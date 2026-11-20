@@ -1,4 +1,6 @@
 import argparse
+import difflib
+import json
 from pathlib import Path
 import re
 import subprocess
@@ -116,29 +118,65 @@ def disassemble_bin(binutils, path, address):
     return lines
 
 
+def read_match_percent(report_path):
+    try:
+        data = json.loads(report_path.read_text(encoding="utf-8"))
+        for section in data.get("left", {}).get("sections", []):
+            if section.get("name") == ".text" and "match_percent" in section:
+                return float(section["match_percent"])
+    except (OSError, ValueError, TypeError):
+        pass
+    return 0.0
+
+
 def print_compact_diff(binutils, folder, address, retail_bytes, candidate_bytes, max_diffs=40):
     if retail_bytes == candidate_bytes:
         return
     r_insns = disassemble_bin(binutils, folder / "retail.bin", address)
     c_insns = disassemble_bin(binutils, folder / "candidate.bin", address)
     print(f"Size: retail={len(retail_bytes)}B ({len(r_insns)} insns)  candidate={len(candidate_bytes)}B ({len(c_insns)} insns)")
-    total = max(len(r_insns), len(c_insns))
+    r_keys = [x[2] for x in r_insns]
+    c_keys = [x[2] for x in c_insns]
+    matcher = difflib.SequenceMatcher(None, r_keys, c_keys, autojunk=False)
     shown = 0
-    mismatches = 0
-    for i in range(total):
-        r = r_insns[i] if i < len(r_insns) else None
-        c = c_insns[i] if i < len(c_insns) else None
-        if r and c and r[1] == c[1]:
+    hidden = 0
+    for tag, i1, i2, j1, j2 in matcher.get_opcodes():
+        if tag == "equal":
             continue
-        mismatches += 1
-        if shown < max_diffs:
-            off = r[0] if r else c[0]
-            r_txt = r[2] if r else "<end>"
-            c_txt = c[2] if c else "<end>"
-            print(f"  +{off:03x}  retail: {r_txt:<28s} | cand: {c_txt}")
-            shown += 1
-    if mismatches > shown:
-        print(f"  ... ({mismatches - shown} more differing instructions)")
+        if i1 > 0 and shown < max_diffs:
+            r = r_insns[i1 - 1]
+            print(f"  ={r[0]:03x}  {r[2]}")
+        if tag == "replace":
+            span = max(i2 - i1, j2 - j1)
+            for k in range(span):
+                r = r_insns[i1 + k] if i1 + k < i2 else None
+                c = c_insns[j1 + k] if j1 + k < j2 else None
+                if shown < max_diffs:
+                    off = r[0] if r else c[0]
+                    r_txt = r[2] if r else "<missing>"
+                    c_txt = c[2] if c else "<missing>"
+                    print(f"  ~{off:03x}  retail: {r_txt:<28s} | cand: {c_txt}")
+                    shown += 1
+                else:
+                    hidden += 1
+        elif tag == "delete":
+            for k in range(i1, i2):
+                if shown < max_diffs:
+                    r = r_insns[k]
+                    print(f"  -{r[0]:03x}  retail: {r[2]:<28s} | cand: <missing>")
+                    shown += 1
+                else:
+                    hidden += 1
+        elif tag == "insert":
+            for k in range(j1, j2):
+                if shown < max_diffs:
+                    c = c_insns[k]
+                    print(f"  +{c[0]:03x}  retail: {'<extra>':<28s} | cand: {c[2]}")
+                    shown += 1
+                else:
+                    hidden += 1
+    if hidden:
+        print(f"  ... ({hidden} more differing instructions)")
 
 
 def diff(args):
@@ -194,7 +232,8 @@ def diff(args):
     run(*command, args.function, cwd=folder)
     if not args.interactive:
         status = "MATCH" if retail == candidate else "DIFFERENT"
-        print(f"{status}  {args.target}:{args.function}  {folder.relative_to(ROOT) / 'report.json'}")
+        pct = 100.0 if status == "MATCH" else read_match_percent(folder / "report.json")
+        print(f"{status}  {args.target}:{args.function}  {pct:.2f}%  {folder.relative_to(ROOT) / 'report.json'}")
         if args.compact and status != "MATCH":
             print_compact_diff(binutils, folder, address, retail, candidate)
 
