@@ -45,8 +45,8 @@
         "bytes": 180
       },
       "GALLERY.ELF": {
-        "functions": 9,
-        "bytes": 264
+        "functions": 10,
+        "bytes": 340
       }
     }
   }

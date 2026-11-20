@@ -45,6 +45,8 @@ segments:
       - [0x1c860, asm, game_01c860]
       - [0x1d1d0, c, gallery/func_0011D150]
       - [0x1d1f0, asm, game_01d1f0]
+      - [0x1d3e0, c, gallery/func_0011D360]
+      - [0x1d430, asm, game_01d430]
       - [0x1e8b0, c, gallery/func_0011E830]
       - [0x1e8f0, asm, game_01e8f0]
       - [0x25100, data, data]

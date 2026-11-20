@@ -13,3 +13,4 @@ func_0011AFB0 = 0x11afb0; // type:func size:0x18
 func_0011D150 = 0x11d150; // type:func size:0x18
 func_0011E830 = 0x11e830; // type:func size:0x34
 func_0011B580 = 0x11b580; // type:func size:0x48
+func_0011D360 = 0x11d360; // type:func size:0x4c
