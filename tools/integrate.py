@@ -200,7 +200,7 @@ def main():
     parser.add_argument("target", choices=TARGETS)
     parser.add_argument("function")
     parser.add_argument("--source", type=Path, required=True)
-    parser.add_argument("--name", help="clean-room C function name (defaults to original label)")
+    parser.add_argument("--name", help="C function name (defaults to original label)")
     parser.add_argument("--subdir", help="subdirectory under src/ (defaults to shared/gallery/main/death)")
     parser.add_argument("--no-pair", action="store_true", help="do not auto-integrate into paired DEATH.ELF")
     args = parser.parse_args()

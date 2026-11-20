@@ -2,8 +2,8 @@
 /build/
 /.tools/
 /.venv/
-/knowledge/
 /local.json
+/.local-notes.md
 /objdiff.json
 __pycache__/
 .DS_Store
