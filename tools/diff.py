@@ -96,6 +96,51 @@ def resolve_range(args, units, symbols, asm_functions):
     raise ValueError(f"Could not find {args.function} in Splat disassembly; pass --address and --size")
 
 
+def disassemble_bin(binutils, path, address):
+    objdump = binutils.get("objdump")
+    if not objdump:
+        return []
+    out = run(
+        objdump, "-D", "-b", "binary", "-m", "mips:5900", "-EL",
+        f"--adjust-vma={address:#x}", str(path),
+        stdout=subprocess.PIPE, stderr=subprocess.PIPE, text=True,
+    ).stdout
+    lines = []
+    for line in out.splitlines():
+        if ":\t" in line:
+            parts = line.split("\t", 2)
+            if len(parts) == 3:
+                off = int(parts[0].strip().rstrip(":"), 16) - address
+                insn = re.sub(r"\s+", " ", parts[2].strip())
+                lines.append((off, parts[1].strip(), insn))
+    return lines
+
+
+def print_compact_diff(binutils, folder, address, retail_bytes, candidate_bytes, max_diffs=40):
+    if retail_bytes == candidate_bytes:
+        return
+    r_insns = disassemble_bin(binutils, folder / "retail.bin", address)
+    c_insns = disassemble_bin(binutils, folder / "candidate.bin", address)
+    print(f"Size: retail={len(retail_bytes)}B ({len(r_insns)} insns)  candidate={len(candidate_bytes)}B ({len(c_insns)} insns)")
+    total = max(len(r_insns), len(c_insns))
+    shown = 0
+    mismatches = 0
+    for i in range(total):
+        r = r_insns[i] if i < len(r_insns) else None
+        c = c_insns[i] if i < len(c_insns) else None
+        if r and c and r[1] == c[1]:
+            continue
+        mismatches += 1
+        if shown < max_diffs:
+            off = r[0] if r else c[0]
+            r_txt = r[2] if r else "<end>"
+            c_txt = c[2] if c else "<end>"
+            print(f"  +{off:03x}  retail: {r_txt:<28s} | cand: {c_txt}")
+            shown += 1
+    if mismatches > shown:
+        print(f"  ... ({mismatches - shown} more differing instructions)")
+
+
 def diff(args):
     if not args.function.isascii() or not args.function.isidentifier():
         raise ValueError("Expected a C function name")
@@ -150,6 +195,8 @@ def diff(args):
     if not args.interactive:
         status = "MATCH" if retail == candidate else "DIFFERENT"
         print(f"{status}  {args.target}:{args.function}  {folder.relative_to(ROOT) / 'report.json'}")
+        if args.compact and status != "MATCH":
+            print_compact_diff(binutils, folder, address, retail, candidate)
 
 
 def main():
@@ -162,6 +209,7 @@ def main():
     parser.add_argument("--compiler", choices=TOOLCHAINS["compilers"], help="override the target compiler")
     parser.add_argument("--objdiff", help="use an existing objdiff-cli executable")
     parser.add_argument("--interactive", action="store_true")
+    parser.add_argument("--compact", action="store_true", help="print compact side-by-side instruction diffs")
     diff(parser.parse_args())
 
 
