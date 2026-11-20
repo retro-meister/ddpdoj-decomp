@@ -1,0 +1,41 @@
+name: GALLERY.ELF
+sha1: 5ab5a8ca91dd7c9546fbd007682dcacd7dc6109f
+options:
+  basename: main
+  target_path: baserom/GALLERY.ELF
+  base_path: ../..
+  platform: ps2
+  compiler: MWCCPS2
+  gp_value: 0x1331f0
+  asm_path: build/split/GALLERY.ELF/asm
+  src_path: src
+  asset_path: build/split/GALLERY.ELF/assets
+  build_path: build/split/GALLERY.ELF/objects
+  ld_script_path: build/split/GALLERY.ELF/main.ld
+  symbol_addrs_path: config/GALLERY.ELF/symbols.txt
+  undefined_funcs_auto_path: build/split/GALLERY.ELF/undefined_funcs.txt
+  undefined_syms_auto_path: build/split/GALLERY.ELF/undefined_syms.txt
+  cache_path: build/split/GALLERY.ELF/.splat_cache
+  create_c_files: false
+  disassemble_all: true
+  subalign: 16
+  section_order: [".text", ".data", ".rodata", ".bss"]
+  auto_link_sections: [".data", ".rodata", ".bss"]
+segments:
+  - name: elf_header
+    type: bin
+    start: 0x0
+  - name: main
+    type: code
+    start: 0x80
+    vram: 0x100000
+    bss_size: 0x95b00
+    subsegments:
+      - [0x80, asm, code_0000]
+      - [0x1a940, c, gallery/reset_gallery_slot_states]
+      - [0x1a960, asm, code_0001]
+      - [0x26780, data, data]
+  - name: elf_tail
+    type: bin
+    start: 0x2b300
+  - [0x2b4c4]

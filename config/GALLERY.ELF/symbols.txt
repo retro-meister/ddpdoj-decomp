@@ -1,0 +1,7 @@
+gallery_slot_0_state = 0x12b280;
+gallery_slot_1_state = 0x12b284;
+gallery_slot_2_state = 0x12b288;
+gallery_slot_3_state = 0x12b28c;
+gallery_state_0 = 0x12b290;
+gallery_state_1 = 0x12b294;
+reset_gallery_slot_states = 0x11a8c0; // type:func size:0x1c

@@ -1,0 +1,7 @@
+rng_cursor = 0x2909b0;
+work_reg_0 = 0x290a80;
+rng_values = 0x26c840;
+bcd_digits = 0x290a60;
+bcd_result = 0x290a78;
+decode_packed_decimal = 0x232230; // type:func size:0x84
+rng_step = 0x2322c0; // type:func size:0x30

@@ -1,0 +1,42 @@
+name: SLPS_252.33
+sha1: 7cfc0fee99fce310909f865c631f963648c82568
+options:
+  basename: main
+  target_path: baserom/SLPS_252.33
+  base_path: ../..
+  platform: ps2
+  compiler: MWCCPS2
+  gp_value: 0x294070
+  asm_path: build/split/SLPS_252.33/asm
+  src_path: src
+  asset_path: build/split/SLPS_252.33/assets
+  build_path: build/split/SLPS_252.33/objects
+  ld_script_path: build/split/SLPS_252.33/main.ld
+  symbol_addrs_path: config/SLPS_252.33/symbols.txt
+  undefined_funcs_auto_path: build/split/SLPS_252.33/undefined_funcs.txt
+  undefined_syms_auto_path: build/split/SLPS_252.33/undefined_syms.txt
+  cache_path: build/split/SLPS_252.33/.splat_cache
+  create_c_files: false
+  disassemble_all: true
+  subalign: 16
+  section_order: [".text", ".data", ".rodata", ".bss"]
+  auto_link_sections: [".data", ".rodata", ".bss"]
+segments:
+  - name: elf_header
+    type: bin
+    start: 0x0
+  - name: main
+    type: code
+    start: 0x80
+    vram: 0x100000
+    bss_size: 0x457f80
+    subsegments:
+      - [0x80, asm, code_0000]
+      - [0x101090, c, shared/decode_packed_decimal]
+      - [0x101120, c, shared/rng_step]
+      - [0x101150, asm, code_0001]
+      - [0x13f380, data, data]
+  - name: elf_tail
+    type: bin
+    start: 0x18df00
+  - [0x18e0c4]

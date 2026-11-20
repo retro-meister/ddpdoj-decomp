@@ -1,0 +1,14 @@
+{
+  "SLPS_252.33": {
+    "sha256": "3c326c8a93138303a193fb2a698cebcea361c3a657210afcb85ff6830cd32c18",
+    "compiler": "3.0.3-020716"
+  },
+  "DEATH.ELF": {
+    "sha256": "c44c4368d2eb80329c614e3954017c443454886dc50a93cc898320be8b251cbf",
+    "compiler": "3.0.3-020716"
+  },
+  "GALLERY.ELF": {
+    "sha256": "ca1a71a37385be0b9a6f6f3e865841858c2ca7793accffa533ba3f5bbc440327",
+    "compiler": "3.0b22-020926"
+  }
+}

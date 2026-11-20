@@ -1,0 +1,36 @@
+[
+  {
+    "date": "2026-11-19",
+    "targets": {
+      "SLPS_252.33": {
+        "bytes": 48,
+        "functions": 1
+      },
+      "DEATH.ELF": {
+        "bytes": 48,
+        "functions": 1
+      },
+      "GALLERY.ELF": {
+        "bytes": 0,
+        "functions": 0
+      }
+    }
+  },
+  {
+    "date": "2026-11-20",
+    "targets": {
+      "SLPS_252.33": {
+        "functions": 2,
+        "bytes": 180
+      },
+      "DEATH.ELF": {
+        "functions": 2,
+        "bytes": 180
+      },
+      "GALLERY.ELF": {
+        "functions": 1,
+        "bytes": 28
+      }
+    }
+  }
+]

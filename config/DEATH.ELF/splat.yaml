@@ -1,0 +1,42 @@
+name: DEATH.ELF
+sha1: 1f85e52cfb50314c07d32f6fd4b36ab345f1e045
+options:
+  basename: main
+  target_path: baserom/DEATH.ELF
+  base_path: ../..
+  platform: ps2
+  compiler: MWCCPS2
+  gp_value: 0x2965f0
+  asm_path: build/split/DEATH.ELF/asm
+  src_path: src
+  asset_path: build/split/DEATH.ELF/assets
+  build_path: build/split/DEATH.ELF/objects
+  ld_script_path: build/split/DEATH.ELF/main.ld
+  symbol_addrs_path: config/DEATH.ELF/symbols.txt
+  undefined_funcs_auto_path: build/split/DEATH.ELF/undefined_funcs.txt
+  undefined_syms_auto_path: build/split/DEATH.ELF/undefined_syms.txt
+  cache_path: build/split/DEATH.ELF/.splat_cache
+  create_c_files: false
+  disassemble_all: true
+  subalign: 16
+  section_order: [".text", ".data", ".rodata", ".bss"]
+  auto_link_sections: [".data", ".rodata", ".bss"]
+segments:
+  - name: elf_header
+    type: bin
+    start: 0x0
+  - name: main
+    type: code
+    start: 0x80
+    vram: 0x100000
+    bss_size: 0x402880
+    subsegments:
+      - [0x80, asm, code_0000]
+      - [0x1322b0, c, shared/decode_packed_decimal]
+      - [0x132340, c, shared/rng_step]
+      - [0x132370, asm, code_0001]
+      - [0x142e00, data, data]
+  - name: elf_tail
+    type: bin
+    start: 0x190480
+  - [0x190644]

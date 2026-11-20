@@ -1,0 +1,15 @@
+[project]
+name = "ddpdoj"
+version = "0.1.0"
+requires-python = ">=3.10"
+dependencies = [
+    "splat64[mips]==0.50.1",
+    "m2c",
+    "matplotlib",
+]
+
+[tool.uv]
+package = false
+
+[tool.uv.sources]
+m2c = { url = "https://github.com/matt-kempster/m2c/archive/c632946b8cfbe8fce442b522dba92dfa72f1f317.tar.gz" }

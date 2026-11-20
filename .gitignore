@@ -1,0 +1,8 @@
+/baserom/
+/build/
+/.tools/
+/.venv/
+/knowledge/
+/local.json
+__pycache__/
+.DS_Store

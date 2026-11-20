@@ -1,0 +1,97 @@
+{
+  "compilers": {
+    "3.0.3-020716": {
+      "archive": "mwcps2-3.0.3-020716.tar.gz",
+      "archive_sha256": "63f89baae691403294724178efbcfc9e1b9ac48151536b6a321b17eb8f9970e5",
+      "member_prefix": "",
+      "sha256": "c894c769efbce7938f7c334ee408e6e3c1fae2da033e02cbdecfe9f88210f236"
+    },
+    "3.0b22-020926": {
+      "archive": "ps2_compilers.tar.xz",
+      "archive_sha256": "f337a65a4fbab5cf0e335efe266dcbc7cf69b19c665c6b3a8924736df151a02a",
+      "member_prefix": "mwcps2-3.0b22-020926/",
+      "sha256": "21aa5998116e1491665b9ad09b562081e20a1d92f719c2dd87b99967fb691397"
+    }
+  },
+  "wibo": {
+    "version": "1.2.0",
+    "darwin": [
+      "wibo-macos",
+      "2b3000ef6a7a490c24ccd71967735ae0005e218922e51806cca1b8d77fd3cf7c"
+    ],
+    "linux-x86_64": [
+      "wibo-x86_64",
+      "13f86a2d618f0dbe67179d349625345eabf9b46450295cb4c904e49f6aff85af"
+    ]
+  },
+  "compiler_flags": [
+    "-nostdinc",
+    "-c",
+    "-O4,p",
+    "-i",
+    "include"
+  ],
+  "compiler_dll_sha256": "cf78f32244ad6b5a716589403663030de9cb604f4027d0a3da92de2a91506d83",
+  "objdiff": {
+    "version": "3.8.2",
+    "hosts": {
+      "darwin-arm64": [
+        "macos-arm64",
+        "767c67e13b7b5e6ca545e7d2235e47c7bceac07d47a52776f74a52914cb4085a"
+      ],
+      "darwin-x86_64": [
+        "macos-x86_64",
+        "2cfe0f46fc84cef7d96813f100a0f01fbf99ac7e423b7fda1d314aada4d5ff72"
+      ],
+      "linux-aarch64": [
+        "linux-aarch64",
+        "087516e73e1b3223b39974f00bc2810fea5c3dc2c93a8e1f06442ec68acaacb4"
+      ],
+      "linux-x86_64": [
+        "linux-x86_64",
+        "e5445089a6f707e30cb5e02992451b604619cedfd2660ee2373a86bfefd9e718"
+      ],
+      "win32-arm64": [
+        "windows-arm64.exe",
+        "c4fed8851366859e69499bfd1fed7f026169602833d3032708329809f307f7d0"
+      ],
+      "win32-x86_64": [
+        "windows-x86_64.exe",
+        "36d229ac6ce74a26b47f42cf86ea8e808d8cd834a54aa62d7ed3f47b765d971b"
+      ]
+    }
+  },
+  "binutils": {
+    "version": "v0.10",
+    "hosts": {
+      "darwin-arm64": [
+        "macos-arm64.tar.gz",
+        "948cc736e01b2c135168caabfb616f6ed8efe89f1dad1ed8ef1ca74acb1b742c"
+      ],
+      "linux-x86_64": [
+        "linux-x86-64.tar.gz",
+        "9fe31ea3ee1a37536f9f0e2e12c668e7c3cb99e59f5154bd2f1fc4762473094c"
+      ],
+      "win32-x86_64": [
+        "windows-x86-64.zip",
+        "2bb5904ee174e04f1600cc70ffdb3dc36b0efa4d1892ea446be588ba8dc6198c"
+      ]
+    }
+  },
+  "qemu_guest": {
+    "base_url": "https://dl-cdn.alpinelinux.org/alpine/v3.23/releases/x86_64/",
+    "iso": [
+      "alpine-virt-3.23.8-x86_64.iso",
+      "5e0879304cfbc433bcafd007f5ef88f6c717020bf739a7636b5d5598fd1b4671"
+    ],
+    "rootfs": [
+      "alpine-minirootfs-3.23.8-x86_64.tar.gz",
+      "56e2810205c17a5dff78cdd7b2c2af4ccdef16f18d765d5bb0f527438b136676"
+    ],
+    "kernel_sha256": "0c41150f2c75a1edf0456ffeb54880837fd9cba86cbf3a351c4a1c94b6ab7978",
+    "runtime": {
+      "bin/busybox": "f3547b3d78d08a028a4833ddb83b77cf012838c078bfd2b76355f53d1d8bba62",
+      "lib/ld-musl-x86_64.so.1": "01e3b793ecda1146c4853dfa350e0515f2137f380fb9fa2370428f7bf9481148"
+    }
+  }
+}
