@@ -19,8 +19,8 @@ options:
   create_c_files: false
   disassemble_all: true
   subalign: 16
-  section_order: [".text", ".data", ".rodata", ".bss"]
-  auto_link_sections: [".data", ".rodata", ".bss"]
+  section_order: [".text", ".data", ".rodata", ".sdata", ".bss"]
+  auto_link_sections: [".data", ".rodata", ".sdata", ".bss"]
 segments:
   - name: elf_header
     type: bin
@@ -31,10 +31,11 @@ segments:
     vram: 0x100000
     bss_size: 0x95b00
     subsegments:
-      - [0x80, asm, code_0000]
+      - [0x80, asm, sdk]
       - [0x1a940, c, gallery/reset_gallery_slot_states]
-      - [0x1a960, asm, code_0001]
-      - [0x26780, data, data]
+      - [0x1a960, asm, game_0000]
+      - [0x25100, data, data]
+      - [0x2b270, sdata, sdata]
   - name: elf_tail
     type: bin
     start: 0x2b300
