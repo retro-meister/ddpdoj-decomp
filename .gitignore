@@ -4,5 +4,6 @@
 /.venv/
 /knowledge/
 /local.json
+/objdiff.json
 __pycache__/
 .DS_Store
