@@ -67,8 +67,11 @@ def inline_local_headers(source_text):
     out = []
     seen = set()
 
-    def expand(text):
-        for line in text.splitlines():
+    def expand(text, is_header=False):
+        lines = text.splitlines()
+        if is_header and len(lines) >= 3 and lines[0].strip().startswith("#ifndef ") and lines[1].strip().startswith("#define ") and lines[-1].strip().startswith("#endif"):
+            lines = lines[2:-1]
+        for line in lines:
             stripped = line.strip()
             if stripped.startswith('#include "') and stripped.endswith('"'):
                 header = stripped[10:-1]
@@ -76,10 +79,8 @@ def inline_local_headers(source_text):
                 if path.is_file():
                     if header not in seen:
                         seen.add(header)
-                        expand(path.read_text(encoding="utf-8"))
+                        expand(path.read_text(encoding="utf-8"), is_header=True)
                     continue
-            if stripped.startswith(("#ifndef ", "#define ", "#endif")) and "DDPDOJ_" in stripped:
-                continue
             out.append(line)
 
     expand(source_text)
