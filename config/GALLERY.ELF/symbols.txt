@@ -129,9 +129,6 @@ lzss_decompress_step = 0x124820; // type:func size:0x3dc
 lzss_draw_frame_overlay = 0x124c00; // type:func size:0x244
 gallery_draw_solid_rect = 0x124e50; // type:func size:0x224
 
-// Gallery data tables in SDK/shared .data
-g_ascii_glyph_table = 0x128ae0;
-
 // Linker / SDK references into gallery .sbss/.bss address range
 gallery_slot_0_state = 0x12b280; // defined:true
 D_001331F0 = 0x1331f0;

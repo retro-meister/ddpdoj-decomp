@@ -47,7 +47,7 @@ segments:
       - [0x23750, c, gallery/viewer]
       - [0x248a0, c, gallery/lzss]
       - [0x25100, data, data_sdk]
-      - [0x28c60, .data, gallery/sys]
+      - [0x28ba0, .data, gallery/sys]
       - [0x28d80, .data, gallery/sound]
       - [0x28fc0, .data, gallery/font]
       - [0x29080, .data, gallery/sprite]
