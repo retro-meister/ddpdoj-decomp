@@ -134,30 +134,24 @@ void gallery_draw_solid_rect(s32 xStart, s32 yStart, s32 xEnd, s32 yEnd,
 
     sceGifPkInit(&packet, g_gif_buf);
     sceGifPkReset(&packet);
-    sceGifPkAddGsData(&packet, 0x1000000000008001ULL);
+    sceGifPkAddGsData(&packet, SCE_GIF_SET_TAG(1, 1, 0, 0, SCE_GIF_PACKED, 1));
     sceGifPkAddGsData(&packet, SCE_GIF_PACKED_AD);
 
     if (blendMode == 0) {
-        sceGifPkAddGsData(&packet, 0x44ULL);
+        sceGifPkAddGsData(&packet, SCE_GS_SET_ALPHA(0, 1, 0, 1, 0));
     } else if (blendMode == 1) {
-        sceGifPkAddGsData(&packet, 0x48ULL);
+        sceGifPkAddGsData(&packet, SCE_GS_SET_ALPHA(0, 2, 0, 1, 0));
     } else {
-        sceGifPkAddGsData(&packet, 0x80000000A1ULL);
+        sceGifPkAddGsData(&packet, SCE_GS_SET_ALPHA(1, 0, 2, 2, 0x80));
     }
 
     sceGifPkAddGsData(&packet, SCE_GS_ALPHA_1);
-    sceGifPkAddGsData(&packet, 0x4400000000008001ULL);
+    sceGifPkAddGsData(&packet, SCE_GIF_SET_TAG(1, 1, 0, 0, SCE_GIF_REGLIST, 4));
     sceGifPkAddGsData(&packet, 0x5510ULL);
-    sceGifPkAddGsData(&packet, 0x146ULL);
-    sceGifPkAddGsData(&packet, (u64)(s64)red |
-                            ((u64)(s64)green << 8) |
-                            ((u64)(s64)blue << 16) |
-                            ((u64)(s64)alpha << 24) |
-                            0x3F80000000000000ULL);
-    sceGifPkAddGsData(&packet, (u64)(s64)(s32)(((u32)xStart << 4) + 0x6C00U) |
-                            ((u64)(s64)(s32)(((u32)yStart << 3) + 0x7900U) << 16));
-    sceGifPkAddGsData(&packet, (u64)(s64)(s32)(((u32)xEnd << 4) + 0x6C00U) |
-                            ((u64)(s64)(s32)(((u32)yEnd << 3) + 0x7900U) << 16));
+    sceGifPkAddGsData(&packet, SCE_GS_SET_PRIM(SCE_GS_PRIM_SPRITE, 0, 0, 0, 1, 0, 1, 0, 0));
+    sceGifPkAddGsData(&packet, SCE_GS_SET_RGBAQ(red, green, blue, alpha, 0x3F800000));
+    sceGifPkAddGsData(&packet, SCE_GS_SET_XYZ2((s32)(((u32)xStart << 4) + 0x6C00U), (s32)(((u32)yStart << 3) + 0x7900U), 0));
+    sceGifPkAddGsData(&packet, SCE_GS_SET_XYZ2((s32)(((u32)xEnd << 4) + 0x6C00U), (s32)(((u32)yEnd << 3) + 0x7900U), 0));
     sceGifPkTerminate(&packet);
     FlushCache(0);
     sceDmaSendN(g_dma_gif, g_gif_buf, sceGifPkSize(&packet));

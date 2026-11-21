@@ -233,7 +233,7 @@ void bmp_draw_ascii_char(void *packet, s32 x, s32 y, u8 glyphIndex)
     glyphs[0] = firstGlyph;
     glyphs[1] = firstGlyph + 16;
 
-    sceGifPkAddGsData(packet, 0xA400000000008002ULL);
+    sceGifPkAddGsData(packet, SCE_GIF_SET_TAG(2, 1, 0, 0, SCE_GIF_REGLIST, 10));
     sceGifPkAddGsData(packet, 0x0000005353535310ULL);
 
     glyph = glyphs;
@@ -247,24 +247,16 @@ void bmp_draw_ascii_char(void *packet, s32 x, s32 y, u8 glyphIndex)
         s32 textureLeft = (tile % 126 + 1) * 8;
         s32 textureTop = (tile / 126 + 1) * 8;
 
-        sceGifPkAddGsData(packet, 0x115, tile);
-        sceGifPkAddGsData(packet, 0x3F80000080808080ULL);
-        sceGifPkAddGsData(packet, (u64)(s64)((textureLeft + 7) * 16) |
-                              ((u64)(s64)(textureTop * 16) << 16));
-        sceGifPkAddGsData(packet, (u64)screenLeft |
-                              ((u64)(s64)screenTop << 16));
-        sceGifPkAddGsData(packet, (u64)(s64)((textureLeft + 7) * 16) |
-                              ((u64)(s64)((textureTop + 7) * 16) << 16));
-        sceGifPkAddGsData(packet, (u64)screenRight |
-                              ((u64)(s64)screenTop << 16));
-        sceGifPkAddGsData(packet, (u64)(s64)(textureLeft * 16) |
-                              ((u64)(s64)((textureTop + 7) * 16) << 16));
-        sceGifPkAddGsData(packet, (u64)screenRight |
-                              ((u64)(s64)((y + 8) * 8 + 0x7900) << 16));
-        sceGifPkAddGsData(packet, (u64)(s64)(textureLeft * 16) |
-                              ((u64)(s64)(textureTop * 16) << 16));
-        sceGifPkAddGsData(packet, (u64)screenLeft |
-                              ((u64)(s64)((y + 8) * 8 + 0x7900) << 16));
+        sceGifPkAddGsData(packet, SCE_GS_SET_PRIM(SCE_GS_PRIM_TRIFAN, 0, 1, 0, 0, 0, 1, 0, 0), tile);
+        sceGifPkAddGsData(packet, SCE_GS_SET_RGBAQ(0x80, 0x80, 0x80, 0x80, 0x3F800000));
+        sceGifPkAddGsData(packet, SCE_GS_SET_UV((textureLeft + 7) * 16, textureTop * 16));
+        sceGifPkAddGsData(packet, SCE_GS_SET_XYZ2(screenLeft, screenTop, 0));
+        sceGifPkAddGsData(packet, SCE_GS_SET_UV((textureLeft + 7) * 16, (textureTop + 7) * 16));
+        sceGifPkAddGsData(packet, SCE_GS_SET_XYZ2(screenRight, screenTop, 0));
+        sceGifPkAddGsData(packet, SCE_GS_SET_UV(textureLeft * 16, (textureTop + 7) * 16));
+        sceGifPkAddGsData(packet, SCE_GS_SET_XYZ2(screenRight, (y + 8) * 8 + 0x7900, 0));
+        sceGifPkAddGsData(packet, SCE_GS_SET_UV(textureLeft * 16, textureTop * 16));
+        sceGifPkAddGsData(packet, SCE_GS_SET_XYZ2(screenLeft, (y + 8) * 8 + 0x7900, 0));
     }
 }
 

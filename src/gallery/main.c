@@ -209,17 +209,17 @@ void gallery_init_frame_gs(void)
 
     sceGifPkInit(&packet, g_gif_buf);
     sceGifPkReset(&packet);
-    sceGifPkAddGsData(&packet, 0x1000000000008005ULL);
+    sceGifPkAddGsData(&packet, SCE_GIF_SET_TAG(5, 1, 0, 0, SCE_GIF_PACKED, 1));
     sceGifPkAddGsData(&packet, SCE_GIF_PACKED_AD);
-    sceGifPkAddGsData(&packet, 0x8000000000ULL);
+    sceGifPkAddGsData(&packet, SCE_GS_SET_TEXA(0x00, 0, 0x80));
     sceGifPkAddGsData(&packet, SCE_GS_TEXA);
-    sceGifPkAddGsData(&packet, 0x3000FULL);
+    sceGifPkAddGsData(&packet, SCE_GS_SET_TEST(1, 7, 0, 0, 0, 0, 1, 1));
     sceGifPkAddGsData(&packet, SCE_GS_TEST_1);
-    sceGifPkAddGsData(&packet, 0x100000000ULL);
+    sceGifPkAddGsData(&packet, SCE_GS_SET_ZBUF(0, 0, 1));
     sceGifPkAddGsData(&packet, SCE_GS_ZBUF_1);
     sceGifPkAddGsData(&packet, 0ULL);
     sceGifPkAddGsData(&packet, SCE_GS_TEX1_1);
-    sceGifPkAddGsData(&packet, 0x44ULL);
+    sceGifPkAddGsData(&packet, SCE_GS_SET_ALPHA(0, 1, 0, 1, 0));
     sceGifPkAddGsData(&packet, SCE_GS_ALPHA_1);
     sceGifPkTerminate(&packet);
     FlushCache(0);
@@ -754,9 +754,9 @@ s32 gallery_state_loading(void)
         gallery_draw_solid_rect(0, 0, 0x280, 0x1C0, 0, 0, 0, 0x80, 0);
         sceGifPkInit(&pkt, g_gif_buf);
         sceGifPkReset(&pkt);
-        sceGifPkAddGsData(&pkt, 0x1000000000008002ULL);
+        sceGifPkAddGsData(&pkt, SCE_GIF_SET_TAG(2, 1, 0, 0, SCE_GIF_PACKED, 1));
         sceGifPkAddGsData(&pkt, SCE_GIF_PACKED_AD);
-        sceGifPkAddGsData(&pkt, 0x20170606A9441E40ULL);
+        sceGifPkAddGsData(&pkt, SCE_GS_SET_TEX0(0x1E40, 16, SCE_GS_PSMT4, 10, 10, 1, 0, 0x3830, SCE_GS_PSMCT16, 0, 0, 1));
         sceGifPkAddGsData(&pkt, SCE_GS_TEX0_1);
         sceGifPkAddGsData(&pkt, 0);
         sceGifPkAddGsData(&pkt, SCE_GS_TEX1_1);
@@ -967,28 +967,28 @@ void gallery_draw_background(u8 alpha)
 
     sceGifPkInit(&packet, g_gif_buf);
     sceGifPkReset(&packet);
-    sceGifPkAddGsData(&packet, 0x1000000000008003ULL);
+    sceGifPkAddGsData(&packet, SCE_GIF_SET_TAG(3, 1, 0, 0, SCE_GIF_PACKED, 1));
     sceGifPkAddGsData(&packet, SCE_GIF_PACKED_AD);
     sceGifPkAddGsData(&packet, g_gallery->bgSprite.tex0);
     sceGifPkAddGsData(&packet, SCE_GS_TEX0_1);
-    sceGifPkAddGsData(&packet, 0x60ULL);
+    sceGifPkAddGsData(&packet, SCE_GS_SET_TEX1(0, 0, 1, 1, 0, 0, 0));
     sceGifPkAddGsData(&packet, SCE_GS_TEX1_1);
-    sceGifPkAddGsData(&packet, 0x44ULL);
+    sceGifPkAddGsData(&packet, SCE_GS_SET_ALPHA(0, 1, 0, 1, 0));
     sceGifPkAddGsData(&packet, SCE_GS_ALPHA_1);
-    sceGifPkAddGsData(&packet, 0x6400000000008001ULL);
+    sceGifPkAddGsData(&packet, SCE_GIF_SET_TAG(1, 1, 0, 0, SCE_GIF_REGLIST, 6));
     sceGifPkAddGsData(&packet, 0x535310ULL);
 
     if (alpha == 0x80) {
-        sceGifPkAddGsData(&packet, 0x116ULL);
+        sceGifPkAddGsData(&packet, SCE_GS_SET_PRIM(SCE_GS_PRIM_SPRITE, 0, 1, 0, 0, 0, 1, 0, 0));
     } else {
-        sceGifPkAddGsData(&packet, 0x156ULL);
+        sceGifPkAddGsData(&packet, SCE_GS_SET_PRIM(SCE_GS_PRIM_SPRITE, 0, 1, 0, 1, 0, 1, 0, 0));
     }
 
-    sceGifPkAddGsData(&packet, ((u64)alpha << 24) | 0x3F80000000808080ULL);
-    sceGifPkAddGsData(&packet, 0ULL);
-    sceGifPkAddGsData(&packet, 0x79006C00ULL);
-    sceGifPkAddGsData(&packet, 0x1C002000ULL);
-    sceGifPkAddGsData(&packet, 0x87009400ULL);
+    sceGifPkAddGsData(&packet, SCE_GS_SET_RGBAQ(0x80, 0x80, 0x80, alpha, 0x3F800000));
+    sceGifPkAddGsData(&packet, SCE_GS_SET_UV(0, 0));
+    sceGifPkAddGsData(&packet, SCE_GS_SET_XYZ2(0x6C00, 0x7900, 0));
+    sceGifPkAddGsData(&packet, SCE_GS_SET_UV(512 << 4, 448 << 4));
+    sceGifPkAddGsData(&packet, SCE_GS_SET_XYZ2((640 << 4) + 0x6C00, (448 << 3) + 0x7900, 0));
     sceGifPkTerminate(&packet);
     FlushCache(0);
     sceDmaSendN(g_dma_gif, g_gif_buf, sceGifPkSize(&packet));
@@ -1008,22 +1008,22 @@ void gallery_draw_grid_and_ui(void)
     sceGifPkInit(&pkt, g_gif_buf);
     sceGifPkReset(&pkt);
 
-    sceGifPkAddGsData(&pkt, 0x1000000000008001ULL);
+    sceGifPkAddGsData(&pkt, SCE_GIF_SET_TAG(1, 1, 0, 0, SCE_GIF_PACKED, 1));
     sceGifPkAddGsData(&pkt, SCE_GIF_PACKED_AD);
-    sceGifPkAddGsData(&pkt, 0x60ULL);
+    sceGifPkAddGsData(&pkt, SCE_GS_SET_TEX1(0, 0, 1, 1, 0, 0, 0));
     sceGifPkAddGsData(&pkt, SCE_GS_TEX1_1);
 
     for (i = 0; i < 6; i++) {
         tex = &g_gallery->uiSprites[i];
 
-        sceGifPkAddGsData(&pkt, 0x1000000000008001ULL);
+        sceGifPkAddGsData(&pkt, SCE_GIF_SET_TAG(1, 1, 0, 0, SCE_GIF_PACKED, 1));
         sceGifPkAddGsData(&pkt, SCE_GIF_PACKED_AD);
         sceGifPkAddGsData(&pkt, tex->tex0);
         sceGifPkAddGsData(&pkt, SCE_GS_TEX0_1);
 
-        sceGifPkAddGsData(&pkt, 0x6400000000008001ULL);
+        sceGifPkAddGsData(&pkt, SCE_GIF_SET_TAG(1, 1, 0, 0, SCE_GIF_REGLIST, 6));
         sceGifPkAddGsData(&pkt, 0x535310ULL);
-        sceGifPkAddGsData(&pkt, 0x116ULL);
+        sceGifPkAddGsData(&pkt, SCE_GS_SET_PRIM(SCE_GS_PRIM_SPRITE, 0, 1, 0, 0, 0, 1, 0, 0));
 
         if (g_gallery->uiMode[i] == 1) {
             u8 color = ((g_frame_count & 1) << 6) + 0x40;
@@ -1045,7 +1045,7 @@ void gallery_draw_grid_and_ui(void)
         sceGifPkAddGsData(&pkt, SCE_GS_SET_XYZ2((g_gallery->uiX1[i] << 4) + 0x6C00, (g_gallery->uiY1[i] << 3) + 0x7900, 0));
     }
 
-    sceGifPkAddGsData(&pkt, 0x1000000000008001ULL);
+    sceGifPkAddGsData(&pkt, SCE_GIF_SET_TAG(1, 1, 0, 0, SCE_GIF_PACKED, 1));
     sceGifPkAddGsData(&pkt, SCE_GIF_PACKED_AD);
     sceGifPkAddGsData(&pkt, 0ULL);
     sceGifPkAddGsData(&pkt, SCE_GS_TEX1_1);
@@ -1066,12 +1066,12 @@ void gallery_draw_grid_and_ui(void)
                 break;
             }
 
-            sceGifPkAddGsData(&pkt, 0x1000000000008001ULL);
+            sceGifPkAddGsData(&pkt, SCE_GIF_SET_TAG(1, 1, 0, 0, SCE_GIF_PACKED, 1));
             sceGifPkAddGsData(&pkt, SCE_GIF_PACKED_AD);
             sceGifPkAddGsData(&pkt, tex->tex0);
             sceGifPkAddGsData(&pkt, SCE_GS_TEX0_1);
 
-            sceGifPkAddGsData(&pkt, 0x6400000000008001ULL);
+            sceGifPkAddGsData(&pkt, SCE_GIF_SET_TAG(1, 1, 0, 0, SCE_GIF_REGLIST, 6));
             sceGifPkAddGsData(&pkt, 0x535310ULL);
 
             mode = g_gallery->slotFlags[idx];
@@ -1081,17 +1081,17 @@ void gallery_draw_grid_and_ui(void)
 
             switch (mode) {
             default:
-                sceGifPkAddGsData(&pkt, 0x116ULL);
+                sceGifPkAddGsData(&pkt, SCE_GS_SET_PRIM(SCE_GS_PRIM_SPRITE, 0, 1, 0, 0, 0, 1, 0, 0));
                 sceGifPkAddGsData(&pkt, SCE_GS_SET_RGBAQ(0x80, 0x80, 0x80, 0x80, 0x3F800000));
                 break;
             case 0:
             case 2:
-                sceGifPkAddGsData(&pkt, 0x156ULL);
+                sceGifPkAddGsData(&pkt, SCE_GS_SET_PRIM(SCE_GS_PRIM_SPRITE, 0, 1, 0, 1, 0, 1, 0, 0));
                 sceGifPkAddGsData(&pkt, SCE_GS_SET_RGBAQ(0x80, 0x80, 0x80, g_gallery->countdown << 2, 0x3F800000));
                 break;
             case 4: {
                 s32 bright = (g_thumb_pulse << 2) + 0x80;
-                sceGifPkAddGsData(&pkt, 0x156ULL);
+                sceGifPkAddGsData(&pkt, SCE_GS_SET_PRIM(SCE_GS_PRIM_SPRITE, 0, 1, 0, 1, 0, 1, 0, 0));
                 sceGifPkAddGsData(&pkt, SCE_GS_SET_RGBAQ(bright, bright, bright, 0x80, 0x3F800000));
                 break;
             }
@@ -1119,9 +1119,9 @@ void gallery_draw_grid_and_ui(void)
         }
     }
 
-    sceGifPkAddGsData(&pkt, 0x1000000000008001ULL);
+    sceGifPkAddGsData(&pkt, SCE_GIF_SET_TAG(1, 1, 0, 0, SCE_GIF_PACKED, 1));
     sceGifPkAddGsData(&pkt, SCE_GIF_PACKED_AD);
-    sceGifPkAddGsData(&pkt, 0x60ULL);
+    sceGifPkAddGsData(&pkt, SCE_GS_SET_TEX1(0, 0, 1, 1, 0, 0, 0));
     sceGifPkAddGsData(&pkt, SCE_GS_TEX1_1);
 
     if (g_gallery->fadeState == 1) {
@@ -1132,14 +1132,14 @@ void gallery_draw_grid_and_ui(void)
             }
         }
 
-        sceGifPkAddGsData(&pkt, 0x1000000000008001ULL);
+        sceGifPkAddGsData(&pkt, SCE_GIF_SET_TAG(1, 1, 0, 0, SCE_GIF_PACKED, 1));
         sceGifPkAddGsData(&pkt, SCE_GIF_PACKED_AD);
-        sceGifPkAddGsData(&pkt, 0x48ULL);
+        sceGifPkAddGsData(&pkt, SCE_GS_SET_ALPHA(0, 2, 0, 1, 0));
         sceGifPkAddGsData(&pkt, SCE_GS_ALPHA_1);
 
-        sceGifPkAddGsData(&pkt, 0x4400000000008001ULL);
+        sceGifPkAddGsData(&pkt, SCE_GIF_SET_TAG(1, 1, 0, 0, SCE_GIF_REGLIST, 4));
         sceGifPkAddGsData(&pkt, 0x5510ULL);
-        sceGifPkAddGsData(&pkt, 0x146ULL);
+        sceGifPkAddGsData(&pkt, SCE_GS_SET_PRIM(SCE_GS_PRIM_SPRITE, 0, 0, 0, 1, 0, 1, 0, 0));
         sceGifPkAddGsData(&pkt, SCE_GS_SET_RGBAQ(0xC0, 0xC0, 0xC0, 0x60 - g_cursor_pulse * 2, 0x3F800000));
         sceGifPkAddGsData(
             &pkt,

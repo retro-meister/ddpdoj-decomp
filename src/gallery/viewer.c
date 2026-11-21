@@ -222,18 +222,18 @@ s32 viewer_update_and_draw(GalleryView *view, s32 mode)
 
         sceGifPkInit(&pkt, g_gif_buf);
         sceGifPkReset(&pkt);
-        sceGifPkAddGsData(&pkt, 0x1000000000008003ULL);
+        sceGifPkAddGsData(&pkt, SCE_GIF_SET_TAG(3, 1, 0, 0, SCE_GIF_PACKED, 1));
         sceGifPkAddGsData(&pkt, SCE_GIF_PACKED_AD);
         sceGifPkAddGsData(&pkt, view->tex->tex0);
         sceGifPkAddGsData(&pkt, SCE_GS_TEX0_1);
         sceGifPkAddGsData(&pkt, 0ULL);
         sceGifPkAddGsData(&pkt, SCE_GS_TEX1_1);
-        sceGifPkAddGsData(&pkt, 0x44ULL);
+        sceGifPkAddGsData(&pkt, SCE_GS_SET_ALPHA(0, 1, 0, 1, 0));
         sceGifPkAddGsData(&pkt, SCE_GS_ALPHA_1);
-        sceGifPkAddGsData(&pkt, 0x6400000000008001ULL);
+        sceGifPkAddGsData(&pkt, SCE_GIF_SET_TAG(1, 1, 0, 0, SCE_GIF_REGLIST, 6));
         sceGifPkAddGsData(&pkt, 0x535310ULL);
-        sceGifPkAddGsData(&pkt, 0x156ULL);
-        sceGifPkAddGsData(&pkt, ((u64)alpha << 24) | 0x3F80000000808080ULL);
+        sceGifPkAddGsData(&pkt, SCE_GS_SET_PRIM(SCE_GS_PRIM_SPRITE, 0, 1, 0, 1, 0, 1, 0, 0));
+        sceGifPkAddGsData(&pkt, SCE_GS_SET_RGBAQ(0x80, 0x80, 0x80, alpha, 0x3F800000));
         sceGifPkAddGsData(&pkt, SCE_GS_SET_UV(u << 4, v << 4));
         sceGifPkAddGsData(&pkt, SCE_GS_SET_XYZ2((drawX << 4) + 0x6C00, (drawY << 3) + 0x7900, 0));
         sceGifPkAddGsData(&pkt, SCE_GS_SET_UV((u + texW) << 4, (v + texH) << 4));
