@@ -210,7 +210,7 @@ void bmp_upload_clut(s16 destinationBase, const void *palette, s32 colorCount)
     sceGsSyncPath(0, 0);
 }
 
-void bmp_draw_ascii_char(void *packet, s32 x, s32 y, u8 glyphIndex)
+void bmp_draw_ascii_char(sceGifPacket *packet, s32 x, s32 y, u8 glyphIndex)
 {
     u16 glyphs[2];
     u16 firstGlyph;
