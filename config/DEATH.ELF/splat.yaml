@@ -33,8 +33,8 @@ segments:
     subsegments:
       - [0x80, asm, sdk]
       - [0x19b90, asm, game_0000]
-      - [0x1322b0, c, shared/decode_packed_decimal]
-      - [0x132340, c, shared/rng_step]
+      - [0x1322b0, c, shared/func_00201010]
+      - [0x132340, c, shared/func_002010A0]
       - [0x132370, asm, game_0001]
       - [0x141780, data, data]
       - [0x18e670, sdata, sdata]

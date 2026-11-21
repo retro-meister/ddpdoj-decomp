@@ -50,9 +50,9 @@ def install_compiler(version):
     with tarfile.open(fileobj=io.BytesIO(archive), mode="r:*") as bundle:
         prefix = record["member_prefix"]
         binary = bundle.extractfile(prefix + compiler.name).read()
-        dependency = bundle.extractfile(prefix + dll.name).read()
+        dependency = bundle.extractfile(prefix + record.get("dll_member", dll.name)).read()
     verify(binary, record["sha256"], compiler.name)
-    verify(dependency, TOOLCHAINS["compiler_dll_sha256"], dll.name)
+    verify(dependency, record.get("dll_sha256", TOOLCHAINS["compiler_dll_sha256"]), dll.name)
     compiler.parent.mkdir(parents=True, exist_ok=True)
     compiler.write_bytes(binary)
     dll.write_bytes(dependency)
@@ -204,7 +204,7 @@ def main():
         build(local)
     else:
         with TemporaryDirectory(prefix="setup-", dir=TOOLS) as directory:
-            compile_source(local, "src/shared/rng_step.c", Path(directory) / "rng_step.o", compilers[0])
+            compile_source(local, "src/shared/func_002010A0.c", Path(directory) / "func_002010A0.o", compilers[0])
     pending = LOCAL.with_suffix(".tmp")
     pending.write_text(json.dumps(local, indent=2) + "\n", encoding="utf-8")
     pending.replace(LOCAL)

@@ -5,7 +5,7 @@ extern unsigned short gallery_slot_3_state;
 extern unsigned short gallery_state_0;
 extern unsigned short gallery_state_1;
 
-void reset_gallery_slot_states(void)
+void func_0011A8C0(void)
 {
     gallery_state_1 = 0;
     gallery_state_0 = 0;

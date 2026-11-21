@@ -7,7 +7,7 @@ union DecimalResult {
 
 extern union DecimalResult bcd_result;
 
-void decode_packed_decimal(void)
+void func_00201010(void)
 {
     unsigned char low = work_reg_0[0];
     unsigned char high = work_reg_0[1];

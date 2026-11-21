@@ -3,5 +3,5 @@ work_reg_0 = 0x28e4a8;
 rng_values = 0x266f10;
 bcd_digits = 0x28e488;
 bcd_result = 0x28e4a0;
-decode_packed_decimal = 0x201010; // type:func size:0x84
-rng_step = 0x2010a0; // type:func size:0x30
+func_00201010 = 0x201010; // type:func size:0x84
+func_002010A0 = 0x2010a0; // type:func size:0x30
