@@ -21,8 +21,6 @@ extern u16 D_0012B2C0;
 extern u16 D_0012B2C4;
 extern u8 D_0012B2C8;
 extern u8 D_0012B2CC;
-extern u16 D_0012B2D0;
-extern void *D_0012B300;
 extern s32 D_0012B310;
 extern s32 D_0012B314;
 extern u8 D_0012B380;
@@ -33,11 +31,10 @@ extern u32 D_00132670[];
 extern u32 D_00132674[];
 extern s16 D_00135280[];
 extern u8 D_00135A80[];
-extern u8 D_001A4A80[];
 
 void tex_upload_step(void)
 {
-    cd_read_async(D_0012B300, D_00132620[0], D_00132624[0]);
+    cd_read_async(g_vram_load_buf, D_00132620[0], D_00132624[0]);
 }
 
 void tex_upload_reset(void)
@@ -90,9 +87,9 @@ void tex_upload_clut_slot(u8 *destination, s32 mode, s32 blockCount)
     switch (mode) {
     case 0:
         for (blockIndex = 0; blockIndex < blockCount; blockIndex++) {
-            sceGsSetDefLoadImage(D_001A4A80, (s16)D_0012B314, 1, 2, 0, 0, 8, 2);
+            sceGsSetDefLoadImage(g_gs_load_image, (s16)D_0012B314, 1, 2, 0, 0, 8, 2);
             FlushCache(0);
-            sceGsExecLoadImage(D_001A4A80, destination);
+            sceGsExecLoadImage(g_gs_load_image, destination);
             sceGsSyncPath(0, 0);
             D_0012B314 += 1;
             destination += 0x80;
@@ -100,9 +97,9 @@ void tex_upload_clut_slot(u8 *destination, s32 mode, s32 blockCount)
         break;
     case 1:
         for (blockIndex = 0; blockIndex < blockCount; blockIndex++) {
-            sceGsSetDefLoadImage(D_001A4A80, (s16)D_0012B314, 1, 2, 0, 0, 16, 16);
+            sceGsSetDefLoadImage(g_gs_load_image, (s16)D_0012B314, 1, 2, 0, 0, 16, 16);
             FlushCache(0);
-            sceGsExecLoadImage(D_001A4A80, destination);
+            sceGsExecLoadImage(g_gs_load_image, destination);
             sceGsSyncPath(0, 0);
             D_0012B314 += 4;
             destination += 0x80;
@@ -128,7 +125,7 @@ void tex_upload_bitmap(s32 index)
             case 0:
                 remaining = D_00129010[index].dbw;
                 sceGsSetDefLoadImage(
-                    D_001A4A80,
+                    g_gs_load_image,
                     D_0012B310,
                     remaining,
                     0x14,
@@ -138,14 +135,14 @@ void tex_upload_bitmap(s32 index)
                     D_00129010[index].height
                 );
                 FlushCache(0);
-                sceGsExecLoadImage(D_001A4A80, D_00135A80);
+                sceGsExecLoadImage(g_gs_load_image, D_00135A80);
                 sceGsSyncPath(0, 0);
                 break;
 
             case 1:
                 chunkHeight = D_00129010[index].height;
                 sceGsSetDefLoadImage(
-                    D_001A4A80,
+                    g_gs_load_image,
                     D_0012B310,
                     D_00129010[index].dbw,
                     0x13,
@@ -155,7 +152,7 @@ void tex_upload_bitmap(s32 index)
                     chunkHeight
                 );
                 FlushCache(0);
-                sceGsExecLoadImage(D_001A4A80, D_00135A80);
+                sceGsExecLoadImage(g_gs_load_image, D_00135A80);
                 sceGsSyncPath(0, 0);
                 break;
 
@@ -177,7 +174,7 @@ void tex_upload_bitmap(s32 index)
                 chunkHeight = remaining;
             }
             sceGsSetDefLoadImage(
-                D_001A4A80,
+                g_gs_load_image,
                 D_0012B310,
                 D_00129010[index].dbw,
                 0x14,
@@ -187,7 +184,7 @@ void tex_upload_bitmap(s32 index)
                 chunkHeight
             );
             FlushCache(0);
-            sceGsExecLoadImage(D_001A4A80, src);
+            sceGsExecLoadImage(g_gs_load_image, src);
             sceGsSyncPath(0, 0);
             remaining -= chunkHeight;
             src += 0x20000;
@@ -209,7 +206,7 @@ void tex_upload_bitmap(s32 index)
                     chunkHeight = remaining;
                 }
                 sceGsSetDefLoadImage(
-                    D_001A4A80,
+                    g_gs_load_image,
                     D_0012B310,
                     D_00129010[index].dbw,
                     0x13,
@@ -219,7 +216,7 @@ void tex_upload_bitmap(s32 index)
                     chunkHeight
                 );
                 FlushCache(0);
-                sceGsExecLoadImage(D_001A4A80, src1);
+                sceGsExecLoadImage(g_gs_load_image, src1);
                 sceGsSyncPath(0, 0);
                 remaining -= chunkHeight;
                 src1 += 0x20000;
@@ -237,7 +234,7 @@ done:
 
 void pad_update_vibration(void)
 {
-    if (D_0012B2D0 == 0) {
+    if (g_system_mute == 0) {
         switch (D_0012B2CC) {
             case 0:
                 break;
@@ -295,9 +292,9 @@ void vram_clear_all(void)
     }
 
     for (blockIndex = 0, vramBase = 0; blockIndex < 0x10; blockIndex++, vramBase += 0x400) {
-        sceGsSetDefLoadImage(D_001A4A80, (s16)vramBase, 4, 0, 0, 0, 0x100, 0x100);
+        sceGsSetDefLoadImage(g_gs_load_image, (s16)vramBase, 4, 0, 0, 0, 0x100, 0x100);
         FlushCache(0);
-        sceGsExecLoadImage(D_001A4A80, buffer);
+        sceGsExecLoadImage(g_gs_load_image, buffer);
         sceGsSyncPath(0, 0);
     }
 

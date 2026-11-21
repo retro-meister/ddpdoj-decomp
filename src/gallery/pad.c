@@ -51,7 +51,7 @@ extern u32 D_001A4F78[];
 extern u32 D_001A4F80[4];
 extern u32 D_001A4F84[];
 extern u32 D_001A4F88[];
-extern PadInfo D_001A4F90[3];
+extern PadInfo g_pads[3];
 extern u8 D_001A5040[0x100];
 extern u8 D_001A5140[0x100];
 
@@ -59,7 +59,7 @@ void pad_poll_hardware(void)
 {
     s32 port;
     PadInfo *pad;
-    for (port = 0, pad = D_001A4F90; port < 2; port++, pad++) {
+    for (port = 0, pad = g_pads; port < 2; port++, pad++) {
         s32 padState;
         pad->rawButtons = 0;
         pad->analogX = 0;
@@ -195,17 +195,17 @@ void pad_poll_hardware(void)
         }
     }
 
-    D_001A4F90[2].rawButtons = D_001A4F90[0].rawButtons | D_001A4F90[1].rawButtons;
-    D_001A4F90[2].buttons = D_001A4F90[0].buttons | D_001A4F90[1].buttons;
-    D_001A4F90[2].trigger = D_001A4F90[0].trigger | D_001A4F90[1].trigger;
-    D_001A4F90[2].analogX = (((D_001A4F90[0].analogX >= 0) ? (D_001A4F90[0].analogX) : (-D_001A4F90[0].analogX)) > ((D_001A4F90[1].analogX >= 0) ? (D_001A4F90[1].analogX) : (-D_001A4F90[1].analogX))) ? (D_001A4F90[0].analogX) : (D_001A4F90[1].analogX);
-    D_001A4F90[2].analogY = (((D_001A4F90[0].analogY >= 0) ? (D_001A4F90[0].analogY) : (-D_001A4F90[0].analogY)) > ((D_001A4F90[1].analogY >= 0) ? (D_001A4F90[1].analogY) : (-D_001A4F90[1].analogY))) ? (D_001A4F90[0].analogY) : (D_001A4F90[1].analogY);
-    D_001A4F90[2].unk30 = D_001A4F90[0].unk30 | D_001A4F90[1].unk30;
+    g_pads[2].rawButtons = g_pads[0].rawButtons | g_pads[1].rawButtons;
+    g_pads[2].buttons = g_pads[0].buttons | g_pads[1].buttons;
+    g_pads[2].trigger = g_pads[0].trigger | g_pads[1].trigger;
+    g_pads[2].analogX = (((g_pads[0].analogX >= 0) ? (g_pads[0].analogX) : (-g_pads[0].analogX)) > ((g_pads[1].analogX >= 0) ? (g_pads[1].analogX) : (-g_pads[1].analogX))) ? (g_pads[0].analogX) : (g_pads[1].analogX);
+    g_pads[2].analogY = (((g_pads[0].analogY >= 0) ? (g_pads[0].analogY) : (-g_pads[0].analogY)) > ((g_pads[1].analogY >= 0) ? (g_pads[1].analogY) : (-g_pads[1].analogY))) ? (g_pads[0].analogY) : (g_pads[1].analogY);
+    g_pads[2].unk30 = g_pads[0].unk30 | g_pads[1].unk30;
 }
 
 void pad_init_system(void)
 {
-    memset(D_001A4F90, 0, sizeof(D_001A4F90));
+    memset(g_pads, 0, sizeof(g_pads));
 
     D_001A4F88[0] = 0;
     D_001A4F78[0] = 0;
@@ -243,24 +243,24 @@ void pad_update(void)
     for (padIndex = 0; padIndex < 3; padIndex++) {
         D_001A4F10[padIndex] = 0;
 
-        if (D_001A4F90[padIndex].analogX > -64 && D_001A4F90[padIndex].analogX < 64) {
-            D_001A4F90[padIndex].analogX = 0;
+        if (g_pads[padIndex].analogX > -64 && g_pads[padIndex].analogX < 64) {
+            g_pads[padIndex].analogX = 0;
         }
-        if (D_001A4F90[padIndex].analogY > -64 && D_001A4F90[padIndex].analogY < 64) {
-            D_001A4F90[padIndex].analogY = 0;
+        if (g_pads[padIndex].analogY > -64 && g_pads[padIndex].analogY < 64) {
+            g_pads[padIndex].analogY = 0;
         }
 
-        D_001A4F80[padIndex] = D_001A4F90[padIndex].rawButtons;
-        if (D_001A4F90[padIndex].analogX < 0) {
+        D_001A4F80[padIndex] = g_pads[padIndex].rawButtons;
+        if (g_pads[padIndex].analogX < 0) {
             D_001A4F80[padIndex] |= 0x8000;
         }
-        if (D_001A4F90[padIndex].analogX > 0) {
+        if (g_pads[padIndex].analogX > 0) {
             D_001A4F80[padIndex] |= 0x2000;
         }
-        if (D_001A4F90[padIndex].analogY < 0) {
+        if (g_pads[padIndex].analogY < 0) {
             D_001A4F80[padIndex] |= 0x1000;
         }
-        if (D_001A4F90[padIndex].analogY > 0) {
+        if (g_pads[padIndex].analogY > 0) {
             D_001A4F80[padIndex] |= 0x4000;
         }
 

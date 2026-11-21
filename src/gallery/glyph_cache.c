@@ -1,23 +1,12 @@
 #include "gallery/gallery.h"
 
-typedef struct
-{
-    s16 previous;
-    s16 next;
-    s16 key;
-    s16 x;
-    s16 y;
-    s16 flags;
-} GalleryCacheEntry;
-
 extern s8 D_001A5240[0x2000];
-extern GalleryCacheEntry D_001A7240[0xE3];
+extern GlyphCacheEntry D_001A7240[0xE3];
 extern s16 D_001A7CF0[0x22C4];
-extern GalleryCacheEntry D_001AC298[0x401];
 
 void glyph_cache_init(void)
 {
-    GalleryCacheEntry *table;
+    GlyphCacheEntry *table;
     s32 index;
     s32 i;
     s32 j;
@@ -37,15 +26,15 @@ void glyph_cache_init(void)
         }
     }
     {
-        GalleryCacheEntry *p;
-        for (index = 2, p = D_001AC298; index < 0x402; index++, p++) {
+        GlyphCacheEntry *p;
+        for (index = 2, p = g_glyph_cache; index < 0x402; index++, p++) {
             p->previous = index - 2;
             p->next = index - 2;
         }
     }
-    D_001AC298[-2].next = -1;
-    D_001AC298[-1].previous = -2;
-    table = D_001AC298;
+    g_glyph_cache[-2].next = -1;
+    g_glyph_cache[-1].previous = -2;
+    table = g_glyph_cache;
     for (i = 0; i <= 0x400; i++) {
         if (i == table[i].next) {
             previousTail = table[-2].next;
@@ -84,7 +73,7 @@ s32 glyph_cache_lookup(u16 key)
     s32 next;
     s32 tail;
     s32 newSlot;
-    GalleryCacheEntry *entries = D_001AC298;
+    GlyphCacheEntry *entries = g_glyph_cache;
     s32 oldKey;
     if (slot >= 0) {
         previous = entries[slot].previous;

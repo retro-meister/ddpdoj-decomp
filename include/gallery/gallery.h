@@ -70,6 +70,25 @@ typedef struct {
     s32 baseScale;
 } GalleryView;
 
+/* Shared gallery globals */
+extern u16 g_system_mute;
+extern s8 g_cd_async_state;
+extern s8 g_cd_async_busy;
+extern u32 g_cd_total_bytes_read;
+extern s8 g_cd_retry_timer;
+extern void *g_vram_load_buf;
+extern u32 g_cd_last_read_size;
+extern s32 g_sprite_queue_count;
+extern s8 *g_font_glyph_buf;
+extern void *g_dma_gif;
+extern void *g_pad_dma_buf;
+extern u32 g_cd_file_lba[3];
+extern u32 g_cd_file_size[3];
+extern u8 g_gif_buf[2][0x10000];
+extern u64 g_gs_load_image[12];
+extern u32 g_pad_trigger[4];
+extern GlyphCacheEntry g_glyph_cache[0x401];
+
 /* sys.c */
 void gallery_reset_slot_states(void);
 void gallery_exit_to_elf(s32 destination);

@@ -27,22 +27,20 @@ typedef struct GalleryFrame
     s32 tileAttributes;
 } GalleryFrame;
 
-extern DecompWork *D_0012B3D8;
-extern void *D_0012B318;
-extern u64 D_00180A80[];
+extern DecompWork *g_gallery_work;
 
 inline static s32 getBits(s32 count)
 {
     s32 ret = 0;
     s32 i;
     for (i = 0; i < count; i++) {
-        if ((D_0012B3D8->flagBuf[D_0012B3D8->flagBytePos] >> D_0012B3D8->flagBitPos) & 1) {
+        if ((g_gallery_work->flagBuf[g_gallery_work->flagBytePos] >> g_gallery_work->flagBitPos) & 1) {
             ret += 1 << ((count - 1) - i);
         }
-        D_0012B3D8->flagBitPos--;
-        if (D_0012B3D8->flagBitPos < 0) {
-            D_0012B3D8->flagBitPos = 7;
-            D_0012B3D8->flagBytePos++;
+        g_gallery_work->flagBitPos--;
+        if (g_gallery_work->flagBitPos < 0) {
+            g_gallery_work->flagBitPos = 7;
+            g_gallery_work->flagBytePos++;
         }
     }
 
@@ -53,42 +51,42 @@ s32 lzss_decompress_step(u8 *dst, u8 *src)
 {
     s32 copyLen;
     s32 backOffset;
-    switch (D_0012B3D8->state) {
+    switch (g_gallery_work->state) {
         case 0:
-            D_0012B3D8->flagSize = *((s32 *)(src + 8));
-            D_0012B3D8->flagBytePos = 0;
-            D_0012B3D8->flagBitPos = 7;
-            D_0012B3D8->dstPos = 0;
-            D_0012B3D8->srcPos = 0;
-            D_0012B3D8->dstSize = *((s32 *)(src + 0));
-            if (D_0012B3D8->srcPos && D_0012B3D8->srcPos) {
+            g_gallery_work->flagSize = *((s32 *)(src + 8));
+            g_gallery_work->flagBytePos = 0;
+            g_gallery_work->flagBitPos = 7;
+            g_gallery_work->dstPos = 0;
+            g_gallery_work->srcPos = 0;
+            g_gallery_work->dstSize = *((s32 *)(src + 0));
+            if (g_gallery_work->srcPos && g_gallery_work->srcPos) {
             }
             {
                 s32 s = *((s32 *)(src + 4));
-                D_0012B3D8->srcSize = s;
+                g_gallery_work->srcSize = s;
             }
-            D_0012B3D8->chunkLimit = D_0012B3D8->dstSize / 16;
-            memcpy(D_0012B3D8->flagBuf, src + 0xC, D_0012B3D8->flagSize);
-            D_0012B3D8->srcPos = D_0012B3D8->flagSize + 0xC;
-            D_0012B3D8->state++;
+            g_gallery_work->chunkLimit = g_gallery_work->dstSize / 16;
+            memcpy(g_gallery_work->flagBuf, src + 0xC, g_gallery_work->flagSize);
+            g_gallery_work->srcPos = g_gallery_work->flagSize + 0xC;
+            g_gallery_work->state++;
             break;
 
         case 1:
-            while (D_0012B3D8->srcPos < D_0012B3D8->srcSize) {
+            while (g_gallery_work->srcPos < g_gallery_work->srcSize) {
                 if (getBits(1) != 0) {
-                    copyLen = (src[D_0012B3D8->srcPos + 1] & 0x1F) + 3;
-                    backOffset = (src[D_0012B3D8->srcPos] << 3) + ((src[D_0012B3D8->srcPos + 1] >> 5) & 7);
-                    memcpy(&dst[D_0012B3D8->dstPos], (&dst[D_0012B3D8->dstPos]) - backOffset, copyLen);
-                    D_0012B3D8->dstPos += copyLen;
-                    D_0012B3D8->srcPos += 2;
+                    copyLen = (src[g_gallery_work->srcPos + 1] & 0x1F) + 3;
+                    backOffset = (src[g_gallery_work->srcPos] << 3) + ((src[g_gallery_work->srcPos + 1] >> 5) & 7);
+                    memcpy(&dst[g_gallery_work->dstPos], (&dst[g_gallery_work->dstPos]) - backOffset, copyLen);
+                    g_gallery_work->dstPos += copyLen;
+                    g_gallery_work->srcPos += 2;
                 } else {
-                    dst[D_0012B3D8->dstPos] = src[D_0012B3D8->srcPos];
-                    D_0012B3D8->dstPos++;
-                    D_0012B3D8->srcPos++;
+                    dst[g_gallery_work->dstPos] = src[g_gallery_work->srcPos];
+                    g_gallery_work->dstPos++;
+                    g_gallery_work->srcPos++;
                 }
-                if (D_0012B3D8->dstPos >= D_0012B3D8->chunkLimit) {
-                    D_0012B3D8->chunkLimit += D_0012B3D8->dstSize / 16;
-                    if (D_0012B3D8->srcPos < D_0012B3D8->srcSize) {
+                if (g_gallery_work->dstPos >= g_gallery_work->chunkLimit) {
+                    g_gallery_work->chunkLimit += g_gallery_work->dstSize / 16;
+                    if (g_gallery_work->srcPos < g_gallery_work->srcSize) {
                         return 0;
                     }
                 }
@@ -152,7 +150,7 @@ void gallery_draw_solid_rect(s32 xStart, s32 yStart, s32 xEnd, s32 yEnd,
 {
     sceGifPacket packet;
 
-    sceGifPkInit(&packet, D_00180A80);
+    sceGifPkInit(&packet, g_gif_buf);
     sceGifPkReset(&packet);
     sceGifPkAddGsData(&packet, 0x1000000000008001ULL);
     sceGifPkAddGsData(&packet, 0xEULL);
@@ -180,6 +178,6 @@ void gallery_draw_solid_rect(s32 xStart, s32 yStart, s32 xEnd, s32 yEnd,
                             ((u64)(s64)(s32)(((u32)yEnd << 3) + 0x7900U) << 16));
     sceGifPkTerminate(&packet);
     FlushCache(0);
-    sceDmaSendN(D_0012B318, D_00180A80, sceGifPkSize(&packet));
+    sceDmaSendN(g_dma_gif, g_gif_buf, sceGifPkSize(&packet));
     sceGsSyncPath(0, 0);
 }

@@ -25,13 +25,10 @@ extern u16 D_0012AFF0[8];
 extern const char D_0012B158[];
 extern const char D_0012B160[];
 extern const char D_0012B168[];
-extern void *D_0012B318;
-extern GlobalState *D_0012B3D8;
+extern GlobalState *g_gallery_work;
 extern s32 D_0012B3DC;
 extern s32 D_0012B3E0;
-extern u8 D_00180A80[];
-extern volatile u32 D_001A5020[];
-extern u32 D_001A5024[];
+extern volatile u32 g_pad_buttons[];
 
 void viewer_draw_yes_no_dialog(s32 selection, s32 centerX, s32 y, s32 spacing)
 {
@@ -110,55 +107,55 @@ s32 viewer_update_and_draw(GalleryView *view, s32 mode)
         if (view->state != 0) {
             break;
         }
-        if (view->flags[0] && (D_001A5024[0] & 0x8)) {
+        if (view->flags[0] && (g_pad_trigger[0] & 0x8)) {
             sound_play_page_se();
             ret = 1;
         }
-        if (view->flags[1] && (D_001A5024[0] & 0x4)) {
+        if (view->flags[1] && (g_pad_trigger[0] & 0x4)) {
             sound_play_page_se();
             ret = 2;
         }
-        if (view->flags[4] && (D_001A5024[0] & 0x40)) {
+        if (view->flags[4] && (g_pad_trigger[0] & 0x40)) {
             sound_play_confirm_se();
             ret = 3;
         }
         if (view->flags[2]) {
-            if (D_001A5020[0] & 0x2000) {
+            if (g_pad_buttons[0] & 0x2000) {
                 view->panX -= 4;
                 if (view->panX < view->minX) {
                     view->panX = view->minX;
                 }
             }
-            if (D_001A5020[0] & 0x8000) {
+            if (g_pad_buttons[0] & 0x8000) {
                 view->panX += 4;
                 if (view->panX + 0x280 > view->maxX) {
                     view->panX = view->maxX - 0x280;
                 }
             }
-            if (D_001A5020[0] & 0x4000) {
+            if (g_pad_buttons[0] & 0x4000) {
                 view->panY -= 4;
                 if (view->panY < view->minY) {
                     view->panY = view->minY;
                 }
             }
-            if (D_001A5020[0] & 0x1000) {
+            if (g_pad_buttons[0] & 0x1000) {
                 view->panY += 4;
                 if (view->panY + 0x1C0 > view->maxY) {
                     view->panY = view->maxY - 0x1C0;
                 }
             }
         }
-        if (view->flags[3] && (D_001A5024[0] & 0x10)) {
+        if (view->flags[3] && (g_pad_trigger[0] & 0x10)) {
             view->flags[2] ^= 1;
             view->zoomed ^= 1;
             view->state = 3;
             view->timer = 0x10;
             sound_play_confirm_se();
         }
-        if (D_001A5024[0] & 0x800) {
-            D_0012B3D8->showHelp ^= 1;
-            view->flags[5] = D_0012B3D8->showHelp;
-            if (D_0012B3D8->showHelp) {
+        if (g_pad_trigger[0] & 0x800) {
+            g_gallery_work->showHelp ^= 1;
+            view->flags[5] = g_gallery_work->showHelp;
+            if (g_gallery_work->showHelp) {
                 view->state = 4;
             } else {
                 view->state = 5;
@@ -233,7 +230,7 @@ s32 viewer_update_and_draw(GalleryView *view, s32 mode)
             }
         }
 
-        sceGifPkInit(&pkt, D_00180A80);
+        sceGifPkInit(&pkt, g_gif_buf);
         sceGifPkReset(&pkt);
         sceGifPkAddGsData(&pkt, 0x1000000000008003ULL);
         sceGifPkAddGsData(&pkt, 0xEULL);
@@ -253,7 +250,7 @@ s32 viewer_update_and_draw(GalleryView *view, s32 mode)
         sceGifPkAddGsData(&pkt, (u64)(((drawX + drawW) << 4) + 0x6C00) | ((u64)(((drawY + drawH) << 3) + 0x7900) << 16));
         sceGifPkTerminate(&pkt);
         FlushCache(0);
-        sceDmaSendN(D_0012B318, D_00180A80, sceGifPkSize(&pkt));
+        sceDmaSendN(g_dma_gif, g_gif_buf, sceGifPkSize(&pkt));
         sceGsSyncPath(0, 0);
 
         if (view->title != 0) {
@@ -347,7 +344,7 @@ void viewer_init_image(GalleryView *viewer, SpriteInfo *image, const char *title
     viewer->flags[2] = 0;
     viewer->flags[3] = 0;
     viewer->flags[4] = 1;
-    viewer->flags[5] = D_0012B3D8->showHelp;
+    viewer->flags[5] = g_gallery_work->showHelp;
     viewer->zoomed = 0;
 
     if (viewer->title != 0) {

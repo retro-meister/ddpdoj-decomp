@@ -41,12 +41,9 @@ extern u8 D_00128F80[];
 extern u8 D_00128F90[][3];
 extern u8 D_00128FD0[];
 extern char D_0012AE00[];
-extern void *D_0012B300;
-extern void *D_0012B30C;
 extern PaletteColor D_00132900[16];
 extern PaletteColor D_00132980[17][16];
-extern u8 D_001A0A80[32][512];
-extern u8 D_001A4A80[];
+extern u8 g_glyph_upload_buf[32][512];
 
 void font_build_gs_setup_packet(void *packetPtr)
 {
@@ -137,7 +134,7 @@ second_palette:
 
     for (rgbOffset = 0; rgbOffset < 32; rgbOffset++) {
         for (column = 0; column < 512; column++) {
-            D_001A0A80[rgbOffset][column] = 16 * 0;
+            g_glyph_upload_buf[rgbOffset][column] = 16 * 0;
         }
     }
 }
@@ -194,17 +191,17 @@ void font_init(void)
     galleryEntry = (u8 *)D_00132980;
     do {
         new_var = (s64)(entryIndex + 0x37E8);
-        sceGsSetDefLoadImage(D_001A4A80, new_var, 1, 0, 0, 0, 8, 2);
+        sceGsSetDefLoadImage(g_gs_load_image, new_var, 1, 0, 0, 0, 8, 2);
         FlushCache(0);
-        sceGsExecLoadImage(D_001A4A80, galleryEntry);
+        sceGsExecLoadImage(g_gs_load_image, galleryEntry);
         sceGsSyncPath(0, 0);
         entryIndex++;
         galleryEntry += 0x40;
     } while (entryIndex < 0x11);
 
-    sceGsSetDefLoadImage(D_001A4A80, 0x37FA, 1, 0, 0, 0, 8, 2);
+    sceGsSetDefLoadImage(g_gs_load_image, 0x37FA, 1, 0, 0, 0, 8, 2);
     FlushCache(0);
-    sceGsExecLoadImage(D_001A4A80, D_00132900);
+    sceGsExecLoadImage(g_gs_load_image, D_00132900);
     sceGsSyncPath(0, 0);
     glyph_cache_init();
 }
@@ -215,22 +212,22 @@ void font_upload_default_cluts(void)
     PaletteColor (*resourceBuffer)[16];
 
     *(volatile u32 *)0x10000000 = 0;
-    D_0012B300 = memalign(0x40, 0x300000);
-    printf(D_0012AE00, D_0012B300, 0x2D9248);
-    D_0012B30C = D_0012B300;
+    g_vram_load_buf = memalign(0x40, 0x300000);
+    printf(D_0012AE00, g_vram_load_buf, 0x2D9248);
+    g_font_glyph_buf = g_vram_load_buf;
     font_init_clut_table();
 
     resourceBuffer = D_00132980;
     for (resourceIndex = 0; resourceIndex < 17; resourceIndex++, resourceBuffer++) {
-        sceGsSetDefLoadImage(D_001A4A80, (s16)(0x37E8 + resourceIndex), 1, 0, 0, 0, 8, 2);
+        sceGsSetDefLoadImage(g_gs_load_image, (s16)(0x37E8 + resourceIndex), 1, 0, 0, 0, 8, 2);
         FlushCache(0);
-        sceGsExecLoadImage(D_001A4A80, *resourceBuffer);
+        sceGsExecLoadImage(g_gs_load_image, *resourceBuffer);
         sceGsSyncPath(0, 0);
     }
 
-    sceGsSetDefLoadImage(D_001A4A80, 0x37FA, 1, 0, 0, 0, 8, 2);
+    sceGsSetDefLoadImage(g_gs_load_image, 0x37FA, 1, 0, 0, 0, 8, 2);
     FlushCache(0);
-    sceGsExecLoadImage(D_001A4A80, D_00132900);
+    sceGsExecLoadImage(g_gs_load_image, D_00132900);
     sceGsSyncPath(0, 0);
     glyph_cache_init();
     tex_upload_reset();
