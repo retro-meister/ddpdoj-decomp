@@ -34,12 +34,6 @@ void func_0011B1C0(void) {
     do {
         if (func_00105F28(D_00132850, 0x12345, 0) < 0) {
             while (1) {
-                asm("nop");
-                asm("nop");
-                asm("nop");
-                asm("nop");
-                asm("nop");
-                asm("nop");
             }
         }
     } while (D_00132874[0] == 0);

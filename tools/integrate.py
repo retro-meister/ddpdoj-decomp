@@ -12,6 +12,7 @@ from objects import find_function
 from split import load_splat_config, scan_asm_functions, split, splat_yaml_path, symbols_path, target_layout
 
 SUBSEG_LINE_RE = re.compile(r"^(\s*-\s*\[)(0x[0-9a-fA-F]+|\d+)(,\s*([a-zA-Z0-9_]+),\s*([^\]]+))(\]\s*)$")
+INLINE_ASM_RE = re.compile(r"\b(?:asm|__asm|__asm__)\s*(?:volatile\b|__volatile__\b)?\s*[\({]")
 
 
 def verify_match(local, target_name, function_name, source_path, address, size):
@@ -131,6 +132,8 @@ def integrate(target_name, func_name, source_path, out_name=None, subdir=None, p
     address, size = asm_funcs[func_name]
 
     code = source_path.read_text(encoding="utf-8")
+    if INLINE_ASM_RE.search(code):
+        raise ValueError(f"{source_path}: inline assembly (asm/__asm) is forbidden; write pure C")
     c_name = out_name or func_name
     if c_name != func_name:
         code = re.sub(rf"\b{re.escape(func_name)}\b", c_name, code)
