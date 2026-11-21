@@ -19,6 +19,41 @@
       "sha256": "acf1088553362dddef7eee2d269848b03208e29fd26caa441848e57b6299786a",
       "dll_member": "LMGR326B.DLL",
       "dll_sha256": "bd9415ab11f4aef42c372e8547a8303b02464b59549745be597cf09e460737e8"
+    },
+    "3.0b38-030307-gallery": {
+      "archive": "mwcps2-3.0b38-030307.tar.gz",
+      "archive_sha256": "db3d0606c77d4335d2ad884a1285a4bc3b9e68cdd6161dd46d6e2a2cd3313276",
+      "member_prefix": "",
+      "base_sha256": "acf1088553362dddef7eee2d269848b03208e29fd26caa441848e57b6299786a",
+      "patches": [
+        {
+          "offset": "0xa068e",
+          "old": "7440",
+          "new": "9090",
+          "description": "Allow 128-bit constants fitting in 4 bytes to use 32-bit loader (pre-b38)"
+        },
+        {
+          "offset": "0xa06de",
+          "old": "7447",
+          "new": "9090",
+          "description": "Allow 128-bit constants fitting in 8 bytes to use 64-bit loader (pre-b38)"
+        },
+        {
+          "offset": "0xa07ee",
+          "old": "0fb7442436",
+          "new": "eb56909090",
+          "description": "Skip pcpyld when upper 64 bits are zero (pre-b38)"
+        },
+        {
+          "offset": "0xa0886",
+          "old": "89d1",
+          "new": "eb3d",
+          "description": "Skip 32-bit sign-extension fast path in 64-bit constant loader (pre-b38)"
+        }
+      ],
+      "sha256": "24730355eeb6f937045ae4537621e9bd0ffbc17e0041c86dee02fff7524c916e",
+      "dll_member": "LMGR326B.DLL",
+      "dll_sha256": "bd9415ab11f4aef42c372e8547a8303b02464b59549745be597cf09e460737e8"
     }
   },
   "wibo": {

@@ -39,6 +39,21 @@ def extract_originals(args):
         (BASEROM / name).write_bytes(contents)
 
 
+def apply_compiler_patches(binary, patches, label):
+    patched = bytearray(binary)
+    for patch in patches:
+        offset = int(patch["offset"], 0) if isinstance(patch["offset"], str) else patch["offset"]
+        old = bytes.fromhex(patch["old"])
+        new = bytes.fromhex(patch["new"])
+        if len(old) != len(new):
+            raise ValueError(f"{label}: patch length mismatch at {offset:#x}")
+        actual = bytes(patched[offset : offset + len(old)])
+        if actual != old:
+            raise ValueError(f"{label}: expected {old.hex()} at {offset:#x}, got {actual.hex()}")
+        patched[offset : offset + len(new)] = new
+    return bytes(patched)
+
+
 def install_compiler(version):
     record = TOOLCHAINS["compilers"][version]
     compiler = compiler_path(version)
@@ -51,6 +66,9 @@ def install_compiler(version):
         prefix = record["member_prefix"]
         binary = bundle.extractfile(prefix + compiler.name).read()
         dependency = bundle.extractfile(prefix + record.get("dll_member", dll.name)).read()
+    if "patches" in record:
+        verify(binary, record["base_sha256"], f"{compiler.name} (base)")
+        binary = apply_compiler_patches(binary, record["patches"], compiler.name)
     verify(binary, record["sha256"], compiler.name)
     verify(dependency, record.get("dll_sha256", TOOLCHAINS["compiler_dll_sha256"]), dll.name)
     compiler.parent.mkdir(parents=True, exist_ok=True)

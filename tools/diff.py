@@ -364,7 +364,7 @@ def diff(args):
 
     local = require_local()
     binutils = local["binutils"]
-    version = target_compiler(args.target, local, args.compiler, address=address)
+    version = target_compiler(args.target, local, args.compiler)
     verify_compiler(version)
     original = verify((BASEROM / args.target).read_bytes(), target["sha256"], args.target)
     file_address, load_offset, code_end = target_layout(args.target)

@@ -74,23 +74,16 @@ def run(*args, cwd=ROOT, **kwargs):
     return subprocess.run(list(map(str, args)), cwd=cwd, check=True, **kwargs)
 
 
-def target_compiler(name, local=None, override=None, *, address=None):
+def target_compiler(name, local=None, override=None):
     if override:
         return override
     if local and local.get("compiler"):
         return local["compiler"]
-    target = TARGETS[name]
-    if address is not None:
-        return target.get("unit_compilers", {}).get(hex(address), target["compiler"])
-    return target["compiler"]
+    return TARGETS[name]["compiler"]
 
 
 def required_compilers():
-    return sorted({
-        version
-        for target in TARGETS.values()
-        for version in (target["compiler"], *target.get("unit_compilers", {}).values())
-    })
+    return sorted({target["compiler"] for target in TARGETS.values()})
 
 
 def compiler_path(version):
