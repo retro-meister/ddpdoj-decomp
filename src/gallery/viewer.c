@@ -1,11 +1,6 @@
 #include "gallery/gallery.h"
 
 typedef struct {
-    u8 pad00[0x505168];
-    s32 showHelp;
-} GlobalState;
-
-typedef struct {
     s32 selection;
     s32 selectionCount;
     s32 movementSteps[5];
@@ -25,7 +20,6 @@ extern u16 D_0012AFF0[8];
 extern const char D_0012B158[];
 extern const char D_0012B160[];
 extern const char D_0012B168[];
-extern GlobalState *g_gallery_work;
 extern s32 D_0012B3DC;
 extern s32 D_0012B3E0;
 extern volatile u32 g_pad_buttons[];
@@ -153,9 +147,9 @@ s32 viewer_update_and_draw(GalleryView *view, s32 mode)
             sound_play_confirm_se();
         }
         if (g_pad_trigger[0] & 0x800) {
-            g_gallery_work->showHelp ^= 1;
-            view->flags[5] = g_gallery_work->showHelp;
-            if (g_gallery_work->showHelp) {
+            g_gallery->showHelp ^= 1;
+            view->flags[5] = g_gallery->showHelp;
+            if (g_gallery->showHelp) {
                 view->state = 4;
             } else {
                 view->state = 5;
@@ -344,7 +338,7 @@ void viewer_init_image(GalleryView *viewer, SpriteInfo *image, const char *title
     viewer->flags[2] = 0;
     viewer->flags[3] = 0;
     viewer->flags[4] = 1;
-    viewer->flags[5] = g_gallery_work->showHelp;
+    viewer->flags[5] = g_gallery->showHelp;
     viewer->zoomed = 0;
 
     if (viewer->title != 0) {

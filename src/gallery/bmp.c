@@ -2,13 +2,6 @@
 
 typedef struct
 {
-    u8 unk_0[0x303000];
-    u8 unk_303000[0x202154];
-    s32 state;
-} WorkArea;
-
-typedef struct
-{
     u32 biSize;
     u32 biWidth;
     u32 biHeight;
@@ -28,7 +21,6 @@ typedef struct
 } TexInfo;
 
 extern u16 D_00128AE0[];
-extern WorkArea *g_gallery_work;
 extern u8 *D_0012B3E4;
 extern u8 *D_0012B3E8;
 extern u8 *D_0012B3EC;
@@ -60,7 +52,7 @@ s32 bmp_upload_texture(void *texPtr, s16 tbp, s16 cbp, u8 *bmp, s32 x, s32 y)
     u8 *src;
     u8 *dst;
     u64 chunkHeight;
-    switch (g_gallery_work->state) {
+    switch (g_gallery->stepState) {
         case 0:
             D_0012B3E4 = bmp;
             D_0012B3E8 = bmp + 0xE;
@@ -71,7 +63,7 @@ s32 bmp_upload_texture(void *texPtr, s16 tbp, s16 cbp, u8 *bmp, s32 x, s32 y)
             memcpy(&offBits, bmp + 0xA, 4);
             D_0012B3F0 = bmp + offBits;
             D_0012B3F0 += (g_bmp_ctx.biHeight - 1) * D_0012B410;
-            D_0012B400 = g_gallery_work->unk_303000;
+            D_0012B400 = g_gallery->bmpScratchBuf;
             D_0012B3F4 = D_0012B400;
             if (g_bmp_ctx.biBitCount < 16) {
                 D_0012B408 = (g_bmp_ctx.biBitCount == 4) ? (0x14) : (0x13);
@@ -87,7 +79,7 @@ s32 bmp_upload_texture(void *texPtr, s16 tbp, s16 cbp, u8 *bmp, s32 x, s32 y)
                 D_0012B40C = 0;
             }
             D_0012B428 = 0;
-            g_gallery_work->state++;
+            g_gallery->stepState++;
             break;
 
         case 1:
@@ -118,7 +110,7 @@ s32 bmp_upload_texture(void *texPtr, s16 tbp, s16 cbp, u8 *bmp, s32 x, s32 y)
             }
 
             if ((++D_0012B428) >= 8) {
-                g_gallery_work->state++;
+                g_gallery->stepState++;
             }
             break;
 
@@ -136,7 +128,7 @@ s32 bmp_upload_texture(void *texPtr, s16 tbp, s16 cbp, u8 *bmp, s32 x, s32 y)
             } while ((D_0012B410 * D_0012B424) > 0x7FFF0);
             D_0012B41C = 0;
             D_0012B418 = D_0012B400;
-            g_gallery_work->state++;
+            g_gallery->stepState++;
 
         case 3:
             sceGsSetDefLoadImage(&g_bmp_ctx.loadImage, tbp, D_0012B404, D_0012B408, x, y + (D_0012B424 * D_0012B41C), g_bmp_ctx.biWidth, D_0012B424);
@@ -145,7 +137,7 @@ s32 bmp_upload_texture(void *texPtr, s16 tbp, s16 cbp, u8 *bmp, s32 x, s32 y)
             sceGsSyncPath(0, 0);
             D_0012B418 += ((th = (chunkHeight = D_0012B424)) * D_0012B410) & (~0xF);
             if ((++D_0012B41C) >= (1 << D_0012B420)) {
-                g_gallery_work->state++;
+                g_gallery->stepState++;
             }
             break;
 
@@ -153,7 +145,7 @@ s32 bmp_upload_texture(void *texPtr, s16 tbp, s16 cbp, u8 *bmp, s32 x, s32 y)
             if (g_bmp_ctx.biBitCount < 16) {
                 bmp_upload_clut(cbp, D_0012B3EC, (g_bmp_ctx.biBitCount == 4) ? (0x10) : (0x100));
             }
-            g_gallery_work->state++;
+            g_gallery->stepState++;
             break;
 
         case 5:
@@ -193,7 +185,7 @@ void bmp_upload_clut(s16 destinationBase, const void *palette, s32 colorCount)
     s32 colorIndex;
     s32 row;
     memcpy(paletteCopy, palette, colorCount * 4);
-    new_var[1] = g_gallery_work->unk_303000;
+    new_var[1] = g_gallery->bmpScratchBuf;
     sourceColor = paletteCopy;
     memset(new_var[1], 0, 0x400);
     new_var[0] = new_var[1];
@@ -209,7 +201,7 @@ void bmp_upload_clut(s16 destinationBase, const void *palette, s32 colorCount)
         }
     }
 
-    swizzledPalette = g_gallery_work->unk_303000 + 0x400;
+    swizzledPalette = g_gallery->bmpScratchBuf + 0x400;
     row = 0;
     swizzledBlock = swizzledPalette;
     do {

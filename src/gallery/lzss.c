@@ -1,21 +1,5 @@
 #include "gallery/gallery.h"
 
-typedef struct
-{
-    u8 pad_000000[0x202000];
-    u8 flagBuf[0x303154];
-    s32 state;
-    u8 pad_505158[0x440];
-    s32 flagBytePos;
-    s32 flagBitPos;
-    s32 flagSize;
-    s32 dstSize;
-    s32 srcSize;
-    s32 chunkLimit;
-    s32 dstPos;
-    s32 srcPos;
-} DecompWork;
-
 typedef struct GalleryFrame
 {
     s32 reserved00[2];
@@ -27,20 +11,18 @@ typedef struct GalleryFrame
     s32 tileAttributes;
 } GalleryFrame;
 
-extern DecompWork *g_gallery_work;
-
 inline static s32 getBits(s32 count)
 {
     s32 ret = 0;
     s32 i;
     for (i = 0; i < count; i++) {
-        if ((g_gallery_work->flagBuf[g_gallery_work->flagBytePos] >> g_gallery_work->flagBitPos) & 1) {
+        if ((g_gallery->flagBuf[g_gallery->flagBytePos] >> g_gallery->flagBitPos) & 1) {
             ret += 1 << ((count - 1) - i);
         }
-        g_gallery_work->flagBitPos--;
-        if (g_gallery_work->flagBitPos < 0) {
-            g_gallery_work->flagBitPos = 7;
-            g_gallery_work->flagBytePos++;
+        g_gallery->flagBitPos--;
+        if (g_gallery->flagBitPos < 0) {
+            g_gallery->flagBitPos = 7;
+            g_gallery->flagBytePos++;
         }
     }
 
@@ -51,42 +33,42 @@ s32 lzss_decompress_step(u8 *dst, u8 *src)
 {
     s32 copyLen;
     s32 backOffset;
-    switch (g_gallery_work->state) {
+    switch (g_gallery->stepState) {
         case 0:
-            g_gallery_work->flagSize = *((s32 *)(src + 8));
-            g_gallery_work->flagBytePos = 0;
-            g_gallery_work->flagBitPos = 7;
-            g_gallery_work->dstPos = 0;
-            g_gallery_work->srcPos = 0;
-            g_gallery_work->dstSize = *((s32 *)(src + 0));
-            if (g_gallery_work->srcPos && g_gallery_work->srcPos) {
+            g_gallery->flagSize = *((s32 *)(src + 8));
+            g_gallery->flagBytePos = 0;
+            g_gallery->flagBitPos = 7;
+            g_gallery->dstPos = 0;
+            g_gallery->srcPos = 0;
+            g_gallery->dstSize = *((s32 *)(src + 0));
+            if (g_gallery->srcPos && g_gallery->srcPos) {
             }
             {
                 s32 s = *((s32 *)(src + 4));
-                g_gallery_work->srcSize = s;
+                g_gallery->srcSize = s;
             }
-            g_gallery_work->chunkLimit = g_gallery_work->dstSize / 16;
-            memcpy(g_gallery_work->flagBuf, src + 0xC, g_gallery_work->flagSize);
-            g_gallery_work->srcPos = g_gallery_work->flagSize + 0xC;
-            g_gallery_work->state++;
+            g_gallery->chunkLimit = g_gallery->dstSize / 16;
+            memcpy(g_gallery->flagBuf, src + 0xC, g_gallery->flagSize);
+            g_gallery->srcPos = g_gallery->flagSize + 0xC;
+            g_gallery->stepState++;
             break;
 
         case 1:
-            while (g_gallery_work->srcPos < g_gallery_work->srcSize) {
+            while (g_gallery->srcPos < g_gallery->srcSize) {
                 if (getBits(1) != 0) {
-                    copyLen = (src[g_gallery_work->srcPos + 1] & 0x1F) + 3;
-                    backOffset = (src[g_gallery_work->srcPos] << 3) + ((src[g_gallery_work->srcPos + 1] >> 5) & 7);
-                    memcpy(&dst[g_gallery_work->dstPos], (&dst[g_gallery_work->dstPos]) - backOffset, copyLen);
-                    g_gallery_work->dstPos += copyLen;
-                    g_gallery_work->srcPos += 2;
+                    copyLen = (src[g_gallery->srcPos + 1] & 0x1F) + 3;
+                    backOffset = (src[g_gallery->srcPos] << 3) + ((src[g_gallery->srcPos + 1] >> 5) & 7);
+                    memcpy(&dst[g_gallery->dstPos], (&dst[g_gallery->dstPos]) - backOffset, copyLen);
+                    g_gallery->dstPos += copyLen;
+                    g_gallery->srcPos += 2;
                 } else {
-                    dst[g_gallery_work->dstPos] = src[g_gallery_work->srcPos];
-                    g_gallery_work->dstPos++;
-                    g_gallery_work->srcPos++;
+                    dst[g_gallery->dstPos] = src[g_gallery->srcPos];
+                    g_gallery->dstPos++;
+                    g_gallery->srcPos++;
                 }
-                if (g_gallery_work->dstPos >= g_gallery_work->chunkLimit) {
-                    g_gallery_work->chunkLimit += g_gallery_work->dstSize / 16;
-                    if (g_gallery_work->srcPos < g_gallery_work->srcSize) {
+                if (g_gallery->dstPos >= g_gallery->chunkLimit) {
+                    g_gallery->chunkLimit += g_gallery->dstSize / 16;
+                    if (g_gallery->srcPos < g_gallery->srcSize) {
                         return 0;
                     }
                 }

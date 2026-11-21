@@ -5,73 +5,6 @@ typedef struct {
     u32 entryLocation;
 } GalleryArchiveEntry;
 
-typedef struct {
-    u8 readBuf[0x101000];
-    u8 decodeBuf[0x303000];
-    u8 textureBuffer[0x101000];
-    s32 menu_params[12];
-    u8 pad_505030[4];
-    GalleryView sprites[2];
-    GalleryView *curSprite;
-    GalleryView *prevSprite;
-    s32 exitRequested;
-    s32 mode;
-    s32 state;
-    s32 unk_505150;
-    s32 unk_505154;
-    s32 timer;
-    s32 countdown;
-    s32 exitMode;
-    s16 overlayEnabled;
-    s16 overlayAdjustment;
-    s32 unk_505168;
-    s16 fadeState;
-    s8 dialogState;
-    s8 drawEnabled;
-    SpriteInfo pageSprites[6];
-    SpriteInfo allSprites[37];
-    SpriteInfo viewerTextures[2];
-    SpriteInfo bgSprite;
-    SpriteInfo uiSprites[6];
-    u8 pad_5054B0[0x30];
-    SpriteInfo uiAtlasSprite;
-    u8 pad_5054F0[0x8];
-    s32 box_x0;
-    s32 box_y0;
-    s32 box_x1;
-    s32 box_y1;
-    u8 box_color_r;
-    u8 box_color_g;
-    u8 box_color_b;
-    u8 box_color_a;
-    u8 pad_50550C[0x1C];
-    u8 cursor_color_r;
-    u8 cursor_color_g;
-    u8 cursor_color_b;
-    u8 cursor_color_a;
-    s32 unk_50552C;
-    s32 unk_505530;
-    u8 pad_505534[4];
-    s16 scrollX;
-    s16 scrollDirection;
-    s32 slotIndex;
-    s32 itemCount;
-    s32 pageOffset;
-    s32 currentThumbId;
-    s8 activeBuffer;
-    s8 bufferPending;
-    s8 isInitialized;
-    s8 dialogChoice;
-    s16 uiX0[8];
-    s16 uiY0[8];
-    s16 uiX1[8];
-    s16 uiY1[8];
-    s8 uiMode[0x28];
-    u8 itemStatus[0x100];
-    u8 itemThumbIds[0x100];
-    s8 slotFlags[6];
-} GalleryWork;
-
 extern const char D_001290E0[];
 extern const char D_00129100[];
 extern char *D_00129118[];
@@ -102,7 +35,6 @@ extern u32 D_0012B3C8;
 extern u32 D_0012B3CC;
 extern u32 D_0012B3D0;
 extern u32 D_0012B3D4;
-extern GalleryWork *g_gallery_work;
 extern s32 g_thumb_pulse;
 extern s32 g_cursor_pulse;
 extern s32 g_selected_image_idx;
@@ -205,10 +137,10 @@ void gallery_main(void)
     func_0010EA50();
     gallery_load_font_files();
     sound_init();
-    g_gallery_work = memalign(0x40, 0x885800);
-    memset(g_gallery_work, 0, 0x5057C0);
+    g_gallery = memalign(0x40, 0x885800);
+    memset(g_gallery, 0, 0x5057C0);
     gallery_run_loop();
-    free(g_gallery_work);
+    free(g_gallery);
     gallery_exit_to_elf(0);
 }
 
@@ -227,13 +159,13 @@ void gallery_run_loop(void)
     for (entryIndex = 0; entryIndex < 0x100; entryIndex++) {
         entryState = g_image_unlock_flags[entryIndex];
         if (entryState != 0) {
-            g_gallery_work->itemStatus[entryIndex] = entryState;
-            g_gallery_work->itemThumbIds[entryIndex] = D_00129170[entryIndex];
+            g_gallery->itemStatus[entryIndex] = entryState;
+            g_gallery->itemThumbIds[entryIndex] = D_00129170[entryIndex];
         }
     }
 
-    g_gallery_work->itemStatus[0x11] = 0;
-    g_gallery_work->unk_505168 = 1;
+    g_gallery->itemStatus[0x11] = 0;
+    g_gallery->showHelp = 1;
 
     do {
         *(volatile u32 *)0x10000000 = 0;
@@ -271,9 +203,9 @@ void gallery_run_loop(void)
 
         FlushCache(0);
         sceGsSyncPath(0, 0);
-    } while (!g_gallery_work->exitRequested);
+    } while (!g_gallery->exitRequested);
 
-    g_gallery_work = 0;
+    g_gallery = 0;
 }
 
 void gallery_init_frame_gs(void)
@@ -307,41 +239,41 @@ void gallery_tick_and_render(void)
     s16 fadeState;
     s32 brightness;
 
-    while (D_00129150[g_gallery_work->mode]() != 0) {
+    while (D_00129150[g_gallery->mode]() != 0) {
     }
 
-    if (g_gallery_work == 0) {
+    if (g_gallery == 0) {
         return;
     }
 
-    if (g_gallery_work->drawEnabled != 0) {
+    if (g_gallery->drawEnabled != 0) {
         gallery_draw_background(0x80);
-        if (g_gallery_work->overlayEnabled != 0) {
+        if (g_gallery->overlayEnabled != 0) {
             gallery_draw_grid_and_ui();
-            overlayAdjustment = g_gallery_work->overlayAdjustment;
+            overlayAdjustment = g_gallery->overlayAdjustment;
             if (overlayAdjustment != 0) {
                 gallery_draw_background((u8)(0x80 - ((s16)overlayAdjustment)));
             }
         }
-        if ((g_gallery_work->bufferPending != 0) && (viewer_update_and_draw(&g_gallery_work->sprites[g_gallery_work->activeBuffer ^ 1], 0) != 0)) {
-            g_gallery_work->bufferPending = 0;
+        if ((g_gallery->bufferPending != 0) && (viewer_update_and_draw(&g_gallery->sprites[g_gallery->activeBuffer ^ 1], 0) != 0)) {
+            g_gallery->bufferPending = 0;
         }
-        drawBuffer = g_gallery_work->curSprite;
+        drawBuffer = g_gallery->curSprite;
         if (drawBuffer != 0) {
             viewer_update_and_draw(drawBuffer, 0);
         }
-        drawBuffer = g_gallery_work->prevSprite;
+        drawBuffer = g_gallery->prevSprite;
         if (drawBuffer != 0) {
             viewer_update_and_draw(drawBuffer, 1);
         }
     }
 
-    fadeState = g_gallery_work->fadeState;
+    fadeState = g_gallery->fadeState;
     if (fadeState == 0) {
-        brightness = 0xFF - ((g_gallery_work->timer * 8 > 0xFF) ? 0xFF : g_gallery_work->timer * 8);
+        brightness = 0xFF - ((g_gallery->timer * 8 > 0xFF) ? 0xFF : g_gallery->timer * 8);
         gallery_draw_solid_rect(0, 0, 640, 448, brightness, brightness, brightness, 0x80, 2);
     } else if (fadeState > 8) {
-        brightness = (g_gallery_work->timer * 8 > 0xFF) ? 0xFF : g_gallery_work->timer * 8;
+        brightness = (g_gallery->timer * 8 > 0xFF) ? 0xFF : g_gallery->timer * 8;
         gallery_draw_solid_rect(0, 0, 640, 448, brightness, brightness, brightness, 0x80, 2);
     }
 }
@@ -350,65 +282,65 @@ s32 gallery_state_exit(void)
 {
     s32 byteIndex;
 
-    if (g_gallery_work->state == 0) {
+    if (g_gallery->state == 0) {
         for (byteIndex = 0; byteIndex < sizeof(g_image_viewed_flags); byteIndex++) {
             g_image_viewed_flags[byteIndex] = 0;
         }
 
-        g_gallery_work->fadeState = 9;
-        g_gallery_work->timer = 0;
-        g_gallery_work->state++;
+        g_gallery->fadeState = 9;
+        g_gallery->timer = 0;
+        g_gallery->state++;
     }
 
-    if (g_gallery_work->timer < 32) {
-        g_gallery_work->timer++;
+    if (g_gallery->timer < 32) {
+        g_gallery->timer++;
         return 0;
     }
 
-    g_gallery_work->exitRequested = 1;
+    g_gallery->exitRequested = 1;
     return 0;
 }
 
 s32 gallery_state_viewer(void)
 {
-    switch (g_gallery_work->state) {
+    switch (g_gallery->state) {
     case 0:
-        g_selected_image_idx = g_gallery_work->pageOffset + g_gallery_work->menu_params[0];
-        g_gallery_work->overlayEnabled = 0;
-        g_gallery_work->curSprite = 0;
-        g_gallery_work->prevSprite = 0;
-        g_gallery_work->state++;
+        g_selected_image_idx = g_gallery->pageOffset + g_gallery->menu_params[0];
+        g_gallery->overlayEnabled = 0;
+        g_gallery->curSprite = 0;
+        g_gallery->prevSprite = 0;
+        g_gallery->state++;
 
     case 1: {
-        s32 fileId = g_gallery_work->itemThumbIds[g_selected_image_idx];
+        s32 fileId = g_gallery->itemThumbIds[g_selected_image_idx];
         if (fileId > 0x25) {
             fileId = 0;
         }
-        g_gallery_work->currentThumbId = fileId;
-        g_gallery_work->currentThumbId += 3;
+        g_gallery->currentThumbId = fileId;
+        g_gallery->currentThumbId += 3;
         g_cd_async_busy = 1;
         g_cd_async_state = 0;
-        g_gallery_work->state++;
+        g_gallery->state++;
     }
 
     case 2: {
-        s32 fileId = g_gallery_work->currentThumbId;
+        s32 fileId = g_gallery->currentThumbId;
         s32 offset = D_001C0344[fileId];
         s32 size = D_001C0348[fileId] - offset;
         if (offset != 0) {
             offset /= 0x800;
         }
         offset += g_gallery_archive_lba;
-        cd_read_async(g_gallery_work->readBuf, size, offset);
+        cd_read_async(g_gallery->readBuf, size, offset);
         if (g_cd_async_busy == 0) {
-            g_gallery_work->state++;
+            g_gallery->state++;
         }
         break;
     }
 
     case 3: {
-        u8 *buf = g_gallery_work->readBuf;
-        s32 fileId = g_gallery_work->currentThumbId;
+        u8 *buf = g_gallery->readBuf;
+        s32 fileId = g_gallery->currentThumbId;
         s32 size = D_001C0348[fileId] - D_001C0344[fileId];
         s32 prev = buf[4];
         s32 i;
@@ -418,72 +350,72 @@ s32 gallery_state_viewer(void)
             prev = cur;
         }
 
-        g_gallery_work->unk_505154 = 0;
-        g_gallery_work->state++;
+        g_gallery->stepState = 0;
+        g_gallery->state++;
         break;
     }
 
     case 4:
-        if (lzss_decompress_step(g_gallery_work->decodeBuf, g_gallery_work->readBuf) != 0) {
-            g_gallery_work->unk_505154 = 0;
-            g_gallery_work->state++;
+        if (lzss_decompress_step(g_gallery->decodeBuf, g_gallery->readBuf) != 0) {
+            g_gallery->stepState = 0;
+            g_gallery->state++;
         }
         break;
 
     case 5: {
-        s32 slot = g_gallery_work->activeBuffer;
-        if (bmp_upload_texture(&g_gallery_work->viewerTextures[slot], (slot * 0x1000) + 0x1788, (slot * 4) + 0x3788, g_gallery_work->decodeBuf, 0, 0) != 0) {
-            g_gallery_work->state = 10;
+        s32 slot = g_gallery->activeBuffer;
+        if (bmp_upload_texture(&g_gallery->viewerTextures[slot], (slot * 0x1000) + 0x1788, (slot * 4) + 0x3788, g_gallery->decodeBuf, 0, 0) != 0) {
+            g_gallery->state = 10;
         }
         break;
     }
 
     case 10:
-        g_gallery_work->curSprite = &g_gallery_work->sprites[g_gallery_work->activeBuffer];
-        g_gallery_work->prevSprite = g_gallery_work->curSprite;
-        viewer_init_image(g_gallery_work->curSprite, &g_gallery_work->viewerTextures[g_gallery_work->activeBuffer], 0);
-        if (g_gallery_work->isInitialized != 2) {
-            g_gallery_work->curSprite->menuBox.alpha = 0;
+        g_gallery->curSprite = &g_gallery->sprites[g_gallery->activeBuffer];
+        g_gallery->prevSprite = g_gallery->curSprite;
+        viewer_init_image(g_gallery->curSprite, &g_gallery->viewerTextures[g_gallery->activeBuffer], 0);
+        if (g_gallery->isInitialized != 2) {
+            g_gallery->curSprite->menuBox.alpha = 0;
         }
-        g_gallery_work->state++;
+        g_gallery->state++;
 
     case 11: {
-        s32 action = viewer_update_and_draw(g_gallery_work->curSprite, 2);
+        s32 action = viewer_update_and_draw(g_gallery->curSprite, 2);
         if (action == 3) {
-            g_gallery_work->curSprite = 0;
-            g_gallery_work->prevSprite = 0;
-            g_gallery_work->mode = 2;
-            g_gallery_work->state = 0;
+            g_gallery->curSprite = 0;
+            g_gallery->prevSprite = 0;
+            g_gallery->mode = 2;
+            g_gallery->state = 0;
         } else if (action != 0) {
             do {
                 if (action == 1) {
                     g_selected_image_idx++;
                 } else {
-                    g_selected_image_idx += g_gallery_work->itemCount - 1;
+                    g_selected_image_idx += g_gallery->itemCount - 1;
                 }
-                g_selected_image_idx %= g_gallery_work->itemCount;
+                g_selected_image_idx %= g_gallery->itemCount;
                 if (g_selected_image_idx != 0) {
-                    g_gallery_work->pageOffset = (g_selected_image_idx / 6) * 6;
+                    g_gallery->pageOffset = (g_selected_image_idx / 6) * 6;
                 } else {
-                    g_gallery_work->pageOffset = 0;
+                    g_gallery->pageOffset = 0;
                 }
-                g_gallery_work->menu_params[0] = g_selected_image_idx % 6;
-            } while (g_gallery_work->itemStatus[g_selected_image_idx] != 2);
-            g_gallery_work->curSprite->state = 2;
-            g_gallery_work->curSprite->timer = 0x80;
-            g_gallery_work->bufferPending = 1;
-            g_gallery_work->isInitialized = 2;
-            g_gallery_work->activeBuffer ^= 1;
-            g_gallery_work->curSprite = 0;
-            g_gallery_work->state = 1;
+                g_gallery->menu_params[0] = g_selected_image_idx % 6;
+            } while (g_gallery->itemStatus[g_selected_image_idx] != 2);
+            g_gallery->curSprite->state = 2;
+            g_gallery->curSprite->timer = 0x80;
+            g_gallery->bufferPending = 1;
+            g_gallery->isInitialized = 2;
+            g_gallery->activeBuffer ^= 1;
+            g_gallery->curSprite = 0;
+            g_gallery->state = 1;
         }
         break;
     }
 
     case 200:
         if (g_pad_trigger[0] & 0x20) {
-            g_gallery_work->mode = 2;
-            g_gallery_work->state = 0;
+            g_gallery->mode = 2;
+            g_gallery->state = 0;
         }
         break;
     }
@@ -498,18 +430,18 @@ s32 gallery_state_grid(void)
     s32 previousCursor;
     s32 menuResult;
 
-    switch (g_gallery_work->state) {
+    switch (g_gallery->state) {
     case 0:
-        g_gallery_work->isInitialized = 0;
-        g_gallery_work->state = 3;
+        g_gallery->isInitialized = 0;
+        g_gallery->state = 3;
 
     case 3:
-        g_gallery_work->unk_505154 = 0;
-        while (!bmp_upload_texture(&atlasSprite, 0x1788, 0x2788, g_gallery_work->textureBuffer, 0, 0)) {
+        g_gallery->stepState = 0;
+        while (!bmp_upload_texture(&atlasSprite, 0x1788, 0x2788, g_gallery->textureBuffer, 0, 0)) {
         }
 
         for (thumbnailIndex = 0; thumbnailIndex < 37; thumbnailIndex++) {
-            SpriteInfo *sprite = &g_gallery_work->allSprites[thumbnailIndex];
+            SpriteInfo *sprite = &g_gallery->allSprites[thumbnailIndex];
             *sprite = atlasSprite;
             sprite->tex0 = (sprite->tex0 & (~(((u64)0x3FFF) << 37))) | (getTex0Cbp(atlasSprite.tex0) << 37);
             sprite->u += (s16)((thumbnailIndex & 7) * 128);
@@ -518,195 +450,195 @@ s32 gallery_state_grid(void)
             sprite->h = 90;
         }
 
-        g_gallery_work->timer = 0;
-        g_gallery_work->overlayEnabled = 1;
-        g_gallery_work->scrollX = 0x38;
-        g_gallery_work->unk_505530 = 0;
-        for (g_gallery_work->slotIndex = 0; g_gallery_work->slotIndex < 6; g_gallery_work->slotIndex++) {
-            s32 itemIndex = g_gallery_work->pageOffset + g_gallery_work->slotIndex;
+        g_gallery->timer = 0;
+        g_gallery->overlayEnabled = 1;
+        g_gallery->scrollX = 0x38;
+        g_gallery->unk_505530 = 0;
+        for (g_gallery->slotIndex = 0; g_gallery->slotIndex < 6; g_gallery->slotIndex++) {
+            s32 itemIndex = g_gallery->pageOffset + g_gallery->slotIndex;
             s32 thumbnailId;
-            if (itemIndex >= g_gallery_work->itemCount) {
+            if (itemIndex >= g_gallery->itemCount) {
                 break;
             }
-            thumbnailId = g_gallery_work->itemThumbIds[itemIndex];
+            thumbnailId = g_gallery->itemThumbIds[itemIndex];
             if (thumbnailId > 37) {
                 thumbnailId = 0;
             }
-            g_gallery_work->currentThumbId = thumbnailId;
-            g_gallery_work->pageSprites[g_gallery_work->slotIndex] = g_gallery_work->allSprites[g_gallery_work->currentThumbId];
-            if (g_image_viewed_flags[g_gallery_work->currentThumbId] != 0) {
-                g_gallery_work->slotFlags[g_gallery_work->slotIndex] = 4;
+            g_gallery->currentThumbId = thumbnailId;
+            g_gallery->pageSprites[g_gallery->slotIndex] = g_gallery->allSprites[g_gallery->currentThumbId];
+            if (g_image_viewed_flags[g_gallery->currentThumbId] != 0) {
+                g_gallery->slotFlags[g_gallery->slotIndex] = 4;
             } else {
-                g_gallery_work->slotFlags[g_gallery_work->slotIndex] = 1;
+                g_gallery->slotFlags[g_gallery->slotIndex] = 1;
             }
         }
 
-        if (g_gallery_work->isInitialized == 0) {
-            g_gallery_work->state = 10;
+        if (g_gallery->isInitialized == 0) {
+            g_gallery->state = 10;
             return 1;
         }
-        g_gallery_work->state = 19;
+        g_gallery->state = 19;
         break;
 
     case 10:
-        g_gallery_work->overlayAdjustment = 0;
-        g_gallery_work->state++;
+        g_gallery->overlayAdjustment = 0;
+        g_gallery->state++;
 
     case 11:
-        g_gallery_work->overlayAdjustment += 4;
-        if (g_gallery_work->overlayAdjustment >= 0x80) {
-            g_gallery_work->isInitialized = 1;
-            g_gallery_work->overlayAdjustment = 0;
-            g_gallery_work->state = 19;
+        g_gallery->overlayAdjustment += 4;
+        if (g_gallery->overlayAdjustment >= 0x80) {
+            g_gallery->isInitialized = 1;
+            g_gallery->overlayAdjustment = 0;
+            g_gallery->state = 19;
         }
         break;
 
     case 19:
-        g_gallery_work->unk_505530 = 0;
-        g_gallery_work->fadeState = 1;
-        g_gallery_work->unk_505150 = 0;
-        g_gallery_work->state++;
+        g_gallery->unk_505530 = 0;
+        g_gallery->fadeState = 1;
+        g_gallery->subState = 0;
+        g_gallery->state++;
 
     case 20:
-        previousCursor = g_gallery_work->menu_params[0];
-        menuResult = viewer_update_grid_cursor(&g_gallery_work->menu_params[0], g_pad_merged);
+        previousCursor = g_gallery->menu_params[0];
+        menuResult = viewer_update_grid_cursor(&g_gallery->menu_params[0], g_pad_merged);
         if (menuResult != 0) {
             if (menuResult < 0x100) {
                 int directionButtons;
-                g_gallery_work->unk_505530 = 0;
-                if (g_gallery_work->itemCount <= 6) {
+                g_gallery->unk_505530 = 0;
+                if (g_gallery->itemCount <= 6) {
                     break;
                 }
                 directionButtons = g_pad_buttons[0];
                 if ((directionButtons & 0x8000) && ((previousCursor == 0) || (previousCursor == 3))) {
-                    g_gallery_work->menu_params[0] = previousCursor + 2;
-                    g_gallery_work->scrollDirection = -1;
-                    g_gallery_work->pageOffset -= 6;
-                    if (g_gallery_work->pageOffset < 0) {
-                        g_gallery_work->pageOffset = ((g_gallery_work->itemCount - 1) / 6) * 6;
+                    g_gallery->menu_params[0] = previousCursor + 2;
+                    g_gallery->scrollDirection = -1;
+                    g_gallery->pageOffset -= 6;
+                    if (g_gallery->pageOffset < 0) {
+                        g_gallery->pageOffset = ((g_gallery->itemCount - 1) / 6) * 6;
                     }
-                    g_gallery_work->state = 29;
+                    g_gallery->state = 29;
                     return 1;
                 }
                 if ((directionButtons & 0x2000) && ((previousCursor == 2) || (previousCursor == 5))) {
-                    g_gallery_work->menu_params[0] = previousCursor - 2;
-                    g_gallery_work->scrollDirection = 1;
-                    g_gallery_work->pageOffset += 6;
-                    if (g_gallery_work->pageOffset >= g_gallery_work->itemCount) {
-                        g_gallery_work->pageOffset = 0;
+                    g_gallery->menu_params[0] = previousCursor - 2;
+                    g_gallery->scrollDirection = 1;
+                    g_gallery->pageOffset += 6;
+                    if (g_gallery->pageOffset >= g_gallery->itemCount) {
+                        g_gallery->pageOffset = 0;
                     }
-                    g_gallery_work->state = 29;
+                    g_gallery->state = 29;
                     return 1;
                 }
                 sound_play_cursor_se();
             } else {
-                s32 itemIndex = g_gallery_work->menu_params[0] + g_gallery_work->pageOffset;
-                if ((itemIndex < g_gallery_work->itemCount) && (g_gallery_work->itemStatus[itemIndex] == 2)) {
+                s32 itemIndex = g_gallery->menu_params[0] + g_gallery->pageOffset;
+                if ((itemIndex < g_gallery->itemCount) && (g_gallery->itemStatus[itemIndex] == 2)) {
                     sound_play_confirm_se();
-                    g_gallery_work->exitMode = 3;
-                    g_gallery_work->state = 100;
+                    g_gallery->exitMode = 3;
+                    g_gallery->state = 100;
                 }
             }
         } else {
             u32 buttons = g_pad_trigger[0];
             if (buttons & 0x40) {
                 sound_play_confirm_se();
-                g_gallery_work->state = 40;
+                g_gallery->state = 40;
                 break;
             } else if (buttons & 0x4) {
-                if (g_gallery_work->itemCount <= 6) {
+                if (g_gallery->itemCount <= 6) {
                     break;
                 }
-                g_gallery_work->scrollDirection = -1;
-                g_gallery_work->pageOffset -= 6;
-                if (g_gallery_work->pageOffset < 0) {
-                    g_gallery_work->pageOffset = ((g_gallery_work->itemCount - 1) / 6) * 6;
+                g_gallery->scrollDirection = -1;
+                g_gallery->pageOffset -= 6;
+                if (g_gallery->pageOffset < 0) {
+                    g_gallery->pageOffset = ((g_gallery->itemCount - 1) / 6) * 6;
                 }
-                g_gallery_work->state = 29;
+                g_gallery->state = 29;
                 return 1;
             } else if (buttons & 0x8) {
-                if (g_gallery_work->itemCount <= 6) {
+                if (g_gallery->itemCount <= 6) {
                     break;
                 }
-                g_gallery_work->scrollDirection = 1;
-                g_gallery_work->pageOffset += 6;
-                if (g_gallery_work->pageOffset >= g_gallery_work->itemCount) {
-                    g_gallery_work->pageOffset = 0;
+                g_gallery->scrollDirection = 1;
+                g_gallery->pageOffset += 6;
+                if (g_gallery->pageOffset >= g_gallery->itemCount) {
+                    g_gallery->pageOffset = 0;
                 }
-                g_gallery_work->state = 29;
+                g_gallery->state = 29;
                 return 1;
             }
         }
-        g_gallery_work->timer++;
+        g_gallery->timer++;
         break;
 
     case 29:
-        g_gallery_work->timer = 0;
-        g_gallery_work->unk_505530 = 0;
+        g_gallery->timer = 0;
+        g_gallery->unk_505530 = 0;
         sound_play_page_se();
-        g_gallery_work->fadeState = 2;
-        g_gallery_work->countdown = 0x20;
-        g_gallery_work->state = 30;
+        g_gallery->fadeState = 2;
+        g_gallery->countdown = 0x20;
+        g_gallery->state = 30;
 
     case 30:
-        g_gallery_work->timer++;
-        g_gallery_work->scrollX -= (s16)(g_gallery_work->timer * g_gallery_work->scrollDirection);
-        if ((--g_gallery_work->countdown) == 0) {
-            g_gallery_work->state = 3;
+        g_gallery->timer++;
+        g_gallery->scrollX -= (s16)(g_gallery->timer * g_gallery->scrollDirection);
+        if ((--g_gallery->countdown) == 0) {
+            g_gallery->state = 3;
         }
         break;
 
     case 40:
-        g_gallery_work->dialogState = 1;
-        g_gallery_work->fadeState = 2;
-        g_gallery_work->countdown = 0x10;
-        g_gallery_work->dialogChoice = 1;
+        g_gallery->dialogState = 1;
+        g_gallery->fadeState = 2;
+        g_gallery->countdown = 0x10;
+        g_gallery->dialogChoice = 1;
         viewer_draw_yes_no_dialog(-1, 0, 0, 0);
-        g_gallery_work->state++;
+        g_gallery->state++;
 
     case 41:
         if (g_pad_trigger[0] & 0x8000) {
-            if (menuResult = g_gallery_work->dialogChoice != 0) {
+            if (menuResult = g_gallery->dialogChoice != 0) {
                 sound_play_cursor_se();
             }
-            g_gallery_work->dialogChoice = 0;
+            g_gallery->dialogChoice = 0;
         }
         if (g_pad_trigger[0] & 0x2000) {
-            if (g_gallery_work->dialogChoice != 1) {
+            if (g_gallery->dialogChoice != 1) {
                 sound_play_cursor_se();
             }
-            g_gallery_work->dialogChoice = 1;
+            g_gallery->dialogChoice = 1;
         }
         if (g_pad_trigger[0] & 0x20) {
             sound_play_confirm_se();
-            if (g_gallery_work->dialogChoice == 0) {
-                g_gallery_work->dialogState = -1;
-                g_gallery_work->state = 100;
-                g_gallery_work->exitMode = 4;
+            if (g_gallery->dialogChoice == 0) {
+                g_gallery->dialogState = -1;
+                g_gallery->state = 100;
+                g_gallery->exitMode = 4;
             } else {
-                g_gallery_work->dialogState = 0;
-                g_gallery_work->fadeState = 1;
-                g_gallery_work->state = 20;
+                g_gallery->dialogState = 0;
+                g_gallery->fadeState = 1;
+                g_gallery->state = 20;
             }
         }
         if (g_pad_trigger[0] & 0x40) {
             sound_play_confirm_se();
-            g_gallery_work->dialogState = 0;
-            g_gallery_work->fadeState = 1;
-            g_gallery_work->state = 20;
+            g_gallery->dialogState = 0;
+            g_gallery->fadeState = 1;
+            g_gallery->state = 20;
         }
         break;
 
     case 100:
-        g_gallery_work->overlayAdjustment = 0x80;
-        g_gallery_work->state++;
+        g_gallery->overlayAdjustment = 0x80;
+        g_gallery->state++;
 
     case 101:
-        g_gallery_work->overlayAdjustment -= 4;
-        if (g_gallery_work->overlayAdjustment <= 0) {
-            g_gallery_work->overlayEnabled = 0;
-            g_gallery_work->mode = g_gallery_work->exitMode;
-            g_gallery_work->state = 0;
+        g_gallery->overlayAdjustment -= 4;
+        if (g_gallery->overlayAdjustment <= 0) {
+            g_gallery->overlayEnabled = 0;
+            g_gallery->mode = g_gallery->exitMode;
+            g_gallery->state = 0;
         }
         break;
     }
@@ -716,19 +648,19 @@ s32 gallery_state_grid(void)
 
 s32 gallery_state_fade_in(void)
 {
-    if (g_gallery_work->state == 0) {
-        g_gallery_work->fadeState = 0;
-        g_gallery_work->timer = 0;
-        g_gallery_work->state++;
+    if (g_gallery->state == 0) {
+        g_gallery->fadeState = 0;
+        g_gallery->timer = 0;
+        g_gallery->state++;
     }
 
-    if (++g_gallery_work->timer < 32) {
+    if (++g_gallery->timer < 32) {
         return 0;
     }
 
-    g_gallery_work->fadeState = 1;
-    g_gallery_work->mode = 2;
-    g_gallery_work->state = 0;
+    g_gallery->fadeState = 1;
+    g_gallery->mode = 2;
+    g_gallery->state = 0;
     return 0;
 }
 
@@ -740,54 +672,54 @@ s32 gallery_state_loading(void)
     s32 count;
     s32 *params;
 
-    switch (g_gallery_work->state) {
+    switch (g_gallery->state) {
     case 0:
-        g_gallery_work->drawEnabled = 0;
-        g_gallery_work->fadeState = 0;
-        g_gallery_work->timer = 0;
-        g_gallery_work->state++;
+        g_gallery->drawEnabled = 0;
+        g_gallery->fadeState = 0;
+        g_gallery->timer = 0;
+        g_gallery->state++;
     case 1:
         tex_upload_step();
         if (g_cd_async_busy == 0) {
-            g_gallery_work->state++;
+            g_gallery->state++;
         }
         break;
     case 2:
         if (gallery_load_ui_assets() != 0) {
-            g_gallery_work->state++;
+            g_gallery->state++;
         }
         break;
     case 3:
-        g_gallery_work->fadeState = 9;
-        g_gallery_work->timer = 0;
-        g_gallery_work->state++;
+        g_gallery->fadeState = 9;
+        g_gallery->timer = 0;
+        g_gallery->state++;
     case 4:
-        if (g_gallery_work->timer >= 0x20) {
-            g_gallery_work->fadeState = 0;
-            g_gallery_work->timer = 0;
-            g_gallery_work->state++;
+        if (g_gallery->timer >= 0x20) {
+            g_gallery->fadeState = 0;
+            g_gallery->timer = 0;
+            g_gallery->state++;
         }
         break;
     case 5:
-        g_gallery_work->state++;
+        g_gallery->state++;
         break;
     case 6:
-        g_gallery_work->box_x0 = 0x38;
-        g_gallery_work->box_x1 = 0x248;
-        g_gallery_work->box_y0 = 0x50;
-        g_gallery_work->box_y1 = 0x130;
-        g_gallery_work->box_color_r = 0x80;
-        g_gallery_work->box_color_g = 0x18;
-        g_gallery_work->box_color_b = 0x80;
-        g_gallery_work->box_color_a = 0x33;
-        g_gallery_work->overlayEnabled = 0;
-        g_gallery_work->cursor_color_r = 0x18;
-        g_gallery_work->cursor_color_g = 0xFF;
-        g_gallery_work->cursor_color_b = 0x30;
-        g_gallery_work->cursor_color_a = 0x33;
-        g_gallery_work->unk_50552C = 0x80;
+        g_gallery->box_x0 = 0x38;
+        g_gallery->box_x1 = 0x248;
+        g_gallery->box_y0 = 0x50;
+        g_gallery->box_y1 = 0x130;
+        g_gallery->box_color_r = 0x80;
+        g_gallery->box_color_g = 0x18;
+        g_gallery->box_color_b = 0x80;
+        g_gallery->box_color_a = 0x33;
+        g_gallery->overlayEnabled = 0;
+        g_gallery->cursor_color_r = 0x18;
+        g_gallery->cursor_color_g = 0xFF;
+        g_gallery->cursor_color_b = 0x30;
+        g_gallery->cursor_color_a = 0x33;
+        g_gallery->unk_50552C = 0x80;
 
-        params = g_gallery_work->menu_params;
+        params = g_gallery->menu_params;
         params[0] = 0;
         params[1] = 6;
         params[2] = -3;
@@ -801,12 +733,12 @@ s32 gallery_state_loading(void)
         params[10] = 0;
         params[11] = 0;
 
-        g_gallery_work->slotFlags[0] = 0;
-        g_gallery_work->slotFlags[1] = 0;
-        g_gallery_work->slotFlags[2] = 0;
-        g_gallery_work->slotFlags[3] = 0;
-        g_gallery_work->slotFlags[4] = 0;
-        g_gallery_work->slotFlags[5] = 0;
+        g_gallery->slotFlags[0] = 0;
+        g_gallery->slotFlags[1] = 0;
+        g_gallery->slotFlags[2] = 0;
+        g_gallery->slotFlags[3] = 0;
+        g_gallery->slotFlags[4] = 0;
+        g_gallery->slotFlags[5] = 0;
 
         count = 0;
         for (idx = 0; idx < 0x100; idx++) {
@@ -815,15 +747,15 @@ s32 gallery_state_loading(void)
             }
         }
 
-        g_gallery_work->drawEnabled = 1;
-        g_gallery_work->itemCount = count;
-        g_gallery_work->pageOffset = 0;
-        g_gallery_work->mode = 1;
-        g_gallery_work->state = 0;
+        g_gallery->drawEnabled = 1;
+        g_gallery->itemCount = count;
+        g_gallery->pageOffset = 0;
+        g_gallery->mode = 1;
+        g_gallery->state = 0;
         break;
     }
 
-    if (g_gallery_work->state < 5) {
+    if (g_gallery->state < 5) {
         gallery_draw_solid_rect(0, 0, 0x280, 0x1C0, 0, 0, 0, 0x80, 0);
         sceGifPkInit(&pkt, g_gif_buf);
         sceGifPkReset(&pkt);
@@ -847,8 +779,8 @@ s32 gallery_state_loading(void)
         sceDmaSendN(g_dma_gif, g_gif_buf, sceGifPkSize(&pkt));
         sceGsSyncPath(0, 0);
 
-        if (g_gallery_work->timer < 0x20) {
-            g_gallery_work->timer++;
+        if (g_gallery->timer < 0x20) {
+            g_gallery->timer++;
         }
     }
 
@@ -863,15 +795,15 @@ s32 gallery_load_ui_assets(void)
     u8 *buf;
     u32 k;
 
-    switch (g_gallery_work->unk_505150) {
+    switch (g_gallery->subState) {
     case 0:
         g_cd_async_busy = 1;
         g_cd_async_state = 0;
-        g_gallery_work->unk_505150++;
+        g_gallery->subState++;
 
     case 1:
         offset = D_001C0344[0];
-        buf = g_gallery_work->readBuf;
+        buf = g_gallery->readBuf;
         size = D_001C0348[0] - offset;
         if (offset != 0) {
             offset /= 0x800;
@@ -879,12 +811,12 @@ s32 gallery_load_ui_assets(void)
         offset += g_gallery_archive_lba;
         cd_read_async(buf, size, offset);
         if (g_cd_async_busy == 0) {
-            g_gallery_work->unk_505150++;
+            g_gallery->subState++;
         }
         break;
 
     case 2: {
-        u8 *buf = g_gallery_work->readBuf;
+        u8 *buf = g_gallery->readBuf;
         s32 size = D_001C0348[0] - D_001C0344[0];
         s32 prev = buf[4];
         s32 i;
@@ -894,32 +826,32 @@ s32 gallery_load_ui_assets(void)
             prev = cur;
         }
 
-        g_gallery_work->unk_505154 = 0;
-        g_gallery_work->unk_505150++;
+        g_gallery->stepState = 0;
+        g_gallery->subState++;
         break;
     }
 
     case 3:
-        if (lzss_decompress_step(g_gallery_work->decodeBuf, g_gallery_work->readBuf) != 0) {
-            g_gallery_work->unk_505154 = 0;
-            g_gallery_work->unk_505150++;
+        if (lzss_decompress_step(g_gallery->decodeBuf, g_gallery->readBuf) != 0) {
+            g_gallery->stepState = 0;
+            g_gallery->subState++;
         }
         break;
 
     case 4:
-        if (bmp_upload_texture(&g_gallery_work->bgSprite, 0x1180, 0x1780, g_gallery_work->decodeBuf, 0, 0) != 0) {
-            g_gallery_work->unk_505150 = 10;
+        if (bmp_upload_texture(&g_gallery->bgSprite, 0x1180, 0x1780, g_gallery->decodeBuf, 0, 0) != 0) {
+            g_gallery->subState = 10;
         }
         break;
 
     case 10:
         g_cd_async_state = 0;
         g_cd_async_busy = 1;
-        g_gallery_work->unk_505150++;
+        g_gallery->subState++;
 
     case 11:
         offset = D_001C0348[0];
-        buf = g_gallery_work->readBuf;
+        buf = g_gallery->readBuf;
         size = D_001C034C[0] - offset;
         if (offset != 0) {
             offset /= 0x800;
@@ -927,12 +859,12 @@ s32 gallery_load_ui_assets(void)
         offset += g_gallery_archive_lba;
         cd_read_async(buf, size, offset);
         if (g_cd_async_busy == 0) {
-            g_gallery_work->unk_505150++;
+            g_gallery->subState++;
         }
         break;
 
     case 12: {
-        u8 *buf = g_gallery_work->readBuf;
+        u8 *buf = g_gallery->readBuf;
         s32 size = D_001C034C[0] - D_001C0348[0];
         s32 prev = buf[4];
         s32 i;
@@ -942,32 +874,32 @@ s32 gallery_load_ui_assets(void)
             prev = cur;
         }
 
-        g_gallery_work->unk_505154 = 0;
-        g_gallery_work->unk_505150++;
+        g_gallery->stepState = 0;
+        g_gallery->subState++;
         break;
     }
 
     case 13:
-        if (lzss_decompress_step(g_gallery_work->decodeBuf, g_gallery_work->readBuf) != 0) {
-            g_gallery_work->unk_505154 = 0;
-            g_gallery_work->unk_505150++;
+        if (lzss_decompress_step(g_gallery->decodeBuf, g_gallery->readBuf) != 0) {
+            g_gallery->stepState = 0;
+            g_gallery->subState++;
         }
         break;
 
     case 14:
-        if (bmp_upload_texture(&g_gallery_work->uiAtlasSprite, 0x1380, 0x1784, g_gallery_work->decodeBuf, 0, 0) != 0) {
-            g_gallery_work->unk_505150 = 20;
+        if (bmp_upload_texture(&g_gallery->uiAtlasSprite, 0x1380, 0x1784, g_gallery->decodeBuf, 0, 0) != 0) {
+            g_gallery->subState = 20;
         }
         break;
 
     case 20:
         g_cd_async_state = 0;
         g_cd_async_busy = 1;
-        g_gallery_work->unk_505150++;
+        g_gallery->subState++;
 
     case 21:
         offset = D_001C034C[0];
-        buf = g_gallery_work->readBuf;
+        buf = g_gallery->readBuf;
         size = D_001C0350[0] - offset;
         if (offset != 0) {
             offset /= 0x800;
@@ -975,12 +907,12 @@ s32 gallery_load_ui_assets(void)
         offset += g_gallery_archive_lba;
         cd_read_async(buf, size, offset);
         if (g_cd_async_busy == 0) {
-            g_gallery_work->unk_505150++;
+            g_gallery->subState++;
         }
         break;
 
     case 22: {
-        u8 *buf = g_gallery_work->readBuf;
+        u8 *buf = g_gallery->readBuf;
         s32 size = D_001C0350[0] - D_001C034C[0];
         s32 prev = buf[4];
         s32 i;
@@ -990,25 +922,25 @@ s32 gallery_load_ui_assets(void)
             prev = cur;
         }
 
-        g_gallery_work->unk_505154 = 0;
-        g_gallery_work->unk_505150++;
+        g_gallery->stepState = 0;
+        g_gallery->subState++;
         break;
     }
 
     case 23:
-        if (lzss_decompress_step(g_gallery_work->textureBuffer, g_gallery_work->readBuf) != 0) {
-            g_gallery_work->unk_505150 = 30;
+        if (lzss_decompress_step(g_gallery->textureBuffer, g_gallery->readBuf) != 0) {
+            g_gallery->subState = 30;
         }
         break;
 
     case 30: {
         for (k = 0; k < 6; k++) {
-            SpriteInfo *src = &g_gallery_work->uiAtlasSprite;
+            SpriteInfo *src = &g_gallery->uiAtlasSprite;
             s16 h = D_0012B0C0[k].h;
             s16 w = D_0012B0C0[k].w;
             s16 v = D_0012B0C0[k].v;
             s16 u = D_0012B0C0[k].u;
-            SpriteInfo *dst = &g_gallery_work->uiSprites[k];
+            SpriteInfo *dst = &g_gallery->uiSprites[k];
             *dst = *src;
             dst->tex0 = (dst->tex0 & (~(((u64)0x3FFF) << 37))) | (getTex0Cbp(src->tex0) << 37);
             dst->u += u;
@@ -1019,14 +951,14 @@ s32 gallery_load_ui_assets(void)
 
         for (loopState[1] = 0; ((u32)loopState[1]) < 6; loopState[1]++) {
             loopState[0] = D_0012B0F0[loopState[1]].u;
-            g_gallery_work->uiX0[loopState[1]] = loopState[0];
-            g_gallery_work->uiY0[loopState[1]] = D_0012B0F0[loopState[1]].v;
-            g_gallery_work->uiX1[loopState[1]] = D_0012B0F0[loopState[1]].w;
-            g_gallery_work->uiY1[loopState[1]] = D_0012B0F0[loopState[1]].h;
+            g_gallery->uiX0[loopState[1]] = loopState[0];
+            g_gallery->uiY0[loopState[1]] = D_0012B0F0[loopState[1]].v;
+            g_gallery->uiX1[loopState[1]] = D_0012B0F0[loopState[1]].w;
+            g_gallery->uiY1[loopState[1]] = D_0012B0F0[loopState[1]].h;
         }
 
-        g_gallery_work->uiMode[4] = 2;
-        g_gallery_work->uiMode[5] = 2;
+        g_gallery->uiMode[4] = 2;
+        g_gallery->uiMode[5] = 2;
         return 1;
     }
     }
@@ -1042,7 +974,7 @@ void gallery_draw_background(u8 alpha)
     sceGifPkReset(&packet);
     sceGifPkAddGsData(&packet, 0x1000000000008003ULL);
     sceGifPkAddGsData(&packet, 0xEULL);
-    sceGifPkAddGsData(&packet, g_gallery_work->bgSprite.tex0);
+    sceGifPkAddGsData(&packet, g_gallery->bgSprite.tex0);
     sceGifPkAddGsData(&packet, 0x6ULL);
     sceGifPkAddGsData(&packet, 0x60ULL);
     sceGifPkAddGsData(&packet, 0x14ULL);
@@ -1087,7 +1019,7 @@ void gallery_draw_grid_and_ui(void)
     sceGifPkAddGsData(&pkt, 0x14ULL);
 
     for (i = 0; i < 6; i++) {
-        tex = &g_gallery_work->uiSprites[i];
+        tex = &g_gallery->uiSprites[i];
 
         sceGifPkAddGsData(&pkt, 0x1000000000008001ULL);
         sceGifPkAddGsData(&pkt, 0xEULL);
@@ -1098,11 +1030,11 @@ void gallery_draw_grid_and_ui(void)
         sceGifPkAddGsData(&pkt, 0x535310ULL);
         sceGifPkAddGsData(&pkt, 0x116ULL);
 
-        if (g_gallery_work->uiMode[i] == 1) {
+        if (g_gallery->uiMode[i] == 1) {
             u8 color = ((g_frame_count & 1) << 6) + 0x40;
             sceGifPkAddGsData(&pkt, GS_RGBAQ(color, color, color, color, 0x3F800000));
-        } else if (g_gallery_work->uiMode[i] == 2) {
-            if (g_gallery_work->itemCount <= 6) {
+        } else if (g_gallery->uiMode[i] == 2) {
+            if (g_gallery->itemCount <= 6) {
                 sceGifPkAddGsData(&pkt, GS_RGBAQ(0, 0, 0, 0, 0x3F800000));
             } else {
                 u8 pulse = (u8)(127.0f * sinf((3.1415927f * (f32)(g_frame_count & 0x3F)) / 64.0f));
@@ -1113,9 +1045,9 @@ void gallery_draw_grid_and_ui(void)
         }
 
         sceGifPkAddGsData(&pkt, GS_UV(tex->u << 4, tex->v << 4));
-        sceGifPkAddGsData(&pkt, GS_XYZ2((g_gallery_work->uiX0[i] << 4) + 0x6C00, (g_gallery_work->uiY0[i] << 3) + 0x7900));
+        sceGifPkAddGsData(&pkt, GS_XYZ2((g_gallery->uiX0[i] << 4) + 0x6C00, (g_gallery->uiY0[i] << 3) + 0x7900));
         sceGifPkAddGsData(&pkt, GS_UV((tex->u + tex->w) << 4, (tex->v + tex->h) << 4));
-        sceGifPkAddGsData(&pkt, GS_XYZ2((g_gallery_work->uiX1[i] << 4) + 0x6C00, (g_gallery_work->uiY1[i] << 3) + 0x7900));
+        sceGifPkAddGsData(&pkt, GS_XYZ2((g_gallery->uiX1[i] << 4) + 0x6C00, (g_gallery->uiY1[i] << 3) + 0x7900));
     }
 
     sceGifPkAddGsData(&pkt, 0x1000000000008001ULL);
@@ -1123,8 +1055,8 @@ void gallery_draw_grid_and_ui(void)
     sceGifPkAddGsData(&pkt, 0ULL);
     sceGifPkAddGsData(&pkt, 0x14ULL);
 
-    if ((g_gallery_work->timer & 0x20) == 0) {
-        g_thumb_pulse = g_gallery_work->timer & 0x1F;
+    if ((g_gallery->timer & 0x20) == 0) {
+        g_thumb_pulse = g_gallery->timer & 0x1F;
         if (g_thumb_pulse >= 0x10) {
             g_thumb_pulse = 0x1F - g_thumb_pulse;
         }
@@ -1133,9 +1065,9 @@ void gallery_draw_grid_and_ui(void)
     idx = 0;
     for (row = 0; row < 2; row++) {
         for (col = 0; col < 3; col++) {
-            tex = &g_gallery_work->pageSprites[idx];
+            tex = &g_gallery->pageSprites[idx];
 
-            if (idx >= g_gallery_work->slotIndex) {
+            if (idx >= g_gallery->slotIndex) {
                 break;
             }
 
@@ -1147,9 +1079,9 @@ void gallery_draw_grid_and_ui(void)
             sceGifPkAddGsData(&pkt, 0x6400000000008001ULL);
             sceGifPkAddGsData(&pkt, 0x535310ULL);
 
-            mode = g_gallery_work->slotFlags[idx];
-            if (g_gallery_work->fadeState == 0 || g_gallery_work->fadeState == 2) {
-                mode = g_gallery_work->fadeState;
+            mode = g_gallery->slotFlags[idx];
+            if (g_gallery->fadeState == 0 || g_gallery->fadeState == 2) {
+                mode = g_gallery->fadeState;
             }
 
             switch (mode) {
@@ -1160,7 +1092,7 @@ void gallery_draw_grid_and_ui(void)
             case 0:
             case 2:
                 sceGifPkAddGsData(&pkt, 0x156ULL);
-                sceGifPkAddGsData(&pkt, GS_RGBAQ(0x80, 0x80, 0x80, g_gallery_work->countdown << 2, 0x3F800000));
+                sceGifPkAddGsData(&pkt, GS_RGBAQ(0x80, 0x80, 0x80, g_gallery->countdown << 2, 0x3F800000));
                 break;
             case 4: {
                 s32 bright = (g_thumb_pulse << 2) + 0x80;
@@ -1174,7 +1106,7 @@ void gallery_draw_grid_and_ui(void)
             sceGifPkAddGsData(
                 &pkt,
                 GS_XYZ2(
-                    ((g_gallery_work->scrollX + 0x38 + col * 0x90) << 4) + 0x6C00,
+                    ((g_gallery->scrollX + 0x38 + col * 0x90) << 4) + 0x6C00,
                     ((row * 0x6A + 0x5E) << 3) + 0x7900
                 )
             );
@@ -1182,7 +1114,7 @@ void gallery_draw_grid_and_ui(void)
             sceGifPkAddGsData(
                 &pkt,
                 GS_XYZ2(
-                    ((tex->w + (g_gallery_work->scrollX + 0x38 + col * 0x90)) << 4) + 0x6C00,
+                    ((tex->w + (g_gallery->scrollX + 0x38 + col * 0x90)) << 4) + 0x6C00,
                     ((tex->h + (row * 0x6A + 0x5E)) << 3) + 0x7900
                 )
             );
@@ -1195,9 +1127,9 @@ void gallery_draw_grid_and_ui(void)
     sceGifPkAddGsData(&pkt, 0x60ULL);
     sceGifPkAddGsData(&pkt, 0x14ULL);
 
-    if (g_gallery_work->fadeState == 1) {
-        if ((g_gallery_work->timer & 0x40) == 0) {
-            g_cursor_pulse = g_gallery_work->timer & 0x3F;
+    if (g_gallery->fadeState == 1) {
+        if ((g_gallery->timer & 0x40) == 0) {
+            g_cursor_pulse = g_gallery->timer & 0x3F;
             if (g_cursor_pulse >= 0x20) {
                 g_cursor_pulse = 0x3F - g_cursor_pulse;
             }
@@ -1215,15 +1147,15 @@ void gallery_draw_grid_and_ui(void)
         sceGifPkAddGsData(
             &pkt,
             GS_XYZ2(
-                (((g_gallery_work->menu_params[0] % 3) * 0x90 + 0x70) << 4) + 0x6C00,
-                (((g_gallery_work->menu_params[0] / 3) * 0x6A + 0x5E) << 3) + 0x7900
+                (((g_gallery->menu_params[0] % 3) * 0x90 + 0x70) << 4) + 0x6C00,
+                (((g_gallery->menu_params[0] / 3) * 0x6A + 0x5E) << 3) + 0x7900
             )
         );
         sceGifPkAddGsData(
             &pkt,
             GS_XYZ2(
-                (((g_gallery_work->menu_params[0] % 3) * 0x90 + 0xF0) << 4) + 0x6C00,
-                (((g_gallery_work->menu_params[0] / 3) * 0x6A + 0xB8) << 3) + 0x7900
+                (((g_gallery->menu_params[0] % 3) * 0x90 + 0xF0) << 4) + 0x6C00,
+                (((g_gallery->menu_params[0] / 3) * 0x6A + 0xB8) << 3) + 0x7900
             )
         );
     }
@@ -1233,13 +1165,13 @@ void gallery_draw_grid_and_ui(void)
     sceDmaSendN(g_dma_gif, g_gif_buf, sceGifPkSize(&pkt));
     sceGsSyncPath(0, 0);
 
-    switch (g_gallery_work->dialogState) {
+    switch (g_gallery->dialogState) {
     case 0:
         sprite_clear_queue();
         for (i = 0; i < 2; i++) {
             sprite_queue_sjis_text(
-                (s16)(g_gallery_work->uiX0[2] - 0x20),
-                g_gallery_work->uiY0[2] + 0x13 + i * 0x18,
+                (s16)(g_gallery->uiX0[2] - 0x20),
+                g_gallery->uiY0[2] + 0x13 + i * 0x18,
                 D_00129118[i],
                 0,
                 0x18,
@@ -1253,8 +1185,8 @@ void gallery_draw_grid_and_ui(void)
     case 1:
         sprite_clear_queue();
         sprite_queue_sjis_text(
-            (s16)(g_gallery_work->uiX0[2] - 0x20),
-            g_gallery_work->uiY0[2] + 0x13,
+            (s16)(g_gallery->uiX0[2] - 0x20),
+            g_gallery->uiY0[2] + 0x13,
             D_00129120[0],
             0,
             0x18,
@@ -1263,7 +1195,7 @@ void gallery_draw_grid_and_ui(void)
             0
         );
         sprite_flush_rects();
-        viewer_draw_yes_no_dialog(g_gallery_work->dialogChoice, 0x140, g_gallery_work->uiY0[2] + 0x33, 0x40);
+        viewer_draw_yes_no_dialog(g_gallery->dialogChoice, 0x140, g_gallery->uiY0[2] + 0x33, 0x40);
         break;
     }
 }
