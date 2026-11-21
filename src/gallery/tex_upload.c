@@ -25,12 +25,6 @@ static s16 g_tex_clut_palette[32] = {
     0, -28406, -15655, -11361, -31611, -29496, -16679, -12451,
     -17736, -20940, -19850, -24111, -23054, -14565, -26291, -1,
 };
-extern u16 g_pad_vib_power_p2;
-extern u16 g_pad_vib_power_p1;
-extern u16 g_pad_vib_timer_p2;
-extern u16 g_pad_vib_timer_p1;
-extern u8 g_pad_vib_state_p2;
-extern u8 g_pad_vib_state_p1;
 extern s32 g_tex_vram_tbp;
 extern s32 g_tex_vram_cbp;
 extern s16 g_tex_clut_work_buf[];
@@ -304,3 +298,13 @@ void vram_clear_all(void)
 
     free(buffer);
 }
+
+s32 g_tex_vram_cbp;
+s32 g_tex_vram_tbp;
+
+sceGsDBuffDc g_gs_dbuff;
+u64 g_gs_load_image[12] __attribute__((aligned(64)));
+u8 g_glyph_upload_buf[32][512] __attribute__((aligned(64)));
+u8 g_gif_buf[2][0x10000] __attribute__((aligned(64)));
+u8 g_tex_bitmap_work_buf[0x4B000] __attribute__((aligned(64)));
+s16 g_tex_clut_work_buf[1024] __attribute__((aligned(64)));

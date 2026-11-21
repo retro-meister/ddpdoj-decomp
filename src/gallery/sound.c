@@ -79,8 +79,8 @@ extern s32 g_se_last_result;
 extern u8 g_bgm_fade_active;
 extern s8 g_bgm_stop_pending;
 extern BgmFadeState g_bgm_fade_state[2];
-extern CdFileEntry g_stage_bg_files[12];
-extern CdFileEntry g_bgm_files[16];
+extern CdFileEntry g_stage_bg_files[20];
+extern CdFileEntry g_bgm_files[30];
 extern s32 g_sound_rpc_client[12];
 extern s32 g_sound_rpc_buf[16];
 
@@ -259,8 +259,8 @@ void sound_init_file_tables(void)
     entry = g_bgm_files;
     for (; index < 13; index++, source++, entry++) {
         cd_search_file(*source);
-        entry->size = g_cd_file_size[0];
-        entry->lba = g_cd_file_lba[0];
+        entry->size = g_cd_file.size;
+        entry->lba = g_cd_file.lba;
     }
 
     index = 0;
@@ -268,8 +268,8 @@ void sound_init_file_tables(void)
     entry = g_stage_bg_files;
     for (; index < 10; index++, source++, entry++) {
         cd_search_file(*source);
-        entry->size = g_cd_file_size[0];
-        entry->lba = g_cd_file_lba[0];
+        entry->size = g_cd_file.size;
+        entry->lba = g_cd_file.lba;
     }
 
     index = 0;
@@ -277,8 +277,8 @@ void sound_init_file_tables(void)
     entry = g_data_files;
     for (; index < 14; index++, source++, entry++) {
         cd_search_file(*source);
-        entry->size = g_cd_file_size[0];
-        entry->lba = g_cd_file_lba[0];
+        entry->size = g_cd_file.size;
+        entry->lba = g_cd_file.lba;
     }
 }
 
@@ -333,3 +333,16 @@ void sound_init_iop_rpc(void)
     load_vag(0x560, g_se_vag_path_6);
     load_vag(0x560, g_se_vag_path_7);
 }
+
+s8 g_bgm_stop_pending __attribute__((aligned(4)));
+u8 g_bgm_fade_active __attribute__((aligned(4)));
+s32 g_se_last_result;
+s32 g_se_volume;
+s32 g_se_priority;
+
+s32 g_sound_rpc_buf[16];
+s32 g_sound_rpc_client[12];
+CdFileEntry g_bgm_files[30];
+CdFileEntry g_stage_bg_files[20];
+CdFileEntry g_data_files[20];
+BgmFadeState g_bgm_fade_state[2];

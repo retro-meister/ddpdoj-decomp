@@ -7,7 +7,7 @@ void cd_search_file(const char *value)
 
     do {
         sceCdDiskReady(0);
-        result = sceCdSearchFile(g_cd_file_lba, value);
+        result = sceCdSearchFile(&g_cd_file, value);
         retry = (u32)(result != 0);
         retry ^= 1;
     } while (retry != 0);
@@ -18,17 +18,17 @@ void cd_read_sync(void *destination, u32 byteCount, u32 startSector)
     sceCdRMode readMode;
     s32 error;
 
-    g_cd_file_size[0] = byteCount;
-    g_cd_file_lba[0] = startSector;
+    g_cd_file.size = byteCount;
+    g_cd_file.lba = startSector;
 
     for (;;) {
         do {
             sceCdDiskReady(0);
-            g_cd_last_read_size = g_cd_file_size[0];
+            g_cd_last_read_size = g_cd_file.size;
             readMode.trycount = 0;
             readMode.spindlctrl = 1;
             readMode.datapattern = 0;
-        } while (!sceCdRead(g_cd_file_lba[0], (g_cd_file_size[0] + 0x7FF) >> 11,
+        } while (!sceCdRead(g_cd_file.lba, (g_cd_file.size + 0x7FF) >> 11,
                                 destination, &readMode));
 
         sceCdSync(0);
@@ -106,16 +106,16 @@ void cd_load_file(void *destination, const char *path)
 
     do {
         sceCdDiskReady(0);
-    } while (!sceCdSearchFile(g_cd_file_lba, path));
+    } while (!sceCdSearchFile(&g_cd_file, path));
 
     for (;;) {
         do {
             sceCdDiskReady(0);
-            g_cd_last_read_size = g_cd_file_size[0];
+            g_cd_last_read_size = g_cd_file.size;
             readMode.trycount = 0;
             readMode.spindlctrl = 1;
             readMode.datapattern = 0;
-        } while (!sceCdRead(g_cd_file_lba[0], (g_cd_file_size[0] + 0x7FF) >> 11,
+        } while (!sceCdRead(g_cd_file.lba, (g_cd_file.size + 0x7FF) >> 11,
                                 destination, &readMode));
 
         sceCdSync(0);
@@ -128,3 +128,12 @@ void cd_load_file(void *destination, const char *path)
         sceCdBreak();
     }
 }
+
+u32 g_cd_last_read_size;
+void *g_vram_load_buf;
+s8 g_cd_retry_timer __attribute__((aligned(4)));
+u32 g_cd_total_bytes_read;
+s8 g_cd_async_busy __attribute__((aligned(4)));
+s8 g_cd_async_state __attribute__((aligned(4)));
+
+CdFileStat g_cd_file __attribute__((aligned(64)));

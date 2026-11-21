@@ -203,6 +203,8 @@ def _prepare_shiftable_mod_link(folder, work_target, original, binutils):
     gp_match = re.search(r"_gp\s*=\s*(0x[0-9A-Fa-f]+)\s*;", main_ld)
     retail_gp = int(gp_match.group(1), 16) if gp_match else None
 
+    has_explicit_sbss = "main_SBSS_START" in main_ld
+
     # Parse undefined_syms.txt + symbols.ld to classify relocatable vs fixed symbols.
     undef_syms = []
     for line in (folder / "undefined_syms.txt").read_text(encoding="utf-8").splitlines():
@@ -225,7 +227,10 @@ def _prepare_shiftable_mod_link(folder, work_target, original, binutils):
         elif addr == bss_end:
             bss_end_syms.append(name)
         elif bss_start <= addr < bss_end:
-            bss_syms.append((addr, name))
+            if has_explicit_sbss:
+                fixed_syms.append((name, addr))
+            else:
+                bss_syms.append((addr, name))
         elif data_start <= addr < bss_start:
             interior_data_syms.append((addr, name))
         else:
@@ -239,34 +244,40 @@ def _prepare_shiftable_mod_link(folder, work_target, original, binutils):
         m = SYM_ASSIGN_RE.match(line)
         if m:
             name, addr = m.group(1), int(m.group(2), 16)
-            if addr == bss_end and name not in defined_bss_names:
+            if retail_gp is not None and addr == retail_gp:
+                if name not in gp_sym_names:
+                    gp_sym_names.append(name)
+            elif addr == bss_end and name not in defined_bss_names:
                 bss_end_syms.append(name)
                 defined_bss_names.add(name)
-            elif bss_start <= addr < bss_end and name not in defined_bss_names:
+            elif bss_start <= addr < bss_end and not has_explicit_sbss and name not in defined_bss_names:
                 bss_syms.append((addr, name))
                 defined_bss_names.add(name)
+            elif has_explicit_sbss and bss_start < addr < bss_end:
+                extra_syms_ld.append((name, addr))
             elif addr < load_vaddr or addr > bss_end:
                 extra_syms_ld.append((name, addr))
 
-    # Build relocatable mod_bss.s placing every .sbss/.bss symbol at its exact offset from bss_start.
-    bss_syms.sort(key=lambda item: (item[0], item[1]))
-    bss_lines = ['.section .bss, "wa", @nobits', ".align 4"]
-    cur = bss_start
-    for addr, name in bss_syms:
-        if addr > cur:
-            bss_lines.append(f".space {addr - cur:#x}")
-            cur = addr
-        bss_lines.append(f".globl {name}")
-        bss_lines.append(f"{name}:")
-    if bss_end > cur:
-        bss_lines.append(f".space {bss_end - cur:#x}")
-    mod_bss_s = work_target / "mod_bss.s"
     mod_bss_o = work_target / "mod_bss.o"
-    mod_bss_s.write_text("\n".join(bss_lines) + "\n", encoding="ascii")
-    run(
-        binutils["as"], "-EL", "-march=r5900", "-mabi=eabi", "-no-pad-sections",
-        "-o", str(mod_bss_o), str(mod_bss_s), cwd=ROOT,
-    )
+    if not has_explicit_sbss:
+        # Build relocatable mod_bss.s placing every .sbss/.bss symbol at its exact offset from bss_start.
+        bss_syms.sort(key=lambda item: (item[0], item[1]))
+        bss_lines = ['.section .bss, "wa", @nobits', ".align 4"]
+        cur = bss_start
+        for addr, name in bss_syms:
+            if addr > cur:
+                bss_lines.append(f".space {addr - cur:#x}")
+                cur = addr
+            bss_lines.append(f".globl {name}")
+            bss_lines.append(f"{name}:")
+        if bss_end > cur:
+            bss_lines.append(f".space {bss_end - cur:#x}")
+        mod_bss_s = work_target / "mod_bss.s"
+        mod_bss_s.write_text("\n".join(bss_lines) + "\n", encoding="ascii")
+        run(
+            binutils["as"], "-EL", "-march=r5900", "-mabi=eabi", "-no-pad-sections",
+            "-o", str(mod_bss_o), str(mod_bss_s), cwd=ROOT,
+        )
 
     # Build mod_syms.ld: _gp aliases, _end aliases, interior data offsets, and fixed constants.
     sym_lines = []
@@ -335,18 +346,44 @@ def _prepare_shiftable_mod_link(folder, work_target, original, binutils):
     if not inserted_sdata_start and retail_gp is not None:
         out_lines.append(f"    _gp = {retail_gp:#x};")
 
-    out_lines += [
-        "    .bss (NOLOAD) :",
-        "    {",
-        "        main_BSS_START = .;",
-        f"        {mod_bss_o.as_posix()}(.bss);",
-        "        *(.sbss .sbss.* .bss .bss.* COMMON);",
-        "        . = ALIGN(., 16);",
-        "        main_BSS_END = .;",
-        "    } :main",
-        "    /DISCARD/ : { *(*); }",
-        "}",
-    ]
+    if has_explicit_sbss:
+        in_bss = False
+        out_lines.append("    .bss (NOLOAD) :")
+        out_lines.append("    {")
+        for line in main_ld.splitlines():
+            stripped = line.strip()
+            if stripped.startswith(".main_bss"):
+                in_bss = True
+                continue
+            if not in_bss:
+                continue
+            if stripped == "{":
+                continue
+            if stripped == "}":
+                out_lines.append("    } :main")
+                break
+            if stripped == "main_SBSS_END = .;":
+                out_lines.append("        *(.sbss .sbss.*);")
+            elif stripped == "main_BSS_END = .;":
+                out_lines.append("        *(.bss .bss.* COMMON);")
+            out_lines.append(line)
+        out_lines += [
+            "    /DISCARD/ : { *(*); }",
+            "}",
+        ]
+    else:
+        out_lines += [
+            "    .bss (NOLOAD) :",
+            "    {",
+            "        main_BSS_START = .;",
+            f"        {mod_bss_o.as_posix()}(.bss);",
+            "        *(.sbss .sbss.* .bss .bss.* COMMON);",
+            "        . = ALIGN(., 16);",
+            "        main_BSS_END = .;",
+            "    } :main",
+            "    /DISCARD/ : { *(*); }",
+            "}",
+        ]
     mod_ld = work_target / "mod.ld"
     mod_ld.write_text("\n".join(out_lines) + "\n", encoding="utf-8")
     return e_entry, mod_ld, mod_syms_ld

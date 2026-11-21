@@ -175,8 +175,32 @@ typedef struct {
     u32 lba;
 } CdFileEntry;
 
+typedef struct {
+    u32 lba;
+    u32 size;
+    u8 pad[0x38];
+} CdFileStat;
+
 /* Shared gallery globals */
+extern u16 g_arcade_coin_port;
+extern s8 g_arcade_input_port[];
+extern u8 g_p1_btn_map_a;
+extern u8 g_p1_btn_map_b;
+extern u8 g_p1_btn_map_c;
+extern u8 g_p2_btn_map_a;
+extern u8 g_p2_btn_map_b;
+extern u8 g_p2_btn_map_c;
+extern u8 g_pad_input_locked;
+extern u8 g_pad_tate_rotate;
+extern u16 g_pad_vib_power_p2;
+extern u16 g_pad_vib_power_p1;
+extern u16 g_pad_vib_timer_p2;
+extern u16 g_pad_vib_timer_p1;
+extern u8 g_pad_vib_state_p2;
+extern u8 g_pad_vib_state_p1;
 extern u16 g_system_mute;
+extern u8 *g_pad_port_dst;
+extern u32 g_pad_port_bits;
 extern s8 g_cd_async_state;
 extern s8 g_cd_async_busy;
 extern u32 g_cd_total_bytes_read;
@@ -189,13 +213,15 @@ extern void *g_dma_gif;
 extern void *g_pad_dma_buf;
 extern u8 g_pad_act_direct[6];
 extern GalleryContext *g_gallery;
-extern CdFileEntry g_data_files[16];
-extern u32 g_cd_file_lba[3];
-extern u32 g_cd_file_size[3];
+extern CdFileEntry g_data_files[20];
+extern CdFileStat g_cd_file;
 extern u8 g_gif_buf[2][0x10000];
 extern u64 g_gs_load_image[12];
+extern sceGsDBuffDc g_gs_dbuff;
+extern u8 g_pad_dma_area[0x100];
 extern PadInfo g_pads[3];
-extern GlyphCacheEntry g_glyph_cache[0x401];
+extern GlyphCacheEntry g_glyph_cache_storage[0x403];
+#define g_glyph_cache (&g_glyph_cache_storage[2])
 extern const char g_gallery_archive_path[];
 extern const char *g_viewer_help_lines[8];
 extern const u16 g_menu_dir_buttons[8];

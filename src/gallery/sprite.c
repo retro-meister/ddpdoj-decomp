@@ -435,3 +435,6 @@ void sprite_clear_queue(void)
 {
     g_sprite_queue_count = 0;
 }
+
+s32 g_sprite_queue_count;
+SpriteEntry g_sprite_queue[512];

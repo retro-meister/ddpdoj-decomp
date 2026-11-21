@@ -448,3 +448,7 @@ checkMovement:
 
     return 0;
 }
+
+s32 g_dialog_anim_step;
+s32 g_dialog_selection;
+GalleryContext *g_gallery;

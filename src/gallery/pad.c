@@ -1,19 +1,6 @@
 #include "gallery/gallery.h"
 
-extern u16 g_arcade_coin_port;
-extern s8 g_arcade_input_port[];
-extern u8 g_p1_btn_map_a;
-extern u8 g_p1_btn_map_b;
-extern u8 g_p1_btn_map_c;
-extern u8 g_p2_btn_map_a;
-extern u8 g_p2_btn_map_b;
-extern u8 g_p2_btn_map_c;
-extern u8 g_pad_input_locked;
-extern u8 g_pad_tate_rotate;
-extern u8 *g_pad_port_dst;
-extern u32 g_pad_port_bits;
 extern u8 g_pad_act_align[6];
-
 extern u32 g_pad_unk_state[4];
 extern u32 g_pad_fast_repeat_timer[4];
 extern u32 g_pad_repeat_timer[4];
@@ -391,3 +378,21 @@ void pad_open_ports(void)
     sceGsResetPath();
     sceDmaReset(1);
 }
+
+u8 g_pad_act_direct[6] __attribute__((aligned(64)));
+u8 g_pad_act_align[6] __attribute__((aligned(64)));
+void *g_pad_dma_buf;
+void *g_dma_gif;
+
+u8 g_pad_dma_buf_1[0x100] __attribute__((aligned(64)));
+u8 g_pad_dma_buf_0[0x100] __attribute__((aligned(64)));
+PadInfo g_pads[3];
+u32 g_pad_held[4];
+u32 g_pad_trigger[4];
+u32 g_pad_repeat[4];
+u32 g_pad_fast_repeat[4];
+u32 g_pad_prev_held[4];
+u32 g_pad_repeat_timer[4];
+u32 g_pad_fast_repeat_timer[4];
+u32 g_pad_unk_state[4];
+u8 g_pad_dma_area[0x100];

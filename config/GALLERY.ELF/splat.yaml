@@ -19,8 +19,8 @@ options:
   create_c_files: false
   disassemble_all: true
   subalign: null
-  section_order: [".text", ".data", ".rodata", ".sdata", ".bss"]
-  auto_link_sections: [".data", ".rodata", ".sdata", ".bss"]
+  section_order: [".text", ".data", ".rodata", ".sdata", ".sbss", ".bss"]
+  auto_link_sections: [".data", ".rodata", ".sdata", ".sbss", ".bss"]
 segments:
   - name: elf_header
     type: bin
@@ -41,7 +41,8 @@ segments:
       - [0x1db40, c, gallery/pad]
       - [0x1e8f0, c, gallery/iop]
       - [0x1ea60, c, gallery/glyph_cache]
-      - [0x1ee70, c, gallery/main]
+      - [0x1ee70, c, gallery/mc]
+      - [0x1ef10, c, gallery/main]
       - [0x22d40, c, gallery/bmp]
       - [0x23750, c, gallery/viewer]
       - [0x248a0, c, gallery/lzss]
@@ -52,7 +53,8 @@ segments:
       - [0x28fc0, .data, gallery/font]
       - [0x29080, .data, gallery/sprite]
       - [0x29090, .data, gallery/tex_upload]
-      - [0x29160, .data, gallery/main]
+      - [0x29160, .data, gallery/mc]
+      - [0x29198, .data, gallery/main]
       - [0x29280, data, data_029280]
       - [0x294c0, rodata, rodata_sdk]
       - [0x2aa78, .rodata, gallery/sound]
@@ -64,7 +66,32 @@ segments:
       - [0x2b1c0, .rodata, gallery/bmp]
       - [0x2b1d8, .rodata, gallery/viewer]
       - [0x2b1f0, rodata, rodata_tail]
-      - [0x2b270, sdata, sdata]
+      - [0x2b270, sdata, sdata_sdk]
+      - [0x2b280, .sdata, gallery/main]
+      - [0x2b284, sdata, sdata_pad]
+      - {type: .sbss, vram: 0x12b280, name: gallery/sys}
+      - {type: .sbss, vram: 0x12b2dc, name: gallery/sound}
+      - {type: .sbss, vram: 0x12b2f0, name: gallery/cd}
+      - {type: .sbss, vram: 0x12b308, name: gallery/sprite}
+      - {type: .sbss, vram: 0x12b30c, name: gallery/font}
+      - {type: .sbss, vram: 0x12b310, name: gallery/tex_upload}
+      - {type: .sbss, vram: 0x12b318, name: gallery/pad}
+      - {type: .sbss, vram: 0x12b388, name: gallery/mc}
+      - {type: .sbss, vram: 0x12b3d8, name: gallery/viewer}
+      - {type: .sbss, vram: 0x12b3e4, name: gallery/bmp}
+      - {type: .sbss, vram: 0x12b42c, name: gallery/main}
+      - {type: bss, vram: 0x12b450, name: bss_sdk}
+      - {type: .bss, vram: 0x1325d0, name: gallery/sound}
+      - {type: .bss, vram: 0x1328c0, name: gallery/cd}
+      - {type: .bss, vram: 0x132900, name: gallery/font}
+      - {type: .bss, vram: 0x132e80, name: gallery/sprite}
+      - {type: .bss, vram: 0x135280, name: gallery/tex_upload}
+      - {type: .bss, vram: 0x1a4e10, name: gallery/pad}
+      - {type: .bss, vram: 0x1a5240, name: gallery/glyph_cache}
+      - {type: .bss, vram: 0x1af2b0, name: gallery/mc}
+      - {type: .bss, vram: 0x1c02b0, name: gallery/bmp}
+      - {type: .bss, vram: 0x1c0340, name: gallery/main}
+      - {type: bss, vram: 0x1c0d40, name: bss_sdk_tail}
   - name: elf_tail
     type: bin
     start: 0x2b300

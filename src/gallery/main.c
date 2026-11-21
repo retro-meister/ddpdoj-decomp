@@ -7,9 +7,6 @@ typedef struct {
 
 const char g_gallery_archive_path[32] = "\\GALLERY\\GALLERY.DA;1";
 
-static char g_icon_1_path[0x20] = "\\DATA\\DDON3_1.ICO;1";
-static char g_icon_2_path[0x18] = "\\DATA\\DDON3_2.ICO;1";
-
 static const char *g_grid_help_lines[2] __attribute__((section(".data"))) = {
     SJIS("方向キー、Ｌ１、Ｒ１ボタンで選択してください。"),
     SJIS("○ボタンで決定、×ボタンで終了できます。"),
@@ -77,37 +74,13 @@ static u8 g_gallery_image_order[0x90] = {
     8, 7, 6, 4, 5, 16, 15, 11, 10, 33, 32, 31,
     19, 20, 21, 22, 23, 2, 0, 1, 3,
 };
-extern const char *g_archive_list[1];
-extern u32 g_mc_state_0;
-extern u32 g_mc_state_1;
-extern u32 g_mc_state_2;
-extern u8 g_mc_flag_0;
-extern u8 g_mc_flag_1;
-extern u8 g_mc_flag_2;
-extern u8 g_mc_flag_3;
-extern u8 g_mc_flag_4;
-extern u8 g_mc_enabled;
-extern u8 g_mc_flag_5;
-extern u8 g_mc_flag_6;
-extern u32 g_mc_param_0;
-extern u32 g_mc_param_1;
-extern u32 g_mc_param_2;
-extern u32 g_mc_param_3;
-extern u32 g_mc_param_4;
-extern u32 g_mc_param_5;
-extern u32 g_mc_icon_2_size;
-extern u32 g_mc_icon_1_size;
-extern u8 g_mc_busy;
+const char *g_archive_list[1] = { g_gallery_archive_path };
+
 extern s32 g_thumb_pulse;
 extern s32 g_cursor_pulse;
 extern s32 g_selected_image_idx;
 extern u32 g_frame_count;
 extern GalleryArchiveEntry g_gallery_archive[1];
-extern s32 g_gallery_archive_lba;
-extern sceGsDBuffDc g_gs_dbuff;
-extern u8 g_pad_dma_area[];
-extern u8 g_mc_icon_2_buf[];
-extern u8 g_mc_icon_1_buf[];
 extern s32 g_archive_toc[0x200];
 extern s8 g_image_viewed_flags[256];
 extern s8 g_image_unlock_flags[0x100];
@@ -115,33 +88,6 @@ extern s8 g_image_unlock_flags[0x100];
 static inline u64 getTex0Cbp(u64 tex0)
 {
     return (u64)((s32)((tex0 >> 37) & 0x3FFF));
-}
-
-void gallery_load_font_files(void)
-{
-    cd_load_file(g_mc_icon_1_buf, g_icon_1_path);
-    g_mc_icon_1_size = g_cd_last_read_size;
-    cd_load_file(g_mc_icon_2_buf, g_icon_2_path);
-
-    g_mc_busy = 0;
-    g_mc_enabled = 1;
-    g_mc_flag_4 = 0;
-    g_mc_flag_5 = 0;
-    g_mc_flag_2 = 0;
-    g_mc_flag_3 = 0;
-    g_mc_flag_6 = 0;
-    g_mc_flag_1 = 0;
-    g_mc_state_2 = 0;
-    g_mc_state_1 = 0;
-    g_mc_state_0 = 0;
-    g_mc_param_2 = 0;
-    g_mc_param_5 = 0;
-    g_mc_param_4 = 0;
-    g_mc_param_3 = 0;
-    g_mc_param_1 = 0;
-    g_mc_param_0 = 0;
-    g_mc_flag_0 = 0;
-    g_mc_icon_2_size = g_cd_last_read_size;
 }
 
 void gallery_main(void)
@@ -171,8 +117,8 @@ void gallery_main(void)
     archiveIndex = 0;
     do {
         cd_search_file(g_archive_list[archiveIndex]);
-        g_gallery_archive[archiveIndex].archivePosition = g_cd_file_size[0];
-        g_gallery_archive[archiveIndex].entryLocation = g_cd_file_lba[0];
+        g_gallery_archive[archiveIndex].archivePosition = g_cd_file.size;
+        g_gallery_archive[archiveIndex].entryLocation = g_cd_file.lba;
     } while (++archiveIndex == 0);
 
     archiveIndex = 0;
@@ -379,7 +325,7 @@ s32 gallery_state_viewer(void)
         if (offset != 0) {
             offset /= 0x800;
         }
-        offset += g_gallery_archive_lba;
+        offset += g_gallery_archive[0].entryLocation;
         cd_read_async(g_gallery->readBuf, size, offset);
         if (g_cd_async_busy == 0) {
             g_gallery->state++;
@@ -857,7 +803,7 @@ s32 gallery_load_ui_assets(void)
         if (offset != 0) {
             offset /= 0x800;
         }
-        offset += g_gallery_archive_lba;
+        offset += g_gallery_archive[0].entryLocation;
         cd_read_async(buf, size, offset);
         if (g_cd_async_busy == 0) {
             g_gallery->subState++;
@@ -905,7 +851,7 @@ s32 gallery_load_ui_assets(void)
         if (offset != 0) {
             offset /= 0x800;
         }
-        offset += g_gallery_archive_lba;
+        offset += g_gallery_archive[0].entryLocation;
         cd_read_async(buf, size, offset);
         if (g_cd_async_busy == 0) {
             g_gallery->subState++;
@@ -953,7 +899,7 @@ s32 gallery_load_ui_assets(void)
         if (offset != 0) {
             offset /= 0x800;
         }
-        offset += g_gallery_archive_lba;
+        offset += g_gallery_archive[0].entryLocation;
         cd_read_async(buf, size, offset);
         if (g_cd_async_busy == 0) {
             g_gallery->subState++;
@@ -1248,3 +1194,13 @@ void gallery_draw_grid_and_ui(void)
         break;
     }
 }
+
+GalleryArchiveEntry g_gallery_archive[1] __attribute__((aligned(8)));
+u32 g_frame_count;
+s32 g_selected_image_idx;
+s32 g_cursor_pulse;
+s32 g_thumb_pulse;
+
+s8 g_image_unlock_flags[0x100];
+s8 g_image_viewed_flags[256];
+s32 g_archive_toc[0x200];

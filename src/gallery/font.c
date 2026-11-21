@@ -83,8 +83,8 @@ static u8 g_font_alt_palette_rgb[48] = {
     216,  48, 104, 144,  48,  48, 176, 168, 224, 112, 104, 200,
     248, 176, 240, 200,  96, 176,  96,  96, 104, 255, 255, 255,
 };
-extern PaletteColor g_font_alt_clut[16];
-extern PaletteColor g_font_cluts[17][16];
+extern PaletteColor g_font_alt_clut[32];
+extern PaletteColor g_font_cluts[20][16];
 extern u8 g_glyph_upload_buf[32][512];
 
 void font_build_gs_setup_packet(void *packetPtr)
@@ -274,3 +274,7 @@ void font_upload_default_cluts(void)
     glyph_cache_init();
     tex_upload_reset();
 }
+
+s8 *g_font_glyph_buf;
+PaletteColor g_font_cluts[20][16] __attribute__((aligned(64)));
+PaletteColor g_font_alt_clut[32] __attribute__((aligned(64)));

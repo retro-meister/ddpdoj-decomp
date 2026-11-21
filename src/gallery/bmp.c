@@ -8,7 +8,7 @@ typedef struct
     u16 biPlanes;
     u16 biBitCount;
     u8 unk_10[0x20];
-    u8 loadImage[0x40];
+    u8 loadImage[0x60];
 } BmpContext;
 
 typedef struct
@@ -267,3 +267,23 @@ void bmp_draw_ascii_char(void *packet, s32 x, s32 y, u8 glyphIndex)
                               ((u64)(s64)((y + 8) * 8 + 0x7900) << 16));
     }
 }
+
+s32 g_bmp_decode_pass;
+u32 g_bmp_chunk_height;
+s32 g_bmp_chunk_shift;
+s32 g_bmp_chunk_idx;
+u8 *g_bmp_upload_ptr;
+u32 g_bmp_dst_stride;
+u32 g_bmp_src_stride;
+u32 g_bmp_cpsm;
+u32 g_bmp_psm;
+u32 g_bmp_tbw;
+u8 *g_bmp_pixel_buf;
+u32 g_bmp_row;
+u32 g_bmp_col;
+u8 *g_bmp_dst_row;
+u8 *g_bmp_src_row;
+u8 *g_bmp_palette_ptr;
+u8 *g_bmp_info_ptr;
+u8 *g_bmp_file_ptr;
+BmpContext g_bmp_ctx;
