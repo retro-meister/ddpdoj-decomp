@@ -42,6 +42,11 @@ def decode(data, stages, layout):
             check(function is not None, "Missing start of code generation")
             stage = {"stage": name, "pcode": []}
             placements = {}
+            labels = {}
+        elif tag == b"WB3L":
+            block, label = words("II")
+            check(stage is not None and label != 0 and label not in labels, "Invalid PCode label record")
+            labels[label] = block
         elif tag == b"WB3P":
             block, ordinal, size, address, name_size = words("IIIII")
             check(stage is not None and ordinal == len(stage["pcode"]), "Unexpected PCode instruction")
@@ -71,10 +76,23 @@ def decode(data, stages, layout):
                 "block": block, "opcode": opcode, "mnemonic": mnemonic or f"op_{opcode}",
                 "flags": flags, "operands": operands,
             })
+        elif tag == b"WB3N":
+            index, size = words("II")
+            check(stage is not None and stage["pcode"] and 0 < size < 1024, "Invalid operand symbol record")
+            operands = stage["pcode"][-1]["operands"]
+            check(index < len(operands) and operands[index]["kind"] == 4, "Unexpected symbol operand")
+            check("symbol" not in operands[index], "Duplicate operand symbol")
+            operands[index]["symbol"] = take(size).decode("ascii", errors="backslashreplace")
         elif tag == b"WB3E":
             count, status = words("II")
             check(stage is not None and count == len(stage["pcode"]), "Incomplete PCode stage")
             check(status == 0, f"PCode capture hit limit {status}")
+            for instruction in stage["pcode"]:
+                for operand in instruction["operands"]:
+                    if operand["kind"] == 6:
+                        label = struct.unpack_from("<I", bytes.fromhex(operand["raw_hex"]), 2)[0]
+                        if label in labels:
+                            operand["target_block"] = labels[label]
             name = stage["stage"]
             function["pcode_stages"].append(stage)
             if name in ("before_schedule", "before_late_schedule"):
@@ -197,7 +215,14 @@ def pcode_text(functions):
                     elif operand["kind"] == 3:
                         operands.append(f"imm({operand['word_0e']:#x})")
                     elif operand["kind"] == 4:
-                        operands.append(f"ref({operand['offset']:+#x})")
+                        name = operand.get("symbol")
+                        offset = operand["offset"]
+                        if name:
+                            operands.append(f"{name}{offset:+#x}" if offset else name)
+                        else:
+                            operands.append(f"ref({offset:+#x})")
+                    elif operand["kind"] == 6 and "target_block" in operand:
+                        operands.append(f"block {operand['target_block']}")
                     else:
                         operands.append(f"kind{operand['kind']}")
                 suffix = " " + ", ".join(operands) if operands else ""

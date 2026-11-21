@@ -87,7 +87,7 @@ name_done:
     ret
 
 capture_pcode:
-    subl $48,%esp
+    subl $56,%esp
     movl %eax,8(%esp)
     call trace_handle
     movl $0x53334257,4(%esp) # WB3S
@@ -97,11 +97,32 @@ capture_pcode:
     movl first_block,%ebp
     xorl %esi,%esi
     xorl %ebx,%ebx
+    movl $0,48(%esp)
 block_loop:
     testl %ebp,%ebp
     je pcode_done
     cmpl $8192,%esi
     jae block_limit
+    # The backend links bound LabelRecords through block+8. Capture the
+    # association even for empty blocks, without following operand pointers.
+    movl 8(%ebp),%eax
+label_loop:
+    testl %eax,%eax
+    je block_instructions
+    cmpl $65536,48(%esp)
+    jae label_limit
+    incl 48(%esp)
+    movl $0x4c334257,4(%esp) # WB3L
+    movl %esi,8(%esp)
+    movl %eax,12(%esp)
+    movl (%eax),%eax
+    movl %eax,44(%esp)
+    leal 4(%esp),%ecx
+    movl $12,%edx
+    call write_record
+    movl 44(%esp),%eax
+    jmp label_loop
+block_instructions:
     movl 0x14(%ebp),%ecx
     movl %ecx,36(%esp)
 instruction_loop:
@@ -150,6 +171,8 @@ write_instruction:
     movl 36(%esp),%ecx
     movl 16(%esp),%edx
     call write_record
+    movl 36(%esp),%eax
+    call capture_operand_symbols
     incl %ebx
     movl 36(%esp),%ecx
     movl (%ecx),%ecx
@@ -168,6 +191,9 @@ instruction_limit:
 operand_limit:
     movl $3,%eax
     jmp pcode_end
+label_limit:
+    movl $4,%eax
+    jmp pcode_end
 pcode_done:
     xorl %eax,%eax
 pcode_end:
@@ -177,7 +203,77 @@ pcode_end:
     leal 4(%esp),%ecx
     movl $12,%edx
     call write_record
-    addl $48,%esp
+    addl $56,%esp
+    ret
+
+# Both profiles store a compiler object pointer at +6 of a tag-4 operand.
+# Read its interned name directly. This avoids calling the compiler's symbol
+# formatter, which can allocate and cache a mangled name.
+capture_operand_symbols:
+    pushl %esi
+    pushl %ebx
+    pushl %ebp
+    subl $32,%esp
+    leal pcode_size(%eax),%esi
+    movzwl pcode_count(%eax),%ebp
+    xorl %ebx,%ebx
+operand_symbol_loop:
+    cmpl %ebp,%ebx
+    jae operand_symbols_done
+    cmpb $4,(%esi)
+    jne operand_symbol_next
+    movl 6(%esi),%eax
+    movl $16,%ecx
+symbol_alias:
+    testl %eax,%eax
+    je operand_symbol_next
+    cmpb $6,2(%eax)
+    jne symbol_name
+    movl 0x28(%eax),%eax
+    decl %ecx
+    jnz symbol_alias
+    jmp operand_symbol_next
+symbol_name:
+    # Object types 0 through 5 and 8 carry an interned name at +8.
+    cmpb $5,2(%eax)
+    jbe symbol_base_name
+    cmpb $8,2(%eax)
+    jne operand_symbol_next
+symbol_base_name:
+    movl 8(%eax),%ecx
+    testl %ecx,%ecx
+    je operand_symbol_next
+    addl $10,%ecx
+    xorl %edx,%edx
+symbol_length:
+    cmpb $0,(%ecx,%edx)
+    je symbol_ready
+    incl %edx
+    cmpl $1024,%edx
+    jb symbol_length
+    jmp operand_symbol_next
+symbol_ready:
+    testl %edx,%edx
+    je operand_symbol_next
+    movl $0x4e334257,4(%esp) # WB3N
+    movl %ebx,8(%esp)
+    movl %edx,12(%esp)
+    movl %ecx,16(%esp)
+    leal 4(%esp),%ecx
+    movl $12,%edx
+    call write_record
+    movl 16(%esp),%ecx
+    movl 12(%esp),%edx
+    call write_record
+operand_symbol_next:
+    incl %ebx
+    addl $operand_size,%esi
+    jmp operand_symbol_loop
+operand_symbols_done:
+    addl $32,%esp
+    popl %ebp
+    popl %ebx
+    popl %esi
     ret
 
 choice:
