@@ -1,5 +1,5 @@
-extern unsigned char work_reg_0[2];
-extern unsigned char bcd_digits[4];
+#include "common.h"
+
 union DecimalResult {
     unsigned int word;
     unsigned short halfwords[2];
@@ -9,8 +9,8 @@ extern union DecimalResult bcd_result;
 
 void func_00201010(void)
 {
-    unsigned char low = work_reg_0[0];
-    unsigned char high = work_reg_0[1];
+    unsigned char low = work_reg_0.b[0];
+    unsigned char high = work_reg_0.b[1];
 
     bcd_result.word = 0;
     bcd_digits[0] = low & 15;
