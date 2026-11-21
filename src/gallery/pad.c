@@ -1,28 +1,27 @@
 #include "gallery/gallery.h"
 
-extern u16 D_0012B298;
-extern s8 D_0012B2A0[];
-extern u8 D_0012B2A8;
-extern u8 D_0012B2A9;
-extern u8 D_0012B2AA;
-extern u8 D_0012B2AC;
-extern u8 D_0012B2AD;
-extern u8 D_0012B2AE;
-extern u8 D_0012B2B0;
-extern u8 D_0012B2B4;
-extern u8 *D_0012B2D4;
-extern u32 D_0012B2D8;
-extern u8 D_0012B340[6];
-extern u8 D_0012B380[6];
+extern u16 g_arcade_coin_port;
+extern s8 g_arcade_input_port[];
+extern u8 g_p1_btn_map_a;
+extern u8 g_p1_btn_map_b;
+extern u8 g_p1_btn_map_c;
+extern u8 g_p2_btn_map_a;
+extern u8 g_p2_btn_map_b;
+extern u8 g_p2_btn_map_c;
+extern u8 g_pad_input_locked;
+extern u8 g_pad_tate_rotate;
+extern u8 *g_pad_port_dst;
+extern u32 g_pad_port_bits;
+extern u8 g_pad_act_align[6];
 
-extern u32 D_001A4F10[4];
-extern u32 D_001A4F20[4];
-extern u32 D_001A4F30[4];
-extern u32 D_001A4F40[4];
-extern u32 D_001A4F50[4];
-extern u32 D_001A4F60[4];
-extern u32 D_001A4F70[4];
-extern u32 D_001A4F80[4];
+extern u32 g_pad_unk_state[4];
+extern u32 g_pad_fast_repeat_timer[4];
+extern u32 g_pad_repeat_timer[4];
+extern u32 g_pad_prev_held[4];
+extern u32 g_pad_fast_repeat[4];
+extern u32 g_pad_repeat[4];
+extern u32 g_pad_trigger[4];
+extern u32 g_pad_held[4];
 extern u8 g_pad_dma_buf_0[0x100];
 extern u8 g_pad_dma_buf_1[0x100];
 
@@ -88,10 +87,10 @@ void pad_poll_hardware(void)
                     pad->padTypeFlag = 2;
                     break;
                 }
-                D_0012B340[0] = (D_0012B380[0] = (D_0012B380[1] = (D_0012B380[2] = (D_0012B380[3] = (D_0012B380[4] = (D_0012B380[5] = 0))))));
-                D_0012B340[2] = D_0012B340[3] = D_0012B340[4] = D_0012B340[5] = 0xFF;
-                D_0012B340[1] = 1;
-                if (scePadSetActAlign(port, 0, D_0012B340) != 0) {
+                g_pad_act_align[0] = (g_pad_act_direct[0] = (g_pad_act_direct[1] = (g_pad_act_direct[2] = (g_pad_act_direct[3] = (g_pad_act_direct[4] = (g_pad_act_direct[5] = 0))))));
+                g_pad_act_align[2] = g_pad_act_align[3] = g_pad_act_align[4] = g_pad_act_align[5] = 0xFF;
+                g_pad_act_align[1] = 1;
+                if (scePadSetActAlign(port, 0, g_pad_act_align) != 0) {
                     pad->state++;
                 }
                 break;
@@ -178,26 +177,26 @@ void pad_init_system(void)
 {
     memset(g_pads, 0, sizeof(g_pads));
 
-    D_001A4F80[2] = 0;
-    D_001A4F70[2] = 0;
-    D_001A4F60[2] = 0;
-    D_001A4F40[2] = 0;
-    D_001A4F30[2] = 0;
-    D_001A4F10[2] = 0;
+    g_pad_held[2] = 0;
+    g_pad_trigger[2] = 0;
+    g_pad_repeat[2] = 0;
+    g_pad_prev_held[2] = 0;
+    g_pad_repeat_timer[2] = 0;
+    g_pad_unk_state[2] = 0;
 
-    D_001A4F80[1] = 0;
-    D_001A4F70[1] = 0;
-    D_001A4F60[1] = 0;
-    D_001A4F40[1] = 0;
-    D_001A4F30[1] = 0;
-    D_001A4F10[1] = 0;
+    g_pad_held[1] = 0;
+    g_pad_trigger[1] = 0;
+    g_pad_repeat[1] = 0;
+    g_pad_prev_held[1] = 0;
+    g_pad_repeat_timer[1] = 0;
+    g_pad_unk_state[1] = 0;
 
-    D_001A4F80[0] = 0;
-    D_001A4F70[0] = 0;
-    D_001A4F60[0] = 0;
-    D_001A4F40[0] = 0;
-    D_001A4F30[0] = 0;
-    D_001A4F10[0] = 0;
+    g_pad_held[0] = 0;
+    g_pad_trigger[0] = 0;
+    g_pad_repeat[0] = 0;
+    g_pad_prev_held[0] = 0;
+    g_pad_repeat_timer[0] = 0;
+    g_pad_unk_state[0] = 0;
 
     scePadInit(0);
     scePadPortOpen(0, 0, g_pad_dma_buf_0);
@@ -212,7 +211,7 @@ void pad_update(void)
     pad_poll_hardware();
 
     for (padIndex = 0; padIndex < 3; padIndex++) {
-        D_001A4F10[padIndex] = 0;
+        g_pad_unk_state[padIndex] = 0;
 
         if (g_pads[padIndex].analogX > -64 && g_pads[padIndex].analogX < 64) {
             g_pads[padIndex].analogX = 0;
@@ -221,166 +220,166 @@ void pad_update(void)
             g_pads[padIndex].analogY = 0;
         }
 
-        D_001A4F80[padIndex] = g_pads[padIndex].rawButtons;
+        g_pad_held[padIndex] = g_pads[padIndex].rawButtons;
         if (g_pads[padIndex].analogX < 0) {
-            D_001A4F80[padIndex] |= 0x8000;
+            g_pad_held[padIndex] |= 0x8000;
         }
         if (g_pads[padIndex].analogX > 0) {
-            D_001A4F80[padIndex] |= 0x2000;
+            g_pad_held[padIndex] |= 0x2000;
         }
         if (g_pads[padIndex].analogY < 0) {
-            D_001A4F80[padIndex] |= 0x1000;
+            g_pad_held[padIndex] |= 0x1000;
         }
         if (g_pads[padIndex].analogY > 0) {
-            D_001A4F80[padIndex] |= 0x4000;
+            g_pad_held[padIndex] |= 0x4000;
         }
 
-        if (D_0012B2B4 != 0) {
-            buttons = D_001A4F80[padIndex];
-            D_001A4F80[padIndex] = buttons & 0xFFF;
+        if (g_pad_tate_rotate != 0) {
+            buttons = g_pad_held[padIndex];
+            g_pad_held[padIndex] = buttons & 0xFFF;
             if (buttons & 0x1000) {
-                D_001A4F80[padIndex] |= 0x8000;
+                g_pad_held[padIndex] |= 0x8000;
             }
             if (buttons & 0x4000) {
-                D_001A4F80[padIndex] |= 0x2000;
+                g_pad_held[padIndex] |= 0x2000;
             }
             if (buttons & 0x2000) {
-                D_001A4F80[padIndex] |= 0x1000;
+                g_pad_held[padIndex] |= 0x1000;
             }
             if (buttons & 0x8000) {
-                D_001A4F80[padIndex] |= 0x4000;
+                g_pad_held[padIndex] |= 0x4000;
             }
         }
 
-        if (D_001A4F80[padIndex] == 0) {
-            D_001A4F30[padIndex] = 0;
-            D_001A4F60[padIndex] = 0;
-            D_001A4F20[padIndex] = 0;
-            D_001A4F50[padIndex] = 0;
+        if (g_pad_held[padIndex] == 0) {
+            g_pad_repeat_timer[padIndex] = 0;
+            g_pad_repeat[padIndex] = 0;
+            g_pad_fast_repeat_timer[padIndex] = 0;
+            g_pad_fast_repeat[padIndex] = 0;
         }
 
-        if (D_001A4F80[padIndex] == D_001A4F40[padIndex]) {
-            D_001A4F30[padIndex]++;
-            if (D_001A4F30[padIndex] > 10) {
-                D_001A4F60[padIndex] = D_001A4F80[padIndex];
-                D_001A4F30[padIndex] = 0;
+        if (g_pad_held[padIndex] == g_pad_prev_held[padIndex]) {
+            g_pad_repeat_timer[padIndex]++;
+            if (g_pad_repeat_timer[padIndex] > 10) {
+                g_pad_repeat[padIndex] = g_pad_held[padIndex];
+                g_pad_repeat_timer[padIndex] = 0;
             } else {
-                D_001A4F60[padIndex] = 0;
+                g_pad_repeat[padIndex] = 0;
             }
 
-            D_001A4F20[padIndex]++;
-            if (D_001A4F20[padIndex] > 10) {
-                D_001A4F50[padIndex] = D_001A4F80[padIndex];
-                if (D_001A4F20[padIndex] > 14) {
-                    D_001A4F20[padIndex] = 10;
+            g_pad_fast_repeat_timer[padIndex]++;
+            if (g_pad_fast_repeat_timer[padIndex] > 10) {
+                g_pad_fast_repeat[padIndex] = g_pad_held[padIndex];
+                if (g_pad_fast_repeat_timer[padIndex] > 14) {
+                    g_pad_fast_repeat_timer[padIndex] = 10;
                 }
             } else {
-                D_001A4F50[padIndex] = 0;
+                g_pad_fast_repeat[padIndex] = 0;
             }
-        } else if (D_001A4F40[padIndex] == 0) {
-            D_001A4F60[padIndex] = D_001A4F80[padIndex];
-            D_001A4F30[padIndex] = 0;
-            D_001A4F50[padIndex] = D_001A4F80[padIndex];
-            D_001A4F20[padIndex] = 0;
+        } else if (g_pad_prev_held[padIndex] == 0) {
+            g_pad_repeat[padIndex] = g_pad_held[padIndex];
+            g_pad_repeat_timer[padIndex] = 0;
+            g_pad_fast_repeat[padIndex] = g_pad_held[padIndex];
+            g_pad_fast_repeat_timer[padIndex] = 0;
         } else {
-            D_001A4F30[padIndex]++;
-            if (D_001A4F30[padIndex] > 10) {
-                D_001A4F60[padIndex] = D_001A4F80[padIndex];
-                D_001A4F30[padIndex] = 0;
+            g_pad_repeat_timer[padIndex]++;
+            if (g_pad_repeat_timer[padIndex] > 10) {
+                g_pad_repeat[padIndex] = g_pad_held[padIndex];
+                g_pad_repeat_timer[padIndex] = 0;
             } else {
-                D_001A4F60[padIndex] = 0;
+                g_pad_repeat[padIndex] = 0;
             }
 
-            D_001A4F20[padIndex]++;
-            if (D_001A4F20[padIndex] > 10) {
-                D_001A4F50[padIndex] = D_001A4F80[padIndex];
-                D_001A4F20[padIndex] = 10;
+            g_pad_fast_repeat_timer[padIndex]++;
+            if (g_pad_fast_repeat_timer[padIndex] > 10) {
+                g_pad_fast_repeat[padIndex] = g_pad_held[padIndex];
+                g_pad_fast_repeat_timer[padIndex] = 10;
             } else {
-                D_001A4F50[padIndex] = 0;
+                g_pad_fast_repeat[padIndex] = 0;
             }
         }
 
-        D_001A4F70[padIndex] = D_001A4F40[padIndex] ^ D_001A4F80[padIndex];
-        D_001A4F70[padIndex] &= D_001A4F80[padIndex];
-        D_001A4F40[padIndex] = D_001A4F80[padIndex];
+        g_pad_trigger[padIndex] = g_pad_prev_held[padIndex] ^ g_pad_held[padIndex];
+        g_pad_trigger[padIndex] &= g_pad_held[padIndex];
+        g_pad_prev_held[padIndex] = g_pad_held[padIndex];
 
-        if (D_001A4F50[padIndex] & 0x5000) {
-            D_001A4F50[padIndex] = 0;
-            D_001A4F20[padIndex] = 0;
+        if (g_pad_fast_repeat[padIndex] & 0x5000) {
+            g_pad_fast_repeat[padIndex] = 0;
+            g_pad_fast_repeat_timer[padIndex] = 0;
         }
     }
 
-    D_0012B2D4 = (u8 *)D_0012B2A0;
-    D_0012B2D8 = 0;
-    buttons = D_001A4F80[0];
+    g_pad_port_dst = (u8 *)g_arcade_input_port;
+    g_pad_port_bits = 0;
+    buttons = g_pad_held[0];
     if (buttons & 0x800) {
-        *(u8 *)&D_0012B2D8 |= 0x01;
+        *(u8 *)&g_pad_port_bits |= 0x01;
     }
     if (buttons & 0x1000) {
-        *(u8 *)&D_0012B2D8 |= 0x02;
+        *(u8 *)&g_pad_port_bits |= 0x02;
     }
     if (buttons & 0x4000) {
-        *(u8 *)&D_0012B2D8 |= 0x04;
+        *(u8 *)&g_pad_port_bits |= 0x04;
     }
     if (buttons & 0x8000) {
-        *(u8 *)&D_0012B2D8 |= 0x08;
+        *(u8 *)&g_pad_port_bits |= 0x08;
     }
     if (buttons & 0x2000) {
-        *(u8 *)&D_0012B2D8 |= 0x10;
+        *(u8 *)&g_pad_port_bits |= 0x10;
     }
-    if (buttons & (1 << D_0012B2A8)) {
-        *(u8 *)&D_0012B2D8 |= 0x20;
+    if (buttons & (1 << g_p1_btn_map_a)) {
+        *(u8 *)&g_pad_port_bits |= 0x20;
     }
-    if (buttons & (1 << D_0012B2A9)) {
-        *(u8 *)&D_0012B2D8 |= 0x40;
+    if (buttons & (1 << g_p1_btn_map_b)) {
+        *(u8 *)&g_pad_port_bits |= 0x40;
     }
-    if (buttons & (1 << D_0012B2AA)) {
-        *(u8 *)&D_0012B2D8 |= 0x80;
+    if (buttons & (1 << g_p1_btn_map_c)) {
+        *(u8 *)&g_pad_port_bits |= 0x80;
     }
-    *D_0012B2D4 = ~*(u8 *)&D_0012B2D8;
-    D_0012B2D4++;
+    *g_pad_port_dst = ~*(u8 *)&g_pad_port_bits;
+    g_pad_port_dst++;
 
-    D_0012B2D8 = 0;
-    buttons = D_001A4F80[1];
+    g_pad_port_bits = 0;
+    buttons = g_pad_held[1];
     if (buttons & 0x800) {
-        *(u8 *)&D_0012B2D8 |= 0x01;
+        *(u8 *)&g_pad_port_bits |= 0x01;
     }
     if (buttons & 0x1000) {
-        *(u8 *)&D_0012B2D8 |= 0x02;
+        *(u8 *)&g_pad_port_bits |= 0x02;
     }
     if (buttons & 0x4000) {
-        *(u8 *)&D_0012B2D8 |= 0x04;
+        *(u8 *)&g_pad_port_bits |= 0x04;
     }
     if (buttons & 0x8000) {
-        *(u8 *)&D_0012B2D8 |= 0x08;
+        *(u8 *)&g_pad_port_bits |= 0x08;
     }
     if (buttons & 0x2000) {
-        *(u8 *)&D_0012B2D8 |= 0x10;
+        *(u8 *)&g_pad_port_bits |= 0x10;
     }
-    if (buttons & (1 << D_0012B2AC)) {
-        *(u8 *)&D_0012B2D8 |= 0x20;
+    if (buttons & (1 << g_p2_btn_map_a)) {
+        *(u8 *)&g_pad_port_bits |= 0x20;
     }
-    if (buttons & (1 << D_0012B2AD)) {
-        *(u8 *)&D_0012B2D8 |= 0x40;
+    if (buttons & (1 << g_p2_btn_map_b)) {
+        *(u8 *)&g_pad_port_bits |= 0x40;
     }
-    if (buttons & (1 << D_0012B2AE)) {
-        *(u8 *)&D_0012B2D8 |= 0x80;
+    if (buttons & (1 << g_p2_btn_map_c)) {
+        *(u8 *)&g_pad_port_bits |= 0x80;
     }
-    *D_0012B2D4 = ~*(u8 *)&D_0012B2D8;
+    *g_pad_port_dst = ~*(u8 *)&g_pad_port_bits;
 
-    D_0012B2D4 = (u8 *)&D_0012B298;
-    D_0012B2D8 = 0;
-    if (D_001A4F80[0] & 0x100) {
-        *(u8 *)&D_0012B2D8 |= 0x01;
+    g_pad_port_dst = (u8 *)&g_arcade_coin_port;
+    g_pad_port_bits = 0;
+    if (g_pad_held[0] & 0x100) {
+        *(u8 *)&g_pad_port_bits |= 0x01;
     }
-    if (D_001A4F80[1] & 0x100) {
-        *(u8 *)&D_0012B2D8 |= 0x02;
+    if (g_pad_held[1] & 0x100) {
+        *(u8 *)&g_pad_port_bits |= 0x02;
     }
-    *(u16 *)D_0012B2D4 = ~*(u16 *)&D_0012B2D8;
+    *(u16 *)g_pad_port_dst = ~*(u16 *)&g_pad_port_bits;
 
-    if (D_0012B2B0 != 0) {
-        D_0012B2A0[0] = D_0012B2A0[1] = D_0012B2A0[2] = D_0012B2A0[3] =
-            D_0012B2A0[4] = D_0012B2A0[5] = D_0012B2A0[6] = D_0012B2A0[7] = -1;
+    if (g_pad_input_locked != 0) {
+        g_arcade_input_port[0] = g_arcade_input_port[1] = g_arcade_input_port[2] = g_arcade_input_port[3] =
+            g_arcade_input_port[4] = g_arcade_input_port[5] = g_arcade_input_port[6] = g_arcade_input_port[7] = -1;
         gallery_reset_slot_states();
     }
 }

@@ -20,25 +20,25 @@ typedef struct
     u64 tex0;
 } TexInfo;
 
-extern u16 D_00128AE0[];
-extern u8 *D_0012B3E4;
-extern u8 *D_0012B3E8;
-extern u8 *D_0012B3EC;
-extern u8 *D_0012B3F0;
-extern u8 *D_0012B3F4;
-extern u32 D_0012B3F8;
-extern u32 D_0012B3FC;
-extern u8 *D_0012B400;
-extern u32 D_0012B404;
-extern u32 D_0012B408;
-extern u32 D_0012B40C;
-extern u32 D_0012B410;
-extern u32 D_0012B414;
-extern u8 *D_0012B418;
-extern s32 D_0012B41C;
-extern s32 D_0012B420;
-extern u32 D_0012B424;
-extern s32 D_0012B428;
+extern u16 g_ascii_glyph_table[];
+extern u8 *g_bmp_file_ptr;
+extern u8 *g_bmp_info_ptr;
+extern u8 *g_bmp_palette_ptr;
+extern u8 *g_bmp_src_row;
+extern u8 *g_bmp_dst_row;
+extern u32 g_bmp_col;
+extern u32 g_bmp_row;
+extern u8 *g_bmp_pixel_buf;
+extern u32 g_bmp_tbw;
+extern u32 g_bmp_psm;
+extern u32 g_bmp_cpsm;
+extern u32 g_bmp_src_stride;
+extern u32 g_bmp_dst_stride;
+extern u8 *g_bmp_upload_ptr;
+extern s32 g_bmp_chunk_idx;
+extern s32 g_bmp_chunk_shift;
+extern u32 g_bmp_chunk_height;
+extern s32 g_bmp_decode_pass;
 extern BmpContext g_bmp_ctx;
 
 s32 bmp_upload_texture(void *texPtr, s16 tbp, s16 cbp, u8 *bmp, s32 x, s32 y)
@@ -54,96 +54,96 @@ s32 bmp_upload_texture(void *texPtr, s16 tbp, s16 cbp, u8 *bmp, s32 x, s32 y)
     u64 chunkHeight;
     switch (g_gallery->stepState) {
         case 0:
-            D_0012B3E4 = bmp;
-            D_0012B3E8 = bmp + 0xE;
-            memcpy(&g_bmp_ctx, D_0012B3E8, 0x28);
-            D_0012B410 = (((g_bmp_ctx.biWidth * g_bmp_ctx.biBitCount) >> 3) + 3) & (~3);
-            D_0012B3EC = D_0012B3E8 + 0x28;
-            D_0012B414 = D_0012B410;
+            g_bmp_file_ptr = bmp;
+            g_bmp_info_ptr = bmp + 0xE;
+            memcpy(&g_bmp_ctx, g_bmp_info_ptr, 0x28);
+            g_bmp_src_stride = (((g_bmp_ctx.biWidth * g_bmp_ctx.biBitCount) >> 3) + 3) & (~3);
+            g_bmp_palette_ptr = g_bmp_info_ptr + 0x28;
+            g_bmp_dst_stride = g_bmp_src_stride;
             memcpy(&offBits, bmp + 0xA, 4);
-            D_0012B3F0 = bmp + offBits;
-            D_0012B3F0 += (g_bmp_ctx.biHeight - 1) * D_0012B410;
-            D_0012B400 = g_gallery->bmpScratchBuf;
-            D_0012B3F4 = D_0012B400;
+            g_bmp_src_row = bmp + offBits;
+            g_bmp_src_row += (g_bmp_ctx.biHeight - 1) * g_bmp_src_stride;
+            g_bmp_pixel_buf = g_gallery->bmpScratchBuf;
+            g_bmp_dst_row = g_bmp_pixel_buf;
             if (g_bmp_ctx.biBitCount < 16) {
-                D_0012B408 = (g_bmp_ctx.biBitCount == 4) ? (0x14) : (0x13);
-                D_0012B40C = 0;
+                g_bmp_psm = (g_bmp_ctx.biBitCount == 4) ? (0x14) : (0x13);
+                g_bmp_cpsm = 0;
             } else {
                 if (g_bmp_ctx.biBitCount == 16) {
-                    D_0012B408 = 2;
+                    g_bmp_psm = 2;
                 } else if (g_bmp_ctx.biBitCount == 24) {
-                    D_0012B408 = 1;
+                    g_bmp_psm = 1;
                 } else {
-                    D_0012B408 = 0;
+                    g_bmp_psm = 0;
                 }
-                D_0012B40C = 0;
+                g_bmp_cpsm = 0;
             }
-            D_0012B428 = 0;
+            g_bmp_decode_pass = 0;
             g_gallery->stepState++;
             break;
 
         case 1:
             switch (g_bmp_ctx.biBitCount) {
                 case 4:
-                    for (D_0012B3FC = 0; D_0012B3FC < (g_bmp_ctx.biHeight / 8); D_0012B3FC++) {
-                        src = D_0012B3F0;
-                        dst = D_0012B3F4;
-                        for (D_0012B3F8 = 0; D_0012B3F8 < D_0012B410; D_0012B3F8++) {
+                    for (g_bmp_row = 0; g_bmp_row < (g_bmp_ctx.biHeight / 8); g_bmp_row++) {
+                        src = g_bmp_src_row;
+                        dst = g_bmp_dst_row;
+                        for (g_bmp_col = 0; g_bmp_col < g_bmp_src_stride; g_bmp_col++) {
                             *(dst++) = ((*src) << 4) | ((*src) >> 4);
                             src++;
                         }
 
-                        D_0012B3F0 -= D_0012B410;
-                        D_0012B3F4 += D_0012B414;
+                        g_bmp_src_row -= g_bmp_src_stride;
+                        g_bmp_dst_row += g_bmp_dst_stride;
                     }
 
                     break;
 
                 case 8:
-                    for (D_0012B3FC = 0; D_0012B3FC < (g_bmp_ctx.biHeight / 8); D_0012B3FC++) {
-                        memcpy(D_0012B3F4, D_0012B3F0, D_0012B410);
-                        D_0012B3F0 -= D_0012B410;
-                        D_0012B3F4 += D_0012B414;
+                    for (g_bmp_row = 0; g_bmp_row < (g_bmp_ctx.biHeight / 8); g_bmp_row++) {
+                        memcpy(g_bmp_dst_row, g_bmp_src_row, g_bmp_src_stride);
+                        g_bmp_src_row -= g_bmp_src_stride;
+                        g_bmp_dst_row += g_bmp_dst_stride;
                     }
 
                     break;
             }
 
-            if ((++D_0012B428) >= 8) {
+            if ((++g_bmp_decode_pass) >= 8) {
                 g_gallery->stepState++;
             }
             break;
 
         case 2:
-            D_0012B404 = (g_bmp_ctx.biWidth / 64) + ((g_bmp_ctx.biWidth % 64) != 0);
+            g_bmp_tbw = (g_bmp_ctx.biWidth / 64) + ((g_bmp_ctx.biWidth % 64) != 0);
             if (g_bmp_ctx.biBitCount < 16) {
-                if (D_0012B404 & 1) {
-                    D_0012B404++;
+                if (g_bmp_tbw & 1) {
+                    g_bmp_tbw++;
                 }
             }
-            D_0012B420 = 0;
+            g_bmp_chunk_shift = 0;
             do {
-                D_0012B420++;
-                D_0012B424 = g_bmp_ctx.biHeight >> D_0012B420;
-            } while ((D_0012B410 * D_0012B424) > 0x7FFF0);
-            D_0012B41C = 0;
-            D_0012B418 = D_0012B400;
+                g_bmp_chunk_shift++;
+                g_bmp_chunk_height = g_bmp_ctx.biHeight >> g_bmp_chunk_shift;
+            } while ((g_bmp_src_stride * g_bmp_chunk_height) > 0x7FFF0);
+            g_bmp_chunk_idx = 0;
+            g_bmp_upload_ptr = g_bmp_pixel_buf;
             g_gallery->stepState++;
 
         case 3:
-            sceGsSetDefLoadImage(&g_bmp_ctx.loadImage, tbp, D_0012B404, D_0012B408, x, y + (D_0012B424 * D_0012B41C), g_bmp_ctx.biWidth, D_0012B424);
+            sceGsSetDefLoadImage(&g_bmp_ctx.loadImage, tbp, g_bmp_tbw, g_bmp_psm, x, y + (g_bmp_chunk_height * g_bmp_chunk_idx), g_bmp_ctx.biWidth, g_bmp_chunk_height);
             FlushCache(0);
-            sceGsExecLoadImage(&g_bmp_ctx.loadImage, D_0012B418);
+            sceGsExecLoadImage(&g_bmp_ctx.loadImage, g_bmp_upload_ptr);
             sceGsSyncPath(0, 0);
-            D_0012B418 += ((th = (chunkHeight = D_0012B424)) * D_0012B410) & (~0xF);
-            if ((++D_0012B41C) >= (1 << D_0012B420)) {
+            g_bmp_upload_ptr += ((th = (chunkHeight = g_bmp_chunk_height)) * g_bmp_src_stride) & (~0xF);
+            if ((++g_bmp_chunk_idx) >= (1 << g_bmp_chunk_shift)) {
                 g_gallery->stepState++;
             }
             break;
 
         case 4:
             if (g_bmp_ctx.biBitCount < 16) {
-                bmp_upload_clut(cbp, D_0012B3EC, (g_bmp_ctx.biBitCount == 4) ? (0x10) : (0x100));
+                bmp_upload_clut(cbp, g_bmp_palette_ptr, (g_bmp_ctx.biBitCount == 4) ? (0x10) : (0x100));
             }
             g_gallery->stepState++;
             break;
@@ -163,7 +163,7 @@ s32 bmp_upload_texture(void *texPtr, s16 tbp, s16 cbp, u8 *bmp, s32 x, s32 y)
                 th++;
             }
 
-            tex->tex0 = (((((((((u64)tbp) | (((u64)D_0012B404) << 14)) | (((u64)D_0012B408) << 20)) | (((u64)tw) << 26)) | (((u64)th) << 30)) | (((u64)1) << 34)) | (((u64)cbp) << 37)) | (((u64)D_0012B40C) << 51)) | (((u64)1) << 61);
+            tex->tex0 = (((((((((u64)tbp) | (((u64)g_bmp_tbw) << 14)) | (((u64)g_bmp_psm) << 20)) | (((u64)tw) << 26)) | (((u64)th) << 30)) | (((u64)1) << 34)) | (((u64)cbp) << 37)) | (((u64)g_bmp_cpsm) << 51)) | (((u64)1) << 61);
             tex->x = x;
             tex->y = y;
             tex->w = g_bmp_ctx.biWidth;
@@ -229,7 +229,7 @@ void bmp_draw_ascii_char(void *packet, s32 x, s32 y, u8 glyphIndex)
     s64 screenLeft;
     s64 screenRight;
 
-    firstGlyph = D_00128AE0[glyphIndex];
+    firstGlyph = g_ascii_glyph_table[glyphIndex];
     glyphs[0] = firstGlyph;
     glyphs[1] = firstGlyph + 16;
 

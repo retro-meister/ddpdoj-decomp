@@ -83,8 +83,8 @@ static u8 g_font_alt_palette_rgb[48] = {
     216,  48, 104, 144,  48,  48, 176, 168, 224, 112, 104, 200,
     248, 176, 240, 200,  96, 176,  96,  96, 104, 255, 255, 255,
 };
-extern PaletteColor D_00132900[16];
-extern PaletteColor D_00132980[17][16];
+extern PaletteColor g_font_alt_clut[16];
+extern PaletteColor g_font_cluts[17][16];
 extern u8 g_glyph_upload_buf[32][512];
 
 void font_build_gs_setup_packet(void *packetPtr)
@@ -145,8 +145,8 @@ void font_init_clut_table(void)
 
     for (colorIndex = 0; colorIndex < 16; colorIndex++) {
         column = g_font_luma_table[colorIndex];
-        D_00132980[0][colorIndex].red = (D_00132980[0][colorIndex].green = (D_00132980[0][colorIndex].blue = column));
-        D_00132980[0][colorIndex].alpha = g_font_alpha_table[colorIndex];
+        g_font_cluts[0][colorIndex].red = (g_font_cluts[0][colorIndex].green = (g_font_cluts[0][colorIndex].blue = column));
+        g_font_cluts[0][colorIndex].alpha = g_font_alpha_table[colorIndex];
     }
 
     paletteIndex = 1;
@@ -164,13 +164,13 @@ second_palette:
     }
 
     for (rgbOffset = 0, colorIndex = 0; colorIndex < 16; colorIndex++) {
-        D_00132900[colorIndex].red = g_font_alt_palette_rgb[rgbOffset++];
-        D_00132900[colorIndex].green = g_font_alt_palette_rgb[rgbOffset++];
-        D_00132900[colorIndex].blue = g_font_alt_palette_rgb[rgbOffset++];
+        g_font_alt_clut[colorIndex].red = g_font_alt_palette_rgb[rgbOffset++];
+        g_font_alt_clut[colorIndex].green = g_font_alt_palette_rgb[rgbOffset++];
+        g_font_alt_clut[colorIndex].blue = g_font_alt_palette_rgb[rgbOffset++];
         if (colorIndex == 0) {
-            D_00132900[colorIndex].alpha = 0;
+            g_font_alt_clut[colorIndex].alpha = 0;
         } else {
-            D_00132900[colorIndex].alpha = 0x80;
+            g_font_alt_clut[colorIndex].alpha = 0x80;
         }
     }
 
@@ -186,17 +186,17 @@ void font_upload_clut(s32 paletteIndex)
     s32 i;
 
     for (i = 0; i < 8; i++) {
-        D_00132980[paletteIndex][i].red = (g_font_alt_luma_table[i] * g_font_palette_rgb[paletteIndex][0]) / 6;
-        D_00132980[paletteIndex][i].green = (g_font_alt_luma_table[i] * g_font_palette_rgb[paletteIndex][1]) / 6;
-        D_00132980[paletteIndex][i].blue = (g_font_alt_luma_table[i] * g_font_palette_rgb[paletteIndex][2]) / 6;
-        D_00132980[paletteIndex][i].alpha = g_font_outline_alpha_table[i];
+        g_font_cluts[paletteIndex][i].red = (g_font_alt_luma_table[i] * g_font_palette_rgb[paletteIndex][0]) / 6;
+        g_font_cluts[paletteIndex][i].green = (g_font_alt_luma_table[i] * g_font_palette_rgb[paletteIndex][1]) / 6;
+        g_font_cluts[paletteIndex][i].blue = (g_font_alt_luma_table[i] * g_font_palette_rgb[paletteIndex][2]) / 6;
+        g_font_cluts[paletteIndex][i].alpha = g_font_outline_alpha_table[i];
     }
 
     for (i = 8; i < 16; i++) {
-        D_00132980[paletteIndex][i].red = (g_font_palette_rgb[0][0] * g_font_alt_luma_table[i]) / 6;
-        D_00132980[paletteIndex][i].green = (g_font_palette_rgb[0][1] * g_font_alt_luma_table[i]) / 6;
-        D_00132980[paletteIndex][i].blue = (g_font_palette_rgb[0][2] * g_font_alt_luma_table[i]) / 6;
-        D_00132980[paletteIndex][i].alpha = 0x80;
+        g_font_cluts[paletteIndex][i].red = (g_font_palette_rgb[0][0] * g_font_alt_luma_table[i]) / 6;
+        g_font_cluts[paletteIndex][i].green = (g_font_palette_rgb[0][1] * g_font_alt_luma_table[i]) / 6;
+        g_font_cluts[paletteIndex][i].blue = (g_font_palette_rgb[0][2] * g_font_alt_luma_table[i]) / 6;
+        g_font_cluts[paletteIndex][i].alpha = 0x80;
     }
 }
 
@@ -208,17 +208,17 @@ void font_upload_alt_clut(s32 paletteIndex)
 
     for (i = 0; i < 8; i++) {
         gray = g_font_alt_alpha_table[i];
-        D_00132980[paletteIndex][i].red = gray;
-        D_00132980[paletteIndex][i].green = gray;
-        D_00132980[paletteIndex][i].blue = gray;
-        D_00132980[paletteIndex][i].alpha = g_font_alpha_table[i];
+        g_font_cluts[paletteIndex][i].red = gray;
+        g_font_cluts[paletteIndex][i].green = gray;
+        g_font_cluts[paletteIndex][i].blue = gray;
+        g_font_cluts[paletteIndex][i].alpha = g_font_alpha_table[i];
     }
 
     for (j = 8; j < 16; j++) {
-        D_00132980[paletteIndex][j].red = (g_font_alt_alpha_table[j] * g_font_palette_rgb[paletteIndex][0]) / 6;
-        D_00132980[paletteIndex][j].green = (g_font_alt_alpha_table[j] * g_font_palette_rgb[paletteIndex][1]) / 6;
-        D_00132980[paletteIndex][j].blue = (g_font_alt_alpha_table[j] * g_font_palette_rgb[paletteIndex][2]) / 6;
-        D_00132980[paletteIndex][j].alpha = g_font_alpha_table[j];
+        g_font_cluts[paletteIndex][j].red = (g_font_alt_alpha_table[j] * g_font_palette_rgb[paletteIndex][0]) / 6;
+        g_font_cluts[paletteIndex][j].green = (g_font_alt_alpha_table[j] * g_font_palette_rgb[paletteIndex][1]) / 6;
+        g_font_cluts[paletteIndex][j].blue = (g_font_alt_alpha_table[j] * g_font_palette_rgb[paletteIndex][2]) / 6;
+        g_font_cluts[paletteIndex][j].alpha = g_font_alpha_table[j];
     }
 }
 
@@ -230,7 +230,7 @@ void font_init(void)
 
     font_init_clut_table();
     entryIndex = 0;
-    galleryEntry = (u8 *)D_00132980;
+    galleryEntry = (u8 *)g_font_cluts;
     do {
         new_var = (s64)(entryIndex + 0x37E8);
         sceGsSetDefLoadImage(g_gs_load_image, new_var, 1, 0, 0, 0, 8, 2);
@@ -243,7 +243,7 @@ void font_init(void)
 
     sceGsSetDefLoadImage(g_gs_load_image, 0x37FA, 1, 0, 0, 0, 8, 2);
     FlushCache(0);
-    sceGsExecLoadImage(g_gs_load_image, D_00132900);
+    sceGsExecLoadImage(g_gs_load_image, g_font_alt_clut);
     sceGsSyncPath(0, 0);
     glyph_cache_init();
 }
@@ -259,7 +259,7 @@ void font_upload_default_cluts(void)
     g_font_glyph_buf = g_vram_load_buf;
     font_init_clut_table();
 
-    resourceBuffer = D_00132980;
+    resourceBuffer = g_font_cluts;
     for (resourceIndex = 0; resourceIndex < 17; resourceIndex++, resourceBuffer++) {
         sceGsSetDefLoadImage(g_gs_load_image, (s16)(0x37E8 + resourceIndex), 1, 0, 0, 0, 8, 2);
         FlushCache(0);
@@ -269,7 +269,7 @@ void font_upload_default_cluts(void)
 
     sceGsSetDefLoadImage(g_gs_load_image, 0x37FA, 1, 0, 0, 0, 8, 2);
     FlushCache(0);
-    sceGsExecLoadImage(g_gs_load_image, D_00132900);
+    sceGsExecLoadImage(g_gs_load_image, g_font_alt_clut);
     sceGsSyncPath(0, 0);
     glyph_cache_init();
     tex_upload_reset();

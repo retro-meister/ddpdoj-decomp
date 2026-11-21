@@ -13,11 +13,6 @@ typedef struct {
     s32 unk24;
 } BgmFadeState;
 
-typedef struct {
-    s32 first;
-    s32 second;
-} GalleryEntry;
-
 static char g_se_vag_path_1[0x40] = "\\DATA\\SE1.VAG;1";
 static char g_se_vag_path_2[0x40] = "\\DATA\\SE2.VAG;1";
 static char g_se_vag_path_3[0x40] = "\\DATA\\SE3.VAG;1";
@@ -78,15 +73,14 @@ static const char *g_data_file_paths[16] = {
     0,
     0,
 };
-extern s32 D_0012B2DC;
-extern s32 D_0012B2E0;
-extern s32 D_0012B2E4;
-extern u8 D_0012B2E8;
-extern s8 D_0012B2EC;
+extern s32 g_se_priority;
+extern s32 g_se_volume;
+extern s32 g_se_last_result;
+extern u8 g_bgm_fade_active;
+extern s8 g_bgm_stop_pending;
 extern BgmFadeState g_bgm_fade_state[2];
-extern GalleryEntry D_00132620[];
-extern GalleryEntry D_001326C0[];
-extern GalleryEntry D_00132760[];
+extern CdFileEntry g_stage_bg_files[12];
+extern CdFileEntry g_bgm_files[16];
 extern s32 g_sound_rpc_client[12];
 extern s32 g_sound_rpc_buf[16];
 
@@ -124,7 +118,7 @@ void sound_update_bgm_fade(void)
             printf("-[%d]-----osimai------\n", g_bgm_fade_state[channel].curVol);
 
             if (g_bgm_fade_state[channel].fadeMode == 3) {
-                D_0012B2E8 = 0;
+                g_bgm_fade_active = 0;
             }
 
             if (g_bgm_fade_state[channel].fadeMode == 2) {
@@ -180,7 +174,7 @@ void sound_update(void)
     g_sound_rpc_buf[1] = 0;
     sceSifCallRpc(g_sound_rpc_client, 0x530, 0, g_sound_rpc_buf, 0x10, g_sound_rpc_buf, 0x40, 0, 0);
 
-    if (D_0012B2EC != 0) {
+    if (g_bgm_stop_pending != 0) {
         g_sound_rpc_buf[0] = 0;
         g_sound_rpc_buf[1] = 0;
         sceSifCallRpc(g_sound_rpc_client, 0x100, 0, g_sound_rpc_buf, 0x10, g_sound_rpc_buf, 0x40, 0, 0);
@@ -189,7 +183,7 @@ void sound_update(void)
             g_sound_rpc_buf[0] = 0;
             g_sound_rpc_buf[1] = 0;
             sceSifCallRpc(g_sound_rpc_client, 0x150, 0, g_sound_rpc_buf, 0x10, g_sound_rpc_buf, 0x40, 0, 0);
-            D_0012B2EC = 0;
+            g_bgm_stop_pending = 0;
             g_bgm_fade_state[0].unk00 = 0;
             g_bgm_fade_state[0].unk04 = 0;
         }
@@ -205,22 +199,22 @@ void sound_init(void)
 
 void sound_play_cursor_se(void)
 {
-    D_0012B2E0 = 0x94;
-    D_0012B2DC = 6;
+    g_se_volume = 0x94;
+    g_se_priority = 6;
     sound_play_se(0x37);
 }
 
 void sound_play_page_se(void)
 {
-    D_0012B2E0 = 0x80;
-    D_0012B2DC = 6;
+    g_se_volume = 0x80;
+    g_se_priority = 6;
     sound_play_se(0x14);
 }
 
 void sound_play_confirm_se(void)
 {
-    D_0012B2E0 = 0xFF;
-    D_0012B2DC = 6;
+    g_se_volume = 0xFF;
+    g_se_priority = 6;
     sound_play_se(0x23);
 }
 
@@ -235,7 +229,7 @@ void sound_play_se(s32 selection)
             requestIndex--;
         }
 
-        adjustedValue = D_0012B2E0;
+        adjustedValue = g_se_volume;
         adjustedValue -= 30;
         if (adjustedValue < 0) {
             adjustedValue = 0;
@@ -250,7 +244,7 @@ void sound_play_se(s32 selection)
         g_sound_rpc_buf[1] = adjustedValue;
         sceSifCallRpc(g_sound_rpc_client, 0x500, 0, g_sound_rpc_buf, 0x10,
                       g_sound_rpc_buf, 0x40, 0, 0);
-        D_0012B2E4 = g_sound_rpc_buf[0];
+        g_se_last_result = g_sound_rpc_buf[0];
     }
 }
 
@@ -258,33 +252,33 @@ void sound_init_file_tables(void)
 {
     s32 index;
     const char **source;
-    GalleryEntry *entry;
+    CdFileEntry *entry;
 
     index = 0;
     source = g_bgm_file_paths;
-    entry = D_00132760;
+    entry = g_bgm_files;
     for (; index < 13; index++, source++, entry++) {
         cd_search_file(*source);
-        entry->first = g_cd_file_size[0];
-        entry->second = g_cd_file_lba[0];
+        entry->size = g_cd_file_size[0];
+        entry->lba = g_cd_file_lba[0];
     }
 
     index = 0;
     source = g_stage_bg_paths;
-    entry = D_001326C0;
+    entry = g_stage_bg_files;
     for (; index < 10; index++, source++, entry++) {
         cd_search_file(*source);
-        entry->first = g_cd_file_size[0];
-        entry->second = g_cd_file_lba[0];
+        entry->size = g_cd_file_size[0];
+        entry->lba = g_cd_file_lba[0];
     }
 
     index = 0;
     source = g_data_file_paths;
-    entry = D_00132620;
+    entry = g_data_files;
     for (; index < 14; index++, source++, entry++) {
         cd_search_file(*source);
-        entry->first = g_cd_file_size[0];
-        entry->second = g_cd_file_lba[0];
+        entry->size = g_cd_file_size[0];
+        entry->lba = g_cd_file_lba[0];
     }
 }
 
@@ -306,7 +300,7 @@ void sound_init_iop_rpc(void)
     g_bgm_fade_state[1].fadeMode = 0;
     g_bgm_fade_state[0].unk24 = 0;
     g_bgm_fade_state[1].unk24 = 0;
-    D_0012B2E4 = 0;
+    g_se_last_result = 0;
     g_sound_rpc_buf[0] = 0;
     g_sound_rpc_buf[1] = 0;
     sceSifCallRpc(g_sound_rpc_client, 0xD0, 0, g_sound_rpc_buf, 0x10, g_sound_rpc_buf, 0x40, 0, 0);

@@ -10,8 +10,8 @@ typedef struct
     s32 height;
 } TexUploadInfo;
 
-extern s16 D_00128BE0[];
-extern s16 D_00128CE0[];
+extern s16 g_tex_clut_palette_32[];
+extern s16 g_tex_clut_palette_16[];
 static TexUploadInfo g_tex_upload_table[6] = {
     { 0, 16, 0, 0,  256, 128 },
     { 1, 16, 0, 0,  256, 192 },
@@ -25,26 +25,20 @@ static s16 g_tex_clut_palette[32] = {
     0, -28406, -15655, -11361, -31611, -29496, -16679, -12451,
     -17736, -20940, -19850, -24111, -23054, -14565, -26291, -1,
 };
-extern u16 D_0012B2B8;
-extern u16 D_0012B2BC;
-extern u16 D_0012B2C0;
-extern u16 D_0012B2C4;
-extern u8 D_0012B2C8;
-extern u8 D_0012B2CC;
-extern s32 D_0012B310;
-extern s32 D_0012B314;
-extern u8 D_0012B380;
-extern u8 D_0012B381;
-extern s32 D_00132620[];
-extern u32 D_00132624[];
-extern u32 D_00132670[];
-extern u32 D_00132674[];
-extern s16 D_00135280[];
-extern u8 D_00135A80[];
+extern u16 g_pad_vib_power_p2;
+extern u16 g_pad_vib_power_p1;
+extern u16 g_pad_vib_timer_p2;
+extern u16 g_pad_vib_timer_p1;
+extern u8 g_pad_vib_state_p2;
+extern u8 g_pad_vib_state_p1;
+extern s32 g_tex_vram_tbp;
+extern s32 g_tex_vram_cbp;
+extern s16 g_tex_clut_work_buf[];
+extern u8 g_tex_bitmap_work_buf[];
 
 void tex_upload_step(void)
 {
-    cd_read_async(g_vram_load_buf, D_00132620[0], D_00132624[0]);
+    cd_read_async(g_vram_load_buf, g_data_files[0].size, g_data_files[0].lba);
 }
 
 void tex_upload_reset(void)
@@ -54,36 +48,36 @@ void tex_upload_reset(void)
     s32 colorIndex;
 
     source = g_tex_clut_palette;
-    palette = D_00135280;
+    palette = g_tex_clut_work_buf;
     for (colorIndex = 0; colorIndex < 16; colorIndex++) {
         palette[colorIndex] = *source++;
     }
-    D_0012B314 = 0x3832;
-    tex_upload_clut_slot((u8 *)D_00135280, 0, 1);
+    g_tex_vram_cbp = 0x3832;
+    tex_upload_clut_slot((u8 *)g_tex_clut_work_buf, 0, 1);
 
-    palette = D_00135280;
-    source = D_00128CE0;
+    palette = g_tex_clut_work_buf;
+    source = g_tex_clut_palette_16;
     for (colorIndex = 0; colorIndex < 15; colorIndex++) {
         palette[colorIndex] = *source++ | 0x8000;
     }
     palette[colorIndex] = *source;
-    D_0012B314 = 0x3830;
-    tex_upload_clut_slot((u8 *)D_00135280, 0, 1);
+    g_tex_vram_cbp = 0x3830;
+    tex_upload_clut_slot((u8 *)g_tex_clut_work_buf, 0, 1);
 
-    palette = D_00135280;
-    source = D_00128BE0;
+    palette = g_tex_clut_work_buf;
+    source = g_tex_clut_palette_32;
     for (colorIndex = 0; colorIndex < 31; colorIndex++) {
         palette[colorIndex] = *source++ | 0x8000;
     }
     palette[colorIndex] = *source;
-    D_0012B314 = 0x383A;
-    tex_upload_clut_slot((u8 *)D_00135280, 1, 1);
+    g_tex_vram_cbp = 0x383A;
+    tex_upload_clut_slot((u8 *)g_tex_clut_work_buf, 1, 1);
 }
 
 void tex_upload_init_vram(void)
 {
-    D_0012B310 = 0x1E40;
-    cd_read_sync(D_00135A80, D_00132670[0], D_00132674[0]);
+    g_tex_vram_tbp = 0x1E40;
+    cd_read_sync(g_tex_bitmap_work_buf, g_data_files[10].size, g_data_files[10].lba);
     tex_upload_bitmap(2);
     printf("tex load end\n");
 }
@@ -97,21 +91,21 @@ void tex_upload_clut_slot(u8 *destination, s32 mode, s32 blockCount)
     switch (mode) {
     case 0:
         for (blockIndex = 0; blockIndex < blockCount; blockIndex++) {
-            sceGsSetDefLoadImage(g_gs_load_image, (s16)D_0012B314, 1, 2, 0, 0, 8, 2);
+            sceGsSetDefLoadImage(g_gs_load_image, (s16)g_tex_vram_cbp, 1, 2, 0, 0, 8, 2);
             FlushCache(0);
             sceGsExecLoadImage(g_gs_load_image, destination);
             sceGsSyncPath(0, 0);
-            D_0012B314 += 1;
+            g_tex_vram_cbp += 1;
             destination += 0x80;
         }
         break;
     case 1:
         for (blockIndex = 0; blockIndex < blockCount; blockIndex++) {
-            sceGsSetDefLoadImage(g_gs_load_image, (s16)D_0012B314, 1, 2, 0, 0, 16, 16);
+            sceGsSetDefLoadImage(g_gs_load_image, (s16)g_tex_vram_cbp, 1, 2, 0, 0, 16, 16);
             FlushCache(0);
             sceGsExecLoadImage(g_gs_load_image, destination);
             sceGsSyncPath(0, 0);
-            D_0012B314 += 4;
+            g_tex_vram_cbp += 4;
             destination += 0x80;
         }
         break;
@@ -136,7 +130,7 @@ void tex_upload_bitmap(s32 index)
                 remaining = g_tex_upload_table[index].dbw;
                 sceGsSetDefLoadImage(
                     g_gs_load_image,
-                    D_0012B310,
+                    g_tex_vram_tbp,
                     remaining,
                     0x14,
                     g_tex_upload_table[index].x,
@@ -145,7 +139,7 @@ void tex_upload_bitmap(s32 index)
                     g_tex_upload_table[index].height
                 );
                 FlushCache(0);
-                sceGsExecLoadImage(g_gs_load_image, D_00135A80);
+                sceGsExecLoadImage(g_gs_load_image, g_tex_bitmap_work_buf);
                 sceGsSyncPath(0, 0);
                 break;
 
@@ -153,7 +147,7 @@ void tex_upload_bitmap(s32 index)
                 chunkHeight = g_tex_upload_table[index].height;
                 sceGsSetDefLoadImage(
                     g_gs_load_image,
-                    D_0012B310,
+                    g_tex_vram_tbp,
                     g_tex_upload_table[index].dbw,
                     0x13,
                     g_tex_upload_table[index].x,
@@ -162,7 +156,7 @@ void tex_upload_bitmap(s32 index)
                     chunkHeight
                 );
                 FlushCache(0);
-                sceGsExecLoadImage(g_gs_load_image, D_00135A80);
+                sceGsExecLoadImage(g_gs_load_image, g_tex_bitmap_work_buf);
                 sceGsSyncPath(0, 0);
                 break;
 
@@ -176,7 +170,7 @@ void tex_upload_bitmap(s32 index)
         case 0:
             remaining = g_tex_upload_table[index].height;
             yOffset = 0;
-            src = D_00135A80;
+            src = g_tex_bitmap_work_buf;
             loop0:
             if (remaining > 0x100) {
                 chunkHeight = 0x100;
@@ -185,7 +179,7 @@ void tex_upload_bitmap(s32 index)
             }
             sceGsSetDefLoadImage(
                 g_gs_load_image,
-                D_0012B310,
+                g_tex_vram_tbp,
                 g_tex_upload_table[index].dbw,
                 0x14,
                 g_tex_upload_table[index].x,
@@ -208,7 +202,7 @@ void tex_upload_bitmap(s32 index)
         case 1:
             remaining = g_tex_upload_table[index].height;
             yOffset = 0;
-            src1 = D_00135A80;
+            src1 = g_tex_bitmap_work_buf;
             do {
                 if (remaining > 0x80) {
                     chunkHeight = 0x80;
@@ -217,7 +211,7 @@ void tex_upload_bitmap(s32 index)
                 }
                 sceGsSetDefLoadImage(
                     g_gs_load_image,
-                    D_0012B310,
+                    g_tex_vram_tbp,
                     g_tex_upload_table[index].dbw,
                     0x13,
                     g_tex_upload_table[index].x,
@@ -245,45 +239,45 @@ done:
 void pad_update_vibration(void)
 {
     if (g_system_mute == 0) {
-        switch (D_0012B2CC) {
+        switch (g_pad_vib_state_p1) {
             case 0:
                 break;
             case 1:
-                D_0012B381 = (u8)D_0012B2BC;
-                scePadSetActDirect(0, 0, &D_0012B380);
-                D_0012B2CC++;
+                g_pad_act_direct[1] = (u8)g_pad_vib_power_p1;
+                scePadSetActDirect(0, 0, g_pad_act_direct);
+                g_pad_vib_state_p1++;
                 break;
             case 2:
-                D_0012B2C4--;
-                if (D_0012B2C4 <= 0) {
-                    D_0012B2CC++;
+                g_pad_vib_timer_p1--;
+                if (g_pad_vib_timer_p1 <= 0) {
+                    g_pad_vib_state_p1++;
                 }
                 break;
             case 3:
-                D_0012B381 = 0;
-                scePadSetActDirect(0, 0, &D_0012B380);
-                D_0012B2CC = 0;
+                g_pad_act_direct[1] = 0;
+                scePadSetActDirect(0, 0, g_pad_act_direct);
+                g_pad_vib_state_p1 = 0;
                 break;
         }
 
-        switch (D_0012B2C8) {
+        switch (g_pad_vib_state_p2) {
             case 0:
                 break;
             case 1:
-                D_0012B381 = (u8)D_0012B2B8;
-                scePadSetActDirect(1, 0, &D_0012B380);
-                D_0012B2C8++;
+                g_pad_act_direct[1] = (u8)g_pad_vib_power_p2;
+                scePadSetActDirect(1, 0, g_pad_act_direct);
+                g_pad_vib_state_p2++;
                 break;
             case 2:
-                D_0012B2C0--;
-                if (D_0012B2C0 <= 0) {
-                    D_0012B2C8++;
+                g_pad_vib_timer_p2--;
+                if (g_pad_vib_timer_p2 <= 0) {
+                    g_pad_vib_state_p2++;
                 }
                 break;
             case 3:
-                D_0012B381 = 0;
-                scePadSetActDirect(1, 0, &D_0012B380);
-                D_0012B2C8 = 0;
+                g_pad_act_direct[1] = 0;
+                scePadSetActDirect(1, 0, g_pad_act_direct);
+                g_pad_vib_state_p2 = 0;
                 break;
         }
     }

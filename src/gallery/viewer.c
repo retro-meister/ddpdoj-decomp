@@ -17,8 +17,8 @@ typedef struct {
 static const char g_dialog_yes[8] = SJIS("はい");
 static const char g_dialog_slash[8] = SJIS("／");
 static const char g_dialog_no[8] = SJIS("いいえ");
-extern s32 D_0012B3DC;
-extern s32 D_0012B3E0;
+extern s32 g_dialog_selection;
+extern s32 g_dialog_anim_step;
 
 void viewer_draw_yes_no_dialog(s32 selection, s32 centerX, s32 y, s32 spacing)
 {
@@ -27,32 +27,32 @@ void viewer_draw_yes_no_dialog(s32 selection, s32 centerX, s32 y, s32 spacing)
 
     if (selection < 0) {
         if (selection == -1) {
-            D_0012B3DC = 1;
+            g_dialog_selection = 1;
         } else {
-            D_0012B3DC = 0;
+            g_dialog_selection = 0;
         }
-        D_0012B3E0 = 4;
+        g_dialog_anim_step = 4;
         return;
     }
 
-    if (D_0012B3DC != selection) {
-        D_0012B3DC = selection;
-        D_0012B3E0 = 0;
+    if (g_dialog_selection != selection) {
+        g_dialog_selection = selection;
+        g_dialog_anim_step = 0;
     }
 
-    if (D_0012B3E0 < 4) {
-        D_0012B3E0 += 2;
+    if (g_dialog_anim_step < 4) {
+        g_dialog_anim_step += 2;
     }
 
     highlightOffset = 0;
-    if (D_0012B3E0 != 0) {
-        highlightOffset = D_0012B3E0 / 2;
+    if (g_dialog_anim_step != 0) {
+        highlightOffset = g_dialog_anim_step / 2;
     }
-    glyphSize = D_0012B3E0 + 24;
+    glyphSize = g_dialog_anim_step + 24;
 
     sprite_clear_queue();
 
-    if (D_0012B3DC == 0) {
+    if (g_dialog_selection == 0) {
         sprite_queue_sjis_text((s16)(centerX - spacing - 100 - highlightOffset),
                       (s16)(y - highlightOffset), g_dialog_yes, 4,
                       (u16)glyphSize, (u16)glyphSize, 128, 0);

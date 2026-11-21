@@ -170,6 +170,11 @@ typedef struct {
     u8 padTypeFlag;
 } PadInfo;
 
+typedef struct {
+    s32 size;
+    u32 lba;
+} CdFileEntry;
+
 /* Shared gallery globals */
 extern u16 g_system_mute;
 extern s8 g_cd_async_state;
@@ -182,7 +187,9 @@ extern s32 g_sprite_queue_count;
 extern s8 *g_font_glyph_buf;
 extern void *g_dma_gif;
 extern void *g_pad_dma_buf;
+extern u8 g_pad_act_direct[6];
 extern GalleryContext *g_gallery;
+extern CdFileEntry g_data_files[16];
 extern u32 g_cd_file_lba[3];
 extern u32 g_cd_file_size[3];
 extern u8 g_gif_buf[2][0x10000];

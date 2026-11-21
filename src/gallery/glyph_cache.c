@@ -1,8 +1,8 @@
 #include "gallery/gallery.h"
 
-extern s8 D_001A5240[0x2000];
-extern GlyphCacheEntry D_001A7240[0xE3];
-extern s16 D_001A7CF0[0x22C4];
+extern s8 g_glyph_cache_sub_map[0x2000];
+extern GlyphCacheEntry g_glyph_cache_sub[0xE3];
+extern s16 g_glyph_cache_map[0x22C4];
 
 void glyph_cache_init(void)
 {
@@ -12,15 +12,15 @@ void glyph_cache_init(void)
     s32 j;
     s32 previousTail;
     {
-        s8 *destination = (s8 *)D_001A7CF0;
-        s32 remaining = sizeof(D_001A7CF0);
+        s8 *destination = (s8 *)g_glyph_cache_map;
+        s32 remaining = sizeof(g_glyph_cache_map);
         while (remaining--) {
             *(destination++) = -1;
         }
     }
     {
-        s8 *destination = D_001A5240;
-        s32 remaining = sizeof(D_001A5240);
+        s8 *destination = g_glyph_cache_sub_map;
+        s32 remaining = sizeof(g_glyph_cache_sub_map);
         while (remaining--) {
             *(destination++) = -1;
         }
@@ -46,13 +46,13 @@ void glyph_cache_init(void)
         }
     }
     for (index = 2; index < 0xE3; index++) {
-        D_001A7240[index].previous = index - 2;
-        D_001A7240[index].next = index - 2;
+        g_glyph_cache_sub[index].previous = index - 2;
+        g_glyph_cache_sub[index].next = index - 2;
     }
 
-    table = &D_001A7240[2];
-    D_001A7240[0].next = -1;
-    D_001A7240[1].previous = -2;
+    table = &g_glyph_cache_sub[2];
+    g_glyph_cache_sub[0].next = -1;
+    g_glyph_cache_sub[1].previous = -2;
     for (j = 0; j <= 0xE1; j++) {
         if (j == table[j].next) {
             previousTail = table[-2].next;
@@ -67,7 +67,7 @@ void glyph_cache_init(void)
 
 s32 glyph_cache_lookup(u16 key)
 {
-    s16 *table = D_001A7CF0;
+    s16 *table = g_glyph_cache_map;
     s32 slot = table[key];
     s32 previous;
     s32 next;
