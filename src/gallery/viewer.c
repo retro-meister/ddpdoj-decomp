@@ -1,52 +1,4 @@
-#include "common.h"
-
-typedef struct {
-    u32 data[4];
-} GifPacket;
-
-typedef struct {
-    s16 u;
-    s16 v;
-    s16 w;
-    s16 h;
-    u64 tex0;
-} GalleryTex;
-
-typedef struct {
-    u8 pad00[8];
-    s32 x0;
-    s32 y0;
-    s32 x1;
-    s32 y1;
-    u8 r;
-    u8 g;
-    u8 b;
-    u8 a;
-    s32 alpha;
-} GalleryBox;
-
-typedef struct {
-    s8 flags[6];
-    s8 pad06;
-    s8 zoomed;
-    GalleryBox titleBox;
-    GalleryBox menuBox;
-    GalleryTex *tex;
-    const char *title;
-    s32 state;
-    s32 timer;
-    u32 dispX;
-    u32 dispY;
-    u32 dispW;
-    u32 dispH;
-    s32 panX;
-    s32 panY;
-    s32 minX;
-    s32 minY;
-    s32 maxX;
-    s32 maxY;
-    s32 baseScale;
-} GalleryView;
+#include "gallery/gallery.h"
 
 typedef struct {
     u8 pad00[0x505168];
@@ -81,27 +33,7 @@ extern u8 D_00180A80[];
 extern volatile u32 D_001A5020[];
 extern u32 D_001A5024[];
 
-extern void func_00100E08(s32, s32);
-extern void func_00101FB0(void *, void *, s32);
-extern void func_00102AC8(void *, void *);
-extern void func_00102AD8(void *);
-extern void func_00102AE8(void *);
-extern s32 func_00102B40(void *);
-extern void func_00102B58(void *, u64);
-extern void func_00103220(s32);
-extern void *func_00117060(void *dst, s32 val, u32 size);
-extern s32 func_00118760(const char *);
-extern void func_0011AF90(void);
-extern void func_0011AFB0(void);
-extern void func_0011BD30(void);
-extern void func_0011C360(void);
-extern void func_0011C460(s16 x, s16 y, const char *text, s32 style,
-                          u16 glyphWidth, u16 glyphHeight, u16 intensity, s32 flags);
-extern void func_0011C7D0(void);
-extern void func_00124C00(void *);
-extern void func_00124E50(s32, s32, s32, s32, s32, s32, s32, s32, s32);
-
-void func_001236D0(s32 selection, s32 centerX, s32 y, s32 spacing)
+void viewer_draw_yes_no_dialog(s32 selection, s32 centerX, s32 y, s32 spacing)
 {
     s32 highlightOffset;
     s32 glyphSize;
@@ -131,30 +63,30 @@ void func_001236D0(s32 selection, s32 centerX, s32 y, s32 spacing)
     }
     glyphSize = D_0012B3E0 + 24;
 
-    func_0011C7D0();
+    sprite_clear_queue();
 
     if (D_0012B3DC == 0) {
-        func_0011C460((s16)(centerX - spacing - 100 - highlightOffset),
+        sprite_queue_sjis_text((s16)(centerX - spacing - 100 - highlightOffset),
                       (s16)(y - highlightOffset), D_0012B158, 4,
                       (u16)glyphSize, (u16)glyphSize, 128, 0);
-        func_0011C460((s16)(centerX - 88), (s16)y, D_0012B160, 0, 24, 24, 128, 0);
-        func_0011C460((s16)(centerX + spacing - 100), (s16)y,
+        sprite_queue_sjis_text((s16)(centerX - 88), (s16)y, D_0012B160, 0, 24, 24, 128, 0);
+        sprite_queue_sjis_text((s16)(centerX + spacing - 100), (s16)y,
                       D_0012B168, 0, 24, 24, 128, 0);
     } else {
-        func_0011C460((s16)(centerX - spacing - 100), (s16)y,
+        sprite_queue_sjis_text((s16)(centerX - spacing - 100), (s16)y,
                       D_0012B158, 0, 24, 24, 128, 0);
-        func_0011C460((s16)(centerX - 88), (s16)y, D_0012B160, 0, 24, 24, 128, 0);
-        func_0011C460((s16)(centerX + spacing - 100 - highlightOffset),
+        sprite_queue_sjis_text((s16)(centerX - 88), (s16)y, D_0012B160, 0, 24, 24, 128, 0);
+        sprite_queue_sjis_text((s16)(centerX + spacing - 100 - highlightOffset),
                       (s16)(y - highlightOffset), D_0012B168, 4,
                       (u16)glyphSize, (u16)glyphSize, 128, 0);
     }
 
-    func_0011C360();
+    sprite_flush_rects();
 }
 
-s32 func_00123920(GalleryView *view, s32 mode)
+s32 viewer_update_and_draw(GalleryView *view, s32 mode)
 {
-    GifPacket pkt;
+    sceGifPacket pkt;
     s32 ret;
     s32 alpha;
     s32 drawX;
@@ -179,15 +111,15 @@ s32 func_00123920(GalleryView *view, s32 mode)
             break;
         }
         if (view->flags[0] && (D_001A5024[0] & 0x8)) {
-            func_0011AF90();
+            sound_play_page_se();
             ret = 1;
         }
         if (view->flags[1] && (D_001A5024[0] & 0x4)) {
-            func_0011AF90();
+            sound_play_page_se();
             ret = 2;
         }
         if (view->flags[4] && (D_001A5024[0] & 0x40)) {
-            func_0011AFB0();
+            sound_play_confirm_se();
             ret = 3;
         }
         if (view->flags[2]) {
@@ -221,7 +153,7 @@ s32 func_00123920(GalleryView *view, s32 mode)
             view->zoomed ^= 1;
             view->state = 3;
             view->timer = 0x10;
-            func_0011AFB0();
+            sound_play_confirm_se();
         }
         if (D_001A5024[0] & 0x800) {
             D_0012B3D8->showHelp ^= 1;
@@ -231,7 +163,7 @@ s32 func_00123920(GalleryView *view, s32 mode)
             } else {
                 view->state = 5;
             }
-            func_0011AFB0();
+            sound_play_confirm_se();
         }
         break;
 
@@ -246,7 +178,7 @@ s32 func_00123920(GalleryView *view, s32 mode)
             alpha = 0x80 - view->timer;
             if (view->title != 0) {
                 view->titleBox.x0 = (view->timer * 0x500) / 0x80 + 0x10;
-                view->titleBox.x1 = view->titleBox.x0 + func_00118760(view->title) * 0x10;
+                view->titleBox.x1 = view->titleBox.x0 + strlen(view->title) * 0x10;
             }
             if (view->flags[5] && view->menuBox.alpha < 0x80) {
                 view->menuBox.alpha += 4;
@@ -301,31 +233,31 @@ s32 func_00123920(GalleryView *view, s32 mode)
             }
         }
 
-        func_00102AC8(&pkt, D_00180A80);
-        func_00102AD8(&pkt);
-        func_00102B58(&pkt, 0x1000000000008003ULL);
-        func_00102B58(&pkt, 0xEULL);
-        func_00102B58(&pkt, view->tex->tex0);
-        func_00102B58(&pkt, 0x6ULL);
-        func_00102B58(&pkt, 0ULL);
-        func_00102B58(&pkt, 0x14ULL);
-        func_00102B58(&pkt, 0x44ULL);
-        func_00102B58(&pkt, 0x42ULL);
-        func_00102B58(&pkt, 0x6400000000008001ULL);
-        func_00102B58(&pkt, 0x535310ULL);
-        func_00102B58(&pkt, 0x156ULL);
-        func_00102B58(&pkt, ((u64)alpha << 24) | 0x3F80000000808080ULL);
-        func_00102B58(&pkt, (u64)(u << 4) | ((u64)(v << 4) << 16));
-        func_00102B58(&pkt, (u64)((drawX << 4) + 0x6C00) | ((u64)((drawY << 3) + 0x7900) << 16));
-        func_00102B58(&pkt, (u64)((u + texW) << 4) | ((u64)((v + texH) << 4) << 16));
-        func_00102B58(&pkt, (u64)(((drawX + drawW) << 4) + 0x6C00) | ((u64)(((drawY + drawH) << 3) + 0x7900) << 16));
-        func_00102AE8(&pkt);
-        func_00103220(0);
-        func_00101FB0(D_0012B318, D_00180A80, func_00102B40(&pkt));
-        func_00100E08(0, 0);
+        sceGifPkInit(&pkt, D_00180A80);
+        sceGifPkReset(&pkt);
+        sceGifPkAddGsData(&pkt, 0x1000000000008003ULL);
+        sceGifPkAddGsData(&pkt, 0xEULL);
+        sceGifPkAddGsData(&pkt, view->tex->tex0);
+        sceGifPkAddGsData(&pkt, 0x6ULL);
+        sceGifPkAddGsData(&pkt, 0ULL);
+        sceGifPkAddGsData(&pkt, 0x14ULL);
+        sceGifPkAddGsData(&pkt, 0x44ULL);
+        sceGifPkAddGsData(&pkt, 0x42ULL);
+        sceGifPkAddGsData(&pkt, 0x6400000000008001ULL);
+        sceGifPkAddGsData(&pkt, 0x535310ULL);
+        sceGifPkAddGsData(&pkt, 0x156ULL);
+        sceGifPkAddGsData(&pkt, ((u64)alpha << 24) | 0x3F80000000808080ULL);
+        sceGifPkAddGsData(&pkt, (u64)(u << 4) | ((u64)(v << 4) << 16));
+        sceGifPkAddGsData(&pkt, (u64)((drawX << 4) + 0x6C00) | ((u64)((drawY << 3) + 0x7900) << 16));
+        sceGifPkAddGsData(&pkt, (u64)((u + texW) << 4) | ((u64)((v + texH) << 4) << 16));
+        sceGifPkAddGsData(&pkt, (u64)(((drawX + drawW) << 4) + 0x6C00) | ((u64)(((drawY + drawH) << 3) + 0x7900) << 16));
+        sceGifPkTerminate(&pkt);
+        FlushCache(0);
+        sceDmaSendN(D_0012B318, D_00180A80, sceGifPkSize(&pkt));
+        sceGsSyncPath(0, 0);
 
         if (view->title != 0) {
-            func_00124E50(
+            gallery_draw_solid_rect(
                 view->titleBox.x0,
                 view->titleBox.y0,
                 view->titleBox.x1,
@@ -336,9 +268,9 @@ s32 func_00123920(GalleryView *view, s32 mode)
                 (view->titleBox.a * view->titleBox.alpha) >> 7,
                 0
             );
-            func_0011C7D0();
-            func_0011C460(
-                view->titleBox.x0 - 0x38,
+            sprite_clear_queue();
+            sprite_queue_sjis_text(
+                (s16)(view->titleBox.x0 - 0x38),
                 view->titleBox.y0 + 4,
                 view->title,
                 0,
@@ -347,7 +279,7 @@ s32 func_00123920(GalleryView *view, s32 mode)
                 0x80,
                 0
             );
-            func_0011C360();
+            sprite_flush_rects();
         }
         break;
 
@@ -365,8 +297,8 @@ s32 func_00123920(GalleryView *view, s32 mode)
             }
         }
 
-        func_0011C7D0();
-        func_00124E50(
+        sprite_clear_queue();
+        gallery_draw_solid_rect(
             view->menuBox.x0 + 8,
             view->menuBox.y0 + 0x10,
             view->menuBox.x1,
@@ -377,14 +309,14 @@ s32 func_00123920(GalleryView *view, s32 mode)
             (view->menuBox.a * view->menuBox.alpha) >> 7,
             0
         );
-        func_00124C00(&view->menuBox);
-        func_0011BD30();
-        func_0011C7D0();
+        lzss_draw_frame_overlay(&view->menuBox);
+        sprite_flush_quads();
+        sprite_clear_queue();
 
         for (i = 0; i < 6; i++) {
             bright = view->flags[i] ? 0x80 : 0x40;
-            func_0011C460(
-                view->menuBox.x0 - 0x28,
+            sprite_queue_sjis_text(
+                (s16)(view->menuBox.x0 - 0x28),
                 view->menuBox.y0 + 0x18 + i * 0x18,
                 D_00129130[i],
                 0,
@@ -395,16 +327,16 @@ s32 func_00123920(GalleryView *view, s32 mode)
             );
         }
 
-        func_0011C360();
+        sprite_flush_rects();
         break;
     }
 
     return ret;
 }
 
-void func_00124280(GalleryView *viewer, GalleryTex *image, const char *title)
+void viewer_init_image(GalleryView *viewer, SpriteInfo *image, const char *title)
 {
-    func_00117060(viewer, 0, sizeof(GalleryView));
+    memset(viewer, 0, sizeof(GalleryView));
 
     viewer->tex = image;
     viewer->title = title;
@@ -421,7 +353,7 @@ void func_00124280(GalleryView *viewer, GalleryTex *image, const char *title)
     if (viewer->title != 0) {
         viewer->titleBox.y0 = 0x10;
         viewer->titleBox.x0 = 0x10;
-        viewer->titleBox.x1 = func_00118760(title) * 0x10 + 0x10;
+        viewer->titleBox.x1 = strlen(title) * 0x10 + 0x10;
         viewer->titleBox.y1 = 0x30;
         viewer->titleBox.r = 0x36;
         viewer->titleBox.g = 0xCD;
@@ -477,8 +409,10 @@ void func_00124280(GalleryView *viewer, GalleryTex *image, const char *title)
     }
 }
 
-s32 func_001246C0(GalleryMenuState *menu, GalleryMenuInput *input)
+s32 viewer_update_grid_cursor(void *menuPtr, void *inputPtr)
 {
+    GalleryMenuState *menu = menuPtr;
+    GalleryMenuInput *input = inputPtr;
     s32 heldFrames;
     s32 buttonIndex;
 

@@ -1,4 +1,4 @@
-#include "common.h"
+#include "gallery/gallery.h"
 
 typedef struct
 {
@@ -49,17 +49,9 @@ extern u32 D_0012B424;
 extern s32 D_0012B428;
 extern BmpContext D_001C02B0;
 
-extern s32 func_00100E08(s32 mode, s32 timeout);
-extern s32 func_00101120(void *packet, s16 tbp, s16 dbw, s16 psm, s16 x, s16 y, s16 w, s16 h);
-extern s32 func_00101308(void *packet, const void *pixels);
-extern void func_00102B58(void *packet, u64 word, ...);
-extern void func_00103220(s32 mode);
-extern void *func_00116EA8(void *destination, const void *source, u32 size);
-extern void *func_00117060(void *destination, s32 value, u32 size);
-void func_001232E0(s16 destinationBase, const void *palette, s32 colorCount);
-
-s32 func_00122CC0(TexInfo *tex, s16 tbp, s16 cbp, u8 *bmp, s32 x, s32 y)
+s32 bmp_upload_texture(void *texPtr, s16 tbp, s16 cbp, u8 *bmp, s32 x, s32 y)
 {
+    TexInfo *tex = texPtr;
     u32 offBits;
     u32 wPow;
     u32 hPow;
@@ -72,11 +64,11 @@ s32 func_00122CC0(TexInfo *tex, s16 tbp, s16 cbp, u8 *bmp, s32 x, s32 y)
         case 0:
             D_0012B3E4 = bmp;
             D_0012B3E8 = bmp + 0xE;
-            func_00116EA8(&D_001C02B0, D_0012B3E8, 0x28);
+            memcpy(&D_001C02B0, D_0012B3E8, 0x28);
             D_0012B410 = (((D_001C02B0.biWidth * D_001C02B0.biBitCount) >> 3) + 3) & (~3);
             D_0012B3EC = D_0012B3E8 + 0x28;
             D_0012B414 = D_0012B410;
-            func_00116EA8(&offBits, bmp + 0xA, 4);
+            memcpy(&offBits, bmp + 0xA, 4);
             D_0012B3F0 = bmp + offBits;
             D_0012B3F0 += (D_001C02B0.biHeight - 1) * D_0012B410;
             D_0012B400 = D_0012B3D8->unk_303000;
@@ -117,7 +109,7 @@ s32 func_00122CC0(TexInfo *tex, s16 tbp, s16 cbp, u8 *bmp, s32 x, s32 y)
 
                 case 8:
                     for (D_0012B3FC = 0; D_0012B3FC < (D_001C02B0.biHeight / 8); D_0012B3FC++) {
-                        func_00116EA8(D_0012B3F4, D_0012B3F0, D_0012B410);
+                        memcpy(D_0012B3F4, D_0012B3F0, D_0012B410);
                         D_0012B3F0 -= D_0012B410;
                         D_0012B3F4 += D_0012B414;
                     }
@@ -147,10 +139,10 @@ s32 func_00122CC0(TexInfo *tex, s16 tbp, s16 cbp, u8 *bmp, s32 x, s32 y)
             D_0012B3D8->state++;
 
         case 3:
-            func_00101120(&D_001C02B0.loadImage, tbp, D_0012B404, D_0012B408, x, y + (D_0012B424 * D_0012B41C), D_001C02B0.biWidth, D_0012B424);
-            func_00103220(0);
-            func_00101308(&D_001C02B0.loadImage, D_0012B418);
-            func_00100E08(0, 0);
+            sceGsSetDefLoadImage(&D_001C02B0.loadImage, tbp, D_0012B404, D_0012B408, x, y + (D_0012B424 * D_0012B41C), D_001C02B0.biWidth, D_0012B424);
+            FlushCache(0);
+            sceGsExecLoadImage(&D_001C02B0.loadImage, D_0012B418);
+            sceGsSyncPath(0, 0);
             D_0012B418 += ((th = (chunkHeight = D_0012B424)) * D_0012B410) & (~0xF);
             if ((++D_0012B41C) >= (1 << D_0012B420)) {
                 D_0012B3D8->state++;
@@ -159,7 +151,7 @@ s32 func_00122CC0(TexInfo *tex, s16 tbp, s16 cbp, u8 *bmp, s32 x, s32 y)
 
         case 4:
             if (D_001C02B0.biBitCount < 16) {
-                func_001232E0(cbp, D_0012B3EC, (D_001C02B0.biBitCount == 4) ? (0x10) : (0x100));
+                bmp_upload_clut(cbp, D_0012B3EC, (D_001C02B0.biBitCount == 4) ? (0x10) : (0x100));
             }
             D_0012B3D8->state++;
             break;
@@ -190,7 +182,7 @@ s32 func_00122CC0(TexInfo *tex, s16 tbp, s16 cbp, u8 *bmp, s32 x, s32 y)
     return 0;
 }
 
-void func_001232E0(s16 destinationBase, const void *palette, s32 colorCount)
+void bmp_upload_clut(s16 destinationBase, const void *palette, s32 colorCount)
 {
     u64 loadPacket[12];
     u8 paletteCopy[0x400];
@@ -200,10 +192,10 @@ void func_001232E0(s16 destinationBase, const void *palette, s32 colorCount)
     u8 *swizzledBlock;
     s32 colorIndex;
     s32 row;
-    func_00116EA8(paletteCopy, palette, colorCount * 4);
+    memcpy(paletteCopy, palette, colorCount * 4);
     new_var[1] = D_0012B3D8->unk_303000;
     sourceColor = paletteCopy;
-    func_00117060(new_var[1], 0, 0x400);
+    memset(new_var[1], 0, 0x400);
     new_var[0] = new_var[1];
     for (colorIndex = 0; colorIndex < colorCount; colorIndex++, sourceColor += 4) {
         if ((sourceColor[2] || sourceColor[1]) || sourceColor[0]) {
@@ -221,21 +213,21 @@ void func_001232E0(s16 destinationBase, const void *palette, s32 colorCount)
     row = 0;
     swizzledBlock = swizzledPalette;
     do {
-        func_00116EA8(swizzledBlock, new_var[1], 0x20);
-        func_00116EA8(swizzledBlock + 0x20, new_var[1] + 0x40, 0x20);
-        func_00116EA8(swizzledBlock + 0x40, new_var[1] + 0x20, 0x20);
-        func_00116EA8(swizzledBlock + 0x60, new_var[1] + 0x60, 0x20);
+        memcpy(swizzledBlock, new_var[1], 0x20);
+        memcpy(swizzledBlock + 0x20, new_var[1] + 0x40, 0x20);
+        memcpy(swizzledBlock + 0x40, new_var[1] + 0x20, 0x20);
+        memcpy(swizzledBlock + 0x60, new_var[1] + 0x60, 0x20);
         row += 2;
         swizzledBlock += 0x80;
         new_var[1] += 0x80;
     } while (row < 16);
-    func_00101120(loadPacket, destinationBase, 1, 0, 0, 0, 16, 16);
-    func_00103220(0);
-    func_00101308(loadPacket, (0, swizzledPalette));
-    func_00100E08(0, 0);
+    sceGsSetDefLoadImage(loadPacket, destinationBase, 1, 0, 0, 0, 16, 16);
+    FlushCache(0);
+    sceGsExecLoadImage(loadPacket, (0, swizzledPalette));
+    sceGsSyncPath(0, 0);
 }
 
-void func_00123480(void *packet, s32 x, s32 y, u8 glyphIndex)
+void bmp_draw_ascii_char(void *packet, s32 x, s32 y, u8 glyphIndex)
 {
     u16 glyphs[2];
     u16 firstGlyph;
@@ -249,8 +241,8 @@ void func_00123480(void *packet, s32 x, s32 y, u8 glyphIndex)
     glyphs[0] = firstGlyph;
     glyphs[1] = firstGlyph + 16;
 
-    func_00102B58(packet, 0xA400000000008002ULL);
-    func_00102B58(packet, 0x0000005353535310ULL);
+    sceGifPkAddGsData(packet, 0xA400000000008002ULL);
+    sceGifPkAddGsData(packet, 0x0000005353535310ULL);
 
     glyph = glyphs;
     row = 0;
@@ -263,23 +255,23 @@ void func_00123480(void *packet, s32 x, s32 y, u8 glyphIndex)
         s32 textureLeft = (tile % 126 + 1) * 8;
         s32 textureTop = (tile / 126 + 1) * 8;
 
-        func_00102B58(packet, 0x115, tile);
-        func_00102B58(packet, 0x3F80000080808080ULL);
-        func_00102B58(packet, (u64)(s64)((textureLeft + 7) * 16) |
+        sceGifPkAddGsData(packet, 0x115, tile);
+        sceGifPkAddGsData(packet, 0x3F80000080808080ULL);
+        sceGifPkAddGsData(packet, (u64)(s64)((textureLeft + 7) * 16) |
                               ((u64)(s64)(textureTop * 16) << 16));
-        func_00102B58(packet, (u64)screenLeft |
+        sceGifPkAddGsData(packet, (u64)screenLeft |
                               ((u64)(s64)screenTop << 16));
-        func_00102B58(packet, (u64)(s64)((textureLeft + 7) * 16) |
+        sceGifPkAddGsData(packet, (u64)(s64)((textureLeft + 7) * 16) |
                               ((u64)(s64)((textureTop + 7) * 16) << 16));
-        func_00102B58(packet, (u64)screenRight |
+        sceGifPkAddGsData(packet, (u64)screenRight |
                               ((u64)(s64)screenTop << 16));
-        func_00102B58(packet, (u64)(s64)(textureLeft * 16) |
+        sceGifPkAddGsData(packet, (u64)(s64)(textureLeft * 16) |
                               ((u64)(s64)((textureTop + 7) * 16) << 16));
-        func_00102B58(packet, (u64)screenRight |
+        sceGifPkAddGsData(packet, (u64)screenRight |
                               ((u64)(s64)((y + 8) * 8 + 0x7900) << 16));
-        func_00102B58(packet, (u64)(s64)(textureLeft * 16) |
+        sceGifPkAddGsData(packet, (u64)(s64)(textureLeft * 16) |
                               ((u64)(s64)(textureTop * 16) << 16));
-        func_00102B58(packet, (u64)screenLeft |
+        sceGifPkAddGsData(packet, (u64)screenLeft |
                               ((u64)(s64)((y + 8) * 8 + 0x7900) << 16));
     }
 }

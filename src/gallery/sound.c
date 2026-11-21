@@ -1,4 +1,4 @@
-#include "common.h"
+#include "gallery/gallery.h"
 
 typedef struct {
     s32 unk00;
@@ -54,23 +54,14 @@ extern s32 D_00132884[16];
 extern s32 D_001328C0[3];
 extern s32 D_001328C4[3];
 
-extern void func_001057E8(u32 mode);
-extern s32 func_00105F28(void *cd, u32 sid, u32 mode);
-extern s32 func_001060F8(void *clientData, u32 rpcNumber, u32 sendMode, void *sendBuf, s32 sendSize, void *recvBuf, s32 recvSize, void *endFunc, void *endParam);
-extern void func_00118268(const char *fmt, ...);
-extern void func_0011B580(const char *source);
-
-void func_0011AFD0(s32 selection);
-void func_0011B1C0(void);
-
 static inline s32 send_bgm_rpc(u32 cmd, s32 param1, s32 param2)
 {
     if ((cmd & 0xFFF0) == 0x8020 || (cmd & 0xFFF0) == 0x0550 || (cmd & 0xFFF0) == 0x0560) {
-        func_001060F8(D_00132850, cmd, 0, (void *)param1, 0x40, D_00132880, 0x40, 0, 0);
+        sceSifCallRpc(D_00132850, cmd, 0, (void *)param1, 0x40, D_00132880, 0x40, 0, 0);
     } else {
         D_00132880[0] = param1;
         D_00132880[1] = param2;
-        func_001060F8(D_00132850, cmd, 0, D_00132880, 0x10, D_00132880, 0x40, 0, 0);
+        sceSifCallRpc(D_00132850, cmd, 0, D_00132880, 0x10, D_00132880, 0x40, 0, 0);
     }
     return D_00132880[0];
 }
@@ -78,10 +69,10 @@ static inline s32 send_bgm_rpc(u32 cmd, s32 param1, s32 param2)
 static inline void load_vag(u32 cmd, void *path)
 {
     s32 p = (s32)path;
-    func_001060F8(D_00132850, cmd, 0, (void *)p, 0x40, D_00132880, 0x40, 0, 0);
+    sceSifCallRpc(D_00132850, cmd, 0, (void *)p, 0x40, D_00132880, 0x40, 0, 0);
 }
 
-void func_0011A980(void)
+void sound_update_bgm_fade(void)
 {
     s32 channel;
     s32 volume;
@@ -94,7 +85,7 @@ void func_0011A980(void)
         D_001325D0[channel].timer--;
         if (D_001325D0[channel].timer <= 0) {
             D_001325D0[channel].curVol = D_001325D0[channel].targetVol;
-            func_00118268(D_0012AD90, D_001325D0[channel].curVol);
+            printf(D_0012AD90, D_001325D0[channel].curVol);
 
             if (D_001325D0[channel].fadeMode == 3) {
                 D_0012B2E8 = 0;
@@ -107,7 +98,7 @@ void func_0011A980(void)
                     D_001325D0[channel].fadeMode = 0;
                 }
                 D_001325D0[channel].fadeMode = 0;
-                func_00118268(D_0012ADA8);
+                printf(D_0012ADA8);
                 return;
             } else if (D_001325D0[channel].fadeMode == 4) {
                 send_bgm_rpc(channel | 0x60, 0, 0);
@@ -147,57 +138,57 @@ void func_0011A980(void)
     }
 }
 
-void func_0011AE50(void)
+void sound_update(void)
 {
     D_00132880[0] = 0;
     D_00132884[0] = 0;
-    func_001060F8(D_00132850, 0x530, 0, D_00132880, 0x10, D_00132880, 0x40, 0, 0);
+    sceSifCallRpc(D_00132850, 0x530, 0, D_00132880, 0x10, D_00132880, 0x40, 0, 0);
 
     if (D_0012B2EC != 0) {
         D_00132880[0] = 0;
         D_00132884[0] = 0;
-        func_001060F8(D_00132850, 0x100, 0, D_00132880, 0x10, D_00132880, 0x40, 0, 0);
+        sceSifCallRpc(D_00132850, 0x100, 0, D_00132880, 0x10, D_00132880, 0x40, 0, 0);
 
         if (D_00132880[0] == 0) {
             D_00132880[0] = 0;
             D_00132884[0] = 0;
-            func_001060F8(D_00132850, 0x150, 0, D_00132880, 0x10, D_00132880, 0x40, 0, 0);
+            sceSifCallRpc(D_00132850, 0x150, 0, D_00132880, 0x10, D_00132880, 0x40, 0, 0);
             D_0012B2EC = 0;
             D_001325D0[0].unk00 = 0;
             D_001325D4[0] = 0;
         }
     }
 
-    func_0011A980();
+    sound_update_bgm_fade();
 }
 
-void func_0011AF60(void)
+void sound_init(void)
 {
-    func_0011B1C0();
+    sound_init_iop_rpc();
 }
 
-void func_0011AF70(void)
+void sound_play_cursor_se(void)
 {
     D_0012B2E0 = 0x94;
     D_0012B2DC = 6;
-    func_0011AFD0(0x37);
+    sound_play_se(0x37);
 }
 
-void func_0011AF90(void)
+void sound_play_page_se(void)
 {
     D_0012B2E0 = 0x80;
     D_0012B2DC = 6;
-    func_0011AFD0(0x14);
+    sound_play_se(0x14);
 }
 
-void func_0011AFB0(void)
+void sound_play_confirm_se(void)
 {
     D_0012B2E0 = 0xFF;
     D_0012B2DC = 6;
-    func_0011AFD0(0x23);
+    sound_play_se(0x23);
 }
 
-void func_0011AFD0(s32 selection)
+void sound_play_se(s32 selection)
 {
     s32 adjustedValue;
     s32 requestIndex;
@@ -221,13 +212,13 @@ void func_0011AFD0(s32 selection)
 
         D_00132880[0] = requestIndex;
         D_00132884[0] = adjustedValue;
-        func_001060F8(D_00132850, 0x500, 0, D_00132880, 0x10,
+        sceSifCallRpc(D_00132850, 0x500, 0, D_00132880, 0x10,
                       D_00132880, 0x40, 0, 0);
         D_0012B2E4 = D_00132880[0];
     }
 }
 
-void func_0011B0B0(void)
+void sound_init_file_tables(void)
 {
     s32 index;
     const char **source;
@@ -237,7 +228,7 @@ void func_0011B0B0(void)
     source = D_00128E90;
     entry = D_00132760;
     for (; index < 13; index++, source++, entry++) {
-        func_0011B580(*source);
+        cd_search_file(*source);
         entry->first = D_001328C4[0];
         entry->second = D_001328C0[0];
     }
@@ -246,7 +237,7 @@ void func_0011B0B0(void)
     source = D_00128ED0;
     entry = D_001326C0;
     for (; index < 10; index++, source++, entry++) {
-        func_0011B580(*source);
+        cd_search_file(*source);
         entry->first = D_001328C4[0];
         entry->second = D_001328C0[0];
     }
@@ -255,17 +246,17 @@ void func_0011B0B0(void)
     source = D_00128F00;
     entry = D_00132620;
     for (; index < 14; index++, source++, entry++) {
-        func_0011B580(*source);
+        cd_search_file(*source);
         entry->first = D_001328C4[0];
         entry->second = D_001328C0[0];
     }
 }
 
-void func_0011B1C0(void)
+void sound_init_iop_rpc(void)
 {
-    func_001057E8(0);
+    sceSifInitRpc(0);
     do {
-        if (func_00105F28(D_00132850, 0x12345, 0) < 0) {
+        if (sceSifBindRpc(D_00132850, 0x12345, 0) < 0) {
             while (1) {
             }
         }
@@ -282,27 +273,27 @@ void func_0011B1C0(void)
     D_0012B2E4 = 0;
     D_00132880[0] = 0;
     D_00132884[0] = 0;
-    func_001060F8(D_00132850, 0xD0, 0, D_00132880, 0x10, D_00132880, 0x40, 0, 0);
+    sceSifCallRpc(D_00132850, 0xD0, 0, D_00132880, 0x10, D_00132880, 0x40, 0, 0);
 
     D_00132880[0] = 0;
     D_00132884[0] = 0;
-    func_001060F8(D_00132850, 0x540, 0, D_00132880, 0x10, D_00132880, 0x40, 0, 0);
+    sceSifCallRpc(D_00132850, 0x540, 0, D_00132880, 0x10, D_00132880, 0x40, 0, 0);
 
     D_00132880[0] = 0x3FFF3FFF;
     D_00132884[0] = 0;
-    func_001060F8(D_00132850, 0xA0, 0, D_00132880, 0x10, D_00132880, 0x40, 0, 0);
+    sceSifCallRpc(D_00132850, 0xA0, 0, D_00132880, 0x10, D_00132880, 0x40, 0, 0);
 
     D_00132880[0] = 0x3FFF3FFF;
     D_00132884[0] = 0;
-    func_001060F8(D_00132850, 0xA1, 0, D_00132880, 0x10, D_00132880, 0x40, 0, 0);
+    sceSifCallRpc(D_00132850, 0xA1, 0, D_00132880, 0x10, D_00132880, 0x40, 0, 0);
 
     D_00132880[0] = 0x3FFF3FFF;
     D_00132884[0] = 0;
-    func_001060F8(D_00132850, 0x80, 0, D_00132880, 0x10, D_00132880, 0x40, 0, 0);
+    sceSifCallRpc(D_00132850, 0x80, 0, D_00132880, 0x10, D_00132880, 0x40, 0, 0);
 
     D_00132880[0] = 0x3FFF3FFF;
     D_00132884[0] = 0;
-    func_001060F8(D_00132850, 0x81, 0, D_00132880, 0x10, D_00132880, 0x40, 0, 0);
+    sceSifCallRpc(D_00132850, 0x81, 0, D_00132880, 0x10, D_00132880, 0x40, 0, 0);
 
     load_vag(0x550, D_00128D00);
     load_vag(0x560, D_00128D40);

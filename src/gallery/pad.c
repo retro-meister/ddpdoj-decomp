@@ -1,4 +1,4 @@
-#include "common.h"
+#include "gallery/gallery.h"
 
 typedef struct
 {
@@ -55,25 +55,7 @@ extern PadInfo D_001A4F90[3];
 extern u8 D_001A5040[0x100];
 extern u8 D_001A5140[0x100];
 
-extern void func_00100380(void);
-extern void func_00101C40(s32 enabled);
-extern void func_00102320(void);
-extern void func_00102798(void);
-extern s32 func_0010C0E0(s32 mode);
-extern s32 func_0010C340(s32 port, s32 slot, void *buffer);
-extern s32 func_0010C690(s32, s32, u8 *);
-extern s32 func_0010C710(s32, s32);
-extern s32 func_0010C828(s32, s32);
-extern s32 func_0010C8B0(s32, s32, s32, s32);
-extern s32 func_0010CAF0(s32, s32, s32, s32);
-extern s32 func_0010CC28(s32, s32, s32, s32);
-extern s32 func_0010CDA0(s32, s32, u8 *);
-extern s32 func_0010CFE0(s32, s32);
-extern s32 func_0010D040(s32, s32);
-extern void *func_00117060(void *destination, s32 value, u32 size);
-extern void func_0011A8C0(void);
-
-void func_0011DAC0(void)
+void pad_poll_hardware(void)
 {
     s32 port;
     PadInfo *pad;
@@ -82,16 +64,16 @@ void func_0011DAC0(void)
         pad->rawButtons = 0;
         pad->analogX = 0;
         pad->analogY = 0;
-        padState = func_0010C710(port, 0);
+        padState = scePadGetState(port, 0);
         if (padState == 0) {
             pad->state = 0;
         }
         switch (pad->state) {
             case 0x00:
                 if ((padState == 6) || (padState == 2)) {
-                    s32 mode = func_0010CAF0(port, 0, 1, 0);
+                    s32 mode = scePadInfoMode(port, 0, 1, 0);
                     if (mode != 0) {
-                        s32 exMode = func_0010CAF0(port, 0, 2, 0);
+                        s32 exMode = scePadInfoMode(port, 0, 2, 0);
                         if (exMode > 0) {
                             mode = exMode;
                         }
@@ -107,7 +89,7 @@ void func_0011DAC0(void)
                 break;
 
             case 0x28:
-                if (func_0010CAF0(port, 0, 4, -1) == 0) {
+                if (scePadInfoMode(port, 0, 4, -1) == 0) {
                     pad->state = 0x80;
                     pad->padTypeFlag = 1;
                     break;
@@ -115,22 +97,22 @@ void func_0011DAC0(void)
                 pad->state++;
 
             case 0x29:
-                if (func_0010CC28(port, 0, 1, 3) == 1) {
+                if (scePadSetMainMode(port, 0, 1, 3) == 1) {
                     pad->state++;
                 }
                 break;
 
             case 0x2A:
-                if (func_0010C828(port, 0) == 1) {
+                if (scePadGetReqState(port, 0) == 1) {
                     pad->state--;
                 }
-                if (func_0010C828(port, 0) == 0) {
+                if (scePadGetReqState(port, 0) == 0) {
                     pad->state = 0;
                 }
                 break;
 
             case 0x46:
-                if (func_0010C8B0(port, 0, -1, 0) == 0) {
+                if (scePadInfoAct(port, 0, -1, 0) == 0) {
                     pad->state = 0x80;
                     pad->padTypeFlag = 2;
                     break;
@@ -138,22 +120,22 @@ void func_0011DAC0(void)
                 D_0012B340[0] = (D_0012B380[0] = (D_0012B380[1] = (D_0012B380[2] = (D_0012B380[3] = (D_0012B380[4] = (D_0012B380[5] = 0))))));
                 D_0012B340[2] = D_0012B340[3] = D_0012B340[4] = D_0012B340[5] = 0xFF;
                 D_0012B340[1] = 1;
-                if (func_0010CDA0(port, 0, D_0012B340) != 0) {
+                if (scePadSetActAlign(port, 0, D_0012B340) != 0) {
                     pad->state++;
                 }
                 break;
 
             case 0x47:
-                if (func_0010C828(port, 0) == 1) {
+                if (scePadGetReqState(port, 0) == 1) {
                     pad->state--;
                 }
-                if (func_0010C828(port, 0) == 0) {
+                if (scePadGetReqState(port, 0) == 0) {
                     pad->state++;
                 }
                 break;
 
             case 0x48:
-                if (func_0010CFE0(port, 0) == 0) {
+                if (scePadInfoPressMode(port, 0) == 0) {
                     pad->prevPadId = 0;
                     pad->state = 0x80;
                     pad->padTypeFlag = 4;
@@ -162,7 +144,7 @@ void func_0011DAC0(void)
                 pad->state = 0x4C;
 
             case 0x4C:
-                if (func_0010D040(port, 0) == 0) {
+                if (scePadEnterPressMode(port, 0) == 0) {
                     pad->state = 0x48;
                 } else {
                     pad->state++;
@@ -170,10 +152,10 @@ void func_0011DAC0(void)
                 break;
 
             case 0x4D:
-                if (func_0010C828(port, 0) == 1) {
+                if (scePadGetReqState(port, 0) == 1) {
                     pad->state--;
                 }
-                if (func_0010C828(port, 0) == 0) {
+                if (scePadGetReqState(port, 0) == 0) {
                     pad->state = 0x80;
                     pad->padTypeFlag = 8;
                 }
@@ -183,7 +165,7 @@ void func_0011DAC0(void)
                 if ((padState == 6) || (padState == 2)) {
                     u32 rawBtns;
                     pad->prevButtons = pad->buttons;
-                    if (func_0010C690(port, 0, pad->raw) > 0) {
+                    if (scePadRead(port, 0, pad->raw) > 0) {
                         if (pad->padTypeFlag & 0xE) {
                             s8 rx = pad->raw[4] - 0x80;
                             s8 ry = pad->raw[5] - 0x80;
@@ -221,9 +203,9 @@ void func_0011DAC0(void)
     D_001A4F90[2].unk30 = D_001A4F90[0].unk30 | D_001A4F90[1].unk30;
 }
 
-void func_0011E120(void)
+void pad_init_system(void)
 {
-    func_00117060(D_001A4F90, 0, sizeof(D_001A4F90));
+    memset(D_001A4F90, 0, sizeof(D_001A4F90));
 
     D_001A4F88[0] = 0;
     D_001A4F78[0] = 0;
@@ -246,17 +228,17 @@ void func_0011E120(void)
     D_001A4F30[0] = 0;
     D_001A4F10[0] = 0;
 
-    func_0010C0E0(0);
-    func_0010C340(0, 0, D_001A5040);
-    func_0010C340(1, 0, D_001A5140);
+    scePadInit(0);
+    scePadPortOpen(0, 0, D_001A5040);
+    scePadPortOpen(1, 0, D_001A5140);
 }
 
-void func_0011E210(void)
+void pad_update(void)
 {
     s32 padIndex;
     u32 buttons;
 
-    func_0011DAC0();
+    pad_poll_hardware();
 
     for (padIndex = 0; padIndex < 3; padIndex++) {
         D_001A4F10[padIndex] = 0;
@@ -428,14 +410,14 @@ void func_0011E210(void)
     if (D_0012B2B0 != 0) {
         D_0012B2A0[0] = D_0012B2A0[1] = D_0012B2A0[2] = D_0012B2A0[3] =
             D_0012B2A0[4] = D_0012B2A0[5] = D_0012B2A0[6] = D_0012B2A0[7] = -1;
-        func_0011A8C0();
+        gallery_reset_slot_states();
     }
 }
 
-void func_0011E830(void)
+void pad_open_ports(void)
 {
-    func_00102798();
-    func_00102320();
-    func_00100380();
-    func_00101C40(1);
+    sceDevVif0Reset();
+    sceDevVu0Reset();
+    sceGsResetPath();
+    sceDmaReset(1);
 }

@@ -1,19 +1,4 @@
-#include "common.h"
-
-typedef union {
-    unsigned __int128 q;
-    u64 d[2];
-    u32 w[4];
-} Qword;
-
-typedef struct {
-    s16 previous;
-    s16 next;
-    s16 key;
-    s16 x;
-    s16 y;
-    s16 flags;
-} GlyphCacheEntry;
+#include "gallery/gallery.h"
 
 typedef struct {
     s16 x;
@@ -36,17 +21,7 @@ extern s8 D_001A0A80[];
 extern u64 D_001A4A80[12];
 extern GlyphCacheEntry D_001AC298[];
 
-extern s32 func_00100E08(s32 mode, s32 timeout);
-extern s32 func_00101120(void *packet, s32 base, s32 bufferWidth, s32 format,
-                         s32 x, s32 y, s32 width, s32 height);
-extern s32 func_00101308(void *packet, const void *pixels);
-extern void func_00101F48(void *dmaChannel, void *packet);
-extern void func_00103220(s32 mode);
-extern void func_0011C7E0(void *packet);
-extern u64 func_0011C8B0(u64 shiftJis);
-extern s32 func_0011EC80(u16 key);
-
-void func_0011B930(Qword *pkt, s32 startIndex, s32 count)
+void sprite_build_quad_packet(Qword *pkt, s32 startIndex, s32 count)
 {
     s32 x[4];
     s32 y[4];
@@ -155,7 +130,7 @@ void func_0011B930(Qword *pkt, s32 startIndex, s32 count)
     pkt[qwc].w[0] = 0x70000000;
 }
 
-void func_0011BD30(void)
+void sprite_flush_quads(void)
 {
     s32 firstEntry;
     s32 remainingEntries;
@@ -164,10 +139,10 @@ void func_0011BD30(void)
     u8 *packet;
 
     if (D_0012B308 != 0) {
-        func_0011C7E0(D_00180A80[0]);
-        func_00103220(0);
-        func_00101F48(D_0012B318, D_00180A80[0]);
-        func_00100E08(0, 0);
+        font_build_gs_setup_packet(D_00180A80[0]);
+        FlushCache(0);
+        sceDmaSend(D_0012B318, D_00180A80[0]);
+        sceGsSyncPath(0, 0);
 
         bufferIndex = 0;
         firstEntry = 0;
@@ -179,10 +154,10 @@ void func_0011BD30(void)
             }
 
             packet = D_00180A80[bufferIndex];
-            func_0011B930((Qword *)packet, firstEntry, batchCount);
-            func_00100E08(0, 0);
-            func_00103220(0);
-            func_00101F48(D_0012B318, packet);
+            sprite_build_quad_packet((Qword *)packet, firstEntry, batchCount);
+            sceGsSyncPath(0, 0);
+            FlushCache(0);
+            sceDmaSend(D_0012B318, packet);
 
             D_0012B308 -= batchCount;
             firstEntry += batchCount;
@@ -191,7 +166,12 @@ void func_0011BD30(void)
     }
 }
 
-void func_0011BE30(s16 x, s16 y, u16 textureId, u16 attributes, u16 scale)
+void sprite_queue_glyph(x, y, textureId, attributes, scale)
+    s16 x;
+    s16 y;
+    u16 textureId;
+    u16 attributes;
+    u16 scale;
 {
     s32 id = textureId;
     s32 textureIndex;
@@ -203,7 +183,7 @@ void func_0011BE30(s16 x, s16 y, u16 textureId, u16 attributes, u16 scale)
         s16 width;
         s16 height;
 
-        textureIndex = func_0011EC80((u16)id);
+        textureIndex = glyph_cache_lookup((u16)id);
         if (textureIndex & 0x8000) {
             s32 byteIndex;
 
@@ -212,11 +192,11 @@ void func_0011BE30(s16 x, s16 y, u16 textureId, u16 attributes, u16 scale)
             }
 
             textureIndex &= 0x7FFF;
-            func_00101120(D_001A4A80, 0x3800, 0x10, 0x14,
+            sceGsSetDefLoadImage(D_001A4A80, 0x3800, 0x10, 0x14,
                           textures[textureIndex].x,
                           textures[textureIndex].y, 0x1A, 0x1A);
-            func_00103220(0);
-            func_00101308(D_001A4A80, D_001A0A80);
+            FlushCache(0);
+            sceGsExecLoadImage(D_001A4A80, D_001A0A80);
             uploaded++;
         }
 
@@ -240,11 +220,11 @@ void func_0011BE30(s16 x, s16 y, u16 textureId, u16 attributes, u16 scale)
     }
 
     if (uploaded != 0) {
-        func_00100E08(0, 0);
+        sceGsSyncPath(0, 0);
     }
 }
 
-void func_0011C0C0(Qword *packet, s32 firstEntry, s32 entryCount)
+void sprite_build_rect_packet(Qword *packet, s32 firstEntry, s32 entryCount)
 {
     s32 packetIndex;
     s32 entryIndex;
@@ -337,7 +317,7 @@ void func_0011C0C0(Qword *packet, s32 firstEntry, s32 entryCount)
     packet[packetIndex].w[0] = 0x70000000;
 }
 
-void func_0011C360(void)
+void sprite_flush_rects(void)
 {
     s32 entryOffset;
     s32 batchSize;
@@ -346,10 +326,10 @@ void func_0011C360(void)
     u8 *buffer;
 
     if (D_0012B308 != 0) {
-        func_0011C7E0(D_00180A80[0]);
-        func_00103220(0);
-        func_00101F48(D_0012B318, D_00180A80[0]);
-        func_00100E08(0, 0);
+        font_build_gs_setup_packet(D_00180A80[0]);
+        FlushCache(0);
+        sceDmaSend(D_0012B318, D_00180A80[0]);
+        sceGsSyncPath(0, 0);
 
         bufferIndex = 0;
         entryOffset = 0;
@@ -361,10 +341,10 @@ void func_0011C360(void)
             }
 
             buffer = D_00180A80[bufferIndex];
-            func_0011C0C0((Qword *)buffer, entryOffset, batchSize);
-            func_00100E08(0, 0);
-            func_00103220(0);
-            func_00101F48(D_0012B318, buffer);
+            sprite_build_rect_packet((Qword *)buffer, entryOffset, batchSize);
+            sceGsSyncPath(0, 0);
+            FlushCache(0);
+            sceDmaSend(D_0012B318, buffer);
 
             entryOffset += batchSize;
             D_0012B308 -= batchSize;
@@ -373,7 +353,7 @@ void func_0011C360(void)
     }
 }
 
-void func_0011C460(s32 x, s16 y, const char *text, u16 texturePage, u16 glyphWidth, u16 glyphHeight, u16 alpha, u16 depth)
+void sprite_queue_sjis_text(s32 x, s16 y, const char *text, u16 texturePage, u16 glyphWidth, u16 glyphHeight, u16 alpha, u16 depth)
 {
     s32 uploadCount = 0;
     s8 *uploadBuffer = D_001A0A80;
@@ -401,11 +381,11 @@ void func_0011C460(s32 x, s16 y, const char *text, u16 texturePage, u16 glyphWid
             break;
         }
         if ((D_0012B308 < 512) || (shiftJis != 0x8140)) {
-            jis = func_0011C8B0((s64)shiftJis);
+            jis = sjis_to_jis((s64)shiftJis);
             row = ((jis >> 8) - 0x21) * 94;
             col = (jis & 0xFF) - 0x21;
             glyphIndex = (s32)(row + col);
-            cacheIndex = func_0011EC80((u16)glyphIndex);
+            cacheIndex = glyph_cache_lookup((u16)glyphIndex);
             if (cacheIndex & 0x8000) {
                 bitmapOffset = glyphIndex * 0x152;
                 for (byteIndex = 0; byteIndex < 0x14A; byteIndex += 8) {
@@ -422,9 +402,9 @@ void func_0011C460(s32 x, s16 y, const char *text, u16 texturePage, u16 glyphWid
                 uploadBuffer[byteIndex + 0] = ((D_0012B30C + bitmapOffset) + byteIndex)[0];
                 uploadBuffer[byteIndex + 1] = ((D_0012B30C + bitmapOffset) + byteIndex)[1];
                 cacheIndex &= 0x7FFF;
-                func_00101120(D_001A4A80, 0x3800, 16, 20, cache[cacheIndex].x, cache[cacheIndex].y, 26, 26);
-                func_00103220(0);
-                func_00101308(D_001A4A80, uploadBuffer);
+                sceGsSetDefLoadImage(D_001A4A80, 0x3800, 16, 20, cache[cacheIndex].x, cache[cacheIndex].y, 26, 26);
+                FlushCache(0);
+                sceGsExecLoadImage(D_001A4A80, uploadBuffer);
                 uploadBuffer += 0x200;
                 uploadCount++;
             }
@@ -453,11 +433,11 @@ void func_0011C460(s32 x, s16 y, const char *text, u16 texturePage, u16 glyphWid
     }
 
     if (uploadCount != 0) {
-        func_00100E08(0, 0);
+        sceGsSyncPath(0, 0);
     }
 }
 
-void func_0011C7D0(void)
+void sprite_clear_queue(void)
 {
     D_0012B308 = 0;
 }

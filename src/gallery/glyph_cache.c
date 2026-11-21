@@ -1,4 +1,4 @@
-#include "common.h"
+#include "gallery/gallery.h"
 
 typedef struct
 {
@@ -15,7 +15,7 @@ extern GalleryCacheEntry D_001A7240[0xE3];
 extern s16 D_001A7CF0[0x22C4];
 extern GalleryCacheEntry D_001AC298[0x401];
 
-void func_0011E9E0(void)
+void glyph_cache_init(void)
 {
     GalleryCacheEntry *table;
     s32 index;
@@ -76,7 +76,7 @@ void func_0011E9E0(void)
     }
 }
 
-s32 func_0011EC80(u16 key)
+s32 glyph_cache_lookup(u16 key)
 {
     s16 *table = D_001A7CF0;
     s32 slot = table[key];

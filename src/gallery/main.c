@@ -1,4 +1,4 @@
-#include "common.h"
+#include "gallery/gallery.h"
 
 typedef struct {
     u32 archivePosition;
@@ -6,42 +6,14 @@ typedef struct {
 } GalleryArchiveEntry;
 
 typedef struct {
-    u32 words[4];
-} GifPacket;
-
-typedef struct {
-    u8 unk_00[0x44];
-    s32 unk_44;
-    u8 unk_48[0x8];
-    s32 unk_50;
-    s32 unk_54;
-    u8 unk_58[0x2C];
-} GallerySprite;
-
-typedef struct {
-    s16 u;
-    s16 v;
-    s16 w;
-    s16 h;
-    u64 tex0;
-} SpriteInfo;
-
-typedef struct {
-    s16 u;
-    s16 v;
-    s16 w;
-    s16 h;
-} Rect16;
-
-typedef struct {
     u8 readBuf[0x101000];
     u8 decodeBuf[0x303000];
     u8 textureBuffer[0x101000];
     s32 menu_params[12];
     u8 pad_505030[4];
-    GallerySprite sprites[2];
-    GallerySprite *curSprite;
-    GallerySprite *prevSprite;
+    GalleryView sprites[2];
+    GalleryView *curSprite;
+    GalleryView *prevSprite;
     s32 exitRequested;
     s32 mode;
     s32 state;
@@ -99,15 +71,6 @@ typedef struct {
     u8 itemThumbIds[0x100];
     s8 slotFlags[6];
 } GalleryWork;
-
-#define GS_RGBAQ(r, g, b, a, q) \
-    ((u64)(r) | ((u64)(g) << 8) | ((u64)(b) << 16) | ((u64)(a) << 24) | ((u64)(q) << 32))
-
-#define GS_UV(u, v) \
-    ((u64)(u) | ((u64)(v) << 16))
-
-#define GS_XYZ2(x, y) \
-    ((u64)(x) | ((u64)(y) << 16))
 
 extern const char D_001290E0[];
 extern const char D_00129100[];
@@ -177,78 +140,16 @@ extern s32 D_001C0350[];
 extern s8 D_001C0B40[256];
 extern s8 D_001C0C40[0x100];
 
-extern void func_001001E0(s32, s32, s32, s32);
-extern void func_00100C88(void *);
-extern s32 func_00100D70(s32);
-extern s32 func_00100E08(s32, s32);
-extern void func_00101488(void *, s32, s32, s16);
-extern void func_001016F0(void *, s32, s32, s16);
-extern void func_00101778(void *, s32, s32, s32, s32, s32, s32);
-extern void func_00101A60(void *, s32);
-extern void *func_00101C18(s32);
-extern void func_00101FB0(void *, void *, s32);
-extern void func_00102AC8(GifPacket *, void *);
-extern void func_00102AD8(GifPacket *);
-extern void func_00102AE8(GifPacket *);
-extern s32 func_00102B40(GifPacket *);
-extern void func_00102B58(GifPacket *, u64);
-extern void func_00103220(s32);
-extern void func_0010EA50(void);
-extern f32 func_00111348(f32);
-extern void *func_001160A8(u32, u32);
-extern void func_00116330(void *);
-extern void *func_00117060(void *, s32, u32);
-extern void func_0011A8E0(s32);
-extern void func_0011AE50(void);
-extern void func_0011AF60(void);
-extern void func_0011AF70(void);
-extern void func_0011AF90(void);
-extern void func_0011AFB0(void);
-extern void func_0011B0B0(void);
-extern void func_0011B580(const char *);
-extern void func_0011B5D0(void *, s32, u32);
-extern void func_0011B6B0(void *, s32, s32);
-extern void func_0011B830(void *, const char *);
-extern void func_0011C360(void);
-extern void func_0011C460(s16, s16, char *, s32, s32, s32, s32, s32);
-extern void func_0011C7D0(void);
-extern void func_0011CF30(void);
-extern void func_0011D020(void);
-extern void func_0011D150(void);
-extern void func_0011D170(void);
-extern void func_0011D360(void);
-extern void func_0011D880(void);
-extern void func_0011D9D0(void);
-extern void func_0011E120(void);
-extern void func_0011E210(void);
-extern void func_0011E830(void);
-extern void func_0011E870(void);
-extern s32 func_00122CC0(SpriteInfo *, s16, s16, void *, s32, s32);
-extern void func_00123480(GifPacket *, s32, s32, s32);
-extern void func_001236D0(s32, s32, s32, s32);
-extern s32 func_00123920(GallerySprite *, s32);
-extern void func_00124280(void *, void *, s32);
-extern s32 func_001246C0(s32 *, void *);
-extern s32 func_00124820(u8 *, u8 *);
-extern void func_00124E50(s32, s32, s32, s32, s32, s32, s32, s32, s32);
-
-void func_0011F070(void);
-void func_0011F300(void);
-void func_0011F410(void);
-s32 func_00121720(void);
-void func_00121FB0(u8 alpha);
-void func_00122160(void);
-
 static inline u64 getTex0Cbp(u64 tex0)
 {
     return (u64)((s32)((tex0 >> 37) & 0x3FFF));
 }
 
-void func_0011EDF0(void)
+void gallery_load_font_files(void)
 {
-    func_0011B830(D_001B7AB0, D_001290E0);
+    cd_load_file(D_001B7AB0, D_001290E0);
     D_0012B3D0 = D_0012B304;
-    func_0011B830(D_001AF2B0, D_00129100);
+    cd_load_file(D_001AF2B0, D_00129100);
 
     *(u8 *)&D_0012B3D4 = 0;
     *(u8 *)&D_0012B3A8 = 1;
@@ -271,56 +172,56 @@ void func_0011EDF0(void)
     D_0012B3CC = D_0012B304;
 }
 
-void func_0011EE90(void)
+void gallery_main(void)
 {
     u32 archiveIndex;
 
-    func_0011D9D0();
-    func_0011D170();
-    func_0011CF30();
-    func_001001E0(0, 1, 2, 1);
-    func_00117060(D_001A4AE0, 0, 0x330);
-    func_00101778(D_001A4AE0, 0, 640, 224, 1, 0x31, 0);
-    func_00103220(0);
-    func_00100D70(0);
-    func_00100C88(D_001A4B30);
-    func_00100E08(0, 0);
-    func_00100C88(D_001A4CA0);
-    func_00100E08(0, 0);
-    func_0011E870();
-    func_0011E830();
-    D_0012B318 = func_00101C18(2);
-    func_0011E120();
+    vram_clear_all();
+    tex_upload_reset();
+    font_init();
+    sceGsResetGraph(0, 1, 2, 1);
+    memset(D_001A4AE0, 0, 0x330);
+    sceGsSetDefDBuffDc(D_001A4AE0, 0, 640, 224, 1, 0x31, 0);
+    FlushCache(0);
+    sceGsSyncV(0);
+    sceGsPutDrawEnv(D_001A4B30);
+    sceGsSyncPath(0, 0);
+    sceGsPutDrawEnv(D_001A4CA0);
+    sceGsSyncPath(0, 0);
+    iop_reboot_and_load_modules();
+    pad_open_ports();
+    D_0012B318 = sceDmaGetChan(2);
+    pad_init_system();
     D_0012B31C = D_001A4E10;
     *(volatile u32 *)0x10000010 = 0x83;
-    func_0011B0B0();
+    sound_init_file_tables();
 
     archiveIndex = 0;
     do {
-        func_0011B580(D_0012B200[archiveIndex]);
+        cd_search_file(D_0012B200[archiveIndex]);
         D_0012B440[archiveIndex].archivePosition = D_001328C4[0];
         D_0012B440[archiveIndex].entryLocation = D_001328C0[0];
     } while (++archiveIndex == 0);
 
     archiveIndex = 0;
     do {
-        func_0011B5D0(D_001C0340[archiveIndex], 0x9C,
+        cd_read_sync(D_001C0340[archiveIndex], 0x9C,
                       D_0012B440[archiveIndex].entryLocation);
     } while (++archiveIndex == 0);
 
-    func_0011D360();
-    func_0011D020();
+    tex_upload_init_vram();
+    font_upload_default_cluts();
     func_0010EA50();
-    func_0011EDF0();
-    func_0011AF60();
-    D_0012B3D8 = func_001160A8(0x40, 0x885800);
-    func_00117060(D_0012B3D8, 0, 0x5057C0);
-    func_0011F070();
-    func_00116330(D_0012B3D8);
-    func_0011A8E0(0);
+    gallery_load_font_files();
+    sound_init();
+    D_0012B3D8 = memalign(0x40, 0x885800);
+    memset(D_0012B3D8, 0, 0x5057C0);
+    gallery_run_loop();
+    free(D_0012B3D8);
+    gallery_exit_to_elf(0);
 }
 
-void func_0011F070(void)
+void gallery_run_loop(void)
 {
     s32 entryIndex;
     s32 ready;
@@ -345,9 +246,9 @@ void func_0011F070(void)
 
     do {
         *(volatile u32 *)0x10000000 = 0;
-        func_00101A60(D_001A4AE0, D_0012B438);
-        func_0011F300();
-        func_0011E210();
+        sceGsSwapDBuffDc(D_001A4AE0, D_0012B438);
+        gallery_init_frame_gs();
+        pad_update();
 
         if (D_001A5032[0] < 0) {
             D_001A5020[0] |= 0x8000;
@@ -362,56 +263,56 @@ void func_0011F070(void)
             D_001A5020[0] |= 0x4000;
         }
 
-        func_0011F410();
-        func_0011AE50();
-        func_0011D880();
+        gallery_tick_and_render();
+        sound_update();
+        pad_update_vibration();
 
         D_0012B438++;
-        ready = !func_00100D70(0);
+        ready = !sceGsSyncV(0);
 
         if (D_0012B438 & 1) {
-            func_00101488(D_001A4CB0, 0x800, 0x800, (s16)ready);
-            func_001016F0(D_001A4D30, 0x800, 0x800, (s16)ready);
+            sceGsSetHalfOffset(D_001A4CB0, 0x800, 0x800, (s16)ready);
+            sceGsSetHalfOffset2(D_001A4D30, 0x800, 0x800, (s16)ready);
         } else {
-            func_00101488(D_001A4B40, 0x800, 0x800, (s16)ready);
-            func_001016F0(D_001A4BC0, 0x800, 0x800, (s16)ready);
+            sceGsSetHalfOffset(D_001A4B40, 0x800, 0x800, (s16)ready);
+            sceGsSetHalfOffset2(D_001A4BC0, 0x800, 0x800, (s16)ready);
         }
 
-        func_00103220(0);
-        func_00100E08(0, 0);
+        FlushCache(0);
+        sceGsSyncPath(0, 0);
     } while (!D_0012B3D8->exitRequested);
 
     D_0012B3D8 = 0;
 }
 
-void func_0011F300(void)
+void gallery_init_frame_gs(void)
 {
-    GifPacket packet;
+    sceGifPacket packet;
 
-    func_00102AC8(&packet, D_00180A80);
-    func_00102AD8(&packet);
-    func_00102B58(&packet, 0x1000000000008005ULL);
-    func_00102B58(&packet, 0xEULL);
-    func_00102B58(&packet, 0x8000000000ULL);
-    func_00102B58(&packet, 0x3BULL);
-    func_00102B58(&packet, 0x3000FULL);
-    func_00102B58(&packet, 0x47ULL);
-    func_00102B58(&packet, 0x100000000ULL);
-    func_00102B58(&packet, 0x4EULL);
-    func_00102B58(&packet, 0ULL);
-    func_00102B58(&packet, 0x14ULL);
-    func_00102B58(&packet, 0x44ULL);
-    func_00102B58(&packet, 0x42ULL);
-    func_00102AE8(&packet);
-    func_00103220(0);
-    func_00101FB0(D_0012B318, D_00180A80, func_00102B40(&packet));
-    func_00100E08(0, 0);
+    sceGifPkInit(&packet, D_00180A80);
+    sceGifPkReset(&packet);
+    sceGifPkAddGsData(&packet, 0x1000000000008005ULL);
+    sceGifPkAddGsData(&packet, 0xEULL);
+    sceGifPkAddGsData(&packet, 0x8000000000ULL);
+    sceGifPkAddGsData(&packet, 0x3BULL);
+    sceGifPkAddGsData(&packet, 0x3000FULL);
+    sceGifPkAddGsData(&packet, 0x47ULL);
+    sceGifPkAddGsData(&packet, 0x100000000ULL);
+    sceGifPkAddGsData(&packet, 0x4EULL);
+    sceGifPkAddGsData(&packet, 0ULL);
+    sceGifPkAddGsData(&packet, 0x14ULL);
+    sceGifPkAddGsData(&packet, 0x44ULL);
+    sceGifPkAddGsData(&packet, 0x42ULL);
+    sceGifPkTerminate(&packet);
+    FlushCache(0);
+    sceDmaSendN(D_0012B318, D_00180A80, sceGifPkSize(&packet));
+    sceGsSyncPath(0, 0);
 }
 
-void func_0011F410(void)
+void gallery_tick_and_render(void)
 {
     s32 overlayAdjustment;
-    GallerySprite *drawBuffer;
+    GalleryView *drawBuffer;
     s16 fadeState;
     s32 brightness;
 
@@ -423,38 +324,38 @@ void func_0011F410(void)
     }
 
     if (D_0012B3D8->drawEnabled != 0) {
-        func_00121FB0(0x80);
+        gallery_draw_background(0x80);
         if (D_0012B3D8->overlayEnabled != 0) {
-            func_00122160();
+            gallery_draw_grid_and_ui();
             overlayAdjustment = D_0012B3D8->overlayAdjustment;
             if (overlayAdjustment != 0) {
-                func_00121FB0((u8)(0x80 - ((s16)overlayAdjustment)));
+                gallery_draw_background((u8)(0x80 - ((s16)overlayAdjustment)));
             }
         }
-        if ((D_0012B3D8->bufferPending != 0) && (func_00123920(&D_0012B3D8->sprites[D_0012B3D8->activeBuffer ^ 1], 0) != 0)) {
+        if ((D_0012B3D8->bufferPending != 0) && (viewer_update_and_draw(&D_0012B3D8->sprites[D_0012B3D8->activeBuffer ^ 1], 0) != 0)) {
             D_0012B3D8->bufferPending = 0;
         }
         drawBuffer = D_0012B3D8->curSprite;
         if (drawBuffer != 0) {
-            func_00123920(drawBuffer, 0);
+            viewer_update_and_draw(drawBuffer, 0);
         }
         drawBuffer = D_0012B3D8->prevSprite;
         if (drawBuffer != 0) {
-            func_00123920(drawBuffer, 1);
+            viewer_update_and_draw(drawBuffer, 1);
         }
     }
 
     fadeState = D_0012B3D8->fadeState;
     if (fadeState == 0) {
         brightness = 0xFF - ((D_0012B3D8->timer * 8 > 0xFF) ? 0xFF : D_0012B3D8->timer * 8);
-        func_00124E50(0, 0, 640, 448, brightness, brightness, brightness, 0x80, 2);
+        gallery_draw_solid_rect(0, 0, 640, 448, brightness, brightness, brightness, 0x80, 2);
     } else if (fadeState > 8) {
         brightness = (D_0012B3D8->timer * 8 > 0xFF) ? 0xFF : D_0012B3D8->timer * 8;
-        func_00124E50(0, 0, 640, 448, brightness, brightness, brightness, 0x80, 2);
+        gallery_draw_solid_rect(0, 0, 640, 448, brightness, brightness, brightness, 0x80, 2);
     }
 }
 
-s32 func_0011F630(void)
+s32 gallery_state_exit(void)
 {
     s32 byteIndex;
 
@@ -477,7 +378,7 @@ s32 func_0011F630(void)
     return 0;
 }
 
-s32 func_0011F750(void)
+s32 gallery_state_viewer(void)
 {
     switch (D_0012B3D8->state) {
     case 0:
@@ -507,7 +408,7 @@ s32 func_0011F750(void)
             offset /= 0x800;
         }
         offset += D_0012B444;
-        func_0011B6B0(D_0012B3D8->readBuf, size, offset);
+        cd_read_async(D_0012B3D8->readBuf, size, offset);
         if (D_0012B2F4 == 0) {
             D_0012B3D8->state++;
         }
@@ -532,7 +433,7 @@ s32 func_0011F750(void)
     }
 
     case 4:
-        if (func_00124820(D_0012B3D8->decodeBuf, D_0012B3D8->readBuf) != 0) {
+        if (lzss_decompress_step(D_0012B3D8->decodeBuf, D_0012B3D8->readBuf) != 0) {
             D_0012B3D8->unk_505154 = 0;
             D_0012B3D8->state++;
         }
@@ -540,7 +441,7 @@ s32 func_0011F750(void)
 
     case 5: {
         s32 slot = D_0012B3D8->activeBuffer;
-        if (func_00122CC0(&D_0012B3D8->viewerTextures[slot], (slot * 0x1000) + 0x1788, (slot * 4) + 0x3788, D_0012B3D8->decodeBuf, 0, 0) != 0) {
+        if (bmp_upload_texture(&D_0012B3D8->viewerTextures[slot], (slot * 0x1000) + 0x1788, (slot * 4) + 0x3788, D_0012B3D8->decodeBuf, 0, 0) != 0) {
             D_0012B3D8->state = 10;
         }
         break;
@@ -549,14 +450,14 @@ s32 func_0011F750(void)
     case 10:
         D_0012B3D8->curSprite = &D_0012B3D8->sprites[D_0012B3D8->activeBuffer];
         D_0012B3D8->prevSprite = D_0012B3D8->curSprite;
-        func_00124280(D_0012B3D8->curSprite, &D_0012B3D8->viewerTextures[D_0012B3D8->activeBuffer], 0);
+        viewer_init_image(D_0012B3D8->curSprite, &D_0012B3D8->viewerTextures[D_0012B3D8->activeBuffer], 0);
         if (D_0012B3D8->isInitialized != 2) {
-            D_0012B3D8->curSprite->unk_44 = 0;
+            D_0012B3D8->curSprite->menuBox.alpha = 0;
         }
         D_0012B3D8->state++;
 
     case 11: {
-        s32 action = func_00123920(D_0012B3D8->curSprite, 2);
+        s32 action = viewer_update_and_draw(D_0012B3D8->curSprite, 2);
         if (action == 3) {
             D_0012B3D8->curSprite = 0;
             D_0012B3D8->prevSprite = 0;
@@ -577,8 +478,8 @@ s32 func_0011F750(void)
                 }
                 D_0012B3D8->menu_params[0] = D_0012B434 % 6;
             } while (D_0012B3D8->itemStatus[D_0012B434] != 2);
-            D_0012B3D8->curSprite->unk_50 = 2;
-            D_0012B3D8->curSprite->unk_54 = 0x80;
+            D_0012B3D8->curSprite->state = 2;
+            D_0012B3D8->curSprite->timer = 0x80;
             D_0012B3D8->bufferPending = 1;
             D_0012B3D8->isInitialized = 2;
             D_0012B3D8->activeBuffer ^= 1;
@@ -599,7 +500,7 @@ s32 func_0011F750(void)
     return 0;
 }
 
-s32 func_0011FE50(void)
+s32 gallery_state_grid(void)
 {
     SpriteInfo atlasSprite;
     s32 thumbnailIndex;
@@ -613,7 +514,7 @@ s32 func_0011FE50(void)
 
     case 3:
         D_0012B3D8->unk_505154 = 0;
-        while (!func_00122CC0(&atlasSprite, 0x1788, 0x2788, D_0012B3D8->textureBuffer, 0, 0)) {
+        while (!bmp_upload_texture(&atlasSprite, 0x1788, 0x2788, D_0012B3D8->textureBuffer, 0, 0)) {
         }
 
         for (thumbnailIndex = 0; thumbnailIndex < 37; thumbnailIndex++) {
@@ -677,7 +578,7 @@ s32 func_0011FE50(void)
 
     case 20:
         previousCursor = D_0012B3D8->menu_params[0];
-        menuResult = func_001246C0(&D_0012B3D8->menu_params[0], D_001A5000);
+        menuResult = viewer_update_grid_cursor(&D_0012B3D8->menu_params[0], D_001A5000);
         if (menuResult != 0) {
             if (menuResult < 0x100) {
                 int directionButtons;
@@ -706,11 +607,11 @@ s32 func_0011FE50(void)
                     D_0012B3D8->state = 29;
                     return 1;
                 }
-                func_0011AF70();
+                sound_play_cursor_se();
             } else {
                 s32 itemIndex = D_0012B3D8->menu_params[0] + D_0012B3D8->pageOffset;
                 if ((itemIndex < D_0012B3D8->itemCount) && (D_0012B3D8->itemStatus[itemIndex] == 2)) {
-                    func_0011AFB0();
+                    sound_play_confirm_se();
                     D_0012B3D8->exitMode = 3;
                     D_0012B3D8->state = 100;
                 }
@@ -718,7 +619,7 @@ s32 func_0011FE50(void)
         } else {
             u32 buttons = D_001A5024[0];
             if (buttons & 0x40) {
-                func_0011AFB0();
+                sound_play_confirm_se();
                 D_0012B3D8->state = 40;
                 break;
             } else if (buttons & 0x4) {
@@ -751,7 +652,7 @@ s32 func_0011FE50(void)
     case 29:
         D_0012B3D8->timer = 0;
         D_0012B3D8->unk_505530 = 0;
-        func_0011AF90();
+        sound_play_page_se();
         D_0012B3D8->fadeState = 2;
         D_0012B3D8->countdown = 0x20;
         D_0012B3D8->state = 30;
@@ -769,24 +670,24 @@ s32 func_0011FE50(void)
         D_0012B3D8->fadeState = 2;
         D_0012B3D8->countdown = 0x10;
         D_0012B3D8->dialogChoice = 1;
-        func_001236D0(-1, 0, 0, 0);
+        viewer_draw_yes_no_dialog(-1, 0, 0, 0);
         D_0012B3D8->state++;
 
     case 41:
         if (D_001A5024[0] & 0x8000) {
             if (menuResult = D_0012B3D8->dialogChoice != 0) {
-                func_0011AF70();
+                sound_play_cursor_se();
             }
             D_0012B3D8->dialogChoice = 0;
         }
         if (D_001A5024[0] & 0x2000) {
             if (D_0012B3D8->dialogChoice != 1) {
-                func_0011AF70();
+                sound_play_cursor_se();
             }
             D_0012B3D8->dialogChoice = 1;
         }
         if (D_001A5024[0] & 0x20) {
-            func_0011AFB0();
+            sound_play_confirm_se();
             if (D_0012B3D8->dialogChoice == 0) {
                 D_0012B3D8->dialogState = -1;
                 D_0012B3D8->state = 100;
@@ -798,7 +699,7 @@ s32 func_0011FE50(void)
             }
         }
         if (D_001A5024[0] & 0x40) {
-            func_0011AFB0();
+            sound_play_confirm_se();
             D_0012B3D8->dialogState = 0;
             D_0012B3D8->fadeState = 1;
             D_0012B3D8->state = 20;
@@ -822,7 +723,7 @@ s32 func_0011FE50(void)
     return (unsigned long)0;
 }
 
-s32 func_00121080(void)
+s32 gallery_state_fade_in(void)
 {
     if (D_0012B3D8->state == 0) {
         D_0012B3D8->fadeState = 0;
@@ -840,9 +741,9 @@ s32 func_00121080(void)
     return 0;
 }
 
-s32 func_00121150(void)
+s32 gallery_state_loading(void)
 {
-    GifPacket pkt;
+    sceGifPacket pkt;
     u32 i;
     s32 idx;
     s32 count;
@@ -855,13 +756,13 @@ s32 func_00121150(void)
         D_0012B3D8->timer = 0;
         D_0012B3D8->state++;
     case 1:
-        func_0011D150();
+        tex_upload_step();
         if (D_0012B2F4 == 0) {
             D_0012B3D8->state++;
         }
         break;
     case 2:
-        if (func_00121720() != 0) {
+        if (gallery_load_ui_assets() != 0) {
             D_0012B3D8->state++;
         }
         break;
@@ -932,28 +833,28 @@ s32 func_00121150(void)
     }
 
     if (D_0012B3D8->state < 5) {
-        func_00124E50(0, 0, 0x280, 0x1C0, 0, 0, 0, 0x80, 0);
-        func_00102AC8(&pkt, D_00180A80);
-        func_00102AD8(&pkt);
-        func_00102B58(&pkt, 0x1000000000008002ULL);
-        func_00102B58(&pkt, 0xE);
-        func_00102B58(&pkt, 0x20170606A9441E40ULL);
-        func_00102B58(&pkt, 0x6);
-        func_00102B58(&pkt, 0);
-        func_00102B58(&pkt, 0x14);
+        gallery_draw_solid_rect(0, 0, 0x280, 0x1C0, 0, 0, 0, 0x80, 0);
+        sceGifPkInit(&pkt, D_00180A80);
+        sceGifPkReset(&pkt);
+        sceGifPkAddGsData(&pkt, 0x1000000000008002ULL);
+        sceGifPkAddGsData(&pkt, 0xE);
+        sceGifPkAddGsData(&pkt, 0x20170606A9441E40ULL);
+        sceGifPkAddGsData(&pkt, 0x6);
+        sceGifPkAddGsData(&pkt, 0);
+        sceGifPkAddGsData(&pkt, 0x14);
 
         for (i = 0; i < 11; i++) {
-            func_00123480(&pkt, 0x180 + i * 16, 0x1A0, D_0012B0B0[i]);
+            bmp_draw_ascii_char(&pkt, 0x180 + i * 16, 0x1A0, D_0012B0B0[i]);
         }
 
         for (i = 0; i < ((D_0012B438 & 0x7F) >> 5); i++) {
-            func_00123480(&pkt, 0x180 + (i + 11) * 16, 0x1A0, '.');
+            bmp_draw_ascii_char(&pkt, 0x180 + (i + 11) * 16, 0x1A0, '.');
         }
 
-        func_00102AE8(&pkt);
-        func_00103220(0);
-        func_00101FB0(D_0012B318, D_00180A80, func_00102B40(&pkt));
-        func_00100E08(0, 0);
+        sceGifPkTerminate(&pkt);
+        FlushCache(0);
+        sceDmaSendN(D_0012B318, D_00180A80, sceGifPkSize(&pkt));
+        sceGsSyncPath(0, 0);
 
         if (D_0012B3D8->timer < 0x20) {
             D_0012B3D8->timer++;
@@ -963,7 +864,7 @@ s32 func_00121150(void)
     return 0;
 }
 
-s32 func_00121720(void)
+s32 gallery_load_ui_assets(void)
 {
     s32 loopState[2];
     s32 size;
@@ -985,7 +886,7 @@ s32 func_00121720(void)
             offset /= 0x800;
         }
         offset += D_0012B444;
-        func_0011B6B0(buf, size, offset);
+        cd_read_async(buf, size, offset);
         if (D_0012B2F4 == 0) {
             D_0012B3D8->unk_505150++;
         }
@@ -1008,14 +909,14 @@ s32 func_00121720(void)
     }
 
     case 3:
-        if (func_00124820(D_0012B3D8->decodeBuf, D_0012B3D8->readBuf) != 0) {
+        if (lzss_decompress_step(D_0012B3D8->decodeBuf, D_0012B3D8->readBuf) != 0) {
             D_0012B3D8->unk_505154 = 0;
             D_0012B3D8->unk_505150++;
         }
         break;
 
     case 4:
-        if (func_00122CC0(&D_0012B3D8->bgSprite, 0x1180, 0x1780, D_0012B3D8->decodeBuf, 0, 0) != 0) {
+        if (bmp_upload_texture(&D_0012B3D8->bgSprite, 0x1180, 0x1780, D_0012B3D8->decodeBuf, 0, 0) != 0) {
             D_0012B3D8->unk_505150 = 10;
         }
         break;
@@ -1033,7 +934,7 @@ s32 func_00121720(void)
             offset /= 0x800;
         }
         offset += D_0012B444;
-        func_0011B6B0(buf, size, offset);
+        cd_read_async(buf, size, offset);
         if (D_0012B2F4 == 0) {
             D_0012B3D8->unk_505150++;
         }
@@ -1056,14 +957,14 @@ s32 func_00121720(void)
     }
 
     case 13:
-        if (func_00124820(D_0012B3D8->decodeBuf, D_0012B3D8->readBuf) != 0) {
+        if (lzss_decompress_step(D_0012B3D8->decodeBuf, D_0012B3D8->readBuf) != 0) {
             D_0012B3D8->unk_505154 = 0;
             D_0012B3D8->unk_505150++;
         }
         break;
 
     case 14:
-        if (func_00122CC0(&D_0012B3D8->uiAtlasSprite, 0x1380, 0x1784, D_0012B3D8->decodeBuf, 0, 0) != 0) {
+        if (bmp_upload_texture(&D_0012B3D8->uiAtlasSprite, 0x1380, 0x1784, D_0012B3D8->decodeBuf, 0, 0) != 0) {
             D_0012B3D8->unk_505150 = 20;
         }
         break;
@@ -1081,7 +982,7 @@ s32 func_00121720(void)
             offset /= 0x800;
         }
         offset += D_0012B444;
-        func_0011B6B0(buf, size, offset);
+        cd_read_async(buf, size, offset);
         if (D_0012B2F4 == 0) {
             D_0012B3D8->unk_505150++;
         }
@@ -1104,7 +1005,7 @@ s32 func_00121720(void)
     }
 
     case 23:
-        if (func_00124820(D_0012B3D8->textureBuffer, D_0012B3D8->readBuf) != 0) {
+        if (lzss_decompress_step(D_0012B3D8->textureBuffer, D_0012B3D8->readBuf) != 0) {
             D_0012B3D8->unk_505150 = 30;
         }
         break;
@@ -1142,43 +1043,43 @@ s32 func_00121720(void)
     return 0;
 }
 
-void func_00121FB0(u8 alpha)
+void gallery_draw_background(u8 alpha)
 {
-    GifPacket packet;
+    sceGifPacket packet;
 
-    func_00102AC8(&packet, D_00180A80);
-    func_00102AD8(&packet);
-    func_00102B58(&packet, 0x1000000000008003ULL);
-    func_00102B58(&packet, 0xEULL);
-    func_00102B58(&packet, D_0012B3D8->bgSprite.tex0);
-    func_00102B58(&packet, 0x6ULL);
-    func_00102B58(&packet, 0x60ULL);
-    func_00102B58(&packet, 0x14ULL);
-    func_00102B58(&packet, 0x44ULL);
-    func_00102B58(&packet, 0x42ULL);
-    func_00102B58(&packet, 0x6400000000008001ULL);
-    func_00102B58(&packet, 0x535310ULL);
+    sceGifPkInit(&packet, D_00180A80);
+    sceGifPkReset(&packet);
+    sceGifPkAddGsData(&packet, 0x1000000000008003ULL);
+    sceGifPkAddGsData(&packet, 0xEULL);
+    sceGifPkAddGsData(&packet, D_0012B3D8->bgSprite.tex0);
+    sceGifPkAddGsData(&packet, 0x6ULL);
+    sceGifPkAddGsData(&packet, 0x60ULL);
+    sceGifPkAddGsData(&packet, 0x14ULL);
+    sceGifPkAddGsData(&packet, 0x44ULL);
+    sceGifPkAddGsData(&packet, 0x42ULL);
+    sceGifPkAddGsData(&packet, 0x6400000000008001ULL);
+    sceGifPkAddGsData(&packet, 0x535310ULL);
 
     if (alpha == 0x80) {
-        func_00102B58(&packet, 0x116ULL);
+        sceGifPkAddGsData(&packet, 0x116ULL);
     } else {
-        func_00102B58(&packet, 0x156ULL);
+        sceGifPkAddGsData(&packet, 0x156ULL);
     }
 
-    func_00102B58(&packet, ((u64)alpha << 24) | 0x3F80000000808080ULL);
-    func_00102B58(&packet, 0ULL);
-    func_00102B58(&packet, 0x79006C00ULL);
-    func_00102B58(&packet, 0x1C002000ULL);
-    func_00102B58(&packet, 0x87009400ULL);
-    func_00102AE8(&packet);
-    func_00103220(0);
-    func_00101FB0(D_0012B318, D_00180A80, func_00102B40(&packet));
-    func_00100E08(0, 0);
+    sceGifPkAddGsData(&packet, ((u64)alpha << 24) | 0x3F80000000808080ULL);
+    sceGifPkAddGsData(&packet, 0ULL);
+    sceGifPkAddGsData(&packet, 0x79006C00ULL);
+    sceGifPkAddGsData(&packet, 0x1C002000ULL);
+    sceGifPkAddGsData(&packet, 0x87009400ULL);
+    sceGifPkTerminate(&packet);
+    FlushCache(0);
+    sceDmaSendN(D_0012B318, D_00180A80, sceGifPkSize(&packet));
+    sceGsSyncPath(0, 0);
 }
 
-void func_00122160(void)
+void gallery_draw_grid_and_ui(void)
 {
-    GifPacket pkt;
+    sceGifPacket pkt;
     SpriteInfo *tex;
     s32 i;
     s32 col;
@@ -1186,50 +1087,50 @@ void func_00122160(void)
     s32 idx;
     s32 mode;
 
-    func_00102AC8(&pkt, D_00180A80);
-    func_00102AD8(&pkt);
+    sceGifPkInit(&pkt, D_00180A80);
+    sceGifPkReset(&pkt);
 
-    func_00102B58(&pkt, 0x1000000000008001ULL);
-    func_00102B58(&pkt, 0xEULL);
-    func_00102B58(&pkt, 0x60ULL);
-    func_00102B58(&pkt, 0x14ULL);
+    sceGifPkAddGsData(&pkt, 0x1000000000008001ULL);
+    sceGifPkAddGsData(&pkt, 0xEULL);
+    sceGifPkAddGsData(&pkt, 0x60ULL);
+    sceGifPkAddGsData(&pkt, 0x14ULL);
 
     for (i = 0; i < 6; i++) {
         tex = &D_0012B3D8->uiSprites[i];
 
-        func_00102B58(&pkt, 0x1000000000008001ULL);
-        func_00102B58(&pkt, 0xEULL);
-        func_00102B58(&pkt, tex->tex0);
-        func_00102B58(&pkt, 0x6ULL);
+        sceGifPkAddGsData(&pkt, 0x1000000000008001ULL);
+        sceGifPkAddGsData(&pkt, 0xEULL);
+        sceGifPkAddGsData(&pkt, tex->tex0);
+        sceGifPkAddGsData(&pkt, 0x6ULL);
 
-        func_00102B58(&pkt, 0x6400000000008001ULL);
-        func_00102B58(&pkt, 0x535310ULL);
-        func_00102B58(&pkt, 0x116ULL);
+        sceGifPkAddGsData(&pkt, 0x6400000000008001ULL);
+        sceGifPkAddGsData(&pkt, 0x535310ULL);
+        sceGifPkAddGsData(&pkt, 0x116ULL);
 
         if (D_0012B3D8->uiMode[i] == 1) {
             u8 color = ((D_0012B438 & 1) << 6) + 0x40;
-            func_00102B58(&pkt, GS_RGBAQ(color, color, color, color, 0x3F800000));
+            sceGifPkAddGsData(&pkt, GS_RGBAQ(color, color, color, color, 0x3F800000));
         } else if (D_0012B3D8->uiMode[i] == 2) {
             if (D_0012B3D8->itemCount <= 6) {
-                func_00102B58(&pkt, GS_RGBAQ(0, 0, 0, 0, 0x3F800000));
+                sceGifPkAddGsData(&pkt, GS_RGBAQ(0, 0, 0, 0, 0x3F800000));
             } else {
-                u8 pulse = (u8)(127.0f * func_00111348((3.1415927f * (f32)(D_0012B438 & 0x3F)) / 64.0f));
-                func_00102B58(&pkt, GS_RGBAQ(0x80, pulse, pulse, 0x80, 0x3F800000));
+                u8 pulse = (u8)(127.0f * sinf((3.1415927f * (f32)(D_0012B438 & 0x3F)) / 64.0f));
+                sceGifPkAddGsData(&pkt, GS_RGBAQ(0x80, pulse, pulse, 0x80, 0x3F800000));
             }
         } else {
-            func_00102B58(&pkt, GS_RGBAQ(0x80, 0x80, 0x80, 0x80, 0x3F800000));
+            sceGifPkAddGsData(&pkt, GS_RGBAQ(0x80, 0x80, 0x80, 0x80, 0x3F800000));
         }
 
-        func_00102B58(&pkt, GS_UV(tex->u << 4, tex->v << 4));
-        func_00102B58(&pkt, GS_XYZ2((D_0012B3D8->uiX0[i] << 4) + 0x6C00, (D_0012B3D8->uiY0[i] << 3) + 0x7900));
-        func_00102B58(&pkt, GS_UV((tex->u + tex->w) << 4, (tex->v + tex->h) << 4));
-        func_00102B58(&pkt, GS_XYZ2((D_0012B3D8->uiX1[i] << 4) + 0x6C00, (D_0012B3D8->uiY1[i] << 3) + 0x7900));
+        sceGifPkAddGsData(&pkt, GS_UV(tex->u << 4, tex->v << 4));
+        sceGifPkAddGsData(&pkt, GS_XYZ2((D_0012B3D8->uiX0[i] << 4) + 0x6C00, (D_0012B3D8->uiY0[i] << 3) + 0x7900));
+        sceGifPkAddGsData(&pkt, GS_UV((tex->u + tex->w) << 4, (tex->v + tex->h) << 4));
+        sceGifPkAddGsData(&pkt, GS_XYZ2((D_0012B3D8->uiX1[i] << 4) + 0x6C00, (D_0012B3D8->uiY1[i] << 3) + 0x7900));
     }
 
-    func_00102B58(&pkt, 0x1000000000008001ULL);
-    func_00102B58(&pkt, 0xEULL);
-    func_00102B58(&pkt, 0ULL);
-    func_00102B58(&pkt, 0x14ULL);
+    sceGifPkAddGsData(&pkt, 0x1000000000008001ULL);
+    sceGifPkAddGsData(&pkt, 0xEULL);
+    sceGifPkAddGsData(&pkt, 0ULL);
+    sceGifPkAddGsData(&pkt, 0x14ULL);
 
     if ((D_0012B3D8->timer & 0x20) == 0) {
         D_0012B42C = D_0012B3D8->timer & 0x1F;
@@ -1247,13 +1148,13 @@ void func_00122160(void)
                 break;
             }
 
-            func_00102B58(&pkt, 0x1000000000008001ULL);
-            func_00102B58(&pkt, 0xEULL);
-            func_00102B58(&pkt, tex->tex0);
-            func_00102B58(&pkt, 0x6ULL);
+            sceGifPkAddGsData(&pkt, 0x1000000000008001ULL);
+            sceGifPkAddGsData(&pkt, 0xEULL);
+            sceGifPkAddGsData(&pkt, tex->tex0);
+            sceGifPkAddGsData(&pkt, 0x6ULL);
 
-            func_00102B58(&pkt, 0x6400000000008001ULL);
-            func_00102B58(&pkt, 0x535310ULL);
+            sceGifPkAddGsData(&pkt, 0x6400000000008001ULL);
+            sceGifPkAddGsData(&pkt, 0x535310ULL);
 
             mode = D_0012B3D8->slotFlags[idx];
             if (D_0012B3D8->fadeState == 0 || D_0012B3D8->fadeState == 2) {
@@ -1262,32 +1163,32 @@ void func_00122160(void)
 
             switch (mode) {
             default:
-                func_00102B58(&pkt, 0x116ULL);
-                func_00102B58(&pkt, GS_RGBAQ(0x80, 0x80, 0x80, 0x80, 0x3F800000));
+                sceGifPkAddGsData(&pkt, 0x116ULL);
+                sceGifPkAddGsData(&pkt, GS_RGBAQ(0x80, 0x80, 0x80, 0x80, 0x3F800000));
                 break;
             case 0:
             case 2:
-                func_00102B58(&pkt, 0x156ULL);
-                func_00102B58(&pkt, GS_RGBAQ(0x80, 0x80, 0x80, D_0012B3D8->countdown << 2, 0x3F800000));
+                sceGifPkAddGsData(&pkt, 0x156ULL);
+                sceGifPkAddGsData(&pkt, GS_RGBAQ(0x80, 0x80, 0x80, D_0012B3D8->countdown << 2, 0x3F800000));
                 break;
             case 4: {
                 s32 bright = (D_0012B42C << 2) + 0x80;
-                func_00102B58(&pkt, 0x156ULL);
-                func_00102B58(&pkt, GS_RGBAQ(bright, bright, bright, 0x80, 0x3F800000));
+                sceGifPkAddGsData(&pkt, 0x156ULL);
+                sceGifPkAddGsData(&pkt, GS_RGBAQ(bright, bright, bright, 0x80, 0x3F800000));
                 break;
             }
             }
 
-            func_00102B58(&pkt, GS_UV(tex->u << 4, tex->v << 4));
-            func_00102B58(
+            sceGifPkAddGsData(&pkt, GS_UV(tex->u << 4, tex->v << 4));
+            sceGifPkAddGsData(
                 &pkt,
                 GS_XYZ2(
                     ((D_0012B3D8->scrollX + 0x38 + col * 0x90) << 4) + 0x6C00,
                     ((row * 0x6A + 0x5E) << 3) + 0x7900
                 )
             );
-            func_00102B58(&pkt, GS_UV((tex->u + tex->w - 1) << 4, (tex->v + tex->h) << 4));
-            func_00102B58(
+            sceGifPkAddGsData(&pkt, GS_UV((tex->u + tex->w - 1) << 4, (tex->v + tex->h) << 4));
+            sceGifPkAddGsData(
                 &pkt,
                 GS_XYZ2(
                     ((tex->w + (D_0012B3D8->scrollX + 0x38 + col * 0x90)) << 4) + 0x6C00,
@@ -1298,10 +1199,10 @@ void func_00122160(void)
         }
     }
 
-    func_00102B58(&pkt, 0x1000000000008001ULL);
-    func_00102B58(&pkt, 0xEULL);
-    func_00102B58(&pkt, 0x60ULL);
-    func_00102B58(&pkt, 0x14ULL);
+    sceGifPkAddGsData(&pkt, 0x1000000000008001ULL);
+    sceGifPkAddGsData(&pkt, 0xEULL);
+    sceGifPkAddGsData(&pkt, 0x60ULL);
+    sceGifPkAddGsData(&pkt, 0x14ULL);
 
     if (D_0012B3D8->fadeState == 1) {
         if ((D_0012B3D8->timer & 0x40) == 0) {
@@ -1311,23 +1212,23 @@ void func_00122160(void)
             }
         }
 
-        func_00102B58(&pkt, 0x1000000000008001ULL);
-        func_00102B58(&pkt, 0xEULL);
-        func_00102B58(&pkt, 0x48ULL);
-        func_00102B58(&pkt, 0x42ULL);
+        sceGifPkAddGsData(&pkt, 0x1000000000008001ULL);
+        sceGifPkAddGsData(&pkt, 0xEULL);
+        sceGifPkAddGsData(&pkt, 0x48ULL);
+        sceGifPkAddGsData(&pkt, 0x42ULL);
 
-        func_00102B58(&pkt, 0x4400000000008001ULL);
-        func_00102B58(&pkt, 0x5510ULL);
-        func_00102B58(&pkt, 0x146ULL);
-        func_00102B58(&pkt, GS_RGBAQ(0xC0, 0xC0, 0xC0, 0x60 - D_0012B430 * 2, 0x3F800000));
-        func_00102B58(
+        sceGifPkAddGsData(&pkt, 0x4400000000008001ULL);
+        sceGifPkAddGsData(&pkt, 0x5510ULL);
+        sceGifPkAddGsData(&pkt, 0x146ULL);
+        sceGifPkAddGsData(&pkt, GS_RGBAQ(0xC0, 0xC0, 0xC0, 0x60 - D_0012B430 * 2, 0x3F800000));
+        sceGifPkAddGsData(
             &pkt,
             GS_XYZ2(
                 (((D_0012B3D8->menu_params[0] % 3) * 0x90 + 0x70) << 4) + 0x6C00,
                 (((D_0012B3D8->menu_params[0] / 3) * 0x6A + 0x5E) << 3) + 0x7900
             )
         );
-        func_00102B58(
+        sceGifPkAddGsData(
             &pkt,
             GS_XYZ2(
                 (((D_0012B3D8->menu_params[0] % 3) * 0x90 + 0xF0) << 4) + 0x6C00,
@@ -1336,17 +1237,17 @@ void func_00122160(void)
         );
     }
 
-    func_00102AE8(&pkt);
-    func_00103220(0);
-    func_00101FB0(D_0012B318, D_00180A80, func_00102B40(&pkt));
-    func_00100E08(0, 0);
+    sceGifPkTerminate(&pkt);
+    FlushCache(0);
+    sceDmaSendN(D_0012B318, D_00180A80, sceGifPkSize(&pkt));
+    sceGsSyncPath(0, 0);
 
     switch (D_0012B3D8->dialogState) {
     case 0:
-        func_0011C7D0();
+        sprite_clear_queue();
         for (i = 0; i < 2; i++) {
-            func_0011C460(
-                D_0012B3D8->uiX0[2] - 0x20,
+            sprite_queue_sjis_text(
+                (s16)(D_0012B3D8->uiX0[2] - 0x20),
                 D_0012B3D8->uiY0[2] + 0x13 + i * 0x18,
                 D_00129118[i],
                 0,
@@ -1356,12 +1257,12 @@ void func_00122160(void)
                 0
             );
         }
-        func_0011C360();
+        sprite_flush_rects();
         break;
     case 1:
-        func_0011C7D0();
-        func_0011C460(
-            D_0012B3D8->uiX0[2] - 0x20,
+        sprite_clear_queue();
+        sprite_queue_sjis_text(
+            (s16)(D_0012B3D8->uiX0[2] - 0x20),
             D_0012B3D8->uiY0[2] + 0x13,
             D_00129120[0],
             0,
@@ -1370,8 +1271,8 @@ void func_00122160(void)
             0x80,
             0
         );
-        func_0011C360();
-        func_001236D0(D_0012B3D8->dialogChoice, 0x140, D_0012B3D8->uiY0[2] + 0x33, 0x40);
+        sprite_flush_rects();
+        viewer_draw_yes_no_dialog(D_0012B3D8->dialogChoice, 0x140, D_0012B3D8->uiY0[2] + 0x33, 0x40);
         break;
     }
 }

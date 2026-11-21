@@ -1,4 +1,4 @@
-#include "common.h"
+#include "gallery/gallery.h"
 
 typedef union {
     __int128 quadword;
@@ -48,20 +48,9 @@ extern PaletteColor D_00132980[17][16];
 extern u8 D_001A0A80[32][512];
 extern u8 D_001A4A80[];
 
-extern void func_00100E08(s32, s32);
-extern void func_00101120(void *context, s16 resourceId, s32, s32, s32, s32, s32, s32);
-extern void func_00101308(void *context, void *destination);
-extern void func_00103220(s32);
-extern void *func_001160A8(u32 alignment, u32 size);
-extern void func_00118268(const char *format, ...);
-extern void func_0011D170(void);
-extern void func_0011E9E0(void);
-
-void func_0011CBA0(s32 paletteIndex);
-void func_0011CD30(s32 paletteIndex);
-
-void func_0011C7E0(GalleryTexturePacket *packet)
+void font_build_gs_setup_packet(void *packetPtr)
 {
+    GalleryTexturePacket *packet = packetPtr;
     packet->startTag.quadword = 0;
     packet->startTag.header = 0x10000008;
     packet->gifTag = 0x1000000000008007ULL;
@@ -84,7 +73,7 @@ void func_0011C7E0(GalleryTexturePacket *packet)
     packet->endTag.header = 0x70000000;
 }
 
-u64 func_0011C8B0(u64 shiftJis)
+u64 sjis_to_jis(u64 shiftJis)
 {
     u64 leadByte = (shiftJis >> 8) & 0xFF;
     u64 trailByte = shiftJis & 0xFF;
@@ -108,7 +97,7 @@ u64 func_0011C8B0(u64 shiftJis)
     return ((leadByte + 1) << 8) + trailByte + 0x2021;
 }
 
-void func_0011C990(void)
+void font_init_clut_table(void)
 {
     s32 colorIndex;
     s32 paletteIndex;
@@ -123,14 +112,14 @@ void func_0011C990(void)
 
     paletteIndex = 1;
 first_palette:
-    func_0011CD30(paletteIndex);
+    font_upload_alt_clut(paletteIndex);
     if ((++paletteIndex) < 9) {
         goto first_palette;
     }
 
     paletteIndex = 9;
 second_palette:
-    func_0011CBA0(paletteIndex);
+    font_upload_clut(paletteIndex);
     if ((++paletteIndex) < 17) {
         goto second_palette;
     }
@@ -153,7 +142,7 @@ second_palette:
     }
 }
 
-void func_0011CBA0(s32 paletteIndex)
+void font_upload_clut(s32 paletteIndex)
 {
     s32 i;
 
@@ -172,7 +161,7 @@ void func_0011CBA0(s32 paletteIndex)
     }
 }
 
-void func_0011CD30(s32 paletteIndex)
+void font_upload_alt_clut(s32 paletteIndex)
 {
     s32 i;
     u32 gray;
@@ -194,55 +183,55 @@ void func_0011CD30(s32 paletteIndex)
     }
 }
 
-void func_0011CF30(void)
+void font_init(void)
 {
     s32 entryIndex;
     u8 *galleryEntry;
     short new_var;
 
-    func_0011C990();
+    font_init_clut_table();
     entryIndex = 0;
     galleryEntry = (u8 *)D_00132980;
     do {
         new_var = (s64)(entryIndex + 0x37E8);
-        func_00101120(D_001A4A80, new_var, 1, 0, 0, 0, 8, 2);
-        func_00103220(0);
-        func_00101308(D_001A4A80, galleryEntry);
-        func_00100E08(0, 0);
+        sceGsSetDefLoadImage(D_001A4A80, new_var, 1, 0, 0, 0, 8, 2);
+        FlushCache(0);
+        sceGsExecLoadImage(D_001A4A80, galleryEntry);
+        sceGsSyncPath(0, 0);
         entryIndex++;
         galleryEntry += 0x40;
     } while (entryIndex < 0x11);
 
-    func_00101120(D_001A4A80, 0x37FA, 1, 0, 0, 0, 8, 2);
-    func_00103220(0);
-    func_00101308(D_001A4A80, D_00132900);
-    func_00100E08(0, 0);
-    func_0011E9E0();
+    sceGsSetDefLoadImage(D_001A4A80, 0x37FA, 1, 0, 0, 0, 8, 2);
+    FlushCache(0);
+    sceGsExecLoadImage(D_001A4A80, D_00132900);
+    sceGsSyncPath(0, 0);
+    glyph_cache_init();
 }
 
-void func_0011D020(void)
+void font_upload_default_cluts(void)
 {
     s32 resourceIndex;
     PaletteColor (*resourceBuffer)[16];
 
     *(volatile u32 *)0x10000000 = 0;
-    D_0012B300 = func_001160A8(0x40, 0x300000);
-    func_00118268(D_0012AE00, D_0012B300, 0x2D9248);
+    D_0012B300 = memalign(0x40, 0x300000);
+    printf(D_0012AE00, D_0012B300, 0x2D9248);
     D_0012B30C = D_0012B300;
-    func_0011C990();
+    font_init_clut_table();
 
     resourceBuffer = D_00132980;
     for (resourceIndex = 0; resourceIndex < 17; resourceIndex++, resourceBuffer++) {
-        func_00101120(D_001A4A80, (s16)(0x37E8 + resourceIndex), 1, 0, 0, 0, 8, 2);
-        func_00103220(0);
-        func_00101308(D_001A4A80, *resourceBuffer);
-        func_00100E08(0, 0);
+        sceGsSetDefLoadImage(D_001A4A80, (s16)(0x37E8 + resourceIndex), 1, 0, 0, 0, 8, 2);
+        FlushCache(0);
+        sceGsExecLoadImage(D_001A4A80, *resourceBuffer);
+        sceGsSyncPath(0, 0);
     }
 
-    func_00101120(D_001A4A80, 0x37FA, 1, 0, 0, 0, 8, 2);
-    func_00103220(0);
-    func_00101308(D_001A4A80, D_00132900);
-    func_00100E08(0, 0);
-    func_0011E9E0();
-    func_0011D170();
+    sceGsSetDefLoadImage(D_001A4A80, 0x37FA, 1, 0, 0, 0, 8, 2);
+    FlushCache(0);
+    sceGsExecLoadImage(D_001A4A80, D_00132900);
+    sceGsSyncPath(0, 0);
+    glyph_cache_init();
+    tex_upload_reset();
 }
