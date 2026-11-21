@@ -229,6 +229,8 @@ def append_alias(target_name, sym_name, address):
     sym_file = symbols_path(target_name)
     text = sym_file.read_text(encoding="utf-8")
     for other, (other_address, _) in load_symbols(target_name).items():
+        if other == sym_name and other_address == address:
+            return
         if other_address == address and other != "_gp":
             raise ValueError(
                 f"{target_name}: {address:#x} is already named {other}, but Main calls it {sym_name}; "
@@ -242,8 +244,8 @@ def append_alias(target_name, sym_name, address):
     sym_file.write_text(text, encoding="utf-8")
 
 
-@matching_lock()
-def integrate(target_name, func_name, source_path, out_name=None, subdir=None, pair_death=True):
+def prepare_integration(target_name, func_name, source_path, out_name=None, subdir=None, pair_death=False):
+    """Verify a matched draft against retail bytes without touching the config or the build."""
     local = require_local()
     source_path = Path(source_path).resolve()
     split_folder = split(target_name)
@@ -306,42 +308,91 @@ def integrate(target_name, func_name, source_path, out_name=None, subdir=None, p
     dest_file = ROOT / "src" / subdir / f"{c_name}.c"
     if dest_file.exists():
         raise ValueError(f"Destination already exists: {dest_file.relative_to(ROOT)}")
-    stub = f"{subdir}/{c_name}"
+    return {
+        "func_name": func_name, "c_name": c_name, "code": code, "stub": f"{subdir}/{c_name}",
+        "dest_file": dest_file, "verified_targets": verified_targets, "death_aliases": death_aliases,
+    }
 
+
+def apply_plans(local, plans):
+    """Write sources and patch Splat/symbols for every plan, then build each touched ELF once."""
+    touched = sorted({t[0] for plan in plans for t in plan["verified_targets"]})
     backups = {}
-    for t_name, _, _, _, _ in verified_targets:
+    for t_name in touched:
         for path in (splat_yaml_path(t_name), symbols_path(t_name)):
             backups[path] = path.read_bytes()
-
+    written = []
     try:
-        dest_file.parent.mkdir(parents=True, exist_ok=True)
-        dest_file.write_text(code, encoding="utf-8")
-        for alias, alias_address in death_aliases.items():
-            append_alias(DEATH, alias, alias_address)
-        for t_name, _, t_addr, t_size, rodata in verified_targets:
-            append_symbol(t_name, c_name, t_addr, t_size)
-            patch_splat_yaml(t_name, t_addr, t_size, stub)
-            if rodata is not None:
-                table_offset, table_size = rodata
-                patch_splat_rodata(t_name, table_offset, table_size, stub)
-        for t_name, _, _, _, _ in verified_targets:
+        for plan in plans:
+            plan["dest_file"].parent.mkdir(parents=True, exist_ok=True)
+            plan["dest_file"].write_text(plan["code"], encoding="utf-8")
+            written.append(plan["dest_file"])
+            for alias, alias_address in plan["death_aliases"].items():
+                append_alias(DEATH, alias, alias_address)
+            for t_name, _, t_addr, t_size, rodata in plan["verified_targets"]:
+                append_symbol(t_name, plan["c_name"], t_addr, t_size)
+                patch_splat_yaml(t_name, t_addr, t_size, plan["stub"])
+                if rodata is not None:
+                    table_offset, table_size = rodata
+                    patch_splat_rodata(t_name, table_offset, table_size, plan["stub"])
+        for t_name in touched:
             build(local, target=t_name)
     except BaseException:
-        dest_file.unlink(missing_ok=True)
+        for path in written:
+            path.unlink(missing_ok=True)
         for path, old_bytes in backups.items():
             path.write_bytes(old_bytes)
-        for t_name, _, _, _, _ in verified_targets:
+        for t_name in touched:
             (ROOT / "build" / "split" / t_name / "split-state.json").unlink(missing_ok=True)
         raise
+    for plan in plans:
+        for t_name, asm_name, _, _, _ in plan["verified_targets"]:
+            (nonmatching_dir(t_name) / f"{asm_name}.c").unlink(missing_ok=True)
+            (ROOT / "build" / "wip" / t_name / f"{asm_name}.best.c").unlink(missing_ok=True)
 
-    for t_name, asm_name, _, _, _ in verified_targets:
-        (nonmatching_dir(t_name, shared=False) / f"{asm_name}.c").unlink(missing_ok=True)
-        (nonmatching_dir(t_name, shared=True) / f"{asm_name}.c").unlink(missing_ok=True)
-        (ROOT / "build" / "wip" / t_name / f"{asm_name}.best.c").unlink(missing_ok=True)
-    targets = [t for t, _, _, _, _ in verified_targets]
-    names = ", ".join(targets)
-    print(f"INTEGRATED  {dest_file.relative_to(ROOT)}  ({names})")
-    return dest_file, targets
+
+@matching_lock()
+def integrate_many(plans):
+    """Apply prepared plans with one split+build per ELF. If the combined build fails, retry one by one.
+
+    Returns (applied, failed) where failed is a list of (plan, error).
+    """
+    if not plans:
+        return [], []
+    local = require_local()
+    try:
+        apply_plans(local, plans)
+        applied = list(plans)
+    except (OSError, ValueError, subprocess.CalledProcessError, SystemExit) as error:
+        if len(plans) == 1:
+            return [], [(plans[0], error)]
+        print(f"WARNING  batched integration failed ({error}); retrying {len(plans)} functions one at a time")
+        applied, failed = [], []
+        for plan in plans:
+            try:
+                apply_plans(local, [plan])
+                applied.append(plan)
+            except (OSError, ValueError, subprocess.CalledProcessError, SystemExit) as one_error:
+                failed.append((plan, one_error))
+        for plan in applied:
+            report_integrated(plan)
+        return applied, failed
+    for plan in applied:
+        report_integrated(plan)
+    return applied, []
+
+
+def report_integrated(plan):
+    names = ", ".join(t[0] for t in plan["verified_targets"])
+    print(f"INTEGRATED  {plan['dest_file'].relative_to(ROOT)}  ({names})")
+
+
+def integrate(target_name, func_name, source_path, out_name=None, subdir=None, pair_death=False):
+    plan = prepare_integration(target_name, func_name, source_path, out_name, subdir, pair_death)
+    applied, failed = integrate_many([plan])
+    if failed:
+        raise failed[0][1]
+    return plan["dest_file"], [t[0] for t in plan["verified_targets"]]
 
 
 def main():
@@ -351,9 +402,9 @@ def main():
     parser.add_argument("--source", type=Path, required=True)
     parser.add_argument("--name", help="C function name (defaults to original label)")
     parser.add_argument("--subdir", help="subdirectory under src/ (defaults to shared/gallery/main/death)")
-    parser.add_argument("--no-pair", action="store_true", help="do not auto-integrate into paired DEATH.ELF")
+    parser.add_argument("--pair-death", action="store_true", help="also integrate the exact Death Label twin (off by default; Main-first)")
     args = parser.parse_args()
-    integrate(args.target, args.function, args.source, args.name, args.subdir, pair_death=not args.no_pair)
+    integrate(args.target, args.function, args.source, args.name, args.subdir, pair_death=args.pair_death)
 
 
 if __name__ == "__main__":

@@ -39,9 +39,7 @@ TARGET_SUBDIRS = {
 }
 
 
-def nonmatching_dir(target_name, shared=False):
-    if shared:
-        return ROOT / "src" / "nonmatchings" / "shared"
+def nonmatching_dir(target_name):
     return ROOT / "src" / "nonmatchings" / TARGET_SUBDIRS.get(target_name, target_name.lower())
 
 
