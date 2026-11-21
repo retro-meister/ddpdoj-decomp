@@ -11,26 +11,25 @@ void glyph_cache_init(void)
     s32 i;
     s32 j;
     s32 previousTail;
-    {
-        s8 *destination = (s8 *)g_glyph_cache_map;
-        s32 remaining = sizeof(g_glyph_cache_map);
-        while (remaining--) {
-            *(destination++) = -1;
-        }
+    s8 *destination;
+    s32 remaining;
+    GlyphCacheEntry *p;
+
+    destination = (s8 *)g_glyph_cache_map;
+    remaining = sizeof(g_glyph_cache_map);
+    while (remaining--) {
+        *(destination++) = -1;
     }
-    {
-        s8 *destination = g_glyph_cache_sub_map;
-        s32 remaining = sizeof(g_glyph_cache_sub_map);
-        while (remaining--) {
-            *(destination++) = -1;
-        }
+
+    destination = g_glyph_cache_sub_map;
+    remaining = sizeof(g_glyph_cache_sub_map);
+    while (remaining--) {
+        *(destination++) = -1;
     }
-    {
-        GlyphCacheEntry *p;
-        for (index = 2, p = g_glyph_cache; index < 0x402; index++, p++) {
-            p->previous = index - 2;
-            p->next = index - 2;
-        }
+
+    for (index = 2, p = g_glyph_cache; index < 0x402; index++, p++) {
+        p->previous = index - 2;
+        p->next = index - 2;
     }
     g_glyph_cache[-2].next = -1;
     g_glyph_cache[-1].previous = -2;

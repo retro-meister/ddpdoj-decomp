@@ -208,20 +208,15 @@ void bmp_upload_clut(s16 destinationBase, const void *palette, s32 colorCount)
     }
 
     swizzledPalette = g_gallery->bmpScratchBuf + 0x400;
-    row = 0;
-    swizzledBlock = swizzledPalette;
-    do {
+    for (row = 0, swizzledBlock = swizzledPalette; row < 16; row += 2, swizzledBlock += 0x80, clutPtrs[1] += 0x80) {
         memcpy(swizzledBlock, clutPtrs[1], 0x20);
         memcpy(swizzledBlock + 0x20, clutPtrs[1] + 0x40, 0x20);
         memcpy(swizzledBlock + 0x40, clutPtrs[1] + 0x20, 0x20);
         memcpy(swizzledBlock + 0x60, clutPtrs[1] + 0x60, 0x20);
-        row += 2;
-        swizzledBlock += 0x80;
-        clutPtrs[1] += 0x80;
-    } while (row < 16);
+    }
     sceGsSetDefLoadImage(loadPacket, destinationBase, 1, 0, 0, 0, 16, 16);
     FlushCache(0);
-    sceGsExecLoadImage(loadPacket, (0, swizzledPalette));
+    sceGsExecLoadImage(loadPacket, swizzledPalette);
     sceGsSyncPath(0, 0);
 }
 

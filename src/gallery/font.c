@@ -238,17 +238,14 @@ void font_init(void)
     s16 cbp;
 
     font_init_clut_table();
-    entryIndex = 0;
     clutBytes = (u8 *)g_font_cluts;
-    do {
+    for (entryIndex = 0; entryIndex < 17; entryIndex++, clutBytes += 0x40) {
         cbp = (s64)(entryIndex + 0x37E8);
         sceGsSetDefLoadImage(g_gs_load_image, cbp, 1, 0, 0, 0, 8, 2);
         FlushCache(0);
         sceGsExecLoadImage(g_gs_load_image, clutBytes);
         sceGsSyncPath(0, 0);
-        entryIndex++;
-        clutBytes += 0x40;
-    } while (entryIndex < 0x11);
+    }
 
     sceGsSetDefLoadImage(g_gs_load_image, 0x37FA, 1, 0, 0, 0, 8, 2);
     FlushCache(0);

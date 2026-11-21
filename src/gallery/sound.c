@@ -121,6 +121,8 @@ void sound_update_bgm_fade(void)
 {
     s32 channel;
     s32 volume;
+    u32 cmd;
+    s32 volParam;
 
     for (channel = 0; channel < 2; channel++) {
         if (g_bgm_fade_state[channel].fadeMode == 0) {
@@ -174,12 +176,10 @@ void sound_update_bgm_fade(void)
         if (volume != 0) {
             volume = (volume * 0x7FFF) / 100;
         }
-        {
-            u32 cmd = channel | EZBGM_CMD_SET_VOL;
-            s32 volParam = volume << 16;
-            volParam |= volume;
-            send_bgm_rpc(cmd, volParam, 0);
-        }
+        cmd = channel | EZBGM_CMD_SET_VOL;
+        volParam = volume << 16;
+        volParam |= volume;
+        send_bgm_rpc(cmd, volParam, 0);
     }
 }
 
@@ -269,28 +269,19 @@ void sound_init_file_tables(void)
     const char **source;
     CdFileEntry *entry;
 
-    index = 0;
-    source = g_bgm_file_paths;
-    entry = g_bgm_files;
-    for (; index < 13; index++, source++, entry++) {
+    for (index = 0, source = g_bgm_file_paths, entry = g_bgm_files; index < 13; index++, source++, entry++) {
         cd_search_file(*source);
         entry->size = g_cd_file.size;
         entry->lba = g_cd_file.lba;
     }
 
-    index = 0;
-    source = g_stage_bg_paths;
-    entry = g_stage_bg_files;
-    for (; index < 10; index++, source++, entry++) {
+    for (index = 0, source = g_stage_bg_paths, entry = g_stage_bg_files; index < 10; index++, source++, entry++) {
         cd_search_file(*source);
         entry->size = g_cd_file.size;
         entry->lba = g_cd_file.lba;
     }
 
-    index = 0;
-    source = g_data_file_paths;
-    entry = g_data_files;
-    for (; index < 14; index++, source++, entry++) {
+    for (index = 0, source = g_data_file_paths, entry = g_data_files; index < 14; index++, source++, entry++) {
         cd_search_file(*source);
         entry->size = g_cd_file.size;
         entry->lba = g_cd_file.lba;

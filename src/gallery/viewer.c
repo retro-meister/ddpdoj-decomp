@@ -394,19 +394,11 @@ s32 viewer_update_grid_cursor(GalleryMenuState *menu, PadInfo *input)
     }
 
     heldFrames = menu->heldFrames;
-    if (heldFrames != 1) {
-        if (heldFrames <= 20) {
-            goto checkMovement;
-        }
-        if ((heldFrames & 3) != 0) {
-            goto checkMovement;
-        }
+    if (heldFrames == 1 || (heldFrames > 20 && (heldFrames & 3) == 0)) {
+        input->trigger =
+            (input->trigger & 0x0FFF) | (input->buttons & 0xF000);
     }
 
-    input->trigger =
-        (input->trigger & 0x0FFF) | (input->buttons & 0xF000);
-
-checkMovement:
     for (buttonIndex = 0; buttonIndex < 5; buttonIndex++) {
         if (menu->movementSteps[buttonIndex] != 0 &&
             (input->trigger & g_menu_dir_buttons[buttonIndex]) != 0) {
