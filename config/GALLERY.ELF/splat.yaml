@@ -65,7 +65,7 @@ segments:
       - [0x1d1f0, c, gallery/func_0011D170]
       - [0x1d3e0, c, gallery/func_0011D360]
       - [0x1d430, c, gallery/func_0011D3B0]
-      - [0x1d590, asm, game_01d590]
+      - [0x1d590, c, gallery/func_0011D510]
       - [0x1d900, c, gallery/func_0011D880]
       - [0x1da50, c, gallery/func_0011D9D0]
       - [0x1db40, c, gallery/func_0011DAC0]

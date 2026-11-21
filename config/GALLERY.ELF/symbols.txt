@@ -69,3 +69,4 @@ func_00121720 = 0x121720; // type:func size:0x884
 func_00122160 = 0x122160; // type:func size:0xb60
 func_0011C0C0 = 0x11c0c0; // type:func size:0x298
 func_0011F750 = 0x11f750; // type:func size:0x700
+func_0011D510 = 0x11d510; // type:func size:0x368
