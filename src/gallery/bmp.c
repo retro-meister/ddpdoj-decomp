@@ -13,8 +13,7 @@ typedef struct
     u32 biYPelsPerMeter;
     u32 biClrUsed;
     u32 biClrImportant;
-    u8 reserved28[8];
-    u8 loadImage[0x60];
+    Qword loadImage[6];
 } BmpContext;
 
 extern u16 g_ascii_glyph_table[];
@@ -170,7 +169,7 @@ s32 bmp_upload_texture(SpriteInfo *tex, s16 tbp, s16 cbp, u8 *bmp, s32 x, s32 y)
     return 0;
 }
 
-void bmp_upload_clut(s16 destinationBase, const void *palette, s32 colorCount)
+void bmp_upload_clut(s16 destinationBase, const u8 *palette, s32 colorCount)
 {
     u64 loadPacket[12];
     u8 paletteCopy[0x400];

@@ -300,7 +300,7 @@ void gallery_draw_grid_and_ui(void);
 
 /* bmp.c */
 s32 bmp_upload_texture(SpriteInfo *tex, s16 tbp, s16 cbp, u8 *bmp, s32 x, s32 y);
-void bmp_upload_clut(s16 destinationBase, const void *palette, s32 colorCount);
+void bmp_upload_clut(s16 destinationBase, const u8 *palette, s32 colorCount);
 void bmp_draw_ascii_char(sceGifPacket *packet, s32 x, s32 y, u8 glyphIndex);
 
 /* viewer.c */
