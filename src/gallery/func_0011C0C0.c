@@ -29,7 +29,7 @@ void func_0011C0C0(GalleryPacketQword *packet, s32 firstEntry, s32 entryCount)
     packet[0].quadword = 0;
     packet[0].words[0] = (entryCount * 10) | 0x10000000;
 
-    for (entryIndex = 0; entryIndex < entryCount; entryIndex++, firstEntry++) {
+    for (entryIndex = 0; entryIndex < entryCount; entryIndex++) {
         s32 x = D_00132E80[firstEntry].x;
         s32 y = D_00132E80[firstEntry].y;
         s32 depth = D_00132E80[firstEntry].depth;
@@ -40,6 +40,8 @@ void func_0011C0C0(GalleryPacketQword *packet, s32 firstEntry, s32 entryCount)
         s32 height = D_00132E80[firstEntry].height;
         s32 alpha = D_00132E80[firstEntry].alpha;
         s32 textureBase;
+        s32 left;
+        s32 right;
 
         if (texturePage == 0x14) {
             textureBase = 0x37FA;
@@ -47,8 +49,9 @@ void func_0011C0C0(GalleryPacketQword *packet, s32 firstEntry, s32 entryCount)
             textureBase = texturePage + 0x37E8;
         }
 
-        x += 0x700;
-        width += x;
+        firstEntry++;
+        left = x + 0x700;
+        right = left + width;
         depth <<= 4;
         height >>= 1;
 
@@ -81,8 +84,8 @@ void func_0011C0C0(GalleryPacketQword *packet, s32 firstEntry, s32 entryCount)
         packet[packetIndex].words[3] = 0;
         packetIndex++;
 
-        packet[packetIndex].words[0] = x << 4;
-        packet[packetIndex].words[1] = (y << 3) + 0x7900;
+        packet[packetIndex].words[0] = (u32)left << 4;
+        packet[packetIndex].words[1] = ((u32)y << 3) + 0x7900;
         packet[packetIndex].words[2] = depth;
         packet[packetIndex].words[3] = 0;
         packetIndex++;
@@ -99,8 +102,8 @@ void func_0011C0C0(GalleryPacketQword *packet, s32 firstEntry, s32 entryCount)
         packet[packetIndex].words[3] = 0;
         packetIndex++;
 
-        packet[packetIndex].words[0] = width << 4;
-        packet[packetIndex].words[1] = (y << 3) + ((height + 0x790) << 4);
+        packet[packetIndex].words[0] = (u32)right << 4;
+        packet[packetIndex].words[1] = ((height + 0x790) << 4) + ((u32)y << 3);
         packet[packetIndex].words[2] = depth;
         packet[packetIndex].words[3] = 0;
         packetIndex++;
