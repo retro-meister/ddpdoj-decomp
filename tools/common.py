@@ -19,6 +19,17 @@ def read_json(path):
 
 TARGETS = read_json(ROOT / "config/targets.json")
 TOOLCHAINS = read_json(ROOT / "config/toolchains.json")
+TARGET_SUBDIRS = {
+    "GALLERY.ELF": "gallery",
+    "DEATH.ELF": "death",
+    "SLPS_252.33": "main",
+}
+
+
+def nonmatching_dir(target_name, shared=False):
+    if shared:
+        return ROOT / "src" / "nonmatchings" / "shared"
+    return ROOT / "src" / "nonmatchings" / TARGET_SUBDIRS.get(target_name, target_name.lower())
 
 
 def require_local():

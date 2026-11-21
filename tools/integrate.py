@@ -6,7 +6,7 @@ import subprocess
 import sys
 
 from build import build, compile_source
-from common import BASEROM, ROOT, TARGETS, require_local, run, target_compiler, verify, verify_compiler
+from common import BASEROM, ROOT, TARGETS, nonmatching_dir, require_local, run, target_compiler, verify, verify_compiler
 from diff import collect_provide_symbols
 from objects import find_function
 from split import load_splat_config, scan_asm_functions, split, splat_yaml_path, symbols_path, target_layout
@@ -190,6 +190,10 @@ def integrate(target_name, func_name, source_path, out_name=None, subdir=None, p
             path.write_text(old_text, encoding="utf-8")
         raise
 
+    for t_name, _, _ in verified_targets:
+        (nonmatching_dir(t_name, shared=False) / f"{func_name}.c").unlink(missing_ok=True)
+        (nonmatching_dir(t_name, shared=True) / f"{func_name}.c").unlink(missing_ok=True)
+        (ROOT / "build" / "wip" / t_name / f"{func_name}.best.c").unlink(missing_ok=True)
     names = ", ".join(t for t, _, _ in verified_targets)
     print(f"INTEGRATED  {dest_file.relative_to(ROOT)}  ({names})")
     return dest_file, [t for t, _, _ in verified_targets]
