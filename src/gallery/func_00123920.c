@@ -209,10 +209,12 @@ s32 func_00123920(GalleryView *view, s32 mode) {
             }
         } else {
             if (view->zoomed) {
+                s32 scaledW = view->tex->w * 0x1000;
+                s32 scaledH = view->tex->h * 0x1000;
+                drawW = scaledW >> 12;
                 drawX = (view->panX + 0x140) - ((view->tex->w * 0x1000) >> 13);
+                drawH = scaledH >> 12;
                 drawY = (view->panY + 0xE0) - ((view->tex->h * 0x1000) >> 13);
-                drawW = view->tex->w;
-                drawH = view->tex->h;
             } else {
                 drawX = 0x140 - ((view->tex->w * view->baseScale) >> 13);
                 drawY = 0xE0 - ((view->tex->h * view->baseScale) >> 13);

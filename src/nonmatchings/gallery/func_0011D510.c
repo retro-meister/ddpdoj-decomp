@@ -71,20 +71,17 @@ void func_0011D510(s32 index) {
             remaining -= chunkHeight;
             src += 0x20000;
             yOffset += 0x100;
-            if (remaining == 0) {
-                break;
+            if (remaining != 0) {
+                goto loop0;
+            } else {
+                goto done;
             }
-            goto loop0;
         case 1:
             remaining = D_00129010[index].height;
             yOffset = 0;
             src = D_00135A80;
         loop1:
-            if (remaining > 0x80) {
-                chunkHeight = 0x80;
-            } else {
-                chunkHeight = remaining;
-            }
+            chunkHeight = remaining > 0x80 ? 0x80 : remaining;
             func_00101120(D_001A4A80, D_0012B310, D_00129010[index].dbw, 0x13,
                           D_00129010[index].x, yOffset + D_00129010[index].y,
                           0x400, chunkHeight);
@@ -101,4 +98,6 @@ void func_0011D510(s32 index) {
         case 2:
             break;
     }
+done:
+    return;
 }
