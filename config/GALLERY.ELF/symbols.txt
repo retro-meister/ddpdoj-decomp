@@ -131,8 +131,6 @@ gallery_draw_solid_rect = 0x124e50; // type:func size:0x224
 
 // Gallery data tables in SDK/shared .data
 g_ascii_glyph_table = 0x128ae0;
-g_tex_clut_palette_32 = 0x128be0;
-g_tex_clut_palette_16 = 0x128ce0;
 
 // Linker / SDK references into gallery .sbss/.bss address range
 gallery_slot_0_state = 0x12b280; // defined:true
