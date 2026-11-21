@@ -109,7 +109,7 @@ def disassemble_bin(binutils, path, address):
     if not objdump:
         return []
     out = run(
-        objdump, "-D", "-b", "binary", "-m", "mips:5900", "-EL",
+        objdump, "-D", "--disassemble-zeroes", "-b", "binary", "-m", "mips:5900", "-EL",
         f"--adjust-vma={address:#x}", str(path),
         stdout=subprocess.PIPE, stderr=subprocess.PIPE, text=True,
     ).stdout
