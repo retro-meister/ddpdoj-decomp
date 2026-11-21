@@ -47,6 +47,11 @@ void func_0011C0C0(GalleryPacketQword *packet, s32 firstEntry, s32 entryCount)
             textureBase = texturePage + 0x37E8;
         }
 
+        x += 0x700;
+        width += x;
+        depth <<= 4;
+        height >>= 1;
+
         packet[packetIndex].doublewords[0] = 0x1000000000000002ULL;
         packet[packetIndex].doublewords[1] = 0x0E;
         packetIndex++;
@@ -76,9 +81,9 @@ void func_0011C0C0(GalleryPacketQword *packet, s32 firstEntry, s32 entryCount)
         packet[packetIndex].words[3] = 0;
         packetIndex++;
 
-        packet[packetIndex].words[0] = (x + 0x700) << 4;
+        packet[packetIndex].words[0] = x << 4;
         packet[packetIndex].words[1] = (y << 3) + 0x7900;
-        packet[packetIndex].words[2] = depth << 4;
+        packet[packetIndex].words[2] = depth;
         packet[packetIndex].words[3] = 0;
         packetIndex++;
 
@@ -94,9 +99,9 @@ void func_0011C0C0(GalleryPacketQword *packet, s32 firstEntry, s32 entryCount)
         packet[packetIndex].words[3] = 0;
         packetIndex++;
 
-        packet[packetIndex].words[0] = (x + 0x700 + width) << 4;
-        packet[packetIndex].words[1] = (y << 3) + (((height >> 1) + 0x790) << 4);
-        packet[packetIndex].words[2] = depth << 4;
+        packet[packetIndex].words[0] = width << 4;
+        packet[packetIndex].words[1] = (y << 3) + ((height + 0x790) << 4);
+        packet[packetIndex].words[2] = depth;
         packet[packetIndex].words[3] = 0;
         packetIndex++;
     }

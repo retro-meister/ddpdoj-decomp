@@ -165,6 +165,25 @@ def split(name, force=False):
         elif path.is_file():
             path.unlink()
     run(sys.executable, "-m", "splat", "split", splat_yaml_path(name).relative_to(ROOT), cwd=ROOT)
+    # Splat applies a single SUBALIGN(16) to the entire .main output section, which
+    # over-aligns .rodata subsegments (e.g. 8-byte aligned strings following a 24-byte
+    # jump table). Replace section-wide SUBALIGN(16) on .main with explicit 16-byte
+    # alignment before each asm .text input section so .c.o natural alignments apply.
+    ld_path = folder / "main.ld"
+    ld_text = ld_path.read_text(encoding="utf-8")
+    if ".main " in ld_text and " SUBALIGN(16)" in ld_text:
+        patched_lines = []
+        in_main = False
+        for line in ld_text.splitlines():
+            if line.lstrip().startswith(".main "):
+                in_main = True
+                line = line.replace(" SUBALIGN(16)", "")
+            elif in_main and line.lstrip().startswith("}"):
+                in_main = False
+            elif in_main and ".s.o(.text);" in line:
+                patched_lines.append("        . = ALIGN(., 16);")
+            patched_lines.append(line)
+        ld_path.write_text("\n".join(patched_lines) + "\n", encoding="utf-8")
     write_symbols_ld(name, folder)
     state_file.write_text(json.dumps({"fingerprint": fingerprint}, indent=2) + "\n", encoding="utf-8")
     return folder

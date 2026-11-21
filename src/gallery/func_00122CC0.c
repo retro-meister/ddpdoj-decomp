@@ -59,6 +59,7 @@ s32 func_00122CC0(TexInfo *tex, s16 tbp, s16 cbp, u8 *bmp, s32 x, s32 y)
   u32 th;
   u8 *src;
   u8 *dst;
+  u64 chunkHeight;
   switch (D_0012B3D8->state)
   {
     case 0:
@@ -162,7 +163,7 @@ s32 func_00122CC0(TexInfo *tex, s16 tbp, s16 cbp, u8 *bmp, s32 x, s32 y)
       func_00103220(0);
       func_00101308(&D_001C02B0.loadImage, D_0012B418);
       func_00100E08(0, 0);
-      D_0012B418 += (D_0012B424 * D_0012B410) & (~0xF);
+      D_0012B418 += ((th = (chunkHeight = D_0012B424)) * D_0012B410) & (~0xF);
       if ((++D_0012B41C) >= (1 << D_0012B420))
     {
       D_0012B3D8->state++;

@@ -34,7 +34,7 @@ void func_0011B930(Qword *pkt, s32 startIndex, s32 count) {
     pkt[0].q = 0;
     pkt[0].w[0] = (count << 4) | 0x10000000;
 
-    for (i = 0; i < count; i++, startIndex++) {
+    for (i = 0; i < count; i++) {
         s32 z;
         s32 tex;
         s32 width;
@@ -59,6 +59,8 @@ void func_0011B930(Qword *pkt, s32 startIndex, s32 count) {
         } else {
             cbp = tex + 0x37E8;
         }
+
+        startIndex++;
 
         x[1] = x[0];
         x[2] = x[0];

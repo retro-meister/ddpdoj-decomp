@@ -24,7 +24,6 @@ void func_0011D510(s32 index)
   s32 remaining;
   s32 yOffset;
   u8 *src;
-  int new_var;
   type = D_00129010[index].type;
   if (D_00129010[index].width != 0x400)
   {
@@ -37,9 +36,9 @@ void func_0011D510(s32 index)
         func_00101308(D_001A4A80, D_00135A80);
         func_00100E08(0, 0);
         break;
-        src = D_00135A80;
 
       case 1:
+        src = D_00135A80;
         func_00101120(D_001A4A80, D_0012B310, D_00129010[index].dbw, 0x13, D_00129010[index].x, D_00129010[index].y, D_00129010[index].width, D_00129010[index].height);
         func_00103220(0);
         func_00101308(D_001A4A80, D_00135A80);
@@ -53,6 +52,7 @@ void func_0011D510(s32 index)
 
     return;
   }
+
   switch (type)
   {
     case 0:
@@ -69,7 +69,7 @@ void func_0011D510(s32 index)
       chunkHeight = remaining;
     }
 
-      func_00101120(D_001A4A80, D_0012B310, D_00129010[index].dbw, 0x14, D_00129010[index].x, yOffset + D_00129010[index].y, (float) 0x400, chunkHeight);
+      func_00101120(D_001A4A80, D_0012B310, D_00129010[index].dbw, 0x14, D_00129010[index].x, yOffset + D_00129010[index].y, 0x400, chunkHeight);
       func_00103220(0);
       func_00101308(D_001A4A80, src);
       func_00100E08(0, 0);
@@ -110,6 +110,8 @@ void func_0011D510(s32 index)
 
   }
 
+
+  ;
   done:
   return;
 

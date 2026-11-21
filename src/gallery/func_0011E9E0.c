@@ -13,11 +13,11 @@ extern s8 D_001A7CF0[0x4588];
 extern LinkEntry D_001AC298[0x401];
 void func_0011E9E0(void)
 {
-  s32 index;
-  s32 previousTail;
-  unsigned int new_var2;
-  LinkEntry *new_var;
   LinkEntry *table;
+  s32 index;
+  s32 i;
+  s32 j;
+  s32 previousTail;
   {
     s8 *destination = D_001A7CF0;
     s32 remaining = sizeof(D_001A7CF0);
@@ -48,16 +48,16 @@ void func_0011E9E0(void)
   D_001AC298[-2].previous = -1;
   D_001AC298[-1].next = -2;
   table = D_001AC298;
-  for (index = 0; index <= 0x400; index++)
+  for (i = 0; i <= 0x400; i++)
   {
-    if (index == table[index].previous)
+    if (i == table[i].previous)
     {
       previousTail = table[-2].previous;
-      table[previousTail].next = index;
-      table[-2].previous = index;
-      table[index].next = -2;
-      table[index].previous = previousTail;
-      table[index].value = -1;
+      table[previousTail].next = i;
+      table[-2].previous = i;
+      table[i].next = -2;
+      table[i].previous = previousTail;
+      table[i].value = -1;
     }
   }
   for (index = 2; index < 0xE3; index++)
@@ -66,19 +66,19 @@ void func_0011E9E0(void)
     D_001A7240[index].previous = index - 2;
   }
 
+  table = &D_001A7240[2];
   D_001A7240[0].previous = -1;
   D_001A7240[1].next = -2;
-  table = &D_001A7240[2];
-  for (index = 0; index <= 0xE1; index++)
+  for (j = 0; j <= 0xE1; j++)
   {
-    if (index == table[index].previous)
+    if (j == table[j].previous)
     {
       previousTail = table[-2].previous;
-      table[previousTail].next = index;
-      table[-2].previous = index;
-      table[index].next = -2;
-      table[index].previous = previousTail;
-      table[index].value = -1;
+      table[previousTail].next = j;
+      table[-2].previous = j;
+      table[j].next = -2;
+      table[j].previous = previousTail;
+      table[j].value = -1;
     }
   }
 }
