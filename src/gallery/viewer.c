@@ -35,7 +35,10 @@ typedef struct {
     const char *title;
     s32 state;
     s32 timer;
-    u8 pad58[0x10];
+    u32 dispX;
+    u32 dispY;
+    u32 dispW;
+    u32 dispH;
     s32 panX;
     s32 panY;
     s32 minX;
@@ -50,9 +53,30 @@ typedef struct {
     s32 showHelp;
 } GlobalState;
 
+typedef struct {
+    s32 selection;
+    s32 selectionCount;
+    s32 movementSteps[5];
+    s32 actionEnabled[5];
+    s32 heldFrames;
+} GalleryMenuState;
+
+typedef struct {
+    u8 reserved[0x20];
+    u32 heldButtons;
+    u32 pressedButtons;
+} GalleryMenuInput;
+
 extern const char *D_00129130[];
+extern u16 D_0012AFE0[8];
+extern u16 D_0012AFF0[8];
+extern const char D_0012B158[];
+extern const char D_0012B160[];
+extern const char D_0012B168[];
 extern void *D_0012B318;
 extern GlobalState *D_0012B3D8;
+extern s32 D_0012B3DC;
+extern s32 D_0012B3E0;
 extern u8 D_00180A80[];
 extern volatile u32 D_001A5020[];
 extern u32 D_001A5024[];
@@ -65,17 +89,71 @@ extern void func_00102AE8(void *);
 extern s32 func_00102B40(void *);
 extern void func_00102B58(void *, u64);
 extern void func_00103220(s32);
+extern void *func_00117060(void *dst, s32 val, u32 size);
 extern s32 func_00118760(const char *);
 extern void func_0011AF90(void);
 extern void func_0011AFB0(void);
 extern void func_0011BD30(void);
 extern void func_0011C360(void);
-extern void func_0011C460(s16, s16, const char *, s32, s32, s32, u16, s32);
+extern void func_0011C460(s16 x, s16 y, const char *text, s32 style,
+                          u16 glyphWidth, u16 glyphHeight, u16 intensity, s32 flags);
 extern void func_0011C7D0(void);
 extern void func_00124C00(void *);
 extern void func_00124E50(s32, s32, s32, s32, s32, s32, s32, s32, s32);
 
-s32 func_00123920(GalleryView *view, s32 mode) {
+void func_001236D0(s32 selection, s32 centerX, s32 y, s32 spacing)
+{
+    s32 highlightOffset;
+    s32 glyphSize;
+
+    if (selection < 0) {
+        if (selection == -1) {
+            D_0012B3DC = 1;
+        } else {
+            D_0012B3DC = 0;
+        }
+        D_0012B3E0 = 4;
+        return;
+    }
+
+    if (D_0012B3DC != selection) {
+        D_0012B3DC = selection;
+        D_0012B3E0 = 0;
+    }
+
+    if (D_0012B3E0 < 4) {
+        D_0012B3E0 += 2;
+    }
+
+    highlightOffset = 0;
+    if (D_0012B3E0 != 0) {
+        highlightOffset = D_0012B3E0 / 2;
+    }
+    glyphSize = D_0012B3E0 + 24;
+
+    func_0011C7D0();
+
+    if (D_0012B3DC == 0) {
+        func_0011C460((s16)(centerX - spacing - 100 - highlightOffset),
+                      (s16)(y - highlightOffset), D_0012B158, 4,
+                      (u16)glyphSize, (u16)glyphSize, 128, 0);
+        func_0011C460((s16)(centerX - 88), (s16)y, D_0012B160, 0, 24, 24, 128, 0);
+        func_0011C460((s16)(centerX + spacing - 100), (s16)y,
+                      D_0012B168, 0, 24, 24, 128, 0);
+    } else {
+        func_0011C460((s16)(centerX - spacing - 100), (s16)y,
+                      D_0012B158, 0, 24, 24, 128, 0);
+        func_0011C460((s16)(centerX - 88), (s16)y, D_0012B160, 0, 24, 24, 128, 0);
+        func_0011C460((s16)(centerX + spacing - 100 - highlightOffset),
+                      (s16)(y - highlightOffset), D_0012B168, 4,
+                      (u16)glyphSize, (u16)glyphSize, 128, 0);
+    }
+
+    func_0011C360();
+}
+
+s32 func_00123920(GalleryView *view, s32 mode)
+{
     GifPacket pkt;
     s32 ret;
     s32 alpha;
@@ -322,4 +400,130 @@ s32 func_00123920(GalleryView *view, s32 mode) {
     }
 
     return ret;
+}
+
+void func_00124280(GalleryView *viewer, GalleryTex *image, const char *title)
+{
+    func_00117060(viewer, 0, sizeof(GalleryView));
+
+    viewer->tex = image;
+    viewer->title = title;
+    viewer->state = 1;
+    viewer->timer = 0x80;
+    viewer->flags[0] = 1;
+    viewer->flags[1] = 1;
+    viewer->flags[2] = 0;
+    viewer->flags[3] = 0;
+    viewer->flags[4] = 1;
+    viewer->flags[5] = D_0012B3D8->showHelp;
+    viewer->zoomed = 0;
+
+    if (viewer->title != 0) {
+        viewer->titleBox.y0 = 0x10;
+        viewer->titleBox.x0 = 0x10;
+        viewer->titleBox.x1 = func_00118760(title) * 0x10 + 0x10;
+        viewer->titleBox.y1 = 0x30;
+        viewer->titleBox.r = 0x36;
+        viewer->titleBox.g = 0xCD;
+        viewer->titleBox.b = 0x18;
+        viewer->titleBox.a = 0x25;
+        viewer->titleBox.alpha = 0x80;
+    }
+
+    viewer->menuBox.x0 = 0x90;
+    viewer->menuBox.x1 = 0x1F0;
+    viewer->menuBox.y0 = 0x80;
+    viewer->menuBox.y1 = 0x140;
+    viewer->menuBox.r = 1;
+    viewer->menuBox.g = 1;
+    viewer->menuBox.b = 0x40;
+    viewer->menuBox.a = 0x40;
+    if (viewer->flags[5] != 0) {
+        viewer->menuBox.alpha = 0x80;
+    }
+
+    viewer->dispW = viewer->tex->w;
+    viewer->dispH = viewer->tex->h;
+    if (viewer->dispW > 640 || viewer->dispH > 448) {
+        f32 ratioX = (f32)viewer->dispW / 640.0f;
+        f32 ratioY = (f32)viewer->dispH / 448.0f;
+
+        if (ratioX > ratioY) {
+            viewer->dispW = 640;
+            viewer->dispH = (u32)((f32)viewer->dispH / ratioX);
+            viewer->baseScale = (s32)(4096.0f / ratioX);
+        } else {
+            viewer->dispW = (u32)((f32)viewer->dispW / ratioY);
+            viewer->dispH = 448;
+            viewer->baseScale = (s32)(4096.0f / ratioY);
+        }
+        viewer->flags[3] = 1;
+    }
+
+    viewer->dispX = (640 - viewer->dispW) / 2;
+    viewer->dispY = (448 - viewer->dispH) / 2;
+    viewer->minX = 320 - viewer->tex->w / 2;
+    viewer->minY = 224 - viewer->tex->h / 2;
+    viewer->maxX = viewer->minX + viewer->tex->w;
+    viewer->maxY = viewer->minY + viewer->tex->h;
+    viewer->panX = 0;
+    viewer->panY = 0;
+
+    if (viewer->tex->w == 1024) {
+        viewer->tex->w--;
+    }
+    if (viewer->tex->h == 1024) {
+        viewer->tex->h--;
+    }
+}
+
+s32 func_001246C0(GalleryMenuState *menu, GalleryMenuInput *input)
+{
+    s32 heldFrames;
+    s32 buttonIndex;
+
+    if (input->heldButtons == 0) {
+        menu->heldFrames = 0;
+    } else {
+        menu->heldFrames++;
+    }
+
+    heldFrames = menu->heldFrames;
+    if (heldFrames != 1) {
+        if (heldFrames <= 20) {
+            goto checkMovement;
+        }
+        if ((heldFrames & 3) != 0) {
+            goto checkMovement;
+        }
+    }
+
+    input->pressedButtons =
+        (input->pressedButtons & 0x0FFF) | (input->heldButtons & 0xF000);
+
+checkMovement:
+    for (buttonIndex = 0; buttonIndex < 5; buttonIndex++) {
+        if (menu->movementSteps[buttonIndex] != 0 &&
+            (input->pressedButtons & D_0012AFE0[buttonIndex]) != 0) {
+            menu->selection += menu->movementSteps[buttonIndex];
+            if (menu->selection < 0) {
+                menu->selection += menu->selectionCount;
+                return -1;
+            }
+            if (menu->selection >= menu->selectionCount) {
+                menu->selection -= menu->selectionCount;
+                return -1;
+            }
+            return 1;
+        }
+    }
+
+    for (buttonIndex = 0; buttonIndex < 5; buttonIndex++) {
+        if (menu->actionEnabled[buttonIndex] != 0 &&
+            (input->pressedButtons & D_0012AFF0[buttonIndex]) != 0) {
+            return buttonIndex + 0x100;
+        }
+    }
+
+    return 0;
 }

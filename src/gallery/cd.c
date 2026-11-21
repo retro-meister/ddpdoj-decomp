@@ -7,20 +7,67 @@ typedef struct {
     u8 padding;
 } CdReadMode;
 
+extern const char D_0012ADB8[];
 extern const char D_0012ADC8[];
 extern const char D_0012ADD8[];
+extern const char D_0012ADE8[];
 extern s8 D_0012B2F0;
 extern s8 D_0012B2F4;
 extern u32 D_0012B2F8;
 extern s8 D_0012B2FC;
-extern s32 D_0012B304;
+extern u32 D_0012B304;
+extern u32 D_001328C0[3];
+extern u32 D_001328C4[3];
 
+extern s32 func_0010DCE0(void *fileInfo, const char *path);
 extern s32 func_0010DF08(s32 mode);
 extern s32 func_0010E468(s32 mode);
 extern s32 func_0010E720(u32 startSector, u32 sectorCount, void *destination, CdReadMode *readMode);
 extern s32 func_0010E900(void);
-extern s32 func_0010E998(void);
-extern void func_00118268(const char *format, ...);
+extern void func_0010E998(void);
+extern s32 func_00118268(const char *format, ...);
+
+void func_0011B580(const char *value)
+{
+    s32 result;
+    u32 retry;
+
+    do {
+        func_0010E468(0);
+        result = func_0010DCE0(D_001328C0, value);
+        retry = (u32)(result != 0);
+        retry ^= 1;
+    } while (retry != 0);
+}
+
+void func_0011B5D0(void *destination, u32 byteCount, u32 startSector)
+{
+    CdReadMode readMode;
+    s32 error;
+
+    D_001328C4[0] = byteCount;
+    D_001328C0[0] = startSector;
+
+    for (;;) {
+        do {
+            func_0010E468(0);
+            D_0012B304 = D_001328C4[0];
+            readMode.retryCount = 0;
+            readMode.spindleControl = 1;
+            readMode.dataPattern = 0;
+        } while (!func_0010E720(D_001328C0[0], (D_001328C4[0] + 0x7FF) >> 11,
+                                destination, &readMode));
+
+        func_0010DF08(0);
+        error = func_0010E900();
+        if (error == 0) {
+            break;
+        }
+
+        func_00118268(D_0012ADB8, error);
+        func_0010E998();
+    }
+}
 
 void func_0011B6B0(void *destination, s32 byteCount, u32 startSector)
 {
@@ -76,5 +123,35 @@ void func_0011B6B0(void *destination, s32 byteCount, u32 startSector)
             }
         }
         break;
+    }
+}
+
+void func_0011B830(void *destination, const char *path)
+{
+    CdReadMode readMode;
+    s32 error;
+
+    do {
+        func_0010E468(0);
+    } while (!func_0010DCE0(D_001328C0, path));
+
+    for (;;) {
+        do {
+            func_0010E468(0);
+            D_0012B304 = D_001328C4[0];
+            readMode.retryCount = 0;
+            readMode.spindleControl = 1;
+            readMode.dataPattern = 0;
+        } while (!func_0010E720(D_001328C0[0], (D_001328C4[0] + 0x7FF) >> 11,
+                                destination, &readMode));
+
+        func_0010DF08(0);
+        error = func_0010E900();
+        if (error == 0) {
+            break;
+        }
+
+        func_00118268(D_0012ADE8, error);
+        func_0010E998();
     }
 }
