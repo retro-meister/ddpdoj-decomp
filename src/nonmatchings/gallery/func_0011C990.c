@@ -21,8 +21,10 @@ void func_0011C990(void)
 {
     s32 colorIndex;
     s32 paletteIndex;
-    s32 row;
+    s32 rgbOffset;
+    s32 rowIndex;
     s32 column;
+    u8 (*row)[512];
 
     for (colorIndex = 0; colorIndex < 16; colorIndex++) {
         D_00132980[colorIndex].red = D_00132980[colorIndex].green =
@@ -30,18 +32,25 @@ void func_0011C990(void)
         D_00132980[colorIndex].alpha = D_00128F40[colorIndex];
     }
 
-    for (paletteIndex = 1; paletteIndex < 9; paletteIndex++) {
-        func_0011CD30(paletteIndex);
+    paletteIndex = 1;
+first_palette:
+    func_0011CD30(paletteIndex);
+    if (++paletteIndex < 9) {
+        goto first_palette;
     }
 
-    for (paletteIndex = 9; paletteIndex < 17; paletteIndex++) {
-        func_0011CBA0(paletteIndex);
+    paletteIndex = 9;
+second_palette:
+    func_0011CBA0(paletteIndex);
+    if (++paletteIndex < 17) {
+        goto second_palette;
     }
 
-    for (colorIndex = 0; colorIndex < 16; colorIndex++) {
-        D_00132900[colorIndex].red = D_00128FD0[colorIndex * 3];
-        D_00132900[colorIndex].green = D_00128FD0[colorIndex * 3 + 1];
-        D_00132900[colorIndex].blue = D_00128FD0[colorIndex * 3 + 2];
+    for (colorIndex = 0, rgbOffset = 0; colorIndex < 16; colorIndex++, rgbOffset += 3) {
+        D_00132900[colorIndex].red = D_00128FD0[rgbOffset];
+        D_00132900[colorIndex].green = D_00128FD0[rgbOffset + 1];
+        D_00132900[colorIndex].blue = D_00128FD0[rgbOffset + 2];
+
         if (colorIndex == 0) {
             D_00132900[colorIndex].alpha = 0;
         } else {
@@ -49,9 +58,27 @@ void func_0011C990(void)
         }
     }
 
-    for (row = 0; row < 32; row++) {
-        for (column = 511; column >= 0; column--) {
-            D_001A0A80[row][column] = 0;
-        }
+    rowIndex = 0;
+    row = D_001A0A80;
+clear_row:
+    column = 511;
+    do {
+        u8 *pixel = &(*row)[column];
+
+        pixel[0] = 0;
+        column -= 8;
+        pixel[-1] = 0;
+        pixel[-2] = 0;
+        pixel[-3] = 0;
+        pixel[-4] = 0;
+        pixel[-5] = 0;
+        pixel[-6] = 0;
+        pixel[-7] = 0;
+    } while (column >= 0);
+
+    rowIndex++;
+    row++;
+    if (rowIndex < 32) {
+        goto clear_row;
     }
 }
