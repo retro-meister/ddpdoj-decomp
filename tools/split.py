@@ -91,7 +91,7 @@ def target_layout(name):
     file_address = load_address - load_offset
     code_end = None
     for sub in main["subsegments"]:
-        if isinstance(sub, list) and len(sub) >= 2 and sub[1] == "data":
+        if isinstance(sub, list) and len(sub) >= 2 and sub[1] in ("data", ".data", "rodata", ".rodata", "sdata", ".sdata"):
             code_end = file_address + int(sub[0])
             break
     return file_address, load_offset, code_end
@@ -105,6 +105,11 @@ def target_units(name):
     file_address = int(main["vram"]) - int(main["start"])
     src_path = Path(config["options"].get("src_path", "src"))
     subsegments = main["subsegments"]
+    rodata_addresses = {
+        sub[2]: file_address + int(sub[0])
+        for sub in subsegments
+        if isinstance(sub, list) and len(sub) >= 3 and sub[1] == ".rodata"
+    }
     units = []
     for index, sub in enumerate(subsegments):
         if not (isinstance(sub, list) and len(sub) >= 3 and sub[1] == "c"):
@@ -117,7 +122,10 @@ def target_units(name):
         if sym_size is None:
             next_offset = int(subsegments[index + 1][0])
             sym_size = next_offset - offset
-        units.append({"name": sym_name, "stub": stub, "source": source, "address": address, "size": sym_size})
+        unit = {"name": sym_name, "stub": stub, "source": source, "address": address, "size": sym_size}
+        if stub in rodata_addresses:
+            unit["rodata_address"] = rodata_addresses[stub]
+        units.append(unit)
     return units
 
 

@@ -1,20 +1,26 @@
 import argparse
+from dataclasses import dataclass
 import difflib
 import json
 from pathlib import Path
 import re
+import shutil
 import subprocess
 import sys
+from tempfile import TemporaryDirectory
 
 from build import compile_source
 from common import BASEROM, ROOT, TARGETS, TOOLCHAINS, TOOLS
 from common import download, host_machine, require_local, resolve_tool, run, target_compiler, verify, verify_compiler
+from draft import extract_function
 from objects import find_function
 from split import load_symbols, scan_asm_functions, split, target_layout, target_units
 
 ASSIGN_RE = re.compile(r"^\s*([A-Za-z_][A-Za-z0-9_]*)\s*=\s*(0x[0-9a-fA-F]+|\d+)\s*;")
 DLABEL_RE = re.compile(r"^\s*(?:dlabel|glabel)\s+([A-Za-z_][A-Za-z0-9_]*)")
 HEX_ADDR_SUFFIX_RE = re.compile(r"^(?:D|L|jtbl|str)_([0-9A-Fa-f]{8})$")
+JUMP_TABLE_RE = re.compile(r"\bjtbl_([0-9A-Fa-f]{8})\b")
+RODATA_LAYOUT = "RODATA_LAYOUT"
 
 
 def objdiff_path(override):
@@ -129,11 +135,11 @@ def read_match_percent(report_path):
     return 0.0
 
 
-def print_compact_diff(binutils, folder, address, retail_bytes, candidate_bytes, max_diffs=40):
+def print_compact_diff(binutils, folder, address, retail_bytes, candidate_bytes, max_diffs=40, *, candidate_path=None):
     if retail_bytes == candidate_bytes:
         return
     r_insns = disassemble_bin(binutils, folder / "retail.bin", address)
-    c_insns = disassemble_bin(binutils, folder / "candidate.bin", address)
+    c_insns = disassemble_bin(binutils, candidate_path or folder / "candidate.bin", address)
     print(f"Size: retail={len(retail_bytes)}B ({len(r_insns)} insns)  candidate={len(candidate_bytes)}B ({len(c_insns)} insns)")
     r_keys = [x[2] for x in r_insns]
     c_keys = [x[2] for x in c_insns]
@@ -179,6 +185,100 @@ def print_compact_diff(binutils, folder, address, retail_bytes, candidate_bytes,
         print(f"  ... ({hidden} more differing instructions)")
 
 
+def candidate_layout(provided, text_address, rodata_address=None):
+    rodata = f".rodata {rodata_address:#x}" if rodata_address is not None else ".rodata"
+    return [
+        f"_gp = {provided['_gp']:#x};",
+        *(f"PROVIDE({name} = {addr:#x});" for name, addr in provided.items() if name != "_gp"),
+        "SECTIONS {",
+        f"  .text {text_address:#x} : SUBALIGN(1) {{ compiled.o(.text) }}",
+        f"  {rodata} : {{ compiled.o(.rodata*) }}",
+        "  .data : { compiled.o(.data*) }",
+        "  .sdata : { compiled.o(.sdata*) }",
+        "  .bss : { compiled.o(.sbss*) compiled.o(.bss*) }",
+        "  /DISCARD/ : { *(*) }",
+        "}",
+    ]
+
+
+def link_text(binutils, folder, layout, **kwargs):
+    (folder / "layout.ld").write_text("\n".join(layout) + "\n", encoding="ascii")
+    run(binutils["ld"], "-EL", "-T", "layout.ld", "-o", "compiled.elf", "compiled.o", cwd=folder, **kwargs)
+    run(binutils["objcopy"], "-O", "binary", "-j", ".text",
+        "compiled.elf", "text.bin", cwd=folder, **kwargs)
+    return (folder / "text.bin").read_bytes()
+
+
+@dataclass(frozen=True)
+class JumpTableRelink:
+    address: int
+    text: bytes
+    verified_rodata_size: int
+
+    def proof(self, retail):
+        if self.text == retail and self.verified_rodata_size:
+            return self.address, self.verified_rodata_size
+        return None
+
+
+def relink_jump_tables(binutils, folder, asm_dir, function, layout, fn_offset, candidate_size, retail, original_data, data_address):
+    try:
+        assembly = extract_function(asm_dir, function)
+    except ValueError:
+        return None
+    tables = {int(match, 16) for match in JUMP_TABLE_RE.findall(assembly)}
+    if not tables:
+        return None
+    # Try the first retail table as the section base, then verify the emitted bytes.
+    table_address = min(tables)
+    table_offset = table_address - data_address
+    if not 0 <= table_offset < len(original_data):
+        return None
+
+    relocated_layout = [
+        line.replace(".rodata :", f".rodata {table_address:#x} :", 1)
+        if line.startswith("  .rodata :") else line
+        for line in layout
+    ]
+    with TemporaryDirectory(prefix="rodata-", dir=folder) as temporary:
+        scratch = Path(temporary)
+        shutil.copyfile(folder / "compiled.o", scratch / "compiled.o")
+        try:
+            text = link_text(binutils, scratch, relocated_layout, capture_output=True)
+        except subprocess.CalledProcessError:
+            return None
+        candidate = text[fn_offset:fn_offset + candidate_size]
+        if candidate != retail:
+            return JumpTableRelink(table_address, candidate, 0)
+        try:
+            run(binutils["objcopy"], "-O", "binary", "-j", ".rodata",
+                "compiled.elf", "rodata.bin", cwd=scratch, capture_output=True)
+        except subprocess.CalledProcessError:
+            return JumpTableRelink(table_address, candidate, 0)
+        table_file = scratch / "rodata.bin"
+        table = table_file.read_bytes() if table_file.is_file() else b""
+        if max(tables) + 4 <= table_address + len(table) and original_data[table_offset:table_offset + len(table)] == table:
+            return JumpTableRelink(table_address, candidate, len(table))
+        return JumpTableRelink(table_address, candidate, 0)
+
+
+def verify_jump_table_layout(binutils, folder, asm_dir, function, layout, fn_offset, retail, original_data, data_address):
+    relink = relink_jump_tables(
+        binutils, folder, asm_dir, function, layout, fn_offset, len(retail), retail, original_data, data_address,
+    )
+    return relink.proof(retail) if relink is not None else None
+
+
+def corrected_words(retail, candidate, relinked):
+    if len(candidate) != len(relinked):
+        return []
+    changes = [offset for offset in range(0, len(candidate), 4)
+               if candidate[offset:offset + 4] != relinked[offset:offset + 4]]
+    if all(relinked[offset:offset + 4] == retail[offset:offset + 4] for offset in changes):
+        return changes
+    return []
+
+
 def diff(args):
     if not args.function.isascii() or not args.function.isidentifier():
         raise ValueError("Expected a C function name")
@@ -205,24 +305,10 @@ def diff(args):
     compile_source(local, source, folder / "compiled.o", version)
     fn_offset, fn_size = find_function(folder / "compiled.o", args.function)
     provided = collect_provide_symbols(args.target, split_folder, asm_functions)
-    gp = provided.pop("_gp")
-    defs = [f"_gp = {gp:#x};", *(f"PROVIDE({name} = {addr:#x});" for name, addr in provided.items())]
-    layout = [
-        *defs,
-        "SECTIONS {",
-        f"  .text {address - fn_offset:#x} : SUBALIGN(1) {{ compiled.o(.text) }}",
-        "  .rodata : { compiled.o(.rodata*) }",
-        "  .data : { compiled.o(.data*) }",
-        "  .sdata : { compiled.o(.sdata*) }",
-        "  .bss : { compiled.o(.sbss*) compiled.o(.bss*) }",
-        "  /DISCARD/ : { *(*) }",
-        "}",
-    ]
-    (folder / "layout.ld").write_text("\n".join(layout) + "\n", encoding="ascii")
-    run(binutils["ld"], "-EL", "-T", "layout.ld", "-o", "compiled.elf", "compiled.o", cwd=folder)
-    run(binutils["objcopy"], "-O", "binary", "-j", ".text",
-        "compiled.elf", "text.bin", cwd=folder)
-    candidate = (folder / "text.bin").read_bytes()[fn_offset:fn_offset + fn_size]
+    unit = next((unit for unit in units if unit["name"] == args.function), {})
+    rodata_address = unit.get("rodata_address")
+    layout = candidate_layout(provided, address - fn_offset, rodata_address)
+    candidate = link_text(binutils, folder, layout)[fn_offset:fn_offset + fn_size]
     (folder / "candidate.bin").write_bytes(candidate)
     for side in ("retail", "candidate"):
         function_object(folder, binutils, side, args.function)
@@ -234,8 +320,36 @@ def diff(args):
         status = "MATCH" if retail == candidate else "DIFFERENT"
         pct = 100.0 if status == "MATCH" else read_match_percent(folder / "report.json")
         print(f"{status}  {args.target}:{args.function}  {pct:.2f}%  {folder.relative_to(ROOT) / 'report.json'}")
-        if args.compact and status != "MATCH":
-            print_compact_diff(binutils, folder, address, retail, candidate)
+        if status == "MATCH":
+            return
+        relink = None
+        if rodata_address is None and (args.compact or len(candidate) == size):
+            relink = relink_jump_tables(
+                binutils, folder, split_folder / "asm", args.function, layout,
+                fn_offset, fn_size, retail, original[code_end - file_address:], code_end,
+            )
+        proof = relink.proof(retail) if relink is not None else None
+        if proof is not None:
+            table_address, table_size = proof
+            print(f"{RODATA_LAYOUT}  {args.target}:{args.function}  "
+                  f"Linking .rodata at {table_address:#010x} matches all function bytes "
+                  f"and {table_size} bytes of retail .rodata. "
+                  f"Splat table file offset: {table_address - file_address:#x}. "
+                  "tools/integrate.py can attempt the split and verify the full ELF.")
+        if args.compact:
+            corrections = corrected_words(retail, candidate, relink.text) if relink is not None and proof is None else []
+            if corrections:
+                offsets = ", ".join(f"{offset:#x}" for offset in corrections)
+                print(f"Relocated comparison (.rodata at {relink.address:#010x}, corrected offsets: {offsets}). "
+                      "The score and JSON report above use the original layout.")
+                if relink.text == retail:
+                    print("Relocated text matches. The emitted .rodata could not be verified against retail.")
+                with TemporaryDirectory(prefix="rodata-preview-", dir=folder) as temporary:
+                    path = Path(temporary) / "candidate.bin"
+                    path.write_bytes(relink.text)
+                    print_compact_diff(binutils, folder, address, retail, relink.text, candidate_path=path)
+            else:
+                print_compact_diff(binutils, folder, address, retail, candidate)
 
 
 def main():

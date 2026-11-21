@@ -6,16 +6,16 @@ import subprocess
 import sys
 
 from build import build, compile_source
-from common import BASEROM, ROOT, TARGETS, nonmatching_dir, require_local, run, target_compiler, verify, verify_compiler
-from diff import collect_provide_symbols
+from common import BASEROM, ROOT, TARGETS, nonmatching_dir, require_local, target_compiler, verify, verify_compiler
+from diff import candidate_layout, collect_provide_symbols, link_text, verify_jump_table_layout
 from objects import find_function
 from split import load_splat_config, scan_asm_functions, split, splat_yaml_path, symbols_path, target_layout
 
-SUBSEG_LINE_RE = re.compile(r"^(\s*-\s*\[)(0x[0-9a-fA-F]+|\d+)(,\s*([a-zA-Z0-9_]+),\s*([^\]]+))(\]\s*)$")
+SUBSEG_LINE_RE = re.compile(r"^(\s*-\s*\[)(0x[0-9a-fA-F]+|\d+)(,\s*(\.?[a-zA-Z0-9_]+),\s*([^\]]+))(\]\s*)$")
 INLINE_ASM_RE = re.compile(r"\b(?:asm|__asm|__asm__)\s*(?:volatile\b|__volatile__\b)?\s*[\({]")
 
 
-def verify_match(local, target_name, function_name, source_path, address, size):
+def verify_match(local, target_name, function_name, source_path, address, size, *, asm_function=None):
     target = TARGETS[target_name]
     version = target_compiler(target_name, local)
     verify_compiler(version)
@@ -33,25 +33,20 @@ def verify_match(local, target_name, function_name, source_path, address, size):
     compile_source(local, str(source_path), obj, version)
     fn_offset, fn_size = find_function(obj, function_name)
     provided = collect_provide_symbols(target_name, split_folder, asm_functions)
-    gp = provided.pop("_gp")
-    defs = [f"_gp = {gp:#x};", *(f"PROVIDE({name} = {addr:#x});" for name, addr in provided.items())]
-    layout = [
-        *defs,
-        "SECTIONS {",
-        f"  .text {address - fn_offset:#x} : SUBALIGN(1) {{ compiled.o(.text) }}",
-        "  .rodata : { compiled.o(.rodata*) }",
-        "  .data : { compiled.o(.data*) }",
-        "  .sdata : { compiled.o(.sdata*) }",
-        "  .bss : { compiled.o(.sbss*) compiled.o(.bss*) }",
-        "  /DISCARD/ : { *(*) }",
-        "}",
-    ]
-    (folder / "layout.ld").write_text("\n".join(layout) + "\n", encoding="ascii")
+    layout = candidate_layout(provided, address - fn_offset)
     binutils = local["binutils"]
-    run(binutils["ld"], "-EL", "-T", "layout.ld", "-o", "compiled.elf", "compiled.o", cwd=folder)
-    run(binutils["objcopy"], "-O", "binary", "-j", ".text", "compiled.elf", "text.bin", cwd=folder)
-    candidate = (folder / "text.bin").read_bytes()[fn_offset : fn_offset + fn_size]
-    return retail == candidate
+    candidate = link_text(binutils, folder, layout)[fn_offset:fn_offset + fn_size]
+    if retail == candidate:
+        return True, None
+    if asm_function is not None and len(candidate) == size:
+        proof = verify_jump_table_layout(
+            binutils, folder, split_folder / "asm", asm_function, layout,
+            fn_offset, retail, original[code_end - file_address:], code_end,
+        )
+        if proof is not None:
+            table_address, table_size = proof
+            return True, (table_address - file_address, table_size)
+    return False, None
 
 
 def patch_splat_yaml(target_name, address, size, stub):
@@ -91,6 +86,59 @@ def patch_splat_yaml(target_name, address, size, stub):
             yaml_file.write_text("\n".join(new_lines) + "\n", encoding="utf-8")
             return
     raise ValueError(f"{target_name}: no asm subsegment contains {address:#x}..{address + size:#x}")
+
+
+def patch_splat_rodata(target_name, offset, size, stub):
+    config = load_splat_config(target_name)
+    main = next(seg for seg in config["segments"] if isinstance(seg, dict) and seg.get("name") == "main")
+    options = config["options"]
+    alignment = main.get("subalign", options.get("subalign", 16))
+    if not isinstance(alignment, int) or alignment <= 0 or offset % alignment or not options.get("emit_subalign", True):
+        raise ValueError(f"{target_name}: unsupported Splat alignment for .rodata at {offset:#x}")
+    end = offset + size
+    padded_end = ((end + alignment - 1) // alignment) * alignment
+    original = (BASEROM / target_name).read_bytes()
+    subsegments = main["subsegments"]
+    for index, (sub, following) in enumerate(zip(subsegments, subsegments[1:])):
+        if not (isinstance(sub, list) and len(sub) == 3 and isinstance(sub[0], int)
+                and sub[1] in ("data", "rodata") and sub[0] <= offset):
+            continue
+        if not (isinstance(following, list) and following and isinstance(following[0], int)
+                and offset < following[0]):
+            continue
+        if padded_end > following[0] or padded_end > len(original) or any(original[end:padded_end]):
+            raise ValueError(f"{target_name}: .rodata at {offset:#x} has no verified alignment padding")
+        if sub[1] == "data" and any(
+            isinstance(later, list) and len(later) > 1 and later[1] in ("data", ".data")
+            for later in subsegments[index + 1:]
+        ):
+            raise ValueError(f"{target_name}: splitting .rodata at {offset:#x} would reorder later .data")
+        break
+    else:
+        raise ValueError(f"{target_name}: no plain data or rodata subsegment contains .rodata at {offset:#x}")
+
+    yaml_file = splat_yaml_path(target_name)
+    lines = yaml_file.read_text(encoding="utf-8").splitlines(keepends=True)
+    matches = []
+    for index, line in enumerate(lines):
+        match = SUBSEG_LINE_RE.match(line)
+        if match and (int(match[2], 0), match[4], match[5].strip()) == tuple(sub):
+            matches.append((index, match[1]))
+    if len(matches) != 1:
+        raise ValueError(f"{target_name}: ambiguous Splat subsegment for .rodata at {offset:#x}")
+    line_index, prefix = matches[0]
+    start, kind, name = sub
+    replacement = []
+    if offset > start:
+        replacement.append(f"{prefix}{start:#x}, {kind}, {name}]\n")
+    replacement.append(f"{prefix}{offset:#x}, .rodata, {stub}]\n")
+    if padded_end < following[0]:
+        suffix = f"rodata_{padded_end:06x}"
+        if any(isinstance(other, list) and len(other) > 2 and other[2] == suffix for other in subsegments):
+            raise ValueError(f"{target_name}: Splat subsegment {suffix} already exists")
+        replacement.append(f"{prefix}{padded_end:#x}, rodata, {suffix}]\n")
+    lines[line_index:line_index + 1] = replacement
+    yaml_file.write_text("".join(lines), encoding="utf-8")
 
 
 def append_symbol(target_name, sym_name, address, size):
@@ -169,37 +217,47 @@ def integrate(target_name, func_name, source_path, out_name=None, subdir=None, p
 
     verified_targets = []
     for t_name, t_addr, t_size in targets_to_update:
-        if verify_match(local, t_name, c_name, staging, t_addr, t_size):
-            verified_targets.append((t_name, t_addr, t_size))
+        matched, rodata = verify_match(
+            local, t_name, c_name, staging, t_addr, t_size,
+            asm_function=func_name if t_name == target_name else None,
+        )
+        if matched:
+            verified_targets.append((t_name, t_addr, t_size, rodata))
         elif t_name == target_name:
             raise ValueError(f"{t_name}:{c_name} does not match retail bytes; aborting integration")
 
     backups = {}
-    for t_name, _, _ in verified_targets:
+    for t_name, _, _, _ in verified_targets:
         for path in (splat_yaml_path(t_name), symbols_path(t_name)):
-            backups[path] = path.read_text(encoding="utf-8")
+            backups[path] = path.read_bytes()
 
     try:
         dest_file.parent.mkdir(parents=True, exist_ok=True)
         dest_file.write_text(code, encoding="utf-8")
-        for t_name, t_addr, t_size in verified_targets:
+        for t_name, t_addr, t_size, rodata in verified_targets:
             append_symbol(t_name, c_name, t_addr, t_size)
             patch_splat_yaml(t_name, t_addr, t_size, stub)
-        for t_name, _, _ in verified_targets:
+            if rodata is not None:
+                table_offset, table_size = rodata
+                patch_splat_rodata(t_name, table_offset, table_size, stub)
+        for t_name, _, _, _ in verified_targets:
             build(local, target=t_name)
-    except Exception:
+    except BaseException:
         dest_file.unlink(missing_ok=True)
-        for path, old_text in backups.items():
-            path.write_text(old_text, encoding="utf-8")
+        for path, old_bytes in backups.items():
+            path.write_bytes(old_bytes)
+        for t_name, _, _, _ in verified_targets:
+            (ROOT / "build" / "split" / t_name / "split-state.json").unlink(missing_ok=True)
         raise
 
-    for t_name, _, _ in verified_targets:
+    for t_name, _, _, _ in verified_targets:
         (nonmatching_dir(t_name, shared=False) / f"{func_name}.c").unlink(missing_ok=True)
         (nonmatching_dir(t_name, shared=True) / f"{func_name}.c").unlink(missing_ok=True)
         (ROOT / "build" / "wip" / t_name / f"{func_name}.best.c").unlink(missing_ok=True)
-    names = ", ".join(t for t, _, _ in verified_targets)
+    targets = [t for t, _, _, _ in verified_targets]
+    names = ", ".join(targets)
     print(f"INTEGRATED  {dest_file.relative_to(ROOT)}  ({names})")
-    return dest_file, [t for t, _, _ in verified_targets]
+    return dest_file, targets
 
 
 def main():
