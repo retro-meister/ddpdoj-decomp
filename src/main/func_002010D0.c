@@ -1,6 +1,5 @@
 #include "common.h"
 
-extern Reg32 work_reg_1;
 
 void func_002010D0(void)
 {

@@ -54,16 +54,16 @@
     "date": "2026-11-22",
     "targets": {
       "SLPS_252.33": {
-        "functions": 2,
-        "bytes": 180
+        "functions": 64,
+        "bytes": 892
       },
       "DEATH.ELF": {
-        "functions": 2,
-        "bytes": 180
+        "functions": 15,
+        "bytes": 500
       },
       "GALLERY.ELF": {
-        "functions": 66,
-        "bytes": 42516
+        "functions": 14,
+        "bytes": 8984
       }
     }
   }
