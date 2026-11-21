@@ -2,12 +2,15 @@ import argparse
 import hashlib
 import json
 from pathlib import Path
+import re
 import shutil
+import struct
 import subprocess
 from tempfile import TemporaryDirectory
 
 from common import BASEROM, ROOT, TARGETS, TOOLCHAINS
 from common import compiler_path, require_local, run, target_compiler, verify, verify_compiler
+from gallery_da import sync_gallery_iso
 from objects import validate_object
 from qemu_runner import compile_batch
 from split import split, target_units
@@ -123,6 +126,201 @@ def assemble_split(folder, binutils):
             "-o", obj.relative_to(ROOT), rel_from_root.as_posix(), cwd=ROOT)
 
 
+SYM_ASSIGN_RE = re.compile(r"^\s*([A-Za-z_][A-Za-z0-9_]*)\s*=\s*(0x[0-9A-Fa-f]+)\s*;\s*$")
+DLABEL_RE = re.compile(r"^\s*dlabel\s+([A-Za-z_][A-Za-z0-9_]*)\s*$")
+ADDR_COMMENT_RE = re.compile(r"/\*\s*[0-9A-Fa-f]+\s+([0-9A-Fa-f]{8})\b")
+
+
+def _parse_elf_layout(original):
+    e_entry, e_phoff = struct.unpack_from("<II", original, 0x18)
+    e_phentsize, e_phnum = struct.unpack_from("<HH", original, 0x2A)
+    for i in range(e_phnum):
+        p_type, p_off, p_vaddr, _, p_filesz, p_memsz, _, _ = struct.unpack_from(
+            "<8I", original, e_phoff + i * e_phentsize
+        )
+        if p_type == 1:
+            return e_entry, p_vaddr, p_vaddr + p_filesz, p_vaddr + p_memsz
+    raise ValueError("No PT_LOAD program header found in retail ELF")
+
+
+def _scan_data_dlabels(folder):
+    labels = []
+    data_dir = folder / "asm" / "data"
+    if not data_dir.is_dir():
+        return labels
+    for asm_file in sorted(data_dir.glob("*.s")):
+        lines = asm_file.read_text(encoding="utf-8").splitlines()
+        pending = None
+        for line in lines:
+            m = DLABEL_RE.match(line)
+            if m:
+                pending = m.group(1)
+                continue
+            if pending is not None:
+                am = ADDR_COMMENT_RE.search(line)
+                if am:
+                    labels.append((int(am.group(1), 16), pending))
+                    pending = None
+    labels.sort()
+    return labels
+
+
+def _prepare_shiftable_mod_link(folder, work_target, original, binutils):
+    """Build a shiftable real-ELF linker script + relocatable .bss object for --mod builds."""
+    e_entry, load_vaddr, bss_start, bss_end = _parse_elf_layout(original)
+    main_ld = (folder / "main.ld").read_text(encoding="utf-8")
+    gp_match = re.search(r"_gp\s*=\s*(0x[0-9A-Fa-f]+)\s*;", main_ld)
+    retail_gp = int(gp_match.group(1), 16) if gp_match else None
+
+    # Parse undefined_syms.txt + symbols.ld to classify relocatable vs fixed symbols.
+    undef_syms = []
+    for line in (folder / "undefined_syms.txt").read_text(encoding="utf-8").splitlines():
+        m = SYM_ASSIGN_RE.match(line)
+        if m:
+            undef_syms.append((m.group(1), int(m.group(2), 16)))
+
+    fixed_syms = []
+    bss_syms = []
+    bss_end_syms = []
+    interior_data_syms = []
+    gp_sym_names = []
+
+    dlabels = _scan_data_dlabels(folder)
+    data_start = dlabels[0][0] if dlabels else bss_start
+
+    for name, addr in undef_syms:
+        if retail_gp is not None and addr == retail_gp:
+            gp_sym_names.append(name)
+        elif addr == bss_end:
+            bss_end_syms.append(name)
+        elif bss_start <= addr < bss_end:
+            bss_syms.append((addr, name))
+        elif data_start <= addr < bss_start:
+            interior_data_syms.append((addr, name))
+        else:
+            fixed_syms.append((name, addr))
+
+    # Include any symbols from symbols.ld that live in .sbss/.bss (e.g. gallery_slot_0_state).
+    # Compiled .c.o and split .s.o objects already define all relocatable .text/.data symbols.
+    defined_bss_names = {name for _, name in bss_syms} | set(bss_end_syms)
+    extra_syms_ld = []
+    for line in (folder / "symbols.ld").read_text(encoding="utf-8").splitlines():
+        m = SYM_ASSIGN_RE.match(line)
+        if m:
+            name, addr = m.group(1), int(m.group(2), 16)
+            if addr == bss_end and name not in defined_bss_names:
+                bss_end_syms.append(name)
+                defined_bss_names.add(name)
+            elif bss_start <= addr < bss_end and name not in defined_bss_names:
+                bss_syms.append((addr, name))
+                defined_bss_names.add(name)
+            elif addr < load_vaddr or addr > bss_end:
+                extra_syms_ld.append((name, addr))
+
+    # Build relocatable mod_bss.s placing every .sbss/.bss symbol at its exact offset from bss_start.
+    bss_syms.sort(key=lambda item: (item[0], item[1]))
+    bss_lines = ['.section .bss, "wa", @nobits', ".align 4"]
+    cur = bss_start
+    for addr, name in bss_syms:
+        if addr > cur:
+            bss_lines.append(f".space {addr - cur:#x}")
+            cur = addr
+        bss_lines.append(f".globl {name}")
+        bss_lines.append(f"{name}:")
+    if bss_end > cur:
+        bss_lines.append(f".space {bss_end - cur:#x}")
+    mod_bss_s = work_target / "mod_bss.s"
+    mod_bss_o = work_target / "mod_bss.o"
+    mod_bss_s.write_text("\n".join(bss_lines) + "\n", encoding="ascii")
+    run(
+        binutils["as"], "-EL", "-march=r5900", "-mabi=eabi", "-no-pad-sections",
+        "-o", str(mod_bss_o), str(mod_bss_s), cwd=ROOT,
+    )
+
+    # Build mod_syms.ld: _gp aliases, _end aliases, interior data offsets, and fixed constants.
+    sym_lines = []
+    for name in gp_sym_names:
+        sym_lines.append(f"{name} = _gp;")
+    for name in bss_end_syms:
+        sym_lines.append(f"{name} = main_BSS_END;")
+    for addr, name in interior_data_syms:
+        base = None
+        for d_addr, d_name in dlabels:
+            if d_addr <= addr:
+                base = (d_addr, d_name)
+            else:
+                break
+        if base is not None:
+            delta = addr - base[0]
+            sym_lines.append(f"{name} = {base[1]} + {delta:#x};")
+        else:
+            sym_lines.append(f"{name} = {addr:#x};")
+    for name, addr in fixed_syms:
+        sym_lines.append(f"{name} = {addr:#x};")
+    for name, addr in extra_syms_ld:
+        if name not in defined_bss_names and name not in gp_sym_names:
+            sym_lines.append(f"{name} = {addr:#x};")
+    mod_syms_ld = work_target / "mod_syms.ld"
+    mod_syms_ld.write_text("\n".join(sym_lines) + "\n", encoding="ascii")
+
+    # Derive mod.ld from main.ld: real PS2 ELF PHDR, no elf_header/elf_tail, dynamic _gp + relocatable .bss.
+    out_lines = [
+        "PHDRS",
+        "{",
+        "    main PT_LOAD FLAGS(7);",
+        "}",
+        "SECTIONS",
+        "{",
+    ]
+    in_main = False
+    inserted_sdata_start = False
+    for line in main_ld.splitlines():
+        stripped = line.strip()
+        if stripped.startswith(".main "):
+            in_main = True
+            out_lines.append(f"    .main {load_vaddr:#x} :")
+            continue
+        if not in_main:
+            continue
+        if stripped == "}":
+            # Before closing .main, include any newly added mod .text/.data/.rodata/.sdata sections.
+            out_lines.append("        *(.text .text.*);")
+            out_lines.append("        *(.data .data.*);")
+            out_lines.append("        *(.rodata .rodata.*);")
+            out_lines.append("        *(.sdata .sdata.*);")
+            out_lines.append("        . = ALIGN(., 16);")
+            out_lines.append("    } :main")
+            in_main = False
+            continue
+        if "(.bss);" in stripped or "main_BSS_" in stripped:
+            continue
+        if "(.sdata);" in stripped and not inserted_sdata_start:
+            out_lines.append("        main_SDATA_START = .;")
+            if retail_gp is not None:
+                out_lines.append("        _gp = main_SDATA_START + 0x8000;")
+            inserted_sdata_start = True
+        out_lines.append(line)
+
+    if not inserted_sdata_start and retail_gp is not None:
+        out_lines.append(f"    _gp = {retail_gp:#x};")
+
+    out_lines += [
+        "    .bss (NOLOAD) :",
+        "    {",
+        "        main_BSS_START = .;",
+        f"        {mod_bss_o.as_posix()}(.bss);",
+        "        *(.sbss .sbss.* .bss .bss.* COMMON);",
+        "        . = ALIGN(., 16);",
+        "        main_BSS_END = .;",
+        "    } :main",
+        "    /DISCARD/ : { *(*); }",
+        "}",
+    ]
+    mod_ld = work_target / "mod.ld"
+    mod_ld.write_text("\n".join(out_lines) + "\n", encoding="utf-8")
+    return e_entry, mod_ld, mod_syms_ld
+
+
 def link_target(folder, work_target, filename, original, target, units, version, objects, binutils, matching):
     assemble_split(folder, binutils)
     objects_root = folder / "objects"
@@ -135,25 +333,37 @@ def link_target(folder, work_target, filename, original, target, units, version,
     link_map = work_target / "image.map"
     out = work_target / filename
     rel = folder.relative_to(ROOT)
-    run(
-        binutils["ld"], "-EL",
-        "-T", rel / "main.ld",
-        "-T", rel / "undefined_funcs.txt",
-        "-T", rel / "undefined_syms.txt",
-        "-T", rel / "symbols.ld",
-        "-Map", str(link_map),
-        "-o", str(elf),
-        cwd=ROOT,
-    )
-    run(binutils["objcopy"], "-O", "binary", str(elf), str(out), cwd=ROOT)
-    executable = out.read_bytes()
     if matching:
+        run(
+            binutils["ld"], "-EL",
+            "-T", rel / "main.ld",
+            "-T", rel / "undefined_funcs.txt",
+            "-T", rel / "undefined_syms.txt",
+            "-T", rel / "symbols.ld",
+            "-Map", str(link_map),
+            "-o", str(elf),
+            cwd=ROOT,
+        )
+        run(binutils["objcopy"], "-O", "binary", str(elf), str(out), cwd=ROOT)
+        executable = out.read_bytes()
         if len(executable) != len(original):
             raise ValueError(f"{filename}: size changed from {len(original)} to {len(executable)}")
         verify(executable, target["sha256"], filename)
+    else:
+        e_entry, mod_ld, mod_syms_ld = _prepare_shiftable_mod_link(folder, work_target, original, binutils)
+        run(
+            binutils["ld"], "-EL",
+            "-e", f"{e_entry:#x}",
+            "-T", str(mod_ld),
+            "-T", rel / "undefined_funcs.txt",
+            "-T", str(mod_syms_ld),
+            "-Map", str(link_map),
+            "-o", str(out),
+            cwd=ROOT,
+        )
 
 
-def build(local, target=None, mod=False, compiler=None):
+def build(local, target=None, mod=False, compiler=None, iso=None):
     names = [target] if target else list(TARGETS)
     originals = {
         name: verify((BASEROM / name).read_bytes(), TARGETS[name]["sha256"], f"baserom/{name}")
@@ -198,15 +408,24 @@ def build(local, target=None, mod=False, compiler=None):
             receipt.replace(output / "build-set.json")
         elif mod:
             (output / "build-set.json").unlink(missing_ok=True)
+    if mod and iso is not None and "GALLERY.ELF" in names:
+        iso_path = Path(iso) if iso else (Path(local["iso"]) if local.get("iso") else None)
+        if iso_path is None:
+            raise ValueError("Pass --iso PATH or run tools/setup.py --iso PATH first.")
+        out_iso, changed_ids, wrote = sync_gallery_iso(iso_path)
+        summary = f"modified entries {changed_ids}" if changed_ids else "retail assets"
+        action = "UPDATED" if wrote else "UP-TO-DATE"
+        print(f"ISO  {out_iso.relative_to(ROOT)}  ({action}, {summary})")
 
 
 def main():
     parser = argparse.ArgumentParser(description="Build and verify all three matching PS2 executables.")
     parser.add_argument("--target", choices=TARGETS, help="build one executable")
     parser.add_argument("--mod", action="store_true", help="build edits into build/mod")
+    parser.add_argument("--iso", nargs="?", const="", help="with --mod, incrementally sync assets/ into build/mod/ddpdoj.iso")
     parser.add_argument("--compiler", choices=TOOLCHAINS["compilers"], help="override the target compiler")
     args = parser.parse_args()
-    build(require_local(), args.target, args.mod, args.compiler)
+    build(require_local(), args.target, args.mod, args.compiler, args.iso)
 
 
 if __name__ == "__main__":
