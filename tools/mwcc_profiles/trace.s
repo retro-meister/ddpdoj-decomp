@@ -510,6 +510,79 @@ graph_limit:
     popfl
     ret
 
+schedule_select:
+    pushfl
+    pushal
+    subl $40,%esp
+    movl 80(%esp),%esi
+    movl 84(%esp),%eax
+    movl %eax,32(%esp)
+    .if is_303
+        movzwl 92(%esp),%ebp
+    .else
+        movzwl %bx,%ebp
+    .endif
+    movl %ebp,36(%esp)
+    call trace_handle
+    xorl %ebx,%ebx
+schedule_ready_loop:
+    testl %esi,%esi
+    je schedule_ready_done
+    cmpl $256,%ebx
+    jae schedule_ready_done
+    movl $0x51334257,4(%esp) # WB3Q
+    movl 32(%esp),%eax
+    movl %eax,8(%esp)
+    movl 36(%esp),%eax
+    movl %eax,12(%esp)
+    movl 0x0c(%esi),%eax
+    movl %eax,16(%esp)
+    movl 0x14(%esi),%eax
+    movl %eax,20(%esp)
+    movl 0x18(%esi),%eax
+    movl %eax,24(%esp)
+    leal 4(%esp),%ecx
+    movl $24,%edx
+    call write_record
+    movl (%esi),%esi
+    incl %ebx
+    jmp schedule_ready_loop
+schedule_ready_done:
+    addl $40,%esp
+    popal
+    popfl
+    pushl 8(%esp)
+    pushl 8(%esp)
+    original_call schedule_select_target
+    leal 8(%esp),%esp
+    pushfl
+    pushal
+    subl $32,%esp
+    movl %eax,%esi
+    movl $0x56334257,4(%esp) # WB3V
+    movl 76(%esp),%eax
+    movl %eax,8(%esp)
+    .if is_303
+        movzwl 84(%esp),%eax
+    .else
+        movzwl %bx,%eax
+    .endif
+    movl %eax,12(%esp)
+    xorl %eax,%eax
+    testl %esi,%esi
+    je schedule_select_write
+    movl 0x0c(%esi),%eax
+schedule_select_write:
+    movl %eax,16(%esp)
+    call trace_handle
+    leal 4(%esp),%ecx
+    movl $16,%edx
+    call write_record
+    addl $32,%esp
+    popal
+    popfl
+    ret
+
 schedule_issue:
     pushfl
     pushal

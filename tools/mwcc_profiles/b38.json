@@ -54,6 +54,7 @@
     {"name": "color", "address": "0x4c465a", "bytes": "e841fcffff", "target": "0x4c42a0"},
     {"name": "choice", "address": "0x4c43c8", "bytes": "66837b12ff"},
     {"name": "blocker", "address": "0x4c431c", "bytes": "668b4a126683f9ff"},
+    {"name": "schedule_select", "address": "0x4c3e68", "bytes": "e883fdffff", "target": "0x4c3bf0"},
     {"name": "schedule_issue", "address": "0x4c3e90", "bytes": "e8eba1feff", "target": "0x4ae080"}
   ]
 }

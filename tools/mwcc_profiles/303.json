@@ -53,6 +53,7 @@
     {"name": "color", "address": "0x4aea8d", "bytes": "e84efcffff", "target": "0x4ae6e0"},
     {"name": "choice", "address": "0x4ae816", "bytes": "66837b12ff"},
     {"name": "blocker", "address": "0x4ae763", "bytes": "668b4f126683f9ff"},
+    {"name": "schedule_select", "address": "0x4ae2d3", "bytes": "e888fdffff", "target": "0x4ae060"},
     {"name": "schedule_issue", "address": "0x4ae2f7", "bytes": "e8e4a3feff", "target": "0x4986e0"}
   ]
 }

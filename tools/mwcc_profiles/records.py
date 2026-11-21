@@ -97,13 +97,42 @@ def decode(data, stages, layout):
             function["pcode_stages"].append(stage)
             if name in ("before_schedule", "before_late_schedule"):
                 check(schedule is None, "Unexpected scheduler start")
-                schedule = {"pass": "early" if name == "before_schedule" else "late", "issues": []}
+                schedule = {"pass": "early" if name == "before_schedule" else "late", "issues": [], "decisions": []}
                 scheduled_instructions = placements
+                pending_ready = []
             elif name in ("after_schedule", "after_late_schedule"):
                 check(schedule is not None, "Missing scheduler start")
                 function["schedules"].append(schedule)
                 schedule = None
             stage = None
+        elif tag == b"WB3Q":
+            cycle, slot, address, cycles_word, meta_word = words("IIIII")
+            check(schedule is not None and stage is None, "Unexpected scheduler ready candidate")
+            block, ordinal = scheduled_instructions.get(address, (None, None))
+            pending_ready.append({
+                "block": block,
+                "input_ordinal": ordinal,
+                "earliest_cycle": cycles_word & 0xFFFF,
+                "preferred_cycle": (cycles_word >> 16) & 0xFFFF,
+                "priority": meta_word & 0xFFFF,
+                "unscheduled_preds": (meta_word >> 16) & 0xFFFF,
+            })
+        elif tag == b"WB3V":
+            cycle, slot, address = words("III")
+            check(schedule is not None and stage is None, "Unexpected scheduler decision")
+            if address:
+                block, ordinal = scheduled_instructions.get(address, (None, None))
+                selected = {"block": block, "input_ordinal": ordinal}
+            else:
+                selected = None
+            schedule["decisions"].append({
+                "cycle": cycle,
+                "slot": slot,
+                "stalled": selected is None,
+                "selected": selected,
+                "ready_list": pending_ready,
+            })
+            pending_ready = []
         elif tag == b"WB3T":
             address, opcode, cycle, slot = words("IIII")
             check(schedule is not None and stage is None, "Unexpected scheduler issue")
@@ -228,4 +257,71 @@ def pcode_text(functions):
                 suffix = " " + ", ".join(operands) if operands else ""
                 lines.append(f"    {ins['mnemonic']}{suffix}")
             lines.append("")
+    return "\n".join(lines)
+
+
+def regalloc_text(functions):
+    lines = []
+    for function in functions:
+        lines.append(f"=== {function['symbol']} ===")
+        for frame in function["allocation_frames"]:
+            lines.append(
+                f"  class={frame['register_class']} attempt={frame['attempt']} "
+                f"succeeded={frame['coloring_succeeded']} nodes={len(frame['nodes'])} edges={len(frame['edges'])}"
+            )
+            lines.append("  simplification:")
+            for step in frame["simplification"]:
+                lines.append(
+                    f"    node={step['node']} reason={step['reason']} "
+                    f"deg={step['weighted_degree']} cost={step['cost_field']}"
+                )
+            lines.append("  choices:")
+            for choice in frame["choices"]:
+                retry = f" retry={choice['enabled_for_retry']}" if "enabled_for_retry" in choice else ""
+                blockers = ",".join(
+                    f"{b['neighbor']}(c{b['color']})" for b in choice["colored_neighbors"] if b["removed_mask"]
+                )
+                lines.append(
+                    f"    node={choice['node']} selected={choice['selected']}{retry} "
+                    f"avail={choice['available_mask']:#x} init={choice['initial_mask']:#x} "
+                    f"blockers=[{blockers}]"
+                )
+        lines.append("")
+    return "\n".join(lines)
+
+
+def scheduler_text(functions):
+    lines = []
+    for function in functions:
+        stage_lookup = {
+            stage["stage"]: stage["pcode"] for stage in function["pcode_stages"]
+        }
+        lines.append(f"=== {function['symbol']} ===")
+        for sch in function["schedules"]:
+            pre_name = "before_schedule" if sch["pass"] == "early" else "before_late_schedule"
+            pcode = stage_lookup.get(pre_name, [])
+            stalls = sum(1 for d in sch.get("decisions", []) if d["stalled"])
+            lines.append(
+                f"  pass={sch['pass']} issues={len(sch['issues'])} "
+                f"decisions={len(sch.get('decisions', []))} stalls={stalls}"
+            )
+            for dec in sch.get("decisions", []):
+                sel = dec["selected"]
+                if sel is None:
+                    sel_str = "STALL"
+                else:
+                    ord_idx = sel["input_ordinal"]
+                    mnem = pcode[ord_idx]["mnemonic"] if ord_idx is not None and ord_idx < len(pcode) else "?"
+                    sel_str = f"b{sel['block']}:#{ord_idx}({mnem})"
+                ready_parts = []
+                for cand in dec["ready_list"]:
+                    ord_idx = cand["input_ordinal"]
+                    mnem = pcode[ord_idx]["mnemonic"] if ord_idx is not None and ord_idx < len(pcode) else "?"
+                    ready_parts.append(
+                        f"#{ord_idx}({mnem},e={cand['earliest_cycle']},p={cand['priority']},pred={cand['unscheduled_preds']})"
+                    )
+                lines.append(
+                    f"    cyc={dec['cycle']} slot={dec['slot']} -> {sel_str} | ready=[{', '.join(ready_parts)}]"
+                )
+        lines.append("")
     return "\n".join(lines)
