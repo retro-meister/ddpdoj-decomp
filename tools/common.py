@@ -1,3 +1,4 @@
+from contextlib import contextmanager
 import hashlib
 import json
 from pathlib import Path
@@ -11,6 +12,18 @@ ROOT = Path(__file__).resolve().parent.parent
 BASEROM = ROOT / "baserom"
 TOOLS = ROOT / ".tools"
 LOCAL = ROOT / "local.json"
+
+
+@contextmanager
+def matching_lock():
+    """Keep matching tools from reading Splat state during integration."""
+    import fcntl
+
+    path = ROOT / "build" / "matching.lock"
+    path.parent.mkdir(parents=True, exist_ok=True)
+    with path.open("a+b") as lock:
+        fcntl.flock(lock, fcntl.LOCK_EX)
+        yield
 
 
 def read_json(path):

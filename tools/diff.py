@@ -11,7 +11,7 @@ from tempfile import TemporaryDirectory
 
 from build import compile_source
 from common import BASEROM, ROOT, TARGETS, TOOLCHAINS, TOOLS
-from common import download, host_machine, require_local, resolve_tool, run, target_compiler, verify, verify_compiler
+from common import download, host_machine, matching_lock, require_local, resolve_tool, run, target_compiler, verify, verify_compiler
 from draft import extract_function
 from objects import find_function
 from split import load_symbols, scan_asm_functions, split, target_layout, target_units
@@ -279,6 +279,7 @@ def corrected_words(retail, candidate, relinked):
     return []
 
 
+@matching_lock()
 def diff(args):
     if not args.function.isascii() or not args.function.isidentifier():
         raise ValueError("Expected a C function name")

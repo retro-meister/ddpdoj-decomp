@@ -1,12 +1,13 @@
 import argparse
 import json
+import os
 from pathlib import Path
 import re
 import subprocess
 import sys
 
 from build import build, compile_source
-from common import BASEROM, ROOT, TARGETS, nonmatching_dir, require_local, target_compiler, verify, verify_compiler
+from common import BASEROM, ROOT, TARGETS, matching_lock, nonmatching_dir, require_local, target_compiler, verify, verify_compiler
 from diff import candidate_layout, collect_provide_symbols, link_text, verify_jump_table_layout
 from objects import find_function
 from split import load_splat_config, scan_asm_functions, split, splat_yaml_path, symbols_path, target_layout
@@ -170,6 +171,7 @@ def find_paired_death(func_name):
     return None
 
 
+@matching_lock()
 def integrate(target_name, func_name, source_path, out_name=None, subdir=None, pair_death=True):
     local = require_local()
     source_path = Path(source_path).resolve()
