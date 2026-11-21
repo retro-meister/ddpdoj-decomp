@@ -157,7 +157,7 @@ void pad_poll_hardware(void)
     g_pads[2].trigger = g_pads[0].trigger | g_pads[1].trigger;
     g_pads[2].analogX = (((g_pads[0].analogX >= 0) ? (g_pads[0].analogX) : (-g_pads[0].analogX)) > ((g_pads[1].analogX >= 0) ? (g_pads[1].analogX) : (-g_pads[1].analogX))) ? (g_pads[0].analogX) : (g_pads[1].analogX);
     g_pads[2].analogY = (((g_pads[0].analogY >= 0) ? (g_pads[0].analogY) : (-g_pads[0].analogY)) > ((g_pads[1].analogY >= 0) ? (g_pads[1].analogY) : (-g_pads[1].analogY))) ? (g_pads[0].analogY) : (g_pads[1].analogY);
-    g_pads[2].unk30 = g_pads[0].unk30 | g_pads[1].unk30;
+    g_pads[2].extraButtons = g_pads[0].extraButtons | g_pads[1].extraButtons;
 }
 
 void pad_init_system(void)

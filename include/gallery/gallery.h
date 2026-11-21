@@ -168,7 +168,7 @@ typedef struct {
     u32 trigger;
     u32 prevButtons;
     u32 rawButtons;
-    u16 unk30;
+    u16 extraButtons;
     s8 analogX;
     s8 analogY;
     u8 state;

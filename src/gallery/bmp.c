@@ -7,7 +7,13 @@ typedef struct
     u32 biHeight;
     u16 biPlanes;
     u16 biBitCount;
-    u8 unk_10[0x20];
+    u32 biCompression;
+    u32 biSizeImage;
+    u32 biXPelsPerMeter;
+    u32 biYPelsPerMeter;
+    u32 biClrUsed;
+    u32 biClrImportant;
+    u8 reserved28[8];
     u8 loadImage[0x60];
 } BmpContext;
 
