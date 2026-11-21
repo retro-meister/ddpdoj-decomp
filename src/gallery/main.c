@@ -300,7 +300,7 @@ s32 gallery_state_viewer(void)
 {
     switch (g_gallery->state) {
     case 0:
-        g_selected_image_idx = g_gallery->pageOffset + g_gallery->menu_params[0];
+        g_selected_image_idx = g_gallery->pageOffset + g_gallery->menu.selection;
         g_gallery->overlayEnabled = 0;
         g_gallery->curSprite = 0;
         g_gallery->prevSprite = 0;
@@ -394,7 +394,7 @@ s32 gallery_state_viewer(void)
                 } else {
                     g_gallery->pageOffset = 0;
                 }
-                g_gallery->menu_params[0] = g_selected_image_idx % 6;
+                g_gallery->menu.selection = g_selected_image_idx % 6;
             } while (g_gallery->itemStatus[g_selected_image_idx] != 2);
             g_gallery->curSprite->state = 2;
             g_gallery->curSprite->timer = 0x80;
@@ -495,8 +495,8 @@ s32 gallery_state_grid(void)
         g_gallery->state++;
 
     case 20:
-        previousCursor = g_gallery->menu_params[0];
-        menuResult = viewer_update_grid_cursor(&g_gallery->menu_params[0], &g_pads[2]);
+        previousCursor = g_gallery->menu.selection;
+        menuResult = viewer_update_grid_cursor(&g_gallery->menu, &g_pads[2]);
         if (menuResult != 0) {
             if (menuResult < 0x100) {
                 int directionButtons;
@@ -506,7 +506,7 @@ s32 gallery_state_grid(void)
                 }
                 directionButtons = g_pads[2].buttons;
                 if ((directionButtons & SCE_PADLleft) && ((previousCursor == 0) || (previousCursor == 3))) {
-                    g_gallery->menu_params[0] = previousCursor + 2;
+                    g_gallery->menu.selection = previousCursor + 2;
                     g_gallery->scrollDirection = -1;
                     g_gallery->pageOffset -= 6;
                     if (g_gallery->pageOffset < 0) {
@@ -516,7 +516,7 @@ s32 gallery_state_grid(void)
                     return 1;
                 }
                 if ((directionButtons & SCE_PADLright) && ((previousCursor == 2) || (previousCursor == 5))) {
-                    g_gallery->menu_params[0] = previousCursor - 2;
+                    g_gallery->menu.selection = previousCursor - 2;
                     g_gallery->scrollDirection = 1;
                     g_gallery->pageOffset += 6;
                     if (g_gallery->pageOffset >= g_gallery->itemCount) {
@@ -527,7 +527,7 @@ s32 gallery_state_grid(void)
                 }
                 sound_play_cursor_se();
             } else {
-                s32 itemIndex = g_gallery->menu_params[0] + g_gallery->pageOffset;
+                s32 itemIndex = g_gallery->menu.selection + g_gallery->pageOffset;
                 if ((itemIndex < g_gallery->itemCount) && (g_gallery->itemStatus[itemIndex] == 2)) {
                     sound_play_confirm_se();
                     g_gallery->exitMode = GALLERY_MODE_VIEWER;
@@ -665,7 +665,7 @@ s32 gallery_state_loading(void)
     u32 i;
     s32 idx;
     s32 count;
-    s32 *params;
+    GalleryMenuState *menu;
 
     switch (g_gallery->state) {
     case 0:
@@ -714,19 +714,19 @@ s32 gallery_state_loading(void)
         g_gallery->cursor_color_a = 0x33;
         g_gallery->cursor_alpha = 0x80;
 
-        params = g_gallery->menu_params;
-        params[0] = 0;
-        params[1] = 6;
-        params[2] = -3;
-        params[3] = 3;
-        params[4] = -1;
-        params[5] = 1;
-        params[6] = 0;
-        params[7] = 0;
-        params[8] = 0;
-        params[9] = 1;
-        params[10] = 0;
-        params[11] = 0;
+        menu = &g_gallery->menu;
+        menu->selection = 0;
+        menu->selectionCount = 6;
+        menu->movementSteps[0] = -3;
+        menu->movementSteps[1] = 3;
+        menu->movementSteps[2] = -1;
+        menu->movementSteps[3] = 1;
+        menu->movementSteps[4] = 0;
+        menu->actionEnabled[0] = 0;
+        menu->actionEnabled[1] = 0;
+        menu->actionEnabled[2] = 1;
+        menu->actionEnabled[3] = 0;
+        menu->actionEnabled[4] = 0;
 
         g_gallery->slotFlags[0] = 0;
         g_gallery->slotFlags[1] = 0;
@@ -1144,16 +1144,16 @@ void gallery_draw_grid_and_ui(void)
         sceGifPkAddGsData(
             &pkt,
             SCE_GS_SET_XYZ2(
-                (((g_gallery->menu_params[0] % 3) * 0x90 + 0x70) << 4) + 0x6C00,
-                (((g_gallery->menu_params[0] / 3) * 0x6A + 0x5E) << 3) + 0x7900,
+                (((g_gallery->menu.selection % 3) * 0x90 + 0x70) << 4) + 0x6C00,
+                (((g_gallery->menu.selection / 3) * 0x6A + 0x5E) << 3) + 0x7900,
                 0
             )
         );
         sceGifPkAddGsData(
             &pkt,
             SCE_GS_SET_XYZ2(
-                (((g_gallery->menu_params[0] % 3) * 0x90 + 0xF0) << 4) + 0x6C00,
-                (((g_gallery->menu_params[0] / 3) * 0x6A + 0xB8) << 3) + 0x7900,
+                (((g_gallery->menu.selection % 3) * 0x90 + 0xF0) << 4) + 0x6C00,
+                (((g_gallery->menu.selection / 3) * 0x6A + 0xB8) << 3) + 0x7900,
                 0
             )
         );

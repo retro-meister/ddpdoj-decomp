@@ -1,19 +1,5 @@
 #include "gallery/gallery.h"
 
-typedef struct {
-    s32 selection;
-    s32 selectionCount;
-    s32 movementSteps[5];
-    s32 actionEnabled[5];
-    s32 heldFrames;
-} GalleryMenuState;
-
-typedef struct {
-    u8 reserved[0x20];
-    u32 heldButtons;
-    u32 pressedButtons;
-} GalleryMenuInput;
-
 static const char g_dialog_yes[8] = SJIS("はい");
 static const char g_dialog_slash[8] = SJIS("／");
 static const char g_dialog_no[8] = SJIS("いいえ");
@@ -396,14 +382,12 @@ void viewer_init_image(GalleryView *viewer, SpriteInfo *image, const char *title
     }
 }
 
-s32 viewer_update_grid_cursor(void *menuPtr, void *inputPtr)
+s32 viewer_update_grid_cursor(GalleryMenuState *menu, PadInfo *input)
 {
-    GalleryMenuState *menu = menuPtr;
-    GalleryMenuInput *input = inputPtr;
     s32 heldFrames;
     s32 buttonIndex;
 
-    if (input->heldButtons == 0) {
+    if (input->buttons == 0) {
         menu->heldFrames = 0;
     } else {
         menu->heldFrames++;
@@ -419,13 +403,13 @@ s32 viewer_update_grid_cursor(void *menuPtr, void *inputPtr)
         }
     }
 
-    input->pressedButtons =
-        (input->pressedButtons & 0x0FFF) | (input->heldButtons & 0xF000);
+    input->trigger =
+        (input->trigger & 0x0FFF) | (input->buttons & 0xF000);
 
 checkMovement:
     for (buttonIndex = 0; buttonIndex < 5; buttonIndex++) {
         if (menu->movementSteps[buttonIndex] != 0 &&
-            (input->pressedButtons & g_menu_dir_buttons[buttonIndex]) != 0) {
+            (input->trigger & g_menu_dir_buttons[buttonIndex]) != 0) {
             menu->selection += menu->movementSteps[buttonIndex];
             if (menu->selection < 0) {
                 menu->selection += menu->selectionCount;
@@ -441,7 +425,7 @@ checkMovement:
 
     for (buttonIndex = 0; buttonIndex < 5; buttonIndex++) {
         if (menu->actionEnabled[buttonIndex] != 0 &&
-            (input->pressedButtons & g_menu_action_buttons[buttonIndex]) != 0) {
+            (input->trigger & g_menu_action_buttons[buttonIndex]) != 0) {
             return buttonIndex + 0x100;
         }
     }

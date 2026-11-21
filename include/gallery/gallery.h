@@ -79,13 +79,20 @@ typedef struct {
 } GalleryView;
 
 typedef struct {
+    s32 selection;
+    s32 selectionCount;
+    s32 movementSteps[5];
+    s32 actionEnabled[5];
+    s32 heldFrames;
+} GalleryMenuState;
+
+typedef struct {
     u8 readBuf[0x101000];
     u8 decodeBuf[0x101000];
     u8 flagBuf[0x101000];
     u8 bmpScratchBuf[0x101000];
     u8 textureBuffer[0x101000];
-    s32 menu_params[12];
-    u8 pad_505030[4];
+    GalleryMenuState menu;
     GalleryView sprites[2];
     GalleryView *curSprite;
     GalleryView *prevSprite;
@@ -312,7 +319,7 @@ void bmp_draw_ascii_char(void *packet, s32 x, s32 y, u8 glyphIndex);
 void viewer_draw_yes_no_dialog(s32 selection, s32 centerX, s32 y, s32 spacing);
 s32 viewer_update_and_draw(GalleryView *view, s32 mode);
 void viewer_init_image(GalleryView *viewer, SpriteInfo *image, const char *title);
-s32 viewer_update_grid_cursor(void *menu, void *input);
+s32 viewer_update_grid_cursor(GalleryMenuState *menu, PadInfo *input);
 
 /* lzss.c */
 s32 lzss_decompress_step(u8 *dst, u8 *src);
