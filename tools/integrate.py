@@ -9,14 +9,18 @@ import sys
 from build import build, compile_source
 from common import BASEROM, ROOT, TARGETS, matching_lock, nonmatching_dir, require_local, target_compiler, verify, verify_compiler
 from diff import candidate_layout, collect_provide_symbols, link_text, verify_jump_table_layout
-from objects import find_function
-from split import load_splat_config, scan_asm_functions, split, splat_yaml_path, symbols_path, target_layout
+from draft import extract_function
+from inventory import INSN_RE, pair_main_and_death, scan_game_asm
+from objects import find_function, undefined_symbols
+from split import load_splat_config, load_symbols, scan_asm_functions, split, splat_yaml_path, symbols_path, target_layout
 
 SUBSEG_LINE_RE = re.compile(r"^(\s*-\s*\[)(0x[0-9a-fA-F]+|\d+)(,\s*(\.?[a-zA-Z0-9_]+),\s*([^\]]+))(\]\s*)$")
 INLINE_ASM_RE = re.compile(r"\b(?:asm|__asm|__asm__)\s*(?:volatile\b|__volatile__\b)?\s*[\({]")
+OPERAND_SYM_RE = re.compile(r"(?<![%$.\w])[A-Za-z_][A-Za-z0-9_]*")
+MAIN, DEATH = "SLPS_252.33", "DEATH.ELF"
 
 
-def verify_match(local, target_name, function_name, source_path, address, size, *, asm_function=None):
+def verify_match(local, target_name, function_name, source_path, address, size, *, asm_function=None, extra_symbols=None):
     target = TARGETS[target_name]
     version = target_compiler(target_name, local)
     verify_compiler(version)
@@ -34,6 +38,7 @@ def verify_match(local, target_name, function_name, source_path, address, size, 
     compile_source(local, str(source_path), obj, version)
     fn_offset, fn_size = find_function(obj, function_name)
     provided = collect_provide_symbols(target_name, split_folder, asm_functions)
+    provided.update(extra_symbols or {})
     layout = candidate_layout(provided, address - fn_offset)
     binutils = local["binutils"]
     candidate = link_text(binutils, folder, layout)[fn_offset:fn_offset + fn_size]
@@ -158,17 +163,83 @@ def append_symbol(target_name, sym_name, address, size):
 
 
 def find_paired_death(func_name):
-    inv_path = ROOT / "build" / "inventory.json"
-    if not inv_path.is_file():
-        return None
-    try:
-        data = json.loads(inv_path.read_text(encoding="utf-8"))
-        for entry in data.get("targets", {}).get("SLPS_252.33", []):
-            if entry["name"] == func_name and "paired_death" in entry:
-                return entry["paired_death"]
-    except (OSError, ValueError):
-        return None
-    return None
+    """Pair a Main asm function with its exact normalized Death Label twin, from the current split."""
+    main_funcs = scan_game_asm(MAIN, split(MAIN))
+    death_funcs = scan_game_asm(DEATH, split(DEATH))
+    pair_main_and_death(main_funcs, death_funcs)
+    entry = next((fn for fn in main_funcs if fn["name"] == func_name), None)
+    return entry.get("paired_death") if entry else None
+
+
+def asm_operand_symbols(text):
+    rows = []
+    for line in text.splitlines():
+        match = INSN_RE.search(line)
+        if match:
+            operands = match.group(3).split("/*", 1)[0].strip().split(None, 1)
+            rows.append(OPERAND_SYM_RE.findall(operands[1]) if len(operands) > 1 else [])
+    return rows
+
+
+def death_symbol_aliases(object_path, main_func, death_func):
+    """Map every symbol the compiled C references to its Death Label address.
+
+    Names follow Main (the reference ELF). Addresses come from lining up the operands of the
+    two twin asm functions, which are identical apart from symbol addresses.
+    Returns {name: death_address} for names Death Label does not already define.
+    """
+    main_split, death_split = split(MAIN), split(DEATH)
+    main_asm, death_asm = scan_asm_functions(main_split / "asm"), scan_asm_functions(death_split / "asm")
+    main_syms = collect_provide_symbols(MAIN, main_split, main_asm)
+    death_syms = collect_provide_symbols(DEATH, death_split, death_asm)
+    main_rows = asm_operand_symbols(extract_function(main_split / "asm", main_func))
+    death_rows = asm_operand_symbols(extract_function(death_split / "asm", death_func))
+    if len(main_rows) != len(death_rows):
+        raise ValueError(f"{main_func}/{death_func}: twin asm has different instruction counts")
+
+    address_map = {main_syms[main_func]: death_syms[death_func]}
+    for main_row, death_row in zip(main_rows, death_rows):
+        if len(main_row) != len(death_row):
+            raise ValueError(f"{main_func}/{death_func}: twin asm operands differ")
+        for main_name, death_name in zip(main_row, death_row):
+            if main_name in main_syms and death_name in death_syms:
+                main_address, death_address = main_syms[main_name], death_syms[death_name]
+                if address_map.setdefault(main_address, death_address) != death_address:
+                    raise ValueError(f"{main_func}: {main_name} maps to two Death Label addresses")
+
+    aliases = {}
+    for name in sorted(undefined_symbols(object_path) - {"_gp"}):
+        if name not in main_syms:
+            raise ValueError(f"{name}: not defined in {MAIN}")
+        death_address = address_map.get(main_syms[name])
+        if death_address is None:
+            raise ValueError(f"{name}: no Death Label address (not referenced by {main_func}'s asm)")
+        if name in death_syms:
+            if death_syms[name] != death_address:
+                raise ValueError(
+                    f"{name}: names {death_syms[name]:#x} in Death Label but the twin needs {death_address:#x}; "
+                    f"give it a real name in both symbols.txt files"
+                )
+            continue
+        aliases[name] = death_address
+    return aliases
+
+
+def append_alias(target_name, sym_name, address):
+    sym_file = symbols_path(target_name)
+    text = sym_file.read_text(encoding="utf-8")
+    for other, (other_address, _) in load_symbols(target_name).items():
+        if other_address == address and other != "_gp":
+            raise ValueError(
+                f"{target_name}: {address:#x} is already named {other}, but Main calls it {sym_name}; "
+                f"use one name in both symbols.txt files"
+            )
+    funcs = scan_asm_functions(split(target_name) / "asm")
+    info = next((f"type:func size:{size:#x}" for name, (addr, size) in funcs.items() if addr == address), None)
+    if text and not text.endswith("\n"):
+        text += "\n"
+    text += f"{sym_name} = {address:#x};" + (f" // {info}" if info else "") + "\n"
+    sym_file.write_text(text, encoding="utf-8")
 
 
 @matching_lock()
@@ -188,22 +259,46 @@ def integrate(target_name, func_name, source_path, out_name=None, subdir=None, p
     if c_name != func_name:
         code = re.sub(rf"\b{re.escape(func_name)}\b", c_name, code)
 
-    targets_to_update = [(target_name, address, size)]
-    if target_name == "SLPS_252.33" and pair_death:
+    staging = ROOT / "build" / "integrate" / f"{c_name}.c"
+    staging.parent.mkdir(parents=True, exist_ok=True)
+    staging.write_text(code, encoding="utf-8")
+
+    matched, rodata = verify_match(local, target_name, c_name, staging, address, size, asm_function=func_name)
+    if not matched:
+        raise ValueError(f"{target_name}:{c_name} does not match retail bytes; aborting integration")
+    verified_targets = [(target_name, func_name, address, size, rodata)]
+
+    death_aliases = {}
+    if target_name == MAIN and pair_death:
         paired = find_paired_death(func_name)
-        if paired:
-            d_folder = split("DEATH.ELF")
-            d_funcs = scan_asm_functions(d_folder / "asm")
-            d_info = d_funcs.get(paired["name"])
-            if d_info and d_info[1] == size:
-                targets_to_update.append(("DEATH.ELF", d_info[0], d_info[1]))
+        if paired is None:
+            print(f"NOTE  {func_name} has no exact Death Label twin; integrating into Main only")
+        else:
+            try:
+                death_funcs = scan_asm_functions(split(DEATH) / "asm")
+                d_address, d_size = death_funcs[paired["name"]]
+                if d_size != size:
+                    raise ValueError(f"twin {paired['name']} is {d_size:#x} bytes, Main is {size:#x}")
+                death_aliases = death_symbol_aliases(
+                    ROOT / "build" / "integrate" / target_name / c_name / "compiled.o", func_name, paired["name"],
+                )
+                d_matched, d_rodata = verify_match(
+                    local, DEATH, c_name, staging, d_address, d_size,
+                    asm_function=paired["name"], extra_symbols=death_aliases,
+                )
+                if not d_matched:
+                    raise ValueError(f"does not match twin {paired['name']} at {d_address:#x}")
+                verified_targets.append((DEATH, paired["name"], d_address, d_size, d_rodata))
+            except (KeyError, ValueError) as error:
+                death_aliases = {}
+                print(f"WARNING  Death Label twin of {func_name} not integrated ({error}); integrating into Main only")
 
     if subdir is None:
-        if len(targets_to_update) > 1:
+        if len(verified_targets) > 1:
             subdir = "shared"
         elif target_name == "GALLERY.ELF":
             subdir = "gallery"
-        elif target_name == "DEATH.ELF":
+        elif target_name == DEATH:
             subdir = "death"
         else:
             subdir = "main"
@@ -213,50 +308,37 @@ def integrate(target_name, func_name, source_path, out_name=None, subdir=None, p
         raise ValueError(f"Destination already exists: {dest_file.relative_to(ROOT)}")
     stub = f"{subdir}/{c_name}"
 
-    staging = ROOT / "build" / "integrate" / f"{c_name}.c"
-    staging.parent.mkdir(parents=True, exist_ok=True)
-    staging.write_text(code, encoding="utf-8")
-
-    verified_targets = []
-    for t_name, t_addr, t_size in targets_to_update:
-        matched, rodata = verify_match(
-            local, t_name, c_name, staging, t_addr, t_size,
-            asm_function=func_name if t_name == target_name else None,
-        )
-        if matched:
-            verified_targets.append((t_name, t_addr, t_size, rodata))
-        elif t_name == target_name:
-            raise ValueError(f"{t_name}:{c_name} does not match retail bytes; aborting integration")
-
     backups = {}
-    for t_name, _, _, _ in verified_targets:
+    for t_name, _, _, _, _ in verified_targets:
         for path in (splat_yaml_path(t_name), symbols_path(t_name)):
             backups[path] = path.read_bytes()
 
     try:
         dest_file.parent.mkdir(parents=True, exist_ok=True)
         dest_file.write_text(code, encoding="utf-8")
-        for t_name, t_addr, t_size, rodata in verified_targets:
+        for alias, alias_address in death_aliases.items():
+            append_alias(DEATH, alias, alias_address)
+        for t_name, _, t_addr, t_size, rodata in verified_targets:
             append_symbol(t_name, c_name, t_addr, t_size)
             patch_splat_yaml(t_name, t_addr, t_size, stub)
             if rodata is not None:
                 table_offset, table_size = rodata
                 patch_splat_rodata(t_name, table_offset, table_size, stub)
-        for t_name, _, _, _ in verified_targets:
+        for t_name, _, _, _, _ in verified_targets:
             build(local, target=t_name)
     except BaseException:
         dest_file.unlink(missing_ok=True)
         for path, old_bytes in backups.items():
             path.write_bytes(old_bytes)
-        for t_name, _, _, _ in verified_targets:
+        for t_name, _, _, _, _ in verified_targets:
             (ROOT / "build" / "split" / t_name / "split-state.json").unlink(missing_ok=True)
         raise
 
-    for t_name, _, _, _ in verified_targets:
-        (nonmatching_dir(t_name, shared=False) / f"{func_name}.c").unlink(missing_ok=True)
-        (nonmatching_dir(t_name, shared=True) / f"{func_name}.c").unlink(missing_ok=True)
-        (ROOT / "build" / "wip" / t_name / f"{func_name}.best.c").unlink(missing_ok=True)
-    targets = [t for t, _, _, _ in verified_targets]
+    for t_name, asm_name, _, _, _ in verified_targets:
+        (nonmatching_dir(t_name, shared=False) / f"{asm_name}.c").unlink(missing_ok=True)
+        (nonmatching_dir(t_name, shared=True) / f"{asm_name}.c").unlink(missing_ok=True)
+        (ROOT / "build" / "wip" / t_name / f"{asm_name}.best.c").unlink(missing_ok=True)
+    targets = [t for t, _, _, _, _ in verified_targets]
     names = ", ".join(targets)
     print(f"INTEGRATED  {dest_file.relative_to(ROOT)}  ({names})")
     return dest_file, targets

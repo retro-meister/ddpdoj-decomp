@@ -46,6 +46,18 @@ def validate_object(path):
     return functions
 
 
+def undefined_symbols(path):
+    data = path.read_bytes()
+    sections, named, _ = parse_object(path)
+    symtab = sections[named[".symtab"]]
+    strings = sections[symtab[6]][4]
+    names = set()
+    for name, _, _, info, _, index in struct.iter_unpack("<IIIBBH", data[symtab[4]:symtab[4] + symtab[5]]):
+        if index == 0 and name and info >> 4 in (1, 2):
+            names.add(data[strings + name:data.index(0, strings + name)].decode("ascii"))
+    return names
+
+
 def find_function(path, function):
     functions = validate_object(path)
     if function not in functions:

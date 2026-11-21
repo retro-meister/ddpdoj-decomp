@@ -1,5 +1,6 @@
 import argparse
 from collections import defaultdict
+from difflib import SequenceMatcher
 import hashlib
 import json
 from pathlib import Path
@@ -133,23 +134,36 @@ def matched_entries(target_name):
 
 
 def pair_main_and_death(main_funcs, death_funcs):
+    """Pair Main and Death Label functions with identical normalized code.
+
+    Functions are aligned in address order (like a diff of the two function lists), so repeated
+    bodies such as empty stubs pair with their positional twin. A function outside the aligned
+    runs pairs only when its body is unique in both ELFs.
+    """
+    main_order = sorted(main_funcs, key=lambda fn: fn["address"])
+    death_order = sorted(death_funcs, key=lambda fn: fn["address"])
+    matcher = SequenceMatcher(None, [fn["hash"] for fn in main_order], [fn["hash"] for fn in death_order], autojunk=False)
+    pairs = []
+    for block in matcher.get_matching_blocks():
+        pairs.extend(zip(main_order[block.a:block.a + block.size], death_order[block.b:block.b + block.size]))
+
+    paired_main = {id(m) for m, _ in pairs}
+    paired_death = {id(d) for _, d in pairs}
     by_hash_main = defaultdict(list)
     by_hash_death = defaultdict(list)
-    for fn in main_funcs:
+    for fn in main_order:
         by_hash_main[fn["hash"]].append(fn)
-    for fn in death_funcs:
+    for fn in death_order:
         by_hash_death[fn["hash"]].append(fn)
-
-    pairs = 0
     for digest, m_list in by_hash_main.items():
-        d_list = by_hash_death.get(digest)
-        if not d_list:
-            continue
-        for m_fn, d_fn in zip(m_list, d_list):
-            m_fn["paired_death"] = {"name": d_fn["name"], "address": d_fn["address"]}
-            d_fn["paired_main"] = {"name": m_fn["name"], "address": m_fn["address"]}
-            pairs += 1
-    return pairs
+        d_list = by_hash_death.get(digest, [])
+        if len(m_list) == 1 and len(d_list) == 1 and id(m_list[0]) not in paired_main and id(d_list[0]) not in paired_death:
+            pairs.append((m_list[0], d_list[0]))
+
+    for m_fn, d_fn in pairs:
+        m_fn["paired_death"] = {"name": d_fn["name"], "address": d_fn["address"]}
+        d_fn["paired_main"] = {"name": m_fn["name"], "address": m_fn["address"]}
+    return len(pairs)
 
 
 def build_inventory():
