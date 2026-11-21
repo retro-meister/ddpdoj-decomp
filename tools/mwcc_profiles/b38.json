@@ -1,0 +1,59 @@
+{
+  "compilers": [
+    "3.0b38-030307",
+    "3.0b38-030307-gallery"
+  ],
+  "symbols": {
+    "get_std_handle": "0x57c1d8",
+    "write_file": "0x57c24c",
+    "register_class": "0x5b5e1f",
+    "node_count": "0x5b4610",
+    "physical_count": "0x5b40d8",
+    "graph_nodes": "0x5b4154",
+    "coalesce_parents": "0x588ba0",
+    "allocation_attempt": "0x5b4b84",
+    "first_block": "0x5b412c",
+    "opcode_table": "0x5a6218"
+  },
+  "layout": {
+    "is_303": 0,
+    "function_name_stack": 52,
+    "pcode_opcode": 40,
+    "pcode_count": 42,
+    "pcode_size": 60,
+    "operand_size": 22,
+    "opcode_limit": 1120
+  },
+  "hooks": [
+    {"name": "selection", "address": "0x436cbd", "bytes": "e87e730700", "target": "0x4ae040", "args": 0, "before": "instruction_selection"},
+    {"name": "coalesce", "address": "0x436cda", "bytes": "e8b1550800", "target": "0x4bc290", "args": 0, "after": "early_coalesce"},
+    {"name": "pipeline", "address": "0x436cfc", "bytes": "e87f580800", "target": "0x4bc580", "args": 1, "after": "pipeline"},
+    {"name": "first_cse", "address": "0x436d32", "bytes": "e8f96a0800", "target": "0x4bd830", "args": 0, "after": "first_cse"},
+    {"name": "peephole", "address": "0x436d5d", "bytes": "e81e6e0800", "target": "0x4bdb80", "args": 1, "after": "first_peephole"},
+    {"name": "macro_b", "address": "0x436d80", "bytes": "e80ba70800", "target": "0x4c1490", "args": 1, "after": "macro_expansion_b"},
+    {"name": "cse", "address": "0x436dba", "bytes": "e8716a0800", "target": "0x4bd830", "args": 0, "after": "cse"},
+    {"name": "loop", "address": "0x436dfd", "bytes": "e82e6a0800", "target": "0x4bd830", "args": 0, "after": "loop_invariant"},
+    {"name": "late_coalesce", "address": "0x436e25", "bytes": "e866540800", "target": "0x4bc290", "args": 0, "after": "late_coalesce"},
+    {"name": "schedule", "address": "0x436e69", "bytes": "e882d00800", "target": "0x4c3ef0", "args": 0, "before": "before_schedule", "after": "after_schedule"},
+    {"name": "preallocation_peephole", "address": "0x436eb8", "bytes": "e8c36c0800", "target": "0x4bdb80", "args": 1, "after": "preallocation_peephole"},
+    {"name": "allocator", "address": "0x436edb", "bytes": "e8d0d60800", "target": "0x4c45b0", "args": 1, "before": "before_allocation", "after": "after_allocation"},
+    {"name": "late_peephole", "address": "0x436f2a", "bytes": "e8516c0800", "target": "0x4bdb80", "args": 1, "after": "late_peephole"},
+    {"name": "macro", "address": "0x437113", "bytes": "e888700800", "target": "0x4be1a0", "args": 1, "after": "macro_expansion"},
+    {"name": "cond_move", "address": "0x437144", "bytes": "e867d70800", "target": "0x4c48b0", "args": 0, "after": "conditional_move"},
+    {"name": "divide_fix", "address": "0x43716f", "bytes": "e82cde0800", "target": "0x4c4fa0", "args": 1, "after": "divide_fix"},
+    {"name": "binary", "address": "0x4371c3", "bytes": "e878f00800", "target": "0x4c6240", "args": 0, "after": "binary_lowering"},
+    {"name": "blocks", "address": "0x4371f1", "bytes": "e81af60800", "target": "0x4c6810", "args": 0, "after": "block_optimization"},
+    {"name": "late_schedule", "address": "0x43721a", "bytes": "e8d1cc0800", "target": "0x4c3ef0", "args": 0, "before": "before_late_schedule", "after": "after_late_schedule"},
+    {"name": "nop", "address": "0x437255", "bytes": "e886020900", "target": "0x4c74e0", "args": 3, "after": "nop_insertion"},
+    {"name": "emission", "address": "0x437284", "bytes": "e847780700", "target": "0x4aead0", "args": 1, "after": "before_emission"},
+    {"name": "simplify", "address": "0x4c4654", "bytes": "e8d7f8ffff", "target": "0x4c3f30"},
+    {"name": "simplify_initial", "address": "0x4c400f", "bytes": "6683481402"},
+    {"name": "simplify_pressure", "address": "0x4c4179", "bytes": "6683491402"},
+    {"name": "simplify_rescan", "address": "0x4c4249", "bytes": "66834a1402"},
+    {"name": "retry", "address": "0x4c43ea", "bytes": "090424eb17"},
+    {"name": "color", "address": "0x4c465a", "bytes": "e841fcffff", "target": "0x4c42a0"},
+    {"name": "choice", "address": "0x4c43c8", "bytes": "66837b12ff"},
+    {"name": "blocker", "address": "0x4c431c", "bytes": "668b4a126683f9ff"},
+    {"name": "schedule_issue", "address": "0x4c3e90", "bytes": "e8eba1feff", "target": "0x4ae080"}
+  ]
+}
