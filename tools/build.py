@@ -123,13 +123,13 @@ def assemble_split(folder, binutils):
             "-o", obj.relative_to(ROOT), rel_from_root.as_posix(), cwd=ROOT)
 
 
-def link_target(folder, work_target, filename, original, target, units, version, objects, binutils, matching):
+def link_target(folder, work_target, filename, original, target, units, versions, objects, binutils, matching):
     assemble_split(folder, binutils)
     objects_root = folder / "objects"
     for unit in units:
         dest = objects_root / f"{unit['source']}.o"
         dest.parent.mkdir(parents=True, exist_ok=True)
-        shutil.copyfile(objects[(version, unit["source"])], dest)
+        shutil.copyfile(objects[(versions[unit["address"]], unit["source"])], dest)
     work_target.mkdir(parents=True, exist_ok=True)
     elf = work_target / "image.elf"
     link_map = work_target / "image.map"
@@ -160,9 +160,15 @@ def build(local, target=None, mod=False, compiler=None):
         for name in names
     }
     units_by_target = {name: target_units(name) for name in names}
-    versions = {name: target_compiler(name, local, compiler) for name in names}
+    versions = {
+        name: {
+            unit["address"]: target_compiler(name, local, compiler, address=unit["address"])
+            for unit in units_by_target[name]
+        }
+        for name in names
+    }
     jobs = sorted({
-        (versions[name], unit["source"])
+        (versions[name][unit["address"]], unit["source"])
         for name in names
         for unit in units_by_target[name]
     })
@@ -177,9 +183,8 @@ def build(local, target=None, mod=False, compiler=None):
     with TemporaryDirectory(prefix=".link-", dir=output) as temporary:
         work = Path(temporary)
         for name in names:
-            version = versions[name]
             link_target(split_folders[name], work / name, name, originals[name], TARGETS[name],
-                        units_by_target[name], version, objects, local["binutils"], matching=not mod)
+                        units_by_target[name], versions[name], objects, local["binutils"], matching=not mod)
         full_mod = mod and target is None
         if full_mod:
             hashes = {name: hashlib.sha256((work / name / name).read_bytes()).hexdigest()

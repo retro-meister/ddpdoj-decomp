@@ -37,9 +37,9 @@ def main():
     for name, target in TARGETS.items():
         original = verify((BASEROM / name).read_bytes(), target["sha256"], name)
         file_address, _, _ = target_layout(name)
-        version = target_compiler(name, local)
         retail_dir = ROOT / "build" / "objdiff" / name
         for unit in target_units(name):
+            version = target_compiler(name, local, address=unit["address"])
             retail_obj = build_retail_object(retail_dir, binutils, original, file_address, unit)
             base_obj = OBJ_CACHE / version / f"{unit['source']}.o"
             units_json.append({

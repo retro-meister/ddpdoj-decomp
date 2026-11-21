@@ -5,6 +5,7 @@ import json
 from pathlib import Path
 import re
 import shutil
+import struct
 import subprocess
 import sys
 from tempfile import TemporaryDirectory
@@ -21,6 +22,7 @@ DLABEL_RE = re.compile(r"^\s*(?:dlabel|glabel)\s+([A-Za-z_][A-Za-z0-9_]*)")
 HEX_ADDR_SUFFIX_RE = re.compile(r"^(?:D|L|jtbl|str)_([0-9A-Fa-f]{8})$")
 JUMP_TABLE_RE = re.compile(r"\bjtbl_([0-9A-Fa-f]{8})\b")
 RODATA_LAYOUT = "RODATA_LAYOUT"
+PADDING_LAYOUT = "PADDING_LAYOUT"
 
 
 def objdiff_path(override):
@@ -279,6 +281,76 @@ def corrected_words(retail, candidate, relinked):
     return []
 
 
+def relative_branch(word):
+    opcode = word >> 26
+    return opcode in (4, 5, 6, 7) or (opcode == 1 and ((word >> 16) & 31) in (0, 1))
+
+
+def branch_target(index, word):
+    displacement = word & 0xFFFF
+    if displacement >= 0x8000:
+        displacement -= 0x10000
+    return index + 1 + displacement
+
+
+def padding_only_offsets(retail, candidate, address):
+    if not 0 < len(candidate) < len(retail) or (len(retail) | len(candidate)) & 3:
+        return []
+    retail_words = [word for word, in struct.iter_unpack("<I", retail)]
+    candidate_words = [word for word, in struct.iter_unpack("<I", candidate)]
+    mapping, padding = [], []
+    cursor = 0
+    for word in candidate_words:
+        while word and cursor < len(retail_words) and retail_words[cursor] == 0:
+            padding.append(4 * cursor)
+            cursor += 1
+        if cursor == len(retail_words):
+            return []
+        mask = 0xFFFF0000 if relative_branch(word) else 0xFFFFFFFF
+        if retail_words[cursor] & mask != word & mask:
+            return []
+        mapping.append(cursor)
+        cursor += 1
+    if any(retail_words[cursor:]):
+        return []
+    padding.extend(4 * index for index in range(cursor, len(retail_words)))
+
+    for index, word in enumerate(candidate_words):
+        retail_index = mapping[index]
+        opcode = word >> 26
+        if relative_branch(word):
+            target = branch_target(index, word)
+            if not 0 <= target < len(mapping) or not candidate_words[target]:
+                return []
+            if mapping[target] != branch_target(retail_index, retail_words[retail_index]):
+                return []
+            if index + 1 == len(mapping):
+                return []
+            if mapping[index + 1] != retail_index + 1:
+                # A LUI moved out of a branch delay slot is redundant on the
+                # taken path only if the branch target overwrites that register.
+                slot, first = candidate_words[index + 1], candidate_words[target]
+                if (mapping[index + 1] != retail_index + 2 or target == index + 1
+                        or slot >> 26 != 15 or first >> 26 != 15
+                        or ((slot >> 16) & 31) != ((first >> 16) & 31)):
+                    return []
+        elif opcode in (2, 3) or word == 0x03E00008:  # J, JAL, or JR $ra
+            if index + 1 == len(mapping) or mapping[index + 1] != retail_index + 1:
+                return []
+            if opcode in (2, 3):
+                pc = address + 4 * index + 4
+                retail_pc = address + 4 * retail_index + 4
+                if pc >> 28 != retail_pc >> 28:
+                    return []
+                target = (pc & 0xF0000000) | ((word & 0x03FFFFFF) << 2)
+                if address <= target < address + len(retail):
+                    return []
+        elif ((opcode == 0 and (word & 63) in (8, 9)) or opcode in (1, 20, 21, 22, 23)
+              or (16 <= opcode <= 19 and ((word >> 21) & 31) == 8)):
+            return []  # Other control transfers are outside this comparison.
+    return padding
+
+
 @matching_lock()
 def diff(args):
     if not args.function.isascii() or not args.function.isidentifier():
@@ -292,7 +364,7 @@ def diff(args):
 
     local = require_local()
     binutils = local["binutils"]
-    version = target_compiler(args.target, local, args.compiler)
+    version = target_compiler(args.target, local, args.compiler, address=address)
     verify_compiler(version)
     original = verify((BASEROM / args.target).read_bytes(), target["sha256"], args.target)
     file_address, load_offset, code_end = target_layout(args.target)
@@ -337,6 +409,11 @@ def diff(args):
                   f"and {table_size} bytes of retail .rodata. "
                   f"Splat table file offset: {table_address - file_address:#x}. "
                   "tools/integrate.py can attempt the split and verify the full ELF.")
+        elif padding := padding_only_offsets(retail, candidate, address):
+            offsets = ", ".join(f"{offset:#x}" for offset in padding)
+            print(f"{PADDING_LAYOUT}  {args.target}:{args.function}  "
+                  f"Extra retail NOPs at function offsets {offsets}. "
+                  "Other instruction words and mapped branch targets agree.")
         if args.compact:
             corrections = corrected_words(retail, candidate, relink.text) if relink is not None and proof is None else []
             if corrections:

@@ -11,6 +11,14 @@
       "archive_sha256": "f337a65a4fbab5cf0e335efe266dcbc7cf69b19c665c6b3a8924736df151a02a",
       "member_prefix": "mwcps2-3.0b22-020926/",
       "sha256": "21aa5998116e1491665b9ad09b562081e20a1d92f719c2dd87b99967fb691397"
+    },
+    "3.0b38-030307": {
+      "archive": "mwcps2-3.0b38-030307.tar.gz",
+      "archive_sha256": "db3d0606c77d4335d2ad884a1285a4bc3b9e68cdd6161dd46d6e2a2cd3313276",
+      "member_prefix": "",
+      "sha256": "acf1088553362dddef7eee2d269848b03208e29fd26caa441848e57b6299786a",
+      "dll_member": "LMGR326B.DLL",
+      "dll_sha256": "bd9415ab11f4aef42c372e8547a8303b02464b59549745be597cf09e460737e8"
     }
   },
   "wibo": {

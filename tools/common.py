@@ -74,16 +74,23 @@ def run(*args, cwd=ROOT, **kwargs):
     return subprocess.run(list(map(str, args)), cwd=cwd, check=True, **kwargs)
 
 
-def target_compiler(name, local=None, override=None):
+def target_compiler(name, local=None, override=None, *, address=None):
     if override:
         return override
     if local and local.get("compiler"):
         return local["compiler"]
-    return TARGETS[name]["compiler"]
+    target = TARGETS[name]
+    if address is not None:
+        return target.get("unit_compilers", {}).get(hex(address), target["compiler"])
+    return target["compiler"]
 
 
 def required_compilers():
-    return sorted({target["compiler"] for target in TARGETS.values()})
+    return sorted({
+        version
+        for target in TARGETS.values()
+        for version in (target["compiler"], *target.get("unit_compilers", {}).values())
+    })
 
 
 def compiler_path(version):
@@ -95,7 +102,7 @@ def verify_compiler(version):
     record = TOOLCHAINS["compilers"][version]
     verify(compiler.read_bytes(), record["sha256"], str(compiler))
     dll = compiler.with_name("LMGR326B.dll")
-    verify(dll.read_bytes(), TOOLCHAINS["compiler_dll_sha256"], str(dll))
+    verify(dll.read_bytes(), record.get("dll_sha256", TOOLCHAINS["compiler_dll_sha256"]), str(dll))
 
 
 def download(url, sha256):

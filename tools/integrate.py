@@ -18,7 +18,7 @@ INLINE_ASM_RE = re.compile(r"\b(?:asm|__asm|__asm__)\s*(?:volatile\b|__volatile_
 
 def verify_match(local, target_name, function_name, source_path, address, size, *, asm_function=None):
     target = TARGETS[target_name]
-    version = target_compiler(target_name, local)
+    version = target_compiler(target_name, local, address=address)
     verify_compiler(version)
     split_folder = split(target_name)
     asm_functions = scan_asm_functions(split_folder / "asm")
