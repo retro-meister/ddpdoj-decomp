@@ -56,14 +56,11 @@ inline static u64 getTex0Cbp(u64 tex0)
 
 s32 func_00121720(void)
 {
-  s32 i;
-  volatile int new_var;
+  s32 loopState[2];
   s32 size;
   s32 offset;
   u8 *buf;
-  s32 prev;
-  s32 cur;
-
+  u32 k;
   switch (D_0012B3D8->state)
   {
     case 0:
@@ -88,19 +85,22 @@ s32 func_00121720(void)
       break;
 
     case 2:
-      buf = D_0012B3D8->buf;
-      prev = buf[4];
-      size = D_001C0348[0] - D_001C0344[0];
-      for (i = 5; (i < (size - 5)) != 0; i++)
     {
-      cur = buf[i];
-      buf[i] = cur - prev;
-      prev = cur;
-    }
+      u8 *buf = D_0012B3D8->buf;
+      s32 size = D_001C0348[0] - D_001C0344[0];
+      s32 prev = buf[4];
+      s32 i;
+      for (loopState[1] = 5; loopState[1] < (size - 5); loopState[1]++)
+      {
+        s32 cur = buf[loopState[1]];
+        buf[loopState[1]] = cur - prev;
+        prev = cur;
+      }
 
       D_0012B3D8->unk_505154 = 0;
       D_0012B3D8->state++;
       break;
+    }
 
     case 3:
       if (func_00124820(D_0012B3D8->unk_101000) != 0)
@@ -139,19 +139,22 @@ s32 func_00121720(void)
       break;
 
     case 12:
-      buf = D_0012B3D8->buf;
-      prev = buf[4];
-      size = D_001C034C[0] - D_001C0348[0];
-      for (i = 5; i < (size - 5); i++)
     {
-      cur = buf[i];
-      buf[i] = cur - prev;
-      prev = cur;
-    }
+      u8 *buf = D_0012B3D8->buf;
+      s32 size = D_001C034C[0] - D_001C0348[0];
+      s32 prev = buf[4];
+      s32 i;
+      for (loopState[1] = 5; loopState[1] < (size - 5); loopState[1]++)
+      {
+        s32 cur = buf[loopState[1]];
+        buf[loopState[1]] = cur - prev;
+        prev = cur;
+      }
 
       D_0012B3D8->unk_505154 = 0;
       D_0012B3D8->state++;
       break;
+    }
 
     case 13:
       if (func_00124820(D_0012B3D8->unk_101000) != 0)
@@ -190,19 +193,22 @@ s32 func_00121720(void)
       break;
 
     case 22:
-      buf = D_0012B3D8->buf;
-      prev = buf[4];
-      size = D_001C0350[0] - (new_var = D_001C034C[0]);
-      for (i = 5; i < (size - 5); i++)
     {
-      cur = buf[i];
-      buf[i] = cur - prev;
-      prev = cur;
-    }
+      u8 *buf = D_0012B3D8->buf;
+      s32 size = D_001C0350[0] - D_001C034C[0];
+      s32 prev = buf[4];
+      s32 i;
+      for (loopState[1] = 5; loopState[1] < (size - 5); loopState[1]++)
+      {
+        s32 cur = buf[loopState[1]];
+        buf[loopState[1]] = cur - prev;
+        prev = cur;
+      }
 
       D_0012B3D8->unk_505154 = 0;
       D_0012B3D8->state++;
       break;
+    }
 
     case 23:
       if (func_00124820(D_0012B3D8->unk_404000) != 0)
@@ -212,29 +218,34 @@ s32 func_00121720(void)
       break;
 
     case 30:
-      for (i = 0; ((u32) i) < 6; i++)
     {
-      SpriteInfo *dst = &D_0012B3D8->unk_505450[i];
-      SpriteInfo *src = &D_0012B3D8->unk_5054E0;
-      s16 u = D_0012B0C0[i].u;
-      s16 v = D_0012B0C0[i].v;
-      s16 w = D_0012B0C0[i].w;
-      s16 h = D_0012B0C0[i].h;
-      *dst = *src;
-      dst->tex0 = (dst->tex0 & (~(((u64) 0x3FFF) << 37))) | (getTex0Cbp(src->tex0) << 37);
-      dst->u += u;
-      dst->v += v;
-      dst->w = w;
-      dst->h = h;
+      for (k = 0; k < 6; k++)
+      {
+        SpriteInfo *src = &D_0012B3D8->unk_5054E0;
+        s16 h = D_0012B0C0[k].h;
+        s16 w = D_0012B0C0[k].w;
+        s16 v = D_0012B0C0[k].v;
+        s16 u = D_0012B0C0[k].u;
+        SpriteInfo *dst = &D_0012B3D8->unk_505450[k];
+        *dst = *src;
+        dst->tex0 = (dst->tex0 & (~(((u64) 0x3FFF) << 37))) | (getTex0Cbp(src->tex0) << 37);
+        dst->u += u;
+        dst->v += v;
+        dst->w = w;
+        dst->h = h;
+      }
+
     }
 
-      for (i = 0; ((u32) i) < 6; i++)
+      for (loopState[1] = 0; ((u32) loopState[1]) < 6; loopState[1]++)
     {
-      D_0012B3D8->unk_505550[i] = D_0012B0F0[i].u;
-      D_0012B3D8->unk_505560[i] = D_0012B0F0[i].v;
-      D_0012B3D8->unk_505570[i] = D_0012B0F0[i].w;
-      D_0012B3D8->unk_505580[i] = D_0012B0F0[i].h;
+      loopState[0] = D_0012B0F0[loopState[1]].u;
+      D_0012B3D8->unk_505550[loopState[1]] = loopState[0];
+      D_0012B3D8->unk_505560[loopState[1]] = D_0012B0F0[loopState[1]].v;
+      D_0012B3D8->unk_505570[loopState[1]] = D_0012B0F0[loopState[1]].w;
+      D_0012B3D8->unk_505580[loopState[1]] = D_0012B0F0[loopState[1]].h;
     }
+
 
       D_0012B3D8->unk_505594 = 2;
       D_0012B3D8->unk_505595 = 2;
@@ -242,7 +253,5 @@ s32 func_00121720(void)
 
   }
 
-
-  ;
   return 0;
 }

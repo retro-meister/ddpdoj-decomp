@@ -57,8 +57,6 @@ extern void func_00124280(void *, void *, s32);
 extern s32 func_00124820(void *);
 s32 func_0011F750(void)
 {
-  struct GalleryWork *new_var;
-  struct GallerySprite *new_var2;
   switch (D_0012B3D8->state)
   {
     case 0:
@@ -104,14 +102,13 @@ s32 func_0011F750(void)
     {
       u8 *buf = D_0012B3D8->readBuf;
       s32 fileId = D_0012B3D8->fileId;
+      u32 prev = buf[4];
       s32 size = D_001C0348[fileId] - D_001C0344[fileId];
-      s32 prev = buf[4];
       s32 i;
-      new_var = D_0012B3D8;
       for (i = 5; i < (size - 5); i++)
       {
         s32 cur = buf[i];
-        buf[i] = cur - prev;
+        buf[i] = (u32)cur - prev;
         prev = cur;
       }
 

@@ -76,10 +76,12 @@ extern void func_001236D0(s32, s32, s32, s32);
 
 void func_00122160(void) {
     GifPacket pkt;
+    SpriteTex *tex;
     s32 i;
-    s32 row;
     s32 col;
+    s32 row;
     s32 idx;
+    s32 mode;
 
     func_00102AC8(&pkt, D_00180A80);
     func_00102AD8(&pkt);
@@ -90,7 +92,7 @@ void func_00122160(void) {
     func_00102B58(&pkt, 0x14ULL);
 
     for (i = 0; i < 6; i++) {
-        SpriteTex *tex = &D_0012B3D8->uiSprites[i];
+        tex = &D_0012B3D8->uiSprites[i];
 
         func_00102B58(&pkt, 0x1000000000008001ULL);
         func_00102B58(&pkt, 0xEULL);
@@ -136,8 +138,7 @@ void func_00122160(void) {
     idx = 0;
     for (row = 0; row < 2; row++) {
         for (col = 0; col < 3; col++) {
-            SpriteTex *tex = &D_0012B3D8->thumbs[idx];
-            s16 mode;
+            tex = &D_0012B3D8->thumbs[idx];
 
             if (idx >= D_0012B3D8->thumbCount) {
                 break;
@@ -157,6 +158,10 @@ void func_00122160(void) {
             }
 
             switch (mode) {
+                default:
+                    func_00102B58(&pkt, 0x116ULL);
+                    func_00102B58(&pkt, GS_RGBAQ(0x80, 0x80, 0x80, 0x80, 0x3F800000));
+                    break;
                 case 0:
                 case 2:
                     func_00102B58(&pkt, 0x156ULL);
@@ -168,10 +173,6 @@ void func_00122160(void) {
                     func_00102B58(&pkt, GS_RGBAQ(bright, bright, bright, 0x80, 0x3F800000));
                     break;
                 }
-                default:
-                    func_00102B58(&pkt, 0x116ULL);
-                    func_00102B58(&pkt, GS_RGBAQ(0x80, 0x80, 0x80, 0x80, 0x3F800000));
-                    break;
             }
 
             func_00102B58(&pkt, GS_UV(tex->x << 4, tex->y << 4));
