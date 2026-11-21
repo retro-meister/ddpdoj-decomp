@@ -3,6 +3,8 @@
 
 #include "types.h"
 
+#define SJIS(s) s
+
 typedef union {
     u32 w;
     s32 sw;

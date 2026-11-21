@@ -14,9 +14,9 @@ typedef struct {
     u32 pressedButtons;
 } GalleryMenuInput;
 
-static const char g_dialog_yes[8] = "\x82\xCD\x82\xA2";   /* はい */
-static const char g_dialog_slash[8] = "\x81\x5E";       /* ／ */
-static const char g_dialog_no[8] = "\x82\xA2\x82\xA2\x82\xA6"; /* いいえ */
+static const char g_dialog_yes[8] = SJIS("はい");
+static const char g_dialog_slash[8] = SJIS("／");
+static const char g_dialog_no[8] = SJIS("いいえ");
 extern s32 D_0012B3DC;
 extern s32 D_0012B3E0;
 extern volatile u32 g_pad_buttons[];
