@@ -33,14 +33,56 @@ typedef struct {
     u8 alpha;
 } PaletteColor;
 
-extern u8 D_00128F40[];
-extern u8 D_00128F50[];
-extern u8 D_00128F60[];
-extern u8 D_00128F70[];
-extern u8 D_00128F80[];
-extern u8 D_00128F90[][3];
-extern u8 D_00128FD0[];
-extern char D_0012AE00[];
+static u8 g_font_alpha_table[16] = {
+    0, 25, 51, 76, 102, 51, 76, 102, 128, 128, 128, 128, 128, 128, 128, 128,
+};
+
+static u8 g_font_luma_table[16] = {
+    0, 0, 0, 0, 0, 51, 51, 51, 51, 102, 102, 102, 153, 153, 204, 255,
+};
+
+static u8 g_font_alt_alpha_table[16] = {
+    0, 0, 0, 0, 0, 32, 48, 48, 2, 3, 3, 3, 4, 4, 5, 6,
+};
+
+static u8 g_font_outline_alpha_table[16] = {
+    0, 64, 80, 96, 112, 128, 128, 128, 128, 128, 128, 128, 128, 128, 128, 128,
+};
+
+static u8 g_font_alt_luma_table[16] = {
+    0, 4, 4, 4, 4, 5, 6, 6, 4, 4, 4, 4, 4, 4, 5, 6,
+};
+
+static u8 g_font_palette_rgb[21][3] = {
+    { 255, 255, 255 },
+    { 255, 100, 100 },
+    {   0, 224,  96 },
+    {   0, 144, 224 },
+    { 255, 224,  64 },
+    { 192,  96, 180 },
+    { 255, 144, 176 },
+    { 160, 255,  96 },
+    { 255, 180,  64 },
+    { 255, 100, 100 },
+    {   0, 224,  96 },
+    {   0, 144, 224 },
+    { 255, 224,  64 },
+    { 192,  96, 180 },
+    { 255, 144, 176 },
+    { 160, 255,  96 },
+    { 255, 180,  64 },
+    {   0,   0,   0 },
+    {   0,   0,   0 },
+    {   0,   0,   0 },
+    {   0,   0,   0 },
+};
+
+static u8 g_font_alt_palette_rgb[48] = {
+      0,   0,   0,  48,  48,  50,  56,  56,  64, 104, 104, 104,
+    136, 248, 224,   0, 104,  88,   0,  72,  72, 224, 128, 184,
+    216,  48, 104, 144,  48,  48, 176, 168, 224, 112, 104, 200,
+    248, 176, 240, 200,  96, 176,  96,  96, 104, 255, 255, 255,
+};
 extern PaletteColor D_00132900[16];
 extern PaletteColor D_00132980[17][16];
 extern u8 g_glyph_upload_buf[32][512];
@@ -102,9 +144,9 @@ void font_init_clut_table(void)
     s32 column;
 
     for (colorIndex = 0; colorIndex < 16; colorIndex++) {
-        column = D_00128F50[colorIndex];
+        column = g_font_luma_table[colorIndex];
         D_00132980[0][colorIndex].red = (D_00132980[0][colorIndex].green = (D_00132980[0][colorIndex].blue = column));
-        D_00132980[0][colorIndex].alpha = D_00128F40[colorIndex];
+        D_00132980[0][colorIndex].alpha = g_font_alpha_table[colorIndex];
     }
 
     paletteIndex = 1;
@@ -122,9 +164,9 @@ second_palette:
     }
 
     for (rgbOffset = 0, colorIndex = 0; colorIndex < 16; colorIndex++) {
-        D_00132900[colorIndex].red = D_00128FD0[rgbOffset++];
-        D_00132900[colorIndex].green = D_00128FD0[rgbOffset++];
-        D_00132900[colorIndex].blue = D_00128FD0[rgbOffset++];
+        D_00132900[colorIndex].red = g_font_alt_palette_rgb[rgbOffset++];
+        D_00132900[colorIndex].green = g_font_alt_palette_rgb[rgbOffset++];
+        D_00132900[colorIndex].blue = g_font_alt_palette_rgb[rgbOffset++];
         if (colorIndex == 0) {
             D_00132900[colorIndex].alpha = 0;
         } else {
@@ -144,16 +186,16 @@ void font_upload_clut(s32 paletteIndex)
     s32 i;
 
     for (i = 0; i < 8; i++) {
-        D_00132980[paletteIndex][i].red = (D_00128F80[i] * D_00128F90[paletteIndex][0]) / 6;
-        D_00132980[paletteIndex][i].green = (D_00128F80[i] * D_00128F90[paletteIndex][1]) / 6;
-        D_00132980[paletteIndex][i].blue = (D_00128F80[i] * D_00128F90[paletteIndex][2]) / 6;
-        D_00132980[paletteIndex][i].alpha = D_00128F70[i];
+        D_00132980[paletteIndex][i].red = (g_font_alt_luma_table[i] * g_font_palette_rgb[paletteIndex][0]) / 6;
+        D_00132980[paletteIndex][i].green = (g_font_alt_luma_table[i] * g_font_palette_rgb[paletteIndex][1]) / 6;
+        D_00132980[paletteIndex][i].blue = (g_font_alt_luma_table[i] * g_font_palette_rgb[paletteIndex][2]) / 6;
+        D_00132980[paletteIndex][i].alpha = g_font_outline_alpha_table[i];
     }
 
     for (i = 8; i < 16; i++) {
-        D_00132980[paletteIndex][i].red = (D_00128F90[0][0] * D_00128F80[i]) / 6;
-        D_00132980[paletteIndex][i].green = (D_00128F90[0][1] * D_00128F80[i]) / 6;
-        D_00132980[paletteIndex][i].blue = (D_00128F90[0][2] * D_00128F80[i]) / 6;
+        D_00132980[paletteIndex][i].red = (g_font_palette_rgb[0][0] * g_font_alt_luma_table[i]) / 6;
+        D_00132980[paletteIndex][i].green = (g_font_palette_rgb[0][1] * g_font_alt_luma_table[i]) / 6;
+        D_00132980[paletteIndex][i].blue = (g_font_palette_rgb[0][2] * g_font_alt_luma_table[i]) / 6;
         D_00132980[paletteIndex][i].alpha = 0x80;
     }
 }
@@ -165,18 +207,18 @@ void font_upload_alt_clut(s32 paletteIndex)
     s32 j;
 
     for (i = 0; i < 8; i++) {
-        gray = D_00128F60[i];
+        gray = g_font_alt_alpha_table[i];
         D_00132980[paletteIndex][i].red = gray;
         D_00132980[paletteIndex][i].green = gray;
         D_00132980[paletteIndex][i].blue = gray;
-        D_00132980[paletteIndex][i].alpha = D_00128F40[i];
+        D_00132980[paletteIndex][i].alpha = g_font_alpha_table[i];
     }
 
     for (j = 8; j < 16; j++) {
-        D_00132980[paletteIndex][j].red = (D_00128F60[j] * D_00128F90[paletteIndex][0]) / 6;
-        D_00132980[paletteIndex][j].green = (D_00128F60[j] * D_00128F90[paletteIndex][1]) / 6;
-        D_00132980[paletteIndex][j].blue = (D_00128F60[j] * D_00128F90[paletteIndex][2]) / 6;
-        D_00132980[paletteIndex][j].alpha = D_00128F40[j];
+        D_00132980[paletteIndex][j].red = (g_font_alt_alpha_table[j] * g_font_palette_rgb[paletteIndex][0]) / 6;
+        D_00132980[paletteIndex][j].green = (g_font_alt_alpha_table[j] * g_font_palette_rgb[paletteIndex][1]) / 6;
+        D_00132980[paletteIndex][j].blue = (g_font_alt_alpha_table[j] * g_font_palette_rgb[paletteIndex][2]) / 6;
+        D_00132980[paletteIndex][j].alpha = g_font_alpha_table[j];
     }
 }
 
@@ -213,7 +255,7 @@ void font_upload_default_cluts(void)
 
     *(volatile u32 *)0x10000000 = 0;
     g_vram_load_buf = memalign(0x40, 0x300000);
-    printf(D_0012AE00, g_vram_load_buf, 0x2D9248);
+    printf("mozi buf[%x] size[%d]\n", g_vram_load_buf, 0x2D9248);
     g_font_glyph_buf = g_vram_load_buf;
     font_init_clut_table();
 

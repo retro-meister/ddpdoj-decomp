@@ -7,9 +7,9 @@ extern unsigned short gallery_slot_3_state;
 extern unsigned short gallery_state_0;
 extern unsigned short gallery_state_1;
 
-extern const char D_00128C40[];
-extern const char D_00128C80[];
-extern const char D_00128CC0[];
+static const char g_elf_path_main[0x40] __attribute__((section(".data"))) = "cdrom0:\\SLPS_252.33";
+static const char g_elf_path_don2[0x40] __attribute__((section(".data"))) = "cdrom0:\\DON2.ELF";
+static const char g_elf_path_gallery[0x20] __attribute__((section(".data"))) = "cdrom0:\\GALLERY.ELF";
 
 void gallery_reset_slot_states(void)
 {
@@ -28,10 +28,10 @@ void gallery_exit_to_elf(s32 destination)
     sceSifExitCmd();
 
     if (destination == 0) {
-        LoadExecPS2(D_00128C40, 0, 0);
+        LoadExecPS2(g_elf_path_main, 0, 0);
     } else if (destination == 1) {
-        LoadExecPS2(D_00128C80, 0, 0);
+        LoadExecPS2(g_elf_path_don2, 0, 0);
     } else {
-        LoadExecPS2(D_00128CC0, 0, 0);
+        LoadExecPS2(g_elf_path_gallery, 0, 0);
     }
 }

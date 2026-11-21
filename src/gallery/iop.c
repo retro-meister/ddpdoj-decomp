@@ -1,15 +1,5 @@
 #include "gallery/gallery.h"
 
-extern const char D_0012AE30[];
-extern const char D_0012AE50[];
-extern const char D_0012AE70[];
-extern const char D_0012AE90[];
-extern const char D_0012AEB0[];
-extern const char D_0012AED0[];
-extern const char D_0012AEF0[];
-extern const char D_0012AF10[];
-extern const char D_0012AF30[];
-
 void iop_reboot_and_load_modules(void)
 {
     sceSifInitRpc(0);
@@ -17,7 +7,7 @@ void iop_reboot_and_load_modules(void)
     sceCdMmode(2);
 
     do {
-    } while (!sceSifRebootIop(D_0012AE30));
+    } while (!sceSifRebootIop("cdrom0:\\MODULE\\IOPRP260.IMG;1"));
 
     do {
     } while (!sceSifSyncIop());
@@ -27,25 +17,25 @@ void iop_reboot_and_load_modules(void)
     sceCdMmode(2);
     sceFsReset();
     sceCdDiskReady(0);
-    printf(D_0012AE50);
+    printf("iop reboot 260!\n");
 
     do {
-    } while (sceSifLoadModule(D_0012AE70, 0, 0) < 0);
+    } while (sceSifLoadModule("cdrom0:\\MODULE\\SIO2MAN.IRX;1", 0, 0) < 0);
 
     do {
-    } while (sceSifLoadModule(D_0012AE90, 0, 0) < 0);
+    } while (sceSifLoadModule("cdrom0:\\MODULE\\MCMAN.IRX;1", 0, 0) < 0);
 
     do {
-    } while (sceSifLoadModule(D_0012AEB0, 0, 0) < 0);
+    } while (sceSifLoadModule("cdrom0:\\MODULE\\MCSERV.IRX;1", 0, 0) < 0);
 
     do {
-    } while (sceSifLoadModule(D_0012AED0, 0, 0) < 0);
+    } while (sceSifLoadModule("cdrom0:\\MODULE\\PADMAN.IRX;1", 0, 0) < 0);
 
     do {
-    } while (sceSifLoadModule(D_0012AEF0, 0, 0) < 0);
+    } while (sceSifLoadModule("cdrom0:\\MODULE\\LIBSD.IRX;1", 0, 0) < 0);
 
     do {
-    } while (sceSifLoadModule(D_0012AF10, 0, 0) < 0);
+    } while (sceSifLoadModule("cdrom0:\\MODULE\\EZBGM.IRX;1", 0, 0) < 0);
 
-    printf(D_0012AF30);
+    printf("cd modules ok!\n");
 }

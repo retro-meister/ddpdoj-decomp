@@ -71,6 +71,8 @@
     "-nostdinc",
     "-c",
     "-O4,p",
+    "-str",
+    "readonly",
     "-i",
     "include"
   ],

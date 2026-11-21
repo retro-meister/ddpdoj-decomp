@@ -12,9 +12,19 @@ typedef struct
 
 extern s16 D_00128BE0[];
 extern s16 D_00128CE0[];
-extern TexUploadInfo D_00129010[];
-extern s16 D_001290A0[];
-extern const char D_0012AE18[];
+static TexUploadInfo g_tex_upload_table[6] = {
+    { 0, 16, 0, 0,  256, 128 },
+    { 1, 16, 0, 0,  256, 192 },
+    { 0, 16, 0, 0, 1024, 512 },
+    { 1,  8, 0, 0,  256, 192 },
+    { 1,  8, 0, 0,  512, 256 },
+    { 1,  8, 0, 0,   48, 416 },
+};
+
+static s16 g_tex_clut_palette[32] = {
+    0, -28406, -15655, -11361, -31611, -29496, -16679, -12451,
+    -17736, -20940, -19850, -24111, -23054, -14565, -26291, -1,
+};
 extern u16 D_0012B2B8;
 extern u16 D_0012B2BC;
 extern u16 D_0012B2C0;
@@ -43,7 +53,7 @@ void tex_upload_reset(void)
     s16 *palette;
     s32 colorIndex;
 
-    source = D_001290A0;
+    source = g_tex_clut_palette;
     palette = D_00135280;
     for (colorIndex = 0; colorIndex < 16; colorIndex++) {
         palette[colorIndex] = *source++;
@@ -75,7 +85,7 @@ void tex_upload_init_vram(void)
     D_0012B310 = 0x1E40;
     cd_read_sync(D_00135A80, D_00132670[0], D_00132674[0]);
     tex_upload_bitmap(2);
-    printf(D_0012AE18);
+    printf("tex load end\n");
 }
 
 void tex_upload_clut_slot(u8 *destination, s32 mode, s32 blockCount)
@@ -119,20 +129,20 @@ void tex_upload_bitmap(s32 index)
     u8 *src;
     u8 *src1;
 
-    type = D_00129010[index].type;
-    if (D_00129010[index].width != 0x400) {
+    type = g_tex_upload_table[index].type;
+    if (g_tex_upload_table[index].width != 0x400) {
         switch (type) {
             case 0:
-                remaining = D_00129010[index].dbw;
+                remaining = g_tex_upload_table[index].dbw;
                 sceGsSetDefLoadImage(
                     g_gs_load_image,
                     D_0012B310,
                     remaining,
                     0x14,
-                    D_00129010[index].x,
-                    D_00129010[index].y,
-                    D_00129010[index].width,
-                    D_00129010[index].height
+                    g_tex_upload_table[index].x,
+                    g_tex_upload_table[index].y,
+                    g_tex_upload_table[index].width,
+                    g_tex_upload_table[index].height
                 );
                 FlushCache(0);
                 sceGsExecLoadImage(g_gs_load_image, D_00135A80);
@@ -140,15 +150,15 @@ void tex_upload_bitmap(s32 index)
                 break;
 
             case 1:
-                chunkHeight = D_00129010[index].height;
+                chunkHeight = g_tex_upload_table[index].height;
                 sceGsSetDefLoadImage(
                     g_gs_load_image,
                     D_0012B310,
-                    D_00129010[index].dbw,
+                    g_tex_upload_table[index].dbw,
                     0x13,
-                    D_00129010[index].x,
-                    D_00129010[index].y,
-                    D_00129010[index].width,
+                    g_tex_upload_table[index].x,
+                    g_tex_upload_table[index].y,
+                    g_tex_upload_table[index].width,
                     chunkHeight
                 );
                 FlushCache(0);
@@ -164,7 +174,7 @@ void tex_upload_bitmap(s32 index)
 
     switch (type) {
         case 0:
-            remaining = D_00129010[index].height;
+            remaining = g_tex_upload_table[index].height;
             yOffset = 0;
             src = D_00135A80;
             loop0:
@@ -176,10 +186,10 @@ void tex_upload_bitmap(s32 index)
             sceGsSetDefLoadImage(
                 g_gs_load_image,
                 D_0012B310,
-                D_00129010[index].dbw,
+                g_tex_upload_table[index].dbw,
                 0x14,
-                D_00129010[index].x,
-                yOffset + D_00129010[index].y,
+                g_tex_upload_table[index].x,
+                yOffset + g_tex_upload_table[index].y,
                 0x400,
                 chunkHeight
             );
@@ -196,7 +206,7 @@ void tex_upload_bitmap(s32 index)
             }
 
         case 1:
-            remaining = D_00129010[index].height;
+            remaining = g_tex_upload_table[index].height;
             yOffset = 0;
             src1 = D_00135A80;
             do {
@@ -208,10 +218,10 @@ void tex_upload_bitmap(s32 index)
                 sceGsSetDefLoadImage(
                     g_gs_load_image,
                     D_0012B310,
-                    D_00129010[index].dbw,
+                    g_tex_upload_table[index].dbw,
                     0x13,
-                    D_00129010[index].x,
-                    yOffset + D_00129010[index].y,
+                    g_tex_upload_table[index].x,
+                    yOffset + g_tex_upload_table[index].y,
                     0x400,
                     chunkHeight
                 );

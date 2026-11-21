@@ -18,7 +18,7 @@ options:
   cache_path: build/split/GALLERY.ELF/.splat_cache
   create_c_files: false
   disassemble_all: true
-  subalign: 16
+  subalign: null
   section_order: [".text", ".data", ".rodata", ".sdata", ".bss"]
   auto_link_sections: [".data", ".rodata", ".sdata", ".bss"]
 segments:
@@ -46,11 +46,24 @@ segments:
       - [0x23750, c, gallery/viewer]
       - [0x248a0, c, gallery/lzss]
       - [0x25100, data, data]
+      - [0x28cc0, .data, gallery/sys]
+      - [0x28d60, data, data_028d60]
+      - [0x28d80, .data, gallery/sound]
+      - [0x28fc0, .data, gallery/font]
       - [0x29080, .data, gallery/sprite]
-      - [0x29090, data, data_029090]
-      - [0x2b1a0, .rodata, gallery/main]
+      - [0x29090, .data, gallery/tex_upload]
+      - [0x29160, .data, gallery/main]
+      - [0x29280, data, data_029280]
+      - [0x294c0, rodata, rodata_sdk]
+      - [0x2aa78, .rodata, gallery/sound]
+      - [0x2ae38, .rodata, gallery/cd]
+      - [0x2ae80, .rodata, gallery/font]
+      - [0x2ae98, .rodata, gallery/tex_upload]
+      - [0x2aeb0, .rodata, gallery/iop]
+      - [0x2afc0, .rodata, gallery/main]
       - [0x2b1c0, .rodata, gallery/bmp]
-      - [0x2b1d8, rodata, rodata_tail]
+      - [0x2b1d8, .rodata, gallery/viewer]
+      - [0x2b1f0, rodata, rodata_tail]
       - [0x2b270, sdata, sdata]
   - name: elf_tail
     type: bin

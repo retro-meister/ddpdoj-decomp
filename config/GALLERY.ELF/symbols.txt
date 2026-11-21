@@ -129,7 +129,7 @@ lzss_draw_frame_overlay = 0x124c00; // type:func size:0x244
 gallery_draw_solid_rect = 0x124e50; // type:func size:0x224
 
 // Gallery globals
-D_0012AF40 = 0x12af40;
+g_gallery_archive_path = 0x12af40;
 gallery_slot_0_state = 0x12b280;
 gallery_slot_1_state = 0x12b284;
 gallery_slot_2_state = 0x12b288;

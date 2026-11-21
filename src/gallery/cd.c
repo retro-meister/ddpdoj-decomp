@@ -1,10 +1,5 @@
 #include "gallery/gallery.h"
 
-extern const char D_0012ADB8[];
-extern const char D_0012ADC8[];
-extern const char D_0012ADD8[];
-extern const char D_0012ADE8[];
-
 void cd_search_file(const char *value)
 {
     s32 result;
@@ -42,7 +37,7 @@ void cd_read_sync(void *destination, u32 byteCount, u32 startSector)
             break;
         }
 
-        printf(D_0012ADB8, error);
+        printf("cd4 err[%x]\n", error);
         sceCdBreak();
     }
 }
@@ -68,7 +63,7 @@ void cd_read_async(void *destination, s32 byteCount, u32 startSector)
             if (g_cd_retry_timer > 60) {
                 sceCdBreak();
                 g_cd_retry_timer = 0;
-                printf(D_0012ADC8);
+                printf("err cd break\n");
             }
         }
         break;
@@ -87,7 +82,7 @@ void cd_read_async(void *destination, s32 byteCount, u32 startSector)
         if (sceCdSync(1) == 0) {
             readError = sceCdGetError();
             if (readError != 0) {
-                printf(D_0012ADD8, (u32)readError);
+                printf("cd3 err[%x]\n", (u32)readError);
                 g_cd_retry_timer = 0;
                 g_cd_async_state = 1;
                 sceCdBreak();
@@ -129,7 +124,7 @@ void cd_load_file(void *destination, const char *path)
             break;
         }
 
-        printf(D_0012ADE8, error);
+        printf("cd1 err[%x]\n", error);
         sceCdBreak();
     }
 }

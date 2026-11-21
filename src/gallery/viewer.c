@@ -14,12 +14,9 @@ typedef struct {
     u32 pressedButtons;
 } GalleryMenuInput;
 
-extern const char *D_00129130[];
-extern u16 D_0012AFE0[8];
-extern u16 D_0012AFF0[8];
-extern const char D_0012B158[];
-extern const char D_0012B160[];
-extern const char D_0012B168[];
+static const char g_dialog_yes[8] = "\x82\xCD\x82\xA2";   /* はい */
+static const char g_dialog_slash[8] = "\x81\x5E";       /* ／ */
+static const char g_dialog_no[8] = "\x82\xA2\x82\xA2\x82\xA6"; /* いいえ */
 extern s32 D_0012B3DC;
 extern s32 D_0012B3E0;
 extern volatile u32 g_pad_buttons[];
@@ -58,17 +55,17 @@ void viewer_draw_yes_no_dialog(s32 selection, s32 centerX, s32 y, s32 spacing)
 
     if (D_0012B3DC == 0) {
         sprite_queue_sjis_text((s16)(centerX - spacing - 100 - highlightOffset),
-                      (s16)(y - highlightOffset), D_0012B158, 4,
+                      (s16)(y - highlightOffset), g_dialog_yes, 4,
                       (u16)glyphSize, (u16)glyphSize, 128, 0);
-        sprite_queue_sjis_text((s16)(centerX - 88), (s16)y, D_0012B160, 0, 24, 24, 128, 0);
+        sprite_queue_sjis_text((s16)(centerX - 88), (s16)y, g_dialog_slash, 0, 24, 24, 128, 0);
         sprite_queue_sjis_text((s16)(centerX + spacing - 100), (s16)y,
-                      D_0012B168, 0, 24, 24, 128, 0);
+                      g_dialog_no, 0, 24, 24, 128, 0);
     } else {
         sprite_queue_sjis_text((s16)(centerX - spacing - 100), (s16)y,
-                      D_0012B158, 0, 24, 24, 128, 0);
-        sprite_queue_sjis_text((s16)(centerX - 88), (s16)y, D_0012B160, 0, 24, 24, 128, 0);
+                      g_dialog_yes, 0, 24, 24, 128, 0);
+        sprite_queue_sjis_text((s16)(centerX - 88), (s16)y, g_dialog_slash, 0, 24, 24, 128, 0);
         sprite_queue_sjis_text((s16)(centerX + spacing - 100 - highlightOffset),
-                      (s16)(y - highlightOffset), D_0012B168, 4,
+                      (s16)(y - highlightOffset), g_dialog_no, 4,
                       (u16)glyphSize, (u16)glyphSize, 128, 0);
     }
 
@@ -309,7 +306,7 @@ s32 viewer_update_and_draw(GalleryView *view, s32 mode)
             sprite_queue_sjis_text(
                 (s16)(view->menuBox.x0 - 0x28),
                 view->menuBox.y0 + 0x18 + i * 0x18,
-                D_00129130[i],
+                g_viewer_help_lines[i],
                 0,
                 0x18,
                 0x18,
@@ -429,7 +426,7 @@ s32 viewer_update_grid_cursor(void *menuPtr, void *inputPtr)
 checkMovement:
     for (buttonIndex = 0; buttonIndex < 5; buttonIndex++) {
         if (menu->movementSteps[buttonIndex] != 0 &&
-            (input->pressedButtons & D_0012AFE0[buttonIndex]) != 0) {
+            (input->pressedButtons & g_menu_dir_buttons[buttonIndex]) != 0) {
             menu->selection += menu->movementSteps[buttonIndex];
             if (menu->selection < 0) {
                 menu->selection += menu->selectionCount;
@@ -445,7 +442,7 @@ checkMovement:
 
     for (buttonIndex = 0; buttonIndex < 5; buttonIndex++) {
         if (menu->actionEnabled[buttonIndex] != 0 &&
-            (input->pressedButtons & D_0012AFF0[buttonIndex]) != 0) {
+            (input->pressedButtons & g_menu_action_buttons[buttonIndex]) != 0) {
             return buttonIndex + 0x100;
         }
     }

@@ -5,15 +5,88 @@ typedef struct {
     u32 entryLocation;
 } GalleryArchiveEntry;
 
-extern const char D_001290E0[];
-extern const char D_00129100[];
-extern char *D_00129118[];
-extern char *D_00129120[];
-extern s32 (*D_00129150[])(void);
-extern u8 D_00129170[0x100];
-extern u8 D_0012B0B0[];
-extern const Rect16 D_0012B0C0[6];
-extern const Rect16 D_0012B0F0[6];
+const char g_gallery_archive_path[32] = "\\GALLERY\\GALLERY.DA;1";
+
+static char g_icon_1_path[0x20] = "\\DATA\\DDON3_1.ICO;1";
+static char g_icon_2_path[0x18] = "\\DATA\\DDON3_2.ICO;1";
+
+static const char *g_grid_help_lines[2] __attribute__((section(".data"))) = {
+    "\x95\xFB\x8C\xFC\x83\x4C\x81\x5B\x81\x41\x82\x6B\x82\x50\x81\x41"
+    "\x82\x71\x82\x50\x83\x7B\x83\x5E\x83\x93\x82\xC5\x91\x49\x91\xF0"
+    "\x82\xB5\x82\xC4\x82\xAD\x82\xBE\x82\xB3\x82\xA2\x81\x42", /* 方向キー、Ｌ１、Ｒ１ボタンで選択してください。 */
+    "\x81\x9B\x83\x7B\x83\x5E\x83\x93\x82\xC5\x8C\x88\x92\xE8\x81\x41"
+    "\x81\x7E\x83\x7B\x83\x5E\x83\x93\x82\xC5\x8F\x49\x97\xB9\x82\xC5"
+    "\x82\xAB\x82\xDC\x82\xB7\x81\x42", /* ○ボタンで決定、×ボタンで終了できます。 */
+};
+
+static const char *g_exit_prompt_lines[4] = {
+    "\x83\x4D\x83\x83\x83\x89\x83\x8A\x81\x5B\x82\xF0\x8F\x49\x97\xB9"
+    "\x82\xB5\x82\xDC\x82\xB7\x82\xA9\x81\x48", /* ギャラリーを終了しますか？ */
+    0,
+    0,
+    0,
+};
+
+const u16 g_menu_dir_buttons[8] = {
+    SCE_PADLup, SCE_PADLdown, SCE_PADLleft, SCE_PADLright, SCE_PADselect, 0, 0, 0,
+};
+
+const u16 g_menu_action_buttons[8] = {
+    SCE_PADstart, SCE_PADRleft, SCE_PADRright, SCE_PADRup, SCE_PADRdown, 0, 0, 0,
+};
+
+const char *g_viewer_help_lines[8] = {
+    "\x82\x71\x82\x50\x81\x40\x81\x40\x81\x40\x8E\x9F\x82\xCC\x8A\x47"
+    "\x82\xC9\x88\xDA\x93\xAE", /* Ｒ１　　　次の絵に移動 */
+    "\x82\x6B\x82\x50\x81\x40\x81\x40\x81\x40\x91\x4F\x82\xCC\x8A\x47"
+    "\x82\xC9\x88\xDA\x93\xAE", /* Ｌ１　　　前の絵に移動 */
+    "\x95\xFB\x8C\xFC\x83\x4C\x81\x5B\x81\x40\x83\x58\x83\x4E\x83\x8D"
+    "\x81\x5B\x83\x8B", /* 方向キー　スクロール */
+    "\x81\xA2\x81\x40\x81\x40\x81\x40\x81\x40\x83\x59\x81\x5B\x83\x80"
+    "\x90\xD8\x91\xD6", /* △　　　　ズーム切替 */
+    "\x81\x7E\x81\x40\x81\x40\x81\x40\x81\x40\x96\xDF\x82\xE9", /* ×　　　　戻る */
+    "\x83\x58\x83\x5E\x81\x5B\x83\x67\x81\x40\x83\x81\x83\x6A\x83\x85"
+    "\x81\x5B\x95\x5C\x8E\xA6\x90\xD8\x91\xD6", /* スタート　メニュー表示切替 */
+    0,
+    0,
+};
+
+static const u8 g_now_loading_text[16] = "NOW LOADING";
+
+static const Rect16 g_ui_sprite_uvs[6] = {
+    { 0, 0, 374, 107 },
+    { 0, 109, 512, 235 },
+    { 1, 347, 491, 94 },
+    { 99, 450, 95, 23 },
+    { 216, 450, 36, 32 },
+    { 270, 450, 36, 32 },
+};
+
+static const Rect16 g_ui_sprite_rects[6] = {
+    { 128, -27, 502, 80 },
+    { 0, 72, 640, 307 },
+    { 14, 317, 627, 411 },
+    { 218, 40, 411, 63 },
+    { 172, 21, 208, 53 },
+    { 424, 21, 459, 53 },
+};
+
+static s32 (*g_gallery_modes[8])(void) = {
+    gallery_state_loading,
+    gallery_state_fade_in,
+    gallery_state_grid,
+    gallery_state_viewer,
+    gallery_state_exit,
+    0,
+    0,
+    0,
+};
+
+static u8 g_gallery_image_order[0x90] = {
+    12, 13, 14, 17, 18, 24, 30, 29, 28, 27, 26, 25,
+    8, 7, 6, 4, 5, 16, 15, 11, 10, 33, 32, 31,
+    19, 20, 21, 22, 23, 2, 0, 1, 3,
+};
 extern const char *D_0012B200[1];
 extern u32 D_0012B388;
 extern u32 D_0012B38C;
@@ -70,9 +143,9 @@ static inline u64 getTex0Cbp(u64 tex0)
 
 void gallery_load_font_files(void)
 {
-    cd_load_file(D_001B7AB0, D_001290E0);
+    cd_load_file(D_001B7AB0, g_icon_1_path);
     D_0012B3D0 = g_cd_last_read_size;
-    cd_load_file(D_001AF2B0, D_00129100);
+    cd_load_file(D_001AF2B0, g_icon_2_path);
 
     *(u8 *)&D_0012B3D4 = 0;
     *(u8 *)&D_0012B3A8 = 1;
@@ -160,7 +233,7 @@ void gallery_run_loop(void)
         entryState = g_image_unlock_flags[entryIndex];
         if (entryState != 0) {
             g_gallery->itemStatus[entryIndex] = entryState;
-            g_gallery->itemThumbIds[entryIndex] = D_00129170[entryIndex];
+            g_gallery->itemThumbIds[entryIndex] = g_gallery_image_order[entryIndex];
         }
     }
 
@@ -239,7 +312,7 @@ void gallery_tick_and_render(void)
     s16 fadeState;
     s32 brightness;
 
-    while (D_00129150[g_gallery->mode]() != 0) {
+    while (g_gallery_modes[g_gallery->mode]() != 0) {
     }
 
     if (g_gallery == 0) {
@@ -767,7 +840,7 @@ s32 gallery_state_loading(void)
         sceGifPkAddGsData(&pkt, SCE_GS_TEX1_1);
 
         for (i = 0; i < 11; i++) {
-            bmp_draw_ascii_char(&pkt, 0x180 + i * 16, 0x1A0, D_0012B0B0[i]);
+            bmp_draw_ascii_char(&pkt, 0x180 + i * 16, 0x1A0, g_now_loading_text[i]);
         }
 
         for (i = 0; i < ((g_frame_count & 0x7F) >> 5); i++) {
@@ -936,10 +1009,10 @@ s32 gallery_load_ui_assets(void)
     case 30: {
         for (k = 0; k < 6; k++) {
             SpriteInfo *src = &g_gallery->uiAtlasSprite;
-            s16 h = D_0012B0C0[k].h;
-            s16 w = D_0012B0C0[k].w;
-            s16 v = D_0012B0C0[k].v;
-            s16 u = D_0012B0C0[k].u;
+            s16 h = g_ui_sprite_uvs[k].h;
+            s16 w = g_ui_sprite_uvs[k].w;
+            s16 v = g_ui_sprite_uvs[k].v;
+            s16 u = g_ui_sprite_uvs[k].u;
             SpriteInfo *dst = &g_gallery->uiSprites[k];
             *dst = *src;
             dst->tex0 = (dst->tex0 & (~(((u64)0x3FFF) << 37))) | (getTex0Cbp(src->tex0) << 37);
@@ -950,11 +1023,11 @@ s32 gallery_load_ui_assets(void)
         }
 
         for (loopState[1] = 0; ((u32)loopState[1]) < 6; loopState[1]++) {
-            loopState[0] = D_0012B0F0[loopState[1]].u;
+            loopState[0] = g_ui_sprite_rects[loopState[1]].u;
             g_gallery->uiX0[loopState[1]] = loopState[0];
-            g_gallery->uiY0[loopState[1]] = D_0012B0F0[loopState[1]].v;
-            g_gallery->uiX1[loopState[1]] = D_0012B0F0[loopState[1]].w;
-            g_gallery->uiY1[loopState[1]] = D_0012B0F0[loopState[1]].h;
+            g_gallery->uiY0[loopState[1]] = g_ui_sprite_rects[loopState[1]].v;
+            g_gallery->uiX1[loopState[1]] = g_ui_sprite_rects[loopState[1]].w;
+            g_gallery->uiY1[loopState[1]] = g_ui_sprite_rects[loopState[1]].h;
         }
 
         g_gallery->uiMode[4] = 2;
@@ -1172,7 +1245,7 @@ void gallery_draw_grid_and_ui(void)
             sprite_queue_sjis_text(
                 (s16)(g_gallery->uiX0[2] - 0x20),
                 g_gallery->uiY0[2] + 0x13 + i * 0x18,
-                D_00129118[i],
+                g_grid_help_lines[i],
                 0,
                 0x18,
                 0x18,
@@ -1187,7 +1260,7 @@ void gallery_draw_grid_and_ui(void)
         sprite_queue_sjis_text(
             (s16)(g_gallery->uiX0[2] - 0x20),
             g_gallery->uiY0[2] + 0x13,
-            D_00129120[0],
+            g_exit_prompt_lines[0],
             0,
             0x18,
             0x18,
