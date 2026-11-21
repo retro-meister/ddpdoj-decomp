@@ -10,7 +10,7 @@ typedef struct {
 } PadRawData;
 
 extern void func_0011DAC0(void);
-extern void reset_gallery_slot_states(void);
+extern void func_0011A8C0(void);
 
 extern u16 D_0012B298;
 extern s8 D_0012B2A0[];
@@ -211,6 +211,6 @@ void func_0011E210(void) {
     if (D_0012B2B0 != 0) {
         D_0012B2A0[0] = D_0012B2A0[1] = D_0012B2A0[2] = D_0012B2A0[3] =
             D_0012B2A0[4] = D_0012B2A0[5] = D_0012B2A0[6] = D_0012B2A0[7] = -1;
-        reset_gallery_slot_states();
+        func_0011A8C0();
     }
 }

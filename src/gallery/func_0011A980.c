@@ -90,6 +90,11 @@ void func_0011A980(void) {
         if (volume != 0) {
             volume = (volume * 0x7FFF) / 100;
         }
-        send_bgm_rpc(channel | 0x80, (volume << 16) | volume, 0);
+        {
+            u32 cmd = channel | 0x80;
+            s32 volParam = volume << 16;
+            volParam |= volume;
+            send_bgm_rpc(cmd, volParam, 0);
+        }
     }
 }

@@ -26,7 +26,8 @@ extern s32 D_00132880[16];
 extern s32 D_00132884[16];
 
 static inline void load_vag(u32 cmd, void *path) {
-    func_001060F8(D_00132850, cmd, 0, path, 0x40, D_00132880, 0x40, 0, 0);
+    s32 p = (s32)path;
+    func_001060F8(D_00132850, cmd, 0, (void *)p, 0x40, D_00132880, 0x40, 0, 0);
 }
 
 void func_0011B1C0(void) {
