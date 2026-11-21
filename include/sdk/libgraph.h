@@ -3,6 +3,16 @@
 
 #include "types.h"
 
+#define SCE_GIF_PACKED_AD 0x0EULL
+
+#define SCE_GS_TEX0_1     0x06ULL
+#define SCE_GS_TEX1_1     0x14ULL
+#define SCE_GS_TEXA       0x3BULL
+#define SCE_GS_TEXFLUSH   0x3FULL
+#define SCE_GS_ALPHA_1    0x42ULL
+#define SCE_GS_TEST_1     0x47ULL
+#define SCE_GS_ZBUF_1     0x4EULL
+
 #define GS_RGBAQ(r, g, b, a, q) \
     ((u64)(r) | ((u64)(g) << 8) | ((u64)(b) << 16) | ((u64)(a) << 24) | ((u64)(q) << 32))
 

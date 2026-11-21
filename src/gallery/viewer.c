@@ -101,52 +101,52 @@ s32 viewer_update_and_draw(GalleryView *view, s32 mode)
         if (view->state != 0) {
             break;
         }
-        if (view->flags[0] && (g_pad_trigger[0] & 0x8)) {
+        if (view->flags[0] && (g_pad_trigger[0] & SCE_PADR1)) {
             sound_play_page_se();
             ret = 1;
         }
-        if (view->flags[1] && (g_pad_trigger[0] & 0x4)) {
+        if (view->flags[1] && (g_pad_trigger[0] & SCE_PADL1)) {
             sound_play_page_se();
             ret = 2;
         }
-        if (view->flags[4] && (g_pad_trigger[0] & 0x40)) {
+        if (view->flags[4] && (g_pad_trigger[0] & SCE_PADRdown)) {
             sound_play_confirm_se();
             ret = 3;
         }
         if (view->flags[2]) {
-            if (g_pad_buttons[0] & 0x2000) {
+            if (g_pad_buttons[0] & SCE_PADLright) {
                 view->panX -= 4;
                 if (view->panX < view->minX) {
                     view->panX = view->minX;
                 }
             }
-            if (g_pad_buttons[0] & 0x8000) {
+            if (g_pad_buttons[0] & SCE_PADLleft) {
                 view->panX += 4;
                 if (view->panX + 0x280 > view->maxX) {
                     view->panX = view->maxX - 0x280;
                 }
             }
-            if (g_pad_buttons[0] & 0x4000) {
+            if (g_pad_buttons[0] & SCE_PADLdown) {
                 view->panY -= 4;
                 if (view->panY < view->minY) {
                     view->panY = view->minY;
                 }
             }
-            if (g_pad_buttons[0] & 0x1000) {
+            if (g_pad_buttons[0] & SCE_PADLup) {
                 view->panY += 4;
                 if (view->panY + 0x1C0 > view->maxY) {
                     view->panY = view->maxY - 0x1C0;
                 }
             }
         }
-        if (view->flags[3] && (g_pad_trigger[0] & 0x10)) {
+        if (view->flags[3] && (g_pad_trigger[0] & SCE_PADRup)) {
             view->flags[2] ^= 1;
             view->zoomed ^= 1;
             view->state = 3;
             view->timer = 0x10;
             sound_play_confirm_se();
         }
-        if (g_pad_trigger[0] & 0x800) {
+        if (g_pad_trigger[0] & SCE_PADstart) {
             g_gallery->showHelp ^= 1;
             view->flags[5] = g_gallery->showHelp;
             if (g_gallery->showHelp) {

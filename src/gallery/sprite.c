@@ -77,11 +77,11 @@ void sprite_build_quad_packet(Qword *pkt, s32 startIndex, s32 count)
         v[3] = v[0] + 0x1A;
 
         pkt[qwc].d[0] = 0x1000000000000002ULL;
-        pkt[qwc].d[1] = 0xE;
+        pkt[qwc].d[1] = SCE_GIF_PACKED_AD;
         qwc++;
 
         pkt[qwc].d[0] = 0;
-        pkt[qwc].d[1] = 0x3F;
+        pkt[qwc].d[1] = SCE_GS_TEXFLUSH;
         qwc++;
 
         if (cbp == 0x3832) {
@@ -89,7 +89,7 @@ void sprite_build_quad_packet(Qword *pkt, s32 startIndex, s32 count)
         } else {
             pkt[qwc].d[0] = ((u64)cbp << 37) | 0x20000006A9443800ULL;
         }
-        pkt[qwc].d[1] = 0x6;
+        pkt[qwc].d[1] = SCE_GS_TEX0_1;
         qwc++;
 
         pkt[qwc].d[0] = 0xC0AA400000008001ULL;
@@ -254,16 +254,16 @@ void sprite_build_rect_packet(Qword *packet, s32 firstEntry, s32 entryCount)
         height >>= 1;
 
         packet[packetIndex].d[0] = 0x1000000000000002ULL;
-        packet[packetIndex].d[1] = 0x0E;
+        packet[packetIndex].d[1] = SCE_GIF_PACKED_AD;
         packetIndex++;
 
         packet[packetIndex].d[0] = 0;
-        packet[packetIndex].d[1] = 0x3F;
+        packet[packetIndex].d[1] = SCE_GS_TEXFLUSH;
         packetIndex++;
 
         packet[packetIndex].d[0] =
             ((u64)textureBase << 37) | 0x20000006A9443800ULL;
-        packet[packetIndex].d[1] = 0x06;
+        packet[packetIndex].d[1] = SCE_GS_TEX0_1;
         packetIndex++;
 
         packet[packetIndex].d[0] = 0x60EB400000008001ULL;

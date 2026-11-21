@@ -4,6 +4,14 @@
 #include "common.h"
 #include "sdk/ps2sdk.h"
 
+typedef enum {
+    GALLERY_MODE_LOADING = 0,
+    GALLERY_MODE_FADE_IN = 1,
+    GALLERY_MODE_GRID    = 2,
+    GALLERY_MODE_VIEWER  = 3,
+    GALLERY_MODE_EXIT    = 4
+} GalleryMode;
+
 typedef union {
     unsigned __int128 q;
     u64 d[2];

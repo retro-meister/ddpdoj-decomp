@@ -174,16 +174,16 @@ void gallery_run_loop(void)
         pad_update();
 
         if (g_pad_analog_x[0] < 0) {
-            g_pad_buttons[0] |= 0x8000;
+            g_pad_buttons[0] |= SCE_PADLleft;
         }
         if (g_pad_analog_x[0] > 0) {
-            g_pad_buttons[0] |= 0x2000;
+            g_pad_buttons[0] |= SCE_PADLright;
         }
         if (g_pad_analog_y[0] < 0) {
-            g_pad_buttons[0] |= 0x1000;
+            g_pad_buttons[0] |= SCE_PADLup;
         }
         if (g_pad_analog_y[0] > 0) {
-            g_pad_buttons[0] |= 0x4000;
+            g_pad_buttons[0] |= SCE_PADLdown;
         }
 
         gallery_tick_and_render();
@@ -215,17 +215,17 @@ void gallery_init_frame_gs(void)
     sceGifPkInit(&packet, g_gif_buf);
     sceGifPkReset(&packet);
     sceGifPkAddGsData(&packet, 0x1000000000008005ULL);
-    sceGifPkAddGsData(&packet, 0xEULL);
+    sceGifPkAddGsData(&packet, SCE_GIF_PACKED_AD);
     sceGifPkAddGsData(&packet, 0x8000000000ULL);
-    sceGifPkAddGsData(&packet, 0x3BULL);
+    sceGifPkAddGsData(&packet, SCE_GS_TEXA);
     sceGifPkAddGsData(&packet, 0x3000FULL);
-    sceGifPkAddGsData(&packet, 0x47ULL);
+    sceGifPkAddGsData(&packet, SCE_GS_TEST_1);
     sceGifPkAddGsData(&packet, 0x100000000ULL);
-    sceGifPkAddGsData(&packet, 0x4EULL);
+    sceGifPkAddGsData(&packet, SCE_GS_ZBUF_1);
     sceGifPkAddGsData(&packet, 0ULL);
-    sceGifPkAddGsData(&packet, 0x14ULL);
+    sceGifPkAddGsData(&packet, SCE_GS_TEX1_1);
     sceGifPkAddGsData(&packet, 0x44ULL);
-    sceGifPkAddGsData(&packet, 0x42ULL);
+    sceGifPkAddGsData(&packet, SCE_GS_ALPHA_1);
     sceGifPkTerminate(&packet);
     FlushCache(0);
     sceDmaSendN(g_dma_gif, g_gif_buf, sceGifPkSize(&packet));
@@ -384,7 +384,7 @@ s32 gallery_state_viewer(void)
         if (action == 3) {
             g_gallery->curSprite = 0;
             g_gallery->prevSprite = 0;
-            g_gallery->mode = 2;
+            g_gallery->mode = GALLERY_MODE_GRID;
             g_gallery->state = 0;
         } else if (action != 0) {
             do {
@@ -413,8 +413,8 @@ s32 gallery_state_viewer(void)
     }
 
     case 200:
-        if (g_pad_trigger[0] & 0x20) {
-            g_gallery->mode = 2;
+        if (g_pad_trigger[0] & SCE_PADRright) {
+            g_gallery->mode = GALLERY_MODE_GRID;
             g_gallery->state = 0;
         }
         break;
@@ -510,7 +510,7 @@ s32 gallery_state_grid(void)
                     break;
                 }
                 directionButtons = g_pad_buttons[0];
-                if ((directionButtons & 0x8000) && ((previousCursor == 0) || (previousCursor == 3))) {
+                if ((directionButtons & SCE_PADLleft) && ((previousCursor == 0) || (previousCursor == 3))) {
                     g_gallery->menu_params[0] = previousCursor + 2;
                     g_gallery->scrollDirection = -1;
                     g_gallery->pageOffset -= 6;
@@ -520,7 +520,7 @@ s32 gallery_state_grid(void)
                     g_gallery->state = 29;
                     return 1;
                 }
-                if ((directionButtons & 0x2000) && ((previousCursor == 2) || (previousCursor == 5))) {
+                if ((directionButtons & SCE_PADLright) && ((previousCursor == 2) || (previousCursor == 5))) {
                     g_gallery->menu_params[0] = previousCursor - 2;
                     g_gallery->scrollDirection = 1;
                     g_gallery->pageOffset += 6;
@@ -535,17 +535,17 @@ s32 gallery_state_grid(void)
                 s32 itemIndex = g_gallery->menu_params[0] + g_gallery->pageOffset;
                 if ((itemIndex < g_gallery->itemCount) && (g_gallery->itemStatus[itemIndex] == 2)) {
                     sound_play_confirm_se();
-                    g_gallery->exitMode = 3;
+                    g_gallery->exitMode = GALLERY_MODE_VIEWER;
                     g_gallery->state = 100;
                 }
             }
         } else {
             u32 buttons = g_pad_trigger[0];
-            if (buttons & 0x40) {
+            if (buttons & SCE_PADRdown) {
                 sound_play_confirm_se();
                 g_gallery->state = 40;
                 break;
-            } else if (buttons & 0x4) {
+            } else if (buttons & SCE_PADL1) {
                 if (g_gallery->itemCount <= 6) {
                     break;
                 }
@@ -556,7 +556,7 @@ s32 gallery_state_grid(void)
                 }
                 g_gallery->state = 29;
                 return 1;
-            } else if (buttons & 0x8) {
+            } else if (buttons & SCE_PADR1) {
                 if (g_gallery->itemCount <= 6) {
                     break;
                 }
@@ -597,31 +597,31 @@ s32 gallery_state_grid(void)
         g_gallery->state++;
 
     case 41:
-        if (g_pad_trigger[0] & 0x8000) {
+        if (g_pad_trigger[0] & SCE_PADLleft) {
             if (menuResult = g_gallery->dialogChoice != 0) {
                 sound_play_cursor_se();
             }
             g_gallery->dialogChoice = 0;
         }
-        if (g_pad_trigger[0] & 0x2000) {
+        if (g_pad_trigger[0] & SCE_PADLright) {
             if (g_gallery->dialogChoice != 1) {
                 sound_play_cursor_se();
             }
             g_gallery->dialogChoice = 1;
         }
-        if (g_pad_trigger[0] & 0x20) {
+        if (g_pad_trigger[0] & SCE_PADRright) {
             sound_play_confirm_se();
             if (g_gallery->dialogChoice == 0) {
                 g_gallery->dialogState = -1;
                 g_gallery->state = 100;
-                g_gallery->exitMode = 4;
+                g_gallery->exitMode = GALLERY_MODE_EXIT;
             } else {
                 g_gallery->dialogState = 0;
                 g_gallery->fadeState = 1;
                 g_gallery->state = 20;
             }
         }
-        if (g_pad_trigger[0] & 0x40) {
+        if (g_pad_trigger[0] & SCE_PADRdown) {
             sound_play_confirm_se();
             g_gallery->dialogState = 0;
             g_gallery->fadeState = 1;
@@ -659,7 +659,7 @@ s32 gallery_state_fade_in(void)
     }
 
     g_gallery->fadeState = 1;
-    g_gallery->mode = 2;
+    g_gallery->mode = GALLERY_MODE_GRID;
     g_gallery->state = 0;
     return 0;
 }
@@ -750,7 +750,7 @@ s32 gallery_state_loading(void)
         g_gallery->drawEnabled = 1;
         g_gallery->itemCount = count;
         g_gallery->pageOffset = 0;
-        g_gallery->mode = 1;
+        g_gallery->mode = GALLERY_MODE_FADE_IN;
         g_gallery->state = 0;
         break;
     }
@@ -760,11 +760,11 @@ s32 gallery_state_loading(void)
         sceGifPkInit(&pkt, g_gif_buf);
         sceGifPkReset(&pkt);
         sceGifPkAddGsData(&pkt, 0x1000000000008002ULL);
-        sceGifPkAddGsData(&pkt, 0xE);
+        sceGifPkAddGsData(&pkt, SCE_GIF_PACKED_AD);
         sceGifPkAddGsData(&pkt, 0x20170606A9441E40ULL);
-        sceGifPkAddGsData(&pkt, 0x6);
+        sceGifPkAddGsData(&pkt, SCE_GS_TEX0_1);
         sceGifPkAddGsData(&pkt, 0);
-        sceGifPkAddGsData(&pkt, 0x14);
+        sceGifPkAddGsData(&pkt, SCE_GS_TEX1_1);
 
         for (i = 0; i < 11; i++) {
             bmp_draw_ascii_char(&pkt, 0x180 + i * 16, 0x1A0, D_0012B0B0[i]);
@@ -973,13 +973,13 @@ void gallery_draw_background(u8 alpha)
     sceGifPkInit(&packet, g_gif_buf);
     sceGifPkReset(&packet);
     sceGifPkAddGsData(&packet, 0x1000000000008003ULL);
-    sceGifPkAddGsData(&packet, 0xEULL);
+    sceGifPkAddGsData(&packet, SCE_GIF_PACKED_AD);
     sceGifPkAddGsData(&packet, g_gallery->bgSprite.tex0);
-    sceGifPkAddGsData(&packet, 0x6ULL);
+    sceGifPkAddGsData(&packet, SCE_GS_TEX0_1);
     sceGifPkAddGsData(&packet, 0x60ULL);
-    sceGifPkAddGsData(&packet, 0x14ULL);
+    sceGifPkAddGsData(&packet, SCE_GS_TEX1_1);
     sceGifPkAddGsData(&packet, 0x44ULL);
-    sceGifPkAddGsData(&packet, 0x42ULL);
+    sceGifPkAddGsData(&packet, SCE_GS_ALPHA_1);
     sceGifPkAddGsData(&packet, 0x6400000000008001ULL);
     sceGifPkAddGsData(&packet, 0x535310ULL);
 
@@ -1014,17 +1014,17 @@ void gallery_draw_grid_and_ui(void)
     sceGifPkReset(&pkt);
 
     sceGifPkAddGsData(&pkt, 0x1000000000008001ULL);
-    sceGifPkAddGsData(&pkt, 0xEULL);
+    sceGifPkAddGsData(&pkt, SCE_GIF_PACKED_AD);
     sceGifPkAddGsData(&pkt, 0x60ULL);
-    sceGifPkAddGsData(&pkt, 0x14ULL);
+    sceGifPkAddGsData(&pkt, SCE_GS_TEX1_1);
 
     for (i = 0; i < 6; i++) {
         tex = &g_gallery->uiSprites[i];
 
         sceGifPkAddGsData(&pkt, 0x1000000000008001ULL);
-        sceGifPkAddGsData(&pkt, 0xEULL);
+        sceGifPkAddGsData(&pkt, SCE_GIF_PACKED_AD);
         sceGifPkAddGsData(&pkt, tex->tex0);
-        sceGifPkAddGsData(&pkt, 0x6ULL);
+        sceGifPkAddGsData(&pkt, SCE_GS_TEX0_1);
 
         sceGifPkAddGsData(&pkt, 0x6400000000008001ULL);
         sceGifPkAddGsData(&pkt, 0x535310ULL);
@@ -1051,9 +1051,9 @@ void gallery_draw_grid_and_ui(void)
     }
 
     sceGifPkAddGsData(&pkt, 0x1000000000008001ULL);
-    sceGifPkAddGsData(&pkt, 0xEULL);
+    sceGifPkAddGsData(&pkt, SCE_GIF_PACKED_AD);
     sceGifPkAddGsData(&pkt, 0ULL);
-    sceGifPkAddGsData(&pkt, 0x14ULL);
+    sceGifPkAddGsData(&pkt, SCE_GS_TEX1_1);
 
     if ((g_gallery->timer & 0x20) == 0) {
         g_thumb_pulse = g_gallery->timer & 0x1F;
@@ -1072,9 +1072,9 @@ void gallery_draw_grid_and_ui(void)
             }
 
             sceGifPkAddGsData(&pkt, 0x1000000000008001ULL);
-            sceGifPkAddGsData(&pkt, 0xEULL);
+            sceGifPkAddGsData(&pkt, SCE_GIF_PACKED_AD);
             sceGifPkAddGsData(&pkt, tex->tex0);
-            sceGifPkAddGsData(&pkt, 0x6ULL);
+            sceGifPkAddGsData(&pkt, SCE_GS_TEX0_1);
 
             sceGifPkAddGsData(&pkt, 0x6400000000008001ULL);
             sceGifPkAddGsData(&pkt, 0x535310ULL);
@@ -1123,9 +1123,9 @@ void gallery_draw_grid_and_ui(void)
     }
 
     sceGifPkAddGsData(&pkt, 0x1000000000008001ULL);
-    sceGifPkAddGsData(&pkt, 0xEULL);
+    sceGifPkAddGsData(&pkt, SCE_GIF_PACKED_AD);
     sceGifPkAddGsData(&pkt, 0x60ULL);
-    sceGifPkAddGsData(&pkt, 0x14ULL);
+    sceGifPkAddGsData(&pkt, SCE_GS_TEX1_1);
 
     if (g_gallery->fadeState == 1) {
         if ((g_gallery->timer & 0x40) == 0) {
@@ -1136,9 +1136,9 @@ void gallery_draw_grid_and_ui(void)
         }
 
         sceGifPkAddGsData(&pkt, 0x1000000000008001ULL);
-        sceGifPkAddGsData(&pkt, 0xEULL);
+        sceGifPkAddGsData(&pkt, SCE_GIF_PACKED_AD);
         sceGifPkAddGsData(&pkt, 0x48ULL);
-        sceGifPkAddGsData(&pkt, 0x42ULL);
+        sceGifPkAddGsData(&pkt, SCE_GS_ALPHA_1);
 
         sceGifPkAddGsData(&pkt, 0x4400000000008001ULL);
         sceGifPkAddGsData(&pkt, 0x5510ULL);
