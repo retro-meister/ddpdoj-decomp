@@ -8,22 +8,18 @@ typedef struct
   s16 reserved[3];
 } LinkEntry;
 extern s8 D_001A5240[0x2000];
-extern s16 D_001A7240[][6];
-extern s16 D_001A7242[][6];
-extern s16 D_001A724C[];
-extern LinkEntry D_001A7258[0xE2];
+extern LinkEntry D_001A7240[0xE3];
 extern s8 D_001A7CF0[0x4588];
-extern s16 D_001AC282[];
-extern s16 D_001AC28C[];
 extern LinkEntry D_001AC298[0x401];
 void func_0011E9E0(void)
 {
   s32 index;
   s32 previousTail;
-  LinkEntry *entry;
-  s8 *destination = D_001A7CF0;
+  unsigned int new_var2;
+  LinkEntry *new_var;
   LinkEntry *table;
   {
+    s8 *destination = D_001A7CF0;
     s32 remaining = sizeof(D_001A7CF0);
     while (remaining--)
     {
@@ -32,42 +28,27 @@ void func_0011E9E0(void)
 
   }
   {
-    s32 remaining = sizeof(D_001A5240);
     s8 *destination = D_001A5240;
+    s32 remaining = sizeof(D_001A5240);
     while (remaining--)
     {
       *(destination++) = -1;
     }
 
   }
-  index = 2;
-  entry = D_001AC298;
-  do
   {
-    entry[0].next = index - 2;
-    entry[0].previous = index - 2;
-    entry[1].next = index - 1;
-    entry[1].previous = index - 1;
-    entry[2].next = index;
-    entry[2].previous = index;
-    entry[3].next = index + 1;
-    entry[3].previous = index + 1;
-    entry[4].next = index + 2;
-    entry[4].previous = index + 2;
-    entry[5].next = index + 3;
-    entry[5].previous = index + 3;
-    entry[6].next = index + 4;
-    entry[6].previous = index + 4;
-    entry[7].next = index + 5;
-    entry[7].previous = index + 5;
-    index += 8;
-    entry += 8;
+    LinkEntry *p;
+    for (index = 2, p = D_001AC298; index < 0x402; index++, p++)
+    {
+      p->next = index - 2;
+      p->previous = index - 2;
+    }
+
   }
-  while (index < 0x402);
-  D_001AC282[0] = -1;
+  D_001AC298[-2].previous = -1;
+  D_001AC298[-1].next = -2;
   table = D_001AC298;
-  D_001AC28C[0] = -2;
-  for (index = 0; index < 0x401; index++)
+  for (index = 0; index <= 0x400; index++)
   {
     if (index == table[index].previous)
     {
@@ -79,37 +60,16 @@ void func_0011E9E0(void)
       table[index].value = -1;
     }
   }
-
-  entry = D_001A7258;
-  index = 2;
-  do
+  for (index = 2; index < 0xE3; index++)
   {
-    entry[0].next = index - 2;
-    entry[0].previous = index - 2;
-    entry[1].next = index - 1;
-    entry[1].previous = index - 1;
-    entry[2].next = index;
-    entry[2].previous = index;
-    entry[3].next = index + 1;
-    entry[3].previous = index + 1;
-    entry[4].next = index + 2;
-    entry[4].previous = index + 2;
-    entry[5].next = index + 3;
-    entry[5].previous = index + 3;
-    entry[6].next = index + 4;
-    entry[6].previous = index + 4;
-    entry[7].next = index + 5;
-    entry[7].previous = index + 5;
-    index += 8;
-    entry += 8;
+    D_001A7240[index].next = index - 2;
+    D_001A7240[index].previous = index - 2;
   }
-  while (index < 0xDB);
-  D_001A7240[index][0] = index - 2;
-  D_001A7242[index][0] = index - 2;
-  D_001A7242[0][0] = -1;
-  table = D_001A7258;
-  D_001A724C[0] = -2;
-  for (index = 0; index < 0xE2; index++)
+
+  D_001A7240[0].previous = -1;
+  D_001A7240[1].next = -2;
+  table = &D_001A7240[2];
+  for (index = 0; index <= 0xE1; index++)
   {
     if (index == table[index].previous)
     {
@@ -121,5 +81,4 @@ void func_0011E9E0(void)
       table[index].value = -1;
     }
   }
-
 }

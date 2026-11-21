@@ -105,7 +105,7 @@ void func_00122160(void) {
             u8 color = ((D_0012B438 & 1) << 6) + 0x40;
             func_00102B58(&pkt, GS_RGBAQ(color, color, color, color, 0x3F800000));
         } else if (D_0012B3D8->uiMode[i] == 2) {
-            if (D_0012B3D8->subState < 7) {
+            if (D_0012B3D8->subState <= 6) {
                 func_00102B58(&pkt, GS_RGBAQ(0, 0, 0, 0, 0x3F800000));
             } else {
                 u8 pulse = (u8)(127.0f * func_00111348((3.1415927f * (f32)(D_0012B438 & 0x3F)) / 64.0f));

@@ -53,10 +53,10 @@ extern void func_001232E0(s16, void *, s32);
 s32 func_00122CC0(TexInfo *tex, s16 tbp, s16 cbp, u8 *bmp, s32 x, s32 y)
 {
   u32 offBits;
-  u32 tw;
-  u32 hPow;
-  u32 th;
   u32 wPow;
+  u32 hPow;
+  u32 tw;
+  u32 th;
   u8 *src;
   u8 *dst;
   switch (D_0012B3D8->state)
@@ -65,8 +65,8 @@ s32 func_00122CC0(TexInfo *tex, s16 tbp, s16 cbp, u8 *bmp, s32 x, s32 y)
       D_0012B3E4 = bmp;
       D_0012B3E8 = bmp + 0xE;
       func_00116EA8(&D_001C02B0, D_0012B3E8, 0x28);
-      D_0012B3EC = D_0012B3E8 + 0x28;
       D_0012B410 = (((D_001C02B0.biWidth * D_001C02B0.biBitCount) >> 3) + 3) & (~3);
+      D_0012B3EC = D_0012B3E8 + 0x28;
       D_0012B414 = D_0012B410;
       func_00116EA8(&offBits, bmp + 0xA, 4);
       D_0012B3F0 = bmp + offBits;
@@ -178,10 +178,10 @@ s32 func_00122CC0(TexInfo *tex, s16 tbp, s16 cbp, u8 *bmp, s32 x, s32 y)
       break;
 
     case 5:
-      tw = 1;
-      th = 1;
       wPow = 2;
       hPow = 2;
+      tw = 1;
+      th = 1;
       while ((D_001C02B0.biWidth + x) > wPow)
     {
       wPow <<= 1;
