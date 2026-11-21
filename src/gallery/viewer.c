@@ -19,7 +19,6 @@ static const char g_dialog_slash[8] = SJIS("／");
 static const char g_dialog_no[8] = SJIS("いいえ");
 extern s32 D_0012B3DC;
 extern s32 D_0012B3E0;
-extern volatile u32 g_pad_buttons[];
 
 void viewer_draw_yes_no_dialog(s32 selection, s32 centerX, s32 y, s32 spacing)
 {
@@ -98,52 +97,52 @@ s32 viewer_update_and_draw(GalleryView *view, s32 mode)
         if (view->state != 0) {
             break;
         }
-        if (view->flags[0] && (g_pad_trigger[0] & SCE_PADR1)) {
+        if (view->flags[0] && (g_pads[2].trigger & SCE_PADR1)) {
             sound_play_page_se();
             ret = 1;
         }
-        if (view->flags[1] && (g_pad_trigger[0] & SCE_PADL1)) {
+        if (view->flags[1] && (g_pads[2].trigger & SCE_PADL1)) {
             sound_play_page_se();
             ret = 2;
         }
-        if (view->flags[4] && (g_pad_trigger[0] & SCE_PADRdown)) {
+        if (view->flags[4] && (g_pads[2].trigger & SCE_PADRdown)) {
             sound_play_confirm_se();
             ret = 3;
         }
         if (view->flags[2]) {
-            if (g_pad_buttons[0] & SCE_PADLright) {
+            if (*(volatile u32 *)&g_pads[2].buttons & SCE_PADLright) {
                 view->panX -= 4;
                 if (view->panX < view->minX) {
                     view->panX = view->minX;
                 }
             }
-            if (g_pad_buttons[0] & SCE_PADLleft) {
+            if (*(volatile u32 *)&g_pads[2].buttons & SCE_PADLleft) {
                 view->panX += 4;
                 if (view->panX + 0x280 > view->maxX) {
                     view->panX = view->maxX - 0x280;
                 }
             }
-            if (g_pad_buttons[0] & SCE_PADLdown) {
+            if (*(volatile u32 *)&g_pads[2].buttons & SCE_PADLdown) {
                 view->panY -= 4;
                 if (view->panY < view->minY) {
                     view->panY = view->minY;
                 }
             }
-            if (g_pad_buttons[0] & SCE_PADLup) {
+            if (*(volatile u32 *)&g_pads[2].buttons & SCE_PADLup) {
                 view->panY += 4;
                 if (view->panY + 0x1C0 > view->maxY) {
                     view->panY = view->maxY - 0x1C0;
                 }
             }
         }
-        if (view->flags[3] && (g_pad_trigger[0] & SCE_PADRup)) {
+        if (view->flags[3] && (g_pads[2].trigger & SCE_PADRup)) {
             view->flags[2] ^= 1;
             view->zoomed ^= 1;
             view->state = 3;
             view->timer = 0x10;
             sound_play_confirm_se();
         }
-        if (g_pad_trigger[0] & SCE_PADstart) {
+        if (g_pads[2].trigger & SCE_PADstart) {
             g_gallery->showHelp ^= 1;
             view->flags[5] = g_gallery->showHelp;
             if (g_gallery->showHelp) {

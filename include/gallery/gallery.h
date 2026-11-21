@@ -155,6 +155,21 @@ typedef struct {
     s8 slotFlags[6];
 } GalleryContext;
 
+typedef struct {
+    u8 raw[0x20];
+    u32 buttons;
+    u32 trigger;
+    u32 prevButtons;
+    u32 rawButtons;
+    u16 unk30;
+    s8 analogX;
+    s8 analogY;
+    u8 state;
+    u8 padId;
+    u8 prevPadId;
+    u8 padTypeFlag;
+} PadInfo;
+
 /* Shared gallery globals */
 extern u16 g_system_mute;
 extern s8 g_cd_async_state;
@@ -172,7 +187,7 @@ extern u32 g_cd_file_lba[3];
 extern u32 g_cd_file_size[3];
 extern u8 g_gif_buf[2][0x10000];
 extern u64 g_gs_load_image[12];
-extern u32 g_pad_trigger[4];
+extern PadInfo g_pads[3];
 extern GlyphCacheEntry g_glyph_cache[0x401];
 extern const char g_gallery_archive_path[];
 extern const char *g_viewer_help_lines[8];

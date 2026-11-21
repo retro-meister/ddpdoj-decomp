@@ -7,6 +7,7 @@
 #include "sdk/libdev.h"
 #include "sdk/libdma.h"
 #include "sdk/libgraph.h"
+#include "sdk/libmc.h"
 #include "sdk/libpad.h"
 #include "sdk/libpkt.h"
 #include "sdk/sif.h"

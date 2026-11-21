@@ -1,21 +1,5 @@
 #include "gallery/gallery.h"
 
-typedef struct
-{
-    u8 raw[0x20];
-    u32 buttons;
-    u32 trigger;
-    u32 prevButtons;
-    u32 rawButtons;
-    u16 unk30;
-    s8 analogX;
-    s8 analogY;
-    u8 state;
-    u8 padId;
-    u8 prevPadId;
-    u8 padTypeFlag;
-} PadInfo;
-
 extern u16 D_0012B298;
 extern s8 D_0012B2A0[];
 extern u8 D_0012B2A8;
@@ -32,28 +16,15 @@ extern u8 D_0012B340[6];
 extern u8 D_0012B380[6];
 
 extern u32 D_001A4F10[4];
-extern u32 D_001A4F14[];
-extern u32 D_001A4F18[];
 extern u32 D_001A4F20[4];
 extern u32 D_001A4F30[4];
-extern u32 D_001A4F34[];
-extern u32 D_001A4F38[];
 extern u32 D_001A4F40[4];
-extern u32 D_001A4F44[];
-extern u32 D_001A4F48[];
 extern u32 D_001A4F50[4];
 extern u32 D_001A4F60[4];
-extern u32 D_001A4F64[];
-extern u32 D_001A4F68[];
 extern u32 D_001A4F70[4];
-extern u32 D_001A4F74[];
-extern u32 D_001A4F78[];
 extern u32 D_001A4F80[4];
-extern u32 D_001A4F84[];
-extern u32 D_001A4F88[];
-extern PadInfo g_pads[3];
-extern u8 D_001A5040[0x100];
-extern u8 D_001A5140[0x100];
+extern u8 g_pad_dma_buf_0[0x100];
+extern u8 g_pad_dma_buf_1[0x100];
 
 void pad_poll_hardware(void)
 {
@@ -207,19 +178,19 @@ void pad_init_system(void)
 {
     memset(g_pads, 0, sizeof(g_pads));
 
-    D_001A4F88[0] = 0;
-    D_001A4F78[0] = 0;
-    D_001A4F68[0] = 0;
-    D_001A4F48[0] = 0;
-    D_001A4F38[0] = 0;
-    D_001A4F18[0] = 0;
+    D_001A4F80[2] = 0;
+    D_001A4F70[2] = 0;
+    D_001A4F60[2] = 0;
+    D_001A4F40[2] = 0;
+    D_001A4F30[2] = 0;
+    D_001A4F10[2] = 0;
 
-    D_001A4F84[0] = 0;
-    D_001A4F74[0] = 0;
-    D_001A4F64[0] = 0;
-    D_001A4F44[0] = 0;
-    D_001A4F34[0] = 0;
-    D_001A4F14[0] = 0;
+    D_001A4F80[1] = 0;
+    D_001A4F70[1] = 0;
+    D_001A4F60[1] = 0;
+    D_001A4F40[1] = 0;
+    D_001A4F30[1] = 0;
+    D_001A4F10[1] = 0;
 
     D_001A4F80[0] = 0;
     D_001A4F70[0] = 0;
@@ -229,8 +200,8 @@ void pad_init_system(void)
     D_001A4F10[0] = 0;
 
     scePadInit(0);
-    scePadPortOpen(0, 0, D_001A5040);
-    scePadPortOpen(1, 0, D_001A5140);
+    scePadPortOpen(0, 0, g_pad_dma_buf_0);
+    scePadPortOpen(1, 0, g_pad_dma_buf_1);
 }
 
 void pad_update(void)

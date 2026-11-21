@@ -18,6 +18,5 @@ s32 sceCdMmode(s32 media);
 s32 sceCdRead(u32 lbn, u32 sectors, void *buf, sceCdRMode *mode);
 s32 sceCdGetError(void);
 void sceCdBreak(void);
-void func_0010EA50(void);
 
 #endif

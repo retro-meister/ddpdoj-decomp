@@ -22,6 +22,16 @@
 #define GS_XYZ2(x, y) \
     ((u64)(x) | ((u64)(y) << 16))
 
+typedef struct {
+    u8 disp0[0x50];
+    u8 draw01[0x10];
+    u8 draw01_env[0x80];
+    u8 draw02[0xE0];
+    u8 draw11[0x10];
+    u8 draw11_env[0x80];
+    u8 draw12[0xE0];
+} sceGsDBuffDc;
+
 void sceGsResetGraph(s32 mode, s32 interlace, s32 omode, s32 ffmode);
 void sceGsResetPath(void);
 void sceGsPutDrawEnv(void *giftag);

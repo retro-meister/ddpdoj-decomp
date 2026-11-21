@@ -77,52 +77,38 @@ static u8 g_gallery_image_order[0x90] = {
     8, 7, 6, 4, 5, 16, 15, 11, 10, 33, 32, 31,
     19, 20, 21, 22, 23, 2, 0, 1, 3,
 };
-extern const char *D_0012B200[1];
+extern const char *g_archive_list[1];
 extern u32 D_0012B388;
 extern u32 D_0012B38C;
 extern u32 D_0012B390;
-extern u32 D_0012B394;
-extern u32 D_0012B398;
-extern u32 D_0012B39C;
-extern u32 D_0012B3A0;
-extern u32 D_0012B3A4;
-extern u32 D_0012B3A8;
-extern u32 D_0012B3AC;
-extern u32 D_0012B3B0;
+extern u8 D_0012B394;
+extern u8 D_0012B398;
+extern u8 D_0012B39C;
+extern u8 D_0012B3A0;
+extern u8 D_0012B3A4;
+extern u8 D_0012B3A8;
+extern u8 D_0012B3AC;
+extern u8 D_0012B3B0;
 extern u32 D_0012B3B4;
 extern u32 D_0012B3B8;
 extern u32 D_0012B3BC;
 extern u32 D_0012B3C0;
 extern u32 D_0012B3C4;
 extern u32 D_0012B3C8;
-extern u32 D_0012B3CC;
-extern u32 D_0012B3D0;
-extern u32 D_0012B3D4;
+extern u32 g_mc_icon_2_size;
+extern u32 g_mc_icon_1_size;
+extern u8 D_0012B3D4;
 extern s32 g_thumb_pulse;
 extern s32 g_cursor_pulse;
 extern s32 g_selected_image_idx;
 extern u32 g_frame_count;
 extern GalleryArchiveEntry g_gallery_archive[1];
 extern s32 g_gallery_archive_lba;
-extern u8 g_gs_dbuff[0x330];
-extern u8 D_001A4B30[0x170];
-extern u8 D_001A4B40[];
-extern u8 D_001A4BC0[];
-extern u8 D_001A4CA0[0x170];
-extern u8 D_001A4CB0[];
-extern u8 D_001A4D30[];
-extern u8 D_001A4E10[];
-extern u32 g_pad_merged[];
-extern u32 g_pad_buttons[];
-extern volatile s8 g_pad_analog_x[];
-extern volatile s8 g_pad_analog_y[];
-extern u8 D_001AF2B0[];
-extern u8 D_001B7AB0[];
-extern u8 g_archive_toc[1][0x800];
-extern s32 D_001C0344[4];
-extern s32 D_001C0348[4];
-extern s32 D_001C034C[];
-extern s32 D_001C0350[];
+extern sceGsDBuffDc g_gs_dbuff;
+extern u8 g_pad_dma_area[];
+extern u8 g_mc_icon_2_buf[];
+extern u8 g_mc_icon_1_buf[];
+extern s32 g_archive_toc[0x200];
 extern s8 g_image_viewed_flags[256];
 extern s8 g_image_unlock_flags[0x100];
 
@@ -133,18 +119,18 @@ static inline u64 getTex0Cbp(u64 tex0)
 
 void gallery_load_font_files(void)
 {
-    cd_load_file(D_001B7AB0, g_icon_1_path);
-    D_0012B3D0 = g_cd_last_read_size;
-    cd_load_file(D_001AF2B0, g_icon_2_path);
+    cd_load_file(g_mc_icon_1_buf, g_icon_1_path);
+    g_mc_icon_1_size = g_cd_last_read_size;
+    cd_load_file(g_mc_icon_2_buf, g_icon_2_path);
 
-    *(u8 *)&D_0012B3D4 = 0;
-    *(u8 *)&D_0012B3A8 = 1;
-    *(u8 *)&D_0012B3A4 = 0;
-    *(u8 *)&D_0012B3AC = 0;
-    *(u8 *)&D_0012B39C = 0;
-    *(u8 *)&D_0012B3A0 = 0;
-    *(u8 *)&D_0012B3B0 = 0;
-    *(u8 *)&D_0012B398 = 0;
+    D_0012B3D4 = 0;
+    D_0012B3A8 = 1;
+    D_0012B3A4 = 0;
+    D_0012B3AC = 0;
+    D_0012B39C = 0;
+    D_0012B3A0 = 0;
+    D_0012B3B0 = 0;
+    D_0012B398 = 0;
     D_0012B390 = 0;
     D_0012B38C = 0;
     D_0012B388 = 0;
@@ -154,8 +140,8 @@ void gallery_load_font_files(void)
     D_0012B3C0 = 0;
     D_0012B3B8 = 0;
     D_0012B3B4 = 0;
-    *(u8 *)&D_0012B394 = 0;
-    D_0012B3CC = g_cd_last_read_size;
+    D_0012B394 = 0;
+    g_mc_icon_2_size = g_cd_last_read_size;
 }
 
 void gallery_main(void)
@@ -166,38 +152,38 @@ void gallery_main(void)
     tex_upload_reset();
     font_init();
     sceGsResetGraph(0, 1, 2, 1);
-    memset(g_gs_dbuff, 0, 0x330);
-    sceGsSetDefDBuffDc(g_gs_dbuff, 0, 640, 224, 1, 0x31, 0);
+    memset(&g_gs_dbuff, 0, sizeof(g_gs_dbuff));
+    sceGsSetDefDBuffDc(&g_gs_dbuff, 0, 640, 224, 1, 0x31, 0);
     FlushCache(0);
     sceGsSyncV(0);
-    sceGsPutDrawEnv(D_001A4B30);
+    sceGsPutDrawEnv(g_gs_dbuff.draw01);
     sceGsSyncPath(0, 0);
-    sceGsPutDrawEnv(D_001A4CA0);
+    sceGsPutDrawEnv(g_gs_dbuff.draw11);
     sceGsSyncPath(0, 0);
     iop_reboot_and_load_modules();
     pad_open_ports();
     g_dma_gif = sceDmaGetChan(2);
     pad_init_system();
-    g_pad_dma_buf = D_001A4E10;
+    g_pad_dma_buf = g_pad_dma_area;
     *(volatile u32 *)0x10000010 = 0x83;
     sound_init_file_tables();
 
     archiveIndex = 0;
     do {
-        cd_search_file(D_0012B200[archiveIndex]);
+        cd_search_file(g_archive_list[archiveIndex]);
         g_gallery_archive[archiveIndex].archivePosition = g_cd_file_size[0];
         g_gallery_archive[archiveIndex].entryLocation = g_cd_file_lba[0];
     } while (++archiveIndex == 0);
 
     archiveIndex = 0;
     do {
-        cd_read_sync(g_archive_toc[archiveIndex], 0x9C,
+        cd_read_sync((u8 *)g_archive_toc + archiveIndex * 0x800, 0x9C,
                       g_gallery_archive[archiveIndex].entryLocation);
     } while (++archiveIndex == 0);
 
     tex_upload_init_vram();
     font_upload_default_cluts();
-    func_0010EA50();
+    sceMcInit();
     gallery_load_font_files();
     sound_init();
     g_gallery = memalign(0x40, 0x885800);
@@ -232,21 +218,21 @@ void gallery_run_loop(void)
 
     do {
         *(volatile u32 *)0x10000000 = 0;
-        sceGsSwapDBuffDc(g_gs_dbuff, g_frame_count);
+        sceGsSwapDBuffDc(&g_gs_dbuff, g_frame_count);
         gallery_init_frame_gs();
         pad_update();
 
-        if (g_pad_analog_x[0] < 0) {
-            g_pad_buttons[0] |= SCE_PADLleft;
+        if (*(volatile s8 *)&g_pads[2].analogX < 0) {
+            g_pads[2].buttons |= SCE_PADLleft;
         }
-        if (g_pad_analog_x[0] > 0) {
-            g_pad_buttons[0] |= SCE_PADLright;
+        if (*(volatile s8 *)&g_pads[2].analogX > 0) {
+            g_pads[2].buttons |= SCE_PADLright;
         }
-        if (g_pad_analog_y[0] < 0) {
-            g_pad_buttons[0] |= SCE_PADLup;
+        if (*(volatile s8 *)&g_pads[2].analogY < 0) {
+            g_pads[2].buttons |= SCE_PADLup;
         }
-        if (g_pad_analog_y[0] > 0) {
-            g_pad_buttons[0] |= SCE_PADLdown;
+        if (*(volatile s8 *)&g_pads[2].analogY > 0) {
+            g_pads[2].buttons |= SCE_PADLdown;
         }
 
         gallery_tick_and_render();
@@ -257,11 +243,11 @@ void gallery_run_loop(void)
         ready = !sceGsSyncV(0);
 
         if (g_frame_count & 1) {
-            sceGsSetHalfOffset(D_001A4CB0, 0x800, 0x800, (s16)ready);
-            sceGsSetHalfOffset2(D_001A4D30, 0x800, 0x800, (s16)ready);
+            sceGsSetHalfOffset(g_gs_dbuff.draw11_env, 0x800, 0x800, (s16)ready);
+            sceGsSetHalfOffset2(g_gs_dbuff.draw12, 0x800, 0x800, (s16)ready);
         } else {
-            sceGsSetHalfOffset(D_001A4B40, 0x800, 0x800, (s16)ready);
-            sceGsSetHalfOffset2(D_001A4BC0, 0x800, 0x800, (s16)ready);
+            sceGsSetHalfOffset(g_gs_dbuff.draw01_env, 0x800, 0x800, (s16)ready);
+            sceGsSetHalfOffset2(g_gs_dbuff.draw02, 0x800, 0x800, (s16)ready);
         }
 
         FlushCache(0);
@@ -388,8 +374,8 @@ s32 gallery_state_viewer(void)
 
     case 2: {
         s32 fileId = g_gallery->currentThumbId;
-        s32 offset = D_001C0344[fileId];
-        s32 size = D_001C0348[fileId] - offset;
+        s32 offset = g_archive_toc[fileId + 1];
+        s32 size = g_archive_toc[fileId + 2] - offset;
         if (offset != 0) {
             offset /= 0x800;
         }
@@ -404,7 +390,7 @@ s32 gallery_state_viewer(void)
     case 3: {
         u8 *buf = g_gallery->readBuf;
         s32 fileId = g_gallery->currentThumbId;
-        s32 size = D_001C0348[fileId] - D_001C0344[fileId];
+        s32 size = g_archive_toc[fileId + 2] - g_archive_toc[fileId + 1];
         s32 prev = buf[4];
         s32 i;
         for (i = 5; i < (size - 5); i++) {
@@ -476,7 +462,7 @@ s32 gallery_state_viewer(void)
     }
 
     case 200:
-        if (g_pad_trigger[0] & SCE_PADRright) {
+        if (g_pads[2].trigger & SCE_PADRright) {
             g_gallery->mode = GALLERY_MODE_GRID;
             g_gallery->state = 0;
         }
@@ -564,7 +550,7 @@ s32 gallery_state_grid(void)
 
     case 20:
         previousCursor = g_gallery->menu_params[0];
-        menuResult = viewer_update_grid_cursor(&g_gallery->menu_params[0], g_pad_merged);
+        menuResult = viewer_update_grid_cursor(&g_gallery->menu_params[0], &g_pads[2]);
         if (menuResult != 0) {
             if (menuResult < 0x100) {
                 int directionButtons;
@@ -572,7 +558,7 @@ s32 gallery_state_grid(void)
                 if (g_gallery->itemCount <= 6) {
                     break;
                 }
-                directionButtons = g_pad_buttons[0];
+                directionButtons = g_pads[2].buttons;
                 if ((directionButtons & SCE_PADLleft) && ((previousCursor == 0) || (previousCursor == 3))) {
                     g_gallery->menu_params[0] = previousCursor + 2;
                     g_gallery->scrollDirection = -1;
@@ -603,7 +589,7 @@ s32 gallery_state_grid(void)
                 }
             }
         } else {
-            u32 buttons = g_pad_trigger[0];
+            u32 buttons = g_pads[2].trigger;
             if (buttons & SCE_PADRdown) {
                 sound_play_confirm_se();
                 g_gallery->state = 40;
@@ -660,19 +646,19 @@ s32 gallery_state_grid(void)
         g_gallery->state++;
 
     case 41:
-        if (g_pad_trigger[0] & SCE_PADLleft) {
+        if (g_pads[2].trigger & SCE_PADLleft) {
             if (menuResult = g_gallery->dialogChoice != 0) {
                 sound_play_cursor_se();
             }
             g_gallery->dialogChoice = 0;
         }
-        if (g_pad_trigger[0] & SCE_PADLright) {
+        if (g_pads[2].trigger & SCE_PADLright) {
             if (g_gallery->dialogChoice != 1) {
                 sound_play_cursor_se();
             }
             g_gallery->dialogChoice = 1;
         }
-        if (g_pad_trigger[0] & SCE_PADRright) {
+        if (g_pads[2].trigger & SCE_PADRright) {
             sound_play_confirm_se();
             if (g_gallery->dialogChoice == 0) {
                 g_gallery->dialogState = -1;
@@ -684,7 +670,7 @@ s32 gallery_state_grid(void)
                 g_gallery->state = 20;
             }
         }
-        if (g_pad_trigger[0] & SCE_PADRdown) {
+        if (g_pads[2].trigger & SCE_PADRdown) {
             sound_play_confirm_se();
             g_gallery->dialogState = 0;
             g_gallery->fadeState = 1;
@@ -865,9 +851,9 @@ s32 gallery_load_ui_assets(void)
         g_gallery->subState++;
 
     case 1:
-        offset = D_001C0344[0];
+        offset = g_archive_toc[1];
         buf = g_gallery->readBuf;
-        size = D_001C0348[0] - offset;
+        size = g_archive_toc[2] - offset;
         if (offset != 0) {
             offset /= 0x800;
         }
@@ -880,7 +866,7 @@ s32 gallery_load_ui_assets(void)
 
     case 2: {
         u8 *buf = g_gallery->readBuf;
-        s32 size = D_001C0348[0] - D_001C0344[0];
+        s32 size = g_archive_toc[2] - g_archive_toc[1];
         s32 prev = buf[4];
         s32 i;
         for (loopState[1] = 5; loopState[1] < (size - 5); loopState[1]++) {
@@ -913,9 +899,9 @@ s32 gallery_load_ui_assets(void)
         g_gallery->subState++;
 
     case 11:
-        offset = D_001C0348[0];
+        offset = g_archive_toc[2];
         buf = g_gallery->readBuf;
-        size = D_001C034C[0] - offset;
+        size = g_archive_toc[3] - offset;
         if (offset != 0) {
             offset /= 0x800;
         }
@@ -928,7 +914,7 @@ s32 gallery_load_ui_assets(void)
 
     case 12: {
         u8 *buf = g_gallery->readBuf;
-        s32 size = D_001C034C[0] - D_001C0348[0];
+        s32 size = g_archive_toc[3] - g_archive_toc[2];
         s32 prev = buf[4];
         s32 i;
         for (loopState[1] = 5; loopState[1] < (size - 5); loopState[1]++) {
@@ -961,9 +947,9 @@ s32 gallery_load_ui_assets(void)
         g_gallery->subState++;
 
     case 21:
-        offset = D_001C034C[0];
+        offset = g_archive_toc[3];
         buf = g_gallery->readBuf;
-        size = D_001C0350[0] - offset;
+        size = g_archive_toc[4] - offset;
         if (offset != 0) {
             offset /= 0x800;
         }
@@ -976,7 +962,7 @@ s32 gallery_load_ui_assets(void)
 
     case 22: {
         u8 *buf = g_gallery->readBuf;
-        s32 size = D_001C0350[0] - D_001C034C[0];
+        s32 size = g_archive_toc[4] - g_archive_toc[3];
         s32 prev = buf[4];
         s32 i;
         for (loopState[1] = 5; loopState[1] < (size - 5); loopState[1]++) {
