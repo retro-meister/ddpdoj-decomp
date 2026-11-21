@@ -389,6 +389,8 @@ def _connect_daemon():
 def _ensure_daemon():
     try:
         return _connect_daemon()
+    except PermissionError:
+        raise
     except OSError:
         pass
 
@@ -433,34 +435,49 @@ def stop_daemon():
 def compile_batch(jobs):
     if not jobs:
         return
-    req = {
-        "action": "compile",
-        "jobs": [
-            {
-                "compiler": str(Path(compiler).resolve()),
-                "flags": list(flags),
-                "output": str(Path(output).resolve()),
-                "source": str(Path(source).resolve()),
-            }
-            for compiler, flags, output, source in jobs
-        ],
-    }
-    with _ensure_daemon() as sock:
-        f = sock.makefile("rwb")
-        f.write((json.dumps(req) + "\n").encode("utf-8"))
-        f.flush()
-        resp_line = f.readline()
-    if not resp_line:
-        raise ValueError("QEMU compiler daemon closed connection unexpectedly")
-    resp = json.loads(resp_line.decode("utf-8"))
-    if not resp.get("ok"):
-        err = resp.get("error")
-        if not err:
-            for r in resp.get("results", []):
-                if not r.get("ok"):
-                    err = r.get("error")
-                    break
-        raise ValueError(f"Guest compiler failed:\n{(err or 'unknown error')[-4000:]}")
+    try:
+        req = {
+            "action": "compile",
+            "jobs": [
+                {
+                    "compiler": str(Path(compiler).resolve()),
+                    "flags": list(flags),
+                    "output": str(Path(output).resolve()),
+                    "source": str(Path(source).resolve()),
+                }
+                for compiler, flags, output, source in jobs
+            ],
+        }
+        with _ensure_daemon() as sock:
+            f = sock.makefile("rwb")
+            f.write((json.dumps(req) + "\n").encode("utf-8"))
+            f.flush()
+            resp_line = f.readline()
+        if not resp_line:
+            raise ValueError("QEMU compiler daemon closed connection unexpectedly")
+        resp = json.loads(resp_line.decode("utf-8"))
+        if not resp.get("ok"):
+            err = resp.get("error")
+            if not err:
+                for r in resp.get("results", []):
+                    if not r.get("ok"):
+                        err = r.get("error")
+                        break
+            raise ValueError(f"Guest compiler failed:\n{(err or 'unknown error')[-4000:]}")
+    except (OSError, RuntimeError):
+        guest = PersistentGuest()
+        guest.start()
+        try:
+            for compiler, flags, output, source in jobs:
+                ok, payload = guest.compile_job(compiler, flags, source)
+                if ok:
+                    out_path = Path(output)
+                    out_path.parent.mkdir(parents=True, exist_ok=True)
+                    out_path.write_bytes(payload)
+                else:
+                    raise ValueError(f"Guest compiler failed:\n{payload[-4000:]}")
+        finally:
+            guest.stop()
 
 
 def compile_in_guest(compiler, flags, output, source):
