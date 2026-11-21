@@ -77,11 +77,24 @@ static u8 g_font_palette_rgb[21][3] = {
     {   0,   0,   0 },
 };
 
+/* 16-color RGB888 alternate font palette (16 x { R, G, B }) */
 static u8 g_font_alt_palette_rgb[48] = {
-      0,   0,   0,  48,  48,  50,  56,  56,  64, 104, 104, 104,
-    136, 248, 224,   0, 104,  88,   0,  72,  72, 224, 128, 184,
-    216,  48, 104, 144,  48,  48, 176, 168, 224, 112, 104, 200,
-    248, 176, 240, 200,  96, 176,  96,  96, 104, 255, 255, 255,
+      0,   0,   0,
+     48,  48,  50,
+     56,  56,  64,
+    104, 104, 104,
+    136, 248, 224,
+      0, 104,  88,
+      0,  72,  72,
+    224, 128, 184,
+    216,  48, 104,
+    144,  48,  48,
+    176, 168, 224,
+    112, 104, 200,
+    248, 176, 240,
+    200,  96, 176,
+     96,  96, 104,
+    255, 255, 255,
 };
 extern PaletteColor g_font_alt_clut[32];
 extern PaletteColor g_font_cluts[20][16];
@@ -93,21 +106,21 @@ void font_build_gs_setup_packet(void *packetPtr)
     packet->startTag.quadword = 0;
     packet->startTag.header = 0x10000008;
     packet->gifTag = 0x1000000000008007ULL;
-    packet->gifRegisters = 0x0E;
+    packet->gifRegisters = SCE_GIF_PACKED_AD;
     packet->texflush = 0;
-    packet->texflushRegister = 0x3F;
+    packet->texflushRegister = SCE_GS_TEXFLUSH;
     packet->tex0 = 0x2006FD06A9443800ULL;
-    packet->tex0Register = 0x06;
+    packet->tex0Register = SCE_GS_TEX0_1;
     packet->tex1 = 0x60;
-    packet->tex1Register = 0x14;
+    packet->tex1Register = SCE_GS_TEX1_1;
     packet->clamp = 0;
-    packet->clampRegister = 0x08;
+    packet->clampRegister = SCE_GS_CLAMP_1;
     packet->test = 0x3000F;
-    packet->testRegister = 0x47;
+    packet->testRegister = SCE_GS_TEST_1;
     packet->texa = 0x0000008000008080ULL;
-    packet->texaRegister = 0x3B;
+    packet->texaRegister = SCE_GS_TEXA;
     packet->alpha = 0x44;
-    packet->alphaRegister = 0x42;
+    packet->alphaRegister = SCE_GS_ALPHA_1;
     packet->endTag.quadword = 0;
     packet->endTag.header = 0x70000000;
 }
@@ -150,18 +163,14 @@ void font_init_clut_table(void)
     }
 
     paletteIndex = 1;
-first_palette:
-    font_upload_alt_clut(paletteIndex);
-    if ((++paletteIndex) < 9) {
-        goto first_palette;
-    }
+    do {
+        font_upload_alt_clut(paletteIndex);
+    } while ((++paletteIndex) < 9);
 
     paletteIndex = 9;
-second_palette:
-    font_upload_clut(paletteIndex);
-    if ((++paletteIndex) < 17) {
-        goto second_palette;
-    }
+    do {
+        font_upload_clut(paletteIndex);
+    } while ((++paletteIndex) < 17);
 
     for (rgbOffset = 0, colorIndex = 0; colorIndex < 16; colorIndex++) {
         g_font_alt_clut[colorIndex].red = g_font_alt_palette_rgb[rgbOffset++];
@@ -176,7 +185,7 @@ second_palette:
 
     for (rgbOffset = 0; rgbOffset < 32; rgbOffset++) {
         for (column = 0; column < 512; column++) {
-            g_glyph_upload_buf[rgbOffset][column] = 16 * 0;
+            g_glyph_upload_buf[rgbOffset][column] = 0;
         }
     }
 }
@@ -225,20 +234,20 @@ void font_upload_alt_clut(s32 paletteIndex)
 void font_init(void)
 {
     s32 entryIndex;
-    u8 *galleryEntry;
-    short new_var;
+    u8 *clutBytes;
+    s16 cbp;
 
     font_init_clut_table();
     entryIndex = 0;
-    galleryEntry = (u8 *)g_font_cluts;
+    clutBytes = (u8 *)g_font_cluts;
     do {
-        new_var = (s64)(entryIndex + 0x37E8);
-        sceGsSetDefLoadImage(g_gs_load_image, new_var, 1, 0, 0, 0, 8, 2);
+        cbp = (s64)(entryIndex + 0x37E8);
+        sceGsSetDefLoadImage(g_gs_load_image, cbp, 1, 0, 0, 0, 8, 2);
         FlushCache(0);
-        sceGsExecLoadImage(g_gs_load_image, galleryEntry);
+        sceGsExecLoadImage(g_gs_load_image, clutBytes);
         sceGsSyncPath(0, 0);
         entryIndex++;
-        galleryEntry += 0x40;
+        clutBytes += 0x40;
     } while (entryIndex < 0x11);
 
     sceGsSetDefLoadImage(g_gs_load_image, 0x37FA, 1, 0, 0, 0, 8, 2);

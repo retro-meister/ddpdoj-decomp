@@ -124,8 +124,8 @@ typedef struct {
     u8 cursor_color_g;
     u8 cursor_color_b;
     u8 cursor_color_a;
-    s32 unk_50552C;
-    s32 unk_505530;
+    s32 cursor_alpha;
+    s32 idleTimer;
     u8 pad_505534[4];
     s16 scrollX;
     s16 scrollDirection;

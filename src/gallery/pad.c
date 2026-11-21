@@ -209,32 +209,32 @@ void pad_update(void)
 
         g_pad_held[padIndex] = g_pads[padIndex].rawButtons;
         if (g_pads[padIndex].analogX < 0) {
-            g_pad_held[padIndex] |= 0x8000;
+            g_pad_held[padIndex] |= SCE_PADLleft;
         }
         if (g_pads[padIndex].analogX > 0) {
-            g_pad_held[padIndex] |= 0x2000;
+            g_pad_held[padIndex] |= SCE_PADLright;
         }
         if (g_pads[padIndex].analogY < 0) {
-            g_pad_held[padIndex] |= 0x1000;
+            g_pad_held[padIndex] |= SCE_PADLup;
         }
         if (g_pads[padIndex].analogY > 0) {
-            g_pad_held[padIndex] |= 0x4000;
+            g_pad_held[padIndex] |= SCE_PADLdown;
         }
 
         if (g_pad_tate_rotate != 0) {
             buttons = g_pad_held[padIndex];
             g_pad_held[padIndex] = buttons & 0xFFF;
-            if (buttons & 0x1000) {
-                g_pad_held[padIndex] |= 0x8000;
+            if (buttons & SCE_PADLup) {
+                g_pad_held[padIndex] |= SCE_PADLleft;
             }
-            if (buttons & 0x4000) {
-                g_pad_held[padIndex] |= 0x2000;
+            if (buttons & SCE_PADLdown) {
+                g_pad_held[padIndex] |= SCE_PADLright;
             }
-            if (buttons & 0x2000) {
-                g_pad_held[padIndex] |= 0x1000;
+            if (buttons & SCE_PADLright) {
+                g_pad_held[padIndex] |= SCE_PADLup;
             }
-            if (buttons & 0x8000) {
-                g_pad_held[padIndex] |= 0x4000;
+            if (buttons & SCE_PADLleft) {
+                g_pad_held[padIndex] |= SCE_PADLdown;
             }
         }
 
@@ -299,19 +299,19 @@ void pad_update(void)
     g_pad_port_dst = (u8 *)g_arcade_input_port;
     g_pad_port_bits = 0;
     buttons = g_pad_held[0];
-    if (buttons & 0x800) {
+    if (buttons & SCE_PADstart) {
         *(u8 *)&g_pad_port_bits |= 0x01;
     }
-    if (buttons & 0x1000) {
+    if (buttons & SCE_PADLup) {
         *(u8 *)&g_pad_port_bits |= 0x02;
     }
-    if (buttons & 0x4000) {
+    if (buttons & SCE_PADLdown) {
         *(u8 *)&g_pad_port_bits |= 0x04;
     }
-    if (buttons & 0x8000) {
+    if (buttons & SCE_PADLleft) {
         *(u8 *)&g_pad_port_bits |= 0x08;
     }
-    if (buttons & 0x2000) {
+    if (buttons & SCE_PADLright) {
         *(u8 *)&g_pad_port_bits |= 0x10;
     }
     if (buttons & (1 << g_p1_btn_map_a)) {
@@ -328,19 +328,19 @@ void pad_update(void)
 
     g_pad_port_bits = 0;
     buttons = g_pad_held[1];
-    if (buttons & 0x800) {
+    if (buttons & SCE_PADstart) {
         *(u8 *)&g_pad_port_bits |= 0x01;
     }
-    if (buttons & 0x1000) {
+    if (buttons & SCE_PADLup) {
         *(u8 *)&g_pad_port_bits |= 0x02;
     }
-    if (buttons & 0x4000) {
+    if (buttons & SCE_PADLdown) {
         *(u8 *)&g_pad_port_bits |= 0x04;
     }
-    if (buttons & 0x8000) {
+    if (buttons & SCE_PADLleft) {
         *(u8 *)&g_pad_port_bits |= 0x08;
     }
-    if (buttons & 0x2000) {
+    if (buttons & SCE_PADLright) {
         *(u8 *)&g_pad_port_bits |= 0x10;
     }
     if (buttons & (1 << g_p2_btn_map_a)) {
@@ -356,10 +356,10 @@ void pad_update(void)
 
     g_pad_port_dst = (u8 *)&g_arcade_coin_port;
     g_pad_port_bits = 0;
-    if (g_pad_held[0] & 0x100) {
+    if (g_pad_held[0] & SCE_PADselect) {
         *(u8 *)&g_pad_port_bits |= 0x01;
     }
-    if (g_pad_held[1] & 0x100) {
+    if (g_pad_held[1] & SCE_PADselect) {
         *(u8 *)&g_pad_port_bits |= 0x02;
     }
     *(u16 *)g_pad_port_dst = ~*(u16 *)&g_pad_port_bits;

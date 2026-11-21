@@ -66,17 +66,17 @@ s32 bmp_upload_texture(void *texPtr, s16 tbp, s16 cbp, u8 *bmp, s32 x, s32 y)
             g_bmp_pixel_buf = g_gallery->bmpScratchBuf;
             g_bmp_dst_row = g_bmp_pixel_buf;
             if (g_bmp_ctx.biBitCount < 16) {
-                g_bmp_psm = (g_bmp_ctx.biBitCount == 4) ? (0x14) : (0x13);
-                g_bmp_cpsm = 0;
+                g_bmp_psm = (g_bmp_ctx.biBitCount == 4) ? SCE_GS_PSMT4 : SCE_GS_PSMT8;
+                g_bmp_cpsm = SCE_GS_PSMCT32;
             } else {
                 if (g_bmp_ctx.biBitCount == 16) {
-                    g_bmp_psm = 2;
+                    g_bmp_psm = SCE_GS_PSMCT16;
                 } else if (g_bmp_ctx.biBitCount == 24) {
-                    g_bmp_psm = 1;
+                    g_bmp_psm = SCE_GS_PSMCT24;
                 } else {
-                    g_bmp_psm = 0;
+                    g_bmp_psm = SCE_GS_PSMCT32;
                 }
-                g_bmp_cpsm = 0;
+                g_bmp_cpsm = SCE_GS_PSMCT32;
             }
             g_bmp_decode_pass = 0;
             g_gallery->stepState++;
@@ -163,7 +163,7 @@ s32 bmp_upload_texture(void *texPtr, s16 tbp, s16 cbp, u8 *bmp, s32 x, s32 y)
                 th++;
             }
 
-            tex->tex0 = (((((((((u64)tbp) | (((u64)g_bmp_tbw) << 14)) | (((u64)g_bmp_psm) << 20)) | (((u64)tw) << 26)) | (((u64)th) << 30)) | (((u64)1) << 34)) | (((u64)cbp) << 37)) | (((u64)g_bmp_cpsm) << 51)) | (((u64)1) << 61);
+            tex->tex0 = SCE_GS_SET_TEX0(tbp, g_bmp_tbw, g_bmp_psm, tw, th, 1, 0, cbp, g_bmp_cpsm, 0, 0, 1);
             tex->x = x;
             tex->y = y;
             tex->w = g_bmp_ctx.biWidth;
@@ -178,26 +178,26 @@ void bmp_upload_clut(s16 destinationBase, const void *palette, s32 colorCount)
 {
     u64 loadPacket[12];
     u8 paletteCopy[0x400];
-    u8 *new_var[2];
+    u8 *clutPtrs[2];
     u8 *swizzledPalette;
     u8 *sourceColor;
     u8 *swizzledBlock;
     s32 colorIndex;
     s32 row;
     memcpy(paletteCopy, palette, colorCount * 4);
-    new_var[1] = g_gallery->bmpScratchBuf;
+    clutPtrs[1] = g_gallery->bmpScratchBuf;
     sourceColor = paletteCopy;
-    memset(new_var[1], 0, 0x400);
-    new_var[0] = new_var[1];
+    memset(clutPtrs[1], 0, 0x400);
+    clutPtrs[0] = clutPtrs[1];
     for (colorIndex = 0; colorIndex < colorCount; colorIndex++, sourceColor += 4) {
         if ((sourceColor[2] || sourceColor[1]) || sourceColor[0]) {
-            new_var[0][0] = sourceColor[2];
-            new_var[0][1] = sourceColor[1];
-            new_var[0][2] = sourceColor[0];
-            new_var[0][3] = 0x80;
-            new_var[0] += 4;
+            clutPtrs[0][0] = sourceColor[2];
+            clutPtrs[0][1] = sourceColor[1];
+            clutPtrs[0][2] = sourceColor[0];
+            clutPtrs[0][3] = 0x80;
+            clutPtrs[0] += 4;
         } else {
-            new_var[0] += 4;
+            clutPtrs[0] += 4;
         }
     }
 
@@ -205,13 +205,13 @@ void bmp_upload_clut(s16 destinationBase, const void *palette, s32 colorCount)
     row = 0;
     swizzledBlock = swizzledPalette;
     do {
-        memcpy(swizzledBlock, new_var[1], 0x20);
-        memcpy(swizzledBlock + 0x20, new_var[1] + 0x40, 0x20);
-        memcpy(swizzledBlock + 0x40, new_var[1] + 0x20, 0x20);
-        memcpy(swizzledBlock + 0x60, new_var[1] + 0x60, 0x20);
+        memcpy(swizzledBlock, clutPtrs[1], 0x20);
+        memcpy(swizzledBlock + 0x20, clutPtrs[1] + 0x40, 0x20);
+        memcpy(swizzledBlock + 0x40, clutPtrs[1] + 0x20, 0x20);
+        memcpy(swizzledBlock + 0x60, clutPtrs[1] + 0x60, 0x20);
         row += 2;
         swizzledBlock += 0x80;
-        new_var[1] += 0x80;
+        clutPtrs[1] += 0x80;
     } while (row < 16);
     sceGsSetDefLoadImage(loadPacket, destinationBase, 1, 0, 0, 0, 16, 16);
     FlushCache(0);

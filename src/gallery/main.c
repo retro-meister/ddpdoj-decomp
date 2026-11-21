@@ -448,7 +448,7 @@ s32 gallery_state_grid(void)
         g_gallery->timer = 0;
         g_gallery->overlayEnabled = 1;
         g_gallery->scrollX = 0x38;
-        g_gallery->unk_505530 = 0;
+        g_gallery->idleTimer = 0;
         for (g_gallery->slotIndex = 0; g_gallery->slotIndex < 6; g_gallery->slotIndex++) {
             s32 itemIndex = g_gallery->pageOffset + g_gallery->slotIndex;
             s32 thumbnailId;
@@ -489,7 +489,7 @@ s32 gallery_state_grid(void)
         break;
 
     case 19:
-        g_gallery->unk_505530 = 0;
+        g_gallery->idleTimer = 0;
         g_gallery->fadeState = 1;
         g_gallery->subState = 0;
         g_gallery->state++;
@@ -500,7 +500,7 @@ s32 gallery_state_grid(void)
         if (menuResult != 0) {
             if (menuResult < 0x100) {
                 int directionButtons;
-                g_gallery->unk_505530 = 0;
+                g_gallery->idleTimer = 0;
                 if (g_gallery->itemCount <= 6) {
                     break;
                 }
@@ -569,7 +569,7 @@ s32 gallery_state_grid(void)
 
     case 29:
         g_gallery->timer = 0;
-        g_gallery->unk_505530 = 0;
+        g_gallery->idleTimer = 0;
         sound_play_page_se();
         g_gallery->fadeState = 2;
         g_gallery->countdown = 0x20;
@@ -638,7 +638,7 @@ s32 gallery_state_grid(void)
         break;
     }
 
-    return (unsigned long)0;
+    return 0;
 }
 
 s32 gallery_state_fade_in(void)
@@ -712,7 +712,7 @@ s32 gallery_state_loading(void)
         g_gallery->cursor_color_g = 0xFF;
         g_gallery->cursor_color_b = 0x30;
         g_gallery->cursor_color_a = 0x33;
-        g_gallery->unk_50552C = 0x80;
+        g_gallery->cursor_alpha = 0x80;
 
         params = g_gallery->menu_params;
         params[0] = 0;
@@ -784,7 +784,7 @@ s32 gallery_state_loading(void)
 
 s32 gallery_load_ui_assets(void)
 {
-    s32 loopState[2];
+    s32 iter[2];
     s32 size;
     s32 offset;
     u8 *buf;
@@ -815,9 +815,9 @@ s32 gallery_load_ui_assets(void)
         s32 size = g_archive_toc[2] - g_archive_toc[1];
         s32 prev = buf[4];
         s32 i;
-        for (loopState[1] = 5; loopState[1] < (size - 5); loopState[1]++) {
-            s32 cur = buf[loopState[1]];
-            buf[loopState[1]] = cur - prev;
+        for (iter[1] = 5; iter[1] < (size - 5); iter[1]++) {
+            s32 cur = buf[iter[1]];
+            buf[iter[1]] = cur - prev;
             prev = cur;
         }
 
@@ -863,9 +863,9 @@ s32 gallery_load_ui_assets(void)
         s32 size = g_archive_toc[3] - g_archive_toc[2];
         s32 prev = buf[4];
         s32 i;
-        for (loopState[1] = 5; loopState[1] < (size - 5); loopState[1]++) {
-            s32 cur = buf[loopState[1]];
-            buf[loopState[1]] = cur - prev;
+        for (iter[1] = 5; iter[1] < (size - 5); iter[1]++) {
+            s32 cur = buf[iter[1]];
+            buf[iter[1]] = cur - prev;
             prev = cur;
         }
 
@@ -911,9 +911,9 @@ s32 gallery_load_ui_assets(void)
         s32 size = g_archive_toc[4] - g_archive_toc[3];
         s32 prev = buf[4];
         s32 i;
-        for (loopState[1] = 5; loopState[1] < (size - 5); loopState[1]++) {
-            s32 cur = buf[loopState[1]];
-            buf[loopState[1]] = cur - prev;
+        for (iter[1] = 5; iter[1] < (size - 5); iter[1]++) {
+            s32 cur = buf[iter[1]];
+            buf[iter[1]] = cur - prev;
             prev = cur;
         }
 
@@ -944,12 +944,12 @@ s32 gallery_load_ui_assets(void)
             dst->h = h;
         }
 
-        for (loopState[1] = 0; ((u32)loopState[1]) < 6; loopState[1]++) {
-            loopState[0] = g_ui_sprite_rects[loopState[1]].u;
-            g_gallery->uiX0[loopState[1]] = loopState[0];
-            g_gallery->uiY0[loopState[1]] = g_ui_sprite_rects[loopState[1]].v;
-            g_gallery->uiX1[loopState[1]] = g_ui_sprite_rects[loopState[1]].w;
-            g_gallery->uiY1[loopState[1]] = g_ui_sprite_rects[loopState[1]].h;
+        for (iter[1] = 0; ((u32)iter[1]) < 6; iter[1]++) {
+            iter[0] = g_ui_sprite_rects[iter[1]].u;
+            g_gallery->uiX0[iter[1]] = iter[0];
+            g_gallery->uiY0[iter[1]] = g_ui_sprite_rects[iter[1]].v;
+            g_gallery->uiX1[iter[1]] = g_ui_sprite_rects[iter[1]].w;
+            g_gallery->uiY1[iter[1]] = g_ui_sprite_rects[iter[1]].h;
         }
 
         g_gallery->uiMode[4] = 2;
@@ -1027,22 +1027,22 @@ void gallery_draw_grid_and_ui(void)
 
         if (g_gallery->uiMode[i] == 1) {
             u8 color = ((g_frame_count & 1) << 6) + 0x40;
-            sceGifPkAddGsData(&pkt, GS_RGBAQ(color, color, color, color, 0x3F800000));
+            sceGifPkAddGsData(&pkt, SCE_GS_SET_RGBAQ(color, color, color, color, 0x3F800000));
         } else if (g_gallery->uiMode[i] == 2) {
             if (g_gallery->itemCount <= 6) {
-                sceGifPkAddGsData(&pkt, GS_RGBAQ(0, 0, 0, 0, 0x3F800000));
+                sceGifPkAddGsData(&pkt, SCE_GS_SET_RGBAQ(0, 0, 0, 0, 0x3F800000));
             } else {
                 u8 pulse = (u8)(127.0f * sinf((3.1415927f * (f32)(g_frame_count & 0x3F)) / 64.0f));
-                sceGifPkAddGsData(&pkt, GS_RGBAQ(0x80, pulse, pulse, 0x80, 0x3F800000));
+                sceGifPkAddGsData(&pkt, SCE_GS_SET_RGBAQ(0x80, pulse, pulse, 0x80, 0x3F800000));
             }
         } else {
-            sceGifPkAddGsData(&pkt, GS_RGBAQ(0x80, 0x80, 0x80, 0x80, 0x3F800000));
+            sceGifPkAddGsData(&pkt, SCE_GS_SET_RGBAQ(0x80, 0x80, 0x80, 0x80, 0x3F800000));
         }
 
-        sceGifPkAddGsData(&pkt, GS_UV(tex->u << 4, tex->v << 4));
-        sceGifPkAddGsData(&pkt, GS_XYZ2((g_gallery->uiX0[i] << 4) + 0x6C00, (g_gallery->uiY0[i] << 3) + 0x7900));
-        sceGifPkAddGsData(&pkt, GS_UV((tex->u + tex->w) << 4, (tex->v + tex->h) << 4));
-        sceGifPkAddGsData(&pkt, GS_XYZ2((g_gallery->uiX1[i] << 4) + 0x6C00, (g_gallery->uiY1[i] << 3) + 0x7900));
+        sceGifPkAddGsData(&pkt, SCE_GS_SET_UV(tex->u << 4, tex->v << 4));
+        sceGifPkAddGsData(&pkt, SCE_GS_SET_XYZ2((g_gallery->uiX0[i] << 4) + 0x6C00, (g_gallery->uiY0[i] << 3) + 0x7900, 0));
+        sceGifPkAddGsData(&pkt, SCE_GS_SET_UV((tex->u + tex->w) << 4, (tex->v + tex->h) << 4));
+        sceGifPkAddGsData(&pkt, SCE_GS_SET_XYZ2((g_gallery->uiX1[i] << 4) + 0x6C00, (g_gallery->uiY1[i] << 3) + 0x7900, 0));
     }
 
     sceGifPkAddGsData(&pkt, 0x1000000000008001ULL);
@@ -1082,35 +1082,37 @@ void gallery_draw_grid_and_ui(void)
             switch (mode) {
             default:
                 sceGifPkAddGsData(&pkt, 0x116ULL);
-                sceGifPkAddGsData(&pkt, GS_RGBAQ(0x80, 0x80, 0x80, 0x80, 0x3F800000));
+                sceGifPkAddGsData(&pkt, SCE_GS_SET_RGBAQ(0x80, 0x80, 0x80, 0x80, 0x3F800000));
                 break;
             case 0:
             case 2:
                 sceGifPkAddGsData(&pkt, 0x156ULL);
-                sceGifPkAddGsData(&pkt, GS_RGBAQ(0x80, 0x80, 0x80, g_gallery->countdown << 2, 0x3F800000));
+                sceGifPkAddGsData(&pkt, SCE_GS_SET_RGBAQ(0x80, 0x80, 0x80, g_gallery->countdown << 2, 0x3F800000));
                 break;
             case 4: {
                 s32 bright = (g_thumb_pulse << 2) + 0x80;
                 sceGifPkAddGsData(&pkt, 0x156ULL);
-                sceGifPkAddGsData(&pkt, GS_RGBAQ(bright, bright, bright, 0x80, 0x3F800000));
+                sceGifPkAddGsData(&pkt, SCE_GS_SET_RGBAQ(bright, bright, bright, 0x80, 0x3F800000));
                 break;
             }
             }
 
-            sceGifPkAddGsData(&pkt, GS_UV(tex->u << 4, tex->v << 4));
+            sceGifPkAddGsData(&pkt, SCE_GS_SET_UV(tex->u << 4, tex->v << 4));
             sceGifPkAddGsData(
                 &pkt,
-                GS_XYZ2(
+                SCE_GS_SET_XYZ2(
                     ((g_gallery->scrollX + 0x38 + col * 0x90) << 4) + 0x6C00,
-                    ((row * 0x6A + 0x5E) << 3) + 0x7900
+                    ((row * 0x6A + 0x5E) << 3) + 0x7900,
+                    0
                 )
             );
-            sceGifPkAddGsData(&pkt, GS_UV((tex->u + tex->w - 1) << 4, (tex->v + tex->h) << 4));
+            sceGifPkAddGsData(&pkt, SCE_GS_SET_UV((tex->u + tex->w - 1) << 4, (tex->v + tex->h) << 4));
             sceGifPkAddGsData(
                 &pkt,
-                GS_XYZ2(
+                SCE_GS_SET_XYZ2(
                     ((tex->w + (g_gallery->scrollX + 0x38 + col * 0x90)) << 4) + 0x6C00,
-                    ((tex->h + (row * 0x6A + 0x5E)) << 3) + 0x7900
+                    ((tex->h + (row * 0x6A + 0x5E)) << 3) + 0x7900,
+                    0
                 )
             );
             idx++;
@@ -1138,19 +1140,21 @@ void gallery_draw_grid_and_ui(void)
         sceGifPkAddGsData(&pkt, 0x4400000000008001ULL);
         sceGifPkAddGsData(&pkt, 0x5510ULL);
         sceGifPkAddGsData(&pkt, 0x146ULL);
-        sceGifPkAddGsData(&pkt, GS_RGBAQ(0xC0, 0xC0, 0xC0, 0x60 - g_cursor_pulse * 2, 0x3F800000));
+        sceGifPkAddGsData(&pkt, SCE_GS_SET_RGBAQ(0xC0, 0xC0, 0xC0, 0x60 - g_cursor_pulse * 2, 0x3F800000));
         sceGifPkAddGsData(
             &pkt,
-            GS_XYZ2(
+            SCE_GS_SET_XYZ2(
                 (((g_gallery->menu_params[0] % 3) * 0x90 + 0x70) << 4) + 0x6C00,
-                (((g_gallery->menu_params[0] / 3) * 0x6A + 0x5E) << 3) + 0x7900
+                (((g_gallery->menu_params[0] / 3) * 0x6A + 0x5E) << 3) + 0x7900,
+                0
             )
         );
         sceGifPkAddGsData(
             &pkt,
-            GS_XYZ2(
+            SCE_GS_SET_XYZ2(
                 (((g_gallery->menu_params[0] % 3) * 0x90 + 0xF0) << 4) + 0x6C00,
-                (((g_gallery->menu_params[0] / 3) * 0x6A + 0xB8) << 3) + 0x7900
+                (((g_gallery->menu_params[0] / 3) * 0x6A + 0xB8) << 3) + 0x7900,
+                0
             )
         );
     }

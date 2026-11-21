@@ -2,6 +2,7 @@
 #define DDPDOJ_SDK_PS2SDK_H
 
 #include "sdk/eekernel.h"
+#include "sdk/eestruct.h"
 #include "sdk/libc.h"
 #include "sdk/libcdvd.h"
 #include "sdk/libdev.h"

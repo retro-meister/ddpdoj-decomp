@@ -21,9 +21,12 @@ static TexUploadInfo g_tex_upload_table[6] = {
     { 1,  8, 0, 0,   48, 416 },
 };
 
+/* 16-color warm antialiased UI/glyph RGBA5551 CLUT (padded to 32 entries) */
 static s16 g_tex_clut_palette[32] = {
-    0, -28406, -15655, -11361, -31611, -29496, -16679, -12451,
-    -17736, -20940, -19850, -24111, -23054, -14565, -26291, -1,
+    RGBA5551( 0,  0,  0, 0), RGBA5551(10,  8,  4, 1), RGBA5551(25, 22, 16, 1), RGBA5551(31, 28, 20, 1),
+    RGBA5551( 5,  4,  1, 1), RGBA5551( 8,  6,  3, 1), RGBA5551(25, 22, 15, 1), RGBA5551(29, 26, 19, 1),
+    RGBA5551(24, 21, 14, 1), RGBA5551(20, 17, 11, 1), RGBA5551(22, 19, 12, 1), RGBA5551(17, 14,  8, 1),
+    RGBA5551(18, 15,  9, 1), RGBA5551(27, 24, 17, 1), RGBA5551(13, 10,  6, 1), RGBA5551(31, 31, 31, 1),
 };
 extern s32 g_tex_vram_tbp;
 extern s32 g_tex_vram_cbp;
@@ -85,7 +88,7 @@ void tex_upload_clut_slot(u8 *destination, s32 mode, s32 blockCount)
     switch (mode) {
     case 0:
         for (blockIndex = 0; blockIndex < blockCount; blockIndex++) {
-            sceGsSetDefLoadImage(g_gs_load_image, (s16)g_tex_vram_cbp, 1, 2, 0, 0, 8, 2);
+            sceGsSetDefLoadImage(g_gs_load_image, (s16)g_tex_vram_cbp, 1, SCE_GS_PSMCT16, 0, 0, 8, 2);
             FlushCache(0);
             sceGsExecLoadImage(g_gs_load_image, destination);
             sceGsSyncPath(0, 0);
@@ -95,7 +98,7 @@ void tex_upload_clut_slot(u8 *destination, s32 mode, s32 blockCount)
         break;
     case 1:
         for (blockIndex = 0; blockIndex < blockCount; blockIndex++) {
-            sceGsSetDefLoadImage(g_gs_load_image, (s16)g_tex_vram_cbp, 1, 2, 0, 0, 16, 16);
+            sceGsSetDefLoadImage(g_gs_load_image, (s16)g_tex_vram_cbp, 1, SCE_GS_PSMCT16, 0, 0, 16, 16);
             FlushCache(0);
             sceGsExecLoadImage(g_gs_load_image, destination);
             sceGsSyncPath(0, 0);
@@ -126,7 +129,7 @@ void tex_upload_bitmap(s32 index)
                     g_gs_load_image,
                     g_tex_vram_tbp,
                     remaining,
-                    0x14,
+                    SCE_GS_PSMT4,
                     g_tex_upload_table[index].x,
                     g_tex_upload_table[index].y,
                     g_tex_upload_table[index].width,
@@ -143,7 +146,7 @@ void tex_upload_bitmap(s32 index)
                     g_gs_load_image,
                     g_tex_vram_tbp,
                     g_tex_upload_table[index].dbw,
-                    0x13,
+                    SCE_GS_PSMT8,
                     g_tex_upload_table[index].x,
                     g_tex_upload_table[index].y,
                     g_tex_upload_table[index].width,
@@ -165,7 +168,7 @@ void tex_upload_bitmap(s32 index)
             remaining = g_tex_upload_table[index].height;
             yOffset = 0;
             src = g_tex_bitmap_work_buf;
-            loop0:
+        loop0:
             if (remaining > 0x100) {
                 chunkHeight = 0x100;
             } else {
@@ -175,7 +178,7 @@ void tex_upload_bitmap(s32 index)
                 g_gs_load_image,
                 g_tex_vram_tbp,
                 g_tex_upload_table[index].dbw,
-                0x14,
+                SCE_GS_PSMT4,
                 g_tex_upload_table[index].x,
                 yOffset + g_tex_upload_table[index].y,
                 0x400,
@@ -207,7 +210,7 @@ void tex_upload_bitmap(s32 index)
                     g_gs_load_image,
                     g_tex_vram_tbp,
                     g_tex_upload_table[index].dbw,
-                    0x13,
+                    SCE_GS_PSMT8,
                     g_tex_upload_table[index].x,
                     yOffset + g_tex_upload_table[index].y,
                     0x400,

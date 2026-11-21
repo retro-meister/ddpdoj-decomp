@@ -7,22 +7,28 @@ extern u16 gallery_slot_3_state;
 extern u16 gallery_state_0;
 extern u16 gallery_state_1;
 
+/* 32-color all-white RGB555 CLUT (padded to 48 entries in .data) */
 s16 g_tex_clut_palette_32[48] = {
-    0x7FFF, 0x7FFF, 0x7FFF, 0x7FFF, 0x7FFF, 0x7FFF, 0x7FFF, 0x7FFF,
-    0x7FFF, 0x7FFF, 0x7FFF, 0x7FFF, 0x7FFF, 0x7FFF, 0x7FFF, 0x7FFF,
-    0x7FFF, 0x7FFF, 0x7FFF, 0x7FFF, 0x7FFF, 0x7FFF, 0x7FFF, 0x7FFF,
-    0x7FFF, 0x7FFF, 0x7FFF, 0x7FFF, 0x7FFF, 0x7FFF, 0x7FFF, 0x7FFF,
-    0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000,
-    0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000,
+    RGB555(31, 31, 31), RGB555(31, 31, 31), RGB555(31, 31, 31), RGB555(31, 31, 31),
+    RGB555(31, 31, 31), RGB555(31, 31, 31), RGB555(31, 31, 31), RGB555(31, 31, 31),
+    RGB555(31, 31, 31), RGB555(31, 31, 31), RGB555(31, 31, 31), RGB555(31, 31, 31),
+    RGB555(31, 31, 31), RGB555(31, 31, 31), RGB555(31, 31, 31), RGB555(31, 31, 31),
+    RGB555(31, 31, 31), RGB555(31, 31, 31), RGB555(31, 31, 31), RGB555(31, 31, 31),
+    RGB555(31, 31, 31), RGB555(31, 31, 31), RGB555(31, 31, 31), RGB555(31, 31, 31),
+    RGB555(31, 31, 31), RGB555(31, 31, 31), RGB555(31, 31, 31), RGB555(31, 31, 31),
+    RGB555(31, 31, 31), RGB555(31, 31, 31), RGB555(31, 31, 31), RGB555(31, 31, 31),
 };
 
 static const char g_elf_path_main[0x40] __attribute__((section(".data"))) = "cdrom0:\\SLPS_252.33";
 static const char g_elf_path_don2[0x40] __attribute__((section(".data"))) = "cdrom0:\\DON2.ELF";
 static const char g_elf_path_gallery[0x20] __attribute__((section(".data"))) = "cdrom0:\\GALLERY.ELF";
 
+/* 16-color orange-to-gold gradient RGB555 CLUT */
 s16 g_tex_clut_palette_16[16] = {
-    0x14CA, 0x150D, 0x1110, 0x0913, 0x0516, 0x0119, 0x013C, 0x015F,
-    0x09DF, 0x0E5F, 0x12DF, 0x173F, 0x2F5F, 0x477F, 0x5B9F, 0x0000,
+    RGB555(10,  6,  5), RGB555(13,  8,  5), RGB555(16,  8,  4), RGB555(19,  8,  2),
+    RGB555(22,  8,  1), RGB555(25,  8,  0), RGB555(28,  9,  0), RGB555(31, 10,  0),
+    RGB555(31, 14,  2), RGB555(31, 18,  3), RGB555(31, 22,  4), RGB555(31, 25,  5),
+    RGB555(31, 26, 11), RGB555(31, 27, 17), RGB555(31, 28, 22), RGB555( 0,  0,  0),
 };
 
 void gallery_reset_slot_states(void)

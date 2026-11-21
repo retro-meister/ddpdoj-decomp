@@ -83,19 +83,19 @@ s32 lzss_decompress_step(u8 *dst, u8 *src)
 void lzss_draw_frame_overlay(void *framePtr)
 {
     GalleryFrame *frame = framePtr;
-    s32 rowState[2];
+    s32 rows[2];
     s32 x;
     s32 y;
     s32 innerColumns;
 
     innerColumns = ((frame->right - frame->left) / 16) - 2;
-    rowState[1] = (frame->bottom - frame->top) / 32;
-    rowState[0] = rowState[1] - 2;
+    rows[1] = (frame->bottom - frame->top) / 32;
+    rows[0] = rows[1] - 2;
     x = frame->left - 6;
     y = frame->top / 2;
     sprite_queue_glyph(x - 64, y, 0x2289, frame->tileAttributes, 300);
     y += 16;
-    for (rowState[1] = 0; rowState[1] < rowState[0]; rowState[1]++) {
+    for (rows[1] = 0; rows[1] < rows[0]; rows[1]++) {
         sprite_queue_glyph(x - 64, y, 0x228A, frame->tileAttributes, 300);
         y += 16;
     }
@@ -103,14 +103,14 @@ void lzss_draw_frame_overlay(void *framePtr)
     sprite_queue_glyph(x - 64, y, 0x228B, frame->tileAttributes, 300);
     x = frame->left + 10;
     y = frame->top / 2;
-    for (rowState[1] = 0; rowState[1] < innerColumns; rowState[1]++) {
+    for (rows[1] = 0; rows[1] < innerColumns; rows[1]++) {
         sprite_queue_glyph(x - 64, y, 0x2287, frame->tileAttributes, 300);
         x += 16;
     }
 
     x = frame->left + 10;
-    y = (frame->top / 2) + ((rowState[0] + 1) * 16);
-    for (rowState[1] = 0; rowState[1] < innerColumns; rowState[1]++) {
+    y = (frame->top / 2) + ((rows[0] + 1) * 16);
+    for (rows[1] = 0; rows[1] < innerColumns; rows[1]++) {
         sprite_queue_glyph(x - 64, y, 0x2288, frame->tileAttributes, 300);
         x += 16;
     }
@@ -119,7 +119,7 @@ void lzss_draw_frame_overlay(void *framePtr)
     y = frame->top / 2;
     sprite_queue_glyph(x - 64, y, 0x2284, frame->tileAttributes, 300);
     y += 16;
-    for (rowState[1] = 0; rowState[1] < rowState[0]; rowState[1]++) {
+    for (rows[1] = 0; rows[1] < rows[0]; rows[1]++) {
         sprite_queue_glyph(x - 64, y, 0x2285, frame->tileAttributes, 300);
         y += 16;
     }
@@ -135,7 +135,7 @@ void gallery_draw_solid_rect(s32 xStart, s32 yStart, s32 xEnd, s32 yEnd,
     sceGifPkInit(&packet, g_gif_buf);
     sceGifPkReset(&packet);
     sceGifPkAddGsData(&packet, 0x1000000000008001ULL);
-    sceGifPkAddGsData(&packet, 0xEULL);
+    sceGifPkAddGsData(&packet, SCE_GIF_PACKED_AD);
 
     if (blendMode == 0) {
         sceGifPkAddGsData(&packet, 0x44ULL);
@@ -145,7 +145,7 @@ void gallery_draw_solid_rect(s32 xStart, s32 yStart, s32 xEnd, s32 yEnd,
         sceGifPkAddGsData(&packet, 0x80000000A1ULL);
     }
 
-    sceGifPkAddGsData(&packet, 0x42ULL);
+    sceGifPkAddGsData(&packet, SCE_GS_ALPHA_1);
     sceGifPkAddGsData(&packet, 0x4400000000008001ULL);
     sceGifPkAddGsData(&packet, 0x5510ULL);
     sceGifPkAddGsData(&packet, 0x146ULL);
