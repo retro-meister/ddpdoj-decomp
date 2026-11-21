@@ -16,7 +16,7 @@ typedef struct
   s32 srcPos;
 } DecompWork;
 extern DecompWork *D_0012B3D8;
-extern void func_00116EA8(void *dst, void *src, s32 size);
+extern void func_00116EA8(void *dst, void *src, unsigned int size);
 inline static s32 getBits(s32 count)
 {
   s32 ret = 0;
@@ -41,25 +41,28 @@ inline static s32 getBits(s32 count)
 s32 func_00124820(u8 *dst, u8 *src)
 {
   s32 copyLen;
-  DecompWork *new_var;
   s32 backOffset;
   switch (D_0012B3D8->state)
   {
-    case 0: {
-      s32 *hdr = (s32 *)src;
-      D_0012B3D8->flagSize = hdr[2];
+    case 0:
+      D_0012B3D8->flagSize = *((s32 *) (src + 8));
       D_0012B3D8->flagBytePos = 0;
       D_0012B3D8->flagBitPos = 7;
       D_0012B3D8->dstPos = 0;
       D_0012B3D8->srcPos = 0;
-      D_0012B3D8->dstSize = hdr[0];
-      D_0012B3D8->srcSize = hdr[1];
+      D_0012B3D8->dstSize = *((s32 *) (src + 0));
+      if (D_0012B3D8->srcPos && D_0012B3D8->srcPos)
+    {
+    }
+    {
+      s32 s = *((s32 *) (src + 4));
+      D_0012B3D8->srcSize = s;
+    }
       D_0012B3D8->chunkLimit = D_0012B3D8->dstSize / 16;
-      func_00116EA8(D_0012B3D8->flagBuf, &hdr[3], D_0012B3D8->flagSize);
+      func_00116EA8(D_0012B3D8->flagBuf, src + 0xC, D_0012B3D8->flagSize);
       D_0012B3D8->srcPos = D_0012B3D8->flagSize + 0xC;
       D_0012B3D8->state++;
       break;
-    }
 
     case 1:
       while (D_0012B3D8->srcPos < D_0012B3D8->srcSize)

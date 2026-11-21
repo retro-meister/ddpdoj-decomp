@@ -2,26 +2,11 @@
 
 typedef struct 
 {
-  u64 TBP0 : 14;
-  u64 TBW : 6;
-  u64 PSM : 6;
-  u64 TW : 4;
-  u64 TH : 4;
-  u64 TCC : 1;
-  u64 TFX : 2;
-  u64 CBP : 14;
-  u64 CPSM : 4;
-  u64 CSM : 1;
-  u64 CSA : 5;
-  u64 CLD : 3;
-} GsTex0;
-typedef struct 
-{
   s16 u;
   s16 v;
   s16 width;
   s16 height;
-  GsTex0 tex0;
+  u64 tex0;
 } ThumbSprite;
 typedef struct 
 {
@@ -69,9 +54,14 @@ extern s8 D_001C0B40[];
 extern void func_0011AF70(void);
 extern void func_0011AF90(void);
 extern void func_0011AFB0(void);
-extern s32 func_00122CC0(ThumbSprite *, s32, s32, void *, s32, s32);
+extern s32 func_00122CC0(ThumbSprite *, s16, s16, void *, s32, s32);
 extern void func_001236D0(s32, s32, s32, s32);
 extern s32 func_001246C0(s32 *, void *);
+static inline u64 getTex0Cbp(u64 tex0)
+{
+  return (u64) ((s32) ((tex0 >> 37) & 0x3FFF));
+}
+
 s32 func_0011FE50(void)
 {
   ThumbSprite atlasSprite;
@@ -94,7 +84,7 @@ s32 func_0011FE50(void)
     {
       ThumbSprite *sprite = &D_0012B3D8->allSprites[thumbnailIndex];
       *sprite = atlasSprite;
-      sprite->tex0.CBP = atlasSprite.tex0.CBP;
+      sprite->tex0 = (sprite->tex0 & (~(((u64) 0x3FFF) << 37))) | (getTex0Cbp(atlasSprite.tex0) << 37);
       sprite->u += (s16) ((thumbnailIndex & 7) * 128);
       sprite->v += (s16) ((thumbnailIndex >> 3) * 90);
       sprite->width = 128;
@@ -114,7 +104,7 @@ s32 func_0011FE50(void)
         break;
       }
       thumbnailId = D_0012B3D8->itemThumbIds[itemIndex];
-      if (thumbnailId >= 38)
+      if (thumbnailId > 37)
       {
         thumbnailId = 0;
       }
@@ -167,7 +157,7 @@ s32 func_0011FE50(void)
       {
         int directionButtons;
         D_0012B3D8->unk505530 = 0;
-        if (D_0012B3D8->itemCount < 7)
+        if (D_0012B3D8->itemCount <= 6)
         {
           break;
         }
@@ -221,7 +211,7 @@ s32 func_0011FE50(void)
       else
         if (buttons & 0x4)
       {
-        if (D_0012B3D8->itemCount < 7)
+        if (D_0012B3D8->itemCount <= 6)
         {
           break;
         }
@@ -237,7 +227,7 @@ s32 func_0011FE50(void)
       else
         if (buttons & 0x8)
       {
-        if (D_0012B3D8->itemCount < 7)
+        if (D_0012B3D8->itemCount <= 6)
         {
           break;
         }
@@ -282,7 +272,7 @@ s32 func_0011FE50(void)
     case 41:
       if (D_001A5024[0] & 0x8000)
     {
-      if (D_0012B3D8->dialogChoice != 0)
+      if (menuResult = D_0012B3D8->dialogChoice != 0)
       {
         func_0011AF70();
       }
@@ -337,5 +327,5 @@ s32 func_0011FE50(void)
 
   }
 
-  return 0;
+  return (unsigned long) 0;
 }

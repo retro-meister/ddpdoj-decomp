@@ -75,22 +75,13 @@ void func_0011F410(void)
   fadeState = D_0012B3D8->fadeState;
   if (fadeState == 0)
   {
-    brightness = D_0012B3D8->fadeStep * 8;
-    if (brightness > 0xFF)
-    {
-      brightness = 0xFF;
-    }
-    brightness = 0xFF - (brightness & 0xFFu);
+    brightness = 0xFF - ((D_0012B3D8->fadeStep * 8 > 0xFF) ? 0xFF : D_0012B3D8->fadeStep * 8);
     func_00124E50(0, 0, 640, 448, brightness, brightness, brightness, 0x80, 2);
   }
   else
     if (fadeState > 8)
   {
-    brightness = D_0012B3D8->fadeStep * 8;
-    if (brightness > 0xFF)
-    {
-      brightness = 0xFF;
-    }
+    brightness = (D_0012B3D8->fadeStep * 8 > 0xFF) ? 0xFF : D_0012B3D8->fadeStep * 8;
     func_00124E50(0, 0, 640, 448, brightness, brightness, brightness, 0x80, 2);
   }
 }
