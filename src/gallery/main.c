@@ -97,9 +97,9 @@ void gallery_main(void)
     vram_clear_all();
     tex_upload_reset();
     font_init();
-    sceGsResetGraph(0, 1, 2, 1);
+    sceGsResetGraph(0, SCE_GS_INTERLACE, SCE_GS_NTSC, SCE_GS_FRAME);
     memset(&g_gs_dbuff, 0, sizeof(g_gs_dbuff));
-    sceGsSetDefDBuffDc(&g_gs_dbuff, 0, 640, 224, 1, 0x31, 0);
+    sceGsSetDefDBuffDc(&g_gs_dbuff, SCE_GS_PSMCT32, 640, 224, 1, SCE_GS_PSMZ24, 0);
     FlushCache(0);
     sceGsSyncV(0);
     sceGsPutDrawEnv(g_gs_dbuff.draw01);
@@ -108,17 +108,17 @@ void gallery_main(void)
     sceGsSyncPath(0, 0);
     iop_reboot_and_load_modules();
     pad_open_ports();
-    g_dma_gif = sceDmaGetChan(2);
+    g_dma_gif = sceDmaGetChan(SCE_DMA_GIF);
     pad_init_system();
     g_pad_dma_buf = g_pad_dma_area;
-    *(volatile u32 *)0x10000010 = 0x83;
+    *T0_MODE = 0x83;
     sound_init_file_tables();
 
     archiveIndex = 0;
     do {
         cd_search_file(g_archive_list[archiveIndex]);
         g_gallery_archive[archiveIndex].archivePosition = g_cd_file.size;
-        g_gallery_archive[archiveIndex].entryLocation = g_cd_file.lba;
+        g_gallery_archive[archiveIndex].entryLocation = g_cd_file.lsn;
     } while (++archiveIndex == 0);
 
     archiveIndex = 0;
@@ -163,7 +163,7 @@ void gallery_run_loop(void)
     g_gallery->showHelp = 1;
 
     do {
-        *(volatile u32 *)0x10000000 = 0;
+        *T0_COUNT = 0;
         sceGsSwapDBuffDc(&g_gs_dbuff, g_frame_count);
         gallery_init_frame_gs();
         pad_update();

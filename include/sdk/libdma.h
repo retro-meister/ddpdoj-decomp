@@ -3,6 +3,10 @@
 
 #include "types.h"
 
+#define SCE_DMA_VIF0 0
+#define SCE_DMA_VIF1 1
+#define SCE_DMA_GIF  2
+
 void *sceDmaGetChan(s32 id);
 void sceDmaReset(s32 mode);
 void sceDmaSend(void *chan, void *tag);

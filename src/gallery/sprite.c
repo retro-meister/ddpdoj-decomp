@@ -186,11 +186,11 @@ void sprite_queue_glyph(x, y, textureId, attributes, scale)
             }
 
             textureIndex &= 0x7FFF;
-            sceGsSetDefLoadImage(g_gs_load_image, 0x3800, 0x10, 0x14,
+            sceGsSetDefLoadImage(&g_gs_load_image, 0x3800, 0x10, SCE_GS_PSMT4,
                           textures[textureIndex].x,
                           textures[textureIndex].y, 0x1A, 0x1A);
             FlushCache(0);
-            sceGsExecLoadImage(g_gs_load_image, g_glyph_upload_buf);
+            sceGsExecLoadImage(&g_gs_load_image, g_glyph_upload_buf);
             uploaded++;
         }
 
@@ -396,9 +396,9 @@ void sprite_queue_sjis_text(s32 x, s16 y, const char *text, u16 texturePage, u16
                 uploadBuffer[byteIndex + 0] = ((g_font_glyph_buf + bitmapOffset) + byteIndex)[0];
                 uploadBuffer[byteIndex + 1] = ((g_font_glyph_buf + bitmapOffset) + byteIndex)[1];
                 cacheIndex &= 0x7FFF;
-                sceGsSetDefLoadImage(g_gs_load_image, 0x3800, 16, 20, cache[cacheIndex].x, cache[cacheIndex].y, 26, 26);
+                sceGsSetDefLoadImage(&g_gs_load_image, 0x3800, 16, SCE_GS_PSMT4, cache[cacheIndex].x, cache[cacheIndex].y, 26, 26);
                 FlushCache(0);
-                sceGsExecLoadImage(g_gs_load_image, uploadBuffer);
+                sceGsExecLoadImage(&g_gs_load_image, uploadBuffer);
                 uploadBuffer += 0x200;
                 uploadCount++;
             }

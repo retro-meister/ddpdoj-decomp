@@ -3,6 +3,11 @@
 
 #include "types.h"
 
+#define SCECdINIT         0x00
+#define SCECdSecS2048     0
+#define SCECdSpinNom      1
+#define SCECdComplete     0x02
+
 typedef struct {
     u8 trycount;
     u8 spindlctrl;
@@ -10,7 +15,15 @@ typedef struct {
     u8 pad;
 } sceCdRMode;
 
-s32 sceCdSearchFile(void *fp, const char *name);
+typedef struct {
+    u32 lsn;
+    u32 size;
+    char name[16];
+    u8 date[8];
+    u32 flag;
+} sceCdlFILE;
+
+s32 sceCdSearchFile(sceCdlFILE *fp, const char *name);
 s32 sceCdSync(s32 mode);
 s32 sceCdInit(s32 init_mode);
 s32 sceCdDiskReady(s32 mode);

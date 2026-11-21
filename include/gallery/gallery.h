@@ -168,12 +168,6 @@ typedef struct {
     u32 lba;
 } CdFileEntry;
 
-typedef struct {
-    u32 lba;
-    u32 size;
-    u8 pad[0x38];
-} CdFileStat;
-
 /* Shared gallery globals */
 extern u16 g_arcade_coin_port;
 extern s8 g_arcade_input_port[];
@@ -207,9 +201,9 @@ extern void *g_pad_dma_buf;
 extern u8 g_pad_act_direct[6];
 extern GalleryContext *g_gallery;
 extern CdFileEntry g_data_files[20];
-extern CdFileStat g_cd_file;
+extern sceCdlFILE g_cd_file;
 extern u8 g_gif_buf[2][0x10000];
-extern u64 g_gs_load_image[12];
+extern sceGsLoadImage g_gs_load_image;
 extern sceGsDBuffDc g_gs_dbuff;
 extern u8 g_pad_dma_area[0x100];
 extern PadInfo g_pads[3];

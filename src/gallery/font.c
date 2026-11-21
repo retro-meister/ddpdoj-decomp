@@ -241,15 +241,15 @@ void font_init(void)
     clutBytes = (u8 *)g_font_cluts;
     for (entryIndex = 0; entryIndex < 17; entryIndex++, clutBytes += 0x40) {
         cbp = (s64)(entryIndex + 0x37E8);
-        sceGsSetDefLoadImage(g_gs_load_image, cbp, 1, 0, 0, 0, 8, 2);
+        sceGsSetDefLoadImage(&g_gs_load_image, cbp, 1, SCE_GS_PSMCT32, 0, 0, 8, 2);
         FlushCache(0);
-        sceGsExecLoadImage(g_gs_load_image, clutBytes);
+        sceGsExecLoadImage(&g_gs_load_image, clutBytes);
         sceGsSyncPath(0, 0);
     }
 
-    sceGsSetDefLoadImage(g_gs_load_image, 0x37FA, 1, 0, 0, 0, 8, 2);
+    sceGsSetDefLoadImage(&g_gs_load_image, 0x37FA, 1, SCE_GS_PSMCT32, 0, 0, 8, 2);
     FlushCache(0);
-    sceGsExecLoadImage(g_gs_load_image, g_font_alt_clut);
+    sceGsExecLoadImage(&g_gs_load_image, g_font_alt_clut);
     sceGsSyncPath(0, 0);
     glyph_cache_init();
 }
@@ -259,7 +259,7 @@ void font_upload_default_cluts(void)
     s32 resourceIndex;
     PaletteColor (*resourceBuffer)[16];
 
-    *(volatile u32 *)0x10000000 = 0;
+    *T0_COUNT = 0;
     g_vram_load_buf = memalign(0x40, 0x300000);
     printf("mozi buf[%x] size[%d]\n", g_vram_load_buf, 0x2D9248);
     g_font_glyph_buf = g_vram_load_buf;
@@ -267,15 +267,15 @@ void font_upload_default_cluts(void)
 
     resourceBuffer = g_font_cluts;
     for (resourceIndex = 0; resourceIndex < 17; resourceIndex++, resourceBuffer++) {
-        sceGsSetDefLoadImage(g_gs_load_image, (s16)(0x37E8 + resourceIndex), 1, 0, 0, 0, 8, 2);
+        sceGsSetDefLoadImage(&g_gs_load_image, (s16)(0x37E8 + resourceIndex), 1, SCE_GS_PSMCT32, 0, 0, 8, 2);
         FlushCache(0);
-        sceGsExecLoadImage(g_gs_load_image, *resourceBuffer);
+        sceGsExecLoadImage(&g_gs_load_image, *resourceBuffer);
         sceGsSyncPath(0, 0);
     }
 
-    sceGsSetDefLoadImage(g_gs_load_image, 0x37FA, 1, 0, 0, 0, 8, 2);
+    sceGsSetDefLoadImage(&g_gs_load_image, 0x37FA, 1, SCE_GS_PSMCT32, 0, 0, 8, 2);
     FlushCache(0);
-    sceGsExecLoadImage(g_gs_load_image, g_font_alt_clut);
+    sceGsExecLoadImage(&g_gs_load_image, g_font_alt_clut);
     sceGsSyncPath(0, 0);
     glyph_cache_init();
     tex_upload_reset();

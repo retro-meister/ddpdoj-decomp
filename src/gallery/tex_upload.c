@@ -88,9 +88,9 @@ void tex_upload_clut_slot(u8 *destination, s32 mode, s32 blockCount)
     switch (mode) {
     case 0:
         for (blockIndex = 0; blockIndex < blockCount; blockIndex++) {
-            sceGsSetDefLoadImage(g_gs_load_image, (s16)g_tex_vram_cbp, 1, SCE_GS_PSMCT16, 0, 0, 8, 2);
+            sceGsSetDefLoadImage(&g_gs_load_image, (s16)g_tex_vram_cbp, 1, SCE_GS_PSMCT16, 0, 0, 8, 2);
             FlushCache(0);
-            sceGsExecLoadImage(g_gs_load_image, destination);
+            sceGsExecLoadImage(&g_gs_load_image, destination);
             sceGsSyncPath(0, 0);
             g_tex_vram_cbp += 1;
             destination += 0x80;
@@ -98,9 +98,9 @@ void tex_upload_clut_slot(u8 *destination, s32 mode, s32 blockCount)
         break;
     case 1:
         for (blockIndex = 0; blockIndex < blockCount; blockIndex++) {
-            sceGsSetDefLoadImage(g_gs_load_image, (s16)g_tex_vram_cbp, 1, SCE_GS_PSMCT16, 0, 0, 16, 16);
+            sceGsSetDefLoadImage(&g_gs_load_image, (s16)g_tex_vram_cbp, 1, SCE_GS_PSMCT16, 0, 0, 16, 16);
             FlushCache(0);
-            sceGsExecLoadImage(g_gs_load_image, destination);
+            sceGsExecLoadImage(&g_gs_load_image, destination);
             sceGsSyncPath(0, 0);
             g_tex_vram_cbp += 4;
             destination += 0x80;
@@ -126,7 +126,7 @@ void tex_upload_bitmap(s32 index)
             case 0:
                 remaining = g_tex_upload_table[index].dbw;
                 sceGsSetDefLoadImage(
-                    g_gs_load_image,
+                    &g_gs_load_image,
                     g_tex_vram_tbp,
                     remaining,
                     SCE_GS_PSMT4,
@@ -136,14 +136,14 @@ void tex_upload_bitmap(s32 index)
                     g_tex_upload_table[index].height
                 );
                 FlushCache(0);
-                sceGsExecLoadImage(g_gs_load_image, g_tex_bitmap_work_buf);
+                sceGsExecLoadImage(&g_gs_load_image, g_tex_bitmap_work_buf);
                 sceGsSyncPath(0, 0);
                 break;
 
             case 1:
                 chunkHeight = g_tex_upload_table[index].height;
                 sceGsSetDefLoadImage(
-                    g_gs_load_image,
+                    &g_gs_load_image,
                     g_tex_vram_tbp,
                     g_tex_upload_table[index].dbw,
                     SCE_GS_PSMT8,
@@ -153,7 +153,7 @@ void tex_upload_bitmap(s32 index)
                     chunkHeight
                 );
                 FlushCache(0);
-                sceGsExecLoadImage(g_gs_load_image, g_tex_bitmap_work_buf);
+                sceGsExecLoadImage(&g_gs_load_image, g_tex_bitmap_work_buf);
                 sceGsSyncPath(0, 0);
                 break;
 
@@ -175,7 +175,7 @@ void tex_upload_bitmap(s32 index)
                 chunkHeight = remaining;
             }
             sceGsSetDefLoadImage(
-                g_gs_load_image,
+                &g_gs_load_image,
                 g_tex_vram_tbp,
                 g_tex_upload_table[index].dbw,
                 SCE_GS_PSMT4,
@@ -185,7 +185,7 @@ void tex_upload_bitmap(s32 index)
                 chunkHeight
             );
             FlushCache(0);
-            sceGsExecLoadImage(g_gs_load_image, src);
+            sceGsExecLoadImage(&g_gs_load_image, src);
             sceGsSyncPath(0, 0);
             remaining -= chunkHeight;
             src += 0x20000;
@@ -207,7 +207,7 @@ void tex_upload_bitmap(s32 index)
                     chunkHeight = remaining;
                 }
                 sceGsSetDefLoadImage(
-                    g_gs_load_image,
+                    &g_gs_load_image,
                     g_tex_vram_tbp,
                     g_tex_upload_table[index].dbw,
                     SCE_GS_PSMT8,
@@ -217,7 +217,7 @@ void tex_upload_bitmap(s32 index)
                     chunkHeight
                 );
                 FlushCache(0);
-                sceGsExecLoadImage(g_gs_load_image, src1);
+                sceGsExecLoadImage(&g_gs_load_image, src1);
                 sceGsSyncPath(0, 0);
                 remaining -= chunkHeight;
                 src1 += 0x20000;
@@ -293,9 +293,9 @@ void vram_clear_all(void)
     }
 
     for (blockIndex = 0, vramBase = 0; blockIndex < 0x10; blockIndex++, vramBase += 0x400) {
-        sceGsSetDefLoadImage(g_gs_load_image, (s16)vramBase, 4, 0, 0, 0, 0x100, 0x100);
+        sceGsSetDefLoadImage(&g_gs_load_image, (s16)vramBase, 4, 0, 0, 0, 0x100, 0x100);
         FlushCache(0);
-        sceGsExecLoadImage(g_gs_load_image, buffer);
+        sceGsExecLoadImage(&g_gs_load_image, buffer);
         sceGsSyncPath(0, 0);
     }
 
@@ -306,7 +306,7 @@ s32 g_tex_vram_cbp;
 s32 g_tex_vram_tbp;
 
 sceGsDBuffDc g_gs_dbuff;
-u64 g_gs_load_image[12] __attribute__((aligned(64)));
+sceGsLoadImage g_gs_load_image __attribute__((aligned(64)));
 u8 g_glyph_upload_buf[32][512] __attribute__((aligned(64)));
 u8 g_gif_buf[2][0x10000] __attribute__((aligned(64)));
 u8 g_tex_bitmap_work_buf[0x4B000] __attribute__((aligned(64)));

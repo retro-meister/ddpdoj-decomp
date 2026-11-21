@@ -19,16 +19,16 @@ void cd_read_sync(void *destination, u32 byteCount, u32 startSector)
     s32 error;
 
     g_cd_file.size = byteCount;
-    g_cd_file.lba = startSector;
+    g_cd_file.lsn = startSector;
 
     for (;;) {
         do {
             sceCdDiskReady(0);
             g_cd_last_read_size = g_cd_file.size;
             readMode.trycount = 0;
-            readMode.spindlctrl = 1;
-            readMode.datapattern = 0;
-        } while (!sceCdRead(g_cd_file.lba, (g_cd_file.size + 0x7FF) >> 11,
+            readMode.spindlctrl = SCECdSpinNom;
+            readMode.datapattern = SCECdSecS2048;
+        } while (!sceCdRead(g_cd_file.lsn, (g_cd_file.size + 0x7FF) >> 11,
                                 destination, &readMode));
 
         sceCdSync(0);
@@ -56,7 +56,7 @@ void cd_read_async(void *destination, s32 byteCount, u32 startSector)
         break;
 
     case 1:
-        if (sceCdDiskReady(1) == 2) {
+        if (sceCdDiskReady(1) == SCECdComplete) {
             g_cd_async_state++;
         } else {
             g_cd_retry_timer++;
@@ -71,8 +71,8 @@ void cd_read_async(void *destination, s32 byteCount, u32 startSector)
     case 2:
         g_cd_last_read_size = byteCount;
         readMode.trycount = 0;
-        readMode.spindlctrl = 1;
-        readMode.datapattern = 0;
+        readMode.spindlctrl = SCECdSpinNom;
+        readMode.datapattern = SCECdSecS2048;
         if (sceCdRead(startSector, (byteCount + 2047) / 2048, destination, &readMode) != 0) {
             g_cd_async_state++;
         }
@@ -113,9 +113,9 @@ void cd_load_file(void *destination, const char *path)
             sceCdDiskReady(0);
             g_cd_last_read_size = g_cd_file.size;
             readMode.trycount = 0;
-            readMode.spindlctrl = 1;
-            readMode.datapattern = 0;
-        } while (!sceCdRead(g_cd_file.lba, (g_cd_file.size + 0x7FF) >> 11,
+            readMode.spindlctrl = SCECdSpinNom;
+            readMode.datapattern = SCECdSecS2048;
+        } while (!sceCdRead(g_cd_file.lsn, (g_cd_file.size + 0x7FF) >> 11,
                                 destination, &readMode));
 
         sceCdSync(0);
@@ -136,4 +136,4 @@ u32 g_cd_total_bytes_read;
 s8 g_cd_async_busy __attribute__((aligned(4)));
 s8 g_cd_async_state __attribute__((aligned(4)));
 
-CdFileStat g_cd_file __attribute__((aligned(64)));
+sceCdlFILE g_cd_file __attribute__((aligned(64)));

@@ -1,10 +1,10 @@
 #include "gallery/gallery.h"
 
-#define EZBGM_RPC_SERVER_ID     0x12345
+#define EZBGM_DEV               0x12345
 #define EZBGM_CMD_STOP          0x0060
 #define EZBGM_CMD_SET_VOL       0x0080
 #define EZBGM_CMD_SET_MASTERVOL 0x00A0
-#define EZBGM_CMD_INIT          0x00D0
+#define EZBGM_CMD_SDINIT        0x00D0
 #define EZBGM_CMD_GET_STATUS    0x0100
 #define EZBGM_CMD_START         0x0150
 #define EZBGM_CMD_PLAY_SE       0x0500
@@ -12,8 +12,10 @@
 #define EZBGM_CMD_RESET_SE      0x0540
 #define EZBGM_CMD_LOAD_SE_INIT  0x0550
 #define EZBGM_CMD_LOAD_SE       0x0560
-#define EZBGM_CMD_LOAD_BGM      0x8020
+#define EZBGM_CMD_OPEN          0x8020
 #define EZBGM_CMD_GET_MODE      0x80B0
+
+#define BGM_MODE_RUNNING        0x1000
 
 typedef struct {
     s32 isStopped;
@@ -96,17 +98,17 @@ extern s8 g_bgm_stop_pending;
 extern BgmFadeState g_bgm_fade_state[2];
 extern CdFileEntry g_stage_bg_files[20];
 extern CdFileEntry g_bgm_files[30];
-extern s32 g_sound_rpc_client[12];
+extern sceSifClientData g_sound_rpc_client;
 extern s32 g_sound_rpc_buf[16];
 
 static inline s32 send_bgm_rpc(u32 cmd, s32 param1, s32 param2)
 {
-    if ((cmd & 0xFFF0) == EZBGM_CMD_LOAD_BGM || (cmd & 0xFFF0) == EZBGM_CMD_LOAD_SE_INIT || (cmd & 0xFFF0) == EZBGM_CMD_LOAD_SE) {
-        sceSifCallRpc(g_sound_rpc_client, cmd, 0, (void *)param1, 0x40, g_sound_rpc_buf, 0x40, 0, 0);
+    if ((cmd & 0xFFF0) == EZBGM_CMD_OPEN || (cmd & 0xFFF0) == EZBGM_CMD_LOAD_SE_INIT || (cmd & 0xFFF0) == EZBGM_CMD_LOAD_SE) {
+        sceSifCallRpc(&g_sound_rpc_client, cmd, 0, (void *)param1, 0x40, g_sound_rpc_buf, 0x40, 0, 0);
     } else {
         g_sound_rpc_buf[0] = param1;
         g_sound_rpc_buf[1] = param2;
-        sceSifCallRpc(g_sound_rpc_client, cmd, 0, g_sound_rpc_buf, 0x10, g_sound_rpc_buf, 0x40, 0, 0);
+        sceSifCallRpc(&g_sound_rpc_client, cmd, 0, g_sound_rpc_buf, 0x10, g_sound_rpc_buf, 0x40, 0, 0);
     }
     return g_sound_rpc_buf[0];
 }
@@ -114,7 +116,7 @@ static inline s32 send_bgm_rpc(u32 cmd, s32 param1, s32 param2)
 static inline void load_vag(u32 cmd, void *path)
 {
     s32 p = (s32)path;
-    sceSifCallRpc(g_sound_rpc_client, cmd, 0, (void *)p, 0x40, g_sound_rpc_buf, 0x40, 0, 0);
+    sceSifCallRpc(&g_sound_rpc_client, cmd, 0, (void *)p, 0x40, g_sound_rpc_buf, 0x40, 0, 0);
 }
 
 void sound_update_bgm_fade(void)
@@ -139,7 +141,7 @@ void sound_update_bgm_fade(void)
             }
 
             if (g_bgm_fade_state[channel].fadeMode == 2) {
-                if (send_bgm_rpc(channel | EZBGM_CMD_GET_MODE, 0, 0) & 0x1000) {
+                if (send_bgm_rpc(channel | EZBGM_CMD_GET_MODE, 0, 0) & BGM_MODE_RUNNING) {
                     send_bgm_rpc(channel | EZBGM_CMD_STOP, 0, 0);
                     g_bgm_fade_state[channel].isPaused = 1;
                     g_bgm_fade_state[channel].fadeMode = 0;
@@ -187,17 +189,17 @@ void sound_update(void)
 {
     g_sound_rpc_buf[0] = 0;
     g_sound_rpc_buf[1] = 0;
-    sceSifCallRpc(g_sound_rpc_client, EZBGM_CMD_TICK, 0, g_sound_rpc_buf, 0x10, g_sound_rpc_buf, 0x40, 0, 0);
+    sceSifCallRpc(&g_sound_rpc_client, EZBGM_CMD_TICK, 0, g_sound_rpc_buf, 0x10, g_sound_rpc_buf, 0x40, 0, 0);
 
     if (g_bgm_stop_pending != 0) {
         g_sound_rpc_buf[0] = 0;
         g_sound_rpc_buf[1] = 0;
-        sceSifCallRpc(g_sound_rpc_client, EZBGM_CMD_GET_STATUS, 0, g_sound_rpc_buf, 0x10, g_sound_rpc_buf, 0x40, 0, 0);
+        sceSifCallRpc(&g_sound_rpc_client, EZBGM_CMD_GET_STATUS, 0, g_sound_rpc_buf, 0x10, g_sound_rpc_buf, 0x40, 0, 0);
 
         if (g_sound_rpc_buf[0] == 0) {
             g_sound_rpc_buf[0] = 0;
             g_sound_rpc_buf[1] = 0;
-            sceSifCallRpc(g_sound_rpc_client, EZBGM_CMD_START, 0, g_sound_rpc_buf, 0x10, g_sound_rpc_buf, 0x40, 0, 0);
+            sceSifCallRpc(&g_sound_rpc_client, EZBGM_CMD_START, 0, g_sound_rpc_buf, 0x10, g_sound_rpc_buf, 0x40, 0, 0);
             g_bgm_stop_pending = 0;
             g_bgm_fade_state[0].isStopped = 0;
             g_bgm_fade_state[0].isPaused = 0;
@@ -257,7 +259,7 @@ void sound_play_se(s32 selection)
 
         g_sound_rpc_buf[0] = requestIndex;
         g_sound_rpc_buf[1] = adjustedValue;
-        sceSifCallRpc(g_sound_rpc_client, EZBGM_CMD_PLAY_SE, 0, g_sound_rpc_buf, 0x10,
+        sceSifCallRpc(&g_sound_rpc_client, EZBGM_CMD_PLAY_SE, 0, g_sound_rpc_buf, 0x10,
                       g_sound_rpc_buf, 0x40, 0, 0);
         g_se_last_result = g_sound_rpc_buf[0];
     }
@@ -272,19 +274,19 @@ void sound_init_file_tables(void)
     for (index = 0, source = g_bgm_file_paths, entry = g_bgm_files; index < 13; index++, source++, entry++) {
         cd_search_file(*source);
         entry->size = g_cd_file.size;
-        entry->lba = g_cd_file.lba;
+        entry->lba = g_cd_file.lsn;
     }
 
     for (index = 0, source = g_stage_bg_paths, entry = g_stage_bg_files; index < 10; index++, source++, entry++) {
         cd_search_file(*source);
         entry->size = g_cd_file.size;
-        entry->lba = g_cd_file.lba;
+        entry->lba = g_cd_file.lsn;
     }
 
     for (index = 0, source = g_data_file_paths, entry = g_data_files; index < 14; index++, source++, entry++) {
         cd_search_file(*source);
         entry->size = g_cd_file.size;
-        entry->lba = g_cd_file.lba;
+        entry->lba = g_cd_file.lsn;
     }
 }
 
@@ -292,11 +294,11 @@ void sound_init_iop_rpc(void)
 {
     sceSifInitRpc(0);
     do {
-        if (sceSifBindRpc(g_sound_rpc_client, EZBGM_RPC_SERVER_ID, 0) < 0) {
+        if (sceSifBindRpc(&g_sound_rpc_client, EZBGM_DEV, 0) < 0) {
             while (1) {
             }
         }
-    } while (g_sound_rpc_client[9] == 0);
+    } while (g_sound_rpc_client.serve == 0);
 
     g_bgm_fade_state[0].fadeMode = 0;
     g_bgm_fade_state[0].isStopped = 1;
@@ -309,27 +311,27 @@ void sound_init_iop_rpc(void)
     g_se_last_result = 0;
     g_sound_rpc_buf[0] = 0;
     g_sound_rpc_buf[1] = 0;
-    sceSifCallRpc(g_sound_rpc_client, EZBGM_CMD_INIT, 0, g_sound_rpc_buf, 0x10, g_sound_rpc_buf, 0x40, 0, 0);
+    sceSifCallRpc(&g_sound_rpc_client, EZBGM_CMD_SDINIT, 0, g_sound_rpc_buf, 0x10, g_sound_rpc_buf, 0x40, 0, 0);
 
     g_sound_rpc_buf[0] = 0;
     g_sound_rpc_buf[1] = 0;
-    sceSifCallRpc(g_sound_rpc_client, EZBGM_CMD_RESET_SE, 0, g_sound_rpc_buf, 0x10, g_sound_rpc_buf, 0x40, 0, 0);
+    sceSifCallRpc(&g_sound_rpc_client, EZBGM_CMD_RESET_SE, 0, g_sound_rpc_buf, 0x10, g_sound_rpc_buf, 0x40, 0, 0);
 
     g_sound_rpc_buf[0] = 0x3FFF3FFF;
     g_sound_rpc_buf[1] = 0;
-    sceSifCallRpc(g_sound_rpc_client, EZBGM_CMD_SET_MASTERVOL | 0, 0, g_sound_rpc_buf, 0x10, g_sound_rpc_buf, 0x40, 0, 0);
+    sceSifCallRpc(&g_sound_rpc_client, EZBGM_CMD_SET_MASTERVOL | 0, 0, g_sound_rpc_buf, 0x10, g_sound_rpc_buf, 0x40, 0, 0);
 
     g_sound_rpc_buf[0] = 0x3FFF3FFF;
     g_sound_rpc_buf[1] = 0;
-    sceSifCallRpc(g_sound_rpc_client, EZBGM_CMD_SET_MASTERVOL | 1, 0, g_sound_rpc_buf, 0x10, g_sound_rpc_buf, 0x40, 0, 0);
+    sceSifCallRpc(&g_sound_rpc_client, EZBGM_CMD_SET_MASTERVOL | 1, 0, g_sound_rpc_buf, 0x10, g_sound_rpc_buf, 0x40, 0, 0);
 
     g_sound_rpc_buf[0] = 0x3FFF3FFF;
     g_sound_rpc_buf[1] = 0;
-    sceSifCallRpc(g_sound_rpc_client, EZBGM_CMD_SET_VOL | 0, 0, g_sound_rpc_buf, 0x10, g_sound_rpc_buf, 0x40, 0, 0);
+    sceSifCallRpc(&g_sound_rpc_client, EZBGM_CMD_SET_VOL | 0, 0, g_sound_rpc_buf, 0x10, g_sound_rpc_buf, 0x40, 0, 0);
 
     g_sound_rpc_buf[0] = 0x3FFF3FFF;
     g_sound_rpc_buf[1] = 0;
-    sceSifCallRpc(g_sound_rpc_client, EZBGM_CMD_SET_VOL | 1, 0, g_sound_rpc_buf, 0x10, g_sound_rpc_buf, 0x40, 0, 0);
+    sceSifCallRpc(&g_sound_rpc_client, EZBGM_CMD_SET_VOL | 1, 0, g_sound_rpc_buf, 0x10, g_sound_rpc_buf, 0x40, 0, 0);
 
     load_vag(EZBGM_CMD_LOAD_SE_INIT, g_se_vag_path_1);
     load_vag(EZBGM_CMD_LOAD_SE, g_se_vag_path_2);
@@ -346,8 +348,8 @@ s32 g_se_last_result;
 s32 g_se_volume;
 s32 g_se_priority;
 
-s32 g_sound_rpc_buf[16];
-s32 g_sound_rpc_client[12];
+s32 g_sound_rpc_buf[16] __attribute__((aligned(16)));
+sceSifClientData g_sound_rpc_client;
 CdFileEntry g_bgm_files[30];
 CdFileEntry g_stage_bg_files[20];
 CdFileEntry g_data_files[20];

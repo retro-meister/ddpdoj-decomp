@@ -13,7 +13,7 @@ typedef struct
     u32 biYPelsPerMeter;
     u32 biClrUsed;
     u32 biClrImportant;
-    Qword loadImage[6];
+    sceGsLoadImage loadImage;
 } BmpContext;
 
 extern u16 g_ascii_glyph_table[];
@@ -171,7 +171,7 @@ s32 bmp_upload_texture(SpriteInfo *tex, s16 tbp, s16 cbp, u8 *bmp, s32 x, s32 y)
 
 void bmp_upload_clut(s16 destinationBase, const u8 *palette, s32 colorCount)
 {
-    u64 loadPacket[12];
+    sceGsLoadImage loadPacket;
     u8 paletteCopy[0x400];
     u8 *clutPtrs[2];
     u8 *swizzledPalette;
@@ -203,9 +203,9 @@ void bmp_upload_clut(s16 destinationBase, const u8 *palette, s32 colorCount)
         memcpy(swizzledBlock + 0x40, clutPtrs[1] + 0x20, 0x20);
         memcpy(swizzledBlock + 0x60, clutPtrs[1] + 0x60, 0x20);
     }
-    sceGsSetDefLoadImage(loadPacket, destinationBase, 1, 0, 0, 0, 16, 16);
+    sceGsSetDefLoadImage(&loadPacket, destinationBase, 1, 0, 0, 0, 16, 16);
     FlushCache(0);
-    sceGsExecLoadImage(loadPacket, swizzledPalette);
+    sceGsExecLoadImage(&loadPacket, swizzledPalette);
     sceGsSyncPath(0, 0);
 }
 

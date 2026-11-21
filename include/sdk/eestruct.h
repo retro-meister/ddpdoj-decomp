@@ -38,6 +38,11 @@
 #define SCE_GS_PSMCT16    0x02
 #define SCE_GS_PSMT8      0x13
 #define SCE_GS_PSMT4      0x14
+#define SCE_GS_PSMZ24     0x31
+
+/* EE Hardware Timer 0 registers (eeregs.h) */
+#define T0_COUNT          ((volatile u32 *)0x10000000)
+#define T0_MODE           ((volatile u32 *)0x10000010)
 
 /* GS register bit-packing macros */
 #define SCE_GS_SET_PRIM(prim, iip, tme, fge, abe, aa1, fst, ctxt, fix) \
