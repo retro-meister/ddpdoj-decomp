@@ -17,15 +17,6 @@ typedef struct
     u8 loadImage[0x60];
 } BmpContext;
 
-typedef struct
-{
-    s16 x;
-    s16 y;
-    s16 w;
-    s16 h;
-    u64 tex0;
-} TexInfo;
-
 extern u16 g_ascii_glyph_table[];
 extern u8 *g_bmp_file_ptr;
 extern u8 *g_bmp_info_ptr;
@@ -47,9 +38,8 @@ extern u32 g_bmp_chunk_height;
 extern s32 g_bmp_decode_pass;
 extern BmpContext g_bmp_ctx;
 
-s32 bmp_upload_texture(void *texPtr, s16 tbp, s16 cbp, u8 *bmp, s32 x, s32 y)
+s32 bmp_upload_texture(SpriteInfo *tex, s16 tbp, s16 cbp, u8 *bmp, s32 x, s32 y)
 {
-    TexInfo *tex = texPtr;
     u32 offBits;
     u32 wPow;
     u32 hPow;
@@ -170,8 +160,8 @@ s32 bmp_upload_texture(void *texPtr, s16 tbp, s16 cbp, u8 *bmp, s32 x, s32 y)
             }
 
             tex->tex0 = SCE_GS_SET_TEX0(tbp, g_bmp_tbw, g_bmp_psm, tw, th, 1, 0, cbp, g_bmp_cpsm, 0, 0, 1);
-            tex->x = x;
-            tex->y = y;
+            tex->u = x;
+            tex->v = y;
             tex->w = g_bmp_ctx.biWidth;
             tex->h = g_bmp_ctx.biHeight;
             return 1;

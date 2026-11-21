@@ -1,16 +1,5 @@
 #include "gallery/gallery.h"
 
-typedef struct GalleryFrame
-{
-    s32 reserved00[2];
-    s32 left;
-    s32 top;
-    s32 right;
-    s32 bottom;
-    s32 reserved18;
-    s32 tileAttributes;
-} GalleryFrame;
-
 inline static s32 getBits(s32 count)
 {
     s32 ret = 0;
@@ -80,51 +69,50 @@ s32 lzss_decompress_step(u8 *dst, u8 *src)
     return 0;
 }
 
-void lzss_draw_frame_overlay(void *framePtr)
+void lzss_draw_frame_overlay(GalleryBox *frame)
 {
-    GalleryFrame *frame = framePtr;
     s32 rows[2];
     s32 x;
     s32 y;
     s32 innerColumns;
 
-    innerColumns = ((frame->right - frame->left) / 16) - 2;
-    rows[1] = (frame->bottom - frame->top) / 32;
+    innerColumns = ((frame->x1 - frame->x0) / 16) - 2;
+    rows[1] = (frame->y1 - frame->y0) / 32;
     rows[0] = rows[1] - 2;
-    x = frame->left - 6;
-    y = frame->top / 2;
-    sprite_queue_glyph(x - 64, y, 0x2289, frame->tileAttributes, 300);
+    x = frame->x0 - 6;
+    y = frame->y0 / 2;
+    sprite_queue_glyph(x - 64, y, 0x2289, frame->alpha, 300);
     y += 16;
     for (rows[1] = 0; rows[1] < rows[0]; rows[1]++) {
-        sprite_queue_glyph(x - 64, y, 0x228A, frame->tileAttributes, 300);
+        sprite_queue_glyph(x - 64, y, 0x228A, frame->alpha, 300);
         y += 16;
     }
 
-    sprite_queue_glyph(x - 64, y, 0x228B, frame->tileAttributes, 300);
-    x = frame->left + 10;
-    y = frame->top / 2;
+    sprite_queue_glyph(x - 64, y, 0x228B, frame->alpha, 300);
+    x = frame->x0 + 10;
+    y = frame->y0 / 2;
     for (rows[1] = 0; rows[1] < innerColumns; rows[1]++) {
-        sprite_queue_glyph(x - 64, y, 0x2287, frame->tileAttributes, 300);
+        sprite_queue_glyph(x - 64, y, 0x2287, frame->alpha, 300);
         x += 16;
     }
 
-    x = frame->left + 10;
-    y = (frame->top / 2) + ((rows[0] + 1) * 16);
+    x = frame->x0 + 10;
+    y = (frame->y0 / 2) + ((rows[0] + 1) * 16);
     for (rows[1] = 0; rows[1] < innerColumns; rows[1]++) {
-        sprite_queue_glyph(x - 64, y, 0x2288, frame->tileAttributes, 300);
+        sprite_queue_glyph(x - 64, y, 0x2288, frame->alpha, 300);
         x += 16;
     }
 
-    x = frame->left + (((innerColumns + 1) * 16) - 6);
-    y = frame->top / 2;
-    sprite_queue_glyph(x - 64, y, 0x2284, frame->tileAttributes, 300);
+    x = frame->x0 + (((innerColumns + 1) * 16) - 6);
+    y = frame->y0 / 2;
+    sprite_queue_glyph(x - 64, y, 0x2284, frame->alpha, 300);
     y += 16;
     for (rows[1] = 0; rows[1] < rows[0]; rows[1]++) {
-        sprite_queue_glyph(x - 64, y, 0x2285, frame->tileAttributes, 300);
+        sprite_queue_glyph(x - 64, y, 0x2285, frame->alpha, 300);
         y += 16;
     }
 
-    sprite_queue_glyph(x - 64, y, 0x2286, frame->tileAttributes, 300);
+    sprite_queue_glyph(x - 64, y, 0x2286, frame->alpha, 300);
 }
 
 void gallery_draw_solid_rect(s32 xStart, s32 yStart, s32 xEnd, s32 yEnd,

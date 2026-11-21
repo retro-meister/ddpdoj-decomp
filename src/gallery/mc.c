@@ -26,7 +26,7 @@ extern u8 g_mc_busy;
 extern u8 g_mc_icon_2_buf[0x8800];
 extern u8 g_mc_icon_1_buf[0x8800];
 
-void gallery_load_font_files(void)
+void mc_load_icons(void)
 {
     cd_load_file(g_mc_icon_1_buf, g_icon_1_path);
     g_mc_icon_1_size = g_cd_last_read_size;

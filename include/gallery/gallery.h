@@ -114,24 +114,10 @@ typedef struct {
     SpriteInfo allSprites[37];
     SpriteInfo viewerTextures[2];
     SpriteInfo bgSprite;
-    SpriteInfo uiSprites[6];
-    u8 pad_5054B0[0x30];
+    SpriteInfo uiSprites[9];
     SpriteInfo uiAtlasSprite;
-    u8 pad_5054F0[0x8];
-    s32 box_x0;
-    s32 box_y0;
-    s32 box_x1;
-    s32 box_y1;
-    u8 box_color_r;
-    u8 box_color_g;
-    u8 box_color_b;
-    u8 box_color_a;
-    u8 pad_50550C[0x1C];
-    u8 cursor_color_r;
-    u8 cursor_color_g;
-    u8 cursor_color_b;
-    u8 cursor_color_a;
-    s32 cursor_alpha;
+    GalleryBox gridBox;
+    GalleryBox cursorBox;
     s32 idleTimer;
     u8 pad_505534[4];
     s16 scrollX;
@@ -295,8 +281,10 @@ void iop_reboot_and_load_modules(void);
 void glyph_cache_init(void);
 s32 glyph_cache_lookup(u16 key);
 
+/* mc.c */
+void mc_load_icons(void);
+
 /* main.c */
-void gallery_load_font_files(void);
 void gallery_main(void);
 void gallery_run_loop(void);
 void gallery_init_frame_gs(void);
@@ -311,7 +299,7 @@ void gallery_draw_background(u8 alpha);
 void gallery_draw_grid_and_ui(void);
 
 /* bmp.c */
-s32 bmp_upload_texture(void *tex, s16 tbp, s16 cbp, u8 *bmp, s32 x, s32 y);
+s32 bmp_upload_texture(SpriteInfo *tex, s16 tbp, s16 cbp, u8 *bmp, s32 x, s32 y);
 void bmp_upload_clut(s16 destinationBase, const void *palette, s32 colorCount);
 void bmp_draw_ascii_char(void *packet, s32 x, s32 y, u8 glyphIndex);
 
@@ -323,7 +311,7 @@ s32 viewer_update_grid_cursor(GalleryMenuState *menu, PadInfo *input);
 
 /* lzss.c */
 s32 lzss_decompress_step(u8 *dst, u8 *src);
-void lzss_draw_frame_overlay(void *frame);
+void lzss_draw_frame_overlay(GalleryBox *frame);
 void gallery_draw_solid_rect(s32 xStart, s32 yStart, s32 xEnd, s32 yEnd, s32 red, s32 green, s32 blue, s32 alpha, s32 layer);
 
 #endif

@@ -130,7 +130,7 @@ void gallery_main(void)
     tex_upload_init_vram();
     font_upload_default_cluts();
     sceMcInit();
-    gallery_load_font_files();
+    mc_load_icons();
     sound_init();
     g_gallery = memalign(0x40, 0x885800);
     memset(g_gallery, 0, 0x5057C0);
@@ -699,20 +699,20 @@ s32 gallery_state_loading(void)
         g_gallery->state++;
         break;
     case 6:
-        g_gallery->box_x0 = 0x38;
-        g_gallery->box_x1 = 0x248;
-        g_gallery->box_y0 = 0x50;
-        g_gallery->box_y1 = 0x130;
-        g_gallery->box_color_r = 0x80;
-        g_gallery->box_color_g = 0x18;
-        g_gallery->box_color_b = 0x80;
-        g_gallery->box_color_a = 0x33;
+        g_gallery->gridBox.x0 = 0x38;
+        g_gallery->gridBox.x1 = 0x248;
+        g_gallery->gridBox.y0 = 0x50;
+        g_gallery->gridBox.y1 = 0x130;
+        g_gallery->gridBox.r = 0x80;
+        g_gallery->gridBox.g = 0x18;
+        g_gallery->gridBox.b = 0x80;
+        g_gallery->gridBox.a = 0x33;
         g_gallery->overlayEnabled = 0;
-        g_gallery->cursor_color_r = 0x18;
-        g_gallery->cursor_color_g = 0xFF;
-        g_gallery->cursor_color_b = 0x30;
-        g_gallery->cursor_color_a = 0x33;
-        g_gallery->cursor_alpha = 0x80;
+        g_gallery->cursorBox.r = 0x18;
+        g_gallery->cursorBox.g = 0xFF;
+        g_gallery->cursorBox.b = 0x30;
+        g_gallery->cursorBox.a = 0x33;
+        g_gallery->cursorBox.alpha = 0x80;
 
         menu = &g_gallery->menu;
         menu->selection = 0;
