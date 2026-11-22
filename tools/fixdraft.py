@@ -304,6 +304,67 @@ def fix_pointer_globals(code):
     return code
 
 
+def fix_byte_patterns(code):
+    """m2c byte/pointer-width artifacts that are always safe to rewrite."""
+    # Byte RMW through a halfword pointer: (*(u16 *)p) = (s8) ((u8) (*(u16 *)p) op x)  ->  (*(u8 *)p) op= x
+    ptr = r"\(\(u8 \*\)\(\w+\) \+ \([0-9A-Fx]+\)\)"
+    code = re.sub(
+        rf"\(\*\(u16 \*\)({ptr})\) = \(s8\) \(\(u8\) \(\*\(u16 \*\)\1\) (\+|-|&|\||\^) ([^;]+)\);",
+        r"(*(u8 *)\1) \2= \3;", code,
+    )
+    # (u8)(*(s16 *)p): little-endian low byte of a halfword is a plain byte load (lbu, not lb).
+    code = re.sub(
+        r"\(u8\) \(\*\([su]16 \*\)(\(\(u8 \*\)\([\w]+\) \+ \([0-9A-Fx]+\)\))\)", r"(*(u8 *)\1)", code,
+    )
+    # (u8 *)(*(TABLE + i)) on a u8[] table reads a whole pointer: *(u8 **)(TABLE + i) (lw, not lbu).
+    out, i = [], 0
+    pat = re.compile(r"\(u8 \*\)\(\*\((D_[0-9A-F]{8}) \+ ")
+    while (m := pat.search(code, i)):
+        j, depth = m.end(), 2
+        while depth and j < len(code):
+            depth += (code[j] == "(") - (code[j] == ")")
+            j += 1
+        out.append(code[i:m.start()] + f"*(u8 **)({m[1]} + {code[m.end():j - 2]})")
+        i = j
+    code = "".join(out) + code[i:]
+    # Byte negation: m2c prints *= -1 on a u8 as *= 0xFF (retail li -1; mult).
+    code = re.sub(r"(\.b\[\d\]|\(\*\(u8 \*\)[^;=\n]+\)) \*= 0xFF;", r"\1 *= -1;", code)
+    return code
+
+
+def fix_branch_byte_adds(code):
+    """m2c merges per-branch `addq.b #k,dN` into `var_v0 = d + k; goto L; ... L: d = var_v0; goto M;`.
+    Retail does lbu/addiu/sb in every branch, so give each branch its own `d += k; goto M;`."""
+    m = re.search(r"\nblock_(\d+):\n\s+reg_d\d\.b\[0\] = var_v0;\n\s+goto (block_\d+);\n", code)
+    if not m:
+        return code
+    label, target = m.group(1), m.group(2)
+    new = code.replace(m.group(0), "\n")
+    new = re.sub(rf"var_v0 = (reg_d\d\.b\[0\]) \+ (0x[0-9A-F]+|\d+);\n(\s+)goto block_{label};", rf"\1 += \2;\n\3goto {target};", new)
+    new = re.sub(r"var_v0 = (reg_d\d\.b\[0\]) \+ (0x[0-9A-F]+|\d+);\n(\s+)", rf"\1 += \2;\n\3goto {target};\n\3", new)
+    if "var_v0" in new.replace("u8 var_v0;", ""):
+        return code
+    return re.sub(r"\n\s+u8 var_v0;\n", "\n", new)
+
+
+def fix_wide_constant_adds(code):
+    """m2c sinks `reg_dN.w += 0xXXXXXXXX;` below unrelated stores; the 68k `addi.l` follows the dN load directly,
+    and that order decides which register gets the lui/ori constant. Move it back up to the last write of dN."""
+    add = re.compile(r"^(\s+)reg_d(\d)\.w (\+|-)= 0x[0-9A-F]{8};$")
+    lines = code.split("\n")
+    for i in range(len(lines)):
+        m = add.match(lines[i])
+        if not m:
+            continue
+        reg, j = f"reg_d{m.group(2)}", i - 1
+        while j >= 0 and lines[j].startswith(m.group(1) + "r") and lines[j].endswith(";") and reg not in lines[j] \
+                and not re.search(r"\w+\(", lines[j]):
+            j -= 1
+        if j < i - 1 and j >= 0 and re.search(rf"{reg}\.(h\[[01]\]|w|b\[0\]) = ", lines[j]):
+            lines.insert(j + 1, lines.pop(i))
+    return "\n".join(lines)
+
+
 def fix(code):
     code = fix_function_pointers(code)
     code = fix_arrays(code)
@@ -319,6 +380,9 @@ def fix(code):
     code = IF_LOOKUP.sub(lambda m: m[1] + lookup_expr(m[4], m[3], m[5]) + "\n", code)
     code = split_pointer_locals(code)
     code = fix_integer_derefs(code)
+    code = fix_byte_patterns(code)
+    code = fix_branch_byte_adds(code)
+    code = fix_wide_constant_adds(code)
     code = fix_stray_cases(code)
     code = fix_pointer_globals(code)
     code = fix_address_register_assignments(code)

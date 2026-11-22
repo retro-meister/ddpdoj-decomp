@@ -1,4 +1,6 @@
 import argparse
+import copy
+import functools
 import hashlib
 import json
 from pathlib import Path
@@ -65,8 +67,17 @@ def split_dir(name):
     return ROOT / "build" / "split" / name
 
 
+@functools.lru_cache(maxsize=8)
+def _parse_splat_config(path, mtime_ns, size):
+    # libyaml's C loader is ~10x faster than the pure-Python one on the large target configs.
+    return yaml.load(Path(path).read_text(encoding="utf-8"), Loader=yaml.CSafeLoader)
+
+
 def load_splat_config(name):
-    return yaml.safe_load(splat_yaml_path(name).read_text(encoding="utf-8"))
+    """Parsed splat YAML, cached per file version (integrate.py rewrites it mid-process). Returns a private copy."""
+    path = splat_yaml_path(name)
+    stat = path.stat()
+    return copy.deepcopy(_parse_splat_config(str(path), stat.st_mtime_ns, stat.st_size))
 
 
 def load_symbols(name):

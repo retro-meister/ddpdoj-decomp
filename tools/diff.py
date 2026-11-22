@@ -372,7 +372,7 @@ def diff(args):
         raise ValueError("The comparison range must be aligned and inside the executable code")
     start = address - file_address
     retail = original[start:start + size]
-    folder = ROOT / "build" / "diff" / args.target / args.function
+    folder = ROOT / "build" / "diff" / args.target / (args.function + (f"@{args.tag}" if args.tag else ""))
     folder.mkdir(parents=True, exist_ok=True)
     (folder / "retail.bin").write_bytes(retail)
     compile_source(local, source, folder / "compiled.o", version)
@@ -440,6 +440,7 @@ def main():
     parser.add_argument("--compiler", choices=TOOLCHAINS["compilers"], help="override the target compiler")
     parser.add_argument("--objdiff", help="use an existing objdiff-cli executable")
     parser.add_argument("--interactive", action="store_true")
+    parser.add_argument("--tag", help="separate work folder suffix, for scoring variants of one function in parallel")
     parser.add_argument("--compact", action="store_true", help="print compact side-by-side instruction diffs")
     parser.add_argument("--max-diffs", type=int, default=40, help="differing lines to print with --compact (default 40)")
     diff(parser.parse_args())
