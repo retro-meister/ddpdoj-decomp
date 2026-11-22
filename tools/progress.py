@@ -267,8 +267,6 @@ def collect_map_functions():
     fn_map = known_functions(inventory)
     by_target = {}
     for name in TARGETS:
-        wip_dir = nonmatching_dir(name)
-        wip_names = {p.stem for p in wip_dir.glob("*.c")} if wip_dir.is_dir() else set()
         if name == "GALLERY.ELF":
             # GALLERY.ELF is 100% matched; recover all 66 function names & sizes from 80efe77.
             y = git_output("show", f"{GALLERY_ALL_FUNCTIONS_COMMIT}:config/GALLERY.ELF/splat.yaml")
@@ -289,12 +287,7 @@ def collect_map_functions():
         else:
             funcs = []
             for fn in inventory[name]:
-                if fn["matched"]:
-                    status = "matched"
-                elif fn["name"] in wip_names:
-                    status = "wip"
-                else:
-                    status = "asm"
+                status = "matched" if fn["matched"] else "asm"
                 funcs.append({"name": fn["name"], "size": fn["size"], "status": status})
         funcs.sort(key=lambda f: f["size"], reverse=True)
         by_target[name] = funcs
@@ -318,7 +311,7 @@ def plot_progress_map():
         "SLPS_252.33": "Main game (SLPS_252.33)",
         "GALLERY.ELF": "Gallery (GALLERY.ELF)",
     }
-    colors = {"matched": "#3fb950", "wip": "#d29922", "asm": "#da3633"}
+    colors = {"matched": "#3fb950", "asm": "#da3633"}
 
     # Same bytes-per-px² scale across all 3 stacked panels:
     # Target ~440px height for SLPS_252.33 so GALLERY.ELF is a sleek ~16px strip of ~16x16 tiles.
@@ -351,7 +344,7 @@ def plot_progress_map():
     ]
 
     # Legend (top-right)
-    legend = [("matched", "#3fb950", 900), ("wip", "#d29922", 1010), ("asm", "#da3633", 1090)]
+    legend = [("matched", "#3fb950", 980), ("asm", "#da3633", 1090)]
     for lname, lcol, lx in legend:
         out.append(f'<rect x="{lx}" y="18" width="14" height="14" rx="2" fill="{lcol}"/>')
         out.append(f'<text x="{lx + 20}" y="30" fill="#e6edf3" font-size="13">{lname}</text>')

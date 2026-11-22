@@ -15,7 +15,7 @@ void func_001BDFC0(void)
     reg_d1.h[1] = *(u16 *)(reg_a6 + 2);
     reg_d1.h[0] = *(u16 *)(reg_a6 + 4);
     reg_d4.h[0] = 0x11;
-    reg_d3.h[0] = 0x24D0;
     reg_d1.w += 0xDC00E600U;
+    reg_d3.h[0] = 0x24D0;
     func_0019C530();
 }

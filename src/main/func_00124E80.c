@@ -11,8 +11,8 @@ void func_00124E80(void)
 
     savedDataRegister = reg_d0.w;
     savedAddressRegister = reg_a0;
-    reg_d0.h[0] = 0x13;
     reg_a0 = D_00295EA0;
+    reg_d0.h[0] = 0x13;
 
     do {
         entryFlags = *reg_a0;

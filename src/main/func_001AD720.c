@@ -18,9 +18,9 @@ extern s16 D_0028E650;
 
 void func_001AD720(void)
 {
-    u32 lowHalfword;
+    s32 lowHalfword;
 
-    lowHalfword = (reg_d0.w = 0) & 0xFFFF;
+    lowHalfword = (u16)(reg_d0.w = 0);
     D_0028E618 = 0;
     D_0028E61C = 0;
     D_0028E620 = lowHalfword;
