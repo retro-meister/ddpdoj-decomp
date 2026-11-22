@@ -1,10 +1,10 @@
 #include "common.h"
 
-extern s32 D_0028E48C;
+extern s32 reg_d7;
 
 void func_0020ED20(void) {
-    work_reg_0.w = 0;
-    if (D_0028E48C == 0) {
-        work_reg_0.w = 1;
+    reg_d0.w = 0;
+    if (reg_d7 == 0) {
+        reg_d0.w = 1;
     }
 }

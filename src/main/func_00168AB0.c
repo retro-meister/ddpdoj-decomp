@@ -1,11 +1,11 @@
 #include "common.h"
 
 extern s32 D_0025B0C0[];
-extern s32 *D_0028E468;
+extern s32 *reg_a0;
 
 void func_0014E370(void);
 
 void func_00168AB0(void) {
-    D_0028E468 = D_0025B0C0;
+    reg_a0 = D_0025B0C0;
     func_0014E370();
 }

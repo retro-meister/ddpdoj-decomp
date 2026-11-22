@@ -1,17 +1,17 @@
 #include "common.h"
 
 extern void func_001AED90(void);
-extern u8 *D_0028E468;
-extern u16 D_0028E490;
-extern u32 D_0028E498;
+extern u8 *reg_a0;
+extern u16 reg_d6;
+extern u32 reg_d4;
 extern u16 D_0028E748;
 extern u32 D_0028E764;
 extern u8 D_002BAFAA[];
 
 void func_001AED60(void) {
-    D_0028E468 = D_002BAFAA;
-    work_reg_0.w = D_0028E764;
-    D_0028E490 = D_0028E748;
-    D_0028E498 = work_reg_0.w;
+    reg_a0 = D_002BAFAA;
+    reg_d0.w = D_0028E764;
+    reg_d6 = D_0028E748;
+    reg_d4 = reg_d0.w;
     func_001AED90();
 }

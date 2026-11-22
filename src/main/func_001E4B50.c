@@ -7,13 +7,13 @@ typedef struct WorkRegA4 {
     s16 field6;
 } WorkRegA4;
 
-extern WorkRegA4 *work_reg_a4;
+extern WorkRegA4 *reg_a4;
 
 void func_001E4B70(void);
 
 void func_001E4B50(void) {
-    work_reg_a4->flag3 = 0;
-    work_reg_a4->field4 = 0x20;
-    work_reg_a4->field6 = 0;
+    reg_a4->flag3 = 0;
+    reg_a4->field4 = 0x20;
+    reg_a4->field6 = 0;
     func_001E4B70();
 }

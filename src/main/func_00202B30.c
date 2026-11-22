@@ -1,12 +1,12 @@
 #include "common.h"
 
-extern u16 *D_0028E468;
-extern u16 D_0028E49C;
-extern u16 bcd_result;
+extern u16 *reg_a0;
+extern u16 reg_d3;
+extern u16 reg_d2;
 extern void func_00202B50(void);
 
 void func_00202B30(void) {
-    bcd_result = D_0028E468[1];
-    D_0028E49C = D_0028E468[2];
+    reg_d2 = reg_a0[1];
+    reg_d3 = reg_a0[2];
     func_00202B50();
 }

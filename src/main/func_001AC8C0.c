@@ -1,13 +1,13 @@
 #include "common.h"
 
-extern s16 bcd_result;
-extern s16 D_0028E49C;
+extern s16 reg_d2;
+extern s16 reg_d3;
 void func_0011C7C0(void);
 
 void func_001AC8C0(void) {
-    work_reg_0.h[0] = 0xD4;
-    bcd_result = 7;
-    D_0028E49C = 7;
-    work_reg_1.h[0] = 0;
+    reg_d0.h[0] = 0xD4;
+    reg_d2 = 7;
+    reg_d3 = 7;
+    reg_d1.h[0] = 0;
     func_0011C7C0();
 }

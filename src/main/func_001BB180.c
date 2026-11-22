@@ -1,11 +1,11 @@
 #include "common.h"
 
-extern u8 *work_reg_a4;
-extern u8 *D_0028E450;
+extern u8 *reg_a4;
+extern u8 *reg_a6;
 void func_001BAEC0(void);
 
 void func_001BB180(void) {
-    *(u16 *)work_reg_a4 = 0;
-    work_reg_a4[3] = D_0028E450[0x1B];
+    *(u16 *)reg_a4 = 0;
+    reg_a4[3] = reg_a6[0x1B];
     func_001BAEC0();
 }

@@ -6,11 +6,11 @@ struct Unk0028E450 {
     u16 unk68;
 };
 
-extern struct Unk0028E450 *D_0028E450;
+extern struct Unk0028E450 *reg_a6;
 
 void func_001FAD00(void) {
-    if (D_0028E450->unk66 != work_reg_0.h[0]) {
-        D_0028E450->unk66 = (u16) work_reg_0.h[0];
-        D_0028E450->unk68 = 0;
+    if (reg_a6->unk66 != reg_d0.h[0]) {
+        reg_a6->unk66 = (u16) reg_d0.h[0];
+        reg_a6->unk68 = 0;
     }
 }

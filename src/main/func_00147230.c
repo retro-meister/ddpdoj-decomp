@@ -8,6 +8,6 @@ void func_00147250(void);
 
 void func_00147230(void) {
     D_0028E4AA = D_0029F1F2[0];
-    *(u16 *)&work_reg_0 = D_0029F1F4[0];
+    *(u16 *)&reg_d0 = D_0029F1F4[0];
     func_00147250();
 }

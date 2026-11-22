@@ -1,11 +1,11 @@
 #include "common.h"
 
-extern u16 *D_0028E454;
-extern u16 D_0028E48C;
+extern u16 *reg_a5;
+extern u16 reg_d7;
 
 void func_0014E380(void);
 
 void func_0014E370(void) {
-    D_0028E48C = D_0028E454[2];
+    reg_d7 = reg_a5[2];
     func_0014E380();
 }

@@ -1,7 +1,7 @@
 #include "common.h"
 
-extern u8 *D_0028E450;
+extern u8 *reg_a6;
 
 void func_001713A0(void) {
-    D_0028E450[1] = 0;
+    reg_a6[1] = 0;
 }

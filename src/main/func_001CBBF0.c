@@ -1,6 +1,6 @@
 #include "common.h"
-extern u8 *D_0028E450;
+extern u8 *reg_a6;
 void func_001CBBF0(void) {
-    work_reg_0.h[0] = 0xA000;
-    *(u16 *)(D_0028E450 + 0x100) |= work_reg_0.h[0];
+    reg_d0.h[0] = 0xA000;
+    *(u16 *)(reg_a6 + 0x100) |= reg_d0.h[0];
 }

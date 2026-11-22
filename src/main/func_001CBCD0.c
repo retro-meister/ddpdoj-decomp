@@ -1,7 +1,7 @@
 #include "common.h"
 
-extern u8 *D_0028E450;
+extern u8 *reg_a6;
 
 void func_001CBCD0(void) {
-    *(s16 *)(D_0028E450 + 0x146) = 1;
+    *(s16 *)(reg_a6 + 0x146) = 1;
 }

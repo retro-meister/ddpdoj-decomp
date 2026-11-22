@@ -2,11 +2,11 @@
 
 extern s16 D_0028E23C;
 extern s16 D_0028E240;
-extern s16 *D_0028E468;
+extern s16 *reg_a0;
 
 void func_0012FA20(void) {
-    D_0028E468 = &D_0028E23C;
-    *D_0028E468 = 0;
-    D_0028E468 = &D_0028E240;
-    *D_0028E468 = 1;
+    reg_a0 = &D_0028E23C;
+    *reg_a0 = 0;
+    reg_a0 = &D_0028E240;
+    *reg_a0 = 1;
 }

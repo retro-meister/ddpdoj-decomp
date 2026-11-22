@@ -7,9 +7,9 @@ typedef struct FuncFe100Obj {
     s16 unk4C;
 } FuncFe100Obj;
 
-extern FuncFe100Obj *D_0028E450;
+extern FuncFe100Obj *reg_a6;
 
 void func_001FE100(void) {
-    D_0028E450->unk46 = 1;
-    D_0028E450->unk4C = 0;
+    reg_a6->unk46 = 1;
+    reg_a6->unk4C = 0;
 }

@@ -1,7 +1,7 @@
 #include "common.h"
 
-extern void *D_0028E450;
+extern void *reg_a6;
 
 void func_001D4620(void) {
-    *(s16 *)((u8 *)D_0028E450 + 0x86) = 1;
+    *(s16 *)((u8 *)reg_a6 + 0x86) = 1;
 }

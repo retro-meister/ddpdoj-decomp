@@ -1,9 +1,9 @@
 #include "common.h"
 
-extern s16 *work_reg_a4;
+extern s16 *reg_a4;
 void func_001E7320(void);
 
 void func_001E7310(void) {
-    work_reg_a4[1] = 1;
+    reg_a4[1] = 1;
     func_001E7320();
 }

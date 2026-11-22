@@ -12,15 +12,15 @@ typedef struct WorkRegBC {
     s16 unkBC;
 } WorkRegBC;
 
-extern WorkReg *work_reg_a4;
-extern WorkRegBC *D_0028E450;
+extern WorkReg *reg_a4;
+extern WorkRegBC *reg_a6;
 
 void func_001CE5F0(s32, s32);
 
 void func_001CE5C0(void) {
-    work_reg_a4->unk2 = 1;
-    work_reg_a4->unk4 = 0x202;
-    work_reg_a4->unk6 = 0xC0;
-    D_0028E450->unkBC = 0;
+    reg_a4->unk2 = 1;
+    reg_a4->unk4 = 0x202;
+    reg_a4->unk6 = 0xC0;
+    reg_a6->unkBC = 0;
     func_001CE5F0(0x202, 1);
 }

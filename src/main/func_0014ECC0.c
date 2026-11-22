@@ -1,9 +1,9 @@
 #include "common.h"
 
-extern s8 *D_0028E450;
-extern s8 *D_0028E468;
+extern s8 *reg_a6;
+extern s8 *reg_a0;
 
 void func_0014ECC0(void) {
-    D_0028E450[0x1E] = *D_0028E468;
-    D_0028E468 += 1;
+    reg_a6[0x1E] = *reg_a0;
+    reg_a0 += 1;
 }

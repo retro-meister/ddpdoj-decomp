@@ -1,10 +1,10 @@
 #include "common.h"
 
-extern u32 D_0028E450;
-extern u32 D_0028E468;
+extern u32 reg_a6;
+extern u32 reg_a0;
 
 void func_001CBCA0(void) {
-    D_0028E468 = D_0028E450;
-    D_0028E468 += work_reg_0.h[0];
-    *(u16 *)D_0028E468 = 0x8000;
+    reg_a0 = reg_a6;
+    reg_a0 += reg_d0.h[0];
+    *(u16 *)reg_a0 = 0x8000;
 }

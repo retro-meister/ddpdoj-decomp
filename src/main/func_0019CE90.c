@@ -1,7 +1,7 @@
 #include "common.h"
 
-extern u16 D_0028E48C;
+extern u16 reg_d7;
 
 void func_0019CE90(void) {
-    D_0028E48C = (u16)((u32)D_0028E48C << 2);
+    reg_d7 = (u16)((u32)reg_d7 << 2);
 }

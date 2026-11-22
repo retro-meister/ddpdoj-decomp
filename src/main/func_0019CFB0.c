@@ -1,7 +1,7 @@
 #include "common.h"
 
-extern u16 D_0028E48C;
+extern u16 reg_d7;
 
 void func_0019CFB0(void) {
-    D_0028E48C *= 0xE;
+    reg_d7 *= 0xE;
 }

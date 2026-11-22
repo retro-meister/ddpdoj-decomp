@@ -10,11 +10,11 @@ typedef struct {
     s16 unk2;
 } HalfPair;
 
-extern FlagByte3 *D_0028E454;
-extern HalfPair *D_0028E450;
+extern FlagByte3 *reg_a5;
+extern HalfPair *reg_a6;
 
 void func_00135D70(void) {
-    D_0028E454->unk3 = 2;
-    D_0028E450->unk0 = 0;
-    D_0028E450->unk2 = 0;
+    reg_a5->unk3 = 2;
+    reg_a6->unk0 = 0;
+    reg_a6->unk2 = 0;
 }
