@@ -1,0 +1,23 @@
+#include "common.h"
+
+extern s16 D_0028E644;
+extern s16 D_0028E648;
+extern s16 D_0028E64C;
+extern s16 D_0028E650;
+extern u16 D_0028E698;
+extern volatile u16 D_0029F282[];
+
+void func_001AA1C0(void)
+{
+    u16 adjustment;
+
+    D_0028E650 = 10;
+    adjustment = D_0029F282[0];
+    D_0028E644 = 7;
+    D_0028E648 = 0;
+    reg_d2.w = 8;
+    D_0028E64C = 0;
+    reg_d2.h[0] -= adjustment;
+    reg_d2.h[0] += 8;
+    D_0028E698 = reg_d2.h[0];
+}
