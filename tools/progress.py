@@ -8,7 +8,7 @@ import sys
 import yaml
 
 from build import OBJ_CACHE
-from common import ROOT, TARGETS, read_json, require_local, run, target_compiler
+from common import ROOT, TARGETS, nonmatching_dir, read_json, require_local, run, target_compiler
 from objects import defined_function_count
 from inventory import build_inventory
 from split import SIZE_RE, SYMBOL_RE, target_units
@@ -16,6 +16,7 @@ from split import SIZE_RE, SYMBOL_RE, target_units
 HISTORY = ROOT / "config/progress-history.json"
 GRAPH_DIR = ROOT / "docs"
 GRAPH_NAMES = {"SLPS_252.33": "progress-main.svg", "DEATH.ELF": "progress-death.svg", "GALLERY.ELF": "progress-gallery.svg"}
+MAP_PATH = GRAPH_DIR / "progress-map.svg"
 LABELS = {"SLPS_252.33": "Main game", "DEATH.ELF": "Death Label", "GALLERY.ELF": "Gallery"}
 GALLERY_ALL_FUNCTIONS_COMMIT = "80efe77"
 
@@ -191,6 +192,194 @@ def record_snapshot(history):
     pending.replace(HISTORY)
 
 
+def squarify(items, x, y, w, h):
+    """Bruls-Huizing-van Wijk squarified treemap layout.
+
+    items: list of (value, payload) sorted descending by value (> 0).
+    Returns list of (rx, ry, rw, rh, payload).
+    """
+    if not items or w <= 0 or h <= 0:
+        return []
+    total = sum(v for v, _ in items)
+    if total <= 0:
+        return []
+    scale = (w * h) / total
+    areas = [(v * scale, p) for v, p in items]
+    rects = []
+
+    def worst(row, side):
+        s = sum(a for a, _ in row)
+        if s <= 0 or side <= 0:
+            return float("inf")
+        rmax = max(a for a, _ in row)
+        rmin = min(a for a, _ in row)
+        s2 = s * s
+        side2 = side * side
+        return max((side2 * rmax) / s2, s2 / (side2 * rmin))
+
+    def layout_row(row, rx, ry, rw, rh):
+        s = sum(a for a, _ in row)
+        if rw >= rh:
+            col_w = s / rh if rh > 0 else 0
+            cy = ry
+            for a, p in row:
+                ch = a / col_w if col_w > 0 else 0
+                rects.append((rx, cy, col_w, ch, p))
+                cy += ch
+            return rx + col_w, ry, rw - col_w, rh
+        else:
+            row_h = s / rw if rw > 0 else 0
+            cx = rx
+            for a, p in row:
+                cw = a / row_h if row_h > 0 else 0
+                rects.append((cx, ry, cw, row_h, p))
+                cx += cw
+            return rx, ry + row_h, rw, rh - row_h
+
+    rx, ry, rw, rh = x, y, w, h
+    row = []
+    for item in areas:
+        side = min(rw, rh)
+        if not row or worst(row + [item], side) <= worst(row, side):
+            row.append(item)
+        else:
+            rx, ry, rw, rh = layout_row(row, rx, ry, rw, rh)
+            row = [item]
+    if row:
+        layout_row(row, rx, ry, rw, rh)
+    return rects
+
+
+def collect_map_functions():
+    inventory, _ = build_inventory()
+    fn_map = known_functions(inventory)
+    by_target = {}
+    for name in TARGETS:
+        wip_dir = nonmatching_dir(name)
+        wip_names = {p.stem for p in wip_dir.glob("*.c")} if wip_dir.is_dir() else set()
+        if name == "GALLERY.ELF":
+            # GALLERY.ELF is 100% matched; recover all 66 function names & sizes from 80efe77.
+            y = git_output("show", f"{GALLERY_ALL_FUNCTIONS_COMMIT}:config/GALLERY.ELF/splat.yaml")
+            s = git_output("show", f"{GALLERY_ALL_FUNCTIONS_COMMIT}:config/GALLERY.ELF/symbols.txt")
+            sym_by_addr = {}
+            if s:
+                for line in s.splitlines():
+                    m = SYMBOL_RE.match(line)
+                    if m:
+                        sym_by_addr[int(m.group(2), 0)] = m.group(1)
+            funcs = []
+            for start, _, size in parse_units_from_text(y, s):
+                funcs.append({
+                    "name": sym_by_addr.get(start, f"func_{start:08X}"),
+                    "size": size,
+                    "status": "matched",
+                })
+        else:
+            funcs = []
+            for fn in inventory[name]:
+                if fn["matched"]:
+                    status = "matched"
+                elif fn["name"] in wip_names:
+                    status = "wip"
+                else:
+                    status = "asm"
+                funcs.append({"name": fn["name"], "size": fn["size"], "status": status})
+        funcs.sort(key=lambda f: f["size"], reverse=True)
+        by_target[name] = funcs
+    return by_target
+
+
+def plot_progress_map():
+    from xml.sax.saxutils import escape
+
+    by_target = collect_map_functions()
+    width = 1200
+    pad_x = 14
+    inner_w = width - 2 * pad_x
+    header_h = 84
+    panel_hdr_h = 20
+    panel_gap = 14
+    bottom_pad = 14
+
+    order = ["SLPS_252.33", "DEATH.ELF", "GALLERY.ELF"]
+    panel_titles = {
+        "SLPS_252.33": "Main game (SLPS_252.33)",
+        "DEATH.ELF": "Death Label (DEATH.ELF)",
+        "GALLERY.ELF": "Gallery (GALLERY.ELF)",
+    }
+    colors = {"matched": "#3fb950", "wip": "#d29922", "asm": "#da3633"}
+
+    # Same bytes-per-px² scale across all 3 stacked panels:
+    # Target ~440px height for SLPS_252.33 so GALLERY.ELF is a sleek ~16px strip of ~16x16 tiles.
+    main_bytes = sum(f["size"] for f in by_target["SLPS_252.33"])
+    bytes_per_px2 = main_bytes / (inner_w * 440.0)
+
+    total_bytes = sum(sum(f["size"] for f in by_target[t]) for t in order)
+    matched_bytes = sum(sum(f["size"] for f in by_target[t] if f["status"] == "matched") for t in order)
+    total_fns = sum(len(by_target[t]) for t in order)
+    matched_fns = sum(sum(1 for f in by_target[t] if f["status"] == "matched") for t in order)
+    overall_pct = (matched_bytes / total_bytes * 100.0) if total_bytes else 0.0
+
+    panel_heights = {
+        t: max(16.0, sum(f["size"] for f in by_target[t]) / (bytes_per_px2 * inner_w))
+        for t in order
+    }
+    total_h = int(round(
+        header_h
+        + sum(panel_hdr_h + panel_heights[t] for t in order)
+        + panel_gap * (len(order) - 1)
+        + bottom_pad
+    ))
+
+    out = [
+        f'<svg xmlns="http://www.w3.org/2000/svg" width="{width}" height="{total_h}" viewBox="0 0 {width} {total_h}" font-family="ui-monospace,Menlo,Consolas,monospace">',
+        f'<rect width="{width}" height="{total_h}" fill="#0d1117"/>',
+        f'<text x="{pad_x}" y="34" fill="#e6edf3" font-size="24" font-weight="700">DoDonPachi DaiOuJou (PS2) — C-match progress</text>',
+        f'<text x="{pad_x}" y="62" fill="#3fb950" font-size="20" font-weight="700">{overall_pct:.2f}% matched</text>',
+        f'<text x="196" y="62" fill="#8b949e" font-size="14">{matched_bytes:,} / {total_bytes:,} bytes · {matched_fns:,} / {total_fns:,} functions</text>',
+    ]
+
+    # Legend (top-right)
+    legend = [("matched", "#3fb950", 900), ("wip", "#d29922", 1010), ("asm", "#da3633", 1090)]
+    for lname, lcol, lx in legend:
+        out.append(f'<rect x="{lx}" y="18" width="14" height="14" rx="2" fill="{lcol}"/>')
+        out.append(f'<text x="{lx + 20}" y="30" fill="#e6edf3" font-size="13">{lname}</text>')
+
+    y = float(header_h)
+    for t in order:
+        funcs = by_target[t]
+        th = panel_heights[t]
+        t_bytes = sum(f["size"] for f in funcs)
+        t_m_bytes = sum(f["size"] for f in funcs if f["status"] == "matched")
+        t_m_fns = sum(1 for f in funcs if f["status"] == "matched")
+        t_pct = (t_m_bytes / t_bytes * 100.0) if t_bytes else 0.0
+
+        out.append(f'<rect x="{pad_x:.2f}" y="{y:.2f}" width="{inner_w:.2f}" height="{panel_hdr_h + th:.2f}" fill="none" stroke="#30363d" stroke-width="1"/>')
+        out.append(f'<rect x="{pad_x:.2f}" y="{y:.2f}" width="{inner_w:.2f}" height="{panel_hdr_h:.2f}" fill="#161b22"/>')
+        out.append(f'<text x="{pad_x + 6:.2f}" y="{y + 14:.2f}" fill="#e6edf3" font-size="12" font-weight="600">{escape(panel_titles[t])}</text>')
+        out.append(
+            f'<text x="{pad_x + inner_w - 6:.2f}" y="{y + 14:.2f}" fill="#8b949e" font-size="11" text-anchor="end">'
+            f'{t_pct:.2f}% bytes ({t_m_bytes:,}/{t_bytes:,} B) · {t_m_fns:,}/{len(funcs):,} funcs</text>'
+        )
+
+        tile_y = y + panel_hdr_h
+        rects = squarify([(f["size"], f) for f in funcs if f["size"] > 0], pad_x, tile_y, inner_w, th)
+        for rx, ry, rw, rh, fn in rects:
+            col = colors[fn["status"]]
+            title = escape(f"{fn['name']}  ·  {fn['size']:,} bytes  ·  {fn['status']}")
+            out.append(
+                f'<rect x="{rx:.2f}" y="{ry:.2f}" width="{rw:.2f}" height="{rh:.2f}" '
+                f'fill="{col}" stroke="#0d1117" stroke-width="0.5"><title>{title}</title></rect>'
+            )
+
+        y += panel_hdr_h + th + panel_gap
+
+    out.append("</svg>\n")
+    GRAPH_DIR.mkdir(exist_ok=True)
+    MAP_PATH.write_text("\n".join(out), encoding="utf-8")
+    return MAP_PATH
+
+
 def plot_history(history):
     import matplotlib
     matplotlib.use("Agg")
@@ -243,6 +432,7 @@ def plot_history(history):
         fig.savefig(path, facecolor="white", metadata={"Date": None, "Creator": "tools/progress.py"})
         plt.close(fig)
         written.append(path)
+    written.append(plot_progress_map())
     return written
 
 
