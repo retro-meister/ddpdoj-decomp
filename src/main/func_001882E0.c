@@ -1,6 +1,6 @@
 #include "common.h"
 
-extern void func_00117320(const char *);
+extern void printf(const char *);
 
 extern const char D_00275BE0[];
 extern const char D_00275C00[];
@@ -996,1711 +996,1711 @@ extern u16 D_0028D63E[];
 
 void func_001882E0(void) {
     if (D_0025D9BA[0] != 0x5) {
-        func_00117320(D_00275BE0);
+        printf(D_00275BE0);
     }
     reg_tmp.w = (u32)D_0025D7F0;
     D_0025D9BA[0] = reg_tmp.h[1];
     D_0025D9BC[0] = reg_tmp.h[0];
     if (D_0025D9CE[0] != 0xf) {
-        func_00117320(D_00275C00);
+        printf(D_00275C00);
     }
     reg_tmp.w = (u32)D_0025D820;
     D_0025D9CE[0] = reg_tmp.h[1];
     D_0025D9D0[0] = reg_tmp.h[0];
     if (D_0025D9EA[0] != 0x5) {
-        func_00117320(D_00275C20);
+        printf(D_00275C20);
     }
     reg_tmp.w = (u32)D_0025D7F0;
     D_0025D9EA[0] = reg_tmp.h[1];
     D_0025D9EC[0] = reg_tmp.h[0];
     if (D_0025D9FE[0] != 0xf) {
-        func_00117320(D_00275C40);
+        printf(D_00275C40);
     }
     reg_tmp.w = (u32)D_0025D820;
     D_0025D9FE[0] = reg_tmp.h[1];
     D_0025DA00[0] = reg_tmp.h[0];
     if (D_0025DA1A[0] != 0x5) {
-        func_00117320(D_00275C60);
+        printf(D_00275C60);
     }
     reg_tmp.w = (u32)D_0025D7F0;
     D_0025DA1A[0] = reg_tmp.h[1];
     D_0025DA1C[0] = reg_tmp.h[0];
     if (D_0025DA2E[0] != 0xf) {
-        func_00117320(D_00275C80);
+        printf(D_00275C80);
     }
     reg_tmp.w = (u32)D_0025D820;
     D_0025DA2E[0] = reg_tmp.h[1];
     D_0025DA30[0] = reg_tmp.h[0];
     if (D_0025DA4A[0] != 0x5) {
-        func_00117320(D_00275CA0);
+        printf(D_00275CA0);
     }
     reg_tmp.w = (u32)D_0025D7F0;
     D_0025DA4A[0] = reg_tmp.h[1];
     D_0025DA4C[0] = reg_tmp.h[0];
     if (D_0025DA5E[0] != 0xf) {
-        func_00117320(D_00275CC0);
+        printf(D_00275CC0);
     }
     reg_tmp.w = (u32)D_0025D820;
     D_0025DA5E[0] = reg_tmp.h[1];
     D_0025DA60[0] = reg_tmp.h[0];
     if (D_0025DA7A[0] != 0x5) {
-        func_00117320(D_00275CE0);
+        printf(D_00275CE0);
     }
     reg_tmp.w = (u32)D_0025D7F0;
     D_0025DA7A[0] = reg_tmp.h[1];
     D_0025DA7C[0] = reg_tmp.h[0];
     if (D_0025DA8E[0] != 0xf) {
-        func_00117320(D_00275D00);
+        printf(D_00275D00);
     }
     reg_tmp.w = (u32)D_0025D820;
     D_0025DA8E[0] = reg_tmp.h[1];
     D_0025DA90[0] = reg_tmp.h[0];
     if (D_0025DAAA[0] != 0x5) {
-        func_00117320(D_00275D20);
+        printf(D_00275D20);
     }
     reg_tmp.w = (u32)D_0025D7F0;
     D_0025DAAA[0] = reg_tmp.h[1];
     D_0025DAAC[0] = reg_tmp.h[0];
     if (D_0025DABE[0] != 0xf) {
-        func_00117320(D_00275D40);
+        printf(D_00275D40);
     }
     reg_tmp.w = (u32)D_0025D820;
     D_0025DABE[0] = reg_tmp.h[1];
     D_0025DAC0[0] = reg_tmp.h[0];
     if (D_0025DADA[0] != 0x5) {
-        func_00117320(D_00275D60);
+        printf(D_00275D60);
     }
     reg_tmp.w = (u32)D_0025D7F0;
     D_0025DADA[0] = reg_tmp.h[1];
     D_0025DADC[0] = reg_tmp.h[0];
     if (D_0025DAEE[0] != 0xf) {
-        func_00117320(D_00275D80);
+        printf(D_00275D80);
     }
     reg_tmp.w = (u32)D_0025D820;
     D_0025DAEE[0] = reg_tmp.h[1];
     D_0025DAF0[0] = reg_tmp.h[0];
     if (D_0025DB0A[0] != 0x5) {
-        func_00117320(D_00275DA0);
+        printf(D_00275DA0);
     }
     reg_tmp.w = (u32)D_0025D7F0;
     D_0025DB0A[0] = reg_tmp.h[1];
     D_0025DB0C[0] = reg_tmp.h[0];
     if (D_0025DB1E[0] != 0xf) {
-        func_00117320(D_00275DC0);
+        printf(D_00275DC0);
     }
     reg_tmp.w = (u32)D_0025D820;
     D_0025DB1E[0] = reg_tmp.h[1];
     D_0025DB20[0] = reg_tmp.h[0];
     if (D_0025DB3A[0] != 0x5) {
-        func_00117320(D_00275DE0);
+        printf(D_00275DE0);
     }
     reg_tmp.w = (u32)D_0025D7F0;
     D_0025DB3A[0] = reg_tmp.h[1];
     D_0025DB3C[0] = reg_tmp.h[0];
     if (D_0025DB4E[0] != 0xf) {
-        func_00117320(D_00275E00);
+        printf(D_00275E00);
     }
     reg_tmp.w = (u32)D_0025D820;
     D_0025DB4E[0] = reg_tmp.h[1];
     D_0025DB50[0] = reg_tmp.h[0];
     if (D_0025DB6A[0] != 0x5) {
-        func_00117320(D_00275E20);
+        printf(D_00275E20);
     }
     reg_tmp.w = (u32)D_0025D7F0;
     D_0025DB6A[0] = reg_tmp.h[1];
     D_0025DB6C[0] = reg_tmp.h[0];
     if (D_0025DB7E[0] != 0xf) {
-        func_00117320(D_00275E40);
+        printf(D_00275E40);
     }
     reg_tmp.w = (u32)D_0025D820;
     D_0025DB7E[0] = reg_tmp.h[1];
     D_0025DB80[0] = reg_tmp.h[0];
     if (D_0025DB90[1] != 0x1) {
-        func_00117320(D_00275E60);
+        printf(D_00275E60);
     }
     reg_tmp.w = (u32)D_0025DFC0;
     D_0025DB90[1] = reg_tmp.h[1];
     D_0025DB94[0] = reg_tmp.h[0];
     if (D_0025DB9A[0] != 0x5) {
-        func_00117320(D_00275E80);
+        printf(D_00275E80);
     }
     reg_tmp.w = (u32)D_0025D800;
     D_0025DB9A[0] = reg_tmp.h[1];
     D_0025DB9C[0] = reg_tmp.h[0];
     if (D_0025DBC0[1] != 0x1) {
-        func_00117320(D_00275EA0);
+        printf(D_00275EA0);
     }
     reg_tmp.w = (u32)D_0025DFC0;
     D_0025DBC0[1] = reg_tmp.h[1];
     D_0025DBC4[0] = reg_tmp.h[0];
     if (D_0025DBCA[0] != 0x5) {
-        func_00117320(D_00275EC0);
+        printf(D_00275EC0);
     }
     reg_tmp.w = (u32)D_0025D800;
     D_0025DBCA[0] = reg_tmp.h[1];
     D_0025DBCC[0] = reg_tmp.h[0];
     if (D_0025DBF0[1] != 0x1) {
-        func_00117320(D_00275EE0);
+        printf(D_00275EE0);
     }
     reg_tmp.w = (u32)D_0025DFC0;
     D_0025DBF0[1] = reg_tmp.h[1];
     D_0025DBF4[0] = reg_tmp.h[0];
     if (D_0025DBFA[0] != 0x5) {
-        func_00117320(D_00275F00);
+        printf(D_00275F00);
     }
     reg_tmp.w = (u32)D_0025D800;
     D_0025DBFA[0] = reg_tmp.h[1];
     D_0025DBFC[0] = reg_tmp.h[0];
     if (D_0025DC20[1] != 0x1) {
-        func_00117320(D_00275F20);
+        printf(D_00275F20);
     }
     reg_tmp.w = (u32)D_0025DFC0;
     D_0025DC20[1] = reg_tmp.h[1];
     D_0025DC24[0] = reg_tmp.h[0];
     if (D_0025DC2A[0] != 0x5) {
-        func_00117320(D_00275F40);
+        printf(D_00275F40);
     }
     reg_tmp.w = (u32)D_0025D800;
     D_0025DC2A[0] = reg_tmp.h[1];
     D_0025DC2C[0] = reg_tmp.h[0];
     if (D_0025DC50[1] != 0x1) {
-        func_00117320(D_00275F60);
+        printf(D_00275F60);
     }
     reg_tmp.w = (u32)D_0025DFC0;
     D_0025DC50[1] = reg_tmp.h[1];
     D_0025DC54[0] = reg_tmp.h[0];
     if (D_0025DC5A[0] != 0x5) {
-        func_00117320(D_00275F80);
+        printf(D_00275F80);
     }
     reg_tmp.w = (u32)D_0025D800;
     D_0025DC5A[0] = reg_tmp.h[1];
     D_0025DC5C[0] = reg_tmp.h[0];
     if (D_0025DC8A[0] != 0x5) {
-        func_00117320(D_00275FA0);
+        printf(D_00275FA0);
     }
     reg_tmp.w = (u32)D_0025D810;
     D_0025DC8A[0] = reg_tmp.h[1];
     D_0025DC8C[0] = reg_tmp.h[0];
     if (D_0025DC9E[0] != 0xf) {
-        func_00117320(D_00275FC0);
+        printf(D_00275FC0);
     }
     reg_tmp.w = (u32)D_0025D880;
     D_0025DC9E[0] = reg_tmp.h[1];
     D_0025DCA0[0] = reg_tmp.h[0];
     if (D_0025DCB0[0] != 0x18) {
-        func_00117320(D_00275FE0);
+        printf(D_00275FE0);
     }
     reg_tmp.w = (u32)D_0025D810;
     D_0025DCB0[0] = reg_tmp.h[1];
     D_0025DCB2[0] = reg_tmp.h[0];
     if (D_0025DCC4[0] != 0x22) {
-        func_00117320(D_00276000);
+        printf(D_00276000);
     }
     reg_tmp.w = (u32)D_0025D880;
     D_0025DCC4[0] = reg_tmp.h[1];
     D_0025DCC6[0] = reg_tmp.h[0];
     if (D_0025DCDA[0] != 0x5) {
-        func_00117320(D_00276020);
+        printf(D_00276020);
     }
     reg_tmp.w = (u32)D_0025D810;
     D_0025DCDA[0] = reg_tmp.h[1];
     D_0025DCDC[0] = reg_tmp.h[0];
     if (D_0025DCEE[0] != 0xf) {
-        func_00117320(D_00276040);
+        printf(D_00276040);
     }
     reg_tmp.w = (u32)D_0025D880;
     D_0025DCEE[0] = reg_tmp.h[1];
     D_0025DCF0[0] = reg_tmp.h[0];
     if (D_0025DD00[0] != 0x18) {
-        func_00117320(D_00276060);
+        printf(D_00276060);
     }
     reg_tmp.w = (u32)D_0025D810;
     D_0025DD00[0] = reg_tmp.h[1];
     D_0025DD02[0] = reg_tmp.h[0];
     if (D_0025DD14[0] != 0x22) {
-        func_00117320(D_00276080);
+        printf(D_00276080);
     }
     reg_tmp.w = (u32)D_0025D880;
     D_0025DD14[0] = reg_tmp.h[1];
     D_0025DD16[0] = reg_tmp.h[0];
     if (D_0025DD2A[0] != 0x5) {
-        func_00117320(D_002760A0);
+        printf(D_002760A0);
     }
     reg_tmp.w = (u32)D_0025D810;
     D_0025DD2A[0] = reg_tmp.h[1];
     D_0025DD2C[0] = reg_tmp.h[0];
     if (D_0025DD3E[0] != 0xf) {
-        func_00117320(D_002760C0);
+        printf(D_002760C0);
     }
     reg_tmp.w = (u32)D_0025D880;
     D_0025DD3E[0] = reg_tmp.h[1];
     D_0025DD40[0] = reg_tmp.h[0];
     if (D_0025DD50[0] != 0x18) {
-        func_00117320(D_002760E0);
+        printf(D_002760E0);
     }
     reg_tmp.w = (u32)D_0025D810;
     D_0025DD50[0] = reg_tmp.h[1];
     D_0025DD52[0] = reg_tmp.h[0];
     if (D_0025DD64[0] != 0x22) {
-        func_00117320(D_00276100);
+        printf(D_00276100);
     }
     reg_tmp.w = (u32)D_0025D880;
     D_0025DD64[0] = reg_tmp.h[1];
     D_0025DD66[0] = reg_tmp.h[0];
     if (D_0025DD7A[0] != 0x5) {
-        func_00117320(D_00276120);
+        printf(D_00276120);
     }
     reg_tmp.w = (u32)D_0025D810;
     D_0025DD7A[0] = reg_tmp.h[1];
     D_0025DD7C[0] = reg_tmp.h[0];
     if (D_0025DD8E[0] != 0xf) {
-        func_00117320(D_00276140);
+        printf(D_00276140);
     }
     reg_tmp.w = (u32)D_0025D880;
     D_0025DD8E[0] = reg_tmp.h[1];
     D_0025DD90[0] = reg_tmp.h[0];
     if (D_0025DDA0[0] != 0x18) {
-        func_00117320(D_00276160);
+        printf(D_00276160);
     }
     reg_tmp.w = (u32)D_0025D810;
     D_0025DDA0[0] = reg_tmp.h[1];
     D_0025DDA2[0] = reg_tmp.h[0];
     if (D_0025DDB4[0] != 0x22) {
-        func_00117320(D_00276180);
+        printf(D_00276180);
     }
     reg_tmp.w = (u32)D_0025D880;
     D_0025DDB4[0] = reg_tmp.h[1];
     D_0025DDB6[0] = reg_tmp.h[0];
     if (D_0025DDCA[0] != 0x5) {
-        func_00117320(D_002761A0);
+        printf(D_002761A0);
     }
     reg_tmp.w = (u32)D_0025D810;
     D_0025DDCA[0] = reg_tmp.h[1];
     D_0025DDCC[0] = reg_tmp.h[0];
     if (D_0025DDDE[0] != 0xf) {
-        func_00117320(D_002761C0);
+        printf(D_002761C0);
     }
     reg_tmp.w = (u32)D_0025D880;
     D_0025DDDE[0] = reg_tmp.h[1];
     D_0025DDE0[0] = reg_tmp.h[0];
     if (D_0025DDF0[0] != 0x18) {
-        func_00117320(D_002761E0);
+        printf(D_002761E0);
     }
     reg_tmp.w = (u32)D_0025D810;
     D_0025DDF0[0] = reg_tmp.h[1];
     D_0025DDF2[0] = reg_tmp.h[0];
     if (D_0025DE04[0] != 0x22) {
-        func_00117320(D_00276200);
+        printf(D_00276200);
     }
     reg_tmp.w = (u32)D_0025D880;
     D_0025DE04[0] = reg_tmp.h[1];
     D_0025DE06[0] = reg_tmp.h[0];
     if (D_0025DE10[0] != 0x0) {
-        func_00117320(D_00276220);
+        printf(D_00276220);
     }
     reg_tmp.w = (u32)D_0028D320;
     D_0025DE10[0] = reg_tmp.h[1];
     D_0025DE12[0] = reg_tmp.h[0];
     if (D_0025DE14[0] != 0x2) {
-        func_00117320(D_00276240);
+        printf(D_00276240);
     }
     reg_tmp.w = (u32)D_0028D320;
     D_0025DE14[0] = reg_tmp.h[1];
     D_0025DE16[0] = reg_tmp.h[0];
     if (D_0025DE18[0] != 0x4) {
-        func_00117320(D_00276260);
+        printf(D_00276260);
     }
     reg_tmp.w = (u32)D_0028D328;
     D_0025DE18[0] = reg_tmp.h[1];
     D_0025DE1A[0] = reg_tmp.h[0];
     if (D_0025DE1C[0] != 0x6) {
-        func_00117320(D_00276280);
+        printf(D_00276280);
     }
     reg_tmp.w = (u32)D_0028D328;
     D_0025DE1C[0] = reg_tmp.h[1];
     D_0025DE1E[0] = reg_tmp.h[0];
     if (D_0025DE20[0] != 0x8) {
-        func_00117320(D_002762A0);
+        printf(D_002762A0);
     }
     reg_tmp.w = (u32)D_0028D330;
     D_0025DE20[0] = reg_tmp.h[1];
     D_0025DE22[0] = reg_tmp.h[0];
     if (D_0025DE24[0] != 0xa) {
-        func_00117320(D_002762C0);
+        printf(D_002762C0);
     }
     reg_tmp.w = (u32)D_0028D330;
     D_0025DE24[0] = reg_tmp.h[1];
     D_0025DE26[0] = reg_tmp.h[0];
     if (D_0025DE28[0] != 0xc) {
-        func_00117320(D_002762E0);
+        printf(D_002762E0);
     }
     reg_tmp.w = (u32)D_0028D338;
     D_0025DE28[0] = reg_tmp.h[1];
     D_0025DE2A[0] = reg_tmp.h[0];
     if (D_0025DE2C[0] != 0xe) {
-        func_00117320(D_00276300);
+        printf(D_00276300);
     }
     reg_tmp.w = (u32)D_0028D338;
     D_0025DE2C[0] = reg_tmp.h[1];
     D_0025DE2E[0] = reg_tmp.h[0];
     if (D_0025DE30[0] != 0x10) {
-        func_00117320(D_00276320);
+        printf(D_00276320);
     }
     reg_tmp.w = (u32)D_0028D340;
     D_0025DE30[0] = reg_tmp.h[1];
     D_0025DE32[0] = reg_tmp.h[0];
     if (D_0025DE34[0] != 0x12) {
-        func_00117320(D_00276340);
+        printf(D_00276340);
     }
     reg_tmp.w = (u32)D_0028D340;
     D_0025DE34[0] = reg_tmp.h[1];
     D_0025DE36[0] = reg_tmp.h[0];
     if (D_0025DE38[0] != 0x14) {
-        func_00117320(D_00276360);
+        printf(D_00276360);
     }
     reg_tmp.w = (u32)D_0028D348;
     D_0025DE38[0] = reg_tmp.h[1];
     D_0025DE3A[0] = reg_tmp.h[0];
     if (D_0025DE3C[0] != 0x16) {
-        func_00117320(D_00276380);
+        printf(D_00276380);
     }
     reg_tmp.w = (u32)D_0028D350;
     D_0025DE3C[0] = reg_tmp.h[1];
     D_0025DE3E[0] = reg_tmp.h[0];
     if (D_0025DE40[0] != 0x18) {
-        func_00117320(D_002763A0);
+        printf(D_002763A0);
     }
     reg_tmp.w = (u32)D_0028D358;
     D_0025DE40[0] = reg_tmp.h[1];
     D_0025DE42[0] = reg_tmp.h[0];
     if (D_0025DE44[0] != 0x1a) {
-        func_00117320(D_002763C0);
+        printf(D_002763C0);
     }
     reg_tmp.w = (u32)D_0028D360;
     D_0025DE44[0] = reg_tmp.h[1];
     D_0025DE46[0] = reg_tmp.h[0];
     if (D_0025DE48[0] != 0x1c) {
-        func_00117320(D_002763E0);
+        printf(D_002763E0);
     }
     reg_tmp.w = (u32)D_0028D368;
     D_0025DE48[0] = reg_tmp.h[1];
     D_0025DE4A[0] = reg_tmp.h[0];
     if (D_0025DE4C[0] != 0x1e) {
-        func_00117320(D_00276400);
+        printf(D_00276400);
     }
     reg_tmp.w = (u32)D_0028D370;
     D_0025DE4C[0] = reg_tmp.h[1];
     D_0025DE4E[0] = reg_tmp.h[0];
     if (D_0025DE50[0] != 0x20) {
-        func_00117320(D_00276420);
+        printf(D_00276420);
     }
     reg_tmp.w = (u32)D_0028D370;
     D_0025DE50[0] = reg_tmp.h[1];
     D_0025DE52[0] = reg_tmp.h[0];
     if (D_0025DE54[0] != 0x22) {
-        func_00117320(D_00276440);
+        printf(D_00276440);
     }
     reg_tmp.w = (u32)D_0028D378;
     D_0025DE54[0] = reg_tmp.h[1];
     D_0025DE56[0] = reg_tmp.h[0];
     if (D_0025DE58[0] != 0x24) {
-        func_00117320(D_00276460);
+        printf(D_00276460);
     }
     reg_tmp.w = (u32)D_0028D378;
     D_0025DE58[0] = reg_tmp.h[1];
     D_0025DE5A[0] = reg_tmp.h[0];
     if (D_0025DE5C[0] != 0x26) {
-        func_00117320(D_00276480);
+        printf(D_00276480);
     }
     reg_tmp.w = (u32)D_0028D380;
     D_0025DE5C[0] = reg_tmp.h[1];
     D_0025DE5E[0] = reg_tmp.h[0];
     if (D_0025DE60[0] != 0x28) {
-        func_00117320(D_002764A0);
+        printf(D_002764A0);
     }
     reg_tmp.w = (u32)D_0028D380;
     D_0025DE60[0] = reg_tmp.h[1];
     D_0025DE62[0] = reg_tmp.h[0];
     if (D_0025DE64[0] != 0x2a) {
-        func_00117320(D_002764C0);
+        printf(D_002764C0);
     }
     reg_tmp.w = (u32)D_0028D388;
     D_0025DE64[0] = reg_tmp.h[1];
     D_0025DE66[0] = reg_tmp.h[0];
     if (D_0025DE68[0] != 0x2c) {
-        func_00117320(D_002764E0);
+        printf(D_002764E0);
     }
     reg_tmp.w = (u32)D_0028D388;
     D_0025DE68[0] = reg_tmp.h[1];
     D_0025DE6A[0] = reg_tmp.h[0];
     if (D_0025DE6C[0] != 0x2e) {
-        func_00117320(D_00276500);
+        printf(D_00276500);
     }
     reg_tmp.w = (u32)D_0028D390;
     D_0025DE6C[0] = reg_tmp.h[1];
     D_0025DE6E[0] = reg_tmp.h[0];
     if (D_0025DE70[0] != 0x30) {
-        func_00117320(D_00276520);
+        printf(D_00276520);
     }
     reg_tmp.w = (u32)D_0028D390;
     D_0025DE70[0] = reg_tmp.h[1];
     D_0025DE72[0] = reg_tmp.h[0];
     if (D_0025DE80[0] != 0x0) {
-        func_00117320(D_00276540);
+        printf(D_00276540);
     }
     reg_tmp.w = (u32)D_0028D398;
     D_0025DE80[0] = reg_tmp.h[1];
     D_0025DE82[0] = reg_tmp.h[0];
     if (D_0025DE84[0] != 0x2) {
-        func_00117320(D_00276560);
+        printf(D_00276560);
     }
     reg_tmp.w = (u32)D_0028D3A0;
     D_0025DE84[0] = reg_tmp.h[1];
     D_0025DE86[0] = reg_tmp.h[0];
     if (D_0025DE88[0] != 0x4) {
-        func_00117320(D_00276580);
+        printf(D_00276580);
     }
     reg_tmp.w = (u32)D_0028D3A8;
     D_0025DE88[0] = reg_tmp.h[1];
     D_0025DE8A[0] = reg_tmp.h[0];
     if (D_0025DE8C[0] != 0x6) {
-        func_00117320(D_002765A0);
+        printf(D_002765A0);
     }
     reg_tmp.w = (u32)D_0028D3B0;
     D_0025DE8C[0] = reg_tmp.h[1];
     D_0025DE8E[0] = reg_tmp.h[0];
     if (D_0025DE90[0] != 0x8) {
-        func_00117320(D_002765C0);
+        printf(D_002765C0);
     }
     reg_tmp.w = (u32)D_0028D3B8;
     D_0025DE90[0] = reg_tmp.h[1];
     D_0025DE92[0] = reg_tmp.h[0];
     if (D_0025DE94[0] != 0xa) {
-        func_00117320(D_002765E0);
+        printf(D_002765E0);
     }
     reg_tmp.w = (u32)D_0028D3C0;
     D_0025DE94[0] = reg_tmp.h[1];
     D_0025DE96[0] = reg_tmp.h[0];
     if (D_0025DE98[0] != 0xc) {
-        func_00117320(D_00276600);
+        printf(D_00276600);
     }
     reg_tmp.w = (u32)D_0028D3C8;
     D_0025DE98[0] = reg_tmp.h[1];
     D_0025DE9A[0] = reg_tmp.h[0];
     if (D_0025DE9C[0] != 0xe) {
-        func_00117320(D_00276620);
+        printf(D_00276620);
     }
     reg_tmp.w = (u32)D_0028D3D0;
     D_0025DE9C[0] = reg_tmp.h[1];
     D_0025DE9E[0] = reg_tmp.h[0];
     if (D_0025DEA0[0] != 0x10) {
-        func_00117320(D_00276640);
+        printf(D_00276640);
     }
     reg_tmp.w = (u32)D_0028D3D8;
     D_0025DEA0[0] = reg_tmp.h[1];
     D_0025DEA2[0] = reg_tmp.h[0];
     if (D_0025DEA4[0] != 0x12) {
-        func_00117320(D_00276660);
+        printf(D_00276660);
     }
     reg_tmp.w = (u32)D_0028D3E0;
     D_0025DEA4[0] = reg_tmp.h[1];
     D_0025DEA6[0] = reg_tmp.h[0];
     if (D_0025DEA8[0] != 0x14) {
-        func_00117320(D_00276680);
+        printf(D_00276680);
     }
     reg_tmp.w = (u32)D_0028D3E8;
     D_0025DEA8[0] = reg_tmp.h[1];
     D_0025DEAA[0] = reg_tmp.h[0];
     if (D_0025DEAC[0] != 0x16) {
-        func_00117320(D_002766A0);
+        printf(D_002766A0);
     }
     reg_tmp.w = (u32)D_0028D3F0;
     D_0025DEAC[0] = reg_tmp.h[1];
     D_0025DEAE[0] = reg_tmp.h[0];
     if (D_0025DEB0[0] != 0x18) {
-        func_00117320(D_002766C0);
+        printf(D_002766C0);
     }
     reg_tmp.w = (u32)D_0028D3F8;
     D_0025DEB0[0] = reg_tmp.h[1];
     D_0025DEB2[0] = reg_tmp.h[0];
     if (D_0025DEB4[0] != 0x1a) {
-        func_00117320(D_002766E0);
+        printf(D_002766E0);
     }
     reg_tmp.w = (u32)D_0028D400;
     D_0025DEB4[0] = reg_tmp.h[1];
     D_0025DEB6[0] = reg_tmp.h[0];
     if (D_0025DEB8[0] != 0x1c) {
-        func_00117320(D_00276700);
+        printf(D_00276700);
     }
     reg_tmp.w = (u32)D_0028D408;
     D_0025DEB8[0] = reg_tmp.h[1];
     D_0025DEBA[0] = reg_tmp.h[0];
     if (D_0025DEBC[0] != 0x1e) {
-        func_00117320(D_00276720);
+        printf(D_00276720);
     }
     reg_tmp.w = (u32)D_0028D410;
     D_0025DEBC[0] = reg_tmp.h[1];
     D_0025DEBE[0] = reg_tmp.h[0];
     if (D_0025DEC0[0] != 0x20) {
-        func_00117320(D_00276740);
+        printf(D_00276740);
     }
     reg_tmp.w = (u32)D_0028D418;
     D_0025DEC0[0] = reg_tmp.h[1];
     D_0025DEC2[0] = reg_tmp.h[0];
     if (D_0028D39C[0] != 0x2) {
-        func_00117320(D_00276760);
+        printf(D_00276760);
     }
     reg_tmp.w = (u32)D_0025D830;
     D_0028D39C[0] = reg_tmp.h[1];
     D_0028D39E[0] = reg_tmp.h[0];
     if (D_0028D3A4[0] != 0x2) {
-        func_00117320(D_00276780);
+        printf(D_00276780);
     }
     reg_tmp.w = (u32)D_0025D830;
     D_0028D3A4[0] = reg_tmp.h[1];
     D_0028D3A6[0] = reg_tmp.h[0];
     if (D_0028D3AC[0] != 0x2) {
-        func_00117320(D_002767A0);
+        printf(D_002767A0);
     }
     reg_tmp.w = (u32)D_0025D830;
     D_0028D3AC[0] = reg_tmp.h[1];
     D_0028D3AE[0] = reg_tmp.h[0];
     if (D_0028D3B4[0] != 0x2) {
-        func_00117320(D_002767C0);
+        printf(D_002767C0);
     }
     reg_tmp.w = (u32)D_0025D830;
     D_0028D3B4[0] = reg_tmp.h[1];
     D_0028D3B6[0] = reg_tmp.h[0];
     if (D_0028D3BC[0] != 0x2) {
-        func_00117320(D_002767E0);
+        printf(D_002767E0);
     }
     reg_tmp.w = (u32)D_0025D830;
     D_0028D3BC[0] = reg_tmp.h[1];
     D_0028D3BE[0] = reg_tmp.h[0];
     if (D_0028D3C4[0] != 0x2) {
-        func_00117320(D_00276800);
+        printf(D_00276800);
     }
     reg_tmp.w = (u32)D_0025D830;
     D_0028D3C4[0] = reg_tmp.h[1];
     D_0028D3C6[0] = reg_tmp.h[0];
     if (D_0028D3CC[0] != 0x2) {
-        func_00117320(D_00276820);
+        printf(D_00276820);
     }
     reg_tmp.w = (u32)D_0025D830;
     D_0028D3CC[0] = reg_tmp.h[1];
     D_0028D3CE[0] = reg_tmp.h[0];
     if (D_0028D3D4[0] != 0x2) {
-        func_00117320(D_00276840);
+        printf(D_00276840);
     }
     reg_tmp.w = (u32)D_0025D830;
     D_0028D3D4[0] = reg_tmp.h[1];
     D_0028D3D6[0] = reg_tmp.h[0];
     if (D_0028D3DC[0] != 0x2) {
-        func_00117320(D_00276860);
+        printf(D_00276860);
     }
     reg_tmp.w = (u32)D_0025D830;
     D_0028D3DC[0] = reg_tmp.h[1];
     D_0028D3DE[0] = reg_tmp.h[0];
     if (D_0028D3E4[0] != 0x2) {
-        func_00117320(D_00276880);
+        printf(D_00276880);
     }
     reg_tmp.w = (u32)D_0025D830;
     D_0028D3E4[0] = reg_tmp.h[1];
     D_0028D3E6[0] = reg_tmp.h[0];
     if (D_0028D3EC[0] != 0x2) {
-        func_00117320(D_002768A0);
+        printf(D_002768A0);
     }
     reg_tmp.w = (u32)D_0025D830;
     D_0028D3EC[0] = reg_tmp.h[1];
     D_0028D3EE[0] = reg_tmp.h[0];
     if (D_0028D3F4[0] != 0x2) {
-        func_00117320(D_002768C0);
+        printf(D_002768C0);
     }
     reg_tmp.w = (u32)D_0025D830;
     D_0028D3F4[0] = reg_tmp.h[1];
     D_0028D3F6[0] = reg_tmp.h[0];
     if (D_0028D3FC[0] != 0x2) {
-        func_00117320(D_002768E0);
+        printf(D_002768E0);
     }
     reg_tmp.w = (u32)D_0025D830;
     D_0028D3FC[0] = reg_tmp.h[1];
     D_0028D3FE[0] = reg_tmp.h[0];
     if (D_0028D404[0] != 0x2) {
-        func_00117320(D_00276900);
+        printf(D_00276900);
     }
     reg_tmp.w = (u32)D_0025D830;
     D_0028D404[0] = reg_tmp.h[1];
     D_0028D406[0] = reg_tmp.h[0];
     if (D_0028D40C[0] != 0x2) {
-        func_00117320(D_00276920);
+        printf(D_00276920);
     }
     reg_tmp.w = (u32)D_0025D830;
     D_0028D40C[0] = reg_tmp.h[1];
     D_0028D40E[0] = reg_tmp.h[0];
     if (D_0028D414[0] != 0x2) {
-        func_00117320(D_00276940);
+        printf(D_00276940);
     }
     reg_tmp.w = (u32)D_0025D830;
     D_0028D414[0] = reg_tmp.h[1];
     D_0028D416[0] = reg_tmp.h[0];
     if (D_0028D41C[0] != 0x2) {
-        func_00117320(D_00276960);
+        printf(D_00276960);
     }
     reg_tmp.w = (u32)D_0025D830;
     D_0028D41C[0] = reg_tmp.h[1];
     D_0028D41E[0] = reg_tmp.h[0];
     if (D_0025DED0[0] != 0x0) {
-        func_00117320(D_00276980);
+        printf(D_00276980);
     }
     reg_tmp.w = (u32)D_0028D420;
     D_0025DED0[0] = reg_tmp.h[1];
     D_0025DED2[0] = reg_tmp.h[0];
     if (D_0025DED4[0] != 0x2) {
-        func_00117320(D_002769A0);
+        printf(D_002769A0);
     }
     reg_tmp.w = (u32)D_0028D428;
     D_0025DED4[0] = reg_tmp.h[1];
     D_0025DED6[0] = reg_tmp.h[0];
     if (D_0025DED8[0] != 0x4) {
-        func_00117320(D_002769C0);
+        printf(D_002769C0);
     }
     reg_tmp.w = (u32)D_0028D430;
     D_0025DED8[0] = reg_tmp.h[1];
     D_0025DEDA[0] = reg_tmp.h[0];
     if (D_0025DEDC[0] != 0x6) {
-        func_00117320(D_002769E0);
+        printf(D_002769E0);
     }
     reg_tmp.w = (u32)D_0028D438;
     D_0025DEDC[0] = reg_tmp.h[1];
     D_0025DEDE[0] = reg_tmp.h[0];
     if (D_0025DEE0[0] != 0x8) {
-        func_00117320(D_00276A00);
+        printf(D_00276A00);
     }
     reg_tmp.w = (u32)D_0028D440;
     D_0025DEE0[0] = reg_tmp.h[1];
     D_0025DEE2[0] = reg_tmp.h[0];
     if (D_0025DEE4[0] != 0xa) {
-        func_00117320(D_00276A20);
+        printf(D_00276A20);
     }
     reg_tmp.w = (u32)D_0028D448;
     D_0025DEE4[0] = reg_tmp.h[1];
     D_0025DEE6[0] = reg_tmp.h[0];
     if (D_0025DEE8[0] != 0xc) {
-        func_00117320(D_00276A40);
+        printf(D_00276A40);
     }
     reg_tmp.w = (u32)D_0028D450;
     D_0025DEE8[0] = reg_tmp.h[1];
     D_0025DEEA[0] = reg_tmp.h[0];
     if (D_0025DEEC[0] != 0xe) {
-        func_00117320(D_00276A60);
+        printf(D_00276A60);
     }
     reg_tmp.w = (u32)D_0028D458;
     D_0025DEEC[0] = reg_tmp.h[1];
     D_0025DEEE[0] = reg_tmp.h[0];
     if (D_0025DEF0[0] != 0x10) {
-        func_00117320(D_00276A80);
+        printf(D_00276A80);
     }
     reg_tmp.w = (u32)D_0028D460;
     D_0025DEF0[0] = reg_tmp.h[1];
     D_0025DEF2[0] = reg_tmp.h[0];
     if (D_0025DEF4[0] != 0x12) {
-        func_00117320(D_00276AA0);
+        printf(D_00276AA0);
     }
     reg_tmp.w = (u32)D_0028D468;
     D_0025DEF4[0] = reg_tmp.h[1];
     D_0025DEF6[0] = reg_tmp.h[0];
     if (D_0025DEF8[0] != 0x14) {
-        func_00117320(D_00276AC0);
+        printf(D_00276AC0);
     }
     reg_tmp.w = (u32)D_0028D470;
     D_0025DEF8[0] = reg_tmp.h[1];
     D_0025DEFA[0] = reg_tmp.h[0];
     if (D_0025DEFC[0] != 0x16) {
-        func_00117320(D_00276AE0);
+        printf(D_00276AE0);
     }
     reg_tmp.w = (u32)D_0028D478;
     D_0025DEFC[0] = reg_tmp.h[1];
     D_0025DEFE[0] = reg_tmp.h[0];
     if (D_0025DF00[0] != 0x18) {
-        func_00117320(D_00276B00);
+        printf(D_00276B00);
     }
     reg_tmp.w = (u32)D_0028D480;
     D_0025DF00[0] = reg_tmp.h[1];
     D_0025DF02[0] = reg_tmp.h[0];
     if (D_0025DF04[0] != 0x1a) {
-        func_00117320(D_00276B20);
+        printf(D_00276B20);
     }
     reg_tmp.w = (u32)D_0028D488;
     D_0025DF04[0] = reg_tmp.h[1];
     D_0025DF06[0] = reg_tmp.h[0];
     if (D_0025DF08[0] != 0x1c) {
-        func_00117320(D_00276B40);
+        printf(D_00276B40);
     }
     reg_tmp.w = (u32)D_0028D490;
     D_0025DF08[0] = reg_tmp.h[1];
     D_0025DF0A[0] = reg_tmp.h[0];
     if (D_0025DF0C[0] != 0x1e) {
-        func_00117320(D_00276B60);
+        printf(D_00276B60);
     }
     reg_tmp.w = (u32)D_0028D498;
     D_0025DF0C[0] = reg_tmp.h[1];
     D_0025DF0E[0] = reg_tmp.h[0];
     if (D_0025DF10[0] != 0x20) {
-        func_00117320(D_00276B80);
+        printf(D_00276B80);
     }
     reg_tmp.w = (u32)D_0028D4A0;
     D_0025DF10[0] = reg_tmp.h[1];
     D_0025DF12[0] = reg_tmp.h[0];
     if (D_0028D424[0] != 0x2) {
-        func_00117320(D_00276BA0);
+        printf(D_00276BA0);
     }
     reg_tmp.w = (u32)D_0025D840;
     D_0028D424[0] = reg_tmp.h[1];
     D_0028D426[0] = reg_tmp.h[0];
     if (D_0028D42C[0] != 0x2) {
-        func_00117320(D_00276BC0);
+        printf(D_00276BC0);
     }
     reg_tmp.w = (u32)D_0025D840;
     D_0028D42C[0] = reg_tmp.h[1];
     D_0028D42E[0] = reg_tmp.h[0];
     if (D_0028D434[0] != 0x2) {
-        func_00117320(D_00276BE0);
+        printf(D_00276BE0);
     }
     reg_tmp.w = (u32)D_0025D840;
     D_0028D434[0] = reg_tmp.h[1];
     D_0028D436[0] = reg_tmp.h[0];
     if (D_0028D43C[0] != 0x2) {
-        func_00117320(D_00276C00);
+        printf(D_00276C00);
     }
     reg_tmp.w = (u32)D_0025D840;
     D_0028D43C[0] = reg_tmp.h[1];
     D_0028D43E[0] = reg_tmp.h[0];
     if (D_0028D444[0] != 0x2) {
-        func_00117320(D_00276C20);
+        printf(D_00276C20);
     }
     reg_tmp.w = (u32)D_0025D840;
     D_0028D444[0] = reg_tmp.h[1];
     D_0028D446[0] = reg_tmp.h[0];
     if (D_0028D44C[0] != 0x2) {
-        func_00117320(D_00276C40);
+        printf(D_00276C40);
     }
     reg_tmp.w = (u32)D_0025D840;
     D_0028D44C[0] = reg_tmp.h[1];
     D_0028D44E[0] = reg_tmp.h[0];
     if (D_0028D454[0] != 0x2) {
-        func_00117320(D_00276C60);
+        printf(D_00276C60);
     }
     reg_tmp.w = (u32)D_0025D840;
     D_0028D454[0] = reg_tmp.h[1];
     D_0028D456[0] = reg_tmp.h[0];
     if (D_0028D45C[0] != 0x2) {
-        func_00117320(D_00276C80);
+        printf(D_00276C80);
     }
     reg_tmp.w = (u32)D_0025D840;
     D_0028D45C[0] = reg_tmp.h[1];
     D_0028D45E[0] = reg_tmp.h[0];
     if (D_0028D464[0] != 0x2) {
-        func_00117320(D_00276CA0);
+        printf(D_00276CA0);
     }
     reg_tmp.w = (u32)D_0025D840;
     D_0028D464[0] = reg_tmp.h[1];
     D_0028D466[0] = reg_tmp.h[0];
     if (D_0028D46C[0] != 0x2) {
-        func_00117320(D_00276CC0);
+        printf(D_00276CC0);
     }
     reg_tmp.w = (u32)D_0025D840;
     D_0028D46C[0] = reg_tmp.h[1];
     D_0028D46E[0] = reg_tmp.h[0];
     if (D_0028D474[0] != 0x2) {
-        func_00117320(D_00276CE0);
+        printf(D_00276CE0);
     }
     reg_tmp.w = (u32)D_0025D840;
     D_0028D474[0] = reg_tmp.h[1];
     D_0028D476[0] = reg_tmp.h[0];
     if (D_0028D47C[0] != 0x2) {
-        func_00117320(D_00276D00);
+        printf(D_00276D00);
     }
     reg_tmp.w = (u32)D_0025D840;
     D_0028D47C[0] = reg_tmp.h[1];
     D_0028D47E[0] = reg_tmp.h[0];
     if (D_0028D484[0] != 0x2) {
-        func_00117320(D_00276D20);
+        printf(D_00276D20);
     }
     reg_tmp.w = (u32)D_0025D840;
     D_0028D484[0] = reg_tmp.h[1];
     D_0028D486[0] = reg_tmp.h[0];
     if (D_0028D48C[0] != 0x2) {
-        func_00117320(D_00276D40);
+        printf(D_00276D40);
     }
     reg_tmp.w = (u32)D_0025D840;
     D_0028D48C[0] = reg_tmp.h[1];
     D_0028D48E[0] = reg_tmp.h[0];
     if (D_0028D494[0] != 0x2) {
-        func_00117320(D_00276D60);
+        printf(D_00276D60);
     }
     reg_tmp.w = (u32)D_0025D840;
     D_0028D494[0] = reg_tmp.h[1];
     D_0028D496[0] = reg_tmp.h[0];
     if (D_0028D49C[0] != 0x2) {
-        func_00117320(D_00276D80);
+        printf(D_00276D80);
     }
     reg_tmp.w = (u32)D_0025D840;
     D_0028D49C[0] = reg_tmp.h[1];
     D_0028D49E[0] = reg_tmp.h[0];
     if (D_0028D4A4[0] != 0x2) {
-        func_00117320(D_00276DA0);
+        printf(D_00276DA0);
     }
     reg_tmp.w = (u32)D_0025D840;
     D_0028D4A4[0] = reg_tmp.h[1];
     D_0028D4A6[0] = reg_tmp.h[0];
     if (D_0025DF20[0] != 0x0) {
-        func_00117320(D_00276DC0);
+        printf(D_00276DC0);
     }
     reg_tmp.w = (u32)D_0028D4A8;
     D_0025DF20[0] = reg_tmp.h[1];
     D_0025DF22[0] = reg_tmp.h[0];
     if (D_0025DF24[0] != 0x2) {
-        func_00117320(D_00276DE0);
+        printf(D_00276DE0);
     }
     reg_tmp.w = (u32)D_0028D4B0;
     D_0025DF24[0] = reg_tmp.h[1];
     D_0025DF26[0] = reg_tmp.h[0];
     if (D_0025DF28[0] != 0x4) {
-        func_00117320(D_00276E00);
+        printf(D_00276E00);
     }
     reg_tmp.w = (u32)D_0028D4B8;
     D_0025DF28[0] = reg_tmp.h[1];
     D_0025DF2A[0] = reg_tmp.h[0];
     if (D_0025DF2C[0] != 0x6) {
-        func_00117320(D_00276E20);
+        printf(D_00276E20);
     }
     reg_tmp.w = (u32)D_0028D4C0;
     D_0025DF2C[0] = reg_tmp.h[1];
     D_0025DF2E[0] = reg_tmp.h[0];
     if (D_0025DF30[0] != 0x8) {
-        func_00117320(D_00276E40);
+        printf(D_00276E40);
     }
     reg_tmp.w = (u32)D_0028D4C8;
     D_0025DF30[0] = reg_tmp.h[1];
     D_0025DF32[0] = reg_tmp.h[0];
     if (D_0025DF34[0] != 0xa) {
-        func_00117320(D_00276E60);
+        printf(D_00276E60);
     }
     reg_tmp.w = (u32)D_0028D4D0;
     D_0025DF34[0] = reg_tmp.h[1];
     D_0025DF36[0] = reg_tmp.h[0];
     if (D_0025DF38[0] != 0xc) {
-        func_00117320(D_00276E80);
+        printf(D_00276E80);
     }
     reg_tmp.w = (u32)D_0028D4D8;
     D_0025DF38[0] = reg_tmp.h[1];
     D_0025DF3A[0] = reg_tmp.h[0];
     if (D_0025DF3C[0] != 0xe) {
-        func_00117320(D_00276EA0);
+        printf(D_00276EA0);
     }
     reg_tmp.w = (u32)D_0028D4E0;
     D_0025DF3C[0] = reg_tmp.h[1];
     D_0025DF3E[0] = reg_tmp.h[0];
     if (D_0025DF40[0] != 0x10) {
-        func_00117320(D_00276EC0);
+        printf(D_00276EC0);
     }
     reg_tmp.w = (u32)D_0028D4E8;
     D_0025DF40[0] = reg_tmp.h[1];
     D_0025DF42[0] = reg_tmp.h[0];
     if (D_0025DF44[0] != 0x12) {
-        func_00117320(D_00276EE0);
+        printf(D_00276EE0);
     }
     reg_tmp.w = (u32)D_0028D4F0;
     D_0025DF44[0] = reg_tmp.h[1];
     D_0025DF46[0] = reg_tmp.h[0];
     if (D_0025DF48[0] != 0x14) {
-        func_00117320(D_00276F00);
+        printf(D_00276F00);
     }
     reg_tmp.w = (u32)D_0028D4F8;
     D_0025DF48[0] = reg_tmp.h[1];
     D_0025DF4A[0] = reg_tmp.h[0];
     if (D_0025DF4C[0] != 0x16) {
-        func_00117320(D_00276F20);
+        printf(D_00276F20);
     }
     reg_tmp.w = (u32)D_0028D500;
     D_0025DF4C[0] = reg_tmp.h[1];
     D_0025DF4E[0] = reg_tmp.h[0];
     if (D_0025DF50[0] != 0x18) {
-        func_00117320(D_00276F40);
+        printf(D_00276F40);
     }
     reg_tmp.w = (u32)D_0028D508;
     D_0025DF50[0] = reg_tmp.h[1];
     D_0025DF52[0] = reg_tmp.h[0];
     if (D_0025DF54[0] != 0x1a) {
-        func_00117320(D_00276F60);
+        printf(D_00276F60);
     }
     reg_tmp.w = (u32)D_0028D510;
     D_0025DF54[0] = reg_tmp.h[1];
     D_0025DF56[0] = reg_tmp.h[0];
     if (D_0025DF58[0] != 0x1c) {
-        func_00117320(D_00276F80);
+        printf(D_00276F80);
     }
     reg_tmp.w = (u32)D_0028D518;
     D_0025DF58[0] = reg_tmp.h[1];
     D_0025DF5A[0] = reg_tmp.h[0];
     if (D_0025DF5C[0] != 0x1e) {
-        func_00117320(D_00276FA0);
+        printf(D_00276FA0);
     }
     reg_tmp.w = (u32)D_0028D520;
     D_0025DF5C[0] = reg_tmp.h[1];
     D_0025DF5E[0] = reg_tmp.h[0];
     if (D_0025DF60[0] != 0x20) {
-        func_00117320(D_00276FC0);
+        printf(D_00276FC0);
     }
     reg_tmp.w = (u32)D_0028D528;
     D_0025DF60[0] = reg_tmp.h[1];
     D_0025DF62[0] = reg_tmp.h[0];
     if (D_0028D4AC[0] != 0x2) {
-        func_00117320(D_00276FE0);
+        printf(D_00276FE0);
     }
     reg_tmp.w = (u32)D_0025D850;
     D_0028D4AC[0] = reg_tmp.h[1];
     D_0028D4AE[0] = reg_tmp.h[0];
     if (D_0028D4B4[0] != 0x2) {
-        func_00117320(D_00277000);
+        printf(D_00277000);
     }
     reg_tmp.w = (u32)D_0025D850;
     D_0028D4B4[0] = reg_tmp.h[1];
     D_0028D4B6[0] = reg_tmp.h[0];
     if (D_0028D4BC[0] != 0x2) {
-        func_00117320(D_00277020);
+        printf(D_00277020);
     }
     reg_tmp.w = (u32)D_0025D850;
     D_0028D4BC[0] = reg_tmp.h[1];
     D_0028D4BE[0] = reg_tmp.h[0];
     if (D_0028D4C4[0] != 0x2) {
-        func_00117320(D_00277040);
+        printf(D_00277040);
     }
     reg_tmp.w = (u32)D_0025D850;
     D_0028D4C4[0] = reg_tmp.h[1];
     D_0028D4C6[0] = reg_tmp.h[0];
     if (D_0028D4CC[0] != 0x2) {
-        func_00117320(D_00277060);
+        printf(D_00277060);
     }
     reg_tmp.w = (u32)D_0025D850;
     D_0028D4CC[0] = reg_tmp.h[1];
     D_0028D4CE[0] = reg_tmp.h[0];
     if (D_0028D4D4[0] != 0x2) {
-        func_00117320(D_00277080);
+        printf(D_00277080);
     }
     reg_tmp.w = (u32)D_0025D850;
     D_0028D4D4[0] = reg_tmp.h[1];
     D_0028D4D6[0] = reg_tmp.h[0];
     if (D_0028D4DC[0] != 0x2) {
-        func_00117320(D_002770A0);
+        printf(D_002770A0);
     }
     reg_tmp.w = (u32)D_0025D850;
     D_0028D4DC[0] = reg_tmp.h[1];
     D_0028D4DE[0] = reg_tmp.h[0];
     if (D_0028D4E4[0] != 0x2) {
-        func_00117320(D_002770C0);
+        printf(D_002770C0);
     }
     reg_tmp.w = (u32)D_0025D850;
     D_0028D4E4[0] = reg_tmp.h[1];
     D_0028D4E6[0] = reg_tmp.h[0];
     if (D_0028D4EC[0] != 0x2) {
-        func_00117320(D_002770E0);
+        printf(D_002770E0);
     }
     reg_tmp.w = (u32)D_0025D850;
     D_0028D4EC[0] = reg_tmp.h[1];
     D_0028D4EE[0] = reg_tmp.h[0];
     if (D_0028D4F4[0] != 0x2) {
-        func_00117320(D_00277100);
+        printf(D_00277100);
     }
     reg_tmp.w = (u32)D_0025D850;
     D_0028D4F4[0] = reg_tmp.h[1];
     D_0028D4F6[0] = reg_tmp.h[0];
     if (D_0028D4FC[0] != 0x2) {
-        func_00117320(D_00277120);
+        printf(D_00277120);
     }
     reg_tmp.w = (u32)D_0025D850;
     D_0028D4FC[0] = reg_tmp.h[1];
     D_0028D4FE[0] = reg_tmp.h[0];
     if (D_0028D504[0] != 0x2) {
-        func_00117320(D_00277140);
+        printf(D_00277140);
     }
     reg_tmp.w = (u32)D_0025D850;
     D_0028D504[0] = reg_tmp.h[1];
     D_0028D506[0] = reg_tmp.h[0];
     if (D_0028D50C[0] != 0x2) {
-        func_00117320(D_00277160);
+        printf(D_00277160);
     }
     reg_tmp.w = (u32)D_0025D850;
     D_0028D50C[0] = reg_tmp.h[1];
     D_0028D50E[0] = reg_tmp.h[0];
     if (D_0028D514[0] != 0x2) {
-        func_00117320(D_00277180);
+        printf(D_00277180);
     }
     reg_tmp.w = (u32)D_0025D850;
     D_0028D514[0] = reg_tmp.h[1];
     D_0028D516[0] = reg_tmp.h[0];
     if (D_0028D51C[0] != 0x2) {
-        func_00117320(D_002771A0);
+        printf(D_002771A0);
     }
     reg_tmp.w = (u32)D_0025D850;
     D_0028D51C[0] = reg_tmp.h[1];
     D_0028D51E[0] = reg_tmp.h[0];
     if (D_0028D524[0] != 0x2) {
-        func_00117320(D_002771C0);
+        printf(D_002771C0);
     }
     reg_tmp.w = (u32)D_0025D850;
     D_0028D524[0] = reg_tmp.h[1];
     D_0028D526[0] = reg_tmp.h[0];
     if (D_0028D52C[0] != 0x2) {
-        func_00117320(D_002771E0);
+        printf(D_002771E0);
     }
     reg_tmp.w = (u32)D_0025D850;
     D_0028D52C[0] = reg_tmp.h[1];
     D_0028D52E[0] = reg_tmp.h[0];
     if (D_0025DF70[0] != 0x0) {
-        func_00117320(D_00277200);
+        printf(D_00277200);
     }
     reg_tmp.w = (u32)D_0028D530;
     D_0025DF70[0] = reg_tmp.h[1];
     D_0025DF72[0] = reg_tmp.h[0];
     if (D_0025DF74[0] != 0x2) {
-        func_00117320(D_00277220);
+        printf(D_00277220);
     }
     reg_tmp.w = (u32)D_0028D538;
     D_0025DF74[0] = reg_tmp.h[1];
     D_0025DF76[0] = reg_tmp.h[0];
     if (D_0025DF78[0] != 0x4) {
-        func_00117320(D_00277240);
+        printf(D_00277240);
     }
     reg_tmp.w = (u32)D_0028D540;
     D_0025DF78[0] = reg_tmp.h[1];
     D_0025DF7A[0] = reg_tmp.h[0];
     if (D_0025DF7C[0] != 0x6) {
-        func_00117320(D_00277260);
+        printf(D_00277260);
     }
     reg_tmp.w = (u32)D_0028D548;
     D_0025DF7C[0] = reg_tmp.h[1];
     D_0025DF7E[0] = reg_tmp.h[0];
     if (D_0025DF80[0] != 0x8) {
-        func_00117320(D_00277280);
+        printf(D_00277280);
     }
     reg_tmp.w = (u32)D_0028D550;
     D_0025DF80[0] = reg_tmp.h[1];
     D_0025DF82[0] = reg_tmp.h[0];
     if (D_0025DF84[0] != 0xa) {
-        func_00117320(D_002772A0);
+        printf(D_002772A0);
     }
     reg_tmp.w = (u32)D_0028D558;
     D_0025DF84[0] = reg_tmp.h[1];
     D_0025DF86[0] = reg_tmp.h[0];
     if (D_0025DF88[0] != 0xc) {
-        func_00117320(D_002772C0);
+        printf(D_002772C0);
     }
     reg_tmp.w = (u32)D_0028D560;
     D_0025DF88[0] = reg_tmp.h[1];
     D_0025DF8A[0] = reg_tmp.h[0];
     if (D_0025DF8C[0] != 0xe) {
-        func_00117320(D_002772E0);
+        printf(D_002772E0);
     }
     reg_tmp.w = (u32)D_0028D568;
     D_0025DF8C[0] = reg_tmp.h[1];
     D_0025DF8E[0] = reg_tmp.h[0];
     if (D_0025DF90[0] != 0x10) {
-        func_00117320(D_00277300);
+        printf(D_00277300);
     }
     reg_tmp.w = (u32)D_0028D570;
     D_0025DF90[0] = reg_tmp.h[1];
     D_0025DF92[0] = reg_tmp.h[0];
     if (D_0025DF94[0] != 0x12) {
-        func_00117320(D_00277320);
+        printf(D_00277320);
     }
     reg_tmp.w = (u32)D_0028D578;
     D_0025DF94[0] = reg_tmp.h[1];
     D_0025DF96[0] = reg_tmp.h[0];
     if (D_0025DF98[0] != 0x14) {
-        func_00117320(D_00277340);
+        printf(D_00277340);
     }
     reg_tmp.w = (u32)D_0028D580;
     D_0025DF98[0] = reg_tmp.h[1];
     D_0025DF9A[0] = reg_tmp.h[0];
     if (D_0025DF9C[0] != 0x16) {
-        func_00117320(D_00277360);
+        printf(D_00277360);
     }
     reg_tmp.w = (u32)D_0028D588;
     D_0025DF9C[0] = reg_tmp.h[1];
     D_0025DF9E[0] = reg_tmp.h[0];
     if (D_0025DFA0[0] != 0x18) {
-        func_00117320(D_00277380);
+        printf(D_00277380);
     }
     reg_tmp.w = (u32)D_0028D590;
     D_0025DFA0[0] = reg_tmp.h[1];
     D_0025DFA2[0] = reg_tmp.h[0];
     if (D_0025DFA4[0] != 0x1a) {
-        func_00117320(D_002773A0);
+        printf(D_002773A0);
     }
     reg_tmp.w = (u32)D_0028D598;
     D_0025DFA4[0] = reg_tmp.h[1];
     D_0025DFA6[0] = reg_tmp.h[0];
     if (D_0025DFA8[0] != 0x1c) {
-        func_00117320(D_002773C0);
+        printf(D_002773C0);
     }
     reg_tmp.w = (u32)D_0028D5A0;
     D_0025DFA8[0] = reg_tmp.h[1];
     D_0025DFAA[0] = reg_tmp.h[0];
     if (D_0025DFAC[0] != 0x1e) {
-        func_00117320(D_002773E0);
+        printf(D_002773E0);
     }
     reg_tmp.w = (u32)D_0028D5A8;
     D_0025DFAC[0] = reg_tmp.h[1];
     D_0025DFAE[0] = reg_tmp.h[0];
     if (D_0025DFB0[0] != 0x20) {
-        func_00117320(D_00277400);
+        printf(D_00277400);
     }
     reg_tmp.w = (u32)D_0028D5B0;
     D_0025DFB0[0] = reg_tmp.h[1];
     D_0025DFB2[0] = reg_tmp.h[0];
     if (D_0028D534[0] != 0x2) {
-        func_00117320(D_00277420);
+        printf(D_00277420);
     }
     reg_tmp.w = (u32)D_0025D860;
     D_0028D534[0] = reg_tmp.h[1];
     D_0028D536[0] = reg_tmp.h[0];
     if (D_0028D53C[0] != 0x2) {
-        func_00117320(D_00277440);
+        printf(D_00277440);
     }
     reg_tmp.w = (u32)D_0025D860;
     D_0028D53C[0] = reg_tmp.h[1];
     D_0028D53E[0] = reg_tmp.h[0];
     if (D_0028D544[0] != 0x2) {
-        func_00117320(D_00277460);
+        printf(D_00277460);
     }
     reg_tmp.w = (u32)D_0025D860;
     D_0028D544[0] = reg_tmp.h[1];
     D_0028D546[0] = reg_tmp.h[0];
     if (D_0028D54C[0] != 0x2) {
-        func_00117320(D_00277480);
+        printf(D_00277480);
     }
     reg_tmp.w = (u32)D_0025D860;
     D_0028D54C[0] = reg_tmp.h[1];
     D_0028D54E[0] = reg_tmp.h[0];
     if (D_0028D554[0] != 0x2) {
-        func_00117320(D_002774A0);
+        printf(D_002774A0);
     }
     reg_tmp.w = (u32)D_0025D860;
     D_0028D554[0] = reg_tmp.h[1];
     D_0028D556[0] = reg_tmp.h[0];
     if (D_0028D55C[0] != 0x2) {
-        func_00117320(D_002774C0);
+        printf(D_002774C0);
     }
     reg_tmp.w = (u32)D_0025D860;
     D_0028D55C[0] = reg_tmp.h[1];
     D_0028D55E[0] = reg_tmp.h[0];
     if (D_0028D564[0] != 0x2) {
-        func_00117320(D_002774E0);
+        printf(D_002774E0);
     }
     reg_tmp.w = (u32)D_0025D860;
     D_0028D564[0] = reg_tmp.h[1];
     D_0028D566[0] = reg_tmp.h[0];
     if (D_0028D56C[0] != 0x2) {
-        func_00117320(D_00277500);
+        printf(D_00277500);
     }
     reg_tmp.w = (u32)D_0025D860;
     D_0028D56C[0] = reg_tmp.h[1];
     D_0028D56E[0] = reg_tmp.h[0];
     if (D_0028D574[0] != 0x2) {
-        func_00117320(D_00277520);
+        printf(D_00277520);
     }
     reg_tmp.w = (u32)D_0025D860;
     D_0028D574[0] = reg_tmp.h[1];
     D_0028D576[0] = reg_tmp.h[0];
     if (D_0028D57C[0] != 0x2) {
-        func_00117320(D_00277540);
+        printf(D_00277540);
     }
     reg_tmp.w = (u32)D_0025D860;
     D_0028D57C[0] = reg_tmp.h[1];
     D_0028D57E[0] = reg_tmp.h[0];
     if (D_0028D584[0] != 0x2) {
-        func_00117320(D_00277560);
+        printf(D_00277560);
     }
     reg_tmp.w = (u32)D_0025D860;
     D_0028D584[0] = reg_tmp.h[1];
     D_0028D586[0] = reg_tmp.h[0];
     if (D_0028D58C[0] != 0x2) {
-        func_00117320(D_00277580);
+        printf(D_00277580);
     }
     reg_tmp.w = (u32)D_0025D860;
     D_0028D58C[0] = reg_tmp.h[1];
     D_0028D58E[0] = reg_tmp.h[0];
     if (D_0028D594[0] != 0x2) {
-        func_00117320(D_002775A0);
+        printf(D_002775A0);
     }
     reg_tmp.w = (u32)D_0025D860;
     D_0028D594[0] = reg_tmp.h[1];
     D_0028D596[0] = reg_tmp.h[0];
     if (D_0028D59C[0] != 0x2) {
-        func_00117320(D_002775C0);
+        printf(D_002775C0);
     }
     reg_tmp.w = (u32)D_0025D860;
     D_0028D59C[0] = reg_tmp.h[1];
     D_0028D59E[0] = reg_tmp.h[0];
     if (D_0028D5A4[0] != 0x2) {
-        func_00117320(D_002775E0);
+        printf(D_002775E0);
     }
     reg_tmp.w = (u32)D_0025D860;
     D_0028D5A4[0] = reg_tmp.h[1];
     D_0028D5A6[0] = reg_tmp.h[0];
     if (D_0028D5AC[0] != 0x2) {
-        func_00117320(D_00277600);
+        printf(D_00277600);
     }
     reg_tmp.w = (u32)D_0025D860;
     D_0028D5AC[0] = reg_tmp.h[1];
     D_0028D5AE[0] = reg_tmp.h[0];
     if (D_0028D5B4[0] != 0x2) {
-        func_00117320(D_00277620);
+        printf(D_00277620);
     }
     reg_tmp.w = (u32)D_0025D860;
     D_0028D5B4[0] = reg_tmp.h[1];
     D_0028D5B6[0] = reg_tmp.h[0];
     if (D_0025DFC0[0] != 0x0) {
-        func_00117320(D_00277640);
+        printf(D_00277640);
     }
     reg_tmp.w = (u32)D_0028D5B8;
     D_0025DFC0[0] = reg_tmp.h[1];
     D_0025DFC2[0] = reg_tmp.h[0];
     if (D_0025DFC4[0] != 0x2) {
-        func_00117320(D_00277660);
+        printf(D_00277660);
     }
     reg_tmp.w = (u32)D_0028D5C0;
     D_0025DFC4[0] = reg_tmp.h[1];
     D_0025DFC6[0] = reg_tmp.h[0];
     if (D_0025DFC8[0] != 0x4) {
-        func_00117320(D_00277680);
+        printf(D_00277680);
     }
     reg_tmp.w = (u32)D_0028D5C8;
     D_0025DFC8[0] = reg_tmp.h[1];
     D_0025DFCA[0] = reg_tmp.h[0];
     if (D_0025DFCC[0] != 0x6) {
-        func_00117320(D_002776A0);
+        printf(D_002776A0);
     }
     reg_tmp.w = (u32)D_0028D5D0;
     D_0025DFCC[0] = reg_tmp.h[1];
     D_0025DFCE[0] = reg_tmp.h[0];
     if (D_0025DFD0[0] != 0x8) {
-        func_00117320(D_002776C0);
+        printf(D_002776C0);
     }
     reg_tmp.w = (u32)D_0028D5D8;
     D_0025DFD0[0] = reg_tmp.h[1];
     D_0025DFD2[0] = reg_tmp.h[0];
     if (D_0025DFD4[0] != 0xa) {
-        func_00117320(D_002776E0);
+        printf(D_002776E0);
     }
     reg_tmp.w = (u32)D_0028D5E0;
     D_0025DFD4[0] = reg_tmp.h[1];
     D_0025DFD6[0] = reg_tmp.h[0];
     if (D_0025DFD8[0] != 0xc) {
-        func_00117320(D_00277700);
+        printf(D_00277700);
     }
     reg_tmp.w = (u32)D_0028D5E8;
     D_0025DFD8[0] = reg_tmp.h[1];
     D_0025DFDA[0] = reg_tmp.h[0];
     if (D_0025DFDC[0] != 0xe) {
-        func_00117320(D_00277720);
+        printf(D_00277720);
     }
     reg_tmp.w = (u32)D_0028D5F0;
     D_0025DFDC[0] = reg_tmp.h[1];
     D_0025DFDE[0] = reg_tmp.h[0];
     if (D_0025DFE0[0] != 0x10) {
-        func_00117320(D_00277740);
+        printf(D_00277740);
     }
     reg_tmp.w = (u32)D_0028D5F8;
     D_0025DFE0[0] = reg_tmp.h[1];
     D_0025DFE2[0] = reg_tmp.h[0];
     if (D_0025DFE4[0] != 0x12) {
-        func_00117320(D_00277760);
+        printf(D_00277760);
     }
     reg_tmp.w = (u32)D_0028D600;
     D_0025DFE4[0] = reg_tmp.h[1];
     D_0025DFE6[0] = reg_tmp.h[0];
     if (D_0025DFE8[0] != 0x14) {
-        func_00117320(D_00277780);
+        printf(D_00277780);
     }
     reg_tmp.w = (u32)D_0028D608;
     D_0025DFE8[0] = reg_tmp.h[1];
     D_0025DFEA[0] = reg_tmp.h[0];
     if (D_0025DFEC[0] != 0x16) {
-        func_00117320(D_002777A0);
+        printf(D_002777A0);
     }
     reg_tmp.w = (u32)D_0028D610;
     D_0025DFEC[0] = reg_tmp.h[1];
     D_0025DFEE[0] = reg_tmp.h[0];
     if (D_0025DFF0[0] != 0x18) {
-        func_00117320(D_002777C0);
+        printf(D_002777C0);
     }
     reg_tmp.w = (u32)D_0028D618;
     D_0025DFF0[0] = reg_tmp.h[1];
     D_0025DFF2[0] = reg_tmp.h[0];
     if (D_0025DFF4[0] != 0x1a) {
-        func_00117320(D_002777E0);
+        printf(D_002777E0);
     }
     reg_tmp.w = (u32)D_0028D620;
     D_0025DFF4[0] = reg_tmp.h[1];
     D_0025DFF6[0] = reg_tmp.h[0];
     if (D_0025DFF8[0] != 0x1c) {
-        func_00117320(D_00277800);
+        printf(D_00277800);
     }
     reg_tmp.w = (u32)D_0028D628;
     D_0025DFF8[0] = reg_tmp.h[1];
     D_0025DFFA[0] = reg_tmp.h[0];
     if (D_0025DFFC[0] != 0x1e) {
-        func_00117320(D_00277820);
+        printf(D_00277820);
     }
     reg_tmp.w = (u32)D_0028D630;
     D_0025DFFC[0] = reg_tmp.h[1];
     D_0025DFFE[0] = reg_tmp.h[0];
     if (D_0025E000[0] != 0x20) {
-        func_00117320(D_00277840);
+        printf(D_00277840);
     }
     reg_tmp.w = (u32)D_0028D638;
     D_0025E000[0] = reg_tmp.h[1];
     D_0025E002[0] = reg_tmp.h[0];
     if (D_0028D5BC[0] != 0x2) {
-        func_00117320(D_00277860);
+        printf(D_00277860);
     }
     reg_tmp.w = (u32)D_0025D870;
     D_0028D5BC[0] = reg_tmp.h[1];
     D_0028D5BE[0] = reg_tmp.h[0];
     if (D_0028D5C4[0] != 0x2) {
-        func_00117320(D_00277880);
+        printf(D_00277880);
     }
     reg_tmp.w = (u32)D_0025D870;
     D_0028D5C4[0] = reg_tmp.h[1];
     D_0028D5C6[0] = reg_tmp.h[0];
     if (D_0028D5CC[0] != 0x2) {
-        func_00117320(D_002778A0);
+        printf(D_002778A0);
     }
     reg_tmp.w = (u32)D_0025D870;
     D_0028D5CC[0] = reg_tmp.h[1];
     D_0028D5CE[0] = reg_tmp.h[0];
     if (D_0028D5D4[0] != 0x2) {
-        func_00117320(D_002778C0);
+        printf(D_002778C0);
     }
     reg_tmp.w = (u32)D_0025D870;
     D_0028D5D4[0] = reg_tmp.h[1];
     D_0028D5D6[0] = reg_tmp.h[0];
     if (D_0028D5DC[0] != 0x2) {
-        func_00117320(D_002778E0);
+        printf(D_002778E0);
     }
     reg_tmp.w = (u32)D_0025D870;
     D_0028D5DC[0] = reg_tmp.h[1];
     D_0028D5DE[0] = reg_tmp.h[0];
     if (D_0028D5E4[0] != 0x2) {
-        func_00117320(D_00277900);
+        printf(D_00277900);
     }
     reg_tmp.w = (u32)D_0025D870;
     D_0028D5E4[0] = reg_tmp.h[1];
     D_0028D5E6[0] = reg_tmp.h[0];
     if (D_0028D5EC[0] != 0x2) {
-        func_00117320(D_00277920);
+        printf(D_00277920);
     }
     reg_tmp.w = (u32)D_0025D870;
     D_0028D5EC[0] = reg_tmp.h[1];
     D_0028D5EE[0] = reg_tmp.h[0];
     if (D_0028D5F4[0] != 0x2) {
-        func_00117320(D_00277940);
+        printf(D_00277940);
     }
     reg_tmp.w = (u32)D_0025D870;
     D_0028D5F4[0] = reg_tmp.h[1];
     D_0028D5F6[0] = reg_tmp.h[0];
     if (D_0028D5FC[0] != 0x2) {
-        func_00117320(D_00277960);
+        printf(D_00277960);
     }
     reg_tmp.w = (u32)D_0025D870;
     D_0028D5FC[0] = reg_tmp.h[1];
     D_0028D5FE[0] = reg_tmp.h[0];
     if (D_0028D604[0] != 0x2) {
-        func_00117320(D_00277980);
+        printf(D_00277980);
     }
     reg_tmp.w = (u32)D_0025D870;
     D_0028D604[0] = reg_tmp.h[1];
     D_0028D606[0] = reg_tmp.h[0];
     if (D_0028D60C[0] != 0x2) {
-        func_00117320(D_002779A0);
+        printf(D_002779A0);
     }
     reg_tmp.w = (u32)D_0025D870;
     D_0028D60C[0] = reg_tmp.h[1];
     D_0028D60E[0] = reg_tmp.h[0];
     if (D_0028D614[0] != 0x2) {
-        func_00117320(D_002779C0);
+        printf(D_002779C0);
     }
     reg_tmp.w = (u32)D_0025D870;
     D_0028D614[0] = reg_tmp.h[1];
     D_0028D616[0] = reg_tmp.h[0];
     if (D_0028D61C[0] != 0x2) {
-        func_00117320(D_002779E0);
+        printf(D_002779E0);
     }
     reg_tmp.w = (u32)D_0025D870;
     D_0028D61C[0] = reg_tmp.h[1];
     D_0028D61E[0] = reg_tmp.h[0];
     if (D_0028D624[0] != 0x2) {
-        func_00117320(D_00277A00);
+        printf(D_00277A00);
     }
     reg_tmp.w = (u32)D_0025D870;
     D_0028D624[0] = reg_tmp.h[1];
     D_0028D626[0] = reg_tmp.h[0];
     if (D_0028D62C[0] != 0x2) {
-        func_00117320(D_00277A20);
+        printf(D_00277A20);
     }
     reg_tmp.w = (u32)D_0025D870;
     D_0028D62C[0] = reg_tmp.h[1];
     D_0028D62E[0] = reg_tmp.h[0];
     if (D_0028D634[0] != 0x2) {
-        func_00117320(D_00277A40);
+        printf(D_00277A40);
     }
     reg_tmp.w = (u32)D_0025D870;
     D_0028D634[0] = reg_tmp.h[1];
     D_0028D636[0] = reg_tmp.h[0];
     if (D_0028D63C[0] != 0x2) {
-        func_00117320(D_00277A60);
+        printf(D_00277A60);
     }
     reg_tmp.w = (u32)D_0025D870;
     D_0028D63C[0] = reg_tmp.h[1];
     D_0028D63E[0] = reg_tmp.h[0];
     if (D_0025E010[0] != 0x0) {
-        func_00117320(D_00277A80);
+        printf(D_00277A80);
     }
     reg_tmp.w = (u32)D_0025E078;
     D_0025E010[0] = reg_tmp.h[1];
     D_0025E012[0] = reg_tmp.h[0];
     if (D_0025E014[0] != 0x2) {
-        func_00117320(D_00277AA0);
+        printf(D_00277AA0);
     }
     reg_tmp.w = (u32)D_0025E078;
     D_0025E014[0] = reg_tmp.h[1];
     D_0025E016[0] = reg_tmp.h[0];
     if (D_0025E018[0] != 0x4) {
-        func_00117320(D_00277AC0);
+        printf(D_00277AC0);
     }
     reg_tmp.w = (u32)D_0025E088;
     D_0025E018[0] = reg_tmp.h[1];
     D_0025E01A[0] = reg_tmp.h[0];
     if (D_0025E01C[0] != 0x6) {
-        func_00117320(D_00277AE0);
+        printf(D_00277AE0);
     }
     reg_tmp.w = (u32)D_0025E088;
     D_0025E01C[0] = reg_tmp.h[1];
     D_0025E01E[0] = reg_tmp.h[0];
     if (D_0025E020[0] != 0x8) {
-        func_00117320(D_00277B00);
+        printf(D_00277B00);
     }
     reg_tmp.w = (u32)D_0025E098;
     D_0025E020[0] = reg_tmp.h[1];
     D_0025E022[0] = reg_tmp.h[0];
     if (D_0025E024[0] != 0xa) {
-        func_00117320(D_00277B20);
+        printf(D_00277B20);
     }
     reg_tmp.w = (u32)D_0025E098;
     D_0025E024[0] = reg_tmp.h[1];
     D_0025E026[0] = reg_tmp.h[0];
     if (D_0025E028[0] != 0xc) {
-        func_00117320(D_00277B40);
+        printf(D_00277B40);
     }
     reg_tmp.w = (u32)D_0025E0A8;
     D_0025E028[0] = reg_tmp.h[1];
     D_0025E02A[0] = reg_tmp.h[0];
     if (D_0025E02C[0] != 0xe) {
-        func_00117320(D_00277B60);
+        printf(D_00277B60);
     }
     reg_tmp.w = (u32)D_0025E0A8;
     D_0025E02C[0] = reg_tmp.h[1];
     D_0025E02E[0] = reg_tmp.h[0];
     if (D_0025E030[0] != 0x10) {
-        func_00117320(D_00277B80);
+        printf(D_00277B80);
     }
     reg_tmp.w = (u32)D_0025E0B8;
     D_0025E030[0] = reg_tmp.h[1];
     D_0025E032[0] = reg_tmp.h[0];
     if (D_0025E034[0] != 0x12) {
-        func_00117320(D_00277BA0);
+        printf(D_00277BA0);
     }
     reg_tmp.w = (u32)D_0025E0B8;
     D_0025E034[0] = reg_tmp.h[1];
     D_0025E036[0] = reg_tmp.h[0];
     if (D_0025E038[0] != 0x14) {
-        func_00117320(D_00277BC0);
+        printf(D_00277BC0);
     }
     reg_tmp.w = (u32)D_0025E0C8;
     D_0025E038[0] = reg_tmp.h[1];
     D_0025E03A[0] = reg_tmp.h[0];
     if (D_0025E03C[0] != 0x16) {
-        func_00117320(D_00277BE0);
+        printf(D_00277BE0);
     }
     reg_tmp.w = (u32)D_0025E0D8;
     D_0025E03C[0] = reg_tmp.h[1];
     D_0025E03E[0] = reg_tmp.h[0];
     if (D_0025E040[0] != 0x18) {
-        func_00117320(D_00277C00);
+        printf(D_00277C00);
     }
     reg_tmp.w = (u32)D_0025E0E8;
     D_0025E040[0] = reg_tmp.h[1];
     D_0025E042[0] = reg_tmp.h[0];
     if (D_0025E044[0] != 0x1a) {
-        func_00117320(D_00277C20);
+        printf(D_00277C20);
     }
     reg_tmp.w = (u32)D_0025E0F8;
     D_0025E044[0] = reg_tmp.h[1];
     D_0025E046[0] = reg_tmp.h[0];
     if (D_0025E048[0] != 0x1c) {
-        func_00117320(D_00277C40);
+        printf(D_00277C40);
     }
     reg_tmp.w = (u32)D_0025E108;
     D_0025E048[0] = reg_tmp.h[1];
     D_0025E04A[0] = reg_tmp.h[0];
     if (D_0025E04C[0] != 0x1e) {
-        func_00117320(D_00277C60);
+        printf(D_00277C60);
     }
     reg_tmp.w = (u32)D_0025E118;
     D_0025E04C[0] = reg_tmp.h[1];
     D_0025E04E[0] = reg_tmp.h[0];
     if (D_0025E050[0] != 0x20) {
-        func_00117320(D_00277C80);
+        printf(D_00277C80);
     }
     reg_tmp.w = (u32)D_0025E118;
     D_0025E050[0] = reg_tmp.h[1];
     D_0025E052[0] = reg_tmp.h[0];
     if (D_0025E054[0] != 0x22) {
-        func_00117320(D_00277CA0);
+        printf(D_00277CA0);
     }
     reg_tmp.w = (u32)D_0025E128;
     D_0025E054[0] = reg_tmp.h[1];
     D_0025E056[0] = reg_tmp.h[0];
     if (D_0025E058[0] != 0x24) {
-        func_00117320(D_00277CC0);
+        printf(D_00277CC0);
     }
     reg_tmp.w = (u32)D_0025E128;
     D_0025E058[0] = reg_tmp.h[1];
     D_0025E05A[0] = reg_tmp.h[0];
     if (D_0025E05C[0] != 0x26) {
-        func_00117320(D_00277CE0);
+        printf(D_00277CE0);
     }
     reg_tmp.w = (u32)D_0025E138;
     D_0025E05C[0] = reg_tmp.h[1];
     D_0025E05E[0] = reg_tmp.h[0];
     if (D_0025E060[0] != 0x28) {
-        func_00117320(D_00277D00);
+        printf(D_00277D00);
     }
     reg_tmp.w = (u32)D_0025E138;
     D_0025E060[0] = reg_tmp.h[1];
     D_0025E062[0] = reg_tmp.h[0];
     if (D_0025E064[0] != 0x2a) {
-        func_00117320(D_00277D20);
+        printf(D_00277D20);
     }
     reg_tmp.w = (u32)D_0025E148;
     D_0025E064[0] = reg_tmp.h[1];
     D_0025E066[0] = reg_tmp.h[0];
     if (D_0025E068[0] != 0x2c) {
-        func_00117320(D_00277D40);
+        printf(D_00277D40);
     }
     reg_tmp.w = (u32)D_0025E148;
     D_0025E068[0] = reg_tmp.h[1];
     D_0025E06A[0] = reg_tmp.h[0];
     if (D_0025E06C[0] != 0x2e) {
-        func_00117320(D_00277D60);
+        printf(D_00277D60);
     }
     reg_tmp.w = (u32)D_0025E158;
     D_0025E06C[0] = reg_tmp.h[1];
     D_0025E06E[0] = reg_tmp.h[0];
     if (D_0025E070[0] != 0x30) {
-        func_00117320(D_00277D80);
+        printf(D_00277D80);
     }
     reg_tmp.w = (u32)D_0025E158;
     D_0025E070[0] = reg_tmp.h[1];
     D_0025E072[0] = reg_tmp.h[0];
     if (D_0025E07E[0] != 0x3) {
-        func_00117320(D_00277DA0);
+        printf(D_00277DA0);
     }
     reg_tmp.w = (u32)D_0025D890;
     D_0025E07E[0] = reg_tmp.h[1];
     D_0025E080[0] = reg_tmp.h[0];
     if (D_0025E08E[0] != 0x3) {
-        func_00117320(D_00277DC0);
+        printf(D_00277DC0);
     }
     reg_tmp.w = (u32)D_0025D8B0;
     D_0025E08E[0] = reg_tmp.h[1];
     D_0025E090[0] = reg_tmp.h[0];
     if (D_0025E09E[0] != 0x3) {
-        func_00117320(D_00277DE0);
+        printf(D_00277DE0);
     }
     reg_tmp.w = (u32)D_0025D8B0;
     D_0025E09E[0] = reg_tmp.h[1];
     D_0025E0A0[0] = reg_tmp.h[0];
     if (D_0025E0AE[0] != 0x3) {
-        func_00117320(D_00277E00);
+        printf(D_00277E00);
     }
     reg_tmp.w = (u32)D_0025D8D0;
     D_0025E0AE[0] = reg_tmp.h[1];
     D_0025E0B0[0] = reg_tmp.h[0];
     if (D_0025E0BE[0] != 0x3) {
-        func_00117320(D_00277E20);
+        printf(D_00277E20);
     }
     reg_tmp.w = (u32)D_0025D8D0;
     D_0025E0BE[0] = reg_tmp.h[1];
     D_0025E0C0[0] = reg_tmp.h[0];
     if (D_0025E0CE[0] != 0x3) {
-        func_00117320(D_00277E40);
+        printf(D_00277E40);
     }
     reg_tmp.w = (u32)D_0025D8F0;
     D_0025E0CE[0] = reg_tmp.h[1];
     D_0025E0D0[0] = reg_tmp.h[0];
     if (D_0025E0DE[0] != 0x3) {
-        func_00117320(D_00277E60);
+        printf(D_00277E60);
     }
     reg_tmp.w = (u32)D_0025D910;
     D_0025E0DE[0] = reg_tmp.h[1];
     D_0025E0E0[0] = reg_tmp.h[0];
     if (D_0025E0EE[0] != 0x3) {
-        func_00117320(D_00277E80);
+        printf(D_00277E80);
     }
     reg_tmp.w = (u32)D_0025D910;
     D_0025E0EE[0] = reg_tmp.h[1];
     D_0025E0F0[0] = reg_tmp.h[0];
     if (D_0025E0FE[0] != 0x3) {
-        func_00117320(D_00277EA0);
+        printf(D_00277EA0);
     }
     reg_tmp.w = (u32)D_0025D930;
     D_0025E0FE[0] = reg_tmp.h[1];
     D_0025E100[0] = reg_tmp.h[0];
     if (D_0025E10E[0] != 0x3) {
-        func_00117320(D_00277EC0);
+        printf(D_00277EC0);
     }
     reg_tmp.w = (u32)D_0025D930;
     D_0025E10E[0] = reg_tmp.h[1];
     D_0025E110[0] = reg_tmp.h[0];
     if (D_0025E11E[0] != 0x3) {
-        func_00117320(D_00277EE0);
+        printf(D_00277EE0);
     }
     reg_tmp.w = (u32)D_0025D950;
     D_0025E11E[0] = reg_tmp.h[1];
     D_0025E120[0] = reg_tmp.h[0];
     if (D_0025E12E[0] != 0x3) {
-        func_00117320(D_00277F00);
+        printf(D_00277F00);
     }
     reg_tmp.w = (u32)D_0025D970;
     D_0025E12E[0] = reg_tmp.h[1];
     D_0025E130[0] = reg_tmp.h[0];
     if (D_0025E13E[0] != 0x3) {
-        func_00117320(D_00277F20);
+        printf(D_00277F20);
     }
     reg_tmp.w = (u32)D_0025D970;
     D_0025E13E[0] = reg_tmp.h[1];
     D_0025E140[0] = reg_tmp.h[0];
     if (D_0025E14E[0] != 0x3) {
-        func_00117320(D_00277F40);
+        printf(D_00277F40);
     }
     reg_tmp.w = (u32)D_0025D990;
     D_0025E14E[0] = reg_tmp.h[1];
     D_0025E150[0] = reg_tmp.h[0];
     if (D_0025E15E[0] != 0x3) {
-        func_00117320(D_00277F60);
+        printf(D_00277F60);
     }
     reg_tmp.w = (u32)D_0025D990;
     D_0025E15E[0] = reg_tmp.h[1];

@@ -2,8 +2,8 @@
 
 extern s32 D_0029AA40[];
 
-void func_00116118(void *param_1, s32 param_2, s32 param_3);
+void memset(void *param_1, s32 param_2, s32 param_3);
 
 void func_00139EB0(void) {
-    func_00116118(D_0029AA40, 0, 0x11BA);
+    memset(D_0029AA40, 0, 0x11BA);
 }

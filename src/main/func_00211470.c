@@ -1,17 +1,16 @@
 #include "common.h"
 
-extern s32 reg_d3;
 extern u16 D_0028E910;
 extern u16 D_0028E928;
 
 void func_00211470(void) {
-    reg_d3 = 0x1D;
+    reg_d3.sw = 0x1D;
     if (D_0028E910 == 0) {
         if (D_0028E928 == 0) {
             goto block_3;
         }
     } else {
 block_3:
-        reg_d3 = 0xE;
+        reg_d3.sw = 0xE;
     }
 }
