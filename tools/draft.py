@@ -1,12 +1,13 @@
 import argparse
 from pathlib import Path
 import re
+import struct
 import subprocess
 import sys
 from tempfile import TemporaryDirectory
 
-from common import ROOT, TARGETS
-from split import split
+from common import BASEROM, ROOT, TARGETS
+from split import split, target_layout
 
 
 COMMON_SYMS = frozenset({
@@ -53,6 +54,8 @@ TAIL_JUMP_RE = re.compile(
     r"^([ \t]*/\*[^*]*\*/[ \t]+j[ \t]+[^\n]+\n)([ \t]*/\*[^*]*\*/[ \t]+(?!nop\b)[^\n]+\n)",
     re.M,
 )
+JTBL_REF_RE = re.compile(r"%(?:hi|lo)\(jtbl_([0-9A-Fa-f]{8})\)")
+INSN_ADDR_RE = re.compile(r"^[ \t]*/\*\s*[0-9A-Fa-f]+\s+([0-9A-Fa-f]{8})\s+[0-9A-Fa-f]{8}\s*\*/", re.M)
 
 
 def _strip_preprocessor(text):
@@ -244,18 +247,75 @@ def _hoist_tail_jump_delay_slots(snippet):
     return TAIL_JUMP_RE.sub(lambda m: m.group(2) + m.group(1) + "    nop\n", snippet)
 
 
+def _synthesize_jump_tables(target, snippet):
+    """Extract retail .rodata jump tables referenced by %hi/%lo(jtbl_*) and ensure target labels exist."""
+    table_addrs = sorted({int(m, 16) for m in JTBL_REF_RE.findall(snippet)})
+    if not table_addrs:
+        return snippet, None
+    insn_addrs = [int(m, 16) for m in INSN_ADDR_RE.findall(snippet)]
+    if not insn_addrs:
+        return snippet, None
+    fn_start, fn_end = min(insn_addrs), max(insn_addrs) + 4
+    file_address, _, _ = target_layout(target)
+    binary = (BASEROM / target).read_bytes()
+
+    rodata_lines = [".section .rodata"]
+    needed_labels = set()
+    for table_addr in table_addrs:
+        offset = table_addr - file_address
+        if not 0 <= offset < len(binary):
+            continue
+        entries = []
+        while offset + 4 <= len(binary) and len(entries) < 512:
+            word, = struct.unpack_from("<I", binary, offset)
+            if not (fn_start <= word < fn_end and word % 4 == 0):
+                break
+            entries.append(word)
+            offset += 4
+        if not entries:
+            continue
+        rodata_lines.append(f"glabel jtbl_{table_addr:08X}")
+        for target_addr in entries:
+            label = f".L{target_addr:08X}"
+            needed_labels.add((target_addr, label))
+            rodata_lines.append(f"    .word {label}")
+    if not needed_labels:
+        return snippet, None
+
+    existing = set(re.findall(r"^\s*(\.L[0-9A-Fa-f]{8}):", snippet, re.M))
+    missing = {addr: lbl for addr, lbl in needed_labels if lbl not in existing}
+    if missing:
+        patched = []
+        for line in snippet.splitlines(keepends=True):
+            m = INSN_ADDR_RE.match(line)
+            if m:
+                addr = int(m.group(1), 16)
+                lbl = missing.pop(addr, None)
+                if lbl is not None:
+                    patched.append(f"{lbl}:\n")
+            patched.append(line)
+        snippet = "".join(patched)
+    return snippet, "\n".join(rodata_lines) + "\n"
+
+
 def draft_function(target, function, context=None, raw=False, relax_protos=False):
     folder = split(target)
     snippet = extract_function(folder / "asm", function)
     m2c_snippet = snippet if raw else _hoist_tail_jump_delay_slots(snippet)
+    m2c_snippet, rodata_asm = _synthesize_jump_tables(target, m2c_snippet)
     with TemporaryDirectory(prefix="m2c-") as temporary:
         tmp = Path(temporary)
         path = tmp / f"{function}.s"
         path.write_text(".set noat\n.set noreorder\n\n" + m2c_snippet, encoding="utf-8")
+        inputs = [str(path)]
+        if rodata_asm is not None:
+            rodata_path = tmp / f"{function}_rodata.s"
+            rodata_path.write_text(rodata_asm, encoding="utf-8")
+            inputs.append(str(rodata_path))
         ctx_path = context.resolve() if context else build_m2c_context(tmp / "context.h")
         command = [
             sys.executable, "-m", "m2c.main", "-t", "mipsee-mwcc-c",
-            "--valid-syntax", "--no-cache", "--context", str(ctx_path), str(path),
+            "--valid-syntax", "--no-cache", "--context", str(ctx_path), *inputs,
         ]
         result = subprocess.run(command, cwd=ROOT, capture_output=True, text=True, check=True)
         output = result.stdout
