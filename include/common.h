@@ -17,7 +17,7 @@ typedef union {
 extern u16 rng_cursor;
 extern Reg32 work_reg_0;
 extern Reg32 work_reg_1;
+extern Reg32 work_reg_tmp;
 extern s8 rng_values[256];
-extern u8 bcd_digits[4];
 
 #endif
