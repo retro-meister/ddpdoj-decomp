@@ -1966,6 +1966,8 @@ segments:
       - [0x12ccf0, asm, game_12ccf0]
       - [0x12d340, c, main/func_0022D2C0]
       - [0x12d380, asm, game_12d380]
+      - [0x12d400, c, main/func_0022D380]
+      - [0x12d5d0, asm, game_12d5d0]
       - [0x133f40, c, main/func_00233EC0]
       - [0x133f60, asm, game_133f60]
       - [0x133fb0, c, main/func_00233F30]
