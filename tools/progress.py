@@ -163,10 +163,22 @@ def backfill_from_git():
     return history
 
 
-def record_snapshot(history):
-    run(sys.executable, str(ROOT / "tools/build.py"))
-    inventory, _ = build_inventory()
+def missing_cached_objects(local):
+    for name in TARGETS:
+        version = target_compiler(name, local)
+        for unit in target_units(name):
+            obj = OBJ_CACHE / version / f"{unit['source']}.o"
+            src = ROOT / unit["source"]
+            if not obj.is_file() or (src.is_file() and obj.stat().st_mtime < src.stat().st_mtime):
+                return True
+    return False
+
+
+def record_snapshot(history, skip_build=False):
     local = require_local()
+    if not skip_build and missing_cached_objects(local):
+        run(sys.executable, str(ROOT / "tools/build.py"))
+    inventory, _ = build_inventory()
     fn_map = known_functions(inventory)
     targets = {}
     for name in TARGETS:
@@ -437,7 +449,8 @@ def plot_history(history):
 
 def main():
     parser = argparse.ArgumentParser(description="Record matching progress history and optionally plot a chart.")
-    parser.add_argument("--record", action="store_true", help="build and record a verified snapshot")
+    parser.add_argument("--record", action="store_true", help="record a snapshot (skips full rebuild when object cache is fresh)")
+    parser.add_argument("--skip-build", action="store_true", help="never invoke tools/build.py during --record")
     parser.add_argument("--backfill", action="store_true", help="rebuild history from git commits touching splat.yaml")
     parser.add_argument("--plot", action="store_true", help="render the progress chart SVGs (docs/progress-*.svg)")
     args = parser.parse_args()
@@ -447,7 +460,7 @@ def main():
     else:
         history = read_json(HISTORY) if HISTORY.is_file() else []
     if args.record:
-        record_snapshot(history)
+        record_snapshot(history, skip_build=args.skip_build)
         print(HISTORY.relative_to(ROOT))
     if args.plot or (not args.record and not args.backfill):
         if not history:
