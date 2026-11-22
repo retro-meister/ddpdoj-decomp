@@ -4,24 +4,40 @@ import json
 import subprocess
 import sys
 
-from common import ROOT, TARGETS, read_json, run
+from build import OBJ_CACHE
+from common import ROOT, TARGETS, read_json, require_local, run, target_compiler
+from objects import defined_function_count
+from inventory import build_inventory
 from split import target_units
 
 HISTORY = ROOT / "config/progress-history.json"
-GRAPH = ROOT / "build/progress.png"
+GRAPH = ROOT / "docs/progress.svg"
 LABELS = {"SLPS_252.33": "Main game", "DEATH.ELF": "Death Label", "GALLERY.ELF": "Gallery"}
+
+
+def matched_function_count(name, local):
+    version = target_compiler(name, local)
+    return sum(
+        defined_function_count(OBJ_CACHE / version / f"{unit['source']}.o")
+        for unit in target_units(name)
+    )
 
 
 def record_snapshot(history):
     run(sys.executable, str(ROOT / "tools/build.py"))
-    targets = {
-        name: {
-            "functions": len(units),
+    inventory, _ = build_inventory()
+    local = require_local()
+    targets = {}
+    for name in TARGETS:
+        units = target_units(name)
+        matched_functions = matched_function_count(name, local)
+        unmatched = sum(1 for fn in inventory[name] if not fn["matched"])
+        targets[name] = {
+            "functions": matched_functions,
+            "total_functions": matched_functions + unmatched,
             "bytes": sum(unit["size"] for unit in units),
+            "total_bytes": sum(fn["size"] for fn in inventory[name]),
         }
-        for name in TARGETS
-        for units in (target_units(name),)
-    }
     if history and history[-1]["targets"] == targets:
         return
     today = date.today().isoformat()
@@ -40,66 +56,55 @@ def record_snapshot(history):
 def plot_history(history):
     import matplotlib
     matplotlib.use("Agg")
+    matplotlib.rcParams["svg.fonttype"] = "path"
+    matplotlib.rcParams["svg.hashsalt"] = "ddpdoj"
     import matplotlib.dates as mdates
     import matplotlib.pyplot as plt
-    from matplotlib.ticker import MaxNLocator, StrMethodFormatter
+    from matplotlib.ticker import PercentFormatter
 
-    blue, orange = "#1766af", "#b94723"
-    series = [target for snapshot in history for target in snapshot["targets"].values()]
-    max_functions = max(max(point["functions"] for point in series) * 1.15, 1)
-    max_bytes = max(max(point["bytes"] for point in series) * 1.15, 1)
-    fig, axes = plt.subplots(1, len(TARGETS), figsize=(12, 4), layout="constrained")
-    fig.get_layout_engine().set(rect=(0, 0, 1, .81), wspace=.08)
-    fig.suptitle("DaiOuJou PS2 matching progress", fontsize=16, fontweight="bold")
-    for axis, (name, label) in zip(axes, LABELS.items()):
-        points = [snapshot for snapshot in history if name in snapshot["targets"]]
+    colors = {"functions": "#1766af", "bytes": "#c8321e"}
+    names = {"functions": "Functions", "bytes": "Bytes"}
+    fig, axes = plt.subplots(1, len(TARGETS), figsize=(13, 4.4), layout="constrained", sharey=True)
+    fig.suptitle("DaiOuJou PS2 decompilation progress", fontsize=18, fontweight="bold")
+    handles = []
+    for axis, (target, label) in zip(axes, LABELS.items()):
+        points = [snapshot for snapshot in history if target in snapshot["targets"]]
         dates = [date.fromisoformat(snapshot["date"]) for snapshot in points]
-        values = [snapshot["targets"][name] for snapshot in points]
-        other = axis.twinx()
-        functions, = axis.step(
-            dates, [point["functions"] for point in values], where="post",
-            color=blue, linewidth=2, marker="o", markersize=7, markerfacecolor="white",
-            label="Matched functions", clip_on=False,
-        )
-        code, = other.step(
-            dates, [point["bytes"] for point in values], where="post",
-            color=orange, linewidth=2, marker="s", markersize=4,
-            label="Matched code bytes", clip_on=False,
-        )
-        latest = values[-1]
-        count = latest["functions"]
-        noun = "function" if count == 1 else "functions"
-        axis.set_title(f"{label}\n{count:,} {noun} · {latest['bytes']:,} B",
-                       loc="left", fontsize=11, fontweight="bold")
-        axis.set_ylim(0, max_functions)
-        other.set_ylim(0, max_bytes)
-        axis.yaxis.set_major_locator(MaxNLocator(nbins=4, integer=True))
-        other.yaxis.set_major_locator(MaxNLocator(nbins=4, integer=True))
-        other.yaxis.set_major_formatter(StrMethodFormatter("{x:,.0f}"))
-        axis.tick_params(axis="y", colors=blue)
-        other.tick_params(axis="y", colors=orange)
-        axis.grid(axis="y", alpha=.22)
+        lines = []
+        for key in ("functions", "bytes"):
+            total_key = f"total_{key}"
+            total = next((s["targets"][target][total_key] for s in reversed(points) if total_key in s["targets"][target]), None)
+            values = [min(snapshot["targets"][target][key] / total * 100, 100) if total else 0 for snapshot in points]
+            line, = axis.step(dates, values, where="post", color=colors[key], linewidth=2, label=names[key], clip_on=False)
+            if axis is axes[0]:
+                handles.append(line)
+            matched = points[-1]["targets"][target][key]
+            lines.append(f"{names[key]} {values[-1]:.1f}% ({matched:,}/{total or 0:,})")
+        axis.set_title(label + "\n" + "\n".join(lines), loc="left", fontsize=10, fontweight="bold")
+        axis.set_ylim(0, 100)
+        axis.yaxis.set_major_formatter(PercentFormatter(decimals=0))
+        axis.grid(alpha=.22)
         if len(dates) == 1:
             center = mdates.date2num(dates[0])
             axis.set_xlim(center - 1, center + 1)
             axis.set_xticks([center], [dates[0].isoformat()])
         else:
-            locator = mdates.AutoDateLocator(minticks=2, maxticks=4)
+            locator = mdates.AutoDateLocator(minticks=2, maxticks=5)
             axis.xaxis.set_major_locator(locator)
             axis.xaxis.set_major_formatter(mdates.ConciseDateFormatter(locator))
-        for spine in (*axis.spines.values(), *other.spines.values()):
+        for spine in axis.spines.values():
             spine.set_color("#cbd5df")
-    fig.legend(handles=[functions, code], loc="upper center", bbox_to_anchor=(.5, .90),
-               ncols=2, frameon=False)
+    axes[0].set_ylabel("Decompilation progress")
+    axes[0].legend(handles=handles, loc="upper left", bbox_to_anchor=(0.01, 0.99), frameon=True)
     GRAPH.parent.mkdir(exist_ok=True)
-    fig.savefig(GRAPH, dpi=150, facecolor="white")
+    fig.savefig(GRAPH, facecolor="white", metadata={"Date": None, "Creator": "tools/progress.py"})
     plt.close(fig)
 
 
 def main():
     parser = argparse.ArgumentParser(description="Record matching progress history and optionally plot a chart.")
     parser.add_argument("--record", action="store_true", help="build and record a verified snapshot")
-    parser.add_argument("--plot", action="store_true", help="render the progress chart PNG")
+    parser.add_argument("--plot", action="store_true", help="render the progress chart SVG (docs/progress.svg)")
     args = parser.parse_args()
     history = read_json(HISTORY) if HISTORY.is_file() else []
     if args.record:

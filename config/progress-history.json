@@ -43,10 +43,6 @@
       "DEATH.ELF": {
         "functions": 2,
         "bytes": 180
-      },
-      "GALLERY.ELF": {
-        "functions": 53,
-        "bytes": 22476
       }
     }
   },
@@ -55,15 +51,21 @@
     "targets": {
       "SLPS_252.33": {
         "functions": 762,
-        "bytes": 14976
+        "total_functions": 3398,
+        "bytes": 14976,
+        "total_bytes": 1176144
       },
       "DEATH.ELF": {
         "functions": 0,
-        "bytes": 0
+        "total_functions": 3463,
+        "bytes": 0,
+        "total_bytes": 1190908
       },
       "GALLERY.ELF": {
-        "functions": 14,
-        "bytes": 8984
+        "functions": 66,
+        "total_functions": 66,
+        "bytes": 8984,
+        "total_bytes": 8984
       }
     }
   }

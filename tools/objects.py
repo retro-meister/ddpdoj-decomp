@@ -46,6 +46,16 @@ def validate_object(path):
     return functions
 
 
+def defined_function_count(path):
+    data = path.read_bytes()
+    sections, named, _ = parse_object(path)
+    symtab = sections[named[".symtab"]]
+    return sum(
+        1 for _, _, _, info, _, index in struct.iter_unpack("<IIIBBH", data[symtab[4]:symtab[4] + symtab[5]])
+        if index != 0 and info & 15 == 2
+    )
+
+
 def undefined_symbols(path):
     data = path.read_bytes()
     sections, named, _ = parse_object(path)

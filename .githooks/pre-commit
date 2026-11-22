@@ -1,0 +1,6 @@
+#!/bin/sh
+# Re-render the README progress chart whenever the progress history is part of the commit.
+if git diff --cached --name-only | grep -qx "config/progress-history.json"; then
+    uv run tools/progress.py --plot >/dev/null || { echo "pre-commit: progress chart failed" >&2; exit 1; }
+    git add docs/progress.svg
+fi
