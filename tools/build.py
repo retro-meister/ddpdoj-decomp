@@ -389,7 +389,105 @@ def _prepare_shiftable_mod_link(folder, work_target, original, binutils):
     return e_entry, mod_ld, mod_syms_ld
 
 
-def link_target(folder, work_target, filename, original, target, units, version, objects, binutils, matching):
+SEC_RULE_RE = re.compile(r"^(\s*)(\S+\.o)\(([^)]+)\);\s*$")
+ALIGN_RULE_RE = re.compile(r"^\s*\.\s*=\s*ALIGN\(.*\);\s*$")
+ALLOC_SECS = frozenset({".text", ".data", ".rodata", ".sdata", ".sbss", ".bss"})
+
+
+def _nonempty_elf_sections(obj_path):
+    data = obj_path.read_bytes()
+    e_shoff, = struct.unpack_from("<I", data, 0x20)
+    e_shentsize, e_shnum, e_shstrndx = struct.unpack_from("<HHH", data, 0x2E)
+    str_off, = struct.unpack_from("<I", data, e_shoff + e_shstrndx * e_shentsize + 16)
+    sections = set()
+    for i in range(e_shnum):
+        sh_name, _, _, _, _, sh_size = struct.unpack_from("<6I", data, e_shoff + i * e_shentsize)
+        if sh_size == 0:
+            continue
+        end = data.index(b"\x00", str_off + sh_name)
+        sections.add(data[str_off + sh_name : end].decode("ascii", "ignore"))
+    return sections
+
+
+def _prepare_compact_link(folder, work_target, binutils, chunk_size=64):
+    """Drop empty section rules from main.ld and partial-link contiguous .text-only runs."""
+    main_ld = (folder / "main.ld").read_text(encoding="utf-8")
+    sec_cache = {}
+    filtered = []
+    for line in main_ld.splitlines():
+        m = SEC_RULE_RE.match(line)
+        if m:
+            obj_rel, sec = m.group(2), m.group(3)
+            if obj_rel not in sec_cache:
+                sec_cache[obj_rel] = _nonempty_elf_sections(ROOT / obj_rel)
+            if sec not in sec_cache[obj_rel]:
+                continue
+        filtered.append(line)
+
+    final_lines = []
+    run_items = []
+    chunk_idx = 0
+
+    def emit_chunk(clines):
+        nonlocal chunk_idx
+        trailing = []
+        while clines and clines[-1][1] is None:
+            trailing.append(clines.pop()[0])
+        leading = []
+        while clines and clines[0][1] is None:
+            leading.append(clines.pop(0)[0])
+        final_lines.extend(leading)
+        if clines:
+            c_ld = work_target / f"chunk_{chunk_idx}.ld"
+            c_o = work_target / f"chunk_{chunk_idx}.o"
+            chunk_idx += 1
+            body = "\n".join(line for line, _ in clines)
+            c_ld.write_text(f"SECTIONS {{\n  .text : {{\n{body}\n  }}\n}}\n", encoding="utf-8")
+            run(binutils["ld"], "-EL", "-r", "-T", str(c_ld), "-o", str(c_o), cwd=ROOT)
+            final_lines.append(f"        {c_o.relative_to(ROOT).as_posix()}(.text);")
+        final_lines.extend(reversed(trailing))
+
+    def flush_run():
+        nonlocal run_items
+        objs = sum(1 for _, o in run_items if o is not None)
+        if objs < 8:
+            final_lines.extend(line for line, _ in run_items)
+            run_items = []
+            return
+        cur = []
+        cur_objs = 0
+        for item in run_items:
+            if item[1] is not None and cur_objs >= chunk_size:
+                emit_chunk(cur)
+                cur = []
+                cur_objs = 0
+            cur.append(item)
+            if item[1] is not None:
+                cur_objs += 1
+        if cur:
+            emit_chunk(cur)
+        run_items = []
+
+    for line in filtered:
+        m = SEC_RULE_RE.match(line)
+        if m and m.group(3) == ".text":
+            obj_rel = m.group(2)
+            if (sec_cache[obj_rel] & ALLOC_SECS) == {".text"}:
+                run_items.append((line, obj_rel))
+                continue
+        elif ALIGN_RULE_RE.match(line) and run_items:
+            run_items.append((line, None))
+            continue
+        flush_run()
+        final_lines.append(line)
+    flush_run()
+
+    compact_ld = work_target / "main.compact.ld"
+    compact_ld.write_text("\n".join(final_lines) + "\n", encoding="utf-8")
+    return compact_ld
+
+
+def link_target(folder, work_target, filename, original, target, units, version, objects, binutils, matching, write_map=False):
     assemble_split(folder, binutils)
     objects_root = folder / "objects"
     for unit in units:
@@ -401,14 +499,16 @@ def link_target(folder, work_target, filename, original, target, units, version,
     link_map = work_target / "image.map"
     out = work_target / filename
     rel = folder.relative_to(ROOT)
+    map_args = ["-Map", str(link_map)] if write_map else []
     if matching:
+        compact_ld = _prepare_compact_link(folder, work_target, binutils)
         run(
             binutils["ld"], "-EL",
-            "-T", rel / "main.ld",
+            "-T", str(compact_ld.relative_to(ROOT)),
             "-T", rel / "undefined_funcs.txt",
             "-T", rel / "undefined_syms.txt",
             "-T", rel / "symbols.ld",
-            "-Map", str(link_map),
+            *map_args,
             "-o", str(elf),
             cwd=ROOT,
         )
@@ -425,13 +525,13 @@ def link_target(folder, work_target, filename, original, target, units, version,
             "-T", str(mod_ld),
             "-T", rel / "undefined_funcs.txt",
             "-T", str(mod_syms_ld),
-            "-Map", str(link_map),
+            *map_args,
             "-o", str(out),
             cwd=ROOT,
         )
 
 
-def build(local, target=None, mod=False, compiler=None, iso=None):
+def build(local, target=None, mod=False, compiler=None, iso=None, write_map=False):
     names = [target] if target else list(TARGETS)
     originals = {
         name: verify((BASEROM / name).read_bytes(), TARGETS[name]["sha256"], f"baserom/{name}")
@@ -456,7 +556,8 @@ def build(local, target=None, mod=False, compiler=None, iso=None):
         work = Path(temporary)
         for name in names:
             link_target(split_folders[name], work / name, name, originals[name], TARGETS[name],
-                        units_by_target[name], versions[name], objects, local["binutils"], matching=not mod)
+                        units_by_target[name], versions[name], objects, local["binutils"],
+                        matching=not mod, write_map=write_map)
         full_mod = mod and target is None
         if full_mod:
             hashes = {name: hashlib.sha256((work / name / name).read_bytes()).hexdigest()
@@ -465,7 +566,8 @@ def build(local, target=None, mod=False, compiler=None, iso=None):
             receipt.write_text(json.dumps(hashes, indent=2) + "\n", encoding="utf-8")
         for name in names:
             (work / name / name).replace(output / name)
-            (work / name / "image.map").replace(output / f"{name}.map")
+            if write_map:
+                (work / name / "image.map").replace(output / f"{name}.map")
             count = len(units_by_target[name])
             detail = f"{count} compiled C unit(s)" if count else "Splat asm only"
             if mod:
@@ -492,8 +594,9 @@ def main():
     parser.add_argument("--mod", action="store_true", help="build edits into build/mod")
     parser.add_argument("--iso", nargs="?", const="", help="with --mod, incrementally sync assets/ into build/mod/ddpdoj.iso")
     parser.add_argument("--compiler", choices=TOOLCHAINS["compilers"], help="override the target compiler")
+    parser.add_argument("--map", action="store_true", help="emit linker .map files into build/")
     args = parser.parse_args()
-    build(require_local(), args.target, args.mod, args.compiler, args.iso)
+    build(require_local(), args.target, args.mod, args.compiler, args.iso, write_map=args.map)
 
 
 if __name__ == "__main__":
