@@ -1,0 +1,7 @@
+#include "common.h"
+
+extern u8 D_0028E408;
+
+void func_0012FFC0(void) {
+    D_0028E408 = 1;
+}
