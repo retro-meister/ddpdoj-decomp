@@ -1,53 +1,439 @@
 [
   {
-    "date": "2026-11-19",
-    "targets": {
-      "SLPS_252.33": {
-        "bytes": 48,
-        "functions": 1
-      },
-      "DEATH.ELF": {
-        "bytes": 48,
-        "functions": 1
-      },
-      "GALLERY.ELF": {
-        "bytes": 0,
-        "functions": 0
-      }
-    }
-  },
-  {
-    "date": "2026-11-20",
+    "timestamp": "2026-11-21T05:13:42+08:00",
+    "commit": "0485743",
     "targets": {
       "SLPS_252.33": {
         "functions": 2,
-        "bytes": 180
+        "total_functions": 3398,
+        "bytes": 180,
+        "total_bytes": 1176144
       },
       "DEATH.ELF": {
         "functions": 2,
-        "bytes": 180
+        "total_functions": 3463,
+        "bytes": 180,
+        "total_bytes": 1190908
       },
       "GALLERY.ELF": {
         "functions": 1,
-        "bytes": 28
+        "total_functions": 66,
+        "bytes": 28,
+        "total_bytes": 42516
       }
     }
   },
   {
-    "date": "2026-11-21",
+    "timestamp": "2026-11-21T07:06:03+08:00",
+    "commit": "aad01d9",
     "targets": {
       "SLPS_252.33": {
         "functions": 2,
-        "bytes": 180
+        "total_functions": 3398,
+        "bytes": 180,
+        "total_bytes": 1176144
       },
       "DEATH.ELF": {
         "functions": 2,
-        "bytes": 180
+        "total_functions": 3463,
+        "bytes": 180,
+        "total_bytes": 1190908
+      },
+      "GALLERY.ELF": {
+        "functions": 7,
+        "total_functions": 66,
+        "bytes": 140,
+        "total_bytes": 42516
       }
     }
   },
   {
-    "date": "2026-11-22",
+    "timestamp": "2026-11-21T07:16:39+08:00",
+    "commit": "31c490f",
+    "targets": {
+      "SLPS_252.33": {
+        "functions": 2,
+        "total_functions": 3398,
+        "bytes": 180,
+        "total_bytes": 1176144
+      },
+      "DEATH.ELF": {
+        "functions": 2,
+        "total_functions": 3463,
+        "bytes": 180,
+        "total_bytes": 1190908
+      },
+      "GALLERY.ELF": {
+        "functions": 9,
+        "total_functions": 66,
+        "bytes": 264,
+        "total_bytes": 42516
+      }
+    }
+  },
+  {
+    "timestamp": "2026-11-21T07:31:32+08:00",
+    "commit": "7592f14",
+    "targets": {
+      "SLPS_252.33": {
+        "functions": 2,
+        "total_functions": 3398,
+        "bytes": 180,
+        "total_bytes": 1176144
+      },
+      "DEATH.ELF": {
+        "functions": 2,
+        "total_functions": 3463,
+        "bytes": 180,
+        "total_bytes": 1190908
+      },
+      "GALLERY.ELF": {
+        "functions": 10,
+        "total_functions": 66,
+        "bytes": 340,
+        "total_bytes": 42516
+      }
+    }
+  },
+  {
+    "timestamp": "2026-11-21T08:02:10+08:00",
+    "commit": "d2a79dd",
+    "targets": {
+      "SLPS_252.33": {
+        "functions": 2,
+        "total_functions": 3398,
+        "bytes": 180,
+        "total_bytes": 1176144
+      },
+      "DEATH.ELF": {
+        "functions": 2,
+        "total_functions": 3463,
+        "bytes": 180,
+        "total_bytes": 1190908
+      },
+      "GALLERY.ELF": {
+        "functions": 30,
+        "total_functions": 66,
+        "bytes": 5260,
+        "total_bytes": 42516
+      }
+    }
+  },
+  {
+    "timestamp": "2026-11-21T08:32:54+08:00",
+    "commit": "0f53174",
+    "targets": {
+      "SLPS_252.33": {
+        "functions": 2,
+        "total_functions": 3398,
+        "bytes": 180,
+        "total_bytes": 1176144
+      },
+      "DEATH.ELF": {
+        "functions": 2,
+        "total_functions": 3463,
+        "bytes": 180,
+        "total_bytes": 1190908
+      },
+      "GALLERY.ELF": {
+        "functions": 37,
+        "total_functions": 66,
+        "bytes": 8904,
+        "total_bytes": 42516
+      }
+    }
+  },
+  {
+    "timestamp": "2026-11-21T09:50:49+08:00",
+    "commit": "2304918",
+    "targets": {
+      "SLPS_252.33": {
+        "functions": 2,
+        "total_functions": 3398,
+        "bytes": 180,
+        "total_bytes": 1176144
+      },
+      "DEATH.ELF": {
+        "functions": 2,
+        "total_functions": 3463,
+        "bytes": 180,
+        "total_bytes": 1190908
+      },
+      "GALLERY.ELF": {
+        "functions": 39,
+        "total_functions": 66,
+        "bytes": 9704,
+        "total_bytes": 42516
+      }
+    }
+  },
+  {
+    "timestamp": "2026-11-21T10:27:12+08:00",
+    "commit": "1d3934f",
+    "targets": {
+      "SLPS_252.33": {
+        "functions": 2,
+        "total_functions": 3398,
+        "bytes": 180,
+        "total_bytes": 1176144
+      },
+      "DEATH.ELF": {
+        "functions": 2,
+        "total_functions": 3463,
+        "bytes": 180,
+        "total_bytes": 1190908
+      },
+      "GALLERY.ELF": {
+        "functions": 42,
+        "total_functions": 66,
+        "bytes": 13000,
+        "total_bytes": 42516
+      }
+    }
+  },
+  {
+    "timestamp": "2026-11-21T11:10:53+08:00",
+    "commit": "0427eb4",
+    "targets": {
+      "SLPS_252.33": {
+        "functions": 2,
+        "total_functions": 3398,
+        "bytes": 180,
+        "total_bytes": 1176144
+      },
+      "DEATH.ELF": {
+        "functions": 2,
+        "total_functions": 3463,
+        "bytes": 180,
+        "total_bytes": 1190908
+      },
+      "GALLERY.ELF": {
+        "functions": 44,
+        "total_functions": 66,
+        "bytes": 16864,
+        "total_bytes": 42516
+      }
+    }
+  },
+  {
+    "timestamp": "2026-11-21T15:14:21+08:00",
+    "commit": "be100ad",
+    "targets": {
+      "SLPS_252.33": {
+        "functions": 2,
+        "total_functions": 3398,
+        "bytes": 180,
+        "total_bytes": 1176144
+      },
+      "DEATH.ELF": {
+        "functions": 2,
+        "total_functions": 3463,
+        "bytes": 180,
+        "total_bytes": 1190908
+      },
+      "GALLERY.ELF": {
+        "functions": 51,
+        "total_functions": 66,
+        "bytes": 21424,
+        "total_bytes": 42516
+      }
+    }
+  },
+  {
+    "timestamp": "2026-11-21T15:59:14+08:00",
+    "commit": "460f03e",
+    "targets": {
+      "SLPS_252.33": {
+        "functions": 2,
+        "total_functions": 3398,
+        "bytes": 180,
+        "total_bytes": 1176144
+      },
+      "DEATH.ELF": {
+        "functions": 2,
+        "total_functions": 3463,
+        "bytes": 180,
+        "total_bytes": 1190908
+      },
+      "GALLERY.ELF": {
+        "functions": 57,
+        "total_functions": 66,
+        "bytes": 30268,
+        "total_bytes": 42516
+      }
+    }
+  },
+  {
+    "timestamp": "2026-11-21T16:40:25+08:00",
+    "commit": "7c03f80",
+    "targets": {
+      "SLPS_252.33": {
+        "functions": 2,
+        "total_functions": 3398,
+        "bytes": 180,
+        "total_bytes": 1176144
+      },
+      "DEATH.ELF": {
+        "functions": 2,
+        "total_functions": 3463,
+        "bytes": 180,
+        "total_bytes": 1190908
+      },
+      "GALLERY.ELF": {
+        "functions": 61,
+        "total_functions": 66,
+        "bytes": 34096,
+        "total_bytes": 42516
+      }
+    }
+  },
+  {
+    "timestamp": "2026-11-21T17:03:24+08:00",
+    "commit": "9ad062c",
+    "targets": {
+      "SLPS_252.33": {
+        "functions": 2,
+        "total_functions": 3398,
+        "bytes": 180,
+        "total_bytes": 1176144
+      },
+      "DEATH.ELF": {
+        "functions": 2,
+        "total_functions": 3463,
+        "bytes": 180,
+        "total_bytes": 1190908
+      },
+      "GALLERY.ELF": {
+        "functions": 63,
+        "total_functions": 66,
+        "bytes": 39188,
+        "total_bytes": 42516
+      }
+    }
+  },
+  {
+    "timestamp": "2026-11-22T00:48:56+08:00",
+    "commit": "72a24a3",
+    "targets": {
+      "SLPS_252.33": {
+        "functions": 2,
+        "total_functions": 3398,
+        "bytes": 180,
+        "total_bytes": 1176144
+      },
+      "DEATH.ELF": {
+        "functions": 2,
+        "total_functions": 3463,
+        "bytes": 180,
+        "total_bytes": 1190908
+      },
+      "GALLERY.ELF": {
+        "functions": 65,
+        "total_functions": 66,
+        "bytes": 41644,
+        "total_bytes": 42516
+      }
+    }
+  },
+  {
+    "timestamp": "2026-11-22T01:08:58+08:00",
+    "commit": "80efe77",
+    "targets": {
+      "SLPS_252.33": {
+        "functions": 2,
+        "total_functions": 3398,
+        "bytes": 180,
+        "total_bytes": 1176144
+      },
+      "DEATH.ELF": {
+        "functions": 2,
+        "total_functions": 3463,
+        "bytes": 180,
+        "total_bytes": 1190908
+      },
+      "GALLERY.ELF": {
+        "functions": 66,
+        "total_functions": 66,
+        "bytes": 42516,
+        "total_bytes": 42516
+      }
+    }
+  },
+  {
+    "timestamp": "2026-11-22T07:34:58+08:00",
+    "commit": "1de06d1",
+    "targets": {
+      "SLPS_252.33": {
+        "functions": 11,
+        "total_functions": 3398,
+        "bytes": 468,
+        "total_bytes": 1176144
+      },
+      "DEATH.ELF": {
+        "functions": 11,
+        "total_functions": 3463,
+        "bytes": 468,
+        "total_bytes": 1190908
+      },
+      "GALLERY.ELF": {
+        "functions": 66,
+        "total_functions": 66,
+        "bytes": 42516,
+        "total_bytes": 42516
+      }
+    }
+  },
+  {
+    "timestamp": "2026-11-22T07:46:27+08:00",
+    "commit": "46077e2",
+    "targets": {
+      "SLPS_252.33": {
+        "functions": 64,
+        "total_functions": 3398,
+        "bytes": 892,
+        "total_bytes": 1176144
+      },
+      "DEATH.ELF": {
+        "functions": 0,
+        "total_functions": 3463,
+        "bytes": 0,
+        "total_bytes": 1190908
+      },
+      "GALLERY.ELF": {
+        "functions": 66,
+        "total_functions": 66,
+        "bytes": 42516,
+        "total_bytes": 42516
+      }
+    }
+  },
+  {
+    "timestamp": "2026-11-22T08:01:28+08:00",
+    "commit": "fd918fc",
+    "targets": {
+      "SLPS_252.33": {
+        "functions": 325,
+        "total_functions": 3398,
+        "bytes": 3444,
+        "total_bytes": 1176144
+      },
+      "DEATH.ELF": {
+        "functions": 0,
+        "total_functions": 3463,
+        "bytes": 0,
+        "total_bytes": 1190908
+      },
+      "GALLERY.ELF": {
+        "functions": 66,
+        "total_functions": 66,
+        "bytes": 42516,
+        "total_bytes": 42516
+      }
+    }
+  },
+  {
+    "timestamp": "2026-11-22T08:47:23+08:00",
+    "commit": "4a71595",
     "targets": {
       "SLPS_252.33": {
         "functions": 762,
@@ -64,8 +450,32 @@
       "GALLERY.ELF": {
         "functions": 66,
         "total_functions": 66,
-        "bytes": 8984,
-        "total_bytes": 8984
+        "bytes": 42516,
+        "total_bytes": 42516
+      }
+    }
+  },
+  {
+    "timestamp": "2026-11-22T09:46:36+08:00",
+    "commit": "fa2ce21",
+    "targets": {
+      "SLPS_252.33": {
+        "functions": 790,
+        "total_functions": 3398,
+        "bytes": 16104,
+        "total_bytes": 1176144
+      },
+      "DEATH.ELF": {
+        "functions": 0,
+        "total_functions": 3463,
+        "bytes": 0,
+        "total_bytes": 1190908
+      },
+      "GALLERY.ELF": {
+        "functions": 66,
+        "total_functions": 66,
+        "bytes": 42516,
+        "total_bytes": 42516
       }
     }
   }
