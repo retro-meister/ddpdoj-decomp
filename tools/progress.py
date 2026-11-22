@@ -184,10 +184,7 @@ def record_snapshot(history):
     if history and history[-1]["targets"] == targets:
         return
     now = datetime.now().astimezone().isoformat(timespec="seconds")
-    commit = (git_output("rev-parse", "--short", "HEAD") or "").strip()
     snapshot = {"timestamp": now, "targets": targets}
-    if commit:
-        snapshot["commit"] = commit
     history.append(snapshot)
     pending = HISTORY.with_suffix(".tmp")
     pending.write_text(json.dumps(history, indent=2) + "\n", encoding="utf-8")
