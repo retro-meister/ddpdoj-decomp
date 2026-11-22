@@ -11,7 +11,8 @@ from inventory import build_inventory
 from split import target_units
 
 HISTORY = ROOT / "config/progress-history.json"
-GRAPH = ROOT / "docs/progress.svg"
+GRAPH_DIR = ROOT / "docs"
+GRAPH_NAMES = {"SLPS_252.33": "progress-main.svg", "DEATH.ELF": "progress-death.svg", "GALLERY.ELF": "progress-gallery.svg"}
 LABELS = {"SLPS_252.33": "Main game", "DEATH.ELF": "Death Label", "GALLERY.ELF": "Gallery"}
 
 
@@ -64,47 +65,47 @@ def plot_history(history):
 
     colors = {"functions": "#1766af", "bytes": "#c8321e"}
     names = {"functions": "Functions", "bytes": "Bytes"}
-    fig, axes = plt.subplots(1, len(TARGETS), figsize=(13, 4.4), layout="constrained", sharey=True)
-    fig.suptitle("DaiOuJou PS2 decompilation progress", fontsize=18, fontweight="bold")
-    handles = []
-    for axis, (target, label) in zip(axes, LABELS.items()):
+    GRAPH_DIR.mkdir(exist_ok=True)
+    written = []
+    for target, label in LABELS.items():
         points = [snapshot for snapshot in history if target in snapshot["targets"]]
         dates = [date.fromisoformat(snapshot["date"]) for snapshot in points]
-        lines = []
+        fig, axis = plt.subplots(figsize=(10, 6), layout="constrained")
+        summary = []
         for key in ("functions", "bytes"):
             total_key = f"total_{key}"
             total = next((s["targets"][target][total_key] for s in reversed(points) if total_key in s["targets"][target]), None)
             values = [min(snapshot["targets"][target][key] / total * 100, 100) if total else 0 for snapshot in points]
-            line, = axis.step(dates, values, where="post", color=colors[key], linewidth=2, label=names[key], clip_on=False)
-            if axis is axes[0]:
-                handles.append(line)
+            axis.step(dates, values, where="post", color=colors[key], linewidth=2.5, label=names[key], clip_on=False)
             matched = points[-1]["targets"][target][key]
-            lines.append(f"{names[key]} {values[-1]:.1f}% ({matched:,}/{total or 0:,})")
-        axis.set_title(label + "\n" + "\n".join(lines), loc="left", fontsize=10, fontweight="bold")
+            summary.append(f"{names[key]}: {values[-1]:.1f}% ({matched:,}/{total or 0:,})")
+        fig.suptitle(f"DaiOuJou PS2 {label} decompilation progress", fontsize=16, fontweight="bold")
+        axis.set_title(" | ".join(summary), fontsize=12)
         axis.set_ylim(0, 100)
+        axis.set_ylabel("Decompilation progress")
+        axis.set_xlabel("Date")
         axis.yaxis.set_major_formatter(PercentFormatter(decimals=0))
-        axis.grid(alpha=.22)
+        axis.grid(alpha=.3)
+        axis.legend(loc="upper left")
         if len(dates) == 1:
             center = mdates.date2num(dates[0])
             axis.set_xlim(center - 1, center + 1)
             axis.set_xticks([center], [dates[0].isoformat()])
         else:
-            locator = mdates.AutoDateLocator(minticks=2, maxticks=5)
+            locator = mdates.AutoDateLocator(minticks=2, maxticks=6)
             axis.xaxis.set_major_locator(locator)
             axis.xaxis.set_major_formatter(mdates.ConciseDateFormatter(locator))
-        for spine in axis.spines.values():
-            spine.set_color("#cbd5df")
-    axes[0].set_ylabel("Decompilation progress")
-    axes[0].legend(handles=handles, loc="upper left", bbox_to_anchor=(0.01, 0.99), frameon=True)
-    GRAPH.parent.mkdir(exist_ok=True)
-    fig.savefig(GRAPH, facecolor="white", metadata={"Date": None, "Creator": "tools/progress.py"})
-    plt.close(fig)
+        path = GRAPH_DIR / GRAPH_NAMES[target]
+        fig.savefig(path, facecolor="white", metadata={"Date": None, "Creator": "tools/progress.py"})
+        plt.close(fig)
+        written.append(path)
+    return written
 
 
 def main():
     parser = argparse.ArgumentParser(description="Record matching progress history and optionally plot a chart.")
     parser.add_argument("--record", action="store_true", help="build and record a verified snapshot")
-    parser.add_argument("--plot", action="store_true", help="render the progress chart SVG (docs/progress.svg)")
+    parser.add_argument("--plot", action="store_true", help="render the progress chart SVGs (docs/progress-*.svg)")
     args = parser.parse_args()
     history = read_json(HISTORY) if HISTORY.is_file() else []
     if args.record:
@@ -113,8 +114,8 @@ def main():
     if args.plot or not args.record:
         if not history:
             raise ValueError("No snapshots. Run with --record after setup.")
-        plot_history(history)
-        print(GRAPH.relative_to(ROOT))
+        for path in plot_history(history):
+            print(path.relative_to(ROOT))
 
 
 if __name__ == "__main__":
