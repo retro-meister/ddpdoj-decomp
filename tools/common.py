@@ -15,14 +15,17 @@ LOCAL = ROOT / "local.json"
 
 
 @contextmanager
-def matching_lock():
-    """Keep matching tools from reading Splat state during integration."""
+def matching_lock(shared=False, name="matching.lock"):
+    """Keep matching tools from reading Splat state during integration.
+
+    Readers such as diffs take the lock shared so they can run side by side; integration takes it exclusively.
+    """
     import fcntl
 
-    path = ROOT / "build" / "matching.lock"
+    path = ROOT / "build" / name
     path.parent.mkdir(parents=True, exist_ok=True)
     with path.open("a+b") as lock:
-        fcntl.flock(lock, fcntl.LOCK_EX)
+        fcntl.flock(lock, fcntl.LOCK_SH if shared else fcntl.LOCK_EX)
         yield
 
 

@@ -273,6 +273,29 @@ def fix_stray_cases(code):
     return "\n".join(lines)
 
 
+def fix_address_register_assignments(code):
+    """Address registers hold pointers: type them as byte pointers and cast where they meet other types."""
+    code = re.sub(r"^extern [us](?:8|16|32) (reg_a[0-6]);$", r"extern u8 *\1;", code, flags=re.M)
+    decls = {name: ty.strip() for ty, name in re.findall(r"^extern ([\w ]+?\s*\**)\s*((?:D|jtbl)_[0-9A-F]{8});$", code, flags=re.M)}
+    def cast_global(m):
+        ty = decls.get(m[2])
+        return f"{m[1]}{m[2]} = ({ty}){m[3]};" if ty and ty != "u8 *" else m[0]
+    code = re.sub(r"^(\s*)((?:D|jtbl)_[0-9A-F]{8}) = (reg_a[0-6]);$", cast_global, code, flags=re.M)
+    code = re.sub(r"^(\s*reg_(?:d\d|tmp)\.w = )(reg_a[0-6]);$", r"\1(u32)\2;", code, flags=re.M)
+    code = re.sub(r"^(\s*reg_a[0-6] = )\*\((&?\w+) \+ ([^;\n]+)\);$", r"\1*(u8 **)((u8 *)\2 + \3);", code, flags=re.M)
+    code = re.sub(r"^(\s*reg_a[0-6] = )\*(reg_a[0-6]);$", r"\1*(u8 **)\2;", code, flags=re.M)
+    code = re.sub(r"^(\s*reg_a[0-6] = )(reg_(?:d\d|tmp)\.w);$", r"\1(u8 *)\2;", code, flags=re.M)
+    scalars = {n for t, n in re.findall(r"^extern ([us](?:8|16|32)) ((?:D|jtbl)_[0-9A-F]{8});$", code, flags=re.M)}
+    code = re.sub(r"^(\s*reg_a[0-6] = )((?:D|jtbl)_[0-9A-F]{8});$",
+                  lambda m: f"{m[1]}(u8 *){m[2]};" if m[2] in scalars else m[0], code, flags=re.M)
+    locals_ = {n: t for t, n in re.findall(r"^    ([us](?:8|16|32)) (\w+);$", code, flags=re.M)}
+    code = re.sub(r"^(\s*reg_a[0-6] = )((?:temp|var)_\w+|sp[0-9A-F]+);$",
+                  lambda m: f"{m[1]}(u8 *){m[2]};" if m[2] in locals_ else m[0], code, flags=re.M)
+    code = re.sub(r"^(\s*)((?:temp|var)_\w+|sp[0-9A-F]+) = (reg_a[0-6]);$",
+                  lambda m: f"{m[1]}{m[2]} = ({locals_[m[2]]}){m[3]};" if m[2] in locals_ else m[0], code, flags=re.M)
+    return code
+
+
 def fix_pointer_globals(code):
     """Integer globals assigned an address register hold pointers."""
     for ty, name in re.findall(r"^extern ([us](?:8|16|32)) ((?:D|jtbl)_[0-9A-F]{8});$", code, flags=re.M):
@@ -298,6 +321,7 @@ def fix(code):
     code = fix_integer_derefs(code)
     code = fix_stray_cases(code)
     code = fix_pointer_globals(code)
+    code = fix_address_register_assignments(code)
     code = re.sub(r"\bNULL\b", "0", code)
     header = '#include "common.h"\n'
     # mpwc_relax permits implicit pointer conversions (common inside m2c comma expressions); it does not affect codegen.

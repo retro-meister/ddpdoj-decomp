@@ -351,7 +351,7 @@ def padding_only_offsets(retail, candidate, address):
     return padding
 
 
-@matching_lock()
+@matching_lock(shared=True)
 def diff(args):
     if not args.function.isascii() or not args.function.isidentifier():
         raise ValueError("Expected a C function name")

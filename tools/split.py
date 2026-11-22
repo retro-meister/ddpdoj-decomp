@@ -8,7 +8,7 @@ import subprocess
 import sys
 import yaml
 
-from common import BASEROM, ROOT, TARGETS, run, verify
+from common import BASEROM, ROOT, TARGETS, matching_lock, run, verify
 
 SYMBOL_RE = re.compile(r"^\s*([A-Za-z_][A-Za-z0-9_]*)\s*=\s*(0x[0-9a-fA-F]+|\d+)\s*;(.*)$")
 SIZE_RE = re.compile(r"\bsize:(0x[0-9a-fA-F]+|\d+)\b")
@@ -142,6 +142,12 @@ def write_symbols_ld(name, folder):
 
 
 def split(name, force=False):
+    # Diffs run in parallel under a shared matching lock; only one of them may refresh a stale split at a time.
+    with matching_lock(name="split.lock"):
+        return _split(name, force)
+
+
+def _split(name, force=False):
     target = TARGETS[name]
     verify((BASEROM / name).read_bytes(), target["sha256"], name)
     yaml_text = splat_yaml_path(name).read_text(encoding="utf-8")
