@@ -1,0 +1,55 @@
+#include "common.h"
+
+extern u16 *reg_a0;
+extern u16 *reg_a1;
+
+void func_001A29E0(void) {
+    *reg_a1 = *reg_a0;
+    reg_a0 += 1;
+    reg_a1 += 1;
+    *reg_a1 = *reg_a0;
+    reg_a0 += 1;
+    reg_a1 += 1;
+    *reg_a1 = *reg_a0;
+    reg_a0 += 1;
+    reg_a1 += 1;
+    *reg_a1 = *reg_a0;
+    reg_a0 += 1;
+    reg_a1 += 1;
+    *reg_a1 = *reg_a0;
+    reg_a0 += 1;
+    reg_a1 += 1;
+    *reg_a1 = *reg_a0;
+    reg_a0 += 1;
+    reg_a1 += 1;
+    *reg_a1 = *reg_a0;
+    reg_a0 += 1;
+    reg_a1 += 1;
+    *reg_a1 = *reg_a0;
+    reg_a0 += 1;
+    reg_a1 += 1;
+    *reg_a1 = *reg_a0;
+    reg_a0 += 1;
+    reg_a1 += 1;
+    *reg_a1 = *reg_a0;
+    reg_a0 += 1;
+    reg_a1 += 1;
+    *reg_a1 = *reg_a0;
+    reg_a0 += 1;
+    reg_a1 += 1;
+    *reg_a1 = *reg_a0;
+    reg_a0 += 1;
+    reg_a1 += 1;
+    *reg_a1 = *reg_a0;
+    reg_a0 += 1;
+    reg_a1 += 1;
+    *reg_a1 = *reg_a0;
+    reg_a0 += 1;
+    reg_a1 += 1;
+    *reg_a1 = *reg_a0;
+    reg_a0 += 1;
+    reg_a1 += 1;
+    *reg_a1 = *reg_a0;
+    reg_a0 += 1;
+    reg_a1 += 1;
+}

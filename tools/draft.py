@@ -11,8 +11,21 @@ from split import split
 
 COMMON_SYMS = frozenset({
     "reg_d0", "reg_d1", "reg_d2", "reg_d3", "reg_d4", "reg_d5", "reg_d6", "reg_d7",
-    "reg_tmp", "rng_cursor", "rng_values", "D_0028E48A",
+    "reg_tmp", "rng_cursor", "rng_values",
+    "D_0028E4AA", "D_0028E4A6", "D_0028E4A2", "D_0028E49E",
+    "D_0028E49A", "D_0028E496", "D_0028E492", "D_0028E48E", "D_0028E48A",
 })
+REG_HI16_MAP = {
+    "D_0028E4AA": "reg_d0.h[1]",
+    "D_0028E4A6": "reg_d1.h[1]",
+    "D_0028E4A2": "reg_d2.h[1]",
+    "D_0028E49E": "reg_d3.h[1]",
+    "D_0028E49A": "reg_d4.h[1]",
+    "D_0028E496": "reg_d5.h[1]",
+    "D_0028E492": "reg_d6.h[1]",
+    "D_0028E48E": "reg_d7.h[1]",
+    "D_0028E48A": "reg_tmp.h[1]",
+}
 HI_SYM_RE = re.compile(r"%hi\((D_[0-9A-Fa-f]{8})\)")
 EXTERN_SCALAR_RE = re.compile(r"^(extern\s+[^;]*?)\b(D_[0-9A-Fa-f]{8})\s*;\s*$", re.M)
 EXTERN_FUNC_RE = re.compile(r"^extern\s+(?:s32|u32|int|M2C_UNK|\?\s*)\s+(func_[0-9A-Fa-f]{8})\s*;\s*$", re.M)
@@ -24,14 +37,22 @@ M2C_FIELD_RE = re.compile(r"M2C_FIELD\(([^,]+),\s*([^,]+),\s*([^)]+)\)")
 ORI_HI16_RE = re.compile(r"\bori\s+\$\w+,\s*\$zero,\s*0x[89a-fA-F][0-9a-fA-F]{3}\b")
 ADDIU_HI8_RE = re.compile(r"\baddiu\s+\$\w+,\s*\$zero,\s*0x[89a-fA-F][0-9a-fA-F]\b")
 COMPOUND_CAST_RE = re.compile(
-    r"^(\s*)([^\n;=]+?)\s*=\s*\((?:u8|u16|s8|s16)\)\s*\(\2\s*([+\-|&^])\s*([^\n;]+)\)\s*;\s*$",
+    r"^(\s*)([^\n;=]+?)\s*=\s*\((?:u8|u16|s8|s16)\)\s*\(\2\s*([+\-*|&^])\s*([^\n;]+)\)\s*;\s*$",
+    re.M,
+)
+COMPOUND_SHIFT_RE = re.compile(
+    r"^(\s*)([^\n;=]+?)\s*=\s*\((?:u8|u16)\)\s*\(\((?:u8|u16)\)\s*\2\s*(>>|<<)\s*([^\n;]+)\)\s*;\s*$",
     re.M,
 )
 COMPOUND_PLAIN_RE = re.compile(
-    r"^(\s*)(\(\*\((?:u8|u16) \*\)\([^\n;=]+\)\))\s*=\s*\2\s*([+\-|&^])\s*([^\n;]+)\s*;\s*$",
+    r"^(\s*)(\(\*\((?:u8|u16) \*\)\([^\n;=]+\)\))\s*=\s*\2\s*([+\-*|&^])\s*([^\n;]+)\s*;\s*$",
     re.M,
 )
 MUL2_RE = re.compile(r"^(\s*)([^\n;=]+?)\s*\*=\s*2\s*;\s*$", re.M)
+TAIL_JUMP_RE = re.compile(
+    r"^([ \t]*/\*[^*]*\*/[ \t]+j[ \t]+[^\n]+\n)([ \t]*/\*[^*]*\*/[ \t]+(?!nop\b)[^\n]+\n)",
+    re.M,
+)
 
 
 def _strip_preprocessor(text):
@@ -57,7 +78,48 @@ def clean_m2c(raw_code, asm_chunk="", relax_protos=False):
         out_lines.append(line)
     code = "\n".join(out_lines) + "\n"
 
-    code = code.replace("D_0028E48A", "reg_tmp.h[1]")
+    for hi_sym, reg_expr in REG_HI16_MAP.items():
+        if hi_sym in code:
+            code = re.sub(rf"\b{hi_sym}\b", reg_expr, code)
+
+    # Alias D_0028E484 / D_0028E486 (68k swap scratch Reg32) so MWCCPS2 respects aliasing
+    if "D_0028E484" in code and "D_0028E486" in code:
+        code = re.sub(r"^extern\s+\w+\s+D_0028E484\s*;\s*$", "extern Reg32 D_0028E484;", code, flags=re.M)
+        code = re.sub(r"^extern\s+\w+\s+D_0028E486\s*;\s*\n?", "", code, flags=re.M)
+        code = re.sub(r"\(\s*u16\s*\)\s*D_0028E484\b", "D_0028E484.h[0]", code)
+        code = re.sub(r"\bD_0028E486\b", "D_0028E484.h[1]", code)
+        code = re.sub(r"(?<!Reg32 )\bD_0028E484\b(?!\.)", "D_0028E484.w", code)
+
+    # 68k dbra loop idiom: temp = reg_dN.h[0] - 1; reg_dN.h[0] = temp; ... while (((s64)((temp & 0xFFFF) << 0x30) >> 0x30) >= 0);
+    for dm in list(re.finditer(
+        r"([ \t]*)(temp_\w+)\s*=\s*(reg_d[0-7]\.h\[0\])\s*-\s*1;\n\1\3\s*=\s*\2;\n((?:.*?\n){0,4})([ \t]*)\}\s*while\s*\(\(\(s64\)\s*\(\(\2\s*&\s*0xFFFF\)\s*<<\s*0x30\)\s*>>\s*0x30\)\s*>=\s*0\);",
+        code,
+    )):
+        tvar, reg_expr, mid, ind = dm.group(2), dm.group(3), dm.group(4), dm.group(5)
+        if not re.search(rf"\b{tvar}\b", mid):
+            code = code.replace(dm.group(0), f"{mid}{ind}}} while ((s16)(--{reg_expr}) >= 0);", 1)
+            code = re.sub(rf"^[ \t]*u16\s+{tvar}\s*;\s*\n", "", code, flags=re.M)
+
+    # 68k indexed word table lookup: *(reg_aN + (((s64) ((s64) X << 0x30) >> 0x30) & ~1))
+    if "((s64) ((s64) " in code and "& ~1)" in code:
+        idx_re = re.compile(
+            r"\*\((reg_a[0-6])\s*\+\s*\(\(\(s64\)\s*\(\(s64\)\s*([^<]+?)\s*<<\s*0x30\)\s*>>\s*0x30\)\s*&\s*~1\)\)"
+        )
+        code = idx_re.sub(r"*(u16 *)((u8 *)\1 + ((s16)\2 & ~1))", code)
+        # Collapse simple if (cond) { var = A; } else { var = B; } DST = var; into ternary
+        tern_re = re.compile(
+            r"([ \t]*)if\s*\(([^\n]+)\)\s*\{\n[ \t]*(var_\w+)\s*=\s*([^;]+);\n\1\}\s*else\s*\{\n[ \t]*\3\s*=\s*([^;]+);\n\1\}\n\1([^\n;=]+?)\s*=\s*\3;",
+        )
+        for tm in list(tern_re.finditer(code)):
+            ind, cond, vname, a_expr, b_expr, dst = tm.groups()
+            code = code.replace(tm.group(0), f"{ind}{dst} = ({cond}) ? {a_expr} : {b_expr};", 1)
+            code = re.sub(rf"^[ \t]*[us](?:8|16|32)\s+{vname}\s*;\s*\n", "", code, flags=re.M)
+
+    # RNG byte-increment idiom: lbu %gp_rel(rng_cursor) -> *(u8 *)&rng_cursor += 1
+    if asm_chunk and re.search(r"\blbu\s+\$\w+,\s*%gp_rel\(rng_cursor\)", asm_chunk):
+        code = re.sub(r"\brng_cursor\s*\+=\s*1\s*;", "*(u8 *)&rng_cursor += 1;", code)
+        if re.search(r"\blb\s+\$\w+,\s*0x0\(\$\w+\)", asm_chunk):
+            code = re.sub(r"^(extern\s+)u8(\s+D_00266[0-9A-Fa-f]{3}(?:\[\])?)", r"\1s8\2", code, flags=re.M)
 
     # Treat unknown pointers as byte pointers (u8 *) to avoid unintended *4 scaling
     code = re.sub(r"\bM2C_UNK\s*\*", "u8 *", code)
@@ -84,8 +146,9 @@ def clean_m2c(raw_code, asm_chunk="", relax_protos=False):
             break
         code = new_code
 
-    # Compound assignments trigger lbu/lhu instead of lb/lh in MWCCPS2
+    # Compound assignments trigger lbu/lhu and srl instead of lb/lh and sra in MWCCPS2
     code = COMPOUND_CAST_RE.sub(r"\1\2 \3= \4;", code)
+    code = COMPOUND_SHIFT_RE.sub(r"\1\2 \3= \4;", code)
     code = COMPOUND_PLAIN_RE.sub(r"\1\2 \3= \4;", code)
 
     if asm_chunk and re.search(r"\baddu\s+(\$\w+),\s*\1,\s*\1\b", asm_chunk):
@@ -125,7 +188,10 @@ def clean_m2c(raw_code, asm_chunk="", relax_protos=False):
             code = re.sub(rf"^extern\s+{t}\s+{rn}\s*;$", f"extern {t} *{rn};", code, flags=re.M)
             code = re.sub(rf"^(\s*){rn}\s*=\s*([^;]+);$", rf"\1{rn} = ({t} *)(\2);", code, flags=re.M)
 
-    reg_types = dict(re.findall(r"extern\s+([us](?:8|16|32)\s*\*)\s*(reg_a[0-6])\s*;", code))
+    reg_types = {
+        rname: rtype
+        for rtype, rname in re.findall(r"extern\s+([us](?:8|16|32)\s*\*)\s*(reg_a[0-6])\s*;", code)
+    }
     for rname, rtype in reg_types.items():
         if "16" in rtype:
             code = re.sub(rf"\b{rname}\s*([+-])=\s*2\s*;", rf"{rname} \1= 1;", code)
@@ -161,13 +227,19 @@ def extract_function(asm_dir, function):
     raise ValueError(f"Function {function} not found in {asm_dir}")
 
 
+def _hoist_tail_jump_delay_slots(snippet):
+    """Move non-nop delay-slot instructions before tail-call `j` so m2c does not drop them."""
+    return TAIL_JUMP_RE.sub(lambda m: m.group(2) + m.group(1) + "    nop\n", snippet)
+
+
 def draft_function(target, function, context=None, raw=False, relax_protos=False):
     folder = split(target)
     snippet = extract_function(folder / "asm", function)
+    m2c_snippet = snippet if raw else _hoist_tail_jump_delay_slots(snippet)
     with TemporaryDirectory(prefix="m2c-") as temporary:
         tmp = Path(temporary)
         path = tmp / f"{function}.s"
-        path.write_text(".set noat\n.set noreorder\n\n" + snippet, encoding="utf-8")
+        path.write_text(".set noat\n.set noreorder\n\n" + m2c_snippet, encoding="utf-8")
         ctx_path = context.resolve() if context else build_m2c_context(tmp / "context.h")
         command = [
             sys.executable, "-m", "m2c.main", "-t", "mipsee-mwcc-c",
