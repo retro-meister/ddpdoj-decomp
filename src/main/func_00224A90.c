@@ -1,0 +1,65 @@
+#include "common.h"
+
+s32 func_0011BEA0();
+s32 func_0012FA50();
+s32 func_0012FB00();
+s32 func_0012FD00();
+s32 func_0013B190();
+s32 func_0018DE90();
+s32 func_0018DEE0();
+s32 func_00206D70();
+s32 func_00219570();
+s32 func_00224B50();
+s32 func_00236D50();
+extern u8 D_0028E1DA[];
+extern u8 D_0028E1E6[];
+extern u8 D_0028E2A0;
+extern s16 D_0028E324;
+extern u8 D_0028E368;
+extern u8 D_0028E36C;
+extern u8 D_0028E378;
+extern s16 D_0028E3A0;
+extern s16 D_0028E3B4;
+extern s16 D_0028E3C0;
+extern s16 D_0028E910;
+extern s32 D_0028EAFC;
+extern u8 D_0028EC4C;
+extern u8 D_0028ED64;
+extern u8 D_0028ED6C;
+extern s32 D_0028ED70;
+extern u8 D_0028ED74;
+extern u8 D_0028ED7C;
+extern u8 D_0028ED80;
+
+void func_00224A90(void) {
+    func_0018DE90();
+    func_0018DEE0();
+    func_0012FA50();
+    func_0012FB00();
+    func_0011BEA0();
+    D_0028E3C0 = 0;
+    D_0028EAFC = 0xFF;
+    D_0028E378 = 0xFF;
+    D_0028E36C = 0;
+    D_0028E2A0 = 0;
+    D_0028E368 = 0;
+    func_00224B50();
+    D_0028ED80 = 0;
+    func_00236D50();
+    D_0028ED7C = 0;
+    D_0028ED74 = 0;
+    D_0028EC4C = 0;
+    D_0028ED6C = 0;
+    D_0028ED64 = 0;
+    D_0028ED70 = 0;
+    D_0028E3B4 = 0;
+    func_0012FD00();
+    func_00206D70();
+    func_0013B190();
+    func_00219570();
+    D_0028E910 = 0;
+    D_0028E1DA[0] = 0;
+    D_0028E324 = 0;
+    D_0028E1E6[0] = 0;
+    D_0028E3A0 = 0;
+}
