@@ -204,6 +204,18 @@ def clean_m2c(raw_code, asm_chunk="", relax_protos=False):
     if relax_protos:
         code = PROTO_RE.sub(r"\1();", code)
 
+    # Simplify leftover m2c 64-bit shift-sign-extension idioms to (s8)/(s16) casts
+    code = re.sub(r"\(\(s64\)\s*\(\(s64\)\s*([^<]+?)\s*<<\s*0x38\)\s*>>\s*0x38\)", r"(s8)(\1)", code)
+    code = re.sub(r"\(\(s64\)\s*\(\(s64\)\s*([^<]+?)\s*<<\s*0x30\)\s*>>\s*0x30\)", r"(s16)(\1)", code)
+
+    # Emit missing forward declarations for called func_XXXXXXXX symbols
+    defined_funcs = set(re.findall(r"^\s*(?:void|s32|u32|s16|u16|s8|u8|int|f32|f64|[^;\n]*\*)\s+(func_[0-9A-Fa-f]{8})\s*\([^)]*\)\s*\{", code, re.M))
+    declared_funcs = set(re.findall(r"^(?:extern\s+)?[^;\n]*\b(func_[0-9A-Fa-f]{8})\s*\([^)]*\)\s*;", code, re.M))
+    called_funcs = sorted(set(re.findall(r"\b(func_[0-9A-Fa-f]{8})\s*\(", code)) - defined_funcs - declared_funcs)
+    if called_funcs:
+        decls = "\n".join(f"void {fn}();" for fn in called_funcs) + "\n"
+        code = decls + code
+
     if '#include "common.h"' not in code:
         code = '#include "common.h"\n\n' + code
     return code
