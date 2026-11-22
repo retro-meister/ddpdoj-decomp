@@ -14,6 +14,19 @@ typedef union {
     s8 sb[4];
 } Reg32;
 
+/* 0x38-byte object slot; D_00685010 is Obj38[][16] (group stride 0x380) in SLPS_252.33. */
+typedef struct {
+    s32 x;
+    s32 y;
+    s32 x2;
+    s32 y2;
+    u8 pad10[0x18];
+    s32 timer;
+    s32 unk2C;
+    s32 id;
+    s32 active;
+} Obj38;
+
 /* Virtual 68000 register bank (.sbss 0x0028E450..0x0028E4A8 in SLPS_252.33):
  *   reg_d0..reg_d7 (0x28E4A8 down to 0x28E48C), reg_tmp (0x28E488): 32-bit data/scratch Reg32
  *   reg_a0..reg_a6 (0x28E468 down to 0x28E450): 32-bit address registers (pointers)
