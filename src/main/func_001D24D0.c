@@ -1,6 +1,6 @@
 #include "common.h"
 
-s32 enemy_end_task();
+s32 func_0014E290();
 s32 func_001D2550();
 extern u8 *reg_a6;
 
@@ -15,5 +15,5 @@ void func_001D24D0(void) {
         func_001D2550();
         return;
     }
-    enemy_end_task();
+    func_0014E290();
 }

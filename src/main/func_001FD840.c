@@ -1,6 +1,6 @@
 #include "common.h"
 
-s32 enemy_end_task();
+s32 func_0014E290();
 s32 func_001389D0();
 s32 func_0013B8B0();
 s32 func_0014D220();
@@ -32,7 +32,7 @@ void func_001FD840() {
             reg_d0.h[0] = 0x20;
             reg_d1.h[0] = 0x20;
             func_001389D0();
-            enemy_end_task();
+            func_0014E290();
             return;
         }
         if (((*(u8 *)((u8 *)(reg_a5) + (0x17))) == 0) && ((*(u8 *)((u8 *)(reg_a6) + (0x9E))) == 0) && (D_0028E8A8 == 0x1F0)) {

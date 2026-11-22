@@ -1,6 +1,6 @@
 #include "common.h"
 
-s32 enemy_end_task();                           /* extern */
+s32 func_0014E290();                           /* extern */
 s32 func_00124590();                            /* extern */
 s32 func_0014D220();                            /* extern */
 s32 func_001D3F00();                            /* extern */
@@ -14,7 +14,7 @@ void func_001D3E60(void) {
     func_00124590();
     if (D_0028E408 != 0) {
         func_002035A0();
-        enemy_end_task();
+        func_0014E290();
         return;
     }
     reg_a0 = reg_a6;

@@ -7,7 +7,7 @@ extern u16 D_0028E4A2;
 extern u8 *reg_a4;
 extern u8 *reg_a6;
 
-void stage2_boss_attack11_update(void) {
+void func_001C3080(void) {
     reg_d0.h[0] = (*(u16 *)((u8 *)(reg_a6) + (0x82)));
     reg_d1.h[0] = (*(u16 *)((u8 *)(reg_a6) + (0x84)));
     func_00202140();

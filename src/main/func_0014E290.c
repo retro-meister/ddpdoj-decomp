@@ -4,7 +4,7 @@ extern void func_0014E2C0(void *);
 extern void *reg_a5;
 extern s32 reg_a6;
 
-void enemy_end_task(void) {
+void func_0014E290(void) {
     void *task = reg_a5;
 
     reg_tmp.h[1] = *(u16 *)((u8 *)task + 0x6);

@@ -1,6 +1,6 @@
 #include "common.h"
 
-s32 enemy_end_task();
+s32 func_0014E290();
 s32 func_0014E030();
 extern u16 D_0028E894;
 extern u16 D_0028E8A0;
@@ -9,7 +9,7 @@ extern u8 *reg_a5;
 
 void func_00157DC0() {
     if (D_0028E8A8 >= 0x9C) {
-        enemy_end_task();
+        func_0014E290();
         return;
     }
     if ((D_0028E8A0 == 0) && (D_0028E894 == 0)) {
