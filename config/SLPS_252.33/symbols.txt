@@ -2119,3 +2119,4 @@ func_001C4500 = 0x1c4500; // type:func size:0x98
 func_001DC200 = 0x1dc200; // type:func size:0x84
 func_001F7100 = 0x1f7100; // type:func size:0x94
 func_001FC670 = 0x1fc670; // type:func size:0x94
+func_00129EF0 = 0x129ef0; // type:func size:0x38c4

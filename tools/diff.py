@@ -20,7 +20,7 @@ from split import load_symbols, scan_asm_functions, split, target_layout, target
 ASSIGN_RE = re.compile(r"^\s*([A-Za-z_][A-Za-z0-9_]*)\s*=\s*(0x[0-9a-fA-F]+|\d+)\s*;")
 DLABEL_RE = re.compile(r"^\s*(?:dlabel|glabel)\s+([A-Za-z_][A-Za-z0-9_]*)")
 HEX_ADDR_SUFFIX_RE = re.compile(r"^(?:D|L|jtbl|str)_([0-9A-Fa-f]{8})$")
-JUMP_TABLE_RE = re.compile(r"\bjtbl_([0-9A-Fa-f]{8})\b")
+JUMP_TABLE_RE = re.compile(r"%(?:hi|lo)\(jtbl_([0-9A-Fa-f]{8})\)")
 RODATA_LAYOUT = "RODATA_LAYOUT"
 PADDING_LAYOUT = "PADDING_LAYOUT"
 

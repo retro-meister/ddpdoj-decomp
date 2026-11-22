@@ -266,6 +266,7 @@ segments:
       - [0x29be0, c, main/func_00129B60]
       - [0x29bf0, c, main/func_00129B70]
       - [0x29c60, asm, game_029c60]
+      - [0x29f70, c, main/func_00129EF0]
       - [0x2d840, c, main/func_0012D7C0]
       - [0x2d890, asm, game_02d890]
       - [0x2d970, c, main/func_0012D8F0]
@@ -2714,6 +2715,8 @@ segments:
       - [0x13dc70, c, main/func_0023DBF0]
       - [0x13dcb0, asm, game_13dcb0]
       - [0x13dd00, data, data]
+      - [0x173eb0, .rodata, main/func_00129EF0]
+      - [0x173f40, rodata, rodata_173f40]
       - [0x18c0f0, sdata, sdata]
   - name: elf_tail
     type: bin

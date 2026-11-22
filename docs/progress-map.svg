@@ -1,8 +1,8 @@
 <svg xmlns="http://www.w3.org/2000/svg" width="1200" height="608" viewBox="0 0 1200 608" font-family="ui-monospace,Menlo,Consolas,monospace">
 <rect width="1200" height="608" fill="#0d1117"/>
 <text x="14" y="34" fill="#e6edf3" font-size="24" font-weight="700">DoDonPachi DaiOuJou (PS2) — C-match progress</text>
-<text x="14" y="62" fill="#3fb950" font-size="20" font-weight="700">28.90% matched</text>
-<text x="196" y="62" fill="#8b949e" font-size="14">352,160 / 1,218,664 bytes · 2,137 / 3,465 functions</text>
+<text x="14" y="62" fill="#3fb950" font-size="20" font-weight="700">30.09% matched</text>
+<text x="196" y="62" fill="#8b949e" font-size="14">366,692 / 1,218,664 bytes · 2,138 / 3,465 functions</text>
 <rect x="980" y="18" width="14" height="14" rx="2" fill="#3fb950"/>
 <text x="1000" y="30" fill="#e6edf3" font-size="13">matched</text>
 <rect x="1090" y="18" width="14" height="14" rx="2" fill="#da3633"/>
@@ -10,10 +10,10 @@
 <rect x="14.00" y="84.00" width="1172.00" height="460.00" fill="none" stroke="#30363d" stroke-width="1"/>
 <rect x="14.00" y="84.00" width="1172.00" height="20.00" fill="#161b22"/>
 <text x="20.00" y="98.00" fill="#e6edf3" font-size="12" font-weight="600">Main game (SLPS_252.33)</text>
-<text x="1180.00" y="98.00" fill="#8b949e" font-size="11" text-anchor="end">26.33% bytes (309,644/1,176,148 B) · 2,071/3,399 funcs</text>
+<text x="1180.00" y="98.00" fill="#8b949e" font-size="11" text-anchor="end">27.56% bytes (324,176/1,176,148 B) · 2,072/3,399 funcs</text>
 <rect x="14.00" y="104.00" width="93.88" height="183.78" fill="#3fb950" stroke="#0d1117" stroke-width="0.5"><title>func_0018E5A0  ·  39,348 bytes  ·  matched</title></rect>
 <rect x="14.00" y="287.78" width="93.88" height="79.62" fill="#3fb950" stroke="#0d1117" stroke-width="0.5"><title>func_001882E0  ·  17,048 bytes  ·  matched</title></rect>
-<rect x="14.00" y="367.40" width="93.88" height="67.87" fill="#da3633" stroke="#0d1117" stroke-width="0.5"><title>func_00129EF0  ·  14,532 bytes  ·  asm</title></rect>
+<rect x="14.00" y="367.40" width="93.88" height="67.87" fill="#3fb950" stroke="#0d1117" stroke-width="0.5"><title>func_00129EF0  ·  14,532 bytes  ·  matched</title></rect>
 <rect x="14.00" y="435.27" width="93.88" height="54.36" fill="#3fb950" stroke="#0d1117" stroke-width="0.5"><title>func_00177A30  ·  11,640 bytes  ·  matched</title></rect>
 <rect x="14.00" y="489.64" width="93.88" height="54.36" fill="#3fb950" stroke="#0d1117" stroke-width="0.5"><title>func_0017A7B0  ·  11,640 bytes  ·  matched</title></rect>
 <rect x="107.88" y="104.00" width="58.84" height="83.78" fill="#3fb950" stroke="#0d1117" stroke-width="0.5"><title>func_0017FCB0  ·  11,244 bytes  ·  matched</title></rect>
