@@ -425,9 +425,9 @@ def diff(args):
                 with TemporaryDirectory(prefix="rodata-preview-", dir=folder) as temporary:
                     path = Path(temporary) / "candidate.bin"
                     path.write_bytes(relink.text)
-                    print_compact_diff(binutils, folder, address, retail, relink.text, candidate_path=path)
+                    print_compact_diff(binutils, folder, address, retail, relink.text, args.max_diffs, candidate_path=path)
             else:
-                print_compact_diff(binutils, folder, address, retail, candidate)
+                print_compact_diff(binutils, folder, address, retail, candidate, args.max_diffs)
 
 
 def main():
@@ -441,6 +441,7 @@ def main():
     parser.add_argument("--objdiff", help="use an existing objdiff-cli executable")
     parser.add_argument("--interactive", action="store_true")
     parser.add_argument("--compact", action="store_true", help="print compact side-by-side instruction diffs")
+    parser.add_argument("--max-diffs", type=int, default=40, help="differing lines to print with --compact (default 40)")
     diff(parser.parse_args())
 
 
