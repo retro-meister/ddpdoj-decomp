@@ -301,10 +301,9 @@ def plot_progress_map():
     panel_gap = 14
     bottom_pad = 14
 
-    order = ["SLPS_252.33", "DEATH.ELF", "GALLERY.ELF"]
+    order = ["SLPS_252.33", "GALLERY.ELF"]
     panel_titles = {
         "SLPS_252.33": "Main game (SLPS_252.33)",
-        "DEATH.ELF": "Death Label (DEATH.ELF)",
         "GALLERY.ELF": "Gallery (GALLERY.ELF)",
     }
     colors = {"matched": "#3fb950", "wip": "#d29922", "asm": "#da3633"}
