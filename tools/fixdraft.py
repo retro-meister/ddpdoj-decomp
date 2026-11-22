@@ -307,9 +307,9 @@ def fix(code):
     return code.replace(header, header + extra, 1)
 
 
-def score(target, name, out_dir):
+def score(target, name, out_dir, m2c_args=()):
     try:
-        code = fix(draft_function(target, name, relax_protos=True))
+        code = fix(draft_function(target, name, relax_protos=True, m2c_args=m2c_args))
     except Exception as error:  # noqa: BLE001 - report and keep going
         return name, "draft_fail", str(error)[-150:]
     path = out_dir / f"{name}.fix.c"
@@ -337,10 +337,11 @@ def main():
     parser.add_argument("--target", default="SLPS_252.33")
     parser.add_argument("--jobs", type=int, default=4)
     parser.add_argument("--out", type=Path, default=ROOT / "build/big")
+    parser.add_argument("--m2c-arg", action="append", default=[], help="extra m2c flag, e.g. --m2c-arg=--no-andor")
     args = parser.parse_args()
     args.out.mkdir(parents=True, exist_ok=True)
     with ThreadPoolExecutor(args.jobs) as pool:
-        for name, status, detail in pool.map(lambda n: score(args.target, n, args.out), args.functions):
+        for name, status, detail in pool.map(lambda n: score(args.target, n, args.out, args.m2c_arg), args.functions):
             print(name, status, detail, flush=True)
 
 

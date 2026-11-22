@@ -24,6 +24,7 @@ def decode(data, stages, layout):
 
     functions = []
     function = stage = graph = schedule = None
+    finished_placements = {}
     while cursor < len(data):
         tag = take(4)
         if tag == b"WB3F":
@@ -95,6 +96,7 @@ def decode(data, stages, layout):
                             operand["target_block"] = labels[label]
             name = stage["stage"]
             function["pcode_stages"].append(stage)
+            finished_placements = placements
             if name in ("before_schedule", "before_late_schedule"):
                 check(schedule is None, "Unexpected scheduler start")
                 schedule = {"pass": "early" if name == "before_schedule" else "late", "issues": [], "decisions": []}
@@ -210,6 +212,32 @@ def decode(data, stages, layout):
             graph["edges"] = sorted(incidences)
             function["allocation_frames"].append(graph)
             graph = None
+        elif tag == b"WB3Y":
+            branch, insn, pred_next, flags, live, safe, ft_block, target_block = words("IIIIiiII")
+            check(function is not None and stage is None, "Unexpected delay-slot fall-through record")
+            located = finished_placements.get(branch, (None, None))
+            reasons = []
+            if pred_next == 0xFFFFFFFF:
+                reasons.append("no_predecessor_list")
+            elif pred_next:
+                reasons.append("multiple_predecessors")
+            if not insn:
+                reasons.append("empty_block")
+            else:
+                if flags & 0x48000106:
+                    reasons.append(f"flags_{flags & 0x48000106:#x}")
+                if safe == 0:
+                    reasons.append("unsafe_to_hoist")
+                if live == 1:
+                    reasons.append("destination_live")
+            function.setdefault("fallthrough_checks", []).append({
+                "branch_block": located[0], "branch_ordinal": located[1],
+                "candidate": finished_placements.get(insn, (None, None)) if insn else None,
+                "candidate_flags": flags, "single_predecessor": pred_next == 0,
+                "destination_live": live == 1 if live >= 0 else None,
+                "safe_to_hoist": safe == 1 if safe >= 0 else None,
+                "fill": not reasons, "reasons": reasons,
+            })
         elif tag == b"WB3!":
             raise ValueError("Interference graph exceeded capture limits")
         else:
@@ -325,3 +353,22 @@ def scheduler_text(functions):
                 )
         lines.append("")
     return "\n".join(lines)
+
+
+def fallthrough_text(functions):
+    """One line per conditional branch the 3.0.3 delay-slot filler tried to fill from its fall-through block."""
+    lines = []
+    for function in functions:
+        checks = function.get("fallthrough_checks")
+        if checks is None:
+            continue
+        lines.append(f"{function['symbol']}")
+        for check in checks:
+            candidate = check["candidate"]
+            where = f"block {candidate[0]} #{candidate[1]}" if candidate else "-"
+            verdict = "fill" if check["fill"] else "nop: " + ", ".join(check["reasons"])
+            lines.append(
+                f"  branch block {check['branch_block']} #{check['branch_ordinal']}: candidate {where} "
+                f"flags={check['candidate_flags']:#010x} -> {verdict}"
+            )
+    return "\n".join(lines) + "\n" if lines else ""

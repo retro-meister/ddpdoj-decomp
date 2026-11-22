@@ -614,3 +614,61 @@ schedule_issue:
     original_call schedule_issue_target
     leal 8(%esp),%esp
     ret
+
+# 3.0.3 delay-slot filler: entry of the fall-through attempt for a conditional branch.
+# EBX = target block, EBP = fall-through block, ESI = branch, [esp+4] = fall-through's first instruction,
+# [esp+0x1c] = the branch's block (offsets before the hook's return address).
+# Records why a fall-through fill can or cannot happen, then re-runs the displaced `cmp`.
+.if is_303
+fallthrough:
+    pushal
+    subl $48,%esp
+    # Original ESP = ESP + 48 (frame) + 32 (pushal) + 4 (return address).
+    movl $0x59334257,4(%esp) # WB3Y
+    movl %esi,8(%esp)
+    movl 88(%esp),%eax
+    movl %eax,12(%esp)
+    movl $-1,16(%esp)
+    testl %ebp,%ebp
+    je 1f
+    movl 0xc(%ebp),%ecx
+    testl %ecx,%ecx
+    je 1f
+    movl 8(%ecx),%ecx
+    movl %ecx,16(%esp)
+1:
+    movl $0,20(%esp)
+    movl $-1,24(%esp)
+    movl $-1,28(%esp)
+    testl %eax,%eax
+    je 2f
+    movl 0xc(%eax),%ecx
+    movl %ecx,20(%esp)
+    movzwl pcode_count(%eax),%ecx
+    testl %ecx,%ecx
+    je 2f
+    pushl %eax
+    original_call fill_safe
+    addl $4,%esp
+    movzbl %al,%eax
+    movl %eax,28(%esp)
+    movl 12(%esp),%eax
+    movl 112(%esp),%ecx
+    pushl %ecx
+    pushl %eax
+    original_call fill_live
+    addl $8,%esp
+    movzbl %al,%eax
+    movl %eax,24(%esp)
+2:
+    movl %ebp,32(%esp)
+    movl %ebx,36(%esp)
+    call trace_handle
+    leal 4(%esp),%ecx
+    movl $36,%edx
+    call write_record
+    addl $48,%esp
+    popal
+    cmpl $0,8(%esp)
+    ret
+.endif

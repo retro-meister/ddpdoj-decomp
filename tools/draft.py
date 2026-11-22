@@ -62,11 +62,19 @@ def _strip_preprocessor(text):
     return "\n".join(line for line in text.splitlines() if not line.lstrip().startswith("#")) + "\n"
 
 
+# Types m2c cannot infer well on its own. Only m2c sees these; matched sources keep their own declarations.
+# Do not add the address registers (reg_aN): m2c's per-function guess (u16 *, s16 *) carries the access width,
+# and a u8 * declaration turns halfword loads into byte loads.
+M2C_PROJECT_CONTEXT = """
+extern s8 D_0028E408;
+"""
+
+
 def build_m2c_context(dest_path):
     """Write a pycparser-friendly context header inlining include/types.h and include/common.h."""
     types_h = _strip_preprocessor((ROOT / "include/types.h").read_text(encoding="utf-8"))
     common_h = _strip_preprocessor((ROOT / "include/common.h").read_text(encoding="utf-8"))
-    dest_path.write_text(types_h + "\n" + common_h, encoding="utf-8")
+    dest_path.write_text(types_h + "\n" + common_h + M2C_PROJECT_CONTEXT, encoding="utf-8")
     return dest_path
 
 
@@ -298,7 +306,7 @@ def _synthesize_jump_tables(target, snippet):
     return snippet, "\n".join(rodata_lines) + "\n"
 
 
-def draft_function(target, function, context=None, raw=False, relax_protos=False):
+def draft_function(target, function, context=None, raw=False, relax_protos=False, m2c_args=()):
     folder = split(target)
     snippet = extract_function(folder / "asm", function)
     m2c_snippet = snippet if raw else _hoist_tail_jump_delay_slots(snippet)
@@ -315,13 +323,27 @@ def draft_function(target, function, context=None, raw=False, relax_protos=False
         ctx_path = context.resolve() if context else build_m2c_context(tmp / "context.h")
         command = [
             sys.executable, "-m", "m2c.main", "-t", "mipsee-mwcc-c",
-            "--valid-syntax", "--no-cache", "--context", str(ctx_path), *inputs,
+            "--valid-syntax", "--no-cache", *m2c_args, "--context", str(ctx_path), *inputs,
         ]
         result = subprocess.run(command, cwd=ROOT, capture_output=True, text=True, check=True)
         output = result.stdout
         if raw:
             return output
-        return clean_m2c(output, snippet, relax_protos=relax_protos)
+        return _declare_project_context(clean_m2c(output, snippet, relax_protos=relax_protos))
+
+
+def _declare_project_context(code):
+    """m2c omits declarations for symbols it found in the context; re-add the project-only ones the draft uses."""
+    decls = []
+    for decl in M2C_PROJECT_CONTEXT.strip().splitlines():
+        name = re.search(r"(\w+);$", decl)[1]
+        if re.search(rf"\b{name}\b", code) and not re.search(rf"^extern [^;\n]*\b{name};", code, flags=re.M):
+            decls.append(decl)
+    if not decls:
+        return code
+    m = re.search(r"^(?:void|s32|u32|s16|u16|s8|u8|\w+) \**func_\w+\(", code, flags=re.M)
+    at = m.start() if m else 0
+    return code[:at] + "\n".join(decls) + "\n\n" + code[at:]
 
 
 def main():

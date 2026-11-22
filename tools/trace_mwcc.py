@@ -11,7 +11,7 @@ from tempfile import TemporaryDirectory
 from common import ROOT, TOOLCHAINS, TOOLS, compiler_path, read_json, resolve_tool, run, verify_compiler
 from mwcc_profiles.diff_trace import diff_reports, format_diff_report
 from mwcc_profiles.pe import instrument
-from mwcc_profiles.records import decode, pcode_text, regalloc_text, scheduler_text
+from mwcc_profiles.records import decode, fallthrough_text, pcode_text, regalloc_text, scheduler_text
 
 
 PROFILES_DIR = Path(__file__).with_name("mwcc_profiles")
@@ -88,6 +88,7 @@ def capture_source(source, output, compiler_name, profiles=None, wibo=None, asse
     (output / "pcode.txt").write_text(pcode_text(functions), encoding="utf-8")
     (output / "regalloc.txt").write_text(regalloc_text(functions), encoding="utf-8")
     (output / "scheduler.txt").write_text(scheduler_text(functions), encoding="utf-8")
+    (output / "fallthrough.txt").write_text(fallthrough_text(functions), encoding="utf-8")
     return report, report_path
 
 
