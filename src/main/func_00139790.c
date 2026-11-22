@@ -3,11 +3,10 @@
 extern void *reg_a1;
 extern void *reg_a5;
 
-void func_00139790(void)
-{
+void func_00139790(void) {
     u8 *entry = reg_a1;
 
-    if (*(s16 *)entry > -1) {
+    if (0 <= (s64)*(s16 *)entry) {
         return;
     }
 
