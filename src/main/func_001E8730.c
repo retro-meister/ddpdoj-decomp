@@ -1,8 +1,7 @@
 #include "common.h"
 
 extern u8 *D_0028E450;
-extern u8 *volatile D_0028E468;
-
+extern u8 *D_0028E468;
 void func_001E8730(void) {
     D_0028E468 = D_0028E450;
     D_0028E468 += work_reg_0.h[0];

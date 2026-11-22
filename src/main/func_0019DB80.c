@@ -7,8 +7,8 @@ extern u8 D_002A3D30[];
 void func_0019DB80(void) {
     u32 temp;
 
-    temp = D_0028E12C;
     D_0028E468 = D_002A3D30;
+    temp = D_0028E12C;
     D_0028E468 += temp;
     D_0028E12C = temp + 0xC;
 }
