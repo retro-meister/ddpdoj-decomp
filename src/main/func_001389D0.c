@@ -1,0 +1,11 @@
+#include "common.h"
+
+extern s16 D_0029C076[];
+extern u16 D_0029C078[];
+extern u16 D_0029C07A[];
+
+void func_001389D0(void) {
+    D_0029C076[0] = 1;
+    D_0029C078[0] = work_reg_0.h[0];
+    D_0029C07A[0] = work_reg_1.h[0];
+}

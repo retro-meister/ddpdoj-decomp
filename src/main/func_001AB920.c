@@ -1,0 +1,11 @@
+#include "common.h"
+
+extern s16 D_0028E57C;
+extern s16 D_0028E584;
+extern s32 D_0028E594;
+
+void func_001AB920(void) {
+    D_0028E594 = 0x9E8;
+    D_0028E584 = 1;
+    D_0028E57C = 1;
+}

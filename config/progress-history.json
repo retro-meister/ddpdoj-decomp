@@ -54,8 +54,8 @@
     "date": "2026-11-22",
     "targets": {
       "SLPS_252.33": {
-        "functions": 325,
-        "bytes": 3444
+        "functions": 762,
+        "bytes": 14976
       },
       "DEATH.ELF": {
         "functions": 0,
