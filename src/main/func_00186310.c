@@ -1,7 +1,7 @@
 #include "common.h"
 
-extern u16 D_00158C30[];
-extern u16 D_00159AC0[];
+extern u16 func_00158C30[];
+extern u16 func_00159AC0[];
 extern u16 D_00258880[];
 extern u16 D_00258900[];
 extern u16 D_0028C0D8[];
@@ -93,7 +93,7 @@ void func_00186310(void) {
     reg_tmp.w = (u32)func_001570B0;
     D_0028C9BC[0] = reg_tmp.h[1];
     D_0028C9BE[0] = reg_tmp.h[0];
-    reg_tmp.w = (u32)D_00158C30;
+    reg_tmp.w = (u32)func_00158C30;
     D_00258560[0] = reg_tmp.h[1];
     D_00258562[0] = reg_tmp.h[0];
     reg_tmp.w = (u32)func_00158CF0;
@@ -105,7 +105,7 @@ void func_00186310(void) {
     reg_tmp.w = (u32)func_00158ED0;
     D_0025856C[0] = reg_tmp.h[1];
     D_0025856E[0] = reg_tmp.h[0];
-    reg_tmp.w = (u32)D_00158C30;
+    reg_tmp.w = (u32)func_00158C30;
     D_00258570[0] = reg_tmp.h[1];
     D_00258572[0] = reg_tmp.h[0];
     reg_tmp.w = (u32)func_00158CF0;
@@ -117,13 +117,13 @@ void func_00186310(void) {
     reg_tmp.w = (u32)func_00158ED0;
     D_0025857C[0] = reg_tmp.h[1];
     D_0025857E[0] = reg_tmp.h[0];
-    reg_tmp.w = (u32)D_00159AC0;
+    reg_tmp.w = (u32)func_00159AC0;
     D_002586E0[0] = reg_tmp.h[1];
     D_002586E2[0] = reg_tmp.h[0];
     reg_tmp.w = (u32)func_00159B20;
     D_002586E4[0] = reg_tmp.h[1];
     D_002586E6[0] = reg_tmp.h[0];
-    reg_tmp.w = (u32)D_00159AC0;
+    reg_tmp.w = (u32)func_00159AC0;
     D_002586E8[0] = reg_tmp.h[1];
     D_002586EA[0] = reg_tmp.h[0];
     reg_tmp.w = (u32)func_00159B20;
