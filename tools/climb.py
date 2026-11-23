@@ -52,36 +52,36 @@ def mutations(code):
     for m in LOCAL_RE.finditer(code):
         for t in INT_TYPES:
             if t != m.group(2):
-                out.append((t, code[:m.start(2)] + t + code[m.end(2):]))
+                out.append(("local:" + t, code[:m.start(2)] + t + code[m.end(2):]))
     for m in DEREF_RE.finditer(code):
         for t in INT_TYPES:
             if t == m.group(1):
                 continue
-            out.append((t, code[:m.start(1)] + t + code[m.end(1):]))
+            out.append(("deref:" + t, code[:m.start(1)] + t + code[m.end(1):]))
     for m in COMPOUND_RE.finditer(code):
         indent, _, lhs, op, rhs = m.groups()
         out.append(("compound", code[:m.start()] + f"{indent}{lhs} {op}= {rhs};" + code[m.end():]))
     rest = []
     for m in MEMBER_RE.finditer(code):
         token = m.group(0)
-        rest.append(code[:m.start()] + MEMBER_SWAP[token] + code[m.end():])
+        rest.append(("member", code[:m.start()] + MEMBER_SWAP[token] + code[m.end():]))
     for m in CMP_RE.finditer(code):
         op, num = m.group(1), m.group(2)
         k = parse_int(num)
         alt = {">=": ("> ", k - 1), ">": (">= ", k + 1), "<": ("<= ", k - 1), "<=": ("< ", k + 1)}[op]
-        rest.append(code[:m.start()] + alt[0] + fmt_int(alt[1], num) + code[m.end():])
+        rest.append(("cmp", code[:m.start()] + alt[0] + fmt_int(alt[1], num) + code[m.end():]))
     for m in SWAP_CMP_RE.finditer(code):
         lhs, op, rhs = m.group(2), m.group(3), m.group(4)
         flip = {"<": ">", ">": "<", "<=": ">=", ">=": "<=", "==": "==", "!=": "!="}[op]
-        rest.append(code[:m.start(2)] + f"{rhs} {flip} {lhs}" + code[m.end(4):])
+        rest.append(("cmp", code[:m.start(2)] + f"{rhs} {flip} {lhs}" + code[m.end(4):]))
     for m in CAST_RE.finditer(code):
-        rest.append(code[:m.start()] + code[m.end():])
+        rest.append(("cast", code[:m.start()] + code[m.end():]))
     for m in STMT_RE.finditer(code):
         a, b = m.group(2), m.group(3)
         if a.startswith(("return", "goto", "break", "continue")) or b.startswith(("return", "goto")):
             continue
-        rest.append(code[:m.start(2)] + b + "\n" + m.group(1) + a + code[m.end(3):])
-    return out + [(None, c) for c in rest]
+        rest.append(("swap", code[:m.start(2)] + b + "\n" + m.group(1) + a + code[m.end(3):]))
+    return out + rest
 
 
 def score(func_name, source):
@@ -116,8 +116,10 @@ def main():
     parser.add_argument("--budget", type=int, default=60)
     parser.add_argument("--jobs", type=int, default=6)
     parser.add_argument("--seed", type=int, default=0)
+    parser.add_argument("--kinds", default="", help="comma list: local,deref,compound,member,cmp,cast,swap (default all)")
     args = parser.parse_args()
     rng = random.Random(args.seed)
+    kinds = set(filter(None, args.kinds.split(",")))
     args.out.mkdir(parents=True, exist_ok=True)
     dest = args.out / f"{args.function}.c"
 
@@ -131,7 +133,8 @@ def main():
         while best[0] < 100.0 and used < args.budget:
             muts = [(t, c) for t, c in dict.fromkeys(mutations(best_code)) if c not in seen]
             rng.shuffle(muts)
-            muts.sort(key=lambda tc: 0 if tc[0] == "compound" else 1 if tc[0] in best[2] else 2)
+            muts = [tc for tc in muts if not kinds or tc[0].split(":")[0] in kinds]
+            muts.sort(key=lambda tc: 0 if tc[0] == "compound" else 1 if tc[0].split(":")[-1] in best[2] else 2)
             cands = [c for _, c in muts][: args.budget - used]
             if not cands:
                 break

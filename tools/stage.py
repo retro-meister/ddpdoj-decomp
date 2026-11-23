@@ -29,6 +29,9 @@ KEYWORDS = {"return", "goto", "break", "continue", "else", "do"}
 
 def clean(code, func_name):
     code = PRAGMA_RE.sub("", code)
+    # Without mpwc_relax, pointer assignments from typed tables need an explicit cast (codegen-neutral).
+    types = dict((name, ty) for ty, name in re.findall(r"^extern (\w+) \*(reg_a[0-6]);$", code, flags=re.M))
+    code = re.sub(r"\b(reg_a[0-6]) = (D_[0-9A-F]{8})\b(?!\[)", lambda m: f"{m[1]} = ({types.get(m[1], 'u8')} *){m[2]}", code)
     while True:
         removed = False
         for match in DECL_RE.finditer(code):
