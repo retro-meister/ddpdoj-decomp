@@ -172,6 +172,36 @@ def write_symbols_ld(name, folder):
     return out
 
 
+def align_rodata_subsegments(folder):
+    """Give each split `rodata_<offset>` file the alignment its start offset has (up to 16).
+
+    spimdisasm only emits `.align 2` for string-only rodata, so a subsegment that follows a
+    C unit's shorter .rodata (e.g. a 0x2C-byte jump table) would be linked 4 bytes early.
+    Vaddr and file offset share their low four bits, so on a contiguous layout this adds no
+    padding; it only restores the gap the original unit's own alignment produced.
+    """
+    for path in (folder / "asm" / "data").glob("rodata_*.rodata.s"):
+        match = re.fullmatch(r"rodata_([0-9a-f]+)\.rodata\.s", path.name)
+        if not match:
+            continue
+        offset = int(match.group(1), 16)
+        power = 4 if offset % 16 == 0 else 3 if offset % 8 == 0 else 0
+        if power <= 2:
+            continue
+        text = path.read_text(encoding="utf-8")
+        lines = text.split("\n")
+        for i, line in enumerate(lines):
+            stripped = line.strip()
+            if stripped.startswith(".align"):
+                if int(stripped.split()[1]) < power:
+                    lines[i] = f".align {power}"
+                break
+            if stripped.startswith(("nonmatching", "dlabel", "glabel")):
+                lines.insert(i, f".align {power}")
+                break
+        path.write_text("\n".join(lines), encoding="utf-8")
+
+
 def split(name, force=False):
     # Diffs run in parallel under a shared matching lock; only one of them may refresh a stale split at a time.
     with matching_lock(name="split.lock"):
@@ -221,6 +251,7 @@ def _split(name, force=False):
                 patched_lines.append("        . = ALIGN(., 16);")
             patched_lines.append(line)
         ld_path.write_text("\n".join(patched_lines) + "\n", encoding="utf-8")
+    align_rodata_subsegments(folder)
     write_symbols_ld(name, folder)
     state_file.write_text(json.dumps({"fingerprint": fingerprint}, indent=2) + "\n", encoding="utf-8")
     return folder
