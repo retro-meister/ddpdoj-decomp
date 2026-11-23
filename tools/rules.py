@@ -83,6 +83,24 @@ def nonpositive_test_slt(code):
     return re.sub(r"if \(([^()]+|\([^()]*\) [^()]+) <= 0\) \{", r"if (0 >= \1) {", code)
 
 
+def nonpositive_deref_slt(code):
+    """`if ((s16) (*(u16 *)p) <= 0)` -> `if (0 >= (s16) (*(u16 *)p))` (memory operand only)."""
+    return re.sub(r"if \((\((?:s16|s8|s32)\) \(\*\((?:u|s)(?:8|16|32) \*\)" + PTR + r"\)) <= 0\) \{",
+                  r"if (0 >= \1) {", code)
+
+
+def positive_reg_slt(code):
+    """`if ((s16) reg_dN.h[0] > 0)` / `>= 0` -> `if (0 < ...)` / `if (0 <= ...)`."""
+    flip = {">": "<", ">=": "<="}
+    return re.sub(r"if \((\((?:s16|s8|s32)\) ?\(?reg_\w+\.\w+\[[01]\]\)?) (>=|>) 0\) \{",
+                  lambda m: f"if (0 {flip[m[2]]} {m[1]}) {{", code)
+
+
+def signed_minus_one(code):
+    """`x != -1U` / `x == -1U` -> `-1` (constant materialized before the load, as retail)."""
+    return re.sub(r"([!=]=) -1U\b", r"\1 -1", code)
+
+
 def negate(cond):
     m = re.fullmatch(r"(.+?) (==|!=|<=|>=|<|>) (.+)", cond)
     if m and "&&" not in cond and "||" not in cond and "?" not in cond:
@@ -129,8 +147,12 @@ def _register_saves(code, a_first):
     regs = {v: r for v, r in saves.items() if restores.get(v) == r}
     if len(regs) < 3 or len(set(regs.values())) != len(regs):
         return code
+    restore_count = {}
+    for m in RESTORE_RE.finditer(code):
+        if regs.get(m.group(3)) == m.group(2):
+            restore_count[m.group(3)] = restore_count.get(m.group(3), 0) + 1
     for var in regs:
-        if len(re.findall(rf"\b{var}\b", code)) != 3:  # declaration, save, restore
+        if len(re.findall(rf"\b{var}\b", code)) != 2 + restore_count.get(var, 0):  # declaration, save, restores
             return code
     order = sorted(regs.values(), key=lambda r: ((r[0] == "d") == a_first, int(r[1])))
     for var, reg in regs.items():
@@ -194,10 +216,13 @@ def reg32_scratch_global(code):
 
 
 def swap_register_compare(code):
-    """`(s16) dA < (s16)(dB)` -> `(s16)(dB) > (s16) dA`: retail loads the right operand first (lh/lhu order)."""
+    """`(s16) dA < (s16)(dB)` -> `(s16)(dB) > (s16) dA`: retail loads the right operand first (lh/lhu order).
+    Also the `(s32) dA.h[0] < (s32) dB.h[0]` spelling m2c emits for halfword compares."""
     flip = {"<": ">", ">": "<", "<=": ">=", ">=": "<="}
-    return re.sub(r"\(s16\) (reg_d\d\.h\[0\]) (<=|>=|<|>) \(s16\)\((reg_d\d\.h\[0\])\)",
+    code = re.sub(r"\(s16\) (reg_d\d\.h\[0\]) (<=|>=|<|>) \(s16\)\((reg_d\d\.h\[0\])\)",
                   lambda m: f"(s16)({m[3]}) {flip[m[2]]} (s16) {m[1]}", code)
+    return re.sub(r"\((s32|s16)\) (reg_d\d\.[hs]+\[[01]\]) (<=|>=|<|>) \((s32|s16)\) (reg_d\d\.[hs]+\[[01]\])",
+                  lambda m: f"({m[4]}) {m[5]} {flip[m[3]]} ({m[1]}) {m[2]}", code)
 
 
 def halve_typed_steps(code):
@@ -210,11 +235,108 @@ def halve_typed_steps(code):
     return re.sub(r"(\*\((u16|s16|u32|s32) \*\)reg_a\d )([+-])= (\d+);", repl, code)
 
 
+def typed_pointer_stride(code):
+    """`T *p; p += 4;` written with a byte stride -> `p += 4 / sizeof(T)` (m2c byte step on a typed local)."""
+    size = {"u16": 2, "s16": 2, "u32": 4, "s32": 4}
+    typed = dict((name, ty) for ty, name in re.findall(r"^\s+(u16|s16|u32|s32) \*(\w+);$", code, flags=re.M))
+
+    def repl(m):
+        ty = typed.get(m[2])
+        if ty is None:
+            return m[0]
+        k, n = int(m[4], 0), size[ty]
+        return m[0] if k % n else f"{m[1]}{m[2]} {m[3]}= {k // n};"
+    return re.sub(r"^(\s+)(\w+) ([+-])= (0x[0-9A-Fa-f]+|\d+);$", repl, code, flags=re.M)
+
+
+def negative_constant_add(code):
+    """`x += 0xFFFE0000;` -> `x -= 0x20000;` (lui/addu operand order follows the spelling)."""
+    def repl(m):
+        k = int(m[3], 16)
+        return f"{m[1]} {'-' if m[2] == '+' else '+'}= 0x{(1 << 32) - k:X};" if k >= 0x80000000 else m[0]
+    return re.sub(r"(\S+) ([+-])= (0x[0-9A-Fa-f]{8})U?;", repl, code)
+
+
+def unsigned_ff_bytes(code):
+    """`*(s8 *)p = 0xFF;` -> `*(u8 *)p = 0xFFU;` so every 0xFF store shares one `li 255`."""
+    return re.sub(r"\(\*\(s8 \*\)(\(\(u8 \*\)\(\w+\) \+ \([0-9A-Fx]+\)\))\) = 0xFF;", r"(*(u8 *)\1) = 0xFFU;", code)
+
+
 def compound_through_temp(code):
     """`t = X; X = t op K;` -> `X op= K;` (lhu/op/sh instead of a signed temp load)."""
     lv = r"(?:reg_d\d\.(?:h|b)\[[01]\]|\(\*\((?:u8|u16) \*\)\(\(u8 \*\)\(\w+\) \+ \([0-9A-Fx]+\)\)\))"
     return re.sub(rf"^(\s+)((?:temp|var)_\w+) = ({lv});\n\s+\3 = (?:\(u(?:8|16)\) )?\(?\2 (\+|-|\*|&|\||\^|<<|>>) ([^;]+?)\)?;$",
                   lambda m: f"{m[1]}{m[3]} {m[4]}= {m[5]};", code, flags=re.M)
+
+
+def compound_from_temp(code):
+    """`t = X op K; X = t;` -> `X op= K;` (the temp makes MWCC load X signed: lh instead of lhu)."""
+    lv = r"(?:reg_d\d\.(?:h|b)\[[01]\]|\(\*\((?:u8|u16|s8|s16) \*\)\(\(u8 \*\)\(\w+\) \+ \([0-9A-Fx]+\)\)\))"
+    return re.sub(rf"^(\s+)((?:temp|var)_\w+) = ({lv}) (\+|-|\*|&|\||\^|<<|>>) ([^;]+);\n\s+\3 = (?:\(\w+\) )?\2;$",
+                  lambda m: f"{m[1]}{m[3]} {m[4]}= {m[5]};", code, flags=re.M)
+
+
+def compound_through_temp_far(code):
+    """`t = X; ...; X = t op E;` -> `...; X op= E;` when X is not written in between and t has no other use."""
+    lines = code.split("\n")
+    for i, line in enumerate(lines):
+        m = re.match(r"^(\s+)((?:temp|var)_\w+) = ([^;=]+);$", line)
+        if not m:
+            continue
+        temp, lv = m[2], re.sub(r"^\((?:u|s)(?:8|16|32)\) ", "", m[3].strip())
+        uses = [j for j, l in enumerate(lines)
+                if j != i and re.search(rf"\b{temp}\b", l) and not re.match(rf"^\s+\w+ \**{temp};$", l)]
+        if len(uses) != 1 or uses[0] <= i:
+            continue
+        j = uses[0]
+        u = re.match(rf"^(\s+){re.escape(lv)} = {temp} (\+|-|&|\||\^) ([^;]+);$", lines[j])
+        if not u or u[1] != m[1]:
+            continue
+        between = "\n".join(lines[i + 1:j])
+        if re.search(rf"{re.escape(lv)}\s*(?:[-+*/&|^]|<<|>>)?=[^=]", between) or "{" in between or "}" in between:
+            continue
+        lines[j] = f"{u[1]}{lv} {u[2]}= {u[3]};"
+        del lines[i]
+        return "\n".join(lines)
+    return code
+
+
+def compound_from_temp_far(code):
+    """`t = X op E; ...; X = t;` -> `...; X op= E;` when neither X nor E's operands are written in between."""
+    lines = code.split("\n")
+    for i, line in enumerate(lines):
+        m = next((m for k in range(1, 8)
+                  for m in [re.match(rf"^(\s+)((?:temp|var)_\w+) = ((?:.+? (?:\+|-|&|\||\^|<<|>>) ){{{k - 1}}}.+?) (\+|-|&|\||\^|<<|>>) ([^;]+);$", line)]
+                  if m and m[3].count("(") == m[3].count(")")), None)
+        if not m:
+            continue
+        temp, lv, op, rhs = m[2], m[3].strip(), m[4], m[5]
+        depth, top_level_op = 0, False
+        for k, ch in enumerate(rhs):
+            depth += (ch == "(") - (ch == ")")
+            if depth == 0 and ch == " " and re.match(r" (?:[-+*/&|^?:]|<<|>>) ", rhs[k:]):
+                top_level_op = True
+        if top_level_op:
+            continue
+        uses = [j for j, l in enumerate(lines)
+                if j != i and re.search(rf"\b{temp}\b", l) and not re.match(rf"^\s+\w+ \**{temp};$", l)]
+        if len(uses) != 1 or uses[0] <= i:
+            continue
+        j = uses[0]
+        u = re.match(rf"^(\s+){re.escape(lv)} = (?:\(\w+\) )?{temp};$", lines[j])
+        if not u or u[1] != m[1]:
+            continue
+        between = lines[i + 1:j]
+        if any("{" in l or "}" in l or "(" in l and l.strip().endswith("();") for l in between):
+            continue
+        written = [re.match(r"^\s+(.+?)\s*(?:[-+*/&|^]|<<|>>)?= ", l) for l in between]
+        targets = {w[1].strip() for w in written if w}
+        if lv in targets or any(re.search(rf"\b{re.escape(t)}\b", rhs) for t in targets if re.fullmatch(r"[\w.\[\]]+", t)):
+            continue
+        lines[j] = f"{u[1]}{lv} {op}= {rhs};"
+        del lines[i]
+        return "\n".join(lines)
+    return code
 
 
 def u16_stride(code):
@@ -272,5 +394,8 @@ RULES = [
     natural_save_order, sign_test_slt, u16_table_reads, halfword_store_of_byte, reg32_scratch_global,
     swap_register_compare, halve_typed_steps, compound_through_temp, u16_stride, halfword_rmw, decls_by_register,
     irregular_case_labels, case_return_to_break, nonpositive_test_slt, early_return_guard,
-    word_table_reads, register_saves_natural, register_saves_a_first,
+    word_table_reads, register_saves_natural, register_saves_a_first, compound_from_temp,
+    typed_pointer_stride, negative_constant_add, unsigned_ff_bytes,
+    compound_through_temp_far, compound_from_temp_far, nonpositive_deref_slt,
+    positive_reg_slt, signed_minus_one,
 ]

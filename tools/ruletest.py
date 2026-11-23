@@ -28,7 +28,7 @@ def cur(fn):
         if os.path.exists(p): return p
 def score(fn, src, tag):
     out = subprocess.run(["uv","run","tools/diff.py","SLPS_252.33",fn,"--source",src,"--compact","--max-diffs","2000","--tag",tag],capture_output=True,text=True).stdout
-    if re.search(r"^MATCH", out, re.M): return (100.0, 0)
+    if re.search(r"^(MATCH|RODATA_LAYOUT)", out, re.M): return (100.0, 0)
     m = re.search(r"^DIFFERENT\s+\S+\s+([\d.]+)%", out, re.M)
     if not m: return (-1.0, 10**6)
     return (float(m.group(1)), -len(re.findall(r"^  [~<>+-]", out, re.M)))

@@ -92,7 +92,7 @@ def score(func_name, source):
     ).stdout
     pct, ndiff, wanted = -1.0, 10**6, set()
     for line in out.splitlines():
-        if line.startswith("MATCH"):
+        if line.startswith(("MATCH", "RODATA_LAYOUT")):
             return 100.0, 0, wanted
         mm = re.match(r"^  [~-]\w+\s+retail: (\w+) ", line)
         if mm:

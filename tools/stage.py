@@ -59,6 +59,8 @@ def score(func_name, source):
         ["uv", "run", "tools/diff.py", "SLPS_252.33", func_name, "--source", str(source), "--compact", "--max-diffs", "0"],
         cwd=ROOT, capture_output=True, text=True,
     ).stdout
+    if re.search(r"^RODATA_LAYOUT", out, re.M):  # matches once its jump table is split out of .rodata
+        return "MATCH", "100.00%"
     for line in out.splitlines():
         if line.startswith(("MATCH", "DIFFERENT")):
             parts = line.split()

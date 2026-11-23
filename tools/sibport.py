@@ -59,6 +59,8 @@ def port(matched, target, out):
     res = subprocess.run(["uv", "run", "tools/diff.py", "SLPS_252.33", target, "--source", str(dest), "--compact",
                           "--max-diffs", "2000", "--tag", "sib"], cwd=ROOT, capture_output=True, text=True).stdout
     status = re.search(r"^(MATCH|DIFFERENT)\s+\S+\s+([\d.]+)%", res, re.M)
+    if re.search(r"^RODATA_LAYOUT", res, re.M):
+        return target, matched, ratio, ("MATCH", 100.0), 0
     ndiff = len(re.findall(r"^  [~<>+-]", res, re.M))
     return target, matched, ratio, (status.group(1), float(status.group(2))) if status else ("FAIL", 0.0), ndiff
 

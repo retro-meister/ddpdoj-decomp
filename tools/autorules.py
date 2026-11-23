@@ -36,7 +36,7 @@ def score(fn, source, tag):
         ["uv", "run", "tools/diff.py", "SLPS_252.33", fn, "--source", str(source), "--compact", "--max-diffs", "2000", "--tag", tag],
         cwd=ROOT, capture_output=True, text=True,
     ).stdout
-    if re.search(r"^MATCH", out, re.M):
+    if re.search(r"^(MATCH|RODATA_LAYOUT)", out, re.M):
         return (100.0, 0)
     m = re.search(r"^DIFFERENT\s+\S+\s+([\d.]+)%", out, re.M)
     return (float(m.group(1)), -len(re.findall(r"^  [~<>+-]", out, re.M))) if m else (-1.0, -10**6)
