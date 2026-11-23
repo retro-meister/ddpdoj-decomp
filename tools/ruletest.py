@@ -4,16 +4,25 @@
 
 RULE.py defines `fix(code) -> code`. Each open function's current best draft (build/work/<fn>.c, else
 build/arc/<fn>.fix.c) is rewritten, both versions are scored with tools/diff.py, and with --keep every
-improvement is written back to build/work/. Function list: build/arcmap/arc_open.tsv (first column).
+improvement is written back to build/work/. Covers every unmatched game function.
 """
 import sys, os, re, subprocess, importlib.util, glob
 from concurrent.futures import ThreadPoolExecutor
 ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__))); os.chdir(ROOT)
 os.makedirs("build/rule", exist_ok=True)
 spec = importlib.util.spec_from_file_location("rule", sys.argv[1]); rule = importlib.util.module_from_spec(spec); spec.loader.exec_module(rule)
+def open_functions():
+    """Every unmatched game function (address >= 0x119B10) in SLPS_252.33."""
+    sys.path.insert(0, "tools")
+    from split import split, scan_asm_functions
+    done = {f[:-2] for f in os.listdir("src/main")}
+    funcs = scan_asm_functions(split("SLPS_252.33") / "asm")
+    return [n for n, (a, s) in sorted(funcs.items(), key=lambda kv: kv[1][0]) if a >= 0x119B10 and n not in done]
+
+
 keep = "--keep" in sys.argv
 done = {f[:-2] for f in os.listdir("src/main")}
-fns = [l.split("\t")[0] for l in open("build/arcmap/arc_open.tsv")]
+fns = open_functions()
 def cur(fn):
     for p in (f"build/work/{fn}.c", f"build/arc/{fn}.fix.c"):
         if os.path.exists(p): return p

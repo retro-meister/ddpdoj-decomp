@@ -3,6 +3,7 @@ import copy
 import functools
 import hashlib
 import json
+import os
 from pathlib import Path
 import re
 import shutil
@@ -18,10 +19,29 @@ INSN_ADDR_RE = re.compile(r"/\*\s*[0-9A-Fa-f]+\s+([0-9A-Fa-f]{8})\s+[0-9A-Fa-f]{
 
 
 def scan_asm_functions(asm_dir):
-    functions = {}
+    """{name: (address, size)} for every glabel in asm_dir, cached on disk per file version (name, mtime, size)."""
     if not asm_dir.is_dir():
-        return functions
-    for asm in sorted(asm_dir.glob("*.s")):
+        return {}
+    files = sorted(asm_dir.glob("*.s"))
+    key = hashlib.sha256("\n".join(f"{f.name}:{f.stat().st_mtime_ns}:{f.stat().st_size}" for f in files).encode()).hexdigest()
+    cache = asm_dir.parent / "asm-functions-cache.json"
+    try:
+        data = json.loads(cache.read_text(encoding="utf-8"))
+        if data.get("key") == key:
+            return {name: tuple(value) for name, value in data["functions"].items()}
+    except (OSError, ValueError):
+        pass
+    functions = _scan_asm_functions(files)
+    tmp = cache.with_suffix(f".{os.getpid()}.tmp")
+    tmp.write_text(json.dumps({"key": key, "functions": functions}), encoding="utf-8")
+    tmp.replace(cache)
+    return functions
+
+
+def _scan_asm_functions(files):
+    functions = {}
+    asm_dir = None
+    for asm in files:
         current = None
         first_addr = None
         last_addr = None

@@ -11,6 +11,15 @@ from concurrent.futures import ThreadPoolExecutor
 os.chdir(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 os.makedirs("build/rule", exist_ok=True)
 LINE = re.compile(r"^  ~\w+\s+retail: slti (\w+),\w+,(-?\d+)\s*\| cand: slti (\w+),\w+,(-?\d+)", re.M)
+def open_functions():
+    """Every unmatched game function (address >= 0x119B10) in SLPS_252.33."""
+    sys.path.insert(0, "tools")
+    from split import split, scan_asm_functions
+    done = {f[:-2] for f in os.listdir("src/main")}
+    funcs = scan_asm_functions(split("SLPS_252.33") / "asm")
+    return [n for n, (a, s) in sorted(funcs.items(), key=lambda kv: kv[1][0]) if a >= 0x119B10 and n not in done]
+
+
 def diff(fn, src, tag):
     return subprocess.run(["uv","run","tools/diff.py","SLPS_252.33",fn,"--source",src,"--compact","--max-diffs","2000","--tag",tag],capture_output=True,text=True).stdout
 def metric(out):
@@ -40,7 +49,7 @@ def one(fn):
     after = metric(diff(fn, dst, "sf1"))
     if after > before: open(f"build/work/{fn}.c", "w").write(new)
     return fn, before, after
-fns = [l.split("\t")[0] for l in open("build/arcmap/arc_open.tsv")]
+fns = open_functions()
 res = [r for r in ThreadPoolExecutor(6).map(one, fns) if r]
 for fn, b, a in res:
     print(("MATCH" if a[0] == 100 else "UP" if a > b else "DOWN" if a < b else "same"), fn, b, "->", a)

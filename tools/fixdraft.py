@@ -87,7 +87,7 @@ def fix_address_registers(code):
     for rt, rn in re.findall(r"^extern ([us](?:16|32)) \*(reg_a[0-6]);$", code, flags=re.M):
         size = 2 if "16" in rt else 4
         code = re.sub(rf"^extern {rt} \*{rn};$", f"extern u8 *{rn};", code, flags=re.M)
-        code = re.sub(rf"\b{rn} ([+-])= (\d+);", lambda m: f"{rn} {m[1]}= {int(m[2]) * size};", code)
+        code = re.sub(rf"(?<![*\w]){rn} ([+-])= (\d+);", lambda m: f"{rn} {m[1]}= {int(m[2]) * size};", code)
         code = "\n".join(
             l if l.startswith("extern") else re.sub(rf"(?<![\w)])\*{rn}\b", f"*({rt} *){rn}", l) for l in code.split("\n")
         )
@@ -338,9 +338,12 @@ def fix_byte_patterns(code):
     )
     # A 32-bit register read from a u8[] table is a word load.
     code = re.sub(r"(\.w = )\*\((D_[0-9A-F]{8} \+ )", r"\1*(u32 *)(\2", code)
+    code = re.sub(r"(\.h\[[01]\] = )\*\((D_[0-9A-F]{8} \+ )", r"\1*(u16 *)(\2", code)
     # 68k `move.b (aN)+,...`: m2c prints a halfword read cast to s8 plus `aN += 2`; retail is lb + addiu 1.
     code = re.sub(r"\(s8\) \*\(u16 \*\)(reg_a\d);\n(\s+)\1 \+= 2;", r"*(s8 *)\1;\n\2\1 += 1;", code)
     code = re.sub(r"\(s8\) \*\(u16 \*\)(reg_a\d)\b", r"*(s8 *)\1", code)
+    # `(u32) *reg_aN` into a 32-bit register is a word load, not a byte load.
+    code = re.sub(r"(\.w = )\(u32\) \*(reg_a\d);", r"\1*(u32 *)\2;", code)
     # Byte negation: m2c prints *= -1 on a u8 as *= 0xFF (retail li -1; mult).
     code = re.sub(r"(\.b\[\d\]|\(\*\(u8 \*\)[^;=\n]+\)) \*= 0xFF;", r"\1 *= -1;", code)
     return code
