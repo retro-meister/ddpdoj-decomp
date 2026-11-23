@@ -78,6 +78,95 @@ def sign_test_slt(code):
     return re.sub(r"if \(([^()]+|\([^()]*\) [^()]+|\(s16\) \(\*\(u16 \*\)" + PTR + r"\)) < 0\) \{", r"if (0 > \1) {", code)
 
 
+def nonpositive_test_slt(code):
+    """`if (x <= 0)` -> `if (0 >= x)` (retail `slt v,zero,v; bnez` instead of `bgtz`)."""
+    return re.sub(r"if \(([^()]+|\([^()]*\) [^()]+) <= 0\) \{", r"if (0 >= \1) {", code)
+
+
+def negate(cond):
+    m = re.fullmatch(r"(.+?) (==|!=|<=|>=|<|>) (.+)", cond)
+    if m and "&&" not in cond and "||" not in cond and "?" not in cond:
+        flip = {"==": "!=", "!=": "==", "<": ">=", ">=": "<", ">": "<=", "<=": ">"}
+        return f"{m[1]} {flip[m[2]]} {m[3]}"
+    return f"!({cond})"
+
+
+def early_return_guard(code):
+    """A void function whose body ends in one guarding `if (c) { ... }` -> `if (!c) return; ...`.
+    The wrapped form leaves an extra `nop` at the join (`func_00214140`, `func_002287E0`)."""
+    m = re.search(r"^(void \w+\([^)]*\) \{\n(?:    [^\n]*\n|\n)*?)    if \((.+)\) \{\n((?:        [^\n]*\n|\n)*)    \}\n\}\n", code, re.M)
+    if not m or re.search(r"^    \S", m.group(3), re.M):
+        return code
+    body = re.sub(r"^    ", "", m.group(3), flags=re.M)
+    return code[:m.start()] + m.group(1) + f"    if ({negate(m.group(2))}) {{\n        return;\n    }}\n" + body + "}\n" + code[m.end():]
+
+
+def word_table_reads(code):
+    """`*(D_x + i * 4)` on a `u8[]` table (or through a temp holding `i * 4`) is a word load."""
+    tables = set(re.findall(r"^extern u8 (D_[0-9A-F]{8})\[\];$", code, flags=re.M))
+    scaled = set(re.findall(r"\b(temp_\w+) = [^;]* \* 4;", code))
+
+    def repl(m):
+        if m.group(1) not in tables:
+            return m.group(0)
+        index = m.group(2)
+        if re.search(r"\* 4\)?$", index) or index in scaled:
+            return f"*(u32 *)({m.group(1)} + {index})"
+        return m.group(0)
+    return re.sub(r"(?<![\w)])\*\((D_[0-9A-F]{8}) \+ (\([^()]+\* 4\)|temp_\w+)\)", repl, code)
+
+
+SAVE_RE = re.compile(r"^(\s+)(\w+) = (?:\((?:s32|u32|u8 \*)\)\s*)?\(?reg_([da][0-7])(?:\.w)?\)?;$", re.M)
+RESTORE_RE = re.compile(r"^(\s+)reg_([da][0-7])(?:\.w)? = (?:\((?:s32|u32|u8 \*)\)\s*)?(\w+);$", re.M)
+
+
+def _register_saves(code, a_first):
+    saves = {}
+    for m in SAVE_RE.finditer(code):
+        if m.group(2).startswith(("temp_", "sp", "var_")):
+            saves.setdefault(m.group(2), m.group(3))
+    restores = {m.group(3): m.group(2) for m in RESTORE_RE.finditer(code) if m.group(3) in saves}
+    regs = {v: r for v, r in saves.items() if restores.get(v) == r}
+    if len(regs) < 3 or len(set(regs.values())) != len(regs):
+        return code
+    for var in regs:
+        if len(re.findall(rf"\b{var}\b", code)) != 3:  # declaration, save, restore
+            return code
+    order = sorted(regs.values(), key=lambda r: ((r[0] == "d") == a_first, int(r[1])))
+    for var, reg in regs.items():
+        code = re.sub(rf"^\s+[\w ]+\**\s*{var};\n", "", code, flags=re.M)
+        code = re.sub(rf"^(\s+){var} = [^;]*;$", lambda m, r=reg: f"{m[1]}save_{r} = reg_{r}{'.w' if r[0] == 'd' else ''};", code, flags=re.M)
+        code = re.sub(rf"^(\s+)reg_{reg}(\.w)? = [^;]*\b{var};$", lambda m, r=reg: f"{m[1]}reg_{r}{'.w' if r[0] == 'd' else ''} = save_{r};", code, flags=re.M)
+    decls = "".join(f"    {'u32 ' if r[0] == 'd' else 'u8 *'}save_{r};\n" for r in order)
+    code = re.sub(r"^(\w[^\n]*\) \{\n)", lambda m: m[1] + decls, code, count=1, flags=re.M)
+    # natural order inside each contiguous save / restore run
+    line = re.compile(r"^\s+(?:save_([da][0-7]) = reg_|reg_([da][0-7])(?:\.w)? = save_)")
+    lines, out, i = code.split("\n"), [], 0
+    while i < len(lines):
+        j = i
+        while j < len(lines) and line.match(lines[j]) and bool(line.match(lines[j]).group(1)) == bool(line.match(lines[i]).group(1)):
+            j += 1
+        if j - i >= 2:
+            key = lambda l: (lambda r: (r[0] == "a", int(r[1])))(line.match(l).group(1) or line.match(l).group(2))
+            out += sorted(lines[i:j], key=key)
+            i = j
+        else:
+            out.append(lines[i])
+            i += 1
+    return "\n".join(out)
+
+
+def register_saves_natural(code):
+    """m2c save/restore of the register globals around calls -> `save_dN`/`save_aN` locals declared and
+    saved in d0..d7, a0..a6 order (`func_00237330`)."""
+    return _register_saves(code, False)
+
+
+def register_saves_a_first(code):
+    """Same, declaring the a-register saves first (`func_00221CF0`)."""
+    return _register_saves(code, True)
+
+
 def u16_table_reads(code):
     """`(u8) D_x[i]` from a u16 table is a halfword read; widen the receiving variable."""
     for name in re.findall(r"^extern u16 (D_[0-9A-F]{8})\[\];$", code, flags=re.M):
@@ -166,8 +255,22 @@ def decls_by_register(code):
     return "\n".join(out)
 
 
+def irregular_case_labels(code):
+    """m2c prints compare-chain ("irregular") switches with `case_N:` goto labels; make them real cases.
+    The labels are already in retail block order, which MWCC follows (it emits the compares in reverse)."""
+    return re.sub(r"^(\s*)case_(-?(?:0x[0-9A-Fa-f]+|\d+)):", r"\1case \2:", code, flags=re.M)
+
+
+def case_return_to_break(code):
+    """`return;` ending a case group -> `break;` (the shared exit keeps retail's `b <epilogue>` layout)."""
+    code = irregular_case_labels(code)
+    return re.sub(r"^(\s+)return;\n(?=\s*(?:case [^\n]*:|default:|\}))", r"\1break;\n", code, flags=re.M)
+
+
 RULES = [
     u32_temps, table_before_constant, table_before_index, index_before_table, sort_address_loads,
     natural_save_order, sign_test_slt, u16_table_reads, halfword_store_of_byte, reg32_scratch_global,
     swap_register_compare, halve_typed_steps, compound_through_temp, u16_stride, halfword_rmw, decls_by_register,
+    irregular_case_labels, case_return_to_break, nonpositive_test_slt, early_return_guard,
+    word_table_reads, register_saves_natural, register_saves_a_first,
 ]

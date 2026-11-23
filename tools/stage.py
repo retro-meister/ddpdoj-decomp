@@ -34,10 +34,14 @@ def clean(code, func_name):
     code = re.sub(r"\b(reg_a[0-6]) = (D_[0-9A-F]{8})\b(?!\[)", lambda m: f"{m[1]} = ({types.get(m[1], 'u8')} *){m[2]}", code)
     while True:
         removed = False
+        # struct/union members are layout, never "unused"
+        aggregates = [m.span() for m in re.finditer(r"\b(?:struct|union)\b[^;{()]*\{[^{}]*\}", code)]
         for match in DECL_RE.finditer(code):
             name = match.group(1)
             first = match.group(0).split()[0]
             if name == func_name or first in KEYWORDS:
+                continue
+            if any(start <= match.start() < end for start, end in aggregates):
                 continue
             if len(re.findall(rf"\b{re.escape(name)}\b", code)) == 1:
                 code = code[:match.start()] + code[match.end():]

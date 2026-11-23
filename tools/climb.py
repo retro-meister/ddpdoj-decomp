@@ -161,7 +161,7 @@ def main():
         current = score(args.function, dest) if dest.exists() else score(args.function, tmp / "base.c")
         if better(best, current):
             dest.write_text(best_code, encoding="utf-8")
-            print(f"{'MATCH' if best[0] == 100.0 else 'BEST '}  {args.function} {best[0]:.2f}% -> {dest.relative_to(ROOT)}")
+            print(f"{'MATCH' if best[0] == 100.0 else 'BEST '}  {args.function} {best[0]:.2f}% -> {dest}")
         else:
             print(f"NOCHANGE {args.function} {best[0]:.2f}%")
     finally:
