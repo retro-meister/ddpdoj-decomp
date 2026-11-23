@@ -16,7 +16,7 @@ from split import SIZE_RE, SYMBOL_RE, target_units
 HISTORY = ROOT / "config/progress-history.json"
 GRAPH_DIR = ROOT / "docs"
 GRAPH_NAMES = {"SLPS_252.33": "progress-main.svg", "DEATH.ELF": "progress-death.svg", "GALLERY.ELF": "progress-gallery.svg"}
-MAP_PATH = GRAPH_DIR / "progress-map.svg"
+MAP_NAMES = {"SLPS_252.33": "progress-map-main.svg", "GALLERY.ELF": "progress-map-gallery.svg"}
 LABELS = {"SLPS_252.33": "Main game", "DEATH.ELF": "Death Label", "GALLERY.ELF": "Gallery"}
 GALLERY_ALL_FUNCTIONS_COMMIT = "80efe77"
 
@@ -294,94 +294,61 @@ def collect_map_functions():
     return by_target
 
 
-def plot_progress_map():
+def render_progress_map(target, funcs):
+    """One treemap SVG for a single executable; its header shows only that executable's totals."""
     from xml.sax.saxutils import escape
 
-    by_target = collect_map_functions()
     width = 1200
     pad_x = 14
     inner_w = width - 2 * pad_x
     header_h = 84
-    panel_hdr_h = 20
-    panel_gap = 14
     bottom_pad = 14
-
-    order = ["SLPS_252.33", "GALLERY.ELF"]
-    panel_titles = {
-        "SLPS_252.33": "Main game (SLPS_252.33)",
-        "GALLERY.ELF": "Gallery (GALLERY.ELF)",
+    titles = {
+        "SLPS_252.33": "DoDonPachi DaiOuJou (PS2) — Main game (SLPS_252.33)",
+        "GALLERY.ELF": "DoDonPachi DaiOuJou (PS2) — Gallery (GALLERY.ELF)",
     }
     colors = {"matched": "#3fb950", "asm": "#da3633"}
 
-    # Same bytes-per-px² scale across all 3 stacked panels:
-    # Target ~440px height for SLPS_252.33 so GALLERY.ELF is a sleek ~16px strip of ~16x16 tiles.
-    main_bytes = sum(f["size"] for f in by_target["SLPS_252.33"])
-    bytes_per_px2 = main_bytes / (inner_w * 440.0)
-
-    total_bytes = sum(sum(f["size"] for f in by_target[t]) for t in order)
-    matched_bytes = sum(sum(f["size"] for f in by_target[t] if f["status"] == "matched") for t in order)
-    total_fns = sum(len(by_target[t]) for t in order)
-    matched_fns = sum(sum(1 for f in by_target[t] if f["status"] == "matched") for t in order)
-    overall_pct = (matched_bytes / total_bytes * 100.0) if total_bytes else 0.0
-
-    panel_heights = {
-        t: max(16.0, sum(f["size"] for f in by_target[t]) / (bytes_per_px2 * inner_w))
-        for t in order
-    }
-    total_h = int(round(
-        header_h
-        + sum(panel_hdr_h + panel_heights[t] for t in order)
-        + panel_gap * (len(order) - 1)
-        + bottom_pad
-    ))
+    total_bytes = sum(f["size"] for f in funcs)
+    matched_bytes = sum(f["size"] for f in funcs if f["status"] == "matched")
+    matched_fns = sum(1 for f in funcs if f["status"] == "matched")
+    pct = (matched_bytes / total_bytes * 100.0) if total_bytes else 0.0
+    # Tile area per byte scales with the function count so small executables stay readable.
+    tile_h = 440.0 if len(funcs) > 500 else 160.0
+    total_h = int(round(header_h + tile_h + bottom_pad))
+    # 20px bold monospace is ~12.1px per character; leave a gap after the percentage label.
+    stats_x = pad_x + round(len(f"{pct:.2f}% matched") * 12.1) + 14
 
     out = [
         f'<svg xmlns="http://www.w3.org/2000/svg" width="{width}" height="{total_h}" viewBox="0 0 {width} {total_h}" font-family="ui-monospace,Menlo,Consolas,monospace">',
         f'<rect width="{width}" height="{total_h}" fill="#0d1117"/>',
-        f'<text x="{pad_x}" y="34" fill="#e6edf3" font-size="24" font-weight="700">DoDonPachi DaiOuJou (PS2) — C-match progress</text>',
-        f'<text x="{pad_x}" y="62" fill="#3fb950" font-size="20" font-weight="700">{overall_pct:.2f}% matched</text>',
-        f'<text x="196" y="62" fill="#8b949e" font-size="14">{matched_bytes:,} / {total_bytes:,} bytes · {matched_fns:,} / {total_fns:,} functions</text>',
+        f'<text x="{pad_x}" y="34" fill="#e6edf3" font-size="24" font-weight="700">{escape(titles[target])}</text>',
+        f'<text x="{pad_x}" y="62" fill="#3fb950" font-size="20" font-weight="700">{pct:.2f}% matched</text>',
+        f'<text x="{stats_x}" y="62" fill="#8b949e" font-size="14">{matched_bytes:,} / {total_bytes:,} bytes · {matched_fns:,} / {len(funcs):,} functions</text>',
     ]
+    for lname, lcol, lx in (("matched", "#3fb950", 980), ("asm", "#da3633", 1090)):
+        out.append(f'<rect x="{lx}" y="48" width="14" height="14" rx="2" fill="{lcol}"/>')
+        out.append(f'<text x="{lx + 20}" y="60" fill="#e6edf3" font-size="13">{lname}</text>')
 
-    # Legend (top-right)
-    legend = [("matched", "#3fb950", 980), ("asm", "#da3633", 1090)]
-    for lname, lcol, lx in legend:
-        out.append(f'<rect x="{lx}" y="18" width="14" height="14" rx="2" fill="{lcol}"/>')
-        out.append(f'<text x="{lx + 20}" y="30" fill="#e6edf3" font-size="13">{lname}</text>')
-
-    y = float(header_h)
-    for t in order:
-        funcs = by_target[t]
-        th = panel_heights[t]
-        t_bytes = sum(f["size"] for f in funcs)
-        t_m_bytes = sum(f["size"] for f in funcs if f["status"] == "matched")
-        t_m_fns = sum(1 for f in funcs if f["status"] == "matched")
-        t_pct = (t_m_bytes / t_bytes * 100.0) if t_bytes else 0.0
-
-        out.append(f'<rect x="{pad_x:.2f}" y="{y:.2f}" width="{inner_w:.2f}" height="{panel_hdr_h + th:.2f}" fill="none" stroke="#30363d" stroke-width="1"/>')
-        out.append(f'<rect x="{pad_x:.2f}" y="{y:.2f}" width="{inner_w:.2f}" height="{panel_hdr_h:.2f}" fill="#161b22"/>')
-        out.append(f'<text x="{pad_x + 6:.2f}" y="{y + 14:.2f}" fill="#e6edf3" font-size="12" font-weight="600">{escape(panel_titles[t])}</text>')
+    out.append(f'<rect x="{pad_x}" y="{header_h}" width="{inner_w}" height="{tile_h:.2f}" fill="none" stroke="#30363d" stroke-width="1"/>')
+    rects = squarify([(f["size"], f) for f in funcs if f["size"] > 0], pad_x, header_h, inner_w, tile_h)
+    for rx, ry, rw, rh, fn in rects:
+        title = escape(f"{fn['name']}  ·  {fn['size']:,} bytes  ·  {fn['status']}")
+        col = colors[fn["status"]]
         out.append(
-            f'<text x="{pad_x + inner_w - 6:.2f}" y="{y + 14:.2f}" fill="#8b949e" font-size="11" text-anchor="end">'
-            f'{t_pct:.2f}% bytes ({t_m_bytes:,}/{t_bytes:,} B) · {t_m_fns:,}/{len(funcs):,} funcs</text>'
+            f'<rect x="{rx:.2f}" y="{ry:.2f}" width="{rw:.2f}" height="{rh:.2f}" '
+            f'fill="{col}" stroke="#0d1117" stroke-width="0.5"><title>{title}</title></rect>'
         )
-
-        tile_y = y + panel_hdr_h
-        rects = squarify([(f["size"], f) for f in funcs if f["size"] > 0], pad_x, tile_y, inner_w, th)
-        for rx, ry, rw, rh, fn in rects:
-            col = colors[fn["status"]]
-            title = escape(f"{fn['name']}  ·  {fn['size']:,} bytes  ·  {fn['status']}")
-            out.append(
-                f'<rect x="{rx:.2f}" y="{ry:.2f}" width="{rw:.2f}" height="{rh:.2f}" '
-                f'fill="{col}" stroke="#0d1117" stroke-width="0.5"><title>{title}</title></rect>'
-            )
-
-        y += panel_hdr_h + th + panel_gap
-
     out.append("</svg>\n")
+    path = GRAPH_DIR / MAP_NAMES[target]
+    path.write_text("\n".join(out), encoding="utf-8")
+    return path
+
+
+def plot_progress_maps():
+    by_target = collect_map_functions()
     GRAPH_DIR.mkdir(exist_ok=True)
-    MAP_PATH.write_text("\n".join(out), encoding="utf-8")
-    return MAP_PATH
+    return [render_progress_map(target, by_target[target]) for target in MAP_NAMES]
 
 
 def plot_history(history):
@@ -436,7 +403,7 @@ def plot_history(history):
         fig.savefig(path, facecolor="white", metadata={"Date": None, "Creator": "tools/progress.py"})
         plt.close(fig)
         written.append(path)
-    written.append(plot_progress_map())
+    written.extend(plot_progress_maps())
     return written
 
 
