@@ -1,6 +1,5 @@
 #include "common.h"
 
-#pragma mpwc_relax on
 
 s32 func_001FDED0();
 s32 func_001FDFC0();
