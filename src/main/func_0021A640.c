@@ -1,0 +1,65 @@
+#include "gallery/gallery.h"
+
+typedef struct {
+    u16 tbp;
+    u16 psm;
+    u32 width;
+    u32 height;
+    u16 tw;
+    u16 th;
+} TexInfo;
+
+extern void *D_0028E9F4;
+
+void func_0021A640(TexInfo *tex, void *buffer, s32 tbp, u32 width, u32 height) {
+    sceGifPacket packet;
+    u32 n;
+    u32 m;
+    s32 x;
+    s32 y;
+
+    n = 2;
+    m = 2;
+    tex->width = width;
+    tex->height = height;
+    tex->tbp = tbp;
+    tex->psm = 2;
+    tex->tw = 1;
+    while (width > n) {
+        tex->tw++;
+        n <<= 1;
+    }
+    tex->th = 1;
+    while (height > m) {
+        tex->th++;
+        m <<= 1;
+    }
+    sceGifPkInit(&packet, buffer);
+    sceGifPkReset(&packet);
+    sceGifPkAddGsData(&packet, SCE_GIF_SET_TAG(5, 1, 0, 0, SCE_GIF_PACKED, 1));
+    sceGifPkAddGsData(&packet, SCE_GIF_PACKED_AD);
+    sceGifPkAddGsData(&packet, (u64)(tex->tbp >> 5) | ((u64)((tex->width + 63) >> 6) << 16) | ((u64)tex->psm << 24));
+    sceGifPkAddGsData(&packet, 0x4C);
+    sceGifPkAddGsData(&packet, (u64)((0x800 - (tex->width >> 1)) << 4) | ((u64)((0x800 - (tex->height >> 1)) << 4) << 32));
+    sceGifPkAddGsData(&packet, 0x18);
+    sceGifPkAddGsData(&packet, ((u64)(tex->width - 1) << 16) | ((u64)(tex->height - 1) << 48));
+    sceGifPkAddGsData(&packet, 0x40);
+    sceGifPkAddGsData(&packet, 0x3000F);
+    sceGifPkAddGsData(&packet, 0x47);
+    sceGifPkAddGsData(&packet, (u64)1 << 32);
+    sceGifPkAddGsData(&packet, 0x4E);
+    sceGifPkAddGsData(&packet, SCE_GIF_SET_TAG(1, 1, 0, 0, SCE_GIF_REGLIST, 4));
+    sceGifPkAddGsData(&packet, 0x5510);
+    sceGifPkAddGsData(&packet, 0x106);
+    sceGifPkAddGsData(&packet, (u64)0x3F800000 << 32);
+    x = (0x800 - (tex->width >> 1)) << 4;
+    y = (0x800 - (tex->height >> 1)) << 4;
+    sceGifPkAddGsData(&packet, (u64)x | ((u64)y << 16));
+    x += tex->width << 4;
+    y += tex->height << 4;
+    sceGifPkAddGsData(&packet, (u64)x | ((u64)y << 16));
+    sceGifPkTerminate(&packet);
+    FlushCache(0);
+    sceDmaSendN(D_0028E9F4, buffer, sceGifPkSize(&packet));
+    sceGsSyncPath(0, 0);
+}
