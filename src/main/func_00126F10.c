@@ -21,7 +21,7 @@ extern u8 *reg_a6;
 void func_00126F10(void) {
     u8 *save_a1;
 
-    reg_a3 = D_002695E0;
+    reg_a3 = (u8 *)D_002695E0;
     D_0028E988 += 1;
     reg_a3 = *(u8 **) (D_002695E0 + (reg_d0.h[0] & ~3));
     *(u16 *) reg_a0 = reg_d0.h[0];
@@ -31,7 +31,7 @@ void func_00126F10(void) {
     D_0028E484.h[1] = *(u16 *) (reg_a6 + 2);
     D_0028E484.h[0] = *(u16 *) (reg_a6 + 4);
     reg_d1.w += D_0028E484.w;
-    reg_d1.h[0] += D_0029C06C[0];
+    reg_d1.h[0] += (s32) D_0029C06C[0];
     *(u16 *) reg_a0 = reg_d1.h[1];
     reg_a0 += 2;
     *(u16 *) reg_a0 = reg_d1.h[0];
@@ -39,7 +39,7 @@ void func_00126F10(void) {
     reg_tmp.w = 0;
     reg_tmp.h[0] = 0xAC00;
     reg_d1.h[0] += 0xE00;
-    reg_d1.h[0] += D_0029C068[0];
+    reg_d1.h[0] += (s32) D_0029C068[0];
     D_0028E484.w = 0;
     D_0028E484.h[0] = reg_d1.h[0];
     D_0028E484.w += reg_tmp.w;
@@ -98,7 +98,7 @@ void func_00126F10(void) {
     reg_a0 += 2;
     reg_a0 -= 0x1E;
     save_a1 = reg_a1;
-    reg_a1 = D_00269530;
+    reg_a1 = (u8 *)D_00269530;
     reg_a1 += reg_d2.h[0];
     *(u16 *) (reg_a0 + 0x28) = *(u16 *) (reg_a1 + 2);
     *(u16 *) (reg_a0 + 0x2A) = *(u16 *) (reg_a1 + 0);

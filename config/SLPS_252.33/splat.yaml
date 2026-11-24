@@ -245,7 +245,7 @@ segments:
       - [0x26e10, c, main/func_00126D90]
       - [0x26eb0, c, main/func_00126E30]
       - [0x26f50, c, main/func_00126ED0]
-      - [0x26f90, asm, game_026f90]
+      - [0x26f90, c, main/func_00126F10]
       - [0x27390, c, main/func_00127310]
       - [0x27450, c, main/func_001273D0]
       - [0x27480, c, main/func_00127400]
