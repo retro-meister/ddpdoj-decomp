@@ -58,13 +58,48 @@ extern s8 *g_font_glyph_data;
 extern PaletteColor g_font_alt_palette[];
 extern PaletteColor g_font_palettes[][16];
 extern sceGsLoadImage g_gs_load_image;
-extern u8 g_font_alpha_table[];
-extern u8 g_font_tint_luma_table[];
-extern u8 g_font_palette_rgb[][3];
-extern u8 g_font_highlight_luma_table[];
-extern u8 g_font_highlight_alpha_table[];
-extern u8 g_font_alt_palette_rgb[];
-extern u8 g_font_base_luma_table[];
+u8 g_font_alpha_table[16] = { 0, 25, 51, 76, 102, 51, 76, 102, 128, 128, 128, 128, 128, 128, 128, 128 };
+u8 g_font_base_luma_table[16] = { 0, 0, 0, 0, 0, 51, 51, 51, 51, 102, 102, 102, 153, 153, 204, 255 };
+u8 g_font_tint_luma_table[16] = { 0, 0, 0, 0, 0, 32, 48, 48, 2, 3, 3, 3, 4, 4, 5, 6 };
+u8 g_font_highlight_alpha_table[16] = { 0, 64, 80, 96, 112, 128, 128, 128, 128, 128, 128, 128, 128, 128, 128, 128 };
+u8 g_font_highlight_luma_table[16] = { 0, 4, 4, 4, 4, 5, 6, 6, 4, 4, 4, 4, 4, 4, 5, 6 };
+u8 g_font_palette_rgb[17][3] = {
+    { 255, 255, 255 },
+    { 255, 100, 100 },
+    { 0, 224, 96 },
+    { 0, 144, 224 },
+    { 255, 224, 64 },
+    { 192, 96, 180 },
+    { 255, 144, 176 },
+    { 160, 255, 96 },
+    { 255, 180, 64 },
+    { 255, 100, 100 },
+    { 0, 224, 96 },
+    { 0, 144, 224 },
+    { 255, 224, 64 },
+    { 192, 96, 180 },
+    { 255, 144, 176 },
+    { 160, 255, 96 },
+    { 255, 180, 64 }
+};
+u8 g_font_alt_palette_rgb[48] = {
+    0, 0, 0,
+    48, 48, 50,
+    56, 56, 64,
+    104, 104, 104,
+    136, 248, 224,
+    0, 104, 88,
+    0, 72, 72,
+    224, 128, 184,
+    216, 48, 104,
+    144, 48, 48,
+    176, 168, 224,
+    112, 104, 200,
+    248, 176, 240,
+    200, 96, 176,
+    96, 96, 104,
+    255, 255, 255
+};
 extern s8 D_00578780[];
 extern s32 g_text_queue_count;
 extern s32 g_overlay_queue_count;
@@ -73,7 +108,6 @@ extern GlyphCacheEntry D_00583FD8[];
 extern SpriteEntry g_overlay_queue[];
 extern void *g_dma_gif;
 extern u8 g_gif_buf_as_u8_a2_a0x10000[2][0x10000];
-extern QuadOffsets D_0026F860;
 extern s8 g_cd_async_state;
 extern s8 g_cd_async_busy;
 extern u32 g_cd_total_bytes_read;
@@ -1096,7 +1130,7 @@ void text_build_quad_packet(Qword *pkt, s32 startIndex, s32 count)
     s32 y[4];
     s32 u[4];
     s32 v[4];
-    QuadOffsets uOffset = D_0026F860;
+    QuadOffsets uOffset = { 9, -9, 9, -9 };
     s32 qwc;
     s32 i;
     s32 j;

@@ -2073,6 +2073,8 @@ segments:
       - [0x138c10, c, shared/replay_state]
       - [0x13dcb0, pad]
       - [0x13dd00, data, data]
+      - [0x16f820, .data, shared/text]
+      - [0x16f8f0, data, data_16f8f0]
       - [0x172170, .data, shared/memcard]
       - [0x172190, data, data_172190]
       - [0x173eb0, .rodata, shared/func_00129EF0]
