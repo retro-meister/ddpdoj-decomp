@@ -202,7 +202,7 @@ segments:
       - [0x254c0, c, main/func_00125440]
       - [0x254f0, c, main/func_00125470]
       - [0x25610, c, main/func_00125590]
-      - [0x25670, asm, game_025670]
+      - [0x25670, c, main/func_001255F0]
       - [0x25740, c, main/func_001256C0]
       - [0x25830, c, main/func_001257B0]
       - [0x25860, c, main/func_001257E0]
