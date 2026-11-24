@@ -216,11 +216,18 @@ def canonical_types(pieces):
                     found.setdefault(prototype.group(1), set()).add(re.sub(r"^extern ", "", flat))
     # Prototypes of SDK functions and of the run's own functions are settled by `tidy_prototypes`.
     settled = sdk_functions()
+    loose = set()
     for pair in pieces:
         for stub in dict.fromkeys(pair):
             if stub:
                 settled |= set(definitions(ROOT / "src" / f"{stub}.c"))
-    return {name for name, forms in found.items() if len(forms) > 1 and name not in settled}
+                loose |= set(re.findall(r"^(?!typedef|extern)[A-Za-z_][\w \t\*]*?[ \*](\w+)\s*\(\)\s*\{?\s*$",
+                                        piece_source(stub), re.M))
+    # A function defined as `f()` takes whatever its callers pass; a caller that declared parameters keeps
+    # its own prototype (in its own scope), because the argument conversions depend on it.
+    typed = {name for name, forms in found.items()
+             if name in loose and any(not re.search(r"\(\s*(void)?\s*\)", form) for form in forms)}
+    return {name for name, forms in found.items() if (len(forms) > 1 and name not in settled) or name in typed}
 
 
 def declaration(name, base, dims):

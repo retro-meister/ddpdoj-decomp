@@ -4,6 +4,12 @@ void func_001E0B30(void);
 void func_001E0C20(void);
 void func_001E1F30(void);
 void func_001E3D60(void);
+void func_001E4410(void);
+void func_001E4460(void);
+void func_001E4490(void);
+void func_001E44F0(void);
+void func_001E4520(void);
+
 
 void func_001DE1F0(void) {
     void func_001713F0(s32);
@@ -670,11 +676,6 @@ s32 func_0018D520();
 s32 func_0018D5C0();
 s32 func_0019BF80();
 s32 func_0019C530();
-s32 func_001E4410();
-s32 func_001E4460();
-s32 func_001E4490();
-s32 func_001E44F0();
-s32 func_001E4520();
 s32 func_00201270();
 s32 func_002012F0();
 s32 func_00201800();
@@ -2816,4 +2817,56 @@ next_200:
     reg_d3.h[0] = *(u16 *)(reg_a6 + 0xE);
     reg_d4.h[0] = *(u16 *)(reg_a6 + 0x1C);
     func_0019C530();
+}
+
+s32 func_0019BF80();                            /* extern */
+extern u32 reg_a6_as_u32;
+
+void func_001E4410(void) {
+    reg_a6_as_u32 += 0x20;
+    func_0019BF80();
+    reg_a6_as_u32 += 0x20;
+    func_0019BF80();
+    reg_tmp.h[1] = (*(u16 *)((u8 *)(reg_a5) + (6)));
+    reg_tmp.h[0] = (*(u16 *)((u8 *)(reg_a5) + (8)));
+    reg_a6_as_u32 = reg_tmp.w;
+}
+
+s32 func_0018D580();                            /* extern */
+s32 func_001A91A0();                            /* extern */
+
+void func_001E4460(void) {
+    reg_d0.w = 0x385;
+    func_001A91A0();
+    func_0018D580();
+    func_001E4490();
+}
+
+
+void func_001E4490(void) {
+    (*(u16 *)((u8 *)(reg_a6) + (0x20))) = 0x8080;
+    reg_a6 += 0x20;
+    func_001DF350();
+    reg_tmp.h[1] = (*(u16 *)((u8 *)(reg_a5) + (6)));
+    reg_tmp.h[0] = (*(u16 *)((u8 *)(reg_a5) + (8)));
+    reg_a6 = (void *) reg_tmp.w;
+    (*(u8 *)((u8 *)(reg_a6) + (0x3C))) = (u8) (*(u8 *)((u8 *)(reg_a5) + (0x1B)));
+}
+
+
+void func_001E44F0(void) {
+    reg_d0.w = 0x385;
+    func_001A91A0();
+    func_0018D580();
+    func_001E4520();
+}
+
+void func_001E4520(void) {
+    (*(u16 *)((u8 *)(reg_a6) + (0x40))) = 0x8080;
+    reg_a6 += 0x40;
+    func_001DF350();
+    reg_tmp.h[1] = (*(u16 *)((u8 *)(reg_a5) + (6)));
+    reg_tmp.h[0] = (*(u16 *)((u8 *)(reg_a5) + (8)));
+    reg_a6 = (void *) reg_tmp.w;
+    (*(u8 *)((u8 *)(reg_a6) + (0x5C))) = (u8) (*(u8 *)((u8 *)(reg_a5) + (0x1B)));
 }
