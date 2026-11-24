@@ -8,7 +8,7 @@ import re
 import subprocess
 
 from common import BASEROM, ROOT, TARGETS, verify
-from split import split, target_layout, target_units
+from split import load_symbols, split, target_layout, target_units
 
 INSN_RE = re.compile(r"/\*\s*[0-9A-Fa-f]+\s+([0-9A-Fa-f]{8})\s+([0-9A-Fa-f]{8})\s*\*/\s*(.+?)\s*$")
 SYM_RE = re.compile(r"\b(?:func|D|L|jtbl|str)_[0-9A-Fa-f]{8}\b")
@@ -111,25 +111,37 @@ def scan_game_asm(target_name, split_folder):
 
 
 def matched_entries(target_name):
+    """One entry per function in each compiled C unit (a unit can hold several, e.g. a
+    static helper merged into its caller's file)."""
+    symbols = load_symbols(target_name)
     entries = []
     for unit in target_units(target_name):
-        entries.append({
-            "target": target_name,
-            "name": unit["name"],
-            "address": unit["address"],
-            "size": unit["size"],
-            "insns": unit["size"] // 4,
-            "calls": 0,
-            "branches": 0,
-            "is_leaf": True,
-            "uses_float": False,
-            "uses_64bit": False,
-            "uses_jtbl": False,
-            "tier": "matched",
-            "matched": True,
-            "source": unit["source"],
-            "hash": f"matched:{unit['source']}:{unit['name']}",
-        })
+        start, end = unit["address"], unit["address"] + unit["span"]
+        inside = sorted(
+            (addr, name, size)
+            for name, (addr, size) in symbols.items()
+            if start <= addr < end and size and name != "_gp"
+        )
+        if not inside:
+            inside = [(unit["address"], unit["name"], unit["size"])]
+        for addr, name, size in inside:
+            entries.append({
+                "target": target_name,
+                "name": name,
+                "address": addr,
+                "size": size,
+                "insns": size // 4,
+                "calls": 0,
+                "branches": 0,
+                "is_leaf": True,
+                "uses_float": False,
+                "uses_64bit": False,
+                "uses_jtbl": False,
+                "tier": "matched",
+                "matched": True,
+                "source": unit["source"],
+                "hash": f"matched:{unit['source']}:{name}",
+            })
     return entries
 
 

@@ -153,7 +153,8 @@ def target_units(name):
         if sym_size is None:
             next_offset = int(subsegments[index + 1][0])
             sym_size = next_offset - offset
-        unit = {"name": sym_name, "stub": stub, "source": source, "address": address, "size": sym_size}
+        span = int(subsegments[index + 1][0]) - offset if index + 1 < len(subsegments) else sym_size
+        unit = {"name": sym_name, "stub": stub, "source": source, "address": address, "size": sym_size, "span": span}
         if stub in rodata_addresses:
             unit["rodata_address"] = rodata_addresses[stub]
         units.append(unit)
