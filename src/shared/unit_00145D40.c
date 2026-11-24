@@ -398,7 +398,7 @@ void func_00146720(void) {
 extern u8 D_00257760[];
 extern u8 D_002577B0[];
 extern u16 D_0028DFE4;
-extern u16 D_0028E5AC;
+extern u16 g_hyper_hit_scratch;
 extern u16 g_p2_hyper_active;
 extern u16 g_p1_hyper_active;
 extern u16 D_0029D790_as_u16_a[];
@@ -409,12 +409,12 @@ extern s16 D_0029F260[];
 void func_00146760(void) {
     s32 temp_s0;
     temp_s0 = (s32)reg_a5;
-    D_0028E5AC = 0;
+    g_hyper_hit_scratch = 0;
     D_0028DFE4 = 0;
     if (D_0029F260[0] < 0) {
         reg_a6 = (u8 *)(D_0029DD90_as_u16_a);
         reg_d7.w = 0x1F;
-        D_0028E5AC = g_p1_hyper_active;
+        g_hyper_hit_scratch = g_p1_hyper_active;
         do {
             reg_d0.h[0] = ENTITY(reg_a6)->flags.h;
             if (reg_d0.h[0] != 0) {
@@ -429,7 +429,7 @@ void func_00146760(void) {
     if (D_0029F1F0[0] < 0) {
         reg_a6 = (u8 *)(D_0029D790_as_u16_a);
         reg_d7.w = 0x1F;
-        D_0028E5AC = g_p2_hyper_active;
+        g_hyper_hit_scratch = g_p2_hyper_active;
         do {
             reg_d0.h[0] = ENTITY(reg_a6)->flags.h;
             if (reg_d0.h[0] != 0) {

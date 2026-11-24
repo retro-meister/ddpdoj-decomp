@@ -16,7 +16,7 @@ s32 func_001A91A0();
 s32 func_002016D0();
 extern u8 D_0028E290;
 extern u16 D_0028E2E8;
-extern s32 D_0028E638;
+extern s32 g_boss_score;
 extern u16 D_0028E8B8;
 
 #define W(o) (*(u16 *)(reg_a6 + (o)))
@@ -202,7 +202,7 @@ next_9:
     goto block_chk;
 next_6:
     if (D_0028E2E8 != 0) goto next_7;
-    D_0028E638 = 0x70000;
+    g_boss_score = 0x70000;
     func_001F5520();
     return;
 next_7:

@@ -1076,8 +1076,8 @@ s32 func_0018D990();
 s32 func_0018D9B0();
 s32 func_001A9180();
 s32 func_001AC3A0();
-extern s32 D_0028E734;
-extern u16 D_0028E750;
+extern s32 g_p1_extend_score;
+extern u16 g_p1_score_digits;
 extern u16 g_p1_lives;
 extern u16 D_0029CD90[];
 extern s16 D_0029F260[];
@@ -1097,8 +1097,8 @@ void func_00210EA0(void) {
     if (D_0029F260[0] >= 0) {
         goto block_2;
     }
-    D_0028E734 = -1;
-    if (D_0028E750 != 0) {
+    g_p1_extend_score = -1;
+    if (g_p1_score_digits != 0) {
         goto block_2;
     }
     *(u16 *)(reg_a6 + 0xE) += 1;
@@ -1189,8 +1189,8 @@ block_3:
 s32 func_0013EB60();
 s32 func_001A9190();
 s32 func_001AC5F0();
-extern s32 D_0028E730;
-extern u16 D_0028E748;
+extern s32 g_p2_extend_score;
+extern u16 g_p2_score_digits;
 extern u16 g_p2_lives;
 extern u16 D_0029CD80[];
 extern s16 D_0029F1F0[];
@@ -1210,8 +1210,8 @@ void func_00211140(void) {
     if (D_0029F1F0[0] >= 0) {
         goto block_2;
     }
-    D_0028E730 = -1;
-    if (D_0028E748 != 0) {
+    g_p2_extend_score = -1;
+    if (g_p2_score_digits != 0) {
         goto block_2;
     }
     *(u16 *)(reg_a6 + 0xE) += 1;

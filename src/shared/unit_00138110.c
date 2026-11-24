@@ -27,8 +27,8 @@ void func_00138110(void) {
 }
 
 extern u8 D_0028E2D4;
-extern u16 D_0028E5E8;
-extern u16 D_0028E5EC;
+extern u16 g_p2_hyper_total;
+extern u16 g_p1_hyper_total;
 extern u16 g_p2_hyper_active;
 extern u16 g_p1_hyper_active;
 extern u32 D_0028E8BC_as_u32;
@@ -70,11 +70,11 @@ void func_00138170(void) {
     if (((reg_d0.h[0] |= g_p2_hyper_active) & 0xFFFF) == 0) {
         goto next_2;
     }
-    reg_d0.h[0] = D_0028E5EC;
-    if ((s32) D_0028E5E8 <= (s32) reg_d0.h[0]) {
+    reg_d0.h[0] = g_p1_hyper_total;
+    if ((s32) g_p2_hyper_total <= (s32) reg_d0.h[0]) {
         goto next_1;
     }
-    reg_d0.h[0] = D_0028E5E8;
+    reg_d0.h[0] = g_p2_hyper_total;
 next_1:
     reg_d0.h[0] <<= 4;
     reg_d1.h[0] += reg_d0.h[0];

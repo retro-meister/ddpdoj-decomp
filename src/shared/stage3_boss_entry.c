@@ -13,7 +13,7 @@ s32 func_001D4630();
 s32 func_002016D0();
 s32 func_00203400();
 extern u8 D_0028E290;
-extern s32 D_0028E638;
+extern s32 g_boss_score;
 extern u16 D_0028E8B8;
 extern u16 D_00299768_as_u16_a[];
 extern u16 D_0029976A_as_u16_a[];
@@ -119,7 +119,7 @@ next_20:
     goto block_check;
 next_30:
     reg_d1.h[0] = W(0x8A);
-    D_0028E638 = 0x50000;
+    g_boss_score = 0x50000;
     func_001D4400();
     return;
 block_check:

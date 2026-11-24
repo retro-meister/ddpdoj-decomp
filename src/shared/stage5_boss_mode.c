@@ -57,9 +57,9 @@ s32 boss_phase_start();
 s32 func_0013B2E0();
 s32 func_001F5640();
 extern u8 D_00264EA0[];
-extern s16 D_0028E5B0_as_s16;
-extern u8 *D_0028E620;
-extern s32 D_0028E624;
+extern s16 g_boss_hyper_wait_as_s16;
+extern u8 *g_boss_hp;
+extern s32 g_boss_hp_unit;
 extern u8 D_0028E854;
 extern u8 D_0028E855;
 extern s16 g_true_last_boss_as_s16;
@@ -79,14 +79,14 @@ void func_001F1540() {
             *(u16 *)(reg_a5 + 0x16) = (u16) reg_tmp.h[1];
             var_a1 = reg_tmp.h[0];
             *(u16 *)(reg_a5 + 0x18) = var_a1;
-            D_0028E624 = 0x780;
+            g_boss_hp_unit = 0x780;
             reg_a0 = reg_a5 + 0x16;
-            D_0028E620 = (u8 *)(reg_a0);
+            g_boss_hp = (u8 *)(reg_a0);
         }
     }
     *(u16 *)(reg_a4 + 2) -= 1;
     if (*(u16 *)(reg_a4 + 2) == 0) {
-        D_0028E5B0_as_s16 = 1;
+        g_boss_hyper_wait_as_s16 = 1;
         if (D_0028E2E8 == 0) {
             D_0028E855 |= 2;
             D_0028E855 |= 0x10;
@@ -613,7 +613,7 @@ s32 boss_movement_stop();
 s32 boss_animation_start();
 s32 func_0018D350();
 s32 func_001F5730();
-extern void *D_0028E620_as_void_p;
+extern void *g_boss_hp_as_void_p;
 extern u16 g_true_last_boss;
 extern u16 D_00299768_as_u16_a[];
 extern u16 D_0029976A_as_u16_a[];
@@ -668,9 +668,9 @@ void func_001F2640() {
             *(u16 *)(reg_a5 + 0x18) = (u16) reg_d0.h[0];
             *(u16 *)(reg_a5 + 0x1C) = (u16) reg_d0.h[1];
             *(u16 *)(reg_a5 + 0x1E) = (u16) reg_d0.h[0];
-            D_0028E624 = 0x580;
+            g_boss_hp_unit = 0x580;
             reg_a0 = (u8 *)(reg_a5 + 0x16);
-            D_0028E620_as_void_p = (void *)reg_a0;
+            g_boss_hp_as_void_p = (void *)reg_a0;
             D_0028E855 |= 1;
             D_0028E855 |= 4;
             D_0028E854 |= 1;

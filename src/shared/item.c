@@ -695,7 +695,7 @@ s32 func_0013E6C0();
 s32 func_0018D990();
 extern u8 D_0026AF40[];
 extern u16 D_0028E3EC;
-extern u16 D_0028E5C0;
+extern u16 g_p1_hyper_items;
 extern u16 g_p1_hyper_active;
 extern u16 D_0028E958_as_u16;
 
@@ -728,7 +728,7 @@ block_10:
     func_0016C260();
     return;
 next_1:
-    reg_d0.h[0] = D_0028E5C0;
+    reg_d0.h[0] = g_p1_hyper_items;
     if (reg_d0.h[0] == 5) {
         goto block_10;
     }
@@ -955,7 +955,7 @@ void func_0016C0C0() {
 }
 
 s32 func_0013E710();
-extern u16 D_0028E5BC;
+extern u16 g_p2_hyper_items;
 extern u16 g_p2_hyper_active;
 
 void func_0016C110(void) {
@@ -987,7 +987,7 @@ block_10:
     func_0016C260();
     return;
 next_1:
-    reg_d0.h[0] = D_0028E5BC;
+    reg_d0.h[0] = g_p2_hyper_items;
     if (reg_d0.h[0] == 5) {
         goto block_10;
     }

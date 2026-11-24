@@ -25,7 +25,7 @@ s32 func_001A9000();
 s32 func_001A91A0();
 s32 func_002016D0();
 extern u8 D_0028E290;
-extern s32 D_0028E638;
+extern s32 g_boss_score;
 extern u16 g_enemy_signal_c;
 extern u16 g_enemy_signal_9;
 extern u16 g_enemy_signal_8;
@@ -259,7 +259,7 @@ next_elix:
     reg_d1.h[0] = *(u16 *)(reg_a6 + 0x16A);
     reg_d0.w = 0x60000;
     func_001A91A0();
-    D_0028E638 = 0x60000;
+    g_boss_score = 0x60000;
     func_001E8480();
     return;
 next_death_chk:

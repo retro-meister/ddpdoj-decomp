@@ -142,22 +142,22 @@ void func_0013CBA0(void) {
     reg_a6 = reg_save_a6;
 }
 
-extern u16 D_0028E5BC;
-extern u16 D_0028E5C0;
+extern u16 g_p2_hyper_items;
+extern u16 g_p1_hyper_items;
 extern s16 D_0029F1F0[];
 extern s16 D_0029F260[];
 extern s16 *reg_a1_as_s16_p;
 
 void func_0013CC60(void) {
     if (D_0029F260[0] < 0) {
-        reg_d0.h[0] = D_0028E5C0;
+        reg_d0.h[0] = g_p1_hyper_items;
         reg_a1_as_s16_p = D_0029F260;
         if (reg_d0.h[0] != 0) {
             func_0013CCF0(D_0029F260);
         }
     }
     if (D_0029F1F0[0] < 0) {
-        reg_d0.h[0] = D_0028E5BC;
+        reg_d0.h[0] = g_p2_hyper_items;
         reg_a1_as_s16_p = D_0029F1F0;
         if (reg_d0.h[0] != 0) {
             func_0013CCE0(D_0029F1F0);
@@ -420,14 +420,14 @@ void func_0013D560(void) {
     extern void func_0013D470(u16);
     if (D_0028E3B4 == 0) {
         reg_d0.h[0] = D_0029F260_as_u16_a[0];
-        if ((((s64) ((s64) reg_d0.h[0] << 0x30) >> 0x30) < 0) && (D_0028E5C0 != 0) && ((reg_d0.h[0] & 0xFFFF & 0x4000) || (D_0029CD90[0] == 0) || (D_0028E3E4 != 0))) {
+        if ((((s64) ((s64) reg_d0.h[0] << 0x30) >> 0x30) < 0) && (g_p1_hyper_items != 0) && ((reg_d0.h[0] & 0xFFFF & 0x4000) || (D_0029CD90[0] == 0) || (D_0028E3E4 != 0))) {
             reg_a0_as_s32_p = &D_0028E054_as_s32;
             reg_a1_as_s32_p = &D_0028E05C;
             reg_d1.w = 0x810000;
             func_0013D470(reg_d0.h[0]);
         }
         reg_d0.h[0] = D_0029F1F0_as_u16_a[0];
-        if ((((s64) ((s64) reg_d0.h[0] << 0x30) >> 0x30) < 0) && (D_0028E5BC != 0) && ((reg_d0.h[0] & 0xFFFF & 0x4000) || (D_0029CD80[0] == 0) || (D_0028E3F0 & 2))) {
+        if ((((s64) ((s64) reg_d0.h[0] << 0x30) >> 0x30) < 0) && (g_p2_hyper_items != 0) && ((reg_d0.h[0] & 0xFFFF & 0x4000) || (D_0029CD80[0] == 0) || (D_0028E3F0 & 2))) {
             reg_a0_as_s32_p = &D_0028E050_as_s32;
             reg_a1_as_s32_p = &D_0028E058;
             reg_d1.w = 0x811C00;
@@ -438,14 +438,14 @@ void func_0013D560(void) {
 
 extern u16 D_00255510_as_u16_a[];
 extern u16 D_0028DFFC;
-extern u16 D_0028E5E8;
-extern u16 D_0028E5EC;
+extern u16 g_p2_hyper_total;
+extern u16 g_p1_hyper_total;
 extern u16 g_stage;
 
 void func_0013D660(void) {
-    reg_d0.h[0] = D_0028E5EC;
-    if ((s32) D_0028E5E8 > (s32) reg_d0.h[0]) {
-        reg_d0.h[0] = D_0028E5E8;
+    reg_d0.h[0] = g_p1_hyper_total;
+    if ((s32) g_p2_hyper_total > (s32) reg_d0.h[0]) {
+        reg_d0.h[0] = g_p2_hyper_total;
     }
     if (reg_d0.h[0] == 0) goto next_1;
     reg_d2.h[0] = g_p1_hyper_active;
@@ -754,7 +754,7 @@ void func_0013E360(void) {
     func_0013F120();
     goto block_end;
 block_51:
-    if (D_0028E5C0 != 0) goto block_end;
+    if (g_p1_hyper_items != 0) goto block_end;
     func_0013EE50();
 block_end:
     cond_flag = 0;
@@ -798,7 +798,7 @@ void func_0013E510(void) {
     func_0013F190();
     goto block_end;
 block_51:
-    if (D_0028E5BC != 0) goto block_end;
+    if (g_p2_hyper_items != 0) goto block_end;
     func_0013EE70();
 block_end:
     cond_flag = 0;
@@ -823,14 +823,14 @@ block_52:
 
 s32 func_001AA8F0();                            /* extern */
 extern s8 D_0028E288_as_s8;
-extern s16 D_0028E5F4_as_s16;
+extern s16 g_p1_hyper_time_as_s16;
 
 void func_0013E6C0(void) {
-    if (D_0028E5C0 == 0) {
+    if (g_p1_hyper_items == 0) {
         func_0013D000();
     }
-    D_0028E5C0 += 1;
-    D_0028E5F4_as_s16 = 0x95F;
+    g_p1_hyper_items += 1;
+    g_p1_hyper_time_as_s16 = 0x95F;
     func_0013F120();
     func_001AA8F0();
     D_0028E288_as_s8 = 0;
@@ -838,14 +838,14 @@ void func_0013E6C0(void) {
 
 s32 func_001AAA20();                            /* extern */
 extern s8 D_0028E284_as_s8;
-extern s16 D_0028E5F0_as_s16;
+extern s16 g_p2_hyper_time_as_s16;
 
 void func_0013E710(void) {
-    if (D_0028E5BC == 0) {
+    if (g_p2_hyper_items == 0) {
         func_0013CFD0();
     }
-    D_0028E5BC += 1;
-    D_0028E5F0_as_s16 = 0x95F;
+    g_p2_hyper_items += 1;
+    g_p2_hyper_time_as_s16 = 0x95F;
     func_0013F190();
     func_001AAA20();
     D_0028E284_as_s8 = 0;
@@ -1321,7 +1321,7 @@ extern s8 D_0028E3F8;
 
 void func_0013F2A0(void) {
     D_0028E3F8 = 1;
-    if ((D_0028E5C0 != 0) || (!(D_0029F261[0] & 0x40) && (D_0029CD90[0] != 0))) {
+    if ((g_p1_hyper_items != 0) || (!(D_0029F261[0] & 0x40) && (D_0029CD90[0] != 0))) {
         func_0013EAF0();
         func_0013F120();
         return;
@@ -1332,7 +1332,7 @@ void func_0013F2A0(void) {
 
 void func_0013F310(void) {
     D_0028E3F8 = 1;
-    if ((D_0028E5BC != 0) || (!(D_0029F1F1[0] & 0x40) && (D_0029CD80[0] != 0))) {
+    if ((g_p2_hyper_items != 0) || (!(D_0029F1F1[0] & 0x40) && (D_0029CD80[0] != 0))) {
         func_0013EB60();
         func_0013F190();
         return;

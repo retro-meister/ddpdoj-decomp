@@ -383,8 +383,8 @@ s32 func_0014CAD0();
 void func_00170A50(s32, s32, s32);
 extern u8 D_0028E284;
 extern u8 D_0028E288;
-extern s16 D_0028E580_as_s16;
-extern s16 D_0028E584_as_s16;
+extern s16 g_p2_hyper_effect_flag_as_s16;
+extern s16 g_p1_hyper_effect_flag_as_s16;
 extern u16 g_enemies_stopped;
 extern u16 D_0029C064[];
 extern u16 D_0029C074[];
@@ -401,7 +401,7 @@ void func_001391B0(void) {
                 D_0028E288 -= 1;
             }
             if (D_0028E288 == 0) {
-                D_0028E584_as_s16 = 0;
+                g_p1_hyper_effect_flag_as_s16 = 0;
             }
         }
         if (D_0028E284 != 0) {
@@ -409,7 +409,7 @@ void func_001391B0(void) {
                 D_0028E284 -= 1;
             }
             if (D_0028E284 == 0) {
-                D_0028E580_as_s16 = 0;
+                g_p2_hyper_effect_flag_as_s16 = 0;
             }
         }
         if (D_0029C076[0] != 0) {
@@ -497,12 +497,12 @@ extern u8 D_0028E2BD;
 extern u8 D_0028E304;
 extern s8 D_0028E368_as_s8;
 extern s8 D_0028E378_as_s8;
-extern u16 D_0028E5BC;
-extern u16 D_0028E5C0;
-extern s16 D_0028E5F0_as_s16;
-extern s16 D_0028E5F4_as_s16;
-extern u16 D_0028E748;
-extern u16 D_0028E750;
+extern u16 g_p2_hyper_items;
+extern u16 g_p1_hyper_items;
+extern s16 g_p2_hyper_time_as_s16;
+extern s16 g_p1_hyper_time_as_s16;
+extern u16 g_p2_score_digits;
+extern u16 g_p1_score_digits;
 extern u16 g_loop;
 extern s8 D_0028EC58;
 extern s16 D_0029F1F0[];
@@ -547,22 +547,22 @@ void func_001394A0(void) {
 #endif
         if ((D_0028ED80 == 0) && (g_loop == 1) && (g_stage == 0)) {
             if (D_0029F260[0] < 0) {
-                if (D_0028E5C0 != 0) {
-                    D_0028E5F4_as_s16 = 0;
+                if (g_p1_hyper_items != 0) {
+                    g_p1_hyper_time_as_s16 = 0;
                     D_0028E288_as_s8 = 0x78;
                 }
-            } else if ((D_0029F1F0[0] < 0) && (D_0028E5BC != 0)) {
-                D_0028E5F0_as_s16 = 0;
+            } else if ((D_0029F1F0[0] < 0) && (g_p2_hyper_items != 0)) {
+                g_p2_hyper_time_as_s16 = 0;
                 D_0028E284_as_s8 = 0x78;
             }
         }
         if ((D_0028ED80 == 0) && (D_0028ED7C != 2)) {
-            if ((D_0028E750 == 0) && (D_0029F260[0] < 0)) {
+            if ((g_p1_score_digits == 0) && (D_0029F260[0] < 0)) {
                 D_0028E25C = g_stage + (g_loop * 5);
                 if (D_0028E304 != 0) {
                     D_0028E25C = g_stage + 5;
                 }
-            } else if ((D_0028E748 == 0) && (D_0029F1F0[0] < 0)) {
+            } else if ((g_p2_score_digits == 0) && (D_0029F1F0[0] < 0)) {
                 D_0028E25C = g_stage + (g_loop * 5);
                 if (D_0028E304 != 0) {
                     D_0028E25C = g_stage + 5;

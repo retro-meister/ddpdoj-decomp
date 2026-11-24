@@ -198,13 +198,13 @@ void func_0013FB20(void) {
     reg_a6 = save_a6;
 }
 
-extern u16 D_0028E5B8;
-extern u16 D_0028E5C0;
-extern u16 D_0028E5C8;
-extern u16 D_0028E5D0;
-extern u16 D_0028E5DC;
-extern u16 D_0028E5E4;
-extern u16 D_0028E5F4;
+extern u16 g_p1_hyper_items_pending;
+extern u16 g_p1_hyper_items;
+extern u16 g_p1_hyper_in_effect;
+extern u16 g_p1_hyper_level;
+extern u16 g_p1_hyper_combo_decay;
+extern u16 g_p1_hyper_gauge;
+extern u16 g_p1_hyper_time;
 extern u16 g_p1_hyper_active;
 extern s32 D_002BAEF0[];
 
@@ -212,22 +212,22 @@ void func_0013FCA0(void) {
     reg_d0.w = 0;
     D_002BAEF0[0] = 0;
     g_p1_hyper_active = reg_d0.h[0];
-    D_0028E5E4 = reg_d0.h[0];
-    D_0028E5F4 = reg_d0.h[0];
-    D_0028E5DC = reg_d0.h[0];
-    D_0028E5D0 = reg_d0.h[0];
-    D_0028E5C8 = reg_d0.h[0];
-    D_0028E5C0 = reg_d0.h[0];
-    D_0028E5B8 = reg_d0.h[0];
+    g_p1_hyper_gauge = reg_d0.h[0];
+    g_p1_hyper_time = reg_d0.h[0];
+    g_p1_hyper_combo_decay = reg_d0.h[0];
+    g_p1_hyper_level = reg_d0.h[0];
+    g_p1_hyper_in_effect = reg_d0.h[0];
+    g_p1_hyper_items = reg_d0.h[0];
+    g_p1_hyper_items_pending = reg_d0.h[0];
 }
 
-extern u16 D_0028E5B4;
-extern u16 D_0028E5BC;
-extern u16 D_0028E5C4;
-extern u16 D_0028E5CC;
-extern u16 D_0028E5D8;
-extern u16 D_0028E5E0;
-extern u16 D_0028E5F0;
+extern u16 g_p2_hyper_items_pending;
+extern u16 g_p2_hyper_items;
+extern u16 g_p2_hyper_in_effect;
+extern u16 g_p2_hyper_level;
+extern u16 g_p2_hyper_combo_decay;
+extern u16 g_p2_hyper_gauge;
+extern u16 g_p2_hyper_time;
 extern u16 g_p2_hyper_active;
 extern s32 D_002BAEB0[];
 
@@ -235,41 +235,41 @@ void func_0013FCE0(void) {
     reg_d0.w = 0;
     D_002BAEB0[0] = 0;
     g_p2_hyper_active = reg_d0.h[0];
-    D_0028E5E0 = reg_d0.h[0];
-    D_0028E5F0 = reg_d0.h[0];
-    D_0028E5D8 = reg_d0.h[0];
-    D_0028E5CC = reg_d0.h[0];
-    D_0028E5C4 = reg_d0.h[0];
-    D_0028E5BC = reg_d0.h[0];
-    D_0028E5B4 = reg_d0.h[0];
+    g_p2_hyper_gauge = reg_d0.h[0];
+    g_p2_hyper_time = reg_d0.h[0];
+    g_p2_hyper_combo_decay = reg_d0.h[0];
+    g_p2_hyper_level = reg_d0.h[0];
+    g_p2_hyper_in_effect = reg_d0.h[0];
+    g_p2_hyper_items = reg_d0.h[0];
+    g_p2_hyper_items_pending = reg_d0.h[0];
 }
 
-extern u16 D_0028E5EC;
+extern u16 g_p1_hyper_total;
 
 void func_0013FD20(void) {
     reg_d0.w = 0;
     D_002BAEF0[0] = 0;
     g_p1_hyper_active = reg_d0.h[0];
-    D_0028E5EC = reg_d0.h[0];
-    D_0028E5E4 = reg_d0.h[0];
-    D_0028E5DC = reg_d0.h[0];
-    D_0028E5D0 = reg_d0.h[0];
-    D_0028E5C8 = reg_d0.h[0];
-    D_0028E5B8 = reg_d0.h[0];
+    g_p1_hyper_total = reg_d0.h[0];
+    g_p1_hyper_gauge = reg_d0.h[0];
+    g_p1_hyper_combo_decay = reg_d0.h[0];
+    g_p1_hyper_level = reg_d0.h[0];
+    g_p1_hyper_in_effect = reg_d0.h[0];
+    g_p1_hyper_items_pending = reg_d0.h[0];
 }
 
-extern u16 D_0028E5E8;
+extern u16 g_p2_hyper_total;
 
 void func_0013FD50(void) {
     reg_d0.w = 0;
     D_002BAEB0[0] = 0;
     g_p2_hyper_active = reg_d0.h[0];
-    D_0028E5E8 = reg_d0.h[0];
-    D_0028E5E0 = reg_d0.h[0];
-    D_0028E5D8 = reg_d0.h[0];
-    D_0028E5CC = reg_d0.h[0];
-    D_0028E5C4 = reg_d0.h[0];
-    D_0028E5B4 = reg_d0.h[0];
+    g_p2_hyper_total = reg_d0.h[0];
+    g_p2_hyper_gauge = reg_d0.h[0];
+    g_p2_hyper_combo_decay = reg_d0.h[0];
+    g_p2_hyper_level = reg_d0.h[0];
+    g_p2_hyper_in_effect = reg_d0.h[0];
+    g_p2_hyper_items_pending = reg_d0.h[0];
 }
 
 extern s16 D_0028DFB4_as_s16;
@@ -652,7 +652,7 @@ extern u16 D_0028E044;
 extern u16 D_0028E05C_as_u16;
 extern u16 D_0028E05E;
 extern u8 D_0028E080[];
-extern s16 D_0028E584_as_s16;
+extern s16 g_p1_hyper_effect_flag_as_s16;
 extern u16 g_two_player_seen;
 extern u16 D_0028E930;
 extern u16 D_0028E938;
@@ -670,7 +670,7 @@ void func_001404B0() {
         func_001420E0();
         return;
     }
-    D_0028E584_as_s16 = 0;
+    g_p1_hyper_effect_flag_as_s16 = 0;
     if (D_0028ED7C == 1) {
         D_0028ED6C_as_s8 = 1;
     }
@@ -700,7 +700,7 @@ extern u16 D_0028E040;
 extern u16 D_0028E058_as_u16;
 extern u16 D_0028E05A;
 extern u8 D_0028E078[];
-extern s16 D_0028E580_as_s16;
+extern s16 g_p2_hyper_effect_flag_as_s16;
 extern u16 D_0028E92C;
 extern u16 D_0028E934;
 extern u8 D_0029CD80_as_u8_a[];
@@ -715,7 +715,7 @@ void func_001405D0() {
         func_001420E0();
         return;
     }
-    D_0028E580_as_s16 = 0;
+    g_p2_hyper_effect_flag_as_s16 = 0;
     if (D_0028ED7C == 1) {
         D_0028ED6C_as_s8 = 1;
     }
@@ -913,8 +913,8 @@ next_41:
     reg_d1.h[0] = D_006E5BF0[0];
     *(u16 *)(reg_a6 + 0x22) = reg_d1.h[0];
     func_00145E70(reg_a6);
-    D_0028E5C0 = 0;
-    D_0028E5BC = 0;
+    g_p1_hyper_items = 0;
+    g_p2_hyper_items = 0;
     if (D_0028E2B0 != 0) goto next_60;
     for (i = 0; i < D_006E5BFC[0]; i++) {
         if (reg_a6 == D_0029F260_as_u8_a) {
@@ -929,21 +929,21 @@ next_41:
         if (reg_d6.h[0] == 0) {
             val = D_0028E2AC & 0xFFFF;
             rem = val % 100;
-            D_0028E5E4 = (rem * 0x960) / 100;
+            g_p1_hyper_gauge = (rem * 0x960) / 100;
             if (val == 0x1F4) {
-                D_0028E5B8 = 4;
-                D_0028E5E4 = 0x95F;
+                g_p1_hyper_items_pending = 4;
+                g_p1_hyper_gauge = 0x95F;
             } else {
-                D_0028E5B8 = val / 100;
+                g_p1_hyper_items_pending = val / 100;
             }
         } else {
             val = D_0028E2AC & 0xFFFF;
             if (val >= 100) {
-                D_0028E5B8 = 0;
-                D_0028E5E4 = 0x95F;
+                g_p1_hyper_items_pending = 0;
+                g_p1_hyper_gauge = 0x95F;
             } else {
-                D_0028E5B8 = 0;
-                D_0028E5E4 = ((val % 100) * 0x960) / 100;
+                g_p1_hyper_items_pending = 0;
+                g_p1_hyper_gauge = ((val % 100) * 0x960) / 100;
             }
         }
     } else {
@@ -951,21 +951,21 @@ next_41:
         if (reg_d6.h[0] == 0) {
             val = D_0028E2AC & 0xFFFF;
             rem = val % 100;
-            D_0028E5E0 = (rem * 0x960) / 100;
+            g_p2_hyper_gauge = (rem * 0x960) / 100;
             if (val == 0x1F4) {
-                D_0028E5B4 = 4;
-                D_0028E5E0 = 0x95F;
+                g_p2_hyper_items_pending = 4;
+                g_p2_hyper_gauge = 0x95F;
             } else {
-                D_0028E5B4 = val / 100;
+                g_p2_hyper_items_pending = val / 100;
             }
         } else {
             val = D_0028E2AC & 0xFFFF;
             if (val >= 100) {
-                D_0028E5B4 = 0;
-                D_0028E5E0 = 0x95F;
+                g_p2_hyper_items_pending = 0;
+                g_p2_hyper_gauge = 0x95F;
             } else {
-                D_0028E5B4 = 0;
-                D_0028E5E0 = ((val % 100) * 0x960) / 100;
+                g_p2_hyper_items_pending = 0;
+                g_p2_hyper_gauge = ((val % 100) * 0x960) / 100;
             }
         }
     }
@@ -973,12 +973,12 @@ next_41:
     if (reg_d6.h[0] != 0) goto next_45;
     if (D_0028E280 != 5) goto next_45;
     if (reg_a6 == D_0029F260_as_u8_a) {
-        if (D_0028E5C0 != 0) {
-            D_0028E5F4 = 0;
+        if (g_p1_hyper_items != 0) {
+            g_p1_hyper_time = 0;
             D_0028E288 = 0x78;
         }
-    } else if (D_0028E5BC != 0) {
-        D_0028E5F0 = 0;
+    } else if (g_p2_hyper_items != 0) {
+        g_p2_hyper_time = 0;
         D_0028E284 = 0x78;
     }
 next_45:
@@ -986,12 +986,12 @@ next_45:
         if (D_0028E2AC == 0) goto next_50;
         val = D_0028E2AC & 0xFFFF;
         rem = val % 100;
-        D_0028E5E4 = (rem * 0x960) / 100;
+        g_p1_hyper_gauge = (rem * 0x960) / 100;
         if (val == 0x1F4) {
-            D_0028E5B8 = 4;
-            D_0028E5E4 = 0x95F;
+            g_p1_hyper_items_pending = 4;
+            g_p1_hyper_gauge = 0x95F;
         } else {
-            D_0028E5B8 = val / 100;
+            g_p1_hyper_items_pending = val / 100;
         }
         if (reg_d6.h[0] == 0) goto next_50;
         func_001ABCA0();
@@ -999,12 +999,12 @@ next_45:
         if (D_0028E2AC == 0) goto next_50;
         val = D_0028E2AC & 0xFFFF;
         rem = val % 100;
-        D_0028E5E0 = (rem * 0x960) / 100;
+        g_p2_hyper_gauge = (rem * 0x960) / 100;
         if (val == 0x1F4) {
-            D_0028E5B4 = 4;
-            D_0028E5E0 = 0x95F;
+            g_p2_hyper_items_pending = 4;
+            g_p2_hyper_gauge = 0x95F;
         } else {
-            D_0028E5B4 = val / 100;
+            g_p2_hyper_items_pending = val / 100;
         }
         if (reg_d6.h[0] == 0) goto next_50;
         func_001ABEA0();
@@ -1012,67 +1012,67 @@ next_45:
 #endif
 next_50:
     if (reg_a6 == D_0029F260_as_u8_a) {
-        D_0028E5EC = D_006E5C12[0];
+        g_p1_hyper_total = D_006E5C12[0];
     } else {
-        D_0028E5E8 = D_006E5C12[0];
+        g_p2_hyper_total = D_006E5C12[0];
     }
     goto next_76;
 next_60:
     if (reg_a6 == D_0029F260_as_u8_a) {
-        D_0028E5EC = D_006E5C12[0];
+        g_p1_hyper_total = D_006E5C12[0];
     } else {
-        D_0028E5E8 = D_006E5C12[0];
+        g_p2_hyper_total = D_006E5C12[0];
     }
     n = D_006E5BFC[0];
     if (n == 0) {
         n = 1;
     }
     if (reg_a6 == D_0029F260_as_u8_a) {
-        D_0028E5C8 = 1;
+        g_p1_hyper_in_effect = 1;
         g_p1_hyper_active = 1;
         D_0028DFB8 = 1;
         reg_a6[0] |= 1;
-        D_0028E5D0 = n;
-        D_0028E5C0 = 0;
+        g_p1_hyper_level = n;
+        g_p1_hyper_items = 0;
         if (D_0028E2AC != 0) {
             val = D_0028E2AC & 0xFFFF;
             rem = val % 100;
-            D_0028E5E4 = (rem * 0x960) / 100;
+            g_p1_hyper_gauge = (rem * 0x960) / 100;
             if (val == 0x1F4) {
-                D_0028E5B8 = 4;
-                D_0028E5E4 = 0x95F;
+                g_p1_hyper_items_pending = 4;
+                g_p1_hyper_gauge = 0x95F;
             } else {
-                D_0028E5B8 = val / 100;
+                g_p1_hyper_items_pending = val / 100;
             }
         }
         if (D_0028E2A8 != 0) {
             val = D_0028E2A8 & 0xFF;
-            D_0028E5F4 = (val * 0x960) / 100;
+            g_p1_hyper_time = (val * 0x960) / 100;
         }
-        D_0028E5DC = 0;
+        g_p1_hyper_combo_decay = 0;
     } else {
-        D_0028E5C4 = 1;
+        g_p2_hyper_in_effect = 1;
         g_p2_hyper_active = 1;
         D_0028DFB4 = 1;
         reg_a6[0] |= 1;
-        D_0028E5CC = n;
-        D_0028E5BC = 0;
+        g_p2_hyper_level = n;
+        g_p2_hyper_items = 0;
         if (D_0028E2AC != 0) {
             val = D_0028E2AC & 0xFFFF;
             rem = val % 100;
-            D_0028E5E0 = (rem * 0x960) / 100;
+            g_p2_hyper_gauge = (rem * 0x960) / 100;
             if (val == 0x1F4) {
-                D_0028E5B4 = 4;
-                D_0028E5E0 = 0x95F;
+                g_p2_hyper_items_pending = 4;
+                g_p2_hyper_gauge = 0x95F;
             } else {
-                D_0028E5B4 = val / 100;
+                g_p2_hyper_items_pending = val / 100;
             }
         }
         if (D_0028E2A8 != 0) {
             val = D_0028E2A8 & 0xFF;
-            D_0028E5F0 = (val * 0x960) / 100;
+            g_p2_hyper_time = (val * 0x960) / 100;
         }
-        D_0028E5D8 = 0;
+        g_p2_hyper_combo_decay = 0;
     }
 next_76:
     reg_a6[0x3F] = 0xF0;
@@ -1248,12 +1248,12 @@ void func_00141300(void) {
 
 #pragma push
 #pragma opt_propagation off
-extern s16 D_0028E5B4_as_s16;
-extern s16 D_0028E5B8_as_s16;
-extern s16 D_0028E5E0_as_s16;
-extern s16 D_0028E5E4_as_s16;
-extern s16 D_0028E5E8_as_s16;
-extern s16 D_0028E5EC_as_s16;
+extern s16 g_p2_hyper_items_pending_as_s16;
+extern s16 g_p1_hyper_items_pending_as_s16;
+extern s16 g_p2_hyper_gauge_as_s16;
+extern s16 g_p1_hyper_gauge_as_s16;
+extern s16 g_p2_hyper_total_as_s16;
+extern s16 g_p1_hyper_total_as_s16;
 
 void func_00141640(void) {
     u8 *a0;
@@ -1292,12 +1292,12 @@ void func_00141640(void) {
     reg_d0.w = 0xC30;
     D_0028E05C_as_u16 = reg_d0.h[1];
     D_0028E05E = reg_d0.h[0];
-    D_0028E5B8_as_s16 = 0;
-    D_0028E5E4_as_s16 = 0;
-    D_0028E5B4_as_s16 = 0;
-    D_0028E5E0_as_s16 = 0;
-    D_0028E5EC_as_s16 = 0;
-    D_0028E5E8_as_s16 = 0;
+    g_p1_hyper_items_pending_as_s16 = 0;
+    g_p1_hyper_gauge_as_s16 = 0;
+    g_p2_hyper_items_pending_as_s16 = 0;
+    g_p2_hyper_gauge_as_s16 = 0;
+    g_p1_hyper_total_as_s16 = 0;
+    g_p2_hyper_total_as_s16 = 0;
     reg_d0.w = 0xC30;
     D_0028E058_as_u16 = reg_d0.h[1];
     D_0028E05A = reg_d0.h[0];
@@ -1374,8 +1374,8 @@ void func_00141710(void) {
 
 s32 func_001A7E90();
 s32 func_001A8070();
-extern s16 D_0028E5BC_as_s16;
-extern s16 D_0028E5C0_as_s16;
+extern s16 g_p2_hyper_items_as_s16;
+extern s16 g_p1_hyper_items_as_s16;
 #ifdef DEATH_LABEL
 extern u8 death_D_00290DC0;
 extern u16 D_0028DFFC;
@@ -1442,8 +1442,8 @@ void func_001417D0(void) {
     reg_d1.h[0] = 8;
     *(u16 *)(reg_a6 + 0x20) = (u16) reg_d1.h[0];
     *(u16 *)(reg_a6 + 0x22) = (u16) reg_d1.h[0];
-    D_0028E5C0_as_s16 = 0;
-    D_0028E5BC_as_s16 = 0;
+    g_p1_hyper_items_as_s16 = 0;
+    g_p2_hyper_items_as_s16 = 0;
     for (i = 0; i < (s32) D_006E5BFC[0]; i++) {
         if (reg_a6 == D_0029F260_as_u8_a) {
             func_0013E6C0();
@@ -1455,37 +1455,37 @@ void func_001417D0(void) {
     if (reg_a6 == D_0029F260_as_u8_a) {
         ENTITY(reg_a6)->flags.b[0] &= 0xFE;
         if (death_D_00290DC0 == 0) {
-            D_0028E5B8_as_s16 = 4;
-            D_0028E5E4_as_s16 = 0x95F;
+            g_p1_hyper_items_pending_as_s16 = 4;
+            g_p1_hyper_gauge_as_s16 = 0x95F;
         } else {
-            D_0028E5B8_as_s16 = 0;
-            D_0028E5E4_as_s16 = 0;
+            g_p1_hyper_items_pending_as_s16 = 0;
+            g_p1_hyper_gauge_as_s16 = 0;
         }
-        D_0028E5EC_as_s16 = 0xF;
+        g_p1_hyper_total_as_s16 = 0xF;
     } else {
         ENTITY(reg_a6)->flags.b[0] &= 0xFE;
         if (death_D_00290DC0 == 0) {
-            D_0028E5B4_as_s16 = 4;
-            D_0028E5E0_as_s16 = 0x95F;
+            g_p2_hyper_items_pending_as_s16 = 4;
+            g_p2_hyper_gauge_as_s16 = 0x95F;
         } else {
-            D_0028E5B4_as_s16 = 0;
-            D_0028E5E0_as_s16 = 0;
+            g_p2_hyper_items_pending_as_s16 = 0;
+            g_p2_hyper_gauge_as_s16 = 0;
         }
     }
-    D_0028E5E8_as_s16 = 0xF;
+    g_p2_hyper_total_as_s16 = 0xF;
     D_0028DFFC = 0xA;
     D_0028E7F0 = 2;
 #else
     if (reg_a6 == D_0029F260_as_u8_a) {
         ENTITY(reg_a6)->flags.b[0] &= 0xFE;
-        D_0028E5B8_as_s16 = 4;
-        D_0028E5E4_as_s16 = 0x95F;
-        D_0028E5EC_as_s16 = 0xF;
+        g_p1_hyper_items_pending_as_s16 = 4;
+        g_p1_hyper_gauge_as_s16 = 0x95F;
+        g_p1_hyper_total_as_s16 = 0xF;
     } else {
         ENTITY(reg_a6)->flags.b[0] &= 0xFE;
-        D_0028E5B4_as_s16 = 4;
-        D_0028E5E0_as_s16 = 0x95F;
-        D_0028E5E8_as_s16 = 0xF;
+        g_p2_hyper_items_pending_as_s16 = 4;
+        g_p2_hyper_gauge_as_s16 = 0x95F;
+        g_p2_hyper_total_as_s16 = 0xF;
     }
 #endif
     reg_d5.h[0] = *(u16 *)(reg_a6 + 0x5A);
@@ -1640,10 +1640,10 @@ extern u8 D_0028C618_as_u8_a[];
 extern u8 D_0028C620_as_u8_a[];
 extern u8 D_0028C948[4];
 extern u8 D_0028C94C[4];
-extern u8 D_0028E580_as_u8_a4[4];
-extern u8 D_0028E584_as_u8_a4[4];
-extern u8 D_0028E5BC_as_u8_a4[4];
-extern u8 D_0028E5C0_as_u8_a4[4];
+extern u8 g_p2_hyper_effect_flag_as_u8_a4[4];
+extern u8 g_p1_hyper_effect_flag_as_u8_a4[4];
+extern u8 g_p2_hyper_items_as_u8_a4[4];
+extern u8 g_p1_hyper_items_as_u8_a4[4];
 extern u8 D_0029EA50[];
 s32 func_001340C0();
 s32 func_001340D0();
@@ -1682,10 +1682,10 @@ extern u16 D_0028E082[];
 extern u8 D_0028E380;
 extern s16 D_0028E3A0;
 extern s16 D_0028E3B0;
-extern u8 D_0028E5C4_as_u8;
-extern u8 D_0028E5C8_as_u8;
-extern u16 D_0028E688;
-extern u16 D_0028E6C8;
+extern u8 g_p2_hyper_in_effect_as_u8;
+extern u8 g_p1_hyper_in_effect_as_u8;
+extern u16 g_p2_combo_timer;
+extern u16 g_p1_combo_timer;
 extern u16 D_0028E6E0;
 extern u16 D_0028E6E4;
 extern u16 g_scroll_line;
@@ -1906,17 +1906,17 @@ block_13:
             temp_a2_2 = (u8 *)(reg_a5 + 6);
             if (*(u8 *)(reg_a5 + 6) == 0) {
                 reg_a0 = (u8 *)func_0013C980;
-                reg_a1 = (u8 *)D_0028E5C0_as_u8_a4;
-                reg_a2 = &D_0028E5C8_as_u8;
+                reg_a1 = (u8 *)g_p1_hyper_items_as_u8_a4;
+                reg_a2 = &g_p1_hyper_in_effect_as_u8;
                 reg_a3 = (u8 *)(D_00255750);
-                reg_d6.h[0] = D_0028E5EC;
+                reg_d6.h[0] = g_p1_hyper_total;
                 reg_d7.h[0] = *(u16 *)D_0029CD90_as_u8_a;
             } else {
                 reg_a0 = (u8 *)func_0013CA90;
-                reg_a1 = (u8 *)D_0028E5BC_as_u8_a4;
-                reg_a2 = &D_0028E5C4_as_u8;
+                reg_a1 = (u8 *)g_p2_hyper_items_as_u8_a4;
+                reg_a2 = &g_p2_hyper_in_effect_as_u8;
                 reg_a3 = (u8 *)(D_00255760);
-                reg_d6.h[0] = D_0028E5E8;
+                reg_d6.h[0] = g_p2_hyper_total;
                 reg_d7.h[0] = *(u16 *)D_0029CD80_as_u8_a;
             }
             reg_d1.h[0] = *(u16 *)reg_a1;
@@ -1949,9 +1949,9 @@ block_13:
             }
             temp_a0_8 = (u8 *)(reg_a6 + 0x25);
             if (*(u8 *)(reg_a6 + 0x25) != 0) {
-                reg_a1 = (u8 *)D_0028E584_as_u8_a4;
+                reg_a1 = (u8 *)g_p1_hyper_effect_flag_as_u8_a4;
                 if (*(u8 *)(reg_a5 + 6) != 0) {
-                    reg_a1 = (u8 *)D_0028E580_as_u8_a4;
+                    reg_a1 = (u8 *)g_p2_hyper_effect_flag_as_u8_a4;
                 }
                 if ((*(u16 *)reg_a1 == 0) && (reg_a1 = (u8 *)D_0029CEA0_as_u8_a, ((s16) *(u16 *)reg_a1 >= 0))) {
                     D_0028E3A0 = 1;
@@ -1971,13 +1971,13 @@ block_13:
                         reg_a2 = (u8 *)D_0029F1F0_as_u8_a;
                         reg_a3 = (u8 *)(&D_0028E6E4);
                         reg_a4 = (u8 *)D_0029CD90_as_u8_a;
-                        reg_d0.h[0] = D_0028E6C8;
+                        reg_d0.h[0] = g_p1_combo_timer;
                         if (g_p1_hyper_active != 0) {
                             func_001A7E90();
-                            reg_tmp.h[0] = D_0028E5EC;
-                            D_0028E5EC -= 3;
+                            reg_tmp.h[0] = g_p1_hyper_total;
+                            g_p1_hyper_total -= 3;
                             if ((s32) reg_tmp.h[0] < 3) {
-                                D_0028E5EC = 0;
+                                g_p1_hyper_total = 0;
                             }
                         }
                     } else {
@@ -1988,13 +1988,13 @@ block_13:
                         reg_a2 = (u8 *)D_0029F260_as_u8_a;
                         reg_a3 = (u8 *)(&D_0028E6E0);
                         reg_a4 = (u8 *)D_0029CD80_as_u8_a;
-                        reg_d0.h[0] = D_0028E688;
+                        reg_d0.h[0] = g_p2_combo_timer;
                         if (g_p2_hyper_active != 0) {
                             func_001A8070();
-                            reg_tmp.h[0] = D_0028E5E8;
-                            D_0028E5E8 -= 3;
+                            reg_tmp.h[0] = g_p2_hyper_total;
+                            g_p2_hyper_total -= 3;
                             if ((s32) reg_tmp.h[0] < 3) {
-                                D_0028E5E8 = 0;
+                                g_p2_hyper_total = 0;
                             }
                         }
                     }
@@ -2516,13 +2516,13 @@ void func_001440D0(void) {
         D_0028E068_as_s16 = 8;
         D_0028DFB8 = g_p1_hyper_active;
         func_001A7E90();
-        reg_d0.h[0] = D_0028E5EC;
+        reg_d0.h[0] = g_p1_hyper_total;
         reg_d0.h[0] >>= 2;
         t1 = reg_d0.h[0];
-        reg_d0.h[0] = D_0028E5C0;
-        D_0028E5EC = t1;
+        reg_d0.h[0] = g_p1_hyper_items;
+        g_p1_hyper_total = t1;
         if (reg_d0.h[0] != 0) {
-            D_0028E5C0 = 0;
+            g_p1_hyper_items = 0;
             func_001AA8F0();
         }
         reg_d1.h[0] = g_p1_lives;
@@ -2549,13 +2549,13 @@ void func_001440D0(void) {
         D_0028E060_as_s16 = 8;
         D_0028DFB4 = g_p2_hyper_active;
         func_001A8070();
-        reg_d0.h[0] = D_0028E5E8;
+        reg_d0.h[0] = g_p2_hyper_total;
         reg_d0.h[0] >>= 2;
         t2 = reg_d0.h[0];
-        reg_d0.h[0] = D_0028E5BC;
-        D_0028E5E8 = t2;
+        reg_d0.h[0] = g_p2_hyper_items;
+        g_p2_hyper_total = t2;
         if (reg_d0.h[0] != 0) {
-            D_0028E5BC = 0;
+            g_p2_hyper_items = 0;
             func_001AAA20();
         }
         reg_d1.h[0] = g_p2_lives;

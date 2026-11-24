@@ -26,9 +26,9 @@ extern u8 D_0026F200[];
 extern u8 D_0026F3F0[];
 extern u8 D_0026F4D0[];
 extern u8 D_0028DC88[];
-extern s16 D_0028E5B0_as_s16;
-extern u8 *D_0028E620;
-extern s32 D_0028E624;
+extern s16 g_boss_hyper_wait_as_s16;
+extern u8 *g_boss_hp;
+extern s32 g_boss_hp_unit;
 extern u8 D_0028E854;
 extern u8 D_0028E855;
 extern s16 g_enemy_signal_c_as_s16;
@@ -67,7 +67,7 @@ void func_001E7A20(void) {
     reg_d0.h[0] = 0x12;
     reg_a0 = (u8 *)D_002554B0;
     sprite_palette_load();
-    D_0028E5B0_as_s16 = 1;
+    g_boss_hyper_wait_as_s16 = 1;
     func_0020ED10();
     D_00299768[0] = 1;
     D_0029976A[0] = 1;
@@ -76,7 +76,7 @@ void func_001E7A20(void) {
     }
     D_0028E855 |= 1;
     D_0028E855 |= 4;
-    D_0028E624 = 0x500;
+    g_boss_hp_unit = 0x500;
     g_enemy_signal_c_as_s16 = 0;
     g_enemy_signal_6_as_s16 = 0;
     g_enemy_signal_7_as_s16 = 0;
@@ -85,7 +85,7 @@ void func_001E7A20(void) {
     g_enemy_signal_8_as_s16 = 0;
     g_enemy_signal_9_as_s16 = 0;
     reg_a0 += 0x16;
-    D_0028E620 = (u8 *)(reg_a0);
+    g_boss_hp = (u8 *)(reg_a0);
     func_001E7C50();
     func_001E8700();
     func_001E8720();

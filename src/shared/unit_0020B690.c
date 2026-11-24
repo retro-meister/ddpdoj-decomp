@@ -189,16 +189,16 @@ next_9:
 }
 
 extern u16 D_0028E0A8;
-extern u16 D_0028E5A8;
-extern u16 D_0028E5AC;
+extern u16 g_hyper_level_hit_scratch;
+extern u16 g_hyper_hit_scratch;
 extern s16 *reg_a4_as_s16_p;
 
 void func_0020BD10(void)
 {
     D_0028E0A8 = reg_d0.h[0];
-    D_0028E5AC = reg_d1.h[0];
+    g_hyper_hit_scratch = reg_d1.h[0];
     reg_d7.h[0] = 0x2800;
-    D_0028E5A8 = reg_d2.h[0];
+    g_hyper_level_hit_scratch = reg_d2.h[0];
 
     if (*reg_a4_as_s16_p < 0) {
         func_0020E020();
@@ -243,8 +243,8 @@ void func_0020BD60(void) {
 #endif
 
     D_0028E0A8 = reg_d0.h[0];
-    D_0028E5AC = reg_d1.h[0];
-    D_0028E5A8 = reg_d2.h[0];
+    g_hyper_hit_scratch = reg_d1.h[0];
+    g_hyper_level_hit_scratch = reg_d2.h[0];
     reg_d7.h[0] = 0x2800;
     if ((s16) *(u16 *)reg_a4 < 0) {
         D_0028E094 = 0;
@@ -719,7 +719,7 @@ loop_110:
         if (!(*(u8 *)(reg_a5 + 1) & 0x20)) goto next_110;
         if (*(s16 *)(reg_a5 + 0x18) < 0) goto next_110;
         reg_d5.h[0] = *(u16 *)(reg_a3 + 0x18);
-        if (D_0028E5AC != 0) {
+        if (g_hyper_hit_scratch != 0) {
             reg_d5.h[0] += reg_d5.h[0];
         }
         if (g_two_player_game == 0) {
@@ -1233,12 +1233,12 @@ void func_0020E290(void) {
     reg_a0 += 2;
     reg_d3.h[0] -= *(u16 *) reg_a0;
     reg_a0 += 2;
-    if (D_0028E5AC == 0) goto next_30;
+    if (g_hyper_hit_scratch == 0) goto next_30;
     if (D_00299764[0] != 0) goto next_30;
     reg_d5.h[0] = *(u16 *) (reg_a1 + 0x1C);
     reg_d4.h[0] = reg_d5.h[0];
     reg_d4.h[0] >>= 2;
-    reg_d7.h[0] = D_0028E5A8;
+    reg_d7.h[0] = g_hyper_level_hit_scratch;
     reg_d7.h[0] -= 1;
 loop_20:
     reg_d5.h[0] += reg_d4.h[0];
@@ -1278,7 +1278,7 @@ loop_10:
     if (!(*(u8 *) (reg_a5 + 1) & 0x20)) goto skip_2;
     if (*(s16 *) (reg_a5 + 0x18) < 0) goto next_60;
     reg_d5.h[0] = *(u16 *) (reg_a1 + 0xE);
-    if (D_0028E5AC == 0) goto next_13;
+    if (g_hyper_hit_scratch == 0) goto next_13;
     if (D_00299764[0] != 0) goto next_20;
 next_13:
     if (*(u16 *) (reg_a1 + 0x1A) == 0) goto next_20;
@@ -1322,12 +1322,12 @@ extern u8 D_002BD440_as_u8_a[];
 
 void func_0020E6F0(void) {
     reg_a1 = reg_a2;
-    if (D_0028E5AC == 0) goto next_10;
+    if (g_hyper_hit_scratch == 0) goto next_10;
     if (D_00299764[0] == 0) goto next_5;
     *(u16 *) (reg_a1 + 0xE) = 0;
     goto next_10;
 next_5:
-    reg_d7.h[0] = D_0028E5A8;
+    reg_d7.h[0] = g_hyper_level_hit_scratch;
     reg_d7.h[0] -= 1;
     reg_d5.h[0] = *(u16 *) (reg_a1 + 0x1C);
     reg_d4.h[0] = reg_d5.h[0];

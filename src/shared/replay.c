@@ -9,8 +9,8 @@ extern void func_0018DD40(void);
 extern char death_D_00277690[];
 extern char death_D_002776B0[];
 extern u16 D_0028E3C0;
-extern u16 D_0028E748;
-extern u16 D_0028E750;
+extern u16 g_p2_score_digits;
+extern u16 g_p1_score_digits;
 extern u16 g_two_player_seen;
 extern s8 D_0028EC24;
 extern u8 D_0028ED58;
@@ -116,7 +116,7 @@ void func_00236F40(void) {
             }
             D_006CB5A8[D_0028ED70_as_u32] ^= death_D_002B1ED8[D_0028ED70_as_u32 & 0x1F];
             D_0028ED70_as_u32++;
-            if (g_two_player_seen == 3 || D_0028E750 != 0 || D_0028E748 != 0) {
+            if (g_two_player_seen == 3 || g_p1_score_digits != 0 || g_p2_score_digits != 0) {
                 D_0028ED7C = 0;
             }
             break;
@@ -136,8 +136,8 @@ extern void func_0018DD40(void);
 extern char D_0028BEB0[];
 extern char D_0028BED0[];
 extern u16 D_0028E3C0;
-extern u16 D_0028E748;
-extern u16 D_0028E750;
+extern u16 g_p2_score_digits;
+extern u16 g_p1_score_digits;
 extern u16 g_two_player_seen;
 extern s8 D_0028EC24;
 extern u8 D_0028ED58;
@@ -237,7 +237,7 @@ void func_00236F40(void) {
             }
             D_006CB5A8[D_0028ED70_as_u32] ^= D_006CB588[D_0028ED70_as_u32 & 0x1F];
             D_0028ED70_as_u32++;
-            if (g_two_player_seen == 3 || D_0028E750 != 0 || D_0028E748 != 0) {
+            if (g_two_player_seen == 3 || g_p1_score_digits != 0 || g_p2_score_digits != 0) {
                 D_0028ED7C = 0;
             }
             break;
@@ -892,8 +892,8 @@ extern u16 D_0028E3E4;
 extern u16 D_0028E3E8;
 extern u16 D_0028E3EC;
 extern u16 D_0028E3F0;
-extern u16 D_0028E598;
-extern u16 D_0028E59C;
+extern u16 g_score_task_active;
+extern u16 g_score_panel_intro;
 extern s32 D_0028E8BC;
 extern u16 g_p2_lives;
 extern u16 g_p1_lives;
@@ -967,12 +967,12 @@ void func_00238010(void) {
         reg_d1.h[0] = D_006C58A6[0];
         func_001A33C0();
         func_0023B6B0(D_006C5CA0);
-        D_0028E598 = 0;
+        g_score_task_active = 0;
         return;
     }
     if (step < 0xC8) {
         D_0028E368 = 0;
-        D_0028E598 = 0;
+        g_score_task_active = 0;
         if ((D_006C8E56[0] != 0) && (step < 0x65)) {
             func_0011C920();
 #ifndef DEATH_LABEL
@@ -1059,7 +1059,7 @@ void func_00238010(void) {
                 D_0028E8BC = D_006C8E88[0] - base + 1;
             }
             if ((g_scroll_line == D_006C8E90[0]) && (D_0028E8AC == D_006C8E94[0])) {
-                D_0028E598 = 1;
+                g_score_task_active = 1;
                 D_0028ED6C = 1;
                 step = 0xC8;
 #ifndef DEATH_LABEL
@@ -1075,7 +1075,7 @@ void func_00238010(void) {
             if (D_0028EC58 != 0) {
                 step += 1;
             case 0x65:
-                if (D_0028E59C == 0) {
+                if (g_score_panel_intro == 0) {
                     D_0028ED5C = 0;
                     D_0028ED6C = 1;
 #ifndef DEATH_LABEL
@@ -1089,7 +1089,7 @@ void func_00238010(void) {
             break;
         case 0x66:
             step = 0xC8;
-            D_0028E598 = 1;
+            g_score_task_active = 1;
             break;
         }
     }
@@ -1261,7 +1261,7 @@ void func_00238690(void) {
         g_pad_input_locked_as_s8 = 1;
         break;
     case 17:
-        if (D_0028E59C == 0) {
+        if (g_score_panel_intro == 0) {
             D_0028ED5C_as_s8 = 0;
             step++;
         }

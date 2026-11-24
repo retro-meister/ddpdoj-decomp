@@ -82,12 +82,12 @@ s32 func_001ABF90();
 s32 func_00200EE0();
 s32 func_00201010();
 extern u16 D_0028E024;
-extern u16 D_0028E5E4;
+extern u16 g_p1_hyper_gauge;
 extern s16 g_p1_hyper_active_as_s16;
-extern u16 D_0028E648;
-extern u16 D_0028E650;
-extern u16 D_0028E6A0;
-extern u16 D_0028E6C8;
+extern u16 g_boss_hits;
+extern u16 g_boss_hit_decay_timer;
+extern u16 g_p1_hits;
+extern u16 g_p1_combo_timer;
 extern u8 D_0028E855;
 
 void func_00170DF0(void) {
@@ -100,14 +100,14 @@ void func_00170DF0(void) {
     s64 t;
 
     reg_d3.h[0] = D_0028E024;
-    reg_d4.h[0] = D_0028E6C8;
-    reg_d5.h[0] = D_0028E6A0;
+    reg_d4.h[0] = g_p1_combo_timer;
+    reg_d5.h[0] = g_p1_hits;
     if (D_0028E855 & 2) {
-        reg_d0.h[0] = D_0028E648;
+        reg_d0.h[0] = g_boss_hits;
         if ((s16) reg_d0.h[0] >= 0) {
             func_00200EE0();
             reg_d5.w = reg_d2.w;
-            reg_d4.h[0] = D_0028E650;
+            reg_d4.h[0] = g_boss_hit_decay_timer;
         } else {
             reg_d4.w = 0;
         }
@@ -138,7 +138,7 @@ loop_11:
                 reg_d0.h[0] += 0x48;
                 goto loop_11;
             }
-            D_0028E5E4 += reg_d0.h[0];
+            g_p1_hyper_gauge += reg_d0.h[0];
             func_001ABF90();
             reg_d0.w = save_d0;
             reg_d1.w = save_d1;
@@ -152,10 +152,10 @@ loop_11:
 
 s32 func_001AC160();
 extern u16 D_0028E020;
-extern u16 D_0028E5E0;
+extern u16 g_p2_hyper_gauge;
 extern s16 g_p2_hyper_active_as_s16;
-extern u16 D_0028E660;
-extern u16 D_0028E688;
+extern u16 g_p2_hits;
+extern u16 g_p2_combo_timer;
 
 void func_00170F80(void) {
     u32 save_d0;
@@ -167,14 +167,14 @@ void func_00170F80(void) {
     s64 t;
 
     reg_d3.h[0] = D_0028E020;
-    reg_d4.h[0] = D_0028E688;
-    reg_d5.h[0] = D_0028E660;
+    reg_d4.h[0] = g_p2_combo_timer;
+    reg_d5.h[0] = g_p2_hits;
     if (D_0028E855 & 2) {
-        reg_d0.h[0] = D_0028E648;
+        reg_d0.h[0] = g_boss_hits;
         if ((s16) reg_d0.h[0] >= 0) {
             func_00200EE0();
             reg_d5.w = reg_d2.w;
-            reg_d4.h[0] = D_0028E650;
+            reg_d4.h[0] = g_boss_hit_decay_timer;
         } else {
             reg_d4.w = 0;
         }
@@ -203,7 +203,7 @@ loop_11:
                 reg_d0.h[0] += 0x48;
                 goto loop_11;
             }
-            D_0028E5E0 += reg_d0.h[0];
+            g_p2_hyper_gauge += reg_d0.h[0];
             func_001AC160();
             reg_d0.w = save_d0;
             reg_d1.w = save_d1;

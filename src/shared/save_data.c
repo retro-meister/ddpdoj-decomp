@@ -2565,20 +2565,20 @@ s32 func_0022B540(void) {
     return 0;
 }
 
-extern u16 D_0028E748;
-extern u16 D_0028E750;
-extern u16 D_0028E758;
-extern u16 D_0028E75C;
-extern s32 D_0028E764_as_s32;
-extern s32 D_0028E768_as_s32;
+extern u16 g_p2_score_digits;
+extern u16 g_p1_score_digits;
+extern u16 g_p2_score_billions;
+extern u16 g_p1_score_billions;
+extern s32 g_p2_score_as_s32;
+extern s32 g_p1_score_as_s32;
 
 void func_0022B620(void) {
-    D_0028ED54 = D_0028E750;
-    D_0028ED50 = D_0028E768_as_s32;
-    D_0028ED4C = D_0028E75C;
-    D_0028ED48 = D_0028E748;
-    D_0028ED44 = D_0028E764_as_s32;
-    D_0028ED40 = D_0028E758;
+    D_0028ED54 = g_p1_score_digits;
+    D_0028ED50 = g_p1_score_as_s32;
+    D_0028ED4C = g_p1_score_billions;
+    D_0028ED48 = g_p2_score_digits;
+    D_0028ED44 = g_p2_score_as_s32;
+    D_0028ED40 = g_p2_score_billions;
 }
 
 extern void func_002263C0(void);
@@ -2918,8 +2918,8 @@ extern u8 death_D_0029085C;
 extern u8 death_D_00290850;
 extern u32 death_D_00290DB8;
 extern u32 death_D_00290DB4;
-extern u16 D_0028E614;
-extern u16 D_0028E610;
+extern u16 g_p1_max_hits;
+extern u16 g_p2_max_hits;
 extern u16 g_loop;
 #endif
 
@@ -2986,8 +2986,8 @@ void func_0022BFD0() {
     if (death_D_00290DC0 != 0) {
         func_0022B620();
         reg_d0.h[0] = 10;
-        death_D_00290DB8 = D_0028E614;
-        death_D_00290DB4 = D_0028E610;
+        death_D_00290DB8 = g_p1_max_hits;
+        death_D_00290DB4 = g_p2_max_hits;
         task_start();
         *(u16 *)(reg_a0 + 4) = D_00684C80[6];
     }
@@ -3063,7 +3063,7 @@ extern u8 D_0028E2E4;
 extern u8 D_0028E384;
 extern u8 D_0028E388;
 extern u8 D_0028E38C;
-extern u16 D_0028E59C;
+extern u16 g_score_panel_intro;
 extern u16 g_loop;
 extern u8 D_00684C88[];
 extern u16 D_00684C8A[];
@@ -3077,8 +3077,8 @@ extern u8 death_D_00290DC0;
 extern u8 death_D_00290DBC;
 extern u16 death_D_00290DB8_as_u16;
 extern u16 death_D_00290DB4_as_u16;
-extern u16 D_0028E614;
-extern u16 D_0028E610;
+extern u16 g_p1_max_hits;
+extern u16 g_p2_max_hits;
 #endif
 
 void func_0022C1F0() {
@@ -3139,8 +3139,8 @@ void func_0022C1F0() {
 #ifdef DEATH_LABEL
         if (death_D_00290DC0 != 0) {
             death_D_00290DBC = 1;
-            D_0028E614 = death_D_00290DB8_as_u16;
-            D_0028E610 = death_D_00290DB4_as_u16;
+            g_p1_max_hits = death_D_00290DB8_as_u16;
+            g_p2_max_hits = death_D_00290DB4_as_u16;
         }
 #endif
         D_00684C94[0] += 1;
@@ -3152,7 +3152,7 @@ void func_0022C1F0() {
         break;
 #endif
     case MAIN_OR_DEATH_LABEL(17, 18):
-        if (D_0028E59C == 0) {
+        if (g_score_panel_intro == 0) {
             D_00684C94[0] += 1;
         }
         break;

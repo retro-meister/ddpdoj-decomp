@@ -51,8 +51,8 @@ s32 func_0020BD10();
 s32 func_0020BD60();
 s32 func_00211670();
 extern u16 D_0028E3EC;
-extern u16 D_0028E5CC;
-extern u16 D_0028E5D0;
+extern u16 g_p2_hyper_level;
+extern u16 g_p1_hyper_level;
 extern u16 g_p2_hyper_active;
 extern u16 g_p1_hyper_active;
 extern u16 g_loop;
@@ -115,7 +115,7 @@ void func_00139B80(void) {
             reg_a4 = (u8 *)(D_0029F260_as_u16_a);
             reg_d0.h[0] = 0x1000;
             t2 = g_p1_hyper_active;
-            t1 = D_0028E5D0;
+            t1 = g_p1_hyper_level;
             reg_d1.h[0] = t2;
             reg_d2.h[0] = t1;
             if (D_0028E3EC == 0) {
@@ -133,7 +133,7 @@ void func_00139B80(void) {
             reg_a4 = (u8 *)(D_0029F1F0_as_u16_a);
             reg_d0.h[0] = 0x800;
             t2 = g_p2_hyper_active;
-            t1 = D_0028E5CC;
+            t1 = g_p2_hyper_level;
             reg_d1.h[0] = t2;
             reg_d2.h[0] = t1;
             if (D_0028E3EC != 0) {
@@ -157,7 +157,7 @@ next_1:
             reg_a4 = (u8 *)(D_0029F260_as_u16_a);
             reg_d0.h[0] = 0x1000;
             reg_d1.h[0] = g_p1_hyper_active;
-            reg_d2.h[0] = D_0028E5D0;
+            reg_d2.h[0] = g_p1_hyper_level;
             func_0020BD60();
             return;
         }
@@ -168,7 +168,7 @@ next_1:
         reg_a4 = (u8 *)(D_0029F1F0_as_u16_a);
         reg_d0.h[0] = 0x800;
         reg_d1.h[0] = g_p2_hyper_active;
-        reg_d2.h[0] = D_0028E5CC;
+        reg_d2.h[0] = g_p2_hyper_level;
         func_0020BD60();
     }
 }

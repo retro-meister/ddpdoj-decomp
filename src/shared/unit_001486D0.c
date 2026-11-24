@@ -1184,7 +1184,7 @@ s32 func_001A5A80();
 s32 func_001AEA80();
 s32 func_002075F0();
 extern u8 D_0028E370;
-extern s16 D_0028E598_as_s16;
+extern s16 g_score_task_active_as_s16;
 extern u16 g_stage;
 extern u8 D_0028ED7C;
 
@@ -1203,10 +1203,10 @@ next_1:
     return;
 block_1:
     reg_a5[3] = 1;
-    D_0028E598_as_s16 = 1;
+    g_score_task_active_as_s16 = 1;
     return;
 block_2:
-    D_0028E598_as_s16 = 0;
+    g_score_task_active_as_s16 = 0;
     func_002075F0();
 }
 

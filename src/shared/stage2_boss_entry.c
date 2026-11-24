@@ -20,7 +20,7 @@ s32 func_001CBCE0();
 s32 func_002016D0();
 s32 func_00203400();
 extern u8 D_0028E290;
-extern s32 D_0028E638;
+extern s32 g_boss_score;
 extern u16 D_0028E8B8;
 
 void func_001CA730(void) {
@@ -165,7 +165,7 @@ next_110:
     *(u16 *)(reg_a5 + 0x18) = reg_tmp.h[0];
     goto next_130;
 next_120:
-    D_0028E638 = 0x40000;
+    g_boss_score = 0x40000;
     func_001CB6B0();
     return;
 next_130:

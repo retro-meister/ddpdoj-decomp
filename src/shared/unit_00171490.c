@@ -262,7 +262,7 @@ extern u8 D_0026B1C0[];
 extern u8 D_0026B1D0[];
 extern u8 D_0028DAC8[];
 extern u8 D_0028E370;
-extern s16 D_0028E5B0_as_s16;
+extern s16 g_boss_hyper_wait_as_s16;
 extern u16 g_p2_hyper_active;
 extern u16 g_p1_hyper_active;
 extern u16 g_stage;
@@ -299,7 +299,7 @@ void func_00171B90(void) {
     var_a0 = 1;
     if (*(u16 *)reg_a4 == 0) {
         *(s16 *)(reg_a4 + 2) = 1;
-        D_0028E5B0_as_s16 = 0;
+        g_boss_hyper_wait_as_s16 = 0;
         if ((D_0028ED7C != 2) || (g_stage != 0)) {
             if ((D_0029F260[0] < 0) && (g_p1_hyper_active == 0)) {
                 func_001ABB80();

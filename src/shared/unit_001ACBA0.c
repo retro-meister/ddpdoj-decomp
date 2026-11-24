@@ -26,10 +26,10 @@ extern u32 reg_save3_d3;
 extern u32 reg_save3_d2;
 extern u32 reg_save3_d1;
 extern u32 reg_save3_d0;
-extern u16 D_0028E614;
-extern u16 D_0028E750;
-extern u16 D_0028E75C;
-extern u32 D_0028E768;
+extern u16 g_p1_max_hits;
+extern u16 g_p1_score_digits;
+extern u16 g_p1_score_billions;
+extern u32 g_p1_score;
 extern u16 D_0028E930;
 extern u16 D_0028E938;
 extern u8 D_002BB420[];
@@ -52,19 +52,19 @@ void func_001ACBA0(void) {
     reg_save3_a6 = reg_a6;
     reg_a4 = (u8 *)D_002BB420;
     reg_d6.w = 0xFF;
-    reg_d7.w = D_0028E768;
-    reg_d5.h[0] = D_0028E75C;
+    reg_d7.w = g_p1_score;
+    reg_d5.h[0] = g_p1_score_billions;
     reg_d0.h[0] = D_0028E938;
     reg_d1.h[0] = D_0028E930;
-    reg_d2.h[0] = D_0028E614;
-    reg_d3.h[0] = D_0028E750;
+    reg_d2.h[0] = g_p1_max_hits;
+    reg_d3.h[0] = g_p1_score_digits;
     func_001ACD30();
 }
 
-extern u16 D_0028E610;
-extern u16 D_0028E748;
-extern u16 D_0028E758;
-extern u32 D_0028E764;
+extern u16 g_p2_max_hits;
+extern u16 g_p2_score_digits;
+extern u16 g_p2_score_billions;
+extern u32 g_p2_score;
 extern u16 D_0028E92C;
 extern u16 D_0028E934;
 extern u8 D_002BB410[];
@@ -87,21 +87,21 @@ void func_001ACC60(void) {
     reg_save3_a6 = reg_a6;
     reg_a4 = (u8 *)D_002BB410;
     reg_d6.w = 0xFE;
-    reg_d7.w = D_0028E764;
-    reg_d5.h[0] = D_0028E758;
+    reg_d7.w = g_p2_score;
+    reg_d5.h[0] = g_p2_score_billions;
     reg_d0.h[0] = D_0028E934;
     reg_d0.h[0] += 4;
     reg_d1.h[0] = D_0028E92C;
-    reg_d2.h[0] = D_0028E610;
-    reg_d3.h[0] = D_0028E748;
+    reg_d2.h[0] = g_p2_max_hits;
+    reg_d3.h[0] = g_p2_score_digits;
     func_001ACD30();
 }
 
 
-extern u16 D_0028E738;
-extern u16 D_0028E73C;
-extern u32 D_0028E740;
-extern u32 D_0028E744;
+extern u16 g_p2_score_billions_saved;
+extern u16 g_p1_score_billions_saved;
+extern u32 g_p2_score_saved;
+extern u32 g_p1_score_saved;
 extern u16 g_game_completed;
 extern u16 g_loop;
 extern u16 g_stage;
@@ -130,27 +130,27 @@ void func_001ACD30(void) {
     reg_a4 = (u8 *)reg_tmp.w;
     *(u32 *)(reg_a4 + 0) = reg_d6.w;
     if (reg_d6.w == 0xFF) {
-        reg_d0.h[0] = D_0028E75C;
-        if ((s32) D_0028E73C > (s32) reg_d0.h[0]) {
+        reg_d0.h[0] = g_p1_score_billions;
+        if ((s32) g_p1_score_billions_saved > (s32) reg_d0.h[0]) {
             goto block_51;
         }
-        D_0028E73C = reg_d0.h[0];
-        reg_d0.w = D_0028E768;
-        if ((u32) D_0028E744 > (u32) reg_d0.w) {
+        g_p1_score_billions_saved = reg_d0.h[0];
+        reg_d0.w = g_p1_score;
+        if ((u32) g_p1_score_saved > (u32) reg_d0.w) {
             goto block_51;
         }
-        D_0028E744 = reg_d0.w;
+        g_p1_score_saved = reg_d0.w;
     } else {
-        reg_d0.h[0] = D_0028E758;
-        if ((s32) D_0028E738 > (s32) reg_d0.h[0]) {
+        reg_d0.h[0] = g_p2_score_billions;
+        if ((s32) g_p2_score_billions_saved > (s32) reg_d0.h[0]) {
             goto block_51;
         }
-        D_0028E738 = reg_d0.h[0];
-        reg_d0.w = D_0028E764;
-        if ((u32) D_0028E740 > (u32) reg_d0.w) {
+        g_p2_score_billions_saved = reg_d0.h[0];
+        reg_d0.w = g_p2_score;
+        if ((u32) g_p2_score_saved > (u32) reg_d0.w) {
             goto block_51;
         }
-        D_0028E740 = reg_d0.w;
+        g_p2_score_saved = reg_d0.w;
     }
 block_51:
     cond_flag = 0;
@@ -366,102 +366,102 @@ next_1:
     reg_d0.h[0] += reg_d0.h[0];
 }
 
-extern s16 D_0028E654_as_s16;
-extern s16 D_0028E658_as_s16;
-extern s16 D_0028E65C_as_s16;
-extern u16 D_0028E660;
-extern s32 D_0028E664;
-extern s32 D_0028E668;
-extern s32 D_0028E66C;
-extern s16 D_0028E670_as_s16;
-extern s16 D_0028E674_as_s16;
-extern s16 D_0028E678;
-extern s16 D_0028E67C_as_s16;
-extern s16 D_0028E680_as_s16;
-extern s16 D_0028E684;
-extern u16 D_0028E688;
-extern s32 D_0028E68C;
-extern s32 D_0028E690;
-extern s16 D_0028E694_as_s16;
-extern s16 D_0028E698_as_s16;
-extern s16 D_0028E69C_as_s16;
-extern u16 D_0028E6A0;
-extern s32 D_0028E6A4;
-extern s32 D_0028E6A8;
-extern s32 D_0028E6AC;
-extern s16 D_0028E6B0_as_s16;
-extern s16 D_0028E6B4_as_s16;
-extern s16 D_0028E6B8;
-extern s16 D_0028E6BC_as_s16;
-extern s16 D_0028E6C0_as_s16;
-extern s16 D_0028E6C4;
-extern u16 D_0028E6C8;
-extern s32 D_0028E6CC;
-extern s32 D_0028E6D0;
+extern s16 g_p2_laser_hit_step_as_s16;
+extern s16 g_p2_laser_hit_timer_as_s16;
+extern s16 g_p2_hits_shown_as_s16;
+extern u16 g_p2_hits;
+extern s32 g_p2_chain_points_shown2;
+extern s32 g_p2_chain_points_shown;
+extern s32 g_p2_chain_points;
+extern s16 g_p2_hit10_anim_count_as_s16;
+extern s16 g_p2_hit10_color_timer_as_s16;
+extern s16 g_p2_hit10_display_timer;
+extern s16 g_p2_combo_break_color_timer_as_s16;
+extern s16 g_p2_hit_display_timer_as_s16;
+extern s16 g_p2_chain_points_display_timer;
+extern u16 g_p2_combo_timer;
+extern s32 g_p2_chain_first_score_shown;
+extern s32 g_p2_chain_first_score;
+extern s16 g_p1_laser_hit_step_as_s16;
+extern s16 g_p1_laser_hit_timer_as_s16;
+extern s16 g_p1_hits_shown_as_s16;
+extern u16 g_p1_hits;
+extern s32 g_p1_chain_points_shown2;
+extern s32 g_p1_chain_points_shown;
+extern s32 g_p1_chain_points;
+extern s16 g_p1_hit10_anim_count_as_s16;
+extern s16 g_p1_hit10_color_timer_as_s16;
+extern s16 g_p1_hit10_display_timer;
+extern s16 g_p1_combo_break_color_timer_as_s16;
+extern s16 g_p1_hit_display_timer_as_s16;
+extern s16 g_p1_chain_points_display_timer;
+extern u16 g_p1_combo_timer;
+extern s32 g_p1_chain_first_score_shown;
+extern s32 g_p1_chain_first_score;
 extern s16 D_0028E6D4_as_s16;
 
 void func_001AD690(void) {
-    D_0028E654_as_s16 = 0;
-    D_0028E658_as_s16 = 0;
-    D_0028E65C_as_s16 = 0;
-    D_0028E66C = D_0028E668 = D_0028E664 = (D_0028E660 = 0);
-    D_0028E670_as_s16 = 0;
-    D_0028E674_as_s16 = 0;
-    D_0028E678 = 0;
-    D_0028E67C_as_s16 = 0;
-    D_0028E680_as_s16 = 0;
-    D_0028E684 = 0;
-    D_0028E690 = D_0028E68C = (D_0028E688 = 0);
-    D_0028E694_as_s16 = 0;
-    D_0028E698_as_s16 = 0;
-    D_0028E69C_as_s16 = 0;
-    D_0028E6AC = D_0028E6A8 = D_0028E6A4 = (D_0028E6A0 = 0);
-    D_0028E6B0_as_s16 = 0;
-    D_0028E6B4_as_s16 = 0;
-    D_0028E6B8 = 0;
-    D_0028E6BC_as_s16 = 0;
-    D_0028E6C0_as_s16 = 0;
-    D_0028E6C4 = 0;
-    D_0028E6D0 = D_0028E6CC = (D_0028E6C8 = 0);
+    g_p2_laser_hit_step_as_s16 = 0;
+    g_p2_laser_hit_timer_as_s16 = 0;
+    g_p2_hits_shown_as_s16 = 0;
+    g_p2_chain_points = g_p2_chain_points_shown = g_p2_chain_points_shown2 = (g_p2_hits = 0);
+    g_p2_hit10_anim_count_as_s16 = 0;
+    g_p2_hit10_color_timer_as_s16 = 0;
+    g_p2_hit10_display_timer = 0;
+    g_p2_combo_break_color_timer_as_s16 = 0;
+    g_p2_hit_display_timer_as_s16 = 0;
+    g_p2_chain_points_display_timer = 0;
+    g_p2_chain_first_score = g_p2_chain_first_score_shown = (g_p2_combo_timer = 0);
+    g_p1_laser_hit_step_as_s16 = 0;
+    g_p1_laser_hit_timer_as_s16 = 0;
+    g_p1_hits_shown_as_s16 = 0;
+    g_p1_chain_points = g_p1_chain_points_shown = g_p1_chain_points_shown2 = (g_p1_hits = 0);
+    g_p1_hit10_anim_count_as_s16 = 0;
+    g_p1_hit10_color_timer_as_s16 = 0;
+    g_p1_hit10_display_timer = 0;
+    g_p1_combo_break_color_timer_as_s16 = 0;
+    g_p1_hit_display_timer_as_s16 = 0;
+    g_p1_chain_points_display_timer = 0;
+    g_p1_chain_first_score = g_p1_chain_first_score_shown = (g_p1_combo_timer = 0);
     D_0028E6D4_as_s16 = 0;
 }
 
-extern s16 D_0028E618_as_s16;
-extern s16 D_0028E61C_as_s16;
-extern s32 D_0028E620_as_s32;
-extern s32 D_0028E624;
-extern s16 D_0028E628_as_s16;
-extern s16 D_0028E62C_as_s16;
-extern s16 D_0028E630_as_s16;
-extern s16 D_0028E634_as_s16;
-extern s32 D_0028E638;
-extern s32 D_0028E63C;
-extern s16 D_0028E640_as_s16;
-extern s16 D_0028E644;
-extern s16 D_0028E648_as_s16;
-extern s16 D_0028E64C_as_s16;
-extern s16 D_0028E650_as_s16;
+extern s16 g_boss_explosion_flash_as_s16;
+extern s16 g_boss_near_death_as_s16;
+extern s32 g_boss_hp_as_s32;
+extern s32 g_boss_hp_unit;
+extern s16 g_lives_display_move_x_as_s16;
+extern s16 g_lives_display_move_y_as_s16;
+extern s16 g_boss_hp_bar_move_count_as_s16;
+extern s16 g_boss_hp_bar_flags_as_s16;
+extern s32 g_boss_score;
+extern s32 g_boss_hit_bonus;
+extern s16 g_boss_hit_bonus_timer_as_s16;
+extern s16 g_boss_hit_palette;
+extern s16 g_boss_hits_as_s16;
+extern s16 g_boss_hit_anim_count_as_s16;
+extern s16 g_boss_hit_decay_timer_as_s16;
 
 void func_001AD720(void)
 {
     s32 lowHalfword;
 
     lowHalfword = (u16)(reg_d0.w = 0);
-    D_0028E618_as_s16 = 0;
-    D_0028E61C_as_s16 = 0;
-    D_0028E620_as_s32 = lowHalfword;
-    D_0028E624 = lowHalfword;
-    D_0028E628_as_s16 = 0;
-    D_0028E62C_as_s16 = 0;
-    D_0028E630_as_s16 = 0;
-    D_0028E634_as_s16 = 0;
-    D_0028E638 = lowHalfword;
-    D_0028E63C = lowHalfword;
-    D_0028E640_as_s16 = 0;
-    D_0028E644 = 0;
-    D_0028E648_as_s16 = 0;
-    D_0028E64C_as_s16 = 0;
-    D_0028E650_as_s16 = 0;
+    g_boss_explosion_flash_as_s16 = 0;
+    g_boss_near_death_as_s16 = 0;
+    g_boss_hp_as_s32 = lowHalfword;
+    g_boss_hp_unit = lowHalfword;
+    g_lives_display_move_x_as_s16 = 0;
+    g_lives_display_move_y_as_s16 = 0;
+    g_boss_hp_bar_move_count_as_s16 = 0;
+    g_boss_hp_bar_flags_as_s16 = 0;
+    g_boss_score = lowHalfword;
+    g_boss_hit_bonus = lowHalfword;
+    g_boss_hit_bonus_timer_as_s16 = 0;
+    g_boss_hit_palette = 0;
+    g_boss_hits_as_s16 = 0;
+    g_boss_hit_anim_count_as_s16 = 0;
+    g_boss_hit_decay_timer_as_s16 = 0;
 }
 
 extern s32 D_0026B920[];
@@ -478,7 +478,7 @@ extern u16 D_0026BA08[];
 extern u8 D_0026BA20[];
 extern u16 D_0026BA60[];
 extern s8 D_0025F6D0[5][30];
-extern s32 D_0028E760;
+extern s32 g_high_score;
 extern s8 D_002BB060_as_s8_a5_a30[5][30];
 extern s8 D_002BB100_as_s8_a5_a30[5][30];
 extern u16 D_002BB198_as_u16_a[];
@@ -523,7 +523,7 @@ void func_001AD770(void) {
         src++;
         dst++;
     } while ((s16) (--reg_d0.h[0]) >= 0);
-    D_0028E760 = D_002BB3F0_as_s32_a[0];
+    g_high_score = D_002BB3F0_as_s32_a[0];
     reg_a0 = (u8 *) D_002BB338_as_u16_a;
     reg_a1 = (u8 *) D_0026B938;
     reg_d0.w = 4;
@@ -691,74 +691,74 @@ typedef struct {
     u8 b[0xA];
 } Pair10;
 
-extern u16 D_0028E578;
-extern s16 D_0028E57C_as_s16;
-extern s16 D_0028E580_as_s16;
-extern s16 D_0028E584_as_s16;
-extern s16 D_0028E588_as_s16;
-extern u16 D_0028E58C;
-extern s32 D_0028E590;
-extern s32 D_0028E594;
-extern s16 D_0028E598_as_s16;
-extern s16 D_0028E59C_as_s16;
+extern u16 g_p2_hyper_effect_delay;
+extern s16 g_p1_hyper_effect_delay_as_s16;
+extern s16 g_p2_hyper_effect_flag_as_s16;
+extern s16 g_p1_hyper_effect_flag_as_s16;
+extern s16 g_p2_hyper_effect_frame_as_s16;
+extern u16 g_p1_hyper_effect_frame;
+extern s32 g_p2_hyper_effect_sprite;
+extern s32 g_p1_hyper_effect_sprite;
+extern s16 g_score_task_active_as_s16;
+extern s16 g_score_panel_intro_as_s16;
 extern u16 D_0028E5A0;
-extern s16 D_0028E5A4_as_s16;
-extern s16 D_0028E5A8_as_s16;
-extern s16 D_0028E5AC_as_s16;
-extern s16 D_0028E5B0_as_s16;
-extern s16 D_0028E5B4_as_s16;
-extern u16 D_0028E5B8;
-extern s16 D_0028E5BC_as_s16;
-extern s16 D_0028E5C0_as_s16;
-extern s16 D_0028E5C4_as_s16;
-extern s16 D_0028E5C8_as_s16;
-extern s16 D_0028E5CC_as_s16;
-extern s16 D_0028E5D0_as_s16;
-extern s16 D_0028E5D4_as_s16;
-extern s16 D_0028E5D8_as_s16;
-extern s16 D_0028E5DC_as_s16;
-extern s16 D_0028E5E0_as_s16;
-extern s16 D_0028E5E4_as_s16;
-extern s16 D_0028E5E8_as_s16;
-extern s16 D_0028E5EC_as_s16;
-extern s16 D_0028E5F0_as_s16;
-extern s16 D_0028E5F4_as_s16;
+extern s16 g_boss_double_speed_as_s16;
+extern s16 g_hyper_level_hit_scratch_as_s16;
+extern s16 g_hyper_hit_scratch_as_s16;
+extern s16 g_boss_hyper_wait_as_s16;
+extern s16 g_p2_hyper_items_pending_as_s16;
+extern u16 g_p1_hyper_items_pending;
+extern s16 g_p2_hyper_items_as_s16;
+extern s16 g_p1_hyper_items_as_s16;
+extern s16 g_p2_hyper_in_effect_as_s16;
+extern s16 g_p1_hyper_in_effect_as_s16;
+extern s16 g_p2_hyper_level_as_s16;
+extern s16 g_p1_hyper_level_as_s16;
+extern s16 g_hyper_text_slide_as_s16;
+extern s16 g_p2_hyper_combo_decay_as_s16;
+extern s16 g_p1_hyper_combo_decay_as_s16;
+extern s16 g_p2_hyper_gauge_as_s16;
+extern s16 g_p1_hyper_gauge_as_s16;
+extern s16 g_p2_hyper_total_as_s16;
+extern s16 g_p1_hyper_total_as_s16;
+extern s16 g_p2_hyper_time_as_s16;
+extern s16 g_p1_hyper_time_as_s16;
 extern s16 g_p2_hyper_active_as_s16;
 extern s16 g_p1_hyper_active_as_s16;
-extern s16 D_0028E600_as_s16;
-extern s16 D_0028E604_as_s16;
-extern s16 D_0028E608_as_s16;
-extern s16 D_0028E60C_as_s16;
-extern s16 D_0028E610_as_s16;
-extern s16 D_0028E614_as_s16;
-extern u16 D_0028E61C;
-extern s16 D_0028E6D8_as_s16;
-extern s16 D_0028E6DC_as_s16;
+extern s16 g_p2_shot_hyper_timer_as_s16;
+extern s16 g_p1_shot_hyper_timer_as_s16;
+extern s16 g_p2_laser_hyper_timer_as_s16;
+extern s16 g_p1_laser_hyper_timer_as_s16;
+extern s16 g_p2_max_hits_as_s16;
+extern s16 g_p1_max_hits_as_s16;
+extern u16 g_boss_near_death;
+extern s16 g_boss_hit_carry_as_s16;
+extern s16 g_max_combo_time_as_s16;
 extern s16 D_0028E6E0_as_s16;
 extern u16 D_0028E6E4;
-extern s32 D_0028E6E8;
-extern s16 D_0028E6EC_as_s16;
-extern s32 D_0028E6F0;
-extern s16 D_0028E6F4_as_s16;
-extern u16 D_0028E6F8;
-extern s32 D_0028E6FC;
-extern s16 D_0028E700_as_s16;
-extern s16 D_0028E704_as_s16;
-extern u8 D_0028E708;
-extern u8 D_0028E70C;
+extern s32 g_score_scratch;
+extern s16 g_max_level_display_timer_as_s16;
+extern s32 g_maximum_text_anim_sprite;
+extern s16 g_maximum_text_anim_frame_as_s16;
+extern u16 g_maximum_text_anim_delay;
+extern s32 g_hyper_text_anim_sprite;
+extern s16 g_hyper_text_anim_frame_as_s16;
+extern s16 g_hyper_text_anim_delay_as_s16;
+extern u8 g_p2_score_panel_flags;
+extern u8 g_p1_score_panel_flags;
 extern u16 D_0028E710;
 extern s32 D_0028E714;
 extern s32 D_0028E718;
 extern s32 D_0028E71C;
 extern s32 D_0028E720_as_s32;
 extern s32 D_0028E724;
-extern s16 D_0028E728_as_s16;
-extern u16 D_0028E72C;
-extern u32 D_0028E730_as_u32;
-extern u32 D_0028E734_as_u32;
-extern s16 D_0028E74C_as_s16;
-extern s16 D_0028E754_as_s16;
-extern u32 D_0028E760_as_u32;
+extern s16 g_p2_extend_setting_as_s16;
+extern u16 g_p1_extend_setting;
+extern u32 g_p2_extend_score_as_u32;
+extern u32 g_p1_extend_score_as_u32;
+extern s16 g_high_score_digits_as_s16;
+extern s16 g_high_score_billions_as_s16;
+extern u32 g_high_score_as_u32;
 extern u8 D_002BAEB0_as_u8_a[];
 extern u8 D_002BAEF0_as_u8_a[];
 extern Pair10 D_002BAF30_as_Pair10;
@@ -768,9 +768,9 @@ extern u8 D_002BB010[];
 void func_001AE490(void) {
     s32 i;
 
-    D_0028E754_as_s16 = 0;
-    D_0028E758 = 0;
-    D_0028E768 = D_0028E764 = D_0028E760_as_u32 = (D_0028E75C = 0);
+    g_high_score_billions_as_s16 = 0;
+    g_p2_score_billions = 0;
+    g_p1_score = g_p2_score = g_high_score_as_u32 = (g_p1_score_billions = 0);
     for (i = 0; i < 0x24; i++) {
         ((u16 *)D_002BB010)[i] = 0;
     }
@@ -778,13 +778,13 @@ void func_001AE490(void) {
     D_0028E71C = 0;
     D_0028E720_as_s32 = 0;
     D_0028E724 = 0;
-    D_0028E728_as_s16 = 0;
-    D_0028E734_as_u32 = D_0028E730_as_u32 = (D_0028E72C = 0);
-    D_0028E738 = 0;
-    D_0028E744 = D_0028E740 = (D_0028E73C = 0);
-    D_0028E748 = 0;
-    D_0028E74C_as_s16 = 0;
-    D_0028E750 = 0;
+    g_p2_extend_setting_as_s16 = 0;
+    g_p1_extend_score_as_u32 = g_p2_extend_score_as_u32 = (g_p1_extend_setting = 0);
+    g_p2_score_billions_saved = 0;
+    g_p1_score_saved = g_p2_score_saved = (g_p1_score_billions_saved = 0);
+    g_p2_score_digits = 0;
+    g_high_score_digits_as_s16 = 0;
+    g_p1_score_digits = 0;
     for (i = 0; i < 0x5A; i++) {
         D_002BAF50_as_Pair90.a[i] = 0;
     }
@@ -797,115 +797,115 @@ void func_001AE490(void) {
     for (i = 0; i < 0xA; i++) {
         D_002BAF30_as_Pair10.b[i] = 0;
     }
-    D_0028E708 = 0;
-    D_0028E714 = D_0028E710 = (D_0028E70C = 0);
-    D_0028E6F0 = 0;
-    D_0028E6F4_as_s16 = 0;
-    D_0028E6FC = (D_0028E6F8 = 0);
-    D_0028E700_as_s16 = 0;
-    D_0028E704_as_s16 = 0;
-    D_0028E6D8_as_s16 = 0;
-    D_0028E6DC_as_s16 = 0;
+    g_p2_score_panel_flags = 0;
+    D_0028E714 = D_0028E710 = (g_p1_score_panel_flags = 0);
+    g_maximum_text_anim_sprite = 0;
+    g_maximum_text_anim_frame_as_s16 = 0;
+    g_hyper_text_anim_sprite = (g_maximum_text_anim_delay = 0);
+    g_hyper_text_anim_frame_as_s16 = 0;
+    g_hyper_text_anim_delay_as_s16 = 0;
+    g_boss_hit_carry_as_s16 = 0;
+    g_max_combo_time_as_s16 = 0;
     D_0028E6E0_as_s16 = 0;
-    D_0028E6E8 = (D_0028E6E4 = 0);
-    D_0028E6EC_as_s16 = 0;
-    D_0028E6C0_as_s16 = 0;
-    D_0028E6C4 = 0;
-    D_0028E6D0 = D_0028E6CC = (D_0028E6C8 = 0);
+    g_score_scratch = (D_0028E6E4 = 0);
+    g_max_level_display_timer_as_s16 = 0;
+    g_p1_hit_display_timer_as_s16 = 0;
+    g_p1_chain_points_display_timer = 0;
+    g_p1_chain_first_score = g_p1_chain_first_score_shown = (g_p1_combo_timer = 0);
     D_0028E6D4_as_s16 = 0;
-    D_0028E6B0_as_s16 = 0;
-    D_0028E6B4_as_s16 = 0;
-    D_0028E6B8 = 0;
-    D_0028E6BC_as_s16 = 0;
-    D_0028E698_as_s16 = 0;
-    D_0028E69C_as_s16 = 0;
-    D_0028E6AC = D_0028E6A8 = D_0028E6A4 = (D_0028E6A0 = 0);
-    D_0028E684 = 0;
-    D_0028E690 = D_0028E68C = (D_0028E688 = 0);
-    D_0028E694_as_s16 = 0;
-    D_0028E674_as_s16 = 0;
-    D_0028E678 = 0;
-    D_0028E67C_as_s16 = 0;
-    D_0028E680_as_s16 = 0;
-    D_0028E654_as_s16 = 0;
-    D_0028E658_as_s16 = 0;
-    D_0028E65C_as_s16 = 0;
-    D_0028E66C = D_0028E668 = D_0028E664 = (D_0028E660 = 0);
-    D_0028E670_as_s16 = 0;
-    D_0028E638 = 0;
-    D_0028E63C = 0;
-    D_0028E640_as_s16 = 0;
-    D_0028E644 = 0;
-    D_0028E648_as_s16 = 0;
-    D_0028E64C_as_s16 = 0;
-    D_0028E650_as_s16 = 0;
-    D_0028E630_as_s16 = 0;
-    D_0028E634_as_s16 = 0;
-    D_0028E628_as_s16 = 0;
-    D_0028E62C_as_s16 = 0;
-    D_0028E618_as_s16 = 0;
-    D_0028E624 = D_0028E620_as_s32 = (D_0028E61C = 0);
-    D_0028E600_as_s16 = 0;
-    D_0028E604_as_s16 = 0;
-    D_0028E608_as_s16 = 0;
-    D_0028E60C_as_s16 = 0;
-    D_0028E610_as_s16 = 0;
-    D_0028E614_as_s16 = 0;
-    D_0028E5D4_as_s16 = 0;
-    D_0028E5D8_as_s16 = 0;
-    D_0028E5DC_as_s16 = 0;
-    D_0028E5E0_as_s16 = 0;
-    D_0028E5E4_as_s16 = 0;
-    D_0028E5E8_as_s16 = 0;
-    D_0028E5EC_as_s16 = 0;
-    D_0028E5F0_as_s16 = 0;
-    D_0028E5F4_as_s16 = 0;
+    g_p1_hit10_anim_count_as_s16 = 0;
+    g_p1_hit10_color_timer_as_s16 = 0;
+    g_p1_hit10_display_timer = 0;
+    g_p1_combo_break_color_timer_as_s16 = 0;
+    g_p1_laser_hit_timer_as_s16 = 0;
+    g_p1_hits_shown_as_s16 = 0;
+    g_p1_chain_points = g_p1_chain_points_shown = g_p1_chain_points_shown2 = (g_p1_hits = 0);
+    g_p2_chain_points_display_timer = 0;
+    g_p2_chain_first_score = g_p2_chain_first_score_shown = (g_p2_combo_timer = 0);
+    g_p1_laser_hit_step_as_s16 = 0;
+    g_p2_hit10_color_timer_as_s16 = 0;
+    g_p2_hit10_display_timer = 0;
+    g_p2_combo_break_color_timer_as_s16 = 0;
+    g_p2_hit_display_timer_as_s16 = 0;
+    g_p2_laser_hit_step_as_s16 = 0;
+    g_p2_laser_hit_timer_as_s16 = 0;
+    g_p2_hits_shown_as_s16 = 0;
+    g_p2_chain_points = g_p2_chain_points_shown = g_p2_chain_points_shown2 = (g_p2_hits = 0);
+    g_p2_hit10_anim_count_as_s16 = 0;
+    g_boss_score = 0;
+    g_boss_hit_bonus = 0;
+    g_boss_hit_bonus_timer_as_s16 = 0;
+    g_boss_hit_palette = 0;
+    g_boss_hits_as_s16 = 0;
+    g_boss_hit_anim_count_as_s16 = 0;
+    g_boss_hit_decay_timer_as_s16 = 0;
+    g_boss_hp_bar_move_count_as_s16 = 0;
+    g_boss_hp_bar_flags_as_s16 = 0;
+    g_lives_display_move_x_as_s16 = 0;
+    g_lives_display_move_y_as_s16 = 0;
+    g_boss_explosion_flash_as_s16 = 0;
+    g_boss_hp_unit = g_boss_hp_as_s32 = (g_boss_near_death = 0);
+    g_p2_shot_hyper_timer_as_s16 = 0;
+    g_p1_shot_hyper_timer_as_s16 = 0;
+    g_p2_laser_hyper_timer_as_s16 = 0;
+    g_p1_laser_hyper_timer_as_s16 = 0;
+    g_p2_max_hits_as_s16 = 0;
+    g_p1_max_hits_as_s16 = 0;
+    g_hyper_text_slide_as_s16 = 0;
+    g_p2_hyper_combo_decay_as_s16 = 0;
+    g_p1_hyper_combo_decay_as_s16 = 0;
+    g_p2_hyper_gauge_as_s16 = 0;
+    g_p1_hyper_gauge_as_s16 = 0;
+    g_p2_hyper_total_as_s16 = 0;
+    g_p1_hyper_total_as_s16 = 0;
+    g_p2_hyper_time_as_s16 = 0;
+    g_p1_hyper_time_as_s16 = 0;
     g_p2_hyper_active_as_s16 = 0;
     g_p1_hyper_active_as_s16 = 0;
-    D_0028E5BC_as_s16 = 0;
-    D_0028E5C0_as_s16 = 0;
-    D_0028E5C4_as_s16 = 0;
-    D_0028E5C8_as_s16 = 0;
-    D_0028E5CC_as_s16 = 0;
-    D_0028E5D0_as_s16 = 0;
+    g_p2_hyper_items_as_s16 = 0;
+    g_p1_hyper_items_as_s16 = 0;
+    g_p2_hyper_in_effect_as_s16 = 0;
+    g_p1_hyper_in_effect_as_s16 = 0;
+    g_p2_hyper_level_as_s16 = 0;
+    g_p1_hyper_level_as_s16 = 0;
     for (i = 0; i < 0x10; i++) {
         ((s32 *)D_002BAEF0_as_u8_a)[i] = 0;
     }
     for (i = 0; i < 0x10; i++) {
         ((s32 *)D_002BAEB0_as_u8_a)[i] = 0;
     }
-    D_0028E704_as_s16 = 1;
-    D_0028E700_as_s16 = 0x38;
-    D_0028E594 = D_0028E590 = (u16)(reg_d0.w = 0);
-    D_0028E6F4_as_s16 = 0x54;
-    D_0028E5A4_as_s16 = 0;
-    D_0028E5A8_as_s16 = 0;
-    D_0028E5AC_as_s16 = 0;
-    D_0028E5B0_as_s16 = 0;
-    D_0028E5B4_as_s16 = 0;
-    D_0028E5B8 = 0;
-    D_0028E598_as_s16 = 0;
-    D_0028E59C_as_s16 = 0;
+    g_hyper_text_anim_delay_as_s16 = 1;
+    g_hyper_text_anim_frame_as_s16 = 0x38;
+    g_p1_hyper_effect_sprite = g_p2_hyper_effect_sprite = (u16)(reg_d0.w = 0);
+    g_maximum_text_anim_frame_as_s16 = 0x54;
+    g_boss_double_speed_as_s16 = 0;
+    g_hyper_level_hit_scratch_as_s16 = 0;
+    g_hyper_hit_scratch_as_s16 = 0;
+    g_boss_hyper_wait_as_s16 = 0;
+    g_p2_hyper_items_pending_as_s16 = 0;
+    g_p1_hyper_items_pending = 0;
+    g_score_task_active_as_s16 = 0;
+    g_score_panel_intro_as_s16 = 0;
     D_0028E5A0 = 0;
-    D_0028E578 = 0;
-    D_0028E57C_as_s16 = 0;
-    D_0028E580_as_s16 = 0;
-    D_0028E584_as_s16 = 0;
-    D_0028E588_as_s16 = 0;
-    D_0028E58C = 0;
-    D_0028E6F8 = 0;
-    D_0028E768 = reg_d0.w;
-    D_0028E764 = reg_d0.w;
-    D_0028E744 = reg_d0.w;
-    D_0028E740 = reg_d0.w;
-    D_0028E75C = reg_d0.h[0];
-    D_0028E758 = reg_d0.h[0];
-    D_0028E73C = reg_d0.h[0];
-    D_0028E738 = reg_d0.h[0];
-    D_0028E750 = reg_d0.h[0];
-    D_0028E748 = reg_d0.h[0];
-    D_0028E70C = reg_d0.b[0];
-    D_0028E708 = reg_d0.b[0];
+    g_p2_hyper_effect_delay = 0;
+    g_p1_hyper_effect_delay_as_s16 = 0;
+    g_p2_hyper_effect_flag_as_s16 = 0;
+    g_p1_hyper_effect_flag_as_s16 = 0;
+    g_p2_hyper_effect_frame_as_s16 = 0;
+    g_p1_hyper_effect_frame = 0;
+    g_maximum_text_anim_delay = 0;
+    g_p1_score = reg_d0.w;
+    g_p2_score = reg_d0.w;
+    g_p1_score_saved = reg_d0.w;
+    g_p2_score_saved = reg_d0.w;
+    g_p1_score_billions = reg_d0.h[0];
+    g_p2_score_billions = reg_d0.h[0];
+    g_p1_score_billions_saved = reg_d0.h[0];
+    g_p2_score_billions_saved = reg_d0.h[0];
+    g_p1_score_digits = reg_d0.h[0];
+    g_p2_score_digits = reg_d0.h[0];
+    g_p1_score_panel_flags = reg_d0.b[0];
+    g_p2_score_panel_flags = reg_d0.b[0];
 }
 
 s32 func_001AE9A0(u32 *arg0, u32 *arg1) {
@@ -943,13 +943,13 @@ s32 func_001AE9A0(u32 *arg0, u32 *arg1) {
     return carry;
 }
 
-extern s32 D_0028E728_as_s32;
-extern s32 D_0028E72C_as_s32;
-extern s32 D_0028E730;
-extern s32 D_0028E734;
-extern s32 D_0028E758_as_s32;
-extern s32 D_0028E75C_as_s32;
-extern s32 D_0028E768_as_s32;
+extern s32 g_p2_extend_setting_as_s32;
+extern s32 g_p1_extend_setting_as_s32;
+extern s32 g_p2_extend_score;
+extern s32 g_p1_extend_score;
+extern s32 g_p2_score_billions_as_s32;
+extern s32 g_p1_score_billions_as_s32;
+extern s32 g_p1_score_as_s32;
 extern s32 D_0028E76C_as_s32;
 extern s32 g_p2_lives_as_s32;
 extern s32 g_p1_lives_as_s32;
@@ -963,18 +963,18 @@ extern s32 *reg_a6_as_s32_p;
 void func_001AEA80(void) {
     reg_a0_as_s32_p = &D_0028E76C_as_s32;
     reg_a1_as_s32_p = &D_0028E71C;
-    reg_a2_as_s32_p = &D_0028E734;
+    reg_a2_as_s32_p = &g_p1_extend_score;
     reg_a3_as_s32_p = &g_p1_lives_as_s32;
-    reg_a4_as_s32_p = &D_0028E72C_as_s32;
-    reg_a6_as_s32_p = &D_0028E75C_as_s32;
+    reg_a4_as_s32_p = &g_p1_extend_setting_as_s32;
+    reg_a6_as_s32_p = &g_p1_score_billions_as_s32;
     reg_d7.w = 0;
     func_001AEB10();
-    reg_a0_as_s32_p = &D_0028E768_as_s32;
+    reg_a0_as_s32_p = &g_p1_score_as_s32;
     reg_a1_as_s32_p = &D_0028E718;
-    reg_a2_as_s32_p = &D_0028E730;
+    reg_a2_as_s32_p = &g_p2_extend_score;
     reg_a3_as_s32_p = &g_p2_lives_as_s32;
-    reg_a4_as_s32_p = &D_0028E728_as_s32;
-    reg_a6_as_s32_p = &D_0028E758_as_s32;
+    reg_a4_as_s32_p = &g_p2_extend_setting_as_s32;
+    reg_a6_as_s32_p = &g_p2_score_billions_as_s32;
     reg_d7.w = 1;
     func_001AEB10();
 }
@@ -984,8 +984,8 @@ s32 func_001AAC00();
 s32 func_001AC3A0();
 s32 func_001AC5F0();
 extern u8 D_0028E304;
-extern u16 D_0028E74C;
-extern u16 D_0028E754;
+extern u16 g_high_score_digits;
+extern u16 g_high_score_billions;
 extern u8 D_0028ED80;
 extern u16 D_006E5C06[];
 #ifdef DEATH_LABEL
@@ -1002,10 +1002,10 @@ extern u32 D_0028ED50_as_u32;
 extern u16 D_0028ED4C;
 extern u32 D_0028ED44_as_u32;
 extern u16 D_0028ED40;
-extern u32 D_0028E768;
-extern u16 D_0028E75C;
-extern u32 D_0028E764;
-extern u16 D_0028E758;
+extern u32 g_p1_score;
+extern u16 g_p1_score_billions;
+extern u32 g_p2_score;
+extern u16 g_p2_score_billions;
 #endif
 
 void func_001AEB10(void) {
@@ -1019,15 +1019,15 @@ void func_001AEB10(void) {
             death_D_0068DAA8[0] = 0;
             D_002BAF30[0] = 1;
             death_D_0068DAA6[0] = 0xC030;
-            D_0028E768 = D_0028ED50_as_u32;
-            D_0028E75C = D_0028ED4C;
+            g_p1_score = D_0028ED50_as_u32;
+            g_p1_score_billions = D_0028ED4C;
         }
         if (D_0029F1F0[0] < 0) {
             death_D_0068DAB2[0] = 0;
             D_002BAF3A[0] = 1;
             death_D_0068DAB0[0] = 0xC030;
-            D_0028E764 = D_0028ED44_as_u32;
-            D_0028E758 = D_0028ED40;
+            g_p2_score = D_0028ED44_as_u32;
+            g_p2_score_billions = D_0028ED40;
         }
         D_0028E710 = 0;
         D_0028E714 = 0;
@@ -1084,18 +1084,18 @@ no_extend:
         } else {
             func_001AED60();
         }
-        reg_d0.h[0] = D_0028E754;
+        reg_d0.h[0] = g_high_score_billions;
         t1 = ENTITY(reg_a6)->flags.h;
         if ((s32) t1 >= (s32) reg_d0.h[0]) {
             if (t1 != reg_d0.h[0]) {
-                D_0028E754 = t1;
+                g_high_score_billions = t1;
                 goto next_1;
             }
-            reg_d0.w = D_0028E760_as_u32;
+            reg_d0.w = g_high_score_as_u32;
             if ((u32) reg_d4.w > (u32) reg_d0.w) {
 next_1:
-                D_0028E760_as_u32 = reg_d4.w;
-                D_0028E74C = reg_d6.h[0];
+                g_high_score_as_u32 = reg_d4.w;
+                g_high_score_digits = reg_d6.h[0];
             }
         }
     }
@@ -1108,8 +1108,8 @@ extern u8 D_002BAF50_as_u8_a[];
 
 void func_001AED30(void) {
     reg_a0_as_u32_p = (u32 *)D_002BAF50_as_u8_a;
-    reg_d0.w = D_0028E768;
-    reg_d6.h[0] = D_0028E750;
+    reg_d0.w = g_p1_score;
+    reg_d6.h[0] = g_p1_score_digits;
     reg_d4.w = reg_d0.w;
     func_001AED90();
 }
@@ -1118,8 +1118,8 @@ extern u8 D_002BAFAA_as_u8_a[];
 
 void func_001AED60(void) {
     reg_a0 = D_002BAFAA_as_u8_a;
-    reg_d0.w = D_0028E764;
-    reg_d6.h[0] = D_0028E748;
+    reg_d0.w = g_p2_score;
+    reg_d6.h[0] = g_p2_score_digits;
     reg_d4.w = reg_d0.w;
     func_001AED90();
 }

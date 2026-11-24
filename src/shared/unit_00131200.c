@@ -375,7 +375,7 @@ s32 task_start();                            /* extern */
 extern u8 death_D_00290DC0;
 extern u16 g_game_completed;
 #endif
-extern s16 D_0028E59C_as_s16;
+extern s16 g_score_panel_intro_as_s16;
 extern s16 D_0028E854_as_s16;
 
 void func_001317E0(void) {
@@ -387,7 +387,7 @@ void func_001317E0(void) {
     D_0028E854_as_s16 = 0;
     func_0013E7C0();
     func_0013E850();
-    D_0028E59C_as_s16 = 0;
+    g_score_panel_intro_as_s16 = 0;
 #ifdef DEATH_LABEL
     if (death_D_00290DC0 == 0) {
         reg_d0.h[0] = 7;
@@ -445,12 +445,12 @@ extern u8 D_00274020[];
 extern s16 D_0028DFBC_as_s16;
 extern s16 D_0028DFC4_as_s16;
 extern u8 D_0028E370;
-extern u16 D_0028E748;
-extern u16 D_0028E750;
-extern u16 D_0028E758;
-extern u16 D_0028E75C;
-extern s32 D_0028E764_as_s32;
-extern s32 D_0028E768_as_s32;
+extern u16 g_p2_score_digits;
+extern u16 g_p1_score_digits;
+extern u16 g_p2_score_billions;
+extern u16 g_p1_score_billions;
+extern s32 g_p2_score_as_s32;
+extern s32 g_p1_score_as_s32;
 extern s8 D_0028EC58;
 extern s8 D_0028ED6C_as_s8;
 extern u8 D_0028ED7C;
@@ -504,12 +504,12 @@ void func_00131880(void) {
             *(u8 *)(reg_a5 + 3) = 2U;
             return;
         }
-        printf((const char *)D_00273EC0, D_0028E768_as_s32);
-        printf((const char *)D_00273EE0, (s32) D_0028E750);
-        printf((const char *)D_00273F00, (s32) D_0028E75C);
-        printf((const char *)D_00273F20, D_0028E764_as_s32);
-        printf((const char *)D_00273F40, (s32) D_0028E748);
-        printf((const char *)D_00273F60, (s32) D_0028E758);
+        printf((const char *)D_00273EC0, g_p1_score_as_s32);
+        printf((const char *)D_00273EE0, (s32) g_p1_score_digits);
+        printf((const char *)D_00273F00, (s32) g_p1_score_billions);
+        printf((const char *)D_00273F20, g_p2_score_as_s32);
+        printf((const char *)D_00273F40, (s32) g_p2_score_digits);
+        printf((const char *)D_00273F60, (s32) g_p2_score_billions);
         D_0028E370 = 0;
         func_00135070();
         *(s8 *)(reg_a5 + 7) = 0x1E;
@@ -524,12 +524,12 @@ void func_00131880(void) {
             D_0028E961 &= 0xFC;
         }
         if (D_0028E370 != 0) {
-            printf((const char *)D_00273F80, D_0028E768_as_s32);
-            printf((const char *)D_00273FA0, (s32) D_0028E750);
-            printf((const char *)D_00273FC0, (s32) D_0028E75C);
-            printf((const char *)D_00273FE0, D_0028E764_as_s32);
-            printf((const char *)D_00274000, (s32) D_0028E748);
-            printf((const char *)D_00274020, (s32) D_0028E758);
+            printf((const char *)D_00273F80, g_p1_score_as_s32);
+            printf((const char *)D_00273FA0, (s32) g_p1_score_digits);
+            printf((const char *)D_00273FC0, (s32) g_p1_score_billions);
+            printf((const char *)D_00273FE0, g_p2_score_as_s32);
+            printf((const char *)D_00274000, (s32) g_p2_score_digits);
+            printf((const char *)D_00274020, (s32) g_p2_score_billions);
             *(s8 *)(reg_a5 + 7) = 4;
         }
     }
@@ -809,7 +809,7 @@ extern u8 D_00269AAE[];
 extern u8 D_0028E2A0;
 extern u8 D_0028E2A4;
 extern s16 g_loaded_stage;
-extern u16 D_0028E648;
+extern u16 g_boss_hits;
 extern u8 D_0028E854;
 extern u16 g_stage;
 extern u16 D_0028E970;
@@ -1154,7 +1154,7 @@ block_60:
             {
                 *(u8 *)(reg_a6 + 3) |= 8;
                 reg_d0.h[0] = 8;
-                if (D_0028E648 == 0) {
+                if (g_boss_hits == 0) {
                     reg_d0.h[0] = 1;
                 }
                 *(u16 *)(reg_a6 + 0x2C) = (u16) reg_d0.h[0];

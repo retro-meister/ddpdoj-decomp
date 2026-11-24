@@ -19,11 +19,11 @@ extern u16 D_0028E028;
 extern u16 D_0028E02C;
 extern u8 D_0028E290;
 extern u8 D_0028E2EC;
-extern s16 D_0028E5B0_as_s16;
+extern s16 g_boss_hyper_wait_as_s16;
 extern u16 g_p2_hyper_active;
 extern u16 g_p1_hyper_active;
-extern u16 D_0028E748;
-extern u16 D_0028E750;
+extern u16 g_p2_score_digits;
+extern u16 g_p1_score_digits;
 extern s16 g_p1_lives_as_s16;
 extern u16 g_loop;
 extern u16 g_two_player_seen;
@@ -47,19 +47,19 @@ void func_00122CE0(void) {
         func_0013FD50();
     }
     func_00141640();
-    D_0028E5B0_as_s16 = 0;
+    g_boss_hyper_wait_as_s16 = 0;
     if (g_two_player_seen == 3) goto block_1;
     reg_a0 = &D_0028E00C_as_u8;
     reg_d0.h[0] = D_0028E980;
     reg_a1 = (u8 *)D_0029F260_as_u8_a;
     reg_d1.h[0] = D_0028E01C;
-    reg_d2.h[0] = D_0028E750;
+    reg_d2.h[0] = g_p1_score_digits;
     reg_d3.h[0] = D_0028E02C;
     if (0 > g_p1_lives_as_s16) {
         reg_a0 = &D_0028E008_as_u8;
         reg_d1.h[0] = D_0028E018;
         reg_a1 = (u8 *)D_0029F1F0_as_u8_a;
-        reg_d2.h[0] = D_0028E748;
+        reg_d2.h[0] = g_p2_score_digits;
         reg_d3.h[0] = D_0028E028;
     }
     if (reg_d2.h[0] != 0) goto block_1;
