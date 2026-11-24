@@ -3428,3 +3428,7 @@ func_001984C0 = 0x1984c0; // type:func size:0x6a4
 func_002228D0 = 0x2228d0; // type:func size:0x354
 func_0022C870 = 0x22c870; // type:func size:0xe4
 func_00217D80 = 0x217d80; // type:func size:0x138
+func_00209200 = 0x209200; // type:func size:0xe4
+func_002209C0 = 0x2209c0; // type:func size:0x640
+func_00198280 = 0x198280; // type:func size:0x234
+func_00236F40 = 0x236f40; // type:func size:0x374
