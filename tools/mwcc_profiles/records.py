@@ -3,8 +3,9 @@ from collections import defaultdict
 import struct
 
 
-def decode(data, stages, layout):
+def decode(data, stages, layout, ir_layout=None):
     header, stride = layout["pcode_size"], layout["operand_size"]
+    ir_layout = ir_layout or {}
     cursor = 0
 
     def take(size):
@@ -23,7 +24,8 @@ def decode(data, stages, layout):
             raise ValueError(f"{message} at trace offset {cursor:#x}")
 
     functions = []
-    function = stage = graph = schedule = None
+    function = stage = graph = schedule = ir_stage = None
+    pending_ir = []
     finished_placements = {}
     while cursor < len(data):
         tag = take(4)
@@ -35,7 +37,58 @@ def decode(data, stages, layout):
                 "ordinal": len(functions), "symbol": symbol,
                 "pcode_stages": [], "allocation_frames": [], "schedules": [],
             }
+            if pending_ir:
+                function["ir_raw"] = pending_ir
+                pending_ir = []
             functions.append(function)
+        elif tag == b"WB3J":
+            index, owner, size = words("III")
+            check(index in stages and ir_stage is None and stage is None and size < 1024, "Unexpected IR stage")
+            ir_stage = {
+                "stage": stages[index], "symbol": take(size).decode("ascii", errors="backslashreplace"),
+                "statements": [], "nodes": {}, "depths": {}, "objects": {}, "types": {}, "lists": {},
+            }
+        elif tag == b"WB3K":
+            (address,) = words("I")
+            check(ir_stage is not None, "Unexpected IR statement")
+            ir_stage["statements"].append((address, take(ir_layout["stmt_size"])))
+        elif tag == b"WB3U":
+            address, depth = words("II")
+            check(ir_stage is not None, "Unexpected IR node")
+            ir_stage["nodes"][address] = take(ir_layout["enode_size"])
+            ir_stage["depths"].setdefault(address, depth)
+        elif tag == b"WB3W":
+            (address,) = words("I")
+            check(ir_stage is not None, "Unexpected IR type")
+            ir_stage["types"][address] = take(ir_layout["type_size"])
+        elif tag == b"WB3O":
+            address, size = words("II")
+            check(ir_stage is not None and size < 1024, "Unexpected IR object")
+            raw = take(ir_layout["object_size"])
+            ir_stage["objects"][address] = (raw, take(size).decode("ascii", errors="backslashreplace"))
+        elif tag == b"WB3H":
+            address, size = words("II")
+            check(ir_stage is not None and size < 256, "Unexpected IR label")
+            raw = take(ir_layout["label_size"])
+            ir_stage.setdefault("labels", {})[address] = (raw, take(size).decode("ascii", errors="backslashreplace"))
+        elif tag == b"WB3c":
+            (address,) = words("I")
+            check(ir_stage is not None, "Unexpected IR switch")
+            ir_stage.setdefault("switches", {})[address] = take(ir_layout["switch_size"])
+        elif tag == b"WB3k":
+            (address,) = words("I")
+            check(ir_stage is not None, "Unexpected IR switch case")
+            ir_stage.setdefault("cases", {})[address] = take(ir_layout["case_size"])
+        elif tag == b"WB3A":
+            (address,) = words("I")
+            check(ir_stage is not None, "Unexpected IR argument list")
+            ir_stage["lists"][address] = take(8)
+        elif tag == b"WB3Z":
+            count, status = words("II")
+            check(ir_stage is not None and count == len(ir_stage["statements"]), "Incomplete IR stage")
+            check(status == 0, "IR capture hit its node or depth limit")
+            pending_ir.append(ir_stage)
+            ir_stage = None
         elif tag == b"WB3S":
             (index,) = words("I")
             check(index in stages and stage is None and graph is None, "Unexpected PCode stage")
@@ -242,7 +295,7 @@ def decode(data, stages, layout):
             raise ValueError("Interference graph exceeded capture limits")
         else:
             raise ValueError(f"Unexpected record {tag!r} at trace offset {cursor - 4:#x}")
-    check(functions and stage is None and graph is None and schedule is None, "No complete trace")
+    check(functions and stage is None and graph is None and schedule is None and ir_stage is None, "No complete trace")
     for function in functions:
         pcode = function["pcode_stages"]
         check(

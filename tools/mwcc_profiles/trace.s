@@ -672,3 +672,409 @@ fallthrough:
     cmpl $0,8(%esp)
     ret
 .endif
+
+# Frontend IR: the Statement list and ENode trees that CodeGen hands to the IR
+# optimizer and to the backend. EBX = function Object, ESI = Statement list at
+# the hooked call site (both callee-saved there). The walker writes raw fixed-size
+# copies of every reachable Statement, ENode, Object and Type, and the decoder
+# rebuilds the trees from the pointers inside them. EBP counts the remaining node
+# budget across the recursion.
+.ifdef ir_stmt_size
+.macro ir_hook name, target, argc, before, after, result
+\name:
+    .if \before
+        pushfl
+        pushal
+        movl $\before,%eax
+        call ir_capture
+        popal
+        popfl
+    .endif
+    .rept \argc
+        pushl (4 * \argc)(%esp)
+    .endr
+    original_call \target
+    leal (4 * \argc)(%esp),%esp
+    .if \after
+        pushfl
+        pushal
+        .if \result
+            movl %eax,%esi
+        .endif
+        movl $\after,%eax
+        call ir_capture
+        popal
+        popfl
+    .endif
+    ret
+.endm
+
+ir_capture:
+    subl $48,%esp
+    movl %eax,8(%esp)
+    call trace_handle
+    movl $0x4a334257,4(%esp) # WB3J
+    movl %ebx,12(%esp)
+    xorl %edx,%edx
+    xorl %ecx,%ecx
+    testl %ebx,%ebx
+    je ir_name_length
+    movl 8(%ebx),%ecx
+    testl %ecx,%ecx
+    je ir_name_length
+    addl $10,%ecx
+ir_name_loop:
+    cmpb $0,(%ecx,%edx)
+    je ir_name_length
+    incl %edx
+    cmpl $1024,%edx
+    jb ir_name_loop
+ir_name_length:
+    movl %edx,16(%esp)
+    movl %ecx,40(%esp)
+    leal 4(%esp),%ecx
+    movl $16,%edx
+    call write_record
+    movl 16(%esp),%edx
+    testl %edx,%edx
+    je ir_statements
+    movl 40(%esp),%ecx
+    call write_record
+ir_statements:
+    movl $ir_budget,%ebp
+    xorl %ebx,%ebx
+ir_statement_loop:
+    testl %esi,%esi
+    je ir_statements_done
+    testl %ebp,%ebp
+    jle ir_statements_done
+    decl %ebp
+    movl $0x4b334257,4(%esp) # WB3K
+    movl %esi,8(%esp)
+    leal 4(%esp),%ecx
+    movl $8,%edx
+    call write_record
+    movl %esi,%ecx
+    movl $ir_stmt_size,%edx
+    call write_record
+    # LABEL, GOTO, IFGOTO and IFNGOTO keep a CLabel in the label slot.
+    movzbl 4(%esi),%eax
+    cmpl $31,%eax
+    ja 1f
+    movl $ir_label_statements,%ecx
+    btl %eax,%ecx
+    jnc 1f
+    movl ir_stmt_label(%esi),%eax
+    call ir_label
+1:
+    cmpb $5,4(%esi)
+    jne 1f
+    movl ir_stmt_label(%esi),%eax
+    call ir_switch
+1:
+    movl ir_stmt_expr(%esi),%eax
+    xorl %ecx,%ecx
+    call ir_node
+    incl %ebx
+    movl (%esi),%esi
+    jmp ir_statement_loop
+ir_statements_done:
+    movl $0x5a334257,4(%esp) # WB3Z
+    movl %ebx,8(%esp)
+    xorl %eax,%eax
+    testl %ebp,%ebp
+    jg ir_status
+    incl %eax
+ir_status:
+    movl %eax,12(%esp)
+    leal 4(%esp),%ecx
+    movl $12,%edx
+    call write_record
+    addl $48,%esp
+    ret
+
+# EAX = CLabel. Raw prefix and its unique name.
+ir_label:
+    testl %eax,%eax
+    je ir_label_done
+    pushl %esi
+    subl $24,%esp
+    movl %eax,%esi
+    xorl %edx,%edx
+    xorl %ecx,%ecx
+    .if ir_label_name >= 0
+        movl ir_label_name(%esi),%ecx
+        testl %ecx,%ecx
+        je ir_label_name_ready
+        addl $10,%ecx
+ir_label_name_loop:
+        cmpb $0,(%ecx,%edx)
+        je ir_label_name_ready
+        incl %edx
+        cmpl $256,%edx
+        jb ir_label_name_loop
+        xorl %edx,%edx
+    .endif
+ir_label_name_ready:
+    movl %ecx,16(%esp)
+    movl %edx,12(%esp)
+    movl $0x48334257,4(%esp) # WB3H
+    movl %esi,8(%esp)
+    leal 4(%esp),%ecx
+    movl $12,%edx
+    call write_record
+    movl %esi,%ecx
+    movl $ir_label_size,%edx
+    call write_record
+    movl 12(%esp),%edx
+    testl %edx,%edx
+    je 1f
+    movl 16(%esp),%ecx
+    call write_record
+1:
+    addl $24,%esp
+    popl %esi
+ir_label_done:
+    ret
+
+# EAX = SwitchInfo: raw prefix, then each case (linked through +0) and its CLabel.
+ir_switch:
+    testl %eax,%eax
+    je ir_switch_done
+    pushl %esi
+    subl $24,%esp
+    movl %eax,%esi
+    movl $0x63334257,4(%esp) # WB3c
+    movl %esi,8(%esp)
+    leal 4(%esp),%ecx
+    movl $8,%edx
+    call write_record
+    movl %esi,%ecx
+    movl $ir_switch_size,%edx
+    call write_record
+    movl ir_switch_default(%esi),%eax
+    call ir_label
+    movl ir_switch_cases(%esi),%esi
+    movl $65536,20(%esp)
+ir_case_loop:
+    testl %esi,%esi
+    je ir_switch_end
+    decl 20(%esp)
+    js ir_switch_end
+    movl $0x6b334257,4(%esp) # WB3k
+    movl %esi,8(%esp)
+    leal 4(%esp),%ecx
+    movl $8,%edx
+    call write_record
+    movl %esi,%ecx
+    movl $ir_case_size,%edx
+    call write_record
+    movl ir_case_label(%esi),%eax
+    call ir_label
+    movl (%esi),%esi
+    jmp ir_case_loop
+ir_switch_end:
+    addl $24,%esp
+    popl %esi
+ir_switch_done:
+    ret
+
+# EAX = Type. Writes its raw prefix once per reference.
+ir_type:
+    testl %eax,%eax
+    je ir_type_done
+    pushl %esi
+    subl $16,%esp
+    movl %eax,%esi
+    movl $0x57334257,4(%esp) # WB3W
+    movl %esi,8(%esp)
+    leal 4(%esp),%ecx
+    movl $8,%edx
+    call write_record
+    movl %esi,%ecx
+    movl $ir_type_size,%edx
+    call write_record
+    addl $16,%esp
+    popl %esi
+ir_type_done:
+    ret
+
+# EAX = Object. Raw prefix, then its interned name when it has one.
+ir_object:
+    testl %eax,%eax
+    je ir_object_done
+    pushl %esi
+    subl $24,%esp
+    movl %eax,%esi
+    xorl %edx,%edx
+    xorl %ecx,%ecx
+    cmpb $5,2(%esi)
+    jbe ir_object_named
+    cmpb $8,2(%esi)
+    jne ir_object_name_ready
+ir_object_named:
+    movl 8(%esi),%ecx
+    testl %ecx,%ecx
+    je ir_object_name_ready
+    addl $10,%ecx
+ir_object_name_loop:
+    cmpb $0,(%ecx,%edx)
+    je ir_object_name_ready
+    incl %edx
+    cmpl $1024,%edx
+    jb ir_object_name_loop
+    xorl %edx,%edx
+ir_object_name_ready:
+    movl %ecx,16(%esp)
+    movl %edx,12(%esp)
+    movl $0x4f334257,4(%esp) # WB3O
+    movl %esi,8(%esp)
+    leal 4(%esp),%ecx
+    movl $12,%edx
+    call write_record
+    movl %esi,%ecx
+    movl $ir_object_size,%edx
+    call write_record
+    movl 12(%esp),%edx
+    testl %edx,%edx
+    je ir_object_with_type
+    movl 16(%esp),%ecx
+    call write_record
+ir_object_with_type:
+    movl ir_object_type(%esi),%eax
+    call ir_type
+    addl $24,%esp
+    popl %esi
+ir_object_done:
+    ret
+
+# EAX = ENode, ECX = depth.
+ir_node:
+    testl %eax,%eax
+    je ir_node_return
+    testl %ebp,%ebp
+    jle ir_node_return
+    cmpl $ir_max_depth,%ecx
+    jb ir_node_enter
+    xorl %ebp,%ebp
+    jmp ir_node_return
+ir_node_enter:
+    decl %ebp
+    pushl %esi
+    pushl %ebx
+    subl $24,%esp
+    movl %eax,%esi
+    movl %ecx,%ebx
+    movl $0x55334257,4(%esp) # WB3U
+    movl %esi,8(%esp)
+    movl %ebx,12(%esp)
+    leal 4(%esp),%ecx
+    movl $12,%edx
+    call write_record
+    movl %esi,%ecx
+    movl $ir_enode_size,%edx
+    call write_record
+    .if ir_enode_rtype >= 0
+        movl ir_enode_rtype(%esi),%eax
+        call ir_type
+    .endif
+    movzbl (%esi),%eax
+    cmpl $128,%eax
+    jae ir_node_done
+    movzbl trace_base + (ir_child_table - trace_start)(%eax),%eax
+    movl %eax,16(%esp)
+    incl %ebx
+    testb $16,16(%esp)
+    je 1f
+    movl ir_enode_data(%esi),%eax
+    call ir_object
+1:
+    testb $1,16(%esp)
+    je 1f
+    movl ir_enode_data(%esi),%eax
+    movl %ebx,%ecx
+    call ir_node
+1:
+    testb $2,16(%esp)
+    je 1f
+    movl ir_enode_data+4(%esi),%eax
+    movl %ebx,%ecx
+    call ir_node
+1:
+    testb $4,16(%esp)
+    je 1f
+    movl ir_enode_data+8(%esi),%eax
+    movl %ebx,%ecx
+    call ir_node
+1:
+    testb $8,16(%esp)
+    je ir_node_done
+    # ENodeList: next at +0, node at +4.
+    movl ir_enode_data+4(%esi),%esi
+    movl $4096,20(%esp)
+ir_list_loop:
+    testl %esi,%esi
+    je ir_node_done
+    decl 20(%esp)
+    js ir_node_done
+    movl $0x41334257,4(%esp) # WB3A
+    movl %esi,8(%esp)
+    leal 4(%esp),%ecx
+    movl $8,%edx
+    call write_record
+    movl %esi,%ecx
+    movl $8,%edx
+    call write_record
+    movl 4(%esi),%eax
+    movl %ebx,%ecx
+    call ir_node
+    movl (%esi),%esi
+    jmp ir_list_loop
+ir_node_done:
+    addl $24,%esp
+    popl %ebx
+    popl %esi
+ir_node_return:
+    ret
+.endif
+
+# 3.0.3 IR optimizer log. The compiler keeps its IroDump.c writer; this opens its
+# FILE on a path chosen by the tracer and enables it, and forces every
+# IRO_DumpAfterPhase call to dump the flow graph.
+.ifdef iro_log_flag
+iro_log_open:
+    pushfl
+    pushal
+    pushl $iro_log_mode
+    pushl $trace_base + (iro_log_path - trace_start)
+    original_call msl_fopen
+    addl $8,%esp
+    movl %eax,iro_log_file
+    testl %eax,%eax
+    je 1f
+    movb $1,iro_log_flag
+1:
+    popal
+    popfl
+    ret
+iro_phase:
+    testl %esp,%esp
+    ret
+
+# Extra flow-graph dump after an optimizer call that the compiler does not label.
+.macro iro_dump_hook name, target, label
+\name:
+    original_call \target
+    pushfl
+    pushal
+    pushl $1
+    pushl $trace_base + (\name\()_label - trace_start)
+    original_call iro_dump_after_phase
+    addl $8,%esp
+    popal
+    popfl
+    ret
+\name\()_label:
+    .asciz "\label"
+.endm
+.endif

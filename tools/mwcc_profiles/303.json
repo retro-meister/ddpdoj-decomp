@@ -14,7 +14,46 @@
     "first_block": "0x57c750",
     "opcode_table": "0x56e958",
     "fill_safe": "0x4b1220",
-    "fill_live": "0x4b1280"
+    "fill_live": "0x4b1280",
+    "iro_log_flag": "0x57e170",
+    "iro_log_file": "0x5673cc",
+    "iro_log_mode": "0x540648",
+    "msl_fopen": "0x40ca70",
+    "iro_dump_after_phase": "0x4c5cb0"
+  },
+  "ir": {
+    "layout": {
+      "stmt_size": 32,
+      "stmt_expr": 10,
+      "stmt_label": 14,
+      "label_statements": 204,
+      "label_size": 16,
+      "label_name": 8,
+      "switch_size": 16,
+      "switch_cases": 0,
+      "switch_default": 4,
+      "case_size": 32,
+      "case_label": 4,
+      "enode_size": 40,
+      "enode_rtype": 10,
+      "enode_data": 24,
+      "object_size": 64,
+      "object_type": 12,
+      "type_size": 16,
+      "max_depth": 200,
+      "budget": 200000
+    },
+    "enode_names": [
+      "EPOSTINC", "EPOSTDEC", "EPREINC", "EPREDEC", "EINDIRECT", "EMONMIN", "EBINNOT", "ELOGNOT", "EFORCELOAD", "EMUL",
+      "EMULV", "EDIV", "EMODULO", "EADDV", "ESUBV", "EADD", "ESUB", "ESHL", "ESHR", "ELESS",
+      "EGREATER", "ELESSEQU", "EGREATEREQU", "EEQU", "ENOTEQU", "EAND", "EXOR", "EOR", "ELAND", "ELOR",
+      "EASS", "EMULASS", "EDIVASS", "EMODASS", "EADDASS", "ESUBASS", "ESHLASS", "ESHRASS", "EANDASS", "EXORASS",
+      "EORASS", "ECOMMA", "EPMODULO", "EROTL", "EROTR", "EBCLR", "EBTST", "EBSET", "ETYPCON", "EBITFIELD",
+      "EINTCONST", "EFLOATCONST", "ESTRINGCONST", "ECOND", "EFUNCCALL", "EFUNCCALLP", "EOBJREF", "EMFPOINTER", "ENULLCHECK", "EPRECOMP",
+      "ETEMP", "EARGOBJ", "ELOCOBJ", "ELABEL", "ESETCONST", "ENEWEXCEPTION", "ENEWEXCEPTIONARRAY", "E67", "EOBJLIST", "EMEMBER",
+      "ETEMPLDEP", "EINSTRUCTION", "EDEFINE", "EREUSE", "EASSBLK", "ECONDASS"
+    ],
+    "children": [[0, 8, 1], [9, 47, 3], [48, 49, 1], [53, 53, 7], [54, 55, 9], [56, 56, 16], [58, 58, 3], [72, 72, 1], [74, 75, 3]]
   },
   "layout": {
     "is_303": 1,
@@ -26,6 +65,15 @@
     "opcode_limit": 1120
   },
   "hooks": [
+    {"name": "iro_log_open", "address": "0x43aca0", "bytes": "e84bb20800"},
+    {"name": "iro_phase", "address": "0x4c5cb0", "bytes": "807c240800"},
+    {"name": "iro_x43aad2", "address": "0x43aad2", "bytes": "e8d98e0800", "target": "0x4c39b0", "iro_dump": "call 0x4c39b0"},
+    {"name": "iro_x43aad7", "address": "0x43aad7", "bytes": "e8f4400900", "target": "0x4cebd0", "iro_dump": "call 0x4cebd0"},
+    {"name": "iro_x43aadc", "address": "0x43aadc", "bytes": "e89fe00800", "target": "0x4c8b80", "iro_dump": "self-assignment to load (0x4c8b80)"},
+    {"name": "iro_x43aae1", "address": "0x43aae1", "bytes": "e86a620900", "target": "0x4d0d50", "iro_dump": "call 0x4d0d50"},
+    {"name": "iro_x43aae6", "address": "0x43aae6", "bytes": "e8c58e0800", "target": "0x4c39b0", "iro_dump": "call 0x4c39b0"},
+    {"name": "ir_optimizer", "address": "0x43722f", "bytes": "e84c110800", "target": "0x4b8380", "args": 2, "ir": "result", "before": "ir_original", "after": "ir_optimized"},
+    {"name": "ir_expand", "address": "0x437251", "bytes": "e86a270800", "target": "0x4b99c0", "args": 1, "ir": "same", "after": "ir_backend"},
     {"name": "selection", "address": "0x43604f", "bytes": "e84c260600", "target": "0x4986a0", "args": 0, "before": "instruction_selection"},
     {"name": "coalesce", "address": "0x43606c", "bytes": "e84f090700", "target": "0x4a69c0", "args": 0, "after": "early_coalesce"},
     {"name": "pipeline", "address": "0x43608e", "bytes": "e84d0c0700", "target": "0x4a6ce0", "args": 1, "after": "pipeline"},

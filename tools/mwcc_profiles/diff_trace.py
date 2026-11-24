@@ -2,6 +2,7 @@
 import difflib
 from pathlib import Path
 
+from mwcc_profiles.ir import diff_ir
 from mwcc_profiles.records import pcode_text
 
 
@@ -103,7 +104,12 @@ def diff_reports(report_a, report_b, function_name=None):
                 "first_decision_diff": first_dec,
             })
 
+    ir = diff_ir(fn_a, fn_b) if (fn_a.get("ir_stages") or fn_a.get("iro_phases")) else {
+        "first_diverging_ir_stage": None, "ir_stage_diff": [], "ir_stage_summaries": [],
+    }
+
     return {
+        **ir,
         "symbol": fn_a["symbol"],
         "objects_identical": report_a["object_sha256"] == report_b["object_sha256"],
         "object_sha256": [report_a["object_sha256"], report_b["object_sha256"]],
@@ -119,8 +125,13 @@ def format_diff_report(diff, max_diff_lines=60):
     lines = [
         f"Function: {diff['symbol']}",
         f"Objects identical: {diff['objects_identical']} (A={diff['object_sha256'][0][:12]} B={diff['object_sha256'][1][:12]})",
-        f"First diverging PCode stage: {diff['first_diverging_stage'] or 'NONE'}",
     ]
+    if diff.get("ir_stage_summaries"):
+        lines.append(f"First diverging frontend IR stage: {diff['first_diverging_ir_stage'] or 'NONE'}")
+        for side in ("a", "b"):
+            if diff.get(f"ir_stages_only_in_{side}"):
+                lines.append(f"  IR phases only in {side.upper()}: {', '.join(diff[f'ir_stages_only_in_{side}'])}")
+    lines.append(f"First diverging PCode stage: {diff['first_diverging_stage'] or 'NONE'}")
     if diff["allocation_diff"]:
         ad = diff["allocation_diff"]
         lines.append(
@@ -143,6 +154,13 @@ def format_diff_report(diff, max_diff_lines=60):
             if sd["first_decision_diff"]:
                 fd = sd["first_decision_diff"]
                 lines.append(f"    first decision diff @ #{fd['index']}: A={fd['a']} | B={fd['b']}")
+    if diff.get("ir_stage_diff"):
+        lines.append("")
+        lines.append(f"Frontend IR diff at {diff['first_diverging_ir_stage']}:")
+        shown = diff["ir_stage_diff"][:max_diff_lines]
+        lines.extend("  " + l for l in shown)
+        if len(diff["ir_stage_diff"]) > max_diff_lines:
+            lines.append(f"  ... ({len(diff['ir_stage_diff']) - max_diff_lines} more lines)")
     if diff["first_stage_diff"]:
         lines.append("")
         lines.append(f"PCode diff at {diff['first_diverging_stage']}:")

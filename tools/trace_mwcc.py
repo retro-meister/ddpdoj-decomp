@@ -9,6 +9,7 @@ import sys
 from tempfile import TemporaryDirectory
 
 from common import ROOT, TOOLCHAINS, TOOLS, compiler_path, read_json, resolve_tool, run, verify_compiler
+from mwcc_profiles.ir import ir_text, parse_iro_log, structure_stage, summarize_iro
 from mwcc_profiles.diff_trace import diff_reports, format_diff_report
 from mwcc_profiles.pe import instrument
 from mwcc_profiles.records import decode, fallthrough_text, pcode_text, regalloc_text, scheduler_text
@@ -56,7 +57,9 @@ def capture_source(source, output, compiler_name, profiles=None, wibo=None, asse
     with TemporaryDirectory(prefix="ddpdoj-mwcc-", ignore_cleanup_errors=native_windows) as scratch:
         traced = Path(scratch) / compiler.name
         shutil.copy2(compiler.with_name("LMGR326B.dll"), traced.parent)
-        instrument(compiler, traced, profile, stages, assembler_path, objcopy_path)
+        iro_log = output / "iro.log"
+        iro_log.unlink(missing_ok=True)
+        instrument(compiler, traced, profile, stages, assembler_path, objcopy_path, iro_log)
         for label, executable in (("normal", compiler), ("trace", traced)):
             try:
                 with (output / f"{label}.stdout").open("wb") as stdout, (output / f"{label}.stderr").open("wb") as stderr:
@@ -72,7 +75,9 @@ def capture_source(source, output, compiler_name, profiles=None, wibo=None, asse
         (output / "trace.stderr").read_bytes(),
         {value: name for name, value in stages.items()},
         profile["layout"],
+        profile.get("ir", {}).get("layout"),
     )
+    attach_ir(functions, profile, output / "iro.log")
     report = {
         "format": 1,
         "compiler": compiler_name,
@@ -89,7 +94,29 @@ def capture_source(source, output, compiler_name, profiles=None, wibo=None, asse
     (output / "regalloc.txt").write_text(regalloc_text(functions), encoding="utf-8")
     (output / "scheduler.txt").write_text(scheduler_text(functions), encoding="utf-8")
     (output / "fallthrough.txt").write_text(fallthrough_text(functions), encoding="utf-8")
+    if "ir" in profile:
+        (output / "ir.txt").write_text(ir_text(functions), encoding="utf-8")
     return report, report_path
+
+
+def attach_ir(functions, profile, iro_log):
+    """Replace raw frontend IR records with statement trees and add the optimizer log phases."""
+    for function in functions:
+        raw = function.pop("ir_raw", [])
+        if raw:
+            if any(stage["symbol"] != function["symbol"] for stage in raw):
+                raise ValueError(f"Frontend IR stages do not belong to {function['symbol']}")
+            function["ir_stages"] = [structure_stage(stage, profile["ir"]["layout"], profile["ir"]["enode_names"]) for stage in raw]
+    if not iro_log.exists():
+        return
+    logged = parse_iro_log(iro_log.read_text(encoding="latin-1"))
+    remaining = list(functions)
+    for entry in logged:
+        for index, function in enumerate(remaining):
+            if function["symbol"] == entry["symbol"]:
+                function["iro_phases"] = summarize_iro(entry)
+                del remaining[:index + 1]
+                break
 
 
 def _load_or_capture(target, compiler_name, profiles, wibo, assembler, objcopy, scratch_dir, label):
