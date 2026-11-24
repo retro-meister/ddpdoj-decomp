@@ -68,11 +68,12 @@ void func_0021C920(void) {
     u32 fill;
     s32 n;
     s16 x;
+    s16 y;
     s16 w2;
     s16 h2;
     s32 ex;
+    s32 ybits;
     s32 ey;
-    s16 y;
     s32 dx;
     s32 dy;
     s32 sx;
@@ -165,7 +166,8 @@ void func_0021C920(void) {
                     sceGsExecLoadImage(&D_0057C780, src);
                 } else {
                     do {
-                        word = src[in++];
+                        fill = src[in++];
+                        word = fill;
                         if (!(word & 0x40000000)) {
                             dst[out++] = word & 0x1F1F1F1F;
                         } else {
@@ -197,7 +199,8 @@ void func_0021C920(void) {
         ex = x;
         ey = y;
         sx = (p[0] & 0xF800) >> 11;
-        if (sx == 0 || (sy = (p[1] & 0xF800) >> 11) == 0) {
+        ybits = p[1] & 0xF800;
+        if (sx == 0 || (sy = ybits >> 11) == 0) {
             p += 5;
             continue;
         }
@@ -217,8 +220,9 @@ void func_0021C920(void) {
                 dy = dy * scale / 10000 + 1;
             }
         }
+        attr = p[2];
         e = &D_00592000[count];
-        flip = (p[2] >> 13) & 3;
+        flip = (attr >> 13) & 3;
         e->mode = mode;
         e->alpha = 0x80;
         e->tbp = tbp;
@@ -228,7 +232,7 @@ void func_0021C920(void) {
         e->x[0] = ex;
         e->y[0] = ey;
         e->x[1] = ex + dx;
-        e->y[1] = ey + dy;
+        e->y[1] = dy = ey + dy;
         switch (flip) {
         case 0:
             e->u[0] = tu;
