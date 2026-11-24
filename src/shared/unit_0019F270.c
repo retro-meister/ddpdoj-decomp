@@ -43,14 +43,14 @@ extern u16 D_0028DFC0;
 extern u16 D_0028E3EC;
 extern u16 D_0028E484_as_u16;
 extern u16 D_0028E910;
-extern u16 D_0028E91C;
+extern u16 g_stage;
 extern u8 *reg_a6;
 
 void func_0019F2E0(void) {
     if (D_0028DFC0 != 0) return;
     if (D_0028E3EC != 0) return;
     if (D_0028E910 != 0) return;
-    if (D_0028E91C == 2) return;
+    if (g_stage == 2) return;
     reg_d1.h[1] = *(u16 *)(reg_a6 + 2);
     reg_d1.h[0] = *(u16 *)(reg_a6 + 4);
     reg_d5.h[0] = 0x1C00;
@@ -76,7 +76,7 @@ void func_0019F2E0(void) {
 }
 
 void func_0019F410(void) {
-    if ((D_0028DFC0 == 0) && (D_0028E3EC == 0) && (D_0028E910 == 0) && (D_0028E91C != 2)) {
+    if ((D_0028DFC0 == 0) && (D_0028E3EC == 0) && (D_0028E910 == 0) && (g_stage != 2)) {
         reg_d1.h[1] = *(u16 *)(reg_a6 + 2);
         reg_d1.h[0] = *(u16 *)(reg_a6 + 4);
         reg_d5.h[0] = 0x1C00;
@@ -127,7 +127,7 @@ void func_0019F410(void) {
 }
 
 void func_0019F620(void) {
-    if ((D_0028DFC0 == 0) && (D_0028E910 == 0) && (D_0028E3EC == 0) && (D_0028E91C != 2)) {
+    if ((D_0028DFC0 == 0) && (D_0028E910 == 0) && (D_0028E3EC == 0) && (g_stage != 2)) {
         reg_d1.h[1] = *(u16 *)(reg_a6 + 2);
         reg_d1.h[0] = *(u16 *)(reg_a6 + 4);
         reg_d5.h[0] = 0x1C00;

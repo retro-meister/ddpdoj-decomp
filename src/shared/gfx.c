@@ -5,6 +5,7 @@
 #include "arcade_sprite.h"
 #include "cd.h"
 #include "gfx.h"
+#include "system.h"
 
 typedef struct {
     s32 interlace;
@@ -112,7 +113,7 @@ void splash_image_upload(void)
     }
 }
 
-extern u16 D_0028E91C;
+extern u16 g_stage;
 
 void stage_map_image_upload(void)
 {
@@ -120,7 +121,7 @@ void stage_map_image_upload(void)
     sceGsSetDefLoadImage(&g_gs_load_image, 0x2240, g_tex_upload_table[5].dbw, SCE_GS_PSMT8, g_tex_upload_table[5].x, g_tex_upload_table[5].y,
                          g_tex_upload_table[5].width, g_tex_upload_table[5].height);
     FlushCache(0);
-    sceGsExecLoadImage(&g_gs_load_image, g_stage_map_file_buf + D_0028E91C * 0x4E00 + 0x200);
+    sceGsExecLoadImage(&g_gs_load_image, g_stage_map_file_buf + g_stage * 0x4E00 + 0x200);
     sceGsSyncPath(0, 0);
 }
 
@@ -298,32 +299,32 @@ void tex_load_common(void) {
 }
 
 extern void func_0018DEE0(void);
-extern u8 D_0028E350;
-extern s16 D_0028E3FC;
+extern u8 g_stage_load_state;
+extern s16 g_loaded_stage;
 extern s8 g_cd_async_state;
 extern s8 g_cd_async_busy;
 extern s32 g_stage_unpack_state;
-extern u8 D_002C4F80[];
+extern u8 g_bg_tile_pixels[];
 
 void stage_load_step(void) {
-    extern u8 D_00587000[];
+    extern u8 g_bg_tile_offsets[];
     u8 *buffer;
 
     buffer = g_stage_sprite_buf + 0x5DC800;
-    if (D_0028E91C != D_0028E3FC) {
-    switch (D_0028E350) {
+    if (g_stage != g_loaded_stage) {
+    switch (g_stage_load_state) {
     case 0:
 #ifdef DEATH_LABEL
         printf("stage load start\n");
 #else
-        printf("stage load start[%d]\n", D_0028E91C);
+        printf("stage load start[%d]\n", g_stage);
 #endif
         func_0018DEE0();
         glyph_cache_init();
-        D_0028E350++;
+        g_stage_load_state++;
         break;
     case 1:
-        D_0028E350++;
+        g_stage_load_state++;
         if (g_cd_async_state != 0) {
             sceCdBreak();
         }
@@ -331,32 +332,32 @@ void stage_load_step(void) {
         g_cd_async_busy = 1;
         break;
     case 2:
-        cd_read_async(D_00587000, g_stage_bg_files[D_0028E91C * 2].size, g_stage_bg_files[D_0028E91C * 2].lba);
+        cd_read_async(g_bg_tile_offsets, g_stage_bg_files[g_stage * 2].size, g_stage_bg_files[g_stage * 2].lba);
         if (g_cd_async_busy != 0) {
             break;
         }
         g_cd_async_state = 0;
         g_cd_async_busy = 1;
-        D_0028E350++;
+        g_stage_load_state++;
     case 3:
-        cd_read_async(D_002C4F80, g_stage_bg_files[(u32)(D_0028E91C * 2 + 1)].size,
-                      g_stage_bg_files[(u32)(D_0028E91C * 2 + 1)].lba);
+        cd_read_async(g_bg_tile_pixels, g_stage_bg_files[(u32)(g_stage * 2 + 1)].size,
+                      g_stage_bg_files[(u32)(g_stage * 2 + 1)].lba);
         if (g_cd_async_busy != 0) {
             break;
         }
         g_cd_async_state = 0;
         g_cd_async_busy = 1;
-        D_0028E350++;
+        g_stage_load_state++;
     case 4:
-        cd_read_async(buffer, g_data_files[(u32)(D_0028E91C + DATA_FILE_STAGE_SPRITES)].size,
-                      g_data_files[(u32)(D_0028E91C + DATA_FILE_STAGE_SPRITES)].lba);
+        cd_read_async(buffer, g_data_files[(u32)(g_stage + DATA_FILE_STAGE_SPRITES)].size,
+                      g_data_files[(u32)(g_stage + DATA_FILE_STAGE_SPRITES)].lba);
         if (g_cd_async_busy != 0) {
             break;
         }
         g_stage_unpack_state = 0;
         g_cd_async_busy = 1;
         g_cd_async_state = 0;
-        D_0028E350++;
+        g_stage_load_state++;
         break;
     case 5:
         switch (g_stage_unpack_state) {
@@ -366,20 +367,20 @@ void stage_load_step(void) {
             break;
         }
         if (stage_sprite_unpack_step() != 0) {
-            D_0028E350++;
+            g_stage_load_state++;
         }
         break;
     case 6:
         printf("stage load end\n");
-        D_0028E350 = 0;
-        D_0028E3FC = D_0028E91C;
+        g_stage_load_state = 0;
+        g_loaded_stage = g_stage;
         break;
     case 7:
         break;
     }
     } else {
         glyph_cache_init();
-        D_0028E350 = 0;
+        g_stage_load_state = 0;
     }
 }
 
@@ -541,9 +542,9 @@ void bg_palette_upload(void) {
 }
 
 #ifndef DEATH_LABEL
-extern u8 D_0028E2F4;
+extern u8 g_splash_visible;
 void splash_image_draw(void) {
-    if (D_0028E2F4 != 0) {
+    if (g_splash_visible != 0) {
         g_quad_queue[0].x[0] = 0;
         g_quad_queue[0].z = 1;
         g_quad_queue[0].alpha = 0x80;
@@ -600,8 +601,8 @@ void stage_map_hide(void) {
 }
 
 extern void gfx_draw_color_box(s32 x, s32 y, s32 w, s32 h, s32 depth, s64 alpha, s32 r, s32 g, s32 b);
-extern u8 D_0028E28C;
-extern u8 D_0028E36C;
+extern u8 g_stage_map_enabled;
+extern u8 g_paused;
 
 void stage_map_update(void) {
     extern u8 g_stage_map_active;
@@ -633,7 +634,7 @@ void stage_map_update(void) {
     case 3:
         break;
     }
-    if (D_0028E36C == 0) {
+    if (g_paused == 0) {
         g_stage_map_marker_level += g_stage_map_marker_step;
     }
     if (g_stage_map_marker_step >= 0) {
@@ -645,9 +646,9 @@ void stage_map_update(void) {
         g_stage_map_marker_level = 0x80;
         g_stage_map_marker_step = 1;
     }
-    if ((g_screen_mode == 2 || g_screen_mode == 3) && g_stage_map_alpha != 0 && D_0028E28C != 0) {
+    if ((g_screen_mode == 2 || g_screen_mode == 3) && g_stage_map_alpha != 0 && g_stage_map_enabled != 0) {
         stage_map_draw();
-        level = g_stage_map_progress * g_stage_map_scale[D_0028E91C] / 1000;
+        level = g_stage_map_progress * g_stage_map_scale[g_stage] / 1000;
         level += 2;
         if (level >= 0x170) {
             level = 0x170;
@@ -837,7 +838,7 @@ void text_layer_queue_tile(s32 arg0, s32 arg1) {
 }
 #pragma pop
 
-extern s16 D_0028E238;
+extern s16 g_bg_scroll_x;
 extern u8 g_bg_layer[];
 void bg_layer_draw(void) {
     s32 var_s0;
@@ -849,7 +850,7 @@ void bg_layer_draw(void) {
     var_s4 = (u8 *)(g_bg_layer);
     var_s1 = 0;
     g_quad_count = 0;
-    temp_s2 = D_0028E238 & 0x7FF;
+    temp_s2 = g_bg_scroll_x & 0x7FF;
     do {
         var_s3 = temp_s2 / 32;
         for (var_s0 = 0; var_s0 < 0xF; var_s0++) {
@@ -867,10 +868,10 @@ void bg_layer_draw(void) {
 }
 
 
-extern s16 D_0028E234;
+extern s16 g_bg_scroll_y;
 
 void bg_layer_queue_tile(s32 col, s32 row) {
-    extern s32 D_00587000[];
+    extern s32 g_bg_tile_offsets[];
     s32 uploads;
     GlyphCacheEntry *cache;
     s32 u;
@@ -891,9 +892,9 @@ void bg_layer_queue_tile(s32 col, s32 row) {
 
     uploads = 0;
     cache = g_glyph_cache_sub;
-    x = D_0028E238 & 0x1F;
+    x = g_bg_scroll_x & 0x1F;
     x *= -1;
-    y = -D_0028E234;
+    y = -g_bg_scroll_y;
     x += col * 32;
     y += row * 32;
     palette = (reg_d0.h[0] & 0x3F) >> 1;
@@ -909,7 +910,7 @@ void bg_layer_queue_tile(s32 col, s32 row) {
         out = 0;
         in = 0;
         dst = g_image_unpack_buf;
-        src = (u32 *)(D_002C4F80 + D_00587000[key]);
+        src = (u32 *)(g_bg_tile_pixels + g_bg_tile_offsets[key]);
         if (!(src[0] & 0x80000000)) {
             FlushCache(0);
             sceGsExecLoadImage(&g_gs_load_image, src);
@@ -1199,7 +1200,6 @@ void render_target_begin(RenderTarget *tex, void *buffer) {
 }
 
 extern s32 g_frame_counter;
-extern u8 g_gs_dbuff[];
 
 void framebuffer_begin_present(void *buffer) {
     sceGifPacket packet;
@@ -1211,7 +1211,7 @@ void framebuffer_begin_present(void *buffer) {
     sceGifPkAddGsData(&packet, SCE_GIF_SET_TAG(6, 1, 0, 0, SCE_GIF_PACKED, 1));
     sceGifPkAddGsData(&packet, SCE_GIF_PACKED_AD);
     index = (g_frame_counter + 1) & 1;
-    sceGifPkAddGsData(&packet, ((u64)*(u16 *)(g_gs_dbuff + index * 40 + 0x10) & 0x1FF) | ((u64)((g_screen_width + 63) >> 6) << 16) | ((u64)2 << 24));
+    sceGifPkAddGsData(&packet, ((u64)*(u16 *)&g_gs_dbuff.disp[index].dispfb & 0x1FF) | ((u64)((g_screen_width + 63) >> 6) << 16) | ((u64)2 << 24));
     sceGifPkAddGsData(&packet, 0x4C);
     sceGifPkAddGsData(&packet, ((0x800 - (u64)(g_screen_width >> 1)) << 4) | ((u64)0x7200 << 32));
     sceGifPkAddGsData(&packet, 0x18);
@@ -1300,7 +1300,7 @@ void render_target_present_wide(RenderTarget *tex, void *buffer) {
     sceGifPkAddGsData(&packet, 0);
     sceGifPkAddGsData(&packet, 0x3F);
     index = (g_frame_counter + 1) & 1;
-    sceGifPkAddGsData(&packet, ((u64)*(u16 *)(g_gs_dbuff + index * 40 + 0x10) & 0x1FF) | ((u64)((g_screen_width + 63) >> 6) << 16) | ((u64)2 << 24));
+    sceGifPkAddGsData(&packet, ((u64)*(u16 *)&g_gs_dbuff.disp[index].dispfb & 0x1FF) | ((u64)((g_screen_width + 63) >> 6) << 16) | ((u64)2 << 24));
     sceGifPkAddGsData(&packet, 0x4C);
     sceGifPkAddGsData(&packet, ((0x800 - (u64)(g_screen_width >> 1)) << 4) | ((u64)0x7900 << 32));
     sceGifPkAddGsData(&packet, 0x18);
@@ -1338,7 +1338,7 @@ void framebuffer_begin(void *buffer) {
     sceGifPkAddGsData(&packet, SCE_GIF_SET_TAG(3, 1, 0, 0, SCE_GIF_PACKED, 1));
     sceGifPkAddGsData(&packet, SCE_GIF_PACKED_AD);
     index = (g_frame_counter + 1) & 1;
-    sceGifPkAddGsData(&packet, ((u64)*(u16 *)(g_gs_dbuff + index * 40 + 0x10) & 0x1FF) | ((u64)((g_screen_width + 63) >> 6) << 16) | ((u64)2 << 24));
+    sceGifPkAddGsData(&packet, ((u64)*(u16 *)&g_gs_dbuff.disp[index].dispfb & 0x1FF) | ((u64)((g_screen_width + 63) >> 6) << 16) | ((u64)2 << 24));
     sceGifPkAddGsData(&packet, 0x4C);
     sceGifPkAddGsData(&packet, ((0x700 - (u64)g_screen_margin) << 4) | ((u64)0x7900 << 32));
     sceGifPkAddGsData(&packet, 0x18);
@@ -1350,19 +1350,6 @@ void framebuffer_begin(void *buffer) {
     sceGsSyncPath(0, 0);
 }
 
-typedef struct {
-    u32 DX : 12;
-    u32 DY : 11;
-    u32 MAGH : 4;
-    u32 MAGV : 2;
-    u32 p0 : 3;
-    u32 DW : 12;
-    u32 DH : 11;
-    u32 p1 : 9;
-} DisplayReg;
-
-extern DisplayReg D_0057C7F8[];
-extern DisplayReg D_0057C820[];
 
 void display_set_offset(s32 x, s32 y) {
     s32 dx;
@@ -1392,42 +1379,37 @@ void display_set_offset(s32 x, s32 y) {
     }
     dy = base_y + (s8)y;
     dx = base_x + (s8)(x * 2);
-    D_0057C7F8[0].DX = dx;
-    D_0057C7F8[0].DY = dy;
-    D_0057C820[0].DX = dx;
-    D_0057C820[0].DY = dy;
+    g_gs_dbuff.disp[0].display.DX = dx;
+    g_gs_dbuff.disp[0].display.DY = dy;
+    g_gs_dbuff.disp[1].display.DX = dx;
+    g_gs_dbuff.disp[1].display.DY = dy;
 }
 
-extern s8 D_0028E250;
-extern s8 D_0028E254;
-extern u8 D_0028E2DC;
-typedef struct { u64 fbp:9; u64 fbw:6; u64 psm:5; } Dispfb;
-extern Dispfb D_0057C7F0[];
-extern Dispfb D_0057C818[];
-extern u8 D_0057C830[];
-extern u8 D_0057C9A0[];
+extern s8 g_display_offset_y;
+extern s8 g_display_offset_x;
+extern u8 g_screen_wide;
 
 void display_reset(void) {
     VideoMode *mode;
 
-    mode = &g_video_modes[g_screen_mode + D_0028E2DC * 6];
+    mode = &g_video_modes[g_screen_mode + g_screen_wide * 6];
     sceGsResetGraph(0, (s16)mode->interlace, 2, (s16)mode->ffmode);
     g_screen_width = mode->width;
     if (mode->interlace == 0) {
-        sceGsSetDefDBuffDc(g_gs_dbuff, 2, (s16)mode->width, (s16)mode->height, 1, 0x31, 1);
+        sceGsSetDefDBuffDc(&g_gs_dbuff, 2, (s16)mode->width, (s16)mode->height, 1, 0x31, 1);
         g_screen_margin = (g_screen_width - 0x1C0) >> 1;
     } else {
-        sceGsSetDefDBuffDc(g_gs_dbuff, 2, (s16)mode->width, (s16)mode->height, 1, 0x31, 0);
+        sceGsSetDefDBuffDc(&g_gs_dbuff, 2, (s16)mode->width, (s16)mode->height, 1, 0x31, 0);
         g_screen_margin = (g_screen_width - 0xE0) >> 1;
-        D_0057C7F0[0].fbp = 0;
-        D_0057C818[0].fbp = ((((mode->width + 63) / 64 * 64) * ((mode->height + 31) / 32 * 32)) >> 11) / 2;
+        g_gs_dbuff.disp[0].dispfb.FBP = 0;
+        g_gs_dbuff.disp[1].dispfb.FBP = ((((mode->width + 63) / 64 * 64) * ((mode->height + 31) / 32 * 32)) >> 11) / 2;
     }
-    display_set_offset(D_0028E254, D_0028E250);
+    display_set_offset(g_display_offset_x, g_display_offset_y);
     FlushCache(0);
     sceGsSyncV(0);
-    sceGsPutDrawEnv(D_0057C830);
+    sceGsPutDrawEnv(&g_gs_dbuff.giftag0);
     sceGsSyncPath(0, 0);
-    sceGsPutDrawEnv(D_0057C9A0);
+    sceGsPutDrawEnv(&g_gs_dbuff.giftag1);
     sceGsSyncPath(0, 0);
 }
 
@@ -1516,7 +1498,7 @@ void wallpaper_draw(void *buffer) {
     sceGifPkAddGsData(&packet, 6);
     left = ((0x800 - g_screen_width / 2) << 4) + 8;
     vtx = g_wallpaper_vertices;
-    vtx += D_0028E2DC * 8;
+    vtx += g_screen_wide * 8;
     for (i = 0; i < 2; i++) {
         s64 t;
         sceGifPkAddGsData(&packet, SCE_GIF_SET_TAG(1, 1, 0, 0, SCE_GIF_REGLIST, 10));
@@ -1565,7 +1547,7 @@ extern void gfx_draw_shaded_box(s32 x, s32 y, s32 w, s32 h, s32 depth, s32 alpha
 extern s32 g_label_fade;
 extern s32 g_label_timer;
 
-void label_draw(s32 *rect, s32 x, s32 y, u8 *text) {
+void label_draw(RenderTarget *target, s32 x, s32 y, const char *text) {
     extern u8 *reg_a0;
     u8 *saved;
     s32 bright;
@@ -1578,7 +1560,7 @@ void label_draw(s32 *rect, s32 x, s32 y, u8 *text) {
     saved = reg_a0;
     bright = 0x80;
     if (text != 0) {
-        gfx_draw_shaded_box(x, y - 16, 17, (strlen((const char *)text) + 2) * 8, 100, g_label_fade);
+        gfx_draw_shaded_box(x, y - 16, 17, (strlen(text) + 2) * 8, 100, g_label_fade);
     } else {
         gfx_draw_shaded_box(x, y - 16, 17, 64, 100, g_label_fade);
     }
@@ -1589,11 +1571,11 @@ void label_draw(s32 *rect, s32 x, s32 y, u8 *text) {
     if (g_screen_mode < 2) {
         scissor_set(g_gif_buf, g_screen_margin + 2 + x, 1, 16, 223);
     } else {
-        scissor_set(g_gif_buf, x + 1, 0, 16, rect[2]);
+        scissor_set(g_gif_buf, x + 1, 0, 16, target->height);
     }
     glyph_queue_clear();
-    reg_a0 = text;
-    if (D_0028E36C == 0) {
+    reg_a0 = (u8 *)text;
+    if (g_paused == 0) {
         g_label_timer++;
     }
     switch (g_label_timer >> 6) {
@@ -1617,7 +1599,7 @@ void label_draw(s32 *rect, s32 x, s32 y, u8 *text) {
     if (g_screen_mode < 2) {
         scissor_set(g_gif_buf, g_screen_margin + 1, 1, 447, 223);
     } else {
-        scissor_set(g_gif_buf, 0, 0, rect[1], rect[2]);
+        scissor_set(g_gif_buf, 0, 0, target->width, target->height);
     }
     reg_a0 = saved;
 }

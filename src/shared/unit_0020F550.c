@@ -988,13 +988,13 @@ extern u8 D_00269920[];
 extern s8 D_0028E408;
 extern u16 D_0028E4AA;
 extern u16 D_0028E910;
-extern u16 D_0028E91C;
+extern u16 g_stage;
 extern u8 D_0028ED7C;
 #ifdef DEATH_LABEL
 s32 stage_load_step();
 extern u8 D_0028E2A4;
 extern u8 D_0028E290;
-extern s16 D_0028E3FC;
+extern s16 g_loaded_stage;
 extern u8 D_0028ED60;
 extern u8 death_D_00290568;
 #endif
@@ -1014,7 +1014,7 @@ void func_00210D00() {
     if (D_0028E2A4 != 0) {
         D_0028E2A4 -= 1;
     }
-    if ((D_0028E2A4 == 0) && (D_0028E3FC != D_0028E91C) && (D_0028E2A4 == 0)) {
+    if ((D_0028E2A4 == 0) && (g_loaded_stage != g_stage) && (D_0028E2A4 == 0)) {
         stage_load_step();
     }
 #endif
@@ -1030,7 +1030,7 @@ void func_00210D00() {
         if (temp_a0 != 0) {
 #ifdef DEATH_LABEL
             if (temp_a0 == 1) {
-                if (D_0028E3FC != D_0028E91C) {
+                if (g_loaded_stage != g_stage) {
                     return;
                 }
                 if ((D_0028E290 == 2) && (D_0028ED60 == 0)) {
@@ -1060,7 +1060,7 @@ void func_00210D00() {
                 reg_d0.h[0] = (*(u16 *)((u8 *)(reg_a6) + (0x14)));
                 func_0013C300();
                 if (D_0028ED7C == 2) {
-                    if ((D_0028E910 == 1) && (D_0028E91C == 4)) {
+                    if ((D_0028E910 == 1) && (g_stage == 4)) {
                         func_002376F0();
                         return;
                     }
@@ -1546,7 +1546,7 @@ void func_002119A0(void) {
     u32 save_d6;
     u32 save_d7;
 
-    if (D_0028E91C != 4) goto next_1;
+    if (g_stage != 4) goto next_1;
     if (D_0028E855 & 0x40) goto block_set;
 next_1:
     save_d0 = reg_d0.w;

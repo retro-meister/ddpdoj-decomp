@@ -88,10 +88,10 @@ s32 func_002075F0();
 s32 stage_load_step();
 s32 func_00225630();
 s32 func_002256B0();
-extern s8 D_0028E350_as_s8;
-extern s16 D_0028E3FC;
+extern s8 g_stage_load_state_as_s8;
+extern s16 g_loaded_stage;
 extern s16 D_0028E910_as_s16;
-extern u16 D_0028E91C;
+extern u16 g_stage;
 extern s8 g_cd_async_state;
 extern s8 g_cd_async_busy;
 extern u16 D_00295E38[];
@@ -111,19 +111,19 @@ void func_00122EB0(void) {
             }
             g_cd_async_busy = 1;
             D_00295E3C[0] = 2;
-            D_0028E350_as_s8 = 0;
+            g_stage_load_state_as_s8 = 0;
             g_cd_async_state = 0;
             func_00225630(temp_a0);
             goto block_6;
         }
 block_6:
         if (D_00295E3C[0] == 2) {
-            D_0028E91C = 0;
+            g_stage = 0;
             stage_load_step(D_00295E3C[0]);
-            if (D_0028E3FC == D_0028E91C) {
+            if (g_loaded_stage == g_stage) {
                 D_0028E910_as_s16 = 1;
                 D_00295E3C[0] = 0;
-                func_002256B0(D_0028E3FC);
+                func_002256B0(g_loaded_stage);
                 reg_d0.h[0] = 0x11;
                 func_002071C0();
                 func_002075F0();

@@ -236,7 +236,7 @@ extern u16 D_002BD440[];
 extern u16 D_002BF4F0_as_u16_a[];
 #ifdef DEATH_LABEL
 extern u16 D_0028E3C0;
-extern u16 D_0028E91C;
+extern u16 g_stage;
 extern u8 death_D_0029085C;
 extern u8 death_D_00290DC0;
 extern u16 D_00684C80[];
@@ -799,40 +799,40 @@ loop_130:
                             gain = 0;
                         }
                         if (D_00684C80[9] == 4) {
-                            if ((D_0028E91C == 0) || (D_0028E91C == 1) || (D_0028E91C == 2) || (D_0028E91C == 3)) {
+                            if ((g_stage == 0) || (g_stage == 1) || (g_stage == 2) || (g_stage == 3)) {
                                 gain /= 5;
                             } else {
                                 gain /= 10;
                             }
-                            if ((D_0028E91C == 4) && (death_D_0029085C == 2)) {
+                            if ((g_stage == 4) && (death_D_0029085C == 2)) {
                                 gain = 0;
                             }
                         }
                         if (D_00684C80[9] == 6) {
                             gain /= 10;
-                            if ((D_0028E91C == 0) || (D_0028E91C == 1) || (D_0028E91C == 2)) {
+                            if ((g_stage == 0) || (g_stage == 1) || (g_stage == 2)) {
                                 gain = 0;
                             }
-                            if ((D_0028E91C == 4) && (death_D_0029085C == 2)) {
+                            if ((g_stage == 4) && (death_D_0029085C == 2)) {
                                 gain = 0;
                             }
                         }
                     } else {
                         if (D_00684C80[9] == 2) {
                             gain *= 2;
-                            if (D_0028E91C == 4) {
+                            if (g_stage == 4) {
                                 gain = 0;
                             }
                         }
                         if (D_00684C80[9] == 4) {
                             gain *= 2;
-                            if (D_0028E91C == 4) {
+                            if (g_stage == 4) {
                                 gain = 0;
                             }
                         }
                         if (D_00684C80[9] == 6) {
                             gain *= 2;
-                            if (D_0028E91C == 4) {
+                            if (g_stage == 4) {
                                 gain = 0;
                             }
                         }
@@ -949,40 +949,40 @@ done_140:
                             gain = 0;
                         }
                         if (D_00684C80[9] == 4) {
-                            if ((D_0028E91C == 0) || (D_0028E91C == 1) || (D_0028E91C == 2) || (D_0028E91C == 3)) {
+                            if ((g_stage == 0) || (g_stage == 1) || (g_stage == 2) || (g_stage == 3)) {
                                 gain /= 5;
                             } else {
                                 gain /= 10;
                             }
-                            if ((D_0028E91C == 4) && (death_D_0029085C == 2)) {
+                            if ((g_stage == 4) && (death_D_0029085C == 2)) {
                                 gain = 0;
                             }
                         }
                         if (D_00684C80[9] == 6) {
                             gain /= 10;
-                            if ((D_0028E91C == 0) || (D_0028E91C == 1) || (D_0028E91C == 2)) {
+                            if ((g_stage == 0) || (g_stage == 1) || (g_stage == 2)) {
                                 gain = 0;
                             }
-                            if ((D_0028E91C == 4) && (death_D_0029085C == 2)) {
+                            if ((g_stage == 4) && (death_D_0029085C == 2)) {
                                 gain = 0;
                             }
                         }
                     } else {
                         if (D_00684C80[9] == 2) {
                             gain *= 2;
-                            if (D_0028E91C == 4) {
+                            if (g_stage == 4) {
                                 gain = 0;
                             }
                         }
                         if (D_00684C80[9] == 4) {
                             gain *= 2;
-                            if (D_0028E91C == 4) {
+                            if (g_stage == 4) {
                                 gain = 0;
                             }
                         }
                         if (D_00684C80[9] == 6) {
                             gain *= 2;
-                            if (D_0028E91C == 4) {
+                            if (g_stage == 4) {
                                 gain = 0;
                             }
                         }

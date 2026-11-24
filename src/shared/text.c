@@ -110,7 +110,7 @@ u8 g_font_alt_palette_rgb[48] = {
     96, 96, 104,
     255, 255, 255
 };
-extern s8 D_00578780[];
+extern s8 g_glyph_upload_buf[];
 extern void *g_dma_gif;
 extern u8 g_gif_buf_as_u8_a2_a0x10000[2][0x10000];
 
@@ -234,7 +234,7 @@ void font_init_palettes(void)
 
     for (colorIndex = 0; colorIndex < 32; colorIndex++) {
         for (column = 0; column < 512; column++) {
-            ((u8 (*)[512])D_00578780)[colorIndex][column] = 0;
+            ((u8 (*)[512])g_glyph_upload_buf)[colorIndex][column] = 0;
         }
     }
 }
@@ -334,12 +334,12 @@ void text_queue_sjis(s16 x, s16 y, const char *text, u16 texturePage, u16 glyphW
             cacheIndex = glyph_cache_lookup((u16)glyphIndex);
             if (cacheIndex & 0x8000) {
                 for (byteIndex = 0; byteIndex < 0x152; byteIndex++) {
-                    (D_00578780 + uploadOffset)[byteIndex] = (g_font_glyph_data + glyphIndex * 0x152)[byteIndex];
+                    (g_glyph_upload_buf + uploadOffset)[byteIndex] = (g_font_glyph_data + glyphIndex * 0x152)[byteIndex];
                 }
                 cacheIndex &= 0x7FFF;
                 sceGsSetDefLoadImage(&g_gs_load_image, 0x3800, 16, SCE_GS_PSMT4, cache[cacheIndex].x, cache[cacheIndex].y, 26, 26);
                 FlushCache(0);
-                sceGsExecLoadImage(&g_gs_load_image, D_00578780 + uploadOffset);
+                sceGsExecLoadImage(&g_gs_load_image, g_glyph_upload_buf + uploadOffset);
                 uploadOffset += 0x200;
                 uploadCount++;
             }
@@ -401,12 +401,12 @@ void overlay_queue_sjis(s16 x, s16 y, const char *text, u16 texturePage, u16 gly
             cacheIndex = glyph_cache_lookup((u16)glyphIndex);
             if (cacheIndex & 0x8000) {
                 for (byteIndex = 0; byteIndex < 0x152; byteIndex++) {
-                    (D_00578780 + uploadOffset)[byteIndex] = (g_font_glyph_data + glyphIndex * 0x152)[byteIndex];
+                    (g_glyph_upload_buf + uploadOffset)[byteIndex] = (g_font_glyph_data + glyphIndex * 0x152)[byteIndex];
                 }
                 cacheIndex &= 0x7FFF;
                 sceGsSetDefLoadImage(&g_gs_load_image, 0x3800, 16, SCE_GS_PSMT4, cache[cacheIndex].x, cache[cacheIndex].y, 26, 26);
                 FlushCache(0);
-                sceGsExecLoadImage(&g_gs_load_image, D_00578780 + uploadOffset);
+                sceGsExecLoadImage(&g_gs_load_image, g_glyph_upload_buf + uploadOffset);
                 uploadOffset += 0x200;
                 uploadCount++;
             }
@@ -464,7 +464,7 @@ void text_queue_glyph(x, y, textureId, texturePage, glyphWidth, glyphHeight, alp
             s32 byteIndex;
 
             for (byteIndex = 0; byteIndex < 0x152; byteIndex++) {
-                (D_00578780 + uploadOffset)[byteIndex] = (g_font_glyph_data + id * 0x152)[byteIndex];
+                (g_glyph_upload_buf + uploadOffset)[byteIndex] = (g_font_glyph_data + id * 0x152)[byteIndex];
             }
 
             textureIndex &= 0x7FFF;
@@ -473,7 +473,7 @@ void text_queue_glyph(x, y, textureId, texturePage, glyphWidth, glyphHeight, alp
                           width,
                           textures[textureIndex].y, 0x1A, 0x1A);
             FlushCache(0);
-            sceGsExecLoadImage(&g_gs_load_image, D_00578780);
+            sceGsExecLoadImage(&g_gs_load_image, g_glyph_upload_buf);
         }
 
         width = textures[textureIndex & 0x7FFF].x;
@@ -525,7 +525,7 @@ void overlay_queue_glyph(x, y, textureId, texturePage, glyphWidth, glyphHeight, 
             s32 byteIndex;
 
             for (byteIndex = 0; byteIndex < 0x152; byteIndex++) {
-                (D_00578780 + uploadOffset)[byteIndex] = (g_font_glyph_data + id * 0x152)[byteIndex];
+                (g_glyph_upload_buf + uploadOffset)[byteIndex] = (g_font_glyph_data + id * 0x152)[byteIndex];
             }
 
             textureIndex &= 0x7FFF;
@@ -534,7 +534,7 @@ void overlay_queue_glyph(x, y, textureId, texturePage, glyphWidth, glyphHeight, 
                           width,
                           textures[textureIndex].y, 0x1A, 0x1A);
             FlushCache(0);
-            sceGsExecLoadImage(&g_gs_load_image, D_00578780);
+            sceGsExecLoadImage(&g_gs_load_image, g_glyph_upload_buf);
         }
 
         width = textures[textureIndex & 0x7FFF].x;
@@ -582,12 +582,12 @@ void text_queue_ascii(s16 x, s16 y, const char *text, u16 texturePage, u16 glyph
             if (cacheIndex & 0x8000) {
                 for (byteIndex = 0; byteIndex < 0x152; byteIndex++) {
                     glyphIndex = (leadByte & 0xFF) + 0x208D;
-                    (D_00578780 + uploadOffset)[byteIndex] = (g_font_glyph_data + glyphIndex * 0x152)[byteIndex];
+                    (g_glyph_upload_buf + uploadOffset)[byteIndex] = (g_font_glyph_data + glyphIndex * 0x152)[byteIndex];
                 }
                 cacheIndex &= 0x7FFF;
                 sceGsSetDefLoadImage(&g_gs_load_image, 0x3800, 16, SCE_GS_PSMT4, cache[cacheIndex].x, cache[cacheIndex].y, 26, 26);
                 FlushCache(0);
-                sceGsExecLoadImage(&g_gs_load_image, D_00578780 + uploadOffset);
+                sceGsExecLoadImage(&g_gs_load_image, g_glyph_upload_buf + uploadOffset);
                 uploadOffset += 0x200;
                 uploadCount++;
             }
@@ -641,12 +641,12 @@ void overlay_queue_ascii(s16 x, s16 y, const char *text, u16 texturePage, u16 gl
             if (cacheIndex & 0x8000) {
                 for (byteIndex = 0; byteIndex < 0x152; byteIndex++) {
                     glyphIndex = (leadByte & 0xFF) + 0x208D;
-                    (D_00578780 + uploadOffset)[byteIndex] = (g_font_glyph_data + glyphIndex * 0x152)[byteIndex];
+                    (g_glyph_upload_buf + uploadOffset)[byteIndex] = (g_font_glyph_data + glyphIndex * 0x152)[byteIndex];
                 }
                 cacheIndex &= 0x7FFF;
                 sceGsSetDefLoadImage(&g_gs_load_image, 0x3800, 16, SCE_GS_PSMT4, cache[cacheIndex].x, cache[cacheIndex].y, 26, 26);
                 FlushCache(0);
-                sceGsExecLoadImage(&g_gs_load_image, D_00578780 + uploadOffset);
+                sceGsExecLoadImage(&g_gs_load_image, g_glyph_upload_buf + uploadOffset);
                 uploadOffset += 0x200;
                 uploadCount++;
             }
@@ -832,12 +832,12 @@ void text_queue_sjis_vertical(s16 x, s16 y, const char *text, u16 texturePage, u
             cacheIndex = glyph_cache_lookup((u16)glyphIndex);
             if (cacheIndex & 0x8000) {
                 for (byteIndex = 0; byteIndex < 0x152; byteIndex++) {
-                    (D_00578780 + uploadOffset)[byteIndex] = (g_font_glyph_data + glyphIndex * 0x152)[byteIndex];
+                    (g_glyph_upload_buf + uploadOffset)[byteIndex] = (g_font_glyph_data + glyphIndex * 0x152)[byteIndex];
                 }
                 cacheIndex &= 0x7FFF;
                 sceGsSetDefLoadImage(&g_gs_load_image, 0x3800, 16, SCE_GS_PSMT4, cache[cacheIndex].x, cache[cacheIndex].y, 26, 26);
                 FlushCache(0);
-                sceGsExecLoadImage(&g_gs_load_image, D_00578780 + uploadOffset);
+                sceGsExecLoadImage(&g_gs_load_image, g_glyph_upload_buf + uploadOffset);
                 uploadOffset += 0x200;
                 uploadCount++;
             }
@@ -899,12 +899,12 @@ void overlay_queue_sjis_vertical(s16 x, s16 y, const char *text, u16 texturePage
             cacheIndex = glyph_cache_lookup((u16)glyphIndex);
             if (cacheIndex & 0x8000) {
                 for (byteIndex = 0; byteIndex < 0x152; byteIndex++) {
-                    (D_00578780 + uploadOffset)[byteIndex] = (g_font_glyph_data + glyphIndex * 0x152)[byteIndex];
+                    (g_glyph_upload_buf + uploadOffset)[byteIndex] = (g_font_glyph_data + glyphIndex * 0x152)[byteIndex];
                 }
                 cacheIndex &= 0x7FFF;
                 sceGsSetDefLoadImage(&g_gs_load_image, 0x3800, 16, SCE_GS_PSMT4, cache[cacheIndex].x, cache[cacheIndex].y, 26, 26);
                 FlushCache(0);
-                sceGsExecLoadImage(&g_gs_load_image, D_00578780 + uploadOffset);
+                sceGsExecLoadImage(&g_gs_load_image, g_glyph_upload_buf + uploadOffset);
                 uploadOffset += 0x200;
                 uploadCount++;
             }
@@ -1045,7 +1045,7 @@ void text_queue_tile(s16 x, s16 y, u16 textureId, u16 attributes, u16 scale)
             s32 byteIndex;
 
             for (byteIndex = 0; byteIndex < 0x152; byteIndex++) {
-                (D_00578780 + uploadOffset)[byteIndex] = (g_font_glyph_data + id * 0x152)[byteIndex];
+                (g_glyph_upload_buf + uploadOffset)[byteIndex] = (g_font_glyph_data + id * 0x152)[byteIndex];
             }
 
             textureIndex &= 0x7FFF;
@@ -1054,7 +1054,7 @@ void text_queue_tile(s16 x, s16 y, u16 textureId, u16 attributes, u16 scale)
                           width,
                           textures[textureIndex].y, 0x1A, 0x1A);
             FlushCache(0);
-            sceGsExecLoadImage(&g_gs_load_image, D_00578780);
+            sceGsExecLoadImage(&g_gs_load_image, g_glyph_upload_buf);
             uploaded++;
         }
 

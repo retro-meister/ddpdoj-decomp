@@ -4235,7 +4235,7 @@ void func_00233F30(s16 x, s16 y, char *text, u16 page, u16 w, u16 h, u16 alpha, 
 }
 
 extern s32 sprintf(char *buf, const char *format, ...);
-extern char *D_0028E9F8;
+extern char *g_pad_dma_buf;
 
 void func_00233F50(void) {
     s32 shrink;
@@ -4254,19 +4254,19 @@ void func_00233F50(void) {
     w = (D_0028ECDC & 0xFF) + 20;
     h = (D_0028ECDC & 0xFF) + 14;
     if (D_0028ECEC == 0) {
-        sprintf(D_0028E9F8, SJIS("はい"));
-        func_00233F30(48 - shrink, 364 - shrink, D_0028E9F8, 4, w, h, color, 100);
-        sprintf(D_0028E9F8, SJIS("／"));
-        func_00233F30(104, 364, D_0028E9F8, 0, 20, 14, color, 100);
-        sprintf(D_0028E9F8, SJIS("いいえ"));
-        func_00233F30(136, 364, D_0028E9F8, 0, 20, 14, color, 100);
+        sprintf(g_pad_dma_buf, SJIS("はい"));
+        func_00233F30(48 - shrink, 364 - shrink, g_pad_dma_buf, 4, w, h, color, 100);
+        sprintf(g_pad_dma_buf, SJIS("／"));
+        func_00233F30(104, 364, g_pad_dma_buf, 0, 20, 14, color, 100);
+        sprintf(g_pad_dma_buf, SJIS("いいえ"));
+        func_00233F30(136, 364, g_pad_dma_buf, 0, 20, 14, color, 100);
     } else {
-        sprintf(D_0028E9F8, SJIS("はい"));
-        func_00233F30(48, 364, D_0028E9F8, 0, 20, 14, color, 100);
-        sprintf(D_0028E9F8, SJIS("／"));
-        func_00233F30(104, 364, D_0028E9F8, 0, 20, 14, color, 100);
-        sprintf(D_0028E9F8, SJIS("いいえ"));
-        func_00233F30(136 - shrink, 364 - shrink, D_0028E9F8, 4, w, h, color, 100);
+        sprintf(g_pad_dma_buf, SJIS("はい"));
+        func_00233F30(48, 364, g_pad_dma_buf, 0, 20, 14, color, 100);
+        sprintf(g_pad_dma_buf, SJIS("／"));
+        func_00233F30(104, 364, g_pad_dma_buf, 0, 20, 14, color, 100);
+        sprintf(g_pad_dma_buf, SJIS("いいえ"));
+        func_00233F30(136 - shrink, 364 - shrink, g_pad_dma_buf, 4, w, h, color, 100);
     }
 }
 
@@ -4375,7 +4375,7 @@ s32 sprintf(char *buf, const char *format, ...);
 extern s32 D_00271F40[];
 extern s32 D_0028DE24;
 extern s32 D_0028DE28;
-extern s32 D_0028E9F8_as_s32;
+extern s32 g_pad_dma_buf_as_s32;
 
 void func_00234460(s32 arg0) {
     extern void func_0022C5E0(s32, s32, s32, s32, s32, u16, s32);
@@ -4383,11 +4383,11 @@ void func_00234460(s32 arg0) {
     func_0022C5E0(220, D_00271F40[arg0], 0, 20, 14, D_0028ED10, 100);
     func_0022C5E0(260, (&D_0028DE28)[D_0028ECE8], 0, 20, 14, D_0028ED10, 100);
     if (arg0 == 0) {
-        sprintf((char *)D_0028E9F8_as_s32, SJIS("　　　　 %2d "), D_00271D60[D_0028ED1C * 2]);
+        sprintf((char *)g_pad_dma_buf_as_s32, SJIS("　　　　 %2d "), D_00271D60[D_0028ED1C * 2]);
     } else {
-        sprintf((char *)D_0028E9F8_as_s32, SJIS("　　　　%3d "), D_00271D60[D_0028ED1C * 2]);
+        sprintf((char *)g_pad_dma_buf_as_s32, SJIS("　　　　%3d "), D_00271D60[D_0028ED1C * 2]);
     }
-    func_0022C5E0(300, D_0028E9F8_as_s32, 0, 20, 14, D_0028ED10, 100);
+    func_0022C5E0(300, g_pad_dma_buf_as_s32, 0, 20, 14, D_0028ED10, 100);
 }
 
 extern s32 D_00271EB0[];
@@ -4460,22 +4460,22 @@ extern u16 D_002BB1E8[5];
 extern u16 D_002BB1F8[5];
 extern s32 D_002BB210[15];
 extern s32 D_002BB250[5];
-extern s8 D_0028E250;
-extern s8 D_0028E254;
+extern s8 g_display_offset_y;
+extern s8 g_display_offset_x;
 extern u8 D_0028E258;
-extern u8 D_0028E270[2][4];
+extern u8 g_p1_btn_map_a[2][4];
 extern u8 D_0028E278;
-extern u8 D_0028E27C;
-extern u8 D_0028E28C;
+extern u8 g_pad_vib_enabled;
+extern u8 g_stage_map_enabled;
 extern u8 D_0028E2D8;
-extern u8 D_0028E2DC;
+extern u8 g_screen_wide;
 extern u8 D_0028E2E0;
 extern u16 D_0028E300;
 extern u16 D_0028E32C;
 extern u8 D_0028E354;
 extern u8 D_0028E358;
-extern u8 D_0028E35C;
-extern u8 D_0028E360;
+extern u8 g_pad_vib_state_p2;
+extern u8 g_pad_vib_state_p1;
 extern u8 D_0028E37C;
 extern u8 D_0028E380;
 extern u8 D_0028E384;
@@ -4575,20 +4575,20 @@ void func_002345B0(void) {
     D_006C4EF0_as_SaveBlock.b263 = D_0028E384;
     D_006C4EF0_as_SaveBlock.b264 = D_0028E380;
     D_006C4EF0_as_SaveBlock.b265 = D_0028E37C;
-    D_006C4EF0_as_SaveBlock.b266 = D_0028E360;
-    D_006C4EF0_as_SaveBlock.b267 = D_0028E35C;
+    D_006C4EF0_as_SaveBlock.b266 = g_pad_vib_state_p1;
+    D_006C4EF0_as_SaveBlock.b267 = g_pad_vib_state_p2;
     D_006C4EF0_as_SaveBlock.h268 = D_0028E32C;
-    D_006C4EF0_as_SaveBlock.b26A = D_0028E27C;
+    D_006C4EF0_as_SaveBlock.b26A = g_pad_vib_enabled;
     D_006C4EF0_as_SaveBlock.b26B = D_0028E278;
-    D_006C4EF0_as_SaveBlock.b274 = D_0028E254;
-    D_006C4EF0_as_SaveBlock.b275 = D_0028E250;
+    D_006C4EF0_as_SaveBlock.b274 = g_display_offset_x;
+    D_006C4EF0_as_SaveBlock.b275 = g_display_offset_y;
     D_006C4EF0_as_SaveBlock.b276 = D_0028E258;
     D_006C4EF0_as_SaveBlock.h278 = D_0028E300;
     D_006C4EF0_as_SaveBlock.b59C = D_0028E2E0;
-    D_006C4EF0_as_SaveBlock.b59D = D_0028E2DC;
+    D_006C4EF0_as_SaveBlock.b59D = g_screen_wide;
     D_006C4EF0_as_SaveBlock.b59E = D_0028E2D8;
     D_006C4EF0_as_SaveBlock.b59F = D_0028E354;
-    D_006C4EF0_as_SaveBlock.b5A0 = D_0028E28C;
+    D_006C4EF0_as_SaveBlock.b5A0 = g_stage_map_enabled;
     for (i = 0; i < 10; i++) {
         for (j = 0; j < 4; j++) {
             for (k = 0; k < 5; k++) {
@@ -4598,7 +4598,7 @@ void func_002345B0(void) {
     }
     for (i = 0; i < 2; i++) {
         for (j = 0; j < 4; j++) {
-            D_006C4EF0_as_SaveBlock.a26C[i][j] = D_0028E270[i][j];
+            D_006C4EF0_as_SaveBlock.a26C[i][j] = g_p1_btn_map_a[i][j];
         }
     }
 }
@@ -4727,20 +4727,20 @@ void func_00234EF0(void) {
     D_0028E384 = D_006C4EF0_as_SaveBlock.b263;
     D_0028E380 = D_006C4EF0_as_SaveBlock.b264;
     D_0028E37C = D_006C4EF0_as_SaveBlock.b265;
-    D_0028E360 = D_006C4EF0_as_SaveBlock.b266;
-    D_0028E35C = D_006C4EF0_as_SaveBlock.b267;
+    g_pad_vib_state_p1 = D_006C4EF0_as_SaveBlock.b266;
+    g_pad_vib_state_p2 = D_006C4EF0_as_SaveBlock.b267;
     D_0028E32C = D_006C4EF0_as_SaveBlock.h268;
-    D_0028E27C = D_006C4EF0_as_SaveBlock.b26A;
+    g_pad_vib_enabled = D_006C4EF0_as_SaveBlock.b26A;
     D_0028E278 = D_006C4EF0_as_SaveBlock.b26B;
-    D_0028E254 = D_006C4EF0_as_SaveBlock.b274;
-    D_0028E250 = D_006C4EF0_as_SaveBlock.b275;
+    g_display_offset_x = D_006C4EF0_as_SaveBlock.b274;
+    g_display_offset_y = D_006C4EF0_as_SaveBlock.b275;
     D_0028E258 = D_006C4EF0_as_SaveBlock.b276;
     D_0028E300 = D_006C4EF0_as_SaveBlock.h278;
     D_0028E2E0 = D_006C4EF0_as_SaveBlock.b59C;
-    D_0028E2DC = D_006C4EF0_as_SaveBlock.b59D;
+    g_screen_wide = D_006C4EF0_as_SaveBlock.b59D;
     D_0028E2D8 = D_006C4EF0_as_SaveBlock.b59E;
     D_0028E354 = D_006C4EF0_as_SaveBlock.b59F;
-    D_0028E28C = D_006C4EF0_as_SaveBlock.b5A0;
+    g_stage_map_enabled = D_006C4EF0_as_SaveBlock.b5A0;
     for (i = 0; i < 10; i++) {
         for (j = 0; j < 4; j++) {
             for (k = 0; k < 5; k++) {
@@ -4750,7 +4750,7 @@ void func_00234EF0(void) {
     }
     for (i = 0; i < 2; i++) {
         for (j = 0; j < 4; j++) {
-            D_0028E270[i][j] = D_006C4EF0_as_SaveBlock.a26C[i][j];
+            g_p1_btn_map_a[i][j] = D_006C4EF0_as_SaveBlock.a26C[i][j];
         }
     }
     func_0021E1A0();
@@ -4761,14 +4761,14 @@ extern void display_set_offset(s8, s8);
 extern void wallpaper_load(s32, s32);
 extern s32 D_00271C60_as_s32_a[];
 extern s32 D_00271C64_as_s32_a[];
-extern s8 D_0028E9EC;
+extern s8 g_display_reset_pending;
 
 void func_00235820(void)
 {
     u16 selection;
 
-    D_0028E9EC = 1;
-    display_set_offset(D_0028E254, D_0028E250);
+    g_display_reset_pending = 1;
+    display_set_offset(g_display_offset_x, g_display_offset_y);
 
     selection = D_0028E32C;
     if (selection != 5) {
@@ -4825,20 +4825,20 @@ void func_00235890(void) {
     D_006A3E50.b263 = D_0028E384;
     D_006A3E50.b264 = D_0028E380;
     D_006A3E50.b265 = D_0028E37C;
-    D_006A3E50.b266 = D_0028E360;
-    D_006A3E50.b267 = D_0028E35C;
+    D_006A3E50.b266 = g_pad_vib_state_p1;
+    D_006A3E50.b267 = g_pad_vib_state_p2;
     D_006A3E50.h268 = D_0028E32C;
-    D_006A3E50.b26A = D_0028E27C;
+    D_006A3E50.b26A = g_pad_vib_enabled;
     D_006A3E50.b26B = D_0028E278;
-    D_006A3E50.b274 = D_0028E254;
-    D_006A3E50.b275 = D_0028E250;
+    D_006A3E50.b274 = g_display_offset_x;
+    D_006A3E50.b275 = g_display_offset_y;
     D_006A3E50.b276 = D_0028E258;
     D_006A3E50.h278 = D_0028E300;
     D_006A3E50.b59C = D_0028E2E0;
-    D_006A3E50.b59D = D_0028E2DC;
+    D_006A3E50.b59D = g_screen_wide;
     D_006A3E50.b59E = D_0028E2D8;
     D_006A3E50.b59F = D_0028E354;
-    D_006A3E50.b5A0 = D_0028E28C;
+    D_006A3E50.b5A0 = g_stage_map_enabled;
     for (i = 0; i < 10; i++) {
         for (j = 0; j < 4; j++) {
             for (k = 0; k < 5; k++) {
@@ -4848,7 +4848,7 @@ void func_00235890(void) {
     }
     for (i = 0; i < 2; i++) {
         for (j = 0; j < 4; j++) {
-            D_006A3E50.a26C[i][j] = D_0028E270[i][j];
+            D_006A3E50.a26C[i][j] = g_p1_btn_map_a[i][j];
         }
     }
 }
@@ -4956,11 +4956,11 @@ s32 func_00235ED0(void) {
         goto fail;
     }
     stage++;
-    if (D_006A3E50.b266 != D_0028E360) {
+    if (D_006A3E50.b266 != g_pad_vib_state_p1) {
         goto fail;
     }
     stage++;
-    if (D_006A3E50.b267 != D_0028E35C) {
+    if (D_006A3E50.b267 != g_pad_vib_state_p2) {
         goto fail;
     }
     stage++;
@@ -4968,7 +4968,7 @@ s32 func_00235ED0(void) {
         goto fail;
     }
     stage++;
-    if (D_006A3E50.b26A != D_0028E27C) {
+    if (D_006A3E50.b26A != g_pad_vib_enabled) {
         goto fail;
     }
     stage++;
@@ -4976,11 +4976,11 @@ s32 func_00235ED0(void) {
         goto fail;
     }
     stage++;
-    if (D_006A3E50.b274 != D_0028E254) {
+    if (D_006A3E50.b274 != g_display_offset_x) {
         goto fail;
     }
     stage++;
-    if (D_006A3E50.b275 != D_0028E250) {
+    if (D_006A3E50.b275 != g_display_offset_y) {
         goto fail;
     }
     stage++;
@@ -4997,7 +4997,7 @@ s32 func_00235ED0(void) {
         goto fail;
     }
     stage++;
-    if (D_006A3E50.b59D != D_0028E2DC) {
+    if (D_006A3E50.b59D != g_screen_wide) {
         goto fail;
     }
     stage++;
@@ -5009,7 +5009,7 @@ s32 func_00235ED0(void) {
         goto fail;
     }
     stage++;
-    if (D_006A3E50.b5A0 != D_0028E28C) {
+    if (D_006A3E50.b5A0 != g_stage_map_enabled) {
         goto fail;
     }
     stage++;
@@ -5025,7 +5025,7 @@ s32 func_00235ED0(void) {
     stage++;
     for (i = 0; i < 2; i++) {
         for (j = 0; j < 4; j++) {
-            if (D_006A3E50.a26C[i][j] != D_0028E270[i][j]) {
+            if (D_006A3E50.a26C[i][j] != g_p1_btn_map_a[i][j]) {
                 goto fail;
             }
         }

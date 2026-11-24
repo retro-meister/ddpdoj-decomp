@@ -19,7 +19,7 @@ extern u8 D_00269398[];
 extern u8 D_002693A8[];
 extern u16 D_0028DFE4;
 extern u16 D_0028DFE8;
-extern u8 D_0028E36C;
+extern u8 g_paused;
 extern u8 D_0028E378;
 extern u16 D_0028E3A0_as_u16;
 extern u16 D_0028E3A4_as_u16;
@@ -39,7 +39,7 @@ void func_0020EAB0(void) {
     u8 *tbl;
 
     func_0020EC90();
-    if (D_0028E36C != 0) return;
+    if (g_paused != 0) return;
     D_0028E21C = 1;
     if (D_0028E3E8 != 0) return;
     if (D_0028E3B0_as_u16 != 0) {
@@ -192,13 +192,13 @@ extern u16 D_002523E0[];
 extern u8 D_002610B0[];
 extern u16 D_0028DF14_as_u16;
 extern u16 D_0028DF18_as_u16;
-extern u8 D_0028E27C;
-extern u16 D_0028E340;
-extern u16 D_0028E344;
-extern u16 D_0028E348;
-extern u16 D_0028E34C;
-extern u8 D_0028E35C;
-extern u8 D_0028E360;
+extern u8 g_pad_vib_enabled;
+extern u16 g_pad_vib_power_p2;
+extern u16 g_pad_vib_power_p1;
+extern u16 g_pad_vib_timer_p2;
+extern u16 g_pad_vib_timer_p1;
+extern u8 g_pad_vib_state_p2;
+extern u8 g_pad_vib_state_p1;
 extern s32 D_0028E998;
 extern s32 D_0028E99C;
 extern u8 *reg_a1;
@@ -295,16 +295,16 @@ next_41:
     goto next_50;
 next_45:
 next_42:
-    if (D_0028E27C == 0) goto next_46;
+    if (g_pad_vib_enabled == 0) goto next_46;
     if (reg_d7.h[0] == 0) goto next_44;
-    D_0028E360 = 1;
-    D_0028E344 = 0xA0;
-    D_0028E34C = 0x14;
+    g_pad_vib_state_p1 = 1;
+    g_pad_vib_power_p1 = 0xA0;
+    g_pad_vib_timer_p1 = 0x14;
     goto next_46;
 next_44:
-    D_0028E35C = 1;
-    D_0028E340 = 0xA0;
-    D_0028E348 = 0x14;
+    g_pad_vib_state_p2 = 1;
+    g_pad_vib_power_p2 = 0xA0;
+    g_pad_vib_timer_p2 = 0x14;
 next_46:
     W(0x42) = 3;
     W(0x40) = 0;

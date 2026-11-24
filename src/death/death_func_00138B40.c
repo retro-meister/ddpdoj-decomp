@@ -72,7 +72,7 @@ extern u16 D_00295E40[];
 extern TextScript death_D_002AB800;
 extern u16 g_arcade_sprites_as_u16_a[];
 extern u8 g_splash_file_buf[];
-extern u8 death_D_0056A800[];
+extern u8 g_noise_file_buf[];
 extern u8 g_gs_load_image_as_u8_a[];
 extern GlyphQuad g_quad_queue_as_GlyphQuad_a[];
 extern u8 *reg_a0;
@@ -125,7 +125,7 @@ void death_func_00138C50(TextScript *script) {
         g_quad_queue_as_GlyphQuad_a[0].v1 = 0xE0;
         g_quad_count = 1;
         quad_flush();
-        death_func_00138BE0(death_D_0056A800);
+        death_func_00138BE0(g_noise_file_buf);
         g_quad_count = 0;
         shade = (rand() & 0x1F) + 0x40;
         if (script->frame & 1) {

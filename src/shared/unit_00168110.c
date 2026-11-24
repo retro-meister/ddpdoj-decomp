@@ -21,14 +21,14 @@ extern u16 D_0025AFC0[];
 extern u16 D_0028E88C;
 extern u16 D_0028E8C8;
 extern u16 D_0028E918;
-extern u16 D_0028E91C;
+extern u16 g_stage;
 extern s8 enemy_move_end_requested;
 extern u8 *reg_a0;
 extern u8 *reg_a5;
 extern u8 *reg_a6;
 
 void func_00168120(void) {
-    if ((D_0028E91C == 3) && (D_0028E88C != 0)) {
+    if ((g_stage == 3) && (D_0028E88C != 0)) {
         func_0014E290();
         return;
     }
@@ -203,7 +203,7 @@ next_3:
                 if (t2 == 0) {
                     t2 = (s16 *) D_0028E890;
                     if (t2 != 0) {
-                        t5 = D_0028E91C;
+                        t5 = g_stage;
                         reg_a4 = (u8 *)(D_0025B040);
                         reg_d1.h[0] = *(u16 *)(reg_a5 + 0x26);
                         reg_d5.h[0] = reg_d1.h[0];

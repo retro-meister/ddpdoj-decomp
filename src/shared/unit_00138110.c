@@ -49,13 +49,13 @@ extern u8 D_0028E8FC_as_u8;
 extern u8 D_0028E900_as_u8;
 extern u16 D_0028E904;
 extern u16 D_0028E910;
-extern u16 D_0028E91C;
+extern u16 g_stage;
 extern u8 D_0028ED80;
 extern u16 D_006E5C02[];
 
 void func_00138170(void) {
     reg_a0 = (u8 *) D_0028E7F4;
-    reg_d2.h[0] = D_0028E91C;
+    reg_d2.h[0] = g_stage;
     reg_d1.w = 0;
     reg_d1.b[0] = *(s8 *) (reg_a0 + reg_d2.h[0]);
     reg_d2.w = D_0028E8BC_as_u32;

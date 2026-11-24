@@ -77,14 +77,14 @@ extern u16 D_0028E1A4;
 extern u16 D_0028E1A8;
 extern u16 D_0028E1B0;
 extern u16 D_0028E1B4;
-extern s8 D_0028E248[];
+extern s8 g_arcade_input_port[];
 extern s8 D_0028E249[];
-extern u8 D_0028E350;
-extern u8 D_0028E36C;
+extern u8 g_stage_load_state;
+extern u8 g_paused;
 extern s8 D_0028E370_as_s8;
 extern u8 D_0028E374;
 extern u16 D_0028E3C0;
-extern s16 D_0028E91C_as_s16;
+extern s16 g_stage_as_s16;
 extern s8 D_0028E9A4;
 extern s8 D_0028E9A5;
 extern u16 D_0028E9A8;
@@ -193,14 +193,14 @@ void func_002120D0(void) {
             if (g_cd_async_busy == 0) {
                 g_cd_async_state = 0;
                 t3 += 1;
-                D_0028E91C_as_s16 = 0;
+                g_stage_as_s16 = 0;
                 g_cd_async_busy = 1;
-                D_0028E350 = 0;
+                g_stage_load_state = 0;
             }
             break;
         case 3:
             stage_load_step();
-            if (D_0028E350 == 0) {
+            if (g_stage_load_state == 0) {
                 g_cd_async_state = 0;
                 g_cd_async_busy = 1;
                 t3 += 1;
@@ -223,15 +223,15 @@ loop_15:
     func_0016A7F0();
     t1 = 0;
     t2 = 0;
-    if (D_0028E36C != 0) {
+    if (g_paused != 0) {
         func_002232F0();
-        if (D_0028E36C == 0) {
+        if (g_paused == 0) {
             t1 = 1;
             D_0028E1B0 = D_0028E9B4;
             D_0028E1A4 = D_0028E9B0;
             D_0028E1B4 = D_0028E9AC;
             D_0028E1A8 = D_0028E9A8;
-            D_0028E248[0] = D_0028E9A4;
+            g_arcade_input_port[0] = D_0028E9A4;
             D_0028E249[0] = D_0028E9A5;
         }
     } else {
@@ -244,12 +244,12 @@ loop_15:
         }
         t2 = 1;
     }
-    if ((D_0028E36C == 0) && (t1 == 0)) {
+    if ((g_paused == 0) && (t1 == 0)) {
         D_0028E9B4 = D_0028E1B0;
         D_0028E9B0 = D_0028E1A4;
         D_0028E9AC = D_0028E1B4;
         D_0028E9A8 = D_0028E1A8;
-        D_0028E9A4 = D_0028E248[0];
+        D_0028E9A4 = g_arcade_input_port[0];
         D_0028E9A5 = D_0028E249[0];
     }
     func_0020EAB0();

@@ -21,7 +21,7 @@ extern s8 D_0028E310_as_s8;
 extern u8 D_0028E37C;
 extern u8 D_0028E855;
 extern u16 D_0028E910;
-extern u16 D_0028E91C;
+extern u16 g_stage;
 extern s16 D_00299760_as_s16_a[];
 extern u8 D_002962E0[];
 #ifdef DEATH_LABEL
@@ -54,9 +54,9 @@ void func_00129DB0(void) {
         s16 *limit;
 
         if (D_0028E910 == 0) {
-            limit = &death_D_002512A0[D_0028E91C];
+            limit = &death_D_002512A0[g_stage];
         } else {
-            limit = &death_D_002512B0[D_0028E91C];
+            limit = &death_D_002512B0[g_stage];
         }
         reg_tmp.h[0] = (s16) D_0028E158 + (s16) D_0028E15C;
         reg_tmp.h[0] /= 0xC;
@@ -69,7 +69,7 @@ void func_00129DB0(void) {
     if (D_0028E37C != 0) {
         reg_tmp.h[0] = (s16) D_0028E158 + (s16) D_0028E15C;
         reg_tmp.h[0] /= 0xC;
-        if ((D_0028E855 & 2) && (D_0028E910 != 0) && (reg_tmp.h[0] > D_0024F330[D_0028E91C])) {
+        if ((D_0028E855 & 2) && (D_0028E910 != 0) && (reg_tmp.h[0] > D_0024F330[g_stage])) {
             D_0028E310_as_s8 = 2;
         }
     }

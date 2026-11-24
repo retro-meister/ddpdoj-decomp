@@ -598,7 +598,7 @@ s32 func_0018DEE0();                            /* extern */
 s32 func_00206D70();                            /* extern */
 s32 func_002071C0();                            /* extern */
 extern u16 D_0028E910;
-extern u16 D_0028E91C;
+extern u16 g_stage;
 extern s8 D_0028ED64_as_s8;
 
 void func_00134BD0(void) {
@@ -609,7 +609,7 @@ void func_00134BD0(void) {
     reg_d0.h[0] = 0xE;
     func_002071C0();
     if (D_0028E910 != 1) {
-        if ((s32) 0 < D_0028E91C) {
+        if ((s32) 0 < g_stage) {
             goto block_3;
         }
     } else {

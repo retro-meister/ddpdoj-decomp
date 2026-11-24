@@ -22,13 +22,13 @@ void func_00134FB0(void) {
 
 extern u16 D_0028E914;
 extern u16 D_0028E918;
-extern u16 D_0028E91C;
+extern u16 g_stage;
 
 void func_00134FE0(void) {
     u32 value;
 
     value = reg_d0.h[0];
-    D_0028E91C = value;
+    g_stage = value;
     value = value + value;
     reg_d0.h[0] = value;
     value = reg_d0.h[0];
@@ -750,7 +750,7 @@ void func_00135ED0(void) {
     u8 *temp_a2;
 
     var_a1 = 0;
-    D_0028E928 = D_0028E924 = D_0028E920 = D_0028E91C = D_0028E918 = D_0028E914 = D_0028E910 = D_0028E90C = D_0028E908 = D_0028E904 = D_0028E900 = D_0028E8FC = D_0028E8F8 = D_0028E8F4 = D_0028E8F0 = D_0028E8EC = D_0028E8E8 = D_0028E8E4 = D_0028E8E0 = D_0028E8DC = D_0028E8D8 = D_0028E8D4 = D_0028E8D0 = D_0028E8CC = D_0028E8C8 = D_0028E8C4 = D_0028E8C0 = D_0028E8BC = D_0028E8B8 = (D_0028E8B4 = D_0028E8B0 = (D_0028E8A8 = D_0028E8A4 = D_0028E8A0 = D_0028E89C = D_0028E898 = 0));
+    D_0028E928 = D_0028E924 = D_0028E920 = g_stage = D_0028E918 = D_0028E914 = D_0028E910 = D_0028E90C = D_0028E908 = D_0028E904 = D_0028E900 = D_0028E8FC = D_0028E8F8 = D_0028E8F4 = D_0028E8F0 = D_0028E8EC = D_0028E8E8 = D_0028E8E4 = D_0028E8E0 = D_0028E8DC = D_0028E8D8 = D_0028E8D4 = D_0028E8D0 = D_0028E8CC = D_0028E8C8 = D_0028E8C4 = D_0028E8C0 = D_0028E8BC = D_0028E8B8 = (D_0028E8B4 = D_0028E8B0 = (D_0028E8A8 = D_0028E8A4 = D_0028E8A0 = D_0028E89C = D_0028E898 = 0));
     D_0028E854_as_u16 = 0;
     D_0028E858 = 0;
     D_0028E85C = 0;
@@ -1104,7 +1104,7 @@ void func_00136600(void) {
         if (var_v0 == 0) {
             var_v0 = D_0028ED7C == 2;
         }
-        if (((var_v0 != 0) || (D_0028E3C0 != 0)) && (D_0028E91C == 0)) {
+        if (((var_v0 != 0) || (D_0028E3C0 != 0)) && (g_stage == 0)) {
             reg_d7.h[0] = 0x38;
         }
         reg_d6.h[0] = D_0028E940;
@@ -1130,7 +1130,7 @@ void func_00136600(void) {
 s32 func_00134380();
 s32 func_00138170();
 s32 func_002075F0();
-extern u8 D_0028E350;
+extern u8 g_stage_load_state;
 extern u16 D_0028E3F0;
 extern u8 D_0028EC4C;
 extern s16 D_00299768[];
@@ -1154,7 +1154,7 @@ void func_001367C0(void) {
         reg_d0.w = 0xE;
         reg_d0.h[0] &= D_0028E3F0;
         D_0028E8B8 = reg_d0.h[0];
-        if ((D_0028E8A0 == 0) && (D_0028E350 == 0) && (D_0028EC4C == 0)) {
+        if ((D_0028E8A0 == 0) && (g_stage_load_state == 0) && (D_0028EC4C == 0)) {
             D_0028E8BC += 1;
         }
         func_00138170();

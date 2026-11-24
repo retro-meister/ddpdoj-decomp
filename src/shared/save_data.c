@@ -3063,7 +3063,7 @@ s32 func_001719A0();
 s32 func_001719B0();
 s32 func_001719D0();
 s32 func_0018D190();
-extern u8 D_0028E298;
+extern u8 g_pad_input_locked;
 extern u8 D_0028E2C4;
 extern u8 D_0028E2C8;
 extern u8 D_0028E2D4;
@@ -3143,7 +3143,7 @@ void func_0022C1F0() {
         D_0028E388 = D_00684C90[0];
         D_0028E384 = D_00684C8E[0];
         func_0022C450(D_00684C88[0]);
-        D_0028E298 = 1;
+        g_pad_input_locked = 1;
 #ifdef DEATH_LABEL
         if (death_D_00290DC0 != 0) {
             death_D_00290DBC = 1;
@@ -3167,7 +3167,7 @@ void func_0022C1F0() {
     case MAIN_OR_DEATH_LABEL(18, 19):
         func_00131440();
         if (D_0028E370 != 0) {
-            D_0028E298 = 0;
+            g_pad_input_locked = 0;
             D_00684C94[0] += 1;
             D_0028E910 = D_00684C8A[0];
             func_00135110();

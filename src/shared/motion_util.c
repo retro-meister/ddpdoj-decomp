@@ -1141,11 +1141,11 @@ next_2:
     return;
 }
 
-extern u16 D_0028E91C;
+extern u16 g_stage;
 
 void func_002035A0(void) {
     func_002034C0();
-    reg_d7.h[0] = D_0028E91C;
+    reg_d7.h[0] = g_stage;
     reg_d7.h[0] += 1;
     if ((s32) reg_d7.h[0] >= 5) {
         reg_d7.w = 0;

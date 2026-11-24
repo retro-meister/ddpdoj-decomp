@@ -446,7 +446,7 @@ extern u16 D_00255510_as_u16_a[];
 extern u16 D_0028DFFC;
 extern u16 D_0028E5E8;
 extern u16 D_0028E5EC;
-extern u16 D_0028E91C;
+extern u16 g_stage;
 
 void func_0013D660(void) {
     reg_d0.h[0] = D_0028E5EC;
@@ -471,7 +471,7 @@ next_2:
 next_1:
     if (D_0028E910 != 0) {
         reg_d0.h[0] += 1;
-        if ((D_0028E91C == 4) && (D_0028E908 != 0)) {
+        if ((g_stage == 4) && (D_0028E908 != 0)) {
             reg_d0.h[0] += 4;
         }
     }

@@ -1549,7 +1549,7 @@ block_3:
 
 void func_0019D2F0(void);
 extern u16 D_0028E910;
-extern u16 D_0028E91C;
+extern u16 g_stage;
 
 void func_00128320(void) {
     void func_0019D2C0(void);
@@ -1601,7 +1601,7 @@ void func_00128320(void) {
         }
     } while ((s16)(--reg_d7.h[0]) >= 0);
     reg_d1.h[0] += 0x7FFF + 0x7C01;
-    if (D_0028E91C != 0 || D_0028E910 != 0) {
+    if (g_stage != 0 || D_0028E910 != 0) {
         reg_d6.w = sd6;
         reg_d7.w = sd7;
         return;

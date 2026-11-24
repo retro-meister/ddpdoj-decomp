@@ -49,7 +49,7 @@ s32 func_00224B50();
 extern u8 D_00269160[];
 extern u8 D_0026A830[];
 extern s8 D_0028DF84;
-extern u8 D_0028E350;
+extern u8 g_stage_load_state;
 extern u8 D_0028E39C;
 extern u16 D_0028E3C0;
 extern u16 D_0028E7B8;
@@ -77,7 +77,7 @@ void func_00168BC0(void) {
 #ifndef DEATH_LABEL
     reg_d0.h[0] = D_0028E7BC;
     if (D_0028E3C0 != 0) goto next_1;
-    if (D_0028E350 != 0) goto block_3;
+    if (g_stage_load_state != 0) goto block_3;
     goto next_2;
 next_1:
     if (g_cd_async_state != 0) goto next_3;
@@ -91,7 +91,7 @@ next_2:
     if (reg_d0.h[0] == 16) goto block_3;
     if (reg_d0.h[0] == 19) goto block_3;
     if (D_0028E39C != 0x12) goto next_3;
-    if (D_0028E350 != 0) goto next_3;
+    if (g_stage_load_state != 0) goto next_3;
     if (g_pad_trigger[2] & 0x800) goto block_1;
 next_3:
     func_00130200();
@@ -198,8 +198,8 @@ extern u8 D_0028E304;
 extern u8 D_0028E310;
 extern u8 D_0028E368;
 extern u8 D_0028E378;
-extern s16 D_0028E3FC;
-extern u16 D_0028E91C;
+extern s16 g_loaded_stage;
+extern u16 g_stage;
 extern u8 g_cd_async_state_as_u8;
 extern u8 g_cd_async_busy_as_u8;
 
@@ -222,14 +222,14 @@ void func_00168EF0(void) {
         D_0028E378 = 0xFF;
         D_0028DF84_as_u8 = 0;
         g_cd_async_busy_as_u8 = 1;
-        D_0028E350 = 0;
+        g_stage_load_state = 0;
         g_cd_async_state_as_u8 = 0;
         func_00225630();
     }
     if ((*(u8 *)((u8 *)(reg_a5) + (2))) == 1) {
-        D_0028E91C = 0;
+        g_stage = 0;
         stage_load_step();
-        if (D_0028E3FC == D_0028E91C) {
+        if (g_loaded_stage == g_stage) {
             (*(u8 *)((u8 *)(reg_a5) + (2))) = 2U;
             func_002256B0();
             func_001A3D20();
@@ -247,13 +247,13 @@ s32 func_0015BBD0();
 s32 func_0015BEF0();
 s32 func_0018DEE0();
 s32 fade_reset();
-s32 func_00217EC0();
+s32 boot_scratch_clear();
 s32 stage_map_reset();
 extern u8 D_0028E284;
 extern u8 D_0028E288;
 extern u8 D_0028E290;
 extern u8 D_0028E2E4;
-extern u8 D_0028E2F4;
+extern u8 g_splash_visible;
 
 void func_00168FD0(void) {
     s32 func_0012FAB0();
@@ -268,26 +268,26 @@ void func_00168FD0(void) {
         func_0018DEE0();
         D_0028E368 = 0;
         D_0028E378 = 0xFF;
-        D_0028E2F4 = 0;
+        g_splash_visible = 0;
         fade_reset();
         stage_map_reset();
-        func_00217EC0();
-        D_0028E350 = 0;
+        boot_scratch_clear();
+        g_stage_load_state = 0;
         g_cd_async_busy_as_u8 = 1;
         g_cd_async_state_as_u8 = 0;
         func_00225630();
     }
     if (reg_a5[2] == 1) {
-        D_0028E91C = 0;
+        g_stage = 0;
         stage_load_step();
-        if (D_0028E3FC == D_0028E91C) {
+        if (g_loaded_stage == g_stage) {
             reg_a5[2] = 2U;
             func_002256B0();
         }
     }
     if (D_0028E39C != 0x12) {
         func_0015BD00();
-        if (D_0028E350 == 0) {
+        if (g_stage_load_state == 0) {
             func_00169B40();
         }
     } else {
@@ -297,7 +297,7 @@ void func_00168FD0(void) {
             func_0015BBD0();
         }
         switch (D_0028E408) { case 0: goto block_set; }
-        if (D_0028E350 == 0) {
+        if (g_stage_load_state == 0) {
             func_00169B40();
         }
         return;
@@ -320,7 +320,7 @@ void func_00168FD0(void) {
 s32 func_0018DEE0();
 s32 fade_reset();
 s32 stage_map_reset();
-extern u8 D_0028E2F4;
+extern u8 g_splash_visible;
 extern s8 g_cd_async_busy;
 extern s8 D_0028EB88;
 
@@ -339,23 +339,23 @@ void death_func_00136FF0(void) {
         func_0018DEE0();
         D_0028E368 = 0;
         D_0028E378 = 0xFF;
-        D_0028E2F4 = 0;
+        g_splash_visible = 0;
         fade_reset();
         stage_map_reset();
-        D_0028E350 = 0;
+        g_stage_load_state = 0;
         g_cd_async_busy = 1;
         g_cd_async_state = 0;
         func_00225630();
     }
     if (reg_a5[2] == 1) {
-        D_0028E91C = 0;
+        g_stage = 0;
         stage_load_step();
-        if (D_0028E3FC == D_0028E91C) {
+        if (g_loaded_stage == g_stage) {
             reg_a5[2] = 2U;
             func_002256B0();
         }
     }
-    if (D_0028E350 == 0) {
+    if (g_stage_load_state == 0) {
         D_0028EB88 = 0;
         reg_d0.h[0] = 0xF;
         func_00168BA0();
@@ -371,7 +371,7 @@ extern const char D_00275840[];
 extern s8 D_0028E25C_as_s8;
 extern s8 D_0028E284_as_s8;
 extern s8 D_0028E288_as_s8;
-extern s8 D_0028E298_as_s8;
+extern s8 g_pad_input_locked_as_s8;
 extern s8 D_0028E2A0_as_s8;
 extern s8 D_0028E2A4_as_s8;
 extern u8 D_0028E2B8_as_u8;
@@ -405,7 +405,7 @@ void func_00169140(void) {
         D_0028E310_as_s8 = 0;
         D_0028E288_as_s8 = 0;
         D_0028E284_as_s8 = 0;
-        D_0028E298_as_s8 = 0;
+        g_pad_input_locked_as_s8 = 0;
         D_0028E2A4_as_s8 = 0;
         D_0028E2A0_as_s8 = 0;
         D_0028E368_as_s8 = 0;
@@ -551,7 +551,7 @@ void func_00169400(void) {
 
 s32 func_00122BE0();                            /* extern */
 s32 func_00122C20();                            /* extern */
-extern s8 D_0028E2F4_as_s8;
+extern s8 g_splash_visible_as_s8;
 
 void func_00169410(void) {
     if ((*(u8 *)((u8 *)(reg_a5) + (2))) == 0) {
@@ -561,7 +561,7 @@ void func_00169410(void) {
     func_00122C20();
     if (D_0028E408 == 0) {
         reg_d0.h[0] = 1;
-        D_0028E2F4_as_s8 = 0;
+        g_splash_visible_as_s8 = 0;
         if (D_0028E39C == 0x12) {
             reg_d0.h[0] = 3;
         }
@@ -977,7 +977,7 @@ void func_00169D30(void) {
 extern u8 D_0026AAA0[];
 
 void func_00169DA0(void) {
-    if (D_0028E350 == 0) {
+    if (g_stage_load_state == 0) {
         reg_d0.h[0] = 0;
         reg_d2.h[0] = 0;
         reg_a0 = D_0026AAA0;
@@ -997,7 +997,7 @@ void func_00169DA0(void) {
 extern u8 D_0026AC80[];
 
 void func_00169E20(void) {
-    if (D_0028E350 == 0) {
+    if (g_stage_load_state == 0) {
         reg_d0.h[0] = 0;
         reg_d2.h[0] = 0;
         reg_a0 = D_0026AC80;

@@ -9,7 +9,7 @@ extern u8 D_0025B3C0[];
 extern u16 D_0028E8C8;
 extern u16 D_0028E8D8;
 extern u16 D_0028E918;
-extern u16 D_0028E91C;
+extern u16 g_stage;
 extern u8 *reg_a0;
 extern u8 *reg_a1;
 extern u8 *reg_a2;
@@ -63,7 +63,7 @@ void func_00119B10(void) {
     reg_a3 += 2;
     (*(u16 *)((u8 *)(reg_a6) + (0x1A))) = (u16) *(u16 *)reg_a3;
     reg_a3 += 2;
-    reg_d0.h[0] = D_0028E91C;
+    reg_d0.h[0] = g_stage;
     reg_d0.h[0] >>= 1;
     reg_d0.h[0] += 2;
     (*(u8 *)((u8 *)(reg_a6) + (0x2B))) = (u8) reg_d0.b[0];

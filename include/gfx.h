@@ -111,7 +111,7 @@ void display_reset(void);
 void wallpaper_load(s32 image, u16 *palette);
 void wallpaper_draw(void *packetBuf);
 void scissor_set(void *packetBuf, s32 x, s32 y, s32 w, s32 h);
-void label_draw(s32 *rect, s32 x, s32 y, u8 *text);
+void label_draw(RenderTarget *target, s32 x, s32 y, const char *text);
 void glyph_queue_clear(void);
 void glyph_queue_add(s32 x, s32 y, s32 z, s32 page, s32 color, s32 alpha, s32 wide); /* text in reg_a0 */
 void glyph_queue_flush(void);

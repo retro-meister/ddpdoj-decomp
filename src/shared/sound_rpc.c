@@ -1009,16 +1009,16 @@ void func_0018DEA0(void) {
     func_0018DDF0();
 }
 
-extern u8 D_0028E364;
+extern u8 g_pause_lock_timer;
 
 void func_0018DED0(void) {
-    D_0028E364 = 0xFF;
+    g_pause_lock_timer = 0xFF;
     func_0018CD20(0);
 }
 
 
 void func_0018DEE0(void) {
-    D_0028E364 = 0xFF;
+    g_pause_lock_timer = 0xFF;
     func_0018CCA0(0);
 }
 
@@ -1029,7 +1029,7 @@ extern s32 D_0029CA20_as_s32_a[];
 
 void func_0018DEF0(s32 arg0, s32 arg1) {
     if (D_0028E3C0 != 0) return;
-    D_0028E364 = 0x46;
+    g_pause_lock_timer = 0x46;
     D_0029CA18_as_s32_a[0] = 0;
     func_0018C600(0x100, 1, 0);
     func_0018C8D0(0);

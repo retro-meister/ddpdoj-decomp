@@ -218,6 +218,7 @@ segments:
       - [0x18e5a0, rodata, rodata_18e5a0]
       - [0x18e670, sdata, sdata]
       - {type: sbss, vram: 0x290400, name: sbss_290400}
+      - {type: .sbss, vram: 0x290b54, name: shared/system}
       - {type: .sbss, vram: 0x290bc8, name: shared/text}
       - {type: sbss, vram: 0x290bec, name: sbss_290bec}
       - {type: .sbss, vram: 0x290dd0, name: shared/gfx}
@@ -227,6 +228,7 @@ segments:
       - {type: bss, vram: 0x291580, name: bss_291580}
       - {type: .bss, vram: 0x301010, name: shared/glyph_cache}
       - {type: bss, vram: 0x30b080, name: bss_30b080}
+      - {type: .bss, vram: 0x342800, name: shared/system}
       - {type: .bss, vram: 0x61b000, name: shared/text}
       - {type: bss, vram: 0x61fe00, name: bss_61fe00}
   - name: elf_tail

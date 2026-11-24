@@ -102,9 +102,9 @@ void gallery_main(void)
     sceGsSetDefDBuffDc(&g_gs_dbuff, SCE_GS_PSMCT32, 640, 224, 1, SCE_GS_PSMZ24, 0);
     FlushCache(0);
     sceGsSyncV(0);
-    sceGsPutDrawEnv(g_gs_dbuff.draw01);
+    sceGsPutDrawEnv(&g_gs_dbuff.giftag0);
     sceGsSyncPath(0, 0);
-    sceGsPutDrawEnv(g_gs_dbuff.draw11);
+    sceGsPutDrawEnv(&g_gs_dbuff.giftag1);
     sceGsSyncPath(0, 0);
     iop_reboot_and_load_modules();
     pad_open_ports();
@@ -189,11 +189,11 @@ void gallery_run_loop(void)
         ready = !sceGsSyncV(0);
 
         if (g_frame_count & 1) {
-            sceGsSetHalfOffset(g_gs_dbuff.draw11_env, 0x800, 0x800, (s16)ready);
-            sceGsSetHalfOffset2(g_gs_dbuff.draw12, 0x800, 0x800, (s16)ready);
+            sceGsSetHalfOffset(&g_gs_dbuff.draw11, 0x800, 0x800, (s16)ready);
+            sceGsSetHalfOffset2(&g_gs_dbuff.draw12, 0x800, 0x800, (s16)ready);
         } else {
-            sceGsSetHalfOffset(g_gs_dbuff.draw01_env, 0x800, 0x800, (s16)ready);
-            sceGsSetHalfOffset2(g_gs_dbuff.draw02, 0x800, 0x800, (s16)ready);
+            sceGsSetHalfOffset(&g_gs_dbuff.draw01, 0x800, 0x800, (s16)ready);
+            sceGsSetHalfOffset2(&g_gs_dbuff.draw02, 0x800, 0x800, (s16)ready);
         }
 
         FlushCache(0);

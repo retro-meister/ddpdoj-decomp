@@ -525,7 +525,7 @@ extern u16 D_0028E630;
 extern u8 D_0028E635;
 extern u8 D_0028E855;
 extern u16 D_0028E910;
-extern u16 D_0028E91C;
+extern u16 g_stage;
 extern u16 D_0029CEA0[];
 
 void func_001A6050(void) {
@@ -660,7 +660,7 @@ next_180:
     reg_d4.h[0] = 9;
     if ((u32) reg_d7.w > 0x6FB8U) goto next_240;
     if (D_0028E910 == 0) goto next_200;
-    if (D_0028E91C == 4) goto next_240;
+    if (g_stage == 4) goto next_240;
 next_200:
     reg_d4.h[0] = 0x19;
     reg_d2.h[0] = D_0029CEA0[0];
@@ -1208,7 +1208,7 @@ next_7:
     func_0018DED0();
     goto next_12;
 next_11:
-    if (D_0028E91C == 4) goto next_12;
+    if (g_stage == 4) goto next_12;
     D_0028E2A4_as_s8 = 0x78;
     func_0018DED0();
 next_12:

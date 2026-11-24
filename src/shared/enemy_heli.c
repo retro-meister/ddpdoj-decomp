@@ -70,12 +70,12 @@ void func_00150730(void) {
 }
 
 extern u16 D_0028E894;
-extern u16 D_0028E91C;
+extern u16 g_stage;
 
 void func_00150740(void) {
     s32 func_0014E290(u16);
-    if ((D_0028E91C == 1) && (D_0028E894 != 0)) {
-        func_0014E290(D_0028E91C);
+    if ((g_stage == 1) && (D_0028E894 != 0)) {
+        func_0014E290(g_stage);
         D_0028E408 = 1;
         return;
     }
@@ -86,8 +86,8 @@ extern u16 D_0028E858;
 
 void func_00150790(void) {
     s32 func_0014E290(u16);
-    if ((D_0028E91C == 2) && (D_0028E858 != 0)) {
-        func_0014E290(D_0028E91C);
+    if ((g_stage == 2) && (D_0028E858 != 0)) {
+        func_0014E290(g_stage);
         D_0028E408 = 1;
         return;
     }
@@ -130,7 +130,7 @@ void func_001507E0(void) {
     if (D_0028E910 != 0) {
         goto block_rts;
     }
-    switch (D_0028E91C) {
+    switch (g_stage) {
     case 2:
         return;
     }
@@ -192,7 +192,7 @@ void func_001509D0(void) {
         reg_d0.h[0] = D_0028E8CC;
         reg_d0.b[0] -= 8;
         (*(u8 *)((u8 *)(reg_a5) + (0x19))) -= reg_d0.b[0];
-        if (D_0028E91C == 4) {
+        if (g_stage == 4) {
             if (D_0028E890 != 0) {
                 func_0014E290();
                 return;
@@ -472,7 +472,7 @@ void func_00151610(void) {
                 reg_d0.h[0] = D_0028E8CC;
                 reg_d0.b[0] -= 8;
                 (*(u8 *)((u8 *)(reg_a5) + (0x19))) -= reg_d0.b[0];
-                if (D_0028E91C == 2) {
+                if (g_stage == 2) {
                     (*(u8 *)((u8 *)(reg_a5) + (0x19))) = 0xAU;
                 }
             }
@@ -615,7 +615,7 @@ void func_00151C30(void) {
         reg_d0.h[0] = D_0028E8CC;
         reg_d0.b[0] -= 8;
         (*(u8 *)((u8 *)(reg_a5) + (0x19))) -= reg_d0.b[0];
-        if (D_0028E91C == 4) {
+        if (g_stage == 4) {
             if (D_0028E884 != 0) {
                 func_0014E290();
                 return;
@@ -994,7 +994,7 @@ void func_00152A90(void) {
         reg_d0.h[0] = D_0028E8CC;
         reg_d0.b[0] -= 8;
         (*(u8 *)((u8 *)(reg_a5) + (0x19))) -= reg_d0.b[0];
-        if (D_0028E91C == 4) {
+        if (g_stage == 4) {
             if (D_0028E8A8_as_s16 >= 0x290) {
                 if (D_0028E878 != 0) {
                     func_0014E290();
@@ -1177,7 +1177,7 @@ void func_001531A0(void) {
         reg_d0.h[0] = D_0028E8D4;
         reg_d0.b[0] -= 8;
         (*(u8 *)((u8 *)(reg_a5) + (0x19))) -= reg_d0.b[0];
-        if (D_0028E91C == 4) {
+        if (g_stage == 4) {
             if (D_0028E884 != 0) {
                 func_0014E290();
                 return;

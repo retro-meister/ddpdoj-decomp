@@ -657,7 +657,7 @@ void func_0021DDE0() {
 extern s32 g_screen_mode;
 extern s8 D_0028DD9C[4];
 extern s8 D_0028DDA0[2];
-extern s8 D_0028E2F8_as_s8;
+extern s8 g_pad_tate_rotate_as_s8;
 extern u8 D_0028E354;
 extern u8 D_0028E358;
 extern s8 D_0068DD01[];
@@ -679,19 +679,19 @@ void func_0021DF60(void) {
     }
     g_screen_mode = value;
     if (D_0028E358 == 0 && D_0028E354 >= 2) {
-        D_0028E2F8_as_s8 = 1;
+        g_pad_tate_rotate_as_s8 = 1;
     } else {
-        D_0028E2F8_as_s8 = 0;
+        g_pad_tate_rotate_as_s8 = 0;
     }
 }
 
 extern s8 D_0028DD10[8];
-extern s16 D_0028E340_as_s16;
-extern s16 D_0028E344_as_s16;
-extern s16 D_0028E348_as_s16;
-extern s16 D_0028E34C_as_s16;
-extern u8 D_0028E35C;
-extern u8 D_0028E360;
+extern s16 g_pad_vib_power_p2_as_s16;
+extern s16 g_pad_vib_power_p1_as_s16;
+extern s16 g_pad_vib_timer_p2_as_s16;
+extern s16 g_pad_vib_timer_p1_as_s16;
+extern u8 g_pad_vib_state_p2;
+extern u8 g_pad_vib_state_p1;
 extern s8 D_0068DC20[];
 
 void func_0021E000(void) {
@@ -715,13 +715,13 @@ void func_0021E000(void) {
             D_0068DC20[D_0028EB58] = cur;
             if (D_0028EB58 == 4 && cur == 1) {
                 if (g_pad_repeat[0] != 0) {
-                    D_0028E360 = 1;
-                    D_0028E344_as_s16 = 0x78;
-                    D_0028E34C_as_s16 = 0x14;
+                    g_pad_vib_state_p1 = 1;
+                    g_pad_vib_power_p1_as_s16 = 0x78;
+                    g_pad_vib_timer_p1_as_s16 = 0x14;
                 } else {
-                    D_0028E35C = 1;
-                    D_0028E340_as_s16 = 0x78;
-                    D_0028E348_as_s16 = 0x14;
+                    g_pad_vib_state_p2 = 1;
+                    g_pad_vib_power_p2_as_s16 = 0x78;
+                    g_pad_vib_timer_p2_as_s16 = 0x14;
                 }
             }
         } else if (pad & 0x8000) {
@@ -733,20 +733,20 @@ void func_0021E000(void) {
             D_0068DC20[D_0028EB58] = cur;
             if (D_0028EB58 == 4 && cur == 1) {
                 if (g_pad_repeat[0] != 0) {
-                    D_0028E360 = 1;
-                    D_0028E344_as_s16 = 0x78;
-                    D_0028E34C_as_s16 = 0x14;
+                    g_pad_vib_state_p1 = 1;
+                    g_pad_vib_power_p1_as_s16 = 0x78;
+                    g_pad_vib_timer_p1_as_s16 = 0x14;
                 } else {
-                    D_0028E35C = 1;
-                    D_0028E340_as_s16 = 0x78;
-                    D_0028E348_as_s16 = 0x14;
+                    g_pad_vib_state_p2 = 1;
+                    g_pad_vib_power_p2_as_s16 = 0x78;
+                    g_pad_vib_timer_p2_as_s16 = 0x14;
                 }
             }
         }
     }
 }
 
-extern s8 D_0028E27C_as_s8;
+extern s8 g_pad_vib_enabled_as_s8;
 extern s8 D_0028E384_as_s8;
 extern s8 D_0028E388_as_s8;
 extern s8 D_0028E38C_as_s8;
@@ -759,22 +759,22 @@ void func_0021E160(void) {
     D_0028E38C_as_s8 = D_0068DC21[0];
     D_0028E384_as_s8 = D_0068DC22[0];
     D_0028E388_as_s8 = D_0068DC23[0];
-    D_0028E27C_as_s8 = D_0068DC24[0];
+    g_pad_vib_enabled_as_s8 = D_0068DC24[0];
 }
 
-extern u8 D_0028E270_as_u8;
-extern u8 D_0028E271;
-extern u8 D_0028E272;
+extern u8 g_p1_btn_map_a_as_u8;
+extern u8 g_p1_btn_map_b;
+extern u8 g_p1_btn_map_c;
 extern u8 D_0028E273;
-extern u8 D_0028E274;
-extern u8 D_0028E275;
-extern u8 D_0028E276;
+extern u8 g_p2_btn_map_a;
+extern u8 g_p2_btn_map_b;
+extern u8 g_p2_btn_map_c;
 extern u8 D_0028E277;
 extern u8 D_0028E278;
-extern u8 D_0028E27C;
-extern u8 D_0028E28C;
+extern u8 g_pad_vib_enabled;
+extern u8 g_stage_map_enabled;
 extern u8 D_0028E2D8;
-extern u8 D_0028E2DC;
+extern u8 g_screen_wide;
 extern u8 D_0028E2E0;
 extern u8 D_0028E2E4;
 extern u8 D_0028E2EC;
@@ -821,7 +821,7 @@ void func_0021E1A0(void) {
     D_0068DC21_as_u8_a[0] = D_0028E38C;
     D_0068DC22_as_u8_a[0] = D_0028E384;
     D_0068DC23_as_u8_a[0] = D_0028E388;
-    D_0068DC24_as_u8_a[0] = D_0028E27C;
+    D_0068DC24_as_u8_a[0] = g_pad_vib_enabled;
     D_0068DC33[0] = D_0028E278;
     D_0068DCF4[0] = D_0028E2D8;
     D_0068DC41_as_u8_a[0] = D_0028E304;
@@ -836,17 +836,17 @@ void func_0021E1A0(void) {
 #endif
     D_0068DD01_as_u8_a[0] = D_0028E358;
     D_0068DD02_as_u8_a[0] = D_0028E354;
-    D_0068DD03[0] = D_0028E2DC;
+    D_0068DD03[0] = g_screen_wide;
     D_0068DD04[0] = D_0028E32C_as_u8;
-    D_0068DD05[0] = D_0028E28C;
+    D_0068DD05[0] = g_stage_map_enabled;
     D_0068DD06[0] = D_0028E2E0;
-    D_0068DD09_as_u8_a[0] = D_0028E270_as_u8;
-    D_0068DD0A_as_u8_a[0] = D_0028E271;
-    D_0068DD0B_as_u8_a[0] = D_0028E272;
+    D_0068DD09_as_u8_a[0] = g_p1_btn_map_a_as_u8;
+    D_0068DD0A_as_u8_a[0] = g_p1_btn_map_b;
+    D_0068DD0B_as_u8_a[0] = g_p1_btn_map_c;
     D_0068DD0C[0] = D_0028E273;
-    D_0068DD0D_as_u8_a[0] = D_0028E274;
-    D_0068DD0E_as_u8_a[0] = D_0028E275;
-    D_0068DD0F_as_u8_a[0] = D_0028E276;
+    D_0068DD0D_as_u8_a[0] = g_p2_btn_map_a;
+    D_0068DD0E_as_u8_a[0] = g_p2_btn_map_b;
+    D_0068DD0F_as_u8_a[0] = g_p2_btn_map_c;
     D_0068DD10[0] = D_0028E277;
 }
 
@@ -1429,8 +1429,8 @@ void func_0021EF60()
 #pragma pop
 
 #pragma push
-extern s8 D_0028E250;
-extern s8 D_0028E254;
+extern s8 g_display_offset_y;
+extern s8 g_display_offset_x;
 extern s8 D_0028EAE0;
 extern s8 D_0028EAE4;
 void func_0021EFB0() {
@@ -1478,9 +1478,9 @@ void func_0021EFB0() {
         case 7:
             func_0018D4B0();
             D_0028EB90 = 0x80;
-            D_0028EAE4 = D_0028E254;
+            D_0028EAE4 = g_display_offset_x;
             D_0028EB84 = 0x10;
-            D_0028EAE0 = D_0028E250;
+            D_0028EAE0 = g_display_offset_y;
             break;
         case 9:
             func_00222780();
@@ -1567,18 +1567,18 @@ void func_0021F1C0(void) {
 
 extern u8 D_00271C60[];
 extern u8 D_00271C64[];
-extern s8 D_0028E270_as_s8;
-extern s8 D_0028E271_as_s8;
-extern s8 D_0028E272_as_s8;
+extern s8 g_p1_btn_map_a_as_s8;
+extern s8 g_p1_btn_map_b_as_s8;
+extern s8 g_p1_btn_map_c_as_s8;
 extern s8 D_0028E273_as_s8;
-extern s8 D_0028E274_as_s8;
-extern s8 D_0028E275_as_s8;
-extern s8 D_0028E276_as_s8;
+extern s8 g_p2_btn_map_a_as_s8;
+extern s8 g_p2_btn_map_b_as_s8;
+extern s8 g_p2_btn_map_c_as_s8;
 extern s8 D_0028E277_as_s8;
-extern s8 D_0028E28C_as_s8;
+extern s8 g_stage_map_enabled_as_s8;
 extern s8 D_0028E2E0_as_s8;
 extern u16 D_0028E32C;
-extern s8 D_0028E9EC;
+extern s8 g_display_reset_pending;
 extern s8 D_0068DD02[];
 extern s8 D_0068DD03_as_s8_a[];
 extern s8 D_0068DD04_as_s8_a[];
@@ -1598,7 +1598,7 @@ void func_0021F2C0(void) {
 
     if (D_0028E358 != D_0068DD01[0]) {
         D_0028E354 = 0;
-        D_0028E9EC = 1;
+        g_display_reset_pending = 1;
         D_0068DD02[0] = 0;
     }
     if (D_0028E354 != D_0068DD02[0]) {
@@ -1609,14 +1609,14 @@ void func_0021F2C0(void) {
             D_0028E354 &= 1;
         }
         D_0068DD02[0] = D_0028E354;
-        D_0028E9EC = 1;
+        g_display_reset_pending = 1;
     }
-    if (D_0028E2DC != D_0068DD03_as_s8_a[0]) {
-        D_0028E9EC = 1;
+    if (g_screen_wide != D_0068DD03_as_s8_a[0]) {
+        g_display_reset_pending = 1;
     }
-    D_0028E2DC = (u8) D_0068DD03_as_s8_a[0];
+    g_screen_wide = (u8) D_0068DD03_as_s8_a[0];
     D_0028E2E0_as_s8 = D_0068DD06_as_s8_a[0];
-    D_0028E28C_as_s8 = D_0068DD05_as_s8_a[0];
+    g_stage_map_enabled_as_s8 = D_0068DD05_as_s8_a[0];
     if (D_0028E32C != D_0068DD04_as_s8_a[0]) {
         D_0028E32C = (u16) (s8)(D_0068DD04_as_s8_a[0]);
         if (D_0028E32C != 5) {
@@ -1624,13 +1624,13 @@ void func_0021F2C0(void) {
             wallpaper_load(*(s32 *)(D_00271C60 + temp_a0), *(s32 *)(D_00271C64 + temp_a0));
         }
     }
-    D_0028E270_as_s8 = D_0068DD09[0];
-    D_0028E271_as_s8 = D_0068DD0A[0];
-    D_0028E272_as_s8 = D_0068DD0B[0];
+    g_p1_btn_map_a_as_s8 = D_0068DD09[0];
+    g_p1_btn_map_b_as_s8 = D_0068DD0A[0];
+    g_p1_btn_map_c_as_s8 = D_0068DD0B[0];
     D_0028E273_as_s8 = D_0068DD0C_as_s8_a[0];
-    D_0028E274_as_s8 = D_0068DD0D[0];
-    D_0028E275_as_s8 = D_0068DD0E[0];
-    D_0028E276_as_s8 = D_0068DD0F[0];
+    g_p2_btn_map_a_as_s8 = D_0068DD0D[0];
+    g_p2_btn_map_b_as_s8 = D_0068DD0E[0];
+    g_p2_btn_map_c_as_s8 = D_0068DD0F[0];
     D_0028E277_as_s8 = D_0068DD10_as_s8_a[0];
 }
 
@@ -1641,7 +1641,7 @@ extern u8 death_D_00628F02[];
 
 void func_0021F440(void) {
     if (D_0028E354 != 0) {
-        D_0028E9EC = 1;
+        g_display_reset_pending = 1;
     }
     D_0068DD01[0] = 0;
     D_0068DD02[0] = 0;
@@ -3902,7 +3902,7 @@ void func_00222F90(s32 x, s32 y, s32 attr) {
     }
 }
 
-extern u8 D_0028E36C;
+extern u8 g_paused;
 
 void func_002232F0(void) {
     extern void func_0018D4B0(void);
@@ -3922,7 +3922,7 @@ void func_002232F0(void) {
     u32 save_d6;
     u32 save_d7;
 
-    if (D_0028E36C != 0 && D_0028E36C != 0x63) {
+    if (g_paused != 0 && g_paused != 0x63) {
         save_d0 = reg_d0.w;
         save_d1 = reg_d1.w;
         save_d2 = reg_d2.w;
@@ -3938,7 +3938,7 @@ void func_002232F0(void) {
         save_a4 = reg_a4;
         save_a5 = reg_a5;
         save_a6 = reg_a6;
-        switch (D_0028E36C) {
+        switch (g_paused) {
         case 0:
             break;
         case 1:
@@ -3946,7 +3946,7 @@ void func_002232F0(void) {
             break;
         case 2:
             func_0018D4B0();
-            D_0028E36C++;
+            g_paused++;
             break;
         case 3:
             func_00223550();
@@ -3990,7 +3990,7 @@ extern u16 D_0028E910;
 #ifdef DEATH_LABEL
 extern u8 death_D_00290DC0;
 #endif
-extern u16 D_0028E91C;
+extern u16 g_stage;
 extern u8 D_0028EBBC;
 extern s16 D_0028EBC8;
 extern u8 D_0028EBCC;
@@ -3998,7 +3998,7 @@ extern u8 D_0028EBD0_as_u8;
 extern u8 D_0028ED74;
 
 void func_002234C0(void) {
-    D_0028E36C++;
+    g_paused++;
     D_0028EBC8 = 0;
     D_0028EB90 = 0;
     D_0028EBD0_as_u8 = 1;
@@ -4006,7 +4006,7 @@ void func_002234C0(void) {
     D_0028EB04 = 1;
     D_0028EB8C = 0;
     D_0028E324 = MAIN_OR_DEATH_LABEL(D_0028E910, death_D_00290DC0);
-    D_0028E328 = D_0028E91C;
+    D_0028E328 = g_stage;
     if (D_0028E328 == 0) {
         D_0028E328 = 1;
     }
@@ -4030,17 +4030,17 @@ extern void func_002035F0(void);
 extern void vibration_start_pad1(s32 a, s32 b);
 extern void vibration_start_pad2(s32 a, s32 b);
 extern Pair D_00271C60_as_Pair_a[];
-extern u16 D_0028E31C;
+extern u16 g_pause_player;
 extern u8 D_0028E378;
 #ifdef DEATH_LABEL
 extern u8 death_D_00290DC0;
 #endif
-extern u8 D_0028E9EC_as_u8;
+extern u8 g_display_reset_pending_as_u8;
 extern s8 D_0028EBBC_as_s8;
 extern s8 D_0028EBD0;
 s32 func_0018CAD0();
 s32 vibration_resume();
-extern s8 D_0028E364_as_s8;
+extern s8 g_pause_lock_timer_as_s8;
 s32 func_00237670();
 s32 func_002376F0();
 extern u8 D_0028ED7C;
@@ -4053,7 +4053,7 @@ extern u8 *D_00271B60[];
 extern u8 *D_00271B90[];
 extern s32 sprintf(char *buf, const char *format, ...);
 extern void text_queue_sjis_vertical(s16 x, s16 y, const char *text, u16 texturePage, u16 glyphWidth, u16 glyphHeight, u16 alpha, u16 depth);
-extern char *D_0028E9F8;
+extern char *g_pad_dma_buf;
 extern u8 *D_00271BC8[];
 extern u8 *D_00271BCC[];
 extern u8 *D_00271BD0[];
@@ -4068,9 +4068,9 @@ void func_00223550(void) {
     if (D_0028EBBC_as_s8 != 0) {
         D_0028EBBC_as_s8--;
     }
-    if (D_0028EBBC_as_s8 == 0 && (g_pad_trigger[D_0028E31C] & 0x800)) {
+    if (D_0028EBBC_as_s8 == 0 && (g_pad_trigger[g_pause_player] & 0x800)) {
         func_0018D4B0();
-        D_0028E36C++;
+        g_paused++;
         return;
     }
     if (func_00223BE0() != 0) {
@@ -4078,7 +4078,7 @@ void func_00223550(void) {
     }
     switch (D_0028EBD0) {
     case 1:
-        pad = g_pad_repeat[D_0028E31C];
+        pad = g_pad_repeat[g_pause_player];
         if (pad & 0x8000) {
             func_0018D4C0();
             D_0068DD02[0]--;
@@ -4089,7 +4089,7 @@ void func_00223550(void) {
                 D_0028E354 &= 1;
             }
             D_0068DD02[0] = D_0028E354;
-            D_0028E9EC_as_u8 = 1;
+            g_display_reset_pending_as_u8 = 1;
         } else if (pad & 0x2000) {
             func_0018D4C0();
             D_0068DD02[0]++;
@@ -4100,22 +4100,22 @@ void func_00223550(void) {
                 D_0028E354 &= 1;
             }
             D_0068DD02[0] = D_0028E354;
-            D_0028E9EC_as_u8 = 1;
+            g_display_reset_pending_as_u8 = 1;
         }
         break;
     case 2:
-        if (g_pad_repeat[D_0028E31C] & 0xA000) {
+        if (g_pad_repeat[g_pause_player] & 0xA000) {
             func_0018D4C0();
-            D_0028E27C++;
-            D_0028E27C &= 1;
-            if (D_0028E27C != 0) {
+            g_pad_vib_enabled++;
+            g_pad_vib_enabled &= 1;
+            if (g_pad_vib_enabled != 0) {
                 vibration_start_pad1(0x78, 0x14);
                 vibration_start_pad2(0x78, 0x14);
             }
         }
         break;
     case 3:
-        pad = g_pad_repeat[D_0028E31C];
+        pad = g_pad_repeat[g_pause_player];
         if (pad & 0x8000) {
             func_0018D4C0();
             D_0028E32C--;
@@ -4137,38 +4137,38 @@ void func_00223550(void) {
         }
         break;
     case 4:
-        if (g_pad_repeat[D_0028E31C] & 0xA000) {
+        if (g_pad_repeat[g_pause_player] & 0xA000) {
             func_0018D4C0();
-            D_0028E28C++;
-            D_0028E28C &= 1;
+            g_stage_map_enabled++;
+            g_stage_map_enabled &= 1;
         }
         break;
     case 5:
-        if (g_pad_trigger[D_0028E31C] & 0x20) {
+        if (g_pad_trigger[g_pause_player] & 0x20) {
             func_0018D4B0();
             D_0028EB90 = 0x80;
-            D_0028EAE4 = D_0028E254;
-            D_0028E36C = 0xB;
-            D_0028EAE0 = D_0028E250;
+            D_0028EAE4 = g_display_offset_x;
+            g_paused = 0xB;
+            D_0028EAE0 = g_display_offset_y;
         }
         break;
     case 6:
     case 7:
-        if (g_pad_trigger[D_0028E31C] & 0x20) {
+        if (g_pad_trigger[g_pause_player] & 0x20) {
             func_0018D4B0();
             D_0028EBC4 = 1;
-            D_0028E36C = 5;
+            g_paused = 5;
         }
         break;
     case 8:
-        if (g_pad_repeat[D_0028E31C] & 0xA000) {
+        if (g_pad_repeat[g_pause_player] & 0xA000) {
             func_0018D4C0();
             D_0028E324++;
             D_0028E324 &= 1;
         }
         break;
     case 9:
-        pad = g_pad_repeat[D_0028E31C];
+        pad = g_pad_repeat[g_pause_player];
         if (pad & 0x8000) {
             func_0018D4C0();
             D_0028E328--;
@@ -4182,14 +4182,14 @@ void func_00223550(void) {
                 D_0028E328 = 1;
             }
         }
-        if (D_0028E378 != 0xFF && (g_pad_trigger[D_0028E31C] & 0x20)) {
+        if (D_0028E378 != 0xFF && (g_pad_trigger[g_pause_player] & 0x20)) {
             reg_d6.h[0] = 1;
             reg_d7.h[0] = D_0028E328;
             if (reg_d7.h[0] == 5) {
                 reg_d7.h[0] = 0;
             }
             func_002035F0();
-            D_0028E36C = 0;
+            g_paused = 0;
         }
         break;
     }
@@ -4197,9 +4197,9 @@ void func_00223550(void) {
 }
 
 void func_00223A60(void) {
-    D_0028E36C = 0;
+    g_paused = 0;
     func_0018CAD0();
-    D_0028E364_as_s8 = 0x3C;
+    g_pause_lock_timer_as_s8 = 0x3C;
     vibration_resume();
     if (D_0028ED74 == 3) {
         D_0028ED74 = 1;
@@ -4211,7 +4211,7 @@ void func_00223AA0(void) {
     extern void func_0018D4C0(void);
     u32 buttons;
 
-    buttons = g_pad_trigger[D_0028E31C];
+    buttons = g_pad_trigger[g_pause_player];
     if (buttons & 0x20) {
         if (D_0028EBC4 == 0) {
             if (D_0028ED80 == 0 && D_0028ED7C != 2) {
@@ -4227,13 +4227,13 @@ void func_00223AA0(void) {
             }
         } else {
             func_0018D4B0();
-            D_0028E36C = 3;
+            g_paused = 3;
         }
         return;
     }
     if (buttons & 0x40) {
         func_0018D4B0();
-        D_0028E36C = 3;
+        g_paused = 3;
         return;
     }
     if ((buttons & 0x8000) && D_0028EBC4 == 1) {
@@ -4257,7 +4257,7 @@ s32 func_00223BE0(void) {
 
     if (D_0028ED80 == 0) { temp_s0 = 8; } else { temp_s0 = 8; }
     if (D_0028ED80 == 0) {
-        temp_v1 = g_pad_repeat[D_0028E31C];
+        temp_v1 = g_pad_repeat[g_pause_player];
         if (temp_v1 & 0x1000) {
             func_0018D4D0();
             D_0028EBD0 -= 1;
@@ -4282,7 +4282,7 @@ s32 func_00223BE0(void) {
         }
         goto block_21;
     }
-    temp_v1_2 = g_pad_repeat[D_0028E31C];
+    temp_v1_2 = g_pad_repeat[g_pause_player];
     if (temp_v1_2 & 0x1000) {
         func_0018D4D0();
         D_0028EBD0 -= 1;
@@ -4367,7 +4367,7 @@ void func_00223E80(void) {
             frame_draw_left_panel(D_0028EB90);
             gfx_draw_color_box(0xC, 8, 0x40, 0xD0, 0x12C, alpha, 1, 1, 0x40);
         }
-        if (D_0028E36C != 5) {
+        if (g_paused != 5) {
             if (D_0028ED7C == 2) {
                 reg_a0 = D_00271B90[D_0028EBD0];
 #ifndef DEATH_LABEL
@@ -4416,19 +4416,19 @@ void func_00224020(s32 x, s32 y) {
     }
     func_002228D0(x + 42, y);
     if (D_0028EBC4 == 0) {
-        sprintf(D_0028E9F8, "\x82\xCD\x82\xA2");
-        text_queue_sjis_vertical(py - shrink, px - shrink, D_0028E9F8, 4, w, h, 128, 300);
-        sprintf(D_0028E9F8, "\x81\x5E");
-        text_queue_sjis_vertical(py, px + 50, D_0028E9F8, 0, 20, 16, 128, 300);
-        sprintf(D_0028E9F8, "\x82\xA2\x82\xA2\x82\xA6");
-        text_queue_sjis_vertical(py, px + 75, D_0028E9F8, 0, 20, 16, 128, 300);
+        sprintf(g_pad_dma_buf, "\x82\xCD\x82\xA2");
+        text_queue_sjis_vertical(py - shrink, px - shrink, g_pad_dma_buf, 4, w, h, 128, 300);
+        sprintf(g_pad_dma_buf, "\x81\x5E");
+        text_queue_sjis_vertical(py, px + 50, g_pad_dma_buf, 0, 20, 16, 128, 300);
+        sprintf(g_pad_dma_buf, "\x82\xA2\x82\xA2\x82\xA6");
+        text_queue_sjis_vertical(py, px + 75, g_pad_dma_buf, 0, 20, 16, 128, 300);
     } else {
-        sprintf(D_0028E9F8, "\x82\xCD\x82\xA2");
-        text_queue_sjis_vertical(py, px, D_0028E9F8, 0, 20, 16, 128, 300);
-        sprintf(D_0028E9F8, "\x81\x5E");
-        text_queue_sjis_vertical(py, px + 50, D_0028E9F8, 0, 20, 16, 128, 300);
-        sprintf(D_0028E9F8, "\x82\xA2\x82\xA2\x82\xA6");
-        text_queue_sjis_vertical(py - shrink, px + 75 - shrink, D_0028E9F8, 4, w, h, 128, 300);
+        sprintf(g_pad_dma_buf, "\x82\xCD\x82\xA2");
+        text_queue_sjis_vertical(py, px, g_pad_dma_buf, 0, 20, 16, 128, 300);
+        sprintf(g_pad_dma_buf, "\x81\x5E");
+        text_queue_sjis_vertical(py, px + 50, g_pad_dma_buf, 0, 20, 16, 128, 300);
+        sprintf(g_pad_dma_buf, "\x82\xA2\x82\xA2\x82\xA6");
+        text_queue_sjis_vertical(py - shrink, px + 75 - shrink, g_pad_dma_buf, 4, w, h, 128, 300);
     }
 }
 
@@ -4451,19 +4451,19 @@ void func_002242B0(s32 x, s32 y) {
     w = (s32)(s8)D_0028EBC0 + 20;
     h = (s32)(s8)D_0028EBC0 + 16;
     if (D_0028EB0C == 1) {
-        sprintf(D_0028E9F8, "\x82\xCD\x82\xA2");
-        text_queue_sjis_vertical(py - shrink, px - shrink, D_0028E9F8, 4, w, h, 128, 300);
-        sprintf(D_0028E9F8, "\x81\x5E");
-        text_queue_sjis_vertical(py, px + 50, D_0028E9F8, 0, 20, 16, 128, 300);
-        sprintf(D_0028E9F8, "\x82\xA2\x82\xA2\x82\xA6");
-        text_queue_sjis_vertical(py, px + 75, D_0028E9F8, 0, 20, 16, 128, 300);
+        sprintf(g_pad_dma_buf, "\x82\xCD\x82\xA2");
+        text_queue_sjis_vertical(py - shrink, px - shrink, g_pad_dma_buf, 4, w, h, 128, 300);
+        sprintf(g_pad_dma_buf, "\x81\x5E");
+        text_queue_sjis_vertical(py, px + 50, g_pad_dma_buf, 0, 20, 16, 128, 300);
+        sprintf(g_pad_dma_buf, "\x82\xA2\x82\xA2\x82\xA6");
+        text_queue_sjis_vertical(py, px + 75, g_pad_dma_buf, 0, 20, 16, 128, 300);
     } else {
-        sprintf(D_0028E9F8, "\x82\xCD\x82\xA2");
-        text_queue_sjis_vertical(py, px, D_0028E9F8, 0, 20, 16, 128, 300);
-        sprintf(D_0028E9F8, "\x81\x5E");
-        text_queue_sjis_vertical(py, px + 50, D_0028E9F8, 0, 20, 16, 128, 300);
-        sprintf(D_0028E9F8, "\x82\xA2\x82\xA2\x82\xA6");
-        text_queue_sjis_vertical(py - shrink, px + 75 - shrink, D_0028E9F8, 4, w, h, 128, 300);
+        sprintf(g_pad_dma_buf, "\x82\xCD\x82\xA2");
+        text_queue_sjis_vertical(py, px, g_pad_dma_buf, 0, 20, 16, 128, 300);
+        sprintf(g_pad_dma_buf, "\x81\x5E");
+        text_queue_sjis_vertical(py, px + 50, g_pad_dma_buf, 0, 20, 16, 128, 300);
+        sprintf(g_pad_dma_buf, "\x82\xA2\x82\xA2\x82\xA6");
+        text_queue_sjis_vertical(py - shrink, px + 75 - shrink, g_pad_dma_buf, 4, w, h, 128, 300);
     }
 }
 
@@ -4500,8 +4500,8 @@ void func_002244E0(void) {
     s32 y;
     s32 n;
 
-    if (D_0028E36C != 0 && D_0028E36C != 0x63) {
-        if (D_0028E36C == 0xB) {
+    if (g_paused != 0 && g_paused != 0x63) {
+        if (g_paused == 0xB) {
             func_00225450();
             return;
         }
@@ -4545,7 +4545,7 @@ void func_002244E0(void) {
         y = D_00271C90_as_Point_a[2].y;
         reg_a0 = D_00271710[2];
         glyph_queue_add(x, y, 300, 0, 0x80, 0x80, 1);
-        reg_a0 = D_0028DD18[D_0028E27C];
+        reg_a0 = D_0028DD18[g_pad_vib_enabled];
         glyph_queue_add(x, y + 120, 300, 0, 0x80, 0x80, 1);
         if (D_0028EBD0 == 2) {
             func_00224BA0(x, y + 120, 300, 0, 0x80, 0x80, 1, 3);
@@ -4563,7 +4563,7 @@ void func_002244E0(void) {
         y = D_00271C90_as_Point_a[4].y;
         reg_a0 = D_00271710[4];
         glyph_queue_add(x, y, 300, 0, 0x80, 0x80, 1);
-        reg_a0 = D_0028DD18[D_0028E28C];
+        reg_a0 = D_0028DD18[g_stage_map_enabled];
         glyph_queue_add(x, y + 120, 300, 0, 0x80, 0x80, 1);
         if (D_0028EBD0 == 4) {
             func_00224BA0(x, y + 120, 300, 0, 0x80, 0x80, 1, 3);
@@ -4646,7 +4646,7 @@ void func_00224A90(void) {
     D_0028E3C0_as_s16 = 0;
     D_0028EAFC = 0xFF;
     D_0028E378 = 0xFF;
-    D_0028E36C = 0;
+    g_paused = 0;
     D_0028E2A0 = 0;
     D_0028E368 = 0;
     func_00224B50();
@@ -4711,28 +4711,28 @@ void func_00224BA0(s32 arg0, s32 arg1, s32 arg2, s32 arg3, s32 arg4, s32 arg5, s
 }
 
 s32 display_set_offset();
-extern s8 D_0028E36C_as_s8;
+extern s8 g_paused_as_s8;
 void func_00224CC0(void) {
     s32 func_0018D4B0();
     s32 func_0018D4C0();
     s32 temp_v1;
 
-    temp_v1 = g_pad_trigger[D_0028E31C];
+    temp_v1 = g_pad_trigger[g_pause_player];
     if (temp_v1 & 0x20) {
         func_0018D4B0();
-        D_0028E254 = D_0028EAE4;
-        D_0028E250 = D_0028EAE0;
-        display_set_offset(D_0028E254, D_0028E250);
+        g_display_offset_x = D_0028EAE4;
+        g_display_offset_y = D_0028EAE0;
+        display_set_offset(g_display_offset_x, g_display_offset_y);
         D_0028EB90 = 0;
-        D_0028E36C_as_s8 = 3;
+        g_paused_as_s8 = 3;
         D_0028EB04 = 1;
         return;
     }
     if (temp_v1 & 0x40) {
         func_0018D4B0();
-        display_set_offset(D_0028E254, D_0028E250);
+        display_set_offset(g_display_offset_x, g_display_offset_y);
         D_0028EB90 = 0;
-        D_0028E36C_as_s8 = 3;
+        g_paused_as_s8 = 3;
         D_0028EB04 = 1;
         return;
     }
@@ -4742,36 +4742,36 @@ void func_00224CC0(void) {
         display_set_offset(D_0028EAE4, D_0028EAE0);
     }
     if ((g_screen_mode != 2) && (g_screen_mode != 3)) {
-        if ((g_pad_repeat[D_0028E31C] & 0x4000) && (D_0028EAE4 > -8)) {
+        if ((g_pad_repeat[g_pause_player] & 0x4000) && (D_0028EAE4 > -8)) {
             func_0018D4C0();
             D_0028EAE4 -= 1;
         }
-        if ((g_pad_repeat[D_0028E31C] & 0x1000) && (D_0028EAE4 < 8)) {
+        if ((g_pad_repeat[g_pause_player] & 0x1000) && (D_0028EAE4 < 8)) {
             func_0018D4C0();
             D_0028EAE4 += 1;
         }
-        if ((g_pad_repeat[D_0028E31C] & 0x2000) && (D_0028EAE0 < 8)) {
+        if ((g_pad_repeat[g_pause_player] & 0x2000) && (D_0028EAE0 < 8)) {
             func_0018D4C0();
             D_0028EAE0 += 1;
         }
-        if ((g_pad_repeat[D_0028E31C] & 0x8000) && (D_0028EAE0 > -8)) {
+        if ((g_pad_repeat[g_pause_player] & 0x8000) && (D_0028EAE0 > -8)) {
             func_0018D4C0();
             D_0028EAE0 -= 1;
         }
     } else {
-        if ((g_pad_repeat[D_0028E31C] & 0x4000) && (D_0028EAE0 < 8)) {
+        if ((g_pad_repeat[g_pause_player] & 0x4000) && (D_0028EAE0 < 8)) {
             func_0018D4C0();
             D_0028EAE0 += 1;
         }
-        if ((g_pad_repeat[D_0028E31C] & 0x1000) && (D_0028EAE0 > -8)) {
+        if ((g_pad_repeat[g_pause_player] & 0x1000) && (D_0028EAE0 > -8)) {
             func_0018D4C0();
             D_0028EAE0 -= 1;
         }
-        if ((g_pad_repeat[D_0028E31C] & 0x2000) && (D_0028EAE4 < 8)) {
+        if ((g_pad_repeat[g_pause_player] & 0x2000) && (D_0028EAE4 < 8)) {
             func_0018D4C0();
             D_0028EAE4 += 1;
         }
-        if ((g_pad_repeat[D_0028E31C] & 0x8000) && (D_0028EAE4 > -8)) {
+        if ((g_pad_repeat[g_pause_player] & 0x8000) && (D_0028EAE4 > -8)) {
             func_0018D4C0();
             D_0028EAE4 -= 1;
         }
@@ -4784,9 +4784,9 @@ void func_00225000(void) {
     s32 func_0018D4C0();
     if (g_pad_trigger[2] & 0x20) {
         func_0018D4B0();
-        D_0028E254 = D_0028EAE4;
-        D_0028E250 = D_0028EAE0;
-        display_set_offset(D_0028E254, D_0028E250);
+        g_display_offset_x = D_0028EAE4;
+        g_display_offset_y = D_0028EAE0;
+        display_set_offset(g_display_offset_x, g_display_offset_y);
         D_0028EB04 = 1;
         D_0028EB90 = 0;
         func_00222260(0xF);
@@ -4797,7 +4797,7 @@ void func_00225000(void) {
     }
     if (g_pad_trigger[2] & 0x40) {
         func_0018D4B0();
-        display_set_offset(D_0028E254, D_0028E250);
+        display_set_offset(g_display_offset_x, g_display_offset_y);
         D_0028EB04 = 1;
         D_0028EB90 = 0;
         func_00222260(0xF);

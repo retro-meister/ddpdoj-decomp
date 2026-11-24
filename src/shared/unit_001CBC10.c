@@ -73,7 +73,7 @@ extern u8 D_00263030[];
 extern u8 D_002630D0[];
 extern s16 D_0028E894_as_s16;
 extern u16 D_0028E910;
-extern u16 D_0028E91C;
+extern u16 g_stage;
 extern s16 D_00299768[];
 extern s16 D_0029976A[];
 extern s8 enemy_move_end_requested;
@@ -129,7 +129,7 @@ void func_001CBD60(void) {
         reg_d0.b[0] = 0x10;
         reg_d1.b[0] = 2;
         reg_d2.b[0] = 0x18;
-        if ((s32) D_0028E91C > 1) {
+        if ((s32) g_stage > 1) {
             reg_d0.b[0] = 0x10;
             reg_d1.b[0] = 2;
             reg_d2.b[0] = 0x18;

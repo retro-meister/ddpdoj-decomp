@@ -171,7 +171,7 @@ u16 g_explosion_uv_12ba[54][2] = {
 };
 
 #ifdef DEATH_LABEL
-extern u8 death_D_0056A800[];
+extern u8 g_noise_file_buf[];
 #endif
 
 void arcade_sprite_init(void) {
@@ -208,9 +208,9 @@ void arcade_sprite_init(void) {
     g_clut_upload_cbp = 0x3838;
     clut_upload(g_stage_map_file_buf, 1, 1);
 #ifdef DEATH_LABEL
-    cd_read_sync(death_D_0056A800, g_data_files[DATA_FILE_NOISE].size, g_data_files[DATA_FILE_NOISE].lba);
+    cd_read_sync(g_noise_file_buf, g_data_files[DATA_FILE_NOISE].size, g_data_files[DATA_FILE_NOISE].lba);
     g_clut_upload_cbp = 0x383C;
-    clut_upload(death_D_0056A800, 1, 1);
+    clut_upload(g_noise_file_buf, 1, 1);
 #endif
 }
 
@@ -239,7 +239,7 @@ void stage_sprite_unpack_begin(s32 value) {
     g_unpack_src = g_unpack_src_start;
 }
 
-extern u16 D_0028E91C;
+extern u16 g_stage;
 
 s32 stage_sprite_unpack_step(void) {
     u8 *src;
@@ -247,7 +247,7 @@ s32 stage_sprite_unpack_step(void) {
     u8 code;
 
     g_unpack_step++;
-    while (g_unpack_src - g_unpack_src_start < g_stage_sprite_packed_size[D_0028E91C]) {
+    while (g_unpack_src - g_unpack_src_start < g_stage_sprite_packed_size[g_stage]) {
         code = *g_unpack_src;
         g_unpack_src++;
         if (code & 0x80) {

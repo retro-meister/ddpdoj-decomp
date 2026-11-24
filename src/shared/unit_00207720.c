@@ -402,7 +402,7 @@ extern u8 D_0028DA78;
 extern u8 D_0028DA80;
 extern u8 D_0028DA88;
 extern u8 D_0028DA90;
-extern u8 D_0028E228;
+extern u8 g_arcade_coin_port;
 
 void func_00207FF0(void) {
     s32 func_00209200();
@@ -415,28 +415,28 @@ void func_00207FF0(void) {
     u8 temp_a0_2;
 
     func_00207F40();
-    reg_a0 = &D_0028E228;
+    reg_a0 = &g_arcade_coin_port;
     reg_d0.h[0] = (*(u16 *)((u8 *)(reg_a0) + (0)));
     if (!(reg_d0.w & 0x20)) {
         reg_d0.h[0] = 2;
         reg_a0 = &D_0028DA60;
         func_00209200();
     }
-    reg_a0 = &D_0028E228;
+    reg_a0 = &g_arcade_coin_port;
     reg_d0.h[0] = (*(u16 *)((u8 *)(reg_a0) + (0)));
     if (!(reg_d0.w & 0x10)) {
         reg_d0.h[0] = 2;
         reg_a0 = &D_0028DA68;
         func_00209200();
     }
-    reg_a0 = &D_0028E228;
+    reg_a0 = &g_arcade_coin_port;
     reg_d0.h[0] = (*(u16 *)((u8 *)(reg_a0) + (0)));
     if (!(reg_d0.w & 1)) {
         reg_d0.h[0] = 2;
         reg_a0 = &D_0028DA70;
         func_00209200();
     }
-    reg_a0 = &D_0028E228;
+    reg_a0 = &g_arcade_coin_port;
     reg_d0.h[0] = (*(u16 *)((u8 *)(reg_a0) + (0)));
     if (!(reg_d0.w & 2)) {
         reg_d0.h[0] = 2;

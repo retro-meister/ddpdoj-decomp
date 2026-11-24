@@ -347,9 +347,9 @@ extern void func_00225630(void);
 extern void func_002256B0(void);
 extern void func_00227120(void);
 extern void func_002271D0(void);
-extern u8 D_0028E350;
-extern s16 D_0028E3FC;
-extern u16 D_0028E91C;
+extern u8 g_stage_load_state;
+extern s16 g_loaded_stage;
+extern u16 g_stage;
 extern u8 g_cd_async_state_as_u8;
 extern u8 g_cd_async_busy_as_u8;
 extern s8 D_0028EC20;
@@ -397,15 +397,15 @@ void func_00237470(void) {
         break;
     case 0:
         g_cd_async_busy_as_u8 = 1;
-        D_0028E350 = 0;
+        g_stage_load_state = 0;
         g_cd_async_state_as_u8 = 0;
         func_00225630();
-        D_0028E91C = 0;
+        g_stage = 0;
         step++;
         break;
     case 1:
         stage_load_step();
-        if (D_0028E3FC == D_0028E91C) {
+        if (g_loaded_stage == g_stage) {
             func_002256B0();
             step++;
         }
@@ -690,7 +690,7 @@ void func_00237AC0() {
     memset(D_006CB5A8, 0, 0x1A5E0);
     memset(data, 0, 0x5534);
     func_00238B90((u8 *)data);
-    if (D_0028E91C != 0 || D_0028E910 == 0) {
+    if (g_stage != 0 || D_0028E910 == 0) {
         memset(D_006CB1D4, 0, 0x3A4);
     }
     srand(D_0028E2BC * D_0028E2BB);
@@ -1195,7 +1195,7 @@ void func_00238520(void) {
 }
 
 extern void func_00131440(void);
-extern s8 D_0028E298_as_s8;
+extern s8 g_pad_input_locked_as_s8;
 extern u8 D_0028E2A8;
 extern u16 D_0028E2AC;
 extern u8 D_0028E2B0;
@@ -1266,7 +1266,7 @@ void func_00238690(void) {
         replay_header_apply();
         func_00135100();
         step++;
-        D_0028E298_as_s8 = 1;
+        g_pad_input_locked_as_s8 = 1;
         break;
     case 17:
         if (D_0028E59C == 0) {
@@ -1277,7 +1277,7 @@ void func_00238690(void) {
     case 18:
         func_00131440();
         if (D_0028E370 != 0) {
-            D_0028E298_as_s8 = 0;
+            g_pad_input_locked_as_s8 = 0;
             step++;
             D_0028E910 = g_replay_header.round;
             func_00135110();

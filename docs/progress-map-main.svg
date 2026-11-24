@@ -1944,7 +1944,7 @@
 <rect x="1101.09" y="352.51" width="6.65" height="6.59" fill="#3fb950" stroke="#0d1117" stroke-width="0.5"><title>func_001FB700  ·  100 bytes  ·  matched</title></rect>
 <rect x="1107.75" y="352.51" width="6.65" height="6.59" fill="#3fb950" stroke="#0d1117" stroke-width="0.5"><title>func_002076B0  ·  100 bytes  ·  matched</title></rect>
 <rect x="1114.40" y="352.51" width="6.65" height="6.59" fill="#3fb950" stroke="#0d1117" stroke-width="0.5"><title>func_00210C90  ·  100 bytes  ·  matched</title></rect>
-<rect x="1121.06" y="352.51" width="6.65" height="6.59" fill="#3fb950" stroke="#0d1117" stroke-width="0.5"><title>func_00217EC0  ·  100 bytes  ·  matched</title></rect>
+<rect x="1121.06" y="352.51" width="6.65" height="6.59" fill="#3fb950" stroke="#0d1117" stroke-width="0.5"><title>boot_scratch_clear  ·  100 bytes  ·  matched</title></rect>
 <rect x="1127.71" y="352.51" width="6.65" height="6.59" fill="#3fb950" stroke="#0d1117" stroke-width="0.5"><title>func_0021D500  ·  100 bytes  ·  matched</title></rect>
 <rect x="1134.36" y="352.51" width="6.65" height="6.59" fill="#3fb950" stroke="#0d1117" stroke-width="0.5"><title>func_0021D850  ·  100 bytes  ·  matched</title></rect>
 <rect x="1141.02" y="352.51" width="6.65" height="6.59" fill="#3fb950" stroke="#0d1117" stroke-width="0.5"><title>func_00235820  ·  100 bytes  ·  matched</title></rect>

@@ -812,10 +812,10 @@ extern u16 D_00269A60[];
 extern u8 D_00269AAE[];
 extern u8 D_0028E2A0;
 extern u8 D_0028E2A4;
-extern s16 D_0028E3FC;
+extern s16 g_loaded_stage;
 extern u16 D_0028E648;
 extern u8 D_0028E854;
-extern u16 D_0028E91C;
+extern u16 g_stage;
 extern u16 D_0028E970;
 extern u16 D_0028E974;
 extern u16 D_0028E978;
@@ -1252,8 +1252,8 @@ block_77:
                         if (D_0028E2A4 != 0) {
                             D_0028E2A4 -= 1;
                         }
-                        if ((D_0028E3FC != D_0028E91C) && (D_0028E2A4 == 0)) {
-                            stage_load_step(D_0028E3FC);
+                        if ((g_loaded_stage != g_stage) && (D_0028E2A4 == 0)) {
+                            stage_load_step(g_loaded_stage);
                         }
                     }
                     if ((D_0028E2A0 == 0) && (func_00133070() != 0)) {
@@ -1263,7 +1263,7 @@ block_77:
                         }
                     } else {
 block_90:
-                        if (D_0028E3FC == D_0028E91C) {
+                        if (g_loaded_stage == g_stage) {
                             goto block_91;
                         }
                     }

@@ -1190,7 +1190,7 @@ s32 func_001AEA80();
 s32 func_002075F0();
 extern u8 D_0028E370;
 extern s16 D_0028E598_as_s16;
-extern u16 D_0028E91C;
+extern u16 g_stage;
 extern u8 D_0028ED7C;
 
 void func_0014BE30(void) {
@@ -1201,7 +1201,7 @@ void func_0014BE30(void) {
     if (reg_a5[3] == 2) goto block_2;
     func_001AEA80();
     if (D_0028ED7C != 2) goto next_1;
-    if (D_0028E91C != 0) goto next_1;
+    if (g_stage != 0) goto next_1;
     if (D_0028E370 == 0) return;
 next_1:
     func_001A5A80();
@@ -1395,7 +1395,7 @@ extern u8 *reg_a1;
 void func_0014C4B0(void) {
     u32 temp_s0;
 
-    if ((D_0028ED80 == 0) || (D_0028E2C0 == 0) || (D_0028E91C != 2)) {
+    if ((D_0028ED80 == 0) || (D_0028E2C0 == 0) || (g_stage != 2)) {
         reg_a6 = D_0029BF50;
         reg_d7.w = 7;
         do {

@@ -606,7 +606,7 @@ extern u16 D_00262D40[];
 extern u16 D_00262D60[];
 extern u16 D_00262D80[];
 extern u16 D_0028E8DC;
-extern u16 D_0028E91C;
+extern u16 g_stage;
 extern u8 *reg_a1;
 
 void func_001C6440(void) {
@@ -621,7 +621,7 @@ void func_001C6440(void) {
     func_0014E7E0();
     if (enemy_move_end_requested == 0) {
         reg_d0.b[0] = 6;
-        if ((s32) D_0028E91C > 1) {
+        if ((s32) g_stage > 1) {
             reg_d0.b[0] = 2;
         }
         (*(u8 *)((u8 *)(reg_a5) + (0x16))) = (u8) reg_d0.b[0];
@@ -871,7 +871,7 @@ void func_001C6C10(void) {
     func_0014E7E0();
     if (enemy_move_end_requested == 0) {
         reg_d0.b[0] = 6;
-        if ((s32) D_0028E91C > 0x1) {
+        if ((s32) g_stage > 0x1) {
             reg_d0.b[0] = 2;
         }
         (*(u8 *)((u8 *)(reg_a5) + (0x16))) = (u8) reg_d0.b[0];

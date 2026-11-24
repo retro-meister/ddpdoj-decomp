@@ -34,13 +34,13 @@ void func_0012FA20(void) {
     *reg_a0_as_s16_p = 1;
 }
 
-extern s16 D_0028E234;
-extern s16 D_0028E238;
+extern s16 g_bg_scroll_y;
+extern s16 g_bg_scroll_x;
 
 void func_0012FA50(void) {
-    reg_a0_as_s16_p = &D_0028E234;
+    reg_a0_as_s16_p = &g_bg_scroll_y;
     *reg_a0_as_s16_p = 0;
-    reg_a0_as_s16_p = &D_0028E238;
+    reg_a0_as_s16_p = &g_bg_scroll_x;
     *reg_a0_as_s16_p = 0;
 }
 
@@ -588,8 +588,8 @@ void func_00130720(void) {
     } while ((s16)(--reg_d0.h[0]) >= 0);
 }
 
-extern u8 D_0028E228;
-extern u8 D_0028E350;
+extern u8 g_arcade_coin_port;
+extern u8 g_stage_load_state;
 extern u8 *reg_a1;
 extern u8 *reg_a2;
 extern u8 *reg_a3;
@@ -604,7 +604,7 @@ void func_00130790(void) {
     u16 c;
     u32 count;
 
-    if (D_0028E350 != 0) return;
+    if (g_stage_load_state != 0) return;
     if (D_0028E39C == 0x12) return;
     sd0 = reg_d0.w;
     sd1 = reg_d1.w;
@@ -621,7 +621,7 @@ void func_00130790(void) {
     sa4 = reg_a4;
     sa5 = reg_a5;
     sa6 = reg_a6;
-    reg_a0 = &D_0028E228;
+    reg_a0 = &g_arcade_coin_port;
     reg_d0.h[0] = *(u16 *)reg_a0;
     reg_a0 = (u8 *)D_0028E1C8;
     reg_d7.w = 1;
@@ -711,12 +711,12 @@ extern u16 D_0028E1F8;
 extern u8 D_0028E20C;
 extern u8 D_0028E210;
 extern u16 D_0028E224;
-extern u16 D_0028E228_as_u16;
+extern u16 g_arcade_coin_port_as_u16;
 
 void func_00130A60(void) {
-    if (D_0028E350 != 0) return;
+    if (g_stage_load_state != 0) return;
     if (D_0028E39C == 0x12) return;
-    reg_a0 = (u8 *)&D_0028E228_as_u16;
+    reg_a0 = (u8 *)&g_arcade_coin_port_as_u16;
     reg_d0.h[0] = *(u16 *)reg_a0;
     reg_d1.h[0] = D_0028E1F4;
     D_0028E1F4 = reg_d0.h[0];
