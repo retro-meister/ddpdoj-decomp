@@ -1,5 +1,6 @@
 #include "common.h"
 #include "sdk/ps2sdk.h"
+#include "pad.h"
 
 void func_00168E30(void);
 void func_00169B40(void);
@@ -56,7 +57,6 @@ extern s8 g_cd_async_state;
 extern s8 D_0028ED74_as_s8;
 extern s8 D_0028ED7C_as_s8;
 extern s8 D_0028ED80_as_s8;
-extern s32 D_0057CC78[];
 extern u8 *reg_a0;
 
 void func_00168BC0(void) {
@@ -92,7 +92,7 @@ next_2:
     if (reg_d0.h[0] == 19) goto block_3;
     if (D_0028E39C != 0x12) goto next_3;
     if (D_0028E350 != 0) goto next_3;
-    if (D_0057CC78[0] & 0x800) goto block_1;
+    if (g_pad_trigger[2] & 0x800) goto block_1;
 next_3:
     func_00130200();
     reg_d0.h[0] += reg_d1.h[0];
@@ -888,7 +888,7 @@ extern u8 D_0028E1E6[];
 extern s8 D_0028EB88;
 
 void func_00169B40(void) {
-    if (D_0057CC78[0] & 0x800) {
+    if (g_pad_trigger[2] & 0x800) {
         if (D_0028E39C == 0x12) {
             D_0028EB88 = 0;
             reg_d0.h[0] = 0xF;
@@ -907,17 +907,15 @@ void func_00169B40(void) {
 
 s32 func_00130270();
 s32 func_001303A0();
-extern s32 D_0057CC70_as_s32_a[];
-extern s32 D_0057CC74[];
 void func_00169BC0(void) {
     D_0028E7B4 = 0;
-    if (D_0057CC70_as_s32_a[0] & 0x20) {
+    if (g_pad_trigger[0] & 0x20) {
         func_00130270();
         if (D_0028E408 == 0) {
             D_0028E7B4 |= 1;
         }
     }
-    if (D_0057CC74[0] & 0x20) {
+    if (g_pad_trigger[1] & 0x20) {
         func_001303A0();
         if ((D_0028E408 == 0) && ((D_0028E304 == 0) || (D_0028E7B4 == 0))) {
             D_0028E7B4 |= 2;

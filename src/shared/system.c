@@ -1,14 +1,11 @@
 #include "common.h"
 #include "sdk/ps2sdk.h"
+#include "pad.h"
 #include "gfx_types.h"
 
 void sys_init(void);
 void sys_draw_replay_label(void);
-void pad_update(void);
-void pad_mask_game_inputs(void);
 void pause_check_start_button(void);
-void pad_init_system(void);
-void pad_poll_hardware(void);
 void vram_clear_all(void);
 void fade_reset(void);
 void fade_update_and_draw(void);
@@ -293,23 +290,6 @@ void sys_draw_replay_label(void) {
     }
 }
 
-typedef struct {
-    u8 raw[0x20];
-    u32 buttons;
-    u32 trigger;
-    u32 prevButtons;
-    u32 rawButtons;
-    u16 extraButtons;
-    s8 analogX;
-    s8 analogY;
-    u16 unk34;
-    u8 state;
-    u8 padId;
-    u8 prevPadId;
-    u8 padTypeFlag;
-    u8 pad3A[2];
-} PadState;
-
 extern u16 D_0028E228_as_u16;
 extern s8 D_0028E248[];
 extern u8 D_0028E270_as_u8;
@@ -319,26 +299,17 @@ extern u8 D_0028E274;
 extern u8 D_0028E275;
 extern u8 D_0028E276;
 extern u8 *reg_a0;
-extern u32 D_0057CC50[];
-extern u32 D_0057CC20[];
 extern u8 D_0028E2F8;
 
 void pad_update(void)
 {
-    extern u32 D_0057CC80[];
-    extern u32 D_0057CC40[];
-    extern u32 D_0057CC60[];
-    extern u32 D_0057CC30[];
-    extern u32 D_0057CC70[];
-    extern u32 D_0057CC10[];
-    extern PadState g_pads[];
     s32 padIndex;
     u32 buttons;
 
     pad_poll_hardware();
 
     for (padIndex = 0; padIndex < 3; padIndex++) {
-        D_0057CC10[padIndex] = 0;
+        g_pad_unused[padIndex] = 0;
 
         if (g_pads[padIndex].analogX > -64 && g_pads[padIndex].analogX < 64) {
             g_pads[padIndex].analogX = 0;
@@ -347,98 +318,98 @@ void pad_update(void)
             g_pads[padIndex].analogY = 0;
         }
 
-        D_0057CC80[padIndex] = g_pads[padIndex].rawButtons;
+        g_pad_held[padIndex] = g_pads[padIndex].rawButtons;
         if (g_pads[padIndex].analogX < 0) {
-            D_0057CC80[padIndex] |= SCE_PADLleft;
+            g_pad_held[padIndex] |= SCE_PADLleft;
         }
         if (g_pads[padIndex].analogX > 0) {
-            D_0057CC80[padIndex] |= SCE_PADLright;
+            g_pad_held[padIndex] |= SCE_PADLright;
         }
         if (g_pads[padIndex].analogY < 0) {
-            D_0057CC80[padIndex] |= SCE_PADLup;
+            g_pad_held[padIndex] |= SCE_PADLup;
         }
         if (g_pads[padIndex].analogY > 0) {
-            D_0057CC80[padIndex] |= SCE_PADLdown;
+            g_pad_held[padIndex] |= SCE_PADLdown;
         }
 
         if (D_0028E2F8 != 0) {
-            buttons = D_0057CC80[padIndex];
-            D_0057CC80[padIndex] = buttons & 0xFFF;
+            buttons = g_pad_held[padIndex];
+            g_pad_held[padIndex] = buttons & 0xFFF;
             if (buttons & SCE_PADLup) {
-                D_0057CC80[padIndex] |= SCE_PADLleft;
+                g_pad_held[padIndex] |= SCE_PADLleft;
             }
             if (buttons & SCE_PADLdown) {
-                D_0057CC80[padIndex] |= SCE_PADLright;
+                g_pad_held[padIndex] |= SCE_PADLright;
             }
             if (buttons & SCE_PADLright) {
-                D_0057CC80[padIndex] |= SCE_PADLup;
+                g_pad_held[padIndex] |= SCE_PADLup;
             }
             if (buttons & SCE_PADLleft) {
-                D_0057CC80[padIndex] |= SCE_PADLdown;
+                g_pad_held[padIndex] |= SCE_PADLdown;
             }
         }
 
-        if (D_0057CC80[padIndex] == 0) {
-            D_0057CC30[padIndex] = 0;
-            D_0057CC60[padIndex] = 0;
-            D_0057CC20[padIndex] = 0;
-            D_0057CC50[padIndex] = 0;
+        if (g_pad_held[padIndex] == 0) {
+            g_pad_repeat_timer[padIndex] = 0;
+            g_pad_repeat[padIndex] = 0;
+            g_pad_fast_repeat_timer[padIndex] = 0;
+            g_pad_fast_repeat[padIndex] = 0;
         }
 
-        if (D_0057CC80[padIndex] == D_0057CC40[padIndex]) {
-            D_0057CC30[padIndex]++;
-            if (D_0057CC30[padIndex] > 10) {
-                D_0057CC60[padIndex] = D_0057CC80[padIndex];
-                D_0057CC30[padIndex] = 0;
+        if (g_pad_held[padIndex] == g_pad_prev_held[padIndex]) {
+            g_pad_repeat_timer[padIndex]++;
+            if (g_pad_repeat_timer[padIndex] > 10) {
+                g_pad_repeat[padIndex] = g_pad_held[padIndex];
+                g_pad_repeat_timer[padIndex] = 0;
             } else {
-                D_0057CC60[padIndex] = 0;
+                g_pad_repeat[padIndex] = 0;
             }
 
-            D_0057CC20[padIndex]++;
-            if (D_0057CC20[padIndex] > 10) {
-                D_0057CC50[padIndex] = D_0057CC80[padIndex];
-                if (D_0057CC20[padIndex] > 14) {
-                    D_0057CC20[padIndex] = 10;
+            g_pad_fast_repeat_timer[padIndex]++;
+            if (g_pad_fast_repeat_timer[padIndex] > 10) {
+                g_pad_fast_repeat[padIndex] = g_pad_held[padIndex];
+                if (g_pad_fast_repeat_timer[padIndex] > 14) {
+                    g_pad_fast_repeat_timer[padIndex] = 10;
                 }
             } else {
-                D_0057CC50[padIndex] = 0;
+                g_pad_fast_repeat[padIndex] = 0;
             }
-        } else if (D_0057CC40[padIndex] == 0) {
-            D_0057CC60[padIndex] = D_0057CC80[padIndex];
-            D_0057CC30[padIndex] = 0;
-            D_0057CC50[padIndex] = D_0057CC80[padIndex];
-            D_0057CC20[padIndex] = 0;
+        } else if (g_pad_prev_held[padIndex] == 0) {
+            g_pad_repeat[padIndex] = g_pad_held[padIndex];
+            g_pad_repeat_timer[padIndex] = 0;
+            g_pad_fast_repeat[padIndex] = g_pad_held[padIndex];
+            g_pad_fast_repeat_timer[padIndex] = 0;
         } else {
-            D_0057CC30[padIndex]++;
-            if (D_0057CC30[padIndex] > 10) {
-                D_0057CC60[padIndex] = D_0057CC80[padIndex];
-                D_0057CC30[padIndex] = 0;
+            g_pad_repeat_timer[padIndex]++;
+            if (g_pad_repeat_timer[padIndex] > 10) {
+                g_pad_repeat[padIndex] = g_pad_held[padIndex];
+                g_pad_repeat_timer[padIndex] = 0;
             } else {
-                D_0057CC60[padIndex] = 0;
+                g_pad_repeat[padIndex] = 0;
             }
 
-            D_0057CC20[padIndex]++;
-            if (D_0057CC20[padIndex] > 10) {
-                D_0057CC50[padIndex] = D_0057CC80[padIndex];
-                D_0057CC20[padIndex] = 10;
+            g_pad_fast_repeat_timer[padIndex]++;
+            if (g_pad_fast_repeat_timer[padIndex] > 10) {
+                g_pad_fast_repeat[padIndex] = g_pad_held[padIndex];
+                g_pad_fast_repeat_timer[padIndex] = 10;
             } else {
-                D_0057CC50[padIndex] = 0;
+                g_pad_fast_repeat[padIndex] = 0;
             }
         }
 
-        D_0057CC70[padIndex] = D_0057CC40[padIndex] ^ D_0057CC80[padIndex];
-        D_0057CC70[padIndex] &= D_0057CC80[padIndex];
-        D_0057CC40[padIndex] = D_0057CC80[padIndex];
+        g_pad_trigger[padIndex] = g_pad_prev_held[padIndex] ^ g_pad_held[padIndex];
+        g_pad_trigger[padIndex] &= g_pad_held[padIndex];
+        g_pad_prev_held[padIndex] = g_pad_held[padIndex];
 
-        if (D_0057CC50[padIndex] & 0x5000) {
-            D_0057CC50[padIndex] = 0;
-            D_0057CC20[padIndex] = 0;
+        if (g_pad_fast_repeat[padIndex] & 0x5000) {
+            g_pad_fast_repeat[padIndex] = 0;
+            g_pad_fast_repeat_timer[padIndex] = 0;
         }
     }
 
     reg_a0 = (u8 *)D_0028E248;
     reg_d0.w = 0;
-    buttons = D_0057CC80[0];
+    buttons = g_pad_held[0];
     if (buttons & SCE_PADstart) {
         *(u8 *)&reg_d0 |= 0x01;
     }
@@ -467,7 +438,7 @@ void pad_update(void)
     reg_a0++;
 
     reg_d0.w = 0;
-    buttons = D_0057CC80[1];
+    buttons = g_pad_held[1];
     if (buttons & SCE_PADstart) {
         *(u8 *)&reg_d0 |= 0x01;
     }
@@ -496,10 +467,10 @@ void pad_update(void)
 
     reg_a0 = (u8 *)&D_0028E228_as_u16;
     reg_d0.w = 0;
-    if (D_0057CC80[0] & SCE_PADselect) {
+    if (g_pad_held[0] & SCE_PADselect) {
         *(u8 *)&reg_d0 |= 0x01;
     }
-    if (D_0057CC80[1] & SCE_PADselect) {
+    if (g_pad_held[1] & SCE_PADselect) {
         *(u8 *)&reg_d0 |= 0x02;
     }
     *(u16 *)reg_a0 = ~*(u16 *)&reg_d0;
@@ -540,11 +511,8 @@ extern u8 D_0028E36C;
 extern s8 D_0028EC24;
 extern s16 D_0029F1F0[];
 extern s16 D_0029F260[];
-extern s32 D_0057CC74[];
-extern s32 D_0057CC78[];
 
 void pause_check_start_button(void) {
-    extern s32 D_0057CC70[];
     s32 state;
     s32 busy;
     s32 wait;
@@ -573,7 +541,7 @@ void pause_check_start_button(void) {
         return;
     }
     D_0028E364 = 0;
-    if (!(D_0057CC78[0] & 0x800)) {
+    if (!(g_pad_trigger[2] & 0x800)) {
         return;
     }
     if ((u8)busy != 0) {
@@ -583,7 +551,7 @@ void pause_check_start_button(void) {
         return;
     }
     if (D_0028ED7C == 2) {
-        if (!(D_0057CC70[D_0028EC24] & 0x800)) {
+        if (!(g_pad_trigger[D_0028EC24] & 0x800)) {
             return;
         }
         if (D_0028ED58 != 0 && D_0029F260[0] == 0 && D_0029F1F0[0] == 0) {
@@ -595,91 +563,51 @@ void pause_check_start_button(void) {
 block_rts:
         return;
     }
-    if ((D_0057CC70[0] & 0x800) && D_0029F260[0] < 0) {
+    if ((g_pad_trigger[0] & 0x800) && D_0029F260[0] < 0) {
         func_0018DA30();
         D_0028E31C_as_s16 = 0;
         D_0028E36C = 1;
         return;
     }
-    if ((D_0057CC74[0] & 0x800) && D_0029F1F0[0] < 0) {
+    if ((g_pad_trigger[1] & 0x800) && D_0029F1F0[0] < 0) {
         func_0018DA30();
         D_0028E36C = 1;
         D_0028E31C_as_s16 = 1;
     }
 }
 
-extern s32 D_0057CC14[];
-extern s32 D_0057CC18[];
-extern s32 D_0057CC34[];
-extern s32 D_0057CC38[];
-extern s32 D_0057CC44[];
-extern s32 D_0057CC48[];
-extern s32 D_0057CC64[];
-extern s32 D_0057CC68[];
-extern s32 D_0057CC84[];
-extern s32 D_0057CC88[];
 extern s32 D_0057CD80[];
 extern s32 D_0057CE80[];
 
 void pad_init_system(void) {
-    extern s32 D_0057CC10[];
-    extern s32 D_0057CC30[];
-    extern s32 D_0057CC40[];
-    extern s32 D_0057CC60[];
-    extern s32 D_0057CC70[];
-    extern s32 D_0057CC80[];
-    extern s32 g_pads[];
     memset(g_pads, 0, 0xB4);
-    D_0057CC80[0] = 0;
-    D_0057CC70[0] = 0;
-    D_0057CC60[0] = 0;
-    D_0057CC40[0] = 0;
-    D_0057CC30[0] = 0;
-    D_0057CC10[0] = 0;
-    D_0057CC84[0] = 0;
-    D_0057CC74[0] = 0;
-    D_0057CC64[0] = 0;
-    D_0057CC44[0] = 0;
-    D_0057CC34[0] = 0;
-    D_0057CC14[0] = 0;
-    D_0057CC88[0] = 0;
-    D_0057CC78[0] = 0;
-    D_0057CC68[0] = 0;
-    D_0057CC48[0] = 0;
-    D_0057CC38[0] = 0;
-    D_0057CC18[0] = 0;
+    g_pad_held[0] = 0;
+    g_pad_trigger[0] = 0;
+    g_pad_repeat[0] = 0;
+    g_pad_prev_held[0] = 0;
+    g_pad_repeat_timer[0] = 0;
+    g_pad_unused[0] = 0;
+    g_pad_held[1] = 0;
+    g_pad_trigger[1] = 0;
+    g_pad_repeat[1] = 0;
+    g_pad_prev_held[1] = 0;
+    g_pad_repeat_timer[1] = 0;
+    g_pad_unused[1] = 0;
+    g_pad_held[2] = 0;
+    g_pad_trigger[2] = 0;
+    g_pad_repeat[2] = 0;
+    g_pad_prev_held[2] = 0;
+    g_pad_repeat_timer[2] = 0;
+    g_pad_unused[2] = 0;
     scePadInit(0);
     scePadPortOpen(0, 0, D_0057CD80);
     scePadPortOpen(1, 0, D_0057CE80);
 }
 
-typedef struct {
-    u8 raw[0x20];
-    u32 buttons;
-    u32 trigger;
-    u32 prevButtons;
-    u32 rawButtons;
-    u16 extraButtons;
-    s8 analogX;
-    s8 analogY;
-#ifdef DEATH_LABEL
-    s8 rightX;
-    s8 rightY;
-#else
-    u16 unk34;
-#endif
-    u8 state;
-    u8 padId;
-    u8 prevPadId;
-    u8 padTypeFlag;
-    u8 pad3A[2];
-} PadInfo;
-
 extern u8 D_0028EA00[6];
 
 void pad_poll_hardware(void)
 {
-    extern PadInfo g_pads[3];
     extern u8 g_pad_act_direct[6];
     s32 port;
     PadInfo *pad;

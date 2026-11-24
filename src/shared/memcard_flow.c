@@ -1,5 +1,6 @@
 #include "common.h"
 #include "sdk/ps2sdk.h"
+#include "pad.h"
 
 void func_00226440(void);
 void func_00226450(void);
@@ -143,8 +144,6 @@ s32 func_0018D4D0();
 s32 func_00233DA0();
 extern u8 D_0028EC34;
 extern s8 D_0028EC38_as_s8;
-extern u8 D_0057CC60[];
-extern u8 D_0057CC70[];
 extern u8 D_006A0E50[];
 void func_002264D0(void) {
     s32 temp_a0;
@@ -155,7 +154,7 @@ void func_002264D0(void) {
         func_00226410();
         return;
     }
-    temp_a0 = *(u32 *)(D_0057CC70 + (D_0028EC34 * 4));
+    temp_a0 = g_pad_trigger[D_0028EC34];
     if (temp_a0 & 0x40) {
         func_0018D4B0();
         func_002263F0();
@@ -172,7 +171,7 @@ void func_002264D0(void) {
             }
         }
     }
-    temp_a0_3 = *(u32 *)(D_0057CC60 + (D_0028EC34 * 4));
+    temp_a0_3 = g_pad_repeat[D_0028EC34];
     if (temp_a0_3 & 0x1000) {
         func_0018D4D0();
         D_0028EC40 -= 1;

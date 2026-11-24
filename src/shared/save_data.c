@@ -1,5 +1,6 @@
 #include "common.h"
 #include "sdk/ps2sdk.h"
+#include "pad.h"
 #include "cd.h"
 
 void func_00227C90(void);
@@ -57,8 +58,6 @@ s32 func_0018D4D0();
 s32 func_002263F0();
 extern u8 D_0028EC34;
 extern s8 D_0028EC40;
-extern u8 D_0057CC60[];
-extern u8 D_0057CC70[];
 extern u8 D_006A0E50[];
 void func_002268A0(void) {
     s32 func_0018D4B0();
@@ -66,7 +65,7 @@ void func_002268A0(void) {
     s32 temp_a0_3;
     u16 temp_a0_2;
 
-    temp_a0 = *(u32 *)(D_0057CC70 + (D_0028EC34 * 4));
+    temp_a0 = g_pad_trigger[D_0028EC34];
     if (temp_a0 & 0x40) {
         func_0018D4B0();
         func_002263F0();
@@ -77,7 +76,7 @@ void func_002268A0(void) {
             func_0018D4B0();
         }
     }
-    temp_a0_3 = *(u32 *)(D_0057CC60 + (D_0028EC34 * 4));
+    temp_a0_3 = g_pad_repeat[D_0028EC34];
     if (temp_a0_3 & 0x1000) {
         func_0018D4D0();
         D_0028EC40 -= 1;
@@ -419,9 +418,6 @@ extern u8 *D_00270850[];
 
 extern s8 D_0028EB58;
 extern u16 D_0028E320_as_u16;
-extern u32 D_0057CC70_as_u32_a[];
-extern s32 D_0057CC74[];
-extern s32 D_0057CC78[];
 extern s8 D_002714F0[];
 extern u8 D_00685010[];
 extern void func_00222260(s32 command);
@@ -499,15 +495,12 @@ extern u8 D_00270890[];
 extern s8 D_00271501[];
 extern u8 D_0028DCA8[8];
 extern s8 D_0028DCB0[8];
-extern u32 D_0057CC60_as_u32_a[];
 extern void func_00224BA0(s32 arg0, s32 arg1, s32 arg2, s32 arg3, s32 arg4, s32 arg5, s32 arg6, s32 flags);
 extern u8 *D_002708D0[];
 extern u8 **D_002709B0[];
 extern u16 D_002712C0[];
 extern s8 D_002712D8[];
 extern s8 D_00271502[];
-extern s32 D_0057CC20_as_s32_a[];
-extern s32 D_0057CC50_as_s32_a[];
 extern u8 *D_002709D0[];
 extern u8 **D_00271290[];
 extern u8 *D_0028DCC8;
@@ -563,12 +556,12 @@ static s32 func_002273B0(Fade *fade, s32 command) {
 
 void func_002273E0(void) {
     D_0028E320_as_u16 = 0xE10;
-    if (D_0057CC78[0] == 0) {
+    if (g_pad_trigger[2] == 0) {
         D_0028E320_as_u16 -= 1;
         if (D_0028E320_as_u16 == 0) {
-            D_0057CC74[0] = 0x40;
-            D_0057CC70_as_u32_a[0] = 0x40;
-            D_0057CC78[0] = 0x40;
+            g_pad_trigger[1] = 0x40;
+            g_pad_trigger[0] = 0x40;
+            g_pad_trigger[2] = 0x40;
         }
     } else {
         D_0028E320_as_u16 = 0xE10;
@@ -671,7 +664,7 @@ void func_002276C0(void) {
     last = D_002714F7[0] - 1;
     func_002273E0();
     if (func_00221120(7) == 0) {
-        buttons = D_0057CC70_as_u32_a[D_0028EC24];
+        buttons = g_pad_trigger[D_0028EC24];
         if (buttons & 0x40) {
             D_0028EB58 = last;
             confirm = 1;
@@ -775,7 +768,7 @@ void func_002279A0(void) {
     last = D_002714FA[0] - 1;
     func_002273E0();
     if (func_00221120(10) == 0) {
-        buttons = D_0057CC70_as_u32_a[D_0028EC24];
+        buttons = g_pad_trigger[D_0028EC24];
         if (buttons & 0x40) {
             D_0028EB58 = last;
             confirm = 1;
@@ -1167,7 +1160,7 @@ void func_00228580(void) {
     last = D_002714F8[0] - 1;
     func_002273E0();
     if (func_00221120(8) == 0) {
-        buttons = D_0057CC70_as_u32_a[D_0028EC24];
+        buttons = g_pad_trigger[D_0028EC24];
         if (buttons & 0x40) {
             D_0028EB58 = last;
             confirm = 1;
@@ -1309,7 +1302,7 @@ void func_00228910(void) {
     func_002273E0();
     skip = func_00221120(17);
     if (skip == 0) {
-        buttons = D_0057CC60_as_u32_a[D_0028EC24];
+        buttons = g_pad_repeat[D_0028EC24];
         if (buttons & 0x8000) {
             dir = -1;
             skip = 1;
@@ -1319,7 +1312,7 @@ void func_00228910(void) {
         }
     }
     if (skip == 0) {
-        buttons = D_0057CC70_as_u32_a[D_0028EC24];
+        buttons = g_pad_trigger[D_0028EC24];
         if (buttons & 0x40) {
             D_0028EB58 = last;
             confirm = 1;
@@ -1481,7 +1474,7 @@ void func_00228E80(void) {
     moved = func_00221120(0x12);
     if (moved == 0) {
         if (D_0028EB58 == 3 || D_0028EB58 == 9 || D_0028EB58 == 7) {
-            pad = D_0057CC50_as_s32_a[D_0028EC24];
+            pad = g_pad_fast_repeat[D_0028EC24];
             if (pad & 0x8000) {
                 dir = -1;
                 moved = 1;
@@ -1490,7 +1483,7 @@ void func_00228E80(void) {
                 moved = dir;
             }
         } else {
-            pad = D_0057CC60_as_u32_a[D_0028EC24];
+            pad = g_pad_repeat[D_0028EC24];
             if (pad & 0x8000) {
                 dir = -1;
                 moved = 1;
@@ -1501,7 +1494,7 @@ void func_00228E80(void) {
         }
     }
     if (moved == 0) {
-        pad = D_0057CC70_as_u32_a[D_0028EC24];
+        pad = g_pad_trigger[D_0028EC24];
         if (pad & 0x40) {
             D_0028EB58 = last;
             confirm = 1;
@@ -1543,7 +1536,7 @@ void func_00228E80(void) {
         value = &D_0068DEF0_as_s16_a[idx];
         count = D_002712C0[idx];
         if (sel == 3 || sel == 9 || sel == 7) {
-            pad = D_0057CC20_as_s32_a[D_0028EC24];
+            pad = g_pad_fast_repeat_timer[D_0028EC24];
             if (pad == 0 || pad == 0xE) {
                 if (!(*value == 0 && dir == -1) && !(*value == count - 1 && dir == 1)) {
                     func_0018D4C0();
@@ -1861,7 +1854,7 @@ void func_00229E20(void) {
     func_002273E0();
     skip = func_00221120(19);
     if (skip == 0) {
-        buttons = D_0057CC60_as_u32_a[D_0028EC24];
+        buttons = g_pad_repeat[D_0028EC24];
         if (buttons & 0x8000) {
             dir = -1;
             skip = 1;
@@ -1871,7 +1864,7 @@ void func_00229E20(void) {
         }
     }
     if (skip == 0) {
-        buttons = D_0057CC70_as_u32_a[D_0028EC24];
+        buttons = g_pad_trigger[D_0028EC24];
         if (buttons & 0x40) {
             D_0028EB58 = last;
             confirm = 1;
@@ -2003,7 +1996,7 @@ void func_0022A2E0(void) {
 
     var_s0 = 0;
     func_002273E0();
-    temp_a0 = D_0057CC60_as_u32_a[D_0028EC24];
+    temp_a0 = g_pad_repeat[D_0028EC24];
     var_a1 = 0;
     if (temp_a0 & 0x8000) {
         func_0018D4C0();
@@ -2020,7 +2013,7 @@ void func_0022A2E0(void) {
         }
         var_a1 = 1;
     }
-    if ((var_a1 == 0) && (D_0057CC70_as_u32_a[D_0028EC24] & 0x40)) {
+    if ((var_a1 == 0) && (g_pad_trigger[D_0028EC24] & 0x40)) {
         var_s0 = 1;
     }
     if (var_s0 != 0) {
@@ -2217,7 +2210,7 @@ void func_0022A930() {
 void func_0022A9A0()
 {
     extern void func_0018D4B0(void);
-    if (D_0057CC70_as_u32_a[D_0028EC24] & 0x60) {
+    if (g_pad_trigger[D_0028EC24] & 0x60) {
         func_0018D4B0();
         D_0028EB54 = 2;
         D_0028EB34 = 2;

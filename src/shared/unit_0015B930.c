@@ -1,4 +1,5 @@
 #include "common.h"
+#include "pad.h"
 
 void func_0015BFD0(void);
 void func_0015C090(void);
@@ -315,7 +316,6 @@ s32 func_0013C350();                            /* extern */
 extern s32 D_0026A660[];
 extern u8 D_0028E350;
 extern u16 D_0028E7C4_as_u16;
-extern s32 D_0057CC88[];
 extern s32 *reg_a0_as_s32_p;
 
 void func_0015BFD0(void) {
@@ -323,7 +323,7 @@ void func_0015BFD0(void) {
         if (D_0028E350 == 0) {
             D_0028E7C4_as_u16 -= 1;
         }
-        if (D_0057CC88[0] != 0) {
+        if (g_pad_held[2] != 0) {
             D_0028E7C4_as_u16 = 0x258;
         }
         if (D_0028E7C4_as_u16 != 0) {
