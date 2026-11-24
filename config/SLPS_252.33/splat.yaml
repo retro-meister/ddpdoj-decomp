@@ -3434,7 +3434,7 @@ segments:
       - [0x13d720, c, main/func_0023D6A0]
       - [0x13dc00, c, main/func_0023DB80]
       - [0x13dc70, c, main/func_0023DBF0]
-      - [0x13dcb0, asm, game_13dcb0]
+      - [0x13dcb0, pad]
       - [0x13dd00, data, data]
       - [0x173eb0, .rodata, main/func_00129EF0]
       - [0x173f40, rodata, rodata_173f40]
