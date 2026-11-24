@@ -10,7 +10,7 @@ extern s8 D_00262C40[];
 extern s8 D_00262C50[];
 extern s8 D_00262C60[];
 extern u16 g_loop;
-extern u16 D_0028E918;
+extern u16 g_stage_x2;
 extern s8 enemy_move_end_requested;
 extern s8 *reg_a0_as_s8_p;
 
@@ -26,7 +26,7 @@ void func_001C5170(void) {
     enemy_path_start();
     if (enemy_move_end_requested == 0) {
         reg_a0_as_s8_p = D_00262C40;
-        reg_d0.h[0] = D_0028E918;
+        reg_d0.h[0] = g_stage_x2;
         reg_a0_as_s8_p = &reg_a0_as_s8_p[reg_d0.h[0]];
         *(s8 *)(reg_a6 + 0x1C) = (s8) *reg_a0_as_s8_p;
         *(s8 *)(reg_a5 + 0x1B) = (s8) *reg_a0_as_s8_p;
@@ -203,7 +203,7 @@ void func_001C5740(void) {
     enemy_path_start();
     if (enemy_move_end_requested == 0) {
         reg_a0_as_s8_p = D_00262C80;
-        reg_d0.h[0] = D_0028E918;
+        reg_d0.h[0] = g_stage_x2;
         reg_a0_as_s8_p = &reg_a0_as_s8_p[reg_d0.h[0]];
         *(s8 *)(reg_a6 + 0x1C) = (s8) *reg_a0_as_s8_p;
         *(s8 *)(reg_a5 + 0x19) = (s8) *reg_a0_as_s8_p;
@@ -349,7 +349,7 @@ void func_001C5BF0(void) {
     enemy_path_start();
     if (enemy_move_end_requested == 0) {
         reg_a0_as_s8_p = D_00262CD0;
-        reg_d0.h[0] = D_0028E918;
+        reg_d0.h[0] = g_stage_x2;
         reg_a0_as_s8_p = &reg_a0_as_s8_p[reg_d0.h[0]];
         *(s8 *)(reg_a6 + 0x1C) = (s8) *reg_a0_as_s8_p;
         *(s8 *)(reg_a5 + 0x19) = (s8) *reg_a0_as_s8_p;
@@ -478,7 +478,7 @@ void func_001C6000(void) {
     enemy_path_start();
     if (enemy_move_end_requested == 0) {
         reg_a0_as_s8_p = D_00262D00;
-        reg_d0.h[0] = D_0028E918;
+        reg_d0.h[0] = g_stage_x2;
         reg_a0_as_s8_p = &reg_a0_as_s8_p[reg_d0.h[0]];
         *(s8 *)(reg_a6 + 0x1C) = (s8) *reg_a0_as_s8_p;
         *(s8 *)(reg_a5 + 0x19) = (s8) *reg_a0_as_s8_p;
@@ -601,7 +601,7 @@ extern u16 D_00262D30[];
 extern u16 D_00262D40[];
 extern u16 D_00262D60[];
 extern u16 D_00262D80[];
-extern u16 D_0028E8DC;
+extern u16 g_rank_6_16;
 extern u16 g_stage;
 
 void func_001C6440(void) {
@@ -620,7 +620,7 @@ void func_001C6440(void) {
             reg_d0.b[0] = 2;
         }
         *(u8 *)(reg_a5 + 0x16) = (u8) reg_d0.b[0];
-        reg_d0.h[0] = D_0028E8DC;
+        reg_d0.h[0] = g_rank_6_16;
         *(u8 *)(reg_a5 + 0x1D) -= reg_d0.b[0];
         if (*(u8 *)(reg_a6 + 0x1F) != 0) {
             *(u8 *)(reg_a6 + 0x1F) = 0U;
@@ -643,7 +643,7 @@ void func_001C6440(void) {
         reg_a1 = (u8 *)(reg_tmp.w);
         *(u16 *)reg_a1 = (reg_d0.h[0] != 0) ? *(u16 *)((u8 *)reg_a0 + ((s16)reg_d0.h[0] & ~1)) : *(u16 *)reg_a0;
         reg_a0 = (u8 *)(D_00262D30);
-        reg_d0.h[0] = D_0028E918;
+        reg_d0.h[0] = g_stage_x2;
         reg_a0 += reg_d0.h[0];
         *(s8 *)(reg_a6 + 0x1C) = *(s8 *)reg_a0;
         *(s8 *)(reg_a5 + 0x1B) = *(s8 *)reg_a0;
@@ -660,9 +660,9 @@ s32 func_0016D290();
 s32 func_00170DE0();
 s32 func_0018D560();
 s32 direction256_between();
-extern u16 D_0028E89C;
-extern u16 D_0028E8A0;
-extern u16 D_0028E8D4;
+extern u16 g_bullets_blocked;
+extern u16 g_enemies_stopped;
+extern u16 g_rank_4_16;
 extern u16 D_0029F1F0_as_u16_a[];
 extern u16 D_0029F260_as_u16_a[];
 
@@ -710,7 +710,7 @@ block_5:
         if ((s16) ENTITY(reg_a6)->hp.h >= 0) {
 block_12:
             *(u8 *)(reg_a6 + 0x1C) = (u8) reg_d0.b[0];
-            if ((D_0028E8A0 == 0) && (D_0028E89C == 0) && ((s16) ENTITY(reg_a6)->y.h >= 0x2C00)) {
+            if ((g_enemies_stopped == 0) && (g_bullets_blocked == 0) && ((s16) ENTITY(reg_a6)->y.h >= 0x2C00)) {
                 reg_d0.h[0] = *(u16 *)(reg_a5 + 0x18);
                 if (reg_d0.h[0] == 0) {
                     reg_tmp.b[0] = *(u8 *)(reg_a5 + 0x1D);
@@ -795,7 +795,7 @@ block_30:
                             *(u16 *)(reg_a5 + 0x20) -= 8;
                             if (*(u16 *)(reg_a5 + 0x20) == 0) {
                                 reg_d0.h[0] = 0x40;
-                                reg_d0.h[0] -= D_0028E8D4;
+                                reg_d0.h[0] -= g_rank_4_16;
                                 *(u8 *)(reg_a5 + 0x1D) = (u8) reg_d0.b[0];
                                 *(u16 *)(reg_a5 + 0x18) = 0U;
                             }
@@ -849,7 +849,7 @@ void func_001C6C00(void) {
 extern s8 D_00262E00[];
 extern s8 D_00262E10[];
 extern s8 D_00262E30[];
-extern u16 D_0028E8C8;
+extern u16 g_rank_1_16;
 
 void func_001C6C10(void) {
     s32 enemy_set_task_work();
@@ -867,10 +867,10 @@ void func_001C6C10(void) {
             reg_d0.b[0] = 2;
         }
         *(u8 *)(reg_a5 + 0x16) = (u8) reg_d0.b[0];
-        reg_d0.h[0] = D_0028E8C8;
+        reg_d0.h[0] = g_rank_1_16;
         *(u8 *)(reg_a5 + 0x1C) -= reg_d0.b[0];
         reg_a0_as_s8_p = D_00262E00;
-        reg_d0.h[0] = D_0028E918;
+        reg_d0.h[0] = g_stage_x2;
         reg_a0_as_s8_p = &reg_a0_as_s8_p[reg_d0.h[0]];
         *(s8 *)(reg_a6 + 0x1C) = (s8) *reg_a0_as_s8_p;
         *(s8 *)(reg_a5 + 0x1B) = (s8) *reg_a0_as_s8_p;
@@ -885,7 +885,7 @@ s32 enemy_switch_target_player();
 s32 func_00201710();
 extern u16 D_00259970[];
 extern u16 D_00262E50[];
-extern u16 D_0028E8CC;
+extern u16 g_rank_2_16;
 extern s16 D_0029CEA0_as_s16_a[];
 
 void func_001C6D10(s32 arg0, s32 arg1, s32 arg2, s32 arg3) {
@@ -953,7 +953,7 @@ block_6:
             if ((s16) ENTITY(reg_a6)->hp.h >= 0) {
 block_18:
                 *(u8 *)(reg_a6 + 0x1C) = (u8) reg_d0.b[0];
-                if (D_0028E8A0 == 0) {
+                if (g_enemies_stopped == 0) {
                     reg_d0.h[0] = *(u16 *)(reg_a5 + 0x18);
                     if (reg_d0.h[0] == 0) {
                         if ((s16) ENTITY(reg_a6)->y.h >= 0x1000) {
@@ -961,7 +961,7 @@ block_18:
                             *(u8 *)(reg_a5 + 0x1D) -= 1;
                             if ((s32) reg_tmp.b[0] <= 0) {
                                 reg_d0.h[0] = 0x10;
-                                reg_d0.h[0] -= D_0028E8C8;
+                                reg_d0.h[0] -= g_rank_1_16;
                                 reg_d0.h[0] += 8;
                                 *(u8 *)(reg_a5 + 0x1D) = (u8) reg_d0.b[0];
                                 *(u16 *)(reg_a5 + 0x18) = 1U;
@@ -1048,7 +1048,7 @@ block_35:
                             if ((s32) reg_tmp.b[0] <= 0) {
                                 *(u8 *)(reg_a5 + 0x1F) = (u8) *(u8 *)(reg_a5 + 0x1E);
                                 reg_d0.h[0] = 0x10;
-                                reg_d0.h[0] -= D_0028E8C8;
+                                reg_d0.h[0] -= g_rank_1_16;
                                 reg_d0.h[0] += 8;
                                 *(u8 *)(reg_a5 + 0x1D) = (u8) reg_d0.b[0];
                                 *(u16 *)(reg_a5 + 0x18) = 3U;
@@ -1067,7 +1067,7 @@ block_35:
                                 if (*(u16 *)(reg_a5 + 0x20) == 0) {
                                     enemy_switch_target_player();
                                     reg_d0.h[0] = 0x20;
-                                    reg_d0.h[0] -= D_0028E8CC;
+                                    reg_d0.h[0] -= g_rank_2_16;
                                     *(u8 *)(reg_a5 + 0x1D) = (u8) reg_d0.b[0];
                                     *(u16 *)(reg_a5 + 0x18) = 0U;
                                 }
@@ -1279,18 +1279,18 @@ void func_001C7AA0(void)
 s32 func_0019BF80();
 s32 func_0019C530();
 extern u16 D_00262F00[];
-extern u16 D_0028E8A8;
+extern u16 g_scroll_line;
 
 void func_001C7AF0(void) {
     u32 temp_a1;
 
     func_0014EA50();
     if (enemy_move_end_requested == 0) {
-        if ((s32) D_0028E8A8 >= 0x22F) {
+        if ((s32) g_scroll_line >= 0x22F) {
             enemy_remove();
             return;
         }
-        if (((s32) D_0028E8A8 >= 0x1F8) && (*(s16 *)(reg_a5 + 0x1C) >= 0)) {
+        if (((s32) g_scroll_line >= 0x1F8) && (*(s16 *)(reg_a5 + 0x1C) >= 0)) {
             reg_tmp.b[0] = *(u8 *)(reg_a5 + 0x1B);
             *(u8 *)(reg_a5 + 0x1B) -= 1;
             if ((s32) reg_tmp.b[0] <= 0) {
@@ -1309,7 +1309,7 @@ void func_001C7AF0(void) {
                 *(u16 *)(reg_a5 + 0x1C) -= 8;
             }
         }
-        if ((s32) D_0028E8A8 < 0x21A) {
+        if ((s32) g_scroll_line < 0x21A) {
             func_0019BF80();
         }
         reg_d1.h[0] = ENTITY(reg_a6)->y.h;

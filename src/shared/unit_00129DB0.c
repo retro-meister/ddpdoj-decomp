@@ -93,7 +93,7 @@ extern u8 D_00262570[];
 extern u32 D_0028DEA4;
 extern u16 D_0028E3EC;
 extern u16 D_0028E854_as_u16;
-extern u16 D_0028E88C;
+extern u16 g_enemy_signal_2;
 #ifdef DEATH_LABEL
 extern u8 death_D_00290858;
 extern u8 death_D_0029085C;
@@ -1392,7 +1392,7 @@ block_202:
                                         func_00203330();
                                         if (cond_flag == 0) {
                                             func_00202760();
-                                            if (D_0028E88C == 0) {
+                                            if (g_enemy_signal_2 == 0) {
                                                 reg_d1.b[0] = ENTITY(reg_a6)->move.b.dir;
                                                 reg_d1.b[0] += 0xB0;
                                             }
@@ -1813,7 +1813,7 @@ block_315:
                                         func_00203330();
                                         if (cond_flag == 0) {
                                             func_00202760();
-                                            if (D_0028E88C == 0) {
+                                            if (g_enemy_signal_2 == 0) {
                                                 reg_d1.b[0] = ENTITY(reg_a6)->move.b.dir;
                                                 reg_d1.b[0] += 0xB0;
                                             }

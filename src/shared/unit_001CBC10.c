@@ -34,13 +34,13 @@ void func_001CBCD0(void) {
 
 s32 func_001CB6B0();
 void func_00203400(void);
-extern u16 D_0028E8A0;
+extern u16 g_enemies_stopped;
 
 void func_001CBCE0(void) {
 #ifdef DEATH_LABEL
-    if ((D_0028E8A0 == 0) && (*(u16 *)(reg_a5 + 0x1A) == 0)) {
+    if ((g_enemies_stopped == 0) && (*(u16 *)(reg_a5 + 0x1A) == 0)) {
 #else
-    if ((D_0028E8A0 == 0) && (*(u16 *)(reg_a5 + 0x1A) -= 1, *(u16 *)(reg_a5 + 0x1A) == 0)) {
+    if ((g_enemies_stopped == 0) && (*(u16 *)(reg_a5 + 0x1A) -= 1, *(u16 *)(reg_a5 + 0x1A) == 0)) {
 #endif
         func_00203400();
         if (reg_d0.h[0] == 0) {
@@ -69,7 +69,7 @@ extern u16 D_002590F0[];
 extern u8 D_00263000[];
 extern u8 D_00263030[];
 extern u8 D_002630D0[];
-extern s16 D_0028E894_as_s16;
+extern s16 g_enemy_signal_0_as_s16;
 extern u16 g_loop;
 extern u16 g_stage;
 extern s16 D_00299768[];
@@ -135,7 +135,7 @@ void func_001CBD60(void) {
         *(u8 *)(reg_a5 + 0x3D) = (u8) reg_d2.b[0];
         reg_a0 = D_002630D0;
         func_0013B2E0();
-        D_0028E894_as_s16 = 1;
+        g_enemy_signal_0_as_s16 = 1;
         func_0018DAD0();
         D_00299768[0] = 1;
         if (g_loop != 0) {
@@ -187,12 +187,12 @@ extern u16 D_00263290[];
 extern u8 D_0028E310;
 extern u16 D_0028E3EC;
 extern u16 D_0028E3F0;
-extern u16 D_0028E894;
-extern u16 D_0028E89C;
-extern u16 D_0028E8A8;
+extern u16 g_enemy_signal_0;
+extern u16 g_bullets_blocked;
+extern u16 g_scroll_line;
 extern u16 D_0028E8B8;
-extern u16 D_0028E8C8;
-extern u16 D_0028E8D8;
+extern u16 g_rank_1_16;
+extern u16 g_rank_5_16;
 extern u16 D_0029C068[];
 extern u16 D_0029F1F0_as_u16_a[];
 extern u16 D_0029F260_as_u16_a[];
@@ -237,7 +237,7 @@ void func_001CC0A0(void) {
     if (reg_tmp.h[1] == 0) goto next_30;
 next_20:
     if (*(u8 *)(reg_a5 + 0x17) == 0) goto next_40;
-    D_0028E894 = 0;
+    g_enemy_signal_0 = 0;
     func_0018DDC0();
     enemy_remove();
     return;
@@ -320,10 +320,10 @@ block_join:
     if ((s16) *(u16 *)(reg_a6 + 0x28) >= 0) goto next_120;
     *(u16 *)(reg_a6 + 0x28) = 0x1C;
 next_120:
-    if (D_0028E8A0 != 0) goto next_500;
-    if (D_0028E89C != 0) goto next_500;
-    if (D_0028E8A0 != 0) goto next_500;
-    if (D_0028E89C != 0) goto next_500;
+    if (g_enemies_stopped != 0) goto next_500;
+    if (g_bullets_blocked != 0) goto next_500;
+    if (g_enemies_stopped != 0) goto next_500;
+    if (g_bullets_blocked != 0) goto next_500;
     if (*(u16 *)(reg_a5 + 0x18) != 0) goto next_400;
     if ((s16) ENTITY(reg_a6)->y.h < 0x1000) goto next_400;
     reg_d0.h[0] = *(u16 *)(reg_a5 + 0x1A);
@@ -350,7 +350,7 @@ next_220:
     *(u8 *)(reg_a5 + 0x1F) -= 1;
     if ((s32) reg_tmp.b[0] > 0) goto next_400;
     reg_d0.h[0] = 0x10;
-    reg_d1.h[0] = D_0028E8C8;
+    reg_d1.h[0] = g_rank_1_16;
     reg_d1.h[0] >>= 2;
     reg_d0.b[0] -= reg_d1.b[0];
     *(u8 *)(reg_a5 + 0x1F) = reg_d0.b[0];
@@ -415,7 +415,7 @@ next_290:
     if ((s32) reg_tmp.b[0] > 0) goto next_400;
     *(u8 *)(reg_a5 + 0x21) = *(u8 *)(reg_a5 + 0x20);
     reg_d0.h[0] = 0x50;
-    reg_d0.h[0] -= D_0028E8D8;
+    reg_d0.h[0] -= g_rank_5_16;
     *(u8 *)(reg_a5 + 0x1F) = reg_d0.b[0];
     *(u16 *)(reg_a5 + 0x1A) = 3;
     goto next_400;
@@ -499,7 +499,7 @@ next_500:
     reg_a2 = (u8 *) func_0019BFC0;
     reg_a3 = (u8 *) func_0019C570;
     reg_a4 = (u8 *) func_0019C530;
-    if (!((s32) D_0028E8A8 < 0x11E)) goto next_510;
+    if (!((s32) g_scroll_line < 0x11E)) goto next_510;
     reg_a2 = (u8 *) func_0019BEC0;
     reg_a3 = (u8 *) func_0019C470;
     reg_a4 = (u8 *) func_0019C470;
@@ -564,8 +564,8 @@ next_540:
     enemy_hitbox_debug_draw();
     reg_a0 = reg_a6 + 0x20;
     enemy_hitbox_debug_draw();
-    if (D_0028E8A0 != 0) goto block_rts;
-    if (D_0028E89C != 0) goto block_rts;
+    if (g_enemies_stopped != 0) goto block_rts;
+    if (g_bullets_blocked != 0) goto block_rts;
     if ((s16) ENTITY(reg_a6)->y.h < 0x1000) goto block_rts;
     reg_d0.h[0] = *(u16 *)(reg_a5 + 0x18);
     if (reg_d0.h[0] == 0) goto block_rts;
@@ -859,7 +859,7 @@ next_700:
     *(s16 *)(reg_a0 + 0x18) = 8;
 skip_1:
     if (*(u16 *)(reg_a6 + 0x4C) == 0x30) {
-        D_0028E894 = 0;
+        g_enemy_signal_0 = 0;
     }
     reg_d1.h[0] = *(u16 *)(reg_a6 + 0x4E);
     func_00201800();

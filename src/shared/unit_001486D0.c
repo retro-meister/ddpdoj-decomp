@@ -65,8 +65,8 @@ typedef void (*Fn)();
 
 extern u8 D_00257820[];
 extern u16 D_0028DFE8;
-extern u8 D_0028E5F8_as_u8;
-extern u8 D_0028E5FC_as_u8;
+extern u8 g_p2_hyper_active_as_u8;
+extern u8 g_p1_hyper_active_as_u8;
 extern u16 D_0029C06C[];
 extern u8 D_0029E390[];
 extern u8 D_0029F1F0_as_u8_a[];
@@ -83,7 +83,7 @@ void func_001488C0(void) {
     saved_a4 = reg_a4;
     saved_a5 = reg_a5;
     reg_a4 = (u8 *)D_0029F260_as_u8_a;
-    reg_a5 = &D_0028E5FC_as_u8;
+    reg_a5 = &g_p1_hyper_active_as_u8;
     reg_tmp6.h[0] = reg_d6.h[0];
     reg_d6.h[0] = 1;
     reg_d6.h[1] = reg_tmp6.h[0];
@@ -106,7 +106,7 @@ next_1:
     reg_d7.h[0] = t;
     if (((s64) ((s64) (u16) t << 0x30) >> 0x30) >= 0) goto loop_2;
     reg_a4 = (u8 *)D_0029F1F0_as_u8_a;
-    reg_a5 = &D_0028E5F8_as_u8;
+    reg_a5 = &g_p2_hyper_active_as_u8;
     reg_tmp6.h[0] = reg_d6.h[0];
     reg_d6.h[0] = reg_d6.h[1];
     reg_d6.h[1] = reg_tmp6.h[0];
@@ -122,7 +122,7 @@ s32 velocity_from_dir256();
 s32 func_00209F20();
 extern u16 D_00253940[];
 extern u16 D_002539B0[];
-extern u16 D_0028E928;
+extern u16 g_two_player_game;
 
 void func_00148A40(void) {
     if (reg_d0.h[0] != 0) goto block_main;
@@ -218,7 +218,7 @@ loop_1:
     func_001486D0();
     return;
 block_touch_first:
-    if (D_0028E928 == 0) goto skip_2;
+    if (g_two_player_game == 0) goto skip_2;
     reg_d0.w = 0x14;
     func_00209F20();
 skip_2:
@@ -361,7 +361,7 @@ loop_110:
     func_00148730();
     goto block_rts;
 next_200:
-    if (D_0028E928 == 0) goto next_220;
+    if (g_two_player_game == 0) goto next_220;
     reg_d0.w = 0x14;
     func_00209F20();
 next_220:
@@ -489,7 +489,7 @@ loop_110:
     func_00148700();
     goto block_rts;
 next_200:
-    if (D_0028E928 == 0) goto next_220;
+    if (g_two_player_game == 0) goto next_220;
     reg_d0.w = 0x14;
     func_00209F20();
 next_220:
@@ -609,7 +609,7 @@ loop_110:
     func_00148700();
     goto block_rts;
 next_200:
-    if (D_0028E928 == 0) goto next_220;
+    if (g_two_player_game == 0) goto next_220;
     reg_d0.w = 0x14;
     func_00209F20();
 next_220:
@@ -747,7 +747,7 @@ loop_110:
     func_001486D0();
     goto block_rts;
 next_200:
-    if (D_0028E928 == 0) goto next_220;
+    if (g_two_player_game == 0) goto next_220;
     reg_d0.w = 0x14;
     func_00209F20();
 next_220:
@@ -884,7 +884,7 @@ loop_110:
     func_001486D0();
     goto block_rts;
 next_200:
-    if (D_0028E928 == 0) goto next_220;
+    if (g_two_player_game == 0) goto next_220;
     reg_d0.w = 0x14;
     func_00209F20();
 next_220:
@@ -1012,7 +1012,7 @@ loop_110:
     func_00148700();
     goto block_rts;
 next_200:
-    if (D_0028E928 == 0) goto next_220;
+    if (g_two_player_game == 0) goto next_220;
     reg_d0.w = 0x14;
     func_00209F20();
 next_220:
@@ -1140,7 +1140,7 @@ loop_110:
     func_00148700();
     goto block_rts;
 next_200:
-    if (D_0028E928 == 0) goto next_220;
+    if (g_two_player_game == 0) goto next_220;
     reg_d0.w = 0x14;
     func_00209F20();
 next_220:
@@ -1362,11 +1362,11 @@ next_8:
 }
 
 extern u16 D_00252740[];
-extern u16 D_0028E914;
+extern u16 g_stage_x4;
 
 void func_0014C3B0(void) {
     reg_a0 = (u8 *)(D_00252740);
-    reg_d0.h[0] = D_0028E914;
+    reg_d0.h[0] = g_stage_x4;
     reg_tmp.h[1] = (reg_d0.h[0] != 0) ? *(u16 *)((u8 *)reg_a0 + ((s16)reg_d0.h[0] & ~1)) : *(u16 *)reg_a0;
     reg_tmp.h[0] = (((reg_d0.h[0] & 0xFFFF) + 2) != 0) ? *(u16 *)((u8 *)reg_a0 + ((s16)((reg_d0.h[0] & 0xFFFF) + 2) & ~1)) : *(u16 *)reg_a0;
     reg_a0 = (u8 *) reg_tmp.w;
@@ -1379,7 +1379,7 @@ extern s32 D_0029C050_as_s32_a[];
 void func_0014C450(void) {
     memset(D_0029BF50, 0, 0x104);
     reg_a0 = D_002526B0;
-    reg_a0 += D_0028E914;
+    reg_a0 += g_stage_x4;
     D_0029C050_as_s32_a[0] = *(s32 *)reg_a0;
 }
 
@@ -1499,7 +1499,7 @@ next_1:
     reg_a6 = save_a6;
 }
 
-extern u16 D_0028E8A8;
+extern u16 g_scroll_line;
 extern u8 D_0029C082[];
 
 void func_0014C7B0(void) {
@@ -1518,7 +1518,7 @@ void func_0014C7B0(void) {
                 *(u16 *)(reg_a0 + 0xC) = 0U;
                 *(u16 *)(reg_a0 + 0xE) = 0U;
                 *(s16 *)(reg_a5 + 8) = 0;
-                D_0028E8A8 = *(u16 *)(reg_a0 + 0x18);
+                g_scroll_line = *(u16 *)(reg_a0 + 0x18);
                 return;
             }
         }
@@ -1565,7 +1565,7 @@ void func_0014C8A0(void) {
         *(u16 *)(reg_a1 + 2) = (u16) reg_tmp.h[0];
         reg_a1 = (u8 *)D_0029C09E;
     } while ((s16)(--reg_d1.h[0]) >= 0);
-    if (D_0028E8A8 != 0) {
+    if (g_scroll_line != 0) {
         D_0029C080_as_s16_a[0] = 1;
         reg_tmp.h[1] = *(u16 *)(reg_a5 + 0x10);
         reg_tmp.h[0] = *(u16 *)(reg_a5 + 0x12);
@@ -1578,7 +1578,7 @@ void func_0014C8A0(void) {
         temp_s1 = (u32)reg_a4;
         do {
             func_0014CAE0();
-            var_a0 = (u8 *) D_0028E8A8;
+            var_a0 = (u8 *) g_scroll_line;
             reg_d7.h[0] += 1;
         } while ((u32)var_a0 != reg_d7.h[0]);
         reg_tmp.w = temp_s0;
@@ -1601,7 +1601,7 @@ void func_0014C8A0(void) {
 
 
 void func_0014CAD0(void) {
-    reg_d7.h[0] = D_0028E8A8;
+    reg_d7.h[0] = g_scroll_line;
     func_0014CAE0();
 }
 
@@ -1736,7 +1736,7 @@ extern u16 *reg_a5_as_u16_p;
 
 void func_0014CEE0(void) {
     reg_a5_as_u16_p[4] = 1;
-    reg_d0.h[0] = D_0028E8A8;
+    reg_d0.h[0] = g_scroll_line;
     reg_d0.h[0] += 4;
     reg_a6_as_u16_p[12] = (u16) reg_d0.h[0];
 }

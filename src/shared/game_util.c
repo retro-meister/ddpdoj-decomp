@@ -26,7 +26,7 @@ void func_00200D30(void) {
 s32 sprite_palette_load();
 s32 func_00200A10();
 extern u8 D_0025F770[];
-extern s16 D_0028E90C_as_s16;
+extern s16 g_game_completed_as_s16;
 extern u16 g_loop;
 
 void func_00200D60(void) {
@@ -44,7 +44,7 @@ void func_00200D60(void) {
 #endif
     }
 #ifndef DEATH_LABEL
-    D_0028E90C_as_s16 = 1;
+    g_game_completed_as_s16 = 1;
 #endif
 }
 

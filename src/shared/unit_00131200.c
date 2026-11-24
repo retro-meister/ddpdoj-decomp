@@ -318,8 +318,8 @@ extern s16 D_0029976C_as_s16_a[];
 extern s16 D_0029976E_as_s16_a[];
 
 #ifdef DEATH_LABEL
-extern u16 D_0028E8C0;
-extern u16 D_0028E8C4;
+extern u16 g_p2_lives;
+extern u16 g_p1_lives;
 extern u16 death_D_00290434;
 extern u16 death_D_00290438;
 #endif
@@ -349,8 +349,8 @@ void func_00131700(void) {
     D_0028DFC0_as_s16 = 1;
     D_0028ED74 = 2;
 #ifdef DEATH_LABEL
-    death_D_00290434 = D_0028E8C4;
-    death_D_00290438 = D_0028E8C0;
+    death_D_00290434 = g_p1_lives;
+    death_D_00290438 = g_p2_lives;
 #endif
 }
 
@@ -373,7 +373,7 @@ s32 func_00206D70();                            /* extern */
 s32 task_start();                            /* extern */
 #ifdef DEATH_LABEL
 extern u8 death_D_00290DC0;
-extern u16 D_0028E90C;
+extern u16 g_game_completed;
 #endif
 extern s16 D_0028E59C_as_s16;
 extern s16 D_0028E854_as_s16;
@@ -392,7 +392,7 @@ void func_001317E0(void) {
     if (death_D_00290DC0 == 0) {
         reg_d0.h[0] = 7;
     } else {
-        D_0028E90C = 1;
+        g_game_completed = 1;
         reg_d0.h[0] = 0xE;
     }
 #else
@@ -464,8 +464,8 @@ s32 func_0018DED0();
 extern u8 D_00269920[];
 extern u8 D_002698B0[];
 extern u8 D_0028E290;
-extern u16 D_0028E8C0;
-extern u16 D_0028E8C4;
+extern u16 g_p2_lives;
+extern u16 g_p1_lives;
 extern u16 death_D_00290434;
 extern u16 death_D_00290438;
 extern s8 death_D_00290568_as_s8;
@@ -559,8 +559,8 @@ block_25:
         func_00132420();
         if ((D_0028E290 == 2) && (death_D_00290568_as_s8 == 1)) {
             death_D_00290568_as_s8 = 0;
-            D_0028E8C4 = death_D_00290434;
-            D_0028E8C0 = death_D_00290438;
+            g_p1_lives = death_D_00290434;
+            g_p2_lives = death_D_00290438;
             if ((D_0028ED80 != 0) || (D_0028ED7C == 2)) {
                 reg_a0 = (u8 *)D_00269920;
             } else {

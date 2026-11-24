@@ -133,7 +133,7 @@ extern u16 D_0028E0B4;
 extern u16 D_0028E0B8_as_u16;
 extern u16 D_0028E0BC_as_u16;
 extern u16 D_0028E0C0_as_u16;
-extern s16 D_0028E8A8_as_s16;
+extern s16 g_scroll_line_as_s16;
 extern u16 g_stage;
 extern u8 g_text_palette_as_u8_a[];
 extern u8 g_bg_palette[];
@@ -175,7 +175,7 @@ void func_001A2C80(void) {
         func_001A2C70();
         text_palette_upload();
     }
-    if ((g_stage == 0) && (D_0028E8A8_as_s16 < 0x130)) {
+    if ((g_stage == 0) && (g_scroll_line_as_s16 < 0x130)) {
         reg_a1 = (u8 *)g_bg_palette;
         reg_a0 = (u8 *)D_0029F4B0;
         reg_a1 += 0x540;

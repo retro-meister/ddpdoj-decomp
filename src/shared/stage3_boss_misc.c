@@ -70,8 +70,8 @@ extern u8 D_0026D360[];
 extern u8 D_0026D640[];
 extern u8 D_0026D660[];
 extern u8 D_0028E855;
-extern u16 D_0028E89C;
-extern u16 D_0028E8A0;
+extern u16 g_bullets_blocked;
+extern u16 g_enemies_stopped;
 extern u16 D_0028E8B8;
 
 void func_001D1C00(void) {
@@ -190,8 +190,8 @@ block_objset:
     reg_a0 = reg_a6 + 0x20;
     enemy_hitbox_debug_draw();
     if (*(u16 *)(reg_a5 + 0x18) == 0) return;
-    if (D_0028E8A0 != 0) return;
-    if (D_0028E89C != 0) return;
+    if (g_enemies_stopped != 0) return;
+    if (g_bullets_blocked != 0) return;
     if (ENTITY(reg_a6)->y.sh < 0x1200) return;
     reg_tmp.b[0] = *(u8 *)(reg_a5 + 0x1F);
     *(u8 *)(reg_a5 + 0x1F) -= 1;

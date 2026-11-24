@@ -596,19 +596,19 @@ next_10:
 }
 
 s32 boss_animation_stop();
-extern u16 D_0028E85C;
-extern u16 D_0028E860;
-extern u16 D_0028E864;
-extern u16 D_0028E868;
-extern u16 D_0028E86C;
+extern u16 g_enemy_signal_e;
+extern u16 g_enemy_signal_d;
+extern u16 g_enemy_signal_c;
+extern u16 g_enemy_signal_b;
+extern u16 g_enemy_signal_a;
 extern u16 g_loop;
 
 void func_001E55D0() {
-    D_0028E85C = 2;
-    D_0028E86C = 0xFFFF;
+    g_enemy_signal_e = 2;
+    g_enemy_signal_a = 0xFFFF;
     reg_d0.w = 8;
-    D_0028E868 = 0xFFFF;
-    D_0028E864 = 0;
+    g_enemy_signal_b = 0xFFFF;
+    g_enemy_signal_c = 0;
     boss_movement_start();
     *(s8 *)(reg_a4 + 3) = 0;
     reg_d0.w = 4;
@@ -634,12 +634,12 @@ void func_001E55D0() {
     }
     *(s16 *)(reg_a4 + 0xC) = 8;
     *(s16 *)(reg_a4 + 0xE) = 8;
-    D_0028E860 = 0;
+    g_enemy_signal_d = 0;
     func_001E56D0();
 }
 
 s32 rng_next_unsigned();
-extern s16 D_0028E860_as_s16;
+extern s16 g_enemy_signal_d_as_s16;
 
 void func_001E56D0() {
     u16 temp_a0;
@@ -658,10 +658,10 @@ void func_001E56D0() {
     }
     var_a0 = 1;
     if (*(u8 *)(reg_a4 + 3) == 1) {
-        D_0028E860_as_s16 = 0;
+        g_enemy_signal_d_as_s16 = 0;
         *(u16 *)(reg_a4 + 4) -= 1;
         if ((s16) *(u16 *)(reg_a4 + 4) == 0) {
-            D_0028E860_as_s16 = 1;
+            g_enemy_signal_d_as_s16 = 1;
             rng_next_unsigned();
             reg_d0.h[0] &= 0x7F;
             reg_d0.h[0] += 0x1C0;

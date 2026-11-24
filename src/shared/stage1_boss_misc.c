@@ -44,7 +44,7 @@ s32 func_0019BF80();
 s32 func_001D27A0();
 s32 entity_velocity();
 extern u8 D_0028E855;
-extern u16 D_0028E8A0;
+extern u16 g_enemies_stopped;
 
 #define W(o) (*(u16 *)(reg_a6 + (o)))
 #define B(o) (*(u8 *)(reg_a6 + (o)))
@@ -75,7 +75,7 @@ block_6:
     enemy_remove();
     return;
 next_1:
-    if (D_0028E8A0 != 0) goto next_2;
+    if (g_enemies_stopped != 0) goto next_2;
     entity_velocity();
     if (!((s16) W(2) < -0x400)) goto next_3;
     enemy_remove();
@@ -308,7 +308,7 @@ extern u16 D_00259770[];
 extern u16 D_00259870[];
 extern u16 D_00259970[];
 extern u32 D_0026E7C0[];
-extern u16 D_0028E89C;
+extern u16 g_bullets_blocked;
 
 #define W(o) (*(u16 *)(reg_a6 + (o)))
 #define TW(o) (*(u16 *)(reg_a5 + (o)))
@@ -369,8 +369,8 @@ next_3:
     reg_tmp.w = reg_d0.w;
     reg_d0.h[1] = reg_d0.h[0];
     reg_d0.h[0] = 3;
-    if (D_0028E8A0 != 0) goto block_end;
-    if (D_0028E89C != 0) goto block_end;
+    if (g_enemies_stopped != 0) goto block_end;
+    if (g_bullets_blocked != 0) goto block_end;
     reg_d7.w = 0xF;
     reg_a0 = (u8 *) D_00259970;
     do {
@@ -471,7 +471,7 @@ void func_001501C0(void) {
     u16 temp_a0;
     u16 temp_a1;
 
-    if (D_0028E8A0 == 0) {
+    if (g_enemies_stopped == 0) {
         entity_follow_scroll();
         entity_velocity();
         if (*(u16 *)(reg_a5 + 0x1E) == 0) {

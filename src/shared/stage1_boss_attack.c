@@ -183,13 +183,13 @@ extern u16 D_0026E0A8[];
 extern u16 D_0026E0AA[];
 extern u16 D_0026E0AC[];
 extern u16 D_0026E0AE[];
-extern u16 D_0028E89C;
+extern u16 g_bullets_blocked;
 
 void func_001B5110(void) {
     u16 temp_a0;
     u16 temp_a1;
 
-    if (D_0028E89C == 0) {
+    if (g_bullets_blocked == 0) {
         if (!(*(u8 *)(reg_a4 + 4) & 1)) {
             *(u8 *)(reg_a6 + 0xC7) += 1;
             if ((s8) *(u8 *)(reg_a6 + 0xC7) >= 0x30) {
@@ -444,7 +444,7 @@ void func_001B5990(void) {
     *(u8 *)(reg_a4 + 5) -= 1;
     if ((s32) reg_tmp.b[0] <= 0) {
         *(u8 *)(reg_a4 + 5) = (u8) *(u8 *)(reg_a4 + 4);
-        if (D_0028E89C == 0) {
+        if (g_bullets_blocked == 0) {
             reg_d0.w = 0x100007;
             reg_d2.h[1] = *(u16 *)(reg_a4 + 8);
             reg_d2.h[0] = *(u16 *)(reg_a4 + 0xA);
@@ -512,7 +512,7 @@ void func_001B5BB0(void) {
     *(u8 *)(reg_a4 + 5) -= 1;
     if ((s32) reg_tmp.b[0] <= 0) {
         *(u8 *)(reg_a4 + 5) = (u8) *(u8 *)(reg_a4 + 4);
-        if (D_0028E89C == 0) {
+        if (g_bullets_blocked == 0) {
             reg_d0.w = 0x100007;
             reg_d2.h[1] = *(u16 *)(reg_a4 + 8);
             reg_d2.h[0] = *(u16 *)(reg_a4 + 0xA);
@@ -1090,7 +1090,7 @@ void func_001B6F40(void) {
     u32 temp_a0_5;
     u32 temp_a0_7;
 
-    if (D_0028E89C == 0) {
+    if (g_bullets_blocked == 0) {
         reg_a2 = (u8 *)(D_0026E0C0);
         reg_d2.h[0] = *(u16 *)(reg_a6 + 0xAC);
         reg_d2.h[0] += 7;

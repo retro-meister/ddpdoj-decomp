@@ -127,7 +127,7 @@ s32 entity_release();
 s32 entity_follow_scroll();
 extern u8 D_0028E290;
 extern u8 D_0028E2C8;
-extern u16 D_0028E890;
+extern u16 g_enemy_signal_1;
 extern u8 D_0028ED80;
 extern void func_0019C4F0();
 
@@ -136,7 +136,7 @@ void func_0011CA20(void) {
         entity_release();
         return;
     }
-    if ((D_0028E890 != 0) || (reg_d0.h[0] = ENTITY(reg_a6)->y.h, (((s16) reg_d0.h[0] < -0x4800) != 0))) {
+    if ((g_enemy_signal_1 != 0) || (reg_d0.h[0] = ENTITY(reg_a6)->y.h, (((s16) reg_d0.h[0] < -0x4800) != 0))) {
         entity_release();
         return;
     }

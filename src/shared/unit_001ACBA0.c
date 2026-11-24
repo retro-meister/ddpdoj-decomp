@@ -102,7 +102,7 @@ extern u16 D_0028E738;
 extern u16 D_0028E73C;
 extern u32 D_0028E740;
 extern u32 D_0028E744;
-extern u16 D_0028E90C;
+extern u16 g_game_completed;
 extern u16 g_loop;
 extern u16 g_stage;
 
@@ -113,7 +113,7 @@ extern u8 death_D_00290DC0;
 void func_001ACD30(void) {
     *(u16 *)(reg_a4 + 0) = MAIN_OR_DEATH_LABEL(g_loop, death_D_00290DC0);
     *(u16 *)(reg_a4 + 2) = g_stage;
-    if (D_0028E90C != 0) {
+    if (g_game_completed != 0) {
         *(u16 *)(reg_a4 + 0) = 1;
         *(u16 *)(reg_a4 + 2) = 5;
     }
@@ -723,8 +723,8 @@ extern s16 D_0028E5E8_as_s16;
 extern s16 D_0028E5EC_as_s16;
 extern s16 D_0028E5F0_as_s16;
 extern s16 D_0028E5F4_as_s16;
-extern s16 D_0028E5F8_as_s16;
-extern s16 D_0028E5FC_as_s16;
+extern s16 g_p2_hyper_active_as_s16;
+extern s16 g_p1_hyper_active_as_s16;
 extern s16 D_0028E600_as_s16;
 extern s16 D_0028E604_as_s16;
 extern s16 D_0028E608_as_s16;
@@ -860,8 +860,8 @@ void func_001AE490(void) {
     D_0028E5EC_as_s16 = 0;
     D_0028E5F0_as_s16 = 0;
     D_0028E5F4_as_s16 = 0;
-    D_0028E5F8_as_s16 = 0;
-    D_0028E5FC_as_s16 = 0;
+    g_p2_hyper_active_as_s16 = 0;
+    g_p1_hyper_active_as_s16 = 0;
     D_0028E5BC_as_s16 = 0;
     D_0028E5C0_as_s16 = 0;
     D_0028E5C4_as_s16 = 0;
@@ -951,8 +951,8 @@ extern s32 D_0028E758_as_s32;
 extern s32 D_0028E75C_as_s32;
 extern s32 D_0028E768_as_s32;
 extern s32 D_0028E76C_as_s32;
-extern s32 D_0028E8C0_as_s32;
-extern s32 D_0028E8C4_as_s32;
+extern s32 g_p2_lives_as_s32;
+extern s32 g_p1_lives_as_s32;
 extern s32 *reg_a0_as_s32_p;
 extern s32 *reg_a1_as_s32_p;
 extern s32 *reg_a2_as_s32_p;
@@ -964,7 +964,7 @@ void func_001AEA80(void) {
     reg_a0_as_s32_p = &D_0028E76C_as_s32;
     reg_a1_as_s32_p = &D_0028E71C;
     reg_a2_as_s32_p = &D_0028E734;
-    reg_a3_as_s32_p = &D_0028E8C4_as_s32;
+    reg_a3_as_s32_p = &g_p1_lives_as_s32;
     reg_a4_as_s32_p = &D_0028E72C_as_s32;
     reg_a6_as_s32_p = &D_0028E75C_as_s32;
     reg_d7.w = 0;
@@ -972,7 +972,7 @@ void func_001AEA80(void) {
     reg_a0_as_s32_p = &D_0028E768_as_s32;
     reg_a1_as_s32_p = &D_0028E718;
     reg_a2_as_s32_p = &D_0028E730;
-    reg_a3_as_s32_p = &D_0028E8C0_as_s32;
+    reg_a3_as_s32_p = &g_p2_lives_as_s32;
     reg_a4_as_s32_p = &D_0028E728_as_s32;
     reg_a6_as_s32_p = &D_0028E758_as_s32;
     reg_d7.w = 1;

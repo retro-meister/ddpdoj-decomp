@@ -238,10 +238,10 @@ void func_00201B30(void) {
 
 extern u16 D_0028E0E4[];
 extern u16 D_0028E0E6[];
-extern u16 D_0028E8A0;
+extern u16 g_enemies_stopped;
 
 void entity_follow_scroll(void) {
-    if (D_0028E8A0 == 0) {
+    if (g_enemies_stopped == 0) {
         reg_d0.h[1] = D_0028E0E4[0];
         reg_d0.h[0] = D_0028E0E6[0];
         reg_tmp.h[0] = reg_d0.h[0];
@@ -252,7 +252,7 @@ void entity_follow_scroll(void) {
 }
 
 void func_00201BE0(void) {
-    if (D_0028E8A0 == 0) {
+    if (g_enemies_stopped == 0) {
         reg_d2.h[0] = D_0028E0E4[0];
         reg_d3.h[0] = D_0028E0E6[0];
         return;
@@ -263,7 +263,7 @@ void func_00201BE0(void) {
 
 
 void func_00201C20(void) {
-    if (D_0028E8A0 == 0) {
+    if (g_enemies_stopped == 0) {
         velocity_from_dir();
         return;
     }
@@ -279,7 +279,7 @@ void entity_velocity(void)
     reg_d1.w = 0x3F;
     reg_d1.b[0] &= reg_a6[0x1A];
 
-    if (D_0028E8A0 != 0) {
+    if (g_enemies_stopped != 0) {
         reg_d2.w = 0;
         reg_d3.w = 0;
     } else {
@@ -363,7 +363,7 @@ void func_00201F20(void) {
     reg_d1.w = 0;
     temp_a0 = ENTITY(reg_a6)->move.b.dir;
     reg_d1.b[0] = temp_a0;
-    if (D_0028E8A0 != 0) {
+    if (g_enemies_stopped != 0) {
         reg_d3.w = 0;
         reg_d2.w = 0;
         return;
@@ -393,7 +393,7 @@ void func_00201FC0(void) {
 
 
 void func_00201FE0(void) {
-    if (D_0028E8A0 == 0) {
+    if (g_enemies_stopped == 0) {
         func_00202040();
         ENTITY(reg_a6)->y.h += reg_d2.h[0];
         ENTITY(reg_a6)->x.h += reg_d3.h[0];
@@ -856,7 +856,7 @@ extern u8 D_00267050[];
 extern u8 D_00267070[];
 extern u8 D_00267090[];
 extern u16 g_loop;
-extern u16 D_0028E914;
+extern u16 g_stage_x4;
 
 
 void func_00202D50(void) {
@@ -867,7 +867,7 @@ void func_00202D50(void) {
     save_d1 = reg_d1.w;
     save_d0 = reg_d0.w;
     save_a0 = reg_a0;
-    reg_d0.h[0] = D_0028E914;
+    reg_d0.h[0] = g_stage_x4;
     reg_a0 = (u8 *)D_00267030;
     if (g_loop == 0) goto next_1;
     reg_a0 = (u8 *)D_00267070;
@@ -883,7 +883,7 @@ next_1:
     reg_tmp1.w += reg_tmp.w;
     reg_d1.h[0] += reg_d0.h[1];
     if (reg_tmp1.h[1] != 0) goto next_3;
-    reg_d0.h[0] = D_0028E914;
+    reg_d0.h[0] = g_stage_x4;
     reg_a0 = (u8 *)D_00267050;
     if (g_loop == 0) goto next_2;
     reg_a0 = (u8 *)D_00267090;
@@ -916,7 +916,7 @@ void func_00202F50(void) {
     save_d1 = reg_d1.w;
     save_d0 = reg_d0.w;
     save_a0 = reg_a0;
-    reg_d0.h[0] = D_0028E914;
+    reg_d0.h[0] = g_stage_x4;
     reg_a0 = (u8 *)D_00267030;
     reg_d0.h[1] = (reg_d0.h[0] != 0) ? *(u16 *)(reg_a0 + ((s16) reg_d0.h[0] & ~1)) : *(u16 *)reg_a0;
     reg_d0.h[0] = ((reg_d0.h[0] + 2) != 0) ? *(u16 *)(reg_a0 + ((s16) (reg_d0.h[0] + 2) & ~1)) : *(u16 *)reg_a0;

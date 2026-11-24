@@ -213,7 +213,7 @@ extern u8 D_0028E290;
 extern u16 D_0028E7B0;
 extern u16 D_0028E7E4;
 extern u16 D_0028E7E8;
-extern u16 D_0028E928;
+extern u16 g_two_player_game;
 extern u16 D_0028E988;
 extern u8 D_002962E0[];
 extern u16 D_00299768_as_u16_a[];
@@ -474,7 +474,7 @@ loop_59:
         reg_d4.h[1] = reg_tmp4.h[0];
         (*(u16 *)((u8 *)(reg_a5) + (-2))) |= reg_d4.h[0];
         reg_d5.h[0] = ENTITY(reg_a6)->hit_x_plus.h;
-        if (D_0028E928 == 0) {
+        if (g_two_player_game == 0) {
             reg_d4.h[0] = reg_d5.h[0];
             reg_d4.h[0] >>= 2;
             reg_d5.h[0] -= reg_d4.h[0];
@@ -597,7 +597,7 @@ loop_85:
         reg_d5.h[0] = ENTITY(reg_a6)->hit_x_plus.h;
         reg_d4.h[0] = *(u16 *)(reg_a5 + 0x16);
         ENTITY(reg_a6)->hit_x_plus.h -= reg_d4.h[0];
-        if (D_0028E928 == 0) {
+        if (g_two_player_game == 0) {
             reg_d4.h[0] = reg_d5.h[0];
             reg_d4.h[0] >>= 2;
             reg_d5.h[0] -= reg_d4.h[0];
@@ -665,7 +665,7 @@ loop_100:
 hit_100:
         if (*(s16 *)(reg_a5 + 0x18) < 0) goto next_100;
         reg_d5.h[0] = *(u16 *)(reg_a2 + 0x18);
-        if (D_0028E928 == 0) {
+        if (g_two_player_game == 0) {
             reg_d4.h[0] = reg_d5.h[0];
             reg_d4.h[0] >>= 1;
             reg_d5.h[0] -= reg_d4.h[0];
@@ -722,7 +722,7 @@ loop_110:
         if (D_0028E5AC != 0) {
             reg_d5.h[0] += reg_d5.h[0];
         }
-        if (D_0028E928 == 0) {
+        if (g_two_player_game == 0) {
             reg_d4.h[0] = reg_d5.h[0];
             reg_d4.h[0] >>= 1;
             reg_d5.h[0] -= reg_d4.h[0];
@@ -1300,7 +1300,7 @@ next_35:
     reg_d0.h[0] = reg_d4.h[0];
 next_40:
     if (D_0028E098 != 0) goto next_60;
-    if (D_0028E928 != 0) goto next_50;
+    if (g_two_player_game != 0) goto next_50;
     reg_d4.h[0] = reg_d5.h[0];
     reg_d4.h[0] >>= 2;
     reg_d5.h[0] -= reg_d4.h[0];
@@ -1394,7 +1394,7 @@ next_42:
     reg_d4.h[0] *= 0xFFFF;
     *(u16 *) (reg_a1 + 0xE) = reg_d4.h[0];
 next_44:
-    if (D_0028E928 != 0) goto next_50;
+    if (g_two_player_game != 0) goto next_50;
     reg_d4.h[0] = reg_d5.h[0];
     reg_d4.h[0] >>= 2;
     reg_d5.h[0] -= reg_d4.h[0];

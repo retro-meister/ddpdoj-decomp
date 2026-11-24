@@ -41,14 +41,14 @@ void death_func_002237F0(u8 phase) {
 s32 boss_phase_start();
 s32 boss_attack_start();
 s32 boss_attack_running();
-extern u16 D_0028E89C;
+extern u16 g_bullets_blocked;
 
 void death_func_00223870(void) {
     s8 first_busy;
     s8 second_busy;
 
     if (*(u16 *)(reg_a4 + 2) != 0) {
-        if (D_0028E89C != 0) {
+        if (g_bullets_blocked != 0) {
             return;
         }
         *(u16 *)(reg_a4 + 2) -= 1;
@@ -89,7 +89,7 @@ void death_func_00223980(void) {
     s8 second_busy;
 
     if (*(u16 *)(reg_a4 + 2) != 0) {
-        if (D_0028E89C != 0) {
+        if (g_bullets_blocked != 0) {
             return;
         }
         *(u16 *)(reg_a4 + 2) -= 1;
@@ -128,7 +128,7 @@ void death_func_00223A70(void) {
     s8 second_busy;
 
     if (*(u16 *)(reg_a4 + 2) != 0) {
-        if (D_0028E89C != 0) {
+        if (g_bullets_blocked != 0) {
             return;
         }
         *(u16 *)(reg_a4 + 2) -= 1;
@@ -169,7 +169,7 @@ void death_func_00223B70(void) {
     s8 second_busy;
 
     if (*(u16 *)(reg_a4 + 2) != 0) {
-        if (D_0028E89C != 0) {
+        if (g_bullets_blocked != 0) {
             return;
         }
         *(u16 *)(reg_a4 + 2) -= 1;
@@ -211,7 +211,7 @@ void death_func_00223C50(void) {
 s32 func_001F5630();
 
 void death_func_00223C90(void) {
-    if ((*(u16 *)(reg_a4 + 2) != 0) && (D_0028E89C == 0)) {
+    if ((*(u16 *)(reg_a4 + 2) != 0) && (g_bullets_blocked == 0)) {
         *(u16 *)(reg_a4 + 2) -= 1;
         if (*(u16 *)(reg_a4 + 2) == 0) {
             reg_d0.w = 0x16;
@@ -233,7 +233,7 @@ void death_func_00223D00(void) {
 }
 
 void death_func_00223D40(void) {
-    if ((*(u16 *)(reg_a4 + 2) != 0) && (D_0028E89C == 0)) {
+    if ((*(u16 *)(reg_a4 + 2) != 0) && (g_bullets_blocked == 0)) {
         *(u16 *)(reg_a4 + 2) -= 1;
         if (*(u16 *)(reg_a4 + 2) == 0) {
             reg_d0.w = 0x1c;

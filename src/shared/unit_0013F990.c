@@ -31,7 +31,7 @@ extern u16 D_0028E014;
 extern u16 D_0028E024;
 extern u8 D_0028E290;
 extern s8 D_0028E3F8;
-extern u16 D_0028E8C4;
+extern u16 g_p1_lives;
 extern u16 g_loop;
 extern u16 g_stage;
 
@@ -78,9 +78,9 @@ void func_0013F9A0(void) {
         if (death_D_00290DC0 == 0)
 #endif
         {
-        temp_a0 = D_0028E8C4;
+        temp_a0 = g_p1_lives;
         if (temp_a0 != 0x14) {
-            D_0028E8C4 = temp_a0 + 1;
+            g_p1_lives = temp_a0 + 1;
             func_001AC3A0();
 #ifdef DEATH_LABEL
             if (death_D_00290850 == 0) {
@@ -117,7 +117,7 @@ void func_0013F9A0(void) {
 s32 func_001AC5F0();
 extern u16 D_0028E010;
 extern u16 D_0028E020;
-extern u16 D_0028E8C0;
+extern u16 g_p2_lives;
 
 #ifdef DEATH_LABEL
 extern u8 death_D_00290850;
@@ -162,9 +162,9 @@ void func_0013FB20(void) {
         if (death_D_00290DC0 == 0)
 #endif
         {
-        temp_a0 = D_0028E8C0;
+        temp_a0 = g_p2_lives;
         if (temp_a0 != 0x14) {
-            D_0028E8C0 = temp_a0 + 1;
+            g_p2_lives = temp_a0 + 1;
             func_001AC5F0();
 #ifdef DEATH_LABEL
             if (death_D_00290850 == 0) {
@@ -205,13 +205,13 @@ extern u16 D_0028E5D0;
 extern u16 D_0028E5DC;
 extern u16 D_0028E5E4;
 extern u16 D_0028E5F4;
-extern u16 D_0028E5FC;
+extern u16 g_p1_hyper_active;
 extern s32 D_002BAEF0[];
 
 void func_0013FCA0(void) {
     reg_d0.w = 0;
     D_002BAEF0[0] = 0;
-    D_0028E5FC = reg_d0.h[0];
+    g_p1_hyper_active = reg_d0.h[0];
     D_0028E5E4 = reg_d0.h[0];
     D_0028E5F4 = reg_d0.h[0];
     D_0028E5DC = reg_d0.h[0];
@@ -228,13 +228,13 @@ extern u16 D_0028E5CC;
 extern u16 D_0028E5D8;
 extern u16 D_0028E5E0;
 extern u16 D_0028E5F0;
-extern u16 D_0028E5F8;
+extern u16 g_p2_hyper_active;
 extern s32 D_002BAEB0[];
 
 void func_0013FCE0(void) {
     reg_d0.w = 0;
     D_002BAEB0[0] = 0;
-    D_0028E5F8 = reg_d0.h[0];
+    g_p2_hyper_active = reg_d0.h[0];
     D_0028E5E0 = reg_d0.h[0];
     D_0028E5F0 = reg_d0.h[0];
     D_0028E5D8 = reg_d0.h[0];
@@ -249,7 +249,7 @@ extern u16 D_0028E5EC;
 void func_0013FD20(void) {
     reg_d0.w = 0;
     D_002BAEF0[0] = 0;
-    D_0028E5FC = reg_d0.h[0];
+    g_p1_hyper_active = reg_d0.h[0];
     D_0028E5EC = reg_d0.h[0];
     D_0028E5E4 = reg_d0.h[0];
     D_0028E5DC = reg_d0.h[0];
@@ -263,7 +263,7 @@ extern u16 D_0028E5E8;
 void func_0013FD50(void) {
     reg_d0.w = 0;
     D_002BAEB0[0] = 0;
-    D_0028E5F8 = reg_d0.h[0];
+    g_p2_hyper_active = reg_d0.h[0];
     D_0028E5E8 = reg_d0.h[0];
     D_0028E5E0 = reg_d0.h[0];
     D_0028E5D8 = reg_d0.h[0];
@@ -653,7 +653,7 @@ extern u16 D_0028E05C_as_u16;
 extern u16 D_0028E05E;
 extern u8 D_0028E080[];
 extern s16 D_0028E584_as_s16;
-extern u16 D_0028E920;
+extern u16 g_two_player_seen;
 extern u16 D_0028E930;
 extern u16 D_0028E938;
 extern s8 D_0028ED6C_as_s8;
@@ -663,7 +663,7 @@ extern u8 D_0029CD90_as_u8_a[];
 void func_001404B0() {
     reg_a6 = D_0029F260_as_u8_a;
     reg_a2 = D_0029F180;
-    D_0028E920 |= 1;
+    g_two_player_seen |= 1;
     reg_tmp.b[0] = *(u8 *)(reg_a5 + 2);
     *(u8 *)(reg_a5 + 2) |= 1;
     if (reg_tmp.b[0] & 1) {
@@ -708,7 +708,7 @@ extern u8 D_0029CD80_as_u8_a[];
 void func_001405D0() {
     reg_a6 = D_0029F1F0_as_u8_a;
     reg_a2 = D_0029F110;
-    D_0028E920 |= 2;
+    g_two_player_seen |= 2;
     reg_tmp.b[0] = *(u8 *)(reg_a5 + 2);
     *(u8 *)(reg_a5 + 2) |= 1;
     if (reg_tmp.b[0] & 1) {
@@ -1029,7 +1029,7 @@ next_60:
     }
     if (reg_a6 == D_0029F260_as_u8_a) {
         D_0028E5C8 = 1;
-        D_0028E5FC = 1;
+        g_p1_hyper_active = 1;
         D_0028DFB8 = 1;
         reg_a6[0] |= 1;
         D_0028E5D0 = n;
@@ -1052,7 +1052,7 @@ next_60:
         D_0028E5DC = 0;
     } else {
         D_0028E5C4 = 1;
-        D_0028E5F8 = 1;
+        g_p2_hyper_active = 1;
         D_0028DFB4 = 1;
         reg_a6[0] |= 1;
         D_0028E5CC = n;
@@ -1547,7 +1547,7 @@ extern u16 D_0028E3EC;
 extern u8 D_0028E718_as_u8;
 extern u8 D_0028E71C_as_u8;
 extern u8 D_0028E855;
-extern u16 D_0028E908;
+extern u16 g_true_last_boss;
 extern u8 D_0028EC4C;
 
 void func_00141B50(void) {
@@ -1604,7 +1604,7 @@ void func_00141B50(void) {
         reg_d4.h[0] = 0x18;
         func_0019D360();
     }
-    if ((D_0028E370 != 0) && (D_0028EC4C == 0) && (D_0028E3B4 == 0) && !(D_0028E855 & 1) && (D_0028E908 == 0) && !(ENTITY(reg_a6)->flags.b[1] & 0x40)) {
+    if ((D_0028E370 != 0) && (D_0028EC4C == 0) && (D_0028E3B4 == 0) && !(D_0028E855 & 1) && (g_true_last_boss == 0) && !(ENTITY(reg_a6)->flags.b[1] & 0x40)) {
         if (*(u8 *)(reg_a5 + 6) == 0) {
             if (D_0028E06C == 0) {
                 p0 = &D_0028E71C_as_u8;
@@ -1688,8 +1688,8 @@ extern u16 D_0028E688;
 extern u16 D_0028E6C8;
 extern u16 D_0028E6E0;
 extern u16 D_0028E6E4;
-extern u16 D_0028E8A8;
-extern u16 D_0028E928;
+extern u16 g_scroll_line;
+extern u16 g_two_player_game;
 extern u16 D_00299764[];
 extern u16 D_00299766[];
 extern u16 D_0029C06C[];
@@ -1878,7 +1878,7 @@ block_13:
         }
         ENTITY(reg_a6)->y.h = (u16) reg_d2.h[0];
         ENTITY(reg_a6)->x.h = (u16) reg_d3.h[0];
-        if ((D_0028E928 == 0) && !(ENTITY(reg_a6)->flags.b[0] & 0x20)) {
+        if ((g_two_player_game == 0) && !(ENTITY(reg_a6)->flags.b[0] & 0x20)) {
             reg_d3.h[0] = ENTITY(reg_a6)->x.h;
             reg_d0.h[0] = D_0029C06C[0];
             reg_d3.h[0] -= reg_d0.h[0];
@@ -1902,7 +1902,7 @@ block_13:
                 ENTITY(reg_a6)->hp.b[0] |= 0x10;
             }
         }
-        if (((s32) D_0028E8A8 >= 4) && (ENTITY(reg_a6)->hp.b[1] & 0x20)) {
+        if (((s32) g_scroll_line >= 4) && (ENTITY(reg_a6)->hp.b[1] & 0x20)) {
             temp_a2_2 = (u8 *)(reg_a5 + 6);
             if (*(u8 *)(reg_a5 + 6) == 0) {
                 reg_a0 = (u8 *)func_0013C980;
@@ -1972,7 +1972,7 @@ block_13:
                         reg_a3 = (u8 *)(&D_0028E6E4);
                         reg_a4 = (u8 *)D_0029CD90_as_u8_a;
                         reg_d0.h[0] = D_0028E6C8;
-                        if (D_0028E5FC != 0) {
+                        if (g_p1_hyper_active != 0) {
                             func_001A7E90();
                             reg_tmp.h[0] = D_0028E5EC;
                             D_0028E5EC -= 3;
@@ -1989,7 +1989,7 @@ block_13:
                         reg_a3 = (u8 *)(&D_0028E6E0);
                         reg_a4 = (u8 *)D_0029CD80_as_u8_a;
                         reg_d0.h[0] = D_0028E688;
-                        if (D_0028E5F8 != 0) {
+                        if (g_p2_hyper_active != 0) {
                             func_001A8070();
                             reg_tmp.h[0] = D_0028E5E8;
                             D_0028E5E8 -= 3;
@@ -2176,7 +2176,7 @@ block_135:
                                 if (*(u16 *)(reg_a6 + 0x5A) != 4) {
                                     reg_a0 += 0x2A0;
                                     reg_a4 = reg_a0 + 0x150;
-                                    if ((D_0028E928 == 0) && ((s32) reg_d7.h[0] > 3)) {
+                                    if ((g_two_player_game == 0) && ((s32) reg_d7.h[0] > 3)) {
                                         reg_d7.w = 3;
                                     }
                                     reg_d6.h[0] = reg_d7.h[0];
@@ -2222,7 +2222,7 @@ loop_181:
                                     temp_a3 = (u8 *)(reg_a0 + 0x1B0);
                                     reg_a0 = temp_a3;
                                     reg_d7.h[0] += 2;
-                                    if ((D_0028E928 == 0) && ((s32) reg_d7.h[0] > 4)) {
+                                    if ((g_two_player_game == 0) && ((s32) reg_d7.h[0] > 4)) {
                                         reg_d7.w = 4;
                                     }
 loop_191:
@@ -2286,7 +2286,7 @@ block_196:
                                     reg_a0 += 0x2A0;
                                     reg_d7.h[0] *= 2;
                                     reg_d7.h[0] += 1;
-                                    if ((D_0028E928 == 0) && ((s32) reg_d7.h[0] > 7)) {
+                                    if ((g_two_player_game == 0) && ((s32) reg_d7.h[0] > 7)) {
                                         reg_d7.w = 7;
                                     }
 loop_222:
@@ -2326,7 +2326,7 @@ loop_227:
                                     temp_a3_3 = (u8 *)(reg_a0 + 0x1B0);
                                     reg_a0 = temp_a3_3;
                                     reg_d7.h[0] += 2;
-                                    if ((D_0028E928 == 0) && ((s32) reg_d7.h[0] > 4)) {
+                                    if ((g_two_player_game == 0) && ((s32) reg_d7.h[0] > 4)) {
                                         reg_d7.w = 4;
                                     }
 loop_235:
@@ -2412,7 +2412,7 @@ block_244:
         reg_d4.h[0] = 0x18;
         func_0019D360();
     }
-    if ((D_0028E370 != 0) && (D_0028EC4C == 0) && (D_0028E3B4 == 0) && !(D_0028E855 & 1) && (D_0028E908 == 0) && !(ENTITY(reg_a6)->flags.b[1] & 0x40)) {
+    if ((D_0028E370 != 0) && (D_0028EC4C == 0) && (D_0028E3B4 == 0) && !(D_0028E855 & 1) && (g_true_last_boss == 0) && !(ENTITY(reg_a6)->flags.b[1] & 0x40)) {
         if (*(u8 *)(reg_a5 + 6) == 0) {
             if (D_0028E06C == 0) {
                 p0 = &D_0028E71C_as_u8;
@@ -2514,7 +2514,7 @@ void func_001440D0(void) {
         D_0028E074_as_s16 = 0;
         D_0028E06C_as_s16 = 8;
         D_0028E068_as_s16 = 8;
-        D_0028DFB8 = D_0028E5FC;
+        D_0028DFB8 = g_p1_hyper_active;
         func_001A7E90();
         reg_d0.h[0] = D_0028E5EC;
         reg_d0.h[0] >>= 2;
@@ -2525,7 +2525,7 @@ void func_001440D0(void) {
             D_0028E5C0 = 0;
             func_001AA8F0();
         }
-        reg_d1.h[0] = D_0028E8C4;
+        reg_d1.h[0] = g_p1_lives;
         if (reg_d1.h[0] == 0) {
             func_0013FCA0();
         }
@@ -2547,7 +2547,7 @@ void func_001440D0(void) {
         D_0028E070_as_s16 = 0;
         D_0028E064_as_s16 = 8;
         D_0028E060_as_s16 = 8;
-        D_0028DFB4 = D_0028E5F8;
+        D_0028DFB4 = g_p2_hyper_active;
         func_001A8070();
         reg_d0.h[0] = D_0028E5E8;
         reg_d0.h[0] >>= 2;
@@ -2558,7 +2558,7 @@ void func_001440D0(void) {
             D_0028E5BC = 0;
             func_001AAA20();
         }
-        reg_d1.h[0] = D_0028E8C0;
+        reg_d1.h[0] = g_p2_lives;
         if (reg_d1.h[0] == 0) {
             func_0013FCE0();
         }

@@ -9,7 +9,7 @@ void func_001B0100(void);
 void func_001B0160(void);
 void func_001B0950(void);
 
-extern u16 D_0028E928;
+extern u16 g_two_player_game;
 extern u8 D_0029BF30[];
 extern u8 D_0029BF40[];
 
@@ -19,7 +19,7 @@ void func_001AF2C0(void) {
         reg_a0 = D_0029BF30;
     }
     reg_d0.b[0] = *reg_a0;
-    if (D_0028E928 == 0) {
+    if (g_two_player_game == 0) {
         reg_d0.h[0] = 0xFFFF;
     }
 }
@@ -33,7 +33,7 @@ void func_001AF310(void) {
     reg_a0 = (u8 *)D_0029BF30;
 next_1:
     reg_d1.b[0] = *reg_a0;
-    if (D_0028E928 != 0) goto next_2;
+    if (g_two_player_game != 0) goto next_2;
     reg_d1.h[0] = 0xFFFF;
 next_2:
     if ((s8) reg_d1.b[0] == -1) goto next_3;

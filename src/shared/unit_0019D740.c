@@ -377,7 +377,7 @@ extern u16 D_0028E07C[];
 extern u16 D_0028E07E[];
 extern u16 D_0028E084[];
 extern u16 D_0028E086[];
-extern u16 D_0028E928;
+extern u16 g_two_player_game;
 extern u8 D_0029E390[];
 extern u8 D_0029EA50[];
 
@@ -419,7 +419,7 @@ next_1:
     reg_a1 = &D_0028D960;
     reg_d4.h[0] = (reg_d5.h[0] != 0) ? *(u16 *)((u8 *)reg_a1 + ((s16)reg_d5.h[0] & ~1)) : *(u16 *)reg_a1;
 next_2:
-    if (D_0028E928 != 0) goto next_3;
+    if (g_two_player_game != 0) goto next_3;
     if ((s32)reg_d4.h[0] <= 4) goto next_3;
     reg_d4.w = 4;
 next_3:
@@ -523,7 +523,7 @@ next_2:
     reg_d4.h[0] = (reg_d5.h[0] != 0) ? *(u16 *)((u8 *)reg_a1 + ((s16)reg_d5.h[0] & ~1)) : *(u16 *)reg_a1;
     reg_d4.h[0] += 2;
 next_3:
-    if (D_0028E928 != 0) goto next_4;
+    if (g_two_player_game != 0) goto next_4;
     if ((s32)reg_d4.h[0] <= 4) goto next_4;
     reg_d4.w = 4;
 next_4:
@@ -711,7 +711,7 @@ next_1:
     reg_a1 = &D_0028D960;
     reg_d4.h[0] = (reg_d5.h[0] != 0) ? *(u16 *)((u8 *)reg_a1 + ((s16)reg_d5.h[0] & ~1)) : *(u16 *)reg_a1;
 next_2:
-    if (D_0028E928 != 0) goto next_3;
+    if (g_two_player_game != 0) goto next_3;
     if ((s32)reg_d4.h[0] <= 4) goto next_3;
     reg_d4.w = 4;
 next_3:

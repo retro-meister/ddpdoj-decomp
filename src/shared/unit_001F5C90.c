@@ -1,14 +1,14 @@
 #include "common.h"
 
 s32 func_001F5BB0();
-extern u16 D_0028E8A0;
+extern u16 g_enemies_stopped;
 
 void func_001F5C90(void) {
     void func_00203400(void);
 #ifdef DEATH_LABEL
-    if ((D_0028E8A0 == 0) && (*(u16 *)(reg_a5 + 0x1A) == 0)) {
+    if ((g_enemies_stopped == 0) && (*(u16 *)(reg_a5 + 0x1A) == 0)) {
 #else
-    if ((D_0028E8A0 == 0) && (*(u16 *)(reg_a5 + 0x1A) -= 1, *(u16 *)(reg_a5 + 0x1A) == 0)) {
+    if ((g_enemies_stopped == 0) && (*(u16 *)(reg_a5 + 0x1A) -= 1, *(u16 *)(reg_a5 + 0x1A) == 0)) {
 #endif
         func_00203400();
         if (reg_d0.h[0] == 0) {
@@ -32,7 +32,7 @@ s32 func_001F6080();
 s32 func_001F6140();
 s32 func_002016D0();
 extern s32 D_0028E638;
-extern u16 D_0028E89C;
+extern u16 g_bullets_blocked;
 extern u16 D_0028E8B8;
 extern s16 D_00299768[];
 extern s16 D_0029976A[];
@@ -74,7 +74,7 @@ next_2:
     reg_a6[0x201] &= reg_d0.b[0];
 #endif
     *(u16 *) (reg_a6 + 0x10A) = reg_d1.h[0];
-    if (D_0028E89C != 0) {
+    if (g_bullets_blocked != 0) {
         goto next_3;
     }
     if (D_0029CEA0[0] == 0) {
@@ -156,7 +156,7 @@ next_8:
     *(u16 *) (reg_a6 + 0x216) = reg_d0.h[0];
 #endif
     reg_d0.w = 0x12;
-    if (D_0028E89C != 0) {
+    if (g_bullets_blocked != 0) {
         goto next_9;
     }
     if (D_0029CEA0[0] != 0) {

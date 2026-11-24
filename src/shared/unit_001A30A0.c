@@ -97,14 +97,14 @@ void func_001A3250(void) {
 
 s32 sprite_palette_load();
 extern u32 D_0025F620[];
-extern u16 D_0028E914;
+extern u16 g_stage_x4;
 
 void func_001A3300(void) {
     s64 temp_a0;
     u16 temp_a1;
 
     reg_a2 = (u8 *)(D_0025F620);
-    reg_d0.h[0] = D_0028E914;
+    reg_d0.h[0] = g_stage_x4;
     reg_tmp.w = *(u32 *)(reg_a2 + reg_d0.h[0]);
     reg_a2 = (u8 *) reg_tmp.w;
 loop_1:

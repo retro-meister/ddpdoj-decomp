@@ -332,11 +332,11 @@ void func_0020A270(void) {
     func_0020A370();
 }
 
-extern u16 D_0028E928;
+extern u16 g_two_player_game;
 
 void func_0020A370(void) {
     reg_d2.w = 0x1D;
-    if (D_0028E928 != 0) {
+    if (g_two_player_game != 0) {
         func_0020A3B0();
         return;
     }

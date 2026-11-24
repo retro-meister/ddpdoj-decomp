@@ -358,7 +358,7 @@ void func_00146470(void) {
 
 s32 func_0019D5C0();
 extern u16 D_0028E3EC;
-extern u16 D_0028E928;
+extern u16 g_two_player_game;
 
 void func_00146690(arg0)
     u16 arg0;
@@ -366,7 +366,7 @@ void func_00146690(arg0)
     u16 var_a0;
 
     var_a0 = arg0;
-    if (D_0028E928 == 0) {
+    if (g_two_player_game == 0) {
         reg_d2.w = 0;
         if (ENTITY(reg_a6)->move.h != 0) {
             reg_d2.w = 1;
@@ -384,13 +384,13 @@ block_4:
 s32 func_0019D5C0();                            /* extern */
 
 void func_001466E0(void) {
-    if ((D_0028E928 != 0) || (D_0028E3EC == 0)) {
+    if ((g_two_player_game != 0) || (D_0028E3EC == 0)) {
         func_0019D5C0();
     }
 }
 
 void func_00146720(void) {
-    if ((D_0028E928 != 0) || (D_0028E3EC != 0)) {
+    if ((g_two_player_game != 0) || (D_0028E3EC != 0)) {
         func_0019D5C0();
     }
 }
@@ -399,8 +399,8 @@ extern u8 D_00257760[];
 extern u8 D_002577B0[];
 extern u16 D_0028DFE4;
 extern u16 D_0028E5AC;
-extern u16 D_0028E5F8;
-extern u16 D_0028E5FC;
+extern u16 g_p2_hyper_active;
+extern u16 g_p1_hyper_active;
 extern u16 D_0029D790_as_u16_a[];
 extern u16 D_0029DD90_as_u16_a[];
 extern s16 D_0029F1F0[];
@@ -414,7 +414,7 @@ void func_00146760(void) {
     if (D_0029F260[0] < 0) {
         reg_a6 = (u8 *)(D_0029DD90_as_u16_a);
         reg_d7.w = 0x1F;
-        D_0028E5AC = D_0028E5FC;
+        D_0028E5AC = g_p1_hyper_active;
         do {
             reg_d0.h[0] = ENTITY(reg_a6)->flags.h;
             if (reg_d0.h[0] != 0) {
@@ -429,7 +429,7 @@ void func_00146760(void) {
     if (D_0029F1F0[0] < 0) {
         reg_a6 = (u8 *)(D_0029D790_as_u16_a);
         reg_d7.w = 0x1F;
-        D_0028E5AC = D_0028E5F8;
+        D_0028E5AC = g_p2_hyper_active;
         do {
             reg_d0.h[0] = ENTITY(reg_a6)->flags.h;
             if (reg_d0.h[0] != 0) {
@@ -582,7 +582,7 @@ void func_00146A90() {
     }
     if (ENTITY(reg_a6)->flags.b[1] & 1) goto block_1;
     if (ENTITY(reg_a6)->flags.sb[0] >= 0) {
-        switch (D_0028E928) {
+        switch (g_two_player_game) {
             case 0:
                 break;
             default:
@@ -1316,7 +1316,7 @@ void func_001482C0(void) {
 
     reg_a6 = (u8 *)D_0029D730;
     if (ENTITY(reg_a6)->flags.sh < 0) {
-        if ((D_0028E3EC != 0) && (D_0028E928 != 0) && (D_0028E004 == 0)) {
+        if ((D_0028E3EC != 0) && (g_two_player_game != 0) && (D_0028E004 == 0)) {
             func_0020A120();
         }
         reg_d0.h[0] = D_0028DFD8;
@@ -1363,7 +1363,7 @@ void func_001482C0(void) {
     }
     reg_a6 = (u8 *)D_0029D710;
     if (ENTITY(reg_a6)->flags.sh < 0) {
-        if ((D_0028E3EC == 0) && (D_0028E928 != 0) && (D_0028E000 == 0)) {
+        if ((D_0028E3EC == 0) && (g_two_player_game != 0) && (D_0028E000 == 0)) {
             func_0020A1C0();
         }
         reg_d0.h[0] = D_0028DFD4;

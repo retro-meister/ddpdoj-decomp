@@ -212,13 +212,13 @@ void death_func_0021B8F0(void) {
 s32 boss_attack_stop();
 s32 func_00202A80();
 extern u16 D_00262A50_as_u16_a[];
-extern u16 D_0028E88C;
+extern u16 g_enemy_signal_2;
 
 void death_func_0021BA40(void) {
-    D_0028E88C = 0;
+    g_enemy_signal_2 = 0;
     func_00202A80();
     if ((s32) reg_d0.h[0] < 0x2000) {
-        D_0028E88C = 1;
+        g_enemy_signal_2 = 1;
     }
     reg_tmp.b[0] = *(u8 *)(reg_a4 + 3);
     *(u8 *)(reg_a4 + 3) -= 1;
@@ -272,7 +272,7 @@ void death_func_0021BBB0(void) {
 
 s32 enemy_switch_target_player();
 s32 direction256_between();
-extern u16 D_0028E89C;
+extern u16 g_bullets_blocked;
 extern u16 D_0029F1F0_as_u16_a[];
 extern u16 D_0029F260_as_u16_a[];
 
@@ -288,7 +288,7 @@ void death_func_0021BC30(arg0, arg1)
 
     var_a0 = (u8 *)(arg0);
     var_a1 = (s16 *)(arg1);
-    if (D_0028E89C == 0) {
+    if (g_bullets_blocked == 0) {
         reg_tmp.b[0] = *(u8 *)(reg_a4 + 3);
         *(u8 *)(reg_a4 + 3) -= 1;
         if (reg_tmp.b[0] == 0) {
@@ -402,8 +402,8 @@ void death_func_0021BE80(void) {
 
 s32 velocity_from_dir256();
 extern s16 D_00262A50[];
-extern u16 D_0028E890;
-extern u16 D_0028E894;
+extern u16 g_enemy_signal_1;
+extern u16 g_enemy_signal_0;
 extern s16 D_0029F1F0[];
 extern s16 D_0029F260[];
 
@@ -418,7 +418,7 @@ void death_func_0021BFC0(void) {
         reg_d0.w = 0x15;
     }
     boss_attack_stop();
-    if (D_0028E89C != 0) {
+    if (g_bullets_blocked != 0) {
         death_func_0021BE80();
         return;
     }
@@ -460,8 +460,8 @@ next_2:
             reg_d1.b[0] = *(u8 *)(reg_a4 + 0x1B);
             reg_d0.h[0] = *(u16 *)(reg_a4 + 0x18);
             velocity_from_dir256();
-            D_0028E894 = reg_d2.h[0];
-            D_0028E890 = reg_d3.h[0];
+            g_enemy_signal_0 = reg_d2.h[0];
+            g_enemy_signal_1 = reg_d3.h[0];
             enemy_switch_target_player();
             t3 = 0xFA000000;
             reg_d0.h[1] = *(u16 *)(reg_a4 + 0xA);
@@ -556,8 +556,8 @@ void death_func_0021C430(void) {
 }
 
 extern u16 D_00259870[];
-extern s16 D_0028E890_as_s16;
-extern s16 D_0028E894_as_s16;
+extern s16 g_enemy_signal_1_as_s16;
+extern s16 g_enemy_signal_0_as_s16;
 
 void death_func_0021C500(void) {
     u8 *p;
@@ -588,8 +588,8 @@ next_1:
     reg_d1.b[0] = reg_a4[0x19];
     reg_d2.h[1] = ENTITY(reg_a6)->y.h;
     reg_d2.h[0] = ENTITY(reg_a6)->x.h;
-    D_0028E894_as_s16 = 0;
-    D_0028E890_as_s16 = 0;
+    g_enemy_signal_0_as_s16 = 0;
+    g_enemy_signal_1_as_s16 = 0;
     reg_d4.h[0] = 0x101;
     reg_tmp.w = reg_d4.w;
     reg_d4.h[1] = reg_tmp.h[0];
@@ -684,7 +684,7 @@ void death_func_0021C9A0(void) {
     u8 t5;
     u8 t6;
 
-    if (D_0028E89C != 0) {
+    if (g_bullets_blocked != 0) {
         death_func_0021C8A0();
         return;
     }
@@ -953,7 +953,7 @@ extern u8 death_D_00269860[];
 void death_func_0021D2E0(void) {
     s16 *temp_v1;
 
-    if (D_0028E89C != 0) {
+    if (g_bullets_blocked != 0) {
         func_001EBA00();
         return;
     }

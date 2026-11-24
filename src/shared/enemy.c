@@ -82,13 +82,13 @@ extern u16 D_0026A2B0[];
 extern u16 D_0026A300[];
 extern u8 D_0028E290;
 extern u8 D_0028E2C8;
-extern u16 D_0028E914;
+extern u16 g_stage_x4;
 extern u8 D_002BF330[];
 
 void func_0014D4A0(void) {
     reg_a4 = D_002BF330;
     reg_a0 = (u8 *)(D_0026A2B0);
-    reg_d0.h[0] = D_0028E914;
+    reg_d0.h[0] = g_stage_x4;
     reg_d0.h[0] += reg_d0.h[0];
     reg_d0.h[0] += reg_d0.h[0];
     if (((D_0028ED80 != 0) && (D_0028E2C8 != 0)) || (D_0028E290 == 2)) {
@@ -114,7 +114,7 @@ void func_0014D4A0(void) {
 
 
 extern u16 D_0028E7D4;
-extern u16 D_0028E8A8;
+extern u16 g_scroll_line;
 extern u8 D_002BBB40[];
 extern u8 D_002BF2E0[];
 
@@ -129,8 +129,8 @@ void func_0014D5D0(void) {
 loop_1:
     reg_d0.h[0] = *(u16 *) (reg_a2 + 0);
     if (reg_d0.h[0] == 0xFFFF) goto next_3;
-    if ((s16) D_0028E8A8 > (s16) reg_d0.h[0]) goto next_2;
-    if (D_0028E8A8 != reg_d0.h[0]) goto next_3;
+    if ((s16) g_scroll_line > (s16) reg_d0.h[0]) goto next_2;
+    if (g_scroll_line != reg_d0.h[0]) goto next_3;
     reg_d0.w = 0;
     reg_d0.b[0] = *(u8 *) (reg_a2 + 5);
     reg_d1.h[1] = *(u16 *) (reg_a2 + 4);
@@ -762,7 +762,7 @@ next_1:
 
 s32 entity_follow_scroll();
 s32 entity_velocity();
-extern u16 D_0028E8A0;
+extern u16 g_enemies_stopped;
 
 void func_0014EA50(void) {
     u8 *p;
@@ -770,7 +770,7 @@ void func_0014EA50(void) {
     u8 c;
 
     enemy_move_end_requested = 0;
-    if (D_0028E8A0 != 0) goto block_7;
+    if (g_enemies_stopped != 0) goto block_7;
     if (*(u8 *)(reg_a5 + 0xC) & 1) {
         entity_follow_scroll();
     }

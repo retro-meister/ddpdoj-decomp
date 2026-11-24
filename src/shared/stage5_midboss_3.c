@@ -21,7 +21,7 @@ s32 func_0020ED00();
 extern u8 D_00261AF0[];
 extern u8 D_00265AB0[];
 extern u8 D_00265AD0[];
-extern s16 D_0028E88C_as_s16;
+extern s16 g_enemy_signal_2_as_s16;
 extern s16 D_00299768[];
 extern s8 enemy_move_end_requested;
 
@@ -35,7 +35,7 @@ void func_001F96D0(void) {
     if (enemy_move_end_requested == 0) {
         reg_d0.h[0] = 0x10;
         D_00299768[0] = 1;
-        D_0028E88C_as_s16 = 1;
+        g_enemy_signal_2_as_s16 = 1;
         reg_a0 = D_00261AF0;
         sprite_palette_load();
         func_0020ED00();
@@ -59,9 +59,9 @@ extern u8 D_00265B40[];
 extern u8 D_00265B60[];
 extern u16 D_0028E3A4_as_u16;
 extern u16 D_0028E3A8_as_u16;
-extern u16 D_0028E88C;
-extern u16 D_0028E89C;
-extern u16 D_0028E8A0;
+extern u16 g_enemy_signal_2;
+extern u16 g_bullets_blocked;
+extern u16 g_enemies_stopped;
 
 void func_001F9750(void) {
     u16 temp_a0;
@@ -72,9 +72,9 @@ void func_001F9750(void) {
     reg_d0.h[0] = 0x10;
     reg_a0 = D_00261AF0;
     sprite_palette_load();
-    if (D_0028E8A0 == 0) {
+    if (g_enemies_stopped == 0) {
         if (*(u8 *)(reg_a6 + 0x7F) != 0) {
-            D_0028E88C = 0;
+            g_enemy_signal_2 = 0;
             reg_d0.h[0] = 0x20;
             reg_d1.h[0] = 0x20;
             func_001389D0();
@@ -111,7 +111,7 @@ void func_001F9750(void) {
                 func_001389D0();
                 ENTITY(reg_a6)->flags.h = 0x8000;
                 *(u8 *)(reg_a6 + 0x7E) = 1U;
-                D_0028E88C = 0;
+                g_enemy_signal_2 = 0;
                 reg_d2.h[1] = ENTITY(reg_a6)->y.h;
                 reg_d2.h[0] = ENTITY(reg_a6)->x.h;
                 reg_a1 = D_00265B60;
@@ -131,7 +131,7 @@ block_6:
         reg_d0.w += 0x4000;
         if ((s32) reg_d0.w < 0x801) {
             if (*(u8 *)(reg_a5 + 0x17) != 0) {
-                D_0028E88C = 0;
+                g_enemy_signal_2 = 0;
                 enemy_remove();
                 return;
             }
@@ -176,7 +176,7 @@ block_11:
                 *(u8 *)(reg_a5 + 0x2D) -= 1;
                 if ((s32) reg_tmp.b[0] <= 0) {
                     *(u8 *)(reg_a5 + 0x2D) = *(u8 *)(reg_a5 + 0x2C);
-                    if (D_0028E89C == 0) {
+                    if (g_bullets_blocked == 0) {
                         temp_a0 = 0xFA80 & 0xFFFF;
                         reg_d0.h[0] = ENTITY(reg_a6)->y.h;
                         reg_d1.h[0] = ENTITY(reg_a6)->x.h;

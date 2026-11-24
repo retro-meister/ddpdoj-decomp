@@ -55,8 +55,8 @@ extern u32 D_0028DFD4_as_u32;
 extern u32 D_0028DFD8_as_u32;
 extern u16 D_0028E078_as_u16_a[];
 extern u16 D_0028E080_as_u16_a[];
-extern u32 D_0028E8C0_as_u32;
-extern u32 D_0028E8C4_as_u32;
+extern u32 g_p2_lives_as_u32;
+extern u32 g_p1_lives_as_u32;
 extern u16 D_002962E0_as_u16_a[];
 extern u16 D_00299764[];
 extern u16 D_00299780[];
@@ -517,10 +517,10 @@ void func_0020F550(void) {
     reg_tmp.w = (u32)D_002BF400;
     D_00269D00[0] = reg_tmp.h[1];
     D_00269D02[0] = reg_tmp.h[0];
-    reg_tmp.w = (u32)&D_0028E8C4_as_u32;
+    reg_tmp.w = (u32)&g_p1_lives_as_u32;
     D_00269D1C[0] = reg_tmp.h[1];
     D_00269D1E[0] = reg_tmp.h[0];
-    reg_tmp.w = (u32)&D_0028E8C0_as_u32;
+    reg_tmp.w = (u32)&g_p2_lives_as_u32;
     D_00269D2C[0] = reg_tmp.h[1];
     D_00269D2E[0] = reg_tmp.h[0];
     reg_tmp.w = (u32)D_0029CEA0;
@@ -1078,7 +1078,7 @@ s32 func_001A9180();
 s32 func_001AC3A0();
 extern s32 D_0028E734;
 extern u16 D_0028E750;
-extern u16 D_0028E8C4;
+extern u16 g_p1_lives;
 extern u16 D_0029CD90[];
 extern s16 D_0029F260[];
 extern u8 D_0029F261[];
@@ -1119,13 +1119,13 @@ block_3:
         goto block_rts;
     }
     if (*(u16 *)(reg_a6 + 6) == 1) {
-        switch (D_0028E8C4) {
+        switch (g_p1_lives) {
         case 0:
             goto block_1;
         }
         reg_d0.w = 0x01000000;
         func_001A9180();
-        D_0028E8C4 -= 1;
+        g_p1_lives -= 1;
         func_001AC3A0();
         *(s16 *)(reg_a6 + 0xA) = 0x30;
         *(u8 *)(reg_a6 + 0x11) |= 1;
@@ -1133,10 +1133,10 @@ block_3:
         func_0018D990();
         func_0018D950();
     } else if (*(u16 *)(reg_a6 + 6) == 2) {
-        if (D_0028E8C4 != 0) {
+        if (g_p1_lives != 0) {
             reg_d0.w = MAIN_OR_DEATH_LABEL(0x05000000, 0x07000000);
             func_001A9180();
-            D_0028E8C4 -= 1;
+            g_p1_lives -= 1;
             func_001AC3A0();
             *(s16 *)(reg_a6 + 0xA) = 0x30;
             *(u8 *)(reg_a6 + 0x11) |= 1;
@@ -1191,7 +1191,7 @@ s32 func_001A9190();
 s32 func_001AC5F0();
 extern s32 D_0028E730;
 extern u16 D_0028E748;
-extern u16 D_0028E8C0;
+extern u16 g_p2_lives;
 extern u16 D_0029CD80[];
 extern s16 D_0029F1F0[];
 extern u8 D_0029F1F1[];
@@ -1232,13 +1232,13 @@ block_3:
         goto block_rts;
     }
     if (*(u16 *)(reg_a6 + 8) == 1) {
-        switch (D_0028E8C0) {
+        switch (g_p2_lives) {
         case 0:
             goto block_1;
         }
         reg_d0.w = 0x01000000;
         func_001A9190();
-        D_0028E8C0 -= 1;
+        g_p2_lives -= 1;
         func_001AC5F0();
         *(s16 *)(reg_a6 + 0xA) = 0x30;
         if (*(u16 *)(reg_a6 + 0x10) & 1) {
@@ -1251,10 +1251,10 @@ block_3:
         return;
     }
     if (*(u16 *)(reg_a6 + 8) == 2) {
-        if (D_0028E8C0 != 0) {
+        if (g_p2_lives != 0) {
             reg_d0.w = MAIN_OR_DEATH_LABEL(0x05000000, 0x07000000);
             func_001A9190();
-            D_0028E8C0 -= 1;
+            g_p2_lives -= 1;
             func_001AC5F0();
             if (*(u16 *)(reg_a6 + 0x10) & 1) {
                 *(u8 *)(reg_a6 + 0x11) &= 0xFE;
@@ -1327,12 +1327,12 @@ void func_00211430(void) {
     ENTITY(reg_a6)->x.h -= reg_d1.h[0];
 }
 
-extern u16 D_0028E928;
+extern u16 g_two_player_game;
 
 void func_00211470(void) {
     reg_d3.sw = 0x1D;
     if (g_loop == 0) {
-        if (D_0028E928 == 0) {
+        if (g_two_player_game == 0) {
             goto block_3;
         }
     } else {

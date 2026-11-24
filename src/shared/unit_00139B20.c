@@ -53,10 +53,10 @@ s32 func_00211670();
 extern u16 D_0028E3EC;
 extern u16 D_0028E5CC;
 extern u16 D_0028E5D0;
-extern u16 D_0028E5F8;
-extern u16 D_0028E5FC;
+extern u16 g_p2_hyper_active;
+extern u16 g_p1_hyper_active;
 extern u16 g_loop;
-extern u16 D_0028E928;
+extern u16 g_two_player_game;
 extern u8 D_0029D750[];
 extern u8 D_0029D770[];
 extern u8 D_0029DCA0[];
@@ -105,7 +105,7 @@ void func_00139B80(void) {
     func_0013D090();
     func_0013D560();
     func_00170A50(0, 0x1F, 0);
-    if (D_0028E928 != 0) {
+    if (g_two_player_game != 0) {
         reg_d4.h[0] = D_0029F260_as_u16_a[0];
         if (D_0029F260_as_u16_a[0] != 0) {
             reg_a0 = (u8 *)D_0029E390;
@@ -114,7 +114,7 @@ void func_00139B80(void) {
             reg_a3 = (u8 *)D_0029E330;
             reg_a4 = (u8 *)(D_0029F260_as_u16_a);
             reg_d0.h[0] = 0x1000;
-            t2 = D_0028E5FC;
+            t2 = g_p1_hyper_active;
             t1 = D_0028E5D0;
             reg_d1.h[0] = t2;
             reg_d2.h[0] = t1;
@@ -132,7 +132,7 @@ void func_00139B80(void) {
             reg_a3 = (u8 *)D_0029DD30;
             reg_a4 = (u8 *)(D_0029F1F0_as_u16_a);
             reg_d0.h[0] = 0x800;
-            t2 = D_0028E5F8;
+            t2 = g_p2_hyper_active;
             t1 = D_0028E5CC;
             reg_d1.h[0] = t2;
             reg_d2.h[0] = t1;
@@ -156,7 +156,7 @@ next_1:
             reg_a3 = (u8 *)D_0029E330;
             reg_a4 = (u8 *)(D_0029F260_as_u16_a);
             reg_d0.h[0] = 0x1000;
-            reg_d1.h[0] = D_0028E5FC;
+            reg_d1.h[0] = g_p1_hyper_active;
             reg_d2.h[0] = D_0028E5D0;
             func_0020BD60();
             return;
@@ -167,7 +167,7 @@ next_1:
         reg_a3 = (u8 *)D_0029DD30;
         reg_a4 = (u8 *)(D_0029F1F0_as_u16_a);
         reg_d0.h[0] = 0x800;
-        reg_d1.h[0] = D_0028E5F8;
+        reg_d1.h[0] = g_p2_hyper_active;
         reg_d2.h[0] = D_0028E5CC;
         func_0020BD60();
     }

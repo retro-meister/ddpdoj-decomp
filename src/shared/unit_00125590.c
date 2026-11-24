@@ -104,11 +104,11 @@ void func_001256C0(void) {
     }
 }
 
-extern u16 D_0028E8A0;
+extern u16 g_enemies_stopped;
 extern u16 *reg_a6_as_u16_p;
 extern u16 D_0028E0E4[];
 void func_001257B0(void) {
-    if (D_0028E8A0 == 0) {
+    if (g_enemies_stopped == 0) {
         reg_d0.h[0] = D_0028E0E4[0];
         reg_a6_as_u16_p[1] += reg_d0.h[0];
     }
@@ -171,7 +171,7 @@ extern u16 D_0028E3E0;
 void func_00125930(void) {
     s32 func_00201D10();
     if (D_0028E3E0 == 0) {
-        if (D_0028E8A0 == 0) {
+        if (g_enemies_stopped == 0) {
             ENTITY(reg_a6)->move.b.speed += 1;
         }
         reg_d0.w = 0;
@@ -1814,7 +1814,7 @@ extern u8 *D_0028DEB4_as_u8_p;
 extern u16 D_0028DFFC;
 extern u8 D_0028E2E4;
 extern u16 D_0028E7F0;
-extern u16 D_0028E89C;
+extern u16 g_bullets_blocked;
 extern u16 D_00299768_as_u16_a[];
 extern u16 D_0029976A_as_u16_a[];
 extern u16 D_0029976C[];
@@ -1841,8 +1841,8 @@ void bullet_spawn(void) {
     D_0028DEA4 = reg_d7.w;
     D_0028DEB4_as_u8_p = reg_a0;
     D_0028DEB0_as_u16_p = (u16 *) reg_a1;
-    reg_d7.h[0] = D_0028E89C;
-    reg_d7.h[0] += D_0028E8A0;
+    reg_d7.h[0] = g_bullets_blocked;
+    reg_d7.h[0] += g_enemies_stopped;
     reg_d7.h[0] += D_0029CEA0[0];
     if (reg_d7.h[0] != 0) {
         goto next_3;
@@ -2181,8 +2181,8 @@ void bullet_spawn256(void) {
     D_0028DEA4 = reg_d7.w;
     D_0028DEB4_as_u8_p = reg_a0;
     D_0028DEB0_as_u16_p = (u16 *) reg_a1;
-    reg_d7.h[0] = D_0028E89C;
-    reg_d7.h[0] += D_0028E8A0;
+    reg_d7.h[0] = g_bullets_blocked;
+    reg_d7.h[0] += g_enemies_stopped;
     reg_d7.h[0] += D_0029CEA0[0];
     if (reg_d7.h[0] != 0) {
         goto next_3;
@@ -2379,12 +2379,12 @@ void func_00129A80(void) {
     func_00129A90();
 }
 
-extern u16 D_0028E890;
-extern u16 D_0028E894;
+extern u16 g_enemy_signal_1;
+extern u16 g_enemy_signal_0;
 
 void func_00129A90(void) {
-    *(u16 *)(reg_a0 + 0x18) = (u16) D_0028E894;
-    *(u16 *)(reg_a0 + 0x1A) = (u16) D_0028E890;
+    *(u16 *)(reg_a0 + 0x18) = (u16) g_enemy_signal_0;
+    *(u16 *)(reg_a0 + 0x1A) = (u16) g_enemy_signal_1;
     *(u16 *)(reg_a0 + 0x1C) = (u16) reg_d4.h[1];
     *(u16 *)(reg_a0 + 0x1E) = (u16) reg_d4.h[0];
     *(s8 *)(reg_a0 + 0x25) = 0;

@@ -48,9 +48,9 @@ extern u8 D_00252720[];
 extern s32 D_0028DF1C;
 extern s8 D_0028E310_as_s8;
 extern s8 g_pause_lock_timer_as_s8;
-extern u16 D_0028E8A8;
+extern u16 g_scroll_line;
 extern u16 D_0028E8AC;
-extern u16 D_0028E914;
+extern u16 g_stage_x4;
 extern u8 D_0029C060_as_u8_a[];
 
 void func_00138A50(void) {
@@ -60,7 +60,7 @@ void func_00138A50(void) {
     g_pause_lock_timer_as_s8 = 0x3C;
     D_0028E310_as_s8 = 0;
     D_0028DF1C = 0;
-    D_0028E8A8 = *(u16 *)(reg_a5 + 6);
+    g_scroll_line = *(u16 *)(reg_a5 + 6);
     memset(D_0029C060_as_u8_a, 0, 0x20);
     reg_d0.w = 0;
     reg_d1.w = 0xE;
@@ -75,7 +75,7 @@ void func_00138A50(void) {
     *(s16 *)(reg_a5 + 0x1C) = 0x20;
     *(s16 *)(reg_a5 + 0x22) = 0x20;
     reg_d0.w = 0;
-    reg_d0.h[0] = D_0028E8A8;
+    reg_d0.h[0] = g_scroll_line;
     reg_d0.h[0] &= 3;
     reg_d0.h[0] *= 8;
     reg_d0.h[0] <<= 6;
@@ -90,7 +90,7 @@ void func_00138A50(void) {
     temp_a1 = *(u16 *)(reg_a5 + 0x1E);
     reg_a0 = (u8 *)D_00252700;
     D_0028E8AC = temp_a1;
-    reg_a0 += D_0028E914;
+    reg_a0 += g_stage_x4;
     temp_a0 = (u8 *)(reg_a0);
     reg_tmp.h[1] = (*(u16 *)((u8 *)(temp_a0) + (0)));
     reg_tmp.h[0] = (*(u16 *)((u8 *)(temp_a0) + (2)));
@@ -100,11 +100,11 @@ void func_00138A50(void) {
     func_001A3250();
     *(u8 *)(reg_a5 + 3) &= 0xFE;
     reg_a1 = (u8 *)D_00252720;
-    reg_d0.h[0] = D_0028E914;
+    reg_d0.h[0] = g_stage_x4;
     reg_a1 += reg_d0.h[0];
     reg_tmp.h[1] = *(u16 *)reg_a1;
     reg_tmp.h[0] = *(u16 *)(reg_a1 + 2);
-    reg_d0.h[0] = D_0028E8A8;
+    reg_d0.h[0] = g_scroll_line;
     reg_a1 = (u8 *) reg_tmp.w;
     reg_d0.h[0] >>= 2;
     reg_d1.h[0] = reg_d0.h[0];
@@ -323,23 +323,23 @@ next_5:
     save_00 = D_0028E144;
 loop_6:
     func_001391B0();
-    if (done == 0 && g_stage == 2 && D_0028E8A8 == 0xE4 && *(u16 *) (reg_a5 + 8) == 1) {
+    if (done == 0 && g_stage == 2 && g_scroll_line == 0xE4 && *(u16 *) (reg_a5 + 8) == 1) {
         func_00138A40();
         done = 1;
     }
-    if (g_stage == 4 && D_0028E8A8 == 0x319) {
+    if (g_stage == 4 && g_scroll_line == 0x319) {
         more = 0;
     }
-    if (g_stage == 3 && D_0028E8A8 == MAIN_OR_DEATH_LABEL(0x2C5, 0x2C6)) {
+    if (g_stage == 3 && g_scroll_line == MAIN_OR_DEATH_LABEL(0x2C5, 0x2C6)) {
         more = 0;
     }
-    if (g_stage == 2 && D_0028E8A8 == MAIN_OR_DEATH_LABEL(0x19A, 0x199)) {
+    if (g_stage == 2 && g_scroll_line == MAIN_OR_DEATH_LABEL(0x19A, 0x199)) {
         more = 0;
     }
-    if (g_stage == 1 && D_0028E8A8 == MAIN_OR_DEATH_LABEL(0x1D5, 0x1D6)) {
+    if (g_stage == 1 && g_scroll_line == MAIN_OR_DEATH_LABEL(0x1D5, 0x1D6)) {
         more = 0;
     }
-    if (g_stage == 0 && D_0028E8A8 == 0x1CF) {
+    if (g_stage == 0 && g_scroll_line == 0x1CF) {
         more = 0;
     }
     if (more != 0) {
@@ -385,7 +385,7 @@ extern u8 D_0028E284;
 extern u8 D_0028E288;
 extern s16 D_0028E580_as_s16;
 extern s16 D_0028E584_as_s16;
-extern u16 D_0028E8A0;
+extern u16 g_enemies_stopped;
 extern u16 D_0029C064[];
 extern u16 D_0029C074[];
 extern u16 D_0029C076[];
@@ -395,7 +395,7 @@ extern u16 D_0029C07E[];
 void func_001391B0(void) {
     u16 temp_a0;
     u16 temp_a0_2;
-    if (D_0028E8A0 == 0) {
+    if (g_enemies_stopped == 0) {
         if (D_0028E288 != 0) {
             if ((D_0028E288 & 0xFF) < 0x3D) {
                 D_0028E288 -= 1;
@@ -440,7 +440,7 @@ void func_001391B0(void) {
         if ((s16)(reg_d5.h[0]) >= 0x200) {
             reg_d5.h[0] -= 0x200;
             if (*(u16 *)(reg_a5 + 8) == 0) {
-                D_0028E8A8 += 1;
+                g_scroll_line += 1;
             }
         }
         *(u16 *)(reg_a5 + 0x1E) = (u16) reg_d5.h[0];

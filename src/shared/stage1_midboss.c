@@ -312,8 +312,8 @@ extern u8 D_002601F0[];
 extern u8 D_00260230[];
 extern u8 D_00262700[];
 extern u8 D_00262720[];
-extern s16 D_0028E890_as_s16;
-extern s16 D_0028E894_as_s16;
+extern s16 g_enemy_signal_1_as_s16;
+extern s16 g_enemy_signal_0_as_s16;
 extern s8 enemy_move_end_requested;
 
 void func_001BCF30() {
@@ -330,8 +330,8 @@ void func_001BCF30() {
         ENTITY(reg_a6)->y.h += 0xA40;
         func_001BC8B0();
         func_001BCA10();
-        D_0028E890_as_s16 = 0;
-        D_0028E894_as_s16 = 1;
+        g_enemy_signal_1_as_s16 = 0;
+        g_enemy_signal_0_as_s16 = 1;
         reg_d0.h[0] = 0x10;
         reg_a0 = D_002601B0;
         sprite_palette_load();
@@ -362,10 +362,10 @@ s32 vibration_start_pad2();
 extern u8 D_00259970_as_u8_a[];
 extern u8 D_00262B50[];
 extern u8 D_0028E310;
-extern u16 D_0028E890;
-extern u16 D_0028E894;
-extern u16 D_0028E8A0;
-extern u16 D_0028E8A8;
+extern u16 g_enemy_signal_1;
+extern u16 g_enemy_signal_0;
+extern u16 g_enemies_stopped;
+extern u16 g_scroll_line;
 
 void func_001BD010(void) {
     u16 temp_v1;
@@ -385,7 +385,7 @@ void func_001BD010(void) {
         if (temp_a0 != 0) {
             if (temp_a0 >= 0x48) goto block_tail;
             if (temp_a0 == 48) {
-            D_0028E894 = 0;
+            g_enemy_signal_0 = 0;
             reg_d0.h[0] = 0x20;
             reg_d1.h[0] = 0x20;
             func_001389D0();
@@ -396,10 +396,10 @@ void func_001BD010(void) {
         }
         return;
     } else {
-        if (D_0028E8A8 == 0xD8) {
+        if (g_scroll_line == 0xD8) {
             *(u8 *)(reg_a5 + 0x20) = 1U;
         }
-        if (D_0028E8A8 == 0xF8) {
+        if (g_scroll_line == 0xF8) {
             *(u8 *)(reg_a5 + 0x20) = 0xFFU;
         }
         reg_d1.w = 0x5C;
@@ -423,7 +423,7 @@ void func_001BD010(void) {
                 goto block_18;
             }
             if ((s16) *(u16 *)(reg_a6 + 0x18) < 0) {
-                D_0028E890 = 1;
+                g_enemy_signal_1 = 1;
                 reg_d0.w = 0x1C;
                 func_0014E030();
                 *(u16 *)(reg_a5 + 0x28) = (u16) reg_d1.h[0];
@@ -498,13 +498,13 @@ block_27:
             goto block_35;
         }
         if (*(s16 *)(reg_a6 + 2) < -0x23FF) {
-            D_0028E894 = 0;
+            g_enemy_signal_0 = 0;
             enemy_remove();
             return;
         }
 block_35:
         func_001368E0();
-        if (D_0028E8A0 == 0) {
+        if (g_enemies_stopped == 0) {
             entity_follow_scroll();
             func_001BCA10();
             reg_tmp.b[0] = *(u8 *)(reg_a5 + 0x23);
@@ -893,7 +893,7 @@ void func_001BE0A0(void) {
     u32 cnt;
     u32 cnt2;
 
-    if (D_0028E8A8 == 0x105) {
+    if (g_scroll_line == 0x105) {
         enemy_remove();
         return;
     }

@@ -152,7 +152,7 @@ extern u16 D_0028E32C;
 extern u8 D_0028E378;
 extern u8 D_0028E37C;
 extern u16 D_0028E3F0;
-extern u16 D_0028E8A8;
+extern u16 g_scroll_line;
 void sys_end_frame(void) {
     s32 half;
 
@@ -216,8 +216,8 @@ void sys_end_frame(void) {
             sceGsSetHalfOffset2(&g_gs_dbuff.draw02, 0x800, 0x800, half);
         }
     }
-    if (D_0028E8A8 > g_stage_map_progress) {
-        g_stage_map_progress = D_0028E8A8;
+    if (g_scroll_line > g_stage_map_progress) {
+        g_stage_map_progress = g_scroll_line;
     }
     FlushCache(0);
     sceGsSyncPath(0, 0);

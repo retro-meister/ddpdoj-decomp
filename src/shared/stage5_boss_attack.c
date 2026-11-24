@@ -151,7 +151,7 @@ s32 boss_attack_stop();
 extern u16 D_00262A50_as_u16_a[];
 extern u16 D_00264160_as_u16_a[];
 extern u16 D_00264180[];
-extern u16 D_0028E89C;
+extern u16 g_bullets_blocked;
 
 void func_001E95D0(void) {
     u32 t1;
@@ -164,7 +164,7 @@ void func_001E95D0(void) {
     u8 t8;
     u8 t9;
 
-    if (D_0028E89C != 0) {
+    if (g_bullets_blocked != 0) {
         func_001E94A0();
         return;
     }
@@ -347,7 +347,7 @@ void func_001E9C60(s16 *arg1) {
     u8 temp_v0;
 
     var_a1 = (s16 *)(arg1);
-    if (D_0028E89C != 0) {
+    if (g_bullets_blocked != 0) {
         func_001E9AA0();
         return;
     }
@@ -550,7 +550,7 @@ void func_001EA300(void) {
     u16 temp_v0;
     u16 temp_v0_2;
 
-    if (D_0028E89C != 0) {
+    if (g_bullets_blocked != 0) {
         func_001EA1A0();
         return;
     }
@@ -764,7 +764,7 @@ void func_001EAAB0(void) {
     u8 t10;
     u8 t11;
 
-    if (D_0028E89C != 0) {
+    if (g_bullets_blocked != 0) {
         func_001EA9A0();
         return;
     }
@@ -961,7 +961,7 @@ void func_001EB0E0(void) {
     u8 temp_v1;
     u8 temp_v1_2;
 
-    if (D_0028E89C != 0) {
+    if (g_bullets_blocked != 0) {
         func_001EB060();
         return;
     }
@@ -1059,7 +1059,7 @@ void func_001EB440(s16 *arg1) {
     u8 t6;
 
     t2 = (s16 *)(arg1);
-    if (D_0028E89C != 0) {
+    if (g_bullets_blocked != 0) {
         func_001EB300();
         return;
     }
@@ -1240,7 +1240,7 @@ void func_001EBAD0(void) {
     u16 temp_v0_2;
     u8 temp_v0;
 
-    if (D_0028E89C != 0) {
+    if (g_bullets_blocked != 0) {
         func_001EBA00();
         return;
     }
@@ -1376,7 +1376,7 @@ void func_001EBF40(void) {
     u8 temp_v1;
     u8 *var_a1;
 
-    if (D_0028E89C != 0) {
+    if (g_bullets_blocked != 0) {
         func_001EBE90();
         return;
     }
@@ -1502,7 +1502,7 @@ void func_001EC330(void) {
     u8 t5;
     u8 t6;
 
-    if (D_0028E89C != 0) {
+    if (g_bullets_blocked != 0) {
         func_001EC230();
         return;
     }
@@ -1813,17 +1813,17 @@ void func_001ECD10(void) {
 }
 
 s32 func_00202A80();
-extern s16 D_0028E88C_as_s16;
+extern s16 g_enemy_signal_2_as_s16;
 
 void func_001ECE40() {
     u16 temp_v0_2;
     u16 temp_v0_3;
     u8 temp_v0;
 
-    D_0028E88C_as_s16 = 0;
+    g_enemy_signal_2_as_s16 = 0;
     func_00202A80();
     if ((s32) reg_d0.h[0] < 0x2000) {
-        D_0028E88C_as_s16 = 1;
+        g_enemy_signal_2_as_s16 = 1;
     }
     reg_tmp.b[0] = *(u8 *)(reg_a4 + 3);
     *(u8 *)(reg_a4 + 3) -= 1;
@@ -1927,7 +1927,7 @@ void func_001ED1E0(u8 *arg0, s16 *arg1) {
 
     var_a0 = (u8 *)(arg0);
     var_a1 = (s16 *)(arg1);
-    if (D_0028E89C == 0) {
+    if (g_bullets_blocked == 0) {
         reg_tmp.b[0] = *(u8 *)(reg_a4 + 3);
         *(u8 *)(reg_a4 + 3) -= 1;
         if (reg_tmp.b[0] == 0) {
@@ -2035,8 +2035,8 @@ void func_001ED410(void) {
 }
 
 s32 velocity_from_dir256();
-extern u16 D_0028E890;
-extern u16 D_0028E894;
+extern u16 g_enemy_signal_1;
+extern u16 g_enemy_signal_0;
 
 void func_001ED550(void) {
     s32 bullet_fire256_direct();
@@ -2046,7 +2046,7 @@ void func_001ED550(void) {
 
     reg_d0.w = 0xC;
     boss_attack_stop();
-    if (D_0028E89C != 0) {
+    if (g_bullets_blocked != 0) {
         func_001ED410();
         return;
     }
@@ -2088,8 +2088,8 @@ next_2:
             reg_d1.b[0] = *(u8 *)(reg_a4 + 0x1B);
             reg_d0.h[0] = *(u16 *)(reg_a4 + 0x18);
             velocity_from_dir256();
-            D_0028E894 = reg_d2.h[0];
-            D_0028E890 = reg_d3.h[0];
+            g_enemy_signal_0 = reg_d2.h[0];
+            g_enemy_signal_1 = reg_d3.h[0];
             enemy_switch_target_player();
             t3 = 0xFA000000;
             reg_d0.h[1] = *(u16 *)(reg_a4 + 0xA);
@@ -2250,8 +2250,8 @@ void func_001EDC80(void) {
 }
 
 extern u16 D_00259870[];
-extern s16 D_0028E890_as_s16;
-extern s16 D_0028E894_as_s16;
+extern s16 g_enemy_signal_1_as_s16;
+extern s16 g_enemy_signal_0_as_s16;
 
 void func_001EDD50(void) {
     s32 bullet_fire256_direct();
@@ -2283,8 +2283,8 @@ next_1:
     reg_d1.b[0] = reg_a4[0x19];
     reg_d2.h[1] = ENTITY(reg_a6)->y.h;
     reg_d2.h[0] = ENTITY(reg_a6)->x.h;
-    D_0028E894_as_s16 = 0;
-    D_0028E890_as_s16 = 0;
+    g_enemy_signal_0_as_s16 = 0;
+    g_enemy_signal_1_as_s16 = 0;
     reg_d4.h[0] = 0x101;
     reg_tmp.w = reg_d4.w;
     reg_d4.h[1] = reg_tmp.h[0];

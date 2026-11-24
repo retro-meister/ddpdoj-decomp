@@ -101,7 +101,7 @@ void boss_slots_end(void) {
 #pragma opt_propagation off
 #pragma divbyzerocheck on
 extern u8 D_0028E38C;
-extern u16 D_0028E904;
+extern u16 g_rank;
 
 void boss_level_get(void) {
     u8 val = D_0028E38C;
@@ -109,7 +109,7 @@ void boss_level_get(void) {
 
     reg_d1.w = 0;
     reg_d0.h[0] = (u16)((s16)reg_d0.h[0] >> 2);
-    reg_d2.h[0] = D_0028E904;
+    reg_d2.h[0] = g_rank;
     reg_d1.h[0] = reg_d0.h[0];
     reg_tmp2.w = (u32)(s16)reg_d2.h[0];
     reg_d2.w = reg_tmp2.w;
@@ -125,11 +125,11 @@ typedef void (*Fn)();
 
 
 extern u16 D_0028E3EC;
-extern u16 D_0028E5F8;
-extern u16 D_0028E5FC;
+extern u16 g_p2_hyper_active;
+extern u16 g_p1_hyper_active;
 extern u8 D_0028E855;
-extern u16 D_0028E8A0;
-extern s16 D_0028E908_as_s16;
+extern u16 g_enemies_stopped;
+extern s16 g_true_last_boss_as_s16;
 extern s32 D_00295E9C_as_s32_a[];
 extern u16 D_002962DE[];
 extern u8 *jtbl_0028E3F4_as_u8_p;
@@ -144,13 +144,13 @@ void boss_slots_run(void) {
         cond_flag = 1;
         return;
     }
-    if (D_0028E8A0 == 0) {
+    if (g_enemies_stopped == 0) {
         boss_slots_step();
         if (!(D_0028E855 & 0x40) && (D_0028E855 & 0x10)) {
-            reg_d0.h[0] = D_0028E5FC;
-            temp_v0 = reg_d0.h[0] | D_0028E5F8;
+            reg_d0.h[0] = g_p1_hyper_active;
+            temp_v0 = reg_d0.h[0] | g_p2_hyper_active;
             reg_d0.h[0] = temp_v0;
-            if ((temp_v0 & 0xFFFF) && (0 <= D_0028E908_as_s16) && (D_0028E3EC != 0)) {
+            if ((temp_v0 & 0xFFFF) && (0 <= g_true_last_boss_as_s16) && (D_0028E3EC != 0)) {
                 boss_slots_step();
             }
         }

@@ -207,21 +207,21 @@ s32 func_00202B70();
 extern u8 D_0026F150[];
 extern u16 D_0026F170[];
 extern u16 D_0028E3F0;
-extern u16 D_0028E85C;
-extern u16 D_0028E860;
-extern u16 D_0028E864;
-extern u16 D_0028E870;
-extern u16 D_0028E874;
-extern u8 D_0028E87C_as_u8;
+extern u16 g_enemy_signal_e;
+extern u16 g_enemy_signal_d;
+extern u16 g_enemy_signal_c;
+extern u16 g_enemy_signal_9;
+extern u16 g_enemy_signal_8;
+extern u8 g_enemy_signal_6_as_u8;
 extern u8 D_0028E87D;
-extern u16 D_0028E8A0;
+extern u16 g_enemies_stopped;
 extern u16 D_0029C06C[];
 extern u16 *reg_a4_as_u16_p;
 
 void func_001DD090(void) {
-    switch (D_0028E864) { case 0: goto next_10; }
-    D_0028E874 = 0;
-    D_0028E870 = 0;
+    switch (g_enemy_signal_c) { case 0: goto next_10; }
+    g_enemy_signal_8 = 0;
+    g_enemy_signal_9 = 0;
     if (*(u8 *)(reg_a6 + 0x1E) == 0) goto next_5;
     reg_d0.w = 2;
     explosion_spawn();
@@ -241,9 +241,9 @@ next_10:
     func_001A9000();
     reg_d0.h[0] = 0x7FFF;
     reg_d0.h[0] -= ENTITY(reg_a6)->hp.h;
-    if (!((s16) D_0028E874 < (s16) reg_d0.h[0])) goto next_20;
-    D_0028E874 = reg_d0.h[0];
-    D_0028E870 = reg_d1.h[0];
+    if (!((s16) g_enemy_signal_8 < (s16) reg_d0.h[0])) goto next_20;
+    g_enemy_signal_8 = reg_d0.h[0];
+    g_enemy_signal_9 = reg_d1.h[0];
 next_20:
     ENTITY(reg_a6)->hp.h = 0x7FFF;
     reg_d0.b[0] = *(u8 *)(reg_a6 + 0x1C);
@@ -260,7 +260,7 @@ next_20:
     *(u16 *)(reg_a0 + 0x1A) = ENTITY(reg_a6)->move.h;
     *(u16 *)(reg_a0 + 0x1E) = 0x10;
     func_0018D4E0();
-    if (D_0028E85C == 2) goto next_30;
+    if (g_enemy_signal_e == 2) goto next_30;
     enemy_remove();
     return;
 next_30:
@@ -282,7 +282,7 @@ block_b:
 next_120:
     *(u8 *)(reg_a5 + 0x17) = 1;
 next_130:
-    if (D_0028E8A0 != 0) goto block_c;
+    if (g_enemies_stopped != 0) goto block_c;
     reg_tmp.h[1] = *(u16 *)(reg_a5 + 0x1C);
     reg_tmp.h[0] = *(u16 *)(reg_a5 + 0x1E);
     reg_a0 = (u8 *) reg_tmp.w;
@@ -390,7 +390,7 @@ next_230:
     *(u8 *)(reg_a5 + 0x1B) = reg_d0.b[0];
 next_250:
     if (*(u8 *)(reg_a5 + 0x3B) == 1) goto next_260;
-    if (D_0028E85C != 1) goto next_260;
+    if (g_enemy_signal_e != 1) goto next_260;
     *(u8 *)(reg_a5 + 0x3B) = 1;
     *(u16 *)(reg_a6 + 0x48) = *(u16 *)(reg_a6 + 0x26);
     *(u16 *)(reg_a6 + 0x26) = 0;
@@ -402,7 +402,7 @@ next_250:
     *(u16 *)(reg_a6 + 0x30) = *(u16 *)(reg_a0 + 0x22);
     *(u16 *)(reg_a6 + 0x32) = *(u16 *)(reg_a0 + 0x24);
 next_260:
-    if (D_0028E85C != 2) goto next_300;
+    if (g_enemy_signal_e != 2) goto next_300;
     if (*(u16 *)(reg_a6 + 0x6C) == 0) goto next_300;
     reg_tmp.b[0] = *(u8 *)(reg_a6 + 0x75);
     *(u8 *)(reg_a6 + 0x75) -= 1;
@@ -436,7 +436,7 @@ next_270:
     reg_d3.w = 0;
     reg_d4.w = 0;
 next_300:
-    if (D_0028E85C != 2) goto next_600;
+    if (g_enemy_signal_e != 2) goto next_600;
     if (*(u16 *)(reg_a6 + 0x6C) != 0) goto next_600;
     if (*(u16 *)(reg_a6 + 0x86) != 0) goto next_310;
     reg_tmp.b[0] = *(u8 *)(reg_a6 + 0x8B);
@@ -467,7 +467,7 @@ next_320:
     *(u16 *)(reg_a6 + 0x86) = 0;
 next_330:
     if (*(u16 *)(reg_a6 + 0x66) != 0) goto next_340;
-    if (D_0028E860 == 0) goto next_340;
+    if (g_enemy_signal_d == 0) goto next_340;
     *(u16 *)(reg_a6 + 0x66) = 1;
     *(u16 *)(reg_a6 + 0x7C) = 1;
 next_340:
@@ -509,7 +509,7 @@ next_380:
     reg_d1.h[0] = reg_d1.b[0];
     reg_d1.b[0] += *(u8 *)(reg_a6 + 0x5B);
     if (reg_d7.b[0] == 0x70) goto next_390;
-    D_0028E87C_as_u8 = reg_d1.b[0];
+    g_enemy_signal_6_as_u8 = reg_d1.b[0];
     goto next_400;
 next_390:
     D_0028E87D = reg_d1.b[0];
@@ -525,7 +525,7 @@ next_400:
     reg_d1.w = 0;
     reg_d1.b[0] = D_0028E87D;
     if (*(s8 *)(reg_a6 + 0x3D) <= 3) goto next_410;
-    reg_d1.b[0] = D_0028E87C_as_u8;
+    reg_d1.b[0] = g_enemy_signal_6_as_u8;
 next_410:
     reg_d1.b[0] += 0x80;
     reg_d0.w = 0xFFFD0007;
@@ -582,7 +582,7 @@ next_500:
     reg_d3.w = 0;
     reg_d4.w = 0;
 next_600:
-    if (D_0028E85C == 2) goto block_c;
+    if (g_enemy_signal_e == 2) goto block_c;
     if (*(u8 *)(reg_a6 + 0x1E) == 0) goto block_c;
     if (*(u8 *)(reg_a5 + 0x3B) == 1) goto next_620;
     if (*(u8 *)(reg_a6 + 0x4F) != 0) goto next_650;

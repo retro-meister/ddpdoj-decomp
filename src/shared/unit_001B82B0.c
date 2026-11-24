@@ -23,7 +23,7 @@ void func_001B82D0(void) {
 
 extern u32 D_0028E52C;
 extern u16 g_loop;
-extern u16 D_0028E928;
+extern u16 g_two_player_game;
 extern u16 D_0029A530[];
 
 void func_001B82F0(void) {
@@ -41,7 +41,7 @@ void func_001B82F0(void) {
 loop_1:
     reg_a0 = (u8 *)D_0029A530;
     reg_d1.h[0] = 0x13;
-    if ((g_loop != 0) || (D_0028E928 == 0)) {
+    if ((g_loop != 0) || (g_two_player_game == 0)) {
         reg_d1.h[0] = 9;
     }
 loop_2:

@@ -72,7 +72,7 @@ void func_001A4FB0(void) {
 s32 func_0014E050();
 s32 enemy_remove();
 s32 entity_follow_scroll();
-extern u16 D_0028E8A0;
+extern u16 g_enemies_stopped;
 extern u16 D_0029C068[];
 
 void func_001A51B0(void) {
@@ -107,7 +107,7 @@ next_2:
 next_3:
     ENTITY(reg_a6)->offset_y.h = 1;
 next_4:
-    if (D_0028E8A0 != 0) return;
+    if (g_enemies_stopped != 0) return;
     reg_tmp.b[0] = *(u8 *)(reg_a5 + 0x1B);
     *(u8 *)(reg_a5 + 0x1B) -= 1;
     if ((s32)reg_tmp.b[0] > 0) return;

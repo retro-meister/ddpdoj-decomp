@@ -11,7 +11,7 @@ extern char death_D_002776B0[];
 extern u16 D_0028E3C0;
 extern u16 D_0028E748;
 extern u16 D_0028E750;
-extern u16 D_0028E920;
+extern u16 g_two_player_seen;
 extern s8 D_0028EC24;
 extern u8 D_0028ED58;
 extern u32 D_0028ED70_as_u32;
@@ -116,7 +116,7 @@ void func_00236F40(void) {
             }
             D_006CB5A8[D_0028ED70_as_u32] ^= death_D_002B1ED8[D_0028ED70_as_u32 & 0x1F];
             D_0028ED70_as_u32++;
-            if (D_0028E920 == 3 || D_0028E750 != 0 || D_0028E748 != 0) {
+            if (g_two_player_seen == 3 || D_0028E750 != 0 || D_0028E748 != 0) {
                 D_0028ED7C = 0;
             }
             break;
@@ -138,7 +138,7 @@ extern char D_0028BED0[];
 extern u16 D_0028E3C0;
 extern u16 D_0028E748;
 extern u16 D_0028E750;
-extern u16 D_0028E920;
+extern u16 g_two_player_seen;
 extern s8 D_0028EC24;
 extern u8 D_0028ED58;
 extern u32 D_0028ED70_as_u32;
@@ -237,7 +237,7 @@ void func_00236F40(void) {
             }
             D_006CB5A8[D_0028ED70_as_u32] ^= D_006CB588[D_0028ED70_as_u32 & 0x1F];
             D_0028ED70_as_u32++;
-            if (D_0028E920 == 3 || D_0028E750 != 0 || D_0028E748 != 0) {
+            if (g_two_player_seen == 3 || D_0028E750 != 0 || D_0028E748 != 0) {
                 D_0028ED7C = 0;
             }
             break;
@@ -643,7 +643,7 @@ extern u8 D_0028E2BB;
 extern u8 D_0028E2BC;
 extern u8 D_0028E2E4;
 extern u8 D_0028E38C;
-extern u16 D_0028E8A8;
+extern u16 g_scroll_line;
 extern u16 D_0028E8AC;
 extern u16 g_loop;
 extern u8 D_0028ED64;
@@ -715,7 +715,7 @@ void func_00237AC0() {
     }
     save[5] = D_0028E38C;
     save[18] = D_0028E2E4;
-    printf((const char *)D_0028BF00, D_0028E8A8, D_0028E8AC);
+    printf((const char *)D_0028BF00, g_scroll_line, D_0028E8AC);
     }
 }
 
@@ -895,8 +895,8 @@ extern u16 D_0028E3F0;
 extern u16 D_0028E598;
 extern u16 D_0028E59C;
 extern s32 D_0028E8BC;
-extern u16 D_0028E8C0;
-extern u16 D_0028E8C4;
+extern u16 g_p2_lives;
+extern u16 g_p1_lives;
 extern s32 D_0028E998;
 extern s32 D_0028E99C;
 extern s8 D_0028EC58;
@@ -980,8 +980,8 @@ void func_00238010(void) {
                 func_00137CC0();
             }
 #endif
-            D_0028E8C0 = 0xFFFF;
-            D_0028E8C4 = 0xFFFF;
+            g_p2_lives = 0xFFFF;
+            g_p1_lives = 0xFFFF;
         }
     }
     func_001719D0();
@@ -1042,13 +1042,13 @@ void func_00238010(void) {
             }
             break;
         case 0x65:
-            if ((g_loop != 0) && (D_0028E8A8 == 0x69) && (D_0028E8AC == 0x140)) {
+            if ((g_loop != 0) && (g_scroll_line == 0x69) && (D_0028E8AC == 0x140)) {
                 memcpy(D_0029F260_as_u16_a, D_006C68B6, 0x62);
                 memcpy(D_0029F1F0_as_u16_a, D_006C6918, 0x62);
                 D_0028DFC0 = 0;
                 D_0028ED5C = 0;
             }
-            if (D_0028E8A8 == 0x38) {
+            if (g_scroll_line == 0x38) {
                 D_0028E3F0 = 0x11A;
                 D_0028E3E4 = 2;
                 D_0028E3E0 = 2;
@@ -1058,14 +1058,14 @@ void func_00238010(void) {
                 base = D_006C91A0[0] - 0x11A;
                 D_0028E8BC = D_006C8E88[0] - base + 1;
             }
-            if ((D_0028E8A8 == D_006C8E90[0]) && (D_0028E8AC == D_006C8E94[0])) {
+            if ((g_scroll_line == D_006C8E90[0]) && (D_0028E8AC == D_006C8E94[0])) {
                 D_0028E598 = 1;
                 D_0028ED6C = 1;
                 step = 0xC8;
 #ifndef DEATH_LABEL
                 D_0028DEF8 = 1;
 #endif
-                printf((const char *)D_0028BF20, D_0028E8A8);
+                printf((const char *)D_0028BF20, g_scroll_line);
             }
             break;
         }

@@ -6283,7 +6283,7 @@ extern u8 D_00261F70[];
 extern u8 D_00261FB0[];
 extern u16 D_0028E4B0;
 extern u8 D_0028E8B4;
-extern u16 D_0028E920;
+extern u16 g_two_player_seen;
 extern s16 D_0029F1F0[];
 extern s16 D_0029F260[];
 extern u8 D_002BAE00[];
@@ -6291,7 +6291,7 @@ extern u8 D_002BAE00[];
 void func_00197F60() {
     stage_map_reset();
 #ifndef DEATH_LABEL
-    D_0028E4B0 = D_0028E920;
+    D_0028E4B0 = g_two_player_seen;
 #endif
     func_0012FAB0();
     *(s8 *)(reg_a5 + 3) = 1;
@@ -6388,7 +6388,7 @@ extern u16 D_0028E748;
 extern u16 D_0028E750;
 
 s32 func_001981F0(void) {
-    if ((D_0028E38C == 1) && (D_0028E388 == 0) && (D_0028E384 == 0) && (D_0028E290 == 0) && (D_0028E750 == 0) && (D_0028E748 == 0) && (MAIN_OR_DEATH_LABEL(D_0028E4B0, D_0028E920) != 3)) {
+    if ((D_0028E38C == 1) && (D_0028E388 == 0) && (D_0028E384 == 0) && (D_0028E290 == 0) && (D_0028E750 == 0) && (D_0028E748 == 0) && (MAIN_OR_DEATH_LABEL(D_0028E4B0, g_two_player_seen) != 3)) {
 #ifdef DEATH_LABEL
         printf((const char *)D_0027D7C0);
 #else

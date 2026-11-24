@@ -26,10 +26,10 @@ s32 func_001A91A0();
 s32 func_002016D0();
 extern u8 D_0028E290;
 extern s32 D_0028E638;
-extern u16 D_0028E864;
-extern u16 D_0028E870;
-extern u16 D_0028E874;
-extern u16 D_0028E878;
+extern u16 g_enemy_signal_c;
+extern u16 g_enemy_signal_9;
+extern u16 g_enemy_signal_8;
+extern u16 g_enemy_signal_7;
 extern u16 D_0028E8B8;
 extern s16 D_0029CEA0_as_s16_a[];
 #ifdef DEATH_LABEL
@@ -43,9 +43,9 @@ void func_001E7C90(void) {
     s32 mid;
     s32 low;
 
-    D_0028E878 = 0;
-    if (D_0028E874 == 0) goto next_100_chk;
-    reg_d1.h[0] = D_0028E870;
+    g_enemy_signal_7 = 0;
+    if (g_enemy_signal_8 == 0) goto next_100_chk;
+    reg_d1.h[0] = g_enemy_signal_9;
     *(u16 *)(reg_a6 + 0x16A) = reg_d1.h[0];
     goto next_100_set;
 next_100_chk:
@@ -113,10 +113,10 @@ next_dmg0:
     reg_d2.w = reg_d3.w;
 next_dmg1:
     reg_d0.w = 0;
-    reg_d0.h[0] = D_0028E874;
+    reg_d0.h[0] = g_enemy_signal_8;
     if (reg_d0.h[0] == 0) goto next_dec_cut;
     reg_d0.h[0] = (s32)(reg_d0.h[0] & 0xFFFF) >> 1;
-    D_0028E874 = 0;
+    g_enemy_signal_8 = 0;
     reg_d2.w = reg_d0.w;
     if (D_0029CEA0_as_s16_a[0] >= 0) goto next_flag7;
 #ifdef DEATH_LABEL
@@ -155,7 +155,7 @@ next_div:
     hp += 0x7FFF;
 #endif
 next_flag7:
-    D_0028E878 = 1;
+    g_enemy_signal_7 = 1;
 next_dec_cut:
     if (*(u16 *)(reg_a6 + 0x168) != 0) goto next_nodec;
     reg_tmp.h[1] = *(u16 *)(reg_a5 + 0x16);
@@ -214,9 +214,9 @@ next_hr_r_pal:
     *(u8 *)(reg_a6 + 0x14D) = reg_d0.b[0];
     reg_d0.h[0] = 0x7FFF;
     reg_d0.h[0] -= *(u16 *)(reg_a6 + 0x98);
-    if (!((s16)D_0028E874 < (s16)reg_d0.h[0])) goto next_hr_kangen;
-    D_0028E874 = reg_d0.h[0];
-    D_0028E870 = reg_d1.h[0];
+    if (!((s16)g_enemy_signal_8 < (s16)reg_d0.h[0])) goto next_hr_kangen;
+    g_enemy_signal_8 = reg_d0.h[0];
+    g_enemy_signal_9 = reg_d1.h[0];
 next_hr_kangen:
     *(u16 *)(reg_a6 + 0x98) = 0x7FFF;
     goto next_hr_110;
@@ -237,9 +237,9 @@ next_hl_r_pal:
     *(u8 *)(reg_a6 + 0x14C) = reg_d0.b[0];
     reg_d0.h[0] = 0x7FFF;
     reg_d0.h[0] -= *(u16 *)(reg_a6 + 0xB8);
-    if (!((s16)D_0028E874 < (s16)reg_d0.h[0])) goto next_hl_kangen;
-    D_0028E874 = reg_d0.h[0];
-    D_0028E870 = reg_d1.h[0];
+    if (!((s16)g_enemy_signal_8 < (s16)reg_d0.h[0])) goto next_hl_kangen;
+    g_enemy_signal_8 = reg_d0.h[0];
+    g_enemy_signal_9 = reg_d1.h[0];
 next_hl_kangen:
     *(u16 *)(reg_a6 + 0xB8) = 0x7FFF;
     goto next_hl_110;
@@ -285,7 +285,7 @@ next_mode2_chk:
     reg_tmp.h[0] = *(u16 *)(reg_a5 + 0x18);
     if (!((s32)reg_tmp.w < 0xC400)) goto next_hakyo_chk;
     *(u8 *)(reg_a6 + 0x16C) = 1;
-    D_0028E864 = 1;
+    g_enemy_signal_c = 1;
     reg_d0.w = 5;
     boss_phase_stop();
     reg_d0.w = 6;
@@ -305,7 +305,7 @@ extern u8 D_0028E855;
 
 void func_001E8480(void) {
     D_0028E855 |= 0x40;
-    D_0028E864 = 1;
+    g_enemy_signal_c = 1;
     D_0028E855 |= 0x80;
     func_0020ED10();
     func_0013F3C0();
@@ -413,14 +413,14 @@ void func_001E8790(void) {
     *(s16 *)(reg_a6 + 0x166) = 1;
 }
 
-extern u16 D_0028E8A0;
+extern u16 g_enemies_stopped;
 
 void func_001E87A0(void) {
     void func_00203400(void);
 #ifdef DEATH_LABEL
-    if ((D_0028E8A0 == 0) && (*(u8 *)(reg_a6 + 0x16D) != 0) && (*(u16 *)(reg_a5 + 0x1C) == 0)) {
+    if ((g_enemies_stopped == 0) && (*(u8 *)(reg_a6 + 0x16D) != 0) && (*(u16 *)(reg_a5 + 0x1C) == 0)) {
 #else
-    if ((D_0028E8A0 == 0) && (*(u8 *)(reg_a6 + 0x16D) != 0) && (*(u16 *)(reg_a5 + 0x1C) -= 1, *(u16 *)(reg_a5 + 0x1C) == 0)) {
+    if ((g_enemies_stopped == 0) && (*(u8 *)(reg_a6 + 0x16D) != 0) && (*(u16 *)(reg_a5 + 0x1C) -= 1, *(u16 *)(reg_a5 + 0x1C) == 0)) {
 #endif
         func_00203400();
         if (reg_d0.h[0] == 0) {

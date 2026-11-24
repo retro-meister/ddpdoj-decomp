@@ -881,7 +881,7 @@ void func_001D9CE0(void) {
 }
 
 extern u16 D_00259570[];
-extern u16 D_0028E89C;
+extern u16 g_bullets_blocked;
 
 void func_001D9D40(void) {
     s32 aim256_at_player();
@@ -889,7 +889,7 @@ void func_001D9D40(void) {
     *(u8 *)(reg_a4 + 5) -= 1;
     if ((s32) reg_tmp.b[0] <= 0) {
         *(u8 *)(reg_a4 + 5) = (u8) *(u8 *)(reg_a4 + 4);
-        if (D_0028E89C == 0) {
+        if (g_bullets_blocked == 0) {
             reg_d0.h[0] = *(u16 *)(reg_a6 + 0x102);
             reg_d1.h[0] = *(u16 *)(reg_a6 + 0x104);
             aim256_at_player();
@@ -1375,7 +1375,7 @@ void func_001DAF90(void) {
     reg_d1.w = temp_s0;
 }
 
-extern s16 D_0028E85C_as_s16;
+extern s16 g_enemy_signal_e_as_s16;
 
 void func_001DB000(void) {
     *(s16 *)(reg_a4 + 2) = 0x820;
@@ -1383,14 +1383,14 @@ void func_001DB000(void) {
     *(s16 *)(reg_a4 + 6) = 0xC;
     *(s8 *)(reg_a4 + 9) = 3;
     *(s8 *)(reg_a4 + 8) = 0x48;
-    D_0028E85C_as_s16 = 0;
+    g_enemy_signal_e_as_s16 = 0;
     *(s16 *)(reg_a4 + 0x10) = 0x50;
     *(s16 *)(reg_a6 + 0x19E) = 0;
     func_001DB060();
 }
 
 extern u8 D_0026ED10[];
-extern u16 D_0028E85C;
+extern u16 g_enemy_signal_e;
 
 void func_001DB060(void) {
     s8 var_a0;
@@ -1437,16 +1437,16 @@ void func_001DB060(void) {
         }
     }
     reg_d0.h[0] = *(u16 *)(reg_a6 + 0x19E);
-    if ((*(u16 *)(reg_a4 + 4) == reg_d0.h[0]) && (D_0028E85C == 0)) {
+    if ((*(u16 *)(reg_a4 + 4) == reg_d0.h[0]) && (g_enemy_signal_e == 0)) {
         *(u16 *)(reg_a4 + 0x10) -= 1;
         if ((s16) *(u16 *)(reg_a4 + 0x10) == 0) {
-            D_0028E85C = 1;
+            g_enemy_signal_e = 1;
             *(s16 *)reg_a4 = 0;
         }
     }
 }
 
-extern u16 D_0028E864;
+extern u16 g_enemy_signal_c;
 
 void func_001DB260(void)
 {
@@ -1455,7 +1455,7 @@ void func_001DB260(void)
     ((u16 *)reg_a4_as_void_p)[3] = 0xC;
     ((u8 *)reg_a4_as_void_p)[9] = 0x48;
     ((u8 *)reg_a4_as_void_p)[8] = 0xA0;
-    D_0028E864 = 0;
+    g_enemy_signal_c = 0;
     func_001DB2B0();
 }
 

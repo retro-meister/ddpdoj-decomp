@@ -336,14 +336,14 @@ void func_001F57D0(void) {
     *(s16 *)(reg_a6 + 0x106) = 1;
 }
 
-extern u16 D_0028E8A0;
+extern u16 g_enemies_stopped;
 
 void func_001F57E0(void) {
     void func_00203400(void);
 #ifdef DEATH_LABEL
-    if ((D_0028E8A0 == 0) && (*(u16 *)(reg_a5 + 0x1A) == 0)) {
+    if ((g_enemies_stopped == 0) && (*(u16 *)(reg_a5 + 0x1A) == 0)) {
 #else
-    if ((D_0028E8A0 == 0) && (*(u16 *)(reg_a5 + 0x1A) -= 1, *(u16 *)(reg_a5 + 0x1A) == 0)) {
+    if ((g_enemies_stopped == 0) && (*(u16 *)(reg_a5 + 0x1A) -= 1, *(u16 *)(reg_a5 + 0x1A) == 0)) {
 #endif
         func_00203400();
         if (reg_d0.h[0] == 0) {

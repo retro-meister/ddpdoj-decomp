@@ -21,8 +21,8 @@ void func_00134FB0(void) {
     func_00207490();
 }
 
-extern u16 D_0028E914;
-extern u16 D_0028E918;
+extern u16 g_stage_x4;
+extern u16 g_stage_x2;
 extern u16 g_stage;
 
 void func_00134FE0(void) {
@@ -33,59 +33,59 @@ void func_00134FE0(void) {
     value = value + value;
     reg_d0.h[0] = value;
     value = reg_d0.h[0];
-    D_0028E918 = value;
+    g_stage_x2 = value;
     value = value + value;
     reg_d0.h[0] = value;
     value = reg_d0.h[0];
-    D_0028E914 = value;
+    g_stage_x4 = value;
 }
 
 extern s16 D_0028E854_as_s16;
-extern s16 D_0028E858_as_s16;
-extern s16 D_0028E85C_as_s16;
-extern s16 D_0028E860_as_s16;
-extern s16 D_0028E864_as_s16;
-extern s16 D_0028E868_as_s16;
-extern s16 D_0028E86C_as_s16;
-extern s16 D_0028E870_as_s16;
-extern s16 D_0028E874_as_s16;
-extern s16 D_0028E878_as_s16;
-extern s16 D_0028E87C_as_s16;
-extern s16 D_0028E880_as_s16;
-extern s16 D_0028E884_as_s16;
-extern s16 D_0028E888_as_s16;
-extern s16 D_0028E88C_as_s16;
-extern s16 D_0028E890_as_s16;
-extern s16 D_0028E894_as_s16;
-extern s16 D_0028E898_as_s16;
-extern s16 D_0028E89C_as_s16;
-extern s16 D_0028E8A0_as_s16;
+extern s16 g_enemy_signal_f_as_s16;
+extern s16 g_enemy_signal_e_as_s16;
+extern s16 g_enemy_signal_d_as_s16;
+extern s16 g_enemy_signal_c_as_s16;
+extern s16 g_enemy_signal_b_as_s16;
+extern s16 g_enemy_signal_a_as_s16;
+extern s16 g_enemy_signal_9_as_s16;
+extern s16 g_enemy_signal_8_as_s16;
+extern s16 g_enemy_signal_7_as_s16;
+extern s16 g_enemy_signal_6_as_s16;
+extern s16 g_enemy_signal_5_as_s16;
+extern s16 g_enemy_signal_4_as_s16;
+extern s16 g_enemy_signal_3_as_s16;
+extern s16 g_enemy_signal_2_as_s16;
+extern s16 g_enemy_signal_1_as_s16;
+extern s16 g_enemy_signal_0_as_s16;
+extern s16 g_stopped_and_blocked_as_s16;
+extern s16 g_bullets_blocked_as_s16;
+extern s16 g_enemies_stopped_as_s16;
 extern s16 D_0028E8A4_as_s16;
-extern s16 D_0028E8A8_as_s16;
+extern s16 g_scroll_line_as_s16;
 
 void func_00135010(void) {
     D_0028E854_as_s16 = 0;
-    D_0028E858_as_s16 = 0;
-    D_0028E85C_as_s16 = 0;
-    D_0028E860_as_s16 = 0;
-    D_0028E864_as_s16 = 0;
-    D_0028E868_as_s16 = 0;
-    D_0028E86C_as_s16 = 0;
-    D_0028E870_as_s16 = 0;
-    D_0028E874_as_s16 = 0;
-    D_0028E878_as_s16 = 0;
-    D_0028E87C_as_s16 = 0;
-    D_0028E880_as_s16 = 0;
-    D_0028E884_as_s16 = 0;
-    D_0028E888_as_s16 = 0;
-    D_0028E88C_as_s16 = 0;
-    D_0028E890_as_s16 = 0;
-    D_0028E894_as_s16 = 0;
-    D_0028E898_as_s16 = 0;
-    D_0028E89C_as_s16 = 0;
-    D_0028E8A0_as_s16 = 0;
+    g_enemy_signal_f_as_s16 = 0;
+    g_enemy_signal_e_as_s16 = 0;
+    g_enemy_signal_d_as_s16 = 0;
+    g_enemy_signal_c_as_s16 = 0;
+    g_enemy_signal_b_as_s16 = 0;
+    g_enemy_signal_a_as_s16 = 0;
+    g_enemy_signal_9_as_s16 = 0;
+    g_enemy_signal_8_as_s16 = 0;
+    g_enemy_signal_7_as_s16 = 0;
+    g_enemy_signal_6_as_s16 = 0;
+    g_enemy_signal_5_as_s16 = 0;
+    g_enemy_signal_4_as_s16 = 0;
+    g_enemy_signal_3_as_s16 = 0;
+    g_enemy_signal_2_as_s16 = 0;
+    g_enemy_signal_1_as_s16 = 0;
+    g_enemy_signal_0_as_s16 = 0;
+    g_stopped_and_blocked_as_s16 = 0;
+    g_bullets_blocked_as_s16 = 0;
+    g_enemies_stopped_as_s16 = 0;
     D_0028E8A4_as_s16 = 0;
-    D_0028E8A8_as_s16 = 0;
+    g_scroll_line_as_s16 = 0;
 }
 
 s32 func_00128660();                            /* extern */
@@ -118,15 +118,15 @@ void func_00135070(void) {
 }
 
 void func_00135100() {
-    D_0028E8A0_as_s16 = 1;
+    g_enemies_stopped_as_s16 = 1;
 }
 
 void func_00135110(void) {
-    D_0028E8A0_as_s16 = 0;
+    g_enemies_stopped_as_s16 = 0;
 }
 
-extern u16 D_0028E924;
-extern u16 D_0028E928;
+extern u16 g_two_player_state;
+extern u16 g_two_player_game;
 extern s32 D_002BF390_as_s32_a[];
 extern s32 D_002BF3B4_as_s32_a[];
 extern s32 *reg_a2_as_s32_p;
@@ -134,36 +134,36 @@ extern s32 *reg_a3_as_s32_p;
 
 void func_00135120(void) {
     reg_a2_as_s32_p = D_002BF390_as_s32_a;
-    D_0028E928 = 0;
+    g_two_player_game = 0;
     reg_a3_as_s32_p = D_002BF3B4_as_s32_a;
     reg_d0.h[1] = (*(u16 *)((u8 *)(reg_a2_as_s32_p) + (0x18)));
     reg_d0.h[0] = (*(u16 *)((u8 *)(reg_a2_as_s32_p) + (0x1A)));
     if (reg_d0.w != 0) {
-        D_0028E928 += 1;
+        g_two_player_game += 1;
     }
     reg_d0.h[1] = (*(u16 *)((u8 *)(reg_a3_as_s32_p) + (0x18)));
     reg_d0.h[0] = (*(u16 *)((u8 *)(reg_a3_as_s32_p) + (0x1A)));
     if (reg_d0.w != 0) {
-        D_0028E928 += 1;
+        g_two_player_game += 1;
     }
-    D_0028E928 -= 1;
-    D_0028E924 = D_0028E928;
+    g_two_player_game -= 1;
+    g_two_player_state = g_two_player_game;
     func_00135110();
-    if ((s16) D_0028E924 == -1) {
-        func_00135100((s16) D_0028E924);
+    if ((s16) g_two_player_state == -1) {
+        func_00135100((s16) g_two_player_state);
     }
-    if (D_0028E928 == 0) {
-        D_0028E928 = 1;
+    if (g_two_player_game == 0) {
+        g_two_player_game = 1;
         return;
     }
-    D_0028E928 = 0;
+    g_two_player_game = 0;
 }
 
 extern u16 D_0028E850;
-extern s16 D_0028E924_as_s16;
+extern s16 g_two_player_state_as_s16;
 
 void func_001351F0(void) {
-    if ((D_0028E850 == 0) && (D_0028E924_as_s16 == -1)) {
+    if ((D_0028E850 == 0) && (g_two_player_state_as_s16 == -1)) {
         cond_flag = 1;
         return;
     }
@@ -282,7 +282,7 @@ void func_001354C0(void) {
     func_0012FBD0();
     *(u16 *)(reg_a6 + 0x18) = 0U;
     *(u16 *)(reg_a6 + 0x1A) = 0U;
-    D_0028E89C_as_s16 = 0x78;
+    g_bullets_blocked_as_s16 = 0x78;
     func_00138A00();
     reg_tmp.h[1] = *(u16 *)(reg_a6 + 8);
     reg_tmp.h[0] = *(u16 *)(reg_a6 + 0xA);
@@ -692,74 +692,74 @@ extern s32 D_0028E840;
 extern s32 D_0028E844;
 extern s32 D_0028E848;
 extern u16 D_0028E854_as_u16;
-extern u16 D_0028E858;
-extern u16 D_0028E85C;
-extern u16 D_0028E860;
-extern u16 D_0028E864;
-extern u16 D_0028E868;
-extern u16 D_0028E86C;
-extern u16 D_0028E870;
-extern u16 D_0028E874;
-extern u16 D_0028E878;
-extern u16 D_0028E87C;
-extern u16 D_0028E880;
-extern u16 D_0028E884;
-extern u16 D_0028E888;
-extern u16 D_0028E88C;
-extern u16 D_0028E890;
-extern u16 D_0028E894;
-extern u16 D_0028E898;
-extern u16 D_0028E89C;
-extern u16 D_0028E8A0;
+extern u16 g_enemy_signal_f;
+extern u16 g_enemy_signal_e;
+extern u16 g_enemy_signal_d;
+extern u16 g_enemy_signal_c;
+extern u16 g_enemy_signal_b;
+extern u16 g_enemy_signal_a;
+extern u16 g_enemy_signal_9;
+extern u16 g_enemy_signal_8;
+extern u16 g_enemy_signal_7;
+extern u16 g_enemy_signal_6;
+extern u16 g_enemy_signal_5;
+extern u16 g_enemy_signal_4;
+extern u16 g_enemy_signal_3;
+extern u16 g_enemy_signal_2;
+extern u16 g_enemy_signal_1;
+extern u16 g_enemy_signal_0;
+extern u16 g_stopped_and_blocked;
+extern u16 g_bullets_blocked;
+extern u16 g_enemies_stopped;
 extern u16 D_0028E8A4;
-extern u16 D_0028E8A8;
+extern u16 g_scroll_line;
 extern u8 D_0028E8B0;
 extern u16 D_0028E8B8;
 extern s32 D_0028E8BC;
-extern u16 D_0028E8C0;
-extern u16 D_0028E8C4;
-extern u16 D_0028E8C8;
-extern u16 D_0028E8CC;
-extern u16 D_0028E8D0;
-extern u16 D_0028E8D4;
-extern u16 D_0028E8D8;
-extern u16 D_0028E8DC;
-extern u16 D_0028E8E0;
-extern u16 D_0028E8E4;
-extern u16 D_0028E8E8;
-extern u16 D_0028E8EC;
-extern u16 D_0028E8F0;
-extern u16 D_0028E8F4;
-extern u16 D_0028E8F8;
-extern u16 D_0028E8FC;
-extern u16 D_0028E900;
-extern u16 D_0028E904;
-extern u16 D_0028E908;
-extern u16 D_0028E90C;
-extern u16 D_0028E920;
+extern u16 g_p2_lives;
+extern u16 g_p1_lives;
+extern u16 g_rank_1_16;
+extern u16 g_rank_2_16;
+extern u16 g_rank_3_16;
+extern u16 g_rank_4_16;
+extern u16 g_rank_5_16;
+extern u16 g_rank_6_16;
+extern u16 g_rank_7_16;
+extern u16 g_rank_8_16;
+extern u16 g_rank_9_16;
+extern u16 g_rank_10_16;
+extern u16 g_rank_11_16;
+extern u16 g_rank_12_16;
+extern u16 g_rank_13_16;
+extern u16 g_rank_14_16;
+extern u16 g_rank_15_16;
+extern u16 g_rank;
+extern u16 g_true_last_boss;
+extern u16 g_game_completed;
+extern u16 g_two_player_seen;
 void func_00135ED0(void) {
     s32 var_a1;
     u8 *temp_a2;
 
     var_a1 = 0;
-    D_0028E928 = D_0028E924 = D_0028E920 = g_stage = D_0028E918 = D_0028E914 = g_loop = D_0028E90C = D_0028E908 = D_0028E904 = D_0028E900 = D_0028E8FC = D_0028E8F8 = D_0028E8F4 = D_0028E8F0 = D_0028E8EC = D_0028E8E8 = D_0028E8E4 = D_0028E8E0 = D_0028E8DC = D_0028E8D8 = D_0028E8D4 = D_0028E8D0 = D_0028E8CC = D_0028E8C8 = D_0028E8C4 = D_0028E8C0 = D_0028E8BC = D_0028E8B8 = (D_0028E8B4 = D_0028E8B0 = (D_0028E8A8 = D_0028E8A4 = D_0028E8A0 = D_0028E89C = D_0028E898 = 0));
+    g_two_player_game = g_two_player_state = g_two_player_seen = g_stage = g_stage_x2 = g_stage_x4 = g_loop = g_game_completed = g_true_last_boss = g_rank = g_rank_15_16 = g_rank_14_16 = g_rank_13_16 = g_rank_12_16 = g_rank_11_16 = g_rank_10_16 = g_rank_9_16 = g_rank_8_16 = g_rank_7_16 = g_rank_6_16 = g_rank_5_16 = g_rank_4_16 = g_rank_3_16 = g_rank_2_16 = g_rank_1_16 = g_p1_lives = g_p2_lives = D_0028E8BC = D_0028E8B8 = (D_0028E8B4 = D_0028E8B0 = (g_scroll_line = D_0028E8A4 = g_enemies_stopped = g_bullets_blocked = g_stopped_and_blocked = 0));
     D_0028E854_as_u16 = 0;
-    D_0028E858 = 0;
-    D_0028E85C = 0;
-    D_0028E860 = 0;
-    D_0028E864 = 0;
-    D_0028E868 = 0;
-    D_0028E86C = 0;
-    D_0028E870 = 0;
-    D_0028E874 = 0;
-    D_0028E878 = 0;
-    D_0028E87C = 0;
-    D_0028E880 = 0;
-    D_0028E884 = 0;
-    D_0028E888 = 0;
-    D_0028E88C = 0;
-    D_0028E890 = 0;
-    D_0028E894 = 0;
+    g_enemy_signal_f = 0;
+    g_enemy_signal_e = 0;
+    g_enemy_signal_d = 0;
+    g_enemy_signal_c = 0;
+    g_enemy_signal_b = 0;
+    g_enemy_signal_a = 0;
+    g_enemy_signal_9 = 0;
+    g_enemy_signal_8 = 0;
+    g_enemy_signal_7 = 0;
+    g_enemy_signal_6 = 0;
+    g_enemy_signal_5 = 0;
+    g_enemy_signal_4 = 0;
+    g_enemy_signal_3 = 0;
+    g_enemy_signal_2 = 0;
+    g_enemy_signal_1 = 0;
+    g_enemy_signal_0 = 0;
     do {
         temp_a2 = (u8 *)(D_002BF390 + var_a1);
         (*(s8 *)((u8 *)(temp_a2) + (0))) = 0;
@@ -778,8 +778,8 @@ void func_00135ED0(void) {
     D_0028E844 = 0;
     D_0028E848 = 0;
     D_0028E84C = 0;
-    D_0028E8C4 = 0xFFFF;
-    D_0028E8C0 = 0xFFFF;
+    g_p1_lives = 0xFFFF;
+    g_p2_lives = 0xFFFF;
 }
 
 s32 func_001AAEE0();
@@ -1015,8 +1015,8 @@ void func_00136450(void) {
         func_00135ED0();
     } else {
         D_0028E850 = 0;
-        D_0028E8C4 = 0xFFFF;
-        D_0028E8C0 = 0xFFFF;
+        g_p1_lives = 0xFFFF;
+        g_p2_lives = 0xFFFF;
         D_0028E84C = 0;
         D_0028E848 = 0;
         D_0028E844 = 0;
@@ -1138,15 +1138,15 @@ void func_001367C0(void) {
     if (t == 2) goto block_end1;
     func_00135420();
     if (D_0028E93C == 0) {
-        if (D_0028E8A0 == 0) {
-            if (D_0028E89C != 0) {
-                D_0028E89C -= 1;
+        if (g_enemies_stopped == 0) {
+            if (g_bullets_blocked != 0) {
+                g_bullets_blocked -= 1;
             }
         }
         reg_d0.w = 0xE;
         reg_d0.h[0] &= D_0028E3F0;
         D_0028E8B8 = reg_d0.h[0];
-        if ((D_0028E8A0 == 0) && (g_stage_load_state == 0) && (D_0028EC4C == 0)) {
+        if ((g_enemies_stopped == 0) && (g_stage_load_state == 0) && (D_0028EC4C == 0)) {
             D_0028E8BC += 1;
         }
         func_00138170();

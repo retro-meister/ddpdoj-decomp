@@ -41,13 +41,13 @@ void func_001F6080() {
 }
 
 void func_00203400(void);
-extern u16 D_0028E8A0;
+extern u16 g_enemies_stopped;
 
 void func_001F6140(void) {
     #ifdef DEATH_LABEL
-    if ((D_0028E8A0 == 0) && (*(u16 *)(reg_a5 + 0x1A) == 0)) {
+    if ((g_enemies_stopped == 0) && (*(u16 *)(reg_a5 + 0x1A) == 0)) {
 #else
-    if ((D_0028E8A0 == 0) && (*(u16 *)(reg_a5 + 0x1A) -= 1, *(u16 *)(reg_a5 + 0x1A) == 0)) {
+    if ((g_enemies_stopped == 0) && (*(u16 *)(reg_a5 + 0x1A) -= 1, *(u16 *)(reg_a5 + 0x1A) == 0)) {
 #endif
         func_00203400();
         if (reg_d0.h[0] == 0) {
@@ -281,7 +281,7 @@ void func_001F67C0(void) {
 
 extern u8 D_00265170[];
 extern u8 D_00265180[];
-extern u16 D_0028E8A8;
+extern u16 g_scroll_line;
 
 void func_001F67D0(void) {
     s32 enemy_set_task_work();
@@ -294,20 +294,20 @@ void func_001F67D0(void) {
     enemy_set_task_work();
     enemy_path_start();
     if (enemy_move_end_requested == 0) {
-        *(u16 *)(reg_a5 + 0x22) = (u16) D_0028E8A8;
-        if (D_0028E8A8 == 0xE6) {
+        *(u16 *)(reg_a5 + 0x22) = (u16) g_scroll_line;
+        if (g_scroll_line == 0xE6) {
             *(s8 *)(reg_a5 + 0x19) = 0x60;
         }
-        if (D_0028E8A8 == 0xE4) {
+        if (g_scroll_line == 0xE4) {
             *(u8 *)(reg_a5 + 0x19) = 0xF0;
         }
-        if (D_0028E8A8 == 0x108) {
+        if (g_scroll_line == 0x108) {
             *(s8 *)(reg_a5 + 0x19) = 0x40;
         }
-        if (D_0028E8A8 == 0x106) {
+        if (g_scroll_line == 0x106) {
             *(u8 *)(reg_a5 + 0x19) = 0xF0;
         }
-        if (D_0028E8A8 == 0x116) {
+        if (g_scroll_line == 0x116) {
             *(u8 *)(reg_a5 + 0x19) = 0x80;
         }
     }
@@ -338,7 +338,7 @@ void func_001F68C0(void) {
     *(u8 *)(reg_a5 + 0x17) = 1U;
 block_4:
     entity_follow_scroll();
-    if (D_0028E8A0 == 0) {
+    if (g_enemies_stopped == 0) {
         if ((*(u8 *)(reg_a5 + 0x16) == 0) && (*(u8 *)(reg_a5 + 0x17) != 0)) {
             temp_v0 = (s16) ENTITY(reg_a6)->y.h;
             if ((temp_v0 < 0x7000) && (temp_v0 > 0x5000)) {
@@ -436,7 +436,7 @@ void func_001F6C70(void) {
     enemy_set_task_work();
     enemy_path_start();
     if (enemy_move_end_requested == 0) {
-        if (D_0028E8A8 == 0x201) {
+        if (g_scroll_line == 0x201) {
             *(s8 *)(reg_a6 + 0x1D) = 0x40;
             *(s8 *)(reg_a5 + 0x16) = 1;
         }
@@ -604,8 +604,8 @@ void func_001F71B0(void) {
 
 extern s16 D_00265280[];
 extern s16 D_00265290[];
-extern s16 D_0028E87C_as_s16;
-extern s16 D_0028E884_as_s16;
+extern s16 g_enemy_signal_6_as_s16;
+extern s16 g_enemy_signal_4_as_s16;
 
 void func_001F71C0(void) {
     s32 enemy_set_task_work();
@@ -618,16 +618,16 @@ void func_001F71C0(void) {
     enemy_set_task_work();
     enemy_path_start();
     if (enemy_move_end_requested != 0) return;
-    if (D_0028E8A8 != 0x1F3) goto next_1;
+    if (g_scroll_line != 0x1F3) goto next_1;
     *(s8 *)(reg_a6 + 0x1D) = 0x40;
     *(s8 *)(reg_a5 + 0x16) = 1;
 next_1:
     *(u8 *)(reg_a6 + 0x1C) = *(u8 *)(reg_a5 + 0x19);
     D_00299768[0] = 1;
     D_0029976A[0] = 1;
-    reg_a0 = (u8 *)(&D_0028E884_as_s16);
-    if ((s32) D_0028E8A8 < 0x260) goto next_2;
-    reg_a0 = (u8 *)(&D_0028E87C_as_s16);
+    reg_a0 = (u8 *)(&g_enemy_signal_4_as_s16);
+    if ((s32) g_scroll_line < 0x260) goto next_2;
+    reg_a0 = (u8 *)(&g_enemy_signal_6_as_s16);
 next_2:
     reg_tmp.w = (u32) reg_a0;
     *(u16 *)(reg_a5 + 0x20) = reg_tmp.h[1];
@@ -642,7 +642,7 @@ extern u8 D_00265330[];
 extern u8 D_002653B0[];
 extern u8 D_00265430[];
 extern u8 D_002654B0[];
-extern u16 D_0028E89C;
+extern u16 g_bullets_blocked;
 
 void func_001F72B0(void) {
     s32 enemy_hitbox_debug_draw();
@@ -706,7 +706,7 @@ block_8:
     *(u8 *)(reg_a5 + 0x1B) -= 1;
     if ((s32) reg_tmp.b[0] <= 0) {
         *(u8 *)(reg_a5 + 0x1B) = (u8) *(u8 *)(reg_a5 + 0x1A);
-        if (D_0028E89C == 0) {
+        if (g_bullets_blocked == 0) {
             reg_a1 = (u8 *)D_00265430;
             if (*(u8 *)(reg_a5 + 0x16) != 0) {
                 reg_a1 = (u8 *)D_002653B0;
@@ -733,7 +733,7 @@ block_8:
             bullet_fire256_fixed();
             reg_d0.w = 0xFFFC0005;
             bullet_fire256_2way();
-            if ((s32) D_0028E8A8 >= 0x268) {
+            if ((s32) g_scroll_line >= 0x268) {
                 reg_d0.w = 0x40003;
                 bullet_fire256_double();
             }
@@ -778,7 +778,7 @@ void func_001F7650(void) {
     enemy_set_task_work();
     enemy_path_start();
     if (enemy_move_end_requested == 0) {
-        if (D_0028E8A8 == 0x2B6) {
+        if (g_scroll_line == 0x2B6) {
             *(s8 *)(reg_a6 + 0x1D) = 0x40;
             *(s8 *)(reg_a5 + 0x16) = 1;
         }
@@ -857,7 +857,7 @@ block_8:
     var_a0 = 1;
     *(u8 *)(reg_a5 + 0x17) = 1U;
 block_13:
-    if (D_0028E8A0 == 0) {
+    if (g_enemies_stopped == 0) {
         entity_follow_scroll();
         func_001F71A0();
         if (*(u8 *)(reg_a6 + 0x3E) == 0) {
@@ -944,8 +944,8 @@ void func_001F7B70(void) {
 
 extern s16 D_002655E0[];
 extern s16 D_00265600[];
-extern s16 D_0028E878_as_s16;
-extern s16 D_0028E880_as_s16;
+extern s16 g_enemy_signal_7_as_s16;
+extern s16 g_enemy_signal_5_as_s16;
 
 void func_001F7B80(void) {
     s32 enemy_set_task_work();
@@ -958,17 +958,17 @@ void func_001F7B80(void) {
     enemy_set_task_work();
     enemy_path_start();
     if (enemy_move_end_requested != 0) return;
-    if (D_0028E8A8 != 0x299) goto next_1;
+    if (g_scroll_line != 0x299) goto next_1;
     *(s8 *)(reg_a6 + 0x1D) = 0x40;
     *(s8 *)(reg_a5 + 0x16) = 1;
 next_1:
     *(u8 *)(reg_a6 + 0x1C) = *(u8 *)(reg_a5 + 0x19);
     D_00299768[0] = 1;
     D_0029976A[0] = 1;
-    D_0028E880_as_s16 = 1;
-    reg_a0 = (u8 *)(&D_0028E880_as_s16);
-    if ((s32) D_0028E8A8 < 0x280) goto next_2;
-    reg_a0 = (u8 *)(&D_0028E878_as_s16);
+    g_enemy_signal_5_as_s16 = 1;
+    reg_a0 = (u8 *)(&g_enemy_signal_5_as_s16);
+    if ((s32) g_scroll_line < 0x280) goto next_2;
+    reg_a0 = (u8 *)(&g_enemy_signal_7_as_s16);
     *(s16 *)(reg_a5 + 0x1A) = 0x202;
 next_2:
     reg_tmp.w = (u32) reg_a0;
@@ -1040,7 +1040,7 @@ block_4:
     }
     *(u8 *)(reg_a5 + 0x17) = 1U;
 block_8:
-    if (D_0028E8A0 == 0) {
+    if (g_enemies_stopped == 0) {
         entity_follow_scroll();
         reg_tmp.b[0] = *(u8 *)(reg_a5 + 0x1B);
         *(u8 *)(reg_a5 + 0x1B) -= 1;
@@ -1206,7 +1206,7 @@ block_6:
     }
     *(u8 *)(reg_a5 + 0x17) = 1U;
 block_10:
-    if (D_0028E8A0 == 0) {
+    if (g_enemies_stopped == 0) {
         entity_velocity();
         if (*(u8 *)(reg_a5 + 0x16) == 0) {
             reg_tmp.b[0] = *(u8 *)(reg_a5 + 0x21);
@@ -1265,7 +1265,7 @@ block_26:
                 *(u8 *)(reg_a5 + 0x29) -= 1;
                 if ((s32) reg_tmp.b[0] <= 0) {
                     *(u8 *)(reg_a5 + 0x29) = (u8) *(u8 *)(reg_a5 + 0x28);
-                    if (D_0028E89C == 0) {
+                    if (g_bullets_blocked == 0) {
                         reg_d1.w = 0;
                         reg_d1.b[0] = *(u8 *)(reg_a5 + 0x2D);
                         reg_d0.w = 0xFFFC0006;
@@ -1408,7 +1408,7 @@ void func_001F87E0(void) {
     }
     *(u8 *)(reg_a6 + 0x1C) = (u8) *(u8 *)(reg_a5 + 0x19);
 block_8:
-    if (D_0028E8A0 == 0) {
+    if (g_enemies_stopped == 0) {
         reg_d1.h[0] = ENTITY(reg_a6)->y.h;
         reg_d1.h[0] -= *(u16 *)(reg_a5 + 0x2A);
         ENTITY(reg_a6)->y.h = (u16) reg_d1.h[0];
@@ -1483,7 +1483,7 @@ block_13:
             *(u8 *)(reg_a5 + 0x27) -= 1;
             if ((s32) reg_tmp.b[0] <= 0) {
                 *(u8 *)(reg_a5 + 0x27) = 0x10U;
-                if ((D_0028E89C == 0) && ((s16) ENTITY(reg_a6)->y.h > 0x2000)) {
+                if ((g_bullets_blocked == 0) && ((s16) ENTITY(reg_a6)->y.h > 0x2000)) {
                     reg_d0.b[0] = *(u8 *)(reg_a5 + 0x2F);
                     if (*(u8 *)(reg_a5 + 0x2E) == reg_d0.b[0]) {
                         reg_d0.h[0] = ENTITY(reg_a6)->y.h;

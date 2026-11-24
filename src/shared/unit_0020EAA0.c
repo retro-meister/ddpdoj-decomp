@@ -28,12 +28,12 @@ extern u16 D_0028E3A8_as_u16;
 extern u16 D_0028E3AC;
 extern u16 D_0028E3B0_as_u16;
 extern u16 D_0028E3E8;
-extern u16 D_0028E5F8;
-extern u16 D_0028E5FC;
+extern u16 g_p2_hyper_active;
+extern u16 g_p1_hyper_active;
 extern u16 D_0028E7E4;
 extern u16 g_loop;
-extern u16 D_0028E914;
-extern u16 D_0028E918;
+extern u16 g_stage_x4;
+extern u16 g_stage_x2;
 extern u16 D_00299760[];
 extern u16 D_0029976A_as_u16_a[];
 void func_0020EAB0(void) {
@@ -62,14 +62,14 @@ next_5:
     if (D_0028E3A0_as_u16 == 0) return;
     reg_d1.h[0] += 0x28;
 next_8:
-    reg_d2.h[0] = D_0028E914;
+    reg_d2.h[0] = g_stage_x4;
     tbl += reg_d2.h[0] & ~1;
     reg_d1.h[0] += *(s16 *) (tbl + 0);
     if (D_0029976A_as_u16_a[0] == 0) goto next_10;
     reg_d1.h[0] += *(s16 *) (tbl + 2);
 next_10:
-    reg_d2.h[0] = D_0028E5FC;
-    reg_d2.h[0] |= D_0028E5F8;
+    reg_d2.h[0] = g_p1_hyper_active;
+    reg_d2.h[0] |= g_p2_hyper_active;
     if (reg_d2.h[0] == 0) goto next_12;
     reg_d1.h[0] += 0x1E;
 next_12:
@@ -82,7 +82,7 @@ next_15:
     if (g_loop == 0) goto next_17;
     tbl = D_002693A8;
 next_17:
-    reg_d2.h[0] = (s32) D_0028E918 >> 1;
+    reg_d2.h[0] = (s32) g_stage_x2 >> 1;
     reg_d2.h[0] = ((s16 *) tbl)[reg_d2.h[0]];
     if (!((s32) D_0028E3AC < (s32) reg_d2.h[0])) goto next_20;
     D_0028E3AC += 2;

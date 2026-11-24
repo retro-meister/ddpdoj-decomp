@@ -23,13 +23,13 @@ void func_001D4620(void) {
 
 s32 func_001D4400();
 void func_00203400(void);
-extern u16 D_0028E8A0;
+extern u16 g_enemies_stopped;
 
 void func_001D4630(void) {
 #ifdef DEATH_LABEL
-    if ((D_0028E8A0 == 0) && (*(u16 *)(reg_a5 + 0x1A) == 0)) {
+    if ((g_enemies_stopped == 0) && (*(u16 *)(reg_a5 + 0x1A) == 0)) {
 #else
-    if ((D_0028E8A0 == 0) && (*(u16 *)(reg_a5 + 0x1A) -= 1, *(u16 *)(reg_a5 + 0x1A) == 0)) {
+    if ((g_enemies_stopped == 0) && (*(u16 *)(reg_a5 + 0x1A) -= 1, *(u16 *)(reg_a5 + 0x1A) == 0)) {
 #endif
         func_00203400();
         if (reg_d0.h[0] == 0) {
@@ -77,8 +77,8 @@ extern u16 D_00260370[];
 extern u16 D_002603B0[];
 extern u16 D_00263370[];
 extern u16 D_00263390[];
-extern s16 D_0028E85C_as_s16;
-extern s16 D_0028E884_as_s16;
+extern s16 g_enemy_signal_e_as_s16;
+extern s16 g_enemy_signal_4_as_s16;
 extern u16 D_002BDA80_as_u16_a[];
 extern u16 *reg_a0_as_u16_p;
 
@@ -109,8 +109,8 @@ void func_001D47C0(void) {
         reg_a0_as_u16_p += 1;
     } while ((s16)(--reg_d0.h[0]) >= 0);
     reg_d0.h[0] = 0x12;
-    D_0028E85C_as_s16 = 1;
-    D_0028E884_as_s16 = 1;
+    g_enemy_signal_e_as_s16 = 1;
+    g_enemy_signal_4_as_s16 = 1;
     reg_a0_as_u16_p = D_00260330;
     sprite_palette_load();
     reg_d0.h[0] = 0x13;
@@ -132,7 +132,7 @@ s32 func_001A91A0();
 s32 func_00201800();
 s32 vibration_start_pad1();
 s32 vibration_start_pad2();
-extern u16 D_0028E884;
+extern u16 g_enemy_signal_4;
 extern u16 D_0029C06C[];
 extern u16 D_002BDAA4[];
 extern u16 D_002BDAA6[];
@@ -143,7 +143,7 @@ void func_001D4930(void) {
     u32 saved_d1;
     u8 *p;
 
-    if (D_0028E8A0 != 0) goto next_1;
+    if (g_enemies_stopped != 0) goto next_1;
     reg_d7.h[1] = ENTITY(reg_a6)->y.h;
     reg_d7.h[0] = ENTITY(reg_a6)->x.h;
     saved = reg_d7.w;
@@ -240,7 +240,7 @@ next_5:
     func_00201800();
     ENTITY(reg_a6)->flags.h = 0x8000;
     *(u8 *)(reg_a5 + 0x25) = 1;
-    D_0028E884 = 0;
+    g_enemy_signal_4 = 0;
 next_6:
     *(u8 *)(reg_a6 + 0x1C) = *(u8 *)(reg_a6 + 0x1F);
 next_7:
@@ -403,7 +403,7 @@ void func_001D5230(void) {
             *(u8 *)(reg_a5 + 0x27) -= 1;
             if (*(u8 *)(reg_a5 + 0x27) == 0) {
                 func_00138A40();
-                D_0028E85C_as_s16 = 0;
+                g_enemy_signal_e_as_s16 = 0;
                 *(s16 *)(reg_a5 + 0x30) = 1;
                 goto block_set;
             }
@@ -518,7 +518,7 @@ void func_001D55B0(void) {
         *(u16 *)(reg_a5 + 0x18) = 5U;
         return;
     }
-    D_0028E884_as_s16 = 0;
+    g_enemy_signal_4_as_s16 = 0;
     *(u16 *)(reg_a5 + 0x18) = 6U;
 }
 
@@ -600,7 +600,7 @@ void func_001D5830(void) {
     *(u8 *)(reg_a6 + 0x90) = (u8) reg_d1.b[0];
 }
 
-extern u16 D_0028E8C8;
+extern u16 g_rank_1_16;
 
 void func_001D58F0(void) {
     s32 var_a1;
@@ -660,7 +660,7 @@ void func_001D58F0(void) {
             *(u8 *)(reg_a6 + 0x8B) -= 1;
             if ((s32) reg_tmp.b[0] <= 0) {
                 reg_d0.h[0] = 0x20;
-                reg_d0.h[0] -= D_0028E8C8;
+                reg_d0.h[0] -= g_rank_1_16;
                 *(u8 *)(reg_a6 + 0x8B) = (u8) reg_d0.b[0];
                 reg_d0.b[0] = *(u8 *)(reg_a6 + 0x2F);
                 reg_d0.b[0] += *(u8 *)(reg_a6 + 0x4F);
@@ -973,7 +973,7 @@ void func_001D6410(void) {
         *(u8 *)(reg_a6 + 0xCF) -= 1;
         if ((s32) reg_tmp.b[0] <= 0) {
             reg_d0.h[0] = 0x10;
-            reg_d1.h[0] = D_0028E8C8;
+            reg_d1.h[0] = g_rank_1_16;
             reg_d1.h[0] >>= 2;
             reg_d0.b[0] -= reg_d1.b[0];
             *(u8 *)(reg_a6 + 0xCF) = (u8) reg_d0.b[0];
@@ -1098,7 +1098,7 @@ void func_001D6830(s32 arg0) {
     }
     if ((*(u8 *)(reg_a5 + 0x1B) == 2) && (ENTITY(reg_a6)->y.sh >= 0x6A00)) {
         func_00138A40();
-        D_0028E85C_as_s16 = 0;
+        g_enemy_signal_e_as_s16 = 0;
         *(u8 *)(reg_a5 + 0x1B) = 3U;
     }
     if (*(u8 *)(reg_a5 + 0x1B) == 3) {
@@ -1238,19 +1238,19 @@ s32 func_00203060();
 extern u8 D_00263710[];
 extern u8 D_00263750[];
 extern u8 D_0028E2E4;
-extern u16 D_0028E85C;
+extern u16 g_enemy_signal_e;
 
 void func_001D6D60(void) {
     if (D_0028E2E4 != 0) {
         goto next_1;
     }
-    if (D_0028E884 == 0) {
+    if (g_enemy_signal_4 == 0) {
         goto next_2;
     }
-    if (D_0028E85C == 0) {
+    if (g_enemy_signal_e == 0) {
         goto next_2;
     }
-    if (D_0028E85C == 2) {
+    if (g_enemy_signal_e == 2) {
         goto next_2;
     }
     reg_d1.w = 0x5C;
@@ -1294,7 +1294,7 @@ next_4:
 next_5:
     *(u8 *) (reg_a5 + 0x17) = 1;
 next_6:
-    if (D_0028E8A0 != 0) {
+    if (g_enemies_stopped != 0) {
         goto next_15;
     }
     func_00201F20();

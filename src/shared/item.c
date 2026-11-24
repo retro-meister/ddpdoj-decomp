@@ -322,7 +322,7 @@ s32 rng_next();
 s32 entity_velocity();
 s32 func_00203060();
 extern u8 D_0028E855;
-extern u16 D_0028E8A0;
+extern u16 g_enemies_stopped;
 
 void func_0016AF90(void) {
     s32 func_0016C260();
@@ -333,7 +333,7 @@ void func_0016AF90(void) {
     case 0:
         goto block_7;
     }
-    if (D_0028E8A0 == 0) {
+    if (g_enemies_stopped == 0) {
         ENTITY(reg_a6)->hp.h -= 1;
     }
     reg_d0.h[0] = ENTITY(reg_a6)->x.h;
@@ -484,7 +484,7 @@ void func_0016B3B0(void) {
     case 0:
         goto block_7;
     }
-    if (D_0028E8A0 == 0) {
+    if (g_enemies_stopped == 0) {
         ENTITY(reg_a6)->hp.h -= 1;
     }
     reg_d0.h[0] = ENTITY(reg_a6)->x.h;
@@ -667,14 +667,14 @@ void func_0016B7F0(void) {
                     ENTITY(reg_a6)->move.b.dir = 0U;
                 }
             }
-        } else if (D_0028E8A0 == 0) {
+        } else if (g_enemies_stopped == 0) {
             ENTITY(reg_a6)->hp.h -= 1;
             if ((s16) ENTITY(reg_a6)->hp.h >= 0) {
                 *(u8 *)(reg_a6 + 0x1F) -= 1;
                 if (*(u8 *)(reg_a6 + 0x1F) == 0) {
                     ENTITY(reg_a6)->move.b.dir += 0x10;
                     ENTITY(reg_a6)->move.b.dir &= 0x3F;
-                    if (D_0028E8A0 == 0) {
+                    if (g_enemies_stopped == 0) {
                         *(u8 *)(reg_a6 + 0x1E) += 8;
                     }
                     *(u8 *)(reg_a6 + 0x1F) = (u8) *(u8 *)(reg_a6 + 0x1E);
@@ -696,7 +696,7 @@ s32 func_0018D990();
 extern u8 D_0026AF40[];
 extern u16 D_0028E3EC;
 extern u16 D_0028E5C0;
-extern u16 D_0028E5FC;
+extern u16 g_p1_hyper_active;
 extern u16 D_0028E958_as_u16;
 
 void func_0016B9B0(void) {
@@ -716,7 +716,7 @@ void func_0016B9B0(void) {
         func_0016C260();
         return;
     }
-    if (D_0028E5FC == 0) {
+    if (g_p1_hyper_active == 0) {
         goto next_1;
     }
 block_10:
@@ -828,7 +828,7 @@ void func_0016BD50(void) {
     u32 temp_a1;
     u8 temp_v1;
 
-    if (D_0028E8A0 == 0) {
+    if (g_enemies_stopped == 0) {
         temp_v1 = ENTITY(reg_a6)->hp.b[0];
         reg_d1.b[0] = temp_v1;
         if (temp_v1 != 0) {
@@ -956,7 +956,7 @@ void func_0016C0C0() {
 
 s32 func_0013E710();
 extern u16 D_0028E5BC;
-extern u16 D_0028E5F8;
+extern u16 g_p2_hyper_active;
 
 void func_0016C110(void) {
     s32 func_0016C260();
@@ -975,7 +975,7 @@ void func_0016C110(void) {
         func_0016C260();
         return;
     }
-    if (D_0028E5F8 == 0) {
+    if (g_p2_hyper_active == 0) {
         goto next_1;
     }
 block_10:

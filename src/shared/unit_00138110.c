@@ -29,25 +29,25 @@ void func_00138110(void) {
 extern u8 D_0028E2D4;
 extern u16 D_0028E5E8;
 extern u16 D_0028E5EC;
-extern u16 D_0028E5F8;
-extern u16 D_0028E5FC;
+extern u16 g_p2_hyper_active;
+extern u16 g_p1_hyper_active;
 extern u32 D_0028E8BC_as_u32;
-extern u8 D_0028E8C8_as_u8;
-extern u8 D_0028E8CC_as_u8;
-extern u8 D_0028E8D0_as_u8;
-extern u8 D_0028E8D4_as_u8;
-extern u8 D_0028E8D8_as_u8;
-extern u8 D_0028E8DC_as_u8;
-extern u8 D_0028E8E0_as_u8;
-extern u8 D_0028E8E4_as_u8;
-extern u8 D_0028E8E8_as_u8;
-extern u8 D_0028E8EC_as_u8;
-extern u8 D_0028E8F0_as_u8;
-extern u8 D_0028E8F4_as_u8;
-extern u8 D_0028E8F8_as_u8;
-extern u8 D_0028E8FC_as_u8;
-extern u8 D_0028E900_as_u8;
-extern u16 D_0028E904;
+extern u8 g_rank_1_16_as_u8;
+extern u8 g_rank_2_16_as_u8;
+extern u8 g_rank_3_16_as_u8;
+extern u8 g_rank_4_16_as_u8;
+extern u8 g_rank_5_16_as_u8;
+extern u8 g_rank_6_16_as_u8;
+extern u8 g_rank_7_16_as_u8;
+extern u8 g_rank_8_16_as_u8;
+extern u8 g_rank_9_16_as_u8;
+extern u8 g_rank_10_16_as_u8;
+extern u8 g_rank_11_16_as_u8;
+extern u8 g_rank_12_16_as_u8;
+extern u8 g_rank_13_16_as_u8;
+extern u8 g_rank_14_16_as_u8;
+extern u8 g_rank_15_16_as_u8;
+extern u16 g_rank;
 extern u16 g_loop;
 extern u16 g_stage;
 extern u8 D_0028ED80;
@@ -66,8 +66,8 @@ void func_00138170(void) {
     reg_d2.w >>= reg_d3.w;
     reg_d1.h[0] += reg_d2.h[0];
     reg_d2.h[0] = 0xDF;
-    reg_d0.h[0] = D_0028E5FC;
-    if (((reg_d0.h[0] |= D_0028E5F8) & 0xFFFF) == 0) {
+    reg_d0.h[0] = g_p1_hyper_active;
+    if (((reg_d0.h[0] |= g_p2_hyper_active) & 0xFFFF) == 0) {
         goto next_2;
     }
     reg_d0.h[0] = D_0028E5EC;
@@ -85,77 +85,77 @@ next_2:
     if (D_0028ED80 != 0 && D_006E5C02[0] != 0) {
         goto next_3;
     }
-    D_0028E904 = 0xFF;
-    reg_d0.h[0] = D_0028E5FC;
-    reg_d0.h[0] |= D_0028E5F8;
+    g_rank = 0xFF;
+    reg_d0.h[0] = g_p1_hyper_active;
+    reg_d0.h[0] |= g_p2_hyper_active;
     if (reg_d0.h[0] != 0) {
         goto next_5;
     }
-    D_0028E904 = 0xF8;
+    g_rank = 0xF8;
     goto next_5;
 next_3:
-    D_0028E904 = reg_d1.h[0];
-    reg_d0.h[0] = D_0028E5FC;
-    reg_d0.h[0] |= D_0028E5F8;
+    g_rank = reg_d1.h[0];
+    reg_d0.h[0] = g_p1_hyper_active;
+    reg_d0.h[0] |= g_p2_hyper_active;
     if (reg_d0.h[0] != 0) {
         goto next_4;
     }
-    if (D_0028E904 <= 0xF0) {
+    if (g_rank <= 0xF0) {
         goto next_5;
     }
-    D_0028E904 = 0xF0;
+    g_rank = 0xF0;
     goto next_5;
 next_4:
-    if (D_0028E904 <= 0xFF) {
+    if (g_rank <= 0xFF) {
         goto next_5;
     }
-    D_0028E904 = 0xFF;
+    g_rank = 0xFF;
 next_5:
     reg_d0.w = 0;
-    reg_d0.b[0] = *(u8 *) &D_0028E904;
+    reg_d0.b[0] = *(u8 *) &g_rank;
     reg_d7.h[0] = reg_d0.h[0];
     reg_d7.h[0] >>= 4;
     reg_d0.h[0] >>= 1;
     reg_d1.b[0] = reg_d0.b[0];
     reg_d6.b[0] = reg_d0.b[0];
-    D_0028E8E4_as_u8 = reg_d6.b[0];
+    g_rank_8_16_as_u8 = reg_d6.b[0];
     reg_d6.b[0] += reg_d7.b[0];
-    D_0028E8E8_as_u8 = reg_d6.b[0];
+    g_rank_9_16_as_u8 = reg_d6.b[0];
     reg_d0.h[0] >>= 1;
     reg_d2.h[0] = reg_d0.h[0];
     reg_d6.b[0] = reg_d0.b[0];
-    D_0028E8D4_as_u8 = reg_d6.b[0];
+    g_rank_4_16_as_u8 = reg_d6.b[0];
     reg_d6.b[0] += reg_d7.b[0];
-    D_0028E8D8_as_u8 = reg_d6.b[0];
+    g_rank_5_16_as_u8 = reg_d6.b[0];
     reg_d1.b[0] += reg_d0.b[0];
     reg_d6.b[0] = reg_d1.b[0];
-    D_0028E8F4_as_u8 = reg_d6.b[0];
+    g_rank_12_16_as_u8 = reg_d6.b[0];
     reg_d6.b[0] += reg_d7.b[0];
-    D_0028E8F8_as_u8 = reg_d6.b[0];
+    g_rank_13_16_as_u8 = reg_d6.b[0];
     reg_d0.h[0] >>= 1;
     reg_d3.h[0] = reg_d1.h[0];
     reg_d1.b[0] += reg_d0.b[0];
     reg_d6.b[0] = reg_d1.b[0];
-    D_0028E8FC_as_u8 = reg_d6.b[0];
+    g_rank_14_16_as_u8 = reg_d6.b[0];
     reg_d6.b[0] += reg_d7.b[0];
-    D_0028E900_as_u8 = reg_d6.b[0];
+    g_rank_15_16_as_u8 = reg_d6.b[0];
     reg_d3.b[0] -= reg_d0.b[0];
     reg_d6.b[0] = reg_d3.b[0];
-    D_0028E8EC_as_u8 = reg_d6.b[0];
+    g_rank_10_16_as_u8 = reg_d6.b[0];
     reg_d6.b[0] += reg_d7.b[0];
-    D_0028E8F0_as_u8 = reg_d6.b[0];
+    g_rank_11_16_as_u8 = reg_d6.b[0];
     reg_d3.h[0] = reg_d2.h[0];
     reg_d2.b[0] += reg_d0.b[0];
     reg_d6.b[0] = reg_d2.b[0];
-    D_0028E8DC_as_u8 = reg_d6.b[0];
+    g_rank_6_16_as_u8 = reg_d6.b[0];
     reg_d6.b[0] += reg_d7.b[0];
-    D_0028E8E0_as_u8 = reg_d6.b[0];
+    g_rank_7_16_as_u8 = reg_d6.b[0];
     reg_d3.b[0] -= reg_d0.b[0];
     reg_d6.b[0] = reg_d3.b[0];
-    D_0028E8CC_as_u8 = reg_d6.b[0];
+    g_rank_2_16_as_u8 = reg_d6.b[0];
     reg_d6.b[0] += reg_d7.b[0];
-    D_0028E8D0_as_u8 = reg_d6.b[0];
-    D_0028E8C8_as_u8 = reg_d7.b[0];
+    g_rank_3_16_as_u8 = reg_d6.b[0];
+    g_rank_1_16_as_u8 = reg_d7.b[0];
 }
 
 extern u16 D_0028C108[4];

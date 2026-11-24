@@ -196,19 +196,19 @@ s32 func_0019C530();
 s32 func_0019C730();
 extern u16 D_002524E0[];
 extern u8 D_0028E2C0;
-extern u16 D_0028E8A8;
+extern u16 g_scroll_line;
 
 void func_0011DB40(void) {
     u16 temp_a2;
     u16 temp_a2_2;
     u32 temp_a3;
 
-    if ((s32) D_0028E8A8 >= 0x22F) {
+    if ((s32) g_scroll_line >= 0x22F) {
         entity_release();
         return;
     }
     entity_follow_scroll();
-    if (((s32) D_0028E8A8 >= 0x1F4) && (0 <= (s64)ENTITY(reg_a6)->offset_y.sh)) {
+    if (((s32) g_scroll_line >= 0x1F4) && (0 <= (s64)ENTITY(reg_a6)->offset_y.sh)) {
         reg_tmp.b[0] = ENTITY(reg_a6)->hp.b[1];
         ENTITY(reg_a6)->hp.b[1] -= 1;
         if ((s32) reg_tmp.b[0] <= 0) {
@@ -227,7 +227,7 @@ void func_0011DB40(void) {
             ENTITY(reg_a6)->offset_y.h -= 8;
         }
     }
-    if (((s32) D_0028E8A8 < 0x21A) && ((reg_d1.h[1] = ENTITY(reg_a6)->y.h, reg_d1.h[0] = ENTITY(reg_a6)->x.h, temp_a3 = reg_d1.w, reg_d1.w = temp_a3 + 0xFE00DC00, reg_d2.h[1] = ENTITY(reg_a6)->hit_y_plus.h, temp_a2 = ENTITY(reg_a6)->hit_y_minus.h, reg_d2.h[0] = temp_a2, reg_d3.h[0] = 0x2720, reg_d4.h[0] = 0x15, (D_0028ED80 == 0)) || (D_0028E2C8 == 0) || (D_0028E2C0 == 0)) && ((D_0028E290 != 2) || (D_0028E2C0 == 0))) {
+    if (((s32) g_scroll_line < 0x21A) && ((reg_d1.h[1] = ENTITY(reg_a6)->y.h, reg_d1.h[0] = ENTITY(reg_a6)->x.h, temp_a3 = reg_d1.w, reg_d1.w = temp_a3 + 0xFE00DC00, reg_d2.h[1] = ENTITY(reg_a6)->hit_y_plus.h, temp_a2 = ENTITY(reg_a6)->hit_y_minus.h, reg_d2.h[0] = temp_a2, reg_d3.h[0] = 0x2720, reg_d4.h[0] = 0x15, (D_0028ED80 == 0)) || (D_0028E2C8 == 0) || (D_0028E2C0 == 0)) && ((D_0028E290 != 2) || (D_0028E2C0 == 0))) {
         func_0019C730();
     }
     reg_d1.h[0] = ENTITY(reg_a6)->y.h;

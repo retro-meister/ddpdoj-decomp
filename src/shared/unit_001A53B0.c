@@ -99,7 +99,7 @@ void func_001A5490(void) {
 extern u8 D_0026BFD0[];
 extern u8 D_0028DAE8[];
 extern u16 D_0028E5C0;
-extern u16 D_0028E5FC;
+extern u16 g_p1_hyper_active;
 extern u16 D_0029F2B8[];
 
 void func_001A54C0(void) {
@@ -121,7 +121,7 @@ loop_0:
     if ((s16)(reg_d0.h[0] -= 1) >= 0) goto loop_0;
     reg_d1.w = reg_d5.w;
 next_0:
-    if (D_0028E5FC != 0) goto next_1;
+    if (g_p1_hyper_active != 0) goto next_1;
     reg_d1.h[0] += 0xFF00;
     reg_d1.h[1] += 0x100;
     reg_d3.h[0] = 0x430;
@@ -138,7 +138,7 @@ next_1:
 
 extern u8 D_0028DAF0[];
 extern u16 D_0028E5BC;
-extern u16 D_0028E5F8;
+extern u16 g_p2_hyper_active;
 extern u16 D_0029F248[];
 
 void func_001A5600(void) {
@@ -157,7 +157,7 @@ loop_0:
     if ((s16)(reg_d0.h[0] -= 1) >= 0) goto loop_0;
     reg_d1.w = reg_d5.w;
 next_0:
-    if (D_0028E5F8 != 0) goto next_1;
+    if (g_p2_hyper_active != 0) goto next_1;
     reg_d1.h[0] += 0xF500;
     reg_d1.h[1] += 0x100;
     reg_d3.h[0] = 0x430;
@@ -219,10 +219,10 @@ void func_001A5850(void) {
     }
 }
 
-extern s16 D_0028E8C4_as_s16;
+extern s16 g_p1_lives_as_s16;
 
 void func_001A5960(void) {
-    if (D_0028E8C4_as_s16 >= 0) {
+    if (g_p1_lives_as_s16 >= 0) {
         reg_d6.w = 0x12;
         reg_d6.h[0] -= 0x32;
         reg_d6.h[0] <<= 7;
@@ -230,10 +230,10 @@ void func_001A5960(void) {
     }
 }
 
-extern s16 D_0028E8C0_as_s16;
+extern s16 g_p2_lives_as_s16;
 
 void func_001A59B0(void) {
-    if (D_0028E8C0_as_s16 >= 0) {
+    if (g_p2_lives_as_s16 >= 0) {
         reg_d6.w = 0x12;
         reg_d6.h[0] -= 0x32;
         reg_d6.h[0] <<= 7;
@@ -312,13 +312,13 @@ extern u8 D_0028E70C;
 extern u16 D_0029CD9E[];
 extern u8 D_0029F261[];
 void func_001A5B50(void) {
-    if (D_0028E8C4_as_s16 < 0) {
+    if (g_p1_lives_as_s16 < 0) {
         func_001A5DD0();
         return;
     }
     func_001A80C0();
     if (!(D_0028E854 & 1) || (D_0028E634 < 0)) {
-        if (D_0028E5FC != 0) {
+        if (g_p1_hyper_active != 0) {
             if (!(D_0028E70C & 1)) {
                 D_0028E70C |= 1;
                 func_001A5400();
@@ -378,7 +378,7 @@ block_15:
     }
     reg_d6.h[0] = D_0028E6C8;
     if (D_0028E6C8 != 0) {
-        if (D_0028E5FC != 0) {
+        if (g_p1_hyper_active != 0) {
             D_0028E5DD -= 1;
             if ((s8) D_0028E5DD < 0) {
                 D_0028E5DD = D_0028E5DC_as_u8;
@@ -417,13 +417,13 @@ extern u8 D_0028E708;
 extern u16 D_0029CD8E[];
 extern u8 D_0029F1F1[];
 void func_001A5DD0(void) {
-    if (D_0028E8C0_as_s16 < 0) {
+    if (g_p2_lives_as_s16 < 0) {
         func_001A6510();
         return;
     }
     func_001A8510();
     if (!(D_0028E854 & 1) || (D_0028E634 < 0)) {
-        if (D_0028E5F8 != 0) {
+        if (g_p2_hyper_active != 0) {
             if (!(D_0028E708 & 1)) {
                 D_0028E708 |= 1;
                 func_001A5430();
@@ -483,7 +483,7 @@ block_15:
     }
     reg_d6.h[0] = D_0028E688;
     if (D_0028E688 != 0) {
-        if (D_0028E5F8 != 0) {
+        if (g_p2_hyper_active != 0) {
             D_0028E5D9 -= 1;
             if ((s8) D_0028E5D9 < 0) {
                 D_0028E5D9 = D_0028E5D8_as_u8;
@@ -692,8 +692,8 @@ s32 func_001AC320();
 extern s16 D_0028E644;
 extern u16 D_0028E64C;
 extern u16 D_0028E650;
-extern s16 D_0028E924_as_s16;
-extern u16 D_0028E928;
+extern s16 g_two_player_state_as_s16;
+extern u16 g_two_player_game;
 
 void func_001A6510(void) {
     u32 flags;
@@ -709,13 +709,13 @@ next_0:
     D_0028E64C += 1;
 next_1:
     if (flags & 0x40) goto next_4;
-    if (D_0028E924_as_s16 < 0) goto next_6;
+    if (g_two_player_state_as_s16 < 0) goto next_6;
     if (D_0028E650 == 0) goto next_7;
     D_0028E650 -= 1;
     if (D_0028E650 != 0) goto next_5;
     D_0028E644 = 8;
     D_0028E650 = 0xA;
-    if (D_0028E928 != 0) goto next_3;
+    if (g_two_player_game != 0) goto next_3;
     D_0028E650 = 0x12;
 next_3:
     D_0028E648 -= 1;
@@ -828,11 +828,11 @@ next_7:
     D_0028E684 = 0;
     D_0028E6B8 = 0;
     func_001A6E70();
-    if (D_0028E8C4_as_s16 < 0) goto next_8;
+    if (g_p1_lives_as_s16 < 0) goto next_8;
     func_001AC950();
     func_001A5400();
 next_8:
-    if (D_0028E8C0_as_s16 < 0) {
+    if (g_p2_lives_as_s16 < 0) {
         func_001A6510();
         return;
     }
@@ -846,16 +846,16 @@ s32 func_001AAA20();
 s32 func_001AC3A0();
 s32 func_001AC5F0();
 extern s16 D_0028E59C_as_s16;
-extern u16 D_0028E8C0;
-extern u16 D_0028E8C4;
+extern u16 g_p2_lives;
+extern u16 g_p1_lives;
 
 void func_001A68B0(void) {
     if (!(D_0028E854 & 1)) goto next_2;
-    if ((s16)D_0028E8C4 < 0) goto next_0;
+    if ((s16)g_p1_lives < 0) goto next_0;
     func_001AA8F0();
     func_001AC3A0();
 next_0:
-    if ((s16)D_0028E8C0 < 0) goto next_1;
+    if ((s16)g_p2_lives < 0) goto next_1;
     func_001AAA20();
     func_001AC5F0();
 next_1:
@@ -868,8 +868,8 @@ next_2:
     reg_d6.h[0] = D_0028E630;
     reg_d6.h[0] <<= 6;
     reg_d6.h[0] *= 0xFFFF;
-    reg_d0.h[0] = D_0028E8C4;
-    if ((s16)D_0028E8C4 < 0) goto next_4;
+    reg_d0.h[0] = g_p1_lives;
+    if ((s16)g_p1_lives < 0) goto next_4;
     reg_tmp.w = reg_d0.h[0];
     reg_tmp.w -= 1;
     reg_d0.h[0] = reg_tmp.h[0];
@@ -883,8 +883,8 @@ next_3:
     func_001A54C0();
     func_001A6B70();
 next_4:
-    reg_d0.h[0] = D_0028E8C0;
-    if ((s16)D_0028E8C0 < 0) goto next_6;
+    reg_d0.h[0] = g_p2_lives;
+    if ((s16)g_p2_lives < 0) goto next_6;
     reg_tmp.w = reg_d0.h[0];
     reg_tmp.w -= 1;
     reg_d0.h[0] = reg_tmp.h[0];
@@ -900,8 +900,8 @@ next_5:
 next_6:
     return;
 next_7:
-    reg_d7.h[0] = D_0028E8C4;
-    if ((s16)D_0028E8C4 < 0) goto next_10;
+    reg_d7.h[0] = g_p1_lives;
+    if ((s16)g_p1_lives < 0) goto next_10;
     reg_tmp7.w = reg_d7.h[0];
     reg_tmp7.w -= 1;
     reg_d7.h[0] = reg_tmp7.h[0];
@@ -917,8 +917,8 @@ next_9:
     func_001AC950();
     func_001A5400();
 next_10:
-    reg_d7.h[0] = D_0028E8C0;
-    if ((s16)D_0028E8C0 < 0) goto next_13;
+    reg_d7.h[0] = g_p2_lives;
+    if ((s16)g_p2_lives < 0) goto next_13;
     reg_tmp7.w = reg_d7.h[0];
     reg_tmp7.w -= 1;
     reg_d7.h[0] = reg_tmp7.h[0];
@@ -943,7 +943,7 @@ next_13:
 
 void func_001A6B70(void)
 {
-    if (D_0028E8C4_as_s16 >= 0) {
+    if (g_p1_lives_as_s16 >= 0) {
         u16 offset = reg_d6.h[0];
         u32 savedRegister;
 
@@ -965,7 +965,7 @@ void func_001A6B70(void)
 
 
 void func_001A6BE0(void) {
-    if (D_0028E8C0_as_s16 >= 0) {
+    if (g_p2_lives_as_s16 >= 0) {
         u32 savedRegister;
         u16 savedLow;
 
@@ -998,11 +998,11 @@ void func_001A6C60(void) {
     reg_d0.h[0] = D_0028E62C;
     reg_d0.h[0] <<= 6;
     reg_d1.h[0] -= reg_d0.h[0];
-    reg_d0.h[0] = D_0028E8C4;
+    reg_d0.h[0] = g_p1_lives;
     reg_tmp1.w = reg_d1.w;
     reg_d1.h[1] = reg_d1.h[0];
     reg_d1.h[0] = reg_tmp1.h[1];
-    if ((s16)(D_0028E8C4) >= 0) {
+    if ((s16)(g_p1_lives) >= 0) {
         reg_tmp.w = (u32) reg_d0.h[0];
         reg_tmp.w -= 1;
         reg_d0.h[0] = reg_tmp.h[0];
@@ -1023,8 +1023,8 @@ void func_001A6C60(void) {
             func_001AA8F0();
         }
     }
-    reg_d0.h[0] = D_0028E8C0;
-    if ((s16)(D_0028E8C0) >= 0) {
+    reg_d0.h[0] = g_p2_lives;
+    if ((s16)(g_p2_lives) >= 0) {
         reg_tmp.w = (u32) reg_d0.h[0];
         reg_tmp.w -= 1;
         reg_d0.h[0] = reg_tmp.h[0];
@@ -1066,9 +1066,9 @@ void func_001A6E70(void) {
         }
     }
     reg_d6.h[0] = D_0028E628;
-    reg_d0.h[0] = D_0028E8C4;
+    reg_d0.h[0] = g_p1_lives;
     reg_d6.h[0] <<= 6;
-    if ((s16)(D_0028E8C4) >= 0) {
+    if ((s16)(g_p1_lives) >= 0) {
         reg_tmp.w = (u32) reg_d0.h[0];
         reg_tmp.w -= 1;
         reg_d0.h[0] = reg_tmp.h[0];
@@ -1089,8 +1089,8 @@ void func_001A6E70(void) {
             func_001AA8F0();
         }
     }
-    reg_d0.h[0] = D_0028E8C0;
-    if ((s16)(D_0028E8C0) >= 0) {
+    reg_d0.h[0] = g_p2_lives;
+    if ((s16)(g_p2_lives) >= 0) {
         reg_tmp.w = (u32) reg_d0.h[0];
         reg_tmp.w -= 1;
         reg_d0.h[0] = reg_tmp.h[0];
@@ -1555,7 +1555,7 @@ void func_001A7D00(void) {
     u32 temp_a0;
     u32 temp_v1;
 
-    if (D_0028E5FC == 0) {
+    if (g_p1_hyper_active == 0) {
         if (D_0028E5C8 == 0) {
             func_001AB9D0();
             return;
@@ -1565,7 +1565,7 @@ void func_001A7D00(void) {
         temp_v1 = temp_a0 & D_0029F261[0];
         reg_d0.b[0] = temp_v1;
         if (!(temp_v1 & 0xFF)) {
-            D_0028E5FC = 1;
+            g_p1_hyper_active = 1;
             func_001AB920();
             func_001AA8F0();
             if (D_0028E6C8 != 0) {
@@ -1613,12 +1613,12 @@ s32 func_001ABB80();                            /* extern */
 extern s16 D_0028E58C_as_s16;
 
 void func_001A7E90(void) {
-    if (D_0028E5FC != 0) {
+    if (g_p1_hyper_active != 0) {
         D_0028E58C_as_s16 = 0x48;
     }
     func_0013EA70();
     reg_d0.w = 0;
-    D_0028E5FC = reg_d0.h[0];
+    g_p1_hyper_active = reg_d0.h[0];
     D_0028E5F4 = reg_d0.h[0];
     D_0028E5D0 = reg_d0.h[0];
     D_0028E5C8 = reg_d0.h[0];
@@ -1643,7 +1643,7 @@ void func_001A7EE0(void) {
     u32 temp_a0;
     u32 temp_v1;
 
-    if (D_0028E5F8 == 0) {
+    if (g_p2_hyper_active == 0) {
         if (D_0028E5C4 == 0) {
             func_001ABB00();
             return;
@@ -1653,7 +1653,7 @@ void func_001A7EE0(void) {
         temp_v1 = temp_a0 & D_0029F1F1[0];
         reg_d0.b[0] = temp_v1;
         if (!(temp_v1 & 0xFF)) {
-            D_0028E5F8 = 1;
+            g_p2_hyper_active = 1;
             func_001ABA50();
             func_001AAA20();
             if (D_0028E688 != 0) {
@@ -1701,12 +1701,12 @@ s32 func_001ABD80();                            /* extern */
 extern s16 D_0028E588_as_s16;
 
 void func_001A8070(void) {
-    if (D_0028E5F8 != 0) {
+    if (g_p2_hyper_active != 0) {
         D_0028E588_as_s16 = 0x48;
     }
     func_0013EA90();
     reg_d0.w = 0;
-    D_0028E5F8 = reg_d0.h[0];
+    g_p2_hyper_active = reg_d0.h[0];
     D_0028E5F0 = reg_d0.h[0];
     D_0028E5CC = reg_d0.h[0];
     D_0028E5C4 = reg_d0.h[0];
@@ -1730,7 +1730,7 @@ extern u16 D_0028E5E4;
 void func_001A80D0(void) {
     u32 t1;
 
-    switch (D_0028E5FC) {
+    switch (g_p1_hyper_active) {
     case 0:
         goto next_0;
     }
@@ -1856,7 +1856,7 @@ extern u16 D_0028E5E0;
 void func_001A8520(void) {
     u32 t1;
 
-    switch (D_0028E5F8) {
+    switch (g_p2_hyper_active) {
     case 0:
         goto next_0;
     }
