@@ -1772,7 +1772,7 @@ segments:
       - [0xbf590, c, shared/func_00227120]
       - [0xbf640, c, shared/func_002271D0]
       - [0xbf740, c, shared/func_002272D0]
-      - [0xbf780, asm, game_0bf780]
+      - [0xbf780, c, shared/func_00227310]
       - [0xc2c90, c, shared/func_0022A870]
       - [0xc2d10, c, shared/func_0022A8F0]
       - [0xc2d50, c, shared/func_0022A930]

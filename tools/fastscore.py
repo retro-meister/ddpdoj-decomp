@@ -20,6 +20,7 @@ import sys
 from tempfile import TemporaryDirectory
 import time
 
+from build import draft_defines
 from common import BASEROM, ROOT, TARGETS, TOOLCHAINS, TOOLS
 from common import compiler_path, require_local, target_compiler, verify, verify_compiler
 
@@ -126,7 +127,7 @@ class Scorer:
     def __init__(self, target, function):
         version = target_compiler(target, require_local())
         verify_compiler(version)
-        self.cmd = [*runner(), str(compiler_path(version)), *TOOLCHAINS["compiler_flags"]]
+        self.cmd = [*runner(), str(compiler_path(version)), *TOOLCHAINS["compiler_flags"], *draft_defines(target)]
         self.function = function
         self.retail = retail_bytes(target, function)
 

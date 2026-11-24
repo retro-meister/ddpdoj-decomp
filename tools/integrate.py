@@ -6,7 +6,7 @@ import re
 import subprocess
 import sys
 
-from build import build, compile_source
+from build import build, compile_source, draft_defines
 from common import BASEROM, ROOT, TARGETS, matching_lock, nonmatching_dir, require_local, target_compiler, verify, verify_compiler
 from diff import candidate_layout, collect_provide_symbols, link_text, verify_jump_table_layout
 from draft import extract_function
@@ -35,7 +35,7 @@ def verify_match(local, target_name, function_name, source_path, address, size, 
     folder = ROOT / "build" / "integrate" / target_name / function_name
     folder.mkdir(parents=True, exist_ok=True)
     obj = folder / "compiled.o"
-    compile_source(local, str(source_path), obj, version)
+    compile_source(local, str(source_path), obj, version, draft_defines(target_name))
     fn_offset, fn_size = find_function(obj, function_name)
     provided = collect_provide_symbols(target_name, split_folder, asm_functions)
     provided.update(extra_symbols or {})

@@ -12,7 +12,7 @@ import struct
 import subprocess
 
 from common import BASEROM, ROOT, TARGETS, require_local, target_compiler
-from build import OBJ_CACHE
+from build import OBJ_CACHE, unit_object
 from split import load_splat_config, load_symbols, scan_asm_functions, split, target_layout, target_units
 
 MAIN, DEATH = "SLPS_252.33", "DEATH.ELF"
@@ -137,7 +137,7 @@ def load_main_units(local):
     version = target_compiler(MAIN, local)
     units = []
     for unit in target_units(MAIN):
-        obj = OBJ_CACHE / version / f"{unit['source']}.o"
+        obj = unit_object(version, MAIN, unit["source"])
         sections, symbols = read_object(obj)
         unit = dict(unit, sections=sections, symbols=symbols)
         by_name = {section["name"]: index for index, section in sections.items()}

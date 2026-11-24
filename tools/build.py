@@ -50,14 +50,38 @@ def prepare_compile_source(source, output):
     return staged.relative_to(ROOT).as_posix()
 
 
-def compile_source(local, source, output, version):
+DEATH_DEFINE = "DEATH_LABEL"
+
+
+def target_defines(target_name, source):
+    """Extra compiler flags for a unit: Death Label sees DEATH_LABEL, in sources that test it."""
+    if target_name != "DEATH.ELF":
+        return ()
+    try:
+        text = (ROOT / source).read_text(encoding="utf-8")
+    except OSError:
+        return ()
+    return (f"-D{DEATH_DEFINE}",) if DEATH_DEFINE in text else ()
+
+
+def draft_defines(target_name):
+    return (f"-D{DEATH_DEFINE}",) if target_name == "DEATH.ELF" else ()
+
+
+def unit_object(version, target_name, source):
+    """Cached object of a unit as linked into target_name."""
+    suffix = "".join("." + flag[2:].lower() for flag in target_defines(target_name, source))
+    return OBJ_CACHE / version / f"{source}{suffix}.o"
+
+
+def compile_source(local, source, output, version, defines=()):
     compiler = compiler_path(version)
     runner = local["runner"]
     if isinstance(runner, str):
         runner = [runner]
     output.parent.mkdir(parents=True, exist_ok=True)
     compile_input = prepare_compile_source(source, output)
-    run(*(runner or []), compiler, *TOOLCHAINS["compiler_flags"], "-o", output.relative_to(ROOT), compile_input)
+    run(*(runner or []), compiler, *TOOLCHAINS["compiler_flags"], *defines, "-o", output.relative_to(ROOT), compile_input)
 
 
 def uses_qemu_runner(local):
@@ -80,12 +104,12 @@ def headers_digest():
     return hasher.hexdigest()
 
 
-def unit_stamp(version, source, include_hash):
+def unit_stamp(version, source, include_hash, defines=()):
     record = TOOLCHAINS["compilers"][version]
     hasher = hashlib.sha256()
     hasher.update(record["sha256"].encode("ascii"))
     hasher.update(b"\0")
-    hasher.update("\0".join(TOOLCHAINS["compiler_flags"]).encode("utf-8"))
+    hasher.update("\0".join([*TOOLCHAINS["compiler_flags"], *defines]).encode("utf-8"))
     hasher.update(b"\0")
     hasher.update(include_hash.encode("ascii"))
     hasher.update(b"\0")
@@ -97,30 +121,32 @@ def compile_units(local, jobs):
     include_hash = headers_digest()
     objects = {}
     dirty = []
-    for version, source in jobs:
-        obj = OBJ_CACHE / version / f"{source}.o"
+    for version, source, defines in jobs:
+        suffix = "".join("." + flag[2:].lower() for flag in defines)
+        obj = OBJ_CACHE / version / f"{source}{suffix}.o"
         stamp_file = obj.with_suffix(".stamp")
-        expected = unit_stamp(version, source, include_hash)
-        objects[(version, source)] = obj
+        expected = unit_stamp(version, source, include_hash, defines)
+        objects[(version, source, defines)] = obj
         if obj.is_file() and stamp_file.is_file():
             try:
                 if stamp_file.read_text(encoding="ascii").strip() == expected:
                     continue
             except OSError:
                 pass
-        dirty.append((version, source, obj, stamp_file, expected))
+        dirty.append((version, source, defines, obj, stamp_file, expected))
 
     if dirty:
         if len(dirty) > 1 and uses_qemu_runner(local):
             batch = [
-                (compiler_path(version), TOOLCHAINS["compiler_flags"], obj, ROOT / prepare_compile_source(source, obj))
-                for version, source, obj, _, _ in dirty
+                (compiler_path(version), [*TOOLCHAINS["compiler_flags"], *defines], obj,
+                 ROOT / prepare_compile_source(source, obj))
+                for version, source, defines, obj, _, _ in dirty
             ]
             compile_batch(batch)
         else:
-            for version, source, obj, _, _ in dirty:
-                compile_source(local, source, obj, version)
-        for _, _, obj, stamp_file, expected in dirty:
+            for version, source, defines, obj, _, _ in dirty:
+                compile_source(local, source, obj, version, defines)
+        for _, _, _, obj, stamp_file, expected in dirty:
             validate_object(obj)
             stamp_file.write_text(expected + "\n", encoding="ascii")
     return objects
@@ -488,12 +514,13 @@ def _prepare_compact_link(folder, work_target, binutils, chunk_size=64):
 
 
 def link_target(folder, work_target, filename, original, target, units, version, objects, binutils, matching, write_map=False):
+    name = filename
     assemble_split(folder, binutils)
     objects_root = folder / "objects"
     for unit in units:
         dest = objects_root / f"{unit['source']}.o"
         dest.parent.mkdir(parents=True, exist_ok=True)
-        shutil.copyfile(objects[(version, unit["source"])], dest)
+        shutil.copyfile(objects[(version, unit["source"], target_defines(name, unit["source"]))], dest)
     work_target.mkdir(parents=True, exist_ok=True)
     elf = work_target / "image.elf"
     link_map = work_target / "image.map"
@@ -540,11 +567,11 @@ def build(local, target=None, mod=False, compiler=None, iso=None, write_map=Fals
     units_by_target = {name: target_units(name) for name in names}
     versions = {name: target_compiler(name, local, compiler) for name in names}
     jobs = sorted({
-        (versions[name], unit["source"])
+        (versions[name], unit["source"], target_defines(name, unit["source"]))
         for name in names
         for unit in units_by_target[name]
     })
-    for version in sorted({version for version, _ in jobs}):
+    for version in sorted({version for version, _, _ in jobs}):
         verify_compiler(version)
 
     split_folders = {name: split(name) for name in names}

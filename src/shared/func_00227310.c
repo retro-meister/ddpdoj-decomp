@@ -462,14 +462,16 @@ void func_002279A0(void) {
     }
     D_0028EBE8.flag = D_0028EB58;
     if (confirm != 0) {
-        selected = D_0028EBE8.flag - 1;
         if (last != D_0028EBE8.flag) {
+            selected = D_0028EBE8.flag - 1;
             if (D_0028E258 < selected) {
                 func_0018D490();
                 return;
             }
+#ifndef DEATH_LABEL
             D_0028E280 = selected;
             printf(D_00289E38, D_0028E280);
+#endif
             func_0018D4B0();
             D_0028EBE8.step += 1;
             D_0068DF02[0] = D_0028EBE8.flag - 1;
@@ -1305,7 +1307,30 @@ void func_00228E80(void) {
                     *value = 0;
                 }
             }
+#ifdef DEATH_LABEL
+            if (D_0068DEF0[5] == 0) {
+                base = D_0068DEF0[8];
+                total = 0;
+                if (base != 0) {
+                    total = (s16)base / 100;
+                }
+                extra = D_0068DEF0[7];
+                total += extra;
+                if (total > 5) {
+                    if (idx == 7) {
+                        if ((s16)base >= 100) {
+                            D_0068DEF0[8] -= 100;
+                        }
+                    } else if (idx == 8) {
+                        if (extra > 0) {
+                            D_0068DEF0[7] = extra - 1;
+                        }
+                    }
+                }
+            }
+#endif
         }
+#ifndef DEATH_LABEL
         if (D_0068DEF0[5] == 0) {
             base = D_0068DEF0[8];
             total = 0;
@@ -1322,6 +1347,7 @@ void func_00228E80(void) {
                 }
             }
         }
+#endif
     }
     }
 }

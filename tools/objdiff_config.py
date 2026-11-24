@@ -3,7 +3,7 @@ import json
 from pathlib import Path
 import subprocess
 
-from build import OBJ_CACHE
+from build import OBJ_CACHE, unit_object
 from common import BASEROM, ROOT, TARGETS, require_local, run, target_compiler, verify
 from split import target_layout, target_units
 
@@ -41,7 +41,7 @@ def main():
         version = target_compiler(name, local)
         for unit in target_units(name):
             retail_obj = build_retail_object(retail_dir, binutils, original, file_address, unit)
-            base_obj = OBJ_CACHE / version / f"{unit['source']}.o"
+            base_obj = unit_object(version, name, unit["source"])
             units_json.append({
                 "name": f"{name}/{unit['name']}",
                 "target_path": retail_obj.relative_to(ROOT).as_posix(),

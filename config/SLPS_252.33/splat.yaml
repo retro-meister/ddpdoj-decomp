@@ -3229,7 +3229,7 @@ segments:
       - [0x1271a0, c, shared/func_00227120]
       - [0x127250, c, shared/func_002271D0]
       - [0x127350, c, shared/func_002272D0]
-      - [0x127390, c, main/func_00227310]
+      - [0x127390, c, shared/func_00227310]
       - [0x12a8f0, c, shared/func_0022A870]
       - [0x12a970, c, shared/func_0022A8F0]
       - [0x12a9b0, c, shared/func_0022A930]

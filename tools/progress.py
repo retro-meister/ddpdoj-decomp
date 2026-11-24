@@ -7,7 +7,7 @@ import subprocess
 import sys
 import yaml
 
-from build import OBJ_CACHE
+from build import OBJ_CACHE, unit_object
 from common import ROOT, TARGETS, nonmatching_dir, read_json, require_local, run, target_compiler
 from objects import defined_function_count
 from inventory import build_inventory
@@ -24,7 +24,7 @@ GALLERY_ALL_FUNCTIONS_COMMIT = "80efe77"
 def matched_function_count(name, local):
     version = target_compiler(name, local)
     return sum(
-        defined_function_count(OBJ_CACHE / version / f"{unit['source']}.o")
+        defined_function_count(unit_object(version, name, unit["source"]))
         for unit in target_units(name)
     )
 
@@ -167,7 +167,7 @@ def missing_cached_objects(local):
     for name in TARGETS:
         version = target_compiler(name, local)
         for unit in target_units(name):
-            obj = OBJ_CACHE / version / f"{unit['source']}.o"
+            obj = unit_object(version, name, unit["source"])
             src = ROOT / unit["source"]
             if not obj.is_file() or (src.is_file() and obj.stat().st_mtime < src.stat().st_mtime):
                 return True

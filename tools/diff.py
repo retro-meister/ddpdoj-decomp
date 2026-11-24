@@ -10,7 +10,7 @@ import subprocess
 import sys
 from tempfile import TemporaryDirectory
 
-from build import compile_source
+from build import compile_source, draft_defines
 from common import BASEROM, ROOT, TARGETS, TOOLCHAINS, TOOLS
 from common import download, host_machine, matching_lock, require_local, resolve_tool, run, target_compiler, verify, verify_compiler
 from draft import extract_function
@@ -375,7 +375,7 @@ def diff(args):
     folder = ROOT / "build" / "diff" / args.target / (args.function + (f"@{args.tag}" if args.tag else ""))
     folder.mkdir(parents=True, exist_ok=True)
     (folder / "retail.bin").write_bytes(retail)
-    compile_source(local, source, folder / "compiled.o", version)
+    compile_source(local, source, folder / "compiled.o", version, draft_defines(args.target))
     fn_offset, fn_size = find_function(folder / "compiled.o", args.function)
     provided = collect_provide_symbols(args.target, split_folder, asm_functions)
     unit = next((unit for unit in units if unit["name"] == args.function), {})
