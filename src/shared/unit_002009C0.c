@@ -1,4 +1,5 @@
 #include "common.h"
+#include "entity.h"
 
 extern void func_00128970(void);
 
@@ -58,13 +59,13 @@ next_1:
     reg_a6 = (u8 *)D_002BDA80;
     reg_d7.w = 0x31;
 loop_2:
-    if (*(u16 *)reg_a6 != 0) goto next_2;
-    *(u16 *)(reg_a6 + 0) = 0x8000;
-    *(u16 *)(reg_a6 + 2) = 0xF800;
-    *(u16 *)(reg_a6 + 4) = *(u16 *)(reg_a4 + 2);
-    *(u16 *)(reg_a6 + 6) = *(u16 *)(reg_a4 + 4);
-    *(u16 *)(reg_a6 + 0x10) = *(u16 *)(reg_a4 + 6);
-    *(u16 *)(reg_a6 + 0x12) = *(u16 *)(reg_a4 + 8);
+    if (ENTITY(reg_a6)->flags.h != 0) goto next_2;
+    ENTITY(reg_a6)->flags.h = 0x8000;
+    ENTITY(reg_a6)->y.h = 0xF800;
+    ENTITY(reg_a6)->x.h = *(u16 *)(reg_a4 + 2);
+    ENTITY(reg_a6)->offset_y.h = *(u16 *)(reg_a4 + 4);
+    ENTITY(reg_a6)->hit_y_plus.h = *(u16 *)(reg_a4 + 6);
+    ENTITY(reg_a6)->hit_y_minus.h = *(u16 *)(reg_a4 + 8);
     D_0028DE80_as_u16_a4[0] += 0xA;
     goto next_3;
 next_2:
@@ -76,26 +77,26 @@ next_3:
     reg_a6 = (u8 *)D_002BDA80;
     reg_d7.w = 0x31;
 loop_4:
-    if (*(u16 *)reg_a6 == 0) goto next_9;
+    if (ENTITY(reg_a6)->flags.h == 0) goto next_9;
     reg_d0.h[0] = D_0028DE80_as_u16_a4[2];
-    *(u16 *)(reg_a6 + 2) += reg_d0.h[0];
-    if (*(s16 *)(reg_a6 + 2) < 0x7800) goto next_5;
-    *(u16 *)reg_a6 = 0;
+    ENTITY(reg_a6)->y.h += reg_d0.h[0];
+    if (ENTITY(reg_a6)->y.sh < 0x7800) goto next_5;
+    ENTITY(reg_a6)->flags.h = 0;
     goto next_9;
 next_5:
-    reg_d0.h[1] = *(u16 *)(reg_a6 + 0x10);
-    reg_d0.h[0] = *(u16 *)(reg_a6 + 0x12);
+    reg_d0.h[1] = ENTITY(reg_a6)->hit_y_plus.h;
+    reg_d0.h[0] = ENTITY(reg_a6)->hit_y_minus.h;
     if (reg_d0.w != 0xFFFFFFFF) goto next_6;
     D_0028DE80_as_u16_a4[2] = 0;
     goto next_9;
 next_6:
     reg_a3 = (u8 *)reg_d0.w;
-    reg_d1.h[1] = *(u16 *)(reg_a6 + 2);
-    reg_d1.h[0] = *(u16 *)(reg_a6 + 4);
+    reg_d1.h[1] = ENTITY(reg_a6)->y.h;
+    reg_d1.h[0] = ENTITY(reg_a6)->x.h;
     reg_d3.h[0] = 0x208;
     reg_d4.h[0] = 2;
     reg_a2 = (u8 *)D_0024E5C0;
-    if (*(u16 *)(reg_a6 + 6) != 0) goto loop_7;
+    if (ENTITY(reg_a6)->offset_y.h != 0) goto loop_7;
     reg_a2 = (u8 *)D_0024E440;
     reg_d3.h[0] = 0x210;
 loop_7:
@@ -108,7 +109,7 @@ loop_7:
     reg_d6.h[0] += reg_d6.h[0];
     reg_d2.w = *(u32 *)(reg_a2 + reg_d6.h[0]);
     func_0019C5B0();
-    if (*(u16 *)(reg_a6 + 6) != 0) goto next_8;
+    if (ENTITY(reg_a6)->offset_y.h != 0) goto next_8;
     reg_d1.h[0] += 0x400;
     goto loop_7;
 next_8:

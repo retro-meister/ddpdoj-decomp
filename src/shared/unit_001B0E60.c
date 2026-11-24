@@ -1,4 +1,5 @@
 #include "common.h"
+#include "entity.h"
 
 s32 func_0013AFF0();
 s32 func_001A3020();
@@ -44,7 +45,7 @@ void func_001B0E60(void) {
     s_a6 = reg_a6;
     if (D_0028DF0C != 0) goto block_exit;
     reg_a6 = (u8 *)D_0029BE00;
-    if (*(s8 *)(reg_a6 + 0) >= 6) goto block_set;
+    if (ENTITY(reg_a6)->flags.sb[0] >= 6) goto block_set;
     if (*(s8 *)(reg_a6 + 0x70) < 6) goto next_1;
 block_set:
     D_0028DF0C = 1;
@@ -386,15 +387,15 @@ void func_001B1960(void) {
     reg_a6 = (u8 *)D_0029BE00;
     reg_d7.w = 1;
     do {
-        if (*(u8 *)(reg_a6 + 1) != 0) {
-            if (*(u8 *)reg_a6 == 3) {
+        if (ENTITY(reg_a6)->flags.b[1] != 0) {
+            if (ENTITY(reg_a6)->flags.b[0] == 3) {
                 func_001384E0();
             }
-            if (*(u8 *)reg_a6 == 4) {
+            if (ENTITY(reg_a6)->flags.b[0] == 4) {
                 func_00138750();
             }
 #ifdef DEATH_LABEL
-            if (*(u8 *)reg_a6 == 5) {
+            if (ENTITY(reg_a6)->flags.b[0] == 5) {
                 func_00138650();
                 fade_reset();
                 death_func_001B1220();
@@ -425,26 +426,26 @@ void func_001B1960(void) {
                 return;
             }
 #else
-            if (*(u8 *)reg_a6 == 5) {
+            if (ENTITY(reg_a6)->flags.b[0] == 5) {
                 func_00138650();
             }
-            if (*(u8 *)reg_a6 == 6) {
+            if (ENTITY(reg_a6)->flags.b[0] == 6) {
                 func_0020ED40();
             }
-            if (*(u8 *)reg_a6 == 7) {
+            if (ENTITY(reg_a6)->flags.b[0] == 7) {
                 func_0020EE20();
             }
 #endif
-            if (*(u8 *)reg_a6 == 0) {
+            if (ENTITY(reg_a6)->flags.b[0] == 0) {
                 func_001460A0();
             }
-            if (*(u8 *)reg_a6 == 1) {
+            if (ENTITY(reg_a6)->flags.b[0] == 1) {
                 func_00146470();
             }
-            if (*(u8 *)reg_a6 == 2) {
+            if (ENTITY(reg_a6)->flags.b[0] == 2) {
                 func_00146350();
             }
-            if ((s32) *(u8 *)reg_a6 < 7) {
+            if ((s32) ENTITY(reg_a6)->flags.b[0] < 7) {
                 *(u8 *)(reg_a6 + 0x30) -= 1;
                 if (*(u8 *)(reg_a6 + 0x30) == 0) {
                     *(u8 *)(reg_a6 + 0x30) = 2U;
@@ -473,7 +474,7 @@ void func_001B1960(void) {
             if ((reg_d0.w & 0x8000) && ((reg_a0 = (u8 *)D_0029BE00, (*(u8 *)(reg_a0 + 0x71) == 0)) || ((s32) *(u8 *)(reg_a0 + 0x70) < 6))) {
                 func_00130270();
                 if (cond_flag == 0) {
-                    *(s8 *)(reg_a6 + 1) = 1;
+                    ENTITY(reg_a6)->flags.sb[1] = 1;
                 }
             }
         } else if (D_0028E304 == 0) {
@@ -481,7 +482,7 @@ void func_001B1960(void) {
             if ((reg_d0.w & 0x8000) && ((reg_a0 = (u8 *)D_0029BE00, (*(u8 *)(reg_a0 + 1) == 0)) || ((s32) *(u8 *)reg_a0 < 6))) {
                 func_001303A0();
                 if (cond_flag == 0) {
-                    *(s8 *)(reg_a6 + 1) = 1;
+                    ENTITY(reg_a6)->flags.sb[1] = 1;
                 }
             }
         }
@@ -490,9 +491,9 @@ void func_001B1960(void) {
     } while ((s16)(--reg_d7.h[0]) >= 0);
     reg_d0.w = 3;
     reg_a6 = (u8 *)D_0029BE00;
-    if (*(u8 *)(reg_a6 + 1) != 0) {
+    if (ENTITY(reg_a6)->flags.b[1] != 0) {
         reg_d0.h[0] &= 0xFFFE;
-        if (*(u8 *)reg_a6 == 8) {
+        if (ENTITY(reg_a6)->flags.b[0] == 8) {
             reg_d0.h[0] |= 1;
         }
     }
@@ -591,12 +592,12 @@ void func_001B1D70(void) {
         reg_d1.h[0] = D_0029F2BA[0];
         *(u8 *)(reg_a5 + 5) = (u8) reg_d1.b[0];
         *(u8 *)(reg_a5 + 7) = (u8) reg_d1.b[0];
-        *(s8 *)reg_a6 = 3;
+        ENTITY(reg_a6)->flags.sb[0] = 3;
         reg_d1.w = 0;
         if (D_0028E938 != 0) {
             reg_d1.w = 1;
         }
-        *(u16 *)(reg_a6 + 2) = (u16) reg_d1.h[0];
+        ENTITY(reg_a6)->y.h = (u16) reg_d1.h[0];
         reg_d0.w = 0;
         func_001A33C0();
         reg_d0.w = 0;
@@ -683,21 +684,21 @@ void func_001B2200(void) {
     reg_a6 = D_0029BE00;
     reg_d7.w = 1;
     do {
-        if (*(u8 *)(reg_a6 + 1) != 0) {
-            temp_a0_2 = *(u8 *)reg_a6;
+        if (ENTITY(reg_a6)->flags.b[1] != 0) {
+            temp_a0_2 = ENTITY(reg_a6)->flags.b[0];
             if (temp_a0_2 == 3) {
                 func_001384E0();
-                *(u8 *)reg_a6 = 5U;
+                ENTITY(reg_a6)->flags.b[0] = 5U;
             }
-            temp_a0_3 = *(u8 *)reg_a6;
+            temp_a0_3 = ENTITY(reg_a6)->flags.b[0];
             if (temp_a0_3 == 5) {
                 func_00138650();
             }
-            temp_a0_4 = *(u8 *)reg_a6;
+            temp_a0_4 = ENTITY(reg_a6)->flags.b[0];
             if (temp_a0_4 == 6) {
                 func_0020ED40();
             }
-            temp_a0_5 = *(u8 *)reg_a6;
+            temp_a0_5 = ENTITY(reg_a6)->flags.b[0];
             if (temp_a0_5 == 7) {
                 func_0020EE20();
             }
@@ -706,9 +707,9 @@ void func_001B2200(void) {
     } while ((s16)(--reg_d7.h[0]) >= 0);
     reg_d0.w = 3;
     reg_a6 = D_0029BE00;
-    if (*(u8 *)(reg_a6 + 1) != 0) {
+    if (ENTITY(reg_a6)->flags.b[1] != 0) {
         reg_d0.h[0] &= 0xFFFE;
-        if (*(u8 *)reg_a6 == 8) {
+        if (ENTITY(reg_a6)->flags.b[0] == 8) {
             reg_d0.h[0] |= 1;
         }
     }

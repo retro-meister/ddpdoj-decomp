@@ -1,4 +1,5 @@
 #include "common.h"
+#include "entity.h"
 #include "sdk/ps2sdk.h"
 
 void func_001B8440(void);
@@ -316,18 +317,18 @@ next_anim:
     if (reg_a4[1] > 9) goto next_17;
     reg_d2.w = 0;
 next_17:
-    reg_d0.h[0] = *(u16 *)(reg_a6 + 0x10);
-    reg_tmp.h[1] = *(u16 *)(reg_a6 + 0x14);
-    reg_tmp.h[0] = *(u16 *)(reg_a6 + 0x16);
+    reg_d0.h[0] = ENTITY(reg_a6)->hit_y_plus.h;
+    reg_tmp.h[1] = ENTITY(reg_a6)->hit_x_plus.h;
+    reg_tmp.h[0] = ENTITY(reg_a6)->hit_x_minus.h;
     reg_a0 = (u8 *) reg_tmp.w;
-    *(u16 *)(reg_a6 + 0xA) = (reg_d0.h[0]) ? *(u16 *)(reg_a0 + ((s16) reg_d0.h[0] & ~1)) : *(u16 *)reg_a0;
+    ENTITY(reg_a6)->draw.h = (reg_d0.h[0]) ? *(u16 *)(reg_a0 + ((s16) reg_d0.h[0] & ~1)) : *(u16 *)reg_a0;
     idx = reg_d0.h[0] + 2;
-    *(u16 *)(reg_a6 + 0xC) = (idx) ? *(u16 *)(reg_a0 + ((s16) idx & ~1)) : *(u16 *)reg_a0;
+    ENTITY(reg_a6)->sprite.h = (idx) ? *(u16 *)(reg_a0 + ((s16) idx & ~1)) : *(u16 *)reg_a0;
 loop_18:
-    reg_tmp.h[0] = *(u16 *)(reg_a6 + 0x10);
-    *(u16 *)(reg_a6 + 0x10) -= 4;
+    reg_tmp.h[0] = ENTITY(reg_a6)->hit_y_plus.h;
+    ENTITY(reg_a6)->hit_y_plus.h -= 4;
     if (reg_tmp.h[0] > 3) goto next_19;
-    *(u16 *)(reg_a6 + 0x10) = *(u16 *)(reg_a6 + 0x12);
+    ENTITY(reg_a6)->hit_y_plus.h = ENTITY(reg_a6)->hit_y_minus.h;
 next_19:
     cnt2 = reg_d2.h[0] - 1;
     reg_d2.h[0] = cnt2;
@@ -369,8 +370,8 @@ void func_001B8D00(void) {
     reg_d2.h[0] = reg_d0.h[0];
     reg_a2 = *(u8 **)((u8 *)D_00250CE0 + (reg_d0.h[0] & ~3));
     *(u16 *)reg_a0 = reg_d4.h[0];
-    *(u16 *)(reg_a0 + 2) = (u16) *(u16 *)(reg_a6 + 2);
-    *(u16 *)(reg_a0 + 4) = (u16) *(u16 *)(reg_a6 + 4);
+    *(u16 *)(reg_a0 + 2) = (u16) ENTITY(reg_a6)->y.h;
+    *(u16 *)(reg_a0 + 4) = (u16) ENTITY(reg_a6)->x.h;
     if (0 > (s32) reg_d3.w) {
         func_00201390();
         *(u16 *)(reg_a0 + 4) += reg_d4.h[0];

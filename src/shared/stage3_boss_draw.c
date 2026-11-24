@@ -1,4 +1,5 @@
 #include "common.h"
+#include "entity.h"
 
 extern u8 D_0026D320[];
 
@@ -12,8 +13,8 @@ void func_001D13B0(void) {
     reg_a0 += temp_a3;
     reg_tmp.h[0] = *(u16 *)(reg_a6 + 0xA6);
     reg_d2.w = *(u32 *)(D_0026D320 + (reg_tmp.h[0] & ~3));
-    reg_d1.h[1] = *(u16 *)(reg_a6 + 2);
-    temp_a1 = *(u16 *)(reg_a6 + 4);
+    reg_d1.h[1] = ENTITY(reg_a6)->y.h;
+    temp_a1 = ENTITY(reg_a6)->x.h;
     reg_d1.h[0] = temp_a1;
     reg_d1.w += 0xE4400000;
     reg_d1.w += 0xEC00E800;
@@ -197,8 +198,8 @@ void func_001D1980(void) {
     reg_a0 += 2;
     reg_d2.h[0] = *(u16 *)reg_a0;
     reg_a0 += 2;
-    reg_d1.h[1] = *(u16 *)(reg_a6 + 2);
-    reg_d1.h[0] = *(u16 *)(reg_a6 + 4);
+    reg_d1.h[1] = ENTITY(reg_a6)->y.h;
+    reg_d1.h[0] = ENTITY(reg_a6)->x.h;
     reg_d1.w += 0xF7000000;
     reg_tmp1.h[1] = *(u16 *)reg_a0;
     reg_a0 += 2;

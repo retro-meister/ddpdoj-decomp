@@ -1,4 +1,5 @@
 #include "common.h"
+#include "entity.h"
 #include "sdk/ps2sdk.h"
 #include "cd.h"
 #include "replay.h"
@@ -7031,7 +7032,7 @@ loop_1:
     reg_d2.h[1] = reg_tmp.h[0];
     reg_d2.h[0] = reg_tmp.h[1];
     reg_d2.h[0] = *(u16 *)reg_a2;
-    reg_d3.h[0] = *(u16 *)reg_a6;
+    reg_d3.h[0] = ENTITY(reg_a6)->flags.h;
     reg_tmp.w = reg_d3.w;
     reg_d3.h[1] = reg_tmp.h[0];
     reg_d3.h[0] = reg_tmp.h[1];

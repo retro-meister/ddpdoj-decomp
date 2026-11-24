@@ -1,4 +1,5 @@
 #include "common.h"
+#include "entity.h"
 
 void func_001713F0(s32 id);
 
@@ -52,10 +53,10 @@ void func_001BB640(void) {
     reg_d0.h[0] = t - 1;
     func_0014E300();
     reg_tmp.w = 0x97FFFE00;
-    *(u16 *)(reg_a6 + 2) = (u16) reg_tmp.h[1];
-    *(u16 *)(reg_a6 + 4) = (u16) reg_tmp.h[0];
+    ENTITY(reg_a6)->y.h = (u16) reg_tmp.h[1];
+    ENTITY(reg_a6)->x.h = (u16) reg_tmp.h[0];
     reg_d0.h[0] = D_0029C068[0];
-    *(u16 *)(reg_a6 + 4) -= reg_d0.h[0];
+    ENTITY(reg_a6)->x.h -= reg_d0.h[0];
     reg_a0 = (u8 *)D_0026E8E0;
     reg_a1 = (u8 *)D_0026DFF0;
     reg_a2 = (u8 *)D_0026E190;

@@ -1,4 +1,5 @@
 #include "common.h"
+#include "entity.h"
 
 void func_0019E980(void);
 
@@ -590,7 +591,7 @@ void func_0019E980(void) {
     reg_tmp.h[1] = (reg_d0.h[0] != 0) ? *(u16 *)(reg_a2 + ((s16)reg_d0.h[0] & ~1)) : *(u16 *)reg_a2;
     reg_tmp.h[0] = (((reg_d0.h[0] & 0xFFFF) + 2) != 0) ? *(u16 *)(reg_a2 + ((s16)((reg_d0.h[0] & 0xFFFF) + 2) & ~1)) : *(u16 *)reg_a2;
     reg_a2 = (u8 *)reg_tmp.w;
-    reg_d1.h[0] = *(u16 *)(reg_a6 + 2);
+    reg_d1.h[0] = *(u16 *)(reg_a6 + 0x2);
     reg_d1.h[0] += *(u16 *)reg_a2;
     reg_a2 += 2;
     *(u16 *)reg_a0 = reg_d1.h[0];
@@ -600,7 +601,7 @@ void func_0019E980(void) {
     if ((s8)reg_d3.b[0] < 0) {
         reg_d1.h[0] *= 0xFFFF;
     }
-    *(u16 *)reg_a0 = *(u16 *)(reg_a6 + 4);
+    *(u16 *)reg_a0 = *(u16 *)(reg_a6 + 0x4);
     reg_a0 += 2;
     *(u16 *)reg_a0 = *(u16 *)reg_a1;
     reg_a1 += 2;
@@ -667,7 +668,7 @@ void func_0019E980(void) {
     }
     reg_a6 = reg_a0 - 0x2C;
     func_0019C000();
-    *(u16 *)(reg_a6 + 4) += reg_d1.h[0];
+    *(u16 *)(reg_a6 + 0x4) += reg_d1.h[0];
     reg_a1 = save_a1;
     reg_a6 = save_a6;
 }

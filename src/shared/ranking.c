@@ -1,4 +1,5 @@
 #include "common.h"
+#include "entity.h"
 
 void func_001A40A0(void);
 void func_001A4320(void);
@@ -359,7 +360,7 @@ void func_001A44C0(void) {
     }
     reg_d7.w = 4;
     do {
-        reg_d0.h[0] = *(u16 *)reg_a6;
+        reg_d0.h[0] = ENTITY(reg_a6)->flags.h;
         reg_a6 += 2;
         reg_d0.h[0] += reg_d0.h[0];
         reg_d0.h[0] += reg_d0.h[0];
@@ -391,7 +392,7 @@ void func_001A4660(void) {
     reg_d4.h[0] = 8;
     reg_d7.w = 4;
     do {
-        temp_a0 = *(u16 *)reg_a6;
+        temp_a0 = ENTITY(reg_a6)->flags.h;
         reg_d0.h[0] = temp_a0;
         reg_a6 += 2;
         reg_d0.h[0] -= 2;
@@ -512,7 +513,7 @@ void func_001A4A20(void) {
     reg_d4.h[0] = 8;
     reg_d7.w = 4;
     do {
-        reg_d0.h[0] = *(u16 *)reg_a6;
+        reg_d0.h[0] = ENTITY(reg_a6)->flags.h;
         reg_a6 += 2;
         reg_d1.h[0] = 0x31C0;
         reg_d6.w = 3;
@@ -667,7 +668,7 @@ void func_001A4EA0(void) {
     reg_d7.w = 4;
     reg_a0 = (u8 *)D_0026B520;
     do {
-        temp_a0 = *(u16 *)reg_a6;
+        temp_a0 = ENTITY(reg_a6)->flags.h;
         reg_d2.h[0] = temp_a0;
         reg_a6 += 2;
         reg_d2.h[0] &= 0xF;

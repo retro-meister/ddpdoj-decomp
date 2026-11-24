@@ -1,4 +1,5 @@
 #include "common.h"
+#include "entity.h"
 #include "sdk/ps2sdk.h"
 
 void func_00123540(void);
@@ -126,9 +127,9 @@ block_6:
             }
         }
     } else {
-        *(u16 *)(reg_a6 + 0x12) += 1;
-        reg_d0.h[0] = *(u16 *)(reg_a6 + 0x12);
-        if (*(u16 *)(reg_a6 + 0x10) != reg_d0.h[0]) {
+        ENTITY(reg_a6)->hit_y_minus.h += 1;
+        reg_d0.h[0] = ENTITY(reg_a6)->hit_y_minus.h;
+        if (ENTITY(reg_a6)->hit_y_plus.h != reg_d0.h[0]) {
             func_00123870();
             return;
         }
@@ -432,7 +433,7 @@ void func_00123780(void) {
     if (0 > D_0029F1F0[0]) {
         reg_d0.h[0] += 1;
     }
-    *(u16 *)(reg_a6 + 0x10) = (u16) reg_d0.h[0];
+    ENTITY(reg_a6)->hit_y_plus.h = (u16) reg_d0.h[0];
     D_00295E3E_as_s16_a[0] = 0x101;
     D_00295E40_as_s16_a[0] = 0;
     func_0012FD00();
@@ -460,28 +461,28 @@ void func_00123870(void) {
     func_00123210();
     D_00295E2C_as_s16_a[0] = 0;
     reg_a6 = (u8 *)D_00295E00;
-    if (*(u16 *)(reg_a6 + 0x10) != 1) goto next_0;
+    if (ENTITY(reg_a6)->hit_y_plus.h != 1) goto next_0;
     reg_d0.h[0] = D_0028E930;
     if (0 > D_0029F261_as_s8_a[0]) goto next_1;
     reg_d0.h[0] = D_0028E92C;
     goto next_1;
 next_0:
     reg_d0.h[0] = D_0028E930;
-    if (*(u16 *)(reg_a6 + 0x12) == 0) goto next_1;
+    if (ENTITY(reg_a6)->hit_y_minus.h == 0) goto next_1;
     reg_d0.h[0] = D_0028E92C;
 next_1:
     if (reg_d0.h[0] == 2) {
-        *(u16 *)(reg_a6 + 0xE) = 0U;
+        ENTITY(reg_a6)->look.h = 0U;
     }
     if (reg_d0.h[0] == 4) {
-        *(u16 *)(reg_a6 + 0xE) = 1U;
+        ENTITY(reg_a6)->look.h = 1U;
     }
     if (reg_d0.h[0] == 6) {
-        *(u16 *)(reg_a6 + 0xE) = 2U;
+        ENTITY(reg_a6)->look.h = 2U;
     }
-    if (*(u16 *)(reg_a6 + 0x12) != 0) {
+    if (ENTITY(reg_a6)->hit_y_minus.h != 0) {
         reg_d0.w = 0;
-        reg_d0.h[0] = *(u16 *)(reg_a6 + 0xE);
+        reg_d0.h[0] = ENTITY(reg_a6)->look.h;
         reg_d0.h[0] += 1;
         func_00123210();
     }
@@ -520,7 +521,7 @@ void func_00123980(void) {
 #ifdef DEATH_LABEL
     death_func_00139380();
 #else
-    reg_d0.h[0] = *(u16 *)(reg_a6 + 8);
+    reg_d0.h[0] = ENTITY(reg_a6)->offset_x.h;
     ((Fn)*(u32 *)((u8 *)D_0024D090 + (reg_d0.h[0] * 4)))();
     func_001232E0();
     func_00123040();
@@ -556,25 +557,25 @@ void func_00123B00(void) {
     u8 *temp_a2;
 
     func_0012FAB0();
-    if (*(u16 *)(reg_a6 + 6) == 0) {
-        *(u16 *)(reg_a6 + 6) = 1U;
+    if (ENTITY(reg_a6)->offset_y.h == 0) {
+        ENTITY(reg_a6)->offset_y.h = 1U;
         func_00123240();
-        *(u16 *)(reg_a6 + 0xC) = 0U;
+        ENTITY(reg_a6)->sprite.h = 0U;
         func_0018D3D0();
     }
-    if (*(u16 *)(reg_a6 + 6) == 1) {
+    if (ENTITY(reg_a6)->offset_y.h == 1) {
         reg_a0 = (u8 *)D_0024D628;
-        reg_d0.h[0] = *(u16 *)(reg_a6 + 0xE);
+        reg_d0.h[0] = ENTITY(reg_a6)->look.h;
         reg_d0.h[0] += reg_d0.h[0];
         reg_d0.h[0] += reg_d0.h[0];
         reg_a0 += reg_d0.h[0];
         reg_a0 = *(u8 **)reg_a0;
-        temp_a0 = *(u16 *)(reg_a6 + 0xC);
+        temp_a0 = ENTITY(reg_a6)->sprite.h;
         reg_a0 += temp_a0;
         reg_d0.w = *(u32 *)reg_a0;
         temp_a2 = (u8 *)(reg_a6 + 0xE);
         if (reg_d0.w == -1U) {
-            reg_d0.h[0] = *(u16 *)(reg_a6 + 0xE);
+            reg_d0.h[0] = ENTITY(reg_a6)->look.h;
             reg_d0.h[0] += 1;
             func_00123210();
             return;
@@ -582,7 +583,7 @@ void func_00123B00(void) {
         reg_a0 = (u8 *) reg_d0.w;
         func_00123410();
         if (cond_flag == 0) {
-            *(u16 *)(reg_a6 + 0xC) += 4;
+            ENTITY(reg_a6)->sprite.h += 4;
             func_00123240();
         }
     }
@@ -722,14 +723,14 @@ extern u32 D_0024DA90[];
 void func_001240E0(void) {
     u16 temp_a1;
 
-    if (*(u16 *)(reg_a6 + 6) == 0) {
-        *(u16 *)(reg_a6 + 6) = 1U;
+    if (ENTITY(reg_a6)->offset_y.h == 0) {
+        ENTITY(reg_a6)->offset_y.h = 1U;
         func_00123240();
-        *(u16 *)(reg_a6 + 0xC) = 0U;
+        ENTITY(reg_a6)->sprite.h = 0U;
     }
-    if (*(u16 *)(reg_a6 + 6) == 1) {
+    if (ENTITY(reg_a6)->offset_y.h == 1) {
         reg_a0 = (u8 *)(D_0024DA90);
-        temp_a1 = *(u16 *)(reg_a6 + 0xC);
+        temp_a1 = ENTITY(reg_a6)->sprite.h;
         reg_a0 += temp_a1;
         reg_d0.w = *(u32 *)reg_a0;
         if (reg_d0.w == -1U) {
@@ -739,7 +740,7 @@ void func_001240E0(void) {
         reg_a0 = (u8 *) reg_d0.w;
         func_00123410();
         if (cond_flag == 0) {
-            *(u16 *)(reg_a6 + 0xC) += 4;
+            ENTITY(reg_a6)->sprite.h += 4;
             func_00123240();
         }
     }
@@ -752,14 +753,14 @@ extern u32 D_0024DE00[];
 void func_001241A0(void) {
     u16 temp_a1;
 
-    if (*(u16 *)(reg_a6 + 6) == 0) {
-        *(u16 *)(reg_a6 + 6) = 1U;
+    if (ENTITY(reg_a6)->offset_y.h == 0) {
+        ENTITY(reg_a6)->offset_y.h = 1U;
         func_00123240();
-        *(u16 *)(reg_a6 + 0xC) = 0U;
+        ENTITY(reg_a6)->sprite.h = 0U;
     }
-    if (*(u16 *)(reg_a6 + 6) == 1) {
+    if (ENTITY(reg_a6)->offset_y.h == 1) {
         reg_a0 = (u8 *)(D_0024DE00);
-        temp_a1 = *(u16 *)(reg_a6 + 0xC);
+        temp_a1 = ENTITY(reg_a6)->sprite.h;
         reg_a0 += temp_a1;
         reg_d0.w = *(u32 *)reg_a0;
         if (reg_d0.w == -1U) {
@@ -769,7 +770,7 @@ void func_001241A0(void) {
         reg_a0 = (u8 *) reg_d0.w;
         func_00123410();
         if (cond_flag == 0) {
-            *(u16 *)(reg_a6 + 0xC) += 4;
+            ENTITY(reg_a6)->sprite.h += 4;
             func_00123240();
         }
     }
@@ -782,14 +783,14 @@ extern u32 D_0024E070[];
 void func_00124260(void) {
     u16 temp_a1;
 
-    if (*(u16 *)(reg_a6 + 6) == 0) {
-        *(u16 *)(reg_a6 + 6) = 1U;
+    if (ENTITY(reg_a6)->offset_y.h == 0) {
+        ENTITY(reg_a6)->offset_y.h = 1U;
         func_00123240();
-        *(u16 *)(reg_a6 + 0xC) = 0U;
+        ENTITY(reg_a6)->sprite.h = 0U;
     }
-    if (*(u16 *)(reg_a6 + 6) == 1) {
+    if (ENTITY(reg_a6)->offset_y.h == 1) {
         reg_a0 = (u8 *)(D_0024E070);
-        temp_a1 = *(u16 *)(reg_a6 + 0xC);
+        temp_a1 = ENTITY(reg_a6)->sprite.h;
         reg_a0 += temp_a1;
         reg_d0.w = *(u32 *)reg_a0;
         if (reg_d0.w == -1U) {
@@ -799,7 +800,7 @@ void func_00124260(void) {
         reg_a0 = (u8 *) reg_d0.w;
         func_00123410();
         if (cond_flag == 0) {
-            *(u16 *)(reg_a6 + 0xC) += 4;
+            ENTITY(reg_a6)->sprite.h += 4;
             func_00123240();
         }
     }

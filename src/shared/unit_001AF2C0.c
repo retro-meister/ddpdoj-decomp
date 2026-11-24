@@ -1,4 +1,5 @@
 #include "common.h"
+#include "entity.h"
 #include "sdk/ps2sdk.h"
 
 void func_001AF8F0(void);
@@ -873,13 +874,13 @@ void func_001B0950(void) {
     s32 func_001A3020();
     u8 flag;
 
-    if (*(u16 *)(reg_a6 + 2) != 0) {
-        *(u16 *)(reg_a6 + 2) -= 1;
+    if (ENTITY(reg_a6)->y.h != 0) {
+        ENTITY(reg_a6)->y.h -= 1;
         return;
     }
-    flag = *(u8 *)(reg_a6 + 1);
+    flag = ENTITY(reg_a6)->flags.b[1];
     if (!(flag & 2)) {
-        *(u8 *)(reg_a6 + 1) = flag | 2;
+        ENTITY(reg_a6)->flags.b[1] = flag | 2;
         reg_a0 = (u8 *)D_00260F70;
         reg_d0.w = 0x16;
         func_001A3020();
@@ -900,8 +901,8 @@ void func_001B0950(void) {
     reg_d3.h[0] = 0xCE0;
     reg_d4.h[0] = 0x16;
     func_0019C570();
-    if (*(u16 *)(reg_a6 + 0xC) != 0) {
-        *(u16 *)(reg_a6 + 0xC) -= 1;
+    if (ENTITY(reg_a6)->sprite.h != 0) {
+        ENTITY(reg_a6)->sprite.h -= 1;
         reg_tmp.h[1] = (*(u16 *)(reg_a6 + (0x20)));
         reg_tmp.h[0] = (*(u16 *)(reg_a6 + (0x22)));
         reg_a0 = (u8 *) reg_tmp.w;
@@ -932,20 +933,20 @@ void func_001B0950(void) {
         reg_a0 += 2;
         reg_d2.h[0] = (*(u16 *)(reg_a0 + (0)));
         reg_a0 += 2;
-        if (*(u16 *)(reg_a6 + 0x14) == 0x280) goto skip_1;
-        *(u16 *)(reg_a6 + 0x14) += 8;
+        if (ENTITY(reg_a6)->hit_x_plus.h == 0x280) goto skip_1;
+        ENTITY(reg_a6)->hit_x_plus.h += 8;
         goto skip_4;
 skip_1:
-        if (*(u16 *)(reg_a6 + 0x16) == 0x280) goto skip_2;
-        *(u16 *)(reg_a6 + 0x16) += 8;
+        if (ENTITY(reg_a6)->hit_x_minus.h == 0x280) goto skip_2;
+        ENTITY(reg_a6)->hit_x_minus.h += 8;
         goto skip_4;
 skip_2:
-        if (*(u16 *)(reg_a6 + 0x18) == 0x280) goto skip_3;
-        *(u16 *)(reg_a6 + 0x18) += 8;
+        if (ENTITY(reg_a6)->hp.h == 0x280) goto skip_3;
+        ENTITY(reg_a6)->hp.h += 8;
         goto skip_4;
 skip_3:
-        if (*(u16 *)(reg_a6 + 0x1A) == 0x280) goto skip_4;
-        *(u16 *)(reg_a6 + 0x1A) += 8;
+        if (ENTITY(reg_a6)->move.h == 0x280) goto skip_4;
+        ENTITY(reg_a6)->move.h += 8;
 skip_4:
         if (D_0028E3EC != 0) {
             reg_a0 = (u8 *)D_00251D70;
@@ -1003,12 +1004,12 @@ skip_4:
         if ((s32) reg_tmp.b[0] <= 0) {
             (*(u8 *)(reg_a6 + (9))) = (u8) (*(u8 *)(reg_a6 + (8)));
             (*(u16 *)(reg_a6 + (0xA))) += 4;
-            if (*(u16 *)(reg_a6 + 0xA) != 0x5C) goto skip_5;
-            *(u16 *)(reg_a6 + 0xC) = 0x90;
+            if (ENTITY(reg_a6)->draw.h != 0x5C) goto skip_5;
+            ENTITY(reg_a6)->sprite.h = 0x90;
             return;
 skip_5:
-            if (*(u16 *)(reg_a6 + 0xA) != 0x9C) return;
-            *(u8 *)(reg_a6 + 1) |= 4;
+            if (ENTITY(reg_a6)->draw.h != 0x9C) return;
+            ENTITY(reg_a6)->flags.b[1] |= 4;
         }
     }
 }

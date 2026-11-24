@@ -1,4 +1,5 @@
 #include "common.h"
+#include "entity.h"
 
 void func_001BC160(void);
 void func_001BC230(void);
@@ -51,8 +52,8 @@ void func_001BB8E0(void) {
             *(u8 *)(reg_a6 + 0xBC) = (u8) reg_d0.b[0];
             v1 = (u8 *)(reg_a6);
             reg_d2.w = 0x7FFF;
-            reg_d2.h[0] -= *(u16 *)(reg_a6 + 0x18);
-            hp = *(u16 *)(reg_a6 + 0x18);
+            reg_d2.h[0] -= ENTITY(reg_a6)->hp.h;
+            hp = ENTITY(reg_a6)->hp.h;
             if (*(u16 *)(reg_a6 + 0xE8) == 0) {
                 reg_tmp.h[1] = *(u16 *)(reg_a5 + 0x16);
                 reg_tmp.h[0] = *(u16 *)(reg_a5 + 0x18);
@@ -72,7 +73,7 @@ void func_001BB8E0(void) {
                 *(u16 *)(reg_a5 + 0x18) = reg_tmp.h[0];
             }
             reg_d0.h[0] = 0x7FFF;
-            *(u16 *)(reg_a6 + 0x18) = (u16) reg_d0.h[0];
+            ENTITY(reg_a6)->hp.h = (u16) reg_d0.h[0];
         } else {
             (*(u8 *)((u8 *)(v2) + (0x1C))) = 0x13U;
             *(u8 *)(reg_a6 + 0xBC) = 0x16U;
@@ -318,7 +319,7 @@ void func_001BC160() {
     *(u16 *)(reg_a5 + 0x16) = (u16) reg_tmp.h[1];
     *(u16 *)(reg_a5 + 0x18) = (u16) reg_tmp.h[0];
     *(s8 *)(reg_a6 + 0x1E) = 1;
-    *(u16 *)reg_a6 = 0x8000;
+    ENTITY(reg_a6)->flags.h = 0x8000;
     *(s8 *)(reg_a6 + 0x1C) = 0x13;
     *(s8 *)(reg_a6 + 0xBC) = 0x16;
     reg_d0.w = 1;
@@ -387,7 +388,7 @@ void func_001BC3A0(void) {
 
 void func_001BC3B0(void) {
     reg_d0.h[0] = 0xA001;
-    *(u16 *)reg_a6 |= reg_d0.h[0];
+    ENTITY(reg_a6)->flags.h |= reg_d0.h[0];
     *(u16 *)(reg_a6 + 0x20) |= reg_d0.h[0];
     *(u16 *)(reg_a6 + 0x60) |= reg_d0.h[0];
 }

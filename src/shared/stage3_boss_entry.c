@@ -1,4 +1,5 @@
 #include "common.h"
+#include "entity.h"
 
 void func_001D4400(void);
 void func_001D4510(void);
@@ -168,7 +169,7 @@ void func_001D4400() {
     *(u16 *)(reg_a5 + 0x16) = (u16) reg_tmp.h[1];
     *(u16 *)(reg_a5 + 0x18) = (u16) reg_tmp.h[0];
     *(s8 *)(reg_a6 + 0x1E) = 1;
-    *(u16 *)reg_a6 = 0x8000;
+    ENTITY(reg_a6)->flags.h = 0x8000;
     *(u16 *)(reg_a6 + 0x20) = 0x8000;
     *(u16 *)(reg_a6 + 0x40) = 0x8000;
     *(u16 *)(reg_a6 + 0xC0) = 0x8000;
@@ -201,7 +202,7 @@ void func_001D4550(void) {
 
 void func_001D4560(void) {
     reg_d0.h[0] = 0xA001;
-    *(u16 *)reg_a6 |= reg_d0.h[0];
+    ENTITY(reg_a6)->flags.h |= reg_d0.h[0];
     *(u16 *)(reg_a6 + 0x20) |= reg_d0.h[0];
     *(u16 *)(reg_a6 + 0x40) |= reg_d0.h[0];
     *(u16 *)(reg_a6 + 0xC0) |= reg_d0.h[0];
@@ -210,7 +211,7 @@ void func_001D4560(void) {
 
 void func_001D45D0(void) {
     reg_d0.h[0] = 0x8000;
-    *(u16 *)reg_a6 = (u16) reg_d0.h[0];
+    ENTITY(reg_a6)->flags.h = (u16) reg_d0.h[0];
     *(u16 *)(reg_a6 + 0x20) = (u16) reg_d0.h[0];
     *(u16 *)(reg_a6 + 0x40) = (u16) reg_d0.h[0];
     *(u16 *)(reg_a6 + 0xC0) = (u16) reg_d0.h[0];

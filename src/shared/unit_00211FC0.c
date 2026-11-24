@@ -1,4 +1,5 @@
 #include "common.h"
+#include "entity.h"
 
 void func_001713F0(s32);
 
@@ -19,8 +20,8 @@ void func_00211FD0(void) {
     reg_d0.w = 1;
     func_0014E300();
     reg_tmp.w = 0x38001C00;
-    *(u16 *)(reg_a6 + 2) = (u16) reg_tmp.h[1];
-    *(u16 *)(reg_a6 + 4) = (u16) reg_tmp.h[0];
+    ENTITY(reg_a6)->y.h = (u16) reg_tmp.h[1];
+    ENTITY(reg_a6)->x.h = (u16) reg_tmp.h[0];
 }
 
 s32 func_00137C10();                            /* extern */

@@ -1,4 +1,5 @@
 #include "common.h"
+#include "entity.h"
 
 extern u8 D_0028E290;
 extern u8 D_0028E2D8;
@@ -213,7 +214,7 @@ void func_00133840(void) {
     u32 sh;
 
     if (D_0029F260[0] >= 0) goto next_7;
-    reg_d7.h[0] = *(u16 *)(reg_a6 + 0x18);
+    reg_d7.h[0] = ENTITY(reg_a6)->hp.h;
     reg_d2.w = 0xF;
     reg_d2.h[0] &= reg_d7.h[0];
     reg_a1 = (u8 *)D_00269A30;
@@ -240,11 +241,11 @@ next_1:
     reg_d3.h[0] = 0x208;
     reg_d4.h[0] = 0x16;
     func_0019C470();
-    reg_d0.h[0] = *(u16 *)(reg_a6 + 0x1A);
+    reg_d0.h[0] = ENTITY(reg_a6)->move.h;
     if (reg_d0.h[0] == 0) goto next_2;
     reg_d1.h[0] -= 0x200;
     func_0019C470();
-    reg_d0.h[0] = *(u16 *)(reg_a6 + 0x1A);
+    reg_d0.h[0] = ENTITY(reg_a6)->move.h;
     func_00200EE0();
     reg_d7.w = reg_d2.w;
     reg_d2.w = 0xF;

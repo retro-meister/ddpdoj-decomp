@@ -1,4 +1,5 @@
 #include "common.h"
+#include "entity.h"
 
 void func_001713F0(s32 mode);
 
@@ -31,8 +32,8 @@ void func_00168AC0(void) {
 next_1:
     if (D_0028E8A0 != 0) goto block_rts;
     D_0028E890 = 0;
-    *(u16 *)(reg_a6 + 6) -= 1;
-    if ((s16) *(u16 *)(reg_a6 + 6) >= 0) goto block_rts;
+    ENTITY(reg_a6)->offset_y.h -= 1;
+    if ((s16) ENTITY(reg_a6)->offset_y.h >= 0) goto block_rts;
     reg_d0.h[0] = 7;
     reg_d1.h[0] = D_0028DFFC;
     if (reg_d1.h[0] == 0) goto next_2;
@@ -41,14 +42,14 @@ loop_1:
     reg_d1.h[0] -= 7;
     if ((s16) reg_d1.h[0] >= 0) goto loop_1;
 next_2:
-    *(u16 *)(reg_a6 + 6) = reg_d0.h[0];
+    ENTITY(reg_a6)->offset_y.h = reg_d0.h[0];
     D_0028E890 = 1;
-    t = *(u8 *)(reg_a6 + 0);
+    t = ENTITY(reg_a6)->flags.b[0];
     if (t & 0x40) goto next_3;
-    *(u8 *)(reg_a6 + 0) = t | 0x40;
+    ENTITY(reg_a6)->flags.b[0] = t | 0x40;
     return;
 next_3:
-    *(u8 *)(reg_a6 + 0) = t & 0xBF;
+    ENTITY(reg_a6)->flags.b[0] = t & 0xBF;
     D_0028E890 = 0xFFFF;
 block_rts:
     return;

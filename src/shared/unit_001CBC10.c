@@ -1,4 +1,5 @@
 #include "common.h"
+#include "entity.h"
 
 
 void func_001CBC10(void) {
@@ -86,20 +87,20 @@ void func_001CBD60(void) {
     func_0014E300();
     func_0014E7E0();
     if (enemy_move_end_requested == 0) {
-        reg_d0.h[0] = *(u16 *)reg_a6;
+        reg_d0.h[0] = ENTITY(reg_a6)->flags.h;
         reg_d0.h[0] &= 0xE7FF;
         reg_d2.h[0] = *(u16 *)(reg_a6 + 0x20);
         reg_d2.h[0] &= 0xDFFE;
         reg_d0.h[0] |= reg_d2.h[0];
         *(u16 *)(reg_a6 + 0x20) = (u16) reg_d0.h[0];
         reg_a3 = (u8 *)(D_002590F0);
-        reg_d0.h[0] = *(u16 *)(reg_a6 + 2);
-        reg_d1.h[0] = *(u16 *)(reg_a6 + 4);
+        reg_d0.h[0] = ENTITY(reg_a6)->y.h;
+        reg_d1.h[0] = ENTITY(reg_a6)->x.h;
         reg_d0.h[0] += 0xAC0;
         reg_d1.h[0] += 0x780;
         func_002026F0();
         if (cond_flag != 0) {
-            reg_d1.b[0] = *(u8 *)(reg_a6 + 0x1A);
+            reg_d1.b[0] = ENTITY(reg_a6)->move.b.dir;
             reg_d1.b[0] *= 4;
         }
         *(u8 *)(reg_a5 + 0x2C) = (u8) reg_d1.b[0];
@@ -107,13 +108,13 @@ void func_001CBD60(void) {
         reg_d1.h[0] >>= 1;
         *(u16 *)(reg_a5 + 0x28) = (reg_d1.h[0] != 0) ? *(u16 *)((u8 *)reg_a3 + ((s16)reg_d1.h[0] & ~1)) : *(u16 *)reg_a3;
         *(u16 *)(reg_a5 + 0x2A) = ((reg_d1.h[0] + 2) != 0) ? *(u16 *)((u8 *)reg_a3 + ((s16)(reg_d1.h[0] + 2) & ~1)) : *(u16 *)reg_a3;
-        reg_d0.h[0] = *(u16 *)(reg_a6 + 2);
-        reg_d1.h[0] = *(u16 *)(reg_a6 + 4);
+        reg_d0.h[0] = ENTITY(reg_a6)->y.h;
+        reg_d1.h[0] = ENTITY(reg_a6)->x.h;
         reg_d0.h[0] += 0xAC0;
         reg_d1.h[0] += 0x7FFF + 0x7881;
         func_002026F0();
         if (cond_flag != 0) {
-            reg_d1.b[0] = *(u8 *)(reg_a6 + 0x1A);
+            reg_d1.b[0] = ENTITY(reg_a6)->move.b.dir;
             reg_d1.b[0] *= 4;
         }
         *(u8 *)(reg_a5 + 0x32) = (u8) reg_d1.b[0];
@@ -203,17 +204,17 @@ void func_001CC0A0(void) {
     u8 bits;
     u8 *ptr;
 
-    if (*(s8 *)reg_a6 < 0) goto skip_1;
+    if (ENTITY(reg_a6)->flags.sb[0] < 0) goto skip_1;
     func_0014EA50();
     if (enemy_move_end_requested != 0) return;
-    reg_d0.h[0] = *(u16 *)(reg_a6 + 0);
+    reg_d0.h[0] = ENTITY(reg_a6)->flags.h;
     reg_d0.h[0] &= 0xE7FF;
     reg_d2.h[0] = *(u16 *)(reg_a6 + 0x20);
     reg_d2.h[0] &= 0xDFFE;
     reg_d0.h[0] |= reg_d2.h[0];
     *(u16 *)(reg_a6 + 0x20) = reg_d0.h[0];
-    reg_d0.h[1] = *(u16 *)(reg_a6 + 2);
-    reg_d0.h[0] = *(u16 *)(reg_a6 + 4);
+    reg_d0.h[1] = ENTITY(reg_a6)->y.h;
+    reg_d0.h[0] = ENTITY(reg_a6)->x.h;
     reg_d0.h[0] += 0x1A00;
     reg_d0.h[0] += D_0029C068[0];
     reg_tmp1.w = 0;
@@ -248,22 +249,22 @@ next_40:
     *(u16 *)(reg_a6 + 0x3C) = reg_tmp.h[1];
     *(u16 *)(reg_a6 + 0x3E) = reg_tmp.h[0];
 next_45:
-    *(u16 *)(reg_a6 + 0x22) = *(u16 *)(reg_a6 + 2);
-    *(u16 *)(reg_a6 + 0x24) = *(u16 *)(reg_a6 + 4);
-    reg_d1.b[0] = *(u8 *)(reg_a6 + 1);
+    *(u16 *)(reg_a6 + 0x22) = ENTITY(reg_a6)->y.h;
+    *(u16 *)(reg_a6 + 0x24) = ENTITY(reg_a6)->x.h;
+    reg_d1.b[0] = ENTITY(reg_a6)->flags.b[1];
     reg_d1.b[0] |= *(u8 *)(reg_a6 + 0x21);
     reg_d1.h[0] &= 0x5C;
     if (reg_d1.h[0] != 0) goto next_50;
     reg_d0.b[0] = *(u8 *)(reg_a5 + 0x1D);
     reg_d3.b[0] = *(u8 *)(reg_a6 + 0x49);
     reg_d5.b[0] = *(u8 *)(reg_a6 + 0x4B);
-    if (!((s32) *(u16 *)(reg_a6 + 0x18) < 0x2C00)) goto next_90;
+    if (!((s32) ENTITY(reg_a6)->hp.h < 0x2C00)) goto next_90;
     if (D_0028E8B8 != 0) goto next_90;
     reg_d0.w = 0x19;
     goto next_90;
 next_50:
     reg_d0.h[0] = 0xA3;
-    *(u8 *)(reg_a6 + 1) &= reg_d0.b[0];
+    ENTITY(reg_a6)->flags.b[1] &= reg_d0.b[0];
     *(u8 *)(reg_a6 + 0x21) &= reg_d0.b[0];
     func_001A9000();
     reg_d0.b[0] = *(u8 *)(reg_a6 + 0x1C);
@@ -280,12 +281,12 @@ next_60:
     reg_d3.b[0] ^= reg_d2.b[0];
     reg_d2.b[0] = *(u8 *)(reg_a6 + 0x4A);
     reg_d5.b[0] ^= reg_d2.b[0];
-    reg_d4.h[0] = *(u16 *)(reg_a6 + 0x18);
+    reg_d4.h[0] = ENTITY(reg_a6)->hp.h;
     if (!((s16) *(u16 *)(reg_a6 + 0x38) < (s16) reg_d4.h[0])) goto next_80;
     reg_d4.h[0] = *(u16 *)(reg_a6 + 0x38);
 next_80:
     reg_d6.w = 0x7FFF;
-    *(u16 *)(reg_a6 + 0x18) = reg_d6.h[0];
+    ENTITY(reg_a6)->hp.h = reg_d6.h[0];
     *(u16 *)(reg_a6 + 0x38) = reg_d6.h[0];
     reg_d6.h[0] -= reg_d4.h[0];
     reg_tmp.h[1] = *(u16 *)(reg_a6 + 0x3C);
@@ -324,7 +325,7 @@ next_120:
     if (D_0028E8A0 != 0) goto next_500;
     if (D_0028E89C != 0) goto next_500;
     if (*(u16 *)(reg_a5 + 0x18) != 0) goto next_400;
-    if ((s16) *(u16 *)(reg_a6 + 2) < 0x1000) goto next_400;
+    if ((s16) ENTITY(reg_a6)->y.h < 0x1000) goto next_400;
     reg_d0.h[0] = *(u16 *)(reg_a5 + 0x1A);
     if (reg_d0.h[0] != 0) goto next_200;
     reg_tmp.b[0] = *(u8 *)(reg_a5 + 0x1F);
@@ -369,12 +370,12 @@ next_240:
 next_260:
     reg_d2.h[0] = *(u16 *)(reg_a0 + 2);
     reg_d3.h[0] = *(u16 *)(reg_a0 + 4);
-    reg_d0.h[0] = *(u16 *)(reg_a6 + 2);
-    reg_d1.h[0] = *(u16 *)(reg_a6 + 4);
+    reg_d0.h[0] = ENTITY(reg_a6)->y.h;
+    reg_d1.h[0] = ENTITY(reg_a6)->x.h;
     reg_d0.h[0] += 0xF800;
     func_002027A0();
-    reg_d2.h[1] = *(u16 *)(reg_a6 + 2);
-    reg_d2.h[0] = *(u16 *)(reg_a6 + 4);
+    reg_d2.h[1] = ENTITY(reg_a6)->y.h;
+    reg_d2.h[0] = ENTITY(reg_a6)->x.h;
     reg_d4.w = 0;
     reg_a0 = (u8 *) D_00263240;
     reg_a1 = (u8 *) D_00262A50_as_u16_a;
@@ -456,20 +457,20 @@ next_420:
 next_440:
     reg_d2.h[0] = *(u16 *)(reg_a0 + 2);
     reg_d3.h[0] = *(u16 *)(reg_a0 + 4);
-    reg_d0.h[0] = *(u16 *)(reg_a6 + 2);
-    reg_d1.h[0] = *(u16 *)(reg_a6 + 4);
+    reg_d0.h[0] = ENTITY(reg_a6)->y.h;
+    reg_d1.h[0] = ENTITY(reg_a6)->x.h;
     reg_d5.w = 4;
     reg_d0.b[0] = *(u8 *)(reg_a5 + 0x25);
     if (*(u8 *)(reg_a5 + 0x24) != reg_d0.b[0]) goto next_460;
     reg_d5.w = 1;
 next_460:
     reg_a3 = (u8 *)D_002590F0_as_u8_a;
-    bits = *(u8 *)reg_a6;
+    bits = ENTITY(reg_a6)->flags.b[0];
     if (bits & 0x40) {
-        *(u8 *)reg_a6 = bits & 0xBF;
+        ENTITY(reg_a6)->flags.b[0] = bits & 0xBF;
         goto next_480;
     }
-    *(u8 *)reg_a6 = bits | 0x40;
+    ENTITY(reg_a6)->flags.b[0] = bits | 0x40;
     reg_d0.h[0] += 0xAC0;
     reg_d1.h[0] += 0x780;
     func_002027A0();
@@ -505,8 +506,8 @@ next_500:
 next_510:
     jtbl_0028E3F4 = (Fn) reg_a2;
     jtbl_0028E3F4();
-    reg_d1.h[1] = *(u16 *)(reg_a6 + 2);
-    reg_d1.h[0] = *(u16 *)(reg_a6 + 4);
+    reg_d1.h[1] = ENTITY(reg_a6)->y.h;
+    reg_d1.h[0] = ENTITY(reg_a6)->x.h;
     reg_d1.h[0] += 0xF200;
     reg_d1.h[1] += 0xE400;
     reg_d0.h[0] = *(u16 *)(reg_a6 + 0x2E);
@@ -518,8 +519,8 @@ next_510:
     reg_d4.b[0] = *(u8 *)(reg_a6 + 0x46);
     jtbl_0028E3F4 = (Fn) reg_a3;
     jtbl_0028E3F4();
-    reg_d1.h[1] = *(u16 *)(reg_a6 + 2);
-    reg_d1.h[0] = *(u16 *)(reg_a6 + 4);
+    reg_d1.h[1] = ENTITY(reg_a6)->y.h;
+    reg_d1.h[0] = ENTITY(reg_a6)->x.h;
     reg_d1.h[0] += 0x480;
     reg_d1.h[1] += 0x6C0;
     reg_d2.h[1] = *(u16 *)(reg_a5 + 0x28);
@@ -528,14 +529,14 @@ next_510:
     reg_d4.h[0] = *(u16 *)(reg_a6 + 0x1C);
     jtbl_0028E3F4 = (Fn) reg_a3;
     jtbl_0028E3F4();
-    reg_d1.h[0] = *(u16 *)(reg_a6 + 4);
+    reg_d1.h[0] = ENTITY(reg_a6)->x.h;
     reg_d1.h[0] += 0xF580;
     reg_d2.h[1] = *(u16 *)(reg_a5 + 0x2E);
     reg_d2.h[0] = *(u16 *)(reg_a5 + 0x30);
     jtbl_0028E3F4 = (Fn) reg_a3;
     jtbl_0028E3F4();
-    reg_d1.h[1] = *(u16 *)(reg_a6 + 2);
-    reg_d1.h[0] = *(u16 *)(reg_a6 + 4);
+    reg_d1.h[1] = ENTITY(reg_a6)->y.h;
+    reg_d1.h[0] = ENTITY(reg_a6)->x.h;
     reg_d1.h[0] += 0xEE00;
     reg_d1.h[1] += 0xF900;
     reg_d2.h[1] = *(u16 *)(reg_a6 + 0x2A);
@@ -547,8 +548,8 @@ next_510:
     jtbl_0028E3F4();
     if (D_0028E910 != 0) goto next_540;
     if (D_0028E3EC == 0) goto next_540;
-    reg_d1.h[1] = *(u16 *)(reg_a6 + 2);
-    reg_d1.h[0] = *(u16 *)(reg_a6 + 4);
+    reg_d1.h[1] = ENTITY(reg_a6)->y.h;
+    reg_d1.h[0] = ENTITY(reg_a6)->x.h;
     reg_d1.h[1] += 0xD600;
     reg_d2.w = 0x1B9F;
     reg_d3.h[0] = 0xC48;
@@ -565,7 +566,7 @@ next_540:
     func_0014D220();
     if (D_0028E8A0 != 0) goto block_rts;
     if (D_0028E89C != 0) goto block_rts;
-    if ((s16) *(u16 *)(reg_a6 + 2) < 0x1000) goto block_rts;
+    if ((s16) ENTITY(reg_a6)->y.h < 0x1000) goto block_rts;
     reg_d0.h[0] = *(u16 *)(reg_a5 + 0x18);
     if (reg_d0.h[0] == 0) goto block_rts;
     if (reg_d0.h[0] != 1) goto next_800;
@@ -591,8 +592,8 @@ next_600:
     reg_d3.h[1] += 0xAC0;
     reg_d4.w = (u32) reg_a6;
     reg_d0.w = 0x180007;
-    reg_d2.h[1] = *(u16 *)(reg_a6 + 2);
-    reg_d2.h[0] = *(u16 *)(reg_a6 + 4);
+    reg_d2.h[1] = ENTITY(reg_a6)->y.h;
+    reg_d2.h[0] = ENTITY(reg_a6)->x.h;
     func_001293C0();
     reg_d6.b[0] = *(u8 *)(reg_a5 + 0x25);
     reg_d6.b[0] += reg_d6.b[0];
@@ -657,13 +658,13 @@ next_840:
 next_860:
     reg_d2.h[0] = *(u16 *)(reg_a0 + 2);
     reg_d3.h[0] = *(u16 *)(reg_a0 + 4);
-    reg_d0.h[0] = *(u16 *)(reg_a6 + 2);
-    reg_d1.h[0] = *(u16 *)(reg_a6 + 4);
+    reg_d0.h[0] = ENTITY(reg_a6)->y.h;
+    reg_d1.h[0] = ENTITY(reg_a6)->x.h;
     reg_d0.h[0] += 0xF940;
     func_002027A0();
 next_870:
-    reg_d2.h[1] = *(u16 *)(reg_a6 + 2);
-    reg_d2.h[0] = *(u16 *)(reg_a6 + 4);
+    reg_d2.h[1] = ENTITY(reg_a6)->y.h;
+    reg_d2.h[0] = ENTITY(reg_a6)->x.h;
     reg_d4.h[0] = *(u16 *)(reg_a5 + 0x38);
     reg_d0.h[0] = *(u16 *)(reg_a5 + 0x3E);
     reg_d0.h[0] = reg_d0.h[0] - reg_d4.h[0];
@@ -723,12 +724,12 @@ next_700:
     reg_a0 = (u8 *) D_00263290;
     func_0013B2E0();
     reg_d0.h[0] = 0x8080;
-    *(s16 *)reg_a6 = (s16) reg_d0.h[0];
+    ENTITY(reg_a6)->flags.sh = (s16) reg_d0.h[0];
     *(u16 *)(reg_a6 + 0x20) = (u16) reg_d0.h[0];
     reg_d0.w = 0xD;
     func_0013A780();
-    *(u16 *)(reg_a0 + 2) = (u16) *(u16 *)(reg_a6 + 2);
-    val = *(u16 *)(reg_a6 + 4);
+    *(u16 *)(reg_a0 + 2) = (u16) ENTITY(reg_a6)->y.h;
+    val = ENTITY(reg_a6)->x.h;
     *(u16 *)(reg_a0 + 4) = val;
     *(s16 *)(reg_a0 + 0x1E) = 0x10;
     *(s16 *)(reg_a0 + 0x26) = 0x400;
@@ -736,8 +737,8 @@ next_700:
     *(s16 *)(reg_a0 + 0x14) = 0x400;
     reg_d0.h[0] = 0x84;
     func_0013A780();
-    *(u16 *)(reg_a0 + 2) = (u16) *(u16 *)(reg_a6 + 2);
-    *(u16 *)(reg_a0 + 4) = (u16) *(u16 *)(reg_a6 + 4);
+    *(u16 *)(reg_a0 + 2) = (u16) ENTITY(reg_a6)->y.h;
+    *(u16 *)(reg_a0 + 4) = (u16) ENTITY(reg_a6)->x.h;
     *(s16 *)(reg_a0 + 0x1E) = 0x10;
     *(s16 *)(reg_a0 + 0x26) = 0x400;
     *(s16 *)(reg_a0 + 0x28) = 0x200;
@@ -747,8 +748,8 @@ next_700:
     *(s16 *)(reg_a0 + 0x18) = 1;
     reg_d0.h[0] = 0x84;
     func_0013A780();
-    *(u16 *)(reg_a0 + 2) = (u16) *(u16 *)(reg_a6 + 2);
-    *(u16 *)(reg_a0 + 4) = (u16) *(u16 *)(reg_a6 + 4);
+    *(u16 *)(reg_a0 + 2) = (u16) ENTITY(reg_a6)->y.h;
+    *(u16 *)(reg_a0 + 4) = (u16) ENTITY(reg_a6)->x.h;
     *(s16 *)(reg_a0 + 0x1E) = 0x10;
     *(s16 *)(reg_a0 + 0x26) = 0x400;
     *(u16 *)(reg_a0 + 0x28) = 0xFE00;
@@ -759,8 +760,8 @@ next_700:
     *(s16 *)(reg_a0 + 0x18) = 2;
     reg_d0.w = 0xD;
     func_0013A780();
-    *(u16 *)(reg_a0 + 2) = (u16) *(u16 *)(reg_a6 + 2);
-    *(u16 *)(reg_a0 + 4) = (u16) *(u16 *)(reg_a6 + 4);
+    *(u16 *)(reg_a0 + 2) = (u16) ENTITY(reg_a6)->y.h;
+    *(u16 *)(reg_a0 + 4) = (u16) ENTITY(reg_a6)->x.h;
     *(s16 *)(reg_a0 + 0x1E) = 0x10;
     *(u16 *)(reg_a0 + 0x26) = 0xFA00;
     *(u16 *)(reg_a0 + 0x28) = 0xFE00;
@@ -770,8 +771,8 @@ next_700:
     *(s16 *)(reg_a0 + 0x18) = 2;
     reg_d0.h[0] = 0x85;
     func_0013A780();
-    *(u16 *)(reg_a0 + 2) = (u16) *(u16 *)(reg_a6 + 2);
-    *(u16 *)(reg_a0 + 4) = (u16) *(u16 *)(reg_a6 + 4);
+    *(u16 *)(reg_a0 + 2) = (u16) ENTITY(reg_a6)->y.h;
+    *(u16 *)(reg_a0 + 4) = (u16) ENTITY(reg_a6)->x.h;
     *(s16 *)(reg_a0 + 0x1E) = 0x10;
     *(u16 *)(reg_a0 + 0x26) = 0xFC00;
     *(s16 *)(reg_a0 + 0x28) = 0x100;
@@ -781,8 +782,8 @@ next_700:
     *(s16 *)(reg_a0 + 0x18) = 4;
     reg_d0.h[0] = 0x85;
     func_0013A780();
-    *(u16 *)(reg_a0 + 2) = (u16) *(u16 *)(reg_a6 + 2);
-    *(u16 *)(reg_a0 + 4) = (u16) *(u16 *)(reg_a6 + 4);
+    *(u16 *)(reg_a0 + 2) = (u16) ENTITY(reg_a6)->y.h;
+    *(u16 *)(reg_a0 + 4) = (u16) ENTITY(reg_a6)->x.h;
     *(s16 *)(reg_a0 + 0x1E) = 0x10;
     *(u16 *)(reg_a0 + 0x26) = 0xF400;
     *(u16 *)(reg_a0 + 0x28) = 0xFE00;
@@ -792,8 +793,8 @@ next_700:
     *(s16 *)(reg_a0 + 0x18) = 6;
     reg_d0.w = 0xD;
     func_0013A780();
-    *(u16 *)(reg_a0 + 2) = (u16) *(u16 *)(reg_a6 + 2);
-    *(u16 *)(reg_a0 + 4) = (u16) *(u16 *)(reg_a6 + 4);
+    *(u16 *)(reg_a0 + 2) = (u16) ENTITY(reg_a6)->y.h;
+    *(u16 *)(reg_a0 + 4) = (u16) ENTITY(reg_a6)->x.h;
     *(s16 *)(reg_a0 + 0x1E) = 0x10;
     *(u16 *)(reg_a0 + 0x26) = 0xF400;
     *(s16 *)(reg_a0 + 0x28) = 0x400;
@@ -803,8 +804,8 @@ next_700:
     *(s16 *)(reg_a0 + 0x18) = 4;
     reg_d0.h[0] = 0xD;
     func_0013A780();
-    *(u16 *)(reg_a0 + 2) = (u16) *(u16 *)(reg_a6 + 2);
-    *(u16 *)(reg_a0 + 4) = (u16) *(u16 *)(reg_a6 + 4);
+    *(u16 *)(reg_a0 + 2) = (u16) ENTITY(reg_a6)->y.h;
+    *(u16 *)(reg_a0 + 4) = (u16) ENTITY(reg_a6)->x.h;
     *(s16 *)(reg_a0 + 0x1E) = 0x10;
     *(s16 *)(reg_a0 + 0x26) = 0;
     *(u16 *)(reg_a0 + 0x28) = 0xF200;
@@ -814,8 +815,8 @@ next_700:
     *(s16 *)(reg_a0 + 0x18) = 8;
     reg_d0.h[0] = 0xD;
     func_0013A780();
-    *(u16 *)(reg_a0 + 2) = (u16) *(u16 *)(reg_a6 + 2);
-    *(u16 *)(reg_a0 + 4) = (u16) *(u16 *)(reg_a6 + 4);
+    *(u16 *)(reg_a0 + 2) = (u16) ENTITY(reg_a6)->y.h;
+    *(u16 *)(reg_a0 + 4) = (u16) ENTITY(reg_a6)->x.h;
     *(s16 *)(reg_a0 + 0x1E) = 0x10;
     *(s16 *)(reg_a0 + 0x26) = 0;
     *(s16 *)(reg_a0 + 0x28) = 0xE00;
@@ -825,8 +826,8 @@ next_700:
     *(s16 *)(reg_a0 + 0x18) = 8;
     reg_d0.h[0] = 0x85;
     func_0013A780();
-    *(u16 *)(reg_a0 + 2) = (u16) *(u16 *)(reg_a6 + 2);
-    *(u16 *)(reg_a0 + 4) = (u16) *(u16 *)(reg_a6 + 4);
+    *(u16 *)(reg_a0 + 2) = (u16) ENTITY(reg_a6)->y.h;
+    *(u16 *)(reg_a0 + 4) = (u16) ENTITY(reg_a6)->x.h;
     *(s16 *)(reg_a0 + 0x1E) = 0x10;
     *(u16 *)(reg_a0 + 0x26) = 0xEA00;
     *(u16 *)(reg_a0 + 0x28) = 0xF600;
@@ -836,8 +837,8 @@ next_700:
     *(s16 *)(reg_a0 + 0x18) = 0xA;
     reg_d0.h[0] = 0x85;
     func_0013A780();
-    *(u16 *)(reg_a0 + 2) = (u16) *(u16 *)(reg_a6 + 2);
-    *(u16 *)(reg_a0 + 4) = (u16) *(u16 *)(reg_a6 + 4);
+    *(u16 *)(reg_a0 + 2) = (u16) ENTITY(reg_a6)->y.h;
+    *(u16 *)(reg_a0 + 4) = (u16) ENTITY(reg_a6)->x.h;
     *(s16 *)(reg_a0 + 0x1E) = 0x10;
     *(u16 *)(reg_a0 + 0x26) = 0xEA00;
     *(s16 *)(reg_a0 + 0x28) = 0xA00;
@@ -847,8 +848,8 @@ next_700:
     *(s16 *)(reg_a0 + 0x18) = 0xA;
     reg_d0.h[0] = 0x85;
     func_0013A780();
-    *(u16 *)(reg_a0 + 2) = (u16) *(u16 *)(reg_a6 + 2);
-    *(u16 *)(reg_a0 + 4) = (u16) *(u16 *)(reg_a6 + 4);
+    *(u16 *)(reg_a0 + 2) = (u16) ENTITY(reg_a6)->y.h;
+    *(u16 *)(reg_a0 + 4) = (u16) ENTITY(reg_a6)->x.h;
     *(s16 *)(reg_a0 + 0x1E) = 0x10;
     *(u16 *)(reg_a0 + 0x26) = 0xE400;
     *(s16 *)(reg_a0 + 0x28) = 0x200;

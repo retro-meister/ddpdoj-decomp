@@ -1,4 +1,5 @@
 #include "common.h"
+#include "entity.h"
 
 void death_func_002237F0(u8 phase);
 void death_func_00223870(void);
@@ -70,7 +71,7 @@ void death_func_00223870(void) {
         func_00124B20();
         reg_d0.w = 0xe;
         func_00124D90();
-        *(u8 *)(reg_a6 + 0x1B) = 0xC;
+        ENTITY(reg_a6)->move.b.speed = 0xC;
         *(u8 *)(reg_a6 + 0x21B) = 0xC;
         *(u16 *)reg_a4 = 0;
     }
@@ -138,7 +139,7 @@ void death_func_00223A70(void) {
         func_001251C0();
         reg_d0.w = 0x13;
         func_001251C0();
-        *(u8 *)(reg_a6 + 0x1B) = 4;
+        ENTITY(reg_a6)->move.b.speed = 4;
         *(u8 *)(reg_a6 + 0x21B) = 4;
     }
     reg_d0.w = 0x12;

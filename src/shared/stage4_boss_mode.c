@@ -1,4 +1,5 @@
 #include "common.h"
+#include "entity.h"
 
 void func_001E5BE0(void);
 void func_001E5C60();
@@ -33,8 +34,8 @@ void func_001E58E0(void) {
         *(s16 *)(reg_a0 + 0x1E) = 0x10;
         *(s16 *)(reg_a0 + 0x12) = 0;
         *(s16 *)(reg_a0 + 0x14) = 0;
-        *(u8 *)(reg_a0 + 0x1B) = (u8) *(u8 *)(reg_a6 + 0x1B);
-        reg_d0.b[0] = *(u8 *)(reg_a6 + 0x1A);
+        *(u8 *)(reg_a0 + 0x1B) = (u8) ENTITY(reg_a6)->move.b.speed;
+        reg_d0.b[0] = ENTITY(reg_a6)->move.b.dir;
         reg_d0.b[0] += reg_d0.b[0];
         reg_d0.b[0] += reg_d0.b[0];
         *(u8 *)(reg_a0 + 0x1A) = (u8) reg_d0.b[0];
@@ -547,8 +548,8 @@ void func_001E6540(arg1)
             *(s16 *)(reg_a0 + 0x1E) = 0x10;
             *(s16 *)(reg_a0 + 0x12) = 0;
             *(s16 *)(reg_a0 + 0x14) = 0;
-            *(u8 *)(reg_a0 + 0x1B) = (u8) *(u8 *)(reg_a6 + 0x1B);
-            reg_d0.b[0] = *(u8 *)(reg_a6 + 0x1A);
+            *(u8 *)(reg_a0 + 0x1B) = (u8) ENTITY(reg_a6)->move.b.speed;
+            reg_d0.b[0] = ENTITY(reg_a6)->move.b.dir;
             reg_d0.b[0] += reg_d0.b[0];
             reg_d0.b[0] += reg_d0.b[0];
             *(u8 *)(reg_a0 + 0x1A) = (u8) reg_d0.b[0];

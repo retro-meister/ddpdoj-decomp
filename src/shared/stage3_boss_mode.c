@@ -1,4 +1,5 @@
 #include "common.h"
+#include "entity.h"
 
 void func_001D28B0(void);
 void func_001D2930();
@@ -91,8 +92,8 @@ loop_10:
     reg_a1 += 2;
     *(u16 *)(reg_a0 + 0x28) = *(u16 *)reg_a1;
     reg_a1 += 2;
-    *(u16 *)(reg_a0 + 2) = *(u16 *)(reg_a6 + 2);
-    *(u16 *)(reg_a0 + 4) = *(u16 *)(reg_a6 + 4);
+    *(u16 *)(reg_a0 + 2) = ENTITY(reg_a6)->y.h;
+    *(u16 *)(reg_a0 + 4) = ENTITY(reg_a6)->x.h;
     *(u16 *)(reg_a0 + 0x1E) = 8;
     *(u16 *)(reg_a0 + 0x12) = 0;
     *(u16 *)(reg_a0 + 0x14) = 0;
@@ -128,8 +129,8 @@ next_s1:
     reg_a4[0x11] = reg_a4[0x10];
     func_002011A0();
     reg_d1.b[0] = reg_d0.b[0];
-    reg_d2.h[1] = *(u16 *)(reg_a6 + 2);
-    reg_d2.h[0] = *(u16 *)(reg_a6 + 4);
+    reg_d2.h[1] = ENTITY(reg_a6)->y.h;
+    reg_d2.h[0] = ENTITY(reg_a6)->x.h;
     func_002012F0();
     reg_d0.h[0] = (s16) reg_d0.h[0] >> 2;
     reg_d2.h[0] += reg_d0.h[0];
@@ -180,8 +181,8 @@ next_intdec20:
     reg_a1 += 2;
     *(u16 *)(reg_a0 + 0x28) = *(u16 *)reg_a1;
     reg_a1 += 2;
-    *(u16 *)(reg_a0 + 2) = *(u16 *)(reg_a6 + 2);
-    *(u16 *)(reg_a0 + 4) = *(u16 *)(reg_a6 + 4);
+    *(u16 *)(reg_a0 + 2) = ENTITY(reg_a6)->y.h;
+    *(u16 *)(reg_a0 + 4) = ENTITY(reg_a6)->x.h;
     *(u16 *)(reg_a0 + 0x1E) = 8;
     func_002010A0();
     reg_d0.b[0] = (s8) reg_d0.b[0] >> 2;
@@ -232,8 +233,8 @@ next_40:
     reg_a1 += 2;
     *(u16 *)(reg_a0 + 0x28) = *(u16 *)reg_a1;
     reg_a1 += 2;
-    *(u16 *)(reg_a0 + 2) = *(u16 *)(reg_a6 + 2);
-    *(u16 *)(reg_a0 + 4) = *(u16 *)(reg_a6 + 4);
+    *(u16 *)(reg_a0 + 2) = ENTITY(reg_a6)->y.h;
+    *(u16 *)(reg_a0 + 4) = ENTITY(reg_a6)->x.h;
     *(u16 *)(reg_a0 + 0x1E) = 8;
     *(u16 *)(reg_a0 + 0x12) = 0;
     *(u16 *)(reg_a0 + 0x14) = 0;
@@ -500,8 +501,8 @@ void func_001D34C0() {
         reg_d0.h[0] &= 7;
         reg_d0.h[0] = *(u16 *)(D_0026D9C0 + (reg_d0.h[0] * 2));
         func_0013A780();
-        *(u16 *)(reg_a0 + 2) = (u16) *(u16 *)(reg_a6 + 2);
-        temp_a2 = *(u16 *)(reg_a6 + 4);
+        *(u16 *)(reg_a0 + 2) = (u16) ENTITY(reg_a6)->y.h;
+        temp_a2 = ENTITY(reg_a6)->x.h;
         *(u16 *)(reg_a0 + 4) = temp_a2;
         *(s16 *)(reg_a0 + 0x1E) = 0x10;
         *(s16 *)(reg_a0 + 0x12) = 0;

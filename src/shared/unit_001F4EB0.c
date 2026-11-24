@@ -1,4 +1,5 @@
 #include "common.h"
+#include "entity.h"
 
 void func_001F5520(void);
 void func_001F5620(void);
@@ -281,7 +282,7 @@ void func_001F5630(void) {
 
 void func_001F5640(void) {
     reg_d0.h[0] = 0xA001;
-    *(u16 *)reg_a6 |= reg_d0.h[0];
+    ENTITY(reg_a6)->flags.h |= reg_d0.h[0];
     *(u16 *)(reg_a6 + 0x20) |= reg_d0.h[0];
     *(u16 *)(reg_a6 + 0x40) |= reg_d0.h[0];
     *(u16 *)(reg_a6 + 0x60) |= reg_d0.h[0];
@@ -316,7 +317,7 @@ void func_001F5730(void) {
 
 void func_001F5750(void) {
     reg_d0.h[0] = 0x8000;
-    *(u16 *)reg_a6 = (u16) reg_d0.h[0];
+    ENTITY(reg_a6)->flags.h = (u16) reg_d0.h[0];
     *(u16 *)(reg_a6 + 0x20) = (u16) reg_d0.h[0];
     *(u16 *)(reg_a6 + 0x40) = (u16) reg_d0.h[0];
     *(u16 *)(reg_a6 + 0x60) = (u16) reg_d0.h[0];

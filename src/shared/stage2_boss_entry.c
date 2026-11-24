@@ -1,4 +1,5 @@
 #include "common.h"
+#include "entity.h"
 
 void func_001CB6B0(void);
 void func_001CB7E0(void);
@@ -31,7 +32,7 @@ void func_001CA730(void) {
 
     if (*(u16 *)(reg_a6 + 0x146) != 0) return;
     if (*(u8 *)(reg_a6 + 0x14D) == 0) goto next_110;
-    reg_d1.b[0] = *(u8 *)(reg_a6 + 1);
+    reg_d1.b[0] = ENTITY(reg_a6)->flags.b[1];
     reg_d1.b[0] |= *(u8 *)(reg_a6 + 0x21);
     reg_d1.b[0] |= *(u8 *)(reg_a6 + 0xC1);
     reg_d1.b[0] |= *(u8 *)(reg_a6 + 0xE1);
@@ -39,7 +40,7 @@ void func_001CA730(void) {
     reg_d1.h[0] = cnt;
     if (!(cnt & 0xFFFF)) goto next_100;
     reg_d0.b[0] = 0xA3;
-    *(u8 *)(reg_a6 + 1) &= reg_d0.b[0];
+    ENTITY(reg_a6)->flags.b[1] &= reg_d0.b[0];
     *(u8 *)(reg_a6 + 0x21) &= reg_d0.b[0];
     *(u8 *)(reg_a6 + 0xC1) &= reg_d0.b[0];
     *(u8 *)(reg_a6 + 0xE1) &= reg_d0.b[0];
@@ -77,7 +78,7 @@ next_101:
     reg_d0.b[0] ^= 0x12;
     *(u8 *)(reg_a6 + 0x12F) = reg_d0.b[0];
     if (D_0028E290 == 2) {
-        m = *(u16 *)(reg_a6 + 0x18);
+        m = ENTITY(reg_a6)->hp.h;
         h1 = *(u16 *)(reg_a6 + 0x38);
         h2 = *(u16 *)(reg_a6 + 0xD8);
         h3 = *(u16 *)(reg_a6 + 0xF8);
@@ -92,7 +93,7 @@ skip_m2:
 skip_m3:;
     }
     reg_d2.w = 0x7FFF;
-    reg_d2.h[0] -= *(u16 *)(reg_a6 + 0x18);
+    reg_d2.h[0] -= ENTITY(reg_a6)->hp.h;
     reg_d3.w = 0x7FFF;
     reg_d3.h[0] -= *(u16 *)(reg_a6 + 0x38);
     if (!((s32) reg_d2.w < (s32) reg_d3.w)) goto skip_d180;
@@ -128,7 +129,7 @@ next_107:
     *(u16 *)(reg_a5 + 0x18) = reg_tmp2.h[0];
 next_108:
     reg_d0.h[0] = 0x7FFF;
-    *(u16 *)(reg_a6 + 0x18) = reg_d0.h[0];
+    ENTITY(reg_a6)->hp.h = reg_d0.h[0];
     *(u16 *)(reg_a6 + 0x38) = reg_d0.h[0];
     *(u16 *)(reg_a6 + 0xD8) = reg_d0.h[0];
     *(u16 *)(reg_a6 + 0xF8) = reg_d0.h[0];
@@ -477,7 +478,7 @@ void func_001CB6B0(void) {
     *(u16 *)(reg_a5 + 0x16) = (u16) reg_tmp.h[1];
     *(u16 *)(reg_a5 + 0x18) = (u16) reg_tmp.h[0];
     *(s8 *)(reg_a6 + 0x1E) = 1;
-    *(u16 *)reg_a6 = 0x8000;
+    ENTITY(reg_a6)->flags.h = 0x8000;
     *(u16 *)(reg_a6 + 0x20) = 0x8000;
     *(u16 *)(reg_a6 + 0xC0) = 0x8000;
     *(u16 *)(reg_a6 + 0xE0) = 0x8000;

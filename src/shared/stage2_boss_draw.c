@@ -1,4 +1,5 @@
 #include "common.h"
+#include "entity.h"
 
 extern u8 D_0026C2A0[];
 
@@ -26,12 +27,12 @@ void func_001C3F50(void) {
     u16 temp_a2;
 
     reg_a0 = D_0026C2C0;
-    temp_a2 = *(u16 *)(reg_a6 + 6);
+    temp_a2 = ENTITY(reg_a6)->offset_y.h;
     reg_a0 += temp_a2;
-    reg_tmp.h[0] = *(u16 *)(reg_a6 + 6);
+    reg_tmp.h[0] = ENTITY(reg_a6)->offset_y.h;
     reg_d2.w = *(u32 *)(D_0026C2C0 + (reg_tmp.h[0] & ~3));
-    reg_d1.h[1] = *(u16 *)(reg_a6 + 2);
-    temp_a0 = *(u16 *)(reg_a6 + 4);
+    reg_d1.h[1] = ENTITY(reg_a6)->y.h;
+    temp_a0 = ENTITY(reg_a6)->x.h;
     reg_d1.h[0] = temp_a0;
     reg_d1.w += 0xEE00FA00;
     reg_d3.h[0] = 0x1230;
@@ -51,13 +52,13 @@ void func_001C3FD0(void) {
     reg_a0 += *(u16 *)(reg_a6 + 0x166);
     reg_tmp.h[0] = *(u16 *)(reg_a6 + 0x166);
     reg_d2.w = *(u32 *)(D_0026C2F0 + (reg_tmp.h[0] & ~3));
-    reg_d1.h[0] = *(u16 *)(reg_a6 + 2);
+    reg_d1.h[0] = ENTITY(reg_a6)->y.h;
     reg_d1.h[0] += *(u16 *)(reg_a6 + 0x168);
     temp_a3 = reg_d1.w;
     reg_tmp1.w = temp_a3;
     reg_d1.h[1] = reg_d1.h[0];
     reg_d1.h[0] = reg_tmp1.h[1];
-    temp_a2 = *(u16 *)(reg_a6 + 4);
+    temp_a2 = ENTITY(reg_a6)->x.h;
     reg_d1.h[0] = temp_a2;
     reg_d1.w += 0x04000000;
     reg_d1.w += 0xEE00ED00;
@@ -79,8 +80,8 @@ void func_001C4090(void) {
     reg_a2 += temp_a3;
     reg_tmp.h[0] = *(u16 *)(reg_a6 + 0x16A);
     reg_d2.w = *(u32 *)(D_0026C330 + (reg_tmp.h[0] & ~3));
-    reg_d1.h[1] = *(u16 *)(reg_a6 + 2);
-    temp_a1 = *(u16 *)(reg_a6 + 4);
+    reg_d1.h[1] = ENTITY(reg_a6)->y.h;
+    temp_a1 = ENTITY(reg_a6)->x.h;
     reg_d1.h[0] = temp_a1;
     reg_d1.w += 0xF6000000;
     reg_d1.w += 0xF400ED00;

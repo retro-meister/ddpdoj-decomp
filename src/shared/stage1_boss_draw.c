@@ -1,4 +1,5 @@
 #include "common.h"
+#include "entity.h"
 
 extern void *reg_a6_as_void_p;
 
@@ -156,8 +157,8 @@ void func_001B7EA0(void) {
     reg_d2.h[0] = ((((u16)reg_d2.h[0]) + 2) != 0) ? *(u16 *)((u8 *)D_0026E540 + ((s16)(((u16)reg_d2.h[0]) + 2) & ~1)) : *(u16 *)D_0026E540;
     reg_d3.h[0] = 0x418;
     reg_d4.h[0] = 0x17;
-    reg_d1.h[1] = *(u16 *)(reg_a6 + 2);
-    reg_d1.h[0] = *(u16 *)(reg_a6 + 4);
+    reg_d1.h[1] = ENTITY(reg_a6)->y.h;
+    reg_d1.h[0] = ENTITY(reg_a6)->x.h;
     reg_d1.w += 0xFC00FD00;
     reg_d0.w = reg_d1.w;
     reg_d1.w += 0x09C00400;
@@ -201,8 +202,8 @@ void func_001B8200(void) {
     reg_a2 += *(u16 *)(reg_a6 + 0x11A);
     reg_d2.h[1] = *(u16 *)reg_a2;
     reg_d2.h[0] = *(u16 *)(reg_a2 + 2);
-    reg_d1.h[1] = *(u16 *)(reg_a6 + 2);
-    reg_d1.h[0] = *(u16 *)(reg_a6 + 4);
+    reg_d1.h[1] = ENTITY(reg_a6)->y.h;
+    reg_d1.h[0] = ENTITY(reg_a6)->x.h;
     reg_d1.w += 0xF8000080;
     if ((s16) *(u16 *)(reg_a6 + 0x11A) < 0xB1) {
         reg_d1.w += 0xFE000100;

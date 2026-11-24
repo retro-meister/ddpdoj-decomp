@@ -1,4 +1,5 @@
 #include "common.h"
+#include "entity.h"
 
 s32 func_00171330(s32 *);
 s32 func_001713A0();
@@ -13,7 +14,7 @@ void func_0011F3E0(void) {
         func_001713A0();
         return;
     }
-    reg_d0.h[0] = *(u16 *)(reg_a6 + 2);
+    reg_d0.h[0] = ENTITY(reg_a6)->y.h;
     if ((s16) reg_d0.h[0] < -0x3400) {
         func_001713A0();
         return;
@@ -41,8 +42,8 @@ void func_0011F480(void) {
     reg_d0.w = 1;
     func_0014E300();
     reg_tmp.w = 0x38001C00;
-    *(u16 *)(reg_a6 + 2) = (u16) reg_tmp.h[1];
-    *(u16 *)(reg_a6 + 4) = (u16) reg_tmp.h[0];
+    ENTITY(reg_a6)->y.h = (u16) reg_tmp.h[1];
+    ENTITY(reg_a6)->x.h = (u16) reg_tmp.h[0];
 }
 
 s32 func_0011C440();

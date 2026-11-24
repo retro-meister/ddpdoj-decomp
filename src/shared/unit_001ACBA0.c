@@ -1,4 +1,5 @@
 #include "common.h"
+#include "entity.h"
 #include "sdk/ps2sdk.h"
 
 void func_001ACD30(void);
@@ -304,7 +305,7 @@ loop_90:
     reg_a5 -= 2;
     *(u16 *)reg_a5 = *(u16 *)(reg_a5 - 2);
     reg_a6 -= 2;
-    *(u16 *)reg_a6 = *(u16 *)(reg_a6 - 2);
+    ENTITY(reg_a6)->flags.h = *(u16 *)(reg_a6 - 2);
     if ((s16) --reg_d2.h[0] >= 0) goto loop_90;
 next_98:
     reg_a1 -= 2;
@@ -318,7 +319,7 @@ next_98:
     reg_a5 -= 2;
     *(u16 *)reg_a5 = *(u16 *)(reg_a4 + 8);
     reg_a6 -= 2;
-    *(u16 *)reg_a6 = *(u16 *)(reg_a4 + 0xA);
+    ENTITY(reg_a6)->flags.h = *(u16 *)(reg_a4 + 0xA);
 block_rts:
     reg_a5 = save_a5;
     reg_a6 = save_a6;
@@ -1045,16 +1046,16 @@ void func_001AEB10(void) {
             return;
         }
         D_0028E714 = *(s32 *)(reg_a0 - 4);
-        D_0028E710 = *(u16 *)reg_a6;
+        D_0028E710 = ENTITY(reg_a6)->flags.h;
         reg_a0 -= 4;
         reg_a1 -= 4;
         cond_flag = 0;
         reg_d6.h[0] = 0;
         if (func_001AE9A0((void *)reg_a1, (void *)reg_a0) != 0) {
             *(u16 *)reg_a6 += 1;
-            if (*(u16 *)reg_a6 == 0xA) {
+            if (ENTITY(reg_a6)->flags.h == 0xA) {
                 *(u32 *)reg_a0 = 0x99999999U;
-                *(u16 *)reg_a6 = 9;
+                ENTITY(reg_a6)->flags.h = 9;
             }
         } else {
 #ifdef DEATH_LABEL
@@ -1084,7 +1085,7 @@ no_extend:
             func_001AED60();
         }
         reg_d0.h[0] = D_0028E754;
-        t1 = *(u16 *)reg_a6;
+        t1 = ENTITY(reg_a6)->flags.h;
         if ((s32) t1 >= (s32) reg_d0.h[0]) {
             if (t1 != reg_d0.h[0]) {
                 D_0028E754 = t1;
@@ -1133,7 +1134,7 @@ void func_001AED90(void) {
     reg_tmp7.w = reg_d7.w;
     reg_d7.h[1] = reg_d7.h[0];
     reg_d7.h[0] = 0;
-    reg_d1.h[0] = *(u16 *)reg_a6;
+    reg_d1.h[0] = ENTITY(reg_a6)->flags.h;
     if (D_0028E710 != reg_d1.h[0]) {
         reg_d7.h[0] = 1;
         *(s16 *)(reg_a0 + 0) = 1;

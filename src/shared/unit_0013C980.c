@@ -1,4 +1,5 @@
 #include "common.h"
+#include "entity.h"
 
 void func_0013C9A0(void);
 void func_0013CAB0(void);
@@ -128,7 +129,7 @@ void func_0013CBA0(void) {
     (*(u16 *)(reg_a1 + 0x16)) = reg_d0.h[0];
     reg_d7.h[0] = 0x1F;
     do {
-        *(u16 *)reg_a6 = reg_d0.h[0];
+        ENTITY(reg_a6)->flags.h = reg_d0.h[0];
         reg_a6 += 0x30;
     } while ((s16)(--reg_d7.h[0]) >= 0);
     reg_d0.w = reg_save_d0;
@@ -1465,8 +1466,8 @@ void func_0013F5C0(void) {
     reg_d4.h[0] = 0x1F;
     reg_a2 = reg_a0;
     reg_a3 = reg_a1;
-    reg_d6.h[1] = *(u16 *)(reg_a6 + 2);
-    reg_d6.h[0] = *(u16 *)(reg_a6 + 4);
+    reg_d6.h[1] = ENTITY(reg_a6)->y.h;
+    reg_d6.h[0] = ENTITY(reg_a6)->x.h;
     reg_d6.w &= 0xFF80FF80;
     reg_a1 += 0x40;
     reg_a0 += 0x40;
@@ -1493,10 +1494,10 @@ loop_2:
     *(u16 *)(reg_a0 - 2) = *(u16 *)(reg_a0 - 6);
     reg_a0 -= 4;
     if (reg_d7.h[0] == 0) {
-        *(u16 *)(reg_a3 + 0) = *(u16 *)(reg_a6 + 0xA);
-        *(u16 *)(reg_a3 + 2) = *(u16 *)(reg_a6 + 0xC);
-        *(u16 *)(reg_a2 + 0) = *(u16 *)(reg_a6 + 2);
-        *(u16 *)(reg_a2 + 2) = *(u16 *)(reg_a6 + 4);
+        *(u16 *)(reg_a3 + 0) = ENTITY(reg_a6)->draw.h;
+        *(u16 *)(reg_a3 + 2) = ENTITY(reg_a6)->sprite.h;
+        *(u16 *)(reg_a2 + 0) = ENTITY(reg_a6)->y.h;
+        *(u16 *)(reg_a2 + 2) = ENTITY(reg_a6)->x.h;
         return;
     }
     if (D_0028E3EC == 0) {

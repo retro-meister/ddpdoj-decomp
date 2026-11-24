@@ -1,4 +1,5 @@
 #include "common.h"
+#include "entity.h"
 
 void func_001E6C00(void);
 void func_001E6D00(void);
@@ -107,7 +108,7 @@ void func_001E6DF0(void) {
         (*(u8 *)(reg_a4 + 3)) = (*(u8 *)(reg_a4 + 2));
         reg_a0 = D_0026C0A0;
         reg_a0 += (*(u16 *)(reg_a4 + 4));
-        (*(u16 *)(reg_a6 + 6)) = *(u16 *)reg_a0;
+        (ENTITY(reg_a6)->offset_y.h) = *(u16 *)reg_a0;
         (*(u16 *)(reg_a4 + 4)) += 2;
         if ((*(u16 *)(reg_a4 + 4)) == 0xC) {
             (*(u16 *)(reg_a4 + 4)) = 0;
@@ -191,8 +192,8 @@ void func_001E70A0(void) {
     *(u8 *)(reg_a4 + 3) -= 1;
     if ((s32) reg_tmp.b[0] <= 0) {
         *(u8 *)(reg_a4 + 3) = (u8) *(u8 *)(reg_a4 + 2);
-        *(u16 *)(reg_a6 + 6) += 4;
-        if (*(u16 *)(reg_a6 + 6) == 0x1C) {
+        ENTITY(reg_a6)->offset_y.h += 4;
+        if (ENTITY(reg_a6)->offset_y.h == 0x1C) {
             *(s16 *)reg_a4 = 0;
         }
     }
@@ -214,8 +215,8 @@ void func_001E7130() {
     *(u8 *)(reg_a4 + 3) -= 1;
     if ((s32) reg_tmp.b[0] <= 0) {
         *(u8 *)(reg_a4 + 3) = (u8) *(u8 *)(reg_a4 + 2);
-        *(u16 *)(reg_a6 + 6) -= 4;
-        if (*(u16 *)(reg_a6 + 6) == 0) {
+        ENTITY(reg_a6)->offset_y.h -= 4;
+        if (ENTITY(reg_a6)->offset_y.h == 0) {
             *(s16 *)reg_a4 = 0;
             reg_d0.w = 2;
             func_00124F50();

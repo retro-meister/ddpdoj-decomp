@@ -1,4 +1,5 @@
 #include "common.h"
+#include "entity.h"
 
 void func_0020E020(void);
 void func_0020E230(void);
@@ -30,7 +31,7 @@ void func_0020B6A0(void) {
         return;
     }
 #endif
-    reg_d4.h[0] = *(u16 *)reg_a6;
+    reg_d4.h[0] = ENTITY(reg_a6)->flags.h;
     reg_a6 += 2;
 #ifdef DEATH_LABEL
     if (D_0028E3C0 != 0) {
@@ -38,7 +39,7 @@ void func_0020B6A0(void) {
     }
 #endif
     if (((s32) reg_d4.h[0] <= (s32) reg_d0.h[0]) && ((s32) reg_d1.h[0] <= (s32) reg_d4.h[0])) {
-        reg_d4.h[0] = *(u16 *)reg_a6;
+        reg_d4.h[0] = ENTITY(reg_a6)->flags.h;
         if (((s32) reg_d3.h[0] <= (s32) reg_d4.h[0]) && ((s32) reg_d4.h[0] <= (s32) reg_d2.h[0])) {
             reg_d4.w = 0x51;
             reg_d4.b[0] &= (*(u8 *)((u8 *)(reg_a6) + (-3)));
@@ -261,21 +262,21 @@ void func_0020BD60(void) {
 skip_5:
                 reg_a6 += 0x3E;
 loop_5:
-                reg_d4.h[0] = *(u16 *)reg_a6;
+                reg_d4.h[0] = ENTITY(reg_a6)->flags.h;
                 reg_a6 += 2;
                 if (reg_d4.h[0] == 0) goto skip_5;
                 reg_d4.h[0] += reg_d7.h[0];
                 reg_d5.h[0] = reg_d4.h[0];
-                reg_d5.h[0] -= *(u16 *)(reg_a6 + 0xC);
+                reg_d5.h[0] -= ENTITY(reg_a6)->sprite.h;
                 if ((s32) reg_d5.h[0] <= (s32) reg_d0.h[0]) {
-                    reg_d4.h[0] += *(u16 *)(reg_a6 + 0xC);
+                    reg_d4.h[0] += ENTITY(reg_a6)->sprite.h;
                     if ((s32) reg_d1.h[0] <= (s32) reg_d4.h[0]) {
-                        reg_d4.h[0] = *(u16 *)reg_a6;
+                        reg_d4.h[0] = ENTITY(reg_a6)->flags.h;
                         reg_d4.h[0] += reg_d7.h[0];
                         reg_d5.h[0] = reg_d4.h[0];
-                        reg_d4.h[0] += *(u16 *)(reg_a6 + 0xE);
+                        reg_d4.h[0] += ENTITY(reg_a6)->look.h;
                         if ((s32) reg_d3.h[0] <= (s32) reg_d4.h[0]) {
-                            reg_d5.h[0] -= *(u16 *)(reg_a6 + 0xE);
+                            reg_d5.h[0] -= ENTITY(reg_a6)->look.h;
                             if ((s32) reg_d5.h[0] <= (s32) reg_d2.h[0]) {
                                 reg_d4.h[0] = (*(u16 *)((u8 *)(reg_a6) + (-4)));
                                 reg_d4.h[0] &= 0xC0;
@@ -298,24 +299,24 @@ loop_5:
 skip_17:
                 reg_a6 += 0x2A;
 loop_17:
-                    reg_tmp.h[0] = *(u16 *)reg_a6;
+                    reg_tmp.h[0] = ENTITY(reg_a6)->flags.h;
                     reg_a6 += 2;
                     if ((s16) reg_tmp.h[0] >= 0) goto skip_17;
-                    reg_d4.h[0] = *(u16 *)reg_a6;
+                    reg_d4.h[0] = ENTITY(reg_a6)->flags.h;
                     reg_a6 += 2;
                     if (reg_d4.h[0] == 0) goto next_17;
                     reg_d4.h[0] += reg_d7.h[0];
                     reg_d5.h[0] = reg_d4.h[0];
-                    reg_d5.h[0] -= *(u16 *)(reg_a6 + 0xE);
+                    reg_d5.h[0] -= ENTITY(reg_a6)->look.h;
                     if ((s32) reg_d5.h[0] > (s32) reg_d0.h[0]) goto next_17;
-                    reg_d4.h[0] += *(u16 *)(reg_a6 + 0xC);
+                    reg_d4.h[0] += ENTITY(reg_a6)->sprite.h;
                     if ((s32) reg_d1.h[0] > (s32) reg_d4.h[0]) goto next_17;
-                    reg_d4.h[0] = *(u16 *)reg_a6;
+                    reg_d4.h[0] = ENTITY(reg_a6)->flags.h;
                     reg_d4.h[0] += reg_d7.h[0];
                     reg_d5.h[0] = reg_d4.h[0];
-                    reg_d4.h[0] += *(u16 *)(reg_a6 + 0x10);
+                    reg_d4.h[0] += ENTITY(reg_a6)->hit_y_plus.h;
                     if ((s32) reg_d3.h[0] > (s32) reg_d4.h[0]) goto next_17;
-                    reg_d5.h[0] -= *(u16 *)(reg_a6 + 0x12);
+                    reg_d5.h[0] -= ENTITY(reg_a6)->hit_y_minus.h;
                     if ((s32) reg_d5.h[0] > (s32) reg_d2.h[0]) goto next_17;
                     if ((s8) *(u8 *)(reg_a6 - 4) < 0) goto next_17;
                     reg_d4.h[0] = D_0028E0A8;
@@ -334,29 +335,29 @@ next_17:
 skip_30:
                 reg_a6 += 0x1E;
 loop_30:
-                reg_d4.h[0] = *(u16 *)reg_a6;
+                reg_d4.h[0] = ENTITY(reg_a6)->flags.h;
                 reg_a6 += 2;
                 if ((s16) reg_d4.h[0] >= 0) goto skip_30;
-                reg_d4.h[0] = *(u16 *)reg_a6;
+                reg_d4.h[0] = ENTITY(reg_a6)->flags.h;
                 reg_d4.h[0] += reg_d7.h[0];
                 reg_d5.h[0] = reg_d4.h[0];
-                reg_d5.h[0] -= *(u16 *)(reg_a6 + 0x10);
+                reg_d5.h[0] -= ENTITY(reg_a6)->hit_y_plus.h;
                 if ((s32) reg_d5.h[0] > (s32) reg_d0.h[0]) goto next_30;
-                reg_d4.h[0] += *(u16 *)(reg_a6 + 0xE);
+                reg_d4.h[0] += ENTITY(reg_a6)->look.h;
                 if ((s32) reg_d1.h[0] > (s32) reg_d4.h[0]) goto next_30;
-                reg_d4.h[0] = *(u16 *)(reg_a6 + 2);
+                reg_d4.h[0] = ENTITY(reg_a6)->y.h;
                 reg_d4.h[0] += reg_d7.h[0];
                 reg_d5.h[0] = reg_d4.h[0];
-                reg_d4.h[0] += *(u16 *)(reg_a6 + 0x12);
+                reg_d4.h[0] += ENTITY(reg_a6)->hit_y_minus.h;
                 if ((s32) reg_d3.h[0] > (s32) reg_d4.h[0]) goto next_30;
-                reg_d5.h[0] -= *(u16 *)(reg_a6 + 0x14);
+                reg_d5.h[0] -= ENTITY(reg_a6)->hit_x_plus.h;
                 if ((s32) reg_d5.h[0] > (s32) reg_d2.h[0]) goto next_30;
                 reg_d4.h[0] = (*(u16 *)((u8 *)(reg_a6) + (-2)));
                 reg_d4.h[0] &= 1;
                 if (reg_d4.h[0] == 0) goto next_30;
-                reg_d4.h[0] = *(u16 *)reg_a6;
+                reg_d4.h[0] = ENTITY(reg_a6)->flags.h;
                 reg_d4.h[0] += reg_d7.h[0];
-                reg_d4.h[0] -= *(u16 *)(reg_a6 + 0x10);
+                reg_d4.h[0] -= ENTITY(reg_a6)->hit_y_plus.h;
                 if (!((s32) reg_d4.h[0] < 0xF800)) goto next_30;
 #ifdef DEATH_LABEL
                 if (D_0028E3C0 != 0) goto block_23;
@@ -364,7 +365,7 @@ loop_30:
                 *(u8 *)(reg_a4 + 1) |= 0x10;
                 reg_d4.h[0] = D_0028E0A8;
                 (*(u16 *)((u8 *)(reg_a6) + (-2))) |= reg_d4.h[0];
-                *(u16 *)(reg_a6 + 0x16) -= 1;
+                ENTITY(reg_a6)->hit_x_minus.h -= 1;
                 goto block_23;
 next_30:
                 reg_a6 += 0x1E;
@@ -377,7 +378,7 @@ block_23:
     reg_a6 = (u8 *)(reg_a0);
     reg_d6.w = 0x23;
 loop_40:
-    if ((*(s16 *)reg_a6) < 0) goto found_40;
+    if ((ENTITY(reg_a6)->flags.sh) < 0) goto found_40;
     reg_a6 += 0x30;
     tmp_dec = reg_d6.h[0] - 1; reg_d6.h[0] = tmp_dec;
     if (((s64) ((s64) (tmp_dec & 0xFFFF) << 0x30) >> 0x30) >= 0) goto loop_40;
@@ -414,10 +415,10 @@ loop_48:
         reg_d1.h[0] -= *(u16 *)reg_a1;
         reg_a1 += 2;
         reg_a6 = (u8 *)D_0028E0A0_as_u16_a;
-        reg_tmp.h[0] = *(u16 *)reg_a6;
+        reg_tmp.h[0] = ENTITY(reg_a6)->flags.h;
         reg_a6 += 2;
         if ((s32) reg_tmp.h[0] < (s32) reg_d1.h[0]) goto next_48;
-        reg_tmp.h[0] = *(u16 *)reg_a6;
+        reg_tmp.h[0] = ENTITY(reg_a6)->flags.h;
         reg_a6 += 2;
         if ((s32) reg_tmp.h[0] > (s32) reg_d0.h[0]) goto next_48;
         reg_d2.h[0] += reg_d7.h[0];
@@ -426,10 +427,10 @@ loop_48:
         reg_a1 += 2;
         reg_d3.h[0] -= *(u16 *)reg_a1;
         reg_a1 += 2;
-        reg_tmp.h[0] = *(u16 *)reg_a6;
+        reg_tmp.h[0] = ENTITY(reg_a6)->flags.h;
         reg_a6 += 2;
         if ((s32) reg_tmp.h[0] < (s32) reg_d3.h[0]) goto next_48;
-        reg_tmp.h[0] = *(u16 *)reg_a6;
+        reg_tmp.h[0] = ENTITY(reg_a6)->flags.h;
         reg_a6 += 2;
         if ((s32) reg_tmp.h[0] > (s32) reg_d2.h[0]) goto next_48;
         if (!((s32) reg_d1.h[0] < 0x9700)) goto next_48;
@@ -449,30 +450,30 @@ next_59:
         tmp_dec = reg_d6.h[0] - 1; reg_d6.h[0] = tmp_dec;
         if (((s64) ((s64) (tmp_dec & 0xFFFF) << 0x30) >> 0x30) < 0) goto end_59;
 loop_59:
-        reg_d5.h[0] = *(u16 *)reg_a6;
+        reg_d5.h[0] = ENTITY(reg_a6)->flags.h;
         reg_a6 += 2;
         if ((s16) reg_d5.h[0] >= 0) goto skip_59;
-        reg_d4.h[0] = *(u16 *)reg_a6;
+        reg_d4.h[0] = ENTITY(reg_a6)->flags.h;
         reg_a6 += 2;
         reg_d4.h[0] += reg_d7.h[0];
-        reg_d4.h[0] += *(u16 *)(reg_a6 + 0xC);
+        reg_d4.h[0] += ENTITY(reg_a6)->sprite.h;
         if ((s32) reg_d1.h[0] > (s32) reg_d4.h[0]) goto next_59;
-        reg_d4.h[0] -= *(u16 *)(reg_a6 + 0xE);
+        reg_d4.h[0] -= ENTITY(reg_a6)->look.h;
         if ((s32) reg_d4.h[0] > (s32) reg_d0.h[0]) goto next_59;
-        reg_d4.h[0] = *(u16 *)reg_a6;
+        reg_d4.h[0] = ENTITY(reg_a6)->flags.h;
         reg_d4.h[0] += reg_d7.h[0];
-        reg_d4.h[0] += *(u16 *)(reg_a6 + 0x10);
+        reg_d4.h[0] += ENTITY(reg_a6)->hit_y_plus.h;
         if ((s32) reg_d3.h[0] > (s32) reg_d4.h[0]) goto next_59;
-        reg_d4.h[0] -= *(u16 *)(reg_a6 + 0x12);
-        reg_d4.h[0] -= *(u16 *)(reg_a6 + 0x12);
+        reg_d4.h[0] -= ENTITY(reg_a6)->hit_y_minus.h;
+        reg_d4.h[0] -= ENTITY(reg_a6)->hit_y_minus.h;
         if ((s32) reg_d4.h[0] > (s32) reg_d2.h[0]) goto next_59;
-        if (*(s16 *)(reg_a6 + 0x14) < 0) goto cont_59;
+        if (ENTITY(reg_a6)->hit_x_plus.sh < 0) goto cont_59;
         reg_d4.h[0] = *(u16 *)(reg_a5 + 0x16);
         reg_tmp4.h[0] = reg_d4.h[0];
         reg_d4.h[0] = D_0028E0A8;
         reg_d4.h[1] = reg_tmp4.h[0];
         (*(u16 *)((u8 *)(reg_a5) + (-2))) |= reg_d4.h[0];
-        reg_d5.h[0] = *(u16 *)(reg_a6 + 0x14);
+        reg_d5.h[0] = ENTITY(reg_a6)->hit_x_plus.h;
         if (D_0028E928 == 0) {
             reg_d4.h[0] = reg_d5.h[0];
             reg_d4.h[0] >>= 2;
@@ -480,7 +481,7 @@ loop_59:
         }
         (*(u8 *)((u8 *)(reg_a6) + (-4))) |= 0x80;
         reg_d4.h[0] = *(u16 *)(reg_a5 + 0x16);
-        *(u16 *)(reg_a6 + 0x14) -= reg_d4.h[0];
+        ENTITY(reg_a6)->hit_x_plus.h -= reg_d4.h[0];
         reg_tmp4.h[0] = reg_d4.h[0];
         reg_d4.h[0] = reg_d4.h[1];
         reg_d4.h[1] = reg_tmp4.h[0];
@@ -539,10 +540,10 @@ loop_76:
         reg_d1.h[0] -= *(u16 *)reg_a1;
         reg_a1 += 2;
         reg_a6 = (u8 *)D_0028E0A0_as_u16_a;
-        reg_tmp.h[0] = *(u16 *)reg_a6;
+        reg_tmp.h[0] = ENTITY(reg_a6)->flags.h;
         reg_a6 += 2;
         if ((s32) reg_tmp.h[0] < (s32) reg_d1.h[0]) goto next_76;
-        reg_tmp.h[0] = *(u16 *)reg_a6;
+        reg_tmp.h[0] = ENTITY(reg_a6)->flags.h;
         reg_a6 += 2;
         if ((s32) reg_tmp.h[0] > (s32) reg_d0.h[0]) goto next_76;
         reg_d2.h[0] += reg_d7.h[0];
@@ -551,10 +552,10 @@ loop_76:
         reg_a1 += 2;
         reg_d3.h[0] -= *(u16 *)reg_a1;
         reg_a1 += 2;
-        reg_tmp.h[0] = *(u16 *)reg_a6;
+        reg_tmp.h[0] = ENTITY(reg_a6)->flags.h;
         reg_a6 += 2;
         if ((s32) reg_tmp.h[0] < (s32) reg_d3.h[0]) goto next_76;
-        reg_tmp.h[0] = *(u16 *)reg_a6;
+        reg_tmp.h[0] = ENTITY(reg_a6)->flags.h;
         reg_a6 += 2;
         if ((s32) reg_tmp.h[0] > (s32) reg_d2.h[0]) goto next_76;
         if (!((s32) reg_d1.h[0] < 0x8800)) goto next_76;
@@ -569,33 +570,33 @@ skip_85:
         tmp_dec = reg_d6.h[0] - 1; reg_d6.h[0] = tmp_dec;
         if (((s64) ((s64) (tmp_dec & 0xFFFF) << 0x30) >> 0x30) < 0) goto end_85;
 loop_85:
-        reg_d5.h[0] = *(u16 *)reg_a6;
+        reg_d5.h[0] = ENTITY(reg_a6)->flags.h;
         reg_a6 += 2;
         if ((s16) reg_d5.h[0] >= 0) goto skip_85;
-        reg_d4.h[0] = *(u16 *)reg_a6;
+        reg_d4.h[0] = ENTITY(reg_a6)->flags.h;
         reg_a6 += 2;
         reg_d4.h[0] += reg_d7.h[0];
-        reg_d4.h[0] += *(u16 *)(reg_a6 + 0xC);
+        reg_d4.h[0] += ENTITY(reg_a6)->sprite.h;
         if ((s32) reg_d1.h[0] > (s32) reg_d4.h[0]) goto next_85;
-        reg_d4.h[0] -= *(u16 *)(reg_a6 + 0xE);
+        reg_d4.h[0] -= ENTITY(reg_a6)->look.h;
         if ((s32) reg_d4.h[0] > (s32) reg_d0.h[0]) goto next_85;
-        reg_d4.h[0] = *(u16 *)reg_a6;
+        reg_d4.h[0] = ENTITY(reg_a6)->flags.h;
         reg_d4.h[0] += reg_d7.h[0];
-        reg_d4.h[0] += *(u16 *)(reg_a6 + 0x10);
+        reg_d4.h[0] += ENTITY(reg_a6)->hit_y_plus.h;
         if ((s32) reg_d3.h[0] > (s32) reg_d4.h[0]) goto next_85;
-        reg_d4.h[0] -= *(u16 *)(reg_a6 + 0x12);
-        reg_d4.h[0] -= *(u16 *)(reg_a6 + 0x12);
+        reg_d4.h[0] -= ENTITY(reg_a6)->hit_y_minus.h;
+        reg_d4.h[0] -= ENTITY(reg_a6)->hit_y_minus.h;
         if ((s32) reg_d4.h[0] > (s32) reg_d2.h[0]) goto next_85;
         reg_d4.w = 0x30;
         reg_d4.b[0] &= (*(u8 *)((u8 *)(reg_a6) + (-3)));
         if (reg_d4.b[0] != 0) goto next_85;
-        if (*(s16 *)(reg_a6 + 0x14) < 0) goto next_85;
+        if (ENTITY(reg_a6)->hit_x_plus.sh < 0) goto next_85;
         reg_d4.h[0] = D_0028E0A8;
         (*(u16 *)((u8 *)(reg_a5) + (-2))) |= reg_d4.h[0];
         (*(u8 *)((u8 *)(reg_a6) + (-4))) |= 0x80;
-        reg_d5.h[0] = *(u16 *)(reg_a6 + 0x14);
+        reg_d5.h[0] = ENTITY(reg_a6)->hit_x_plus.h;
         reg_d4.h[0] = *(u16 *)(reg_a5 + 0x16);
-        *(u16 *)(reg_a6 + 0x14) -= reg_d4.h[0];
+        ENTITY(reg_a6)->hit_x_plus.h -= reg_d4.h[0];
         if (D_0028E928 == 0) {
             reg_d4.h[0] = reg_d5.h[0];
             reg_d4.h[0] >>= 2;
@@ -740,7 +741,7 @@ next_110:
 block_120:
         reg_a6 = (u8 *)(D_0029CEA0);
         reg_a0 = (u8 *)(reg_a6);
-        reg_d5.h[0] = *(u16 *)reg_a6;
+        reg_d5.h[0] = ENTITY(reg_a6)->flags.h;
         if (((s16)(reg_d5.h[0]) < 0) && (*(u8 *)reg_a4 & 0x40)) {
             reg_d0.w = 0;
             D_0028DFF8 = 0x7800;
@@ -870,13 +871,13 @@ hit_140:
             reg_d2.h[0] += *(u16 *)reg_a2; reg_a2 += 2;
             reg_d3.h[0] -= *(u16 *)reg_a2; reg_a2 += 2;
             reg_a6 = (u8 *) D_0028E0A0_as_u16_a;
-            reg_tmp.h[0] = *(u16 *)reg_a6; reg_a6 += 2;
+            reg_tmp.h[0] = ENTITY(reg_a6)->flags.h; reg_a6 += 2;
             if ((s32) reg_tmp.h[0] < (s32) reg_d3.h[0]) goto skip_140;
-            reg_tmp.h[0] = *(u16 *)reg_a6; reg_a6 += 2;
+            reg_tmp.h[0] = ENTITY(reg_a6)->flags.h; reg_a6 += 2;
             if ((s32) reg_tmp.h[0] > (s32) reg_d2.h[0]) goto skip_140;
-            reg_tmp.h[0] = *(u16 *)reg_a6; reg_a6 += 2;
+            reg_tmp.h[0] = ENTITY(reg_a6)->flags.h; reg_a6 += 2;
             if ((s32) reg_tmp.h[0] < (s32) reg_d1.h[0]) goto skip_140;
-            reg_tmp.h[0] = *(u16 *)reg_a6; reg_a6 += 2;
+            reg_tmp.h[0] = ENTITY(reg_a6)->flags.h; reg_a6 += 2;
             if ((s32) reg_tmp.h[0] > (s32) reg_d0.h[0]) goto skip_140;
             if (!((s32) reg_d1.h[0] < 0x9800)) goto skip_140;
             reg_tmp7.h[0] = reg_d7.h[0];
@@ -886,22 +887,22 @@ hit_140:
             reg_a6 += 0x30;
             reg_d7.h[0] = 0x28;
 loop_145:
-            reg_d4.b[0] = *(u8 *)(reg_a6 + 1);
+            reg_d4.b[0] = ENTITY(reg_a6)->flags.b[1];
             if ((s8) reg_d4.b[0] >= 0) goto next_145;
             if (reg_d4.h[0] & 2) goto next_145;
-            reg_d4.h[0] = *(u16 *)(reg_a6 + 2);
+            reg_d4.h[0] = ENTITY(reg_a6)->y.h;
             reg_d4.h[0] += reg_d6.h[0];
             reg_d5.h[0] = reg_d4.h[0];
-            reg_d4.h[0] += *(u16 *)(reg_a6 + 0x10);
+            reg_d4.h[0] += ENTITY(reg_a6)->hit_y_plus.h;
             if ((s32) reg_d1.h[0] > (s32) reg_d4.h[0]) goto next_145;
-            reg_d5.h[0] -= *(u16 *)(reg_a6 + 0x12);
+            reg_d5.h[0] -= ENTITY(reg_a6)->hit_y_minus.h;
             if ((s32) reg_d5.h[0] > (s32) reg_d0.h[0]) goto next_145;
-            reg_d4.h[0] = *(u16 *)(reg_a6 + 4);
+            reg_d4.h[0] = ENTITY(reg_a6)->x.h;
             reg_d4.h[0] += reg_d6.h[0];
             reg_d5.h[0] = reg_d4.h[0];
-            reg_d4.h[0] += *(u16 *)(reg_a6 + 0x14);
+            reg_d4.h[0] += ENTITY(reg_a6)->hit_x_plus.h;
             if ((s32) reg_d3.h[0] > (s32) reg_d4.h[0]) goto next_145;
-            reg_d5.h[0] -= *(u16 *)(reg_a6 + 0x16);
+            reg_d5.h[0] -= ENTITY(reg_a6)->hit_x_minus.h;
             if ((s32) reg_d5.h[0] > (s32) reg_d2.h[0]) goto next_145;
             reg_d4.h[0] = reg_d1.h[0];
             reg_d4.h[0] -= reg_d6.h[0];
@@ -1016,13 +1017,13 @@ hit_150:
             reg_d2.h[0] += *(u16 *)reg_a2; reg_a2 += 2;
             reg_d3.h[0] -= *(u16 *)reg_a2; reg_a2 += 2;
             reg_a6 = (u8 *) D_0028E0A0_as_u16_a;
-            reg_tmp.h[0] = *(u16 *)reg_a6; reg_a6 += 2;
+            reg_tmp.h[0] = ENTITY(reg_a6)->flags.h; reg_a6 += 2;
             if ((s32) reg_tmp.h[0] < (s32) reg_d3.h[0]) goto skip_150;
-            reg_tmp.h[0] = *(u16 *)reg_a6; reg_a6 += 2;
+            reg_tmp.h[0] = ENTITY(reg_a6)->flags.h; reg_a6 += 2;
             if ((s32) reg_tmp.h[0] > (s32) reg_d2.h[0]) goto skip_150;
-            reg_tmp.h[0] = *(u16 *)reg_a6; reg_a6 += 2;
+            reg_tmp.h[0] = ENTITY(reg_a6)->flags.h; reg_a6 += 2;
             if ((s32) reg_tmp.h[0] < (s32) reg_d1.h[0]) goto skip_150;
-            reg_tmp.h[0] = *(u16 *)reg_a6; reg_a6 += 2;
+            reg_tmp.h[0] = ENTITY(reg_a6)->flags.h; reg_a6 += 2;
             if ((s32) reg_tmp.h[0] > (s32) reg_d0.h[0]) goto skip_150;
             reg_d4.h[0] = *(u16 *)(reg_a5 + 2);
             if (!((s32) reg_d4.h[0] < 0x7000)) goto skip_150;
@@ -1035,24 +1036,24 @@ scan_150:
             reg_a6 = reg_a0;
             reg_d7.h[0] = 0x2C;
 loop_155:
-            reg_d4.b[0] = *(u8 *)(reg_a6 + 1);
+            reg_d4.b[0] = ENTITY(reg_a6)->flags.b[1];
             if ((s8) reg_d4.b[0] >= 0) goto next_155;
             if (reg_d4.h[0] & 2) goto next_155;
-            reg_d4.h[0] = *(u16 *)(reg_a6 + 2);
+            reg_d4.h[0] = ENTITY(reg_a6)->y.h;
             reg_d4.h[0] += reg_d6.h[0];
             reg_d5.h[0] = reg_d4.h[0];
-            reg_d4.h[0] += *(u16 *)(reg_a6 + 0x10);
+            reg_d4.h[0] += ENTITY(reg_a6)->hit_y_plus.h;
             if ((s32) reg_d1.h[0] > (s32) reg_d4.h[0]) goto next_155;
-            reg_d5.h[0] -= *(u16 *)(reg_a6 + 0x12);
+            reg_d5.h[0] -= ENTITY(reg_a6)->hit_y_minus.h;
             if ((s32) reg_d5.h[0] > (s32) reg_d0.h[0]) goto next_155;
-            reg_d4.h[0] = *(u16 *)(reg_a6 + 4);
+            reg_d4.h[0] = ENTITY(reg_a6)->x.h;
             reg_d4.h[0] += reg_d6.h[0];
             reg_d5.h[0] = reg_d4.h[0];
-            reg_d4.h[0] += *(u16 *)(reg_a6 + 0x14);
+            reg_d4.h[0] += ENTITY(reg_a6)->hit_x_plus.h;
             if ((s32) reg_d3.h[0] > (s32) reg_d4.h[0]) goto next_155;
-            reg_d5.h[0] -= *(u16 *)(reg_a6 + 0x16);
+            reg_d5.h[0] -= ENTITY(reg_a6)->hit_x_minus.h;
             if ((s32) reg_d5.h[0] > (s32) reg_d2.h[0]) goto next_155;
-            *(u8 *)(reg_a6 + 1) |= 0x10;
+            ENTITY(reg_a6)->flags.b[1] |= 0x10;
             reg_d4.h[0] = D_0028E0A8;
             reg_d4.h[0] |= 0x400;
             *(u16 *)reg_a5 |= reg_d4.h[0];
@@ -1090,13 +1091,13 @@ hit_160:
             reg_d2.h[0] = *(u16 *)(reg_a5 + 2);
             reg_d2.h[0] += reg_d6.h[0];
             reg_a6 = (u8 *) D_0028E0A0_as_u16_a;
-            reg_tmp.h[0] = *(u16 *)reg_a6; reg_a6 += 2;
+            reg_tmp.h[0] = ENTITY(reg_a6)->flags.h; reg_a6 += 2;
             if ((s32) reg_tmp.h[0] < (s32) reg_d2.h[0]) goto next_160;
-            reg_tmp.h[0] = *(u16 *)reg_a6; reg_a6 += 2;
+            reg_tmp.h[0] = ENTITY(reg_a6)->flags.h; reg_a6 += 2;
             if ((s32) reg_tmp.h[0] > (s32) reg_d2.h[0]) goto next_160;
-            reg_tmp.h[0] = *(u16 *)reg_a6; reg_a6 += 2;
+            reg_tmp.h[0] = ENTITY(reg_a6)->flags.h; reg_a6 += 2;
             if ((s32) reg_tmp.h[0] < (s32) reg_d0.h[0]) goto next_160;
-            reg_tmp.h[0] = *(u16 *)reg_a6; reg_a6 += 2;
+            reg_tmp.h[0] = ENTITY(reg_a6)->flags.h; reg_a6 += 2;
             if ((s32) reg_tmp.h[0] > (s32) reg_d0.h[0]) goto next_160;
             reg_tmp7.h[0] = reg_d7.h[0];
             reg_d7.h[0] = reg_d7.h[1];

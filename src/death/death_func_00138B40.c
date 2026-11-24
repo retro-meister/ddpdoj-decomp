@@ -1,4 +1,5 @@
 #include "common.h"
+#include "entity.h"
 
 #pragma divbyzerocheck on
 
@@ -307,11 +308,11 @@ s32 death_func_00138FC0(TextScript *script) {
 }
 
 void death_func_00139380(void) {
-    switch (*(u16 *)(reg_a6 + 6)) {
+    switch (ENTITY(reg_a6)->offset_y.h) {
     case 0:
-        *(u16 *)(reg_a6 + 6) = 1;
+        ENTITY(reg_a6)->offset_y.h = 1;
         func_0012FAB0();
-        *(u16 *)(reg_a6 + 0xC) = 0;
+        ENTITY(reg_a6)->sprite.h = 0;
         memset(&death_D_002AB800, 0, sizeof(TextScript));
         death_D_002AB800.cursor = death_D_002549A0;
         death_D_002AB800.alpha = 0x80;

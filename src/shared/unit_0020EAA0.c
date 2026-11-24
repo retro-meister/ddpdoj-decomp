@@ -1,4 +1,5 @@
 #include "common.h"
+#include "entity.h"
 
 void func_0020EC90(void);
 void func_0020ECE0(void);
@@ -157,7 +158,7 @@ void func_0020ED40(void) {
     *(s16 *)(reg_a6 + 0x5A) = 0;
     *(s16 *)(reg_a6 + 0x5E) = 0;
     *(s16 *)(reg_a6 + 0x60) = 0;
-    *(s8 *)reg_a6 = 7;
+    ENTITY(reg_a6)->flags.sb[0] = 7;
     func_0020ED20();
     func_001A35A0();
     if (reg_d7.h[0] != 0) {

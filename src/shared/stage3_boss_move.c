@@ -1,4 +1,5 @@
 #include "common.h"
+#include "entity.h"
 
 void func_001D3810(void);
 void func_001D38E0(void);
@@ -7,16 +8,16 @@ void func_001D3B70(void);
 
 
 void func_001D36C0(void) {
-    reg_d0.h[0] = *(u16 *)(reg_a6 + 2);
-    reg_d1.h[0] = *(u16 *)(reg_a6 + 4);
+    reg_d0.h[0] = ENTITY(reg_a6)->y.h;
+    reg_d1.h[0] = ENTITY(reg_a6)->x.h;
     reg_d0.h[0] += 0xF800 & 0xFFFF;
     reg_d0.h[0] += *(u16 *)(reg_a6 + 0x26);
     *(u16 *)(reg_a6 + 0x22) = (u16) reg_d0.h[0];
     reg_d1.h[0] += 0x7FFF + 0x7401;
     reg_d1.h[0] += *(u16 *)(reg_a6 + 0x28);
     *(u16 *)(reg_a6 + 0x24) = (u16) reg_d1.h[0];
-    reg_d0.h[0] = *(u16 *)(reg_a6 + 2);
-    reg_d1.h[0] = *(u16 *)(reg_a6 + 4);
+    reg_d0.h[0] = ENTITY(reg_a6)->y.h;
+    reg_d1.h[0] = ENTITY(reg_a6)->x.h;
     reg_d0.h[0] += 0x7FFF + 0x7801;
     reg_d0.h[0] += *(u16 *)(reg_a6 + 0x46);
     *(u16 *)(reg_a6 + 0x42) = (u16) reg_d0.h[0];
@@ -54,9 +55,9 @@ void func_001D3810(void) {
     *(u8 *)(reg_a4 + 1) -= 1;
     if ((s32) reg_tmp.b[0] <= 0) {
         *(u8 *)(reg_a4 + 1) = (u8) *(u8 *)reg_a4;
-        temp_v1 = *(u8 *)(reg_a6 + 0x1B);
+        temp_v1 = ENTITY(reg_a6)->move.b.speed;
         if (temp_v1 != 4) {
-            *(u8 *)(reg_a6 + 0x1B) = (u8) (temp_v1 - 1);
+            ENTITY(reg_a6)->move.b.speed = (u8) (temp_v1 - 1);
             goto block_5;
         }
         reg_d0.w = 7;
@@ -99,8 +100,8 @@ void func_001D38E0(void) {
         }
     }
     func_002010A0();
-    reg_d1.h[1] = *(u16 *)(reg_a6 + 2);
-    reg_d1.h[0] = *(u16 *)(reg_a6 + 4);
+    reg_d1.h[1] = ENTITY(reg_a6)->y.h;
+    reg_d1.h[0] = ENTITY(reg_a6)->x.h;
     reg_d1.h[0] += 0x2800;
     if ((s32) reg_d1.h[0] < 0x3A00) {
         reg_d0.b[0] += 0x10;
@@ -146,8 +147,8 @@ void func_001D3A20(void) {
         }
     }
     func_002010A0();
-    reg_d1.h[1] = *(u16 *)(reg_a6 + 2);
-    reg_d1.h[0] = *(u16 *)(reg_a6 + 4);
+    reg_d1.h[1] = ENTITY(reg_a6)->y.h;
+    reg_d1.h[0] = ENTITY(reg_a6)->x.h;
     reg_d1.h[0] += 0x2800;
     if ((s32) reg_d1.h[0] < 0x3600) {
         reg_d0.b[0] += 0x10;
@@ -193,8 +194,8 @@ void func_001D3B70(void) {
         }
     }
     func_002010A0();
-    reg_d1.h[1] = *(u16 *)(reg_a6 + 2);
-    reg_d1.h[0] = *(u16 *)(reg_a6 + 4);
+    reg_d1.h[1] = ENTITY(reg_a6)->y.h;
+    reg_d1.h[0] = ENTITY(reg_a6)->x.h;
     reg_d1.h[0] += 0x2800;
     if ((s32) reg_d1.h[0] < 0x3C00) {
         reg_d0.b[0] += 0x10;
