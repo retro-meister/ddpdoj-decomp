@@ -1,5 +1,4 @@
 #include "common.h"
-#pragma opt_dead_assignments off
 
 extern void func_0021C100(s32 x, s32 y, s32 z, s32 page, s32 bright, s32 alpha, s32 flag);
 extern void func_00224BA0(s32 x, s32 y, s32 z, s32 page, s32 bright, s32 alpha, s32 flag, s32 kind);
