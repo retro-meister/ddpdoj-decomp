@@ -47,6 +47,8 @@ extern TileEntry D_00592000[];
 
 void func_0021C920(void) {
     s32 tu;
+    u16 flags;
+    s32 flip;
     s32 tv;
     u16 *p;
     u32 *src;
@@ -70,7 +72,6 @@ void func_0021C920(void) {
     s16 x;
     s16 y;
     s16 w2;
-    s16 h2;
     s32 ex;
     s32 ybits;
     s32 ey;
@@ -218,7 +219,8 @@ void func_0021C920(void) {
                 dy = dy * scale / 10000 + 1;
             }
         }
-        attr = p[2];
+        flags = p[2];
+        flip = (flags >> 13) & 3;
         D_00592000[count].z = 10;
         D_00592000[count].alpha = 0x80;
         D_00592000[count].tbp = tbp;
@@ -228,8 +230,8 @@ void func_0021C920(void) {
         D_00592000[count].x[0] = ex;
         D_00592000[count].y[0] = ey;
         D_00592000[count].x[1] = ex + dx;
-        D_00592000[count].y[1] = dy = ey + dy;
-        switch ((attr >> 13) & 3) {
+        D_00592000[count].y[1] = ey + dy;
+        switch (flip) {
         case 0:
             D_00592000[count].u[0] = tu;
             D_00592000[count].v[0] = tv;

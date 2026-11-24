@@ -3099,7 +3099,7 @@ segments:
       - [0x11c810, c, main/func_0021C790]
       - [0x11c830, c, main/func_0021C7B0]
       - [0x11c860, c, main/func_0021C7E0]
-      - [0x11c9a0, asm, game_11c9a0]
+      - [0x11c9a0, c, main/func_0021C920]
       - [0x11d1c0, c, main/func_0021D140]
       - [0x11d490, c, main/func_0021D410]
       - [0x11d580, c, main/func_0021D500]
