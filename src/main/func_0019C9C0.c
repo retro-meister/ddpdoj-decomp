@@ -1,4 +1,5 @@
 #include "common.h"
+#pragma opt_propagation off
 
 extern void func_0019BC10(void);
 extern void func_0019BD40(void);
@@ -12,9 +13,9 @@ void func_0019C9C0(void)
     u32 savedD4;
     u32 savedD7;
 
-    savedD7 = ((volatile Reg32 *)&reg_d7)->w;
-    savedAddress = *(u8 *volatile *)&reg_a0;
-    savedD4 = ((volatile Reg32 *)&reg_d4)->w;
+    savedD4 = reg_d4.w;
+    savedD7 = reg_d7.w;
+    savedAddress = reg_a0;
 
     func_0019BC10();
     reg_a0 = D_002AB240;

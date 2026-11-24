@@ -47,7 +47,8 @@ void func_00219DF0(s32 col, s32 row) {
 
     uploads = 0;
     cache = D_0057EF98;
-    x = -(D_0028E238 & 0x1F);
+    x = D_0028E238 & 0x1F;
+    x *= -1;
     y = -D_0028E234;
     x += col * 32;
     y += row * 32;

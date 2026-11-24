@@ -3075,7 +3075,7 @@ segments:
       - [0x119a70, c, main/func_002199F0]
       - [0x119b00, c, main/func_00219A80]
       - [0x119da0, c, main/func_00219D20]
-      - [0x119e70, asm, game_119e70]
+      - [0x119e70, c, main/func_00219DF0]
       - [0x11a1f0, c, main/func_0021A170]
       - [0x11a2c0, c, main/func_0021A240]
       - [0x11a6c0, c, main/func_0021A640]

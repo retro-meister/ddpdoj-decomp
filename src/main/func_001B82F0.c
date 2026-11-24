@@ -16,9 +16,9 @@ void func_001B82F0(void) {
 
     reg_d3.w = reg_d0.w;
     reg_tmp.w = reg_d3.w;
-    reg_d3.h[1] = *(volatile u16 *)&reg_tmp.h[0];
-    reg_d3.h[0] = *(volatile u16 *)&reg_tmp.h[1];
-    reg_d3.w = (u32) reg_d3.b[0];
+    reg_d3.h[1] = reg_tmp.h[0];
+    reg_d3.h[0] = reg_tmp.h[1];
+    reg_d3.w &= 0xFF;
     if (reg_d3.w != 0) {
         reg_d3.w -= 0x10000;
     }

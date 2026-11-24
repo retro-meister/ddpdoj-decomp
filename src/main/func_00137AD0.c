@@ -28,7 +28,7 @@ loop_1:
     reg_d4.b[0] = (u8) *reg_a0;
     reg_a0 += 1;
     if (reg_d4.b[0] != 0) {
-        reg_d4.h[0] = *(volatile u8 *)&reg_d4.b[0];
+        reg_d4.h[0] = reg_d4.w & 0xFF;
         D_0028E478 = reg_d4.w;
         reg_d4.h[1] = reg_d4.h[0];
         reg_d4.h[0] = reg_d5.h[0];
