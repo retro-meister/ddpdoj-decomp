@@ -41,7 +41,8 @@ void func_0021B840(s32 index, u16 *src) {
         sceGsExecLoadImage(D_0057C780, data);
     } else {
         do {
-            word = data[i++];
+            fill = data[i++];
+            word = fill;
             if (!(word & 0x40000000)) {
                 buf[n++] = word & 0x1F1F1F1F;
             } else {

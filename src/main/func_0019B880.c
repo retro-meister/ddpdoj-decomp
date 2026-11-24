@@ -13,7 +13,7 @@ void func_0019B880(void) {
     u16 t;
 
     k = 0xFFFF;
-    reg_a0 = D_0025EAF0;
+    reg_a0 = (u8 *)D_0025EAF0;
     reg_d1.w = reg_d6.w;
     reg_d1.w = (u32) reg_d1.w >> 8;
     reg_d1.h[0] *= (u16)k;
@@ -23,10 +23,10 @@ void func_0019B880(void) {
     reg_d0.h[0] >>= 1;
     jtbl_0028E3F4 = *(Fn *)(D_0025EAF0 + (reg_d0.h[0] & ~3));
     jtbl_0028E3F4();
-    reg_a0 = D_0025EAF0;
+    D_0028E484 = reg_d1.h[0];
+    reg_a0 = (u8 *)D_0025EAF0;
     reg_d0.w = 0x3E;
     t = reg_d1.h[1];
-    D_0028E484 = reg_d1.h[0];
     reg_d1.h[1] = D_0028E484;
     reg_d1.h[0] = t;
     reg_d1.h[0] *= 0xFFFF;

@@ -69,7 +69,8 @@ void func_00219DF0(s32 col, s32 row) {
             sceGsSyncPath(0, 0);
         } else {
             do {
-                word = src[in++];
+                fill = src[in++];
+                word = fill;
                 if (!(word & 0x40000000)) {
                     dst[out++] = word & 0x1F1F1F1F;
                 } else {
