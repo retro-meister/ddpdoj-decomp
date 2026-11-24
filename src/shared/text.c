@@ -1,6 +1,7 @@
 #include "common.h"
 #include "sdk/ps2sdk.h"
 #include "gfx_types.h"
+#include "glyph_cache.h"
 
 typedef struct {
     u8 red;
@@ -111,7 +112,6 @@ u8 g_font_alt_palette_rgb[48] = {
     255, 255, 255
 };
 extern s8 D_00578780[];
-extern GlyphCacheEntry D_00583FD8[];
 extern void *g_dma_gif;
 extern u8 g_gif_buf_as_u8_a2_a0x10000[2][0x10000];
 
@@ -127,7 +127,6 @@ void font_load_async(void) {
     cd_read_async(g_font_file_buf, D_0029CAB0[0], D_0029CAB4[0]);
 }
 
-s32 func_002182F0();
 s32 clut_upload_defaults();
 
 void font_init(void) {
@@ -137,7 +136,7 @@ void font_init(void) {
     g_font_glyph_data = g_font_file_buf;
     font_init_palettes();
     font_upload_palettes();
-    func_002182F0();
+    glyph_cache_init();
     clut_upload_defaults();
 }
 
@@ -308,13 +307,12 @@ void text_queue_clear_all(void) {
     g_text_queue_count = 0;
 }
 
-extern s32 func_00217F30(u16 key);
 
 void text_queue_sjis(s16 x, s16 y, const char *text, u16 texturePage, u16 glyphWidth, u16 glyphHeight, u16 alpha, u16 depth)
 {
     s32 uploadCount;
     s32 uploadOffset = 0;
-    GlyphCacheEntry *cache = D_00583FD8;
+    GlyphCacheEntry *cache = g_glyph_cache;
     s32 leadByte;
     s32 shiftJis;
     s32 glyphIndex;
@@ -336,7 +334,7 @@ void text_queue_sjis(s16 x, s16 y, const char *text, u16 texturePage, u16 glyphW
         }
         if ((g_text_queue_count < 512) || (shiftJis != 0x8140)) {
             glyphIndex = (s32)sjis_to_glyph_index((s64)shiftJis);
-            cacheIndex = func_00217F30((u16)glyphIndex);
+            cacheIndex = glyph_cache_lookup((u16)glyphIndex);
             if (cacheIndex & 0x8000) {
                 for (byteIndex = 0; byteIndex < 0x152; byteIndex++) {
                     (D_00578780 + uploadOffset)[byteIndex] = (g_font_glyph_data + glyphIndex * 0x152)[byteIndex];
@@ -381,7 +379,7 @@ void overlay_queue_sjis(s16 x, s16 y, const char *text, u16 texturePage, u16 gly
 {
     s32 uploadCount;
     s32 uploadOffset = 0;
-    GlyphCacheEntry *cache = D_00583FD8;
+    GlyphCacheEntry *cache = g_glyph_cache;
     s32 leadByte;
     s32 shiftJis;
     s32 glyphIndex;
@@ -403,7 +401,7 @@ void overlay_queue_sjis(s16 x, s16 y, const char *text, u16 texturePage, u16 gly
         }
         if ((g_overlay_queue_count < 512) || (shiftJis != 0x8140)) {
             glyphIndex = (s32)sjis_to_glyph_index((s64)shiftJis);
-            cacheIndex = func_00217F30((u16)glyphIndex);
+            cacheIndex = glyph_cache_lookup((u16)glyphIndex);
             if (cacheIndex & 0x8000) {
                 for (byteIndex = 0; byteIndex < 0x152; byteIndex++) {
                     (D_00578780 + uploadOffset)[byteIndex] = (g_font_glyph_data + glyphIndex * 0x152)[byteIndex];
@@ -457,14 +455,14 @@ void text_queue_glyph(x, y, textureId, texturePage, glyphWidth, glyphHeight, alp
     s32 id = textureId;
     s32 textureIndex;
     s32 uploadOffset = 0;
-    GlyphCacheEntry *textures = D_00583FD8;
+    GlyphCacheEntry *textures = g_glyph_cache;
 
     if (g_text_queue_count < 0x200) {
         s32 queueIndex;
         s16 height;
         s16 width;
 
-        textureIndex = func_00217F30((u16)id);
+        textureIndex = glyph_cache_lookup((u16)id);
         if (textureIndex & 0x8000) {
             s32 byteIndex;
 
@@ -518,14 +516,14 @@ void overlay_queue_glyph(x, y, textureId, texturePage, glyphWidth, glyphHeight, 
     s32 id = textureId;
     s32 textureIndex;
     s32 uploadOffset = 0;
-    GlyphCacheEntry *textures = D_00583FD8;
+    GlyphCacheEntry *textures = g_glyph_cache;
 
     if (g_overlay_queue_count < 0x200) {
         s32 queueIndex;
         s16 height;
         s16 width;
 
-        textureIndex = func_00217F30((u16)id);
+        textureIndex = glyph_cache_lookup((u16)id);
         if (textureIndex & 0x8000) {
             s32 byteIndex;
 
@@ -570,7 +568,7 @@ void text_queue_ascii(s16 x, s16 y, const char *text, u16 texturePage, u16 glyph
 {
     s32 cacheIndex;
     s32 uploadCount;
-    GlyphCacheEntry *cache = D_00583FD8;
+    GlyphCacheEntry *cache = g_glyph_cache;
     s32 leadByte;
     s32 uploadOffset = 0;
     s32 glyphIndex;
@@ -583,7 +581,7 @@ void text_queue_ascii(s16 x, s16 y, const char *text, u16 texturePage, u16 glyph
     while (((leadByte = *text) != 0) && (uploadCount < 30) && (leadByte != '@')) {
         text++;
         if ((g_text_queue_count < 512) || ((leadByte & 0xFF) != ' ')) {
-            cacheIndex = func_00217F30((u16)((u8)leadByte + 0x208D));
+            cacheIndex = glyph_cache_lookup((u16)((u8)leadByte + 0x208D));
             if (cacheIndex & 0x8000) {
                 for (byteIndex = 0; byteIndex < 0x152; byteIndex++) {
                     glyphIndex = (leadByte & 0xFF) + 0x208D;
@@ -629,7 +627,7 @@ void overlay_queue_ascii(s16 x, s16 y, const char *text, u16 texturePage, u16 gl
 {
     s32 cacheIndex;
     s32 uploadCount;
-    GlyphCacheEntry *cache = D_00583FD8;
+    GlyphCacheEntry *cache = g_glyph_cache;
     s32 leadByte;
     s32 uploadOffset = 0;
     s32 glyphIndex;
@@ -642,7 +640,7 @@ void overlay_queue_ascii(s16 x, s16 y, const char *text, u16 texturePage, u16 gl
     while (((leadByte = *text) != 0) && (uploadCount < 30) && (leadByte != '@')) {
         text++;
         if ((g_overlay_queue_count < 512) || ((leadByte & 0xFF) != ' ')) {
-            cacheIndex = func_00217F30((u16)((u8)leadByte + 0x208D));
+            cacheIndex = glyph_cache_lookup((u16)((u8)leadByte + 0x208D));
             if (cacheIndex & 0x8000) {
                 for (byteIndex = 0; byteIndex < 0x152; byteIndex++) {
                     glyphIndex = (leadByte & 0xFF) + 0x208D;
@@ -812,7 +810,7 @@ void text_queue_sjis_vertical(s16 x, s16 y, const char *text, u16 texturePage, u
 {
     s32 uploadCount;
     s32 uploadOffset = 0;
-    GlyphCacheEntry *cache = D_00583FD8;
+    GlyphCacheEntry *cache = g_glyph_cache;
     s32 leadByte;
     s32 shiftJis;
     s32 glyphIndex;
@@ -834,7 +832,7 @@ void text_queue_sjis_vertical(s16 x, s16 y, const char *text, u16 texturePage, u
         }
         if ((g_text_queue_count < 512) || (shiftJis != 0x8140)) {
             glyphIndex = (s32)sjis_to_glyph_index((s64)shiftJis);
-            cacheIndex = func_00217F30((u16)glyphIndex);
+            cacheIndex = glyph_cache_lookup((u16)glyphIndex);
             if (cacheIndex & 0x8000) {
                 for (byteIndex = 0; byteIndex < 0x152; byteIndex++) {
                     (D_00578780 + uploadOffset)[byteIndex] = (g_font_glyph_data + glyphIndex * 0x152)[byteIndex];
@@ -879,7 +877,7 @@ void overlay_queue_sjis_vertical(s16 x, s16 y, const char *text, u16 texturePage
 {
     s32 uploadCount;
     s32 uploadOffset = 0;
-    GlyphCacheEntry *cache = D_00583FD8;
+    GlyphCacheEntry *cache = g_glyph_cache;
     s32 leadByte;
     s32 shiftJis;
     s32 glyphIndex;
@@ -901,7 +899,7 @@ void overlay_queue_sjis_vertical(s16 x, s16 y, const char *text, u16 texturePage
         }
         if ((g_overlay_queue_count < 512) || (shiftJis != 0x8140)) {
             glyphIndex = (s32)sjis_to_glyph_index((s64)shiftJis);
-            cacheIndex = func_00217F30((u16)glyphIndex);
+            cacheIndex = glyph_cache_lookup((u16)glyphIndex);
             if (cacheIndex & 0x8000) {
                 for (byteIndex = 0; byteIndex < 0x152; byteIndex++) {
                     (D_00578780 + uploadOffset)[byteIndex] = (g_font_glyph_data + glyphIndex * 0x152)[byteIndex];
@@ -1036,7 +1034,7 @@ void text_queue_tile(s16 x, s16 y, u16 textureId, u16 attributes, u16 scale)
     s32 textureIndex;
     s32 uploaded;
     s32 uploadOffset = 0;
-    GlyphCacheEntry *textures = D_00583FD8;
+    GlyphCacheEntry *textures = g_glyph_cache;
 
     uploaded = 0;
 
@@ -1045,7 +1043,7 @@ void text_queue_tile(s16 x, s16 y, u16 textureId, u16 attributes, u16 scale)
         s16 height;
         s16 width;
 
-        textureIndex = func_00217F30((u16)id);
+        textureIndex = glyph_cache_lookup((u16)id);
         if (textureIndex & 0x8000) {
             s32 byteIndex;
 

@@ -93,7 +93,7 @@ segments:
       - [0xa03f0, c, shared/unit_0019F270]
       - [0xa3a80, c, shared/unit_001A2900]
       - [0xa4220, c, shared/unit_001A30A0]
-      - [0xa4ea0, c, shared/unit_00217F30]
+      - [0xa4ea0, c, shared/glyph_cache]
       - [0xa5410, c, shared/memcard]
       - [0xafac0, c, shared/system]
       - [0xb1770, c, shared/text]
@@ -217,6 +217,8 @@ segments:
       - {type: .sbss, vram: 0x290bc8, name: shared/text}
       - {type: sbss, vram: 0x290bec, name: sbss_290bec}
       - {type: bss, vram: 0x291580, name: bss_291580}
+      - {type: .bss, vram: 0x301010, name: shared/glyph_cache}
+      - {type: bss, vram: 0x30b080, name: bss_30b080}
       - {type: .bss, vram: 0x61b000, name: shared/text}
       - {type: bss, vram: 0x61fe00, name: bss_61fe00}
   - name: elf_tail

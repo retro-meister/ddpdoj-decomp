@@ -168,7 +168,7 @@ segments:
       - [0x112690, c, shared/unit_00212610]
       - [0x1127a0, c, shared/text]
       - [0x1162d0, c, shared/system]
-      - [0x117fb0, c, shared/unit_00217F30]
+      - [0x117fb0, c, shared/glyph_cache]
       - [0x118520, c, shared/gfx]
       - [0x11c5b0, c, shared/background]
       - [0x11d490, c, shared/func_0021D410]
@@ -210,6 +210,8 @@ segments:
       - {type: bss, vram: 0x28f000, name: bss_28f000}
       - {type: .bss, vram: 0x2c0100, name: shared/text}
       - {type: bss, vram: 0x2c4f00, name: bss_2c4f00}
+      - {type: .bss, vram: 0x57cf80, name: shared/glyph_cache}
+      - {type: bss, vram: 0x586ff0, name: bss_586ff0}
   - name: elf_tail
     type: bin
     start: 0x18df00

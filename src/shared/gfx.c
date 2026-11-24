@@ -1,6 +1,7 @@
 #include "common.h"
 #include "sdk/ps2sdk.h"
 #include "gfx_types.h"
+#include "glyph_cache.h"
 
 void func_00219860(void);
 void func_00219A80(s32 arg0, s32 arg1);
@@ -248,7 +249,6 @@ void tex_load_common(void) {
 
 extern void func_0018DEE0(void);
 extern void cd_read_async(u8 *dst, s32 a, s32 b);
-extern void func_002182F0(void);
 extern void func_0021C7B0(s32 size);
 extern s32 func_0021C7E0(void);
 extern u8 D_0028E350;
@@ -277,7 +277,7 @@ void stage_load_step(void) {
         printf("stage load start[%d]\n", D_0028E91C);
 #endif
         func_0018DEE0();
-        func_002182F0();
+        glyph_cache_init();
         D_0028E350++;
         break;
     case 1:
@@ -334,7 +334,7 @@ void stage_load_step(void) {
         break;
     }
     } else {
-        func_002182F0();
+        glyph_cache_init();
         D_0028E350 = 0;
     }
 }
@@ -928,9 +928,7 @@ typedef struct {
     s16 pad32;
 } TileEntry;
 
-extern s32 func_002180A0(u16 key);
 extern s16 D_0028E234;
-extern GlyphCacheEntry D_0057EF98[];
 extern u32 D_005C4C80[];
 
 void func_00219DF0(s32 col, s32 row) {
@@ -956,7 +954,7 @@ void func_00219DF0(s32 col, s32 row) {
     s32 count;
 
     uploads = 0;
-    cache = D_0057EF98;
+    cache = g_glyph_cache_sub;
     x = D_0028E238 & 0x1F;
     x *= -1;
     y = -D_0028E234;
@@ -965,7 +963,7 @@ void func_00219DF0(s32 col, s32 row) {
     palette = (reg_d0.h[0] & 0x3F) >> 1;
     key = reg_d0.h[1] & 0x1FFF;
     n = g_quad_count;
-    slot = func_002180A0(key);
+    slot = glyph_cache_sub_lookup(key);
     if (slot & 0x8000) {
         slot &= 0x7FFF;
         u = cache[slot].x;

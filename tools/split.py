@@ -192,9 +192,11 @@ def align_rodata_subsegments(folder):
     Vaddr and file offset share their low four bits, so on a contiguous layout this adds no
     padding; it only restores the gap the original unit's own alignment produced.
     """
-    for path in (folder / "asm" / "data").glob("*data_*.*data.s"):
-        # the same holds for a `data_<offset>` slice that follows a C unit's .data
-        match = re.fullmatch(r"(?:ro)?data_([0-9a-f]+)\.(?:ro)?data\.s", path.name)
+    data_dir = folder / "asm" / "data"
+    for path in list(data_dir.glob("*data_*.*data.s")) + list(data_dir.glob("bss_*.bss.s")):
+        # the same holds for a `data_<offset>` slice that follows a C unit's .data, and for a
+        # `bss_<address>` slice that follows a C unit's .bss
+        match = re.fullmatch(r"(?:(?:ro)?data|bss)_([0-9a-f]+)\.(?:(?:ro)?data|bss)\.s", path.name)
         if not match:
             continue
         offset = int(match.group(1), 16)
@@ -227,7 +229,8 @@ def _split(name, force=False):
     yaml_text = splat_yaml_path(name).read_text(encoding="utf-8")
     sym_text = symbols_path(name).read_text(encoding="utf-8")
     fingerprint = hashlib.sha256(
-        (splat_versions() + "\n" + yaml_text + "\n" + sym_text + aliases_text(name)).encode("utf-8")
+        (splat_versions() + "\n" + yaml_text + "\n" + sym_text + aliases_text(name)
+         + Path(__file__).read_text(encoding="utf-8")).encode("utf-8")  # post-processing lives in this file
     ).hexdigest()
     folder = split_dir(name)
     state_file = folder / "split-state.json"
