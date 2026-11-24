@@ -5,6 +5,7 @@
     uv run tools/tu.py --rodata src/shared/font.c --main 286ec0:286ed8 --death 281fe0:281ff8
                                                                         # the unit now owns these .rodata bytes
     uv run tools/tu.py --strings src/shared/system.c                    # its string references become literals
+    uv run tools/tu.py --move src/shared/a.c src/shared/b.c             # rename a unit (file and splat.yaml)
 
 `--from`/`--to` name the first and last unit of the run in SLPS_252.33 (a unit is named after its file). The
 same code in DEATH.ELF is found through the shared units of the run; Death Label units lying between them are
@@ -205,7 +206,17 @@ def canonical_types(pieces):
                 parsed = data_declaration(text) if kind == "decl" and "\n" not in text else None
                 if parsed:
                     found.setdefault(parsed[0], set()).add(parsed[1:])
-    return {name for name, forms in found.items() if len(forms) > 1}
+                prototype = PROTOTYPE_RE.match(text) if kind == "decl" and "\n" not in text else None
+                if prototype:
+                    flat = re.sub(r"\s+", " ", re.sub(r"/\*.*?\*/", "", text)).strip()
+                    found.setdefault(prototype.group(1), set()).add(re.sub(r"^extern ", "", flat))
+    # Prototypes of SDK functions and of the run's own functions are settled by `tidy_prototypes`.
+    settled = sdk_functions()
+    for pair in pieces:
+        for stub in dict.fromkeys(pair):
+            if stub:
+                settled |= set(definitions(ROOT / "src" / f"{stub}.c"))
+    return {name for name, forms in found.items() if len(forms) > 1 and name not in settled}
 
 
 def declaration(name, base, dims):
@@ -242,6 +253,7 @@ def piece_text(path, seen, scopes, canonical):
     with (the compiler accepts differing block-scope declarations, not differing file-scope ones)."""
     includes, body, leading, local = [], [], [], {}
     started = False
+    depth = 0
     for kind, text in blocks(piece_source(path.relative_to(ROOT / "src").with_suffix("").as_posix())):
         if kind == "include":
             includes.append(text)
@@ -249,10 +261,21 @@ def piece_text(path, seen, scopes, canonical):
         if kind == "pragma" and not started:
             leading.append(text)
             continue
+        if kind == "code" and re.match(r"\s*#\s*if", text):
+            depth += 1
+        elif kind == "code" and re.match(r"\s*#\s*endif", text):
+            depth -= 1
+        if kind == "decl" and depth:
+            body.append(text)       # inside a conditional: leave it exactly where it is
+            continue
         if kind == "decl":
             parsed = data_declaration(text) if "\n" not in text else None
             if parsed and parsed[0] in canonical:
                 local[parsed[0]] = declaration(*parsed)
+                continue
+            prototype = PROTOTYPE_RE.match(text) if "\n" not in text else None
+            if prototype and prototype.group(1) in canonical:
+                local[prototype.group(1)] = re.sub(r"\s*/\*.*?\*/\s*$", "", text.strip())
                 continue
             key = re.sub(r"\s+", " ", text.strip())
             if any(key in seen[scope] for scope in scopes):
@@ -314,6 +337,12 @@ def tidy_prototypes(text, pieces):
                 continue
         kept.append(line)
     body = "\n".join(kept)
+    for name, prototype in list(defined.items()):
+        if not prototype.endswith(f"{name}(void);"):
+            continue
+        if re.search(rf"\b{name}\s*\(\s*(?!void\s*\))[^)\s]", body):
+            body = re.sub(rf"^([A-Za-z_][\w \t\*]*?[ \*]{name})\s*\(\s*void\s*\)", r"\1()", body, flags=re.M)
+            defined[name] = prototype.replace(f"{name}(void);", f"{name}();")
     forward = []
     for name, prototype in defined.items():
         definition = re.search(rf"^[A-Za-z_][\w \t\*]*?[ \*]{name}\s*\([^;{{]*\)\s*\{{?\s*$", body, re.M)
@@ -375,13 +404,18 @@ def patch_yaml(target, run, new_stub):
     drop = {e["line"] for e in run[1:]}
     first = run[0]
     lines[first["line"]] = f"{first['prefix']}{first['offset']:#x}, c, {new_stub}]"
+    # The members' .rodata (jump tables, strings) becomes the unit's. Entries that touch are joined; where
+    # assembly slices still lie between them (strings not yet inlined) several entries stay for now, and
+    # `--strings` joins them when it gives the unit the strings in between.
     rodata = [e for e in entries if e["kind"] == ".rodata" and e["stub"] in stubs]
-    if rodata:
-        index = entries.index(rodata[0])
-        if [e["line"] for e in entries[index:index + len(rodata)]] != [e["line"] for e in rodata]:
-            raise ValueError(f"{target}: the run's .rodata is not contiguous; it is not one translation unit")
-        lines[rodata[0]["line"]] = f"{rodata[0]['prefix']}{rodata[0]['offset']:#x}, .rodata, {new_stub}]"
-        drop |= {e["line"] for e in rodata[1:]}
+    previous = None
+    for entry in rodata:
+        index = entries.index(entry)
+        if previous is not None and entries[index - 1] is previous:
+            drop.add(entry["line"])
+        else:
+            lines[entry["line"]] = f"{entry['prefix']}{entry['offset']:#x}, .rodata, {new_stub}]"
+        previous = entry
     path.write_text("\n".join(line for i, line in enumerate(lines) if i not in drop) + "\n", encoding="utf-8")
 
 
@@ -619,7 +653,19 @@ def main():
     parser.add_argument("--main", metavar="START:END", help="address range in SLPS_252.33")
     parser.add_argument("--death", metavar="START:END", help="address range in DEATH.ELF")
     parser.add_argument("--strings", metavar="SOURCE", help="turn the unit's string references into literals")
+    parser.add_argument("--move", nargs=2, metavar=("SOURCE", "NEW"), help="rename or move a unit, e.g. src/shared/a.c src/engine/b.c")
     args = parser.parse_args()
+    if args.move:
+        old, new = (Path(value).relative_to("src").with_suffix("").as_posix() for value in args.move)
+        for target in (MAIN, DEATH):
+            path, lines, entries = yaml_entries(target)
+            for entry in entries:
+                if entry["stub"] == old:
+                    lines[entry["line"]] = f"{entry['prefix']}{entry['offset']:#x}, {entry['kind']}, {new}]"
+            path.write_text("\n".join(lines) + "\n", encoding="utf-8")
+        (ROOT / args.move[1]).parent.mkdir(parents=True, exist_ok=True)
+        subprocess.run(["git", "mv", args.move[0], args.move[1]], cwd=ROOT, check=True)
+        return
     if args.strings:
         inline_strings(args.strings)
         return
