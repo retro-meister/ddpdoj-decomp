@@ -245,6 +245,21 @@ def localize(lines, local):
     return out
 
 
+def unbalanced_pragma(text):
+    """True when a pragma other than push/pop stands outside every push/pop pair of `text`."""
+    depth = 0
+    for kind, line in blocks(text):
+        if kind == "pragma":
+            word = line.split()[-1] if len(line.split()) == 2 else ""
+            if word == "push":
+                depth += 1
+            elif word == "pop":
+                depth -= 1
+            elif depth <= 0:
+                return True
+    return False
+
+
 def piece_text(path, seen, scopes, canonical):
     """Body of one unit with declarations already seen in `scopes` removed; returns (includes, text).
 
@@ -293,8 +308,9 @@ def piece_text(path, seen, scopes, canonical):
     if local:
         body = localize(body, local)
     text = "\n".join(body).strip("\n")
-    if leading:
-        text = "#pragma push\n" + "\n".join(leading) + "\n" + text + "\n#pragma pop"
+    # a pragma in the middle of a piece lasted to the end of its file, so the whole piece is bracketed
+    if leading or unbalanced_pragma(text):
+        text = "#pragma push\n" + "\n".join(leading + [text]) + "\n#pragma pop"
     return includes, text
 
 
@@ -425,19 +441,20 @@ def patch_yaml(target, run, new_stub):
     path.write_text("\n".join(line for i, line in enumerate(lines) if i not in drop) + "\n", encoding="utf-8")
 
 
-def carve_rodata(target, stub, start, end):
-    """Give `stub` the .rodata bytes [start, end) (addresses) plus whatever .rodata it already has, as one
-    entry. The bytes come out of assembly `rodata` slices, which are cut where needed."""
+def carve_rodata(target, stub, start, end, section="rodata"):
+    """Give `stub` the .rodata (or .data) bytes [start, end) (addresses) plus whatever it already has of that
+    section, as one entry. The bytes come out of assembly slices, which are cut where needed."""
     path, lines, entries = yaml_entries(target)
     start, end = start - FILE_ADDRESS, end - FILE_ADDRESS
-    area = [i for i, e in enumerate(entries) if e["kind"] in ("rodata", ".rodata")]
+    ours = "." + section
+    area = [i for i, e in enumerate(entries) if e["kind"] in (section, ours)]
     first, last = area[0], area[-1]
     spans = [(entries[i], entries[i + 1]["offset"]) for i in range(first, last + 1)]
     for entry, stop in spans:
-        if entry["kind"] == ".rodata" and entry["stub"] == stub:
+        if entry["kind"] == ours and entry["stub"] == stub:
             start, end = min(start, entry["offset"]), max(end, stop)
     prefix = entries[first]["prefix"]
-    own = f"{prefix}{start:#x}, .rodata, {stub}]"
+    own = f"{prefix}{start:#x}, {ours}, {stub}]"
     new, placed = [], False
     for entry, stop in spans:
         if stop <= start or entry["offset"] >= end:
@@ -446,15 +463,15 @@ def carve_rodata(target, stub, start, end):
                 placed = True
             new.append(lines[entry["line"]])
             continue
-        if entry["kind"] == ".rodata" and entry["stub"] != stub:
-            raise ValueError(f"{target}: {start:#x}..{end:#x} runs into the .rodata of {entry['stub']}")
+        if entry["kind"] == ours and entry["stub"] != stub:
+            raise ValueError(f"{target}: {start:#x}..{end:#x} runs into the {ours} of {entry['stub']}")
         if entry["offset"] < start:
             new.append(lines[entry["line"]])
         if not placed:
             new.append(own)
             placed = True
         if stop > end:
-            new.append(f"{prefix}{end:#x}, rodata, rodata_{end:x}]")
+            new.append(f"{prefix}{end:#x}, {section}, {section}_{end:x}]")
     if not placed:
         new.append(own)
     lines[entries[first]["line"]:entries[last]["line"] + 1] = new
@@ -656,6 +673,7 @@ def main():
     parser.add_argument("--to", dest="last")
     parser.add_argument("--check", metavar="SOURCE")
     parser.add_argument("--rodata", metavar="SOURCE", help="give a unit a .rodata range; use with --main and/or --death")
+    parser.add_argument("--data", metavar="SOURCE", help="give a unit a .data range; use with --main and/or --death")
     parser.add_argument("--main", metavar="START:END", help="address range in SLPS_252.33")
     parser.add_argument("--death", metavar="START:END", help="address range in DEATH.ELF")
     parser.add_argument("--strings", metavar="SOURCE", help="turn the unit's string references into literals")
@@ -675,12 +693,12 @@ def main():
     if args.strings:
         inline_strings(args.strings)
         return
-    if args.rodata:
-        stub = Path(args.rodata).relative_to("src").with_suffix("").as_posix()
+    if args.rodata or args.data:
+        stub = Path(args.rodata or args.data).relative_to("src").with_suffix("").as_posix()
         for target, span in ((MAIN, args.main), (DEATH, args.death)):
             if span:
                 start, end = (int(v, 16) for v in span.split(":"))
-                carve_rodata(target, stub, start, end)
+                carve_rodata(target, stub, start, end, "rodata" if args.rodata else "data")
         return
     if args.check:
         raise SystemExit(0 if check(args.check) else 1)

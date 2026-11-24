@@ -181,6 +181,10 @@ def write_symbols_ld(name, folder):
             lines.append(f"{sym_name} = {int(addr_str, 0):#x};")
     out = folder / "symbols.ld"
     out.write_text("\n".join(lines) + "\n", encoding="ascii")
+    with (ROOT / "build" / "symbols-ld.log").open("a", encoding="utf-8") as log:   # temporary diagnostics
+        import datetime, traceback
+        log.write(f"{datetime.datetime.now()} {name} {len(lines)} lines, aliases {len(aliases_text(name))}\n"
+                  + "".join(traceback.format_stack(limit=6)) + "\n")
     return out
 
 
