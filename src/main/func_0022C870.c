@@ -2,7 +2,7 @@
 
 s32 func_0022C960(void);
 s32 func_002345B0(void);
-extern volatile s8 D_0028E268;
+extern s8 D_0028E268;
 extern s32 D_0028ECC0;
 extern s32 D_0028ECC4;
 extern s32 D_0028ECCC;
@@ -15,16 +15,16 @@ extern s32 D_0028ED0C;
 extern s32 D_0028ED10;
 extern s32 D_0028ED18;
 extern u32 D_0028ED20;
-extern volatile s32 D_006A0E40[4];
+extern s32 D_006A0E40[4];
 
 void func_0022C870(void) {
     D_0028E268 = 1;
+    D_0028ED10 = 0;
+    D_0028ED08 = 0;
     D_006A0E40[0] = 0;
     D_006A0E40[1] = 0;
     D_006A0E40[2] = 0;
-    D_0028ED10 = 0;
     D_006A0E40[3] = 0;
-    D_0028ED08 = 0;
     D_0028ED0C = 0;
     D_0028ECC4 = 0;
     D_0028ECC0 = 0;
