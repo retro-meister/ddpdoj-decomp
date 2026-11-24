@@ -141,7 +141,7 @@ void func_00131460(void) {
 }
 
 s32 func_0020ECE0();                            /* extern */
-s32 func_00236D50();                            /* extern */
+s32 replay_header_clear();                            /* extern */
 extern s16 D_0028E3B4_as_s16;
 extern s16 D_0028E3B8;
 extern s16 D_0028E3BC_as_s16;
@@ -169,7 +169,7 @@ void func_00131490(void) {
     D_0028E3CC = 0;
     D_0028ED80_as_s8 = 0;
     D_0028ED7C_as_s8 = 0;
-    func_00236D50();
+    replay_header_clear();
     D_0028E3C0_as_s16 = 0;
     D_0028E3BC_as_s16 = 0;
     D_0028E3B8 = 0;

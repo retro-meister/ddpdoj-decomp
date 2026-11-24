@@ -65,7 +65,7 @@ void func_00168BC0(void) {
     s32 func_001A2FA0();
     s32 func_00206D70();
     s32 func_002071C0();
-    s32 func_00236D50();
+    s32 replay_header_clear();
 #ifndef DEATH_LABEL
     u32 t;
 #endif
@@ -107,7 +107,7 @@ block_1:
     func_00137C50();
     if (D_0028E3C0 == 0) goto next_4;
     D_0028E3C0 = 0;
-    func_00236D50();
+    replay_header_clear();
     D_0028ED80_as_s8 = 0;
     D_0028ED7C_as_s8 = 0;
     D_0028ED74_as_s8 = 0;
@@ -710,7 +710,7 @@ void func_00169680(void) {
     void func_001A2FA0(void);
     void func_00206D70(void);
     void func_002071C0(void);
-    void func_00236D50(void);
+    void replay_header_clear(void);
     s32 a;
     s32 b;
 
@@ -720,7 +720,7 @@ void func_00169680(void) {
     reg_d0.w = 0;
     reg_a0 = (u8 *)D_00269140;
     func_001A2FA0();
-    func_00236D50();
+    replay_header_clear();
     a = D_0068DEDA[0];
     b = D_0068DEDC[0];
     if (D_0028EC24 == 0) {

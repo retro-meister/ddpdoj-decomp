@@ -1,34 +1,29 @@
 #include "common.h"
 #include "sdk/ps2sdk.h"
+#include "replay.h"
 
-void func_00236C50(u8 *arg0) {
-    printf("fig1p type[%d] doll[%d] \n", (*(u16 *)((u8 *)(arg0) + (2))), (*(u16 *)((u8 *)(arg0) + (4))));
-    printf("fig2p type[%d] doll[%d] \n", (*(u16 *)((u8 *)(arg0) + (6))), (*(u16 *)((u8 *)(arg0) + (8))));
-    printf("difficulty[%d]\n", (*(u16 *)((u8 *)(arg0) + (0xA))));
-    printf("round[%d]\n", (*(u16 *)((u8 *)(arg0) + (0xC))));
-    printf("stage[%d]\n", (*(u16 *)((u8 *)(arg0) + (0xE))));
-    printf("rank[%d]\n", (*(u16 *)((u8 *)(arg0) + (0x20))));
-    printf("max bom[%d]\n", (*(u16 *)((u8 *)(arg0) + (0x14))));
-    printf("stock bom[%d]\n", (*(u16 *)((u8 *)(arg0) + (0x16))));
-    printf("hyper stock[%d]\n", (*(u16 *)((u8 *)(arg0) + (0x1C))));
-    printf("hyper gage[%d]\n", (*(u16 *)((u8 *)(arg0) + (0x1E))));
-    printf("start[%d]\n", (*(u16 *)((u8 *)(arg0) + (0x18))));
-    printf("death[%d]\n", (*(u16 *)((u8 *)(arg0) + (0x1A))));
-    printf("bullet[%d]\n", (*(u16 *)((u8 *)(arg0) + (0x24))));
+void replay_header_print(ReplayHeader *header) {
+    printf("fig1p type[%d] doll[%d] \n", header->p1_type, header->p1_doll);
+    printf("fig2p type[%d] doll[%d] \n", header->p2_type, header->p2_doll);
+    printf("difficulty[%d]\n", header->difficulty);
+    printf("round[%d]\n", header->round);
+    printf("stage[%d]\n", header->stage);
+    printf("rank[%d]\n", header->rank);
+    printf("max bom[%d]\n", header->max_bomb);
+    printf("stock bom[%d]\n", header->stock_bomb);
+    printf("hyper stock[%d]\n", header->hyper_stock);
+    printf("hyper gage[%d]\n", header->hyper_gauge);
+    printf("start[%d]\n", header->start);
+    printf("death[%d]\n", header->death);
+    printf("bullet[%d]\n", header->bullet);
 }
 
-extern s32 D_006E5BE0_as_s32_a[];
-extern s16 D_006E5BE2[];
-extern s16 D_006E5BE4[];
-extern s16 D_006E5BE6[];
-extern s16 D_006E5BE8[];
-
-void func_00236D50(void) {
-    memset(D_006E5BE0_as_s32_a, 0, 0x42);
-    D_006E5BE2[0] = 0xFF;
-    D_006E5BE4[0] = 0xFF;
-    D_006E5BE6[0] = 0xFF;
-    D_006E5BE8[0] = 0xFF;
+void replay_header_clear(void) {
+    memset(&g_replay_header, 0, sizeof(g_replay_header));
+    g_replay_header.p1_type = 0xFF;
+    g_replay_header.p1_doll = 0xFF;
+    g_replay_header.p2_type = 0xFF;
+    g_replay_header.p2_doll = 0xFF;
 }
 
 void func_002075F0(void);
@@ -46,13 +41,10 @@ typedef struct {
     s16 trailingHalfword;
 } StateBlock;
 
-extern StateBlock D_006E5B90_as_StateBlock_a[];
-extern StateBlock D_006E5BE0_as_StateBlock_a[];
-
-void func_00236DB0(void)
+void replay_header_save(void)
 {
-    u32 destinationAddress = (u32)D_006E5B90_as_StateBlock_a;
-    u32 sourceAddress = (u32)D_006E5BE0_as_StateBlock_a;
+    u32 destinationAddress = (u32)&g_replay_header_saved;
+    u32 sourceAddress = (u32)&g_replay_header;
 
     *(StatePayload *)destinationAddress = *(const StatePayload *)sourceAddress;
     *(s16 *)(destinationAddress + sizeof(StatePayload)) =
@@ -61,11 +53,6 @@ void func_00236DB0(void)
 
 extern void func_00136600(void);
 extern u8 D_0028E370;
-extern u8 D_006E5BE0[];
-extern u16 D_006E5BE2_as_u16_a[];
-extern u16 D_006E5BE4_as_u16_a[];
-extern u16 D_006E5BE6_as_u16_a[];
-extern u16 D_006E5BE8_as_u16_a[];
 extern u8 *reg_a0;
 extern u8 *reg_a1;
 extern u8 *reg_a2;
@@ -73,7 +60,7 @@ extern u8 *reg_a3;
 extern u8 *reg_a4;
 extern u8 *reg_a5;
 
-void func_00236DF0(void) {
+void replay_header_apply(void) {
     u32 save_d0;
     u32 save_d1;
     u32 save_d2;
@@ -105,16 +92,16 @@ void func_00236DF0(void) {
     save_a5 = reg_a5;
     reg_d0.w = 0;
     reg_d1.w = 0;
-    reg_d0.h[0] = D_006E5BE2_as_u16_a[0];
-    reg_d1.h[0] = D_006E5BE4_as_u16_a[0];
+    reg_d0.h[0] = g_replay_header.p1_type;
+    reg_d1.h[0] = g_replay_header.p1_doll;
     reg_d2.w = 0;
     D_0028E370 = 0;
     reg_d3.w = 0;
     reg_d4.w = 1;
-    reg_d2.h[0] = D_006E5BE6_as_u16_a[0];
-    reg_d3.h[0] = D_006E5BE8_as_u16_a[0];
+    reg_d2.h[0] = g_replay_header.p2_type;
+    reg_d3.h[0] = g_replay_header.p2_doll;
     func_00136600();
-    func_00236C50(D_006E5BE0);
+    replay_header_print(&g_replay_header);
     reg_d0.w = save_d0;
     reg_d1.w = save_d1;
     reg_d2.w = save_d2;

@@ -107,7 +107,7 @@ s32 func_001A2FA0();
 s32 func_001B04B0();
 s32 func_002071C0();
 s32 func_0020ECE0();
-s32 func_00236D50();
+s32 replay_header_clear();
 extern u8 D_0025F770[];
 extern u8 D_00260930[];
 extern u8 D_00260970[];
@@ -136,7 +136,7 @@ void func_001B1080(void) {
     func_00137C50();
     D_0028E3C0_as_s16 = 0;
     D_0028ED80 = 0;
-    func_00236D50();
+    replay_header_clear();
     D_0028ED7C = 1;
     D_0028ED74 = 2;
     func_0020ECE0();

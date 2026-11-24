@@ -1,5 +1,6 @@
 #include "common.h"
 #include "sdk/ps2sdk.h"
+#include "replay.h"
 
 void func_00237D50();
 
@@ -443,19 +444,13 @@ void func_00237470(void) {
     reg_a5 = save_a5;
 }
 
-typedef struct {
-    u8 data[0x42];
-} Struct66;
-
-extern Struct66 D_006E5B90;
-extern Struct66 D_006E5BE0_as_Struct66;
 
 void func_00237670(void) {
     s32 func_002071C0();
     u32 temp_s0 = reg_d0.w;
     u8 *temp_s1 = reg_a0;
 
-    D_006E5BE0_as_Struct66 = D_006E5B90;
+    g_replay_header = g_replay_header_saved;
     reg_d0.h[0] = 0x14;
     func_002071C0();
     *(s8 *)(reg_a0 + 5) = 0;
@@ -782,10 +777,6 @@ void func_00237D50() {
     func_002376F0(D_006CB584[0]);
 }
 
-typedef struct {
-    s16 h[0x21];
-} SaveHeader;
-
 extern void label_draw(s32 a, s32 b, s32 c, s32 d);
 extern void func_0023B720(u8 *arg);
 extern u8 D_00269140[];
@@ -797,18 +788,16 @@ extern u16 D_0028E3C0;
 extern u8 D_0028E3F8_as_u8;
 extern u8 D_0028ED58;
 extern u8 D_0028ED5C;
-extern SaveHeader D_006C58A0_as_SaveHeader;
+extern ReplayHeader D_006C58A0_as_SaveHeader; /* the header at the start of the save buffer */
 extern u16 D_006C8E56[];
 extern u16 D_006C8E5C[];
-extern SaveHeader D_006E5BE0_as_SaveHeader;
-extern u16 D_006E5BEE[];
 
 void func_00237DF0(void) {
     extern void func_0012FAB0(void);
     extern void func_00171910(void);
     extern void func_001A2FA0(void);
     extern void func_002071C0(void);
-    extern void func_00236DB0(void);
+    extern void replay_header_save(void);
     u32 save_d0;
     u32 save_d1;
     u32 save_d2;
@@ -847,7 +836,7 @@ void func_00237DF0(void) {
     save_a4 = reg_a4;
     save_a5 = reg_a5;
     save_a6 = reg_a6;
-    D_006E5BE0_as_SaveHeader = D_006C58A0_as_SaveHeader;
+    g_replay_header = D_006C58A0_as_SaveHeader;
     *(u8 *)(reg_a5 + 3) = 1;
     *(u16 *)(reg_a5 + 10) = 0;
     if (D_006C8E56[0] == 0 && D_006C8E5C[0] != 0) {
@@ -867,14 +856,14 @@ void func_00237DF0(void) {
     }
     reg_d0.h[0] = 10;
     func_002071C0();
-    *(u16 *)(reg_a0 + 4) = D_006E5BEE[0];
+    *(u16 *)(reg_a0 + 4) = g_replay_header.stage;
     func_00171910();
     func_0012FAB0();
     reg_d0.w = 0;
     reg_a0 = (u8 *)D_00269140;
     func_001A2FA0();
     label_draw(0, 0, 0, 0);
-    func_00236DB0();
+    replay_header_save();
     reg_d0.w = save_d0;
     reg_d1.w = save_d1;
     reg_d2.w = save_d2;
@@ -896,7 +885,7 @@ s32 func_0011C920();
 s32 func_00137CC0();
 s32 func_001A33C0();
 extern void gfx_draw_color_box(s32 x, s32 y, s32 w, s32 h, s32 depth, s32 alpha, s32 r, s32 g, s32 b);
-extern void func_00236DF0(void);
+extern void replay_header_apply(void);
 s32 func_0023B6B0();
 extern char D_0028BF20[];
 extern u8 D_0028DEF8;
@@ -1022,7 +1011,7 @@ void func_00238010(void) {
         D_0028E2EC = D_006C91AF[0];
         D_0028E304 = D_006C91B0[0];
         D_0028E2E4 = D_006C58C4[0];
-        func_00236DF0();
+        replay_header_apply();
         func_00135100();
         step = 0x64;
         break;
@@ -1042,9 +1031,9 @@ void func_00238010(void) {
             if (D_0028EC58 != 0) {
                 step += 1;
 #ifdef DEATH_LABEL
-                if (D_006E5BEE[0] == 0) {
+                if (g_replay_header.stage == 0) {
 #else
-                if ((D_006E5BEE[0] == 0) && (D_0028E3C0 == 0)) {
+                if ((g_replay_header.stage == 0) && (D_0028E3C0 == 0)) {
 #endif
                     func_0018D190();
                 }
@@ -1140,7 +1129,7 @@ void func_00238520(void) {
     s32 func_00171910();
     s32 func_001A2FA0();
     s32 func_002071C0();
-    s32 func_00236DB0();
+    s32 replay_header_save();
     u32 save_d0;
     u32 save_d1;
     u32 save_d2;
@@ -1181,13 +1170,13 @@ void func_00238520(void) {
     *(s16 *)(reg_a5 + 4) = 0;
     reg_d0.h[0] = 0xA;
     func_002071C0();
-    *(u16 *)(reg_a0 + 4) = D_006E5BEE[0];
+    *(u16 *)(reg_a0 + 4) = g_replay_header.stage;
     func_00171910();
     func_0012FAB0();
     reg_d0.w = 0;
     reg_a0 = (u8 *)D_00269140;
     func_001A2FA0();
-    func_00236DB0();
+    replay_header_save();
     reg_d0.w = save_d0;
     reg_d1.w = save_d1;
     reg_d2.w = save_d2;
@@ -1213,15 +1202,6 @@ extern u8 D_0028E2B0;
 extern u8 D_0028E2C4;
 extern u8 D_0028E2C8;
 extern u8 D_0028E2D4;
-extern u8 D_006E5BEA[];
-extern u16 D_006E5BEC[];
-extern u8 D_006E5BF8[];
-extern u8 D_006E5BFA[];
-extern u16 D_006E5BFE[];
-extern u8 D_006E5C00[];
-extern u8 D_006E5C04[];
-extern u8 D_006E5C0A[];
-extern u8 D_006E5C0C[];
 
 void func_00238690(void) {
     extern void func_00135100(void);
@@ -1275,15 +1255,15 @@ void func_00238690(void) {
         step++;
         break;
     case 16:
-        D_0028E38C = D_006E5BEA[0];
-        D_0028E2E4 = D_006E5C04[0];
-        D_0028E2C8 = D_006E5BF8[0];
-        D_0028E2C4 = D_006E5BFA[0];
-        D_0028E2D4 = D_006E5C00[0];
-        D_0028E2B0 = D_006E5C0A[0];
-        D_0028E2AC = D_006E5BFE[0];
-        D_0028E2A8 = D_006E5C0C[0];
-        func_00236DF0();
+        D_0028E38C = *(u8 *)&g_replay_header.difficulty;
+        D_0028E2E4 = *(u8 *)&g_replay_header.bullet;
+        D_0028E2C8 = *(u8 *)&g_replay_header.start;
+        D_0028E2C4 = *(u8 *)&g_replay_header.death;
+        D_0028E2D4 = *(u8 *)&g_replay_header.rank;
+        D_0028E2B0 = *(u8 *)&g_replay_header.unk2A;
+        D_0028E2AC = g_replay_header.hyper_gauge;
+        D_0028E2A8 = *(u8 *)&g_replay_header.unk2C;
+        replay_header_apply();
         func_00135100();
         step++;
         D_0028E298_as_s8 = 1;
@@ -1299,9 +1279,9 @@ void func_00238690(void) {
         if (D_0028E370 != 0) {
             D_0028E298_as_s8 = 0;
             step++;
-            D_0028E910 = D_006E5BEC[0];
+            D_0028E910 = g_replay_header.round;
             func_00135110();
-            if (D_006E5BEE[0] == 0) {
+            if (g_replay_header.stage == 0) {
                 func_0018D190();
             }
         }
