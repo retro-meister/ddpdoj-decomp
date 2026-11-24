@@ -179,10 +179,10 @@ def unit_constraints(unit, base, image, file_address, gp):
         if symbol["shndx"] == 0:
             externs[symbol["name"]][value] += 1
         elif symbol["shndx"] == unit["text"]:
-            if value != base:
+            if value - symbol["value"] != base:
                 externs["@text"][value] += 1
         elif symbol["shndx"] in unit["sections"]:
-            locals_[unit["sections"][symbol["shndx"]]["name"]][value] += 1
+            locals_[unit["sections"][symbol["shndx"]]["name"]][value - symbol["value"]] += 1
     return externs, locals_
 
 
@@ -217,7 +217,7 @@ def verify_sections(unit, placement, image, file_address, gp, bss_start):
             if symbol["shndx"] == 0:
                 externs[symbol["name"]][value] += 1
             elif symbol["shndx"] == unit["text"]:
-                if value != placement["base"]:
+                if value - symbol["value"] != placement["base"]:
                     problems.append(f"{name}: jump table points outside the unit")
             elif unit["sections"][symbol["shndx"]]["name"] != name or value != base:
                 problems.append(f"{name}: unexpected local reference")

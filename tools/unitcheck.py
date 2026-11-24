@@ -110,7 +110,7 @@ def integrate_unit(local, source, base, sections, symbols, text, functions, do_b
             if symbol["shndx"] == 0:
                 wanted[symbol["name"]][value] += 1
             elif symbol["shndx"] != text and symbol["shndx"] in sections:
-                local_bases[sections[symbol["shndx"]]["name"]][value] += 1
+                local_bases[sections[symbol["shndx"]]["name"]][value - symbol["value"]] += 1
 
     collect(section["data"], theirs, section["relocs"])
     rodata = []
