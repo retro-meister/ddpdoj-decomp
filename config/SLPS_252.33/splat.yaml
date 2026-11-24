@@ -182,7 +182,7 @@ segments:
       - [0x13dcb0, pad]
       - [0x13dd00, data, data]
       - [0x16f820, .data, shared/text]
-      - [0x16f8f0, data, data_16f8f0]
+      - [0x16f8f0, .data, shared/gfx]
       - [0x16fc20, .data, shared/arcade_sprite]
       - [0x170890, data, data_170890]
       - [0x172170, .data, shared/memcard]
@@ -209,6 +209,7 @@ segments:
       - {type: sbss, vram: 0x28de80, name: sbss_28de80}
       - {type: .sbss, vram: 0x28e9b8, name: shared/text}
       - {type: sbss, vram: 0x28e9dc, name: sbss_28e9dc}
+      - {type: .sbss, vram: 0x28ea48, name: shared/gfx}
       - {type: .sbss, vram: 0x28ea84, name: shared/arcade_sprite}
       - {type: sbss, vram: 0x28eaa8, name: sbss_28eaa8}
       - {type: bss, vram: 0x28f000, name: bss_28f000}

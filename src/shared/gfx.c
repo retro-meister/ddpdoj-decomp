@@ -6,7 +6,88 @@
 #include "cd.h"
 #include "gfx.h"
 
-extern TexUploadInfo g_tex_upload_table[];
+typedef struct {
+    s32 interlace;
+    s32 ffmode;
+    s32 width;
+    s32 height;
+} VideoMode;
+
+typedef struct {
+    s32 x;
+    s32 y;
+    s32 u;
+    s32 v;
+} Vertex;
+
+TexUploadInfo g_tex_upload_table[] = {
+    { 0, 16, 0, 0, 256, 128 },
+    { 1, 16, 0, 0, 256, 192 },
+    { 0, 16, 0, 0, 1024, 512 },
+    { 1, 8, 0, 0, 256, 192 },
+    { 1, 8, 0, 0, 512, 256 },
+    { 1, 8, 0, 0, 48, 416 },
+#ifdef DEATH_LABEL
+    { 1, 8, 0, 0, 512, 256 },
+#endif
+};
+
+s16 g_default_palette[32] = {
+    0x0000, 0x910A, 0xC2D9, 0xD39F, 0x8485, 0x8CC8, 0xBED9, 0xCF5D,
+    0xBAB8, 0xAE34, 0xB276, 0xA1D1, 0xA5F2, 0xC71B, 0x994D, 0xFFFF,
+};
+
+/* Height of the stage map marker's travel per 1000 units of stage progress. */
+s32 g_stage_map_scale[5] = { 440, 601, 851, 471, 388 };
+
+/* Sprite size in 1/10000 for each of the 32 zoom steps (16 is 1:1). */
+s32 g_sprite_zoom_table[32] = {
+    0, 5005, 5338, 5671, 6004, 6337, 6670, 7003,
+    7336, 7669, 8002, 8335, 8668, 9001, 9334, 9667,
+    10000, 10333, 10666, 10999, 11332, 11665, 11998, 12331,
+    12664, 12997, 13330, 13663, 13996, 14329, 14662, 14995,
+};
+
+VideoMode g_video_modes[12] = {
+    { 0, 1, 448, 224 },
+    { 0, 1, 448, 224 },
+    { 1, 0, 384, 448 },
+    { 1, 0, 384, 448 },
+    { 0, 1, 448, 224 },
+    { 0, 1, 448, 224 },
+    { 0, 1, 640, 224 },
+    { 0, 1, 640, 224 },
+    { 1, 0, 512, 448 },
+    { 1, 0, 512, 448 },
+    { 0, 1, 640, 224 },
+    { 0, 1, 640, 224 },
+};
+
+Vertex g_wallpaper_vertices[16] = {
+    { 0x0, 0x0, 0x1CF0, 0x100 },
+    { 0x500, 0x0, 0x1CF0, 0x600 },
+    { 0x500, 0x1C00, 0x100, 0x600 },
+    { 0x0, 0x1C00, 0x100, 0x100 },
+    { 0x1300, 0x0, 0x1CF0, 0xA00 },
+    { 0x1800, 0x0, 0x1CF0, 0xF00 },
+    { 0x1800, 0x1C00, 0x100, 0xF00 },
+    { 0x1300, 0x1C00, 0x100, 0xA00 },
+    { 0x0, 0x0, 0x1CF0, 0x100 },
+    { 0x900, 0x0, 0x1CF0, 0xA00 },
+    { 0x900, 0x1C00, 0x100, 0xA00 },
+    { 0x0, 0x1C00, 0x100, 0x100 },
+    { 0x1700, 0x0, 0x1CF0, 0x600 },
+    { 0x2000, 0x0, 0x1CF0, 0xF00 },
+    { 0x2000, 0x1C00, 0x100, 0xF00 },
+    { 0x1700, 0x1C00, 0x100, 0x600 },
+};
+
+extern s16 g_text_palette[];
+extern s16 g_sprite_palette[];
+extern s16 g_bg_palette[];
+extern s16 g_clut_buf[];
+extern s16 g_sprite_clut_buf[];
+extern s16 g_bg_clut_buf[];
 
 void splash_image_upload(void)
 {
@@ -302,13 +383,11 @@ void stage_load_step(void) {
     }
 }
 
-extern s16 g_default_palette[];
 extern s16 D_00269140_as_s16_a[];
 extern s16 D_002554B0_as_s16_a[];
 
 void clut_upload_defaults(void)
 {
-    extern s16 g_clut_buf[];
     s16 *source;
     s16 *palette;
     s32 colorIndex;
@@ -340,164 +419,125 @@ void clut_upload_defaults(void)
     clut_upload((u8 *)g_clut_buf, 1, 1);
 }
 
-extern u16 g_text_palette_as_u16_a[];
+
+/* The game logic keeps its palettes in the arcade layout; these copy them out with the alpha bit set on every
+   colour but the last one of a palette, and send them to the GS. */
 void text_palette_upload(void) {
-    extern u8 g_clut_buf[];
-    s32 var_v0;
-    s32 var_v1;
-    s16 *var_a0;
-    u8 *var_a1;
-    s16 *temp_a2;
-    s32 var_a2;
-    u8 *temp_a3;
-    s16 temp_a3_3;
-    s16 temp_t2;
-    s32 var_t2;
+    s32 i;
+    s32 colorIndex;
+    s16 *source;
+    s16 *palette;
 
-    var_a0 = (s16 *)(g_text_palette_as_u16_a);
-    var_a1 = (u8 *)(g_clut_buf);
-    var_v0 = 0;
-    do {
-        var_v1 = 0;
-        var_a2 = 0;
-loop_2:
-        temp_a3 = (u8 *)(var_a1 + var_a2);
-        var_v1 += 8;
-        var_a2 += 0x10;
-        (*(s16 *)((u8 *)(temp_a3) + (0))) = (s16) ((*(s16 *)((u8 *)(var_a0) + (0))) | 0x8000);
-        (*(s16 *)((u8 *)(temp_a3) + (2))) = (s16) ((*(s16 *)((u8 *)(var_a0) + (2))) | 0x8000);
-        (*(s16 *)((u8 *)(temp_a3) + (4))) = (s16) ((*(s16 *)((u8 *)(var_a0) + (4))) | 0x8000);
-        (*(s16 *)((u8 *)(temp_a3) + (6))) = (s16) ((*(s16 *)((u8 *)(var_a0) + (6))) | 0x8000);
-        (*(s16 *)((u8 *)(temp_a3) + (8))) = (s16) ((*(s16 *)((u8 *)(var_a0) + (8))) | 0x8000);
-        (*(s16 *)((u8 *)(temp_a3) + (0xA))) = (s16) ((*(s16 *)((u8 *)(var_a0) + (0xA))) | 0x8000);
-        (*(s16 *)((u8 *)(temp_a3) + (0xC))) = (s16) ((*(s16 *)((u8 *)(var_a0) + (0xC))) | 0x8000);
-        temp_t2 = (*(s16 *)((u8 *)(var_a0) + (0xE))) | 0x8000;
-        var_a0 += 8;
-        (*(s16 *)((u8 *)(temp_a3) + (0xE))) = temp_t2;
-        if (var_v1 < 7) {
-            goto loop_2;
+    source = g_text_palette;
+    palette = g_clut_buf;
+    for (i = 0; i < 16; i++) {
+        for (colorIndex = 0; colorIndex < 15; colorIndex++) {
+            palette[colorIndex] = *source++ | 0x8000;
         }
-        var_t2 = var_v1 * 2;
-        if (var_v1 < 0xF) {
-            do {
-                var_v1 += 1;
-                *(s16 *)(var_a1 + var_t2) = *var_a0++ | 0x8000;
-                var_t2 += 2;
-            } while (var_v1 < 0xF);
-        }
-        temp_a3_3 = *var_a0;
-        var_v0 += 1;
-        temp_a2 = (s16 *)(var_a1 + (var_v1 * 2));
-        *temp_a2 = temp_a3_3;
-        var_a1 += 0x80;
-        var_a0 += 1;
-    } while (var_v0 < 0x10);
+        palette[colorIndex] = *source++;
+        palette += 0x40;
+    }
     g_clut_upload_cbp = 0x37B0;
-    clut_upload(g_clut_buf, 0, 0x10);
+    clut_upload((u8 *)g_clut_buf, 0, 16);
 }
 
-extern u8 g_sprite_palette[];
+/* 32-colour palettes go out in the GS's CSM1 order (entries 8-15 and 16-23 swapped). */
 void sprite_palette_upload(void) {
-    extern u8 g_sprite_clut_buf[];
-    s32 var_v0;
-    u8 *var_v1;
-    u8 *var_a0;
-    s16 temp_a3;
+    s32 i;
+    s16 *src;
+    s16 *dst;
 
-    var_v1 = (u8 *)(g_sprite_palette);
-    var_a0 = (u8 *)(g_sprite_clut_buf);
-    var_v0 = 0;
+    src = g_sprite_palette;
+    dst = g_sprite_clut_buf;
+    i = 0;
     do {
-        var_v0 += 1;
-        (*(s16 *)((u8 *)(var_a0) + (0))) = (s16) ((*(s16 *)((u8 *)(var_v1) + (0))) | 0x8000);
-        (*(s16 *)((u8 *)(var_a0) + (2))) = (s16) ((*(s16 *)((u8 *)(var_v1) + (2))) | 0x8000);
-        (*(s16 *)((u8 *)(var_a0) + (4))) = (s16) ((*(s16 *)((u8 *)(var_v1) + (4))) | 0x8000);
-        (*(s16 *)((u8 *)(var_a0) + (6))) = (s16) ((*(s16 *)((u8 *)(var_v1) + (6))) | 0x8000);
-        (*(s16 *)((u8 *)(var_a0) + (8))) = (s16) ((*(s16 *)((u8 *)(var_v1) + (8))) | 0x8000);
-        (*(s16 *)((u8 *)(var_a0) + (0xA))) = (s16) ((*(s16 *)((u8 *)(var_v1) + (0xA))) | 0x8000);
-        (*(s16 *)((u8 *)(var_a0) + (0xC))) = (s16) ((*(s16 *)((u8 *)(var_v1) + (0xC))) | 0x8000);
-        (*(s16 *)((u8 *)(var_a0) + (0xE))) = (s16) ((*(s16 *)((u8 *)(var_v1) + (0xE))) | 0x8000);
-        (*(s16 *)((u8 *)(var_a0) + (0x20))) = (s16) ((*(s16 *)((u8 *)(var_v1) + (0x10))) | 0x8000);
-        (*(s16 *)((u8 *)(var_a0) + (0x22))) = (s16) ((*(s16 *)((u8 *)(var_v1) + (0x12))) | 0x8000);
-        (*(s16 *)((u8 *)(var_a0) + (0x24))) = (s16) ((*(s16 *)((u8 *)(var_v1) + (0x14))) | 0x8000);
-        (*(s16 *)((u8 *)(var_a0) + (0x26))) = (s16) ((*(s16 *)((u8 *)(var_v1) + (0x16))) | 0x8000);
-        (*(s16 *)((u8 *)(var_a0) + (0x28))) = (s16) ((*(s16 *)((u8 *)(var_v1) + (0x18))) | 0x8000);
-        (*(s16 *)((u8 *)(var_a0) + (0x2A))) = (s16) ((*(s16 *)((u8 *)(var_v1) + (0x1A))) | 0x8000);
-        (*(s16 *)((u8 *)(var_a0) + (0x2C))) = (s16) ((*(s16 *)((u8 *)(var_v1) + (0x1C))) | 0x8000);
-        (*(s16 *)((u8 *)(var_a0) + (0x2E))) = (s16) ((*(s16 *)((u8 *)(var_v1) + (0x1E))) | 0x8000);
-        (*(s16 *)((u8 *)(var_a0) + (0x10))) = (s16) ((*(s16 *)((u8 *)(var_v1) + (0x20))) | 0x8000);
-        (*(s16 *)((u8 *)(var_a0) + (0x12))) = (s16) ((*(s16 *)((u8 *)(var_v1) + (0x22))) | 0x8000);
-        (*(s16 *)((u8 *)(var_a0) + (0x14))) = (s16) ((*(s16 *)((u8 *)(var_v1) + (0x24))) | 0x8000);
-        (*(s16 *)((u8 *)(var_a0) + (0x16))) = (s16) ((*(s16 *)((u8 *)(var_v1) + (0x26))) | 0x8000);
-        (*(s16 *)((u8 *)(var_a0) + (0x18))) = (s16) ((*(s16 *)((u8 *)(var_v1) + (0x28))) | 0x8000);
-        (*(s16 *)((u8 *)(var_a0) + (0x1A))) = (s16) ((*(s16 *)((u8 *)(var_v1) + (0x2A))) | 0x8000);
-        (*(s16 *)((u8 *)(var_a0) + (0x1C))) = (s16) ((*(s16 *)((u8 *)(var_v1) + (0x2C))) | 0x8000);
-        (*(s16 *)((u8 *)(var_a0) + (0x1E))) = (s16) ((*(s16 *)((u8 *)(var_v1) + (0x2E))) | 0x8000);
-        (*(s16 *)((u8 *)(var_a0) + (0x30))) = (s16) ((*(s16 *)((u8 *)(var_v1) + (0x30))) | 0x8000);
-        (*(s16 *)((u8 *)(var_a0) + (0x32))) = (s16) ((*(s16 *)((u8 *)(var_v1) + (0x32))) | 0x8000);
-        (*(s16 *)((u8 *)(var_a0) + (0x34))) = (s16) ((*(s16 *)((u8 *)(var_v1) + (0x34))) | 0x8000);
-        (*(s16 *)((u8 *)(var_a0) + (0x36))) = (s16) ((*(s16 *)((u8 *)(var_v1) + (0x36))) | 0x8000);
-        (*(s16 *)((u8 *)(var_a0) + (0x38))) = (s16) ((*(s16 *)((u8 *)(var_v1) + (0x38))) | 0x8000);
-        (*(s16 *)((u8 *)(var_a0) + (0x3A))) = (s16) ((*(s16 *)((u8 *)(var_v1) + (0x3A))) | 0x8000);
-        (*(s16 *)((u8 *)(var_a0) + (0x3C))) = (s16) ((*(s16 *)((u8 *)(var_v1) + (0x3C))) | 0x8000);
-        temp_a3 = (*(s16 *)((u8 *)(var_v1) + (0x3E)));
-        (*(s16 *)((u8 *)(var_a0) + (0x3E))) = temp_a3;
-        var_v1 += 0x40;
-        var_a0 += 0x80;
-    } while (var_v0 < 0x20);
+        i++;
+        dst[0] = src[0] | 0x8000;
+        dst[1] = src[1] | 0x8000;
+        dst[2] = src[2] | 0x8000;
+        dst[3] = src[3] | 0x8000;
+        dst[4] = src[4] | 0x8000;
+        dst[5] = src[5] | 0x8000;
+        dst[6] = src[6] | 0x8000;
+        dst[7] = src[7] | 0x8000;
+        dst[16] = src[8] | 0x8000;
+        dst[17] = src[9] | 0x8000;
+        dst[18] = src[10] | 0x8000;
+        dst[19] = src[11] | 0x8000;
+        dst[20] = src[12] | 0x8000;
+        dst[21] = src[13] | 0x8000;
+        dst[22] = src[14] | 0x8000;
+        dst[23] = src[15] | 0x8000;
+        dst[8] = src[16] | 0x8000;
+        dst[9] = src[17] | 0x8000;
+        dst[10] = src[18] | 0x8000;
+        dst[11] = src[19] | 0x8000;
+        dst[12] = src[20] | 0x8000;
+        dst[13] = src[21] | 0x8000;
+        dst[14] = src[22] | 0x8000;
+        dst[15] = src[23] | 0x8000;
+        dst[24] = src[24] | 0x8000;
+        dst[25] = src[25] | 0x8000;
+        dst[26] = src[26] | 0x8000;
+        dst[27] = src[27] | 0x8000;
+        dst[28] = src[28] | 0x8000;
+        dst[29] = src[29] | 0x8000;
+        dst[30] = src[30] | 0x8000;
+        dst[31] = src[31];
+        src += 32;
+        dst += 64;
+    } while (i < 32);
     g_clut_upload_cbp = 0x3730;
-    clut_upload(g_sprite_clut_buf, 1, 0x20);
+    clut_upload((u8 *)g_sprite_clut_buf, 1, 32);
 }
 
-extern u8 g_bg_palette[];
-extern u8 g_bg_clut_buf[];
 void bg_palette_upload(void) {
-    s32 var_v0;
-    u8 *var_v1;
-    u8 *var_a0;
+    s32 i;
+    s16 *src;
+    s16 *dst;
 
-    var_v1 = (u8 *)(g_bg_palette);
-    var_a0 = (u8 *)(g_bg_clut_buf);
-    var_v0 = 0;
+    src = g_bg_palette;
+    dst = g_bg_clut_buf;
+    i = 0;
     do {
-        var_v0 += 1;
-        (*(s16 *)((u8 *)(var_a0) + (0))) = (s16) ((*(s16 *)((u8 *)(var_v1) + (0))) | 0x8000);
-        (*(s16 *)((u8 *)(var_a0) + (2))) = (s16) ((*(s16 *)((u8 *)(var_v1) + (2))) | 0x8000);
-        (*(s16 *)((u8 *)(var_a0) + (4))) = (s16) ((*(s16 *)((u8 *)(var_v1) + (4))) | 0x8000);
-        (*(s16 *)((u8 *)(var_a0) + (6))) = (s16) ((*(s16 *)((u8 *)(var_v1) + (6))) | 0x8000);
-        (*(s16 *)((u8 *)(var_a0) + (8))) = (s16) ((*(s16 *)((u8 *)(var_v1) + (8))) | 0x8000);
-        (*(s16 *)((u8 *)(var_a0) + (0xA))) = (s16) ((*(s16 *)((u8 *)(var_v1) + (0xA))) | 0x8000);
-        (*(s16 *)((u8 *)(var_a0) + (0xC))) = (s16) ((*(s16 *)((u8 *)(var_v1) + (0xC))) | 0x8000);
-        (*(s16 *)((u8 *)(var_a0) + (0xE))) = (s16) ((*(s16 *)((u8 *)(var_v1) + (0xE))) | 0x8000);
-        (*(s16 *)((u8 *)(var_a0) + (0x20))) = (s16) ((*(s16 *)((u8 *)(var_v1) + (0x10))) | 0x8000);
-        (*(s16 *)((u8 *)(var_a0) + (0x22))) = (s16) ((*(s16 *)((u8 *)(var_v1) + (0x12))) | 0x8000);
-        (*(s16 *)((u8 *)(var_a0) + (0x24))) = (s16) ((*(s16 *)((u8 *)(var_v1) + (0x14))) | 0x8000);
-        (*(s16 *)((u8 *)(var_a0) + (0x26))) = (s16) ((*(s16 *)((u8 *)(var_v1) + (0x16))) | 0x8000);
-        (*(s16 *)((u8 *)(var_a0) + (0x28))) = (s16) ((*(s16 *)((u8 *)(var_v1) + (0x18))) | 0x8000);
-        (*(s16 *)((u8 *)(var_a0) + (0x2A))) = (s16) ((*(s16 *)((u8 *)(var_v1) + (0x1A))) | 0x8000);
-        (*(s16 *)((u8 *)(var_a0) + (0x2C))) = (s16) ((*(s16 *)((u8 *)(var_v1) + (0x1C))) | 0x8000);
-        (*(s16 *)((u8 *)(var_a0) + (0x2E))) = (s16) ((*(s16 *)((u8 *)(var_v1) + (0x1E))) | 0x8000);
-        (*(s16 *)((u8 *)(var_a0) + (0x10))) = (s16) ((*(s16 *)((u8 *)(var_v1) + (0x20))) | 0x8000);
-        (*(s16 *)((u8 *)(var_a0) + (0x12))) = (s16) ((*(s16 *)((u8 *)(var_v1) + (0x22))) | 0x8000);
-        (*(s16 *)((u8 *)(var_a0) + (0x14))) = (s16) ((*(s16 *)((u8 *)(var_v1) + (0x24))) | 0x8000);
-        (*(s16 *)((u8 *)(var_a0) + (0x16))) = (s16) ((*(s16 *)((u8 *)(var_v1) + (0x26))) | 0x8000);
-        (*(s16 *)((u8 *)(var_a0) + (0x18))) = (s16) ((*(s16 *)((u8 *)(var_v1) + (0x28))) | 0x8000);
-        (*(s16 *)((u8 *)(var_a0) + (0x1A))) = (s16) ((*(s16 *)((u8 *)(var_v1) + (0x2A))) | 0x8000);
-        (*(s16 *)((u8 *)(var_a0) + (0x1C))) = (s16) ((*(s16 *)((u8 *)(var_v1) + (0x2C))) | 0x8000);
-        (*(s16 *)((u8 *)(var_a0) + (0x1E))) = (s16) ((*(s16 *)((u8 *)(var_v1) + (0x2E))) | 0x8000);
-        (*(s16 *)((u8 *)(var_a0) + (0x30))) = (s16) ((*(s16 *)((u8 *)(var_v1) + (0x30))) | 0x8000);
-        (*(s16 *)((u8 *)(var_a0) + (0x32))) = (s16) ((*(s16 *)((u8 *)(var_v1) + (0x32))) | 0x8000);
-        (*(s16 *)((u8 *)(var_a0) + (0x34))) = (s16) ((*(s16 *)((u8 *)(var_v1) + (0x34))) | 0x8000);
-        (*(s16 *)((u8 *)(var_a0) + (0x36))) = (s16) ((*(s16 *)((u8 *)(var_v1) + (0x36))) | 0x8000);
-        (*(s16 *)((u8 *)(var_a0) + (0x38))) = (s16) ((*(s16 *)((u8 *)(var_v1) + (0x38))) | 0x8000);
-        (*(s16 *)((u8 *)(var_a0) + (0x3A))) = (s16) ((*(s16 *)((u8 *)(var_v1) + (0x3A))) | 0x8000);
-        (*(s16 *)((u8 *)(var_a0) + (0x3C))) = (s16) ((*(s16 *)((u8 *)(var_v1) + (0x3C))) | 0x8000);
-        (*(s16 *)((u8 *)(var_a0) + (0x3E))) = (*(s16 *)((u8 *)(var_v1) + (0x3E)));
-        var_v1 += 0x40;
-        var_a0 += 0x80;
-    } while (var_v0 < 0x20);
+        i++;
+        dst[0] = src[0] | 0x8000;
+        dst[1] = src[1] | 0x8000;
+        dst[2] = src[2] | 0x8000;
+        dst[3] = src[3] | 0x8000;
+        dst[4] = src[4] | 0x8000;
+        dst[5] = src[5] | 0x8000;
+        dst[6] = src[6] | 0x8000;
+        dst[7] = src[7] | 0x8000;
+        dst[16] = src[8] | 0x8000;
+        dst[17] = src[9] | 0x8000;
+        dst[18] = src[10] | 0x8000;
+        dst[19] = src[11] | 0x8000;
+        dst[20] = src[12] | 0x8000;
+        dst[21] = src[13] | 0x8000;
+        dst[22] = src[14] | 0x8000;
+        dst[23] = src[15] | 0x8000;
+        dst[8] = src[16] | 0x8000;
+        dst[9] = src[17] | 0x8000;
+        dst[10] = src[18] | 0x8000;
+        dst[11] = src[19] | 0x8000;
+        dst[12] = src[20] | 0x8000;
+        dst[13] = src[21] | 0x8000;
+        dst[14] = src[22] | 0x8000;
+        dst[15] = src[23] | 0x8000;
+        dst[24] = src[24] | 0x8000;
+        dst[25] = src[25] | 0x8000;
+        dst[26] = src[26] | 0x8000;
+        dst[27] = src[27] | 0x8000;
+        dst[28] = src[28] | 0x8000;
+        dst[29] = src[29] | 0x8000;
+        dst[30] = src[30] | 0x8000;
+        dst[31] = src[31];
+        src += 32;
+        dst += 64;
+    } while (i < 32);
     g_clut_upload_cbp = 0x36B0;
-    clut_upload(g_bg_clut_buf, 1, 0x20);
+    clut_upload((u8 *)g_bg_clut_buf, 1, 32);
 }
 
 #ifndef DEATH_LABEL
@@ -560,7 +600,6 @@ void stage_map_hide(void) {
 }
 
 extern void gfx_draw_color_box(s32 x, s32 y, s32 w, s32 h, s32 depth, s64 alpha, s32 r, s32 g, s32 b);
-extern s32 g_stage_map_scale[];
 extern u8 D_0028E28C;
 extern u8 D_0028E36C;
 
@@ -1359,14 +1398,6 @@ void display_set_offset(s32 x, s32 y) {
     D_0057C820[0].DY = dy;
 }
 
-typedef struct {
-    s32 interlace;
-    s32 ffmode;
-    s32 width;
-    s32 height;
-} VideoMode;
-
-extern VideoMode g_video_modes[];
 extern s8 D_0028E250;
 extern s8 D_0028E254;
 extern u8 D_0028E2DC;
@@ -1402,7 +1433,6 @@ void display_reset(void) {
 
 
 void wallpaper_load(s32 index, u16 *src) {
-    extern u16 g_sprite_clut_buf[];
     s32 n;
     s32 i;
     u32 *data;
@@ -1443,7 +1473,7 @@ void wallpaper_load(s32 index, u16 *src) {
         sceGsExecLoadImage(&g_gs_load_image, buf);
     }
     row = 0;
-    dst = g_sprite_clut_buf;
+    dst = (u16 *)g_sprite_clut_buf;
     do {
         row++;
         dst[0] = src[0] | 0x8000;
@@ -1469,14 +1499,6 @@ void wallpaper_load(s32 index, u16 *src) {
     clut_upload((u8 *)g_sprite_clut_buf, 1, 1);
 }
 
-typedef struct {
-    s32 x;
-    s32 y;
-    s32 u;
-    s32 v;
-} Vertex;
-
-extern Vertex g_wallpaper_vertices[];
 
 void wallpaper_draw(void *buffer) {
     sceGifPacket packet;
@@ -1760,3 +1782,19 @@ void glyph_queue_emit(s32 index) {
     g_quad_queue[n].v[1] = v + 8;
     g_quad_count = n + 1;
 }
+
+s32 g_quad_count;
+s32 g_glyph_queue_count;
+s32 g_clut_upload_cbp;
+s32 g_tex_upload_tbp;
+s32 g_stage_map_alpha;
+s32 g_stage_map_marker_level;
+s32 g_stage_map_marker_step;
+s32 g_stage_map_state;
+s32 g_stage_map_unused_a;
+s32 g_stage_map_unused_b;
+s32 g_stage_unpack_state;
+s32 g_screen_width;
+s32 g_screen_margin;
+s32 g_label_timer;
+s32 g_label_fade;
