@@ -42,13 +42,13 @@ void func_0019F270(void) {
 void func_0019D390(void);
 extern u16 D_0028DFC0;
 extern u16 D_0028E3EC;
-extern u16 D_0028E910;
+extern u16 g_loop;
 extern u16 g_stage;
 
 void func_0019F2E0(void) {
     if (D_0028DFC0 != 0) return;
     if (D_0028E3EC != 0) return;
-    if (D_0028E910 != 0) return;
+    if (g_loop != 0) return;
     if (g_stage == 2) return;
     reg_d1.h[1] = ENTITY(reg_a6)->y.h;
     reg_d1.h[0] = ENTITY(reg_a6)->x.h;
@@ -75,7 +75,7 @@ void func_0019F2E0(void) {
 }
 
 void func_0019F410(void) {
-    if ((D_0028DFC0 == 0) && (D_0028E3EC == 0) && (D_0028E910 == 0) && (g_stage != 2)) {
+    if ((D_0028DFC0 == 0) && (D_0028E3EC == 0) && (g_loop == 0) && (g_stage != 2)) {
         reg_d1.h[1] = ENTITY(reg_a6)->y.h;
         reg_d1.h[0] = ENTITY(reg_a6)->x.h;
         reg_d5.h[0] = 0x1C00;
@@ -126,7 +126,7 @@ void func_0019F410(void) {
 }
 
 void func_0019F620(void) {
-    if ((D_0028DFC0 == 0) && (D_0028E910 == 0) && (D_0028E3EC == 0) && (g_stage != 2)) {
+    if ((D_0028DFC0 == 0) && (g_loop == 0) && (D_0028E3EC == 0) && (g_stage != 2)) {
         reg_d1.h[1] = ENTITY(reg_a6)->y.h;
         reg_d1.h[0] = ENTITY(reg_a6)->x.h;
         reg_d5.h[0] = 0x1C00;

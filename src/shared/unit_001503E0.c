@@ -1,24 +1,24 @@
 #include "common.h"
 #include "entity.h"
 
-extern void func_001713F0(s32);
+extern void enemy_set_entity_count(s32);
 
 void func_001503E0(void) {
-    func_001713F0(0);
+    enemy_set_entity_count(0);
 }
 
-s32 func_0014E300();                            /* extern */
-s32 func_0014E370();                            /* extern */
+s32 enemy_set_task_work();                            /* extern */
+s32 enemy_init_entities();                            /* extern */
 extern s32 D_00257860[];
 extern s32 D_0028C9A8;
 extern s32 *reg_a0_as_s32_p;
 
 void func_001503F0(void) {
     reg_a0_as_s32_p = D_00257860;
-    func_0014E370();
+    enemy_init_entities();
     reg_a0_as_s32_p = &D_0028C9A8;
     reg_d0.w = 1;
-    func_0014E300();
+    enemy_set_task_work();
     reg_tmp.w = 0x38001C00;
     ENTITY(reg_a6)->y.h = (u16) reg_tmp.h[1];
     ENTITY(reg_a6)->x.h = (u16) reg_tmp.h[0];

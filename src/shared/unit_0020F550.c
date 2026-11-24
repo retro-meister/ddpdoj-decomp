@@ -984,7 +984,7 @@ s32 func_0022B660();
 s32 func_002376F0();
 s32 func_00237790();
 extern u8 D_00269920[];
-extern u16 D_0028E910;
+extern u16 g_loop;
 extern u16 g_stage;
 extern u8 D_0028ED7C;
 #ifdef DEATH_LABEL
@@ -1056,7 +1056,7 @@ void func_00210D00() {
                 reg_d0.h[0] = ENTITY(reg_a6)->hit_x_plus.h;
                 func_0013C300();
                 if (D_0028ED7C == 2) {
-                    if ((D_0028E910 == 1) && (g_stage == 4)) {
+                    if ((g_loop == 1) && (g_stage == 4)) {
                         func_002376F0();
                         return;
                     }
@@ -1102,7 +1102,7 @@ void func_00210EA0(void) {
         goto block_2;
     }
     *(u16 *)(reg_a6 + 0xE) += 1;
-    if (D_0028E910 == 0) {
+    if (g_loop == 0) {
         *(u16 *)(reg_a6 + 6) = 1;
         return;
     }
@@ -1215,7 +1215,7 @@ void func_00211140(void) {
         goto block_2;
     }
     *(u16 *)(reg_a6 + 0xE) += 1;
-    if (D_0028E910 == 0) {
+    if (g_loop == 0) {
         *(u16 *)(reg_a6 + 8) = 1;
         return;
     }
@@ -1318,11 +1318,11 @@ block_3:
 void func_00211420(void) {
 }
 
-s32 func_00201B80();
+s32 entity_follow_scroll();
 extern u16 D_0029C06C[];
 
 void func_00211430(void) {
-    func_00201B80();
+    entity_follow_scroll();
     reg_d1.h[0] = D_0029C06C[0];
     ENTITY(reg_a6)->x.h -= reg_d1.h[0];
 }
@@ -1331,7 +1331,7 @@ extern u16 D_0028E928;
 
 void func_00211470(void) {
     reg_d3.sw = 0x1D;
-    if (D_0028E910 == 0) {
+    if (g_loop == 0) {
         if (D_0028E928 == 0) {
             goto block_3;
         }
@@ -1517,7 +1517,7 @@ void func_00211920(void) {
     func_002119A0();
 }
 
-s32 func_002011D0();
+s32 rng_next_bit();
 s32 func_00201230();
 s32 func_00201270();
 s32 func_00202B50();
@@ -1566,7 +1566,7 @@ loop_2:
     if (D_00299D22[0] == 0) goto block_kill;
     D_00299D22[0] -= 1;
 next_3:
-    if (D_0028E910 == 0) goto next_4;
+    if (g_loop == 0) goto next_4;
     reg_d0.h[0] = W6(0);
     reg_d0.h[0] &= 0x3C;
     reg_d0.h[0] -= 4;
@@ -1616,7 +1616,7 @@ block_set:
     W0(8) = NEXT_W();
     reg_a2 += 2;
     reg_d3.w = 0;
-    func_002011D0();
+    rng_next_bit();
     if (reg_d0.b[0] != 0) goto next_7;
     reg_d3.b[0] |= 0x20;
 next_7:
@@ -1638,7 +1638,7 @@ next_7:
     reg_tmp.h[0] = NEXT_W();
     reg_a2 += 2;
     if (0 > (s16) reg_tmp.h[0]) {
-        func_002011D0();
+        rng_next_bit();
     } else if (!reg_tmp.h[0]) {
         func_00201230();
     } else {

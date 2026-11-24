@@ -113,7 +113,7 @@ extern u8 D_0028E304;
 extern u16 D_0028E314;
 extern u16 D_0028E318;
 extern u16 D_0028E3C0;
-extern u16 D_0028E910;
+extern u16 g_loop;
 extern u8 D_0028ED58;
 extern u8 D_0028ED7C;
 extern u8 D_0028ED80;
@@ -121,7 +121,7 @@ extern u8 *jtbl_0028E3F4_as_u8_p;
 
 void func_001AF560(void) {
     void func_00131610(void);
-    void func_001A3020(void);
+    void sprite_palette_load(void);
     void func_001A3560(void);
     u8 state;
     u8 seq;
@@ -142,7 +142,7 @@ void func_001AF560(void) {
     if (*(u8 *)(reg_a5 + 0xD) != 0) {
         goto block_51;
     }
-    if (D_0028E910 != 0) {
+    if (g_loop != 0) {
         goto block_50;
     }
     if (D_0028E304 != 0) {
@@ -192,7 +192,7 @@ block_51:
     if (*(u8 *)(reg_a5 + 0xD) != 0) {
         goto block_52;
     }
-    if (D_0028E910 != 0) {
+    if (g_loop != 0) {
         goto block_52;
     }
     if (D_0028E3C0 != 0) {
@@ -259,7 +259,7 @@ block_51:
 #endif
     reg_d0.h[0] = *(u16 *)(reg_a4 + 0x14);
     reg_a0 = (u8 *)D_002623B0;
-    func_001A3020();
+    sprite_palette_load();
     func_0012FBD0();
     reg_d0.w = 0;
     reg_d0.b[0] = *(u8 *)(reg_a5 + 6);
@@ -871,7 +871,7 @@ extern u16 D_0028E3E0;
 extern u16 D_0028E3EC;
 
 void func_001B0950(void) {
-    s32 func_001A3020();
+    s32 sprite_palette_load();
     u8 flag;
 
     if (ENTITY(reg_a6)->y.h != 0) {
@@ -883,12 +883,12 @@ void func_001B0950(void) {
         ENTITY(reg_a6)->flags.b[1] = flag | 2;
         reg_a0 = (u8 *)D_00260F70;
         reg_d0.w = 0x16;
-        func_001A3020();
+        sprite_palette_load();
         reg_tmp.h[1] = (*(u16 *)(reg_a6 + (0x1C)));
         reg_tmp.h[0] = (*(u16 *)(reg_a6 + (0x1E)));
         reg_a0 = (u8 *) reg_tmp.w;
         reg_d0.h[0] = (*(u16 *)(reg_a6 + (0xE)));
-        func_001A3020();
+        sprite_palette_load();
     }
     reg_d1.h[1] = (*(u16 *)(reg_a6 + (4)));
     reg_d1.h[0] = (*(u16 *)(reg_a6 + (6)));

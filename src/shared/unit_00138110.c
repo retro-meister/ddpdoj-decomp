@@ -48,7 +48,7 @@ extern u8 D_0028E8F8_as_u8;
 extern u8 D_0028E8FC_as_u8;
 extern u8 D_0028E900_as_u8;
 extern u16 D_0028E904;
-extern u16 D_0028E910;
+extern u16 g_loop;
 extern u16 g_stage;
 extern u8 D_0028ED80;
 extern u16 D_006E5C02[];
@@ -79,7 +79,7 @@ next_1:
     reg_d0.h[0] <<= 4;
     reg_d1.h[0] += reg_d0.h[0];
 next_2:
-    if (D_0028E910 == 0) {
+    if (g_loop == 0) {
         goto next_3;
     }
     if (D_0028ED80 != 0 && D_006E5C02[0] != 0) {
@@ -231,7 +231,7 @@ extern u16 D_0028C100;
 
 void func_00138650(void) {
     u16 temp_a0;
-    if (D_0028E910 == 0) {
+    if (g_loop == 0) {
         reg_d0.w = 0;
         reg_d0.b[0] = *(u8 *)(reg_a6 + 4);
         reg_a0 = (u8 *)(&D_0028C100);

@@ -55,7 +55,7 @@ extern u16 D_0028E5CC;
 extern u16 D_0028E5D0;
 extern u16 D_0028E5F8;
 extern u16 D_0028E5FC;
-extern u16 D_0028E910;
+extern u16 g_loop;
 extern u16 D_0028E928;
 extern u8 D_0029D750[];
 extern u8 D_0029D770[];
@@ -141,7 +141,7 @@ void func_00139B80(void) {
                 return;
             }
 next_1:
-            switch (D_0028E910) {
+            switch (g_loop) {
             case 0:
                 break;
             default:
@@ -220,8 +220,8 @@ loop_1:
 typedef void (*Fn)();
 
 s32 func_001B82F0();
-s32 func_00201B80();
-s32 func_00201E20();
+s32 entity_follow_scroll();
+s32 velocity_from_dir256();
 extern u16 D_0024F570[];
 extern u16 D_0024F680[];
 extern u8 D_00250760[];
@@ -307,14 +307,14 @@ block_debris:
     reg_d0.h[0] = D_0029C06C[0];
     *(u16 *)(reg_a6 + 4) -= reg_d0.h[0];
     if (*(u16 *)(reg_a6 + 0x10) == 0) goto block_shift;
-    func_00201B80();
+    entity_follow_scroll();
 block_shift:
     reg_d0.w = 0;
     reg_d0.b[0] = *(u8 *)(reg_a6 + 0x1B);
     if (reg_d0.b[0] == 0) goto block_speed;
     reg_d1.w = 0;
     reg_d1.b[0] = *(u8 *)(reg_a6 + 0x1A);
-    func_00201E20();
+    velocity_from_dir256();
     *(u16 *)(reg_a6 + 0x34) = reg_d2.h[0];
     *(u16 *)(reg_a6 + 0x36) = reg_d3.h[0];
     *(u8 *)(reg_a6 + 0x1B) = 0;
@@ -407,7 +407,7 @@ next_1:
 
 extern u8 D_0029BBC0[];
 
-void func_0013A780(void) {
+void explosion_spawn(void) {
     u8 *sa1;
     u8 *sa2;
     u8 *sa3;

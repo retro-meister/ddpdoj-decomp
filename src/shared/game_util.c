@@ -1,6 +1,6 @@
 #include "common.h"
 
-s32 func_002071C0();                            /* extern */
+s32 task_start();                            /* extern */
 #ifdef DEATH_LABEL
 s32 func_00206D70();
 extern u8 death_D_00290DC0;
@@ -14,30 +14,30 @@ void func_00200D30(void) {
     death_D_00290DC0 = 1;
     func_00206D70();
     reg_d0.h[0] = 0x15;
-    func_002071C0();
+    task_start();
 #else
     reg_d0.h[0] = 0xE;
-    func_002071C0();
+    task_start();
     (*(s16 *)((u8 *)(&D_0028DE80_as_s32) + (8))) = 0;
     func_002075F0();
 #endif
 }
 
-s32 func_001A3020();
+s32 sprite_palette_load();
 s32 func_00200A10();
 extern u8 D_0025F770[];
 extern s16 D_0028E90C_as_s16;
-extern u16 D_0028E910;
+extern u16 g_loop;
 
 void func_00200D60(void) {
     *(s8 *)(reg_a5 + 3) = 1;
     func_00200A10();
     reg_a0 = D_0025F770;
     reg_d0.h[0] = 2;
-    func_001A3020();
+    sprite_palette_load();
     *(s16 *)(reg_a5 + 4) = 0;
     *(s16 *)(reg_a5 + 6) = 0x80;
-    if (D_0028E910 == 0) {
+    if (g_loop == 0) {
         *(s8 *)(reg_a5 + 3) = 2;
 #ifndef DEATH_LABEL
         return;
@@ -157,7 +157,7 @@ void func_00201010(void)
         (reg_tmp.b[3] * 1000 + reg_tmp.b[2] * 100));
 }
 
-void func_002010A0(void)
+void rng_next(void)
 {
     ++*(unsigned char *)&rng_cursor;
     reg_d0.h[0] = rng_cursor;
@@ -191,7 +191,7 @@ void func_00201130(void)
 
 extern s8 rng_masked_values[128];
 
-void func_00201160(void)
+void rng_next_masked(void)
 {
     ++*(u8 *)&rng_cursor;
     reg_d0.w = rng_cursor & 0x7F;
@@ -200,7 +200,7 @@ void func_00201160(void)
 
 extern u8 rng_unsigned_values[256];
 
-void func_002011A0(void)
+void rng_next_unsigned(void)
 {
     ++*(u8 *)&rng_cursor;
     reg_d0.h[0] = rng_cursor;
@@ -211,7 +211,7 @@ extern u16 rng_cursor;
 extern Reg32 reg_d0;
 extern s8 D_00266B90[];
 
-void func_002011D0(void) {
+void rng_next_bit(void) {
     *(u8 *)&rng_cursor += 1;
     reg_d0.h[0] = rng_cursor;
     reg_d0.h[0] = D_00266B90[reg_d0.h[0]];

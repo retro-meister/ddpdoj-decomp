@@ -175,12 +175,12 @@ extern u8 *reg_save4_a3;
 extern u8 *reg_save4_a2;
 extern u8 *reg_save4_a1;
 extern u8 *reg_save4_a0;
-extern u16 D_0028E910;
+extern u16 g_loop;
 extern u8 D_0029A12C[];
 extern u8 D_0029F260_as_u8_a[];
 
 void func_00209F20(void) {
-    if (D_0028E910 != 0) {
+    if (g_loop != 0) {
         func_00209F10();
         return;
     }
@@ -614,8 +614,8 @@ void func_0020AAA0(void) {
     ((Fn)*(u32 *)((u8 *)D_00250D00 + (reg_d0.h[0] & ~3)))();
 }
 
-s32 func_00201160();
-s32 func_002011A0();
+s32 rng_next_masked();
+s32 rng_next_unsigned();
 s32 func_00201D10();
 extern u16 D_00250D20[];
 extern u16 D_0029F212[];
@@ -632,14 +632,14 @@ void func_0020AD50(void) {
     temp_s2 = reg_d1.w;
     temp_s3 = reg_d2.w;
     reg_d3.w = 0x18;
-    func_002011A0();
+    rng_next_unsigned();
     if (0 > reg_d0.sb[0]) {
         reg_d3.w = 0x28;
     }
     func_0020B5F0();
     reg_d1.b[0] += reg_d3.b[0];
     reg_d1.b[0] &= 0x3F;
-    func_00201160();
+    rng_next_masked();
     temp_s0 = reg_d1.w;
     reg_d0.b[0] += 4;
     func_00201D10();
@@ -692,7 +692,7 @@ void func_0020AF20(void) {
     save_d0 = reg_d0.w;
     save_d1 = reg_d1.w;
     save_d2 = reg_d2.w;
-    func_00201160();
+    rng_next_masked();
     reg_d0.h[0] += 8;
     if ((s32) reg_d0.h[0] >= 0x24) {
         reg_d0.w = 0x24;
@@ -716,7 +716,7 @@ void func_0020AF20(void) {
     reg_a2 = (u8 *)D_0028E530;
 }
 
-s32 func_00201E20();
+s32 velocity_from_dir256();
 
 void func_0020B030(void) {
     u32 save_d0;
@@ -726,13 +726,13 @@ void func_0020B030(void) {
     save_d0 = reg_d0.w;
     save_d1 = reg_d1.w;
     save_d2 = reg_d2.w;
-    func_00201160();
+    rng_next_masked();
     reg_d0.h[0] += 8;
     if ((s32) reg_d0.h[0] >= 0x24) {
         reg_d0.w = 0x24;
     }
     func_0020B640();
-    func_00201E20();
+    velocity_from_dir256();
     *(u16 *)reg_a0 = (u16) reg_d2.h[0];
     reg_a0 += 2;
     *(u16 *)reg_a0 = (u16) reg_d3.h[0];
@@ -757,7 +757,7 @@ void func_0020B140(void) {
     save_d0 = reg_d0.w;
     save_d1 = reg_d1.w;
     save_d2 = reg_d2.w;
-    func_00201160();
+    rng_next_masked();
     reg_d0.h[0] += 8;
     if ((s32) reg_d0.h[0] >= 0x24) {
         reg_d0.w = 0x24;
@@ -790,14 +790,14 @@ void func_0020B270(void) {
     save_d0 = reg_d0.w;
     save_d1 = reg_d1.w;
     save_d2 = reg_d2.w;
-    func_00201160();
+    rng_next_masked();
     reg_d0.b[0] += 8;
     if ((s32) reg_d0.b[0] >= 0x24) {
         reg_d0.w = 0x24;
     }
     func_0020B640();
     reg_d1.b[0] += ENTITY(reg_a6)->move.b.dir;
-    func_00201E20();
+    velocity_from_dir256();
     *(u16 *)reg_a0 = (u16) reg_d2.h[0];
     reg_a0 += 2;
     *(u16 *)reg_a0 = (u16) reg_d3.h[0];
@@ -822,7 +822,7 @@ void func_0020B390(void) {
     save_d0 = reg_d0.w;
     save_d1 = reg_d1.w;
     save_d2 = reg_d2.w;
-    func_00201160();
+    rng_next_masked();
     reg_d0.h[0] += 8;
     if ((s32) reg_d0.h[0] >= 0x24) {
         reg_d0.w = 0x24;
@@ -856,7 +856,7 @@ void func_0020B4C0(void) {
     save_d0 = reg_d0.w;
     save_d1 = reg_d1.w;
     save_d2 = reg_d2.w;
-    func_00201160();
+    rng_next_masked();
     reg_d0.h[0] += 8;
     if ((s32) reg_d0.h[0] >= 0x24) {
         reg_d0.w = 0x24;
@@ -864,7 +864,7 @@ void func_0020B4C0(void) {
     func_0020B640();
     reg_d1.b[0] += ENTITY(reg_a6)->move.b.dir;
     reg_d1.b[0] += 0x80;
-    func_00201E20();
+    velocity_from_dir256();
     *(u16 *)reg_a0 = (u16) reg_d2.h[0];
     reg_a0 += 2;
     *(u16 *)reg_a0 = (u16) reg_d3.h[0];

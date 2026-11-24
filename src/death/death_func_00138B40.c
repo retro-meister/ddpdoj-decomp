@@ -55,7 +55,7 @@ s32 rand(void);
 s32 func_0012FAB0();
 s32 func_0019AB20();
 s32 func_0019C5B0();
-s32 func_001A3020();
+s32 sprite_palette_load();
 s32 text_queue_clear();
 void text_queue_sjis_vertical(s16 x, s16 y, const char *text, u16 texturePage, u16 glyphWidth, u16 glyphHeight, u16 alpha, u16 depth);
 s32 text_flush();
@@ -181,7 +181,7 @@ void death_func_00138ED0(TextScript *script) {
             func_0019C5B0();
             reg_a0 = ((script->frame >> 1) & 1) ? (u8 *) D_002624F0 : (u8 *) D_00262530;
             reg_d0.h[0] = 1;
-            func_001A3020();
+            sprite_palette_load();
             func_0019AB20();
             arcade_sprite_draw();
             head = (ListHead *) g_arcade_sprites_as_u16_a;

@@ -40,8 +40,8 @@ void func_001CDE90(void) {
     func_001CDEA0();
 }
 
-s32 func_002021F0();
-s32 func_00202500();
+s32 direction_between();
+s32 direction_turn_toward();
 extern s16 D_0029F1F0[];
 extern s16 D_0029F260[];
 
@@ -80,9 +80,9 @@ block_6:
                 reg_d1.h[0] = *(u16 *)(reg_a6 + 0x24);
                 reg_d0.h[0] += 0x1100;
                 reg_d1.h[0] += 0x80;
-                func_002021F0();
+                direction_between();
                 reg_d0.h[0] = *(u16 *)(reg_a6 + 0xB0);
-                func_00202500();
+                direction_turn_toward();
                 *(u16 *)(reg_a6 + 0xB0) = (u16) reg_d1.h[0];
             }
             reg_d2.w = temp_s0;
@@ -92,9 +92,9 @@ block_6:
                 reg_d1.h[0] = *(u16 *)(reg_a6 + 0x44);
                 reg_d0.h[0] += 0x1100;
                 reg_d1.h[0] += 0x7FFF + 0x7F81;
-                func_002021F0();
+                direction_between();
                 reg_d0.h[0] = *(u16 *)(reg_a6 + 0xB2);
-                func_00202500();
+                direction_turn_toward();
                 *(u16 *)(reg_a6 + 0xB2) = (u16) reg_d1.h[0];
             }
         }
@@ -113,8 +113,8 @@ void func_001CE040(void) {
     func_001CE070(flag);
 }
 
-s32 func_00124F50();
-s32 func_001251C0();
+s32 boss_animation_start();
+s32 boss_attack_start();
 extern u16 D_0026CB20[];
 
 void func_001CE070() {
@@ -136,9 +136,9 @@ void func_001CE070() {
         if (temp_a0 == 0x94) {
             *(s16 *)reg_a4 = 0;
             reg_d0.w = 0;
-            func_001251C0();
+            boss_attack_start();
             reg_d0.w = 3;
-            func_00124F50();
+            boss_animation_start();
         }
         *(u16 *)(reg_a6 + 0x4A) = (u16) *(u16 *)(reg_a6 + 0x2A);
     }
@@ -153,7 +153,7 @@ void func_001CE230(void) {
     func_001CE260(0x6001);
 }
 
-s32 func_00124DC0();
+s32 boss_part_show();
 
 void func_001CE260() {
     reg_tmp.b[0] = *(u8 *)(reg_a4 + 3);
@@ -172,11 +172,11 @@ void func_001CE260() {
         if ((s16) *(u16 *)(reg_a6 + 0x2A) < 0) {
             *(s16 *)reg_a4 = 0;
             reg_d0.w = 2;
-            func_00124F50();
+            boss_animation_start();
             reg_d0.w = 2;
-            func_00124DC0();
+            boss_part_show();
             reg_d0.w = 3;
-            func_00124DC0();
+            boss_part_show();
         }
         *(u16 *)(reg_a6 + 0x4A) = (u16) *(u16 *)(reg_a6 + 0x2A);
     }
@@ -268,7 +268,7 @@ void func_001CE5C0(void) {
     func_001CE5F0(0x202, 1);
 }
 
-s32 func_00124F00();
+s32 boss_part_hide();
 s32 func_0013B2E0();
 s32 func_001D4550();
 s32 func_001D4560();
@@ -308,31 +308,31 @@ next_40:
             func_001D4550();
             func_001D4560();
             reg_d0.w = 9;
-            func_00124F00();
+            boss_part_hide();
             reg_d0.w = 0;
-            func_00124DC0();
+            boss_part_show();
             reg_d0.w = 1;
-            func_00124DC0();
+            boss_part_show();
             reg_d0.w = 2;
-            func_00124DC0();
+            boss_part_show();
             reg_d0.w = 3;
-            func_00124DC0();
+            boss_part_show();
             reg_d0.w = 4;
-            func_00124DC0();
+            boss_part_show();
             reg_d0.w = 5;
-            func_00124DC0();
+            boss_part_show();
             reg_d0.w = 6;
-            func_00124DC0();
+            boss_part_show();
             reg_d0.w = 7;
-            func_00124DC0();
+            boss_part_show();
             reg_d0.w = 8;
-            func_00124DC0();
+            boss_part_show();
             reg_d0.w = 0;
-            func_00124F50();
+            boss_animation_start();
             reg_d0.w = 1;
-            func_00124F50();
+            boss_animation_start();
             reg_d0.w = 6;
-            func_00124F50();
+            boss_animation_start();
             reg_a0 = (u8 *)D_0026CBC0;
             func_0013B2E0();
         }

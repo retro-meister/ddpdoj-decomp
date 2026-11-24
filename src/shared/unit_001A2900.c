@@ -232,7 +232,7 @@ void func_001A2F20(void)
 
 extern s32 reg_a0_as_s32;
 
-void func_001A2FA0(void) {
+void text_palette_load(void) {
     u32 temp_s0 = reg_d0.w;
     s32 temp_s1 = reg_a0_as_s32;
     u8 *temp_s2 = reg_a1;
@@ -248,7 +248,7 @@ void func_001A2FA0(void) {
     reg_a1 = temp_s2;
 }
 
-void func_001A3020(void) {
+void sprite_palette_load(void) {
     u32 temp_s0 = reg_d0.w;
     s32 temp_s1 = reg_a0_as_s32;
     u8 *temp_s2 = reg_a1;

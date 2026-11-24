@@ -110,7 +110,7 @@ extern u16 D_0028E5D0;
 extern u32 D_0028E66C_as_u32;
 extern u32 D_0028E6AC_as_u32;
 extern u16 D_0028E6DC;
-extern u16 D_0028E910;
+extern u16 g_loop;
 
 void func_001A91A0(void) {
     u32 temp_s0;
@@ -118,7 +118,7 @@ void func_001A91A0(void) {
     u32 temp_s1;
     u32 temp_s1_2;
 
-    reg_d2.h[0] = D_0028E910;
+    reg_d2.h[0] = g_loop;
     reg_a0 = (u8 *)(D_0028DAD8);
     reg_d2.h[0] += reg_d2.h[0];
     D_0028E6DC = (reg_d2.h[0] != 0) ? *(u16 *)((u8 *)reg_a0 + ((s16)reg_d2.h[0] & ~1)) : *(u16 *)reg_a0;
@@ -429,7 +429,7 @@ void func_001A9820(void) {
 
     bits = reg_d1.w & 4;
     reg_d0.h[0] = D_0028E694;
-    if ((bits != 0) || (D_0028E910 == 0)) {
+    if ((bits != 0) || (g_loop == 0)) {
         D_0028E6C8 += reg_d0.h[0];
         reg_d0.h[0] = D_0028E6DC;
         if ((s32) D_0028E6C8 < (s32) reg_d0.h[0]) {
@@ -489,7 +489,7 @@ void func_001A99C0(void) {
 
     bits = reg_d1.w & 4;
     reg_d0.h[0] = D_0028E694;
-    if ((bits != 0) || (D_0028E910 == 0)) {
+    if ((bits != 0) || (g_loop == 0)) {
         D_0028E688 += reg_d0.h[0];
         reg_d0.h[0] = D_0028E6DC;
         if ((s32) D_0028E688 < (s32) reg_d0.h[0]) {

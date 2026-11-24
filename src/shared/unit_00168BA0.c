@@ -60,9 +60,9 @@ extern s8 D_0028ED80_as_s8;
 void func_00168BC0(void) {
     s32 func_0012FAB0();
     s32 func_0013B190();
-    s32 func_001A2FA0();
+    s32 text_palette_load();
     s32 func_00206D70();
-    s32 func_002071C0();
+    s32 task_start();
     s32 replay_header_clear();
 #ifndef DEATH_LABEL
     u32 t;
@@ -118,11 +118,11 @@ next_4:
 next_5:
     reg_d0.w = 0;
     reg_a0 = (u8 *)D_00269160;
-    func_001A2FA0();
+    text_palette_load();
     func_0012FAB0();
     func_0012FB00();
     reg_d0.h[0] = 8;
-    func_002071C0();
+    task_start();
     *(s16 *)(reg_a0 + 4) = 3;
     return;
 block_2:
@@ -202,14 +202,14 @@ extern u8 g_cd_async_busy_as_u8;
 
 void func_00168EF0(void) {
     s32 func_0012FAB0();
-    s32 func_001A2FA0();
+    s32 text_palette_load();
     s32 func_0020EAA0();
     if (*(u8 *)(reg_a5 + 2) == 0) {
         *(u8 *)(reg_a5 + 2) = 1U;
         func_0012FAB0();
         reg_d0.w = 0;
         reg_a0 = D_00269160;
-        func_001A2FA0();
+        text_palette_load();
         D_0028E304 = 0;
         func_0020EAA0();
         D_0028E310 = 0;
@@ -324,14 +324,14 @@ extern s8 D_0028EB88;
 void death_func_00136FF0(void) {
     s32 func_0012FAB0();
     s32 func_0013B190();
-    s32 func_001A2FA0();
+    s32 text_palette_load();
     if (reg_a5[2] == 0) {
         reg_a5[2] = 1U;
         func_0012FB00();
         func_0012FAB0();
         reg_d0.w = 0;
         reg_a0 = D_00269160;
-        func_001A2FA0();
+        text_palette_load();
         func_0013B190();
         func_0018DEE0();
         D_0028E368 = 0;
@@ -507,9 +507,9 @@ extern s32 *reg_a0_as_s32_p;
 void func_00169320(void) {
     s32 func_0012FAB0();
     s32 func_0013B190();
-    s32 func_001A2FA0();
+    s32 text_palette_load();
     s32 func_00206D70();
-    s32 func_002071C0();
+    s32 task_start();
     if (*(u8 *)(reg_a5 + 2) == 0) {
         *(u8 *)(reg_a5 + 2) = 1U;
         func_00137C90();
@@ -517,7 +517,7 @@ void func_00169320(void) {
         *(s16 *)(reg_a5 + 4) = 0;
         reg_a0_as_s32_p = D_00269140_as_s32_a;
         reg_d0.w = 0;
-        func_001A2FA0();
+        text_palette_load();
     }
     func_00137E00();
     if (cond_flag == 0) {
@@ -528,7 +528,7 @@ void func_00169320(void) {
         stage_map_reset();
         func_0012FAB0();
         reg_d0.h[0] = 8;
-        func_002071C0();
+        task_start();
         (*(s16 *)((u8 *)(reg_a0_as_s32_p) + (4))) = 2;
         func_0018DE90();
     }
@@ -596,7 +596,7 @@ extern u8 D_0026A880[];
 
 void func_001694F0() {
     s32 func_0012FAB0();
-    s32 func_001A2FA0();
+    s32 text_palette_load();
     u16 temp_v1;
     u16 temp_v1_2;
 
@@ -606,7 +606,7 @@ void func_001694F0() {
         func_0012FAB0();
         reg_d0.w = 0;
         reg_a0 = D_00269140;
-        func_001A2FA0();
+        text_palette_load();
         *(u16 *)(reg_a5 + 6) = 0U;
         *(u16 *)(reg_a5 + 8) = 0xB8U;
         *(u16 *)(reg_a5 + 0xA) = 1U;
@@ -640,10 +640,10 @@ extern u8 D_0028E7B4;
 
 void func_00169640(void) {
     s32 func_00206D70();
-    s32 func_002071C0();
+    s32 task_start();
     func_00206D70();
     reg_d0.h[0] = 9;
-    func_002071C0();
+    task_start();
     *(u8 *)(reg_a0 + 5) = (u8) D_0028E7B4;
 }
 
@@ -704,9 +704,9 @@ extern s16 D_006E5C14_as_s16_a[];
 
 void func_00169680(void) {
     void func_0012FAB0(void);
-    void func_001A2FA0(void);
+    void text_palette_load(void);
     void func_00206D70(void);
-    void func_002071C0(void);
+    void task_start(void);
     void replay_header_clear(void);
     s32 a;
     s32 b;
@@ -716,7 +716,7 @@ void func_00169680(void) {
     func_0012FAB0();
     reg_d0.w = 0;
     reg_a0 = (u8 *)D_00269140;
-    func_001A2FA0();
+    text_palette_load();
     replay_header_clear();
     a = D_0068DEDA[0];
     b = D_0068DEDC[0];
@@ -750,7 +750,7 @@ void func_00169680(void) {
     D_006E5BF2_as_s16_a[0] = D_0028DE48[D_0068DED0[0]];
     D_006E5C14_as_s16_a[0] = D_0068DED2[0];
     reg_d0.h[0] = 0x14;
-    func_002071C0();
+    task_start();
     if (D_0028ED7C == 2) {
         *(s8 *)(reg_a0 + 5) = 3;
         return;
@@ -765,9 +765,9 @@ extern u8 death_D_00290DC0;
 
 void func_00169900(void) {
     s32 func_0012FAB0();
-    s32 func_001A2FA0();
+    s32 text_palette_load();
     s32 func_00206D70();
-    s32 func_002071C0();
+    s32 task_start();
     D_0028E290_as_s8 = 2;
 #ifdef DEATH_LABEL
     death_D_00290DC0 = 0;
@@ -776,9 +776,9 @@ void func_00169900(void) {
     func_0012FAB0();
     reg_d0.w = 0;
     reg_a0_as_s32_p = D_00269140_as_s32_a;
-    func_001A2FA0();
+    text_palette_load();
     reg_d0.h[0] = MAIN_OR_DEATH_LABEL(0x15, 9);
-    func_002071C0();
+    task_start();
 #ifdef DEATH_LABEL
     *((u8 *)reg_a0_as_s32_p + 5) = D_0028E7B4;
 #endif

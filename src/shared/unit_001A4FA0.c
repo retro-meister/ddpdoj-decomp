@@ -1,13 +1,13 @@
 #include "common.h"
 #include "entity.h"
 
-void func_001713F0(s32);
+void enemy_set_entity_count(s32);
 
 void func_001A4FA0(void) {
-    func_001713F0(0);
+    enemy_set_entity_count(0);
 }
 
-s32 func_0014E370();
+s32 enemy_init_entities();
 extern u8 D_0025F690[];
 extern s8 *reg_a0_as_s8_p;
 
@@ -17,7 +17,7 @@ void func_001A4FB0(void) {
     u32 temp_a2;
 
     reg_a0_as_s8_p = (s8 *)D_0025F690;
-    func_0014E370();
+    enemy_init_entities();
     reg_tmp.h[1] = *(u16 *)(reg_a5 + 0x12);
     reg_tmp.h[0] = *(u16 *)(reg_a5 + 0x14);
     reg_a0_as_s8_p = (s8 *) reg_tmp.w;
@@ -70,14 +70,14 @@ void func_001A4FB0(void) {
 }
 
 s32 func_0014E050();
-s32 func_0014E290();
-s32 func_00201B80();
+s32 enemy_remove();
+s32 entity_follow_scroll();
 extern u16 D_0028E8A0;
 extern u16 D_0029C068[];
 
 void func_001A51B0(void) {
     if (ENTITY(reg_a6)->offset_x.h != 0) goto next_0;
-    func_00201B80();
+    entity_follow_scroll();
 next_0:
     reg_d0.h[1] = ENTITY(reg_a6)->y.h;
     reg_d0.h[0] = ENTITY(reg_a6)->x.h;
@@ -102,7 +102,7 @@ next_0:
 next_1:
     if (ENTITY(reg_a6)->offset_y.h == 0) goto next_4;
 next_2:
-    func_0014E290();
+    enemy_remove();
     return;
 next_3:
     ENTITY(reg_a6)->offset_y.h = 1;

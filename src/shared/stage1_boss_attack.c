@@ -21,21 +21,21 @@ void func_001B4BD0(void) {
 
 
 s32 func_001713B0();
-s32 func_00171400();
-s32 func_002010A0();
+s32 enemy_switch_target_player();
+s32 rng_next();
 s32 func_00202730();
 extern u16 D_0026E070[];
 extern u16 D_0026E080[];
 
 void func_001B4BE0(void) {
-    func_00171400();
+    enemy_switch_target_player();
     *(s16 *)(reg_a4 + 2) = 0x1001;
     *(s16 *)(reg_a4 + 4) = 0;
     *(s16 *)(reg_a4 + 8) = 8;
     *(u8 *)(reg_a4 + 0xB) = 0x80U;
     func_00202730();
     if (cond_flag == 0) {
-        func_002010A0();
+        rng_next();
         reg_d1.b[0] += reg_d0.b[0];
         *(u8 *)(reg_a4 + 0xB) = (u8) reg_d1.b[0];
     }
@@ -47,7 +47,7 @@ void func_001B4BE0(void) {
     *(u16 *)(reg_a4 + 6) = (reg_d0.h[0] != 0) ? *(u16 *)((u8 *)reg_a0 + ((s16)reg_d0.h[0] & ~1)) : *(u16 *)reg_a0;
 }
 
-s32 func_00129370();
+s32 bullet_fire256_2way();
 extern u16 D_0026E090[];
 extern u16 D_0026E092[];
 extern u16 D_0026E094[];
@@ -80,21 +80,21 @@ void func_001B4D00(void) {
         reg_d2.h[1] = ENTITY(reg_a6)->y.h;
         reg_d2.h[0] = ENTITY(reg_a6)->x.h;
         reg_d1.h[0] += 2;
-        func_00129370();
+        bullet_fire256_2way();
         reg_d3.h[1] = D_0026E09C[0];
         reg_d3.h[0] = D_0026E09E[0];
         reg_d1.h[0] -= 4;
-        func_00129370();
+        bullet_fire256_2way();
         reg_d1.h[0] += 2;
         reg_d1.b[0] += reg_d6.b[0];
         reg_d3.h[1] = D_0026E090[0];
         reg_d3.h[0] = D_0026E092[0];
-        func_00129370();
+        bullet_fire256_2way();
         reg_d1.b[0] -= reg_d6.b[0];
         reg_d3.h[1] = D_0026E094[0];
         reg_d3.h[0] = D_0026E096[0];
         reg_d1.b[0] -= reg_d6.b[0];
-        func_00129370();
+        bullet_fire256_2way();
         *(u16 *)(reg_a4 + 4) += 4;
         reg_d0.h[0] = *(u16 *)(reg_a4 + 0xC);
         *(u16 *)(reg_a4 + 8) += reg_d0.h[0];
@@ -105,10 +105,10 @@ void func_001B4D00(void) {
     }
 }
 
-void func_00128A70(void);
+void bullet_fire_3way(void);
 
 void func_001B4EB0(void) {
-    func_00128A70();
+    bullet_fire_3way();
 }
 
 extern u16 D_0026E0B0[];
@@ -127,17 +127,17 @@ void func_001B4EC0(void) {
     *(u8 *)(reg_a4 + 8) = 0x20U;
     *(u8 *)(reg_a4 + 0xB) = 0x20U;
     *(u8 *)(reg_a4 + 0xA) = 0x20U;
-    func_002010A0();
+    rng_next();
     *(u8 *)(reg_a4 + 9) += reg_d0.b[0];
-    func_002010A0();
+    rng_next();
     *(u8 *)(reg_a4 + 8) += reg_d0.b[0];
-    func_002010A0();
+    rng_next();
     *(u8 *)(reg_a4 + 0xB) += reg_d0.b[0];
-    func_002010A0();
+    rng_next();
     *(u8 *)(reg_a4 + 0xA) += reg_d0.b[0];
 }
 
-s32 func_00202500();                            /* extern */
+s32 direction_turn_toward();                            /* extern */
 
 void func_001B4FD0(void) {
     if (*(u8 *)(reg_a4 + 7) != 0) {
@@ -146,19 +146,19 @@ void func_001B4FD0(void) {
     }
     reg_d1.b[0] = *(u8 *)(reg_a4 + 9);
     reg_d0.b[0] = *(u8 *)(reg_a6 + 0xC7);
-    func_00202500();
+    direction_turn_toward();
     *(u8 *)(reg_a6 + 0xC7) = (u8) reg_d1.b[0];
     reg_d1.b[0] = *(u8 *)(reg_a4 + 8);
     reg_d0.b[0] = *(u8 *)(reg_a6 + 0xC6);
-    func_00202500();
+    direction_turn_toward();
     *(u8 *)(reg_a6 + 0xC6) = (u8) reg_d1.b[0];
     reg_d1.b[0] = *(u8 *)(reg_a4 + 0xB);
     reg_d0.b[0] = *(u8 *)(reg_a6 + 0xC9);
-    func_00202500();
+    direction_turn_toward();
     *(u8 *)(reg_a6 + 0xC9) = (u8) reg_d1.b[0];
     reg_d1.b[0] = *(u8 *)(reg_a4 + 0xA);
     reg_d0.b[0] = *(u8 *)(reg_a6 + 0xC8);
-    func_00202500();
+    direction_turn_toward();
     *(u8 *)(reg_a6 + 0xC8) = (u8) reg_d1.b[0];
     reg_d0.b[0] = *(u8 *)(reg_a4 + 9);
     if (*(u8 *)(reg_a6 + 0xC7) == reg_d0.b[0]) {
@@ -281,10 +281,10 @@ void func_001B5460(void) {
     *(u16 *)(reg_a4 + 0xC) = 0xFFFC;
 }
 
-s32 func_00129280();
+s32 bullet_fire256_fixed();
 s32 func_00201200();
-s32 func_00202140();
-s32 func_00202500();
+s32 aim_at_player();
+s32 direction_turn_toward();
 extern u16 D_0026E0C0[];
 
 void func_001B54B0(void) {
@@ -299,7 +299,7 @@ void func_001B54B0(void) {
             *(u8 *)(reg_a4 + 5) = 1U;
             reg_d0.h[0] = *(u16 *)(reg_a6 + 0xA2);
             reg_d1.h[0] = *(u16 *)(reg_a6 + 0xA4);
-            func_00202140();
+            aim_at_player();
             if (cond_flag == 0) {
                 if ((s8) reg_d1.b[0] > 0x27) {
                     reg_d1.w = 0x27;
@@ -322,7 +322,7 @@ void func_001B54B0(void) {
             reg_d1.b[0] = *(u8 *)(reg_a4 + 4);
             reg_d0.h[0] = *(u16 *)(reg_a6 + 0xAC);
             reg_d0.h[0] += 0x20;
-            func_00202500();
+            direction_turn_toward();
             reg_d0.h[0] = reg_d1.h[0];
             reg_d0.h[0] = (u16) reg_d0.b[0];
             reg_d0.h[0] -= 0x20;
@@ -360,7 +360,7 @@ void func_001B54B0(void) {
             reg_d3.w = 0;
             reg_d4.w = 0;
             reg_d2.w += reg_tmp.w;
-            func_00129280();
+            bullet_fire256_fixed();
             *(u16 *)(reg_a4 + 0xC) += 2;
             *(u16 *)(reg_a4 + 0xA) -= 1;
             if (*(u16 *)(reg_a4 + 0xA) == 0) {
@@ -370,8 +370,8 @@ void func_001B54B0(void) {
     }
 }
 
-s32 func_001292C0();
-extern u16 D_0028E910;
+s32 bullet_fire256_fast();
+extern u16 g_loop;
 
 void func_001B57D0() {
     u32 tmp;
@@ -381,7 +381,7 @@ void func_001B57D0() {
     reg_d0.h[1] = reg_d0.h[0];
     reg_d0.h[0] = 7;
     reg_d1.b[0] = reg_a4[0xD];
-    if (D_0028E910 != 0) goto next_1;
+    if (g_loop != 0) goto next_1;
     reg_d1.b[0] -= 0x14;
     reg_d5.h[0] = 0x14;
     reg_d7.h[0] = 2;
@@ -391,24 +391,24 @@ next_1:
     reg_d5.h[0] = 0xA;
     reg_d7.h[0] = 6;
 loop_1:
-    func_001292C0();
+    bullet_fire256_fast();
     reg_d1.b[0] += reg_d5.b[0];
     tmp = reg_d7.h[0] - 1;
     reg_d7.h[0] = tmp;
     if (((s64) ((s64) (u16) tmp << 0x30) >> 0x30) >= 0) goto loop_1;
 }
 
-s32 func_002011D0();
-s32 func_002026F0();
+s32 rng_next_bit();
+s32 aim256_at_player();
 
 void func_001B5890(void) {
     u16 temp_a0;
     u8 temp_a0_2;
 
-    func_00171400();
+    enemy_switch_target_player();
     *(s16 *)(reg_a4 + 4) = 4;
     *(s16 *)(reg_a4 + 6) = 0x820;
-    func_002011D0();
+    rng_next_bit();
     reg_d0.b[0] -= 1;
     *(u8 *)(reg_a4 + 6) += reg_d0.b[0];
     reg_d0.h[1] = *(u16 *)(reg_a6 + 0x22);
@@ -420,7 +420,7 @@ void func_001B5890(void) {
     *(u8 *)(reg_a4 + 0xD) = 0x80U;
     reg_d0.h[0] = *(u16 *)(reg_a4 + 8);
     reg_d1.h[0] = *(u16 *)(reg_a4 + 0xA);
-    func_002026F0();
+    aim256_at_player();
     if (cond_flag != 0) {
         func_001B5990();
         return;
@@ -474,10 +474,10 @@ void func_001B5AB0(void) {
     u16 temp_a0;
     u8 temp_a0_2;
 
-    func_00171400();
+    enemy_switch_target_player();
     *(s16 *)(reg_a4 + 4) = 4;
     *(s16 *)(reg_a4 + 6) = 0x820;
-    func_002011D0();
+    rng_next_bit();
     reg_d0.b[0] -= 1;
     *(u8 *)(reg_a4 + 6) += reg_d0.b[0];
     reg_d0.h[1] = *(u16 *)(reg_a6 + 0x62);
@@ -489,7 +489,7 @@ void func_001B5AB0(void) {
     *(u8 *)(reg_a4 + 0xD) = 0x80U;
     reg_d0.h[0] = *(u16 *)(reg_a4 + 8);
     reg_d1.h[0] = *(u16 *)(reg_a4 + 0xA);
-    func_002026F0();
+    aim256_at_player();
     if (cond_flag != 0) {
         func_001B5990();
         return;
@@ -540,7 +540,7 @@ void func_001B5BB0(void) {
 void func_001B5CD0(void) {
     *(s8 *)(reg_a4 + 2) = 6;
     *(u16 *)(reg_a4 + 0x14) = 0xFFFA;
-    if (D_0028E910 != 0) {
+    if (g_loop != 0) {
         *(s8 *)(reg_a4 + 2) = 3;
         *(u16 *)(reg_a4 + 0x14) = 0xFFFB;
     }
@@ -554,14 +554,14 @@ void func_001B5D20() {
     reg_tmp.w = reg_d0.w;
     reg_d0.h[1] = reg_d0.h[0];
     reg_d0.h[0] = 0x13;
-    func_00129370();
+    bullet_fire256_2way();
     reg_d1.b[0] += 0x80;
-    func_00129370();
-    if (D_0028E910 != 0) {
+    bullet_fire256_2way();
+    if (g_loop != 0) {
         reg_d1.b[0] += 0x40;
-        func_00129280();
+        bullet_fire256_fixed();
         reg_d1.b[0] += 0x80;
-        func_00129280();
+        bullet_fire256_fixed();
     }
 }
 
@@ -572,7 +572,7 @@ void func_001B5DB0(void) {
     *(s16 *)(reg_a4 + 4) = 0;
     *(s16 *)(reg_a4 + 6) = 8;
     *(u8 *)(reg_a4 + 0xB) = 0x40U;
-    func_002010A0();
+    rng_next();
     reg_d0.b[0] = reg_d0.sb[0] * 4;
     *(u8 *)(reg_a4 + 0xB) += reg_d0.b[0];
     *(s16 *)(reg_a4 + 0xE) = 0x404;
@@ -631,7 +631,7 @@ void func_001B5F90(void) {
     *(s16 *)(reg_a4 + 6) = 8;
     *(s16 *)(reg_a4 + 0xE) = 0x404;
     *(u8 *)(reg_a4 + 0xB) = 0xC0U;
-    func_002010A0();
+    rng_next();
     reg_d0.b[0] = reg_d0.sb[0] * 4;
     *(u8 *)(reg_a4 + 0xB) += reg_d0.b[0];
     *(s16 *)(reg_a4 + 0xE) = 0x404;
@@ -728,7 +728,7 @@ void func_001B61D0(void) {
             reg_d3.w = 0;
             reg_d4.w = 0;
             reg_d2.w += reg_tmp.w;
-            func_00129280();
+            bullet_fire256_fixed();
             *(u16 *)(reg_a4 + 0xC) += 1;
             *(u16 *)(reg_a4 + 0xA) -= 1;
             if (*(u16 *)(reg_a4 + 0xA) == 0) {
@@ -738,7 +738,7 @@ void func_001B61D0(void) {
     }
 }
 
-s32 func_002011A0();
+s32 rng_next_unsigned();
 extern u16 D_0026E100[];
 extern u16 D_0026E110[];
 
@@ -752,7 +752,7 @@ void func_001B63D0(void) {
     *(s16 *)(reg_a4 + 6) = 0x18;
     *(u16 *)(reg_a4 + 8) = 0U;
     *(s16 *)(reg_a4 + 0xA) = 2;
-    func_002011A0();
+    rng_next_unsigned();
     reg_d0.h[0] &= 1;
     *(u16 *)(reg_a4 + 8) = (u16) reg_d0.h[0];
     func_001B64D0();
@@ -783,7 +783,7 @@ void func_001B64D0(void) {
     *(u16 *)(reg_a0 + 0x1A) = 0x2020;
     *(u16 *)(reg_a0 + 0x1C) = *(u16 *)(reg_a4 + 4);
     *(u16 *)(reg_a0 + 0x1E) = *(u16 *)(reg_a4 + 2);
-    if (D_0028E910 == 0) {
+    if (g_loop == 0) {
         goto skip_1;
     }
     reg_d0.w = 0x1E;
@@ -813,7 +813,7 @@ skip_1:
     *(u16 *)(reg_a0 + 0x1A) = 0x2020;
     *(u16 *)(reg_a0 + 0x1C) = *(u16 *)(reg_a4 + 4);
     *(u16 *)(reg_a0 + 0x1E) = *(u16 *)(reg_a4 + 2);
-    if (D_0028E910 == 0) {
+    if (g_loop == 0) {
         goto skip_2;
     }
     reg_d0.w = 0x1E;
@@ -850,7 +850,7 @@ void func_001B67A0(void) {
     func_001B6820();
 }
 
-s32 func_00129410();
+s32 bullet_fire256();
 
 void func_001B6820() {
     u16 temp_a2;
@@ -869,19 +869,19 @@ void func_001B6820() {
         reg_d3.h[1] = D_0026E094[0];
         reg_d3.h[0] = D_0026E096[0];
         reg_d4.w = 0;
-        func_00129410();
+        bullet_fire256();
         reg_d1.b[0] = 0x70;
         reg_d3.h[1] = D_0026E09C[0];
         reg_d3.h[0] = D_0026E09E[0];
-        func_00129410();
+        bullet_fire256();
         reg_d1.b[0] = 0xA0;
         reg_d3.h[1] = D_0026E090[0];
         reg_d3.h[0] = D_0026E092[0];
-        func_00129410();
+        bullet_fire256();
         reg_d1.b[0] = 0x90;
         reg_d3.h[1] = D_0026E098[0];
         reg_d3.h[0] = D_0026E09A[0];
-        func_00129410();
+        bullet_fire256();
         *(u16 *)(reg_a4 + 0xA) -= 1;
         if (*(u16 *)(reg_a4 + 0xA) == 0) {
             *(s16 *)reg_a4 = 0;
@@ -917,7 +917,7 @@ void func_001B69E0() {
         *(u8 *)(reg_a4 + 9) = (u8) *(u8 *)(reg_a4 + 8);
         reg_d0.h[0] = ENTITY(reg_a6)->y.h;
         reg_d1.h[0] = ENTITY(reg_a6)->x.h;
-        func_002026F0();
+        aim256_at_player();
         if (cond_flag == 0) {
             *(u8 *)(reg_a4 + 0xD) = (u8) reg_d1.b[0];
         }
@@ -931,16 +931,16 @@ void func_001B69E0() {
         reg_d1.b[0] = temp_a0;
         reg_d3.h[1] = D_0026E094[0];
         reg_d3.h[0] = D_0026E096[0];
-        func_00129410();
+        bullet_fire256();
         reg_d3.h[1] = D_0026E09C[0];
         reg_d3.h[0] = D_0026E09E[0];
-        func_00129410();
+        bullet_fire256();
         reg_d3.h[1] = D_0026E090[0];
         reg_d3.h[0] = D_0026E092[0];
-        func_00129410();
+        bullet_fire256();
         reg_d3.h[1] = D_0026E098[0];
         reg_d3.h[0] = D_0026E09A[0];
-        func_00129410();
+        bullet_fire256();
         *(u16 *)(reg_a4 + 0xA) -= 1;
         if (*(u16 *)(reg_a4 + 0xA) == 0) {
             *(s16 *)reg_a4 = 0;
@@ -985,16 +985,16 @@ void func_001B6BA0(void) {
         reg_d3.h[1] = D_0026E174[0];
         reg_d3.h[0] = D_0026E176[0];
         reg_d4.w = 0;
-        func_00129280();
+        bullet_fire256_fixed();
         reg_d3.h[1] = D_0026E17C[0];
         reg_d3.h[0] = D_0026E17E[0];
-        func_00129280();
+        bullet_fire256_fixed();
         reg_d3.h[1] = D_0026E170[0];
         reg_d3.h[0] = D_0026E172[0];
-        func_00129280();
+        bullet_fire256_fixed();
         reg_d3.h[1] = D_0026E178[0];
         reg_d3.h[0] = D_0026E17A[0];
-        func_00129280();
+        bullet_fire256_fixed();
         *(u16 *)(reg_a4 + 4) -= 1;
         if (*(u16 *)(reg_a4 + 4) == 0) {
             *(s16 *)reg_a4 = 0;
@@ -1029,27 +1029,27 @@ void func_001B6D30(void) {
         reg_d3.h[1] = D_0026E170[0];
         reg_d3.h[0] = D_0026E172[0];
         reg_d4.w = 0;
-        func_00129370();
+        bullet_fire256_2way();
         reg_d1.b[0] += 0xC;
-        func_00129370();
+        bullet_fire256_2way();
         reg_d1.b[0] += 0xC;
-        func_00129370();
+        bullet_fire256_2way();
         reg_d1.b[0] -= 0x24;
-        func_00129370();
+        bullet_fire256_2way();
         reg_d1.b[0] -= 0xC;
-        func_00129370();
+        bullet_fire256_2way();
         reg_d1.b[0] = 0x80;
         reg_d3.h[1] = D_0026E174[0];
         reg_d3.h[0] = D_0026E176[0];
-        func_00129370();
+        bullet_fire256_2way();
         reg_d1.b[0] += 0xC;
-        func_00129370();
+        bullet_fire256_2way();
         reg_d1.b[0] += 0xC;
-        func_00129370();
+        bullet_fire256_2way();
         reg_d1.b[0] -= 0x24;
-        func_00129370();
+        bullet_fire256_2way();
         reg_d1.b[0] -= 0xC;
-        func_00129370();
+        bullet_fire256_2way();
         *(u16 *)(reg_a4 + 4) -= 1;
         if (*(u16 *)(reg_a4 + 4) == 0) {
             *(s16 *)reg_a4 = 0;
@@ -1068,11 +1068,11 @@ void func_001B6E90(void) {
     *(u8 *)(reg_a4 + 0x11) = (u8) reg_d0.b[0];
     reg_d0.h[0] = *(u16 *)(reg_a6 + 0xA2);
     reg_d1.h[0] = *(u16 *)(reg_a6 + 0xA4);
-    func_002026F0();
+    aim256_at_player();
     if (cond_flag == 0) {
         *(u8 *)(reg_a4 + 0x11) = (u8) reg_d1.b[0];
     }
-    func_00171400();
+    enemy_switch_target_player();
 }
 
 s32 func_002012F0();
@@ -1102,7 +1102,7 @@ void func_001B6F40(void) {
         reg_tmp.h[1] = temp_a0;
         reg_tmp.h[0] = *(u16 *)(reg_a6 + 0xA4);
         reg_d2.w += reg_tmp.w;
-        func_002011A0();
+        rng_next_unsigned();
         reg_d4.w = 0;
         reg_d1.b[0] = reg_d0.b[0];
         reg_d0.w = 0xFFF9000B;
@@ -1115,14 +1115,14 @@ void func_001B6F40(void) {
             reg_d3.h[1] = (reg_d3.h[0] != 0) ? *(u16 *)((u8 *)reg_a0 + ((s16)reg_d3.h[0] & ~1)) : *(u16 *)reg_a0;
             reg_d3.h[0] = ((reg_d3.h[0] + 2) != 0) ? *(u16 *)((u8 *)reg_a0 + ((s16)(reg_d3.h[0] + 2) & ~1)) : *(u16 *)reg_a0;
             reg_d6.b[0] = reg_d1.b[0];
-            func_00129410();
+            bullet_fire256();
             reg_d1.b[0] += 4;
             reg_d3.h[0] = reg_d1.h[0];
             reg_d3.h[0] += 2;
             reg_d3.h[0] &= 0xFC;
             reg_d3.h[1] = (reg_d3.h[0] != 0) ? *(u16 *)((u8 *)reg_a0 + ((s16)reg_d3.h[0] & ~1)) : *(u16 *)reg_a0;
             reg_d3.h[0] = ((reg_d3.h[0] + 2) != 0) ? *(u16 *)((u8 *)reg_a0 + ((s16)(reg_d3.h[0] + 2) & ~1)) : *(u16 *)reg_a0;
-            func_00129410();
+            bullet_fire256();
             reg_d1.b[0] = reg_d6.b[0];
             reg_d1.b[0] += 0x10;
         } while ((s16)(--reg_d7.h[0]) >= 0);
@@ -1153,7 +1153,7 @@ void func_001B6F40(void) {
             reg_d2.h[0] += *(u16 *)(reg_a4 + 0x12);
             reg_d3.w = 0;
             reg_d4.w = 0;
-            func_00129280();
+            bullet_fire256_fixed();
             *(u8 *)(reg_a4 + 5) += 2;
             *(u16 *)(reg_a4 + 0xA) += 2;
             *(u16 *)(reg_a4 + 0xC) += 2;
@@ -1184,7 +1184,7 @@ void func_001B6F40(void) {
             reg_d2.h[0] += *(u16 *)(reg_a4 + 0x12);
             reg_d3.w = 0;
             reg_d4.w = 0;
-            func_00129280();
+            bullet_fire256_fixed();
             func_002012F0();
             reg_d0.h[0] = (u16) ((s16) reg_d0.h[0] >> 3);
             *(u16 *)(reg_a4 + 0x12) = (u16) reg_d0.h[0];
@@ -1212,7 +1212,7 @@ void func_001B6F40(void) {
             reg_d2.h[0] += *(u16 *)(reg_a4 + 0x12);
             reg_d3.w = 0;
             reg_d4.w = 0;
-            func_00129280();
+            bullet_fire256_fixed();
             *(u16 *)(reg_a4 + 6) -= 1;
         } while (*(u16 *)(reg_a4 + 6) != 0);
     }
@@ -1224,7 +1224,7 @@ void func_001B7620(void) {
 
     reg_d3.w = 0;
     reg_d4.w = 0;
-    if (D_0028E910 != 0) goto next_1;
+    if (g_loop != 0) goto next_1;
     reg_d0.w = 0xFFFE0004;
     reg_d1.b[0] -= 2;
     reg_d5.h[0] = 2;
@@ -1236,7 +1236,7 @@ next_1:
     reg_d5.h[0] = 4;
     reg_d7.h[0] = 6;
 loop_1:
-    func_00129280();
+    bullet_fire256_fixed();
     reg_d1.b[0] += reg_d5.b[0];
     tmp = reg_d7.h[0] - 1;
     reg_d7.h[0] = tmp;
@@ -1284,13 +1284,13 @@ block_5:
         *(u8 *)(reg_a4 + 0xB) -= 1;
         if ((s32) reg_tmp.b[0] <= 0) {
             *(u8 *)(reg_a4 + 0xB) = (u8) *(u8 *)(reg_a4 + 0xA);
-            func_00171400();
+            enemy_switch_target_player();
             if (*(u8 *)(reg_a6 + 0x3E) == 0) {
                 reg_d0.h[0] = *(u16 *)(reg_a6 + 0x22);
                 reg_d1.h[0] = *(u16 *)(reg_a6 + 0x24);
                 reg_d0.h[0] += 0x7FFF + 0x76C1;
                 reg_d1.h[0] += 0x140;
-                func_002026F0();
+                aim256_at_player();
                 if (cond_flag == 0) {
                     reg_d2.h[1] = *(u16 *)(reg_a6 + 0x22);
                     reg_d2.h[0] = *(u16 *)(reg_a6 + 0x24);
@@ -1303,7 +1303,7 @@ block_5:
                 reg_d1.h[0] = *(u16 *)(reg_a6 + 0x64);
                 reg_d0.h[0] += 0x7FFF + 0x76C1;
                 reg_d1.h[0] += 0x7FFF + 0x7EC1;
-                func_002026F0();
+                aim256_at_player();
                 if (cond_flag == 0) {
                     reg_d2.h[1] = *(u16 *)(reg_a6 + 0x62);
                     reg_d2.h[0] = *(u16 *)(reg_a6 + 0x64);

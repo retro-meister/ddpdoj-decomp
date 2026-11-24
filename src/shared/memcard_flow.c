@@ -139,7 +139,7 @@ void func_00226490(void) {
     D_0028EC3C = 4;
 }
 
-s32 func_0018D4B0();
+s32 sound_request();
 s32 func_0018D4D0();
 s32 func_00233DA0();
 extern u8 D_0028EC34;
@@ -156,18 +156,18 @@ void func_002264D0(void) {
     }
     temp_a0 = g_pad_trigger[D_0028EC34];
     if (temp_a0 & 0x40) {
-        func_0018D4B0();
+        sound_request();
         func_002263F0();
     } else if (temp_a0 & 0x20) {
         D_0028EC38_as_s8 = 0;
         if (D_0028EC2C == 1) {
             D_0028EC3C = 5;
-            func_0018D4B0();
+            sound_request();
         } else {
             temp_a0_2 = *(u16 *)(D_006A0E50 + (D_0028EC40 << 0xA));
             if ((temp_a0_2 != 0) && (temp_a0_2 != 3)) {
                 D_0028EC3C = 6;
-                func_0018D4B0();
+                sound_request();
             }
         }
     }

@@ -9,8 +9,8 @@ void func_0011DA20(void);
 void func_0011DB40(void);
 
 s32 func_00171330(s32 *);
-s32 func_001713A0();
-s32 func_00201B80();
+s32 entity_release();
+s32 entity_follow_scroll();
 extern u8 D_0028E290;
 extern u8 D_0028E2C8;
 extern u8 D_0028ED80;
@@ -18,15 +18,15 @@ extern void func_0019C4F0();
 
 void func_0011D510(void) {
     if (((D_0028ED80 != 0) && (D_0028E2C8 != 0)) || (D_0028E290 == 2)) {
-        func_001713A0();
+        entity_release();
         return;
     }
     reg_d0.h[0] = ENTITY(reg_a6)->y.h;
     if ((s16) reg_d0.h[0] < -0x13FF) {
-        func_001713A0();
+        entity_release();
         return;
     }
-    func_00201B80();
+    entity_follow_scroll();
     func_00171330((void *)func_0019C4F0);
 }
 
@@ -44,15 +44,15 @@ void func_0011D5A0(void) {
 
 void func_0011D600(void) {
     if (((D_0028ED80 != 0) && (D_0028E2C8 != 0)) || (D_0028E290 == 2)) {
-        func_001713A0();
+        entity_release();
         return;
     }
     reg_d0.h[0] = ENTITY(reg_a6)->y.h;
     if ((s16) reg_d0.h[0] < -0x5C00) {
-        func_001713A0();
+        entity_release();
         return;
     }
-    func_00201B80();
+    entity_follow_scroll();
     func_00171330((void *)func_0019C4F0);
 }
 
@@ -72,15 +72,15 @@ extern void func_0019C4B0();
 
 void func_0011D6F0(void) {
     if (((D_0028ED80 != 0) && (D_0028E2C8 != 0)) || (D_0028E290 == 2)) {
-        func_001713A0();
+        entity_release();
         return;
     }
     reg_d0.h[0] = ENTITY(reg_a6)->y.h;
     if ((s16) reg_d0.h[0] < -0x3C00) {
-        func_001713A0();
+        entity_release();
         return;
     }
-    func_00201B80();
+    entity_follow_scroll();
     func_00171330((void *)func_0019C4B0);
 }
 
@@ -99,10 +99,10 @@ void func_0011D780(void) {
 void func_0011D7E0(void) {
     reg_d0.h[0] = ENTITY(reg_a6)->y.h;
     if ((s16) reg_d0.h[0] < -0x4000) {
-        func_001713A0();
+        entity_release();
         return;
     }
-    func_00201B80();
+    entity_follow_scroll();
     func_00171330((void *)func_0019C4F0);
 }
 
@@ -132,10 +132,10 @@ void func_0011D8A0(void) {
 void func_0011D900(void) {
     reg_d0.h[0] = ENTITY(reg_a6)->y.h;
     if ((s16) reg_d0.h[0] < -0x5400) {
-        func_001713A0();
+        entity_release();
         return;
     }
-    func_00201B80();
+    entity_follow_scroll();
     func_00171330((void *)func_0019C4F0);
 }
 
@@ -164,15 +164,15 @@ void func_0011D9C0(void) {
 
 void func_0011DA20(void) {
     if (((D_0028ED80 != 0) && (D_0028E2C8 != 0)) || (D_0028E290 == 2)) {
-        func_001713A0();
+        entity_release();
         return;
     }
     reg_d0.h[0] = ENTITY(reg_a6)->y.h;
     if ((s16) reg_d0.h[0] < -0x2400) {
-        func_001713A0();
+        entity_release();
         return;
     }
-    func_00201B80();
+    entity_follow_scroll();
     func_00171330((void *)func_0019C4F0);
 }
 
@@ -204,10 +204,10 @@ void func_0011DB40(void) {
     u32 temp_a3;
 
     if ((s32) D_0028E8A8 >= 0x22F) {
-        func_001713A0();
+        entity_release();
         return;
     }
-    func_00201B80();
+    entity_follow_scroll();
     if (((s32) D_0028E8A8 >= 0x1F4) && (0 <= (s64)ENTITY(reg_a6)->offset_y.sh)) {
         reg_tmp.b[0] = ENTITY(reg_a6)->hp.b[1];
         ENTITY(reg_a6)->hp.b[1] -= 1;

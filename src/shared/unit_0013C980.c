@@ -184,7 +184,7 @@ void func_0019DBE0(void);
 extern u16 D_0028DFC0;
 extern u16 D_0028E3EC;
 extern u16 D_0028E3F0;
-extern u16 D_0028E910;
+extern u16 g_loop;
 
 void func_0013CD00(void) {
     if (reg_d0.h[0] != 5) {
@@ -238,7 +238,7 @@ loop_2:
         reg_d1.h[0] = reg_d1.h[1];
         reg_d1.h[1] = reg_tmp1.h[0];
         reg_d1.h[0] += reg_d6.h[0];
-        if (((s16) reg_d1.h[0] >= -0x500) && ((D_0028E910 == 0) || (*(u8 *)(reg_a1 + 0x3E) == 0) || (D_0028E3EC == 0))) {
+        if (((s16) reg_d1.h[0] >= -0x500) && ((g_loop == 0) || (*(u8 *)(reg_a1 + 0x3E) == 0) || (D_0028E3EC == 0))) {
             reg_tmp1.h[0] = reg_d1.h[0];
             reg_d1.h[0] = reg_d1.h[1];
             reg_d1.h[1] = reg_tmp1.h[0];
@@ -463,7 +463,7 @@ next_2:
         reg_d0.h[0] += 2;
     }
 next_1:
-    if (D_0028E910 != 0) {
+    if (g_loop != 0) {
         reg_d0.h[0] += 1;
         if ((g_stage == 4) && (D_0028E908 != 0)) {
             reg_d0.h[0] += 4;

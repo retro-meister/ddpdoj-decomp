@@ -34,14 +34,14 @@ void func_001340D0(void) {
     func_001340E0();
 }
 
-void func_001A3020(void);
+void sprite_palette_load(void);
 
 void func_001340E0(void) {
     *(u16 *)&reg_d0 = 6;
-    func_001A3020();
+    sprite_palette_load();
 }
 
-s32 func_001A2FA0();
+s32 text_palette_load();
 extern u8 D_00269340[];
 extern u8 D_002BF3E0[];
 
@@ -70,7 +70,7 @@ void func_001340F0(void) {
     }
     reg_a0 = D_00269340;
     reg_d0.h[0] = 0xD;
-    func_001A2FA0();
+    text_palette_load();
 }
 
 extern u8 D_002BF3F6[];
@@ -588,8 +588,8 @@ s32 func_0013B190();                            /* extern */
 s32 func_0018DE90();                            /* extern */
 s32 func_0018DEE0();                            /* extern */
 s32 func_00206D70();                            /* extern */
-s32 func_002071C0();                            /* extern */
-extern u16 D_0028E910;
+s32 task_start();                            /* extern */
+extern u16 g_loop;
 extern u16 g_stage;
 extern s8 D_0028ED64_as_s8;
 
@@ -599,8 +599,8 @@ void func_00134BD0(void) {
     func_0013B190();
     func_00206D70();
     reg_d0.h[0] = 0xE;
-    func_002071C0();
-    if (D_0028E910 != 1) {
+    task_start();
+    if (g_loop != 1) {
         if ((s32) 0 < g_stage) {
             goto block_3;
         }
@@ -640,7 +640,7 @@ void func_00134C40(void) {
         func_00134BD0();
         return;
     }
-    if (D_0028E910 != 0) {
+    if (g_loop != 0) {
         goto next_8;
     }
     if (D_0028E398 == 0) {
@@ -722,7 +722,7 @@ next_8:
     if (D_0028ED80 != 0) {
         goto next_9;
     }
-    if (D_0028E910 != 0) {
+    if (g_loop != 0) {
         goto next_9;
     }
     func_001351F0();

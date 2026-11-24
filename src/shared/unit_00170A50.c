@@ -296,31 +296,31 @@ void func_00171330(void (*callback)(void))
 }
 #pragma pop
 
-void func_001713A0(void) {
+void entity_release(void) {
     reg_a6[1] = 0;
 }
 
 void func_001713B0(void) {
-    void func_00124520(void);
+    void boss_level_get(void);
     *(u16 *)&reg_d0 = 0x58;
-    func_00124520();
+    boss_level_get();
 }
 
 void func_001713C0(void) {
-    s32 func_00124520();
+    s32 boss_level_get();
     reg_d0.h[0] = 0x78;
-    func_00124520();
+    boss_level_get();
     reg_d0.w = 4;
 }
 
 extern u16 *reg_a5_as_u16_p;
 
-void func_001713F0(u16 val) {
+void enemy_set_entity_count(u16 val) {
     reg_a5_as_u16_p[2] = val;
 }
 
 
-void func_00171400(void) {
+void enemy_switch_target_player(void) {
     u8 *flags_ptr;
     u8 flags;
 
@@ -333,14 +333,14 @@ void func_00171400(void) {
     flags_ptr[0] = flags | 1;
 }
 
-s32 func_0014E290();                           /* extern */
+s32 enemy_remove();                           /* extern */
 s32 func_00203060();                            /* extern */
 
 void func_00171430(void) {
     func_00203060();
     if (cond_flag != 0) {
         if (*(u8 *)(reg_a5 + 0x17) != 0) {
-            func_0014E290();
+            enemy_remove();
             cond_flag = 1;
             return;
         }

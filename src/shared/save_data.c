@@ -60,20 +60,20 @@ extern u8 D_0028EC34;
 extern s8 D_0028EC40;
 extern u8 D_006A0E50[];
 void func_002268A0(void) {
-    s32 func_0018D4B0();
+    s32 sound_request();
     s32 temp_a0;
     s32 temp_a0_3;
     u16 temp_a0_2;
 
     temp_a0 = g_pad_trigger[D_0028EC34];
     if (temp_a0 & 0x40) {
-        func_0018D4B0();
+        sound_request();
         func_002263F0();
     } else if (temp_a0 & 0x20) {
         temp_a0_2 = *(u16 *)(D_006A0E50 + (D_0028EC40 << 0xA));
         if ((temp_a0_2 != 0) && (temp_a0_2 != 3)) {
             D_0028EC3C = 6;
-            func_0018D4B0();
+            sound_request();
         }
     }
     temp_a0_3 = g_pad_repeat[D_0028EC34];
@@ -667,7 +667,7 @@ void func_002276C0(void) {
     }
     D_0028EC18_as_Fade.flag = D_0028EB58;
     if (confirm != 0) {
-        func_0018D4B0();
+        sound_request();
         D_0028EC18_as_Fade.step += 1;
         if (last == D_0028EC18_as_Fade.flag) {
             func_00222260(0);
@@ -781,12 +781,12 @@ void func_002279A0(void) {
             D_0028E280 = selected;
             printf(D_00289E38, D_0028E280);
 #endif
-            func_0018D4B0();
+            sound_request();
             D_0028EBE8_as_Fade.step += 1;
             D_0068DF02[0] = D_0028EBE8_as_Fade.flag - 1;
             func_002272D0();
         } else {
-            func_0018D4B0();
+            sound_request();
             D_0028EC18_as_Fade.flag = 2;
             D_0028EBE8_as_Fade.state = 0;
             D_0028EB84 = 7;
@@ -1165,7 +1165,7 @@ void func_00228580(void) {
     if (confirm != 0) {
         switch (D_0028EB58) {
         case 1:
-            func_0018D4B0();
+            sound_request();
             D_0028EC10_as_Fade.state = 0;
             D_0028EB84 = 0x11;
             D_0028EC10_as_Fade.value = 0;
@@ -1175,7 +1175,7 @@ void func_00228580(void) {
             D_0028EC10_as_Fade.step += 1;
             break;
         case 2:
-            func_0018D4B0();
+            sound_request();
             D_0028EC10_as_Fade.state = 0;
             D_0028EB84 = 0x12;
             D_0028EC10_as_Fade.value = 0;
@@ -1185,7 +1185,7 @@ void func_00228580(void) {
             D_0028EC10_as_Fade.step += 1;
             break;
         case 3:
-            func_0018D4B0();
+            sound_request();
             D_0028EC10_as_Fade.state = 0;
             D_0028EB84 = 0x13;
             D_0028EC10_as_Fade.value = 0;
@@ -1195,7 +1195,7 @@ void func_00228580(void) {
             D_0028EC10_as_Fade.step += 1;
             break;
         case 4:
-            func_0018D4B0();
+            sound_request();
             D_0028EC10_as_Fade.state = 0;
             D_0028EB84 = 0x14;
             D_0028EC10_as_Fade.value = 0;
@@ -1205,7 +1205,7 @@ void func_00228580(void) {
             D_0028EC10_as_Fade.step += 1;
             break;
         case 5:
-            func_0018D4B0();
+            sound_request();
             D_0028EC10_as_Fade.state = 0;
             D_0028EC18_as_Fade.flag = 1;
             D_0028EC10_as_Fade.value = 0;
@@ -1317,11 +1317,11 @@ void func_00228910(void) {
     if (confirm != 0) {
         switch (D_0028EB58) {
         case 6:
-            func_0018D4B0();
+            sound_request();
             memcpy(D_0068DED8_as_s16_a, D_00270828_as_s16_a, 10);
             break;
         case 7:
-            func_0018D4B0();
+            sound_request();
             D_0028EC08_as_Fade.state = 0;
             D_0028EC10_as_Fade.flag = 1;
             D_0028EC08_as_Fade.value = 0;
@@ -1500,16 +1500,16 @@ void func_00228E80(void) {
     if (confirm != 0) {
         switch (sel) {
         case 3:
-            func_0018D4B0();
+            sound_request();
             D_0068DEF0_as_s16_a[10] += 1;
             D_0068DEF0_as_s16_a[10] &= 1;
             break;
         case 10:
-            func_0018D4B0();
+            sound_request();
             memcpy(D_0068DEF0_as_s16_a, D_00270810_as_s16_a, 0x16);
             break;
         case 11:
-            func_0018D4B0();
+            sound_request();
             D_0028EC00_as_Fade.state = 0;
             D_0028EC10_as_Fade.flag = 2;
             D_0028EC00_as_Fade.value = 0;
@@ -1869,11 +1869,11 @@ void func_00229E20(void) {
     if (confirm != 0) {
         switch (D_0028EB58) {
         case 7:
-            func_0018D4B0();
+            sound_request();
             memcpy(D_0068DEC8_as_s16_a, D_00270838_as_s16_a, 12);
             break;
         case 8:
-            func_0018D4B0();
+            sound_request();
             D_0028EBF8.state = 0;
             D_0028EC10_as_Fade.flag = 3;
             D_0028EBF8.value = 0;
@@ -2010,7 +2010,7 @@ void func_0022A2E0(void) {
         var_s0 = 1;
     }
     if (var_s0 != 0) {
-        func_0018D4B0();
+        sound_request();
         D_0028EBD8_as_Fade.state = 0;
         D_0028EB04 = 1;
         D_0028EBD8_as_Fade.value = 0;
@@ -2202,9 +2202,9 @@ void func_0022A930() {
 
 void func_0022A9A0()
 {
-    extern void func_0018D4B0(void);
+    extern void sound_request(void);
     if (g_pad_trigger[D_0028EC24] & 0x60) {
-        func_0018D4B0();
+        sound_request();
         D_0028EB54 = 2;
         D_0028EB34 = 2;
         D_0028EB64 = D_0028EB64 + 1;
@@ -2901,8 +2901,8 @@ void func_0022BF60(void) {
 
 extern void func_0012FAB0(void);
 extern void func_00171910(void);
-extern void func_001A2FA0(void);
-extern void func_002071C0(void);
+extern void text_palette_load(void);
+extern void task_start(void);
 extern u8 D_00269140[];
 extern u8 D_0028DE40[];
 extern u8 D_0028DE44[];
@@ -2920,7 +2920,7 @@ extern u32 death_D_00290DB8;
 extern u32 death_D_00290DB4;
 extern u16 D_0028E614;
 extern u16 D_0028E610;
-extern u16 D_0028E910;
+extern u16 g_loop;
 #endif
 
 void func_0022BFD0() {
@@ -2957,7 +2957,7 @@ void func_0022BFD0() {
     save_a6 = reg_a6;
 #ifdef DEATH_LABEL
     D_0028E290 = 2;
-    D_0028E910 = 0;
+    g_loop = 0;
     D_00684C80[6] = 0;
     D_00684C80[4] = 3;
     D_00684C80[5] = 1;
@@ -2988,7 +2988,7 @@ void func_0022BFD0() {
         reg_d0.h[0] = 10;
         death_D_00290DB8 = D_0028E614;
         death_D_00290DB4 = D_0028E610;
-        func_002071C0();
+        task_start();
         *(u16 *)(reg_a0 + 4) = D_00684C80[6];
     }
     func_00171910();
@@ -3016,14 +3016,14 @@ void func_0022BFD0() {
     D_00684C80[7] = 0;
     D_0028E368 = 0;
     D_00684C80[10] = 0;
-    func_002071C0();
+    task_start();
     *(u16 *)(reg_a0 + 4) = D_00684C80[6];
     func_00171910();
 #endif
     func_0012FAB0();
     reg_d0.w = 0;
     reg_a0 = (u8 *)D_00269140;
-    func_001A2FA0();
+    text_palette_load();
     *(u8 *)(reg_a5 + 3) = 1;
     reg_d0.w = save_d0;
     reg_d1.w = save_d1;
@@ -3064,7 +3064,7 @@ extern u8 D_0028E384;
 extern u8 D_0028E388;
 extern u8 D_0028E38C;
 extern u16 D_0028E59C;
-extern u16 D_0028E910;
+extern u16 g_loop;
 extern u8 D_00684C88[];
 extern u16 D_00684C8A[];
 extern u16 D_00684C8C[];
@@ -3161,7 +3161,7 @@ void func_0022C1F0() {
         if (D_0028E370 != 0) {
             g_pad_input_locked = 0;
             D_00684C94[0] += 1;
-            D_0028E910 = D_00684C8A[0];
+            g_loop = D_00684C8A[0];
             func_00135110();
 #ifdef DEATH_LABEL
             fade_reset();

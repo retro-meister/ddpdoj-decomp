@@ -197,7 +197,7 @@ void func_001719D0(void) {
     }
 }
 
-s32 func_001A3020();
+s32 sprite_palette_load();
 extern u8 D_002554B0[];
 extern u8 D_0026B170[];
 extern u8 D_0026B180[];
@@ -228,7 +228,7 @@ void func_00171A30(void) {
         *(u8 *)(reg_a6 + 0x1C) = (u8) reg_d0.b[0];
         *(u8 *)(reg_a6 + 0x3C) = (u8) reg_d0.b[0];
         reg_a0 = (u8 *)D_002554B0;
-        func_001A3020();
+        sprite_palette_load();
         return;
     }
     if (*(u16 *)reg_a4 == 0) {
@@ -294,7 +294,7 @@ void func_00171B90(void) {
         *(u8 *)(reg_a6 + 0x1C) = (u8) reg_d0.b[0];
         *(u8 *)(reg_a6 + 0x3C) = (u8) reg_d0.b[0];
         reg_a0 = (u8 *)D_002554B0;
-        func_001A3020();
+        sprite_palette_load();
     }
     var_a0 = 1;
     if (*(u16 *)reg_a4 == 0) {

@@ -32,7 +32,7 @@ extern u16 D_0028E024;
 extern u8 D_0028E290;
 extern s8 D_0028E3F8;
 extern u16 D_0028E8C4;
-extern u16 D_0028E910;
+extern u16 g_loop;
 extern u16 g_stage;
 
 #ifdef DEATH_LABEL
@@ -73,7 +73,7 @@ void func_0013F9A0(void) {
     save_a4 = reg_a4;
     save_a5 = reg_a5;
     save_a6 = reg_a6;
-    if ((D_0028E290 == 2) || ((D_0028E910 != 0) && ((D_0028E024 == 0) || (D_0028E014 == 0)))) {
+    if ((D_0028E290 == 2) || ((g_loop != 0) && ((D_0028E024 == 0) || (D_0028E014 == 0)))) {
 #ifdef DEATH_LABEL
         if (death_D_00290DC0 == 0)
 #endif
@@ -157,7 +157,7 @@ void func_0013FB20(void) {
     save_a4 = reg_a4;
     save_a5 = reg_a5;
     save_a6 = reg_a6;
-    if ((D_0028E290 == 2) || ((D_0028E910 != 0) && ((D_0028E020 == 0) || (D_0028E010 == 0)))) {
+    if ((D_0028E290 == 2) || ((g_loop != 0) && ((D_0028E020 == 0) || (D_0028E010 == 0)))) {
 #ifdef DEATH_LABEL
         if (death_D_00290DC0 == 0)
 #endif
@@ -1572,7 +1572,7 @@ void func_00141B50(void) {
     reg_a0 = (u8 *) reg_tmp.w;
     ENTITY(reg_a6)->hit_x_plus.h = (reg_d0.h[0] != 0) ? *(u16 *)((u8 *)reg_a0 + ((s16)reg_d0.h[0] & ~1)) : *(u16 *)reg_a0;
     ENTITY(reg_a6)->hit_x_minus.h = ((reg_d0.h[0] + 2) != 0) ? *(u16 *)((u8 *)reg_a0 + ((s16)(reg_d0.h[0] + 2) & ~1)) : *(u16 *)reg_a0;
-    if ((D_0028DFC0 == 0) && (D_0028E3EC == 0) && (D_0028E910 == 0) && (g_stage != 2)) {
+    if ((D_0028DFC0 == 0) && (D_0028E3EC == 0) && (g_loop == 0) && (g_stage != 2)) {
         reg_d1.h[1] = ENTITY(reg_a6)->y.h;
         reg_d1.h[0] = ENTITY(reg_a6)->x.h;
         reg_d5.h[0] = 0x1C00;
@@ -1611,7 +1611,7 @@ void func_00141B50(void) {
                 p1 = (s32 *)(p0 - 0x34);
                 *p1 = D_0029CD94[0];
                 func_00140280((void *)p0, (void *)p1);
-                if (D_0028E910 != 0) {
+                if (g_loop != 0) {
                     func_00140280((void *)p0, (void *)p1);
                 }
                 return;
@@ -1621,7 +1621,7 @@ void func_00141B50(void) {
             p1 = (s32 *)(p0 - 0x30);
             *p1 = D_0029CD84[0];
             func_00140280((void *)p0, (void *)p1);
-            if (D_0028E910 != 0) {
+            if (g_loop != 0) {
                 func_00140280((void *)p0, (void *)p1);
             }
         }
@@ -1667,7 +1667,7 @@ s32 func_00200EE0();
 s32 func_002014D0();
 s32 func_002015B0();
 s32 func_00201690();
-s32 func_00201C60();
+s32 entity_velocity();
 extern u8 D_00255700[];
 extern u16 D_00255750[];
 extern u16 D_00255760[];
@@ -1797,7 +1797,7 @@ block_13:
             reg_d2.h[0] = ENTITY(reg_a6)->y.h;
             reg_d3.h[0] = ENTITY(reg_a6)->x.h;
         } else {
-            func_00201C60();
+            entity_velocity();
             *(u16 *)(reg_a6 + 0x30) = (u16) reg_d2.h[0];
             *(u16 *)(reg_a6 + 0x32) = (u16) reg_d3.h[0];
             *(u16 *)(reg_a6 + 0x5C) = (u16) reg_d3.h[0];
@@ -2380,7 +2380,7 @@ block_244:
     reg_a0 = (u8 *) reg_tmp.w;
     ENTITY(reg_a6)->hit_x_plus.h = (reg_d0.h[0] != 0) ? *(u16 *)((u8 *)reg_a0 + ((s16)reg_d0.h[0] & ~1)) : *(u16 *)reg_a0;
     ENTITY(reg_a6)->hit_x_minus.h = ((reg_d0.h[0] + 2) != 0) ? *(u16 *)((u8 *)reg_a0 + ((s16)(reg_d0.h[0] + 2) & ~1)) : *(u16 *)reg_a0;
-    if ((D_0028DFC0 == 0) && (D_0028E3EC == 0) && (D_0028E910 == 0) && (g_stage != 2)) {
+    if ((D_0028DFC0 == 0) && (D_0028E3EC == 0) && (g_loop == 0) && (g_stage != 2)) {
         reg_d1.h[1] = ENTITY(reg_a6)->y.h;
         reg_d1.h[0] = ENTITY(reg_a6)->x.h;
         reg_d5.h[0] = 0x1C00;
@@ -2419,7 +2419,7 @@ block_244:
                 p1 = (s32 *)(p0 - 0x34);
                 *p1 = D_0029CD94[0];
                 func_00140280((void *)p0, (void *)p1);
-                if (D_0028E910 != 0) {
+                if (g_loop != 0) {
                     func_00140280((void *)p0, (void *)p1);
                 }
                 return;
@@ -2429,7 +2429,7 @@ block_244:
             p1 = (s32 *)(p0 - 0x30);
             *p1 = D_0029CD84[0];
             func_00140280((void *)p0, (void *)p1);
-            if (D_0028E910 != 0) {
+            if (g_loop != 0) {
                 func_00140280((void *)p0, (void *)p1);
             }
         }

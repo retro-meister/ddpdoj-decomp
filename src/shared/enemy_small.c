@@ -28,11 +28,11 @@ void func_0016CDD0(void) {
     *(u8 *)(reg_a6 + 0x1F) = (u8) reg_d1.b[0];
 }
 
-s32 func_0013A780();
+s32 explosion_spawn();
 extern u16 *reg_a1_as_u16_p;
 
 void func_0016CEA0(void) {
-    func_0013A780();
+    explosion_spawn();
     *(u16 *)(reg_a0 + 2) = (u16) ENTITY(reg_a6)->y.h;
     *(u16 *)(reg_a0 + 4) = (u16) ENTITY(reg_a6)->x.h;
     reg_d0.w = 0;
@@ -80,20 +80,20 @@ extern u8 D_00267030[];
 extern u8 D_00267050[];
 extern u8 D_00267070[];
 extern u8 D_00267090[];
-extern u16 D_0028E910;
+extern u16 g_loop;
 extern u16 D_0028E914;
 
 void func_0016D040(void) {
     cond_flag = 0;
     reg_d0.h[0] = D_0028E914;
     reg_a0 = (u8 *)D_00267050;
-    if (D_0028E910 != 0) {
+    if (g_loop != 0) {
         reg_a0 = (u8 *)D_00267090;
     }
     reg_d2.h[1] = (reg_d0.h[0] != 0) ? *(u16 *)(reg_a0 + ((s16)reg_d0.h[0] & ~1)) : *(u16 *)reg_a0;
     reg_d2.h[0] = (((reg_d0.h[0] & 0xFFFF) + 2) != 0) ? *(u16 *)(reg_a0 + ((s16)((reg_d0.h[0] & 0xFFFF) + 2) & ~1)) : *(u16 *)reg_a0;
     reg_a0 = (u8 *)D_00267030;
-    if (D_0028E910 != 0) {
+    if (g_loop != 0) {
         reg_a0 = (u8 *)D_00267070;
     }
     reg_d3.h[1] = (reg_d0.h[0] != 0) ? *(u16 *)(reg_a0 + ((s16)reg_d0.h[0] & ~1)) : *(u16 *)reg_a0;
@@ -211,13 +211,13 @@ void func_0016D290(void) {
 }
 
 void func_0016D520(void) {
-    void func_001713F0(s32);
-    func_001713F0(0);
+    void enemy_set_entity_count(s32);
+    enemy_set_entity_count(0);
 }
 
-s32 func_0014E300();
-s32 func_0014E370();
-s32 func_0014E7E0();
+s32 enemy_set_task_work();
+s32 enemy_init_entities();
+s32 enemy_path_start();
 extern u16 D_0025B170[];
 extern u16 D_0025B180[];
 extern u16 D_0025B1A0[];
@@ -229,10 +229,10 @@ extern s8 enemy_move_end_requested;
 
 void func_0016D530(void) {
     reg_a0 = (u8 *)(D_0025B1A0);
-    func_0014E370();
+    enemy_init_entities();
     reg_a0 = (u8 *)(D_0025B180);
     reg_d0.w = 0xF;
-    func_0014E300();
+    enemy_set_task_work();
     reg_d0.h[0] = g_stage;
     reg_d0.h[0] >>= 1;
     reg_d0.h[0] += 2;
@@ -243,7 +243,7 @@ void func_0016D530(void) {
     reg_d0.h[0] = D_0028E8C8;
     reg_d0.h[0] >>= 4;
     *(u8 *)(reg_a5 + 0x18) -= reg_d0.b[0];
-    func_0014E7E0();
+    enemy_path_start();
     if (enemy_move_end_requested == 0) {
         if ((s32) ENTITY(reg_a6)->y.h >= 0x7600) {
             *(s8 *)(reg_a5 + 0x33) = 1;
@@ -280,15 +280,15 @@ extern u8 D_0025B1C0[];
 extern u8 D_0025B2C0[];
 extern u8 D_0025B3C0[];
 
-s32 func_00128970();
-s32 func_0014D220();
-s32 func_0014E290();
+s32 bullet_fire_fast();
+s32 enemy_hitbox_debug_draw();
+s32 enemy_remove();
 s32 func_0014EA50();
 s32 func_0018D4E0();
 s32 func_001A9000();
 s32 func_001A91A0();
-s32 func_00202140();
-s32 func_00202500();
+s32 aim_at_player();
+s32 direction_turn_toward();
 extern u8 D_0025B130_as_u8_a[];
 extern u8 D_0025B140_as_u8_a[];
 extern u16 D_0028E3EC;
@@ -330,7 +330,7 @@ next_1:
     if (reg_tmp.h[1] == 0) goto next_2;
 block_a:
     if (*(u16 *)(reg_a5 + 0x16) == 0) goto next_3;
-    func_0014E290();
+    enemy_remove();
     return;
 next_2:
     *(u16 *)(reg_a5 + 0x16) = 1;
@@ -378,7 +378,7 @@ next_7:
     jtbl_0028E3F4 = (Fn)(reg_a0);
     jtbl_0028E3F4();
     reg_a0 = reg_a6;
-    func_0014D220();
+    enemy_hitbox_debug_draw();
     if (*(s8 *)(reg_a5 + 0x21) >= 0) goto block_b;
     if (D_0028E3EC == 0) goto block_rts;
     reg_d1.h[1] = ENTITY(reg_a6)->y.h;
@@ -396,10 +396,10 @@ block_b:
     reg_d0.h[0] = ENTITY(reg_a6)->y.h;
     reg_d1.h[0] = ENTITY(reg_a6)->x.h;
     reg_d0.h[0] += 0x200;
-    func_00202140();
+    aim_at_player();
     if (cond_flag != 0) goto block_c;
     reg_d0.b[0] = *(u8 *)(reg_a5 + 0x32);
-    func_00202500();
+    direction_turn_toward();
     *(u8 *)(reg_a5 + 0x32) = reg_d1.b[0];
     reg_a0 = (u8 *)D_0025B3C0;
     reg_d1.b[0] += 1;
@@ -437,7 +437,7 @@ next_9:
     reg_d0.h[0] = ENTITY(reg_a6)->y.h;
     reg_d1.h[0] = ENTITY(reg_a6)->x.h;
     reg_d0.h[0] += 0x200;
-    func_00202140();
+    aim_at_player();
     if (cond_flag != 0) goto block_c;
     reg_d2.h[0] = reg_d1.h[0];
     reg_d0.w = 0x3C;
@@ -474,7 +474,7 @@ next_11:
     reg_d1.h[0] &= 0x3C;
     reg_d0.w = 0xC;
     reg_d3.w = 0x02000000;
-    func_00128970();
+    bullet_fire_fast();
     goto block_c;
 block_e:
     reg_d0.w = 0x10;
@@ -488,17 +488,17 @@ block_e:
     reg_d0.w = 4;
     func_0016CF40();
     func_0018D4E0();
-    func_0014E290();
+    enemy_remove();
 block_rts:
     return;
 }
 
 void func_0016E000(void) {
-    void func_001713F0(s32);
-    func_001713F0(0);
+    void enemy_set_entity_count(s32);
+    enemy_set_entity_count(0);
 }
 
-s32 func_00201160();
+s32 rng_next_masked();
 extern u16 D_0025B440[];
 extern u16 D_0025B450[];
 extern u16 D_0025B470[];
@@ -509,14 +509,14 @@ extern u16 D_0028E8DC;
 
 void func_0016E010(void) {
     reg_a0 = (u8 *)(D_0025B470);
-    func_0014E370();
+    enemy_init_entities();
     reg_a0 = (u8 *)(D_0025B450);
     reg_d0.w = 0xF;
-    func_0014E300();
+    enemy_set_task_work();
     reg_d0.h[0] = D_0028E8DC;
     *(u8 *)(reg_a5 + 0x29) -= reg_d0.b[0];
     *(u8 *)(reg_a5 + 0x1B) -= reg_d0.b[0];
-    func_00201160();
+    rng_next_masked();
     reg_d0.b[0] >>= 1;
     *(u8 *)(reg_a5 + 0x29) += reg_d0.b[0];
     reg_d0.h[0] = D_0028E8C8;
@@ -528,7 +528,7 @@ void func_0016E010(void) {
         reg_d0.h[0] -= 6;
         *(u8 *)(reg_a5 + 0x29) = (u8) reg_d0.b[0];
     }
-    func_0014E7E0();
+    enemy_path_start();
     if (enemy_move_end_requested == 0) {
         if (g_stage == 2) {
             *(s8 *)(reg_a6 + 0x1E) = 2;
@@ -596,7 +596,7 @@ void func_0016E2A0(void) {
 next_lim:
     if (reg_tmp1.h[1] == 0) goto next_40;
     if (*(u16 *)(reg_a5 + 0x16) == 0) goto next_50;
-    func_0014E290();
+    enemy_remove();
     return;
 next_40:
     *(u16 *)(reg_a5 + 0x16) = 1;
@@ -645,7 +645,7 @@ next_225:
     jtbl_0028E3F4 = (Fn) reg_a0;
     jtbl_0028E3F4();
     reg_a0 = reg_a6;
-    func_0014D220();
+    enemy_hitbox_debug_draw();
     if ((s8) reg_a5[0x21] >= 0) goto next_300;
     if (D_0028E3EC == 0) goto block_rts;
     reg_d1.h[1] = ENTITY(reg_a6)->y.h;
@@ -663,10 +663,10 @@ next_300:
     reg_d0.h[0] = ENTITY(reg_a6)->y.h;
     reg_d1.h[0] = ENTITY(reg_a6)->x.h;
     reg_d0.h[0] += 0x200;
-    func_00202140();
+    aim_at_player();
     if (cond_flag != 0) goto block_objset;
     reg_d0.b[0] = reg_a5[0x32];
-    func_00202500();
+    direction_turn_toward();
     reg_a5[0x32] = reg_d1.b[0];
     reg_a0 = (u8 *) D_0025B610_as_u16_a;
     reg_d1.b[0] += 1;
@@ -697,7 +697,7 @@ block_shot:
     reg_d0.h[0] = 0xA0;
     reg_d0.h[0] -= D_0028E8EC;
     reg_d0.h[0] += 4;
-    if (D_0028E910 != 0) goto next_610;
+    if (g_loop != 0) goto next_610;
     if (g_stage != 1) goto next_610;
     if ((s32) D_0028E8A8 < 0x159) goto next_610;
     reg_d0.w = 0x30;
@@ -727,7 +727,7 @@ next_620:
     reg_d0.w = 0xFFFC000D;
 next_630:
     reg_d3.w = 0x2000000;
-    func_00128970();
+    bullet_fire_fast();
     goto block_objset;
 block_70:
     reg_d0.w = 0x10;
@@ -748,15 +748,15 @@ next_71:
     func_0016CF40();
 next_72:
     func_0018D4E0();
-    func_0014E290();
+    enemy_remove();
 }
 
 void func_0016EA90(void) {
-    void func_001713F0(s32 mode);
-    func_001713F0(1);
+    void enemy_set_entity_count(s32 mode);
+    enemy_set_entity_count(1);
 }
 
-s32 func_002021F0();
+s32 direction_between();
 extern u16 D_00258FF0[];
 extern u16 D_0025B690[];
 extern u16 D_0025B6A0[];
@@ -765,13 +765,13 @@ extern u16 D_0025B740[];
 
 void func_0016EAA0(void) {
     reg_a0 = (u8 *)(D_0025B6C0);
-    func_0014E370();
+    enemy_init_entities();
     reg_tmp.w = (u32) reg_a0;
     *(u16 *)(reg_a5 + 0x44) = (u16) reg_tmp.h[1];
     *(u16 *)(reg_a5 + 0x46) = (u16) reg_tmp.h[0];
     reg_a0 = (u8 *)(D_0025B6A0);
     reg_d0.w = 0xE;
-    func_0014E300();
+    enemy_set_task_work();
     reg_d0.b[0] = 4;
     reg_d2.b[0] = 2;
     reg_d1.b[0] = 4;
@@ -783,13 +783,13 @@ void func_0016EAA0(void) {
     *(u8 *)(reg_a5 + 0x2B) = (u8) reg_d0.b[0];
     *(u8 *)(reg_a5 + 0x2A) = (u8) reg_d1.b[0];
     *(u8 *)(reg_a6 + 0x31) = (u8) reg_d2.b[0];
-    func_0014E7E0();
+    enemy_path_start();
     if (enemy_move_end_requested == 0) {
         reg_a0 = (u8 *)(D_00258FF0);
         reg_d0.h[0] = ENTITY(reg_a6)->y.h;
         reg_d1.h[0] = ENTITY(reg_a6)->x.h;
         reg_d0.h[0] += 0xB00;
-        func_002021F0();
+        direction_between();
         if (cond_flag != 0) {
             reg_d1.b[0] = ENTITY(reg_a6)->move.b.dir;
         }
@@ -812,15 +812,15 @@ void func_0016EAA0(void) {
     }
 }
 
-s32 func_001292C0();
-s32 func_00129320();
+s32 bullet_fire256_fast();
+s32 bullet_fire256_double();
 s32 func_001368E0();
 s32 func_0018D580();
 s32 func_0019BEC0();
 s32 func_0019C470();
-s32 func_002010A0();
+s32 rng_next();
 s32 func_00201100();
-s32 func_002026F0();
+s32 aim256_at_player();
 s32 func_00211550();
 extern u16 D_00259370[];
 extern u16 D_00259870[];
@@ -848,7 +848,7 @@ void func_0016ED40(void) {
         reg_d0.h[0] += 0x6E00;
         if (reg_tmp.h[1] != 0) {
             if (*(u8 *)(reg_a5 + 0x17) != 0) {
-                func_0014E290();
+                enemy_remove();
                 return;
             }
             goto next_1;
@@ -935,9 +935,9 @@ next_3:
                         reg_d1.h[0] = t3;
                         reg_a3 = (u8 *)(D_00258FF0);
                         reg_d0.h[0] += 0xB00;
-                        func_002021F0();
+                        direction_between();
                         reg_d0.h[0] = *(u16 *)(reg_a5 + 0x28);
-                        func_00202500();
+                        direction_turn_toward();
                         *(u16 *)(reg_a5 + 0x28) = (u16) reg_d1.h[0];
                         reg_d1.h[0] &= 0x3E;
                         reg_d1.h[0] += reg_d1.h[0];
@@ -983,7 +983,7 @@ next_4:
                                 reg_d3.h[1] = (reg_d3.h[0] != 0) ? *(u16 *)((u8 *)reg_a0 + ((s16)reg_d3.h[0] & ~1)) : *(u16 *)reg_a0;
                                 reg_d3.h[0] = ((reg_d3.h[0] + 2) != 0) ? *(u16 *)((u8 *)reg_a0 + ((s16)(reg_d3.h[0] + 2) & ~1)) : *(u16 *)reg_a0;
                                 reg_d3.w += reg_d5.w;
-                                func_00129320();
+                                bullet_fire256_double();
                                 reg_d1.h[0] += 0xC;
                             } while ((s16)(--reg_d7.h[0]) >= 0);
                             reg_tmp.b[0] = *(u8 *)(reg_a5 + 0x21);
@@ -1008,7 +1008,7 @@ next_4:
             reg_d4.h[0] = *(u16 *)(reg_a6 + 0x1C);
             func_0019C470();
             reg_a0 = (u8 *)(reg_a6);
-            func_0014D220();
+            enemy_hitbox_debug_draw();
             if (D_0028E8A0 != 0) {
                 return;
             }
@@ -1035,7 +1035,7 @@ next_5:
                 reg_d1.h[0] = ENTITY(reg_a6)->x.h;
                 reg_d0.h[0] += 0xFA00;
                 reg_d1.h[0] += 0x680;
-                func_002026F0();
+                aim256_at_player();
                 if (cond_flag != 0) {
                     goto next_6;
                 }
@@ -1044,7 +1044,7 @@ next_5:
                 reg_d1.h[0] = ENTITY(reg_a6)->x.h;
                 reg_d0.h[0] += 0x7FFF + 0x7A01;
                 reg_d1.h[0] += 0x7FFF + 0x7981;
-                func_002026F0();
+                aim256_at_player();
                 reg_a5[0x32] = reg_d1.b[0];
 next_6:
                 reg_tmp.b[0] = reg_a5[0x2F];
@@ -1055,7 +1055,7 @@ next_6:
                 reg_a5[0x2F] = reg_a5[0x2B];
                 reg_d1.w = 0;
                 reg_d1.b[0] = reg_a5[0x33];
-                func_002010A0();
+                rng_next();
                 reg_d0.b[0] = (u8) ((s8) reg_d0.b[0] >> 2);
                 reg_d1.b[0] += reg_d0.b[0];
                 reg_d0.w = 0x20016;
@@ -1063,10 +1063,10 @@ next_6:
                 reg_d2.h[0] = ENTITY(reg_a6)->x.h;
                 reg_d3.w = 0xFA000680;
                 reg_d4.w = 0;
-                func_001292C0();
+                bullet_fire256_fast();
                 reg_d1.w = 0;
                 reg_d1.b[0] = reg_a5[0x32];
-                func_002010A0();
+                rng_next();
                 reg_d0.b[0] = (u8) ((s8) reg_d0.b[0] >> 2);
                 reg_d1.b[0] += reg_d0.b[0];
                 reg_d0.w = 0x20016;
@@ -1074,7 +1074,7 @@ next_6:
                 reg_d2.h[0] = ENTITY(reg_a6)->x.h;
                 reg_d3.w = 0xF9FFF980;
                 reg_d4.w = 0;
-                func_001292C0();
+                bullet_fire256_fast();
                 reg_tmp.b[0] = reg_a5[0x31];
                 reg_a5[0x31] -= 1;
                 if ((s32) reg_tmp.b[0] > 0) {
@@ -1099,7 +1099,7 @@ block_rts:
                 }
             }
             reg_d0.w = 0xD;
-            func_0013A780();
+            explosion_spawn();
             *(u16 *)(reg_a0 + 2) = (u16) ENTITY(reg_a6)->y.h;
             t5 = ENTITY(reg_a6)->x.h;
             *(u16 *)(reg_a0 + 4) = t5;
@@ -1110,7 +1110,7 @@ block_rts:
             *(s16 *)(reg_a0 + 0x28) = 0;
             *(s16 *)(reg_a0 + 0x10) = 1;
             reg_d0.w = 5;
-            func_0013A780();
+            explosion_spawn();
             *(u16 *)(reg_a0 + 2) = (u16) ENTITY(reg_a6)->y.h;
             *(u16 *)(reg_a0 + 4) = (u16) ENTITY(reg_a6)->x.h;
             *(s16 *)(reg_a0 + 0x1E) = 0x10;
@@ -1120,7 +1120,7 @@ block_rts:
             *(s16 *)(reg_a0 + 0x28) = 0x600;
             *(s16 *)(reg_a0 + 0x10) = 1;
             reg_d0.w = 5;
-            func_0013A780();
+            explosion_spawn();
             *(u16 *)(reg_a0 + 2) = (u16) ENTITY(reg_a6)->y.h;
             *(u16 *)(reg_a0 + 4) = (u16) ENTITY(reg_a6)->x.h;
             *(s16 *)(reg_a0 + 0x1E) = 0x10;
@@ -1129,14 +1129,14 @@ block_rts:
             *(u16 *)(reg_a0 + 0x26) = 0xF600;
             *(u16 *)(reg_a0 + 0x28) = 0xFA00;
             *(s16 *)(reg_a0 + 0x10) = 1;
-            func_0014E290();
+            enemy_remove();
         }
     }
 }
 
 void func_0016F930(void) {
-    void func_001713F0(s32 mode);
-    func_001713F0(1);
+    void enemy_set_entity_count(s32 mode);
+    enemy_set_entity_count(1);
 }
 
 extern u16 D_0025B750[];
@@ -1146,13 +1146,13 @@ extern u16 D_0025B7F0_as_u16_a[];
 
 void func_0016F940(void) {
     reg_a0 = (u8 *)(D_0025B780);
-    func_0014E370();
+    enemy_init_entities();
     reg_tmp.w = (u32) reg_a0;
     *(u16 *)(reg_a5 + 0x44) = (u16) reg_tmp.h[1];
     *(u16 *)(reg_a5 + 0x46) = (u16) reg_tmp.h[0];
     reg_a0 = (u8 *)(D_0025B760);
     reg_d0.w = 0xE;
-    func_0014E300();
+    enemy_set_task_work();
     reg_d0.b[0] = 4;
     reg_d1.b[0] = 4;
     if ((s32) g_stage > 1) {
@@ -1173,7 +1173,7 @@ void func_0016F940(void) {
     *(s8 *)(reg_a5 + 0x1C) = *(s8 *)reg_a0;
     reg_a0 += 1;
     D_0028E894 += 1;
-    func_0014E7E0();
+    enemy_path_start();
     if (enemy_move_end_requested != 0) {
         return;
     }
@@ -1208,7 +1208,7 @@ void func_0016FAE0(void) {
         if (reg_tmp.h[1] != 0) {
             if (*(u8 *)(reg_a5 + 0x17) != 0) {
                 D_0028E894 -= 1;
-                func_0014E290();
+                enemy_remove();
                 return;
             }
             goto next_1;
@@ -1301,9 +1301,9 @@ next_2:
                         reg_d0.h[0] = ENTITY(reg_a6)->y.h;
                         reg_d1.h[0] = ENTITY(reg_a6)->x.h;
                         reg_d0.h[0] += 0xA80;
-                        func_002026F0();
+                        aim256_at_player();
                         reg_d7.h[0] = reg_d1.h[0];
-                        func_002010A0();
+                        rng_next();
                         reg_d0.b[0] = (u8) ((s8) reg_d0.b[0] >> 1);
                         reg_d1.b[0] += reg_d0.b[0];
                         reg_d2.h[1] = ENTITY(reg_a6)->y.h;
@@ -1315,9 +1315,9 @@ next_2:
                         reg_tmp.h[0] = reg_d0.h[0];
                         reg_d0.h[0] = 0x13;
                         reg_d0.h[1] = reg_tmp.h[0];
-                        func_001292C0();
+                        bullet_fire256_fast();
                         reg_d1.h[0] = reg_d7.h[0];
-                        func_002010A0();
+                        rng_next();
                         reg_d0.b[0] = (u8) ((s8) reg_d0.b[0] >> 1);
                         reg_d1.b[0] += reg_d0.b[0];
                         reg_d2.h[1] = ENTITY(reg_a6)->y.h;
@@ -1329,7 +1329,7 @@ next_2:
                         reg_tmp.h[0] = reg_d0.h[0];
                         reg_d0.h[0] = 0x13;
                         reg_d0.h[1] = reg_tmp.h[0];
-                        func_001292C0();
+                        bullet_fire256_fast();
                         *(u16 *)(reg_a5 + 0x34) += 1;
                         reg_tmp.b[0] = *(u8 *)(reg_a5 + 0x21);
                         *(u8 *)(reg_a5 + 0x21) -= 1;
@@ -1394,7 +1394,7 @@ next_2:
             reg_d4.h[0] = *(u16 *)(reg_a6 + 0x1C);
             func_0019C530();
             reg_a0 = reg_a6;
-            func_0014D220();
+            enemy_hitbox_debug_draw();
             if (D_0028E8A0 != 0) {
                 goto block_rts;
             }
@@ -1421,7 +1421,7 @@ next_2:
             reg_d1.h[0] = 0x6B;
             reg_d4.w = 0;
             do {
-                func_001292C0();
+                bullet_fire256_fast();
                 reg_d1.h[0] += 7;
             } while ((s16)(--reg_d7.h[0]) >= 0);
             reg_tmp.b[0] = *(u8 *)(reg_a5 + 0x33);
@@ -1441,7 +1441,7 @@ block_rts:
             reg_d1.h[0] = 8;
             func_00211550();
             reg_d0.w = 0xD;
-            func_0013A780();
+            explosion_spawn();
             *(u16 *)(reg_a0 + 2) = (u16) ENTITY(reg_a6)->y.h;
             t6 = ENTITY(reg_a6)->x.h;
             *(u16 *)(reg_a0 + 4) = t6;
@@ -1452,7 +1452,7 @@ block_rts:
             *(s16 *)(reg_a0 + 0x28) = 0;
             *(s16 *)(reg_a0 + 0x10) = 1;
             reg_d0.w = 0xC;
-            func_0013A780();
+            explosion_spawn();
             *(u16 *)(reg_a0 + 2) = (u16) ENTITY(reg_a6)->y.h;
             *(u16 *)(reg_a0 + 4) = (u16) ENTITY(reg_a6)->x.h;
             *(s16 *)(reg_a0 + 0x1E) = 0x10;
@@ -1462,7 +1462,7 @@ block_rts:
             *(s16 *)(reg_a0 + 0x28) = 0x600;
             *(s16 *)(reg_a0 + 0x10) = 1;
             reg_d0.w = 0x84;
-            func_0013A780();
+            explosion_spawn();
             *(u16 *)(reg_a0 + 2) = (u16) ENTITY(reg_a6)->y.h;
             *(u16 *)(reg_a0 + 4) = (u16) ENTITY(reg_a6)->x.h;
             *(s16 *)(reg_a0 + 0x1E) = 0x10;
@@ -1484,7 +1484,7 @@ block_rts:
                 reg_d2.w = 3;
                 func_00125EC0();
             } while ((s16)(--reg_d6.h[0]) >= 0);
-            func_0014E290();
+            enemy_remove();
         }
     }
 }
@@ -1504,12 +1504,12 @@ void func_00170690(void) {
 }
 
 void func_00170710(void) {
-    void func_001713F0(s32);
-    func_001713F0(0);
+    void enemy_set_entity_count(s32);
+    enemy_set_entity_count(0);
 }
 
 s32 func_0018DCE0();
-s32 func_001A3020();
+s32 sprite_palette_load();
 extern u16 D_0025B820[];
 extern u16 D_0025B830[];
 extern u8 D_0025B840[];
@@ -1519,10 +1519,10 @@ extern u8 D_00261CF0[];
 
 void func_00170720(void) {
     reg_a0 = D_0025B850;
-    func_0014E370();
+    enemy_init_entities();
     reg_a0 = D_0025B840;
     reg_d0.w = 5;
-    func_0014E300();
+    enemy_set_task_work();
     reg_tmp.w = 0x40001C00;
     ENTITY(reg_a6)->y.h = (u16) reg_tmp.h[1];
     ENTITY(reg_a6)->x.h = (u16) reg_tmp.h[0];
@@ -1532,11 +1532,11 @@ void func_00170720(void) {
     reg_a1 = (u8 *)(D_0025B820);
     reg_d0.h[0] = (reg_d6.h[0] != 0) ? *(u16 *)((u8 *)reg_a1 + ((s16)reg_d6.h[0] & ~1)) : *(u16 *)reg_a1;
     *(u8 *)(reg_a6 + 0x1C) = (u8) reg_d0.b[0];
-    func_001A3020();
+    sprite_palette_load();
     reg_a0 = D_00261C30;
     reg_a1 = (u8 *)(D_0025B830);
     reg_d0.h[0] = (reg_d6.h[0] != 0) ? *(u16 *)((u8 *)reg_a1 + ((s16)reg_d6.h[0] & ~1)) : *(u16 *)reg_a1;
-    func_001A3020();
+    sprite_palette_load();
 }
 
 s32 func_0018D9D0();
@@ -1579,7 +1579,7 @@ next_200:
     func_00170690();
     *(u16 *)(reg_a5 + 0x1A) += 8;
     if (*(u16 *)(reg_a5 + 0x1A) != 0x230) goto block_objset;
-    func_0014E290();
+    enemy_remove();
     return;
 block_objset:
     func_0019D770();

@@ -160,7 +160,7 @@ extern u8 D_002678A0_as_u8_a[];
 extern u32 D_0028E0C4;
 extern u8 D_002A1770[];
 
-void func_002071C0(void) {
+void task_start(void) {
     u32 save_d1;
     u32 save_d2;
     s32 t1;

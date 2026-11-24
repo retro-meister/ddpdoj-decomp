@@ -17,10 +17,10 @@ void func_001E7C60(void) {
     }
 }
 
-s32 func_00124B20();
-s32 func_00124C70();
-s32 func_00124D10();
-s32 func_001253B0();
+s32 boss_phase_start();
+s32 boss_phase_stop();
+s32 boss_phase_stop_all();
+s32 boss_attack_stop_all();
 s32 func_001A9000();
 s32 func_001A91A0();
 s32 func_002016D0();
@@ -273,11 +273,11 @@ next_death_chk:
     if (!((s32)reg_tmp.w < 0x23000)) goto next_mode2_chk;
 next_mode2_set:
     *(u8 *)(reg_a6 + 0x16D) = 1;
-    func_001253B0();
-    func_00124D10();
+    boss_attack_stop_all();
+    boss_phase_stop_all();
     func_002016D0();
     reg_d0.w = 1;
-    func_00124B20();
+    boss_phase_start();
     *(u8 *)(reg_a6 + 0x5E) = 1;
 next_mode2_chk:
     if (*(u8 *)(reg_a6 + 0x16C) != 0) goto next_hakyo_chk;
@@ -287,9 +287,9 @@ next_mode2_chk:
     *(u8 *)(reg_a6 + 0x16C) = 1;
     D_0028E864 = 1;
     reg_d0.w = 5;
-    func_00124C70();
+    boss_phase_stop();
     reg_d0.w = 6;
-    func_00124B20();
+    boss_phase_start();
     func_001E8580();
     func_001E8640();
     func_002016D0();
@@ -312,8 +312,8 @@ void func_001E8480(void) {
     func_00203460();
     func_00201490();
     func_001E8790();
-    func_001253B0();
-    func_00124D10();
+    boss_attack_stop_all();
+    boss_phase_stop_all();
     reg_tmp.w = -1U;
     *(u16 *)(reg_a5 + 0x16) = (u16) reg_tmp.h[1];
     *(u16 *)(reg_a5 + 0x18) = (u16) reg_tmp.h[0];
@@ -328,14 +328,14 @@ void func_001E8480(void) {
     func_001E8580();
     func_001E8640();
     reg_d0.w = 2;
-    func_00124B20();
+    boss_phase_start();
 }
 
-s32 func_00124F00(s32, s32, s32);
+s32 boss_part_hide(s32, s32, s32);
 s32 func_0013AB50(void *);
 s32 func_0018D560();
 s32 func_001E58E0();
-s32 func_002011A0();
+s32 rng_next_unsigned();
 extern u8 D_0026F640[];
 
 void func_001E8580(void) {
@@ -345,13 +345,13 @@ void func_001E8580(void) {
         *(u16 *)(reg_a6 + 0x80) = 0x8000;
         *(s8 *)(reg_a6 + 0x14D) = 0x13;
         reg_d0.w = 7;
-        func_00124F00(0x13, 0x8000, 1);
+        boss_part_hide(0x13, 0x8000, 1);
         func_0018D560();
         reg_a1 = D_0026F640;
         reg_d2.h[1] = *(u16 *)(reg_a6 + 0x82);
         reg_d2.h[0] = *(u16 *)(reg_a6 + 0x84);
         func_001E58E0();
-        func_002011A0();
+        rng_next_unsigned();
         reg_d1.b[0] = reg_d0.b[0];
         reg_d2.h[1] = *(u16 *)(reg_a6 + 0x82);
         reg_d2.h[0] = *(u16 *)(reg_a6 + 0x84);
@@ -370,13 +370,13 @@ void func_001E8640(void) {
         *(u16 *)(reg_a6 + 0xA0) = 0x8000;
         *(s8 *)(reg_a6 + 0x14C) = 0x13;
         reg_d0.w = 8;
-        func_00124F00(0x13, 0x8000, 1);
+        boss_part_hide(0x13, 0x8000, 1);
         func_0018D560();
         reg_a1 = D_0026F670;
         reg_d2.h[1] = *(u16 *)(reg_a6 + 0xA2);
         reg_d2.h[0] = *(u16 *)(reg_a6 + 0xA4);
         func_001E58E0();
-        func_002011A0();
+        rng_next_unsigned();
         reg_d1.b[0] = reg_d0.b[0];
         reg_d2.h[1] = *(u16 *)(reg_a6 + 0xA2);
         reg_d2.h[0] = *(u16 *)(reg_a6 + 0xA4);

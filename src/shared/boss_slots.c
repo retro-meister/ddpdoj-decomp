@@ -2,8 +2,8 @@
 #include "entity.h"
 #include "sdk/ps2sdk.h"
 
-void func_00124700(void);
-void func_00125470(void);
+void boss_slots_step(void);
+void boss_flash_update(void);
 
 extern u8 D_00295E50[];
 extern s32 D_00295E54_as_s32_a[];
@@ -14,7 +14,7 @@ extern s32 D_00295F40_as_s32_a[];
 extern s64 D_002960A8[];
 extern s32 D_00296210_as_s32_a[];
 
-void func_00124320(void) {
+void boss_slots_init(void) {
     u8 *save_a0;
     u8 *save_a1;
     u8 *save_a2;
@@ -93,7 +93,7 @@ loop_8:
 
 extern s16 D_002962DE_as_s16_a[];
 
-void func_00124510(void) {
+void boss_slots_end(void) {
     D_002962DE_as_s16_a[0] = 1;
 }
 
@@ -103,7 +103,7 @@ void func_00124510(void) {
 extern u8 D_0028E38C;
 extern u16 D_0028E904;
 
-void func_00124520(void) {
+void boss_level_get(void) {
     u8 val = D_0028E38C;
     s32 quotient;
 
@@ -134,7 +134,7 @@ extern s32 D_00295E9C_as_s32_a[];
 extern u16 D_002962DE[];
 extern u8 *jtbl_0028E3F4_as_u8_p;
 
-void func_00124590(void) {
+void boss_slots_run(void) {
     u32 temp_s0;
     u8 *temp_s1;
     u32 temp_v0;
@@ -145,13 +145,13 @@ void func_00124590(void) {
         return;
     }
     if (D_0028E8A0 == 0) {
-        func_00124700();
+        boss_slots_step();
         if (!(D_0028E855 & 0x40) && (D_0028E855 & 0x10)) {
             reg_d0.h[0] = D_0028E5FC;
             temp_v0 = reg_d0.h[0] | D_0028E5F8;
             reg_d0.h[0] = temp_v0;
             if ((temp_v0 & 0xFFFF) && (0 <= D_0028E908_as_s16) && (D_0028E3EC != 0)) {
-                func_00124700();
+                boss_slots_step();
             }
         }
     }
@@ -173,7 +173,7 @@ void func_00124590(void) {
             reg_a4 += 8;
         } while ((s16)(--reg_d7.h[0]) >= 0);
     }
-    func_00125470();
+    boss_flash_update();
     cond_flag = 0;
 }
 
@@ -190,7 +190,7 @@ extern u8 *D_00296210[];
 extern u16 D_00296214[];
 extern void (*jtbl_0028E3F4)();
 
-void func_00124700(void) {
+void boss_slots_step(void) {
     u32 t1;
     u32 t2;
     u32 t3;
@@ -303,7 +303,7 @@ void func_00124700(void) {
 extern s16 D_00296214_as_s16_a[];
 extern s16 D_002962B4[];
 
-void func_00124B20(void) {
+void boss_phase_start(void) {
     s32 d0 = reg_d0.w;
     s32 d1 = reg_d1.w;
     u32 tmp;
@@ -327,7 +327,7 @@ next_1:
     reg_d0.w = d0;
 }
 
-void func_00124BB0(void) {
+void boss_phase_running(void) {
     u8 *a0;
     s32 d0;
     s32 d1;
@@ -363,7 +363,7 @@ next_1:
     cond_flag = 0;
 }
 
-void func_00124C70(void) {
+void boss_phase_stop(void) {
     u8 *a0;
     s32 d0;
     s32 d1;
@@ -394,7 +394,7 @@ next_1:
 }
 
 extern s16 *reg_a0_as_s16_p;
-void func_00124D10(void)
+void boss_phase_stop_all(void)
 {
   s16 *savedAddressRegister;
   u32 savedDataRegister;
@@ -417,24 +417,24 @@ void func_00124D10(void)
   reg_d0.w = savedDataRegister;
 }
 
-void func_00124D70(void) {
+void boss_movement_stop(void) {
     D_00295E5A[0] = 0xFFFF;
 }
 
-void func_00124D80(void) {
+void boss_movement_current(void) {
     *(u16 *)&reg_d0 = D_00295E5A[0];
 }
 
 extern s16 D_00295E50_as_s16_a[];
 extern void *reg_a0_as_void_p;
 
-void func_00124D90(void) {
+void boss_movement_start(void) {
     D_00295E50_as_s16_a[0] = 1;
     reg_a0_as_void_p = D_00295E7C;
     D_00295E52[0] = reg_d0.h[0];
 }
 
-void func_00124DC0(void) {
+void boss_part_show(void) {
     u8 *savedAddress;
     u32 savedData;
 
@@ -450,7 +450,7 @@ void func_00124DC0(void) {
 
 extern s16 D_00295EA0_as_s16_a[];
 
-void func_00124E10(void)
+void boss_part_show_all(void)
 {
     s16 *savedAddress;
     u32 savedData;
@@ -475,7 +475,7 @@ void func_00124E10(void)
     reg_d0.w = savedData;
 }
 
-void func_00124E80(void)
+void boss_part_hide_all(void)
 {
     s16 *savedAddressRegister;
     u32 savedDataRegister;
@@ -501,7 +501,7 @@ void func_00124E80(void)
     reg_d0.w = savedDataRegister;
 }
 
-void func_00124F00(void)
+void boss_part_hide(void)
 {
   u8 *savedAddress;
   int new_var;
@@ -520,7 +520,7 @@ void func_00124F00(void)
 
 extern u16 D_00296084[];
 
-void func_00124F50(void) {
+void boss_animation_start(void) {
     u32 t1;
     u32 t2;
     u32 s0;
@@ -574,7 +574,7 @@ block_8:
     return;
 }
 
-void func_00125060(void) {
+void boss_animation_running(void) {
     u8 *a0;
     s32 d0;
     s32 d1;
@@ -610,7 +610,7 @@ next_1:
     cond_flag = 0;
 }
 
-void func_00125120(void) {
+void boss_animation_stop(void) {
     u8 *a0;
     s32 d0;
     s32 d1;
@@ -643,7 +643,7 @@ next_1:
 extern s16 D_002960B0_as_s16_a[];
 extern s16 D_002961F0[];
 
-void func_001251C0(void) {
+void boss_attack_start(void) {
     s32 d0 = reg_d0.w;
     s32 d1 = reg_d1.w;
     u32 tmp;
@@ -667,7 +667,7 @@ next_1:
     reg_d0.w = d0;
 }
 
-void func_00125250(void) {
+void boss_attack_running(void) {
     u8 *a0;
     s32 d0;
     s32 d1;
@@ -703,7 +703,7 @@ next_1:
     cond_flag = 0;
 }
 
-void func_00125310(void) {
+void boss_attack_stop(void) {
     u8 *a0;
     s32 d0;
     s32 d1;
@@ -733,7 +733,7 @@ next_1:
     reg_a0 = a0;
 }
 
-void func_001253B0(void)
+void boss_attack_stop_all(void)
 {
     s16 *savedAddressRegister;
     u32 savedDataRegister;
@@ -756,7 +756,7 @@ extern s16 D_002962D4_as_s16_a[];
 extern u16 D_002962D6[];
 extern s16 D_002962D8_as_s16_a[];
 extern s16 D_002962DA_as_s16_a[];
-void func_00125410(void) {
+void boss_flash_start(void) {
     D_002962D6[0] = reg_d0.h[0];
     D_002962D4_as_s16_a[0] = 1;
     D_002962D8_as_s16_a[0] = 0x1C00;
@@ -765,7 +765,7 @@ void func_00125410(void) {
 
 extern u16 D_002962D4[];
 
-void func_00125440(void) {
+void boss_flash_running(void) {
     if (D_002962D4[0] == 0) {
         cond_flag = 0;
         return;
@@ -777,7 +777,7 @@ s32 func_0019D7A0();
 extern u16 D_002962D8[];
 extern u16 D_002962DA[];
 extern u16 D_002962DC[];
-void func_00125470(void) {
+void boss_flash_update(void) {
     if (D_002962D4[0] == 0) return;
     if (D_002962D4[0] != 2) goto next_1;
     D_002962DC[0] -= 1;

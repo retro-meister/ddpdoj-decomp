@@ -500,7 +500,7 @@ extern u8 D_00251FB0[];
 extern u8 D_00251FD0[];
 extern u8 D_00251FF0[];
 extern u16 D_0028E3F0;
-extern u16 D_0028E910;
+extern u16 g_loop;
 
 void func_00204A20(void) {
     u16 temp_a0_2;
@@ -661,7 +661,7 @@ block_20:
             reg_d1.h[0] = *(u16 *)(reg_a1 + 6);
             *(u16 *)(reg_a6 + 0x26) += reg_d1.h[0];
 block_31:
-            if (D_0028E910 == 0) {
+            if (g_loop == 0) {
                 reg_d1.h[0] = *(u16 *)(reg_a1 + 8);
                 reg_d1.h[0] += 0xE600 & 0xFFFF;
                 reg_d1.h[0] += reg_d6.h[0];
@@ -704,7 +704,7 @@ block_31:
             reg_d1.h[0] = *(u16 *)(reg_a1 + 6);
             *(u16 *)(reg_a6 + 0x20) += reg_d1.h[0];
 block_41:
-            if (D_0028E910 == 0) {
+            if (g_loop == 0) {
                 reg_d1.h[0] = *(u16 *)(reg_a1 + 8);
                 reg_d1.h[0] += 0xE600 & 0xFFFF;
                 reg_d1.h[0] += reg_d6.h[0];
@@ -747,7 +747,7 @@ block_41:
             reg_d1.h[0] = *(u16 *)(reg_a1 + 6);
             ENTITY(reg_a6)->move.h += reg_d1.h[0];
 block_51:
-            if (D_0028E910 == 0) {
+            if (g_loop == 0) {
                 reg_d1.h[0] = *(u16 *)(reg_a1 + 8);
                 reg_d1.h[0] += 0xE600 & 0xFFFF;
                 reg_d1.h[0] += reg_d6.h[0];
@@ -969,7 +969,7 @@ void func_00205D20(void) {
 }
 
 void func_00205DA0(void) {
-    if (D_0028E910 != 0) goto block_rts;
+    if (g_loop != 0) goto block_rts;
     reg_d1.w = 0x5B001C00;
     reg_tmp.w = reg_d1.w;
     reg_d1.h[1] = reg_tmp.h[0];
@@ -1013,7 +1013,7 @@ void func_00205EE0(void) {
 }
 
 void func_00205F30(void) {
-    if (D_0028E910 != 0) goto block_rts;
+    if (g_loop != 0) goto block_rts;
     reg_d1.w = 0x15401C00;
     reg_tmp.w = reg_d1.w;
     reg_d1.h[1] = reg_tmp.h[0];
@@ -1117,7 +1117,7 @@ next_10:
 next_11:
     reg_a0 += 0x10;
 next_2:
-    if (D_0028E910 != 0) return;
+    if (g_loop != 0) return;
     reg_d1.h[1] = *(u16 *)reg_a0;
     reg_a0 += 2;
     reg_d1.h[0] = *(u16 *)reg_a0;

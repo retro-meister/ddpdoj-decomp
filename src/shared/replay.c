@@ -277,7 +277,7 @@ extern s8 D_0028DF84;
 
 void func_00237330(void) {
     s32 func_0012FAB0();
-    s32 func_001A2FA0();
+    s32 text_palette_load();
     u32 save_d0;
     u32 save_d1;
     u32 save_d2;
@@ -312,7 +312,7 @@ void func_00237330(void) {
     func_0012FAB0();
     reg_d0.w = 0;
     reg_a0 = (u8 *)D_00269160;
-    func_001A2FA0();
+    text_palette_load();
     D_0028DF84 = 0;
     *(s8 *)(reg_a5 + 3) = 1;
     *(s16 *)(reg_a5 + 8) = 0;
@@ -348,7 +348,7 @@ extern u8 g_cd_async_busy_as_u8;
 extern s8 D_0028EC20;
 
 void func_00237470(void) {
-    extern void func_002071C0(void);
+    extern void task_start(void);
     u32 save_d0;
     u32 save_d1;
     u32 save_d2;
@@ -415,7 +415,7 @@ void func_00237470(void) {
         break;
     case 4:
         reg_d0.h[0] = 8;
-        func_002071C0();
+        task_start();
         *(u16 *)(reg_a0 + 4) = 15;
         *(u8 *)(reg_a5 + 3) = 2;
         break;
@@ -439,13 +439,13 @@ void func_00237470(void) {
 
 
 void func_00237670(void) {
-    s32 func_002071C0();
+    s32 task_start();
     u32 temp_s0 = reg_d0.w;
     u8 *temp_s1 = reg_a0;
 
     g_replay_header = g_replay_header_saved;
     reg_d0.h[0] = 0x14;
-    func_002071C0();
+    task_start();
     *(s8 *)(reg_a0 + 5) = 0;
     reg_d0.w = temp_s0;
     reg_a0 = temp_s1;
@@ -455,7 +455,7 @@ extern u8 D_0028ED7C;
 extern u8 D_0028ED80;
 
 void func_002376F0() {
-    s32 func_002071C0();
+    s32 task_start();
     s32 func_00224A90();
     u32 temp_s0;
     u8 *temp_s1;
@@ -472,7 +472,7 @@ void func_002376F0() {
     }
     func_00224A90();
     reg_d0.h[0] = 0x14;
-    func_002071C0();
+    task_start();
     if (var_s2 != 0) {
         *(s8 *)(reg_a0 + 5) = 1;
     } else {
@@ -482,7 +482,7 @@ void func_002376F0() {
     reg_a0 = temp_s1;
 }
 
-s32 func_002071C0();                            /* extern */
+s32 task_start();                            /* extern */
 s32 func_00224A90();                            /* extern */
 s32 func_0022B620();                            /* extern */
 
@@ -495,7 +495,7 @@ void func_00237790(void) {
     func_0022B620();
     func_00224A90();
     reg_d0.h[0] = 0x14;
-    func_002071C0();
+    task_start();
     *(s8 *)(reg_a0 + 5) = 4;
     reg_d0.w = temp_s0;
     reg_a0 = temp_s1;
@@ -503,7 +503,7 @@ void func_00237790(void) {
 
 s32 func_0012FAB0();                            /* extern */
 s32 func_0013B350();                            /* extern */
-s32 func_001A2FA0();                            /* extern */
+s32 text_palette_load();                            /* extern */
 s32 func_00225B70();                            /* extern */
 extern s32 D_00269160_as_s32_a[];
 extern s32 D_0026B580_as_s32_a[];
@@ -519,7 +519,7 @@ void func_002377F0(void) {
     func_0012FAB0();
     reg_d0.w = 0;
     reg_a0_as_s32_p = D_00269160_as_s32_a;
-    func_001A2FA0();
+    text_palette_load();
     *(s8 *)(reg_a5 + 3) = 1;
     *(s16 *)(reg_a5 + 6) = 0;
     func_00225B70();
@@ -540,7 +540,7 @@ extern u8 D_0026B5F0[];
 extern s8 D_0028EACC;
 
 void func_00237870(void) {
-    extern void func_002071C0(void);
+    extern void task_start(void);
     extern void func_00224A90(void);
     s32 step;
     s32 done;
@@ -613,7 +613,7 @@ void func_00237870(void) {
         func_00206D70();
         func_00224A90();
         reg_d0.h[0] = 20;
-        func_002071C0();
+        task_start();
         done = 1;
         *(u8 *)(reg_a0 + 5) = 2;
         break;
@@ -645,7 +645,7 @@ extern u8 D_0028E2E4;
 extern u8 D_0028E38C;
 extern u16 D_0028E8A8;
 extern u16 D_0028E8AC;
-extern u16 D_0028E910;
+extern u16 g_loop;
 extern u8 D_0028ED64;
 extern s32 D_0028ED70;
 extern u8 D_0028ED74;
@@ -682,7 +682,7 @@ void func_00237AC0() {
     memset(D_006CB5A8, 0, 0x1A5E0);
     memset(data, 0, 0x5534);
     func_00238B90((u8 *)data);
-    if (g_stage != 0 || D_0028E910 == 0) {
+    if (g_stage != 0 || g_loop == 0) {
         memset(D_006CB1D4, 0, 0x3A4);
     }
     srand(D_0028E2BC * D_0028E2BB);
@@ -787,8 +787,8 @@ extern u16 D_006C8E5C[];
 void func_00237DF0(void) {
     extern void func_0012FAB0(void);
     extern void func_00171910(void);
-    extern void func_001A2FA0(void);
-    extern void func_002071C0(void);
+    extern void text_palette_load(void);
+    extern void task_start(void);
     extern void replay_header_save(void);
     u32 save_d0;
     u32 save_d1;
@@ -847,13 +847,13 @@ void func_00237DF0(void) {
         }
     }
     reg_d0.h[0] = 10;
-    func_002071C0();
+    task_start();
     *(u16 *)(reg_a0 + 4) = g_replay_header.stage;
     func_00171910();
     func_0012FAB0();
     reg_d0.w = 0;
     reg_a0 = (u8 *)D_00269140;
-    func_001A2FA0();
+    text_palette_load();
     label_draw(0, 0, 0, 0);
     replay_header_save();
     reg_d0.w = save_d0;
@@ -1031,7 +1031,7 @@ void func_00238010(void) {
                 }
                 func_00135110();
                 D_0028ED5C = 0;
-                if (D_0028E910 == 0) {
+                if (g_loop == 0) {
                     memcpy(D_0029F260_as_u16_a, D_006C68B6, 0x62);
                     memcpy(D_0029F1F0_as_u16_a, D_006C6918, 0x62);
                     D_0029F260_as_u16_a[0] = 0;
@@ -1042,7 +1042,7 @@ void func_00238010(void) {
             }
             break;
         case 0x65:
-            if ((D_0028E910 != 0) && (D_0028E8A8 == 0x69) && (D_0028E8AC == 0x140)) {
+            if ((g_loop != 0) && (D_0028E8A8 == 0x69) && (D_0028E8AC == 0x140)) {
                 memcpy(D_0029F260_as_u16_a, D_006C68B6, 0x62);
                 memcpy(D_0029F1F0_as_u16_a, D_006C6918, 0x62);
                 D_0028DFC0 = 0;
@@ -1119,8 +1119,8 @@ extern s8 D_0028ED80_as_s8;
 void func_00238520(void) {
     s32 func_0012FAB0();
     s32 func_00171910();
-    s32 func_001A2FA0();
-    s32 func_002071C0();
+    s32 text_palette_load();
+    s32 task_start();
     s32 replay_header_save();
     u32 save_d0;
     u32 save_d1;
@@ -1161,13 +1161,13 @@ void func_00238520(void) {
     save_a5[3] = 1;
     *(s16 *)(reg_a5 + 4) = 0;
     reg_d0.h[0] = 0xA;
-    func_002071C0();
+    task_start();
     *(u16 *)(reg_a0 + 4) = g_replay_header.stage;
     func_00171910();
     func_0012FAB0();
     reg_d0.w = 0;
     reg_a0 = (u8 *)D_00269140;
-    func_001A2FA0();
+    text_palette_load();
     replay_header_save();
     reg_d0.w = save_d0;
     reg_d1.w = save_d1;
@@ -1271,7 +1271,7 @@ void func_00238690(void) {
         if (D_0028E370 != 0) {
             g_pad_input_locked_as_s8 = 0;
             step++;
-            D_0028E910 = g_replay_header.round;
+            g_loop = g_replay_header.round;
             func_00135110();
             if (g_replay_header.stage == 0) {
                 func_0018D190();
@@ -1344,7 +1344,7 @@ static void func_00238910(void)
 }
 
 void func_00238980(void) {
-    extern void func_002071C0(void);
+    extern void task_start(void);
     u32 save_d0;
     u32 save_d1;
     u32 save_d2;
@@ -1406,7 +1406,7 @@ void func_00238980(void) {
         D_0028ED7C_as_s8 = 2;
         func_00206D70();
         reg_d0.h[0] = 20;
-        func_002071C0();
+        task_start();
         *(u8 *)(reg_a0 + 5) = 3;
         return;
     }

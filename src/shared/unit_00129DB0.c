@@ -21,7 +21,7 @@ extern u16 D_0028E15C;
 extern s8 D_0028E310_as_s8;
 extern u8 D_0028E37C;
 extern u8 D_0028E855;
-extern u16 D_0028E910;
+extern u16 g_loop;
 extern u16 g_stage;
 extern s16 D_00299760_as_s16_a[];
 extern u8 D_002962E0[];
@@ -52,7 +52,7 @@ void func_00129DB0(void) {
     if (D_0028E37C != 0) {
         s16 *limit;
 
-        if (D_0028E910 == 0) {
+        if (g_loop == 0) {
             limit = &death_D_002512A0[g_stage];
         } else {
             limit = &death_D_002512B0[g_stage];
@@ -68,7 +68,7 @@ void func_00129DB0(void) {
     if (D_0028E37C != 0) {
         reg_tmp.h[0] = (s16) D_0028E158 + (s16) D_0028E15C;
         reg_tmp.h[0] /= 0xC;
-        if ((D_0028E855 & 2) && (D_0028E910 != 0) && (reg_tmp.h[0] > D_0024F330[g_stage])) {
+        if ((D_0028E855 & 2) && (g_loop != 0) && (reg_tmp.h[0] > D_0024F330[g_stage])) {
             D_0028E310_as_s8 = 2;
         }
     }
@@ -82,8 +82,8 @@ void func_00125EE0();
 void death_func_00128A90();
 #endif
 void func_00128640();
-void func_00129450();
-void func_00129460();
+void bullet_fire256_direct();
+void bullet_spawn256();
 void func_0014E030();
 void func_00202760();
 void func_00203330();
@@ -1402,7 +1402,7 @@ block_202:
                                             reg_d2.h[0] = ENTITY(reg_a6)->x.h;
                                             reg_d3.w = 0;
                                             reg_d4.w = 0;
-                                            MAIN_OR_DEATH_LABEL(func_00129450, func_00129460)();
+                                            MAIN_OR_DEATH_LABEL(bullet_fire256_direct, bullet_spawn256)();
                                         }
                                     }
                                 }
@@ -1823,7 +1823,7 @@ block_315:
                                             reg_d2.h[0] = ENTITY(reg_a6)->x.h;
                                             reg_d3.w = 0;
                                             reg_d4.w = 0;
-                                            func_00129450();
+                                            bullet_fire256_direct();
                                         }
                                     }
                                 }

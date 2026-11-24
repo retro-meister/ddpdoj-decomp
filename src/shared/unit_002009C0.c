@@ -1,7 +1,7 @@
 #include "common.h"
 #include "entity.h"
 
-extern void func_00128970(void);
+extern void bullet_fire_fast(void);
 
 void func_002009C0(void)
 {
@@ -11,7 +11,7 @@ void func_002009C0(void)
     savedD0 = reg_d0.w;
     command = (s8)reg_d1.b[0];
     if (command < 0x34 && command > 0xC) {
-        func_00128970();
+        bullet_fire_fast();
     }
     reg_d0.w = savedD0;
 }

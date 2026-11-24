@@ -1,23 +1,23 @@
 #include "common.h"
 #include "entity.h"
 
-void func_001713F0(s32 mode);
+void enemy_set_entity_count(s32 mode);
 
 void func_00168AA0(void) {
-    func_001713F0(0);
+    enemy_set_entity_count(0);
 }
 
 extern s32 D_0025B0C0[];
 extern s32 *reg_a0_as_s32_p;
 
-void func_0014E370(void);
+void enemy_init_entities(void);
 
 void func_00168AB0(void) {
     reg_a0_as_s32_p = D_0025B0C0;
-    func_0014E370();
+    enemy_init_entities();
 }
 
-s32 func_0014E290();
+s32 enemy_remove();
 extern u16 D_0028DFFC;
 extern u16 D_0028E890;
 extern u16 D_0028E8A0;
@@ -27,7 +27,7 @@ void func_00168AC0(void) {
     u8 t;
 
     if ((s32) D_0028E8A8 < 0x2E0) goto next_1;
-    func_0014E290();
+    enemy_remove();
     return;
 next_1:
     if (D_0028E8A0 != 0) goto block_rts;

@@ -306,20 +306,20 @@ next_2:
 }
 
 extern void *reg_a6_as_void_p;
-extern void func_00201160(void);
+extern void rng_next_masked(void);
 
 void func_0016AF30(void)
 {
     ((u16 *)reg_a6_as_void_p)[0xC] = 0x700;
     ((u16 *)reg_a6_as_void_p)[0xD] = 0xB00;
-    func_00201160();
+    rng_next_masked();
     reg_d0.b[0] >>= 1;
     reg_d0.b[0] += 0x10;
     ((u8 *)reg_a6_as_void_p)[0x1A] = reg_d0.b[0];
 }
 
-s32 func_002010A0();
-s32 func_00201C60();
+s32 rng_next();
+s32 entity_velocity();
 s32 func_00203060();
 extern u8 D_0028E855;
 extern u16 D_0028E8A0;
@@ -364,7 +364,7 @@ block_6:
     ENTITY(reg_a6)->move.b.dir = 0x28;
 block_1:
     ENTITY(reg_a6)->move.b.dir *= -1;
-    func_002010A0();
+    rng_next();
     ENTITY(reg_a6)->move.b.dir += reg_d0.b[0];
     ENTITY(reg_a6)->move.b.dir &= 0x3F;
 next_2:
@@ -393,11 +393,11 @@ block_4:
 block_5:
     ENTITY(reg_a6)->move.b.dir += 0x20;
     ENTITY(reg_a6)->move.b.dir *= -1;
-    func_002010A0();
+    rng_next();
     ENTITY(reg_a6)->move.b.dir += reg_d0.b[0];
     ENTITY(reg_a6)->move.b.dir &= 0x3F;
 block_7:
-    func_00201C60();
+    entity_velocity();
     cond_flag = 0;
     func_00203060();
     if (cond_flag != 0) {
@@ -470,7 +470,7 @@ void func_0016B360(void)
 {
     *(u16 *)((u8 *)reg_a6_as_void_p + 0x18) = 0x700;
     *(u16 *)((u8 *)reg_a6_as_void_p + 0x1A) = 0xB00;
-    func_00201160();
+    rng_next_masked();
     *((u8 *)reg_a6_as_void_p + 0x1A) = reg_d0.b[0];
     *((u8 *)reg_a6_as_void_p + 0x1A) |= 8;
 }
@@ -515,7 +515,7 @@ block_6:
     ENTITY(reg_a6)->move.b.dir = 0x28;
 block_1:
     ENTITY(reg_a6)->move.b.dir *= -1;
-    func_002010A0();
+    rng_next();
     ENTITY(reg_a6)->move.b.dir += reg_d0.b[0];
     ENTITY(reg_a6)->move.b.dir &= 0x3F;
 next_2:
@@ -544,11 +544,11 @@ block_4:
 block_5:
     ENTITY(reg_a6)->move.b.dir += 0x20;
     ENTITY(reg_a6)->move.b.dir *= -1;
-    func_002010A0();
+    rng_next();
     ENTITY(reg_a6)->move.b.dir += reg_d0.b[0];
     ENTITY(reg_a6)->move.b.dir &= 0x3F;
 block_7:
-    func_00201C60();
+    entity_velocity();
     cond_flag = 0;
     func_00203060();
     if (cond_flag != 0) {
@@ -682,7 +682,7 @@ void func_0016B7F0(void) {
             }
         }
     }
-    func_00201C60();
+    entity_velocity();
     cond_flag = 0;
     func_00203060();
     if (cond_flag != 0) {
@@ -1084,7 +1084,7 @@ void func_0016C410() {
     if ((s32) reg_d1.h[0] < 0x1C00) {
         ENTITY(reg_a6)->move.sb.dir = 0x10;
     }
-    func_002010A0();
+    rng_next();
     if (((s64) ((s64) reg_d0.b[0] << 0x38) >> 0x38) < 0) {
         reg_d0.b[0] *= -1;
     }

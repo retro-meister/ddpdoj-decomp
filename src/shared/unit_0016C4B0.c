@@ -5,7 +5,7 @@ void func_0016C620(void);
 
 s32 func_0016C260();
 s32 func_0019D230();
-s32 func_00201C60();
+s32 entity_velocity();
 
 void func_0016C4B0(void) {
     u16 temp_a0;
@@ -40,7 +40,7 @@ void func_0016C4B0(void) {
     if (*(u8 *)(reg_a6 + 0xF) != 0) {
         *(u16 *)(reg_a6 + 2) += 0x20;
     } else {
-        func_00201C60();
+        entity_velocity();
     }
     *(u8 *)(reg_a6 + 0xD) -= 1;
     if (*(u8 *)(reg_a6 + 0xD) == 0) {
@@ -82,7 +82,7 @@ void func_0016C620(void) {
     if (*(u8 *)(reg_a6 + 0xF) != 0) {
         *(u16 *)(reg_a6 + 2) += 0x20;
     } else {
-        func_00201C60();
+        entity_velocity();
     }
     *(u8 *)(reg_a6 + 0xD) -= 1;
     if (*(u8 *)(reg_a6 + 0xD) == 0) {
@@ -218,24 +218,24 @@ void func_0016CA20(void) {
     }
 }
 
-void func_001713F0(s32 mode);
+void enemy_set_entity_count(s32 mode);
 
 void func_0016CCD0(void) {
-    func_001713F0(0);
+    enemy_set_entity_count(0);
 }
 
-s32 func_0014E300();                            /* extern */
-s32 func_0014E370();                            /* extern */
+s32 enemy_set_task_work();                            /* extern */
+s32 enemy_init_entities();                            /* extern */
 extern s32 D_0025B0E0[];
 extern s32 D_0028CA00;
 extern s32 *reg_a0_as_s32_p;
 
 void func_0016CCE0(void) {
     reg_a0_as_s32_p = D_0025B0E0;
-    func_0014E370();
+    enemy_init_entities();
     reg_a0_as_s32_p = &D_0028CA00;
     reg_d0.w = 1;
-    func_0014E300();
+    enemy_set_task_work();
     reg_tmp.w = 0x38001C00;
     ENTITY(reg_a6)->y.h = (u16) reg_tmp.h[1];
     ENTITY(reg_a6)->x.h = (u16) reg_tmp.h[0];

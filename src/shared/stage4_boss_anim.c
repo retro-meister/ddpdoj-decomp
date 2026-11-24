@@ -17,20 +17,20 @@ void func_001D71C0(void) {
     *reg_a4_as_s16_p = 0;
 }
 
-s32 func_00124DC0();                            /* extern */
-s32 func_00124F00();                            /* extern */
+s32 boss_part_show();                            /* extern */
+s32 boss_part_hide();                            /* extern */
 
 void func_001D71D0(void) {
     *(s16 *)(reg_a6 + 0x106) = 0;
     reg_d0.w = 0;
-    func_00124F00();
+    boss_part_hide();
     reg_d0.w = 6;
-    func_00124DC0();
+    boss_part_show();
     *(s16 *)(reg_a4 + 2) = 0x202;
 }
 
-s32 func_00124DC0();
-s32 func_00124F00();
+s32 boss_part_show();
+s32 boss_part_hide();
 s32 func_001E8710();
 s32 func_001E8730();
 
@@ -46,13 +46,13 @@ void func_001D7210() {
         if (temp_a0 == 0x3C) {
             *(u16 *)(reg_a6 + 0x106) = 0U;
             reg_d0.w = 6;
-            func_00124F00();
+            boss_part_hide();
             reg_d0.w = 9;
-            func_00124DC0();
+            boss_part_show();
             reg_d0.w = 7;
-            func_00124DC0();
+            boss_part_show();
             reg_d0.w = 8;
-            func_00124DC0();
+            boss_part_show();
             *(s16 *)(reg_a6 + 0x30) = 0xC00;
             *(s16 *)(reg_a6 + 0x32) = 0xD80;
             *(s16 *)(reg_a6 + 0x34) = 0x900;
@@ -243,16 +243,16 @@ void func_001D7770(void) {
     func_001D7780();
 }
 
-s32 func_00202140();                            /* extern */
-s32 func_00202500();                            /* extern */
+s32 aim_at_player();                            /* extern */
+s32 direction_turn_toward();                            /* extern */
 
 void func_001D7780(void) {
     reg_d0.h[0] = *(u16 *)(reg_a6 + 0x102);
     reg_d1.h[0] = *(u16 *)(reg_a6 + 0x104);
-    func_00202140();
+    aim_at_player();
     if (cond_flag == 0) {
         reg_d0.b[0] = *(u8 *)(reg_a6 + 0x11A);
-        func_00202500();
+        direction_turn_toward();
         *(u8 *)(reg_a6 + 0x11A) = (u8) reg_d1.b[0];
     }
 }

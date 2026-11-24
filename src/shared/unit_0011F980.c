@@ -69,7 +69,7 @@ s32 func_0018D8B0();
 s32 func_0019D990();
 s32 func_0019D9C0();
 s32 func_0019DA10();
-s32 func_002011D0();
+s32 rng_next_bit();
 s32 vibration_start_pad1();
 s32 vibration_start_pad2();
 extern u8 D_00241780[];
@@ -246,7 +246,7 @@ block_b:
 block_c:
     if (*(u16 *)(reg_a6 + 0x28) != 1) goto block_e;
     reg_d1.w = 0x40;
-    func_002011D0();
+    rng_next_bit();
     if (reg_d0.b[0] != 0) goto next_3;
     reg_d1.h[0] *= 0xFFFF;
 next_3:

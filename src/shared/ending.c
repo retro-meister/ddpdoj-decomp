@@ -25,7 +25,7 @@ extern u16 D_0028E5FC;
 extern u16 D_0028E748;
 extern u16 D_0028E750;
 extern s16 D_0028E8C4_as_s16;
-extern u16 D_0028E910;
+extern u16 g_loop;
 extern u16 D_0028E920;
 extern u16 D_0028E980;
 extern u8 D_0029F1F0_as_u8_a[];
@@ -37,7 +37,7 @@ void func_00122CE0(void) {
 #ifdef DEATH_LABEL
     if (D_0028E290 == 2) goto block_1;
 #endif
-    if (D_0028E910 != 0) goto block_1;
+    if (g_loop != 0) goto block_1;
     if (D_0028E5FC != 0) {
         func_001A7E90();
         func_0013FD20();
@@ -81,14 +81,14 @@ void func_00122CE0(void) {
     reg_a0 += 2;
 }
 
-s32 func_002071C0();
+s32 task_start();
 s32 func_002075F0();
 s32 stage_load_step();
 s32 func_00225630();
 s32 func_002256B0();
 extern s8 g_stage_load_state_as_s8;
 extern s16 g_loaded_stage;
-extern s16 D_0028E910_as_s16;
+extern s16 g_loop_as_s16;
 extern u16 g_stage;
 extern s8 g_cd_async_state;
 extern s8 g_cd_async_busy;
@@ -118,11 +118,11 @@ block_6:
             g_stage = 0;
             stage_load_step(D_00295E3C[0]);
             if (g_loaded_stage == g_stage) {
-                D_0028E910_as_s16 = 1;
+                g_loop_as_s16 = 1;
                 D_00295E3C[0] = 0;
                 func_002256B0(g_loaded_stage);
                 reg_d0.h[0] = 0x11;
-                func_002071C0();
+                task_start();
                 func_002075F0();
             }
         }
@@ -134,7 +134,7 @@ block_6:
             return;
         }
         reg_d0.h[0] = 0xF;
-        func_002071C0();
+        task_start();
         func_002075F0();
     }
 }
@@ -232,7 +232,7 @@ void func_00123210(void) {
     reg_a6_as_u16_p[3] = 0;
 }
 
-s32 func_001A3020();
+s32 sprite_palette_load();
 extern u8 D_0024D030[];
 extern s16 D_00295E1C_as_s16_a[];
 extern s16 D_00295E1E_as_s16_a[];
@@ -258,7 +258,7 @@ void func_00123240(void) {
     D_00295E20_as_s16_a[0] = 0;
     D_00295E24_as_s32_a[0] = 0;
     D_00295E28_as_s32_a[0] = 0;
-    func_001A3020();
+    sprite_palette_load();
 }
 
 #ifndef DEATH_LABEL
@@ -620,7 +620,7 @@ void func_00123C20(void) {
     D_00295E3A[0] = 0x258;
     reg_a0 = (u8 *) D_0025F770_as_u32_a;
     reg_d0.h[0] = 3;
-    func_001A3020();
+    sprite_palette_load();
 next_10:
     if (W(6) != 1) goto next_20;
     reg_a0 = (u8 *) &D_0028C098;

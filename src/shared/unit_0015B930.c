@@ -412,21 +412,21 @@ extern u8 D_0025F770[];
 extern u8 D_002623F0[];
 extern u8 D_00262430[];
 
-extern void func_001A3020(void);
+extern void sprite_palette_load(void);
 
 void func_0015C1F0(void)
 {
     reg_a0 = D_00262430;
     reg_d0.h[0] = 0;
-    func_001A3020();
+    sprite_palette_load();
 
     reg_a0 = D_002623F0;
     reg_d0.h[0] = 1;
-    func_001A3020();
+    sprite_palette_load();
 
     reg_a0 = D_0025F770;
     reg_d0.h[0] = 2;
-    func_001A3020();
+    sprite_palette_load();
 }
 
 extern void func_0019C430(void);
@@ -537,10 +537,10 @@ void func_0015C430(void) {
 }
 
 
-extern void func_001713F0(s32);
+extern void enemy_set_entity_count(s32);
 
 void func_0015C440(void) {
-    func_001713F0(0);
+    enemy_set_entity_count(0);
 }
 
 
@@ -548,8 +548,8 @@ void func_0015C450(void) {
     func_0015C460();
 }
 
-extern void func_0014E290(void);
+extern void enemy_remove(void);
 
 void func_0015C460(void) {
-    func_0014E290();
+    enemy_remove();
 }

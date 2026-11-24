@@ -20,12 +20,12 @@ void func_001F5C90(void) {
     }
 }
 
-s32 func_00124B20();
-s32 func_00124D10();
-s32 func_00124D90();
-s32 func_00124DC0();
-s32 func_00124F00();
-s32 func_001253B0();
+s32 boss_phase_start();
+s32 boss_phase_stop_all();
+s32 boss_movement_start();
+s32 boss_part_show();
+s32 boss_part_hide();
+s32 boss_attack_stop_all();
 s32 func_001A9000();
 s32 func_001F5620();
 s32 func_001F6080();
@@ -83,7 +83,7 @@ next_2:
     *(u16 *) (reg_a6 + 0x13A) = 40;
 next_3:
     reg_d0.w = 0x12;
-    func_00124DC0();
+    boss_part_show();
     reg_d5.h[0] = 0x7FFF;
     *(u16 *) (reg_a6 + 0x198) = reg_d5.h[0];
 #ifdef DEATH_LABEL
@@ -165,10 +165,10 @@ next_8:
     if (*(u16 *) (reg_a6 + 0x13A) != 0) {
         goto next_9;
     }
-    func_00124F00();
+    boss_part_hide();
     goto next_10;
 next_9:
-    func_00124DC0();
+    boss_part_show();
 next_10:
 #ifdef DEATH_LABEL
     if (reg_a6[0x111] == 0) {
@@ -178,12 +178,12 @@ next_10:
         if (0 <= (s64) (s32) reg_d0.w) {
             goto next_11;
         }
-        func_001253B0();
-        func_00124D10();
+        boss_attack_stop_all();
+        boss_phase_stop_all();
         reg_d0.w = 0x10;
-        func_00124D90();
+        boss_movement_start();
         reg_d0.w = 0x1A;
-        func_00124B20();
+        boss_phase_start();
         func_001F5620();
         reg_a6[0x111] = 1;
         D_00299768[0] = 1;
@@ -199,12 +199,12 @@ next_10:
         if (0 <= (s64) (s32) reg_d0.w) {
             goto next_11;
         }
-        func_001253B0();
-        func_00124D10();
+        boss_attack_stop_all();
+        boss_phase_stop_all();
         reg_d0.w = 0x10;
-        func_00124D90();
+        boss_movement_start();
         reg_d0.w = 0x19;
-        func_00124B20();
+        boss_phase_start();
         func_001F5620();
         reg_a6[0x111] = 2;
         D_00299768[0] = 1;
@@ -223,12 +223,12 @@ next_10:
     if (0 <= (s64) (s32) reg_d0.w) {
         goto next_11;
     }
-    func_001253B0();
-    func_00124D10();
+    boss_attack_stop_all();
+    boss_phase_stop_all();
     reg_d0.w = 0xB;
-    func_00124D90();
+    boss_movement_start();
     reg_d0.w = 0x13;
-    func_00124B20();
+    boss_phase_start();
     func_001F5620();
     reg_a6[0x111] = 1;
     D_00299768[0] = 1;

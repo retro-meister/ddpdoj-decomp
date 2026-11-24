@@ -43,10 +43,10 @@ void func_001D37D0(void)
     func_001D3810();
 }
 
-s32 func_00124B20();
-s32 func_00124C70();
-s32 func_00125060(void *);
-s32 func_00201C60();
+s32 boss_phase_start();
+s32 boss_phase_stop();
+s32 boss_animation_running(void *);
+s32 entity_velocity();
 
 void func_001D3810(void) {
     u8 temp_v1;
@@ -61,19 +61,19 @@ void func_001D3810(void) {
             goto block_5;
         }
         reg_d0.w = 7;
-        func_00125060(reg_a6 + 0x1B);
+        boss_animation_running(reg_a6 + 0x1B);
         if (cond_flag == 0) {
             reg_d0.w = 0;
-            func_00124C70();
+            boss_phase_stop();
             reg_d0.w = 2;
-            func_00124B20();
+            boss_phase_start();
             func_001D36C0();
             return;
         }
         goto block_5;
     }
 block_5:
-    func_00201C60();
+    entity_velocity();
     func_001D36C0();
 }
 
@@ -87,11 +87,11 @@ void func_001D38C0(void) {
     func_001D38E0();
 }
 
-s32 func_002010A0();
+s32 rng_next();
 s32 func_002024C0();
 
 void func_001D38E0(void) {
-    func_00201C60();
+    entity_velocity();
     if (*(u8 *)reg_a4 != 0) {
         reg_d1.b[0] = *(u8 *)(reg_a4 + 1);
         func_002024C0();
@@ -99,7 +99,7 @@ void func_001D38E0(void) {
             *(u8 *)reg_a4 = 0U;
         }
     }
-    func_002010A0();
+    rng_next();
     reg_d1.h[1] = ENTITY(reg_a6)->y.h;
     reg_d1.h[0] = ENTITY(reg_a6)->x.h;
     reg_d1.h[0] += 0x2800;
@@ -138,7 +138,7 @@ void func_001D3A00(void) {
 }
 
 void func_001D3A20(void) {
-    func_00201C60();
+    entity_velocity();
     if (*(u8 *)reg_a4 != 0) {
         reg_d1.b[0] = *(u8 *)(reg_a4 + 1);
         func_002024C0();
@@ -146,7 +146,7 @@ void func_001D3A20(void) {
             *(u8 *)reg_a4 = 0U;
         }
     }
-    func_002010A0();
+    rng_next();
     reg_d1.h[1] = ENTITY(reg_a6)->y.h;
     reg_d1.h[0] = ENTITY(reg_a6)->x.h;
     reg_d1.h[0] += 0x2800;
@@ -185,7 +185,7 @@ void func_001D3B50(void) {
 }
 
 void func_001D3B70(void) {
-    func_00201C60();
+    entity_velocity();
     if (*(u8 *)reg_a4 != 0) {
         reg_d1.b[0] = *(u8 *)(reg_a4 + 1);
         func_002024C0();
@@ -193,7 +193,7 @@ void func_001D3B70(void) {
             *(u8 *)reg_a4 = 0U;
         }
     }
-    func_002010A0();
+    rng_next();
     reg_d1.h[1] = ENTITY(reg_a6)->y.h;
     reg_d1.h[0] = ENTITY(reg_a6)->x.h;
     reg_d1.h[0] += 0x2800;

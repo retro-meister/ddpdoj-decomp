@@ -2,8 +2,8 @@
 #include "entity.h"
 
 s32 func_00171330(s32 *);
-s32 func_001713A0();
-s32 func_00201B80();
+s32 entity_release();
+s32 entity_follow_scroll();
 extern u8 D_0028E290;
 extern u8 D_0028E2C8;
 extern u8 D_0028ED80;
@@ -11,36 +11,36 @@ extern void func_0019C4B0();
 
 void func_0011F3E0(void) {
     if (((D_0028ED80 != 0) && (D_0028E2C8 != 0)) || (D_0028E290 == 2)) {
-        func_001713A0();
+        entity_release();
         return;
     }
     reg_d0.h[0] = ENTITY(reg_a6)->y.h;
     if ((s16) reg_d0.h[0] < -0x3400) {
-        func_001713A0();
+        entity_release();
         return;
     }
-    func_00201B80();
+    entity_follow_scroll();
     func_00171330((void *)func_0019C4B0);
 }
 
-void func_001713F0(s32 arg0);
+void enemy_set_entity_count(s32 arg0);
 
 void func_0011F470(void) {
-    func_001713F0(0);
+    enemy_set_entity_count(0);
 }
 
-s32 func_0014E300();                            /* extern */
-s32 func_0014E370();                            /* extern */
+s32 enemy_set_task_work();                            /* extern */
+s32 enemy_init_entities();                            /* extern */
 extern s32 D_0024CBC0[];
 extern s32 D_0028C088;
 extern s32 *reg_a0_as_s32_p;
 
 void func_0011F480(void) {
     reg_a0_as_s32_p = D_0024CBC0;
-    func_0014E370();
+    enemy_init_entities();
     reg_a0_as_s32_p = &D_0028C088;
     reg_d0.w = 1;
-    func_0014E300();
+    enemy_set_task_work();
     reg_tmp.w = 0x38001C00;
     ENTITY(reg_a6)->y.h = (u16) reg_tmp.h[1];
     ENTITY(reg_a6)->x.h = (u16) reg_tmp.h[0];

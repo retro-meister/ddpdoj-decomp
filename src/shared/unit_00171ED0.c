@@ -1,6 +1,6 @@
 #include "common.h"
 
-s32 func_002011A0();
+s32 rng_next_unsigned();
 extern s8 D_0026B210[];
 extern u16 D_0028E3F0;
 extern s8 D_002BB430[];
@@ -14,7 +14,7 @@ void func_00171ED0(void) {
     reg_d7.w = 4;
     do {
 loop_1:
-        func_002011A0();
+        rng_next_unsigned();
         reg_a0_as_s8_p = (s8 *)D_0026B210;
         reg_d0.h[0] += D_0028E3F0;
         reg_d0.h[0] &= 0x1F;
@@ -75,7 +75,7 @@ void func_00172090(void)
 }
 
 
-s32 func_001A3020();
+s32 sprite_palette_load();
 extern u8 D_0026B250[];
 extern u16 D_0028E78C;
 extern u8 D_0028E790;
@@ -94,7 +94,7 @@ void func_001720E0(void) {
         temp_a0 = reg_d0.h[0] * 4;
         reg_a0 = *(u8 **)((u8 *)D_0026B250 + temp_a0);
         reg_d0.h[0] = 0x17;
-        func_001A3020();
+        sprite_palette_load();
     }
     if (D_0028E794 == 1) {
         D_0028E78C -= 1;
@@ -109,7 +109,7 @@ void func_001720E0(void) {
             temp_a0_3 = reg_d0.h[0] * 4;
             reg_a0 = *(u8 **)((u8 *)D_0026B250 + temp_a0_3);
             reg_d0.h[0] = 0x17;
-            func_001A3020();
+            sprite_palette_load();
             if (D_0028E788 == 0) {
                 D_0028E791 = 0x20;
                 D_0028E794 = 2;

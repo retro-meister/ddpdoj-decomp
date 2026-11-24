@@ -22,7 +22,7 @@ void func_001B82D0(void) {
 
 
 extern u32 D_0028E52C;
-extern u16 D_0028E910;
+extern u16 g_loop;
 extern u16 D_0028E928;
 extern u16 D_0029A530[];
 
@@ -41,7 +41,7 @@ void func_001B82F0(void) {
 loop_1:
     reg_a0 = (u8 *)D_0029A530;
     reg_d1.h[0] = 0x13;
-    if ((D_0028E910 != 0) || (D_0028E928 == 0)) {
+    if ((g_loop != 0) || (D_0028E928 == 0)) {
         reg_d1.h[0] = 9;
     }
 loop_2:
@@ -105,7 +105,7 @@ void func_001B8440(void) {
     reg_d7.h[0] = D_0029AA30[0];
     if (reg_d7.h[0] == 0) goto block_rts;
     reg_d7.h[0] -= 1;
-    if (D_0028E910 != 0) {
+    if (g_loop != 0) {
         reg_a6 = (u8 *)D_0029A530_as_u8_a;
         goto next_clr;
     }
@@ -339,11 +339,11 @@ block_rts:
 }
 
 extern u8 D_002509E0[];
-s32 func_002010A0();
+s32 rng_next();
 s32 func_00201130();
-s32 func_00201160();
-s32 func_002011A0();
-s32 func_002011D0();
+s32 rng_next_masked();
+s32 rng_next_unsigned();
+s32 rng_next_bit();
 s32 func_00201390();
 extern u16 D_00250CE0[];
 extern u8 D_0028E52F;
@@ -385,7 +385,7 @@ void func_001B8D00(void) {
     reg_d0.h[0] = reg_tmp.h[1];
     reg_d4.h[0] = reg_d0.h[0];
     reg_d4.h[0] &= 0xFF00;
-    func_002011D0();
+    rng_next_bit();
     if (reg_d0.b[0] == 0) {
         reg_d4.h[0] |= 0x1000;
     }
@@ -406,7 +406,7 @@ void func_001B8D00(void) {
     reg_a2 += 2;
     *(u16 *)(reg_a0 + 0x18) = (u16) *(u16 *)reg_a2;
     reg_a2 += 2;
-    func_002011A0();
+    rng_next_unsigned();
     reg_d0.b[0] &= 0xF;
     reg_d0.b[0] += 0x1A;
     *(u8 *)(reg_a0 + 0x1B) = (u8) reg_d0.b[0];
@@ -426,7 +426,7 @@ void func_001B8D00(void) {
         reg_d0.h[0] = *(u16 *)(reg_a0 + 0x20);
         reg_d0.b[0] += 0x10;
         *(u8 *)(reg_a0 + 0x21) = (u8) reg_d0.b[0];
-        func_002011A0();
+        rng_next_unsigned();
         reg_d0.h[0] &= 0xF;
         if (*(u8 *)(reg_a0 + 1) & 4) {
             reg_d0.b[0] >>= 1;
@@ -436,11 +436,11 @@ void func_001B8D00(void) {
         reg_d0.b[0] = *(u8 *)(reg_a0 + 0x1B);
         reg_d0.b[0] += 0x20;
         *(u8 *)(reg_a0 + 0x27) = (u8) reg_d0.b[0];
-        func_002010A0();
+        rng_next();
         reg_d0.b[0] = (u8) ((s8) reg_d0.b[0] >> 2);
         reg_d0.b[0] += D_0028E52F;
     } else {
-        func_00201160();
+        rng_next_masked();
         if (((s32) reg_d0.h[0] > 0x15) && ((s32) reg_d0.h[0] < 0x2B)) {
             reg_d0.h[0] += 0x20;
             reg_d0.h[0] &= 0x3F;

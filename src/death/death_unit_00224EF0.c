@@ -21,13 +21,13 @@ typedef struct {
     s32 high;
 } Range;
 
-s32 func_002010A0();
-s32 func_00201C60();
+s32 rng_next();
+s32 entity_velocity();
 s32 func_002024C0();
 extern Range death_D_0028E490[];
 
 void death_func_00224F20(u8 index) {
-    func_00201C60();
+    entity_velocity();
     if (*(u8 *)reg_a4 != 0) {
         reg_d1.b[0] = *(u8 *)(reg_a4 + 1);
         func_002024C0();
@@ -35,7 +35,7 @@ void death_func_00224F20(u8 index) {
             *(u8 *)reg_a4 = 0U;
         }
     }
-    func_002010A0();
+    rng_next();
     reg_d1.h[1] = ENTITY(reg_a6)->y.h;
     reg_d1.h[0] = ENTITY(reg_a6)->x.h;
     reg_d1.h[0] += 0x2800;
@@ -75,7 +75,7 @@ void death_func_00225060(u8 index) {
 extern Range death_D_0028E4A0[];
 
 void death_func_00225090(u8 index) {
-    func_00201C60();
+    entity_velocity();
     if (*(u8 *)reg_a4 != 0) {
         reg_d1.b[0] = *(u8 *)(reg_a4 + 1);
         func_002024C0();
@@ -83,7 +83,7 @@ void death_func_00225090(u8 index) {
             *(u8 *)reg_a4 = 0U;
         }
     }
-    func_002010A0();
+    rng_next();
     reg_d1.h[1] = ENTITY(reg_a6)->y.h;
     reg_d1.h[0] = ENTITY(reg_a6)->x.h;
     reg_d1.h[0] += 0x2800;
@@ -122,7 +122,7 @@ void death_func_002251D0(u8 index) {
 extern Range death_D_0028E4B0[];
 
 void death_func_002251F0(u8 index) {
-    func_00201C60();
+    entity_velocity();
     if (*(u8 *)reg_a4 != 0) {
         reg_d1.b[0] = *(u8 *)(reg_a4 + 1);
         func_002024C0();
@@ -130,7 +130,7 @@ void death_func_002251F0(u8 index) {
             *(u8 *)reg_a4 = 0U;
         }
     }
-    func_002010A0();
+    rng_next();
     reg_d1.h[1] = ENTITY(reg_a6)->y.h;
     reg_d1.h[0] = ENTITY(reg_a6)->x.h;
     reg_d1.h[0] += 0x2800;
@@ -170,7 +170,7 @@ void death_func_00225330(u8 index) {
 extern Range death_D_0028E4C0[];
 
 void death_func_00225360(u8 index) {
-    func_00201C60();
+    entity_velocity();
     if (*(u8 *)reg_a4 != 0) {
         reg_d1.b[0] = *(u8 *)(reg_a4 + 1);
         func_002024C0();
@@ -178,7 +178,7 @@ void death_func_00225360(u8 index) {
             *(u8 *)reg_a4 = 0U;
         }
     }
-    func_002010A0();
+    rng_next();
     reg_d1.h[1] = ENTITY(reg_a6)->y.h;
     reg_d1.h[0] = ENTITY(reg_a6)->x.h;
     reg_d1.h[0] += 0x2800;
@@ -206,14 +206,14 @@ block_11:
     }
 }
 
-s32 func_00201160();
+s32 rng_next_masked();
 
 void death_func_002254A0(u8 index) {
     reg_d0.w = 0;
     *(u8 *)(reg_a4 + 1) = reg_d0.b[0];
     *(u8 *)(reg_a4 + 0) = reg_d0.b[0];
     ENTITY(reg_a6)->move.b.speed = 4;
-    func_00201160();
+    rng_next_masked();
     ENTITY(reg_a6)->move.b.dir = reg_d0.b[0];
     death_func_00225500(index);
 }
@@ -221,7 +221,7 @@ void death_func_002254A0(u8 index) {
 extern Range death_D_0028E4D0[];
 
 void death_func_00225500(u8 index) {
-    func_00201C60();
+    entity_velocity();
     if (*(u8 *)reg_a4 != 0) {
         reg_d1.b[0] = *(u8 *)(reg_a4 + 1);
         func_002024C0();
@@ -229,7 +229,7 @@ void death_func_00225500(u8 index) {
             *(u8 *)reg_a4 = 0U;
         }
     }
-    func_002010A0();
+    rng_next();
     reg_d1.h[1] = ENTITY(reg_a6)->y.h;
     reg_d1.h[0] = ENTITY(reg_a6)->x.h;
     reg_d1.h[0] += 0x2800;

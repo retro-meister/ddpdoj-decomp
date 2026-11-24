@@ -508,7 +508,7 @@ block_29:
 }
 
 s32 func_0018DD00();
-s32 func_001A3020();
+s32 sprite_palette_load();
 s32 func_001AC8C0();
 s32 func_001AC8E0();
 extern u8 D_00261C30[];
@@ -521,7 +521,7 @@ extern u16 D_0028E62C;
 extern u16 D_0028E630;
 extern u8 D_0028E635;
 extern u8 D_0028E855;
-extern u16 D_0028E910;
+extern u16 g_loop;
 extern u16 g_stage;
 extern u16 D_0029CEA0[];
 
@@ -556,10 +556,10 @@ void func_001A6050(void) {
     func_001AC8E0();
     reg_a0 = (u8 *)D_00261C30;
     reg_d0.h[0] = 7;
-    func_001A3020();
+    sprite_palette_load();
     reg_a0 = (u8 *)D_00261C70;
     reg_d0.h[0] = 8;
-    func_001A3020();
+    sprite_palette_load();
     goto next_40;
 next_20:
     D_0028E635 &= 0xFE;
@@ -656,7 +656,7 @@ next_180:
     }
     reg_d4.h[0] = 9;
     if ((u32) reg_d7.w > 0x6FB8U) goto next_240;
-    if (D_0028E910 == 0) goto next_200;
+    if (g_loop == 0) goto next_200;
     if (g_stage == 4) goto next_240;
 next_200:
     reg_d4.h[0] = 0x19;
@@ -1522,7 +1522,7 @@ next_1:
 extern u16 D_0028DAE0[];
 
 void func_001A7C60(void) {
-    reg_d2.h[0] = D_0028E910;
+    reg_d2.h[0] = g_loop;
     reg_a0 = (u8 *) D_0028DAE0;
     reg_d2.h[0] += reg_d2.h[0];
     reg_d2.h[0] += reg_d2.h[0];

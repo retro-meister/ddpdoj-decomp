@@ -3,7 +3,7 @@
 
 void func_001BB300(void);
 
-s32 func_00201E20();
+s32 velocity_from_dir256();
 extern u16 D_002BDA90[];
 extern u16 D_002BDA92[];
 extern u8 D_002BDA94[];
@@ -50,7 +50,7 @@ loop_1:
     reg_d1.w = 0;
     reg_d0.b[0] = *(u8 *)(reg_a6 + 0x4B);
     reg_d1.b[0] = *(u8 *)(reg_a6 + 0x4A);
-    func_00201E20();
+    velocity_from_dir256();
     reg_d2.h[0] = (s16) reg_d2.h[0] * 2;
     reg_d2.h[0] += 0xFD80;
     *(u16 *)(reg_a6 + 0x22) += reg_d2.h[0];
@@ -72,7 +72,7 @@ next_2:
     reg_d1.w = 0;
     reg_d0.b[0] = *(u8 *)(reg_a6 + 0x8B);
     reg_d1.b[0] = *(u8 *)(reg_a6 + 0x8A);
-    func_00201E20();
+    velocity_from_dir256();
     reg_d2.h[0] = (s16) reg_d2.h[0] * 2;
     reg_d2.h[0] += 0xFD80;
     *(u16 *)(reg_a6 + 0x62) += reg_d2.h[0];
@@ -92,15 +92,15 @@ void func_001BAB10(void) {
     *(s16 *)(reg_a4 + 0x6) = 0x101;
 }
 
-s32 func_00124B20();
-s32 func_00124D90();
-s32 func_00124DC0();
-s32 func_00124F50();
+s32 boss_phase_start();
+s32 boss_movement_start();
+s32 boss_part_show();
+s32 boss_animation_start();
 s32 func_0013B2E0();
 s32 func_001BC3A0();
 s32 func_001BC3B0();
-s32 func_00201C60();
-s32 func_00202500();
+s32 entity_velocity();
+s32 direction_turn_toward();
 s32 func_00202B50();
 extern u16 D_0026E930[];
 extern u8 D_0028E855;
@@ -108,7 +108,7 @@ extern u16 D_0029C068[];
 extern u16 D_002BDA80_as_u16_a[];
 
 void func_001BAB40(void) {
-    s32 func_002021F0();
+    s32 direction_between();
     u8 temp_v0_2;
 
     reg_d2.h[0] = 0x5400;
@@ -116,11 +116,11 @@ void func_001BAB40(void) {
     reg_d3.h[0] -= D_0029C068[0];
     reg_d0.h[0] = ENTITY(reg_a6)->y.h;
     reg_d1.h[0] = ENTITY(reg_a6)->x.h;
-    func_002021F0();
+    direction_between();
     reg_d0.b[0] = ENTITY(reg_a6)->move.b.dir;
-    func_00202500();
+    direction_turn_toward();
     ENTITY(reg_a6)->move.b.dir = (u8) reg_d1.b[0];
-    func_00201C60();
+    entity_velocity();
     reg_a0 = (u8 *)(D_002BDA80_as_u16_a);
     reg_d1.h[1] = ENTITY(reg_a6)->y.h;
     reg_d1.h[0] = ENTITY(reg_a6)->x.h;
@@ -161,33 +161,33 @@ void func_001BAB40(void) {
                 D_0028E855 |= 0x10;
                 D_0028E855 |= 2;
                 reg_d0.w = 2;
-                func_00124D90();
+                boss_movement_start();
                 reg_d0.w = 1;
-                func_00124B20();
+                boss_phase_start();
                 func_001BC3A0();
                 func_001BC3B0();
                 reg_d0.w = 0;
-                func_00124F50();
+                boss_animation_start();
                 reg_d0.w = 1;
-                func_00124F50();
+                boss_animation_start();
                 reg_d0.w = 2;
-                func_00124F50();
+                boss_animation_start();
                 reg_d0.w = 3;
-                func_00124F50();
+                boss_animation_start();
                 reg_d0.w = 7;
-                func_00124F50();
+                boss_animation_start();
                 reg_d0.w = 0;
-                func_00124DC0();
+                boss_part_show();
                 reg_d0.w = 1;
-                func_00124DC0();
+                boss_part_show();
                 reg_d0.w = 2;
-                func_00124DC0();
+                boss_part_show();
                 reg_d0.w = 3;
-                func_00124DC0();
+                boss_part_show();
                 reg_d0.w = 4;
-                func_00124DC0();
+                boss_part_show();
                 reg_d0.w = 5;
-                func_00124DC0();
+                boss_part_show();
                 reg_d0.w = 6;
                 reg_a0 = (u8 *)(D_0026E930);
                 func_0013B2E0();
@@ -213,15 +213,15 @@ void func_001BAE40(void) {
     *(u16 *)(reg_a6 + 0xA4) = (u16) reg_d1.h[0];
 }
 
-s32 func_00201160();
+s32 rng_next_masked();
 
 void func_001BAEC0(void) {
-    func_00201160();
+    rng_next_masked();
     reg_d0.h[0] &= 7;
     reg_d0.h[0] += reg_d0.h[0];
     reg_d0.h[0] += reg_d0.h[0];
     *(u16 *)reg_a4 = (u16) reg_d0.h[0];
-    func_00201160();
+    rng_next_masked();
     reg_d0.b[0] &= 3;
     reg_d0.b[0] += 2;
     *(u8 *)(reg_a4 + 3) = (u8) reg_d0.b[0];
@@ -258,19 +258,19 @@ extern u8 D_0026E980[];
 extern u16 *reg_a4_as_u16_p;
 
 void func_001BAFD0(void) {
-    s32 func_002021F0(void *);
+    s32 direction_between(void *);
     reg_a0 = D_0026E980;
     reg_a0 += *reg_a4_as_u16_p;
     reg_d2.h[0] = *(u16 *)reg_a0;
     reg_d3.h[0] = *(u16 *)(reg_a0 + 2);
     reg_d0.h[0] = ENTITY(reg_a6)->y.h;
     reg_d1.h[0] = ENTITY(reg_a6)->x.h;
-    func_002021F0(reg_a6);
+    direction_between(reg_a6);
     reg_d0.b[0] = ENTITY(reg_a6)->move.b.dir;
-    func_00202500();
+    direction_turn_toward();
     ENTITY(reg_a6)->move.b.dir = (u8) reg_d1.b[0];
     func_001BAF40();
-    func_00201C60();
+    entity_velocity();
     reg_a0 = D_0026E980;
     reg_a0 += *reg_a4_as_u16_p;
     reg_d2.h[0] = *(u16 *)reg_a0;
@@ -291,12 +291,12 @@ void func_001BB0B0(void) {
 }
 
 void func_001BB0D0() {
-    s32 func_002021F0();
+    s32 direction_between();
     reg_d2.h[0] = 0x6A00;
     reg_d3.h[0] = 0x1C00;
     reg_d0.h[0] = ENTITY(reg_a6)->y.h;
     reg_d1.h[0] = ENTITY(reg_a6)->x.h;
-    func_002021F0();
+    direction_between();
     ENTITY(reg_a6)->move.b.dir = (u8) reg_d1.b[0];
     reg_d2.h[0] = 0x6A00;
     reg_d3.h[0] = 0x1C00;
@@ -306,10 +306,10 @@ void func_001BB0D0() {
     *(u8 *)(reg_a4 + 3) = (u8) reg_d1.b[0];
     if ((s16) reg_d0.h[0] < 0x101) {
         reg_d0.w = 4;
-        func_00124D90();
+        boss_movement_start();
     }
     func_001BAF40();
-    func_00201C60();
+    entity_velocity();
     func_001BA820();
 }
 
@@ -323,19 +323,19 @@ void func_001BB180(void) {
 extern u8 D_0026E9A0[];
 
 void func_001BB1A0(void) {
-    s32 func_002021F0(void *);
+    s32 direction_between(void *);
     reg_a0 = D_0026E9A0;
     reg_a0 += *reg_a4_as_u16_p;
     reg_d2.h[0] = *(u16 *)reg_a0;
     reg_d3.h[0] = *(u16 *)(reg_a0 + 2);
     reg_d0.h[0] = ENTITY(reg_a6)->y.h;
     reg_d1.h[0] = ENTITY(reg_a6)->x.h;
-    func_002021F0(reg_a6);
+    direction_between(reg_a6);
     reg_d0.b[0] = ENTITY(reg_a6)->move.b.dir;
-    func_00202500();
+    direction_turn_toward();
     ENTITY(reg_a6)->move.b.dir = (u8) reg_d1.b[0];
     func_001BAF40();
-    func_00201C60();
+    entity_velocity();
     reg_a0 = D_0026E9A0;
     reg_a0 += *reg_a4_as_u16_p;
     reg_d2.h[0] = *(u16 *)reg_a0;
@@ -362,21 +362,21 @@ void func_001BB280(void) {
 }
 
 void func_001BB300() {
-    s32 func_002021F0();
+    s32 direction_between();
     reg_d2.h[0] = 0x5C00;
     reg_d3.h[0] = 0x1C00;
     reg_d0.h[0] = ENTITY(reg_a6)->y.h;
     reg_d1.h[0] = ENTITY(reg_a6)->x.h;
-    func_002021F0();
+    direction_between();
     ENTITY(reg_a6)->move.b.dir = (u8) reg_d1.b[0];
     reg_d2.h[0] = 0x5C00;
     reg_d3.h[0] = 0x1C00;
     func_00202B50();
     if ((s16) reg_d0.h[0] < 0x101) {
         reg_d0.w = 2;
-        func_00124D90();
+        boss_movement_start();
     }
-    func_00201C60();
+    entity_velocity();
     func_001BA820();
 }
 
@@ -386,12 +386,12 @@ void func_001BB390(void) {
 }
 
 void func_001BB3B0() {
-    s32 func_002021F0();
+    s32 direction_between();
     reg_d2.h[0] = 0x7400;
     reg_d3.h[0] = 0x1C00;
     reg_d0.h[0] = ENTITY(reg_a6)->y.h;
     reg_d1.h[0] = ENTITY(reg_a6)->x.h;
-    func_002021F0();
+    direction_between();
     ENTITY(reg_a6)->move.b.dir = (u8) reg_d1.b[0];
     reg_d2.h[0] = 0x7400;
     reg_d3.h[0] = 0x1C00;
@@ -401,10 +401,10 @@ void func_001BB3B0() {
     *(u8 *)(reg_a4 + 3) = (u8) reg_d1.b[0];
     if ((s16) reg_d0.h[0] < 0x101) {
         reg_d0.w = 7;
-        func_00124D90();
+        boss_movement_start();
     }
     func_001BAF40();
-    func_00201C60();
+    entity_velocity();
     func_001BA820();
 }
 
@@ -422,19 +422,19 @@ void func_001BB460(void) {
 extern u8 D_0026E9C0[];
 
 void func_001BB480(void) {
-    s32 func_002021F0(void *);
+    s32 direction_between(void *);
     reg_a0 = D_0026E9C0;
     reg_a0 += *reg_a4_as_u16_p;
     reg_d2.h[0] = *(u16 *)reg_a0;
     reg_d3.h[0] = *(u16 *)(reg_a0 + 2);
     reg_d0.h[0] = ENTITY(reg_a6)->y.h;
     reg_d1.h[0] = ENTITY(reg_a6)->x.h;
-    func_002021F0(reg_a6);
+    direction_between(reg_a6);
     reg_d0.b[0] = ENTITY(reg_a6)->move.b.dir;
-    func_00202500();
+    direction_turn_toward();
     ENTITY(reg_a6)->move.b.dir = (u8) reg_d1.b[0];
     func_001BAF40();
-    func_00201C60();
+    entity_velocity();
     reg_a0 = D_0026E9C0;
     reg_a0 += *reg_a4_as_u16_p;
     reg_d2.h[0] = *(u16 *)reg_a0;
@@ -452,12 +452,12 @@ void func_001BB560(void) {
 }
 
 void func_001BB580() {
-    s32 func_002021F0();
+    s32 direction_between();
     reg_d2.h[0] = 0x7400;
     reg_d3.h[0] = 0x1C00;
     reg_d0.h[0] = ENTITY(reg_a6)->y.h;
     reg_d1.h[0] = ENTITY(reg_a6)->x.h;
-    func_002021F0();
+    direction_between();
     ENTITY(reg_a6)->move.b.dir = (u8) reg_d1.b[0];
     reg_d2.h[0] = 0x7400;
     reg_d3.h[0] = 0x1C00;
@@ -467,9 +467,9 @@ void func_001BB580() {
     *(u8 *)(reg_a4 + 3) = (u8) reg_d1.b[0];
     if ((s16) reg_d0.h[0] < 0x101) {
         reg_d0.w = 4;
-        func_00124D90();
+        boss_movement_start();
     }
     func_001BAF40();
-    func_00201C60();
+    entity_velocity();
     func_001BA820();
 }

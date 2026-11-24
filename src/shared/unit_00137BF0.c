@@ -66,8 +66,8 @@ void func_00137C50(void) {
 
 #ifdef DEATH_LABEL
 s32 func_00171910();
-s32 func_001A2FA0();
-s32 func_002071C0();
+s32 text_palette_load();
+s32 task_start();
 extern u8 death_D_0026EE20[];
 extern u32 death_D_0026FD90[];
 extern u16 D_0028E3BC;
@@ -139,12 +139,12 @@ void func_00137C90(void) {
     reg_a0 += 2;
     D_0028E7F8 = reg_tmp.w;
     reg_d0.h[0] = 0xA;
-    func_002071C0();
+    task_start();
     *(u16 *)(reg_a0 + 4) = reg_d7.h[0];
     func_00171910();
     reg_a0 = death_D_0026EE20;
     reg_d0.h[0] = 0xC;
-    func_001A2FA0();
+    text_palette_load();
     reg_d0.w = save_d0;
     reg_d1.w = save_d1;
     reg_d2.w = save_d2;
@@ -243,8 +243,8 @@ void func_00137CC0(void) {
 
 #ifndef DEATH_LABEL
 
-s32 func_001A2FA0();
-s32 func_002071C0();
+s32 text_palette_load();
+s32 task_start();
 s32 func_0021D410();
 s32 func_00224B50();
 s32 func_0022BC60();
@@ -323,7 +323,7 @@ void func_00137E00(void) {
         func_0022BC60(4, temp_a1, 1);
         reg_a0 = (u8 *)D_00269320;
         reg_d0.h[0] = 0xC;
-        func_001A2FA0();
+        text_palette_load();
         /* fallthrough */
     case 1:
         if (func_0022BE60(D_0028DF04) != 0) {
@@ -341,7 +341,7 @@ void func_00137E00(void) {
             D_0028ED35 = D_006C58DD[0];
             D_0028ED36 = D_006C58DE[0];
             D_0028ED37 = D_006C58DF[0];
-            func_002071C0();
+            task_start();
             *(s8 *)(reg_a0 + 5) = 3;
         }
         break;

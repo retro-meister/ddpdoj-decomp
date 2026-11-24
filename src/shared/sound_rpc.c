@@ -513,7 +513,7 @@ void func_0018D490(void) {
 }
 
 
-void func_0018D4B0(void) {
+void sound_request(void) {
     func_0018DA30();
 }
 

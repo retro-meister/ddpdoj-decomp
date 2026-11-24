@@ -58,9 +58,9 @@ void func_001E8940(void) {
     func_001E8950();
 }
 
-s32 func_00171400();
-s32 func_002021F0();
-s32 func_00202500();
+s32 enemy_switch_target_player();
+s32 direction_between();
+s32 direction_turn_toward();
 extern s16 D_0029F1F0[];
 extern s16 D_0029F260[];
 
@@ -97,66 +97,66 @@ block_6:
             if ((*(u8 *)(reg_a6 + 0x3E) == 0) && (*(u8 *)(reg_a6 + 0x3F) == 0)) {
                 reg_d0.w = (u32) *(u16 *)(reg_a6 + 0x22);
                 reg_d1.w = (u32) *(u16 *)(reg_a6 + 0x24);
-                func_002021F0();
+                direction_between();
                 reg_d0.h[0] = *(u16 *)(reg_a6 + 0x3A);
-                func_00202500();
+                direction_turn_toward();
                 *(u16 *)(reg_a6 + 0x3A) = (u16) reg_d1.h[0];
-                func_00171400();
+                enemy_switch_target_player();
             }
             reg_d2.h[0] = *(u16 *)(reg_a6 + 0x134);
             reg_d3.h[0] = *(u16 *)(reg_a6 + 0x136);
             if ((*(u8 *)(reg_a6 + 0x5E) == 0) && (*(u8 *)(reg_a6 + 0x5F) == 0)) {
                 reg_d0.w = (u32) *(u16 *)(reg_a6 + 0x42);
                 reg_d1.w = (u32) *(u16 *)(reg_a6 + 0x44);
-                func_002021F0();
+                direction_between();
                 reg_d0.h[0] = *(u16 *)(reg_a6 + 0x5A);
-                func_00202500();
+                direction_turn_toward();
                 *(u16 *)(reg_a6 + 0x5A) = (u16) reg_d1.h[0];
-                func_00171400();
+                enemy_switch_target_player();
             }
             reg_d2.h[0] = *(u16 *)(reg_a6 + 0x134);
             reg_d3.h[0] = *(u16 *)(reg_a6 + 0x136);
             if ((*(u8 *)(reg_a6 + 0x7E) == 0) && (*(u8 *)(reg_a6 + 0x7F) == 0)) {
                 reg_d0.w = (u32) *(u16 *)(reg_a6 + 0x62);
                 reg_d1.w = (u32) *(u16 *)(reg_a6 + 0x64);
-                func_002021F0();
+                direction_between();
                 reg_d0.h[0] = *(u16 *)(reg_a6 + 0x7A);
-                func_00202500();
+                direction_turn_toward();
                 *(u16 *)(reg_a6 + 0x7A) = (u16) reg_d1.h[0];
-                func_00171400();
+                enemy_switch_target_player();
             }
             reg_d2.h[0] = *(u16 *)(reg_a6 + 0x134);
             reg_d3.h[0] = *(u16 *)(reg_a6 + 0x136);
             if ((*(u8 *)(reg_a6 + 0x9E) == 0) && (*(u8 *)(reg_a6 + 0x9F) == 0)) {
                 reg_d0.w = (u32) *(u16 *)(reg_a6 + 0x82);
                 reg_d1.w = (u32) *(u16 *)(reg_a6 + 0x84);
-                func_002021F0();
+                direction_between();
                 reg_d0.h[0] = *(u16 *)(reg_a6 + 0x9A);
-                func_00202500();
+                direction_turn_toward();
                 *(u16 *)(reg_a6 + 0x9A) = (u16) reg_d1.h[0];
-                func_00171400();
+                enemy_switch_target_player();
             }
             reg_d2.h[0] = *(u16 *)(reg_a6 + 0x134);
             reg_d3.h[0] = *(u16 *)(reg_a6 + 0x136);
             if ((*(u8 *)(reg_a6 + 0xBE) == 0) && (*(u8 *)(reg_a6 + 0xBF) == 0)) {
                 reg_d0.w = (u32) *(u16 *)(reg_a6 + 0xA2);
                 reg_d1.w = (u32) *(u16 *)(reg_a6 + 0xA4);
-                func_002021F0();
+                direction_between();
                 reg_d0.h[0] = *(u16 *)(reg_a6 + 0xBA);
-                func_00202500();
+                direction_turn_toward();
                 *(u16 *)(reg_a6 + 0xBA) = (u16) reg_d1.h[0];
-                func_00171400();
+                enemy_switch_target_player();
             }
             reg_d2.h[0] = *(u16 *)(reg_a6 + 0x134);
             reg_d3.h[0] = *(u16 *)(reg_a6 + 0x136);
             if ((*(u8 *)(reg_a6 + 0xDE) == 0) && (*(u8 *)(reg_a6 + 0xDF) == 0)) {
                 reg_d0.w = (u32) *(u16 *)(reg_a6 + 0xC2);
                 reg_d1.w = (u32) *(u16 *)(reg_a6 + 0xC4);
-                func_002021F0();
+                direction_between();
                 reg_d0.h[0] = *(u16 *)(reg_a6 + 0xDA);
-                func_00202500();
+                direction_turn_toward();
                 *(u16 *)(reg_a6 + 0xDA) = (u16) reg_d1.h[0];
-                func_00171400();
+                enemy_switch_target_player();
             }
         }
     }
@@ -240,7 +240,7 @@ block_6:
                 reg_d0.w = (u32) ENTITY(reg_a6)->y.h;
                 reg_d1.w = (u32) ENTITY(reg_a6)->x.h;
                 reg_d0.h[0] += 0x7FFF + 0x77C1;
-                func_002021F0();
+                direction_between();
                 reg_d3.h[0] = *(u16 *)(reg_a6 + 0x12E);
                 func_001E8FF0();
                 if (cond_flag == 0) {

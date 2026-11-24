@@ -1,13 +1,13 @@
 #include "common.h"
 
-s32 func_0013A780();
-s32 func_002010A0();
+s32 explosion_spawn();
+s32 rng_next();
 
 void func_0013A930(u32 arg0, u32 arg1, s16 arg2) {
     u32 temp_a0;
 
     reg_d0.w = arg0;
-    func_0013A780();
+    explosion_spawn();
     *(u16 *)(reg_a0 + 0x1E) = (u16) reg_d3.h[0];
     *(u16 *)(reg_a0 + 2) = (u16) reg_d2.h[1];
     *(u16 *)(reg_a0 + 4) = (u16) reg_d2.h[0];
@@ -16,7 +16,7 @@ void func_0013A930(u32 arg0, u32 arg1, s16 arg2) {
     reg_d0.h[0] = (u16) (temp_a0 >> reg_d6.h[0]);
     *(u8 *)(reg_a0 + 0x1B) = (u8) reg_d0.b[0];
     *(u8 *)(reg_a0 + 0x1A) = (u8) reg_d1.b[0];
-    func_002010A0();
+    rng_next();
     reg_d0.b[0] = (u8) ((s8) reg_d0.b[0] >> 2);
     *(u8 *)(reg_a0 + 0x1A) += reg_d0.b[0];
     *(s16 *)(reg_a0 + 0x18) = arg2;

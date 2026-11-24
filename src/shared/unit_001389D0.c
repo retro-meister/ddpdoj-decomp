@@ -503,7 +503,7 @@ extern s16 D_0028E5F0_as_s16;
 extern s16 D_0028E5F4_as_s16;
 extern u16 D_0028E748;
 extern u16 D_0028E750;
-extern u16 D_0028E910;
+extern u16 g_loop;
 extern s8 D_0028EC58;
 extern s16 D_0029F1F0[];
 extern s16 D_0029F260[];
@@ -530,13 +530,13 @@ void func_001394A0(void) {
         func_00138110();
         stage_map_show();
 #ifdef DEATH_LABEL
-        if (D_0028E910 == 0) {
+        if (g_loop == 0) {
             D_0028E288_as_s8 = 0;
             D_0028E284_as_s8 = 0;
         }
 #else
         if (D_0028ED80 == 0) {
-            if (D_0028E910 == 0) {
+            if (g_loop == 0) {
                 D_0028E288_as_s8 = 0;
                 D_0028E284_as_s8 = 0;
             }
@@ -545,7 +545,7 @@ void func_001394A0(void) {
             D_0028E284_as_s8 = 0;
         }
 #endif
-        if ((D_0028ED80 == 0) && (D_0028E910 == 1) && (g_stage == 0)) {
+        if ((D_0028ED80 == 0) && (g_loop == 1) && (g_stage == 0)) {
             if (D_0029F260[0] < 0) {
                 if (D_0028E5C0 != 0) {
                     D_0028E5F4_as_s16 = 0;
@@ -558,12 +558,12 @@ void func_001394A0(void) {
         }
         if ((D_0028ED80 == 0) && (D_0028ED7C != 2)) {
             if ((D_0028E750 == 0) && (D_0029F260[0] < 0)) {
-                D_0028E25C = g_stage + (D_0028E910 * 5);
+                D_0028E25C = g_stage + (g_loop * 5);
                 if (D_0028E304 != 0) {
                     D_0028E25C = g_stage + 5;
                 }
             } else if ((D_0028E748 == 0) && (D_0029F1F0[0] < 0)) {
-                D_0028E25C = g_stage + (D_0028E910 * 5);
+                D_0028E25C = g_stage + (g_loop * 5);
                 if (D_0028E304 != 0) {
                     D_0028E25C = g_stage + 5;
                 }

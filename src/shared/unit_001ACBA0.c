@@ -103,7 +103,7 @@ extern u16 D_0028E73C;
 extern u32 D_0028E740;
 extern u32 D_0028E744;
 extern u16 D_0028E90C;
-extern u16 D_0028E910;
+extern u16 g_loop;
 extern u16 g_stage;
 
 #ifdef DEATH_LABEL
@@ -111,7 +111,7 @@ extern u8 death_D_00290DC0;
 #endif
 
 void func_001ACD30(void) {
-    *(u16 *)(reg_a4 + 0) = MAIN_OR_DEATH_LABEL(D_0028E910, death_D_00290DC0);
+    *(u16 *)(reg_a4 + 0) = MAIN_OR_DEATH_LABEL(g_loop, death_D_00290DC0);
     *(u16 *)(reg_a4 + 2) = g_stage;
     if (D_0028E90C != 0) {
         *(u16 *)(reg_a4 + 0) = 1;

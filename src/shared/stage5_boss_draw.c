@@ -74,7 +74,7 @@ void func_001F00D0(void) {
 }
 
 
-s32 func_00201E20();
+s32 velocity_from_dir256();
 extern u8 D_00264870[];
 
 void func_001F0330(void) {
@@ -85,7 +85,7 @@ void func_001F0330(void) {
     reg_d1.w = 0;
     reg_d0.h[0] = 0x1A;
     reg_d1.b[0] = *(u8 *)(reg_a6 + 0x13C);
-    func_00201E20();
+    velocity_from_dir256();
     *(u8 *)(reg_a6 + 0x13C) += 2;
     ENTITY(reg_a6)->hit_y_plus.h = 0x1400U;
     ENTITY(reg_a6)->hit_y_plus.h += reg_d2.h[0];
@@ -121,7 +121,7 @@ void func_001F04A0(void) {
     reg_d1.w = 0;
     reg_d0.b[0] = ENTITY(reg_a6)->move.b.speed;
     reg_d1.b[0] = ENTITY(reg_a6)->move.b.dir;
-    func_00201E20();
+    velocity_from_dir256();
     *(u16 *)(reg_a6 + 0x1FA) = reg_d2.h[0];
     ENTITY(reg_a6)->move.b.dir += 2;
     reg_d1.h[0] = ENTITY(reg_a6)->y.h;
@@ -144,7 +144,7 @@ void func_001F0570(void) {
     reg_d0.h[0] = 0x1A;
     reg_d1.w = 0;
     reg_d1.b[0] = reg_a6[0x13C];
-    func_00201E20();
+    velocity_from_dir256();
     reg_d1.h[0] = *(u16 *) (reg_a6 + 2);
     reg_d1.h[0] += reg_d2.h[0];
     reg_tmp.w = reg_d1.w;
@@ -368,7 +368,7 @@ void func_001F0E70(void) {
     reg_d1.w = 0;
     reg_d0.h[0] = 0x10;
     reg_d1.b[0] = *(u8 *)(reg_a6 + 0x130);
-    func_00201E20();
+    velocity_from_dir256();
     *(u8 *)(reg_a6 + 0x130) += 2;
     reg_d1.h[0] = ENTITY(reg_a6)->y.h;
     reg_d1.h[0] += reg_d2.h[0];
@@ -396,7 +396,7 @@ void func_001F0F50(void) {
     reg_d1.w = 0;
     reg_d0.h[0] = 0x1C;
     reg_d1.b[0] = *(u8 *)(reg_a6 + 0x13C);
-    func_00201E20();
+    velocity_from_dir256();
     *(u8 *)(reg_a6 + 0x13C) += 3;
     reg_d1.h[0] = ENTITY(reg_a6)->y.h;
     reg_d1.h[0] += reg_d2.h[0];
@@ -442,7 +442,7 @@ void func_001F10A0(void) {
     reg_d0.h[0] = 0x1A;
     reg_d1.w = 0;
     reg_d1.b[0] = reg_a6[0x13C];
-    func_00201E20();
+    velocity_from_dir256();
     reg_d1.h[0] = *(u16 *) (reg_a6 + 2);
     reg_d1.h[0] += reg_d2.h[0];
     reg_tmp.w = reg_d1.w;

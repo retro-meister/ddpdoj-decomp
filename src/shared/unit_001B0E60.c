@@ -2,8 +2,8 @@
 #include "entity.h"
 
 s32 func_0013AFF0();
-s32 func_001A3020();
-s32 func_00201E20();
+s32 sprite_palette_load();
+s32 velocity_from_dir256();
 extern u8 D_0028DF0C;
 extern u8 D_0028DF10;
 extern u16 D_0029BD80[];
@@ -57,7 +57,7 @@ next_1:
     reg_d0.h[0] = 0x50;
     D_0028DF10 += 6;
     reg_d1.b[0] = D_0028DF10;
-    func_00201E20();
+    velocity_from_dir256();
     reg_d6.h[0] = 0x800;
     reg_d6.h[0] -= reg_d2.h[0];
     reg_d7.w = 0x1F;
@@ -74,7 +74,7 @@ loop_2:
     if (((s64) ((s64) (t & 0xFFFF) << 0x30) >> 0x30) >= 0) goto loop_2;
     reg_a0 = (u8 *)D_0029BD80;
     reg_d0.h[0] = 0xB;
-    func_001A3020();
+    sprite_palette_load();
 block_exit:
     reg_d0.w = s_d0;
     reg_d1.w = s_d1;
@@ -97,9 +97,9 @@ s32 func_0012FAB0();
 s32 func_00137C50();
 s32 func_0018D150();
 s32 func_0018DD20();
-s32 func_001A2FA0();
+s32 text_palette_load();
 s32 func_001B04B0();
-s32 func_002071C0();
+s32 task_start();
 s32 func_0020ECE0();
 s32 replay_header_clear();
 extern u8 D_0025F770[];
@@ -183,51 +183,51 @@ void func_001B1080(void) {
     func_0012FAB0();
     reg_a0 = (u8 *)D_00269140;
     reg_d0.w = 0;
-    func_001A2FA0();
+    text_palette_load();
     reg_a0 = (u8 *)D_0025F770;
     reg_d0.w = 2;
-    func_001A3020();
+    sprite_palette_load();
     reg_a0 = (u8 *)D_00260930;
     reg_d0.w = 0x18;
-    func_001A3020();
+    sprite_palette_load();
     reg_a0 = (u8 *)D_00260970;
     reg_d0.w = 0x19;
-    func_001A3020();
+    sprite_palette_load();
     reg_a0 = (u8 *)D_002609B0;
     reg_d0.w = 0x1B;
-    func_001A3020();
+    sprite_palette_load();
     reg_a0 = (u8 *)D_002609F0;
     reg_d0.w = 0x1A;
-    func_001A3020();
+    sprite_palette_load();
     reg_a0 = (u8 *)D_00260A30;
     reg_d0.w = 0x1C;
-    func_001A3020();
+    sprite_palette_load();
     reg_a0 = (u8 *)D_00260CB0;
     reg_d0.w = 0x12;
-    func_001A3020();
+    sprite_palette_load();
     reg_a0 = (u8 *)D_00260D70;
     reg_d0.w = 0x13;
-    func_001A3020();
+    sprite_palette_load();
     reg_a0 = (u8 *)D_00260E70;
     reg_d0.w = 0x14;
-    func_001A3020();
+    sprite_palette_load();
     reg_a0 = (u8 *)D_00260DB0;
     reg_d0.w = 0x10;
-    func_001A3020();
+    sprite_palette_load();
     reg_a0 = (u8 *)D_00260CF0;
     reg_d0.w = 0x15;
-    func_001A3020();
+    sprite_palette_load();
     reg_a0 = (u8 *)D_00260E30;
     reg_d0.w = 0x16;
-    func_001A3020();
+    sprite_palette_load();
     reg_a0 = (u8 *)D_00260DF0;
     reg_d0.w = 0x17;
-    func_001A3020();
+    sprite_palette_load();
     reg_a0 = (u8 *)D_00260D30;
     reg_d0.w = 0x11;
-    func_001A3020();
+    sprite_palette_load();
     reg_d0.h[0] = 0xA;
-    func_002071C0();
+    task_start();
     *(s16 *)(reg_a0 + 4) = 0;
     func_0018D150();
     func_0018DD20();
@@ -332,13 +332,13 @@ void func_001B1080(void) {
 }
 
 extern u8 D_0028E304;
-extern u16 D_0028E910;
+extern u16 g_loop;
 
 void func_001B1920(void) {
     s32 func_002075F0();
     func_002075F0();
-    if ((D_0028E304 != 0) && (D_0028E910 == 0)) {
-        D_0028E910 = 1;
+    if ((D_0028E304 != 0) && (g_loop == 0)) {
+        g_loop = 1;
     }
 }
 
@@ -360,9 +360,9 @@ s32 func_0020EE20();
 s32 func_0012FAB0();
 s32 func_0018DD40();
 s32 func_0018DEE0();
-s32 func_001A2FA0();
+s32 text_palette_load();
 s32 death_func_001B1220();
-s32 func_002071C0();
+s32 task_start();
 s32 func_002075F0();
 s32 fade_reset();
 extern u8 D_00269140[];
@@ -403,7 +403,7 @@ void func_001B1960(void) {
                 func_0012FAB0();
                 reg_d0.w = 0;
                 reg_a0 = (u8 *)D_00269140;
-                func_001A2FA0();
+                text_palette_load();
                 D_00684C80[0] = 0xFF;
                 D_00684C80[1] = 0xFF;
                 D_00684C80[2] = 0xFF;
@@ -422,7 +422,7 @@ void func_001B1960(void) {
                 func_0018DD40();
                 func_0018DEE0();
                 reg_d0.h[0] = 0x15;
-                func_002071C0();
+                task_start();
                 return;
             }
 #else
@@ -606,54 +606,54 @@ void func_001B1D70(void) {
     func_0012FAB0();
     reg_a0 = (u8 *)D_00269140;
     reg_d0.w = 0;
-    func_001A2FA0();
+    text_palette_load();
     reg_a0 = (u8 *)D_0025F770;
     reg_d0.w = 2;
-    func_001A3020();
+    sprite_palette_load();
     reg_a0 = (u8 *)D_00260930;
     reg_d0.w = 0x18;
-    func_001A3020();
+    sprite_palette_load();
     reg_a0 = (u8 *)D_00260970;
     reg_d0.w = 0x19;
-    func_001A3020();
+    sprite_palette_load();
     reg_a0 = (u8 *)D_002609B0;
     reg_d0.w = 0x1B;
-    func_001A3020();
+    sprite_palette_load();
     reg_a0 = (u8 *)D_002609F0;
     reg_d0.w = 0x1A;
-    func_001A3020();
+    sprite_palette_load();
     reg_a0 = (u8 *)D_00260A30;
     reg_d0.w = 0x1C;
-    func_001A3020();
+    sprite_palette_load();
     reg_a0 = (u8 *)D_00260CB0;
     reg_d0.w = 0x12;
-    func_001A3020();
+    sprite_palette_load();
     reg_a0 = (u8 *)D_00260D70;
     reg_d0.w = 0x13;
-    func_001A3020();
+    sprite_palette_load();
     reg_a0 = (u8 *)D_00260E70;
     reg_d0.w = 0x14;
-    func_001A3020();
+    sprite_palette_load();
     reg_a0 = (u8 *)D_00260DB0;
     reg_d0.w = 0x10;
-    func_001A3020();
+    sprite_palette_load();
     reg_a0 = (u8 *)D_00260CF0;
     reg_d0.w = 0x15;
-    func_001A3020();
+    sprite_palette_load();
     reg_a0 = (u8 *)D_00260E30;
     reg_d0.w = 0x16;
-    func_001A3020();
+    sprite_palette_load();
     reg_a0 = (u8 *)D_00260DF0;
     reg_d0.w = 0x17;
-    func_001A3020();
+    sprite_palette_load();
     reg_a0 = (u8 *)D_00260D30;
     reg_d0.w = 0x11;
-    func_001A3020();
+    sprite_palette_load();
     if (D_0028ED7C == 1) {
         func_0023C1E0(D_006CB1D4);
     }
     reg_d0.h[0] = 0xA;
-    func_002071C0();
+    task_start();
     *(s16 *)(reg_a0 + 4) = 0;
 }
 

@@ -4,27 +4,27 @@
 void func_00201920(void);
 void func_00201A00(void);
 void func_00201B30(void);
-void func_00201CC0(void);
+void velocity_from_dir(void);
 void func_00201D10(void);
 void func_00201F70();
 void func_00201FE0(void);
 void func_00202040(void);
 void func_002021B0(void);
 void func_002021D0(void);
-void func_002021F0(void);
+void direction_between(void);
 void func_002024C0(void);
 void func_002024F0(void);
-void func_00202500(void);
+void direction_turn_toward(void);
 void func_00202760(void);
 void func_00202780(void);
-void func_002027A0(void);
+void direction256_between(void);
 void func_00202AE0(void);
 void func_00202B30(void);
 void func_00202B50(void);
 void func_00202B70(void);
 void func_00202C40(void);
 void func_00202D00(void);
-void func_002032A0(void);
+void target_player_get(void);
 void func_002032F0(void);
 void func_00203630(void);
 void func_00203660(void);
@@ -240,7 +240,7 @@ extern u16 D_0028E0E4[];
 extern u16 D_0028E0E6[];
 extern u16 D_0028E8A0;
 
-void func_00201B80(void) {
+void entity_follow_scroll(void) {
     if (D_0028E8A0 == 0) {
         reg_d0.h[1] = D_0028E0E4[0];
         reg_d0.h[0] = D_0028E0E6[0];
@@ -264,7 +264,7 @@ void func_00201BE0(void) {
 
 void func_00201C20(void) {
     if (D_0028E8A0 == 0) {
-        func_00201CC0();
+        velocity_from_dir();
         return;
     }
     reg_d2.w = 0;
@@ -272,7 +272,7 @@ void func_00201C20(void) {
 }
 
 
-void func_00201C60(void)
+void entity_velocity(void)
 {
     reg_d0.w = 0;
     reg_d0.b[0] = reg_a6[0x1B];
@@ -283,12 +283,12 @@ void func_00201C60(void)
         reg_d2.w = 0;
         reg_d3.w = 0;
     } else {
-        func_00201CC0();
+        velocity_from_dir();
     }
 }
 
 
-void func_00201CC0(void) {
+void velocity_from_dir(void) {
     func_00201D10();
     ENTITY(reg_a6)->y.h += reg_d2.h[0];
     ENTITY(reg_a6)->x.h += reg_d3.h[0];
@@ -327,7 +327,7 @@ void func_00201D10(void) {
 
 extern u8 D_00267660[];
 
-void func_00201E20(void) {
+void velocity_from_dir256(void) {
     s32 t;
 
     reg_d3.h[0] = *(s16 *)(D_00267660 + reg_d1.h[0] * 2);
@@ -373,7 +373,7 @@ void func_00201F20(void) {
 
 
 void func_00201F70() {
-    func_00201E20();
+    velocity_from_dir256();
     ENTITY(reg_a6)->y.h += reg_d2.h[0];
     ENTITY(reg_a6)->x.h += reg_d3.h[0];
 }
@@ -430,18 +430,18 @@ void func_00202040(void) {
 }
 
 
-void func_00202140(void) {
-    func_002032A0();
+void aim_at_player(void) {
+    target_player_get();
     if (cond_flag == 0) {
         reg_d2.h[0] = *(u16 *)(reg_a0 + 2);
         reg_d3.h[0] = *(u16 *)(reg_a0 + 4);
-        func_002021F0();
+        direction_between();
     }
 }
 
 
 void func_00202180(void) {
-    func_002032A0();
+    target_player_get();
     if (cond_flag == 0) {
         func_002021B0();
     }
@@ -462,7 +462,7 @@ extern u16 *reg_a6_as_u16_p;
 void func_002021D0(void) {
     reg_d0.h[0] = reg_a6_as_u16_p[1];
     reg_d1.h[0] = reg_a6_as_u16_p[2];
-    func_002021F0();
+    direction_between();
 }
 
 #pragma push
@@ -473,7 +473,7 @@ extern u8 D_00267120[];
 extern u8 D_00267140[];
 extern u8 D_00267150[];
 
-void func_002021F0(void) {
+void direction_between(void) {
     reg_d4.h[0] = 0x1800;
     reg_d0.h[0] += reg_d4.h[0];
     reg_d1.h[0] += reg_d4.h[0];
@@ -555,10 +555,10 @@ void func_002024C0(void) {
 
 void func_002024F0(void) {
     *(u8 *)&reg_d0 = reg_a6[0x1A];
-    func_00202500();
+    direction_turn_toward();
 }
 
-void func_00202500(void) {
+void direction_turn_toward(void) {
     reg_d2.w = 0x3F;
     reg_d0.h[0] &= reg_d2.h[0];
     reg_d1.h[0] &= reg_d2.h[0];
@@ -622,18 +622,18 @@ block_5:
 }
 
 
-void func_002026F0(void) {
-    func_002032A0();
+void aim256_at_player(void) {
+    target_player_get();
     if (cond_flag == 0) {
         reg_d2.h[0] = *(u16 *)(reg_a0 + 2);
         reg_d3.h[0] = *(u16 *)(reg_a0 + 4);
-        func_002027A0();
+        direction256_between();
     }
 }
 
 
 void func_00202730(void) {
-    func_002032A0();
+    target_player_get();
     if (cond_flag == 0) {
         func_00202760();
     }
@@ -652,7 +652,7 @@ void func_00202760(void) {
 void func_00202780(void) {
     reg_d0.h[0] = reg_a6_as_u16_p[1];
     reg_d1.h[0] = reg_a6_as_u16_p[2];
-    func_002027A0();
+    direction256_between();
 }
 
 #pragma push
@@ -660,7 +660,7 @@ void func_00202780(void) {
 extern u8 D_002670C0[];
 extern u8 D_002670D0[];
 
-void func_002027A0(void) {
+void direction256_between(void) {
     reg_d4.h[0] = 0x1800;
     reg_d0.h[0] += reg_d4.h[0];
     reg_d1.h[0] += reg_d4.h[0];
@@ -855,7 +855,7 @@ extern u8 D_00267030[];
 extern u8 D_00267050[];
 extern u8 D_00267070[];
 extern u8 D_00267090[];
-extern u16 D_0028E910;
+extern u16 g_loop;
 extern u16 D_0028E914;
 
 
@@ -869,7 +869,7 @@ void func_00202D50(void) {
     save_a0 = reg_a0;
     reg_d0.h[0] = D_0028E914;
     reg_a0 = (u8 *)D_00267030;
-    if (D_0028E910 == 0) goto next_1;
+    if (g_loop == 0) goto next_1;
     reg_a0 = (u8 *)D_00267070;
 next_1:
     reg_d0.h[1] = (reg_d0.h[0] != 0) ? *(u16 *)(reg_a0 + ((s16) reg_d0.h[0] & ~1)) : *(u16 *)reg_a0;
@@ -885,7 +885,7 @@ next_1:
     if (reg_tmp1.h[1] != 0) goto next_3;
     reg_d0.h[0] = D_0028E914;
     reg_a0 = (u8 *)D_00267050;
-    if (D_0028E910 == 0) goto next_2;
+    if (g_loop == 0) goto next_2;
     reg_a0 = (u8 *)D_00267090;
 next_2:
     reg_d0.h[1] = (reg_d0.h[0] != 0) ? *(u16 *)(reg_a0 + ((s16) reg_d0.h[0] & ~1)) : *(u16 *)reg_a0;
@@ -1016,7 +1016,7 @@ extern u32 reg_a0_as_u32;
 extern u32 reg_a1_as_u32;
 extern u32 reg_a5_as_u32;
 
-void func_002032A0(void)
+void target_player_get(void)
 {
     reg_a0_as_u32 = (u32)D_0029F260_as_u8_a;
     cond_flag = 0;
@@ -1150,11 +1150,11 @@ void func_002035F0(void) {
     func_00203630();
 }
 
-s32 func_002071C0();                            /* extern */
+s32 task_start();                            /* extern */
 
 void func_00203630(void) {
     reg_d0.h[0] = 6;
-    func_002071C0();
+    task_start();
     *(u16 *)(reg_a0 + 4) = (u16) reg_d7.h[0];
 }
 
@@ -1172,7 +1172,7 @@ void func_00203670(void) {
     reg_d0.h[0] &= 0xF;
     ENTITY(reg_a6)->move.sb.dir = D_002670B0[reg_d0.h[0]];
     if (ENTITY(reg_a6)->move.sb.dir >= 0) {
-        func_00201C60();
+        entity_velocity();
         return;
     }
     ENTITY(reg_a6)->move.sb.dir = 0x40;

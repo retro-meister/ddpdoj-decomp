@@ -6273,7 +6273,7 @@ void func_0018E5A0(void) {
 
 s32 func_0012FAB0();
 s32 func_0018D450();
-s32 func_001A3020();
+s32 sprite_palette_load();
 s32 func_001ACBA0();
 s32 func_001ACC60();
 s32 stage_map_reset();
@@ -6298,16 +6298,16 @@ void func_00197F60() {
     memset(D_002BAE00, 0, 0x84);
     reg_a0 = (u8 *)D_00261F30_as_u8_a;
     reg_d0.h[0] = 2;
-    func_001A3020();
+    sprite_palette_load();
     reg_a0 = (u8 *)D_00261F70;
     reg_d0.h[0] = 3;
-    func_001A3020();
+    sprite_palette_load();
     reg_a0 = (u8 *)D_00261FB0;
     reg_d0.h[0] = 4;
-    func_001A3020();
+    sprite_palette_load();
     reg_a0 = (u8 *)D_00261EF0;
     reg_d0.h[0] = 5;
-    func_001A3020();
+    sprite_palette_load();
     if (0 > D_0029F260[0]) {
         func_001ACBA0();
         if (cond_flag == 0) {
@@ -6331,8 +6331,8 @@ s32 func_00135ED0();                            /* extern */
 s32 func_00137C20();                            /* extern */
 s32 func_0013FD80();                            /* extern */
 s32 func_0018DE90();                            /* extern */
-s32 func_001A2FA0();                            /* extern */
-s32 func_002071C0();                            /* extern */
+s32 text_palette_load();                            /* extern */
+s32 task_start();                            /* extern */
 s32 func_002075F0();                            /* extern */
 extern s32 D_00269160_as_s32_a[];
 extern u8 D_0028E258;
@@ -6350,7 +6350,7 @@ void func_001980A0() {
     func_0012FAB0();
     reg_d0.w = 0;
     reg_a0_as_s32_p = D_00269160_as_s32_a;
-    func_001A2FA0();
+    text_palette_load();
     if ((s32) D_0028E258 < (s32) D_0028E25C) {
         D_0028E258 = D_0028E25C;
     }
@@ -6362,7 +6362,7 @@ void func_001980A0() {
         D_0028EAFC = 0xFF;
     }
     reg_d0.h[0] = 8;
-    func_002071C0();
+    task_start();
     (*(s16 *)((u8 *)(reg_a0_as_s32_p) + (4))) = 0x12;
 }
 

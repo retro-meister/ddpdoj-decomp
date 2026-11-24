@@ -9,7 +9,7 @@ void death_func_00223B70(void);
 void death_func_00223C90(void);
 void death_func_00223D40(void);
 
-s32 func_00124D90();
+s32 boss_movement_start();
 extern u8 death_D_0029085C;
 
 void death_func_002237B0(void) {
@@ -38,9 +38,9 @@ void death_func_002237F0(u8 phase) {
     death_D_00290854 = death_D_0028E450[death_D_00290DC0][type][phase].second;
 }
 
-s32 func_00124B20();
-s32 func_001251C0();
-s32 func_00125250();
+s32 boss_phase_start();
+s32 boss_attack_start();
+s32 boss_attack_running();
 extern u16 D_0028E89C;
 
 void death_func_00223870(void) {
@@ -56,21 +56,21 @@ void death_func_00223870(void) {
             return;
         }
         reg_d0.w = 0x18;
-        func_001251C0();
+        boss_attack_start();
         reg_d0.w = 0x19;
-        func_001251C0();
+        boss_attack_start();
     }
     reg_d0.w = 0x18;
-    func_00125250();
+    boss_attack_running();
     first_busy = cond_flag;
     reg_d0.w = 0x19;
-    func_00125250();
+    boss_attack_running();
     second_busy = cond_flag;
     if ((first_busy == 0) && (second_busy == 0)) {
         reg_d0.w = 0x17;
-        func_00124B20();
+        boss_phase_start();
         reg_d0.w = 0xe;
-        func_00124D90();
+        boss_movement_start();
         ENTITY(reg_a6)->move.b.speed = 0xC;
         *(u8 *)(reg_a6 + 0x21B) = 0xC;
         *(u16 *)reg_a4 = 0;
@@ -97,21 +97,21 @@ void death_func_00223980(void) {
             return;
         }
         reg_d0.w = 0x10;
-        func_001251C0();
+        boss_attack_start();
         reg_d0.w = 0x11;
-        func_001251C0();
+        boss_attack_start();
     }
     reg_d0.w = 0x10;
-    func_00125250();
+    boss_attack_running();
     first_busy = cond_flag;
     reg_d0.w = 0x11;
-    func_00125250();
+    boss_attack_running();
     second_busy = cond_flag;
     if ((first_busy == 0) && (second_busy == 0)) {
         reg_d0.w = 0x15;
-        func_00124B20();
+        boss_phase_start();
         reg_d0.w = 0x10;
-        func_00124D90();
+        boss_movement_start();
         *(u16 *)reg_a4 = 0;
     }
 }
@@ -136,23 +136,23 @@ void death_func_00223A70(void) {
             return;
         }
         reg_d0.w = 0x12;
-        func_001251C0();
+        boss_attack_start();
         reg_d0.w = 0x13;
-        func_001251C0();
+        boss_attack_start();
         ENTITY(reg_a6)->move.b.speed = 4;
         *(u8 *)(reg_a6 + 0x21B) = 4;
     }
     reg_d0.w = 0x12;
-    func_00125250();
+    boss_attack_running();
     first_busy = cond_flag;
     reg_d0.w = 0x12;
-    func_00125250();
+    boss_attack_running();
     second_busy = cond_flag;
     if ((first_busy == 0) && (second_busy == 0)) {
         reg_d0.w = 0x16;
-        func_00124B20();
+        boss_phase_start();
         reg_d0.w = 0xd;
-        func_00124D90();
+        boss_movement_start();
         *(u16 *)reg_a4 = 0;
     }
 }
@@ -177,23 +177,23 @@ void death_func_00223B70(void) {
             return;
         }
         reg_d0.w = 0x14;
-        func_001251C0();
+        boss_attack_start();
         reg_d0.w = 0x15;
-        func_001251C0();
+        boss_attack_start();
     }
     reg_d0.w = 0x14;
-    func_00125250();
+    boss_attack_running();
     first_busy = cond_flag;
     reg_d0.w = 0x15;
-    func_00125250();
+    boss_attack_running();
     second_busy = cond_flag;
     if ((first_busy == 0) && (second_busy == 0)) {
         *(u16 *)(reg_a4 + 4) -= 1;
         if (*(u16 *)(reg_a4 + 4) == 0) {
             reg_d0.w = 0x15;
-            func_00124B20();
+            boss_phase_start();
             reg_d0.w = 0x10;
-            func_00124D90();
+            boss_movement_start();
             *(u16 *)reg_a4 = 0;
         }
     }
@@ -204,7 +204,7 @@ void death_func_00223C50(void) {
     *(u16 *)(reg_a4 + 2) = 0x60;
     death_func_002237F0(4);
     reg_d0.w = 0x10;
-    func_00124D90();
+    boss_movement_start();
     death_func_00223C90();
 }
 
@@ -215,9 +215,9 @@ void death_func_00223C90(void) {
         *(u16 *)(reg_a4 + 2) -= 1;
         if (*(u16 *)(reg_a4 + 2) == 0) {
             reg_d0.w = 0x16;
-            func_001251C0();
+            boss_attack_start();
             reg_d0.w = 0x17;
-            func_001251C0();
+            boss_attack_start();
             func_001F5630();
         }
     }
@@ -228,7 +228,7 @@ void death_func_00223D00(void) {
     death_func_002237F0(3);
     *(u16 *)(reg_a4 + 2) = 0x60;
     reg_d0.w = 0xC;
-    func_00124D90();
+    boss_movement_start();
     death_func_00223D40();
 }
 
@@ -237,9 +237,9 @@ void death_func_00223D40(void) {
         *(u16 *)(reg_a4 + 2) -= 1;
         if (*(u16 *)(reg_a4 + 2) == 0) {
             reg_d0.w = 0x1c;
-            func_001251C0();
+            boss_attack_start();
             reg_d0.w = 0x1d;
-            func_001251C0();
+            boss_attack_start();
             func_001F5630();
         }
     }
