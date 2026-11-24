@@ -60,7 +60,7 @@ void text_queue_sjis_vertical(s16 x, s16 y, const char *text, u16 texturePage, u
 s32 text_flush();
 void gfx_draw_color_box(s32 x, s32 y, s32 w, s32 h, s32 depth, s32 alpha, s32 r, s32 g, s32 b);
 void quad_flush(void);
-s32 func_0021C920();
+s32 arcade_sprite_draw();
 void death_func_00138C50(TextScript *script);
 extern s8 death_D_002549A0[];
 extern u32 death_D_00254B40[];
@@ -185,7 +185,7 @@ void death_func_00138ED0(TextScript *script) {
             reg_d0.h[0] = 1;
             func_001A3020();
             func_0019AB20();
-            func_0021C920();
+            arcade_sprite_draw();
             head = (ListHead *) D_002B3950_as_u16_a;
             head->e = 0;
             head->d = 0;

@@ -1,5 +1,7 @@
 #include "common.h"
 #include "sdk/ps2sdk.h"
+#include "cd.h"
+#include "replay.h"
 
 void func_0018E060(void);
 void func_0018E0B0(void);
@@ -124,82 +126,56 @@ void func_0018E0B0(void) {
     } while (i < 2);
 }
 
-extern s32 D_0025BC50[];
-extern s32 D_0029CBF0_as_s32_a_a2[][2];
-extern s32 g_cd_file_as_s32_a[];
-extern s32 D_002C0104[];
+extern const char *D_0025BC50[];
+extern const char *D_0025BCC0[];
+extern const char *D_0025BCF0[];
+extern const char *D_0025BD30[];
+extern ReplayHeader D_0068DF10[];
 
 void func_0018E300(void) {
-    void cd_search_file(s32);
     s32 i;
 
     for (i = 0; i < 0x1A; i++) {
         cd_search_file(D_0025BC50[i]);
-        D_0029CBF0_as_s32_a_a2[i][0] = D_002C0104[0];
-        D_0029CBF0_as_s32_a_a2[i][1] = g_cd_file_as_s32_a[0];
+        g_bgm_files[i].size = g_cd_file.size;
+        g_bgm_files[i].lba = g_cd_file.lsn;
     }
 }
 
-extern s32 D_0025BCC0[];
-extern s32 D_0029CB50[][2];
-
 void func_0018E390(void) {
-    void cd_search_file(s32);
     s32 i;
 
     for (i = 0; i < 0xA; i++) {
         cd_search_file(D_0025BCC0[i]);
-        D_0029CB50[i][0] = D_002C0104[0];
-        D_0029CB50[i][1] = g_cd_file_as_s32_a[0];
+        g_stage_bg_files[i].size = g_cd_file.size;
+        g_stage_bg_files[i].lba = g_cd_file.lsn;
     }
 }
 
-extern s32 D_0025BCF0[];
-extern s32 D_0029CAB0_as_s32_a_a2[][2];
-
 void func_0018E420(void) {
-    void cd_search_file(s32);
     s32 i;
 
     for (i = 0; i < MAIN_OR_DEATH_LABEL(0xE, 0x10); i++) {
         cd_search_file(D_0025BCF0[i]);
-        D_0029CAB0_as_s32_a_a2[i][0] = D_002C0104[0];
-        D_0029CAB0_as_s32_a_a2[i][1] = g_cd_file_as_s32_a[0];
+        g_data_files[i].size = g_cd_file.size;
+        g_data_files[i].lba = g_cd_file.lsn;
     }
 }
 
-void cd_read_sync(void *, s32, s32);
-
-typedef struct {
-    s32 f0;
-    s32 f4;
-} Entry18E4B0;
-
-typedef struct {
-    s32 size;
-    s32 lsn;
-} CdInfo18E4B0;
-
-extern char *D_0025BD30[];
-extern Entry18E4B0 D_0029CA60_as_Entry18E4B0_a[];
-extern CdInfo18E4B0 g_cd_file_as_CdInfo18E4B0_a[];
-extern u8 D_0068DF10[];
-
 void func_0018E4B0(void) {
-    void cd_search_file(char *);
     s32 i;
     void *buf;
-    s16 *dst;
+    ReplayHeader *dst;
 
     buf = memalign(0x40, 0x800);
     for (i = 0; i < 10; i++) {
         cd_search_file(D_0025BD30[i]);
-        D_0029CA60_as_Entry18E4B0_a[i].f0 = g_cd_file_as_CdInfo18E4B0_a[0].lsn;
-        D_0029CA60_as_Entry18E4B0_a[i].f4 = g_cd_file_as_CdInfo18E4B0_a[0].size;
-        cd_read_sync(buf, 0x800, g_cd_file_as_CdInfo18E4B0_a[0].size);
-        dst = (s16 *)(D_0068DF10 + i * 0x42);
+        g_replay_files[i].size = g_cd_file.size;
+        g_replay_files[i].lba = g_cd_file.lsn;
+        cd_read_sync(buf, 0x800, g_cd_file.lsn);
+        dst = &D_0068DF10[i];
         memcpy(dst, buf, 0x42);
-        *dst = 1;
+        dst->unk00 = 1;
     }
     free(buf);
 }

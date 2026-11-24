@@ -2,6 +2,7 @@
 #include "sdk/ps2sdk.h"
 #include "gfx_types.h"
 #include "glyph_cache.h"
+#include "cd.h"
 
 typedef struct {
     u8 red;
@@ -52,8 +53,6 @@ typedef struct {
     s32 value[4];
 } QuadOffsets;
 
-extern s32 D_0029CAB0[];
-extern u32 D_0029CAB4[];
 extern sceGsLoadImage g_gs_load_image;
 extern void *g_font_file_buf;
 extern s8 *g_font_glyph_data;
@@ -121,10 +120,8 @@ void text_build_rect_packet(Qword *packet, s32 firstEntry, s32 entryCount);
 void text_queue_tile(s16 x, s16 y, u16 textureId, u16 attributes, u16 scale);
 void text_build_quad_packet(Qword *pkt, s32 startIndex, s32 count);
 void overlay_build_quad_packet(Qword *pkt, s32 startIndex, s32 count);
-void cd_read_async(void *destination, s32 byteCount, u32 startSector);
-
 void font_load_async(void) {
-    cd_read_async(g_font_file_buf, D_0029CAB0[0], D_0029CAB4[0]);
+    cd_read_async(g_font_file_buf, g_data_files[DATA_FILE_FONT].size, g_data_files[DATA_FILE_FONT].lba);
 }
 
 s32 clut_upload_defaults();

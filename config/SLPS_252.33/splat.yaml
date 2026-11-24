@@ -170,7 +170,7 @@ segments:
       - [0x1162d0, c, shared/system]
       - [0x117fb0, c, shared/glyph_cache]
       - [0x118520, c, shared/gfx]
-      - [0x11c5b0, c, shared/background]
+      - [0x11c5b0, c, shared/arcade_sprite]
       - [0x11d490, c, shared/func_0021D410]
       - [0x11d580, c, shared/menu]
       - [0x1262e0, c, shared/memcard_flow]

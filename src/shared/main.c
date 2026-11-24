@@ -49,9 +49,9 @@ s32 stage_load_step();
 s32 func_00219930();
 s32 func_00219990();
 s32 func_0021B840();
-s32 func_0021C530();
-s32 func_0021C770();
-s32 func_0021C790();
+s32 arcade_sprite_init();
+s32 sprite_header_load_async();
+s32 sprite_pixels_load_async();
 s32 func_0021D8C0();
 s32 func_002232F0();
 s32 func_00225630();
@@ -120,7 +120,7 @@ void func_002120D0(void) {
     func_0020F550();
     func_002108C0();
     func_0018DE70();
-    func_0021C530();
+    arcade_sprite_init();
     func_00208B60();
     func_00209410();
     func_00206C20();
@@ -181,7 +181,7 @@ void func_002120D0(void) {
             }
             break;
         case 1:
-            func_0021C770();
+            sprite_header_load_async();
             if (g_cd_async_busy == 0) {
                 g_cd_async_state = 0;
                 t3 += 1;
@@ -189,7 +189,7 @@ void func_002120D0(void) {
             }
             break;
         case 2:
-            func_0021C790();
+            sprite_pixels_load_async();
             if (g_cd_async_busy == 0) {
                 g_cd_async_state = 0;
                 t3 += 1;

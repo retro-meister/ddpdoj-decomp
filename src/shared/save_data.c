@@ -1,5 +1,6 @@
 #include "common.h"
 #include "sdk/ps2sdk.h"
+#include "cd.h"
 
 void func_00227C90(void);
 void func_00227CD0(void);
@@ -2850,7 +2851,6 @@ s32 func_0022BC60(void) {
 }
 
 s32 func_0018DEE0();
-void cd_read_async(void *destination, s32 byteCount, s32 startSector);
 extern char D_00289F10[];
 extern char D_00289F30[];
 extern s8 g_cd_async_state;
@@ -2858,8 +2858,6 @@ extern s8 g_cd_async_busy;
 extern u8 *D_0028EAAC;
 extern u8 D_0028EAB0;
 extern u8 D_0028EAB4;
-extern s32 D_0029CA60[];
-extern s32 D_0029CA64[];
 extern u8 D_0050D780[];
 s32 func_0022BE60(u8 arg0) {
     u32 state;
@@ -2881,7 +2879,7 @@ s32 func_0022BE60(u8 arg0) {
         }
         break;
     case 2:
-        cd_read_async(D_0028EAAC, D_0029CA60[D_0028EAB0 * 2], D_0029CA64[D_0028EAB0 * 2]);
+        cd_read_async(D_0028EAAC, g_replay_files[D_0028EAB0].size, g_replay_files[D_0028EAB0].lba);
         if (g_cd_async_busy == 0) {
 #ifndef DEATH_LABEL
             g_cd_async_busy = 1;

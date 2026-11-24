@@ -110,7 +110,7 @@ segments:
       - [0xd6550, c, shared/unit_001ACBA0]
       - [0xd8d00, c, shared/unit_001AF2C0]
       - [0xda8d0, c, shared/unit_001B0E60]
-      - [0xdbed0, c, shared/background]
+      - [0xdbed0, c, shared/arcade_sprite]
       - [0xdcde0, c, shared/stage1_boss_anim]
       - [0xdf5f0, c, shared/stage1_boss_attack]
       - [0xe2300, c, shared/stage1_boss_draw]

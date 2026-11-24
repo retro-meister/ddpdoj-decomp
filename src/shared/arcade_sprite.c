@@ -1,43 +1,28 @@
 #include "common.h"
 #include "sdk/ps2sdk.h"
 #include "gfx_types.h"
+#include "cd.h"
+#include "arcade_sprite.h"
 
 extern sceGsLoadImage g_gs_load_image;
 extern s32 g_clut_upload_cbp;
-extern u8 *D_0028EA98;
-extern u8 *D_0028EA9C;
-extern u8 *D_0028EAA0;
-extern u8 *D_0028EAA4;
-extern s32 D_0029CAB8[];
-extern s32 D_0029CABC[];
-extern s32 D_0029CAC0[];
-extern s32 D_0029CAC4[];
-extern s32 D_0029CB08[];
-extern s32 D_0029CB0C[];
-extern s32 D_0029CB10[];
-extern s32 D_0029CB14[];
-extern s32 D_0029CB18[];
-extern s32 D_0029CB1C[];
 extern u8 D_004CCF80[];
 #ifdef DEATH_LABEL
-extern s32 death_D_002CC808[];
-extern s32 death_D_002CC80C[];
 extern u8 death_D_0056A800[];
 #endif
 extern u8 D_004ECF80[];
-void cd_read_sync(u8 *dst, s32 a, s32 b);
 void clut_upload(u8 *destination, s32 mode, s32 blockCount);
 
-void func_0021C530(void) {
+void arcade_sprite_init(void) {
     u8 *buffer;
 
     buffer = memalign(0x40, 0x80000);
-    cd_read_sync(buffer, D_0029CAB8[0], D_0029CABC[0]);
+    cd_read_sync(buffer, g_data_files[DATA_FILE_BULLET].size, g_data_files[DATA_FILE_BULLET].lba);
     sceGsSetDefLoadImage(&g_gs_load_image, 0x2640, 8, SCE_GS_PSMT8, 0, 0, 512, 512);
     FlushCache(0);
     sceGsExecLoadImage(&g_gs_load_image, buffer);
     sceGsSyncPath(0, 0);
-    cd_read_sync(buffer, D_0029CAC0[0], D_0029CAC4[0]);
+    cd_read_sync(buffer, g_data_files[DATA_FILE_EXPLOSION].size, g_data_files[DATA_FILE_EXPLOSION].lba);
     sceGsSetDefLoadImage(&g_gs_load_image, 0x2A40, 0x10, SCE_GS_PSMT8, 0, 0, 1024, 256);
     FlushCache(0);
     sceGsExecLoadImage(&g_gs_load_image, buffer);
@@ -47,91 +32,84 @@ void func_0021C530(void) {
     sceGsExecLoadImage(&g_gs_load_image, buffer + 0x40000);
     sceGsSyncPath(0, 0);
     free(buffer);
-    D_0028EAA4 = memalign(0x40, 0x10000);
-    D_0028EAA0 = memalign(0x40, 0xC20000);
-    D_0028EA9C = memalign(0x40, 0x885800);
-    D_0028EA98 = memalign(0x40, 0x10800);
-    cd_read_sync(D_0028EA98, D_0029CB08[0], D_0029CB0C[0]);
+    g_sprite_images = (SpriteImage *)memalign(0x40, 0x10000);
+    g_sprite_pixels = memalign(0x40, 0xC20000);
+    g_stage_sprite_buf = memalign(0x40, 0x885800);
+    g_frame_file_buf = memalign(0x40, 0x10800);
+    cd_read_sync(g_frame_file_buf, g_data_files[DATA_FILE_FRAME].size, g_data_files[DATA_FILE_FRAME].lba);
     g_clut_upload_cbp = 0x3834;
-    clut_upload(D_0028EA98, 1, 1);
-    cd_read_sync(D_004ECF80, D_0029CB10[0], D_0029CB14[0]);
+    clut_upload(g_frame_file_buf, 1, 1);
+    cd_read_sync(D_004ECF80, g_data_files[MAIN_OR_DEATH_LABEL(DATA_FILE_ARIKA, DATA_FILE_DON)].size,
+                 g_data_files[MAIN_OR_DEATH_LABEL(DATA_FILE_ARIKA, DATA_FILE_DON)].lba);
     g_clut_upload_cbp = 0x3836;
     clut_upload(D_004ECF80, 1, 1);
-    cd_read_sync(D_004CCF80, D_0029CB18[0], D_0029CB1C[0]);
+    cd_read_sync(D_004CCF80, g_data_files[DATA_FILE_MAP].size, g_data_files[DATA_FILE_MAP].lba);
     g_clut_upload_cbp = 0x3838;
     clut_upload(D_004CCF80, 1, 1);
 #ifdef DEATH_LABEL
-    cd_read_sync(death_D_0056A800, death_D_002CC808[0], death_D_002CC80C[0]);
+    cd_read_sync(death_D_0056A800, g_data_files[DATA_FILE_NOISE].size, g_data_files[DATA_FILE_NOISE].lba);
     g_clut_upload_cbp = 0x383C;
     clut_upload(death_D_0056A800, 1, 1);
 #endif
 }
 
-extern s32 D_0028EAA4_as_s32;
-extern s32 D_0029CAD0[];
-extern s32 D_0029CAD4[];
 
-void func_0021C770(void) {
-    extern s32 cd_read_async(s32, s32, s32);
-    cd_read_async(D_0028EAA4_as_s32, D_0029CAD0[0], D_0029CAD4[0]);
+void sprite_header_load_async(void) {
+    cd_read_async(g_sprite_images, g_data_files[DATA_FILE_SPRITE_HEADER].size, g_data_files[DATA_FILE_SPRITE_HEADER].lba);
 }
 
-extern s32 D_0028EAA0_as_s32;
-extern s32 D_0029CAC8[];
-extern s32 D_0029CACC[];
 
 
-void func_0021C790(void) {
-    void cd_read_async(s32, s32, s32);
-    cd_read_async(D_0028EAA0_as_s32, D_0029CAC8[0], D_0029CACC[0]);
+void sprite_pixels_load_async(void) {
+    cd_read_async(g_sprite_pixels, g_data_files[DATA_FILE_SPRITE_DATA].size, g_data_files[DATA_FILE_SPRITE_DATA].lba);
 }
 
-extern u8 *D_0028EA84;
-extern u8 *D_0028EA88;
-extern u8 *D_0028EA8C;
-extern s32 D_0028EA90;
-extern s32 D_0028EA94;
-void func_0021C7B0(s32 value) {
-    u8 *base = D_0028EA9C;
-    D_0028EA94 = value;
-    D_0028EA90 = 0;
-    D_0028EA88 = base;
-    D_0028EA8C = base + 0x5DC800;
-    D_0028EA84 = D_0028EA8C;
+extern u8 *g_unpack_src;
+extern u8 *g_unpack_dst;
+extern u8 *g_unpack_src_start;
+extern s32 g_unpack_step;
+extern s32 g_unpack_chunk_size;
+void stage_sprite_unpack_begin(s32 value) {
+    u8 *base = g_stage_sprite_buf;
+    g_unpack_chunk_size = value;
+    g_unpack_step = 0;
+    g_unpack_dst = base;
+    g_unpack_src_start = base + 0x5DC800;
+    g_unpack_src = g_unpack_src_start;
 }
 
-extern s32 D_0026FBA0[];
+extern s32 g_stage_sprite_packed_size[];
 extern u16 D_0028E91C;
 
-s32 func_0021C7E0(void) {
+s32 stage_sprite_unpack_step(void) {
     u8 *src;
     s32 count;
     u8 code;
 
-    D_0028EA90++;
-    while (D_0028EA84 - D_0028EA8C < D_0026FBA0[D_0028E91C]) {
-        code = *D_0028EA84;
-        D_0028EA84++;
+    g_unpack_step++;
+    while (g_unpack_src - g_unpack_src_start < g_stage_sprite_packed_size[D_0028E91C]) {
+        code = *g_unpack_src;
+        g_unpack_src++;
         if (code & 0x80) {
-            count = *D_0028EA84;
-            D_0028EA84++;
-            src = D_0028EA88 - (code & 0x7F);
+            count = *g_unpack_src;
+            g_unpack_src++;
+            src = g_unpack_dst - (code & 0x7F);
             for (; count >= 0; count--) {
-                *D_0028EA88 = *src;
-                D_0028EA88++;
+                *g_unpack_dst = *src;
+                g_unpack_dst++;
                 src++;
             }
         } else if (code & 0x40) {
-            src = D_0028EA88 - (code & 0x3F);
-            *D_0028EA88 = src[0];
-            D_0028EA88++;
-            *D_0028EA88 = src[1];
-            D_0028EA88++;
+            src = g_unpack_dst - (code & 0x3F);
+            *g_unpack_dst = src[0];
+            g_unpack_dst++;
+            *g_unpack_dst = src[1];
+            g_unpack_dst++;
         } else {
-            *D_0028EA88 = code;
-            D_0028EA88++;
+            *g_unpack_dst = code;
+            g_unpack_dst++;
         }
-        if (D_0028EA88 - D_0028EA9C > D_0028EA90 * D_0028EA94) {
+        if (g_unpack_dst - g_stage_sprite_buf > g_unpack_step * g_unpack_chunk_size) {
             return 0;
         }
     }
@@ -153,14 +131,7 @@ typedef struct {
     s16 pad32;
 } TileEntry;
 
-typedef struct {
-    s32 offset;
-    s16 w;
-    s16 h;
-} TileImage;
-
 extern void quad_build_packet(void *pkt, s32 first, s32 count);
-extern s32 D_0026F960[];
 extern u16 D_0026FBC0[][2];
 extern u16 D_0026FC00[][2];
 extern u16 D_0026FC40[][2];
@@ -173,13 +144,11 @@ extern u16 D_00270720[][2];
 extern s16 D_0028E48A_as_s16;
 extern void *g_dma_gif;
 extern s32 g_quad_count;
-extern TileImage *D_0028EAA4_as_TileImage_p;
 extern u16 D_002B3950_as_u16_a_a5[][5];
 extern u8 g_gif_buf[];
-extern u32 D_005C4C80[];
 extern TileEntry g_quad_queue[];
 
-void func_0021C920(void) {
+void arcade_sprite_draw(void) {
     s32 tu;
     u16 flags;
     s32 flip;
@@ -240,8 +209,8 @@ void func_0021C920(void) {
             id = 0;
         }
         index = id;
-        w = D_0028EAA4_as_TileImage_p[index].w;
-        h = D_0028EAA4_as_TileImage_p[index].h;
+        w = g_sprite_images[index].w;
+        h = g_sprite_images[index].h;
         if (id >= 0xBBF && id < 0xBCF) {
             tu = D_0026FBC0[id - 0xBBF][0];
             tv = D_0026FBC0[id - 0xBBF][1];
@@ -287,12 +256,12 @@ void func_0021C920(void) {
             if (id >= 0x195E) {
                 sceGsSetDefLoadImage(&g_gs_load_image, 0x2240, 8, 0x13, 0x10, 0x10, w, h);
                 FlushCache(0);
-                sceGsExecLoadImage(&g_gs_load_image, D_0028EA9C + D_0028EAA4_as_TileImage_p[index].offset);
+                sceGsExecLoadImage(&g_gs_load_image, g_stage_sprite_buf + g_sprite_images[index].offset);
             } else {
-                src = (u32 *)(D_0028EAA0 + D_0028EAA4_as_TileImage_p[index].offset);
+                src = (u32 *)(g_sprite_pixels + g_sprite_images[index].offset);
                 out = 0;
                 in = 0;
-                dst = D_005C4C80;
+                dst = g_image_unpack_buf;
                 if (!(src[0] & 0x80000000)) {
                     sceGsSetDefLoadImage(&g_gs_load_image, 0x2240, 8, 0x13, 0x10, 0x10, w, h);
                     FlushCache(0);
@@ -321,8 +290,8 @@ void func_0021C920(void) {
         y = p[1] & 0x3FF;
         dy = p[4] & 0x1FF;
         dx = ((p[4] >> 9) & 0x3F) << 4;
-        w2 = D_0028EAA4_as_TileImage_p[index].w;
-        h = D_0028EAA4_as_TileImage_p[index].h;
+        w2 = g_sprite_images[index].w;
+        h = g_sprite_images[index].h;
         if (x & 0x400) {
             x |= 0xF800;
         }
@@ -338,7 +307,7 @@ void func_0021C920(void) {
             continue;
         }
         if (sx != 16) {
-            scale = D_0026F960[sx];
+            scale = g_sprite_zoom_table[sx];
             if (scale >= 10000) {
                 dx = (dx * scale + 5000) / 10000;
             } else {
@@ -346,7 +315,7 @@ void func_0021C920(void) {
             }
         }
         if (sy != 16) {
-            scale = D_0026F960[sy];
+            scale = g_sprite_zoom_table[sy];
             if (scale >= 10000) {
                 dy = (dy * scale + 5000) / 10000;
             } else {
@@ -414,7 +383,7 @@ extern void sceGifPkCloseGifTag(sceGifPacket *packet);
 extern void sceGifPkAddGsAD(sceGifPacket *packet, s32 addr, u64 data);
 extern GifTag D_00270800[];
 
-void func_0021D140(u16 alpha) {
+void frame_image_draw(u16 alpha) {
     GifTag tag;
     sceGifPacket packet;
     u8 *buf;
@@ -425,7 +394,7 @@ void func_0021D140(u16 alpha) {
     buf = g_gif_buf;
     sceGsSetDefLoadImage(&g_gs_load_image, 0x2240, 8, 0x13, 0, 0, 320, 208);
     FlushCache(0);
-    sceGsExecLoadImage(&g_gs_load_image, D_0028EA98 + 0x200);
+    sceGsExecLoadImage(&g_gs_load_image, g_frame_file_buf + 0x200);
     sceGsSyncPath(0, 0);
     sceGifPkInit(&packet, buf);
     sceGifPkReset(&packet);

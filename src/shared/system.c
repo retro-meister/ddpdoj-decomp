@@ -167,7 +167,7 @@ s32 func_0021ABB0();
 s32 func_0021AE20();
 s32 func_0021B080();
 s32 func_0021BAE0();
-s32 func_0021C920();
+s32 arcade_sprite_draw();
 s32 func_0021FA50();
 s32 func_00221CF0();
 s32 func_002244E0();
@@ -195,7 +195,7 @@ void sys_end_frame(void) {
 #ifndef DEATH_LABEL
     func_002194C0();
 #endif
-    func_0021C920();
+    arcade_sprite_draw();
     func_002199F0();
     sys_draw_replay_label();
     func_0021FA50();
