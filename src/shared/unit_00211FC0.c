@@ -19,8 +19,8 @@ void func_00211FD0(void) {
     reg_d0.w = 1;
     func_0014E300();
     reg_tmp.w = 0x38001C00;
-    (*(u16 *)((u8 *)(reg_a6) + (2))) = (u16) reg_tmp.h[1];
-    (*(u16 *)((u8 *)(reg_a6) + (4))) = (u16) reg_tmp.h[0];
+    *(u16 *)(reg_a6 + 2) = (u16) reg_tmp.h[1];
+    *(u16 *)(reg_a6 + 4) = (u16) reg_tmp.h[0];
 }
 
 s32 func_00137C10();                            /* extern */
@@ -34,9 +34,9 @@ void func_00212030(void) {
     u16 temp_v0;
 
     func_00203670();
-    temp_v0 = (*(u16 *)((u8 *)(reg_a5) + (0x18)));
+    temp_v0 = *(u16 *)(reg_a5 + 0x18);
     if (temp_v0 != 0) {
-        (*(u16 *)((u8 *)(reg_a5) + (0x18))) = (u16) (temp_v0 - 1);
+        *(u16 *)(reg_a5 + 0x18) = (u16) (temp_v0 - 1);
     } else {
         func_0016A8E0();
         if (reg_d0.w & 0x40) {

@@ -7,26 +7,26 @@ void func_001D3B70(void);
 
 
 void func_001D36C0(void) {
-    reg_d0.h[0] = (*(u16 *)((u8 *)(reg_a6) + (2)));
-    reg_d1.h[0] = (*(u16 *)((u8 *)(reg_a6) + (4)));
+    reg_d0.h[0] = *(u16 *)(reg_a6 + 2);
+    reg_d1.h[0] = *(u16 *)(reg_a6 + 4);
     reg_d0.h[0] += 0xF800 & 0xFFFF;
-    reg_d0.h[0] += (*(u16 *)((u8 *)(reg_a6) + (0x26)));
-    (*(u16 *)((u8 *)(reg_a6) + (0x22))) = (u16) reg_d0.h[0];
+    reg_d0.h[0] += *(u16 *)(reg_a6 + 0x26);
+    *(u16 *)(reg_a6 + 0x22) = (u16) reg_d0.h[0];
     reg_d1.h[0] += 0x7FFF + 0x7401;
-    reg_d1.h[0] += (*(u16 *)((u8 *)(reg_a6) + (0x28)));
-    (*(u16 *)((u8 *)(reg_a6) + (0x24))) = (u16) reg_d1.h[0];
-    reg_d0.h[0] = (*(u16 *)((u8 *)(reg_a6) + (2)));
-    reg_d1.h[0] = (*(u16 *)((u8 *)(reg_a6) + (4)));
+    reg_d1.h[0] += *(u16 *)(reg_a6 + 0x28);
+    *(u16 *)(reg_a6 + 0x24) = (u16) reg_d1.h[0];
+    reg_d0.h[0] = *(u16 *)(reg_a6 + 2);
+    reg_d1.h[0] = *(u16 *)(reg_a6 + 4);
     reg_d0.h[0] += 0x7FFF + 0x7801;
-    reg_d0.h[0] += (*(u16 *)((u8 *)(reg_a6) + (0x46)));
-    (*(u16 *)((u8 *)(reg_a6) + (0x42))) = (u16) reg_d0.h[0];
+    reg_d0.h[0] += *(u16 *)(reg_a6 + 0x46);
+    *(u16 *)(reg_a6 + 0x42) = (u16) reg_d0.h[0];
     reg_d1.h[0] += 0xC00;
-    reg_d1.h[0] += (*(s16 *)((u8 *)(reg_a6) + (0x48)));
-    (*(u16 *)((u8 *)(reg_a6) + (0x44))) = (u16) reg_d1.h[0];
-    (*(u16 *)((u8 *)(reg_a6) + (0xC2))) = (u16) (*(u16 *)((u8 *)(reg_a6) + (0x22)));
-    (*(u16 *)((u8 *)(reg_a6) + (0xC4))) = (u16) (*(u16 *)((u8 *)(reg_a6) + (0x24)));
-    (*(u16 *)((u8 *)(reg_a6) + (0xE2))) = (u16) (*(u16 *)((u8 *)(reg_a6) + (0x42)));
-    (*(u16 *)((u8 *)(reg_a6) + (0xE4))) = (u16) (*(u16 *)((u8 *)(reg_a6) + (0x44)));
+    reg_d1.h[0] += *(s16 *)(reg_a6 + 0x48);
+    *(u16 *)(reg_a6 + 0x44) = (u16) reg_d1.h[0];
+    *(u16 *)(reg_a6 + 0xC2) = (u16) *(u16 *)(reg_a6 + 0x22);
+    *(u16 *)(reg_a6 + 0xC4) = (u16) *(u16 *)(reg_a6 + 0x24);
+    *(u16 *)(reg_a6 + 0xE2) = (u16) *(u16 *)(reg_a6 + 0x42);
+    *(u16 *)(reg_a6 + 0xE4) = (u16) *(u16 *)(reg_a6 + 0x44);
 }
 
 extern s16 *reg_a4_as_s16_p;
@@ -50,13 +50,13 @@ s32 func_00201C60();
 void func_001D3810(void) {
     u8 temp_v1;
 
-    reg_tmp.b[0] = (*(u8 *)((u8 *)(reg_a4) + (1)));
-    (*(u8 *)((u8 *)(reg_a4) + (1))) -= 1;
+    reg_tmp.b[0] = *(u8 *)(reg_a4 + 1);
+    *(u8 *)(reg_a4 + 1) -= 1;
     if ((s32) reg_tmp.b[0] <= 0) {
-        (*(u8 *)((u8 *)(reg_a4) + (1))) = (u8) (*(u8 *)((u8 *)(reg_a4) + (0)));
-        temp_v1 = (*(u8 *)((u8 *)(reg_a6) + (0x1B)));
+        *(u8 *)(reg_a4 + 1) = (u8) *(u8 *)reg_a4;
+        temp_v1 = *(u8 *)(reg_a6 + 0x1B);
         if (temp_v1 != 4) {
-            (*(u8 *)((u8 *)(reg_a6) + (0x1B))) = (u8) (temp_v1 - 1);
+            *(u8 *)(reg_a6 + 0x1B) = (u8) (temp_v1 - 1);
             goto block_5;
         }
         reg_d0.w = 7;
@@ -91,16 +91,16 @@ s32 func_002024C0();
 
 void func_001D38E0(void) {
     func_00201C60();
-    if ((*(u8 *)((u8 *)(reg_a4) + (0))) != 0) {
-        reg_d1.b[0] = (*(u8 *)((u8 *)(reg_a4) + (1)));
+    if (*(u8 *)reg_a4 != 0) {
+        reg_d1.b[0] = *(u8 *)(reg_a4 + 1);
         func_002024C0();
-        if ((*(u8 *)((u8 *)(reg_a4) + (1))) == reg_d1.b[0]) {
-            (*(u8 *)((u8 *)(reg_a4) + (0))) = 0U;
+        if (*(u8 *)(reg_a4 + 1) == reg_d1.b[0]) {
+            *(u8 *)reg_a4 = 0U;
         }
     }
     func_002010A0();
-    reg_d1.h[1] = (*(u16 *)((u8 *)(reg_a6) + (2)));
-    reg_d1.h[0] = (*(u16 *)((u8 *)(reg_a6) + (4)));
+    reg_d1.h[1] = *(u16 *)(reg_a6 + 2);
+    reg_d1.h[0] = *(u16 *)(reg_a6 + 4);
     reg_d1.h[0] += 0x2800;
     if ((s32) reg_d1.h[0] < 0x3A00) {
         reg_d0.b[0] += 0x10;
@@ -123,8 +123,8 @@ void func_001D38E0(void) {
     }
 block_12:
     reg_d0.b[0] &= 0x3F;
-    (*(u8 *)((u8 *)(reg_a4) + (1))) = (u8) reg_d0.b[0];
-    (*(u8 *)((u8 *)(reg_a4) + (0))) = 1U;
+    *(u8 *)(reg_a4 + 1) = (u8) reg_d0.b[0];
+    *(u8 *)reg_a4 = 1U;
     func_001D36C0();
 }
 
@@ -138,16 +138,16 @@ void func_001D3A00(void) {
 
 void func_001D3A20(void) {
     func_00201C60();
-    if ((*(u8 *)((u8 *)(reg_a4) + (0))) != 0) {
-        reg_d1.b[0] = (*(u8 *)((u8 *)(reg_a4) + (1)));
+    if (*(u8 *)reg_a4 != 0) {
+        reg_d1.b[0] = *(u8 *)(reg_a4 + 1);
         func_002024C0();
-        if ((*(u8 *)((u8 *)(reg_a4) + (1))) == reg_d1.b[0]) {
-            (*(u8 *)((u8 *)(reg_a4) + (0))) = 0U;
+        if (*(u8 *)(reg_a4 + 1) == reg_d1.b[0]) {
+            *(u8 *)reg_a4 = 0U;
         }
     }
     func_002010A0();
-    reg_d1.h[1] = (*(u16 *)((u8 *)(reg_a6) + (2)));
-    reg_d1.h[0] = (*(u16 *)((u8 *)(reg_a6) + (4)));
+    reg_d1.h[1] = *(u16 *)(reg_a6 + 2);
+    reg_d1.h[0] = *(u16 *)(reg_a6 + 4);
     reg_d1.h[0] += 0x2800;
     if ((s32) reg_d1.h[0] < 0x3600) {
         reg_d0.b[0] += 0x10;
@@ -170,8 +170,8 @@ void func_001D3A20(void) {
     }
 block_12:
     reg_d0.b[0] &= 0x3F;
-    (*(u8 *)((u8 *)(reg_a4) + (1))) = (u8) reg_d0.b[0];
-    (*(u8 *)((u8 *)(reg_a4) + (0))) = 1U;
+    *(u8 *)(reg_a4 + 1) = (u8) reg_d0.b[0];
+    *(u8 *)reg_a4 = 1U;
     func_001D36C0();
 }
 
@@ -185,16 +185,16 @@ void func_001D3B50(void) {
 
 void func_001D3B70(void) {
     func_00201C60();
-    if ((*(u8 *)((u8 *)(reg_a4) + (0))) != 0) {
-        reg_d1.b[0] = (*(u8 *)((u8 *)(reg_a4) + (1)));
+    if (*(u8 *)reg_a4 != 0) {
+        reg_d1.b[0] = *(u8 *)(reg_a4 + 1);
         func_002024C0();
-        if ((*(u8 *)((u8 *)(reg_a4) + (1))) == reg_d1.b[0]) {
-            (*(u8 *)((u8 *)(reg_a4) + (0))) = 0U;
+        if (*(u8 *)(reg_a4 + 1) == reg_d1.b[0]) {
+            *(u8 *)reg_a4 = 0U;
         }
     }
     func_002010A0();
-    reg_d1.h[1] = (*(u16 *)((u8 *)(reg_a6) + (2)));
-    reg_d1.h[0] = (*(u16 *)((u8 *)(reg_a6) + (4)));
+    reg_d1.h[1] = *(u16 *)(reg_a6 + 2);
+    reg_d1.h[0] = *(u16 *)(reg_a6 + 4);
     reg_d1.h[0] += 0x2800;
     if ((s32) reg_d1.h[0] < 0x3C00) {
         reg_d0.b[0] += 0x10;
@@ -217,7 +217,7 @@ void func_001D3B70(void) {
     }
 block_12:
     reg_d0.b[0] &= 0x3F;
-    (*(u8 *)((u8 *)(reg_a4) + (1))) = (u8) reg_d0.b[0];
-    (*(u8 *)((u8 *)(reg_a4) + (0))) = 1U;
+    *(u8 *)(reg_a4 + 1) = (u8) reg_d0.b[0];
+    *(u8 *)reg_a4 = 1U;
     func_001D36C0();
 }

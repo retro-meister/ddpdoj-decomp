@@ -342,7 +342,7 @@ void func_00137E00(void) {
             D_0028ED36 = D_006C58DE[0];
             D_0028ED37 = D_006C58DF[0];
             func_002071C0();
-            (*(s8 *)((u8 *)(reg_a0) + (5))) = 3;
+            *(s8 *)(reg_a0 + 5) = 3;
         }
         break;
     case 2:

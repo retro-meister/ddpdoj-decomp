@@ -356,36 +356,36 @@ next_50:
             if ((s16) reg_d4.h[0] < 0) {
                 reg_d4.w = 0x32;
                 reg_tmp.w = 0xFBFFFC00;
-                (*(u16 *)((u8 *)(reg_a0) + (0))) = (u16) reg_tmp.h[1];
+                *(u16 *)reg_a0 = (u16) reg_tmp.h[1];
                 reg_a0 += 2;
-                (*(u16 *)((u8 *)(reg_a0) + (0))) = (u16) reg_tmp.h[0];
+                *(u16 *)reg_a0 = (u16) reg_tmp.h[0];
                 reg_a0 += 2;
-                (*(u16 *)((u8 *)(reg_a0) + (0))) = 0U;
+                *(u16 *)reg_a0 = 0U;
                 reg_a0 += 2;
-                (*(u16 *)((u8 *)(reg_a0) + (0))) = 0U;
+                *(u16 *)reg_a0 = 0U;
                 reg_a0 += 2;
-                (*(u16 *)((u8 *)(reg_a0) + (0))) = 0x201U;
+                *(u16 *)reg_a0 = 0x201U;
                 reg_a0 += 2;
                 reg_d2.h[0] += 0xC;
                 reg_d4.h[0] -= 1;
             }
-            (*(u16 *)((u8 *)(reg_a0) + (0))) = (u16) (*(u16 *)((u8 *)(reg_a1) + (0)));
+            *(u16 *)reg_a0 = (u16) *(u16 *)reg_a1;
             reg_a1 += 2;
             reg_a0 += 2;
-            (*(u16 *)((u8 *)(reg_a0) + (0))) = (u16) (*(u16 *)((u8 *)(reg_a1) + (0)));
+            *(u16 *)reg_a0 = (u16) *(u16 *)reg_a1;
             reg_a1 += 2;
             reg_a0 += 2;
-            (*(u16 *)((u8 *)(reg_a0) + (0))) = (u16) (*(u16 *)((u8 *)(reg_a1) + (0)));
+            *(u16 *)reg_a0 = (u16) *(u16 *)reg_a1;
             reg_a1 += 2;
             reg_a0 += 2;
-            (*(u16 *)((u8 *)(reg_a0) + (0))) = (u16) (*(u16 *)((u8 *)(reg_a1) + (0)));
+            *(u16 *)reg_a0 = (u16) *(u16 *)reg_a1;
             reg_a1 += 2;
             reg_a0 += 2;
-            (*(u16 *)((u8 *)(reg_a0) + (0))) = (u16) (*(u16 *)((u8 *)(reg_a1) + (0)));
+            *(u16 *)reg_a0 = (u16) *(u16 *)reg_a1;
             reg_a1 += 2;
             reg_a0 += 2;
-            reg_d3.b[0] = (*(u8 *)((u8 *)(reg_a1) + (1)));
-            bits = (*(u8 *)((u8 *)(reg_a1) + (0)));
+            reg_d3.b[0] = *(u8 *)(reg_a1 + 1);
+            bits = *(u8 *)reg_a1;
             reg_d3.b[0] |= bits;
             reg_a1 += 2;
             (*(u8 *)((u8 *)(reg_a0) + (-5))) = (u8) reg_d3.b[0];
@@ -399,15 +399,15 @@ next_50:
         }
     } else {
 block_51:
-        (*(u16 *)((u8 *)(reg_a0) + (0))) = 0U;
+        *(u16 *)reg_a0 = 0U;
         reg_a0 += 2;
-        (*(u16 *)((u8 *)(reg_a0) + (0))) = 0U;
+        *(u16 *)reg_a0 = 0U;
         reg_a0 += 2;
-        (*(u16 *)((u8 *)(reg_a0) + (0))) = 0U;
+        *(u16 *)reg_a0 = 0U;
         reg_a0 += 2;
-        (*(u16 *)((u8 *)(reg_a0) + (0))) = 0U;
+        *(u16 *)reg_a0 = 0U;
         reg_a0 += 2;
-        (*(u16 *)((u8 *)(reg_a0) + (0))) = 0U;
+        *(u16 *)reg_a0 = 0U;
         reg_a0 += 2;
     }
     D_0028E1A0 = 0;
@@ -532,7 +532,7 @@ void func_0019B6E0(void) {
     *(u16 *)reg_a0 = *(u16 *)reg_a1;
     reg_a1 += 2;
     reg_a0 += 2;
-    *(u16 *)reg_a0 = (*(u16 *)((u8 *)(reg_a6) + (0x1C)));
+    *(u16 *)reg_a0 = *(u16 *)(reg_a6 + 0x1C);
     reg_a0 += 2;
 }
 
@@ -572,15 +572,15 @@ void func_0019B880(void) {
 
 void func_0019B9B0(void) {
     reg_a1 = reg_a6 + 2;
-    reg_d1.h[0] += (*(u16 *)((u8 *)(reg_a1) + (0)));
+    reg_d1.h[0] += *(u16 *)reg_a1;
     reg_a1 += 2;
-    reg_d1.h[0] += (*(u16 *)((u8 *)(reg_a1) + (2)));
+    reg_d1.h[0] += *(u16 *)(reg_a1 + 2);
     reg_tmp1.h[0] = reg_d1.h[0];
     reg_d1.h[0] = reg_d1.h[1];
     reg_d1.h[1] = reg_tmp1.h[0];
-    reg_d1.h[0] += (*(u16 *)((u8 *)(reg_a1) + (0)));
+    reg_d1.h[0] += *(u16 *)reg_a1;
     reg_a1 += 2;
-    reg_d1.h[0] += (*(u16 *)((u8 *)(reg_a1) + (2)));
+    reg_d1.h[0] += *(u16 *)(reg_a1 + 2);
     reg_d1.w = (u32) ((s32) reg_d1.w >> 6);
     reg_d1.w &= 0x07FF03FF;
     reg_d1.w |= reg_d6.w;
@@ -589,16 +589,16 @@ void func_0019B9B0(void) {
     *(u16 *)reg_a0 = reg_d1.h[0];
     reg_a0 += 2;
     reg_a1 += 4;
-    *(u16 *)reg_a0 = (*(u16 *)((u8 *)(reg_a1) + (0)));
+    *(u16 *)reg_a0 = *(u16 *)reg_a1;
     reg_a1 += 2;
     reg_a0 += 2;
-    *(u16 *)reg_a0 = (*(u16 *)((u8 *)(reg_a1) + (0)));
+    *(u16 *)reg_a0 = *(u16 *)reg_a1;
     reg_a1 += 2;
     reg_a0 += 2;
-    *(u16 *)reg_a0 = (*(u16 *)((u8 *)(reg_a1) + (0)));
+    *(u16 *)reg_a0 = *(u16 *)reg_a1;
     reg_a1 += 2;
     reg_a0 += 2;
-    *(u16 *)reg_a0 = (*(u16 *)((u8 *)(reg_a6) + (0x1C)));
+    *(u16 *)reg_a0 = *(u16 *)(reg_a6 + 0x1C);
     reg_a0 += 2;
 }
 

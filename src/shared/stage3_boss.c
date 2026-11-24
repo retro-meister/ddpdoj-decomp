@@ -43,8 +43,8 @@ void func_001D3CA0(void) {
     reg_d0.h[0] = 2;
     func_0014E300();
     reg_tmp.w = 0x38001C00;
-    (*(u16 *)((u8 *)(reg_a6) + (2))) = (u16) reg_tmp.h[1];
-    (*(u16 *)((u8 *)(reg_a6) + (4))) = (u16) reg_tmp.h[0];
+    *(u16 *)(reg_a6 + 2) = (u16) reg_tmp.h[1];
+    *(u16 *)(reg_a6 + 4) = (u16) reg_tmp.h[0];
     reg_a0 = (u8 *)D_0026D9E0;
     reg_a1 = (u8 *)D_0026CBF0;
     reg_a2 = (u8 *)D_0026D2F0;

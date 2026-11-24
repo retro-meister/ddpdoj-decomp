@@ -966,9 +966,9 @@ void func_00210C90(void) {
         (*(s8 *)((u8 *)(temp_a2) + (6))) = 0;
         (*(s8 *)((u8 *)(temp_a2) + (7))) = 0;
     } while (var_a1 < 0x20);
-    (*(s8 *)((u8 *)(reg_a5) + (3))) = 1;
-    (*(s16 *)((u8 *)(reg_a6) + (0xA))) = 0x60;
-    (*(s16 *)((u8 *)(reg_a6) + (0xC))) = 0x10;
+    *(s8 *)(reg_a5 + 3) = 1;
+    *(s16 *)(reg_a6 + 0xA) = 0x60;
+    *(s16 *)(reg_a6 + 0xC) = 0x10;
 #ifdef DEATH_LABEL
     D_0028E2A4_as_s8 = 0x78;
 #endif
@@ -1001,7 +1001,7 @@ void func_00210D00() {
 
     reg_a6 = D_002BAE90;
     func_00211420();
-    if ((*(u8 *)((u8 *)(reg_a5) + (3))) == 0) {
+    if (*(u8 *)(reg_a5 + 3) == 0) {
         func_00210C90();
         return;
     }
@@ -1013,15 +1013,15 @@ void func_00210D00() {
         stage_load_step();
     }
 #endif
-    temp_v1 = (*(u16 *)((u8 *)(reg_a6) + (0xA)));
+    temp_v1 = *(u16 *)(reg_a6 + 0xA);
     if (temp_v1 != 0) {
-        (*(u16 *)((u8 *)(reg_a6) + (0xA))) = (u16) (temp_v1 - 1);
+        *(u16 *)(reg_a6 + 0xA) = (u16) (temp_v1 - 1);
         return;
     }
     func_00210EA0();
     func_00211140();
-    if ((*(u16 *)((u8 *)(reg_a6) + (0xE))) == 0) {
-        temp_a0 = (*(u16 *)((u8 *)(reg_a6) + (0xC)));
+    if (*(u16 *)(reg_a6 + 0xE) == 0) {
+        temp_a0 = *(u16 *)(reg_a6 + 0xC);
         if (temp_a0 != 0) {
 #ifdef DEATH_LABEL
             if (temp_a0 == 1) {
@@ -1030,7 +1030,7 @@ void func_00210D00() {
                 }
                 if ((D_0028E290 == 2) && (D_0028ED60 == 0)) {
                     death_D_00290568 = 1;
-                    (*(s16 *)((u8 *)(reg_a5) + (0))) = 0;
+                    *(s16 *)reg_a5 = 0;
                     return;
                 }
             }
@@ -1038,21 +1038,21 @@ void func_00210D00() {
 #else
             if ((temp_a0 != 1) || (func_00133070() == 0) || (func_0022B660() != 0)) {
 #endif
-                (*(u16 *)((u8 *)(reg_a6) + (0xC))) -= 1;
-                if ((*(u16 *)((u8 *)(reg_a6) + (0xC))) == 0) {
+                *(u16 *)(reg_a6 + 0xC) -= 1;
+                if (*(u16 *)(reg_a6 + 0xC) == 0) {
                     reg_a0 = D_00269920;
                     func_0013B920();
-                    (*(u16 *)((u8 *)(reg_a6) + (0x12))) = (u16) reg_d0.h[1];
-                    (*(u16 *)((u8 *)(reg_a6) + (0x14))) = (u16) reg_d0.h[0];
+                    *(u16 *)(reg_a6 + 0x12) = (u16) reg_d0.h[1];
+                    *(u16 *)(reg_a6 + 0x14) = (u16) reg_d0.h[0];
                 }
             }
         } else {
-            reg_d0.h[1] = (*(u16 *)((u8 *)(reg_a6) + (0x12)));
-            reg_d0.h[0] = (*(u16 *)((u8 *)(reg_a6) + (0x14)));
+            reg_d0.h[1] = *(u16 *)(reg_a6 + 0x12);
+            reg_d0.h[0] = *(u16 *)(reg_a6 + 0x14);
             func_0013C350();
             if (cond_flag == 0) {
-                reg_d0.h[1] = (*(u16 *)((u8 *)(reg_a6) + (0x12)));
-                reg_d0.h[0] = (*(u16 *)((u8 *)(reg_a6) + (0x14)));
+                reg_d0.h[1] = *(u16 *)(reg_a6 + 0x12);
+                reg_d0.h[0] = *(u16 *)(reg_a6 + 0x14);
                 func_0013C300();
                 if (D_0028ED7C == 2) {
                     if ((D_0028E910 == 1) && (g_stage == 4)) {
@@ -1063,7 +1063,7 @@ void func_00210D00() {
                     return;
                 }
                 func_001317E0();
-                (*(s16 *)((u8 *)(reg_a5) + (0))) = 0;
+                *(s16 *)reg_a5 = 0;
             }
         }
     }
@@ -1323,7 +1323,7 @@ extern u16 D_0029C06C[];
 void func_00211430(void) {
     func_00201B80();
     reg_d1.h[0] = D_0029C06C[0];
-    (*(u16 *)((u8 *)(reg_a6) + (4))) -= reg_d1.h[0];
+    *(u16 *)(reg_a6 + 4) -= reg_d1.h[0];
 }
 
 extern u16 D_0028E928;
@@ -1663,17 +1663,17 @@ next_7:
 
 void func_00211E90(void) {
     D_0028E9A0 = reg_d0.w;
-    (*(s8 *)((u8 *)(reg_a0) + (0x1E))) = 0x1F;
+    *(s8 *)(reg_a0 + 0x1E) = 0x1F;
     reg_d3.h[0] = reg_d0.h[0];
     reg_d3.h[0] &= 0x3C;
     reg_a2 = *(u8 **)(D_00251700 + (reg_d3.h[0] & ~3));
-    (*(u16 *)((u8 *)(reg_a0) + (0))) = (u16) *(u16 *)reg_a2;
+    *(u16 *)reg_a0 = (u16) *(u16 *)reg_a2;
     reg_a2 += 2;
-    reg_d3.h[1] = (*(u16 *)((u8 *)(reg_a6) + (2)));
-    reg_d3.h[0] = (*(u16 *)((u8 *)(reg_a6) + (4)));
+    reg_d3.h[1] = *(u16 *)(reg_a6 + 2);
+    reg_d3.h[0] = *(u16 *)(reg_a6 + 4);
     reg_d3.w += reg_d2.w;
-    (*(u16 *)((u8 *)(reg_a0) + (2))) = (u16) reg_d3.h[1];
-    (*(u16 *)((u8 *)(reg_a0) + (4))) = (u16) reg_d3.h[0];
+    *(u16 *)(reg_a0 + 2) = (u16) reg_d3.h[1];
+    *(u16 *)(reg_a0 + 4) = (u16) reg_d3.h[0];
     func_002119A0();
 }
 

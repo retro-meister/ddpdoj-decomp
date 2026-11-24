@@ -266,7 +266,7 @@ extern s16 D_0028E3B8;
 extern void (*jtbl_0028E3F4)();
 
 void func_00208BA0(void) {
-    if ((*(u8 *)((u8 *)(reg_a5) + (3))) != 0) {
+    if (*(u8 *)(reg_a5 + 3) != 0) {
         if (D_0028DFAC == 1) {
             reg_d0.w = 0;
             D_0028DFAC = 2;
@@ -289,7 +289,7 @@ void func_00208BA0(void) {
     D_0028DFB0 = 0x3C;
     D_0028DFAC = 1;
     func_00208AD0();
-    (*(u8 *)((u8 *)(reg_a5) + (3))) = 1U;
+    *(u8 *)(reg_a5 + 3) = 1U;
     func_0018DEE0();
     func_0018DE90();
     func_0018DEA0();

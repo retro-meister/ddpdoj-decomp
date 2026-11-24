@@ -42,7 +42,7 @@ extern u8 D_0028E855;
 extern u16 D_0029CEA0[];
 
 void func_001A9000(void) {
-    if (!((*(u8 *)((u8 *)(reg_a6) + (1))) & 2)) {
+    if (!(*(u8 *)(reg_a6 + 1) & 2)) {
         if ((D_0028E855 & 4) && (reg_d2.h[0] = D_0029CEA0[0], ((s16) reg_d2.h[0] < 0)) && (reg_d2.w & 1) && (reg_d0.w = 1, ((s8) reg_d2.b[0] >= 0))) {
             if (reg_d1.w & 0x10) {
                 reg_d0.h[0] += D_0028E5FC;

@@ -2885,7 +2885,7 @@ s32 func_0022BE60(u8 arg0) {
 void func_0022BF60(void) {
     u8 temp_a0;
 
-    temp_a0 = (*(u8 *)((u8 *)(reg_a5) + (3)));
+    temp_a0 = *(u8 *)(reg_a5 + 3);
     switch (temp_a0) {                              /* irregular */
     case 0:
         func_0022BFD0(temp_a0);
@@ -3174,7 +3174,7 @@ void func_0022C1F0() {
     case MAIN_OR_DEATH_LABEL(19, 20):
         func_001719B0();
         if (cond_flag == 0) {
-            (*(s8 *)((u8 *)(reg_a5) + (3))) = 2;
+            *(s8 *)(reg_a5 + 3) = 2;
         }
         break;
     }

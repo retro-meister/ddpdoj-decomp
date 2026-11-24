@@ -63,9 +63,9 @@ loop_8:
         reg_d0.w = *(u32 *)reg_a2;
         reg_a2 += 4;
         if (reg_d0.w != -1U) {
-            (*(u16 *)((u8 *)(reg_a6) + (0))) = 0x8000;
-            (*(u16 *)((u8 *)(reg_a6) + (2))) = (u16) reg_d0.h[1];
-            (*(u16 *)((u8 *)(reg_a6) + (4))) = (u16) reg_d0.h[0];
+            *(u16 *)reg_a6 = 0x8000;
+            *(u16 *)(reg_a6 + 2) = (u16) reg_d0.h[1];
+            *(u16 *)(reg_a6 + 4) = (u16) reg_d0.h[0];
             reg_a6 += 8;
             goto loop_8;
         }
