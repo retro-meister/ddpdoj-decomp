@@ -1,5 +1,4 @@
 #include "common.h"
-#pragma opt_dead_assignments off
 
 extern s8 D_0028E408;
 extern Reg32 D_0028E484;
@@ -17,8 +16,8 @@ void func_002037E0(void) {
     originalD6 = dataRegister6->h[0];
     adjustment = temporaryRegister->w;
     D_0028E484.h[0] = originalD6;
-    dataRegister6->h[0] = originalD6 - 0x2400;
     D_0028E484.w -= adjustment;
+    dataRegister6->h[0] = originalD6 - 0x2400;
 
     if (D_0028E484.h[1] != 0) {
         D_0028E408 = 1;
