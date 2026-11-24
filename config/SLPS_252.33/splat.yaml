@@ -1348,7 +1348,7 @@ segments:
       - [0x9b900, c, main/func_0019B880]
       - [0x9ba30, c, main/func_0019B9B0]
       - [0x9bbc0, c, main/func_0019BB40]
-      - [0x9bc90, asm, game_09bc90]
+      - [0x9bc90, c, main/func_0019BC10]
       - [0x9bdc0, c, main/func_0019BD40]
       - [0x9bf00, c, main/func_0019BE80]
       - [0x9bf40, c, main/func_0019BEC0]
