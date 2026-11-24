@@ -58,11 +58,11 @@ void death_func_001B74D0(void) {
 
 void death_func_001B7520(void) {
     if (func_00222530(0x17) != 0) {
+        death_D_00290CA8++;
         D_0028EB58 = 1;
         D_0028EB90 = 0x40;
         D_0028EB54 = 1;
         D_0028EB04 = 1;
-        death_D_00290CA8++;
     }
 }
 

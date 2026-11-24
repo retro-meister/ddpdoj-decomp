@@ -1,6 +1,7 @@
 #include "common.h"
 
 s32 func_00125310();
+s32 death_func_0021B180();
 s32 func_00129450();
 s32 func_00171400();
 s32 death_func_0021C8A0();
@@ -55,14 +56,13 @@ next_1:
             reg_d3.w = (u32) *(u16 *)(reg_a0 + 4);
             reg_d0.w = (u32) *(u16 *)(reg_a6 + 2);
             t3 = *(u16 *)(reg_a6 + 4);
-            reg_d0.h[0] += 0x7FFF + 0x5801;
             reg_d1.w = (u32) t3;
             if ((s32) reg_d0.h[0] <= (s32) reg_d2.h[0]) {
                 func_002027A0();
                 reg_d0.w = 0x80013;
                 reg_d2.h[1] = *(u16 *)(reg_a6 + 2);
                 reg_d2.h[0] = *(u16 *)(reg_a6 + 4);
-                reg_d3.w = 0xD8000000;
+                reg_d3.w = 0;
                 reg_d4.w = 0;
                 func_00201100();
                 reg_d5.b[0] = (u8) ((s8) reg_d5.b[0] >> 1);
@@ -81,7 +81,6 @@ next_1:
             reg_d0.h[0] = *(u16 *)(reg_a4 + 0xE);
             reg_d2.h[1] = *(u16 *)(reg_a6 + 2);
             reg_d2.h[0] = *(u16 *)(reg_a6 + 4);
-            reg_d6.w = 0xD8000000;
             reg_d7.w = 6;
             reg_d1.h[0] -= 0x2D;
             reg_a1 = (u8 *)(D_00262A50);
@@ -140,7 +139,11 @@ next_23:;
             if ((s32) t5 < 0x28) {
                 *(u8 *)(reg_a6 + 0xf) = (u8) (t5 + 0x14);
             }
-            reg_d0.w = 8;
+            if (death_func_0021B180()) {
+                reg_d0.w = 0x18;
+            } else {
+                reg_d0.w = 0x19;
+            }
             func_00125310();
         }
     }

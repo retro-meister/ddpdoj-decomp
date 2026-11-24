@@ -16,8 +16,8 @@ extern u8 *reg_a6;
 void func_001F1320(void) {
 #ifdef DEATH_LABEL
     s32 i;
-    u16 y;
     u16 x;
+    u16 y;
 
     x = *(u16 *)(reg_a6 + 2);
     y = *(u16 *)(reg_a6 + 4);

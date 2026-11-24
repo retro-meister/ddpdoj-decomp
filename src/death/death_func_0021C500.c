@@ -64,11 +64,11 @@ loop_0:
     reg_d1.b[0] = reg_a4[0x18];
     reg_a4[0x19] += reg_d1.b[0];
 next_2:
-    reg_tmp.b[0] = reg_a6[0x1FC];
-    reg_a6[0x1FC] -= 1;
+    reg_tmp.b[0] = reg_a6[0x1C];
+    reg_a6[0x1C] -= 1;
     if ((s32)reg_tmp.b[0] > 0) goto next_9;
-    reg_a6[0x1FC] = 8;
-    if (reg_a6[0x1FD] & 1) goto next_4;
+    reg_a6[0x1C] = 8;
+    if (reg_a6[0x1D] & 1) goto next_4;
     if ((s8)reg_a4[0x18] == -6) goto next_3;
     reg_a4[0x18] -= 1;
     goto next_7;
@@ -90,12 +90,12 @@ next_8:
     reg_a4[9] -= 1;
     if ((s32)reg_tmp.b[0] > 0) goto next_9;
     reg_a4[9] = reg_a4[8];
-    t = reg_a6[0x1FD];
+    t = reg_a6[0x1D];
     if (t & 1) {
-        reg_a6[0x1FD] = t & 0xFE;
+        reg_a6[0x1D] = t & 0xFE;
         goto next_9;
     }
-    reg_a6[0x1FD] = t | 1;
+    reg_a6[0x1D] = t | 1;
 next_9:
     return;
 }

@@ -61,7 +61,7 @@ void func_00137C90(void) {
     D_0028E820 = 0x960;
     reg_a0 = (u8 *) death_D_0026FD90;
     reg_d2.h[0] = D_0028E3BC;
-    reg_tmp.w = *(u32 *)(reg_a0 + reg_d2.h[0] * 4);
+    reg_tmp.w = death_D_0026FD90[reg_d2.h[0]];
     reg_a0 = (u8 *) reg_tmp.w;
     reg_d7.h[0] = *(u16 *)reg_a0;
     reg_a0 += 2;
@@ -85,8 +85,8 @@ void func_00137C90(void) {
     func_002071C0();
     *(u16 *)(reg_a0 + 4) = reg_d7.h[0];
     func_00171910();
-    reg_d0.h[0] = 0xC;
     reg_a0 = death_D_0026EE20;
+    reg_d0.h[0] = 0xC;
     func_001A2FA0();
     reg_d0.w = save_d0;
     reg_d1.w = save_d1;

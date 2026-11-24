@@ -1,12 +1,11 @@
 #include "common.h"
 
-s32 func_00125310();
 s32 func_00171400();
 s32 death_func_0021D0F0();
 s32 func_001EBA00();
 s32 func_00201160();
 s32 func_002027A0();
-extern u8 D_002643A0[];
+extern u8 death_D_00269860[];
 extern s16 *D_0028E44C;
 extern u16 D_0028E89C;
 extern s16 D_0029F1F0[];
@@ -20,8 +19,6 @@ extern u8 *reg_a6;
 
 void death_func_0021D2E0(void) {
     s16 *temp_v1;
-    u16 temp_v0_2;
-    u8 temp_v0;
 
     if (D_0028E89C != 0) {
         func_001EBA00();
@@ -61,7 +58,7 @@ block_8:
             reg_d0.h[0] = (*(u16 *)((u8 *)(reg_a4) + (8)));
             reg_d2.h[1] = (*(u16 *)((u8 *)(reg_a6) + (2)));
             reg_d2.h[0] = (*(u16 *)((u8 *)(reg_a6) + (4)));
-            reg_a3 = (u8 *)D_002643A0;
+            reg_a3 = (u8 *)death_D_00269860;
             reg_d4.h[0] = (*(u16 *)((u8 *)(reg_a4) + (0xE)));
             reg_a3 += reg_d4.h[0];
             reg_d3.h[1] = (*(u16 *)((u8 *)(reg_a3) + (0)));
@@ -75,21 +72,5 @@ block_8:
             }
         }
         func_00171400();
-        reg_tmp.b[0] = (*(u8 *)((u8 *)(reg_a4) + (5)));
-        (*(u8 *)((u8 *)(reg_a4) + (5))) -= 1;
-        if ((s32) reg_tmp.b[0] <= 0) {
-            (*(u8 *)((u8 *)(reg_a4) + (5))) = (u8) (*(u8 *)((u8 *)(reg_a4) + (4)));
-            (*(u8 *)((u8 *)(reg_a4) + (3))) = (u8) (*(u8 *)((u8 *)(reg_a4) + (2)));
-            temp_v0 = (*(u8 *)((u8 *)(reg_a6) + (0x7)));
-            if ((s32) temp_v0 < 0x14) {
-                (*(u8 *)((u8 *)(reg_a6) + (0x7))) = (u8) (temp_v0 + 0xA);
-            }
-            temp_v0_2 = (*(u16 *)((u8 *)(reg_a6) + (0x8)));
-            if ((s32) temp_v0_2 < 6) {
-                (*(u16 *)((u8 *)(reg_a6) + (0x8))) = (u16) (temp_v0_2 + 1);
-            }
-            reg_d0.w = 6;
-            func_00125310();
-        }
     }
 }

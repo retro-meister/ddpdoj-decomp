@@ -1,6 +1,6 @@
 #include "common.h"
 
-s32 func_001EFF10();
+s32 death_func_0021B1A0();
 s32 func_0020ED00();
 extern u8 D_00262A50[];
 extern u8 *reg_a1;
@@ -18,27 +18,27 @@ void death_func_0021CE90(void) {
         reg_d0.b[0] = (*(u8 *)((u8 *)(reg_a4) + (9)));
         reg_tmp.h[1] = (*(u16 *)((u8 *)(reg_a5) + (0x16)));
         reg_tmp.h[0] = (*(u16 *)((u8 *)(reg_a5) + (0x18)));
-        if ((u32) reg_tmp.w < 0x15000U) {
+        if ((u32) reg_tmp.w < 0xE000U) {
             reg_d0.b[0] -= 2;
             func_0020ED00();
         }
         (*(u8 *)((u8 *)(reg_a4) + (3))) = (u8) reg_d0.b[0];
         reg_a1 = (u8 *)D_00262A50;
         reg_d1.b[0] = (*(u8 *)((u8 *)(reg_a4) + (0x12)));
-        func_001EFF10();
+        death_func_0021B1A0();
         reg_d1.b[0] = (*(u8 *)((u8 *)(reg_a4) + (0x12)));
         reg_d1.b[0] += 0x40;
-        func_001EFF10();
+        death_func_0021B1A0();
         reg_d1.b[0] = (*(u8 *)((u8 *)(reg_a4) + (0x12)));
         reg_d1.b[0] += 0x80;
-        func_001EFF10();
+        death_func_0021B1A0();
         reg_d1.b[0] = (*(u8 *)((u8 *)(reg_a4) + (0x12)));
         reg_d1.b[0] += 0xC0;
-        func_001EFF10();
+        death_func_0021B1A0();
         reg_d0.b[0] = (*(u8 *)((u8 *)(reg_a4) + (0x13)));
         reg_tmp.h[1] = (*(u16 *)((u8 *)(reg_a5) + (0x16)));
         reg_tmp.h[0] = (*(u16 *)((u8 *)(reg_a5) + (0x18)));
-        if ((u32) reg_tmp.w < 0x15000U) {
+        if ((u32) reg_tmp.w < 0xE000U) {
             reg_d0.b[0] = (s8) reg_d0.b[0] * 2;
         }
         (*(u8 *)((u8 *)(reg_a4) + (0x12))) += reg_d0.b[0];

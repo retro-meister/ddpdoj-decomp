@@ -1,5 +1,7 @@
 #include "common.h"
 
+#pragma divbyzerocheck on
+
 typedef struct {
     s8 *page;
     s8 *cursor;
@@ -94,16 +96,20 @@ void death_func_00138BE0(u8 *image) {
 }
 
 void death_func_00138C50(TextScript *script) {
-    s32 shade;
     s32 u;
+    s32 shade;
     s32 v;
     u8 alpha;
     u8 color;
 
-    if (script->picture >= 7) {
+    if (script->picture > 6) {
         death_func_00138BE0(D_004ECF80);
         D_0028EA80 = 0;
-        D_00592000[0].attr = (script->frame & 1) ? 0x80 : 0x60;
+        shade = 0x60;
+        if (script->frame & 1) {
+            shade = 0x80;
+        }
+        D_00592000[0].attr = shade;
         D_00592000[0].z = 1;
         D_0028EA80 = 1;
         D_00592000[0].tex = 0x2240;
@@ -111,13 +117,13 @@ void death_func_00138C50(TextScript *script) {
         D_00592000[0].alpha = 0x80;
         D_00592000[0].x0 = 0xB0;
         D_00592000[0].x1 = 0x1C0;
-        D_00592000[0].flags = 1;
         D_00592000[0].u0 = 0x110;
-        D_00592000[0].u1 = 0x200;
-        D_00592000[0].y0 = 0;
+        D_00592000[0].v0 = 0;
         D_00592000[0].y1 = 0xE0;
         D_00592000[0].v1 = 0xE0;
-        D_00592000[0].v0 = 0;
+        D_00592000[0].flags = 1;
+        D_00592000[0].u1 = 0x200;
+        D_00592000[0].y0 = 0;
         func_0021A170();
         death_func_00138BE0(death_D_0056A800);
         D_0028EA80 = 0;
@@ -148,11 +154,24 @@ void death_func_00138C50(TextScript *script) {
     if (script->flashMode & 1) {
         alpha = 0x80 - (s8) alpha;
     }
-    color = (script->flashMode & 2) ? 0xFF : 1;
+    color = 1;
+    if (script->flashMode & 2) {
+        color = 0xFF;
+    }
     func_00215DB0(0, 0, 0x1C0, 0xE0, 0, alpha, color, color, color);
 }
 
+typedef struct {
+    u16 a;
+    u16 b;
+    u16 c;
+    u16 d;
+    u16 e;
+} ListHead;
+
 void death_func_00138ED0(TextScript *script) {
+    ListHead *head;
+
     if (script->picture != 0) {
         if (script->picture < 7) {
             reg_d1.w = 0x38000000;
@@ -161,20 +180,17 @@ void death_func_00138ED0(TextScript *script) {
             reg_d4.h[0] = 1;
             reg_d4.h[0] += D_00295E40[0];
             func_0019C5B0();
-            if ((script->frame >> 1) & 1) {
-                reg_a0 = (u8 *) D_002624F0;
-            } else {
-                reg_a0 = (u8 *) D_00262530;
-            }
+            reg_a0 = ((script->frame >> 1) & 1) ? (u8 *) D_002624F0 : (u8 *) D_00262530;
             reg_d0.h[0] = 1;
             func_001A3020();
             func_0019AB20();
             func_0021C920();
-            D_002B3950[4] = 0;
-            D_002B3950[3] = 0;
-            D_002B3950[2] = 0;
-            D_002B3950[1] = 0;
-            D_002B3950[0] = 0;
+            head = (ListHead *) D_002B3950;
+            head->e = 0;
+            head->d = 0;
+            head->c = 0;
+            head->b = 0;
+            head->a = 0;
         }
         death_func_00138C50(script);
     }
@@ -193,20 +209,21 @@ s32 death_func_00138FC0(TextScript *script) {
     y = script->row << 3;
     func_00213060();
     while (text != script->cursor) {
-        if ((((u8) *text >= 0x81) && ((u8) *text < 0xA0)) || (((u8) *text >= 0xE0) && ((u8) *text < 0xF0))) {
+        s8 ch = *text; u8 c = ch;
+        if (((c >= 0x81) && (c <= 0x9F)) || ((c >= 0xE0) && (c <= 0xEF))) {
             glyph[0] = text[0];
             glyph[1] = text[1];
-            func_002144D0(x, y, glyph, script->texturePage, script->glyphWidth, script->glyphHeight, script->alpha, 0);
             text += 2;
+            func_002144D0(x, y, glyph, script->texturePage, script->glyphWidth, script->glyphHeight, script->alpha, 0);
             y += script->glyphHeight;
         } else {
-            if (*text == 0xA) {
+            if (ch == 0xA) {
                 x -= 0x20;
                 y = script->row << 3;
-            } else if (*text == 'c') {
+            } else if (ch == 'c') {
                 script->texturePage = death_func_00138BB0((u8 *) text + 1);
                 text += 2;
-            } else if (*text == 'b') {
+            } else if (ch == 'b') {
                 script->glyphWidth = death_func_00138BB0((u8 *) text + 1);
                 script->glyphHeight = death_func_00138BB0((u8 *) text + 3);
                 text += 4;

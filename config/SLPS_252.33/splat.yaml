@@ -2516,7 +2516,7 @@ segments:
       - [0xf11d0, c, shared/func_001F1150]
       - [0xf1250, c, shared/func_001F11D0]
       - [0xf12f0, c, shared/func_001F1270]
-      - [0xf13a0, c, main/func_001F1320]
+      - [0xf13a0, c, shared/func_001F1320]
       - [0xf14a0, c, shared/func_001F1420]
       - [0xf1540, c, shared/func_001F14C0]
       - [0xf15c0, c, shared/func_001F1540]

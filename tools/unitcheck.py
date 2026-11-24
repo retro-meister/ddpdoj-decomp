@@ -10,6 +10,7 @@ will and compared with retail DEATH.ELF with only relocated fields masked. --app
 import argparse
 from collections import Counter, defaultdict
 import difflib
+import os
 from pathlib import Path
 import re
 import struct
@@ -81,7 +82,7 @@ def check(local, source, base, show=40):
                 mine = disassemble(local["binutils"], coarse(ours), 0)
             print(f"DIFF  {function['name']} at {position:#x}: ours {size:#x} B, Death Label {theirs_size:#x} B")
             shown = 0
-            for line in difflib.unified_diff(other, mine, "death", "ours", n=2, lineterm=""):
+            for line in difflib.unified_diff(other, mine, "death", "ours", n=int(os.environ.get("UNITCHECK_CONTEXT", "2")), lineterm=""):
                 print("   ", line)
                 shown += 1
                 if shown >= show:
