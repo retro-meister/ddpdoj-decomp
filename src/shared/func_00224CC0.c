@@ -7,7 +7,7 @@ extern s32 D_0028DC98;
 extern s8 D_0028E250;
 extern s8 D_0028E254;
 extern u16 D_0028E31C;
-extern s8 D_0028E36C;
+extern s8 D_0028E36C_as_s8;
 extern s8 D_0028EAE0;
 extern s8 D_0028EAE4;
 extern s8 D_0028EB04;
@@ -24,7 +24,7 @@ void func_00224CC0(void) {
         D_0028E250 = D_0028EAE0;
         display_set_offset(D_0028E254, D_0028E250);
         D_0028EB90 = 0;
-        D_0028E36C = 3;
+        D_0028E36C_as_s8 = 3;
         D_0028EB04 = 1;
         return;
     }
@@ -32,7 +32,7 @@ void func_00224CC0(void) {
         func_0018D4B0();
         display_set_offset(D_0028E254, D_0028E250);
         D_0028EB90 = 0;
-        D_0028E36C = 3;
+        D_0028E36C_as_s8 = 3;
         D_0028EB04 = 1;
         return;
     }

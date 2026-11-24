@@ -3,7 +3,7 @@
 typedef void (*Fn)();
 
 extern u8 D_00295E7C[];
-extern u16 D_00295E50[];
+extern u16 D_00295E50_as_u16_a[];
 extern u16 D_00295E52[];
 extern u8 *D_00295E54[];
 extern u16 D_00295E58[];
@@ -50,8 +50,8 @@ void func_00124700(void) {
         } while ((s16)(--reg_d7.h[0]) >= 0);
     }
     if (D_00295E54[0] != 0) {
-        if (D_00295E50[0] != 0) {
-            D_00295E50[0] = 0;
+        if (D_00295E50_as_u16_a[0] != 0) {
+            D_00295E50_as_u16_a[0] = 0;
             reg_a0 = (u8 *)D_00295E7C;
             D_00295E58[0] = 0;
             reg_a1 = (u8 *)(D_00295E5C);

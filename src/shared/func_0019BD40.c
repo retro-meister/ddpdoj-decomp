@@ -2,17 +2,17 @@
 
 extern u16 D_0028E46C;
 extern u16 D_0028E478;
-extern u16 D_0028E484;
+extern u16 D_0028E484_as_u16;
 extern u8 *reg_a0;
 
 void func_0019BD40(void) {
-    D_0028E484 = reg_d1.h[0];
+    D_0028E484_as_u16 = reg_d1.h[0];
     reg_d1.h[0] = reg_d1.h[1];
-    reg_d1.h[1] = D_0028E484;
-    D_0028E484 = reg_d1.h[0];
+    reg_d1.h[1] = D_0028E484_as_u16;
+    D_0028E484_as_u16 = reg_d1.h[0];
     reg_d7.h[0] += reg_d1.h[0];
     reg_d1.h[0] = reg_d1.h[1];
-    reg_d1.h[1] = D_0028E484;
+    reg_d1.h[1] = D_0028E484_as_u16;
     D_0028E46C = reg_d7.h[0];
     reg_d7.h[0] = reg_d7.h[1];
     reg_d7.h[1] = D_0028E46C;

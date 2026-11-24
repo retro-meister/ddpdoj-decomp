@@ -4,14 +4,14 @@ s32 func_0014E300();                            /* extern */
 s32 func_0014E370();                            /* extern */
 extern s32 D_00262C20[];
 extern s32 D_0028D990;
-extern s32 *reg_a0;
+extern s32 *reg_a0_as_s32_p;
 extern u8 *reg_a6;
 
 void func_001BE040(void) {
-    reg_a0 = D_00262C20;
+    reg_a0_as_s32_p = D_00262C20;
     func_0014E370();
     reg_d0.w = 0;
-    reg_a0 = &D_0028D990;
+    reg_a0_as_s32_p = &D_0028D990;
     func_0014E300();
     reg_tmp.w = 0x38001C00;
     (*(u16 *)((u8 *)(reg_a6) + (2))) = (u16) reg_tmp.h[1];

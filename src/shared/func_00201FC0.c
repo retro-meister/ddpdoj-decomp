@@ -1,11 +1,11 @@
 #include "common.h"
 
-extern void *reg_a6;
+extern void *reg_a6_as_void_p;
 
 void func_00201FE0(void);
 
 void func_00201FC0(void) {
-    u8 *base = (u8 *)reg_a6;
+    u8 *base = (u8 *)reg_a6_as_void_p;
 
     reg_d0.w = 0;
     reg_d0.b[0] = base[0x1B];

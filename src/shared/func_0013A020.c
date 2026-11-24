@@ -14,7 +14,7 @@ extern Reg32 D_0028E484;
 extern u8 D_0029AA40[];
 extern u16 D_0029BBF8[];
 extern u16 D_0029C06C[];
-extern u8 D_0029CEA0[];
+extern u8 D_0029CEA0_as_u8_a[];
 extern u8 *reg_a0;
 extern u8 *reg_a1;
 extern u8 *reg_a2;
@@ -180,7 +180,7 @@ block_anim:
     *(u16 *)(reg_a6 + 0x2A) = reg_tmp.h[1];
     *(u16 *)(reg_a6 + 0x2C) = reg_tmp.h[0];
 block_disp:
-    reg_a0 = (u8 *)D_0029CEA0;
+    reg_a0 = (u8 *)D_0029CEA0_as_u8_a;
     if (!(0 > *(s16 *)reg_a0)) goto block_draw;
     reg_d0.h[0] = D_0028E3F0;
     reg_d0.h[0] &= 1;

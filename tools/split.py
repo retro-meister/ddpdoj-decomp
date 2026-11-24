@@ -161,9 +161,20 @@ def target_units(name):
     return units
 
 
+def aliases_path(name):
+    """Second names for objects that some sources still declare with another type (tools/typealias.py).
+    Splat allows one name per address, so these are kept out of symbols.txt and only reach the linker."""
+    return symbols_path(name).with_name("aliases.txt")
+
+
+def aliases_text(name):
+    path = aliases_path(name)
+    return path.read_text(encoding="utf-8") if path.is_file() else ""
+
+
 def write_symbols_ld(name, folder):
     lines = []
-    for line in symbols_path(name).read_text(encoding="utf-8").splitlines():
+    for line in (symbols_path(name).read_text(encoding="utf-8") + aliases_text(name)).splitlines():
         match = SYMBOL_RE.match(line)
         if match:
             sym_name, addr_str, _ = match.groups()
@@ -215,7 +226,7 @@ def _split(name, force=False):
     yaml_text = splat_yaml_path(name).read_text(encoding="utf-8")
     sym_text = symbols_path(name).read_text(encoding="utf-8")
     fingerprint = hashlib.sha256(
-        (splat_versions() + "\n" + yaml_text + "\n" + sym_text).encode("utf-8")
+        (splat_versions() + "\n" + yaml_text + "\n" + sym_text + aliases_text(name)).encode("utf-8")
     ).hexdigest()
     folder = split_dir(name)
     state_file = folder / "split-state.json"

@@ -81,10 +81,10 @@ extern s8 D_0028E248[];
 extern s8 D_0028E249[];
 extern u8 D_0028E350;
 extern u8 D_0028E36C;
-extern s8 D_0028E370;
+extern s8 D_0028E370_as_s8;
 extern u8 D_0028E374;
 extern u16 D_0028E3C0;
-extern s16 D_0028E91C;
+extern s16 D_0028E91C_as_s16;
 extern s8 D_0028E9A4;
 extern s8 D_0028E9A5;
 extern u16 D_0028E9A8;
@@ -193,7 +193,7 @@ void func_002120D0(void) {
             if (g_cd_async_busy == 0) {
                 g_cd_async_state = 0;
                 t3 += 1;
-                D_0028E91C = 0;
+                D_0028E91C_as_s16 = 0;
                 g_cd_async_busy = 1;
                 D_0028E350 = 0;
             }
@@ -240,7 +240,7 @@ loop_15:
         func_0013C3F0();
         func_0019AB20();
         if (D_0028EC58 != 0) {
-            D_0028E370 = 1;
+            D_0028E370_as_s8 = 1;
         }
         t2 = 1;
     }

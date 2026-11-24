@@ -13,7 +13,7 @@ s32 func_002010A0();
 extern u16 D_002634F0[];
 extern u16 D_00263540[];
 extern u8 D_00263590[];
-extern s16 D_0028E85C;
+extern s16 D_0028E85C_as_s16;
 extern u8 *reg_a0;
 extern u8 *reg_a1;
 extern u8 *reg_a5;
@@ -31,7 +31,7 @@ void func_001D5230(void) {
             (*(u8 *)((u8 *)(reg_a5) + (0x27))) -= 1;
             if ((*(u8 *)((u8 *)(reg_a5) + (0x27))) == 0) {
                 func_00138A40();
-                D_0028E85C = 0;
+                D_0028E85C_as_s16 = 0;
                 (*(s16 *)((u8 *)(reg_a5) + (0x30))) = 1;
                 goto block_set;
             }

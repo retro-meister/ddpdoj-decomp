@@ -1,7 +1,7 @@
 #include "common.h"
 
 extern u16 D_0025B160[];
-extern u32 D_0028E484;
+extern u32 D_0028E484_as_u32;
 extern u16 D_0028E91C;
 extern s16 D_0029F1F0[];
 extern u16 D_0029F1F2[];
@@ -33,9 +33,9 @@ void func_0016D290(void) {
             reg_d1.h[0] *= 0xFFFF;
         }
         if ((s32) reg_d1.h[0] > (s32) reg_d0.h[0]) {
-            D_0028E484 = reg_d1.w;
+            D_0028E484_as_u32 = reg_d1.w;
             reg_d1.w = reg_d0.w;
-            reg_d0.w = D_0028E484;
+            reg_d0.w = D_0028E484_as_u32;
         }
         reg_d1.h[0] >>= 1;
         reg_d0.h[0] += reg_d1.h[0];
@@ -59,9 +59,9 @@ void func_0016D290(void) {
             reg_d1.h[0] *= 0xFFFF;
         }
         if ((s32) reg_d1.h[0] > (s32) reg_d0.h[0]) {
-            D_0028E484 = reg_d1.w;
+            D_0028E484_as_u32 = reg_d1.w;
             reg_d1.w = reg_d0.w;
-            reg_d0.w = D_0028E484;
+            reg_d0.w = D_0028E484_as_u32;
         }
         reg_d1.h[0] >>= 1;
         reg_d0.h[0] += reg_d1.h[0];

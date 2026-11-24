@@ -5,8 +5,8 @@ typedef void (*Fn)();
 extern u8 D_00241720[];
 extern u8 D_002417C0[];
 extern u8 D_00241830[];
-extern u8 D_0029F1F0[];
-extern u8 D_0029F260[];
+extern u8 D_0029F1F0_as_u8_a[];
+extern u8 D_0029F260_as_u8_a[];
 s32 func_00122B20();
 s32 func_0018D890();
 s32 func_0018D8B0();
@@ -21,9 +21,9 @@ extern u8 D_00241810[];
 extern u8 D_00241870[];
 extern u16 D_0028DFC8;
 extern u16 D_0028E3EC;
-extern u16 D_0028E484;
+extern u16 D_0028E484_as_u16;
 extern u16 D_0029C06C[];
-extern u8 D_0029CEA0[];
+extern u8 D_0029CEA0_as_u8_a[];
 extern void (*jtbl_0028E3F4)();
 extern u8 *reg_a0;
 extern u8 *reg_a1;
@@ -96,7 +96,7 @@ void func_0011FA90(void) {
 next_1:
     jtbl_0028E3F4 = (Fn)(reg_a0);
     jtbl_0028E3F4();
-    if (reg_a5 != D_0029F260) goto next_2;
+    if (reg_a5 != D_0029F260_as_u8_a) goto next_2;
     vibration_start_pad1(0xC8, 0x64);
     goto block_a;
 next_2:
@@ -109,9 +109,9 @@ block_a:
     reg_d1.h[0] = (*(u16 *)((u8 *)(reg_a6) + (2)));
     reg_d1.h[0] += (*(u16 *)((u8 *)(reg_a0) + (0)));
     reg_a0 += 2;
-    D_0028E484 = reg_d1.h[0];
+    D_0028E484_as_u16 = reg_d1.h[0];
     reg_d1.h[0] = reg_d1.h[1];
-    reg_d1.h[1] = D_0028E484;
+    reg_d1.h[1] = D_0028E484_as_u16;
     reg_d1.h[0] = (*(u16 *)((u8 *)(reg_a6) + (4)));
     reg_d1.h[0] += (*(u16 *)((u8 *)(reg_a0) + (0)));
     reg_a0 += 2;
@@ -293,11 +293,11 @@ block_f:
     (*(u16 *)((u8 *)(reg_a6) + (0x20))) = (u16) reg_tmp.h[0];
     return;
 block_g:
-    reg_a0 = (u8 *)D_0029F260;
+    reg_a0 = (u8 *)D_0029F260_as_u8_a;
     reg_d1.w = 0;
-    reg_a6 = (u8 *)D_0029CEA0;
+    reg_a6 = (u8 *)D_0029CEA0_as_u8_a;
     if ((*(s8 *)((u8 *)(reg_a6) + (0))) >= 0) goto next_6;
-    reg_a0 = (u8 *)D_0029F1F0;
+    reg_a0 = (u8 *)D_0029F1F0_as_u8_a;
     reg_d1.w = 2;
 next_6:
     reg_d0.b[0] = (*(u8 *)((u8 *)(reg_a0) + (0x38)));

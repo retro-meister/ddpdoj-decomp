@@ -8,10 +8,10 @@ s32 func_001A9180();
 s32 func_001A9190();
 s32 func_001A97F0();
 extern s8 D_0028E408;
-extern s8 D_0028E2A0;
-extern s8 D_0028E2A4;
-extern u32 D_0028E638;
-extern u32 D_0028E63C;
+extern s8 D_0028E2A0_as_s8;
+extern s8 D_0028E2A4_as_s8;
+extern u32 D_0028E638_as_u32;
+extern u32 D_0028E63C_as_u32;
 extern u16 D_0028E640;
 extern u16 D_0028E648;
 extern u16 D_0028E64C;
@@ -35,7 +35,7 @@ void func_001A7080(void) {
     D_0028E854 = flags | 0x10;
     D_0028E640 = 7;
     reg_a0 = (u8 *)&D_0028E640;
-    reg_d0.w = D_0028E638;
+    reg_d0.w = D_0028E638_as_u32;
     reg_d0.w <<= 4;
     func_001A97F0();
 next_0:
@@ -51,7 +51,7 @@ next_0:
     if (D_0028E408 != 0) goto next_6;
     D_0028E640 -= 1;
     if ((s16)D_0028E640 >= 0) goto next_9;
-    if (D_0028E63C == 0) goto next_1;
+    if (D_0028E63C_as_u32 == 0) goto next_1;
     func_0018DA10();
 next_1:
     reg_d0.w = 0x10;
@@ -84,22 +84,22 @@ next_7:
     if (D_0028E648 == 0) goto next_6;
     if ((s16)D_0028E648 >= 0) goto next_8;
     if (reg_tmp.h[1] != 0) goto next_10;
-    D_0028E2A0 = 0;
-    D_0028E2A4 = 0;
+    D_0028E2A0_as_s8 = 0;
+    D_0028E2A4_as_s8 = 0;
     D_0028E854 |= 2;
     if (D_0028ED80 == 0) goto next_11;
-    D_0028E2A4 = 0x78;
+    D_0028E2A4_as_s8 = 0x78;
     func_0018DED0();
     goto next_12;
 next_11:
     if (D_0028E91C == 4) goto next_12;
-    D_0028E2A4 = 0x78;
+    D_0028E2A4_as_s8 = 0x78;
     func_0018DED0();
 next_12:
     reg_d0.w = 0;
     D_0028E648 = reg_d0.h[0];
     D_0028E640 = reg_d0.h[0];
-    D_0028E63C = reg_d0.w;
+    D_0028E63C_as_u32 = reg_d0.w;
     func_001A7B30();
     return;
 next_10:
@@ -111,7 +111,7 @@ next_6:
     D_0028E64C = 0x17;
     D_0028E640 = 0x12;
 next_8:
-    reg_d0.w = D_0028E638;
+    reg_d0.w = D_0028E638_as_u32;
     reg_d0.w >>= 8;
 loop_0:
     p = (u8 *)&D_0028E640;
@@ -135,7 +135,7 @@ next_13:
     if (D_0028E640 == 8) goto next_14;
     func_001A7B30();
 next_14:
-    reg_d1.w = D_0028E63C;
+    reg_d1.w = D_0028E63C_as_u32;
     if (reg_d1.w == 0) goto next_15;
     func_0018DA10();
     reg_d0.w = reg_d1.w;
@@ -147,7 +147,7 @@ next_16:
     func_001A9190();
 next_17:
     reg_d0.w = 0;
-    D_0028E63C = reg_d0.w;
+    D_0028E63C_as_u32 = reg_d0.w;
 next_15:
     func_001A7B30();
 }

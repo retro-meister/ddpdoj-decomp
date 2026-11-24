@@ -25,7 +25,7 @@ extern u16 D_0028E820;
 extern u16 D_0028E824;
 extern u16 D_0028E828;
 extern u8 death_D_00291191;
-extern s8 death_D_00291195;
+extern s8 death_D_00291195_as_s8;
 extern u8 *reg_a0;
 extern u8 *reg_a1;
 extern u8 *reg_a2;
@@ -92,7 +92,7 @@ void func_00137E00(void) {
         reg_a0 += D_0028E800;
         reg_d0.b[0] = *(s8 *)reg_a0;
         D_0028E804 = reg_d0.h[0];
-        death_D_00291195 = *(s8 *)(reg_a0 + 1);
+        death_D_00291195_as_s8 = *(s8 *)(reg_a0 + 1);
         D_0028E800 += 2;
         func_00131440();
         D_0028E370 = 0;

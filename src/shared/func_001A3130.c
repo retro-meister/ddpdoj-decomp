@@ -1,7 +1,7 @@
 #include "common.h"
 
 extern s16 D_0028E0C0;
-extern u16 D_0029FCB0[];
+extern u16 D_0029FCB0_as_u16_a[];
 extern u8 *reg_a0;
 extern u8 *reg_a1;
 
@@ -16,7 +16,7 @@ void func_001A3130(void) {
     d1 = reg_d1.w;
     a0 = reg_a0;
     a1 = reg_a1;
-    reg_a1 = (u8 *) D_0029FCB0;
+    reg_a1 = (u8 *) D_0029FCB0_as_u16_a;
     reg_d0.h[0] <<= 6;
     reg_a1 += reg_d0.h[0];
 loop_1:

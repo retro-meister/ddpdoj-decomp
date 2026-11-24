@@ -1,7 +1,7 @@
 #include "common.h"
 
-extern s16 D_0028E7AC;
-extern s16 D_0028E7B0;
+extern s16 D_0028E7AC_as_s16;
+extern s16 D_0028E7B0_as_s16;
 extern u8 D_002BB4B0[];
 
 void func_0016AAB0(void) {
@@ -96,6 +96,6 @@ void func_0016AAB0(void) {
         p5[6] = 0;
         p5[7] = 0;
     } while (n5 < 0x40);
-    D_0028E7B0 = 0;
-    D_0028E7AC = 0;
+    D_0028E7B0_as_s16 = 0;
+    D_0028E7AC_as_s16 = 0;
 }

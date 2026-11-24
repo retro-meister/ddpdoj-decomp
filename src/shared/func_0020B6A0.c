@@ -1,6 +1,6 @@
 #include "common.h"
 
-extern s16 D_0028E094;
+extern s16 D_0028E094_as_s16;
 extern u8 *reg_a4;
 extern u8 *reg_a6;
 
@@ -37,7 +37,7 @@ void func_0020B6A0(void) {
                 reg_d4.w = 0x10;
                 *temp_a2 |= reg_d4.b[0];
                 (*(u8 *)((u8 *)(reg_a4) + (1))) |= reg_d4.b[0];
-                D_0028E094 = 1;
+                D_0028E094_as_s16 = 1;
                 D_0028E408 = 1;
             }
         }

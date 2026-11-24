@@ -11,9 +11,9 @@ extern u16 D_0028E06C;
 extern u8 D_0028E370;
 extern u16 D_0028E3B4;
 extern u16 D_0028E3EC;
-extern u16 D_0028E484;
-extern u8 D_0028E718;
-extern u8 D_0028E71C;
+extern u16 D_0028E484_as_u16;
+extern u8 D_0028E718_as_u8;
+extern u8 D_0028E71C_as_u8;
 extern u8 D_0028E855;
 extern u16 D_0028E908;
 extern u16 D_0028E910;
@@ -54,16 +54,16 @@ void func_00141B50(void) {
         reg_d1.h[0] -= reg_d5.h[0];
         reg_d1.h[0] = (u16) ((s16) reg_d1.h[0] >> 1);
         reg_d1.h[0] += reg_d5.h[0];
-        D_0028E484 = reg_d1.h[0];
+        D_0028E484_as_u16 = reg_d1.h[0];
         reg_d1.h[0] = reg_d1.h[1];
-        reg_d1.h[1] = D_0028E484;
+        reg_d1.h[1] = D_0028E484_as_u16;
         reg_d5.h[0] = 0x1400;
         reg_d1.h[0] -= reg_d5.h[0];
         reg_d1.h[0] = (u16) ((s16) reg_d1.h[0] >> 1);
         reg_d1.h[0] += reg_d5.h[0];
-        D_0028E484 = reg_d1.h[0];
+        D_0028E484_as_u16 = reg_d1.h[0];
         reg_d1.h[0] = reg_d1.h[1];
-        reg_d1.h[1] = D_0028E484;
+        reg_d1.h[1] = D_0028E484_as_u16;
         reg_d1.w += 0xFE00FE00;
         reg_a0 = (u8 *)D_0028C620;
         reg_d0.h[0] = (*(u16 *)((u8 *)(reg_a6) + (0x58)));
@@ -82,7 +82,7 @@ void func_00141B50(void) {
     if ((D_0028E370 != 0) && (D_0028EC4C == 0) && (D_0028E3B4 == 0) && !(D_0028E855 & 1) && (D_0028E908 == 0) && !((*(u8 *)((u8 *)(reg_a6) + (1))) & 0x40)) {
         if ((*(u8 *)((u8 *)(reg_a5) + (6))) == 0) {
             if (D_0028E06C == 0) {
-                p0 = &D_0028E71C;
+                p0 = &D_0028E71C_as_u8;
                 p1 = (s32 *)(p0 - 0x34);
                 *p1 = D_0029CD94[0];
                 func_00140280(p0, p1);
@@ -92,7 +92,7 @@ void func_00141B50(void) {
                 return;
             }
         } else if (D_0028E064 == 0) {
-            p0 = &D_0028E718;
+            p0 = &D_0028E718_as_u8;
             p1 = (s32 *)(p0 - 0x30);
             *p1 = D_0029CD84[0];
             func_00140280(p0, p1);

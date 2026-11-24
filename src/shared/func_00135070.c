@@ -11,7 +11,7 @@ s32 func_002071C0();                            /* extern */
 s32 func_00209E60();                            /* extern */
 s32 func_002114A0();                            /* extern */
 extern u16 D_0028E4AA;
-extern u32 D_0028E84C;
+extern u32 D_0028E84C_as_u32;
 extern u8 *reg_a0;
 
 void func_00135070(void) {
@@ -29,6 +29,6 @@ void func_00135070(void) {
     reg_tmp.h[0] = D_0028E4AA;
     D_0028E4AA = reg_d0.h[0];
     reg_d0.h[0] = reg_tmp.h[0];
-    D_0028E84C = reg_d0.w;
+    D_0028E84C_as_u32 = reg_d0.w;
     (*(s16 *)((u8 *)(reg_a0) + (6))) = 0;
 }

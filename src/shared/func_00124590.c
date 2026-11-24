@@ -11,8 +11,8 @@ extern u16 D_0028E5F8;
 extern u16 D_0028E5FC;
 extern u8 D_0028E855;
 extern u16 D_0028E8A0;
-extern s16 D_0028E908;
-extern s32 D_00295E9C[];
+extern s16 D_0028E908_as_s16;
+extern s32 D_00295E9C_as_s32_a[];
 extern u8 D_00295EA0[];
 extern u16 D_002962DE[];
 extern u8 *jtbl_0028E3F4;
@@ -35,12 +35,12 @@ void func_00124590(void) {
             reg_d0.h[0] = D_0028E5FC;
             temp_v0 = reg_d0.h[0] | D_0028E5F8;
             reg_d0.h[0] = temp_v0;
-            if ((temp_v0 & 0xFFFF) && (0 <= D_0028E908) && (D_0028E3EC != 0)) {
+            if ((temp_v0 & 0xFFFF) && (0 <= D_0028E908_as_s16) && (D_0028E3EC != 0)) {
                 func_00124700();
             }
         }
     }
-    if (D_00295E9C[0] != 0) {
+    if (D_00295E9C_as_s32_a[0] != 0) {
         reg_a4 = (u8 *)D_00295EA0;
         reg_d7.h[0] = 0x13;
         do {

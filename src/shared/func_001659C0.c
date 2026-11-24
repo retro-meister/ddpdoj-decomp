@@ -27,8 +27,8 @@ extern u16 D_0028E89C;
 extern u16 D_0028E8A0;
 extern u16 D_0028E8B8;
 extern u16 D_0028E8D4;
-extern u16 D_0029F1F0[];
-extern u16 D_0029F260[];
+extern u16 D_0029F1F0_as_u16_a[];
+extern u16 D_0029F260_as_u16_a[];
 extern s8 enemy_move_end_requested;
 extern u8 *reg_a0;
 extern u8 *reg_a1;
@@ -83,8 +83,8 @@ block_12:
                     if (D_0028E408 == 0) {
                         reg_d0.b[0] = (*(u8 *)((u8 *)(reg_a5) + (0x1D)));
                         if ((*(u8 *)((u8 *)(reg_a5) + (0x1C))) == reg_d0.b[0]) {
-                            reg_a0 = (u8 *)(D_0029F260);
-                            reg_a1 = (u8 *)(D_0029F1F0);
+                            reg_a0 = (u8 *)(D_0029F260_as_u16_a);
+                            reg_a1 = (u8 *)(D_0029F1F0_as_u16_a);
                             if ((*(u8 *)((u8 *)(reg_a5) + (2))) != 0) {
                                 D_0028E44C = (s16 *)(reg_a0);
                                 reg_a0 = (u8 *)(reg_a1);

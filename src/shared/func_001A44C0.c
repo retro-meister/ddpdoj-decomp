@@ -3,14 +3,14 @@
 void func_0019C5B0(void);
 extern u16 D_0026B390[];
 extern u8 D_0028E294;
-extern u16 D_002BB378[];
+extern u16 D_002BB378_as_u16_a[];
 extern u8 *reg_a0;
 extern u8 *reg_a6;
 
 void func_001A44C0(void) {
     u16 idx;
 
-    reg_a6 = (u8 *)D_002BB378;
+    reg_a6 = (u8 *)D_002BB378_as_u16_a;
     reg_a0 = (u8 *)D_0026B390;
     if (D_0028E294 != 0) {
         reg_d1.w = 0x62000A80;

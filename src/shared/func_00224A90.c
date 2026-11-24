@@ -14,14 +14,14 @@ s32 func_00236D50();
 extern u8 D_0028E1DA[];
 extern u8 D_0028E1E6[];
 extern u8 D_0028E2A0;
-extern s16 D_0028E324;
+extern s16 D_0028E324_as_s16;
 extern u8 D_0028E368;
 extern u8 D_0028E36C;
 extern u8 D_0028E378;
 extern s16 D_0028E3A0;
-extern s16 D_0028E3B4;
-extern s16 D_0028E3C0;
-extern s16 D_0028E910;
+extern s16 D_0028E3B4_as_s16;
+extern s16 D_0028E3C0_as_s16;
+extern s16 D_0028E910_as_s16;
 extern s32 D_0028EAFC;
 extern u8 D_0028EC4C;
 extern u8 D_0028ED64;
@@ -37,7 +37,7 @@ void func_00224A90(void) {
     func_0012FA50();
     func_0012FB00();
     func_0011BEA0();
-    D_0028E3C0 = 0;
+    D_0028E3C0_as_s16 = 0;
     D_0028EAFC = 0xFF;
     D_0028E378 = 0xFF;
     D_0028E36C = 0;
@@ -53,15 +53,15 @@ void func_00224A90(void) {
     D_0028ED64 = 0;
     D_0028ED70 = 0;
 #ifndef DEATH_LABEL
-    D_0028E3B4 = 0;
+    D_0028E3B4_as_s16 = 0;
 #endif
     func_0012FD00();
     func_00206D70();
     func_0013B190();
     func_00219570();
-    D_0028E910 = 0;
+    D_0028E910_as_s16 = 0;
     D_0028E1DA[0] = 0;
-    D_0028E324 = 0;
+    D_0028E324_as_s16 = 0;
     D_0028E1E6[0] = 0;
     D_0028E3A0 = 0;
 }

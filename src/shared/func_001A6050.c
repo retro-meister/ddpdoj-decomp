@@ -15,11 +15,11 @@ s32 func_001AC8C0();
 s32 func_001AC8E0();
 extern u8 D_00261C30[];
 extern u8 D_00261C70[];
-extern u32 D_0028E46C;
+extern u32 D_0028E46C_as_u32;
 extern Reg32 D_0028E484;
 extern u8 D_0028E61D;
 extern u8 *D_0028E620;
-extern u32 D_0028E624;
+extern u32 D_0028E624_as_u32;
 extern u16 D_0028E628;
 extern u16 D_0028E62C;
 extern u16 D_0028E630;
@@ -175,11 +175,11 @@ next_240:
     reg_d1.w = 0x67C001C0;
     reg_d2.w = 0xCA1;
     reg_d3.h[0] = 0x200;
-    reg_d0.w = D_0028E624;
+    reg_d0.w = D_0028E624_as_u32;
 loop_260:
-    D_0028E46C = reg_d7.w;
+    D_0028E46C_as_u32 = reg_d7.w;
     reg_d7.w -= reg_d0.w;
-    if ((u32) reg_d0.w <= (u32) D_0028E46C) {
+    if ((u32) reg_d0.w <= (u32) D_0028E46C_as_u32) {
         reg_d3.h[0] += 1;
         goto loop_260;
     }

@@ -6,7 +6,7 @@ extern void func_0014E7E0(void);
 
 extern u32 D_0025A6A0[];
 extern u32 D_0028C9F0;
-extern s16 D_0028E8A8;
+extern s16 D_0028E8A8_as_s16;
 extern u16 D_0028E91C;
 extern s8 enemy_move_end_requested;
 extern u8 *reg_a0;
@@ -22,7 +22,7 @@ void func_00164980(void)
     func_0014E300();
     func_0014E7E0();
 
-    if (enemy_move_end_requested == 0 && D_0028E91C == 1 && D_0028E8A8 < 4) {
+    if (enemy_move_end_requested == 0 && D_0028E91C == 1 && D_0028E8A8_as_s16 < 4) {
         *(u16 *)reg_a6 = 0x8000;
     }
 }

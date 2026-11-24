@@ -2,10 +2,10 @@
 
 extern s32 printf(const char *format, ...);
 extern char D_0028B2E0[];
-extern u32 D_0028ED1C;
-extern s8 D_006A4800[];
+extern u32 D_0028ED1C_as_u32;
+extern s8 D_006A4800_as_s8_a[];
 extern s32 D_006C4AE8[];
-extern s8 D_006C4EF0[];
+extern s8 D_006C4EF0_as_s8_a[];
 extern s32 D_006C5494[];
 
 void func_0022C960(void) {
@@ -14,9 +14,9 @@ void func_0022C960(void) {
     s8 *data;
     s32 sum;
 
-    switch (D_0028ED1C) {
+    switch (D_0028ED1C_as_u32) {
     case 0:
-        data = D_006C4EF0;
+        data = D_006C4EF0_as_s8_a;
         size = 0x5A4;
         break;
     case 1:
@@ -30,15 +30,15 @@ void func_0022C960(void) {
     case 9:
     case 10:
         size = 0x202E8;
-        data = D_006A4800;
+        data = D_006A4800_as_s8_a;
         break;
     }
     sum = 0;
     for (i = 0; i < size; i++) {
         sum ^= *data++;
     }
-    printf(D_0028B2E0, D_0028ED1C, size, sum);
-    switch (D_0028ED1C) {
+    printf(D_0028B2E0, D_0028ED1C_as_u32, size, sum);
+    switch (D_0028ED1C_as_u32) {
     case 0:
         D_006C5494[0] = sum;
         break;

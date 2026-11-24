@@ -4,14 +4,14 @@ s32 func_001A34C0();                            /* extern */
 s32 func_001A3560();                            /* extern */
 s32 func_001A35A0();                            /* extern */
 extern u8 D_0028E390;
-extern s8 D_0028E39C;
+extern s8 D_0028E39C_as_s8;
 extern u16 D_0028E910;
 extern u8 *reg_a4;
 
 void func_001A3630(void) {
     u8 *temp_s0;
 
-    if (D_0028E39C >= 9) {
+    if (D_0028E39C_as_s8 >= 9) {
         func_001A3560();
         return;
     }

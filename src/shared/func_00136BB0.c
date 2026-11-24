@@ -4,7 +4,7 @@ extern s8 D_0028E408;
 
 s32 func_002011D0();
 extern u16 D_0024F520[];
-extern u8 D_0029BD7C[];
+extern u8 D_0029BD7C_as_u8_a[];
 extern u8 *reg_a0;
 extern u8 *reg_a1;
 extern u8 *reg_a2;
@@ -77,14 +77,14 @@ next_2:
     reg_a3 += 2;
     reg_d3.h[0] = *(u16 *)reg_a3;
     reg_a3 += 2;
-    reg_d3.h[0] -= *(u16 *)(D_0029BD7C + 2);
+    reg_d3.h[0] -= *(u16 *)(D_0029BD7C_as_u8_a + 2);
     *(u16 *)reg_a0 = reg_d3.h[1];
     reg_a0 += 2;
     *(u16 *)reg_a0 = reg_d3.h[0];
     reg_a0 += 2;
-    *(u16 *)(D_0029BD7C + 2) -= 4;
-    if (0 <= (s64)*(s16 *)(D_0029BD7C + 2)) goto next_3;
-    *(u16 *)(D_0029BD7C + 2) = 0xC;
+    *(u16 *)(D_0029BD7C_as_u8_a + 2) -= 4;
+    if (0 <= (s64)*(s16 *)(D_0029BD7C_as_u8_a + 2)) goto next_3;
+    *(u16 *)(D_0029BD7C_as_u8_a + 2) = 0xC;
 next_3:
     reg_a0 = save;
     D_0028E408 = 0;

@@ -8,14 +8,14 @@ typedef struct WorkRegA4 {
     u16 unk8;
 } WorkRegA4;
 
-extern WorkRegA4 *reg_a4;
+extern WorkRegA4 *reg_a4_as_WorkRegA4_p;
 
 void func_001BEE50(void);
 
 void func_001BEE20(void) {
-    reg_a4->unk3 = 0;
-    reg_a4->unk4 = 0;
-    reg_a4->unk6 = 0;
-    reg_a4->unk8 = 0x808;
+    reg_a4_as_WorkRegA4_p->unk3 = 0;
+    reg_a4_as_WorkRegA4_p->unk4 = 0;
+    reg_a4_as_WorkRegA4_p->unk6 = 0;
+    reg_a4_as_WorkRegA4_p->unk8 = 0x808;
     func_001BEE50();
 }

@@ -35,7 +35,7 @@ extern u32 D_0028E4E4;
 extern u32 D_0028E4E8;
 extern u32 D_0028E4EC;
 extern u32 D_0028E770;
-extern u16 D_0028E774;
+extern u16 D_0028E774_as_u16;
 extern u16 D_0028E778;
 extern u8 *reg_a0;
 extern u8 *reg_a1;
@@ -71,8 +71,8 @@ void func_001A3E70(void) {
     }
     if (D_0028E294 == 0) {
         if (D_0028E778 == 1) {
-            D_0028E774 -= 1;
-            if (D_0028E774 == 0) {
+            D_0028E774_as_u16 -= 1;
+            if (D_0028E774_as_u16 == 0) {
                 reg_a0 = (u8 *)D_0026B5F0;
                 func_0013BE50();
                 D_0028E770 = reg_d0.w;

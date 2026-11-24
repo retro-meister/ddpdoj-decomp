@@ -8,12 +8,12 @@ extern u16 D_0028E2E8;
 extern u8 *reg_a4;
 
 #ifdef DEATH_LABEL
-extern s8 death_D_0029085C;
+extern s8 death_D_0029085C_as_s8;
 #endif
 
 void func_001F14C0(void) {
 #ifdef DEATH_LABEL
-    death_D_0029085C = 0;
+    death_D_0029085C_as_s8 = 0;
 #endif
     reg_d0.w = 0;
     func_00124F50();

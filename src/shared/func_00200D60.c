@@ -3,7 +3,7 @@
 s32 func_001A3020();
 s32 func_00200A10();
 extern u8 D_0025F770[];
-extern s16 D_0028E90C;
+extern s16 D_0028E90C_as_s16;
 extern u16 D_0028E910;
 extern u8 *reg_a0;
 extern u8 *reg_a5;
@@ -23,6 +23,6 @@ void func_00200D60(void) {
 #endif
     }
 #ifndef DEATH_LABEL
-    D_0028E90C = 1;
+    D_0028E90C_as_s16 = 1;
 #endif
 }

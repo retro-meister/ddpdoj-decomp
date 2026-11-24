@@ -4,8 +4,8 @@ s32 func_001BC930();
 s32 func_002011D0();
 s32 func_00201E20();
 extern u16 D_0028E470;
-extern u32 D_0028E47C;
-extern u32 D_0028E480;
+extern u32 D_0028E47C_as_u32;
+extern u32 D_0028E480_as_u32;
 extern u8 *reg_a4;
 extern u8 *reg_a5;
 extern u8 *reg_a6;
@@ -122,10 +122,10 @@ loop_6:
         reg_d3.h[0] = reg_d3.sh[0] - SW(4);
         reg_d2.h[0] = reg_d2.sh[0] >> 4;
         reg_d3.h[0] = reg_d3.sh[0] >> 4;
-        D_0028E480 = (s16) reg_d2.h[0];
-        reg_d2.w = D_0028E480;
-        D_0028E47C = (s16) reg_d3.h[0];
-        reg_d3.w = D_0028E47C;
+        D_0028E480_as_u32 = (s16) reg_d2.h[0];
+        reg_d2.w = D_0028E480_as_u32;
+        D_0028E47C_as_u32 = (s16) reg_d3.h[0];
+        reg_d3.w = D_0028E47C_as_u32;
 #ifdef DEATH_LABEL
         reg_d2.h[0] = reg_d2.sh[0] * reg_d6.sh[0];
         reg_d3.h[0] = reg_d3.sh[0] * reg_d6.sh[0];

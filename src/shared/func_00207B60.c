@@ -9,7 +9,7 @@ void func_00207AC0(void);
 void func_00207B10(void);
 extern u8 *D_00267D20[];
 extern s8 D_0028DFA0;
-extern Fn jtbl_0028E3F4;
+extern Fn jtbl_0028E3F4_as_Fn;
 extern u8 *reg_a0;
 
 void func_00207B60(void) {
@@ -34,6 +34,6 @@ void func_00207B60(void) {
     }
     reg_a0 = entry;
     reg_d7.h[0] = 2;
-    jtbl_0028E3F4 = (Fn)reg_a0;
-    jtbl_0028E3F4();
+    jtbl_0028E3F4_as_Fn = (Fn)reg_a0;
+    jtbl_0028E3F4_as_Fn();
 }

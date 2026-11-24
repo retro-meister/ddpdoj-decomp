@@ -4,14 +4,14 @@ void func_0019C5B0(void);
 extern u8 D_0026B3F0[];
 extern u8 D_0028E294;
 extern Reg32 D_0028E484;
-extern u16 D_002BB358[];
+extern u16 D_002BB358_as_u16_a[];
 extern u8 *reg_a0;
 extern u8 *reg_a6;
 
 void func_001A4A20(void) {
     u32 tmp;
 
-    reg_a6 = (u8 *)D_002BB358;
+    reg_a6 = (u8 *)D_002BB358_as_u16_a;
     reg_a0 = (u8 *)D_0026B3F0;
     if (D_0028E294 != 0) {
         reg_d1.h[0] = 0x6380;

@@ -7,7 +7,7 @@ s32 func_00206D70();                            /* extern */
 s32 func_002071C0();                            /* extern */
 extern u16 D_0028E910;
 extern u16 D_0028E91C;
-extern s8 D_0028ED64;
+extern s8 D_0028ED64_as_s8;
 
 void func_00134BD0(void) {
     func_0018DEE0();
@@ -22,6 +22,6 @@ void func_00134BD0(void) {
         }
     } else {
 block_3:
-        D_0028ED64 = 1;
+        D_0028ED64_as_s8 = 1;
     }
 }

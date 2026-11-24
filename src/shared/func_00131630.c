@@ -2,11 +2,11 @@
 
 extern s16 D_0028E948;
 extern s16 D_0028E94C;
-extern s16 D_0028E950;
-extern s16 D_0028E954;
+extern s16 D_0028E950_as_s16;
+extern s16 D_0028E954_as_s16;
 extern s16 D_0028E958;
-extern s16 D_0028E95C;
-extern s16 D_0028E960;
+extern s16 D_0028E95C_as_s16;
+extern s16 D_0028E960_as_s16;
 extern u8 D_002BF410[];
 extern u8 D_002BF450[];
 extern u8 D_002BF490[];
@@ -35,11 +35,11 @@ void func_00131630(void) {
     var_t1 = 0;
     D_0028E94C = 0;
     var_a2 = 0;
-    D_0028E950 = 0;
-    D_0028E954 = 0;
+    D_0028E950_as_s16 = 0;
+    D_0028E954_as_s16 = 0;
     D_0028E958 = 0;
-    D_0028E95C = 0;
-    D_0028E960 = 0;
+    D_0028E95C_as_s16 = 0;
+    D_0028E960_as_s16 = 0;
     do {
         temp_a3 = (u8 *)(D_002BF450 + var_a2);
         temp_t0 = (u8 *)(D_002BF410 + var_a2);

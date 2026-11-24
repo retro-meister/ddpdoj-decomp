@@ -3,7 +3,7 @@
 typedef void (*Fn)();
 
 s32 func_0019C940();
-extern u16 D_0026E1B0[];
+extern u16 D_0026E1B0_as_u16_a[];
 extern u16 D_0026E1D0[];
 extern u16 D_0026E2D0[];
 extern u8 *reg_a0;
@@ -39,11 +39,11 @@ void func_001B7B60(void) {
     reg_d0.b[0] = (*(u8 *)((u8 *)(reg_a6) + (0x8A)));
     if (reg_d0.b[0] != 0xC0) {
         reg_d0.b[0] = (u8) ((s32) (reg_d0.b[0] & 0xFF) >> 5);
-        reg_a0 = (u8 *)(D_0026E1B0);
+        reg_a0 = (u8 *)(D_0026E1B0_as_u16_a);
         reg_d0.h[0] = (u16) reg_d0.b[0];
         reg_d0.h[0] += reg_d0.h[0];
         reg_d0.h[0] += reg_d0.h[0];
-        ((Fn)*(u32 *)((u8 *)D_0026E1B0 + (reg_d0.h[0] & ~3)))();
+        ((Fn)*(u32 *)((u8 *)D_0026E1B0_as_u16_a + (reg_d0.h[0] & ~3)))();
     }
     func_0019C940();
 }

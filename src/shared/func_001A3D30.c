@@ -6,7 +6,7 @@ extern u8 D_0026B580[];
 extern u16 D_0028E76C;
 extern u32 D_0028E770;
 extern s16 D_0028E774;
-extern s16 D_0028E778;
+extern s16 D_0028E778_as_s16;
 extern u8 *reg_a0;
 extern u8 *reg_a1;
 extern u8 *reg_a2;
@@ -49,7 +49,7 @@ void func_001A3D30(void) {
     save_a6 = reg_a6;
     func_0018DEE0();
     D_0028E770 = (u16)(D_0028E76C = 0);
-    D_0028E778 = 0;
+    D_0028E778_as_s16 = 0;
     D_0028E774 = 0xF0;
     reg_a0 = (u8 *)D_0026B580;
     func_0013B350();

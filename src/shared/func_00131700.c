@@ -8,17 +8,17 @@ s32 func_00172060();
 s32 func_001AD690();
 s32 vibration_stop_all(s32, s32);
 s32 func_002195D0();
-extern s16 D_0028DFC0;
+extern s16 D_0028DFC0_as_s16;
 extern u8 D_0028E378;
 extern s16 D_0028E958;
-extern s16 D_0028E95C;
+extern s16 D_0028E95C_as_s16;
 extern u8 D_0028E961;
 extern u8 D_0028ED60;
 extern u8 D_0028ED74;
 extern s16 D_00299768[];
 extern s16 D_0029976A[];
-extern s16 D_0029976C[];
-extern s16 D_0029976E[];
+extern s16 D_0029976C_as_s16_a[];
+extern s16 D_0029976E_as_s16_a[];
 extern u8 *reg_a5;
 
 #ifdef DEATH_LABEL
@@ -42,15 +42,15 @@ void func_00131700(void) {
     D_0028E961 |= 8;
     func_00171910();
     D_00299768[0] = 0;
-    D_0028E95C = 1;
+    D_0028E95C_as_s16 = 1;
     D_0029976A[0] = 0;
     D_0028E958 = 1;
-    D_0029976C[0] = 0;
-    D_0029976E[0] = 0;
+    D_0029976C_as_s16_a[0] = 0;
+    D_0029976E_as_s16_a[0] = 0;
     func_00172060();
     func_00134FB0();
     D_0028ED60 = 0;
-    D_0028DFC0 = 1;
+    D_0028DFC0_as_s16 = 1;
     D_0028ED74 = 2;
 #ifdef DEATH_LABEL
     death_D_00290434 = D_0028E8C4;

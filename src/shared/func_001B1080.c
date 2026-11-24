@@ -28,7 +28,7 @@ extern u8 D_00269140[];
 extern u8 D_0028DF0C;
 extern s16 D_0028DF14;
 extern s16 D_0028DF18;
-extern s16 D_0028E3C0;
+extern s16 D_0028E3C0_as_s16;
 extern u8 D_0028ED74;
 extern u8 D_0028ED7C;
 extern u8 D_0028ED80;
@@ -42,7 +42,7 @@ void func_001B1080(void) {
     (*(s8 *)((u8 *)(reg_a5) + (3))) = 1;
     func_001B04B0();
     func_00137C50();
-    D_0028E3C0 = 0;
+    D_0028E3C0_as_s16 = 0;
     D_0028ED80 = 0;
     func_00236D50();
     D_0028ED7C = 1;

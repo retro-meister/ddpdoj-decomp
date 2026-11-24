@@ -50,7 +50,7 @@ extern u16 D_002635A6[];
 extern u16 D_002635A8[];
 extern u16 D_002635B4[];
 extern u16 D_002635B6[];
-extern u16 D_002635C0[];
+extern u16 D_002635C0_as_u16_a[];
 extern u16 D_002635C2[];
 extern u16 D_002635C4[];
 extern u16 D_002635C6[];
@@ -80,7 +80,7 @@ extern u16 D_00263608[];
 extern u16 D_0026360A[];
 extern u16 D_0026360C[];
 extern u16 D_0026360E[];
-extern u16 D_00263610[];
+extern u16 D_00263610_as_u16_a[];
 extern u16 D_00263612[];
 extern u16 D_00263614[];
 extern u16 D_00263616[];
@@ -122,11 +122,11 @@ void func_00186CA0(void) {
     reg_tmp.w = (u32)D_00247080;
     D_002635B4[0] = reg_tmp.h[1];
     D_002635B6[0] = reg_tmp.h[0];
-    if (D_002635C0[0] != 0x0) {
+    if (D_002635C0_as_u16_a[0] != 0x0) {
         printf(D_00275900);
     }
     reg_tmp.w = (u32)func_001D5780;
-    D_002635C0[0] = reg_tmp.h[1];
+    D_002635C0_as_u16_a[0] = reg_tmp.h[1];
     D_002635C2[0] = reg_tmp.h[0];
     if (D_002635C4[0] != 0x2) {
         printf(D_00275920);
@@ -212,11 +212,11 @@ void func_00186CA0(void) {
     reg_tmp.w = (u32)func_001D60F0;
     D_0026360C[0] = reg_tmp.h[1];
     D_0026360E[0] = reg_tmp.h[0];
-    if (D_00263610[0] != 0x0) {
+    if (D_00263610_as_u16_a[0] != 0x0) {
         printf(D_00275AE0);
     }
     reg_tmp.w = (u32)func_001D6160;
-    D_00263610[0] = reg_tmp.h[1];
+    D_00263610_as_u16_a[0] = reg_tmp.h[1];
     D_00263612[0] = reg_tmp.h[0];
     if (D_00263614[0] != 0x2) {
         printf(D_00275B00);

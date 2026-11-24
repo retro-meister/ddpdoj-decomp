@@ -10,8 +10,8 @@ extern u8 D_002617B0[];
 extern u8 D_002617F0[];
 extern u8 D_00263890[];
 extern u8 D_002638B0[];
-extern s16 D_0028E88C;
-extern s16 D_0028E894;
+extern s16 D_0028E88C_as_s16;
+extern s16 D_0028E894_as_s16;
 extern u16 D_0028E8DC;
 extern s16 D_00299768[];
 extern s8 enemy_move_end_requested;
@@ -32,10 +32,10 @@ void func_001DF7A0(void) {
     if (enemy_move_end_requested == 0) {
         reg_d0.h[0] = D_0028E8DC;
         (*(u8 *)((u8 *)(reg_a5) + (0x1C))) -= reg_d0.b[0];
-        D_0028E894 = 1;
+        D_0028E894_as_s16 = 1;
         reg_a0 = D_002616F0;
         reg_d0.h[0] = 0xF;
-        D_0028E88C = 1;
+        D_0028E88C_as_s16 = 1;
         D_00299768[0] = 1;
         func_001A3020();
         reg_a0 = D_002617B0;

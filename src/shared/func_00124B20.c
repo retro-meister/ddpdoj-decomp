@@ -1,6 +1,6 @@
 #include "common.h"
 
-extern s16 D_00296214[];
+extern s16 D_00296214_as_s16_a[];
 extern s16 D_002962B4[];
 extern u8 *reg_a0;
 
@@ -9,7 +9,7 @@ void func_00124B20(void) {
     s32 d1 = reg_d1.w;
     u32 tmp;
 
-    reg_a0 = (u8 *) D_00296214;
+    reg_a0 = (u8 *) D_00296214_as_s16_a;
     reg_d1.w = 4;
 loop_1:
     if (*(s16 *) reg_a0 != 0) goto next_1;

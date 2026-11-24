@@ -8,7 +8,7 @@ s32 func_00201160();
 extern u16 D_0025B440[];
 extern u16 D_0025B450[];
 extern u16 D_0025B470[];
-extern u16 D_0025B610[];
+extern u16 D_0025B610_as_u16_a[];
 extern u16 D_0028E8A8;
 extern u16 D_0028E8C8;
 extern u16 D_0028E8CC;
@@ -52,7 +52,7 @@ void func_0016E010(void) {
         reg_a6 = (void *) reg_tmp.w;
         reg_d1.b[0] = (*(u8 *)((u8 *)(reg_a6) + (0x1A)));
         (*(u8 *)((u8 *)(reg_a5) + (0x32))) = (u8) reg_d1.b[0];
-        reg_a0 = (u8 *)(D_0025B610);
+        reg_a0 = (u8 *)(D_0025B610_as_u16_a);
         reg_d1.b[0] += 1;
         reg_d1.h[0] &= 0x3E;
         reg_d1.h[0] += reg_d1.h[0];

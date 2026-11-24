@@ -10,7 +10,7 @@ extern u16 D_0028E750;
 extern u16 D_0028E920;
 extern s8 D_0028EC24;
 extern u8 D_0028ED58;
-extern u32 D_0028ED70;
+extern u32 D_0028ED70_as_u32;
 extern u8 D_0028ED74;
 extern u8 D_0028ED78;
 extern u8 D_0028ED7C;
@@ -40,20 +40,20 @@ void func_00236F40(void) {
     reg_d7.h[0] &= 0xFF00;
     switch (D_0028ED74) {
     case 0:
-        D_0028ED70 = 0;
+        D_0028ED70_as_u32 = 0;
         reg_d1.b[0] = 0x80;
         reg_d0.b[0] = 0x80;
         break;
     case 1:
-        if (D_0028ED70 == 0x1A5E0) {
-            D_0028ED70 = 0x1A5DF;
+        if (D_0028ED70_as_u32 == 0x1A5E0) {
+            D_0028ED70_as_u32 = 0x1A5DF;
             printf(D_0028BEB0);
         }
         switch (D_0028ED7C) {
         case 0:
             break;
         case 2:
-            if (D_0028ED70 > 2 && D_0028ED58 == 0 && D_0028E3C0 == 0) {
+            if (D_0028ED70_as_u32 > 2 && D_0028ED58 == 0 && D_0028E3C0 == 0) {
                 if (D_0028EC24 == 0) {
                     if (reg_d0.b[0] & 0x7F) {
                         D_0028ED58 = 1;
@@ -88,11 +88,11 @@ void func_00236F40(void) {
                     D_0028ED7C = 0;
                 }
                 if (D_006C58A4[0] != 0xFF) {
-                    reg_d0.b[0] = D_006CB5A8[D_0028ED70] ^ D_006CB588[D_0028ED70 & 0x1F];
+                    reg_d0.b[0] = D_006CB5A8[D_0028ED70_as_u32] ^ D_006CB588[D_0028ED70_as_u32 & 0x1F];
                 } else {
-                    reg_d1.b[0] = D_006CB5A8[D_0028ED70] ^ D_006CB588[D_0028ED70 & 0x1F];
+                    reg_d1.b[0] = D_006CB5A8[D_0028ED70_as_u32] ^ D_006CB588[D_0028ED70_as_u32 & 0x1F];
                 }
-                D_0028ED70++;
+                D_0028ED70_as_u32++;
             }
             break;
         case 1:
@@ -100,12 +100,12 @@ void func_00236F40(void) {
                 D_0028ED7C = 0;
             }
             if (D_006C58A4[0] != 0xFF) {
-                D_006CB5A8[D_0028ED70] = reg_d0.b[0];
+                D_006CB5A8[D_0028ED70_as_u32] = reg_d0.b[0];
             } else {
-                D_006CB5A8[D_0028ED70] = reg_d1.b[0];
+                D_006CB5A8[D_0028ED70_as_u32] = reg_d1.b[0];
             }
-            D_006CB5A8[D_0028ED70] ^= D_006CB588[D_0028ED70 & 0x1F];
-            D_0028ED70++;
+            D_006CB5A8[D_0028ED70_as_u32] ^= D_006CB588[D_0028ED70_as_u32 & 0x1F];
+            D_0028ED70_as_u32++;
             if (D_0028E920 == 3 || D_0028E750 != 0 || D_0028E748 != 0) {
                 D_0028ED7C = 0;
             }

@@ -30,8 +30,8 @@ extern u16 D_0028E8C8;
 extern u16 D_0028E8D4;
 extern u16 D_0028E91C;
 extern u16 D_0029C068[];
-extern u16 D_0029F1F0[];
-extern u16 D_0029F260[];
+extern u16 D_0029F1F0_as_u16_a[];
+extern u16 D_0029F260_as_u16_a[];
 extern s8 enemy_move_end_requested;
 extern u8 *reg_a0;
 extern u8 *reg_a1;
@@ -145,8 +145,8 @@ next_2:
                 *(u8 *)(reg_a5 + 0x23) -= 1;
                 if ((s32) reg_tmp.b[0] <= 0) {
                     *(u8 *)(reg_a5 + 0x23) = (u8) *(u8 *)(reg_a5 + 0x22);
-                    reg_a0 = (u8 *)(D_0029F260);
-                    reg_a1 = (u8 *)(D_0029F1F0);
+                    reg_a0 = (u8 *)(D_0029F260_as_u16_a);
+                    reg_a1 = (u8 *)(D_0029F1F0_as_u16_a);
                     if (*(u8 *)(reg_a5 + 2) != 0) {
                         D_0028E44C = (s16 *)(reg_a0);
                         reg_a0 = (u8 *)(reg_a1);

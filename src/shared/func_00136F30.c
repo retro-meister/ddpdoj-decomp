@@ -12,7 +12,7 @@ extern u8 D_0024F4A0[];
 extern u8 D_002BC7C0[];
 s32 func_00137820();
 extern u16 D_0028E3EC;
-extern s8 D_0028E855;
+extern s8 D_0028E855_as_s8;
 extern u8 D_0029BC00[];
 extern u16 D_0029BD7C[];
 extern void (*jtbl_0028E3F4)();
@@ -53,7 +53,7 @@ loop_40:
     reg_d1.h[0] = (*(u16 *)((u8 *)(reg_a0) + (0)));
     if (!(0 > (s16)reg_d1.h[0])) goto block_clr;
     if (0 > (s8)reg_d1.b[0]) goto block_clr;
-    if (0 > D_0028E855) goto block_clr;
+    if (0 > D_0028E855_as_s8) goto block_clr;
 next_50:
     if (D_0028E3EC == 0) goto next_90;
     if (0 > (s8)reg_d2.b[0]) goto next_60;

@@ -1,14 +1,14 @@
 #include "common.h"
 
 s32 func_00137AD0();                            /* extern */
-extern s32 reg_a0;
+extern s32 reg_a0_as_s32;
 
 void func_0016A2F0(void) {
     reg_d2.h[0] = 0;
     reg_d0.h[0] = reg_d7.h[0];
     reg_d1.h[0] = reg_d6.h[0];
     func_00137AD0();
-    reg_a0 += 0x10;
+    reg_a0_as_s32 += 0x10;
     reg_d1.h[0] -= 1;
     func_00137AD0();
 }

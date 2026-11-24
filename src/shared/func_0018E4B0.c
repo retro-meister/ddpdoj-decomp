@@ -17,8 +17,8 @@ typedef struct {
 } CdInfo18E4B0;
 
 extern char *D_0025BD30[];
-extern Entry18E4B0 D_0029CA60[];
-extern CdInfo18E4B0 g_cd_file[];
+extern Entry18E4B0 D_0029CA60_as_Entry18E4B0_a[];
+extern CdInfo18E4B0 g_cd_file_as_CdInfo18E4B0_a[];
 extern u8 D_0068DF10[];
 
 void func_0018E4B0(void) {
@@ -29,9 +29,9 @@ void func_0018E4B0(void) {
     buf = memalign(0x40, 0x800);
     for (i = 0; i < 10; i++) {
         cd_search_file(D_0025BD30[i]);
-        D_0029CA60[i].f0 = g_cd_file[0].lsn;
-        D_0029CA60[i].f4 = g_cd_file[0].size;
-        cd_read_sync(buf, 0x800, g_cd_file[0].size);
+        D_0029CA60_as_Entry18E4B0_a[i].f0 = g_cd_file_as_CdInfo18E4B0_a[0].lsn;
+        D_0029CA60_as_Entry18E4B0_a[i].f4 = g_cd_file_as_CdInfo18E4B0_a[0].size;
+        cd_read_sync(buf, 0x800, g_cd_file_as_CdInfo18E4B0_a[0].size);
         dst = (s16 *)(D_0068DF10 + i * 0x42);
         memcpy(dst, buf, 0x42);
         *dst = 1;

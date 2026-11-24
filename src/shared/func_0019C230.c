@@ -4,7 +4,7 @@ s32 func_0019B6E0();
 extern u16 D_0028E190;
 extern u8 D_002A9AE0[];
 extern u8 *reg_a0;
-extern s32 reg_a1;
+extern s32 reg_a1_as_s32;
 
 void func_0019C230(void) {
     u8 *temp_s1;
@@ -13,12 +13,12 @@ void func_0019C230(void) {
 
     temp_s1 = reg_a0;
     temp_s0 = reg_d0.w;
-    temp_s2 = reg_a1;
+    temp_s2 = reg_a1_as_s32;
     reg_a0 = D_002A9AE0;
     reg_a0 += D_0028E190;
     func_0019B6E0();
     reg_d0.w = temp_s0;
     reg_a0 = temp_s1;
-    reg_a1 = temp_s2;
+    reg_a1_as_s32 = temp_s2;
     D_0028E190 += 0xC;
 }

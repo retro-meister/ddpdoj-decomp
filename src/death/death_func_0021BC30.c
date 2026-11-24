@@ -7,8 +7,8 @@ s32 death_func_0021B420();
 s32 func_002027A0();
 extern s16 *D_0028E44C;
 extern u16 D_0028E89C;
-extern u16 D_0029F1F0[];
-extern u16 D_0029F260[];
+extern u16 D_0029F1F0_as_u16_a[];
+extern u16 D_0029F260_as_u16_a[];
 extern u8 *reg_a0;
 extern u8 *reg_a1;
 extern u8 *reg_a4;
@@ -31,8 +31,8 @@ void death_func_0021BC30(u8 *arg0, s16 *arg1) {
             (*(u8 *)((u8 *)(reg_a4) + (3))) = (u8) (*(u8 *)((u8 *)(reg_a4) + (7)));
             reg_d2.b[0] = (*(u8 *)((u8 *)(reg_a4) + (5)));
             if ((*(u8 *)((u8 *)(reg_a4) + (4))) == reg_d2.b[0]) {
-                reg_a0 = (u8 *)(D_0029F260);
-                reg_a1 = (u8 *)(D_0029F1F0);
+                reg_a0 = (u8 *)(D_0029F260_as_u16_a);
+                reg_a1 = (u8 *)(D_0029F1F0_as_u16_a);
                 if ((*(u8 *)((u8 *)(reg_a5) + (2))) != 0) {
                     D_0028E44C = (s16 *)(reg_a0);
                     reg_a0 = (u8 *)(reg_a1);

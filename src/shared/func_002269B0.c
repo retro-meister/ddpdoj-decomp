@@ -7,7 +7,7 @@ s32 memcpy();
 extern s8 D_0028EB04;
 extern s32 D_0028EB90;
 extern s8 D_0028EC28;
-extern u8 D_0028EC40;
+extern u8 D_0028EC40_as_u8;
 extern u8 D_0028ED30;
 extern u8 D_0028ED31;
 extern u8 D_0028ED32;
@@ -28,8 +28,8 @@ extern u8 D_006C58DE[];
 extern u8 D_006C58DF[];
 extern u8 D_006C5CA0[];
 s32 func_002269B0(void) {
-    if (func_0022BE60(D_0028EC40) != 0) {
-        D_0028EC28 = *(s8 *)&D_0028EC40;
+    if (func_0022BE60(D_0028EC40_as_u8) != 0) {
+        D_0028EC28 = *(s8 *)&D_0028EC40_as_u8;
         D_0028EB04 = 1;
         D_0028EB90 = 0x40;
         memcpy(D_006C58A0, D_006A4800, 0x202E8);

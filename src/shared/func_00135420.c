@@ -4,7 +4,7 @@
 typedef void (*Fn)();
 
 extern u8 D_00269D30[];
-extern u16 D_002BF390[];
+extern u16 D_002BF390_as_u16_a[];
 extern u8 *reg_a6;
 
 void func_00135420(u16 *arg0) {
@@ -12,7 +12,7 @@ void func_00135420(u16 *arg0) {
     u32 temp_s0;
 
     var_a0 = (u16 *)(arg0);
-    reg_a6 = (u8 *)(D_002BF390);
+    reg_a6 = (u8 *)(D_002BF390_as_u16_a);
     reg_d7.w = 1;
     do {
         reg_d0.h[0] = *(u16 *)reg_a6;

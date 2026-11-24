@@ -5,14 +5,14 @@ s32 func_001AA2E0();
 s32 func_001AA330();
 extern u16 D_0028E5D0;
 extern u16 D_0028E5FC;
-extern s16 D_0028E648;
+extern s16 D_0028E648_as_s16;
 extern u16 D_0028E698;
 extern u16 D_0029F282[];
 extern u16 D_0029F2BA[];
 
 void func_001AA210(void) {
-    if (D_0028E648 < 0) {
-        D_0028E648 = 0;
+    if (D_0028E648_as_s16 < 0) {
+        D_0028E648_as_s16 = 0;
     }
     func_001A9BE0();
     D_0028E698 -= 1;

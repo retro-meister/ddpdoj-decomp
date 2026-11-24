@@ -73,7 +73,7 @@ extern u8 D_002A9AE0[];
 extern u8 D_002AB240[];
 extern u8 D_002AC9A0[];
 extern u8 D_002AE100[];
-extern u16 D_002AF860[];
+extern u16 D_002AF860_as_u16_a[];
 extern u8 D_002B3950[];
 extern u8 *reg_a0;
 extern u8 *reg_a1;
@@ -276,7 +276,7 @@ next_50:
     reg_d3.h[0] = count;
     reg_d7.h[0] -= count;
     if (reg_d0.h[0] != 0) {
-        reg_a1 = (u8 *)(D_002AF860);
+        reg_a1 = (u8 *)(D_002AF860_as_u16_a);
         if (reg_d0.h[0] > MAIN_OR_DEATH_LABEL(0x1758, 0x36C0)) {
             reg_d0.h[0] = MAIN_OR_DEATH_LABEL(0x1758, 0x36C0);
         }

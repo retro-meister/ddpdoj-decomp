@@ -10,9 +10,9 @@ extern u16 D_0028E1B4;
 extern u16 D_0028E1B8;
 extern s32 D_0028ED3C;
 extern s32 D_0028ED70;
-extern s8 D_0028ED74;
-extern s8 D_0028ED78;
-extern s32 D_006C5CA0[];
+extern s8 D_0028ED74_as_s8;
+extern s8 D_0028ED78_as_s8;
+extern s32 D_006C5CA0_as_s32_a[];
 extern u16 D_006CB578[];
 extern u16 D_006CB57A[];
 extern u16 D_006CB57C[];
@@ -22,10 +22,10 @@ extern u16 D_006CB582[];
 extern s32 D_006CB584[];
 
 void func_00237D50(void) {
-    D_0028ED78 = 2;
-    func_0023A490(D_006C5CA0);
+    D_0028ED78_as_s8 = 2;
+    func_0023A490(D_006C5CA0_as_s32_a);
     if (D_006CB584[0] == D_0028ED3C) {
-        D_0028ED74 = 1;
+        D_0028ED74_as_s8 = 1;
         D_0028ED70 = 0;
         D_0028E1B4 = D_006CB57A[0];
         D_0028E1B8 = D_006CB578[0];

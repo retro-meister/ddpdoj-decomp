@@ -1,12 +1,12 @@
 #include "common.h"
 
-extern s16 D_0028E970;
-extern s16 D_0028E974;
-extern s16 D_0028E978;
-extern s16 D_0028E97C;
-extern s16 D_0028E980;
-extern s16 D_0028E984;
-extern s16 D_0028E988;
+extern s16 D_0028E970_as_s16;
+extern s16 D_0028E974_as_s16;
+extern s16 D_0028E978_as_s16;
+extern s16 D_0028E97C_as_s16;
+extern s16 D_0028E980_as_s16;
+extern s16 D_0028E984_as_s16;
+extern s16 D_0028E988_as_s16;
 extern u8 D_002BF4F0[];
 void func_00125DE0(void) {
     s32 var_a1;
@@ -25,11 +25,11 @@ void func_00125DE0(void) {
         (*(s8 *)((u8 *)(temp_a2) + (6))) = 0;
         (*(s8 *)((u8 *)(temp_a2) + (7))) = 0;
     } while (var_a1 < 0xC08);
-    D_0028E970 = 0;
-    D_0028E974 = 0;
-    D_0028E978 = 0;
-    D_0028E97C = 0;
-    D_0028E980 = 0;
-    D_0028E984 = 0;
-    D_0028E988 = 0;
+    D_0028E970_as_s16 = 0;
+    D_0028E974_as_s16 = 0;
+    D_0028E978_as_s16 = 0;
+    D_0028E97C_as_s16 = 0;
+    D_0028E980_as_s16 = 0;
+    D_0028E984_as_s16 = 0;
+    D_0028E988_as_s16 = 0;
 }

@@ -8,8 +8,8 @@ extern u16 D_0028DFE4;
 extern u16 D_0028E5AC;
 extern u16 D_0028E5F8;
 extern u16 D_0028E5FC;
-extern u16 D_0029D790[];
-extern u16 D_0029DD90[];
+extern u16 D_0029D790_as_u16_a[];
+extern u16 D_0029DD90_as_u16_a[];
 extern s16 D_0029F1F0[];
 extern s16 D_0029F260[];
 extern u8 *reg_a5;
@@ -21,7 +21,7 @@ void func_00146760(void) {
     D_0028E5AC = 0;
     D_0028DFE4 = 0;
     if (D_0029F260[0] < 0) {
-        reg_a6 = (u8 *)(D_0029DD90);
+        reg_a6 = (u8 *)(D_0029DD90_as_u16_a);
         reg_d7.w = 0x1F;
         D_0028E5AC = D_0028E5FC;
         do {
@@ -36,7 +36,7 @@ void func_00146760(void) {
         } while ((s16)(--reg_d7.h[0]) >= 0);
     }
     if (D_0029F1F0[0] < 0) {
-        reg_a6 = (u8 *)(D_0029D790);
+        reg_a6 = (u8 *)(D_0029D790_as_u16_a);
         reg_d7.w = 0x1F;
         D_0028E5AC = D_0028E5F8;
         do {

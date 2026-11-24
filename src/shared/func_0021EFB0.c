@@ -9,7 +9,7 @@ s32 func_00222260();
 s32 func_00222780();
 extern s8 D_0028E250;
 extern s8 D_0028E254;
-extern u16 D_0028E320;
+extern u16 D_0028E320_as_u16;
 extern s8 D_0028EAE0;
 extern s8 D_0028EAE4;
 extern s8 D_0028EB04;
@@ -32,15 +32,15 @@ void func_0021EFB0(void) {
     }
     func_0021F2C0();
     var_a1 = 0;
-    D_0028E320 = 0xE10;
+    D_0028E320_as_u16 = 0xE10;
     if (D_0057CC88[0] == 0) {
-        D_0028E320 -= 1;
-        if ((s32) D_0028E320 <= 0) {
+        D_0028E320_as_u16 -= 1;
+        if ((s32) D_0028E320_as_u16 <= 0) {
             var_a1 = 1;
             D_0028EB58 = 0xD;
         }
     } else {
-        D_0028E320 = 0xE10;
+        D_0028E320_as_u16 = 0xE10;
     }
     D_0028EB14 = D_0028EB58;
     if (D_0057CC78[0] & 0x20) {
@@ -112,7 +112,7 @@ void func_0021F180(void)
 
         D_0028EB68 = 2;
         D_0028EB54 = 1;
-        D_0028E320 = 0xE10;
+        D_0028E320_as_u16 = 0xE10;
         D_0028EB58 = savedState;
         return;
     }
@@ -160,34 +160,34 @@ void func_0021F1C0(void) {
 extern void func_0021B840(s32, s32);
 extern u8 D_00271C60[];
 extern u8 D_00271C64[];
-extern s8 D_0028E270;
-extern s8 D_0028E271;
-extern s8 D_0028E272;
-extern s8 D_0028E273;
-extern s8 D_0028E274;
-extern s8 D_0028E275;
-extern s8 D_0028E276;
-extern s8 D_0028E277;
-extern s8 D_0028E28C;
+extern s8 D_0028E270_as_s8;
+extern s8 D_0028E271_as_s8;
+extern s8 D_0028E272_as_s8;
+extern s8 D_0028E273_as_s8;
+extern s8 D_0028E274_as_s8;
+extern s8 D_0028E275_as_s8;
+extern s8 D_0028E276_as_s8;
+extern s8 D_0028E277_as_s8;
+extern s8 D_0028E28C_as_s8;
 extern u8 D_0028E2DC;
-extern s8 D_0028E2E0;
+extern s8 D_0028E2E0_as_s8;
 extern u16 D_0028E32C;
 extern u8 D_0028E354;
 extern s8 D_0028E9EC;
 extern s8 D_0068DD01[];
 extern s8 D_0068DD02[];
-extern s8 D_0068DD03[];
-extern s8 D_0068DD04[];
-extern s8 D_0068DD05[];
-extern s8 D_0068DD06[];
+extern s8 D_0068DD03_as_s8_a[];
+extern s8 D_0068DD04_as_s8_a[];
+extern s8 D_0068DD05_as_s8_a[];
+extern s8 D_0068DD06_as_s8_a[];
 extern s8 D_0068DD09[];
 extern s8 D_0068DD0A[];
 extern s8 D_0068DD0B[];
-extern s8 D_0068DD0C[];
+extern s8 D_0068DD0C_as_s8_a[];
 extern s8 D_0068DD0D[];
 extern s8 D_0068DD0E[];
 extern s8 D_0068DD0F[];
-extern s8 D_0068DD10[];
+extern s8 D_0068DD10_as_s8_a[];
 void func_0021F2C0(void) {
     s32 temp_a0;
 
@@ -206,27 +206,27 @@ void func_0021F2C0(void) {
         D_0068DD02[0] = D_0028E354;
         D_0028E9EC = 1;
     }
-    if (D_0028E2DC != D_0068DD03[0]) {
+    if (D_0028E2DC != D_0068DD03_as_s8_a[0]) {
         D_0028E9EC = 1;
     }
-    D_0028E2DC = (u8) D_0068DD03[0];
-    D_0028E2E0 = D_0068DD06[0];
-    D_0028E28C = D_0068DD05[0];
-    if (D_0028E32C != D_0068DD04[0]) {
-        D_0028E32C = (u16) (s8)(D_0068DD04[0]);
+    D_0028E2DC = (u8) D_0068DD03_as_s8_a[0];
+    D_0028E2E0_as_s8 = D_0068DD06_as_s8_a[0];
+    D_0028E28C_as_s8 = D_0068DD05_as_s8_a[0];
+    if (D_0028E32C != D_0068DD04_as_s8_a[0]) {
+        D_0028E32C = (u16) (s8)(D_0068DD04_as_s8_a[0]);
         if (D_0028E32C != 5) {
             temp_a0 = (D_0028E32C & 0xFFFF) * 8;
             func_0021B840(*(s32 *)(D_00271C60 + temp_a0), *(s32 *)(D_00271C64 + temp_a0));
         }
     }
-    D_0028E270 = D_0068DD09[0];
-    D_0028E271 = D_0068DD0A[0];
-    D_0028E272 = D_0068DD0B[0];
-    D_0028E273 = D_0068DD0C[0];
-    D_0028E274 = D_0068DD0D[0];
-    D_0028E275 = D_0068DD0E[0];
-    D_0028E276 = D_0068DD0F[0];
-    D_0028E277 = D_0068DD10[0];
+    D_0028E270_as_s8 = D_0068DD09[0];
+    D_0028E271_as_s8 = D_0068DD0A[0];
+    D_0028E272_as_s8 = D_0068DD0B[0];
+    D_0028E273_as_s8 = D_0068DD0C_as_s8_a[0];
+    D_0028E274_as_s8 = D_0068DD0D[0];
+    D_0028E275_as_s8 = D_0068DD0E[0];
+    D_0028E276_as_s8 = D_0068DD0F[0];
+    D_0028E277_as_s8 = D_0068DD10_as_s8_a[0];
 }
 
 #ifdef DEATH_LABEL
@@ -241,18 +241,18 @@ void func_0021F440(void) {
     D_0068DD01[0] = 0;
     D_0068DD02[0] = 0;
     D_0028E354 = 0;
-    D_0068DD03[0] = 0;
-    D_0068DD04[0] = 5;
-    D_0068DD05[0] = 1;
-    D_0068DD06[0] = 0;
+    D_0068DD03_as_s8_a[0] = 0;
+    D_0068DD04_as_s8_a[0] = 5;
+    D_0068DD05_as_s8_a[0] = 1;
+    D_0068DD06_as_s8_a[0] = 0;
     D_0068DD09[0] = 7;
     D_0068DD0D[0] = 7;
     D_0068DD0A[0] = 6;
     D_0068DD0E[0] = 6;
     D_0068DD0B[0] = 5;
     D_0068DD0F[0] = 5;
-    D_0068DD0C[0] = 1;
-    D_0068DD10[0] = 1;
+    D_0068DD0C_as_s8_a[0] = 1;
+    D_0068DD10_as_s8_a[0] = 1;
 #ifdef DEATH_LABEL
     death_D_00628F01[0] = 0;
     death_D_00628F02[0] = 0;

@@ -16,7 +16,7 @@ extern void func_00225450(void);
 extern u8 *D_002716B0[];
 extern u8 *D_00271710[];
 extern u8 *D_00271740[];
-extern Point D_00271C90[];
+extern Point D_00271C90_as_Point_a[];
 extern u8 *D_0028DD18[2];
 extern u8 *D_0028DD48[2];
 extern u8 D_0028E27C;
@@ -79,12 +79,12 @@ void func_002244E0(void) {
         func_00223D70();
         func_00223E80();
         glyph_queue_clear();
-        x = D_00271C90[0].x;
-        y = D_00271C90[0].y;
+        x = D_00271C90_as_Point_a[0].x;
+        y = D_00271C90_as_Point_a[0].y;
         reg_a0 = D_00271710[0];
         glyph_queue_add(x, y, 300, 0, 0x80, 0x80, 1);
-        x = D_00271C90[1].x;
-        y = D_00271C90[1].y;
+        x = D_00271C90_as_Point_a[1].x;
+        y = D_00271C90_as_Point_a[1].y;
         reg_a0 = D_00271710[1];
         glyph_queue_add(x, y, 300, 0, 0x80, 0x80, 1);
         if (D_0028E358 == 0) {
@@ -96,8 +96,8 @@ void func_002244E0(void) {
         if (D_0028EBD0 == 1) {
             func_00224BA0(x, y + 120, 300, 0, 0x80, 0x80, 1, 3);
         }
-        x = D_00271C90[2].x;
-        y = D_00271C90[2].y;
+        x = D_00271C90_as_Point_a[2].x;
+        y = D_00271C90_as_Point_a[2].y;
         reg_a0 = D_00271710[2];
         glyph_queue_add(x, y, 300, 0, 0x80, 0x80, 1);
         reg_a0 = D_0028DD18[D_0028E27C];
@@ -105,8 +105,8 @@ void func_002244E0(void) {
         if (D_0028EBD0 == 2) {
             func_00224BA0(x, y + 120, 300, 0, 0x80, 0x80, 1, 3);
         }
-        x = D_00271C90[3].x;
-        y = D_00271C90[3].y;
+        x = D_00271C90_as_Point_a[3].x;
+        y = D_00271C90_as_Point_a[3].y;
         reg_a0 = D_00271710[3];
         glyph_queue_add(x, y, 300, 0, 0x80, 0x80, 1);
         reg_a0 = D_00271740[D_0028E32C];
@@ -114,8 +114,8 @@ void func_002244E0(void) {
         if (D_0028EBD0 == 3) {
             func_00224BA0(x, y + 120, 300, 0, 0x80, 0x80, 1, 3);
         }
-        x = D_00271C90[4].x;
-        y = D_00271C90[4].y;
+        x = D_00271C90_as_Point_a[4].x;
+        y = D_00271C90_as_Point_a[4].y;
         reg_a0 = D_00271710[4];
         glyph_queue_add(x, y, 300, 0, 0x80, 0x80, 1);
         reg_a0 = D_0028DD18[D_0028E28C];
@@ -124,16 +124,16 @@ void func_002244E0(void) {
             func_00224BA0(x, y + 120, 300, 0, 0x80, 0x80, 1, 3);
         }
         reg_a0 = D_00271710[5];
-        glyph_queue_add(D_00271C90[5].x, D_00271C90[5].y, 300, 0, 0x80, 0x80, 1);
+        glyph_queue_add(D_00271C90_as_Point_a[5].x, D_00271C90_as_Point_a[5].y, 300, 0, 0x80, 0x80, 1);
         n = 6;
         if (D_0028ED80 != 0) {
             n++;
             reg_a0 = D_00271710[6];
-            glyph_queue_add(D_00271C90[6].x, D_00271C90[6].y, 300, 0, 0x80, 0x80, 1);
+            glyph_queue_add(D_00271C90_as_Point_a[6].x, D_00271C90_as_Point_a[6].y, 300, 0, 0x80, 0x80, 1);
         }
-        x = D_00271C90[n].x;
+        x = D_00271C90_as_Point_a[n].x;
         reg_a0 = D_00271710[7];
-        glyph_queue_add(x, D_00271C90[n].y, 300, 0, 0x80, 0x80, 1);
+        glyph_queue_add(x, D_00271C90_as_Point_a[n].y, 300, 0, 0x80, 0x80, 1);
         glyph_queue_flush();
         reg_d0.w = save_d0;
         reg_d1.w = save_d1;

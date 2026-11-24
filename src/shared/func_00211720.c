@@ -3,7 +3,7 @@
 typedef void (*Fn)(void);
 
 s32 func_00211430();
-extern u8 D_00299780[];
+extern u8 D_00299780_as_u8_a[];
 extern u16 D_00299D20[];
 extern u8 *jtbl_0028E3F4;
 extern u8 *reg_a0;
@@ -13,7 +13,7 @@ extern u8 *reg_a6;
 void func_00211720(void) {
     u32 t1;
 
-    reg_a6 = (u8 *)D_00299780;
+    reg_a6 = (u8 *)D_00299780_as_u8_a;
     goto loop_1;
 skip_1:
     reg_a6 += 0x30;

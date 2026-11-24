@@ -1,7 +1,7 @@
 #include "common.h"
 
 s32 func_0011C2B0();
-extern u16 D_0028E474;
+extern u16 D_0028E474_as_u16;
 extern u16 D_0028E478;
 
 void func_00208EB0(void) {
@@ -25,9 +25,9 @@ void func_00208EB0(void) {
     s_d7 = reg_d7.w;
     reg_d3.w &= 0xFFFF;
     reg_d5.w = reg_d3.w;
-    D_0028E474 = reg_d5.h[0];
+    D_0028E474_as_u16 = reg_d5.h[0];
     reg_d5.h[0] = reg_d5.h[1];
-    reg_d5.h[1] = D_0028E474;
+    reg_d5.h[1] = D_0028E474_as_u16;
     reg_d6.h[0] = reg_d2.h[0];
     reg_d2.w = 0;
     reg_d3.w = 0;

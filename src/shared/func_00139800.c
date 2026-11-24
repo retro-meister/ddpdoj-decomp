@@ -2,7 +2,7 @@
 
 extern u16 D_0029C060[];
 extern u8 *reg_a1;
-extern void *reg_a5;
+extern void *reg_a5_as_void_p;
 
 void func_00139800(void) {
     if (0 <= (s64) *(s16 *) reg_a1) {
@@ -23,7 +23,7 @@ void func_00139800(void) {
     }
     reg_d4.w = 7;
 next_1:
-    if ((1U << reg_d4.b[0]) & ((u8 *) reg_a5)[0x31]) {
+    if ((1U << reg_d4.b[0]) & ((u8 *) reg_a5_as_void_p)[0x31]) {
         goto block_rts;
     }
     reg_d1.h[0] = D_0029C060[0];

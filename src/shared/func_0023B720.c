@@ -103,11 +103,11 @@ extern u16 D_0028E608;
 extern u16 D_0028E60C;
 extern u16 D_0028E610;
 extern u16 D_0028E614;
-extern u16 D_0028E634;
+extern u16 D_0028E634_as_u16;
 extern s32 D_0028E638;
 extern s32 D_0028E63C;
 extern u16 D_0028E640;
-extern u16 D_0028E644;
+extern u16 D_0028E644_as_u16;
 extern u16 D_0028E648;
 extern u16 D_0028E64C;
 extern u16 D_0028E650;
@@ -120,10 +120,10 @@ extern s32 D_0028E668;
 extern s32 D_0028E66C;
 extern u16 D_0028E670;
 extern u16 D_0028E674;
-extern u16 D_0028E678;
+extern u16 D_0028E678_as_u16;
 extern u16 D_0028E67C;
 extern u16 D_0028E680;
-extern u16 D_0028E684;
+extern u16 D_0028E684_as_u16;
 extern u16 D_0028E688;
 extern s32 D_0028E68C;
 extern s32 D_0028E690;
@@ -136,10 +136,10 @@ extern s32 D_0028E6A8;
 extern s32 D_0028E6AC;
 extern u16 D_0028E6B0;
 extern u16 D_0028E6B4;
-extern u16 D_0028E6B8;
+extern u16 D_0028E6B8_as_u16;
 extern u16 D_0028E6BC;
 extern u16 D_0028E6C0;
-extern u16 D_0028E6C4;
+extern u16 D_0028E6C4_as_u16;
 extern u16 D_0028E6C8;
 extern s32 D_0028E6CC;
 extern s32 D_0028E6D0;
@@ -168,8 +168,8 @@ extern s32 D_0028E730;
 extern s32 D_0028E734;
 extern u16 D_0028E738;
 extern u16 D_0028E73C;
-extern s32 D_0028E740;
-extern s32 D_0028E744;
+extern s32 D_0028E740_as_s32;
+extern s32 D_0028E744_as_s32;
 extern u16 D_0028E748;
 extern u16 D_0028E74C;
 extern u16 D_0028E750;
@@ -177,9 +177,9 @@ extern u16 D_0028E754;
 extern u16 D_0028E758;
 extern u16 D_0028E75C;
 extern s32 D_0028E760;
-extern s32 D_0028E764;
-extern s32 D_0028E768;
-extern u16 D_0028E854;
+extern s32 D_0028E764_as_s32;
+extern s32 D_0028E768_as_s32;
+extern u16 D_0028E854_as_u16;
 extern u16 D_0028E858;
 extern u16 D_0028E85C;
 extern u16 D_0028E860;
@@ -233,20 +233,20 @@ extern u16 D_0028E978;
 extern u16 D_0028E97C;
 extern u16 D_0028E980;
 extern u16 D_0028E984;
-extern u8 D_0029CD80[];
-extern u8 D_0029CD90[];
-extern u8 D_0029F1F0[];
-extern u8 D_0029F260[];
+extern u8 D_0029CD80_as_u8_a[];
+extern u8 D_0029CD90_as_u8_a[];
+extern u8 D_0029F1F0_as_u8_a[];
+extern u8 D_0029F260_as_u8_a[];
 typedef struct {
     u8 a[10];
     u8 b[10];
 } Bank10;
-extern Bank10 D_002BAF30;
+extern Bank10 D_002BAF30_as_Bank10;
 typedef struct {
     u8 a[90];
     u8 b[90];
 } Bank90;
-extern Bank90 D_002BAF50;
+extern Bank90 D_002BAF50_as_Bank90;
 void func_0023B720(u8 *p) {
     s32 i;
 
@@ -270,11 +270,11 @@ void func_0023B720(u8 *p) {
     D_0028E974 = *(u16 *)(p + 0x8);
     D_0028E970 = *(u16 *)(p + 0xA);
     for (i = 0; i < 98; i++) {
-        D_0029F260[i] = p[12 + i];
-        D_0029F1F0[i] = p[110 + i];
+        D_0029F260_as_u8_a[i] = p[12 + i];
+        D_0029F1F0_as_u8_a[i] = p[110 + i];
     }
-    *(Vec4 *)D_0029CD90 = *(Vec4 *)(p + 0xD0);
-    *(Vec4 *)D_0029CD80 = *(Vec4 *)(p + 0xE0);
+    *(Vec4 *)D_0029CD90_as_u8_a = *(Vec4 *)(p + 0xD0);
+    *(Vec4 *)D_0029CD80_as_u8_a = *(Vec4 *)(p + 0xE0);
     D_0028E074 = *(u16 *)(p + 0xF0);
     D_0028E070 = *(u16 *)(p + 0xF2);
     D_0028E06C = *(u16 *)(p + 0xF4);
@@ -368,9 +368,9 @@ void func_0023B720(u8 *p) {
     D_0028E860 = *(u16 *)(p + 0x1AA);
     D_0028E85C = *(u16 *)(p + 0x1AC);
     D_0028E858 = *(u16 *)(p + 0x1AE);
-    D_0028E854 = *(u16 *)(p + 0x1B0);
-    D_0028E768 = *(s32 *)(p + 0x1B4);
-    D_0028E764 = *(s32 *)(p + 0x1B8);
+    D_0028E854_as_u16 = *(u16 *)(p + 0x1B0);
+    D_0028E768_as_s32 = *(s32 *)(p + 0x1B4);
+    D_0028E764_as_s32 = *(s32 *)(p + 0x1B8);
     D_0028E760 = *(s32 *)(p + 0x1BC);
     D_0028E75C = *(u16 *)(p + 0x1C0);
     D_0028E758 = *(u16 *)(p + 0x1C2);
@@ -378,8 +378,8 @@ void func_0023B720(u8 *p) {
     D_0028E750 = *(u16 *)(p + 0x1C6);
     D_0028E74C = *(u16 *)(p + 0x1C8);
     D_0028E748 = *(u16 *)(p + 0x1CA);
-    D_0028E744 = *(s32 *)(p + 0x1CC);
-    D_0028E740 = *(s32 *)(p + 0x1D0);
+    D_0028E744_as_s32 = *(s32 *)(p + 0x1CC);
+    D_0028E740_as_s32 = *(s32 *)(p + 0x1D0);
     D_0028E73C = *(u16 *)(p + 0x1D4);
     D_0028E738 = *(u16 *)(p + 0x1D6);
     D_0028E734 = *(s32 *)(p + 0x1D8);
@@ -389,16 +389,16 @@ void func_0023B720(u8 *p) {
     D_0028E71C = *(s32 *)(p + 0x1E4);
     D_0028E718 = *(s32 *)(p + 0x1E8);
     for (i = 0; i < 90; i++) {
-        D_002BAF50.a[i] = p[0x1EC + i];
+        D_002BAF50_as_Bank90.a[i] = p[0x1EC + i];
     }
     for (i = 0; i < 90; i++) {
-        D_002BAF50.b[i] = p[0x246 + i];
+        D_002BAF50_as_Bank90.b[i] = p[0x246 + i];
     }
     for (i = 0; i < 10; i++) {
-        D_002BAF30.a[i] = p[0x2A0 + i];
+        D_002BAF30_as_Bank10.a[i] = p[0x2A0 + i];
     }
     for (i = 0; i < 10; i++) {
-        D_002BAF30.b[i] = p[0x2AA + i];
+        D_002BAF30_as_Bank10.b[i] = p[0x2AA + i];
     }
     D_0028E714 = *(s32 *)(p + 0x2B4);
     D_0028E710 = *(u16 *)(p + 0x2B8);
@@ -420,10 +420,10 @@ void func_0023B720(u8 *p) {
     D_0028E6D0 = *(s32 *)(p + 0x2E0);
     D_0028E6CC = *(s32 *)(p + 0x2E4);
     D_0028E6C8 = *(u16 *)(p + 0x2E8);
-    D_0028E6C4 = *(u16 *)(p + 0x2EA);
+    D_0028E6C4_as_u16 = *(u16 *)(p + 0x2EA);
     D_0028E6C0 = *(u16 *)(p + 0x2EC);
     D_0028E6BC = *(u16 *)(p + 0x2EE);
-    D_0028E6B8 = *(u16 *)(p + 0x2F0);
+    D_0028E6B8_as_u16 = *(u16 *)(p + 0x2F0);
     D_0028E6B4 = *(u16 *)(p + 0x2F2);
     D_0028E6B0 = *(u16 *)(p + 0x2F4);
     D_0028E6AC = *(s32 *)(p + 0x2F8);
@@ -436,10 +436,10 @@ void func_0023B720(u8 *p) {
     D_0028E690 = *(s32 *)(p + 0x30C);
     D_0028E68C = *(s32 *)(p + 0x310);
     D_0028E688 = *(u16 *)(p + 0x314);
-    D_0028E684 = *(u16 *)(p + 0x316);
+    D_0028E684_as_u16 = *(u16 *)(p + 0x316);
     D_0028E680 = *(u16 *)(p + 0x318);
     D_0028E67C = *(u16 *)(p + 0x31A);
-    D_0028E678 = *(u16 *)(p + 0x31C);
+    D_0028E678_as_u16 = *(u16 *)(p + 0x31C);
     D_0028E674 = *(u16 *)(p + 0x31E);
     D_0028E670 = *(u16 *)(p + 0x320);
     D_0028E66C = *(s32 *)(p + 0x324);
@@ -452,11 +452,11 @@ void func_0023B720(u8 *p) {
     D_0028E650 = *(u16 *)(p + 0x338);
     D_0028E64C = *(u16 *)(p + 0x33A);
     D_0028E648 = *(u16 *)(p + 0x33C);
-    D_0028E644 = *(u16 *)(p + 0x33E);
+    D_0028E644_as_u16 = *(u16 *)(p + 0x33E);
     D_0028E640 = *(u16 *)(p + 0x340);
     D_0028E63C = *(s32 *)(p + 0x344);
     D_0028E638 = *(s32 *)(p + 0x348);
-    D_0028E634 = *(u16 *)(p + 0x34C);
+    D_0028E634_as_u16 = *(u16 *)(p + 0x34C);
     D_0028E614 = *(u16 *)(p + 0x34E);
     D_0028E610 = *(u16 *)(p + 0x350);
     D_0028E60C = *(u16 *)(p + 0x352);

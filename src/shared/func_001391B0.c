@@ -10,8 +10,8 @@ s32 func_0014CAD0();
 void func_00170A50(s32, s32, s32);
 extern u8 D_0028E284;
 extern u8 D_0028E288;
-extern s16 D_0028E580;
-extern s16 D_0028E584;
+extern s16 D_0028E580_as_s16;
+extern s16 D_0028E584_as_s16;
 extern u16 D_0028E8A0;
 extern u16 D_0028E8A8;
 extern u16 D_0028E8AC;
@@ -34,7 +34,7 @@ void func_001391B0(void) {
                 D_0028E288 -= 1;
             }
             if (D_0028E288 == 0) {
-                D_0028E584 = 0;
+                D_0028E584_as_s16 = 0;
             }
         }
         if (D_0028E284 != 0) {
@@ -42,7 +42,7 @@ void func_001391B0(void) {
                 D_0028E284 -= 1;
             }
             if (D_0028E284 == 0) {
-                D_0028E580 = 0;
+                D_0028E580_as_s16 = 0;
             }
         }
         if (D_0029C076[0] != 0) {

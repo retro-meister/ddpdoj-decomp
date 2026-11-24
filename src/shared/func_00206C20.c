@@ -13,10 +13,10 @@ s32 func_00206B20();                            /* extern */
 s32 func_00206B60();                            /* extern */
 s32 func_00206BA0();                            /* extern */
 s32 func_00206BE0();                            /* extern */
-extern s16 D_0028E220;
+extern s16 D_0028E220_as_s16;
 
 void func_00206C20(void) {
-    D_0028E220 = 0;
+    D_0028E220_as_s16 = 0;
     reg_d0.w = 0;
     func_00206920();
     reg_d0.w = 1;

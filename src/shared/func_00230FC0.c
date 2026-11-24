@@ -12,8 +12,8 @@ extern s32 D_00272010[];
 extern char D_0028BB20[];
 extern char D_0028BB70[];
 extern char D_0028BB80[];
-extern char D_0028BB98[];
-extern char D_0028BBB0[];
+extern char D_0028BB98_as_char_a[];
+extern char D_0028BBB0_as_char_a[];
 extern s32 D_0028EC70;
 extern s32 D_0028EC74;
 extern s32 D_0028ECA8;
@@ -168,12 +168,12 @@ void func_00230FC0(void) {
         D_0028ED14 += 1;
         break;
     case 20:
-        printf(D_0028BB98, D_0028ED1C);
+        printf(D_0028BB98_as_char_a, D_0028ED1C);
         D_0028ECF0 = 0;
         D_0028ED14 += 1;
         break;
     case 30:
-        printf(D_0028BBB0, D_0028ED1C);
+        printf(D_0028BBB0_as_char_a, D_0028ED1C);
         D_0028ECF0 = 0;
         D_0028ED14 = 30;
         break;

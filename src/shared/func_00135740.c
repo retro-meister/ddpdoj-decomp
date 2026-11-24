@@ -1,7 +1,7 @@
 #include "common.h"
 
 s32 func_001358A0();
-extern u8 *D_0028DEB8;
+extern u8 *D_0028DEB8_as_u8_p;
 extern u8 *D_0028DEBC;
 extern u8 *D_0028DEC0;
 extern u8 *D_0028DEC4;
@@ -45,7 +45,7 @@ void func_00135740(void) {
     D_0028DEC4 = reg_a3;
     D_0028DEC0 = reg_a4;
     D_0028DEBC = reg_a5;
-    D_0028DEB8 = (u8 *)(reg_a6);
+    D_0028DEB8_as_u8_p = (u8 *)(reg_a6);
     if (reg_d2.h[0] != 0) {
         reg_a6 = (u8 *)D_002BF3B4;
         D_0028E934 = reg_d0.h[0];

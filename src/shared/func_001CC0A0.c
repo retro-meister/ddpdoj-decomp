@@ -2,8 +2,8 @@
 
 typedef void (*Fn)();
 
-extern u8 D_002590F0[];
-extern u8 D_002594F0[];
+extern u8 D_002590F0_as_u8_a[];
+extern u8 D_002594F0_as_u8_a[];
 s32 func_00129280();
 s32 func_001292C0();
 s32 func_00129370();
@@ -33,7 +33,7 @@ s32 func_002027A0();
 s32 vibration_start_pad1(s32, s32);
 s32 vibration_start_pad2(s32, s32);
 extern u16 D_00259970[];
-extern u16 D_00262A50[];
+extern u16 D_00262A50_as_u16_a[];
 extern u16 D_00263100[];
 extern u16 D_00263120[];
 extern u16 D_00263180[];
@@ -56,8 +56,8 @@ extern u16 D_0028E8C8;
 extern u16 D_0028E8D8;
 extern u16 D_0028E910;
 extern u16 D_0029C068[];
-extern u16 D_0029F1F0[];
-extern u16 D_0029F260[];
+extern u16 D_0029F1F0_as_u16_a[];
+extern u16 D_0029F260_as_u16_a[];
 extern s8 enemy_move_end_requested;
 extern void (*jtbl_0028E3F4)();
 extern u8 *reg_a0;
@@ -224,8 +224,8 @@ next_220:
     reg_d1.h[0] >>= 2;
     reg_d0.b[0] -= reg_d1.b[0];
     *(u8 *)(reg_a5 + 0x1F) = reg_d0.b[0];
-    reg_a0 = (u8 *) D_0029F260;
-    reg_a1 = (u8 *) D_0029F1F0;
+    reg_a0 = (u8 *) D_0029F260_as_u16_a;
+    reg_a1 = (u8 *) D_0029F1F0_as_u16_a;
     if (*(u8 *)(reg_a5 + 2) == 0) goto next_240;
     D_0028E44C = (s16 *) reg_a0;
     reg_a0 = reg_a1;
@@ -248,7 +248,7 @@ next_260:
     reg_d2.h[0] = *(u16 *)(reg_a6 + 4);
     reg_d4.w = 0;
     reg_a0 = (u8 *) D_00263240;
-    reg_a1 = (u8 *) D_00262A50;
+    reg_a1 = (u8 *) D_00262A50_as_u16_a;
     reg_d6.h[0] = reg_d1.h[0];
     reg_d7.w = 0xB;
 loop_280:
@@ -311,8 +311,8 @@ next_400:
     reg_a0 += 2;
     *(u16 *)(reg_a6 + 0x36) = *(u16 *)reg_a0;
     reg_a0 += 2;
-    reg_a0 = (u8 *) D_0029F260;
-    reg_a1 = (u8 *) D_0029F1F0;
+    reg_a0 = (u8 *) D_0029F260_as_u16_a;
+    reg_a1 = (u8 *) D_0029F1F0_as_u16_a;
     if (*(u8 *)(reg_a5 + 2) == 0) goto next_420;
     D_0028E44C = (s16 *) reg_a0;
     reg_a0 = reg_a1;
@@ -334,7 +334,7 @@ next_440:
     if (*(u8 *)(reg_a5 + 0x24) != reg_d0.b[0]) goto next_460;
     reg_d5.w = 1;
 next_460:
-    reg_a3 = (u8 *)D_002590F0;
+    reg_a3 = (u8 *)D_002590F0_as_u8_a;
     bits = *(u8 *)reg_a6;
     if (bits & 0x40) {
         *(u8 *)reg_a6 = bits & 0xBF;
@@ -450,7 +450,7 @@ block_rts:
     return;
 next_600:
     *(u8 *)(reg_a5 + 0x23) = *(u8 *)(reg_a5 + 0x34);
-    reg_a4 = (u8 *)D_002594F0;
+    reg_a4 = (u8 *)D_002594F0_as_u8_a;
     reg_d1.h[0] = *(u16 *)(reg_a5 + 0x2C);
     reg_d0.h[0] = reg_d1.h[0];
     reg_d0.h[0] += 4;
@@ -512,8 +512,8 @@ next_820:
     reg_d1.h[0] = reg_d0.h[0];
     goto next_870;
 next_830:
-    reg_a0 = (u8 *) D_0029F260;
-    reg_a1 = (u8 *) D_0029F1F0;
+    reg_a0 = (u8 *) D_0029F260_as_u16_a;
+    reg_a1 = (u8 *) D_0029F1F0_as_u16_a;
     if (*(u8 *)(reg_a5 + 2) == 0) goto next_840;
     D_0028E44C = (s16 *) reg_a0;
     reg_a0 = reg_a1;

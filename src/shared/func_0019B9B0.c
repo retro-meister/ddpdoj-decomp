@@ -1,6 +1,6 @@
 #include "common.h"
 
-extern u16 D_0028E484;
+extern u16 D_0028E484_as_u16;
 extern u8 *reg_a0;
 extern u8 *reg_a1;
 extern u8 *reg_a6;
@@ -10,9 +10,9 @@ void func_0019B9B0(void) {
     reg_d1.h[0] += (*(u16 *)((u8 *)(reg_a1) + (0)));
     reg_a1 += 2;
     reg_d1.h[0] += (*(u16 *)((u8 *)(reg_a1) + (2)));
-    D_0028E484 = reg_d1.h[0];
+    D_0028E484_as_u16 = reg_d1.h[0];
     reg_d1.h[0] = reg_d1.h[1];
-    reg_d1.h[1] = D_0028E484;
+    reg_d1.h[1] = D_0028E484_as_u16;
     reg_d1.h[0] += (*(u16 *)((u8 *)(reg_a1) + (0)));
     reg_a1 += 2;
     reg_d1.h[0] += (*(u16 *)((u8 *)(reg_a1) + (2)));

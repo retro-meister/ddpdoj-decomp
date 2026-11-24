@@ -2,12 +2,12 @@
 
 s32 func_0014E370();                            /* extern */
 extern s32 D_0026E7A0[];
-extern s32 *reg_a0;
+extern s32 *reg_a0_as_s32_p;
 extern u8 *reg_a5;
 extern u8 *reg_a6;
 
 void func_0014FAB0(void) {
-    reg_a0 = D_0026E7A0;
+    reg_a0_as_s32_p = D_0026E7A0;
     func_0014E370();
     (*(u16 *)((u8 *)(reg_a6) + (2))) = (u16) (*(u16 *)((u8 *)(reg_a5) + (0x16)));
     (*(u16 *)((u8 *)(reg_a6) + (4))) = (u16) (*(u16 *)((u8 *)(reg_a5) + (0x18)));

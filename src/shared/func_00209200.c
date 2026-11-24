@@ -2,7 +2,7 @@
 
 s32 func_0011C2B0(void);
 extern u16 D_0028E478;
-extern s8 *reg_a0;
+extern s8 *reg_a0_as_s8_p;
 
 void func_00209200(void) {
     u32 saved;
@@ -14,15 +14,15 @@ void func_00209200(void) {
 loop_1:
     reg_d1.w = 0;
     reg_d0.w = 0;
-    reg_d0.b[0] = *reg_a0;
-    reg_a0 += 1;
-    reg_d1.b[0] = *reg_a0;
-    reg_a0 += 1;
-    reg_a0 += 1;
+    reg_d0.b[0] = *reg_a0_as_s8_p;
+    reg_a0_as_s8_p += 1;
+    reg_d1.b[0] = *reg_a0_as_s8_p;
+    reg_a0_as_s8_p += 1;
+    reg_a0_as_s8_p += 1;
 loop_2:
     reg_d4.w = 0;
-    reg_d4.b[0] = *reg_a0;
-    reg_a0 += 1;
+    reg_d4.b[0] = *reg_a0_as_s8_p;
+    reg_a0_as_s8_p += 1;
     if (reg_d4.b[0] == 0x7F) {
         goto loop_1;
     }

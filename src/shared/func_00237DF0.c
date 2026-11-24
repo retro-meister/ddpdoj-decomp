@@ -17,17 +17,17 @@ extern u16 D_0028E318;
 extern u8 D_0028E368;
 extern u8 D_0028E370;
 extern u16 D_0028E3C0;
-extern u8 D_0028E3F8;
+extern u8 D_0028E3F8_as_u8;
 extern u8 D_0028ED58;
 extern u8 D_0028ED5C;
 extern s32 D_0028ED70;
 extern u8 D_0028ED74;
-extern SaveHeader D_006C58A0;
+extern SaveHeader D_006C58A0_as_SaveHeader;
 extern u16 D_006C58A4[];
 extern u16 D_006C8E56[];
 extern u16 D_006C8E5C[];
 extern u8 D_006CB1D4[];
-extern SaveHeader D_006E5BE0;
+extern SaveHeader D_006E5BE0_as_SaveHeader;
 extern u16 D_006E5BEE[];
 extern u8 *reg_a0;
 extern u8 *reg_a1;
@@ -55,7 +55,7 @@ void func_00237DF0(void) {
     u8 *save_a6;
 
     D_0028E370 = 0;
-    D_0028E3F8 = 0;
+    D_0028E3F8_as_u8 = 0;
     D_0028ED74 = 0;
     D_0028ED70 = 0;
     D_0028E368 = 0;
@@ -76,7 +76,7 @@ void func_00237DF0(void) {
     save_a4 = reg_a4;
     save_a5 = reg_a5;
     save_a6 = reg_a6;
-    D_006E5BE0 = D_006C58A0;
+    D_006E5BE0_as_SaveHeader = D_006C58A0_as_SaveHeader;
     *(u8 *)(reg_a5 + 3) = 1;
     *(u16 *)(reg_a5 + 10) = 0;
     if (D_006C8E56[0] == 0 && D_006C8E5C[0] != 0) {

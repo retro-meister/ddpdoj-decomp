@@ -14,7 +14,7 @@ extern u8 D_00271BE0[];
 extern char D_00289C58[];
 extern s8 D_0028EAE0;
 extern s8 D_0028EAE4;
-extern u8 g_gif_buf[2][0x10000];
+extern u8 g_gif_buf_as_u8_a2_a0x10000[2][0x10000];
 extern u8 *reg_a0;
 extern u8 *reg_a1;
 extern u8 *reg_a2;
@@ -58,7 +58,7 @@ void func_00225450(void) {
     save_a5 = reg_a5;
     save_a6 = reg_a6;
     gfx_draw_color_box(0, 0, 0x1C2, 0xE0, 0x50, 0x60, 1, 1, 1);
-    func_002252E0(g_gif_buf[0]);
+    func_002252E0(g_gif_buf_as_u8_a2_a0x10000[0]);
     text_queue_clear();
     frame_draw_wide_left_panel(0x80);
     gfx_draw_color_box(0xC, 8, 0x70, 0xD0, 0x12C, 0x40, 1, 1, 0x40);

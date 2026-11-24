@@ -23,8 +23,8 @@ s32 vibration_start_pad2();
 extern u8 D_00261AF0[];
 extern u8 D_00265B40[];
 extern u8 D_00265B60[];
-extern u16 D_0028E3A4;
-extern u16 D_0028E3A8;
+extern u16 D_0028E3A4_as_u16;
+extern u16 D_0028E3A8_as_u16;
 extern u16 D_0028E88C;
 extern u16 D_0028E89C;
 extern u16 D_0028E8A0;
@@ -125,8 +125,8 @@ block_11:
                     (*(u16 *)((u8 *)(reg_a5) + (0x1A))) += 4;
                     if ((s32) (*(u16 *)((u8 *)(reg_a5) + (0x1A))) >= 0x1C) {
                         (*(u16 *)((u8 *)(reg_a5) + (0x1A))) = 0x1CU;
-                        D_0028E3A8 = 0;
-                        D_0028E3A4 = 0;
+                        D_0028E3A8_as_u16 = 0;
+                        D_0028E3A4_as_u16 = 0;
                         (*(u8 *)((u8 *)(reg_a5) + (0x16))) = 2U;
                         (*(s16 *)((u8 *)(reg_a5) + (0x1E))) = 0x1020;
                         (*(s16 *)((u8 *)(reg_a5) + (0x20))) = 0x606;

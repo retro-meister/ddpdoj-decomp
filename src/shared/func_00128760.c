@@ -3,7 +3,7 @@
 void func_001286D0(void);
 void func_00128710(void);
 void func_00128830(void);
-extern u8 *D_0028DE98;
+extern u8 *D_0028DE98_as_u8_p;
 extern u32 D_0028DE9C;
 extern u32 D_0028DEA0;
 extern Reg32 D_0028E484;
@@ -13,7 +13,7 @@ extern u8 *reg_a5;
 void func_00128760(void) {
     D_0028DEA0 = reg_d0.w;
     D_0028DE9C = reg_d1.w;
-    D_0028DE98 = reg_a0;
+    D_0028DE98_as_u8_p = reg_a0;
     D_0028E484.w = reg_d1.w;
     reg_d1.h[0] = 0x81;
     reg_d1.h[1] = D_0028E484.h[0];

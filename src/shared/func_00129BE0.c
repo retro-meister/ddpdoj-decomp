@@ -5,8 +5,8 @@ s32 func_00128640();
 extern u32 D_0028DEA4;
 extern u8 D_002962E0[];
 extern u16 D_00299764[];
-extern u16 D_00299768[];
-extern u16 D_0029976A[];
+extern u16 D_00299768_as_u16_a[];
+extern u16 D_0029976A_as_u16_a[];
 extern u16 D_0029976C[];
 extern u16 D_0029976E[];
 extern u8 *reg_a6;
@@ -27,11 +27,11 @@ void func_00129BE0(void) {
     }
     reg_a6 = (u8 *)D_002962E0;
     reg_d7.h[0] = MAIN_OR_DEATH_LABEL(0x45, 0x15D);
-    if (D_00299768[0] == 0) {
+    if (D_00299768_as_u16_a[0] == 0) {
         goto loop_1;
     }
     reg_d7.h[0] = MAIN_OR_DEATH_LABEL(0x6D, 0x225);
-    if (D_0029976A[0] == 0) {
+    if (D_0029976A_as_u16_a[0] == 0) {
         goto loop_1;
     }
     reg_d7.h[0] = MAIN_OR_DEATH_LABEL(0x9F, 0x31F);
@@ -60,11 +60,11 @@ next_3:
     reg_a6 = (u8 *)D_002962E0;
     reg_d2.w = 0x40;
     reg_d7.h[0] = MAIN_OR_DEATH_LABEL(0x45, 0x15D);
-    if (D_00299768[0] == 0) {
+    if (D_00299768_as_u16_a[0] == 0) {
         goto loop_4;
     }
     reg_d7.h[0] = MAIN_OR_DEATH_LABEL(0x6D, 0x225);
-    if (D_0029976A[0] == 0) {
+    if (D_0029976A_as_u16_a[0] == 0) {
         goto loop_4;
     }
     reg_d7.h[0] = MAIN_OR_DEATH_LABEL(0x9F, 0x31F);

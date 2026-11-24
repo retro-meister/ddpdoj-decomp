@@ -1,6 +1,6 @@
 #include "common.h"
-extern s8 D_0028E368;
-extern s8 D_0028ED7C;
+extern s8 D_0028E368_as_s8;
+extern s8 D_0028ED7C_as_s8;
 extern s8 D_0028DF84;
 extern u8 *reg_a5;
 extern void func_00206D70(void);
@@ -27,7 +27,7 @@ static void func_00238910(void)
     u32 saved_d6;
     u32 saved_d7;
 
-    D_0028ED7C = 2;
+    D_0028ED7C_as_s8 = 2;
 
     saved_d0 = reg_d0.w;
     saved_d1 = reg_d1.w;
@@ -39,7 +39,7 @@ static void func_00238910(void)
     saved_d7 = reg_d7.w;
 
     D_0028DF84 = 0;
-    D_0028E368 = 0;
+    D_0028E368_as_s8 = 0;
     reg_a5[3] = 1;
     *(u16 *)(reg_a5 + 0xC) = 0;
 
@@ -111,8 +111,8 @@ void func_00238980(void) {
         break;
     case 16:
         gfx_draw_color_box(0, 0, 0x1C2, 0xE0, 0x50, 0x80, 0xFF, 0xFF, 0xFF);
-        D_0028E368 = 1;
-        D_0028ED7C = 2;
+        D_0028E368_as_s8 = 1;
+        D_0028ED7C_as_s8 = 2;
         func_00206D70();
         reg_d0.h[0] = 20;
         func_002071C0();

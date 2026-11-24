@@ -23,8 +23,8 @@ s32 func_00202140();
 s32 func_00202500();
 extern u16 D_00257D20[];
 extern u8 D_002593F0[];
-extern u8 D_00259570[];
-extern u8 D_00259870[];
+extern u8 D_00259570_as_u8_a[];
+extern u8 D_00259870_as_u8_a[];
 extern s8 D_0028E408;
 extern u16 D_0028E858;
 extern u16 D_0028E85C;
@@ -36,7 +36,7 @@ extern u16 D_0028E8C8;
 extern u16 D_0028E8CC;
 extern s8 enemy_move_end_requested;
 extern u8 *reg_a0;
-extern u16 *reg_a1;
+extern u16 *reg_a1_as_u16_p;
 extern u8 *reg_a4;
 extern u8 *reg_a5;
 extern u8 *reg_a6;
@@ -223,23 +223,23 @@ block_4:
             if ((s32) reg_tmp.w < 0) {
                 reg_d0.w = 0x174;
                 func_001A91A0();
-                reg_a1 = (u16 *)D_00257D20;
+                reg_a1_as_u16_p = (u16 *)D_00257D20;
 loop_19:
-                temp_a0 = *reg_a1;
+                temp_a0 = *reg_a1_as_u16_p;
                 reg_d1.h[0] = temp_a0;
-                reg_a1 += 1;
+                reg_a1_as_u16_p += 1;
                 if ((s16) reg_d1.h[0] != -1) {
-                    reg_d0.h[0] = *reg_a1;
-                    reg_a1 += 1;
+                    reg_d0.h[0] = *reg_a1_as_u16_p;
+                    reg_a1_as_u16_p += 1;
                     func_0013A780();
-                    reg_d0.h[0] = *reg_a1;
-                    reg_a1 += 1;
+                    reg_d0.h[0] = *reg_a1_as_u16_p;
+                    reg_a1_as_u16_p += 1;
                     (*(u8 *)((u8 *)(reg_a0) + (0x1D))) = (u8) reg_d0.b[0];
                     (*(u16 *)((u8 *)(reg_a0) + (0x18))) = (u16) reg_d1.h[0];
-                    (*(u16 *)((u8 *)(reg_a0) + (0x26))) = (u16) *reg_a1;
-                    reg_a1 += 1;
-                    (*(u16 *)((u8 *)(reg_a0) + (0x28))) = (u16) *reg_a1;
-                    reg_a1 += 1;
+                    (*(u16 *)((u8 *)(reg_a0) + (0x26))) = (u16) *reg_a1_as_u16_p;
+                    reg_a1_as_u16_p += 1;
+                    (*(u16 *)((u8 *)(reg_a0) + (0x28))) = (u16) *reg_a1_as_u16_p;
+                    reg_a1_as_u16_p += 1;
                     (*(u16 *)((u8 *)(reg_a0) + (2))) = (*(u16 *)((u8 *)(reg_a6) + (2)));
                     (*(u16 *)((u8 *)(reg_a0) + (4))) = (u16) (*(u16 *)((u8 *)(reg_a6) + (4)));
                     (*(s16 *)((u8 *)(reg_a0) + (0x1E))) = 0x10;
@@ -249,7 +249,7 @@ loop_19:
                     reg_d0.b[0] = (*(u8 *)((u8 *)(reg_a6) + (0x1A)));
                     reg_d0.b[0] *= 4;
                     (*(u8 *)((u8 *)(reg_a0) + (0x1A))) = (u8) reg_d0.b[0];
-                    reg_a1 += 1;
+                    reg_a1_as_u16_p += 1;
                     goto loop_19;
                 }
                 func_0018D580();
@@ -305,7 +305,7 @@ block_24:
                     if ((s16) (*(u16 *)((u8 *)(reg_a6) + (0x62))) > 0x1800) {
                         if (((*(u8 *)((u8 *)(reg_a6) + (0x5E))) == 0) && (D_0028E89C == 0)) {
                             reg_d3.w = 0;
-                            reg_a4 = D_00259570;
+                            reg_a4 = D_00259570_as_u8_a;
                             reg_d3.b[0] = (*(u8 *)((u8 *)(reg_a6) + (0x5A)));
                             reg_d3.b[0] += 1;
                             reg_d3.h[0] &= 0x3E;
@@ -322,7 +322,7 @@ block_24:
                         }
                         if (((*(u8 *)((u8 *)(reg_a6) + (0x7E))) == 0) && (D_0028E89C == 0)) {
                             reg_d3.w = 0;
-                            reg_a4 = D_00259570;
+                            reg_a4 = D_00259570_as_u8_a;
                             reg_d3.b[0] = (*(u8 *)((u8 *)(reg_a6) + (0x7A)));
                             reg_d3.b[0] += 1;
                             reg_d3.h[0] &= 0x3E;
@@ -478,7 +478,7 @@ block_56:
                                 temp_a1_2 = (*(u16 *)((u8 *)(reg_a6) + (4)));
                                 reg_d2.h[0] = temp_a1_2;
                                 reg_d5.w = 0x04000000;
-                                reg_a0 = D_00259870;
+                                reg_a0 = D_00259870_as_u8_a;
                                 reg_d4.w = 0;
                                 reg_d7.b[0] = reg_d1.b[0];
                                 if (!((*(u8 *)((u8 *)(reg_a6) + (0xD5))) & 1)) {

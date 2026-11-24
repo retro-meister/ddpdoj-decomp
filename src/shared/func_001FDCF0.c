@@ -1,6 +1,6 @@
 #include "common.h"
 
-extern void *reg_a6;
+extern void *reg_a6_as_void_p;
 extern void func_001FDBD0(void);
 
 void func_001FDCF0(void)
@@ -8,7 +8,7 @@ void func_001FDCF0(void)
     u8 *object;
 
     reg_d2.w = 0x1E93;
-    object = reg_a6;
+    object = reg_a6_as_void_p;
     reg_d1.h[1] = *(u16 *)(object + 0x02);
     reg_d1.h[0] = *(u16 *)(object + 0x04);
     reg_d1.h[1] += *(u16 *)(object + 0x68);

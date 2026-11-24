@@ -6,8 +6,8 @@ void func_00141640(void);
 void func_001A7E90(void);
 void func_001A8070(void);
 extern u8 D_0028C608[];
-extern u8 D_0028E008;
-extern u8 D_0028E00C;
+extern u8 D_0028E008_as_u8;
+extern u8 D_0028E00C_as_u8;
 extern u16 D_0028E018;
 extern u16 D_0028E01C;
 extern u16 D_0028E028;
@@ -15,17 +15,17 @@ extern u16 D_0028E02C;
 extern u8 D_0028E290;
 extern u8 D_0028E2EC;
 extern s8 D_0028E408;
-extern s16 D_0028E5B0;
+extern s16 D_0028E5B0_as_s16;
 extern u16 D_0028E5F8;
 extern u16 D_0028E5FC;
 extern u16 D_0028E748;
 extern u16 D_0028E750;
-extern s16 D_0028E8C4;
+extern s16 D_0028E8C4_as_s16;
 extern u16 D_0028E910;
 extern u16 D_0028E920;
 extern u16 D_0028E980;
-extern u8 D_0029F1F0[];
-extern u8 D_0029F260[];
+extern u8 D_0029F1F0_as_u8_a[];
+extern u8 D_0029F260_as_u8_a[];
 extern u8 *reg_a0;
 extern u8 *reg_a1;
 
@@ -45,18 +45,18 @@ void func_00122CE0(void) {
         func_0013FD50();
     }
     func_00141640();
-    D_0028E5B0 = 0;
+    D_0028E5B0_as_s16 = 0;
     if (D_0028E920 == 3) goto block_1;
-    reg_a0 = &D_0028E00C;
+    reg_a0 = &D_0028E00C_as_u8;
     reg_d0.h[0] = D_0028E980;
-    reg_a1 = (u8 *)D_0029F260;
+    reg_a1 = (u8 *)D_0029F260_as_u8_a;
     reg_d1.h[0] = D_0028E01C;
     reg_d2.h[0] = D_0028E750;
     reg_d3.h[0] = D_0028E02C;
-    if (0 > D_0028E8C4) {
-        reg_a0 = &D_0028E008;
+    if (0 > D_0028E8C4_as_s16) {
+        reg_a0 = &D_0028E008_as_u8;
         reg_d1.h[0] = D_0028E018;
-        reg_a1 = (u8 *)D_0029F1F0;
+        reg_a1 = (u8 *)D_0029F1F0_as_u8_a;
         reg_d2.h[0] = D_0028E748;
         reg_d3.h[0] = D_0028E028;
     }

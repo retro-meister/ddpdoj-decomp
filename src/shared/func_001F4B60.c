@@ -30,7 +30,7 @@ extern u16 D_0028E2E8;
 extern u16 D_0028E910;
 extern s16 D_00299768[];
 extern s16 D_0029976A[];
-extern s16 D_0029976C[];
+extern s16 D_0029976C_as_s16_a[];
 extern u8 *reg_a0;
 extern u8 *reg_a1;
 extern u8 *reg_a2;
@@ -111,6 +111,6 @@ void func_001F4B60(void) {
     func_001A3020();
     D_00299768[0] = 1;
     D_0029976A[0] = 1;
-    D_0029976C[0] = 1;
+    D_0029976C_as_s16_a[0] = 1;
     func_001F5750();
 }

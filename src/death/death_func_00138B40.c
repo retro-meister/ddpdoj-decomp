@@ -70,11 +70,11 @@ extern s32 D_0028EA74;
 extern s32 g_quad_count;
 extern u16 D_00295E40[];
 extern TextScript death_D_002AB800;
-extern u16 D_002B3950[];
+extern u16 D_002B3950_as_u16_a[];
 extern u8 D_004ECF80[];
 extern u8 death_D_0056A800[];
-extern u8 g_gs_load_image[];
-extern GlyphQuad g_quad_queue[];
+extern u8 g_gs_load_image_as_u8_a[];
+extern GlyphQuad g_quad_queue_as_GlyphQuad_a[];
 extern u8 *reg_a0;
 extern u8 *reg_a5;
 extern u8 *reg_a6;
@@ -89,9 +89,9 @@ s32 death_func_00138BB0(u8 *digits) {
 
 void death_func_00138BE0(u8 *image) {
     D_0028EA74 = 0x2240;
-    sceGsSetDefLoadImage(g_gs_load_image, 0x2240, 8, 0x13, 0, 0, 0x200, 0x100);
+    sceGsSetDefLoadImage(g_gs_load_image_as_u8_a, 0x2240, 8, 0x13, 0, 0, 0x200, 0x100);
     FlushCache(0);
-    sceGsExecLoadImage(g_gs_load_image, image + 0x200);
+    sceGsExecLoadImage(g_gs_load_image_as_u8_a, image + 0x200);
     sceGsSyncPath(0, 0);
 }
 
@@ -109,20 +109,20 @@ void death_func_00138C50(TextScript *script) {
         if (script->frame & 1) {
             shade = 0x80;
         }
-        g_quad_queue[0].attr = shade;
-        g_quad_queue[0].z = 1;
-        g_quad_queue[0].tex = 0x2240;
-        g_quad_queue[0].clut = 0x3836;
-        g_quad_queue[0].alpha = 0x80;
-        g_quad_queue[0].flags = 1;
-        g_quad_queue[0].x0 = 0xB0;
-        g_quad_queue[0].x1 = 0x1C0;
-        g_quad_queue[0].y0 = 0;
-        g_quad_queue[0].y1 = 0xE0;
-        g_quad_queue[0].u0 = 0x110;
-        g_quad_queue[0].v0 = 0;
-        g_quad_queue[0].u1 = 0x200;
-        g_quad_queue[0].v1 = 0xE0;
+        g_quad_queue_as_GlyphQuad_a[0].attr = shade;
+        g_quad_queue_as_GlyphQuad_a[0].z = 1;
+        g_quad_queue_as_GlyphQuad_a[0].tex = 0x2240;
+        g_quad_queue_as_GlyphQuad_a[0].clut = 0x3836;
+        g_quad_queue_as_GlyphQuad_a[0].alpha = 0x80;
+        g_quad_queue_as_GlyphQuad_a[0].flags = 1;
+        g_quad_queue_as_GlyphQuad_a[0].x0 = 0xB0;
+        g_quad_queue_as_GlyphQuad_a[0].x1 = 0x1C0;
+        g_quad_queue_as_GlyphQuad_a[0].y0 = 0;
+        g_quad_queue_as_GlyphQuad_a[0].y1 = 0xE0;
+        g_quad_queue_as_GlyphQuad_a[0].u0 = 0x110;
+        g_quad_queue_as_GlyphQuad_a[0].v0 = 0;
+        g_quad_queue_as_GlyphQuad_a[0].u1 = 0x200;
+        g_quad_queue_as_GlyphQuad_a[0].v1 = 0xE0;
         g_quad_count = 1;
         quad_flush();
         death_func_00138BE0(death_D_0056A800);
@@ -133,20 +133,20 @@ void death_func_00138C50(TextScript *script) {
         }
         u = rand() % 0x110;
         v = rand() % 0x20;
-        g_quad_queue[0].attr = shade;
-        g_quad_queue[0].z = 1;
-        g_quad_queue[0].tex = 0x2240;
-        g_quad_queue[0].clut = 0x383C;
-        g_quad_queue[0].alpha = 0x80;
-        g_quad_queue[0].flags = 1;
-        g_quad_queue[0].x0 = 0xB0;
-        g_quad_queue[0].x1 = 0x1C0;
-        g_quad_queue[0].y0 = 0;
-        g_quad_queue[0].y1 = 0xE0;
-        g_quad_queue[0].u0 = u;
-        g_quad_queue[0].v0 = v;
-        g_quad_queue[0].u1 = u + 0xF0;
-        g_quad_queue[0].v1 = v + 0xE0;
+        g_quad_queue_as_GlyphQuad_a[0].attr = shade;
+        g_quad_queue_as_GlyphQuad_a[0].z = 1;
+        g_quad_queue_as_GlyphQuad_a[0].tex = 0x2240;
+        g_quad_queue_as_GlyphQuad_a[0].clut = 0x383C;
+        g_quad_queue_as_GlyphQuad_a[0].alpha = 0x80;
+        g_quad_queue_as_GlyphQuad_a[0].flags = 1;
+        g_quad_queue_as_GlyphQuad_a[0].x0 = 0xB0;
+        g_quad_queue_as_GlyphQuad_a[0].x1 = 0x1C0;
+        g_quad_queue_as_GlyphQuad_a[0].y0 = 0;
+        g_quad_queue_as_GlyphQuad_a[0].y1 = 0xE0;
+        g_quad_queue_as_GlyphQuad_a[0].u0 = u;
+        g_quad_queue_as_GlyphQuad_a[0].v0 = v;
+        g_quad_queue_as_GlyphQuad_a[0].u1 = u + 0xF0;
+        g_quad_queue_as_GlyphQuad_a[0].v1 = v + 0xE0;
         g_quad_count = 1;
         quad_flush();
     }
@@ -186,7 +186,7 @@ void death_func_00138ED0(TextScript *script) {
             func_001A3020();
             func_0019AB20();
             func_0021C920();
-            head = (ListHead *) D_002B3950;
+            head = (ListHead *) D_002B3950_as_u16_a;
             head->e = 0;
             head->d = 0;
             head->c = 0;

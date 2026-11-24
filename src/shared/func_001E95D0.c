@@ -7,8 +7,8 @@ s32 func_001E9220();
 s32 func_001E9320();
 s32 func_001E9420();
 s32 func_001E94A0();
-extern u16 D_00262A50[];
-extern u16 D_00264160[];
+extern u16 D_00262A50_as_u16_a[];
+extern u16 D_00264160_as_u16_a[];
 extern u16 D_00264180[];
 extern u16 D_0028E89C;
 extern u8 *reg_a1;
@@ -41,7 +41,7 @@ void func_001E95D0(void) {
         (*(s8 *)((u8 *)(reg_a6) + (0x9F))) = 1;
         (*(s8 *)((u8 *)(reg_a6) + (0xBF))) = 1;
         (*(s8 *)((u8 *)(reg_a6) + (0xDF))) = 1;
-        reg_a3 = (u8 *)(D_00264160);
+        reg_a3 = (u8 *)(D_00264160_as_u16_a);
         reg_d1.h[0] = (*(u16 *)((u8 *)(reg_a6) + (0x3A)));
         reg_d2.b[0] = (*(u8 *)((u8 *)(reg_a4) + (0x1B)));
         func_001E9320();
@@ -63,7 +63,7 @@ void func_001E95D0(void) {
         if ((*(u8 *)((u8 *)(reg_a4) + (5))) == 0) {
             reg_d2.h[1] = (*(u16 *)((u8 *)(reg_a6) + (2)));
             reg_d2.h[0] = (*(u16 *)((u8 *)(reg_a6) + (4)));
-            reg_a1 = (u8 *)(D_00262A50);
+            reg_a1 = (u8 *)(D_00262A50_as_u16_a);
             reg_a3 = (u8 *)(D_00264180);
             reg_d6.w = 5;
             do {

@@ -4,7 +4,7 @@ s32 func_001A5A80();
 s32 func_001AEA80();
 s32 func_002075F0();
 extern u8 D_0028E370;
-extern s16 D_0028E598;
+extern s16 D_0028E598_as_s16;
 extern u16 D_0028E91C;
 extern u8 D_0028ED7C;
 extern u8 *reg_a5;
@@ -24,9 +24,9 @@ next_1:
     return;
 block_1:
     reg_a5[3] = 1;
-    D_0028E598 = 1;
+    D_0028E598_as_s16 = 1;
     return;
 block_2:
-    D_0028E598 = 0;
+    D_0028E598_as_s16 = 0;
     func_002075F0();
 }

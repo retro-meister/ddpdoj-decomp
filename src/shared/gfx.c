@@ -258,8 +258,8 @@ extern s8 g_cd_async_busy;
 extern s32 D_0028EA58;
 extern u8 *D_0028EA9C;
 extern s32 D_0029CAB0[];
-extern s32 D_0029CAB4[];
-extern s32 D_0029CB50[];
+extern s32 D_0029CAB4_as_s32_a[];
+extern s32 D_0029CB50_as_s32_a[];
 extern s32 D_0029CB54[];
 extern u8 D_002C4F80[];
 
@@ -289,7 +289,7 @@ void stage_load_step(void) {
         g_cd_async_busy = 1;
         break;
     case 2:
-        cd_read_async(D_00587000, D_0029CB50[D_0028E91C * 4], D_0029CB54[D_0028E91C * 4]);
+        cd_read_async(D_00587000, D_0029CB50_as_s32_a[D_0028E91C * 4], D_0029CB54[D_0028E91C * 4]);
         if (g_cd_async_busy != 0) {
             break;
         }
@@ -297,7 +297,7 @@ void stage_load_step(void) {
         g_cd_async_busy = 1;
         D_0028E350++;
     case 3:
-        cd_read_async(D_002C4F80, D_0029CB50[(D_0028E91C * 2 + 1) * 2], D_0029CB54[(D_0028E91C * 2 + 1) * 2]);
+        cd_read_async(D_002C4F80, D_0029CB50_as_s32_a[(D_0028E91C * 2 + 1) * 2], D_0029CB54[(D_0028E91C * 2 + 1) * 2]);
         if (g_cd_async_busy != 0) {
             break;
         }
@@ -305,7 +305,7 @@ void stage_load_step(void) {
         g_cd_async_busy = 1;
         D_0028E350++;
     case 4:
-        cd_read_async(buffer, D_0029CAB0[(D_0028E91C + 5) * 2], D_0029CAB4[(D_0028E91C + 5) * 2]);
+        cd_read_async(buffer, D_0029CAB0[(D_0028E91C + 5) * 2], D_0029CAB4_as_s32_a[(D_0028E91C + 5) * 2]);
         if (g_cd_async_busy != 0) {
             break;
         }
@@ -340,8 +340,8 @@ void stage_load_step(void) {
 }
 
 extern s16 D_0026F900[];
-extern s16 D_00269140[];
-extern s16 D_002554B0[];
+extern s16 D_00269140_as_s16_a[];
+extern s16 D_002554B0_as_s16_a[];
 
 void clut_upload_defaults(void)
 {
@@ -358,7 +358,7 @@ void clut_upload_defaults(void)
     g_clut_upload_cbp = 0x3832;
     clut_upload((u8 *)D_0058D800, 0, 1);
 
-    source = D_00269140;
+    source = D_00269140_as_s16_a;
     palette = D_0058D800;
     for (colorIndex = 0; colorIndex < 15; colorIndex++) {
         palette[colorIndex] = *source++ | 0x8000;
@@ -367,7 +367,7 @@ void clut_upload_defaults(void)
     g_clut_upload_cbp = 0x3830;
     clut_upload((u8 *)D_0058D800, 0, 1);
 
-    source = D_002554B0;
+    source = D_002554B0_as_s16_a;
     palette = D_0058D800;
     for (colorIndex = 0; colorIndex < 31; colorIndex++) {
         palette[colorIndex] = *source++ | 0x8000;
@@ -377,7 +377,7 @@ void clut_upload_defaults(void)
     clut_upload((u8 *)D_0058D800, 1, 1);
 }
 
-extern u16 D_002B2750[];
+extern u16 D_002B2750_as_u16_a[];
 void func_00219010(void) {
     extern u8 D_0058D800[];
     s32 var_v0;
@@ -391,7 +391,7 @@ void func_00219010(void) {
     s16 temp_t2;
     s32 var_t2;
 
-    var_a0 = (s16 *)(D_002B2750);
+    var_a0 = (s16 *)(D_002B2750_as_u16_a);
     var_a1 = (u8 *)(D_0058D800);
     var_v0 = 0;
     do {
@@ -716,7 +716,7 @@ void func_00219860(void) {
 #pragma push
 #pragma opt_common_subs off
 #pragma opt_propagation off
-extern u32 D_002B4D50[];
+extern u32 D_002B4D50_as_u32_a[];
 
 
 void func_00219930(void) {
@@ -731,14 +731,14 @@ void func_00219930(void) {
     row = 0;
     do {
         x1 = 54;
-        p = D_002B4D50;
+        p = D_002B4D50_as_u32_a;
         p += x1 + row;
         *p = 0;
         x2 = 55;
         idx = x2 + row;
         i++;
         row += 64;
-        p = D_002B4D50;
+        p = D_002B4D50_as_u32_a;
         p += idx;
         *p = 0;
     } while (i < 14);
@@ -765,14 +765,14 @@ void func_00219990(void) {
     row = 0x380;
     do {
         x1 = 54;
-        p = D_002B4D50;
+        p = D_002B4D50_as_u32_a;
         p += x1 + row;
         *p = 0;
         x2 = 55;
         idx = x2 + row;
         i++;
         row += 64;
-        p = D_002B4D50;
+        p = D_002B4D50_as_u32_a;
         p += idx;
         *p = 0;
     } while (i < 27);
@@ -782,11 +782,11 @@ void func_00219990(void) {
 #pragma pop
 #endif
 
-extern u32 D_002B4D50[];
+extern u32 D_002B4D50_as_u32_a[];
 
 void func_002199F0(void) {
     s32 y;
-    u32 *p = D_002B4D50;
+    u32 *p = D_002B4D50_as_u32_a;
     s32 x;
 
     g_quad_count = 0;
@@ -1533,7 +1533,7 @@ typedef struct {
 } ClutEntry;
 
 extern u8 *D_0028EAA0;
-extern ClutEntry *D_0028EAA4;
+extern ClutEntry *D_0028EAA4_as_ClutEntry_p;
 
 void func_0021B840(s32 index, u16 *src) {
     extern sceGsLoadImage g_gs_load_image;
@@ -1552,9 +1552,9 @@ void func_0021B840(s32 index, u16 *src) {
     n = 0;
     i = 0;
     buf = D_005C4C80;
-    w = D_0028EAA4[index].w;
-    h = D_0028EAA4[index].h;
-    data = (u32 *)(D_0028EAA0 + D_0028EAA4[index].offset);
+    w = D_0028EAA4_as_ClutEntry_p[index].w;
+    h = D_0028EAA4_as_ClutEntry_p[index].h;
+    data = (u32 *)(D_0028EAA0 + D_0028EAA4_as_ClutEntry_p[index].offset);
     if (!(data[0] & 0x80000000)) {
         sceGsSetDefLoadImage(&g_gs_load_image, 0x16C0, 8, 0x13, 16, 16, w, h);
         FlushCache(0);

@@ -1,7 +1,7 @@
 #include "common.h"
 
 s32 func_0014E370();
-extern u16 D_0024EBC0[];
+extern u16 D_0024EBC0_as_u16_a[];
 extern u16 D_0024EC80[];
 extern u16 D_0024EEF0[];
 extern u16 D_0026E740[];
@@ -26,7 +26,7 @@ void func_0014F000(void) {
     reg_d1.h[0] += reg_d1.h[0];
     reg_d1.h[0] += reg_d1.h[0];
     reg_d0.h[0] = (reg_d1.h[0] != 0) ? *(u16 *)((u8 *)reg_a0 + ((s16)reg_d1.h[0] & ~1)) : *(u16 *)reg_a0;
-    reg_a0 = (u8 *)(D_0024EBC0);
+    reg_a0 = (u8 *)(D_0024EBC0_as_u16_a);
     (*(u16 *)((u8 *)(reg_a5) + (0x1A))) = (reg_d0.h[0] != 0) ? *(u16 *)((u8 *)reg_a0 + ((s16)reg_d0.h[0] & ~1)) : *(u16 *)reg_a0;
     (*(u16 *)((u8 *)(reg_a5) + (0x1C))) = ((reg_d0.h[0] + 2) != 0) ? *(u16 *)((u8 *)reg_a0 + ((s16)(reg_d0.h[0] + 2) & ~1)) : *(u16 *)reg_a0;
     (*(s16 *)((u8 *)(reg_a5) + (0x1E))) = 2;

@@ -2,8 +2,8 @@
 
 extern s32 func_0018C600(s32, s32, s32);
 extern u8 D_0029CA10[];
-extern s32 D_0029CA14[];
-extern s32 D_0029CA18[];
+extern s32 D_0029CA14_as_s32_a[];
+extern s32 D_0029CA18_as_s32_a[];
 extern s32 D_0029CA3C[];
 extern s32 D_0029CA40[];
 
@@ -21,8 +21,8 @@ void func_0018CBB0(void) {
             *(s32 *)(D_0029CA10 + i * 0x28 + 8) = 0;
         }
     }
-    D_0029CA18[0] = 0;
-    D_0029CA14[0] = 1;
+    D_0029CA18_as_s32_a[0] = 0;
+    D_0029CA14_as_s32_a[0] = 1;
     D_0029CA3C[0] = 1;
     D_0029CA40[0] = 0;
 }

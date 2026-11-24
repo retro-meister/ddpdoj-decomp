@@ -5,7 +5,7 @@ extern u8 D_0026B420[];
 extern u8 D_0026B4A0[];
 extern u8 D_0028E294;
 extern Reg32 D_0028E484;
-extern u8 D_002BB3B0[];
+extern u8 D_002BB3B0_as_u8_a[];
 extern u8 *reg_a0;
 extern u8 *reg_a6;
 
@@ -13,7 +13,7 @@ void func_001A4B60(void) {
     s32 flag;
     u32 tmp;
 
-    reg_a6 = (u8 *)D_002BB3B0;
+    reg_a6 = (u8 *)D_002BB3B0_as_u8_a;
     if (D_0028E294 != 0) {
         reg_d1.h[0] = 0x66C0;
     } else {

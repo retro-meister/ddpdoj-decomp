@@ -6,10 +6,10 @@ extern u16 D_0028E3C0;
 extern u16 D_0028E8A8;
 extern u8 D_0028ED7C;
 extern u8 D_0028ED80;
-extern u32 D_002B6D50[];
+extern u32 D_002B6D50_as_u32_a[];
 extern u32 D_002B6DF4[];
 extern u32 D_002B6E0C[];
-extern u8 *D_0028E484;
+extern u8 *D_0028E484_as_u8_p;
 extern u8 *reg_a0;
 
 void func_001BE0A0(void) {
@@ -49,11 +49,11 @@ loop_2:
     if (((s64) ((s64) (u16) cnt << 0x30) >> 0x30) >= 0) {
         goto loop_2;
     }
-    D_0028E484 = (u8 *)D_002B6D50;
+    D_0028E484_as_u8_p = (u8 *)D_002B6D50_as_u32_a;
     reg_tmp.w += 4;
     reg_tmp.w = (u32) reg_tmp.b[0];
-    D_0028E484 += reg_tmp.w;
-    reg_a0 = (u8 *)(D_0028E484);
+    D_0028E484_as_u8_p += reg_tmp.w;
+    reg_a0 = (u8 *)(D_0028E484_as_u8_p);
     cnt2 = reg_d6.h[0] - 1;
     reg_d6.h[0] = cnt2;
     if (((s64) ((s64) (u16) cnt2 << 0x30) >> 0x30) >= 0) {

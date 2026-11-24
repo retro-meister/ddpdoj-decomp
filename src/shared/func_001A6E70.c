@@ -10,7 +10,7 @@ extern Reg32 D_0028E484;
 extern u16 D_0028E628;
 extern u16 D_0028E62C;
 extern u16 D_0028E630;
-extern u8 D_0028E634;
+extern u8 D_0028E634_as_u8;
 extern u16 D_0028E8C0;
 extern u16 D_0028E8C4;
 
@@ -22,7 +22,7 @@ void func_001A6E70(void) {
     D_0028E484.w = reg_d1.w;
     reg_d1.h[1] = reg_d1.h[0];
     reg_d1.h[0] = D_0028E484.h[1];
-    if ((D_0028E634 & 8) && ((s32) D_0028E630 < 0x11)) {
+    if ((D_0028E634_as_u8 & 8) && ((s32) D_0028E630 < 0x11)) {
         D_0028E628 -= 1;
         if ((s16) D_0028E628 < 0) {
             D_0028E628 = 0;
@@ -45,7 +45,7 @@ void func_001A6E70(void) {
         reg_d3.h[0] = 0x208;
         reg_d1.h[0] -= reg_d6.h[0];
         func_001A54C0();
-        if ((s8) D_0028E634 < 0) {
+        if ((s8) D_0028E634_as_u8 < 0) {
             reg_d0.h[0] = 0xBC;
             reg_d1.h[0] = 0x200;
             func_001A5740();
@@ -67,7 +67,7 @@ void func_001A6E70(void) {
         reg_d3.h[0] = 0x208;
         reg_d1.h[0] += reg_d6.h[0];
         func_001A5600();
-        if ((s8) D_0028E634 < 0) {
+        if ((s8) D_0028E634_as_u8 < 0) {
             reg_d0.h[0] = 0xBC;
             reg_d1.h[0] = 0x1900;
             func_001A5850();

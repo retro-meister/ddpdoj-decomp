@@ -13,7 +13,7 @@ extern u8 D_0026B170[];
 extern u8 D_0026B180[];
 extern u8 D_0028DAC0[];
 extern s32 D_0028DC20;
-extern u16 D_0028E798;
+extern u16 D_0028E798_as_u16;
 extern s16 D_0028E79C;
 extern u16 D_0028E918;
 extern u8 *reg_a0;
@@ -46,7 +46,7 @@ void func_00171A30(void) {
         return;
     }
     if ((*(u16 *)((u8 *)(reg_a4) + (0))) == 0) {
-        if (D_0028E798 != 0) {
+        if (D_0028E798_as_u16 != 0) {
             (*(s16 *)((u8 *)(reg_a4) + (2))) = 1;
             D_0028E79C = 0;
             (*(s16 *)((u8 *)(reg_a6) + (0))) = 0;

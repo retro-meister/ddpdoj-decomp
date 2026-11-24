@@ -4,8 +4,8 @@ extern s32 D_0026C010[];
 extern u8 D_0028E388;
 extern u8 D_0028ED80;
 extern u8 D_006E5C08[];
-extern s32 *reg_a0;
-extern u16 *reg_a1;
+extern s32 *reg_a0_as_s32_p;
+extern u16 *reg_a1_as_u16_p;
 extern u8 *reg_a2;
 
 void func_001AAB90(void)
@@ -19,6 +19,6 @@ void func_001AAB90(void)
     reg_a2 = (u8 *)D_0026C010;
     reg_d0.h[0] += reg_d0.h[0];
     reg_d0.h[0] += reg_d0.h[0];
-    *reg_a0 = *(s32 *)(reg_a2 + reg_d0.h[0]);
-    *reg_a1 = reg_d0.h[0];
+    *reg_a0_as_s32_p = *(s32 *)(reg_a2 + reg_d0.h[0]);
+    *reg_a1_as_u16_p = reg_d0.h[0];
 }

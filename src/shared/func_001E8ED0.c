@@ -5,12 +5,12 @@ typedef struct WorkReg {
     s16 unk2;
 } WorkReg;
 
-extern WorkReg *reg_a4;
-extern void *reg_a6;
+extern WorkReg *reg_a4_as_WorkReg_p;
+extern void *reg_a6_as_void_p;
 extern void func_001E8EF0(void);
 
 void func_001E8ED0(void) {
-    reg_a4->unk2 = 1;
-    *(s16 *)((u8 *)reg_a6 + 0x132) = 0;
+    reg_a4_as_WorkReg_p->unk2 = 1;
+    *(s16 *)((u8 *)reg_a6_as_void_p + 0x132) = 0;
     func_001E8EF0();
 }

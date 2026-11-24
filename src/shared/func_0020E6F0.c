@@ -2,13 +2,13 @@
 
 extern u16 D_0028E098;
 extern u16 D_0028E0A8;
-extern Reg32 D_0028E478;
+extern Reg32 D_0028E478_as_Reg32;
 extern u16 D_0028E5A8;
 extern u16 D_0028E5AC;
 extern u8 D_0028E855;
 extern u16 D_0028E928;
 extern u16 D_00299764[];
-extern u8 D_002BD440[];
+extern u8 D_002BD440_as_u8_a[];
 extern u8 *reg_a1;
 extern u8 *reg_a2;
 extern u8 *reg_a5;
@@ -32,7 +32,7 @@ loop_6:
     if ((s16) --reg_d7.h[0] >= 0) goto loop_6;
     *(u16 *) (reg_a1 + 0xE) = reg_d5.h[0];
 next_10:
-    reg_a5 = (u8 *)D_002BD440;
+    reg_a5 = (u8 *)D_002BD440_as_u8_a;
     reg_d7.h[0] = 0x31;
     goto loop_20;
 skip_2:
@@ -49,9 +49,9 @@ loop_20:
     if ((s32) reg_d3.h[0] > (s32) reg_d4.h[0]) goto skip_2;
     reg_d5.h[0] -= *(u16 *) (reg_a5 + 0x16);
     if ((s32) reg_d5.h[0] > (s32) reg_d2.h[0]) goto skip_2;
-    D_0028E478.h[0] = reg_d4.h[0];
+    D_0028E478_as_Reg32.h[0] = reg_d4.h[0];
     reg_d4.h[0] = reg_d4.h[1];
-    reg_d4.h[1] = D_0028E478.h[0];
+    reg_d4.h[1] = D_0028E478_as_Reg32.h[0];
     reg_d4.h[0] += reg_d6.h[0];
     reg_d5.h[0] = reg_d4.h[0];
     reg_d4.h[0] -= *(u16 *) (reg_a5 + 0x12);
@@ -59,15 +59,15 @@ loop_20:
     reg_d5.h[0] += *(u16 *) (reg_a5 + 0x10);
     if ((s32) reg_d1.h[0] > (s32) reg_d5.h[0]) goto skip_2;
     if (reg_d4.h[0] >= 0x9800) goto skip_2;
-    D_0028E478.h[0] = reg_d4.h[0];
+    D_0028E478_as_Reg32.h[0] = reg_d4.h[0];
     reg_d4.h[0] = reg_d4.h[1];
-    reg_d4.h[1] = D_0028E478.h[0];
+    reg_d4.h[1] = D_0028E478_as_Reg32.h[0];
     if (!(*(u8 *) (reg_a5 + 1) & 0x20)) goto skip_2;
     if (*(s16 *) (reg_a5 + 0x18) < 0) goto next_60;
     reg_d5.h[0] = *(u16 *) (reg_a1 + 0xE);
-    D_0028E478.h[0] = reg_d4.h[0];
+    D_0028E478_as_Reg32.h[0] = reg_d4.h[0];
     reg_d4.h[0] = reg_d4.h[1];
-    reg_d4.h[1] = D_0028E478.h[0];
+    reg_d4.h[1] = D_0028E478_as_Reg32.h[0];
     if (!((s32) *(u16 *) (reg_a1 + 0x10) > (s32) reg_d4.h[0])) goto next_60;
     *(u16 *) (reg_a1 + 0) |= 0x1001;
     *(u16 *) (reg_a1 + 0xC) = 0;

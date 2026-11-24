@@ -1,10 +1,10 @@
 #include "common.h"
 
 extern s8 D_0028E408;
-extern u16 D_0028E7A0;
+extern u16 D_0028E7A0_as_u16;
 
 void func_001719B0(void) {
-    if (D_0028E7A0 != 0) {
+    if (D_0028E7A0_as_u16 != 0) {
         D_0028E408 = 1;
         return;
     }

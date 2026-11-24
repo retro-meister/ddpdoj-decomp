@@ -11,7 +11,7 @@ extern s8 D_0028EAC8;
 extern s8 D_0028EACC;
 extern s8 D_0028EB04;
 extern s32 D_0028EB90;
-extern u8 D_0028EC3C;
+extern u8 D_0028EC3C_as_u8;
 extern u8 *reg_a0;
 
 void func_002260F0(void) {
@@ -46,7 +46,7 @@ void func_002260F0(void) {
             gfx_draw_color_box(0xC, 8, 0x40, 0xD0, 0x12C, alpha, 1, 1, 0x40);
         }
         if (D_0028EACC >= 0x40) {
-            if (D_0028EC3C != 0 && (u32)(D_0028EC3C - 1) > 1 && (u32)(D_0028EC3C - 5) > 1) {
+            if (D_0028EC3C_as_u8 != 0 && (u32)(D_0028EC3C_as_u8 - 1) > 1 && (u32)(D_0028EC3C_as_u8 - 5) > 1) {
                 reg_a0 = (u8 *)D_0028DDA8;
                 func_002228D0(0x36, 8);
             }

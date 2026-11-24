@@ -20,7 +20,7 @@ extern void func_002035F0(void);
 extern void vibration_start_pad1(s32 a, s32 b);
 extern void vibration_start_pad2(s32 a, s32 b);
 extern void func_0021B840(s32 a, s32 b);
-extern Pair D_00271C60[];
+extern Pair D_00271C60_as_Pair_a[];
 extern s8 D_0028E250;
 extern s8 D_0028E254;
 extern u8 D_0028E27C;
@@ -36,18 +36,18 @@ extern u16 D_0028E910;
 #ifdef DEATH_LABEL
 extern u8 death_D_00290DC0;
 #endif
-extern u8 D_0028E9EC;
+extern u8 D_0028E9EC_as_u8;
 extern s8 D_0028EAE0;
 extern s8 D_0028EAE4;
 extern s32 D_0028EB90;
-extern s8 D_0028EBBC;
+extern s8 D_0028EBBC_as_s8;
 extern s8 D_0028EBD0;
-extern u32 D_0057CC60[];
-extern u32 D_0057CC70[];
+extern u32 D_0057CC60_as_u32_a[];
+extern u32 D_0057CC70_as_u32_a[];
 extern s8 D_0068DD02[];
 s32 func_0018CAD0();
 s32 vibration_resume();
-extern s8 D_0028E364;
+extern s8 D_0028E364_as_s8;
 extern u8 D_0028E36C;
 extern u8 D_0028ED74;
 s32 func_00224A30();
@@ -62,7 +62,7 @@ extern void gfx_draw_color_box(s32 x, s32 y, s32 w, s32 h, s32 depth, s64 alpha,
 extern s16 D_00271C8C[];
 extern s16 D_00271C90[];
 extern s16 D_0028EBC8;
-extern s8 D_0028EBCC;
+extern s8 D_0028EBCC_as_s8;
 extern void text_queue_clear(void);
 extern void frame_draw_left_panel(s32 level);
 extern void text_flush(void);
@@ -84,10 +84,10 @@ extern s8 D_0028EB0C;
 void func_00223550(void) {
     u32 pad;
 
-    if (D_0028EBBC != 0) {
-        D_0028EBBC--;
+    if (D_0028EBBC_as_s8 != 0) {
+        D_0028EBBC_as_s8--;
     }
-    if (D_0028EBBC == 0 && (D_0057CC70[D_0028E31C] & 0x800)) {
+    if (D_0028EBBC_as_s8 == 0 && (D_0057CC70_as_u32_a[D_0028E31C] & 0x800)) {
         func_0018D4B0();
         D_0028E36C++;
         return;
@@ -97,7 +97,7 @@ void func_00223550(void) {
     }
     switch (D_0028EBD0) {
     case 1:
-        pad = D_0057CC60[D_0028E31C];
+        pad = D_0057CC60_as_u32_a[D_0028E31C];
         if (pad & 0x8000) {
             func_0018D4C0();
             D_0068DD02[0]--;
@@ -108,7 +108,7 @@ void func_00223550(void) {
                 D_0028E354 &= 1;
             }
             D_0068DD02[0] = D_0028E354;
-            D_0028E9EC = 1;
+            D_0028E9EC_as_u8 = 1;
         } else if (pad & 0x2000) {
             func_0018D4C0();
             D_0068DD02[0]++;
@@ -119,11 +119,11 @@ void func_00223550(void) {
                 D_0028E354 &= 1;
             }
             D_0068DD02[0] = D_0028E354;
-            D_0028E9EC = 1;
+            D_0028E9EC_as_u8 = 1;
         }
         break;
     case 2:
-        if (D_0057CC60[D_0028E31C] & 0xA000) {
+        if (D_0057CC60_as_u32_a[D_0028E31C] & 0xA000) {
             func_0018D4C0();
             D_0028E27C++;
             D_0028E27C &= 1;
@@ -134,7 +134,7 @@ void func_00223550(void) {
         }
         break;
     case 3:
-        pad = D_0057CC60[D_0028E31C];
+        pad = D_0057CC60_as_u32_a[D_0028E31C];
         if (pad & 0x8000) {
             func_0018D4C0();
             D_0028E32C--;
@@ -142,7 +142,7 @@ void func_00223550(void) {
                 D_0028E32C = 5;
             }
             if (D_0028E32C != 5) {
-                func_0021B840(D_00271C60[D_0028E32C].a, D_00271C60[D_0028E32C].b);
+                func_0021B840(D_00271C60_as_Pair_a[D_0028E32C].a, D_00271C60_as_Pair_a[D_0028E32C].b);
             }
         } else if (pad & 0x2000) {
             func_0018D4C0();
@@ -151,19 +151,19 @@ void func_00223550(void) {
                 D_0028E32C = 0;
             }
             if (D_0028E32C != 5) {
-                func_0021B840(D_00271C60[D_0028E32C].a, D_00271C60[D_0028E32C].b);
+                func_0021B840(D_00271C60_as_Pair_a[D_0028E32C].a, D_00271C60_as_Pair_a[D_0028E32C].b);
             }
         }
         break;
     case 4:
-        if (D_0057CC60[D_0028E31C] & 0xA000) {
+        if (D_0057CC60_as_u32_a[D_0028E31C] & 0xA000) {
             func_0018D4C0();
             D_0028E28C++;
             D_0028E28C &= 1;
         }
         break;
     case 5:
-        if (D_0057CC70[D_0028E31C] & 0x20) {
+        if (D_0057CC70_as_u32_a[D_0028E31C] & 0x20) {
             func_0018D4B0();
             D_0028EB90 = 0x80;
             D_0028EAE4 = D_0028E254;
@@ -173,21 +173,21 @@ void func_00223550(void) {
         break;
     case 6:
     case 7:
-        if (D_0057CC70[D_0028E31C] & 0x20) {
+        if (D_0057CC70_as_u32_a[D_0028E31C] & 0x20) {
             func_0018D4B0();
             D_0028EBC4 = 1;
             D_0028E36C = 5;
         }
         break;
     case 8:
-        if (D_0057CC60[D_0028E31C] & 0xA000) {
+        if (D_0057CC60_as_u32_a[D_0028E31C] & 0xA000) {
             func_0018D4C0();
             D_0028E324++;
             D_0028E324 &= 1;
         }
         break;
     case 9:
-        pad = D_0057CC60[D_0028E31C];
+        pad = D_0057CC60_as_u32_a[D_0028E31C];
         if (pad & 0x8000) {
             func_0018D4C0();
             D_0028E328--;
@@ -201,7 +201,7 @@ void func_00223550(void) {
                 D_0028E328 = 1;
             }
         }
-        if (D_0028E378 != 0xFF && (D_0057CC70[D_0028E31C] & 0x20)) {
+        if (D_0028E378 != 0xFF && (D_0057CC70_as_u32_a[D_0028E31C] & 0x20)) {
             reg_d6.h[0] = 1;
             reg_d7.h[0] = D_0028E328;
             if (reg_d7.h[0] == 5) {
@@ -218,7 +218,7 @@ void func_00223550(void) {
 void func_00223A60(void) {
     D_0028E36C = 0;
     func_0018CAD0();
-    D_0028E364 = 0x3C;
+    D_0028E364_as_s8 = 0x3C;
     vibration_resume();
     if (D_0028ED74 == 3) {
         D_0028ED74 = 1;
@@ -228,7 +228,7 @@ void func_00223A60(void) {
 void func_00223AA0(void) {
     u32 buttons;
 
-    buttons = D_0057CC70[D_0028E31C];
+    buttons = D_0057CC70_as_u32_a[D_0028E31C];
     if (buttons & 0x20) {
         if (D_0028EBC4 == 0) {
             if (D_0028ED80 == 0 && D_0028ED7C != 2) {
@@ -273,7 +273,7 @@ s32 func_00223BE0(void) {
 
     if (D_0028ED80 == 0) { temp_s0 = 8; } else { temp_s0 = 8; }
     if (D_0028ED80 == 0) {
-        temp_v1 = D_0057CC60[D_0028E31C];
+        temp_v1 = D_0057CC60_as_u32_a[D_0028E31C];
         if (temp_v1 & 0x1000) {
             func_0018D4D0();
             D_0028EBD0 -= 1;
@@ -298,7 +298,7 @@ s32 func_00223BE0(void) {
         }
         goto block_21;
     }
-    temp_v1_2 = D_0057CC60[D_0028E31C];
+    temp_v1_2 = D_0057CC60_as_u32_a[D_0028E31C];
     if (temp_v1_2 & 0x1000) {
         func_0018D4D0();
         D_0028EBD0 -= 1;
@@ -322,13 +322,13 @@ block_21:
 void func_00223D70(void) {
     s32 x;
 
-    switch (D_0028EBCC) {
+    switch (D_0028EBCC_as_s8) {
     case 0:
         break;
     case 1:
         D_0028EBC8 += 4;
         if (D_0028EBC8 >= 0x40) {
-            D_0028EBCC = 0;
+            D_0028EBCC_as_s8 = 0;
             D_0028EBC8 = 0x40;
         }
         break;
@@ -336,7 +336,7 @@ void func_00223D70(void) {
         D_0028EBC8 -= 4;
         if (D_0028EBC8 <= 0) {
             D_0028EBC8 = 0;
-            D_0028EBCC = 0;
+            D_0028EBCC_as_s8 = 0;
         }
         break;
     }

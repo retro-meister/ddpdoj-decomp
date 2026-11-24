@@ -14,7 +14,7 @@ extern void func_002260F0(void);
 extern void func_00227000(void);
 extern void func_0022AA20(void);
 extern u8 *D_00271CC0[];
-extern Point D_00271CE0[];
+extern Point D_00271CE0_as_Point_a[];
 extern s32 D_0028EAC4;
 extern s8 D_0028EACC;
 extern u8 *reg_a0;
@@ -71,7 +71,7 @@ void func_00225EF0(void) {
             alpha = D_0028EAC4 * 2;
             for (i = 0; i < 3; i++) {
                 reg_a0 = D_00271CC0[i];
-                glyph_queue_add(D_00271CE0[i].x, D_00271CE0[i].y, 0x12C, 0, 0x80, alpha, 1);
+                glyph_queue_add(D_00271CE0_as_Point_a[i].x, D_00271CE0_as_Point_a[i].y, 0x12C, 0, 0x80, alpha, 1);
             }
             glyph_queue_flush();
         }

@@ -10,7 +10,7 @@ extern u32 D_0028E544;
 extern u32 D_0028E548;
 extern u32 D_0028E54C;
 extern u32 D_0028E550;
-extern void *D_0028E554;
+extern void *D_0028E554_as_void_p;
 extern u8 *D_0028E558;
 extern u8 *D_0028E55C;
 extern u8 *D_0028E560;
@@ -42,7 +42,7 @@ void func_0020A040(void) {
     D_0028E560 = reg_a3;
     D_0028E55C = reg_a4;
     D_0028E558 = reg_a5;
-    D_0028E554 = reg_a6;
+    D_0028E554_as_void_p = reg_a6;
     reg_d7.w = 0;
     reg_d1.w = 1;
     reg_a2 = (u8 *)D_00250E00;

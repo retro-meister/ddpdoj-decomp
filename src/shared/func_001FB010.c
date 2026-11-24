@@ -7,7 +7,7 @@ s32 func_002032A0();
 extern u16 D_00265DE0[];
 extern s8 D_0028E408;
 extern u8 *reg_a0;
-extern u16 *reg_a4;
+extern u16 *reg_a4_as_u16_p;
 extern u8 *reg_a6;
 
 void func_001FB010(u16 arg0) {
@@ -62,13 +62,13 @@ block_9:
         }
     }
     (*(u8 *)((u8 *)(reg_a6) + (0x1B))) = 0x32U;
-    reg_a4 = D_00265DE0;
+    reg_a4_as_u16_p = D_00265DE0;
 loop_12:
-    reg_d1.h[0] = *reg_a4;
-    reg_a4 += 1;
+    reg_d1.h[0] = *reg_a4_as_u16_p;
+    reg_a4_as_u16_p += 1;
     if ((s16) reg_d1.h[0] != -1) {
-        reg_d2.h[0] = *reg_a4;
-        reg_a4 += 1;
+        reg_d2.h[0] = *reg_a4_as_u16_p;
+        reg_a4_as_u16_p += 1;
         if ((s16) reg_d1.h[0] >= (s16) reg_d0.h[0]) {
             (*(u8 *)((u8 *)(reg_a6) + (0x1B))) = (u8) reg_d2.b[0];
         } else {

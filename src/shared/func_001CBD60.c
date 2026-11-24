@@ -12,7 +12,7 @@ extern u16 D_002590F0[];
 extern u8 D_00263000[];
 extern u8 D_00263030[];
 extern u8 D_002630D0[];
-extern s16 D_0028E894;
+extern s16 D_0028E894_as_s16;
 extern u16 D_0028E910;
 extern u16 D_0028E91C;
 extern s16 D_00299768[];
@@ -82,7 +82,7 @@ void func_001CBD60(void) {
         (*(u8 *)((u8 *)(reg_a5) + (0x3D))) = (u8) reg_d2.b[0];
         reg_a0 = D_002630D0;
         func_0013B2E0();
-        D_0028E894 = 1;
+        D_0028E894_as_s16 = 1;
         func_0018DAD0();
         D_00299768[0] = 1;
         if (D_0028E910 != 0) {

@@ -1,9 +1,9 @@
 #include "common.h"
 
-extern s8 *reg_a6;
-extern s8 *reg_a0;
+extern s8 *reg_a6_as_s8_p;
+extern s8 *reg_a0_as_s8_p;
 
 void func_0014EF80(void) {
-    reg_a6[0x1F] = *reg_a0;
-    reg_a0 += 1;
+    reg_a6_as_s8_p[0x1F] = *reg_a0_as_s8_p;
+    reg_a0_as_s8_p += 1;
 }

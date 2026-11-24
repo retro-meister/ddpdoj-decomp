@@ -1,19 +1,19 @@
 #include "common.h"
 
 s32 func_001AB500(u16);
-extern s16 D_0028E750;
-extern u8 D_002BAF30[];
+extern s16 D_0028E750_as_s16;
+extern u8 D_002BAF30_as_u8_a[];
 extern u8 *reg_a0;
 
 void func_001AB520(void) {
     u8 *temp_s0;
     u16 temp_a0;
 
-    temp_a0 = D_0028E750;
+    temp_a0 = D_0028E750_as_s16;
     if (temp_a0 != 9) {
         temp_s0 = reg_a0;
-        D_0028E750 = temp_a0 + 1;
-        reg_a0 = D_002BAF30;
+        D_0028E750_as_s16 = temp_a0 + 1;
+        reg_a0 = D_002BAF30_as_u8_a;
         func_001AB500(temp_a0);
         reg_a0 = temp_s0;
     }

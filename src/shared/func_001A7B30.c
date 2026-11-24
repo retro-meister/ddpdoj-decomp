@@ -2,11 +2,11 @@
 
 s32 func_0019C670();
 extern u8 D_0026BFA0[];
-extern u32 D_0028E63C;
+extern u32 D_0028E63C_as_u32;
 extern u8 *reg_a0;
 
 void func_001A7B30(void) {
-    reg_d0.w = D_0028E63C;
+    reg_d0.w = D_0028E63C_as_u32;
     reg_d1.w = 0x0E000C00;
     reg_d3.h[0] = 0x410;
     reg_d4.h[0] = 0x10;

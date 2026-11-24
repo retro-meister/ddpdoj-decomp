@@ -2,8 +2,8 @@
 
 extern void display_set_offset(s8, s8);
 extern void func_0021B840(s32, s32);
-extern s32 D_00271C60[];
-extern s32 D_00271C64[];
+extern s32 D_00271C60_as_s32_a[];
+extern s32 D_00271C64_as_s32_a[];
 extern s8 D_0028E250;
 extern s8 D_0028E254;
 extern u16 D_0028E32C;
@@ -20,6 +20,6 @@ void func_00235820(void)
     if (selection != 5) {
         s32 tableIndex = (selection & 0xFFFF) * 2;
 
-        func_0021B840(D_00271C60[tableIndex], D_00271C64[tableIndex]);
+        func_0021B840(D_00271C60_as_s32_a[tableIndex], D_00271C64_as_s32_a[tableIndex]);
     }
 }

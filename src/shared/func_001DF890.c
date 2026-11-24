@@ -2,13 +2,13 @@
 
 typedef void (*Fn)();
 
-extern u8 D_00259970[];
+extern u8 D_00259970_as_u8_a[];
 extern u8 D_00263940[];
 extern u8 D_00263960[];
 extern u8 D_002639A0[];
 extern u8 D_002639B0[];
-extern u8 D_0029F1F0[];
-extern u8 D_0029F260[];
+extern u8 D_0029F1F0_as_u8_a[];
+extern u8 D_0029F260_as_u8_a[];
 s32 func_00129280();
 s32 func_00129320();
 s32 func_001293C0();
@@ -47,7 +47,7 @@ s32 func_002027A0();
 s32 func_00202C50();
 s32 vibration_start_pad1();
 s32 vibration_start_pad2();
-extern u8 *D_0028E44C;
+extern u8 *D_0028E44C_as_u8_p;
 extern Reg32 D_0028E484;
 extern u16 D_0028E88C;
 extern u16 D_0028E894;
@@ -241,18 +241,18 @@ next_400:
     (*(u8 *)((u8 *)(reg_a5) + (0x29))) = (*(u8 *)((u8 *)(reg_a5) + (0x28)));
     (*(u16 *)((u8 *)(reg_a5) + (0x20))) += 4;
     if ((*(u16 *)((u8 *)(reg_a5) + (0x20))) != 0x24) goto block_d;
-    reg_a0 = (u8 *)D_0029F260;
-    reg_a1 = (u8 *)D_0029F1F0;
+    reg_a0 = (u8 *)D_0029F260_as_u8_a;
+    reg_a1 = (u8 *)D_0029F1F0_as_u8_a;
     if ((*(u8 *)((u8 *)(reg_a5) + (2))) == 0) goto next_440;
-    D_0028E44C = reg_a0;
+    D_0028E44C_as_u8_p = reg_a0;
     reg_a0 = reg_a1;
-    reg_a1 = (u8 *)D_0028E44C;
+    reg_a1 = (u8 *)D_0028E44C_as_u8_p;
 next_440:
     if ((*(s16 *)reg_a0) < 0) goto next_460;
     if ((*(s16 *)reg_a1) >= 0) goto next_490;
-    D_0028E44C = reg_a0;
+    D_0028E44C_as_u8_p = reg_a0;
     reg_a0 = reg_a1;
-    reg_a1 = (u8 *)D_0028E44C;
+    reg_a1 = (u8 *)D_0028E44C_as_u8_p;
 next_460:
     reg_a4 = reg_a0;
     reg_d2.h[0] = (*(u16 *)((u8 *)(reg_a0) + (2)));
@@ -264,7 +264,7 @@ next_460:
     reg_d2.h[1] = (*(u16 *)((u8 *)(reg_a6) + (2)));
     reg_d2.h[0] = (*(u16 *)((u8 *)(reg_a6) + (4)));
     reg_d4.w = 0;
-    reg_a0 = (u8 *)D_00259970;
+    reg_a0 = (u8 *)D_00259970_as_u8_a;
     if ((*(u8 *)((u8 *)(reg_a5) + (0x1F))) == 0) goto next_475;
     reg_d5.h[0] = reg_d1.h[0];
     reg_d5.h[0] -= 0xC;

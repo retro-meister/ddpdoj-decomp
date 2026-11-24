@@ -72,14 +72,14 @@ extern SpriteEntry g_text_queue[];
 extern GlyphCacheEntry D_00583FD8[];
 extern SpriteEntry g_overlay_queue[];
 extern void *g_dma_gif;
-extern u8 g_gif_buf[2][0x10000];
+extern u8 g_gif_buf_as_u8_a2_a0x10000[2][0x10000];
 extern QuadOffsets D_0026F860;
 extern s8 g_cd_async_state;
 extern s8 g_cd_async_busy;
 extern u32 g_cd_total_bytes_read;
 extern s8 g_cd_retry_timer;
 extern u32 g_cd_last_read_size;
-extern sceCdlFILE g_cd_file;
+extern sceCdlFILE g_cd_file_as_sceCdlFILE;
 
 void font_upload_palettes(void);
 void font_init_palettes(void);
@@ -661,9 +661,9 @@ void text_flush_rects(void)
     if (g_text_queue_count == 0) {
         return;
     }
-    font_build_gs_setup_packet(g_gif_buf[0]);
+    font_build_gs_setup_packet(g_gif_buf_as_u8_a2_a0x10000[0]);
     FlushCache(0);
-    sceDmaSend(g_dma_gif, g_gif_buf[0]);
+    sceDmaSend(g_dma_gif, g_gif_buf_as_u8_a2_a0x10000[0]);
     sceGsSyncPath(0, 0);
 
     bufferIndex = 0;
@@ -675,7 +675,7 @@ void text_flush_rects(void)
             batchCount = remainingEntries;
         }
 
-        packet = g_gif_buf[bufferIndex];
+        packet = g_gif_buf_as_u8_a2_a0x10000[bufferIndex];
         text_build_rect_packet((Qword *)packet, firstEntry, batchCount);
         sceGsSyncPath(0, 0);
         FlushCache(0);
@@ -1064,9 +1064,9 @@ void text_flush(void)
     if (g_text_queue_count == 0) {
         return;
     }
-    font_build_gs_setup_packet(g_gif_buf[0]);
+    font_build_gs_setup_packet(g_gif_buf_as_u8_a2_a0x10000[0]);
     FlushCache(0);
-    sceDmaSend(g_dma_gif, g_gif_buf[0]);
+    sceDmaSend(g_dma_gif, g_gif_buf_as_u8_a2_a0x10000[0]);
     sceGsSyncPath(0, 0);
 
     bufferIndex = 0;
@@ -1078,7 +1078,7 @@ void text_flush(void)
             batchCount = remainingEntries;
         }
 
-        packet = g_gif_buf[bufferIndex];
+        packet = g_gif_buf_as_u8_a2_a0x10000[bufferIndex];
         text_build_quad_packet((Qword *)packet, firstEntry, batchCount);
         sceGsSyncPath(0, 0);
         FlushCache(0);
@@ -1210,9 +1210,9 @@ void overlay_flush(void)
     if (g_overlay_queue_count == 0) {
         return;
     }
-    font_build_gs_setup_packet(g_gif_buf[0]);
+    font_build_gs_setup_packet(g_gif_buf_as_u8_a2_a0x10000[0]);
     FlushCache(0);
-    sceDmaSend(g_dma_gif, g_gif_buf[0]);
+    sceDmaSend(g_dma_gif, g_gif_buf_as_u8_a2_a0x10000[0]);
     sceGsSyncPath(0, 0);
 
     bufferIndex = 0;
@@ -1224,7 +1224,7 @@ void overlay_flush(void)
             batchCount = remainingEntries;
         }
 
-        packet = g_gif_buf[bufferIndex];
+        packet = g_gif_buf_as_u8_a2_a0x10000[bufferIndex];
         overlay_build_quad_packet((Qword *)packet, firstEntry, batchCount);
         sceGsSyncPath(0, 0);
         FlushCache(0);
@@ -1342,7 +1342,7 @@ void overlay_build_quad_packet(Qword *pkt, s32 startIndex, s32 count)
 }
 
 void gfx_draw_shaded_box(s32 x, s32 y, s32 w, s32 h, s32 depth, s32 alpha) {
-    Qword *packet = (Qword *)g_gif_buf[0];
+    Qword *packet = (Qword *)g_gif_buf_as_u8_a2_a0x10000[0];
 
     packet[0].q = 0;
     packet[0].w[0] = 0x1000000C;
@@ -1389,12 +1389,12 @@ void gfx_draw_shaded_box(s32 x, s32 y, s32 w, s32 h, s32 depth, s32 alpha) {
     packet[13].q = 0;
     packet[13].w[0] = 0x70000000;
     FlushCache(0);
-    sceDmaSend(g_dma_gif, g_gif_buf[0]);
+    sceDmaSend(g_dma_gif, g_gif_buf_as_u8_a2_a0x10000[0]);
     sceGsSyncPath(0, 0);
 }
 
 void gfx_draw_color_box(s32 x, s32 y, s32 w, s32 h, s32 depth, s32 alpha, s32 r, s32 g, s32 b) {
-    Qword *packet = (Qword *)g_gif_buf[0];
+    Qword *packet = (Qword *)g_gif_buf_as_u8_a2_a0x10000[0];
 
     packet[0].q = 0;
     packet[0].w[0] = 0x1000000C;
@@ -1441,7 +1441,7 @@ void gfx_draw_color_box(s32 x, s32 y, s32 w, s32 h, s32 depth, s32 alpha, s32 r,
     packet[13].q = 0;
     packet[13].w[0] = 0x70000000;
     FlushCache(0);
-    sceDmaSend(g_dma_gif, g_gif_buf[0]);
+    sceDmaSend(g_dma_gif, g_gif_buf_as_u8_a2_a0x10000[0]);
     sceGsSyncPath(0, 0);
 }
 
@@ -1452,16 +1452,16 @@ void cd_load_file(void *destination, const char *path)
 
     do {
         sceCdDiskReady(0);
-    } while (!sceCdSearchFile(&g_cd_file, path));
+    } while (!sceCdSearchFile(&g_cd_file_as_sceCdlFILE, path));
 
     for (;;) {
         do {
             sceCdDiskReady(0);
-            g_cd_last_read_size = g_cd_file.size;
+            g_cd_last_read_size = g_cd_file_as_sceCdlFILE.size;
             readMode.trycount = 0;
             readMode.spindlctrl = SCECdSpinNom;
             readMode.datapattern = SCECdSecS2048;
-        } while (!sceCdRead(g_cd_file.lsn, (g_cd_file.size + 0x7FF) >> 11, destination, &readMode));
+        } while (!sceCdRead(g_cd_file_as_sceCdlFILE.lsn, (g_cd_file_as_sceCdlFILE.size + 0x7FF) >> 11, destination, &readMode));
 
         sceCdSync(0);
         error = sceCdGetError();
@@ -1533,17 +1533,17 @@ void cd_read_sync(void *destination, u32 byteCount, u32 startSector)
     sceCdRMode readMode;
     s32 error;
 
-    g_cd_file.size = byteCount;
-    g_cd_file.lsn = startSector;
+    g_cd_file_as_sceCdlFILE.size = byteCount;
+    g_cd_file_as_sceCdlFILE.lsn = startSector;
 
     for (;;) {
         do {
             sceCdDiskReady(0);
-            g_cd_last_read_size = g_cd_file.size;
+            g_cd_last_read_size = g_cd_file_as_sceCdlFILE.size;
             readMode.trycount = 0;
             readMode.spindlctrl = SCECdSpinNom;
             readMode.datapattern = SCECdSecS2048;
-        } while (!sceCdRead(g_cd_file.lsn, (g_cd_file.size + 0x7FF) >> 11, destination, &readMode));
+        } while (!sceCdRead(g_cd_file_as_sceCdlFILE.lsn, (g_cd_file_as_sceCdlFILE.size + 0x7FF) >> 11, destination, &readMode));
 
         sceCdSync(0);
         error = sceCdGetError();
@@ -1560,5 +1560,5 @@ void cd_search_file(const char *path)
 {
     do {
         sceCdDiskReady(0);
-    } while (sceCdSearchFile(&g_cd_file, path) == 0);
+    } while (sceCdSearchFile(&g_cd_file_as_sceCdlFILE, path) == 0);
 }

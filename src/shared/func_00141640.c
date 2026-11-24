@@ -2,18 +2,18 @@
 
 #pragma opt_propagation off
 
-extern s16 D_0028E050;
-extern s16 D_0028E054;
-extern u16 D_0028E058;
+extern s16 D_0028E050_as_s16;
+extern s16 D_0028E054_as_s16;
+extern u16 D_0028E058_as_u16;
 extern u16 D_0028E05A;
-extern u16 D_0028E05C;
+extern u16 D_0028E05C_as_u16;
 extern u16 D_0028E05E;
-extern s16 D_0028E5B4;
-extern s16 D_0028E5B8;
-extern s16 D_0028E5E0;
-extern s16 D_0028E5E4;
-extern s16 D_0028E5E8;
-extern s16 D_0028E5EC;
+extern s16 D_0028E5B4_as_s16;
+extern s16 D_0028E5B8_as_s16;
+extern s16 D_0028E5E0_as_s16;
+extern s16 D_0028E5E4_as_s16;
+extern s16 D_0028E5E8_as_s16;
+extern s16 D_0028E5EC_as_s16;
 extern u8 *reg_a0;
 extern u8 *reg_a1;
 extern u8 *reg_a2;
@@ -39,8 +39,8 @@ void func_00141640(void) {
     u32 d6;
     u32 d7;
 
-    D_0028E054 = 0x101;
-    D_0028E050 = 0x101;
+    D_0028E054_as_s16 = 0x101;
+    D_0028E050_as_s16 = 0x101;
     d0 = reg_d0.w;
     d1 = reg_d1.w;
     d2 = reg_d2.w;
@@ -57,16 +57,16 @@ void func_00141640(void) {
     a5 = reg_a5;
     a6 = reg_a6;
     reg_d0.w = 0xC30;
-    D_0028E05C = reg_d0.h[1];
+    D_0028E05C_as_u16 = reg_d0.h[1];
     D_0028E05E = reg_d0.h[0];
-    D_0028E5B8 = 0;
-    D_0028E5E4 = 0;
-    D_0028E5B4 = 0;
-    D_0028E5E0 = 0;
-    D_0028E5EC = 0;
-    D_0028E5E8 = 0;
+    D_0028E5B8_as_s16 = 0;
+    D_0028E5E4_as_s16 = 0;
+    D_0028E5B4_as_s16 = 0;
+    D_0028E5E0_as_s16 = 0;
+    D_0028E5EC_as_s16 = 0;
+    D_0028E5E8_as_s16 = 0;
     reg_d0.w = 0xC30;
-    D_0028E058 = reg_d0.h[1];
+    D_0028E058_as_u16 = reg_d0.h[1];
     D_0028E05A = reg_d0.h[0];
     reg_d0.w = d0;
     reg_d1.w = d1;

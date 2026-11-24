@@ -7,9 +7,9 @@ s32 func_001BB8E0();                            /* extern */
 s32 func_002016D0();                            /* extern */
 s32 func_002035A0();                            /* extern */
 extern s8 D_0028E408;
-extern s32 reg_a0;
+extern s32 reg_a0_as_s32;
 extern u8 *reg_a5;
-extern s32 reg_a6;
+extern s32 reg_a6_as_s32;
 
 void func_001BB830(void) {
     u16 temp_v0;
@@ -26,10 +26,10 @@ void func_001BB830(void) {
         func_0014E290();
         return;
     }
-    reg_a0 = reg_a6;
+    reg_a0_as_s32 = reg_a6_as_s32;
     func_0014D220();
-    reg_a0 = reg_a6 + 0x20;
+    reg_a0_as_s32 = reg_a6_as_s32 + 0x20;
     func_0014D220();
-    reg_a0 = reg_a6 + 0x60;
+    reg_a0_as_s32 = reg_a6_as_s32 + 0x60;
     func_0014D220();
 }

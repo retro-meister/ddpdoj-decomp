@@ -14,7 +14,7 @@ extern u16 D_0028E710;
 extern s32 D_0028E714;
 extern u16 D_0028E74C;
 extern u16 D_0028E754;
-extern u32 D_0028E760;
+extern u32 D_0028E760_as_u32;
 extern u8 D_0028ED80;
 extern u16 D_006E5C06[];
 #ifdef DEATH_LABEL
@@ -27,9 +27,9 @@ extern u16 death_D_0068DAB0[];
 extern u16 death_D_0068DAB2[];
 extern u16 D_002BAF30[];
 extern u16 D_002BAF3A[];
-extern u32 D_0028ED50;
+extern u32 D_0028ED50_as_u32;
 extern u16 D_0028ED4C;
-extern u32 D_0028ED44;
+extern u32 D_0028ED44_as_u32;
 extern u16 D_0028ED40;
 extern u32 D_0028E768;
 extern u16 D_0028E75C;
@@ -53,14 +53,14 @@ void func_001AEB10(void) {
             death_D_0068DAA8[0] = 0;
             D_002BAF30[0] = 1;
             death_D_0068DAA6[0] = 0xC030;
-            D_0028E768 = D_0028ED50;
+            D_0028E768 = D_0028ED50_as_u32;
             D_0028E75C = D_0028ED4C;
         }
         if (D_0029F1F0[0] < 0) {
             death_D_0068DAB2[0] = 0;
             D_002BAF3A[0] = 1;
             death_D_0068DAB0[0] = 0xC030;
-            D_0028E764 = D_0028ED44;
+            D_0028E764 = D_0028ED44_as_u32;
             D_0028E758 = D_0028ED40;
         }
         D_0028E710 = 0;
@@ -125,10 +125,10 @@ no_extend:
                 D_0028E754 = t1;
                 goto next_1;
             }
-            reg_d0.w = D_0028E760;
+            reg_d0.w = D_0028E760_as_u32;
             if ((u32) reg_d4.w > (u32) reg_d0.w) {
 next_1:
-                D_0028E760 = reg_d4.w;
+                D_0028E760_as_u32 = reg_d4.w;
                 D_0028E74C = reg_d6.h[0];
             }
         }

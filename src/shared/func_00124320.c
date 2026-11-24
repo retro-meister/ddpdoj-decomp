@@ -2,13 +2,13 @@
 
 s32 memset();
 extern u8 D_00295E50[];
-extern s32 D_00295E54[];
+extern s32 D_00295E54_as_s32_a[];
 extern u16 D_00295E5A[];
 extern u32 *D_00295E9C[];
 extern u8 D_00295EA0[];
-extern s32 D_00295F40[];
+extern s32 D_00295F40_as_s32_a[];
 extern s64 D_002960A8[];
-extern s32 D_00296210[];
+extern s32 D_00296210_as_s32_a[];
 extern u8 *reg_a0;
 extern u8 *reg_a1;
 extern u8 *reg_a2;
@@ -51,11 +51,11 @@ void func_00124320(void) {
     save_a6 = reg_a6;
     memset(D_00295E50, 0, MAIN_OR_DEATH_LABEL(0x490, 0x4D0));
     if (reg_a0 != 0) {
-        D_00295E54[0] = (int)reg_a0;
+        D_00295E54_as_s32_a[0] = (int)reg_a0;
         D_00295E5A[0] = 0xFFFF;
     }
     if (reg_a3 != 0) {
-        D_00295F40[0] = (int)reg_a3;
+        D_00295F40_as_s32_a[0] = (int)reg_a3;
     }
     if (reg_a1 != 0) {
         D_002960A8[0] = (s32)reg_a1;
@@ -75,7 +75,7 @@ loop_8:
         }
     }
     if (reg_a4 != 0) {
-        D_00296210[0] = (int)reg_a4;
+        D_00296210_as_s32_a[0] = (int)reg_a4;
     }
     reg_d0.w = save_d0;
     reg_d1.w = save_d1;

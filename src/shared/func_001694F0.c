@@ -7,7 +7,7 @@ s32 func_00168BA0();
 s32 func_001A2FA0();
 extern u8 D_00269140[];
 extern u8 D_0026A880[];
-extern u8 D_0028DF84;
+extern u8 D_0028DF84_as_u8;
 extern u8 *reg_a0;
 extern u8 *reg_a5;
 
@@ -16,7 +16,7 @@ void func_001694F0() {
     u16 temp_v1_2;
 
     if ((*(u8 *)((u8 *)(reg_a5) + (2))) == 0) {
-        D_0028DF84 = 0;
+        D_0028DF84_as_u8 = 0;
         (*(u8 *)((u8 *)(reg_a5) + (2))) = 1U;
         func_0012FAB0();
         reg_d0.w = 0;

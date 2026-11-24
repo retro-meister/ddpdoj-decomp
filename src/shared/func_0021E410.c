@@ -10,16 +10,16 @@ s32 func_00222260();
 extern s32 D_0028DF88;
 extern s32 D_0028DF8C;
 extern s32 D_0028DF90;
-extern u16 D_0028E320;
-extern u8 D_0028EB04;
-extern u8 D_0028EB20;
-extern u8 D_0028EB44;
-extern u8 D_0028EB4C;
-extern u8 D_0028EB54;
+extern u16 D_0028E320_as_u16;
+extern u8 D_0028EB04_as_u8;
+extern u8 D_0028EB20_as_u8;
+extern u8 D_0028EB44_as_u8;
+extern u8 D_0028EB4C_as_u8;
+extern u8 D_0028EB54_as_u8;
 extern s8 D_0028EB58;
 extern s8 D_0028EB74;
-extern u8 D_0028EB7C;
-extern u8 D_0028EB84;
+extern u8 D_0028EB7C_as_u8;
+extern u8 D_0028EB84_as_u8;
 extern s32 D_0028EB90;
 extern s32 D_0028EC68;
 extern s32 D_0028EC6C;
@@ -34,15 +34,15 @@ void func_0021E410(void) {
         func_0021E5C0();
     }
     var_a1 = 0;
-    D_0028E320 = 0xE10;
+    D_0028E320_as_u16 = 0xE10;
     if (D_0057CC88[0] == 0) {
-        D_0028E320 -= 1;
-        if ((s32) D_0028E320 <= 0) {
+        D_0028E320_as_u16 -= 1;
+        if ((s32) D_0028E320_as_u16 <= 0) {
             var_a1 = 1;
             D_0028EB58 = 4;
         }
     } else {
-        D_0028E320 = 0xE10;
+        D_0028E320_as_u16 = 0xE10;
     }
     if (D_0057CC78[0] & 0x40) {
         var_a1 = 1;
@@ -50,7 +50,7 @@ void func_0021E410(void) {
     } else if (D_0057CC78[0] & 0x20) {
         var_a1 = 1;
     }
-    D_0028EB20 = D_0028EB58;
+    D_0028EB20_as_u8 = D_0028EB58;
     if (var_a1 != 0) {
         switch (D_0028EB58) {
         case 0:
@@ -59,23 +59,23 @@ void func_0021E410(void) {
         case 1:
             func_0018D4B0();
             D_0028EC68 = 0;
-            D_0028EB84 = 6;
+            D_0028EB84_as_u8 = 6;
             break;
         case 2:
             func_0018D4B0();
             D_0028EC6C = 0;
-            D_0028EB84 = 5;
+            D_0028EB84_as_u8 = 5;
             break;
         case 4:
             func_0018CBB0();
             func_00222260(0);
-            D_0028EB7C = 3;
-            D_0028EB4C = 1;
+            D_0028EB7C_as_u8 = 3;
+            D_0028EB4C_as_u8 = 1;
             D_0028EB90 = 0x40;
-            D_0028EB04 = 1;
-            D_0028EB54 = 2;
-            D_0028EB44 = 2;
-            D_0028EB84 = 0;
+            D_0028EB04_as_u8 = 1;
+            D_0028EB54_as_u8 = 2;
+            D_0028EB44_as_u8 = 2;
+            D_0028EB84_as_u8 = 0;
             D_0028EB74 += 1;
             func_0018D4B0();
             break;

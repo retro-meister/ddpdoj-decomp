@@ -18,7 +18,7 @@ extern u16 D_0028E878;
 extern u16 D_0028E87C;
 extern u16 D_0028E880;
 extern u16 D_0028E884;
-extern s16 D_0028E8A8;
+extern s16 D_0028E8A8_as_s16;
 extern u16 D_0028E8CC;
 extern u16 D_0028E91C;
 extern s8 enemy_move_end_requested;
@@ -54,16 +54,16 @@ void func_00152A90(void) {
         reg_d0.b[0] -= 8;
         (*(u8 *)((u8 *)(reg_a5) + (0x19))) -= reg_d0.b[0];
         if (D_0028E91C == 4) {
-            if (D_0028E8A8 >= 0x290) {
+            if (D_0028E8A8_as_s16 >= 0x290) {
                 if (D_0028E878 != 0) {
                     func_0014E290();
                 }
-            } else if (D_0028E8A8 > 0x1FC) {
-                if (((D_0028E8A8 < 0x240) || (D_0028E8A8 > 0x274)) && (D_0028E884 != 0)) {
+            } else if (D_0028E8A8_as_s16 > 0x1FC) {
+                if (((D_0028E8A8_as_s16 < 0x240) || (D_0028E8A8_as_s16 > 0x274)) && (D_0028E884 != 0)) {
                     func_0014E290();
                     return;
                 }
-                if ((D_0028E880 != 0) && (D_0028E8A8 > 0x228)) {
+                if ((D_0028E880 != 0) && (D_0028E8A8_as_s16 > 0x228)) {
                     func_0014E290();
                     return;
                 }

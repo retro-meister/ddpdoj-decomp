@@ -2,7 +2,7 @@
 
 typedef void (*Fn)();
 
-extern u8 D_00259870[];
+extern u8 D_00259870_as_u8_a[];
 extern u8 D_00263880[];
 s32 func_00119FE0();
 s32 func_0011B220();
@@ -15,7 +15,7 @@ s32 func_0018D580();
 s32 func_0019BF40();
 s32 func_001A9000();
 s32 func_001A91A0();
-extern u16 D_0028E474;
+extern u16 D_0028E474_as_u16;
 extern Reg32 D_0028E484;
 extern u16 D_0028E8A0;
 extern u16 D_0028E8B8;
@@ -93,12 +93,12 @@ next_90:
     reg_d2.h[1] = (*(u16 *)((u8 *)(reg_a6) + (2)));
     reg_d2.h[0] = (*(u16 *)((u8 *)(reg_a6) + (4)));
     reg_d5.h[0] = 0x600;
-    D_0028E474 = reg_d5.h[0];
+    D_0028E474_as_u16 = reg_d5.h[0];
     reg_d5.h[0] = reg_d5.h[1];
-    reg_d5.h[1] = D_0028E474;
+    reg_d5.h[1] = D_0028E474_as_u16;
     reg_d5.h[0] = (*(u16 *)((u8 *)(reg_a5) + (0x2C)));
     reg_d0.w = 0x13;
-    reg_a0 = (u8 *)D_00259870;
+    reg_a0 = (u8 *)D_00259870_as_u8_a;
     reg_d4.w = (u32) reg_a6;
     reg_d1.b[0] = (*(u8 *)((u8 *)(reg_a5) + (0x29)));
     reg_d3.b[0] = reg_d1.b[0];

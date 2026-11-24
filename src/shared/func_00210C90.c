@@ -5,7 +5,7 @@ extern u8 *reg_a5;
 extern u8 *reg_a6;
 
 #ifdef DEATH_LABEL
-extern s8 D_0028E2A4;
+extern s8 D_0028E2A4_as_s8;
 #endif
 
 void func_00210C90(void) {
@@ -29,6 +29,6 @@ void func_00210C90(void) {
     (*(s16 *)((u8 *)(reg_a6) + (0xA))) = 0x60;
     (*(s16 *)((u8 *)(reg_a6) + (0xC))) = 0x10;
 #ifdef DEATH_LABEL
-    D_0028E2A4 = 0x78;
+    D_0028E2A4_as_s8 = 0x78;
 #endif
 }

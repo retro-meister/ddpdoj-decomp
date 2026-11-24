@@ -31,7 +31,7 @@ extern u8 D_0028E370;
 extern s32 D_0028ED70;
 extern u8 D_0028ED7C;
 extern u8 D_0029D710[];
-extern u8 D_0029F1F0[];
+extern u8 D_0029F1F0_as_u8_a[];
 extern void (*jtbl_0028E3F4)();
 extern u8 *reg_a0;
 extern u8 *reg_a1;
@@ -47,7 +47,7 @@ void func_0019FD30(void) {
     goto next_20;
 loop_10:
     reg_a6 = (u8 *)D_0029F110;
-    reg_a4 = (u8 *)D_0029F1F0;
+    reg_a4 = (u8 *)D_0029F1F0_as_u8_a;
     reg_a2 = (u8 *)D_0029D710;
     if ((*(s16 *)((u8 *)(reg_a6) + (0))) < 0) goto next_20;
     return;

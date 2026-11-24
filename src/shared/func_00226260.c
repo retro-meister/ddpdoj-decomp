@@ -14,11 +14,11 @@ s32 func_002269B0();
 s32 printf();
 extern u8 D_00289D20[];
 extern u8 D_0028EC30;
-extern u8 D_0028EC3C;
+extern u8 D_0028EC3C_as_u8;
 
 s32 func_00226260(void) {
     if (D_0028EC30 == 0) {
-        switch (D_0028EC3C) {
+        switch (D_0028EC3C_as_u8) {
         case 0:
             return 0;
         case 1:
@@ -42,7 +42,7 @@ s32 func_00226260(void) {
             break;
         }
     } else {
-        switch (D_0028EC3C) {
+        switch (D_0028EC3C_as_u8) {
         case 0:
             return 0;
         case 1:

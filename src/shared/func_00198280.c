@@ -9,7 +9,7 @@ extern s32 D_0028E4AC;
 extern u8 D_002BAD50[];
 extern u8 D_002BAD63[];
 extern u8 D_002BAD70[];
-extern s8 D_002BADD0[];
+extern s8 D_002BADD0_as_s8_a[];
 extern u8 D_002BADF0[];
 
 s32 func_00198280(void) {
@@ -50,14 +50,14 @@ s32 func_00198280(void) {
     for (i = 0; D_0025C4A0[i] != -1; i++) {
         D_0028E4AC++;
     }
-    memset(D_002BADD0, 0, 30);
+    memset(D_002BADD0_as_s8_a, 0, 30);
     for (i = 0; i < 20; i++) {
         ch = D_002BAD50[i];
         if ((((s32) ch < 0) || ((s32) ch >= D_0028E4AC)) ? 1 : 0) {
             printf(D_0027D7E0);
             return 0;
         }
-        D_002BADD0[i] = D_0025C4A0[ch];
+        D_002BADD0_as_s8_a[i] = D_0025C4A0[ch];
     }
     return 1;
 }

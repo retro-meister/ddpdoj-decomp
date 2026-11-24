@@ -44,9 +44,9 @@ extern u16 D_0028E3C0;
 extern s16 D_0028E3FC;
 extern u16 D_0028E8A8;
 extern u16 D_0028E91C;
-extern u8 g_cd_async_state;
-extern u8 g_cd_async_busy;
-extern u8 D_0028EC58;
+extern u8 g_cd_async_state_as_u8;
+extern u8 g_cd_async_busy_as_u8;
+extern u8 D_0028EC58_as_u8;
 extern u8 D_0028ED7C;
 extern u8 D_0028ED80;
 extern u8 *reg_a5;
@@ -117,10 +117,10 @@ next_1:
     }
 next_2:
     D_0028E350 = 0;
-    g_cd_async_busy = 1;
-    g_cd_async_state = 0;
+    g_cd_async_busy_as_u8 = 1;
+    g_cd_async_state_as_u8 = 0;
     D_0028E370 = 0;
-    D_0028EC58 = 0;
+    D_0028EC58_as_u8 = 0;
     return;
 next_3:
     t = *(u8 *) (reg_a5 + 2);

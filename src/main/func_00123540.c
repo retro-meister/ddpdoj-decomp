@@ -8,7 +8,7 @@ void func_0013C350(void);
 extern u8 D_0024D340[];
 extern s8 D_0028E408;
 extern u16 D_00295E1C[];
-extern u16 D_00295E1E[];
+extern u16 D_00295E1E_as_u16_a[];
 extern u16 D_00295E20[];
 extern u32 D_00295E24[];
 extern u32 D_00295E28[];
@@ -17,7 +17,7 @@ extern u8 *reg_a2;
 
 void func_00123540(void) {
     if (reg_d0.h[0] == 0x8000) {
-        D_00295E1E[0] = *(u16 *)reg_a2;
+        D_00295E1E_as_u16_a[0] = *(u16 *)reg_a2;
         reg_a2 += 2;
         D_00295E1C[0] += 4;
         func_00123410();

@@ -11,7 +11,7 @@ s32 sceMcSync(s32, s32, s32 *);
 s32 sceMcGetDir(s32, s32, char *, s32, s32, void *);
 s32 printf(const char *, ...);
 extern s32 D_00271D60[];
-extern char *D_00271FB0[];
+extern char *D_00271FB0_as_char_p_a[];
 extern char *D_00271FB4[];
 extern char *D_00271FB8[];
 extern char *D_00271FBC[];
@@ -175,7 +175,7 @@ void func_00232DE0(void) {
         D_0028EC8F = 0;
         D_0028EC80 = 0;
         D_0028EC84 = 0;
-        sceMcGetDir(D_0028EC70, D_0028EC74, D_00271FB0[0], 0, 99, D_0069F580);
+        sceMcGetDir(D_0028EC70, D_0028EC74, D_00271FB0_as_char_p_a[0], 0, 99, D_0069F580);
         D_0028ECF0 += 1;
         break;
     case 0x33:

@@ -10,7 +10,7 @@ extern u8 D_0028E855;
 extern u16 D_0028E910;
 extern u16 D_0028E91C;
 extern u32 D_0028E9A0;
-extern u8 D_00299780[];
+extern u8 D_00299780_as_u8_a[];
 extern u16 D_00299D20[];
 extern u16 D_00299D22[];
 extern u16 D_00299D24[];
@@ -52,7 +52,7 @@ next_1:
     reg_d6.h[0] = reg_d3.h[0];
     D_00299D22[0] = 2;
     D_00299D24[0] = 0xA;
-    reg_a6 = (u8 *)D_00299780;
+    reg_a6 = (u8 *)D_00299780_as_u8_a;
 loop_2:
     if (W6(0) == 0) goto next_6;
     if (W6(4) != reg_d7.h[0]) goto next_3;

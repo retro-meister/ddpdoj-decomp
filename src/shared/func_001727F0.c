@@ -95,7 +95,7 @@ extern u16 D_00241A48[];
 extern u16 D_00241A4A[];
 extern u16 D_00241A5C[];
 extern u16 D_00241A5E[];
-extern u16 D_00241C30[];
+extern u16 D_00241C30_as_u16_a[];
 extern u16 D_00241C32[];
 extern u16 D_00241C34[];
 extern u16 D_00241C36[];
@@ -219,7 +219,7 @@ void func_001727F0(void) {
     D_00241A5C[0] = reg_tmp.h[1];
     D_00241A5E[0] = reg_tmp.h[0];
     reg_tmp.w = (u32)D_00241CC0;
-    D_00241C30[0] = reg_tmp.h[1];
+    D_00241C30_as_u16_a[0] = reg_tmp.h[1];
     D_00241C32[0] = reg_tmp.h[0];
     reg_tmp.w = (u32)D_00241CB0;
     D_00241C34[0] = reg_tmp.h[1];

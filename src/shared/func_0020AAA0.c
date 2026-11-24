@@ -4,7 +4,7 @@ typedef void (*Fn)();
 
 s32 func_00201200();
 extern u8 D_00250D00[];
-extern u16 *D_0028E530;
+extern u16 *D_0028E530_as_u16_p;
 extern u16 D_0029A528[];
 extern u8 *reg_a0;
 extern u8 *reg_a2;
@@ -17,7 +17,7 @@ void func_0020AAA0(void) {
     u32 temp_a0_2;
     u32 temp_a1;
 
-    D_0028E530 = (u16 *)(reg_a2);
+    D_0028E530_as_u16_p = (u16 *)(reg_a2);
     reg_d3.h[0] = reg_d0.h[0];
     reg_d3.h[0] |= 0x8000;
     *(u16 *)reg_a0 = reg_d3.h[0];

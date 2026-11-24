@@ -4,7 +4,7 @@ typedef void (*Fn)(void);
 
 extern u8 D_0029BF50[];
 extern u8 *D_0029C050[];
-extern Fn jtbl_0028E3F4;
+extern Fn jtbl_0028E3F4_as_Fn;
 extern u8 *reg_a0;
 extern u8 *reg_a1;
 extern u8 *reg_a2;
@@ -58,8 +58,8 @@ loop_1:
     reg_d0.h[0] += reg_d0.h[0];
     reg_a1 += reg_d0.h[0];
     reg_a1 = *(u8 **)reg_a1;
-    jtbl_0028E3F4 = (Fn)reg_a1;
-    jtbl_0028E3F4();
+    jtbl_0028E3F4_as_Fn = (Fn)reg_a1;
+    jtbl_0028E3F4_as_Fn();
     reg_d0.w = save_d0;
     reg_d1.w = save_d1;
     reg_d2.w = save_d2;

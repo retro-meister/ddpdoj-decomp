@@ -3,9 +3,9 @@
 s32 func_002071C0();
 extern u8 D_00269D10[];
 extern u8 D_00269D20[];
-extern u32 D_0028E83C;
-extern u32 D_0028E840;
-extern u32 D_0028E844;
+extern u32 D_0028E83C_as_u32;
+extern u32 D_0028E840_as_u32;
+extern u32 D_0028E844_as_u32;
 extern u8 D_002BF390[];
 extern u8 *reg_a0;
 extern u8 *reg_a6;
@@ -42,20 +42,20 @@ void func_00135220(void) {
     reg_tmp.h[0] = temp_a0;
     reg_d0.h[1] = reg_d0.h[0];
     reg_d0.h[0] = reg_tmp.h[0];
-    D_0028E844 = reg_d0.w;
+    D_0028E844_as_u32 = reg_d0.w;
     reg_d0.h[0] = 4;
     func_002071C0();
     temp_a1 = reg_d0.h[1];
     reg_tmp.h[0] = temp_a1;
     reg_d0.h[1] = reg_d0.h[0];
     reg_d0.h[0] = reg_tmp.h[0];
-    D_0028E840 = reg_d0.w;
+    D_0028E840_as_u32 = reg_d0.w;
     (*(u8 *)((u8 *)(reg_a0) + (6))) = 0;
     reg_d0.h[0] = 4;
     func_002071C0();
     reg_tmp.h[0] = reg_d0.h[1];
     reg_d0.h[1] = reg_d0.h[0];
     reg_d0.h[0] = reg_tmp.h[0];
-    D_0028E83C = reg_d0.w;
+    D_0028E83C_as_u32 = reg_d0.w;
     (*(u8 *)((u8 *)(reg_a0) + (6))) = 1;
 }

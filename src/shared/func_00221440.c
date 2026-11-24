@@ -2,7 +2,7 @@
 
 extern void gfx_draw_color_box(s32 x, s32 y, s32 w, s32 h, s32 depth, s64 alpha, s32 r, s32 g, s32 b);
 extern s16 D_00271760[];
-extern s16 D_002717A0[];
+extern s16 D_002717A0_as_s16_a[];
 extern s8 D_0028EB50;
 extern s8 D_0028EB54;
 extern s8 D_0028EB58;
@@ -33,7 +33,7 @@ void func_00221440(void) {
     sel = D_0028EB58;
     if (sel != -1) {
         if (D_0028EB84 == 0xF) {
-            x = D_002717A0[sel * 2];
+            x = D_002717A0_as_s16_a[sel * 2];
         } else {
             x = D_00271760[sel * 2];
         }

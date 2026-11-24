@@ -9,7 +9,7 @@ extern u8 D_0026B870[];
 extern u8 D_0028DAD0[];
 extern u16 D_0028E3F0;
 extern u16 D_0028E470;
-extern u16 D_0028E644;
+extern u16 D_0028E644_as_u16;
 extern u16 D_0028E648;
 extern u16 D_0028E64C;
 extern u8 *reg_a0;
@@ -25,7 +25,7 @@ next_0:
     reg_d0.w = reg_d2.w;
     reg_d1.w = 0x5BBFFE00;
     reg_d1.h[0] += 0x440;
-    reg_d4.h[0] = D_0028E644;
+    reg_d4.h[0] = D_0028E644_as_u16;
     reg_d6.w = 0;
     reg_d6.h[0] = D_0028E64C;
     reg_d7.w = 7;

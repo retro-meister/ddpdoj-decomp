@@ -9,8 +9,8 @@ s32 func_00201C60();
 s32 func_00202180();
 s32 func_00203060();
 extern u8 D_0024EBC0[];
-extern u8 D_0024EC80[];
-extern u8 D_0024EEF0[];
+extern u8 D_0024EC80_as_u8_a[];
+extern u8 D_0024EEF0_as_u8_a[];
 extern u8 D_0028E2E4;
 extern u8 *reg_a0;
 extern u8 *reg_a5;
@@ -72,12 +72,12 @@ block_8:
             }
             reg_d1.w = 0;
             reg_d1.b[0] = (*(u8 *)((u8 *)(reg_a5) + (0x1B)));
-            reg_a0 = (u8 *)D_0024EEF0;
+            reg_a0 = (u8 *)D_0024EEF0_as_u8_a;
             reg_d1.b[0] += 1;
             reg_d1.h[0] &= 0x3E;
             reg_d0.h[0] = (reg_d1.h[0] != 0) ? *(u16 *)((u8 *)reg_a0 + ((s16)reg_d1.h[0] & ~1)) : (*(u16 *)((u8 *)(reg_a0) + (0)));
             (*(u8 *)((u8 *)(reg_a6) + (0x1D))) = (u8) reg_d0.b[0];
-            reg_a0 = (u8 *)D_0024EC80;
+            reg_a0 = (u8 *)D_0024EC80_as_u8_a;
             reg_d1.h[0] += reg_d1.h[0];
             reg_d1.h[0] += reg_d1.h[0];
             reg_d0.h[0] = (reg_d1.h[0] != 0) ? *(u16 *)((u8 *)reg_a0 + ((s16)reg_d1.h[0] & ~1)) : (*(u16 *)((u8 *)(reg_a0) + (0)));

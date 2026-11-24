@@ -22,9 +22,9 @@ extern u8 D_00241C10[];
 extern u8 D_00241C20[];
 extern u8 D_00241C30[];
 extern u8 D_00241CD0[];
-extern s16 D_0028DFC8;
+extern s16 D_0028DFC8_as_s16;
 extern u16 D_0028DFD0;
-extern u8 D_0029F260[];
+extern u8 D_0029F260_as_u8_a[];
 extern void (*jtbl_0028E3F4)();
 extern u8 *reg_a0;
 extern u8 *reg_a1;
@@ -327,7 +327,7 @@ void func_00120770(u16 arg3) {
         }
         jtbl_0028E3F4 = (Fn)(reg_a0);
         jtbl_0028E3F4();
-        if (reg_a5 == D_0029F260) {
+        if (reg_a5 == D_0029F260_as_u8_a) {
             vibration_start_pad1(0xC8, 0x78);
         } else {
             vibration_start_pad2(0xC8, 0x78);
@@ -426,7 +426,7 @@ block_40:
         func_00122650();
         goto block_36;
     } else {
-        D_0028DFC8 = 0x28;
+        D_0028DFC8_as_s16 = 0x28;
         func_00122A60();
         func_00122B20();
     }

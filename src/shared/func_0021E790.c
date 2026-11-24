@@ -5,7 +5,7 @@ s32 func_0021E8D0();
 s32 func_0021EA10();
 s32 func_00221120();
 s32 func_00222260();
-extern u16 D_0028E320;
+extern u16 D_0028E320_as_u16;
 extern s8 D_0028EB04;
 extern s8 D_0028EB1C;
 extern s8 D_0028EB40;
@@ -26,15 +26,15 @@ void func_0021E790(void) {
     }
     func_0021EA10();
     var_a1 = 0;
-    D_0028E320 = 0xE10;
+    D_0028E320_as_u16 = 0xE10;
     if (D_0057CC88[0] == 0) {
-        D_0028E320 -= 1;
-        if ((s32) D_0028E320 <= 0) {
+        D_0028E320_as_u16 -= 1;
+        if ((s32) D_0028E320_as_u16 <= 0) {
             var_a1 = 1;
             D_0028EB58 = MAIN_OR_DEATH_LABEL(5, 7);
         }
     } else {
-        D_0028E320 = 0xE10;
+        D_0028E320_as_u16 = 0xE10;
     }
     if (D_0057CC78[0] & 0x20) {
         var_a1 = 1;

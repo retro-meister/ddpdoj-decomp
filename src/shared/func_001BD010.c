@@ -24,7 +24,7 @@ s32 func_00201B80();
 s32 func_002026F0();
 s32 vibration_start_pad1();
 s32 vibration_start_pad2();
-extern u8 D_00259970[];
+extern u8 D_00259970_as_u8_a[];
 extern u8 D_00262B50[];
 extern u8 D_0028E310;
 extern s8 D_0028E408;
@@ -245,7 +245,7 @@ block_50:
                                     } while ((s16)(--reg_d7.h[0]) >= 0);
                                 }
                                 reg_d1.h[0] = reg_d6.h[0];
-                                reg_a0 = D_00259970;
+                                reg_a0 = D_00259970_as_u8_a;
                                 reg_d1.h[0] -= 0x56;
                                 func_001BC4B0();
                                 func_001BC5D0();

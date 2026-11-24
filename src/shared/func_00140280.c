@@ -1,6 +1,6 @@
 #include "common.h"
 
-extern u32 D_0028E484;
+extern u32 D_0028E484_as_u32;
 
 void func_00140280(s32 *arg0, u32 *arg1) {
     s32 carry;
@@ -11,10 +11,10 @@ void func_00140280(s32 *arg0, u32 *arg1) {
     carry = 0;
     n = 0;
     reg_tmp.w = *arg1;
-    D_0028E484 = *arg0;
+    D_0028E484_as_u32 = *arg0;
     reg_d2.w = 0;
     do {
-        digit = carry + ((reg_tmp.w & 0xF) + (D_0028E484 & 0xF));
+        digit = carry + ((reg_tmp.w & 0xF) + (D_0028E484_as_u32 & 0xF));
         carry = 0;
         if (digit >= 0xA) {
             carry = 1;
@@ -22,7 +22,7 @@ void func_00140280(s32 *arg0, u32 *arg1) {
         }
         n += 1;
         reg_tmp.w = (u32) reg_tmp.w >> 4;
-        D_0028E484 = (u32) D_0028E484 >> 4;
+        D_0028E484_as_u32 = (u32) D_0028E484_as_u32 >> 4;
         reg_d2.w *= 0x10;
         reg_d2.w |= digit;
     } while (n < 8);

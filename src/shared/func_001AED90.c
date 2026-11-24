@@ -1,9 +1,9 @@
 #include "common.h"
 
-extern Reg32 D_0028E46C;
-extern u32 D_0028E484;
+extern Reg32 D_0028E46C_as_Reg32;
+extern u32 D_0028E484_as_u32;
 extern u16 D_0028E710;
-extern u32 D_0028E714;
+extern u32 D_0028E714_as_u32;
 extern u8 *reg_a0;
 extern u8 *reg_a6;
 
@@ -12,7 +12,7 @@ void func_001AED90(void) {
     u32 d2;
 
     reg_d5.w = 8;
-    D_0028E46C.w = reg_d7.w;
+    D_0028E46C_as_Reg32.w = reg_d7.w;
     reg_d7.h[1] = reg_d7.h[0];
     reg_d7.h[0] = 0;
     reg_d1.h[0] = *(u16 *)reg_a6;
@@ -25,16 +25,16 @@ void func_001AED90(void) {
     if (reg_d1.h[0] != 0) {
         reg_d7.h[0] = 1;
     }
-    reg_d1.w = D_0028E714;
+    reg_d1.w = D_0028E714_as_u32;
     goto next_2;
 loop_1:
     reg_d2.w = 0xF;
     reg_tmp.w = reg_d0.w;
     reg_d0.w <<= 4;
-    D_0028E484 = reg_d1.w;
+    D_0028E484_as_u32 = reg_d1.w;
     reg_d1.w <<= 4;
     reg_d0.w |= reg_tmp.w >> 0x1C;
-    reg_d1.w |= D_0028E484 >> 0x1C;
+    reg_d1.w |= D_0028E484_as_u32 >> 0x1C;
     d2 = reg_d2.w & reg_d0.w;
     reg_d2.w = d2;
     if ((d2 == 0) && (reg_d7.h[0] == 0)) {
@@ -63,7 +63,7 @@ next_2:
     if (((s64) ((s64) (tmp & 0xFFFF) << 0x30) >> 0x30) >= 0) {
         goto loop_1;
     }
-    D_0028E46C.w = reg_d7.w;
+    D_0028E46C_as_Reg32.w = reg_d7.w;
     reg_d7.h[1] = reg_d7.h[0];
-    reg_d7.h[0] = D_0028E46C.h[1];
+    reg_d7.h[0] = D_0028E46C_as_Reg32.h[1];
 }

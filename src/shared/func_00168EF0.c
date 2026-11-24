@@ -14,7 +14,7 @@ s32 stage_load_step();
 s32 func_00225630();
 s32 func_002256B0();
 extern u8 D_00269160[];
-extern u8 D_0028DF84;
+extern u8 D_0028DF84_as_u8;
 extern u8 D_0028E294;
 extern u8 D_0028E304;
 extern u8 D_0028E310;
@@ -23,8 +23,8 @@ extern u8 D_0028E368;
 extern u8 D_0028E378;
 extern s16 D_0028E3FC;
 extern u16 D_0028E91C;
-extern u8 g_cd_async_state;
-extern u8 g_cd_async_busy;
+extern u8 g_cd_async_state_as_u8;
+extern u8 g_cd_async_busy_as_u8;
 extern u8 *reg_a0;
 extern u8 *reg_a5;
 
@@ -42,10 +42,10 @@ void func_00168EF0(void) {
         func_001A3D30();
         D_0028E368 = 0;
         D_0028E378 = 0xFF;
-        D_0028DF84 = 0;
-        g_cd_async_busy = 1;
+        D_0028DF84_as_u8 = 0;
+        g_cd_async_busy_as_u8 = 1;
         D_0028E350 = 0;
-        g_cd_async_state = 0;
+        g_cd_async_state_as_u8 = 0;
         func_00225630();
     }
     if ((*(u8 *)((u8 *)(reg_a5) + (2))) == 1) {

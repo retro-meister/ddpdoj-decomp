@@ -10,11 +10,11 @@ extern u32 D_0028E418;
 extern u32 D_0028E41C;
 extern u32 D_0028E420;
 extern u32 D_0028E424;
-extern u16 *D_0028E434;
-extern u32 D_0028E438;
+extern u16 *D_0028E434_as_u16_p;
+extern u32 D_0028E438_as_u32;
 extern u8 *D_0028E43C;
 extern u8 *D_0028E440;
-extern u16 *D_0028E444;
+extern u16 *D_0028E444_as_u16_p;
 extern u8 D_0029C0C0[];
 extern u8 D_0029C150[];
 extern u8 *reg_a0;
@@ -120,11 +120,11 @@ next_4:
     reg_d5.w = D_0028E414;
     reg_d6.w = D_0028E410;
     reg_d7.w = D_0028E40C;
-    reg_a0 = (u8 *) D_0028E444;
+    reg_a0 = (u8 *) D_0028E444_as_u16_p;
     reg_a1 = (u8 *)D_0028E440;
     reg_a2 = (u8 *)D_0028E43C;
-    reg_a3 = (u8 *) D_0028E438;
-    reg_a4 = (u8 *) D_0028E434;
+    reg_a3 = (u8 *) D_0028E438_as_u32;
+    reg_a4 = (u8 *) D_0028E434_as_u16_p;
     return;
 next_3:
     reg_a1 += 0x30;
@@ -140,9 +140,9 @@ next_5:
     reg_d5.w = D_0028E414;
     reg_d6.w = D_0028E410;
     reg_d7.w = D_0028E40C;
-    reg_a0 = (u8 *) D_0028E444;
+    reg_a0 = (u8 *) D_0028E444_as_u16_p;
     reg_a1 = (u8 *)D_0028E440;
     reg_a2 = (u8 *)D_0028E43C;
-    reg_a3 = (u8 *) D_0028E438;
-    reg_a4 = (u8 *) D_0028E434;
+    reg_a3 = (u8 *) D_0028E438_as_u32;
+    reg_a4 = (u8 *) D_0028E434_as_u16_p;
 }

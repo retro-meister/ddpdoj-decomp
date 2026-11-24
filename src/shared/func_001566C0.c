@@ -7,9 +7,9 @@ s32 func_0014E7E0();
 s32 func_002011A0();
 extern u8 D_00258100[];
 extern u8 D_00258130[];
-extern s16 D_0028E88C;
-extern s16 D_0028E890;
-extern s16 D_0028E894;
+extern s16 D_0028E88C_as_s16;
+extern s16 D_0028E890_as_s16;
+extern s16 D_0028E894_as_s16;
 extern u16 D_0028E8A8;
 extern s16 D_00299768[];
 extern s8 enemy_move_end_requested;
@@ -29,19 +29,19 @@ void func_001566C0(void) {
         reg_d0.h[0] = D_0028E8A8;
         (*(u16 *)((u8 *)(reg_a5) + (0x3A))) = (u16) reg_d0.h[0];
         if (reg_d0.h[0] == 0x48) {
-            D_0028E894 = 1;
-            D_0028E890 = 1;
-            D_0028E88C = 1;
+            D_0028E894_as_s16 = 1;
+            D_0028E890_as_s16 = 1;
+            D_0028E88C_as_s16 = 1;
             (*(u16 *)((u8 *)(reg_a6) + (2))) += 0x900;
             (*(u16 *)((u8 *)(reg_a6) + (4))) -= 0x100;
         }
         if (reg_d0.h[0] == 0x8D) {
-            D_0028E890 = 1;
+            D_0028E890_as_s16 = 1;
             (*(u16 *)((u8 *)(reg_a6) + (2))) += 0x900;
             (*(u16 *)((u8 *)(reg_a6) + (4))) -= 0x100;
         }
         if (reg_d0.h[0] == 0xAC) {
-            D_0028E88C = 1;
+            D_0028E88C_as_s16 = 1;
             (*(u16 *)((u8 *)(reg_a6) + (2))) += 0x900;
             (*(u16 *)((u8 *)(reg_a6) + (4))) -= 0x100;
         }

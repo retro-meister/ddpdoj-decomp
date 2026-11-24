@@ -22,7 +22,7 @@ extern s32 D_002729C0[];
 extern u16 D_0028DE50[4];
 extern u16 D_0028DE58[4];
 extern s32 D_0028ED88;
-extern u16 D_002B4D50[];
+extern u16 D_002B4D50_as_u16_a[];
 extern u16 D_002BD440[];
 
 void func_0023CEA0(u8 *base) {
@@ -106,7 +106,7 @@ void func_0023CEA0(u8 *base) {
     func_0023CC30(base + 0x3226, D_0028DE58, 2);
     func_0023CC30(base + 0x324A, D_0028DE58, 2);
     for (n = 0; n < 0x5A; n += 10) {
-        func_0023CDA0(&((u8 (*)[10])(base + 0x32B6))[0][n], D_002B4D50, 0x800, 4);
-        func_0023CDA0(&((u8 (*)[10])(base + 0x3310))[0][n], D_002B4D50, 0x800, 4);
+        func_0023CDA0(&((u8 (*)[10])(base + 0x32B6))[0][n], D_002B4D50_as_u16_a, 0x800, 4);
+        func_0023CDA0(&((u8 (*)[10])(base + 0x3310))[0][n], D_002B4D50_as_u16_a, 0x800, 4);
     }
 }

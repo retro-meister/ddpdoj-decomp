@@ -4,7 +4,7 @@ s32 func_00125310();
 s32 func_00202A80();
 s32 death_func_0021B180(void);
 void death_func_0021B2E0(void);
-extern u16 D_00262A50[];
+extern u16 D_00262A50_as_u16_a[];
 extern u16 D_0028E88C;
 extern u8 *reg_a1;
 extern u8 *reg_a4;
@@ -22,7 +22,7 @@ void death_func_0021BA40(void) {
         return;
     }
     *(u8 *)(reg_a4 + 3) = *(u8 *)(reg_a4 + 7);
-    reg_a1 = (u8 *) D_00262A50;
+    reg_a1 = (u8 *) D_00262A50_as_u16_a;
     reg_d1.b[0] = *(u8 *)(reg_a4 + 0x10);
     death_func_0021B2E0();
     reg_d0.b[0] = *(u8 *)(reg_a4 + 0x11);

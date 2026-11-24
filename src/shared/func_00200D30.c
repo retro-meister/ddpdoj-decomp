@@ -6,7 +6,7 @@ s32 func_00206D70();
 extern u8 death_D_00290DC0;
 #else
 s32 func_002075F0();                            /* extern */
-extern s32 D_0028DE80;
+extern s32 D_0028DE80_as_s32;
 #endif
 
 void func_00200D30(void) {
@@ -18,7 +18,7 @@ void func_00200D30(void) {
 #else
     reg_d0.h[0] = 0xE;
     func_002071C0();
-    (*(s16 *)((u8 *)(&D_0028DE80) + (8))) = 0;
+    (*(s16 *)((u8 *)(&D_0028DE80_as_s32) + (8))) = 0;
     func_002075F0();
 #endif
 }

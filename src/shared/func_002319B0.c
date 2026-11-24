@@ -9,7 +9,7 @@ s32 strcmp();
 s32 func_0022CDB0();
 s32 printf();
 extern u8 D_00271FE0[];
-extern u8 D_00272010[];
+extern u8 D_00272010_as_u8_a[];
 extern u8 D_0028B3F0[];
 extern u8 D_0028B410[];
 extern u8 D_0028B430[];
@@ -20,7 +20,7 @@ extern u8 D_0028B4B0[];
 extern u8 D_0028B4D0[];
 extern u8 D_0028B4F0[];
 extern u8 D_0028B510[];
-extern u8 D_0028BB20[];
+extern u8 D_0028BB20_as_u8_a[];
 extern u8 D_0028BB98[];
 extern u8 D_0028BBB0[];
 extern u8 D_0028BC30[];
@@ -46,7 +46,7 @@ typedef struct {
     u16 id;
     u8 pad48[0x3B8];
 } Slot;
-extern Slot D_006A0E40[];
+extern Slot D_006A0E40_as_Slot_a[];
 void func_002319B0(void) {
     s32 sp5C;
     s32 ok;
@@ -170,7 +170,7 @@ void func_002319B0(void) {
         }
         break;
     case 4:
-        if (sceMcOpen(D_0028EC70, D_0028EC74, *(u32 *)(D_00272010 + (D_0028ED1C * 4)), 3) == 0) {
+        if (sceMcOpen(D_0028EC70, D_0028EC74, *(u32 *)(D_00272010_as_u8_a + (D_0028ED1C * 4)), 3) == 0) {
             D_0028ECF0 += 1;
             break;
         }
@@ -186,7 +186,7 @@ void func_002319B0(void) {
                 D_0028ECF0 = 0x14;
                 break;
             }
-            printf(D_0028BB20, D_0069F590[0]);
+            printf(D_0028BB20_as_u8_a, D_0069F590[0]);
             D_0028ECF8 = 0xA;
             D_0028ECA8 = sp5C;
             D_0028ECF0 += 1;
@@ -240,12 +240,12 @@ void func_002319B0(void) {
     case 10:
         off = D_0028ED1C - 1;
         ok = D_0028ED1C;
-        D_006A0E40[off].state = 1;
-        if (D_006A0E40[off].id == MAIN_OR_DEATH_LABEL(0xCB, 0x6E)) {
+        D_006A0E40_as_Slot_a[off].state = 1;
+        if (D_006A0E40_as_Slot_a[off].id == MAIN_OR_DEATH_LABEL(0xCB, 0x6E)) {
             printf(D_0028BC30, ok);
         } else {
-            D_006A0E40[off].state = 3;
-            printf(D_0028BC50, ok, D_006A0E40[off].id, MAIN_OR_DEATH_LABEL(0xCB, 0x6E));
+            D_006A0E40_as_Slot_a[off].state = 3;
+            printf(D_0028BC50, ok, D_006A0E40_as_Slot_a[off].id, MAIN_OR_DEATH_LABEL(0xCB, 0x6E));
         }
         D_0028ECF0 = 0;
         D_0028ED14 += 1;

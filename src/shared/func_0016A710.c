@@ -4,7 +4,7 @@ s32 func_00236F40();
 s32 func_0014A370();
 extern u16 D_0028E1AC;
 extern u16 D_0028E1B8;
-extern u16 D_0028E248[];
+extern u16 D_0028E248_as_u16_a[];
 extern u8 D_0028E36C;
 extern u8 *reg_a0;
 
@@ -13,7 +13,7 @@ void func_0016A710(void) {
     u32 t2;
 
     if (D_0028E36C != 0) return;
-    reg_a0 = (u8 *)D_0028E248;
+    reg_a0 = (u8 *)D_0028E248_as_u16_a;
     reg_d0.h[0] = *(u16 *)reg_a0;
     t = reg_d0.h[0];
     reg_d1.h[0] = t;

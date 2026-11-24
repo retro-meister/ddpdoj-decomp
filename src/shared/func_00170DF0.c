@@ -6,7 +6,7 @@ s32 func_00201010();
 extern u16 D_0028E024;
 extern Reg32 D_0028E480;
 extern u16 D_0028E5E4;
-extern s16 D_0028E5FC;
+extern s16 D_0028E5FC_as_s16;
 extern u16 D_0028E648;
 extern u16 D_0028E650;
 extern u16 D_0028E6A0;
@@ -35,7 +35,7 @@ void func_00170DF0(void) {
             reg_d4.w = 0;
         }
     }
-    if ((D_0028E5FC == 0) && ((s16) reg_d4.h[0] != 0)) {
+    if ((D_0028E5FC_as_s16 == 0) && ((s16) reg_d4.h[0] != 0)) {
         t = (s64) ((s64) reg_d5.h[0] << 0x30) >> 0x30;
         if ((t != 0) && (t >= 0)) {
             save_d0 = reg_d0.w;

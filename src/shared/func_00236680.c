@@ -6,20 +6,20 @@ extern void func_00233EE0(void);
 extern s32 D_00271FA0[];
 extern s32 D_00271FA4[];
 extern s32 D_00271FA8[];
-extern s16 D_0028E2FC;
+extern s16 D_0028E2FC_as_s16;
 extern u16 D_0028E300;
 extern u8 D_0028ECF0;
 extern s32 D_0028ED08;
 extern s32 D_0028ED10;
 extern s32 D_0028ED18;
-extern u32 D_0057CC78[];
+extern u32 D_0057CC78_as_u32_a[];
 
 void func_00236680(void) {
     s16 pressed;
 
     switch (D_0028ECF0) {
     case 0:
-        pressed = (s16)(s32)D_0028E300 ^ D_0028E2FC;
+        pressed = (s16)(s32)D_0028E300 ^ D_0028E2FC_as_s16;
         pressed &= (s16)D_0028E300;
         if (pressed == 0) {
             D_0028ECF0 = 99;
@@ -38,7 +38,7 @@ void func_00236680(void) {
     case 2:
         func_0022C5E0(200, D_00271FA0[0], 0, 20, 14, D_0028ED10, 100);
         func_00233EE0();
-        if (D_0057CC78[0] & 0x20) {
+        if (D_0057CC78_as_u32_a[0] & 0x20) {
             D_0028ECF0++;
         }
         break;
@@ -53,7 +53,7 @@ void func_00236680(void) {
     case 4:
         func_0022C5E0(200, D_00271FA4[0], 0, 20, 14, D_0028ED10, 100);
         func_00233EE0();
-        if (D_0057CC78[0] & 0x20) {
+        if (D_0057CC78_as_u32_a[0] & 0x20) {
             D_0028ECF0++;
         }
         break;
@@ -68,7 +68,7 @@ void func_00236680(void) {
     case 6:
         func_0022C5E0(200, D_00271FA8[0], 0, 20, 14, D_0028ED10, 100);
         func_00233EE0();
-        if (D_0057CC78[0] & 0x20) {
+        if (D_0057CC78_as_u32_a[0] & 0x20) {
             D_0028ECF0++;
         }
         break;

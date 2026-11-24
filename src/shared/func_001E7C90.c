@@ -19,7 +19,7 @@ extern u16 D_0028E870;
 extern u16 D_0028E874;
 extern u16 D_0028E878;
 extern u16 D_0028E8B8;
-extern s16 D_0029CEA0[];
+extern s16 D_0029CEA0_as_s16_a[];
 #ifdef DEATH_LABEL
 extern u8 death_D_00290DC0;
 extern u16 D_00684C80[];
@@ -107,7 +107,7 @@ next_dmg1:
     reg_d0.h[0] = (s32)(reg_d0.h[0] & 0xFFFF) >> 1;
     D_0028E874 = 0;
     reg_d2.w = reg_d0.w;
-    if (D_0029CEA0[0] >= 0) goto next_flag7;
+    if (D_0029CEA0_as_s16_a[0] >= 0) goto next_flag7;
 #ifdef DEATH_LABEL
     hp = reg_d2.w;
     if (hp != 0) {

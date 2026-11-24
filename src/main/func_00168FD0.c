@@ -23,16 +23,16 @@ extern u8 D_0028E288;
 extern u8 D_0028E290;
 extern u8 D_0028E2E4;
 extern u8 D_0028E2F4;
-extern s16 D_0028E314;
-extern s16 D_0028E318;
+extern s16 D_0028E314_as_s16;
+extern s16 D_0028E318_as_s16;
 extern u8 D_0028E350;
 extern u8 D_0028E368;
 extern u8 D_0028E378;
 extern u8 D_0028E39C;
 extern s16 D_0028E3FC;
 extern u16 D_0028E91C;
-extern u8 g_cd_async_state;
-extern u8 g_cd_async_busy;
+extern u8 g_cd_async_state_as_u8;
+extern u8 g_cd_async_busy_as_u8;
 extern u8 *reg_a5;
 
 void func_00168FD0(void) {
@@ -49,8 +49,8 @@ void func_00168FD0(void) {
         func_00219570();
         func_00217EC0();
         D_0028E350 = 0;
-        g_cd_async_busy = 1;
-        g_cd_async_state = 0;
+        g_cd_async_busy_as_u8 = 1;
+        g_cd_async_state_as_u8 = 0;
         func_00225630();
     }
     if (reg_a5[2] == 1) {
@@ -78,8 +78,8 @@ void func_00168FD0(void) {
         }
         return;
     block_set:
-        D_0028E318 = 1;
-        D_0028E314 = 1;
+        D_0028E318_as_s16 = 1;
+        D_0028E314_as_s16 = 1;
         reg_d0.h[0] = 5;
         D_0028E288 = 0;
         D_0028E284 = 0;

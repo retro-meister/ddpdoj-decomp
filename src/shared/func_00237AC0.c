@@ -26,12 +26,12 @@ extern s32 D_0028ED70;
 extern u8 D_0028ED74;
 extern u8 D_0028ED78;
 extern u8 D_0028ED80;
-extern u16 D_006C58A0[];
+extern u16 D_006C58A0_as_u16_a[];
 extern u16 D_006C58A2[];
 extern u16 D_006C58A4[];
 extern u16 D_006C58A6[];
 extern u16 D_006C58A8[];
-extern u16 D_006C5CA0[];
+extern u16 D_006C5CA0_as_u16_a[];
 extern u8 D_006CB1D4[];
 extern u16 D_006CB578[];
 extern u16 D_006CB57A[];
@@ -47,8 +47,8 @@ void func_00237AC0(void) {
     u16 *save;
 
     if (D_0028ED80 == 0 && D_0028ED74 == 2) {
-        data = D_006C5CA0;
-        save = D_006C58A0;
+        data = D_006C5CA0_as_u16_a;
+        save = D_006C58A0_as_u16_a;
     D_0028ED78 = 1;
     D_0028ED74 = 1;
     D_0028ED64 = 0;
@@ -63,7 +63,7 @@ void func_00237AC0(void) {
     }
     srand(D_0028E2BC * D_0028E2BB);
     for (i = 0; i < 0x20; i++) {
-        ((u8 *)D_006C58A0)[0x5CE8 + i] = rand();
+        ((u8 *)D_006C58A0_as_u16_a)[0x5CE8 + i] = rand();
     }
     D_006CB57A[0] = D_0028E1B4;
     D_006CB578[0] = D_0028E1B8;

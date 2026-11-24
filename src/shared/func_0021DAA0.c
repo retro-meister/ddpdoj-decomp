@@ -3,7 +3,7 @@
 s32 func_0018D4B0();
 s32 fade_start_out();
 s32 func_00221120();
-extern u16 D_0028E320;
+extern u16 D_0028E320_as_u16;
 extern s8 D_0028EAE8;
 extern s8 D_0028EB08;
 extern s8 D_0028EB0C;
@@ -24,16 +24,16 @@ extern s8 D_0028EB70;
 extern s8 D_0028EB74;
 extern s8 D_0028EB84;
 extern s8 D_0028EB88;
-extern s8 D_0028EC18;
+extern s8 D_0028EC18_as_s8;
 extern s8 D_0028EC1A;
 extern s8 D_0028EC24;
-extern s32 D_0057CC70[];
+extern s32 D_0057CC70_as_s32_a[];
 extern s32 D_0057CC78[];
 extern s32 D_0057CC88[];
 #ifdef DEATH_LABEL
-extern s8 D_0028E290;
-extern s8 D_0028E2E4;
-extern s8 D_0028E304;
+extern s8 D_0028E290_as_s8;
+extern s8 D_0028E2E4_as_s8;
+extern s8 D_0028E304_as_s8;
 extern s32 D_0028EAFC;
 extern s8 D_0028EB00;
 s32 func_00169BC0();
@@ -44,15 +44,15 @@ void func_0021DAA0(void) {
 
     func_00221120(0);
     var_a1 = 0;
-    D_0028E320 = 0xE10;
+    D_0028E320_as_u16 = 0xE10;
     if (D_0057CC88[0] == 0) {
-        D_0028E320 -= 1;
-        if ((s32) D_0028E320 <= 0) {
+        D_0028E320_as_u16 -= 1;
+        if ((s32) D_0028E320_as_u16 <= 0) {
             var_a1 = 1;
             D_0028EB58 = MAIN_OR_DEATH_LABEL(8, 5);
         }
     } else {
-        D_0028E320 = 0xE10;
+        D_0028E320_as_u16 = 0xE10;
     }
     if (D_0057CC78[0] & 0x40) {
         var_a1 = 1;
@@ -72,9 +72,9 @@ void func_0021DAA0(void) {
         case 0:
             break;
         case 1:
-            D_0028E2E4 = 0;
-            D_0028E290 = 2;
-            D_0028E304 = 1;
+            D_0028E2E4_as_s8 = 0;
+            D_0028E290_as_s8 = 2;
+            D_0028E304_as_s8 = 1;
             D_0028EAFC = 0xFF;
             func_00169BC0();
             fade_start_out();
@@ -146,9 +146,9 @@ void func_0021DAA0(void) {
             break;
         case 2:
             D_0028EB84 = 7;
-            D_0028EC18 = 0xA;
+            D_0028EC18_as_s8 = 0xA;
             D_0028EC1A = 0;
-            if (D_0057CC70[0] & 0x20) {
+            if (D_0057CC70_as_s32_a[0] & 0x20) {
                 D_0028EC24 = 0;
             } else {
                 D_0028EC24 = 1;

@@ -4,7 +4,7 @@ void func_0013CA90(void);
 void func_0013DA80(void);
 extern u8 D_002555E0[];
 extern u8 D_0028E078[];
-extern u8 D_0028E07C[];
+extern u8 D_0028E07C_as_u8_a[];
 extern s8 D_0028E408;
 extern s16 D_0029F160[];
 extern u16 D_0029F210[];
@@ -54,7 +54,7 @@ void func_0013DA90(void) {
             *(u16 *)(reg_a1 + 0) = reg_tmp.h[1];
             *(u16 *)(reg_a1 + 2) = reg_tmp.h[0];
         }
-        reg_a2 = (u8 *)D_0028E07C;
+        reg_a2 = (u8 *)D_0028E07C_as_u8_a;
         reg_tmp.h[1] = *(u16 *)(reg_a2 + 0);
         reg_tmp.h[0] = *(u16 *)(reg_a2 + 2);
         reg_a0 = (u8 *)reg_tmp.w;

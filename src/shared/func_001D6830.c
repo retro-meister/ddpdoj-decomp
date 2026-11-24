@@ -3,7 +3,7 @@
 s32 func_00138A40();
 s32 func_001D66A0();
 s32 func_00201C60();
-extern s16 D_0028E85C;
+extern s16 D_0028E85C_as_s16;
 extern u8 *reg_a5;
 extern u8 *reg_a6;
 
@@ -34,7 +34,7 @@ void func_001D6830(s32 arg0) {
     }
     if (((*(u8 *)((u8 *)(reg_a5) + (0x1B))) == 2) && ((*(s16 *)((u8 *)(reg_a6) + (2))) >= 0x6A00)) {
         func_00138A40();
-        D_0028E85C = 0;
+        D_0028E85C_as_s16 = 0;
         (*(u8 *)((u8 *)(reg_a5) + (0x1B))) = 3U;
     }
     if ((*(u8 *)((u8 *)(reg_a5) + (0x1B))) == 3) {

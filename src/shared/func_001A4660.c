@@ -3,14 +3,14 @@
 s32 func_0019C5B0();
 extern u8 D_0026B3B0[];
 extern u8 D_0028E294;
-extern u16 D_002BB368[];
+extern u16 D_002BB368_as_u16_a[];
 extern u8 *reg_a0;
 extern u8 *reg_a6;
 
 void func_001A4660(void) {
     u16 temp_a0;
 
-    reg_a6 = (u8 *)(D_002BB368);
+    reg_a6 = (u8 *)(D_002BB368_as_u16_a);
     reg_a0 = (u8 *)D_0026B3B0;
     if (D_0028E294 != 0) {
         reg_d1.w = 0x5E0009C0;

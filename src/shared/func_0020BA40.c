@@ -1,7 +1,7 @@
 #include "common.h"
 
 extern u8 D_0028E0A0[];
-extern u8 D_0029CEA0[];
+extern u8 D_0029CEA0_as_u8_a[];
 extern u8 *reg_a5;
 extern u8 *reg_a6;
 
@@ -17,7 +17,7 @@ void func_0020BA40(void) {
     *(u16 *) reg_a5 = 0x7C00;
     reg_a5 += 2;
     reg_d5.h[0] = 0x2C;
-    reg_a6 = (u8 *)D_0029CEA0;
+    reg_a6 = (u8 *)D_0029CEA0_as_u8_a;
 loop_1:
     reg_tmp.h[0] = *(u16 *) reg_a6;
     reg_a6 += 2;

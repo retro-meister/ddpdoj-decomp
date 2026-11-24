@@ -2,10 +2,10 @@
 
 void func_0022E710(void);
 void func_0022F070(void);
-extern u32 D_0028ED1C;
+extern u32 D_0028ED1C_as_u32;
 
 void func_0022E6B0(void) {
-    switch (D_0028ED1C) {
+    switch (D_0028ED1C_as_u32) {
     case 0:
         func_0022E710();
         break;

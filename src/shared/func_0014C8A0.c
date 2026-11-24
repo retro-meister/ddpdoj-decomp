@@ -4,7 +4,7 @@ s32 func_0014C3B0();
 s32 func_0014CAE0();
 s32 memset();
 extern u16 D_0028E8A8;
-extern s16 D_0029C080[];
+extern s16 D_0029C080_as_s16_a[];
 extern u8 D_0029C082[];
 extern s16 D_0029C08E[];
 extern s16 D_0029C090[];
@@ -24,7 +24,7 @@ void func_0014C8A0(void) {
     u32 temp_s1;
 
     func_0014C3B0();
-    memset(D_0029C080, 0, 0x40);
+    memset(D_0029C080_as_s16_a, 0, 0x40);
     reg_a1 = (u8 *)D_0029C082;
     reg_d1.w = 1;
     var_a0 = (u8 *)(D_0029C09E);
@@ -48,7 +48,7 @@ void func_0014C8A0(void) {
         reg_a1 = (u8 *)D_0029C09E;
     } while ((s16)(--reg_d1.h[0]) >= 0);
     if (D_0028E8A8 != 0) {
-        D_0029C080[0] = 1;
+        D_0029C080_as_s16_a[0] = 1;
         reg_tmp.h[1] = (*(u16 *)((u8 *)(reg_a5) + (0x10)));
         reg_tmp.h[0] = (*(u16 *)((u8 *)(reg_a5) + (0x12)));
         reg_a3 = (u8 *)reg_tmp.w;
@@ -78,5 +78,5 @@ void func_0014C8A0(void) {
         D_0029C0AA[0] = 0;
         D_0029C0AC[0] = 0;
     }
-    D_0029C080[0] = 0;
+    D_0029C080_as_s16_a[0] = 0;
 }

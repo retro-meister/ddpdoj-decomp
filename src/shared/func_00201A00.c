@@ -10,14 +10,14 @@ extern u32 D_0028E41C;
 extern u32 D_0028E420;
 extern u32 D_0028E424;
 extern u32 D_0028E428;
-extern s32 D_0028E42C;
-extern s32 D_0028E430;
+extern s32 D_0028E42C_as_s32;
+extern s32 D_0028E430_as_s32;
 extern s32 D_0028E434;
 extern s32 D_0028E438;
-extern u16 *D_0028E43C;
-extern s32 D_0028E440;
+extern u16 *D_0028E43C_as_u16_p;
+extern s32 D_0028E440_as_s32;
 extern s32 D_0028E444;
-extern u16 D_002962E0[];
+extern u16 D_002962E0_as_u16_a[];
 extern u8 *reg_a0;
 extern u8 *reg_a1;
 extern u8 *reg_a2;
@@ -28,9 +28,9 @@ extern u8 *reg_a6;
 
 void func_00201A00(void) {
     u16 *var_a0;
-    var_a0 = (u16 *)(D_002962E0);
+    var_a0 = (u16 *)(D_002962E0_as_u16_a);
     reg_d2.w = 0;
-    reg_a2 = (u8 *)(D_002962E0);
+    reg_a2 = (u8 *)(D_002962E0_as_u16_a);
     reg_d7.h[0] = MAIN_OR_DEATH_LABEL(0xD1, 0x419);
     do {
         reg_d0.h[0] = *(u16 *)reg_a2;
@@ -56,10 +56,10 @@ void func_00201A00(void) {
     reg_d6.w = D_0028E410;
     reg_d7.w = D_0028E40C;
     reg_a0 = (u8 *)D_0028E444;
-    reg_a1 = (u8 *)D_0028E440;
-    reg_a2 = (u8 *)(D_0028E43C);
+    reg_a1 = (u8 *)D_0028E440_as_s32;
+    reg_a2 = (u8 *)(D_0028E43C_as_u16_p);
     reg_a3 = (u8 *)D_0028E438;
     reg_a4 = (u8 *)D_0028E434;
-    reg_a5 = (u8 *)D_0028E430;
-    reg_a6 = (u8 *)D_0028E42C;
+    reg_a5 = (u8 *)D_0028E430_as_s32;
+    reg_a6 = (u8 *)D_0028E42C_as_s32;
 }

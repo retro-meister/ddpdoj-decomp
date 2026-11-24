@@ -2,11 +2,11 @@
 
 s32 func_00129370();
 s32 func_002027A0();
-extern u8 *D_0028E44C;
+extern u8 *D_0028E44C_as_u8_p;
 extern Reg32 D_0028E474;
 extern u16 D_0028E910;
-extern u16 D_0029F1F0[];
-extern u16 D_0029F260[];
+extern u16 D_0029F1F0_as_u16_a[];
+extern u16 D_0029F260_as_u16_a[];
 extern u8 *reg_a0;
 extern u8 *reg_a1;
 extern u8 *reg_a5;
@@ -24,18 +24,18 @@ void func_001E3D60(void) {
     reg_d0.h[0] += 4;
 next_1:
     *(u8 *)(reg_a5 + 0x39) = reg_d0.b[0];
-    reg_a0 = (u8 *)D_0029F260;
-    reg_a1 = (u8 *)D_0029F1F0;
+    reg_a0 = (u8 *)D_0029F260_as_u16_a;
+    reg_a1 = (u8 *)D_0029F1F0_as_u16_a;
     if (*(u8 *)(reg_a5 + 2) == 0) goto next_2;
-    D_0028E44C = reg_a0;
+    D_0028E44C_as_u8_p = reg_a0;
     reg_a0 = reg_a1;
-    reg_a1 = (u8 *)D_0028E44C;
+    reg_a1 = (u8 *)D_0028E44C_as_u8_p;
 next_2:
     if (*(s16 *)reg_a0 < 0) goto next_3;
     if (*(s16 *)reg_a1 >= 0) goto block_rts;
-    D_0028E44C = reg_a0;
+    D_0028E44C_as_u8_p = reg_a0;
     reg_a0 = reg_a1;
-    reg_a1 = (u8 *)D_0028E44C;
+    reg_a1 = (u8 *)D_0028E44C_as_u8_p;
 next_3:
     reg_d2.h[0] = *(u16 *)(reg_a0 + 2);
     reg_d3.h[0] = *(u16 *)(reg_a0 + 4);

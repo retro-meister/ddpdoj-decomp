@@ -10,7 +10,7 @@ void func_00234230(void);
 void func_002343C0(void);
 void func_00236900(void);
 extern char D_0028BBD0[];
-extern u8 D_0028ECBC;
+extern u8 D_0028ECBC_as_u8;
 extern s32 D_0028ECC0;
 extern s32 D_0028ECC4;
 extern s32 D_0028ECCC;
@@ -108,7 +108,7 @@ void func_00231520(void) {
         D_006A0E44[0] = 0;
         D_0028ECFC = 20;
         D_006A0E48[0] = 0;
-        D_0028ECBC = 1;
+        D_0028ECBC_as_u8 = 1;
         D_0028ED00 = 1;
         D_0028ED0C = 0;
         D_0028ECC4 = 0;

@@ -21,7 +21,7 @@ extern u8 *D_0028E56C;
 extern u16 D_0028E910;
 extern u8 D_00299D30[];
 extern u8 D_0029A12C[];
-extern u8 D_0029F260[];
+extern u8 D_0029F260_as_u8_a[];
 extern u8 *reg_a0;
 extern u8 *reg_a1;
 extern u8 *reg_a2;
@@ -55,7 +55,7 @@ void func_00209F20(void) {
     reg_d1.w = 0;
     reg_a2 = *(u8 **)(D_00251120 + reg_d5.h[0] * 4);
     reg_a0 = (u8 *)D_00299D30;
-    if (D_0029F260 == reg_a4) {
+    if (D_0029F260_as_u8_a == reg_a4) {
         func_0020A370();
         return;
     }

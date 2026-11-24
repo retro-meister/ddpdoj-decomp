@@ -7,7 +7,7 @@ extern u16 D_0026C1C0[];
 extern u16 D_0028DB08[];
 extern u16 D_0028E47C;
 extern u16 D_0028E47E;
-extern u16 D_0028E480;
+extern u16 D_0028E480_as_u16;
 extern u16 D_0028E482;
 extern void (*jtbl_0028E3F4)();
 extern u8 *reg_a0;
@@ -33,8 +33,8 @@ void func_001BF2A0(void) {
     reg_d1.h[0] += reg_d1.h[0];
     reg_d1.h[0] += reg_d1.h[0];
     D_0028E482 = *(u16 *)(reg_a6 + 0x82);
-    D_0028E480 = *(u16 *)(reg_a6 + 0x84);
-    reg_d2.w = *(u32 *)&D_0028E480;
+    D_0028E480_as_u16 = *(u16 *)(reg_a6 + 0x84);
+    reg_d2.w = *(u32 *)&D_0028E480_as_u16;
     goto next_2;
 next_1:
     reg_a0 = (u8 *)(D_0026C140);

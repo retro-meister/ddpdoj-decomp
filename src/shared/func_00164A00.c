@@ -9,7 +9,7 @@ s32 func_0018D4E0();
 s32 func_001A91A0();
 s32 func_00201B80();
 extern Reg32 D_0028E484;
-extern s8 D_0028E855;
+extern s8 D_0028E855_as_s8;
 extern u16 D_0028E8A8;
 extern u16 D_0028E91C;
 extern u16 D_0029C068[];
@@ -20,7 +20,7 @@ extern u8 *reg_a6;
 void func_00164A00(void) {
     u32 saved;
 
-    if (D_0028E855 < 0) goto block_1;
+    if (D_0028E855_as_s8 < 0) goto block_1;
     reg_a0 = reg_a6;
     func_0014D220();
     func_00201B80();

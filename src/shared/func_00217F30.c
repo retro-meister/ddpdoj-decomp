@@ -3,11 +3,11 @@
 #include "gfx_types.h"
 
 extern GlyphCacheEntry D_00583FD8[];
-extern s16 D_0057FA30[];
+extern s16 D_0057FA30_as_s16_a[];
 
 s32 func_00217F30(u16 key)
 {
-    s16 *table = D_0057FA30;
+    s16 *table = D_0057FA30_as_s16_a;
     s32 slot = table[key];
     s32 previous;
     s32 next;

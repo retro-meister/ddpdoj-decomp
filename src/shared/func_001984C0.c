@@ -25,17 +25,17 @@ extern u8 D_0028E2BC;
 extern s32 D_0028EAFC;
 extern u8 D_002BADD0[];
 extern u8 D_002BADF0[];
-extern u8 D_002BB060[];
-extern u8 D_002BB100[];
-extern u8 D_002BB338[];
-extern u8 D_002BB348[];
-extern u8 D_002BB358[];
-extern u8 D_002BB368[];
-extern u8 D_002BB378[];
-extern u8 D_002BB388[];
-extern u8 D_002BB398[];
-extern u8 D_002BB3B0[];
-extern u8 D_002BB3F0[];
+extern u8 D_002BB060_as_u8_a[];
+extern u8 D_002BB100_as_u8_a[];
+extern u8 D_002BB338_as_u8_a[];
+extern u8 D_002BB348_as_u8_a[];
+extern u8 D_002BB358_as_u8_a[];
+extern u8 D_002BB368_as_u8_a[];
+extern u8 D_002BB378_as_u8_a[];
+extern u8 D_002BB388_as_u8_a[];
+extern u8 D_002BB398_as_u8_a[];
+extern u8 D_002BB3B0_as_u8_a[];
+extern u8 D_002BB3F0_as_u8_a[];
 void func_001984C0(void) {
     u32 save_d0;
     char str[0x28];
@@ -70,17 +70,17 @@ void func_001984C0(void) {
         rec[j] = 0;
     }
     flags = 0;
-    score = ((u32 *)D_002BB3F0)[D_0028EAFC];
+    score = ((u32 *)D_002BB3F0_as_u8_a)[D_0028EAFC];
     for (i = 0; i < 3; i++) {
-        name[i] = ((u32 *)D_002BB3B0)[D_0028EAFC * 3 + i];
+        name[i] = ((u32 *)D_002BB3B0_as_u8_a)[D_0028EAFC * 3 + i];
     }
-    v0 = ((u16 *)D_002BB388)[D_0028EAFC];
-    v1 = ((u16 *)D_002BB378)[D_0028EAFC];
-    v2 = ((u16 *)D_002BB368)[D_0028EAFC];
-    val_fc = ((u16 *)D_002BB338)[D_0028EAFC];
-    v3 = ((u16 *)D_002BB398)[D_0028EAFC];
-    val_fe = ((u16 *)D_002BB358)[D_0028EAFC];
-    v4 = ((u16 *)D_002BB348)[D_0028EAFC];
+    v0 = ((u16 *)D_002BB388_as_u8_a)[D_0028EAFC];
+    v1 = ((u16 *)D_002BB378_as_u8_a)[D_0028EAFC];
+    v2 = ((u16 *)D_002BB368_as_u8_a)[D_0028EAFC];
+    val_fc = ((u16 *)D_002BB338_as_u8_a)[D_0028EAFC];
+    v3 = ((u16 *)D_002BB398_as_u8_a)[D_0028EAFC];
+    val_fe = ((u16 *)D_002BB358_as_u8_a)[D_0028EAFC];
+    v4 = ((u16 *)D_002BB348_as_u8_a)[D_0028EAFC];
     shift = (u32)D_0028E2BC & 3;
     if (shift == 0) {
         shift = (u8)(shift + 1);
@@ -174,9 +174,9 @@ void func_001984C0(void) {
     memcpy(D_002BADF0, code, 12);
     func_00198280();
     if (D_0028E290 == 2) {
-        memcpy(D_002BB060 + D_0028EAFC * 0x1E, D_002BADD0, 0x1E);
+        memcpy(D_002BB060_as_u8_a + D_0028EAFC * 0x1E, D_002BADD0, 0x1E);
     } else {
-        memcpy(D_002BB100 + D_0028EAFC * 0x1E, D_002BADD0, 0x1E);
+        memcpy(D_002BB100_as_u8_a + D_0028EAFC * 0x1E, D_002BADD0, 0x1E);
     }
     reg_d0.w = save_d0;
 }

@@ -14,8 +14,8 @@ extern u8 D_0028E290;
 extern Reg32 D_0028E474;
 extern s32 D_0028E638;
 extern u16 D_0028E8B8;
-extern u16 D_00299768[];
-extern u16 D_0029976A[];
+extern u16 D_00299768_as_u16_a[];
+extern u16 D_0029976A_as_u16_a[];
 extern u16 D_0029976C[];
 extern u8 *reg_a5;
 extern u8 *reg_a6;
@@ -136,8 +136,8 @@ block_check:
     func_001D4540();
     func_001D4510();
     B(0x8D) = 1;
-    D_00299768[0] = 1;
-    D_0029976A[0] = 1;
+    D_00299768_as_u16_a[0] = 1;
+    D_0029976A_as_u16_a[0] = 1;
     D_0029976C[0] = 1;
     func_002016D0();
 block_tail:

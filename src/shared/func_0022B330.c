@@ -10,7 +10,7 @@ extern char D_00289E90[];
 extern char D_00289EB0[];
 extern char D_00289ED0[];
 extern char D_00289EF0[];
-extern u8 D_0028ED30[8];
+extern u8 D_0028ED30_as_u8_a8[8];
 extern u16 D_0028ED40;
 extern s32 D_0028ED44;
 extern u16 D_0028ED48;
@@ -42,7 +42,7 @@ void func_0022B330(void) {
 
     count = 0;
     for (i = 0; i < 6; i++) {
-        if (D_0028ED30[i] == D_006A4800[0x38 + i]) {
+        if (D_0028ED30_as_u8_a8[i] == D_006A4800[0x38 + i]) {
             count++;
         }
     }

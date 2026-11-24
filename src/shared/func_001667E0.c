@@ -17,16 +17,16 @@ extern u16 D_0028E8CC;
 extern u16 D_0028E918;
 extern u16 D_0028E91C;
 extern s8 enemy_move_end_requested;
-extern s8 *reg_a0;
+extern s8 *reg_a0_as_s8_p;
 extern u8 *reg_a5;
 extern u8 *reg_a6;
 
 void func_001667E0(void) {
     s8 *temp_a1_2;
 
-    reg_a0 = (s8 *)D_0025ACF0;
+    reg_a0_as_s8_p = (s8 *)D_0025ACF0;
     func_0014E370();
-    reg_a0 = (s8 *)D_0025ACD0;
+    reg_a0_as_s8_p = (s8 *)D_0025ACD0;
     reg_d0.w = 0xC;
     func_0014E300();
     func_0014E7E0();
@@ -52,15 +52,15 @@ void func_001667E0(void) {
             goto block_10;
         }
 block_10:
-        reg_a0 = (s8 *)D_0025ACC0;
+        reg_a0_as_s8_p = (s8 *)D_0025ACC0;
         reg_d0.h[0] = D_0028E918;
-        reg_a0 = &reg_a0[reg_d0.h[0]];
-        (*(s8 *)((u8 *)(reg_a6) + (0x1C))) = (s8) *reg_a0;
-        (*(s8 *)((u8 *)(reg_a5) + (0x1B))) = (s8) *reg_a0;
-        reg_a0 += 1;
-        (*(s8 *)((u8 *)(reg_a5) + (0x1A))) = (s8) *reg_a0;
-        temp_a1_2 = (s8 *)(reg_a0 + 1);
-        reg_a0 = temp_a1_2;
+        reg_a0_as_s8_p = &reg_a0_as_s8_p[reg_d0.h[0]];
+        (*(s8 *)((u8 *)(reg_a6) + (0x1C))) = (s8) *reg_a0_as_s8_p;
+        (*(s8 *)((u8 *)(reg_a5) + (0x1B))) = (s8) *reg_a0_as_s8_p;
+        reg_a0_as_s8_p += 1;
+        (*(s8 *)((u8 *)(reg_a5) + (0x1A))) = (s8) *reg_a0_as_s8_p;
+        temp_a1_2 = (s8 *)(reg_a0_as_s8_p + 1);
+        reg_a0_as_s8_p = temp_a1_2;
         if (D_0028E91C == 4) {
             (*(s16 *)((u8 *)(reg_a6) + (0x18))) = 0x880;
             if ((s32) D_0028E8A8 < 0x230) {

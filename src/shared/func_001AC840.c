@@ -1,6 +1,6 @@
 #include "common.h"
 
-extern s16 D_0028E59C;
+extern s16 D_0028E59C_as_s16;
 extern u16 D_0028E630;
 extern u8 D_0028E854;
 extern u16 D_0028E91C;
@@ -22,5 +22,5 @@ void func_001AC840(void) {
             D_0028E630 = 1;
         }
     }
-    D_0028E59C = 1;
+    D_0028E59C_as_s16 = 1;
 }

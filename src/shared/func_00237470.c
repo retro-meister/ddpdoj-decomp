@@ -12,8 +12,8 @@ extern void func_00237330(void);
 extern u8 D_0028E350;
 extern s16 D_0028E3FC;
 extern u16 D_0028E91C;
-extern u8 g_cd_async_state;
-extern u8 g_cd_async_busy;
+extern u8 g_cd_async_state_as_u8;
+extern u8 g_cd_async_busy_as_u8;
 extern s8 D_0028EC20;
 extern u8 *reg_a0;
 extern u8 *reg_a1;
@@ -63,9 +63,9 @@ void func_00237470(void) {
         step++;
         break;
     case 0:
-        g_cd_async_busy = 1;
+        g_cd_async_busy_as_u8 = 1;
         D_0028E350 = 0;
-        g_cd_async_state = 0;
+        g_cd_async_state_as_u8 = 0;
         func_00225630();
         D_0028E91C = 0;
         step++;

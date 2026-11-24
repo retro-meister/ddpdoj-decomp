@@ -3,7 +3,7 @@
 extern u8 D_002555E0[];
 extern u8 D_0028E078[];
 extern u8 D_0028E080[];
-extern u8 D_0029F260[];
+extern u8 D_0029F260_as_u8_a[];
 extern u8 *reg_a0;
 extern u8 *reg_a1;
 extern u8 *reg_a2;
@@ -25,7 +25,7 @@ void func_00145E70(u8 *arg0) {
     sd0 = reg_d0.w;
     sd1 = reg_d1.w;
     stmp = reg_tmp.w;
-    if (D_0029F260 == arg0) {
+    if (D_0029F260_as_u8_a == arg0) {
         reg_a4 = (u8 *)D_0028E080;
     } else {
         reg_a4 = (u8 *)D_0028E078;

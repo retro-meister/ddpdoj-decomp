@@ -8,7 +8,7 @@ s32 func_002010A0();
 s32 func_002012F0();
 s32 func_00202730();
 extern u16 D_0028E3EC;
-extern u32 D_0028E47C;
+extern u32 D_0028E47C_as_u32;
 extern u8 *reg_a4;
 extern u8 *reg_a5;
 extern u8 *reg_a6;
@@ -37,7 +37,7 @@ loop_1:
     reg_d3.h[0] = reg_d0.h[0];
     func_002012F0();
     reg_d0.h[0] = (s16) reg_d0.h[0] >> 3;
-    D_0028E47C = reg_d3.w;
+    D_0028E47C_as_u32 = reg_d3.w;
     reg_d3.h[1] = reg_d3.h[0];
     reg_d3.h[0] = reg_d0.h[0];
     reg_d2.h[1] = *(u16 *)(reg_a6 + 2);

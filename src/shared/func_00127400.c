@@ -5,7 +5,7 @@ extern s8 D_0028E408;
 s32 func_002011D0();
 s32 func_00201270();
 s32 func_00201D10();
-extern void *D_0028E44C;
+extern void *D_0028E44C_as_void_p;
 extern u8 *reg_a0;
 extern u8 *reg_a6;
 
@@ -31,12 +31,12 @@ void func_00127400(void) {
     reg_d0.h[0] = (u16) reg_d0.b[0];
     reg_d1.b[0] &= (*(u8 *)((u8 *)(temp_a1) + (0x1A)));
     reg_a0 = reg_a6;
-    D_0028E44C = temp_a1;
+    D_0028E44C_as_void_p = temp_a1;
     reg_a6 = temp_a1;
     func_00201D10();
-    D_0028E44C = (void *)reg_a0;
+    D_0028E44C_as_void_p = (void *)reg_a0;
     reg_a0 = reg_a6;
-    reg_a6 = (u8 *)D_0028E44C;
+    reg_a6 = (u8 *)D_0028E44C_as_void_p;
     (*(u16 *)((u8 *)(reg_a0) + (0x20))) = (u16) reg_d2.h[0];
     (*(u16 *)((u8 *)(reg_a0) + (0x22))) = (u16) reg_d3.h[0];
     reg_d0.w = save_d0;

@@ -10,8 +10,8 @@ extern u32 D_0028E41C;
 extern u32 D_0028E420;
 extern u32 D_0028E424;
 extern u32 D_0028E428;
-extern void *D_0028E42C;
-extern u16 D_0028E474;
+extern void *D_0028E42C_as_void_p;
+extern u16 D_0028E474_as_u16;
 extern u8 *reg_a6;
 
 void func_0013EC50(void) {
@@ -31,9 +31,9 @@ next_1:
     reg_d5.w = 0;
     reg_d5.b[0] = *(u8 *) (reg_a6 + 0x24);
     reg_d6.b[0] -= reg_d5.b[0];
-    D_0028E474 = reg_d5.h[0];
+    D_0028E474_as_u16 = reg_d5.h[0];
     reg_d5.h[0] = reg_d5.h[1];
-    reg_d5.h[1] = D_0028E474;
+    reg_d5.h[1] = D_0028E474_as_u16;
     reg_d5.b[0] = *(u8 *) (reg_a6 + 0x25);
     if (reg_d5.b[0] == 0) goto next_2;
     reg_d4.w = 0x02CC000A;
@@ -43,12 +43,12 @@ loop_1:
     reg_d5.w -= 0x10001;
     if (reg_d5.h[0] != 0) goto loop_1;
 next_2:
-    D_0028E474 = reg_d5.h[0];
+    D_0028E474_as_u16 = reg_d5.h[0];
     reg_d5.h[0] = reg_d5.h[1];
-    reg_d5.h[1] = D_0028E474;
-    D_0028E474 = reg_d5.h[0];
+    reg_d5.h[1] = D_0028E474_as_u16;
+    D_0028E474_as_u16 = reg_d5.h[0];
     reg_d5.h[0] -= 1;
-    if (D_0028E474 == 0) goto next_3;
+    if (D_0028E474_as_u16 == 0) goto next_3;
     reg_d4.w = 0x02C0000A;
 loop_2:
     func_0011C4A0();
@@ -76,5 +76,5 @@ next_4:
     reg_d5.w = D_0028E414;
     reg_d6.w = D_0028E410;
     reg_d7.w = D_0028E40C;
-    reg_a6 = (u8 *)D_0028E42C;
+    reg_a6 = (u8 *)D_0028E42C_as_void_p;
 }

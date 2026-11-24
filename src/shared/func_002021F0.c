@@ -7,7 +7,7 @@ typedef void (*Fn)();
 extern u8 D_00267120[];
 extern u8 D_00267140[];
 extern u8 D_00267150[];
-extern u16 D_0028E484;
+extern u16 D_0028E484_as_u16;
 
 void func_002021F0(void) {
     reg_d4.h[0] = 0x1800;
@@ -16,9 +16,9 @@ void func_002021F0(void) {
     reg_d2.h[0] += reg_d4.h[0];
     reg_d3.h[0] += reg_d4.h[0];
     reg_d4.w = 8;
-    D_0028E484 = reg_d1.h[0];
+    D_0028E484_as_u16 = reg_d1.h[0];
     reg_d1.h[0] -= reg_d3.h[0];
-    if ((s32) D_0028E484 < (s32) reg_d3.h[0]) {
+    if ((s32) D_0028E484_as_u16 < (s32) reg_d3.h[0]) {
         reg_d4.w = 0;
         reg_d1.h[0] *= 0xFFFF;
     }

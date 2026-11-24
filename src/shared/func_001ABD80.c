@@ -4,7 +4,7 @@ s32 func_0016AA30();
 extern u16 D_0028E5B0;
 extern u16 D_0028E5B4;
 extern u16 D_0028E5E0;
-extern s16 D_0028E8C0;
+extern s16 D_0028E8C0_as_s16;
 extern s16 D_0029F1F0[];
 extern u8 D_0029F215[];
 extern u8 *reg_a0;
@@ -19,7 +19,7 @@ void func_001ABD80(void) {
     u16 var_a0;
     if (D_0028E5B0 != 0) {
         if (D_0029F1F0[0] >= 0) {
-            if (D_0028E8C0 >= 0) {
+            if (D_0028E8C0_as_s16 >= 0) {
                 return;
             }
             goto block_5;

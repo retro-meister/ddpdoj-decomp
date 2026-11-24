@@ -20,8 +20,8 @@ s32 func_001A9000();
 s32 func_001A91A0();
 s32 func_00202140();
 s32 func_00202500();
-extern u8 D_0025B130[];
-extern u8 D_0025B140[];
+extern u8 D_0025B130_as_u8_a[];
+extern u8 D_0025B140_as_u8_a[];
 extern u16 D_0028E3EC;
 extern u16 D_0028E3F0;
 extern Reg32 D_0028E484;
@@ -89,7 +89,7 @@ next_3:
     func_001A91A0();
     (*(u8 *)((u8 *)(reg_a5) + (0x21))) |= 0x80;
     reg_d0.w = 3;
-    reg_a1 = (u8 *)D_0025B140;
+    reg_a1 = (u8 *)D_0025B140_as_u8_a;
     func_0016CEA0();
     (*(u16 *)((u8 *)(reg_a0) + (0x26))) = 0xFE00;
     (*(s16 *)((u8 *)(reg_a0) + (0x12))) = 0;
@@ -219,7 +219,7 @@ block_e:
     reg_d0.w = 0x10;
     func_001A91A0();
     reg_d0.w = 4;
-    reg_a1 = (u8 *)D_0025B130;
+    reg_a1 = (u8 *)D_0025B130_as_u8_a;
     func_0016CEA0();
     (*(u16 *)((u8 *)(reg_a0) + (0x26))) = 0xFE00;
     (*(s16 *)((u8 *)(reg_a0) + (0x12))) = 0;

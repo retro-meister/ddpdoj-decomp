@@ -2,8 +2,8 @@
 
 extern void func_0018D4B0(void);
 extern s8 D_0028EB14;
-extern u32 D_0057CC70[];
-extern u32 D_0057CC74[];
+extern u32 D_0057CC70_as_u32_a[];
+extern u32 D_0057CC74_as_u32_a[];
 extern s8 D_0068DC10[];
 extern s8 D_0068DD00[];
 
@@ -12,9 +12,9 @@ void func_00222780(void) {
     s32 slot;
     s32 sel;
 
-    if (D_0057CC70[0] != 0) {
+    if (D_0057CC70_as_u32_a[0] != 0) {
         for (button = 0; button < 8; button++) {
-            if (D_0057CC70[0] & (1 << button)) {
+            if (D_0057CC70_as_u32_a[0] & (1 << button)) {
                 goto found1;
             }
         }
@@ -30,9 +30,9 @@ found1:
         D_0068DD00[sel] = button;
     }
 next:
-    if (D_0057CC74[0] != 0) {
+    if (D_0057CC74_as_u32_a[0] != 0) {
         for (button = 0; button < 8; button++) {
-            if (D_0057CC74[0] & (1 << button)) {
+            if (D_0057CC74_as_u32_a[0] & (1 << button)) {
                 goto found2;
             }
         }

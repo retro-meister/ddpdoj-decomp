@@ -15,14 +15,14 @@ void func_0012DCC0();
 void func_0014E030();
 void func_00202760();
 void func_00203330();
-extern u8 D_0024E7D0[];
+extern u8 D_0024E7D0_as_u8_a[];
 extern u8 D_0024F0F0[];
 extern u8 D_00262570[];
 extern u32 D_0028DEA4;
 extern u16 D_0028E3EC;
 extern s8 D_0028E408;
 extern Reg32 D_0028E484;
-extern u16 D_0028E854;
+extern u16 D_0028E854_as_u16;
 extern u16 D_0028E88C;
 extern u8 D_002962E0[];
 #ifdef DEATH_LABEL
@@ -31,18 +31,18 @@ extern u8 death_D_0029085C;
 #endif
 extern u16 D_00299760[];
 extern u16 D_00299762[];
-extern u16 D_00299768[];
-extern u16 D_0029976A[];
+extern u16 D_00299768_as_u16_a[];
+extern u16 D_0029976A_as_u16_a[];
 extern u16 D_0029976C[];
 extern u16 D_0029976E[];
 extern u8 *D_00299770[];
 extern u16 D_0029C06C[];
-extern u8 D_0029CEA0[];
+extern u8 D_0029CEA0_as_u8_a[];
 extern void (*jtbl_0028E3F4)();
 extern u8 *reg_a0;
 extern u8 *reg_a1;
 extern u8 *reg_a2;
-extern u16 *reg_a4;
+extern u16 *reg_a4_as_u16_p;
 extern u8 *reg_a6;
 
 #define SLOT_PHASE MAIN_OR_DEATH_LABEL(D_00299762[0], *(u16 *)(D_002962E0 + 0x10682))
@@ -161,9 +161,9 @@ void func_00129EF0(void) {
     reg_a6 = D_002962E0;
     reg_d7.h[0] = MAIN_OR_DEATH_LABEL(0x45, 0x15D);
     reg_d6.h[0] = D_0029C06C[0];
-    if (D_00299768[0] != 0) {
+    if (D_00299768_as_u16_a[0] != 0) {
         reg_d7.h[0] = MAIN_OR_DEATH_LABEL(0x6D, 0x225);
-        if (D_0029976A[0] != 0) {
+        if (D_0029976A_as_u16_a[0] != 0) {
             reg_d7.h[0] = MAIN_OR_DEATH_LABEL(0x9F, 0x31F);
             if (D_0029976C[0] != 0) {
                 reg_d7.h[0] = MAIN_OR_DEATH_LABEL(0xBD, 0x3B5);
@@ -176,8 +176,8 @@ void func_00129EF0(void) {
     goto loop_10;
 
 L_bom_bui:
-    reg_d1.h[0] = *(u16 *)D_0029CEA0;
-    if ((reg_d1.h[0] != 0) && (reg_d1.w & 1) && (0 <= (s64)(s16)D_0028E854)) {
+    reg_d1.h[0] = *(u16 *)D_0029CEA0_as_u8_a;
+    if ((reg_d1.h[0] != 0) && (reg_d1.w & 1) && (0 <= (s64)(s16)D_0028E854_as_u16)) {
         goto block_12;
     }
     reg_d0.w = 0;
@@ -199,8 +199,8 @@ loop_10:
         goto block_9;
     }
     D_00299760[0] += 1;
-    reg_d1.h[0] = *(u16 *)D_0029CEA0;
-    if ((s16)(reg_d1.h[0] |= (s16)D_0028E854) < 0) {
+    reg_d1.h[0] = *(u16 *)D_0029CEA0_as_u8_a;
+    if ((s16)(reg_d1.h[0] |= (s16)D_0028E854_as_u16) < 0) {
         goto L_bom_bui;
     }
 
@@ -259,20 +259,20 @@ block_12:
     reg_d0.w = temp_a1_2 & 0x07FF03FF;
     temp_a0 = reg_d0.w;
     reg_d0.w = temp_a0 | 0x80008000;
-    *reg_a4 = reg_d0.h[1];
-    reg_a4 += 1;
-    *reg_a4 = reg_d0.h[0];
-    reg_a4 += 1;
-    *reg_a4 = *(u16 *)(reg_a1 + 0);
+    *reg_a4_as_u16_p = reg_d0.h[1];
+    reg_a4_as_u16_p += 1;
+    *reg_a4_as_u16_p = reg_d0.h[0];
+    reg_a4_as_u16_p += 1;
+    *reg_a4_as_u16_p = *(u16 *)(reg_a1 + 0);
     reg_a1 += 2;
-    reg_a4 += 1;
-    *reg_a4 = *(u16 *)(reg_a1 + 0);
+    reg_a4_as_u16_p += 1;
+    *reg_a4_as_u16_p = *(u16 *)(reg_a1 + 0);
     reg_a1 += 2;
-    reg_a4 += 1;
-    *reg_a4 = *(u16 *)(reg_a1 + 0);
-    reg_a4 += 1;
-    *reg_a4 = *(u16 *)(reg_a6 + 0x1C);
-    reg_a4 += 1;
+    reg_a4_as_u16_p += 1;
+    *reg_a4_as_u16_p = *(u16 *)(reg_a1 + 0);
+    reg_a4_as_u16_p += 1;
+    *reg_a4_as_u16_p = *(u16 *)(reg_a6 + 0x1C);
+    reg_a4_as_u16_p += 1;
     func_0012DCC0();
     reg_tmp.h[1] = *(u16 *)(reg_a6 + 0x22);
     reg_tmp.h[0] = *(u16 *)(reg_a6 + 0x24);
@@ -408,7 +408,7 @@ block_33:
         *(u16 *)(reg_a6 + 0xA) = reg_tmp.h[1];
         *(u16 *)(reg_a6 + 0xC) = reg_tmp.h[0];
         reg_d0.h[0] = *(u16 *)(reg_a6 + 0);
-        reg_a1 = D_0024E7D0;
+        reg_a1 = D_0024E7D0_as_u8_a;
         reg_d0.h[0] &= 0x3F;
         reg_d0.h[0] += reg_d0.h[0];
         reg_d0.h[0] += reg_d0.h[0];
@@ -1219,9 +1219,9 @@ block_202:
                                 }
                                 return;
                             case 27:                /* switch 1 */
-                                reg_a4 -= 6;
+                                reg_a4_as_u16_p -= 6;
                                 reg_a0 = SLOT_CURSOR;
-                                reg_a2 = (u8 *)reg_a4;
+                                reg_a2 = (u8 *)reg_a4_as_u16_p;
                                 *(u16 *)(reg_a0 + 0) = *(u16 *)reg_a2;
                                 reg_a2 += 2;
                                 reg_a0 += 2;

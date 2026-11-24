@@ -3,7 +3,7 @@
 s32 func_001A9130();
 extern u16 D_00269430[];
 extern u16 D_00269460[];
-extern Reg32 D_0028E47C;
+extern Reg32 D_0028E47C_as_Reg32;
 extern u16 D_0028E980;
 extern u16 D_0028E984;
 extern u8 *reg_a0;
@@ -35,13 +35,13 @@ next_2:
     reg_d1.b[0] = *(u8 *)(reg_a6 + 1);
     reg_d4.w = 3;
 loop_3:
-    D_0028E47C.w = 0;
+    D_0028E47C_as_Reg32.w = 0;
     reg_d3.w = 0xF;
     reg_d3.h[0] &= reg_d5.h[0];
-    D_0028E47C.h[0] = reg_d3.h[0];
+    D_0028E47C_as_Reg32.h[0] = reg_d3.h[0];
     reg_d3.h[0] -= 1;
-    D_0028E47C.w -= 1;
-    if (D_0028E47C.h[1] != 0) goto next_4;
+    D_0028E47C_as_Reg32.w -= 1;
+    if (D_0028E47C_as_Reg32.h[1] != 0) goto next_4;
 loop_4:
     func_001A9130();
     t2 = reg_d3.h[0] - 1;

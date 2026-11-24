@@ -5,8 +5,8 @@ s32 func_0014E370();
 s32 func_0014E7E0();
 extern s16 D_00265280[];
 extern s16 D_00265290[];
-extern s16 D_0028E87C;
-extern s16 D_0028E884;
+extern s16 D_0028E87C_as_s16;
+extern s16 D_0028E884_as_s16;
 extern u16 D_0028E8A8;
 extern s16 D_00299768[];
 extern s16 D_0029976A[];
@@ -30,9 +30,9 @@ next_1:
     *(u8 *)(reg_a6 + 0x1C) = *(u8 *)(reg_a5 + 0x19);
     D_00299768[0] = 1;
     D_0029976A[0] = 1;
-    reg_a0 = (u8 *)(&D_0028E884);
+    reg_a0 = (u8 *)(&D_0028E884_as_s16);
     if ((s32) D_0028E8A8 < 0x260) goto next_2;
-    reg_a0 = (u8 *)(&D_0028E87C);
+    reg_a0 = (u8 *)(&D_0028E87C_as_s16);
 next_2:
     reg_tmp.w = (u32) reg_a0;
     *(u16 *)(reg_a5 + 0x20) = reg_tmp.h[1];

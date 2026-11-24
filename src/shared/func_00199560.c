@@ -1,13 +1,13 @@
 #include "common.h"
 
-extern u16 D_002BB338[];
-extern u16 D_002BB348[];
-extern u16 D_002BB358[];
-extern u16 D_002BB368[];
-extern u16 D_002BB378[];
-extern u16 D_002BB398[];
-extern s32 D_002BB3B0[];
-extern u8 D_002BB3F0[];
+extern u16 D_002BB338_as_u16_a[];
+extern u16 D_002BB348_as_u16_a[];
+extern u16 D_002BB358_as_u16_a[];
+extern u16 D_002BB368_as_u16_a[];
+extern u16 D_002BB378_as_u16_a[];
+extern u16 D_002BB398_as_u16_a[];
+extern s32 D_002BB3B0_as_s32_a[];
+extern u8 D_002BB3F0_as_u8_a[];
 extern u8 *reg_a0;
 extern u8 *reg_a1;
 extern u8 *reg_a2;
@@ -23,7 +23,7 @@ void func_00199560(void) {
     D_0028E408 = 0;
     reg_d4.w = 4;
     reg_d1.w = 0;
-    reg_a0 = (u8 *)D_002BB3B0;
+    reg_a0 = (u8 *)D_002BB3B0_as_s32_a;
 loop_1:
     if (*(u32 *)reg_a0 != reg_d0.w) {
         reg_a0 += 0xC;
@@ -38,11 +38,11 @@ loop_1:
         reg_d0.h[0] -= 1;
         return;
     }
-    reg_a2 = (u8 *)D_002BB348;
+    reg_a2 = (u8 *)D_002BB348_as_u16_a;
     reg_d0.h[0] = reg_d1.h[0];
-    reg_a3 = (u8 *)D_002BB338;
-    reg_a5 = (u8 *)D_002BB378;
-    reg_a6 = (u8 *)D_002BB368;
+    reg_a3 = (u8 *)D_002BB338_as_u16_a;
+    reg_a5 = (u8 *)D_002BB378_as_u16_a;
+    reg_a6 = (u8 *)D_002BB368_as_u16_a;
     reg_d0.h[0] += reg_d0.h[0];
     reg_a2 += reg_d0.h[0];
     reg_a3 += reg_d0.h[0];
@@ -58,11 +58,11 @@ loop_1:
     reg_d3.h[1] = reg_tmp.h[0];
     reg_d3.h[0] = reg_tmp.h[1];
     reg_d3.h[0] = *(u16 *)reg_a5;
-    reg_a2 = (u8 *)D_002BB398;
-    reg_a3 = (u8 *)D_002BB358;
+    reg_a2 = (u8 *)D_002BB398_as_u16_a;
+    reg_a3 = (u8 *)D_002BB358_as_u16_a;
     reg_a2 += reg_d0.h[0];
     reg_a3 += reg_d0.h[0];
     reg_d0.h[0] += reg_d0.h[0];
-    reg_a1 = (u8 *)D_002BB3F0;
+    reg_a1 = (u8 *)D_002BB3F0_as_u8_a;
     reg_a1 += reg_d0.h[0];
 }

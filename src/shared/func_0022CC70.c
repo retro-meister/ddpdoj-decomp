@@ -7,7 +7,7 @@ extern s32 D_0028EC70;
 extern s32 D_0028EC74;
 extern s32 D_0028ECAC;
 extern s32 D_0028ECB0;
-extern u8 D_0028ECB4;
+extern u8 D_0028ECB4_as_u8;
 extern s32 D_0028ECB8;
 
 s32 func_0022CC70(s32 arg0) {
@@ -17,7 +17,7 @@ s32 func_0022CC70(s32 arg0) {
 
     tries = 0;
 retry:
-    D_0028ECAC = sceMcGetInfo(D_0028EC70, D_0028EC74, &D_0028ECB8, &D_0028ECB4, &D_0028ECB0);
+    D_0028ECAC = sceMcGetInfo(D_0028EC70, D_0028EC74, &D_0028ECB8, &D_0028ECB4_as_u8, &D_0028ECB0);
     if (D_0028ECAC != 0) {
         sceGsSyncV(0);
         sceMcSync(0, 0, &result);

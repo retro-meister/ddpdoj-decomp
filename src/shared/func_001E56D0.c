@@ -5,7 +5,7 @@ s32 func_001251C0();
 s32 func_00125250();
 s32 func_002011A0();
 extern s8 D_0028E408;
-extern s16 D_0028E860;
+extern s16 D_0028E860_as_s16;
 extern u16 D_0028E910;
 extern u8 *reg_a0;
 extern u8 *reg_a4;
@@ -27,10 +27,10 @@ void func_001E56D0() {
     }
     var_a0 = 1;
     if ((*(u8 *)((u8 *)(reg_a4) + (3))) == 1) {
-        D_0028E860 = 0;
+        D_0028E860_as_s16 = 0;
         (*(u16 *)((u8 *)(reg_a4) + (4))) -= 1;
         if ((s16) (*(u16 *)((u8 *)(reg_a4) + (4))) == 0) {
-            D_0028E860 = 1;
+            D_0028E860_as_s16 = 1;
             func_002011A0();
             reg_d0.h[0] &= 0x7F;
             reg_d0.h[0] += 0x1C0;

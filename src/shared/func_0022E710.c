@@ -20,7 +20,7 @@ void func_002342D0(void);
 void func_00234460(s32 arg0);
 s32 printf(const char *format, ...);
 
-extern char *D_00272010[];
+extern char *D_00272010_as_char_p_a[];
 extern u8 D_00272040[];
 extern u8 D_00272080[];
 extern u8 D_002720B0[];
@@ -232,7 +232,7 @@ void func_0022E710(void) {
         }
         break;
     case 0x24:
-        if (sceMcOpen(D_0028EC70, D_0028EC74, D_00272010[D_0028ED1C], 0x203) == 0) {
+        if (sceMcOpen(D_0028EC70, D_0028EC74, D_00272010_as_char_p_a[D_0028ED1C], 0x203) == 0) {
             D_0028ECF0 += 1;
         } else {
             D_0028ECF8 -= 1;

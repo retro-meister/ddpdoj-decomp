@@ -1,6 +1,6 @@
 #include "common.h"
 
-extern u32 D_002BB3B0[];
+extern u32 D_002BB3B0_as_u32_a[];
 extern u8 *reg_a0;
 extern u8 *reg_a1;
 extern u8 *reg_a2;
@@ -15,7 +15,7 @@ void func_00199970(void) {
     reg_d0.h[0] = *(u16 *)(reg_a4 + 0x2C);
     reg_d0.b[0] = ~(s8) reg_d0.b[0];
     reg_d5.w = 4;
-    reg_a1 = (u8 *)(D_002BB3B0);
+    reg_a1 = (u8 *)(D_002BB3B0_as_u32_a);
 loop_1:
     reg_tmp.w = *(u32 *)reg_a1;
     if (reg_tmp.w != reg_d0.w) goto next_2;

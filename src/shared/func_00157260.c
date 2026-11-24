@@ -14,7 +14,7 @@ s32 func_001A91A0();
 s32 func_00201C60();
 s32 func_00202490();
 s32 func_00203060();
-extern u8 D_00259970[];
+extern u8 D_00259970_as_u8_a[];
 extern u16 D_0028E8A0;
 extern u16 D_0028E8D0;
 extern u16 D_0028E91C;
@@ -120,7 +120,7 @@ block_14:
             reg_d2.h[1] = (*(u16 *)((u8 *)(reg_a6) + (2)));
             temp_a1 = (*(u16 *)((u8 *)(reg_a6) + (4)));
             reg_d2.h[0] = temp_a1;
-            reg_a0 = (u8 *)D_00259970;
+            reg_a0 = (u8 *)D_00259970_as_u8_a;
             reg_d3.h[0] = reg_d1.h[0];
             reg_d3.h[0] += 2;
             reg_d3.h[0] &= 0xFC;

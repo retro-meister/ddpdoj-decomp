@@ -11,7 +11,7 @@ extern u8 D_0026AF40[];
 extern u16 D_0028E3EC;
 extern u16 D_0028E5C0;
 extern u16 D_0028E5FC;
-extern u16 D_0028E958;
+extern u16 D_0028E958_as_u16;
 extern u8 *reg_a0;
 extern u8 *reg_a6;
 
@@ -27,7 +27,7 @@ void func_0016B9B0(void) {
         *(s16 *)(reg_a6 + 0xC) = 0x202;
         *(s16 *)(reg_a6 + 0xE) = 0;
     }
-    if (D_0028E958 != 0) {
+    if (D_0028E958_as_u16 != 0) {
         func_0016C260();
         return;
     }

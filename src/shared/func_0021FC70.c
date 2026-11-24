@@ -14,7 +14,7 @@ extern s8 D_002714F0[];
 extern u8 *D_00271510[];
 extern s8 D_0028EB4C;
 extern s32 D_0028EBB4;
-extern Label D_00685010[];
+extern Label D_00685010_as_Label_a[];
 extern u8 *reg_a0;
 
 void func_0021FC70(void) {
@@ -45,7 +45,7 @@ void func_0021FC70(void) {
         break;
     }
     for (i = 0; i < count; i++) {
-        label = &D_00685010[i];
+        label = &D_00685010_as_Label_a[i];
         if (label->active != 0) {
             label->alpha = D_0028EBB4;
             reg_a0 = D_00271510[i];

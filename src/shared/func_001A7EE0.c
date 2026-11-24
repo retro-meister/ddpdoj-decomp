@@ -12,8 +12,8 @@ extern u16 D_0028E3B4;
 extern u16 D_0028E5BC;
 extern u16 D_0028E5C4;
 extern u16 D_0028E5CC;
-extern s8 D_0028E5D8;
-extern s8 D_0028E5D9;
+extern s8 D_0028E5D8_as_s8;
+extern s8 D_0028E5D9_as_s8;
 extern u16 D_0028E5E8;
 extern u16 D_0028E5F0;
 extern u16 D_0028E5F8;
@@ -52,8 +52,8 @@ void func_001A7EE0(void) {
             if (D_0028E5E8 > 0xF) {
                 D_0028E5E8 = 0xF;
             }
-            D_0028E5D9 = 0;
-            D_0028E5D8 = 0;
+            D_0028E5D9_as_s8 = 0;
+            D_0028E5D8_as_s8 = 0;
             D_0028E5BC = 0;
             func_0013EA30();
             goto block_9;

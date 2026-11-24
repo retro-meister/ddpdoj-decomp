@@ -11,9 +11,9 @@ extern u32 D_0028E41C;
 extern u32 D_0028E420;
 extern u32 D_0028E424;
 extern u32 D_0028E428;
-extern s32 D_0028E42C;
+extern s32 D_0028E42C_as_s32;
 extern u8 *reg_a5;
-extern s32 reg_a6;
+extern s32 reg_a6_as_s32;
 
 void func_0013EBD0(void) {
     D_0028E41C = reg_d3.w;
@@ -24,7 +24,7 @@ void func_0013EBD0(void) {
     D_0028E420 = reg_d2.w;
     D_0028E410 = reg_d6.w;
     D_0028E40C = reg_d7.w;
-    D_0028E42C = reg_a6;
+    D_0028E42C_as_s32 = reg_a6_as_s32;
     func_0013EAB0(reg_d6.w, reg_d2.w, reg_d1.w, reg_d0.w);
     if ((*(u8 *)((u8 *)(reg_a5) + (6))) != 0) {
         func_0013EAD0();

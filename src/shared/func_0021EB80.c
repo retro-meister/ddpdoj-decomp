@@ -8,7 +8,7 @@ extern void fade_start_out(void);
 extern void func_00222260(s32 arg0);
 extern u8 D_0028E290;
 extern u8 D_0028E2E4;
-extern u16 D_0028E320;
+extern u16 D_0028E320_as_u16;
 extern s32 D_0028EAFC;
 extern s8 D_0028EB00;
 extern s8 D_0028EB04;
@@ -34,15 +34,15 @@ void func_0021EB80(void) {
         func_0021EDC0();
     }
     var_a1 = 0;
-    D_0028E320 = 0xE10;
+    D_0028E320_as_u16 = 0xE10;
     if (D_0057CC88[0] == 0) {
-        D_0028E320 -= 1;
-        if ((s32) D_0028E320 <= 0) {
+        D_0028E320_as_u16 -= 1;
+        if ((s32) D_0028E320_as_u16 <= 0) {
             var_a1 = 1;
             D_0028EB58 = 5;
         }
     } else {
-        D_0028E320 = 0xE10;
+        D_0028E320_as_u16 = 0xE10;
     }
     if (D_0057CC78[0] & 0x20) {
         var_a1 = 1;

@@ -3,8 +3,8 @@
 s32 func_00125310();
 s32 func_001ECBD0();
 s32 func_00202A80();
-extern u8 D_00262A50[];
-extern s16 D_0028E88C;
+extern u8 D_00262A50_as_u8_a[];
+extern s16 D_0028E88C_as_s16;
 extern u8 *reg_a1;
 extern u8 *reg_a4;
 extern u8 *reg_a6;
@@ -14,16 +14,16 @@ void func_001ECE40() {
     u16 temp_v0_3;
     u8 temp_v0;
 
-    D_0028E88C = 0;
+    D_0028E88C_as_s16 = 0;
     func_00202A80();
     if ((s32) reg_d0.h[0] < 0x2000) {
-        D_0028E88C = 1;
+        D_0028E88C_as_s16 = 1;
     }
     reg_tmp.b[0] = (*(u8 *)((u8 *)(reg_a4) + (3)));
     (*(u8 *)((u8 *)(reg_a4) + (3))) -= 1;
     if (reg_tmp.b[0] == 0) {
         (*(u8 *)((u8 *)(reg_a4) + (3))) = (u8) (*(u8 *)((u8 *)(reg_a4) + (7)));
-        reg_a1 = D_00262A50;
+        reg_a1 = D_00262A50_as_u8_a;
         reg_d1.b[0] = (*(u8 *)((u8 *)(reg_a4) + (0x10)));
         func_001ECBD0();
         reg_d0.b[0] = (*(u8 *)((u8 *)(reg_a4) + (0x11)));

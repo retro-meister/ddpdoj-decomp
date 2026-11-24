@@ -13,7 +13,7 @@ extern void func_0019C4F0(void);
 extern void func_0019C530(void);
 extern void func_0019C570(void);
 
-extern u16 D_0025B100[];
+extern u16 D_0025B100_as_u16_a[];
 extern u16 D_0025B102[];
 extern u16 D_0025B104[];
 extern u16 D_0025B106[];
@@ -60,7 +60,7 @@ extern u16 D_0025B7D2[];
 
 void func_001867B0(void) {
     reg_tmp.w = (u32)func_0019BEC0;
-    D_0025B100[0] = reg_tmp.h[1];
+    D_0025B100_as_u16_a[0] = reg_tmp.h[1];
     D_0025B102[0] = reg_tmp.h[0];
     reg_tmp.w = (u32)func_0019C470;
     D_0025B104[0] = reg_tmp.h[1];

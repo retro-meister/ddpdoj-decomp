@@ -9,7 +9,7 @@ extern u8 D_00261CD0[];
 extern u8 D_0026B640[];
 extern u8 D_0026B660[];
 extern u16 D_0028E3EC;
-extern Reg32 D_0028E470;
+extern Reg32 D_0028E470_as_Reg32;
 extern Reg32 D_0028E480;
 extern u8 *reg_a0;
 
@@ -59,10 +59,10 @@ next_3:
     reg_d5.w = 0;
     save_d6 = reg_d6.w;
 loop_1:
-    D_0028E470.w = reg_d6.h[0];
-    D_0028E470.w -= 3;
-    reg_d6.h[0] = D_0028E470.h[0];
-    if (D_0028E470.h[1] != 0) goto next_4;
+    D_0028E470_as_Reg32.w = reg_d6.h[0];
+    D_0028E470_as_Reg32.w -= 3;
+    reg_d6.h[0] = D_0028E470_as_Reg32.h[0];
+    if (D_0028E470_as_Reg32.h[1] != 0) goto next_4;
     reg_d5.h[0] += 4;
     goto loop_1;
 next_4:

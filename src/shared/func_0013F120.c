@@ -10,7 +10,7 @@ extern u32 D_0028E420;
 extern u32 D_0028E424;
 extern u32 D_0028E428;
 extern s32 D_0028E444;
-extern s32 reg_a0;
+extern s32 reg_a0_as_s32;
 extern u8 D_0029F284[];
 
 void func_0013F120(void)
@@ -23,7 +23,7 @@ void func_0013F120(void)
     D_0028E414 = reg_d5.w;
     D_0028E410 = reg_d6.w;
     D_0028E40C = reg_d7.w;
-    D_0028E444 = reg_a0;
+    D_0028E444 = reg_a0_as_s32;
 
     reg_d1.h[0] = 0x100;
     reg_d4.w = 0;

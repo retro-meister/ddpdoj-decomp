@@ -2,7 +2,7 @@
 
 s32 func_0019C5B0();
 extern u8 D_0028C148[];
-extern u8 D_0028C868[];
+extern u8 D_0028C868_as_u8_a[];
 extern u16 D_0028E3E4;
 extern u16 D_0028E3EC;
 extern u8 *reg_a0;
@@ -15,7 +15,7 @@ void func_00203F50(void) {
     if (*(u16 *)(reg_a6 + 0x54) == 0) goto block_rts;
     if (D_0028E3EC == 0) goto block_rts;
     reg_a0 = (u8 *)D_0028C148;
-    reg_a1 = (u8 *)D_0028C868;
+    reg_a1 = (u8 *)D_0028C868_as_u8_a;
     i = reg_d5.h[0];
     reg_tmp.h[1] = (i != 0) ? *(u16 *)(reg_a0 + ((s16) i & ~1)) : *(u16 *)reg_a0;
     reg_tmp.h[0] = (((u16) i + 2) != 0) ? *(u16 *)(reg_a0 + ((s16) ((u16) i + 2) & ~1)) : *(u16 *)reg_a0;

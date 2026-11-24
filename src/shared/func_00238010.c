@@ -47,8 +47,8 @@ extern s32 D_0028E99C;
 extern s8 D_0028EC58;
 extern u8 D_0028ED5C;
 extern u8 D_0028ED6C;
-extern u16 D_0029F1F0[];
-extern u16 D_0029F260[];
+extern u16 D_0029F1F0_as_u16_a[];
+extern u16 D_0029F260_as_u16_a[];
 extern u16 D_006C58A2[];
 extern u16 D_006C58A6[];
 extern u8 D_006C58C4[];
@@ -183,10 +183,10 @@ void func_00238010(void) {
                 func_00135110();
                 D_0028ED5C = 0;
                 if (D_0028E910 == 0) {
-                    memcpy(D_0029F260, D_006C68B6, 0x62);
-                    memcpy(D_0029F1F0, D_006C6918, 0x62);
-                    D_0029F260[0] = 0;
-                    D_0029F1F0[0] = 0;
+                    memcpy(D_0029F260_as_u16_a, D_006C68B6, 0x62);
+                    memcpy(D_0029F1F0_as_u16_a, D_006C6918, 0x62);
+                    D_0029F260_as_u16_a[0] = 0;
+                    D_0029F1F0_as_u16_a[0] = 0;
                 } else {
                     D_0028DFC0 = 1;
                 }
@@ -194,8 +194,8 @@ void func_00238010(void) {
             break;
         case 0x65:
             if ((D_0028E910 != 0) && (D_0028E8A8 == 0x69) && (D_0028E8AC == 0x140)) {
-                memcpy(D_0029F260, D_006C68B6, 0x62);
-                memcpy(D_0029F1F0, D_006C6918, 0x62);
+                memcpy(D_0029F260_as_u16_a, D_006C68B6, 0x62);
+                memcpy(D_0029F1F0_as_u16_a, D_006C6918, 0x62);
                 D_0028DFC0 = 0;
                 D_0028ED5C = 0;
             }

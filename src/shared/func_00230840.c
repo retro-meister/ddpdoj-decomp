@@ -19,7 +19,7 @@ extern s32 D_0028EC98;
 extern s32 D_0028ECA8;
 extern s8 D_0028ECBC;
 extern s32 D_0028ECC4;
-extern u8 D_0028ECD4;
+extern u8 D_0028ECD4_as_u8;
 extern u8 D_0028ECE4;
 extern u8 D_0028ECF0;
 extern u8 D_0028ECF8;
@@ -27,7 +27,7 @@ extern u8 D_0028ECFC;
 extern s32 D_0028ED08;
 extern s32 D_0028ED10;
 extern s32 D_0028ED18;
-extern u32 D_0028ED1C;
+extern u32 D_0028ED1C_as_u32;
 extern s32 D_0057CC78[];
 extern u8 D_006A4800[];
 extern u8 D_006C4EF0[];
@@ -53,7 +53,7 @@ void func_00230840(void) {
         }
         break;
     case 2:
-        status = sceMcOpen(D_0028EC70, D_0028EC74, D_00272010[D_0028ED1C], 3);
+        status = sceMcOpen(D_0028EC70, D_0028EC74, D_00272010[D_0028ED1C_as_u32], 3);
         if (status == 0) {
             D_0028ECF0 += 1;
         } else {
@@ -75,7 +75,7 @@ void func_00230840(void) {
         }
         break;
     case 4:
-        switch (D_0028ED1C) {
+        switch (D_0028ED1C_as_u32) {
         case 0:
             status = sceMcRead(D_0028ECA8, D_006C4EF0, 2472);
             break;
@@ -149,7 +149,7 @@ void func_00230840(void) {
         break;
     case 11:
         func_002343A0();
-        if (D_0028ECD4 != 0) {
+        if (D_0028ECD4_as_u8 != 0) {
             D_0028ECF8 -= 1;
             if ((s32)D_0028ECF8 <= 0) {
                 D_0028ECF0 += 1;

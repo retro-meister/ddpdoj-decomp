@@ -1,7 +1,7 @@
 #include "common.h"
 
 extern u16 D_0028E1A0;
-extern u16 D_002AF860[];
+extern u16 D_002AF860_as_u16_a[];
 extern u8 *reg_a0;
 extern u8 *reg_a1;
 extern u8 *reg_a2;
@@ -15,7 +15,7 @@ void func_0019B510(void) {
     case 0:
         goto block_rts;
     default:
-        reg_a2 = (u8 *)D_002AF860;
+        reg_a2 = (u8 *)D_002AF860_as_u16_a;
         reg_a2 += D_0028E1A0;
 loop_1:
         *(u16 *)reg_a2 = *(u16 *)reg_a0;

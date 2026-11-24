@@ -8,7 +8,7 @@ extern u16 D_0028E648;
 extern u16 D_0028E64C;
 extern u16 D_0028E650;
 extern u8 D_0028E855;
-extern s16 D_0028E924;
+extern s16 D_0028E924_as_s16;
 extern u16 D_0028E928;
 
 void func_001A6510(void) {
@@ -25,7 +25,7 @@ next_0:
     D_0028E64C += 1;
 next_1:
     if (flags & 0x40) goto next_4;
-    if (D_0028E924 < 0) goto next_6;
+    if (D_0028E924_as_s16 < 0) goto next_6;
     if (D_0028E650 == 0) goto next_7;
     D_0028E650 -= 1;
     if (D_0028E650 != 0) goto next_5;

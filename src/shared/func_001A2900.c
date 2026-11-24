@@ -1,8 +1,8 @@
 #include "common.h"
 
-extern s16 D_0028E0AC;
-extern s16 D_0028E0B0;
-extern s16 D_0028E0B4;
+extern s16 D_0028E0AC_as_s16;
+extern s16 D_0028E0B0_as_s16;
+extern s16 D_0028E0B4_as_s16;
 extern s16 D_0028E0B8;
 extern s16 D_0028E0BC;
 extern s16 D_0028E0C0;
@@ -58,9 +58,9 @@ void func_001A2900(void) {
         (*(s16 *)((u8 *)(temp_a2) + (0xE))) = 0;
     } while (var_a3_2 < 0xF0);
     D_0028E0C0 = 0;
-    D_0028E0AC = 0x101;
+    D_0028E0AC_as_s16 = 0x101;
     D_0028E0BC = 0;
-    D_0028E0B0 = 1;
+    D_0028E0B0_as_s16 = 1;
     D_0028E0B8 = 0;
-    D_0028E0B4 = 0x20;
+    D_0028E0B4_as_s16 = 0x20;
 }

@@ -30,8 +30,8 @@ extern u16 D_00684C94[];
 s32 fade_reset();
 extern u8 death_D_00290DC0;
 extern u8 death_D_00290DBC;
-extern u16 death_D_00290DB8;
-extern u16 death_D_00290DB4;
+extern u16 death_D_00290DB8_as_u16;
+extern u16 death_D_00290DB4_as_u16;
 extern u16 D_0028E614;
 extern u16 D_0028E610;
 #endif
@@ -100,8 +100,8 @@ void func_0022C1F0(void) {
 #ifdef DEATH_LABEL
         if (death_D_00290DC0 != 0) {
             death_D_00290DBC = 1;
-            D_0028E614 = death_D_00290DB8;
-            D_0028E610 = death_D_00290DB4;
+            D_0028E614 = death_D_00290DB8_as_u16;
+            D_0028E610 = death_D_00290DB4_as_u16;
         }
 #endif
         D_00684C94[0] += 1;

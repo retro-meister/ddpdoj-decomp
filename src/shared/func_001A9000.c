@@ -6,7 +6,7 @@ s32 func_001AA0D0();
 s32 func_001AA380();
 extern u16 D_0028E5F8;
 extern u16 D_0028E5FC;
-extern u8 D_0028E71C;
+extern u8 D_0028E71C_as_u8;
 extern u8 D_0028E720;
 extern u8 D_0028E855;
 extern u16 D_0029CEA0[];
@@ -41,7 +41,7 @@ block_7:
                 func_001AA380();
                 return;
             }
-            reg_a0 = &D_0028E71C;
+            reg_a0 = &D_0028E71C_as_u8;
             func_001A97F0();
         }
     }

@@ -7,19 +7,19 @@ extern s8 D_0028C9C8;
 extern u8 D_0028C9D0;
 extern u16 D_0028E91C;
 extern u8 *reg_a2;
-extern s8 *reg_a3;
+extern s8 *reg_a3_as_s8_p;
 extern u8 *reg_a4;
 extern u8 *reg_a6;
 
 void func_0015A390(void) {
     u16 temp_a0;
     reg_a4 = D_00258740;
-    reg_a3 = &D_0028C9C8;
+    reg_a3_as_s8_p = &D_0028C9C8;
     reg_a2 = &D_0028C9D0;
     reg_d7.w = 5;
     do {
         reg_d1.w = 0;
-        reg_d1.b[0] = (u8) *reg_a3;
+        reg_d1.b[0] = (u8) *reg_a3_as_s8_p;
         reg_d2.h[1] = (*(u16 *)((u8 *)(reg_a6) + (2)));
         reg_d2.h[0] = (*(u16 *)((u8 *)(reg_a6) + (4)));
         reg_d4.w = (u32) reg_a6;
@@ -48,7 +48,7 @@ void func_0015A390(void) {
             func_00129280();
         }
         reg_a4 += 4;
-        reg_a3 += 1;
+        reg_a3_as_s8_p += 1;
         reg_a2 += 1;
     } while ((s16)(--reg_d7.h[0]) >= 0);
 }

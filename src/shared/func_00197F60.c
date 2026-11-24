@@ -10,7 +10,7 @@ s32 func_001ACC60();
 s32 func_00219570();
 s32 memset();
 extern u8 D_00261EF0[];
-extern u8 D_00261F30[];
+extern u8 D_00261F30_as_u8_a[];
 extern u8 D_00261F70[];
 extern u8 D_00261FB0[];
 extern u16 D_0028E4B0;
@@ -30,7 +30,7 @@ void func_00197F60(void) {
     func_0012FAB0();
     (*(s8 *)((u8 *)(reg_a5) + (3))) = 1;
     memset(D_002BAE00, 0, 0x84);
-    reg_a0 = (u8 *)D_00261F30;
+    reg_a0 = (u8 *)D_00261F30_as_u8_a;
     reg_d0.h[0] = 2;
     func_001A3020();
     reg_a0 = (u8 *)D_00261F70;

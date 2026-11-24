@@ -97,8 +97,8 @@ extern s16 D_0028E3FC;
 extern u8 D_0028E400;
 extern s32 g_frame_counter;
 extern void *g_dma_gif;
-extern u8 *D_0028E9F8;
-extern u8 D_0028EB00;
+extern u8 *D_0028E9F8_as_u8_p;
+extern u8 D_0028EB00_as_u8;
 extern u8 D_0057CB10[];
 void sys_init(void) {
     extern u8 D_0028E9EC;
@@ -112,13 +112,13 @@ void sys_init(void) {
     display_reset();
     func_0021A640(D_00586FF0, g_gif_buf, 0x12C0, 0x200, 0x100);
     pad_init_system();
-    D_0028E9F8 = (u8 *)(D_0057CB10);
+    D_0028E9F8_as_u8_p = (u8 *)(D_0057CB10);
     *(s32 *)0x10000010 = 0x83;
     D_0028E3FC = 0xFF;
     g_frame_counter = 0;
     D_0028E400 = 0;
     D_0028E9EC = 0;
-    D_0028EB00 = 0;
+    D_0028EB00_as_u8 = 0;
     fade_reset();
     func_0018C890();
     tex_load_common();
@@ -310,9 +310,9 @@ typedef struct {
     u8 pad3A[2];
 } PadState;
 
-extern u16 D_0028E228;
+extern u16 D_0028E228_as_u16;
 extern s8 D_0028E248[];
-extern u8 D_0028E270;
+extern u8 D_0028E270_as_u8;
 extern u8 D_0028E271;
 extern u8 D_0028E272;
 extern u8 D_0028E274;
@@ -454,7 +454,7 @@ void pad_update(void)
     if (buttons & SCE_PADLright) {
         *(u8 *)&reg_d0 |= 0x10;
     }
-    if (buttons & (1 << D_0028E270)) {
+    if (buttons & (1 << D_0028E270_as_u8)) {
         *(u8 *)&reg_d0 |= 0x20;
     }
     if (buttons & (1 << D_0028E271)) {
@@ -494,7 +494,7 @@ void pad_update(void)
     }
     *reg_a0 = ~*(u8 *)&reg_d0;
 
-    reg_a0 = (u8 *)&D_0028E228;
+    reg_a0 = (u8 *)&D_0028E228_as_u16;
     reg_d0.w = 0;
     if (D_0057CC80[0] & SCE_PADselect) {
         *(u8 *)&reg_d0 |= 0x01;
@@ -532,7 +532,7 @@ void pad_mask_game_inputs(void) {
 }
 
 extern void func_0018DA30(void);
-extern s16 D_0028E31C;
+extern s16 D_0028E31C_as_s16;
 extern u8 D_0028E350;
 extern u8 D_0028E364;
 extern u8 D_0028E368;
@@ -591,20 +591,20 @@ void pause_check_start_button(void) {
         }
         func_0018DA30();
         D_0028E36C = 1;
-        D_0028E31C = D_0028EC24;
+        D_0028E31C_as_s16 = D_0028EC24;
 block_rts:
         return;
     }
     if ((D_0057CC70[0] & 0x800) && D_0029F260[0] < 0) {
         func_0018DA30();
-        D_0028E31C = 0;
+        D_0028E31C_as_s16 = 0;
         D_0028E36C = 1;
         return;
     }
     if ((D_0057CC74[0] & 0x800) && D_0029F1F0[0] < 0) {
         func_0018DA30();
         D_0028E36C = 1;
-        D_0028E31C = 1;
+        D_0028E31C_as_s16 = 1;
     }
 }
 

@@ -9,7 +9,7 @@ extern u16 D_0028E496;
 extern u16 D_0028E49A;
 extern u16 D_0028E49E;
 extern u8 *reg_a0;
-extern s32 reg_a1;
+extern s32 reg_a1_as_s32;
 
 void func_00129B70(void) {
     (*(u16 *)((u8 *)(reg_a0) + (0x18))) = (u16) D_0028E49E;
@@ -22,5 +22,5 @@ void func_00129B70(void) {
     reg_d0.w = D_0028DEA8;
     reg_d7.w = D_0028DEA4;
     reg_a0 = D_0028DEB4;
-    reg_a1 = D_0028DEB0;
+    reg_a1_as_s32 = D_0028DEB0;
 }

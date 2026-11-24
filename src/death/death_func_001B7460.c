@@ -11,7 +11,7 @@ void death_func_001B74D0(void);
 void death_func_001B7520(void);
 void death_func_001B7570(void);
 void death_func_001B76A0(void);
-extern u16 D_0028E320;
+extern u16 D_0028E320_as_u16;
 extern s8 D_0028EB04;
 extern s8 D_0028EB4C;
 extern s8 D_0028EB54;
@@ -53,7 +53,7 @@ void death_func_001B74D0(void) {
     death_D_00290C4C = 0;
     death_D_00290C74 = 1;
     D_0028EB04 = 1;
-    D_0028E320 = 0xE10;
+    D_0028E320_as_u16 = 0xE10;
 }
 
 void death_func_001B7520(void) {
@@ -73,15 +73,15 @@ void death_func_001B7570(void) {
         death_func_001B76A0();
     }
     var_a1 = 0;
-    D_0028E320 = 0xE10;
+    D_0028E320_as_u16 = 0xE10;
     if (D_0057CC88[0] == 0) {
-        D_0028E320 -= 1;
-        if ((s32) D_0028E320 <= 0) {
+        D_0028E320_as_u16 -= 1;
+        if ((s32) D_0028E320_as_u16 <= 0) {
             var_a1 = 1;
             D_0028EB58 = 3;
         }
     } else {
-        D_0028E320 = 0xE10;
+        D_0028E320_as_u16 = 0xE10;
     }
     if (D_0057CC78[0] & 0x40) {
         var_a1 = 1;

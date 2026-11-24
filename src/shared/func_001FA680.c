@@ -4,7 +4,7 @@ s32 func_0014E300();
 s32 func_0014E370();
 extern u8 D_00265C90[];
 extern u8 D_0028DA30;
-extern s16 D_0028E890;
+extern s16 D_0028E890_as_s16;
 extern s16 D_00299768[];
 extern u8 *reg_a0;
 extern u8 *reg_a5;
@@ -21,6 +21,6 @@ void func_001FA680() {
     reg_a0 = &D_0028DA30;
     reg_d0.h[0] = 2;
     func_0014E300();
-    D_0028E890 = 1;
+    D_0028E890_as_s16 = 1;
     D_00299768[0] = 1;
 }

@@ -9,7 +9,7 @@ s32 func_0018DEA0();
 s32 func_0018DEE0();
 s32 func_00208AD0();
 extern u8 D_00268080[];
-extern s8 D_0028DFA8;
+extern s8 D_0028DFA8_as_s8;
 extern s8 D_0028DFAC;
 extern s8 D_0028DFB0;
 extern s16 D_0028E3B8;
@@ -22,14 +22,14 @@ void func_00208BA0(void) {
         if (D_0028DFAC == 1) {
             reg_d0.w = 0;
             D_0028DFAC = 2;
-            reg_d0.b[0] = (u8) D_0028DFA8;
+            reg_d0.b[0] = (u8) D_0028DFA8_as_s8;
             reg_d0.h[0] += reg_d0.h[0];
             reg_a0 = *(u8 **)((u8 *)D_00268080 + (reg_d0.h[0] * 4));
             jtbl_0028E3F4 = (Fn)(reg_a0);
             jtbl_0028E3F4();
         }
         reg_d0.w = 0;
-        reg_d0.b[0] = (u8) D_0028DFA8;
+        reg_d0.b[0] = (u8) D_0028DFA8_as_s8;
         reg_d0.h[0] += reg_d0.h[0];
         reg_d0.h[0] += 1;
         reg_a0 = *(u8 **)((u8 *)D_00268080 + (reg_d0.h[0] * 4));
@@ -37,7 +37,7 @@ void func_00208BA0(void) {
         jtbl_0028E3F4();
         return;
     }
-    D_0028DFA8 = 0;
+    D_0028DFA8_as_s8 = 0;
     D_0028DFB0 = 0x3C;
     D_0028DFAC = 1;
     func_00208AD0();

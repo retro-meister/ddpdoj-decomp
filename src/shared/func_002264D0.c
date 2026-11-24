@@ -7,7 +7,7 @@ s32 func_00226410();
 s32 func_00233DA0();
 extern s8 D_0028EC2C;
 extern u8 D_0028EC34;
-extern s8 D_0028EC38;
+extern s8 D_0028EC38_as_s8;
 extern s8 D_0028EC3C;
 extern s8 D_0028EC40;
 extern u8 D_0057CC60[];
@@ -27,7 +27,7 @@ void func_002264D0(void) {
         func_0018D4B0();
         func_002263F0();
     } else if (temp_a0 & 0x20) {
-        D_0028EC38 = 0;
+        D_0028EC38_as_s8 = 0;
         if (D_0028EC2C == 1) {
             D_0028EC3C = 5;
             func_0018D4B0();

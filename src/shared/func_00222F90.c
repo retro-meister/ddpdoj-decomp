@@ -3,7 +3,7 @@
 void overlay_queue_sjis(s16 x, s16 y, u8 *text, s32 a3, s32 w, s32 h, u16 attr, s32 z);
 void overlay_queue_glyph(s16 x, s16 y, s32 glyph, s32 w, s32 a4, s32 h, u16 attr, s32 z);
 void overlay_queue_ascii(s16 x, s16 y, u8 *text, s32 a3, s32 w, s32 h, u16 attr, s32 z);
-extern s8 *reg_a0;
+extern s8 *reg_a0_as_s8_p;
 extern u16 D_0028E3F0;
 
 void func_00222F90(s32 x, s32 y, s32 attr) {
@@ -17,15 +17,15 @@ void func_00222F90(s32 x, s32 y, s32 attr) {
     cy = y;
     cx = x;
     for (i = 0; i < 0x100; i++) {
-        buf[0] = *reg_a0;
-        reg_a0++;
+        buf[0] = *reg_a0_as_s8_p;
+        reg_a0_as_s8_p++;
         if (buf[0] < 0x81) {
             buf[1] = 0;
             single = 1;
         } else {
             single = 0;
-            buf[1] = *reg_a0;
-            reg_a0++;
+            buf[1] = *reg_a0_as_s8_p;
+            reg_a0_as_s8_p++;
         }
         *(u16 *)&buf[2] = 0;
         switch (*(u16 *)buf) {

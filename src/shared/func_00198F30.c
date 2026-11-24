@@ -14,7 +14,7 @@ s32 func_0019A640();
 s32 func_0019A870();
 extern u8 D_0025BD60[];
 extern u8 D_0025BFD0[];
-extern u16 D_002BAE82[];
+extern u16 D_002BAE82_as_u16_a[];
 extern u8 *reg_a0;
 extern u8 *reg_a1;
 extern u8 *reg_a4;
@@ -41,7 +41,7 @@ next_1:
     func_0019A2B0();
     if (W(0x1E) == 0) goto block_count;
     func_00199A50();
-    if (D_002BAE82[0] != 0) return;
+    if (D_002BAE82_as_u16_a[0] != 0) return;
     if (W(0x2E) == 0) return;
     if (W(0x1E) != 0x30) goto next_4;
     W(0x1E) -= 1;
@@ -177,7 +177,7 @@ next_16:
 block_copy:
     func_00199970();
     reg_d1.h[0] = W(0x12);
-    *(u8 *)D_002BAE82 &= ~(1 << reg_d1.sb[0]);
+    *(u8 *)D_002BAE82_as_u16_a &= ~(1 << reg_d1.sb[0]);
     W(0x1E) = 0x70;
     reg_d0.w = 0;
     W(0x1A) = reg_d0.h[1];

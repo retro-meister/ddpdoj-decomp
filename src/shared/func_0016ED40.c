@@ -25,15 +25,15 @@ extern u16 D_00259370[];
 extern u16 D_00259870[];
 extern u16 D_0025B740[];
 extern s16 *D_0028E44C;
-extern u16 D_0028E474;
+extern u16 D_0028E474_as_u16;
 extern Reg32 D_0028E484;
 extern u16 D_0028E89C;
 extern u16 D_0028E8A0;
 extern u16 D_0028E8A8;
 extern u16 D_0028E8B8;
 extern u16 D_0028E91C;
-extern u16 D_0029F1F0[];
-extern u16 D_0029F260[];
+extern u16 D_0029F1F0_as_u16_a[];
+extern u16 D_0029F260_as_u16_a[];
 extern s8 enemy_move_end_requested;
 extern u8 *reg_a0;
 extern u8 *reg_a1;
@@ -124,8 +124,8 @@ next_2:
                 reg_tmp.b[0] = *(u8 *)(reg_a5 + 0x23);
                 *(u8 *)(reg_a5 + 0x23) -= 1;
                 if (((s32) reg_tmp.b[0] <= 0) && (*(u8 *)(reg_a5 + 0x23) = (u8) *(u8 *)(reg_a5 + 0x22), reg_d0.b[0] = *(u8 *)(reg_a5 + 0x21), (*(u8 *)(reg_a5 + 0x20) == reg_d0.b[0]))) {
-                    reg_a0 = (u8 *)(D_0029F260);
-                    reg_a1 = (u8 *)(D_0029F1F0);
+                    reg_a0 = (u8 *)(D_0029F260_as_u16_a);
+                    reg_a1 = (u8 *)(D_0029F1F0_as_u16_a);
                     if (*(u8 *)(reg_a5 + 2) != 0) {
                         D_0028E44C = (s16 *)(reg_a0);
                         reg_a0 = (u8 *)(reg_a1);
@@ -177,13 +177,13 @@ next_4:
                             reg_d5.h[0] = (((reg_d0.h[0] & 0xFFFF) + 2) != 0) ? *(u16 *)((u8 *)reg_a4 + ((s16)((reg_d0.h[0] & 0xFFFF) + 2) & ~1)) : *(u16 *)reg_a4;
                             reg_d0.w = 5;
                             reg_d4.w = 0;
-                            D_0028E474 = reg_d5.h[0];
+                            D_0028E474_as_u16 = reg_d5.h[0];
                             reg_d5.h[0] = reg_d5.h[1];
-                            reg_d5.h[1] = D_0028E474;
+                            reg_d5.h[1] = D_0028E474_as_u16;
                             reg_d5.h[0] += 0xB00;
-                            D_0028E474 = reg_d5.h[0];
+                            D_0028E474_as_u16 = reg_d5.h[0];
                             reg_d5.h[0] = reg_d5.h[1];
-                            reg_d5.h[1] = D_0028E474;
+                            reg_d5.h[1] = D_0028E474_as_u16;
                             reg_d2.h[1] = *(u16 *)(reg_a6 + 2);
                             reg_d2.h[0] = *(u16 *)(reg_a6 + 4);
                             reg_d1.h[0] -= 0x24;

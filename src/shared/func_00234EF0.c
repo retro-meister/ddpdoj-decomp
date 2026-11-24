@@ -109,7 +109,7 @@ extern u16 D_002BB398[5];
 extern s32 D_002BB3B0[15];
 extern s32 D_002BB3F0[5];
 extern s32 D_00684CF0[10][4][5];
-extern SaveBlock D_006C4EF0;
+extern SaveBlock D_006C4EF0_as_SaveBlock;
 
 extern void func_0021E1A0(void);
 extern void func_00235820(void);
@@ -120,91 +120,91 @@ void func_00234EF0(void) {
     s32 k;
 
     for (i = 0; i < 5; i++) {
-        D_002BB378[i] = D_006C4EF0.a00[i];
-        D_002BB368[i] = D_006C4EF0.a0A[i];
-        D_002BB398[i] = D_006C4EF0.a14[i];
-        D_002BB388[i] = D_006C4EF0.a1E[i];
-        D_002BB358[i] = D_006C4EF0.a28[i];
-        D_002BB3F0[i] = D_006C4EF0.a70[i];
-        D_002BB338[i] = D_006C4EF0.a84[i];
-        D_002BB348[i] = D_006C4EF0.a8E[i];
-        D_002BB1D8[i] = D_006C4EF0.a00[i];
-        D_002BB1C8[i] = D_006C4EF0.a0A[i];
-        D_002BB1F8[i] = D_006C4EF0.a14[i];
-        D_002BB1E8[i] = D_006C4EF0.a1E[i];
-        D_002BB1B8[i] = D_006C4EF0.a28[i];
-        D_002BB250[i] = D_006C4EF0.a70[i];
-        D_002BB198[i] = D_006C4EF0.a84[i];
-        D_002BB1A8[i] = D_006C4EF0.a8E[i];
-        D_002BB2A8[i] = D_006C4EF0.a98[i];
-        D_002BB298[i] = D_006C4EF0.aA2[i];
-        D_002BB2C8[i] = D_006C4EF0.aAC[i];
-        D_002BB2B8[i] = D_006C4EF0.aB6[i];
-        D_002BB288[i] = D_006C4EF0.aC0[i];
-        D_002BB320[i] = D_006C4EF0.a108[i];
-        D_002BB268[i] = D_006C4EF0.a11C[i];
-        D_002BB278[i] = D_006C4EF0.a126[i];
+        D_002BB378[i] = D_006C4EF0_as_SaveBlock.a00[i];
+        D_002BB368[i] = D_006C4EF0_as_SaveBlock.a0A[i];
+        D_002BB398[i] = D_006C4EF0_as_SaveBlock.a14[i];
+        D_002BB388[i] = D_006C4EF0_as_SaveBlock.a1E[i];
+        D_002BB358[i] = D_006C4EF0_as_SaveBlock.a28[i];
+        D_002BB3F0[i] = D_006C4EF0_as_SaveBlock.a70[i];
+        D_002BB338[i] = D_006C4EF0_as_SaveBlock.a84[i];
+        D_002BB348[i] = D_006C4EF0_as_SaveBlock.a8E[i];
+        D_002BB1D8[i] = D_006C4EF0_as_SaveBlock.a00[i];
+        D_002BB1C8[i] = D_006C4EF0_as_SaveBlock.a0A[i];
+        D_002BB1F8[i] = D_006C4EF0_as_SaveBlock.a14[i];
+        D_002BB1E8[i] = D_006C4EF0_as_SaveBlock.a1E[i];
+        D_002BB1B8[i] = D_006C4EF0_as_SaveBlock.a28[i];
+        D_002BB250[i] = D_006C4EF0_as_SaveBlock.a70[i];
+        D_002BB198[i] = D_006C4EF0_as_SaveBlock.a84[i];
+        D_002BB1A8[i] = D_006C4EF0_as_SaveBlock.a8E[i];
+        D_002BB2A8[i] = D_006C4EF0_as_SaveBlock.a98[i];
+        D_002BB298[i] = D_006C4EF0_as_SaveBlock.aA2[i];
+        D_002BB2C8[i] = D_006C4EF0_as_SaveBlock.aAC[i];
+        D_002BB2B8[i] = D_006C4EF0_as_SaveBlock.aB6[i];
+        D_002BB288[i] = D_006C4EF0_as_SaveBlock.aC0[i];
+        D_002BB320[i] = D_006C4EF0_as_SaveBlock.a108[i];
+        D_002BB268[i] = D_006C4EF0_as_SaveBlock.a11C[i];
+        D_002BB278[i] = D_006C4EF0_as_SaveBlock.a126[i];
     }
     for (i = 0; i < 15; i++) {
-        D_002BB3B0[i] = D_006C4EF0.a34[i];
-        D_002BB2E0[i] = D_006C4EF0.aCC[i];
-        D_002BB210[i] = D_006C4EF0.a34[i];
+        D_002BB3B0[i] = D_006C4EF0_as_SaveBlock.a34[i];
+        D_002BB2E0[i] = D_006C4EF0_as_SaveBlock.aCC[i];
+        D_002BB210[i] = D_006C4EF0_as_SaveBlock.a34[i];
     }
     for (i = 0; i < 5; i++) {
         for (j = 0; j < 30; j++) {
-            D_002BB100[i][j] = D_006C4EF0.a130[i][j];
-            D_002BB060[i][j] = D_006C4EF0.a1C6[i][j];
+            D_002BB100[i][j] = D_006C4EF0_as_SaveBlock.a130[i][j];
+            D_002BB060[i][j] = D_006C4EF0_as_SaveBlock.a1C6[i][j];
         }
     }
     if (D_0028E290 == 2) {
         for (i = 0; i < 5; i++) {
-            D_002BB378[i] = D_006C4EF0.a98[i];
-            D_002BB368[i] = D_006C4EF0.aA2[i];
-            D_002BB398[i] = D_006C4EF0.aAC[i];
-            D_002BB388[i] = D_006C4EF0.aB6[i];
-            D_002BB358[i] = D_006C4EF0.aC0[i];
-            D_002BB3F0[i] = D_006C4EF0.a108[i];
-            D_002BB338[i] = D_006C4EF0.a11C[i];
-            D_002BB348[i] = D_006C4EF0.a126[i];
+            D_002BB378[i] = D_006C4EF0_as_SaveBlock.a98[i];
+            D_002BB368[i] = D_006C4EF0_as_SaveBlock.aA2[i];
+            D_002BB398[i] = D_006C4EF0_as_SaveBlock.aAC[i];
+            D_002BB388[i] = D_006C4EF0_as_SaveBlock.aB6[i];
+            D_002BB358[i] = D_006C4EF0_as_SaveBlock.aC0[i];
+            D_002BB3F0[i] = D_006C4EF0_as_SaveBlock.a108[i];
+            D_002BB338[i] = D_006C4EF0_as_SaveBlock.a11C[i];
+            D_002BB348[i] = D_006C4EF0_as_SaveBlock.a126[i];
         }
         for (i = 0; i < 15; i++) {
-            D_002BB3B0[i] = D_006C4EF0.aCC[i];
+            D_002BB3B0[i] = D_006C4EF0_as_SaveBlock.aCC[i];
         }
     }
-    D_0028E39C = D_006C4EF0.b25C;
-    D_0028E398 = D_006C4EF0.b25D;
-    D_0028E394 = D_006C4EF0.b25E;
-    D_0028E390 = D_006C4EF0.b25F;
-    D_0028E358 = D_006C4EF0.b260;
-    D_0028E38C = D_006C4EF0.b261;
-    D_0028E388 = D_006C4EF0.b262;
-    D_0028E384 = D_006C4EF0.b263;
-    D_0028E380 = D_006C4EF0.b264;
-    D_0028E37C = D_006C4EF0.b265;
-    D_0028E360 = D_006C4EF0.b266;
-    D_0028E35C = D_006C4EF0.b267;
-    D_0028E32C = D_006C4EF0.h268;
-    D_0028E27C = D_006C4EF0.b26A;
-    D_0028E278 = D_006C4EF0.b26B;
-    D_0028E254 = D_006C4EF0.b274;
-    D_0028E250 = D_006C4EF0.b275;
-    D_0028E258 = D_006C4EF0.b276;
-    D_0028E300 = D_006C4EF0.h278;
-    D_0028E2E0 = D_006C4EF0.b59C;
-    D_0028E2DC = D_006C4EF0.b59D;
-    D_0028E2D8 = D_006C4EF0.b59E;
-    D_0028E354 = D_006C4EF0.b59F;
-    D_0028E28C = D_006C4EF0.b5A0;
+    D_0028E39C = D_006C4EF0_as_SaveBlock.b25C;
+    D_0028E398 = D_006C4EF0_as_SaveBlock.b25D;
+    D_0028E394 = D_006C4EF0_as_SaveBlock.b25E;
+    D_0028E390 = D_006C4EF0_as_SaveBlock.b25F;
+    D_0028E358 = D_006C4EF0_as_SaveBlock.b260;
+    D_0028E38C = D_006C4EF0_as_SaveBlock.b261;
+    D_0028E388 = D_006C4EF0_as_SaveBlock.b262;
+    D_0028E384 = D_006C4EF0_as_SaveBlock.b263;
+    D_0028E380 = D_006C4EF0_as_SaveBlock.b264;
+    D_0028E37C = D_006C4EF0_as_SaveBlock.b265;
+    D_0028E360 = D_006C4EF0_as_SaveBlock.b266;
+    D_0028E35C = D_006C4EF0_as_SaveBlock.b267;
+    D_0028E32C = D_006C4EF0_as_SaveBlock.h268;
+    D_0028E27C = D_006C4EF0_as_SaveBlock.b26A;
+    D_0028E278 = D_006C4EF0_as_SaveBlock.b26B;
+    D_0028E254 = D_006C4EF0_as_SaveBlock.b274;
+    D_0028E250 = D_006C4EF0_as_SaveBlock.b275;
+    D_0028E258 = D_006C4EF0_as_SaveBlock.b276;
+    D_0028E300 = D_006C4EF0_as_SaveBlock.h278;
+    D_0028E2E0 = D_006C4EF0_as_SaveBlock.b59C;
+    D_0028E2DC = D_006C4EF0_as_SaveBlock.b59D;
+    D_0028E2D8 = D_006C4EF0_as_SaveBlock.b59E;
+    D_0028E354 = D_006C4EF0_as_SaveBlock.b59F;
+    D_0028E28C = D_006C4EF0_as_SaveBlock.b5A0;
     for (i = 0; i < 10; i++) {
         for (j = 0; j < 4; j++) {
             for (k = 0; k < 5; k++) {
-                D_00684CF0[i][j][k] = D_006C4EF0.a27C[i][j][k];
+                D_00684CF0[i][j][k] = D_006C4EF0_as_SaveBlock.a27C[i][j][k];
             }
         }
     }
     for (i = 0; i < 2; i++) {
         for (j = 0; j < 4; j++) {
-            D_0028E270[i][j] = D_006C4EF0.a26C[i][j];
+            D_0028E270[i][j] = D_006C4EF0_as_SaveBlock.a26C[i][j];
         }
     }
     func_0021E1A0();

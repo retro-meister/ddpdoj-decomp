@@ -3,9 +3,9 @@
 extern u16 D_0025F490[];
 extern u16 D_0025F4B0[];
 extern u16 D_0025F550[];
-extern u16 D_0028D968;
-extern u16 D_0028D970;
-extern u16 D_0028D978;
+extern u16 D_0028D968_as_u16;
+extern u16 D_0028D970_as_u16;
+extern u16 D_0028D978_as_u16;
 extern u16 D_0028DFD4;
 extern u16 D_0028DFD8;
 extern u8 D_0029D710[];
@@ -86,7 +86,7 @@ next_60:
     reg_a0 = (u8 *)D_0025F490;
     if (reg_a4[0x5A] & 4) goto next_64;
     reg_d3.h[0] = *(u16 *)(reg_a4 + 0x58);
-    reg_a0 = (u8 *)&D_0028D968;
+    reg_a0 = (u8 *)&D_0028D968_as_u16;
     reg_d3.h[0] += reg_d3.h[0];
     reg_tmp.h[1] = (reg_d3.h[0] != 0) ? *(u16 *)((u8 *)reg_a0 + ((s16)reg_d3.h[0] & ~1)) : *(u16 *)reg_a0;
     reg_tmp.h[0] = (((u16) reg_d3.h[0] + 2) != 0) ? *(u16 *)((u8 *)reg_a0 + ((s16)((u16) reg_d3.h[0] + 2) & ~1)) : *(u16 *)reg_a0;
@@ -153,10 +153,10 @@ block_sen:
     reg_a2 = reg_a1;
     reg_a1 += 0x510;
     reg_d3.h[0] = *(u16 *)(reg_a4 + 0x58);
-    reg_a0 = (u8 *)&D_0028D970;
+    reg_a0 = (u8 *)&D_0028D970_as_u16;
     reg_d3.h[0] += reg_d3.h[0];
     if (reg_a4[0x5A] & 4) {
-        reg_a0 = (u8 *)&D_0028D978;
+        reg_a0 = (u8 *)&D_0028D978_as_u16;
     }
     reg_tmp.h[1] = (reg_d3.h[0] != 0) ? *(u16 *)((u8 *)reg_a0 + ((s16)reg_d3.h[0] & ~1)) : *(u16 *)reg_a0;
     reg_tmp.h[0] = (((u16) reg_d3.h[0] + 2) != 0) ? *(u16 *)((u8 *)reg_a0 + ((s16)((u16) reg_d3.h[0] + 2) & ~1)) : *(u16 *)reg_a0;

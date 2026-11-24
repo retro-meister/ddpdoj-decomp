@@ -5,7 +5,7 @@ typedef void (*Fn)();
 s32 func_001292C0();
 s32 func_00129410();
 s32 func_001D7940();
-extern Fn jtbl_0028E3F4;
+extern Fn jtbl_0028E3F4_as_Fn;
 extern u8 *reg_a4;
 extern u8 *reg_a6;
 
@@ -16,8 +16,8 @@ void func_001D82E0(u32 arg0, u32 arg1, s32 (*arg2)(void *)) {
     reg_a4[5] -= 1;
     if ((s32) reg_tmp.b[0] > 0) goto next_2;
     reg_a4[5] = reg_a4[4];
-    jtbl_0028E3F4 = (Fn) arg2;
-    jtbl_0028E3F4();
+    jtbl_0028E3F4_as_Fn = (Fn) arg2;
+    jtbl_0028E3F4_as_Fn();
     reg_d0.h[0] = LOOKUP(arg0);
     func_001D7940();
     reg_d0.h[0] = *(u16 *)(reg_a4 + 8);

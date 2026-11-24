@@ -10,9 +10,9 @@ extern u8 D_0025BBC0[];
 extern u8 D_0025BC00[];
 extern u8 D_0025BC40[];
 extern s32 D_0028DF90;
-extern s32 D_0029CA10[];
-extern s32 D_0029CA14[];
-extern s32 D_0029CA18[];
+extern s32 D_0029CA10_as_s32_a[];
+extern s32 D_0029CA14_as_s32_a[];
+extern s32 D_0029CA18_as_s32_a[];
 extern s32 D_0029CA34[];
 extern s32 D_0029CA38[];
 extern s32 D_0029CA3C[];
@@ -21,11 +21,11 @@ extern s32 D_0029CA5C[];
 
 void func_0018C730(void) {
     func_0018C580();
-    D_0029CA18[0] = 0;
-    D_0029CA10[0] = 1;
+    D_0029CA18_as_s32_a[0] = 0;
+    D_0029CA10_as_s32_a[0] = 1;
     D_0028DF90 = 0;
     D_0029CA38[0] = 1;
-    D_0029CA14[0] = 1;
+    D_0029CA14_as_s32_a[0] = 1;
     D_0029CA3C[0] = 1;
     D_0029CA40[0] = 0;
     D_0029CA34[0] = 0;

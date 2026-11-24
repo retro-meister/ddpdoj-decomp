@@ -10,9 +10,9 @@ extern char *D_0028DD90;
 extern s32 D_0028EAEC;
 extern s32 D_0028EAF0;
 extern s8 D_0028EB58;
-extern char D_002BB060[];
-extern char D_002BB100[];
-extern char *reg_a0;
+extern char D_002BB060_as_char_a[];
+extern char D_002BB100_as_char_a[];
+extern char *reg_a0_as_char_p;
 
 void func_00221E20(void) {
     char buf[2];
@@ -50,15 +50,15 @@ void func_00221E20(void) {
             frame_draw_right_panel(D_0028EAEC);
             gfx_draw_color_box(0xEC, 8, 0x40, 0xD0, 0x12C, alpha, 1, 1, 0x40);
         }
-        reg_a0 = (char *)D_0028DD90;
+        reg_a0_as_char_p = (char *)D_0028DD90;
         func_00222C30(0x116, 8, D_0028EAEC);
         buf[1] = 0;
         i = 0;
         y = 0;
-        p = MAIN_OR_DEATH_LABEL(D_002BB100, D_002BB060) + D_0028EB58 * 0x1E;
+        p = MAIN_OR_DEATH_LABEL(D_002BB100_as_char_a, D_002BB060_as_char_a) + D_0028EB58 * 0x1E;
         do {
-            reg_a0 = buf;
-            *reg_a0 = *p++;
+            reg_a0_as_char_p = buf;
+            *reg_a0_as_char_p = *p++;
             glyph_queue_add(0x106, y + 0xE + (i / 5) * 5, 0x136, 0, 0x80, D_0028EAEC, 1);
             i++;
             y += 9;

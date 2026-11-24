@@ -4,7 +4,7 @@ s32 func_0021E1A0();
 s32 func_00222170();
 s32 func_002263C0();
 s32 memset();
-extern s8 D_0028E368;
+extern s8 D_0028E368_as_s8;
 extern s32 D_0028EAEC;
 extern s32 D_0028EAF0;
 extern s32 D_0028EAF4;
@@ -144,7 +144,7 @@ void func_00221FF0(void) {
     memset(&D_0028EBE0, 0, 6);
     memset(&D_0028EBD8, 0, 6);
     func_002263C0();
-    D_0028E368 = 0;
+    D_0028E368_as_s8 = 0;
     D_0028EB00 = 1;
     func_00222170();
     func_0021E1A0();

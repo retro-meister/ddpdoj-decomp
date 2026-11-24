@@ -2,7 +2,7 @@
 
 extern Reg32 D_0028E480;
 extern u8 D_002BC7C0[];
-extern u8 D_002BD440[];
+extern u8 D_002BD440_as_u8_a[];
 extern u8 *reg_a5;
 extern u8 *reg_a6;
 
@@ -15,7 +15,7 @@ s32 func_0014DCA0(void) {
     reg_d2.b[0] = *(u8 *)(reg_a5 + 0xC);
     if ((s8)reg_d2.b[0] >= 0) goto block_2;
 block_1:
-    reg_a6 = (u8 *)D_002BD440;
+    reg_a6 = (u8 *)D_002BD440_as_u8_a;
     reg_d2.w = 0x32;
     goto loop_3;
 block_2:

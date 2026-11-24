@@ -20,7 +20,7 @@ extern u8 D_0026D7C0[];
 extern u8 D_0026D9E0[];
 extern u8 D_0026DA00[];
 extern u8 D_0028DC18[];
-extern s16 D_0028E5B0;
+extern s16 D_0028E5B0_as_s16;
 extern u8 *D_0028E620;
 extern s32 D_0028E624;
 extern u8 D_0028E854;
@@ -28,7 +28,7 @@ extern u8 D_0028E855;
 extern u16 D_0028E910;
 extern s16 D_00299768[];
 extern s16 D_0029976A[];
-extern s16 D_0029976C[];
+extern s16 D_0029976C_as_s16_a[];
 extern u8 *reg_a0;
 extern u8 *reg_a1;
 extern u8 *reg_a2;
@@ -74,7 +74,7 @@ void func_001D3CA0(void) {
     reg_d0.h[0] = 0xA;
     reg_a0 = (u8 *)D_002554B0;
     func_001A3020();
-    D_0028E5B0 = 1;
+    D_0028E5B0_as_s16 = 1;
     D_0028E855 |= 1;
     D_0028E624 = 0x4A0;
     D_0028E855 |= 4;
@@ -85,6 +85,6 @@ void func_001D3CA0(void) {
     D_00299768[0] = 1;
     D_0029976A[0] = 1;
     if (D_0028E910 != 0) {
-        D_0029976C[0] = 1;
+        D_0029976C_as_s16_a[0] = 1;
     }
 }

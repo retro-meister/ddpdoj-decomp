@@ -2,11 +2,11 @@
 
 s32 func_0014BE20();                            /* extern */
 s32 func_0019D530();                            /* extern */
-extern s32 reg_a0;
-extern s32 reg_a6;
+extern s32 reg_a0_as_s32;
+extern s32 reg_a6_as_s32;
 
 void func_001486D0(void) {
-    reg_a0 = reg_a6;
+    reg_a0_as_s32 = reg_a6_as_s32;
     func_0014BE20();
     func_0019D530();
 }

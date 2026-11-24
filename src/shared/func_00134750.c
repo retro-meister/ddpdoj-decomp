@@ -4,10 +4,10 @@ s32 func_0011C4A0();
 s32 func_0011C610();
 s32 func_00137AD0();
 s32 func_0018D9F0();
-extern u32 D_00269BA0[];
+extern u32 D_00269BA0_as_u32_a[];
 extern u8 D_00269BB0[];
 extern u8 D_00269C00[];
-extern s16 D_002BF3F6[];
+extern s16 D_002BF3F6_as_s16_a[];
 extern u8 *reg_a0;
 extern u8 *reg_a4;
 #ifdef DEATH_LABEL
@@ -33,15 +33,15 @@ void func_00134750(void) {
         (*(s16 *)((u8 *)(reg_a4) + (0x12))) = 1;
         reg_d0.h[0] = 1;
         reg_d1.h[0] = 0x33;
-        reg_a0 = (u8 *)(D_00269BA0);
+        reg_a0 = (u8 *)(D_00269BA0_as_u32_a);
         reg_d2.h[0] = 2;
         func_00137AD0();
         reg_d0.h[0] = 0xF;
         reg_d1.h[0] = 0x33;
-        reg_a0 = (u8 *)(D_00269BA0);
+        reg_a0 = (u8 *)(D_00269BA0_as_u32_a);
         reg_d2.h[0] = 2;
         func_00137AD0();
-        D_002BF3F6[0] = 0;
+        D_002BF3F6_as_s16_a[0] = 0;
     }
 #ifdef DEATH_LABEL
     reg_d0.h[0] = 1;

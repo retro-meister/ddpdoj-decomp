@@ -25,10 +25,10 @@ typedef struct {
 } Point16;
 
 extern s8 D_002714F0[];
-extern Point16 D_00271760[];
-extern Point16 D_002717A0[];
+extern Point16 D_00271760_as_Point16_a[];
+extern Point16 D_002717A0_as_Point16_a[];
 extern s32 D_00271910[];
-extern MoveItem D_00685010[][16];
+extern MoveItem D_00685010_as_MoveItem_a_a16[][16];
 
 void func_00222340(s32 group) {
     s32 i;
@@ -41,39 +41,39 @@ void func_00222340(s32 group) {
     count = D_002714F0[group];
     for (i = 0; i < count; i++) {
         if (group == 15) {
-            D_00685010[group][i].x0 = -D_002717A0[i].x;
-            D_00685010[group][i].y0 = D_002717A0[i].y;
-            D_00685010[group][i].x1 = D_002717A0[i].x;
-            D_00685010[group][i].y1 = D_002717A0[i].y;
+            D_00685010_as_MoveItem_a_a16[group][i].x0 = -D_002717A0_as_Point16_a[i].x;
+            D_00685010_as_MoveItem_a_a16[group][i].y0 = D_002717A0_as_Point16_a[i].y;
+            D_00685010_as_MoveItem_a_a16[group][i].x1 = D_002717A0_as_Point16_a[i].x;
+            D_00685010_as_MoveItem_a_a16[group][i].y1 = D_002717A0_as_Point16_a[i].y;
         } else {
-            D_00685010[group][i].x0 = -D_00271760[i].x;
-            D_00685010[group][i].y0 = D_00271760[i].y;
-            D_00685010[group][i].x1 = D_00271760[i].x;
-            D_00685010[group][i].y1 = D_00271760[i].y;
+            D_00685010_as_MoveItem_a_a16[group][i].x0 = -D_00271760_as_Point16_a[i].x;
+            D_00685010_as_MoveItem_a_a16[group][i].y0 = D_00271760_as_Point16_a[i].y;
+            D_00685010_as_MoveItem_a_a16[group][i].x1 = D_00271760_as_Point16_a[i].x;
+            D_00685010_as_MoveItem_a_a16[group][i].y1 = D_00271760_as_Point16_a[i].y;
         }
-        D_00685010[group][i].step = 0;
-        D_00685010[group][i].timer = 60;
-        D_00685010[group][i].id = tag;
-        D_00685010[group][i].active = 1;
-        dx = D_00685010[group][i].x1 - D_00685010[group][i].x0;
-        dy = D_00685010[group][i].y1 - D_00685010[group][i].y0;
+        D_00685010_as_MoveItem_a_a16[group][i].step = 0;
+        D_00685010_as_MoveItem_a_a16[group][i].timer = 60;
+        D_00685010_as_MoveItem_a_a16[group][i].id = tag;
+        D_00685010_as_MoveItem_a_a16[group][i].active = 1;
+        dx = D_00685010_as_MoveItem_a_a16[group][i].x1 - D_00685010_as_MoveItem_a_a16[group][i].x0;
+        dy = D_00685010_as_MoveItem_a_a16[group][i].y1 - D_00685010_as_MoveItem_a_a16[group][i].y0;
         if (dx < 0) {
             dx = -dx;
         }
         if (dy < 0) {
             dy = -dy;
         }
-        D_00685010[group][i].dx = 0;
-        D_00685010[group][i].dy = 0;
+        D_00685010_as_MoveItem_a_a16[group][i].dx = 0;
+        D_00685010_as_MoveItem_a_a16[group][i].dy = 0;
         if (dx != 0) {
-            D_00685010[group][i].dx = dx * 10000 / D_00271910[0];
+            D_00685010_as_MoveItem_a_a16[group][i].dx = dx * 10000 / D_00271910[0];
         }
         if (dy != 0) {
-            D_00685010[group][i].dy = dy * 10000 / D_00271910[0];
+            D_00685010_as_MoveItem_a_a16[group][i].dy = dy * 10000 / D_00271910[0];
         }
-        D_00685010[group][i].vx = D_00685010[group][i].dx * 60;
-        D_00685010[group][i].vy = D_00685010[group][i].dy * 60;
-        D_00685010[group][i].fx = D_00685010[group][i].x0 * 10000;
-        D_00685010[group][i].fy = D_00685010[group][i].y0 * 10000;
+        D_00685010_as_MoveItem_a_a16[group][i].vx = D_00685010_as_MoveItem_a_a16[group][i].dx * 60;
+        D_00685010_as_MoveItem_a_a16[group][i].vy = D_00685010_as_MoveItem_a_a16[group][i].dy * 60;
+        D_00685010_as_MoveItem_a_a16[group][i].fx = D_00685010_as_MoveItem_a_a16[group][i].x0 * 10000;
+        D_00685010_as_MoveItem_a_a16[group][i].fy = D_00685010_as_MoveItem_a_a16[group][i].y0 * 10000;
     }
 }

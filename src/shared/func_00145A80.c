@@ -3,7 +3,7 @@
 void func_0019D400(void);
 void func_0019D460(void);
 extern u16 D_0028E47C;
-extern u16 D_0028E484;
+extern u16 D_0028E484_as_u16;
 extern u8 *reg_a2;
 extern u8 *reg_a6;
 
@@ -56,9 +56,9 @@ block_2:
     reg_a2 += 2;
     reg_d1.h[0] = *(u16 *)(reg_a6 + 2);
     reg_d1.h[0] += 0x7FFF + 0x7C01;
-    D_0028E484 = reg_d1.h[0];
+    D_0028E484_as_u16 = reg_d1.h[0];
     reg_d1.h[0] = reg_d1.h[1];
-    reg_d1.h[1] = D_0028E484;
+    reg_d1.h[1] = D_0028E484_as_u16;
     reg_d3.h[0] = *(u16 *)(reg_a6 + 4);
     D_0028E47C = reg_d3.h[0];
     reg_d3.h[0] -= 0x1000;

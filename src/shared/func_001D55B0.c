@@ -1,6 +1,6 @@
 #include "common.h"
 
-extern s16 D_0028E884;
+extern s16 D_0028E884_as_s16;
 extern u8 *reg_a5;
 extern u8 *reg_a6;
 
@@ -25,6 +25,6 @@ void func_001D55B0(void) {
         (*(u16 *)((u8 *)(reg_a5) + (0x18))) = 5U;
         return;
     }
-    D_0028E884 = 0;
+    D_0028E884_as_s16 = 0;
     (*(u16 *)((u8 *)(reg_a5) + (0x18))) = 6U;
 }

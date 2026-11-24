@@ -8,8 +8,8 @@ extern u8 D_0029D710[];
 extern u8 D_0029D730[];
 extern u8 D_0029D750[];
 extern u8 D_0029D770[];
-extern u8 D_0029F1F0[];
-extern u8 D_0029F260[];
+extern u8 D_0029F1F0_as_u8_a[];
+extern u8 D_0029F260_as_u8_a[];
 extern u8 *reg_a0;
 extern u8 *reg_a2;
 extern u8 *reg_a5;
@@ -19,12 +19,12 @@ void func_00147F90(void) {
     reg_d1.h[0] = D_0028DFD8;
     reg_a0 = (u8 *)D_0029D730;
     reg_a2 = (u8 *)D_0029D770;
-    reg_a5 = (u8 *)D_0029F260;
+    reg_a5 = (u8 *)D_0029F260_as_u8_a;
     if (*(u16 *)(reg_a6 + 0x1A) != 0) goto block_1;
     reg_d1.h[0] = D_0028DFD4;
     reg_a0 = (u8 *)D_0029D710;
     reg_a2 = (u8 *)D_0029D750;
-    reg_a5 = (u8 *)D_0029F1F0;
+    reg_a5 = (u8 *)D_0029F1F0_as_u8_a;
 block_1:
     switch (*(u8 *)(reg_a2 + 1) & 0x10) {
     case 0:

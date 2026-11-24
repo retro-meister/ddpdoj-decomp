@@ -5,7 +5,7 @@ extern s8 D_002714F0[];
 extern s8 D_0028EB58;
 extern s8 D_0028EB84;
 extern s8 D_0028EC24;
-extern u32 D_0057CC60[];
+extern u32 D_0057CC60_as_u32_a[];
 extern s16 D_0068DEFA[];
 
 s32 func_00221120(s32 page) {
@@ -27,7 +27,7 @@ s32 func_00221120(s32 page) {
         break;
     }
     count = D_002714F0[page];
-    pad = D_0057CC60[port];
+    pad = D_0057CC60_as_u32_a[port];
     if (pad & 0x1000) {
         func_0018D4D0();
         D_0028EB58--;

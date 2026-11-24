@@ -9,7 +9,7 @@ extern u16 D_0028E07C[];
 extern u16 D_0028E07E[];
 extern u16 D_0028E084[];
 extern u16 D_0028E086[];
-extern u8 *D_0028E44C;
+extern u8 *D_0028E44C_as_u8_p;
 extern u16 D_0028E928;
 extern u8 D_0029E390[];
 extern u8 D_0029EA50[];
@@ -52,9 +52,9 @@ next_1:
     reg_d0.b[0] += 0x10;
     reg_d0.b[0] &= 0x3F;
     if ((s32)reg_d0.b[0] >= 0x20) goto next_2;
-    D_0028E44C = reg_a0;
+    D_0028E44C_as_u8_p = reg_a0;
     reg_a0 = reg_a3;
-    reg_a3 = (u8 *)D_0028E44C;
+    reg_a3 = (u8 *)D_0028E44C_as_u8_p;
 next_2:
     reg_d4.h[0] = *(u16 *)reg_a1;
     reg_d4.h[0] += 2;

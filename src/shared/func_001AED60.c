@@ -4,10 +4,10 @@ extern void func_001AED90(void);
 extern u8 *reg_a0;
 extern u16 D_0028E748;
 extern u32 D_0028E764;
-extern u8 D_002BAFAA[];
+extern u8 D_002BAFAA_as_u8_a[];
 
 void func_001AED60(void) {
-    reg_a0 = D_002BAFAA;
+    reg_a0 = D_002BAFAA_as_u8_a;
     reg_d0.w = D_0028E764;
     reg_d6.h[0] = D_0028E748;
     reg_d4.w = reg_d0.w;

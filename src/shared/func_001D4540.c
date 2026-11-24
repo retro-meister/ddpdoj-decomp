@@ -5,8 +5,8 @@ struct UnkDataD28E450 {
     s16 unk88;
 };
 
-extern struct UnkDataD28E450 *reg_a6;
+extern struct UnkDataD28E450 *reg_a6_as_UnkDataD28E450_p;
 
 void func_001D4540(void) {
-    reg_a6->unk88 = 1;
+    reg_a6_as_UnkDataD28E450_p->unk88 = 1;
 }

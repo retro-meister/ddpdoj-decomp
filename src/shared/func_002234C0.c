@@ -17,14 +17,14 @@ extern s32 D_0028EB90;
 extern u8 D_0028EBBC;
 extern s16 D_0028EBC8;
 extern u8 D_0028EBCC;
-extern u8 D_0028EBD0;
+extern u8 D_0028EBD0_as_u8;
 extern u8 D_0028ED74;
 
 void func_002234C0(void) {
     D_0028E36C++;
     D_0028EBC8 = 0;
     D_0028EB90 = 0;
-    D_0028EBD0 = 1;
+    D_0028EBD0_as_u8 = 1;
     D_0028EBCC = 1;
     D_0028EB04 = 1;
     D_0028EB8C = 0;

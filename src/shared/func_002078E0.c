@@ -9,7 +9,7 @@ extern s32 D_00267A60[];
 extern s32 D_00267A80[];
 extern s8 D_0028DF9C;
 extern s8 D_0028DFA0;
-extern s32 *reg_a0;
+extern s32 *reg_a0_as_s32_p;
 
 void func_002078E0(void) {
     func_0012FD00();
@@ -17,11 +17,11 @@ void func_002078E0(void) {
     D_0028DFA0 = 0;
     D_0028DF9C = 1;
     reg_d0.h[0] = 0;
-    reg_a0 = D_002679C0;
+    reg_a0_as_s32_p = D_002679C0;
     func_00209200();
-    reg_a0 = D_00267A60;
+    reg_a0_as_s32_p = D_00267A60;
     func_00209200();
-    reg_a0 = D_00267A80;
+    reg_a0_as_s32_p = D_00267A80;
     func_00209200();
     func_00207860();
     reg_d0.w = 0;

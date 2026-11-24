@@ -10,7 +10,7 @@ extern u8 D_0028DE44[];
 extern u8 D_0028E290;
 extern u8 D_0028E368;
 extern u8 D_0028E370;
-extern u8 D_0028E3F8;
+extern u8 D_0028E3F8_as_u8;
 extern u8 D_0028E7B4;
 extern u16 D_00684C80[];
 #ifdef DEATH_LABEL
@@ -92,7 +92,7 @@ void func_0022BFD0(void) {
     death_D_00290850 = 0;
     death_D_00290DBC = 0;
     D_0028E370 = 0;
-    D_0028E3F8 = 0;
+    D_0028E3F8_as_u8 = 0;
     D_0028E368 = 0;
     if (death_D_00290DC0 != 0) {
         func_0022B620();
@@ -120,7 +120,7 @@ void func_0022BFD0(void) {
     D_00684C80[6] = 0;
     D_00684C80[4] = 3;
     D_0028E370 = 0;
-    D_0028E3F8 = 0;
+    D_0028E3F8_as_u8 = 0;
     D_00684C80[5] = 1;
     D_00684C80[8] = 3;
     reg_d0.h[0] = 10;

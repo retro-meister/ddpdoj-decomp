@@ -1,6 +1,6 @@
 #include "common.h"
 
-extern u16 D_00255510[];
+extern u16 D_00255510_as_u16_a[];
 extern u16 D_0028DFFC;
 extern u16 D_0028E5E8;
 extern u16 D_0028E5EC;
@@ -25,7 +25,7 @@ void func_0013D660(void) {
     if (reg_d0.h[0] == 0) goto next_1;
 next_2:
     reg_d2.h[0] = reg_d0.h[0];
-    reg_a0 = (u8 *) D_00255510;
+    reg_a0 = (u8 *) D_00255510_as_u16_a;
     reg_d2.h[0] -= 1;
     reg_d2.h[0] *= 2;
     reg_d0.h[0] = (reg_d2.h[0] != 0) ? *(u16 *) ((u8 *) reg_a0 + ((s16) reg_d2.h[0] & ~1)) : *(u16 *) reg_a0;

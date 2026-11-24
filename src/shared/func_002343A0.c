@@ -1,10 +1,10 @@
 #include "common.h"
 
-extern u16 D_0028ED10;
+extern u16 D_0028ED10_as_u16;
 extern s32 D_0028DE34;
 
 void func_0022C5E0(s32, s32, s32, s32, s32, s32, s32);
 
 void func_002343A0(void) {
-    func_0022C5E0(0xC8, D_0028DE34, 0, 0x14, 0xE, D_0028ED10, 0x64);
+    func_0022C5E0(0xC8, D_0028DE34, 0, 0x14, 0xE, D_0028ED10_as_u16, 0x64);
 }
