@@ -3,6 +3,7 @@
 
 #include "common.h"
 #include "sdk/ps2sdk.h"
+#include "gfx_types.h"
 
 typedef enum {
     GALLERY_MODE_LOADING = 0,
@@ -11,12 +12,6 @@ typedef enum {
     GALLERY_MODE_VIEWER  = 3,
     GALLERY_MODE_EXIT    = 4
 } GalleryMode;
-
-typedef union {
-    unsigned __int128 q;
-    u64 d[2];
-    u32 w[4];
-} Qword;
 
 typedef struct {
     s16 u;
@@ -32,15 +27,6 @@ typedef struct {
     s16 w;
     s16 h;
 } Rect16;
-
-typedef struct {
-    s16 previous;
-    s16 next;
-    s16 key;
-    s16 x;
-    s16 y;
-    s16 flags;
-} GlyphCacheEntry;
 
 typedef struct {
     u8 pad00[8];

@@ -1,4 +1,6 @@
-#include "gallery/gallery.h"
+#include "common.h"
+#include "sdk/ps2sdk.h"
+#include "gfx_types.h"
 
 extern s32 D_0028EA80;
 extern void *D_0028E9F4;

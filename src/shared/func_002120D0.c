@@ -39,7 +39,7 @@ s32 func_0020EAA0();
 s32 func_0020EAB0();
 s32 func_0020F550();
 s32 func_002108C0();
-s32 func_00212720();
+s32 font_load_async();
 s32 func_00216470();
 s32 func_00216570();
 s32 func_00216610();
@@ -173,7 +173,7 @@ void func_002120D0(void) {
         func_00216570();
         switch (t3) {
         case 0:
-            func_00212720();
+            font_load_async();
             if (D_0028E9BC == 0) {
                 D_0028E9B8 = 0;
                 t3 += 1;

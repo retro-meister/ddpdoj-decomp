@@ -1,4 +1,6 @@
-#include "gallery/gallery.h"
+#include "common.h"
+#include "sdk/ps2sdk.h"
+#include "gfx_types.h"
 
 typedef struct {
     s32 x;

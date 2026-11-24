@@ -1,4 +1,6 @@
-#include "gallery/gallery.h"
+#include "common.h"
+#include "sdk/ps2sdk.h"
+#include "gfx_types.h"
 
 extern void *D_0028E9F4;
 extern u8 D_00558780[2][0x10000];

@@ -1,9 +1,11 @@
-#include "gallery/gallery.h"
+#include "common.h"
+#include "sdk/ps2sdk.h"
+#include "gfx_types.h"
 
 extern s32 D_0028E9D0;
 extern void *D_0028E9F4;
 extern u8 D_00558780[2][0x10000];
-void func_00212F90(u8 *packet);
+void font_build_gs_setup_packet(u8 *packet);
 void func_002158C0(Qword *packet, s32 firstEntry, s32 count);
 
 void func_002157D0(void)
@@ -17,7 +19,7 @@ void func_002157D0(void)
     if (D_0028E9D0 == 0) {
         return;
     }
-    func_00212F90(D_00558780[0]);
+    font_build_gs_setup_packet(D_00558780[0]);
     FlushCache(0);
     sceDmaSend(D_0028E9F4, D_00558780[0]);
     sceGsSyncPath(0, 0);

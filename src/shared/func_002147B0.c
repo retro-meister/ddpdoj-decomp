@@ -1,4 +1,6 @@
-#include "gallery/gallery.h"
+#include "common.h"
+#include "sdk/ps2sdk.h"
+#include "gfx_types.h"
 
 typedef struct {
     s16 x;
@@ -18,7 +20,7 @@ extern s8 *D_0028E9D8;
 extern SpriteEntry D_002C0700[];
 extern s8 D_00578780[];
 extern GlyphCacheEntry D_00583FD8[];
-extern s64 func_00212F30(s64 sjis);
+extern s64 sjis_to_glyph_index(s64 sjis);
 extern s32 func_00217F30(u16 key);
 
 void func_002147B0(s16 x, s16 y, const char *text, u16 texturePage, u16 glyphWidth, u16 glyphHeight, u16 alpha, u16 depth)
@@ -46,7 +48,7 @@ void func_002147B0(s16 x, s16 y, const char *text, u16 texturePage, u16 glyphWid
             break;
         }
         if ((D_0028E9D0 < 512) || (shiftJis != 0x8140)) {
-            glyphIndex = (s32)func_00212F30((s64)shiftJis);
+            glyphIndex = (s32)sjis_to_glyph_index((s64)shiftJis);
             cacheIndex = func_00217F30((u16)glyphIndex);
             if (cacheIndex & 0x8000) {
                 for (byteIndex = 0; byteIndex < 0x152; byteIndex++) {

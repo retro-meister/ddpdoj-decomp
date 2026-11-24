@@ -3,7 +3,7 @@
 s32 sceDmaGetChan();
 s32 sceMcInit();
 s32 func_0018C890();
-s32 func_00212740();
+s32 font_init();
 s32 func_00216250();
 s32 func_002163B0();
 s32 func_002163F0();
@@ -43,7 +43,7 @@ void func_002164A0(void) {
     func_00217A20();
     func_0018C890();
     func_00218B00();
-    func_00212740();
+    font_init();
     sceMcInit();
     func_0022C630();
 }

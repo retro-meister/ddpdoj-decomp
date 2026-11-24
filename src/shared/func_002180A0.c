@@ -1,4 +1,6 @@
-#include "gallery/gallery.h"
+#include "common.h"
+#include "sdk/ps2sdk.h"
+#include "gfx_types.h"
 
 extern GlyphCacheEntry D_0057EF98[];
 extern s16 D_0057CF80[];
