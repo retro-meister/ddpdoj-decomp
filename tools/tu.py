@@ -240,7 +240,7 @@ def localize(lines, local):
             text = "\n".join(lines[index + 1:end])
             for name, declared in local.items():
                 if re.search(rf"\b{re.escape(name)}\b", text):
-                    out.append("    " + declared)
+                    out.extend(part if part.startswith("#") else "    " + part.strip() for part in declared.splitlines())
         index += 1
     return out
 
@@ -263,10 +263,16 @@ def piece_text(path, seen, scopes, canonical):
             continue
         if kind == "code" and re.match(r"\s*#\s*if", text):
             depth += 1
+            opener = text.strip()
         elif kind == "code" and re.match(r"\s*#\s*endif", text):
             depth -= 1
         if kind == "decl" and depth:
-            body.append(text)       # inside a conditional: leave it exactly where it is
+            parsed = data_declaration(text) if "\n" not in text else None
+            if parsed and parsed[0] in canonical and depth == 1:
+                # a clashing declaration under a conditional goes into the functions with its conditional
+                local[parsed[0]] = f"{opener}\n    {declaration(*parsed)}\n#endif"
+            else:
+                body.append(text)   # otherwise leave it exactly where it is
             continue
         if kind == "decl":
             parsed = data_declaration(text) if "\n" not in text else None
