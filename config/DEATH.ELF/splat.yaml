@@ -530,7 +530,7 @@ segments:
       - [0x38950, c, shared/func_00123780]
       - [0x38a40, c, shared/func_00123870]
       - [0x38b50, c, shared/func_00123980]
-      - [0x38bc0, asm, game_038bc0]
+      - [0x38bc0, c, death/death_func_00138B40]
       - [0x394d0, c, shared/func_0014D220]
       - [0x394e0, c, shared/func_0014D260]
       - [0x39720, c, shared/func_0014D4A0]

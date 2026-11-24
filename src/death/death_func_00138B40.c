@@ -111,19 +111,19 @@ void death_func_00138C50(TextScript *script) {
         }
         D_00592000[0].attr = shade;
         D_00592000[0].z = 1;
-        D_0028EA80 = 1;
         D_00592000[0].tex = 0x2240;
         D_00592000[0].clut = 0x3836;
         D_00592000[0].alpha = 0x80;
+        D_00592000[0].flags = 1;
         D_00592000[0].x0 = 0xB0;
         D_00592000[0].x1 = 0x1C0;
+        D_00592000[0].y0 = 0;
+        D_00592000[0].y1 = 0xE0;
         D_00592000[0].u0 = 0x110;
         D_00592000[0].v0 = 0;
-        D_00592000[0].y1 = 0xE0;
-        D_00592000[0].v1 = 0xE0;
-        D_00592000[0].flags = 1;
         D_00592000[0].u1 = 0x200;
-        D_00592000[0].y0 = 0;
+        D_00592000[0].v1 = 0xE0;
+        D_0028EA80 = 1;
         func_0021A170();
         death_func_00138BE0(death_D_0056A800);
         D_0028EA80 = 0;
@@ -135,19 +135,19 @@ void death_func_00138C50(TextScript *script) {
         v = func_001173A8() % 0x20;
         D_00592000[0].attr = shade;
         D_00592000[0].z = 1;
-        D_0028EA80 = 1;
         D_00592000[0].tex = 0x2240;
         D_00592000[0].clut = 0x383C;
         D_00592000[0].alpha = 0x80;
+        D_00592000[0].flags = 1;
         D_00592000[0].x0 = 0xB0;
         D_00592000[0].x1 = 0x1C0;
+        D_00592000[0].y0 = 0;
         D_00592000[0].y1 = 0xE0;
         D_00592000[0].u0 = u;
         D_00592000[0].v0 = v;
         D_00592000[0].u1 = u + 0xF0;
         D_00592000[0].v1 = v + 0xE0;
-        D_00592000[0].flags = 1;
-        D_00592000[0].y0 = 0;
+        D_0028EA80 = 1;
         func_0021A170();
     }
     alpha = (script->flashTimer << 7) / script->flashLength;
@@ -160,6 +160,7 @@ void death_func_00138C50(TextScript *script) {
     }
     func_00215DB0(0, 0, 0x1C0, 0xE0, 0, alpha, color, color, color);
 }
+
 
 typedef struct {
     u16 a;

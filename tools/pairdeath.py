@@ -398,7 +398,7 @@ def pair(local):
     }
 
 
-SUBSEG_RE = re.compile(r"^(\s*-\s*\[)(0x[0-9a-fA-F]+|\d+),\s*(\.?[a-zA-Z0-9_]+),\s*([^\]]+)\]\s*$")
+SUBSEG_RE = re.compile(r"^(\s*-\s*\[)(0x[0-9a-fA-F]+|\d+),\s*(\.?[a-zA-Z0-9_]+)(?:,\s*([^\]]+))?\]\s*$")
 AUTO_RE = re.compile(r"(func|D)_[0-9A-F]{8}")
 LABEL_RE = re.compile(r"^(?:glabel|dlabel|jlabel|alabel|nonmatching)\s+(\w+)", re.M)
 
@@ -422,8 +422,9 @@ def patch_death_text(lines, units, image, file_address, code_end):
     if last - first + 1 != len(rows):
         raise ValueError("DEATH.ELF splat.yaml: subsegment list is not contiguous")
     prefix = rows[0][1].group(1)
-    subs = [[int(m.group(2), 0), m.group(3), m.group(4).strip()] for _, m in rows]
-    names = {sub[2] for sub in subs}
+    # A subsegment without a name (`[offset, pad]`) is kept as it is.
+    subs = [[int(m.group(2), 0), m.group(3), (m.group(4) or "").strip()] for _, m in rows]
+    names = {sub[2] for sub in subs if sub[2]}
     code_end_off = code_end - file_address
     for unit in sorted(units, key=lambda u: u["death_address"]):
         offset = unit["death_address"] - file_address
@@ -449,7 +450,8 @@ def patch_death_text(lines, units, image, file_address, code_end):
             names.add(name)
             replacement.append([end, "asm", name])
         subs[index:index + 1] = replacement
-    lines[first:last + 1] = [f"{prefix}{off:#x}, {kind}, {name}]" for off, kind, name in subs]
+    lines[first:last + 1] = [f"{prefix}{off:#x}, {kind}, {name}]" if name else f"{prefix}{off:#x}, {kind}]"
+                             for off, kind, name in subs]
 
 
 def apply(local, only=None):
