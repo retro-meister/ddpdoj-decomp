@@ -30,7 +30,7 @@ void func_00218B50(void) {
     if (D_0028E91C != D_0028E3FC) {
     switch (D_0028E350) {
     case 0:
-        printf(D_00287070);
+        printf(D_00287070, D_0028E91C);
         func_0018DEE0();
         func_002182F0();
         D_0028E350++;

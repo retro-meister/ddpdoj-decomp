@@ -39,7 +39,14 @@ extern s32 D_0028ED1C;
 extern u8 D_0069F580[];
 extern s32 D_0069F590[];
 extern u8 D_006A0E50[];
-extern u8 D_006A0E86[];
+typedef struct {
+    u8 pad0[0x10];
+    s16 state;
+    u8 pad12[0x34];
+    u16 id;
+    u8 pad48[0x3B8];
+} Slot;
+extern Slot D_006A0E40[];
 void func_002319B0(void) {
     s32 sp5C;
     s32 ok;
@@ -231,14 +238,14 @@ void func_002319B0(void) {
         }
         break;
     case 10:
+        off = D_0028ED1C - 1;
         ok = D_0028ED1C;
-        off = (ok - 1) << 9;
-        ((s16 *)D_006A0E50)[off] = 1;
-        if (((u16 *)D_006A0E86)[off] == 0xCB) {
+        D_006A0E40[off].state = 1;
+        if (D_006A0E40[off].id == 0xCB) {
             printf(D_0028BC30, ok);
         } else {
-            ((s16 *)D_006A0E50)[off] = 3;
-            printf(D_0028BC50, ok, ((u16 *)D_006A0E86)[off]);
+            D_006A0E40[off].state = 3;
+            printf(D_0028BC50, ok, D_006A0E40[off].id, 0xCB);
         }
         D_0028ECF0 = 0;
         D_0028ED14 += 1;
