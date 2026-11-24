@@ -315,7 +315,8 @@ def piece_text(path, seen, scopes, canonical):
 
 
 DEFINITION_RE = re.compile(r"^(?!typedef|extern|static\s+inline|#|//|/\*)([A-Za-z_][\w \t\*]*?[ \*])(\w+)\s*\(([^;{]*)\)\s*\{?\s*$")
-PROTOTYPE_RE = re.compile(r"^(?:extern\s+)?[A-Za-z_][\w \t\*]*?[ \*](\w+)\s*\([^;{]*\)\s*;")
+# (a `(` followed by `*` declares a function pointer, not a function)
+PROTOTYPE_RE = re.compile(r"^(?:extern\s+)?[A-Za-z_][\w \t\*]*?[ \*](\w+)\s*\((?!\s*\*)[^;{]*\)\s*;")
 
 
 def sdk_functions():
