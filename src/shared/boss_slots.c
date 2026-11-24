@@ -12,13 +12,6 @@ extern u8 D_00295EA0[];
 extern s32 D_00295F40_as_s32_a[];
 extern s64 D_002960A8[];
 extern s32 D_00296210_as_s32_a[];
-extern u8 *reg_a0;
-extern u8 *reg_a1;
-extern u8 *reg_a2;
-extern u8 *reg_a3;
-extern u8 *reg_a4;
-extern u8 *reg_a5;
-extern u8 *reg_a6;
 
 void func_00124320(void) {
     u8 *save_a0;
@@ -129,7 +122,6 @@ void func_00124520(void) {
 
 typedef void (*Fn)();
 
-extern s8 D_0028E408;
 
 extern u16 D_0028E3EC;
 extern u16 D_0028E5F8;
@@ -146,9 +138,9 @@ void func_00124590(void) {
     u8 *temp_s1;
     u32 temp_v0;
 
-    D_0028E408 = 0;
+    cond_flag = 0;
     if (D_002962DE[0] != 0) {
-        D_0028E408 = 1;
+        cond_flag = 1;
         return;
     }
     if (D_0028E8A0 == 0) {
@@ -181,7 +173,7 @@ void func_00124590(void) {
         } while ((s16)(--reg_d7.h[0]) >= 0);
     }
     func_00125470();
-    D_0028E408 = 0;
+    cond_flag = 0;
 }
 
 extern u8 D_00295E7C[];
@@ -356,7 +348,7 @@ loop_1:
     reg_d1.w = d1;
     reg_d2.w = d2;
     reg_a0 = a0;
-    D_0028E408 = 1;
+    cond_flag = 1;
     return;
 next_1:
     reg_a0 += 0x20;
@@ -367,7 +359,7 @@ next_1:
     reg_d1.w = d1;
     reg_d2.w = d2;
     reg_a0 = a0;
-    D_0028E408 = 0;
+    cond_flag = 0;
 }
 
 void func_00124C70(void) {
@@ -603,7 +595,7 @@ loop_1:
     reg_d1.w = d1;
     reg_d2.w = d2;
     reg_a0 = a0;
-    D_0028E408 = 1;
+    cond_flag = 1;
     return;
 next_1:
     reg_a0 += 0x20;
@@ -614,7 +606,7 @@ next_1:
     reg_d1.w = d1;
     reg_d2.w = d2;
     reg_a0 = a0;
-    D_0028E408 = 0;
+    cond_flag = 0;
 }
 
 void func_00125120(void) {
@@ -696,7 +688,7 @@ loop_1:
     reg_d1.w = d1;
     reg_d2.w = d2;
     reg_a0 = a0;
-    D_0028E408 = 1;
+    cond_flag = 1;
     return;
 next_1:
     reg_a0 += 0x20;
@@ -707,7 +699,7 @@ next_1:
     reg_d1.w = d1;
     reg_d2.w = d2;
     reg_a0 = a0;
-    D_0028E408 = 0;
+    cond_flag = 0;
 }
 
 void func_00125310(void) {
@@ -774,10 +766,10 @@ extern u16 D_002962D4[];
 
 void func_00125440(void) {
     if (D_002962D4[0] == 0) {
-        D_0028E408 = 0;
+        cond_flag = 0;
         return;
     }
-    D_0028E408 = 1;
+    cond_flag = 1;
 }
 
 s32 func_0019D7A0();

@@ -14,7 +14,6 @@ extern u8 D_0028E290;
 extern u8 D_0028E2C8;
 extern u8 D_0028ED80;
 extern void func_0019C4F0();
-extern u8 *reg_a6;
 
 void func_0011D510(void) {
     if (((D_0028ED80 != 0) && (D_0028E2C8 != 0)) || (D_0028E290 == 2)) {
@@ -197,7 +196,6 @@ s32 func_0019C730();
 extern u16 D_002524E0[];
 extern u8 D_0028E2C0;
 extern u16 D_0028E8A8;
-extern u8 *reg_a0;
 
 void func_0011DB40(void) {
     u16 temp_a2;

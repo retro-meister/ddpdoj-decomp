@@ -138,8 +138,6 @@ extern u16 g_stage;
 extern u8 g_text_palette_as_u8_a[];
 extern u8 g_bg_palette[];
 extern u8 g_sprite_palette[];
-extern u8 *reg_a0;
-extern u8 *reg_a1;
 
 void func_001A2C80(void) {
     if (D_0028E0C0_as_u16 != 0) {

@@ -24,7 +24,6 @@ void func_0011F110(void);
 void func_0011F200(void);
 void func_0011F2F0(void);
 
-extern u8 *reg_a6;
 
 void func_0011DDC0(void) {
     reg_tmp.w = 0x1CBF;

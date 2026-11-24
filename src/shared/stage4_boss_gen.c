@@ -26,8 +26,6 @@ extern u8 D_0028D9AC;
 extern u16 D_0028E8A8;
 extern u16 D_0029C068[];
 extern s8 enemy_move_end_requested;
-extern u8 *reg_a0;
-extern u8 *reg_a6;
 
 void func_001DE200(void) {
 
@@ -60,7 +58,6 @@ s32 func_0019BF00();
 s32 func_001A9000();
 extern u16 D_0028E8A0;
 extern u16 D_0029C06C[];
-extern u8 *reg_a5;
 
 void func_001DE2E0(void) {
     func_0014EA50();
@@ -138,7 +135,6 @@ s32 func_002011A0();
 extern u8 D_002637F0[];
 extern u8 D_00263810[];
 extern void (*jtbl_0028E3F4)();
-extern u8 *reg_a3;
 
 void func_001DE510(void) {
     reg_a0 = (u8 *)D_00263860;
@@ -681,12 +677,9 @@ s32 func_002027A0();
 s32 func_00202C50();
 s32 vibration_start_pad1();
 s32 vibration_start_pad2();
-extern u8 *D_0028E44C_as_u8_p;
 extern u16 D_0028E88C;
 extern u16 D_0028E894;
 extern u16 D_0029CEA0[];
-extern u8 *reg_a1;
-extern u8 *reg_a4;
 
 void func_001DF890(void) {
     s16 saved_x;
@@ -868,15 +861,15 @@ next_400:
     reg_a0 = (u8 *)D_0029F260_as_u8_a;
     reg_a1 = (u8 *)D_0029F1F0_as_u8_a;
     if ((*(u8 *)((u8 *)(reg_a5) + (2))) == 0) goto next_440;
-    D_0028E44C_as_u8_p = reg_a0;
+    reg_atmp = reg_a0;
     reg_a0 = reg_a1;
-    reg_a1 = (u8 *)D_0028E44C_as_u8_p;
+    reg_a1 = (u8 *)reg_atmp;
 next_440:
     if ((*(s16 *)reg_a0) < 0) goto next_460;
     if ((*(s16 *)reg_a1) >= 0) goto next_490;
-    D_0028E44C_as_u8_p = reg_a0;
+    reg_atmp = reg_a0;
     reg_a0 = reg_a1;
-    reg_a1 = (u8 *)D_0028E44C_as_u8_p;
+    reg_a1 = (u8 *)reg_atmp;
 next_460:
     reg_a4 = reg_a0;
     reg_d2.h[0] = (*(u16 *)((u8 *)(reg_a0) + (2)));
@@ -1146,7 +1139,6 @@ next_6260:
     goto block_e;
 }
 
-extern s16 *D_0028E44C;
 extern s16 D_0029F1F0[];
 extern s16 D_0029F260[];
 
@@ -1157,16 +1149,16 @@ void func_001E0B30(void) {
     reg_a0 = (u8 *)(D_0029F260);
     reg_a1 = (u8 *)(D_0029F1F0);
     if ((*(u8 *)((u8 *)(reg_a5) + (2))) != 0) {
-        D_0028E44C = (s16 *)(reg_a0);
+        reg_atmp = (u8 *)(reg_a0);
         reg_a0 = (u8 *)(reg_a1);
-        reg_a1 = (u8 *)(D_0028E44C);
+        reg_a1 = (u8 *)(reg_atmp);
     }
     temp_a0 = (s16 *)(reg_a0);
     if ((*(s16 *)((u8 *)(temp_a0) + (0))) >= 0) {
         var_a1 = (s16 *)(reg_a1);
         if (*var_a1 >= 0) goto block_st;
         reg_a0 = (u8 *)(var_a1);
-        D_0028E44C = (s16 *)(temp_a0);
+        reg_atmp = (u8 *)(temp_a0);
         reg_a1 = (u8 *)(temp_a0);
     }
     func_00171400();
@@ -1190,16 +1182,16 @@ void func_001E0C20(void) {
     reg_a0 = (u8 *)(D_0029F260);
     reg_a1 = (u8 *)(D_0029F1F0);
     if ((*(u8 *)((u8 *)(reg_a5) + (2))) != 0) {
-        D_0028E44C = (s16 *)(reg_a0);
+        reg_atmp = (u8 *)(reg_a0);
         reg_a0 = (u8 *)(reg_a1);
-        reg_a1 = (u8 *)(D_0028E44C);
+        reg_a1 = (u8 *)(reg_atmp);
     }
     temp_a0 = (s16 *)(reg_a0);
     if ((*(s16 *)((u8 *)(temp_a0) + (0))) >= 0) {
         var_a1 = (s16 *)(reg_a1);
         if (*var_a1 >= 0) goto block_st;
         reg_a0 = (u8 *)(var_a1);
-        D_0028E44C = (s16 *)(temp_a0);
+        reg_atmp = (u8 *)(temp_a0);
         reg_a1 = (u8 *)(temp_a0);
     }
     func_00171400();
@@ -2374,9 +2366,9 @@ next_220:
     reg_a0 = (u8 *)(D_0029F260_as_u16_a);
     reg_a1 = (u8 *)(D_0029F1F0_as_u16_a);
     if ((*(u8 *)((u8 *)(reg_a5) + (2))) == 0) goto next_240;
-    D_0028E44C = (s16 *)(reg_a0);
+    reg_atmp = (u8 *)(reg_a0);
     reg_a0 = (u8 *)(reg_a1);
-    reg_a1 = (u8 *)(D_0028E44C);
+    reg_a1 = (u8 *)(reg_atmp);
 next_240:
     if (*(s16 *)reg_a1 < 0) goto next_250;
     reg_tmp.h[1] = (*(u16 *)((u8 *)(reg_a5) + (0x34)));
@@ -2391,7 +2383,7 @@ next_250:
     if (*(s16 *)reg_a1 >= 0) goto next_300;
     temp = reg_a0;
     reg_a0 = (u8 *)(reg_a1);
-    D_0028E44C = (s16 *)(temp);
+    reg_atmp = (u8 *)(temp);
     reg_a1 = (u8 *)(temp);
 next_260:
     reg_d2.h[0] = (*(u16 *)((u8 *)(reg_a0) + (2)));
@@ -2629,15 +2621,15 @@ next_1:
     reg_a0 = (u8 *)D_0029F260_as_u16_a;
     reg_a1 = (u8 *)D_0029F1F0_as_u16_a;
     if (*(u8 *)(reg_a5 + 2) == 0) goto next_2;
-    D_0028E44C_as_u8_p = reg_a0;
+    reg_atmp = reg_a0;
     reg_a0 = reg_a1;
-    reg_a1 = (u8 *)D_0028E44C_as_u8_p;
+    reg_a1 = (u8 *)reg_atmp;
 next_2:
     if (*(s16 *)reg_a0 < 0) goto next_3;
     if (*(s16 *)reg_a1 >= 0) goto block_rts;
-    D_0028E44C_as_u8_p = reg_a0;
+    reg_atmp = reg_a0;
     reg_a0 = reg_a1;
-    reg_a1 = (u8 *)D_0028E44C_as_u8_p;
+    reg_a1 = (u8 *)reg_atmp;
 next_3:
     reg_d2.h[0] = *(u16 *)(reg_a0 + 2);
     reg_d3.h[0] = *(u16 *)(reg_a0 + 4);

@@ -146,7 +146,6 @@ void func_0011C250(void) {
 }
 
 extern u8 g_text_layer[];
-extern u8 *reg_a0;
 
 void func_0011C2B0(void) {
     u8 *a0;

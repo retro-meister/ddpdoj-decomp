@@ -169,13 +169,6 @@ extern char D_00289E08[];
 extern char D_00289E18[];
 extern char D_00289E20[];
 extern char D_00289E28[];
-extern u8 *reg_a0;
-extern u8 *reg_a1;
-extern u8 *reg_a2;
-extern u8 *reg_a3;
-extern u8 *reg_a4;
-extern u8 *reg_a5;
-extern u8 *reg_a6;
 
 void func_00226A90(s32 slot, s32 x, s32 y, s32 alpha, s32 selected, SaveInfo *info) {
     extern void text_queue_clear(void);
@@ -3055,7 +3048,6 @@ void func_0022C1E0() {
     func_002075F0();
 }
 
-extern s8 D_0028E408;
 
 s32 func_00131440();
 s32 func_00135110();
@@ -3181,7 +3173,7 @@ void func_0022C1F0() {
         break;
     case MAIN_OR_DEATH_LABEL(19, 20):
         func_001719B0();
-        if (D_0028E408 == 0) {
+        if (cond_flag == 0) {
             (*(s8 *)((u8 *)(reg_a5) + (3))) = 2;
         }
         break;

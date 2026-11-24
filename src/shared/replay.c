@@ -257,7 +257,6 @@ void func_00236F40(void) {
 
 extern void func_00236DA0(void);
 extern void (*D_00272110[])(void);
-extern u8 *reg_a5;
 
 void func_002372C0(void) {
     s32 index = reg_a5[5];
@@ -275,12 +274,6 @@ void func_002372C0(void) {
 
 extern u8 D_00269160[];
 extern s8 D_0028DF84;
-extern u8 *reg_a0;
-extern u8 *reg_a1;
-extern u8 *reg_a2;
-extern u8 *reg_a3;
-extern u8 *reg_a4;
-extern u8 *reg_a6;
 
 void func_00237330(void) {
     s32 func_0012FAB0();
@@ -544,7 +537,6 @@ extern void func_001A42A0(void);
 extern void func_00206D70(void);
 extern s32 func_00225CD0(void);
 extern u8 D_0026B5F0[];
-extern s8 D_0028E408;
 extern s8 D_0028EACC;
 
 void func_00237870(void) {
@@ -570,7 +562,7 @@ void func_00237870(void) {
     case 0:
         reg_d0.w = D_0028ED84;
         func_0013C350();
-        if (D_0028E408 == 0) {
+        if (cond_flag == 0) {
             func_0013C300();
             step++;
         }
@@ -601,7 +593,7 @@ void func_00237870(void) {
     case 416:
         reg_d0.w = D_0028ED84;
         func_0013C350();
-        if (D_0028E408 == 0) {
+        if (cond_flag == 0) {
             func_0013C300();
             step++;
         }
@@ -1020,7 +1012,7 @@ void func_00238010(void) {
         D_0028E368 = 1;
     case 0xC9:
         func_001719B0();
-        if (D_0028E408 == 0) {
+        if (cond_flag == 0) {
             *(u8 *)(reg_a5 + 3) = 2;
         }
         break;
@@ -1288,7 +1280,7 @@ void func_00238690(void) {
         break;
     case 19:
         func_001719B0();
-        if (D_0028E408 == 0) {
+        if (cond_flag == 0) {
             *(u8 *)(reg_a5 + 3) = 2;
         }
         break;

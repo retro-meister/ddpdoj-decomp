@@ -101,7 +101,6 @@ extern u8 D_0028DAE8[];
 extern u16 D_0028E5C0;
 extern u16 D_0028E5FC;
 extern u16 D_0029F2B8[];
-extern u8 *reg_a0;
 
 void func_001A54C0(void) {
     u32 save_d1;
@@ -1123,7 +1122,6 @@ s32 func_0018DED0();
 s32 func_001A9180();
 s32 func_001A9190();
 s32 func_001A97F0();
-extern s8 D_0028E408;
 extern s8 D_0028E2A0_as_s8;
 extern s8 D_0028E2A4_as_s8;
 extern u32 D_0028E638_as_u32;
@@ -1159,7 +1157,7 @@ next_0:
         return;
     }
     func_001A7410();
-    if (D_0028E408 != 0) goto next_6;
+    if (cond_flag != 0) goto next_6;
     D_0028E640 -= 1;
     if ((s16)D_0028E640 >= 0) goto next_9;
     if (D_0028E63C_as_u32 == 0) goto next_1;
@@ -1274,7 +1272,7 @@ void func_001A7410(void) {
     reg_d0.h[0] = D_0028E648;
     reg_d0.h[0] -= 1;
     if ((s16) reg_d0.h[0] < 0) {
-        D_0028E408 = 0;
+        cond_flag = 0;
         return;
     }
     reg_d0.w = 0;
@@ -1295,11 +1293,11 @@ void func_001A7410(void) {
     temp_v1 = reg_d0.b[0] & 0x70;
     reg_d0.b[0] = temp_v1;
     if (!(temp_v1 & 0xFF)) {
-        D_0028E408 = 0;
+        cond_flag = 0;
         return;
     }
     reg_d7.h[0] = D_0028E648;
-    D_0028E408 = 1;
+    cond_flag = 1;
     D_0028E648 = 0;
     reg_d7.w -= 1;
 }
@@ -2081,7 +2079,6 @@ next_1:
 }
 
 extern u16 D_0026BC00[];
-extern u8 *reg_a1;
 
 void func_001A8E00(void) {
     s32 func_0011C4A0();

@@ -19,7 +19,6 @@ void func_00144F00(void);
 void func_00145640(void);
 void func_00145A80();
 
-extern u8 *reg_a4;
 
 void func_0013F990(void) {
     *(u16 *)(reg_a4 + 0x60) = 0;
@@ -34,12 +33,6 @@ extern s8 D_0028E3F8;
 extern u16 D_0028E8C4;
 extern u16 D_0028E910;
 extern u16 g_stage;
-extern u8 *reg_a0;
-extern u8 *reg_a1;
-extern u8 *reg_a2;
-extern u8 *reg_a3;
-extern u8 *reg_a5;
-extern u8 *reg_a6;
 
 #ifdef DEATH_LABEL
 extern u8 death_D_00290850;

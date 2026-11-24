@@ -41,10 +41,6 @@ extern u8 D_0024E440[];
 extern u8 D_0024E5C0[];
 extern u16 D_0028DE80_as_u16_a4[4];
 extern u8 D_002BDA80[];
-extern u8 *reg_a2;
-extern u8 *reg_a3;
-extern u8 *reg_a4;
-extern u8 *reg_a6;
 
 void func_00200A70(void) {
     u32 tmp;

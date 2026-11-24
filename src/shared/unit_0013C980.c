@@ -33,14 +33,14 @@ void func_0013C980(void) {
 typedef void (*Fn)(void);
 
 extern u8 D_0028C5D8[8];
-extern u32 D_0028E40C;
-extern u32 D_0028E410;
-extern u32 D_0028E414;
-extern u32 D_0028E428;
-extern u8 *D_0028E42C;
-extern u8 *D_0028E43C;
-extern u8 *D_0028E440;
-extern u8 *D_0028E444_as_u8_p;
+extern u32 reg_save_d7;
+extern u32 reg_save_d6;
+extern u32 reg_save_d5;
+extern u32 reg_save_d0;
+extern u8 *reg_save_a6;
+extern u8 *reg_save_a2;
+extern u8 *reg_save_a1;
+extern u8 *reg_save_a0_as_u8_p;
 extern u16 D_0028E5FC;
 extern u8 D_0029D730[];
 extern u8 D_0029D770[];
@@ -48,22 +48,18 @@ extern u8 D_0029DD90[];
 extern u8 D_0029F180[];
 extern u16 D_0029F2B8[];
 extern Fn jtbl_0028E3F4_as_Fn;
-extern u8 *reg_a0;
-extern u8 *reg_a1;
-extern u8 *reg_a2;
-extern u8 *reg_a6;
 
 void func_0018DE10(void);
 
 void func_0013C9A0(void) {
-    D_0028E428 = reg_d0.w;
-    D_0028E414 = reg_d5.w;
-    D_0028E410 = reg_d6.w;
-    D_0028E40C = reg_d7.w;
-    D_0028E444_as_u8_p = reg_a0;
-    D_0028E440 = reg_a1;
-    D_0028E43C = reg_a2;
-    D_0028E42C = reg_a6;
+    reg_save_d0 = reg_d0.w;
+    reg_save_d5 = reg_d5.w;
+    reg_save_d6 = reg_d6.w;
+    reg_save_d7 = reg_d7.w;
+    reg_save_a0_as_u8_p = reg_a0;
+    reg_save_a1 = reg_a1;
+    reg_save_a2 = reg_a2;
+    reg_save_a6 = reg_a6;
     reg_d0.h[0] = D_0029F2B8[0];
     reg_d0.h[0] <<= 1;
     reg_a0 = *(u8 **)(D_0028C5D8 + (reg_d0.h[0] & ~3));
@@ -98,14 +94,14 @@ extern u16 D_0029F248[];
 void func_0018DE40(void);
 
 void func_0013CAB0(void) {
-    D_0028E428 = reg_d0.w;
-    D_0028E414 = reg_d5.w;
-    D_0028E410 = reg_d6.w;
-    D_0028E40C = reg_d7.w;
-    D_0028E444_as_u8_p = reg_a0;
-    D_0028E440 = reg_a1;
-    D_0028E43C = reg_a2;
-    D_0028E42C = reg_a6;
+    reg_save_d0 = reg_d0.w;
+    reg_save_d5 = reg_d5.w;
+    reg_save_d6 = reg_d6.w;
+    reg_save_d7 = reg_d7.w;
+    reg_save_a0_as_u8_p = reg_a0;
+    reg_save_a1 = reg_a1;
+    reg_save_a2 = reg_a2;
+    reg_save_a6 = reg_a6;
     reg_d0.h[0] = D_0029F248[0];
     reg_d0.h[0] <<= 1;
     reg_a0 = *(u8 **)(D_0028C5E0 + (reg_d0.h[0] & ~3));
@@ -121,7 +117,7 @@ void func_0013CAB0(void) {
     func_0013CBA0();
 }
 
-extern u16 *D_0028E444_as_u16_p;
+extern u16 *reg_save_a0_as_u16_p;
 extern u16 *reg_a0_as_u16_p;
 
 void func_0013CBA0(void) {
@@ -135,14 +131,14 @@ void func_0013CBA0(void) {
         *(u16 *)reg_a6 = reg_d0.h[0];
         reg_a6 += 0x30;
     } while ((s16)(--reg_d7.h[0]) >= 0);
-    reg_d0.w = D_0028E428;
-    reg_d5.w = D_0028E414;
-    reg_d6.w = D_0028E410;
-    reg_d7.w = D_0028E40C;
-    reg_a0_as_u16_p = D_0028E444_as_u16_p;
-    reg_a1 = D_0028E440;
-    reg_a2 = D_0028E43C;
-    reg_a6 = D_0028E42C;
+    reg_d0.w = reg_save_d0;
+    reg_d5.w = reg_save_d5;
+    reg_d6.w = reg_save_d6;
+    reg_d7.w = reg_save_d7;
+    reg_a0_as_u16_p = reg_save_a0_as_u16_p;
+    reg_a1 = reg_save_a1;
+    reg_a2 = reg_save_a2;
+    reg_a6 = reg_save_a6;
 }
 
 extern u16 D_0028E5BC;
@@ -481,7 +477,6 @@ next_1:
 extern u8 D_002555E0[];
 extern u8 D_0028E080[];
 extern u8 D_0028E084_as_u8_a[];
-extern s8 D_0028E408;
 extern s16 D_0029F1D0[];
 extern u16 D_0029F280[];
 extern u16 D_0029F282[];
@@ -538,13 +533,12 @@ void func_0013D7A0(void) {
             *(u16 *)(reg_a1 + 6) = reg_tmp.h[0];
         }
     }
-    D_0028E408 = 0;
+    cond_flag = 0;
 }
 
-extern u8 D_0028E408_as_u8;
 
 void func_0013DA80(void) {
-    D_0028E408_as_u8 = 1;
+    (*(u8 *)&cond_flag) = 1;
 }
 
 extern u8 D_0028E078[];
@@ -605,7 +599,7 @@ void func_0013DA90(void) {
             *(u16 *)(reg_a1 + 6) = reg_tmp.h[0];
         }
     }
-    D_0028E408 = 0;
+    cond_flag = 0;
 }
 
 
@@ -645,11 +639,11 @@ void func_0013DD70(void) {
     *(u16 *)(reg_a1 + 4) = reg_tmp.h[1];
     *(u16 *)(reg_a1 + 6) = reg_tmp.h[0];
 block_end:
-    D_0028E408 = 0;
+    cond_flag = 0;
 }
 
 void func_0013DFE0(void) {
-    D_0028E408_as_u8 = 1;
+    (*(u8 *)&cond_flag) = 1;
 }
 
 void func_0013DFF0(void) {
@@ -688,7 +682,7 @@ void func_0013DFF0(void) {
     *(u16 *)(reg_a1 + 4) = reg_tmp.h[1];
     *(u16 *)(reg_a1 + 6) = reg_tmp.h[0];
 block_end:
-    D_0028E408 = 0;
+    cond_flag = 0;
 }
 
 extern void func_00200EE0(void);
@@ -762,7 +756,7 @@ block_51:
     if (D_0028E5C0 != 0) goto block_end;
     func_0013EE50();
 block_end:
-    D_0028E408 = 0;
+    cond_flag = 0;
     return;
 block_50:
     if (D_0029CD9C[0] == 0x63) goto block_end;
@@ -806,7 +800,7 @@ block_51:
     if (D_0028E5BC != 0) goto block_end;
     func_0013EE70();
 block_end:
-    D_0028E408 = 0;
+    cond_flag = 0;
     return;
 block_50:
     if (D_0029CD8C[0] == 0x63) goto block_end;
@@ -1017,24 +1011,24 @@ void func_0013EAD0() {
     reg_d7.h[0] = 0xFE00;
 }
 
-extern u32 D_0028E418;
-extern u32 D_0028E41C;
-extern u32 D_0028E420;
-extern u32 D_0028E424;
-extern s32 *D_0028E42C_as_s32_p;
+extern u32 reg_save_d4;
+extern u32 reg_save_d3;
+extern u32 reg_save_d2;
+extern u32 reg_save_d1;
+extern s32 *reg_save_a6_as_s32_p;
 extern s32 D_0029F260_as_s32_a[];
 extern s32 *reg_a6_as_s32_p;
 
 void func_0013EAF0(void) {
-    D_0028E41C = reg_d3.w;
-    D_0028E418 = reg_d4.w;
-    D_0028E414 = reg_d5.w;
-    D_0028E428 = reg_d0.w;
-    D_0028E424 = reg_d1.w;
-    D_0028E420 = reg_d2.w;
-    D_0028E410 = reg_d6.w;
-    D_0028E40C = reg_d7.w;
-    D_0028E42C_as_s32_p = reg_a6_as_s32_p;
+    reg_save_d3 = reg_d3.w;
+    reg_save_d4 = reg_d4.w;
+    reg_save_d5 = reg_d5.w;
+    reg_save_d0 = reg_d0.w;
+    reg_save_d1 = reg_d1.w;
+    reg_save_d2 = reg_d2.w;
+    reg_save_d6 = reg_d6.w;
+    reg_save_d7 = reg_d7.w;
+    reg_save_a6_as_s32_p = reg_a6_as_s32_p;
     func_0013EAB0(reg_d6.w, reg_d2.w, reg_d1.w, reg_d0.w);
     reg_a6_as_s32_p = D_0029F260_as_s32_a;
     func_0013EC50();
@@ -1043,34 +1037,33 @@ void func_0013EAF0(void) {
 extern s32 D_0029F1F0_as_s32_a[];
 
 void func_0013EB60(void) {
-    D_0028E41C = reg_d3.w;
-    D_0028E418 = reg_d4.w;
-    D_0028E414 = reg_d5.w;
-    D_0028E428 = reg_d0.w;
-    D_0028E424 = reg_d1.w;
-    D_0028E420 = reg_d2.w;
-    D_0028E410 = reg_d6.w;
-    D_0028E40C = reg_d7.w;
-    D_0028E42C_as_s32_p = reg_a6_as_s32_p;
+    reg_save_d3 = reg_d3.w;
+    reg_save_d4 = reg_d4.w;
+    reg_save_d5 = reg_d5.w;
+    reg_save_d0 = reg_d0.w;
+    reg_save_d1 = reg_d1.w;
+    reg_save_d2 = reg_d2.w;
+    reg_save_d6 = reg_d6.w;
+    reg_save_d7 = reg_d7.w;
+    reg_save_a6_as_s32_p = reg_a6_as_s32_p;
     func_0013EAD0(reg_d6.w, reg_d2.w, reg_d1.w, reg_d0.w);
     reg_a6_as_s32_p = D_0029F1F0_as_s32_a;
     func_0013EC50();
 }
 
-extern s32 D_0028E42C_as_s32;
-extern u8 *reg_a5;
+extern s32 reg_save_a6_as_s32;
 extern s32 reg_a6_as_s32;
 
 void func_0013EBD0(void) {
-    D_0028E41C = reg_d3.w;
-    D_0028E418 = reg_d4.w;
-    D_0028E414 = reg_d5.w;
-    D_0028E428 = reg_d0.w;
-    D_0028E424 = reg_d1.w;
-    D_0028E420 = reg_d2.w;
-    D_0028E410 = reg_d6.w;
-    D_0028E40C = reg_d7.w;
-    D_0028E42C_as_s32 = reg_a6_as_s32;
+    reg_save_d3 = reg_d3.w;
+    reg_save_d4 = reg_d4.w;
+    reg_save_d5 = reg_d5.w;
+    reg_save_d0 = reg_d0.w;
+    reg_save_d1 = reg_d1.w;
+    reg_save_d2 = reg_d2.w;
+    reg_save_d6 = reg_d6.w;
+    reg_save_d7 = reg_d7.w;
+    reg_save_a6_as_s32 = reg_a6_as_s32;
     func_0013EAB0(reg_d6.w, reg_d2.w, reg_d1.w, reg_d0.w);
     if ((*(u8 *)((u8 *)(reg_a5) + (6))) != 0) {
         func_0013EAD0();
@@ -1080,7 +1073,7 @@ void func_0013EBD0(void) {
 
 s32 func_0011C4A0();
 s32 func_0011C610();
-extern void *D_0028E42C_as_void_p;
+extern void *reg_save_a6_as_void_p;
 
 void func_0013EC50(void) {
     u32 tmp;
@@ -1136,15 +1129,15 @@ loop_3:
 next_4:
     reg_d4.w = 0x02D2000A;
     func_0011C4A0();
-    reg_d0.w = D_0028E428;
-    reg_d1.w = D_0028E424;
-    reg_d2.w = D_0028E420;
-    reg_d3.w = D_0028E41C;
-    reg_d4.w = D_0028E418;
-    reg_d5.w = D_0028E414;
-    reg_d6.w = D_0028E410;
-    reg_d7.w = D_0028E40C;
-    reg_a6 = (u8 *)D_0028E42C_as_void_p;
+    reg_d0.w = reg_save_d0;
+    reg_d1.w = reg_save_d1;
+    reg_d2.w = reg_save_d2;
+    reg_d3.w = reg_save_d3;
+    reg_d4.w = reg_save_d4;
+    reg_d5.w = reg_save_d5;
+    reg_d6.w = reg_save_d6;
+    reg_d7.w = reg_save_d7;
+    reg_a6 = (u8 *)reg_save_a6_as_void_p;
 }
 
 extern Reg32 reg_d1;
@@ -1264,20 +1257,20 @@ void func_0013F000(void) {
     reg_d7.w = save_d7;
 }
 
-extern s32 D_0028E444;
+extern s32 reg_save_a0;
 extern s32 reg_a0_as_s32;
 
 void func_0013F120(void)
 {
-    D_0028E428 = reg_d0.w;
-    D_0028E424 = reg_d1.w;
-    D_0028E420 = reg_d2.w;
-    D_0028E41C = reg_d3.w;
-    D_0028E418 = reg_d4.w;
-    D_0028E414 = reg_d5.w;
-    D_0028E410 = reg_d6.w;
-    D_0028E40C = reg_d7.w;
-    D_0028E444 = reg_a0_as_s32;
+    reg_save_d0 = reg_d0.w;
+    reg_save_d1 = reg_d1.w;
+    reg_save_d2 = reg_d2.w;
+    reg_save_d3 = reg_d3.w;
+    reg_save_d4 = reg_d4.w;
+    reg_save_d5 = reg_d5.w;
+    reg_save_d6 = reg_d6.w;
+    reg_save_d7 = reg_d7.w;
+    reg_save_a0 = reg_a0_as_s32;
 
     reg_d1.h[0] = 0x100;
     reg_d4.w = 0;
@@ -1287,15 +1280,15 @@ void func_0013F120(void)
 
 void func_0013F190(void)
 {
-    D_0028E428 = reg_d0.w;
-    D_0028E424 = reg_d1.w;
-    D_0028E420 = reg_d2.w;
-    D_0028E41C = reg_d3.w;
-    D_0028E418 = reg_d4.w;
-    D_0028E414 = reg_d5.w;
-    D_0028E410 = reg_d6.w;
-    D_0028E40C = reg_d7.w;
-    D_0028E444 = reg_a0_as_s32;
+    reg_save_d0 = reg_d0.w;
+    reg_save_d1 = reg_d1.w;
+    reg_save_d2 = reg_d2.w;
+    reg_save_d3 = reg_d3.w;
+    reg_save_d4 = reg_d4.w;
+    reg_save_d5 = reg_d5.w;
+    reg_save_d6 = reg_d6.w;
+    reg_save_d7 = reg_d7.w;
+    reg_save_a0 = reg_a0_as_s32;
 
     reg_d1.h[0] = 0xF00;
     reg_d4.w = 0;
@@ -1312,15 +1305,15 @@ void func_0013F200(void) {
     reg_d4.h[0] -= 1;
     reg_d4.w = *(u32 *)(D_00255550 + (reg_d4.h[0] * 4));
     func_0011C4A0();
-    reg_d0.w = D_0028E428;
-    reg_d1.w = D_0028E424;
-    reg_d2.w = D_0028E420;
-    reg_d3.w = D_0028E41C;
-    reg_d4.w = D_0028E418;
-    reg_d5.w = D_0028E414;
-    reg_d6.w = D_0028E410;
-    reg_d7.w = D_0028E40C;
-    reg_a0 = (u8 *)D_0028E444;
+    reg_d0.w = reg_save_d0;
+    reg_d1.w = reg_save_d1;
+    reg_d2.w = reg_save_d2;
+    reg_d3.w = reg_save_d3;
+    reg_d4.w = reg_save_d4;
+    reg_d5.w = reg_save_d5;
+    reg_d6.w = reg_save_d6;
+    reg_d7.w = reg_save_d7;
+    reg_a0 = (u8 *)reg_save_a0;
 }
 
 extern s8 D_0028E3F8;
@@ -1370,8 +1363,6 @@ void func_0013F3C0(void) {
 void func_0013F3F0(void) {
 }
 
-extern u8 *reg_a3;
-extern u8 *reg_a4;
 
 void func_0013F400(void) {
     u8 *sv_a0;
@@ -1541,10 +1532,10 @@ void func_0013F800(void) {
     temp_a3 = reg_a0;
     temp_a2 = reg_a1;
     temp_a1 = reg_a2;
-    D_0028E428 = reg_d0.w;
-    D_0028E444_as_u8_p = temp_a3;
-    D_0028E440 = temp_a2;
-    D_0028E43C = temp_a1;
+    reg_save_d0 = reg_d0.w;
+    reg_save_a0_as_u8_p = temp_a3;
+    reg_save_a1 = temp_a2;
+    reg_save_a2 = temp_a1;
     reg_a0 = D_0029CE60_as_u8_a;
     reg_a1 = D_0029CDE0_as_u8_a;
     reg_a2 = D_0029F260_as_u8_a;
@@ -1559,18 +1550,18 @@ void func_0013F850(void) {
     temp_a3 = reg_a0;
     temp_a2 = reg_a1;
     temp_a1 = reg_a2;
-    D_0028E428 = reg_d0.w;
-    D_0028E444_as_u8_p = temp_a3;
-    D_0028E440 = temp_a2;
-    D_0028E43C = temp_a1;
+    reg_save_d0 = reg_d0.w;
+    reg_save_a0_as_u8_p = temp_a3;
+    reg_save_a1 = temp_a2;
+    reg_save_a2 = temp_a1;
     reg_a0 = D_0029CE20;
     reg_a1 = D_0029CDA0;
     reg_a2 = D_0029F1F0_as_u8_a;
     func_0013F8A0();
 }
 
-extern void *D_0028E43C_as_void_p;
-extern u16 *D_0028E440_as_u16_p;
+extern void *reg_save_a2_as_void_p;
+extern u16 *reg_save_a1_as_u16_p;
 extern u16 *reg_a1_as_u16_p;
 
 void func_0013F8A0(void) {
@@ -1585,10 +1576,10 @@ void func_0013F8A0(void) {
         *reg_a1_as_u16_p = (*(u16 *)((u8 *)(reg_a2) + (0xC)));
         reg_a1_as_u16_p += 1;
     } while ((s16)(--reg_d0.h[0]) >= 0);
-    reg_d0.w = D_0028E428;
-    reg_a0_as_u16_p = D_0028E444_as_u16_p;
-    reg_a1_as_u16_p = D_0028E440_as_u16_p;
-    reg_a2 = D_0028E43C_as_void_p;
+    reg_d0.w = reg_save_d0;
+    reg_a0_as_u16_p = reg_save_a0_as_u16_p;
+    reg_a1_as_u16_p = reg_save_a1_as_u16_p;
+    reg_a2 = reg_save_a2_as_void_p;
 }
 
 void func_0013F960(void) {

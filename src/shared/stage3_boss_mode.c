@@ -31,7 +31,6 @@ void func_001D28B0(void) {
 s32 func_0013B8B0();                            /* extern */
 extern s32 D_0026D990[];
 extern s32 *reg_a0_as_s32_p;
-extern u8 *reg_a4;
 
 void func_001D28C0(void) {
     reg_a0_as_s32_p = D_0026D990;
@@ -64,11 +63,7 @@ s32 func_002011A0();
 s32 func_002012F0();
 extern u16 D_0026D810[];
 extern u16 D_0026D8A0[];
-extern s8 D_0028E408;
 extern void (*jtbl_0028E3F4)();
-extern u8 *reg_a0;
-extern u8 *reg_a1;
-extern u8 *reg_a6;
 
 void func_001D2930() {
     u8 bits;
@@ -118,7 +113,7 @@ next_20:
 next_s2:
     if (*(u16 *)(reg_a4 + 2) != 2) goto next_s1;
     func_00125440();
-    if (D_0028E408 != 0) goto next_s1;
+    if (cond_flag != 0) goto next_s1;
     reg_a0 = (u8 *) D_0026D8A0;
     func_0013B2E0();
     func_00124E80();
@@ -273,7 +268,7 @@ s32 func_00125250();                            /* extern */
 void func_001D30B0(void) {
     reg_d0.w = 6;
     func_00125250();
-    if (D_0028E408 == 0) {
+    if (cond_flag == 0) {
         reg_d0.w = 3;
         func_00124B20();
         *reg_a4_as_s16_p = 0;
@@ -310,7 +305,7 @@ s32 func_001251C0();                            /* extern */
 void func_001D3170(u8 arg0) {
     reg_d0.w = 4;
     func_00125060();
-    if (D_0028E408 == 0) {
+    if (cond_flag == 0) {
         reg_d0.w = 5;
         func_001251C0();
         reg_d0.w = 6;
@@ -331,10 +326,10 @@ s32 func_00125250();                            /* extern */
 void func_001D31D0(void) {
     reg_d0.w = 5;
     func_00125250();
-    if (D_0028E408 == 0) {
+    if (cond_flag == 0) {
         reg_d0.w = 5;
         func_00125060();
-        if (D_0028E408 == 0) {
+        if (cond_flag == 0) {
             reg_d0.w = 4;
             func_00124B20();
             *reg_a4_as_s16_p = 0;
@@ -361,7 +356,7 @@ s32 func_00125250();                            /* extern */
 void func_001D3270(void) {
     reg_d0.w = 4;
     func_00125250();
-    if (D_0028E408 == 0) {
+    if (cond_flag == 0) {
         reg_d0.w = 5;
         func_00124B20();
         *reg_a4_as_s16_p = 0;
@@ -384,7 +379,7 @@ s32 func_001251C0();                            /* extern */
 void func_001D32E0(void) {
     reg_d0.w = 4;
     func_00125060();
-    if (D_0028E408 == 0) {
+    if (cond_flag == 0) {
         reg_d0.w = 8;
         func_001251C0();
         reg_d0.w = 7;
@@ -419,10 +414,10 @@ void func_001D3340(void) {
     } else {
         reg_d0.w = 8;
         func_00125250(temp_a0);
-        if (D_0028E408 == 0) {
+        if (cond_flag == 0) {
             reg_d0.w = 5;
             func_00125060();
-            if (D_0028E408 == 0) {
+            if (cond_flag == 0) {
                 (*(u16 *)((u8 *)(reg_a4) + (2))) = 1U;
             }
         }

@@ -11,8 +11,6 @@ void func_001DC170(void) {
 }
 
 extern u32 D_0026EE10[];
-extern u8 *reg_a0;
-extern u8 *reg_a6;
 
 void func_001DC180(void) {
     u8 *object = reg_a6;

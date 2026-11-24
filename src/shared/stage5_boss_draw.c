@@ -5,9 +5,6 @@ void func_001F0E70(void);
 s32 func_001EFF10();
 s32 func_0020ED00();
 extern u8 D_00262A50_as_u8_a[];
-extern u8 *reg_a1;
-extern u8 *reg_a4;
-extern u8 *reg_a5;
 
 void func_001F00D0(void) {
     u32 temp_a0;
@@ -78,8 +75,6 @@ void func_001F00D0(void) {
 
 s32 func_00201E20();
 extern u8 D_00264870[];
-extern u8 *reg_a0;
-extern u8 *reg_a6;
 
 void func_001F0330(void) {
     s32 func_0019C670();

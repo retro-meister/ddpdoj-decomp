@@ -53,12 +53,6 @@ void replay_header_save(void)
 
 extern void func_00136600(void);
 extern u8 D_0028E370;
-extern u8 *reg_a0;
-extern u8 *reg_a1;
-extern u8 *reg_a2;
-extern u8 *reg_a3;
-extern u8 *reg_a4;
-extern u8 *reg_a5;
 
 void replay_header_apply(void) {
     u32 save_d0;

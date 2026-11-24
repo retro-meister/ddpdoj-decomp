@@ -1,10 +1,6 @@
 #include "common.h"
 
 extern u8 D_00264660[];
-extern u8 *reg_a2;
-extern u8 *reg_a3;
-extern u8 *reg_a4;
-extern u8 *reg_a6;
 
 void func_001EE0F0(void) {
     s32 func_00129410();
@@ -122,8 +118,6 @@ void func_001EE390(void) {
 
 extern u16 D_002645E0[];
 extern u32 D_0028DA04;
-extern u8 *reg_a0;
-extern u8 *reg_a1;
 
 void func_001EE410(void) {
     u16 *temp_a0;
@@ -321,10 +315,8 @@ void func_001EE9D0(void) {
 
 s32 func_002010A0();
 s32 func_002027A0();
-extern s16 *D_0028E44C;
 extern s16 D_0029F1F0[];
 extern s16 D_0029F260[];
-extern u8 *reg_a5;
 
 void func_001EEB90(s16 *arg1) {
     s32 func_00129410();
@@ -347,16 +339,16 @@ void func_001EEB90(s16 *arg1) {
             reg_a0 = (u8 *)(D_0029F260);
             reg_a1 = (u8 *)(D_0029F1F0);
             if ((*(u8 *)((u8 *)(reg_a5) + (2))) != 0) {
-                D_0028E44C = (s16 *)(reg_a0);
+                reg_atmp = (u8 *)(reg_a0);
                 reg_a0 = (u8 *)(reg_a1);
-                reg_a1 = (u8 *)(D_0028E44C);
+                reg_a1 = (u8 *)(reg_atmp);
             }
             temp_a0 = (s16 *)(reg_a0);
             if (0 <= (s64)*(s16 *)((u8 *)(temp_a0) + (0))) {
                 var_a1 = (s16 *)(reg_a1);
                 if (0 > *var_a1) {
                     reg_a0 = (u8 *)(var_a1);
-                    D_0028E44C = (s16 *)(temp_a0);
+                    reg_atmp = (u8 *)(temp_a0);
                     reg_a1 = (u8 *)(temp_a0);
                     goto block_7;
                 }
@@ -573,16 +565,16 @@ void func_001EF2B0(void) {
             reg_a0 = (u8 *)(D_0029F260);
             reg_a1 = (u8 *)(D_0029F1F0);
             if ((*(u8 *)((u8 *)(reg_a5) + (2))) != 0) {
-                D_0028E44C = (s16 *)(reg_a0);
+                reg_atmp = (u8 *)(reg_a0);
                 reg_a0 = (u8 *)(reg_a1);
-                reg_a1 = (u8 *)(D_0028E44C);
+                reg_a1 = (u8 *)(reg_atmp);
             }
             temp_a0 = (s16 *)(reg_a0);
             if (0 <= (s64)*(s16 *)((u8 *)(temp_a0) + (0))) {
                 var_a1 = (s16 *)(reg_a1);
                 if (0 > *var_a1) {
                     reg_a0 = (u8 *)(var_a1);
-                    D_0028E44C = (s16 *)(temp_a0);
+                    reg_atmp = (u8 *)(temp_a0);
                     reg_a1 = (u8 *)(temp_a0);
                     goto block_7;
                 }
@@ -795,15 +787,15 @@ void func_001EFAB0(void) {
         reg_a0 = (u8 *)(D_0029F260);
         reg_a1 = (u8 *)(D_0029F1F0);
         if ((*(u8 *)((u8 *)(reg_a5) + (2))) != 0) {
-            D_0028E44C = (s16 *)(reg_a0);
+            reg_atmp = (u8 *)(reg_a0);
             reg_a0 = (u8 *)(reg_a1);
-            reg_a1 = (u8 *)(D_0028E44C);
+            reg_a1 = (u8 *)(reg_atmp);
         }
         temp_a0_2 = (s16 *)(reg_a0);
         if (0 <= (s64)*(s16 *)((u8 *)(temp_a0_2) + (0))) {
             if (0 > (s64)*(s16 *)reg_a1) {
                 reg_a0 = (u8 *)(reg_a1);
-                D_0028E44C = (s16 *)(temp_a0_2);
+                reg_atmp = (u8 *)(temp_a0_2);
                 reg_a1 = (u8 *)(temp_a0_2);
                 goto block_8;
             }

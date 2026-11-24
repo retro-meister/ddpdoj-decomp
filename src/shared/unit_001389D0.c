@@ -52,9 +52,6 @@ extern u16 D_0028E8A8;
 extern u16 D_0028E8AC;
 extern u16 D_0028E914;
 extern u8 D_0029C060_as_u8_a[];
-extern u8 *reg_a0;
-extern u8 *reg_a1;
-extern u8 *reg_a5;
 
 void func_00138A50(void) {
     u8 *temp_a0;
@@ -683,7 +680,6 @@ extern u16 D_0029C06C[];
 extern u16 D_0029C06E[];
 extern u16 D_0029F1F0_as_u16_a[];
 extern u16 D_0029F260_as_u16_a[];
-extern u8 *reg_a6;
 
 void func_00139930(void) {
     if (D_0029C062_as_u16_a[0] != 0) {

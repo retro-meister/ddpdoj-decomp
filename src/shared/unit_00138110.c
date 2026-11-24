@@ -5,7 +5,6 @@ extern u8 D_0028DAB8[];
 extern u8 D_0028E38C;
 extern u16 D_0028E7F0;
 extern s32 D_0028E7F4;
-extern u8 *reg_a0;
 
 #ifdef DEATH_LABEL
 extern u16 D_0028E3C0;
@@ -182,9 +181,6 @@ void func_00138470(void)
 
 extern u8 D_00251A80[];
 extern u8 D_00251A90[];
-extern u8 *reg_a4;
-extern u8 *reg_a5;
-extern u8 *reg_a6;
 
 void func_001384E0(void) {
     if (reg_d7.h[0] == 0) {
@@ -270,7 +266,6 @@ s32 func_002053F0();
 s32 func_00205D20();
 s32 func_00206080();
 extern u8 *jtbl_0028E3F4_as_u8_p;
-extern u8 *reg_a3;
 
 void func_00138750(void) {
     u8 *temp_s0;

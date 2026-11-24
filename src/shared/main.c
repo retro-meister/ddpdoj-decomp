@@ -96,7 +96,6 @@ extern s8 g_cd_async_busy;
 extern s8 D_0028EC58;
 extern u8 D_006A4800[];
 extern u8 D_006C58A0[];
-extern u8 *reg_a0;
 
 void func_002120D0(void) {
     s32 t1;

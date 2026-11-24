@@ -5,8 +5,6 @@ void func_00170A50(void) {
 
 typedef void (*Fn)(void);
 extern u8 *jtbl_0028E3F4_as_u8_p;
-extern u8 *reg_a0;
-extern u8 *reg_a6;
 extern u16 D_0025AE10[];
 
 void func_00170A60(void) {
@@ -320,7 +318,6 @@ void func_001713F0(u16 val) {
     reg_a5_as_u16_p[2] = val;
 }
 
-extern u8 *reg_a5;
 
 void func_00171400(void) {
     u8 *flags_ptr;
@@ -337,19 +334,18 @@ void func_00171400(void) {
 
 s32 func_0014E290();                           /* extern */
 s32 func_00203060();                            /* extern */
-extern s8 D_0028E408;
 
 void func_00171430(void) {
     func_00203060();
-    if (D_0028E408 != 0) {
+    if (cond_flag != 0) {
         if ((*(u8 *)((u8 *)(reg_a5) + (0x17))) != 0) {
             func_0014E290();
-            D_0028E408 = 1;
+            cond_flag = 1;
             return;
         }
         goto block_4;
     }
     (*(u8 *)((u8 *)(reg_a5) + (0x17))) = 1U;
 block_4:
-    D_0028E408 = 0;
+    cond_flag = 0;
 }

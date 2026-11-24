@@ -36,7 +36,6 @@ extern u8 D_002683A0[];
 extern u8 D_002683C0[];
 extern u8 D_002683D8[];
 extern u8 D_00268430[];
-extern u8 *reg_a0;
 
 void func_00209880(void) {
     s32 temp_a0;

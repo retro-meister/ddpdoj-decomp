@@ -9,7 +9,6 @@ void func_00206520(void);
 void func_00206690(void);
 
 s32 func_0019C5B0();
-extern u8 *reg_a6;
 
 void func_00203850(void) {
     if (*(u16 *)(reg_a6 + 0x64) == 0) goto block_rts;
@@ -52,7 +51,6 @@ block_rts:
 
 s32 func_0019C840();
 extern u8 D_00251EF0[];
-extern u8 *reg_a4;
 
 void func_002039B0(void) {
     reg_d1.w = 0x48010000;
@@ -243,8 +241,6 @@ extern u8 D_0028C148[];
 extern u8 D_0028C868_as_u8_a[];
 extern u16 D_0028E3E4;
 extern u16 D_0028E3EC;
-extern u8 *reg_a0;
-extern u8 *reg_a1;
 
 void func_00203F50(void) {
     u32 i;
@@ -421,7 +417,6 @@ void func_002046F0(void) {
     func_0019C5B0();
 }
 
-extern s8 D_0028E408;
 
 s32 func_0019C790();
 s32 func_001A3520();
@@ -429,9 +424,6 @@ extern u8 D_00251F70[];
 extern u8 D_00251F80[];
 extern u8 D_0028DF0C;
 extern u8 D_0028E304;
-extern u8 *reg_a2;
-extern u8 *reg_a3;
-extern u8 *reg_a5;
 
 void func_00204800(void) {
     u8 *save_a0;
@@ -473,7 +465,7 @@ void func_00204800(void) {
     reg_a4 = save_a4;
     reg_a5 = save_a5;
     reg_a6 = temp_s5;
-    if (D_0028E408 == 0) {
+    if (cond_flag == 0) {
         save_d0 = reg_d0.w;
         reg_d0.h[0] = reg_d7.h[0];
         reg_d0.h[0] += 1;
@@ -1268,7 +1260,7 @@ extern u8 D_0028E390;
 extern u8 D_0028E39C;
 
 void func_00206690(void) {
-    D_0028E408 = 0;
+    cond_flag = 0;
     reg_a4 = (u8 *)D_0028C158;
     if (reg_d7.h[0] != 0) goto next_1;
     reg_a4 = (u8 *)D_0028C15C;
@@ -1317,7 +1309,7 @@ next_10:
     reg_d0.h[0] = 1;
     reg_d0.h[0] += *(u16 *)(reg_a4 + 2);
     func_00130CC0();
-    D_0028E408 = 1;
+    cond_flag = 1;
     return;
 next_11:
     reg_d0.h[0] -= reg_d1.h[0];
@@ -1335,7 +1327,7 @@ next_11:
     reg_d0.h[0] = 1;
     reg_d0.h[0] += *(u16 *)(reg_a4 + 2);
     func_00130CC0();
-    D_0028E408 = 1;
+    cond_flag = 1;
     return;
 next_12:
     reg_a0 = (u8 *)D_00251C00;
@@ -1346,5 +1338,5 @@ next_12:
     reg_a0 += 0x10;
     reg_d1.h[0] -= 1;
     func_00137AD0();
-    D_0028E408 = 1;
+    cond_flag = 1;
 }

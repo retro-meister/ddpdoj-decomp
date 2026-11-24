@@ -11,7 +11,6 @@ s32 func_0014E370();                            /* extern */
 extern s32 D_00257860[];
 extern s32 D_0028C9A8;
 extern s32 *reg_a0_as_s32_p;
-extern u8 *reg_a6;
 
 void func_001503F0(void) {
     reg_a0_as_s32_p = D_00257860;
@@ -29,7 +28,6 @@ s32 func_0016A8E0();                            /* extern */
 s32 func_0019BE80();                            /* extern */
 s32 func_001B82F0();                            /* extern */
 s32 func_00203670();                            /* extern */
-extern u8 *reg_a5;
 
 void func_00150450(void) {
     s64 temp_v0_2;

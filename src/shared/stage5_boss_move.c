@@ -13,7 +13,6 @@ void func_001F4770(void);
 u8 func_001F48C0(u8 arg0);
 void func_001F4A30(void);
 
-extern u8 *reg_a6;
 
 void func_001F3A10(void) {
     reg_d0.w = (u32) (*(u16 *)((u8 *)(reg_a6) + (2)));
@@ -90,7 +89,6 @@ void func_001F3CC0(void) {
     func_001F3A10();
 }
 
-extern u8 *reg_a4;
 
 void func_001F3CF0(void) {
     (*(s16 *)((u8 *)(reg_a4) + (2))) = 0;

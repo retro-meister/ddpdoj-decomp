@@ -264,7 +264,6 @@ extern u8 g_p1_btn_map_c;
 extern u8 g_p2_btn_map_a;
 extern u8 g_p2_btn_map_b;
 extern u8 g_p2_btn_map_c;
-extern u8 *reg_a0;
 extern u8 g_pad_tate_rotate;
 
 void pad_update(void)

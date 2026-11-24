@@ -11,7 +11,6 @@ s32 func_0016AAB0();                            /* extern */
 s32 func_001B82D0();                            /* extern */
 s32 func_00209E60();                            /* extern */
 s32 func_002114A0();                            /* extern */
-extern u8 *reg_a5;
 
 void func_00139B20(void) {
     func_0016AAB0();
@@ -67,11 +66,6 @@ extern u8 D_0029E390[];
 extern u8 D_0029EA50[];
 extern u16 D_0029F1F0_as_u16_a[];
 extern u16 D_0029F260_as_u16_a[];
-extern u8 *reg_a0;
-extern u8 *reg_a1;
-extern u8 *reg_a2;
-extern u8 *reg_a3;
-extern u8 *reg_a4;
 
 void func_00139B80(void) {
     u16 t1;
@@ -185,7 +179,6 @@ void func_00139EB0(void) {
     memset(D_0029AA40_as_s32_a, 0, 0x11BA);
 }
 
-extern u8 *reg_a6;
 
 void func_00139ED0(void) {
     reg_tmp.h[1] = (*(u16 *)((u8 *)(reg_a6) + (0x2A)));

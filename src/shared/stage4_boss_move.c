@@ -10,8 +10,6 @@ void func_001BEE10(void);
 void func_001BEE50(void);
 void func_001BF080(void);
 
-extern u8 *reg_a4;
-extern u8 *reg_a6;
 
 void func_001BE1E0(void) {
     reg_d0.b[0] = reg_a4[3];
@@ -122,7 +120,6 @@ extern u8 D_0025FEF0[];
 extern u8 D_0026F440[];
 extern u8 D_0028E855;
 extern u16 D_0029C068[];
-extern u8 *reg_a0;
 
 void func_001BE5F0(void) {
     s32 func_00124F50();

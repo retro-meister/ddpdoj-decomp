@@ -14,10 +14,7 @@ void func_0020B690(void) {
 }
 
 extern s16 D_0028E094_as_s16;
-extern u8 *reg_a4;
-extern u8 *reg_a6;
 
-extern s8 D_0028E408;
 
 #ifdef DEATH_LABEL
 extern u16 D_0028E3C0;
@@ -27,7 +24,7 @@ s32 death_func_001271E0(void);
 void func_0020B6A0(void) {
     u8 *temp_a2;
 
-    D_0028E408 = 0;
+    cond_flag = 0;
 #ifdef DEATH_LABEL
     if (death_func_001271E0() != 0) {
         return;
@@ -51,15 +48,13 @@ void func_0020B6A0(void) {
                 *temp_a2 |= reg_d4.b[0];
                 (*(u8 *)((u8 *)(reg_a4) + (1))) |= reg_d4.b[0];
                 D_0028E094_as_s16 = 1;
-                D_0028E408 = 1;
+                cond_flag = 1;
             }
         }
     }
 }
 
 extern u8 D_0028E0A0[];
-extern u8 *reg_a0;
-extern u8 *reg_a1;
 
 void func_0020B770(void) {
     u8 *save_a1;
@@ -128,7 +123,6 @@ next_9:
 }
 
 extern u8 D_0029CEA0_as_u8_a[];
-extern u8 *reg_a5;
 
 void func_0020BA40(void) {
     reg_d0.h[0] = 0xF800;
@@ -237,8 +231,6 @@ extern u8 death_D_0029085C;
 extern u8 death_D_00290DC0;
 extern u16 D_00684C80[];
 #endif
-extern u8 *reg_a2;
-extern u8 *reg_a3;
 
 void func_0020BD60(void) {
     u8 *saved_a1;
@@ -1170,34 +1162,34 @@ void func_0020E020(void) {
     reg_d6.h[0] = MAIN_OR_DEATH_LABEL(0x14, 104);
 loop_5:
     func_0020B6A0();
-    if (D_0028E408 != 0) return;
+    if (cond_flag != 0) return;
     reg_a6 += 0x3E;
     func_0020B6A0();
-    if (D_0028E408 != 0) return;
+    if (cond_flag != 0) return;
     reg_a6 += 0x3E;
     func_0020B6A0();
-    if (D_0028E408 != 0) return;
+    if (cond_flag != 0) return;
     reg_a6 += 0x3E;
     func_0020B6A0();
-    if (D_0028E408 != 0) return;
+    if (cond_flag != 0) return;
     reg_a6 += 0x3E;
     func_0020B6A0();
-    if (D_0028E408 != 0) return;
+    if (cond_flag != 0) return;
     reg_a6 += 0x3E;
     func_0020B6A0();
-    if (D_0028E408 != 0) return;
+    if (cond_flag != 0) return;
     reg_a6 += 0x3E;
     func_0020B6A0();
-    if (D_0028E408 != 0) return;
+    if (cond_flag != 0) return;
     reg_a6 += 0x3E;
     func_0020B6A0();
-    if (D_0028E408 != 0) return;
+    if (cond_flag != 0) return;
     reg_a6 += 0x3E;
     func_0020B6A0();
-    if (D_0028E408 != 0) return;
+    if (cond_flag != 0) return;
     reg_a6 += 0x3E;
     func_0020B6A0();
-    if (D_0028E408 != 0) return;
+    if (cond_flag != 0) return;
     reg_a6 += 0x3E;
     if ((s16) --reg_d6.h[0] >= 0) goto loop_5;
 }

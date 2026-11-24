@@ -6,8 +6,6 @@ void func_001BDEE0(void);
 void func_001BDFC0(void);
 
 s32 func_00129410();
-extern u8 *reg_a0;
-extern u8 *reg_a6;
 
 void func_001BC4B0(void) {
 
@@ -50,8 +48,6 @@ void func_001BC5D0(void) {
 s32 func_0013A780();
 s32 func_0018D5C0();
 extern u8 D_00262680[];
-extern u8 *reg_a4;
-extern u8 *reg_a5;
 
 void func_001BC6F0(arg1)
     u16 arg1;
@@ -365,7 +361,6 @@ s32 vibration_start_pad2();
 extern u8 D_00259970_as_u8_a[];
 extern u8 D_00262B50[];
 extern u8 D_0028E310;
-extern s8 D_0028E408;
 extern u16 D_0028E890;
 extern u16 D_0028E894;
 extern u16 D_0028E8A0;
@@ -563,7 +558,7 @@ block_50:
                             reg_d1.h[0] = (*(u16 *)((u8 *)(reg_a6) + (4)));
                             reg_d0.h[0] += 0x2700;
                             func_002026F0();
-                            if (D_0028E408 == 0) {
+                            if (cond_flag == 0) {
                                 reg_d2.h[1] = (*(u16 *)((u8 *)(reg_a6) + (2)));
                                 reg_d2.h[0] = (*(u16 *)((u8 *)(reg_a6) + (4)));
                                 reg_d4.w = 0;
@@ -790,7 +785,6 @@ block_tail:
 s32 func_0019C730();
 extern u8 D_00262910[];
 extern u8 D_00262930[];
-extern u8 *reg_a1;
 
 void func_001BDD40(void) {
     u16 temp_a0;

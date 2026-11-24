@@ -8,7 +8,6 @@ void func_001CA090(void);
 void func_001CA1F0(void);
 void func_001CA370(void);
 
-extern u8 *reg_a6;
 
 void func_001C9750(void) {
     reg_d0.h[1] = (*(u16 *)((u8 *)(reg_a6) + (2)));
@@ -46,7 +45,6 @@ void func_001C9750(void) {
     (*(u16 *)((u8 *)(reg_a6) + (0x102))) -= 0x300;
 }
 
-extern u8 *reg_a4;
 
 void func_001C9920(void) {
     reg_a4[3] = 0;
@@ -66,7 +64,6 @@ extern u8 D_0025FCB0[];
 extern u8 D_0026C8C0[];
 extern u8 D_0028E854;
 extern u8 D_0028E855;
-extern u8 *reg_a0;
 
 void func_001C9950(void) {
     func_00201B80();

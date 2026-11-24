@@ -19,13 +19,11 @@ void func_001B82D0(void) {
     memset(D_0029A530_as_s32_a, 0, 0x502);
 }
 
-extern s8 D_0028E408;
 
 extern u32 D_0028E52C;
 extern u16 D_0028E910;
 extern u16 D_0028E928;
 extern u16 D_0029A530[];
-extern u8 *reg_a0;
 
 void func_001B82F0(void) {
     u32 tmp;
@@ -54,7 +52,7 @@ loop_2:
             goto loop_2;
         }
         reg_d1.w = 0;
-        D_0028E408 = 1;
+        cond_flag = 1;
         reg_d1.h[0] -= 1;
         return;
     }
@@ -67,7 +65,7 @@ loop_2:
     if (((s64) ((s64) (tmp & 0xFFFF) << 0x30) >> 0x30) >= 0) {
         goto loop_1;
     }
-    D_0028E408 = 0;
+    cond_flag = 0;
 }
 
 extern s32 reg_a5_as_s32;
@@ -94,9 +92,6 @@ extern u16 D_0028E854_as_u16;
 extern u8 D_0029A530_as_u8_a[];
 extern u16 D_0029C06C[];
 extern u8 *jtbl_0028E3F4_as_u8_p;
-extern u8 *reg_a2;
-extern u8 *reg_a4;
-extern u8 *reg_a6;
 
 void func_001B8440(void) {
     u32 cnt;
@@ -352,7 +347,6 @@ s32 func_00201390();
 extern u16 D_00250CE0[];
 extern u8 D_0028E52F;
 extern void (*jtbl_0028E3F4)();
-extern u8 *reg_a1;
 
 void func_001B8D00(void) {
     u8 flag;

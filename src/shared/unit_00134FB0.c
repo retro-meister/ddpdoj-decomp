@@ -96,7 +96,6 @@ s32 func_002071C0();                            /* extern */
 s32 func_00209E60();                            /* extern */
 s32 func_002114A0();                            /* extern */
 extern u32 D_0028E84C_as_u32;
-extern u8 *reg_a0;
 
 void func_00135070(void) {
     func_00135010();
@@ -159,16 +158,15 @@ void func_00135120(void) {
     D_0028E928 = 0;
 }
 
-extern s8 D_0028E408;
 extern u16 D_0028E850;
 extern s16 D_0028E924_as_s16;
 
 void func_001351F0(void) {
     if ((D_0028E850 == 0) && (D_0028E924_as_s16 == -1)) {
-        D_0028E408 = 1;
+        cond_flag = 1;
         return;
     }
-    D_0028E408 = 0;
+    cond_flag = 0;
 }
 
 s32 func_002071C0();
@@ -178,7 +176,6 @@ extern u32 D_0028E83C_as_u32;
 extern u32 D_0028E840_as_u32;
 extern u32 D_0028E844_as_u32;
 extern u8 D_002BF390[];
-extern u8 *reg_a6;
 
 void func_00135220(void) {
     u16 temp_a0;
@@ -340,12 +337,12 @@ void func_00135640(void) {
     if (D_0028E3C0 == 0) {
         if ((*(u8 *)((u8 *)(reg_a6) + (0x16))) == 0) {
             func_001ACBA0();
-            if (D_0028E408 == 0) {
+            if (cond_flag == 0) {
                 D_0028E8B4 |= 1;
             }
         } else {
             func_001ACC60();
-            if (D_0028E408 == 0) {
+            if (cond_flag == 0) {
                 D_0028E8B4 |= 2;
             }
         }
@@ -385,11 +382,6 @@ extern u16 D_0028E930;
 extern u16 D_0028E934;
 extern u16 D_0028E938;
 extern u8 D_002BF3B4[];
-extern u8 *reg_a1;
-extern u8 *reg_a2;
-extern u8 *reg_a3;
-extern u8 *reg_a4;
-extern u8 *reg_a5;
 
 void func_00135740(void) {
     D_0028DEF0 = reg_d0.w;
@@ -1220,10 +1212,9 @@ loop_1:
     goto loop_1;
 }
 
-extern u8 D_0028E408_as_u8;
 
 void func_00136A30(void) {
-    D_0028E408_as_u8 = 0;
+    (*(u8 *)&cond_flag) = 0;
 }
 
 extern u16 D_0029BC00_as_u16_a[];
@@ -1240,7 +1231,7 @@ loop_0:
     reg_tmp.w = (u32)reg_a1;
     *(u16 *)(reg_a5 + 0x44) = reg_tmp.h[1];
     *(u16 *)(reg_a5 + 0x46) = reg_tmp.h[0];
-    D_0028E408 = 1;
+    cond_flag = 1;
     reg_d0.w = 0;
     reg_d0.h[0] -= 1;
     return;
@@ -1348,7 +1339,7 @@ next_2:
     *(u16 *)(D_0029BD7C_as_u8_a + 2) = 0xC;
 next_3:
     reg_a0 = save;
-    D_0028E408 = 0;
+    cond_flag = 0;
 }
 
 extern u8 D_0024F3C0[];

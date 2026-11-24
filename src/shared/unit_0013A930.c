@@ -2,7 +2,6 @@
 
 s32 func_0013A780();
 s32 func_002010A0();
-extern u8 *reg_a0;
 
 void func_0013A930(u32 arg0, u32 arg1, s16 arg2) {
     u32 temp_a0;

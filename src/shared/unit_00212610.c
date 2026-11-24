@@ -18,7 +18,6 @@ s32 func_002093F0();
 s32 func_00209410();
 extern u8 D_0026F760[];
 extern u8 D_0026F780[];
-extern u8 *reg_a0;
 
 void func_00212640(void) {
     D_0028DF9C += 1;

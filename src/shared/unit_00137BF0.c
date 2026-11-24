@@ -79,13 +79,6 @@ extern u16 D_0028E814;
 extern u16 D_0028E818;
 extern u16 D_0028E820;
 extern u16 D_0028E824;
-extern u8 *reg_a0;
-extern u8 *reg_a1;
-extern u8 *reg_a2;
-extern u8 *reg_a3;
-extern u8 *reg_a4;
-extern u8 *reg_a5;
-extern u8 *reg_a6;
 
 void func_00137C90(void) {
     u32 save_d0;
@@ -190,12 +183,6 @@ void func_00137C90(void) {
 s32 func_0011C4A0();
 extern u32 D_0026A290[];
 extern u16 D_0028DEFC;
-extern u8 *reg_a0;
-extern u8 *reg_a1;
-extern u8 *reg_a2;
-extern u8 *reg_a3;
-extern u8 *reg_a4;
-extern u8 *reg_a5;
 
 void func_00137CC0(void) {
     u32 save_d0;
@@ -255,7 +242,6 @@ void func_00137CC0(void) {
 #endif
 
 #ifndef DEATH_LABEL
-extern s8 D_0028E408;
 
 s32 func_001A2FA0();
 s32 func_002071C0();
@@ -293,12 +279,6 @@ extern u8 D_006C58DD[];
 extern u8 D_006C58DE[];
 extern u8 D_006C58DF[];
 extern u8 D_006C5CA0[];
-extern u8 *reg_a0;
-extern u8 *reg_a1;
-extern u8 *reg_a2;
-extern u8 *reg_a3;
-extern u8 *reg_a4;
-extern u8 *reg_a5;
 
 void func_00137E00(void) {
     s32 func_0011BEA0();
@@ -335,7 +315,7 @@ void func_00137E00(void) {
     save_a4 = reg_a4;
     save_a5 = reg_a5;
     temp_a1 = D_0028DF08;
-    D_0028E408 = 1;
+    cond_flag = 1;
     D_0028DEF4 += 1;
     switch (temp_a1) {                              /* irregular */
     case 0:
@@ -377,7 +357,7 @@ void func_00137E00(void) {
         D_0028DF00 -= 1;
         if (D_0028DF00 == 0) {
             D_0028DF08 = 0;
-            D_0028E408 = 0;
+            cond_flag = 0;
             D_0028E3C0_as_s16 = 0;
             D_0028ED7C_as_s8 = 0;
             D_0028ED74_as_s8 = 0;
@@ -424,8 +404,6 @@ extern u16 D_0028E800;
 extern u16 D_0028E804;
 extern u16 D_0028E80C;
 extern u8 death_D_00291195;
-extern u8 *reg_a0;
-extern u8 *reg_a1;
 
 void death_func_00136980(void) {
     u32 save_d6;
@@ -480,7 +458,6 @@ extern u8 D_0028E370;
 extern u16 D_0028E3BC;
 extern u16 D_0028E3C0;
 extern u16 D_0028E3F0;
-extern s8 D_0028E408;
 extern u16 D_0028E814;
 extern u16 D_0028E818;
 extern u16 D_0028E81C;
@@ -489,11 +466,6 @@ extern u16 D_0028E824;
 extern u16 D_0028E828;
 extern u8 death_D_00291191;
 extern s8 death_D_00291195_as_s8;
-extern u8 *reg_a2;
-extern u8 *reg_a3;
-extern u8 *reg_a4;
-extern u8 *reg_a5;
-extern u8 *reg_a6;
 
 void func_00137E00(void) {
     void func_0011BEA0(void);
@@ -600,7 +572,7 @@ check_end:
     reg_a4 = save_a4;
     reg_a5 = save_a5;
     reg_a6 = save_a6;
-    D_0028E408 = 1;
+    cond_flag = 1;
     return;
 finished:
     D_0028E3BC += 1;
@@ -609,7 +581,7 @@ finished:
         D_0028E3BC = 0;
     }
     D_0028E3C0 = 0;
-    D_0028E408 = 0;
+    cond_flag = 0;
     reg_d0.w = save_d0;
     reg_d1.w = save_d1;
     reg_d2.w = save_d2;

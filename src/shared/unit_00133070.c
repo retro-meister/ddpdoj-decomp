@@ -20,8 +20,6 @@ s32 func_0019C470();
 s32 func_0019C4F0();
 extern s16 D_0029F1F0[];
 extern s16 D_0029F260[];
-extern u8 *reg_a0;
-extern u8 *reg_a6;
 
 void func_001330F0(void) {
     (*(u8 *)((u8 *)(reg_a6) + (0x11))) -= 1;
@@ -210,7 +208,6 @@ next_120:
 s32 func_00132210();
 s32 func_00200EE0();
 extern u8 D_00269A30[];
-extern u8 *reg_a1;
 
 void func_00133840(void) {
     u32 sh;

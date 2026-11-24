@@ -21,7 +21,6 @@ void func_001E6BE0(void) {
     func_001E6C00();
 }
 
-extern u8 *reg_a6;
 
 void func_001E6C00(void) {
     reg_tmp.b[0] = (*(u8 *)((u8 *)(reg_a6) + (0x27)));
@@ -58,7 +57,6 @@ void func_001E6CD0(void) {
 }
 
 s32 func_00202500();
-extern u8 *reg_a4;
 
 void func_001E6D00() {
     u8 temp_a0;
@@ -99,7 +97,6 @@ void func_001E6DD0(void) {
     func_001E6DF0();
 }
 
-extern u8 *reg_a0;
 
 extern u8 D_0026C0A0[];
 
@@ -366,7 +363,6 @@ void func_001E75A0(void) {
 
 s32 func_0014E030();
 extern u8 D_0026C0B0[];
-extern u8 *reg_a1;
 
 void func_001E75C0(void) {
     reg_tmp.b[0] = (*(u8 *)((u8 *)(reg_a4) + (3)));

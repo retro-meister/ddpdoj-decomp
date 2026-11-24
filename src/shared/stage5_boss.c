@@ -37,12 +37,6 @@ extern u16 D_0028E910;
 extern s16 D_00299768[];
 extern s16 D_0029976A[];
 extern s16 D_0029976C_as_s16_a[];
-extern u8 *reg_a0;
-extern u8 *reg_a1;
-extern u8 *reg_a2;
-extern u8 *reg_a3;
-extern u8 *reg_a4;
-extern u8 *reg_a6;
 
 void func_001F4B60(void) {
     reg_a0 = D_00264F50;
@@ -126,14 +120,13 @@ s32 func_00124590();                            /* extern */
 s32 func_0014D220();                            /* extern */
 s32 func_001F4EB0();                            /* extern */
 s32 func_002035A0();                            /* extern */
-extern s8 D_0028E408;
 extern s32 reg_a0_as_s32;
 extern s32 reg_a6_as_s32;
 
 void func_001F4DB0(void) {
     func_001F4EB0();
     func_00124590();
-    if (D_0028E408 != 0) {
+    if (cond_flag != 0) {
         func_002035A0();
         func_0014E290();
         return;

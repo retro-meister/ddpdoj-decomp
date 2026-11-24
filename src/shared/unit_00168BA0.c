@@ -28,7 +28,6 @@ void func_0016A5C0(void);
 void func_0016A630(void);
 void func_0016A690(void);
 
-extern u8 *reg_a5;
 extern u16 D_0028E7BC;
 
 void func_00168BA0() {
@@ -57,7 +56,6 @@ extern s8 g_cd_async_state;
 extern s8 D_0028ED74_as_s8;
 extern s8 D_0028ED7C_as_s8;
 extern s8 D_0028ED80_as_s8;
-extern u8 *reg_a0;
 
 void func_00168BC0(void) {
     s32 func_0012FAB0();
@@ -166,7 +164,6 @@ void func_00168E30(void) {
 s32 func_0015BBD0();                            /* extern */
 extern s16 D_0028E314_as_s16;
 extern s16 D_0028E318_as_s16;
-extern s8 D_0028E408;
 
 void func_00168E80(void) {
     s32 func_0012FAB0();
@@ -177,7 +174,7 @@ void func_00168E80(void) {
         func_0015BA20();
     }
     func_0015BBD0();
-    if (D_0028E408 == 0) {
+    if (cond_flag == 0) {
         D_0028E318_as_s16 = 1;
         D_0028E314_as_s16 = 1;
         reg_d0.h[0] = 5;
@@ -236,7 +233,7 @@ void func_00168EF0(void) {
         }
     }
     func_001A3E70();
-    if (D_0028E408 == 0) {
+    if (cond_flag == 0) {
         reg_d0.h[0] = 0xC;
         func_00168BA0();
     }
@@ -296,7 +293,7 @@ void func_00168FD0(void) {
         } else {
             func_0015BBD0();
         }
-        switch (D_0028E408) { case 0: goto block_set; }
+        switch (cond_flag) { case 0: goto block_set; }
         if (g_stage_load_state == 0) {
             func_00169B40();
         }
@@ -523,7 +520,7 @@ void func_00169320(void) {
         func_001A2FA0();
     }
     func_00137E00();
-    if (D_0028E408 == 0) {
+    if (cond_flag == 0) {
         printf((const char *)D_00275860);
         func_00206D70();
         func_0013B190();
@@ -559,7 +556,7 @@ void func_00169410(void) {
         func_00122BE0();
     }
     func_00122C20();
-    if (D_0028E408 == 0) {
+    if (cond_flag == 0) {
         reg_d0.h[0] = 1;
         g_splash_visible_as_s8 = 0;
         if (D_0028E39C == 0x12) {
@@ -586,7 +583,7 @@ void func_001694A0(void) {
         func_0012F6A0();
     }
     func_0012F7D0();
-    if (D_0028E408 == 0) {
+    if (cond_flag == 0) {
         reg_d0.h[0] = 9;
         func_00168BA0();
     }
@@ -911,13 +908,13 @@ void func_00169BC0(void) {
     D_0028E7B4 = 0;
     if (g_pad_trigger[0] & 0x20) {
         func_00130270();
-        if (D_0028E408 == 0) {
+        if (cond_flag == 0) {
             D_0028E7B4 |= 1;
         }
     }
     if (g_pad_trigger[1] & 0x20) {
         func_001303A0();
-        if ((D_0028E408 == 0) && ((D_0028E304 == 0) || (D_0028E7B4 == 0))) {
+        if ((cond_flag == 0) && ((D_0028E304 == 0) || (D_0028E7B4 == 0))) {
             D_0028E7B4 |= 2;
         }
     }    if (D_0028E7B4 != 0) { return; }

@@ -10,13 +10,6 @@ extern u16 D_0028E8C8;
 extern u16 D_0028E8D8;
 extern u16 D_0028E918;
 extern u16 g_stage;
-extern u8 *reg_a0;
-extern u8 *reg_a1;
-extern u8 *reg_a2;
-extern u8 *reg_a3;
-extern u8 *reg_a4;
-extern u8 *reg_a5;
-extern u8 *reg_a6;
 
 void func_00119B10(void) {
     u8 *save_a0;
@@ -153,7 +146,6 @@ s32 func_00202500();
 extern u16 D_0025B130[];
 extern u16 D_0025B140[];
 extern u16 D_0028E3EC;
-extern s8 D_0028E408;
 extern u16 D_0028E8A0;
 extern u16 D_0028E8D0;
 extern void (*jtbl_0028E3F4)();
@@ -275,7 +267,7 @@ block_b:
     reg_d1.h[0] = (*(u16 *)((u8 *)(reg_a6) + (4)));
     reg_d0.h[0] += 0x200;
     func_00202140();
-    if (D_0028E408 != 0) goto block_c;
+    if (cond_flag != 0) goto block_c;
     reg_d0.b[0] = (*(u8 *)((u8 *)(reg_a6) + (0x3F)));
     func_00202500();
     (*(u8 *)((u8 *)(reg_a6) + (0x3F))) = (u8) reg_d1.b[0];
@@ -345,12 +337,12 @@ block_d:
     reg_d1.h[0] += 0xA200;
     if (reg_tmp1.h[1] != 0) goto block_c;
     func_0016D290();
-    if (D_0028E408 != 0) goto block_c;
+    if (cond_flag != 0) goto block_c;
     reg_d0.h[0] = (*(u16 *)((u8 *)(reg_a6) + (2)));
     reg_d1.h[0] = (*(u16 *)((u8 *)(reg_a6) + (4)));
     reg_d0.h[0] += 0x200;
     func_00202140();
-    if (D_0028E408 != 0) goto block_c;
+    if (cond_flag != 0) goto block_c;
     reg_d2.h[0] = reg_d1.h[0];
     reg_d0.w = 0x3C;
     reg_d2.b[0] += 2;
@@ -727,7 +719,7 @@ block_b:
     reg_d1.h[0] = (*(u16 *)((u8 *)(reg_a6) + (4)));
     reg_d0.h[0] += 0x200;
     func_00202140();
-    if (D_0028E408 != 0) goto block_c;
+    if (cond_flag != 0) goto block_c;
     reg_d0.b[0] = (*(u8 *)((u8 *)(reg_a6) + (0x3F)));
     func_00202500();
     (*(u8 *)((u8 *)(reg_a6) + (0x3F))) = (u8) reg_d1.b[0];
@@ -800,7 +792,7 @@ block_d:
     reg_d1.h[0] += 0xA200;
     if (reg_tmp1.h[1] != 0) goto block_c;
     func_0016D290();
-    if (D_0028E408 != 0) goto block_c;
+    if (cond_flag != 0) goto block_c;
     if (!((*(u8 *)((u8 *)(reg_a6) + (1))) & 0x20)) goto block_c;
     reg_d2.b[0] = (*(u8 *)((u8 *)(reg_a6) + (0x3F)));
     reg_d1.h[0] = reg_d2.h[0];

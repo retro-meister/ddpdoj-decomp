@@ -6,7 +6,6 @@ void func_00168110(void) {
     func_001713F0(0);
 }
 
-extern s8 D_0028E408;
 
 s32 func_0014E290();
 s32 func_0014E300();
@@ -23,9 +22,6 @@ extern u16 D_0028E8C8;
 extern u16 D_0028E918;
 extern u16 g_stage;
 extern s8 enemy_move_end_requested;
-extern u8 *reg_a0;
-extern u8 *reg_a5;
-extern u8 *reg_a6;
 
 void func_00168120(void) {
     if ((g_stage == 3) && (D_0028E88C != 0)) {
@@ -43,7 +39,7 @@ void func_00168120(void) {
     func_0014E7E0();
     if (enemy_move_end_requested == 0) {
         func_00202180();
-        if (D_0028E408 != 0) {
+        if (cond_flag != 0) {
             reg_d1.b[0] = (*(u8 *)((u8 *)(reg_a6) + (0x1A)));
         }
         (*(u8 *)((u8 *)(reg_a5) + (0x26))) = (u8) reg_d1.b[0];
@@ -85,7 +81,7 @@ s32 func_00202500();
 s32 func_00202730();
 extern u16 D_0025B040[];
 extern u16 D_0028E3EC;
-extern s16 *D_0028E448;
+extern s16 *reg_save_atmp;
 extern u16 D_0028E890;
 extern u16 D_0028E89C;
 extern u16 D_0028E8A0;
@@ -96,9 +92,6 @@ extern u16 D_0028E910;
 extern u16 D_0029C068[];
 extern u16 D_0029F1F0_as_u16_a[];
 extern u16 D_0029F260_as_u16_a[];
-extern u8 *reg_a1;
-extern u8 *reg_a3;
-extern u8 *reg_a4;
 
 void func_001683C0(void) {
     u16 swap;
@@ -167,15 +160,15 @@ next_2:
                 reg_a0 = (u8 *)(D_0029F260_as_u16_a);
                 reg_a1 = (u8 *)(D_0029F1F0_as_u16_a);
                 if (*(u8 *)(reg_a5 + 2) != 0) {
-                    D_0028E448 = (s16 *)(reg_a1);
+                    reg_save_atmp = (s16 *)(reg_a1);
                     reg_a1 = (u8 *)(reg_a0);
-                    reg_a0 = (u8 *)(D_0028E448);
+                    reg_a0 = (u8 *)(reg_save_atmp);
                 }
                 if (*(s16 *)reg_a0 >= 0) {
                     t1 = (s16 *)(reg_a1);
                     if (*t1 < 0) {
                         reg_a1 = (u8 *)(reg_a0);
-                        D_0028E448 = (s16 *)(t1);
+                        reg_save_atmp = (s16 *)(t1);
                         reg_a0 = (u8 *)(t1);
                         goto next_3;
                     }
@@ -267,7 +260,7 @@ next_3:
             func_001A91A0();
             if (D_0028E910 != 0) {
                 func_00202730();
-                if (D_0028E408 == 0) {
+                if (cond_flag == 0) {
                     reg_d0.w = 0x1000C;
                     reg_d2.h[1] = *(u16 *)(reg_a6 + 2);
                     reg_d2.h[0] = *(u16 *)(reg_a6 + 4);

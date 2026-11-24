@@ -75,9 +75,6 @@ extern u8 g_splash_file_buf[];
 extern u8 g_noise_file_buf[];
 extern u8 g_gs_load_image_as_u8_a[];
 extern GlyphQuad g_quad_queue_as_GlyphQuad_a[];
-extern u8 *reg_a0;
-extern u8 *reg_a5;
-extern u8 *reg_a6;
 
 s32 death_func_00138B40(u8 *digits) {
     return (digits[0] - '0') * 1000 + (digits[1] - '0') * 100 + (digits[2] - '0') * 10 + (digits[3] - '0');

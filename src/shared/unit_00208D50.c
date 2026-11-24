@@ -149,7 +149,6 @@ s32 func_0018DEA0();
 s32 func_0018DEE0();
 extern u8 D_00268230[];
 extern void (*jtbl_0028E3F4)();
-extern u8 *reg_a0;
 
 void func_00209050(void) {
     u32 t;
@@ -487,7 +486,6 @@ void func_00209410(void) {
     D_0028EAF8 = 0;
 }
 
-extern s8 D_0028E408;
 
 void func_002095E0(void) {
     reg_d0.b[0] = D_0028E39C;
@@ -514,10 +512,10 @@ void func_002095E0(void) {
     reg_d0.b[0] = D_0028E380;
     if ((s8) reg_d0.b[0] > 0x1) goto next_1;
     if (0 > (s8) reg_d0.b[0]) goto next_1;
-    D_0028E408 = 0;
+    cond_flag = 0;
     return;
 next_1:
-    D_0028E408 = 1;
+    cond_flag = 1;
 }
 
 extern u16 D_00268350[];

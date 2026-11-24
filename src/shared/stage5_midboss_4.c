@@ -34,8 +34,6 @@ extern u8 D_00260530[];
 extern u8 D_00265C20[];
 extern u8 D_00265C30[];
 extern u16 D_0029C068[];
-extern u8 *reg_a0;
-extern u8 *reg_a6;
 
 void func_001FA3A0(void) {
 
@@ -67,7 +65,6 @@ s32 func_00201B80();
 s32 func_00201C60();
 extern u8 D_00265C50[];
 extern u16 D_0028E8A0;
-extern u8 *reg_a5;
 
 void func_001FA470(void) {
     u16 temp_a1;
@@ -400,7 +397,6 @@ s32 func_002027A0();
 s32 func_00202B70();
 extern u8 D_00265D40[];
 extern u16 D_00265D70[];
-extern u8 *reg_a4;
 
 void func_001FADE0(void) {
     if ((*(u16 *)((u8 *)(reg_a6) + (0x68))) == 0) {
@@ -460,7 +456,6 @@ loop_6:
 
 s32 func_002032A0();
 extern u16 D_00265DE0[];
-extern s8 D_0028E408;
 extern u16 *reg_a4_as_u16_p;
 
 void func_001FB010(arg0)
@@ -476,7 +471,7 @@ void func_001FB010(arg0)
     }
     if ((*(u16 *)((u8 *)(reg_a6) + (0x68))) == 1) {
         func_002032A0();
-        if (D_0028E408 == 0) {
+        if (cond_flag == 0) {
             reg_d2.h[0] = (*(u16 *)((u8 *)(reg_a0) + (2)));
             var_a0 = (*(u16 *)((u8 *)(reg_a0) + (4)));
             reg_d2.h[0] += 0x1E00;
@@ -779,7 +774,7 @@ void func_001FB770() {
         (*(u8 *)((u8 *)(reg_a4) + (3))) = (*(u8 *)((u8 *)(reg_a4) + (2)));
         if (D_0028E89C == 0) {
             func_00202730();
-            if (D_0028E408 == 0) {
+            if (cond_flag == 0) {
                 reg_d0.w = 0x30004;
                 reg_d2.h[1] = (*(u16 *)((u8 *)(reg_a6) + (2)));
                 temp_a1 = (*(u16 *)((u8 *)(reg_a6) + (4)));
@@ -880,7 +875,6 @@ s32 vibration_start_pad1();
 s32 vibration_start_pad2();
 extern u16 D_00265EC0[];
 extern u16 D_00265F10[];
-extern u8 *reg_a1;
 
 void func_001FBE90(void) {
     u16 temp_a0_2;
@@ -975,10 +969,10 @@ void func_001FBE90(void) {
         goto block_11;
     }
 block_11:
-    D_0028E408 = 0;
+    cond_flag = 0;
     return;
 block_set:
-    D_0028E408 = 1;
+    cond_flag = 1;
 }
 
 void func_001FC1F0(void) {

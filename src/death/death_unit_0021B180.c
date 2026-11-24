@@ -5,7 +5,6 @@ void death_func_0021D4F0(void);
 void death_func_0021D520(void);
 
 extern u8 death_D_006901D0[];
-extern u8 *reg_a6;
 
 s32 death_func_0021B180(void) {
     return reg_a6 == death_D_006901D0;
@@ -14,9 +13,6 @@ s32 death_func_0021B180(void) {
 s32 func_00129410();
 s32 func_00129450();
 extern u16 D_00259770[];
-extern u8 *reg_a1;
-extern u8 *reg_a4;
-extern u8 *reg_a5;
 
 #define LOOKUP(d) (((d) != 0) ? *(u16 *)((u8 *)reg_a1 + ((s16)(d) & ~1)) : *(u16 *)reg_a1)
 
@@ -180,7 +176,6 @@ void death_func_0021B770(void) {
 s32 func_002011A0();
 extern u16 D_00264550[];
 extern u32 D_0028D9F4;
-extern u8 *reg_a0;
 
 void death_func_0021B8F0(void) {
     s32 sum;
@@ -276,7 +271,6 @@ void death_func_0021BBB0(void) {
 
 s32 func_00171400();
 s32 func_002027A0();
-extern s16 *D_0028E44C;
 extern u16 D_0028E89C;
 extern u16 D_0029F1F0_as_u16_a[];
 extern u16 D_0029F260_as_u16_a[];
@@ -303,16 +297,16 @@ void death_func_0021BC30(arg0, arg1)
                 reg_a0 = (u8 *)(D_0029F260_as_u16_a);
                 reg_a1 = (u8 *)(D_0029F1F0_as_u16_a);
                 if ((*(u8 *)((u8 *)(reg_a5) + (2))) != 0) {
-                    D_0028E44C = (s16 *)(reg_a0);
+                    reg_atmp = (u8 *)(reg_a0);
                     reg_a0 = (u8 *)(reg_a1);
-                    reg_a1 = (u8 *)(D_0028E44C);
+                    reg_a1 = (u8 *)(reg_atmp);
                 }
                 temp_a0 = (s16 *)(reg_a0);
                 if (0 <= (s64)*(s16 *)((u8 *)(temp_a0) + (0))) {
                     var_a1 = (s16 *)(reg_a1);
                     if (0 > *var_a1) {
                         reg_a0 = (u8 *)(var_a1);
-                        D_0028E44C = (s16 *)(temp_a0);
+                        reg_atmp = (u8 *)(temp_a0);
                         reg_a1 = (u8 *)(temp_a0);
                         goto block_8;
                     }
@@ -436,15 +430,15 @@ void death_func_0021BFC0(void) {
             reg_a0 = (u8 *)(D_0029F260);
             reg_a1 = (u8 *)(D_0029F1F0);
             if (*(u8 *)(reg_a5 + 2) != 0) {
-                D_0028E44C = (s16 *)(reg_a0);
+                reg_atmp = (u8 *)(reg_a0);
                 reg_a0 = (u8 *)(reg_a1);
-                reg_a1 = (u8 *)(D_0028E44C);
+                reg_a1 = (u8 *)(reg_atmp);
             }
             t1 = (s16 *)(reg_a0);
             if (0 <= (s64)*(s16 *)((u8 *)(t1) + (0))) {
                 if (0 > *(s16 *)reg_a1) {
                     reg_a0 = (u8 *)(reg_a1);
-                    D_0028E44C = (s16 *)(t1);
+                    reg_atmp = (u8 *)(t1);
                     reg_a1 = (u8 *)(t1);
                     goto next_1;
                 }
@@ -700,16 +694,16 @@ void death_func_0021C9A0(void) {
         reg_a0 = (u8 *)(D_0029F260);
         reg_a1 = (u8 *)(D_0029F1F0);
         if (*(u8 *)(reg_a5 + 2) != 0) {
-            D_0028E44C = (s16 *)(reg_a0);
+            reg_atmp = (u8 *)(reg_a0);
             reg_a0 = (u8 *)(reg_a1);
-            reg_a1 = (u8 *)(D_0028E44C);
+            reg_a1 = (u8 *)(reg_atmp);
         }
         t1 = (s16 *)(reg_a0);
         if (0 <= (s64)*(s16 *)((u8 *)(t1) + (0))) {
             t2 = (s16 *)(reg_a1);
             if (0 > *t2) {
                 reg_a0 = (u8 *)(t2);
-                D_0028E44C = (s16 *)(t1);
+                reg_atmp = (u8 *)(t1);
                 reg_a1 = (u8 *)(t1);
                 goto next_1;
             }
@@ -954,7 +948,6 @@ void death_func_0021D210(void) {
 
 s32 func_001EBA00();
 extern u8 death_D_00269860[];
-extern u8 *reg_a3;
 
 void death_func_0021D2E0(void) {
     s16 *temp_v1;
@@ -970,15 +963,15 @@ void death_func_0021D2E0(void) {
         reg_a0 = (u8 *)(D_0029F260);
         reg_a1 = (u8 *)(D_0029F1F0);
         if ((*(u8 *)((u8 *)(reg_a5) + (2))) != 0) {
-            D_0028E44C = (s16 *)(reg_a0);
+            reg_atmp = (u8 *)(reg_a0);
             reg_a0 = (u8 *)(reg_a1);
-            reg_a1 = (u8 *)(D_0028E44C);
+            reg_a1 = (u8 *)(reg_atmp);
         }
         temp_v1 = (s16 *)(reg_a0);
         if (0 <= (s64)*(s16 *)((u8 *)(temp_v1) + (0))) {
             if (0 > (s64)*(s16 *)reg_a1) {
                 reg_a0 = (u8 *)(reg_a1);
-                D_0028E44C = (s16 *)(temp_v1);
+                reg_atmp = (u8 *)(temp_v1);
                 reg_a1 = (u8 *)(temp_v1);
                 goto block_8;
             }

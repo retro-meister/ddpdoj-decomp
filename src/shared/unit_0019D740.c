@@ -3,7 +3,6 @@
 void func_0019E980(void);
 
 extern u16 D_0028E154;
-extern u8 *reg_a0;
 extern u8 D_002A45B0[];
 
 void func_0019D740(void) {
@@ -260,7 +259,6 @@ void func_0019DBE0(void) {
     reg_a0_as_s32 = temp_s0;
 }
 
-extern u8 *reg_a6;
 
 void func_0019DC20(void) {
     (*(u16 *)((u8 *)(reg_a6) + (0x52))) -= 4;
@@ -294,9 +292,6 @@ void func_0019DCE0(void) {
     reg_d7.h[0] = (*(u16 *)((u8 *)(reg_a6) + (0x54)));
 }
 
-extern u8 *reg_a1;
-extern u8 *reg_a4;
-extern u8 *reg_a5;
 
 void func_0019DD20(void) {
     *(u16 *) reg_a0 = *(u16 *) reg_a1;
@@ -384,8 +379,6 @@ extern u16 D_0028E086[];
 extern u16 D_0028E928;
 extern u8 D_0029E390[];
 extern u8 D_0029EA50[];
-extern u8 *reg_a2;
-extern u8 *reg_a3;
 
 void func_0019E130(void) {
     u8 *save_a3;
@@ -481,7 +474,6 @@ next_7:
 }
 
 extern u8 D_0025EE10[];
-extern u8 *D_0028E44C_as_u8_p;
 
 void func_0019E5B0(void) {
     u8 *save_a3;
@@ -515,9 +507,9 @@ next_1:
     reg_d0.b[0] += 0x10;
     reg_d0.b[0] &= 0x3F;
     if ((s32)reg_d0.b[0] >= 0x20) goto next_2;
-    D_0028E44C_as_u8_p = reg_a0;
+    reg_atmp = reg_a0;
     reg_a0 = reg_a3;
-    reg_a3 = (u8 *)D_0028E44C_as_u8_p;
+    reg_a3 = (u8 *)reg_atmp;
 next_2:
     reg_d4.h[0] = *(u16 *)reg_a1;
     reg_d4.h[0] += 2;

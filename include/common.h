@@ -38,6 +38,8 @@ typedef struct {
  *   reg_d0..reg_d7 (0x28E4A8 down to 0x28E48C), reg_tmp (0x28E488): 32-bit data/scratch Reg32
  *   reg_tmp1..reg_tmp7 (0x28E484 down to 0x28E46C): scratch for d1..d7 (exchanges, 32-bit intermediates)
  *   reg_a0..reg_a6 (0x28E468 down to 0x28E450): 32-bit address registers (pointers)
+ *   reg_atmp (0x28E44C), then the slots routines keep registers in across calls (reg_save_d0.. down from
+ *   0x28E428, reg_save_a0.. down from 0x28E444; three more such banks follow the registers), cond_flag (0x28E408)
  */
 extern u16 rng_cursor;
 extern Reg32 reg_d0;
@@ -56,6 +58,15 @@ extern Reg32 reg_tmp4;
 extern Reg32 reg_tmp5;
 extern Reg32 reg_tmp6;
 extern Reg32 reg_tmp7;
+extern u8 *reg_a0;
+extern u8 *reg_a1;
+extern u8 *reg_a2;
+extern u8 *reg_a3;
+extern u8 *reg_a4;
+extern u8 *reg_a5;
+extern u8 *reg_a6;
+extern u8 *reg_atmp; /* scratch address register (exchanges) */
+extern s8 cond_flag; /* result of the last routine that reports through the condition codes */
 extern s8 rng_values[256];
 
 #endif

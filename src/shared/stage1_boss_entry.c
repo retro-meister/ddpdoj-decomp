@@ -10,7 +10,6 @@ void func_001BB8D0(void) {
 
 }
 
-extern s8 D_0028E408;
 
 s32 func_00124B20();
 s32 func_00124BB0();
@@ -21,8 +20,6 @@ s32 func_002016D0();
 extern u8 D_0028E290;
 extern s32 D_0028E638;
 extern u16 D_0028E8B8;
-extern u8 *reg_a5;
-extern u8 *reg_a6;
 
 void func_001BB8E0(void) {
     s32 func_00203400();
@@ -272,7 +269,7 @@ next_5:
         if (reg_d0.b[0] == 2) {
             reg_d0.w = 5;
             func_00124BB0();
-            if (D_0028E408 == 0) {
+            if (cond_flag == 0) {
                 reg_d0.w = 5;
                 func_00124B20();
             }
@@ -280,7 +277,7 @@ next_5:
         if (*(u8 *)(reg_a6 + 0x3E) != 0) {
             reg_d0.w = 4;
             func_00124BB0();
-            if (D_0028E408 == 0) {
+            if (cond_flag == 0) {
                 reg_d0.w = 4;
                 func_00124B20();
             }
@@ -288,7 +285,7 @@ next_5:
         if (*(u8 *)(reg_a6 + 0x7E) != 0) {
             reg_d0.w = 4;
             func_00124BB0();
-            if (D_0028E408 == 0) {
+            if (cond_flag == 0) {
                 reg_d0.w = 4;
                 func_00124B20();
             }

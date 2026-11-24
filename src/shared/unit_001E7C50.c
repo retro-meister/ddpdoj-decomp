@@ -10,7 +10,6 @@ void func_001E87A0(void);
 void func_001E7C50(void) {
 }
 
-extern u8 *reg_a6;
 
 void func_001E7C60(void) {
     if ((*(u16 *)((u8 *)(reg_a6) + (0x166))) == 0) {
@@ -37,7 +36,6 @@ extern s16 D_0029CEA0_as_s16_a[];
 extern u8 death_D_00290DC0;
 extern u16 D_00684C80[];
 #endif
-extern u8 *reg_a5;
 
 void func_001E7C90(void) {
     s32 func_00203400();
@@ -339,7 +337,6 @@ s32 func_0018D560();
 s32 func_001E58E0();
 s32 func_002011A0();
 extern u8 D_0026F640[];
-extern u8 *reg_a1;
 
 void func_001E8580(void) {
     if ((*(u8 *)((u8 *)(reg_a6) + (0x9E))) == 0) {
@@ -400,7 +397,6 @@ void func_001E8710(void) {
 void func_001E8720(void) {
 }
 
-extern u8 *reg_a0;
 void func_001E8730(void) {
     reg_a0 = reg_a6;
     reg_a0 += reg_d0.h[0];

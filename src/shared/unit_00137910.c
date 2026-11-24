@@ -3,12 +3,6 @@
 s32 func_0011C610();
 extern u16 D_00269D60[];
 extern s8 *reg_a0_as_s8_p;
-extern u8 *reg_a1;
-extern u8 *reg_a2;
-extern u8 *reg_a3;
-extern u8 *reg_a4;
-extern u8 *reg_a5;
-extern u8 *reg_a6;
 
 void func_00137910(void) {
     u32 sv_d0;

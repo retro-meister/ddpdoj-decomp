@@ -1548,7 +1548,6 @@ extern s32 g_label_fade;
 extern s32 g_label_timer;
 
 void label_draw(RenderTarget *target, s32 x, s32 y, const char *text) {
-    extern u8 *reg_a0;
     u8 *saved;
     s32 bright;
 
@@ -1611,12 +1610,6 @@ void glyph_queue_clear(void) {
 
 
 extern u16 D_00269D60[];
-extern u8 *reg_a1;
-extern u8 *reg_a2;
-extern u8 *reg_a3;
-extern u8 *reg_a4;
-extern u8 *reg_a5;
-extern u8 *reg_a6;
 
 void glyph_queue_add(x, y, z, page, alpha, attr, wide)
     s32 x;
@@ -1627,7 +1620,6 @@ void glyph_queue_add(x, y, z, page, alpha, attr, wide)
     s16 attr;
     s32 wide;
 {
-    extern s8 *reg_a0;
     u32 save_d0;
     u32 save_d1;
     u32 save_d2;
@@ -1636,7 +1628,7 @@ void glyph_queue_add(x, y, z, page, alpha, attr, wide)
     u32 save_d5;
     u32 save_d6;
     u32 save_d7;
-    s8 *save_a0;
+    u8 *save_a0;
     u8 *save_a1;
     u8 *save_a2;
     u8 *save_a3;
@@ -1665,7 +1657,7 @@ void glyph_queue_add(x, y, z, page, alpha, attr, wide)
     count = g_glyph_queue_count;
     while (1) {
         reg_d4.w = 0;
-        reg_d4.sb[0] = *reg_a0;
+        reg_d4.sb[0] = *(s8 *)reg_a0;
         reg_a0++;
         if (reg_d4.w == 0) {
             break;

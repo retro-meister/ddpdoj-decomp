@@ -17,9 +17,6 @@ void func_001CE7F0(void) {
 s32 func_00124F00();
 s32 func_0014E030();
 s32 func_002010A0();
-extern u8 *reg_a0;
-extern u8 *reg_a4;
-extern u8 *reg_a6;
 
 void func_001CE800(void) {
     u32 temp_s0;
@@ -79,7 +76,6 @@ s32 func_002011A0();
 extern u8 D_0026CC40[];
 extern u32 D_0028DB20;
 extern u16 D_0028E910;
-extern u8 *reg_a1;
 
 void func_001CE9B0(void) {
     s32 temp_a1;
@@ -157,7 +153,6 @@ void func_001CEAD0(void) {
 }
 
 s32 func_00129280();
-extern u8 *reg_a5;
 
 void func_001CEC30(void) {
     s32 func_001292C0();
@@ -248,7 +243,6 @@ void func_001CEDD0(void) {
 }
 
 extern u16 D_002594F0[];
-extern u8 *reg_a3;
 
 void func_001CEF00(void) {
     reg_tmp.b[0] = (*(u8 *)((u8 *)(reg_a4) + (3)));
@@ -681,7 +675,7 @@ void func_001CFD70(void) {
     func_001CFF10();
 }
 
-extern s16 *D_0028E448;
+extern s16 *reg_save_atmp;
 
 void func_001CFF10(void) {
     s16 *temp_a0;
@@ -697,15 +691,15 @@ void func_001CFF10(void) {
         reg_a0 = (u8 *)(D_0029F260);
         reg_a1 = (u8 *)(D_0029F1F0);
         switch ((*(u8 *)((u8 *)(reg_a5) + (2)))) { case 0: break; default:
-            D_0028E448 = (s16 *)(reg_a1);
+            reg_save_atmp = (s16 *)(reg_a1);
             reg_a1 = (u8 *)(reg_a0);
-            reg_a0 = (u8 *)(D_0028E448);
+            reg_a0 = (u8 *)(reg_save_atmp);
         }
         if ((*(s16 *)((u8 *)(reg_a0) + (0))) >= 0) {
             temp_a0 = (s16 *)(reg_a1);
             if (*temp_a0 < 0) {
                 reg_a1 = (u8 *)(reg_a0);
-                D_0028E448 = (s16 *)(temp_a0);
+                reg_save_atmp = (s16 *)(temp_a0);
                 reg_a0 = (u8 *)(temp_a0);
                 goto block_6;
             }
@@ -1140,16 +1134,16 @@ void func_001D0E60(void) {
             reg_a0 = (u8 *)(D_0029F260_as_u16_a);
             reg_a1 = (u8 *)(D_0029F1F0_as_u16_a);
             if ((*(u8 *)((u8 *)(reg_a5) + (2))) != 0) {
-                D_0028E448 = (s16 *)(reg_a1);
+                reg_save_atmp = (s16 *)(reg_a1);
                 reg_a1 = (u8 *)(reg_a0);
-                reg_a0 = (u8 *)(D_0028E448);
+                reg_a0 = (u8 *)(reg_save_atmp);
             }
             var_a1 = (s16 *)(reg_a0);
             if ((*(s16 *)((u8 *)(var_a1) + (0))) >= 0) {
                 temp_a0_2 = (s16 *)(reg_a1);
                 if (*temp_a0_2 < 0) {
                     reg_a1 = (u8 *)(var_a1);
-                    D_0028E448 = (s16 *)(temp_a0_2);
+                    reg_save_atmp = (s16 *)(temp_a0_2);
                     reg_a0 = (u8 *)(temp_a0_2);
                     goto block_7;
                 }

@@ -101,7 +101,6 @@ extern u8 D_00267A10[];
 extern u8 D_00267A30[];
 extern u8 D_00267A50[];
 extern u8 *D_00267AA0[];
-extern u8 *reg_a0;
 
 void func_00207950(void) {
     void func_00209200(void);

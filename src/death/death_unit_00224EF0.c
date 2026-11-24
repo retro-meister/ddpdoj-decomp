@@ -6,8 +6,6 @@ void death_func_002251F0(u8 index);
 void death_func_00225360(u8 index);
 void death_func_00225500(u8 index);
 
-extern u8 *reg_a4;
-extern u8 *reg_a6;
 
 void death_func_00224EF0(u8 index) {
     reg_d0.w = 0;

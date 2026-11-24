@@ -22,8 +22,6 @@ void func_00148700(void) {
 
 s32 func_0019D560();
 extern u16 D_00257800[];
-extern u8 *reg_a0;
-extern u8 *reg_a6;
 
 void func_00148730(void) {
     u32 temp_s0;
@@ -72,8 +70,6 @@ extern u16 D_0029C06C[];
 extern u8 D_0029E390[];
 extern u8 D_0029F1F0_as_u8_a[];
 extern u8 D_0029F260_as_u8_a[];
-extern u8 *reg_a4;
-extern u8 *reg_a5;
 
 void func_001488C0(void) {
     u8 *saved_a4;
@@ -1388,7 +1384,6 @@ void func_0014C450(void) {
 
 extern u8 D_0028E2C0;
 extern u8 *jtbl_0028E3F4_as_u8_p;
-extern u8 *reg_a1;
 
 void func_0014C4B0(void) {
     u32 temp_s0;
@@ -1417,8 +1412,6 @@ typedef void (*Fn)(void);
 
 extern u8 *D_0029C050[];
 extern Fn jtbl_0028E3F4_as_Fn;
-extern u8 *reg_a2;
-extern u8 *reg_a3;
 
 void func_0014C590(void) {
     u8 *save_a0;

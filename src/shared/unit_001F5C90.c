@@ -2,8 +2,6 @@
 
 s32 func_001F5BB0();
 extern u16 D_0028E8A0;
-extern u8 *reg_a5;
-extern u8 *reg_a6;
 
 void func_001F5C90(void) {
     void func_00203400(void);

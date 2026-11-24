@@ -1,6 +1,5 @@
 #include "common.h"
 
-extern u8 *reg_a6;
 
 void func_001CBC10(void) {
     reg_d0.h[0] = 0x8000;
@@ -35,7 +34,6 @@ void func_001CBCD0(void) {
 s32 func_001CB6B0();
 void func_00203400(void);
 extern u16 D_0028E8A0;
-extern u8 *reg_a5;
 
 void func_001CBCE0(void) {
 #ifdef DEATH_LABEL
@@ -59,7 +57,6 @@ void func_001CBD50(void) {
     func_001713F0(2);
 }
 
-extern s8 D_0028E408;
 
 s32 func_0013B2E0();
 s32 func_0014E300();
@@ -77,8 +74,6 @@ extern u16 g_stage;
 extern s16 D_00299768[];
 extern s16 D_0029976A[];
 extern s8 enemy_move_end_requested;
-extern u8 *reg_a0;
-extern u8 *reg_a3;
 
 void func_001CBD60(void) {
     reg_a0 = D_00263030;
@@ -103,7 +98,7 @@ void func_001CBD60(void) {
         reg_d0.h[0] += 0xAC0;
         reg_d1.h[0] += 0x780;
         func_002026F0();
-        if (D_0028E408 != 0) {
+        if (cond_flag != 0) {
             reg_d1.b[0] = (*(u8 *)((u8 *)(reg_a6) + (0x1A)));
             reg_d1.b[0] *= 4;
         }
@@ -117,7 +112,7 @@ void func_001CBD60(void) {
         reg_d0.h[0] += 0xAC0;
         reg_d1.h[0] += 0x7FFF + 0x7881;
         func_002026F0();
-        if (D_0028E408 != 0) {
+        if (cond_flag != 0) {
             reg_d1.b[0] = (*(u8 *)((u8 *)(reg_a6) + (0x1A)));
             reg_d1.b[0] *= 4;
         }
@@ -191,7 +186,6 @@ extern u16 D_00263290[];
 extern u8 D_0028E310;
 extern u16 D_0028E3EC;
 extern u16 D_0028E3F0;
-extern s16 *D_0028E44C;
 extern u16 D_0028E894;
 extern u16 D_0028E89C;
 extern u16 D_0028E8A8;
@@ -202,9 +196,6 @@ extern u16 D_0029C068[];
 extern u16 D_0029F1F0_as_u16_a[];
 extern u16 D_0029F260_as_u16_a[];
 extern void (*jtbl_0028E3F4)();
-extern u8 *reg_a1;
-extern u8 *reg_a2;
-extern u8 *reg_a4;
 
 void func_001CC0A0(void) {
     u32 cnt;
@@ -365,15 +356,15 @@ next_220:
     reg_a0 = (u8 *) D_0029F260_as_u16_a;
     reg_a1 = (u8 *) D_0029F1F0_as_u16_a;
     if (*(u8 *)(reg_a5 + 2) == 0) goto next_240;
-    D_0028E44C = (s16 *) reg_a0;
+    reg_atmp = (u8 *) reg_a0;
     reg_a0 = reg_a1;
-    reg_a1 = (u8 *) D_0028E44C;
+    reg_a1 = (u8 *) reg_atmp;
 next_240:
     if (*(s16 *)reg_a0 < 0) goto next_260;
     if (*(s16 *)reg_a1 >= 0) goto next_400;
     ptr = reg_a0;
     reg_a0 = reg_a1;
-    D_0028E44C = (s16 *) ptr;
+    reg_atmp = (u8 *) ptr;
     reg_a1 = ptr;
 next_260:
     reg_d2.h[0] = *(u16 *)(reg_a0 + 2);
@@ -452,15 +443,15 @@ next_400:
     reg_a0 = (u8 *) D_0029F260_as_u16_a;
     reg_a1 = (u8 *) D_0029F1F0_as_u16_a;
     if (*(u8 *)(reg_a5 + 2) == 0) goto next_420;
-    D_0028E44C = (s16 *) reg_a0;
+    reg_atmp = (u8 *) reg_a0;
     reg_a0 = reg_a1;
-    reg_a1 = (u8 *) D_0028E44C;
+    reg_a1 = (u8 *) reg_atmp;
 next_420:
     if (*(s16 *)reg_a0 < 0) goto next_440;
     if (*(s16 *)reg_a1 >= 0) goto next_500;
     ptr = reg_a0;
     reg_a0 = reg_a1;
-    D_0028E44C = (s16 *) ptr;
+    reg_atmp = (u8 *) ptr;
     reg_a1 = ptr;
 next_440:
     reg_d2.h[0] = *(u16 *)(reg_a0 + 2);
@@ -653,15 +644,15 @@ next_830:
     reg_a0 = (u8 *) D_0029F260_as_u16_a;
     reg_a1 = (u8 *) D_0029F1F0_as_u16_a;
     if (*(u8 *)(reg_a5 + 2) == 0) goto next_840;
-    D_0028E44C = (s16 *) reg_a0;
+    reg_atmp = (u8 *) reg_a0;
     reg_a0 = reg_a1;
-    reg_a1 = (u8 *) D_0028E44C;
+    reg_a1 = (u8 *) reg_atmp;
 next_840:
     if (*(s16 *)reg_a0 < 0) goto next_860;
     if (*(s16 *)reg_a1 >= 0) goto next_900;
     ptr = reg_a0;
     reg_a0 = reg_a1;
-    D_0028E44C = (s16 *) ptr;
+    reg_atmp = (u8 *) ptr;
     reg_a1 = ptr;
 next_860:
     reg_d2.h[0] = *(u16 *)(reg_a0 + 2);

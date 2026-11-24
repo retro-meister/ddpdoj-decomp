@@ -9,8 +9,6 @@ void func_001A4FA0(void) {
 s32 func_0014E370();
 extern u8 D_0025F690[];
 extern s8 *reg_a0_as_s8_p;
-extern u8 *reg_a5;
-extern u8 *reg_a6;
 
 void func_001A4FB0(void) {
     s8 temp_a1;
@@ -75,7 +73,6 @@ s32 func_0014E290();
 s32 func_00201B80();
 extern u16 D_0028E8A0;
 extern u16 D_0029C068[];
-extern u8 *reg_a0;
 
 void func_001A51B0(void) {
     if ((*(u16 *)((u8 *)(reg_a6) + (8))) != 0) goto next_0;

@@ -18,9 +18,6 @@ extern u8 D_0029F110[];
 extern u8 D_0029F180[];
 extern u8 D_0029F1F0_as_u8_a[];
 extern u8 D_0029F260_as_u8_a[];
-extern u8 *reg_a4;
-extern u8 *reg_a5;
-extern u8 *reg_a6;
 
 void func_0011F980(void) {
     u8 *sa5;
@@ -81,8 +78,6 @@ extern u16 D_0028E3EC;
 extern u16 D_0029C06C[];
 extern u8 D_0029CEA0_as_u8_a[];
 extern void (*jtbl_0028E3F4)();
-extern u8 *reg_a0;
-extern u8 *reg_a1;
 
 void func_0011FA90(void) {
     u8 temp;
@@ -784,8 +779,6 @@ extern u16 D_00241FF0[];
 extern s32 D_0028DFF4;
 extern u16 D_0028DFF8;
 extern u16 D_0029CED0[];
-extern u8 *reg_a2;
-extern u8 *reg_a3;
 
 #define W(o) (*(u16 *)(reg_a6 + (o)))
 

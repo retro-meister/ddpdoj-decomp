@@ -30,8 +30,6 @@ extern s16 death_D_002512B0[];
 #endif
 extern u8 D_002A4670[];
 extern u8 D_002A5050[];
-extern u8 *reg_a0;
-extern u8 *reg_a4;
 
 void func_00129DB0(void) {
     func_00129BE0();
@@ -93,7 +91,6 @@ extern u8 D_0024F0F0[];
 extern u8 D_00262570[];
 extern u32 D_0028DEA4;
 extern u16 D_0028E3EC;
-extern s8 D_0028E408;
 extern u16 D_0028E854_as_u16;
 extern u16 D_0028E88C;
 #ifdef DEATH_LABEL
@@ -110,10 +107,7 @@ extern u8 *D_00299770[];
 extern u16 D_0029C06C[];
 extern u8 D_0029CEA0_as_u8_a[];
 extern void (*jtbl_0028E3F4)();
-extern u8 *reg_a1;
-extern u8 *reg_a2;
 extern u16 *reg_a4_as_u16_p;
-extern u8 *reg_a6;
 
 #define SLOT_PHASE MAIN_OR_DEATH_LABEL(D_00299762[0], *(u16 *)(D_002962E0 + 0x10682))
 #define SLOT_CURSOR MAIN_OR_DEATH_LABEL(D_00299770[0], *(u8 **)(D_002962E0 + 0x10690))
@@ -1395,7 +1389,7 @@ block_202:
                                     (*(u8 *)((u8 *)(reg_a6) + (0x29))) = (u8) (temp_v1_42 - 1);
                                     if ((*(u8 *)((u8 *)(reg_a6) + (0x29))) == 0) {
                                         func_00203330();
-                                        if (D_0028E408 == 0) {
+                                        if (cond_flag == 0) {
                                             func_00202760();
                                             if (D_0028E88C == 0) {
                                                 reg_d1.b[0] = (*(u8 *)((u8 *)(reg_a6) + (0x1A)));
@@ -1816,7 +1810,7 @@ block_315:
                                     (*(u8 *)((u8 *)(reg_a6) + (0x29))) = (u8) (temp_v1_42 - 1);
                                     if ((*(u8 *)((u8 *)(reg_a6) + (0x29))) == 0) {
                                         func_00203330();
-                                        if (D_0028E408 == 0) {
+                                        if (cond_flag == 0) {
                                             func_00202760();
                                             if (D_0028E88C == 0) {
                                                 reg_d1.b[0] = (*(u8 *)((u8 *)(reg_a6) + (0x1A)));

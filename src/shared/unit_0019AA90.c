@@ -70,7 +70,6 @@ void func_0019AA90(void) {
     D_0028E124_as_s16 = 0;
 }
 
-extern s8 D_0028E408;
 
 s32 func_00206D10();
 s32 func_00206D30();
@@ -144,8 +143,6 @@ extern u8 D_002AC9A0[];
 extern u8 D_002AE100[];
 extern u16 D_002AF860_as_u16_a[];
 extern u8 g_arcade_sprites[];
-extern u8 *reg_a0;
-extern u8 *reg_a1;
 
 void func_0019AB20(void) {
     u16 count;
@@ -209,94 +206,94 @@ void func_0019AB20(void) {
     reg_a0 = (u8 *)D_002AE100;
     reg_a1 = (u8 *)(&D_0028E19C);
     func_0019B510();
-    if (D_0028E408 != 0) goto next_50;
+    if (cond_flag != 0) goto next_50;
     reg_a0 = (u8 *)D_002AC9A0;
     reg_a1 = (u8 *)(&D_0028E198);
     func_0019B510();
-    if (D_0028E408 != 0) goto next_50;
+    if (cond_flag != 0) goto next_50;
     reg_a0 = (u8 *)D_002AB240;
     reg_a1 = (u8 *)(&D_0028E194);
     func_0019B510();
-    if (D_0028E408 != 0) goto next_50;
+    if (cond_flag != 0) goto next_50;
     reg_a0 = (u8 *)D_002A67B0;
     reg_a1 = (u8 *)(&D_0028E184);
     func_0019B510();
-    if (D_0028E408 != 0) goto next_50;
+    if (cond_flag != 0) goto next_50;
     reg_a0 = (u8 *)D_002A6630;
     reg_a1 = (u8 *)(&D_0028E17C);
     func_0019B510();
-    if (D_0028E408 != 0) goto next_50;
+    if (cond_flag != 0) goto next_50;
     reg_a0 = (u8 *)D_002A6540;
     reg_a1 = (u8 *)(&D_0028E178);
     func_0019B510();
-    if (D_0028E408 != 0) goto next_50;
+    if (cond_flag != 0) goto next_50;
     reg_a0 = (u8 *)D_002A9AE0;
     reg_a1 = (u8 *)(&D_0028E190);
     func_0019B510();
-    if (D_0028E408 != 0) goto next_50;
+    if (cond_flag != 0) goto next_50;
     reg_a0 = (u8 *)D_002A68E0;
     reg_a1 = (u8 *)(&D_0028E188);
     func_0019B510();
-    if (D_0028E408 != 0) goto next_50;
+    if (cond_flag != 0) goto next_50;
     reg_a0 = (u8 *)D_002A6450;
     reg_a1 = (u8 *)(&D_0028E174);
     func_0019B510();
-    if (D_0028E408 != 0) goto next_50;
+    if (cond_flag != 0) goto next_50;
     reg_a0 = (u8 *)D_002A43B0;
     reg_a1 = (u8 *)(&D_0028E14C);
     func_0019B510();
-    if (D_0028E408 != 0) goto next_50;
+    if (cond_flag != 0) goto next_50;
     reg_a0 = (u8 *)D_002A3E70;
     reg_a1 = (u8 *)(&D_0028E13C);
     func_0019B510();
-    if (D_0028E408 != 0) goto next_50;
+    if (cond_flag != 0) goto next_50;
     reg_a0 = (u8 *)D_002A3CB0;
     reg_a1 = (u8 *)(&D_0028E148);
     func_0019B510();
-    if (D_0028E408 != 0) goto next_50;
+    if (cond_flag != 0) goto next_50;
     reg_a0 = (u8 *)D_002A3F70;
     reg_a1 = (u8 *)(&D_0028E144);
     func_0019B510();
-    if (D_0028E408 != 0) goto next_50;
+    if (cond_flag != 0) goto next_50;
     reg_a0 = (u8 *)D_002A60F0;
     reg_a1 = (u8 *)(&D_0028E170);
     func_0019B510();
-    if (D_0028E408 != 0) goto next_50;
+    if (cond_flag != 0) goto next_50;
     reg_a0 = (u8 *)D_002A5DC0;
     reg_a1 = (u8 *)(&D_0028E168);
     func_0019B510();
-    if (D_0028E408 != 0) goto next_50;
+    if (cond_flag != 0) goto next_50;
     reg_a0 = (u8 *)D_002A5DF0;
     reg_a1 = (u8 *)(&D_0028E16C);
     func_0019B510();
-    if (D_0028E408 != 0) goto next_50;
+    if (cond_flag != 0) goto next_50;
     reg_a0 = (u8 *)D_002A6680;
     reg_a1 = (u8 *)(&D_0028E180);
     func_0019B510();
-    if (D_0028E408 != 0) goto next_50;
+    if (cond_flag != 0) goto next_50;
     reg_a0 = (u8 *)D_002A3D30;
     reg_a1 = (u8 *)(&D_0028E12C);
     func_0019B510();
-    if (D_0028E408 != 0) goto next_50;
+    if (cond_flag != 0) goto next_50;
     reg_a0 = (u8 *)D_002A5D00;
     reg_a1 = (u8 *)(&D_0028E164);
     func_0019B510();
-    if (D_0028E408 != 0) goto next_50;
+    if (cond_flag != 0) goto next_50;
     reg_a0 = (u8 *)D_002A5A30;
     reg_a1 = (u8 *)(&D_0028E160);
     func_0019B510();
-    if (D_0028E408 != 0) goto next_50;
+    if (cond_flag != 0) goto next_50;
     reg_a0 = (u8 *)D_002A45B0;
     reg_a1 = (u8 *)(&D_0028E154);
     func_0019B510();
-    if (D_0028E408 != 0) goto next_50;
+    if (cond_flag != 0) goto next_50;
     if (D_0028E30C == 0) goto next_30;
     if (D_0028E308 != 0) goto next_32;
 next_30:
     reg_a0 = (u8 *)D_002A5050;
     reg_a1 = (u8 *)(&D_0028E15C);
     func_0019B510();
-    if (D_0028E408 != 0) goto next_50;
+    if (cond_flag != 0) goto next_50;
 next_32:
     if (D_0028E30C == 0) goto next_34;
     if (D_0028E308 != 0) goto next_36;
@@ -304,34 +301,34 @@ next_34:
     reg_a0 = (u8 *)D_002A4670;
     reg_a1 = (u8 *)(&D_0028E158);
     func_0019B510();
-    if (D_0028E408 != 0) goto next_50;
+    if (cond_flag != 0) goto next_50;
 next_36:
     if (D_0028E30C == 0) goto next_40;
     reg_a0 = (u8 *)D_002A6C30;
     reg_a1 = (u8 *)(&D_0028E18C);
     func_0019B510();
-    if (D_0028E408 != 0) goto next_50;
+    if (cond_flag != 0) goto next_50;
 next_40:
     reg_a0 = (u8 *)D_002A3C80;
     reg_a1 = (u8 *)(&D_0028E128);
     func_0019B510();
-    if (D_0028E408 != 0) goto next_50;
+    if (cond_flag != 0) goto next_50;
     reg_a0 = (u8 *)D_002A4430;
     reg_a1 = (u8 *)(&D_0028E150);
     func_0019B510();
-    if (D_0028E408 != 0) goto next_50;
+    if (cond_flag != 0) goto next_50;
     reg_a0 = (u8 *)D_002A3EF0;
     reg_a1 = (u8 *)(&D_0028E140);
     func_0019B510();
-    if (D_0028E408 != 0) goto next_50;
+    if (cond_flag != 0) goto next_50;
     reg_a0 = (u8 *)D_002A3DF0;
     reg_a1 = (u8 *)(&D_0028E138);
     func_0019B510();
-    if (D_0028E408 != 0) goto next_50;
+    if (cond_flag != 0) goto next_50;
     reg_a0 = (u8 *)D_002A3DD0;
     reg_a1 = (u8 *)(&D_0028E134);
     func_0019B510();
-    if (D_0028E408 != 0) goto next_50;
+    if (cond_flag != 0) goto next_50;
     reg_a0 = (u8 *)D_002A3DB0;
     reg_a1 = (u8 *)(&D_0028E130);
     func_0019B510();
@@ -446,11 +443,10 @@ block_51:
     func_00206D10();
 }
 
-extern u8 *reg_a2;
 
 
 void func_0019B510(void) {
-    D_0028E408 = 0;
+    cond_flag = 0;
     reg_d0.h[0] = *(u16 *)reg_a1;
     switch (reg_d0.h[0]) {
     case 0:
@@ -492,13 +488,12 @@ block_rts:
             return;
         } else {
             *(u16 *)reg_a1 = 0;
-            D_0028E408 = 1;
+            cond_flag = 1;
         }
         break;
     }
 }
 
-extern u8 *reg_a6;
 
 void func_0019B6E0(void) {
     u32 temp_a3;

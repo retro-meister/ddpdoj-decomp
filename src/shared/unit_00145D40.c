@@ -24,13 +24,6 @@ void func_00148110(void);
 
 s32 func_00137BC0();
 s32 func_00137BD0();
-extern u8 *reg_a0;
-extern u8 *reg_a1;
-extern u8 *reg_a2;
-extern u8 *reg_a3;
-extern u8 *reg_a4;
-extern u8 *reg_a5;
-extern u8 *reg_a6;
 
 void func_00145D40(void) {
     u8 *save_a0;

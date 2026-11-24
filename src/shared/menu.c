@@ -116,13 +116,6 @@ void func_0021D500(void) {
 }
 
 extern s8 D_0028EB88;
-extern u8 *reg_a0;
-extern u8 *reg_a1;
-extern u8 *reg_a2;
-extern u8 *reg_a3;
-extern u8 *reg_a4;
-extern u8 *reg_a5;
-extern u8 *reg_a6;
 
 void func_0021D570(void) {
     u8 *save_a0;

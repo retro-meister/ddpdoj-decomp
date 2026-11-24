@@ -5,7 +5,6 @@ void func_001D38E0(void);
 void func_001D3A20(void);
 void func_001D3B70(void);
 
-extern u8 *reg_a6;
 
 void func_001D36C0(void) {
     reg_d0.h[0] = (*(u16 *)((u8 *)(reg_a6) + (2)));
@@ -47,8 +46,6 @@ s32 func_00124B20();
 s32 func_00124C70();
 s32 func_00125060(void *);
 s32 func_00201C60();
-extern s8 D_0028E408;
-extern u8 *reg_a4;
 
 void func_001D3810(void) {
     u8 temp_v1;
@@ -64,7 +61,7 @@ void func_001D3810(void) {
         }
         reg_d0.w = 7;
         func_00125060(reg_a6 + 0x1B);
-        if (D_0028E408 == 0) {
+        if (cond_flag == 0) {
             reg_d0.w = 0;
             func_00124C70();
             reg_d0.w = 2;

@@ -9,8 +9,6 @@ void func_001CE4C0(void);
 void func_001CE540(void);
 void func_001CE5F0();
 
-extern u8 *reg_a4;
-extern u8 *reg_a6;
 
 
 void func_001CDDF0(void) {
@@ -44,12 +42,8 @@ void func_001CDE90(void) {
 
 s32 func_002021F0();
 s32 func_00202500();
-extern s16 *D_0028E44C;
 extern s16 D_0029F1F0[];
 extern s16 D_0029F260[];
-extern u8 *reg_a0;
-extern u8 *reg_a1;
-extern u8 *reg_a5;
 
 void func_001CDEA0(void) {
     s16 *temp_a0;
@@ -63,15 +57,15 @@ void func_001CDEA0(void) {
         reg_a0 = (u8 *)(D_0029F260);
         reg_a1 = (u8 *)(D_0029F1F0);
         if ((*(u8 *)((u8 *)(reg_a5) + (2))) != 0) {
-            D_0028E44C = (s16 *)(reg_a0);
+            reg_atmp = (u8 *)(reg_a0);
             reg_a0 = (u8 *)(reg_a1);
-            reg_a1 = (u8 *)(D_0028E44C);
+            reg_a1 = (u8 *)(reg_atmp);
         }
         temp_a0 = (s16 *)(reg_a0);
         if ((*(s16 *)((u8 *)(temp_a0) + (0))) >= 0) {
             if (*(s16 *)reg_a1 < 0) {
                 reg_a0 = (u8 *)(reg_a1);
-                D_0028E44C = (s16 *)(temp_a0);
+                reg_atmp = (u8 *)(temp_a0);
                 reg_a1 = (u8 *)(temp_a0);
                 goto block_6;
             }

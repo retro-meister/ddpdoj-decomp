@@ -21,7 +21,6 @@ extern u16 D_0028DFFC;
 extern u16 D_0028E890;
 extern u16 D_0028E8A0;
 extern u16 D_0028E8A8;
-extern u8 *reg_a6;
 
 void func_00168AC0(void) {
     u8 t;

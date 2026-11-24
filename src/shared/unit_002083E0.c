@@ -45,7 +45,6 @@ void func_00208430(void) {
 s32 func_002092F0();
 s32 func_002093F0();
 extern u8 D_0028DA94;
-extern u8 *reg_a0;
 
 void func_002084A0(void) {
     func_00208430();

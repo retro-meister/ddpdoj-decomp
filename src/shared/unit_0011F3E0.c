@@ -7,7 +7,6 @@ extern u8 D_0028E290;
 extern u8 D_0028E2C8;
 extern u8 D_0028ED80;
 extern void func_0019C4B0();
-extern u8 *reg_a6;
 
 void func_0011F3E0(void) {
     if (((D_0028ED80 != 0) && (D_0028E2C8 != 0)) || (D_0028E290 == 2)) {
@@ -54,12 +53,6 @@ s32 func_00203670();
 extern u16 D_0029C068[];
 extern u16 D_0029C07C[];
 extern u16 D_0029C07E[];
-extern u8 *reg_a0;
-extern u8 *reg_a1;
-extern u8 *reg_a2;
-extern u8 *reg_a3;
-extern u8 *reg_a4;
-extern u8 *reg_a5;
 
 void func_0011F4E0(void) {
     u32 b1_d0;

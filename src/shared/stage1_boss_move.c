@@ -6,9 +6,6 @@ s32 func_00201E20();
 extern u16 D_002BDA90[];
 extern u16 D_002BDA92[];
 extern u8 D_002BDA94[];
-extern u8 *reg_a0;
-extern u8 *reg_a1;
-extern u8 *reg_a6;
 
 void func_001BA820(void) {
     u32 t;
@@ -86,7 +83,6 @@ next_3:
     return;
 }
 
-extern u8 *reg_a4;
 
 void func_001BAB10(void) {
     *(s16 *)(reg_a6 + 0x1A) = 0x1E20;

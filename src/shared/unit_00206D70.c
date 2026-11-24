@@ -8,7 +8,6 @@ extern s16 D_0028E0C8;
 extern s16 D_0028E0CC_as_s16;
 extern s16 D_0028E0D0_as_s16;
 extern u8 D_002A04B0[];
-extern u8 *reg_a0;
 
 void func_00206D70(void) {
     D_0028E0C4_as_s32 = 0;
@@ -31,7 +30,6 @@ typedef void (*Fn)();
 extern u16 D_002678A0[];
 extern u16 D_002A04B0_as_u16_a[];
 extern u32 jtbl_0028E3F4_as_u32;
-extern u8 *reg_a5;
 
 void func_00206DF0(void) {
     u32 temp_s0;
@@ -60,8 +58,6 @@ void func_00206DF0(void) {
     } while ((s16)(--reg_d0.h[0]) >= 0);
 }
 
-extern u8 *reg_a2;
-extern u8 *reg_a3;
 
 void func_00206F30(void) {
     u8 *a2;
@@ -118,7 +114,6 @@ void func_00206FD0(void) {
 extern u16 D_0028E0D0;
 extern u8 D_002A0AF0[];
 extern u8 D_002A1130[];
-extern u8 *reg_a1;
 
 void func_00207070(void) {
     u32 tmp;
@@ -313,7 +308,6 @@ void func_002075F0(void) {
     func_00207490();
 }
 
-extern s8 D_0028E408;
 
 void func_00207600(void) {
     s32 d0;
@@ -334,7 +328,7 @@ loop_1:
     reg_d0.w = d0;
     reg_d1.w = d1;
     reg_d2.w = d2;
-    D_0028E408 = 0;
+    cond_flag = 0;
     return;
 next_1:
     reg_a0 += 0x50;
@@ -345,5 +339,5 @@ next_1:
     reg_d0.w = d0;
     reg_d1.w = d1;
     reg_d2.w = d2;
-    D_0028E408 = 1;
+    cond_flag = 1;
 }

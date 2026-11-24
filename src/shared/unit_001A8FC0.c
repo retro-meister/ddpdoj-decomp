@@ -40,8 +40,6 @@ extern u8 D_0028E71C_as_u8;
 extern u8 D_0028E720;
 extern u8 D_0028E855;
 extern u16 D_0029CEA0[];
-extern u8 *reg_a0;
-extern u8 *reg_a6;
 
 void func_001A9000(void) {
     if (!((*(u8 *)((u8 *)(reg_a6) + (1))) & 2)) {
@@ -1129,7 +1127,6 @@ extern s32 D_0026C010[];
 extern u8 D_0028E388;
 extern u8 D_006E5C08[];
 extern u16 *reg_a1_as_u16_p;
-extern u8 *reg_a2;
 
 void func_001AAB90(void)
 {
@@ -1147,8 +1144,6 @@ void func_001AAB90(void)
 }
 
 extern u8 D_0026C020[];
-extern u8 *reg_a4;
-extern u8 *reg_a5;
 
 void func_001AAC00(void) {
     s32 func_001AE9A0(Reg32 *, Reg32 *);
@@ -1512,7 +1507,6 @@ void func_001AB570(void) {
 }
 
 extern u16 D_0028E598;
-extern u8 *reg_a1;
 
 void func_001AB5C0(void) {
     u32 tmp;

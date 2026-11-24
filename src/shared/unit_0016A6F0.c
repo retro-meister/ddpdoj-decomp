@@ -22,7 +22,6 @@ extern u16 D_0028E1AC;
 extern u16 D_0028E1B8;
 extern u16 g_arcade_input_port_as_u16_a[];
 extern u8 g_paused;
-extern u8 *reg_a0;
 
 void func_0016A710(void) {
     u32 t;

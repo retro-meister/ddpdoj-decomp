@@ -17,8 +17,6 @@ extern u16 D_0028E8B8;
 extern u16 D_00299768_as_u16_a[];
 extern u16 D_0029976A_as_u16_a[];
 extern u16 D_0029976C[];
-extern u8 *reg_a5;
-extern u8 *reg_a6;
 
 #define W(o) (*(u16 *)(reg_a6 + (o)))
 #define B(o) (*(u8 *)(reg_a6 + (o)))

@@ -17,8 +17,6 @@ extern u8 D_0028E290;
 extern u16 D_0028E2E8;
 extern s32 D_0028E638;
 extern u16 D_0028E8B8;
-extern u8 *reg_a5;
-extern u8 *reg_a6;
 
 #define W(o) (*(u16 *)(reg_a6 + (o)))
 #define TW(o) (*(u16 *)(reg_a5 + (o)))
@@ -328,7 +326,6 @@ void func_001F5750(void) {
     (*(u16 *)((u8 *)(reg_a6) + (0x1A0))) = (u16) reg_d0.h[0];
 }
 
-extern u8* reg_a6;
 
 void func_001F57C0(void) {
     *(s16*)(reg_a6 + 0x106) = 0;

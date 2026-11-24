@@ -23,9 +23,6 @@ s32 func_0019C940();
 extern u8 D_0026E1B0[];
 extern u16 D_0026E1D0[];
 extern u16 D_0026E250[];
-extern u8 *reg_a0;
-extern u8 *reg_a2;
-extern u8 *reg_a6;
 
 void func_001B7930(void) {
     u16 temp_a1;

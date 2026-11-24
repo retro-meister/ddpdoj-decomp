@@ -16,7 +16,6 @@ void func_0011D450(void);
 extern u32 D_002A17C0[];
 extern u8 D_002A3C80[];
 extern u8 g_text_layer[];
-extern u8 *reg_a0;
 
 void func_0011C7C0(void) {
     u8 *a0;
@@ -110,7 +109,6 @@ loop_1:
     func_0011C920();
 }
 
-extern u8 *reg_a6;
 
 void func_0011C9C0(void) {
     reg_tmp.w = 0x1AC0;

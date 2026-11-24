@@ -144,8 +144,6 @@ void func_0020ED20(void) {
 s32 func_0018DD40();
 s32 func_001A35A0();
 s32 func_00206520();
-extern u8 *reg_a0;
-extern u8 *reg_a6;
 
 void func_0020ED40(void) {
     reg_d0.w = 0;
@@ -201,8 +199,6 @@ extern u8 g_pad_vib_state_p2;
 extern u8 g_pad_vib_state_p1;
 extern s32 D_0028E998;
 extern s32 D_0028E99C;
-extern u8 *reg_a1;
-extern u8 *reg_a5;
 
 #define W(o) (*(u16 *)(reg_a6 + (o)))
 

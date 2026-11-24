@@ -66,7 +66,6 @@ extern u8 D_00267FB0[];
 extern u8 D_00267FC8[];
 extern u8 D_00267FD8[];
 extern u8 *D_00268050[];
-extern u8 *reg_a0;
 
 void func_00208710(void) {
     void func_00209200(void);
@@ -102,7 +101,6 @@ void func_00208710(void) {
     func_00209200();
 }
 
-extern s8 D_0028E408;
 
 s32 func_0016A8D0();
 s32 func_0018DA30();
@@ -189,13 +187,13 @@ void func_00208800(void) {
             func_002093F0();
         }
         if (D_0028DFA0 == 9) {
-            D_0028E408 = 1;
+            cond_flag = 1;
             return;
         }
         goto block_31;
     }
 block_31:
-    D_0028E408 = 0;
+    cond_flag = 0;
 }
 
 extern s32 g_text_palette[];
@@ -250,7 +248,7 @@ void func_00208B60(void) {
     D_0028DFB0 = 0x3C;
     D_0028DFA4 = 0;
     func_002095E0();
-    if (D_0028E408 != 0) {
+    if (cond_flag != 0) {
         func_00209410();
     }
 }
@@ -266,7 +264,6 @@ extern s8 D_0028DFA8_as_s8;
 extern s8 D_0028DFAC;
 extern s16 D_0028E3B8;
 extern void (*jtbl_0028E3F4)();
-extern u8 *reg_a5;
 
 void func_00208BA0(void) {
     if ((*(u8 *)((u8 *)(reg_a5) + (3))) != 0) {

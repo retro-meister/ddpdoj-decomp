@@ -19,7 +19,6 @@ void func_00122BE0(void) {
 s32 fade_reset();
 s32 fade_start_out();
 extern s8 g_splash_visible_as_s8;
-extern s8 D_0028E408;
 extern u16 D_0028E990;
 extern u16 D_0028E994;
 extern s8 g_fade_state;
@@ -45,8 +44,8 @@ void func_00122C20(void) {
     if ((s32) D_0028E994 >= 3) {
         fade_reset();
         g_splash_visible_as_s8 = 0;
-        D_0028E408 = 0;
+        cond_flag = 0;
         return;
     }
-    D_0028E408 = 1;
+    cond_flag = 1;
 }

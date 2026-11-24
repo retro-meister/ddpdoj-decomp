@@ -9,7 +9,6 @@ void func_001B23C0(void) {
 }
 
 s32 func_002011A0();                            /* extern */
-extern u8 *reg_a4;
 
 void func_001B23D0(void) {
     func_002011A0();
@@ -19,7 +18,6 @@ void func_001B23D0(void) {
 }
 
 s32 func_00201E20();
-extern u8 *reg_a6;
 
 void func_001B2410(void) {
     u32 temp_a0;
@@ -115,8 +113,6 @@ void func_001B2660(void) {
 }
 
 s32 func_0013A780();
-extern u8 *reg_a0;
-extern u8 *reg_a1;
 
 void func_001B26F0(arg2)
     u16 *arg2;
@@ -416,7 +412,6 @@ extern u16 D_0026DF00[];
 extern u8 D_0026DF70[];
 extern u8 D_0026DFC0[];
 extern u8 D_0028E310;
-extern s8 D_0028E408;
 
 void func_001B3030(void) {
     u16 *temp_a3_2;
@@ -537,7 +532,7 @@ void func_001B3030(void) {
     temp_a0_5 = (*(u8 *)((u8 *)(reg_a4) + (3)));
     if (temp_a0_5 == 4) {
         func_00125440();
-        if (D_0028E408 == 0) {
+        if (cond_flag == 0) {
             D_0028E310 = 0xA;
             reg_a0 = D_0026DFC0;
             func_0013B2E0();
@@ -800,7 +795,6 @@ void func_001B3BE0() {
     }
 }
 
-extern u8* reg_a4;
 
 void func_001B3CF0(void) {
     *(u16*)(reg_a4 + 2) = 0;

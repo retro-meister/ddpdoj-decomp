@@ -43,7 +43,6 @@ extern u16 D_0028DFC0;
 extern u16 D_0028E3EC;
 extern u16 D_0028E910;
 extern u16 g_stage;
-extern u8 *reg_a6;
 
 void func_0019F2E0(void) {
     if (D_0028DFC0 != 0) return;
@@ -152,7 +151,6 @@ void func_0019F620(void) {
     }
 }
 
-extern u8 *reg_a0;
 
 void func_0019F750(void) {
     reg_tmp.b[0] = (*(u8 *)((u8 *)(reg_a6) + (0x43)));
@@ -185,8 +183,6 @@ void func_0019F750(void) {
     }
 }
 
-extern u8 *reg_a1;
-extern u8 *reg_a4;
 
 void func_0019F930(void) {
     (*(u16 *)((u8 *)(reg_a1) + (0))) = (u16) *(u16 *)reg_a0;
@@ -293,7 +289,6 @@ extern u8 D_0025F3C0[];
 extern u8 D_0025F400[];
 extern u8 D_0025F430[];
 extern u8 D_0029F110[];
-extern s8 D_0028E408;
 
 s32 func_0013C9A0();
 s32 func_0013CAB0();
@@ -307,7 +302,6 @@ extern u8 D_0028ED7C;
 extern u8 D_0029D710[];
 extern u8 D_0029F1F0_as_u8_a[];
 extern void (*jtbl_0028E3F4)();
-extern u8 *reg_a2;
 
 void func_0019FD30(void) {
     u32 temp;
@@ -500,7 +494,7 @@ next_320:
     if ((*(u8 *)((u8 *)(reg_a6) + (0x1A))) != 0) goto next_330;
     func_001A17C0();
     func_001A18B0();
-    if (D_0028E408 == 0) goto block_b;
+    if (cond_flag == 0) goto block_b;
     (*(u8 *)((u8 *)(reg_a6) + (0))) |= 4;
     (*(s16 *)((u8 *)(reg_a6) + (0x4E))) = 0;
     if ((*(u8 *)((u8 *)(reg_a4) + (0))) & 1) goto next_328;
@@ -768,7 +762,6 @@ block_13:
 }
 
 s32 func_0019E5B0();
-extern u8 *reg_a3;
 
 void func_001A1040(void) {
     u32 t;
@@ -1008,10 +1001,10 @@ void func_001A18B0(void) {
         reg_tmp.w = (u32)reg_a0;
         (*(u16 *)((u8 *)(reg_a6) + (0x16))) = (u16) reg_tmp.h[1];
         (*(u16 *)((u8 *)(reg_a6) + (0x18))) = (u16) reg_tmp.h[0];
-        D_0028E408 = 0;
+        cond_flag = 0;
         return;
     }
-    D_0028E408 = 1;
+    cond_flag = 1;
 }
 
 extern u16 D_0025F3D0[];

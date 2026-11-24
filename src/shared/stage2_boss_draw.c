@@ -1,8 +1,6 @@
 #include "common.h"
 
 extern u8 D_0026C2A0[];
-extern u8 *reg_a0;
-extern u8 *reg_a6;
 
 void func_001C3EC0(void) {
     s32 func_0019C670();
@@ -70,7 +68,6 @@ void func_001C3FD0(void) {
 }
 
 extern u8 D_0026C330[];
-extern u8 *reg_a2;
 
 void func_001C4090(void) {
     s32 func_0019C670();

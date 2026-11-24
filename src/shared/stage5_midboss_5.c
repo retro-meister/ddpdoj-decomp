@@ -29,9 +29,7 @@ void func_002004E0(void);
 s32 func_00128930();
 extern u16 D_00259970[];
 extern u16 D_0028E910;
-extern u8 *reg_a0;
 extern u32 reg_a4_as_u32;
-extern u8 *reg_a5;
 
 void func_001FC8E0(void) {
     u16 temp_a0;
@@ -341,7 +339,6 @@ extern s16 D_0028E884_as_s16;
 extern s16 D_0028E888_as_s16;
 extern s16 D_00299768[];
 extern u16 D_0029C068[];
-extern u8 *reg_a6;
 
 void func_001FD760(void) {
     reg_a0 = (u8 *)D_002661E0;
@@ -631,7 +628,6 @@ void func_001FDED0(void) {
 }
 
 extern u8 D_0028DA58;
-extern s8 D_0028E408;
 
 void func_001FDFC0() {
     if ((*(u16 *)((u8 *)(reg_a6) + (0x28))) == 0) {
@@ -647,7 +643,7 @@ void func_001FDFC0() {
     reg_d2.h[0] = (*(u16 *)((u8 *)(reg_a0) + (0)));
     reg_d3.h[0] = (*(u16 *)((u8 *)(reg_a0) + (2)));
     func_001FF000();
-    if (D_0028E408 == 0) {
+    if (cond_flag == 0) {
         (*(u16 *)((u8 *)(reg_a6) + (0x2A))) += 4;
         (*(u16 *)((u8 *)(reg_a6) + (0x2A))) &= 7;
     }
@@ -860,7 +856,6 @@ void func_001FE330(void) {
 }
 
 extern u8 D_00266270[];
-extern u8 *reg_a4;
 
 void func_001FE6D0(void) {
     u16 temp_a0;
@@ -879,7 +874,7 @@ void func_001FE6D0(void) {
         reg_d2.h[0] = 0x2800;
         reg_d3.h[0] = 0x1C00;
         func_001FF000();
-        if (D_0028E408 == 0) {
+        if (cond_flag == 0) {
             (*(s8 *)((u8 *)(reg_a6) + (0x1B))) = 0;
             (*(u16 *)((u8 *)(reg_a6) + (0x28))) = 2U;
         }
@@ -964,7 +959,7 @@ void func_001FE990(arg1)
         reg_d2.h[0] = 0x5C00;
         reg_d3.h[0] = 0x1C00;
         func_001FF000();
-        if (D_0028E408 == 0) {
+        if (cond_flag == 0) {
             (*(s8 *)((u8 *)(reg_a6) + (0x1B))) = 0;
             (*(u16 *)((u8 *)(reg_a6) + (0x28))) = 2U;
         }
@@ -997,7 +992,7 @@ void func_001FEA90(void) {
         reg_d2.h[0] = 0x3200;
         reg_d3.h[0] = 0x1C00;
         func_001FF000();
-        if (D_0028E408 == 0) {
+        if (cond_flag == 0) {
             (*(s8 *)((u8 *)(reg_a6) + (0x1B))) = 4;
             (*(u16 *)((u8 *)(reg_a6) + (0x28))) = 2U;
             (*(u8 *)((u8 *)(reg_a6) + (0x2B))) = 1U;
@@ -1008,7 +1003,7 @@ void func_001FEA90(void) {
         reg_d2.h[0] = 0x3600;
         reg_d3.h[0] = 0x2A00;
         func_001FF000();
-        if (D_0028E408 == 0) {
+        if (cond_flag == 0) {
             (*(u16 *)((u8 *)(reg_a6) + (0x28))) = 3U;
             (*(u8 *)((u8 *)(reg_a6) + (0x2B))) = 1U;
         }
@@ -1018,7 +1013,7 @@ void func_001FEA90(void) {
         reg_d2.h[0] = 0x3600;
         reg_d3.h[0] = 0xE00;
         func_001FF000();
-        if (D_0028E408 == 0) {
+        if (cond_flag == 0) {
             reg_d0.w = 5;
             func_001FDDD0();
         }
@@ -1107,7 +1102,7 @@ void func_001FEE40(arg1)
         reg_d2.h[0] = 0x5C00;
         reg_d3.h[0] = 0x1C00;
         func_001FF000();
-        if (D_0028E408 == 0) {
+        if (cond_flag == 0) {
             (*(s8 *)((u8 *)(reg_a6) + (0x1B))) = 0;
             (*(u16 *)((u8 *)(reg_a6) + (0x28))) = 2U;
         }
@@ -1161,10 +1156,10 @@ void func_001FF000(void) {
         func_002021D0();
         func_002024F0();
         (*(u8 *)((u8 *)(reg_a6) + (0x1A))) = (u8) reg_d1.b[0];
-        D_0028E408 = 1;
+        cond_flag = 1;
         return;
     }
-    D_0028E408 = 0;
+    cond_flag = 0;
 }
 
 s32 func_0013A780();
@@ -1178,7 +1173,6 @@ s32 vibration_start_pad1();
 s32 vibration_start_pad2();
 extern u16 D_00266290[];
 extern u16 D_002662E0[];
-extern u8 *reg_a1;
 
 void func_001FF0B0(void) {
     u16 temp_a0_2;
@@ -1274,10 +1268,10 @@ void func_001FF0B0(void) {
         goto block_11;
     }
 block_11:
-    D_0028E408 = 0;
+    cond_flag = 0;
     return;
 block_set:
-    D_0028E408 = 1;
+    cond_flag = 1;
 }
 
 void func_001FF420(void) {
@@ -1384,7 +1378,7 @@ void func_001FF670(void) {
             return;
         }
         func_00203060();
-        if (D_0028E408 != 0) {
+        if (cond_flag != 0) {
             if (*(u8 *)(reg_a5 + 0x17) == 0) goto next_1;
 block_end1:
             func_0014E290();
@@ -1551,7 +1545,7 @@ void func_001FFB10(void) {
     if (D_0028E2E4 != 0) goto block_end1;
     {
         func_00203060();
-        if (D_0028E408 != 0) {
+        if (cond_flag != 0) {
             if (*(u8 *)(reg_a5 + 0x17) == 0) goto next_1;
 block_end1:
             func_0014E290();
@@ -1732,7 +1726,7 @@ next_11:
     reg_d6.w = 0;
     reg_d7.b[0] = *(u8 *)(reg_a6 + 0x1A);
     func_00202490();
-    if (D_0028E408 != 0) goto next_12;
+    if (cond_flag != 0) goto next_12;
     reg_d6.w = 1;
     reg_d7.b[0] -= reg_d1.b[0];
     if (reg_d7.b[0] == 0) goto next_12;
@@ -1898,7 +1892,7 @@ void func_002005E0() {
     (*(u16 *)((u8 *)(reg_a5) + (0x20))) = (u16) reg_d3.h[0];
     (*(u8 *)((u8 *)(reg_a5) + (0x1D))) = 0x20U;
     func_00202180();
-    if (D_0028E408 == 0) {
+    if (cond_flag == 0) {
         (*(u8 *)((u8 *)(reg_a5) + (0x1D))) = (u8) reg_d1.b[0];
     }
 }

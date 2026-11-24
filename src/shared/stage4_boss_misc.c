@@ -7,9 +7,6 @@ void func_001DC9D0(void) {
 
 s32 func_0014E370();
 extern u8 D_0026F0A0[];
-extern u8 *reg_a0;
-extern u8 *reg_a5;
-extern u8 *reg_a6;
 
 void func_001DC9E0(void) {
     reg_a0 = D_0026F0A0;
@@ -26,7 +23,6 @@ void func_001DC9E0(void) {
     (*(s16 *)((u8 *)(reg_a5) + (0x20))) = 0;
 }
 
-extern s8 D_0028E408;
 
 s32 func_0014E290();
 s32 func_0019D710();
@@ -52,9 +48,9 @@ void func_001DCA80(void) {
             (*(s16 *)((u8 *)(reg_a6) + (0x18))) = 0x7FFF;
         }
         func_001D27A0();
-        if (D_0028E408 == 0) {
+        if (cond_flag == 0) {
             func_00203060();
-            if (D_0028E408 != 0) {
+            if (cond_flag != 0) {
                 if ((*(u8 *)((u8 *)(reg_a5) + (0x17))) != 0) {
 block_6:
                     func_0014E290();
@@ -210,7 +206,6 @@ s32 func_00202B70();
 extern u8 D_0026F150[];
 extern u16 D_0026F170[];
 extern u16 D_0028E3F0;
-extern u8 D_0028E408_as_u8;
 extern u16 D_0028E85C;
 extern u16 D_0028E860;
 extern u16 D_0028E864;
@@ -278,7 +273,7 @@ next_110:
     if ((*(s16 *)((u8 *)(reg_a6) + (4))) <= -0x400) goto block_b;
     if (!((*(s16 *)((u8 *)(reg_a6) + (4))) < 0x3C00)) goto block_b;
     func_00203060();
-    if ((s8) D_0028E408_as_u8 == 0) goto next_120;
+    if ((s8) (*(u8 *)&cond_flag) == 0) goto next_120;
     if ((*(u8 *)((u8 *)(reg_a5) + (0x17))) == 0) goto next_130;
 block_b:
     func_0014E290();

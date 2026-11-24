@@ -74,7 +74,6 @@ void func_00172090(void)
     reg_d0.b[0] = (u8)*reg_a0_as_s8_p;
 }
 
-extern s8 D_0028E408;
 
 s32 func_001A3020();
 extern u8 D_0026B250[];
@@ -82,7 +81,6 @@ extern u16 D_0028E78C;
 extern u8 D_0028E790;
 extern u8 D_0028E791;
 extern u16 D_0028E794;
-extern u8 *reg_a0;
 
 void func_001720E0(void) {
     s32 temp_a0;
@@ -128,10 +126,10 @@ void func_001720E0(void) {
             goto block_z;
         }
     }
-    D_0028E408 = 1;
+    cond_flag = 1;
     return;
 block_z:
-    D_0028E408 = 0;
+    cond_flag = 0;
 }
 
 extern u16 D_0028E784_as_u16;
