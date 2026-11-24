@@ -1,5 +1,4 @@
 #include "common.h"
-#pragma opt_propagation off
 
 extern void func_0019BC10(void);
 extern void func_0019BD40(void);

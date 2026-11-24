@@ -1,6 +1,5 @@
 #include "common.h"
 
-#pragma opt_propagation off
 
 typedef struct {
     s16 x;
@@ -41,7 +40,7 @@ extern GlyphEntry D_0058E000[];
 extern GlyphQuad D_00592000[];
 
 void func_0021C350(s32 index) {
-    s32 n;
+    u32 n;
     s32 u;
     s32 v;
     s32 x;
