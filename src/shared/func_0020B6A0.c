@@ -8,7 +8,7 @@ extern s8 D_0028E408;
 
 #ifdef DEATH_LABEL
 extern u16 D_0028E3C0;
-s32 func_001271E0(void);
+s32 death_func_001271E0(void);
 #endif
 
 void func_0020B6A0(void) {
@@ -16,7 +16,7 @@ void func_0020B6A0(void) {
 
     D_0028E408 = 0;
 #ifdef DEATH_LABEL
-    if (func_001271E0() != 0) {
+    if (death_func_001271E0() != 0) {
         return;
     }
 #endif
