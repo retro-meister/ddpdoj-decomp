@@ -33,6 +33,8 @@ def sources():
 
 def code(base, dims):
     """Short name of a declared type: `u8`, `s16_a` (array), `PadInfo_a3`, `u8_p` (pointer)."""
+    if base.startswith("fn "):
+        return "fn" + "".join("_a" + re.sub(r"\W", "", size) for size in re.findall(r"\[([^\]]*)\]", dims))
     text = base.replace("const ", "").replace("volatile ", "").replace("unsigned ", "u").replace("struct ", "")
     text = re.sub(r"\s+", "_", text.strip()).replace("*", "_p")
     for size in re.findall(r"\[([^\]]*)\]", dims):
@@ -40,11 +42,21 @@ def code(base, dims):
     return re.sub(r"_+", "_", text)
 
 
+FUNCTION_POINTER = re.compile(r"^extern\s+(.+?)\(\s*\*\s*(\w+)\s*((?:\[[^\]]*\])*)\s*\)\s*\((.*)\)\s*;")
+
+
 def declarations(text):
-    """[(name, base, dims, line)] for the file-scope object declarations of a source."""
+    """[(name, base, dims, line)] for the file-scope object declarations of a source. A pointer to function
+    has the base `fn <return type>(<parameters>)`."""
     out = []
     for kind, block in blocks(text):
-        parsed = data_declaration(block) if kind == "decl" and "\n" not in block else None
+        if kind != "decl" or "\n" in block:
+            continue
+        parsed = data_declaration(block)
+        pointer = FUNCTION_POINTER.match(block.strip())
+        if pointer:
+            signature = re.sub(r"\s+", " ", f"{pointer.group(1).strip()}({pointer.group(4).strip()})")
+            parsed = (pointer.group(2), "fn " + signature, pointer.group(3))
         if parsed:
             out.append((*parsed, block))
     return out

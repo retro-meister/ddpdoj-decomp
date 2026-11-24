@@ -8,7 +8,7 @@ s32 func_00209A50();
 s32 func_00209AA0();
 extern u8 D_00268790[];
 extern s8 D_0028DFA0;
-extern u8 *jtbl_0028E3F4;
+extern u8 *jtbl_0028E3F4_as_u8_p;
 extern u8 *reg_a0;
 
 void func_00209AF0(void) {
@@ -29,7 +29,7 @@ void func_00209AF0(void) {
     if (reg_d0.w != -1U) {
         reg_a0 = (u8 *)reg_d0.w;
         reg_d7.h[0] = 2;
-        jtbl_0028E3F4 = reg_a0;
-        ((Fn)jtbl_0028E3F4)();
+        jtbl_0028E3F4_as_u8_p = reg_a0;
+        ((Fn)jtbl_0028E3F4_as_u8_p)();
     }
 }

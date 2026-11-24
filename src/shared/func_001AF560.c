@@ -29,7 +29,7 @@ extern u16 D_0028E910;
 extern u8 D_0028ED58;
 extern u8 D_0028ED7C;
 extern u8 D_0028ED80;
-extern u8 *jtbl_0028E3F4;
+extern u8 *jtbl_0028E3F4_as_u8_p;
 extern u8 *reg_a0;
 extern u8 *reg_a4;
 extern u8 *reg_a5;
@@ -135,8 +135,8 @@ block_51:
     reg_tmp.h[1] = *(u16 *)(reg_a4 + 4);
     reg_tmp.h[0] = *(u16 *)(reg_a4 + 6);
     reg_a0 = (u8 *)reg_tmp.w;
-    jtbl_0028E3F4 = reg_a0;
-    ((Fn)jtbl_0028E3F4)();
+    jtbl_0028E3F4_as_u8_p = reg_a0;
+    ((Fn)jtbl_0028E3F4_as_u8_p)();
     if (!(reg_d0.w & 0x8000)) {
         goto block_52;
     }
@@ -147,8 +147,8 @@ block_51:
     reg_tmp.h[1] = *(u16 *)(reg_a4 + 0xC);
     reg_tmp.h[0] = *(u16 *)(reg_a4 + 0xE);
     reg_a0 = (u8 *)reg_tmp.w;
-    jtbl_0028E3F4 = reg_a0;
-    ((Fn)jtbl_0028E3F4)();
+    jtbl_0028E3F4_as_u8_p = reg_a0;
+    ((Fn)jtbl_0028E3F4_as_u8_p)();
     if (D_0028E408 != 0) {
         goto block_52;
     }

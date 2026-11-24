@@ -5,7 +5,7 @@ extern u8 D_0028E2C0;
 extern u16 D_0028E4A2;
 extern u16 D_0028E4A6;
 extern void *reg_a6_as_void_p;
-extern void (*jtbl_0028E3F4)(void);
+extern void (*jtbl_0028E3F4_as_fn)(void);
 
 void func_00171330(void (*callback)(void))
 {
@@ -19,7 +19,7 @@ void func_00171330(void (*callback)(void))
         reg_d2.h[0] = state[9];
         reg_d4.w = 0;
         reg_d4.h[0] = state[6];
-        jtbl_0028E3F4 = callback;
-        jtbl_0028E3F4();
+        jtbl_0028E3F4_as_fn = callback;
+        jtbl_0028E3F4_as_fn();
     }
 }

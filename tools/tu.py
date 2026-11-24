@@ -131,7 +131,7 @@ def blocks(text):
                 j += 1
             out.append(("decl", "\n".join(lines[i:j + 1]))); i = j + 1
         else:
-            flat = re.sub(r"\s+", " ", line.strip())
+            flat = re.sub(r"\s+", " ", re.sub(r"\s*(/\*.*?\*/|//.*)\s*$", "", line).strip())   # a trailing comment
             top = line[:1] not in (" ", "\t", "}", "#", "") and not line.startswith("//")
             if top and flat.endswith(";") and "=" not in flat and "{" not in flat:
                 out.append(("decl", line))
@@ -154,9 +154,13 @@ def data_declaration(text):
 
 
 def type_name(text):
-    """Name a `typedef struct { ... } Name;` block defines, else None."""
-    if not text.startswith("typedef") or "\n" not in text:
+    """Name a `typedef struct { ... } Name;` block defines, or the tag of a plain `struct Tag { ... };`,
+    else None."""
+    if "\n" not in text:
         return None
+    if not text.startswith("typedef"):
+        match = re.match(r"^(?:struct|union|enum)\s+(\w+)\s*\{", text)
+        return match.group(1) if match and re.search(r"^\}\s*;\s*$", text, re.M) else None
     match = re.search(r"^\}\s*(\w+)\s*;\s*$", text, re.M)
     return match.group(1) if match else None
 

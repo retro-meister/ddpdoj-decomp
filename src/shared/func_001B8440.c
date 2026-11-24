@@ -18,7 +18,7 @@ extern u16 D_0028E910;
 extern u8 D_0029A530_as_u8_a[];
 extern u16 D_0029AA30[];
 extern u16 D_0029C06C[];
-extern u8 *jtbl_0028E3F4;
+extern u8 *jtbl_0028E3F4_as_u8_p;
 extern u8 *reg_a0;
 extern u8 *reg_a2;
 extern u8 *reg_a4;
@@ -127,8 +127,8 @@ next_set:
     reg_d0.h[0] = *(u16 *)(reg_a6 + 0x24);
     reg_a0 += reg_d0.h[0];
     reg_a0 = *(u8 **)reg_a0;
-    jtbl_0028E3F4 = reg_a0;
-    ((Fn) jtbl_0028E3F4)();
+    jtbl_0028E3F4_as_u8_p = reg_a0;
+    ((Fn) jtbl_0028E3F4_as_u8_p)();
     reg_a6 += 0x40;
     cnt = reg_d7.h[0] - 1;
     reg_d7.h[0] = cnt;
@@ -142,8 +142,8 @@ next_8:
     reg_d0.h[0] = *(u16 *)(reg_a6 + 0x24);
     reg_a0 += reg_d0.h[0];
     reg_a0 = *(u8 **)reg_a0;
-    jtbl_0028E3F4 = reg_a0;
-    ((Fn) jtbl_0028E3F4)();
+    jtbl_0028E3F4_as_u8_p = reg_a0;
+    ((Fn) jtbl_0028E3F4_as_u8_p)();
 next_9:
     reg_a6 += 0x40;
     cnt = reg_d7.h[0] - 1;

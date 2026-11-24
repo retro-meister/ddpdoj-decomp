@@ -15,7 +15,7 @@ extern s16 D_0028E908_as_s16;
 extern s32 D_00295E9C_as_s32_a[];
 extern u8 D_00295EA0[];
 extern u16 D_002962DE[];
-extern u8 *jtbl_0028E3F4;
+extern u8 *jtbl_0028E3F4_as_u8_p;
 extern u8 *reg_a3;
 extern u8 *reg_a4;
 
@@ -49,9 +49,9 @@ void func_00124590(void) {
                 reg_tmp.h[1] = (*(u16 *)((u8 *)(temp_s1) + (2)));
                 reg_tmp.h[0] = (*(u16 *)((u8 *)(temp_s1) + (4)));
                 reg_a3 = (u8 *)reg_tmp.w;
-                jtbl_0028E3F4 = reg_a3;
+                jtbl_0028E3F4_as_u8_p = reg_a3;
                 temp_s0 = reg_d7.w;
-                ((Fn)jtbl_0028E3F4)();
+                ((Fn)jtbl_0028E3F4_as_u8_p)();
                 reg_a4 = temp_s1;
                 reg_d7.w = temp_s0;
             }

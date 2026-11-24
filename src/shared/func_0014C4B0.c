@@ -8,7 +8,7 @@ extern u16 D_0028E91C;
 extern u8 D_0028ED80;
 extern u8 D_0029BF50[];
 extern u16 D_0029C06C[];
-extern u8 *jtbl_0028E3F4;
+extern u8 *jtbl_0028E3F4_as_u8_p;
 extern u8 *reg_a1;
 extern u8 *reg_a6;
 
@@ -25,9 +25,9 @@ void func_0014C4B0(void) {
                 reg_tmp.h[1] = (*(u16 *)((u8 *)(reg_a6) + (8)));
                 reg_tmp.h[0] = (*(u16 *)((u8 *)(reg_a6) + (0xA)));
                 reg_a1 = (u8 *)reg_tmp.w;
-                jtbl_0028E3F4 = reg_a1;
+                jtbl_0028E3F4_as_u8_p = reg_a1;
                 temp_s0 = reg_d7.w;
-                ((Fn)jtbl_0028E3F4)();
+                ((Fn)jtbl_0028E3F4_as_u8_p)();
                 reg_d7.w = temp_s0;
             }
             reg_a6 += 0x20;
