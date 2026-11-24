@@ -541,6 +541,13 @@ def link_target(folder, work_target, filename, original, target, units, version,
         )
         run(binutils["objcopy"], "-O", "binary", str(elf), str(out), cwd=ROOT)
         executable = out.read_bytes()
+        if hashlib.sha256(executable).hexdigest() != target["sha256"]:
+            # keep what was linked, so the first different byte can be looked up
+            failed = BUILD / "failed"
+            failed.mkdir(parents=True, exist_ok=True)
+            shutil.copyfile(out, failed / filename)
+            if link_map.is_file():
+                shutil.copyfile(link_map, failed / f"{filename}.map")
         if len(executable) != len(original):
             raise ValueError(f"{filename}: size changed from {len(original)} to {len(executable)}")
         verify(executable, target["sha256"], filename)

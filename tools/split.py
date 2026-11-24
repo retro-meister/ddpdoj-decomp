@@ -181,10 +181,6 @@ def write_symbols_ld(name, folder):
             lines.append(f"{sym_name} = {int(addr_str, 0):#x};")
     out = folder / "symbols.ld"
     out.write_text("\n".join(lines) + "\n", encoding="ascii")
-    with (ROOT / "build" / "symbols-ld.log").open("a", encoding="utf-8") as log:   # temporary diagnostics
-        import datetime, traceback
-        log.write(f"{datetime.datetime.now()} {name} {len(lines)} lines, aliases {len(aliases_text(name))}\n"
-                  + "".join(traceback.format_stack(limit=6)) + "\n")
     return out
 
 
@@ -196,8 +192,9 @@ def align_rodata_subsegments(folder):
     Vaddr and file offset share their low four bits, so on a contiguous layout this adds no
     padding; it only restores the gap the original unit's own alignment produced.
     """
-    for path in (folder / "asm" / "data").glob("rodata_*.rodata.s"):
-        match = re.fullmatch(r"rodata_([0-9a-f]+)\.rodata\.s", path.name)
+    for path in (folder / "asm" / "data").glob("*data_*.*data.s"):
+        # the same holds for a `data_<offset>` slice that follows a C unit's .data
+        match = re.fullmatch(r"(?:ro)?data_([0-9a-f]+)\.(?:ro)?data\.s", path.name)
         if not match:
             continue
         offset = int(match.group(1), 16)

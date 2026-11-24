@@ -479,7 +479,7 @@ def carve_rodata(target, stub, start, end, section="rodata"):
 
 
 RODATA = (0x273EC0, 0x28C070)
-AUTO_DATA = re.compile(r"\b(death_)?D_([0-9A-F]{8})\b")
+AUTO_DATA = re.compile(r"\b(death_)?D_([0-9A-F]{8})(?:_as_\w+)?\b")
 
 
 def literal(data):
@@ -515,7 +515,7 @@ def inline_strings(source):
     images = {MAIN: (ROOT / "build" / MAIN).read_bytes(), DEATH: (ROOT / "build" / DEATH).read_bytes()}
     death_symbols = load_symbols(DEATH)
     areas = {MAIN: RODATA, DEATH: death_rodata()}
-    found, spans = {}, {MAIN: [], DEATH: []}
+    found, where, spans = {}, {}, {MAIN: [], DEATH: []}
     for match in AUTO_DATA.finditer(text):
         name = match.group(0)
         if name in found:
@@ -533,13 +533,36 @@ def inline_strings(source):
             continue
         # {MAIN: literal, DEATH: literal}: what the name stands for in each executable
         found[name] = {own: literal(raw)}
-        spans[own].append((address, address + len(raw) + 1))
+        where[name] = {own: (address, address + len(raw) + 1)}
         if own == MAIN and name in death_symbols:
             other = death_symbols[name][0] - FILE_ADDRESS
             other_raw = images[DEATH][other:images[DEATH].index(0, other)]
             if literal(other_raw) is not None:
                 found[name][DEATH] = literal(other_raw)
-                spans[DEATH].append((other + FILE_ADDRESS, other + FILE_ADDRESS + len(other_raw) + 1))
+                where[name][DEATH] = (other + FILE_ADDRESS, other + FILE_ADDRESS + len(other_raw) + 1)
+    # The compiler aligns a string longer than 16 bytes to 16 within the unit's .rodata, so a unit that has
+    # one cannot start at an address that is only 8-aligned: its leading strings stay references until the
+    # data before them is in the unit too.
+    stub = Path(source).relative_to("src").with_suffix("").as_posix()
+    while True:
+        late = set()
+        for target in (MAIN, DEATH):
+            placed = [span[target] for span in where.values() if target in span]
+            placed += [(e["offset"] + FILE_ADDRESS, e["offset"] + FILE_ADDRESS + 32)
+                       for e in yaml_entries(target)[2] if e["kind"] == ".rodata" and e["stub"] == stub]
+            if not placed or not any(high - low > 16 for low, high in placed):
+                continue
+            start = min(low for low, _ in placed)
+            if start % 16:
+                late |= {name for name, span in where.items() if target in span and span[target][0] < start + 8}
+        if not late:
+            break
+        for name in late:
+            print(f"  {name} stays a reference: the unit's .rodata has to start 16-aligned")
+            del found[name], where[name]
+    for span in where.values():
+        for target, pair in span.items():
+            spans[target].append(pair)
     if not found:
         print("no string references")
         return
@@ -573,7 +596,6 @@ def inline_strings(source):
 
         out.append(re.sub(r"\b(" + "|".join(map(re.escape, found)) + r")\b", replace, line))
     path.write_text("\n".join(out) + "\n", encoding="utf-8")
-    stub = Path(source).relative_to("src").with_suffix("").as_posix()
     for target in (MAIN, DEATH):
         if spans[target]:
             start = min(low for low, _ in spans[target])
