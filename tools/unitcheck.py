@@ -135,6 +135,13 @@ def integrate_unit(local, source, base, sections, symbols, text, functions, do_b
         if len(votes) != 1:
             raise ValueError(f"{name}: used at {len(votes)} different addresses: {[hex(v) for v in votes]}")
         names.setdefault(name, (next(iter(votes)), "type:func" if next(iter(votes)) < code_end else ""))
+    shared_addresses = {}
+    for name, (address, _) in names.items():
+        shared_addresses.setdefault(address, []).append(name)
+    doubles = [f"{address:#x} is used under {len(group)} names: {', '.join(sorted(group))}"
+               for address, group in sorted(shared_addresses.items()) if len(group) > 1]
+    if doubles:
+        raise ValueError("\n".join(doubles))
     problems = [f"{name}: symbols.txt has {death_symbols[name][0]:#x}, this unit needs {address:#x}"
                 for name, (address, _) in names.items() if name in death_symbols and death_symbols[name][0] != address]
     if problems:

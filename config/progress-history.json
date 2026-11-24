@@ -2180,5 +2180,28 @@
         "total_bytes": 42516
       }
     }
+  },
+  {
+    "timestamp": "2026-11-25T03:44:00+08:00",
+    "targets": {
+      "SLPS_252.33": {
+        "functions": 3403,
+        "total_functions": 3403,
+        "bytes": 1176096,
+        "total_bytes": 1176096
+      },
+      "DEATH.ELF": {
+        "functions": 3428,
+        "total_functions": 3468,
+        "bytes": 1176156,
+        "total_bytes": 1190872
+      },
+      "GALLERY.ELF": {
+        "functions": 66,
+        "total_functions": 66,
+        "bytes": 42516,
+        "total_bytes": 42516
+      }
+    }
   }
 ]
