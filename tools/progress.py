@@ -373,6 +373,10 @@ def plot_history(history):
             if tot_f and tot_b and data["functions"] >= tot_f and data["bytes"] >= tot_b:
                 points = points[: i + 1]
                 break
+        start = points[0]["targets"][target]["functions"] if points else 0
+        first = next((i for i, s in enumerate(points) if s["targets"][target]["functions"] != start), None)
+        if first:
+            points = points[first - 1:]
         dates = [parse_timestamp(snapshot) for snapshot in points]
         fig, axis = plt.subplots(figsize=(10, 6), layout="constrained")
         summary = []
