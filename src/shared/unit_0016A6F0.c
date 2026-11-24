@@ -17,7 +17,7 @@ void func_0016A6F0(void) {
 }
 
 s32 func_00236F40();
-s32 func_0014A370();
+s32 death_func_00136980();
 extern u16 D_0028E1AC;
 extern u16 D_0028E1B8;
 extern u16 D_0028E248_as_u16_a[];
@@ -49,10 +49,10 @@ void func_0016A710(void) {
     }
     reg_d0.h[0] = ~reg_d0.sh[0];
     reg_d1.h[0] = ~reg_d1.sh[0];
-    func_00236F40();
 #ifdef DEATH_LABEL
-    func_0014A370();
+    death_func_00136980();
 #endif
+    func_00236F40();
     D_0028E1B8 = reg_d0.h[0];
     D_0028E1AC = reg_d1.h[0];
 }
