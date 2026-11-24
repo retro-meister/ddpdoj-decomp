@@ -30,12 +30,12 @@ extern GlyphQuad D_00592000[];
 
 void func_00219A80(s32 arg0, s32 arg1) {
     s32 n;
-    s32 code;
-    s32 flip;
     s32 u;
     s32 v;
     s32 x;
     s32 y;
+    s32 code;
+    s32 flip;
 
     n = D_0028EA80;
     x = arg0 * 8;
