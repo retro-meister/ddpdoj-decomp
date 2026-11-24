@@ -1,5 +1,7 @@
 #include "common.h"
 
+#pragma opt_propagation off
+
 typedef struct {
     s16 x0;
     s16 x1;
@@ -35,13 +37,13 @@ void func_00219A80(s32 arg0, s32 arg1) {
     s32 x;
     s32 y;
 
-    code = reg_d0.h[1] & 0x1FFF;
-    u = (code % 126 + 1) * 8;
-    v = (code / 126 + 1) * 8;
-    flip = (reg_d0.h[0] >> 6) & 3;
     n = D_0028EA80;
     x = arg0 * 8;
     y = arg1 * 8;
+    flip = (reg_d0.h[0] >> 6) & 3;
+    code = reg_d0.h[1] & 0x1FFF;
+    u = (code % 126 + 1) * 8;
+    v = (code / 126 + 1) * 8;
     D_00592000[n].z = 0x14;
     D_00592000[n].attr = 0x80;
     D_00592000[n].tex = 0x1E40;
@@ -78,5 +80,5 @@ void func_00219A80(s32 arg0, s32 arg1) {
         D_00592000[n].v1 = v;
         break;
     }
-    D_0028EA80 = n + 1;
+    D_0028EA80++;
 }
