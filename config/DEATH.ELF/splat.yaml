@@ -3421,7 +3421,7 @@ segments:
       - [0x141700, c, shared/func_00206D10]
       - [0x141720, c, shared/func_00206D30]
       - [0x141750, c, shared/func_00206D60]
-      - [0x141760, asm, game_141760]
+      - [0x141760, pad]
       - [0x141780, data, data]
       - [0x1763b0, .rodata, shared/func_00129EF0]
       - [0x176450, rodata, rodata_176450]
