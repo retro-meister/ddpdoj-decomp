@@ -19,8 +19,8 @@ options:
   create_c_files: false
   disassemble_all: true
   subalign: 16
-  section_order: [".text", ".data", ".rodata", ".sdata", ".bss"]
-  auto_link_sections: [".data", ".rodata", ".sdata", ".bss"]
+  section_order: [".text", ".data", ".rodata", ".sdata", ".sbss", ".bss"]
+  auto_link_sections: [".data", ".rodata", ".sdata", ".sbss", ".bss"]
 segments:
   - name: elf_header
     type: bin
@@ -2156,6 +2156,12 @@ segments:
       - [0x18e580, .rodata, shared/func_002027A0]
       - [0x18e5a0, rodata, rodata_18e5a0]
       - [0x18e670, sdata, sdata]
+      - {type: sbss, vram: 0x290400, name: sbss_290400}
+      - {type: .sbss, vram: 0x290bc8, name: shared/text}
+      - {type: sbss, vram: 0x290bec, name: sbss_290bec}
+      - {type: bss, vram: 0x291580, name: bss_291580}
+      - {type: .bss, vram: 0x61b000, name: shared/text}
+      - {type: bss, vram: 0x61fe00, name: bss_61fe00}
   - name: elf_tail
     type: bin
     start: 0x190480

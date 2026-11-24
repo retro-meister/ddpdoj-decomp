@@ -255,6 +255,8 @@ def _split(name, force=False):
         patched_lines = []
         in_main = False
         for line in ld_text.splitlines():
+            if line.lstrip().startswith(".main_bss "):
+                line = line.replace(" SUBALIGN(16)", "")     # C units own parts of .sbss/.bss too
             if line.lstrip().startswith(".main "):
                 in_main = True
                 line = line.replace(" SUBALIGN(16)", "")

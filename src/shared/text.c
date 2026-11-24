@@ -51,13 +51,23 @@ typedef struct {
     s32 value[4];
 } QuadOffsets;
 
-extern void *g_font_file_buf;
 extern s32 D_0029CAB0[];
 extern u32 D_0029CAB4[];
-extern s8 *g_font_glyph_data;
-extern PaletteColor g_font_alt_palette[];
-extern PaletteColor g_font_palettes[][16];
 extern sceGsLoadImage g_gs_load_image;
+extern void *g_font_file_buf;
+extern s8 *g_font_glyph_data;
+extern PaletteColor g_font_alt_palette[32];
+extern PaletteColor g_font_palettes[20][16];
+extern s32 g_text_queue_count;
+extern s32 g_overlay_queue_count;
+extern SpriteEntry g_text_queue[512];
+extern SpriteEntry g_overlay_queue[512];
+extern s8 g_cd_async_state;
+extern s8 g_cd_async_busy;
+extern u32 g_cd_total_bytes_read;
+extern s8 g_cd_retry_timer;
+extern u32 g_cd_last_read_size;
+extern sceCdlFILE g_cd_file;
 u8 g_font_alpha_table[16] = { 0, 25, 51, 76, 102, 51, 76, 102, 128, 128, 128, 128, 128, 128, 128, 128 };
 u8 g_font_base_luma_table[16] = { 0, 0, 0, 0, 0, 51, 51, 51, 51, 102, 102, 102, 153, 153, 204, 255 };
 u8 g_font_tint_luma_table[16] = { 0, 0, 0, 0, 0, 32, 48, 48, 2, 3, 3, 3, 4, 4, 5, 6 };
@@ -101,19 +111,9 @@ u8 g_font_alt_palette_rgb[48] = {
     255, 255, 255
 };
 extern s8 D_00578780[];
-extern s32 g_text_queue_count;
-extern s32 g_overlay_queue_count;
-extern SpriteEntry g_text_queue[];
 extern GlyphCacheEntry D_00583FD8[];
-extern SpriteEntry g_overlay_queue[];
 extern void *g_dma_gif;
 extern u8 g_gif_buf_as_u8_a2_a0x10000[2][0x10000];
-extern s8 g_cd_async_state;
-extern s8 g_cd_async_busy;
-extern u32 g_cd_total_bytes_read;
-extern s8 g_cd_retry_timer;
-extern u32 g_cd_last_read_size;
-extern sceCdlFILE g_cd_file_as_sceCdlFILE;
 
 void font_upload_palettes(void);
 void font_init_palettes(void);
@@ -1486,16 +1486,16 @@ void cd_load_file(void *destination, const char *path)
 
     do {
         sceCdDiskReady(0);
-    } while (!sceCdSearchFile(&g_cd_file_as_sceCdlFILE, path));
+    } while (!sceCdSearchFile(&g_cd_file, path));
 
     for (;;) {
         do {
             sceCdDiskReady(0);
-            g_cd_last_read_size = g_cd_file_as_sceCdlFILE.size;
+            g_cd_last_read_size = g_cd_file.size;
             readMode.trycount = 0;
             readMode.spindlctrl = SCECdSpinNom;
             readMode.datapattern = SCECdSecS2048;
-        } while (!sceCdRead(g_cd_file_as_sceCdlFILE.lsn, (g_cd_file_as_sceCdlFILE.size + 0x7FF) >> 11, destination, &readMode));
+        } while (!sceCdRead(g_cd_file.lsn, (g_cd_file.size + 0x7FF) >> 11, destination, &readMode));
 
         sceCdSync(0);
         error = sceCdGetError();
@@ -1567,17 +1567,17 @@ void cd_read_sync(void *destination, u32 byteCount, u32 startSector)
     sceCdRMode readMode;
     s32 error;
 
-    g_cd_file_as_sceCdlFILE.size = byteCount;
-    g_cd_file_as_sceCdlFILE.lsn = startSector;
+    g_cd_file.size = byteCount;
+    g_cd_file.lsn = startSector;
 
     for (;;) {
         do {
             sceCdDiskReady(0);
-            g_cd_last_read_size = g_cd_file_as_sceCdlFILE.size;
+            g_cd_last_read_size = g_cd_file.size;
             readMode.trycount = 0;
             readMode.spindlctrl = SCECdSpinNom;
             readMode.datapattern = SCECdSecS2048;
-        } while (!sceCdRead(g_cd_file_as_sceCdlFILE.lsn, (g_cd_file_as_sceCdlFILE.size + 0x7FF) >> 11, destination, &readMode));
+        } while (!sceCdRead(g_cd_file.lsn, (g_cd_file.size + 0x7FF) >> 11, destination, &readMode));
 
         sceCdSync(0);
         error = sceCdGetError();
@@ -1594,5 +1594,22 @@ void cd_search_file(const char *path)
 {
     do {
         sceCdDiskReady(0);
-    } while (sceCdSearchFile(&g_cd_file_as_sceCdlFILE, path) == 0);
+    } while (sceCdSearchFile(&g_cd_file, path) == 0);
 }
+
+s8 *g_font_glyph_data;
+s32 g_text_queue_count;
+s32 g_overlay_queue_count;
+u32 g_cd_last_read_size;
+void *g_font_file_buf;
+s8 g_cd_retry_timer __attribute__((aligned(4)));
+u32 g_cd_total_bytes_read;
+s8 g_cd_async_busy __attribute__((aligned(4)));
+s8 g_cd_async_state __attribute__((aligned(4)));
+
+SpriteEntry g_text_queue[512] __attribute__((aligned(64)));
+SpriteEntry g_overlay_queue[512] __attribute__((aligned(64)));
+PaletteColor g_font_palettes[20][16] __attribute__((aligned(64)));
+PaletteColor g_font_alt_palette[32] __attribute__((aligned(64)));
+u8 g_cd_unused[64] __attribute__((aligned(64)));    /* nothing refers to these 64 bytes */
+sceCdlFILE g_cd_file __attribute__((aligned(64)));

@@ -19,8 +19,8 @@ options:
   create_c_files: false
   disassemble_all: true
   subalign: 16
-  section_order: [".text", ".data", ".rodata", ".sdata", ".bss"]
-  auto_link_sections: [".data", ".rodata", ".sdata", ".bss"]
+  section_order: [".text", ".data", ".rodata", ".sdata", ".sbss", ".bss"]
+  auto_link_sections: [".data", ".rodata", ".sdata", ".sbss", ".bss"]
 segments:
   - name: elf_header
     type: bin
@@ -2096,6 +2096,12 @@ segments:
       - [0x18be30, .rodata, shared/replay_header]
       - [0x18bf30, rodata, rodata_18bf30]
       - [0x18c0f0, sdata, sdata]
+      - {type: sbss, vram: 0x28de80, name: sbss_28de80}
+      - {type: .sbss, vram: 0x28e9b8, name: shared/text}
+      - {type: sbss, vram: 0x28e9dc, name: sbss_28e9dc}
+      - {type: bss, vram: 0x28f000, name: bss_28f000}
+      - {type: .bss, vram: 0x2c0100, name: shared/text}
+      - {type: bss, vram: 0x2c4f00, name: bss_2c4f00}
   - name: elf_tail
     type: bin
     start: 0x18df00
