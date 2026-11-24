@@ -40,9 +40,9 @@ s32 func_0020EAB0();
 s32 func_0020F550();
 s32 func_002108C0();
 s32 font_load_async();
-s32 func_00216470();
-s32 func_00216570();
-s32 func_00216610();
+s32 sys_start();
+s32 sys_begin_frame();
+s32 sys_end_frame();
 s32 func_00218B50();
 s32 func_00219930();
 s32 func_00219990();
@@ -114,7 +114,7 @@ void func_002120D0(void) {
     memset(D_006C58A0, 0, 0x202E8);
     memset(D_006A4800, 0, 0x202E8);
     func_0021D8C0();
-    func_00216470();
+    sys_start();
     func_00172320();
     func_0018E5A0();
     func_0020F550();
@@ -170,7 +170,7 @@ void func_002120D0(void) {
     func_00225630();
     printf(D_00286E88);
     do {
-        func_00216570();
+        sys_begin_frame();
         switch (t3) {
         case 0:
             font_load_async();
@@ -215,11 +215,11 @@ void func_002120D0(void) {
         case 5:
             break;
         }
-        func_00216610();
+        sys_end_frame();
     } while (t3 != 5);
     func_0021B840(0x14B5, D_002620F0);
 loop_15:
-    func_00216570();
+    sys_begin_frame();
     func_0016A7F0();
     t1 = 0;
     t2 = 0;
@@ -259,7 +259,7 @@ loop_15:
         func_00219990();
     }
 #endif
-    func_00216610();
+    sys_end_frame();
     if (t2 == 0) {
         goto loop_15;
     }

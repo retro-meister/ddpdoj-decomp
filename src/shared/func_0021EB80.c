@@ -4,7 +4,7 @@ extern s32 func_00221120(s32 id);
 extern void func_0021EDC0(void);
 extern void func_0018D4B0(void);
 extern void func_00169BC0(void);
-extern void func_00217A40(void);
+extern void fade_start_out(void);
 extern void func_00222260(s32 arg0);
 extern u8 D_0028E290;
 extern u8 D_0028E2E4;
@@ -64,7 +64,7 @@ void func_0021EB80(void) {
             D_0028E2E4 = 0;
             func_0018D4B0();
             func_00169BC0();
-            func_00217A40();
+            fade_start_out();
             D_0028EB88 = 2;
             D_0028EB00 = 2;
             break;
@@ -78,7 +78,7 @@ void func_0021EB80(void) {
             D_0028EB54 = 2;
             func_0018D4B0();
             func_00169BC0();
-            func_00217A40();
+            fade_start_out();
             D_0028EB88 = 2;
             D_0028EB00 = 2;
             break;

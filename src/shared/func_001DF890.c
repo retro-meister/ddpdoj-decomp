@@ -45,8 +45,8 @@ s32 func_002012F0();
 s32 func_00201800();
 s32 func_002027A0();
 s32 func_00202C50();
-s32 func_00217BB0();
-s32 func_00217C20();
+s32 vibration_start_pad1();
+s32 vibration_start_pad2();
 extern u8 *D_0028E44C;
 extern Reg32 D_0028E484;
 extern u16 D_0028E88C;
@@ -478,8 +478,8 @@ next_6200:
     func_001DF350();
     reg_a0 = (u8 *)D_002639B0;
     func_0013B2E0();
-    func_00217BB0(0xB4, 0x64);
-    func_00217C20(0xB4, 0x64);
+    vibration_start_pad1(0xB4, 0x64);
+    vibration_start_pad2(0xB4, 0x64);
     func_0018D5C0();
     goto block_e;
 next_6240:

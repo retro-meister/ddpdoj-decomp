@@ -27,7 +27,7 @@ extern u8 D_00684C8E[];
 extern u8 D_00684C90[];
 extern u16 D_00684C94[];
 #ifdef DEATH_LABEL
-s32 func_00217A20();
+s32 fade_reset();
 extern u8 death_D_00290DC0;
 extern u8 death_D_00290DBC;
 extern u16 death_D_00290DB8;
@@ -83,7 +83,7 @@ void func_0022C1F0(void) {
         break;
 #ifdef DEATH_LABEL
     case 2:
-        func_00217A20();
+        fade_reset();
         D_00684C94[0] += 1;
         break;
 #endif
@@ -125,7 +125,7 @@ void func_0022C1F0(void) {
             D_0028E910 = D_00684C8A[0];
             func_00135110();
 #ifdef DEATH_LABEL
-            func_00217A20();
+            fade_reset();
 #endif
             if (D_00684C8C[0] == 0) {
                 func_0018D190();

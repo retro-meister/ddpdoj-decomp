@@ -14,8 +14,8 @@ s32 func_0019D990();
 s32 func_0019D9C0();
 s32 func_0019DA10();
 s32 func_002011D0();
-s32 func_00217BB0();
-s32 func_00217C20();
+s32 vibration_start_pad1();
+s32 vibration_start_pad2();
 extern u8 D_00241780[];
 extern u8 D_00241810[];
 extern u8 D_00241870[];
@@ -97,10 +97,10 @@ next_1:
     jtbl_0028E3F4 = (Fn)(reg_a0);
     jtbl_0028E3F4();
     if (reg_a5 != D_0029F260) goto next_2;
-    func_00217BB0(0xC8, 0x64);
+    vibration_start_pad1(0xC8, 0x64);
     goto block_a;
 next_2:
-    func_00217C20(0xC8, 0x64);
+    vibration_start_pad2(0xC8, 0x64);
 block_a:
     if ((*(u16 *)((u8 *)(reg_a6) + (0x28))) != 0) goto block_c;
     reg_tmp.h[1] = (*(u16 *)((u8 *)(reg_a6) + (0x1E)));

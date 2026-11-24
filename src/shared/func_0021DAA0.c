@@ -1,7 +1,7 @@
 #include "common.h"
 
 s32 func_0018D4B0();
-s32 func_00217A40();
+s32 fade_start_out();
 s32 func_00221120();
 extern u16 D_0028E320;
 extern s8 D_0028EAE8;
@@ -77,7 +77,7 @@ void func_0021DAA0(void) {
             D_0028E304 = 1;
             D_0028EAFC = 0xFF;
             func_00169BC0();
-            func_00217A40();
+            fade_start_out();
             D_0028EB88 = 2;
             D_0028EB00 = 4;
             break;
@@ -160,7 +160,7 @@ void func_0021DAA0(void) {
             D_0028EB1C = 0;
             break;
         case 8:
-            func_00217A40();
+            fade_start_out();
             D_0028EB88 = 2;
             break;
         }

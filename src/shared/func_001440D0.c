@@ -20,8 +20,8 @@ s32 func_001ABF90();
 s32 func_001AC160();
 s32 func_001ACB00();
 s32 func_001ACB50();
-s32 func_00217BB0();
-s32 func_00217C20();
+s32 vibration_start_pad1();
+s32 vibration_start_pad2();
 extern u8 D_00255EE0[];
 extern u16 D_0028DFB4;
 extern u16 D_0028DFB8;
@@ -76,7 +76,7 @@ void func_001440D0(void) {
     func_0018D6D0();
     D_0028E3A0 = 1;
     if ((*(u8 *)((u8 *)(reg_a5) + (6))) == 0) {
-        func_00217BB0(0xC8, 0x28);
+        vibration_start_pad1(0xC8, 0x28);
         func_0013C9A0();
         D_0028E044 = 1;
         D_0028E03C = 1;
@@ -109,7 +109,7 @@ void func_001440D0(void) {
         reg_a1 = (u8 *) &D_0028E034;
         reg_a3 = (u8 *) &D_0028E02C;
     } else {
-        func_00217C20(0xC8, 0x28);
+        vibration_start_pad2(0xC8, 0x28);
         func_0013CAB0();
         D_0028E040 = 1;
         D_0028E038 = 1;

@@ -1,6 +1,6 @@
 #include "common.h"
 
-s32 func_00217A30();
+s32 fade_start_in();
 s32 func_00221FF0();
 s32 func_00224B50();
 s32 memcpy();
@@ -24,5 +24,5 @@ void func_00227120(void) {
     memcpy(D_0068DEC8, sp40, 0xC);
     D_0028EBE8 = 0;
     D_0028EB84 = 0xA;
-    func_00217A30();
+    fade_start_in();
 }

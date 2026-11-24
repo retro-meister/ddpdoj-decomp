@@ -1,12 +1,12 @@
 #include "common.h"
 #include "sdk/ps2sdk.h"
 
-extern s8 D_0028E9E8;
+extern s8 g_fade_state;
 extern s8 D_0028EB00;
 extern s8 D_0028EB88;
 
 void func_0021D850(void) {
-    if (D_0028E9E8 == 0) {
+    if (g_fade_state == 0) {
         D_0028EB88 = 0;
         if (D_0028EB00 == 2) {
             D_0028EB00 = 0x14;

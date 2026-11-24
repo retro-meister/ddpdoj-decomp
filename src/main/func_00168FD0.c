@@ -11,7 +11,7 @@ s32 func_0015BEF0();
 s32 func_00168BA0();
 s32 func_00169B40();
 s32 func_0018DEE0();
-s32 func_00217A20();
+s32 fade_reset();
 s32 func_00217EC0();
 s32 func_00218B50();
 s32 func_00219570();
@@ -45,7 +45,7 @@ void func_00168FD0(void) {
         D_0028E368 = 0;
         D_0028E378 = 0xFF;
         D_0028E2F4 = 0;
-        func_00217A20();
+        fade_reset();
         func_00219570();
         func_00217EC0();
         D_0028E350 = 0;

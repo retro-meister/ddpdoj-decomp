@@ -1,8 +1,8 @@
 #include "common.h"
 
 extern void func_0018C990(void);
-extern void func_00217B30(void);
-extern void func_00217CD0(void);
+extern void vibration_stop_all(void);
+extern void vibration_suspend(void);
 extern u16 D_0028E324;
 extern u16 D_0028E328;
 extern u8 D_0028E36C;
@@ -34,8 +34,8 @@ void func_002234C0(void) {
         D_0028E328 = 1;
     }
     D_0028EBBC = 0x28;
-    func_00217CD0();
-    func_00217B30();
+    vibration_suspend();
+    vibration_stop_all();
     func_0018C990();
     if (D_0028ED74 == 1) {
         D_0028ED74 = 3;

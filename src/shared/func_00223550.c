@@ -17,8 +17,8 @@ typedef struct {
 extern void func_0018D4B0(void);
 extern void func_0018D4C0(void);
 extern void func_002035F0(void);
-extern void func_00217BB0(s32 a, s32 b);
-extern void func_00217C20(s32 a, s32 b);
+extern void vibration_start_pad1(s32 a, s32 b);
+extern void vibration_start_pad2(s32 a, s32 b);
 extern void func_0021B840(s32 a, s32 b);
 extern Pair D_00271C60[];
 extern s8 D_0028E250;
@@ -46,7 +46,7 @@ extern u32 D_0057CC60[];
 extern u32 D_0057CC70[];
 extern s8 D_0068DD02[];
 s32 func_0018CAD0();
-s32 func_00217D20();
+s32 vibration_resume();
 extern s8 D_0028E364;
 extern u8 D_0028E36C;
 extern u8 D_0028ED74;
@@ -128,8 +128,8 @@ void func_00223550(void) {
             D_0028E27C++;
             D_0028E27C &= 1;
             if (D_0028E27C != 0) {
-                func_00217BB0(0x78, 0x14);
-                func_00217C20(0x78, 0x14);
+                vibration_start_pad1(0x78, 0x14);
+                vibration_start_pad2(0x78, 0x14);
             }
         }
         break;
@@ -219,7 +219,7 @@ void func_00223A60(void) {
     D_0028E36C = 0;
     func_0018CAD0();
     D_0028E364 = 0x3C;
-    func_00217D20();
+    vibration_resume();
     if (D_0028ED74 == 3) {
         D_0028ED74 = 1;
     }

@@ -26,7 +26,7 @@ s32 func_001A2FA0();
 s32 death_func_001B1220();
 s32 func_002071C0();
 s32 func_002075F0();
-s32 func_00217A20();
+s32 fade_reset();
 extern u8 D_00269140[];
 extern u8 D_0028E290;
 extern u8 D_0028E7B4;
@@ -64,7 +64,7 @@ void func_001B1960(void) {
 #ifdef DEATH_LABEL
             if (*(u8 *)reg_a6 == 5) {
                 func_00138650();
-                func_00217A20();
+                fade_reset();
                 death_func_001B1220();
                 D_0028E290 = 2;
                 func_0012FAB0();

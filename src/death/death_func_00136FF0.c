@@ -6,7 +6,7 @@ s32 func_0013B190();
 s32 func_00168BA0();
 s32 func_0018DEE0();
 s32 func_001A2FA0();
-s32 func_00217A20();
+s32 fade_reset();
 s32 func_00218B50();
 s32 func_00219570();
 s32 func_00225630();
@@ -37,7 +37,7 @@ void death_func_00136FF0(void) {
         D_0028E368 = 0;
         D_0028E378 = 0xFF;
         D_0028E2F4 = 0;
-        func_00217A20();
+        fade_reset();
         func_00219570();
         D_0028E350 = 0;
         g_cd_async_busy = 1;

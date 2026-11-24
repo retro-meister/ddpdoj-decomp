@@ -4,6 +4,7 @@
     uv run tools/tu.py --check src/shared/font.c                        # compare an existing unit again
     uv run tools/tu.py --rodata src/shared/font.c --main 286ec0:286ed8 --death 281fe0:281ff8
                                                                         # the unit now owns these .rodata bytes
+    uv run tools/tu.py --strings src/shared/system.c                    # its string references become literals
 
 `--from`/`--to` name the first and last unit of the run in SLPS_252.33 (a unit is named after its file). The
 same code in DEATH.ELF is found through the shared units of the run; Death Label units lying between them are
@@ -12,8 +13,9 @@ merged too. The pieces keep their link order. A piece only one executable has is
 under `#ifdef DEATH_LABEL ... #else ... #endif`. Identical top-level declarations are kept once, and a piece
 that began with file-level pragmas gets them inside `#pragma push` / `#pragma pop`. Local prototypes of SDK
 functions give way to `sdk/ps2sdk.h`, and prototypes of functions the unit itself defines are dropped (one
-forward declaration is written where a call comes first). Names left with two different declarations are
-listed, since those have to be settled by hand.
+forward declaration is written where a call comes first). An object the pieces declared with different types
+gets no file-scope declaration: each function declares it in its own body with the type it was matched with,
+which the compiler accepts and which marks the type as still to be settled. Names left with two different declarations are listed, to be settled by hand.
 
 The merged file goes to `src/shared/<name>.c` (`src/main/<name>.c` when Death Label has none of it). Both
 splat.yaml files get one `c` entry (and one `.rodata` entry) for the run. Afterwards every function of the
@@ -137,9 +139,72 @@ def blocks(text):
     return out
 
 
-def piece_text(path, seen, scopes):
-    """Body of one unit with declarations already seen in `scopes` removed; returns (includes, text)."""
-    includes, body, leading = [], [], []
+DATA_RE = re.compile(r"^extern\s+((?:const\s+|volatile\s+)*[A-Za-z_]\w*(?:\s+\w+)*?[\s\*]+)(\w+)\s*((?:\[[^\]]*\]\s*)*);\s*(?:/\*.*\*/\s*)?$")
+
+
+def data_declaration(text):
+    """(name, base type, dimensions) of a one-line `extern` object declaration, else None."""
+    match = DATA_RE.match(text.strip())
+    if not match or "(" in text:
+        return None
+    base = re.sub(r"\s+", " ", match.group(1)).strip().replace(" *", "*").replace("* ", "*")
+    return match.group(2), base, re.sub(r"\s+", "", match.group(3))
+
+
+def canonical_types(pieces):
+    """{name: (base, dims)} for objects the pieces declare in more than one way: the commonest declaration,
+    a structure type winning over a plain integer one."""
+    found = {}
+    for pair in pieces:
+        for stub in dict.fromkeys(pair):
+            if not stub:
+                continue
+            for kind, text in blocks((ROOT / "src" / f"{stub}.c").read_text(encoding="utf-8")):
+                parsed = data_declaration(text) if kind == "decl" and "\n" not in text else None
+                if parsed:
+                    forms = found.setdefault(parsed[0], {})
+                    forms[parsed[1:]] = forms.get(parsed[1:], 0) + 1
+    basic = re.compile(r"^(?:[us](?:8|16|32|64)|f32|f64|char|int|short|long|void)\**$")
+    out = {}
+    for name, forms in found.items():
+        if len(forms) > 1:
+            out[name] = max(forms, key=lambda form: (not basic.match(form[0]), forms[form], form[1] != ""))
+    return out
+
+
+def declaration(name, base, dims):
+    stars = len(base) - len(base.rstrip("*"))
+    return f"extern {base.rstrip('*')} {'*' * stars}{name}{dims};"
+
+
+def localize(lines, local):
+    """Insert the declarations of `local` ({name: declaration}) at the top of each function that uses them."""
+    out, index = [], 0
+    while index < len(lines):
+        line = lines[index]
+        out.append(line)
+        opens = line[:1] not in (" ", "\t", "#", "}", "") and line.rstrip().endswith("{") and "(" in line and "=" not in line
+        if not opens and line.rstrip() == "{" and index and out[-2][:1] not in ("", "#"):
+            opens = True
+        if opens:
+            end = index + 1
+            while end < len(lines) and not lines[end].startswith("}"):
+                end += 1
+            text = "\n".join(lines[index + 1:end])
+            for name, declared in local.items():
+                if re.search(rf"\b{re.escape(name)}\b", text):
+                    out.append("    " + declared)
+        index += 1
+    return out
+
+
+def piece_text(path, seen, scopes, canonical):
+    """Body of one unit with declarations already seen in `scopes` removed; returns (includes, text).
+
+    An object the pieces of the run declare with different types gets no file-scope declaration at all.
+    Each function that uses it declares it at the top of its own body instead, with the type it was matched
+    with (the compiler accepts differing block-scope declarations, not differing file-scope ones)."""
+    includes, body, leading, local = [], [], [], {}
     started = False
     for kind, text in blocks(path.read_text(encoding="utf-8")):
         if kind == "include":
@@ -149,6 +214,10 @@ def piece_text(path, seen, scopes):
             leading.append(text)
             continue
         if kind == "decl":
+            parsed = data_declaration(text) if "\n" not in text else None
+            if parsed and parsed[0] in canonical:
+                local[parsed[0]] = declaration(*parsed)
+                continue
             key = re.sub(r"\s+", " ", text.strip())
             if any(key in seen[scope] for scope in scopes):
                 continue
@@ -156,6 +225,8 @@ def piece_text(path, seen, scopes):
         if kind == "code" and text.strip():
             started = True
         body.append(text)
+    if local:
+        body = localize(body, local)
     text = "\n".join(body).strip("\n")
     if leading:
         text = "#pragma push\n" + "\n".join(leading) + "\n" + text + "\n#pragma pop"
@@ -236,19 +307,20 @@ def conflicts(text):
 def merge_text(pieces):
     seen = {"all": set(), "main": set(), "death": set()}
     includes, parts = [], []
+    canonical = canonical_types(pieces)
     for main_stub, death_stub in pieces:
         if main_stub and main_stub == death_stub:
-            inc, text = piece_text(ROOT / "src" / f"{main_stub}.c", seen, ["all"])
+            inc, text = piece_text(ROOT / "src" / f"{main_stub}.c", seen, ["all"], canonical)
             includes += inc
             parts.append(text)
             continue
         chunk = []
         if death_stub:
-            inc, text = piece_text(ROOT / "src" / f"{death_stub}.c", seen, ["death", "all"])
+            inc, text = piece_text(ROOT / "src" / f"{death_stub}.c", seen, ["death", "all"], canonical)
             includes += inc
             chunk += ["#ifdef DEATH_LABEL", text]
         if main_stub:
-            inc, text = piece_text(ROOT / "src" / f"{main_stub}.c", seen, ["main", "all"])
+            inc, text = piece_text(ROOT / "src" / f"{main_stub}.c", seen, ["main", "all"], canonical)
             includes += inc
             chunk += ["#else" if death_stub else "#ifndef DEATH_LABEL", text]
         chunk.append("#endif")
@@ -299,6 +371,70 @@ def carve_rodata(target, stub, start, end):
     if extends:
         del lines[entry["line"] + len(new)]
     path.write_text("\n".join(lines) + "\n", encoding="utf-8")
+
+
+RODATA = {MAIN: (0x273EC0, 0x28C070), DEATH: None}
+AUTO_DATA = re.compile(r"\bD_([0-9A-F]{8})\b")
+
+
+def literal(data):
+    """C source for a NUL-terminated string, or None when the bytes are not text."""
+    try:
+        text = data.decode("cp932")
+    except UnicodeDecodeError:
+        return None
+    if not text or any(ord(ch) < 0x20 and ch not in "\n\t\r" for ch in text):
+        return None
+    escaped = text.replace("\\", "\\\\").replace('"', '\\"').replace("\n", "\\n").replace("\t", "\\t").replace("\r", "\\r")
+    if text.isascii():
+        return f'"{escaped}"'
+    if text.encode("cp932") != data:
+        return None
+    return f'SJIS("{escaped}")'
+
+
+def inline_strings(source):
+    """Replace the unit's references to read-only strings with string literals, and give it that .rodata."""
+    path = ROOT / source
+    text = path.read_text(encoding="utf-8")
+    main_image = (ROOT / "build" / MAIN).read_bytes()
+    death_image = (ROOT / "build" / DEATH).read_bytes()
+    death_symbols = load_symbols(DEATH)
+    low, high = RODATA[MAIN]
+    found = {}
+    for match in AUTO_DATA.finditer(text):
+        address = int(match.group(1), 16)
+        name = match.group(0)
+        if not low <= address < high or name in found:
+            continue
+        if re.search(rf"\b{name}\s*\[|&\s*{name}\b|\b{name}\s*[-+]", re.sub(rf"^extern.*\b{name}\b.*$", "", text, flags=re.M)):
+            continue
+        offset = address - FILE_ADDRESS
+        raw = main_image[offset:main_image.index(0, offset)]
+        source_text = literal(raw)
+        if source_text is None:
+            continue
+        found[name] = (address, raw, source_text)
+    if not found:
+        print("no string references")
+        return
+    for name, (_, _, source_text) in found.items():
+        text = re.sub(rf"^extern[^\n]*\b{name}\b[^\n]*;[^\n]*\n", "", text, flags=re.M)
+        text = re.sub(rf"\b{name}\b", lambda _: source_text, text)
+    path.write_text(text, encoding="utf-8")
+    stub = Path(source).relative_to("src").with_suffix("").as_posix()
+    start = min(address for address, _, _ in found.values())
+    last, raw, _ = max(found.values())
+    end = (last + len(raw) + 1 + 7) & ~7      # the next string may start on the next 8-byte boundary
+    print(f"{len(found)} strings, {MAIN} .rodata {start:#x}..{end:#x}")
+    carve_rodata(MAIN, stub, start, end)
+    first = min(found, key=lambda name: found[name][0])
+    if first in death_symbols:
+        death_start = death_symbols[first][0]
+        length = end - start
+        same = death_image[death_start - FILE_ADDRESS:death_start - FILE_ADDRESS + length] == main_image[start - FILE_ADDRESS:end - FILE_ADDRESS]
+        print(f"{DEATH} .rodata {death_start:#x}..{death_start + length:#x}" + ("" if same else "  (bytes differ from Main: check by hand)"))
+        carve_rodata(DEATH, stub, death_start, death_start + length)
 
 
 def object_functions(path):
@@ -394,7 +530,11 @@ def main():
     parser.add_argument("--rodata", metavar="SOURCE", help="give a unit a .rodata range; use with --main and/or --death")
     parser.add_argument("--main", metavar="START:END", help="address range in SLPS_252.33")
     parser.add_argument("--death", metavar="START:END", help="address range in DEATH.ELF")
+    parser.add_argument("--strings", metavar="SOURCE", help="turn the unit's string references into literals")
     args = parser.parse_args()
+    if args.strings:
+        inline_strings(args.strings)
+        return
     if args.rodata:
         stub = Path(args.rodata).relative_to("src").with_suffix("").as_posix()
         for target, span in ((MAIN, args.main), (DEATH, args.death)):

@@ -17,7 +17,7 @@ extern s8 D_0028E254;
 extern u8 D_0028E2DC;
 extern s32 D_0028EA50;
 extern s32 D_0028EA54;
-extern u8 D_0057C7E0[];
+extern u8 g_gs_dbuff[];
 typedef struct { u64 fbp:9; u64 fbw:6; u64 psm:5; } Dispfb;
 extern Dispfb D_0057C7F0[];
 extern Dispfb D_0057C818[];
@@ -31,10 +31,10 @@ void func_0021B680(void) {
     sceGsResetGraph(0, (s16)mode->interlace, 2, (s16)mode->ffmode);
     D_0028EA54 = mode->width;
     if (mode->interlace == 0) {
-        sceGsSetDefDBuffDc(D_0057C7E0, 2, (s16)mode->width, (s16)mode->height, 1, 0x31, 1);
+        sceGsSetDefDBuffDc(g_gs_dbuff, 2, (s16)mode->width, (s16)mode->height, 1, 0x31, 1);
         D_0028EA50 = (D_0028EA54 - 0x1C0) >> 1;
     } else {
-        sceGsSetDefDBuffDc(D_0057C7E0, 2, (s16)mode->width, (s16)mode->height, 1, 0x31, 0);
+        sceGsSetDefDBuffDc(g_gs_dbuff, 2, (s16)mode->width, (s16)mode->height, 1, 0x31, 0);
         D_0028EA50 = (D_0028EA54 - 0xE0) >> 1;
         D_0057C7F0[0].fbp = 0;
         D_0057C818[0].fbp = ((((mode->width + 63) / 64 * 64) * ((mode->height + 31) / 32 * 32)) >> 11) / 2;

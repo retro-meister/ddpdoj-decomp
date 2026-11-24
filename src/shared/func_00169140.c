@@ -6,7 +6,7 @@ void func_0015BA20(void);
 void func_0015BD00(void);
 void func_00168BA0(void);
 void func_0020EAA0(void);
-void func_00217A30(void);
+void fade_start_in(void);
 void func_0021D570(void);
 s32 func_0022BB80(u8 *);
 void func_00235890(void);
@@ -135,6 +135,6 @@ void func_00169140(void) {
             func_00168BA0();
         }
         D_0028EB00 = 0;
-        func_00217A30();
+        fade_start_in();
     }
 }

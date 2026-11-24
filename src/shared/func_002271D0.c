@@ -1,6 +1,6 @@
 #include "common.h"
 
-s32 func_00217A30();
+s32 fade_start_in();
 s32 func_00221FF0();
 s32 func_00224B50();
 s32 func_00227C90();
@@ -38,5 +38,5 @@ void func_002271D0(void) {
     while (D_0028EBE0 != 2) {
         func_00227CD0();
     }
-    func_00217A30();
+    fade_start_in();
 }

@@ -4,9 +4,9 @@
 
 extern void *g_dma_gif;
 extern s32 D_0028DC98;
-extern s32 D_0028E9F0;
+extern s32 g_frame_counter;
 extern s32 D_0028EA54;
-extern u8 D_0057C7E0[];
+extern u8 g_gs_dbuff[];
 
 void func_0021ABB0(void *buffer) {
     sceGifPacket packet;
@@ -17,8 +17,8 @@ void func_0021ABB0(void *buffer) {
     sceGifPkReset(&packet);
     sceGifPkAddGsData(&packet, SCE_GIF_SET_TAG(6, 1, 0, 0, SCE_GIF_PACKED, 1));
     sceGifPkAddGsData(&packet, SCE_GIF_PACKED_AD);
-    index = (D_0028E9F0 + 1) & 1;
-    sceGifPkAddGsData(&packet, ((u64)*(u16 *)(D_0057C7E0 + index * 40 + 0x10) & 0x1FF) | ((u64)((D_0028EA54 + 63) >> 6) << 16) | ((u64)2 << 24));
+    index = (g_frame_counter + 1) & 1;
+    sceGifPkAddGsData(&packet, ((u64)*(u16 *)(g_gs_dbuff + index * 40 + 0x10) & 0x1FF) | ((u64)((D_0028EA54 + 63) >> 6) << 16) | ((u64)2 << 24));
     sceGifPkAddGsData(&packet, 0x4C);
     sceGifPkAddGsData(&packet, ((0x800 - (u64)(D_0028EA54 >> 1)) << 4) | ((u64)0x7200 << 32));
     sceGifPkAddGsData(&packet, 0x18);

@@ -6,7 +6,7 @@ s32 func_0013B190();
 s32 func_00171910();
 s32 func_00172060();
 s32 func_001AD690();
-s32 func_00217B30(s32, s32);
+s32 vibration_stop_all(s32, s32);
 s32 func_002195D0();
 extern s16 D_0028DFC0;
 extern u8 D_0028E378;
@@ -33,7 +33,7 @@ void func_00131700(void) {
     (*(s8 *)((u8 *)(reg_a5) + (7))) = 0;
     (*(s8 *)((u8 *)(reg_a5) + (6))) = 4;
     D_0028E378 = 0xFF;
-    func_00217B30(4, 1);
+    vibration_stop_all(4, 1);
     func_002195D0();
     func_0013B190();
     func_00131630();

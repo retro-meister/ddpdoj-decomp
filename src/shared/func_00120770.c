@@ -14,8 +14,8 @@ s32 func_0018D850();
 s32 func_0018D870();
 s32 func_0019D990();
 s32 func_0020A270();
-s32 func_00217BB0();
-s32 func_00217C20();
+s32 vibration_start_pad1();
+s32 vibration_start_pad2();
 extern u8 D_00241BF0[];
 extern u8 D_00241C00[];
 extern u8 D_00241C10[];
@@ -328,9 +328,9 @@ void func_00120770(u16 arg3) {
         jtbl_0028E3F4 = (Fn)(reg_a0);
         jtbl_0028E3F4();
         if (reg_a5 == D_0029F260) {
-            func_00217BB0(0xC8, 0x78);
+            vibration_start_pad1(0xC8, 0x78);
         } else {
-            func_00217C20(0xC8, 0x78);
+            vibration_start_pad2(0xC8, 0x78);
         }
     }
     reg_d0.h[1] = (*(u16 *)((u8 *)(reg_a5) + (2)));

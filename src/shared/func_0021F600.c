@@ -3,7 +3,7 @@
 s32 func_0018CBB0();
 s32 func_0018D4B0();
 s32 func_0018D4D0();
-s32 func_00217A40();
+s32 fade_start_out();
 s32 func_00222260();
 extern s8 D_0028EAA8;
 extern s8 D_0028EAE8;
@@ -47,13 +47,13 @@ void func_0021F600(void) {
             func_0018CBB0();
             func_0018D4B0();
             D_0028EB60 = 0x40;
-            func_00217A40();
+            fade_start_out();
             break;
 #else
         case 1:
         case 2:
             D_0028EAA8 = choice;
-            func_00217A40();
+            fade_start_out();
             func_0018D4B0();
             D_0028EB60 += 1;
             break;
