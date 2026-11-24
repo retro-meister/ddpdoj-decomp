@@ -1090,10 +1090,10 @@ extern u16 D_00684C80[];
 void func_00210EA0(void) {
     u8 *p;
 
-    if (*(u8 *)(reg_a6 + 0x5) & 1) {
+    if (*(u8 *)(reg_a6 + 5) & 1) {
         goto block_3;
     }
-    *(u8 *)(reg_a6 + 0x5) |= 1;
+    *(u8 *)(reg_a6 + 5) |= 1;
     if (D_0029F260[0] >= 0) {
         goto block_2;
     }
@@ -1103,22 +1103,22 @@ void func_00210EA0(void) {
     }
     *(u16 *)(reg_a6 + 0xE) += 1;
     if (D_0028E910 == 0) {
-        *(u16 *)(reg_a6 + 0x6) = 1;
+        *(u16 *)(reg_a6 + 6) = 1;
         return;
     }
-    *(u16 *)(reg_a6 + 0x6) = 2;
+    *(u16 *)(reg_a6 + 6) = 2;
     return;
 block_1:
     *(u16 *)(reg_a6 + 0xE) -= 1;
 block_2:
-    *(u8 *)(reg_a6 + 0x5) |= 0x80;
+    *(u8 *)(reg_a6 + 5) |= 0x80;
 block_rts:
     return;
 block_3:
-    if (*(u8 *)(reg_a6 + 0x5) & 0x80) {
+    if (*(u8 *)(reg_a6 + 5) & 0x80) {
         goto block_rts;
     }
-    if (*(u16 *)(reg_a6 + 0x6) == 1) {
+    if (*(u16 *)(reg_a6 + 6) == 1) {
         switch (D_0028E8C4) {
         case 0:
             goto block_1;
@@ -1132,7 +1132,7 @@ block_3:
         func_0018D9B0();
         func_0018D990();
         func_0018D950();
-    } else if (*(u16 *)(reg_a6 + 0x6) == 2) {
+    } else if (*(u16 *)(reg_a6 + 6) == 2) {
         if (D_0028E8C4 != 0) {
             reg_d0.w = MAIN_OR_DEATH_LABEL(0x05000000, 0x07000000);
             func_001A9180();
@@ -1144,9 +1144,9 @@ block_3:
             func_0018D990();
             func_0018D950();
         } else {
-            *(u16 *)(reg_a6 + 0x6) = 3;
+            *(u16 *)(reg_a6 + 6) = 3;
         }
-    } else if (*(u16 *)(reg_a6 + 0x6) == 3) {
+    } else if (*(u16 *)(reg_a6 + 6) == 3) {
         if (!(D_0029F261[0] & 0x40) && D_0029CD90[0] != 0) {
             reg_d0.w = 0x10000000;
             func_001A9180();
@@ -1158,7 +1158,7 @@ block_3:
             func_0018D990();
             func_0018D950();
         } else {
-            *(u16 *)(reg_a6 + 0x6) = 4;
+            *(u16 *)(reg_a6 + 6) = 4;
         }
     } else {
         p = (u8 *)(u32)D_0029F285;
@@ -1203,10 +1203,10 @@ extern u16 D_00684C80[];
 void func_00211140(void) {
     u8 *p;
 
-    if (*(u8 *)(reg_a6 + 0x4) & 1) {
+    if (*(u8 *)(reg_a6 + 4) & 1) {
         goto block_3;
     }
-    *(u8 *)(reg_a6 + 0x4) |= 1;
+    *(u8 *)(reg_a6 + 4) |= 1;
     if (D_0029F1F0[0] >= 0) {
         goto block_2;
     }
@@ -1216,22 +1216,22 @@ void func_00211140(void) {
     }
     *(u16 *)(reg_a6 + 0xE) += 1;
     if (D_0028E910 == 0) {
-        *(u16 *)(reg_a6 + 0x8) = 1;
+        *(u16 *)(reg_a6 + 8) = 1;
         return;
     }
-    *(u16 *)(reg_a6 + 0x8) = 2;
+    *(u16 *)(reg_a6 + 8) = 2;
     return;
 block_1:
     *(u16 *)(reg_a6 + 0xE) -= 1;
 block_2:
-    *(u8 *)(reg_a6 + 0x4) |= 0x80;
+    *(u8 *)(reg_a6 + 4) |= 0x80;
 block_rts:
     return;
 block_3:
-    if (*(u8 *)(reg_a6 + 0x4) & 0x80) {
+    if (*(u8 *)(reg_a6 + 4) & 0x80) {
         goto block_rts;
     }
-    if (*(u16 *)(reg_a6 + 0x8) == 1) {
+    if (*(u16 *)(reg_a6 + 8) == 1) {
         switch (D_0028E8C0) {
         case 0:
             goto block_1;
@@ -1250,7 +1250,7 @@ block_3:
         }
         return;
     }
-    if (*(u16 *)(reg_a6 + 0x8) == 2) {
+    if (*(u16 *)(reg_a6 + 8) == 2) {
         if (D_0028E8C0 != 0) {
             reg_d0.w = MAIN_OR_DEATH_LABEL(0x05000000, 0x07000000);
             func_001A9190();
@@ -1266,10 +1266,10 @@ block_3:
             }
             return;
         }
-        *(u16 *)(reg_a6 + 0x8) = 3;
+        *(u16 *)(reg_a6 + 8) = 3;
         return;
     }
-    if (*(u16 *)(reg_a6 + 0x8) == 3) {
+    if (*(u16 *)(reg_a6 + 8) == 3) {
         if (!(D_0029F1F1[0] & 0x40) && D_0029CD80[0] != 0) {
             reg_d0.w = 0x10000000;
             func_001A9190();
@@ -1285,7 +1285,7 @@ block_3:
             }
             return;
         }
-        *(u16 *)(reg_a6 + 0x8) = 4;
+        *(u16 *)(reg_a6 + 8) = 4;
         return;
     }
     p = (u8 *)(u32)D_0029F215;

@@ -245,11 +245,11 @@ loop_1:
     goto next_1;
 block_main:
     D_0029BBF8[0] += 1;
-    if (!(*(u8 *)(reg_a6 + 0x1) & 0x40)) goto block_first;
-    *(u8 *)(reg_a6 + 0x1) |= 0x40;
+    if (!(*(u8 *)(reg_a6 + 1) & 0x40)) goto block_first;
+    *(u8 *)(reg_a6 + 1) |= 0x40;
     goto block_fire;
 block_first:
-    *(u8 *)(reg_a6 + 0x1) |= 0x40;
+    *(u8 *)(reg_a6 + 1) |= 0x40;
     reg_d1.h[0] = *(u16 *)reg_a6;
     reg_a1 = (u8 *)D_0024F570;
     reg_d1.h[0] = reg_d1.b[0];
@@ -281,13 +281,13 @@ skip_1:
     reg_tmp.w = (u32)reg_a2;
     *(u16 *)(reg_a6 + 0x2A) = reg_tmp.h[1];
     *(u16 *)(reg_a6 + 0x2C) = reg_tmp.h[0];
-    reg_d1.h[1] = *(u16 *)(reg_a6 + 0x2);
-    reg_d1.h[0] = *(u16 *)(reg_a6 + 0x4);
+    reg_d1.h[1] = *(u16 *)(reg_a6 + 2);
+    reg_d1.h[0] = *(u16 *)(reg_a6 + 4);
     reg_tmp.h[1] = *(u16 *)(reg_a6 + 0x26);
     reg_tmp.h[0] = *(u16 *)(reg_a6 + 0x28);
     reg_d1.w += reg_tmp.w;
-    *(u16 *)(reg_a6 + 0x2) = reg_d1.h[1];
-    *(u16 *)(reg_a6 + 0x4) = reg_d1.h[0];
+    *(u16 *)(reg_a6 + 2) = reg_d1.h[1];
+    *(u16 *)(reg_a6 + 4) = reg_d1.h[0];
 block_fire:
     reg_d0.h[0] = *(u16 *)(reg_a6 + 0x12);
     if (0 > (s16)reg_d0.h[0]) goto block_debris;
@@ -305,7 +305,7 @@ block_fire:
     *(u16 *)(reg_a6 + 0x12) = 0xFFFF;
 block_debris:
     reg_d0.h[0] = D_0029C06C[0];
-    *(u16 *)(reg_a6 + 0x4) -= reg_d0.h[0];
+    *(u16 *)(reg_a6 + 4) -= reg_d0.h[0];
     if (*(u16 *)(reg_a6 + 0x10) == 0) goto block_shift;
     func_00201B80();
 block_shift:
@@ -334,13 +334,13 @@ block_speed:
 block_move:
     reg_d0.h[1] = *(u16 *)(reg_a6 + 0x34);
     reg_d0.h[0] = *(u16 *)(reg_a6 + 0x36);
-    *(u16 *)(reg_a6 + 0x4) += reg_d0.h[0];
+    *(u16 *)(reg_a6 + 4) += reg_d0.h[0];
     reg_tmp.w = reg_d0.w;
     reg_d0.h[1] = reg_tmp.h[0];
     reg_d0.h[0] = reg_tmp.h[1];
-    *(u16 *)(reg_a6 + 0x2) += reg_d0.h[0];
-    reg_d1.h[1] = *(u16 *)(reg_a6 + 0x2);
-    reg_d1.h[0] = *(u16 *)(reg_a6 + 0x4);
+    *(u16 *)(reg_a6 + 2) += reg_d0.h[0];
+    reg_d1.h[1] = *(u16 *)(reg_a6 + 2);
+    reg_d1.h[0] = *(u16 *)(reg_a6 + 4);
     reg_tmp.w = 0;
     reg_tmp.h[0] = 0xA800;
     reg_tmp1.w = 0;

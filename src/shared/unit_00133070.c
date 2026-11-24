@@ -78,7 +78,7 @@ void func_001330F0(void) {
     func_0019C470();
     reg_d1.h[1] = *(u16 *)(reg_a6 + 0x40);
     reg_d1.h[0] = *(u16 *)(reg_a6 + 0x42);
-    reg_d1.h[0] += *(u16 *)(reg_a6 + 0x8);
+    reg_d1.h[0] += *(u16 *)(reg_a6 + 8);
     reg_d1.w += 0xF000E400;
     reg_d2.w = 0x14B0;
     reg_d3.h[0] = 0x10E0;

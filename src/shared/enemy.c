@@ -708,24 +708,24 @@ void func_0014E7E0(void) {
     }
     reg_a0 = (u8 *)(reg_d0.w);
     if (*(u8 *)(reg_a5 + 3) & 0x40) {
-        *(u16 *)(reg_a6 + 0x2) = *(u16 *)(reg_a5 + 0x48);
-        *(u16 *)(reg_a6 + 0x4) = *(u16 *)(reg_a5 + 0x4A);
+        *(u16 *)(reg_a6 + 2) = *(u16 *)(reg_a5 + 0x48);
+        *(u16 *)(reg_a6 + 4) = *(u16 *)(reg_a5 + 0x4A);
         reg_d0.h[0] = D_0029C068[0];
-        *(u16 *)(reg_a6 + 0x4) += reg_d0.sh[0];
+        *(u16 *)(reg_a6 + 4) += reg_d0.sh[0];
     } else {
         reg_d0.b[1] = *(s8 *)reg_a0;
         reg_a0 += 1;
         reg_d0.b[0] = *(s8 *)reg_a0;
         reg_a0 += 1;
-        *(u16 *)(reg_a6 + 0x2) = reg_d0.h[0];
+        *(u16 *)(reg_a6 + 2) = reg_d0.h[0];
         reg_tmp.b[1] = *(s8 *)reg_a0;
         reg_a0 += 1;
         reg_tmp.b[0] = *(s8 *)reg_a0;
         reg_a0 += 1;
-        *(u16 *)(reg_a6 + 0x4) = reg_tmp.h[0];
+        *(u16 *)(reg_a6 + 4) = reg_tmp.h[0];
     }
-    if ((s32) *(u8 *)(reg_a6 + 0x5) >= 0x80) {
-        *(u8 *)(reg_a6 + 0x5) |= 0x80;
+    if ((s32) *(u8 *)(reg_a6 + 5) >= 0x80) {
+        *(u8 *)(reg_a6 + 5) |= 0x80;
     }
 loop_1:
     t = *(s8 *)reg_a0;
@@ -753,8 +753,8 @@ next_1:
     reg_tmp.h[0] = reg_d0.h[0];
     reg_d0.h[0] >>= 7;
     reg_d0.h[0] |= ((s16) reg_tmp.h[0] << 9) & 0xFFFF;
-    *(u16 *)(reg_a6 + 0x4) += reg_d0.h[0];
-    *(u16 *)(reg_a6 + 0x4) -= 0x800;
+    *(u16 *)(reg_a6 + 4) += reg_d0.h[0];
+    *(u16 *)(reg_a6 + 4) -= 0x800;
     reg_d1.w = 0;
     *(u16 *)(reg_a5 + 0x10) = (u16) reg_d1.h[0];
     *(u8 *)(reg_a5 + 3) |= 0x20;

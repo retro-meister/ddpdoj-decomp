@@ -859,10 +859,10 @@ void func_00132420(void) {
     u8 *v3;
     u8 *v4;
 
-    v1 = *(u8 *)(reg_a6 + 0x3);
+    v1 = *(u8 *)(reg_a6 + 3);
     v4 = (u8 *)(reg_a6 + 3);
     if (!(v1 & 1)) {
-        *(u8 *)(reg_a6 + 0x3) = (u8) (v1 | 1);
+        *(u8 *)(reg_a6 + 3) = (u8) (v1 | 1);
         D_0028E961 |= 2;
         reg_d0.w = 0;
         t5 = reg_d0.h[0];
@@ -892,16 +892,16 @@ void func_00132420(void) {
         return;
     }
     if (!(v1 & 4)) {
-        *(u8 *)(reg_a6 + 0x3) = (u8) (v1 | 4);
-        *(u16 *)(reg_a6 + 0x4) = 1U;
+        *(u8 *)(reg_a6 + 3) = (u8) (v1 | 4);
+        *(u16 *)(reg_a6 + 4) = 1U;
         func_0012FB00();
         return;
     }
-    t8 = *(u16 *)(reg_a6 + 0x4);
+    t8 = *(u16 *)(reg_a6 + 4);
     t16 = (u8 *)(reg_a6 + 4);
     if (t8 != 0) {
-        *(u16 *)(reg_a6 + 0x4) = (u16) (t8 - 1);
-        if (*(u16 *)(reg_a6 + 0x4) != 0) goto next_290;
+        *(u16 *)(reg_a6 + 4) = (u16) (t8 - 1);
+        if (*(u16 *)(reg_a6 + 4) != 0) goto next_290;
         {
             reg_a0 = (u8 *)(D_00269A10);
             reg_a1 = (u8 *)(reg_a6 + 6);
@@ -961,14 +961,14 @@ void func_00132420(void) {
 next_290:
         return;
     } else {
-        if (*(s16 *)(reg_a6 + 0x6) >= 0) {
+        if (*(s16 *)(reg_a6 + 6) >= 0) {
             reg_a0 = (u8 *)(D_00269A60);
             reg_d1.w = 0;
-            reg_d1.h[0] = *(u16 *)(reg_a6 + 0x6);
+            reg_d1.h[0] = *(u16 *)(reg_a6 + 6);
             reg_d0.h[0] = (reg_d1.h[0] != 0) ? *(u16 *)((u8 *)reg_a0 + ((s16)reg_d1.h[0] & ~1)) : *(u16 *)reg_a0;
-            *(u16 *)(reg_a6 + 0x8) -= reg_d0.h[0];
+            *(u16 *)(reg_a6 + 8) -= reg_d0.h[0];
             *(u16 *)(reg_a6 + 0xC) += reg_d0.h[0];
-            *(u16 *)(reg_a6 + 0x6) += 2;
+            *(u16 *)(reg_a6 + 6) += 2;
             reg_a0 += reg_d1.w;
             t9 = *(u16 *)(reg_a6 + 0x16);
             if (t9 != 0) {
@@ -988,27 +988,27 @@ block_15:
                 v3 = (u8 *)((void *) (*(u16 *)((u8 *)(v4) + (0xE))));
                 (*(u16 *)((u8 *)(v4) + (0xE))) = (u16) (v3 + reg_d0.h[0]);
                 if (D_00269AAE == reg_a0) {
-                    *(u16 *)(reg_a6 + 0x6) = 0xFFFF;
+                    *(u16 *)(reg_a6 + 6) = 0xFFFF;
                 }
             }
             if (D_0029F260[0] >= 0) {
-                *(u16 *)(reg_a6 + 0x8) = 0U;
+                *(u16 *)(reg_a6 + 8) = 0U;
                 *(u16 *)(reg_a6 + 0xA) = 0U;
             }
             if (D_0029F1F0[0] >= 0) {
                 *(u16 *)(reg_a6 + 0xC) = 0x40U;
                 *(u16 *)(reg_a6 + 0xE) = 0x40U;
             }
-            if (*(s16 *)(reg_a6 + 0x6) < 0) {
+            if (*(s16 *)(reg_a6 + 6) < 0) {
                 D_0028E854 |= 8;
             }
             func_001330F0();
             return;
         }
         if (v1 & 2) {
-            *(u8 *)(reg_a6 + 0x3) = (u8) (v1 | 2);
+            *(u8 *)(reg_a6 + 3) = (u8) (v1 | 2);
         } else {
-            *(u8 *)(reg_a6 + 0x3) = (u8) (v1 | 2);
+            *(u8 *)(reg_a6 + 3) = (u8) (v1 | 2);
             *(u16 *)(reg_a6 + 0x2C) = 0x18U;
             reg_d7.w = 0;
             if (D_0029F260[0] < 0) {
@@ -1064,7 +1064,7 @@ block_15:
             *(u16 *)(reg_a6 + 0x2C) = (u16) (t11 - 1);
             return;
         }
-        if (!(*(u8 *)(reg_a6 + 0x3) & 8)) {
+        if (!(*(u8 *)(reg_a6 + 3) & 8)) {
             reg_d7.w = 0;
             reg_d6.h[0] = *(u16 *)(reg_a6 + 0x1A);
             reg_d6.h[0] += *(u16 *)(reg_a6 + 0x1E);
@@ -1152,7 +1152,7 @@ block_60:
             }
             if (reg_d7.h[0] != 0) goto next_499;
             {
-                *(u8 *)(reg_a6 + 0x3) |= 8;
+                *(u8 *)(reg_a6 + 3) |= 8;
                 reg_d0.h[0] = 8;
                 if (D_0028E648 == 0) {
                     reg_d0.h[0] = 1;

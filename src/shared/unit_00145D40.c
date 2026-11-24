@@ -248,7 +248,7 @@ extern u16 D_0028C118[];
 void func_00146350(void) {
     u16 temp_a0;
     reg_d0.w = 0;
-    reg_d0.b[0] = *(u8 *)(reg_a6 + 0x2);
+    reg_d0.b[0] = *(u8 *)(reg_a6 + 2);
     reg_a0 = (u8 *)(D_0028C118);
     reg_d0.h[0] += reg_d0.h[0];
     reg_d0.h[0] = (reg_d0.h[0] != 0) ? *(u16 *)((u8 *)reg_a0 + ((s16)reg_d0.h[0] & ~1)) : *(u16 *)reg_a0;
@@ -261,7 +261,7 @@ void func_00146350(void) {
     if (reg_d7.h[0] == 0) {
         reg_d0.w = 1;
     }
-    reg_d1.h[0] = *(u16 *)(reg_a6 + 0x2);
+    reg_d1.h[0] = *(u16 *)(reg_a6 + 2);
     func_001A33C0();
     temp_a0 = *(u16 *)(reg_a4 + 0xA);
     reg_d1.h[0] = temp_a0;
