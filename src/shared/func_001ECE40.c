@@ -34,7 +34,7 @@ void func_001ECE40() {
             (*(u8 *)((u8 *)(reg_a4) + (5))) = (u8) (*(u8 *)((u8 *)(reg_a4) + (4)));
             (*(s8 *)((u8 *)(reg_a6) + (0x1F1))) = (s8) ~(*(s8 *)((u8 *)(reg_a6) + (0x1F1)));
             temp_v0 = (*(u8 *)((u8 *)(reg_a6) + (0x1F0)));
-            if ((s32) temp_v0 < 0x95) {
+            if ((s32) temp_v0 < MAIN_OR_DEATH_LABEL(0x95, 0x81)) {
                 (*(u8 *)((u8 *)(reg_a6) + (0x1F0))) = (u8) (temp_v0 + 0xA);
             }
             temp_v0_2 = (*(u16 *)((u8 *)(reg_a6) + (0x1F2)));

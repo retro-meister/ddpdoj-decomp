@@ -1,6 +1,6 @@
 #include "common.h"
 
-extern s32 D_0028DE80;
+extern void *D_0028DE8C;
 extern u32 D_0028DE90;
 extern u32 D_0028DE94;
 extern s8 D_0028E408;
@@ -13,5 +13,5 @@ void func_00126ED0(void) {
     (*(s16 *)((u8 *)(reg_a0) + (-6))) = 0;
     D_0028E408 = 0;
     reg_d7.w = D_0028DE90;
-    reg_a0 = (*(void **)((u8 *)(&D_0028DE80) + (0xC)));
+    reg_a0 = D_0028DE8C;
 }

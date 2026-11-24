@@ -16,7 +16,7 @@ import struct
 import subprocess
 from tempfile import TemporaryDirectory
 
-from build import build, compile_source, draft_defines
+from build import build, compile_source, draft_defines, unit_object
 from common import ROOT, require_local, target_compiler
 from pairdeath import AUTO_RE, DEATH, MAIN, coarse, death_image, masked_equal, patch_death_text, read_object, site_values
 from split import load_symbols, scan_asm_functions, split, target_units
@@ -95,7 +95,7 @@ def check(local, source, base, show=40):
     return sections, symbols, text, functions, results, shifted
 
 
-def integrate_unit(local, source, base, sections, symbols, text, functions):
+def integrate_unit(local, source, base, sections, symbols, text, functions, do_build=True):
     """Everything matched: derive symbol addresses, then move/patch/build."""
     from integrate import patch_splat_rodata
     image, file_address, code_end, gp = death_image()
@@ -184,7 +184,10 @@ def integrate_unit(local, source, base, sections, symbols, text, functions):
         elif not in_shared:
             dest.parent.mkdir(parents=True, exist_ok=True)
             dest.write_text(source.read_text(encoding="utf-8"), encoding="utf-8")
-        build(local)
+        if do_build:
+            build(local)
+            if sync_function_symbols(local):
+                build(local, target=DEATH)
     except BaseException:
         for path, data in backups.items():
             path.write_bytes(data)
@@ -198,14 +201,76 @@ def integrate_unit(local, source, base, sections, symbols, text, functions):
     print(f"INTEGRATED  src/{stub}.c at {base:#x} ({len(functions)} function(s))")
 
 
+def sync_function_symbols(local):
+    """Give every function a Death Label C unit defines (statics too) a sized entry in symbols.txt."""
+    version = target_compiler(DEATH, local)
+    wanted = {}
+    for unit in target_units(DEATH):
+        obj = unit_object(version, DEATH, unit["source"])
+        if not obj.is_file():
+            continue
+        sections, symbols = read_object(obj)
+        text = next(index for index, section in sections.items() if section["name"] == ".text")
+        for symbol in symbols:
+            if symbol["type"] == 2 and symbol["shndx"] == text and symbol["size"]:
+                wanted[symbol["name"]] = (unit["address"] + symbol["value"], symbol["size"])
+    sym_file = ROOT / "config" / DEATH / "symbols.txt"
+    lines, seen, changed = [], set(), 0
+    for line in sym_file.read_text(encoding="utf-8").splitlines():
+        match = re.match(r"\s*(\w+)\s*=\s*(0x[0-9a-fA-F]+)\s*;(.*)$", line)
+        if match and match.group(1) in wanted:
+            name = match.group(1)
+            address, size = wanted[name]
+            seen.add(name)
+            if int(match.group(2), 16) != address:
+                raise ValueError(f"{name}: symbols.txt has {match.group(2)}, its unit defines it at {address:#x}")
+            fixed = f"{name} = {address:#x}; // type:func size:{size:#x}" + (" ignore:true" if "ignore:true" in match.group(3) else "")
+            changed += fixed != line
+            line = fixed
+        lines.append(line)
+    for name, (address, size) in sorted(wanted.items(), key=lambda kv: kv[1][0]):
+        if name not in seen:
+            lines.append(f"{name} = {address:#x}; // type:func size:{size:#x}")
+            changed += 1
+    if changed:
+        sym_file.write_text("\n".join(lines) + "\n", encoding="utf-8")
+    return changed
+
+
 def main():
     parser = argparse.ArgumentParser(description=__doc__.splitlines()[0])
-    parser.add_argument("source")
-    parser.add_argument("--at", required=True, type=lambda value: int(value, 0), help="Death Label address of the first function")
+    parser.add_argument("source", nargs="?")
+    parser.add_argument("--sync-symbols", action="store_true", help="only refresh the sized function entries in symbols.txt")
+    parser.add_argument("--batch", help="file of '<source> <address>' lines to integrate with one build")
+    parser.add_argument("--at", type=lambda value: int(value, 0), help="Death Label address of the first function")
     parser.add_argument("--apply", action="store_true")
     parser.add_argument("--max-diffs", type=int, default=40)
     args = parser.parse_args()
     local = require_local()
+    if args.sync_symbols:
+        print(f"{sync_function_symbols(local)} symbols.txt entries updated")
+        return
+    if args.batch:
+        done = []
+        for line in Path(args.batch).read_text(encoding="utf-8").split("\n"):
+            if not line.strip():
+                continue
+            name, address = line.split()
+            source = (ROOT / name).resolve()
+            sections, symbols, text, functions, results, _ = check(local, source, int(address, 0), 0)
+            if not all(result[4] for result in results):
+                print(f"SKIP  {name}: does not match")
+                continue
+            try:
+                integrate_unit(local, source, int(address, 0), sections, symbols, text, functions, do_build=False)
+                done.append(name)
+            except ValueError as error:
+                print(f"SKIP  {name}: {error}")
+        build(local)
+        if sync_function_symbols(local):
+            build(local, target=DEATH)
+        print(f"batch of {len(done)} integrated")
+        return
     source = (ROOT / args.source).resolve()
     sections, symbols, text, functions, results, shifted = check(local, source, args.at, args.max_diffs)
     if args.apply:

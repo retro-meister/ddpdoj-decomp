@@ -5,6 +5,13 @@
 
 #define SJIS(s) s
 
+/* A value that differs between the main game and the Death Label executable. */
+#ifdef DEATH_LABEL
+#define MAIN_OR_DEATH_LABEL(main, death) (death)
+#else
+#define MAIN_OR_DEATH_LABEL(main, death) (main)
+#endif
+
 typedef union {
     u32 w;
     s32 sw;

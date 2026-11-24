@@ -49,7 +49,7 @@ void func_00124320(void) {
     save_a4 = reg_a4;
     save_a5 = reg_a5;
     save_a6 = reg_a6;
-    memset(D_00295E50, 0, 0x490);
+    memset(D_00295E50, 0, MAIN_OR_DEATH_LABEL(0x490, 0x4D0));
     if (reg_a0 != 0) {
         D_00295E54[0] = (int)reg_a0;
         D_00295E5A[0] = 0xFFFF;

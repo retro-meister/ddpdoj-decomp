@@ -28,7 +28,7 @@ block_4:
         if (D_0028E408 == 0) {
             reg_d0.w = 0xF;
             func_00124B20();
-            reg_d0.w = 4;
+            reg_d0.w = MAIN_OR_DEATH_LABEL(4, 16);
             func_00124D90();
             (*(s16 *)((u8 *)(reg_a4) + (0))) = 0;
         }

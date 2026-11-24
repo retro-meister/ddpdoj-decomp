@@ -11,7 +11,7 @@ void func_0021E8D0(void) {
     s32 count;
     s32 value;
 
-    if (D_0028EB58 >= 5) {
+    if (D_0028EB58 >= MAIN_OR_DEATH_LABEL(5, 7)) {
         return;
     }
     if (D_0028EB58 == 1 && !(D_0028E300 & 1)) {

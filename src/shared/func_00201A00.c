@@ -31,7 +31,7 @@ void func_00201A00(void) {
     var_a0 = (u16 *)(D_002962E0);
     reg_d2.w = 0;
     reg_a2 = (u8 *)(D_002962E0);
-    reg_d7.h[0] = 0xD1;
+    reg_d7.h[0] = MAIN_OR_DEATH_LABEL(0xD1, 0x419);
     do {
         reg_d0.h[0] = *(u16 *)reg_a2;
         if ((s16) reg_d0.h[0] < 0) {

@@ -43,7 +43,7 @@ loop_1:
         reg_a0 += 2;
         reg_a2 += 2;
         D_0028E1A0 += 0xC;
-        if (D_0028E1A0 != 0x1758) {
+        if (D_0028E1A0 != MAIN_OR_DEATH_LABEL(0x1758, 0x36C0)) {
             reg_d0.h[0] -= 0xC;
             if (reg_d0.h[0] != 0) goto loop_1;
             *(u16 *)reg_a1 = reg_d0.h[0];

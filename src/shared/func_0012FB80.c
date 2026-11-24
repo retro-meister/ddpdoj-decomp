@@ -5,7 +5,7 @@ extern s32 *reg_a0;
 
 void func_0012FB80(void) {
     reg_a0 = D_002B3950;
-    reg_d0.h[0] = 0x4FF;
+    reg_d0.h[0] = MAIN_OR_DEATH_LABEL(0x4FF, 0xBB7);
     do {
         *reg_a0 = 0;
         reg_a0 += 1;

@@ -6,7 +6,7 @@ s32 func_00126ED0();
 extern u8 D_00269530[];
 extern u8 D_00269550[];
 extern u8 D_002695E0[];
-extern u8 D_0028DE80;
+extern u8 *D_0028DE8C;
 extern u32 D_0028DE90;
 extern u32 D_0028DE94;
 extern Reg32 D_0028E484;
@@ -105,5 +105,5 @@ void func_00126F10(void) {
     ((Fn) *(u32 *) (D_00269550 + (reg_d0.h[0] & ~3)))();
     reg_a1 = save_a1;
     reg_d7.w = D_0028DE90;
-    reg_a0 = *(u8 **) (&D_0028DE80 + 0xC);
+    reg_a0 = D_0028DE8C;
 }

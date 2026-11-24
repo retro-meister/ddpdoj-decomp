@@ -55,7 +55,7 @@ void func_00124700(void) {
             reg_a0 = (u8 *)D_00295E7C;
             D_00295E58[0] = 0;
             reg_a1 = (u8 *)(D_00295E5C);
-            reg_d0.h[0] = 0xF;
+            reg_d0.h[0] = MAIN_OR_DEATH_LABEL(0xF, 0x1F);
             D_00295E5A[0] = D_00295E52[0];
             do {
                 *(u16 *)reg_a1 = (u16) *(u16 *)reg_a0;
