@@ -2,7 +2,7 @@
 
 extern void func_0021C0F0(void);
 extern void func_0021C2F0(void);
-extern void func_00215DB0(s32 x, s32 y, s32 w, s32 h, s32 depth, s32 alpha, s32 r, s32 g, s32 b);
+extern void gfx_draw_color_box(s32 x, s32 y, s32 w, s32 h, s32 depth, s32 alpha, s32 r, s32 g, s32 b);
 extern void func_00227000(void);
 extern void func_0022BA60(void);
 extern s8 D_0028EB04;
@@ -69,7 +69,7 @@ void func_0022B870(void) {
             }
             break;
         }
-        func_00215DB0(0, 0, 0x1C2, 0xE0, 0x50, D_0028EB90 / 2, 1, 1, 1);
+        gfx_draw_color_box(0, 0, 0x1C2, 0xE0, 0x50, D_0028EB90 / 2, 1, 1, 1);
         if (D_0028ED7C == 1) {
             func_0022BA60();
             func_00227000();

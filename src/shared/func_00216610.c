@@ -2,7 +2,7 @@
 
 s32 FlushCache(s32);
 s32 func_0018E020();
-s32 func_00214140();
+s32 text_flush_rects();
 s32 func_002168B0();
 s32 func_00217040();
 s32 func_00217A50();
@@ -37,7 +37,7 @@ extern u16 D_0028E3F0;
 extern u16 D_0028E8A8;
 extern s32 D_0028E9DC;
 extern s32 D_0028E9F0;
-extern u8 D_00558780[];
+extern u8 g_gif_buf[];
 extern u8 D_0057C840[];
 extern u8 D_0057C8C0[];
 extern u8 D_0057C9B0[];
@@ -63,18 +63,18 @@ void func_00216610(void) {
     func_00217A50();
     if (D_0028DC98 >= 2) {
         if (D_0028DC98 >= 4) {
-            func_0021B080(D_00586FF0, D_00558780);
+            func_0021B080(D_00586FF0, g_gif_buf);
         } else {
-            func_0021ABB0(D_00558780);
+            func_0021ABB0(g_gif_buf);
             if (D_0028E32C != 5) {
-                func_0021BAE0(D_00558780);
+                func_0021BAE0(g_gif_buf);
             }
-            func_0021AE20(D_00586FF0, D_00558780);
+            func_0021AE20(D_00586FF0, g_gif_buf);
         }
     }
     func_00217040();
     func_002195F0();
-    func_00214140();
+    text_flush_rects();
     func_0018E020();
     func_00217D80();
     sceGsSyncPath(0, 0);

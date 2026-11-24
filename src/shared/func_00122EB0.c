@@ -10,8 +10,8 @@ extern s8 D_0028E350;
 extern s16 D_0028E3FC;
 extern s16 D_0028E910;
 extern u16 D_0028E91C;
-extern s8 D_0028E9B8;
-extern s8 D_0028E9BC;
+extern s8 g_cd_async_state;
+extern s8 g_cd_async_busy;
 extern u16 D_00295E38[];
 extern u16 D_00295E3C[];
 extern u8 *reg_a6;
@@ -27,10 +27,10 @@ void func_00122EB0(void) {
                 func_00123870();
                 return;
             }
-            D_0028E9BC = 1;
+            g_cd_async_busy = 1;
             D_00295E3C[0] = 2;
             D_0028E350 = 0;
-            D_0028E9B8 = 0;
+            g_cd_async_state = 0;
             func_00225630(temp_a0);
             goto block_6;
         }

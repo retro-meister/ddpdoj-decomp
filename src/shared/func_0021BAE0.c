@@ -11,7 +11,7 @@ typedef struct {
 
 extern Vertex D_0026FAA0[];
 extern u8 D_0028E2DC;
-extern void *D_0028E9F4;
+extern void *g_dma_gif;
 extern s32 D_0028EA54;
 
 void func_0021BAE0(void *buffer) {
@@ -56,6 +56,6 @@ void func_0021BAE0(void *buffer) {
     }
     sceGifPkTerminate(&packet);
     FlushCache(0);
-    sceDmaSendN(D_0028E9F4, buffer, sceGifPkSize(&packet));
+    sceDmaSendN(g_dma_gif, buffer, sceGifPkSize(&packet));
     sceGsSyncPath(0, 0);
 }

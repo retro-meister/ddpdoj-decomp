@@ -1,8 +1,8 @@
 #include "common.h"
 
-void func_00213080(s16 x, s16 y, u8 *text, s32 a3, s32 w, s32 h, u16 attr, s32 z);
-void func_00213640(s16 x, s16 y, s32 glyph, s32 w, s32 a4, s32 h, u16 attr, s32 z);
-void func_00213B80(s16 x, s16 y, u8 *text, s32 a3, s32 w, s32 h, u16 attr, s32 z);
+void text_queue_sjis(s16 x, s16 y, u8 *text, s32 a3, s32 w, s32 h, u16 attr, s32 z);
+void text_queue_glyph(s16 x, s16 y, s32 glyph, s32 w, s32 a4, s32 h, u16 attr, s32 z);
+void text_queue_ascii(s16 x, s16 y, u8 *text, s32 a3, s32 w, s32 h, u16 attr, s32 z);
 extern s8 *reg_a0;
 extern u16 D_0028E3F0;
 
@@ -36,43 +36,43 @@ void func_00222C30(s32 x, s32 y, s32 attr) {
         case 0x8F81:
             return;
         case 0x6781:
-            func_00213080(cx, cy - 4, buf, 0, 0x14, 0x10, attr, 0x12C);
+            text_queue_sjis(cx, cy - 4, buf, 0, 0x14, 0x10, attr, 0x12C);
             cy += 0xC;
             break;
         case 0x6881:
-            func_00213080(cx, cy, buf, 0, 0x14, 0x10, attr, 0x12C);
+            text_queue_sjis(cx, cy, buf, 0, 0x14, 0x10, attr, 0x12C);
             cy += 0xC;
             break;
         case 0x6981:
-            func_00213080(cx, cy - 4, buf, 0, 0x14, 0x10, attr, 0x12C);
+            text_queue_sjis(cx, cy - 4, buf, 0, 0x14, 0x10, attr, 0x12C);
             cy += 0xC;
             break;
         case 0x6A81:
-            func_00213080(cx, cy, buf, 0, 0x14, 0x10, attr, 0x12C);
+            text_queue_sjis(cx, cy, buf, 0, 0x14, 0x10, attr, 0x12C);
             cy += 0xC;
             break;
         case 0x9B81:
-            func_00213640(cx - 0x10, cy + 2, 0x227C, 0x14, 0x26, 0x14, attr, 0x12C);
+            text_queue_glyph(cx - 0x10, cy + 2, 0x227C, 0x14, 0x26, 0x14, attr, 0x12C);
             cy += 0x10;
             break;
         case 0x7E81:
-            func_00213640(cx - 0x10, cy + 2, 0x227D, 0x14, 0x26, 0x14, attr, 0x12C);
+            text_queue_glyph(cx - 0x10, cy + 2, 0x227D, 0x14, 0x26, 0x14, attr, 0x12C);
             cy += 0x10;
             break;
         case 0x9781:
             buf[0] = 0x81;
             buf[1] = 0x44;
             for (n = (D_0028E3F0 >> 5) & 3; n > 0; n--) {
-                func_00213080(cx, cy, buf, 0, 0x14, 0x10, attr, 0x12C);
+                text_queue_sjis(cx, cy, buf, 0, 0x14, 0x10, attr, 0x12C);
                 cy += 5;
             }
             return;
         default:
             if (single != 0) {
-                func_00213B80(cx, cy, buf, 0, 0x14, 0x10, attr, 0x12C);
+                text_queue_ascii(cx, cy, buf, 0, 0x14, 0x10, attr, 0x12C);
                 cy += 8;
             } else {
-                func_00213080(cx, cy, buf, 0, 0x14, 0x10, attr, 0x12C);
+                text_queue_sjis(cx, cy, buf, 0, 0x14, 0x10, attr, 0x12C);
                 cy += 0x10;
             }
             break;

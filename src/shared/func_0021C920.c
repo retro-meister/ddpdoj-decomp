@@ -34,14 +34,14 @@ extern u16 D_00270690[][2];
 extern u16 D_002706C0[][2];
 extern u16 D_00270720[][2];
 extern s16 D_0028E48A;
-extern void *D_0028E9F4;
+extern void *g_dma_gif;
 extern s32 D_0028EA80;
 extern u8 *D_0028EA9C;
 extern u8 *D_0028EAA0;
 extern TileImage *D_0028EAA4;
 extern u16 D_002B3950[][5];
-extern u8 D_00558780[];
-extern sceGsLoadImage D_0057C780;
+extern u8 g_gif_buf[];
+extern sceGsLoadImage g_gs_load_image;
 extern u32 D_005C4C80[];
 extern TileEntry D_00592000[];
 
@@ -151,18 +151,18 @@ void func_0021C920(void) {
         } else if (prev != id) {
             prev = id;
             if (id >= 0x195E) {
-                sceGsSetDefLoadImage(&D_0057C780, 0x2240, 8, 0x13, 0x10, 0x10, w, h);
+                sceGsSetDefLoadImage(&g_gs_load_image, 0x2240, 8, 0x13, 0x10, 0x10, w, h);
                 FlushCache(0);
-                sceGsExecLoadImage(&D_0057C780, D_0028EA9C + D_0028EAA4[index].offset);
+                sceGsExecLoadImage(&g_gs_load_image, D_0028EA9C + D_0028EAA4[index].offset);
             } else {
                 src = (u32 *)(D_0028EAA0 + D_0028EAA4[index].offset);
                 out = 0;
                 in = 0;
                 dst = D_005C4C80;
                 if (!(src[0] & 0x80000000)) {
-                    sceGsSetDefLoadImage(&D_0057C780, 0x2240, 8, 0x13, 0x10, 0x10, w, h);
+                    sceGsSetDefLoadImage(&g_gs_load_image, 0x2240, 8, 0x13, 0x10, 0x10, w, h);
                     FlushCache(0);
-                    sceGsExecLoadImage(&D_0057C780, src);
+                    sceGsExecLoadImage(&g_gs_load_image, src);
                 } else {
                     do {
                         fill = src[in++];
@@ -176,9 +176,9 @@ void func_0021C920(void) {
                             }
                         }
                     } while (out < w * h / 4);
-                    sceGsSetDefLoadImage(&D_0057C780, 0x2240, 8, 0x13, 0x10, 0x10, w, h);
+                    sceGsSetDefLoadImage(&g_gs_load_image, 0x2240, 8, 0x13, 0x10, 0x10, w, h);
                     FlushCache(0);
-                    sceGsExecLoadImage(&D_0057C780, dst);
+                    sceGsExecLoadImage(&g_gs_load_image, dst);
                 }
             }
             sceGsSyncPath(0, 0);
@@ -257,11 +257,11 @@ void func_0021C920(void) {
             D_00592000[count].v[1] = tv;
             break;
         }
-        pkt = D_00558780 + (buf << 16);
+        pkt = g_gif_buf + (buf << 16);
         func_0021A240(pkt, count, 1);
         sceGsSyncPath(0, 0);
         FlushCache(0);
-        sceDmaSend(D_0028E9F4, pkt);
+        sceDmaSend(g_dma_gif, pkt);
         buf ^= 1;
         count++;
         p += 5;

@@ -1,6 +1,6 @@
 #include "common.h"
 
-void func_00215DB0(s32 a, s32 b, s32 c, s32 d, s32 e, s64 alpha, s32 g, s32 h, s32 i);
+void gfx_draw_color_box(s32 a, s32 b, s32 c, s32 d, s32 e, s64 alpha, s32 g, s32 h, s32 i);
 extern s16 D_0028E9E0;
 extern s16 D_0028E9E4;
 extern s8 D_0028E9E8;
@@ -38,14 +38,14 @@ void func_00217A50(void) {
 #ifdef DEATH_LABEL
     if (D_0028E9E0 != 0) {
         if (death_D_00290B60 == 0) {
-            func_00215DB0(0, 0, 0x1C2, 0xE0, 0x1F4, D_0028E9E0, 1, 1, 1);
+            gfx_draw_color_box(0, 0, 0x1C2, 0xE0, 0x1F4, D_0028E9E0, 1, 1, 1);
         } else {
-            func_00215DB0(0, 0, 0x1C2, 0xE0, 0x1F4, D_0028E9E0, 0xFF, 0xFF, 0xFF);
+            gfx_draw_color_box(0, 0, 0x1C2, 0xE0, 0x1F4, D_0028E9E0, 0xFF, 0xFF, 0xFF);
         }
     }
 #else
     if (D_0028E9E0 != 0) {
-        func_00215DB0(0, 0, 0x1C2, 0xE0, 0x1F4, D_0028E9E0, 1, 1, 1);
+        gfx_draw_color_box(0, 0, 0x1C2, 0xE0, 0x1F4, D_0028E9E0, 1, 1, 1);
     }
 #endif
 }

@@ -11,10 +11,10 @@ extern void sceGifPkOpenGifTag(sceGifPacket *packet, unsigned __int128 tag);
 extern void sceGifPkCloseGifTag(sceGifPacket *packet);
 extern void sceGifPkAddGsAD(sceGifPacket *packet, s32 addr, u64 data);
 extern GifTag D_00270800[];
-extern void *D_0028E9F4;
+extern void *g_dma_gif;
 extern u8 *D_0028EA98;
-extern u8 D_00558780[];
-extern sceGsLoadImage D_0057C780;
+extern u8 g_gif_buf[];
+extern sceGsLoadImage g_gs_load_image;
 
 void func_0021D140(u16 alpha) {
     GifTag tag;
@@ -24,10 +24,10 @@ void func_0021D140(u16 alpha) {
     u64 prim;
 
     tag = D_00270800[0];
-    buf = D_00558780;
-    sceGsSetDefLoadImage(&D_0057C780, 0x2240, 8, 0x13, 0, 0, 320, 208);
+    buf = g_gif_buf;
+    sceGsSetDefLoadImage(&g_gs_load_image, 0x2240, 8, 0x13, 0, 0, 320, 208);
     FlushCache(0);
-    sceGsExecLoadImage(&D_0057C780, D_0028EA98 + 0x200);
+    sceGsExecLoadImage(&g_gs_load_image, D_0028EA98 + 0x200);
     sceGsSyncPath(0, 0);
     sceGifPkInit(&packet, buf);
     sceGifPkReset(&packet);
@@ -59,6 +59,6 @@ void func_0021D140(u16 alpha) {
     sceGifPkCloseGifTag(&packet);
     sceGifPkTerminate(&packet);
     FlushCache(0);
-    sceDmaSendN(D_0028E9F4, buf, sceGifPkSize(&packet));
+    sceDmaSendN(g_dma_gif, buf, sceGifPkSize(&packet));
     sceGsSyncPath(0, 0);
 }

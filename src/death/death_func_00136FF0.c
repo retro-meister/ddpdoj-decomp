@@ -18,8 +18,8 @@ extern u8 D_0028E368;
 extern u8 D_0028E378;
 extern s16 D_0028E3FC;
 extern u16 D_0028E91C;
-extern s8 D_0028E9B8;
-extern s8 D_0028E9BC;
+extern s8 g_cd_async_state;
+extern s8 g_cd_async_busy;
 extern s8 D_0028EB88;
 extern u8 *reg_a0;
 extern u8 *reg_a5;
@@ -40,8 +40,8 @@ void death_func_00136FF0(void) {
         func_00217A20();
         func_00219570();
         D_0028E350 = 0;
-        D_0028E9BC = 1;
-        D_0028E9B8 = 0;
+        g_cd_async_busy = 1;
+        g_cd_async_state = 0;
         func_00225630();
     }
     if (reg_a5[2] == 1) {

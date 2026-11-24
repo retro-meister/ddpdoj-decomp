@@ -1,9 +1,9 @@
 #include "common.h"
 
-extern void func_00213060(void);
-extern void func_00214DE0(s32 level);
-extern void func_00215350(void);
-extern void func_00215DB0(s32 x, s32 y, s32 w, s32 h, s32 depth, s32 alpha, s32 r, s32 g, s32 b);
+extern void text_queue_clear(void);
+extern void frame_draw_right_panel(s32 level);
+extern void text_flush(void);
+extern void gfx_draw_color_box(s32 x, s32 y, s32 w, s32 h, s32 depth, s32 alpha, s32 r, s32 g, s32 b);
 extern s32 func_0021C100(s32 x, s32 y, s32 z, s32 page, s32 alpha, s32 attr, s32 wide);
 extern void func_00222C30(s32 x, s32 y, s32 alpha);
 extern char *D_0028DD90;
@@ -41,14 +41,14 @@ void func_00221E20(void) {
         break;
     }
     if (D_0028EAEC != 0) {
-        func_00213060();
+        text_queue_clear();
         alpha = D_0028EAEC;
         if (D_0028EAEC >= 0x60) {
             alpha = 0x60;
         }
         if (alpha != 0) {
-            func_00214DE0(D_0028EAEC);
-            func_00215DB0(0xEC, 8, 0x40, 0xD0, 0x12C, alpha, 1, 1, 0x40);
+            frame_draw_right_panel(D_0028EAEC);
+            gfx_draw_color_box(0xEC, 8, 0x40, 0xD0, 0x12C, alpha, 1, 1, 0x40);
         }
         reg_a0 = (char *)D_0028DD90;
         func_00222C30(0x116, 8, D_0028EAEC);
@@ -64,5 +64,5 @@ void func_00221E20(void) {
             y += 9;
         } while (i < 0x14);
     }
-    func_00215350();
+    text_flush();
 }

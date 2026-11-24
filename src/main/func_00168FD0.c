@@ -31,8 +31,8 @@ extern u8 D_0028E378;
 extern u8 D_0028E39C;
 extern s16 D_0028E3FC;
 extern u16 D_0028E91C;
-extern u8 D_0028E9B8;
-extern u8 D_0028E9BC;
+extern u8 g_cd_async_state;
+extern u8 g_cd_async_busy;
 extern u8 *reg_a5;
 
 void func_00168FD0(void) {
@@ -49,8 +49,8 @@ void func_00168FD0(void) {
         func_00219570();
         func_00217EC0();
         D_0028E350 = 0;
-        D_0028E9BC = 1;
-        D_0028E9B8 = 0;
+        g_cd_async_busy = 1;
+        g_cd_async_state = 0;
         func_00225630();
     }
     if (reg_a5[2] == 1) {

@@ -1,6 +1,6 @@
 #include "common.h"
 
-s32 func_00213070();                            /* extern */
+s32 text_queue_clear_all();                            /* extern */
 s32 func_0022C870(s32);                         /* extern */
 s32 func_0022CC20(s32);                         /* extern */
 s32 func_0022CC60(s32);                         /* extern */
@@ -9,7 +9,7 @@ extern s32 D_0028ED10;
 extern s32 D_0028ED18;
 
 void func_0022C7B0(void) {
-    func_00213070();
+    text_queue_clear_all();
     switch (D_0028ED18) {                           /* irregular */
     case 0:
         func_0022C870(D_0028ED18);

@@ -3,9 +3,9 @@
 
 extern void func_0021C100(s32 x, s32 y, s32 z, s32 page, s32 bright, s32 alpha, s32 flag);
 extern void func_00224BA0(s32 x, s32 y, s32 z, s32 page, s32 bright, s32 alpha, s32 flag, s32 kind);
-void func_00213640(s16 x, s16 y, u16 glyph, s32 w, s32 a4, s32 h, u16 attr, u16 z);
-void func_00213060(void);
-void func_00215350(void);
+void text_queue_glyph(s16 x, s16 y, u16 glyph, s32 w, s32 a4, s32 h, u16 attr, u16 z);
+void text_queue_clear(void);
+void text_flush(void);
 extern s8 D_002714FF[];
 extern u8 *D_002715D0[];
 extern u8 *D_002716B0[];
@@ -62,7 +62,7 @@ void func_002209C0(void) {
         }
         break;
     }
-    func_00213060();
+    text_queue_clear();
     for (i = 0; i < count; i++) {
         item = D_00685010 + i * 0x38;
         if (*(s32 *)(item + 0x34B4) == 0) {
@@ -128,22 +128,22 @@ void func_002209C0(void) {
         }
         if (i == 9) {
             glyph = D_00271A10[D_0068DD09[0]];
-            func_00213640(x - 22, y - 4, glyph, 20, 32, 32, alpha, z);
+            text_queue_glyph(x - 22, y - 4, glyph, 20, 32, 32, alpha, z);
             glyph = D_00271A10[D_0068DD0D[0]];
-            func_00213640(x - 22, y + 100, glyph, 20, 32, 32, alpha, z);
+            text_queue_glyph(x - 22, y + 100, glyph, 20, 32, 32, alpha, z);
         }
         if (i == 10) {
             glyph = D_00271A10[D_0068DD0A[0]];
-            func_00213640(x - 22, y - 4, glyph, 20, 32, 32, alpha, z);
+            text_queue_glyph(x - 22, y - 4, glyph, 20, 32, 32, alpha, z);
             glyph = D_00271A10[D_0068DD0E[0]];
-            func_00213640(x - 22, y + 100, glyph, 20, 32, 32, alpha, z);
+            text_queue_glyph(x - 22, y + 100, glyph, 20, 32, 32, alpha, z);
         }
         if (i == 11) {
             glyph = D_00271A10[D_0068DD0B[0]];
-            func_00213640(x - 22, y - 4, glyph, 20, 32, 32, alpha, z);
+            text_queue_glyph(x - 22, y - 4, glyph, 20, 32, 32, alpha, z);
             glyph = D_00271A10[D_0068DD0F[0]];
-            func_00213640(x - 22, y + 100, glyph, 20, 32, 32, alpha, z);
+            text_queue_glyph(x - 22, y + 100, glyph, 20, 32, 32, alpha, z);
         }
     }
-    func_00215350();
+    text_flush();
 }

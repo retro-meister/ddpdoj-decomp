@@ -2,7 +2,7 @@
 #include "sdk/ps2sdk.h"
 #include "gfx_types.h"
 
-extern void *D_0028E9F4;
+extern void *g_dma_gif;
 
 void func_002252E0(void *buffer) {
     sceGifPacket packet;
@@ -29,6 +29,6 @@ void func_002252E0(void *buffer) {
     }
     sceGifPkTerminate(&packet);
     FlushCache(0);
-    sceDmaSendN(D_0028E9F4, buffer, sceGifPkSize(&packet));
+    sceDmaSendN(g_dma_gif, buffer, sceGifPkSize(&packet));
     sceGsSyncPath(0, 0);
 }

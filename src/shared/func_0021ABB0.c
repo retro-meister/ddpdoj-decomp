@@ -2,7 +2,7 @@
 #include "sdk/ps2sdk.h"
 #include "gfx_types.h"
 
-extern void *D_0028E9F4;
+extern void *g_dma_gif;
 extern s32 D_0028DC98;
 extern s32 D_0028E9F0;
 extern s32 D_0028EA54;
@@ -44,6 +44,6 @@ void func_0021ABB0(void *buffer) {
     sceGifPkAddGsData(&packet, (u64)x | ((u64)0x8E00 << 16));
     sceGifPkTerminate(&packet);
     FlushCache(0);
-    sceDmaSendN(D_0028E9F4, buffer, sceGifPkSize(&packet));
+    sceDmaSendN(g_dma_gif, buffer, sceGifPkSize(&packet));
     sceGsSyncPath(0, 0);
 }

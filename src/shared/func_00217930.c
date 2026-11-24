@@ -2,7 +2,7 @@
 #include "sdk/ps2sdk.h"
 #include "gfx_types.h"
 
-extern sceGsLoadImage D_0057C780;
+extern sceGsLoadImage g_gs_load_image;
 void *malloc(u32 size);
 void free(void *pointer);
 
@@ -19,9 +19,9 @@ void func_00217930(void)
     }
 
     for (blockIndex = 0, vramBase = 0; blockIndex < 0x10; blockIndex++, vramBase += 0x400) {
-        sceGsSetDefLoadImage(&D_0057C780, (s16)vramBase, 4, 0, 0, 0, 0x100, 0x100);
+        sceGsSetDefLoadImage(&g_gs_load_image, (s16)vramBase, 4, 0, 0, 0, 0x100, 0x100);
         FlushCache(0);
-        sceGsExecLoadImage(&D_0057C780, buffer);
+        sceGsExecLoadImage(&g_gs_load_image, buffer);
         sceGsSyncPath(0, 0);
     }
 

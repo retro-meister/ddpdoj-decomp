@@ -2,8 +2,8 @@
 
 extern void func_0021C100(s32 x, s32 y, s32 z, s32 page, s32 bright, s32 alpha, s32 flag);
 extern void func_00224BA0(s32 x, s32 y, s32 z, s32 page, s32 bright, s32 alpha, s32 flag, s32 kind);
-void func_00213060(void);
-void func_00215350(void);
+void text_queue_clear(void);
+void text_flush(void);
 extern s8 death_D_00262EC7[];
 extern u8 *death_D_00262FF0[];
 extern u8 *death_D_002630C8[];
@@ -46,7 +46,7 @@ void death_func_001B9120(void) {
         }
         break;
     }
-    func_00213060();
+    text_queue_clear();
     for (i = 0; i < count; i++) {
         item = D_00685010 + i * 0x38;
         if (*(s32 *)(item + 0x50B4) == 0) {
@@ -79,5 +79,5 @@ void death_func_001B9120(void) {
             }
         }
     }
-    func_00215350();
+    text_flush();
 }

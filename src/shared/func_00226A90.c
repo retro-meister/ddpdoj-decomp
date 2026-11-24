@@ -18,10 +18,10 @@ typedef struct {
 
 extern s32 sprintf(char *buf, const char *format, ...);
 extern char *strcpy(char *dst, const char *src);
-extern void func_00213060(void);
-extern void func_00214A90(s32 x, s32 y, s32 alpha);
-extern void func_00215350(void);
-extern void func_00215DB0(s32 x, s32 y, s32 w, s32 h, s32 depth, s32 alpha, s32 r, s32 g, s32 b);
+extern void text_queue_clear(void);
+extern void frame_draw_column(s32 x, s32 y, s32 alpha);
+extern void text_flush(void);
+extern void gfx_draw_color_box(s32 x, s32 y, s32 w, s32 h, s32 depth, s32 alpha, s32 r, s32 g, s32 b);
 extern void func_0021C0F0(void);
 extern void func_0021C100(s32 x, s32 y, s32 z, s32 page, s32 alpha, s32 attr, s32 wide);
 extern void func_0021C2F0(void);
@@ -84,15 +84,15 @@ void func_00226A90(s32 slot, s32 x, s32 y, s32 alpha, s32 selected, SaveInfo *in
     save_a4 = reg_a4;
     save_a5 = reg_a5;
     save_a6 = reg_a6;
-    func_00213060();
-    func_00214A90(x, y, alpha);
+    text_queue_clear();
+    frame_draw_column(x, y, alpha);
     if (selected != 0) {
-        func_00215DB0(x + 8, y + 8, 0x1A, 0xD0, 0x12C, alpha, 0xFF, 1, 1);
+        gfx_draw_color_box(x + 8, y + 8, 0x1A, 0xD0, 0x12C, alpha, 0xFF, 1, 1);
     } else {
         fade = alpha >= 0x40 ? 0x40 : alpha;
-        func_00215DB0(x + 8, y + 8, 0x1A, 0xD0, 0x12C, fade, 1, 1, 0x40);
+        gfx_draw_color_box(x + 8, y + 8, 0x1A, 0xD0, 0x12C, fade, 1, 1, 0x40);
     }
-    func_00215350();
+    text_flush();
     func_0021C0F0();
     reg_a0 = (u8 *)buf;
     a = info->f04;

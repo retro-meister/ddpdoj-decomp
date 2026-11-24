@@ -27,7 +27,7 @@ extern u8 D_0028E39C;
 extern u16 D_0028E3C0;
 extern u16 D_0028E7B8;
 extern u16 D_0028E7BC;
-extern s8 D_0028E9B8;
+extern s8 g_cd_async_state;
 extern s8 D_0028ED74;
 extern s8 D_0028ED7C;
 extern s8 D_0028ED80;
@@ -50,7 +50,7 @@ void func_00168BC0(void) {
     if (D_0028E350 != 0) goto block_3;
     goto next_2;
 next_1:
-    if (D_0028E9B8 != 0) goto next_3;
+    if (g_cd_async_state != 0) goto next_3;
 next_2:
     if (reg_d0.h[0] == 14) goto block_2;
     if (reg_d0.h[0] == 3) goto block_2;

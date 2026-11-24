@@ -22,7 +22,7 @@ extern s16 D_0028E234;
 extern s16 D_0028E238;
 extern s32 D_0028EA80;
 extern u8 D_002C4F80[];
-extern sceGsLoadImage D_0057C780;
+extern sceGsLoadImage g_gs_load_image;
 extern GlyphCacheEntry D_0057EF98[];
 extern s32 D_00587000[];
 extern u32 D_005C4C80[];
@@ -62,7 +62,7 @@ void func_00219DF0(s32 col, s32 row) {
         slot &= 0x7FFF;
         u = cache[slot].x;
         v = cache[slot].y;
-        sceGsSetDefLoadImage(&D_0057C780, 0x1A40, 8, SCE_GS_PSMT8, u, v, 32, 32);
+        sceGsSetDefLoadImage(&g_gs_load_image, 0x1A40, 8, SCE_GS_PSMT8, u, v, 32, 32);
         FlushCache(0);
         out = 0;
         in = 0;
@@ -70,7 +70,7 @@ void func_00219DF0(s32 col, s32 row) {
         src = (u32 *)(D_002C4F80 + D_00587000[key]);
         if (!(src[0] & 0x80000000)) {
             FlushCache(0);
-            sceGsExecLoadImage(&D_0057C780, src);
+            sceGsExecLoadImage(&g_gs_load_image, src);
             sceGsSyncPath(0, 0);
         } else {
             do {
@@ -87,7 +87,7 @@ void func_00219DF0(s32 col, s32 row) {
                 }
             } while (out < 32 * 32 / 4);
             FlushCache(0);
-            sceGsExecLoadImage(&D_0057C780, dst);
+            sceGsExecLoadImage(&g_gs_load_image, dst);
             sceGsSyncPath(0, 0);
         }
         uploads++;

@@ -13,7 +13,7 @@ extern s32 sceGsSetDefLoadImage(u8 *lp, s16 dbp, s16 dbw, s16 dpsm, s16 x, s16 y
 extern s32 D_0028EA78;
 extern u8 *D_0028EAA0;
 extern ClutEntry *D_0028EAA4;
-extern u8 D_0057C780[];
+extern u8 g_gs_load_image[];
 extern u16 D_0058C800[];
 extern u32 D_005C4C80[];
 
@@ -36,9 +36,9 @@ void func_0021B840(s32 index, u16 *src) {
     h = D_0028EAA4[index].h;
     data = (u32 *)(D_0028EAA0 + D_0028EAA4[index].offset);
     if (!(data[0] & 0x80000000)) {
-        sceGsSetDefLoadImage(D_0057C780, 0x16C0, 8, 0x13, 16, 16, w, h);
+        sceGsSetDefLoadImage(g_gs_load_image, 0x16C0, 8, 0x13, 16, 16, w, h);
         FlushCache(0);
-        sceGsExecLoadImage(D_0057C780, data);
+        sceGsExecLoadImage(g_gs_load_image, data);
     } else {
         do {
             fill = data[i++];
@@ -53,9 +53,9 @@ void func_0021B840(s32 index, u16 *src) {
                 }
             }
         } while (n < w * h / 4);
-        sceGsSetDefLoadImage(D_0057C780, 0x16C0, 8, 0x13, 16, 16, w, h);
+        sceGsSetDefLoadImage(g_gs_load_image, 0x16C0, 8, 0x13, 16, 16, w, h);
         FlushCache(0);
-        sceGsExecLoadImage(D_0057C780, buf);
+        sceGsExecLoadImage(g_gs_load_image, buf);
     }
     row = 0;
     dst = D_0058C800;

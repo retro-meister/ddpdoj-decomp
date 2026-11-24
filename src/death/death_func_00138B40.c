@@ -55,10 +55,10 @@ s32 func_0012FAB0();
 s32 func_0019AB20();
 s32 func_0019C5B0();
 s32 func_001A3020();
-s32 func_00213060();
-void func_002144D0(s16 x, s16 y, const char *text, u16 texturePage, u16 glyphWidth, u16 glyphHeight, u16 alpha, u16 depth);
-s32 func_00215350();
-void func_00215DB0(s32 x, s32 y, s32 w, s32 h, s32 depth, s32 alpha, s32 r, s32 g, s32 b);
+s32 text_queue_clear();
+void text_queue_sjis_vertical(s16 x, s16 y, const char *text, u16 texturePage, u16 glyphWidth, u16 glyphHeight, u16 alpha, u16 depth);
+s32 text_flush();
+void gfx_draw_color_box(s32 x, s32 y, s32 w, s32 h, s32 depth, s32 alpha, s32 r, s32 g, s32 b);
 void func_0021A170(void);
 s32 func_0021C920();
 void death_func_00138C50(TextScript *script);
@@ -73,7 +73,7 @@ extern TextScript death_D_002AB800;
 extern u16 D_002B3950[];
 extern u8 D_004ECF80[];
 extern u8 death_D_0056A800[];
-extern u8 D_0057C780[];
+extern u8 g_gs_load_image[];
 extern GlyphQuad D_00592000[];
 extern u8 *reg_a0;
 extern u8 *reg_a5;
@@ -89,9 +89,9 @@ s32 death_func_00138BB0(u8 *digits) {
 
 void death_func_00138BE0(u8 *image) {
     D_0028EA74 = 0x2240;
-    sceGsSetDefLoadImage(D_0057C780, 0x2240, 8, 0x13, 0, 0, 0x200, 0x100);
+    sceGsSetDefLoadImage(g_gs_load_image, 0x2240, 8, 0x13, 0, 0, 0x200, 0x100);
     FlushCache(0);
-    sceGsExecLoadImage(D_0057C780, image + 0x200);
+    sceGsExecLoadImage(g_gs_load_image, image + 0x200);
     sceGsSyncPath(0, 0);
 }
 
@@ -158,7 +158,7 @@ void death_func_00138C50(TextScript *script) {
     if (script->flashMode & 2) {
         color = 0xFF;
     }
-    func_00215DB0(0, 0, 0x1C0, 0xE0, 0, alpha, color, color, color);
+    gfx_draw_color_box(0, 0, 0x1C0, 0xE0, 0, alpha, color, color, color);
 }
 
 
@@ -208,14 +208,14 @@ s32 death_func_00138FC0(TextScript *script) {
     text = script->page;
     x = script->column << 3;
     y = script->row << 3;
-    func_00213060();
+    text_queue_clear();
     while (text != script->cursor) {
         s8 ch = *text; u8 c = ch;
         if (((c >= 0x81) && (c <= 0x9F)) || ((c >= 0xE0) && (c <= 0xEF))) {
             glyph[0] = text[0];
             glyph[1] = text[1];
             text += 2;
-            func_002144D0(x, y, glyph, script->texturePage, script->glyphWidth, script->glyphHeight, script->alpha, 0);
+            text_queue_sjis_vertical(x, y, glyph, script->texturePage, script->glyphWidth, script->glyphHeight, script->alpha, 0);
             y += script->glyphHeight;
         } else {
             if (ch == 0xA) {
@@ -232,7 +232,7 @@ s32 death_func_00138FC0(TextScript *script) {
             text++;
         }
     }
-    func_00215350();
+    text_flush();
     if (script->flashTimer != 0) {
         script->flashTimer--;
     }

@@ -91,8 +91,8 @@ extern u16 D_0028E9A8;
 extern u16 D_0028E9AC;
 extern u16 D_0028E9B0;
 extern u16 D_0028E9B4;
-extern s8 D_0028E9B8;
-extern s8 D_0028E9BC;
+extern s8 g_cd_async_state;
+extern s8 g_cd_async_busy;
 extern s8 D_0028EC58;
 extern u8 D_006A4800[];
 extern u8 D_006C58A0[];
@@ -106,7 +106,7 @@ void func_002120D0(void) {
 #ifdef DEATH_LABEL
     D_0028E290 = 2;
 #endif
-    D_0028E9B8 = 0;
+    g_cd_async_state = 0;
     printf(D_00286E20, 0x9A8);
     printf(D_00286E40, 0x206EC);
     printf(D_00286E60, 0x202E8);
@@ -165,7 +165,7 @@ void func_002120D0(void) {
     func_002071C0();
     *(s16 *)(reg_a0 + 4) = 0x11;
     printf(D_00286E78, memalign(0x40, 0x10));
-    D_0028E9B8 = 0;
+    g_cd_async_state = 0;
     t3 = 0;
     func_00225630();
     printf(D_00286E88);
@@ -174,35 +174,35 @@ void func_002120D0(void) {
         switch (t3) {
         case 0:
             font_load_async();
-            if (D_0028E9BC == 0) {
-                D_0028E9B8 = 0;
+            if (g_cd_async_busy == 0) {
+                g_cd_async_state = 0;
                 t3 += 1;
-                D_0028E9BC = 1;
+                g_cd_async_busy = 1;
             }
             break;
         case 1:
             func_0021C770();
-            if (D_0028E9BC == 0) {
-                D_0028E9B8 = 0;
+            if (g_cd_async_busy == 0) {
+                g_cd_async_state = 0;
                 t3 += 1;
-                D_0028E9BC = 1;
+                g_cd_async_busy = 1;
             }
             break;
         case 2:
             func_0021C790();
-            if (D_0028E9BC == 0) {
-                D_0028E9B8 = 0;
+            if (g_cd_async_busy == 0) {
+                g_cd_async_state = 0;
                 t3 += 1;
                 D_0028E91C = 0;
-                D_0028E9BC = 1;
+                g_cd_async_busy = 1;
                 D_0028E350 = 0;
             }
             break;
         case 3:
             func_00218B50();
             if (D_0028E350 == 0) {
-                D_0028E9B8 = 0;
-                D_0028E9BC = 1;
+                g_cd_async_state = 0;
+                g_cd_async_busy = 1;
                 t3 += 1;
                 func_002256B0();
             }

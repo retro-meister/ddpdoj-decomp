@@ -333,6 +333,25 @@ def object_functions(path):
     return out
 
 
+def show_difference(local, name, code, retail, mask):
+    """Print the differing instructions of one function, ours against retail (relocated fields zeroed)."""
+    import difflib
+    import tempfile
+
+    def listing(data):
+        masked = bytes(a & m for a, m in zip(data, mask))
+        with tempfile.NamedTemporaryFile(suffix=".bin") as handle:
+            handle.write(masked)
+            handle.flush()
+            out = subprocess.run([local["binutils"]["objdump"], "-D", "-b", "binary", "-m", "mips:5900", "-EL",
+                                  "--no-show-raw-insn", handle.name], capture_output=True, text=True).stdout
+        return [re.sub(r"\s+", " ", line.split(":", 1)[1]).strip() for line in out.splitlines()
+                if re.match(r"\s*[0-9a-f]+:", line)]
+
+    diff = list(difflib.unified_diff(listing(retail), listing(code), "retail", name, n=2, lineterm=""))
+    print("\n".join("    " + line for line in diff[:60]))
+
+
 def check(source):
     """Compile `source` for each executable that links it and compare every function with the retail code."""
     local = require_local()
@@ -360,6 +379,7 @@ def check(source):
             retail = image[offset:offset + len(code)]
             if any((a ^ b) & m for a, b, m in zip(code, retail, mask)):
                 bad.append(name)
+                show_difference(local, name, code, retail, mask)
         print(f"{target}: {'all functions match' if not bad else 'DIFFERENT: ' + ', '.join(bad)}")
         ok &= not bad
     return ok

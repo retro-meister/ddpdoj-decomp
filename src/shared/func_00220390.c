@@ -1,7 +1,7 @@
 #include "common.h"
 
-extern void func_00213060(void);
-extern void func_00215350(void);
+extern void text_queue_clear(void);
+extern void text_flush(void);
 extern void func_0021C100(s32 x, s32 y, s32 z, s32 page, s32 bright, s32 alpha, s32 flag);
 extern void func_00224BA0(s32 x, s32 y, s32 z, s32 page, s32 bright, s32 alpha, s32 flag, s32 kind);
 extern s8 D_002714F3[];
@@ -54,7 +54,7 @@ void func_00220390(void) {
         }
         break;
     }
-    func_00213060();
+    text_queue_clear();
     for (i = 0; i < count; i++) {
         item = D_00685010 + i * 0x38;
         if (*(s32 *)(item + 0xAB4) == 0) {
@@ -129,5 +129,5 @@ void func_00220390(void) {
         }
 #endif
     }
-    func_00215350();
+    text_flush();
 }

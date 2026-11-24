@@ -11,7 +11,7 @@ typedef struct {
     u16 th;
 } TexInfo;
 
-extern void *D_0028E9F4;
+extern void *g_dma_gif;
 
 void func_0021A640(TexInfo *tex, void *buffer, s32 tbp, u32 width, u32 height) {
     sceGifPacket packet;
@@ -62,6 +62,6 @@ void func_0021A640(TexInfo *tex, void *buffer, s32 tbp, u32 width, u32 height) {
     sceGifPkAddGsData(&packet, (u64)x | ((u64)y << 16));
     sceGifPkTerminate(&packet);
     FlushCache(0);
-    sceDmaSendN(D_0028E9F4, buffer, sceGifPkSize(&packet));
+    sceDmaSendN(g_dma_gif, buffer, sceGifPkSize(&packet));
     sceGsSyncPath(0, 0);
 }

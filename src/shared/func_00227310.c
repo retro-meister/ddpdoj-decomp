@@ -185,7 +185,7 @@ extern u8 *D_002709D0[];
 extern u8 **D_00271290[];
 extern u8 *D_0028DCC8;
 extern u8 *D_0028DCCC;
-extern void func_00215DB0(s32 x, s32 y, s32 w, s32 h, s32 depth, s32 alpha, s32 r, s32 g, s32 b);
+extern void gfx_draw_color_box(s32 x, s32 y, s32 w, s32 h, s32 depth, s32 alpha, s32 r, s32 g, s32 b);
 extern u8 *D_00270AB0[];
 extern u8 *D_0028DCE0;
 extern s8 D_00271503[];
@@ -194,8 +194,8 @@ extern s8 D_00271468[];
 extern u8 *D_002712F0[];
 extern u8 **D_00271440[];
 s32 func_00222530(s32);
-extern void func_00213060(void);
-extern void func_00215350(void);
+extern void text_queue_clear(void);
+extern void text_flush(void);
 extern void func_002228D0(s32 x, s32 y);
 extern void func_0022AD20(s32 page, s32 sel);
 extern u8 *D_002714B0[];
@@ -1456,12 +1456,12 @@ void func_00229950(s32 x, s32 y, s32 alpha, s32 mode, s32 kind) {
     if (mode != 0x80) {
         c = 0x40;
     }
-    func_00215DB0(x - 8, y, 0x10, 0x40, 0xC8, alpha, 0x14, 0x14, 0x14);
+    gfx_draw_color_box(x - 8, y, 0x10, 0x40, 0xC8, alpha, 0x14, 0x14, 0x14);
     if (h != 0) {
         if (h == 0x3C) {
-            func_00215DB0(x - 6, y + 2, 0xE, h + 1, 0xC8, alpha, c, 0, 0);
+            gfx_draw_color_box(x - 6, y + 2, 0xE, h + 1, 0xC8, alpha, c, 0, 0);
         } else {
-            func_00215DB0(x - 6, y + 2, 0xE, h + 1, 0xC8, alpha, 0, 0, c);
+            gfx_draw_color_box(x - 6, y + 2, 0xE, h + 1, 0xC8, alpha, 0, 0, c);
         }
         if (kind == 8 && level >= 100) {
             if (level >= 100 && level < 200) {
@@ -1476,21 +1476,21 @@ void func_00229950(s32 x, s32 y, s32 alpha, s32 mode, s32 kind) {
             if (level >= 400 && level < 500) {
                 h = 48;
             }
-            func_00215DB0(x - 6, y + 2, 0xE, h + 1, 0xC8, alpha, c, 0, 0);
+            gfx_draw_color_box(x - 6, y + 2, 0xE, h + 1, 0xC8, alpha, c, 0, 0);
         }
     }
-    func_00215DB0(x - 7, y, 0xE, 1, 0xC8, alpha, c, c, c);
-    func_00215DB0(x - 8, y + 1, 0x10, 1, 0xC8, alpha, c, c, c);
-    func_00215DB0(x - 8, y + 0x3E, 0x10, 1, 0xC8, alpha, c, c, c);
-    func_00215DB0(x - 7, y + 0x3F, 0xE, 1, 0xC8, alpha, c, c, c);
+    gfx_draw_color_box(x - 7, y, 0xE, 1, 0xC8, alpha, c, c, c);
+    gfx_draw_color_box(x - 8, y + 1, 0x10, 1, 0xC8, alpha, c, c, c);
+    gfx_draw_color_box(x - 8, y + 0x3E, 0x10, 1, 0xC8, alpha, c, c, c);
+    gfx_draw_color_box(x - 7, y + 0x3F, 0xE, 1, 0xC8, alpha, c, c, c);
     if (kind == 8) {
-        func_00215DB0(x - 8, y + 0xE, 0x10, 1, 0xC8, alpha, c, c, c);
-        func_00215DB0(x - 8, y + 0x1A, 0x10, 1, 0xC8, alpha, c, c, c);
-        func_00215DB0(x - 8, y + 0x26, 0x10, 1, 0xC8, alpha, c, c, c);
-        func_00215DB0(x - 8, y + 0x32, 0x10, 1, 0xC8, alpha, c, c, c);
+        gfx_draw_color_box(x - 8, y + 0xE, 0x10, 1, 0xC8, alpha, c, c, c);
+        gfx_draw_color_box(x - 8, y + 0x1A, 0x10, 1, 0xC8, alpha, c, c, c);
+        gfx_draw_color_box(x - 8, y + 0x26, 0x10, 1, 0xC8, alpha, c, c, c);
+        gfx_draw_color_box(x - 8, y + 0x32, 0x10, 1, 0xC8, alpha, c, c, c);
     }
-    func_00215DB0(x - 8, y + 1, 2, 0x3E, 0xC8, alpha, c, c, c);
-    func_00215DB0(x + 6, y + 1, 2, 0x3E, 0xC8, alpha, c, c, c);
+    gfx_draw_color_box(x - 8, y + 1, 2, 0x3E, 0xC8, alpha, c, c, c);
+    gfx_draw_color_box(x + 6, y + 1, 2, 0x3E, 0xC8, alpha, c, c, c);
     if (kind != 2) {
         reg_a0 = D_00270AB0[level];
         func_0021C100(x - 4, y + 0x42, 0xC8, 0, c, alpha, 0);
@@ -1732,7 +1732,7 @@ void func_0022A480(void) {
         return;
     }
     count = D_002714FD[0];
-    func_00213060();
+    text_queue_clear();
     for (i = 0; i < count; i++) {
         item = D_00685010 + i * 0x38;
         if (*(s32 *)(item + 0x2DB4) == 0) {
@@ -1823,5 +1823,5 @@ void func_0022A480(void) {
     D_0028EB90 = D_0028EBD8.value;
     reg_a0 = (u8 *)D_0028DD98;
     func_002228D0(D_006880A0[0] - 10, D_006880A4[0] + 0x58);
-    func_00215350();
+    text_flush();
 }

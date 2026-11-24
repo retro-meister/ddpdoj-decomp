@@ -1,7 +1,7 @@
 #include "common.h"
 
-extern void func_00213060(void);
-extern void func_00215350(void);
+extern void text_queue_clear(void);
+extern void text_flush(void);
 extern void func_0021C0F0(void);
 extern void func_0021C100(s32 arg0, s32 arg1, s32 arg2, s32 arg3, s32 arg4, s32 arg5, s32 arg6);
 extern void func_0021C2F0(void);
@@ -92,10 +92,10 @@ void func_0022AA20(void) {
         }
     }
     func_0021C2F0();
-    func_00213060();
+    text_queue_clear();
     D_0028EB90 = D_0028EB9C;
     reg_a0 = (u8 *)D_0028DD94;
     func_002228D0(x - 10, 0x40);
-    func_00215350();
+    text_flush();
     reg_a0 = save;
 }

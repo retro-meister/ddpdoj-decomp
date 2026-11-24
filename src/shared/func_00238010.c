@@ -11,7 +11,7 @@ s32 func_001719B0();
 s32 func_001719D0();
 s32 func_0018D190();
 s32 func_001A33C0();
-extern void func_00215DB0(s32 x, s32 y, s32 w, s32 h, s32 depth, s32 alpha, s32 r, s32 g, s32 b);
+extern void gfx_draw_color_box(s32 x, s32 y, s32 w, s32 h, s32 depth, s32 alpha, s32 r, s32 g, s32 b);
 extern void func_00236DF0(void);
 s32 func_00237DF0();
 s32 func_0023B6B0();
@@ -108,7 +108,7 @@ void func_00238010(void) {
     step = *(u16 *)(reg_a5 + 10);
     if (*(u8 *)(reg_a5 + 3) == 0) {
         func_00237DF0();
-        func_00215DB0(0, 0, 0x1C2, 0xE0, 0x50, 0x80, 0xFF, 0xFF, 0xFF);
+        gfx_draw_color_box(0, 0, 0x1C2, 0xE0, 0x50, 0x80, 0xFF, 0xFF, 0xFF);
         D_0028E998 = -1;
         D_0028E99C = -1;
         reg_d0.h[0] = 0;
@@ -139,7 +139,7 @@ void func_00238010(void) {
     switch (step) {
     case 0x0:
         func_001719A0();
-        func_00215DB0(0, 0, 0x1C2, 0xE0, 0x50, 0x80, 0xFF, 0xFF, 0xFF);
+        gfx_draw_color_box(0, 0, 0x1C2, 0xE0, 0x50, 0x80, 0xFF, 0xFF, 0xFF);
         step += 1;
         break;
     default:

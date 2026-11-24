@@ -58,14 +58,14 @@ extern s8 D_0028EBC0;
 extern u8 D_0028ED7C;
 extern u8 D_0028ED80;
 s32 func_0018D4D0();
-extern void func_00215DB0(s32 x, s32 y, s32 w, s32 h, s32 depth, s64 alpha, s32 r, s32 g, s32 b);
+extern void gfx_draw_color_box(s32 x, s32 y, s32 w, s32 h, s32 depth, s64 alpha, s32 r, s32 g, s32 b);
 extern s16 D_00271C8C[];
 extern s16 D_00271C90[];
 extern s16 D_0028EBC8;
 extern s8 D_0028EBCC;
-extern void func_00213060(void);
-extern void func_00214C70(s32 level);
-extern void func_00215350(void);
+extern void text_queue_clear(void);
+extern void frame_draw_left_panel(s32 level);
+extern void text_flush(void);
 extern void func_002228D0(s32 x, s32 y);
 extern u8 *D_00271B30[];
 extern u8 *D_00271B60[];
@@ -73,7 +73,7 @@ extern u8 *D_00271B90[];
 extern s8 D_0028EB04;
 extern u8 *reg_a0;
 extern s32 sprintf(char *buf, const char *format, ...);
-extern void func_002144D0(s16 x, s16 y, const char *text, u16 texturePage, u16 glyphWidth, u16 glyphHeight, u16 alpha, u16 depth);
+extern void text_queue_sjis_vertical(s16 x, s16 y, const char *text, u16 texturePage, u16 glyphWidth, u16 glyphHeight, u16 alpha, u16 depth);
 extern char *D_0028E9F8;
 extern u8 *D_00271BC8[];
 extern u8 *D_00271BCC[];
@@ -346,7 +346,7 @@ void func_00223D70(void) {
         x = D_00271C90[D_0028EBD0 * 2];
     }
     if (D_0028EBC8 != 0) {
-        func_00215DB0(x - 8, 0, 0x12, 0xE0, 0x5A, D_0028EBC8, 0xB4, 1, 1);
+        gfx_draw_color_box(x - 8, 0, 0x12, 0xE0, 0x5A, D_0028EBC8, 0xB4, 1, 1);
     }
 }
 
@@ -372,14 +372,14 @@ void func_00223E80(void) {
         break;
     }
     if (D_0028EB90 != 0) {
-        func_00213060();
+        text_queue_clear();
         alpha = D_0028EB90;
         if (D_0028EB90 >= 0x40) {
             alpha = 0x40;
         }
         if (alpha != 0) {
-            func_00214C70(D_0028EB90);
-            func_00215DB0(0xC, 8, 0x40, 0xD0, 0x12C, alpha, 1, 1, 0x40);
+            frame_draw_left_panel(D_0028EB90);
+            gfx_draw_color_box(0xC, 8, 0x40, 0xD0, 0x12C, alpha, 1, 1, 0x40);
         }
         if (D_0028E36C != 5) {
             if (D_0028ED7C == 2) {
@@ -395,7 +395,7 @@ void func_00223E80(void) {
         } else {
             func_00224020(0xC, 8);
         }
-        func_00215350();
+        text_flush();
     }
 }
 
@@ -431,18 +431,18 @@ void func_00224020(s32 x, s32 y) {
     func_002228D0(x + 42, y);
     if (D_0028EBC4 == 0) {
         sprintf(D_0028E9F8, "\x82\xCD\x82\xA2");
-        func_002144D0(py - shrink, px - shrink, D_0028E9F8, 4, w, h, 128, 300);
+        text_queue_sjis_vertical(py - shrink, px - shrink, D_0028E9F8, 4, w, h, 128, 300);
         sprintf(D_0028E9F8, "\x81\x5E");
-        func_002144D0(py, px + 50, D_0028E9F8, 0, 20, 16, 128, 300);
+        text_queue_sjis_vertical(py, px + 50, D_0028E9F8, 0, 20, 16, 128, 300);
         sprintf(D_0028E9F8, "\x82\xA2\x82\xA2\x82\xA6");
-        func_002144D0(py, px + 75, D_0028E9F8, 0, 20, 16, 128, 300);
+        text_queue_sjis_vertical(py, px + 75, D_0028E9F8, 0, 20, 16, 128, 300);
     } else {
         sprintf(D_0028E9F8, "\x82\xCD\x82\xA2");
-        func_002144D0(py, px, D_0028E9F8, 0, 20, 16, 128, 300);
+        text_queue_sjis_vertical(py, px, D_0028E9F8, 0, 20, 16, 128, 300);
         sprintf(D_0028E9F8, "\x81\x5E");
-        func_002144D0(py, px + 50, D_0028E9F8, 0, 20, 16, 128, 300);
+        text_queue_sjis_vertical(py, px + 50, D_0028E9F8, 0, 20, 16, 128, 300);
         sprintf(D_0028E9F8, "\x82\xA2\x82\xA2\x82\xA6");
-        func_002144D0(py - shrink, px + 75 - shrink, D_0028E9F8, 4, w, h, 128, 300);
+        text_queue_sjis_vertical(py - shrink, px + 75 - shrink, D_0028E9F8, 4, w, h, 128, 300);
     }
 }
 
@@ -466,17 +466,17 @@ void func_002242B0(s32 x, s32 y) {
     h = (s32)(s8)D_0028EBC0 + 16;
     if (D_0028EB0C == 1) {
         sprintf(D_0028E9F8, "\x82\xCD\x82\xA2");
-        func_002144D0(py - shrink, px - shrink, D_0028E9F8, 4, w, h, 128, 300);
+        text_queue_sjis_vertical(py - shrink, px - shrink, D_0028E9F8, 4, w, h, 128, 300);
         sprintf(D_0028E9F8, "\x81\x5E");
-        func_002144D0(py, px + 50, D_0028E9F8, 0, 20, 16, 128, 300);
+        text_queue_sjis_vertical(py, px + 50, D_0028E9F8, 0, 20, 16, 128, 300);
         sprintf(D_0028E9F8, "\x82\xA2\x82\xA2\x82\xA6");
-        func_002144D0(py, px + 75, D_0028E9F8, 0, 20, 16, 128, 300);
+        text_queue_sjis_vertical(py, px + 75, D_0028E9F8, 0, 20, 16, 128, 300);
     } else {
         sprintf(D_0028E9F8, "\x82\xCD\x82\xA2");
-        func_002144D0(py, px, D_0028E9F8, 0, 20, 16, 128, 300);
+        text_queue_sjis_vertical(py, px, D_0028E9F8, 0, 20, 16, 128, 300);
         sprintf(D_0028E9F8, "\x81\x5E");
-        func_002144D0(py, px + 50, D_0028E9F8, 0, 20, 16, 128, 300);
+        text_queue_sjis_vertical(py, px + 50, D_0028E9F8, 0, 20, 16, 128, 300);
         sprintf(D_0028E9F8, "\x82\xA2\x82\xA2\x82\xA6");
-        func_002144D0(py - shrink, px + 75 - shrink, D_0028E9F8, 4, w, h, 128, 300);
+        text_queue_sjis_vertical(py - shrink, px + 75 - shrink, D_0028E9F8, 4, w, h, 128, 300);
     }
 }

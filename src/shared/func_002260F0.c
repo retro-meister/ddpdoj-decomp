@@ -1,9 +1,9 @@
 #include "common.h"
 
-extern void func_00213060(void);
-extern void func_00214C70(s32 level);
-extern void func_00215350(void);
-extern void func_00215DB0(s32 x, s32 y, s32 w, s32 h, s32 depth, s32 alpha, s32 r, s32 g, s32 b);
+extern void text_queue_clear(void);
+extern void frame_draw_left_panel(s32 level);
+extern void text_flush(void);
+extern void gfx_draw_color_box(s32 x, s32 y, s32 w, s32 h, s32 depth, s32 alpha, s32 r, s32 g, s32 b);
 extern void func_002228D0(s32 x, s32 y);
 extern u8 *D_00271CD0[];
 extern u8 *D_0028DDA8;
@@ -36,14 +36,14 @@ void func_002260F0(void) {
         break;
     }
     if (D_0028EB90 != 0) {
-        func_00213060();
+        text_queue_clear();
         alpha = D_0028EB90;
         if (D_0028EB90 >= 0x40) {
             alpha = 0x40;
         }
         if (alpha != 0) {
-            func_00214C70(D_0028EB90);
-            func_00215DB0(0xC, 8, 0x40, 0xD0, 0x12C, alpha, 1, 1, 0x40);
+            frame_draw_left_panel(D_0028EB90);
+            gfx_draw_color_box(0xC, 8, 0x40, 0xD0, 0x12C, alpha, 1, 1, 0x40);
         }
         if (D_0028EACC >= 0x40) {
             if (D_0028EC3C != 0 && (u32)(D_0028EC3C - 1) > 1 && (u32)(D_0028EC3C - 5) > 1) {
@@ -54,6 +54,6 @@ void func_002260F0(void) {
             reg_a0 = D_00271CD0[D_0028EAC8];
             func_002228D0(0x36, 8);
         }
-        func_00215350();
+        text_flush();
     }
 }

@@ -5,7 +5,7 @@ extern s8 D_0028DF84;
 extern u8 *reg_a5;
 extern void func_00206D70(void);
 extern void func_002071C0(void);
-extern void func_00215DB0(s32 x, s32 y, s32 w, s32 h, s32 depth, s32 alpha, s32 r, s32 g, s32 b);
+extern void gfx_draw_color_box(s32 x, s32 y, s32 w, s32 h, s32 depth, s32 alpha, s32 r, s32 g, s32 b);
 extern s32 func_0022B2F0(void);
 extern void func_002376F0(void);
 extern u8 D_0028ED58;
@@ -106,11 +106,11 @@ void func_00238980(void) {
         }
         break;
     default:
-        func_00215DB0(0, 0, 0x1C2, 0xE0, 0x50, step * 8, 0xFF, 0xFF, 0xFF);
+        gfx_draw_color_box(0, 0, 0x1C2, 0xE0, 0x50, step * 8, 0xFF, 0xFF, 0xFF);
         step++;
         break;
     case 16:
-        func_00215DB0(0, 0, 0x1C2, 0xE0, 0x50, 0x80, 0xFF, 0xFF, 0xFF);
+        gfx_draw_color_box(0, 0, 0x1C2, 0xE0, 0x50, 0x80, 0xFF, 0xFF, 0xFF);
         D_0028E368 = 1;
         D_0028ED7C = 2;
         func_00206D70();

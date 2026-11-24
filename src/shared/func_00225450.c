@@ -1,9 +1,9 @@
 #include "common.h"
 
-extern void func_00213060(void);
-extern void func_00214F50(s32 alpha);
-extern void func_00215350(void);
-extern void func_00215DB0(s32 x, s32 y, s32 w, s32 h, s32 depth, s32 alpha, s32 r, s32 g, s32 b);
+extern void text_queue_clear(void);
+extern void frame_draw_wide_left_panel(s32 alpha);
+extern void text_flush(void);
+extern void gfx_draw_color_box(s32 x, s32 y, s32 w, s32 h, s32 depth, s32 alpha, s32 r, s32 g, s32 b);
 extern void func_0021C0F0(void);
 extern void func_0021C100(s32 arg0, s32 arg1, s32 arg2, s32 arg3, s32 arg4, s32 arg5, s32 arg6);
 extern void func_0021C2F0(void);
@@ -14,7 +14,7 @@ extern u8 D_00271BE0[];
 extern char D_00289C58[];
 extern s8 D_0028EAE0;
 extern s8 D_0028EAE4;
-extern u8 D_00558780[2][0x10000];
+extern u8 g_gif_buf[2][0x10000];
 extern u8 *reg_a0;
 extern u8 *reg_a1;
 extern u8 *reg_a2;
@@ -57,14 +57,14 @@ void func_00225450(void) {
     save_a4 = reg_a4;
     save_a5 = reg_a5;
     save_a6 = reg_a6;
-    func_00215DB0(0, 0, 0x1C2, 0xE0, 0x50, 0x60, 1, 1, 1);
-    func_002252E0(D_00558780[0]);
-    func_00213060();
-    func_00214F50(0x80);
-    func_00215DB0(0xC, 8, 0x70, 0xD0, 0x12C, 0x40, 1, 1, 0x40);
+    gfx_draw_color_box(0, 0, 0x1C2, 0xE0, 0x50, 0x60, 1, 1, 1);
+    func_002252E0(g_gif_buf[0]);
+    text_queue_clear();
+    frame_draw_wide_left_panel(0x80);
+    gfx_draw_color_box(0xC, 8, 0x70, 0xD0, 0x12C, 0x40, 1, 1, 0x40);
     reg_a0 = (u8 *)D_00271BE0;
     func_002228D0(0x62, 8);
-    func_00215350();
+    text_flush();
     sprintf(buf, D_00289C58, D_0028EAE4, D_0028EAE0);
     reg_a0 = (u8 *)buf;
     func_0021C0F0();

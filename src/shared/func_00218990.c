@@ -2,7 +2,7 @@
 #include "sdk/ps2sdk.h"
 #include "gfx_types.h"
 
-extern sceGsLoadImage D_0057C780;
+extern sceGsLoadImage g_gs_load_image;
 extern s32 D_0028EA78;
 
 void func_00218990(u8 *src, s32 mode, s32 count) {
@@ -17,9 +17,9 @@ void func_00218990(u8 *src, s32 mode, s32 count) {
             i = 0;
             offset = 0;
             do {
-                sceGsSetDefLoadImage(&D_0057C780, D_0028EA78, 1, SCE_GS_PSMCT16, 0, 0, 8, 2);
+                sceGsSetDefLoadImage(&g_gs_load_image, D_0028EA78, 1, SCE_GS_PSMCT16, 0, 0, 8, 2);
                 FlushCache(0);
-                sceGsExecLoadImage(&D_0057C780, src + offset);
+                sceGsExecLoadImage(&g_gs_load_image, src + offset);
                 sceGsSyncPath(0, 0);
                 D_0028EA78 += 1;
                 i++;
@@ -32,9 +32,9 @@ void func_00218990(u8 *src, s32 mode, s32 count) {
             i = 0;
             off2 = 0;
             do {
-                sceGsSetDefLoadImage(&D_0057C780, D_0028EA78, 1, SCE_GS_PSMCT16, 0, 0, 16, 16);
+                sceGsSetDefLoadImage(&g_gs_load_image, D_0028EA78, 1, SCE_GS_PSMCT16, 0, 0, 16, 16);
                 FlushCache(0);
-                sceGsExecLoadImage(&D_0057C780, src + off2);
+                sceGsExecLoadImage(&g_gs_load_image, src + off2);
                 sceGsSyncPath(0, 0);
                 D_0028EA78 += 4;
                 i++;
