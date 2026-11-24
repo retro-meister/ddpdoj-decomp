@@ -66,12 +66,12 @@ extern s8 death_D_002549A0[];
 extern u32 death_D_00254B40[];
 extern u16 D_002624F0[];
 extern u16 D_00262530[];
-extern s32 D_0028EA74;
+extern s32 g_tex_upload_tbp;
 extern s32 g_quad_count;
 extern u16 D_00295E40[];
 extern TextScript death_D_002AB800;
 extern u16 g_arcade_sprites_as_u16_a[];
-extern u8 D_004ECF80[];
+extern u8 g_splash_file_buf[];
 extern u8 death_D_0056A800[];
 extern u8 g_gs_load_image_as_u8_a[];
 extern GlyphQuad g_quad_queue_as_GlyphQuad_a[];
@@ -88,7 +88,7 @@ s32 death_func_00138BB0(u8 *digits) {
 }
 
 void death_func_00138BE0(u8 *image) {
-    D_0028EA74 = 0x2240;
+    g_tex_upload_tbp = 0x2240;
     sceGsSetDefLoadImage(g_gs_load_image_as_u8_a, 0x2240, 8, 0x13, 0, 0, 0x200, 0x100);
     FlushCache(0);
     sceGsExecLoadImage(g_gs_load_image_as_u8_a, image + 0x200);
@@ -103,7 +103,7 @@ void death_func_00138C50(TextScript *script) {
     u8 color;
 
     if (script->picture > 6) {
-        death_func_00138BE0(D_004ECF80);
+        death_func_00138BE0(g_splash_file_buf);
         g_quad_count = 0;
         shade = 0x60;
         if (script->frame & 1) {

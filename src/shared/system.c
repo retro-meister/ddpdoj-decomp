@@ -79,18 +79,18 @@ void sys_init_display(void) {
     D_0057CAD0[0] = 0;
 }
 
-extern s32 D_0028E9DC;
+extern s32 g_stage_map_progress;
 
 void sys_start(void) {
     printf("--start--\n");
-    D_0028E9DC = 0;
+    g_stage_map_progress = 0;
     sys_init();
 }
 
 s32 func_0018C890();
 s32 font_init();
 s32 tex_load_common();
-s32 func_0021A640();
+s32 render_target_init();
 s32 display_reset();
 s32 func_0022C630();
 extern s16 D_0028E3FC;
@@ -103,14 +103,14 @@ extern u8 D_0057CB10[];
 void sys_init(void) {
     extern u8 D_0028E9EC;
     extern u8 g_gif_buf[];
-    extern u8 D_00586FF0[];
+    extern u8 g_render_target[];
     iop_reboot_and_load_modules();
     sys_reset_gs_path();
     sys_init_display();
     vram_clear_all();
     g_dma_gif = sceDmaGetChan(2);
     display_reset();
-    func_0021A640(D_00586FF0, g_gif_buf, 0x12C0, 0x200, 0x100);
+    render_target_init(g_render_target, g_gif_buf, 0x12C0, 0x200, 0x100);
     pad_init_system();
     D_0028E9F8_as_u8_p = (u8 *)(D_0057CB10);
     *(s32 *)0x10000010 = 0x83;
@@ -129,17 +129,17 @@ void sys_init(void) {
 
 s32 func_0016A710();                            /* extern */
 s32 text_queue_clear();                            /* extern */
-s32 func_0021A920(s32 *, s32 *);        /* extern */
-s32 func_0021B400(s32 *);                   /* extern */
+s32 render_target_begin(s32 *, s32 *);        /* extern */
+s32 framebuffer_begin(s32 *);                   /* extern */
 s32 display_reset();                            /* extern */
 s32 func_0021DF60();                            /* extern */
-extern s32 D_0028DC98;
+extern s32 g_screen_mode;
 
 void sys_begin_frame(void) {
     extern s8 D_0028E9EC;
     extern s32 g_gif_buf[];
     extern s32 g_gs_dbuff[];
-    extern s32 D_00586FF0[];
+    extern s32 g_render_target[];
     *(s32 *)0x10000000 = 0;
     sceGsSwapDBuffDc(g_gs_dbuff, g_frame_counter);
     text_queue_clear();
@@ -150,23 +150,23 @@ void sys_begin_frame(void) {
         func_0021DF60();
         display_reset();
     }
-    if (D_0028DC98 < 2) {
-        func_0021B400(g_gif_buf);
+    if (g_screen_mode < 2) {
+        framebuffer_begin(g_gif_buf);
         return;
     }
-    func_0021A920(D_00586FF0, g_gif_buf);
+    render_target_begin(g_render_target, g_gif_buf);
 }
 
 s32 func_0018E020();
 s32 text_flush_rects();
-s32 func_002194C0();
-s32 func_002195F0();
-s32 func_002199F0();
-s32 func_00219D20();
-s32 func_0021ABB0();
-s32 func_0021AE20();
-s32 func_0021B080();
-s32 func_0021BAE0();
+s32 splash_image_draw();
+s32 stage_map_update();
+s32 text_layer_draw();
+s32 bg_layer_draw();
+s32 framebuffer_begin_present();
+s32 render_target_present();
+s32 render_target_present_wide();
+s32 wallpaper_draw();
 s32 arcade_sprite_draw();
 s32 func_0021FA50();
 s32 func_00221CF0();
@@ -188,15 +188,15 @@ extern u8 D_0057C9B0[];
 extern u8 D_0057CA30[];
 void sys_end_frame(void) {
     extern u8 g_gif_buf[];
-    extern u8 D_00586FF0[];
+    extern u8 g_render_target[];
     s32 half;
 
-    func_00219D20();
+    bg_layer_draw();
 #ifndef DEATH_LABEL
-    func_002194C0();
+    splash_image_draw();
 #endif
     arcade_sprite_draw();
-    func_002199F0();
+    text_layer_draw();
     sys_draw_replay_label();
     func_0021FA50();
     func_00221CF0();
@@ -206,19 +206,19 @@ void sys_end_frame(void) {
     func_0022C5A0();
     func_002256C0();
     fade_update_and_draw();
-    if (D_0028DC98 >= 2) {
-        if (D_0028DC98 >= 4) {
-            func_0021B080(D_00586FF0, g_gif_buf);
+    if (g_screen_mode >= 2) {
+        if (g_screen_mode >= 4) {
+            render_target_present_wide(g_render_target, g_gif_buf);
         } else {
-            func_0021ABB0(g_gif_buf);
+            framebuffer_begin_present(g_gif_buf);
             if (D_0028E32C != 5) {
-                func_0021BAE0(g_gif_buf);
+                wallpaper_draw(g_gif_buf);
             }
-            func_0021AE20(D_00586FF0, g_gif_buf);
+            render_target_present(g_render_target, g_gif_buf);
         }
     }
     pause_check_start_button();
-    func_002195F0();
+    stage_map_update();
     text_flush_rects();
     func_0018E020();
     vibration_update();
@@ -242,7 +242,7 @@ void sys_end_frame(void) {
         D_0028E37C &= 1;
     }
     D_0028E21C = 0;
-    if ((D_0028DC98 != 2) && (D_0028DC98 != 3)) {
+    if ((g_screen_mode != 2) && (g_screen_mode != 3)) {
         if (g_frame_counter & 1) {
             sceGsSetHalfOffset(D_0057C9B0, 0x800, 0x800, half);
             sceGsSetHalfOffset2(D_0057CA30, 0x800, 0x800, half);
@@ -251,8 +251,8 @@ void sys_end_frame(void) {
             sceGsSetHalfOffset2(D_0057C8C0, 0x800, 0x800, half);
         }
     }
-    if (D_0028E8A8 > D_0028E9DC) {
-        D_0028E9DC = D_0028E8A8;
+    if (D_0028E8A8 > g_stage_map_progress) {
+        g_stage_map_progress = D_0028E8A8;
     }
     FlushCache(0);
     sceGsSyncPath(0, 0);
@@ -268,7 +268,7 @@ extern u8 D_0028ED7C;
 extern u16 D_006C58A4[];
 
 void sys_draw_replay_label(void) {
-    extern s32 D_00586FF0[];
+    extern s32 g_render_target[];
     s32 var_a2;
     s32 var_a2_2;
 
@@ -282,14 +282,14 @@ void sys_draw_replay_label(void) {
             if (D_006C58A4[0] == 0xFF) {
                 var_a2 = 0x18;
             }
-            label_draw(D_00586FF0, 2, var_a2, "OVERRIDE");
+            label_draw(g_render_target, 2, var_a2, "OVERRIDE");
             return;
         }
         var_a2_2 = 0x90;
         if (D_006C58A4[0] == 0xFF) {
             var_a2_2 = 0x20;
         }
-        label_draw(D_00586FF0, 2, var_a2_2, "REPLAY");
+        label_draw(g_render_target, 2, var_a2_2, "REPLAY");
     }
 }
 

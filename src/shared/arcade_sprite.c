@@ -3,6 +3,7 @@
 #include "gfx_types.h"
 #include "cd.h"
 #include "arcade_sprite.h"
+#include "gfx.h"
 
 /* Compressed size of each stage's sprite file (STnSP.PRS). */
 s32 g_stage_sprite_packed_size[5] = {
@@ -169,14 +170,9 @@ u16 g_explosion_uv_12ba[54][2] = {
     { 338, 170 }, { 338, 226 }, { 338, 282 }, { 338, 338 }, { 338, 394 }, { 338, 450 },
 };
 
-extern sceGsLoadImage g_gs_load_image;
-extern s32 g_clut_upload_cbp;
-extern u8 D_004CCF80[];
 #ifdef DEATH_LABEL
 extern u8 death_D_0056A800[];
 #endif
-extern u8 D_004ECF80[];
-void clut_upload(u8 *destination, s32 mode, s32 blockCount);
 
 void arcade_sprite_init(void) {
     u8 *buffer;
@@ -204,13 +200,13 @@ void arcade_sprite_init(void) {
     cd_read_sync(g_frame_file_buf, g_data_files[DATA_FILE_FRAME].size, g_data_files[DATA_FILE_FRAME].lba);
     g_clut_upload_cbp = 0x3834;
     clut_upload(g_frame_file_buf, 1, 1);
-    cd_read_sync(D_004ECF80, g_data_files[MAIN_OR_DEATH_LABEL(DATA_FILE_ARIKA, DATA_FILE_DON)].size,
+    cd_read_sync(g_splash_file_buf, g_data_files[MAIN_OR_DEATH_LABEL(DATA_FILE_ARIKA, DATA_FILE_DON)].size,
                  g_data_files[MAIN_OR_DEATH_LABEL(DATA_FILE_ARIKA, DATA_FILE_DON)].lba);
     g_clut_upload_cbp = 0x3836;
-    clut_upload(D_004ECF80, 1, 1);
-    cd_read_sync(D_004CCF80, g_data_files[DATA_FILE_MAP].size, g_data_files[DATA_FILE_MAP].lba);
+    clut_upload(g_splash_file_buf, 1, 1);
+    cd_read_sync(g_stage_map_file_buf, g_data_files[DATA_FILE_MAP].size, g_data_files[DATA_FILE_MAP].lba);
     g_clut_upload_cbp = 0x3838;
-    clut_upload(D_004CCF80, 1, 1);
+    clut_upload(g_stage_map_file_buf, 1, 1);
 #ifdef DEATH_LABEL
     cd_read_sync(death_D_0056A800, g_data_files[DATA_FILE_NOISE].size, g_data_files[DATA_FILE_NOISE].lba);
     g_clut_upload_cbp = 0x383C;
@@ -280,26 +276,6 @@ s32 stage_sprite_unpack_step(void) {
     return 1;
 }
 
-typedef struct {
-    s16 x[4];
-    s16 y[4];
-    s16 u[4];
-    s16 v[4];
-    s16 z;
-    s16 pad22;
-    s32 tbp;
-    s32 cbp;
-    s16 mode;
-    s16 alpha;
-    u16 color;
-    s16 pad32;
-} TileEntry;
-
-extern void quad_build_packet(void *pkt, s32 first, s32 count);
-extern void *g_dma_gif;
-extern s32 g_quad_count;
-extern u8 g_gif_buf[];
-extern TileEntry g_quad_queue[];
 
 void arcade_sprite_draw(void) {
     s32 tu;
@@ -513,8 +489,8 @@ void arcade_sprite_draw(void) {
             g_quad_queue[count].v[1] = tv;
             break;
         }
-        pkt = g_gif_buf + (buf << 16);
-        quad_build_packet(pkt, count, 1);
+        pkt = g_gif_buf[buf];
+        quad_build_packet((Qword *)pkt, count, 1);
         sceGsSyncPath(0, 0);
         FlushCache(0);
         sceDmaSend(g_dma_gif, pkt);
@@ -546,7 +522,7 @@ void frame_image_draw(u16 alpha) {
     u64 prim;
 
     tag = g_frame_gif_tag;
-    buf = g_gif_buf;
+    buf = g_gif_buf[0];
     sceGsSetDefLoadImage(&g_gs_load_image, 0x2240, 8, 0x13, 0, 0, 320, 208);
     FlushCache(0);
     sceGsExecLoadImage(&g_gs_load_image, g_frame_file_buf + 0x200);

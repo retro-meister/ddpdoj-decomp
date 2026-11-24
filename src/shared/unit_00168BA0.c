@@ -248,7 +248,7 @@ s32 func_0015BEF0();
 s32 func_0018DEE0();
 s32 fade_reset();
 s32 func_00217EC0();
-s32 func_00219570();
+s32 stage_map_reset();
 extern u8 D_0028E284;
 extern u8 D_0028E288;
 extern u8 D_0028E290;
@@ -270,7 +270,7 @@ void func_00168FD0(void) {
         D_0028E378 = 0xFF;
         D_0028E2F4 = 0;
         fade_reset();
-        func_00219570();
+        stage_map_reset();
         func_00217EC0();
         D_0028E350 = 0;
         g_cd_async_busy_as_u8 = 1;
@@ -319,7 +319,7 @@ void func_00168FD0(void) {
 #ifdef DEATH_LABEL
 s32 func_0018DEE0();
 s32 fade_reset();
-s32 func_00219570();
+s32 stage_map_reset();
 extern u8 D_0028E2F4;
 extern s8 g_cd_async_busy;
 extern s8 D_0028EB88;
@@ -341,7 +341,7 @@ void death_func_00136FF0(void) {
         D_0028E378 = 0xFF;
         D_0028E2F4 = 0;
         fade_reset();
-        func_00219570();
+        stage_map_reset();
         D_0028E350 = 0;
         g_cd_async_busy = 1;
         g_cd_async_state = 0;
@@ -502,7 +502,7 @@ s32 func_00137C50();                            /* extern */
 s32 func_00137C90();                            /* extern */
 s32 func_00137E00();                            /* extern */
 s32 func_0018DE90();                            /* extern */
-s32 func_00219570();                            /* extern */
+s32 stage_map_reset();                            /* extern */
 extern s32 D_00269140_as_s32_a[];
 extern s32 D_00275860[];
 extern s32 *reg_a0_as_s32_p;
@@ -528,7 +528,7 @@ void func_00169320(void) {
         func_00206D70();
         func_0013B190();
         func_00137C50();
-        func_00219570();
+        stage_map_reset();
         func_0012FAB0();
         reg_d0.h[0] = 8;
         func_002071C0();

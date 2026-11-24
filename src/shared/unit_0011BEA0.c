@@ -145,7 +145,7 @@ void func_0011C250(void) {
     *reg_a1_as_u16_p = reg_d1.h[0];
 }
 
-extern u8 D_002B4D50[];
+extern u8 g_text_layer[];
 extern u8 *reg_a0;
 
 void func_0011C2B0(void) {
@@ -170,7 +170,7 @@ void func_0011C2B0(void) {
     d6 = reg_d6.w;
     d7 = reg_d7.w;
     a0 = reg_a0;
-    reg_a0 = (u8 *)D_002B4D50;
+    reg_a0 = (u8 *)g_text_layer;
     reg_d4.h[0] = (s16) reg_d4.h[0] * 2;
 loop_1:
     reg_d6.h[0] = reg_d0.h[0];
@@ -200,7 +200,7 @@ loop_2:
     reg_a0 = a0;
 }
 
-extern u8 D_002B6D50[];
+extern u8 g_bg_layer[];
 
 void func_0011C3C0(void) {
     u8 *a0 = reg_a0;
@@ -211,7 +211,7 @@ void func_0011C3C0(void) {
     u32 d4 = reg_d4.w;
 
     reg_d0.h[0] <<= 6;
-    reg_a0 = D_002B6D50;
+    reg_a0 = g_bg_layer;
     reg_d0.h[0] += reg_d1.h[0];
     reg_d0.h[0] <<= 2;
     reg_a0 += reg_d0.h[0];
@@ -228,7 +228,7 @@ void func_0011C440(void) {
     u32 d0 = reg_d0.w;
 
     reg_d0.h[0] <<= 6;
-    reg_a0 = D_002B6D50;
+    reg_a0 = g_bg_layer;
     reg_d0.h[0] += reg_d1.h[0];
     reg_d0.h[0] <<= 2;
     reg_a0 += reg_d0.h[0];
@@ -269,8 +269,8 @@ loop_1:
     reg_d6.h[0] = reg_d1.h[0];
     reg_d7.h[0] = reg_d3.h[0];
 loop_2:
-    reg_tmp.w = (u32)D_002B4D50;
-    *(u32 *)reg_a0 = (u32)D_002B4D50;
+    reg_tmp.w = (u32)g_text_layer;
+    *(u32 *)reg_a0 = (u32)g_text_layer;
     reg_d5.h[0] = reg_d6.h[0];
     reg_d5.h[0] += reg_d0.h[0];
     reg_tmp.w += reg_d5.w;
@@ -341,8 +341,8 @@ loop_1:
     reg_d6.h[0] = reg_d1.h[0];
     reg_d7.h[0] = reg_d3.h[0];
 loop_2:
-    reg_tmp.w = (u32)D_002B4D50;
-    *(u32 *)reg_a0 = (u32)D_002B4D50;
+    reg_tmp.w = (u32)g_text_layer;
+    *(u32 *)reg_a0 = (u32)g_text_layer;
     reg_d5.h[0] = reg_d6.h[0];
     reg_d5.h[0] += reg_d0.h[0];
     reg_tmp.w += reg_d5.w;

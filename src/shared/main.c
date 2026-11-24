@@ -46,9 +46,9 @@ s32 sys_start();
 s32 sys_begin_frame();
 s32 sys_end_frame();
 s32 stage_load_step();
-s32 func_00219930();
-s32 func_00219990();
-s32 func_0021B840();
+s32 text_layer_clear_edge_top();
+s32 text_layer_clear_edge_bottom();
+s32 wallpaper_load();
 s32 arcade_sprite_init();
 s32 sprite_header_load_async();
 s32 sprite_pixels_load_async();
@@ -217,7 +217,7 @@ void func_002120D0(void) {
         }
         sys_end_frame();
     } while (t3 != 5);
-    func_0021B840(0x14B5, D_002620F0);
+    wallpaper_load(0x14B5, D_002620F0);
 loop_15:
     sys_begin_frame();
     func_0016A7F0();
@@ -255,8 +255,8 @@ loop_15:
     func_0020EAB0();
 #ifndef DEATH_LABEL
     if ((D_0028E3C0 != 0) && ((s32) D_0028DF08 < 4)) {
-        func_00219930();
-        func_00219990();
+        text_layer_clear_edge_top();
+        text_layer_clear_edge_bottom();
     }
 #endif
     sys_end_frame();

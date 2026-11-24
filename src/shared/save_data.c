@@ -2858,7 +2858,7 @@ extern s8 g_cd_async_busy;
 extern u8 *D_0028EAAC;
 extern u8 D_0028EAB0;
 extern u8 D_0028EAB4;
-extern u8 D_0050D780[];
+extern u8 g_load_buf[];
 s32 func_0022BE60(u8 arg0) {
     u32 state;
 
@@ -2867,7 +2867,7 @@ s32 func_0022BE60(u8 arg0) {
     case 0:
         D_0028EAB0 = arg0;
         D_0028EAB4 = state + 1;
-        D_0028EAAC = D_0050D780;
+        D_0028EAAC = g_load_buf;
         func_0018DEE0();
         printf(D_00289F10);
         break;

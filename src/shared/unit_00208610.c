@@ -198,13 +198,13 @@ block_31:
     D_0028E408 = 0;
 }
 
-extern s32 D_002B2750[];
+extern s32 g_text_palette[];
 extern s32 reg_a1_as_s32;
 
 void func_00208A60(void)
 {
     s32 *source = reg_a0_as_s32_p;
-    s32 *destination = D_002B2750;
+    s32 *destination = g_text_palette;
     s32 offset;
 
     reg_d0.h[0] <<= 5;

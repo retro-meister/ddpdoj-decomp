@@ -306,7 +306,7 @@ s32 func_00171910();
 s32 func_00172060();
 s32 func_001AD690();
 s32 vibration_stop_all(s32, s32);
-s32 func_002195D0();
+s32 stage_map_hide();
 extern s16 D_0028DFC0_as_s16;
 extern u8 D_0028E378;
 extern u8 D_0028E961;
@@ -331,7 +331,7 @@ void func_00131700(void) {
     (*(s8 *)((u8 *)(reg_a5) + (6))) = 4;
     D_0028E378 = 0xFF;
     vibration_stop_all(4, 1);
-    func_002195D0();
+    stage_map_hide();
     func_0013B190();
     func_00131630();
     func_001AD690();
@@ -457,7 +457,7 @@ extern s8 D_0028EC58;
 extern s8 D_0028ED6C_as_s8;
 extern u8 D_0028ED7C;
 extern u8 D_0028ED80;
-extern u16 D_002B3150_as_u16_a[];
+extern u16 g_sprite_palette_as_u16_a[];
 extern u16 D_002BF410_as_u16_a[];
 extern u16 D_002BF450_as_u16_a[];
 #ifdef DEATH_LABEL
@@ -622,7 +622,7 @@ block_25:
             reg_a0 = (u8 *)(D_00269840);
             func_0013B2E0();
             (*(u8 *)((u8 *)(reg_a5) + (7))) = 1U;
-            reg_a0 = (u8 *)(D_002B3150_as_u16_a);
+            reg_a0 = (u8 *)(g_sprite_palette_as_u16_a);
             reg_a1 = (u8 *)(D_002BF450_as_u16_a);
             reg_a0 += 0x5C0;
             *(u16 *)reg_a1 = *(u16 *)reg_a0;

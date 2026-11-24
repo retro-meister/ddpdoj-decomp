@@ -15,7 +15,7 @@ void func_0011D450(void);
 
 extern u32 D_002A17C0[];
 extern u8 D_002A3C80[];
-extern u8 D_002B4D50[];
+extern u8 g_text_layer[];
 extern u8 *reg_a0;
 
 void func_0011C7C0(void) {
@@ -49,8 +49,8 @@ loop_1:
     reg_d6.h[0] = reg_d1.h[0];
     reg_d7.h[0] = reg_d3.h[0];
 loop_2:
-    reg_tmp.w = (u32)D_002B4D50;
-    *(u32 *)reg_a0 = (u32)D_002B4D50;
+    reg_tmp.w = (u32)g_text_layer;
+    *(u32 *)reg_a0 = (u32)g_text_layer;
     reg_d5.h[0] = reg_d6.h[0];
     reg_d5.h[0] += reg_d0.h[0];
     reg_tmp.w += reg_d5.w;

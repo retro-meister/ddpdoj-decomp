@@ -123,9 +123,9 @@ void func_001A2C70(void) {
 }
 
 s32 func_0013AFF0();
-s32 func_00219010();
-s32 func_00219120();
-s32 func_002192F0();
+s32 text_palette_upload();
+s32 sprite_palette_upload();
+s32 bg_palette_upload();
 extern u8 D_0028E0AC;
 extern u8 D_0028E0AD;
 extern u16 D_0028E0B0;
@@ -135,16 +135,16 @@ extern u16 D_0028E0BC_as_u16;
 extern u16 D_0028E0C0_as_u16;
 extern s16 D_0028E8A8_as_s16;
 extern u16 D_0028E91C;
-extern u8 D_002B2750_as_u8_a[];
-extern u8 D_002B2950[];
-extern u8 D_002B3150[];
+extern u8 g_text_palette_as_u8_a[];
+extern u8 g_bg_palette[];
+extern u8 g_sprite_palette[];
 extern u8 *reg_a0;
 extern u8 *reg_a1;
 
 void func_001A2C80(void) {
     if (D_0028E0C0_as_u16 != 0) {
         reg_a0 = (u8 *)D_0029FCB0;
-        reg_a1 = (u8 *)D_002B3150;
+        reg_a1 = (u8 *)g_sprite_palette;
         reg_d0.w = 0x1F;
         do {
             func_001A29E0();
@@ -152,11 +152,11 @@ void func_001A2C80(void) {
         } while ((s16)(--reg_d0.h[0]) >= 0);
         D_0028E0C0_as_u16 = 0;
         func_001A2C70();
-        func_00219120();
+        sprite_palette_upload();
     }
     if (D_0028E0BC_as_u16 != 0) {
         reg_a0 = (u8 *)D_0029F4B0;
-        reg_a1 = (u8 *)D_002B2950;
+        reg_a1 = (u8 *)g_bg_palette;
         reg_d0.w = 0x1F;
         do {
             func_001A29E0();
@@ -164,21 +164,21 @@ void func_001A2C80(void) {
         } while ((s16)(--reg_d0.h[0]) >= 0);
         D_0028E0BC_as_u16 = 0;
         func_001A2C70();
-        func_002192F0();
+        bg_palette_upload();
     }
     if (D_0028E0B8_as_u16 != 0) {
         reg_a0 = (u8 *)D_0029F2D0;
-        reg_a1 = (u8 *)D_002B2750_as_u8_a;
+        reg_a1 = (u8 *)g_text_palette_as_u8_a;
         reg_d0.w = 0xE;
         do {
             func_001A29E0();
         } while ((s16)(--reg_d0.h[0]) >= 0);
         D_0028E0B8_as_u16 = 0;
         func_001A2C70();
-        func_00219010();
+        text_palette_upload();
     }
     if ((D_0028E91C == 0) && (D_0028E8A8_as_s16 < 0x130)) {
-        reg_a1 = (u8 *)D_002B2950;
+        reg_a1 = (u8 *)g_bg_palette;
         reg_a0 = (u8 *)D_0029F4B0;
         reg_a1 += 0x540;
         reg_a0 += 0x540;
@@ -195,7 +195,7 @@ void func_001A2C80(void) {
         reg_d0.h[0] = *(u16 *)reg_a0;
         func_0013AFF0();
         *(u16 *)reg_a1 = (u16) reg_d0.h[0];
-        func_002192F0();
+        bg_palette_upload();
         reg_tmp.b[0] = D_0028E0AD;
         D_0028E0AD -= 1;
         if ((s32) reg_tmp.b[0] <= 0) {

@@ -345,7 +345,7 @@ extern u16 D_0029F280[];
 extern u16 D_0029F282[];
 extern u8 D_0029F284[];
 extern u8 D_0029F285[];
-extern s8 D_002B4D50_as_s8_a[];
+extern s8 g_text_layer_as_s8_a[];
 extern s32 D_002BAEB0[];
 extern s32 D_002BAEF0[];
 extern Bank10 D_002BAF30_as_Bank10;
@@ -683,7 +683,7 @@ void func_00238B90(Buf *buf) {
     *(u16 *)(p + 0x350A) = D_0028E3DC;
     *(Row16 *)(p + 0x5512) = *(Row16 *)D_0029C060_as_s16_a;
     for (i = 0; i < 0x2000; i++) {
-        buf->f3511[i] = D_002B4D50_as_s8_a[i];
+        buf->f3511[i] = g_text_layer_as_s8_a[i];
     }
     p[0x5532] = D_0028E288;
     p[0x5533] = D_0028E284;
@@ -1192,12 +1192,12 @@ void func_0023A490(u8 *p) {
     func_0023B6B0((const Src *)p);
 }
 
-extern s8 D_002B4D50_as_s8_a0x2000[0x2000];
+extern s8 g_text_layer_as_s8_a0x2000[0x2000];
 
 void func_0023B6B0(const Src *src) {
     s32 i;
     for (i = 0; i < 0x2000; i++) {
-        D_002B4D50_as_s8_a0x2000[i] = src->data[i];
+        g_text_layer_as_s8_a0x2000[i] = src->data[i];
     }
 }
 
@@ -1849,7 +1849,7 @@ extern u16 D_00272990[];
 extern s32 D_002729C0[];
 extern u16 D_0028DE50[4];
 extern u16 D_0028DE58[4];
-extern u16 D_002B4D50_as_u16_a[];
+extern u16 g_text_layer_as_u16_a[];
 extern u16 D_002BD440[];
 
 void func_0023CEA0(u8 *base) {
@@ -1933,14 +1933,14 @@ void func_0023CEA0(u8 *base) {
     func_0023CC30((void *)(base + 0x3226), (void *)D_0028DE58, 2);
     func_0023CC30((void *)(base + 0x324A), (void *)D_0028DE58, 2);
     for (n = 0; n < 0x5A; n += 10) {
-        func_0023CDA0((void *)(&((u8 (*)[10])(base + 0x32B6))[0][n]), (void *)D_002B4D50_as_u16_a, 0x800, 4);
-        func_0023CDA0((void *)(&((u8 (*)[10])(base + 0x3310))[0][n]), (void *)D_002B4D50_as_u16_a, 0x800, 4);
+        func_0023CDA0((void *)(&((u8 (*)[10])(base + 0x32B6))[0][n]), (void *)g_text_layer_as_u16_a, 0x800, 4);
+        func_0023CDA0((void *)(&((u8 (*)[10])(base + 0x3310))[0][n]), (void *)g_text_layer_as_u16_a, 0x800, 4);
     }
 }
 
 #pragma push
 #pragma opt_common_subs off
-extern u8 D_002B4D50[];
+extern u8 g_text_layer[];
 
 
 void func_0023D420(s32 baseAddress)
@@ -1948,8 +1948,8 @@ void func_0023D420(s32 baseAddress)
     s32 entryOffset = 0;
 
     do {
-        func_0023CDA0((void *)(entryOffset + baseAddress + 0x1EE), (void *)D_002B4D50, 0x800, 4);
-        func_0023CDA0((void *)(entryOffset + baseAddress + 0x248), (void *)D_002B4D50, 0x800, 4);
+        func_0023CDA0((void *)(entryOffset + baseAddress + 0x1EE), (void *)g_text_layer, 0x800, 4);
+        func_0023CDA0((void *)(entryOffset + baseAddress + 0x248), (void *)g_text_layer, 0x800, 4);
         entryOffset += 0xA;
     } while (entryOffset < 0x5A);
 }
@@ -2108,8 +2108,8 @@ void func_0023D6A0(u8 *base) {
     func_0023D4E0(base + 0x3226, D_0028DE58, 0x80);
     func_0023D4E0(base + 0x324A, D_0028DE58, 0x80);
     for (n = 0; n < 0x5A; n += 10) {
-        func_0023D4E0(&((u8 (*)[10])(base + 0x32B6))[0][n], D_002B4D50_as_u16_a, 0x82);
-        func_0023D4E0(&((u8 (*)[10])(base + 0x3310))[0][n], D_002B4D50_as_u16_a, 0x82);
+        func_0023D4E0(&((u8 (*)[10])(base + 0x32B6))[0][n], g_text_layer_as_u16_a, 0x82);
+        func_0023D4E0(&((u8 (*)[10])(base + 0x3310))[0][n], g_text_layer_as_u16_a, 0x82);
     }
 }
 
@@ -2119,8 +2119,8 @@ void func_0023DB80(u8 *base)
     s32 offset = 0;
 
     do {
-        func_0023D4E0((void *)((u8 *)offset + (s32)base + 0x1EE), (void *)D_002B4D50, 0x82);
-        func_0023D4E0((void *)((u8 *)(offset + (s32)base) + 0x248), (void *)D_002B4D50, 0x82);
+        func_0023D4E0((void *)((u8 *)offset + (s32)base + 0x1EE), (void *)g_text_layer, 0x82);
+        func_0023D4E0((void *)((u8 *)(offset + (s32)base) + 0x248), (void *)g_text_layer, 0x82);
         offset += 0xA;
     } while (offset < 0x5A);
 }

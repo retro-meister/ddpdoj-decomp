@@ -1219,7 +1219,7 @@ s32 func_0012FA80();
 s32 func_0012FAB0();
 s32 func_0012FB00();
 s32 func_0013B2E0(s32, s32, s32, s32);
-s32 func_00219570();
+s32 stage_map_reset();
 extern u8 D_0026A3F0[];
 extern u8 D_0028E368;
 extern u8 D_0028E378;
@@ -1232,7 +1232,7 @@ void func_0014BEC0(void) {
     func_0012FA80();
     func_0012FAB0();
     func_0012FB00();
-    func_00219570();
+    stage_map_reset();
     (*(s8 *)((u8 *)(reg_a5) + (3))) = 1;
     (*(s16 *)((u8 *)(reg_a5) + (8))) = 0x4400;
     (*(s16 *)((u8 *)(reg_a5) + (0xA))) = 0x1C00;

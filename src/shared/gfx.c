@@ -4,49 +4,26 @@
 #include "glyph_cache.h"
 #include "arcade_sprite.h"
 #include "cd.h"
+#include "gfx.h"
 
-void func_00219860(void);
-void func_00219A80(s32 arg0, s32 arg1);
-void func_00219DF0(s32 col, s32 row);
-void quad_flush(void);
-void quad_build_packet(Qword *pkt, s32 first, s32 count);
-void glyph_queue_clear(void);
-void glyph_queue_add(s32 x, s32 y, s32 z, s32 page, s32 alpha, s32 attr, s32 wide);
-void glyph_queue_flush(void);
-void glyph_queue_emit(s32 index);
+extern TexUploadInfo g_tex_upload_table[];
 
-typedef struct
+void splash_image_upload(void)
 {
-    s32 type;
-    s32 dbw;
-    s32 x;
-    s32 y;
-    s32 width;
-    s32 height;
-} TexUploadInfo;
-
-extern TexUploadInfo D_0026F870[];
-extern s32 D_0028EA74;
-extern u8 D_004ED000[];
-extern u8 D_004ED180[];
-
-void func_002184A0(void)
-{
-    extern sceGsLoadImage g_gs_load_image;
-    D_0028EA74 = 0x2240;
-    switch (D_0026F870[4].type) {
+    g_tex_upload_tbp = 0x2240;
+    switch (g_tex_upload_table[4].type) {
     case 0:
-        sceGsSetDefLoadImage(&g_gs_load_image, 0x2240, D_0026F870[4].dbw, SCE_GS_PSMT4, D_0026F870[4].x, D_0026F870[4].y,
-                             D_0026F870[4].width, D_0026F870[4].height);
+        sceGsSetDefLoadImage(&g_gs_load_image, 0x2240, g_tex_upload_table[4].dbw, SCE_GS_PSMT4, g_tex_upload_table[4].x, g_tex_upload_table[4].y,
+                             g_tex_upload_table[4].width, g_tex_upload_table[4].height);
         FlushCache(0);
-        sceGsExecLoadImage(&g_gs_load_image, D_004ED000);
+        sceGsExecLoadImage(&g_gs_load_image, g_splash_file_buf + 0x80);
         sceGsSyncPath(0, 0);
         break;
     case 1:
-        sceGsSetDefLoadImage(&g_gs_load_image, 0x2240, D_0026F870[4].dbw, SCE_GS_PSMT8, D_0026F870[4].x, D_0026F870[4].y,
-                             D_0026F870[4].width, D_0026F870[4].height);
+        sceGsSetDefLoadImage(&g_gs_load_image, 0x2240, g_tex_upload_table[4].dbw, SCE_GS_PSMT8, g_tex_upload_table[4].x, g_tex_upload_table[4].y,
+                             g_tex_upload_table[4].width, g_tex_upload_table[4].height);
         FlushCache(0);
-        sceGsExecLoadImage(&g_gs_load_image, D_004ED180);
+        sceGsExecLoadImage(&g_gs_load_image, g_splash_file_buf + 0x200);
         sceGsSyncPath(0, 0);
         break;
     case 2:
@@ -55,23 +32,19 @@ void func_002184A0(void)
 }
 
 extern u16 D_0028E91C;
-extern u8 D_004CCF80[];
 
-void func_002185B0(void)
+void stage_map_image_upload(void)
 {
-    extern sceGsLoadImage g_gs_load_image;
-    D_0028EA74 = 0x2240;
-    sceGsSetDefLoadImage(&g_gs_load_image, 0x2240, D_0026F870[5].dbw, SCE_GS_PSMT8, D_0026F870[5].x, D_0026F870[5].y,
-                         D_0026F870[5].width, D_0026F870[5].height);
+    g_tex_upload_tbp = 0x2240;
+    sceGsSetDefLoadImage(&g_gs_load_image, 0x2240, g_tex_upload_table[5].dbw, SCE_GS_PSMT8, g_tex_upload_table[5].x, g_tex_upload_table[5].y,
+                         g_tex_upload_table[5].width, g_tex_upload_table[5].height);
     FlushCache(0);
-    sceGsExecLoadImage(&g_gs_load_image, D_004CCF80 + D_0028E91C * 0x4E00 + 0x200);
+    sceGsExecLoadImage(&g_gs_load_image, g_stage_map_file_buf + D_0028E91C * 0x4E00 + 0x200);
     sceGsSyncPath(0, 0);
 }
 
-void func_00218650(s32 index)
+void tex_upload(s32 index)
 {
-    extern u8 D_0050D780[];
-    extern sceGsLoadImage g_gs_load_image;
     s32 type;
     s32 chunkHeight;
     s32 remaining;
@@ -79,40 +52,40 @@ void func_00218650(s32 index)
     s32 src;
     s32 src1;
 
-    type = D_0026F870[index].type;
-    if (D_0026F870[index].width != 0x400) {
+    type = g_tex_upload_table[index].type;
+    if (g_tex_upload_table[index].width != 0x400) {
         switch (type) {
             case 0:
-                remaining = D_0026F870[index].dbw;
+                remaining = g_tex_upload_table[index].dbw;
                 sceGsSetDefLoadImage(
                     &g_gs_load_image,
-                    D_0028EA74,
+                    g_tex_upload_tbp,
                     remaining,
                     SCE_GS_PSMT4,
-                    D_0026F870[index].x,
-                    D_0026F870[index].y,
-                    D_0026F870[index].width,
-                    D_0026F870[index].height
+                    g_tex_upload_table[index].x,
+                    g_tex_upload_table[index].y,
+                    g_tex_upload_table[index].width,
+                    g_tex_upload_table[index].height
                 );
                 FlushCache(0);
-                sceGsExecLoadImage(&g_gs_load_image, D_0050D780);
+                sceGsExecLoadImage(&g_gs_load_image, g_load_buf);
                 sceGsSyncPath(0, 0);
                 break;
 
             case 1:
-                chunkHeight = D_0026F870[index].height;
+                chunkHeight = g_tex_upload_table[index].height;
                 sceGsSetDefLoadImage(
                     &g_gs_load_image,
-                    D_0028EA74,
-                    D_0026F870[index].dbw,
+                    g_tex_upload_tbp,
+                    g_tex_upload_table[index].dbw,
                     SCE_GS_PSMT8,
-                    D_0026F870[index].x,
-                    D_0026F870[index].y,
-                    D_0026F870[index].width,
+                    g_tex_upload_table[index].x,
+                    g_tex_upload_table[index].y,
+                    g_tex_upload_table[index].width,
                     chunkHeight
                 );
                 FlushCache(0);
-                sceGsExecLoadImage(&g_gs_load_image, D_0050D780);
+                sceGsExecLoadImage(&g_gs_load_image, g_load_buf);
                 sceGsSyncPath(0, 0);
                 break;
 
@@ -124,7 +97,7 @@ void func_00218650(s32 index)
 
     switch (type) {
         case 0:
-            remaining = D_0026F870[index].height;
+            remaining = g_tex_upload_table[index].height;
             yOffset = 0;
             src = 0;
         loop0:
@@ -135,16 +108,16 @@ void func_00218650(s32 index)
             }
             sceGsSetDefLoadImage(
                 &g_gs_load_image,
-                D_0028EA74,
-                D_0026F870[index].dbw,
+                g_tex_upload_tbp,
+                g_tex_upload_table[index].dbw,
                 SCE_GS_PSMT4,
-                D_0026F870[index].x,
-                yOffset + D_0026F870[index].y,
+                g_tex_upload_table[index].x,
+                yOffset + g_tex_upload_table[index].y,
                 0x400,
                 chunkHeight
             );
             FlushCache(0);
-            sceGsExecLoadImage(&g_gs_load_image, D_0050D780 + src);
+            sceGsExecLoadImage(&g_gs_load_image, g_load_buf + src);
             sceGsSyncPath(0, 0);
             remaining -= chunkHeight;
             src += 0x20000;
@@ -156,7 +129,7 @@ void func_00218650(s32 index)
             }
 
         case 1:
-            remaining = D_0026F870[index].height;
+            remaining = g_tex_upload_table[index].height;
             yOffset = 0;
             src1 = 0;
             do {
@@ -167,16 +140,16 @@ void func_00218650(s32 index)
                 }
                 sceGsSetDefLoadImage(
                     &g_gs_load_image,
-                    D_0028EA74,
-                    D_0026F870[index].dbw,
+                    g_tex_upload_tbp,
+                    g_tex_upload_table[index].dbw,
                     SCE_GS_PSMT8,
-                    D_0026F870[index].x,
-                    yOffset + D_0026F870[index].y,
+                    g_tex_upload_table[index].x,
+                    yOffset + g_tex_upload_table[index].y,
                     0x400,
                     chunkHeight
                 );
                 FlushCache(0);
-                sceGsExecLoadImage(&g_gs_load_image, D_0050D780 + src1);
+                sceGsExecLoadImage(&g_gs_load_image, g_load_buf + src1);
                 sceGsSyncPath(0, 0);
                 remaining -= chunkHeight;
                 src1 += 0x20000;
@@ -192,10 +165,8 @@ done:
     return;
 }
 
-extern s32 g_clut_upload_cbp;
 
 void clut_upload(u8 *src, s32 mode, s32 count) {
-    extern sceGsLoadImage g_gs_load_image;
     s32 i;
     s32 offset;
     s32 off2;
@@ -239,10 +210,9 @@ void clut_upload(u8 *src, s32 mode, s32 count) {
 
 
 void tex_load_common(void) {
-    extern s32 D_0050D780[];
-    D_0028EA74 = 0x1E40;
-    cd_read_sync(D_0050D780, g_data_files[DATA_FILE_COMMON_TEX].size, g_data_files[DATA_FILE_COMMON_TEX].lba);
-    func_00218650(2);
+    g_tex_upload_tbp = 0x1E40;
+    cd_read_sync(g_load_buf, g_data_files[DATA_FILE_COMMON_TEX].size, g_data_files[DATA_FILE_COMMON_TEX].lba);
+    tex_upload(2);
     printf("tex load end\n");
 }
 
@@ -251,7 +221,7 @@ extern u8 D_0028E350;
 extern s16 D_0028E3FC;
 extern s8 g_cd_async_state;
 extern s8 g_cd_async_busy;
-extern s32 D_0028EA58;
+extern s32 g_stage_unpack_state;
 extern u8 D_002C4F80[];
 
 void stage_load_step(void) {
@@ -302,16 +272,16 @@ void stage_load_step(void) {
         if (g_cd_async_busy != 0) {
             break;
         }
-        D_0028EA58 = 0;
+        g_stage_unpack_state = 0;
         g_cd_async_busy = 1;
         g_cd_async_state = 0;
         D_0028E350++;
         break;
     case 5:
-        switch (D_0028EA58) {
+        switch (g_stage_unpack_state) {
         case 0:
             stage_sprite_unpack_begin(0x14000);
-            D_0028EA58++;
+            g_stage_unpack_state++;
             break;
         }
         if (stage_sprite_unpack_step() != 0) {
@@ -332,47 +302,47 @@ void stage_load_step(void) {
     }
 }
 
-extern s16 D_0026F900[];
+extern s16 g_default_palette[];
 extern s16 D_00269140_as_s16_a[];
 extern s16 D_002554B0_as_s16_a[];
 
 void clut_upload_defaults(void)
 {
-    extern s16 D_0058D800[];
+    extern s16 g_clut_buf[];
     s16 *source;
     s16 *palette;
     s32 colorIndex;
 
-    source = D_0026F900;
-    palette = D_0058D800;
+    source = g_default_palette;
+    palette = g_clut_buf;
     for (colorIndex = 0; colorIndex < 16; colorIndex++) {
         palette[colorIndex] = *source++;
     }
     g_clut_upload_cbp = 0x3832;
-    clut_upload((u8 *)D_0058D800, 0, 1);
+    clut_upload((u8 *)g_clut_buf, 0, 1);
 
     source = D_00269140_as_s16_a;
-    palette = D_0058D800;
+    palette = g_clut_buf;
     for (colorIndex = 0; colorIndex < 15; colorIndex++) {
         palette[colorIndex] = *source++ | 0x8000;
     }
     palette[colorIndex] = *source;
     g_clut_upload_cbp = 0x3830;
-    clut_upload((u8 *)D_0058D800, 0, 1);
+    clut_upload((u8 *)g_clut_buf, 0, 1);
 
     source = D_002554B0_as_s16_a;
-    palette = D_0058D800;
+    palette = g_clut_buf;
     for (colorIndex = 0; colorIndex < 31; colorIndex++) {
         palette[colorIndex] = *source++ | 0x8000;
     }
     palette[colorIndex] = *source;
     g_clut_upload_cbp = 0x383A;
-    clut_upload((u8 *)D_0058D800, 1, 1);
+    clut_upload((u8 *)g_clut_buf, 1, 1);
 }
 
-extern u16 D_002B2750_as_u16_a[];
-void func_00219010(void) {
-    extern u8 D_0058D800[];
+extern u16 g_text_palette_as_u16_a[];
+void text_palette_upload(void) {
+    extern u8 g_clut_buf[];
     s32 var_v0;
     s32 var_v1;
     s16 *var_a0;
@@ -384,8 +354,8 @@ void func_00219010(void) {
     s16 temp_t2;
     s32 var_t2;
 
-    var_a0 = (s16 *)(D_002B2750_as_u16_a);
-    var_a1 = (u8 *)(D_0058D800);
+    var_a0 = (s16 *)(g_text_palette_as_u16_a);
+    var_a1 = (u8 *)(g_clut_buf);
     var_v0 = 0;
     do {
         var_v1 = 0;
@@ -423,19 +393,19 @@ loop_2:
         var_a0 += 1;
     } while (var_v0 < 0x10);
     g_clut_upload_cbp = 0x37B0;
-    clut_upload(D_0058D800, 0, 0x10);
+    clut_upload(g_clut_buf, 0, 0x10);
 }
 
-extern u8 D_002B3150[];
-void func_00219120(void) {
-    extern u8 D_0058C800[];
+extern u8 g_sprite_palette[];
+void sprite_palette_upload(void) {
+    extern u8 g_sprite_clut_buf[];
     s32 var_v0;
     u8 *var_v1;
     u8 *var_a0;
     s16 temp_a3;
 
-    var_v1 = (u8 *)(D_002B3150);
-    var_a0 = (u8 *)(D_0058C800);
+    var_v1 = (u8 *)(g_sprite_palette);
+    var_a0 = (u8 *)(g_sprite_clut_buf);
     var_v0 = 0;
     do {
         var_v0 += 1;
@@ -476,18 +446,18 @@ void func_00219120(void) {
         var_a0 += 0x80;
     } while (var_v0 < 0x20);
     g_clut_upload_cbp = 0x3730;
-    clut_upload(D_0058C800, 1, 0x20);
+    clut_upload(g_sprite_clut_buf, 1, 0x20);
 }
 
-extern u8 D_002B2950[];
-extern u8 D_0058B800[];
-void func_002192F0(void) {
+extern u8 g_bg_palette[];
+extern u8 g_bg_clut_buf[];
+void bg_palette_upload(void) {
     s32 var_v0;
     u8 *var_v1;
     u8 *var_a0;
 
-    var_v1 = (u8 *)(D_002B2950);
-    var_a0 = (u8 *)(D_0058B800);
+    var_v1 = (u8 *)(g_bg_palette);
+    var_a0 = (u8 *)(g_bg_clut_buf);
     var_v0 = 0;
     do {
         var_v0 += 1;
@@ -527,135 +497,118 @@ void func_002192F0(void) {
         var_a0 += 0x80;
     } while (var_v0 < 0x20);
     g_clut_upload_cbp = 0x36B0;
-    clut_upload(D_0058B800, 1, 0x20);
+    clut_upload(g_bg_clut_buf, 1, 0x20);
 }
 
 #ifndef DEATH_LABEL
 extern u8 D_0028E2F4;
-extern s32 g_quad_count;
-extern s16 D_00592002[];
-extern s16 D_00592008[];
-extern s16 D_0059200A[];
-extern s16 D_00592010[];
-extern s16 D_00592012[];
-extern s16 D_00592018[];
-extern s16 D_0059201A[];
-extern s16 D_00592020[];
-extern s32 D_00592024[];
-extern s32 D_00592028[];
-extern s16 D_0059202C[];
-extern s16 D_0059202E[];
-extern s16 D_00592030[];
-void func_002194C0(void) {
-    extern s16 g_quad_queue[];
+void splash_image_draw(void) {
     if (D_0028E2F4 != 0) {
-        g_quad_queue[0] = 0;
-        D_00592020[0] = 1;
-        D_0059202E[0] = 0x80;
+        g_quad_queue[0].x[0] = 0;
+        g_quad_queue[0].z = 1;
+        g_quad_queue[0].alpha = 0x80;
         g_quad_count = 1;
-        D_00592024[0] = 0x2240;
-        D_00592028[0] = 0x3836;
-        D_00592030[0] = 0x80;
-        D_0059202C[0] = 1;
-        D_00592008[0] = 0;
-        D_00592002[0] = 0x1C0;
-        D_00592012[0] = 0x1C0;
-        D_0059200A[0] = 0xE0;
-        D_0059201A[0] = 0xE0;
-        D_00592010[0] = 0;
-        D_00592018[0] = 0;
+        g_quad_queue[0].tbp = 0x2240;
+        g_quad_queue[0].cbp = 0x3836;
+        g_quad_queue[0].color = 0x80;
+        g_quad_queue[0].mode = 1;
+        g_quad_queue[0].y[0] = 0;
+        g_quad_queue[0].x[1] = 0x1C0;
+        g_quad_queue[0].u[1] = 0x1C0;
+        g_quad_queue[0].y[1] = 0xE0;
+        g_quad_queue[0].v[1] = 0xE0;
+        g_quad_queue[0].u[0] = 0;
+        g_quad_queue[0].v[0] = 0;
         quad_flush();
     }
 }
 #endif
 
-extern s32 D_0028E9DC;
-extern s32 D_0028EA5C;
-extern s32 D_0028EA60;
-extern s32 D_0028EA64;
-extern s32 D_0028EA68;
-extern s32 D_0028EA6C;
-extern s32 D_0028EA70;
+extern s32 g_stage_map_unused_b;
+extern s32 g_stage_map_unused_a;
+extern s32 g_stage_map_state;
+extern s32 g_stage_map_marker_step;
+extern s32 g_stage_map_marker_level;
+extern s32 g_stage_map_alpha;
 
-void func_00219570(void) {
-    extern s8 D_0028E2F0;
-    D_0028E2F0 = 0;
-    D_0028EA6C = 0x80;
-    D_0028EA64 = 0;
-    D_0028EA68 = 1;
-    D_0028EA70 = 0;
-    D_0028EA60 = 0;
-    D_0028EA5C = 0;
-    D_0028E9DC = 0;
+void stage_map_reset(void) {
+    extern s8 g_stage_map_active;
+    g_stage_map_active = 0;
+    g_stage_map_marker_level = 0x80;
+    g_stage_map_state = 0;
+    g_stage_map_marker_step = 1;
+    g_stage_map_alpha = 0;
+    g_stage_map_unused_a = 0;
+    g_stage_map_unused_b = 0;
+    g_stage_map_progress = 0;
 }
 
 
-void func_002195A0(void) {
-    extern s8 D_0028E2F0;
-    func_00219570();
-    D_0028EA70 = 0;
-    D_0028E2F0 = 1;
-    D_0028EA64 = 1;
+void stage_map_show(void) {
+    extern s8 g_stage_map_active;
+    stage_map_reset();
+    g_stage_map_alpha = 0;
+    g_stage_map_active = 1;
+    g_stage_map_state = 1;
 }
 
-void func_002195D0(void) {
-    extern s8 D_0028E2F0;
-    D_0028E2F0 = 1;
-    D_0028EA64 = 2;
-    D_0028EA70 = 0x80;
+void stage_map_hide(void) {
+    extern s8 g_stage_map_active;
+    g_stage_map_active = 1;
+    g_stage_map_state = 2;
+    g_stage_map_alpha = 0x80;
 }
 
 extern void gfx_draw_color_box(s32 x, s32 y, s32 w, s32 h, s32 depth, s64 alpha, s32 r, s32 g, s32 b);
-extern s32 D_0026F940[];
-extern s32 D_0028DC98;
+extern s32 g_stage_map_scale[];
 extern u8 D_0028E28C;
 extern u8 D_0028E36C;
 
-void func_002195F0(void) {
-    extern u8 D_0028E2F0;
+void stage_map_update(void) {
+    extern u8 g_stage_map_active;
     s32 level;
     s32 top;
     s32 h;
 
-    if (D_0028E2F0 == 0) {
+    if (g_stage_map_active == 0) {
         return;
     }
-    switch (D_0028EA64) {
+    switch (g_stage_map_state) {
     case 0:
         break;
     case 1:
-        D_0028EA70 += 8;
-        if (D_0028EA70 >= 0x80) {
-            D_0028EA64 = 3;
-            D_0028EA70 = 0x80;
+        g_stage_map_alpha += 8;
+        if (g_stage_map_alpha >= 0x80) {
+            g_stage_map_state = 3;
+            g_stage_map_alpha = 0x80;
         }
         break;
     case 2:
-        D_0028EA70 -= 8;
-        if (D_0028EA70 <= 0) {
-            D_0028EA70 = 0;
-            D_0028EA64 = 0;
-            D_0028E2F0 = 0;
+        g_stage_map_alpha -= 8;
+        if (g_stage_map_alpha <= 0) {
+            g_stage_map_alpha = 0;
+            g_stage_map_state = 0;
+            g_stage_map_active = 0;
         }
         break;
     case 3:
         break;
     }
     if (D_0028E36C == 0) {
-        D_0028EA6C += D_0028EA68;
+        g_stage_map_marker_level += g_stage_map_marker_step;
     }
-    if (D_0028EA68 >= 0) {
-        if (D_0028EA6C >= 0xFF) {
-            D_0028EA6C = 0xFF;
-            D_0028EA68 = -1;
+    if (g_stage_map_marker_step >= 0) {
+        if (g_stage_map_marker_level >= 0xFF) {
+            g_stage_map_marker_level = 0xFF;
+            g_stage_map_marker_step = -1;
         }
-    } else if (D_0028EA6C <= 0x80) {
-        D_0028EA6C = 0x80;
-        D_0028EA68 = 1;
+    } else if (g_stage_map_marker_level <= 0x80) {
+        g_stage_map_marker_level = 0x80;
+        g_stage_map_marker_step = 1;
     }
-    if ((D_0028DC98 == 2 || D_0028DC98 == 3) && D_0028EA70 != 0 && D_0028E28C != 0) {
-        func_00219860();
-        level = D_0028E9DC * D_0026F940[D_0028E91C] / 1000;
+    if ((g_screen_mode == 2 || g_screen_mode == 3) && g_stage_map_alpha != 0 && D_0028E28C != 0) {
+        stage_map_draw();
+        level = g_stage_map_progress * g_stage_map_scale[D_0028E91C] / 1000;
         level += 2;
         if (level >= 0x170) {
             level = 0x170;
@@ -663,43 +616,34 @@ void func_002195F0(void) {
         top = 0x190 - level;
         h = top - 0x20;
         if (h > 0) {
-            gfx_draw_color_box(0x188, -0x50, 0x20, h, 12, D_0028EA70, 1, 1, 1);
+            gfx_draw_color_box(0x188, -0x50, 0x20, h, 12, g_stage_map_alpha, 1, 1, 1);
         }
-        gfx_draw_color_box(0x188, top - 0x50, 0x20, 2, 12, D_0028EA70, D_0028EA6C, 0, 0);
-        gfx_draw_color_box(0x188, top - 0x70, 0x20, 2, 12, D_0028EA70, D_0028EA6C, 0, 0);
-        gfx_draw_color_box(0x188, top - 0x70, 2, 0x20, 12, D_0028EA70, D_0028EA6C, 0, 0);
-        gfx_draw_color_box(0x1A6, top - 0x70, 2, 0x20, 12, D_0028EA70, D_0028EA6C, 0, 0);
+        gfx_draw_color_box(0x188, top - 0x50, 0x20, 2, 12, g_stage_map_alpha, g_stage_map_marker_level, 0, 0);
+        gfx_draw_color_box(0x188, top - 0x70, 0x20, 2, 12, g_stage_map_alpha, g_stage_map_marker_level, 0, 0);
+        gfx_draw_color_box(0x188, top - 0x70, 2, 0x20, 12, g_stage_map_alpha, g_stage_map_marker_level, 0, 0);
+        gfx_draw_color_box(0x1A6, top - 0x70, 2, 0x20, 12, g_stage_map_alpha, g_stage_map_marker_level, 0, 0);
     }
 }
 
-extern s32 g_quad_count;
-
-typedef struct {
-    s16 f00, f02, f04, f06, f08, f0A, f0C, f0E;
-    s16 f10, f12, f14, f16, f18, f1A, f1C, f1E;
-    s16 f20, f22;
-    s32 f24, f28;
-    s16 f2C, f2E, f30, f32;
-} Unk592000;
 
 
-void func_00219860(void) {
-    extern Unk592000 g_quad_queue[];
-    func_002185B0();
-    g_quad_queue[0].f10 = 0;
-    g_quad_queue[0].f20 = 0xA;
-    g_quad_queue[0].f24 = 0x2240;
-    g_quad_queue[0].f2C = 1;
-    g_quad_queue[0].f28 = 0x3838;
-    g_quad_queue[0].f30 = 0x80;
-    g_quad_queue[0].f00 = 0x180;
-    g_quad_queue[0].f08 = -0x58;
-    g_quad_queue[0].f02 = 0x1B0;
-    g_quad_queue[0].f0A = 0x148;
-    g_quad_queue[0].f12 = 0x30;
-    g_quad_queue[0].f1A = 0x1A0;
-    g_quad_queue[0].f18 = 0;
-    g_quad_queue[0].f2E = D_0028EA70;
+
+void stage_map_draw(void) {
+    stage_map_image_upload();
+    g_quad_queue[0].u[0] = 0;
+    g_quad_queue[0].z = 0xA;
+    g_quad_queue[0].tbp = 0x2240;
+    g_quad_queue[0].mode = 1;
+    g_quad_queue[0].cbp = 0x3838;
+    g_quad_queue[0].color = 0x80;
+    g_quad_queue[0].x[0] = 0x180;
+    g_quad_queue[0].y[0] = -0x58;
+    g_quad_queue[0].x[1] = 0x1B0;
+    g_quad_queue[0].y[1] = 0x148;
+    g_quad_queue[0].u[1] = 0x30;
+    g_quad_queue[0].v[1] = 0x1A0;
+    g_quad_queue[0].v[0] = 0;
+    g_quad_queue[0].alpha = g_stage_map_alpha;
     g_quad_count = 1;
     quad_flush();
 }
@@ -709,10 +653,10 @@ void func_00219860(void) {
 #pragma push
 #pragma opt_common_subs off
 #pragma opt_propagation off
-extern u32 D_002B4D50_as_u32_a[];
+extern u32 g_text_layer_as_u32_a[];
 
 
-void func_00219930(void) {
+void text_layer_clear_edge_top(void) {
     s32 i;
     u32 *p;
     s32 row;
@@ -724,14 +668,14 @@ void func_00219930(void) {
     row = 0;
     do {
         x1 = 54;
-        p = D_002B4D50_as_u32_a;
+        p = g_text_layer_as_u32_a;
         p += x1 + row;
         *p = 0;
         x2 = 55;
         idx = x2 + row;
         i++;
         row += 64;
-        p = D_002B4D50_as_u32_a;
+        p = g_text_layer_as_u32_a;
         p += idx;
         *p = 0;
     } while (i < 14);
@@ -746,7 +690,7 @@ void func_00219930(void) {
 #pragma push
 #pragma opt_common_subs off
 #pragma opt_propagation off
-void func_00219990(void) {
+void text_layer_clear_edge_bottom(void) {
     s32 i;
     u32 *p;
     s32 row;
@@ -758,14 +702,14 @@ void func_00219990(void) {
     row = 0x380;
     do {
         x1 = 54;
-        p = D_002B4D50_as_u32_a;
+        p = g_text_layer_as_u32_a;
         p += x1 + row;
         *p = 0;
         x2 = 55;
         idx = x2 + row;
         i++;
         row += 64;
-        p = D_002B4D50_as_u32_a;
+        p = g_text_layer_as_u32_a;
         p += idx;
         *p = 0;
     } while (i < 27);
@@ -775,11 +719,11 @@ void func_00219990(void) {
 #pragma pop
 #endif
 
-extern u32 D_002B4D50_as_u32_a[];
+extern u32 g_text_layer_as_u32_a[];
 
-void func_002199F0(void) {
+void text_layer_draw(void) {
     s32 y;
-    u32 *p = D_002B4D50_as_u32_a;
+    u32 *p = g_text_layer_as_u32_a;
     s32 x;
 
     g_quad_count = 0;
@@ -787,7 +731,7 @@ void func_002199F0(void) {
         for (x = 0; x < 64; x++) {
             reg_d0.w = *p++;
             if (reg_d0.w != 0xC0000000 && reg_d0.w != 0) {
-                func_00219A80(x, y);
+                text_layer_queue_tile(x, y);
             }
         }
     }
@@ -796,32 +740,9 @@ void func_002199F0(void) {
 
 #pragma push
 #pragma opt_propagation off
-typedef struct {
-    s16 x0;
-    s16 x1;
-    s16 pad04[2];
-    s16 y0;
-    s16 y1;
-    s16 pad0C[2];
-    s16 u0;
-    s16 u1;
-    s16 pad14[2];
-    s16 v0;
-    s16 v1;
-    s16 pad1C[2];
-    s16 z;
-    s16 pad22;
-    s32 tex;
-    s32 clut;
-    s16 flags;
-    s16 attr;
-    u16 alpha;
-    s16 pad32;
-} GlyphQuad;
 
 
-void func_00219A80(s32 arg0, s32 arg1) {
-    extern GlyphQuad g_quad_queue[];
+void text_layer_queue_tile(s32 arg0, s32 arg1) {
     s32 x;
     s32 y;
     s32 code;
@@ -838,39 +759,39 @@ void func_00219A80(s32 arg0, s32 arg1) {
     u = (code % 126 + 1) * 8;
     v = (code / 126 + 1) * 8;
     g_quad_queue[n].z = 0x14;
-    g_quad_queue[n].attr = 0x80;
-    g_quad_queue[n].tex = 0x1E40;
-    g_quad_queue[n].flags = 0;
-    g_quad_queue[n].clut = palette + 0x37B0;
     g_quad_queue[n].alpha = 0x80;
-    g_quad_queue[n].x0 = x - 1;
-    g_quad_queue[n].y0 = y;
-    g_quad_queue[n].x1 = x + 7;
-    g_quad_queue[n].y1 = y + 8;
+    g_quad_queue[n].tbp = 0x1E40;
+    g_quad_queue[n].mode = 0;
+    g_quad_queue[n].cbp = palette + 0x37B0;
+    g_quad_queue[n].color = 0x80;
+    g_quad_queue[n].x[0] = x - 1;
+    g_quad_queue[n].y[0] = y;
+    g_quad_queue[n].x[1] = x + 7;
+    g_quad_queue[n].y[1] = y + 8;
     switch ((reg_d0.h[0] >> 6) & 3) {
     case 0:
-        g_quad_queue[n].u0 = u;
-        g_quad_queue[n].v0 = v;
-        g_quad_queue[n].u1 = u + 8;
-        g_quad_queue[n].v1 = v + 8;
+        g_quad_queue[n].u[0] = u;
+        g_quad_queue[n].v[0] = v;
+        g_quad_queue[n].u[1] = u + 8;
+        g_quad_queue[n].v[1] = v + 8;
         break;
     case 1:
-        g_quad_queue[n].u0 = u + 8;
-        g_quad_queue[n].v0 = v;
-        g_quad_queue[n].u1 = u;
-        g_quad_queue[n].v1 = v + 8;
+        g_quad_queue[n].u[0] = u + 8;
+        g_quad_queue[n].v[0] = v;
+        g_quad_queue[n].u[1] = u;
+        g_quad_queue[n].v[1] = v + 8;
         break;
     case 2:
-        g_quad_queue[n].u0 = u;
-        g_quad_queue[n].v0 = v + 8;
-        g_quad_queue[n].u1 = u + 8;
-        g_quad_queue[n].v1 = v;
+        g_quad_queue[n].u[0] = u;
+        g_quad_queue[n].v[0] = v + 8;
+        g_quad_queue[n].u[1] = u + 8;
+        g_quad_queue[n].v[1] = v;
         break;
     case 3:
-        g_quad_queue[n].u0 = u + 8;
-        g_quad_queue[n].v0 = v + 8;
-        g_quad_queue[n].u1 = u;
-        g_quad_queue[n].v1 = v;
+        g_quad_queue[n].u[0] = u + 8;
+        g_quad_queue[n].v[0] = v + 8;
+        g_quad_queue[n].u[1] = u;
+        g_quad_queue[n].v[1] = v;
         break;
     }
     g_quad_count = n + 1;
@@ -878,15 +799,15 @@ void func_00219A80(s32 arg0, s32 arg1) {
 #pragma pop
 
 extern s16 D_0028E238;
-extern u8 D_002B6D50[];
-void func_00219D20(void) {
+extern u8 g_bg_layer[];
+void bg_layer_draw(void) {
     s32 var_s0;
     s32 var_s1;
     s32 temp_s2;
     s32 var_s3;
     u8 *var_s4;
 
-    var_s4 = (u8 *)(D_002B6D50);
+    var_s4 = (u8 *)(g_bg_layer);
     var_s1 = 0;
     g_quad_count = 0;
     temp_s2 = D_0028E238 & 0x7FF;
@@ -895,7 +816,7 @@ void func_00219D20(void) {
         for (var_s0 = 0; var_s0 < 0xF; var_s0++) {
             reg_d0.w = *(u32 *)(var_s4 + (var_s3 * 4));
             if ((reg_d0.w != 0xC0000000) && (reg_d0.w != 0)) {
-                func_00219DF0(var_s0, var_s1);
+                bg_layer_queue_tile(var_s0, var_s1);
             }
             var_s3++;
             var_s3 &= 0x3F;
@@ -906,27 +827,11 @@ void func_00219D20(void) {
     quad_flush();
 }
 
-typedef struct {
-    s16 x[4];
-    s16 y[4];
-    s16 u[4];
-    s16 v[4];
-    s16 z;
-    s16 pad22;
-    s32 tbp;
-    s32 cbp;
-    s16 mode;
-    s16 alpha;
-    u16 color;
-    s16 pad32;
-} TileEntry;
 
 extern s16 D_0028E234;
 
-void func_00219DF0(s32 col, s32 row) {
-    extern sceGsLoadImage g_gs_load_image;
+void bg_layer_queue_tile(s32 col, s32 row) {
     extern s32 D_00587000[];
-    extern TileEntry g_quad_queue[];
     s32 uploads;
     GlyphCacheEntry *cache;
     s32 u;
@@ -1013,11 +918,9 @@ void func_00219DF0(s32 col, s32 row) {
     }
 }
 
-extern void *g_dma_gif;
 
 void quad_flush(void)
 {
-    extern u8 g_gif_buf[2][0x10000];
     u8 *packet;
     s32 bufferIndex;
     s32 firstEntry;
@@ -1050,7 +953,6 @@ void quad_flush(void)
 }
 
 void quad_build_packet(Qword *pkt, s32 first, s32 count) {
-    extern TileEntry g_quad_queue[];
     s32 qwc;
     s32 i;
     s32 j;
@@ -1165,17 +1067,9 @@ void quad_build_packet(Qword *pkt, s32 first, s32 count) {
     pkt[0].w[0] = (qwc - 1) | 0x10000000;
 }
 
-typedef struct {
-    u16 tbp;
-    u16 psm;
-    u32 width;
-    u32 height;
-    u16 tw;
-    u16 th;
-} TexInfo;
 
 
-void func_0021A640(TexInfo *tex, void *buffer, s32 tbp, u32 width, u32 height) {
+void render_target_init(RenderTarget *tex, void *buffer, s32 tbp, u32 width, u32 height) {
     sceGifPacket packet;
     u32 n;
     u32 m;
@@ -1228,7 +1122,7 @@ void func_0021A640(TexInfo *tex, void *buffer, s32 tbp, u32 width, u32 height) {
     sceGsSyncPath(0, 0);
 }
 
-void func_0021A920(TexInfo *tex, void *buffer) {
+void render_target_begin(RenderTarget *tex, void *buffer) {
     sceGifPacket packet;
     s32 x;
     s32 y;
@@ -1266,10 +1160,9 @@ void func_0021A920(TexInfo *tex, void *buffer) {
 }
 
 extern s32 g_frame_counter;
-extern s32 D_0028EA54;
 extern u8 g_gs_dbuff[];
 
-void func_0021ABB0(void *buffer) {
+void framebuffer_begin_present(void *buffer) {
     sceGifPacket packet;
     s32 index;
     s32 x;
@@ -1279,13 +1172,13 @@ void func_0021ABB0(void *buffer) {
     sceGifPkAddGsData(&packet, SCE_GIF_SET_TAG(6, 1, 0, 0, SCE_GIF_PACKED, 1));
     sceGifPkAddGsData(&packet, SCE_GIF_PACKED_AD);
     index = (g_frame_counter + 1) & 1;
-    sceGifPkAddGsData(&packet, ((u64)*(u16 *)(g_gs_dbuff + index * 40 + 0x10) & 0x1FF) | ((u64)((D_0028EA54 + 63) >> 6) << 16) | ((u64)2 << 24));
+    sceGifPkAddGsData(&packet, ((u64)*(u16 *)(g_gs_dbuff + index * 40 + 0x10) & 0x1FF) | ((u64)((g_screen_width + 63) >> 6) << 16) | ((u64)2 << 24));
     sceGifPkAddGsData(&packet, 0x4C);
-    sceGifPkAddGsData(&packet, ((0x800 - (u64)(D_0028EA54 >> 1)) << 4) | ((u64)0x7200 << 32));
+    sceGifPkAddGsData(&packet, ((0x800 - (u64)(g_screen_width >> 1)) << 4) | ((u64)0x7200 << 32));
     sceGifPkAddGsData(&packet, 0x18);
-    sceGifPkAddGsData(&packet, ((u64)(D_0028EA54 - 1) << 16) | ((u64)0x1BF << 48));
+    sceGifPkAddGsData(&packet, ((u64)(g_screen_width - 1) << 16) | ((u64)0x1BF << 48));
     sceGifPkAddGsData(&packet, 0x40);
-    if (D_0028DC98 == 2) {
+    if (g_screen_mode == 2) {
         sceGifPkAddGsData(&packet, 0);
     } else {
         sceGifPkAddGsData(&packet, 0x60);
@@ -1299,9 +1192,9 @@ void func_0021ABB0(void *buffer) {
     sceGifPkAddGsData(&packet, 0x5510);
     sceGifPkAddGsData(&packet, 0x106);
     sceGifPkAddGsData(&packet, 0x80000000ULL | ((u64)0x3F800000 << 32));
-    x = (0x800 - (D_0028EA54 >> 1)) << 4;
+    x = (0x800 - (g_screen_width >> 1)) << 4;
     sceGifPkAddGsData(&packet, (u64)x | 0x72000000);
-    x += D_0028EA54 << 4;
+    x += g_screen_width << 4;
     sceGifPkAddGsData(&packet, (u64)x | ((u64)0x8E00 << 16));
     sceGifPkTerminate(&packet);
     FlushCache(0);
@@ -1309,9 +1202,8 @@ void func_0021ABB0(void *buffer) {
     sceGsSyncPath(0, 0);
 }
 
-extern s32 D_0028EA50;
 
-void func_0021AE20(TexInfo *tex, void *buffer) {
+void render_target_present(RenderTarget *tex, void *buffer) {
     sceGifPacket packet;
     s32 x;
     s64 right;
@@ -1321,7 +1213,7 @@ void func_0021AE20(TexInfo *tex, void *buffer) {
     sceGifPkReset(&packet);
     sceGifPkAddGsData(&packet, SCE_GIF_SET_TAG(2, 1, 0, 0, SCE_GIF_PACKED, 1));
     sceGifPkAddGsData(&packet, SCE_GIF_PACKED_AD);
-    sceGifPkAddGsData(&packet, ((u64)(D_0028EA54 - 1) << 16) | ((u64)0x1BE << 48));
+    sceGifPkAddGsData(&packet, ((u64)(g_screen_width - 1) << 16) | ((u64)0x1BE << 48));
     sceGifPkAddGsData(&packet, 0x40);
     sceGifPkAddGsData(&packet, SCE_GS_SET_TEX0(tex->tbp, tex->width >> 6, tex->psm, tex->tw, tex->th, 1, 0, 0, 0, 0, 0, 0));
     sceGifPkAddGsData(&packet, SCE_GS_TEX0_1);
@@ -1329,8 +1221,8 @@ void func_0021AE20(TexInfo *tex, void *buffer) {
     sceGifPkAddGsData(&packet, 0x5353535310ULL);
     sceGifPkAddGsData(&packet, 0x115);
     sceGifPkAddGsData(&packet, 0x80808080 | ((u64)0x3F800000 << 32));
-    x = ((0x800 - D_0028EA54 / 2) << 4) + 8;
-    x += D_0028EA50 << 4;
+    x = ((0x800 - g_screen_width / 2) << 4) + 8;
+    x += g_screen_margin << 4;
     sceGifPkAddGsData(&packet, 0x1101C00);
     left = x;
     sceGifPkAddGsData(&packet, left | 0x72000000);
@@ -1347,17 +1239,9 @@ void func_0021AE20(TexInfo *tex, void *buffer) {
     sceGsSyncPath(0, 0);
 }
 
-typedef struct {
-    u16 tbp;
-    u16 psm;
-    u32 width;
-    u32 height;
-    u16 tw;
-    u16 th;
-} TexDesc;
 
 
-void func_0021B080(TexDesc *tex, void *buffer) {
+void render_target_present_wide(RenderTarget *tex, void *buffer) {
     sceGifPacket packet;
     s32 index;
     s32 x;
@@ -1366,7 +1250,7 @@ void func_0021B080(TexDesc *tex, void *buffer) {
     sceGifPkReset(&packet);
     sceGifPkAddGsData(&packet, SCE_GIF_SET_TAG(7, 1, 0, 0, SCE_GIF_PACKED, 1));
     sceGifPkAddGsData(&packet, SCE_GIF_PACKED_AD);
-    if (D_0028DC98 == 4) {
+    if (g_screen_mode == 4) {
         sceGifPkAddGsData(&packet, 0);
     } else {
         sceGifPkAddGsData(&packet, 0x60);
@@ -1377,11 +1261,11 @@ void func_0021B080(TexDesc *tex, void *buffer) {
     sceGifPkAddGsData(&packet, 0);
     sceGifPkAddGsData(&packet, 0x3F);
     index = (g_frame_counter + 1) & 1;
-    sceGifPkAddGsData(&packet, ((u64)*(u16 *)(g_gs_dbuff + index * 40 + 0x10) & 0x1FF) | ((u64)((D_0028EA54 + 63) >> 6) << 16) | ((u64)2 << 24));
+    sceGifPkAddGsData(&packet, ((u64)*(u16 *)(g_gs_dbuff + index * 40 + 0x10) & 0x1FF) | ((u64)((g_screen_width + 63) >> 6) << 16) | ((u64)2 << 24));
     sceGifPkAddGsData(&packet, 0x4C);
-    sceGifPkAddGsData(&packet, ((0x800 - (u64)(D_0028EA54 >> 1)) << 4) | ((u64)0x7900 << 32));
+    sceGifPkAddGsData(&packet, ((0x800 - (u64)(g_screen_width >> 1)) << 4) | ((u64)0x7900 << 32));
     sceGifPkAddGsData(&packet, 0x18);
-    sceGifPkAddGsData(&packet, ((u64)(D_0028EA50 + 0x1BF) << 16) | 1 | ((u64)1 << 32) | ((u64)0xDF << 48));
+    sceGifPkAddGsData(&packet, ((u64)(g_screen_margin + 0x1BF) << 16) | 1 | ((u64)1 << 32) | ((u64)0xDF << 48));
     sceGifPkAddGsData(&packet, 0x40);
     sceGifPkAddGsData(&packet, (u64)tex->tbp | ((u64)(tex->width >> 6) << 14) | ((u64)tex->psm << 20) | ((u64)tex->tw << 26) | ((u64)tex->th << 30) | ((u64)1 << 34));
     sceGifPkAddGsData(&packet, 6);
@@ -1389,8 +1273,8 @@ void func_0021B080(TexDesc *tex, void *buffer) {
     sceGifPkAddGsData(&packet, 0x5353535310ULL);
     sceGifPkAddGsData(&packet, 0x115);
     sceGifPkAddGsData(&packet, 0x80808080ULL | ((u64)0x3F800000 << 32));
-    x = ((0x800 - D_0028EA54 / 2) << 4) + 8;
-    x += (D_0028EA50 + 0x1B0) << 4;
+    x = ((0x800 - g_screen_width / 2) << 4) + 8;
+    x += (g_screen_margin + 0x1B0) << 4;
     sceGifPkAddGsData(&packet, 0x1101C10);
     sceGifPkAddGsData(&packet, (u64)x | 0x79080000);
     sceGifPkAddGsData(&packet, 0xF101C10);
@@ -1406,7 +1290,7 @@ void func_0021B080(TexDesc *tex, void *buffer) {
     sceGsSyncPath(0, 0);
 }
 
-void func_0021B400(void *buffer) {
+void framebuffer_begin(void *buffer) {
     sceGifPacket packet;
     s32 index;
 
@@ -1415,11 +1299,11 @@ void func_0021B400(void *buffer) {
     sceGifPkAddGsData(&packet, SCE_GIF_SET_TAG(3, 1, 0, 0, SCE_GIF_PACKED, 1));
     sceGifPkAddGsData(&packet, SCE_GIF_PACKED_AD);
     index = (g_frame_counter + 1) & 1;
-    sceGifPkAddGsData(&packet, ((u64)*(u16 *)(g_gs_dbuff + index * 40 + 0x10) & 0x1FF) | ((u64)((D_0028EA54 + 63) >> 6) << 16) | ((u64)2 << 24));
+    sceGifPkAddGsData(&packet, ((u64)*(u16 *)(g_gs_dbuff + index * 40 + 0x10) & 0x1FF) | ((u64)((g_screen_width + 63) >> 6) << 16) | ((u64)2 << 24));
     sceGifPkAddGsData(&packet, 0x4C);
-    sceGifPkAddGsData(&packet, ((0x700 - (u64)D_0028EA50) << 4) | ((u64)0x7900 << 32));
+    sceGifPkAddGsData(&packet, ((0x700 - (u64)g_screen_margin) << 4) | ((u64)0x7900 << 32));
     sceGifPkAddGsData(&packet, 0x18);
-    sceGifPkAddGsData(&packet, (u64)(D_0028EA50 + 1) | ((u64)(D_0028EA50 + 0x1BF) << 16) | ((u64)1 << 32) | ((u64)0xDF << 48));
+    sceGifPkAddGsData(&packet, (u64)(g_screen_margin + 1) | ((u64)(g_screen_margin + 0x1BF) << 16) | ((u64)1 << 32) | ((u64)0xDF << 48));
     sceGifPkAddGsData(&packet, 0x40);
     sceGifPkTerminate(&packet);
     FlushCache(0);
@@ -1447,7 +1331,7 @@ void display_set_offset(s32 x, s32 y) {
     s32 base_x;
     s32 base_y;
 
-    switch (D_0028EA54) {
+    switch (g_screen_width) {
     case 0x180:
         base_x = 0x21E;
         base_y = 0x32;
@@ -1482,7 +1366,7 @@ typedef struct {
     s32 height;
 } VideoMode;
 
-extern VideoMode D_0026F9E0[];
+extern VideoMode g_video_modes[];
 extern s8 D_0028E250;
 extern s8 D_0028E254;
 extern u8 D_0028E2DC;
@@ -1495,15 +1379,15 @@ extern u8 D_0057C9A0[];
 void display_reset(void) {
     VideoMode *mode;
 
-    mode = &D_0026F9E0[D_0028DC98 + D_0028E2DC * 6];
+    mode = &g_video_modes[g_screen_mode + D_0028E2DC * 6];
     sceGsResetGraph(0, (s16)mode->interlace, 2, (s16)mode->ffmode);
-    D_0028EA54 = mode->width;
+    g_screen_width = mode->width;
     if (mode->interlace == 0) {
         sceGsSetDefDBuffDc(g_gs_dbuff, 2, (s16)mode->width, (s16)mode->height, 1, 0x31, 1);
-        D_0028EA50 = (D_0028EA54 - 0x1C0) >> 1;
+        g_screen_margin = (g_screen_width - 0x1C0) >> 1;
     } else {
         sceGsSetDefDBuffDc(g_gs_dbuff, 2, (s16)mode->width, (s16)mode->height, 1, 0x31, 0);
-        D_0028EA50 = (D_0028EA54 - 0xE0) >> 1;
+        g_screen_margin = (g_screen_width - 0xE0) >> 1;
         D_0057C7F0[0].fbp = 0;
         D_0057C818[0].fbp = ((((mode->width + 63) / 64 * 64) * ((mode->height + 31) / 32 * 32)) >> 11) / 2;
     }
@@ -1517,9 +1401,8 @@ void display_reset(void) {
 }
 
 
-void func_0021B840(s32 index, u16 *src) {
-    extern sceGsLoadImage g_gs_load_image;
-    extern u16 D_0058C800[];
+void wallpaper_load(s32 index, u16 *src) {
+    extern u16 g_sprite_clut_buf[];
     s32 n;
     s32 i;
     u32 *data;
@@ -1560,7 +1443,7 @@ void func_0021B840(s32 index, u16 *src) {
         sceGsExecLoadImage(&g_gs_load_image, buf);
     }
     row = 0;
-    dst = D_0058C800;
+    dst = g_sprite_clut_buf;
     do {
         row++;
         dst[0] = src[0] | 0x8000;
@@ -1583,7 +1466,7 @@ void func_0021B840(s32 index, u16 *src) {
         dst += 8;
     } while (row < 2);
     g_clut_upload_cbp = 0x18C0;
-    clut_upload((u8 *)D_0058C800, 1, 1);
+    clut_upload((u8 *)g_sprite_clut_buf, 1, 1);
 }
 
 typedef struct {
@@ -1593,9 +1476,9 @@ typedef struct {
     s32 v;
 } Vertex;
 
-extern Vertex D_0026FAA0[];
+extern Vertex g_wallpaper_vertices[];
 
-void func_0021BAE0(void *buffer) {
+void wallpaper_draw(void *buffer) {
     sceGifPacket packet;
     s32 left;
     s32 i;
@@ -1609,8 +1492,8 @@ void func_0021BAE0(void *buffer) {
     sceGifPkAddGsData(&packet, SCE_GIF_PACKED_AD);
     sceGifPkAddGsData(&packet, 0x253216C0 | ((u64)0x20131806 << 32));
     sceGifPkAddGsData(&packet, 6);
-    left = ((0x800 - D_0028EA54 / 2) << 4) + 8;
-    vtx = D_0026FAA0;
+    left = ((0x800 - g_screen_width / 2) << 4) + 8;
+    vtx = g_wallpaper_vertices;
     vtx += D_0028E2DC * 8;
     for (i = 0; i < 2; i++) {
         s64 t;
@@ -1641,7 +1524,7 @@ void func_0021BAE0(void *buffer) {
     sceGsSyncPath(0, 0);
 }
 
-void func_0021BD80(void *buffer, s32 x, s32 y, s32 w, s32 h) {
+void scissor_set(void *buffer, s32 x, s32 y, s32 w, s32 h) {
     sceGifPacket packet;
 
     sceGifPkInit(&packet, buffer);
@@ -1657,83 +1540,71 @@ void func_0021BD80(void *buffer, s32 x, s32 y, s32 w, s32 h) {
 }
 
 extern void gfx_draw_shaded_box(s32 x, s32 y, s32 w, s32 h, s32 depth, s32 alpha);
-extern s32 D_0028EA48;
-extern s32 D_0028EA4C;
+extern s32 g_label_fade;
+extern s32 g_label_timer;
 
 void label_draw(s32 *rect, s32 x, s32 y, u8 *text) {
-    extern u8 g_gif_buf[];
     extern u8 *reg_a0;
     u8 *saved;
     s32 bright;
 
     if (text == 0) {
-        D_0028EA4C = 0;
-        D_0028EA48 = 0;
+        g_label_timer = 0;
+        g_label_fade = 0;
         return;
     }
     saved = reg_a0;
     bright = 0x80;
     if (text != 0) {
-        gfx_draw_shaded_box(x, y - 16, 17, (strlen((const char *)text) + 2) * 8, 100, D_0028EA48);
+        gfx_draw_shaded_box(x, y - 16, 17, (strlen((const char *)text) + 2) * 8, 100, g_label_fade);
     } else {
-        gfx_draw_shaded_box(x, y - 16, 17, 64, 100, D_0028EA48);
+        gfx_draw_shaded_box(x, y - 16, 17, 64, 100, g_label_fade);
     }
-    if (D_0028EA48 < 0x60) {
-        D_0028EA48++;
+    if (g_label_fade < 0x60) {
+        g_label_fade++;
         return;
     }
-    if (D_0028DC98 < 2) {
-        func_0021BD80(g_gif_buf, D_0028EA50 + 2 + x, 1, 16, 223);
+    if (g_screen_mode < 2) {
+        scissor_set(g_gif_buf, g_screen_margin + 2 + x, 1, 16, 223);
     } else {
-        func_0021BD80(g_gif_buf, x + 1, 0, 16, rect[2]);
+        scissor_set(g_gif_buf, x + 1, 0, 16, rect[2]);
     }
     glyph_queue_clear();
     reg_a0 = text;
     if (D_0028E36C == 0) {
-        D_0028EA4C++;
+        g_label_timer++;
     }
-    switch (D_0028EA4C >> 6) {
+    switch (g_label_timer >> 6) {
     case 4:
-        D_0028EA4C = 0;
+        g_label_timer = 0;
     case 0:
     case 1:
-        x += ((D_0028EA4C >> 1) & 0x1F) - 15;
+        x += ((g_label_timer >> 1) & 0x1F) - 15;
         break;
     case 2:
-        bright = (D_0028EA4C << 1) & 0x7F;
+        bright = (g_label_timer << 1) & 0x7F;
         break;
     case 3:
-        bright = (0x7F - (D_0028EA4C << 1)) & 0x7F;
+        bright = (0x7F - (g_label_timer << 1)) & 0x7F;
         break;
     }
     if (text != 0) {
         glyph_queue_add(x + 8, y, 100, 0, 0x80, bright, 1);
     }
     glyph_queue_flush();
-    if (D_0028DC98 < 2) {
-        func_0021BD80(g_gif_buf, D_0028EA50 + 1, 1, 447, 223);
+    if (g_screen_mode < 2) {
+        scissor_set(g_gif_buf, g_screen_margin + 1, 1, 447, 223);
     } else {
-        func_0021BD80(g_gif_buf, 0, 0, rect[1], rect[2]);
+        scissor_set(g_gif_buf, 0, 0, rect[1], rect[2]);
     }
     reg_a0 = saved;
 }
 
-extern s32 g_glyph_queue_count;
 
 void glyph_queue_clear(void) {
     g_glyph_queue_count = 0;
 }
 
-typedef struct {
-    s16 x;
-    s16 y;
-    s16 page;
-    s16 code;
-    s16 z;
-    s16 attr;
-    s16 alpha;
-    s16 pad;
-} GlyphEntry;
 
 extern u16 D_00269D60[];
 extern u8 *reg_a1;
@@ -1752,7 +1623,6 @@ void glyph_queue_add(x, y, z, page, alpha, attr, wide)
     s16 attr;
     s32 wide;
 {
-    extern GlyphEntry D_0058E000[];
     extern s8 *reg_a0;
     u32 save_d0;
     u32 save_d1;
@@ -1770,7 +1640,7 @@ void glyph_queue_add(x, y, z, page, alpha, attr, wide)
     u8 *save_a5;
     u8 *save_a6;
     s32 count;
-    GlyphEntry *entry;
+    GlyphQueueEntry *entry;
     u16 code;
 
     save_d0 = reg_d0.w;
@@ -1804,25 +1674,25 @@ void glyph_queue_add(x, y, z, page, alpha, attr, wide)
             reg_a1 += reg_d4.h[0];
             reg_d4.h[0] = *(u16 *)reg_a1;
         }
-        entry = &D_0058E000[count];
+        entry = &g_glyph_queue[count];
         count++;
         entry->x = x;
         entry->y = y;
         entry->z = z;
         entry->page = page;
-        entry->attr = attr;
-        entry->alpha = alpha;
+        entry->alpha = attr;
+        entry->color = alpha;
         code = reg_d4.h[0];
         entry->code = code;
         if (wide) {
-            entry = &D_0058E000[count];
+            entry = &g_glyph_queue[count];
             count++;
             entry->x = x - 8;
             entry->y = y;
             entry->z = z;
             entry->page = page;
-            entry->attr = attr;
-            entry->alpha = alpha;
+            entry->alpha = attr;
+            entry->color = alpha;
             entry->code = (s16)code + 0x10;
         }
         y += 8;
@@ -1859,22 +1729,10 @@ void glyph_queue_flush(void)
     }
 }
 
-typedef struct {
-    s16 x;
-    s16 y;
-    s16 page;
-    s16 code;
-    s16 z;
-    s16 attr;
-    u16 alpha;
-    s16 pad;
-} GlyphEntry2;
 
 
 
 void glyph_queue_emit(s32 index) {
-    extern GlyphEntry2 D_0058E000[];
-    extern GlyphQuad g_quad_queue[];
     u32 n;
     s32 u;
     s32 v;
@@ -1882,23 +1740,23 @@ void glyph_queue_emit(s32 index) {
     s32 y;
 
     n = g_quad_count;
-    x = D_0058E000[index].x;
-    y = D_0058E000[index].y;
-    u = (D_0058E000[index].code % 126 + 1) * 8;
-    v = (D_0058E000[index].code / 126 + 1) * 8;
-    g_quad_queue[n].z = D_0058E000[index].z;
-    g_quad_queue[n].attr = D_0058E000[index].attr;
-    g_quad_queue[n].tex = 0x1E40;
-    g_quad_queue[n].flags = 0;
-    g_quad_queue[n].clut = 0x3830;
-    g_quad_queue[n].alpha = D_0058E000[index].alpha;
-    g_quad_queue[n].x0 = x;
-    g_quad_queue[n].y0 = y;
-    g_quad_queue[n].x1 = x + 8;
-    g_quad_queue[n].y1 = y + 8;
-    g_quad_queue[n].u0 = u;
-    g_quad_queue[n].v0 = v;
-    g_quad_queue[n].u1 = u + 8;
-    g_quad_queue[n].v1 = v + 8;
+    x = g_glyph_queue[index].x;
+    y = g_glyph_queue[index].y;
+    u = (g_glyph_queue[index].code % 126 + 1) * 8;
+    v = (g_glyph_queue[index].code / 126 + 1) * 8;
+    g_quad_queue[n].z = g_glyph_queue[index].z;
+    g_quad_queue[n].alpha = g_glyph_queue[index].alpha;
+    g_quad_queue[n].tbp = 0x1E40;
+    g_quad_queue[n].mode = 0;
+    g_quad_queue[n].cbp = 0x3830;
+    g_quad_queue[n].color = g_glyph_queue[index].color;
+    g_quad_queue[n].x[0] = x;
+    g_quad_queue[n].y[0] = y;
+    g_quad_queue[n].x[1] = x + 8;
+    g_quad_queue[n].y[1] = y + 8;
+    g_quad_queue[n].u[0] = u;
+    g_quad_queue[n].v[0] = v;
+    g_quad_queue[n].u[1] = u + 8;
+    g_quad_queue[n].v[1] = v + 8;
     g_quad_count = n + 1;
 }

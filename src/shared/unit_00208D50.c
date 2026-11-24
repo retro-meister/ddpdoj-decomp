@@ -300,7 +300,7 @@ void func_002093F0() {
     D_0028DFA8 = reg_d0.b[0];
 }
 
-s32 func_00219570();
+s32 stage_map_reset();
 s32 func_0021D500();
 s32 func_0021DF60();
 s32 func_0021E2D0();
@@ -464,7 +464,7 @@ void func_00209410(void) {
     D_0028E29C_as_s16 = 0;
     D_0028E2A0 = 0;
     func_00235890(5, 6, 7);
-    func_00219570();
+    stage_map_reset();
     func_0021D500();
     D_0028ED30 = 0;
     D_0028E258 = 0xA;

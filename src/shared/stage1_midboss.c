@@ -890,7 +890,7 @@ extern u32 D_00251720[];
 extern u16 D_0028E3C0;
 extern u8 D_0028ED7C;
 extern u8 D_0028ED80;
-extern u32 D_002B6D50_as_u32_a[];
+extern u32 g_bg_layer_as_u32_a[];
 extern u32 D_002B6DF4[];
 extern u32 D_002B6E0C[];
 extern u8 *D_0028E484_as_u8_p;
@@ -932,7 +932,7 @@ loop_2:
     if (((s64) ((s64) (u16) cnt << 0x30) >> 0x30) >= 0) {
         goto loop_2;
     }
-    D_0028E484_as_u8_p = (u8 *)D_002B6D50_as_u32_a;
+    D_0028E484_as_u8_p = (u8 *)g_bg_layer_as_u32_a;
     reg_tmp.w += 4;
     reg_tmp.w = (u32) reg_tmp.b[0];
     D_0028E484_as_u8_p += reg_tmp.w;

@@ -490,7 +490,7 @@ void func_001391B0(void) {
 s32 func_00131440();
 s32 func_00138110();
 s32 stage_load_step();
-s32 func_002195A0();
+s32 stage_map_show();
 s32 func_002256B0();
 extern u8 D_0028E25C;
 extern u8 D_0028E280;
@@ -531,7 +531,7 @@ void func_001394A0(void) {
         func_00138CC0();
         func_002256B0();
         func_00138110();
-        func_002195A0();
+        stage_map_show();
 #ifdef DEATH_LABEL
         if (D_0028E910 == 0) {
             D_0028E288_as_s8 = 0;

@@ -6276,7 +6276,7 @@ s32 func_0018D450();
 s32 func_001A3020();
 s32 func_001ACBA0();
 s32 func_001ACC60();
-s32 func_00219570();
+s32 stage_map_reset();
 extern u8 D_00261EF0[];
 extern u8 D_00261F30_as_u8_a[];
 extern u8 D_00261F70[];
@@ -6291,7 +6291,7 @@ extern u8 *reg_a0;
 extern u8 *reg_a5;
 
 void func_00197F60() {
-    func_00219570();
+    stage_map_reset();
 #ifndef DEATH_LABEL
     D_0028E4B0 = D_0028E920;
 #endif
