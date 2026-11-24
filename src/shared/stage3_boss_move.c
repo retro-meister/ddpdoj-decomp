@@ -91,7 +91,6 @@ void func_001D38C0(void) {
 
 s32 func_002010A0();
 s32 func_002024C0();
-extern Reg32 D_0028E484;
 
 void func_001D38E0(void) {
     func_00201C60();
@@ -114,9 +113,9 @@ void func_001D38E0(void) {
         reg_d0.b[0] += 0x30;
         goto block_12;
     }
-    D_0028E484.w = reg_d1.w;
+    reg_tmp1.w = reg_d1.w;
     reg_d1.h[1] = reg_d1.h[0];
-    reg_d1.h[0] = D_0028E484.h[1];
+    reg_d1.h[0] = reg_tmp1.h[1];
     if ((s32) reg_d1.h[0] >= 0x5C00) {
         if ((s32) reg_d1.h[0] < 0x6400) {
             func_001D36C0();
@@ -161,9 +160,9 @@ void func_001D3A20(void) {
         reg_d0.b[0] += 0x30;
         goto block_12;
     }
-    D_0028E484.w = reg_d1.w;
+    reg_tmp1.w = reg_d1.w;
     reg_d1.h[1] = reg_d1.h[0];
-    reg_d1.h[0] = D_0028E484.h[1];
+    reg_d1.h[0] = reg_tmp1.h[1];
     if ((s32) reg_d1.h[0] >= 0x6600) {
         if ((s32) reg_d1.h[0] < 0x6A00) {
             func_001D36C0();
@@ -208,9 +207,9 @@ void func_001D3B70(void) {
         reg_d0.b[0] += 0x30;
         goto block_12;
     }
-    D_0028E484.w = reg_d1.w;
+    reg_tmp1.w = reg_d1.w;
     reg_d1.h[1] = reg_d1.h[0];
-    reg_d1.h[0] = D_0028E484.h[1];
+    reg_d1.h[0] = reg_tmp1.h[1];
     if ((s32) reg_d1.h[0] >= 0x5E00) {
         if ((s32) reg_d1.h[0] < 0x6600) {
             func_001D36C0();

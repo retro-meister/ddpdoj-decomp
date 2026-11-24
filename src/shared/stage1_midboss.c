@@ -150,9 +150,6 @@ void func_001BC930(void) {
 }
 
 s32 func_00201E20();
-extern u16 D_0028E470;
-extern u32 D_0028E47C_as_u32;
-extern u32 D_0028E480_as_u32;
 
 #define W(o) (*(u16 *)(reg_a4 + (o)))
 #define SW(o) (*(s16 *)(reg_a4 + (o)))
@@ -240,8 +237,8 @@ next_4:
         SW(4) += reg_d3.sh[0];
         reg_d6.w = 0;
         reg_d6.b[0] = reg_a4[0x1B];
-        D_0028E470 = (u16) reg_d6.sb[0];
-        reg_d6.h[0] = D_0028E470;
+        reg_tmp6.h[0] = (u16) reg_d6.sb[0];
+        reg_d6.h[0] = reg_tmp6.h[0];
         reg_d6.h[0] = reg_d6.sh[0] + reg_d5.sh[0];
         if ((s16) reg_d6.h[0] >= 0) {
             reg_d4.w = 1;
@@ -266,10 +263,10 @@ loop_6:
         reg_d3.h[0] = reg_d3.sh[0] - SW(4);
         reg_d2.h[0] = reg_d2.sh[0] >> 4;
         reg_d3.h[0] = reg_d3.sh[0] >> 4;
-        D_0028E480_as_u32 = (s16) reg_d2.h[0];
-        reg_d2.w = D_0028E480_as_u32;
-        D_0028E47C_as_u32 = (s16) reg_d3.h[0];
-        reg_d3.w = D_0028E47C_as_u32;
+        reg_tmp2.w = (s16) reg_d2.h[0];
+        reg_d2.w = reg_tmp2.w;
+        reg_tmp3.w = (s16) reg_d3.h[0];
+        reg_d3.w = reg_tmp3.w;
 #ifdef DEATH_LABEL
         reg_d2.h[0] = reg_d2.sh[0] * reg_d6.sh[0];
         reg_d3.h[0] = reg_d3.sh[0] * reg_d6.sh[0];
@@ -893,7 +890,6 @@ extern u8 D_0028ED80;
 extern u32 g_bg_layer_as_u32_a[];
 extern u32 D_002B6DF4[];
 extern u32 D_002B6E0C[];
-extern u8 *D_0028E484_as_u8_p;
 
 void func_001BE0A0(void) {
     s32 flag;
@@ -932,11 +928,11 @@ loop_2:
     if (((s64) ((s64) (u16) cnt << 0x30) >> 0x30) >= 0) {
         goto loop_2;
     }
-    D_0028E484_as_u8_p = (u8 *)g_bg_layer_as_u32_a;
+    (*(u8 **)&reg_tmp1) = (u8 *)g_bg_layer_as_u32_a;
     reg_tmp.w += 4;
     reg_tmp.w = (u32) reg_tmp.b[0];
-    D_0028E484_as_u8_p += reg_tmp.w;
-    reg_a0 = (u8 *)(D_0028E484_as_u8_p);
+    (*(u8 **)&reg_tmp1) += reg_tmp.w;
+    reg_a0 = (u8 *)((*(u8 **)&reg_tmp1));
     cnt2 = reg_d6.h[0] - 1;
     reg_d6.h[0] = cnt2;
     if (((s64) ((s64) (u16) cnt2 << 0x30) >> 0x30) >= 0) {

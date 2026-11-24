@@ -66,7 +66,6 @@ typedef void (*Fn)();
 
 extern u8 D_00257820[];
 extern u16 D_0028DFE8;
-extern u16 D_0028E470;
 extern u8 D_0028E5F8_as_u8;
 extern u8 D_0028E5FC_as_u8;
 extern u16 D_0029C06C[];
@@ -88,13 +87,13 @@ void func_001488C0(void) {
     saved_a5 = reg_a5;
     reg_a4 = (u8 *)D_0029F260_as_u8_a;
     reg_a5 = &D_0028E5FC_as_u8;
-    D_0028E470 = reg_d6.h[0];
+    reg_tmp6.h[0] = reg_d6.h[0];
     reg_d6.h[0] = 1;
-    reg_d6.h[1] = D_0028E470;
+    reg_d6.h[1] = reg_tmp6.h[0];
 loop_1:
-    D_0028E470 = reg_d6.h[0];
+    reg_tmp6.h[0] = reg_d6.h[0];
     reg_d6.h[0] = reg_d6.h[1];
-    reg_d6.h[1] = D_0028E470;
+    reg_d6.h[1] = reg_tmp6.h[0];
     reg_d7.w = 0x23;
 loop_2:
     reg_d1.h[0] = *(u16 *)(reg_a6 + 0);
@@ -111,9 +110,9 @@ next_1:
     if (((s64) ((s64) (u16) t << 0x30) >> 0x30) >= 0) goto loop_2;
     reg_a4 = (u8 *)D_0029F1F0_as_u8_a;
     reg_a5 = &D_0028E5F8_as_u8;
-    D_0028E470 = reg_d6.h[0];
+    reg_tmp6.h[0] = reg_d6.h[0];
     reg_d6.h[0] = reg_d6.h[1];
-    reg_d6.h[1] = D_0028E470;
+    reg_d6.h[1] = reg_tmp6.h[0];
     t = reg_d6.h[0] - 1;
     reg_d6.h[0] = t;
     if (((s64) ((s64) (t & 0xFFFF) << 0x30) >> 0x30) >= 0) goto loop_1;
@@ -126,7 +125,6 @@ s32 func_00201E20();
 s32 func_00209F20();
 extern u16 D_00253940[];
 extern u16 D_002539B0[];
-extern Reg32 D_0028E484;
 extern u16 D_0028E928;
 
 void func_00148A40(void) {
@@ -181,8 +179,8 @@ block_anim:
     if ((s32)*(u16 *)(reg_a6 + 2) >= 0x8000) goto block_clr;
     *(u16 *)(reg_a6 + 4) += reg_d1.h[0];
     reg_d0.h[0] = *(u16 *)(reg_a6 + 4);
-    D_0028E484.w = 0;
-    D_0028E484.h[0] = 0xC000;
+    reg_tmp1.w = 0;
+    reg_tmp1.h[0] = 0xC000;
     reg_tmp.w = 0;
     reg_d0.h[0] += 0x400;
     reg_tmp.h[0] = reg_d0.h[0];
@@ -324,8 +322,8 @@ block_anime:
     if (!((s32) W(2) < 0x7800)) goto block_clr;
     W(4) += reg_d1.h[0];
     reg_d0.h[0] = W(4);
-    D_0028E484.w = 0;
-    D_0028E484.h[0] = 0xB800;
+    reg_tmp1.w = 0;
+    reg_tmp1.h[0] = 0xB800;
     reg_tmp.w = 0;
     reg_d0.h[0] += 0x800;
     reg_tmp.h[0] = reg_d0.h[0];
@@ -466,8 +464,8 @@ block_anime:
     if (!((s32) W(2) < 0x7800)) goto block_clr;
     W(4) += reg_d1.h[0];
     reg_d0.h[0] = W(4);
-    D_0028E484.w = 0;
-    D_0028E484.h[0] = 0xC000;
+    reg_tmp1.w = 0;
+    reg_tmp1.h[0] = 0xC000;
     reg_tmp.w = 0;
     reg_d0.h[0] += 0x400;
     reg_tmp.h[0] = reg_d0.h[0];
@@ -586,8 +584,8 @@ block_anime:
     if (!((s32) W(2) < 0x7400)) goto block_clr;
     W(4) += reg_d1.h[0];
     reg_d0.h[0] = W(4);
-    D_0028E484.w = 0;
-    D_0028E484.h[0] = 0xBC00;
+    reg_tmp1.w = 0;
+    reg_tmp1.h[0] = 0xBC00;
     reg_tmp.w = 0;
     reg_d0.h[0] += 0x600;
     reg_tmp.h[0] = reg_d0.h[0];
@@ -710,8 +708,8 @@ block_anime:
     if (!((s32) W(2) < 0x8000)) goto block_clr;
     W(4) += reg_d1.h[0];
     reg_d0.h[0] = W(4);
-    D_0028E484.w = 0;
-    D_0028E484.h[0] = 0xB000;
+    reg_tmp1.w = 0;
+    reg_tmp1.h[0] = 0xB000;
     reg_tmp.w = 0;
     reg_d0.h[0] += 0xC00;
     reg_tmp.h[0] = reg_d0.h[0];
@@ -847,8 +845,8 @@ block_anime:
     if (!((s32) W(2) < 0x8000)) goto block_clr;
     W(4) += reg_d1.h[0];
     reg_d0.h[0] = W(4);
-    D_0028E484.w = 0;
-    D_0028E484.h[0] = 0xB000;
+    reg_tmp1.w = 0;
+    reg_tmp1.h[0] = 0xB000;
     reg_tmp.w = 0;
     reg_d0.h[0] += 0xC00;
     reg_tmp.h[0] = reg_d0.h[0];
@@ -975,8 +973,8 @@ block_anime:
     if (!((s32) W(2) < 0x7800)) goto block_clr;
     W(4) += reg_d1.h[0];
     reg_d0.h[0] = W(4);
-    D_0028E484.w = 0;
-    D_0028E484.h[0] = 0xB400;
+    reg_tmp1.w = 0;
+    reg_tmp1.h[0] = 0xB400;
     reg_tmp.w = 0;
     reg_d0.h[0] += 0xA00;
     reg_tmp.h[0] = reg_d0.h[0];
@@ -1103,8 +1101,8 @@ block_anime:
     if (!((s32) W(2) < 0x7800)) goto block_clr;
     W(4) += reg_d1.h[0];
     reg_d0.h[0] = W(4);
-    D_0028E484.w = 0;
-    D_0028E484.h[0] = 0xB400;
+    reg_tmp1.w = 0;
+    reg_tmp1.h[0] = 0xB400;
     reg_tmp.w = 0;
     reg_d0.h[0] += 0xA00;
     reg_tmp.h[0] = reg_d0.h[0];

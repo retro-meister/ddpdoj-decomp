@@ -784,7 +784,6 @@ void func_00130A60(void) {
 }
 
 s32 func_0011C2B0();
-extern u16 D_0028E478;
 
 void func_00130CC0(void) {
     u32 temp_s0;
@@ -806,9 +805,9 @@ void func_00130CC0(void) {
         reg_d4.h[0] += 7;
     }
     reg_d4.h[0] += 0x30;
-    D_0028E478 = reg_d4.h[0];
+    reg_tmp4.h[0] = reg_d4.h[0];
     reg_d4.h[0] = reg_d5.h[0];
-    reg_d4.h[1] = D_0028E478;
+    reg_d4.h[1] = reg_tmp4.h[0];
     func_0011C2B0();
     reg_d0.w = temp_s0;
     reg_d1.w = temp_s1;

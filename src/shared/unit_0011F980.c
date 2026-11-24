@@ -78,7 +78,6 @@ extern u8 D_00241780[];
 extern u8 D_00241810[];
 extern u8 D_00241870[];
 extern u16 D_0028E3EC;
-extern u16 D_0028E484_as_u16;
 extern u16 D_0029C06C[];
 extern u8 D_0029CEA0_as_u8_a[];
 extern void (*jtbl_0028E3F4)();
@@ -164,9 +163,9 @@ block_a:
     reg_d1.h[0] = (*(u16 *)((u8 *)(reg_a6) + (2)));
     reg_d1.h[0] += (*(u16 *)((u8 *)(reg_a0) + (0)));
     reg_a0 += 2;
-    D_0028E484_as_u16 = reg_d1.h[0];
+    reg_tmp1.h[0] = reg_d1.h[0];
     reg_d1.h[0] = reg_d1.h[1];
-    reg_d1.h[1] = D_0028E484_as_u16;
+    reg_d1.h[1] = reg_tmp1.h[0];
     reg_d1.h[0] = (*(u16 *)((u8 *)(reg_a6) + (4)));
     reg_d1.h[0] += (*(u16 *)((u8 *)(reg_a0) + (0)));
     reg_a0 += 2;
@@ -1045,21 +1044,20 @@ block_4:
     reg_a6 -= 0x840;
 }
 
-extern u16 D_0028E470;
 
 void func_00122650(void) {
     reg_d7.w = 0x28;
     reg_a1 = (u8 *) D_0029CED0;
     reg_d6.h[1] = *(u16 *) (reg_a5 + 2);
     reg_d6.h[0] = *(u16 *) (reg_a5 + 4);
-    D_0028E470 = reg_d6.h[0];
+    reg_tmp6.h[0] = reg_d6.h[0];
     reg_d6.h[0] = reg_d6.h[1];
-    reg_d6.h[1] = D_0028E470;
+    reg_d6.h[1] = reg_tmp6.h[0];
     reg_d6.h[0] += 0x600;
     reg_d6.h[0] -= *(u16 *) (reg_a5 + 0x30);
-    D_0028E470 = reg_d6.h[0];
+    reg_tmp6.h[0] = reg_d6.h[0];
     reg_d6.h[0] = reg_d6.h[1];
-    reg_d6.h[1] = D_0028E470;
+    reg_d6.h[1] = reg_tmp6.h[0];
     reg_d5.w = 0;
 loop_20:
     if (reg_d5.h[0] == 0) goto next_40;
@@ -1086,9 +1084,9 @@ next_40:
     *(u16 *) reg_a1 = *(u16 *) reg_a2;
     reg_a2 += 2;
     reg_a1 += 2;
-    D_0028E470 = reg_d6.h[0];
+    reg_tmp6.h[0] = reg_d6.h[0];
     reg_d6.h[0] = reg_d6.h[1];
-    reg_d6.h[1] = D_0028E470;
+    reg_d6.h[1] = reg_tmp6.h[0];
     reg_d6.h[0] += 0x400;
     if (D_0028DFF4 != 0) goto next_80;
     if (*(u8 *) (reg_a6 + 0x841) & 2) goto next_60;
@@ -1106,9 +1104,9 @@ next_80:
 next_100:
     reg_d5.w = 1;
 next_120:
-    D_0028E470 = reg_d6.h[0];
+    reg_tmp6.h[0] = reg_d6.h[0];
     reg_d6.h[0] = reg_d6.h[1];
-    reg_d6.h[1] = D_0028E470;
+    reg_d6.h[1] = reg_tmp6.h[0];
     *(u16 *) reg_a1 = *(u16 *) (reg_a0 + 0);
     reg_a1 += 2;
     *(u16 *) reg_a1 = *(u16 *) (reg_a0 + 2);

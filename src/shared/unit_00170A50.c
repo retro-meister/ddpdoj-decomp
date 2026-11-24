@@ -8,13 +8,12 @@ extern u8 *jtbl_0028E3F4_as_u8_p;
 extern u8 *reg_a0;
 extern u8 *reg_a6;
 extern u16 D_0025AE10[];
-extern u16 D_0028E48A;
 
 void func_00170A60(void) {
     reg_d0.h[0] = *(u16 *)(reg_a6 + 0x1E);
     reg_a0 = (u8 *)D_0025AE10;
     reg_d0.h[0] <<= 2;
-    D_0028E48A = (reg_d0.h[0] != 0) ? *(u16 *)(reg_a0 + ((s16)reg_d0.h[0] & ~1)) : *(u16 *)reg_a0;
+    reg_tmp.h[1] = (reg_d0.h[0] != 0) ? *(u16 *)(reg_a0 + ((s16)reg_d0.h[0] & ~1)) : *(u16 *)reg_a0;
     reg_tmp.h[0] = (((u16)reg_d0.h[0] + 2) != 0) ? *(u16 *)(reg_a0 + ((s16)((u16)reg_d0.h[0] + 2) & ~1)) : *(u16 *)reg_a0;
     reg_a0 = (u8 *)reg_tmp.w;
     jtbl_0028E3F4_as_u8_p = reg_a0;
@@ -27,7 +26,7 @@ void func_00170B20(void) {
     reg_d0.h[0] = *(u16 *)(reg_a6 + 0x1E);
     reg_a0 = (u8 *)D_0025AE50;
     reg_d0.h[0] <<= 2;
-    D_0028E48A = (reg_d0.h[0] != 0) ? *(u16 *)(reg_a0 + ((s16)reg_d0.h[0] & ~1)) : *(u16 *)reg_a0;
+    reg_tmp.h[1] = (reg_d0.h[0] != 0) ? *(u16 *)(reg_a0 + ((s16)reg_d0.h[0] & ~1)) : *(u16 *)reg_a0;
     reg_tmp.h[0] = (((u16)reg_d0.h[0] + 2) != 0) ? *(u16 *)(reg_a0 + ((s16)((u16)reg_d0.h[0] + 2) & ~1)) : *(u16 *)reg_a0;
     reg_a0 = (u8 *)reg_tmp.w;
     jtbl_0028E3F4_as_u8_p = reg_a0;
@@ -40,7 +39,7 @@ void func_00170BE0(void) {
     reg_d0.h[0] = *(u16 *)(reg_a6 + 0x1E);
     reg_a0 = (u8 *)D_0025AE70;
     reg_d0.h[0] <<= 2;
-    D_0028E48A = (reg_d0.h[0] != 0) ? *(u16 *)(reg_a0 + ((s16)reg_d0.h[0] & ~1)) : *(u16 *)reg_a0;
+    reg_tmp.h[1] = (reg_d0.h[0] != 0) ? *(u16 *)(reg_a0 + ((s16)reg_d0.h[0] & ~1)) : *(u16 *)reg_a0;
     reg_tmp.h[0] = (((u16)reg_d0.h[0] + 2) != 0) ? *(u16 *)(reg_a0 + ((s16)((u16)reg_d0.h[0] + 2) & ~1)) : *(u16 *)reg_a0;
     reg_a0 = (u8 *)reg_tmp.w;
     jtbl_0028E3F4_as_u8_p = reg_a0;
@@ -84,7 +83,6 @@ s32 func_001ABF90();
 s32 func_00200EE0();
 s32 func_00201010();
 extern u16 D_0028E024;
-extern Reg32 D_0028E480;
 extern u16 D_0028E5E4;
 extern s16 D_0028E5FC_as_s16;
 extern u16 D_0028E648;
@@ -131,13 +129,13 @@ void func_00170DF0(void) {
             func_00201010();
             reg_d0.w = 0;
 loop_11:
-            D_0028E480.w = 0;
+            reg_tmp2.w = 0;
             reg_tmp.w = 0;
             reg_tmp.h[0] = 0x14;
-            D_0028E480.h[0] = reg_d2.h[0];
-            D_0028E480.w -= reg_tmp.w;
+            reg_tmp2.h[0] = reg_d2.h[0];
+            reg_tmp2.w -= reg_tmp.w;
             reg_d2.h[0] -= 0x14;
-            if (D_0028E480.h[1] == 0) {
+            if (reg_tmp2.h[1] == 0) {
                 reg_d0.h[0] += 0x48;
                 goto loop_11;
             }
@@ -198,11 +196,11 @@ void func_00170F80(void) {
             func_00201010();
             reg_d0.w = 0;
 loop_11:
-            D_0028E480.w = 0;
-            D_0028E480.h[0] = reg_d2.h[0];
-            D_0028E480.w -= 0x14;
+            reg_tmp2.w = 0;
+            reg_tmp2.h[0] = reg_d2.h[0];
+            reg_tmp2.w -= 0x14;
             reg_d2.h[0] -= 0x14;
-            if (D_0028E480.h[1] == 0) {
+            if (reg_tmp2.h[1] == 0) {
                 reg_d0.h[0] += 0x48;
                 goto loop_11;
             }
@@ -221,7 +219,6 @@ loop_11:
 s32 func_001A9130();
 extern u16 D_00269430[];
 extern u16 D_00269460[];
-extern Reg32 D_0028E47C_as_Reg32;
 extern u16 D_0028E980;
 extern u16 D_0028E984;
 
@@ -251,13 +248,13 @@ next_2:
     reg_d1.b[0] = *(u8 *)(reg_a6 + 1);
     reg_d4.w = 3;
 loop_3:
-    D_0028E47C_as_Reg32.w = 0;
+    reg_tmp3.w = 0;
     reg_d3.w = 0xF;
     reg_d3.h[0] &= reg_d5.h[0];
-    D_0028E47C_as_Reg32.h[0] = reg_d3.h[0];
+    reg_tmp3.h[0] = reg_d3.h[0];
     reg_d3.h[0] -= 1;
-    D_0028E47C_as_Reg32.w -= 1;
-    if (D_0028E47C_as_Reg32.h[1] != 0) goto next_4;
+    reg_tmp3.w -= 1;
+    if (reg_tmp3.h[1] != 0) goto next_4;
 loop_4:
     func_001A9130();
     t2 = reg_d3.h[0] - 1;
@@ -279,8 +276,6 @@ next_5:
 #pragma push
 #pragma opt_propagation off
 extern u8 D_0028E2C0;
-extern u16 D_0028E4A2;
-extern u16 D_0028E4A6;
 extern void *reg_a6_as_void_p;
 extern void (*jtbl_0028E3F4_as_fn)(void);
 
@@ -289,10 +284,10 @@ void func_00171330(void (*callback)(void))
     if (D_0028E2C0 == 0) {
         const u16 *state = (const u16 *)reg_a6_as_void_p;
 
-        D_0028E4A6 = state[1];
+        reg_d1.h[1] = state[1];
         reg_d1.h[0] = state[2];
         reg_d3.h[0] = state[10];
-        D_0028E4A2 = state[8];
+        reg_d2.h[1] = state[8];
         reg_d2.h[0] = state[9];
         reg_d4.w = 0;
         reg_d4.h[0] = state[6];

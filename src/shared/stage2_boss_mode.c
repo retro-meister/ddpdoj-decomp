@@ -139,7 +139,6 @@ s32 func_002010A0();
 s32 func_002011A0();
 s32 func_002012F0();
 extern u16 D_0026C6E0[];
-extern Reg32 D_0028E480;
 
 void func_001C7F70() {
     u16 *t1;
@@ -239,16 +238,16 @@ loop_6:
                 func_002012F0();
                 reg_d0.h[0] = (u16) ((s16) reg_d0.h[0] >> 2);
                 reg_d2.h[0] += reg_d0.h[0];
-                D_0028E480.w = reg_d2.w;
+                reg_tmp2.w = reg_d2.w;
                 reg_d2.h[1] = reg_d2.h[0];
-                reg_d2.h[0] = D_0028E480.h[1];
+                reg_d2.h[0] = reg_tmp2.h[1];
                 func_002012F0();
                 reg_d0.h[0] = (u16) ((s16) reg_d0.h[0] >> 1);
                 reg_d2.h[0] += reg_d0.h[0];
                 reg_d2.h[0] -= 0x1000;
-                D_0028E480.w = reg_d2.w;
+                reg_tmp2.w = reg_d2.w;
                 reg_d2.h[1] = reg_d2.h[0];
-                reg_d2.h[0] = D_0028E480.h[1];
+                reg_d2.h[0] = reg_tmp2.h[1];
                 reg_d3.h[0] = 8;
                 reg_d0.h[0] = 0;
                 func_0013AAB0();

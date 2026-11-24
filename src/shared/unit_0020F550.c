@@ -986,7 +986,6 @@ s32 func_002376F0();
 s32 func_00237790();
 extern u8 D_00269920[];
 extern s8 D_0028E408;
-extern u16 D_0028E4AA;
 extern u16 D_0028E910;
 extern u16 g_stage;
 extern u8 D_0028ED7C;
@@ -1047,16 +1046,16 @@ void func_00210D00() {
                 if ((*(u16 *)((u8 *)(reg_a6) + (0xC))) == 0) {
                     reg_a0 = D_00269920;
                     func_0013B920();
-                    (*(u16 *)((u8 *)(reg_a6) + (0x12))) = (u16) D_0028E4AA;
+                    (*(u16 *)((u8 *)(reg_a6) + (0x12))) = (u16) reg_d0.h[1];
                     (*(u16 *)((u8 *)(reg_a6) + (0x14))) = (u16) reg_d0.h[0];
                 }
             }
         } else {
-            D_0028E4AA = (*(u16 *)((u8 *)(reg_a6) + (0x12)));
+            reg_d0.h[1] = (*(u16 *)((u8 *)(reg_a6) + (0x12)));
             reg_d0.h[0] = (*(u16 *)((u8 *)(reg_a6) + (0x14)));
             func_0013C350();
             if (D_0028E408 == 0) {
-                D_0028E4AA = (*(u16 *)((u8 *)(reg_a6) + (0x12)));
+                reg_d0.h[1] = (*(u16 *)((u8 *)(reg_a6) + (0x12)));
                 reg_d0.h[0] = (*(u16 *)((u8 *)(reg_a6) + (0x14)));
                 func_0013C300();
                 if (D_0028ED7C == 2) {

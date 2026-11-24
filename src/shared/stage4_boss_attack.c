@@ -393,7 +393,6 @@ void func_001D8730(void) {
 s32 func_002010A0();
 s32 func_002011A0();
 extern u8 D_0026ECC0[];
-extern Reg32 D_0028E47C_as_Reg32;
 extern void (*jtbl_0028E3F4)();
 
 void func_001D8740(s32 arg0, s32 arg1, void *arg2) {
@@ -414,13 +413,13 @@ void func_001D8740(s32 arg0, s32 arg1, void *arg2) {
     reg_d0.h[0] = ((arg1) != 0) ? *(u16 *)((u8 *)reg_a6 + ((s16)(arg1) & ~1)) : *(u16 *)reg_a6;
     reg_d1.h[0] = ((arg1 + 2) != 0) ? *(u16 *)((u8 *)reg_a6 + ((s16)(arg1 + 2) & ~1)) : *(u16 *)reg_a6;
     reg_d1.h[0] += reg_d3.h[0];
-    D_0028E47C_as_Reg32.w = reg_d3.w;
+    reg_tmp3.w = reg_d3.w;
     reg_d3.h[1] = reg_d3.h[0];
-    reg_d3.h[0] = D_0028E47C_as_Reg32.h[1];
+    reg_d3.h[0] = reg_tmp3.h[1];
     reg_d0.h[0] += reg_d3.h[0];
-    D_0028E47C_as_Reg32.w = reg_d3.w;
+    reg_tmp3.w = reg_d3.w;
     reg_d3.h[1] = reg_d3.h[0];
-    reg_d3.h[0] = D_0028E47C_as_Reg32.h[1];
+    reg_d3.h[0] = reg_tmp3.h[1];
     func_002026F0();
     reg_d3.w = saved;
     func_002010A0();
@@ -445,13 +444,13 @@ next_0:
     reg_d0.h[0] = ((arg1) != 0) ? *(u16 *)((u8 *)reg_a6 + ((s16)(arg1) & ~1)) : *(u16 *)reg_a6;
     reg_d1.h[0] = ((arg1 + 2) != 0) ? *(u16 *)((u8 *)reg_a6 + ((s16)(arg1 + 2) & ~1)) : *(u16 *)reg_a6;
     reg_d1.h[0] += reg_d3.h[0];
-    D_0028E47C_as_Reg32.w = reg_d3.w;
+    reg_tmp3.w = reg_d3.w;
     reg_d3.h[1] = reg_d3.h[0];
-    reg_d3.h[0] = D_0028E47C_as_Reg32.h[1];
+    reg_d3.h[0] = reg_tmp3.h[1];
     reg_d0.h[0] += reg_d3.h[0];
-    D_0028E47C_as_Reg32.w = reg_d3.w;
+    reg_tmp3.w = reg_d3.w;
     reg_d3.h[1] = reg_d3.h[0];
-    reg_d3.h[0] = D_0028E47C_as_Reg32.h[1];
+    reg_d3.h[0] = reg_tmp3.h[1];
     func_002026F0();
     reg_d3.w = saved;
     func_002010A0();
@@ -476,13 +475,13 @@ next_1:
     reg_d0.h[0] = ((arg1) != 0) ? *(u16 *)((u8 *)reg_a6 + ((s16)(arg1) & ~1)) : *(u16 *)reg_a6;
     reg_d1.h[0] = ((arg1 + 2) != 0) ? *(u16 *)((u8 *)reg_a6 + ((s16)(arg1 + 2) & ~1)) : *(u16 *)reg_a6;
     reg_d1.h[0] += reg_d3.h[0];
-    D_0028E47C_as_Reg32.w = reg_d3.w;
+    reg_tmp3.w = reg_d3.w;
     reg_d3.h[1] = reg_d3.h[0];
-    reg_d3.h[0] = D_0028E47C_as_Reg32.h[1];
+    reg_d3.h[0] = reg_tmp3.h[1];
     reg_d0.h[0] += reg_d3.h[0];
-    D_0028E47C_as_Reg32.w = reg_d3.w;
+    reg_tmp3.w = reg_d3.w;
     reg_d3.h[1] = reg_d3.h[0];
-    reg_d3.h[0] = D_0028E47C_as_Reg32.h[1];
+    reg_d3.h[0] = reg_tmp3.h[1];
     func_002026F0();
     reg_d3.w = saved;
     func_002010A0();

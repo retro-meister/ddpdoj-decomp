@@ -74,8 +74,6 @@ void func_00208E20(void) {
     func_00209200();
 }
 
-extern u16 D_0028E474_as_u16;
-extern u16 D_0028E478;
 
 void func_00208EB0(void) {
     s32 func_0011C2B0();
@@ -99,9 +97,9 @@ void func_00208EB0(void) {
     s_d7 = reg_d7.w;
     reg_d3.w &= 0xFFFF;
     reg_d5.w = reg_d3.w;
-    D_0028E474_as_u16 = reg_d5.h[0];
+    reg_tmp5.h[0] = reg_d5.h[0];
     reg_d5.h[0] = reg_d5.h[1];
-    reg_d5.h[1] = D_0028E474_as_u16;
+    reg_d5.h[1] = reg_tmp5.h[0];
     reg_d6.h[0] = reg_d2.h[0];
     reg_d2.w = 0;
     reg_d3.w = 0;
@@ -125,9 +123,9 @@ loop_2:
     reg_d4.h[0] += 7;
 next_1:
     reg_d4.h[0] += 0x30;
-    D_0028E478 = reg_d4.h[0];
+    reg_tmp4.h[0] = reg_d4.h[0];
     reg_d4.h[0] = reg_d4.h[1];
-    reg_d4.h[1] = D_0028E478;
+    reg_d4.h[1] = reg_tmp4.h[0];
     reg_d4.h[0] = reg_d6.h[0];
     func_0011C2B0();
     reg_d0.h[0] += 1;
@@ -235,9 +233,9 @@ loop_2:
     }
     if ((s8) reg_d4.b[0] != -1) {
         reg_d4.h[0] &= 0xFF;
-        D_0028E478 = reg_d4.h[0];
+        reg_tmp4.h[0] = reg_d4.h[0];
         reg_d4.h[0] = reg_d5.h[0];
-        reg_d4.h[1] = D_0028E478;
+        reg_d4.h[1] = reg_tmp4.h[0];
         func_0011C2B0();
         reg_d0.h[0] += 1;
         goto loop_2;
@@ -265,9 +263,9 @@ loop_1:
     reg_a0 += 1;
     if (reg_d4.sb[0] == -1) goto next_1;
     reg_d4.h[0] = reg_d4.b[0];
-    D_0028E478 = reg_d4.h[0];
+    reg_tmp4.h[0] = reg_d4.h[0];
     reg_d4.h[0] = reg_d5.h[0];
-    reg_d4.h[1] = D_0028E478;
+    reg_d4.h[1] = reg_tmp4.h[0];
     func_0011C2B0();
     reg_d0.h[0] += 1;
     goto loop_1;

@@ -18,7 +18,6 @@ s32 func_00133070(void) {
 
 s32 func_0019C470();
 s32 func_0019C4F0();
-extern Reg32 D_0028E480;
 extern s16 D_0029F1F0[];
 extern s16 D_0029F260[];
 extern u8 *reg_a0;
@@ -58,9 +57,9 @@ void func_001330F0(void) {
     reg_d1.h[1] = (*(u16 *)((u8 *)(reg_a6) + (0x40)));
     reg_d1.h[0] = (*(u16 *)((u8 *)(reg_a6) + (0x42)));
     reg_d1.w += 0xF000E400;
-    D_0028E480.w = 0x14B1;
-    reg_d2.h[1] = D_0028E480.h[1];
-    reg_d2.h[0] = D_0028E480.h[0];
+    reg_tmp2.w = 0x14B1;
+    reg_d2.h[1] = reg_tmp2.h[1];
+    reg_d2.h[0] = reg_tmp2.h[0];
     reg_d3.h[0] = 0x10E0;
     reg_d4.h[0] = 0x15;
     func_0019C470();

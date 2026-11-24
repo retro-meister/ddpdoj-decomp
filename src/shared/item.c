@@ -249,7 +249,6 @@ s32 func_0018DC60();
 s32 func_0019D230();
 extern u32 D_0026ADC0[];
 extern u32 D_0026AFC0[];
-extern Reg32 D_0028E484;
 
 void func_0016AD60(void) {
     u32 t1;
@@ -292,9 +291,9 @@ next_2:
         }
         reg_d1.h[0] = *(u16 *)(reg_a6 + 2);
         reg_d1.h[0] += 0xFA00 & 0xFFFF;
-        D_0028E484.w = reg_d1.w;
+        reg_tmp1.w = reg_d1.w;
         reg_d1.h[1] = reg_d1.h[0];
-        reg_d1.h[0] = D_0028E484.h[1];
+        reg_d1.h[0] = reg_tmp1.h[1];
         reg_d1.h[0] = *(u16 *)(reg_a6 + 4);
         reg_a0 = (u8 *)(D_0026ADC0);
         reg_d1.h[0] += 0x7FFF + 0x7D01;
@@ -453,9 +452,9 @@ next_2:
         }
         reg_d1.h[0] = *(u16 *)(reg_a6 + 2);
         reg_d1.h[0] += 0xFC00 & 0xFFFF;
-        D_0028E484.w = reg_d1.w;
+        reg_tmp1.w = reg_d1.w;
         reg_d1.h[1] = reg_d1.h[0];
-        reg_d1.h[0] = D_0028E484.h[1];
+        reg_d1.h[0] = reg_tmp1.h[1];
         reg_d1.h[0] = *(u16 *)(reg_a6 + 4);
         reg_a0 = (u8 *)(D_0026ADD0);
         reg_d1.h[0] += 0x7FFF + 0x7C01;
@@ -606,9 +605,9 @@ next_2:
         }
         reg_d1.h[0] = *(u16 *)(reg_a6 + 2);
         reg_d1.h[0] += 0xFA00 & 0xFFFF;
-        D_0028E484.w = reg_d1.w;
+        reg_tmp1.w = reg_d1.w;
         reg_d1.h[1] = reg_d1.h[0];
-        reg_d1.h[0] = D_0028E484.h[1];
+        reg_d1.h[0] = reg_tmp1.h[1];
         reg_d1.h[0] = *(u16 *)(reg_a6 + 4);
         reg_a0 = (u8 *)(D_0026ADE0);
         reg_d1.h[0] += 0x7FFF + 0x7D01;
@@ -755,7 +754,6 @@ next_1:
 }
 
 extern u32 D_0026ADF0[];
-extern Reg32 D_0028E474;
 
 void func_0016BAF0(void) {
     u32 t1;
@@ -771,12 +769,12 @@ void func_0016BAF0(void) {
         }
         reg_d1.h[0] = *(u16 *)(reg_a6 + 2);
         reg_d1.h[0] += reg_d5.h[0];
-        D_0028E484.w = reg_d1.w;
+        reg_tmp1.w = reg_d1.w;
         reg_d1.h[1] = reg_d1.h[0];
-        reg_d1.h[0] = D_0028E484.h[1];
-        D_0028E474.w = reg_d5.w;
+        reg_d1.h[0] = reg_tmp1.h[1];
+        reg_tmp5.w = reg_d5.w;
         reg_d5.h[1] = reg_d5.h[0];
-        reg_d5.h[0] = D_0028E474.h[1];
+        reg_d5.h[0] = reg_tmp5.h[1];
         reg_d1.h[0] = *(u16 *)(reg_a6 + 4);
         reg_d1.h[0] += reg_d5.h[0];
         reg_d3.h[0] = 0x638;
@@ -784,9 +782,9 @@ void func_0016BAF0(void) {
         if (D_0028E3EC != 0) {
             reg_d1.h[0] = *(u16 *)(reg_a6 + 2);
             reg_d1.h[0] += 0xFC00;
-            D_0028E484.w = reg_d1.w;
+            reg_tmp1.w = reg_d1.w;
             reg_d1.h[1] = reg_d1.h[0];
-            reg_d1.h[0] = D_0028E484.h[1];
+            reg_d1.h[0] = reg_tmp1.h[1];
             reg_d1.h[0] = *(u16 *)(reg_a6 + 4);
             reg_d2.w = 0xB5C;
             reg_d1.h[0] += 0xFD00;
@@ -795,9 +793,9 @@ void func_0016BAF0(void) {
         }
         reg_d1.h[0] = *(u16 *)(reg_a6 + 2);
         reg_d1.h[0] += 0xFC00;
-        D_0028E484.w = reg_d1.w;
+        reg_tmp1.w = reg_d1.w;
         reg_d1.h[1] = reg_d1.h[0];
-        reg_d1.h[0] = D_0028E484.h[1];
+        reg_d1.h[0] = reg_tmp1.h[1];
         reg_d1.h[0] = *(u16 *)(reg_a6 + 4);
         reg_a0 = (u8 *)(D_0026ADF0);
         reg_d1.h[0] += 0xFD00;
@@ -844,12 +842,12 @@ void func_0016BD50(void) {
         }
         (*(u16 *)((u8 *)(reg_a6) + (2))) += 0x18;
         reg_d0.h[0] = (*(u16 *)((u8 *)(reg_a6) + (2)));
-        D_0028E484.w = 0;
-        D_0028E484.h[0] = 0x8800;
+        reg_tmp1.w = 0;
+        reg_tmp1.h[0] = 0x8800;
         reg_tmp.w = 0;
         reg_tmp.h[0] = reg_d0.h[0];
         temp_a1 = reg_tmp.w;
-        reg_tmp.w = temp_a1 + D_0028E484.w;
+        reg_tmp.w = temp_a1 + reg_tmp1.w;
         reg_d0.h[0] += 0x7FFF + 0x801;
         if (reg_tmp.h[1] != 0) {
             func_0016C260();
@@ -927,9 +925,9 @@ void func_0016BFD0(void) {
     }
     reg_d1.h[0] = (*(u16 *)((u8 *)(reg_a6) + (2)));
     reg_d1.h[0] += 0xFC00 & 0xFFFF;
-    D_0028E484.w = reg_d1.w;
+    reg_tmp1.w = reg_d1.w;
     reg_d1.h[1] = reg_d1.h[0];
-    reg_d1.h[0] = D_0028E484.h[1];
+    reg_d1.h[0] = reg_tmp1.h[1];
     reg_d1.h[0] = (*(u16 *)((u8 *)(reg_a6) + (4)));
     reg_a0 = (u8 *)(D_0026AE30);
     reg_d1.h[0] += 0x7FFF + 0x7C01;

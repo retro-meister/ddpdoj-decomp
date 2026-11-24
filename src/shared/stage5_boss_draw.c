@@ -78,8 +78,6 @@ void func_001F00D0(void) {
 
 s32 func_00201E20();
 extern u8 D_00264870[];
-extern u16 D_0028E4A2;
-extern u16 D_0028E4A6;
 extern u8 *reg_a0;
 extern u8 *reg_a6;
 
@@ -104,7 +102,7 @@ void func_001F0330(void) {
     reg_d1.h[0] = (*(u16 *)((u8 *)(reg_a6) + (2)));
     reg_d1.h[0] += reg_d2.h[0];
     reg_tmp.w = reg_d1.w;
-    D_0028E4A6 = reg_tmp.h[0];
+    reg_d1.h[1] = reg_tmp.h[0];
     reg_d1.h[0] = reg_tmp.h[1];
     reg_d1.h[0] = (*(u16 *)((u8 *)(reg_a6) + (4)));
     temp_a2 = reg_d1.w;
@@ -113,7 +111,7 @@ void func_001F0330(void) {
     temp_a1 = reg_d1.w;
     reg_d1.w = temp_a1 + 0xEA00F200;
     reg_a0 += (*(u16 *)((u8 *)(reg_a6) + (0x128)));
-    D_0028E4A2 = (*(u16 *)((u8 *)(reg_a0) + (0)));
+    reg_d2.h[1] = (*(u16 *)((u8 *)(reg_a0) + (0)));
     reg_d2.h[0] = (*(u16 *)((u8 *)(reg_a0) + (2)));
     reg_d3.h[0] = 0x1670;
     reg_d4.w = 0;
@@ -407,7 +405,7 @@ void func_001F0F50(void) {
     reg_d1.h[0] = (*(u16 *)((u8 *)(reg_a6) + (2)));
     reg_d1.h[0] += reg_d2.h[0];
     reg_tmp.w = reg_d1.w;
-    D_0028E4A6 = reg_tmp.h[0];
+    reg_d1.h[1] = reg_tmp.h[0];
     reg_d1.h[0] = reg_tmp.h[1];
     reg_d1.h[0] = (*(u16 *)((u8 *)(reg_a6) + (4)));
     temp_a2 = reg_d1.w;
@@ -416,7 +414,7 @@ void func_001F0F50(void) {
     temp_a1 = reg_d1.w;
     reg_d1.w = temp_a1 + 0xEA00F200;
     reg_a0 += (*(u16 *)((u8 *)(reg_a6) + (0x128)));
-    D_0028E4A2 = (*(u16 *)((u8 *)(reg_a0) + (0)));
+    reg_d2.h[1] = (*(u16 *)((u8 *)(reg_a0) + (0)));
     reg_d2.h[0] = (*(u16 *)((u8 *)(reg_a0) + (2)));
     reg_d3.h[0] = 0x1670;
     reg_d4.w = 0;
@@ -433,7 +431,7 @@ void func_001F1040(void)
 
     reg_d2.w = 0x1E51;
     source = (u8 *)reg_a6_as_void_p;
-    D_0028E4A6 = *(u16 *)(source + 2);
+    reg_d1.h[1] = *(u16 *)(source + 2);
     reg_d1.h[0] = *(u16 *)(source + 4);
     reg_d1.w = reg_d1.w + 0x0200FFC0U;
     reg_d4.w = 0;

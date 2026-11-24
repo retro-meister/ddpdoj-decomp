@@ -302,7 +302,6 @@ block_rts:
 }
 
 extern u32 D_0028E0D4;
-extern u16 D_0028E474_as_u16;
 
 void func_0011C610(void) {
     u8 *a0;
@@ -331,9 +330,9 @@ void func_0011C610(void) {
     if (reg_tmp.w == (u32)D_002A3C80) goto block_rts;
     reg_d5.h[0] -= reg_d3.h[0];
     reg_d5.h[0] -= 1;
-    D_0028E474_as_u16 = reg_d5.h[0];
+    reg_tmp5.h[0] = reg_d5.h[0];
     reg_d5.h[0] = reg_d5.h[1];
-    reg_d5.h[1] = D_0028E474_as_u16;
+    reg_d5.h[1] = reg_tmp5.h[0];
     reg_d5.h[0] = 0;
     D_0028E0D4 = reg_d5.w;
     reg_d5.w = 0;

@@ -12,7 +12,6 @@ s32 func_001D4630();
 s32 func_002016D0();
 s32 func_00203400();
 extern u8 D_0028E290;
-extern Reg32 D_0028E474;
 extern s32 D_0028E638;
 extern u16 D_0028E8B8;
 extern u16 D_00299768_as_u16_a[];
@@ -98,21 +97,21 @@ next_20:
     W(0xF8) = reg_d5.h[0];
     reg_d5.h[0] -= reg_d4.h[0];
     if (W(0x88) != 0) goto block_check;
-    D_0028E474.h[1] = *(u16 *)(reg_a5 + 0x16);
-    D_0028E474.h[0] = *(u16 *)(reg_a5 + 0x18);
+    reg_tmp5.h[1] = *(u16 *)(reg_a5 + 0x16);
+    reg_tmp5.h[0] = *(u16 *)(reg_a5 + 0x18);
     if (D_0028E290 == 2) {
         if (m0 > 0x7FFF) {
-            D_0028E474.w += m0 - 0x7FFF;
-            if (D_0028E474.w >= 0x40C00) D_0028E474.w = 0x40C00;
+            reg_tmp5.w += m0 - 0x7FFF;
+            if (reg_tmp5.w >= 0x40C00) reg_tmp5.w = 0x40C00;
         } else {
-            D_0028E474.w -= reg_d5.w;
+            reg_tmp5.w -= reg_d5.w;
         }
     } else {
-        D_0028E474.w -= reg_d5.w;
+        reg_tmp5.w -= reg_d5.w;
     }
-    *(u16 *)(reg_a5 + 0x16) = D_0028E474.h[1];
-    *(u16 *)(reg_a5 + 0x18) = D_0028E474.h[0];
-    if ((s32) D_0028E474.w >= 0) goto block_check;
+    *(u16 *)(reg_a5 + 0x16) = reg_tmp5.h[1];
+    *(u16 *)(reg_a5 + 0x18) = reg_tmp5.h[0];
+    if ((s32) reg_tmp5.w >= 0) goto block_check;
     func_00203400();
     if (reg_d0.h[0] != 0) goto next_30;
     reg_tmp.w = 0x200;

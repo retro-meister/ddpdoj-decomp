@@ -82,7 +82,6 @@ next_1:
 }
 
 s32 func_0011C2B0();
-extern u32 D_0028E478_as_u32;
 
 void func_00137AD0(void) {
     u32 save_d0;
@@ -109,7 +108,7 @@ loop_1:
     reg_a0_as_s8_p += 1;
     if (reg_d4.b[0] != 0) {
         reg_d4.h[0] = reg_d4.w & 0xFF;
-        D_0028E478_as_u32 = reg_d4.w;
+        reg_tmp4.w = reg_d4.w;
         reg_d4.h[1] = reg_d4.h[0];
         reg_d4.h[0] = reg_d5.h[0];
         func_0011C2B0();

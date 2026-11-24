@@ -722,7 +722,6 @@ s32 func_00129410();
 s32 func_00202730();
 extern u16 D_00259870[];
 extern u16 D_00259970[];
-extern Reg32 D_0028E484;
 extern u16 D_0028E89C;
 
 void func_001FB770() {
@@ -747,11 +746,11 @@ void func_001FB770() {
         (*(u8 *)((u8 *)(reg_a4) + (1))) = (*(u8 *)((u8 *)(reg_a4) + (0)));
         if (D_0028E89C == 0) {
             reg_d1.h[0] = (*(u16 *)((u8 *)(reg_a4) + (4)));
-            D_0028E484.w = 0;
+            reg_tmp1.w = 0;
             reg_tmp.w = 0;
             reg_tmp.h[0] = (*(u16 *)((u8 *)(reg_a4) + (4)));
-            D_0028E484.h[0] = 0xE;
-            reg_tmp.w += D_0028E484.w;
+            reg_tmp1.h[0] = 0xE;
+            reg_tmp.w += reg_tmp1.w;
             (*(u16 *)((u8 *)(reg_a4) + (4))) += 0xE;
             if (reg_tmp.h[1] == 0) {
                 reg_d0.w = 0xFFFF000B;

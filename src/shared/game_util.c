@@ -58,7 +58,6 @@ s32 func_00200A70();
 extern u8 D_0024E090[];
 extern u8 D_0028DE80;
 extern s8 D_0028E408;
-extern u16 D_0028E4AA;
 
 void func_00200DD0() {
     u16 temp_a0;
@@ -85,7 +84,7 @@ void func_00200DD0() {
             (*(u16 *)((u8 *)(reg_a5) + (4))) = 1U;
             reg_a0 = D_0024E090;
             func_0013BE50();
-            (*(u16 *)((u8 *)(reg_a5) + (8))) = (u16) D_0028E4AA;
+            (*(u16 *)((u8 *)(reg_a5) + (8))) = (u16) reg_d0.h[1];
             (*(u16 *)((u8 *)(reg_a5) + (0xA))) = (u16) reg_d0.h[0];
             reg_d1.w = 0;
             func_0018DED0();
@@ -93,7 +92,7 @@ void func_00200DD0() {
     }
     temp_a0 = (*(u16 *)((u8 *)(reg_a5) + (4)));
     if (temp_a0 == 1) {
-        D_0028E4AA = (*(u16 *)((u8 *)(reg_a5) + (8)));
+        reg_d0.h[1] = (*(u16 *)((u8 *)(reg_a5) + (8)));
         reg_d0.h[0] = (*(u16 *)((u8 *)(reg_a5) + (0xA)));
         func_0013C350();
         if (D_0028E408 == 0) {
@@ -263,7 +262,6 @@ void func_002012F0(void)
 
 extern s16 D_002668D0[];
 extern s16 D_002668D2[];
-extern s16 D_0028E4A6_as_s16;
 
 void func_00201330(void)
 {
@@ -273,13 +271,12 @@ void func_00201330(void)
     reg_d1.w = rng_cursor & 0x3F;
     reg_d1.h[0] *= 2;
     table_index = reg_d1.h[0];
-    D_0028E4A6_as_s16 = D_002668D0[table_index];
+    reg_d1.sh[1] = D_002668D0[table_index];
     reg_d1.h[0] = (u16)D_002668D2[table_index];
 }
 
 extern s16 D_002667D0[];
 extern s16 D_002667D2[];
-extern s16 D_0028E49A_as_s16;
 
 void func_00201390(void)
 {
@@ -289,7 +286,7 @@ void func_00201390(void)
     reg_d4.w = rng_cursor & 0x3F;
     reg_d4.h[0] <<= 1;
     table_index = reg_d4.h[0];
-    D_0028E49A_as_s16 = D_002667D0[table_index];
+    reg_d4.sh[1] = D_002667D0[table_index];
     reg_d4.h[0] = (u16)D_002667D2[table_index];
 }
 
@@ -304,7 +301,7 @@ void func_002013F0(void)
     reg_d1.w = rng_cursor & 0x3F;
     reg_d1.h[0] *= 2;
     table_index = reg_d1.h[0];
-    D_0028E4A6_as_s16 = D_002666D0[table_index];
+    reg_d1.sh[1] = D_002666D0[table_index];
     reg_d1.h[0] = (u16)D_002666D2[table_index];
 }
 
