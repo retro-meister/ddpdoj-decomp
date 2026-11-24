@@ -16,7 +16,7 @@ from split import SIZE_RE, SYMBOL_RE, target_units
 HISTORY = ROOT / "config/progress-history.json"
 GRAPH_DIR = ROOT / "docs"
 GRAPH_NAMES = {"SLPS_252.33": "progress-main.svg", "DEATH.ELF": "progress-death.svg", "GALLERY.ELF": "progress-gallery.svg"}
-MAP_NAMES = {"SLPS_252.33": "progress-map-main.svg", "GALLERY.ELF": "progress-map-gallery.svg"}
+MAP_NAMES = {"DEATH.ELF": "progress-map-death.svg", "SLPS_252.33": "progress-map-main.svg", "GALLERY.ELF": "progress-map-gallery.svg"}
 LABELS = {"SLPS_252.33": "Main game", "DEATH.ELF": "Death Label", "GALLERY.ELF": "Gallery"}
 GALLERY_ALL_FUNCTIONS_COMMIT = "80efe77"
 
@@ -304,6 +304,7 @@ def render_progress_map(target, funcs):
     header_h = 84
     bottom_pad = 14
     titles = {
+        "DEATH.ELF": "DoDonPachi DaiOuJou (PS2) — Death Label (DEATH.ELF)",
         "SLPS_252.33": "DoDonPachi DaiOuJou (PS2) — Main game (SLPS_252.33)",
         "GALLERY.ELF": "DoDonPachi DaiOuJou (PS2) — Gallery (GALLERY.ELF)",
     }
