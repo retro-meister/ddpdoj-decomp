@@ -399,7 +399,7 @@ def scheduler_text(functions):
                     ord_idx = cand["input_ordinal"]
                     mnem = pcode[ord_idx]["mnemonic"] if ord_idx is not None and ord_idx < len(pcode) else "?"
                     ready_parts.append(
-                        f"#{ord_idx}({mnem},e={cand['earliest_cycle']},p={cand['priority']},pred={cand['unscheduled_preds']})"
+                        f"#{ord_idx}({mnem},e={cand['earliest_cycle']},d={cand['preferred_cycle']},p={cand['priority']},pred={cand['unscheduled_preds']})"
                     )
                 lines.append(
                     f"    cyc={dec['cycle']} slot={dec['slot']} -> {sel_str} | ready=[{', '.join(ready_parts)}]"

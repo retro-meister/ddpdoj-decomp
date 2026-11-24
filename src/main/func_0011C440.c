@@ -12,5 +12,5 @@ void func_0011C440(void) {
     reg_d0.h[0] <<= 2;
     reg_a0 += reg_d0.h[0];
     reg_d0.w = d0;
-    *(volatile u32 *)&reg_d1.w = *(volatile u32 *)&reg_d1.w;
+    reg_d1.w = (u32)reg_d1.w;
 }
