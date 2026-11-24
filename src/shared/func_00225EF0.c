@@ -6,9 +6,9 @@ typedef struct {
 } Point;
 
 extern void gfx_draw_color_box(s32 x, s32 y, s32 w, s32 h, s32 depth, s32 alpha, s32 r, s32 g, s32 b);
-extern void func_0021C0F0(void);
-extern void func_0021C100(s32 arg0, s32 arg1, s32 arg2, s32 arg3, s32 arg4, s32 arg5, s32 arg6);
-extern void func_0021C2F0(void);
+extern void glyph_queue_clear(void);
+extern void glyph_queue_add(s32 arg0, s32 arg1, s32 arg2, s32 arg3, s32 arg4, s32 arg5, s32 arg6);
+extern void glyph_queue_flush(void);
 extern void func_00225E20(void);
 extern void func_002260F0(void);
 extern void func_00227000(void);
@@ -67,13 +67,13 @@ void func_00225EF0(void) {
             func_00225E20();
             func_002260F0();
             func_00227000();
-            func_0021C0F0();
+            glyph_queue_clear();
             alpha = D_0028EAC4 * 2;
             for (i = 0; i < 3; i++) {
                 reg_a0 = D_00271CC0[i];
-                func_0021C100(D_00271CE0[i].x, D_00271CE0[i].y, 0x12C, 0, 0x80, alpha, 1);
+                glyph_queue_add(D_00271CE0[i].x, D_00271CE0[i].y, 0x12C, 0, 0x80, alpha, 1);
             }
-            func_0021C2F0();
+            glyph_queue_flush();
         }
         reg_d0.w = save_d0;
         reg_d1.w = save_d1;

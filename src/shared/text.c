@@ -94,7 +94,7 @@ void font_load_async(void) {
 }
 
 s32 func_002182F0();
-s32 func_00218D90();
+s32 clut_upload_defaults();
 
 void font_init(void) {
     *(s32 *)0x10000000 = 0;
@@ -104,7 +104,7 @@ void font_init(void) {
     font_init_palettes();
     font_upload_palettes();
     func_002182F0();
-    func_00218D90();
+    clut_upload_defaults();
 }
 
 void font_upload_palettes(void) {

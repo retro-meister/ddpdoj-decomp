@@ -22,7 +22,7 @@ typedef struct {
     s16 h;
 } TileImage;
 
-extern void func_0021A240(void *pkt, s32 first, s32 count);
+extern void quad_build_packet(void *pkt, s32 first, s32 count);
 extern s32 D_0026F960[];
 extern u16 D_0026FBC0[][2];
 extern u16 D_0026FC00[][2];
@@ -35,7 +35,7 @@ extern u16 D_002706C0[][2];
 extern u16 D_00270720[][2];
 extern s16 D_0028E48A;
 extern void *g_dma_gif;
-extern s32 D_0028EA80;
+extern s32 g_quad_count;
 extern u8 *D_0028EA9C;
 extern u8 *D_0028EAA0;
 extern TileImage *D_0028EAA4;
@@ -43,7 +43,7 @@ extern u16 D_002B3950[][5];
 extern u8 g_gif_buf[];
 extern sceGsLoadImage g_gs_load_image;
 extern u32 D_005C4C80[];
-extern TileEntry D_00592000[];
+extern TileEntry g_quad_queue[];
 
 void func_0021C920(void) {
     s32 tu;
@@ -221,44 +221,44 @@ void func_0021C920(void) {
         }
         flags = p[2];
         flip = (flags >> 13) & 3;
-        D_00592000[count].z = 10;
-        D_00592000[count].alpha = 0x80;
-        D_00592000[count].tbp = tbp;
-        D_00592000[count].mode = mode;
-        D_00592000[count].cbp = palette;
-        D_00592000[count].color = 0x80;
-        D_00592000[count].x[0] = ex;
-        D_00592000[count].y[0] = ey;
-        D_00592000[count].x[1] = ex + dx;
-        D_00592000[count].y[1] = ey + dy;
+        g_quad_queue[count].z = 10;
+        g_quad_queue[count].alpha = 0x80;
+        g_quad_queue[count].tbp = tbp;
+        g_quad_queue[count].mode = mode;
+        g_quad_queue[count].cbp = palette;
+        g_quad_queue[count].color = 0x80;
+        g_quad_queue[count].x[0] = ex;
+        g_quad_queue[count].y[0] = ey;
+        g_quad_queue[count].x[1] = ex + dx;
+        g_quad_queue[count].y[1] = ey + dy;
         switch (flip) {
         case 0:
-            D_00592000[count].u[0] = tu;
-            D_00592000[count].v[0] = tv;
-            D_00592000[count].u[1] = tu + w2;
-            D_00592000[count].v[1] = tv + h;
+            g_quad_queue[count].u[0] = tu;
+            g_quad_queue[count].v[0] = tv;
+            g_quad_queue[count].u[1] = tu + w2;
+            g_quad_queue[count].v[1] = tv + h;
             break;
         case 1:
-            D_00592000[count].u[0] = tu + w2;
-            D_00592000[count].v[0] = tv;
-            D_00592000[count].u[1] = tu;
-            D_00592000[count].v[1] = tv + h;
+            g_quad_queue[count].u[0] = tu + w2;
+            g_quad_queue[count].v[0] = tv;
+            g_quad_queue[count].u[1] = tu;
+            g_quad_queue[count].v[1] = tv + h;
             break;
         case 2:
-            D_00592000[count].u[0] = tu;
-            D_00592000[count].v[0] = tv + h;
-            D_00592000[count].u[1] = tu + w2;
-            D_00592000[count].v[1] = tv;
+            g_quad_queue[count].u[0] = tu;
+            g_quad_queue[count].v[0] = tv + h;
+            g_quad_queue[count].u[1] = tu + w2;
+            g_quad_queue[count].v[1] = tv;
             break;
         case 3:
-            D_00592000[count].u[0] = tu + w2;
-            D_00592000[count].v[0] = tv + h;
-            D_00592000[count].u[1] = tu;
-            D_00592000[count].v[1] = tv;
+            g_quad_queue[count].u[0] = tu + w2;
+            g_quad_queue[count].v[0] = tv + h;
+            g_quad_queue[count].u[1] = tu;
+            g_quad_queue[count].v[1] = tv;
             break;
         }
         pkt = g_gif_buf + (buf << 16);
-        func_0021A240(pkt, count, 1);
+        quad_build_packet(pkt, count, 1);
         sceGsSyncPath(0, 0);
         FlushCache(0);
         sceDmaSend(g_dma_gif, pkt);
@@ -266,5 +266,5 @@ void func_0021C920(void) {
         count++;
         p += 5;
     }
-    D_0028EA80 = count;
+    g_quad_count = count;
 }

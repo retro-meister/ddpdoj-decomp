@@ -13,7 +13,7 @@ s32 func_00169B40();
 s32 func_0018DEE0();
 s32 fade_reset();
 s32 func_00217EC0();
-s32 func_00218B50();
+s32 stage_load_step();
 s32 func_00219570();
 s32 func_00225630();
 s32 func_002256B0();
@@ -55,7 +55,7 @@ void func_00168FD0(void) {
     }
     if (reg_a5[2] == 1) {
         D_0028E91C = 0;
-        func_00218B50();
+        stage_load_step();
         if (D_0028E3FC == D_0028E91C) {
             reg_a5[2] = 2U;
             func_002256B0();

@@ -43,7 +43,7 @@ s32 font_load_async();
 s32 sys_start();
 s32 sys_begin_frame();
 s32 sys_end_frame();
-s32 func_00218B50();
+s32 stage_load_step();
 s32 func_00219930();
 s32 func_00219990();
 s32 func_0021B840();
@@ -199,7 +199,7 @@ void func_002120D0(void) {
             }
             break;
         case 3:
-            func_00218B50();
+            stage_load_step();
             if (D_0028E350 == 0) {
                 g_cd_async_state = 0;
                 g_cd_async_busy = 1;

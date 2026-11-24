@@ -20,7 +20,7 @@ extern u16 D_0028E91C;
 extern u8 D_0028ED7C;
 extern u8 D_002BAE90[];
 #ifdef DEATH_LABEL
-s32 func_00218B50();
+s32 stage_load_step();
 extern u8 D_0028E2A4;
 extern u8 D_0028E290;
 extern s16 D_0028E3FC;
@@ -46,7 +46,7 @@ void func_00210D00() {
         D_0028E2A4 -= 1;
     }
     if ((D_0028E2A4 == 0) && (D_0028E3FC != D_0028E91C) && (D_0028E2A4 == 0)) {
-        func_00218B50();
+        stage_load_step();
     }
 #endif
     temp_v1 = (*(u16 *)((u8 *)(reg_a6) + (0xA)));

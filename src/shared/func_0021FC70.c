@@ -9,7 +9,7 @@ typedef struct {
     s32 active;
 } Label;
 
-extern void func_0021C100(s32 x, s32 y, s32 z, s32 page, s32 bright, s32 alpha, s32 wide);
+extern void glyph_queue_add(s32 x, s32 y, s32 z, s32 page, s32 bright, s32 alpha, s32 wide);
 extern s8 D_002714F0[];
 extern u8 *D_00271510[];
 extern s8 D_0028EB4C;
@@ -53,7 +53,7 @@ void func_0021FC70(void) {
             y = label->y;
             z = label->z;
             if (label->alpha != 0) {
-                func_0021C100(x, y, z, 0, 0x80, label->alpha, 1);
+                glyph_queue_add(x, y, z, 0, 0x80, label->alpha, 1);
             }
         }
     }

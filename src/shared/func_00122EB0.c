@@ -3,7 +3,7 @@
 s32 func_00123870();
 s32 func_002071C0();
 s32 func_002075F0();
-s32 func_00218B50();
+s32 stage_load_step();
 s32 func_00225630();
 s32 func_002256B0();
 extern s8 D_0028E350;
@@ -37,7 +37,7 @@ void func_00122EB0(void) {
 block_6:
         if (D_00295E3C[0] == 2) {
             D_0028E91C = 0;
-            func_00218B50(D_00295E3C[0]);
+            stage_load_step(D_00295E3C[0]);
             if (D_0028E3FC == D_0028E91C) {
                 D_0028E910 = 1;
                 D_00295E3C[0] = 0;

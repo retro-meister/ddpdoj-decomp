@@ -2,7 +2,7 @@
 
 extern void text_queue_clear(void);
 extern void text_flush(void);
-extern void func_0021C100(s32 x, s32 y, s32 z, s32 page, s32 bright, s32 alpha, s32 flag);
+extern void glyph_queue_add(s32 x, s32 y, s32 z, s32 page, s32 bright, s32 alpha, s32 flag);
 extern void func_00224BA0(s32 x, s32 y, s32 z, s32 page, s32 bright, s32 alpha, s32 flag, s32 kind);
 extern s8 D_002714F1[];
 extern u8 *D_00271540[];
@@ -64,19 +64,19 @@ void func_0021FDB0(void) {
         if (alpha == 0) {
             continue;
         }
-        func_0021C100(x, top, z, 0, 0x80, alpha, 1);
+        glyph_queue_add(x, top, z, 0, 0x80, alpha, 1);
         y = D_00271800[i];
         index = D_0068DC10[0x10 + i];
         if (i == 1) {
             reg_a0 = D_00271640[index];
-            func_0021C100(x, y, z, 0, 0x80, alpha, 1);
+            glyph_queue_add(x, y, z, 0, 0x80, alpha, 1);
             if (D_0028EB24 == 1) {
                 func_00224BA0(x, y, z, 0, 0x80, alpha, 1, 3);
             }
         }
         if (i == 2) {
             reg_a0 = D_00271650[index];
-            func_0021C100(x, y, z, 0, 0x80, alpha, 1);
+            glyph_queue_add(x, y, z, 0, 0x80, alpha, 1);
             if (D_0028EB24 == 2) {
                 func_00224BA0(x, y, z, 0, 0x80, alpha, 1, 3);
             }
@@ -84,13 +84,13 @@ void func_0021FDB0(void) {
         if (i == 3) {
             if (index == 3) {
                 reg_a0 = D_00271670[index][0];
-                func_0021C100(x, y, z, 0, 0x80, alpha, 1);
+                glyph_queue_add(x, y, z, 0, 0x80, alpha, 1);
             } else {
                 pair = D_00271670[index];
                 reg_a0 = pair[0];
-                func_0021C100(x, y, z, 0, 0x80, alpha, 0);
+                glyph_queue_add(x, y, z, 0, 0x80, alpha, 0);
                 reg_a0 = pair[1];
-                func_0021C100(x - 8, y, z, 0, 0x80, alpha, 0);
+                glyph_queue_add(x - 8, y, z, 0, 0x80, alpha, 0);
             }
             if (D_0028EB24 == 3) {
                 func_00224BA0(x, y, z, 0, 0x80, alpha, 1, 3);
@@ -98,7 +98,7 @@ void func_0021FDB0(void) {
         }
         if (i == 4) {
             reg_a0 = D_0028DD18[index];
-            func_0021C100(x, y, z, 0, 0x80, alpha, 1);
+            glyph_queue_add(x, y, z, 0, 0x80, alpha, 1);
             if (D_0028EB24 == 4) {
                 func_00224BA0(x, y, z, 0, 0x80, alpha, 1, 3);
             }

@@ -3,7 +3,7 @@
 #include "gfx_types.h"
 
 extern sceGsLoadImage g_gs_load_image;
-extern s32 D_0028EA78;
+extern s32 g_clut_upload_cbp;
 extern u8 *D_0028EA98;
 extern u8 *D_0028EA9C;
 extern u8 *D_0028EAA0;
@@ -28,7 +28,7 @@ extern u8 D_004ECF80[];
 void *memalign(u32 align, u32 size);
 void free(void *pointer);
 void cd_read_sync(u8 *dst, s32 a, s32 b);
-void func_00218990(u8 *destination, s32 mode, s32 blockCount);
+void clut_upload(u8 *destination, s32 mode, s32 blockCount);
 
 void func_0021C530(void) {
     u8 *buffer;
@@ -54,17 +54,17 @@ void func_0021C530(void) {
     D_0028EA9C = memalign(0x40, 0x885800);
     D_0028EA98 = memalign(0x40, 0x10800);
     cd_read_sync(D_0028EA98, D_0029CB08[0], D_0029CB0C[0]);
-    D_0028EA78 = 0x3834;
-    func_00218990(D_0028EA98, 1, 1);
+    g_clut_upload_cbp = 0x3834;
+    clut_upload(D_0028EA98, 1, 1);
     cd_read_sync(D_004ECF80, D_0029CB10[0], D_0029CB14[0]);
-    D_0028EA78 = 0x3836;
-    func_00218990(D_004ECF80, 1, 1);
+    g_clut_upload_cbp = 0x3836;
+    clut_upload(D_004ECF80, 1, 1);
     cd_read_sync(D_004CCF80, D_0029CB18[0], D_0029CB1C[0]);
-    D_0028EA78 = 0x3838;
-    func_00218990(D_004CCF80, 1, 1);
+    g_clut_upload_cbp = 0x3838;
+    clut_upload(D_004CCF80, 1, 1);
 #ifdef DEATH_LABEL
     cd_read_sync(death_D_0056A800, death_D_002CC808[0], death_D_002CC80C[0]);
-    D_0028EA78 = 0x383C;
-    func_00218990(death_D_0056A800, 1, 1);
+    g_clut_upload_cbp = 0x383C;
+    clut_upload(death_D_0056A800, 1, 1);
 #endif
 }

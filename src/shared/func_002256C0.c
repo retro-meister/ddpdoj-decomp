@@ -1,9 +1,9 @@
 #include "common.h"
 
 extern void gfx_draw_color_box(s32 x, s32 y, s32 w, s32 h, s32 depth, s32 alpha, s32 r, s32 g, s32 b);
-extern void func_0021C0F0(void);
-extern void func_0021C100(s32 arg0, s32 arg1, s32 arg2, s32 arg3, s32 arg4, s32 arg5, s32 arg6);
-extern void func_0021C2F0(void);
+extern void glyph_queue_clear(void);
+extern void glyph_queue_add(s32 arg0, s32 arg1, s32 arg2, s32 arg3, s32 arg4, s32 arg5, s32 arg6);
+extern void glyph_queue_flush(void);
 extern u8 *D_0028DD70;
 extern u8 *D_0028DD74;
 extern u8 D_0028E374;
@@ -87,7 +87,7 @@ void func_002256C0(void) {
         if (D_0028EC64 < 3 && D_0028E374 == 1) {
             gfx_draw_color_box(0, 0, 0x1C2, 0xE0, 0x18F, 0x60, 1, 1, 1);
         }
-        func_0021C0F0();
+        glyph_queue_clear();
         if (D_0028E374 == 1) {
             x = 32;
             y = 104;
@@ -96,22 +96,22 @@ void func_002256C0(void) {
             y = 72;
         }
         reg_a0 = (u8 *)D_0028DD70;
-        func_0021C100(x, y, 400, 0, 0x80, alpha, 1);
+        glyph_queue_add(x, y, 400, 0, 0x80, alpha, 1);
         if (D_0028EC60 >= 30) {
             reg_a0 = (u8 *)D_0028DD74;
             y += 88;
-            func_0021C100(x, y, 400, 0, 0x80, alpha, 1);
+            glyph_queue_add(x, y, 400, 0, 0x80, alpha, 1);
         }
         if (D_0028EC60 >= 60) {
             reg_a0 = (u8 *)D_0028DD74;
             y += 8;
-            func_0021C100(x, y, 400, 0, 0x80, alpha, 1);
+            glyph_queue_add(x, y, 400, 0, 0x80, alpha, 1);
         }
         if (D_0028EC60 >= 90) {
             reg_a0 = (u8 *)D_0028DD74;
-            func_0021C100(x, y + 8, 400, 0, 0x80, alpha, 1);
+            glyph_queue_add(x, y + 8, 400, 0, 0x80, alpha, 1);
         }
-        func_0021C2F0();
+        glyph_queue_flush();
         reg_d0.w = save_d0;
         reg_d1.w = save_d1;
         reg_d2.w = save_d2;

@@ -85,7 +85,7 @@ extern u16 D_0028E320;
 extern u32 D_0057CC70[];
 extern s32 D_0057CC74[];
 extern s32 D_0057CC78[];
-void func_0021C100(s32 x, s32 y, s32 z, s32 page, s32 bright, s32 alpha, s32 flag);
+void glyph_queue_add(s32 x, s32 y, s32 z, s32 page, s32 bright, s32 alpha, s32 flag);
 extern s8 D_002714F0[];
 extern u8 D_00685010[];
 extern u8 *reg_a0;
@@ -294,7 +294,7 @@ void func_002274C0(Fade *arg0, u8 **arg1, s32 arg2) {
             if (*(s32 *)(entry + 0x34) != 0) {
                 *(s32 *)(entry + 0x2C) = arg0->value;
                 reg_a0 = *(u8 **)((u8 *)arg1 + index);
-                func_0021C100(*(s32 *)entry, *(s32 *)(entry + 4), *(s32 *)(entry + 0x30), 0, 128, arg0->value, 1);
+                glyph_queue_add(*(s32 *)entry, *(s32 *)(entry + 4), *(s32 *)(entry + 0x30), 0, 128, arg0->value, 1);
             }
             i++;
             offset += 0x38;
@@ -547,7 +547,7 @@ void func_00227B70(void) {
                     alpha = 64;
                     reg_a0 = (u8 *)D_0028DCF8;
                 }
-                func_0021C100(x, y, sprite, 0, alpha, value, 1);
+                glyph_queue_add(x, y, sprite, 0, alpha, value, 1);
             }
             i++;
             offset += 0x38;
@@ -943,7 +943,7 @@ void func_002287E0(void) {
 
                 *(s32 *)(entry + 0x1C2C) = value;
                 reg_a0 = *(u8 **)(D_00270890 + tableOffset);
-                func_0021C100(*(s32 *)(entry + 0x1C00), *(s32 *)(entry + 0x1C04), *(s32 *)(entry + 0x1C30), 0, 0x80, value, 1);
+                glyph_queue_add(*(s32 *)(entry + 0x1C00), *(s32 *)(entry + 0x1C04), *(s32 *)(entry + 0x1C30), 0, 0x80, value, 1);
             }
             i++;
             offset += 0x38;
@@ -1085,7 +1085,7 @@ void func_00228BC0(void) {
         y = *(s32 *)(item + 0x3B84);
         z = *(s32 *)(item + 0x3BB0);
         reg_a0 = D_002708D0[i];
-        func_0021C100(x, y, z, 0, 0x80, alpha, 1);
+        glyph_queue_add(x, y, z, 0, 0x80, alpha, 1);
         y += strlen(reg_a0) * 8;
         reg_a0 = 0;
         index = D_0028DCB0[i];
@@ -1102,14 +1102,14 @@ void func_00228BC0(void) {
             dbl = value * 2;
             reg_a0 = entries[dbl];
             if (dbl == 6) {
-                func_0021C100(x, y, z, 0, 0x80, D_0028EC08.value, 1);
+                glyph_queue_add(x, y, z, 0, 0x80, D_0028EC08.value, 1);
             } else {
-                func_0021C100(x, y, z, 0, 0x80, D_0028EC08.value, 0);
+                glyph_queue_add(x, y, z, 0, 0x80, D_0028EC08.value, 0);
                 reg_a0 = D_002709B0[index][dbl + 1];
-                func_0021C100(x - 8, y, z, 0, 0x80, D_0028EC08.value, 0);
+                glyph_queue_add(x - 8, y, z, 0, 0x80, D_0028EC08.value, 0);
             }
         } else {
-            func_0021C100(x, y, z, 0, 0x80, D_0028EC08.value, 1);
+            glyph_queue_add(x, y, z, 0, 0x80, D_0028EC08.value, 1);
         }
         if (i == D_0028EC08.flag) {
             func_00224BA0(x, y, z, 0, 0x80, D_0028EC08.value, 1, 3);
@@ -1399,7 +1399,7 @@ void func_00229660(void) {
             bright = 0x40;
         }
         reg_a0 = D_002709D0[i];
-        func_0021C100(x, y, z, 0, bright, alpha, 1);
+        glyph_queue_add(x, y, z, 0, bright, alpha, 1);
         y += strlen(reg_a0) * 8;
         reg_a0 = 0;
         index = D_002712D8[i];
@@ -1421,7 +1421,7 @@ void func_00229660(void) {
             if (D_0068DF04[0] == 1) {
                 func_00229950(x, y, D_0028EC00.value, bright, 2);
             } else {
-                func_0021C100(x, y, z, 0, bright, D_0028EC00.value, flag);
+                glyph_queue_add(x, y, z, 0, bright, D_0028EC00.value, flag);
                 flag = 0;
             }
         } else if (i == 9) {
@@ -1429,7 +1429,7 @@ void func_00229660(void) {
         } else if (i == 7) {
             func_00229950(x, y, D_0028EC00.value, bright, 6);
         } else {
-            func_0021C100(x, y, z, 0, bright, D_0028EC00.value, flag);
+            glyph_queue_add(x, y, z, 0, bright, D_0028EC00.value, flag);
         }
         if (i == D_0028EC00.flag && flag != 0) {
             func_00224BA0(x, y, z, 0, bright, D_0028EC00.value, 1, 3);
@@ -1493,9 +1493,9 @@ void func_00229950(s32 x, s32 y, s32 alpha, s32 mode, s32 kind) {
     gfx_draw_color_box(x + 6, y + 1, 2, 0x3E, 0xC8, alpha, c, c, c);
     if (kind != 2) {
         reg_a0 = D_00270AB0[level];
-        func_0021C100(x - 4, y + 0x42, 0xC8, 0, c, alpha, 0);
+        glyph_queue_add(x - 4, y + 0x42, 0xC8, 0, c, alpha, 0);
         reg_a0 = (u8 *)D_0028DCE0;
-        func_0021C100(x - 4, y + 0x5A, 0xC8, 0, c, alpha, 0);
+        glyph_queue_add(x - 4, y + 0x5A, 0xC8, 0, c, alpha, 0);
     }
     reg_a0 = saved;
 }
@@ -1626,7 +1626,7 @@ void func_0022A0B0(void) {
         z = *(s32 *)(item + 0x42B0);
         x = *(s32 *)(item + 0x4280);
         reg_a0 = D_002712F0[i];
-        func_0021C100(x, y, z, 0, 0x80, alpha, 1);
+        glyph_queue_add(x, y, z, 0, 0x80, alpha, 1);
         y += strlen(reg_a0) * 8;
         reg_a0 = 0;
         index = D_00271468[i];
@@ -1637,7 +1637,7 @@ void func_0022A0B0(void) {
         if (reg_a0 == 0) {
             continue;
         }
-        func_0021C100(x, y, z, 0, 0x80, D_0028EBF8.value, 1);
+        glyph_queue_add(x, y, z, 0, 0x80, D_0028EBF8.value, 1);
         if (i == D_0028EBF8.flag) {
             func_00224BA0(x, y, z, 0, 0x80, D_0028EBF8.value, 1, 3);
         }
@@ -1750,10 +1750,10 @@ void func_0022A480(void) {
         if (i == 1) {
             func_00224BA0(x, y, z, 0, 0x80, alpha, 1, 3);
         }
-        func_0021C100(x, y, z, 0, 0x80, alpha, 1);
+        glyph_queue_add(x, y, z, 0, 0x80, alpha, 1);
         if (i == 1) {
             reg_a0 = D_002716E0[D_0028EBD8.flag];
-            func_0021C100(x, y + 0x70, z, 0, 0x80, alpha, 1);
+            glyph_queue_add(x, y + 0x70, z, 0, 0x80, alpha, 1);
         }
     }
     func_0022AD20(D_0028EBD8.flag, 0);
@@ -1769,7 +1769,7 @@ void func_0022A480(void) {
         z = *(s32 *)(item + 0x2DB0);
         alpha = *(s32 *)(item + 0x2DAC);
         if (alpha != 0) {
-            func_0021C100(x, y, z, 0, 0x80, alpha, 1);
+            glyph_queue_add(x, y, z, 0, 0x80, alpha, 1);
         }
     }
     func_0022AD20(D_0028EBD8.flag, 1);
@@ -1785,7 +1785,7 @@ void func_0022A480(void) {
         z = *(s32 *)(item + 0x2DB0);
         alpha = *(s32 *)(item + 0x2DAC);
         if (alpha != 0) {
-            func_0021C100(x, y, z, 0, 0x80, alpha, 1);
+            glyph_queue_add(x, y, z, 0, 0x80, alpha, 1);
         }
     }
     func_0022AD20(D_0028EBD8.flag, 2);
@@ -1801,7 +1801,7 @@ void func_0022A480(void) {
         z = *(s32 *)(item + 0x2DB0);
         alpha = *(s32 *)(item + 0x2DAC);
         if (alpha != 0) {
-            func_0021C100(x, y, z, 0, 0x80, alpha, 1);
+            glyph_queue_add(x, y, z, 0, 0x80, alpha, 1);
         }
     }
     func_0022AD20(D_0028EBD8.flag, 3);
@@ -1817,7 +1817,7 @@ void func_0022A480(void) {
         z = *(s32 *)(item + 0x2DB0);
         alpha = *(s32 *)(item + 0x2DAC);
         if (alpha != 0) {
-            func_0021C100(x, y, z, 0, 0x80, alpha, 1);
+            glyph_queue_add(x, y, z, 0, 0x80, alpha, 1);
         }
     }
     D_0028EB90 = D_0028EBD8.value;

@@ -1,7 +1,7 @@
 #include "common.h"
 
-extern void func_0021C0F0(void);
-extern void func_0021C2F0(void);
+extern void glyph_queue_clear(void);
+extern void glyph_queue_flush(void);
 extern void gfx_draw_color_box(s32 x, s32 y, s32 w, s32 h, s32 depth, s32 alpha, s32 r, s32 g, s32 b);
 extern void func_00227000(void);
 extern void func_0022BA60(void);
@@ -50,7 +50,7 @@ void func_0022B870(void) {
         save_a4 = reg_a4;
         save_a5 = reg_a5;
         save_a6 = reg_a6;
-        func_0021C0F0();
+        glyph_queue_clear();
         switch (D_0028EB04) {
         case 0:
             break;
@@ -74,7 +74,7 @@ void func_0022B870(void) {
             func_0022BA60();
             func_00227000();
         }
-        func_0021C2F0();
+        glyph_queue_flush();
         reg_d0.w = save_d0;
         reg_d1.w = save_d1;
         reg_d2.w = save_d2;

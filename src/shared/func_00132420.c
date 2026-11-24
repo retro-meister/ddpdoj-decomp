@@ -16,7 +16,7 @@ s32 func_001A3020();
 s32 func_001A9130();
 s32 func_00200EE0();
 s32 func_002071C0();
-s32 func_00218B50();
+s32 stage_load_step();
 s32 func_0022B660();
 extern u16 D_00261F30[];
 extern u16 D_00261FF0[];
@@ -479,7 +479,7 @@ block_77:
                             D_0028E2A4 -= 1;
                         }
                         if ((D_0028E3FC != D_0028E91C) && (D_0028E2A4 == 0)) {
-                            func_00218B50(D_0028E3FC);
+                            stage_load_step(D_0028E3FC);
                         }
                     }
                     if ((D_0028E2A0 == 0) && (func_00133070() != 0)) {

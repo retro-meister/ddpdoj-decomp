@@ -10,7 +10,7 @@ s32 func_001A3D20();
 s32 func_001A3D30();
 s32 func_001A3E70();
 s32 func_0020EAA0();
-s32 func_00218B50();
+s32 stage_load_step();
 s32 func_00225630();
 s32 func_002256B0();
 extern u8 D_00269160[];
@@ -50,7 +50,7 @@ void func_00168EF0(void) {
     }
     if ((*(u8 *)((u8 *)(reg_a5) + (2))) == 1) {
         D_0028E91C = 0;
-        func_00218B50();
+        stage_load_step();
         if (D_0028E3FC == D_0028E91C) {
             (*(u8 *)((u8 *)(reg_a5) + (2))) = 2U;
             func_002256B0();

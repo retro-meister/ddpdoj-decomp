@@ -2,9 +2,9 @@
 
 extern void text_queue_clear(void);
 extern void text_flush(void);
-extern void func_0021C0F0(void);
-extern void func_0021C100(s32 arg0, s32 arg1, s32 arg2, s32 arg3, s32 arg4, s32 arg5, s32 arg6);
-extern void func_0021C2F0(void);
+extern void glyph_queue_clear(void);
+extern void glyph_queue_add(s32 arg0, s32 arg1, s32 arg2, s32 arg3, s32 arg4, s32 arg5, s32 arg6);
+extern void glyph_queue_flush(void);
 extern void func_002228D0(s32 x, s32 y);
 extern void func_0022AD20(s32 page, s32 sel);
 extern void func_0022B1D0(void);
@@ -60,7 +60,7 @@ void func_0022AA20(void) {
     sel = D_006C58AA[0];
     func_0022AD20(page, sel);
     func_0022B1D0();
-    func_0021C0F0();
+    glyph_queue_clear();
     for (i = 0; i < count; i++) {
         item = D_00685010 + i * 0x38;
         if (*(s32 *)(item + 0x2A34) == 0) {
@@ -75,23 +75,23 @@ void func_0022AA20(void) {
         if (alpha == 0) {
             continue;
         }
-        func_0021C100(x, y, z, 0, 0x80, alpha, 1);
+        glyph_queue_add(x, y, z, 0, 0x80, alpha, 1);
         if (i == 1) {
             reg_a0 = D_002716E0[page];
-            func_0021C100(x, y + 0x38, z, 0, 0x80, alpha, 1);
+            glyph_queue_add(x, y + 0x38, z, 0, 0x80, alpha, 1);
             reg_a0 = D_00271640[sel];
-            func_0021C100(x, y + 0x78, z, 0, 0x80, alpha, 1);
+            glyph_queue_add(x, y + 0x78, z, 0, 0x80, alpha, 1);
         }
         if (i >= 3 && i < 8) {
             reg_a0 = (u8 *)D_00684CA0 + (i - 3) * 11;
-            func_0021C100(x, y + 0x38, z, 0, 0x80, alpha, 1);
+            glyph_queue_add(x, y + 0x38, z, 0, 0x80, alpha, 1);
         }
         if (i == 9) {
             reg_a0 = (u8 *)D_00684CD7;
-            func_0021C100(x, y + 0x38, z, 0, 0x80, alpha, 1);
+            glyph_queue_add(x, y + 0x38, z, 0, 0x80, alpha, 1);
         }
     }
-    func_0021C2F0();
+    glyph_queue_flush();
     text_queue_clear();
     D_0028EB90 = D_0028EB9C;
     reg_a0 = (u8 *)D_0028DD94;

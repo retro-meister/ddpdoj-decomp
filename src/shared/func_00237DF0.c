@@ -8,7 +8,7 @@ extern void func_0012FAB0(void);
 extern void func_00171910(void);
 extern void func_001A2FA0(void);
 extern void func_002071C0(void);
-extern void func_0021BEA0(s32 a, s32 b, s32 c, s32 d);
+extern void label_draw(s32 a, s32 b, s32 c, s32 d);
 extern void func_00236DB0(void);
 extern void func_0023B720(u8 *arg);
 extern u8 D_00269140[];
@@ -102,7 +102,7 @@ void func_00237DF0(void) {
     reg_d0.w = 0;
     reg_a0 = (u8 *)D_00269140;
     func_001A2FA0();
-    func_0021BEA0(0, 0, 0, 0);
+    label_draw(0, 0, 0, 0);
     func_00236DB0();
     reg_d0.w = save_d0;
     reg_d1.w = save_d1;

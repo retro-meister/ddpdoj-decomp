@@ -2,7 +2,7 @@
 
 extern void text_queue_clear(void);
 extern void text_flush(void);
-extern void func_0021C100(s32 x, s32 y, s32 z, s32 page, s32 bright, s32 alpha, s32 flag);
+extern void glyph_queue_add(s32 x, s32 y, s32 z, s32 page, s32 bright, s32 alpha, s32 flag);
 extern void func_00224BA0(s32 x, s32 y, s32 z, s32 page, s32 bright, s32 alpha, s32 flag, s32 kind);
 extern s8 D_002714F3[];
 extern u8 *D_00271580[];
@@ -81,33 +81,33 @@ void func_00220390(void) {
         if (i == 4 && !(D_0028E300 & 8)) {
             reg_a0 = D_00271598[0];
         }
-        func_0021C100(x, top, z, 0, 0x80, alpha, 1);
+        glyph_queue_add(x, top, z, 0, 0x80, alpha, 1);
         y = D_00271800[i];
         index = D_0068DC10[0x30 + i];
         if (i == 1 && (D_0028E300 & 1)) {
             reg_a0 = D_0028DD28[index];
-            func_0021C100(x, y + 16, z, 0, 0x80, alpha, 1);
+            glyph_queue_add(x, y + 16, z, 0, 0x80, alpha, 1);
             if (D_0028EB1C == 1) {
                 func_00224BA0(x, y + 16, z, 0, 0x80, alpha, 1, 3);
             }
         }
         if (i == 2 && (D_0028E300 & 2)) {
             reg_a0 = D_0028DD30[index];
-            func_0021C100(x, y + 16, z, 0, 0x80, alpha, 1);
+            glyph_queue_add(x, y + 16, z, 0, 0x80, alpha, 1);
             if (D_0028EB1C == 2) {
                 func_00224BA0(x, y + 16, z, 0, 0x80, alpha, 1, 3);
             }
         }
         if (i == 3 && (D_0028E300 & 4)) {
             reg_a0 = D_0028DD38[index];
-            func_0021C100(x, y + 16, z, 0, 0x80, alpha, 1);
+            glyph_queue_add(x, y + 16, z, 0, 0x80, alpha, 1);
             if (D_0028EB1C == 3) {
                 func_00224BA0(x, y + 16, z, 0, 0x80, alpha, 1, 3);
             }
         }
         if (i == 4 && (D_0028E300 & 8)) {
             reg_a0 = D_0028DD40[index];
-            func_0021C100(x, y + 16, z, 0, 0x80, alpha, 1);
+            glyph_queue_add(x, y + 16, z, 0, 0x80, alpha, 1);
             if (D_0028EB1C == 4) {
                 func_00224BA0(x, y + 16, z, 0, 0x80, alpha, 1, 3);
             }
@@ -115,14 +115,14 @@ void func_00220390(void) {
 #ifdef DEATH_LABEL
         if (i == 5) {
             reg_a0 = D_00270AB0[index];
-            func_0021C100(x, y + 16, z, 0, 0x80, alpha, 1);
+            glyph_queue_add(x, y + 16, z, 0, 0x80, alpha, 1);
             if (D_0028EB1C == 5) {
                 func_00224BA0(x, y + 16, z, 0, 0x80, alpha, 1, 3);
             }
         }
         if (i == 6) {
             reg_a0 = D_0028DD60[index];
-            func_0021C100(x, y + 16, z, 0, 0x80, alpha, 1);
+            glyph_queue_add(x, y + 16, z, 0, 0x80, alpha, 1);
             if (D_0028EB1C == 6) {
                 func_00224BA0(x, y + 16, z, 0, 0x80, alpha, 1, 3);
             }

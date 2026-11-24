@@ -123,7 +123,8 @@ def blocks(text):
             out.append(("include", line)); i += 1
         elif re.match(r"^#\s*pragma\b", line):
             out.append(("pragma", line.strip())); i += 1
-        elif DECL_START.match(line):
+        elif DECL_START.match(line) or (re.match(r"^(typedef\s+)?(struct|union|enum)\b[^;{(]*$", line)
+                                        and i + 1 < len(lines) and lines[i + 1].rstrip() == "{"):
             j = i
             while j < len(lines) and not lines[j].startswith("}"):
                 j += 1
@@ -151,25 +152,60 @@ def data_declaration(text):
     return match.group(2), base, re.sub(r"\s+", "", match.group(3))
 
 
+def type_name(text):
+    """Name a `typedef struct { ... } Name;` block defines, else None."""
+    if not text.startswith("typedef") or "\n" not in text:
+        return None
+    match = re.search(r"^\}\s*(\w+)\s*;\s*$", text, re.M)
+    return match.group(1) if match else None
+
+
+SOURCES = {}
+
+
+def piece_source(stub):
+    """Text of one unit. A type name that the pieces of the run define with different bodies is renamed in
+    the later pieces (`Name2`, `Name3`, ...), see `rename_clashing_types`."""
+    if stub not in SOURCES:
+        SOURCES[stub] = (ROOT / "src" / f"{stub}.c").read_text(encoding="utf-8")
+    return SOURCES[stub]
+
+
+def rename_clashing_types(pieces):
+    bodies = {}
+    for pair in pieces:
+        for stub in dict.fromkeys(pair):
+            if not stub:
+                continue
+            renames = {}
+            for kind, text in blocks(piece_source(stub)):
+                name = type_name(text) if kind == "decl" else None
+                if not name:
+                    continue
+                body = re.sub(r"\s+", " ", text[:text.rindex("}")])
+                known = bodies.setdefault(name, [])
+                if body not in known:
+                    known.append(body)
+                if known.index(body):
+                    renames[name] = f"{name}{known.index(body) + 1}"
+            if renames:
+                pattern = re.compile(r"\b(" + "|".join(map(re.escape, renames)) + r")\b")
+                SOURCES[stub] = pattern.sub(lambda m: renames[m.group(1)], piece_source(stub))
+
+
 def canonical_types(pieces):
-    """{name: (base, dims)} for objects the pieces declare in more than one way: the commonest declaration,
-    a structure type winning over a plain integer one."""
+    """Names of the objects the pieces declare in more than one way."""
+    rename_clashing_types(pieces)
     found = {}
     for pair in pieces:
         for stub in dict.fromkeys(pair):
             if not stub:
                 continue
-            for kind, text in blocks((ROOT / "src" / f"{stub}.c").read_text(encoding="utf-8")):
+            for kind, text in blocks(piece_source(stub)):
                 parsed = data_declaration(text) if kind == "decl" and "\n" not in text else None
                 if parsed:
-                    forms = found.setdefault(parsed[0], {})
-                    forms[parsed[1:]] = forms.get(parsed[1:], 0) + 1
-    basic = re.compile(r"^(?:[us](?:8|16|32|64)|f32|f64|char|int|short|long|void)\**$")
-    out = {}
-    for name, forms in found.items():
-        if len(forms) > 1:
-            out[name] = max(forms, key=lambda form: (not basic.match(form[0]), forms[form], form[1] != ""))
-    return out
+                    found.setdefault(parsed[0], set()).add(parsed[1:])
+    return {name for name, forms in found.items() if len(forms) > 1}
 
 
 def declaration(name, base, dims):
@@ -206,7 +242,7 @@ def piece_text(path, seen, scopes, canonical):
     with (the compiler accepts differing block-scope declarations, not differing file-scope ones)."""
     includes, body, leading, local = [], [], [], {}
     started = False
-    for kind, text in blocks(path.read_text(encoding="utf-8")):
+    for kind, text in blocks(piece_source(path.relative_to(ROOT / "src").with_suffix("").as_posix())):
         if kind == "include":
             includes.append(text)
             continue
@@ -350,31 +386,43 @@ def patch_yaml(target, run, new_stub):
 
 
 def carve_rodata(target, stub, start, end):
-    """Give `stub` the .rodata bytes [start, end) (addresses), taken out of an assembly `rodata` slice."""
+    """Give `stub` the .rodata bytes [start, end) (addresses) plus whatever .rodata it already has, as one
+    entry. The bytes come out of assembly `rodata` slices, which are cut where needed."""
     path, lines, entries = yaml_entries(target)
     start, end = start - FILE_ADDRESS, end - FILE_ADDRESS
-    index = max(i for i, e in enumerate(entries) if e["offset"] <= start and e["kind"] in ("rodata", ".rodata"))
-    entry, following = entries[index], entries[index + 1]
-    if entry["kind"] != "rodata" or end > following["offset"]:
-        raise ValueError(f"{target}: {start:#x}..{end:#x} is not inside one assembly rodata slice")
-    prefix = entry["prefix"]
-    new = []
-    if entry["offset"] < start:
-        new.append(f"{prefix}{entry['offset']:#x}, rodata, {entry['stub']}]")
-    previous = entries[index - 1]
-    if not (entry["offset"] == start and previous["kind"] == ".rodata" and previous["stub"] == stub):
-        new.append(f"{prefix}{start:#x}, .rodata, {stub}]")
-    extends = following["kind"] == ".rodata" and following["stub"] == stub and following["offset"] == end
-    if end < following["offset"]:
-        new.append(f"{prefix}{end:#x}, rodata, rodata_{end:x}]")
-    lines[entry["line"]:entry["line"] + 1] = new
-    if extends:
-        del lines[entry["line"] + len(new)]
+    area = [i for i, e in enumerate(entries) if e["kind"] in ("rodata", ".rodata")]
+    first, last = area[0], area[-1]
+    spans = [(entries[i], entries[i + 1]["offset"]) for i in range(first, last + 1)]
+    for entry, stop in spans:
+        if entry["kind"] == ".rodata" and entry["stub"] == stub:
+            start, end = min(start, entry["offset"]), max(end, stop)
+    prefix = entries[first]["prefix"]
+    own = f"{prefix}{start:#x}, .rodata, {stub}]"
+    new, placed = [], False
+    for entry, stop in spans:
+        if stop <= start or entry["offset"] >= end:
+            if entry["offset"] >= end and not placed:
+                new.append(own)
+                placed = True
+            new.append(lines[entry["line"]])
+            continue
+        if entry["kind"] == ".rodata" and entry["stub"] != stub:
+            raise ValueError(f"{target}: {start:#x}..{end:#x} runs into the .rodata of {entry['stub']}")
+        if entry["offset"] < start:
+            new.append(lines[entry["line"]])
+        if not placed:
+            new.append(own)
+            placed = True
+        if stop > end:
+            new.append(f"{prefix}{end:#x}, rodata, rodata_{end:x}]")
+    if not placed:
+        new.append(own)
+    lines[entries[first]["line"]:entries[last]["line"] + 1] = new
     path.write_text("\n".join(lines) + "\n", encoding="utf-8")
 
 
-RODATA = {MAIN: (0x273EC0, 0x28C070), DEATH: None}
-AUTO_DATA = re.compile(r"\bD_([0-9A-F]{8})\b")
+RODATA = (0x273EC0, 0x28C070)
+AUTO_DATA = re.compile(r"\b(death_)?D_([0-9A-F]{8})\b")
 
 
 def literal(data):
@@ -385,7 +433,8 @@ def literal(data):
         return None
     if not text or any(ord(ch) < 0x20 and ch not in "\n\t\r" for ch in text):
         return None
-    escaped = text.replace("\\", "\\\\").replace('"', '\\"').replace("\n", "\\n").replace("\t", "\\t").replace("\r", "\\r")
+    escaped = (text.replace("\\", "\\\\").replace('"', '\\"').replace("\n", "\\n").replace("\t", "\\t")
+               .replace("\r", "\\r"))
     if text.isascii():
         return f'"{escaped}"'
     if text.encode("cp932") != data:
@@ -393,48 +442,87 @@ def literal(data):
     return f'SJIS("{escaped}")'
 
 
+def death_rodata():
+    _, _, entries = yaml_entries(DEATH)
+    area = [i for i, e in enumerate(entries) if e["kind"] in ("rodata", ".rodata")]
+    return entries[area[0]]["offset"] + FILE_ADDRESS, entries[area[-1] + 1]["offset"] + FILE_ADDRESS
+
+
 def inline_strings(source):
-    """Replace the unit's references to read-only strings with string literals, and give it that .rodata."""
+    """Replace the unit's references to read-only strings with string literals, and give it that .rodata.
+
+    `D_XXXXXXXX` is a SLPS_252.33 address (DEATH.ELF has the same string where its symbols.txt puts the
+    name); `death_D_XXXXXXXX` is a DEATH.ELF address."""
     path = ROOT / source
     text = path.read_text(encoding="utf-8")
-    main_image = (ROOT / "build" / MAIN).read_bytes()
-    death_image = (ROOT / "build" / DEATH).read_bytes()
+    images = {MAIN: (ROOT / "build" / MAIN).read_bytes(), DEATH: (ROOT / "build" / DEATH).read_bytes()}
     death_symbols = load_symbols(DEATH)
-    low, high = RODATA[MAIN]
-    found = {}
+    areas = {MAIN: RODATA, DEATH: death_rodata()}
+    found, spans = {}, {MAIN: [], DEATH: []}
     for match in AUTO_DATA.finditer(text):
-        address = int(match.group(1), 16)
         name = match.group(0)
-        if not low <= address < high or name in found:
+        if name in found:
             continue
-        if re.search(rf"\b{name}\s*\[|&\s*{name}\b|\b{name}\s*[-+]", re.sub(rf"^extern.*\b{name}\b.*$", "", text, flags=re.M)):
+        own = DEATH if match.group(1) else MAIN
+        address = int(match.group(2), 16)
+        if not areas[own][0] <= address < areas[own][1]:
+            continue
+        rest = re.sub(rf"^\s*extern.*\b{name}\b.*$", "", text, flags=re.M)
+        if re.search(rf"\b{name}\s*\[|&\s*{name}\b|\b{name}\s*[-+]|[-+]\s*{name}\b", rest):
             continue
         offset = address - FILE_ADDRESS
-        raw = main_image[offset:main_image.index(0, offset)]
-        source_text = literal(raw)
-        if source_text is None:
+        raw = images[own][offset:images[own].index(0, offset)]
+        if literal(raw) is None:
             continue
-        found[name] = (address, raw, source_text)
+        # {MAIN: literal, DEATH: literal}: what the name stands for in each executable
+        found[name] = {own: literal(raw)}
+        spans[own].append((address, address + len(raw) + 1))
+        if own == MAIN and name in death_symbols:
+            other = death_symbols[name][0] - FILE_ADDRESS
+            other_raw = images[DEATH][other:images[DEATH].index(0, other)]
+            if literal(other_raw) is not None:
+                found[name][DEATH] = literal(other_raw)
+                spans[DEATH].append((other + FILE_ADDRESS, other + FILE_ADDRESS + len(other_raw) + 1))
     if not found:
         print("no string references")
         return
-    for name, (_, _, source_text) in found.items():
-        text = re.sub(rf"^extern[^\n]*\b{name}\b[^\n]*;[^\n]*\n", "", text, flags=re.M)
-        text = re.sub(rf"\b{name}\b", lambda _: source_text, text)
-    path.write_text(text, encoding="utf-8")
+    # Which executable compiles each line: both, or the one a DEATH_LABEL conditional selects.
+    out, scope, stack = [], None, []
+    for line in text.splitlines():
+        directive = line.strip()
+        if directive.startswith("#if"):
+            stack.append(scope)
+            if directive in ("#ifdef DEATH_LABEL", "#if defined(DEATH_LABEL)"):
+                scope = DEATH
+            elif directive == "#ifndef DEATH_LABEL":
+                scope = MAIN
+        elif directive.startswith("#else") and scope in (MAIN, DEATH):
+            scope = MAIN if scope == DEATH else DEATH
+        elif directive.startswith("#endif") and stack:
+            scope = stack.pop()
+        elif re.match(r"\s*extern\b", line) and any(re.search(rf"\b{name}\b", line) for name in found):
+            continue
+
+        def replace(match):
+            forms = found[match.group(0)]
+            if scope:
+                return forms.get(scope, match.group(0))
+            if len(set(forms.values())) == 1 and (len(forms) == 2 or match.group(0).startswith("death_")):
+                return next(iter(forms.values()))
+            if len(forms) == 1:
+                return next(iter(forms.values()))
+            print(f"  {match.group(0)} is a different string in each executable; left as it is")
+            return match.group(0)
+
+        out.append(re.sub(r"\b(" + "|".join(map(re.escape, found)) + r")\b", replace, line))
+    path.write_text("\n".join(out) + "\n", encoding="utf-8")
     stub = Path(source).relative_to("src").with_suffix("").as_posix()
-    start = min(address for address, _, _ in found.values())
-    last, raw, _ = max(found.values())
-    end = (last + len(raw) + 1 + 7) & ~7      # the next string may start on the next 8-byte boundary
-    print(f"{len(found)} strings, {MAIN} .rodata {start:#x}..{end:#x}")
-    carve_rodata(MAIN, stub, start, end)
-    first = min(found, key=lambda name: found[name][0])
-    if first in death_symbols:
-        death_start = death_symbols[first][0]
-        length = end - start
-        same = death_image[death_start - FILE_ADDRESS:death_start - FILE_ADDRESS + length] == main_image[start - FILE_ADDRESS:end - FILE_ADDRESS]
-        print(f"{DEATH} .rodata {death_start:#x}..{death_start + length:#x}" + ("" if same else "  (bytes differ from Main: check by hand)"))
-        carve_rodata(DEATH, stub, death_start, death_start + length)
+    for target in (MAIN, DEATH):
+        if spans[target]:
+            start = min(low for low, _ in spans[target])
+            end = (max(high for _, high in spans[target]) + 7) & ~7     # the next string may start 8-aligned
+            print(f"{len(spans[target])} strings, {target} .rodata {start:#x}..{end:#x}")
+            carve_rodata(target, stub, start, end)
 
 
 def object_functions(path):

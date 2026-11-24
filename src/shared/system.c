@@ -89,9 +89,9 @@ void sys_start(void) {
 
 s32 func_0018C890();
 s32 font_init();
-s32 func_00218B00();
+s32 tex_load_common();
 s32 func_0021A640();
-s32 func_0021B680();
+s32 display_reset();
 s32 func_0022C630();
 extern s16 D_0028E3FC;
 extern u8 D_0028E400;
@@ -109,7 +109,7 @@ void sys_init(void) {
     sys_init_display();
     vram_clear_all();
     g_dma_gif = sceDmaGetChan(2);
-    func_0021B680();
+    display_reset();
     func_0021A640(D_00586FF0, g_gif_buf, 0x12C0, 0x200, 0x100);
     pad_init_system();
     D_0028E9F8 = (u8 *)(D_0057CB10);
@@ -121,7 +121,7 @@ void sys_init(void) {
     D_0028EB00 = 0;
     fade_reset();
     func_0018C890();
-    func_00218B00();
+    tex_load_common();
     font_init();
     sceMcInit();
     func_0022C630();
@@ -131,7 +131,7 @@ s32 func_0016A710();                            /* extern */
 s32 text_queue_clear();                            /* extern */
 s32 func_0021A920(s32 *, s32 *);        /* extern */
 s32 func_0021B400(s32 *);                   /* extern */
-s32 func_0021B680();                            /* extern */
+s32 display_reset();                            /* extern */
 s32 func_0021DF60();                            /* extern */
 extern s32 D_0028DC98;
 
@@ -148,7 +148,7 @@ void sys_begin_frame(void) {
     if (D_0028E9EC != 0) {
         D_0028E9EC = 0;
         func_0021DF60();
-        func_0021B680();
+        display_reset();
     }
     if (D_0028DC98 < 2) {
         func_0021B400(g_gif_buf);
@@ -258,7 +258,7 @@ void sys_end_frame(void) {
     sceGsSyncPath(0, 0);
 }
 
-s32 func_0021BEA0(s32 *, s32, s32, const char *);
+s32 label_draw(s32 *, s32, s32, const char *);
 extern u8 D_0028E370;
 extern u16 D_0028E3C0;
 extern s8 D_0028E3F8;
@@ -282,14 +282,14 @@ void sys_draw_replay_label(void) {
             if (D_006C58A4[0] == 0xFF) {
                 var_a2 = 0x18;
             }
-            func_0021BEA0(D_00586FF0, 2, var_a2, "OVERRIDE");
+            label_draw(D_00586FF0, 2, var_a2, "OVERRIDE");
             return;
         }
         var_a2_2 = 0x90;
         if (D_006C58A4[0] == 0xFF) {
             var_a2_2 = 0x20;
         }
-        func_0021BEA0(D_00586FF0, 2, var_a2_2, "REPLAY");
+        label_draw(D_00586FF0, 2, var_a2_2, "REPLAY");
     }
 }
 

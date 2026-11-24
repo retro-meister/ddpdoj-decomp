@@ -1,8 +1,8 @@
 #include "common.h"
 
 extern void gfx_draw_color_box(s32 x, s32 y, s32 w, s32 h, s32 depth, s32 alpha, s32 r, s32 g, s32 b);
-extern void func_0021C0F0(void);
-extern void func_0021C2F0(void);
+extern void glyph_queue_clear(void);
+extern void glyph_queue_flush(void);
 extern void func_0021FC70(void);
 extern void func_0021FDB0(void);
 extern void func_002201A0(void);
@@ -81,7 +81,7 @@ void func_0021FA50(void) {
         } else {
             func_00221360();
         }
-        func_0021C0F0();
+        glyph_queue_clear();
         func_0021FC70();
         func_0021FDB0();
         func_002201A0();
@@ -101,7 +101,7 @@ void func_0021FA50(void) {
         func_0022A0B0();
         func_0022A480();
         func_00221E20();
-        func_0021C2F0();
+        glyph_queue_flush();
         func_00227E00();
         func_00221550();
         reg_d0.w = save_d0;

@@ -1,6 +1,6 @@
 #include "common.h"
 
-extern void func_0021B570(s8, s8);
+extern void display_set_offset(s8, s8);
 extern void func_0021B840(s32, s32);
 extern s32 D_00271C60[];
 extern s32 D_00271C64[];
@@ -14,7 +14,7 @@ void func_00235820(void)
     u16 selection;
 
     D_0028E9EC = 1;
-    func_0021B570(D_0028E254, D_0028E250);
+    display_set_offset(D_0028E254, D_0028E250);
 
     selection = D_0028E32C;
     if (selection != 5) {

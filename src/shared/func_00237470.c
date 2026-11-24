@@ -3,7 +3,7 @@
 extern void func_0015BA20(void);
 extern void func_0015BD00(void);
 extern void func_002071C0(void);
-extern void func_00218B50(void);
+extern void stage_load_step(void);
 extern void func_00225630(void);
 extern void func_002256B0(void);
 extern void func_00227120(void);
@@ -71,7 +71,7 @@ void func_00237470(void) {
         step++;
         break;
     case 1:
-        func_00218B50();
+        stage_load_step();
         if (D_0028E3FC == D_0028E91C) {
             func_002256B0();
             step++;

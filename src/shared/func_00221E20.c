@@ -4,7 +4,7 @@ extern void text_queue_clear(void);
 extern void frame_draw_right_panel(s32 level);
 extern void text_flush(void);
 extern void gfx_draw_color_box(s32 x, s32 y, s32 w, s32 h, s32 depth, s32 alpha, s32 r, s32 g, s32 b);
-extern s32 func_0021C100(s32 x, s32 y, s32 z, s32 page, s32 alpha, s32 attr, s32 wide);
+extern s32 glyph_queue_add(s32 x, s32 y, s32 z, s32 page, s32 alpha, s32 attr, s32 wide);
 extern void func_00222C30(s32 x, s32 y, s32 alpha);
 extern char *D_0028DD90;
 extern s32 D_0028EAEC;
@@ -59,7 +59,7 @@ void func_00221E20(void) {
         do {
             reg_a0 = buf;
             *reg_a0 = *p++;
-            func_0021C100(0x106, y + 0xE + (i / 5) * 5, 0x136, 0, 0x80, D_0028EAEC, 1);
+            glyph_queue_add(0x106, y + 0xE + (i / 5) * 5, 0x136, 0, 0x80, D_0028EAEC, 1);
             i++;
             y += 9;
         } while (i < 0x14);

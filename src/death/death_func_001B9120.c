@@ -1,6 +1,6 @@
 #include "common.h"
 
-extern void func_0021C100(s32 x, s32 y, s32 z, s32 page, s32 bright, s32 alpha, s32 flag);
+extern void glyph_queue_add(s32 x, s32 y, s32 z, s32 page, s32 bright, s32 alpha, s32 flag);
 extern void func_00224BA0(s32 x, s32 y, s32 z, s32 page, s32 bright, s32 alpha, s32 flag, s32 kind);
 void text_queue_clear(void);
 void text_flush(void);
@@ -61,19 +61,19 @@ void death_func_001B9120(void) {
         if (alpha == 0) {
             continue;
         }
-        func_0021C100(x, top, z, 0, 0x80, alpha, 1);
+        glyph_queue_add(x, top, z, 0, 0x80, alpha, 1);
         y = D_00271800[i];
         index = D_0068DC10[0x170 + i];
         if (i == 1) {
             reg_a0 = death_D_00290050[index];
-            func_0021C100(x, y + 16, z, 0, 0x80, alpha, 1);
+            glyph_queue_add(x, y + 16, z, 0, 0x80, alpha, 1);
             if (death_D_00290C4C == 1) {
                 func_00224BA0(x, y + 16, z, 0, 0x80, alpha, 1, 3);
             }
         }
         if (i == 2) {
             reg_a0 = death_D_002630C8[index];
-            func_0021C100(x, y + 16, z, 0, 0x80, alpha, 1);
+            glyph_queue_add(x, y + 16, z, 0, 0x80, alpha, 1);
             if (death_D_00290C4C == 2) {
                 func_00224BA0(x, y + 16, z, 0, 0x80, alpha, 1, 3);
             }

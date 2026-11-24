@@ -1,7 +1,7 @@
 #include "common.h"
 
-s32 func_0021C0F0();
-s32 func_0021C2F0();
+s32 glyph_queue_clear();
+s32 glyph_queue_flush();
 s32 func_00221E20();
 extern s32 D_0028EAF8;
 extern u8 *reg_a0;
@@ -45,9 +45,9 @@ void func_00221CF0(void) {
         spE0 = reg_a4;
         spF0 = reg_a5;
         temp_fp = reg_a6;
-        func_0021C0F0();
+        glyph_queue_clear();
         func_00221E20();
-        func_0021C2F0();
+        glyph_queue_flush();
         reg_d0.w = temp_s7;
         reg_d1.w = temp_s6;
         reg_d2.w = temp_s0;
