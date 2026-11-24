@@ -79,8 +79,6 @@ void func_0021C920(void) {
     s32 sx;
     s32 sy;
     s32 scale;
-    s32 flip;
-    TileEntry *e;
     u8 *pkt;
 
     count = 0;
@@ -221,42 +219,40 @@ void func_0021C920(void) {
             }
         }
         attr = p[2];
-        e = &D_00592000[count];
-        flip = (attr >> 13) & 3;
-        e->mode = mode;
-        e->alpha = 0x80;
-        e->tbp = tbp;
-        e->z = 10;
-        e->cbp = palette;
-        e->color = 0x80;
-        e->x[0] = ex;
-        e->y[0] = ey;
-        e->x[1] = ex + dx;
-        e->y[1] = dy = ey + dy;
-        switch (flip) {
+        D_00592000[count].z = 10;
+        D_00592000[count].alpha = 0x80;
+        D_00592000[count].tbp = tbp;
+        D_00592000[count].mode = mode;
+        D_00592000[count].cbp = palette;
+        D_00592000[count].color = 0x80;
+        D_00592000[count].x[0] = ex;
+        D_00592000[count].y[0] = ey;
+        D_00592000[count].x[1] = ex + dx;
+        D_00592000[count].y[1] = dy = ey + dy;
+        switch ((attr >> 13) & 3) {
         case 0:
-            e->u[0] = tu;
-            e->v[0] = tv;
-            e->u[1] = tu + w2;
-            e->v[1] = tv + h;
+            D_00592000[count].u[0] = tu;
+            D_00592000[count].v[0] = tv;
+            D_00592000[count].u[1] = tu + w2;
+            D_00592000[count].v[1] = tv + h;
             break;
         case 1:
-            e->u[0] = tu + w2;
-            e->v[0] = tv;
-            e->u[1] = tu;
-            e->v[1] = tv + h;
+            D_00592000[count].u[0] = tu + w2;
+            D_00592000[count].v[0] = tv;
+            D_00592000[count].u[1] = tu;
+            D_00592000[count].v[1] = tv + h;
             break;
         case 2:
-            e->u[0] = tu;
-            e->v[0] = tv + h;
-            e->u[1] = tu + w2;
-            e->v[1] = tv;
+            D_00592000[count].u[0] = tu;
+            D_00592000[count].v[0] = tv + h;
+            D_00592000[count].u[1] = tu + w2;
+            D_00592000[count].v[1] = tv;
             break;
         case 3:
-            e->u[0] = tu + w2;
-            e->v[0] = tv + h;
-            e->u[1] = tu;
-            e->v[1] = tv;
+            D_00592000[count].u[0] = tu + w2;
+            D_00592000[count].v[0] = tv + h;
+            D_00592000[count].u[1] = tu;
+            D_00592000[count].v[1] = tv;
             break;
         }
         pkt = D_00558780 + (buf << 16);
