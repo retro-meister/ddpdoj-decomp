@@ -650,7 +650,7 @@ segments:
       - [0x40650, c, main/func_001405D0]
       - [0x40770, c, main/func_001406F0]
       - [0x41380, c, main/func_00141300]
-      - [0x416c0, asm, game_0416c0]
+      - [0x416c0, c, main/func_00141640]
       - [0x41790, c, main/func_00141710]
       - [0x41850, c, main/func_001417D0]
       - [0x41bd0, c, main/func_00141B50]
