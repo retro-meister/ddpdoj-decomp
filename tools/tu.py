@@ -369,7 +369,7 @@ def tidy_prototypes(text, pieces):
             if stub:
                 defined.update(definitions(ROOT / "src" / f"{stub}.c"))
     sdk = sdk_functions()
-    kept, order, uses_sdk = [], [], False
+    kept, uses_sdk = [], False
     for line in text.splitlines():
         match = PROTOTYPE_RE.match(line)
         if match and line[:1] not in (" ", "\t"):
