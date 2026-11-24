@@ -60,7 +60,16 @@ def find_runs(first, last):
     code = [e for e in main_entries if e["kind"] == "c"]
     names = [stem(e["stub"]) for e in code]
     if first not in names or last not in names:
-        raise ValueError(f"{first}..{last}: not units of {MAIN}")
+        # A run that only Death Label has: its units become one unit in src/death.
+        _, _, death_entries = yaml_entries(DEATH)
+        death_code = [e for e in death_entries if e["kind"] == "c"]
+        death_names = [stem(e["stub"]) for e in death_code]
+        if first not in death_names or last not in death_names:
+            raise ValueError(f"{first}..{last}: not units of {MAIN} or {DEATH}")
+        death_run = death_code[death_names.index(first):death_names.index(last) + 1]
+        if not death_run or any(not e["stub"].startswith("death/") or stem(e["stub"]) in names for e in death_run):
+            raise ValueError(f"{first}..{last}: not a run that only {DEATH} has")
+        return [], death_run
     main_run = code[names.index(first):names.index(last) + 1]
     if not main_run:
         raise ValueError("empty run")
@@ -740,15 +749,20 @@ def main():
         parser.error("give a name with --from and --to, or --check SOURCE")
 
     main_run, death_run = find_runs(args.first, args.last)
-    pieces = sequence(main_run, death_run)
-    folder = "shared" if death_run else "main"
+    if main_run:
+        pieces = sequence(main_run, death_run)
+        folder = "shared" if death_run else "main"
+    else:
+        pieces = [(entry["stub"], entry["stub"]) for entry in death_run]
+        folder = "death"
     new_stub = f"{folder}/{args.name}"
     dest = ROOT / "src" / f"{new_stub}.c"
     old = [ROOT / "src" / f"{stub}.c" for pair in pieces for stub in dict.fromkeys(pair) if stub]
     if dest.exists() and dest not in old:
         raise ValueError(f"{dest.relative_to(ROOT)} already exists")
     text = merge_text(pieces)
-    patch_yaml(MAIN, main_run, new_stub)
+    if main_run:
+        patch_yaml(MAIN, main_run, new_stub)
     if death_run:
         patch_yaml(DEATH, death_run, new_stub)
     subprocess.run(["git", "mv", str(old[0].relative_to(ROOT)), str(dest.relative_to(ROOT))], cwd=ROOT, check=True)
