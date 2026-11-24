@@ -1,8 +1,8 @@
 #include "common.h"
 
-s32 func_0010F670(s32 arg0, s32 arg1, s32 *arg2);
-s32 func_0010F7A8(s32 arg0, s32 arg1, s32 *arg2, s32 *arg3, s32 *arg4);
-s32 func_0010FCA8(s32 arg0, s32 arg1);
+s32 sceMcSync(s32 arg0, s32 arg1, s32 *arg2);
+s32 sceMcGetInfo(s32 arg0, s32 arg1, s32 *arg2, s32 *arg3, s32 *arg4);
+s32 sceMcFormat(s32 arg0, s32 arg1);
 extern void func_0022C5E0(s32, s32, s32, s32, s32, u16, s32);
 void func_0022CF20(void);
 void func_00233EE0(void);
@@ -43,7 +43,7 @@ void func_00232710(void) {
         }
         break;
     case 2:
-        D_0028ECAC = func_0010F7A8(D_0028EC70, D_0028EC74, &D_0028ECB8, &D_0028ECB4, &D_0028ECB0);
+        D_0028ECAC = sceMcGetInfo(D_0028EC70, D_0028EC74, &D_0028ECB8, &D_0028ECB4, &D_0028ECB0);
         if (D_0028ECAC == 0) {
             D_0028ECF0 += 1;
             break;
@@ -54,7 +54,7 @@ void func_00232710(void) {
         }
         break;
     case 3:
-        if (func_0010F670(1, 0, &result) != 0) {
+        if (sceMcSync(1, 0, &result) != 0) {
             switch (result) {
             case 0:
                 D_0028ECF0 += 1;
@@ -69,7 +69,7 @@ void func_00232710(void) {
         }
         break;
     case 4:
-        if (func_0010FCA8(D_0028EC70, D_0028EC74) == 0) {
+        if (sceMcFormat(D_0028EC70, D_0028EC74) == 0) {
             D_0028ECF0 += 1;
             break;
         }
@@ -79,7 +79,7 @@ void func_00232710(void) {
         }
         break;
     case 5:
-        if (func_0010F670(1, 0, &result) != 0) {
+        if (sceMcSync(1, 0, &result) != 0) {
             if (result == 0) {
                 D_0028ECF0 += 1;
             } else {

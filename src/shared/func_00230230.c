@@ -1,7 +1,7 @@
 #include "common.h"
 
-s32 func_0010F670(s32 arg0, s32 arg1, s32 *arg2);
-s32 func_0010F998(s32 arg0, s32 arg1, s32 arg2, s32 arg3, s32 arg4, void *arg5);
+s32 sceMcSync(s32 arg0, s32 arg1, s32 *arg2);
+s32 sceMcGetDir(s32 arg0, s32 arg1, s32 arg2, s32 arg3, s32 arg4, void *arg5);
 void func_0022CDB0(s32 arg0);
 void func_0022CF20(void);
 void func_00233EE0(void);
@@ -91,7 +91,7 @@ void func_00230230(void) {
         }
         break;
     case 3:
-        if (func_0010F998(D_0028EC70, D_0028EC74, D_00272010[D_0028ED1C], 0, 99, D_0069F580) == 0) {
+        if (sceMcGetDir(D_0028EC70, D_0028EC74, D_00272010[D_0028ED1C], 0, 99, D_0069F580) == 0) {
             D_0028ECF0 += 1;
             break;
         }
@@ -101,7 +101,7 @@ void func_00230230(void) {
         }
         break;
     case 4:
-        if (func_0010F670(1, 0, &result) != 0) {
+        if (sceMcSync(1, 0, &result) != 0) {
             if (result <= 0) {
                 D_0028ECF0 = 50;
             } else {
@@ -143,7 +143,7 @@ void func_00230230(void) {
         break;
     case 60:
         D_0028EC90 = 0;
-        if (func_0010F998(D_0028EC70, D_0028EC74, D_00272010[0], 0, 99, D_0069F580) == 0) {
+        if (sceMcGetDir(D_0028EC70, D_0028EC74, D_00272010[0], 0, 99, D_0069F580) == 0) {
             D_0028ECF0 += 1;
             break;
         }
@@ -153,7 +153,7 @@ void func_00230230(void) {
         }
         break;
     case 61:
-        if (func_0010F670(1, 0, &result) != 0) {
+        if (sceMcSync(1, 0, &result) != 0) {
             if (result <= 0) {
                 D_0028EC90 += 1;
             }

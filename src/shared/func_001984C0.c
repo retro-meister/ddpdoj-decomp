@@ -1,7 +1,7 @@
 #include "common.h"
 
-s64 func_00112BF0();
-s32 func_00117550();
+s64 atoi();
+s32 sprintf();
 u8 func_00198170();
 s32 func_00198280();
 s32 memcpy();
@@ -128,10 +128,10 @@ void func_001984C0(void) {
     memset(code, 0, 12);
     memcpy(code, rec, 12);
     sum = 0;
-    func_00117550(str, D_0027D8D0, code[3], code[2], code[1], code[0]);
-    sum += func_00112BF0(str);
-    func_00117550(str, D_0027D8F0, code[6], code[5]);
-    sum += func_00112BF0(str);
+    sprintf(str, D_0027D8D0, code[3], code[2], code[1], code[0]);
+    sum += atoi(str);
+    sprintf(str, D_0027D8F0, code[6], code[5]);
+    sum += atoi(str);
     j = 2;
     bits = 0;
     for (i1 = 0; i1 < 4; i1++, j++) {

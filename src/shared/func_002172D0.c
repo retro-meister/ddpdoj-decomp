@@ -22,15 +22,15 @@ typedef struct {
     u8 pad3A[2];
 } PadInfo;
 
-s32 func_0010C790(s32 port, s32 slot, u8 *data);
-s32 func_0010C810(s32 port, s32 slot);
-s32 func_0010C928(s32 port, s32 slot);
-s32 func_0010C9B0(s32 port, s32 slot, s32 actno, s32 term);
-s32 func_0010CBF0(s32 port, s32 slot, s32 term, s32 offs);
-s32 func_0010CD28(s32 port, s32 slot, s32 offs, s32 lock);
-s32 func_0010CEA0(s32 port, s32 slot, u8 *data);
-s32 func_0010D0E0(s32 port, s32 slot);
-s32 func_0010D140(s32 port, s32 slot);
+s32 scePadRead(s32 port, s32 slot, u8 *data);
+s32 scePadGetState(s32 port, s32 slot);
+s32 scePadGetReqState(s32 port, s32 slot);
+s32 scePadInfoAct(s32 port, s32 slot, s32 actno, s32 term);
+s32 scePadInfoMode(s32 port, s32 slot, s32 term, s32 offs);
+s32 scePadSetMainMode(s32 port, s32 slot, s32 offs, s32 lock);
+s32 scePadSetActAlign(s32 port, s32 slot, u8 *data);
+s32 scePadInfoPressMode(s32 port, s32 slot);
+s32 scePadEnterPressMode(s32 port, s32 slot);
 extern PadInfo D_0057CC90[3];
 extern u8 D_0028EA00[6];
 extern u8 D_0028EA40[6];
@@ -48,16 +48,16 @@ void func_002172D0(void)
         pad->rightX = 0;
         pad->rightY = 0;
 #endif
-        padState = func_0010C810(port, 0);
+        padState = scePadGetState(port, 0);
         if (padState == 0) {
             pad->state = 0;
         }
         switch (pad->state) {
             case 0x00:
                 if ((padState == 6) || (padState == 2)) {
-                    s32 mode = func_0010CBF0(port, 0, 1, 0);
+                    s32 mode = scePadInfoMode(port, 0, 1, 0);
                     if (mode != 0) {
-                        s32 exMode = func_0010CBF0(port, 0, 2, 0);
+                        s32 exMode = scePadInfoMode(port, 0, 2, 0);
                         if (exMode > 0) {
                             mode = exMode;
                         }
@@ -73,7 +73,7 @@ void func_002172D0(void)
                 break;
 
             case 0x28:
-                if (func_0010CBF0(port, 0, 4, -1) == 0) {
+                if (scePadInfoMode(port, 0, 4, -1) == 0) {
                     pad->state = 0x80;
                     pad->padTypeFlag = 1;
                     break;
@@ -81,22 +81,22 @@ void func_002172D0(void)
                 pad->state++;
 
             case 0x29:
-                if (func_0010CD28(port, 0, 1, 3) == 1) {
+                if (scePadSetMainMode(port, 0, 1, 3) == 1) {
                     pad->state++;
                 }
                 break;
 
             case 0x2A:
-                if (func_0010C928(port, 0) == 1) {
+                if (scePadGetReqState(port, 0) == 1) {
                     pad->state--;
                 }
-                if (func_0010C928(port, 0) == 0) {
+                if (scePadGetReqState(port, 0) == 0) {
                     pad->state = 0;
                 }
                 break;
 
             case 0x46:
-                if (func_0010C9B0(port, 0, -1, 0) == 0) {
+                if (scePadInfoAct(port, 0, -1, 0) == 0) {
                     pad->state = 0x80;
                     pad->padTypeFlag = 2;
                     break;
@@ -104,22 +104,22 @@ void func_002172D0(void)
                 D_0028EA00[0] = D_0028EA40[5] = D_0028EA40[4] = D_0028EA40[3] = D_0028EA40[2] = D_0028EA40[1] = D_0028EA40[0] = 0;
                 D_0028EA00[5] = D_0028EA00[4] = D_0028EA00[3] = D_0028EA00[2] = 0xFF;
                 D_0028EA00[1] = 1;
-                if (func_0010CEA0(port, 0, D_0028EA00) != 0) {
+                if (scePadSetActAlign(port, 0, D_0028EA00) != 0) {
                     pad->state++;
                 }
                 break;
 
             case 0x47:
-                if (func_0010C928(port, 0) == 1) {
+                if (scePadGetReqState(port, 0) == 1) {
                     pad->state--;
                 }
-                if (func_0010C928(port, 0) == 0) {
+                if (scePadGetReqState(port, 0) == 0) {
                     pad->state++;
                 }
                 break;
 
             case 0x48:
-                if (func_0010D0E0(port, 0) == 0) {
+                if (scePadInfoPressMode(port, 0) == 0) {
                     pad->prevPadId = 0;
                     pad->state = 0x80;
                     pad->padTypeFlag = 4;
@@ -128,7 +128,7 @@ void func_002172D0(void)
                 pad->state = 0x4C;
 
             case 0x4C:
-                if (func_0010D140(port, 0) == 0) {
+                if (scePadEnterPressMode(port, 0) == 0) {
                     pad->state = 0x48;
                 } else {
                     pad->state++;
@@ -136,10 +136,10 @@ void func_002172D0(void)
                 break;
 
             case 0x4D:
-                if (func_0010C928(port, 0) == 1) {
+                if (scePadGetReqState(port, 0) == 1) {
                     pad->state--;
                 }
-                if (func_0010C928(port, 0) == 0) {
+                if (scePadGetReqState(port, 0) == 0) {
                     pad->state = 0x80;
                     pad->padTypeFlag = 8;
                 }
@@ -149,7 +149,7 @@ void func_002172D0(void)
                 if ((padState == 6) || (padState == 2)) {
                     u32 rawBtns;
                     pad->prevButtons = pad->buttons;
-                    if (func_0010C790(port, 0, pad->raw) > 0) {
+                    if (scePadRead(port, 0, pad->raw) > 0) {
                         if (pad->padTypeFlag & 0xE) {
                             s8 rx = pad->raw[4] - 0x80;
                             s8 ry = pad->raw[5] - 0x80;

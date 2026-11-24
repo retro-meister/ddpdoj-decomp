@@ -8,7 +8,7 @@ typedef struct {
     s32 height;
 } VideoMode;
 
-extern void func_001001E0(s32, s32, s32, s32);
+extern void sceGsResetGraph(s32, s32, s32, s32);
 extern void func_0021B570(s32 a, s32 b);
 extern VideoMode D_0026F9E0[];
 extern s32 D_0028DC98;
@@ -28,7 +28,7 @@ void func_0021B680(void) {
     VideoMode *mode;
 
     mode = &D_0026F9E0[D_0028DC98 + D_0028E2DC * 6];
-    func_001001E0(0, (s16)mode->interlace, 2, (s16)mode->ffmode);
+    sceGsResetGraph(0, (s16)mode->interlace, 2, (s16)mode->ffmode);
     D_0028EA54 = mode->width;
     if (mode->interlace == 0) {
         sceGsSetDefDBuffDc(D_0057C7E0, 2, (s16)mode->width, (s16)mode->height, 1, 0x31, 1);

@@ -1,7 +1,7 @@
 #include "common.h"
 
-s32 func_0010F670(s32, s32, s32 *);
-s32 func_0010F7A8(s32, s32, s32 *, u8 *, s32 *);
+s32 sceMcSync(s32, s32, s32 *);
+s32 sceMcGetInfo(s32, s32, s32 *, u8 *, s32 *);
 s32 sceGsSyncV(s32);
 extern s32 D_0028EC70;
 extern s32 D_0028EC74;
@@ -17,13 +17,13 @@ s32 func_0022CC70(s32 arg0) {
 
     tries = 0;
 retry:
-    D_0028ECAC = func_0010F7A8(D_0028EC70, D_0028EC74, &D_0028ECB8, &D_0028ECB4, &D_0028ECB0);
+    D_0028ECAC = sceMcGetInfo(D_0028EC70, D_0028EC74, &D_0028ECB8, &D_0028ECB4, &D_0028ECB0);
     if (D_0028ECAC != 0) {
         sceGsSyncV(0);
-        func_0010F670(0, 0, &result);
+        sceMcSync(0, 0, &result);
         goto retry;
     }
-    func_0010F670(0, 0, &result);
+    sceMcSync(0, 0, &result);
     ret = 0;
     switch (result) {
     case 0:

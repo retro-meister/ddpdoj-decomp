@@ -50,7 +50,7 @@ void *memset(void *dst, s32 value, u32 size);
 s32 sceGsExecLoadImage();
 s32 sceGsSetDefLoadImage();
 s32 sceGsSyncPath(s32 mode, u32 timeout);
-s32 func_001173A8(void);
+s32 rand(void);
 s32 func_0012FAB0();
 s32 func_0019AB20();
 s32 func_0019C5B0();
@@ -127,12 +127,12 @@ void death_func_00138C50(TextScript *script) {
         func_0021A170();
         death_func_00138BE0(death_D_0056A800);
         D_0028EA80 = 0;
-        shade = (func_001173A8() & 0x1F) + 0x40;
+        shade = (rand() & 0x1F) + 0x40;
         if (script->frame & 1) {
             shade = 0;
         }
-        u = func_001173A8() % 0x110;
-        v = func_001173A8() % 0x20;
+        u = rand() % 0x110;
+        v = rand() % 0x20;
         D_00592000[0].attr = shade;
         D_00592000[0].z = 1;
         D_00592000[0].tex = 0x2240;

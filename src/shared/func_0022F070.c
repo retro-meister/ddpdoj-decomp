@@ -4,13 +4,13 @@ typedef struct {
     char *name[3];
 } NameSet;
 
-s32 func_0010EFF0(s32 arg0, s32 arg1, void *arg2, s32 arg3);
-s32 func_0010F150(s32 arg0);
-s32 func_0010F488(s32 arg0, void *arg1, s32 arg2);
-s32 func_0010F670(s32 arg0, s32 arg1, s32 *arg2);
+s32 sceMcOpen(s32 arg0, s32 arg1, void *arg2, s32 arg3);
+s32 sceMcClose(s32 arg0);
+s32 sceMcWrite(s32 arg0, void *arg1, s32 arg2);
+s32 sceMcSync(s32 arg0, s32 arg1, s32 *arg2);
 void *memcpy(void *dst, const void *src, u32 n);
 void *memset(void *dst, s32 c, u32 n);
-char *func_00117898(u8 *dst, const char *src);
+char *strcpy(u8 *dst, const char *src);
 extern void func_0022C5E0(s32, s32, s32, s32, s32, u16, s32);
 void func_0022CF20(void);
 void func_0022D240(s32 arg0);
@@ -112,34 +112,34 @@ void func_0022F070(void) {
         break;
     case 0x2:
         if (D_0028ED1C == 1) {
-            ret = func_0010EFF0(D_0028EC70, D_0028EC74, D_0028B750, 0x203);
+            ret = sceMcOpen(D_0028EC70, D_0028EC74, D_0028B750, 0x203);
         }
         if (D_0028ED1C == 2) {
-            ret = func_0010EFF0(D_0028EC70, D_0028EC74, D_0028B770, 0x203);
+            ret = sceMcOpen(D_0028EC70, D_0028EC74, D_0028B770, 0x203);
         }
         if (D_0028ED1C == 3) {
-            ret = func_0010EFF0(D_0028EC70, D_0028EC74, D_0028B790, 0x203);
+            ret = sceMcOpen(D_0028EC70, D_0028EC74, D_0028B790, 0x203);
         }
         if (D_0028ED1C == 4) {
-            ret = func_0010EFF0(D_0028EC70, D_0028EC74, D_0028B7B0, 0x203);
+            ret = sceMcOpen(D_0028EC70, D_0028EC74, D_0028B7B0, 0x203);
         }
         if (D_0028ED1C == 5) {
-            ret = func_0010EFF0(D_0028EC70, D_0028EC74, D_0028B7D0, 0x203);
+            ret = sceMcOpen(D_0028EC70, D_0028EC74, D_0028B7D0, 0x203);
         }
         if (D_0028ED1C == 6) {
-            ret = func_0010EFF0(D_0028EC70, D_0028EC74, D_0028B7F0, 0x203);
+            ret = sceMcOpen(D_0028EC70, D_0028EC74, D_0028B7F0, 0x203);
         }
         if (D_0028ED1C == 7) {
-            ret = func_0010EFF0(D_0028EC70, D_0028EC74, D_0028B810, 0x203);
+            ret = sceMcOpen(D_0028EC70, D_0028EC74, D_0028B810, 0x203);
         }
         if (D_0028ED1C == 8) {
-            ret = func_0010EFF0(D_0028EC70, D_0028EC74, D_0028B830, 0x203);
+            ret = sceMcOpen(D_0028EC70, D_0028EC74, D_0028B830, 0x203);
         }
         if (D_0028ED1C == 9) {
-            ret = func_0010EFF0(D_0028EC70, D_0028EC74, D_0028B850, 0x203);
+            ret = sceMcOpen(D_0028EC70, D_0028EC74, D_0028B850, 0x203);
         }
         if (D_0028ED1C == 10) {
-            ret = func_0010EFF0(D_0028EC70, D_0028EC74, D_0028B870, 0x203);
+            ret = sceMcOpen(D_0028EC70, D_0028EC74, D_0028B870, 0x203);
         }
         if (ret == 0) {
             D_0028ECF0 += 1;
@@ -151,7 +151,7 @@ void func_0022F070(void) {
         }
         break;
     case 0x3:
-        ret = func_0010F670(1, 0, &result);
+        ret = sceMcSync(1, 0, &result);
         if (ret != 0) {
             if (result < 0) {
                 D_0028ECF0 = 0x2D;
@@ -163,36 +163,36 @@ void func_0022F070(void) {
         break;
     case 0x4:
         memset(D_0068E1B0, 0, 0x3C4);
-        func_00117898(D_0068E1B0, D_0028B6E8);
+        strcpy(D_0068E1B0, D_0028B6E8);
         if (D_0028ED1C == 1) {
-            func_00117898(D_0068E270, D_0028B890);
+            strcpy(D_0068E270, D_0028B890);
         }
         if (D_0028ED1C == 2) {
-            func_00117898(D_0068E270, D_0028B8B0);
+            strcpy(D_0068E270, D_0028B8B0);
         }
         if (D_0028ED1C == 3) {
-            func_00117898(D_0068E270, D_0028B8D0);
+            strcpy(D_0068E270, D_0028B8D0);
         }
         if (D_0028ED1C == 4) {
-            func_00117898(D_0068E270, D_0028B8F0);
+            strcpy(D_0068E270, D_0028B8F0);
         }
         if (D_0028ED1C == 5) {
-            func_00117898(D_0068E270, D_0028B910);
+            strcpy(D_0068E270, D_0028B910);
         }
         if (D_0028ED1C == 6) {
-            func_00117898(D_0068E270, D_0028B930);
+            strcpy(D_0068E270, D_0028B930);
         }
         if (D_0028ED1C == 7) {
-            func_00117898(D_0068E270, D_0028B950);
+            strcpy(D_0068E270, D_0028B950);
         }
         if (D_0028ED1C == 8) {
-            func_00117898(D_0068E270, D_0028B970);
+            strcpy(D_0068E270, D_0028B970);
         }
         if (D_0028ED1C == 9) {
-            func_00117898(D_0068E270, D_0028B990);
+            strcpy(D_0068E270, D_0028B990);
         }
         if (D_0028ED1C == 10) {
-            func_00117898(D_0068E270, D_0028B9B0);
+            strcpy(D_0068E270, D_0028B9B0);
         }
         D_0068E1B6[0] = 0xE;
         D_0068E1BC[0] = 0x60;
@@ -200,14 +200,14 @@ void func_0022F070(void) {
         memcpy(D_0068E200, D_00272080, 0x30);
         memcpy(D_0068E230, D_002720B0, 0x30);
         memcpy(D_0068E260, D_002720E0, 0x10);
-        func_00117898(D_0068E2B4, names.name[0]);
-        func_00117898(D_0068E2F4, names.name[1]);
-        func_00117898(D_0068E334, names.name[2]);
+        strcpy(D_0068E2B4, names.name[0]);
+        strcpy(D_0068E2F4, names.name[1]);
+        strcpy(D_0068E334, names.name[2]);
         D_0028ECF0 += 1;
         D_0028ECF8 = 0xA;
         break;
     case 0x5:
-        if (func_0010F488(D_0028ECA8, D_0068E1B0, 0x3C4) == 0) {
+        if (sceMcWrite(D_0028ECA8, D_0068E1B0, 0x3C4) == 0) {
             D_0028ECF0 += 1;
         } else {
             D_0028ECF8 -= 1;
@@ -217,7 +217,7 @@ void func_0022F070(void) {
         }
         break;
     case 0x6:
-        if (func_0010F670(1, 0, &result) != 0) {
+        if (sceMcSync(1, 0, &result) != 0) {
             if (result < 0) {
                 if (result == -3) {
                     D_0028ECF0 = 0x30;
@@ -231,7 +231,7 @@ void func_0022F070(void) {
         }
         break;
     case 0x7:
-        if (func_0010F150(D_0028ECA8) == 0) {
+        if (sceMcClose(D_0028ECA8) == 0) {
             D_0028ECF0 += 1;
         } else {
             D_0028ECF8 -= 1;
@@ -241,7 +241,7 @@ void func_0022F070(void) {
         }
         break;
     case 0x8:
-        if (func_0010F670(1, 0, &result) != 0) {
+        if (sceMcSync(1, 0, &result) != 0) {
             if (result < 0) {
                 D_0028ECF0 = 0x2D;
             } else {
@@ -256,34 +256,34 @@ void func_0022F070(void) {
         break;
     case 0xA:
         if (D_0028ED1C == 1) {
-            ret = func_0010EFF0(D_0028EC70, D_0028EC74, D_0028B9E0, 0x203);
+            ret = sceMcOpen(D_0028EC70, D_0028EC74, D_0028B9E0, 0x203);
         }
         if (D_0028ED1C == 2) {
-            ret = func_0010EFF0(D_0028EC70, D_0028EC74, D_0028BA00, 0x203);
+            ret = sceMcOpen(D_0028EC70, D_0028EC74, D_0028BA00, 0x203);
         }
         if (D_0028ED1C == 3) {
-            ret = func_0010EFF0(D_0028EC70, D_0028EC74, D_0028BA20, 0x203);
+            ret = sceMcOpen(D_0028EC70, D_0028EC74, D_0028BA20, 0x203);
         }
         if (D_0028ED1C == 4) {
-            ret = func_0010EFF0(D_0028EC70, D_0028EC74, D_0028BA40, 0x203);
+            ret = sceMcOpen(D_0028EC70, D_0028EC74, D_0028BA40, 0x203);
         }
         if (D_0028ED1C == 5) {
-            ret = func_0010EFF0(D_0028EC70, D_0028EC74, D_0028BA60, 0x203);
+            ret = sceMcOpen(D_0028EC70, D_0028EC74, D_0028BA60, 0x203);
         }
         if (D_0028ED1C == 6) {
-            ret = func_0010EFF0(D_0028EC70, D_0028EC74, D_0028BA80, 0x203);
+            ret = sceMcOpen(D_0028EC70, D_0028EC74, D_0028BA80, 0x203);
         }
         if (D_0028ED1C == 7) {
-            ret = func_0010EFF0(D_0028EC70, D_0028EC74, D_0028BAA0, 0x203);
+            ret = sceMcOpen(D_0028EC70, D_0028EC74, D_0028BAA0, 0x203);
         }
         if (D_0028ED1C == 8) {
-            ret = func_0010EFF0(D_0028EC70, D_0028EC74, D_0028BAC0, 0x203);
+            ret = sceMcOpen(D_0028EC70, D_0028EC74, D_0028BAC0, 0x203);
         }
         if (D_0028ED1C == 9) {
-            ret = func_0010EFF0(D_0028EC70, D_0028EC74, D_0028BAE0, 0x203);
+            ret = sceMcOpen(D_0028EC70, D_0028EC74, D_0028BAE0, 0x203);
         }
         if (D_0028ED1C == 10) {
-            ret = func_0010EFF0(D_0028EC70, D_0028EC74, D_0028BB00, 0x203);
+            ret = sceMcOpen(D_0028EC70, D_0028EC74, D_0028BB00, 0x203);
         }
         if (ret == 0) {
             D_0028ECF0 += 1;
@@ -295,7 +295,7 @@ void func_0022F070(void) {
         }
         break;
     case 0xB:
-        if (func_0010F670(1, 0, &result) != 0) {
+        if (sceMcSync(1, 0, &result) != 0) {
             if (result < 0) {
                 D_0028ECF0 = 0x2D;
             } else {
@@ -306,7 +306,7 @@ void func_0022F070(void) {
         }
         break;
     case 0xC:
-        if (func_0010F488(D_0028ECA8, D_0068E580, D_0028ED24) == 0) {
+        if (sceMcWrite(D_0028ECA8, D_0068E580, D_0028ED24) == 0) {
             D_0028ECF0 += 1;
         } else {
             D_0028ECF8 -= 1;
@@ -316,7 +316,7 @@ void func_0022F070(void) {
         }
         break;
     case 0xD:
-        if (func_0010F670(1, 0, &result) != 0) {
+        if (sceMcSync(1, 0, &result) != 0) {
             if (result < 0) {
                 if (result == -3) {
                     D_0028ECF0 = 0x30;
@@ -330,7 +330,7 @@ void func_0022F070(void) {
         }
         break;
     case 0xE:
-        if (func_0010F150(D_0028ECA8) == 0) {
+        if (sceMcClose(D_0028ECA8) == 0) {
             D_0028ECF0 += 1;
         } else {
             D_0028ECF8 -= 1;
@@ -340,7 +340,7 @@ void func_0022F070(void) {
         }
         break;
     case 0xF:
-        if (func_0010F670(1, 0, &result) != 0) {
+        if (sceMcSync(1, 0, &result) != 0) {
             if (result < 0) {
                 D_0028ECF0 = 0x2D;
             } else {
@@ -350,7 +350,7 @@ void func_0022F070(void) {
         }
         break;
     case 0x24:
-        if (func_0010EFF0(D_0028EC70, D_0028EC74, D_00272010[D_0028ED1C], 0x203) == 0) {
+        if (sceMcOpen(D_0028EC70, D_0028EC74, D_00272010[D_0028ED1C], 0x203) == 0) {
             D_0028ECF0 += 1;
         } else {
             D_0028ECF8 -= 1;
@@ -360,7 +360,7 @@ void func_0022F070(void) {
         }
         break;
     case 0x25:
-        if (func_0010F670(1, 0, &result) != 0) {
+        if (sceMcSync(1, 0, &result) != 0) {
             if (result < 0) {
                 D_0028ECF0 = 0x2D;
             } else {
@@ -371,7 +371,7 @@ void func_0022F070(void) {
         }
         break;
     case 0x26:
-        if (func_0010F488(D_0028ECA8, D_006A4800, 0x206EC) == 0) {
+        if (sceMcWrite(D_0028ECA8, D_006A4800, 0x206EC) == 0) {
             D_0028ECF0 += 1;
         } else {
             D_0028ECF8 -= 1;
@@ -381,7 +381,7 @@ void func_0022F070(void) {
         }
         break;
     case 0x27:
-        if (func_0010F670(1, 0, &result) != 0) {
+        if (sceMcSync(1, 0, &result) != 0) {
             if (result < 0) {
                 if (result == -3) {
                     D_0028ECF0 = 0x30;
@@ -395,7 +395,7 @@ void func_0022F070(void) {
         }
         break;
     case 0x28:
-        if (func_0010F150(D_0028ECA8) == 0) {
+        if (sceMcClose(D_0028ECA8) == 0) {
             D_0028ECF0 += 1;
         } else {
             D_0028ECF8 -= 1;
@@ -405,7 +405,7 @@ void func_0022F070(void) {
         }
         break;
     case 0x29:
-        if (func_0010F670(1, 0, &result) != 0) {
+        if (sceMcSync(1, 0, &result) != 0) {
             if (result < 0) {
                 D_0028ECF0 = 0x2D;
             } else {

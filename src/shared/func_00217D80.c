@@ -1,7 +1,7 @@
 #pragma opt_propagation off
 #include "common.h"
 
-extern void func_0010CDE0(s32 port, s32 slot, u8 *info);
+extern void scePadSetActDirect(s32 port, s32 slot, u8 *info);
 extern u8 D_0028E340;
 extern u8 D_0028E344;
 extern u16 D_0028E348;
@@ -24,7 +24,7 @@ void func_00217D80(void) {
         break;
     case 1:
         D_0028EA41 = D_0028E344;
-        func_0010CDE0(0, slot, &D_0028EA40);
+        scePadSetActDirect(0, slot, &D_0028EA40);
         D_0028E360 += 1;
         break;
     case 2:
@@ -35,7 +35,7 @@ void func_00217D80(void) {
         break;
     case 3:
         D_0028EA41 = 0;
-        func_0010CDE0(0, slot, &D_0028EA40);
+        scePadSetActDirect(0, slot, &D_0028EA40);
         D_0028E360 = 0;
         break;
     }
@@ -44,7 +44,7 @@ void func_00217D80(void) {
         break;
     case 1:
         D_0028EA41 = D_0028E340;
-        func_0010CDE0(1, 0, &D_0028EA40);
+        scePadSetActDirect(1, 0, &D_0028EA40);
         D_0028E35C += 1;
         break;
     case 2:
@@ -55,7 +55,7 @@ void func_00217D80(void) {
         break;
     case 3:
         D_0028EA41 = 0;
-        func_0010CDE0(1, 0, &D_0028EA40);
+        scePadSetActDirect(1, 0, &D_0028EA40);
         D_0028E35C = 0;
         break;
     }

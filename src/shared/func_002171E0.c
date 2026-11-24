@@ -1,7 +1,7 @@
 #include "common.h"
 
-s32 func_0010C1E0(s32);                     /* extern */
-s32 func_0010C440(s32, s32, s32 *); /* extern */
+s32 scePadInit(s32);                     /* extern */
+s32 scePadPortOpen(s32, s32, s32 *); /* extern */
 s32 memset(s32 *, s32, s32);        /* extern */
 extern s32 D_0057CC10[];
 extern s32 D_0057CC14[];
@@ -45,7 +45,7 @@ void func_002171E0(void) {
     D_0057CC48[0] = 0;
     D_0057CC38[0] = 0;
     D_0057CC18[0] = 0;
-    func_0010C1E0(0);
-    func_0010C440(0, 0, D_0057CD80);
-    func_0010C440(1, 0, D_0057CE80);
+    scePadInit(0);
+    scePadPortOpen(0, 0, D_0057CD80);
+    scePadPortOpen(1, 0, D_0057CE80);
 }

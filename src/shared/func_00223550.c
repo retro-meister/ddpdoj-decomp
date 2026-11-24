@@ -72,7 +72,7 @@ extern u8 *D_00271B60[];
 extern u8 *D_00271B90[];
 extern s8 D_0028EB04;
 extern u8 *reg_a0;
-extern s32 func_00117550(char *buf, const char *format, ...);
+extern s32 sprintf(char *buf, const char *format, ...);
 extern void func_002144D0(s16 x, s16 y, const char *text, u16 texturePage, u16 glyphWidth, u16 glyphHeight, u16 alpha, u16 depth);
 extern char *D_0028E9F8;
 extern u8 *D_00271BC8[];
@@ -430,18 +430,18 @@ void func_00224020(s32 x, s32 y) {
     }
     func_002228D0(x + 42, y);
     if (D_0028EBC4 == 0) {
-        func_00117550(D_0028E9F8, "\x82\xCD\x82\xA2");
+        sprintf(D_0028E9F8, "\x82\xCD\x82\xA2");
         func_002144D0(py - shrink, px - shrink, D_0028E9F8, 4, w, h, 128, 300);
-        func_00117550(D_0028E9F8, "\x81\x5E");
+        sprintf(D_0028E9F8, "\x81\x5E");
         func_002144D0(py, px + 50, D_0028E9F8, 0, 20, 16, 128, 300);
-        func_00117550(D_0028E9F8, "\x82\xA2\x82\xA2\x82\xA6");
+        sprintf(D_0028E9F8, "\x82\xA2\x82\xA2\x82\xA6");
         func_002144D0(py, px + 75, D_0028E9F8, 0, 20, 16, 128, 300);
     } else {
-        func_00117550(D_0028E9F8, "\x82\xCD\x82\xA2");
+        sprintf(D_0028E9F8, "\x82\xCD\x82\xA2");
         func_002144D0(py, px, D_0028E9F8, 0, 20, 16, 128, 300);
-        func_00117550(D_0028E9F8, "\x81\x5E");
+        sprintf(D_0028E9F8, "\x81\x5E");
         func_002144D0(py, px + 50, D_0028E9F8, 0, 20, 16, 128, 300);
-        func_00117550(D_0028E9F8, "\x82\xA2\x82\xA2\x82\xA6");
+        sprintf(D_0028E9F8, "\x82\xA2\x82\xA2\x82\xA6");
         func_002144D0(py - shrink, px + 75 - shrink, D_0028E9F8, 4, w, h, 128, 300);
     }
 }
@@ -465,18 +465,18 @@ void func_002242B0(s32 x, s32 y) {
     w = (s32)(s8)D_0028EBC0 + 20;
     h = (s32)(s8)D_0028EBC0 + 16;
     if (D_0028EB0C == 1) {
-        func_00117550(D_0028E9F8, "\x82\xCD\x82\xA2");
+        sprintf(D_0028E9F8, "\x82\xCD\x82\xA2");
         func_002144D0(py - shrink, px - shrink, D_0028E9F8, 4, w, h, 128, 300);
-        func_00117550(D_0028E9F8, "\x81\x5E");
+        sprintf(D_0028E9F8, "\x81\x5E");
         func_002144D0(py, px + 50, D_0028E9F8, 0, 20, 16, 128, 300);
-        func_00117550(D_0028E9F8, "\x82\xA2\x82\xA2\x82\xA6");
+        sprintf(D_0028E9F8, "\x82\xA2\x82\xA2\x82\xA6");
         func_002144D0(py, px + 75, D_0028E9F8, 0, 20, 16, 128, 300);
     } else {
-        func_00117550(D_0028E9F8, "\x82\xCD\x82\xA2");
+        sprintf(D_0028E9F8, "\x82\xCD\x82\xA2");
         func_002144D0(py, px, D_0028E9F8, 0, 20, 16, 128, 300);
-        func_00117550(D_0028E9F8, "\x81\x5E");
+        sprintf(D_0028E9F8, "\x81\x5E");
         func_002144D0(py, px + 50, D_0028E9F8, 0, 20, 16, 128, 300);
-        func_00117550(D_0028E9F8, "\x82\xA2\x82\xA2\x82\xA6");
+        sprintf(D_0028E9F8, "\x82\xA2\x82\xA2\x82\xA6");
         func_002144D0(py - shrink, px + 75 - shrink, D_0028E9F8, 4, w, h, 128, 300);
     }
 }

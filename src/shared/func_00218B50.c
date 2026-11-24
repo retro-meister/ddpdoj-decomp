@@ -1,7 +1,7 @@
 #include "common.h"
 
 extern s32 printf(const char *format, ...);
-extern void func_0010EA98(void);
+extern void sceCdBreak(void);
 extern void func_0018DEE0(void);
 extern void func_00215FF0(u8 *dst, s32 a, s32 b);
 extern void func_002182F0(void);
@@ -42,7 +42,7 @@ void func_00218B50(void) {
     case 1:
         D_0028E350++;
         if (D_0028E9B8 != 0) {
-            func_0010EA98();
+            sceCdBreak();
         }
         D_0028E9B8 = 0;
         D_0028E9BC = 1;

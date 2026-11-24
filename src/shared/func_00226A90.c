@@ -16,8 +16,8 @@ typedef struct {
     u8 f3B;
 } SaveInfo;
 
-extern s32 func_00117550(char *buf, const char *format, ...);
-extern char *func_00117898(char *dst, const char *src);
+extern s32 sprintf(char *buf, const char *format, ...);
+extern char *strcpy(char *dst, const char *src);
 extern void func_00213060(void);
 extern void func_00214A90(s32 x, s32 y, s32 alpha);
 extern void func_00215350(void);
@@ -102,33 +102,33 @@ void func_00226A90(s32 slot, s32 x, s32 y, s32 alpha, s32 selected, SaveInfo *in
         b = info->f06;
         a = info->f08;
     }
-    func_00117550(buf, D_00289DD8, slot + 1);
+    sprintf(buf, D_00289DD8, slot + 1);
     func_0021C100(x + D_00289D70[0], y + D_00289D70[1], 0x12C, 0, 0x80, alpha, 1);
     switch (info->status) {
     case 0:
-        func_00117898(buf, D_00289DE0);
+        strcpy(buf, D_00289DE0);
         func_0021C100(x + D_00289D70[0], y + D_00289D70[1] + 0x60, 0x12C, 0, 0x80, alpha, 1);
         break;
     case 2:
-        func_00117898(buf, D_00289DE8);
+        strcpy(buf, D_00289DE8);
         func_0021C100(x + D_00289D70[0], y + D_00289D70[1] + 0x60, 0x12C, 0, 0x80, alpha, 1);
         break;
     case 3:
-        func_00117898(buf, D_00289DF8);
+        strcpy(buf, D_00289DF8);
         func_0021C100(x + D_00289D70[0], y + D_00289D70[1] + 0x60, 0x12C, 0, 0x80, alpha, 1);
         break;
     default:
-        func_00117550(buf, D_00289E08, info->f0C + 1, info->f0E + 1);
+        sprintf(buf, D_00289E08, info->f0C + 1, info->f0E + 1);
         func_0021C100(x + D_00289D70[2], y + D_00289D70[3], 0x12C, 0, 0x80, alpha, 0);
-        func_00117550(buf, D_00289E18, D_00271D10[info->f0A]);
+        sprintf(buf, D_00289E18, D_00271D10[info->f0A]);
         func_0021C100(x + D_00289D70[4], y + D_00289D70[5], 0x12C, 0, 0x80, alpha, 0);
-        func_00117550(buf, D_00289E18, D_0028DDB0[b / 2]);
+        sprintf(buf, D_00289E18, D_0028DDB0[b / 2]);
         func_0021C100(x + D_00289D70[6], y + D_00289D70[7], 0x12C, 0, 0x80, alpha, 0);
-        func_00117550(buf, D_00289E18, D_00271D00[a / 2]);
+        sprintf(buf, D_00289E18, D_00271D00[a / 2]);
         func_0021C100(x + D_00289D70[8], y + D_00289D70[9], 0x12C, 0, 0x80, alpha, 0);
-        func_00117550(buf, D_00289E20, info->f38, info->f39);
+        sprintf(buf, D_00289E20, info->f38, info->f39);
         func_0021C100(x + D_00289D70[10], y + D_00289D70[11], 0x12C, 0, 0x80, alpha, 0);
-        func_00117550(buf, D_00289E28, info->f3A, info->f3B);
+        sprintf(buf, D_00289E28, info->f3A, info->f3B);
         func_0021C100(x + D_00289D70[12], y + D_00289D70[13], 0x12C, 0, 0x80, alpha, 0);
         break;
     }

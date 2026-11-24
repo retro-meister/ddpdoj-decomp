@@ -1,7 +1,7 @@
 #include "common.h"
 
-s32 func_001058E8(s32);                     /* extern */
-s32 func_00106028(s32 *, s32, s32);     /* extern */
+s32 sceSifInitRpc(s32);                     /* extern */
+s32 sceSifBindRpc(s32 *, s32, s32);     /* extern */
 extern s32 D_0029CCE0[];
 extern s32 D_0029CD04[];
 
@@ -9,9 +9,9 @@ s32 func_0018C580(void) {
     s32 temp_v0;
     s32 var_v1;
 
-    func_001058E8(0);
+    sceSifInitRpc(0);
 loop_1:
-    if (func_00106028(D_0029CCE0, 0x12345, 0) < 0) {
+    if (sceSifBindRpc(D_0029CCE0, 0x12345, 0) < 0) {
 loop_2:
         goto loop_2;
     }

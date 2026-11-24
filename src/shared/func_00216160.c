@@ -7,11 +7,11 @@ typedef struct {
     u8 pad;
 } CdReadMode;
 
-s32 func_0010E008(s32 mode);
-s32 func_0010E568(s32 mode);
-s32 func_0010E820(u32 sector, u32 count, void *destination, CdReadMode *mode);
-s32 func_0010EA00(void);
-s32 func_0010EA98(void);
+s32 sceCdSync(s32 mode);
+s32 sceCdDiskReady(s32 mode);
+s32 sceCdRead(u32 sector, u32 count, void *destination, CdReadMode *mode);
+s32 sceCdGetError(void);
+s32 sceCdBreak(void);
 s32 printf(const char *format, ...);
 extern char D_00286F08[];
 extern u32 D_0028E9CC;
@@ -34,20 +34,20 @@ void func_00216160(void *destination, u32 byteCount, u32 startSector)
 
     for (;;) {
         do {
-            func_0010E568(0);
+            sceCdDiskReady(0);
             D_0028E9CC = D_002C0100.size;
             readMode.trycount = 0;
             readMode.spindlctrl = 1;
             readMode.datapattern = 0;
-        } while (!func_0010E820(D_002C0100.lsn, (D_002C0100.size + 0x7FF) >> 11, destination, &readMode));
+        } while (!sceCdRead(D_002C0100.lsn, (D_002C0100.size + 0x7FF) >> 11, destination, &readMode));
 
-        func_0010E008(0);
-        error = func_0010EA00();
+        sceCdSync(0);
+        error = sceCdGetError();
         if (error == 0) {
             break;
         }
 
         printf(D_00286F08, error);
-        func_0010EA98();
+        sceCdBreak();
     }
 }

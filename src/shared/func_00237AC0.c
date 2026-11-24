@@ -2,8 +2,8 @@
 
 extern s32 printf(const char *format, ...);
 extern void *memset(void *dst, s32 c, u32 n);
-extern void func_00117390(u32 seed);
-extern s32 func_001173A8(void);
+extern void srand(u32 seed);
+extern s32 rand(void);
 extern void func_00238B90(u8 *data);
 extern char D_0028BEE0[];
 extern char D_0028BF00[];
@@ -61,9 +61,9 @@ void func_00237AC0(void) {
     if (D_0028E91C != 0 || D_0028E910 == 0) {
         memset(D_006CB1D4, 0, 0x3A4);
     }
-    func_00117390(D_0028E2BC * D_0028E2BB);
+    srand(D_0028E2BC * D_0028E2BB);
     for (i = 0; i < 0x20; i++) {
-        ((u8 *)D_006C58A0)[0x5CE8 + i] = func_001173A8();
+        ((u8 *)D_006C58A0)[0x5CE8 + i] = rand();
     }
     D_006CB57A[0] = D_0028E1B4;
     D_006CB578[0] = D_0028E1B8;

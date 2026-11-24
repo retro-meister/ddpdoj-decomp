@@ -1,7 +1,7 @@
 #include "common.h"
 
-s32 func_0010F670(s32 arg0, s32 arg1, s32 *arg2);
-s32 func_0010F7A8(s32 arg0, s32 arg1, s32 *arg2, s32 *arg3, s32 *arg4);
+s32 sceMcSync(s32 arg0, s32 arg1, s32 *arg2);
+s32 sceMcGetInfo(s32 arg0, s32 arg1, s32 *arg2, s32 *arg3, s32 *arg4);
 extern s32 D_0028EC70;
 extern s32 D_0028EC74;
 extern s32 D_0028ECAC;
@@ -18,20 +18,20 @@ void func_0022CDB0(s32 arg0) {
 
     switch (D_0028ECCC) {
     case 0:
-        if (func_0010F670(1, 0, &result) != 0) {
+        if (sceMcSync(1, 0, &result) != 0) {
             D_0028ECC8 = 0;
             D_0028ECD0 = 6;
             D_0028ECCC += 1;
         }
         break;
     case 1:
-        D_0028ECAC = func_0010F7A8(D_0028EC70, D_0028EC74, &D_0028ECB8, &D_0028ECB4, &D_0028ECB0);
+        D_0028ECAC = sceMcGetInfo(D_0028EC70, D_0028EC74, &D_0028ECB8, &D_0028ECB4, &D_0028ECB0);
         if (D_0028ECAC == 0) {
             D_0028ECCC += 1;
         }
         break;
     case 2:
-        if (func_0010F670(1, 0, &result) != 0) {
+        if (sceMcSync(1, 0, &result) != 0) {
             error = 0;
             switch (result) {
             case 0:

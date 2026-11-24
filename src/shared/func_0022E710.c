@@ -4,13 +4,13 @@ typedef struct {
     char *name[3];
 } NameSet;
 
-s32 func_0010EFF0(s32 arg0, s32 arg1, void *arg2, s32 arg3);
-s32 func_0010F150(s32 arg0);
-s32 func_0010F488(s32 arg0, void *arg1, s32 arg2);
-s32 func_0010F670(s32 arg0, s32 arg1, s32 *arg2);
+s32 sceMcOpen(s32 arg0, s32 arg1, void *arg2, s32 arg3);
+s32 sceMcClose(s32 arg0);
+s32 sceMcWrite(s32 arg0, void *arg1, s32 arg2);
+s32 sceMcSync(s32 arg0, s32 arg1, s32 *arg2);
 void *memcpy(void *dst, const void *src, u32 n);
 void *memset(void *dst, s32 c, u32 n);
-char *func_00117898(u8 *dst, const char *src);
+char *strcpy(u8 *dst, const char *src);
 extern void func_0022C5E0(s32, s32, s32, s32, s32, u16, s32);
 void func_0022CF20(void);
 void func_0022D240(s32 arg0);
@@ -83,7 +83,7 @@ void func_0022E710(void) {
         }
         break;
     case 0x2:
-        if (func_0010EFF0(D_0028EC70, D_0028EC74, D_0028B6D0, 0x203) == 0) {
+        if (sceMcOpen(D_0028EC70, D_0028EC74, D_0028B6D0, 0x203) == 0) {
             D_0028ECF0 += 1;
         } else {
             D_0028ECF8 -= 1;
@@ -93,7 +93,7 @@ void func_0022E710(void) {
         }
         break;
     case 0x3:
-        if (func_0010F670(1, 0, &result) != 0) {
+        if (sceMcSync(1, 0, &result) != 0) {
             if (result < 0) {
                 D_0028ECF0 = 0x2D;
             } else {
@@ -104,22 +104,22 @@ void func_0022E710(void) {
         break;
     case 0x4:
         memset(D_0068E1B0, 0, 0x3C4);
-        func_00117898(D_0068E1B0, D_0028B6E8);
-        func_00117898(D_0068E270, D_0028B6F0);
+        strcpy(D_0068E1B0, D_0028B6E8);
+        strcpy(D_0068E270, D_0028B6F0);
         D_0068E1B6[0] = 0xE;
         D_0068E1BC[0] = 0x60;
         memcpy(D_0068E1C0, D_00272040, 0x40);
         memcpy(D_0068E200, D_00272080, 0x30);
         memcpy(D_0068E230, D_002720B0, 0x30);
         memcpy(D_0068E260, D_002720E0, 0x10);
-        func_00117898(D_0068E2B4, names.name[0]);
-        func_00117898(D_0068E2F4, names.name[1]);
-        func_00117898(D_0068E334, names.name[2]);
+        strcpy(D_0068E2B4, names.name[0]);
+        strcpy(D_0068E2F4, names.name[1]);
+        strcpy(D_0068E334, names.name[2]);
         D_0028ECF0 += 1;
         D_0028ECF8 = 0xA;
         break;
     case 0x5:
-        if (func_0010F488(D_0028ECA8, D_0068E1B0, 0x3C4) == 0) {
+        if (sceMcWrite(D_0028ECA8, D_0068E1B0, 0x3C4) == 0) {
             D_0028ECF0 += 1;
         } else {
             D_0028ECF8 -= 1;
@@ -129,7 +129,7 @@ void func_0022E710(void) {
         }
         break;
     case 0x6:
-        if (func_0010F670(1, 0, &result) != 0) {
+        if (sceMcSync(1, 0, &result) != 0) {
             if (result < 0) {
                 if (result == -3) {
                     D_0028ECF0 = 0x30;
@@ -143,7 +143,7 @@ void func_0022E710(void) {
         }
         break;
     case 0x7:
-        if (func_0010F150(D_0028ECA8) == 0) {
+        if (sceMcClose(D_0028ECA8) == 0) {
             D_0028ECF0 += 1;
         } else {
             D_0028ECF8 -= 1;
@@ -153,7 +153,7 @@ void func_0022E710(void) {
         }
         break;
     case 0x8:
-        if (func_0010F670(1, 0, &result) != 0) {
+        if (sceMcSync(1, 0, &result) != 0) {
             if (result < 0) {
                 D_0028ECF0 = 0x2D;
             } else {
@@ -167,7 +167,7 @@ void func_0022E710(void) {
         D_0028ECF8 = 0xA;
         break;
     case 0xA:
-        if (func_0010EFF0(D_0028EC70, D_0028EC74, D_0028B730, 0x203) == 0) {
+        if (sceMcOpen(D_0028EC70, D_0028EC74, D_0028B730, 0x203) == 0) {
             D_0028ECF0 += 1;
         } else {
             D_0028ECF8 -= 1;
@@ -177,7 +177,7 @@ void func_0022E710(void) {
         }
         break;
     case 0xB:
-        if (func_0010F670(1, 0, &result) != 0) {
+        if (sceMcSync(1, 0, &result) != 0) {
             if (result < 0) {
                 D_0028ECF0 = 0x2D;
             } else {
@@ -188,7 +188,7 @@ void func_0022E710(void) {
         }
         break;
     case 0xC:
-        if (func_0010F488(D_0028ECA8, D_00696D80, D_0028ED28) == 0) {
+        if (sceMcWrite(D_0028ECA8, D_00696D80, D_0028ED28) == 0) {
             D_0028ECF0 += 1;
         } else {
             D_0028ECF8 -= 1;
@@ -198,7 +198,7 @@ void func_0022E710(void) {
         }
         break;
     case 0xD:
-        if (func_0010F670(1, 0, &result) != 0) {
+        if (sceMcSync(1, 0, &result) != 0) {
             if (result < 0) {
                 if (result == -3) {
                     D_0028ECF0 = 0x30;
@@ -212,7 +212,7 @@ void func_0022E710(void) {
         }
         break;
     case 0xE:
-        if (func_0010F150(D_0028ECA8) == 0) {
+        if (sceMcClose(D_0028ECA8) == 0) {
             D_0028ECF0 += 1;
         } else {
             D_0028ECF8 -= 1;
@@ -222,7 +222,7 @@ void func_0022E710(void) {
         }
         break;
     case 0xF:
-        if (func_0010F670(1, 0, &result) != 0) {
+        if (sceMcSync(1, 0, &result) != 0) {
             if (result < 0) {
                 D_0028ECF0 = 0x2D;
             } else {
@@ -232,7 +232,7 @@ void func_0022E710(void) {
         }
         break;
     case 0x24:
-        if (func_0010EFF0(D_0028EC70, D_0028EC74, D_00272010[D_0028ED1C], 0x203) == 0) {
+        if (sceMcOpen(D_0028EC70, D_0028EC74, D_00272010[D_0028ED1C], 0x203) == 0) {
             D_0028ECF0 += 1;
         } else {
             D_0028ECF8 -= 1;
@@ -242,7 +242,7 @@ void func_0022E710(void) {
         }
         break;
     case 0x25:
-        if (func_0010F670(1, 0, &result) != 0) {
+        if (sceMcSync(1, 0, &result) != 0) {
             if (result < 0) {
                 D_0028ECF0 = 0x2D;
             } else {
@@ -253,7 +253,7 @@ void func_0022E710(void) {
         }
         break;
     case 0x26:
-        if (func_0010F488(D_0028ECA8, D_006C4EF0, 0x9A8) == 0) {
+        if (sceMcWrite(D_0028ECA8, D_006C4EF0, 0x9A8) == 0) {
             D_0028ECF0 += 1;
         } else {
             D_0028ECF8 -= 1;
@@ -263,7 +263,7 @@ void func_0022E710(void) {
         }
         break;
     case 0x27:
-        if (func_0010F670(1, 0, &result) != 0) {
+        if (sceMcSync(1, 0, &result) != 0) {
             if (result < 0) {
                 if (result == -3) {
                     D_0028ECF0 = 0x30;
@@ -277,7 +277,7 @@ void func_0022E710(void) {
         }
         break;
     case 0x28:
-        if (func_0010F150(D_0028ECA8) == 0) {
+        if (sceMcClose(D_0028ECA8) == 0) {
             D_0028ECF0 += 1;
         } else {
             D_0028ECF8 -= 1;
@@ -287,7 +287,7 @@ void func_0022E710(void) {
         }
         break;
     case 0x29:
-        if (func_0010F670(1, 0, &result) != 0) {
+        if (sceMcSync(1, 0, &result) != 0) {
             if (result < 0) {
                 D_0028ECF0 = 0x2D;
             } else {

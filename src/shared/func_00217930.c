@@ -1,8 +1,8 @@
 #include "gallery/gallery.h"
 
 extern sceGsLoadImage D_0057C780;
-void *func_00115390(u32 size);
-void func_001153E8(void *pointer);
+void *malloc(u32 size);
+void free(void *pointer);
 
 void func_00217930(void)
 {
@@ -11,7 +11,7 @@ void func_00217930(void)
     s32 vramBase;
     u32 blockIndex;
 
-    buffer = func_00115390(0x40000);
+    buffer = malloc(0x40000);
     for (wordIndex = 0; wordIndex < 0x10000; wordIndex++) {
         buffer[wordIndex] = 0;
     }
@@ -23,5 +23,5 @@ void func_00217930(void)
         sceGsSyncPath(0, 0);
     }
 
-    func_001153E8(buffer);
+    free(buffer);
 }

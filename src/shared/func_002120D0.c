@@ -1,6 +1,6 @@
 #include "common.h"
 
-s32 func_00115160();
+s32 memalign();
 s32 func_0011BEA0();
 s32 func_0012FD00();
 s32 func_0012FD40();
@@ -164,7 +164,7 @@ void func_002120D0(void) {
     reg_d0.h[0] = 8;
     func_002071C0();
     *(s16 *)(reg_a0 + 4) = 0x11;
-    printf(D_00286E78, func_00115160(0x40, 0x10));
+    printf(D_00286E78, memalign(0x40, 0x10));
     D_0028E9B8 = 0;
     t3 = 0;
     func_00225630();

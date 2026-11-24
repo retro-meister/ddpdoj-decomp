@@ -1,8 +1,8 @@
 #include "common.h"
 
-s32 func_0010F670(s32 arg0, s32 arg1, s32 *arg2);
-s32 func_0010F998(s32 arg0, s32 arg1, s32 arg2, s32 arg3, s32 arg4, void *arg5);
-s32 func_00117750(const char *a, const char *b);
+s32 sceMcSync(s32 arg0, s32 arg1, s32 *arg2);
+s32 sceMcGetDir(s32 arg0, s32 arg1, s32 arg2, s32 arg3, s32 arg4, void *arg5);
+s32 strcmp(const char *a, const char *b);
 void func_0022CDB0(s32 arg0);
 void func_0022CF20(void);
 void func_00233EE0(void);
@@ -107,7 +107,7 @@ void func_0022D550(void) {
         }
         break;
     case 3:
-        if (func_0010F998(D_0028EC70, D_0028EC74, D_00271FE0[D_0028ED1C], 0, 5, D_0069F580) == 0) {
+        if (sceMcGetDir(D_0028EC70, D_0028EC74, D_00271FE0[D_0028ED1C], 0, 5, D_0069F580) == 0) {
             D_0028ECF0 += 1;
             break;
         }
@@ -117,7 +117,7 @@ void func_0022D550(void) {
         }
         break;
     case 4:
-        if (func_0010F670(1, 0, &result) != 0) {
+        if (sceMcSync(1, 0, &result) != 0) {
             if (result <= 0) {
                 if (D_0028ECB4 < D_00271D60[D_0028ED1C * 2]) {
                     D_0028ECF0 = 50;
@@ -136,67 +136,67 @@ void func_0022D550(void) {
         for (i = 0, offset = 0; i < 5; i++, offset += 0x40) {
             if (D_0028ED1C == 0) {
                 entry = D_0069F580 + offset;
-                if ((func_00117750((char *)entry + 0x20, D_0028B3E0) == 0) && (*(s32 *)(entry + 0x10) == 0x9A8)) {
+                if ((strcmp((char *)entry + 0x20, D_0028B3E0) == 0) && (*(s32 *)(entry + 0x10) == 0x9A8)) {
                     missing = 0;
                 }
             }
             if (D_0028ED1C == 1) {
                 entry = D_0069F580 + offset;
-                if ((func_00117750((char *)entry + 0x20, D_0028B3F0) == 0) && (*(s32 *)(entry + 0x10) == 0x206EC)) {
+                if ((strcmp((char *)entry + 0x20, D_0028B3F0) == 0) && (*(s32 *)(entry + 0x10) == 0x206EC)) {
                     missing = 0;
                 }
             }
             if (D_0028ED1C == 2) {
                 entry = D_0069F580 + offset;
-                if ((func_00117750((char *)entry + 0x20, D_0028B410) == 0) && (*(s32 *)(entry + 0x10) == 0x206EC)) {
+                if ((strcmp((char *)entry + 0x20, D_0028B410) == 0) && (*(s32 *)(entry + 0x10) == 0x206EC)) {
                     missing = 0;
                 }
             }
             if (D_0028ED1C == 3) {
                 entry = D_0069F580 + offset;
-                if ((func_00117750((char *)entry + 0x20, D_0028B430) == 0) && (*(s32 *)(entry + 0x10) == 0x206EC)) {
+                if ((strcmp((char *)entry + 0x20, D_0028B430) == 0) && (*(s32 *)(entry + 0x10) == 0x206EC)) {
                     missing = 0;
                 }
             }
             if (D_0028ED1C == 4) {
                 entry = D_0069F580 + offset;
-                if ((func_00117750((char *)entry + 0x20, D_0028B450) == 0) && (*(s32 *)(entry + 0x10) == 0x206EC)) {
+                if ((strcmp((char *)entry + 0x20, D_0028B450) == 0) && (*(s32 *)(entry + 0x10) == 0x206EC)) {
                     missing = 0;
                 }
             }
             if (D_0028ED1C == 5) {
                 entry = D_0069F580 + offset;
-                if ((func_00117750((char *)entry + 0x20, D_0028B470) == 0) && (*(s32 *)(entry + 0x10) == 0x206EC)) {
+                if ((strcmp((char *)entry + 0x20, D_0028B470) == 0) && (*(s32 *)(entry + 0x10) == 0x206EC)) {
                     missing = 0;
                 }
             }
             if (D_0028ED1C == 6) {
                 entry = D_0069F580 + offset;
-                if ((func_00117750((char *)entry + 0x20, D_0028B490) == 0) && (*(s32 *)(entry + 0x10) == 0x206EC)) {
+                if ((strcmp((char *)entry + 0x20, D_0028B490) == 0) && (*(s32 *)(entry + 0x10) == 0x206EC)) {
                     missing = 0;
                 }
             }
             if (D_0028ED1C == 7) {
                 entry = D_0069F580 + offset;
-                if ((func_00117750((char *)entry + 0x20, D_0028B4B0) == 0) && (*(s32 *)(entry + 0x10) == 0x206EC)) {
+                if ((strcmp((char *)entry + 0x20, D_0028B4B0) == 0) && (*(s32 *)(entry + 0x10) == 0x206EC)) {
                     missing = 0;
                 }
             }
             if (D_0028ED1C == 8) {
                 entry = D_0069F580 + offset;
-                if ((func_00117750((char *)entry + 0x20, D_0028B4D0) == 0) && (*(s32 *)(entry + 0x10) == 0x206EC)) {
+                if ((strcmp((char *)entry + 0x20, D_0028B4D0) == 0) && (*(s32 *)(entry + 0x10) == 0x206EC)) {
                     missing = 0;
                 }
             }
             if (D_0028ED1C == 9) {
                 entry = D_0069F580 + offset;
-                if ((func_00117750((char *)entry + 0x20, D_0028B4F0) == 0) && (*(s32 *)(entry + 0x10) == 0x206EC)) {
+                if ((strcmp((char *)entry + 0x20, D_0028B4F0) == 0) && (*(s32 *)(entry + 0x10) == 0x206EC)) {
                     missing = 0;
                 }
             }
             if (D_0028ED1C == 10) {
                 entry = D_0069F580 + offset;
-                if ((func_00117750((char *)entry + 0x20, D_0028B510) == 0) && (*(s32 *)(entry + 0x10) == 0x206EC)) {
+                if ((strcmp((char *)entry + 0x20, D_0028B510) == 0) && (*(s32 *)(entry + 0x10) == 0x206EC)) {
                     missing = 0;
                 }
             }
@@ -204,67 +204,67 @@ void func_0022D550(void) {
         for (j = 0, offset2 = 0; j < 5; j++, offset2 += 0x40) {
             if (D_0028ED1C == 0) {
                 entry = D_0069F580 + offset2;
-                if (func_00117750((char *)entry + 0x20, D_0028B3E0) == 0) {
+                if (strcmp((char *)entry + 0x20, D_0028B3E0) == 0) {
                     printf(D_0028B530, *(s32 *)(entry + 0x10));
                 }
             }
             if (D_0028ED1C == 1) {
                 entry = D_0069F580 + offset2;
-                if (func_00117750((char *)entry + 0x20, D_0028B3F0) == 0) {
+                if (strcmp((char *)entry + 0x20, D_0028B3F0) == 0) {
                     printf(D_0028B550, *(s32 *)(entry + 0x10));
                 }
             }
             if (D_0028ED1C == 2) {
                 entry = D_0069F580 + offset2;
-                if (func_00117750((char *)entry + 0x20, D_0028B410) == 0) {
+                if (strcmp((char *)entry + 0x20, D_0028B410) == 0) {
                     printf(D_0028B570, *(s32 *)(entry + 0x10));
                 }
             }
             if (D_0028ED1C == 3) {
                 entry = D_0069F580 + offset2;
-                if (func_00117750((char *)entry + 0x20, D_0028B430) == 0) {
+                if (strcmp((char *)entry + 0x20, D_0028B430) == 0) {
                     printf(D_0028B590, *(s32 *)(entry + 0x10));
                 }
             }
             if (D_0028ED1C == 4) {
                 entry = D_0069F580 + offset2;
-                if (func_00117750((char *)entry + 0x20, D_0028B450) == 0) {
+                if (strcmp((char *)entry + 0x20, D_0028B450) == 0) {
                     printf(D_0028B5B0, *(s32 *)(entry + 0x10));
                 }
             }
             if (D_0028ED1C == 5) {
                 entry = D_0069F580 + offset2;
-                if (func_00117750((char *)entry + 0x20, D_0028B470) == 0) {
+                if (strcmp((char *)entry + 0x20, D_0028B470) == 0) {
                     printf(D_0028B5D0, *(s32 *)(entry + 0x10));
                 }
             }
             if (D_0028ED1C == 6) {
                 entry = D_0069F580 + offset2;
-                if (func_00117750((char *)entry + 0x20, D_0028B490) == 0) {
+                if (strcmp((char *)entry + 0x20, D_0028B490) == 0) {
                     printf(D_0028B5F0, *(s32 *)(entry + 0x10));
                 }
             }
             if (D_0028ED1C == 7) {
                 entry = D_0069F580 + offset2;
-                if (func_00117750((char *)entry + 0x20, D_0028B4B0) == 0) {
+                if (strcmp((char *)entry + 0x20, D_0028B4B0) == 0) {
                     printf(D_0028B610, *(s32 *)(entry + 0x10));
                 }
             }
             if (D_0028ED1C == 8) {
                 entry = D_0069F580 + offset2;
-                if (func_00117750((char *)entry + 0x20, D_0028B4D0) == 0) {
+                if (strcmp((char *)entry + 0x20, D_0028B4D0) == 0) {
                     printf(D_0028B630, *(s32 *)(entry + 0x10));
                 }
             }
             if (D_0028ED1C == 9) {
                 entry = D_0069F580 + offset2;
-                if (func_00117750((char *)entry + 0x20, D_0028B4F0) == 0) {
+                if (strcmp((char *)entry + 0x20, D_0028B4F0) == 0) {
                     printf(D_0028B650, *(s32 *)(entry + 0x10));
                 }
             }
             if (D_0028ED1C == 10) {
                 entry = D_0069F580 + offset2;
-                if (func_00117750((char *)entry + 0x20, D_0028B510) == 0) {
+                if (strcmp((char *)entry + 0x20, D_0028B510) == 0) {
                     printf(D_0028B670, *(s32 *)(entry + 0x10));
                 }
             }

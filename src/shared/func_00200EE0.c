@@ -1,7 +1,7 @@
 #include "common.h"
 
-s64 func_00110540(s64, s64);
-s64 func_00110BD8(s64, s64);
+s64 __divdi3(s64, s64);
+s64 __moddi3(s64, s64);
 extern s64 D_00267010[];
 extern u8 *reg_a0;
 
@@ -28,8 +28,8 @@ void func_00200EE0(void) {
         x = (s32) reg_d0.h[0];
         t = *(s64 *)((u8 *)D_00267010 + off);
         if (x >= t) {
-            buf[i] = func_00110540(x, t);
-            reg_d0.h[0] = func_00110BD8(x, t);
+            buf[i] = __divdi3(x, t);
+            reg_d0.h[0] = __moddi3(x, t);
         } else {
             buf[i] = 0;
         }

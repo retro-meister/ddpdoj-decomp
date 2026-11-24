@@ -7,8 +7,8 @@ void func_00233EE0(void);
 void func_00233F50(void);
 void func_00234230(void);
 void func_002343E0(void);
-s32 func_0010F670(s32, s32, s32 *);
-s32 func_0010F998(s32, s32, char *, s32, s32, void *);
+s32 sceMcSync(s32, s32, s32 *);
+s32 sceMcGetDir(s32, s32, char *, s32, s32, void *);
 s32 printf(const char *, ...);
 extern s32 D_00271D60[];
 extern char *D_00271FB0[];
@@ -175,12 +175,12 @@ void func_00232DE0(void) {
         D_0028EC8F = 0;
         D_0028EC80 = 0;
         D_0028EC84 = 0;
-        func_0010F998(D_0028EC70, D_0028EC74, D_00271FB0[0], 0, 99, D_0069F580);
+        sceMcGetDir(D_0028EC70, D_0028EC74, D_00271FB0[0], 0, 99, D_0069F580);
         D_0028ECF0 += 1;
         break;
     case 0x33:
         func_00234230();
-        if (func_0010F670(1, 0, &result) != 0) {
+        if (sceMcSync(1, 0, &result) != 0) {
             if (result <= 0) {
                 D_0028EC8D = 1;
                 D_0028EC88 += D_00271D60[0];
@@ -192,12 +192,12 @@ void func_00232DE0(void) {
         break;
     case 0x34:
         func_00234230();
-        func_0010F998(D_0028EC70, D_0028EC74, D_00271FB4[0], 0, 99, D_0069F580);
+        sceMcGetDir(D_0028EC70, D_0028EC74, D_00271FB4[0], 0, 99, D_0069F580);
         D_0028ECF0 += 1;
         break;
     case 0x35:
         func_00234230();
-        if (func_0010F670(1, 0, &result) != 0) {
+        if (sceMcSync(1, 0, &result) != 0) {
             if (result <= 0) {
                 D_0028EC84 += 1;
             }
@@ -206,12 +206,12 @@ void func_00232DE0(void) {
         break;
     case 0x36:
         func_00234230();
-        func_0010F998(D_0028EC70, D_0028EC74, D_00271FB8[0], 0, 99, D_0069F580);
+        sceMcGetDir(D_0028EC70, D_0028EC74, D_00271FB8[0], 0, 99, D_0069F580);
         D_0028ECF0 += 1;
         break;
     case 0x37:
         func_00234230();
-        if (func_0010F670(1, 0, &result) != 0) {
+        if (sceMcSync(1, 0, &result) != 0) {
             if (result <= 0) {
                 D_0028EC84 += 1;
             }
@@ -220,12 +220,12 @@ void func_00232DE0(void) {
         break;
     case 0x38:
         func_00234230();
-        func_0010F998(D_0028EC70, D_0028EC74, D_00271FBC[0], 0, 99, D_0069F580);
+        sceMcGetDir(D_0028EC70, D_0028EC74, D_00271FBC[0], 0, 99, D_0069F580);
         D_0028ECF0 += 1;
         break;
     case 0x39:
         func_00234230();
-        if (func_0010F670(1, 0, &result) != 0) {
+        if (sceMcSync(1, 0, &result) != 0) {
             if (result <= 0) {
                 D_0028EC84 += 1;
             }
@@ -234,12 +234,12 @@ void func_00232DE0(void) {
         break;
     case 0x3A:
         func_00234230();
-        func_0010F998(D_0028EC70, D_0028EC74, D_00271FC0[0], 0, 99, D_0069F580);
+        sceMcGetDir(D_0028EC70, D_0028EC74, D_00271FC0[0], 0, 99, D_0069F580);
         D_0028ECF0 += 1;
         break;
     case 0x3B:
         func_00234230();
-        if (func_0010F670(1, 0, &result) != 0) {
+        if (sceMcSync(1, 0, &result) != 0) {
             if (result <= 0) {
                 D_0028EC84 += 1;
             }
@@ -248,12 +248,12 @@ void func_00232DE0(void) {
         break;
     case 0x3C:
         func_00234230();
-        func_0010F998(D_0028EC70, D_0028EC74, D_00271FC4[0], 0, 99, D_0069F580);
+        sceMcGetDir(D_0028EC70, D_0028EC74, D_00271FC4[0], 0, 99, D_0069F580);
         D_0028ECF0 += 1;
         break;
     case 0x3D:
         func_00234230();
-        if (func_0010F670(1, 0, &result) != 0) {
+        if (sceMcSync(1, 0, &result) != 0) {
             if (result <= 0) {
                 D_0028EC84 += 1;
             }
@@ -262,12 +262,12 @@ void func_00232DE0(void) {
         break;
     case 0x3E:
         func_00234230();
-        func_0010F998(D_0028EC70, D_0028EC74, D_00271FC8[0], 0, 99, D_0069F580);
+        sceMcGetDir(D_0028EC70, D_0028EC74, D_00271FC8[0], 0, 99, D_0069F580);
         D_0028ECF0 += 1;
         break;
     case 0x3F:
         func_00234230();
-        if (func_0010F670(1, 0, &result) != 0) {
+        if (sceMcSync(1, 0, &result) != 0) {
             if (result <= 0) {
                 D_0028EC84 += 1;
             }
@@ -276,12 +276,12 @@ void func_00232DE0(void) {
         break;
     case 0x40:
         func_00234230();
-        func_0010F998(D_0028EC70, D_0028EC74, D_00271FCC[0], 0, 99, D_0069F580);
+        sceMcGetDir(D_0028EC70, D_0028EC74, D_00271FCC[0], 0, 99, D_0069F580);
         D_0028ECF0 += 1;
         break;
     case 0x41:
         func_00234230();
-        if (func_0010F670(1, 0, &result) != 0) {
+        if (sceMcSync(1, 0, &result) != 0) {
             if (result <= 0) {
                 D_0028EC84 += 1;
             }
@@ -290,12 +290,12 @@ void func_00232DE0(void) {
         break;
     case 0x42:
         func_00234230();
-        func_0010F998(D_0028EC70, D_0028EC74, D_00271FD0[0], 0, 99, D_0069F580);
+        sceMcGetDir(D_0028EC70, D_0028EC74, D_00271FD0[0], 0, 99, D_0069F580);
         D_0028ECF0 += 1;
         break;
     case 0x43:
         func_00234230();
-        if (func_0010F670(1, 0, &result) != 0) {
+        if (sceMcSync(1, 0, &result) != 0) {
             if (result <= 0) {
                 D_0028EC84 += 1;
             }
@@ -304,12 +304,12 @@ void func_00232DE0(void) {
         break;
     case 0x44:
         func_00234230();
-        func_0010F998(D_0028EC70, D_0028EC74, D_00271FD4[0], 0, 99, D_0069F580);
+        sceMcGetDir(D_0028EC70, D_0028EC74, D_00271FD4[0], 0, 99, D_0069F580);
         D_0028ECF0 += 1;
         break;
     case 0x45:
         func_00234230();
-        if (func_0010F670(1, 0, &result) != 0) {
+        if (sceMcSync(1, 0, &result) != 0) {
             if (result <= 0) {
                 D_0028EC84 += 1;
             }
@@ -318,12 +318,12 @@ void func_00232DE0(void) {
         break;
     case 0x46:
         func_00234230();
-        func_0010F998(D_0028EC70, D_0028EC74, D_00271FD8[0], 0, 99, D_0069F580);
+        sceMcGetDir(D_0028EC70, D_0028EC74, D_00271FD8[0], 0, 99, D_0069F580);
         D_0028ECF0 += 1;
         break;
     case 0x47:
         func_00234230();
-        if (func_0010F670(1, 0, &result) != 0) {
+        if (sceMcSync(1, 0, &result) != 0) {
             if (result <= 0) {
                 D_0028EC84 += 1;
             }

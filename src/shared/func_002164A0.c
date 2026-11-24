@@ -1,7 +1,7 @@
 #include "common.h"
 
-s32 func_00101C18();
-s32 func_0010EC48();
+s32 sceDmaGetChan();
+s32 sceMcInit();
 s32 func_0018C890();
 s32 func_00212740();
 s32 func_00216250();
@@ -29,7 +29,7 @@ void func_002164A0(void) {
     func_002163B0();
     func_002163F0();
     func_00217930();
-    D_0028E9F4 = func_00101C18(2);
+    D_0028E9F4 = sceDmaGetChan(2);
     func_0021B680();
     func_0021A640(D_00586FF0, D_00558780, 0x12C0, 0x200, 0x100);
     func_002171E0();
@@ -44,6 +44,6 @@ void func_002164A0(void) {
     func_0018C890();
     func_00218B00();
     func_00212740();
-    func_0010EC48();
+    sceMcInit();
     func_0022C630();
 }

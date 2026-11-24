@@ -9,7 +9,7 @@ extern void func_0021C100(s32 arg0, s32 arg1, s32 arg2, s32 arg3, s32 arg4, s32 
 extern void func_0021C2F0(void);
 extern void func_002228D0(s32 x, s32 y);
 extern void func_002252E0(void *buffer);
-extern s32 func_00117550(char *buf, const char *format, ...);
+extern s32 sprintf(char *buf, const char *format, ...);
 extern u8 D_00271BE0[];
 extern char D_00289C58[];
 extern s8 D_0028EAE0;
@@ -65,7 +65,7 @@ void func_00225450(void) {
     reg_a0 = (u8 *)D_00271BE0;
     func_002228D0(0x62, 8);
     func_00215350();
-    func_00117550(buf, D_00289C58, D_0028EAE4, D_0028EAE0);
+    sprintf(buf, D_00289C58, D_0028EAE4, D_0028EAE0);
     reg_a0 = (u8 *)buf;
     func_0021C0F0();
     func_0021C100(0xD8, 0x54, 0x12C, 0, 0x80, 0x80, 1);

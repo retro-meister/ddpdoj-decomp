@@ -1,11 +1,11 @@
 #include "common.h"
 
-s32 func_001058E8(s32);                     /* extern */
-s32 func_00107208();                            /* extern */
-s32 func_0010AEF8(s32 *);                       /* extern */
-s32 func_0010E288(s32);                     /* extern */
-s32 func_0010E568(s32);                     /* extern */
-s32 func_0010E750(s32);                     /* extern */
+s32 sceSifInitRpc(s32);                     /* extern */
+s32 sceFsReset();                            /* extern */
+s32 sceSifRebootIop(s32 *);                       /* extern */
+s32 sceCdInit(s32);                     /* extern */
+s32 sceCdDiskReady(s32);                     /* extern */
+s32 sceCdMmode(s32);                     /* extern */
 s32 printf(s32 *);                          /* extern */
 s32 sceSifLoadModule(s32 *, s32, s32);  /* extern */
 s32 sceSifSyncIop();                                /* extern */
@@ -20,20 +20,20 @@ extern s32 D_00287000[];
 extern s32 D_00287020[];
 
 void func_00216250(void) {
-    func_001058E8(0);
-    func_0010E288(0);
-    func_0010E750(2);
+    sceSifInitRpc(0);
+    sceCdInit(0);
+    sceCdMmode(2);
     do {
 
-    } while (func_0010AEF8(D_00286F20) == 0);
+    } while (sceSifRebootIop(D_00286F20) == 0);
     do {
 
     } while (sceSifSyncIop() == 0);
-    func_001058E8(0);
-    func_0010E288(0);
-    func_0010E750(2);
-    func_00107208();
-    func_0010E568(0);
+    sceSifInitRpc(0);
+    sceCdInit(0);
+    sceCdMmode(2);
+    sceFsReset();
+    sceCdDiskReady(0);
     printf(D_00286F40);
     do {
 

@@ -1,9 +1,9 @@
 #include "common.h"
 
-s32 func_0010EFF0(s32 arg0, s32 arg1, s32 arg2, s32 arg3);
-s32 func_0010F150(s32 arg0);
-s32 func_0010F370(s32 arg0, void *arg1, s32 arg2);
-s32 func_0010F670(s32 arg0, s32 arg1, s32 *arg2);
+s32 sceMcOpen(s32 arg0, s32 arg1, s32 arg2, s32 arg3);
+s32 sceMcClose(s32 arg0);
+s32 sceMcRead(s32 arg0, void *arg1, s32 arg2);
+s32 sceMcSync(s32 arg0, s32 arg1, s32 *arg2);
 s32 func_0022CAB0(void);
 void func_0022CF20(void);
 void func_0022D240(s32 arg0);
@@ -53,7 +53,7 @@ void func_00230840(void) {
         }
         break;
     case 2:
-        status = func_0010EFF0(D_0028EC70, D_0028EC74, D_00272010[D_0028ED1C], 3);
+        status = sceMcOpen(D_0028EC70, D_0028EC74, D_00272010[D_0028ED1C], 3);
         if (status == 0) {
             D_0028ECF0 += 1;
         } else {
@@ -64,7 +64,7 @@ void func_00230840(void) {
         }
         break;
     case 3:
-        if (func_0010F670(1, 0, &result) != 0) {
+        if (sceMcSync(1, 0, &result) != 0) {
             if (result < 0) {
                 D_0028ECF0 = 30;
             } else {
@@ -77,7 +77,7 @@ void func_00230840(void) {
     case 4:
         switch (D_0028ED1C) {
         case 0:
-            status = func_0010F370(D_0028ECA8, D_006C4EF0, 2472);
+            status = sceMcRead(D_0028ECA8, D_006C4EF0, 2472);
             break;
         case 1:
         case 2:
@@ -89,7 +89,7 @@ void func_00230840(void) {
         case 8:
         case 9:
         case 10:
-            status = func_0010F370(D_0028ECA8, D_006A4800, 0x206EC);
+            status = sceMcRead(D_0028ECA8, D_006A4800, 0x206EC);
             break;
         }
         if (status == 0) {
@@ -102,13 +102,13 @@ void func_00230840(void) {
         }
         break;
     case 5:
-        if (func_0010F670(1, 0, &result) != 0) {
+        if (sceMcSync(1, 0, &result) != 0) {
             D_0028ECF0 += 1;
             D_0028ECF8 = 10;
         }
         break;
     case 6:
-        if (func_0010F150(D_0028ECA8) == 0) {
+        if (sceMcClose(D_0028ECA8) == 0) {
             D_0028ECF0 += 1;
         } else {
             D_0028ECF8 -= 1;
@@ -118,7 +118,7 @@ void func_00230840(void) {
         }
         break;
     case 7:
-        if (func_0010F670(1, 0, &result) != 0) {
+        if (sceMcSync(1, 0, &result) != 0) {
             if (result < 0) {
                 D_0028ECF0 = 30;
             } else {
@@ -135,7 +135,7 @@ void func_00230840(void) {
         D_0028ECF0 = 10;
         break;
     case 9:
-        func_0010F670(0, 0, &result);
+        sceMcSync(0, 0, &result);
         if (result < 0) {
             D_0028ECF0 = 30;
         } else {

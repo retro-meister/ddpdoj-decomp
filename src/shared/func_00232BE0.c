@@ -1,7 +1,7 @@
 #include "common.h"
 
-s32 func_0010F670(s32 arg0, s32 arg1, s32 *arg2);
-s32 func_00110268(s32 arg0, s32 arg1);
+s32 sceMcSync(s32 arg0, s32 arg1, s32 *arg2);
+s32 sceMcUnformat(s32 arg0, s32 arg1);
 extern void func_0022C5E0(s32, s32, s32, s32, s32, u16, s32);
 s32 func_0022CC70(s32 arg0);
 void func_0022CF20(void);
@@ -33,13 +33,13 @@ void func_00232BE0(void) {
         }
         break;
     case 1:
-        if (func_00110268(D_0028EC70, D_0028EC74) == 0) {
+        if (sceMcUnformat(D_0028EC70, D_0028EC74) == 0) {
             D_0028ECF0 += 1;
         }
         break;
     case 2:
         func_00234150(4);
-        if (func_0010F670(1, 0, &result) != 0) {
+        if (sceMcSync(1, 0, &result) != 0) {
             if (result == 0) {
                 D_0028ECF0 += 1;
             } else {

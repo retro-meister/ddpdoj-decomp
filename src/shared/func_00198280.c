@@ -1,6 +1,6 @@
 #include "common.h"
 
-s32 func_001173A8(void);
+s32 rand(void);
 void *memset(void *, s32, s32);
 void printf(const char *, ...);
 extern s8 D_0025C4A0[];
@@ -42,7 +42,7 @@ s32 func_00198280(void) {
         D_002BAD50[i] = val;
     }
     for (i = 0; i < 4; i++) {
-        if ((func_001173A8() % 2) != 0) {
+        if ((rand() % 2) != 0) {
             D_002BAD63[0] |= 1 << (i + 1);
         }
     }
