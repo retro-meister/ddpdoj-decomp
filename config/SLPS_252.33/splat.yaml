@@ -3357,7 +3357,7 @@ segments:
       - [0x1308c0, c, main/func_00230840]
       - [0x130d50, c, main/func_00230CD0]
       - [0x131040, c, main/func_00230FC0]
-      - [0x1315a0, asm, game_1315a0]
+      - [0x1315a0, c, main/func_00231520]
       - [0x1318c0, c, main/func_00231840]
       - [0x131a30, c, main/func_002319B0]
       - [0x1322f0, c, main/func_00232270]
