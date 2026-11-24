@@ -8,7 +8,7 @@ import subprocess
 import sys
 from tempfile import TemporaryDirectory
 
-from common import ROOT, TARGETS
+from common import ROOT, TARGETS, target_compiler
 from trace_mwcc import capture_source, load_profiles
 
 
@@ -156,12 +156,13 @@ def main():
     parser.add_argument("target", choices=TARGETS)
     parser.add_argument("function")
     parser.add_argument("--source", type=Path, required=True)
-    parser.add_argument("--compiler", choices=profiles, default="3.0b38-030307-gallery")
+    parser.add_argument("--compiler", choices=profiles, help="override the target's configured compiler")
     parser.add_argument("--max-depth", type=int, default=2)
     parser.add_argument("--max-candidates", type=int, default=40)
     parser.add_argument("--trace", action="store_true", help="deduplicate and record compiler-internal trace signatures")
     parser.add_argument("--out", type=Path, help="write the best or matched C source to this path")
     options = parser.parse_args()
+    options.compiler = target_compiler(options.target, override=options.compiler)
 
     baseline_text = options.source.resolve(strict=True).read_text(encoding="utf-8")
 

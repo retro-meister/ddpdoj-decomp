@@ -29,18 +29,18 @@ extern s32 D_0028EA80;
 extern GlyphQuad D_00592000[];
 
 void func_00219A80(s32 arg0, s32 arg1) {
-    s32 n;
-    s32 u;
-    s32 v;
     s32 x;
     s32 y;
     s32 code;
-    s32 flip;
+    s32 n;
+    s32 u;
+    s32 v;
+    s32 palette;
 
     n = D_0028EA80;
     x = arg0 * 8;
     y = arg1 * 8;
-    flip = (reg_d0.h[0] >> 6) & 3;
+    palette = (reg_d0.h[0] & 0x3F) >> 1;
     code = reg_d0.h[1] & 0x1FFF;
     u = (code % 126 + 1) * 8;
     v = (code / 126 + 1) * 8;
@@ -48,13 +48,13 @@ void func_00219A80(s32 arg0, s32 arg1) {
     D_00592000[n].attr = 0x80;
     D_00592000[n].tex = 0x1E40;
     D_00592000[n].flags = 0;
-    D_00592000[n].clut = ((reg_d0.h[0] & 0x3F) >> 1) + 0x37B0;
+    D_00592000[n].clut = palette + 0x37B0;
     D_00592000[n].alpha = 0x80;
     D_00592000[n].x0 = x - 1;
     D_00592000[n].y0 = y;
     D_00592000[n].x1 = x + 7;
     D_00592000[n].y1 = y + 8;
-    switch (flip) {
+    switch ((reg_d0.h[0] >> 6) & 3) {
     case 0:
         D_00592000[n].u0 = u;
         D_00592000[n].v0 = v;
@@ -80,5 +80,5 @@ void func_00219A80(s32 arg0, s32 arg1) {
         D_00592000[n].v1 = v;
         break;
     }
-    D_0028EA80++;
+    D_0028EA80 = n + 1;
 }

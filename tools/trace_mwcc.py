@@ -139,7 +139,7 @@ def main():
     parser.add_argument("--diff", nargs=2, metavar=("A", "B"), help="compare two captures (.json/dir) or C sources")
     parser.add_argument("--function", help="function symbol to compare in --diff mode (defaults to first)")
     parser.add_argument("--json", type=Path, help="optional JSON output path for --diff mode")
-    parser.add_argument("--compiler", choices=profiles, default="3.0b38-030307-gallery")
+    parser.add_argument("--compiler", choices=profiles, default="3.0.3-020716")
     parser.add_argument("--wibo", help="override the Wibo executable on macOS or Linux")
     parser.add_argument("--assembler", default=f"{binutils_prefix}as")
     parser.add_argument("--objcopy", default=f"{binutils_prefix}objcopy")
