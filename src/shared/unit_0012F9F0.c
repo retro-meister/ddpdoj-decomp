@@ -79,10 +79,10 @@ void func_0012FB50(void) {
     func_0012FB00();
 }
 
-extern s32 D_002B3950_as_s32_a[];
+extern s32 g_arcade_sprites_as_s32_a[];
 
 void func_0012FB80(void) {
-    reg_a0_as_s32_p = D_002B3950_as_s32_a;
+    reg_a0_as_s32_p = g_arcade_sprites_as_s32_a;
     reg_d0.h[0] = MAIN_OR_DEATH_LABEL(0x4FF, 0xBB7);
     do {
         *reg_a0_as_s32_p = 0;

@@ -143,7 +143,7 @@ extern u8 D_002AB240[];
 extern u8 D_002AC9A0[];
 extern u8 D_002AE100[];
 extern u16 D_002AF860_as_u16_a[];
-extern u8 D_002B3950[];
+extern u8 g_arcade_sprites[];
 extern u8 *reg_a0;
 extern u8 *reg_a1;
 
@@ -337,7 +337,7 @@ next_40:
     func_0019B510();
 next_50:
     count = D_0028E1A0;
-    reg_a0 = (u8 *)D_002B3950;
+    reg_a0 = (u8 *)g_arcade_sprites;
     reg_d7.h[0] = D_0028E124;
     reg_d1.h[0] = 0xA;
     reg_d0.h[0] = count;

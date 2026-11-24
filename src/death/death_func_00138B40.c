@@ -70,7 +70,7 @@ extern s32 D_0028EA74;
 extern s32 g_quad_count;
 extern u16 D_00295E40[];
 extern TextScript death_D_002AB800;
-extern u16 D_002B3950_as_u16_a[];
+extern u16 g_arcade_sprites_as_u16_a[];
 extern u8 D_004ECF80[];
 extern u8 death_D_0056A800[];
 extern u8 g_gs_load_image_as_u8_a[];
@@ -186,7 +186,7 @@ void death_func_00138ED0(TextScript *script) {
             func_001A3020();
             func_0019AB20();
             arcade_sprite_draw();
-            head = (ListHead *) D_002B3950_as_u16_a;
+            head = (ListHead *) g_arcade_sprites_as_u16_a;
             head->e = 0;
             head->d = 0;
             head->c = 0;

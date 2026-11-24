@@ -189,6 +189,8 @@ segments:
       - [0x162160, .data, shared/memcard]
       - [0x162180, .data, shared/text]
       - [0x162250, data, data_162250]
+      - [0x167320, .data, shared/arcade_sprite]
+      - [0x167f90, data, data_167f90]
       - [0x1763b0, .rodata, shared/unit_00129DB0]
       - [0x176450, rodata, rodata_176450]
       - [0x177610, .rodata, shared/replay_header]
@@ -216,6 +218,8 @@ segments:
       - {type: sbss, vram: 0x290400, name: sbss_290400}
       - {type: .sbss, vram: 0x290bc8, name: shared/text}
       - {type: sbss, vram: 0x290bec, name: sbss_290bec}
+      - {type: .sbss, vram: 0x290e84, name: shared/arcade_sprite}
+      - {type: sbss, vram: 0x290ea8, name: sbss_290ea8}
       - {type: bss, vram: 0x291580, name: bss_291580}
       - {type: .bss, vram: 0x301010, name: shared/glyph_cache}
       - {type: bss, vram: 0x30b080, name: bss_30b080}

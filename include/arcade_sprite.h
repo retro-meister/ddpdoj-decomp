@@ -10,6 +10,17 @@ typedef struct {
     s16 h;
 } SpriteImage;
 
+/* One entry of the sprite list the game logic fills each frame; an all-zero entry ends the list. */
+typedef struct {
+    u16 x;    /* bits 0-10 position, bits 11-15 horizontal zoom (16 = 1:1, 0 = hidden) */
+    u16 y;    /* bits 0-9 position, bits 11-15 vertical zoom */
+    u16 attr; /* bits 0-6 priority, bits 8-12 palette, bits 13-14 flip */
+    u16 id;   /* image number */
+    u16 size; /* bits 0-8 height, bits 9-14 width / 16 */
+} ArcadeSprite;
+
+extern ArcadeSprite g_arcade_sprites[];
+
 extern SpriteImage *g_sprite_images; /* SPHED.PRS */
 extern u8 *g_sprite_pixels;          /* SPDAT.PRS */
 extern u8 *g_stage_sprite_buf;       /* unpacked STnSP.PRS; the packed file is read to +0x5DC800 */
