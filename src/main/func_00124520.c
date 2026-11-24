@@ -1,8 +1,9 @@
 #include "common.h"
+#pragma opt_propagation off
 
 #pragma divbyzerocheck on
 
-extern volatile u8 D_0028E38C;
+extern u8 D_0028E38C;
 extern u32 D_0028E480;
 extern u16 D_0028E904;
 

@@ -5,7 +5,7 @@ void func_00213640(s16 x, s16 y, s32 glyph, s32 w, s32 a4, s32 h, u16 attr, s32 
 void func_00213B80(s16 x, s16 y, u8 *text, s32 a3, s32 w, s32 h, u16 attr, s32 z);
 extern s8 *reg_a0;
 extern u16 D_0028E3F0;
-extern volatile s32 D_0028EB90;
+extern s32 D_0028EB90;
 
 void func_002228D0(s32 x, s32 y) {
     u8 buf[4];

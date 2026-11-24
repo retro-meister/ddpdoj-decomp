@@ -1,4 +1,5 @@
 #include "common.h"
+#pragma opt_propagation off
 
 typedef void (*Fn)(void);
 
@@ -9,7 +10,7 @@ void func_00207B10(void);
 extern u8 *D_00267D20[];
 extern s8 D_0028DFA0;
 extern Fn jtbl_0028E3F4;
-extern u8 *volatile reg_a0;
+extern u8 *reg_a0;
 
 void func_00207B60(void) {
     u8 **table;

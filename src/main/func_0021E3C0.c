@@ -1,11 +1,12 @@
 #include "common.h"
+#pragma opt_propagation off
 
 extern s32 func_00222530(s32);
-extern volatile s8 D_0028EB04;
-extern volatile s8 D_0028EB54;
-extern volatile s8 D_0028EB58;
-extern volatile s8 D_0028EB74;
-extern volatile s32 D_0028EB90;
+extern s8 D_0028EB04;
+extern s8 D_0028EB54;
+extern s8 D_0028EB58;
+extern s8 D_0028EB74;
+extern s32 D_0028EB90;
 
 void func_0021E3C0(void)
 {

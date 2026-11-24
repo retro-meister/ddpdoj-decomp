@@ -1,11 +1,12 @@
 #include "common.h"
+#pragma opt_common_subs off
 
 extern u8 D_0025BE50[];
 extern u8 D_0025BE70[];
 extern u8 D_002BAE82[];
 extern u8 *reg_a0;
 extern u8 *reg_a1;
-extern u8 *volatile reg_a4;
+extern u8 *reg_a4;
 
 void func_00199710(void) {
     reg_tmp.w = (u32)reg_a0;

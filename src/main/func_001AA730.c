@@ -1,4 +1,5 @@
 #include "common.h"
+#pragma opt_propagation off
 
 extern s16 D_0028E644;
 extern s16 D_0028E648;
@@ -13,7 +14,7 @@ void func_001AA730(void)
     u32 counter;
 
     D_0028E650 = 10;
-    adjustment = *(volatile u16 *)&D_0029F212[0];
+    adjustment = D_0029F212[0];
     D_0028E644 = 7;
     D_0028E648 = 0;
     reg_d2.w = 8;

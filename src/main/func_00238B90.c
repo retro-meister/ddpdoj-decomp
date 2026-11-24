@@ -737,7 +737,7 @@ void func_00238B90(Buf *buf) {
         if ((D_0029F260[0] & 2) && !(D_0029F261[0] & 0x40) && *(u16 *)D_0029CD90 != 0) {
             D_006C58B6[0] = 7;
         }
-        if (*(volatile u8 *)D_0029F260 & 2) {
+        if (*(u8 *)D_0029F260 & 2) {
             printf(D_0028BF58);
         } else {
             printf(D_0028BF68);
@@ -805,7 +805,7 @@ void func_00238B90(Buf *buf) {
         if ((D_0029F1F0[0] & 2) && !(D_0029F1F1[0] & 0x40) && *(u16 *)D_0029CD80 != 0) {
             D_006C58B6[0] = 7;
         }
-        if (*(volatile u8 *)D_0029F1F0 & 2) {
+        if (*(u8 *)D_0029F1F0 & 2) {
             printf(D_0028BF58);
         } else {
             printf(D_0028BF68);

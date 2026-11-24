@@ -1,7 +1,7 @@
 #include "common.h"
 
 extern u32 reg_a0;
-extern volatile s8 enemy_move_end_requested;
+extern s8 enemy_move_end_requested;
 extern u32 D_00262ED0[];
 extern u32 D_00262EE0[];
 

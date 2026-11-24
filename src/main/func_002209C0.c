@@ -1,4 +1,5 @@
 #include "common.h"
+#pragma opt_dead_assignments off
 
 extern void func_0021C100(s32 x, s32 y, s32 z, s32 page, s32 bright, s32 alpha, s32 flag);
 extern void func_00224BA0(s32 x, s32 y, s32 z, s32 page, s32 bright, s32 alpha, s32 flag, s32 kind);
@@ -10,7 +11,7 @@ extern u8 *D_002715D0[];
 extern u8 *D_002716B0[];
 extern u8 *D_002716C0[];
 extern s16 D_00271800[];
-extern volatile u16 D_00271A10[];
+extern u16 D_00271A10[];
 extern u8 *D_0028DD48[2];
 extern u8 *D_0028DD50[2];
 extern u8 *D_0028DD58[2];

@@ -1,4 +1,5 @@
 #include "common.h"
+#pragma opt_propagation off
 
 extern u32 D_0028E484;
 extern u16 D_0028E4A6;
@@ -10,7 +11,7 @@ extern void func_001A80D0(void);
 void func_001A6B70(void)
 {
     if (D_0028E8C4 >= 0) {
-        u16 offset = *(volatile u16 *)&reg_d6.h[0];
+        u16 offset = reg_d6.h[0];
         u32 savedRegister;
 
         reg_d1.h[0] = 0x5BC0;

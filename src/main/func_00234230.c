@@ -1,6 +1,7 @@
 #include "common.h"
+#pragma opt_propagation off
 extern s32 D_0028DDD0;
-extern volatile u16 D_0028ED10;
+extern u16 D_0028ED10;
 void func_0022C5E0(s32, s32, s32, s32, s32, u16, s32);
 void func_00234230(void) {
     u16 t = D_0028ED10;

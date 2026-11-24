@@ -1,6 +1,7 @@
 #include "common.h"
+#pragma opt_propagation off
 
-extern volatile s32 D_0028E484;
+extern s32 D_0028E484;
 
 void func_0012D980(void);
 

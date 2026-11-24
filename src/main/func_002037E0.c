@@ -1,12 +1,13 @@
 #include "common.h"
+#pragma opt_dead_assignments off
 
 extern s8 D_0028E408;
 extern Reg32 D_0028E484;
 extern void func_002037B0(void);
 
 void func_002037E0(void) {
-    volatile Reg32 *temporaryRegister = &reg_tmp;
-    volatile Reg32 *dataRegister6 = &reg_d6;
+    Reg32 *temporaryRegister = &reg_tmp;
+    Reg32 *dataRegister6 = &reg_d6;
     u32 originalD6;
     u32 adjustment;
 

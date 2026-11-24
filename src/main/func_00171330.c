@@ -1,10 +1,11 @@
 #include "common.h"
+#pragma opt_propagation off
 
 extern u8 D_0028E2C0;
 extern u16 D_0028E4A2;
 extern u16 D_0028E4A6;
 extern void *reg_a6;
-extern void (*volatile jtbl_0028E3F4)(void);
+extern void (*jtbl_0028E3F4)(void);
 
 void func_00171330(void (*callback)(void))
 {

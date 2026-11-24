@@ -3,7 +3,7 @@
 typedef void (*Fn)(void);
 
 extern u8 D_0025EAF0[];
-extern volatile u16 D_0028E484;
+extern u16 D_0028E484;
 extern Fn jtbl_0028E3F4;
 extern u8 *reg_a0;
 extern u8 *reg_a6;

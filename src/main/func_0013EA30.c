@@ -13,6 +13,6 @@ void func_0013EA30(void)
     }
 
     destinationAddress = (u32)D_0029F22F;
-    *(volatile u8 *)destinationAddress = reg_d0.b[0];
-    *(volatile u8 *)destinationAddress = 0x50;
+    *(u8 *)destinationAddress = reg_d0.b[0];
+    *(u8 *)destinationAddress = 0x50;
 }

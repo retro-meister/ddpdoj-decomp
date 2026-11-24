@@ -1,11 +1,12 @@
 #include "common.h"
+#pragma opt_propagation off
 
 extern s16 D_0028E644;
 extern s16 D_0028E648;
 extern s16 D_0028E64C;
 extern s16 D_0028E650;
 extern u16 D_0028E698;
-extern volatile u16 D_0029F282[];
+extern u16 D_0029F282[];
 
 void func_001AA1C0(void)
 {

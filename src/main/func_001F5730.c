@@ -8,6 +8,6 @@ void func_001F5730(void) {
 
     reg_d0.h[0] = 0xA001;
     flags = (u16 *)reg_a6;
-    combined = (u32)flags[0xC0] | (u32)*(u16 *)&reg_d0.h[0];
+    combined = (u32)flags[0xC0] | (u32)reg_d0.h[0];
     flags[0xC0] = (u16)combined;
 }

@@ -3,7 +3,7 @@
 extern u8 D_002586F0[];
 extern u8 D_00258720[];
 extern u8 *reg_a0;
-extern volatile s8 enemy_move_end_requested;
+extern s8 enemy_move_end_requested;
 
 extern void func_0014E300(void);
 extern void func_0014E370(void);

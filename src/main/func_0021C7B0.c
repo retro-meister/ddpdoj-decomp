@@ -1,7 +1,7 @@
 #include "common.h"
 extern u8 *D_0028EA84;
 extern u8 *D_0028EA88;
-extern u8 *volatile D_0028EA8C;
+extern u8 *D_0028EA8C;
 extern s32 D_0028EA90;
 extern s32 D_0028EA94;
 extern u8 *D_0028EA9C;

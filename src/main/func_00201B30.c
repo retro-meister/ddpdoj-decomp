@@ -1,3 +1,4 @@
+#pragma opt_propagation off
 typedef unsigned int u32;
 typedef unsigned short u16;
 typedef unsigned char u8;
@@ -8,14 +9,14 @@ typedef union {
     u8 b[4];
 } Reg32;
 
-extern volatile Reg32 reg_d0;
-extern volatile Reg32 reg_d1;
-extern volatile Reg32 reg_d2;
-extern volatile Reg32 reg_d3;
-extern volatile Reg32 reg_d4;
-extern volatile Reg32 reg_d5;
-extern volatile Reg32 reg_d6;
-extern volatile Reg32 reg_d7;
+extern Reg32 reg_d0;
+extern Reg32 reg_d1;
+extern Reg32 reg_d2;
+extern Reg32 reg_d3;
+extern Reg32 reg_d4;
+extern Reg32 reg_d5;
+extern Reg32 reg_d6;
+extern Reg32 reg_d7;
 
 void func_00201B30(void) {
     u32 d5, d4, d3, d2, d1, d0, d7, d6;
