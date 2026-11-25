@@ -6577,3 +6577,7 @@ stage1_boss_turret_volleys = 0x28dc48;
 stage1_boss_beam_waits = 0x28dc50;
 stage1_boss_normal_rounds = 0x28dc58;
 stage1_boss_palette = 0x25fa30;
+stage3_boss_blast_chain = 0x26d810;
+stage3_boss_final_flash = 0x26d8a0;
+stage3_boss_final_fade = 0x26d990;
+stage3_boss_phase_blasts = 0x26d9c0;
