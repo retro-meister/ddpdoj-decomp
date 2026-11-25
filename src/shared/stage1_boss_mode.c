@@ -36,11 +36,11 @@ void (*stage1_boss_mode_routines[])(void) = {
     0,
 };
 
-u16 stage1_boss_side_gun_levels[] = {
+u16 stage1_boss_beam_levels[] = {
     0xFFFC, 0xFFFD, 0xFFFE, 0xFFFF, 0x0000, 0x0001, 0x0002, 0x0003,
 };
 
-u16 stage1_boss_side_arg10_levels[] = {
+u16 stage1_boss_beam_speeds[] = {
     0xFFFC, 0xFFFC, 0xFFFC, 0xFFFC, 0xFFFE, 0x0000, 0x0002, 0x0004,
 };
 
@@ -154,9 +154,9 @@ s32 aim_at_player();
 s32 direction_turn_toward();
 
 extern u8 stage1_boss_palette[];
-extern u8 stage1_boss_gatling_rates[];
-extern u8 stage1_boss_gatling_arg5_levels[];
-extern u8 stage1_boss_side_gun_waits[];
+extern u8 stage1_boss_turret_shot_waits[];
+extern u8 stage1_boss_turret_volleys[];
+extern u8 stage1_boss_beam_waits[];
 extern u8 stage1_boss_normal_rounds[];
 
 void stage1_boss_mode_vulcan_end(void);
@@ -184,13 +184,13 @@ void stage1_boss_mode_normal_start(void) {
     NORMAL_MODE(reg_a4)->step = 0;
     NORMAL_MODE(reg_a4)->gatling.sh = 0x1000;
     func_001713B0();
-    reg_d1.b[0] = *(stage1_boss_gatling_arg5_levels + reg_d0.b[0]);
+    reg_d1.b[0] = *(stage1_boss_turret_volleys + reg_d0.b[0]);
     reg_d1.b[0] += ENTITY(reg_a6)[8].sprite.b[1];
     if ((s32) reg_d1.b[0] >= 0x80) {
         reg_d1.b[0] = 0x80;
     }
     NORMAL_MODE(reg_a4)->gatling_arg5 = (u8) reg_d1.b[0];
-    reg_d1.b[0] = *(stage1_boss_gatling_rates + reg_d0.b[0]);
+    reg_d1.b[0] = *(stage1_boss_turret_shot_waits + reg_d0.b[0]);
     reg_d1.b[0] -= ENTITY(reg_a6)[8].draw.b.flip;
     if ((s8) reg_d1.b[0] < 3) {
         reg_d1.b[0] = 3;
@@ -209,9 +209,9 @@ void stage1_boss_mode_normal_start(void) {
     NORMAL_MODE(reg_a4)->side.sb = 1;
     NORMAL_MODE(reg_a4)->unused_0C = 4;
     func_001713B0();
-    reg_d1.b[0] = *(stage1_boss_side_gun_waits + reg_d0.b[0]);
+    reg_d1.b[0] = *(stage1_boss_beam_waits + reg_d0.b[0]);
     NORMAL_MODE(reg_a4)->side_guns.t.reload = reg_d1.b[0];
-    reg_a0 = (u8 *)(stage1_boss_side_gun_levels);
+    reg_a0 = (u8 *)(stage1_boss_beam_levels);
     reg_d0.h[0] += reg_d0.h[0];
     reg_d1.h[0] = (reg_d0.h[0] != 0) ? *(u16 *)((u8 *)reg_a0 + ((s16)reg_d0.h[0] & ~1)) : *(u16 *)reg_a0;
     reg_d1.h[0] += ENTITY(reg_a6)[8].look.h;
@@ -223,7 +223,7 @@ void stage1_boss_mode_normal_start(void) {
     if ((s16) ENTITY(reg_a6)[8].look.h > 4) {
         ENTITY(reg_a6)[8].look.h = 4U;
     }
-    reg_a0 = (u8 *)(stage1_boss_side_arg10_levels);
+    reg_a0 = (u8 *)(stage1_boss_beam_speeds);
     reg_d1.h[0] = (reg_d0.h[0] != 0) ? *(u16 *)((u8 *)reg_a0 + ((s16)reg_d0.h[0] & ~1)) : *(u16 *)reg_a0;
     reg_d1.h[0] += ENTITY(reg_a6)[8].hit_y_plus.h;
     if ((s16) reg_d1.h[0] > 0x20) {

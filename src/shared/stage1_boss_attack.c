@@ -32,6 +32,89 @@ void stage1_boss_fire_body_ports_aimed(void);
 void stage1_boss_fire_front_guns_rage(void);
 void stage1_boss_fire_front_guns_rage_spread(void);
 void stage1_boss_fire_side_spread(void);
+/* Two bytes of a boss slot that are set together as one word: a reload value and its countdown. */
+typedef union {
+    u16 h;
+    s16 sh;
+    struct { u8 reload; u8 count; } t;
+} SlotTimer;
+
+/*
+ * The attack part of the boss slot (reg_a4), one record per attack. `running` is cleared when the attack is over.
+ * The mode that starts an attack fills in some of its fields. Directions are in 1/256 of a turn where the
+ * bullets are fired with the 256-step routines, otherwise in 1/64.
+ */
+typedef struct {
+    /* 0x00 */ s16 running;
+    /* 0x02 */ SlotTimer shot;
+    /* 0x04 */ u16 speed;
+    /* 0x06 */ u16 shots_left;
+    /* 0x08 */ u16 spread;        /* angle between the pairs; grows by spread_step with every shot */
+    /* 0x0A */ u8 unused_0A;
+    /* 0x0B */ u8 direction;
+    /* 0x0C */ u16 spread_step;
+} BodyPortsRage;
+
+typedef struct {
+    /* 0x00 */ s16 running;
+    /* 0x02 */ SlotTimer shot;
+    /* 0x04 */ u8 swing;          /* one bit per turret: swinging back */
+    /* 0x05 */ u8 volleys_left;
+    /* 0x06 */ u8 unused_06;
+    /* 0x07 */ u8 aimed;          /* every turret has reached its start angle */
+    /* 0x08 */ u8 start_angle[4];
+    /* 0x0C */ u16 speed;
+} TurretsScatter;
+
+typedef struct {
+    /* 0x00 */ s16 running;
+    /* 0x02 */ SlotTimer aim_wait;
+    /* 0x04 */ u8 target_angle;
+    /* 0x05 */ u8 step;
+    /* 0x06 */ SlotTimer turn;
+    /* 0x08 */ SlotTimer shot;
+    /* 0x0A */ u16 shots_left;
+    /* 0x0C */ u16 speed;
+} GatlingA;
+
+/* The beams of the right and the left side. */
+typedef struct {
+    /* 0x00 */ s16 running;
+    /* 0x02 */ u8 kind;           /* 0: one aimed line, otherwise a fan */
+    /* 0x03 */ u8 shots_left;
+    /* 0x04 */ SlotTimer shot;
+    /* 0x06 */ Field16 spare;
+    /* 0x08 */ u16 y;             /* where the bullets start */
+    /* 0x0A */ u16 x;
+    /* 0x0C */ u8 unused_0C;
+    /* 0x0D */ u8 direction;
+    /* 0x0E */ u16 unused_0E;
+    /* 0x10 */ u16 speed;
+} SideBeam;
+
+/* The main guns of the right and the left side. */
+typedef struct {
+    /* 0x00 */ s16 running;
+    /* 0x02 */ u8 interval;       /* frames between two shots; gets shorter */
+    /* 0x03 */ u8 wait;
+    /* 0x04 */ s16 unused_04;
+    /* 0x06 */ s16 unused_06;
+    /* 0x08 */ u8 unused_08[3];
+    /* 0x0B */ u8 direction;      /* turns with every shot */
+    /* 0x0C */ u8 unused_0C[2];
+    /* 0x0E */ SlotTimer speedup; /* shots between two steps of the interval */
+    /* 0x10 */ SlotTimer spare;
+    /* 0x12 */ u8 unused_12;
+    /* 0x13 */ u8 unused_13;
+    /* 0x14 */ u16 speed;
+} SideMainGun;
+
+#define RAGE(pointer) ((BodyPortsRage *)(pointer))
+#define TURRETS(pointer) ((TurretsScatter *)(pointer))
+#define GATLING_A(pointer) ((GatlingA *)(pointer))
+#define BEAM(pointer) ((SideBeam *)(pointer))
+#define MAIN_GUN(pointer) ((SideMainGun *)(pointer))
+
 /* The set-up routine and the per-frame routine of every attack, by attack number. */
 void (*stage1_boss_fire_routines[])(void) = {
     stage1_boss_fire_body_ports_rage_start,
@@ -68,7 +151,7 @@ void (*stage1_boss_fire_routines[])(void) = {
     0,
 };
 
-void func_001B5110(void);
+void stage1_boss_fire_turrets_sweep(void);
 void stage1_boss_fire_right_beam(void);
 void stage1_boss_fire_left_beam(void);
 void stage1_boss_fire_right_main_gun(void);
@@ -96,22 +179,22 @@ extern u16 D_0026E080[];
 
 void stage1_boss_fire_body_ports_rage_start(void) {
     enemy_switch_target_player();
-    *(s16 *)(reg_a4 + 2) = 0x1001;
-    *(s16 *)(reg_a4 + 4) = 0;
-    *(s16 *)(reg_a4 + 8) = 8;
-    *(u8 *)(reg_a4 + 0xB) = 0x80U;
+    RAGE(reg_a4)->shot.sh = 0x1001;
+    RAGE(reg_a4)->speed = 0;
+    RAGE(reg_a4)->spread = 8;
+    RAGE(reg_a4)->direction = 0x80U;
     func_00202730();
     if (cond_flag == 0) {
         rng_next();
         reg_d1.b[0] += reg_d0.b[0];
-        *(u8 *)(reg_a4 + 0xB) = (u8) reg_d1.b[0];
+        RAGE(reg_a4)->direction = (u8) reg_d1.b[0];
     }
     func_001713B0();
     reg_d0.h[0] += reg_d0.h[0];
     reg_a0 = (u8 *)(D_0026E070);
-    *(u16 *)(reg_a4 + 0xC) = (reg_d0.h[0] != 0) ? *(u16 *)((u8 *)reg_a0 + ((s16)reg_d0.h[0] & ~1)) : *(u16 *)reg_a0;
+    RAGE(reg_a4)->spread_step = (reg_d0.h[0] != 0) ? *(u16 *)((u8 *)reg_a0 + ((s16)reg_d0.h[0] & ~1)) : *(u16 *)reg_a0;
     reg_a0 = (u8 *)(D_0026E080);
-    *(u16 *)(reg_a4 + 6) = (reg_d0.h[0] != 0) ? *(u16 *)((u8 *)reg_a0 + ((s16)reg_d0.h[0] & ~1)) : *(u16 *)reg_a0;
+    RAGE(reg_a4)->shots_left = (reg_d0.h[0] != 0) ? *(u16 *)((u8 *)reg_a0 + ((s16)reg_d0.h[0] & ~1)) : *(u16 *)reg_a0;
 }
 
 s32 bullet_fire256_2way();
@@ -128,18 +211,18 @@ void stage1_boss_fire_body_ports_rage(void) {
     u16 temp_a1;
     u16 temp_a2;
 
-    reg_tmp.b[0] = *(u8 *)(reg_a4 + 3);
-    *(u8 *)(reg_a4 + 3) -= 1;
+    reg_tmp.b[0] = RAGE(reg_a4)->shot.t.count;
+    RAGE(reg_a4)->shot.t.count -= 1;
     if ((s32) reg_tmp.b[0] <= 0) {
-        *(u8 *)(reg_a4 + 3) = (u8) *(u8 *)(reg_a4 + 2);
+        RAGE(reg_a4)->shot.t.count = (u8) RAGE(reg_a4)->shot.t.reload;
         reg_d1.w = 0;
-        reg_d1.b[0] = *(u8 *)(reg_a4 + 0xB);
-        reg_d0.h[0] = *(u16 *)(reg_a4 + 4);
+        reg_d1.b[0] = RAGE(reg_a4)->direction;
+        reg_d0.h[0] = RAGE(reg_a4)->speed;
         temp_a2 = reg_d0.h[0];
         reg_tmp.w = reg_d0.w;
         reg_d0.h[1] = temp_a2;
         reg_d0.h[0] = 3;
-        temp_a1 = *(u16 *)(reg_a4 + 8);
+        temp_a1 = RAGE(reg_a4)->spread;
         reg_d6.h[0] = temp_a1;
         reg_d3.h[1] = D_0026E098[0];
         reg_d3.h[0] = D_0026E09A[0];
@@ -162,12 +245,12 @@ void stage1_boss_fire_body_ports_rage(void) {
         reg_d3.h[0] = D_0026E096[0];
         reg_d1.b[0] -= reg_d6.b[0];
         bullet_fire256_2way();
-        *(u16 *)(reg_a4 + 4) += 4;
-        reg_d0.h[0] = *(u16 *)(reg_a4 + 0xC);
-        *(u16 *)(reg_a4 + 8) += reg_d0.h[0];
-        *(u16 *)(reg_a4 + 6) -= 1;
-        if ((s16) *(u16 *)(reg_a4 + 6) == 0) {
-            *(s16 *)reg_a4 = 0;
+        RAGE(reg_a4)->speed += 4;
+        reg_d0.h[0] = RAGE(reg_a4)->spread_step;
+        RAGE(reg_a4)->spread += reg_d0.h[0];
+        RAGE(reg_a4)->shots_left -= 1;
+        if ((s16) RAGE(reg_a4)->shots_left == 0) {
+            RAGE(reg_a4)->running = 0;
         }
     }
 }
@@ -182,60 +265,60 @@ extern u16 D_0026E0B0[];
 
 void stage1_boss_fire_turrets_scatter_start(void) {
     u32 temp_a0;
-    *(s8 *)(reg_a4 + 4) = 0;
-    *(s8 *)(reg_a4 + 7) = 0;
+    TURRETS(reg_a4)->swing = 0;
+    TURRETS(reg_a4)->aimed = 0;
     func_001713B0();
     reg_a0 = (u8 *)(D_0026E0B0);
     reg_d0.h[0] += reg_d0.h[0];
     reg_d0.h[0] = (reg_d0.h[0] != 0) ? *(u16 *)((u8 *)reg_a0 + ((s16)reg_d0.h[0] & ~1)) : *(u16 *)reg_a0;
-    temp_a0 = *(u16 *)(reg_a4 + 0xC);
-    *(u16 *)(reg_a4 + 0xC) = (u16) (temp_a0 + reg_d0.h[0]);
-    *(u8 *)(reg_a4 + 9) = 0x20U;
-    *(u8 *)(reg_a4 + 8) = 0x20U;
-    *(u8 *)(reg_a4 + 0xB) = 0x20U;
-    *(u8 *)(reg_a4 + 0xA) = 0x20U;
+    temp_a0 = TURRETS(reg_a4)->speed;
+    TURRETS(reg_a4)->speed = (u16) (temp_a0 + reg_d0.h[0]);
+    TURRETS(reg_a4)->start_angle[1] = 0x20U;
+    TURRETS(reg_a4)->start_angle[0] = 0x20U;
+    TURRETS(reg_a4)->start_angle[3] = 0x20U;
+    TURRETS(reg_a4)->start_angle[2] = 0x20U;
     rng_next();
-    *(u8 *)(reg_a4 + 9) += reg_d0.b[0];
+    TURRETS(reg_a4)->start_angle[1] += reg_d0.b[0];
     rng_next();
-    *(u8 *)(reg_a4 + 8) += reg_d0.b[0];
+    TURRETS(reg_a4)->start_angle[0] += reg_d0.b[0];
     rng_next();
-    *(u8 *)(reg_a4 + 0xB) += reg_d0.b[0];
+    TURRETS(reg_a4)->start_angle[3] += reg_d0.b[0];
     rng_next();
-    *(u8 *)(reg_a4 + 0xA) += reg_d0.b[0];
+    TURRETS(reg_a4)->start_angle[2] += reg_d0.b[0];
 }
 
 s32 direction_turn_toward();                            /* extern */
 
 void stage1_boss_fire_turrets_scatter(void) {
-    if (*(u8 *)(reg_a4 + 7) != 0) {
-        func_001B5110();
+    if (TURRETS(reg_a4)->aimed != 0) {
+        stage1_boss_fire_turrets_sweep();
         return;
     }
-    reg_d1.b[0] = *(u8 *)(reg_a4 + 9);
+    reg_d1.b[0] = TURRETS(reg_a4)->start_angle[1];
     reg_d0.b[0] = ENTITY(reg_a6)[6].offset_y.b[1];
     direction_turn_toward();
     ENTITY(reg_a6)[6].offset_y.b[1] = (u8) reg_d1.b[0];
-    reg_d1.b[0] = *(u8 *)(reg_a4 + 8);
+    reg_d1.b[0] = TURRETS(reg_a4)->start_angle[0];
     reg_d0.b[0] = ENTITY(reg_a6)[6].offset_y.b[0];
     direction_turn_toward();
     ENTITY(reg_a6)[6].offset_y.b[0] = (u8) reg_d1.b[0];
-    reg_d1.b[0] = *(u8 *)(reg_a4 + 0xB);
+    reg_d1.b[0] = TURRETS(reg_a4)->start_angle[3];
     reg_d0.b[0] = ENTITY(reg_a6)[6].offset_x.b[1];
     direction_turn_toward();
     ENTITY(reg_a6)[6].offset_x.b[1] = (u8) reg_d1.b[0];
-    reg_d1.b[0] = *(u8 *)(reg_a4 + 0xA);
+    reg_d1.b[0] = TURRETS(reg_a4)->start_angle[2];
     reg_d0.b[0] = ENTITY(reg_a6)[6].offset_x.b[0];
     direction_turn_toward();
     ENTITY(reg_a6)[6].offset_x.b[0] = (u8) reg_d1.b[0];
-    reg_d0.b[0] = *(u8 *)(reg_a4 + 9);
+    reg_d0.b[0] = TURRETS(reg_a4)->start_angle[1];
     if (ENTITY(reg_a6)[6].offset_y.b[1] == reg_d0.b[0]) {
-        reg_d0.b[0] = *(u8 *)(reg_a4 + 8);
+        reg_d0.b[0] = TURRETS(reg_a4)->start_angle[0];
         if (ENTITY(reg_a6)[6].offset_y.b[0] == reg_d0.b[0]) {
-            reg_d0.b[0] = *(u8 *)(reg_a4 + 0xB);
+            reg_d0.b[0] = TURRETS(reg_a4)->start_angle[3];
             if (ENTITY(reg_a6)[6].offset_x.b[1] == reg_d0.b[0]) {
-                reg_d0.b[0] = *(u8 *)(reg_a4 + 0xA);
+                reg_d0.b[0] = TURRETS(reg_a4)->start_angle[2];
                 if (ENTITY(reg_a6)[6].offset_x.b[0] == reg_d0.b[0]) {
-                    *(u8 *)(reg_a4 + 7) = 1U;
+                    TURRETS(reg_a4)->aimed = 1U;
                 }
             }
         }
@@ -252,60 +335,60 @@ extern u16 D_0026E0AC[];
 extern u16 D_0026E0AE[];
 extern u16 g_bullets_blocked;
 
-void func_001B5110(void) {
+void stage1_boss_fire_turrets_sweep(void) {
     u16 temp_a0;
     u16 temp_a1;
 
     if (g_bullets_blocked == 0) {
-        if (!(*(u8 *)(reg_a4 + 4) & 1)) {
+        if (!(TURRETS(reg_a4)->swing & 1)) {
             ENTITY(reg_a6)[6].offset_y.b[1] += 1;
             if ((s8) ENTITY(reg_a6)[6].offset_y.b[1] >= 0x30) {
-                *(u8 *)(reg_a4 + 4) |= 1;
+                TURRETS(reg_a4)->swing |= 1;
             }
         } else {
             ENTITY(reg_a6)[6].offset_y.b[1] -= 1;
             if ((s8) ENTITY(reg_a6)[6].offset_y.b[1] < 0x11) {
-                *(u8 *)(reg_a4 + 4) &= 0xE;
+                TURRETS(reg_a4)->swing &= 0xE;
             }
         }
-        if (!(*(u8 *)(reg_a4 + 4) & 2)) {
+        if (!(TURRETS(reg_a4)->swing & 2)) {
             ENTITY(reg_a6)[6].offset_y.b[0] += 1;
             if ((s8) ENTITY(reg_a6)[6].offset_y.b[0] >= 0x30) {
-                *(u8 *)(reg_a4 + 4) |= 2;
+                TURRETS(reg_a4)->swing |= 2;
             }
         } else {
             ENTITY(reg_a6)[6].offset_y.b[0] -= 1;
             if ((s8) ENTITY(reg_a6)[6].offset_y.b[0] < 0x11) {
-                *(u8 *)(reg_a4 + 4) &= 0xD;
+                TURRETS(reg_a4)->swing &= 0xD;
             }
         }
-        if (!(*(u8 *)(reg_a4 + 4) & 4)) {
+        if (!(TURRETS(reg_a4)->swing & 4)) {
             ENTITY(reg_a6)[6].offset_x.b[1] += 1;
             if ((s8) ENTITY(reg_a6)[6].offset_x.b[1] >= 0x30) {
-                *(u8 *)(reg_a4 + 4) |= 4;
+                TURRETS(reg_a4)->swing |= 4;
             }
         } else {
             ENTITY(reg_a6)[6].offset_x.b[1] -= 1;
             if ((s8) ENTITY(reg_a6)[6].offset_x.b[1] < 0x11) {
-                *(u8 *)(reg_a4 + 4) &= 0xB;
+                TURRETS(reg_a4)->swing &= 0xB;
             }
         }
-        if (!(*(u8 *)(reg_a4 + 4) & 8)) {
+        if (!(TURRETS(reg_a4)->swing & 8)) {
             ENTITY(reg_a6)[6].offset_x.b[0] += 1;
             if ((s8) ENTITY(reg_a6)[6].offset_x.b[0] >= 0x30) {
-                *(u8 *)(reg_a4 + 4) |= 8;
+                TURRETS(reg_a4)->swing |= 8;
             }
         } else {
             ENTITY(reg_a6)[6].offset_x.b[0] -= 1;
             if ((s8) ENTITY(reg_a6)[6].offset_x.b[0] < 0x11) {
-                *(u8 *)(reg_a4 + 4) &= 7;
+                TURRETS(reg_a4)->swing &= 7;
             }
         }
-        reg_tmp.b[0] = *(u8 *)(reg_a4 + 3);
-        *(u8 *)(reg_a4 + 3) -= 1;
+        reg_tmp.b[0] = TURRETS(reg_a4)->shot.t.count;
+        TURRETS(reg_a4)->shot.t.count -= 1;
         if ((s32) reg_tmp.b[0] <= 0) {
-            *(u8 *)(reg_a4 + 3) = (u8) *(u8 *)(reg_a4 + 2);
-            reg_d0.h[0] = *(u16 *)(reg_a4 + 0xC);
+            TURRETS(reg_a4)->shot.t.count = (u8) TURRETS(reg_a4)->shot.t.reload;
+            reg_d0.h[0] = TURRETS(reg_a4)->speed;
             temp_a1 = reg_d0.h[0];
             reg_tmp.w = reg_d0.w;
             reg_d0.h[1] = temp_a1;
@@ -330,22 +413,22 @@ void func_001B5110(void) {
             reg_d3.h[0] = D_0026E0AE[0];
             reg_d1.b[0] = ENTITY(reg_a6)[6].offset_x.b[0];
             bullet_fire_3way_entry();
-            *(u8 *)(reg_a4 + 5) -= 1;
-            if ((s8) *(u8 *)(reg_a4 + 5) == 0) {
-                *(s16 *)reg_a4 = 0;
+            TURRETS(reg_a4)->volleys_left -= 1;
+            if ((s8) TURRETS(reg_a4)->volleys_left == 0) {
+                TURRETS(reg_a4)->running = 0;
             }
         }
     }
 }
 
 void stage1_boss_fire_gatling_a_start(void) {
-    *(u16 *)(reg_a4 + 2) = 0;
-    *(s8 *)(reg_a4 + 5) = 0;
-    *(s8 *)(reg_a4 + 4) = 0x20;
-    *(u16 *)(reg_a4 + 6) = 0x101;
-    *(u16 *)(reg_a4 + 8) = 4;
-    *(u16 *)(reg_a4 + 0xA) = 0x10;
-    *(u16 *)(reg_a4 + 0xC) = 0xFFFC;
+    GATLING_A(reg_a4)->aim_wait.h = 0;
+    GATLING_A(reg_a4)->step = 0;
+    GATLING_A(reg_a4)->target_angle = 0x20;
+    GATLING_A(reg_a4)->turn.h = 0x101;
+    GATLING_A(reg_a4)->shot.h = 4;
+    GATLING_A(reg_a4)->shots_left = 0x10;
+    GATLING_A(reg_a4)->speed = 0xFFFC;
 }
 
 s32 bullet_fire256_fixed();
@@ -358,12 +441,12 @@ void stage1_boss_fire_gatling_a(void) {
     u16 temp_a0_2;
     u8 temp_a0;
 
-    if (*(u8 *)(reg_a4 + 5) == 0) {
-        reg_tmp.b[0] = *(u8 *)(reg_a4 + 3);
-        *(u8 *)(reg_a4 + 3) -= 1;
+    if (GATLING_A(reg_a4)->step == 0) {
+        reg_tmp.b[0] = GATLING_A(reg_a4)->aim_wait.t.count;
+        GATLING_A(reg_a4)->aim_wait.t.count -= 1;
         if ((s32) reg_tmp.b[0] <= 0) {
-            *(u8 *)(reg_a4 + 3) = (u8) *(u8 *)(reg_a4 + 2);
-            *(u8 *)(reg_a4 + 5) = 1U;
+            GATLING_A(reg_a4)->aim_wait.t.count = (u8) GATLING_A(reg_a4)->aim_wait.t.reload;
+            GATLING_A(reg_a4)->step = 1U;
             reg_d0.h[0] = ENTITY(reg_a6)[5].y.h;
             reg_d1.h[0] = ENTITY(reg_a6)[5].x.h;
             aim_at_player();
@@ -374,19 +457,19 @@ void stage1_boss_fire_gatling_a(void) {
                 if ((s8) reg_d1.b[0] < 0x19) {
                     reg_d1.w = 0x19;
                 }
-                *(u8 *)(reg_a4 + 4) = (u8) reg_d1.b[0];
+                GATLING_A(reg_a4)->target_angle = (u8) reg_d1.b[0];
             }
         }
     }
-    temp_a0 = *(u8 *)(reg_a4 + 5);
+    temp_a0 = GATLING_A(reg_a4)->step;
     if (temp_a0 == 1) {
-        reg_tmp.b[0] = *(u8 *)(reg_a4 + 7);
-        *(u8 *)(reg_a4 + 7) -= 1;
+        reg_tmp.b[0] = GATLING_A(reg_a4)->turn.t.count;
+        GATLING_A(reg_a4)->turn.t.count -= 1;
         if ((s32) reg_tmp.b[0] <= 0) {
-            *(u8 *)(reg_a4 + 7) = (u8) *(u8 *)(reg_a4 + 6);
+            GATLING_A(reg_a4)->turn.t.count = (u8) GATLING_A(reg_a4)->turn.t.reload;
             reg_d0.w = 0;
             reg_d1.w = 0;
-            reg_d1.b[0] = *(u8 *)(reg_a4 + 4);
+            reg_d1.b[0] = GATLING_A(reg_a4)->target_angle;
             reg_d0.h[0] = ENTITY(reg_a6)[5].sprite.h;
             reg_d0.h[0] += 0x20;
             direction_turn_toward();
@@ -394,24 +477,24 @@ void stage1_boss_fire_gatling_a(void) {
             reg_d0.h[0] = (u16) reg_d0.b[0];
             reg_d0.h[0] -= 0x20;
             ENTITY(reg_a6)[5].sprite.h = (u16) reg_d0.h[0];
-            if (*(u8 *)(reg_a4 + 4) == reg_d1.b[0]) {
-                *(u8 *)(reg_a4 + 5) = 2U;
+            if (GATLING_A(reg_a4)->target_angle == reg_d1.b[0]) {
+                GATLING_A(reg_a4)->step = 2U;
             }
         }
     }
-    if (*(u8 *)(reg_a4 + 5) == 2) {
-        reg_tmp.b[0] = *(u8 *)(reg_a4 + 9);
-        *(u8 *)(reg_a4 + 9) -= 1;
+    if (GATLING_A(reg_a4)->step == 2) {
+        reg_tmp.b[0] = GATLING_A(reg_a4)->shot.t.count;
+        GATLING_A(reg_a4)->shot.t.count -= 1;
         if ((s32) reg_tmp.b[0] <= 0) {
-            *(u8 *)(reg_a4 + 9) = (u8) *(u8 *)(reg_a4 + 8);
-            reg_d0.h[0] = *(u16 *)(reg_a4 + 0xC);
+            GATLING_A(reg_a4)->shot.t.count = (u8) GATLING_A(reg_a4)->shot.t.reload;
+            reg_d0.h[0] = GATLING_A(reg_a4)->speed;
             reg_d0.h[0] += 0x14;
             reg_tmp.w = reg_d0.w;
             reg_d0.h[1] = reg_d0.h[0];
             reg_d0.h[0] = 7;
             func_00201200();
             reg_d5.b[0] -= 1;
-            reg_d5.b[0] += *(u8 *)(reg_a4 + 4);
+            reg_d5.b[0] += GATLING_A(reg_a4)->target_angle;
             reg_a0 = (u8 *)(D_0026E0C0);
             reg_d5.h[0] &= 0x3F;
             reg_d1.h[0] = reg_d5.h[0];
@@ -428,10 +511,10 @@ void stage1_boss_fire_gatling_a(void) {
             reg_d4.w = 0;
             reg_d2.w += reg_tmp.w;
             bullet_fire256_fixed();
-            *(u16 *)(reg_a4 + 0xC) += 2;
-            *(u16 *)(reg_a4 + 0xA) -= 1;
-            if (*(u16 *)(reg_a4 + 0xA) == 0) {
-                *(s16 *)reg_a4 = 0;
+            GATLING_A(reg_a4)->speed += 2;
+            GATLING_A(reg_a4)->shots_left -= 1;
+            if (GATLING_A(reg_a4)->shots_left == 0) {
+                GATLING_A(reg_a4)->running = 0;
             }
         }
     }
@@ -440,14 +523,14 @@ void stage1_boss_fire_gatling_a(void) {
 s32 bullet_fire256_fast();
 extern u16 g_loop;
 
-void func_001B57D0() {
+void stage1_boss_fire_beam_fan() {
     u32 tmp;
 
-    reg_d0.h[0] = *(u16 *) (reg_a4 + 0x10);
+    reg_d0.h[0] = BEAM(reg_a4)->speed;
     reg_tmp.w = reg_d0.w;
     reg_d0.h[1] = reg_d0.h[0];
     reg_d0.h[0] = 7;
-    reg_d1.b[0] = reg_a4[0xD];
+    reg_d1.b[0] = BEAM(reg_a4)->direction;
     if (g_loop != 0) goto next_1;
     reg_d1.b[0] -= 0x14;
     reg_d5.h[0] = 0x14;
@@ -473,27 +556,27 @@ void stage1_boss_fire_right_beam_start(void) {
     u8 temp_a0_2;
 
     enemy_switch_target_player();
-    *(s16 *)(reg_a4 + 4) = 4;
-    *(s16 *)(reg_a4 + 6) = 0x820;
+    BEAM(reg_a4)->shot.sh = 4;
+    BEAM(reg_a4)->spare.sh = 0x820;
     rng_next_bit();
     reg_d0.b[0] -= 1;
-    *(u8 *)(reg_a4 + 6) += reg_d0.b[0];
+    BEAM(reg_a4)->spare.b[0] += reg_d0.b[0];
     reg_d0.h[1] = ENTITY(reg_a6)[1].y.h;
     reg_d0.h[0] = ENTITY(reg_a6)[1].x.h;
     reg_d0.w += 0xF6C00140;
-    *(u16 *)(reg_a4 + 8) = (u16) reg_d0.h[1];
+    BEAM(reg_a4)->y = (u16) reg_d0.h[1];
     temp_a0 = reg_d0.h[0];
-    *(u16 *)(reg_a4 + 0xA) = temp_a0;
-    *(u8 *)(reg_a4 + 0xD) = 0x80U;
-    reg_d0.h[0] = *(u16 *)(reg_a4 + 8);
-    reg_d1.h[0] = *(u16 *)(reg_a4 + 0xA);
+    BEAM(reg_a4)->x = temp_a0;
+    BEAM(reg_a4)->direction = 0x80U;
+    reg_d0.h[0] = BEAM(reg_a4)->y;
+    reg_d1.h[0] = BEAM(reg_a4)->x;
     aim256_at_player();
     if (cond_flag != 0) {
         stage1_boss_fire_right_beam();
         return;
     }
-    *(u8 *)(reg_a4 + 0xD) = (u8) reg_d1.b[0];
-    temp_a0_2 = *(u8 *)(reg_a4 + 2);
+    BEAM(reg_a4)->direction = (u8) reg_d1.b[0];
+    temp_a0_2 = BEAM(reg_a4)->kind;
     if (temp_a0_2 != 2) {
         stage1_boss_fire_right_beam();
     }
@@ -507,31 +590,31 @@ void stage1_boss_fire_right_beam(void) {
         stage1_boss_fire_clear();
         return;
     }
-    reg_tmp.b[0] = *(u8 *)(reg_a4 + 5);
-    *(u8 *)(reg_a4 + 5) -= 1;
+    reg_tmp.b[0] = BEAM(reg_a4)->shot.t.count;
+    BEAM(reg_a4)->shot.t.count -= 1;
     if ((s32) reg_tmp.b[0] <= 0) {
-        *(u8 *)(reg_a4 + 5) = (u8) *(u8 *)(reg_a4 + 4);
+        BEAM(reg_a4)->shot.t.count = (u8) BEAM(reg_a4)->shot.t.reload;
         if (g_bullets_blocked == 0) {
             reg_d0.w = 0x100007;
-            reg_d2.h[1] = *(u16 *)(reg_a4 + 8);
-            reg_d2.h[0] = *(u16 *)(reg_a4 + 0xA);
+            reg_d2.h[1] = BEAM(reg_a4)->y;
+            reg_d2.h[0] = BEAM(reg_a4)->x;
             reg_d3.w = 0;
             reg_d1.w = 0;
-            temp_v1 = *(u8 *)(reg_a4 + 2);
+            temp_v1 = BEAM(reg_a4)->kind;
             if (temp_v1 == 0) {
                 reg_d0.w = 0x10007;
                 reg_d6.w = reg_d0.w;
-                reg_d1.b[0] = *(u8 *)(reg_a4 + 0xD);
+                reg_d1.b[0] = BEAM(reg_a4)->direction;
             } else if (temp_v1 == 1) {
-                func_001B57D0(reg_a4);
+                stage1_boss_fire_beam_fan(reg_a4);
             } else {
-                func_001B57D0(reg_a4);
+                stage1_boss_fire_beam_fan(reg_a4);
             }
         }
-        *(u16 *)(reg_a4 + 0x10) += 4;
-        *(u8 *)(reg_a4 + 3) -= 1;
-        if (*(u8 *)(reg_a4 + 3) == 0) {
-            *(s16 *)reg_a4 = 0;
+        BEAM(reg_a4)->speed += 4;
+        BEAM(reg_a4)->shots_left -= 1;
+        if (BEAM(reg_a4)->shots_left == 0) {
+            BEAM(reg_a4)->running = 0;
         }
     }
 }
@@ -542,27 +625,27 @@ void stage1_boss_fire_left_beam_start(void) {
     u8 temp_a0_2;
 
     enemy_switch_target_player();
-    *(s16 *)(reg_a4 + 4) = 4;
-    *(s16 *)(reg_a4 + 6) = 0x820;
+    BEAM(reg_a4)->shot.sh = 4;
+    BEAM(reg_a4)->spare.sh = 0x820;
     rng_next_bit();
     reg_d0.b[0] -= 1;
-    *(u8 *)(reg_a4 + 6) += reg_d0.b[0];
+    BEAM(reg_a4)->spare.b[0] += reg_d0.b[0];
     reg_d0.h[1] = ENTITY(reg_a6)[3].y.h;
     reg_d0.h[0] = ENTITY(reg_a6)[3].x.h;
     reg_d0.w += 0xF6BFFEC0;
-    *(u16 *)(reg_a4 + 8) = (u16) reg_d0.h[1];
+    BEAM(reg_a4)->y = (u16) reg_d0.h[1];
     temp_a0 = reg_d0.h[0];
-    *(u16 *)(reg_a4 + 0xA) = temp_a0;
-    *(u8 *)(reg_a4 + 0xD) = 0x80U;
-    reg_d0.h[0] = *(u16 *)(reg_a4 + 8);
-    reg_d1.h[0] = *(u16 *)(reg_a4 + 0xA);
+    BEAM(reg_a4)->x = temp_a0;
+    BEAM(reg_a4)->direction = 0x80U;
+    reg_d0.h[0] = BEAM(reg_a4)->y;
+    reg_d1.h[0] = BEAM(reg_a4)->x;
     aim256_at_player();
     if (cond_flag != 0) {
         stage1_boss_fire_right_beam();
         return;
     }
-    *(u8 *)(reg_a4 + 0xD) = (u8) reg_d1.b[0];
-    temp_a0_2 = *(u8 *)(reg_a4 + 2);
+    BEAM(reg_a4)->direction = (u8) reg_d1.b[0];
+    temp_a0_2 = BEAM(reg_a4)->kind;
     if (temp_a0_2 != 2) {
         stage1_boss_fire_left_beam();
     }
@@ -575,49 +658,49 @@ void stage1_boss_fire_left_beam(void) {
         stage1_boss_fire_clear();
         return;
     }
-    reg_tmp.b[0] = *(u8 *)(reg_a4 + 5);
-    *(u8 *)(reg_a4 + 5) -= 1;
+    reg_tmp.b[0] = BEAM(reg_a4)->shot.t.count;
+    BEAM(reg_a4)->shot.t.count -= 1;
     if ((s32) reg_tmp.b[0] <= 0) {
-        *(u8 *)(reg_a4 + 5) = (u8) *(u8 *)(reg_a4 + 4);
+        BEAM(reg_a4)->shot.t.count = (u8) BEAM(reg_a4)->shot.t.reload;
         if (g_bullets_blocked == 0) {
             reg_d0.w = 0x100007;
-            reg_d2.h[1] = *(u16 *)(reg_a4 + 8);
-            reg_d2.h[0] = *(u16 *)(reg_a4 + 0xA);
+            reg_d2.h[1] = BEAM(reg_a4)->y;
+            reg_d2.h[0] = BEAM(reg_a4)->x;
             reg_d3.w = 0;
             reg_d1.w = 0;
-            temp_v1 = *(u8 *)(reg_a4 + 2);
+            temp_v1 = BEAM(reg_a4)->kind;
             if (temp_v1 == 0) {
                 reg_d0.w = 0x10007;
                 reg_d6.w = reg_d0.w;
-                reg_d1.b[0] = *(u8 *)(reg_a4 + 0xD);
+                reg_d1.b[0] = BEAM(reg_a4)->direction;
             } else if (temp_v1 == 1) {
-                func_001B57D0(reg_a4);
+                stage1_boss_fire_beam_fan(reg_a4);
             } else {
-                func_001B57D0(reg_a4);
+                stage1_boss_fire_beam_fan(reg_a4);
             }
         }
-        *(u16 *)(reg_a4 + 0x10) += 4;
-        *(u8 *)(reg_a4 + 3) -= 1;
-        if (*(u8 *)(reg_a4 + 3) == 0) {
-            *(s16 *)reg_a4 = 0;
+        BEAM(reg_a4)->speed += 4;
+        BEAM(reg_a4)->shots_left -= 1;
+        if (BEAM(reg_a4)->shots_left == 0) {
+            BEAM(reg_a4)->running = 0;
         }
     }
 }
 
-void func_001B5CD0(void) {
-    *(s8 *)(reg_a4 + 2) = 6;
-    *(u16 *)(reg_a4 + 0x14) = 0xFFFA;
+void stage1_boss_main_gun_pace_set(void) {
+    MAIN_GUN(reg_a4)->interval = 6;
+    MAIN_GUN(reg_a4)->speed = 0xFFFA;
     if (g_loop != 0) {
-        *(s8 *)(reg_a4 + 2) = 3;
-        *(u16 *)(reg_a4 + 0x14) = 0xFFFB;
+        MAIN_GUN(reg_a4)->interval = 3;
+        MAIN_GUN(reg_a4)->speed = 0xFFFB;
     }
 }
 
 
-void func_001B5D20() {
+void stage1_boss_main_gun_shoot() {
     reg_d1.w = 0;
-    reg_d1.b[0] = *(u8 *)(reg_a4 + 0xB);
-    reg_d0.h[0] = *(u16 *)(reg_a4 + 0x14);
+    reg_d1.b[0] = MAIN_GUN(reg_a4)->direction;
+    reg_d0.h[0] = MAIN_GUN(reg_a4)->speed;
     reg_tmp.w = reg_d0.w;
     reg_d0.h[1] = reg_d0.h[0];
     reg_d0.h[0] = 0x13;
@@ -635,20 +718,20 @@ void func_001B5D20() {
 extern u8 D_0028DC38[];
 
 void stage1_boss_fire_right_main_gun_start(void) {
-    *(s8 *)(reg_a4 + 3) = 0x38;
-    *(s16 *)(reg_a4 + 4) = 0;
-    *(s16 *)(reg_a4 + 6) = 8;
-    *(u8 *)(reg_a4 + 0xB) = 0x40U;
+    MAIN_GUN(reg_a4)->wait = 0x38;
+    MAIN_GUN(reg_a4)->unused_04 = 0;
+    MAIN_GUN(reg_a4)->unused_06 = 8;
+    MAIN_GUN(reg_a4)->direction = 0x40U;
     rng_next();
     reg_d0.b[0] = reg_d0.sb[0] * 4;
-    *(u8 *)(reg_a4 + 0xB) += reg_d0.b[0];
-    *(s16 *)(reg_a4 + 0xE) = 0x404;
-    *(s16 *)(reg_a4 + 0x10) = 0x505;
-    *(s8 *)(reg_a4 + 0x13) = 1;
-    *(s8 *)(reg_a4 + 0x12) = 0;
-    func_001B5CD0();
+    MAIN_GUN(reg_a4)->direction += reg_d0.b[0];
+    MAIN_GUN(reg_a4)->speedup.sh = 0x404;
+    MAIN_GUN(reg_a4)->spare.sh = 0x505;
+    MAIN_GUN(reg_a4)->unused_13 = 1;
+    MAIN_GUN(reg_a4)->unused_12 = 0;
+    stage1_boss_main_gun_pace_set();
     func_001713B0();
-    *(u8 *)(reg_a4 + 0x10) = *(D_0028DC38 + reg_d0.b[0]);
+    MAIN_GUN(reg_a4)->spare.t.reload = *(D_0028DC38 + reg_d0.b[0]);
     stage1_boss_fire_right_main_gun();
 }
 
@@ -669,45 +752,45 @@ void stage1_boss_fire_right_main_gun() {
         reg_tmp.b[0] = (*(u8 *)((u8 *)(var_a0) + (3)));
         (*(u8 *)((u8 *)(var_a0) + (3))) -= 1;
         if ((s32) reg_tmp.b[0] <= 0) {
-            reg_tmp.b[0] = *(u8 *)(reg_a4 + 0xF);
-            *(u8 *)(reg_a4 + 0xF) -= 1;
+            reg_tmp.b[0] = MAIN_GUN(reg_a4)->speedup.t.count;
+            MAIN_GUN(reg_a4)->speedup.t.count -= 1;
             if ((s32) reg_tmp.b[0] <= 0) {
-                *(u8 *)(reg_a4 + 0xF) = (u8) *(u8 *)(reg_a4 + 0xE);
+                MAIN_GUN(reg_a4)->speedup.t.count = (u8) MAIN_GUN(reg_a4)->speedup.t.reload;
                 var_a0 = reg_a4 + 2;
-                temp_v1 = *(u8 *)(reg_a4 + 2);
+                temp_v1 = MAIN_GUN(reg_a4)->interval;
                 if (temp_v1 != 3) {
-                    *(u8 *)(reg_a4 + 2) = (u8) (temp_v1 - 1);
+                    MAIN_GUN(reg_a4)->interval = (u8) (temp_v1 - 1);
                 }
             }
-            *(u8 *)(reg_a4 + 3) = (u8) *(u8 *)(reg_a4 + 2);
-            reg_tmp.b[0] = *(u8 *)(reg_a4 + 0x11);
-            *(u8 *)(reg_a4 + 0x11) -= 1;
+            MAIN_GUN(reg_a4)->wait = (u8) MAIN_GUN(reg_a4)->interval;
+            reg_tmp.b[0] = MAIN_GUN(reg_a4)->spare.t.count;
+            MAIN_GUN(reg_a4)->spare.t.count -= 1;
             if ((s32) reg_tmp.b[0] <= 0) {
-                *(u8 *)(reg_a4 + 0x11) = (u8) *(u8 *)(reg_a4 + 0x10);
+                MAIN_GUN(reg_a4)->spare.t.count = (u8) MAIN_GUN(reg_a4)->spare.t.reload;
             }
-            func_001B5D20();
-            *(u8 *)(reg_a4 + 0xB) += 0xB;
+            stage1_boss_main_gun_shoot();
+            MAIN_GUN(reg_a4)->direction += 0xB;
         }
     }
 }
 
 
 void stage1_boss_fire_left_main_gun_start(void) {
-    *(s8 *)(reg_a4 + 3) = 0x20;
-    *(s16 *)(reg_a4 + 4) = 0;
-    *(s16 *)(reg_a4 + 6) = 8;
-    *(s16 *)(reg_a4 + 0xE) = 0x404;
-    *(u8 *)(reg_a4 + 0xB) = 0xC0U;
+    MAIN_GUN(reg_a4)->wait = 0x20;
+    MAIN_GUN(reg_a4)->unused_04 = 0;
+    MAIN_GUN(reg_a4)->unused_06 = 8;
+    MAIN_GUN(reg_a4)->speedup.sh = 0x404;
+    MAIN_GUN(reg_a4)->direction = 0xC0U;
     rng_next();
     reg_d0.b[0] = reg_d0.sb[0] * 4;
-    *(u8 *)(reg_a4 + 0xB) += reg_d0.b[0];
-    *(s16 *)(reg_a4 + 0xE) = 0x404;
-    *(s16 *)(reg_a4 + 0x10) = 0x505;
-    *(s8 *)(reg_a4 + 0x13) = 1;
-    *(s8 *)(reg_a4 + 0x12) = 0;
-    func_001B5CD0();
+    MAIN_GUN(reg_a4)->direction += reg_d0.b[0];
+    MAIN_GUN(reg_a4)->speedup.sh = 0x404;
+    MAIN_GUN(reg_a4)->spare.sh = 0x505;
+    MAIN_GUN(reg_a4)->unused_13 = 1;
+    MAIN_GUN(reg_a4)->unused_12 = 0;
+    stage1_boss_main_gun_pace_set();
     func_001713B0();
-    *(u8 *)(reg_a4 + 0x10) = *(D_0028DC38 + reg_d0.b[0]);
+    MAIN_GUN(reg_a4)->spare.t.reload = *(D_0028DC38 + reg_d0.b[0]);
     stage1_boss_fire_left_main_gun();
 }
 
@@ -727,24 +810,24 @@ void stage1_boss_fire_left_main_gun() {
         reg_tmp.b[0] = (*(u8 *)((u8 *)(var_a0) + (3)));
         (*(u8 *)((u8 *)(var_a0) + (3))) -= 1;
         if ((s32) reg_tmp.b[0] <= 0) {
-            reg_tmp.b[0] = *(u8 *)(reg_a4 + 0xF);
-            *(u8 *)(reg_a4 + 0xF) -= 1;
+            reg_tmp.b[0] = MAIN_GUN(reg_a4)->speedup.t.count;
+            MAIN_GUN(reg_a4)->speedup.t.count -= 1;
             if ((s32) reg_tmp.b[0] <= 0) {
-                *(u8 *)(reg_a4 + 0xF) = (u8) *(u8 *)(reg_a4 + 0xE);
+                MAIN_GUN(reg_a4)->speedup.t.count = (u8) MAIN_GUN(reg_a4)->speedup.t.reload;
                 var_a0 = reg_a4 + 2;
-                temp_v1 = *(u8 *)(reg_a4 + 2);
+                temp_v1 = MAIN_GUN(reg_a4)->interval;
                 if (temp_v1 != 3) {
-                    *(u8 *)(reg_a4 + 2) = (u8) (temp_v1 - 1);
+                    MAIN_GUN(reg_a4)->interval = (u8) (temp_v1 - 1);
                 }
             }
-            *(u8 *)(reg_a4 + 3) = (u8) *(u8 *)(reg_a4 + 2);
-            reg_tmp.b[0] = *(u8 *)(reg_a4 + 0x11);
-            *(u8 *)(reg_a4 + 0x11) -= 1;
+            MAIN_GUN(reg_a4)->wait = (u8) MAIN_GUN(reg_a4)->interval;
+            reg_tmp.b[0] = MAIN_GUN(reg_a4)->spare.t.count;
+            MAIN_GUN(reg_a4)->spare.t.count -= 1;
             if ((s32) reg_tmp.b[0] <= 0) {
-                *(u8 *)(reg_a4 + 0x11) = (u8) *(u8 *)(reg_a4 + 0x10);
+                MAIN_GUN(reg_a4)->spare.t.count = (u8) MAIN_GUN(reg_a4)->spare.t.reload;
             }
-            func_001B5D20();
-            *(u8 *)(reg_a4 + 0xB) -= 0xB;
+            stage1_boss_main_gun_shoot();
+            MAIN_GUN(reg_a4)->direction -= 0xB;
         }
     }
 }
