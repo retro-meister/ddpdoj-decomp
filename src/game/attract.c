@@ -649,7 +649,7 @@ extern u8 D_0028DE40[];
 extern u8 D_0028DE44[];
 extern u8 D_0028DE48[];
 extern s8 g_game_mode_as_s8;
-extern s8 D_0028EC24;
+extern s8 g_menu_pad;
 extern u8 g_replay_mode;
 extern s16 D_0068DEC8_as_s16_a[];
 extern s16 D_0068DECA[];
@@ -718,7 +718,7 @@ void func_00169680(void) {
     replay_header_clear();
     a = D_0068DEDA[0];
     b = D_0068DEDC[0];
-    if (D_0028EC24 == 0) {
+    if (g_menu_pad == 0) {
         D_006E5BE2[0] = D_0028DE40[a];
         D_006E5BE4[0] = D_0028DE44[b];
     } else {

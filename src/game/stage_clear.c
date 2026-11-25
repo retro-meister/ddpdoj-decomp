@@ -601,7 +601,7 @@ extern u16 g_p2_stage_stars_small;
 extern u16 g_p2_stage_stars_large;
 extern u16 g_p1_stage_stars_small;
 extern u16 g_p1_stage_stars_large;
-extern s8 D_0028EC24;
+extern s8 g_menu_pad;
 extern s8 D_0028ED60_as_s8;
 extern u16 g_side_scroll_x[];
 extern u16 g_side_scroll_step[];
@@ -855,7 +855,7 @@ block_15:
             reg_d6.h[0] += *(u16 *)(reg_a6 + 0x1E);
             if (reg_d6.h[0] != 0) {
                 input_get_p1_pressed();
-                if ((g_replay_mode == 2) && (D_0028EC24 == 1)) {
+                if ((g_replay_mode == 2) && (g_menu_pad == 1)) {
                     input_get_p2_pressed();
                 }
                 t12 = reg_d0.h[0] & 0x70;
@@ -897,7 +897,7 @@ block_48:
             reg_d6.h[0] += *(u16 *)(reg_a6 + 0x28);
             if (reg_d6.h[0] != 0) {
                 input_get_p2_pressed();
-                if ((g_replay_mode == 2) && (D_0028EC24 == 0)) {
+                if ((g_replay_mode == 2) && (g_menu_pad == 0)) {
                     input_get_p1_pressed();
                 }
                 t15 = reg_d0.h[0] & 0x70;

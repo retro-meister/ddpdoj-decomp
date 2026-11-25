@@ -473,7 +473,7 @@ extern u8 g_stage_load_state;
 extern u8 g_pause_lock_timer;
 extern u8 D_0028E368;
 extern u8 g_paused;
-extern s8 D_0028EC24;
+extern s8 g_menu_pad;
 extern s16 g_player2[];
 extern s16 g_player1[];
 
@@ -516,7 +516,7 @@ void pause_check_start_button(void) {
         return;
     }
     if (g_replay_mode == 2) {
-        if (!(g_pad_trigger[D_0028EC24] & 0x800)) {
+        if (!(g_pad_trigger[g_menu_pad] & 0x800)) {
             return;
         }
         if (g_replay_taken_over != 0 && g_player1[0] == 0 && g_player2[0] == 0) {
@@ -524,7 +524,7 @@ void pause_check_start_button(void) {
         }
         sfx_confirm();
         g_paused = 1;
-        g_pause_player_as_s16 = D_0028EC24;
+        g_pause_player_as_s16 = g_menu_pad;
 block_rts:
         return;
     }
@@ -901,7 +901,7 @@ void vibration_start_active_pad(s16 arg0, s16 arg1) {
     extern s16 g_pad_vib_timer_p1;
     extern s8 g_pad_vib_state_p2;
     extern s8 g_pad_vib_state_p1;
-    if (D_0028EC24 == 0) {
+    if (g_menu_pad == 0) {
         g_pad_vib_power_p1 = arg0;
         g_pad_vib_state_p1 = 1;
         g_pad_vib_timer_p1 = arg1;

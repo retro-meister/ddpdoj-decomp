@@ -11,7 +11,7 @@ extern u16 g_attract_demo;
 extern u16 g_p2_score_digits;
 extern u16 g_p1_score_digits;
 extern u16 g_two_player_seen;
-extern s8 D_0028EC24;
+extern s8 g_menu_pad;
 extern u8 g_replay_taken_over;
 extern u32 g_replay_position_as_u32;
 extern u8 g_replay_buffer_state;
@@ -63,7 +63,7 @@ void replay_filter_input(void) {
             break;
         case 2:
             if (g_replay_position_as_u32 > 2 && g_replay_taken_over == 0) {
-                if (D_0028EC24 == 0) {
+                if (g_menu_pad == 0) {
                     if (reg_d0.b[0] & 0x7F) {
                         g_replay_taken_over = 1;
                     }
@@ -77,7 +77,7 @@ void replay_filter_input(void) {
             }
             if (g_replay_taken_over != 0) {
                 swap = 0;
-                if (D_0028EC24 == 0) {
+                if (g_menu_pad == 0) {
                     if (D_006C58A4[0] == 0xFF) {
                         swap = 1;
                     }
@@ -136,7 +136,7 @@ extern u16 g_attract_demo;
 extern u16 g_p2_score_digits;
 extern u16 g_p1_score_digits;
 extern u16 g_two_player_seen;
-extern s8 D_0028EC24;
+extern s8 g_menu_pad;
 extern u8 g_replay_taken_over;
 extern u32 g_replay_position_as_u32;
 extern u8 g_replay_buffer_state;
@@ -182,7 +182,7 @@ void replay_filter_input(void) {
             break;
         case 2:
             if (g_replay_position_as_u32 > 2 && g_replay_taken_over == 0 && g_attract_demo == 0) {
-                if (D_0028EC24 == 0) {
+                if (g_menu_pad == 0) {
                     if (reg_d0.b[0] & 0x7F) {
                         g_replay_taken_over = 1;
                     }
@@ -196,7 +196,7 @@ void replay_filter_input(void) {
             }
             if (g_replay_taken_over != 0) {
                 swap = 0;
-                if (D_0028EC24 == 0) {
+                if (g_menu_pad == 0) {
                     if (D_006C58A4[0] == 0xFF) {
                         swap = 1;
                     }

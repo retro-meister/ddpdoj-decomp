@@ -167,7 +167,7 @@ extern s16 D_0028DEFC_as_s16;
 extern s16 D_0028DF00_as_s16;
 extern s8 D_0028DF08_as_s8;
 extern s16 g_attract_demo_as_s16;
-extern s8 D_0028EC24;
+extern s8 g_menu_pad;
 
 void func_00137C90(void) {
     D_0028DF08_as_s8 = 0;
@@ -175,7 +175,7 @@ void func_00137C90(void) {
     D_0028DEFC_as_s16 = 0;
     g_attract_demo_as_s16 = 1;
     D_0028DEF8_as_s8 = 1;
-    D_0028EC24 = 0;
+    g_menu_pad = 0;
 }
 #endif
 

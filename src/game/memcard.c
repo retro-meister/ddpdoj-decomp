@@ -4984,7 +4984,7 @@ void func_00234EF0(void) {
 
 extern void display_set_offset(s8, s8);
 extern void wallpaper_load(s32, s32);
-extern s32 D_00271C60_as_s32_a[];
+extern s32 g_menu_wallpapers_as_s32_a[];
 extern s32 D_00271C64_as_s32_a[];
 extern s8 g_display_reset_pending;
 
@@ -4999,7 +4999,7 @@ void func_00235820(void)
     if (selection != 5) {
         s32 tableIndex = (selection & 0xFFFF) * 2;
 
-        wallpaper_load(D_00271C60_as_s32_a[tableIndex], D_00271C64_as_s32_a[tableIndex]);
+        wallpaper_load(g_menu_wallpapers_as_s32_a[tableIndex], D_00271C64_as_s32_a[tableIndex]);
     }
 }
 

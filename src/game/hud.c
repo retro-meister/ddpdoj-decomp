@@ -1264,7 +1264,7 @@ next_15:
 
 s32 input_get_p1_held();
 s32 input_get_p2_held();
-extern s8 D_0028EC24;
+extern s8 g_menu_pad;
 extern u8 g_replay_mode;
 void func_001A7410(void) {
     u32 temp_s0;
@@ -1279,14 +1279,14 @@ void func_001A7410(void) {
     reg_d0.w = 0;
     if (g_player1[0] < 0) {
         input_get_p1_held();
-        if ((g_replay_mode == 2) && (D_0028EC24 == 1)) {
+        if ((g_replay_mode == 2) && (g_menu_pad == 1)) {
             input_get_p2_held();
         }
     }
     if (g_player2[0] < 0) {
         temp_s0 = reg_d0.h[0];
         input_get_p2_held();
-        if ((g_replay_mode == 2) && (D_0028EC24 == 0)) {
+        if ((g_replay_mode == 2) && (g_menu_pad == 0)) {
             input_get_p1_held();
         }
         reg_d0.h[0] |= temp_s0 & 0xFFFF;
