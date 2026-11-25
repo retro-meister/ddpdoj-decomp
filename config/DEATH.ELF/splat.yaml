@@ -242,7 +242,6 @@ segments:
       - [0x173250, .data, shared/stage3_boss_move]
       - [0x173270, data, data_173270]
       - [0x173390, .data, shared/stage1_boss_anim]
-      - [0x173440, data, data_173440]
       - [0x173860, .data, shared/stage1_boss_attack]
       - [0x173a00, .data, shared/stage1_boss_draw]
       - [0x173fb0, data, data_173fb0]
