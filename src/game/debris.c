@@ -498,3 +498,7 @@ void func_001B9300(void) {
 
 /* .sbss (the compiler lays these out in reverse) */
 u32 D_0028E52C;
+
+/* .bss (the compiler lays these out in reverse) */
+u16 D_0029AA30[8];
+u16 D_0029A530[640];

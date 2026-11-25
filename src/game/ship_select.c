@@ -725,3 +725,8 @@ s16 D_0028DF18 __attribute__((aligned(4)));
 s16 D_0028DF14 __attribute__((aligned(4)));
 u8 D_0028DF10 __attribute__((aligned(4)));
 u8 D_0028DF0C __attribute__((aligned(4)));
+
+/* .bss (the compiler lays these out in reverse) */
+u8 D_0029BE00[224];
+u16 D_0029BDC0[32];
+u16 D_0029BD80[32];

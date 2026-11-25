@@ -1217,3 +1217,12 @@ s8 g_bgm_fade_active;
 s32 g_se_last_result;
 s32 g_se_volume;
 s32 g_se_priority;
+
+/* .bss (the compiler lays these out in reverse) */
+s32 g_sound_rpc_buf[16] __attribute__((aligned(64)));
+sceSifClientData g_sound_rpc_client;
+CdFileEntry g_bgm_files[30];
+CdFileEntry g_stage_bg_files[20];
+CdFileEntry g_data_files[DATA_FILE_TABLE_SIZE];
+CdFileEntry g_replay_files[10];
+BgmFadeState g_bgm_fade_state[2];

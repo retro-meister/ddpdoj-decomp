@@ -1566,3 +1566,6 @@ u8 *D_0028DEC4;
 u8 *D_0028DEC0;
 u8 *D_0028DEBC;
 void *D_0028DEB8;
+
+/* .bss (the compiler lays these out in reverse) */
+u8 D_0029BC00[384];

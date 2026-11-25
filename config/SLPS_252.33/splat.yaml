@@ -495,6 +495,28 @@ segments:
       - {type: .sbss, vram: 0x28ed88, name: game/replay_state}
       - {type: sbss, vram: 0x28ed8c, name: sbss_28ed8c}
       - {type: bss, vram: 0x28f000, name: bss_28f000}
+      - {type: .bss, vram: 0x295e00, name: game/ending}
+      - {type: .bss, vram: 0x295e50, name: game/boss_slots}
+      - {type: .bss, vram: 0x2962e0, name: game/bullet}
+      - {type: .bss, vram: 0x299780, name: game/wreck}
+      - {type: .bss, vram: 0x299d30, name: game/sparks}
+      - {type: .bss, vram: 0x29a530, name: game/debris}
+      - {type: .bss, vram: 0x29aa40, name: game/explosion}
+      - {type: .bss, vram: 0x29bc00, name: game/game}
+      - {type: .bss, vram: 0x29bd80, name: game/ship_select}
+      - {type: .bss, vram: 0x29bee0, name: game/ship_select_player}
+      - {type: .bss, vram: 0x29bf50, name: game/scroll_events}
+      - {type: .bss, vram: 0x29c0c0, name: game/fade}
+      - {type: .bss, vram: 0x29ca10, name: game/sound_rpc}
+      - {type: .bss, vram: 0x29cd80, name: game/player/player}
+      - {type: .bss, vram: 0x29f2d0, name: game/palette}
+      - {type: .bss, vram: 0x2a04b0, name: game/task}
+      - {type: .bss, vram: 0x2a17c0, name: game/layers}
+      - {type: .bss, vram: 0x2a3c80, name: game/sprite_queue}
+      - {type: .bss, vram: 0x2b2710, name: game/zoom}
+      - {type: .bss, vram: 0x2b2750, name: game/screen_clear}
+      - {type: .bss, vram: 0x2bad50, name: game/name_entry}
+      - {type: .bss, vram: 0x2bae90, name: game/play_state}
       - {type: .bss, vram: 0x2c0100, name: game/text}
       - {type: .bss, vram: 0x2c4f00, name: game/system}
       - {type: .bss, vram: 0x57cf80, name: game/glyph_cache}

@@ -440,3 +440,7 @@ u16 g_layer_b_shift[2];
 u16 g_layer_b_step_fraction[2];
 u32 g_layer_b_fraction[2];
 u32 g_deferred_text_row_skip;
+
+/* .bss (the compiler lays these out in reverse) */
+u32 g_deferred_text[1568];
+u32 g_deferred_text_next[784];

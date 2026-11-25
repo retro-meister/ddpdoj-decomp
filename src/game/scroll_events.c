@@ -490,3 +490,9 @@ void ground_event_06(void) {
         D_0029976E_as_s16_a[0] = 1;
     }
 }
+
+/* .bss (the compiler lays these out in reverse) */
+s16 D_0029C090[24];
+u16 D_0029C080[8];
+u8 *D_0029C050[12];
+u8 D_0029BF50[256];

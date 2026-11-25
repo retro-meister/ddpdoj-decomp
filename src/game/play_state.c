@@ -291,3 +291,64 @@ u32 reg_save4_d5;
 u32 reg_save4_d6;
 u32 reg_save4_d7;
 s32 D_0028E530;
+
+/* .bss (the compiler lays these out in reverse) */
+u8 D_002BF4F0[3080];
+u8 D_002BF490[96];
+u8 D_002BF450[64];
+u8 D_002BF410[64];
+u16 D_002BF400[8];
+u8 D_002BF3E0[32];
+u8 D_002BF390[80];
+s16 D_002BF370[16];
+s16 D_002BF350[16];
+u8 D_002BF330[32];
+u8 D_002BF2E0[80];
+u8 D_002BE3E0[3840];
+u8 D_002BE160[640];
+u8 D_002BE0C0[160];
+u8 g_spare_entities[1600];
+#ifdef DEATH_LABEL
+u8 death_D_006901F0[1024];
+u8 death_D_006901D0[32];
+u8 death_D_006901B0[32];
+#endif
+#ifdef DEATH_LABEL
+u16 D_002BD440[256];
+#else
+u16 D_002BD440[800];
+#endif
+u8 D_002BC7C0[3200];
+u8 g_spawn_requests[3200];
+u8 g_spawn_request_spare[80];
+u8 D_002BBAB0[64];
+u8 D_002BB930[384];
+u8 D_002BB7B0[384];
+u8 D_002BB730[128];
+u8 D_002BB6B0[128];
+u8 D_002BB4B0[512];
+u8 D_002BB470[64];
+s16 D_002BB460[8];
+u8 D_002BB420[64];
+u8 D_002BB410[16];
+s32 D_002BB3F0[8];
+s32 D_002BB3B0[16];
+s32 D_002BB320[36];
+s32 D_002BB2E0[16];
+s32 D_002BB250[36];
+s32 D_002BB210[16];
+u8 D_002BB100[272];
+u8 D_002BB060[160];
+u8 D_002BB010[80];
+u16 D_002BAF50[96];
+#ifdef DEATH_LABEL
+u16 death_D_0068DAB0[8];
+#endif
+#ifdef DEATH_LABEL
+u16 D_002BAF30[8];
+#else
+u16 D_002BAF30[16];
+#endif
+s32 g_p1_position_trail[16];
+s32 g_p2_position_trail[16];
+u8 D_002BAE90[32];

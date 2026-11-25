@@ -872,3 +872,7 @@ s32 D_0028DF2C;
 s32 D_0028DF28;
 s32 D_0028DF24;
 s32 D_0028DF20;
+
+/* .bss (the compiler lays these out in reverse) */
+u8 D_0029C150[2240];
+u8 D_0029C0C0[144];

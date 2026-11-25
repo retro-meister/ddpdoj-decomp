@@ -141,3 +141,15 @@ void layers_clear_all(void) {
     func_0012FBD0();
     func_0012FCD0();
 }
+
+/* .bss (the compiler lays these out in reverse) */
+u8 g_bg_layer[16384];
+u8 g_text_layer[8192];
+#ifdef DEATH_LABEL
+u8 g_arcade_sprites[12000];
+#else
+u8 g_arcade_sprites[5120];
+#endif
+s16 g_sprite_palette[1024];
+s16 g_bg_palette[1024];
+s32 g_text_palette[128];

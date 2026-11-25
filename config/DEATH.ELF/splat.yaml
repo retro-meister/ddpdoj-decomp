@@ -512,11 +512,37 @@ segments:
       - {type: .sbss, vram: 0x290ebc, name: game/play_state}
       - {type: sbss, vram: 0x291330, name: sbss_291330}
       - {type: bss, vram: 0x291580, name: bss_291580}
+      - {type: .bss, vram: 0x2984c0, name: game/boss_slots}
+      - {type: .bss, vram: 0x298990, name: game/bullet}
+      - {type: bss, vram: 0x2a9020, name: bss_2a9020}
+      - {type: .bss, vram: 0x2a9030, name: game/wreck}
+      - {type: .bss, vram: 0x2a95e0, name: game/sparks}
+      - {type: .bss, vram: 0x2a9de0, name: game/debris}
+      - {type: .bss, vram: 0x2aa2f0, name: game/explosion}
+      - {type: .bss, vram: 0x2ab4b0, name: game/game}
+      - {type: .bss, vram: 0x2ab630, name: game/ship_select}
+      - {type: .bss, vram: 0x2ab790, name: game/ship_select_player}
+      - {type: bss, vram: 0x2ab800, name: bss_2ab800}
+      - {type: .bss, vram: 0x2ab850, name: game/ending}
+      - {type: .bss, vram: 0x2ab8a0, name: game/fade}
+      - {type: bss, vram: 0x2ac1f0, name: bss_2ac1f0}
+      - {type: .bss, vram: 0x2cc580, name: game/scroll_events}
+      - {type: .bss, vram: 0x2cc6f0, name: game/sound_rpc}
+      - {type: .bss, vram: 0x2cca40, name: game/player/player}
+      - {type: .bss, vram: 0x2cef90, name: game/palette}
+      - {type: .bss, vram: 0x2d0170, name: game/task}
+      - {type: .bss, vram: 0x2d1480, name: game/layers}
+      - {type: .bss, vram: 0x2d3940, name: game/sprite_queue}
+      - {type: .bss, vram: 0x2f6db0, name: game/zoom}
+      - {type: .bss, vram: 0x2f6df0, name: game/screen_clear}
+      - {type: .bss, vram: 0x300ed0, name: game/name_entry}
       - {type: .bss, vram: 0x301010, name: game/glyph_cache}
       - {type: bss, vram: 0x30b080, name: bss_30b080}
       - {type: .bss, vram: 0x342800, name: game/system}
       - {type: .bss, vram: 0x61b000, name: game/text}
       - {type: bss, vram: 0x61fe00, name: bss_61fe00}
+      - {type: .bss, vram: 0x68da00, name: game/play_state}
+      - {type: bss, vram: 0x692c68, name: bss_692c68}
   - name: elf_tail
     type: bin
     start: 0x190480

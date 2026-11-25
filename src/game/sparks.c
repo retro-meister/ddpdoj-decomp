@@ -815,3 +815,6 @@ void func_0020B640(void)
     reg_a2 += reg_d1.h[0];
     reg_d1.b[0] = (u8)*(s8 *)reg_a2;
 }
+
+/* .bss (the compiler lays these out in reverse) */
+u8 D_00299D30[2048];

@@ -1100,3 +1100,7 @@ void func_00211F40(void) {
 #ifdef DEATH_LABEL
 u8 death_D_00290568 __attribute__((aligned(4)));
 #endif
+
+/* .bss (the compiler lays these out in reverse) */
+u16 D_00299D20[8];
+u16 D_00299780[720];

@@ -804,3 +804,7 @@ void func_00124260(void) {
     }
 }
 #endif
+
+/* .bss (the compiler lays these out in reverse) */
+u16 D_00295E40[8];
+u8 D_00295E00[64];

@@ -1311,3 +1311,12 @@ void func_0019A870(void) {
         }
     }
 }
+
+/* .bss (the compiler lays these out in reverse) */
+u16 D_002BAE80[8];
+u8 D_002BAE40[64];
+u8 D_002BAE00[64];
+u8 D_002BADF0[16];
+u8 D_002BADD0[32];
+u8 D_002BAD70[96];
+u8 D_002BAD50[32];

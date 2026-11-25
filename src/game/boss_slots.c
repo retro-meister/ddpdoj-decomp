@@ -799,3 +799,15 @@ next_2:
     reg_d4.h[0] = D_002962D6[0];
     sprite_draw_with_warning_keep();
 }
+
+/* .bss (the compiler lays these out in reverse) */
+u8 *D_00296210[52];
+s16 D_002961F0[16];
+u16 D_002960B0[160];
+u8 *D_00295F40[92];
+u8 D_00295EA0[160];
+#ifdef DEATH_LABEL
+u8 D_00295E50[144];
+#else
+u8 D_00295E50[80];
+#endif

@@ -476,3 +476,7 @@ block_2:
     reg_a5 = sa5;
     reg_a6 = sa6;
 }
+
+/* .bss (the compiler lays these out in reverse) */
+u8 D_0029BBC0[64];
+u8 D_0029AA40[4480];

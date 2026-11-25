@@ -1896,3 +1896,68 @@ u16 g_sprite_overflow_count __attribute__((aligned(4)));
 u16 g_sprite_overflow_bytes __attribute__((aligned(4)));
 s16 g_sprite_sparks_dropped __attribute__((aligned(4)));
 s16 g_sprite_debris_dropped __attribute__((aligned(4)));
+
+/* .bss (the compiler lays these out in reverse) */
+#ifdef DEATH_LABEL
+u8 g_sprite_layer1_buf[28032];
+#else
+u8 g_sprite_layer1_buf[11952];
+#endif
+#ifdef DEATH_LABEL
+u8 g_sprite_layer2_buf[14016];
+#else
+u8 g_sprite_layer2_buf[5984];
+#endif
+#ifdef DEATH_LABEL
+u8 g_sprite_layer3_buf[14016];
+#else
+u8 g_sprite_layer3_buf[5984];
+#endif
+#ifdef DEATH_LABEL
+u8 g_sprite_layer4_buf[14016];
+#else
+u8 g_sprite_layer4_buf[5984];
+#endif
+#ifdef DEATH_LABEL
+u8 g_sprite_layer5_buf[14016];
+#else
+u8 g_sprite_layer5_buf[5984];
+#endif
+#ifdef DEATH_LABEL
+u8 g_sprite_extra_buf[28032];
+#else
+u8 g_sprite_extra_buf[11952];
+#endif
+u8 g_sprite_special_items_buf[848];
+u8 g_sprite_items_first_buf[304];
+u8 g_sprite_items_buf[304];
+u8 g_sprite_player_shadows_buf[80];
+u8 g_sprite_debris1_buf[240];
+u8 g_sprite_debris2_buf[240];
+u8 g_sprite_player_shots_buf[864];
+u8 g_sprite_player_lasers_buf[768];
+u8 g_sprite_options_buf[48];
+u8 g_sprite_players_buf[192];
+u8 g_sprite_sparks_buf[720];
+#ifdef DEATH_LABEL
+u8 g_sprite_bullets_buf[12608];
+#else
+u8 g_sprite_bullets_buf[2528];
+#endif
+#ifdef DEATH_LABEL
+u8 g_sprite_bullets2_buf[12608];
+#else
+u8 g_sprite_bullets2_buf[2528];
+#endif
+u8 g_sprite_warning_buf[192];
+u8 g_sprite_score_buf[384];
+u8 g_sprite_sight_buf[128];
+u8 g_sprite_bombs_buf[1088];
+u8 g_sprite_ship_select_buf[128];
+u8 g_sprite_stage_clear1_buf[128];
+u8 g_sprite_stage_clear2_buf[128];
+u8 g_sprite_maximum_buf[32];
+u8 g_sprite_hyper_ready_buf[32];
+u8 g_sprite_hyper_display_buf[128];
+u8 g_sprite_laser_trail_buf[128];
+u8 g_sprite_last_boss_buf[48];

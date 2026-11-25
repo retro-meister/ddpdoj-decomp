@@ -352,3 +352,10 @@ u16 g_task_table[88] = {
     0x0000, 0x0000, 0x000A, 0x0000, 0x0000, 0x0000, 0x001E, 0x0000,
     0x0000, 0x0000, 0x0008, 0x0000, 0x0000, 0x0000, 0x0008, 0x0000,
 };
+
+/* .bss (the compiler lays these out in reverse) */
+u8 g_task_dummy[80];
+u8 D_002A1500[624];
+u8 g_task_start_requests[976];
+u8 g_task_stop_requests[1600];
+u8 g_tasks[1600];
