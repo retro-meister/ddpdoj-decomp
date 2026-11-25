@@ -953,7 +953,7 @@ void func_00211670(void) {
 typedef void (*Fn)(void);
 
 extern u8 D_00299780_as_u8_a[];
-extern u8 *jtbl_0028E3F4_as_u8_p;
+extern u8 *reg_call_target_as_u8_p;
 
 void func_00211720(void) {
     u32 t1;
@@ -992,8 +992,8 @@ block_2:
     reg_d0.w = 0;
     reg_d0.b[0] = ENTITY(reg_a6)->misc.b.user;
     reg_a0 = *(u8 **)(reg_a4 + reg_d0.h[0]);
-    jtbl_0028E3F4_as_u8_p = reg_a0;
-    ((Fn)jtbl_0028E3F4_as_u8_p)();
+    reg_call_target_as_u8_p = reg_a0;
+    ((Fn)reg_call_target_as_u8_p)();
     reg_a6 += 0x30;
     t1 = reg_d7.h[0] - 1;
     reg_d7.h[0] = t1;

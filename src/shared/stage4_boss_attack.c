@@ -136,7 +136,7 @@ void func_001D7C80(void) {
 
 typedef void (*Fn)();
 
-extern Fn jtbl_0028E3F4_as_Fn;
+extern Fn reg_call_target_as_Fn;
 
 #define LOOKUP(d) (((d) != 0) ? *(u16 *)(reg_a6 + ((s16)(d) & ~1)) : ENTITY(reg_a6)->flags.h)
 
@@ -145,8 +145,8 @@ void func_001D7C90(u32 arg0, u32 arg1, s32 (*arg2)(void *), s32 arg3) {
     reg_a4[5] -= 1;
     if ((s32) reg_tmp.b[0] > 0) goto next_2;
     reg_a4[5] = reg_a4[4];
-    jtbl_0028E3F4_as_Fn = (Fn) arg2;
-    jtbl_0028E3F4_as_Fn();
+    reg_call_target_as_Fn = (Fn) arg2;
+    reg_call_target_as_Fn();
     reg_tmp.w = arg0;
     reg_d0.h[0] = LOOKUP(reg_tmp.h[0]);
     func_001D7940();
@@ -301,8 +301,8 @@ void func_001D82E0(arg0, arg1, arg2)
     reg_a4[5] -= 1;
     if ((s32) reg_tmp.b[0] > 0) goto next_2;
     reg_a4[5] = reg_a4[4];
-    jtbl_0028E3F4_as_Fn = (Fn) arg2;
-    jtbl_0028E3F4_as_Fn();
+    reg_call_target_as_Fn = (Fn) arg2;
+    reg_call_target_as_Fn();
     reg_d0.h[0] = LOOKUP(arg0);
     func_001D7940();
     reg_d0.h[0] = *(u16 *)(reg_a4 + 8);
@@ -389,15 +389,15 @@ void func_001D8730(void) {
 s32 rng_next();
 s32 rng_next_unsigned();
 extern u8 D_0026ECC0[];
-extern void (*jtbl_0028E3F4)();
+extern void (*reg_call_target)();
 
 void func_001D8740(s32 arg0, s32 arg1, void *arg2) {
     s32 aim256_at_player();
     u32 saved;
     u32 idx;
 
-    jtbl_0028E3F4 = (Fn)(arg2);
-    jtbl_0028E3F4();
+    reg_call_target = (Fn)(arg2);
+    reg_call_target();
     reg_tmp.b[0] = *(u8 *)(reg_a4 + 5);
     *(u8 *)(reg_a4 + 5) -= 1;
     if ((s32)reg_tmp.b[0] > 0) return;
@@ -604,8 +604,8 @@ void func_001D90D0(void) {
 
 
 void func_001D90E0(s32 first, s32 second, void (*callback)(void), s8 *table) {
-    jtbl_0028E3F4 = (Fn) callback;
-    jtbl_0028E3F4();
+    reg_call_target = (Fn) callback;
+    reg_call_target();
     reg_a0 = (u8 *)table;
     reg_a0 += *(u16 *) (reg_a4 + 0xC);
     reg_d7.b[0] = *(s8 *)reg_a0;
@@ -716,8 +716,8 @@ void func_001D9670(arg0, arg1, arg2)
 {
     if (*(u8 *)(reg_a4 + 0x17) != 0) goto next_0;
     if (*(s16 *)(reg_a4 + 0xA) <= 0x10) goto next_1;
-    jtbl_0028E3F4 = (Fn)(arg2);
-    jtbl_0028E3F4();
+    reg_call_target = (Fn)(arg2);
+    reg_call_target();
 next_1:
     *(u16 *)(reg_a4 + 0xA) -= 1;
     if (*(s16 *)(reg_a4 + 0xA) != 0) goto next_0;
@@ -1638,8 +1638,8 @@ next_1:
                 reg_d4.w = 0;
                 reg_a0 = *(u8 **)reg_a2;
                 reg_a2 += 4;
-                jtbl_0028E3F4 = (Fn)(reg_a0);
-                jtbl_0028E3F4();
+                reg_call_target = (Fn)(reg_a0);
+                reg_call_target();
             } while ((s16)(--reg_d7.h[0]) >= 0);
             *(u16 *)(reg_a4 + 8) -= 1;
             if (*(s16 *)(reg_a4 + 8) == 0) {

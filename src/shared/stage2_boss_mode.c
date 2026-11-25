@@ -65,7 +65,7 @@ s32 boss_phase_start();
 s32 boss_part_hide();
 s32 func_001CBA00();
 extern u8 D_0026C680[];
-extern void (*jtbl_0028E3F4)();
+extern void (*reg_call_target)();
 
 void func_001C7DA0() {
     if (*(u8 *)(reg_a4 + 3) == 0) {
@@ -83,8 +83,8 @@ void func_001C7DA0() {
             reg_a0 = D_0026C6C0;
             reg_a0 += *(u16 *)(reg_a4 + 0x14);
             reg_a0 = *(u8 **)reg_a0;
-            jtbl_0028E3F4 = (Fn)(reg_a0);
-            jtbl_0028E3F4();
+            reg_call_target = (Fn)(reg_a0);
+            reg_call_target();
             *(u16 *)(reg_a4 + 0x14) += 4;
             *(u16 *)(reg_a4 + 8) &= 0x1F;
         }
@@ -269,8 +269,8 @@ loop_6:
                     reg_a0 = (u8 *)D_0026C6C0;
                     reg_a0 += *(u16 *)(reg_a4 + 0x14);
                     reg_a0 = *(u8 **)reg_a0;
-                    jtbl_0028E3F4 = (Fn)(reg_a0);
-                    jtbl_0028E3F4();
+                    reg_call_target = (Fn)(reg_a0);
+                    reg_call_target();
                     *(u16 *)(reg_a4 + 0x14) += 4;
                     *(u16 *)(reg_a4 + 0x14) &= 0x1F;
                 }
@@ -320,8 +320,8 @@ loop_6:
                 reg_a0 = (u8 *)D_0026C6C0;
                 reg_a0 += *(u16 *)(reg_a4 + 0x14);
                 reg_a0 = *(u8 **)reg_a0;
-                jtbl_0028E3F4 = (Fn)(reg_a0);
-                jtbl_0028E3F4();
+                reg_call_target = (Fn)(reg_a0);
+                reg_call_target();
                 *(u16 *)(reg_a4 + 0x14) += 4;
                 *(u16 *)(reg_a4 + 0x14) &= 0x1F;
             }

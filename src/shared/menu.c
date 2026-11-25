@@ -4612,7 +4612,7 @@ s32 func_0012FD00();
 s32 func_0013B190();
 s32 func_0018DE90();
 s32 func_0018DEE0();
-s32 func_00206D70();
+s32 task_reset_all();
 s32 stage_map_reset();
 s32 replay_header_clear();
 extern u8 D_0028E1DA[];
@@ -4654,7 +4654,7 @@ void func_00224A90(void) {
     D_0028E3B4_as_s16 = 0;
 #endif
     func_0012FD00();
-    func_00206D70();
+    task_reset_all();
     func_0013B190();
     stage_map_reset();
     g_loop_as_s16 = 0;

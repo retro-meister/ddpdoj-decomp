@@ -135,7 +135,7 @@ extern u16 g_enemy_signal_4;
 extern u16 g_side_scroll_step[];
 extern u16 D_002BDAA4[];
 extern u16 D_002BDAA6[];
-extern void (*jtbl_0028E3F4)();
+extern void (*reg_call_target)();
 
 void func_001D4930(void) {
     u32 saved;
@@ -152,8 +152,8 @@ void func_001D4930(void) {
     reg_tmp.h[1] = (reg_d0.h[0] != 0) ? *(u16 *)((u8 *)reg_a0 + ((s16)reg_d0.h[0] & ~1)) : *(u16 *)(reg_a0 + 0);
     reg_tmp.h[0] = (((reg_d0.h[0] & 0xFFFF) + 2) != 0) ? *(u16 *)((u8 *)reg_a0 + ((s16)((reg_d0.h[0] & 0xFFFF) + 2) & ~1)) : *(u16 *)reg_a0;
     reg_a0 = (u8 *) reg_tmp.w;
-    jtbl_0028E3F4 = (Fn)(reg_a0);
-    jtbl_0028E3F4();
+    reg_call_target = (Fn)(reg_a0);
+    reg_call_target();
     reg_d7.w = saved;
     if (*(u8 *)(reg_a5 + 0x25) != 0) goto next_3;
     if (*(u16 *)(reg_a5 + 0x2E) == 0) goto next_3;
@@ -792,8 +792,8 @@ void func_001D5CA0(void) {
                     temp_a0_2 = ENTITY(reg_a6)[1].offset_x.h;
                     reg_d3.h[0] = temp_a0_2;
                     reg_a0 = reg_a6 + 0x20;
-                    jtbl_0028E3F4 = (Fn)(reg_a4);
-                    jtbl_0028E3F4();
+                    reg_call_target = (Fn)(reg_a4);
+                    reg_call_target();
                 }
                 if (ENTITY(reg_a6)[2].look.b.size == 0) {
                     reg_d0.h[0] = ENTITY(reg_a6)[2].y.h;
@@ -810,8 +810,8 @@ void func_001D5CA0(void) {
                     temp_a0_4 = ENTITY(reg_a6)[2].offset_x.h;
                     reg_d3.h[0] = temp_a0_4;
                     reg_a0 = reg_a6 + 0x40;
-                    jtbl_0028E3F4 = (Fn)(reg_a4);
-                    jtbl_0028E3F4();
+                    reg_call_target = (Fn)(reg_a4);
+                    reg_call_target();
                 }
                 ENTITY(reg_a6)[5].sprite.h -= 1;
                 if (ENTITY(reg_a6)[5].sprite.h == 0) {

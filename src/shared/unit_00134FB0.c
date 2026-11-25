@@ -11,13 +11,13 @@ void func_00136A40(void);
 void func_00136BB0(void);
 void func_00137820(void);
 
-s32 func_00207490();                            /* extern */
+s32 task_request_stop();                            /* extern */
 extern s32 D_0028E84C;
 
 void func_00134FB0(void) {
     func_00135100();
     reg_a0 = (u8 *)(&D_0028E84C);
-    func_00207490();
+    task_request_stop();
 }
 
 extern u16 g_stage_x4;
@@ -577,7 +577,7 @@ void func_00135AD0(void) {
 
 s32 func_0018DE90();
 s32 func_0018DEE0();
-s32 func_00207490();
+s32 task_request_stop();
 extern u8 D_0028E83C_as_u8;
 extern u8 D_0028E840_as_u8;
 extern u8 D_0028E844_as_u8;
@@ -588,23 +588,23 @@ void func_00135C90(void) {
     reg_a2 = D_002BF390;
     reg_a3 = D_002BF3B4;
     reg_a0 = reg_a2 + 0x1C;
-    func_00207490();
+    task_request_stop();
     reg_a0 = reg_a3 + 0x1C;
-    func_00207490();
+    task_request_stop();
     reg_a0 = reg_a2 + 0x20;
-    func_00207490();
+    task_request_stop();
     reg_a0 = reg_a3 + 0x20;
-    func_00207490();
+    task_request_stop();
     reg_a0 = &D_0028E848_as_u8;
-    func_00207490();
+    task_request_stop();
     reg_a0 = &D_0028E84C_as_u8;
-    func_00207490();
+    task_request_stop();
     reg_a0 = &D_0028E844_as_u8;
-    func_00207490();
+    task_request_stop();
     reg_a0 = &D_0028E840_as_u8;
-    func_00207490();
+    task_request_stop();
     reg_a0 = &D_0028E83C_as_u8;
-    func_00207490();
+    task_request_stop();
     func_0018DEE0();
     func_0018DE90();
     reg_d0.h[0] = 0xE;
@@ -630,13 +630,13 @@ void func_00135D70(void) {
     ((HalfPair *)reg_a6)->unk2 = 0;
 }
 
-s32 func_00207600();                            /* extern */
+s32 task_find();                            /* extern */
 
 void func_00135D90(void) {
     D_0028E850 += 1;
     reg_d0.h[1] = *(u16 *)(reg_a6 + 0x20);
     reg_d0.h[0] = *(u16 *)(reg_a6 + 0x22);
-    func_00207600();
+    task_find();
     *(s8 *)(reg_a0 + 3) = 3;
     ENTITY(reg_a6)->flags.sh = 0;
     ENTITY(reg_a6)->y.sh = 0;
@@ -647,11 +647,11 @@ void func_00135DF0(void) {
     reg_a3 = (u8 *)D_002BF3B4_as_s32_a;
     reg_d0.h[1] = (*(u16 *)((u8 *)((s32 *)reg_a2) + (0x20)));
     reg_d0.h[0] = (*(u16 *)((u8 *)((s32 *)reg_a2) + (0x22)));
-    func_00207600();
+    task_find();
     *(s8 *)(reg_a0 + 4) = 0;
     reg_d0.h[1] = (*(u16 *)((u8 *)((s32 *)reg_a3) + (0x20)));
     reg_d0.h[0] = (*(u16 *)((u8 *)((s32 *)reg_a3) + (0x22)));
-    func_00207600();
+    task_find();
     *(s8 *)(reg_a0 + 4) = 0;
     ENTITY(reg_a6)->flags.sh = 0;
     ENTITY(reg_a6)->y.sh = 0;
@@ -868,26 +868,26 @@ void func_00136260(void) {
     reg_a2 = D_002BF390;
     reg_a3 = D_002BF3B4;
     reg_a0 = reg_a2 + 0x18;
-    func_00207490();
+    task_request_stop();
     reg_a0 = reg_a3 + 0x18;
-    func_00207490();
+    task_request_stop();
     reg_a0 = reg_a2 + 0x1C;
-    func_00207490();
+    task_request_stop();
     reg_a0 = reg_a3 + 0x1C;
-    func_00207490();
+    task_request_stop();
     reg_a0 = reg_a2 + 0x20;
-    func_00207490();
+    task_request_stop();
     reg_a0 = reg_a3 + 0x20;
-    func_00207490();
+    task_request_stop();
 }
 
 extern u16 D_0028E940;
 
 void func_001362F0(void) {
     reg_a0 = (u8 *)(&D_0028E848);
-    func_00207490();
+    task_request_stop();
     reg_a0 = (u8 *)(&D_0028E84C);
-    func_00207490();
+    task_request_stop();
     if (D_0028E940 != 0) {
         func_00136260();
     }
@@ -1109,7 +1109,7 @@ void func_00136600(void) {
 
 s32 func_00134380();
 s32 func_00138170();
-s32 func_002075F0();
+s32 task_stop_self();
 extern u8 g_stage_load_state;
 extern u16 D_0028E3F0;
 extern u8 D_0028EC4C;
@@ -1146,7 +1146,7 @@ void func_001367C0(void) {
     return;
 block_end1:
     func_00135ED0();
-    func_002075F0();
+    task_stop_self();
 }
 
 extern s32 D_0029BC00_as_s32_a[];
@@ -1342,7 +1342,7 @@ extern u8 D_002BC7C0[];
 extern u16 D_0028E3EC;
 extern s8 D_0028E855_as_s8;
 extern u8 D_0029BC00[];
-extern void (*jtbl_0028E3F4)();
+extern void (*reg_call_target)();
 
 void func_00136F30(void) {
     u32 count;
@@ -1497,8 +1497,8 @@ next_obj10:
     reg_a0 = (u8 *)D_0024F3C0;
     reg_a0 += reg_d0.h[0];
     reg_a0 = *(u8 **)reg_a0;
-    jtbl_0028E3F4 = (Fn)(reg_a0);
-    jtbl_0028E3F4();
+    reg_call_target = (Fn)(reg_a0);
+    reg_call_target();
     reg_a6 += 0x26;
     count = reg_d7.h[0] - 1;
     reg_d7.h[0] = count;

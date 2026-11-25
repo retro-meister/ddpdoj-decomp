@@ -132,7 +132,7 @@ extern u16 g_enemies_stopped;
 extern s16 g_true_last_boss_as_s16;
 extern s32 D_00295E9C_as_s32_a[];
 extern u16 D_002962DE[];
-extern u8 *jtbl_0028E3F4_as_u8_p;
+extern u8 *reg_call_target_as_u8_p;
 
 void boss_slots_run(void) {
     u32 temp_s0;
@@ -164,9 +164,9 @@ void boss_slots_run(void) {
                 reg_tmp.h[1] = (*(u16 *)((u8 *)(temp_s1) + (2)));
                 reg_tmp.h[0] = (*(u16 *)((u8 *)(temp_s1) + (4)));
                 reg_a3 = (u8 *)reg_tmp.w;
-                jtbl_0028E3F4_as_u8_p = reg_a3;
+                reg_call_target_as_u8_p = reg_a3;
                 temp_s0 = reg_d7.w;
-                ((Fn)jtbl_0028E3F4_as_u8_p)();
+                ((Fn)reg_call_target_as_u8_p)();
                 reg_a4 = temp_s1;
                 reg_d7.w = temp_s0;
             }
@@ -188,7 +188,7 @@ extern u16 D_00295F44[];
 extern u16 D_002960B0[];
 extern u8 *D_00296210[];
 extern u16 D_00296214[];
-extern void (*jtbl_0028E3F4)();
+extern void (*reg_call_target)();
 
 void boss_slots_step(void) {
     u32 t1;
@@ -211,9 +211,9 @@ void boss_slots_step(void) {
                 reg_a0 = D_00296210[0];
                 reg_a0 += reg_d0.h[0];
                 reg_a0 = *(u8 **)reg_a0;
-                jtbl_0028E3F4 = (Fn)(reg_a0);
+                reg_call_target = (Fn)(reg_a0);
                 t1 = reg_d7.w;
-                jtbl_0028E3F4();
+                reg_call_target();
                 reg_d7.w = t1;
             }
             reg_a4 += 0x20;
@@ -241,8 +241,8 @@ void boss_slots_step(void) {
             reg_a0 += reg_d0.h[0];
             reg_a0 = *(u8 **)reg_a0;
             reg_a4 = (u8 *)(D_00295E5C);
-            jtbl_0028E3F4 = (Fn)(reg_a0);
-            jtbl_0028E3F4();
+            reg_call_target = (Fn)(reg_a0);
+            reg_call_target();
             if (D_00295E58[0] == 0) {
                 D_00295E58[0] += 4;
             }
@@ -265,9 +265,9 @@ void boss_slots_step(void) {
                     reg_a0 = (u8 *) D_002960A8[0];
                     reg_a0 += reg_d0.h[0];
                     reg_a0 = *(u8 **)reg_a0;
-                    jtbl_0028E3F4 = (Fn)(reg_a0);
+                    reg_call_target = (Fn)(reg_a0);
                     t2 = reg_d7.w;
-                    jtbl_0028E3F4();
+                    reg_call_target();
                     reg_d7.w = t2;
                 }
             }
@@ -290,9 +290,9 @@ void boss_slots_step(void) {
                 reg_a0 = D_00295F40[0];
                 reg_a0 += reg_d0.h[0];
                 reg_a0 = *(u8 **)reg_a0;
-                jtbl_0028E3F4 = (Fn)(reg_a0);
+                reg_call_target = (Fn)(reg_a0);
                 t3 = reg_d7.w;
-                jtbl_0028E3F4();
+                reg_call_target();
                 reg_d7.w = t3;
             }
             reg_a4 += 0x20;

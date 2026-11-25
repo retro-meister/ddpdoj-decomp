@@ -130,7 +130,7 @@ s32 vibration_start_pad2();
 extern u16 D_00264BB0[];
 extern u16 D_00264C10[];
 extern u8 D_0028E310;
-extern void (*jtbl_0028E3F4)();
+extern void (*reg_call_target)();
 
 void func_001F1680() {
     s16 t1;
@@ -294,8 +294,8 @@ block_rts:
     if (0 > reg_d0.sb[0]) {
         reg_a0 = (u8 *)func_0018D520;
     }
-    jtbl_0028E3F4 = (Fn)(reg_a0);
-    jtbl_0028E3F4();
+    reg_call_target = (Fn)(reg_a0);
+    reg_call_target();
     rng_next_unsigned();
     reg_d0.h[0] &= 7;
     reg_d0.h[0] += reg_d0.h[0];
@@ -548,8 +548,8 @@ block_rts:
         if (0 > reg_d0.sb[0]) {
             reg_a0 = (u8 *)func_0018D520;
         }
-        jtbl_0028E3F4 = (Fn)(reg_a0);
-        jtbl_0028E3F4();
+        reg_call_target = (Fn)(reg_a0);
+        reg_call_target();
         rng_next_unsigned();
         reg_d0.h[0] &= 7;
         reg_a1 = (u8 *)(D_00264C10);
@@ -916,8 +916,8 @@ block_0:
     if (!(0 > reg_d0.sb[0])) goto next_5;
     reg_a0 = (u8 *)func_0018D520;
 next_5:
-    jtbl_0028E3F4 = (Fn)reg_a0;
-    jtbl_0028E3F4();
+    reg_call_target = (Fn)reg_a0;
+    reg_call_target();
 next_4:
 #ifdef DEATH_LABEL
     y = ENTITY(reg_a6)->x.h;

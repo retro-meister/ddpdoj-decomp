@@ -78,7 +78,7 @@ extern u8 D_00241870[];
 extern u16 D_0028E3EC;
 extern u16 g_side_scroll_step[];
 extern u8 D_0029CEA0_as_u8_a[];
-extern void (*jtbl_0028E3F4)();
+extern void (*reg_call_target)();
 
 void func_0011FA90(void) {
     u8 temp;
@@ -144,8 +144,8 @@ void func_0011FA90(void) {
     *(u16 *)(reg_a6 + 0x20) = (u16) reg_tmp.h[0];
     reg_a0 = (u8 *)func_0018D8B0;
 next_1:
-    jtbl_0028E3F4 = (Fn)(reg_a0);
-    jtbl_0028E3F4();
+    reg_call_target = (Fn)(reg_a0);
+    reg_call_target();
     if (reg_a5 != g_player1_as_u8_a) goto next_2;
     vibration_start_pad1(0xC8, 0x64);
     goto block_a;
@@ -669,8 +669,8 @@ void func_00120770(arg3)
             *(u16 *)(reg_a6 + 0x860) = var_a0;
             reg_a0 = (u8 *)func_0018D870;
         }
-        jtbl_0028E3F4 = (Fn)(reg_a0);
-        jtbl_0028E3F4();
+        reg_call_target = (Fn)(reg_a0);
+        reg_call_target();
         if (reg_a5 == g_player1_as_u8_a) {
             vibration_start_pad1(0xC8, 0x78);
         } else {

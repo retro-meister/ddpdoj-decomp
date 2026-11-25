@@ -5439,7 +5439,7 @@ s32 func_0013FD80();                            /* extern */
 s32 func_0018DE90();                            /* extern */
 s32 text_palette_load();                            /* extern */
 s32 task_start();                            /* extern */
-s32 func_002075F0();                            /* extern */
+s32 task_stop_self();                            /* extern */
 extern s32 D_00269160_as_s32_a[];
 extern u8 D_0028E258;
 extern u8 D_0028E25C;
@@ -5450,7 +5450,7 @@ void func_001980A0() {
     func_0013FD80();
     func_00137C20();
     func_00135ED0();
-    func_002075F0();
+    task_stop_self();
     func_0018DE90();
     text_layer_clear();
     reg_d0.w = 0;

@@ -91,7 +91,7 @@ extern u16 D_0028E3F0;
 extern u16 D_0028E854_as_u16;
 extern u8 D_0029A530_as_u8_a[];
 extern u16 g_side_scroll_step[];
-extern u8 *jtbl_0028E3F4_as_u8_p;
+extern u8 *reg_call_target_as_u8_p;
 
 void func_001B8440(void) {
     u32 cnt;
@@ -196,8 +196,8 @@ next_set:
     reg_d0.h[0] = *(u16 *)(reg_a6 + 0x24);
     reg_a0 += reg_d0.h[0];
     reg_a0 = *(u8 **)reg_a0;
-    jtbl_0028E3F4_as_u8_p = reg_a0;
-    ((Fn) jtbl_0028E3F4_as_u8_p)();
+    reg_call_target_as_u8_p = reg_a0;
+    ((Fn) reg_call_target_as_u8_p)();
     reg_a6 += 0x40;
     cnt = reg_d7.h[0] - 1;
     reg_d7.h[0] = cnt;
@@ -211,8 +211,8 @@ next_8:
     reg_d0.h[0] = *(u16 *)(reg_a6 + 0x24);
     reg_a0 += reg_d0.h[0];
     reg_a0 = *(u8 **)reg_a0;
-    jtbl_0028E3F4_as_u8_p = reg_a0;
-    ((Fn) jtbl_0028E3F4_as_u8_p)();
+    reg_call_target_as_u8_p = reg_a0;
+    ((Fn) reg_call_target_as_u8_p)();
 next_9:
     reg_a6 += 0x40;
     cnt = reg_d7.h[0] - 1;
@@ -346,7 +346,7 @@ s32 rng_next_bit();
 s32 func_00201390();
 extern u16 D_00250CE0[];
 extern u8 D_0028E52F;
-extern void (*jtbl_0028E3F4)();
+extern void (*reg_call_target)();
 
 void func_001B8D00(void) {
     u8 flag;
@@ -419,8 +419,8 @@ void func_001B8D00(void) {
     reg_a1 = (u8 *)D_002509E0;
     reg_a1 += reg_d2.h[0];
     reg_a1 = *(u8 **)reg_a1;
-    jtbl_0028E3F4 = (Fn)(reg_a1);
-    jtbl_0028E3F4();
+    reg_call_target = (Fn)(reg_a1);
+    reg_call_target();
     if (0 > (s16) reg_d1.h[0]) {
         reg_d0.h[0] = *(u16 *)(reg_a0 + 0x20);
         reg_d0.b[0] += 0x10;

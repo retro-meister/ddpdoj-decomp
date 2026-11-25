@@ -205,7 +205,7 @@ void func_00207B10(void)
 typedef void (*Fn)(void);
 
 extern u8 *D_00267D20[];
-extern Fn jtbl_0028E3F4_as_Fn;
+extern Fn reg_call_target_as_Fn;
 
 void func_00207B60(void) {
     u8 **table;
@@ -229,8 +229,8 @@ void func_00207B60(void) {
     }
     reg_a0 = entry;
     reg_d7.h[0] = 2;
-    jtbl_0028E3F4_as_Fn = (Fn)reg_a0;
-    jtbl_0028E3F4_as_Fn();
+    reg_call_target_as_Fn = (Fn)reg_a0;
+    reg_call_target_as_Fn();
 }
 #pragma pop
 

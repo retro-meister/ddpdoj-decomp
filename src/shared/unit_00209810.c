@@ -151,7 +151,7 @@ void func_00209AA0(void) {
 typedef void (*Fn)();
 
 extern u8 D_00268790[];
-extern u8 *jtbl_0028E3F4_as_u8_p;
+extern u8 *reg_call_target_as_u8_p;
 
 void func_00209AF0(void) {
     s32 temp_a1;
@@ -171,7 +171,7 @@ void func_00209AF0(void) {
     if (reg_d0.w != -1U) {
         reg_a0 = (u8 *)reg_d0.w;
         reg_d7.h[0] = 2;
-        jtbl_0028E3F4_as_u8_p = reg_a0;
-        ((Fn)jtbl_0028E3F4_as_u8_p)();
+        reg_call_target_as_u8_p = reg_a0;
+        ((Fn)reg_call_target_as_u8_p)();
     }
 }

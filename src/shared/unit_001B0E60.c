@@ -335,8 +335,8 @@ extern u8 D_0028E304;
 extern u16 g_loop;
 
 void func_001B1920(void) {
-    s32 func_002075F0();
-    func_002075F0();
+    s32 task_stop_self();
+    task_stop_self();
     if ((D_0028E304 != 0) && (g_loop == 0)) {
         g_loop = 1;
     }
@@ -363,7 +363,7 @@ s32 func_0018DEE0();
 s32 text_palette_load();
 s32 death_func_001B1220();
 s32 task_start();
-s32 func_002075F0();
+s32 task_stop_self();
 s32 fade_reset();
 extern u8 D_00269140[];
 extern u8 g_game_mode;
@@ -418,7 +418,7 @@ void func_001B1960(void) {
                     D_00684C80[3] = *(u8 *)(reg_a5 + 4);
                     D_00684C80[9] = D_00684C80[3];
                 }
-                func_002075F0();
+                task_stop_self();
                 func_0018DD40();
                 func_0018DEE0();
                 reg_d0.h[0] = 0x15;
@@ -658,9 +658,9 @@ void func_001B1D70(void) {
 }
 
 void func_001B21F0(void) {
-    void func_002075F0(void);
+    void task_stop_self(void);
     D_0028E3B4_as_s16 = 0;
-    func_002075F0();
+    task_stop_self();
 }
 
 

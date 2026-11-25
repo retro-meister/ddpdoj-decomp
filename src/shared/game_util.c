@@ -3,23 +3,23 @@
 
 s32 task_start();                            /* extern */
 #ifdef DEATH_LABEL
-s32 func_00206D70();
+s32 task_reset_all();
 extern u8 death_D_00290DC0;
 #else
-s32 func_002075F0();                            /* extern */
+s32 task_stop_self();                            /* extern */
 #endif
 
 void func_00200D30(void) {
 #ifdef DEATH_LABEL
     death_D_00290DC0 = 1;
-    func_00206D70();
+    task_reset_all();
     reg_d0.h[0] = 0x15;
     task_start();
 #else
     reg_d0.h[0] = 0xE;
     task_start();
     g_ending_started = 0;
-    func_002075F0();
+    task_stop_self();
 #endif
 }
 

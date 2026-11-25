@@ -210,6 +210,7 @@ segments:
       - [0x18c0f0, sdata, sdata]
       - {type: .sbss, vram: 0x28de80, name: shared/credits_roll}
       - {type: sbss, vram: 0x28de8c, name: sbss_28de8c}
+      - {type: .sbss, vram: 0x28e0c4, name: shared/task}
       - {type: .sbss, vram: 0x28e0d4, name: shared/layers}
       - {type: sbss, vram: 0x28e114, name: sbss_28e114}
       - {type: .sbss, vram: 0x28e1a4, name: shared/input}

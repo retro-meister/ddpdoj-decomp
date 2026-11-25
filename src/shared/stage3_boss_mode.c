@@ -63,7 +63,7 @@ s32 rng_next_unsigned();
 s32 rng_next_word();
 extern u16 D_0026D810[];
 extern u16 D_0026D8A0[];
-extern void (*jtbl_0028E3F4)();
+extern void (*reg_call_target)();
 
 void func_001D2930() {
     u8 bits;
@@ -217,8 +217,8 @@ next_s0:
     if (reg_d0.sb[0] >= 0) goto next_30;
     reg_a0 = (u8 *) func_0018D520;
 next_30:
-    jtbl_0028E3F4 = (Fn) reg_a0;
-    jtbl_0028E3F4();
+    reg_call_target = (Fn) reg_a0;
+    reg_call_target();
 next_40:
     reg_a1 = (u8 *) D_0026D810;
     reg_a1 += *(u16 *)(reg_a4 + 8);
@@ -493,8 +493,8 @@ void func_001D34C0() {
         if ((s8) reg_d0.b[0] >= 0) {
             reg_a0 = (u8 *)func_0018D520;
         }
-        jtbl_0028E3F4 = (Fn)(reg_a0);
-        jtbl_0028E3F4();
+        reg_call_target = (Fn)(reg_a0);
+        reg_call_target();
         rng_next_unsigned();
         reg_d0.h[0] &= 7;
         reg_d0.h[0] = *(u16 *)(D_0026D9C0 + (reg_d0.h[0] * 2));

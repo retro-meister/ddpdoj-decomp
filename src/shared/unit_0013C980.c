@@ -48,7 +48,7 @@ extern u8 D_0029D770[];
 extern u8 D_0029DD90[];
 extern u8 D_0029F180[];
 extern u16 D_0029F2B8[];
-extern Fn jtbl_0028E3F4_as_Fn;
+extern Fn reg_call_target_as_Fn;
 
 void func_0018DE10(void);
 
@@ -67,8 +67,8 @@ void func_0013C9A0(void) {
     if (g_p1_hyper_active != 0) {
         reg_a0 = (u8 *)func_0018DE10;
     }
-    jtbl_0028E3F4_as_Fn = (Fn)reg_a0;
-    jtbl_0028E3F4_as_Fn();
+    reg_call_target_as_Fn = (Fn)reg_a0;
+    reg_call_target_as_Fn();
     reg_a6 = (u8 *)D_0029DD90;
     reg_a0 = (u8 *)D_0029D770;
     reg_a1 = (u8 *)D_0029D730;
@@ -109,8 +109,8 @@ void func_0013CAB0(void) {
     if (g_p2_hyper_active != 0) {
         reg_a0 = (u8 *)func_0018DE40;
     }
-    jtbl_0028E3F4_as_Fn = (Fn)reg_a0;
-    jtbl_0028E3F4_as_Fn();
+    reg_call_target_as_Fn = (Fn)reg_a0;
+    reg_call_target_as_Fn();
     reg_a6 = (u8 *)D_0029D790;
     reg_a0 = (u8 *)D_0029D750;
     reg_a1 = (u8 *)D_0029D710;

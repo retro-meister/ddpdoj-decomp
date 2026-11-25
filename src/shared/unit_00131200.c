@@ -356,12 +356,12 @@ void func_00131700(void) {
 
 extern u16 D_0028E960;
 
-void func_002075F0(void);
+void task_stop_self(void);
 
 void func_001317D0(void) {
     D_0028E960 = 0;
     D_0028E95C = 0;
-    func_002075F0();
+    task_stop_self();
 }
 
 s32 func_00125E80();                            /* extern */
@@ -369,7 +369,7 @@ s32 func_0013B190();                            /* extern */
 s32 func_0013E7C0();                            /* extern */
 s32 func_0013E850();                            /* extern */
 s32 func_001AD720();                            /* extern */
-s32 func_00206D70();                            /* extern */
+s32 task_reset_all();                            /* extern */
 s32 task_start();                            /* extern */
 #ifdef DEATH_LABEL
 extern u8 death_D_00290DC0;
@@ -380,7 +380,7 @@ extern s16 D_0028E854_as_s16;
 
 void func_001317E0(void) {
     func_0013B190();
-    func_00206D70();
+    task_reset_all();
     func_00131630();
     func_00125E80();
     func_001AD720();

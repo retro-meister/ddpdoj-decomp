@@ -135,7 +135,7 @@ s32 enemy_init_entities_n();
 s32 rng_next_unsigned();
 extern u8 D_002637F0[];
 extern u8 D_00263810[];
-extern void (*jtbl_0028E3F4)();
+extern void (*reg_call_target)();
 
 void func_001DE510(void) {
     reg_a0 = (u8 *)D_00263860;
@@ -181,8 +181,8 @@ void func_001DE510(void) {
     }
     reg_a6 += 0x20;
     do {
-        jtbl_0028E3F4 = (Fn)(reg_a0);
-        jtbl_0028E3F4();
+        reg_call_target = (Fn)(reg_a0);
+        reg_call_target();
         reg_a6 += 0x40;
         reg_a3 += 6;
     } while ((s16)(--reg_d7.h[0]) >= 0);
@@ -332,8 +332,8 @@ block_objset:
 next_sen:
     reg_a6 += 0x20;
 loop_1:
-    jtbl_0028E3F4 = (Fn)(reg_a0);
-    jtbl_0028E3F4();
+    reg_call_target = (Fn)(reg_a0);
+    reg_call_target();
     if (ENTITY(reg_a6)->flags.sb[0] < 0) goto next_sen60;
     reg_d6.w = 1;
 next_sen60:
@@ -1110,8 +1110,8 @@ next_6240:
     if ((s8) reg_d0.b[0] >= 0) goto next_6260;
     reg_a0 = (u8 *) func_0018D520;
 next_6260:
-    jtbl_0028E3F4 = (Fn) reg_a0;
-    jtbl_0028E3F4();
+    reg_call_target = (Fn) reg_a0;
+    reg_call_target();
     rng_next_unsigned();
     reg_d0.h[0] &= 7;
     reg_a1 = (u8 *)D_00263940;
@@ -1708,8 +1708,8 @@ next_24:
     if (reg_d0.sb[0] >= 0) goto next_25;
     reg_a0 = (u8 *)func_0018D520;
 next_25:
-    jtbl_0028E3F4 = (Fn)(reg_a0);
-    jtbl_0028E3F4();
+    reg_call_target = (Fn)(reg_a0);
+    reg_call_target();
     rng_next_unsigned();
     reg_d0.h[0] &= 7;
     reg_a0 = (u8 *)D_00263C10;

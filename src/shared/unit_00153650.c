@@ -2456,7 +2456,7 @@ void func_00158B40(void) {
 }
 
 typedef void (*Fn)(void);
-extern u8 *jtbl_0028E3F4_as_u8_p;
+extern u8 *reg_call_target_as_u8_p;
 extern u16 D_00258560[];
 
 void func_00158B80(void) {
@@ -2473,8 +2473,8 @@ void func_00158B80(void) {
     reg_a0 += reg_d0.h[0];
     reg_tmp.h[1] = *(u16 *)reg_a0;
     reg_tmp.h[0] = *(u16 *)(reg_a0 + 2);
-    jtbl_0028E3F4_as_u8_p = (u8 *)reg_tmp.w;
-    ((Fn)jtbl_0028E3F4_as_u8_p)();
+    reg_call_target_as_u8_p = (u8 *)reg_tmp.w;
+    ((Fn)reg_call_target_as_u8_p)();
 }
 
 
@@ -2931,8 +2931,8 @@ void func_00159A10(void) {
     reg_a0 += reg_d0.h[0];
     reg_tmp.h[1] = *(u16 *)reg_a0;
     reg_tmp.h[0] = *(u16 *)(reg_a0 + 2);
-    jtbl_0028E3F4_as_u8_p = (u8 *)reg_tmp.w;
-    ((Fn)jtbl_0028E3F4_as_u8_p)();
+    reg_call_target_as_u8_p = (u8 *)reg_tmp.w;
+    ((Fn)reg_call_target_as_u8_p)();
 }
 
 
@@ -3021,7 +3021,7 @@ s32 func_0018D500();
 extern u16 D_00258760[];
 extern u16 D_00258770[];
 extern u8 D_00258790[];
-extern u32 jtbl_0028E3F4_as_u32;
+extern u32 reg_call_target_as_u32;
 
 void func_00159CB0(void) {
     s32 enemy_remove();
@@ -3093,8 +3093,8 @@ block_11:
                     reg_d0.h[0] *= 4;
                     reg_tmp.h[1] = (reg_d0.h[0] != 0) ? *(u16 *)((u8 *)reg_a0 + ((s16)reg_d0.h[0] & ~1)) : *(u16 *)reg_a0;
                     reg_tmp.h[0] = (((reg_d0.h[0] & 0xFFFF) + 2) != 0) ? *(u16 *)((u8 *)reg_a0 + ((s16)((reg_d0.h[0] & 0xFFFF) + 2) & ~1)) : *(u16 *)reg_a0;
-                    jtbl_0028E3F4_as_u32 = reg_tmp.w;
-                    ((Fn)jtbl_0028E3F4_as_u32)();
+                    reg_call_target_as_u32 = reg_tmp.w;
+                    ((Fn)reg_call_target_as_u32)();
                     *(u16 *)(reg_a5 + 0x24) += 1;
                     reg_d0.w = 4;
                     reg_d1.w = 3;
@@ -3631,7 +3631,7 @@ s32 func_002031E0();
 s32 wreck_spawn();
 extern u16 D_0028E3EC;
 extern u16 g_rank_10_16;
-extern void (*jtbl_0028E3F4)();
+extern void (*reg_call_target)();
 
 void func_0015B210(void) {
     s32 enemy_remove();
@@ -3687,8 +3687,8 @@ block_obj:
     reg_tmp.h[1] = *(u16 *)(reg_a5 + 0x2A);
     reg_tmp.h[0] = *(u16 *)(reg_a5 + 0x2C);
     reg_a0 = (u8 *)reg_tmp.w;
-    jtbl_0028E3F4 = (Fn)reg_a0;
-    jtbl_0028E3F4();
+    reg_call_target = (Fn)reg_a0;
+    reg_call_target();
     reg_a0 = reg_a6;
     enemy_hitbox_debug_draw();
     if (*(s8 *)(reg_a5 + 0x21) >= 0) goto block_turret;
@@ -3743,8 +3743,8 @@ block_turret_obj:
     reg_tmp.h[1] = *(u16 *)(reg_a5 + 0x2E);
     reg_tmp.h[0] = *(u16 *)(reg_a5 + 0x30);
     reg_a0 = (u8 *)reg_tmp.w;
-    jtbl_0028E3F4 = (Fn)reg_a0;
-    jtbl_0028E3F4();
+    reg_call_target = (Fn)reg_a0;
+    reg_call_target();
     return;
 block_shot:
     reg_d0.h[0] = 0xA0;

@@ -265,7 +265,7 @@ s32 func_00204A20();
 s32 func_002053F0();
 s32 func_00205D20();
 s32 func_00206080();
-extern u8 *jtbl_0028E3F4_as_u8_p;
+extern u8 *reg_call_target_as_u8_p;
 
 void func_00138750(void) {
     u8 *temp_s0;
@@ -285,8 +285,8 @@ void func_00138750(void) {
     reg_tmp.h[1] = *(u16 *)(reg_a4 + 6);
     reg_tmp.h[0] = *(u16 *)(reg_a4 + 8);
     reg_a0 = (u8 *)reg_tmp.w;
-    jtbl_0028E3F4_as_u8_p = reg_a0;
-    ((Fn)jtbl_0028E3F4_as_u8_p)();
+    reg_call_target_as_u8_p = reg_a0;
+    ((Fn)reg_call_target_as_u8_p)();
     if (reg_d0.w & 4) {
         func_0018DA50();
         *(s16 *)(reg_a6 + 0x28) = 1;

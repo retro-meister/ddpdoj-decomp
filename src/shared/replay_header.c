@@ -26,10 +26,10 @@ void replay_header_clear(void) {
     g_replay_header.p2_doll = 0xFF;
 }
 
-void func_002075F0(void);
+void task_stop_self(void);
 
 void func_00236DA0(void) {
-    func_002075F0();
+    task_stop_self();
 }
 
 typedef struct {

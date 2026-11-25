@@ -5,7 +5,7 @@ void func_00170A50(void) {
 }
 
 typedef void (*Fn)(void);
-extern u8 *jtbl_0028E3F4_as_u8_p;
+extern u8 *reg_call_target_as_u8_p;
 extern u16 D_0025AE10[];
 
 void func_00170A60(void) {
@@ -15,8 +15,8 @@ void func_00170A60(void) {
     reg_tmp.h[1] = (reg_d0.h[0] != 0) ? *(u16 *)(reg_a0 + ((s16)reg_d0.h[0] & ~1)) : *(u16 *)reg_a0;
     reg_tmp.h[0] = (((u16)reg_d0.h[0] + 2) != 0) ? *(u16 *)(reg_a0 + ((s16)((u16)reg_d0.h[0] + 2) & ~1)) : *(u16 *)reg_a0;
     reg_a0 = (u8 *)reg_tmp.w;
-    jtbl_0028E3F4_as_u8_p = reg_a0;
-    ((Fn)jtbl_0028E3F4_as_u8_p)();
+    reg_call_target_as_u8_p = reg_a0;
+    ((Fn)reg_call_target_as_u8_p)();
 }
 
 extern u16 D_0025AE50[];
@@ -28,8 +28,8 @@ void func_00170B20(void) {
     reg_tmp.h[1] = (reg_d0.h[0] != 0) ? *(u16 *)(reg_a0 + ((s16)reg_d0.h[0] & ~1)) : *(u16 *)reg_a0;
     reg_tmp.h[0] = (((u16)reg_d0.h[0] + 2) != 0) ? *(u16 *)(reg_a0 + ((s16)((u16)reg_d0.h[0] + 2) & ~1)) : *(u16 *)reg_a0;
     reg_a0 = (u8 *)reg_tmp.w;
-    jtbl_0028E3F4_as_u8_p = reg_a0;
-    ((Fn)jtbl_0028E3F4_as_u8_p)();
+    reg_call_target_as_u8_p = reg_a0;
+    ((Fn)reg_call_target_as_u8_p)();
 }
 
 extern u16 D_0025AE70[];
@@ -41,8 +41,8 @@ void func_00170BE0(void) {
     reg_tmp.h[1] = (reg_d0.h[0] != 0) ? *(u16 *)(reg_a0 + ((s16)reg_d0.h[0] & ~1)) : *(u16 *)reg_a0;
     reg_tmp.h[0] = (((u16)reg_d0.h[0] + 2) != 0) ? *(u16 *)(reg_a0 + ((s16)((u16)reg_d0.h[0] + 2) & ~1)) : *(u16 *)reg_a0;
     reg_a0 = (u8 *)reg_tmp.w;
-    jtbl_0028E3F4_as_u8_p = reg_a0;
-    ((Fn)jtbl_0028E3F4_as_u8_p)();
+    reg_call_target_as_u8_p = reg_a0;
+    ((Fn)reg_call_target_as_u8_p)();
 }
 
 extern u16 D_0025AEA8[];
@@ -273,7 +273,7 @@ next_5:
 #pragma push
 #pragma opt_propagation off
 extern u8 g_ground_no_draw;
-extern void (*jtbl_0028E3F4_as_fn)(void);
+extern void (*reg_call_target_as_fn)(void);
 
 void scenery_draw(void (*callback)(void))
 {
@@ -287,8 +287,8 @@ void scenery_draw(void (*callback)(void))
         reg_d2.h[0] = state[9];
         reg_d4.w = 0;
         reg_d4.h[0] = state[6];
-        jtbl_0028E3F4_as_fn = callback;
-        jtbl_0028E3F4_as_fn();
+        reg_call_target_as_fn = callback;
+        reg_call_target_as_fn();
     }
 }
 #pragma pop

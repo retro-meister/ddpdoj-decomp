@@ -533,7 +533,7 @@ extern void func_0013BE50(void);
 extern void func_0013C300(void);
 extern void func_0013C350(void);
 extern void func_001A42A0(void);
-extern void func_00206D70(void);
+extern void task_reset_all(void);
 extern s32 func_00225CD0(void);
 extern u8 D_0026B5F0[];
 extern s8 D_0028EACC;
@@ -599,7 +599,7 @@ void func_00237870(void) {
         break;
     case 217:
     case 317:
-        func_00206D70();
+        task_reset_all();
         func_00237670();
         if (step / 100 == 2) {
             D_0028ED7C = 2;
@@ -609,7 +609,7 @@ void func_00237870(void) {
         done = 1;
         break;
     case 417:
-        func_00206D70();
+        task_reset_all();
         func_00224A90();
         reg_d0.h[0] = 20;
         task_start();
@@ -1403,7 +1403,7 @@ void func_00238980(void) {
         gfx_draw_color_box(0, 0, 0x1C2, 0xE0, 0x50, 0x80, 0xFF, 0xFF, 0xFF);
         D_0028E368_as_s8 = 1;
         D_0028ED7C_as_s8 = 2;
-        func_00206D70();
+        task_reset_all();
         reg_d0.h[0] = 20;
         task_start();
         *(u8 *)(reg_a0 + 5) = 3;

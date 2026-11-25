@@ -296,7 +296,7 @@ extern s32 D_0028ED70;
 extern u8 D_0028ED7C;
 extern u8 D_0029D710[];
 extern u8 g_player2_as_u8_a[];
-extern void (*jtbl_0028E3F4)();
+extern void (*reg_call_target)();
 
 void func_0019FD30(void) {
     u32 temp;
@@ -558,8 +558,8 @@ next_350:
     if (reg_d7.h[0] != 0) goto next_360;
     reg_a0 = (u8 *) func_0013F850;
 next_360:
-    jtbl_0028E3F4 = (Fn) reg_a0;
-    jtbl_0028E3F4();
+    reg_call_target = (Fn) reg_a0;
+    reg_call_target();
     goto block_b;
 next_400:
     if (*(s8 *)reg_a4 >= 0) goto next_410;

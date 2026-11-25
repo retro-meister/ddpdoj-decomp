@@ -1694,7 +1694,7 @@ extern u16 g_two_player_game;
 extern u16 D_00299764[];
 extern u16 D_00299766[];
 extern u16 g_side_scroll_step[];
-extern void (*jtbl_0028E3F4)();
+extern void (*reg_call_target)();
 
 void func_001420E0(void) {
     u32 tmp_dec;
@@ -1930,8 +1930,8 @@ block_13:
                 reg_d6.h[0] = (reg_d6.h[0] != 0) ? *(u16 *)((u8 *)reg_a1 + ((s16)reg_d6.h[0] & ~1)) : *(u16 *)reg_a1;
                 D_00299764[0] += 8;
                 D_00299766[0] = (reg_d1.h[0] != 0) ? *(u16 *)((u8 *)reg_a3 + ((s16)reg_d1.h[0] & ~1)) : *(u16 *)reg_a3;
-                jtbl_0028E3F4 = (Fn)(reg_a0);
-                jtbl_0028E3F4();
+                reg_call_target = (Fn)(reg_a0);
+                reg_call_target();
                 *(s16 *)reg_a2 = 1;
                 PLAYER(reg_a6)->flags.b[0] |= 1;
                 func_0018DC20();
@@ -1939,8 +1939,8 @@ block_13:
                 if (*(u8 *)(reg_a5 + 6) != 0) {
                     reg_a0 = (u8 *)func_002015B0;
                 }
-                jtbl_0028E3F4 = (Fn)(reg_a0);
-                jtbl_0028E3F4();
+                reg_call_target = (Fn)(reg_a0);
+                reg_call_target();
                 PLAYER(reg_a6)->state.b.invincible = 2U;
                 D_0028E3B0 = 0x14;
                 if ((PLAYER(reg_a6)->flags.b[1] & 0x40) || (reg_d7.h[0] == 0)) {
@@ -2247,8 +2247,8 @@ block_196:
                                             if (PLAYER(reg_a6)->flags.b[0] & 1) {
                                                 reg_a0 = (u8 *)func_0018D730;
                                             }
-                                            jtbl_0028E3F4 = (Fn)(reg_a0);
-                                            jtbl_0028E3F4();
+                                            reg_call_target = (Fn)(reg_a0);
+                                            reg_call_target();
                                         }
                                     }
                                 }
@@ -2351,8 +2351,8 @@ block_240:
                                             if (PLAYER(reg_a6)->flags.b[0] & 1) {
                                                 reg_a0 = (u8 *)func_0018D730;
                                             }
-                                            jtbl_0028E3F4 = (Fn)(reg_a0);
-                                            jtbl_0028E3F4();
+                                            reg_call_target = (Fn)(reg_a0);
+                                            reg_call_target();
                                         }
                                     }
                                 }
@@ -2618,7 +2618,7 @@ next_4:
 }
 
 s32 func_001340A0();
-s32 func_002075F0();
+s32 task_stop_self();
 
 void func_00144400(void) {
     u8 *var_a1;
@@ -2692,7 +2692,7 @@ block_4:
         reg_d0.w = 0;
         reg_d0.b[0] = *(u8 *)(reg_a5 + 6);
         func_001340A0();
-        func_002075F0();
+        task_stop_self();
     }
 }
 

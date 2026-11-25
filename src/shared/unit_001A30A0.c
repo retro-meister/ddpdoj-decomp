@@ -278,7 +278,7 @@ void func_001A36E0(void) {
 typedef void (*Fn)();
 
 extern u8 D_0026B2A0[];
-extern void (*jtbl_0028E3F4)();
+extern void (*reg_call_target)();
 
 void func_001A3730(void) {
     if (*(u8 *)(reg_a5 + 3) == 0) {
@@ -297,8 +297,8 @@ void func_001A3730(void) {
     }
     reg_a0 = (u8 *)D_0026B2A0;
     reg_a0 += *(u16 *)(reg_a5 + 4);
-    jtbl_0028E3F4 = *(Fn *)reg_a0;
-    jtbl_0028E3F4();
+    reg_call_target = *(Fn *)reg_a0;
+    reg_call_target();
 }
 
 

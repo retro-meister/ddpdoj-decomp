@@ -50,7 +50,7 @@ typedef void (*Fn)();
 extern u16 D_0026C140[];
 extern u16 D_0026C1C0[];
 extern u16 D_0028DB08[];
-extern void (*jtbl_0028E3F4)();
+extern void (*reg_call_target)();
 
 void func_001BF2A0() {
     reg_tmp.b[0] = *(u8 *)(reg_a4 + 3);
@@ -95,8 +95,8 @@ next_2:
     reg_d0.h[0] += reg_d0.h[0];
     reg_d0.h[0] += reg_d0.h[0];
     reg_tmp.w = *(u32 *)(reg_a0 + reg_d0.h[0]);
-    jtbl_0028E3F4 = *(Fn *)reg_tmp.w;
-    jtbl_0028E3F4();
+    reg_call_target = *(Fn *)reg_tmp.w;
+    reg_call_target();
     *(u16 *)(reg_a4 + 6) *= 0xFFFF;
     *(u16 *)(reg_a4 + 8) -= 1;
     if (*(u16 *)(reg_a4 + 8) != 0) goto block_rts;

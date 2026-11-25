@@ -3042,10 +3042,10 @@ void func_0022BFD0() {
     reg_a6 = save_a6;
 }
 
-extern void func_002075F0(void);
+extern void task_stop_self(void);
 
 void func_0022C1E0() {
-    func_002075F0();
+    task_stop_self();
 }
 
 

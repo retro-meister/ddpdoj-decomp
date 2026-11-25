@@ -107,7 +107,7 @@ extern u16 D_0029976E[];
 extern u8 *D_00299770[];
 extern u16 g_side_scroll_step[];
 extern u8 D_0029CEA0_as_u8_a[];
-extern void (*jtbl_0028E3F4)();
+extern void (*reg_call_target)();
 extern u16 *reg_a4_as_u16_p;
 
 #define SLOT_PHASE MAIN_OR_DEATH_LABEL(D_00299762[0], *(u16 *)(D_002962E0 + 0x10682))
@@ -379,8 +379,8 @@ L_not_plain:
     reg_tmp.h[1] = *(u16 *)(reg_a0 + 0);
     reg_tmp.h[0] = *(u16 *)(reg_a0 + 2);
     reg_a0 = (u8 *)reg_tmp.w;
-    jtbl_0028E3F4 = (void (*)())reg_a0;
-    jtbl_0028E3F4();
+    reg_call_target = (void (*)())reg_a0;
+    reg_call_target();
     SLOT_PHASE += 1;
     if (SLOT_PHASE == 3) {
         SLOT_PHASE = 0;
@@ -444,8 +444,8 @@ L_0012A5DC:
     reg_tmp.h[1] = *(u16 *)(reg_a0 + 0);
     reg_tmp.h[0] = *(u16 *)(reg_a0 + 2);
     reg_a0 = (u8 *)reg_tmp.w;
-    jtbl_0028E3F4 = (void (*)())reg_a0;
-    jtbl_0028E3F4();
+    reg_call_target = (void (*)())reg_a0;
+    reg_call_target();
     reg_a6 += 0x40;
     if ((s16)(--reg_d7.h[0]) >= 0) {
         goto loop_10;

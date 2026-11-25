@@ -53,7 +53,7 @@ void func_0016CF40(void) {
 }
 
 typedef void (*Fn)(void);
-extern u8 *jtbl_0028E3F4_as_u8_p;
+extern u8 *reg_call_target_as_u8_p;
 
 void func_0016CFB0(void) {
     reg_d2.w = 0;
@@ -69,8 +69,8 @@ void func_0016CFB0(void) {
     reg_tmp.h[1] = *(u16 *)(reg_a5 + 0x2E);
     reg_tmp.h[0] = *(u16 *)(reg_a5 + 0x30);
     reg_a0 = (u8 *)reg_tmp.w;
-    jtbl_0028E3F4_as_u8_p = reg_a0;
-    ((Fn)jtbl_0028E3F4_as_u8_p)();
+    reg_call_target_as_u8_p = reg_a0;
+    ((Fn)reg_call_target_as_u8_p)();
 }
 
 
@@ -295,7 +295,7 @@ extern u16 g_enemy_signal_0;
 extern u16 g_enemies_stopped;
 extern u16 g_rank_3_16;
 extern u16 g_side_scroll_x[];
-extern void (*jtbl_0028E3F4)();
+extern void (*reg_call_target)();
 
 void func_0016D790(void) {
     enemy_path_step();
@@ -373,8 +373,8 @@ next_7:
     reg_tmp.h[1] = *(u16 *)(reg_a5 + 0x2A);
     reg_tmp.h[0] = *(u16 *)(reg_a5 + 0x2C);
     reg_a0 = (u8 *) reg_tmp.w;
-    jtbl_0028E3F4 = (Fn)(reg_a0);
-    jtbl_0028E3F4();
+    reg_call_target = (Fn)(reg_a0);
+    reg_call_target();
     reg_a0 = reg_a6;
     enemy_hitbox_debug_draw();
     if (*(s8 *)(reg_a5 + 0x21) >= 0) goto block_b;
@@ -420,8 +420,8 @@ block_c:
     reg_tmp.h[1] = *(u16 *)(reg_a5 + 0x2E);
     reg_tmp.h[0] = *(u16 *)(reg_a5 + 0x30);
     reg_a0 = (u8 *) reg_tmp.w;
-    jtbl_0028E3F4 = (Fn)(reg_a0);
-    jtbl_0028E3F4();
+    reg_call_target = (Fn)(reg_a0);
+    reg_call_target();
     goto block_rts;
 block_d:
     reg_d0.w = 0x18;
@@ -640,8 +640,8 @@ next_225:
     reg_tmp.h[1] = *(u16 *)(reg_a5 + 0x2A);
     reg_tmp.h[0] = *(u16 *)(reg_a5 + 0x2C);
     reg_a0 = (u8 *) reg_tmp.w;
-    jtbl_0028E3F4 = (Fn) reg_a0;
-    jtbl_0028E3F4();
+    reg_call_target = (Fn) reg_a0;
+    reg_call_target();
     reg_a0 = reg_a6;
     enemy_hitbox_debug_draw();
     if ((s8) reg_a5[0x21] >= 0) goto next_300;
@@ -687,8 +687,8 @@ block_objset:
     reg_tmp.h[1] = *(u16 *)(reg_a5 + 0x2E);
     reg_tmp.h[0] = *(u16 *)(reg_a5 + 0x30);
     reg_a0 = (u8 *) reg_tmp.w;
-    jtbl_0028E3F4 = (Fn) reg_a0;
-    jtbl_0028E3F4();
+    reg_call_target = (Fn) reg_a0;
+    reg_call_target();
 block_rts:
     return;
 block_shot:

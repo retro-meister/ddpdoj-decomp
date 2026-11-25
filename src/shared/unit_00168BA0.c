@@ -61,7 +61,7 @@ void func_00168BC0(void) {
     s32 text_layer_clear();
     s32 func_0013B190();
     s32 text_palette_load();
-    s32 func_00206D70();
+    s32 task_reset_all();
     s32 task_start();
     s32 replay_header_clear();
 #ifndef DEATH_LABEL
@@ -100,7 +100,7 @@ next_3:
     if (reg_d0.h[0] == 0) goto block_2;
 block_1:
     D_0028DF84 = 1;
-    func_00206D70();
+    task_reset_all();
     func_0013B190();
     func_00137C50();
     if (D_0028E3C0 == 0) goto next_4;
@@ -507,7 +507,7 @@ void func_00169320(void) {
     s32 text_layer_clear();
     s32 func_0013B190();
     s32 text_palette_load();
-    s32 func_00206D70();
+    s32 task_reset_all();
     s32 task_start();
     if (*(u8 *)(reg_a5 + 2) == 0) {
         *(u8 *)(reg_a5 + 2) = 1U;
@@ -521,7 +521,7 @@ void func_00169320(void) {
     func_00137E00();
     if (cond_flag == 0) {
         printf((const char *)D_00275860);
-        func_00206D70();
+        task_reset_all();
         func_0013B190();
         func_00137C50();
         stage_map_reset();
@@ -638,9 +638,9 @@ void func_001694F0() {
 extern u8 D_0028E7B4;
 
 void func_00169640(void) {
-    s32 func_00206D70();
+    s32 task_reset_all();
     s32 task_start();
-    func_00206D70();
+    task_reset_all();
     reg_d0.h[0] = 9;
     task_start();
     *(u8 *)(reg_a0 + 5) = (u8) D_0028E7B4;
@@ -704,14 +704,14 @@ extern s16 D_006E5C14_as_s16_a[];
 void func_00169680(void) {
     void text_layer_clear(void);
     void text_palette_load(void);
-    void func_00206D70(void);
+    void task_reset_all(void);
     void task_start(void);
     void replay_header_clear(void);
     s32 a;
     s32 b;
 
     g_game_mode_as_s8 = 0;
-    func_00206D70();
+    task_reset_all();
     text_layer_clear();
     reg_d0.w = 0;
     reg_a0 = (u8 *)D_00269140;
@@ -765,13 +765,13 @@ extern u8 death_D_00290DC0;
 void func_00169900(void) {
     s32 text_layer_clear();
     s32 text_palette_load();
-    s32 func_00206D70();
+    s32 task_reset_all();
     s32 task_start();
     g_game_mode_as_s8 = 2;
 #ifdef DEATH_LABEL
     death_D_00290DC0 = 0;
 #endif
-    func_00206D70();
+    task_reset_all();
     text_layer_clear();
     reg_d0.w = 0;
     reg_a0 = (u8 *)D_00269140_as_s32_a;

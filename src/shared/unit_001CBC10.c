@@ -196,7 +196,7 @@ extern u16 g_rank_5_16;
 extern u16 g_side_scroll_x[];
 extern u16 g_player2_as_u16_a[];
 extern u16 g_player1_as_u16_a[];
-extern void (*jtbl_0028E3F4)();
+extern void (*reg_call_target)();
 
 void func_001CC0A0(void) {
     u32 cnt;
@@ -504,8 +504,8 @@ next_500:
     reg_a3 = (u8 *) sprite_draw_layer1;
     reg_a4 = (u8 *) sprite_draw_layer1;
 next_510:
-    jtbl_0028E3F4 = (Fn) reg_a2;
-    jtbl_0028E3F4();
+    reg_call_target = (Fn) reg_a2;
+    reg_call_target();
     reg_d1.h[1] = ENTITY(reg_a6)->y.h;
     reg_d1.h[0] = ENTITY(reg_a6)->x.h;
     reg_d1.h[0] += 0xF200;
@@ -517,8 +517,8 @@ next_510:
     reg_d3.h[0] = 0x1670;
     reg_d4.w = 0;
     reg_d4.b[0] = ENTITY(reg_a6)[2].offset_y.b[0];
-    jtbl_0028E3F4 = (Fn) reg_a3;
-    jtbl_0028E3F4();
+    reg_call_target = (Fn) reg_a3;
+    reg_call_target();
     reg_d1.h[1] = ENTITY(reg_a6)->y.h;
     reg_d1.h[0] = ENTITY(reg_a6)->x.h;
     reg_d1.h[0] += 0x480;
@@ -527,14 +527,14 @@ next_510:
     reg_d2.h[0] = *(u16 *)(reg_a5 + 0x2A);
     reg_d3.h[0] = 0x418;
     reg_d4.h[0] = ENTITY(reg_a6)->attr.h;
-    jtbl_0028E3F4 = (Fn) reg_a3;
-    jtbl_0028E3F4();
+    reg_call_target = (Fn) reg_a3;
+    reg_call_target();
     reg_d1.h[0] = ENTITY(reg_a6)->x.h;
     reg_d1.h[0] += 0xF580;
     reg_d2.h[1] = *(u16 *)(reg_a5 + 0x2E);
     reg_d2.h[0] = *(u16 *)(reg_a5 + 0x30);
-    jtbl_0028E3F4 = (Fn) reg_a3;
-    jtbl_0028E3F4();
+    reg_call_target = (Fn) reg_a3;
+    reg_call_target();
     reg_d1.h[1] = ENTITY(reg_a6)->y.h;
     reg_d1.h[0] = ENTITY(reg_a6)->x.h;
     reg_d1.h[0] += 0xEE00;
@@ -544,8 +544,8 @@ next_510:
     reg_d3.h[0] = 0x1290;
     reg_d4.w = 0;
     reg_d4.b[0] = ENTITY(reg_a6)[2].offset_y.b[1];
-    jtbl_0028E3F4 = (Fn) reg_a3;
-    jtbl_0028E3F4();
+    reg_call_target = (Fn) reg_a3;
+    reg_call_target();
     if (g_loop != 0) goto next_540;
     if (D_0028E3EC == 0) goto next_540;
     reg_d1.h[1] = ENTITY(reg_a6)->y.h;
@@ -557,8 +557,8 @@ next_510:
     if (!(D_0028E3F0 & 2)) goto next_520;
     reg_d4.h[0] |= 0x4000;
 next_520:
-    jtbl_0028E3F4 = (Fn) reg_a4;
-    jtbl_0028E3F4();
+    reg_call_target = (Fn) reg_a4;
+    reg_call_target();
 next_540:
     reg_a0 = reg_a6;
     enemy_hitbox_debug_draw();

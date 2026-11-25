@@ -238,7 +238,7 @@ extern u16 D_0028E7E8;
 extern u16 D_0028E7EC;
 extern u16 g_side_scroll_step[];
 extern u8 D_002BE0C0[];
-extern u8 *jtbl_0028E3F4_as_u8_p;
+extern u8 *reg_call_target_as_u8_p;
 
 void func_0014DA80(void) {
     u32 temp_s0;
@@ -258,9 +258,9 @@ void func_0014DA80(void) {
             reg_tmp.h[1] = *(u16 *)(reg_a5 + 0x4C);
             reg_tmp.h[0] = *(u16 *)(reg_a5 + 0x4E);
             reg_a1 = (u8 *)reg_tmp.w;
-            jtbl_0028E3F4_as_u8_p = reg_a1;
+            reg_call_target_as_u8_p = reg_a1;
             temp_s0 = reg_d6.w;
-            ((Fn)jtbl_0028E3F4_as_u8_p)();
+            ((Fn)reg_call_target_as_u8_p)();
             reg_d6.w = temp_s0;
             reg_d0.h[0] = *(u16 *)(reg_a5 + 4);
             reg_d0.h[0] += 1;

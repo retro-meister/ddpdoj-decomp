@@ -147,7 +147,7 @@ s32 func_0018DE90();
 s32 func_0018DEA0();
 s32 func_0018DEE0();
 extern u8 D_00268230[];
-extern void (*jtbl_0028E3F4)();
+extern void (*reg_call_target)();
 
 void func_00209050(void) {
     u32 t;
@@ -178,8 +178,8 @@ next_4:
     reg_d1.w = 0;
     reg_d1.b[0] = (u8) D_0028DFA0;
     reg_a0 = *(u8 **)((u8 *)D_00268230 + (reg_d1.h[0] * 4));
-    jtbl_0028E3F4 = (Fn)(reg_a0);
-    jtbl_0028E3F4();
+    reg_call_target = (Fn)(reg_a0);
+    reg_call_target();
 next_5:
     if (!(reg_d0.w & 0x20)) goto next_6;
     func_0018DEE0();

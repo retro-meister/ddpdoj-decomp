@@ -149,7 +149,7 @@ extern u16 D_0025B140[];
 extern u16 D_0028E3EC;
 extern u16 g_enemies_stopped;
 extern u16 g_rank_3_16;
-extern void (*jtbl_0028E3F4)();
+extern void (*reg_call_target)();
 
 void func_00119FE0(void) {
     u8 *save_a0;
@@ -216,8 +216,8 @@ block_a:
     reg_tmp.h[1] = *(u16 *)(reg_a6 + 0x30);
     reg_tmp.h[0] = *(u16 *)(reg_a6 + 0x32);
     reg_a0 = (u8 *) reg_tmp.w;
-    jtbl_0028E3F4 = (Fn)(reg_a0);
-    jtbl_0028E3F4();
+    reg_call_target = (Fn)(reg_a0);
+    reg_call_target();
     reg_a0 = reg_a6;
     enemy_hitbox_debug_draw();
     if (!(*(u8 *)reg_a6 & 0x40)) goto block_b;
@@ -238,8 +238,8 @@ next_4:
     reg_tmp.h[1] = *(u16 *)(reg_a6 + 0x34);
     reg_tmp.h[0] = *(u16 *)(reg_a6 + 0x36);
     reg_a0 = (u8 *) reg_tmp.w;
-    jtbl_0028E3F4 = (Fn)(reg_a0);
-    jtbl_0028E3F4();
+    reg_call_target = (Fn)(reg_a0);
+    reg_call_target();
 block_rts:
     reg_d0.w = save_d0;
     reg_d1.w = save_d1;
@@ -293,8 +293,8 @@ block_c:
     reg_tmp.h[1] = *(u16 *)(reg_a6 + 0x34);
     reg_tmp.h[0] = *(u16 *)(reg_a6 + 0x36);
     reg_a0 = (u8 *) reg_tmp.w;
-    jtbl_0028E3F4 = (Fn)(reg_a0);
-    jtbl_0028E3F4();
+    reg_call_target = (Fn)(reg_a0);
+    reg_call_target();
     reg_d0.w = save_d0;
     reg_d1.w = save_d1;
     reg_d2.w = save_d2;
@@ -459,8 +459,8 @@ next_9:
     reg_tmp.h[1] = *(u16 *)(reg_a6 + 0x30);
     reg_tmp.h[0] = *(u16 *)(reg_a6 + 0x32);
     reg_a0 = (u8 *) reg_tmp.w;
-    jtbl_0028E3F4 = (Fn)(reg_a0);
-    jtbl_0028E3F4();
+    reg_call_target = (Fn)(reg_a0);
+    reg_call_target();
     reg_d0.w = save_d0;
     reg_d1.w = save_d1;
     reg_d2.w = save_d2;
@@ -668,8 +668,8 @@ block_a:
     reg_tmp.h[1] = *(u16 *)(reg_a6 + 0x30);
     reg_tmp.h[0] = *(u16 *)(reg_a6 + 0x32);
     reg_a0 = (u8 *) reg_tmp.w;
-    jtbl_0028E3F4 = (Fn)(reg_a0);
-    jtbl_0028E3F4();
+    reg_call_target = (Fn)(reg_a0);
+    reg_call_target();
     reg_a0 = reg_a6;
     enemy_hitbox_debug_draw();
     if (!(*(u8 *)reg_a6 & 0x40)) goto block_b;
@@ -690,8 +690,8 @@ next_4:
     reg_tmp.h[1] = *(u16 *)(reg_a6 + 0x34);
     reg_tmp.h[0] = *(u16 *)(reg_a6 + 0x36);
     reg_a0 = (u8 *) reg_tmp.w;
-    jtbl_0028E3F4 = (Fn)(reg_a0);
-    jtbl_0028E3F4();
+    reg_call_target = (Fn)(reg_a0);
+    reg_call_target();
 block_rts:
     reg_d0.w = save_d0;
     reg_d1.w = save_d1;
@@ -745,8 +745,8 @@ block_c:
     reg_tmp.h[1] = *(u16 *)(reg_a6 + 0x34);
     reg_tmp.h[0] = *(u16 *)(reg_a6 + 0x36);
     reg_a0 = (u8 *) reg_tmp.w;
-    jtbl_0028E3F4 = (Fn)(reg_a0);
-    jtbl_0028E3F4();
+    reg_call_target = (Fn)(reg_a0);
+    reg_call_target();
     reg_d0.w = save_d0;
     reg_d1.w = save_d1;
     reg_d2.w = save_d2;
@@ -889,8 +889,8 @@ next_9:
     reg_tmp.h[1] = *(u16 *)(reg_a6 + 0x30);
     reg_tmp.h[0] = *(u16 *)(reg_a6 + 0x32);
     reg_a0 = (u8 *) reg_tmp.w;
-    jtbl_0028E3F4 = (Fn)(reg_a0);
-    jtbl_0028E3F4();
+    reg_call_target = (Fn)(reg_a0);
+    reg_call_target();
     reg_d0.w = save_d0;
     reg_d1.w = save_d1;
     reg_d2.w = save_d2;

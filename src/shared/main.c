@@ -30,8 +30,8 @@ s32 func_001AE490();
 s32 func_00206C20();
 s32 func_00206D10();
 s32 func_00206D60();
-s32 func_00206D70();
-s32 func_00206DF0();
+s32 task_reset_all();
+s32 task_run_all();
 s32 task_start();
 s32 func_002076B0();
 s32 func_00208B60();
@@ -135,7 +135,7 @@ void func_002120D0(void) {
     func_001A2900();
     func_0013B190();
     func_0019AA90();
-    func_00206D70();
+    task_reset_all();
     func_00135EC0();
     layers_reset();
     func_00137C20();
@@ -234,7 +234,7 @@ loop_15:
             D_0028E249[0] = D_0028E9A5;
         }
     } else {
-        func_00206DF0();
+        task_run_all();
         func_00131500();
         func_0013C3F0();
         func_0019AB20();

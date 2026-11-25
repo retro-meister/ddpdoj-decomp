@@ -1180,7 +1180,7 @@ void func_0014BE20(void) {
 
 s32 func_001A5A80();
 s32 func_001AEA80();
-s32 func_002075F0();
+s32 task_stop_self();
 extern u8 D_0028E370;
 extern s16 g_score_task_active_as_s16;
 extern u16 g_stage;
@@ -1205,7 +1205,7 @@ block_1:
     return;
 block_2:
     g_score_task_active_as_s16 = 0;
-    func_002075F0();
+    task_stop_self();
 }
 
 s32 func_0012FA80();
@@ -1255,7 +1255,7 @@ void func_0014BF90() {
         func_0013B190();
         reg_d0.h[0] = 0xC;
         task_start();
-        func_002075F0();
+        task_stop_self();
     }
 }
 
@@ -1382,7 +1382,7 @@ void func_0014C450(void) {
 }
 
 extern u8 g_ground_no_draw;
-extern u8 *jtbl_0028E3F4_as_u8_p;
+extern u8 *reg_call_target_as_u8_p;
 
 void func_0014C4B0(void) {
     u32 temp_s0;
@@ -1397,9 +1397,9 @@ void func_0014C4B0(void) {
                 reg_tmp.h[1] = ENTITY(reg_a6)->offset_x.h;
                 reg_tmp.h[0] = ENTITY(reg_a6)->draw.h;
                 reg_a1 = (u8 *)reg_tmp.w;
-                jtbl_0028E3F4_as_u8_p = reg_a1;
+                reg_call_target_as_u8_p = reg_a1;
                 temp_s0 = reg_d7.w;
-                ((Fn)jtbl_0028E3F4_as_u8_p)();
+                ((Fn)reg_call_target_as_u8_p)();
                 reg_d7.w = temp_s0;
             }
             reg_a6 += 0x20;
@@ -1410,7 +1410,7 @@ void func_0014C4B0(void) {
 typedef void (*Fn)(void);
 
 extern u8 *D_0029C050[];
-extern Fn jtbl_0028E3F4_as_Fn;
+extern Fn reg_call_target_as_Fn;
 
 void func_0014C590(void) {
     u8 *save_a0;
@@ -1457,8 +1457,8 @@ loop_1:
     reg_d0.h[0] += reg_d0.h[0];
     reg_a1 += reg_d0.h[0];
     reg_a1 = *(u8 **)reg_a1;
-    jtbl_0028E3F4_as_Fn = (Fn)reg_a1;
-    jtbl_0028E3F4_as_Fn();
+    reg_call_target_as_Fn = (Fn)reg_a1;
+    reg_call_target_as_Fn();
     reg_d0.w = save_d0;
     reg_d1.w = save_d1;
     reg_d2.w = save_d2;
@@ -1607,7 +1607,7 @@ extern u8 D_002526D0[];
 extern u16 D_0029C0BA[];
 extern u16 D_0029C0BC[];
 extern u16 D_0029C0BE[];
-extern void (*jtbl_0028E3F4)();
+extern void (*reg_call_target)();
 
 void func_0014CAE0(void) {
     u16 temp_a0;
@@ -1630,8 +1630,8 @@ loop_1:
             reg_tmp.h[1] = *(u16 *)reg_a2;
             reg_tmp.h[0] = *(u16 *)(reg_a2 + 2);
             reg_a2 = (u8 *) reg_tmp.w;
-            jtbl_0028E3F4 = (Fn)(reg_a2);
-            jtbl_0028E3F4();
+            reg_call_target = (Fn)(reg_a2);
+            reg_call_target();
             reg_tmp.w = (u32)reg_a1;
             ENTITY(reg_a6)->flags.h = (u16) reg_tmp.h[1];
             ENTITY(reg_a6)->y.h = (u16) reg_tmp.h[0];
@@ -1645,8 +1645,8 @@ loop_1:
         D_0029C0BA[0] -= 1;
         if (0 > (s16) D_0029C0BA[0]) {
             reg_a0 = (u8 *)reg_d0.w;
-            jtbl_0028E3F4 = (Fn)((u8 *) reg_a0);
-            jtbl_0028E3F4();
+            reg_call_target = (Fn)((u8 *) reg_a0);
+            reg_call_target();
             *(u32 *)D_0029C0BC = 0;
         }
     }
@@ -1779,8 +1779,8 @@ loop_1:
         reg_tmp.h[1] = (reg_d0.h[0] != 0) ? *(u16 *)((u8 *)reg_a3 + ((s16)reg_d0.h[0] & ~1)) : *(u16 *)reg_a3;
         reg_tmp.h[0] = (((reg_d0.h[0] & 0xFFFF) + 2) != 0) ? *(u16 *)((u8 *)reg_a3 + ((s16)((reg_d0.h[0] & 0xFFFF) + 2) & ~1)) : *(u16 *)reg_a3;
         reg_a3 = (u8 *) reg_tmp.w;
-        jtbl_0028E3F4 = (Fn)(reg_a3);
-        jtbl_0028E3F4();
+        reg_call_target = (Fn)(reg_a3);
+        reg_call_target();
         reg_d2.h[0] -= 1;
         if (reg_d2.h[0] == 0) {
             reg_tmp.w = (u32)reg_a2;

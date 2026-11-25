@@ -74,7 +74,7 @@ void func_001AF3A0() {
 }
 
 s32 func_00135740();
-s32 func_002075F0();
+s32 task_stop_self();
 extern u16 D_0028C11C[];
 extern u16 D_0028C120[];
 
@@ -95,7 +95,7 @@ void func_001AF460(void) {
     reg_d2.w = 0;
     reg_d2.b[0] = *(u8 *)(reg_a5 + 6);
     func_00135740();
-    func_002075F0();
+    task_stop_self();
 }
 
 typedef void (*Fn)(void);
@@ -117,7 +117,7 @@ extern u16 g_loop;
 extern u8 D_0028ED58;
 extern u8 D_0028ED7C;
 extern u8 g_simulation_active;
-extern u8 *jtbl_0028E3F4_as_u8_p;
+extern u8 *reg_call_target_as_u8_p;
 
 void func_001AF560(void) {
     void func_00131610(void);
@@ -223,8 +223,8 @@ block_51:
     reg_tmp.h[1] = *(u16 *)(reg_a4 + 4);
     reg_tmp.h[0] = *(u16 *)(reg_a4 + 6);
     reg_a0 = (u8 *)reg_tmp.w;
-    jtbl_0028E3F4_as_u8_p = reg_a0;
-    ((Fn)jtbl_0028E3F4_as_u8_p)();
+    reg_call_target_as_u8_p = reg_a0;
+    ((Fn)reg_call_target_as_u8_p)();
     if (!(reg_d0.w & 0x8000)) {
         goto block_52;
     }
@@ -235,8 +235,8 @@ block_51:
     reg_tmp.h[1] = *(u16 *)(reg_a4 + 0xC);
     reg_tmp.h[0] = *(u16 *)(reg_a4 + 0xE);
     reg_a0 = (u8 *)reg_tmp.w;
-    jtbl_0028E3F4_as_u8_p = reg_a0;
-    ((Fn)jtbl_0028E3F4_as_u8_p)();
+    reg_call_target_as_u8_p = reg_a0;
+    ((Fn)reg_call_target_as_u8_p)();
     if (cond_flag != 0) {
         goto block_52;
     }
@@ -309,8 +309,8 @@ void func_001AF8F0(void) {
     reg_tmp.h[1] = *(u16 *)(reg_a4 + 8);
     reg_tmp.h[0] = *(u16 *)(reg_a4 + 0xA);
     reg_a0 = (u8 *)reg_tmp.w;
-    jtbl_0028E3F4_as_u8_p = reg_a0;
-    ((Fn)jtbl_0028E3F4_as_u8_p)();
+    reg_call_target_as_u8_p = reg_a0;
+    ((Fn)reg_call_target_as_u8_p)();
     if (reg_d0.w & 4) {
         *(u8 *)(reg_a5 + 0xF) -= 1;
         *(s8 *)(reg_a5 + 0xC) = 1;
@@ -422,8 +422,8 @@ void func_001AFCC0(void) {
     reg_tmp.h[1] = *(u16 *)(reg_a4 + 8);
     reg_tmp.h[0] = *(u16 *)(reg_a4 + 0xA);
     reg_a0 = (u8 *)(reg_tmp.w);
-    jtbl_0028E3F4_as_u8_p = reg_a0;
-    ((Fn)jtbl_0028E3F4_as_u8_p)();
+    reg_call_target_as_u8_p = reg_a0;
+    ((Fn)reg_call_target_as_u8_p)();
     reg_d7.w = 0;
     reg_d7.b[0] = *(u8 *)(reg_a5 + 0xE);
     reg_d6.h[0] = reg_d7.h[0];
