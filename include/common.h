@@ -66,6 +66,15 @@ extern u8 *reg_a4;
 extern u8 *reg_a5;
 extern u8 *reg_a6;
 extern u8 *reg_atmp; /* scratch address register (exchanges) */
+
+/*
+ * Data tables hold addresses as two 16-bit words, high word first. The tables that point at code or at other
+ * tables are filled in at start-up with this.
+ */
+#define STORE_POINTER(words, target) \
+    reg_tmp.w = (u32)(target); \
+    (words)[0] = reg_tmp.h[1]; \
+    (words)[1] = reg_tmp.h[0]
 extern s8 cond_flag; /* result of the last routine that reports through the condition codes */
 extern s8 rng_values[256];
 

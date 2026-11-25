@@ -1975,598 +1975,300 @@ extern u16 D_002516FA[];
 extern u16 D_00251A80_as_u16_a[];
 extern u16 D_00251A84[];
 extern u16 D_00251A86[];
-extern u16 D_00251A88[];
 extern u16 D_00251A90_as_u16_a[];
 extern u16 D_00251A94[];
 extern u16 D_00251A96[];
-extern u16 D_00251A98[];
 extern u16 D_00251AB0_as_u16_a[];
 extern u16 D_00251AB4[];
 extern u16 D_00251AB6[];
-extern u16 D_00251AB8[];
 extern u16 D_00251AC0_as_u16_a[];
 extern u16 D_00251AC4[];
 extern u16 D_00251AC6[];
-extern u16 D_00251AC8[];
 extern u16 D_00251AE4[];
-extern u16 D_00251AE6[];
 extern u16 D_00251AE8[];
-extern u16 D_00251AEA[];
 extern u16 D_00251AEC[];
-extern u16 D_00251AEE[];
 extern u16 D_00251AF0[];
-extern u16 D_00251AF2[];
 extern u16 D_00251B04[];
-extern u16 D_00251B06[];
 extern u16 D_00251B08[];
-extern u16 D_00251B0A[];
 extern u16 D_00251B0C[];
-extern u16 D_00251B0E[];
 extern u16 D_00251B10[];
-extern u16 D_00251B12[];
 extern u16 D_00251CC0[];
-extern u16 D_00251CC2[];
 extern u16 D_00251CC4[];
-extern u16 D_00251CC6[];
 extern u16 D_00251CC8[];
-extern u16 D_00251CCA[];
 extern u16 D_00251CCC[];
-extern u16 D_00251CCE[];
 extern u16 D_00251CD0[];
-extern u16 D_00251CD2[];
 extern u16 D_00251CD4[];
-extern u16 D_00251CD6[];
 extern u16 D_00252010[];
-extern u16 D_00252012[];
 extern u16 D_00252014[];
-extern u16 D_00252016[];
 extern u16 D_00252018[];
-extern u16 D_0025201A[];
-extern u16 D_00252022[];
 extern u16 D_00252024[];
-extern u16 D_00252026[];
 extern u16 D_00252028[];
-extern u16 D_0025202A[];
-extern u16 D_00252032[];
 extern u16 D_00252034[];
-extern u16 D_00252036[];
 extern u16 D_00252038[];
-extern u16 D_0025203A[];
-extern u16 D_00252042[];
 extern u16 D_00252044[];
-extern u16 D_00252046[];
 extern u16 D_00252048[];
-extern u16 D_0025204A[];
 extern u16 D_00252050[];
-extern u16 D_00252052[];
 extern u16 D_00252054[];
-extern u16 D_00252056[];
 extern u16 D_00252058[];
-extern u16 D_0025205A[];
-extern u16 D_00252062[];
 extern u16 D_00252064[];
-extern u16 D_00252066[];
 extern u16 D_00252068[];
-extern u16 D_0025206A[];
-extern u16 D_00252072[];
 extern u16 D_00252074[];
-extern u16 D_00252076[];
 extern u16 D_00252078[];
-extern u16 D_0025207A[];
-extern u16 D_00252082[];
 extern u16 D_00252084[];
-extern u16 D_00252086[];
 extern u16 D_00252088[];
-extern u16 D_0025208A[];
 extern u16 D_002520C6[];
-extern u16 D_002520C8[];
 extern u16 D_002520D6[];
-extern u16 D_002520D8[];
 extern u16 D_002520E6[];
-extern u16 D_002520E8[];
 extern u16 D_00252156[];
-extern u16 D_00252158[];
 extern u16 D_00252166[];
-extern u16 D_00252168[];
 extern u16 D_00252176[];
-extern u16 D_00252178[];
 extern u16 D_00252210[];
-extern u16 D_00252212[];
 extern u16 D_00252214[];
-extern u16 D_00252216[];
 extern u16 D_00252218[];
-extern u16 D_0025221A[];
 extern u16 D_00252220[];
-extern u16 D_00252222[];
 extern u16 D_00252224[];
-extern u16 D_00252226[];
 extern u16 D_00252228[];
-extern u16 D_0025222A[];
 extern u16 D_00252236[];
-extern u16 D_00252238[];
 extern u16 D_00252246[];
-extern u16 D_00252248[];
 extern u16 D_00252256[];
-extern u16 D_00252258[];
 extern u16 D_00252260[];
-extern u16 D_00252262[];
 extern u16 D_0025226E[];
-extern u16 D_00252270[];
 extern u16 D_0025227E[];
-extern u16 D_00252280[];
 extern u16 D_00252296[];
-extern u16 D_00252298[];
 extern u16 D_002522A0[];
-extern u16 D_002522A2[];
 extern u16 D_002526D0_as_u16_a[];
 extern u16 D_002526D2[];
 extern u16 D_002526D4[];
-extern u16 D_002526D6[];
 extern u16 D_002526D8[];
-extern u16 D_002526DA[];
 extern u16 D_002526DC[];
-extern u16 D_002526DE[];
 extern u16 D_002526E0[];
-extern u16 D_002526E2[];
 extern u16 D_002526E4[];
-extern u16 D_002526E6[];
 extern u16 D_002526E8[];
-extern u16 D_002526EA[];
 extern u16 D_002526F0_as_u16_a[];
 extern u16 D_002526F2[];
 extern u16 D_002526F4[];
-extern u16 D_002526F6[];
 extern u16 D_002526F8[];
-extern u16 D_002526FA[];
 extern u16 D_00252700_as_u16_a[];
 extern u16 D_00252702[];
 extern u16 D_00252704[];
-extern u16 D_00252706[];
 extern u16 D_00252708[];
-extern u16 D_0025270A[];
 extern u16 D_0025270C[];
-extern u16 D_0025270E[];
 extern u16 D_00252710[];
-extern u16 D_00252712[];
 extern u16 D_00252720_as_u16_a[];
 extern u16 D_00252722[];
 extern u16 D_00252724[];
-extern u16 D_00252726[];
 extern u16 D_00252728[];
-extern u16 D_0025272A[];
 extern u16 D_0025272C[];
-extern u16 D_0025272E[];
 extern u16 D_00252730[];
-extern u16 D_00252732[];
 extern u16 D_00252740[];
-extern u16 D_00252742[];
 extern u16 D_00252744[];
-extern u16 D_00252746[];
 extern u16 D_00252748[];
-extern u16 D_0025274A[];
 extern u16 D_0025274C[];
-extern u16 D_0025274E[];
 extern u16 D_00252750[];
-extern u16 D_00252752[];
-extern u16 D_00252762[];
 extern u16 D_00252766[];
-extern u16 D_00252768[];
 extern u16 D_0025276C[];
-extern u16 D_0025276E[];
 extern u16 D_00252772[];
-extern u16 D_00252774[];
 extern u16 D_00252778[];
-extern u16 D_0025277A[];
 extern u16 D_0025277E[];
-extern u16 D_00252780[];
 extern u16 D_00252784[];
-extern u16 D_00252786[];
 extern u16 D_0025278A[];
-extern u16 D_0025278C[];
 extern u16 D_00252790[];
-extern u16 D_00252792[];
 extern u16 D_00252796[];
-extern u16 D_00252798[];
 extern u16 D_0025279C[];
-extern u16 D_0025279E[];
 extern u16 D_002527A2[];
-extern u16 D_002527A4[];
 extern u16 D_002527A8[];
-extern u16 D_002527AA[];
 extern u16 D_002527AE[];
-extern u16 D_002527B0[];
 extern u16 D_002527B4[];
-extern u16 D_002527B6[];
 extern u16 D_002527BA[];
-extern u16 D_002527BC[];
 extern u16 D_002527C0[];
-extern u16 D_002527C2[];
 extern u16 D_002527C6[];
-extern u16 D_002527C8[];
 extern u16 D_002527CC[];
-extern u16 D_002527CE[];
 extern u16 D_002527D2[];
-extern u16 D_002527D4[];
 extern u16 D_002527D8[];
-extern u16 D_002527DA[];
 extern u16 D_002527DE[];
-extern u16 D_002527E0[];
 extern u16 D_002527F0[];
-extern u16 D_002527F2[];
-extern u16 D_00252802[];
 extern u16 D_00252804[];
-extern u16 D_00252806[];
-extern u16 D_00252A22[];
 extern u16 D_00252A26[];
-extern u16 D_00252A28[];
 extern u16 D_00252A2C[];
-extern u16 D_00252A2E[];
 extern u16 D_00252A32[];
-extern u16 D_00252A34[];
 extern u16 D_00252A38[];
-extern u16 D_00252A3A[];
 extern u16 D_00252A3E[];
-extern u16 D_00252A40[];
 extern u16 D_00252A44[];
-extern u16 D_00252A46[];
 extern u16 D_00252A4A[];
-extern u16 D_00252A4C[];
 extern u16 D_00252A50[];
-extern u16 D_00252A52[];
 extern u16 D_00252A56[];
-extern u16 D_00252A58[];
 extern u16 D_00252A5C[];
-extern u16 D_00252A5E[];
 extern u16 D_00252A62[];
-extern u16 D_00252A64[];
 extern u16 D_00252A68[];
-extern u16 D_00252A6A[];
 extern u16 D_00252A6E[];
-extern u16 D_00252A70[];
 extern u16 D_00252A74[];
-extern u16 D_00252A76[];
 extern u16 D_00252A7A[];
-extern u16 D_00252A7C[];
 extern u16 D_00252A80[];
-extern u16 D_00252A82[];
 extern u16 D_00252A86[];
-extern u16 D_00252A88[];
 extern u16 D_00252A8C[];
-extern u16 D_00252A8E[];
 extern u16 D_00252A92[];
-extern u16 D_00252A94[];
 extern u16 D_00252A98[];
-extern u16 D_00252A9A[];
 extern u16 D_00252A9E[];
-extern u16 D_00252AA0[];
 extern u16 D_00252AA4[];
-extern u16 D_00252AA6[];
 extern u16 D_00252AAA[];
-extern u16 D_00252AAC[];
 extern u16 D_00252AB0[];
-extern u16 D_00252AB2[];
 extern u16 D_00252AB6[];
-extern u16 D_00252AB8[];
 extern u16 D_00252AC4[];
-extern u16 D_00252AC6[];
 extern u16 D_00252AD0[];
-extern u16 D_00252AD2[];
-extern u16 D_00252AE2[];
 extern u16 D_00252AE4[];
-extern u16 D_00252AE6[];
-extern u16 D_00252BD2[];
 extern u16 D_00252BD6[];
-extern u16 D_00252BD8[];
 extern u16 D_00252BDC[];
-extern u16 D_00252BDE[];
 extern u16 D_00252BE2[];
-extern u16 D_00252BE4[];
 extern u16 D_00252BE8[];
-extern u16 D_00252BEA[];
 extern u16 D_00252BEE[];
-extern u16 D_00252BF0[];
 extern u16 D_00252BF4[];
-extern u16 D_00252BF6[];
 extern u16 D_00252BFA[];
-extern u16 D_00252BFC[];
 extern u16 D_00252C00[];
-extern u16 D_00252C02[];
 extern u16 D_00252C06[];
-extern u16 D_00252C08[];
 extern u16 D_00252C0C[];
-extern u16 D_00252C0E[];
 extern u16 D_00252C12[];
-extern u16 D_00252C14[];
 extern u16 D_00252C18[];
-extern u16 D_00252C1A[];
 extern u16 D_00252C1E[];
-extern u16 D_00252C20[];
 extern u16 D_00252C24[];
-extern u16 D_00252C26[];
 extern u16 D_00252C2A[];
-extern u16 D_00252C2C[];
 extern u16 D_00252C30[];
-extern u16 D_00252C32[];
 extern u16 D_00252C36[];
-extern u16 D_00252C38[];
 extern u16 D_00252C3C[];
-extern u16 D_00252C3E[];
 extern u16 D_00252C42[];
-extern u16 D_00252C44[];
 extern u16 D_00252C48[];
-extern u16 D_00252C4A[];
 extern u16 D_00252C4E[];
-extern u16 D_00252C50[];
 extern u16 D_00252C54[];
-extern u16 D_00252C56[];
 extern u16 D_00252C5A[];
-extern u16 D_00252C5C[];
 extern u16 D_00252C74[];
-extern u16 D_00252C76[];
 extern u16 D_00252C80[];
-extern u16 D_00252C82[];
-extern u16 D_00252C92[];
 extern u16 D_00252C94[];
-extern u16 D_00252C96[];
-extern u16 D_00252DB2[];
 extern u16 D_00252DB6[];
-extern u16 D_00252DB8[];
 extern u16 D_00252DBC[];
-extern u16 D_00252DBE[];
 extern u16 D_00252DC2[];
-extern u16 D_00252DC4[];
 extern u16 D_00252DC8[];
-extern u16 D_00252DCA[];
 extern u16 D_00252DCE[];
-extern u16 D_00252DD0[];
 extern u16 D_00252DD4[];
-extern u16 D_00252DD6[];
 extern u16 D_00252DDA[];
-extern u16 D_00252DDC[];
 extern u16 D_00252DE0[];
-extern u16 D_00252DE2[];
 extern u16 D_00252DE6[];
-extern u16 D_00252DE8[];
 extern u16 D_00252DEC[];
-extern u16 D_00252DEE[];
 extern u16 D_00252DF2[];
-extern u16 D_00252DF4[];
 extern u16 D_00252DF8[];
-extern u16 D_00252DFA[];
 extern u16 D_00252DFE[];
-extern u16 D_00252E00[];
 extern u16 D_00252E04[];
-extern u16 D_00252E06[];
 extern u16 D_00252E0A[];
-extern u16 D_00252E0C[];
 extern u16 D_00252E10[];
-extern u16 D_00252E12[];
 extern u16 D_00252E16[];
-extern u16 D_00252E18[];
 extern u16 D_00252E1C[];
-extern u16 D_00252E1E[];
 extern u16 D_00252E22[];
-extern u16 D_00252E24[];
 extern u16 D_00252E28[];
-extern u16 D_00252E2A[];
 extern u16 D_00252E2E[];
-extern u16 D_00252E30[];
 extern u16 D_00252E44[];
-extern u16 D_00252E46[];
 extern u16 D_00252E50[];
-extern u16 D_00252E52[];
-extern u16 D_00252E62[];
 extern u16 D_00252E64[];
-extern u16 D_00252E66[];
-extern u16 D_00252F82[];
 extern u16 D_00252F86[];
-extern u16 D_00252F88[];
 extern u16 D_00252F8C[];
-extern u16 D_00252F8E[];
 extern u16 D_00252F92[];
-extern u16 D_00252F94[];
 extern u16 D_00252F98[];
-extern u16 D_00252F9A[];
 extern u16 D_00252F9E[];
-extern u16 D_00252FA0[];
 extern u16 D_00252FA4[];
-extern u16 D_00252FA6[];
 extern u16 D_00252FAA[];
-extern u16 D_00252FAC[];
 extern u16 D_00252FB0[];
-extern u16 D_00252FB2[];
 extern u16 D_00252FB6[];
-extern u16 D_00252FB8[];
 extern u16 D_00252FBC[];
-extern u16 D_00252FBE[];
 extern u16 D_00252FC2[];
-extern u16 D_00252FC4[];
 extern u16 D_00252FC8[];
-extern u16 D_00252FCA[];
 extern u16 D_00252FCE[];
-extern u16 D_00252FD0[];
 extern u16 D_00252FD4[];
-extern u16 D_00252FD6[];
 extern u16 D_00252FDA[];
-extern u16 D_00252FDC[];
 extern u16 D_00252FE0[];
-extern u16 D_00252FE2[];
 extern u16 D_00252FE6[];
-extern u16 D_00252FE8[];
 extern u16 D_00252FEC[];
-extern u16 D_00252FEE[];
 extern u16 D_00252FF2[];
-extern u16 D_00252FF4[];
 extern u16 D_00253004[];
-extern u16 D_00253006[];
 extern u16 D_00253010[];
-extern u16 D_00253012[];
-extern u16 D_00253022[];
 extern u16 D_00253024[];
-extern u16 D_00253026[];
 extern u16 D_0025BF98[];
-extern u16 D_0025BF9A[];
 extern u16 D_0025BFA6[];
-extern u16 D_0025BFA8[];
 extern u16 D_0025BFB4[];
-extern u16 D_0025BFB6[];
 extern u16 D_0025BFC2[];
-extern u16 D_0025BFC4[];
 extern u16 D_0025C3C0[];
-extern u16 D_0025C3C2[];
 extern u16 D_0025C3C4[];
-extern u16 D_0025C3C6[];
 extern u16 D_0025C3C8[];
-extern u16 D_0025C3CA[];
 extern u16 D_0025C3CC[];
-extern u16 D_0025C3CE[];
 extern u16 D_0025C3D0[];
-extern u16 D_0025C3D2[];
 extern u16 D_0025C3D4[];
-extern u16 D_0025C3D6[];
 extern u16 D_0025C3D8[];
-extern u16 D_0025C3DA[];
 extern u16 D_0025C3DC[];
-extern u16 D_0025C3DE[];
 extern u16 D_0025C3E0[];
-extern u16 D_0025C3E2[];
 extern u16 D_0025C3E4[];
-extern u16 D_0025C3E6[];
 extern u16 D_0025C3E8[];
-extern u16 D_0025C3EA[];
 extern u16 D_0025C3EC[];
-extern u16 D_0025C3EE[];
 extern u16 D_0025C3F0[];
-extern u16 D_0025C3F2[];
 extern u16 D_0025C3F4[];
-extern u16 D_0025C3F6[];
 extern u16 D_0025C3F8[];
-extern u16 D_0025C3FA[];
 extern u16 D_0025C3FC[];
-extern u16 D_0025C3FE[];
 extern u16 D_0025C400[];
-extern u16 D_0025C402[];
 extern u16 D_0025C404[];
-extern u16 D_0025C406[];
 extern u16 D_0025C408[];
-extern u16 D_0025C40A[];
 extern u16 D_0025C40C[];
-extern u16 D_0025C40E[];
 extern u16 D_0025C410[];
-extern u16 D_0025C412[];
 extern u16 D_0025C414[];
-extern u16 D_0025C416[];
 extern u16 D_0025C418[];
-extern u16 D_0025C41A[];
 extern u16 D_0025C41C[];
-extern u16 D_0025C41E[];
 extern u16 D_0025C420[];
-extern u16 D_0025C422[];
 extern u16 D_0025C424[];
-extern u16 D_0025C426[];
 extern u16 D_0025C428[];
-extern u16 D_0025C42A[];
 extern u16 D_0025C42C[];
-extern u16 D_0025C42E[];
 extern u16 D_002643E0_as_u16_a[];
 extern u16 D_002643E2[];
 extern u16 D_002643E4[];
-extern u16 D_002643E6[];
 extern u16 D_002643E8[];
-extern u16 D_002643EA[];
 extern u16 D_002643EC[];
-extern u16 D_002643EE[];
 extern u16 D_00264C38[];
-extern u16 D_00264C3A[];
 extern u16 D_00264C46[];
-extern u16 D_00264C48[];
 extern u16 D_00264C54[];
-extern u16 D_00264C56[];
 extern u16 D_00264C62[];
-extern u16 D_00264C64[];
 extern u16 D_00264C70[];
-extern u16 D_00264C72[];
 extern u16 D_00264C7E[];
-extern u16 D_00264C80[];
 extern u16 D_00264C8C[];
-extern u16 D_00264C8E[];
 extern u16 D_00264C9A[];
-extern u16 D_00264C9C[];
 extern u16 D_00264CA8[];
-extern u16 D_00264CAA[];
 extern u16 D_00264CB6[];
-extern u16 D_00264CB8[];
 extern u16 D_00264CC4[];
-extern u16 D_00264CC6[];
 extern u16 D_00264CD2[];
-extern u16 D_00264CD4[];
 extern u16 D_00264CE0[];
-extern u16 D_00264CE2[];
 extern u16 D_00264CEE[];
-extern u16 D_00264CF0[];
 extern u16 D_00264D08[];
-extern u16 D_00264D0A[];
 extern u16 D_00264D16[];
-extern u16 D_00264D18[];
 extern u16 D_00264D24[];
-extern u16 D_00264D26[];
 extern u16 D_00264D32[];
-extern u16 D_00264D34[];
 extern u16 D_00264D40[];
-extern u16 D_00264D42[];
 extern u16 D_00264D4E[];
-extern u16 D_00264D50[];
 extern u16 D_00264D5C[];
-extern u16 D_00264D5E[];
 extern u16 D_00264D6A[];
-extern u16 D_00264D6C[];
 extern u16 D_00264D78[];
-extern u16 D_00264D7A[];
 extern u16 D_00264E18[];
-extern u16 D_00264E1A[];
 extern u16 D_00264E26[];
-extern u16 D_00264E28[];
 extern u16 D_00264E34[];
-extern u16 D_00264E36[];
 extern u16 D_00264E42[];
-extern u16 D_00264E44[];
 extern u16 D_00264E50[];
-extern u16 D_00264E52[];
 extern u16 D_00264E5E[];
-extern u16 D_00264E60[];
 extern u16 D_00264E6C[];
-extern u16 D_00264E6E[];
 extern u16 D_00264E86[];
-extern u16 D_00264E88[];
 extern u16 D_00264E92[];
-extern u16 D_00264E94[];
 extern u16 D_00264EA8[];
-extern u16 D_00264EAA[];
 extern u16 D_00264EB6[];
-extern u16 D_00264EB8[];
 extern u16 D_00264EC4[];
-extern u16 D_00264EC6[];
 extern u16 D_00264ED2[];
-extern u16 D_00264ED4[];
 extern u16 D_0028C148_as_u16_a[];
 extern u16 D_0028C14A[];
 extern u16 D_0028C14C[];
-extern u16 D_0028C14E[];
-extern u16 D_0028C162[];
 extern u16 D_0028C164[];
-extern u16 D_0028C166[];
-extern u16 D_0028C16A[];
 extern u16 D_0028C16C[];
-extern u16 D_0028C16E[];
-extern u16 D_0028C172[];
 extern u16 D_0028C174[];
-extern u16 D_0028C176[];
-extern u16 D_0028C17A[];
 extern u16 D_0028C17C[];
-extern u16 D_0028C17E[];
-extern u16 D_0028C182[];
 extern u16 D_0028C184[];
-extern u16 D_0028C186[];
 
 #ifdef DEATH_LABEL
 extern u16 death_D_002506F0[];
@@ -4429,39 +4131,27 @@ void func_0018E5A0(void) {
     if (D_002526D4[0] != 0x2) {
         printf((const char *)D_0027B120);
     }
-    reg_tmp.w = (u32)func_0014CD70;
-    D_002526D4[0] = reg_tmp.h[1];
-    D_002526D6[0] = reg_tmp.h[0];
+    STORE_POINTER(D_002526D4, func_0014CD70);
     if (D_002526D8[0] != 0x4) {
         printf((const char *)D_0027B140);
     }
-    reg_tmp.w = (u32)func_0014CEA0;
-    D_002526D8[0] = reg_tmp.h[1];
-    D_002526DA[0] = reg_tmp.h[0];
+    STORE_POINTER(D_002526D8, func_0014CEA0);
     if (D_002526DC[0] != 0x6) {
         printf((const char *)D_0027B160);
     }
-    reg_tmp.w = (u32)func_0014CEE0;
-    D_002526DC[0] = reg_tmp.h[1];
-    D_002526DE[0] = reg_tmp.h[0];
+    STORE_POINTER(D_002526DC, func_0014CEE0);
     if (D_002526E0[0] != 0x8) {
         printf((const char *)D_0027B180);
     }
-    reg_tmp.w = (u32)func_0014CF10;
-    D_002526E0[0] = reg_tmp.h[1];
-    D_002526E2[0] = reg_tmp.h[0];
+    STORE_POINTER(D_002526E0, func_0014CF10);
     if (D_002526E4[0] != 0xa) {
         printf((const char *)D_0027B1A0);
     }
-    reg_tmp.w = (u32)func_0014CF90;
-    D_002526E4[0] = reg_tmp.h[1];
-    D_002526E6[0] = reg_tmp.h[0];
+    STORE_POINTER(D_002526E4, func_0014CF90);
     if (D_002526E8[0] != 0xc) {
         printf((const char *)D_0027B1C0);
     }
-    reg_tmp.w = (u32)func_0014D170;
-    D_002526E8[0] = reg_tmp.h[1];
-    D_002526EA[0] = reg_tmp.h[0];
+    STORE_POINTER(D_002526E8, func_0014D170);
     if (D_002526F0_as_u16_a[0] != 0x0) {
         printf((const char *)D_0027B1E0);
     }
@@ -4471,15 +4161,11 @@ void func_0018E5A0(void) {
     if (D_002526F4[0] != 0x2) {
         printf((const char *)D_0027B200);
     }
-    reg_tmp.w = (u32)func_0014D140;
-    D_002526F4[0] = reg_tmp.h[1];
-    D_002526F6[0] = reg_tmp.h[0];
+    STORE_POINTER(D_002526F4, func_0014D140);
     if (D_002526F8[0] != 0x4) {
         printf((const char *)D_0027B220);
     }
-    reg_tmp.w = (u32)func_0014D150;
-    D_002526F8[0] = reg_tmp.h[1];
-    D_002526FA[0] = reg_tmp.h[0];
+    STORE_POINTER(D_002526F8, func_0014D150);
     if (D_00252700_as_u16_a[0] != 0x0) {
         printf((const char *)D_0027B240);
     }
@@ -4489,27 +4175,19 @@ void func_0018E5A0(void) {
     if (D_00252704[0] != 0x2) {
         printf((const char *)D_0027B260);
     }
-    reg_tmp.w = (u32)D_002461D0;
-    D_00252704[0] = reg_tmp.h[1];
-    D_00252706[0] = reg_tmp.h[0];
+    STORE_POINTER(D_00252704, D_002461D0);
     if (D_00252708[0] != 0x4) {
         printf((const char *)D_0027B280);
     }
-    reg_tmp.w = (u32)D_00247080;
-    D_00252708[0] = reg_tmp.h[1];
-    D_0025270A[0] = reg_tmp.h[0];
+    STORE_POINTER(D_00252708, D_00247080);
     if (D_0025270C[0] != 0x6) {
         printf((const char *)D_0027B2A0);
     }
-    reg_tmp.w = (u32)D_00249610;
-    D_0025270C[0] = reg_tmp.h[1];
-    D_0025270E[0] = reg_tmp.h[0];
+    STORE_POINTER(D_0025270C, D_00249610);
     if (D_00252710[0] != 0x8) {
         printf((const char *)D_0027B2C0);
     }
-    reg_tmp.w = (u32)D_0024C240;
-    D_00252710[0] = reg_tmp.h[1];
-    D_00252712[0] = reg_tmp.h[0];
+    STORE_POINTER(D_00252710, D_0024C240);
     if (D_00252720_as_u16_a[0] != 0x0) {
         printf((const char *)D_0027B2E0);
     }
@@ -4519,1107 +4197,739 @@ void func_0018E5A0(void) {
     if (D_00252724[0] != 0x2) {
         printf((const char *)D_0027B300);
     }
-    reg_tmp.w = (u32)D_00244A30;
-    D_00252724[0] = reg_tmp.h[1];
-    D_00252726[0] = reg_tmp.h[0];
+    STORE_POINTER(D_00252724, D_00244A30);
     if (D_00252728[0] != 0x4) {
         printf((const char *)D_0027B320);
     }
-    reg_tmp.w = (u32)D_00246C90;
-    D_00252728[0] = reg_tmp.h[1];
-    D_0025272A[0] = reg_tmp.h[0];
+    STORE_POINTER(D_00252728, D_00246C90);
     if (D_0025272C[0] != 0x6) {
         printf((const char *)D_0027B340);
     }
-    reg_tmp.w = (u32)D_00247880;
-    D_0025272C[0] = reg_tmp.h[1];
-    D_0025272E[0] = reg_tmp.h[0];
+    STORE_POINTER(D_0025272C, D_00247880);
     if (D_00252730[0] != 0x8) {
         printf((const char *)D_0027B360);
     }
-    reg_tmp.w = (u32)D_00249ED0;
-    D_00252730[0] = reg_tmp.h[1];
-    D_00252732[0] = reg_tmp.h[0];
+    STORE_POINTER(D_00252730, D_00249ED0);
     if (D_0028C160[0] != 0x0) {
         printf((const char *)D_0027B380);
     }
-    reg_tmp.w = (u32)D_00252800;
-    D_0028C160[0] = reg_tmp.h[1];
-    D_0028C162[0] = reg_tmp.h[0];
+    STORE_POINTER(D_0028C160, D_00252800);
     if (D_0028C164[0] != 0x2) {
         printf((const char *)D_0027B3A0);
     }
-    reg_tmp.w = (u32)D_00252990;
-    D_0028C164[0] = reg_tmp.h[1];
-    D_0028C166[0] = reg_tmp.h[0];
+    STORE_POINTER(D_0028C164, D_00252990);
     if (D_0028C168[0] != 0x0) {
         printf((const char *)D_0027B3C0);
     }
-    reg_tmp.w = (u32)D_00252AE0;
-    D_0028C168[0] = reg_tmp.h[1];
-    D_0028C16A[0] = reg_tmp.h[0];
+    STORE_POINTER(D_0028C168, D_00252AE0);
     if (D_0028C16C[0] != 0x2) {
         printf((const char *)D_0027B3E0);
     }
-    reg_tmp.w = (u32)D_00252BB0;
-    D_0028C16C[0] = reg_tmp.h[1];
-    D_0028C16E[0] = reg_tmp.h[0];
+    STORE_POINTER(D_0028C16C, D_00252BB0);
     if (D_0028C170[0] != 0x0) {
         printf((const char *)D_0027B400);
     }
-    reg_tmp.w = (u32)D_00252C90;
-    D_0028C170[0] = reg_tmp.h[1];
-    D_0028C172[0] = reg_tmp.h[0];
+    STORE_POINTER(D_0028C170, D_00252C90);
     if (D_0028C174[0] != 0x2) {
         printf((const char *)D_0027B420);
     }
-    reg_tmp.w = (u32)D_00252D70;
-    D_0028C174[0] = reg_tmp.h[1];
-    D_0028C176[0] = reg_tmp.h[0];
+    STORE_POINTER(D_0028C174, D_00252D70);
     if (D_0028C178[0] != 0x0) {
         printf((const char *)D_0027B440);
     }
-    reg_tmp.w = (u32)D_00252E60;
-    D_0028C178[0] = reg_tmp.h[1];
-    D_0028C17A[0] = reg_tmp.h[0];
+    STORE_POINTER(D_0028C178, D_00252E60);
     if (D_0028C17C[0] != 0x2) {
         printf((const char *)D_0027B460);
     }
-    reg_tmp.w = (u32)D_00252F40;
-    D_0028C17C[0] = reg_tmp.h[1];
-    D_0028C17E[0] = reg_tmp.h[0];
+    STORE_POINTER(D_0028C17C, D_00252F40);
     if (D_0028C180[0] != 0x0) {
         printf((const char *)D_0027B480);
     }
-    reg_tmp.w = (u32)D_00253020;
-    D_0028C180[0] = reg_tmp.h[1];
-    D_0028C182[0] = reg_tmp.h[0];
+    STORE_POINTER(D_0028C180, D_00253020);
     if (D_0028C184[0] != 0x2) {
         printf((const char *)D_0027B4A0);
     }
-    reg_tmp.w = (u32)D_00253160;
-    D_0028C184[0] = reg_tmp.h[1];
-    D_0028C186[0] = reg_tmp.h[0];
+    STORE_POINTER(D_0028C184, D_00253160);
     if (D_00252740[0] != 0x0) {
         printf((const char *)D_0027B4C0);
     }
-    reg_tmp.w = (u32)D_0028C160;
-    D_00252740[0] = reg_tmp.h[1];
-    D_00252742[0] = reg_tmp.h[0];
+    STORE_POINTER(D_00252740, D_0028C160);
     if (D_00252744[0] != 0x2) {
         printf((const char *)D_0027B4E0);
     }
-    reg_tmp.w = (u32)D_0028C168;
-    D_00252744[0] = reg_tmp.h[1];
-    D_00252746[0] = reg_tmp.h[0];
+    STORE_POINTER(D_00252744, D_0028C168);
     if (D_00252748[0] != 0x4) {
         printf((const char *)D_0027B500);
     }
-    reg_tmp.w = (u32)D_0028C170;
-    D_00252748[0] = reg_tmp.h[1];
-    D_0025274A[0] = reg_tmp.h[0];
+    STORE_POINTER(D_00252748, D_0028C170);
     if (D_0025274C[0] != 0x6) {
         printf((const char *)D_0027B520);
     }
-    reg_tmp.w = (u32)D_0028C178;
-    D_0025274C[0] = reg_tmp.h[1];
-    D_0025274E[0] = reg_tmp.h[0];
+    STORE_POINTER(D_0025274C, D_0028C178);
     if (D_00252750[0] != 0x8) {
         printf((const char *)D_0027B540);
     }
-    reg_tmp.w = (u32)D_0028C180;
-    D_00252750[0] = reg_tmp.h[1];
-    D_00252752[0] = reg_tmp.h[0];
+    STORE_POINTER(D_00252750, D_0028C180);
     if (D_00252760[0] != 0x0) {
         printf((const char *)D_0027B560);
     }
-    reg_tmp.w = (u32)D_002606F0;
-    D_00252760[0] = reg_tmp.h[1];
-    D_00252762[0] = reg_tmp.h[0];
+    STORE_POINTER(D_00252760, D_002606F0);
     if (D_00252766[0] != 0x3) {
         printf((const char *)D_0027B580);
     }
-    reg_tmp.w = (u32)D_002606B0;
-    D_00252766[0] = reg_tmp.h[1];
-    D_00252768[0] = reg_tmp.h[0];
+    STORE_POINTER(D_00252766, D_002606B0);
     if (D_0025276C[0] != 0x6) {
         printf((const char *)D_0027B5A0);
     }
-    reg_tmp.w = (u32)D_00260630;
-    D_0025276C[0] = reg_tmp.h[1];
-    D_0025276E[0] = reg_tmp.h[0];
+    STORE_POINTER(D_0025276C, D_00260630);
     if (D_00252772[0] != 0x9) {
         printf((const char *)D_0027B5C0);
     }
-    reg_tmp.w = (u32)D_00260670;
-    D_00252772[0] = reg_tmp.h[1];
-    D_00252774[0] = reg_tmp.h[0];
+    STORE_POINTER(D_00252772, D_00260670);
     if (D_00252778[0] != 0xc) {
         printf((const char *)D_0027B5E0);
     }
-    reg_tmp.w = (u32)D_002607B0;
-    D_00252778[0] = reg_tmp.h[1];
-    D_0025277A[0] = reg_tmp.h[0];
+    STORE_POINTER(D_00252778, D_002607B0);
     if (D_0025277E[0] != 0xf) {
         printf((const char *)D_0027B600);
     }
-    reg_tmp.w = (u32)D_00260730;
-    D_0025277E[0] = reg_tmp.h[1];
-    D_00252780[0] = reg_tmp.h[0];
+    STORE_POINTER(D_0025277E, D_00260730);
     if (D_00252784[0] != 0x12) {
         printf((const char *)D_0027B620);
     }
-    reg_tmp.w = (u32)D_00255470;
-    D_00252784[0] = reg_tmp.h[1];
-    D_00252786[0] = reg_tmp.h[0];
+    STORE_POINTER(D_00252784, D_00255470);
     if (D_0025278A[0] != 0x15) {
         printf((const char *)D_0027B640);
     }
-    reg_tmp.w = (u32)D_00261DB0;
-    D_0025278A[0] = reg_tmp.h[1];
-    D_0025278C[0] = reg_tmp.h[0];
+    STORE_POINTER(D_0025278A, D_00261DB0);
     if (D_00252790[0] != 0x18) {
         printf((const char *)D_0027B660);
     }
-    reg_tmp.w = (u32)D_002610B0_as_u16_a;
-    D_00252790[0] = reg_tmp.h[1];
-    D_00252792[0] = reg_tmp.h[0];
+    STORE_POINTER(D_00252790, D_002610B0_as_u16_a);
     if (D_00252796[0] != 0x1b) {
         printf((const char *)D_0027B680);
     }
-    reg_tmp.w = (u32)D_00260FB0;
-    D_00252796[0] = reg_tmp.h[1];
-    D_00252798[0] = reg_tmp.h[0];
+    STORE_POINTER(D_00252796, D_00260FB0);
     if (D_0025279C[0] != 0x1e) {
         printf((const char *)D_0027B6A0);
     }
-    reg_tmp.w = (u32)D_00260FF0;
-    D_0025279C[0] = reg_tmp.h[1];
-    D_0025279E[0] = reg_tmp.h[0];
+    STORE_POINTER(D_0025279C, D_00260FF0);
     if (D_002527A2[0] != 0x21) {
         printf((const char *)D_0027B6C0);
     }
-    reg_tmp.w = (u32)D_002610F0;
-    D_002527A2[0] = reg_tmp.h[1];
-    D_002527A4[0] = reg_tmp.h[0];
+    STORE_POINTER(D_002527A2, D_002610F0);
     if (D_002527A8[0] != 0x24) {
         printf((const char *)D_0027B6E0);
     }
-    reg_tmp.w = (u32)D_00261030;
-    D_002527A8[0] = reg_tmp.h[1];
-    D_002527AA[0] = reg_tmp.h[0];
+    STORE_POINTER(D_002527A8, D_00261030);
     if (D_002527AE[0] != 0x27) {
         printf((const char *)D_0027B700);
     }
-    reg_tmp.w = (u32)D_00261D70;
-    D_002527AE[0] = reg_tmp.h[1];
-    D_002527B0[0] = reg_tmp.h[0];
+    STORE_POINTER(D_002527AE, D_00261D70);
     if (D_002527B4[0] != 0x2a) {
         printf((const char *)D_0027B720);
     }
-    reg_tmp.w = (u32)D_00261170;
-    D_002527B4[0] = reg_tmp.h[1];
-    D_002527B6[0] = reg_tmp.h[0];
+    STORE_POINTER(D_002527B4, D_00261170);
     if (D_002527BA[0] != 0x2d) {
         printf((const char *)D_0027B740);
     }
-    reg_tmp.w = (u32)D_00261130;
-    D_002527BA[0] = reg_tmp.h[1];
-    D_002527BC[0] = reg_tmp.h[0];
+    STORE_POINTER(D_002527BA, D_00261130);
     if (D_002527C0[0] != 0x30) {
         printf((const char *)D_0027B760);
     }
-    reg_tmp.w = (u32)D_002612B0;
-    D_002527C0[0] = reg_tmp.h[1];
-    D_002527C2[0] = reg_tmp.h[0];
+    STORE_POINTER(D_002527C0, D_002612B0);
     if (D_002527C6[0] != 0x33) {
         printf((const char *)D_0027B780);
     }
-    reg_tmp.w = (u32)D_002611B0;
-    D_002527C6[0] = reg_tmp.h[1];
-    D_002527C8[0] = reg_tmp.h[0];
+    STORE_POINTER(D_002527C6, D_002611B0);
     if (D_002527CC[0] != 0x36) {
         printf((const char *)D_0027B7A0);
     }
-    reg_tmp.w = (u32)D_002611F0;
-    D_002527CC[0] = reg_tmp.h[1];
-    D_002527CE[0] = reg_tmp.h[0];
+    STORE_POINTER(D_002527CC, D_002611F0);
     if (D_002527D2[0] != 0x39) {
         printf((const char *)D_0027B7C0);
     }
-    reg_tmp.w = (u32)D_00260730;
-    D_002527D2[0] = reg_tmp.h[1];
-    D_002527D4[0] = reg_tmp.h[0];
+    STORE_POINTER(D_002527D2, D_00260730);
     if (D_002527D8[0] != 0x3c) {
         printf((const char *)D_0027B7E0);
     }
-    reg_tmp.w = (u32)D_00261230;
-    D_002527D8[0] = reg_tmp.h[1];
-    D_002527DA[0] = reg_tmp.h[0];
+    STORE_POINTER(D_002527D8, D_00261230);
     if (D_002527DE[0] != 0x3f) {
         printf((const char *)D_0027B800);
     }
-    reg_tmp.w = (u32)D_00261270;
-    D_002527DE[0] = reg_tmp.h[1];
-    D_002527E0[0] = reg_tmp.h[0];
+    STORE_POINTER(D_002527DE, D_00261270);
     if (D_002527F0[0] != 0x4) {
         printf((const char *)D_0027B820);
     }
-    reg_tmp.w = (u32)func_0018D2D0;
-    D_002527F0[0] = reg_tmp.h[1];
-    D_002527F2[0] = reg_tmp.h[0];
+    STORE_POINTER(D_002527F0, func_0018D2D0);
     if (D_00252800[0] != 0x0) {
         printf((const char *)D_0027B840);
     }
-    reg_tmp.w = (u32)D_00252760;
-    D_00252800[0] = reg_tmp.h[1];
-    D_00252802[0] = reg_tmp.h[0];
+    STORE_POINTER(D_00252800, D_00252760);
     if (D_00252804[0] != 0x2) {
         printf((const char *)D_0027B860);
     }
-    reg_tmp.w = (u32)D_002527E8;
-    D_00252804[0] = reg_tmp.h[1];
-    D_00252806[0] = reg_tmp.h[0];
+    STORE_POINTER(D_00252804, D_002527E8);
     if (D_00252A20[0] != 0x0) {
         printf((const char *)D_0027B880);
     }
-    reg_tmp.w = (u32)D_00255470;
-    D_00252A20[0] = reg_tmp.h[1];
-    D_00252A22[0] = reg_tmp.h[0];
+    STORE_POINTER(D_00252A20, D_00255470);
     if (D_00252A26[0] != 0x3) {
         printf((const char *)D_0027B8A0);
     }
-    reg_tmp.w = (u32)D_00261DB0;
-    D_00252A26[0] = reg_tmp.h[1];
-    D_00252A28[0] = reg_tmp.h[0];
+    STORE_POINTER(D_00252A26, D_00261DB0);
     if (D_00252A2C[0] != 0x6) {
         printf((const char *)D_0027B8C0);
     }
-    reg_tmp.w = (u32)D_002610B0_as_u16_a;
-    D_00252A2C[0] = reg_tmp.h[1];
-    D_00252A2E[0] = reg_tmp.h[0];
+    STORE_POINTER(D_00252A2C, D_002610B0_as_u16_a);
     if (D_00252A32[0] != 0x9) {
         printf((const char *)D_0027B8E0);
     }
-    reg_tmp.w = (u32)D_00260FB0;
-    D_00252A32[0] = reg_tmp.h[1];
-    D_00252A34[0] = reg_tmp.h[0];
+    STORE_POINTER(D_00252A32, D_00260FB0);
     if (D_00252A38[0] != 0xc) {
         printf((const char *)D_0027B900);
     }
-    reg_tmp.w = (u32)D_00260FF0;
-    D_00252A38[0] = reg_tmp.h[1];
-    D_00252A3A[0] = reg_tmp.h[0];
+    STORE_POINTER(D_00252A38, D_00260FF0);
     if (D_00252A3E[0] != 0xf) {
         printf((const char *)D_0027B920);
     }
-    reg_tmp.w = (u32)D_002610F0;
-    D_00252A3E[0] = reg_tmp.h[1];
-    D_00252A40[0] = reg_tmp.h[0];
+    STORE_POINTER(D_00252A3E, D_002610F0);
     if (D_00252A44[0] != 0x12) {
         printf((const char *)D_0027B940);
     }
-    reg_tmp.w = (u32)D_00261030;
-    D_00252A44[0] = reg_tmp.h[1];
-    D_00252A46[0] = reg_tmp.h[0];
+    STORE_POINTER(D_00252A44, D_00261030);
     if (D_00252A4A[0] != 0x15) {
         printf((const char *)D_0027B960);
     }
-    reg_tmp.w = (u32)D_00261D70;
-    D_00252A4A[0] = reg_tmp.h[1];
-    D_00252A4C[0] = reg_tmp.h[0];
+    STORE_POINTER(D_00252A4A, D_00261D70);
     if (D_00252A50[0] != 0x18) {
         printf((const char *)D_0027B980);
     }
-    reg_tmp.w = (u32)D_002606F0;
-    D_00252A50[0] = reg_tmp.h[1];
-    D_00252A52[0] = reg_tmp.h[0];
+    STORE_POINTER(D_00252A50, D_002606F0);
     if (D_00252A56[0] != 0x1b) {
         printf((const char *)D_0027B9A0);
     }
-    reg_tmp.w = (u32)D_002606B0;
-    D_00252A56[0] = reg_tmp.h[1];
-    D_00252A58[0] = reg_tmp.h[0];
+    STORE_POINTER(D_00252A56, D_002606B0);
     if (D_00252A5C[0] != 0x1e) {
         printf((const char *)D_0027B9C0);
     }
-    reg_tmp.w = (u32)D_00260630;
-    D_00252A5C[0] = reg_tmp.h[1];
-    D_00252A5E[0] = reg_tmp.h[0];
+    STORE_POINTER(D_00252A5C, D_00260630);
     if (D_00252A62[0] != 0x21) {
         printf((const char *)D_0027B9E0);
     }
-    reg_tmp.w = (u32)D_00260570;
-    D_00252A62[0] = reg_tmp.h[1];
-    D_00252A64[0] = reg_tmp.h[0];
+    STORE_POINTER(D_00252A62, D_00260570);
     if (D_00252A68[0] != 0x24) {
         printf((const char *)D_0027BA00);
     }
-    reg_tmp.w = (u32)D_002605F0;
-    D_00252A68[0] = reg_tmp.h[1];
-    D_00252A6A[0] = reg_tmp.h[0];
+    STORE_POINTER(D_00252A68, D_002605F0);
     if (D_00252A6E[0] != 0x27) {
         printf((const char *)D_0027BA20);
     }
-    reg_tmp.w = (u32)D_00260730;
-    D_00252A6E[0] = reg_tmp.h[1];
-    D_00252A70[0] = reg_tmp.h[0];
+    STORE_POINTER(D_00252A6E, D_00260730);
     if (D_00252A74[0] != 0x2a) {
         printf((const char *)D_0027BA40);
     }
-    reg_tmp.w = (u32)D_00260670;
-    D_00252A74[0] = reg_tmp.h[1];
-    D_00252A76[0] = reg_tmp.h[0];
+    STORE_POINTER(D_00252A74, D_00260670);
     if (D_00252A7A[0] != 0x2d) {
         printf((const char *)D_0027BA60);
     }
-    reg_tmp.w = (u32)D_00261370;
-    D_00252A7A[0] = reg_tmp.h[1];
-    D_00252A7C[0] = reg_tmp.h[0];
+    STORE_POINTER(D_00252A7A, D_00261370);
     if (D_00252A80[0] != 0x30) {
         printf((const char *)D_0027BA80);
     }
-    reg_tmp.w = (u32)D_002614F0;
-    D_00252A80[0] = reg_tmp.h[1];
-    D_00252A82[0] = reg_tmp.h[0];
+    STORE_POINTER(D_00252A80, D_002614F0);
     if (D_00252A86[0] != 0x33) {
         printf((const char *)D_0027BAA0);
     }
-    reg_tmp.w = (u32)D_002612F0;
-    D_00252A86[0] = reg_tmp.h[1];
-    D_00252A88[0] = reg_tmp.h[0];
+    STORE_POINTER(D_00252A86, D_002612F0);
     if (D_00252A8C[0] != 0x36) {
         printf((const char *)D_0027BAC0);
     }
-    reg_tmp.w = (u32)D_002605B0;
-    D_00252A8C[0] = reg_tmp.h[1];
-    D_00252A8E[0] = reg_tmp.h[0];
+    STORE_POINTER(D_00252A8C, D_002605B0);
     if (D_00252A92[0] != 0x39) {
         printf((const char *)D_0027BAE0);
     }
-    reg_tmp.w = (u32)D_00261530;
-    D_00252A92[0] = reg_tmp.h[1];
-    D_00252A94[0] = reg_tmp.h[0];
+    STORE_POINTER(D_00252A92, D_00261530);
     if (D_00252A98[0] != 0x3c) {
         printf((const char *)D_0027BB00);
     }
-    reg_tmp.w = (u32)D_00261330;
-    D_00252A98[0] = reg_tmp.h[1];
-    D_00252A9A[0] = reg_tmp.h[0];
+    STORE_POINTER(D_00252A98, D_00261330);
     if (D_00252A9E[0] != 0x3f) {
         printf((const char *)D_0027BB20);
     }
-    reg_tmp.w = (u32)D_002613B0;
-    D_00252A9E[0] = reg_tmp.h[1];
-    D_00252AA0[0] = reg_tmp.h[0];
+    STORE_POINTER(D_00252A9E, D_002613B0);
     if (D_00252AA4[0] != 0x42) {
         printf((const char *)D_0027BB40);
     }
-    reg_tmp.w = (u32)D_002613F0;
-    D_00252AA4[0] = reg_tmp.h[1];
-    D_00252AA6[0] = reg_tmp.h[0];
+    STORE_POINTER(D_00252AA4, D_002613F0);
     if (D_00252AAA[0] != 0x45) {
         printf((const char *)D_0027BB60);
     }
-    reg_tmp.w = (u32)D_00261430;
-    D_00252AAA[0] = reg_tmp.h[1];
-    D_00252AAC[0] = reg_tmp.h[0];
+    STORE_POINTER(D_00252AAA, D_00261430);
     if (D_00252AB0[0] != 0x48) {
         printf((const char *)D_0027BB80);
     }
-    reg_tmp.w = (u32)D_00261470;
-    D_00252AB0[0] = reg_tmp.h[1];
-    D_00252AB2[0] = reg_tmp.h[0];
+    STORE_POINTER(D_00252AB0, D_00261470);
     if (D_00252AB6[0] != 0x4b) {
         printf((const char *)D_0027BBA0);
     }
-    reg_tmp.w = (u32)D_002614B0;
-    D_00252AB6[0] = reg_tmp.h[1];
-    D_00252AB8[0] = reg_tmp.h[0];
+    STORE_POINTER(D_00252AB6, D_002614B0);
     if (D_00252AC4[0] != 0x2) {
         printf((const char *)D_0027BBC0);
     }
-    reg_tmp.w = (u32)func_0018D1D0;
-    D_00252AC4[0] = reg_tmp.h[1];
-    D_00252AC6[0] = reg_tmp.h[0];
+    STORE_POINTER(D_00252AC4, func_0018D1D0);
     if (D_00252AD0[0] != 0x8) {
         printf((const char *)D_0027BBE0);
     }
-    reg_tmp.w = (u32)func_0018D2D0;
-    D_00252AD0[0] = reg_tmp.h[1];
-    D_00252AD2[0] = reg_tmp.h[0];
+    STORE_POINTER(D_00252AD0, func_0018D2D0);
     if (D_00252AE0[0] != 0x0) {
         printf((const char *)D_0027BC00);
     }
-    reg_tmp.w = (u32)D_00252A20;
-    D_00252AE0[0] = reg_tmp.h[1];
-    D_00252AE2[0] = reg_tmp.h[0];
+    STORE_POINTER(D_00252AE0, D_00252A20);
     if (D_00252AE4[0] != 0x2) {
         printf((const char *)D_0027BC20);
     }
-    reg_tmp.w = (u32)D_00252AC0;
-    D_00252AE4[0] = reg_tmp.h[1];
-    D_00252AE6[0] = reg_tmp.h[0];
+    STORE_POINTER(D_00252AE4, D_00252AC0);
     if (D_00252BD0[0] != 0x0) {
         printf((const char *)D_0027BC40);
     }
-    reg_tmp.w = (u32)D_00255470;
-    D_00252BD0[0] = reg_tmp.h[1];
-    D_00252BD2[0] = reg_tmp.h[0];
+    STORE_POINTER(D_00252BD0, D_00255470);
     if (D_00252BD6[0] != 0x3) {
         printf((const char *)D_0027BC60);
     }
-    reg_tmp.w = (u32)D_00261DB0;
-    D_00252BD6[0] = reg_tmp.h[1];
-    D_00252BD8[0] = reg_tmp.h[0];
+    STORE_POINTER(D_00252BD6, D_00261DB0);
     if (D_00252BDC[0] != 0x6) {
         printf((const char *)D_0027BC80);
     }
-    reg_tmp.w = (u32)D_002610B0_as_u16_a;
-    D_00252BDC[0] = reg_tmp.h[1];
-    D_00252BDE[0] = reg_tmp.h[0];
+    STORE_POINTER(D_00252BDC, D_002610B0_as_u16_a);
     if (D_00252BE2[0] != 0x9) {
         printf((const char *)D_0027BCA0);
     }
-    reg_tmp.w = (u32)D_00260FB0;
-    D_00252BE2[0] = reg_tmp.h[1];
-    D_00252BE4[0] = reg_tmp.h[0];
+    STORE_POINTER(D_00252BE2, D_00260FB0);
     if (D_00252BE8[0] != 0xc) {
         printf((const char *)D_0027BCC0);
     }
-    reg_tmp.w = (u32)D_00260FF0;
-    D_00252BE8[0] = reg_tmp.h[1];
-    D_00252BEA[0] = reg_tmp.h[0];
+    STORE_POINTER(D_00252BE8, D_00260FF0);
     if (D_00252BEE[0] != 0xf) {
         printf((const char *)D_0027BCE0);
     }
-    reg_tmp.w = (u32)D_002610F0;
-    D_00252BEE[0] = reg_tmp.h[1];
-    D_00252BF0[0] = reg_tmp.h[0];
+    STORE_POINTER(D_00252BEE, D_002610F0);
     if (D_00252BF4[0] != 0x12) {
         printf((const char *)D_0027BD00);
     }
-    reg_tmp.w = (u32)D_00261030;
-    D_00252BF4[0] = reg_tmp.h[1];
-    D_00252BF6[0] = reg_tmp.h[0];
+    STORE_POINTER(D_00252BF4, D_00261030);
     if (D_00252BFA[0] != 0x15) {
         printf((const char *)D_0027BD20);
     }
-    reg_tmp.w = (u32)D_00261D70;
-    D_00252BFA[0] = reg_tmp.h[1];
-    D_00252BFC[0] = reg_tmp.h[0];
+    STORE_POINTER(D_00252BFA, D_00261D70);
     if (D_00252C00[0] != 0x18) {
         printf((const char *)D_0027BD40);
     }
-    reg_tmp.w = (u32)D_002606F0;
-    D_00252C00[0] = reg_tmp.h[1];
-    D_00252C02[0] = reg_tmp.h[0];
+    STORE_POINTER(D_00252C00, D_002606F0);
     if (D_00252C06[0] != 0x1b) {
         printf((const char *)D_0027BD60);
     }
-    reg_tmp.w = (u32)D_002606B0;
-    D_00252C06[0] = reg_tmp.h[1];
-    D_00252C08[0] = reg_tmp.h[0];
+    STORE_POINTER(D_00252C06, D_002606B0);
     if (D_00252C0C[0] != 0x1e) {
         printf((const char *)D_0027BD80);
     }
-    reg_tmp.w = (u32)D_00260630;
-    D_00252C0C[0] = reg_tmp.h[1];
-    D_00252C0E[0] = reg_tmp.h[0];
+    STORE_POINTER(D_00252C0C, D_00260630);
     if (D_00252C12[0] != 0x21) {
         printf((const char *)D_0027BDA0);
     }
-    reg_tmp.w = (u32)D_002608B0;
-    D_00252C12[0] = reg_tmp.h[1];
-    D_00252C14[0] = reg_tmp.h[0];
+    STORE_POINTER(D_00252C12, D_002608B0);
     if (D_00252C18[0] != 0x24) {
         printf((const char *)D_0027BDC0);
     }
-    reg_tmp.w = (u32)D_002605F0;
-    D_00252C18[0] = reg_tmp.h[1];
-    D_00252C1A[0] = reg_tmp.h[0];
+    STORE_POINTER(D_00252C18, D_002605F0);
     if (D_00252C1E[0] != 0x27) {
         printf((const char *)D_0027BDE0);
     }
-    reg_tmp.w = (u32)D_00260730;
-    D_00252C1E[0] = reg_tmp.h[1];
-    D_00252C20[0] = reg_tmp.h[0];
+    STORE_POINTER(D_00252C1E, D_00260730);
     if (D_00252C24[0] != 0x2a) {
         printf((const char *)D_0027BE00);
     }
-    reg_tmp.w = (u32)D_00260670;
-    D_00252C24[0] = reg_tmp.h[1];
-    D_00252C26[0] = reg_tmp.h[0];
+    STORE_POINTER(D_00252C24, D_00260670);
     if (D_00252C2A[0] != 0x2d) {
         printf((const char *)D_0027BE20);
     }
-    reg_tmp.w = (u32)D_00260630;
-    D_00252C2A[0] = reg_tmp.h[1];
-    D_00252C2C[0] = reg_tmp.h[0];
+    STORE_POINTER(D_00252C2A, D_00260630);
     if (D_00252C30[0] != 0x30) {
         printf((const char *)D_0027BE40);
     }
-    reg_tmp.w = (u32)D_002608F0;
-    D_00252C30[0] = reg_tmp.h[1];
-    D_00252C32[0] = reg_tmp.h[0];
+    STORE_POINTER(D_00252C30, D_002608F0);
     if (D_00252C36[0] != 0x33) {
         printf((const char *)D_0027BE60);
     }
-    reg_tmp.w = (u32)D_002606B0;
-    D_00252C36[0] = reg_tmp.h[1];
-    D_00252C38[0] = reg_tmp.h[0];
+    STORE_POINTER(D_00252C36, D_002606B0);
     if (D_00252C3C[0] != 0x36) {
         printf((const char *)D_0027BE80);
     }
-    reg_tmp.w = (u32)D_002616B0;
-    D_00252C3C[0] = reg_tmp.h[1];
-    D_00252C3E[0] = reg_tmp.h[0];
+    STORE_POINTER(D_00252C3C, D_002616B0);
     if (D_00252C42[0] != 0x39) {
         printf((const char *)D_0027BEA0);
     }
-    reg_tmp.w = (u32)D_00261670;
-    D_00252C42[0] = reg_tmp.h[1];
-    D_00252C44[0] = reg_tmp.h[0];
+    STORE_POINTER(D_00252C42, D_00261670);
     if (D_00252C48[0] != 0x3c) {
         printf((const char *)D_0027BEC0);
     }
-    reg_tmp.w = (u32)D_00261630;
-    D_00252C48[0] = reg_tmp.h[1];
-    D_00252C4A[0] = reg_tmp.h[0];
+    STORE_POINTER(D_00252C48, D_00261630);
     if (D_00252C4E[0] != 0x3f) {
         printf((const char *)D_0027BEE0);
     }
-    reg_tmp.w = (u32)D_002615F0;
-    D_00252C4E[0] = reg_tmp.h[1];
-    D_00252C50[0] = reg_tmp.h[0];
+    STORE_POINTER(D_00252C4E, D_002615F0);
     if (D_00252C54[0] != 0x42) {
         printf((const char *)D_0027BF00);
     }
-    reg_tmp.w = (u32)D_00261570;
-    D_00252C54[0] = reg_tmp.h[1];
-    D_00252C56[0] = reg_tmp.h[0];
+    STORE_POINTER(D_00252C54, D_00261570);
     if (D_00252C5A[0] != 0x45) {
         printf((const char *)D_0027BF20);
     }
-    reg_tmp.w = (u32)D_002615B0;
-    D_00252C5A[0] = reg_tmp.h[1];
-    D_00252C5C[0] = reg_tmp.h[0];
+    STORE_POINTER(D_00252C5A, D_002615B0);
     if (D_00252C74[0] != 0x2) {
         printf((const char *)D_0027BF40);
     }
-    reg_tmp.w = (u32)func_0018D210;
-    D_00252C74[0] = reg_tmp.h[1];
-    D_00252C76[0] = reg_tmp.h[0];
+    STORE_POINTER(D_00252C74, func_0018D210);
     if (D_00252C80[0] != 0x8) {
         printf((const char *)D_0027BF60);
     }
-    reg_tmp.w = (u32)func_0018D2D0;
-    D_00252C80[0] = reg_tmp.h[1];
-    D_00252C82[0] = reg_tmp.h[0];
+    STORE_POINTER(D_00252C80, func_0018D2D0);
     if (D_00252C90[0] != 0x0) {
         printf((const char *)D_0027BF80);
     }
-    reg_tmp.w = (u32)D_00252BD0;
-    D_00252C90[0] = reg_tmp.h[1];
-    D_00252C92[0] = reg_tmp.h[0];
+    STORE_POINTER(D_00252C90, D_00252BD0);
     if (D_00252C94[0] != 0x2) {
         printf((const char *)D_0027BFA0);
     }
-    reg_tmp.w = (u32)D_00252C70;
-    D_00252C94[0] = reg_tmp.h[1];
-    D_00252C96[0] = reg_tmp.h[0];
+    STORE_POINTER(D_00252C94, D_00252C70);
     if (D_00252DB0[0] != 0x0) {
         printf((const char *)D_0027BFC0);
     }
-    reg_tmp.w = (u32)D_00255470;
-    D_00252DB0[0] = reg_tmp.h[1];
-    D_00252DB2[0] = reg_tmp.h[0];
+    STORE_POINTER(D_00252DB0, D_00255470);
     if (D_00252DB6[0] != 0x3) {
         printf((const char *)D_0027BFE0);
     }
-    reg_tmp.w = (u32)D_00261DB0;
-    D_00252DB6[0] = reg_tmp.h[1];
-    D_00252DB8[0] = reg_tmp.h[0];
+    STORE_POINTER(D_00252DB6, D_00261DB0);
     if (D_00252DBC[0] != 0x6) {
         printf((const char *)D_0027C000);
     }
-    reg_tmp.w = (u32)D_002610B0_as_u16_a;
-    D_00252DBC[0] = reg_tmp.h[1];
-    D_00252DBE[0] = reg_tmp.h[0];
+    STORE_POINTER(D_00252DBC, D_002610B0_as_u16_a);
     if (D_00252DC2[0] != 0x9) {
         printf((const char *)D_0027C020);
     }
-    reg_tmp.w = (u32)D_00260FB0;
-    D_00252DC2[0] = reg_tmp.h[1];
-    D_00252DC4[0] = reg_tmp.h[0];
+    STORE_POINTER(D_00252DC2, D_00260FB0);
     if (D_00252DC8[0] != 0xc) {
         printf((const char *)D_0027C040);
     }
-    reg_tmp.w = (u32)D_00260FF0;
-    D_00252DC8[0] = reg_tmp.h[1];
-    D_00252DCA[0] = reg_tmp.h[0];
+    STORE_POINTER(D_00252DC8, D_00260FF0);
     if (D_00252DCE[0] != 0xf) {
         printf((const char *)D_0027C060);
     }
-    reg_tmp.w = (u32)D_002610F0;
-    D_00252DCE[0] = reg_tmp.h[1];
-    D_00252DD0[0] = reg_tmp.h[0];
+    STORE_POINTER(D_00252DCE, D_002610F0);
     if (D_00252DD4[0] != 0x12) {
         printf((const char *)D_0027C080);
     }
-    reg_tmp.w = (u32)D_00261030;
-    D_00252DD4[0] = reg_tmp.h[1];
-    D_00252DD6[0] = reg_tmp.h[0];
+    STORE_POINTER(D_00252DD4, D_00261030);
     if (D_00252DDA[0] != 0x15) {
         printf((const char *)D_0027C0A0);
     }
-    reg_tmp.w = (u32)D_00261D70;
-    D_00252DDA[0] = reg_tmp.h[1];
-    D_00252DDC[0] = reg_tmp.h[0];
+    STORE_POINTER(D_00252DDA, D_00261D70);
     if (D_00252DE0[0] != 0x18) {
         printf((const char *)D_0027C0C0);
     }
-    reg_tmp.w = (u32)D_002606F0;
-    D_00252DE0[0] = reg_tmp.h[1];
-    D_00252DE2[0] = reg_tmp.h[0];
+    STORE_POINTER(D_00252DE0, D_002606F0);
     if (D_00252DE6[0] != 0x1b) {
         printf((const char *)D_0027C0E0);
     }
-    reg_tmp.w = (u32)D_002606B0;
-    D_00252DE6[0] = reg_tmp.h[1];
-    D_00252DE8[0] = reg_tmp.h[0];
+    STORE_POINTER(D_00252DE6, D_002606B0);
     if (D_00252DEC[0] != 0x1e) {
         printf((const char *)D_0027C100);
     }
-    reg_tmp.w = (u32)D_00260630;
-    D_00252DEC[0] = reg_tmp.h[1];
-    D_00252DEE[0] = reg_tmp.h[0];
+    STORE_POINTER(D_00252DEC, D_00260630);
     if (D_00252DF2[0] != 0x21) {
         printf((const char *)D_0027C120);
     }
-    reg_tmp.w = (u32)D_002605F0;
-    D_00252DF2[0] = reg_tmp.h[1];
-    D_00252DF4[0] = reg_tmp.h[0];
+    STORE_POINTER(D_00252DF2, D_002605F0);
     if (D_00252DF8[0] != 0x24) {
         printf((const char *)D_0027C140);
     }
-    reg_tmp.w = (u32)D_00260730;
-    D_00252DF8[0] = reg_tmp.h[1];
-    D_00252DFA[0] = reg_tmp.h[0];
+    STORE_POINTER(D_00252DF8, D_00260730);
     if (D_00252DFE[0] != 0x27) {
         printf((const char *)D_0027C160);
     }
-    reg_tmp.w = (u32)D_002607F0;
-    D_00252DFE[0] = reg_tmp.h[1];
-    D_00252E00[0] = reg_tmp.h[0];
+    STORE_POINTER(D_00252DFE, D_002607F0);
     if (D_00252E04[0] != 0x2a) {
         printf((const char *)D_0027C180);
     }
-    reg_tmp.w = (u32)D_00261A30;
-    D_00252E04[0] = reg_tmp.h[1];
-    D_00252E06[0] = reg_tmp.h[0];
+    STORE_POINTER(D_00252E04, D_00261A30);
     if (D_00252E0A[0] != 0x2d) {
         printf((const char *)D_0027C1A0);
     }
-    reg_tmp.w = (u32)D_00261930;
-    D_00252E0A[0] = reg_tmp.h[1];
-    D_00252E0C[0] = reg_tmp.h[0];
+    STORE_POINTER(D_00252E0A, D_00261930);
     if (D_00252E10[0] != 0x30) {
         printf((const char *)D_0027C1C0);
     }
-    reg_tmp.w = (u32)D_00261730_as_u16_a;
-    D_00252E10[0] = reg_tmp.h[1];
-    D_00252E12[0] = reg_tmp.h[0];
+    STORE_POINTER(D_00252E10, D_00261730_as_u16_a);
     if (D_00252E16[0] != 0x33) {
         printf((const char *)D_0027C1E0);
     }
-    reg_tmp.w = (u32)D_00261970;
-    D_00252E16[0] = reg_tmp.h[1];
-    D_00252E18[0] = reg_tmp.h[0];
+    STORE_POINTER(D_00252E16, D_00261970);
     if (D_00252E1C[0] != 0x36) {
         printf((const char *)D_0027C200);
     }
-    reg_tmp.w = (u32)D_002619B0;
-    D_00252E1C[0] = reg_tmp.h[1];
-    D_00252E1E[0] = reg_tmp.h[0];
+    STORE_POINTER(D_00252E1C, D_002619B0);
     if (D_00252E22[0] != 0x39) {
         printf((const char *)D_0027C220);
     }
-    reg_tmp.w = (u32)D_00260830;
-    D_00252E22[0] = reg_tmp.h[1];
-    D_00252E24[0] = reg_tmp.h[0];
+    STORE_POINTER(D_00252E22, D_00260830);
     if (D_00252E28[0] != 0x3c) {
         printf((const char *)D_0027C240);
     }
-    reg_tmp.w = (u32)D_002607F0;
-    D_00252E28[0] = reg_tmp.h[1];
-    D_00252E2A[0] = reg_tmp.h[0];
+    STORE_POINTER(D_00252E28, D_002607F0);
     if (D_00252E2E[0] != 0x3f) {
         printf((const char *)D_0027C260);
     }
-    reg_tmp.w = (u32)D_002619F0;
-    D_00252E2E[0] = reg_tmp.h[1];
-    D_00252E30[0] = reg_tmp.h[0];
+    STORE_POINTER(D_00252E2E, D_002619F0);
     if (D_00252E44[0] != 0x2) {
         printf((const char *)D_0027C280);
     }
-    reg_tmp.w = (u32)func_0018D250;
-    D_00252E44[0] = reg_tmp.h[1];
-    D_00252E46[0] = reg_tmp.h[0];
+    STORE_POINTER(D_00252E44, func_0018D250);
     if (D_00252E50[0] != 0x8) {
         printf((const char *)D_0027C2A0);
     }
-    reg_tmp.w = (u32)func_0018D2D0;
-    D_00252E50[0] = reg_tmp.h[1];
-    D_00252E52[0] = reg_tmp.h[0];
+    STORE_POINTER(D_00252E50, func_0018D2D0);
     if (D_00252E60[0] != 0x0) {
         printf((const char *)D_0027C2C0);
     }
-    reg_tmp.w = (u32)D_00252DB0;
-    D_00252E60[0] = reg_tmp.h[1];
-    D_00252E62[0] = reg_tmp.h[0];
+    STORE_POINTER(D_00252E60, D_00252DB0);
     if (D_00252E64[0] != 0x2) {
         printf((const char *)D_0027C2E0);
     }
-    reg_tmp.w = (u32)D_00252E40;
-    D_00252E64[0] = reg_tmp.h[1];
-    D_00252E66[0] = reg_tmp.h[0];
+    STORE_POINTER(D_00252E64, D_00252E40);
     if (D_00252F80[0] != 0x0) {
         printf((const char *)D_0027C300);
     }
-    reg_tmp.w = (u32)D_00255470;
-    D_00252F80[0] = reg_tmp.h[1];
-    D_00252F82[0] = reg_tmp.h[0];
+    STORE_POINTER(D_00252F80, D_00255470);
     if (D_00252F86[0] != 0x3) {
         printf((const char *)D_0027C320);
     }
-    reg_tmp.w = (u32)D_00261DB0;
-    D_00252F86[0] = reg_tmp.h[1];
-    D_00252F88[0] = reg_tmp.h[0];
+    STORE_POINTER(D_00252F86, D_00261DB0);
     if (D_00252F8C[0] != 0x6) {
         printf((const char *)D_0027C340);
     }
-    reg_tmp.w = (u32)D_002610B0_as_u16_a;
-    D_00252F8C[0] = reg_tmp.h[1];
-    D_00252F8E[0] = reg_tmp.h[0];
+    STORE_POINTER(D_00252F8C, D_002610B0_as_u16_a);
     if (D_00252F92[0] != 0x9) {
         printf((const char *)D_0027C360);
     }
-    reg_tmp.w = (u32)D_00260FB0;
-    D_00252F92[0] = reg_tmp.h[1];
-    D_00252F94[0] = reg_tmp.h[0];
+    STORE_POINTER(D_00252F92, D_00260FB0);
     if (D_00252F98[0] != 0xc) {
         printf((const char *)D_0027C380);
     }
-    reg_tmp.w = (u32)D_00260FF0;
-    D_00252F98[0] = reg_tmp.h[1];
-    D_00252F9A[0] = reg_tmp.h[0];
+    STORE_POINTER(D_00252F98, D_00260FF0);
     if (D_00252F9E[0] != 0xf) {
         printf((const char *)D_0027C3A0);
     }
-    reg_tmp.w = (u32)D_002610F0;
-    D_00252F9E[0] = reg_tmp.h[1];
-    D_00252FA0[0] = reg_tmp.h[0];
+    STORE_POINTER(D_00252F9E, D_002610F0);
     if (D_00252FA4[0] != 0x12) {
         printf((const char *)D_0027C3C0);
     }
-    reg_tmp.w = (u32)D_00261030;
-    D_00252FA4[0] = reg_tmp.h[1];
-    D_00252FA6[0] = reg_tmp.h[0];
+    STORE_POINTER(D_00252FA4, D_00261030);
     if (D_00252FAA[0] != 0x15) {
         printf((const char *)D_0027C3E0);
     }
-    reg_tmp.w = (u32)D_00261D70;
-    D_00252FAA[0] = reg_tmp.h[1];
-    D_00252FAC[0] = reg_tmp.h[0];
+    STORE_POINTER(D_00252FAA, D_00261D70);
     if (D_00252FB0[0] != 0x18) {
         printf((const char *)D_0027C400);
     }
-    reg_tmp.w = (u32)D_002606F0;
-    D_00252FB0[0] = reg_tmp.h[1];
-    D_00252FB2[0] = reg_tmp.h[0];
+    STORE_POINTER(D_00252FB0, D_002606F0);
     if (D_00252FB6[0] != 0x1b) {
         printf((const char *)D_0027C420);
     }
-    reg_tmp.w = (u32)D_002606B0;
-    D_00252FB6[0] = reg_tmp.h[1];
-    D_00252FB8[0] = reg_tmp.h[0];
+    STORE_POINTER(D_00252FB6, D_002606B0);
     if (D_00252FBC[0] != 0x1e) {
         printf((const char *)D_0027C440);
     }
-    reg_tmp.w = (u32)D_00260630;
-    D_00252FBC[0] = reg_tmp.h[1];
-    D_00252FBE[0] = reg_tmp.h[0];
+    STORE_POINTER(D_00252FBC, D_00260630);
     if (D_00252FC2[0] != 0x21) {
         printf((const char *)D_0027C460);
     }
-    reg_tmp.w = (u32)D_002605F0;
-    D_00252FC2[0] = reg_tmp.h[1];
-    D_00252FC4[0] = reg_tmp.h[0];
+    STORE_POINTER(D_00252FC2, D_002605F0);
     if (D_00252FC8[0] != 0x24) {
         printf((const char *)D_0027C480);
     }
-    reg_tmp.w = (u32)D_00260730;
-    D_00252FC8[0] = reg_tmp.h[1];
-    D_00252FCA[0] = reg_tmp.h[0];
+    STORE_POINTER(D_00252FC8, D_00260730);
     if (D_00252FCE[0] != 0x27) {
         printf((const char *)D_0027C4A0);
     }
-    reg_tmp.w = (u32)D_002608B0;
-    D_00252FCE[0] = reg_tmp.h[1];
-    D_00252FD0[0] = reg_tmp.h[0];
+    STORE_POINTER(D_00252FCE, D_002608B0);
     if (D_00252FD4[0] != 0x2a) {
         printf((const char *)D_0027C4C0);
     }
-    reg_tmp.w = (u32)D_00261AB0;
-    D_00252FD4[0] = reg_tmp.h[1];
-    D_00252FD6[0] = reg_tmp.h[0];
+    STORE_POINTER(D_00252FD4, D_00261AB0);
     if (D_00252FDA[0] != 0x2d) {
         printf((const char *)D_0027C4E0);
     }
-    reg_tmp.w = (u32)D_00261A70;
-    D_00252FDA[0] = reg_tmp.h[1];
-    D_00252FDC[0] = reg_tmp.h[0];
+    STORE_POINTER(D_00252FDA, D_00261A70);
     if (D_00252FE0[0] != 0x30) {
         printf((const char *)D_0027C500);
     }
-    reg_tmp.w = (u32)D_00260670;
-    D_00252FE0[0] = reg_tmp.h[1];
-    D_00252FE2[0] = reg_tmp.h[0];
+    STORE_POINTER(D_00252FE0, D_00260670);
     if (D_00252FE6[0] != 0x33) {
         printf((const char *)D_0027C520);
     }
-    reg_tmp.w = (u32)D_00260770;
-    D_00252FE6[0] = reg_tmp.h[1];
-    D_00252FE8[0] = reg_tmp.h[0];
+    STORE_POINTER(D_00252FE6, D_00260770);
     if (D_00252FEC[0] != 0x36) {
         printf((const char *)D_0027C540);
     }
-    reg_tmp.w = (u32)D_00261B30;
-    D_00252FEC[0] = reg_tmp.h[1];
-    D_00252FEE[0] = reg_tmp.h[0];
+    STORE_POINTER(D_00252FEC, D_00261B30);
     if (D_00252FF2[0] != 0x39) {
         printf((const char *)D_0027C560);
     }
-    reg_tmp.w = (u32)D_00261B70;
-    D_00252FF2[0] = reg_tmp.h[1];
-    D_00252FF4[0] = reg_tmp.h[0];
+    STORE_POINTER(D_00252FF2, D_00261B70);
     if (D_00253004[0] != 0x2) {
         printf((const char *)D_0027C580);
     }
-    reg_tmp.w = (u32)func_0018D290;
-    D_00253004[0] = reg_tmp.h[1];
-    D_00253006[0] = reg_tmp.h[0];
+    STORE_POINTER(D_00253004, func_0018D290);
     if (D_00253010[0] != 0x8) {
         printf((const char *)D_0027C5A0);
     }
-    reg_tmp.w = (u32)func_0018D310;
-    D_00253010[0] = reg_tmp.h[1];
-    D_00253012[0] = reg_tmp.h[0];
+    STORE_POINTER(D_00253010, func_0018D310);
     if (D_00253020[0] != 0x0) {
         printf((const char *)D_0027C5C0);
     }
-    reg_tmp.w = (u32)D_00252F80;
-    D_00253020[0] = reg_tmp.h[1];
-    D_00253022[0] = reg_tmp.h[0];
+    STORE_POINTER(D_00253020, D_00252F80);
     if (D_00253024[0] != 0x2) {
         printf((const char *)D_0027C5E0);
     }
-    reg_tmp.w = (u32)D_00253000;
-    D_00253024[0] = reg_tmp.h[1];
-    D_00253026[0] = reg_tmp.h[0];
+    STORE_POINTER(D_00253024, D_00253000);
     if (D_0025BF98[0] != 0x4) {
         printf((const char *)D_0027C600);
     }
-    reg_tmp.w = (u32)D_00261F30;
-    D_0025BF98[0] = reg_tmp.h[1];
-    D_0025BF9A[0] = reg_tmp.h[0];
+    STORE_POINTER(D_0025BF98, D_00261F30);
     if (D_0025BFA6[0] != 0xb) {
         printf((const char *)D_0027C620);
     }
-    reg_tmp.w = (u32)D_00261F70_as_u16_a;
-    D_0025BFA6[0] = reg_tmp.h[1];
-    D_0025BFA8[0] = reg_tmp.h[0];
+    STORE_POINTER(D_0025BFA6, D_00261F70_as_u16_a);
     if (D_0025BFB4[0] != 0x12) {
         printf((const char *)D_0027C640);
     }
-    reg_tmp.w = (u32)D_00261FB0_as_u16_a;
-    D_0025BFB4[0] = reg_tmp.h[1];
-    D_0025BFB6[0] = reg_tmp.h[0];
+    STORE_POINTER(D_0025BFB4, D_00261FB0_as_u16_a);
     if (D_0025BFC2[0] != 0x19) {
         printf((const char *)D_0027C660);
     }
-    reg_tmp.w = (u32)D_00261EF0_as_u16_a;
-    D_0025BFC2[0] = reg_tmp.h[1];
-    D_0025BFC4[0] = reg_tmp.h[0];
+    STORE_POINTER(D_0025BFC2, D_00261EF0_as_u16_a);
     if (D_0025C3C0[0] != 0x0) {
         printf((const char *)D_0027C680);
     }
-    reg_tmp.w = (u32)D_0025C040;
-    D_0025C3C0[0] = reg_tmp.h[1];
-    D_0025C3C2[0] = reg_tmp.h[0];
+    STORE_POINTER(D_0025C3C0, D_0025C040);
     if (D_0025C3C4[0] != 0x2) {
         printf((const char *)D_0027C6A0);
     }
-    reg_tmp.w = (u32)D_0025C060;
-    D_0025C3C4[0] = reg_tmp.h[1];
-    D_0025C3C6[0] = reg_tmp.h[0];
+    STORE_POINTER(D_0025C3C4, D_0025C060);
     if (D_0025C3C8[0] != 0x4) {
         printf((const char *)D_0027C6C0);
     }
-    reg_tmp.w = (u32)D_0025C080;
-    D_0025C3C8[0] = reg_tmp.h[1];
-    D_0025C3CA[0] = reg_tmp.h[0];
+    STORE_POINTER(D_0025C3C8, D_0025C080);
     if (D_0025C3CC[0] != 0x6) {
         printf((const char *)D_0027C6E0);
     }
-    reg_tmp.w = (u32)D_0025C0A0;
-    D_0025C3CC[0] = reg_tmp.h[1];
-    D_0025C3CE[0] = reg_tmp.h[0];
+    STORE_POINTER(D_0025C3CC, D_0025C0A0);
     if (D_0025C3D0[0] != 0x8) {
         printf((const char *)D_0027C700);
     }
-    reg_tmp.w = (u32)D_0025C0C0;
-    D_0025C3D0[0] = reg_tmp.h[1];
-    D_0025C3D2[0] = reg_tmp.h[0];
+    STORE_POINTER(D_0025C3D0, D_0025C0C0);
     if (D_0025C3D4[0] != 0xa) {
         printf((const char *)D_0027C720);
     }
-    reg_tmp.w = (u32)D_0025C0E0;
-    D_0025C3D4[0] = reg_tmp.h[1];
-    D_0025C3D6[0] = reg_tmp.h[0];
+    STORE_POINTER(D_0025C3D4, D_0025C0E0);
     if (D_0025C3D8[0] != 0xc) {
         printf((const char *)D_0027C740);
     }
-    reg_tmp.w = (u32)D_0025C100;
-    D_0025C3D8[0] = reg_tmp.h[1];
-    D_0025C3DA[0] = reg_tmp.h[0];
+    STORE_POINTER(D_0025C3D8, D_0025C100);
     if (D_0025C3DC[0] != 0xe) {
         printf((const char *)D_0027C760);
     }
-    reg_tmp.w = (u32)D_0025C120;
-    D_0025C3DC[0] = reg_tmp.h[1];
-    D_0025C3DE[0] = reg_tmp.h[0];
+    STORE_POINTER(D_0025C3DC, D_0025C120);
     if (D_0025C3E0[0] != 0x10) {
         printf((const char *)D_0027C780);
     }
-    reg_tmp.w = (u32)D_0025C140;
-    D_0025C3E0[0] = reg_tmp.h[1];
-    D_0025C3E2[0] = reg_tmp.h[0];
+    STORE_POINTER(D_0025C3E0, D_0025C140);
     if (D_0025C3E4[0] != 0x12) {
         printf((const char *)D_0027C7A0);
     }
-    reg_tmp.w = (u32)D_0025C160;
-    D_0025C3E4[0] = reg_tmp.h[1];
-    D_0025C3E6[0] = reg_tmp.h[0];
+    STORE_POINTER(D_0025C3E4, D_0025C160);
     if (D_0025C3E8[0] != 0x14) {
         printf((const char *)D_0027C7C0);
     }
-    reg_tmp.w = (u32)D_0025C180;
-    D_0025C3E8[0] = reg_tmp.h[1];
-    D_0025C3EA[0] = reg_tmp.h[0];
+    STORE_POINTER(D_0025C3E8, D_0025C180);
     if (D_0025C3EC[0] != 0x16) {
         printf((const char *)D_0027C7E0);
     }
-    reg_tmp.w = (u32)D_0025C1A0;
-    D_0025C3EC[0] = reg_tmp.h[1];
-    D_0025C3EE[0] = reg_tmp.h[0];
+    STORE_POINTER(D_0025C3EC, D_0025C1A0);
     if (D_0025C3F0[0] != 0x18) {
         printf((const char *)D_0027C800);
     }
-    reg_tmp.w = (u32)D_0025C1C0;
-    D_0025C3F0[0] = reg_tmp.h[1];
-    D_0025C3F2[0] = reg_tmp.h[0];
+    STORE_POINTER(D_0025C3F0, D_0025C1C0);
     if (D_0025C3F4[0] != 0x1a) {
         printf((const char *)D_0027C820);
     }
-    reg_tmp.w = (u32)D_0025C1E0;
-    D_0025C3F4[0] = reg_tmp.h[1];
-    D_0025C3F6[0] = reg_tmp.h[0];
+    STORE_POINTER(D_0025C3F4, D_0025C1E0);
     if (D_0025C3F8[0] != 0x1c) {
         printf((const char *)D_0027C840);
     }
-    reg_tmp.w = (u32)D_0025C200;
-    D_0025C3F8[0] = reg_tmp.h[1];
-    D_0025C3FA[0] = reg_tmp.h[0];
+    STORE_POINTER(D_0025C3F8, D_0025C200);
     if (D_0025C3FC[0] != 0x1e) {
         printf((const char *)D_0027C860);
     }
-    reg_tmp.w = (u32)D_0025C220;
-    D_0025C3FC[0] = reg_tmp.h[1];
-    D_0025C3FE[0] = reg_tmp.h[0];
+    STORE_POINTER(D_0025C3FC, D_0025C220);
     if (D_0025C400[0] != 0x20) {
         printf((const char *)D_0027C880);
     }
-    reg_tmp.w = (u32)D_0025C240;
-    D_0025C400[0] = reg_tmp.h[1];
-    D_0025C402[0] = reg_tmp.h[0];
+    STORE_POINTER(D_0025C400, D_0025C240);
     if (D_0025C404[0] != 0x22) {
         printf((const char *)D_0027C8A0);
     }
-    reg_tmp.w = (u32)D_0025C260;
-    D_0025C404[0] = reg_tmp.h[1];
-    D_0025C406[0] = reg_tmp.h[0];
+    STORE_POINTER(D_0025C404, D_0025C260);
     if (D_0025C408[0] != 0x24) {
         printf((const char *)D_0027C8C0);
     }
-    reg_tmp.w = (u32)D_0025C280;
-    D_0025C408[0] = reg_tmp.h[1];
-    D_0025C40A[0] = reg_tmp.h[0];
+    STORE_POINTER(D_0025C408, D_0025C280);
     if (D_0025C40C[0] != 0x26) {
         printf((const char *)D_0027C8E0);
     }
-    reg_tmp.w = (u32)D_0025C2A0;
-    D_0025C40C[0] = reg_tmp.h[1];
-    D_0025C40E[0] = reg_tmp.h[0];
+    STORE_POINTER(D_0025C40C, D_0025C2A0);
     if (D_0025C410[0] != 0x28) {
         printf((const char *)D_0027C900);
     }
-    reg_tmp.w = (u32)D_0025C2C0;
-    D_0025C410[0] = reg_tmp.h[1];
-    D_0025C412[0] = reg_tmp.h[0];
+    STORE_POINTER(D_0025C410, D_0025C2C0);
     if (D_0025C414[0] != 0x2a) {
         printf((const char *)D_0027C920);
     }
-    reg_tmp.w = (u32)D_0025C2E0;
-    D_0025C414[0] = reg_tmp.h[1];
-    D_0025C416[0] = reg_tmp.h[0];
+    STORE_POINTER(D_0025C414, D_0025C2E0);
     if (D_0025C418[0] != 0x2c) {
         printf((const char *)D_0027C940);
     }
-    reg_tmp.w = (u32)D_0025C300;
-    D_0025C418[0] = reg_tmp.h[1];
-    D_0025C41A[0] = reg_tmp.h[0];
+    STORE_POINTER(D_0025C418, D_0025C300);
     if (D_0025C41C[0] != 0x2e) {
         printf((const char *)D_0027C960);
     }
-    reg_tmp.w = (u32)D_0025C320;
-    D_0025C41C[0] = reg_tmp.h[1];
-    D_0025C41E[0] = reg_tmp.h[0];
+    STORE_POINTER(D_0025C41C, D_0025C320);
     if (D_0025C420[0] != 0x30) {
         printf((const char *)D_0027C980);
     }
-    reg_tmp.w = (u32)D_0025C340;
-    D_0025C420[0] = reg_tmp.h[1];
-    D_0025C422[0] = reg_tmp.h[0];
+    STORE_POINTER(D_0025C420, D_0025C340);
     if (D_0025C424[0] != 0x32) {
         printf((const char *)D_0027C9A0);
     }
-    reg_tmp.w = (u32)D_0025C360;
-    D_0025C424[0] = reg_tmp.h[1];
-    D_0025C426[0] = reg_tmp.h[0];
+    STORE_POINTER(D_0025C424, D_0025C360);
     if (D_0025C428[0] != 0x34) {
         printf((const char *)D_0027C9C0);
     }
-    reg_tmp.w = (u32)D_0025C380;
-    D_0025C428[0] = reg_tmp.h[1];
-    D_0025C42A[0] = reg_tmp.h[0];
+    STORE_POINTER(D_0025C428, D_0025C380);
     if (D_0025C42C[0] != 0x36) {
         printf((const char *)D_0027C9E0);
     }
-    reg_tmp.w = (u32)D_0025C3A0;
-    D_0025C42C[0] = reg_tmp.h[1];
-    D_0025C42E[0] = reg_tmp.h[0];
+    STORE_POINTER(D_0025C42C, D_0025C3A0);
     if (D_00251A80_as_u16_a[1] != 0x1) {
         printf((const char *)D_0027CA00);
     }
@@ -5629,9 +4939,7 @@ void func_0018E5A0(void) {
     if (D_00251A86[0] != 0x3) {
         printf((const char *)D_0027CA20);
     }
-    reg_tmp.w = (u32)func_0016A8D0;
-    D_00251A86[0] = reg_tmp.h[1];
-    D_00251A88[0] = reg_tmp.h[0];
+    STORE_POINTER(D_00251A86, func_0016A8D0);
     if (D_00251A90_as_u16_a[1] != 0x1) {
         printf((const char *)D_0027CA40);
     }
@@ -5641,9 +4949,7 @@ void func_0018E5A0(void) {
     if (D_00251A96[0] != 0x3) {
         printf((const char *)D_0027CA60);
     }
-    reg_tmp.w = (u32)func_0016A8E0;
-    D_00251A96[0] = reg_tmp.h[1];
-    D_00251A98[0] = reg_tmp.h[0];
+    STORE_POINTER(D_00251A96, func_0016A8E0);
     if (D_00251AB0_as_u16_a[1] != 0x1) {
         printf((const char *)D_0027CA80);
     }
@@ -5653,9 +4959,7 @@ void func_0018E5A0(void) {
     if (D_00251AB6[0] != 0x3) {
         printf((const char *)D_0027CAA0);
     }
-    reg_tmp.w = (u32)func_0016A8D0;
-    D_00251AB6[0] = reg_tmp.h[1];
-    D_00251AB8[0] = reg_tmp.h[0];
+    STORE_POINTER(D_00251AB6, func_0016A8D0);
     if (D_00251AC0_as_u16_a[1] != 0x1) {
         printf((const char *)D_0027CAC0);
     }
@@ -5665,93 +4969,63 @@ void func_0018E5A0(void) {
     if (D_00251AC6[0] != 0x3) {
         printf((const char *)D_0027CAE0);
     }
-    reg_tmp.w = (u32)func_0016A8E0;
-    D_00251AC6[0] = reg_tmp.h[1];
-    D_00251AC8[0] = reg_tmp.h[0];
+    STORE_POINTER(D_00251AC6, func_0016A8E0);
     if (D_00251AE4[0] != 0x2) {
         printf((const char *)D_0027CB00);
     }
-    reg_tmp.w = (u32)func_0016A8B0;
-    D_00251AE4[0] = reg_tmp.h[1];
-    D_00251AE6[0] = reg_tmp.h[0];
+    STORE_POINTER(D_00251AE4, func_0016A8B0);
     if (D_00251AE8[0] != 0x4) {
         printf((const char *)D_0027CB20);
     }
-    reg_tmp.w = (u32)func_0016A8D0;
-    D_00251AE8[0] = reg_tmp.h[1];
-    D_00251AEA[0] = reg_tmp.h[0];
+    STORE_POINTER(D_00251AE8, func_0016A8D0);
     if (D_00251AEC[0] != 0x6) {
         printf((const char *)D_0027CB40);
     }
-    reg_tmp.w = (u32)func_00130270;
-    D_00251AEC[0] = reg_tmp.h[1];
-    D_00251AEE[0] = reg_tmp.h[0];
+    STORE_POINTER(D_00251AEC, func_00130270);
     if (D_00251AF0[0] != 0x8) {
         printf((const char *)D_0027CB60);
     }
-    reg_tmp.w = (u32)D_0029BF40_as_u16_a;
-    D_00251AF0[0] = reg_tmp.h[1];
-    D_00251AF2[0] = reg_tmp.h[0];
+    STORE_POINTER(D_00251AF0, D_0029BF40_as_u16_a);
     if (D_00251B04[0] != 0x2) {
         printf((const char *)D_0027CB80);
     }
-    reg_tmp.w = (u32)func_0016A8C0;
-    D_00251B04[0] = reg_tmp.h[1];
-    D_00251B06[0] = reg_tmp.h[0];
+    STORE_POINTER(D_00251B04, func_0016A8C0);
     if (D_00251B08[0] != 0x4) {
         printf((const char *)D_0027CBA0);
     }
-    reg_tmp.w = (u32)func_0016A8E0;
-    D_00251B08[0] = reg_tmp.h[1];
-    D_00251B0A[0] = reg_tmp.h[0];
+    STORE_POINTER(D_00251B08, func_0016A8E0);
     if (D_00251B0C[0] != 0x6) {
         printf((const char *)D_0027CBC0);
     }
-    reg_tmp.w = (u32)func_001303A0;
-    D_00251B0C[0] = reg_tmp.h[1];
-    D_00251B0E[0] = reg_tmp.h[0];
+    STORE_POINTER(D_00251B0C, func_001303A0);
     if (D_00251B10[0] != 0x8) {
         printf((const char *)D_0027CBE0);
     }
-    reg_tmp.w = (u32)D_0029BF30_as_u16_a;
-    D_00251B10[0] = reg_tmp.h[1];
-    D_00251B12[0] = reg_tmp.h[0];
+    STORE_POINTER(D_00251B10, D_0029BF30_as_u16_a);
     if (D_00251CC0[0] != 0x0) {
         printf((const char *)D_0027CC00);
     }
-    reg_tmp.w = (u32)D_00251CE0;
-    D_00251CC0[0] = reg_tmp.h[1];
-    D_00251CC2[0] = reg_tmp.h[0];
+    STORE_POINTER(D_00251CC0, D_00251CE0);
     if (D_00251CC4[0] != 0x2) {
         printf((const char *)D_0027CC20);
     }
-    reg_tmp.w = (u32)D_00260F30;
-    D_00251CC4[0] = reg_tmp.h[1];
-    D_00251CC6[0] = reg_tmp.h[0];
+    STORE_POINTER(D_00251CC4, D_00260F30);
     if (D_00251CC8[0] != 0x4) {
         printf((const char *)D_0027CC40);
     }
-    reg_tmp.w = (u32)D_00251D10;
-    D_00251CC8[0] = reg_tmp.h[1];
-    D_00251CCA[0] = reg_tmp.h[0];
+    STORE_POINTER(D_00251CC8, D_00251D10);
     if (D_00251CCC[0] != 0x6) {
         printf((const char *)D_0027CC60);
     }
-    reg_tmp.w = (u32)D_00260EF0;
-    D_00251CCC[0] = reg_tmp.h[1];
-    D_00251CCE[0] = reg_tmp.h[0];
+    STORE_POINTER(D_00251CCC, D_00260EF0);
     if (D_00251CD0[0] != 0x8) {
         printf((const char *)D_0027CC80);
     }
-    reg_tmp.w = (u32)D_00251D40;
-    D_00251CD0[0] = reg_tmp.h[1];
-    D_00251CD2[0] = reg_tmp.h[0];
+    STORE_POINTER(D_00251CD0, D_00251D40);
     if (D_00251CD4[0] != 0xa) {
         printf((const char *)D_0027CCA0);
     }
-    reg_tmp.w = (u32)D_00260EB0;
-    D_00251CD4[0] = reg_tmp.h[1];
-    D_00251CD6[0] = reg_tmp.h[0];
+    STORE_POINTER(D_00251CD4, D_00260EB0);
     if (D_0028C148_as_u16_a[0] != 0x0) {
         printf((const char *)D_0027CCC0);
     }
@@ -5761,273 +5035,183 @@ void func_0018E5A0(void) {
     if (D_0028C14C[0] != 0x2) {
         printf((const char *)D_0027CCE0);
     }
-    reg_tmp.w = (u32)D_0028C708;
-    D_0028C14C[0] = reg_tmp.h[1];
-    D_0028C14E[0] = reg_tmp.h[0];
+    STORE_POINTER(D_0028C14C, D_0028C708);
     if (D_00252010[0] != 0x0) {
         printf((const char *)D_0027CD00);
     }
-    reg_tmp.w = (u32)D_00252020;
-    D_00252010[0] = reg_tmp.h[1];
-    D_00252012[0] = reg_tmp.h[0];
+    STORE_POINTER(D_00252010, D_00252020);
     if (D_00252014[0] != 0x2) {
         printf((const char *)D_0027CD20);
     }
-    reg_tmp.w = (u32)D_00252030;
-    D_00252014[0] = reg_tmp.h[1];
-    D_00252016[0] = reg_tmp.h[0];
+    STORE_POINTER(D_00252014, D_00252030);
     if (D_00252018[0] != 0x4) {
         printf((const char *)D_0027CD40);
     }
-    reg_tmp.w = (u32)D_00252040;
-    D_00252018[0] = reg_tmp.h[1];
-    D_0025201A[0] = reg_tmp.h[0];
+    STORE_POINTER(D_00252018, D_00252040);
     if (D_00252020[0] != 0x0) {
         printf((const char *)D_0027CD60);
     }
-    reg_tmp.w = (u32)D_00252090;
-    D_00252020[0] = reg_tmp.h[1];
-    D_00252022[0] = reg_tmp.h[0];
+    STORE_POINTER(D_00252020, D_00252090);
     if (D_00252024[0] != 0x2) {
         printf((const char *)D_0027CD80);
     }
-    reg_tmp.w = (u32)D_002520A0;
-    D_00252024[0] = reg_tmp.h[1];
-    D_00252026[0] = reg_tmp.h[0];
+    STORE_POINTER(D_00252024, D_002520A0);
     if (D_00252028[0] != 0x4) {
         printf((const char *)D_0027CDA0);
     }
-    reg_tmp.w = (u32)D_002520B0;
-    D_00252028[0] = reg_tmp.h[1];
-    D_0025202A[0] = reg_tmp.h[0];
+    STORE_POINTER(D_00252028, D_002520B0);
     if (D_00252030[0] != 0x0) {
         printf((const char *)D_0027CDC0);
     }
-    reg_tmp.w = (u32)D_002520C0;
-    D_00252030[0] = reg_tmp.h[1];
-    D_00252032[0] = reg_tmp.h[0];
+    STORE_POINTER(D_00252030, D_002520C0);
     if (D_00252034[0] != 0x2) {
         printf((const char *)D_0027CDE0);
     }
-    reg_tmp.w = (u32)D_002520D0;
-    D_00252034[0] = reg_tmp.h[1];
-    D_00252036[0] = reg_tmp.h[0];
+    STORE_POINTER(D_00252034, D_002520D0);
     if (D_00252038[0] != 0x4) {
         printf((const char *)D_0027CE00);
     }
-    reg_tmp.w = (u32)D_002520E0;
-    D_00252038[0] = reg_tmp.h[1];
-    D_0025203A[0] = reg_tmp.h[0];
+    STORE_POINTER(D_00252038, D_002520E0);
     if (D_00252040[0] != 0x0) {
         printf((const char *)D_0027CE20);
     }
-    reg_tmp.w = (u32)D_002520F0;
-    D_00252040[0] = reg_tmp.h[1];
-    D_00252042[0] = reg_tmp.h[0];
+    STORE_POINTER(D_00252040, D_002520F0);
     if (D_00252044[0] != 0x2) {
         printf((const char *)D_0027CE40);
     }
-    reg_tmp.w = (u32)D_00252100;
-    D_00252044[0] = reg_tmp.h[1];
-    D_00252046[0] = reg_tmp.h[0];
+    STORE_POINTER(D_00252044, D_00252100);
     if (D_00252048[0] != 0x4) {
         printf((const char *)D_0027CE60);
     }
-    reg_tmp.w = (u32)D_00252110;
-    D_00252048[0] = reg_tmp.h[1];
-    D_0025204A[0] = reg_tmp.h[0];
+    STORE_POINTER(D_00252048, D_00252110);
     if (D_00252050[0] != 0x0) {
         printf((const char *)D_0027CE80);
     }
-    reg_tmp.w = (u32)D_00252060;
-    D_00252050[0] = reg_tmp.h[1];
-    D_00252052[0] = reg_tmp.h[0];
+    STORE_POINTER(D_00252050, D_00252060);
     if (D_00252054[0] != 0x2) {
         printf((const char *)D_0027CEA0);
     }
-    reg_tmp.w = (u32)D_00252070;
-    D_00252054[0] = reg_tmp.h[1];
-    D_00252056[0] = reg_tmp.h[0];
+    STORE_POINTER(D_00252054, D_00252070);
     if (D_00252058[0] != 0x4) {
         printf((const char *)D_0027CEC0);
     }
-    reg_tmp.w = (u32)D_00252080;
-    D_00252058[0] = reg_tmp.h[1];
-    D_0025205A[0] = reg_tmp.h[0];
+    STORE_POINTER(D_00252058, D_00252080);
     if (D_00252060[0] != 0x0) {
         printf((const char *)D_0027CEE0);
     }
-    reg_tmp.w = (u32)D_00252120;
-    D_00252060[0] = reg_tmp.h[1];
-    D_00252062[0] = reg_tmp.h[0];
+    STORE_POINTER(D_00252060, D_00252120);
     if (D_00252064[0] != 0x2) {
         printf((const char *)D_0027CF00);
     }
-    reg_tmp.w = (u32)D_00252130;
-    D_00252064[0] = reg_tmp.h[1];
-    D_00252066[0] = reg_tmp.h[0];
+    STORE_POINTER(D_00252064, D_00252130);
     if (D_00252068[0] != 0x4) {
         printf((const char *)D_0027CF20);
     }
-    reg_tmp.w = (u32)D_00252140;
-    D_00252068[0] = reg_tmp.h[1];
-    D_0025206A[0] = reg_tmp.h[0];
+    STORE_POINTER(D_00252068, D_00252140);
     if (D_00252070[0] != 0x0) {
         printf((const char *)D_0027CF40);
     }
-    reg_tmp.w = (u32)D_00252150;
-    D_00252070[0] = reg_tmp.h[1];
-    D_00252072[0] = reg_tmp.h[0];
+    STORE_POINTER(D_00252070, D_00252150);
     if (D_00252074[0] != 0x2) {
         printf((const char *)D_0027CF60);
     }
-    reg_tmp.w = (u32)D_00252160;
-    D_00252074[0] = reg_tmp.h[1];
-    D_00252076[0] = reg_tmp.h[0];
+    STORE_POINTER(D_00252074, D_00252160);
     if (D_00252078[0] != 0x4) {
         printf((const char *)D_0027CF80);
     }
-    reg_tmp.w = (u32)D_00252170;
-    D_00252078[0] = reg_tmp.h[1];
-    D_0025207A[0] = reg_tmp.h[0];
+    STORE_POINTER(D_00252078, D_00252170);
     if (D_00252080[0] != 0x0) {
         printf((const char *)D_0027CFA0);
     }
-    reg_tmp.w = (u32)D_00252180;
-    D_00252080[0] = reg_tmp.h[1];
-    D_00252082[0] = reg_tmp.h[0];
+    STORE_POINTER(D_00252080, D_00252180);
     if (D_00252084[0] != 0x2) {
         printf((const char *)D_0027CFC0);
     }
-    reg_tmp.w = (u32)D_00252190;
-    D_00252084[0] = reg_tmp.h[1];
-    D_00252086[0] = reg_tmp.h[0];
+    STORE_POINTER(D_00252084, D_00252190);
     if (D_00252088[0] != 0x4) {
         printf((const char *)D_0027CFE0);
     }
-    reg_tmp.w = (u32)D_002521A0;
-    D_00252088[0] = reg_tmp.h[1];
-    D_0025208A[0] = reg_tmp.h[0];
+    STORE_POINTER(D_00252088, D_002521A0);
     if (D_002520C6[0] != 0x3) {
         printf((const char *)D_0027D000);
     }
-    reg_tmp.w = (u32)D_002521B0;
-    D_002520C6[0] = reg_tmp.h[1];
-    D_002520C8[0] = reg_tmp.h[0];
+    STORE_POINTER(D_002520C6, D_002521B0);
     if (D_002520D6[0] != 0x3) {
         printf((const char *)D_0027D020);
     }
-    reg_tmp.w = (u32)D_002521D0;
-    D_002520D6[0] = reg_tmp.h[1];
-    D_002520D8[0] = reg_tmp.h[0];
+    STORE_POINTER(D_002520D6, D_002521D0);
     if (D_002520E6[0] != 0x3) {
         printf((const char *)D_0027D040);
     }
-    reg_tmp.w = (u32)D_002521F0;
-    D_002520E6[0] = reg_tmp.h[1];
-    D_002520E8[0] = reg_tmp.h[0];
+    STORE_POINTER(D_002520E6, D_002521F0);
     if (D_00252156[0] != 0x3) {
         printf((const char *)D_0027D060);
     }
-    reg_tmp.w = (u32)D_002521B0;
-    D_00252156[0] = reg_tmp.h[1];
-    D_00252158[0] = reg_tmp.h[0];
+    STORE_POINTER(D_00252156, D_002521B0);
     if (D_00252166[0] != 0x3) {
         printf((const char *)D_0027D080);
     }
-    reg_tmp.w = (u32)D_002521D0;
-    D_00252166[0] = reg_tmp.h[1];
-    D_00252168[0] = reg_tmp.h[0];
+    STORE_POINTER(D_00252166, D_002521D0);
     if (D_00252176[0] != 0x3) {
         printf((const char *)D_0027D0A0);
     }
-    reg_tmp.w = (u32)D_002521F0;
-    D_00252176[0] = reg_tmp.h[1];
-    D_00252178[0] = reg_tmp.h[0];
+    STORE_POINTER(D_00252176, D_002521F0);
     if (D_00252210[0] != 0x0) {
         printf((const char *)D_0027D0C0);
     }
-    reg_tmp.w = (u32)D_00252230;
-    D_00252210[0] = reg_tmp.h[1];
-    D_00252212[0] = reg_tmp.h[0];
+    STORE_POINTER(D_00252210, D_00252230);
     if (D_00252214[0] != 0x2) {
         printf((const char *)D_0027D0E0);
     }
-    reg_tmp.w = (u32)D_00252240;
-    D_00252214[0] = reg_tmp.h[1];
-    D_00252216[0] = reg_tmp.h[0];
+    STORE_POINTER(D_00252214, D_00252240);
     if (D_00252218[0] != 0x4) {
         printf((const char *)D_0027D100);
     }
-    reg_tmp.w = (u32)D_00252250;
-    D_00252218[0] = reg_tmp.h[1];
-    D_0025221A[0] = reg_tmp.h[0];
+    STORE_POINTER(D_00252218, D_00252250);
     if (D_00252220[0] != 0x0) {
         printf((const char *)D_0027D120);
     }
-    reg_tmp.w = (u32)D_00252268;
-    D_00252220[0] = reg_tmp.h[1];
-    D_00252222[0] = reg_tmp.h[0];
+    STORE_POINTER(D_00252220, D_00252268);
     if (D_00252224[0] != 0x2) {
         printf((const char *)D_0027D140);
     }
-    reg_tmp.w = (u32)D_00252278;
-    D_00252224[0] = reg_tmp.h[1];
-    D_00252226[0] = reg_tmp.h[0];
+    STORE_POINTER(D_00252224, D_00252278);
     if (D_00252228[0] != 0x4) {
         printf((const char *)D_0027D160);
     }
-    reg_tmp.w = (u32)D_00252290;
-    D_00252228[0] = reg_tmp.h[1];
-    D_0025222A[0] = reg_tmp.h[0];
+    STORE_POINTER(D_00252228, D_00252290);
     if (D_00252236[0] != 0x3) {
         printf((const char *)D_0027D180);
     }
-    reg_tmp.w = (u32)D_002522B0;
-    D_00252236[0] = reg_tmp.h[1];
-    D_00252238[0] = reg_tmp.h[0];
+    STORE_POINTER(D_00252236, D_002522B0);
     if (D_00252246[0] != 0x3) {
         printf((const char *)D_0027D1A0);
     }
-    reg_tmp.w = (u32)D_002522D0;
-    D_00252246[0] = reg_tmp.h[1];
-    D_00252248[0] = reg_tmp.h[0];
+    STORE_POINTER(D_00252246, D_002522D0);
     if (D_00252256[0] != 0x3) {
         printf((const char *)D_0027D1C0);
     }
-    reg_tmp.w = (u32)D_002522F0;
-    D_00252256[0] = reg_tmp.h[1];
-    D_00252258[0] = reg_tmp.h[0];
+    STORE_POINTER(D_00252256, D_002522F0);
     if (D_00252260[0] != 0x8) {
         printf((const char *)D_0027D1E0);
     }
-    reg_tmp.w = (u32)D_00252310;
-    D_00252260[0] = reg_tmp.h[1];
-    D_00252262[0] = reg_tmp.h[0];
+    STORE_POINTER(D_00252260, D_00252310);
     if (D_0025226E[0] != 0x3) {
         printf((const char *)D_0027D200);
     }
-    reg_tmp.w = (u32)D_002522B0;
-    D_0025226E[0] = reg_tmp.h[1];
-    D_00252270[0] = reg_tmp.h[0];
+    STORE_POINTER(D_0025226E, D_002522B0);
     if (D_0025227E[0] != 0x3) {
         printf((const char *)D_0027D220);
     }
-    reg_tmp.w = (u32)D_002522D0;
-    D_0025227E[0] = reg_tmp.h[1];
-    D_00252280[0] = reg_tmp.h[0];
+    STORE_POINTER(D_0025227E, D_002522D0);
     if (D_00252296[0] != 0x3) {
         printf((const char *)D_0027D240);
     }
-    reg_tmp.w = (u32)D_002522F0;
-    D_00252296[0] = reg_tmp.h[1];
-    D_00252298[0] = reg_tmp.h[0];
+    STORE_POINTER(D_00252296, D_002522F0);
     if (D_002522A0[0] != 0x8) {
         printf((const char *)D_0027D260);
     }
-    reg_tmp.w = (u32)D_00252310;
-    D_002522A0[0] = reg_tmp.h[1];
-    D_002522A2[0] = reg_tmp.h[0];
+    STORE_POINTER(D_002522A0, D_00252310);
     if (D_002643E0_as_u16_a[0] != 0x0) {
         printf((const char *)D_0027D280);
     }
@@ -6037,237 +5221,159 @@ void func_0018E5A0(void) {
     if (D_002643E4[0] != 0x2) {
         printf((const char *)D_0027D2B0);
     }
-    reg_tmp.w = (u32)D_00264490;
-    D_002643E4[0] = reg_tmp.h[1];
-    D_002643E6[0] = reg_tmp.h[0];
+    STORE_POINTER(D_002643E4, D_00264490);
     if (D_002643E8[0] != 0x4) {
         printf((const char *)D_0027D2E0);
     }
-    reg_tmp.w = (u32)D_00264440;
-    D_002643E8[0] = reg_tmp.h[1];
-    D_002643EA[0] = reg_tmp.h[0];
+    STORE_POINTER(D_002643E8, D_00264440);
     if (D_002643EC[0] != 0x6) {
         printf((const char *)D_0027D310);
     }
-    reg_tmp.w = (u32)D_002643F0;
-    D_002643EC[0] = reg_tmp.h[1];
-    D_002643EE[0] = reg_tmp.h[0];
+    STORE_POINTER(D_002643EC, D_002643F0);
     if (D_00264C38[0] != 0x4) {
         printf((const char *)D_0027D340);
     }
-    reg_tmp.w = (u32)D_002610F0;
-    D_00264C38[0] = reg_tmp.h[1];
-    D_00264C3A[0] = reg_tmp.h[0];
+    STORE_POINTER(D_00264C38, D_002610F0);
     if (D_00264C46[0] != 0xb) {
         printf((const char *)D_0027D360);
     }
-    reg_tmp.w = (u32)D_0025FF70_as_u16_a;
-    D_00264C46[0] = reg_tmp.h[1];
-    D_00264C48[0] = reg_tmp.h[0];
+    STORE_POINTER(D_00264C46, D_0025FF70_as_u16_a);
     if (D_00264C54[0] != 0x12) {
         printf((const char *)D_0027D380);
     }
-    reg_tmp.w = (u32)D_0025FFB0_as_u16_a;
-    D_00264C54[0] = reg_tmp.h[1];
-    D_00264C56[0] = reg_tmp.h[0];
+    STORE_POINTER(D_00264C54, D_0025FFB0_as_u16_a);
     if (D_00264C62[0] != 0x19) {
         printf((const char *)D_0027D3A0);
     }
-    reg_tmp.w = (u32)D_0025FFF0_as_u16_a;
-    D_00264C62[0] = reg_tmp.h[1];
-    D_00264C64[0] = reg_tmp.h[0];
+    STORE_POINTER(D_00264C62, D_0025FFF0_as_u16_a);
     if (D_00264C70[0] != 0x20) {
         printf((const char *)D_0027D3C0);
     }
-    reg_tmp.w = (u32)D_00260030_as_u16_a;
-    D_00264C70[0] = reg_tmp.h[1];
-    D_00264C72[0] = reg_tmp.h[0];
+    STORE_POINTER(D_00264C70, D_00260030_as_u16_a);
     if (D_00264C7E[0] != 0x27) {
         printf((const char *)D_0027D3E0);
     }
-    reg_tmp.w = (u32)D_00260070_as_u16_a;
-    D_00264C7E[0] = reg_tmp.h[1];
-    D_00264C80[0] = reg_tmp.h[0];
+    STORE_POINTER(D_00264C7E, D_00260070_as_u16_a);
     if (D_00264C8C[0] != 0x2e) {
         printf((const char *)D_0027D400);
     }
-    reg_tmp.w = (u32)D_002600B0_as_u16_a;
-    D_00264C8C[0] = reg_tmp.h[1];
-    D_00264C8E[0] = reg_tmp.h[0];
+    STORE_POINTER(D_00264C8C, D_002600B0_as_u16_a);
     if (D_00264C9A[0] != 0x35) {
         printf((const char *)D_0027D420);
     }
-    reg_tmp.w = (u32)D_002600F0_as_u16_a;
-    D_00264C9A[0] = reg_tmp.h[1];
-    D_00264C9C[0] = reg_tmp.h[0];
+    STORE_POINTER(D_00264C9A, D_002600F0_as_u16_a);
     if (D_00264CA8[0] != 0x3c) {
         printf((const char *)D_0027D440);
     }
-    reg_tmp.w = (u32)D_0024CA40;
-    D_00264CA8[0] = reg_tmp.h[1];
-    D_00264CAA[0] = reg_tmp.h[0];
+    STORE_POINTER(D_00264CA8, D_0024CA40);
     if (D_00264CB6[0] != 0x43) {
         printf((const char *)D_0027D460);
     }
-    reg_tmp.w = (u32)D_0024CA80;
-    D_00264CB6[0] = reg_tmp.h[1];
-    D_00264CB8[0] = reg_tmp.h[0];
+    STORE_POINTER(D_00264CB6, D_0024CA80);
     if (D_00264CC4[0] != 0x4a) {
         printf((const char *)D_0027D480);
     }
-    reg_tmp.w = (u32)D_0024CAC0;
-    D_00264CC4[0] = reg_tmp.h[1];
-    D_00264CC6[0] = reg_tmp.h[0];
+    STORE_POINTER(D_00264CC4, D_0024CAC0);
     if (D_00264CD2[0] != 0x51) {
         printf((const char *)D_0027D4A0);
     }
-    reg_tmp.w = (u32)D_0024CB00;
-    D_00264CD2[0] = reg_tmp.h[1];
-    D_00264CD4[0] = reg_tmp.h[0];
+    STORE_POINTER(D_00264CD2, D_0024CB00);
     if (D_00264CE0[0] != 0x58) {
         printf((const char *)D_0027D4C0);
     }
-    reg_tmp.w = (u32)D_0024CB40;
-    D_00264CE0[0] = reg_tmp.h[1];
-    D_00264CE2[0] = reg_tmp.h[0];
+    STORE_POINTER(D_00264CE0, D_0024CB40);
     if (D_00264CEE[0] != 0x5f) {
         printf((const char *)D_0027D4E0);
     }
-    reg_tmp.w = (u32)D_0024CB80;
-    D_00264CEE[0] = reg_tmp.h[1];
-    D_00264CF0[0] = reg_tmp.h[0];
+    STORE_POINTER(D_00264CEE, D_0024CB80);
     if (D_00264D08[0] != 0x4) {
         printf((const char *)D_0027D500);
     }
-    reg_tmp.w = (u32)D_002610F0;
-    D_00264D08[0] = reg_tmp.h[1];
-    D_00264D0A[0] = reg_tmp.h[0];
+    STORE_POINTER(D_00264D08, D_002610F0);
     if (D_00264D16[0] != 0xb) {
         printf((const char *)D_0027D520);
     }
-    reg_tmp.w = (u32)D_00260130_as_u16_a;
-    D_00264D16[0] = reg_tmp.h[1];
-    D_00264D18[0] = reg_tmp.h[0];
+    STORE_POINTER(D_00264D16, D_00260130_as_u16_a);
     if (D_00264D24[0] != 0x12) {
         printf((const char *)D_0027D540);
     }
-    reg_tmp.w = (u32)D_00260170_as_u16_a;
-    D_00264D24[0] = reg_tmp.h[1];
-    D_00264D26[0] = reg_tmp.h[0];
+    STORE_POINTER(D_00264D24, D_00260170_as_u16_a);
     if (D_00264D32[0] != 0x19) {
         printf((const char *)D_0027D560);
     }
-    reg_tmp.w = (u32)D_0024CA40;
-    D_00264D32[0] = reg_tmp.h[1];
-    D_00264D34[0] = reg_tmp.h[0];
+    STORE_POINTER(D_00264D32, D_0024CA40);
     if (D_00264D40[0] != 0x20) {
         printf((const char *)D_0027D580);
     }
-    reg_tmp.w = (u32)D_0024CA80;
-    D_00264D40[0] = reg_tmp.h[1];
-    D_00264D42[0] = reg_tmp.h[0];
+    STORE_POINTER(D_00264D40, D_0024CA80);
     if (D_00264D4E[0] != 0x27) {
         printf((const char *)D_0027D5A0);
     }
-    reg_tmp.w = (u32)D_0024CAC0;
-    D_00264D4E[0] = reg_tmp.h[1];
-    D_00264D50[0] = reg_tmp.h[0];
+    STORE_POINTER(D_00264D4E, D_0024CAC0);
     if (D_00264D5C[0] != 0x2e) {
         printf((const char *)D_0027D5C0);
     }
-    reg_tmp.w = (u32)D_0024CB00;
-    D_00264D5C[0] = reg_tmp.h[1];
-    D_00264D5E[0] = reg_tmp.h[0];
+    STORE_POINTER(D_00264D5C, D_0024CB00);
     if (D_00264D6A[0] != 0x35) {
         printf((const char *)D_0027D5E0);
     }
-    reg_tmp.w = (u32)D_0024CB40;
-    D_00264D6A[0] = reg_tmp.h[1];
-    D_00264D6C[0] = reg_tmp.h[0];
+    STORE_POINTER(D_00264D6A, D_0024CB40);
     if (D_00264D78[0] != 0x3c) {
         printf((const char *)D_0027D600);
     }
-    reg_tmp.w = (u32)D_0024CB80;
-    D_00264D78[0] = reg_tmp.h[1];
-    D_00264D7A[0] = reg_tmp.h[0];
+    STORE_POINTER(D_00264D78, D_0024CB80);
     if (D_00264E18[0] != 0x4) {
         printf((const char *)D_0027D620);
     }
-    reg_tmp.w = (u32)D_002610F0;
-    D_00264E18[0] = reg_tmp.h[1];
-    D_00264E1A[0] = reg_tmp.h[0];
+    STORE_POINTER(D_00264E18, D_002610F0);
     if (D_00264E26[0] != 0xb) {
         printf((const char *)D_0027D640);
     }
-    reg_tmp.w = (u32)D_0024CA40;
-    D_00264E26[0] = reg_tmp.h[1];
-    D_00264E28[0] = reg_tmp.h[0];
+    STORE_POINTER(D_00264E26, D_0024CA40);
     if (D_00264E34[0] != 0x12) {
         printf((const char *)D_0027D660);
     }
-    reg_tmp.w = (u32)D_0024CA80;
-    D_00264E34[0] = reg_tmp.h[1];
-    D_00264E36[0] = reg_tmp.h[0];
+    STORE_POINTER(D_00264E34, D_0024CA80);
     if (D_00264E42[0] != 0x19) {
         printf((const char *)D_0027D680);
     }
-    reg_tmp.w = (u32)D_0024CAC0;
-    D_00264E42[0] = reg_tmp.h[1];
-    D_00264E44[0] = reg_tmp.h[0];
+    STORE_POINTER(D_00264E42, D_0024CAC0);
     if (D_00264E50[0] != 0x20) {
         printf((const char *)D_0027D6A0);
     }
-    reg_tmp.w = (u32)D_0024CB00;
-    D_00264E50[0] = reg_tmp.h[1];
-    D_00264E52[0] = reg_tmp.h[0];
+    STORE_POINTER(D_00264E50, D_0024CB00);
     if (D_00264E5E[0] != 0x27) {
         printf((const char *)D_0027D6C0);
     }
-    reg_tmp.w = (u32)D_0024CB40;
-    D_00264E5E[0] = reg_tmp.h[1];
-    D_00264E60[0] = reg_tmp.h[0];
+    STORE_POINTER(D_00264E5E, D_0024CB40);
     if (D_00264E6C[0] != 0x2e) {
         printf((const char *)D_0027D6E0);
     }
-    reg_tmp.w = (u32)D_0024CB80;
-    D_00264E6C[0] = reg_tmp.h[1];
-    D_00264E6E[0] = reg_tmp.h[0];
+    STORE_POINTER(D_00264E6C, D_0024CB80);
     if (D_00264E86[0] != 0x3) {
         printf((const char *)D_0027D700);
     }
-    reg_tmp.w = (u32)D_00261D30;
-    D_00264E86[0] = reg_tmp.h[1];
-    D_00264E88[0] = reg_tmp.h[0];
+    STORE_POINTER(D_00264E86, D_00261D30);
     if (D_00264E92[0] != 0x9) {
         printf((const char *)D_0027D720);
     }
-    reg_tmp.w = (u32)D_00261D30;
-    D_00264E92[0] = reg_tmp.h[1];
-    D_00264E94[0] = reg_tmp.h[0];
+    STORE_POINTER(D_00264E92, D_00261D30);
     if (D_00264EA8[0] != 0x4) {
         printf((const char *)D_0027D740);
     }
-    reg_tmp.w = (u32)D_0025FF70_as_u16_a;
-    D_00264EA8[0] = reg_tmp.h[1];
-    D_00264EAA[0] = reg_tmp.h[0];
+    STORE_POINTER(D_00264EA8, D_0025FF70_as_u16_a);
     if (D_00264EB6[0] != 0xb) {
         printf((const char *)D_0027D760);
     }
-    reg_tmp.w = (u32)D_0025FFB0_as_u16_a;
-    D_00264EB6[0] = reg_tmp.h[1];
-    D_00264EB8[0] = reg_tmp.h[0];
+    STORE_POINTER(D_00264EB6, D_0025FFB0_as_u16_a);
     if (D_00264EC4[0] != 0x12) {
         printf((const char *)D_0027D780);
     }
-    reg_tmp.w = (u32)D_0025FFF0_as_u16_a;
-    D_00264EC4[0] = reg_tmp.h[1];
-    D_00264EC6[0] = reg_tmp.h[0];
+    STORE_POINTER(D_00264EC4, D_0025FFF0_as_u16_a);
     if (D_00264ED2[0] != 0x19) {
         printf((const char *)D_0027D7A0);
     }
-    reg_tmp.w = (u32)D_002600F0_as_u16_a;
-    D_00264ED2[0] = reg_tmp.h[1];
-    D_00264ED4[0] = reg_tmp.h[0];
+    STORE_POINTER(D_00264ED2, D_002600F0_as_u16_a);
 }
 
 
