@@ -24,8 +24,8 @@ void func_0013ABD0(void) {
 }
 
 s32 explosion_spawn();
-s32 func_0016A8C0();
-s32 func_0016A8E0();
+s32 input_get_p2_held();
+s32 input_get_p2_pressed();
 s32 sprite_draw_layer5_keep();
 extern u16 D_00253220[];
 extern u16 D_0028C190_as_u16;
@@ -35,7 +35,7 @@ void func_0013AC30(void) {
     u32 temp_a1;
     u32 temp_v1_2;
 
-    func_0016A8E0();
+    input_get_p2_pressed();
     reg_d0.h[0] &= 3;
     if (reg_d0.h[0] != 0) {
         *(u8 *)(reg_a5 + 0x16) += 1;
@@ -49,7 +49,7 @@ void func_0013AC30(void) {
         reg_d4.h[0] = reg_d6.h[0];
         reg_d4.h[0] *= 8;
         reg_d6.h[0] += reg_d4.h[0];
-        func_0016A8C0();
+        input_get_p2_held();
         reg_d0.h[0] &= 0x20;
         if (reg_d0.h[0] != 0) {
             reg_d6.h[0] |= 0x80;

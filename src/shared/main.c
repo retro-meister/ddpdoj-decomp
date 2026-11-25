@@ -14,8 +14,8 @@ s32 func_00137C50();
 s32 func_0013B190();
 s32 func_0013C3F0();
 s32 func_0013FD80();
-s32 func_0016A6F0();
-s32 func_0016A7F0();
+s32 input_clear();
+s32 input_update_pressed();
 s32 func_00172320();
 s32 func_0018DE70();
 s32 func_0018DE80();
@@ -73,10 +73,10 @@ extern u8 D_0028DF08;
 #ifdef DEATH_LABEL
 extern u8 D_0028E290;
 #endif
-extern u16 D_0028E1A4;
-extern u16 D_0028E1A8;
-extern u16 D_0028E1B0;
-extern u16 D_0028E1B4;
+extern u16 g_input_p2_previous;
+extern u16 g_input_p2_pressed;
+extern u16 g_input_p1_previous;
+extern u16 g_input_p1_pressed;
 extern s8 g_arcade_input_port[];
 extern s8 D_0028E249[];
 extern u8 g_stage_load_state;
@@ -131,7 +131,7 @@ void func_002120D0(void) {
     func_002076B0();
     func_0012FD00();
     func_0012FD40();
-    func_0016A6F0();
+    input_clear();
     func_001A2900();
     func_0013B190();
     func_0019AA90();
@@ -219,17 +219,17 @@ void func_002120D0(void) {
     wallpaper_load(0x14B5, D_002620F0);
 loop_15:
     sys_begin_frame();
-    func_0016A7F0();
+    input_update_pressed();
     t1 = 0;
     t2 = 0;
     if (g_paused != 0) {
         func_002232F0();
         if (g_paused == 0) {
             t1 = 1;
-            D_0028E1B0 = D_0028E9B4;
-            D_0028E1A4 = D_0028E9B0;
-            D_0028E1B4 = D_0028E9AC;
-            D_0028E1A8 = D_0028E9A8;
+            g_input_p1_previous = D_0028E9B4;
+            g_input_p2_previous = D_0028E9B0;
+            g_input_p1_pressed = D_0028E9AC;
+            g_input_p2_pressed = D_0028E9A8;
             g_arcade_input_port[0] = D_0028E9A4;
             D_0028E249[0] = D_0028E9A5;
         }
@@ -244,10 +244,10 @@ loop_15:
         t2 = 1;
     }
     if ((g_paused == 0) && (t1 == 0)) {
-        D_0028E9B4 = D_0028E1B0;
-        D_0028E9B0 = D_0028E1A4;
-        D_0028E9AC = D_0028E1B4;
-        D_0028E9A8 = D_0028E1A8;
+        D_0028E9B4 = g_input_p1_previous;
+        D_0028E9B0 = g_input_p2_previous;
+        D_0028E9AC = g_input_p1_pressed;
+        D_0028E9A8 = g_input_p2_pressed;
         D_0028E9A4 = g_arcade_input_port[0];
         D_0028E9A5 = D_0028E249[0];
     }

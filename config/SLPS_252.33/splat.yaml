@@ -73,7 +73,7 @@ segments:
       - [0x68190, c, shared/unit_00168110]
       - [0x68b20, c, shared/formation_fire_timer]
       - [0x68c20, c, shared/unit_00168BA0]
-      - [0x6a770, c, shared/unit_0016A6F0]
+      - [0x6a770, c, shared/input]
       - [0x6a970, c, shared/item]
       - [0x6c530, c, shared/unit_0016C4B0]
       - [0x6ce50, c, shared/enemy_small]
@@ -207,6 +207,8 @@ segments:
       - [0x18bf30, rodata, rodata_18bf30]
       - [0x18c0f0, sdata, sdata]
       - {type: sbss, vram: 0x28de80, name: sbss_28de80}
+      - {type: .sbss, vram: 0x28e1a4, name: shared/input}
+      - {type: sbss, vram: 0x28e1bc, name: sbss_28e1bc}
       - {type: .sbss, vram: 0x28e98c, name: shared/splash}
       - {type: sbss, vram: 0x28e998, name: sbss_28e998}
       - {type: .sbss, vram: 0x28e9b8, name: shared/text}

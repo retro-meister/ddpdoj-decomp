@@ -9,7 +9,7 @@ void func_0020B5F0(void);
 void func_0020B640(void);
 
 
-s32 func_0016A8D0();
+s32 input_get_p1_pressed();
 s32 func_0018DA30();
 s32 func_0018DA50();
 s32 func_002093F0();
@@ -28,7 +28,7 @@ void func_00209B80(void) {
     s64 temp_v1;
     s64 temp_v1_2;
 
-    func_0016A8D0();
+    input_get_p1_pressed();
     if (reg_d0.w & 1) {
         D_0028DF9C = 1;
         func_0018DA50();
@@ -39,7 +39,7 @@ void func_00209B80(void) {
         }
         func_00209790();
     }
-    func_0016A8D0();
+    input_get_p1_pressed();
     if (reg_d0.w & 2) {
         D_0028DF9C = 1;
         func_0018DA50();
@@ -50,7 +50,7 @@ void func_00209B80(void) {
         }
         func_00209790();
     }
-    func_0016A8D0();
+    input_get_p1_pressed();
     if (reg_d0.w & 4) {
         D_0028DF9C = 1;
         if (D_0028DFA0 != 4) {
@@ -78,7 +78,7 @@ void func_00209B80(void) {
             }
         }
     }
-    func_0016A8D0();
+    input_get_p1_pressed();
     if (reg_d0.w & 8) {
         D_0028DF9C = 1;
         if (D_0028DFA0 != 4) {
@@ -106,7 +106,7 @@ void func_00209B80(void) {
             }
         }
     }
-    func_0016A8D0();
+    input_get_p1_pressed();
     if ((reg_d0.w & 0x10) && (D_0028DFA0 == 4)) {
         func_0018DA30();
         reg_d0.w = 0;

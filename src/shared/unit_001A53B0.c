@@ -1261,8 +1261,8 @@ next_15:
     func_001A7B30();
 }
 
-s32 func_0016A8B0();
-s32 func_0016A8C0();
+s32 input_get_p1_held();
+s32 input_get_p2_held();
 extern s8 D_0028EC24;
 extern u8 D_0028ED7C;
 void func_001A7410(void) {
@@ -1277,16 +1277,16 @@ void func_001A7410(void) {
     }
     reg_d0.w = 0;
     if (g_player1[0] < 0) {
-        func_0016A8B0();
+        input_get_p1_held();
         if ((D_0028ED7C == 2) && (D_0028EC24 == 1)) {
-            func_0016A8C0();
+            input_get_p2_held();
         }
     }
     if (g_player2[0] < 0) {
         temp_s0 = reg_d0.h[0];
-        func_0016A8C0();
+        input_get_p2_held();
         if ((D_0028ED7C == 2) && (D_0028EC24 == 0)) {
-            func_0016A8B0();
+            input_get_p1_held();
         }
         reg_d0.h[0] |= temp_s0 & 0xFFFF;
     }

@@ -41,7 +41,7 @@ void func_001E76A0(void) {
     reg_d0.w = 0;
 }
 
-s32 func_0016A8B0();
+s32 input_get_p1_held();
 s32 sprite_draw_keep();
 s32 func_002093F0();
 extern u32 D_00264050[];
@@ -116,7 +116,7 @@ void func_001E7770(void) {
         var_s0_4 += 1;
         reg_d6.h[0] += 0x200;
     } while ((s16)(--reg_d7.h[0]) >= 0);
-    func_0016A8B0();
+    input_get_p1_held();
     temp_a0 = reg_d0.w;
     if ((temp_a0 & 0x8000) && (temp_a0 & 0x10)) {
         reg_d0.w = 0;

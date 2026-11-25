@@ -1153,11 +1153,11 @@ void func_00203660(void) {
     func_0014DBF0();
 }
 
-s32 func_0016A8C0();
+s32 input_get_p2_held();
 extern s8 D_002670B0[];
 
 void func_00203670(void) {
-    func_0016A8C0();
+    input_get_p2_held();
     reg_d0.h[0] &= 0xF;
     ENTITY(reg_a6)->move.sb.dir = D_002670B0[reg_d0.h[0]];
     if (ENTITY(reg_a6)->move.sb.dir >= 0) {

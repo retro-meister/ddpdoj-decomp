@@ -24,7 +24,7 @@ void func_00211FD0(void) {
 }
 
 s32 func_00137C10();                            /* extern */
-s32 func_0016A8E0();                            /* extern */
+s32 input_get_p2_pressed();                            /* extern */
 s32 entity_draw();                            /* extern */
 s32 func_00203670();                            /* extern */
 s32 func_002114C0();                            /* extern */
@@ -38,7 +38,7 @@ void func_00212030(void) {
     if (temp_v0 != 0) {
         *(u16 *)(reg_a5 + 0x18) = (u16) (temp_v0 - 1);
     } else {
-        func_0016A8E0();
+        input_get_p2_pressed();
         if (reg_d0.w & 0x40) {
             func_00137C10();
             temp_v0_2 = (s64) ((s64) reg_d0.h[0] << 0x30) >> 0x30;

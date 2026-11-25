@@ -600,8 +600,8 @@ extern u32 D_0028C090;
 extern u32 D_0028C098;
 extern u16 D_00295E3A[];
 extern s16 D_00295E3C_as_s16_a[];
-void func_0016A8D0();
-void func_0016A8E0();
+void input_get_p1_pressed();
+void input_get_p2_pressed();
 extern u32 jtbl_0028E3F4_as_u32;
 
 #define W(o) (*(u16 *)(reg_a6 + (o)))
@@ -627,11 +627,11 @@ next_10:
     reg_d0.w = *(u32 *)reg_a0;
     if (reg_d0.w != -1U) goto next_15;
     W(6) = 2;
-    reg_tmp.w = (u32) (void *) func_0016A8D0;
+    reg_tmp.w = (u32) (void *) input_get_p1_pressed;
     W(0x18) = reg_tmp.h[1];
     W(0x1A) = reg_tmp.h[0];
     if (0 > g_player1[0]) goto next_20;
-    reg_tmp.w = (u32) (void *) func_0016A8E0;
+    reg_tmp.w = (u32) (void *) input_get_p2_pressed;
     W(0x18) = reg_tmp.h[1];
     W(0x1A) = reg_tmp.h[0];
     goto next_20;

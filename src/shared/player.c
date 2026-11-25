@@ -1654,10 +1654,10 @@ s32 func_0013C9A0();
 s32 func_0013CA90();
 s32 func_0013CAB0();
 s32 func_0013EBD0();
-s32 func_0016A8B0();
-s32 func_0016A8C0();
-s32 func_0016A8D0();
-s32 func_0016A8E0();
+s32 input_get_p1_held();
+s32 input_get_p2_held();
+s32 input_get_p1_pressed();
+s32 input_get_p2_pressed();
 s32 func_0018D6F0();
 s32 func_0018D710();
 s32 func_0018D730();
@@ -1771,14 +1771,14 @@ block_13:
             PLAYER(reg_a6)->aux.b.shot_sound_wait = (u8) (temp_v0 - 1);
         }
         if (*(u8 *)(reg_a5 + 6) == 0) {
-            func_0016A8B0();
+            input_get_p1_held();
             PLAYER(reg_a6)->input.b.raw = (u8) reg_d0.b[0];
-            func_0016A8D0();
+            input_get_p1_pressed();
             PLAYER(reg_a6)->input.b.filtered = reg_d0.b[0];
         } else {
-            func_0016A8C0();
+            input_get_p2_held();
             PLAYER(reg_a6)->input.b.raw = (u8) reg_d0.b[0];
-            func_0016A8E0();
+            input_get_p2_pressed();
             PLAYER(reg_a6)->input.b.filtered = reg_d0.b[0];
         }
         reg_d0.w = 0;

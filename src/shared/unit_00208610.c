@@ -102,7 +102,7 @@ void func_00208710(void) {
 }
 
 
-s32 func_0016A8D0();
+s32 input_get_p1_pressed();
 s32 func_0018DA30();
 s32 func_0018DA50();
 s32 func_002093F0();
@@ -111,7 +111,7 @@ extern u8 D_00268030[];
 
 void func_00208800(void) {
     s32 func_00209200();
-    func_0016A8D0();
+    input_get_p1_pressed();
     if (reg_d0.w & 1) {
         func_0018DA50();
         func_00208610();
@@ -129,7 +129,7 @@ void func_00208800(void) {
             func_00209200();
         }
     }
-    func_0016A8D0();
+    input_get_p1_pressed();
     if (reg_d0.w & 2) {
         func_0018DA50();
         func_00208610();
@@ -147,7 +147,7 @@ void func_00208800(void) {
             func_00209200();
         }
     }
-    func_0016A8D0();
+    input_get_p1_pressed();
     if (reg_d0.w & 0x10) {
         func_0018DA30();
         if (D_0028DFA0 == 0) {

@@ -24,7 +24,7 @@ extern u16 D_006C58A8[];
 extern u8 death_D_002B1ED8[];
 extern u8 D_006CB5A8[];
 
-void func_00236F40(void) {
+void replay_filter_input(void) {
     u32 save_d6;
     u32 save_d7;
     u8 swap;
@@ -151,7 +151,7 @@ extern u16 D_006C58A8[];
 extern u8 D_006CB588[];
 extern u8 D_006CB5A8[];
 
-void func_00236F40(void) {
+void replay_filter_input(void) {
     u32 save_d6;
     u32 save_d7;
     u8 swap;
@@ -632,12 +632,12 @@ extern s32 rand(void);
 extern void func_00238B90(u8 *data);
 extern char D_0028BEE0[];
 extern char D_0028BF00[];
-extern u16 D_0028E1A4;
-extern u16 D_0028E1A8;
-extern u16 D_0028E1AC;
-extern u16 D_0028E1B0;
-extern u16 D_0028E1B4;
-extern u16 D_0028E1B8;
+extern u16 g_input_p2_previous;
+extern u16 g_input_p2_pressed;
+extern u16 g_input_p2_held;
+extern u16 g_input_p1_previous;
+extern u16 g_input_p1_pressed;
+extern u16 g_input_p1_held;
 extern u8 D_0028E2BB;
 extern u8 D_0028E2BC;
 extern u8 D_0028E2E4;
@@ -688,16 +688,16 @@ void func_00237AC0() {
     for (i = 0; i < 0x20; i++) {
         ((u8 *)D_006C58A0_as_u16_a)[0x5CE8 + i] = rand();
     }
-    D_006CB57A[0] = D_0028E1B4;
-    D_006CB578[0] = D_0028E1B8;
-    D_006CB57C[0] = D_0028E1B0;
-    D_006CB580[0] = D_0028E1A8;
-    D_006CB57E[0] = D_0028E1AC;
+    D_006CB57A[0] = g_input_p1_pressed;
+    D_006CB578[0] = g_input_p1_held;
+    D_006CB57C[0] = g_input_p1_previous;
+    D_006CB580[0] = g_input_p2_pressed;
+    D_006CB57E[0] = g_input_p2_held;
     D_006C58A2[0] = 0xFF;
     D_006C58A4[0] = 0xFF;
     D_006C58A6[0] = 0xFF;
     D_006C58A8[0] = 0xFF;
-    D_006CB582[0] = D_0028E1A4;
+    D_006CB582[0] = g_input_p2_previous;
     save[6] = data[0x31BC / 2];
     save[7] = data[0x31B6 / 2];
     save[1] = data[0xC6E / 2];
@@ -757,12 +757,12 @@ void func_00237D50() {
     if (D_006CB584[0] == D_0028ED3C) {
         D_0028ED74_as_s8 = 1;
         D_0028ED70 = 0;
-        D_0028E1B4 = D_006CB57A[0];
-        D_0028E1B8 = D_006CB578[0];
-        D_0028E1B0 = D_006CB57C[0];
-        D_0028E1A8 = D_006CB580[0];
-        D_0028E1AC = D_006CB57E[0];
-        D_0028E1A4 = D_006CB582[0];
+        g_input_p1_pressed = D_006CB57A[0];
+        g_input_p1_held = D_006CB578[0];
+        g_input_p1_previous = D_006CB57C[0];
+        g_input_p2_pressed = D_006CB580[0];
+        g_input_p2_held = D_006CB57E[0];
+        g_input_p2_previous = D_006CB582[0];
         return;
     }
     func_002376F0(D_006CB584[0]);

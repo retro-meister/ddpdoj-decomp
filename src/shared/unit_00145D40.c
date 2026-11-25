@@ -152,10 +152,10 @@ extern u8 D_00260BB0[];
 extern u8 D_00260BF0[];
 extern u8 D_00260C30[];
 extern u8 D_00260C70[];
-extern u16 D_0028E1A4;
-extern u16 D_0028E1A8;
-extern u16 D_0028E1B0;
-extern u16 D_0028E1B4;
+extern u16 g_input_p2_previous;
+extern u16 g_input_p2_pressed;
+extern u16 g_input_p1_previous;
+extern u16 g_input_p1_pressed;
 
 void func_001460A0(void) {
     ENTITY(reg_a6)->y.sh = 0;
@@ -234,10 +234,10 @@ void func_001460A0(void) {
     reg_d0.w = 0xF;
     sprite_palette_load();
     ENTITY(reg_a6)->flags.sb[0] = 1;
-    D_0028E1B0 = 0xFFFF;
-    D_0028E1A4 = 0xFFFF;
-    D_0028E1B4 = 0;
-    D_0028E1A8 = 0;
+    g_input_p1_previous = 0xFFFF;
+    g_input_p2_previous = 0xFFFF;
+    g_input_p1_pressed = 0;
+    g_input_p2_pressed = 0;
 }
 
 s32 text_layer_print();

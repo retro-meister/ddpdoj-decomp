@@ -114,7 +114,7 @@ void sys_init(void) {
     func_0022C630();
 }
 
-s32 func_0016A710();                            /* extern */
+s32 input_read();                            /* extern */
 s32 text_queue_clear();                            /* extern */
 s32 func_0021DF60();                            /* extern */
 
@@ -123,7 +123,7 @@ void sys_begin_frame(void) {
     sceGsSwapDBuffDc(&g_gs_dbuff, g_frame_counter);
     text_queue_clear();
     pad_update();
-    func_0016A710();
+    input_read();
     if (g_display_reset_pending != 0) {
         g_display_reset_pending = 0;
         func_0021DF60();
@@ -443,7 +443,7 @@ void pad_update(void)
     pad_mask_game_inputs();
 }
 
-s32 func_0016A6F0();                            /* extern */
+s32 input_clear();                            /* extern */
 extern s8 D_0028E249[];
 extern s8 D_0028E24A[];
 extern s8 D_0028E24B[];
@@ -463,7 +463,7 @@ void pad_mask_game_inputs(void) {
         D_0028E24D[0] = -1;
         D_0028E24E[0] = -1;
         D_0028E24F[0] = -1;
-        func_0016A6F0();
+        input_clear();
     }
 }
 

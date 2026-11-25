@@ -2303,10 +2303,10 @@ extern void death_func_0012E5B0(void);
 #endif
 
 void func_0018E5A0(void) {
-    extern void func_0016A8B0(void);
-    extern void func_0016A8C0(void);
-    extern void func_0016A8D0(void);
-    extern void func_0016A8E0(void);
+    extern void input_get_p1_held(void);
+    extern void input_get_p2_held(void);
+    extern void input_get_p1_pressed(void);
+    extern void input_get_p2_pressed(void);
     if (D_0024E740_as_u16_a[0] != 0x0) {
         printf((const char *)D_002784E0);
     }
@@ -4933,51 +4933,51 @@ void func_0018E5A0(void) {
     if (D_00251A80_as_u16_a[1] != 0x1) {
         printf((const char *)D_0027CA00);
     }
-    reg_tmp.w = (u32)func_0016A8B0;
+    reg_tmp.w = (u32)input_get_p1_held;
     D_00251A80_as_u16_a[1] = reg_tmp.h[1];
     D_00251A84[0] = reg_tmp.h[0];
     if (D_00251A86[0] != 0x3) {
         printf((const char *)D_0027CA20);
     }
-    STORE_POINTER(D_00251A86, func_0016A8D0);
+    STORE_POINTER(D_00251A86, input_get_p1_pressed);
     if (D_00251A90_as_u16_a[1] != 0x1) {
         printf((const char *)D_0027CA40);
     }
-    reg_tmp.w = (u32)func_0016A8C0;
+    reg_tmp.w = (u32)input_get_p2_held;
     D_00251A90_as_u16_a[1] = reg_tmp.h[1];
     D_00251A94[0] = reg_tmp.h[0];
     if (D_00251A96[0] != 0x3) {
         printf((const char *)D_0027CA60);
     }
-    STORE_POINTER(D_00251A96, func_0016A8E0);
+    STORE_POINTER(D_00251A96, input_get_p2_pressed);
     if (D_00251AB0_as_u16_a[1] != 0x1) {
         printf((const char *)D_0027CA80);
     }
-    reg_tmp.w = (u32)func_0016A8B0;
+    reg_tmp.w = (u32)input_get_p1_held;
     D_00251AB0_as_u16_a[1] = reg_tmp.h[1];
     D_00251AB4[0] = reg_tmp.h[0];
     if (D_00251AB6[0] != 0x3) {
         printf((const char *)D_0027CAA0);
     }
-    STORE_POINTER(D_00251AB6, func_0016A8D0);
+    STORE_POINTER(D_00251AB6, input_get_p1_pressed);
     if (D_00251AC0_as_u16_a[1] != 0x1) {
         printf((const char *)D_0027CAC0);
     }
-    reg_tmp.w = (u32)func_0016A8C0;
+    reg_tmp.w = (u32)input_get_p2_held;
     D_00251AC0_as_u16_a[1] = reg_tmp.h[1];
     D_00251AC4[0] = reg_tmp.h[0];
     if (D_00251AC6[0] != 0x3) {
         printf((const char *)D_0027CAE0);
     }
-    STORE_POINTER(D_00251AC6, func_0016A8E0);
+    STORE_POINTER(D_00251AC6, input_get_p2_pressed);
     if (D_00251AE4[0] != 0x2) {
         printf((const char *)D_0027CB00);
     }
-    STORE_POINTER(D_00251AE4, func_0016A8B0);
+    STORE_POINTER(D_00251AE4, input_get_p1_held);
     if (D_00251AE8[0] != 0x4) {
         printf((const char *)D_0027CB20);
     }
-    STORE_POINTER(D_00251AE8, func_0016A8D0);
+    STORE_POINTER(D_00251AE8, input_get_p1_pressed);
     if (D_00251AEC[0] != 0x6) {
         printf((const char *)D_0027CB40);
     }
@@ -4989,11 +4989,11 @@ void func_0018E5A0(void) {
     if (D_00251B04[0] != 0x2) {
         printf((const char *)D_0027CB80);
     }
-    STORE_POINTER(D_00251B04, func_0016A8C0);
+    STORE_POINTER(D_00251B04, input_get_p2_held);
     if (D_00251B08[0] != 0x4) {
         printf((const char *)D_0027CBA0);
     }
-    STORE_POINTER(D_00251B08, func_0016A8E0);
+    STORE_POINTER(D_00251B08, input_get_p2_pressed);
     if (D_00251B0C[0] != 0x6) {
         printf((const char *)D_0027CBC0);
     }
@@ -5773,8 +5773,8 @@ void func_00198B70(void) {
 extern u16 D_002BAE80[];
 
 void func_00198C40() {
-    s32 func_0016A8B0();
-    s32 func_0016A8D0();
+    s32 input_get_p1_held();
+    s32 input_get_p1_pressed();
     s32 temp_s6;
     s32 temp_s0;
     s32 temp_s1;
@@ -5784,9 +5784,9 @@ void func_00198C40() {
     s32 temp_s5;
 
     reg_a4 = (u8 *)D_002BAE00;
-    func_0016A8B0();
+    input_get_p1_held();
     *(u16 *)(reg_a4 + 0x34) = (u16) reg_d0.h[0];
-    func_0016A8D0();
+    input_get_p1_pressed();
     *(u16 *)(reg_a4 + 0x36) = (u16) reg_d0.h[0];
     reg_d7.h[0] = *(u16 *)(reg_a4 + 2);
     if (reg_d7.h[0] != 0) {
@@ -5833,8 +5833,8 @@ void func_00198C40() {
 extern u8 D_002BAE40[];
 
 void func_00198D90() {
-    s32 func_0016A8C0();
-    s32 func_0016A8E0();
+    s32 input_get_p2_held();
+    s32 input_get_p2_pressed();
     s32 temp_s6;
     s32 temp_s0;
     s32 temp_s1;
@@ -5844,9 +5844,9 @@ void func_00198D90() {
     s32 temp_s5;
 
     reg_a4 = (u8 *)D_002BAE40;
-    func_0016A8C0();
+    input_get_p2_held();
     *(u16 *)(reg_a4 + 0x34) = (u16) reg_d0.h[0];
-    func_0016A8E0();
+    input_get_p2_pressed();
     *(u16 *)(reg_a4 + 0x36) = (u16) reg_d0.h[0];
     reg_d7.h[0] = *(u16 *)(reg_a4 + 2);
     if (reg_d7.h[0] != 0) {

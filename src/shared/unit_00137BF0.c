@@ -405,7 +405,7 @@ extern u16 D_0028E804;
 extern u16 D_0028E80C;
 extern u8 death_D_00291195;
 
-void death_func_00136980(void) {
+void scripted_input_apply(void) {
     u32 save_d6;
     u32 save_d7;
     u8 *save_a0;

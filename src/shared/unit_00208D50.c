@@ -5,19 +5,19 @@ void func_00209200(void);
 void func_002093F0();
 
 s32 func_00131420();                            /* extern */
-s32 func_0016A8B0();                            /* extern */
-s32 func_0016A8D0();                            /* extern */
+s32 input_get_p1_held();                            /* extern */
+s32 input_get_p1_pressed();                            /* extern */
 s32 func_00208D30();                            /* extern */
 
 void func_00208D50(void) {
     u32 temp_a0;
 
     func_00208D30();
-    func_0016A8D0();
+    input_get_p1_pressed();
     if (reg_d0.w & 0x20) {
         func_00131420();
     }
-    func_0016A8B0();
+    input_get_p1_held();
     temp_a0 = reg_d0.w;
     if ((temp_a0 & 0x8000) && (temp_a0 & 0x10)) {
         reg_d0.w = 0;
@@ -141,8 +141,8 @@ next_1:
 
 typedef void (*Fn)();
 
-s32 func_0016A8B0();
-s32 func_0016A8D0();
+s32 input_get_p1_held();
+s32 input_get_p1_pressed();
 s32 func_0018DE90();
 s32 func_0018DEA0();
 s32 func_0018DEE0();
@@ -153,7 +153,7 @@ void func_00209050(void) {
     u32 t;
 
     func_00208E20();
-    func_0016A8D0();
+    input_get_p1_pressed();
     if (!(reg_d0.w & 1)) goto next_1;
     D_0028DFA0 += 1;
     if (D_0028DFA0 < 0x2F) goto next_1;
@@ -192,7 +192,7 @@ next_6:
     reg_d1.h[0] = 0x2A;
     reg_d3.b[0] = (u8) D_0028DFA0;
     func_00208EB0();
-    func_0016A8B0();
+    input_get_p1_held();
     t = reg_d0.w;
     if ((t & 0x8000) && (t & 0x10)) {
         reg_d0.w = 0;

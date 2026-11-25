@@ -787,8 +787,8 @@ s32 func_00133070();
 s32 func_001330F0();
 s32 func_00133840();
 s32 func_0013B920();
-s32 func_0016A8D0();
-s32 func_0016A8E0();
+s32 input_get_p1_pressed();
+s32 input_get_p2_pressed();
 s32 func_0018DED0();
 s32 func_001A9130();
 s32 func_00200EE0();
@@ -1069,9 +1069,9 @@ block_15:
             reg_d6.h[0] = *(u16 *)(reg_a6 + 0x1A);
             reg_d6.h[0] += *(u16 *)(reg_a6 + 0x1E);
             if (reg_d6.h[0] != 0) {
-                func_0016A8D0();
+                input_get_p1_pressed();
                 if ((D_0028ED7C == 2) && (D_0028EC24 == 1)) {
-                    func_0016A8E0();
+                    input_get_p2_pressed();
                 }
                 t12 = reg_d0.h[0] & 0x70;
                 reg_d0.h[0] = t12;
@@ -1111,9 +1111,9 @@ block_48:
             reg_d6.h[0] = *(u16 *)(reg_a6 + 0x24);
             reg_d6.h[0] += *(u16 *)(reg_a6 + 0x28);
             if (reg_d6.h[0] != 0) {
-                func_0016A8E0();
+                input_get_p2_pressed();
                 if ((D_0028ED7C == 2) && (D_0028EC24 == 0)) {
-                    func_0016A8D0();
+                    input_get_p1_pressed();
                 }
                 t15 = reg_d0.h[0] & 0x70;
                 reg_d0.h[0] = t15;
