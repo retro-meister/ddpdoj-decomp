@@ -1,4 +1,5 @@
 #include "common.h"
+#include "credits_roll.h"
 
 s32 task_start();                            /* extern */
 #ifdef DEATH_LABEL
@@ -6,7 +7,6 @@ s32 func_00206D70();
 extern u8 death_D_00290DC0;
 #else
 s32 func_002075F0();                            /* extern */
-extern s32 D_0028DE80_as_s32;
 #endif
 
 void func_00200D30(void) {
@@ -18,20 +18,19 @@ void func_00200D30(void) {
 #else
     reg_d0.h[0] = 0xE;
     task_start();
-    (*(s16 *)((u8 *)(&D_0028DE80_as_s32) + (8))) = 0;
+    g_ending_started = 0;
     func_002075F0();
 #endif
 }
 
 s32 sprite_palette_load();
-s32 func_00200A10();
 extern u8 D_0025F770[];
 extern s16 g_game_completed_as_s16;
 extern u16 g_loop;
 
 void func_00200D60(void) {
     *(s8 *)(reg_a5 + 3) = 1;
-    func_00200A10();
+    credits_roll_begin();
     reg_a0 = D_0025F770;
     reg_d0.h[0] = 2;
     sprite_palette_load();
@@ -52,9 +51,7 @@ s32 func_0013BE50();
 s32 func_0013C300();
 s32 func_0013C350();
 s32 func_0018DED0();
-s32 func_00200A70();
 extern u8 D_0024E090[];
-extern u8 D_0028DE80;
 
 void func_00200DD0() {
     u16 temp_a0;
@@ -73,8 +70,8 @@ void func_00200DD0() {
     if (*(u16 *)(reg_a5 + 4) == 0) {
         {
 #else
-    func_00200A70();
-    if ((*(u16 *)(reg_a5 + 4) == 0) && ((*(u16 *)((u8 *)(&D_0028DE80) + (4))) == 0)) {
+    credits_roll_update();
+    if ((*(u16 *)(reg_a5 + 4) == 0) && (g_credits_roll.scroll_speed == 0)) {
         *(u16 *)(reg_a5 + 6) -= 1;
         if (*(u16 *)(reg_a5 + 6) == 0) {
 #endif

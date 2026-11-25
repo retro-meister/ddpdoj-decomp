@@ -147,7 +147,7 @@ segments:
       - [0xf9740, c, shared/stage5_midboss_3]
       - [0xfa410, c, shared/stage5_midboss_4]
       - [0xfc960, c, shared/stage5_midboss_5]
-      - [0x100a40, c, shared/unit_002009C0]
+      - [0x100a90, c, shared/credits_roll]
       - [0x100db0, c, shared/game_util]
       - [0x101790, c, shared/motion_util]
       - [0x1038d0, c, shared/unit_00203850]
@@ -206,7 +206,8 @@ segments:
       - [0x18be30, .rodata, shared/replay_header]
       - [0x18bf30, rodata, rodata_18bf30]
       - [0x18c0f0, sdata, sdata]
-      - {type: sbss, vram: 0x28de80, name: sbss_28de80}
+      - {type: .sbss, vram: 0x28de80, name: shared/credits_roll}
+      - {type: sbss, vram: 0x28de8c, name: sbss_28de8c}
       - {type: .sbss, vram: 0x28e1a4, name: shared/input}
       - {type: sbss, vram: 0x28e1bc, name: sbss_28e1bc}
       - {type: .sbss, vram: 0x28e98c, name: shared/splash}

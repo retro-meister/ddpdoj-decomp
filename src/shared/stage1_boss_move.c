@@ -105,7 +105,7 @@ s32 func_00202B50();
 extern u16 D_0026E930[];
 extern u8 D_0028E855;
 extern u16 g_side_scroll_x[];
-extern u16 D_002BDA80_as_u16_a[];
+extern u16 g_spare_entities_as_u16_a[];
 
 void func_001BAB40(void) {
     s32 direction_between();
@@ -121,7 +121,7 @@ void func_001BAB40(void) {
     direction_turn_toward();
     ENTITY(reg_a6)->move.b.dir = (u8) reg_d1.b[0];
     entity_velocity();
-    reg_a0 = (u8 *)(D_002BDA80_as_u16_a);
+    reg_a0 = (u8 *)(g_spare_entities_as_u16_a);
     reg_d1.h[1] = ENTITY(reg_a6)->y.h;
     reg_d1.h[0] = ENTITY(reg_a6)->x.h;
     reg_d0.w = 4;

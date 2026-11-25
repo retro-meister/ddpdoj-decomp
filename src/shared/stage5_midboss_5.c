@@ -1895,7 +1895,7 @@ void func_002005E0() {
     }
 }
 
-s32 func_002009C0();
+void bullet_fire_fast_in_arc(void);
 
 void func_002006B0(void) {
     s32 enemy_remove();
@@ -1953,13 +1953,13 @@ next_4:
     reg_d0.w = 0xFFFC0007;
     reg_d4.w = 0;
     reg_d3.w = 0;
-    func_002009C0();
+    bullet_fire_fast_in_arc();
     reg_d1.b[0] += 0x15;
     reg_d1.b[0] &= 0x3F;
-    func_002009C0();
+    bullet_fire_fast_in_arc();
     reg_d1.b[0] += 0x15;
     reg_d1.b[0] &= 0x3F;
-    func_002009C0();
+    bullet_fire_fast_in_arc();
     *(u16 *)(reg_a5 + 0x24) -= 1;
 next_5:
     reg_a0 = (u8 *)D_00266480;
@@ -1975,4 +1975,18 @@ next_5:
     sprite_draw_layer5();
     reg_a0 = reg_a6;
     enemy_hitbox_debug_draw();
+}
+
+/* Fires only in directions 0x0D to 0x33 of the 0x40 that make a full turn. */
+void bullet_fire_fast_in_arc(void)
+{
+    u32 savedD0;
+    s8 direction;
+
+    savedD0 = reg_d0.w;
+    direction = (s8)reg_d1.b[0];
+    if (direction < 0x34 && direction > 0xC) {
+        bullet_fire_fast();
+    }
+    reg_d0.w = savedD0;
 }
