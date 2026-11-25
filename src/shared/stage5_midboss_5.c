@@ -323,7 +323,7 @@ void func_001FC8E0(void) {
 void func_001FE990();
 void func_001FEE40();
 
-void func_001FD750(void) {
+void stage5_midboss5_first(void) {
     void enemy_set_entity_count(s32);
     enemy_set_entity_count(4);
 }
@@ -341,7 +341,7 @@ extern s16 g_enemy_signal_3_as_s16;
 extern s16 D_00299768[];
 extern u16 g_side_scroll_x[];
 
-void func_001FD760(void) {
+void stage5_midboss5_start(void) {
     reg_a0 = (u8 *)D_002661E0;
     enemy_init_entities();
     reg_a0 = (u8 *)D_002661C8;
@@ -377,7 +377,7 @@ extern u16 g_enemy_signal_3;
 extern u16 g_enemies_stopped;
 extern u16 g_scroll_line;
 
-void func_001FD840() {
+void stage5_midboss5_main() {
     s32 enemy_remove();
     if (g_enemies_stopped == 0) {
         if (ENTITY(reg_a6)[4].misc.b.user != 0) {
@@ -1271,7 +1271,7 @@ block_set:
     cond_flag = 1;
 }
 
-void func_001FF420(void) {
+void stage5_midboss5_small_missile_first(void) {
     void enemy_set_entity_count(s32);
     enemy_set_entity_count(0);
 }
@@ -1279,7 +1279,7 @@ void func_001FF420(void) {
 extern u8 D_00266340[];
 extern u8 D_0028DA38;
 
-void func_001FF430() {
+void stage5_midboss5_small_missile_start() {
     u16 temp_a1;
 
     reg_a0 = D_00266340;
@@ -1296,7 +1296,7 @@ s32 sprite_draw_layer3();
 s32 func_00201D10();
 extern u8 D_0028E2E4;
 
-void func_001FF490(void) {
+void stage5_midboss5_small_missile(void) {
     s32 enemy_remove();
     if (D_0028E2E4 != 0) goto block_end;
     reg_d1.w = 0;
@@ -1335,7 +1335,7 @@ block_disp:
     sprite_draw_layer3();
 }
 
-void func_001FF600(void) {
+void stage5_midboss5_small_blast_first(void) {
     void enemy_set_entity_count(s32 mode);
     enemy_set_entity_count(0);
 }
@@ -1343,7 +1343,7 @@ void func_001FF600(void) {
 extern u8 D_00266360[];
 extern u8 D_0028DA40;
 
-void func_001FF610() {
+void stage5_midboss5_small_blast_start() {
     u16 temp_a1;
 
     reg_a0 = D_00266360;
@@ -1362,7 +1362,7 @@ s32 entity_check_bounds();
 extern u8 D_00266380[];
 extern u16 g_frame_mod4;
 
-void func_001FF670(void) {
+void stage5_midboss5_small_blast(void) {
     s32 enemy_remove();
     u8 *t1;
     u16 t2;
@@ -1436,7 +1436,7 @@ next_1:
     }
 }
 
-void func_001FF8B0(void) {
+void stage5_midboss5_large_missile_first(void) {
     void enemy_set_entity_count(s32 mode);
     enemy_set_entity_count(0);
 }
@@ -1444,7 +1444,7 @@ void func_001FF8B0(void) {
 extern u8 D_002663C0[];
 extern u8 D_0028DA48;
 
-void func_001FF8C0() {
+void stage5_midboss5_large_missile_start() {
     u16 temp_a1;
 
     reg_a0 = D_002663C0;
@@ -1457,7 +1457,7 @@ void func_001FF8C0() {
     enemy_set_task_work();
 }
 
-void func_001FF920(void) {
+void stage5_midboss5_large_missile(void) {
     s32 enemy_remove();
     if (D_0028E2E4 != 0) goto block_1;
     if (g_enemy_signal_4 == 0) {
@@ -1508,7 +1508,7 @@ void func_001FFA50(void) {
     enemy_remove(temp_a0);
 }
 
-void func_001FFAA0(void) {
+void stage5_midboss5_large_blast_first(void) {
     void enemy_set_entity_count(s32);
     enemy_set_entity_count(0);
 }
@@ -1516,7 +1516,7 @@ void func_001FFAA0(void) {
 extern u8 D_002663E0[];
 extern u8 D_0028DA50;
 
-void func_001FFAB0() {
+void stage5_midboss5_large_blast_start() {
     u16 temp_a1;
 
     reg_a0 = D_002663E0;
@@ -1531,7 +1531,7 @@ void func_001FFAB0() {
 
 extern u8 D_00266400[];
 
-void func_001FFB10(void) {
+void stage5_midboss5_large_blast(void) {
     s32 enemy_remove();
     u8 *t1;
     u16 t2;
@@ -1610,7 +1610,7 @@ next_1:
     }
 }
 
-void func_001FFD60(void) {
+void stage5_midboss5_drone_first(void) {
     void enemy_set_entity_count(s32);
     enemy_set_entity_count(0);
 }
@@ -1618,7 +1618,7 @@ void func_001FFD60(void) {
 extern u8 D_00266440[];
 extern u8 D_00266460[];
 
-void func_001FFD70() {
+void stage5_midboss5_drone_start() {
     u8 temp_a1;
 
     reg_a0 = D_00266460;
@@ -1636,7 +1636,7 @@ s32 sfx_explosion_ground_medium();
 s32 func_00202490();
 s32 direction_turn_toward();
 
-void func_001FFDE0(void) {
+void stage5_midboss5_drone(void) {
     s32 enemy_remove();
     u8 t;
     u8 c;
@@ -1859,7 +1859,7 @@ void func_002004E0(void) {
     }
 }
 
-void func_002005D0(void) {
+void stage5_midboss5_spin_drone_first(void) {
     void enemy_set_entity_count(s32);
     enemy_set_entity_count(0);
 }
@@ -1868,7 +1868,7 @@ s32 func_00202180();
 extern u8 D_002666A0[];
 extern u8 D_002666B0[];
 
-void func_002005E0() {
+void stage5_midboss5_spin_drone_start() {
     u8 temp_a1;
 
     reg_a0 = D_002666B0;
@@ -1896,7 +1896,7 @@ void func_002005E0() {
 
 void bullet_fire_fast_in_arc(void);
 
-void func_002006B0(void) {
+void stage5_midboss5_spin_drone(void) {
     s32 enemy_remove();
     if (ENTITY(reg_a6)->y.sh > -0x400) goto next_1;
     enemy_remove();

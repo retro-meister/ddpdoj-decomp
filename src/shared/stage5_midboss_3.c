@@ -9,7 +9,7 @@ void func_001FA320(void);
 
 s32 enemy_set_entity_count(s32);
 
-s32 func_001F96C0(void) {
+s32 stage5_midboss3_first(void) {
     return enemy_set_entity_count(3);
 }
 
@@ -25,7 +25,7 @@ extern s16 g_enemy_signal_2_as_s16;
 extern s16 D_00299768[];
 extern s8 enemy_move_end_requested;
 
-void func_001F96D0(void) {
+void stage5_midboss3_start(void) {
     reg_a0 = D_00265AD0;
     enemy_init_entities();
     reg_a0 = D_00265AB0;
@@ -63,7 +63,7 @@ extern u16 g_enemy_signal_2;
 extern u16 g_bullets_blocked;
 extern u16 g_enemies_stopped;
 
-void func_001F9750(void) {
+void stage5_midboss3_main(void) {
     u16 temp_a0;
     u16 temp_a0_4;
     u8 temp_a0_2;

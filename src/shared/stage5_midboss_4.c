@@ -21,7 +21,7 @@ void func_001FC670(void);
 void func_001FC710(void);
 void func_001FC7F0(void);
 
-void func_001FA390(void) {
+void stage5_midboss4_arrival_first(void) {
     void enemy_set_entity_count(s32);
     enemy_set_entity_count(0);
 }
@@ -36,7 +36,7 @@ extern u8 D_00265C20[];
 extern u8 D_00265C30[];
 extern u16 g_side_scroll_x[];
 
-void func_001FA3A0(void) {
+void stage5_midboss4_arrival_start(void) {
 
     reg_a0 = D_00265C30;
     enemy_init_entities();
@@ -67,7 +67,7 @@ s32 entity_velocity();
 extern u8 D_00265C50[];
 extern u16 g_enemies_stopped;
 
-void func_001FA470(void) {
+void stage5_midboss4_arrival(void) {
     u16 temp_a1;
     u16 temp_v1;
 
@@ -129,7 +129,7 @@ block_14:
     sprite_draw_layer1();
 }
 
-void func_001FA670(void) {
+void stage5_midboss4_first(void) {
     void enemy_set_entity_count(s32 id);
     enemy_set_entity_count(5);
 }
@@ -139,7 +139,7 @@ extern u8 D_0028DA30;
 extern s16 g_enemy_signal_1_as_s16;
 extern s16 D_00299768[];
 
-void func_001FA680() {
+void stage5_midboss4_start() {
     u16 temp_a1;
 
     reg_a0 = D_00265C90;
@@ -162,7 +162,7 @@ extern u8 D_00265F60[];
 extern u16 g_enemy_signal_1;
 extern u16 g_scroll_line;
 
-void func_001FA6F0(void) {
+void stage5_midboss4_main(void) {
     u16 temp_v0;
     u16 temp_v0_2;
 
@@ -976,7 +976,7 @@ block_set:
     cond_flag = 1;
 }
 
-void func_001FC1F0(void) {
+void stage5_midboss4_wave_beam_first(void) {
     void enemy_set_entity_count(s32);
     enemy_set_entity_count(0);
 }
@@ -984,7 +984,7 @@ void func_001FC1F0(void) {
 extern u16 D_00265F70[];
 extern u16 D_00265F80[];
 
-void func_001FC200(void) {
+void stage5_midboss4_wave_beam_start(void) {
     reg_a0 = (u8 *)(D_00265F80);
     enemy_init_entities();
     reg_a0 = (u8 *)(D_00265F70);
@@ -1005,7 +1005,7 @@ s32 func_001FC8E0();
 extern u8 D_00266160[];
 extern u8 D_0028E2E4;
 
-void func_001FC2B0(void) {
+void stage5_midboss4_wave_beam(void) {
     if (D_0028E2E4 != 0) return;
     ENTITY(reg_a6)->hp.sh = 0x7FFF;
     if (g_enemy_signal_1 == 0) goto block_end1;

@@ -1,7 +1,7 @@
 #include "common.h"
 #include "entity.h"
 
-void func_001F0E70(void);
+void stage5_boss_draw_form2_head(void);
 
 s32 func_001EFF10();
 s32 slowdown_allow_with_boss();
@@ -77,7 +77,7 @@ void func_001F00D0(void) {
 s32 velocity_from_dir256();
 extern u8 D_00264870[];
 
-void func_001F0330(void) {
+void stage5_boss_draw_belly(void) {
     s32 sprite_draw_layer2_keep();
     u32 temp_a1;
     u32 temp_a2;
@@ -115,7 +115,7 @@ void func_001F0330(void) {
     sprite_draw_layer2_keep(reg_a0, temp_a1, temp_a2, reg_tmp.h[0]);
 }
 
-void func_001F04A0(void) {
+void stage5_boss_draw_chest(void) {
     s32 sprite_draw_layer2_keep();
     reg_d0.w = 0;
     reg_d1.w = 0;
@@ -139,7 +139,7 @@ void func_001F04A0(void) {
     sprite_draw_layer2_keep();
 }
 
-void func_001F0570(void) {
+void stage5_boss_draw_stinger(void) {
     s32 sprite_draw_layer2_keep();
     reg_d0.h[0] = 0x1A;
     reg_d1.w = 0;
@@ -162,7 +162,7 @@ void func_001F0570(void) {
 
 extern u16 D_00264890[];
 
-void func_001F0620(void) {
+void stage5_boss_draw_left_arm_gun_low(void) {
     s32 sprite_draw_layer2_keep();
     u32 temp_a0;
 
@@ -194,7 +194,7 @@ void func_001F0620(void) {
     sprite_draw_layer2_keep();
 }
 
-void func_001F0780(void) {
+void stage5_boss_draw_left_arm_gun_mid(void) {
     s32 sprite_draw_layer2_keep();
     u32 temp_a0;
 
@@ -226,7 +226,7 @@ void func_001F0780(void) {
     sprite_draw_layer2_keep();
 }
 
-void func_001F08E0(void) {
+void stage5_boss_draw_left_arm_gun_high(void) {
     s32 sprite_draw_layer2_keep();
     u32 temp_a0;
 
@@ -258,7 +258,7 @@ void func_001F08E0(void) {
     sprite_draw_layer2_keep();
 }
 
-void func_001F0A40(void) {
+void stage5_boss_draw_right_arm_gun_low(void) {
     s32 sprite_draw_layer2_keep();
     u32 temp_a0;
 
@@ -290,7 +290,7 @@ void func_001F0A40(void) {
     sprite_draw_layer2_keep();
 }
 
-void func_001F0BA0(void) {
+void stage5_boss_draw_right_arm_gun_mid(void) {
     s32 sprite_draw_layer2_keep();
     u32 temp_a0;
 
@@ -322,7 +322,7 @@ void func_001F0BA0(void) {
     sprite_draw_layer2_keep();
 }
 
-void func_001F0D00(void) {
+void stage5_boss_draw_right_arm_gun_high(void) {
     s32 sprite_draw_layer2_keep();
     u32 temp_a0;
 
@@ -355,13 +355,13 @@ void func_001F0D00(void) {
 }
 
 
-void func_001F0E60(void) {
-    func_001F0E70();
+void stage5_boss_draw_head(void) {
+    stage5_boss_draw_form2_head();
 }
 
 extern u8 D_00264990[];
 
-void func_001F0E70(void) {
+void stage5_boss_draw_form2_head(void) {
     s32 sprite_draw_layer2_keep();
     u32 temp_a1;
 
@@ -388,7 +388,7 @@ void func_001F0E70(void) {
     sprite_draw_layer2_keep();
 }
 
-void func_001F0F50(void) {
+void stage5_boss_draw_form2_belly(void) {
     s32 sprite_draw_layer2_keep();
     u32 temp_a1;
     u32 temp_a2;
@@ -419,7 +419,7 @@ void func_001F0F50(void) {
 }
 
 
-void func_001F1040(void)
+void stage5_boss_draw_form2_chest(void)
 {
     extern void sprite_draw_layer2_keep(void);
     u8 *source;
@@ -436,7 +436,7 @@ void func_001F1040(void)
     sprite_draw_layer2_keep();
 }
 
-void func_001F10A0(void) {
+void stage5_boss_draw_form2_stinger(void) {
     s32 sprite_draw_layer2_keep();
     reg_d0.h[0] = 0x1A;
     reg_d1.w = 0;
@@ -459,7 +459,7 @@ void func_001F10A0(void) {
 
 extern u8 D_002649A8[];
 
-void func_001F1150(void) {
+void stage5_boss_draw_form2_exhaust(void) {
     s32 sprite_draw_layer2_keep();
     u16 temp_a1;
 
@@ -480,7 +480,7 @@ void func_001F1150(void) {
 
 extern u16 D_002649C0[];
 
-void func_001F11D0(void) {
+void stage5_boss_draw_form2_wings(void) {
     s32 sprite_draw_layer2_keep();
     u16 temp_a3;
     u32 temp_a0;
@@ -507,7 +507,7 @@ s32 sprite_draw_with_last_boss_keep();
 extern u8 D_00264A50[];
 extern u16 g_frame_mod3;
 
-void func_001F1270(void) {
+void stage5_boss_draw_form3_body(void) {
     s32 sprite_draw_layer2_keep();
 #ifdef DEATH_LABEL
     s32 i;
@@ -567,7 +567,7 @@ extern u16 MAIN_OR_DEATH_LABEL(D_00264A70, death_D_0026A2E0)[];
 #define BOSS_Y (ENTITY(reg_a6)->x.h)
 #endif
 
-void func_001F1320(void) {
+void stage5_boss_draw_form3_tail(void) {
     s32 sprite_draw_layer2_keep();
 #ifdef DEATH_LABEL
     s32 i;
@@ -603,7 +603,7 @@ void func_001F1320(void) {
 extern u8 D_00264AC0[];
 extern u16 g_frame_mod2;
 
-void func_001F1420(void) {
+void stage5_boss_draw_form3_bomb_barrier(void) {
     s32 sprite_draw_layer2_keep();
 #ifdef DEATH_LABEL
     s32 i;

@@ -1,25 +1,25 @@
 #include "common.h"
 #include "entity.h"
 
-void func_001E8840(void);
-void func_001E88D0(void);
-void func_001E8950(void);
-void func_001E8C90(void);
-void func_001E8D20(void);
-void func_001E8DA0(void);
-void func_001E8EF0(void);
-void func_001E8F80(void);
+void stage5_boss_head_anim(void);
+void stage5_boss_belly_anim(void);
+void stage5_boss_arm_guns_track(void);
+void stage5_boss_form2_exhaust_anim(void);
+void stage5_boss_form2_wings_anim(void);
+void stage5_boss_form3_tail_track(void);
+void stage5_boss_form3_body_anim(void);
+void stage5_boss_form3_bomb_barrier_anim(void);
 void func_001E8FF0(void);
 
 
 
-void func_001E8820(void) {
+void stage5_boss_head_anim_start(void) {
     *(s16 *)(reg_a4 + 2) = 1;
     ENTITY(reg_a6)[9].offset_y.sh = 0;
-    func_001E8840();
+    stage5_boss_head_anim();
 }
 
-void func_001E8840(void) {
+void stage5_boss_head_anim(void) {
     reg_tmp.b[0] = *(u8 *)(reg_a4 + 3);
     *(u8 *)(reg_a4 + 3) -= 1;
     if ((s32) reg_tmp.b[0] <= 0) {
@@ -32,13 +32,13 @@ void func_001E8840(void) {
 }
 
 
-void func_001E88B0(void) {
+void stage5_boss_belly_anim_start(void) {
     *(s16 *)(reg_a4 + 2) = 2;
     ENTITY(reg_a6)[9].offset_x.sh = 0;
-    func_001E88D0();
+    stage5_boss_belly_anim();
 }
 
-void func_001E88D0(void) {
+void stage5_boss_belly_anim(void) {
     reg_tmp.b[0] = *(u8 *)(reg_a4 + 3);
     *(u8 *)(reg_a4 + 3) -= 1;
     if ((s32) reg_tmp.b[0] <= 0) {
@@ -51,9 +51,9 @@ void func_001E88D0(void) {
 }
 
 
-void func_001E8940(void) {
+void stage5_boss_arm_guns_track_start(void) {
     *(s16 *)(reg_a4 + 2) = 1;
-    func_001E8950();
+    stage5_boss_arm_guns_track();
 }
 
 s32 enemy_switch_target_player();
@@ -62,7 +62,7 @@ s32 direction_turn_toward();
 extern s16 g_player2[];
 extern s16 g_player1[];
 
-void func_001E8950(void) {
+void stage5_boss_arm_guns_track(void) {
     s16 *temp_a0;
     u16 temp_a1;
 
@@ -161,13 +161,13 @@ block_6:
 }
 
 
-void func_001E8C70(void) {
+void stage5_boss_form2_exhaust_anim_start(void) {
     *(u16 *)(reg_a4 + 2) = 0;
     ENTITY(reg_a6)[9].draw.h = 0;
-    func_001E8C90();
+    stage5_boss_form2_exhaust_anim();
 }
 
-void func_001E8C90(void) {
+void stage5_boss_form2_exhaust_anim(void) {
     reg_tmp.b[0] = *(u8 *)(reg_a4 + 3);
     *(u8 *)(reg_a4 + 3) -= 1;
     if ((s32) reg_tmp.b[0] <= 0) {
@@ -180,13 +180,13 @@ void func_001E8C90(void) {
 }
 
 
-void func_001E8D00(void) {
+void stage5_boss_form2_wings_anim_start(void) {
     ((u16 *)((void *)reg_a4))[1] = 1;
     *(u16 *)((u8 *)((void *)reg_a6) + 0x12C) = 0;
-    func_001E8D20();
+    stage5_boss_form2_wings_anim();
 }
 
-void func_001E8D20(void) {
+void stage5_boss_form2_wings_anim(void) {
     reg_tmp.b[0] = *(u8 *)(reg_a4 + 3);
     *(u8 *)(reg_a4 + 3) -= 1;
     if ((s32) reg_tmp.b[0] <= 0) {
@@ -199,14 +199,14 @@ void func_001E8D20(void) {
 }
 
 
-void func_001E8D90(void) {
+void stage5_boss_form3_tail_track_start(void) {
     *(s16 *)((u8 *)((void *)reg_a4) + 2) = 1;
-    func_001E8DA0();
+    stage5_boss_form3_tail_track();
 }
 
 
 
-void func_001E8DA0(void) {
+void stage5_boss_form3_tail_track(void) {
     s16 *temp_a0;
 
     reg_tmp.b[0] = *(u8 *)(reg_a4 + 3);
@@ -253,13 +253,13 @@ typedef struct WorkReg {
 } WorkReg;
 
 
-void func_001E8ED0(void) {
+void stage5_boss_form3_body_anim_start(void) {
     ((WorkReg *)reg_a4)->unk2 = 1;
     *(s16 *)((u8 *)((void *)reg_a6) + 0x132) = 0;
-    func_001E8EF0();
+    stage5_boss_form3_body_anim();
 }
 
-void func_001E8EF0(void) {
+void stage5_boss_form3_body_anim(void) {
     reg_tmp.b[0] = *(u8 *)(reg_a4 + 3);
     *(u8 *)(reg_a4 + 3) -= 1;
     if ((s32) reg_tmp.b[0] <= 0) {
@@ -272,13 +272,13 @@ void func_001E8EF0(void) {
 }
 
 
-void func_001E8F60(void) {
+void stage5_boss_form3_bomb_barrier_anim_start(void) {
     ((s16 *)((void *)reg_a4))[1] = 1;
     *(s16 *)((u8 *)((void *)reg_a6) + 0x138) = 0;
-    func_001E8F80();
+    stage5_boss_form3_bomb_barrier_anim();
 }
 
-void func_001E8F80(void) {
+void stage5_boss_form3_bomb_barrier_anim(void) {
     reg_tmp.b[0] = *(u8 *)(reg_a4 + 3);
     *(u8 *)(reg_a4 + 3) -= 1;
     if ((s32) reg_tmp.b[0] <= 0) {
