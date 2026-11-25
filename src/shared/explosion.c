@@ -222,8 +222,8 @@ typedef void (*Fn)();
 s32 debris_spawn();
 s32 entity_follow_scroll();
 s32 velocity_from_dir256();
-extern u16 D_0024F570[];
-extern u16 D_0024F680[];
+extern u16 explosion_scripts[];
+extern u16 explosion_scripts_b[];
 extern u8 D_00250760[];
 extern u16 g_game_frame;
 extern u8 D_0029AA40[];
@@ -251,12 +251,12 @@ block_main:
 block_first:
     *(u8 *)(reg_a6 + 1) |= 0x40;
     reg_d1.h[0] = *(u16 *)reg_a6;
-    reg_a1 = (u8 *)D_0024F570;
+    reg_a1 = (u8 *)explosion_scripts;
     reg_d1.h[0] = reg_d1.b[0];
     reg_tmp.w = reg_d1.w;
     if (!(reg_tmp.w & 0x80)) goto skip_1;
     reg_d1.w &= ~0x80;
-    reg_a1 = (u8 *)D_0024F680;
+    reg_a1 = (u8 *)explosion_scripts_b;
 skip_1:
     reg_d1.h[0] *= 8;
     reg_tmp.h[1] = ((reg_d1.h[0] + 4) != 0) ? *(u16 *)(reg_a1 + ((s16)(reg_d1.h[0] + 4) & ~1)) : *(u16 *)reg_a1;

@@ -1798,7 +1798,7 @@ void bullet_fire_direct(void) {
     bullet_spawn();
 }
 
-extern u16 D_0024E7D0[];
+extern u16 bullet_type_records[];
 extern u32 D_0028DEA4;
 extern u32 D_0028DEA8;
 extern u16 *D_0028DEB0_as_u16_p;
@@ -1906,7 +1906,7 @@ next_5:
     reg_d0.h[0] &= 0x3F;
     reg_d0.h[0] += reg_d0.h[0];
     reg_d0.h[0] += reg_d0.h[0];
-    reg_a1 = (u8 *) D_0024E7D0;
+    reg_a1 = (u8 *) bullet_type_records;
     reg_tmp.h[1] = (reg_d0.h[0] != 0) ? *(u16 *) (reg_a1 + ((s16) reg_d0.h[0] & ~1)) : *(u16 *) reg_a1;
     reg_tmp.h[0] = (((u16) reg_d0.h[0] + 2) != 0) ? *(u16 *) (reg_a1 + ((s16) ((u16) reg_d0.h[0] + 2) & ~1)) : *(u16 *) reg_a1;
     reg_a1 = (u8 *) reg_tmp.w;
@@ -1954,7 +1954,7 @@ next_5:
     func_00128F70();
 }
 
-extern u8 D_0024E740[];
+extern u8 bullet_type_setup_routines[];
 extern u8 *D_0028DEB0_as_u8_p;
 
 void func_00128F70(void) {
@@ -1973,7 +1973,7 @@ next_1:
     if (*(s16 *) reg_a1 == 0) {
         goto next_2;
     }
-    reg_a1 = (u8 *)D_0024E740;
+    reg_a1 = (u8 *)bullet_type_setup_routines;
     reg_a1 += reg_d0.h[0];
     reg_tmp.h[1] = *(u16 *) reg_a1;
     reg_tmp.h[0] = *(u16 *) (reg_a1 + 2);
@@ -2246,7 +2246,7 @@ next_5:
     reg_d0.h[0] &= 0x3F;
     reg_d0.h[0] += reg_d0.h[0];
     reg_d0.h[0] += reg_d0.h[0];
-    reg_a1 = (u8 *) D_0024E7D0;
+    reg_a1 = (u8 *) bullet_type_records;
     reg_tmp.h[1] = (reg_d0.h[0] != 0) ? *(u16 *) (reg_a1 + ((s16) reg_d0.h[0] & ~1)) : *(u16 *) reg_a1;
     reg_tmp.h[0] = (((u16) reg_d0.h[0] + 2) != 0) ? *(u16 *) (reg_a1 + ((s16) ((u16) reg_d0.h[0] + 2) & ~1)) : *(u16 *) reg_a1;
     reg_a1 = (u8 *) reg_tmp.w;

@@ -75,7 +75,7 @@ void func_00129DB0(void) {
 #endif
 }
 
-extern u8 D_0024EB30[];
+extern u8 bullet_move_routines[];
 extern u8 D_0024EE90[];
 void func_00125EE0();
 #ifdef DEATH_LABEL
@@ -87,7 +87,7 @@ void bullet_spawn256();
 void func_0014E030();
 void func_00202760();
 void func_00203330();
-extern u8 D_0024E7D0_as_u8_a[];
+extern u8 bullet_type_records_as_u8_a[];
 extern u8 D_0024F0F0[];
 extern u8 D_00262570[];
 extern u32 D_0028DEA4;
@@ -371,7 +371,7 @@ L_not_plain:
     *(u16 *)(reg_a6 + 0x20) = reg_d3.h[0];
     reg_d0.w = 0x3F;
     reg_d0.h[0] &= ENTITY(reg_a6)->flags.h;
-    reg_a0 = D_0024EB30;
+    reg_a0 = bullet_move_routines;
     reg_d0.h[0] += reg_d0.h[0];
     reg_d0.h[0] += reg_d0.h[0];
     reg_a0 += reg_d0.h[0];
@@ -436,7 +436,7 @@ L_0012A4B0:
 L_0012A5DC:
     reg_d0.w = 0x3F;
     reg_d0.h[0] &= ENTITY(reg_a6)->flags.h;
-    reg_a0 = D_0024EB30;
+    reg_a0 = bullet_move_routines;
     reg_d0.h[0] += reg_d0.h[0];
     reg_d0.h[0] += reg_d0.h[0];
     reg_a0 += reg_d0.h[0];
@@ -472,7 +472,7 @@ block_33:
         ENTITY(reg_a6)->draw.h = reg_tmp.h[1];
         ENTITY(reg_a6)->sprite.h = reg_tmp.h[0];
         reg_d0.h[0] = ENTITY(reg_a6)->flags.h;
-        reg_a1 = D_0024E7D0_as_u8_a;
+        reg_a1 = bullet_type_records_as_u8_a;
         reg_d0.h[0] &= 0x3F;
         reg_d0.h[0] += reg_d0.h[0];
         reg_d0.h[0] += reg_d0.h[0];

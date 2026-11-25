@@ -462,11 +462,11 @@ void func_001B8D00(void) {
 }
 
 s32 func_00201270();
-extern u8 D_00250CD0[];
+extern u8 debris_random_patterns[];
 
 void func_001B91C0(void) {
     func_00201270();
-    reg_a1 = D_00250CD0;
+    reg_a1 = debris_random_patterns;
     reg_d0.h[0] += reg_d0.h[0];
     reg_d0.h[0] += reg_d0.h[0];
     reg_a1 += reg_d0.h[0];
