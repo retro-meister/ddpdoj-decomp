@@ -62,7 +62,7 @@ segments:
       - [0x3af90, c, shared/fade]
       - [0x3ca00, c, shared/player_support]
       - [0x3fa10, c, shared/player]
-      - [0x45dc0, c, shared/unit_00145D40]
+      - [0x45dc0, c, shared/player_laser]
       - [0x48750, c, shared/unit_001486D0]
       - [0x4d2a0, c, shared/enemy]
       - [0x4f070, c, shared/stage1_boss_misc]

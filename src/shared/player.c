@@ -744,7 +744,7 @@ void player2_task() {
 s32 func_001340B0();
 s32 p1_hyper_item_take();
 s32 p2_hyper_item_take();
-s32 func_00145E70(u8 *);
+s32 weapon_level_data_set(u8 *);
 s32 func_001ABCA0();
 s32 func_001ABEA0();
 extern u16 D_002555C0[];
@@ -895,7 +895,7 @@ next_30:
 next_35:
     func_00141710();
 next_36:
-    func_00145E70(reg_a6);
+    weapon_level_data_set(reg_a6);
 next_40:
     if (g_simulation_active == 0) goto next_76;
     if (reg_d6.h[0] == 0) goto next_41;
@@ -913,7 +913,7 @@ next_41:
     PLAYER(reg_a6)->shot_power.h = reg_d1.h[0];
     reg_d1.h[0] = D_006E5BF0[0];
     PLAYER(reg_a6)->laser_power.h = reg_d1.h[0];
-    func_00145E70(reg_a6);
+    weapon_level_data_set(reg_a6);
     g_p1_hyper_items = 0;
     g_p2_hyper_items = 0;
     if (D_0028E2B0 != 0) goto next_60;

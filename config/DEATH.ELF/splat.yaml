@@ -65,7 +65,7 @@ segments:
       - [0x3c660, c, shared/fade]
       - [0x3e0d0, c, shared/player_support]
       - [0x410f0, c, shared/player]
-      - [0x47770, c, shared/unit_00145D40]
+      - [0x47770, c, shared/player_laser]
       - [0x4a100, c, shared/replay_header]
       - [0x4a3f0, c, shared/replay]
       - [0x4c030, c, shared/unit_001486D0]

@@ -61,7 +61,7 @@ void func_00148860() {
 
 typedef void (*Fn)();
 
-extern u8 D_00257820[];
+extern u8 player_shot_update_routines[];
 extern u16 g_player_shot_count;
 extern u8 g_p2_hyper_active_as_u8;
 extern u8 g_p1_hyper_active_as_u8;
@@ -97,7 +97,7 @@ loop_2:
     ENTITY(reg_a6)->x.h -= reg_d6.h[0];
     reg_d0.w = 0xF;
     reg_d0.h[0] &= reg_d1.h[0];
-    ((Fn)*(u32 *)((u8 *)D_00257820 + (reg_d0.h[0] * 4)))();
+    ((Fn)*(u32 *)((u8 *)player_shot_update_routines + (reg_d0.h[0] * 4)))();
 next_1:
     reg_a6 += 0x30;
     t = reg_d7.h[0] - 1;

@@ -2,27 +2,27 @@
 #include "player.h"
 #include "entity.h"
 
-void func_001468F0(void);
-void func_00146920(void);
-void func_00146940(void);
-void func_001469E0(void);
-void func_00146A50(void);
-void func_00146A90();
-void func_00146DB0();
-void func_00147050();
-void func_001471E0(void);
-void func_00147230(void);
-void func_00147250(void);
-void func_001473E0(void);
-void func_00147440(void);
-void func_00147470();
-void func_00147780(void);
-void func_00147830(void);
-void func_00147CA0(void);
-void func_00147F30(void);
-void func_00147F90(void);
+void p1_laser_segment_b(void);
+void p2_laser_segment_b(void);
+void laser_segment_move(void);
+void p1_laser_front_hyper(void);
+void p2_laser_front_hyper(void);
+void laser_front_update();
+void laser_muzzle_update();
+void laser_muzzle_update_strong();
+void p1_laser_ship_glow_hyper(void);
+void p2_laser_ship_glow_hyper(void);
+void laser_ship_glow_update(void);
+void p1_laser_option_glow_hyper(void);
+void p2_laser_option_glow_hyper(void);
+void laser_option_glow_update();
+void laser_segment_move_strong(void);
+void laser_segment_move_hyper(void);
+void laser_segment_spawn(void);
+void laser_segment_end(void);
+void laser_segment_hit_check(void);
 void func_001480C0(void);
-void func_00148110(void);
+void laser_impact_start(void);
 
 s32 debug_print_hex8_stub();
 s32 debug_print_hex_short_stub();
@@ -87,7 +87,7 @@ extern u8 g_p2_weapon_level_data[];
 extern u8 g_p1_weapon_level_data[];
 extern u8 g_player1_as_u8_a[];
 
-void func_00145E70(u8 *arg0) {
+void weapon_level_data_set(u8 *arg0) {
     u8 *sa0;
     u8 *sa1;
     u8 *sa2;
@@ -384,20 +384,20 @@ block_4:
 
 s32 entity_draw_with_player_lasers();                            /* extern */
 
-void func_001466E0(void) {
+void p1_laser_draw_alternating(void) {
     if ((g_two_player_game != 0) || (g_frame_mod2 == 0)) {
         entity_draw_with_player_lasers();
     }
 }
 
-void func_00146720(void) {
+void p2_laser_draw_alternating(void) {
     if ((g_two_player_game != 0) || (g_frame_mod2 != 0)) {
         entity_draw_with_player_lasers();
     }
 }
 
-extern u8 D_00257760[];
-extern u8 D_002577B0[];
+extern u8 p1_laser_part_routines[];
+extern u8 p2_laser_part_routines[];
 extern u16 g_player_laser_count;
 extern u16 g_hyper_hit_scratch;
 extern u16 g_p2_hyper_active;
@@ -407,7 +407,7 @@ extern u16 g_p1_laser_entities_as_u16_a[];
 extern s16 g_player2[];
 extern s16 g_player1[];
 
-void func_00146760(void) {
+void player_lasers_update(void) {
     s32 temp_s0;
     temp_s0 = (s32)reg_a5;
     g_hyper_hit_scratch = 0;
@@ -422,7 +422,7 @@ void func_00146760(void) {
                 reg_d1.w = 0x1F;
                 g_player_laser_count += 1;
                 reg_d1.h[0] &= reg_d0.h[0];
-                ((Fn)*(u32 *)((u8 *)D_00257760 + (reg_d1.h[0] * 4)))();
+                ((Fn)*(u32 *)((u8 *)p1_laser_part_routines + (reg_d1.h[0] * 4)))();
             }
             reg_a6 += 0x30;
         } while ((s16)(--reg_d7.h[0]) >= 0);
@@ -437,7 +437,7 @@ void func_00146760(void) {
                 reg_d1.w = 0x1F;
                 g_player_laser_count += 1;
                 reg_d1.h[0] &= reg_d0.h[0];
-                ((Fn)*(u32 *)((u8 *)D_002577B0 + (reg_d1.h[0] * 4)))();
+                ((Fn)*(u32 *)((u8 *)p2_laser_part_routines + (reg_d1.h[0] * 4)))();
             }
             reg_a6 += 0x30;
         } while ((s16)(--reg_d7.h[0]) >= 0);
@@ -446,61 +446,61 @@ void func_00146760(void) {
 }
 
 
-void func_001468E0(void) {
-    func_001468F0();
+void p1_laser_segment_a(void) {
+    p1_laser_segment_b();
 }
 
 
-void func_001468F0(void) {
+void p1_laser_segment_b(void) {
     reg_d0.h[0] = PLAYER(g_player1_as_u8_a)->moved_y.h;
     reg_d1.h[0] = PLAYER(g_player1_as_u8_a)->x.h;
-    func_00146940();
+    laser_segment_move();
 }
 
 
-void func_00146910(void) {
-    func_00146920();
+void p2_laser_segment_a(void) {
+    p2_laser_segment_b();
 }
 
-void func_00146920(void) {
+void p2_laser_segment_b(void) {
     reg_d0.h[0] = PLAYER(g_player2)->moved_y.h;
     reg_d1.h[0] = PLAYER(g_player2)->x.h;
-    func_00146940();
+    laser_segment_move();
 }
 
 
-void func_00146940() {
+void laser_segment_move() {
     u8 *temp_a0;
 
     reg_d0.h[0] += 0x800;
     temp_a0 = reg_a6 + 2;
     reg_d0.h[0] += ENTITY(reg_a6)->y.h;
     if ((s32) reg_d0.h[0] >= 0x7800) {
-        func_00147F30();
+        laser_segment_end();
         return;
     }
     ENTITY(reg_a6)->y.h = (u16) reg_d0.h[0];
     ENTITY(reg_a6)->x.h = (u16) reg_d1.h[0];
-    func_00147F90();
+    laser_segment_hit_check();
 }
 
 
-void func_001469B0(void) {
-    func_001469E0();
+void p1_laser_front_a(void) {
+    p1_laser_front_hyper();
 }
 
 
-void func_001469C0(void) {
-    func_001469E0();
+void p1_laser_front_b(void) {
+    p1_laser_front_hyper();
 }
 
-void func_001469D0(void) {
-    func_001469E0();
+void p1_laser_front_strong(void) {
+    p1_laser_front_hyper();
 }
 
 extern u8 D_0029D730[];
 extern u8 D_0029D770[];
-void func_001469E0(void)
+void p1_laser_front_hyper(void)
 {
   u16 value = PLAYER(g_player1_as_u8_a)->moved_y.h;
   int new_var;
@@ -511,20 +511,20 @@ void func_001469E0(void)
   reg_d2.h[0] = (new_var = PLAYER(g_player1_as_u8_a)->x.h);
   reg_a1 = D_0029D730;
   reg_d1.h[0] = value;
-  func_00146A90(value);
+  laser_front_update(value);
 }
 
 
-void func_00146A20(void) {
-    func_00146A50();
+void p2_laser_front_a(void) {
+    p2_laser_front_hyper();
 }
 
-void func_00146A30(void) {
-    func_00146A50();
+void p2_laser_front_b(void) {
+    p2_laser_front_hyper();
 }
 
-void func_00146A40(void) {
-    func_00146A50();
+void p2_laser_front_strong(void) {
+    p2_laser_front_hyper();
 }
 
 extern u8 D_0029D710[];
@@ -534,7 +534,7 @@ inline int inline_fn(u16 arg0, u16 arg1, u16 arg2)
   return (arg0 && arg1) && arg2;
 }
 
-void func_00146A50(void)
+void p2_laser_front_hyper(void)
 {
   u16 sourceValue = PLAYER(g_player2)->moved_y.h;
   u16 new_var;
@@ -553,14 +553,14 @@ void func_00146A50(void)
   }
   reg_d1.h[new_var2] = new_var;
   reg_d2.h[new_var2] = new_var3;
-  func_00146A90(new_var);
+  laser_front_update(new_var);
 }
 
 void func_0020A040(void);
 extern u16 g_p2_laser_bomb_active;
 extern u16 g_p1_laser_bomb_active;
 
-void func_00146A90() {
+void laser_front_update() {
     reg_d1.h[0] += 0x800;
     ENTITY(reg_a6)->y.h += reg_d1.h[0];
     ENTITY(reg_a6)->x.h = reg_d2.h[0];
@@ -604,7 +604,7 @@ block_3:
     ENTITY(reg_a6)->flags.h = 0;
     return;
 block_4:
-    func_00147F30();
+    laser_segment_end();
     return;
 block_5:
     if (g_p2_laser_bomb_active != 0) return;
@@ -615,7 +615,7 @@ block_6:
 extern u16 g_p1_options_as_u16_a[];
 extern u16 D_0029F182[];
 extern u16 D_0029F184[];
-void func_00146CB0(void)
+void p1_laser_muzzle_a(void)
 {
     extern void sfx_p1_laser_a_start(void);
   unsigned int highWord = D_0029F182[0];
@@ -623,23 +623,23 @@ void func_00146CB0(void)
   reg_d0.h[0] = D_0029F184[0];
   reg_a3 = (u8 *)((u32) (&sfx_p1_laser_a_start));
   reg_d0.h[1] = highWord;
-  func_00146DB0(highWord);
+  laser_muzzle_update(highWord);
 }
 
-void func_00146CF0(void) {
+void p1_laser_muzzle_b(void) {
     extern void sfx_p1_laser_b_start(void);
     unsigned int highWord = D_0029F182[0];
     reg_a4 = (u8 *)((u32)g_p1_options_as_u16_a);
     reg_d0.h[0] = D_0029F184[0];
     reg_a3 = (u8 *)((u32)(&sfx_p1_laser_b_start));
     reg_d0.h[1] = highWord;
-    func_00146DB0(highWord);
+    laser_muzzle_update(highWord);
 }
 
 extern u16 g_p2_options_as_u16_a[];
 extern u16 D_0029F112[];
 extern u16 D_0029F114[];
-void func_00146D30(void)
+void p2_laser_muzzle_a(void)
 {
     extern void sfx_p2_laser_a_start(void);
   u16 highWord = D_0029F112[0];
@@ -648,21 +648,21 @@ void func_00146D30(void)
   reg_d0.h[0] = D_0029F114[0];
   reg_a3 = (u8 *)((u32) sfx_p2_laser_a_start);
   reg_d0.h[0] = D_0029F114[0];
-  func_00146DB0(highWord);
+  laser_muzzle_update(highWord);
 }
 
-void func_00146D70(void) {
+void p2_laser_muzzle_b(void) {
     extern void sfx_p2_laser_b_start(void);
     unsigned int highWord = D_0029F112[0];
     reg_a4 = (u8 *)((u32)g_p2_options_as_u16_a);
     reg_d0.h[0] = D_0029F114[0];
     reg_a3 = (u8 *)((u32)(&sfx_p2_laser_b_start));
     reg_d0.h[1] = highWord;
-    func_00146DB0(highWord);
+    laser_muzzle_update(highWord);
 }
 
 
-void func_00146DB0() {
+void laser_muzzle_update() {
     s64 temp_v1;
     u16 temp_a0;
 
@@ -692,7 +692,7 @@ block_7:
             reg_call_target();
         }
 block_8:
-        func_00147CA0();
+        laser_segment_spawn();
         goto block_9;
     }
 block_9:
@@ -710,8 +710,8 @@ block_9:
 
 extern u8 g_p1_options[];
 
-void func_00146F10(void) {
-    extern void func_00147050(u16);
+void p1_laser_muzzle_strong(void) {
+    extern void laser_muzzle_update_strong(u16);
     extern void sfx_p1_laser_a_start();
     extern void sfx_p1_laser_b_start();
     reg_a4 = g_p1_options;
@@ -719,28 +719,28 @@ void func_00146F10(void) {
     reg_d0.h[1] = D_0029F182[0];
     reg_d0.h[0] = D_0029F184[0];
     if (PLAYER(g_player1_as_u8_a)->ship_type.h == 0) {
-        func_00147050(D_0029F182[0]);
+        laser_muzzle_update_strong(D_0029F182[0]);
         return;
     }
     reg_a3 = (void *)sfx_p1_laser_b_start;
-    func_00147050(D_0029F182[0]);
+    laser_muzzle_update_strong(D_0029F182[0]);
 }
 
 extern void sfx_p1_laser_hyper_start(void);
 
-void func_00146F80(void) {
+void p1_laser_muzzle_hyper(void) {
     unsigned int highWord = D_0029F182[0];
     reg_a4 = (u8 *)((u32)g_p1_options_as_u16_a);
     reg_d0.h[0] = D_0029F184[0];
     reg_a3 = (u8 *)((u32)(&sfx_p1_laser_hyper_start));
     reg_d0.h[1] = highWord;
-    func_00147050(highWord);
+    laser_muzzle_update_strong(highWord);
 }
 
 extern u8 g_p2_options[];
 
-void func_00146FC0(void) {
-    extern void func_00147050(u16);
+void p2_laser_muzzle_strong(void) {
+    extern void laser_muzzle_update_strong(u16);
     extern void sfx_p2_laser_a_start();
     extern void sfx_p2_laser_b_start();
     reg_a4 = g_p2_options;
@@ -750,21 +750,21 @@ void func_00146FC0(void) {
     if (PLAYER(g_player2)->ship_type.h != 0) {
         reg_a3 = (void *)sfx_p2_laser_b_start;
     }
-    func_00147050(D_0029F112[0]);
+    laser_muzzle_update_strong(D_0029F112[0]);
 }
 
 extern void sfx_p2_laser_hyper_start(void);
 
-void func_00147010(void) {
+void p2_laser_muzzle_hyper(void) {
     unsigned int highWord = D_0029F112[0];
     reg_a4 = (u8 *)((u32)g_p2_options_as_u16_a);
     reg_d0.h[0] = D_0029F114[0];
     reg_a3 = (u8 *)((u32)(&sfx_p2_laser_hyper_start));
     reg_d0.h[1] = highWord;
-    func_00147050(highWord);
+    laser_muzzle_update_strong(highWord);
 }
 
-void func_00147050() {
+void laser_muzzle_update_strong() {
     s64 temp_v1;
     u16 temp_a0;
 
@@ -794,7 +794,7 @@ block_7:
             reg_call_target();
         }
 block_8:
-        func_00147CA0();
+        laser_segment_spawn();
         goto block_9;
     }
 block_9:
@@ -811,48 +811,48 @@ block_9:
 }
 
 
-void func_001471B0(void) {
-    func_001471E0();
+void p1_laser_ship_glow_a(void) {
+    p1_laser_ship_glow_hyper();
 }
 
 
-void func_001471C0(void) {
-    func_001471E0();
+void p1_laser_ship_glow_b(void) {
+    p1_laser_ship_glow_hyper();
 }
 
-void func_001471D0(void) {
-    func_001471E0();
+void p1_laser_ship_glow_strong(void) {
+    p1_laser_ship_glow_hyper();
 }
 
 
-void func_001471E0(void) {
+void p1_laser_ship_glow_hyper(void) {
     reg_d0.h[1] = PLAYER(g_player1_as_u8_a)->y.h;
     *(u16 *)&reg_d0 = PLAYER(g_player1_as_u8_a)->x.h;
-    func_00147250();
+    laser_ship_glow_update();
 }
 
 
-void func_00147200(void) {
-    func_00147230();
+void p2_laser_ship_glow_a(void) {
+    p2_laser_ship_glow_hyper();
 }
 
 
-void func_00147210(void) {
-    func_00147230();
+void p2_laser_ship_glow_b(void) {
+    p2_laser_ship_glow_hyper();
 }
 
-void func_00147220(void) {
-    func_00147230();
+void p2_laser_ship_glow_strong(void) {
+    p2_laser_ship_glow_hyper();
 }
 
 
-void func_00147230(void) {
+void p2_laser_ship_glow_hyper(void) {
     reg_d0.h[1] = PLAYER(g_player2)->y.h;
     *(u16 *)&reg_d0 = PLAYER(g_player2)->x.h;
-    func_00147250();
+    laser_ship_glow_update();
 }
 
-void func_00147250(void) {
+void laser_ship_glow_update(void) {
     ENTITY(reg_a6)->y.h = (u16) reg_d0.h[1];
     ENTITY(reg_a6)->x.h = (u16) reg_d0.h[0];
     reg_d0.w = 0;
@@ -885,48 +885,48 @@ block_15:
 }
 
 
-void func_001473B0(void) {
-    func_001473E0();
+void p1_laser_option_glow_a(void) {
+    p1_laser_option_glow_hyper();
 }
 
 
-void func_001473C0(void) {
-    func_001473E0();
+void p1_laser_option_glow_b(void) {
+    p1_laser_option_glow_hyper();
 }
 
-void func_001473D0(void) {
-    func_001473E0();
+void p1_laser_option_glow_strong(void) {
+    p1_laser_option_glow_hyper();
 }
-void func_001473E0(void) {
+void p1_laser_option_glow_hyper(void) {
     reg_d0.h[1] = D_0029F182[0];
     reg_d0.h[0] = D_0029F184[0];
     reg_d1.h[0] = PLAYER(g_player1_as_u8_a)->laser_power.h;
-    func_00147470();
+    laser_option_glow_update();
 }
 
 
-void func_00147410(void) {
-    func_00147440();
+void p2_laser_option_glow_a(void) {
+    p2_laser_option_glow_hyper();
 }
 
-void func_00147420(void) {
-    func_00147440();
+void p2_laser_option_glow_b(void) {
+    p2_laser_option_glow_hyper();
 }
 
-void func_00147430(void) {
-    func_00147440();
+void p2_laser_option_glow_strong(void) {
+    p2_laser_option_glow_hyper();
 }
 
-void func_00147440(void) {
+void p2_laser_option_glow_hyper(void) {
     u16 reg_value = D_0029F112[0];
 
     reg_d0.h[1] = reg_value;
     reg_d0.h[0] = D_0029F114[0];
     reg_d1.h[0] = PLAYER(g_player2)->laser_power.h;
-    func_00147470(reg_value);
+    laser_option_glow_update(reg_value);
 }
 
-void func_00147470() {
+void laser_option_glow_update() {
     *(u16 *) (reg_a6 + 2) = reg_d0.h[1];
     *(u16 *) (reg_a6 + 4) = reg_d0.h[0];
     if (*(u16 *) (reg_a6 + 0x28) == reg_d1.h[0]) goto next_1;
@@ -976,58 +976,58 @@ next_4:
 }
 
 
-void func_00147740(void) {
+void p1_laser_segment_strong(void) {
     reg_d0.h[0] = PLAYER(g_player1_as_u8_a)->moved_y.h;
     reg_d1.h[0] = PLAYER(g_player1_as_u8_a)->x.h;
-    func_00147780();
+    laser_segment_move_strong();
 }
 
-void func_00147760(void) {
+void p2_laser_segment_strong(void) {
     reg_d0.h[0] = PLAYER(g_player2)->moved_y.h;
     reg_d1.h[0] = PLAYER(g_player2)->x.h;
-    func_00147780();
+    laser_segment_move_strong();
 }
 
-void func_00147780() {
+void laser_segment_move_strong() {
     reg_d0.h[0] += 0x800;
     ENTITY(reg_a6)->y.h += reg_d0.h[0];
     reg_d0.h[0] = ENTITY(reg_a6)->y.h;
     if ((s32) reg_d0.h[0] >= 0x7800) {
-        func_00147F30();
+        laser_segment_end();
         return;
     }
     ENTITY(reg_a6)->x.h = (u16) reg_d1.h[0];
-    func_00147F90();
+    laser_segment_hit_check();
 }
 
 extern Reg32 reg_d0;
 extern Reg32 reg_d1;
 
-void func_001477F0(void) {
+void p1_laser_segment_hyper(void) {
     reg_d0.h[0] = PLAYER(g_player1_as_u8_a)->moved_y.h;
     reg_d1.h[0] = PLAYER(g_player1_as_u8_a)->x.h;
-    func_00147830();
+    laser_segment_move_hyper();
 }
 
-void func_00147810(void) {
+void p2_laser_segment_hyper(void) {
     reg_d0.h[0] = PLAYER(g_player2)->moved_y.h;
     reg_d1.h[0] = PLAYER(g_player2)->x.h;
-    func_00147830();
+    laser_segment_move_hyper();
 }
 
-void func_00147830() {
+void laser_segment_move_hyper() {
     reg_d0.h[0] += 0x800;
     ENTITY(reg_a6)->y.h += reg_d0.h[0];
     reg_d0.h[0] = ENTITY(reg_a6)->y.h;
     if ((s32) reg_d0.h[0] >= 0x7800) {
-        func_00147F30();
+        laser_segment_end();
         return;
     }
     ENTITY(reg_a6)->x.h = (u16) reg_d1.h[0];
-    func_00147F90();
+    laser_segment_hit_check();
 }
 
-void func_001478A0(void) {
+void laser_parts_spawn(void) {
     reg_tmp.h[1] = *(u16 *)(reg_a6 + 0x28);
     reg_tmp.h[0] = *(u16 *)(reg_a6 + 0x2A);
     reg_a1 = (u8 *)(reg_tmp.w);
@@ -1114,7 +1114,7 @@ extern u8 D_0029DD30[];
 extern u8 D_0029E330[];
 extern u8 g_player2_as_u8_a[];
 
-void func_00147CA0(void) {
+void laser_segment_spawn(void) {
     u8 *temp_a3;
     u16 temp_a2;
     u16 temp_a2_2;
@@ -1178,10 +1178,10 @@ void func_00147CA0(void) {
     *(u16 *)(reg_a2 + 0x18) = (u16) reg_d2.h[0];
     *(u16 *)(reg_a2 + 0x1A) = (u16) reg_d3.h[0];
     *(u16 *)(reg_a2 + 0x1C) = (u16) reg_d0.h[0];
-    func_001478A0();
+    laser_parts_spawn();
 }
 
-void func_00147F30(void) {
+void laser_segment_end(void) {
     reg_a0 = D_0029D770;
     if (ENTITY(reg_a6)->move.h == 0) {
         reg_a0 = D_0029D750;
@@ -1196,7 +1196,7 @@ void func_00147F30(void) {
 extern u16 g_p2_laser_stop_y;
 extern u16 g_p1_laser_stop_y;
 
-void func_00147F90(void) {
+void laser_segment_hit_check(void) {
     reg_d1.h[0] = g_p1_laser_stop_y;
     reg_a0 = (u8 *)D_0029D730;
     reg_a2 = (u8 *)D_0029D770;
@@ -1219,13 +1219,13 @@ block_2:
     return;
 next_1:
     reg_d1.h[0] = reg_d0.h[0];
-    func_00148110();
+    laser_impact_start();
     func_001480C0();
     return;
 block_3:
     ENTITY(reg_a6)->flags.h = 0;
     if (*(s16 *)reg_a0 < 0) return;
-    func_00148110();
+    laser_impact_start();
     return;
 block_4:
     if (*(u16 *)(reg_a0 + 0x16) != 0) goto block_2;
@@ -1249,7 +1249,7 @@ block_4:
 
 extern u16 D_002576C0[];
 
-void func_00148110(void) {
+void laser_impact_start(void) {
     *(u16 *)reg_a0 = 0x8000U;
     reg_a0 += 2;
     reg_d1.h[0] += 0x200;
@@ -1289,7 +1289,7 @@ void func_00148110(void) {
 s32 func_0020A120();
 s32 func_0020A1C0();
 
-void func_001482C0(void) {
+void laser_impacts_update(void) {
     u16 temp_a2;
     u16 temp_a2_2;
     u32 temp_a1;
@@ -1339,7 +1339,7 @@ void func_001482C0(void) {
             ENTITY(reg_a6)->hit_y_plus.h = (u16) ENTITY(reg_a6)->hp.h;
         }
         if (g_p1_laser_bomb_active == 0) {
-            func_001466E0();
+            p1_laser_draw_alternating();
         }
     }
     reg_a6 = (u8 *)D_0029D710;
@@ -1385,7 +1385,7 @@ void func_001482C0(void) {
             ENTITY(reg_a6)->hit_y_plus.h = (u16) ENTITY(reg_a6)->hp.h;
         }
         if (g_p2_laser_bomb_active == 0) {
-            func_00146720();
+            p2_laser_draw_alternating();
         }
     }
 }
