@@ -81,10 +81,42 @@ typedef struct {
     /* 0x0C */ u16 fall_speed;
 } SideWreck;
 
+/* The body blows up: chains of explosions, shaking, then the big ones. */
+typedef struct {
+    /* 0x00 */ s16 running;
+    /* 0x02 */ u8 blasts;         /* bit 0: the series of small explosions is running */
+    /* 0x03 */ u8 step;
+    /* 0x04 */ SlotTimer blast;
+    /* 0x06 */ SlotTimer blast_b;
+    /* 0x08 */ u16 unused_08;
+    /* 0x0A */ u16 delay;
+    /* 0x0C */ SlotTimer chain;   /* wait between two explosions of the list */
+    /* 0x0E */ u16 chain_position;
+    /* 0x10 */ u16 toggle;        /* every other explosion of the list comes with a flash */
+    /* 0x12 */ SlotTimer shake;
+    /* 0x14 */ u16 shake_position;
+} BodyExplode;
+
+/* The body turns to one side, holds while it fires, and turns back. */
+typedef struct {
+    /* 0x00 */ s16 running;
+    /* 0x02 */ u8 angle;
+    /* 0x03 */ u8 direction;      /* 1 or -1 */
+    /* 0x04 */ SlotTimer turn;
+    /* 0x06 */ u8 unused_06;
+    /* 0x07 */ u8 step;
+    /* 0x08 */ u16 delay;
+    /* 0x0A */ u16 saved_a[2];    /* two 32-bit values kept while it turns, high word first */
+    /* 0x0E */ u16 saved_b[2];
+    /* 0x12 */ u16 hold;
+} BodySpin;
+
 #define HOVER(pointer) ((SideHover *)(pointer))
 #define ROTOR(pointer) ((FrameStep *)(pointer))
 #define DOOR(pointer) ((SideDoor *)(pointer))
 #define WRECK(pointer) ((SideWreck *)(pointer))
+#define EXPLODE(pointer) ((BodyExplode *)(pointer))
+#define SPIN(pointer) ((BodySpin *)(pointer))
 
 /* The set-up routine and the per-frame routine of every animation, by animation number. */
 void (*stage1_boss_anim_routines[])(void) = {
@@ -134,7 +166,6 @@ void (*stage1_boss_anim_routines[])(void) = {
 
 void stage1_boss_gatling_spin(void);
 
-extern u16 *reg_a4_as_u16_p;
 
 void stage1_boss_anim_clear(void) {
     ROTOR(reg_a4)->running = 0;
@@ -287,7 +318,7 @@ loop_1:
 
 s32 rng_next();
 
-void func_001B2830(void) {
+void stage1_boss_explosions_spawn(void) {
     u16 *temp_a2;
     u16 temp_a1;
 
@@ -316,7 +347,7 @@ void func_001B2830(void) {
         reg_a1 += 2;
         rng_next();
         *(u8 *)(reg_a0 + 0x1A) += reg_d0.b[0];
-        func_001B2830();
+        stage1_boss_explosions_spawn();
     }
 }
 
@@ -351,7 +382,7 @@ void stage1_boss_right_wreck(void) {
         reg_d2.h[1] = ENTITY(reg_a6)[1].y.h;
         reg_d2.h[0] = ENTITY(reg_a6)[1].x.h;
         reg_a1 = (u8 *)D_0026DC40;
-        func_001B2830();
+        stage1_boss_explosions_spawn();
         WRECK(reg_a4)->running = 0;
     }
     if (WRECK(reg_a4)->step == 1) {
@@ -475,7 +506,7 @@ void stage1_boss_left_wreck(void) {
         reg_d2.h[1] = ENTITY(reg_a6)[3].y.h;
         reg_d2.h[0] = ENTITY(reg_a6)[3].x.h;
         reg_a1 = D_0026DCF0;
-        func_001B2830();
+        stage1_boss_explosions_spawn();
         WRECK(reg_a4)->running = 0;
     }
     if (WRECK(reg_a4)->step == 1) {
@@ -514,16 +545,16 @@ void stage1_boss_left_wreck(void) {
 }
 
 void stage1_boss_body_explode_start(void) {
-    *(s8 *)(reg_a4 + 3) = 0;
-    *(s8 *)(reg_a4 + 2) = 0;
-    *(s16 *)(reg_a4 + 4) = 8;
-    *(s16 *)(reg_a4 + 6) = 0x1209;
-    *(s16 *)(reg_a4 + 0xA) = 0x20;
-    *(s16 *)(reg_a4 + 0xC) = 0xC;
-    *(s16 *)(reg_a4 + 0xE) = 0;
-    *(s16 *)(reg_a4 + 0x10) = 0;
-    *(s16 *)(reg_a4 + 0x12) = 0x1010;
-    *(s16 *)(reg_a4 + 0x14) = 0;
+    EXPLODE(reg_a4)->step = 0;
+    EXPLODE(reg_a4)->blasts = 0;
+    EXPLODE(reg_a4)->blast.sh = 8;
+    EXPLODE(reg_a4)->blast_b.sh = 0x1209;
+    EXPLODE(reg_a4)->delay = 0x20;
+    EXPLODE(reg_a4)->chain.sh = 0xC;
+    EXPLODE(reg_a4)->chain_position = 0;
+    EXPLODE(reg_a4)->toggle = 0;
+    EXPLODE(reg_a4)->shake.sh = 0x1010;
+    EXPLODE(reg_a4)->shake_position = 0;
 }
 
 typedef void (*Fn)();
@@ -564,9 +595,9 @@ void stage1_boss_body_explode(void) {
     temp_a0 = (*(u8 *)((u8 *)(var_a1) + (3)));
     if (temp_a0 == 6) {
         (*(u16 *)((u8 *)(var_a1) + (0xA))) -= 1;
-        if (*(u16 *)(reg_a4 + 0xA) == 0) {
+        if (EXPLODE(reg_a4)->delay == 0) {
             boss_slots_end();
-            *(s16 *)reg_a4 = 0;
+            EXPLODE(reg_a4)->running = 0;
         }
         return;
     }
@@ -574,7 +605,7 @@ void stage1_boss_body_explode(void) {
         reg_tmp.b[0] = (*(u8 *)((u8 *)(var_a1) + (7)));
         (*(u8 *)((u8 *)(var_a1) + (7))) -= 1;
         if ((s32) reg_tmp.b[0] <= 0) {
-            *(u8 *)(reg_a4 + 7) = (u8) *(u8 *)(reg_a4 + 6);
+            EXPLODE(reg_a4)->blast_b.t.count = (u8) EXPLODE(reg_a4)->blast_b.t.reload;
             reg_d0.w = 5;
             explosion_spawn();
             *(s16 *)(reg_a0 + 0x1E) = 0xC;
@@ -589,11 +620,11 @@ void stage1_boss_body_explode(void) {
             *(u16 *)(reg_a0 + 0x28) = (u16) reg_tmp.h[0];
         }
     }
-    if (*(u8 *)(reg_a4 + 2) & 1) {
-        reg_tmp.b[0] = *(u8 *)(reg_a4 + 5);
-        *(u8 *)(reg_a4 + 5) -= 1;
+    if (EXPLODE(reg_a4)->blasts & 1) {
+        reg_tmp.b[0] = EXPLODE(reg_a4)->blast.t.count;
+        EXPLODE(reg_a4)->blast.t.count -= 1;
         if ((s32) reg_tmp.b[0] <= 0) {
-            *(u8 *)(reg_a4 + 5) = (u8) *(u8 *)(reg_a4 + 4);
+            EXPLODE(reg_a4)->blast.t.count = (u8) EXPLODE(reg_a4)->blast.t.reload;
             reg_d0.w = 0x10;
             explosion_spawn();
             *(s16 *)(reg_a0 + 0x1E) = 0xC;
@@ -620,13 +651,13 @@ void stage1_boss_body_explode(void) {
             *(u16 *)(reg_a0 + 0x28) = (u16) reg_tmp.h[0];
         }
     }
-    temp_a0_2 = *(u8 *)(reg_a4 + 3);
+    temp_a0_2 = EXPLODE(reg_a4)->step;
     if (temp_a0_2 == 5) {
         sfx_explosion_boss();
         reg_d2.h[1] = ENTITY(reg_a6)->y.h;
         reg_d2.h[0] = ENTITY(reg_a6)->x.h;
         reg_a1 = (u8 *)(D_0026DF00);
-        func_001B2830();
+        stage1_boss_explosions_spawn();
         rng_next();
         reg_d0.h[0] = (s16) reg_d0.h[0] * 4;
         reg_d1.b[0] = reg_d0.b[0];
@@ -658,10 +689,10 @@ void stage1_boss_body_explode(void) {
         reg_d0.h[0] = 0;
         explosion_burst_large();
         var_a1 = (u8 *)((void *)0x80);
-        *(u16 *)(reg_a4 + 0xA) = 0x80U;
-        *(u8 *)(reg_a4 + 3) = 6U;
+        EXPLODE(reg_a4)->delay = 0x80U;
+        EXPLODE(reg_a4)->step = 6U;
     }
-    temp_a0_5 = *(u8 *)(reg_a4 + 3);
+    temp_a0_5 = EXPLODE(reg_a4)->step;
     if (temp_a0_5 == 4) {
         boss_flash_running();
         if (cond_flag == 0) {
@@ -674,28 +705,28 @@ void stage1_boss_body_explode(void) {
             boss_part_hide();
             reg_d0.w = 5;
             boss_part_hide();
-            *(u8 *)(reg_a4 + 3) = 5U;
+            EXPLODE(reg_a4)->step = 5U;
         }
     }
-    if (*(u8 *)(reg_a4 + 3) == 3) {
-        reg_tmp.b[0] = *(u8 *)(reg_a4 + 0x13);
-        *(u8 *)(reg_a4 + 0x13) -= 1;
+    if (EXPLODE(reg_a4)->step == 3) {
+        reg_tmp.b[0] = EXPLODE(reg_a4)->shake.t.count;
+        EXPLODE(reg_a4)->shake.t.count -= 1;
         if ((s32) reg_tmp.b[0] <= 0) {
-            *(u8 *)(reg_a4 + 0x13) = (u8) *(u8 *)(reg_a4 + 0x12);
+            EXPLODE(reg_a4)->shake.t.count = (u8) EXPLODE(reg_a4)->shake.t.reload;
             reg_a0 = D_0026DD30;
-            temp_a0_6 = *(u16 *)(reg_a4 + 0x14);
+            temp_a0_6 = EXPLODE(reg_a4)->shake_position;
             reg_a0 += temp_a0_6;
-            reg_tmp.h[0] = *(u16 *)(reg_a4 + 0x14);
+            reg_tmp.h[0] = EXPLODE(reg_a4)->shake_position;
             ((Fn)*(u32 *)((u8 *)D_0026DD30 + (reg_tmp.h[0] & ~3)))();
-            *(u16 *)(reg_a4 + 0x14) += 4;
-            *(u16 *)(reg_a4 + 0x14) &= 0x1F;
+            EXPLODE(reg_a4)->shake_position += 4;
+            EXPLODE(reg_a4)->shake_position &= 0x1F;
         }
-        reg_tmp.b[0] = *(u8 *)(reg_a4 + 0xD);
-        *(u8 *)(reg_a4 + 0xD) -= 1;
+        reg_tmp.b[0] = EXPLODE(reg_a4)->chain.t.count;
+        EXPLODE(reg_a4)->chain.t.count -= 1;
         if ((s32) reg_tmp.b[0] <= 0) {
-            *(u8 *)(reg_a4 + 0xD) = (u8) *(u8 *)(reg_a4 + 0xC);
+            EXPLODE(reg_a4)->chain.t.count = (u8) EXPLODE(reg_a4)->chain.t.reload;
             reg_a1 = (u8 *)(D_0026DE00);
-            reg_a1 += *(u16 *)(reg_a4 + 0xE);
+            reg_a1 += EXPLODE(reg_a4)->chain_position;
             reg_d0.h[0] = *(u16 *)reg_a1;
             reg_a1 += 2;
             explosion_spawn();
@@ -714,39 +745,39 @@ void stage1_boss_body_explode(void) {
             *(s16 *)(reg_a0 + 0x14) = 0x800;
             *(u16 *)(reg_a0 + 0x1A) = *(u16 *)reg_a1;
             reg_a1 += 2;
-            *(u16 *)(reg_a4 + 0xE) += 0x10;
-            if (*(u16 *)(reg_a4 + 0xE) == 0x100) {
-                *(u16 *)(reg_a4 + 0xE) = 0U;
-                *(u8 *)(reg_a4 + 3) = 4U;
+            EXPLODE(reg_a4)->chain_position += 0x10;
+            if (EXPLODE(reg_a4)->chain_position == 0x100) {
+                EXPLODE(reg_a4)->chain_position = 0U;
+                EXPLODE(reg_a4)->step = 4U;
                 reg_d0.h[0] = 0x12;
                 boss_flash_start();
                 sfx_explosion_ground_medium();
             }
         }
     }
-    if (*(u8 *)(reg_a4 + 3) == 2) {
-        temp_v1 = *(u16 *)(reg_a4 + 0xA);
+    if (EXPLODE(reg_a4)->step == 2) {
+        temp_v1 = EXPLODE(reg_a4)->delay;
         if (temp_v1 != 0) {
-            *(u16 *)(reg_a4 + 0xA) = (u16) (temp_v1 - 1);
+            EXPLODE(reg_a4)->delay = (u16) (temp_v1 - 1);
         } else {
-            reg_tmp.b[0] = *(u8 *)(reg_a4 + 0x13);
-            *(u8 *)(reg_a4 + 0x13) -= 1;
+            reg_tmp.b[0] = EXPLODE(reg_a4)->shake.t.count;
+            EXPLODE(reg_a4)->shake.t.count -= 1;
             if ((s32) reg_tmp.b[0] <= 0) {
-                *(u8 *)(reg_a4 + 0x13) = (u8) *(u8 *)(reg_a4 + 0x12);
+                EXPLODE(reg_a4)->shake.t.count = (u8) EXPLODE(reg_a4)->shake.t.reload;
                 reg_a0 = D_0026DD30;
-                temp_a0_7 = *(u16 *)(reg_a4 + 0x14);
+                temp_a0_7 = EXPLODE(reg_a4)->shake_position;
                 reg_a0 += temp_a0_7;
-                reg_tmp.h[0] = *(u16 *)(reg_a4 + 0x14);
+                reg_tmp.h[0] = EXPLODE(reg_a4)->shake_position;
                 ((Fn)*(u32 *)((u8 *)D_0026DD30 + (reg_tmp.h[0] & ~3)))();
-                *(u16 *)(reg_a4 + 0x14) += 4;
-                *(u16 *)(reg_a4 + 0x14) &= 0x1F;
+                EXPLODE(reg_a4)->shake_position += 4;
+                EXPLODE(reg_a4)->shake_position &= 0x1F;
             }
-            reg_tmp.b[0] = *(u8 *)(reg_a4 + 0xD);
-            *(u8 *)(reg_a4 + 0xD) -= 1;
+            reg_tmp.b[0] = EXPLODE(reg_a4)->chain.t.count;
+            EXPLODE(reg_a4)->chain.t.count -= 1;
             if ((s32) reg_tmp.b[0] <= 0) {
-                *(u8 *)(reg_a4 + 0xD) = (u8) *(u8 *)(reg_a4 + 0xC);
+                EXPLODE(reg_a4)->chain.t.count = (u8) EXPLODE(reg_a4)->chain.t.reload;
                 reg_a1 = (u8 *)(D_0026DE00);
-                reg_a1 += *(u16 *)(reg_a4 + 0xE);
+                reg_a1 += EXPLODE(reg_a4)->chain_position;
                 reg_d0.h[0] = *(u16 *)reg_a1;
                 reg_a1 += 2;
                 explosion_spawn();
@@ -766,9 +797,9 @@ void stage1_boss_body_explode(void) {
                 *(s16 *)(reg_a0 + 0x14) = 0x800;
                 *(u16 *)(reg_a0 + 0x1A) = *(u16 *)reg_a1;
                 reg_a1 += 2;
-                *(u16 *)(reg_a4 + 0x10) += 1;
-                *(u16 *)(reg_a4 + 0x10) &= 1;
-                if (*(u16 *)(reg_a4 + 0x10) == 0) {
+                EXPLODE(reg_a4)->toggle += 1;
+                EXPLODE(reg_a4)->toggle &= 1;
+                if (EXPLODE(reg_a4)->toggle == 0) {
                     g_slowdown_timer = 0xA;
                     reg_a0 = D_0026DF70;
                     func_0013B2E0();
@@ -781,33 +812,33 @@ void stage1_boss_body_explode(void) {
                     explosion_burst_small();
                     sfx_explosion_ground_small();
                 }
-                *(u16 *)(reg_a4 + 0xE) += 0x10;
-                if (*(u16 *)(reg_a4 + 0xE) == 0x80) {
-                    *(u16 *)(reg_a4 + 0xE) = 0U;
-                    *(u8 *)(reg_a4 + 3) = 3U;
-                    *(u16 *)(reg_a4 + 0xC) = 4;
-                    *(u8 *)(reg_a4 + 2) = 0U;
-                    *(u16 *)(reg_a4 + 0x12) = 0x808;
+                EXPLODE(reg_a4)->chain_position += 0x10;
+                if (EXPLODE(reg_a4)->chain_position == 0x80) {
+                    EXPLODE(reg_a4)->chain_position = 0U;
+                    EXPLODE(reg_a4)->step = 3U;
+                    EXPLODE(reg_a4)->chain.h = 4;
+                    EXPLODE(reg_a4)->blasts = 0U;
+                    EXPLODE(reg_a4)->shake.h = 0x808;
                 }
             }
         }
     }
-    if (*(u8 *)(reg_a4 + 3) == 1) {
-        *(u16 *)(reg_a4 + 0xA) -= 1;
-        if (*(u16 *)(reg_a4 + 0xA) == 0) {
+    if (EXPLODE(reg_a4)->step == 1) {
+        EXPLODE(reg_a4)->delay -= 1;
+        if (EXPLODE(reg_a4)->delay == 0) {
             reg_d2.h[1] = ENTITY(reg_a6)->y.h;
             reg_d2.h[0] = ENTITY(reg_a6)->x.h;
             reg_a1 = (u8 *)(D_0026DDC0);
             func_001B26F0();
-            *(u8 *)(reg_a4 + 3) = 2U;
-            *(u16 *)(reg_a4 + 0xA) = 0x80U;
-            *(u8 *)(reg_a4 + 2) |= 2;
+            EXPLODE(reg_a4)->step = 2U;
+            EXPLODE(reg_a4)->delay = 0x80U;
+            EXPLODE(reg_a4)->blasts |= 2;
             reg_d0.w = 3;
             boss_part_hide();
         }
     }
-    if (*(u8 *)(reg_a4 + 3) == 0) {
-        *(u8 *)(reg_a4 + 3) = 1U;
+    if (EXPLODE(reg_a4)->step == 0) {
+        EXPLODE(reg_a4)->step = 1U;
         sfx_explosion_ground_medium();
         reg_d2.h[1] = ENTITY(reg_a6)->y.h;
         reg_d2.h[0] = ENTITY(reg_a6)->x.h;
@@ -882,12 +913,6 @@ void stage1_boss_right_open() {
     }
 }
 
-typedef struct WorkRegA4 {
-    u8 pad0[2];
-    u16 unk2;
-    u8 pad4[3];
-    u8 unk7;
-} WorkRegA4;
 
 
 void stage1_boss_left_open_start(void) {
@@ -928,7 +953,7 @@ void stage1_boss_left_open() {
 
 
 void stage1_boss_right_rotor_opened_start(void) {
-    *(u16*)(reg_a4 + 2) = 0;
+    ROTOR(reg_a4)->frame.h = 0;
 }
 
 void stage1_boss_right_rotor_opened(void) {
@@ -947,10 +972,8 @@ void stage1_boss_right_rotor_opened(void) {
     }
 }
 
-extern s16 *reg_a4_as_s16_p;
-
 void stage1_boss_left_rotor_opened_start(void) {
-    reg_a4_as_s16_p[1] = 0;
+    ROTOR(reg_a4)->frame.h = 0;
 }
 
 void stage1_boss_left_rotor_opened(void) {
@@ -978,22 +1001,22 @@ extern u8 D_0028DC30[];
 
 void stage1_boss_spin_start(void) {
     ENTITY(reg_a6)[8].hit_x_plus.sh = 0;
-    *(u8 *)(reg_a4 + 3) = 1U;
+    SPIN(reg_a4)->direction = 1U;
     rng_next_bit();
     if (reg_d0.h[0] == 0) {
-        *(u8 *)(reg_a4 + 3) = 0xFFU;
+        SPIN(reg_a4)->direction = 0xFFU;
     }
-    *(u8 *)(reg_a4 + 2) = (u8) *(u8 *)(reg_a4 + 3);
-    *(s16 *)(reg_a4 + 4) = 0x4040;
-    *(s8 *)(reg_a4 + 7) = 0;
-    *(s16 *)(reg_a4 + 8) = 0x60;
+    SPIN(reg_a4)->angle = (u8) SPIN(reg_a4)->direction;
+    SPIN(reg_a4)->turn.sh = 0x4040;
+    SPIN(reg_a4)->step = 0;
+    SPIN(reg_a4)->delay = 0x60;
     reg_tmp.w = 0;
-    *(u16 *)(reg_a4 + 0xA) = (u16) reg_tmp.h[1];
-    *(u16 *)(reg_a4 + 0xC) = (u16) reg_tmp.h[0];
+    SPIN(reg_a4)->saved_a[0] = (u16) reg_tmp.h[1];
+    SPIN(reg_a4)->saved_a[1] = (u16) reg_tmp.h[0];
     reg_tmp.w = 0;
-    *(u16 *)(reg_a4 + 0xE) = (u16) reg_tmp.h[1];
-    *(u16 *)(reg_a4 + 0x10) = (u16) reg_tmp.h[0];
-    *(s16 *)(reg_a4 + 0x12) = 0;
+    SPIN(reg_a4)->saved_b[0] = (u16) reg_tmp.h[1];
+    SPIN(reg_a4)->saved_b[1] = (u16) reg_tmp.h[0];
+    SPIN(reg_a4)->hold = 0;
     func_001713B0();
     reg_d2.w = 0;
     reg_d2.b[0] = *(D_0028DC28 + reg_d0.h[0]);
@@ -1024,16 +1047,16 @@ void stage1_boss_spin_start(void) {
     *(u8 *)(reg_a0 + 0xA) = (u8) reg_d3.b[0];
     *(u16 *)(reg_a0 + 0xC) = (u16) reg_d4.h[0];
     reg_tmp.w = (u32) reg_a0;
-    *(u16 *)(reg_a4 + 0xA) = (u16) reg_tmp.h[1];
-    *(u16 *)(reg_a4 + 0xC) = (u16) reg_tmp.h[0];
+    SPIN(reg_a4)->saved_a[0] = (u16) reg_tmp.h[1];
+    SPIN(reg_a4)->saved_a[1] = (u16) reg_tmp.h[0];
     reg_d0.w = 6;
     boss_attack_start();
     *(u16 *)(reg_a0 + 4) = (u16) reg_d2.h[0];
     *(u8 *)(reg_a0 + 0xA) = (u8) reg_d3.b[0];
     *(u16 *)(reg_a0 + 0xC) = (u16) reg_d4.h[0];
     reg_tmp.w = (u32) reg_a0;
-    *(u16 *)(reg_a4 + 0xE) = (u16) reg_tmp.h[1];
-    *(u16 *)(reg_a4 + 0x10) = (u16) reg_tmp.h[0];
+    SPIN(reg_a4)->saved_b[0] = (u16) reg_tmp.h[1];
+    SPIN(reg_a4)->saved_b[1] = (u16) reg_tmp.h[0];
     reg_d0.w = 0xE;
     boss_attack_start();
 }
@@ -1043,57 +1066,57 @@ s32 boss_attack_stop();
 void stage1_boss_spin(void) {
     u16 temp_v1;
 
-    if (*(u8 *)(reg_a4 + 7) == 0) {
-        *(u16 *)(reg_a4 + 8) -= 1;
-        if (*(u16 *)(reg_a4 + 8) == 0) {
-            *(u8 *)(reg_a4 + 7) = 1U;
+    if (SPIN(reg_a4)->step == 0) {
+        SPIN(reg_a4)->delay -= 1;
+        if (SPIN(reg_a4)->delay == 0) {
+            SPIN(reg_a4)->step = 1U;
             ENTITY(reg_a6)[8].hit_x_plus.sh = 1;
             goto block_3;
         }
     } else {
 block_3:
-        reg_d0.b[0] = *(u8 *)(reg_a4 + 2);
+        reg_d0.b[0] = SPIN(reg_a4)->angle;
         ENTITY(reg_a6)[2].draw.b.flip += reg_d0.b[0];
         ENTITY(reg_a6)[4].draw.b.flip += reg_d0.b[0];
-        if (*(u8 *)(reg_a4 + 7) == 1) {
-            reg_tmp.b[0] = *(u8 *)(reg_a4 + 5);
-            *(u8 *)(reg_a4 + 5) -= 1;
+        if (SPIN(reg_a4)->step == 1) {
+            reg_tmp.b[0] = SPIN(reg_a4)->turn.t.count;
+            SPIN(reg_a4)->turn.t.count -= 1;
             if ((s32) reg_tmp.b[0] <= 0) {
-                *(u8 *)(reg_a4 + 5) = (u8) *(u8 *)(reg_a4 + 4);
-                reg_d0.b[0] = *(u8 *)(reg_a4 + 3);
-                *(u8 *)(reg_a4 + 2) += reg_d0.b[0];
-                reg_d0.b[0] = *(u8 *)(reg_a4 + 2);
+                SPIN(reg_a4)->turn.t.count = (u8) SPIN(reg_a4)->turn.t.reload;
+                reg_d0.b[0] = SPIN(reg_a4)->direction;
+                SPIN(reg_a4)->angle += reg_d0.b[0];
+                reg_d0.b[0] = SPIN(reg_a4)->angle;
                 if ((s8)(reg_d0.b[0]) < 0) {
                     reg_d0.b[0] *= -1;
                 }
                 if (reg_d0.b[0] == 2) {
-                    *(u8 *)(reg_a4 + 7) = 2U;
-                    *(u16 *)(reg_a4 + 4) = 0x6020;
-                    *(u16 *)(reg_a4 + 0x12) = 0x100U;
+                    SPIN(reg_a4)->step = 2U;
+                    SPIN(reg_a4)->turn.h = 0x6020;
+                    SPIN(reg_a4)->hold = 0x100U;
                 }
             }
         }
-        if (*(u8 *)(reg_a4 + 7) == 2) {
-            temp_v1 = *(u16 *)(reg_a4 + 0x12);
+        if (SPIN(reg_a4)->step == 2) {
+            temp_v1 = SPIN(reg_a4)->hold;
             if (temp_v1 != 0) {
-                *(u16 *)(reg_a4 + 0x12) = (u16) (temp_v1 - 1);
+                SPIN(reg_a4)->hold = (u16) (temp_v1 - 1);
             } else {
-                reg_d0.b[0] = *(u8 *)(reg_a4 + 3);
+                reg_d0.b[0] = SPIN(reg_a4)->direction;
                 reg_d0.b[0] += reg_d0.b[0];
-                reg_d1.b[0] = *(u8 *)(reg_a4 + 2);
+                reg_d1.b[0] = SPIN(reg_a4)->angle;
                 if (reg_d0.b[0] != reg_d1.b[0]) {
-                    reg_tmp.b[0] = *(u8 *)(reg_a4 + 5);
-                    *(u8 *)(reg_a4 + 5) -= 1;
+                    reg_tmp.b[0] = SPIN(reg_a4)->turn.t.count;
+                    SPIN(reg_a4)->turn.t.count -= 1;
                     if ((s32) reg_tmp.b[0] <= 0) {
-                        *(u8 *)(reg_a4 + 5) = (u8) *(u8 *)(reg_a4 + 4);
-                        reg_tmp.h[1] = *(u16 *)(reg_a4 + 0xA);
-                        reg_tmp.h[0] = *(u16 *)(reg_a4 + 0xC);
+                        SPIN(reg_a4)->turn.t.count = (u8) SPIN(reg_a4)->turn.t.reload;
+                        reg_tmp.h[1] = SPIN(reg_a4)->saved_a[0];
+                        reg_tmp.h[0] = SPIN(reg_a4)->saved_a[1];
                         reg_a0 = (u8 *)reg_tmp.w;
-                        reg_tmp.h[1] = *(u16 *)(reg_a4 + 0xE);
-                        reg_tmp.h[0] = *(u16 *)(reg_a4 + 0x10);
+                        reg_tmp.h[1] = SPIN(reg_a4)->saved_b[0];
+                        reg_tmp.h[0] = SPIN(reg_a4)->saved_b[1];
                         reg_a0 = (u8 *)reg_tmp.w;
-                        reg_d0.b[0] = *(u8 *)(reg_a4 + 3);
-                        *(u8 *)(reg_a4 + 2) -= reg_d0.b[0];
+                        reg_d0.b[0] = SPIN(reg_a4)->direction;
+                        SPIN(reg_a4)->angle -= reg_d0.b[0];
                     }
                 } else {
                     reg_d0.b[0] = ENTITY(reg_a6)[2].draw.b.flip;
@@ -1101,7 +1124,7 @@ block_3:
                     if (reg_d0.b[0] == 0x40) {
                         ENTITY(reg_a6)[2].draw.b.flip = 0x40U;
                         ENTITY(reg_a6)[4].draw.b.flip = 0xC0U;
-                        *(u8 *)(reg_a4 + 7) = 3U;
+                        SPIN(reg_a4)->step = 3U;
                         reg_d0.w = 5;
                         boss_attack_stop();
                         reg_d0.w = 6;
@@ -1112,20 +1135,13 @@ block_3:
                 }
             }
         }
-        if (*(u8 *)(reg_a4 + 7) == 3) {
-            *(s16 *)reg_a4 = 0;
+        if (SPIN(reg_a4)->step == 3) {
+            SPIN(reg_a4)->running = 0;
             ENTITY(reg_a6)[8].hit_x_plus.sh = 0;
         }
     }
 }
 
-typedef struct WorkRegA42 {
-    u8 pad0[2];
-    s16 unk2;
-    s16 unk4;
-    u8 pad6;
-    u8 unk7;
-} WorkRegA42;
 
 
 void stage1_boss_right_close_start(void) {
@@ -1283,16 +1299,9 @@ void stage1_boss_right_open_wide() {
     }
 }
 
-struct WorkRegA4b {
-    u8 unk0[2];
-    s16 unk2;
-    u8 unk4[3];
-    u8 unk7;
-};
 
 
 void stage1_boss_left_open_wide_start(void) {
-    extern struct WorkRegA4b *reg_a4_as_WorkRegA4_p;
     DOOR(reg_a4)->frame.h = 0;
     DOOR(reg_a4)->moving = 0;
 }
@@ -1328,17 +1337,9 @@ void stage1_boss_left_open_wide() {
     }
 }
 
-typedef struct WorkRegA43 {
-    u16 unk0;
-    u16 unk2;
-    u16 unk4;
-    u8 unk6;
-    u8 unk7;
-} WorkRegA43;
 
 
 void stage1_boss_right_close_wide_start(void) {
-    extern WorkRegA43 *reg_a4_as_WorkRegA4_p;
     DOOR(reg_a4)->frame.h = 0;
     DOOR(reg_a4)->delay = 0x20;
     DOOR(reg_a4)->moving = 0;
