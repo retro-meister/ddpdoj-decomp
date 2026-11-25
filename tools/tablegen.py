@@ -176,7 +176,7 @@ used = set(re.findall(r'\b[A-Za-z_]\w*\b', alltext))
 for site_, ref_ in death_rel.items():
     m = re.fullmatch(r'D_([0-9A-F]{8})', ref_[0])
     if m and int(m.group(1), 16) + ref_[1] == int.from_bytes(drom[site_ - OFF:site_ - OFF + 4], 'little') \
-            and death_named.get(ref_[0], int(m.group(1), 16)) != int(m.group(1), 16):
+            and (death_named.get(ref_[0], int(m.group(1), 16)) != int(m.group(1), 16) or ref_[0] in main_named or ref_[0] in used):
         ref_[0] = 'death_' + ref_[0]; new_syms['DEATH.ELF'][ref_[0]] = int(m.group(1), 16)
 add_checked_addresses('SLPS_252.33', main_rel, labels); add_checked_addresses('DEATH.ELF', death_rel, death_labels)
 # element types the code already declares its tables with: {name: (type, count or None)}
@@ -276,6 +276,61 @@ def partition_data(start, end):
         out.append((a, size, nxt)); i = j
     return out
 
+def partition_rodata(start, end):
+    """Constants: every object is on 8, from 16 bytes on 16, whatever its size; each label on 8 starts one where
+    that can be."""
+    known = {a for a in labels if start <= a < end and a % 8 == 0} | {a for a in forced if start < a < end} | {start}
+    # where nothing points at a text, its start is taken from the bytes, but only where the layout needs one
+    guessed = {a for a in range(start + 8, end, 8) if a not in known and rom[a - OFF] and not rom[a - OFF - 1]}
+    cands = sorted(known | guessed)
+    cands.append(end)
+    n = len(cands)
+    def valid(i, j):
+        a, L = cands[i], cands[j] - cands[i]
+        if a % 16 == 8:
+            if L == 8: return True
+            if any(x in main_rel for x in range(a, a + 16, 4)) and any(rom[a - OFF + 12:a - OFF + 16]): return False
+            return L in (16, 24) and not any(rom[a - OFF + 15:a - OFF + L])
+        return True
+    INF = float('inf')
+    best = [INF] * n; back = [None] * n
+    best[n - 1] = 0
+    seen = [0]
+    for q in cands: seen.append(seen[-1] + (q in known))   # labels before each candidate
+    for i in range(n - 2, -1, -1):
+        for j in range(i + 1, n):
+            if j > i + 1 and cands[j - 1] in forced: break
+            if best[j] is INF or not valid(i, j): continue
+            c = 1 + best[j] + 1000 * (seen[j] - seen[i + 1]) + (5000 if cands[i] in guessed else 0)
+            if c < best[i]: best[i] = c; back[i] = j
+    assert best[0] is not INF, 'no valid layout for %x..%x' % (start, end)
+    out = []; i = 0
+    while i != n - 1:
+        j = back[i]; a = cands[i]; nxt = cands[j]
+        if a % 16 == 8 and nxt - a > 8:
+            size = 12 if any(x in main_rel for x in range(a, a + 16, 4)) else (14 if not rom[a - OFF + 14] else 15)
+        else:
+            size = nxt - a
+        out.append((a, size, nxt)); i = j
+    return out
+
+def cut(sec, start, end):
+    if sec == '.data': return split_declared(partition_data(start, end))
+    if sec == '.rodata': return partition_rodata(start, end)
+    return partition_sdata(start, end)
+
+def constant(decl, text):
+    """The declaration and definition of a .rodata object."""
+    def fix(line):
+        if line.startswith('extern struct ') or (line.startswith('struct ') and '= {' in line and not line.rstrip().endswith('};')):
+            return line.replace('struct ', 'const struct ', 1)
+        if line.startswith('extern void *'): return line.replace('extern void *', 'extern void *const ', 1)
+        if line.startswith('void *'): return line.replace('void *', 'void *const ', 1)
+        if line.startswith('extern '): return line.replace('extern ', 'extern const ', 1)
+        if re.match(r'(u8|s8|u16|s16|u32|s32|char) \w+\[', line): return 'const ' + line
+        return line
+    return '\n'.join(fix(l) for l in decl.split('\n')), '\n'.join(fix(l) for l in text.split('\n'))
+
 def partition_sdata(start, end):
     cands = sorted(a for a in labels if start <= a < end and a % 4 == 0)
     if start not in cands: cands.insert(0, start)
@@ -298,7 +353,7 @@ def fmt(raw, size):
         return '\n'.join('    ' + ', '.join('0x%04X' % x for x in w[j:j + 8]) + ',' for j in range(0, len(w), 8))
     return '\n'.join('    ' + ', '.join('0x%02X' % x for x in raw[j:j + 12]) + ',' for j in range(0, size, 12))
 
-death_add = {}; death_alias = {}; main_numbers = set()
+death_add = {}; death_alias = {}; main_numbers = set(); death_numbers = set(); sec_of = {}; in_rodata = False
 defs = []; defined = {}; plan = []; decls = []; kinds = {}; externs = {}; dexterns = {}
 dend_given = {}
 for arg in args[1:]:
@@ -318,7 +373,7 @@ if separate:
     stretches = []
 objects = []   # (sec, a, size, nxt, da, dsize, dn, name)
 for sec, start, end in stretches:
-    objs = split_declared(partition_data(start, end)) if sec == '.data' else partition_sdata(start, end)
+    objs = cut(sec, start, end)
     if (sec, start) in main_only:
         plan.append((sec, start, end, None, None, objs))
         for a, size, nxt in objs:
@@ -382,8 +437,8 @@ for sec, start, end in stretches:
             same = True
         if sec == '.sdata' and size == 4 and nxt - a == 8 and dn - da == 4: same = True
         dsize = size if same else dn - da
-        if not same: assert sec == '.data' and dsize >= 16 and da % 16 == 0, 'Death Label object at %x cannot be laid out' % a
-        al = (16 if dsize >= 16 else 8) if sec == '.data' else (8 if dsize > 4 else 4)
+        if not same: assert sec in ('.data', '.rodata') and dsize >= 16 and da % 16 == 0, 'Death Label object at %x cannot be laid out' % a
+        al = (16 if dsize >= 16 else 8) if sec in ('.data', '.rodata') else (8 if dsize > 4 else 4)
         pos = (pos + al - 1) // al * al
         assert pos == da, 'Death Label lays %x out differently (%x, expected %x)' % (a, pos, da)
         pos += dsize
@@ -391,10 +446,15 @@ for sec, start, end in stretches:
         assert n not in defined, n
         defined[n] = a
         objects.append((sec, a, size, nxt, da, dsize, dn, n))
-    al_end = 16 if sec == '.data' else 4
+    al_end = 16 if sec == '.data' else 8 if sec == '.rodata' else 4
     assert (pos + al_end - 1) // al_end * al_end == (dend + al_end - 1) // al_end * al_end, 'Death Label stretch ends elsewhere'
 obj_by_main = [(a, a + size, None if da is None else da - a, n) for sec, a, size, nxt, da, dsize, dn, n in objects]
+sec_of.update({n: sec for sec, a, size, nxt, da, dsize, dn, n in objects})
 def carray(n, raw, size):
+    body = raw[:size].rstrip(b'\0')
+    if in_rodata and body and len(body) < size and all(0x20 <= c < 0x7F for c in body):
+        text = body.decode('ascii').replace('\\', '\\\\').replace('"', '\\"')
+        return 'char', size, 'char %s[%d] = "%s";\n' % (n, size, text)
     d = declared_as(n)
     if d and size % WIDTH[d[0]] == 0 and (d[1] is None or d[1] * WIDTH[d[0]] == size):
         ctype, w = d[0], WIDTH[d[0]]; count = size // w
@@ -506,6 +566,13 @@ for sec, a, size, nxt, da, dsize, dn, n in objects:
         for x in set(ms) - set(ms2): main_rel.pop(x)
         for x in set(ds) - set(ds2): death_rel.pop(x)
         ms, ds = ms2, ds2
+        # an unused placeholder past the data sections, or a value outside the image, with a different word
+        # and no address at the same place in the other executable, is a number
+        for lst_, rel_, orel_, shift_, bag_ in ((ms, main_rel, death_rel, da - a, main_numbers), (ds, death_rel, main_rel, a - da, death_numbers)):
+            for x in list(lst_):
+                q = rel_[x][0]; m = re.fullmatch(r'D_([0-9A-F]{8})', q)
+                if m and (x + shift_) not in orel_ and q not in used and (int(m.group(1), 16) >= 0x28FF00 or int(m.group(1), 16) < 0x241700):
+                    bag_.add(q); rel_.pop(x); lst_.remove(x)
         # a word that is an address in one executable and differs in the other is an address there too, also
         # where the split assembly shows it as something else (a short string, say)
         for x in ms:
@@ -539,6 +606,13 @@ for sec, a, size, nxt, da, dsize, dn, n in objects:
             else:
                 print('%s: 0x%x / 0x%x at %x differ and look like addresses, left as numbers' % (n, v, w, x))
         ms.sort(); ds.sort()
+    if size != dsize:
+        # nothing to line the words up with: an unused placeholder past the data sections is taken for a number
+        for lst_, rel_, bag_ in ((ms, main_rel, main_numbers), (ds, death_rel, death_numbers)):
+            for x in list(lst_):
+                q = rel_[x][0]; m = re.fullmatch(r'D_([0-9A-F]{8})', q)
+                if m and q not in used and (int(m.group(1), 16) >= 0x28FF00 or int(m.group(1), 16) < 0x241700):
+                    bag_.add(q); rel_.pop(x); lst_.remove(x)
     assert all((x - a) % 4 == 0 for x in ms) and all((x - da) % 4 == 0 for x in ds), 'odd pointer position in %s' % n
     if ms or ds: assert size % 2 == 0 and dsize % 2 == 0
     mk = 'plain' if not ms else ('table' if len(ms) * 4 == size else 'record')
@@ -547,6 +621,11 @@ for sec, a, size, nxt, da, dsize, dn, n in objects:
     info[n] = (raw, draw, ms, ds, mk, dk)
 def one(n, a, size, raw, sites, kind, rel, target):
     """(declaration, definition) of the object for one executable."""
+    global in_rodata
+    in_rodata = sec_of.get(n) == '.rodata'
+    out = one_plain(n, a, size, raw, sites, kind, rel, target)
+    return constant(*out) if in_rodata else out
+def one_plain(n, a, size, raw, sites, kind, rel, target):
     if kind == 'plain':
         ctype, count, text = carray(n, raw, size)
         return 'extern %s %s[%d];' % (ctype, n, count), text
@@ -573,13 +652,13 @@ for sec, a, size, nxt, da, dsize, dn, n in objects:
     md, mt = one(n, a, size, raw, ms, mk, main_rel, main_target)
     if shared:
         decls.append(md); defs.append((sec, mt)); continue
-    for x in ms:
+    for x in list(ms):
         q = main_rel[x][0]
         qa = sym_addr(q, main_named)
         twin = size == dsize and (x - a + da) in death_rel   # an address at the same place in Death Label
         assert twin or q in defined or q in used or any(s_ <= qa < e_ for s_, e_, d_, _ in obj_by_main) or not re.fullmatch(r'D_[0-9A-F]{8}', q), \
             'unverified pointer %s in %s (differs from Death Label, nothing else uses the target)' % (q, n)
-    for x in ds:
+    for x in list(ds):
         q = death_rel[x][0]
         twin = size == dsize and (x - da + a) in main_rel
         assert twin or not (re.fullmatch(r'D_[0-9A-F]{8}', q) and int(q[2:], 16) >= 0x28FF00), 'unverified Death Label pointer %s in %s' % (q, n)
@@ -609,14 +688,14 @@ if separate:
                     main_rel[x] = [target_name(target, names, v), 0]
                 else:
                     print('0x%x at %x looks like an address, left as a number' % (v, x))
-            objs = split_declared(partition_data(start, end)) if sec == '.data' else partition_sdata(start, end)
+            objs = cut(sec, start, end)
             for a, size, nxt in objs:
                 n = pick(a) if a in labels else 'D_%08X' % a
                 # a Death Label placeholder that spells a name the shared code uses for something else
                 if target == 'DEATH.ELF' and n == 'D_%08X' % a and n in used: n = 'death_' + n
                 assert n not in defined, n
                 assert not any(rom[a - OFF + size:nxt - OFF]), 'padding not zero at %x' % a
-                defined[n] = a; objs_all.append((sec, a, size, n))
+                defined[n] = a; objs_all.append((sec, a, size, n)); sec_of[n] = sec
         obj_by_main = [(a, a + size, None, n) for sec, a, size, n in objs_all]
         sites = {}
         for sec, a, size, n in objs_all:
@@ -627,6 +706,8 @@ if separate:
                     or not re.fullmatch(PLACE, q) or qa < TEXT_END \
                     or (0x270000 <= qa < 0x291000 and qa % 4 == 0)   # the PS2 part's strings and tables
                 # nothing to check an address against here: a placeholder nothing else uses must be confirmed
+                if not known and re.fullmatch(r'D_[0-9A-F]{8}', q) and (qa >= 0x28FF00 or qa < 0x241700):
+                    (main_numbers if target == 'SLPS_252.33' else death_numbers).add(q); main_rel.pop(x); ms.remove(x); continue
                 assert known or ('%x' % x) in confirmed, 'unverified pointer %s at %x in %s: pass --address %x or --number %x' % (q, x, n, x, x)
                 if ('%x' % x) in numbers: main_rel.pop(x); ms.remove(x)
             assert all((x - a) % 4 == 0 for x in ms), 'odd pointer position in %s' % n
@@ -742,6 +823,8 @@ for t, named in (('SLPS_252.33', main_named), ('DEATH.ELF', death_named)):
                     if n_ in used and n_ not in have:
                         add.append('%s = 0x%x;\n' % (n_, a_ + (d_ if t == 'DEATH.ELF' else 0)))
     if t == 'DEATH.ELF':
+        for n_ in sorted(death_numbers):
+            if n_ not in have: add.append('%s = 0x%x; // ignore:true\n' % (n_, int(n_[2:], 16)))
         for n_, a_ in sorted(death_add.items()):
             if n_ not in defined and not re.search(r'^%s = ' % n_, text, re.M): add.append('%s = 0x%x;\n' % (n_, a_))
         # an address Death Label already names takes the new name as an alias
@@ -749,14 +832,14 @@ for t, named in (('SLPS_252.33', main_named), ('DEATH.ELF', death_named)):
         for l in text.split('\n'):
             m = re.match(r'(\w+)\s*=\s*0x([0-9A-Fa-f]+);', l)
             if m and 'ignore:true' not in l: taken.setdefault(int(m.group(2), 16), m.group(1))
-        keep = []
-        for l in add:
+        keep = [l for l in add if 'ignore:true' in l]
+        for l in [l for l in add if 'ignore:true' not in l]:
             n_, a_ = l.split(' = '); a_ = int(a_.rstrip(';\n'), 16)
             if a_ in taken and taken[a_] != n_: death_alias[n_] = (a_, taken[a_])
             else: keep.append(l); taken[a_] = n_
         # a Main placeholder name given a Death Label address: whatever Death Label has at the address the
         # name spells needs a name of its own, or the split would call it the same
-        for l in list(keep):
+        for l in [l for l in keep if 'ignore:true' not in l]:
             n_, a_ = l.split(' = '); a_ = int(a_.rstrip(';\n'), 16)
             m = re.fullmatch(r'D_([0-9A-F]{8})', n_)
             if m and int(m.group(1), 16) != a_ and int(m.group(1), 16) not in taken and 0x100000 <= int(m.group(1), 16) < 0x700000:
