@@ -196,6 +196,7 @@ segments:
       - [0x172190, data, data_172190]
       - [0x173eb0, .rodata, shared/unit_00129DB0]
       - [0x173f40, rodata, rodata_173f40]
+      - [0x175900, .rodata, shared/pointer_tables]
       - [0x177ff8, .rodata, shared/sound_rpc]
       - [0x178058, rodata, rodata_178058]
       - [0x178560, .rodata, shared/unit_0018E5A0]

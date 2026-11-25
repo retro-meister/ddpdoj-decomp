@@ -204,6 +204,7 @@ segments:
       - [0x176450, rodata, rodata_176450]
       - [0x177610, .rodata, shared/replay_header]
       - [0x177710, rodata, rodata_177710]
+      - [0x177fb0, .rodata, shared/pointer_tables]
       - [0x17a6a8, .rodata, shared/sound_rpc]
       - [0x17a708, rodata, rodata_17a708]
       - [0x17ac30, .rodata, shared/unit_0018E5A0]
