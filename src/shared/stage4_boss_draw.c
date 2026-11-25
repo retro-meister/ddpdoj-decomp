@@ -3,11 +3,11 @@
 
 void sprite_draw_layer4_keep(void);
 
-void func_001DC160(void) {
+void sprite_draw_layer4_keep_entry(void) {
     sprite_draw_layer4_keep();
 }
 
-void func_001DC170(void) {
+void sprite_draw_layer4_keep_entry_2(void) {
     sprite_draw_layer4_keep();
 }
 
@@ -28,7 +28,7 @@ void func_001DC180(void) {
     reg_d3.h[0] = 0x1290;
     reg_d4.h[0] = *(u16 *)(object + 0x3C);
     *(u8 *)&reg_d4 = object[0x147];
-    func_001DC160();
+    sprite_draw_layer4_keep_entry();
 }
 
 extern u8 D_0026EE30[];
@@ -45,7 +45,7 @@ void func_001DC200(void) {
     reg_d3.h[0] = 0x1AB0;
     reg_d4.h[0] = ENTITY(reg_a6)[1].attr.h;
     reg_d4.b[0] = ENTITY(reg_a6)[10].offset_y.b[1];
-    func_001DC160();
+    sprite_draw_layer4_keep_entry();
 }
 
 extern u8 D_0026EE70[];
@@ -66,7 +66,7 @@ void func_001DC290(void) {
     reg_d3.h[0] = 0x14E8;
     reg_d4.h[0] = ENTITY(reg_a6)[1].attr.h;
     reg_d4.b[0] = ENTITY(reg_a6)[10].offset_y.b[1];
-    func_001DC170();
+    sprite_draw_layer4_keep_entry_2();
     reg_d2.w = 0x1D05;
     reg_d1.h[1] = ENTITY(reg_a6)[1].y.h;
     temp_a1_2 = ENTITY(reg_a6)[1].x.h;
@@ -76,7 +76,7 @@ void func_001DC290(void) {
     reg_d3.h[0] = 0xA50;
     reg_d4.h[0] = ENTITY(reg_a6)[1].attr.h;
     reg_d4.b[0] = ENTITY(reg_a6)[10].offset_y.b[1];
-    func_001DC160();
+    sprite_draw_layer4_keep_entry();
 }
 
 extern u8 D_0026EEB0[];
@@ -96,7 +96,7 @@ void func_001DC390(void) {
     reg_d3.h[0] = 0x18A0;
     reg_d4.h[0] = *(u16 *)(object + 0x5C);
     *(u8 *)&reg_d4 = object[0x146];
-    func_001DC160();
+    sprite_draw_layer4_keep_entry();
 }
 
 extern u16 D_0026EED0[];
@@ -116,7 +116,7 @@ void func_001DC410(void) {
     reg_d3.h[0] = 0x0A30;
     reg_d4.h[0] = *(u16 *)(object + 0x7C);
     *(u8 *)&reg_d4 = object[0x149];
-    func_001DC160();
+    sprite_draw_layer4_keep_entry();
 }
 
 extern u8 D_0026EEF0[];
@@ -135,7 +135,7 @@ void func_001DC490(void) {
     reg_d3.h[0] = 0x830;
     reg_d4.h[0] = ENTITY(reg_a6)[6].attr.h;
     reg_d4.b[0] = ENTITY(reg_a6)[10].offset_x.b[0];
-    func_001DC160();
+    sprite_draw_layer4_keep_entry();
 }
 
 void func_001DC530(void) {
@@ -152,7 +152,7 @@ void func_001DC530(void) {
     reg_d3.h[0] = 0x830;
     reg_d4.h[0] = ENTITY(reg_a6)[7].attr.h;
     reg_d4.b[0] = ENTITY(reg_a6)[10].draw.b.priority;
-    func_001DC160();
+    sprite_draw_layer4_keep_entry();
 }
 
 extern u16 D_0026EF50[];
@@ -174,7 +174,7 @@ void func_001DC5D0(void) {
     reg_d3.h[0] = 0x628;
     reg_d4.h[0] = ENTITY(reg_a6)[8].attr.h;
     reg_d4.b[0] = ENTITY(reg_a6)[10].draw.b.flip;
-    func_001DC160();
+    sprite_draw_layer4_keep_entry();
 }
 
 s32 sprite_draw_layer2();

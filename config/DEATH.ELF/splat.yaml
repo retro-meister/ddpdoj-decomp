@@ -92,7 +92,7 @@ segments:
       - [0x8f600, c, shared/unit_0018E5A0]
       - [0x9bc10, c, shared/sprite_queue]
       - [0x9eda0, c, shared/unit_0019DC20]
-      - [0xa03f0, c, shared/unit_0019F270]
+      - [0xa03f0, c, shared/player_options]
       - [0xa3a80, c, shared/palette]
       - [0xa4220, c, shared/unit_001A30A0]
       - [0xa4ea0, c, shared/glyph_cache]

@@ -87,7 +87,7 @@ segments:
       - [0x8e620, c, shared/unit_0018E5A0]
       - [0x9ab10, c, shared/sprite_queue]
       - [0x9dca0, c, shared/unit_0019DC20]
-      - [0x9f2f0, c, shared/unit_0019F270]
+      - [0x9f2f0, c, shared/player_options]
       - [0xa2980, c, shared/palette]
       - [0xa3120, c, shared/unit_001A30A0]
       - [0xa3da0, c, shared/ranking]

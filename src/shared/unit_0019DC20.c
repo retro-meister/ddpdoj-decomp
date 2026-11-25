@@ -416,7 +416,7 @@ void func_0019E980(void) {
     reg_a6 = save_a6;
 }
 
-s32 func_0019F270();
+s32 option_pair_draw();
 extern u8 option_shot_lists_4[];
 
 void func_0019EF20(void) {
@@ -484,7 +484,7 @@ loop_1:
     if ((s16)(reg_d4.h[0] -= 1) >= 0) goto loop_1;
     goto next_5;
 next_6:
-    func_0019F270();
+    option_pair_draw();
 next_5:
     reg_d6.w = save_d6;
     reg_d7.w = save_d7;

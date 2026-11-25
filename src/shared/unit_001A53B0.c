@@ -45,17 +45,17 @@ void func_001A53C0(void) {
 
 void sprite_draw_with_score(void);
 
-void func_001A53D0() {
+void sprite_draw_with_score_entry() {
     sprite_draw_with_score();
 }
 
-void func_001A53E0(void) {
+void sprite_draw_with_score_entry_2(void) {
     sprite_draw_with_score();
 }
 
 void sprite_draw_with_score_keep(void);
 
-void func_001A53F0(void) {
+void sprite_draw_with_score_keep_entry(void) {
     sprite_draw_with_score_keep();
 }
 
@@ -118,7 +118,7 @@ void func_001A54C0(void) {
     reg_d2.w = *(u32 *)(reg_a0 + reg_d2.h[0]);
     reg_d4.h[0] = 0;
 loop_0:
-    func_001A53F0();
+    sprite_draw_with_score_keep_entry();
     reg_d1.h[0] += 0x200;
     if ((s16)(reg_d0.h[0] -= 1) >= 0) goto loop_0;
     reg_d1.w = reg_d5.w;
@@ -133,7 +133,7 @@ next_0:
     reg_d2.h[0] += reg_d2.h[0];
     reg_a0 = (u8 *)D_0026BFD0;
     reg_d2.w = *(u32 *)(reg_a0 + reg_d2.h[0]);
-    func_001A53D0();
+    sprite_draw_with_score_entry();
 next_1:
     reg_d1.w = save_d1;
 }
@@ -153,7 +153,7 @@ void func_001A5600(void) {
     reg_d2.w = *(u32 *)(reg_a0 + reg_d2.h[0]);
     reg_d4.h[0] = 1;
 loop_0:
-    func_001A53F0();
+    sprite_draw_with_score_keep_entry();
     reg_d1.h[0] -= 0x200;
     if ((s16)(reg_d0.h[0] -= 1) >= 0) goto loop_0;
     reg_d1.w = reg_d5.w;
@@ -168,7 +168,7 @@ next_0:
     reg_d2.h[0] += reg_d2.h[0];
     reg_a0 = (u8 *)D_0026BFD0;
     reg_d2.w = *(u32 *)(reg_a0 + reg_d2.h[0]);
-    func_001A53D0();
+    sprite_draw_with_score_entry();
 next_1:
     return;
 }
@@ -600,7 +600,7 @@ next_80:
     reg_tmp1.w = reg_d1.w;
     reg_d1.h[1] = reg_d1.h[0];
     reg_d1.h[0] = 0;
-    func_001A53D0();
+    sprite_draw_with_score_entry();
     reg_d7.h[0] = 0xE00;
     reg_d7.h[0] -= reg_d6.h[0];
     func_001A5960();
@@ -685,7 +685,7 @@ next_280:
         func_001A6510();
         return;
     }
-    func_001A53D0();
+    sprite_draw_with_score_entry();
     func_001A6510();
 }
 
@@ -796,7 +796,7 @@ next_2:
     reg_tmp1.w = reg_d1.w;
     reg_d1.h[1] = reg_d1.h[0];
     reg_d1.h[0] = 0;
-    func_001A53D0();
+    sprite_draw_with_score_entry();
     reg_d7.h[0] = reg_d6.h[0];
     func_001A5960();
     func_001A59B0();
@@ -957,7 +957,7 @@ void func_001A6B70(void)
         reg_d1.h[1] = reg_d1.h[0];
         reg_d1.h[0] = 0;
         reg_d1.h[0] += offset;
-        func_001A53D0(savedRegister);
+        sprite_draw_with_score_entry(savedRegister);
         reg_d7.w = 0;
         func_001A80D0();
     }
@@ -980,7 +980,7 @@ void func_001A6BE0(void) {
         reg_tmp1.w = savedRegister;
         reg_d1.h[1] = savedLow;
         reg_d1.h[0] -= reg_d6.h[0];
-        func_001A53D0();
+        sprite_draw_with_score_entry();
         reg_d7.w = 0;
         func_001A8520();
     }
@@ -1377,7 +1377,7 @@ next_5:
     reg_d2.h[0] = *(u16 *)(D_0026B640 + (reg_d2.h[0] & ~1));
     reg_d2.w += reg_d5.w;
 next_6:
-    func_001A53F0();
+    sprite_draw_with_score_keep_entry();
 next_7:
     reg_d1.h[0] += 0x480;
 next_8:
@@ -1404,7 +1404,7 @@ next_1:
     reg_d2.w = 0xD78;
 next_2:
     reg_d3.h[0] = 0x420;
-    func_001A53E0();
+    sprite_draw_with_score_entry_2();
 }
 
 s32 func_00200EE0();
@@ -1469,7 +1469,7 @@ next_3:
     reg_d2.w += *(u32 *)reg_a0;
 next_4:
     reg_d3.h[0] = 0x610;
-    func_001A53F0();
+    sprite_draw_with_score_keep_entry();
 next_5:
     reg_d1.h[0] += 0x440;
     if ((s16)(reg_d7.h[0] -= 1) >= 0) goto loop_0;
@@ -1484,7 +1484,7 @@ next_5:
     reg_d2.w = *(u32 *)(D_0026B800 + (reg_d6.h[0] & ~3));
 next_6:
     reg_d3.h[0] = 0x420;
-    func_001A53E0();
+    sprite_draw_with_score_entry_2();
 }
 
 s32 sprite_draw_layer2_keep();
@@ -1533,7 +1533,7 @@ void func_001A7C60(void) {
     reg_d2.h[0] = (reg_d6.h[0]) ? *(u16 *) (reg_a0 + ((s16) reg_d6.h[0] & ~1)) : *(u16 *) reg_a0;
     reg_d3.h[0] = 0x810;
     reg_d2.w += 0xD7D;
-    func_001A53E0();
+    sprite_draw_with_score_entry_2();
 }
 
 s32 p1_invincible_start();
@@ -1783,7 +1783,7 @@ next_3:
 next_1:
     reg_d3.h[0] = 0x430;
     reg_d4.h[0] = 9;
-    func_001A53D0();
+    sprite_draw_with_score_entry();
     reg_d1.h[0] = 0x5FC0;
     reg_d1.h[0] -= reg_d7.h[0];
     reg_tmp1.w = reg_d1.w;
@@ -1797,7 +1797,7 @@ next_1:
     if (g_p1_hyper_items_pending == 0) goto next_4;
     reg_d0.h[0] -= 1;
 loop_0:
-    func_001A53F0();
+    sprite_draw_with_score_keep_entry();
     reg_d1.h[0] += 0x200;
     if ((s16)(reg_d0.h[0] -= 1) >= 0) goto loop_0;
 next_4:
@@ -1810,7 +1810,7 @@ next_4:
     reg_d2.h[0] += reg_d2.h[0];
     reg_d2.h[0] += reg_d2.h[0];
     reg_d2.w = *(u32 *)(reg_a0 + reg_d2.h[0]);
-    func_001A53E0();
+    sprite_draw_with_score_entry_2();
     return;
 next_0:
     reg_d1.h[0] = 0x5FC0;
@@ -1827,7 +1827,7 @@ next_0:
     reg_d0.h[0] -= 1;
     reg_d2.w = 0xCFF;
 loop_1:
-    func_001A53F0();
+    sprite_draw_with_score_keep_entry();
     reg_d1.h[0] += 0x200;
     if ((s16)(reg_d0.h[0] -= 1) >= 0) goto loop_1;
 next_5:
@@ -1840,7 +1840,7 @@ next_5:
     reg_d2.h[0] += reg_d2.h[0];
     reg_d2.h[0] += reg_d2.h[0];
     reg_d2.w = *(u32 *)(reg_a0 + reg_d2.h[0]);
-    func_001A53E0();
+    sprite_draw_with_score_entry_2();
 }
 
 
@@ -1909,7 +1909,7 @@ next_3:
 next_1:
     reg_d3.h[0] = 0x430;
     reg_d4.h[0] = 9;
-    func_001A53D0();
+    sprite_draw_with_score_entry();
     reg_d1.h[0] = 0x5FC0;
     reg_d1.h[0] -= reg_d7.h[0];
     reg_tmp1.w = reg_d1.w;
@@ -1923,7 +1923,7 @@ next_1:
     if (g_p2_hyper_items_pending == 0) goto next_4;
     reg_d0.h[0] -= 1;
 loop_0:
-    func_001A53F0();
+    sprite_draw_with_score_keep_entry();
     reg_d1.h[0] -= 0x200;
     if ((s16)(reg_d0.h[0] -= 1) >= 0) goto loop_0;
 next_4:
@@ -1936,7 +1936,7 @@ next_4:
     reg_d2.h[0] += reg_d2.h[0];
     reg_d2.h[0] += reg_d2.h[0];
     reg_d2.w = *(u32 *)(reg_a0 + reg_d2.h[0]);
-    func_001A53E0();
+    sprite_draw_with_score_entry_2();
     return;
 next_0:
     reg_d1.h[0] = 0x5FC0;
@@ -1953,7 +1953,7 @@ next_0:
     reg_d0.h[0] -= 1;
     reg_d2.w = 0xE3A;
 loop_1:
-    func_001A53F0();
+    sprite_draw_with_score_keep_entry();
     reg_d1.h[0] -= 0x200;
     if ((s16)(reg_d0.h[0] -= 1) >= 0) goto loop_1;
 next_5:
@@ -1966,7 +1966,7 @@ next_5:
     reg_d2.h[0] += reg_d2.h[0];
     reg_d2.h[0] += reg_d2.h[0];
     reg_d2.w = *(u32 *)(reg_a0 + reg_d2.h[0]);
-    func_001A53E0();
+    sprite_draw_with_score_entry_2();
 }
 
 extern s32 D_0026BA70[];
@@ -2009,7 +2009,7 @@ void func_001A89E0(void) {
 void func_001A8A40(void) {
     reg_d3.sh[0] = 0x430;
     reg_d4.sh[0] = 0x9;
-    func_001A53E0();
+    sprite_draw_with_score_entry_2();
 }
 
 s32 deferred_text_put_sheet();

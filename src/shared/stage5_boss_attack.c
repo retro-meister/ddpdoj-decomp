@@ -722,7 +722,7 @@ block_12:
 
 void bullet_fire256_double(void);
 
-void func_001EA990(void) {
+void bullet_fire256_double_entry(void) {
     bullet_fire256_double();
 }
 
@@ -849,7 +849,7 @@ next_1:
             reg_d1.b[0] += reg_d4.b[0];
             reg_d4.w = 0;
             reg_d6.b[0] = *(u8 *)(reg_a4 + 7);
-            func_001EA990();
+            bullet_fire256_double_entry();
             reg_d1.w = t7;
             reg_d3.h[1] = *(u16 *)reg_a3;
             reg_a3 += 2;
@@ -863,7 +863,7 @@ next_1:
             reg_d1.b[0] += reg_d4.b[0];
             reg_d6.b[0] = *(u8 *)(reg_a4 + 7);
             reg_d6.b[0] = ~(s8) reg_d6.b[0];
-            func_001EA990();
+            bullet_fire256_double_entry();
             reg_tmp.h[0] = *(u16 *)(reg_a4 + 0xE);
             *(u16 *)(reg_a4 + 0xE) -= 0xC;
             if ((s32) reg_tmp.h[0] < 0xC) {

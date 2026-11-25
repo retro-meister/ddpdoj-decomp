@@ -14,7 +14,7 @@ void func_0015C310(void);
 void func_0015C340(void);
 void func_0015C3A0(void);
 void func_0015C430(void);
-void func_0015C460(void);
+void enemy_remove_entry(void);
 
 void layers_reset(void);
 void func_0012FA50(void);
@@ -537,11 +537,11 @@ void func_0015C440(void) {
 
 
 void func_0015C450(void) {
-    func_0015C460();
+    enemy_remove_entry();
 }
 
 extern void enemy_remove(void);
 
-void func_0015C460(void) {
+void enemy_remove_entry(void) {
     enemy_remove();
 }

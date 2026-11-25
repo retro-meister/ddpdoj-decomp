@@ -44,7 +44,7 @@ s32 func_001488C0();
 s32 func_0014DA50();
 s32 func_0016AC30();
 void func_00170A50(s32, s32, s32);
-s32 func_0019FC70();
+s32 p1_options_update();
 s32 func_001B8410();
 s32 func_0020A540();
 s32 func_0020BD10();
@@ -87,7 +87,7 @@ void func_00139B80(void) {
     func_00170A50(0x1F, 0, 0);
     bombs_update();
     func_001488C0();
-    func_0019FC70();
+    p1_options_update();
     player_lasers_update();
     laser_impacts_update();
     func_0020A540();

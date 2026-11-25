@@ -107,7 +107,7 @@ void func_001B4D00(void) {
 
 void bullet_fire_3way(void);
 
-void func_001B4EB0(void) {
+void bullet_fire_3way_entry(void) {
     bullet_fire_3way();
 }
 
@@ -250,19 +250,19 @@ void func_001B5110(void) {
             reg_d3.h[0] = D_0026E0A2[0];
             reg_d1.w = 0;
             reg_d1.b[0] = ENTITY(reg_a6)[6].offset_y.b[1];
-            func_001B4EB0();
+            bullet_fire_3way_entry();
             reg_d3.h[1] = D_0026E0A4[0];
             reg_d3.h[0] = D_0026E0A6[0];
             reg_d1.b[0] = ENTITY(reg_a6)[6].offset_y.b[0];
-            func_001B4EB0();
+            bullet_fire_3way_entry();
             reg_d3.h[1] = D_0026E0A8[0];
             reg_d3.h[0] = D_0026E0AA[0];
             reg_d1.b[0] = ENTITY(reg_a6)[6].offset_x.b[1];
-            func_001B4EB0();
+            bullet_fire_3way_entry();
             reg_d3.h[1] = D_0026E0AC[0];
             reg_d3.h[0] = D_0026E0AE[0];
             reg_d1.b[0] = ENTITY(reg_a6)[6].offset_x.b[0];
-            func_001B4EB0();
+            bullet_fire_3way_entry();
             *(u8 *)(reg_a4 + 5) -= 1;
             if ((s8) *(u8 *)(reg_a4 + 5) == 0) {
                 *(s16 *)reg_a4 = 0;

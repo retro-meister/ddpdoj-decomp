@@ -22,7 +22,7 @@ void func_0022BA60(void);
 s32 replay_disc_headers_load(void);
 s32 replay_disc_file_load(u8 arg0);
 void func_0022BFD0();
-void func_0022C1E0();
+void task_stop_self_entry();
 void func_0022C1F0();
 void func_0022C450();
 
@@ -2894,7 +2894,7 @@ void func_0022BF60(void) {
         func_0022C1F0(temp_a0);
         break;
     case 2:
-        func_0022C1E0(temp_a0);
+        task_stop_self_entry(temp_a0);
         break;
     }
 }
@@ -3044,7 +3044,7 @@ void func_0022BFD0() {
 
 extern void task_stop_self(void);
 
-void func_0022C1E0() {
+void task_stop_self_entry() {
     task_stop_self();
 }
 

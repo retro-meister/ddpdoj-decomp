@@ -768,7 +768,7 @@ block_6:
 
 void bullet_fire256(void);
 
-void func_001D01D0(void) {
+void bullet_fire256_entry(void) {
     bullet_fire256();
 }
 
@@ -846,14 +846,14 @@ void func_001D03B0(void) {
             if (!(reg_d7.w & 1)) {
                 reg_d0.h[1] = *(u16 *)(reg_a4 + 6);
                 reg_d0.h[0] = *(u16 *)(reg_a4 + 8);
-                func_001D01D0();
+                bullet_fire256_entry();
                 reg_d0.w += 0x30000;
-                func_001D01D0();
+                bullet_fire256_entry();
                 reg_d0.w += 0xFFFD0000;
             } else {
                 reg_d0.h[1] = *(u16 *)(reg_a4 + 0xA);
                 reg_d0.h[0] = *(u16 *)(reg_a4 + 0xC);
-                func_001D01D0();
+                bullet_fire256_entry();
             }
             reg_d1.b[0] += 4;
         } while ((s16)(--reg_d7.h[0]) >= 0);
@@ -881,14 +881,14 @@ void func_001D03B0(void) {
             if (!(reg_d7.w & 1)) {
                 reg_d0.h[1] = *(u16 *)(reg_a4 + 6);
                 reg_d0.h[0] = *(u16 *)(reg_a4 + 8);
-                func_001D01D0();
+                bullet_fire256_entry();
                 reg_d0.w += 0x30000;
-                func_001D01D0();
+                bullet_fire256_entry();
                 reg_d0.w += 0xFFFD0000;
             } else {
                 reg_d0.h[1] = *(u16 *)(reg_a4 + 0xA);
                 reg_d0.h[0] = *(u16 *)(reg_a4 + 0xC);
-                func_001D01D0();
+                bullet_fire256_entry();
             }
             var_a0_4 = (u8 *)(reg_d1.b[0] - 4);
             reg_d1.b[0] = (u8) var_a0_4;

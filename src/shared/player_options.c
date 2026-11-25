@@ -2,24 +2,24 @@
 #include "player.h"
 #include "entity.h"
 
-void func_0019FCE0(void);
-void func_0019FD30(void);
+void p2_options_update(void);
+void options_update(void);
 void func_001A0E90(void);
 void func_001A1040(void);
 void func_001A1360(void);
-void func_001A1510(void);
-void func_001A17C0(void);
-void func_001A1850(void);
-void func_001A18B0(void);
-void func_001A19B0(void);
-void func_001A1AA0(void);
-void func_001A1B60(void);
-void func_001A2680(void);
+void option_aim(void);
+void options_narrow_step(void);
+void options_widen_step(void);
+void option_frames_load(void);
+void option_power_values_load(void);
+void option_table_load(void);
+void options_laser_fire(void);
+void option_move(void);
 
 s32 entity_draw_keep();                            /* extern */
 s32 func_0019DD20();                            /* extern */
 
-void func_0019F270(void) {
+void option_pair_draw(void) {
     s32 temp_s0;
     s32 temp_s0_2;
 
@@ -43,7 +43,7 @@ extern u16 g_frame_mod2;
 extern u16 g_loop;
 extern u16 g_stage;
 
-void func_0019F2E0(void) {
+void option_shadow_draw(void) {
     if (g_players_hidden != 0) return;
     if (g_frame_mod2 != 0) return;
     if (g_loop != 0) return;
@@ -72,7 +72,7 @@ void func_0019F2E0(void) {
     sprite_draw_with_player_shadows_keep();
 }
 
-void func_0019F410(void) {
+void option_pair_shadows_draw(void) {
     if ((g_players_hidden == 0) && (g_frame_mod2 == 0) && (g_loop == 0) && (g_stage != 2)) {
         reg_d1.h[1] = ENTITY(reg_a6)->y.h;
         reg_d1.h[0] = ENTITY(reg_a6)->x.h;
@@ -123,7 +123,7 @@ void func_0019F410(void) {
     }
 }
 
-void func_0019F620(void) {
+void option_shadow_draw_single(void) {
     if ((g_players_hidden == 0) && (g_loop == 0) && (g_frame_mod2 == 0) && (g_stage != 2)) {
         reg_d1.h[1] = ENTITY(reg_a6)->y.h;
         reg_d1.h[0] = ENTITY(reg_a6)->x.h;
@@ -151,7 +151,7 @@ void func_0019F620(void) {
 }
 
 
-void func_0019F750(void) {
+void option_animate(void) {
     reg_tmp.b[0] = *(u8 *)(reg_a6 + 0x43);
     *(u8 *)(reg_a6 + 0x43) -= 1;
     if ((s32) reg_tmp.b[0] <= 0) {
@@ -183,7 +183,7 @@ void func_0019F750(void) {
 }
 
 
-void func_0019F930(void) {
+void option_setup_from_template(void) {
     *(u16 *)reg_a1 = (u16) *(u16 *)reg_a0;
     reg_a0 += 2;
     reg_a1 += 2;
@@ -252,29 +252,29 @@ extern s32 D_0029D730_as_s32_a[];
 extern s16 g_p1_options_as_s16_a[];
 extern s32 g_player1_as_s32_a[];
 
-void func_0019FC70(void) {
+void p1_options_update(void) {
     reg_a6 = (u8 *)g_p1_options_as_s16_a;
     reg_a4 = (u8 *)g_player1_as_s32_a;
     reg_a2 = (u8 *)D_0029D730_as_s32_a;
     reg_d7.w = 1;
     if (*(s16 *)reg_a6 < 0) {
-        func_0019FD30();
+        options_update();
         return;
     }
     reg_d7.w = 0;
-    func_0019FCE0();
+    p2_options_update();
 }
 
 extern s32 D_0029D710_as_s32_a[];
 extern s16 g_p2_options_as_s16_a[];
 extern s32 g_player2_as_s32_a[];
 
-void func_0019FCE0(void) {
+void p2_options_update(void) {
     reg_a6 = (u8 *)g_p2_options_as_s16_a;
     reg_a4 = (u8 *)g_player2_as_s32_a;
     reg_a2 = (u8 *)D_0029D710_as_s32_a;
     if (*(s16 *)reg_a6 < 0) {
-        func_0019FD30();
+        options_update();
     }
 }
 
@@ -298,7 +298,7 @@ extern u8 g_replay_mode;
 extern u8 D_0029D710[];
 extern u8 g_player2_as_u8_a[];
 
-void func_0019FD30(void) {
+void options_update(void) {
     u32 temp;
     u8 bits;
     s32 temp2;
@@ -483,18 +483,18 @@ next_210:
 next_310:
     player_zoom_in_step();
     if (!(*(u8 *)reg_a6 & 4)) goto next_320;
-    func_001A17C0();
+    options_narrow_step();
     goto block_b;
 next_320:
     if (*(u8 *)(reg_a6 + 0x1A) != 0) goto next_330;
-    func_001A17C0();
-    func_001A18B0();
+    options_narrow_step();
+    option_frames_load();
     if (cond_flag == 0) goto block_b;
     *(u8 *)reg_a6 |= 4;
     *(s16 *)(reg_a6 + 0x4E) = 0;
     if (*(u8 *)reg_a4 & 1) goto next_328;
     if (*(u8 *)(reg_a4 + 0x5A) & 4) goto next_326;
-    func_001A19B0();
+    option_power_values_load();
     goto block_b;
 next_326:
     reg_a0 = (u8 *)option_strong_params;
@@ -504,11 +504,11 @@ next_326:
 next_327:
     reg_a0 = (u8 *)option_strong_params;
     reg_a0 += reg_d0.h[0];
-    func_001A1AA0();
+    option_table_load();
     goto block_b;
 next_328:
     reg_a0 = (u8 *)option_hyper_params;
-    func_001A1AA0();
+    option_table_load();
     goto block_b;
 next_330:
     if (*(u16 *)(reg_a6 + 0x10) != 4) goto next_350;
@@ -548,7 +548,7 @@ next_350:
     *(u8 *)(reg_a6 + 0x4A) = 4;
     *(u16 *)(reg_a6 + 0x16) = *(u16 *)(reg_a6 + 0x30);
     *(u16 *)(reg_a6 + 0x18) = *(u16 *)(reg_a6 + 0x32);
-    func_001A18B0();
+    option_frames_load();
     *(u16 *)(reg_a6 + 0xE) = 0x418;
     reg_tmp.w = 0xFC00FD00;
     *(u16 *)(reg_a6 + 6) = reg_tmp.h[1];
@@ -563,11 +563,11 @@ next_360:
     goto block_b;
 next_400:
     if (*(s8 *)reg_a4 >= 0) goto next_410;
-    func_001A17C0();
+    options_narrow_step();
     goto block_b;
 next_410:
     func_0013F990();
-    func_001A1850();
+    options_widen_step();
     *(u8 *)(reg_a6 + 0x3E) = 0xA;
     if (!(*(u8 *)(reg_a6 + 1) & 0x40)) goto block_b;
     reg_d0.w = 0;
@@ -633,10 +633,10 @@ next_520:
     reg_a6 += 0x20;
     goto next_540;
 next_530:
-    func_001A2680();
+    option_move();
     reg_d0.h[0] = *(u16 *)(reg_a6 + 0x1E);
     *(u16 *)(reg_a6 + 2) += reg_d0.h[0];
-    func_001A1B60();
+    options_laser_fire();
 next_540:
     temp = reg_d7.h[0] - 1;
     reg_d7.h[0] = temp;
@@ -662,7 +662,7 @@ next_620:
 next_630:
     *(u8 *)(reg_a6 + 0x3B) = *(u8 *)(reg_a6 + 0x1B);
     if (*(u16 *)(reg_a4 + 0x5A) == 4) goto next_640;
-    func_0019F750();
+    option_animate();
 next_640:
     reg_d0.h[1] = *(u16 *)(reg_a4 + 2);
     reg_d0.h[0] = *(u16 *)(reg_a4 + 4);
@@ -670,10 +670,10 @@ next_640:
     *(u16 *)(reg_a6 + 4) = reg_d0.h[0];
     *(u16 *)(reg_a6 + 0x22) = reg_d0.h[1];
     *(u16 *)(reg_a6 + 0x24) = reg_d0.h[0];
-    func_0019F410();
-    func_001A2680();
+    option_pair_shadows_draw();
+    option_move();
     reg_a6 += 0x20;
-    func_001A2680();
+    option_move();
     temp = reg_d7.h[0] - 1;
     reg_d7.h[0] = temp;
     if (((s64) ((s64) (temp & 0xFFFF) << 0x30) >> 0x30) >= 0) goto loop_10;
@@ -705,12 +705,12 @@ block_rts:
 s32 func_0019E130();
 
 void func_001A0E90(void) {
-    func_0019F750();
-    func_001A2680();
+    option_animate();
+    option_move();
     reg_a6 += 0x20;
-    func_001A2680();
+    option_move();
     reg_a6 -= 0x20;
-    func_0019F410();
+    option_pair_shadows_draw();
     if (*(u8 *)(reg_a6 + 0x40) & 0x10) {
         reg_d0.b[0] = *(u8 *)(reg_a4 + 0x20);
         if (*(u8 *)reg_a4 & 1) {
@@ -763,11 +763,11 @@ void func_001A1040(void) {
     u8 *p0;
 
     if (*(u8 *)(reg_a6 + 1) & 4) {
-        func_001A2680();
+        option_move();
         reg_a6 += 0x20;
-        func_001A2680();
+        option_move();
         reg_a6 -= 0x20;
-        func_0019F410();
+        option_pair_shadows_draw();
     } else {
         reg_d3.w = 0;
         if (*(u8 *)(reg_a6 + 1) & 8) {
@@ -795,7 +795,7 @@ next_6:
         reg_tmp.h[1] = *(u16 *)(reg_a6 + 0x58);
         reg_tmp.h[0] = *(u16 *)(reg_a6 + 0x5A);
         reg_a3 = (u8 *)reg_tmp.w;
-        func_001A1510();
+        option_aim();
         *(u16 *)(reg_a6 + 0x5C) = (u16) reg_d6.h[1];
         *(u16 *)(reg_a6 + 0x5E) = (u16) reg_d6.h[0];
         p0 = (u8 *)(reg_a6);
@@ -804,7 +804,7 @@ next_6:
         reg_tmp.h[0] = *(u16 *)(p0 + 0x5A);
         reg_a6 = p0 + 0x20;
         reg_a3 = (u8 *)reg_tmp.w;
-        func_001A1510();
+        option_aim();
         reg_a6 -= 0x20;
         *(u16 *)(reg_a6 + 0x60) = (u16) reg_d6.h[1];
         *(u16 *)(reg_a6 + 0x62) = (u16) reg_d6.h[0];
@@ -857,12 +857,12 @@ block_22:
 s32 func_0019EF20();
 
 void func_001A1360(void) {
-    func_0019F750();
-    func_001A2680();
+    option_animate();
+    option_move();
     reg_a6 += 0x20;
-    func_001A2680();
+    option_move();
     reg_a6 -= 0x20;
-    func_0019F410();
+    option_pair_shadows_draw();
     if (*(u8 *)(reg_a6 + 0x40) & 0x10) {
         reg_d0.b[0] = *(u8 *)(reg_a4 + 0x20);
         if (*(u8 *)reg_a4 & 1) {
@@ -911,7 +911,7 @@ block_13:
 s32 entity_draw_with_options();
 extern u16 D_0025F1D0[];
 
-void func_001A1510(void) {
+void option_aim(void) {
     u32 p0;
     ENTITY(reg_a6)->y.h = (u16) *(u16 *)(reg_a4 + 2);
     ENTITY(reg_a6)->x.h = (u16) *(u16 *)(reg_a4 + 4);
@@ -945,12 +945,12 @@ void func_001A1510(void) {
     p0 = ENTITY(reg_a6)->x.h;
     ENTITY(reg_a6)->x.h = (u16) (p0 + reg_d5.h[0]);
     if (g_players_hidden == 0) {
-        func_0019F2E0();
+        option_shadow_draw();
         entity_draw_with_options();
     }
 }
 
-void func_001A17C0(void) {
+void options_narrow_step(void) {
     reg_d0.b[0] = *(u8 *)(reg_a4 + 0x1B);
     if (*(u8 *)(reg_a4 + 0x39) != reg_d0.b[0]) {
         *(u8 *)(reg_a6 + 0x4A) -= 1;
@@ -967,7 +967,7 @@ void func_001A17C0(void) {
 
 extern u16 g_bomb_entities[];
 
-void func_001A1850(void) {
+void options_widen_step(void) {
     if ((g_bomb_entities[0] == 0) || !(*(u8 *)reg_a4 & 0x40)) {
         reg_d0.b[0] = *(u8 *)(reg_a4 + 0x1B);
         if (*(u8 *)(reg_a4 + 0x38) != reg_d0.b[0]) {
@@ -976,7 +976,7 @@ void func_001A1850(void) {
     }
 }
 
-void func_001A18B0(void) {
+void option_frames_load(void) {
     reg_tmp.h[1] = ENTITY(reg_a6)->hit_x_minus.h;
     reg_tmp.h[0] = ENTITY(reg_a6)->hp.h;
     reg_a0 = (u8 *)(reg_tmp.w);
@@ -1006,7 +1006,7 @@ extern u16 option_power_values[];
 extern u8 D_0029DCD0[];
 extern u8 D_0029E2D0[];
 
-void func_001A19B0(void) {
+void option_power_values_load(void) {
     reg_a1 = D_0029E2D0;
     if (reg_d7.h[0] == 0) {
         reg_a1 = D_0029DCD0;
@@ -1022,10 +1022,10 @@ void func_001A19B0(void) {
     reg_tmp.h[1] = (reg_d0.h[0] != 0) ? *(u16 *)((u8 *)reg_a0 + ((s16)reg_d0.h[0] & ~1)) : *(u16 *)reg_a0;
     reg_tmp.h[0] = (((reg_d0.h[0] & 0xFFFF) + 2) != 0) ? *(u16 *)((u8 *)reg_a0 + ((s16)((reg_d0.h[0] & 0xFFFF) + 2) & ~1)) : *(u16 *)reg_a0;
     reg_a0 = (u8 *) reg_tmp.w;
-    func_0019F930();
+    option_setup_from_template();
 }
 
-void func_001A1AA0(void) {
+void option_table_load(void) {
     reg_a1 = D_0029E2D0;
     if (reg_d7.h[0] == 0) {
         reg_a1 = D_0029DCD0;
@@ -1035,7 +1035,7 @@ void func_001A1AA0(void) {
     reg_tmp.h[1] = (reg_d0.h[0] != 0) ? *(u16 *)((u8 *)reg_a0 + ((s16)reg_d0.h[0] & ~1)) : *(u16 *)reg_a0;
     reg_tmp.h[0] = (((reg_d0.h[0] & 0xFFFF) + 2) != 0) ? *(u16 *)((u8 *)reg_a0 + ((s16)((reg_d0.h[0] & 0xFFFF) + 2) & ~1)) : *(u16 *)reg_a0;
     reg_a0 = (u8 *) reg_tmp.w;
-    func_0019F930();
+    option_setup_from_template();
 }
 
 extern u16 option_strong_sprites_a[];
@@ -1053,7 +1053,7 @@ extern u8 g_p2_laser_entities[];
 extern u8 g_p1_laser_entities[];
 
 
-void func_001A1B60(void) {
+void options_laser_fire(void) {
     u32 cnt;
 
     switch (ENTITY(reg_a6)->flags.b[1] & 0x20) {
@@ -1173,7 +1173,7 @@ next_80:
     *(u16 *)(reg_a6 + 0x50) = 0;
 next_100:
     if ((s8)reg_a4[0] < 0) return;
-    func_0019F620();
+    option_shadow_draw_single();
     entity_draw_with_options();
     return;
 block_sen:
@@ -1265,7 +1265,7 @@ block_sen:
     goto next_60;
 next_sen10:
     *(u16 *)(reg_a6 + 0x4E) = 2;
-    func_0019F620();
+    option_shadow_draw_single();
     entity_draw_with_options();
 }
 
@@ -1274,7 +1274,7 @@ s32 func_00201D10();
 extern u16 D_0025F5A8[];
 extern u16 option_offsets[];
 
-void func_001A2680(void) {
+void option_move(void) {
     u32 temp_a0;
     u32 temp_a0_2;
     reg_d1.w = 0x3F;
@@ -1312,7 +1312,7 @@ void func_001A2680(void) {
             reg_d0.h[0] = (reg_d0.h[0] != 0) ? *(u16 *)((u8 *)reg_a0 + ((s16)reg_d0.h[0] & ~1)) : *(u16 *)reg_a0;
             ENTITY(reg_a6)->y.h -= reg_d0.h[0];
             *(u16 *)(reg_a6 + 0x38) -= 2;
-            func_0019F620();
+            option_shadow_draw_single();
             entity_draw_with_options();
         }
         reg_d0.h[0] = *(u16 *)(reg_a6 + 0x56);
@@ -1325,7 +1325,7 @@ void func_001A2680(void) {
         reg_d1.h[0] = ((temp_a0_2 + 2) != 0) ? *(u16 *)((u8 *)reg_a0 + ((s16)(temp_a0_2 + 2) & ~1)) : *(u16 *)reg_a0;
         reg_d0.h[0] = (temp_a0_2 != 0) ? *(u16 *)((u8 *)reg_a0 + ((s16)temp_a0_2 & ~1)) : *(u16 *)reg_a0;
         func_00201C20();
-        func_0019F620();
+        option_shadow_draw_single();
         entity_draw_with_options();
     }
 }
