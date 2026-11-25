@@ -279,10 +279,10 @@ void func_0019FCE0(void) {
 
 typedef void (*Fn)();
 
-extern u8 D_0025F3B0[];
+extern u8 laser_style_params[];
 extern u8 D_0025F3C0[];
-extern u8 D_0025F400[];
-extern u8 D_0025F430[];
+extern u8 laser_strong_params[];
+extern u8 laser_hyper_params[];
 extern u8 D_0029F110[];
 
 s32 func_0013C9A0();
@@ -313,7 +313,7 @@ next_20:
     reg_tmp.b[0] = *(u8 *)reg_a6;
     *(u8 *)reg_a6 |= 1;
     if (reg_tmp.b[0] & 1) goto next_100;
-    reg_a0 = (u8 *)D_0025F3B0;
+    reg_a0 = (u8 *)laser_style_params;
     reg_d0.h[0] = *(u16 *)(reg_a4 + 0x5A);
     reg_d0.h[0] -= 2;
     reg_d0.h[0] *= 2;
@@ -496,17 +496,17 @@ next_320:
     func_001A19B0();
     goto block_b;
 next_326:
-    reg_a0 = (u8 *)D_0025F400;
+    reg_a0 = (u8 *)laser_strong_params;
     reg_d0.h[0] = *(u16 *)(reg_a4 + 0x58);
     if (reg_d0.h[0] == 0) goto next_327;
     reg_d0.w = 0x14;
 next_327:
-    reg_a0 = (u8 *)D_0025F400;
+    reg_a0 = (u8 *)laser_strong_params;
     reg_a0 += reg_d0.h[0];
     func_001A1AA0();
     goto block_b;
 next_328:
-    reg_a0 = (u8 *)D_0025F430;
+    reg_a0 = (u8 *)laser_hyper_params;
     func_001A1AA0();
     goto block_b;
 next_330:
@@ -1001,7 +1001,7 @@ void func_001A18B0(void) {
     cond_flag = 1;
 }
 
-extern u16 D_0025F3D0[];
+extern u16 laser_power_lengths[];
 extern u8 D_0029DCD0[];
 extern u8 D_0029E2D0[];
 
@@ -1015,7 +1015,7 @@ void func_001A19B0(void) {
         reg_d0.w = 0x14;
     }
     reg_d1.h[0] = *(u16 *)(reg_a4 + 0x22);
-    reg_a0 = (u8 *)(D_0025F3D0);
+    reg_a0 = (u8 *)(laser_power_lengths);
     reg_d1.h[0] += reg_d1.h[0];
     reg_d0.h[0] += reg_d1.h[0];
     reg_tmp.h[1] = (reg_d0.h[0] != 0) ? *(u16 *)((u8 *)reg_a0 + ((s16)reg_d0.h[0] & ~1)) : *(u16 *)reg_a0;
@@ -1037,12 +1037,12 @@ void func_001A1AA0(void) {
     func_0019F930();
 }
 
-extern u16 D_0025F490[];
-extern u16 D_0025F4B0[];
-extern u16 D_0025F550[];
-extern u16 D_0028D968_as_u16;
-extern u16 D_0028D970_as_u16;
-extern u16 D_0028D978_as_u16;
+extern u16 laser_strong_head_sprites[];
+extern u16 laser_hyper_head_sprites[];
+extern u16 laser_hyper_beam_sprites[];
+extern u16 laser_head_sprite_tables_as_u16;
+extern u16 laser_beam_sprite_tables_as_u16;
+extern u16 laser_strong_beam_sprite_tables_as_u16;
 extern u16 D_0028DFD4;
 extern u16 D_0028DFD8;
 extern u8 D_0029D730[];
@@ -1108,13 +1108,13 @@ next_50:
 next_60:
     reg_d0.w = 0x1D;
     if (reg_a4[0] & 1) {
-        reg_a0 = (u8 *)D_0025F4B0;
+        reg_a0 = (u8 *)laser_hyper_head_sprites;
         goto next_64;
     }
-    reg_a0 = (u8 *)D_0025F490;
+    reg_a0 = (u8 *)laser_strong_head_sprites;
     if (reg_a4[0x5A] & 4) goto next_64;
     reg_d3.h[0] = *(u16 *)(reg_a4 + 0x58);
-    reg_a0 = (u8 *)&D_0028D968_as_u16;
+    reg_a0 = (u8 *)&laser_head_sprite_tables_as_u16;
     reg_d3.h[0] += reg_d3.h[0];
     reg_tmp.h[1] = (reg_d3.h[0] != 0) ? *(u16 *)((u8 *)reg_a0 + ((s16)reg_d3.h[0] & ~1)) : *(u16 *)reg_a0;
     reg_tmp.h[0] = (((u16) reg_d3.h[0] + 2) != 0) ? *(u16 *)((u8 *)reg_a0 + ((s16)((u16) reg_d3.h[0] + 2) & ~1)) : *(u16 *)reg_a0;
@@ -1181,10 +1181,10 @@ block_sen:
     reg_a2 = reg_a1;
     reg_a1 += 0x510;
     reg_d3.h[0] = *(u16 *)(reg_a4 + 0x58);
-    reg_a0 = (u8 *)&D_0028D970_as_u16;
+    reg_a0 = (u8 *)&laser_beam_sprite_tables_as_u16;
     reg_d3.h[0] += reg_d3.h[0];
     if (reg_a4[0x5A] & 4) {
-        reg_a0 = (u8 *)&D_0028D978_as_u16;
+        reg_a0 = (u8 *)&laser_strong_beam_sprite_tables_as_u16;
     }
     reg_tmp.h[1] = (reg_d3.h[0] != 0) ? *(u16 *)((u8 *)reg_a0 + ((s16)reg_d3.h[0] & ~1)) : *(u16 *)reg_a0;
     reg_tmp.h[0] = (((u16) reg_d3.h[0] + 2) != 0) ? *(u16 *)((u8 *)reg_a0 + ((s16)((u16) reg_d3.h[0] + 2) & ~1)) : *(u16 *)reg_a0;
@@ -1193,7 +1193,7 @@ block_sen:
     reg_d2.h[0] = reg_d1.h[0];
     reg_d1.h[0] += reg_d1.h[0];
     if (reg_a4[0] & 1) {
-        reg_a0 = (u8 *)D_0025F550;
+        reg_a0 = (u8 *)laser_hyper_beam_sprites;
     }
     reg_tmp.h[1] = (reg_d1.h[0] != 0) ? *(u16 *)((u8 *)reg_a0 + ((s16)reg_d1.h[0] & ~1)) : *(u16 *)reg_a0;
     reg_tmp.h[0] = (((u16) reg_d1.h[0] + 2) != 0) ? *(u16 *)((u8 *)reg_a0 + ((s16)((u16) reg_d1.h[0] + 2) & ~1)) : *(u16 *)reg_a0;
@@ -1273,7 +1273,7 @@ next_sen10:
 s32 func_00201C20();
 s32 func_00201D10();
 extern u16 D_0025F5A8[];
-extern u16 D_0025F5C0[];
+extern u16 laser_offsets[];
 
 void func_001A2680(void) {
     u32 temp_a0;
@@ -1309,7 +1309,7 @@ void func_001A2680(void) {
         }
         reg_d0.h[0] = *(u16 *)(reg_a6 + 0x38);
         switch (reg_d0.h[0]) { case 0: break; default:
-            reg_a0 = (u8 *)(D_0025F5C0);
+            reg_a0 = (u8 *)(laser_offsets);
             reg_d0.h[0] = (reg_d0.h[0] != 0) ? *(u16 *)((u8 *)reg_a0 + ((s16)reg_d0.h[0] & ~1)) : *(u16 *)reg_a0;
             ENTITY(reg_a6)->y.h -= reg_d0.h[0];
             *(u16 *)(reg_a6 + 0x38) -= 2;
