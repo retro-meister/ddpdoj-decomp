@@ -8,6 +8,8 @@ void stage1_boss_draw_gatling(void);
 void stage1_boss_draw_core(void);
 void stage1_boss_draw_turrets(void);
 void stage1_boss_draw_entrance_part(void);
+s32 sprite_draw_layer3_keep();
+s32 sprite_draw_layer5_keep();
 s32 sprite_draw_layer2_zoom_keep();
 s32 sprite_draw_layer3_zoom_keep();
 s32 sprite_draw_layer4_zoom_keep();
@@ -147,16 +149,12 @@ u16 stage1_boss_entrance_part_frames[] = {
 
 void stage1_boss_draw_body(void)
 {
-    extern void sprite_draw_layer3_keep(void);
-    u16 *work;
-
     reg_d2.w = 0x195E;
-    work = (u16 *)((void *)reg_a6);
-    reg_d1.h[1] = work[1];
-    reg_d1.h[0] = work[2];
+    reg_d1.h[1] = ENTITY(reg_a6)->y.h;
+    reg_d1.h[0] = ENTITY(reg_a6)->x.h;
     reg_d1.w += 0xE600F400U;
     reg_d3.h[0] = 0x1A60;
-    reg_d4.h[0] = work[0xE];
+    reg_d4.h[0] = ENTITY(reg_a6)->attr.h;
     sprite_draw_layer3_keep();
 }
 
@@ -241,7 +239,6 @@ void stage1_boss_draw_left_side(void) {
 }
 
 void stage1_boss_draw_gatling(void) {
-    s32 sprite_draw_layer3_keep();
     u16 temp_a0;
 
     reg_a2 = ((u8 *)stage1_boss_gatling_sprites);
@@ -262,7 +259,6 @@ void stage1_boss_draw_gatling(void) {
 }
 
 void stage1_boss_draw_core(void) {
-    extern void sprite_draw_layer3_keep(void);
     reg_a2 = (u8 *)((u16 *)stage1_boss_core_sprite);
     reg_d2.h[1] = *(u16 *)reg_a2;
     reg_d2.h[0] = *(u16 *)(reg_a2 + 2);
@@ -276,7 +272,6 @@ void stage1_boss_draw_core(void) {
 }
 
 void stage1_boss_draw_turrets(void) {
-    s32 sprite_draw_layer3_keep();
     reg_d2.w = 0;
     reg_d2.b[0] = ENTITY(reg_a6)[6].offset_y.b[1];
     reg_d2.h[0] &= 0x3E;
@@ -320,7 +315,6 @@ void stage1_boss_draw_turrets(void) {
     sprite_draw_layer3_keep();
 }
 
-s32 sprite_draw_layer5_keep();
 
 void stage1_boss_draw_entrance_part(void) {
     u32 temp_a0;
