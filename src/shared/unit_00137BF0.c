@@ -245,7 +245,7 @@ void func_00137CC0(void) {
 
 s32 text_palette_load();
 s32 task_start();
-s32 func_0021D410();
+s32 delta_encode();
 s32 func_00224B50();
 s32 func_0022BC60();
 s32 func_0022BE60();
@@ -329,7 +329,7 @@ void func_00137E00(void) {
         if (func_0022BE60(D_0028DF04) != 0) {
             D_0028DF08 += 1;
             memcpy(D_006C58A0, D_006A4800, 0x202E8);
-            func_0021D410(D_006C5CA0);
+            delta_encode(D_006C5CA0);
             func_0023DBF0(D_006C58A0);
             D_0028ED7C_as_s8 = 2;
             D_0028ED30 = D_006C58D8[0];

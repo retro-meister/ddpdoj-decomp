@@ -2,16 +2,16 @@
 
 void enemy_set_entity_count(s32);
 
-void func_0015B900(void) {
+void dummy_enemy_first(void) {
     enemy_set_entity_count(0);
 }
 
 extern void enemy_remove(void);
 
-void func_0015B910(void) {
+void dummy_enemy_main(void) {
     enemy_remove();
 }
 
-void func_0015B920(void) {
+void dummy_enemy_main_b(void) {
     enemy_remove();
 }

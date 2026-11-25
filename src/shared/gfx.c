@@ -542,7 +542,6 @@ void bg_palette_upload(void) {
 }
 
 #ifndef DEATH_LABEL
-extern u8 g_splash_visible;
 void splash_image_draw(void) {
     if (g_splash_visible != 0) {
         g_quad_queue[0].x[0] = 0;

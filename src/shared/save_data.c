@@ -114,14 +114,14 @@ extern u8 D_006C58DE[];
 extern u8 D_006C58DF[];
 extern u8 D_006C5CA0[];
 s32 func_002269B0(void) {
-    s32 func_0021D410();
+    s32 delta_encode();
     s32 func_0023DBF0();
     if (func_0022BE60(D_0028EC40_as_u8) != 0) {
         D_0028EC28 = *(s8 *)&D_0028EC40_as_u8;
         D_0028EB04 = 1;
         D_0028EB90 = 0x40;
         memcpy(D_006C58A0, D_006A4800, 0x202E8);
-        func_0021D410(D_006C5CA0);
+        delta_encode(D_006C5CA0);
         func_0023DBF0(D_006C58A0);
         D_0028ED30 = D_006C58D8[0];
         D_0028ED31 = D_006C58D9[0];
@@ -2468,7 +2468,7 @@ typedef struct {
 } SaveBody;
 
 void func_0022B330(void) {
-    extern void func_0021D410(u8 *buf);
+    extern void delta_encode(u8 *buf);
     extern void func_0023DBF0(void *data);
     s32 count;
     s32 i;
@@ -2482,7 +2482,7 @@ void func_0022B330(void) {
     }
     if (count == 6) {
         data = (SaveBody *)D_006A4C00;
-        func_0021D410((u8 *)data);
+        delta_encode((u8 *)data);
         func_0023DBF0(D_006A4800);
         printf(D_00289E50, D_0028ED50, data->score1);
         printf(D_00289E70, D_0028ED54, data->count1);

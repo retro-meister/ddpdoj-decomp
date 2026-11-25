@@ -76,6 +76,7 @@ extern u8 g_splash_file_buf[];    /* ARIKA.8 (DON.8 in Death Label) */
 extern u8 g_stage_map_file_buf[]; /* MAP2.8 */
 extern s32 g_stage_map_progress;
 
+extern u8 g_splash_visible;
 void splash_image_upload(void);
 void stage_map_image_upload(void);
 void tex_upload(s32 index);

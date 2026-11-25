@@ -228,7 +228,7 @@ s32 func_00226620(void) {
     return 1;
 }
 
-s32 func_0021D410(s32 *);                   /* extern */
+s32 delta_encode(s32 *);                   /* extern */
 s32 func_0022C760(s32);                         /* extern */
 s32 func_00233EC0();                            /* extern */
 s32 func_0023DBF0(s32 *);                   /* extern */
@@ -272,7 +272,7 @@ s32 func_00226700(void) {
             D_0028EC28 = D_0028EC40;
             if (D_0028ECC4 != 0) {
                 memcpy(D_006C58A0_as_s32_a, D_006A4800_as_s32_a, 0x202E8);
-                func_0021D410(D_006C5CA0_as_s32_a);
+                delta_encode(D_006C5CA0_as_s32_a);
                 func_0023DBF0(D_006C58A0_as_s32_a);
                 D_0028ED30 = D_006C58D8[0];
                 D_0028ED31 = D_006C58D9[0];

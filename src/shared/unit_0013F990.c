@@ -291,7 +291,7 @@ extern s16 D_0028DFEC_as_s16;
 extern s16 D_0028DFF0_as_s16;
 extern s32 D_0028DFF4;
 extern s16 D_0028DFF8_as_s16;
-extern s16 D_0028DFFC_as_s16;
+extern s16 g_hyper_bullet_speed_as_s16;
 extern s16 D_0028E000_as_s16;
 extern s16 D_0028E004_as_s16;
 extern s16 D_0028E008_as_s16;
@@ -594,7 +594,7 @@ void func_0013FD80(void) {
     D_0028E008_as_s16 = 0;
     D_0028E004_as_s16 = 0;
     D_0028E000_as_s16 = 0;
-    D_0028DFFC_as_s16 = 0;
+    g_hyper_bullet_speed_as_s16 = 0;
     D_0028DFF8_as_s16 = 0;
     D_0028DFF4 = 0;
     D_0028DFF0_as_s16 = 0;
@@ -1379,7 +1379,7 @@ extern s16 g_p2_hyper_items_as_s16;
 extern s16 g_p1_hyper_items_as_s16;
 #ifdef DEATH_LABEL
 extern u8 death_D_00290DC0;
-extern u16 D_0028DFFC;
+extern u16 g_hyper_bullet_speed;
 extern u16 D_0028E7F0;
 #endif
 
@@ -1474,7 +1474,7 @@ void func_001417D0(void) {
         }
     }
     g_p2_hyper_total_as_s16 = 0xF;
-    D_0028DFFC = 0xA;
+    g_hyper_bullet_speed = 0xA;
     D_0028E7F0 = 2;
 #else
     if (reg_a6 == g_player1_as_u8_a) {

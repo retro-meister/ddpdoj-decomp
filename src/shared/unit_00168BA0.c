@@ -545,19 +545,19 @@ void func_00169400(void) {
 
 }
 
-s32 func_00122BE0();                            /* extern */
-s32 func_00122C20();                            /* extern */
-extern s8 g_splash_visible_as_s8;
+s32 splash_begin();                            /* extern */
+s32 splash_update();                            /* extern */
+extern u8 g_splash_visible;
 
 void func_00169410(void) {
     if (*(u8 *)(reg_a5 + 2) == 0) {
         *(u8 *)(reg_a5 + 2) = 1U;
-        func_00122BE0();
+        splash_begin();
     }
-    func_00122C20();
+    splash_update();
     if (cond_flag == 0) {
         reg_d0.h[0] = 1;
-        g_splash_visible_as_s8 = 0;
+        g_splash_visible = 0;
         if (D_0028E39C == 0x12) {
             reg_d0.h[0] = 3;
         }

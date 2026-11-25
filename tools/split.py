@@ -193,15 +193,20 @@ def align_rodata_subsegments(folder):
     padding; it only restores the gap the original unit's own alignment produced.
     """
     data_dir = folder / "asm" / "data"
-    for path in list(data_dir.glob("*data_*.*data.s")) + list(data_dir.glob("bss_*.bss.s")):
+    for path in list(data_dir.glob("*data_*.*data.s")) + list(data_dir.glob("bss_*.bss.s")) + list(data_dir.glob("sbss_*.sbss.s")):
         # the same holds for a `data_<offset>` slice that follows a C unit's .data, and for a
-        # `bss_<address>` slice that follows a C unit's .bss
-        match = re.fullmatch(r"(?:(?:ro)?data|bss)_([0-9a-f]+)\.(?:(?:ro)?data|bss)\.s", path.name)
+        # `bss_<address>` / `sbss_<address>` slice that follows a C unit's .bss / .sbss
+        match = re.fullmatch(r"(?:(?:ro)?data|s?bss)_([0-9a-f]+)\.(?:(?:ro)?data|s?bss)\.s", path.name)
         if not match:
             continue
         offset = int(match.group(1), 16)
         power = 4 if offset % 16 == 0 else 3 if offset % 8 == 0 else 0
-        if power <= 2:
+        if path.name.startswith("sbss_"):
+            # a C unit's last small variable may be 2 bytes long; the next slice still starts on a word
+            power = max(power, 2) if offset % 4 == 0 else 0
+        elif power <= 2:
+            continue
+        if power < 2:
             continue
         text = path.read_text(encoding="utf-8")
         lines = text.split("\n")

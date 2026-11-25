@@ -1,6 +1,6 @@
 #include "common.h"
 
-void func_0021D410(u8 *buf) {
+void delta_encode(u8 *buf) {
     u8 prev;
     u8 cur;
     s32 i;

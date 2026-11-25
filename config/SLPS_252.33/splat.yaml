@@ -39,7 +39,7 @@ segments:
       - [0x1de40, c, shared/unit_0011DDC0]
       - [0x1f460, c, shared/unit_0011F3E0]
       - [0x1fa00, c, shared/unit_0011F980]
-      - [0x22c60, c, shared/unit_00122BE0]
+      - [0x22c60, c, shared/splash]
       - [0x22d60, c, shared/ending]
       - [0x243a0, c, shared/boss_slots]
       - [0x25610, c, shared/unit_00125590]
@@ -67,11 +67,11 @@ segments:
       - [0x50460, c, shared/unit_001503E0]
       - [0x50590, c, shared/enemy_heli]
       - [0x536d0, c, shared/unit_00153650]
-      - [0x5b980, c, shared/unit_0015B900]
+      - [0x5b980, c, shared/enemy_dummy]
       - [0x5b9b0, c, shared/unit_0015B930]
       - [0x5c4f0, c, shared/unit_0015C470]
       - [0x68190, c, shared/unit_00168110]
-      - [0x68b20, c, shared/unit_00168AA0]
+      - [0x68b20, c, shared/formation_fire_timer]
       - [0x68c20, c, shared/unit_00168BA0]
       - [0x6a770, c, shared/unit_0016A6F0]
       - [0x6a970, c, shared/item]
@@ -171,7 +171,7 @@ segments:
       - [0x117fb0, c, shared/glyph_cache]
       - [0x118520, c, shared/gfx]
       - [0x11c5b0, c, shared/arcade_sprite]
-      - [0x11d490, c, shared/func_0021D410]
+      - [0x11d490, c, shared/delta_encode]
       - [0x11d580, c, shared/menu]
       - [0x1262e0, c, shared/memcard_flow]
       - [0x1268b0, c, shared/save_data]
@@ -207,6 +207,8 @@ segments:
       - [0x18bf30, rodata, rodata_18bf30]
       - [0x18c0f0, sdata, sdata]
       - {type: sbss, vram: 0x28de80, name: sbss_28de80}
+      - {type: .sbss, vram: 0x28e98c, name: shared/splash}
+      - {type: sbss, vram: 0x28e998, name: sbss_28e998}
       - {type: .sbss, vram: 0x28e9b8, name: shared/text}
       - {type: .sbss, vram: 0x28e9dc, name: shared/system}
       - {type: .sbss, vram: 0x28ea48, name: shared/gfx}

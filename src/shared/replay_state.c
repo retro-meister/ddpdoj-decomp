@@ -85,7 +85,7 @@ extern u16 D_0028DFEC;
 extern u16 D_0028DFF0;
 extern s32 D_0028DFF4;
 extern u16 D_0028DFF8;
-extern u16 D_0028DFFC;
+extern u16 g_hyper_bullet_speed;
 extern u16 D_0028E000;
 extern u16 D_0028E004;
 extern u16 D_0028E008;
@@ -455,7 +455,7 @@ void func_00238B90(Buf *buf) {
     *(u16 *)(p + 0x3182) = D_0028E008;
     *(u16 *)(p + 0x3184) = D_0028E004;
     *(u16 *)(p + 0x3186) = D_0028E000;
-    *(u16 *)(p + 0x3188) = D_0028DFFC;
+    *(u16 *)(p + 0x3188) = g_hyper_bullet_speed;
     *(u16 *)(p + 0x318A) = D_0028DFF8;
     *(s32 *)(p + 0x318C) = D_0028DFF4;
     *(u16 *)(p + 0x3190) = D_0028DFF0;
@@ -958,7 +958,7 @@ void func_0023A490(u8 *p) {
     D_0028E008 = *(u16 *)(p + 0x3182);
     D_0028E004 = *(u16 *)(p + 0x3184);
     D_0028E000 = *(u16 *)(p + 0x3186);
-    D_0028DFFC = *(u16 *)(p + 0x3188);
+    g_hyper_bullet_speed = *(u16 *)(p + 0x3188);
     D_0028DFF8 = *(u16 *)(p + 0x318A);
     D_0028DFF4 = *(s32 *)(p + 0x318C);
     D_0028DFF0 = *(u16 *)(p + 0x3190);
@@ -1270,7 +1270,7 @@ void func_0023B720(u8 *p) {
     D_0028E008 = *(u16 *)(p + 0x126);
     D_0028E004 = *(u16 *)(p + 0x128);
     D_0028E000 = *(u16 *)(p + 0x12A);
-    D_0028DFFC = *(u16 *)(p + 0x12C);
+    g_hyper_bullet_speed = *(u16 *)(p + 0x12C);
     D_0028DFF8 = *(u16 *)(p + 0x12E);
     D_0028DFF0 = *(u16 *)(p + 0x130);
     D_0028DFEC = *(u16 *)(p + 0x132);
@@ -1518,7 +1518,7 @@ void func_0023C1E0(Buf2 *buf) {
     *(u16 *)(p + 0x126) = D_0028E008;
     *(u16 *)(p + 0x128) = D_0028E004;
     *(u16 *)(p + 0x12A) = D_0028E000;
-    *(u16 *)(p + 0x12C) = D_0028DFFC;
+    *(u16 *)(p + 0x12C) = g_hyper_bullet_speed;
     *(u16 *)(p + 0x12E) = D_0028DFF8;
     *(u16 *)(p + 0x130) = D_0028DFF0;
     *(u16 *)(p + 0x132) = D_0028DFEC;

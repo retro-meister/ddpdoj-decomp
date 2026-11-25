@@ -433,7 +433,7 @@ void func_0013D560(void) {
 }
 
 extern u16 D_00255510_as_u16_a[];
-extern u16 D_0028DFFC;
+extern u16 g_hyper_bullet_speed;
 extern u16 g_p2_hyper_total;
 extern u16 g_p1_hyper_total;
 extern u16 g_stage;
@@ -468,7 +468,7 @@ next_1:
     if ((s32) reg_d0.h[0] > 0xA) {
         reg_d0.h[0] = 0xA;
     }
-    D_0028DFFC = MAIN_OR_DEATH_LABEL(reg_d0.h[0], 0xA);
+    g_hyper_bullet_speed = MAIN_OR_DEATH_LABEL(reg_d0.h[0], 0xA);
 }
 
 extern u8 D_002555E0[];
