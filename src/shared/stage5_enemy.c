@@ -28,12 +28,12 @@ void func_001F6080() {
     reg_tmp.w = -1U;
     *(u16 *)(reg_a5 + 0x16) = (u16) reg_tmp.h[1];
     *(u16 *)(reg_a5 + 0x18) = (u16) reg_tmp.h[0];
-    *(s8 *)(reg_a6 + 0x15E) = 1;
-    *(u16 *)(reg_a6 + 0x180) = 0x8000;
+    ENTITY(reg_a6)[10].misc.sb.draw_layer = 1;
+    ENTITY(reg_a6)[12].flags.h = 0x8000;
 #ifdef DEATH_LABEL
-    *(u16 *)(reg_a6 + 0x200) = 0x8000;
+    ENTITY(reg_a6)[16].flags.h = 0x8000;
 #endif
-    *(s8 *)(reg_a6 + 0xEC) = 0x17;
+    ENTITY(reg_a6)[7].sprite.sb[0] = 0x17;
     reg_d0.w = 0x12;
     boss_part_hide();
     reg_d0.w = 5;
@@ -54,7 +54,7 @@ void func_001F6140(void) {
             *(u16 *)(reg_a5 + 0x1A) = 0x78U;
             return;
         }
-        *(s16 *)(reg_a6 + 0x10A) = 0;
+        ENTITY(reg_a6)[8].draw.sh = 0;
         func_001F6080();
     }
 }
@@ -458,7 +458,7 @@ extern u8 D_0028DA18;
 extern u8 D_0028DA1C;
 
 void func_001F6D30(void) {
-    if (*(u8 *)(reg_a6 + 0x3E) == 0) {
+    if (ENTITY(reg_a6)[1].misc.b.draw_layer == 0) {
         if (ENTITY(reg_a6)->y.sh > 0x2800) {
             reg_d1.w = 0x5C;
             reg_d1.b[0] &= ENTITY(reg_a6)->flags.b[1];
@@ -486,7 +486,7 @@ block_5:
             reg_a1 = (u8 *)D_00265240;
             func_001F61B0();
             func_0018D580();
-            *(u8 *)(reg_a6 + 0x3E) = 1U;
+            ENTITY(reg_a6)[1].misc.b.draw_layer = 1U;
             goto block_6;
         }
     } else {
@@ -509,7 +509,7 @@ block_6:
 block_11:
     entity_follow_scroll();
     func_001F71A0();
-    if (*(u8 *)(reg_a6 + 0x3E) == 0) {
+    if (ENTITY(reg_a6)[1].misc.b.draw_layer == 0) {
         if (*(u8 *)(reg_a5 + 0x25) == 0) {
             reg_tmp.b[0] = *(u8 *)(reg_a5 + 0x1F);
             *(u8 *)(reg_a5 + 0x1F) -= 1;
@@ -569,7 +569,7 @@ block_15:
         *(u16 *)(reg_a5 + 0x1C) += 4;
         *(u16 *)(reg_a5 + 0x1C) &= 0x1F;
     }
-    if (*(u8 *)(reg_a6 + 0x3E) == 0) {
+    if (ENTITY(reg_a6)[1].misc.b.draw_layer == 0) {
         func_001F7100();
     }
 }
@@ -803,7 +803,7 @@ void func_001F7710(void) {
     u32 temp_a0_3;
     u8 var_a0;
 
-    if (*(u8 *)(reg_a6 + 0x3E) == 0) {
+    if (ENTITY(reg_a6)[1].misc.b.draw_layer == 0) {
         if (ENTITY(reg_a6)->y.sh < 0x2801) {
             if (*(u8 *)(reg_a5 + 0x17) == 0) {
                 goto block_4;
@@ -831,7 +831,7 @@ block_7:
                 reg_a1 = (u8 *)D_00265570;
                 func_001F61B0();
                 func_0018D580();
-                *(u8 *)(reg_a6 + 0x3E) = 1U;
+                ENTITY(reg_a6)[1].misc.b.draw_layer = 1U;
                 goto block_8;
             }
         } else {
@@ -860,7 +860,7 @@ block_13:
     if (g_enemies_stopped == 0) {
         entity_follow_scroll();
         func_001F71A0();
-        if (*(u8 *)(reg_a6 + 0x3E) == 0) {
+        if (ENTITY(reg_a6)[1].misc.b.draw_layer == 0) {
             if (*(u8 *)(reg_a5 + 0x25) == 0) {
                 reg_tmp.b[0] = *(u8 *)(reg_a5 + 0x1F);
                 *(u8 *)(reg_a5 + 0x1F) -= 1;
@@ -919,7 +919,7 @@ block_18:
             *(u16 *)(reg_a5 + 0x1C) &= 0x1F;
         }
     }
-    if (*(u8 *)(reg_a6 + 0x3E) == 0) {
+    if (ENTITY(reg_a6)[1].misc.b.draw_layer == 0) {
         reg_a0 = (u8 *)D_00265550;
         reg_a0 += *(u16 *)(reg_a5 + 0x1C);
         reg_d2.h[1] = *(u16 *)reg_a0;

@@ -23,7 +23,7 @@ s32 velocity_from_dir256();
 void func_001B2410(void) {
     u32 temp_a0;
 
-    if (*(u8 *)(reg_a6 + 0x3E) != 0) {
+    if (ENTITY(reg_a6)[1].misc.b.draw_layer != 0) {
         func_001B23C0();
         return;
     }
@@ -31,13 +31,13 @@ void func_001B2410(void) {
     reg_d0.w = 2;
     reg_d1.b[0] = *(u8 *)(reg_a4 + 5);
     velocity_from_dir256();
-    temp_a0 = *(u16 *)(reg_a6 + 0x26);
-    *(u16 *)(reg_a6 + 0x26) = (u16) (temp_a0 + reg_d2.h[0]);
+    temp_a0 = ENTITY(reg_a6)[1].offset_y.h;
+    ENTITY(reg_a6)[1].offset_y.h = (u16) (temp_a0 + reg_d2.h[0]);
     reg_d0.w = 1;
     reg_d1.w = 0;
     reg_d1.b[0] = *(u8 *)(reg_a4 + 4);
     velocity_from_dir256();
-    *(u16 *)(reg_a6 + 0x28) += reg_d3.h[0];
+    ENTITY(reg_a6)[1].offset_x.h += reg_d3.h[0];
     *(u8 *)(reg_a4 + 5) += 2;
     *(u8 *)(reg_a4 + 4) += 1;
 }
@@ -54,7 +54,7 @@ void func_001B24C0(void) {
 void func_001B2500(void) {
     u32 temp_a0;
 
-    if (*(u8 *)(reg_a6 + 0x7E) != 0) {
+    if (ENTITY(reg_a6)[3].misc.b.draw_layer != 0) {
         func_001B23C0();
         return;
     }
@@ -62,13 +62,13 @@ void func_001B2500(void) {
     reg_d0.w = 2;
     reg_d1.b[0] = *(u8 *)(reg_a4 + 5);
     velocity_from_dir256();
-    temp_a0 = *(u16 *)(reg_a6 + 0x66);
-    *(u16 *)(reg_a6 + 0x66) = (u16) (temp_a0 + reg_d2.h[0]);
+    temp_a0 = ENTITY(reg_a6)[3].offset_y.h;
+    ENTITY(reg_a6)[3].offset_y.h = (u16) (temp_a0 + reg_d2.h[0]);
     reg_d0.w = 1;
     reg_d1.w = 0;
     reg_d1.b[0] = *(u8 *)(reg_a4 + 4);
     velocity_from_dir256();
-    *(u16 *)(reg_a6 + 0x68) += reg_d3.h[0];
+    ENTITY(reg_a6)[3].offset_x.h += reg_d3.h[0];
     *(u8 *)(reg_a4 + 5) += 2;
     *(u8 *)(reg_a4 + 4) += 1;
 }
@@ -78,7 +78,7 @@ void func_001B25B0(void) {
 }
 
 void func_001B25C0(void) {
-    if (*(u8 *)(reg_a6 + 0x3E) != 0) {
+    if (ENTITY(reg_a6)[1].misc.b.draw_layer != 0) {
         func_001B23C0();
         return;
     }
@@ -86,9 +86,9 @@ void func_001B25C0(void) {
     *(u8 *)(reg_a4 + 3) -= 1;
     if ((s32) reg_tmp.b[0] <= 0) {
         *(u8 *)(reg_a4 + 3) = (u8) *(u8 *)(reg_a4 + 2);
-        *(u16 *)(reg_a6 + 0x2A) += 4;
-        if (*(s16 *)(reg_a6 + 0x2A) > 0xc) {
-            *(u16 *)(reg_a6 + 0x2A) = 0U;
+        ENTITY(reg_a6)[1].draw.h += 4;
+        if (ENTITY(reg_a6)[1].draw.sh > 0xc) {
+            ENTITY(reg_a6)[1].draw.h = 0U;
         }
     }
 }
@@ -98,7 +98,7 @@ void func_001B2650(void) {
 }
 
 void func_001B2660(void) {
-    if (*(u8 *)(reg_a6 + 0x7E) != 0) {
+    if (ENTITY(reg_a6)[3].misc.b.draw_layer != 0) {
         func_001B23C0();
         return;
     }
@@ -106,9 +106,9 @@ void func_001B2660(void) {
     *(u8 *)(reg_a4 + 3) -= 1;
     if ((s32) reg_tmp.b[0] <= 0) {
         *(u8 *)(reg_a4 + 3) = (u8) *(u8 *)(reg_a4 + 2);
-        *(u16 *)(reg_a6 + 0x6A) += 4;
-        if (*(s16 *)(reg_a6 + 0x6A) > 0xc) {
-            *(u16 *)(reg_a6 + 0x6A) = 0U;
+        ENTITY(reg_a6)[3].draw.h += 4;
+        if (ENTITY(reg_a6)[3].draw.sh > 0xc) {
+            ENTITY(reg_a6)[3].draw.h = 0U;
         }
     }
 }
@@ -212,13 +212,13 @@ void func_001B29B0(void) {
     u8 temp_v1;
 
     reg_d0.h[0] = D_0029C06C[0];
-    temp_a1 = *(u16 *)(reg_a6 + 0x24);
-    *(u16 *)(reg_a6 + 0x24) = (u16) (temp_a1 - reg_d0.h[0]);
+    temp_a1 = ENTITY(reg_a6)[1].x.h;
+    ENTITY(reg_a6)[1].x.h = (u16) (temp_a1 - reg_d0.h[0]);
     temp_a0 = *(u8 *)(reg_a4 + 3);
     if (temp_a0 == 2) {
         func_0018D540();
-        reg_d2.h[1] = *(u16 *)(reg_a6 + 0x22);
-        reg_d2.h[0] = *(u16 *)(reg_a6 + 0x24);
+        reg_d2.h[1] = ENTITY(reg_a6)[1].y.h;
+        reg_d2.h[0] = ENTITY(reg_a6)[1].x.h;
         reg_a1 = (u8 *)D_0026DC40;
         func_001B2830();
         *(s16 *)reg_a4 = 0;
@@ -233,12 +233,12 @@ void func_001B29B0(void) {
                 *(u8 *)(reg_a4 + 0xA) = (u8) (temp_v1 - 1);
             }
             *(u16 *)(reg_a4 + 0xC) += 0x10;
-            *(u16 *)(reg_a6 + 0x46) -= 0x800;
-            *(u16 *)(reg_a6 + 0x48) -= 0x800;
-            if (0 > (s16) *(u16 *)(reg_a6 + 0x48)) {
+            ENTITY(reg_a6)[2].offset_y.h -= 0x800;
+            ENTITY(reg_a6)[2].offset_x.h -= 0x800;
+            if (0 > (s16) ENTITY(reg_a6)[2].offset_x.h) {
                 reg_tmp.w = 0;
-                *(u16 *)(reg_a6 + 0x46) = (u16) reg_tmp.h[1];
-                *(u16 *)(reg_a6 + 0x48) = (u16) reg_tmp.h[0];
+                ENTITY(reg_a6)[2].offset_y.h = (u16) reg_tmp.h[1];
+                ENTITY(reg_a6)[2].offset_x.h = (u16) reg_tmp.h[0];
                 *(u16 *)(reg_a4 + 0xC) = 0U;
                 *(u8 *)(reg_a4 + 3) = 2U;
                 reg_d0.w = 0;
@@ -249,13 +249,13 @@ void func_001B29B0(void) {
     if (*(u8 *)(reg_a4 + 3) == 0) {
         *(u8 *)(reg_a4 + 3) = 1U;
         func_0018D560();
-        reg_d2.h[1] = *(u16 *)(reg_a6 + 0x22);
-        reg_d2.h[0] = *(u16 *)(reg_a6 + 0x24);
+        reg_d2.h[1] = ENTITY(reg_a6)[1].y.h;
+        reg_d2.h[0] = ENTITY(reg_a6)[1].x.h;
         reg_a1 = (u8 *)D_0026DBD0;
         func_001B26F0();
     }
     reg_d0.h[0] = *(u16 *)(reg_a4 + 0xC);
-    *(u16 *)(reg_a6 + 0x22) -= reg_d0.h[0];
+    ENTITY(reg_a6)[1].y.h -= reg_d0.h[0];
 }
 
 void func_001B2B70(void) {
@@ -290,8 +290,8 @@ void func_001B2BC0(void) {
             *(s8 *)(reg_a0 + 0x1B) = 0x10;
             rng_next();
             *(u8 *)(reg_a0 + 0x1A) = (u8) reg_d0.b[0];
-            *(u16 *)(reg_a0 + 2) = (u16) *(u16 *)(reg_a6 + 0x62);
-            var_a1 = (u8 *)((void *) *(u16 *)(reg_a6 + 0x64));
+            *(u16 *)(reg_a0 + 2) = (u16) ENTITY(reg_a6)[3].y.h;
+            var_a1 = (u8 *)((void *) ENTITY(reg_a6)[3].x.h);
             *(s16 *)(reg_a0 + 4) = (s16) var_a1;
             reg_tmp.w = 0xFDFFFC00;
             *(u16 *)(reg_a0 + 0x26) = (u16) reg_tmp.h[1];
@@ -310,8 +310,8 @@ void func_001B2BC0(void) {
             rng_next();
             reg_d0.b[0] += reg_d0.b[0];
             *(u8 *)(reg_a0 + 0x1A) = (u8) reg_d0.b[0];
-            *(u16 *)(reg_a0 + 2) = (u16) *(u16 *)(reg_a6 + 0x62);
-            var_a1 = (u8 *)((void *) *(u16 *)(reg_a6 + 0x64));
+            *(u16 *)(reg_a0 + 2) = (u16) ENTITY(reg_a6)[3].y.h;
+            var_a1 = (u8 *)((void *) ENTITY(reg_a6)[3].x.h);
             *(s16 *)(reg_a0 + 4) = (s16) var_a1;
             reg_tmp.w = 0xF2000200;
             *(u16 *)(reg_a0 + 0x26) = (u16) reg_tmp.h[1];
@@ -330,8 +330,8 @@ void func_001B2BC0(void) {
             rng_next();
             reg_d0.b[0] += reg_d0.b[0];
             *(u8 *)(reg_a0 + 0x1A) = (u8) reg_d0.b[0];
-            *(u16 *)(reg_a0 + 2) = (u16) *(u16 *)(reg_a6 + 0x62);
-            var_a1 = (u8 *)((void *) *(u16 *)(reg_a6 + 0x64));
+            *(u16 *)(reg_a0 + 2) = (u16) ENTITY(reg_a6)[3].y.h;
+            var_a1 = (u8 *)((void *) ENTITY(reg_a6)[3].x.h);
             *(s16 *)(reg_a0 + 4) = (s16) var_a1;
             reg_tmp.w = 0xF5FFFC00;
             *(u16 *)(reg_a0 + 0x26) = (u16) reg_tmp.h[1];
@@ -341,8 +341,8 @@ void func_001B2BC0(void) {
     temp_a0 = *(u8 *)(reg_a4 + 3);
     if (temp_a0 == 2) {
         func_0018D540();
-        reg_d2.h[1] = *(u16 *)(reg_a6 + 0x62);
-        reg_d2.h[0] = *(u16 *)(reg_a6 + 0x64);
+        reg_d2.h[1] = ENTITY(reg_a6)[3].y.h;
+        reg_d2.h[0] = ENTITY(reg_a6)[3].x.h;
         reg_a1 = D_0026DCF0;
         func_001B2830();
         *(s16 *)reg_a4 = 0;
@@ -357,12 +357,12 @@ void func_001B2BC0(void) {
                 *(u8 *)(reg_a4 + 0xA) = (u8) (temp_v1 - 1);
             }
             *(u16 *)(reg_a4 + 0xC) += 0x10;
-            *(u16 *)(reg_a6 + 0x86) -= 0x800;
-            *(u16 *)(reg_a6 + 0x88) -= 0x800;
-            if (0 > (s16) *(u16 *)(reg_a6 + 0x88)) {
+            ENTITY(reg_a6)[4].offset_y.h -= 0x800;
+            ENTITY(reg_a6)[4].offset_x.h -= 0x800;
+            if (0 > (s16) ENTITY(reg_a6)[4].offset_x.h) {
                 reg_tmp.w = 0;
-                *(u16 *)(reg_a6 + 0x86) = (u16) reg_tmp.h[1];
-                *(u16 *)(reg_a6 + 0x88) = (u16) reg_tmp.h[0];
+                ENTITY(reg_a6)[4].offset_y.h = (u16) reg_tmp.h[1];
+                ENTITY(reg_a6)[4].offset_x.h = (u16) reg_tmp.h[0];
                 *(u16 *)(reg_a4 + 0xC) = 0U;
                 *(u8 *)(reg_a4 + 3) = 2U;
                 reg_d0.w = 1;
@@ -373,13 +373,13 @@ void func_001B2BC0(void) {
     if (*(u8 *)(reg_a4 + 3) == 0) {
         *(u8 *)(reg_a4 + 3) = 1U;
         func_0018D560();
-        reg_d2.h[1] = *(u16 *)(reg_a6 + 0x62);
-        reg_d2.h[0] = *(u16 *)(reg_a6 + 0x64);
+        reg_d2.h[1] = ENTITY(reg_a6)[3].y.h;
+        reg_d2.h[0] = ENTITY(reg_a6)[3].x.h;
         reg_a1 = D_0026DC80;
         func_001B26F0();
     }
     reg_d0.h[0] = *(u16 *)(reg_a4 + 0xC);
-    *(u16 *)(reg_a6 + 0x62) -= reg_d0.h[0];
+    ENTITY(reg_a6)[3].y.h -= reg_d0.h[0];
 }
 
 void func_001B2FC0(void) {
@@ -693,21 +693,21 @@ void func_001B39E0(void) {
 void func_001B39F0(void) {
     u8 temp_a0;
 
-    reg_tmp.b[0] = (*(u8 *)(reg_a6 + 0xAF));
-    (*(u8 *)(reg_a6 + 0xAF)) -= 1;
+    reg_tmp.b[0] = (ENTITY(reg_a6)[5].look.b.size);
+    (ENTITY(reg_a6)[5].look.b.size) -= 1;
     if ((s32)reg_tmp.b[0] <= 0) {
-        (*(u8 *)(reg_a6 + 0xAF)) = (*(u8 *)(reg_a6 + 0xAE));
-        temp_a0 = (*(u8 *)(reg_a6 + 0xAE));
+        (ENTITY(reg_a6)[5].look.b.size) = (ENTITY(reg_a6)[5].look.b.palette);
+        temp_a0 = (ENTITY(reg_a6)[5].look.b.palette);
         if (temp_a0 != 2) {
             if ((s8)temp_a0 >= 2) {
-                (*(u8 *)(reg_a6 + 0xAE)) = temp_a0 - 1;
+                (ENTITY(reg_a6)[5].look.b.palette) = temp_a0 - 1;
             } else {
-                (*(u8 *)(reg_a6 + 0xAE)) = temp_a0 + 1;
+                (ENTITY(reg_a6)[5].look.b.palette) = temp_a0 + 1;
             }
         }
-        (*(u16 *)(reg_a6 + 0xAA)) += 4;
-        if ((s16)(*(u16 *)(reg_a6 + 0xAA)) >= 0x1C) {
-            (*(u16 *)(reg_a6 + 0xAA)) = 0;
+        (ENTITY(reg_a6)[5].draw.h) += 4;
+        if ((s16)(ENTITY(reg_a6)[5].draw.h) >= 0x1C) {
+            (ENTITY(reg_a6)[5].draw.h) = 0;
         }
     }
 }
@@ -723,14 +723,14 @@ s32 boss_animation_stop();
 void func_001B3AB0() {
     u16 temp_a0;
 
-    if (*(u8 *)(reg_a6 + 0x3E) != 0) {
+    if (ENTITY(reg_a6)[1].misc.b.draw_layer != 0) {
         func_001B23C0();
         return;
     }
-    if ((*(u8 *)(reg_a4 + 7) == 0) && (*(u16 *)(reg_a6 + 0x2A) == 0)) {
+    if ((*(u8 *)(reg_a4 + 7) == 0) && (ENTITY(reg_a6)[1].draw.h == 0)) {
         reg_d0.w = 2;
         boss_animation_stop();
-        *(u16 *)(reg_a6 + 0x2A) = 0x10U;
+        ENTITY(reg_a6)[1].draw.h = 0x10U;
         *(u8 *)(reg_a4 + 7) = 1U;
     }
     if (*(u8 *)(reg_a4 + 7) == 1) {
@@ -738,10 +738,10 @@ void func_001B3AB0() {
         *(u8 *)(reg_a4 + 3) -= 1;
         if ((s32) reg_tmp.b[0] <= 0) {
             *(u8 *)(reg_a4 + 3) = (u8) *(u8 *)(reg_a4 + 2);
-            *(u16 *)(reg_a6 + 0x4C) += 0xC0;
-            *(u8 *)(reg_a6 + 0x4B) += 2;
-            *(u16 *)(reg_a6 + 0x2A) += 4;
-            temp_a0 = *(u16 *)(reg_a6 + 0x2A);
+            ENTITY(reg_a6)[2].sprite.h += 0xC0;
+            ENTITY(reg_a6)[2].draw.b.priority += 2;
+            ENTITY(reg_a6)[1].draw.h += 4;
+            temp_a0 = ENTITY(reg_a6)[1].draw.h;
             if (temp_a0 == 0x68) {
                 reg_d0.w = 0xA;
                 boss_animation_start();
@@ -768,14 +768,14 @@ void func_001B3BC0(void) {
 void func_001B3BE0() {
     u16 temp_a0;
 
-    if (*(u8 *)(reg_a6 + 0x7E) != 0) {
+    if (ENTITY(reg_a6)[3].misc.b.draw_layer != 0) {
         func_001B23C0();
         return;
     }
-    if ((*(u8 *)(reg_a4 + 7) == 0) && (*(u16 *)(reg_a6 + 0x6A) == 0)) {
+    if ((*(u8 *)(reg_a4 + 7) == 0) && (ENTITY(reg_a6)[3].draw.h == 0)) {
         reg_d0.w = 3;
         boss_animation_stop();
-        *(u16 *)(reg_a6 + 0x6A) = 0x10U;
+        ENTITY(reg_a6)[3].draw.h = 0x10U;
         *(u8 *)(reg_a4 + 7) = 1U;
     }
     if (*(u8 *)(reg_a4 + 7) == 1) {
@@ -783,10 +783,10 @@ void func_001B3BE0() {
         *(u8 *)(reg_a4 + 3) -= 1;
         if ((s32) reg_tmp.b[0] <= 0) {
             *(u8 *)(reg_a4 + 3) = (u8) *(u8 *)(reg_a4 + 2);
-            *(u16 *)(reg_a6 + 0x8C) += 0xC0;
-            *(u8 *)(reg_a6 + 0x8B) += 2;
-            *(u16 *)(reg_a6 + 0x6A) += 4;
-            temp_a0 = *(u16 *)(reg_a6 + 0x6A);
+            ENTITY(reg_a6)[4].sprite.h += 0xC0;
+            ENTITY(reg_a6)[4].draw.b.priority += 2;
+            ENTITY(reg_a6)[3].draw.h += 4;
+            temp_a0 = ENTITY(reg_a6)[3].draw.h;
             if (temp_a0 == 0x68) {
                 reg_d0.w = 0xB;
                 boss_animation_start();
@@ -802,7 +802,7 @@ void func_001B3CF0(void) {
 }
 
 void func_001B3D00(void) {
-    if (*(u8 *)(reg_a6 + 0x3E) != 0) {
+    if (ENTITY(reg_a6)[1].misc.b.draw_layer != 0) {
         func_001B23C0();
         return;
     }
@@ -810,9 +810,9 @@ void func_001B3D00(void) {
     *(u8 *)(reg_a4 + 3) -= 1;
     if ((s32) reg_tmp.b[0] <= 0) {
         *(u8 *)(reg_a4 + 3) = (u8) *(u8 *)(reg_a4 + 2);
-        *(u16 *)(reg_a6 + 0x2A) += 4;
-        if (*(s16 *)(reg_a6 + 0x2A) > 0x74) {
-            *(u16 *)(reg_a6 + 0x2A) = 0x68U;
+        ENTITY(reg_a6)[1].draw.h += 4;
+        if (ENTITY(reg_a6)[1].draw.sh > 0x74) {
+            ENTITY(reg_a6)[1].draw.h = 0x68U;
         }
     }
 }
@@ -824,7 +824,7 @@ void func_001B3D90(void) {
 }
 
 void func_001B3DA0(void) {
-    if (*(u8 *)(reg_a6 + 0x7E) != 0) {
+    if (ENTITY(reg_a6)[3].misc.b.draw_layer != 0) {
         func_001B23C0();
         return;
     }
@@ -832,9 +832,9 @@ void func_001B3DA0(void) {
     *(u8 *)(reg_a4 + 3) -= 1;
     if ((s32) reg_tmp.b[0] <= 0) {
         *(u8 *)(reg_a4 + 3) = (u8) *(u8 *)(reg_a4 + 2);
-        *(u16 *)(reg_a6 + 0x6A) += 4;
-        if (*(s16 *)(reg_a6 + 0x6A) > 0x74) {
-            *(u16 *)(reg_a6 + 0x6A) = 0x68U;
+        ENTITY(reg_a6)[3].draw.h += 4;
+        if (ENTITY(reg_a6)[3].draw.sh > 0x74) {
+            ENTITY(reg_a6)[3].draw.h = 0x68U;
         }
     }
 }
@@ -847,7 +847,7 @@ extern u8 D_0028DC28[];
 extern u8 D_0028DC30[];
 
 void func_001B3E30(void) {
-    *(s16 *)(reg_a6 + 0x114) = 0;
+    ENTITY(reg_a6)[8].hit_x_plus.sh = 0;
     *(u8 *)(reg_a4 + 3) = 1U;
     rng_next_bit();
     if (reg_d0.h[0] == 0) {
@@ -867,23 +867,23 @@ void func_001B3E30(void) {
     func_001713B0();
     reg_d2.w = 0;
     reg_d2.b[0] = *(D_0028DC28 + reg_d0.h[0]);
-    reg_d2.b[0] -= *(u8 *)(reg_a6 + 0x113);
+    reg_d2.b[0] -= ENTITY(reg_a6)[8].hit_y_minus.b[1];
     if ((s8) reg_d2.b[0] < 5) {
         reg_d2.b[0] = 4;
     }
-    *(u8 *)(reg_a6 + 0x113) += 1;
-    if ((s8) *(u8 *)(reg_a6 + 0x113) > 4) {
-        *(u8 *)(reg_a6 + 0x113) = 4U;
+    ENTITY(reg_a6)[8].hit_y_minus.b[1] += 1;
+    if ((s8) ENTITY(reg_a6)[8].hit_y_minus.b[1] > 4) {
+        ENTITY(reg_a6)[8].hit_y_minus.b[1] = 4U;
     }
     reg_d3.w = 0;
     reg_d3.b[0] = *(D_0028DC30 + reg_d0.h[0]);
-    reg_d3.b[0] -= *(u8 *)(reg_a6 + 0x112);
+    reg_d3.b[0] -= ENTITY(reg_a6)[8].hit_y_minus.b[0];
     if ((s8) reg_d3.b[0] < 0x10) {
         reg_d3.b[0] = 0xF;
     }
-    *(u8 *)(reg_a6 + 0x112) += 1;
-    if ((s8) *(u8 *)(reg_a6 + 0x112) > 0x10) {
-        *(u8 *)(reg_a6 + 0x112) = 0x10U;
+    ENTITY(reg_a6)[8].hit_y_minus.b[0] += 1;
+    if ((s8) ENTITY(reg_a6)[8].hit_y_minus.b[0] > 0x10) {
+        ENTITY(reg_a6)[8].hit_y_minus.b[0] = 0x10U;
     }
     reg_d0.h[0] += reg_d0.h[0];
     reg_a0 = (u8 *)D_0026DFE0;
@@ -917,14 +917,14 @@ void func_001B40C0(void) {
         *(u16 *)(reg_a4 + 8) -= 1;
         if (*(u16 *)(reg_a4 + 8) == 0) {
             *(u8 *)(reg_a4 + 7) = 1U;
-            *(s16 *)(reg_a6 + 0x114) = 1;
+            ENTITY(reg_a6)[8].hit_x_plus.sh = 1;
             goto block_3;
         }
     } else {
 block_3:
         reg_d0.b[0] = *(u8 *)(reg_a4 + 2);
-        *(u8 *)(reg_a6 + 0x4A) += reg_d0.b[0];
-        *(u8 *)(reg_a6 + 0x8A) += reg_d0.b[0];
+        ENTITY(reg_a6)[2].draw.b.flip += reg_d0.b[0];
+        ENTITY(reg_a6)[4].draw.b.flip += reg_d0.b[0];
         if (*(u8 *)(reg_a4 + 7) == 1) {
             reg_tmp.b[0] = *(u8 *)(reg_a4 + 5);
             *(u8 *)(reg_a4 + 5) -= 1;
@@ -966,11 +966,11 @@ block_3:
                         *(u8 *)(reg_a4 + 2) -= reg_d0.b[0];
                     }
                 } else {
-                    reg_d0.b[0] = *(u8 *)(reg_a6 + 0x4A);
+                    reg_d0.b[0] = ENTITY(reg_a6)[2].draw.b.flip;
                     reg_d0.b[0] &= 0xFE;
                     if (reg_d0.b[0] == 0x40) {
-                        *(u8 *)(reg_a6 + 0x4A) = 0x40U;
-                        *(u8 *)(reg_a6 + 0x8A) = 0xC0U;
+                        ENTITY(reg_a6)[2].draw.b.flip = 0x40U;
+                        ENTITY(reg_a6)[4].draw.b.flip = 0xC0U;
                         *(u8 *)(reg_a4 + 7) = 3U;
                         reg_d0.w = 5;
                         boss_attack_stop();
@@ -984,7 +984,7 @@ block_3:
         }
         if (*(u8 *)(reg_a4 + 7) == 3) {
             *(s16 *)reg_a4 = 0;
-            *(s16 *)(reg_a6 + 0x114) = 0;
+            ENTITY(reg_a6)[8].hit_x_plus.sh = 0;
         }
     }
 }
@@ -1010,7 +1010,7 @@ void func_001B4380() {
     u16 temp_a0_2;
     u16 temp_v1;
 
-    if (*(u8 *)(reg_a6 + 0x3E) != 0) {
+    if (ENTITY(reg_a6)[1].misc.b.draw_layer != 0) {
         func_001B23C0();
         return;
     }
@@ -1019,7 +1019,7 @@ void func_001B4380() {
         if (temp_v1 != 0) {
             *(u16 *)(reg_a4 + 4) = (u16) (temp_v1 - 1);
         } else {
-            temp_a0 = *(u16 *)(reg_a6 + 0x2A);
+            temp_a0 = ENTITY(reg_a6)[1].draw.h;
             if (temp_a0 == 0x68) {
                 reg_d0.w = 0xA;
                 boss_animation_stop();
@@ -1032,10 +1032,10 @@ void func_001B4380() {
         *(u8 *)(reg_a4 + 3) -= 1;
         if ((s32) reg_tmp.b[0] <= 0) {
             *(u8 *)(reg_a4 + 3) = (u8) *(u8 *)(reg_a4 + 2);
-            *(u16 *)(reg_a6 + 0x4C) -= 0xC0;
-            *(u8 *)(reg_a6 + 0x4B) -= 2;
-            *(u16 *)(reg_a6 + 0x2A) -= 4;
-            temp_a0_2 = *(u16 *)(reg_a6 + 0x2A);
+            ENTITY(reg_a6)[2].sprite.h -= 0xC0;
+            ENTITY(reg_a6)[2].draw.b.priority -= 2;
+            ENTITY(reg_a6)[1].draw.h -= 4;
+            temp_a0_2 = ENTITY(reg_a6)[1].draw.h;
             if (temp_a0_2 == 0x10) {
                 reg_d0.w = 2;
                 boss_animation_start();
@@ -1056,7 +1056,7 @@ void func_001B44C0() {
     u16 temp_a0_2;
     u16 temp_v1;
 
-    if (*(u8 *)(reg_a6 + 0x7E) != 0) {
+    if (ENTITY(reg_a6)[3].misc.b.draw_layer != 0) {
         func_001B23C0();
         return;
     }
@@ -1065,7 +1065,7 @@ void func_001B44C0() {
         if (temp_v1 != 0) {
             *(u16 *)(reg_a4 + 4) = (u16) (temp_v1 - 1);
         } else {
-            temp_a0 = *(u16 *)(reg_a6 + 0x6A);
+            temp_a0 = ENTITY(reg_a6)[3].draw.h;
             if (temp_a0 == 0x68) {
                 reg_d0.w = 0xB;
                 boss_animation_stop();
@@ -1078,10 +1078,10 @@ void func_001B44C0() {
         *(u8 *)(reg_a4 + 3) -= 1;
         if ((s32) reg_tmp.b[0] <= 0) {
             *(u8 *)(reg_a4 + 3) = (u8) *(u8 *)(reg_a4 + 2);
-            *(u16 *)(reg_a6 + 0x8C) -= 0xC0;
-            *(u8 *)(reg_a6 + 0x8B) -= 2;
-            *(u16 *)(reg_a6 + 0x6A) -= 4;
-            temp_a0_2 = *(u16 *)(reg_a6 + 0x6A);
+            ENTITY(reg_a6)[4].sprite.h -= 0xC0;
+            ENTITY(reg_a6)[4].draw.b.priority -= 2;
+            ENTITY(reg_a6)[3].draw.h -= 4;
+            temp_a0_2 = ENTITY(reg_a6)[3].draw.h;
             if (temp_a0_2 == 0x10) {
                 reg_d0.w = 3;
                 boss_animation_start();
@@ -1105,13 +1105,13 @@ void func_001B45F0() {
         reg_d1.w = 0;
         reg_d1.b[0] = 0x20;
         reg_d0.w = 0;
-        reg_d0.h[0] = *(u16 *)(reg_a6 + 0xAC);
+        reg_d0.h[0] = ENTITY(reg_a6)[5].sprite.h;
         reg_d0.h[0] += 0x20;
         direction_turn_toward();
         reg_d0.h[0] = reg_d1.h[0];
         reg_d0.h[0] = (u16) reg_d0.b[0];
         reg_d0.h[0] -= 0x20;
-        *(u16 *)(reg_a6 + 0xAC) = (u16) reg_d0.h[0];
+        ENTITY(reg_a6)[5].sprite.h = (u16) reg_d0.h[0];
         if (reg_d1.b[0] == 0x20) {
             *(s16 *)reg_a4 = 0;
         }
@@ -1126,14 +1126,14 @@ void func_001B46A0(void) {
 void func_001B46C0() {
     u16 temp_a0;
 
-    if (*(u8 *)(reg_a6 + 0x3E) != 0) {
+    if (ENTITY(reg_a6)[1].misc.b.draw_layer != 0) {
         func_001B23C0();
         return;
     }
-    if ((*(u8 *)(reg_a4 + 7) == 0) && (*(u16 *)(reg_a6 + 0x2A) == 0)) {
+    if ((*(u8 *)(reg_a4 + 7) == 0) && (ENTITY(reg_a6)[1].draw.h == 0)) {
         reg_d0.w = 2;
         boss_animation_stop();
-        *(u16 *)(reg_a6 + 0x2A) = 0x10U;
+        ENTITY(reg_a6)[1].draw.h = 0x10U;
         *(u8 *)(reg_a4 + 7) = 1U;
     }
     if (*(u8 *)(reg_a4 + 7) == 1) {
@@ -1141,10 +1141,10 @@ void func_001B46C0() {
         *(u8 *)(reg_a4 + 3) -= 1;
         if ((s32) reg_tmp.b[0] <= 0) {
             *(u8 *)(reg_a4 + 3) = (u8) *(u8 *)(reg_a4 + 2);
-            *(u16 *)(reg_a6 + 0x4C) += 0xC0;
-            *(u8 *)(reg_a6 + 0x4B) -= 2;
-            *(u16 *)(reg_a6 + 0x2A) += 4;
-            temp_a0 = *(u16 *)(reg_a6 + 0x2A);
+            ENTITY(reg_a6)[2].sprite.h += 0xC0;
+            ENTITY(reg_a6)[2].draw.b.priority -= 2;
+            ENTITY(reg_a6)[1].draw.h += 4;
+            temp_a0 = ENTITY(reg_a6)[1].draw.h;
             if (temp_a0 == 0x68) {
                 reg_d0.w = 0xA;
                 boss_animation_start();
@@ -1171,14 +1171,14 @@ void func_001B47D0(void) {
 void func_001B47F0() {
     u16 temp_a0;
 
-    if (*(u8 *)(reg_a6 + 0x7E) != 0) {
+    if (ENTITY(reg_a6)[3].misc.b.draw_layer != 0) {
         func_001B23C0();
         return;
     }
-    if ((*(u8 *)(reg_a4 + 7) == 0) && (*(u16 *)(reg_a6 + 0x6A) == 0)) {
+    if ((*(u8 *)(reg_a4 + 7) == 0) && (ENTITY(reg_a6)[3].draw.h == 0)) {
         reg_d0.w = 3;
         boss_animation_stop();
-        *(u16 *)(reg_a6 + 0x6A) = 0x10U;
+        ENTITY(reg_a6)[3].draw.h = 0x10U;
         *(u8 *)(reg_a4 + 7) = 1U;
     }
     if (*(u8 *)(reg_a4 + 7) == 1) {
@@ -1186,10 +1186,10 @@ void func_001B47F0() {
         *(u8 *)(reg_a4 + 3) -= 1;
         if ((s32) reg_tmp.b[0] <= 0) {
             *(u8 *)(reg_a4 + 3) = (u8) *(u8 *)(reg_a4 + 2);
-            *(u16 *)(reg_a6 + 0x8C) += 0xC0;
-            *(u8 *)(reg_a6 + 0x8B) -= 2;
-            *(u16 *)(reg_a6 + 0x6A) += 4;
-            temp_a0 = *(u16 *)(reg_a6 + 0x6A);
+            ENTITY(reg_a6)[4].sprite.h += 0xC0;
+            ENTITY(reg_a6)[4].draw.b.priority -= 2;
+            ENTITY(reg_a6)[3].draw.h += 4;
+            temp_a0 = ENTITY(reg_a6)[3].draw.h;
             if (temp_a0 == 0x68) {
                 reg_d0.w = 0xB;
                 boss_animation_start();
@@ -1220,7 +1220,7 @@ void func_001B4920() {
     u16 temp_a0_2;
     u16 temp_v1;
 
-    if (*(u8 *)(reg_a6 + 0x3E) != 0) {
+    if (ENTITY(reg_a6)[1].misc.b.draw_layer != 0) {
         func_001B23C0();
         return;
     }
@@ -1229,7 +1229,7 @@ void func_001B4920() {
         if (temp_v1 != 0) {
             *(u16 *)(reg_a4 + 4) = (u16) (temp_v1 - 1);
         } else {
-            temp_a0 = *(u16 *)(reg_a6 + 0x2A);
+            temp_a0 = ENTITY(reg_a6)[1].draw.h;
             if (temp_a0 == 0x68) {
                 reg_d0.w = 0xA;
                 boss_animation_stop();
@@ -1242,10 +1242,10 @@ void func_001B4920() {
         *(u8 *)(reg_a4 + 3) -= 1;
         if ((s32) reg_tmp.b[0] <= 0) {
             *(u8 *)(reg_a4 + 3) = (u8) *(u8 *)(reg_a4 + 2);
-            *(u16 *)(reg_a6 + 0x4C) -= 0xC0;
-            *(u8 *)(reg_a6 + 0x4B) += 2;
-            *(u16 *)(reg_a6 + 0x2A) -= 4;
-            temp_a0_2 = *(u16 *)(reg_a6 + 0x2A);
+            ENTITY(reg_a6)[2].sprite.h -= 0xC0;
+            ENTITY(reg_a6)[2].draw.b.priority += 2;
+            ENTITY(reg_a6)[1].draw.h -= 4;
+            temp_a0_2 = ENTITY(reg_a6)[1].draw.h;
             if (temp_a0_2 == 0x10) {
                 reg_d0.w = 2;
                 boss_animation_start();
@@ -1266,7 +1266,7 @@ void func_001B4A60() {
     u16 temp_a0_2;
     u16 temp_v1;
 
-    if (*(u8 *)(reg_a6 + 0x7E) != 0) {
+    if (ENTITY(reg_a6)[3].misc.b.draw_layer != 0) {
         func_001B23C0();
         return;
     }
@@ -1275,7 +1275,7 @@ void func_001B4A60() {
         if (temp_v1 != 0) {
             *(u16 *)(reg_a4 + 4) = (u16) (temp_v1 - 1);
         } else {
-            temp_a0 = *(u16 *)(reg_a6 + 0x6A);
+            temp_a0 = ENTITY(reg_a6)[3].draw.h;
             if (temp_a0 == 0x68) {
                 reg_d0.w = 0xB;
                 boss_animation_stop();
@@ -1288,10 +1288,10 @@ void func_001B4A60() {
         *(u8 *)(reg_a4 + 3) -= 1;
         if ((s32) reg_tmp.b[0] <= 0) {
             *(u8 *)(reg_a4 + 3) = (u8) *(u8 *)(reg_a4 + 2);
-            *(u16 *)(reg_a6 + 0x8C) -= 0xC0;
-            *(u8 *)(reg_a6 + 0x8B) += 2;
-            *(u16 *)(reg_a6 + 0x6A) -= 4;
-            temp_a0_2 = *(u16 *)(reg_a6 + 0x6A);
+            ENTITY(reg_a6)[4].sprite.h -= 0xC0;
+            ENTITY(reg_a6)[4].draw.b.priority += 2;
+            ENTITY(reg_a6)[3].draw.h -= 4;
+            temp_a0_2 = ENTITY(reg_a6)[3].draw.h;
             if (temp_a0_2 == 0x10) {
                 reg_d0.w = 3;
                 boss_animation_start();
@@ -1302,12 +1302,12 @@ void func_001B4A60() {
 }
 
 void func_001B4B80(void) {
-    *(s16 *)(reg_a6 + 0xAE) = 0;
+    ENTITY(reg_a6)[5].look.sh = 0;
 }
 
 void func_001B4B90(void) {
-    *(u16 *)(reg_a6 + 0xAA) += 4;
-    if ((s16) *(u16 *)(reg_a6 + 0xAA) >= 0x1C) {
-        *(u16 *)(reg_a6 + 0xAA) = 0U;
+    ENTITY(reg_a6)[5].draw.h += 4;
+    if ((s16) ENTITY(reg_a6)[5].draw.h >= 0x1C) {
+        ENTITY(reg_a6)[5].draw.h = 0U;
     }
 }

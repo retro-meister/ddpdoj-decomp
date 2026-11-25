@@ -1,4 +1,5 @@
 #include "common.h"
+#include "entity.h"
 
 void func_001E4640();
 void func_001E4B70(void);
@@ -46,13 +47,13 @@ void func_001E4640() {
 
     if (*(u8 *)(reg_a4 + 3) == 0) {
         reg_d7.w = 0;
-        reg_d0.h[0] = *(u16 *)(reg_a6 + 0xC6);
+        reg_d0.h[0] = ENTITY(reg_a6)[6].offset_y.h;
         temp_a0 = *(u16 *)(reg_a4 + 8);
         if (temp_a0 != reg_d0.h[0]) {
             func_001D7880();
             reg_d7.w = 1;
         }
-        reg_d0.h[0] = *(u16 *)(reg_a6 + 0xE6);
+        reg_d0.h[0] = ENTITY(reg_a6)[7].offset_y.h;
         temp_a0_2 = *(u16 *)(reg_a4 + 0xA);
         if (temp_a0_2 != reg_d0.h[0]) {
             func_001D7900();
@@ -344,26 +345,26 @@ void func_001E4EF0(void) {
     if (!(reg_a4[3] & 1)) {
         goto next_1;
     }
-    if (*(u16 *)(reg_a6 + 0x18E) == -0x1000) {
+    if (ENTITY(reg_a6)[12].look.h == -0x1000) {
         goto next_1;
     }
     *(u16 *)(reg_a4 + 6) += 4;
     reg_d0.h[0] = *(u16 *)(reg_a4 + 6);
-    *(u16 *)(reg_a6 + 0x18E) -= reg_d0.h[0];
-    *(u16 *)(reg_a6 + 0x192) += reg_d0.h[0];
-    if (*(s16 *)(reg_a6 + 0x192) < 0xE00) {
+    ENTITY(reg_a6)[12].look.h -= reg_d0.h[0];
+    ENTITY(reg_a6)[12].hit_y_minus.h += reg_d0.h[0];
+    if (ENTITY(reg_a6)[12].hit_y_minus.sh < 0xE00) {
         goto next_1;
     }
-    *(u16 *)(reg_a6 + 0x192) = 0xE00;
-    *(u16 *)(reg_a6 + 0x18E) = 0xF200;
+    ENTITY(reg_a6)[12].hit_y_minus.h = 0xE00;
+    ENTITY(reg_a6)[12].look.h = 0xF200;
     t = reg_a4[3];
     if (t & 1) {
         reg_a4[3] = t & 0xFE;
     }
     reg_a4[3] |= 2;
     reg_a4[3] |= 4;
-    *(u16 *)(reg_a6 + 0x198) = 0;
-    *(u16 *)(reg_a6 + 0x19A) = 0;
+    ENTITY(reg_a6)[12].hp.h = 0;
+    ENTITY(reg_a6)[12].move.h = 0;
     *(u16 *)(reg_a4 + 0xA) = 0;
     func_001E4D90(0x198, 0x82);
     func_001E4D90(0x19A, 0xA2);
@@ -466,10 +467,10 @@ next_5:
     }
     func_001E4D90(0x198, 0x82);
     func_001E4D90(0x19A, 0xA2);
-    reg_d0.h[0] = *(u16 *)(reg_a6 + 0x198);
-    *(u16 *)(reg_a6 + 0x18C) += reg_d0.h[0];
-    reg_d0.h[0] = *(u16 *)(reg_a6 + 0x19A);
-    *(u16 *)(reg_a6 + 0x190) += reg_d0.h[0];
+    reg_d0.h[0] = ENTITY(reg_a6)[12].hp.h;
+    ENTITY(reg_a6)[12].sprite.h += reg_d0.h[0];
+    reg_d0.h[0] = ENTITY(reg_a6)[12].move.h;
+    ENTITY(reg_a6)[12].hit_y_plus.h += reg_d0.h[0];
 next_6:
     if (!(reg_a4[3] & 4)) {
         goto next_8;

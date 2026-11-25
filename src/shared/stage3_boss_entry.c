@@ -163,20 +163,20 @@ void func_001D4400() {
     boss_animation_stop();
     reg_d0.w = 3;
     boss_animation_stop();
-    *(u16 *)(reg_a6 + 0xB6) = 1;
-    *(u16 *)(reg_a6 + 0xB8) = 1;
+    ENTITY(reg_a6)[5].hit_x_minus.h = 1;
+    ENTITY(reg_a6)[5].hp.h = 1;
     reg_tmp.w = -1U;
     *(u16 *)(reg_a5 + 0x16) = (u16) reg_tmp.h[1];
     *(u16 *)(reg_a5 + 0x18) = (u16) reg_tmp.h[0];
     ENTITY(reg_a6)->misc.sb.draw_layer = 1;
     ENTITY(reg_a6)->flags.h = 0x8000;
-    *(u16 *)(reg_a6 + 0x20) = 0x8000;
-    *(u16 *)(reg_a6 + 0x40) = 0x8000;
-    *(u16 *)(reg_a6 + 0xC0) = 0x8000;
-    *(u16 *)(reg_a6 + 0xE0) = 0x8000;
-    *(s8 *)(reg_a6 + 0x67) = 0x10;
-    *(s8 *)(reg_a6 + 0x66) = 0x11;
-    *(s8 *)(reg_a6 + 0x69) = 0x12;
+    ENTITY(reg_a6)[1].flags.h = 0x8000;
+    ENTITY(reg_a6)[2].flags.h = 0x8000;
+    ENTITY(reg_a6)[6].flags.h = 0x8000;
+    ENTITY(reg_a6)[7].flags.h = 0x8000;
+    ENTITY(reg_a6)[3].offset_y.sb[1] = 0x10;
+    ENTITY(reg_a6)[3].offset_y.sb[0] = 0x11;
+    ENTITY(reg_a6)[3].offset_x.sb[1] = 0x12;
     reg_d0.w = 1;
     boss_phase_start();
 }
@@ -197,23 +197,23 @@ void func_001D4540(void) {
 }
 
 void func_001D4550(void) {
-    *(s16 *)(reg_a6 + 0x88) = 0;
+    ENTITY(reg_a6)[4].offset_x.sh = 0;
 }
 
 void func_001D4560(void) {
     reg_d0.h[0] = 0xA001;
     ENTITY(reg_a6)->flags.h |= reg_d0.h[0];
-    *(u16 *)(reg_a6 + 0x20) |= reg_d0.h[0];
-    *(u16 *)(reg_a6 + 0x40) |= reg_d0.h[0];
-    *(u16 *)(reg_a6 + 0xC0) |= reg_d0.h[0];
-    *(u16 *)(reg_a6 + 0xE0) |= reg_d0.h[0];
+    ENTITY(reg_a6)[1].flags.h |= reg_d0.h[0];
+    ENTITY(reg_a6)[2].flags.h |= reg_d0.h[0];
+    ENTITY(reg_a6)[6].flags.h |= reg_d0.h[0];
+    ENTITY(reg_a6)[7].flags.h |= reg_d0.h[0];
 }
 
 void func_001D45D0(void) {
     reg_d0.h[0] = 0x8000;
     ENTITY(reg_a6)->flags.h = (u16) reg_d0.h[0];
-    *(u16 *)(reg_a6 + 0x20) = (u16) reg_d0.h[0];
-    *(u16 *)(reg_a6 + 0x40) = (u16) reg_d0.h[0];
-    *(u16 *)(reg_a6 + 0xC0) = (u16) reg_d0.h[0];
-    *(u16 *)(reg_a6 + 0xE0) = (u16) reg_d0.h[0];
+    ENTITY(reg_a6)[1].flags.h = (u16) reg_d0.h[0];
+    ENTITY(reg_a6)[2].flags.h = (u16) reg_d0.h[0];
+    ENTITY(reg_a6)[6].flags.h = (u16) reg_d0.h[0];
+    ENTITY(reg_a6)[7].flags.h = (u16) reg_d0.h[0];
 }

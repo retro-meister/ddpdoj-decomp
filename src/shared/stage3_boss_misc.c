@@ -48,7 +48,7 @@ void func_001D1A60(void) {
     *(u16 *)(reg_a5 + 0x30) = (u16) *(u16 *)reg_a0;
     reg_a0 += 2;
     ENTITY(reg_a6)->hp.h = (u16) *(u16 *)reg_a0;
-    *(u16 *)(reg_a6 + 0x38) = (u16) *(u16 *)reg_a0;
+    ENTITY(reg_a6)[1].hp.h = (u16) *(u16 *)reg_a0;
     if (g_loop == 0) {
         func_001D1C00();
         return;
@@ -100,10 +100,10 @@ next_20:
 next_lim:
     *(u8 *)(reg_a5 + 0x17) = 1;
 next_lim_end:
-    *(u16 *)(reg_a6 + 0x22) = ENTITY(reg_a6)->y.h;
-    *(u16 *)(reg_a6 + 0x24) = ENTITY(reg_a6)->x.h;
+    ENTITY(reg_a6)[1].y.h = ENTITY(reg_a6)->y.h;
+    ENTITY(reg_a6)[1].x.h = ENTITY(reg_a6)->x.h;
     reg_d1.b[0] = ENTITY(reg_a6)->flags.b[1];
-    reg_d1.b[0] |= *(u8 *)(reg_a6 + 0x21);
+    reg_d1.b[0] |= ENTITY(reg_a6)[1].flags.b[1];
     reg_d1.h[0] &= 0x5C;
     if (reg_d1.h[0] != 0) goto next_50;
     reg_d0.b[0] = *(u8 *)(reg_a5 + 0x1D);
@@ -114,7 +114,7 @@ next_lim_end:
 next_50:
     reg_d0.h[0] = 0xA3;
     ENTITY(reg_a6)->flags.b[1] &= reg_d0.b[0];
-    *(u8 *)(reg_a6 + 0x21) &= reg_d0.b[0];
+    ENTITY(reg_a6)[1].flags.b[1] &= reg_d0.b[0];
     ENTITY(reg_a6)->misc.b.user = 2;
     reg_d2.w = 1;
     if (!(reg_d1.w & 4)) goto next_53;
@@ -131,12 +131,12 @@ next_60:
     reg_d2.b[0] = *(u8 *)(reg_a5 + 0x1C);
     reg_d0.b[0] ^= reg_d2.b[0];
     reg_d4.h[0] = ENTITY(reg_a6)->hp.h;
-    hp = *(u16 *)(reg_a6 + 0x38);
+    hp = ENTITY(reg_a6)[1].hp.h;
     if (!((s16)hp < (s16)reg_d4.h[0])) goto next_80;
     reg_d4.h[0] = hp;
 next_80:
     ENTITY(reg_a6)->hp.h = reg_d4.h[0];
-    *(u16 *)(reg_a6 + 0x38) = reg_d4.h[0];
+    ENTITY(reg_a6)[1].hp.h = reg_d4.h[0];
     if (ENTITY(reg_a6)->hp.sh < 0) goto block_dead;
 next_90:
     ENTITY(reg_a6)->attr.b.palette = reg_d0.b[0];

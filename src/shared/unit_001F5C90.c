@@ -1,4 +1,5 @@
 #include "common.h"
+#include "entity.h"
 
 s32 func_001F5BB0();
 extern u16 g_enemies_stopped;
@@ -15,7 +16,7 @@ void func_001F5C90(void) {
             *(u16 *)(reg_a5 + 0x1A) = 0x78U;
             return;
         }
-        *(s16 *)(reg_a6 + 0x10A) = 0;
+        ENTITY(reg_a6)[8].draw.sh = 0;
         func_001F5BB0();
     }
 }
@@ -46,16 +47,16 @@ void func_001F5D00(void) {
     u16 hp;
 
 #endif
-    reg_d1.b[0] = reg_a6[0x181];
+    reg_d1.b[0] = ENTITY(reg_a6)[12].flags.b[1];
 #ifdef DEATH_LABEL
-    reg_d1.b[0] |= reg_a6[0x201];
+    reg_d1.b[0] |= ENTITY(reg_a6)[16].flags.b[1];
 #endif
     reg_d1.h[0] &= 0x5C;
     if (reg_d1.h[0] != 0) {
         goto next_2;
     }
 next_1:
-    reg_a6[0xEC] = 0x17;
+    ENTITY(reg_a6)[7].sprite.b[0] = 0x17;
     reg_tmp.h[1] = *(u16 *) (reg_a5 + 0x16);
     reg_tmp.h[0] = *(u16 *) (reg_a5 + 0x18);
     if (reg_tmp.w >= 0x1ECCC) {
@@ -65,13 +66,13 @@ next_1:
         goto next_7;
     }
     reg_d0.w = 0x19;
-    reg_a6[0xEC] = reg_d0.b[0];
+    ENTITY(reg_a6)[7].sprite.b[0] = reg_d0.b[0];
     goto next_7;
 next_2:
     reg_d0.b[0] = 0xA3;
-    reg_a6[0x181] &= reg_d0.b[0];
+    ENTITY(reg_a6)[12].flags.b[1] &= reg_d0.b[0];
 #ifdef DEATH_LABEL
-    reg_a6[0x201] &= reg_d0.b[0];
+    ENTITY(reg_a6)[16].flags.b[1] &= reg_d0.b[0];
 #endif
     *(u16 *) (reg_a6 + 0x10A) = reg_d1.h[0];
     if (g_bullets_blocked != 0) {
@@ -97,14 +98,14 @@ next_4:
         goto next_3;
     }
     score_add_no_chain();
-    reg_d0.b[0] = reg_a6[0xEC];
+    reg_d0.b[0] = ENTITY(reg_a6)[7].sprite.b[0];
     if (reg_d0.b[0] != 0x19) {
         goto next_5;
     }
     reg_d0.b[0] = 0x17;
 next_5:
     reg_d0.b[0] ^= 8;
-    reg_a6[0xEC] = reg_d0.b[0];
+    ENTITY(reg_a6)[7].sprite.b[0] = reg_d0.b[0];
     reg_d4.h[0] = *(u16 *) (reg_a6 + 0x198);
 #ifdef DEATH_LABEL
     hp = *(u16 *) (reg_a6 + 0x218);
@@ -171,7 +172,7 @@ next_9:
     boss_part_show();
 next_10:
 #ifdef DEATH_LABEL
-    if (reg_a6[0x111] == 0) {
+    if (ENTITY(reg_a6)[8].hit_y_plus.b[1] == 0) {
         reg_d0.h[1] = *(u16 *) (reg_a5 + 0x16);
         reg_d0.h[0] = *(u16 *) (reg_a5 + 0x18);
         reg_d0.w -= 0x23000;
@@ -185,14 +186,14 @@ next_10:
         reg_d0.w = 0x1A;
         boss_phase_start();
         func_001F5620();
-        reg_a6[0x111] = 1;
+        ENTITY(reg_a6)[8].hit_y_plus.b[1] = 1;
         D_00299768[0] = 1;
         D_0029976A[0] = 1;
         D_0029976C_as_s16_a[0] = 1;
         D_0029976E_as_s16_a[0] = 1;
         func_002016D0();
     }
-    if (reg_a6[0x111] < 2) {
+    if (ENTITY(reg_a6)[8].hit_y_plus.b[1] < 2) {
         reg_d0.h[1] = *(u16 *) (reg_a5 + 0x16);
         reg_d0.h[0] = *(u16 *) (reg_a5 + 0x18);
         reg_d0.w -= 0x174C0;
@@ -206,7 +207,7 @@ next_10:
         reg_d0.w = 0x19;
         boss_phase_start();
         func_001F5620();
-        reg_a6[0x111] = 2;
+        ENTITY(reg_a6)[8].hit_y_plus.b[1] = 2;
         D_00299768[0] = 1;
         D_0029976A[0] = 1;
         D_0029976C_as_s16_a[0] = 1;
@@ -214,7 +215,7 @@ next_10:
         func_002016D0();
     }
 #else
-    if (reg_a6[0x111] != 0) {
+    if (ENTITY(reg_a6)[8].hit_y_plus.b[1] != 0) {
         goto next_11;
     }
     reg_d0.h[1] = *(u16 *) (reg_a5 + 0x16);
@@ -230,7 +231,7 @@ next_10:
     reg_d0.w = 0x13;
     boss_phase_start();
     func_001F5620();
-    reg_a6[0x111] = 1;
+    ENTITY(reg_a6)[8].hit_y_plus.b[1] = 1;
     D_00299768[0] = 1;
     D_0029976A[0] = 1;
     D_0029976C_as_s16_a[0] = 1;

@@ -1,4 +1,5 @@
 #include "common.h"
+#include "entity.h"
 
 void func_001B9DE0(void);
 void func_001BA0E0(void);
@@ -39,25 +40,25 @@ void func_001B9460(void) {
     *(s16 *)(reg_a4 + 4) = 0x1000;
     func_001713B0();
     reg_d1.b[0] = *(D_0028DC48 + reg_d0.b[0]);
-    reg_d1.b[0] += *(u8 *)(reg_a6 + 0x10D);
+    reg_d1.b[0] += ENTITY(reg_a6)[8].sprite.b[1];
     if ((s32) reg_d1.b[0] >= 0x80) {
         reg_d1.b[0] = 0x80;
     }
     *(u8 *)(reg_a4 + 9) = (u8) reg_d1.b[0];
     reg_d1.b[0] = *(D_0028DC40 + reg_d0.b[0]);
-    reg_d1.b[0] -= *(u8 *)(reg_a6 + 0x10A);
+    reg_d1.b[0] -= ENTITY(reg_a6)[8].draw.b.flip;
     if ((s8) reg_d1.b[0] < 3) {
         reg_d1.b[0] = 3;
     }
     *(s8 *)(reg_a4 + 7) = 0;
     *(u8 *)(reg_a4 + 6) = (u8) reg_d1.b[0];
-    *(u8 *)(reg_a6 + 0x10D) += 2;
-    if ((s32) *(u8 *)(reg_a6 + 0x10D) >= 0x80) {
-        *(u8 *)(reg_a6 + 0x10D) = 0x80U;
+    ENTITY(reg_a6)[8].sprite.b[1] += 2;
+    if ((s32) ENTITY(reg_a6)[8].sprite.b[1] >= 0x80) {
+        ENTITY(reg_a6)[8].sprite.b[1] = 0x80U;
     }
-    *(u8 *)(reg_a6 + 0x10A) -= 1;
-    if ((s8) *(u8 *)(reg_a6 + 0x10A) < 3) {
-        *(u8 *)(reg_a6 + 0x10A) = 3U;
+    ENTITY(reg_a6)[8].draw.b.flip -= 1;
+    if ((s8) ENTITY(reg_a6)[8].draw.b.flip < 3) {
+        ENTITY(reg_a6)[8].draw.b.flip = 3U;
     }
     *(s16 *)(reg_a4 + 0xA) = 0x6000;
     *(s8 *)(reg_a4 + 0xD) = 1;
@@ -68,25 +69,25 @@ void func_001B9460(void) {
     reg_a0 = (u8 *)(D_0026E8A0);
     reg_d0.h[0] += reg_d0.h[0];
     reg_d1.h[0] = (reg_d0.h[0] != 0) ? *(u16 *)((u8 *)reg_a0 + ((s16)reg_d0.h[0] & ~1)) : *(u16 *)reg_a0;
-    reg_d1.h[0] += *(u16 *)(reg_a6 + 0x10E);
+    reg_d1.h[0] += ENTITY(reg_a6)[8].look.h;
     if ((s16) reg_d1.h[0] > 4) {
         reg_d1.h[0] = 4;
     }
     *(u16 *)(reg_a4 + 0xE) = (u16) reg_d1.h[0];
-    *(u16 *)(reg_a6 + 0x10E) += 1;
-    if ((s16) *(u16 *)(reg_a6 + 0x10E) > 4) {
-        *(u16 *)(reg_a6 + 0x10E) = 4U;
+    ENTITY(reg_a6)[8].look.h += 1;
+    if ((s16) ENTITY(reg_a6)[8].look.h > 4) {
+        ENTITY(reg_a6)[8].look.h = 4U;
     }
     reg_a0 = (u8 *)(D_0026E8B0);
     reg_d1.h[0] = (reg_d0.h[0] != 0) ? *(u16 *)((u8 *)reg_a0 + ((s16)reg_d0.h[0] & ~1)) : *(u16 *)reg_a0;
-    reg_d1.h[0] += *(u16 *)(reg_a6 + 0x110);
+    reg_d1.h[0] += ENTITY(reg_a6)[8].hit_y_plus.h;
     if ((s16) reg_d1.h[0] > 0x20) {
         reg_d1.h[0] = 0x20;
     }
     *(u16 *)(reg_a4 + 0x10) = (u16) reg_d1.h[0];
-    *(u16 *)(reg_a6 + 0x110) += 2;
-    if ((s16) *(u16 *)(reg_a6 + 0x110) > 0x20) {
-        *(u16 *)(reg_a6 + 0x110) = 0x20U;
+    ENTITY(reg_a6)[8].hit_y_plus.h += 2;
+    if ((s16) ENTITY(reg_a6)[8].hit_y_plus.h > 0x20) {
+        ENTITY(reg_a6)[8].hit_y_plus.h = 0x20U;
     }
     *(s16 *)(reg_a4 + 0x12) = 0x2020;
 }
@@ -118,10 +119,10 @@ void func_001B9750(void) {
                 boss_attack_start();
                 *(u16 *)(reg_a0 + 2) = (u16) *(u16 *)(reg_a4 + 6);
                 *(u8 *)(reg_a0 + 5) = (u8) *(u8 *)(reg_a4 + 9);
-                *(u16 *)(reg_a0 + 0xC) = (u16) *(u16 *)(reg_a6 + 0x108);
-                *(u16 *)(reg_a6 + 0x108) += 2;
-                if ((s16) *(u16 *)(reg_a6 + 0x108) > 0xC) {
-                    *(u16 *)(reg_a6 + 0x108) = 0xCU;
+                *(u16 *)(reg_a0 + 0xC) = (u16) ENTITY(reg_a6)[8].offset_x.h;
+                ENTITY(reg_a6)[8].offset_x.h += 2;
+                if ((s16) ENTITY(reg_a6)[8].offset_x.h > 0xC) {
+                    ENTITY(reg_a6)[8].offset_x.h = 0xCU;
                 }
             }
         }
@@ -206,7 +207,7 @@ void func_001B9750(void) {
                 boss_attack_running();
                 if (cond_flag == 0) {
                     reg_a0 = (u8 *)D_0028DC58;
-                    reg_a0 += *(u16 *)(reg_a6 + 0x106);
+                    reg_a0 += ENTITY(reg_a6)[8].offset_y.h;
                     reg_d0.h[0] = *(u16 *)reg_a0;
                     if ((s16) reg_d0.h[0] < 0) {
                         reg_d7.w = 3;
@@ -215,7 +216,7 @@ void func_001B9750(void) {
                             reg_d7.w = 2;
                         }
                     } else {
-                        *(u16 *)(reg_a6 + 0x106) += 2;
+                        ENTITY(reg_a6)[8].offset_y.h += 2;
                     }
                     reg_d0.w = 3;
                     boss_phase_start();
@@ -229,8 +230,8 @@ void func_001B9750(void) {
 
 void func_001B9B30(void) {
     void boss_movement_start(void);
-    reg_d0.b[0] = *(u8 *)(reg_a6 + 0x3E);
-    reg_d0.b[0] += *(u8 *)(reg_a6 + 0x7E);
+    reg_d0.b[0] = ENTITY(reg_a6)[1].misc.b.draw_layer;
+    reg_d0.b[0] += ENTITY(reg_a6)[3].misc.b.draw_layer;
     if (reg_d0.b[0] == 2) {
         func_001B9DE0();
         return;
@@ -254,8 +255,8 @@ void func_001B9BC0(void) {
     u8 temp_a0_3;
     u8 temp_a0_4;
 
-    reg_d0.b[0] = *(u8 *)(reg_a6 + 0x3E);
-    reg_d0.b[0] += *(u8 *)(reg_a6 + 0x7E);
+    reg_d0.b[0] = ENTITY(reg_a6)[1].misc.b.draw_layer;
+    reg_d0.b[0] += ENTITY(reg_a6)[3].misc.b.draw_layer;
     if (reg_d0.b[0] == 2) {
         func_001B9DE0();
         return;
@@ -339,8 +340,8 @@ void func_001B9DE0(void) {
 
 void func_001B9E10(void) {
     s32 boss_movement_start();
-    reg_d0.b[0] = *(u8 *)(reg_a6 + 0x3E);
-    reg_d0.b[0] += *(u8 *)(reg_a6 + 0x7E);
+    reg_d0.b[0] = ENTITY(reg_a6)[1].misc.b.draw_layer;
+    reg_d0.b[0] += ENTITY(reg_a6)[3].misc.b.draw_layer;
     if (reg_d0.b[0] == 2) {
         func_001BA0E0();
         return;
@@ -359,8 +360,8 @@ void func_001B9E90(void) {
     u8 temp_a0_3;
     u8 temp_a0_4;
 
-    reg_d0.b[0] = *(u8 *)(reg_a6 + 0x3E);
-    reg_d0.b[0] += *(u8 *)(reg_a6 + 0x7E);
+    reg_d0.b[0] = ENTITY(reg_a6)[1].misc.b.draw_layer;
+    reg_d0.b[0] += ENTITY(reg_a6)[3].misc.b.draw_layer;
     if (reg_d0.b[0] == 2) {
         func_001BA0E0();
         return;
@@ -557,14 +558,14 @@ void func_001BA3A0(void) {
     *(u16 *)(reg_a4 + 0xE) = (u16) *(u16 *)reg_a0;
     reg_a0 += 2;
     reg_d1.h[0] = *(u16 *)reg_a0;
-    reg_d1.h[0] += *(u16 *)(reg_a6 + 0x118);
+    reg_d1.h[0] += ENTITY(reg_a6)[8].hp.h;
     if ((s16) reg_d1.h[0] > 0x5) {
         reg_d1.h[0] = 5;
     }
     *(u16 *)(reg_a4 + 0xC) = (u16) reg_d1.h[0];
-    *(u16 *)(reg_a6 + 0x118) += 1;
-    if ((s16) *(u16 *)(reg_a6 + 0x118) > 0x5) {
-        *(u16 *)(reg_a6 + 0x118) = 5U;
+    ENTITY(reg_a6)[8].hp.h += 1;
+    if ((s16) ENTITY(reg_a6)[8].hp.h > 0x5) {
+        ENTITY(reg_a6)[8].hp.h = 5U;
     }
     reg_d0.w = 6;
     boss_movement_start();
@@ -606,8 +607,8 @@ void func_001BA4D0(void) {
             *(u8 *)(reg_a4 + 5) -= 1;
             if ((s32) reg_tmp.b[0] <= 0) {
                 *(u8 *)(reg_a4 + 5) = (u8) *(u8 *)(reg_a4 + 4);
-                reg_d0.h[0] = *(u16 *)(reg_a6 + 0xA2);
-                reg_d1.h[0] = *(u16 *)(reg_a6 + 0xA4);
+                reg_d0.h[0] = ENTITY(reg_a6)[5].y.h;
+                reg_d1.h[0] = ENTITY(reg_a6)[5].x.h;
                 aim_at_player();
                 if (cond_flag == 0) {
                     if ((s8) reg_d1.b[0] > 0x27) {
@@ -618,13 +619,13 @@ void func_001BA4D0(void) {
                     }
                     reg_d0.w = 0;
                     reg_d1.h[0] = (u16) reg_d1.b[0];
-                    reg_d0.h[0] = *(u16 *)(reg_a6 + 0xAC);
+                    reg_d0.h[0] = ENTITY(reg_a6)[5].sprite.h;
                     reg_d0.h[0] += 0x20;
                     direction_turn_toward();
                     reg_d0.h[0] = reg_d1.h[0];
                     reg_d0.h[0] = (u16) reg_d0.b[0];
                     reg_d0.h[0] -= 0x20;
-                    *(u16 *)(reg_a6 + 0xAC) = (u16) reg_d0.h[0];
+                    ENTITY(reg_a6)[5].sprite.h = (u16) reg_d0.h[0];
                 }
             }
         }

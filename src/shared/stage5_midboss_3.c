@@ -73,7 +73,7 @@ void func_001F9750(void) {
     reg_a0 = D_00261AF0;
     sprite_palette_load();
     if (g_enemies_stopped == 0) {
-        if (*(u8 *)(reg_a6 + 0x7F) != 0) {
+        if (ENTITY(reg_a6)[3].misc.b.user != 0) {
             g_enemy_signal_2 = 0;
             reg_d0.h[0] = 0x20;
             reg_d1.h[0] = 0x20;
@@ -86,7 +86,7 @@ void func_001F9750(void) {
         if (reg_d1.b[0] != 0) {
             reg_d0.b[0] = 0xA3;
             ENTITY(reg_a6)->flags.b[1] &= reg_d0.b[0];
-            *(u16 *)(reg_a6 + 0x6E) = (u16) reg_d1.h[0];
+            ENTITY(reg_a6)[3].look.h = (u16) reg_d1.h[0];
             score_add_no_chain();
             reg_d0.b[0] = ENTITY(reg_a6)->attr.b.palette;
             reg_d0.b[0] ^= 0xF;
@@ -110,7 +110,7 @@ void func_001F9750(void) {
                 reg_d1.h[0] = 0x20;
                 func_001389D0();
                 ENTITY(reg_a6)->flags.h = 0x8000;
-                *(u8 *)(reg_a6 + 0x7E) = 1U;
+                ENTITY(reg_a6)[3].misc.b.draw_layer = 1U;
                 g_enemy_signal_2 = 0;
                 reg_d2.h[1] = ENTITY(reg_a6)->y.h;
                 reg_d2.h[0] = ENTITY(reg_a6)->x.h;
@@ -140,7 +140,7 @@ block_6:
         *(u8 *)(reg_a5 + 0x17) = 1U;
 block_11:
         entity_follow_scroll();
-        if (*(u8 *)(reg_a6 + 0x7E) == 0) {
+        if (ENTITY(reg_a6)[3].misc.b.draw_layer == 0) {
             if (*(u8 *)(reg_a5 + 0x16) == 0) {
                 *(u16 *)(reg_a5 + 0x1C) -= 1;
                 if (*(u16 *)(reg_a5 + 0x1C) == 0) {
@@ -250,8 +250,8 @@ block_11:
                 }
             }
             if (*(u8 *)(reg_a5 + 0x2F) == 1) {
-                *(u16 *)(reg_a6 + 0x2E) -= 1;
-                if (*(u16 *)(reg_a6 + 0x2E) == 0) {
+                ENTITY(reg_a6)[1].look.h -= 1;
+                if (ENTITY(reg_a6)[1].look.h == 0) {
                     func_001F9ED0();
                     *(u8 *)(reg_a5 + 0x2F) = 2U;
                 }
@@ -276,7 +276,7 @@ block_11:
         goto block_33;
     }
 block_33:
-    if (*(u8 *)(reg_a6 + 0x7E) == 0) {
+    if (ENTITY(reg_a6)[3].misc.b.draw_layer == 0) {
         reg_a0 = D_00265B40;
         reg_d2.h[1] = *(u16 *)reg_a0;
         reg_d2.h[0] = *(u16 *)(reg_a0 + 2);
@@ -296,18 +296,18 @@ block_33:
 s32 rng_next_unsigned();
 
 void func_001F9ED0(void) {
-    *(s16 *)(reg_a6 + 0x2A) = 0x258;
-    *(s16 *)(reg_a6 + 0x28) = 0x104;
+    ENTITY(reg_a6)[1].draw.sh = 0x258;
+    ENTITY(reg_a6)[1].offset_x.sh = 0x104;
     rng_next_unsigned();
     reg_d0.h[0] &= 0x1F;
-    *(u8 *)(reg_a6 + 0x2D) = 0x40U;
-    *(u8 *)(reg_a6 + 0x2D) -= reg_d0.b[0];
-    *(u8 *)(reg_a6 + 0x2C) = 0U;
+    ENTITY(reg_a6)[1].sprite.b[1] = 0x40U;
+    ENTITY(reg_a6)[1].sprite.b[1] -= reg_d0.b[0];
+    ENTITY(reg_a6)[1].sprite.b[0] = 0U;
     reg_d7.h[0] = 0x3B;
     do {
-        *(u8 *)(reg_a6 + 0x2C) += 1;
-        reg_d0.b[0] = *(u8 *)(reg_a6 + 0x2C);
-        *(u8 *)(reg_a6 + 0x2D) += reg_d0.b[0];
+        ENTITY(reg_a6)[1].sprite.b[0] += 1;
+        reg_d0.b[0] = ENTITY(reg_a6)[1].sprite.b[0];
+        ENTITY(reg_a6)[1].sprite.b[1] += reg_d0.b[0];
     } while ((s16)(--reg_d7.h[0]) >= 0);
 }
 
@@ -317,15 +317,15 @@ void func_001F9F90(void) {
     u8 var_a0;
 
     cond_flag = 0;
-    reg_tmp.b[0] = *(u8 *)(reg_a6 + 0x29);
-    *(u8 *)(reg_a6 + 0x29) -= 1;
+    reg_tmp.b[0] = ENTITY(reg_a6)[1].offset_x.b[1];
+    ENTITY(reg_a6)[1].offset_x.b[1] -= 1;
     if ((s32) reg_tmp.b[0] <= 0) {
         var_a0 = 0x10000000;
-        *(u8 *)(reg_a6 + 0x29) = (u8) *(u8 *)(reg_a6 + 0x28);
-        *(u8 *)(reg_a6 + 0x2C) += 1;
-        reg_d0.b[0] = *(u8 *)(reg_a6 + 0x2C);
-        *(u8 *)(reg_a6 + 0x2D) += reg_d0.b[0];
-        reg_d1.b[0] = *(u8 *)(reg_a6 + 0x2D);
+        ENTITY(reg_a6)[1].offset_x.b[1] = (u8) ENTITY(reg_a6)[1].offset_x.b[0];
+        ENTITY(reg_a6)[1].sprite.b[0] += 1;
+        reg_d0.b[0] = ENTITY(reg_a6)[1].sprite.b[0];
+        ENTITY(reg_a6)[1].sprite.b[1] += reg_d0.b[0];
+        reg_d1.b[0] = ENTITY(reg_a6)[1].sprite.b[1];
         reg_d0.w = 0x50003;
         reg_d2.h[1] = ENTITY(reg_a6)->y.h;
         reg_d2.h[0] = ENTITY(reg_a6)->x.h;
@@ -345,8 +345,8 @@ void func_001F9F90(void) {
             reg_d1.b[0] += 0x8C;
         } while ((s16)(--reg_d7.h[0]) >= 0);
     }
-    *(u16 *)(reg_a6 + 0x2A) -= 1;
-    if (*(u16 *)(reg_a6 + 0x2A) != 0) {
+    ENTITY(reg_a6)[1].draw.h -= 1;
+    if (ENTITY(reg_a6)[1].draw.h != 0) {
         cond_flag = 1;
         return;
     }
@@ -357,20 +357,20 @@ extern u16 D_0028E3F0;
 extern u16 g_loop;
 
 void func_001FA0E0(void) {
-    *(s16 *)(reg_a6 + 0x4E) = 0;
-    *(s16 *)(reg_a6 + 0x4A) = 0x258;
-    *(s16 *)(reg_a6 + 0x48) = 0x202;
+    ENTITY(reg_a6)[2].look.sh = 0;
+    ENTITY(reg_a6)[2].draw.sh = 0x258;
+    ENTITY(reg_a6)[2].offset_x.sh = 0x202;
     reg_d0.w = 3;
     if (g_loop != 0) {
         reg_d0.w = 2;
     }
     if (!(D_0028E3F0 & 2)) {
-        *(u8 *)(reg_a6 + 0x49) += reg_d0.b[0];
+        ENTITY(reg_a6)[2].offset_x.b[1] += reg_d0.b[0];
     }
-    *(u8 *)(reg_a6 + 0x48) += reg_d0.b[0];
+    ENTITY(reg_a6)[2].offset_x.b[0] += reg_d0.b[0];
     rng_next_unsigned();
     reg_d0.b[0] -= 0x20;
-    *(u8 *)(reg_a6 + 0x4D) = (u8) reg_d0.b[0];
+    ENTITY(reg_a6)[2].sprite.b[1] = (u8) reg_d0.b[0];
 }
 
 s32 bullet_fire256_fixed();
@@ -380,22 +380,22 @@ void func_001FA180(void) {
     u32 temp_a0;
     u8 temp_a1;
 
-    *(u8 *)(reg_a6 + 0x4D) += 2;
-    *(u8 *)(reg_a6 + 0x49) -= 1;
-    if ((s8) *(u8 *)(reg_a6 + 0x49) < 0) {
-        reg_d0.b[0] = *(u8 *)(reg_a6 + 0x4D);
+    ENTITY(reg_a6)[2].sprite.b[1] += 2;
+    ENTITY(reg_a6)[2].offset_x.b[1] -= 1;
+    if ((s8) ENTITY(reg_a6)[2].offset_x.b[1] < 0) {
+        reg_d0.b[0] = ENTITY(reg_a6)[2].sprite.b[1];
         reg_d0.b[0] += 0x10;
         if ((s32) reg_d0.b[0] < 0x21) {
-            if ((s8) *(u8 *)(reg_a6 + 0x49) > -2) {
+            if ((s8) ENTITY(reg_a6)[2].offset_x.b[1] > -2) {
                 goto block_end;
             }
-        } else if ((s8) *(u8 *)(reg_a6 + 0x49) >= -2) {
+        } else if ((s8) ENTITY(reg_a6)[2].offset_x.b[1] >= -2) {
             goto block_end;
         }
-        *(u8 *)(reg_a6 + 0x49) = (u8) *(u8 *)(reg_a6 + 0x48);
+        ENTITY(reg_a6)[2].offset_x.b[1] = (u8) ENTITY(reg_a6)[2].offset_x.b[0];
 block_end:;
     } else {
-        temp_a1 = *(u8 *)(reg_a6 + 0x4D);
+        temp_a1 = ENTITY(reg_a6)[2].sprite.b[1];
         reg_d1.b[0] = temp_a1;
         reg_d0.w = 0xFFFD0004;
         reg_d2.h[1] = ENTITY(reg_a6)->y.h;
@@ -409,7 +409,7 @@ block_end:;
             reg_d1.b[0] *= -1;
             bullet_fire256_double();
         } else {
-            if (*(u16 *)(reg_a6 + 0x4E) == 0) {
+            if (ENTITY(reg_a6)[2].look.h == 0) {
                 bullet_fire256_double();
                 reg_d1.b[0] *= -1;
                 bullet_fire256_double();
@@ -418,12 +418,12 @@ block_end:;
                 reg_d1.b[0] *= -1;
                 bullet_fire256_fixed();
             }
-            *(u16 *)(reg_a6 + 0x4E) += 1;
-            *(u16 *)(reg_a6 + 0x4E) &= 1;
+            ENTITY(reg_a6)[2].look.h += 1;
+            ENTITY(reg_a6)[2].look.h &= 1;
         }
     }
-    *(u16 *)(reg_a6 + 0x4A) -= 1;
-    if (*(u16 *)(reg_a6 + 0x4A) != 0) {
+    ENTITY(reg_a6)[2].draw.h -= 1;
+    if (ENTITY(reg_a6)[2].draw.h != 0) {
         cond_flag = 1;
         return;
     }
@@ -433,12 +433,12 @@ block_end:;
 s32 func_00201710(void *);
 
 void func_001FA320(void) {
-    if ((*(u8 *)(reg_a6 + 0x7E) != 0) && (*(u8 *)(reg_a6 + 0x67) == 0)) {
-        reg_d1.h[0] = *(u16 *)(reg_a6 + 0x6E);
+    if ((ENTITY(reg_a6)[3].misc.b.draw_layer != 0) && (ENTITY(reg_a6)[3].offset_y.b[1] == 0)) {
+        reg_d1.h[0] = ENTITY(reg_a6)[3].look.h;
         func_00201710(reg_a6);
-        *(u16 *)(reg_a6 + 0x70) -= 1;
-        if (*(u16 *)(reg_a6 + 0x70) == 0) {
-            *(s8 *)(reg_a6 + 0x7F) = 1;
+        ENTITY(reg_a6)[3].hit_y_plus.h -= 1;
+        if (ENTITY(reg_a6)[3].hit_y_plus.h == 0) {
+            ENTITY(reg_a6)[3].misc.sb.user = 1;
         }
     }
     cond_flag = 0;

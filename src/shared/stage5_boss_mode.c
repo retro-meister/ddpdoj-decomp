@@ -388,8 +388,8 @@ void func_001F1E20() {
             boss_part_show();
             reg_d0.w = 1;
             boss_movement_start();
-            *(s8 *)(reg_a6 + 0x10F) = 1;
-            *(s16 *)(reg_a6 + 0x172) = 0;
+            ENTITY(reg_a6)[8].look.sb.size = 1;
+            ENTITY(reg_a6)[11].hit_y_minus.sh = 0;
             reg_tmp.w = 0x23000;
             *(u16 *)(reg_a5 + 0x16) = (u16) reg_tmp.h[1];
             *(u16 *)(reg_a5 + 0x18) = (u16) reg_tmp.h[0];
@@ -658,7 +658,7 @@ void func_001F2640() {
             death_D_006901B2[0] = death_D_0068FFB2[0];
             death_D_006901B4[0] = death_D_0068FFB4[0];
 #endif
-            *(s8 *)(reg_a6 + 0x10F) = 2;
+            ENTITY(reg_a6)[8].look.sb.size = 2;
             g_true_last_boss = 0xFFFF;
             reg_d0.w = 0x4D000;
             *(u16 *)(reg_a5 + 0x16) = (u16) reg_d0.h[1];
@@ -782,8 +782,8 @@ loop_1:
     goto loop_1;
 block_3_end:
 #ifdef DEATH_LABEL
-        x = *(u16 *)(reg_a6 + 0x202);
-        y = *(u16 *)(reg_a6 + 0x204);
+        x = ENTITY(reg_a6)[16].y.h;
+        y = ENTITY(reg_a6)[16].x.h;
     }
 #endif
     *(u16 *)(reg_a4 + 4) = 0x80;
@@ -832,8 +832,8 @@ block_1:
     reg_d0.h[0] = 0;
     func_0013AAB0();
 #ifdef DEATH_LABEL
-        x = *(u16 *)(reg_a6 + 0x202);
-        y = *(u16 *)(reg_a6 + 0x204);
+        x = ENTITY(reg_a6)[16].y.h;
+        y = ENTITY(reg_a6)[16].x.h;
     }
 #endif
     switch (*(u8 *)(reg_a4 + 6)) { case 2: goto next_1; }
@@ -888,8 +888,8 @@ next_3:
     rng_next_unsigned();
     *(u8 *)(reg_a0 + 0x1A) = reg_d0.b[0];
 #ifdef DEATH_LABEL
-        x = *(u16 *)(reg_a6 + 0x202);
-        y = *(u16 *)(reg_a6 + 0x204);
+        x = ENTITY(reg_a6)[16].y.h;
+        y = ENTITY(reg_a6)[16].x.h;
     }
 #endif
     *(u16 *)(reg_a4 + 8) += 8;
@@ -942,8 +942,8 @@ next_4:
     *(u16 *)(reg_a0 + 0x12) = 0;
     *(u16 *)(reg_a0 + 0x14) = 0;
 #ifdef DEATH_LABEL
-        x = *(u16 *)(reg_a6 + 0x202);
-        y = *(u16 *)(reg_a6 + 0x204);
+        x = ENTITY(reg_a6)[16].y.h;
+        y = ENTITY(reg_a6)[16].x.h;
     }
 #endif
     *(u16 *)(reg_a4 + 8) += 8;
@@ -1133,7 +1133,7 @@ void func_001F32D0() {
                 boss_attack_start();
                 reg_d0.w = 0xE;
                 boss_part_hide();
-                *(s16 *)(reg_a6 + 0x172) = 0;
+                ENTITY(reg_a6)[11].hit_y_minus.sh = 0;
                 reg_d0.w = 5;
                 boss_movement_start();
                 goto block_4;
@@ -1146,7 +1146,7 @@ block_4:
         if (cond_flag == 0) {
             reg_d0.w = 0xE;
             boss_part_show();
-            *(s16 *)(reg_a6 + 0x172) = 0x1000;
+            ENTITY(reg_a6)[11].hit_y_minus.sh = 0x1000;
             reg_d0.w = 0xC;
             boss_phase_start();
             *(s16 *)reg_a4 = 0;
@@ -1235,12 +1235,12 @@ block_4:
 void func_001F3560(void) {
     *(s16 *)(reg_a4 + 2) = 0x40;
     *(s16 *)(reg_a4 + 4) = 1;
-    *(s8 *)(reg_a6 + 0x3F) = 0;
-    *(s8 *)(reg_a6 + 0x5F) = 0;
-    *(s8 *)(reg_a6 + 0x7F) = 0;
-    *(s8 *)(reg_a6 + 0x9F) = 0;
-    *(s8 *)(reg_a6 + 0xBF) = 0;
-    *(s8 *)(reg_a6 + 0xDF) = 0;
+    ENTITY(reg_a6)[1].misc.sb.user = 0;
+    ENTITY(reg_a6)[2].misc.sb.user = 0;
+    ENTITY(reg_a6)[3].misc.sb.user = 0;
+    ENTITY(reg_a6)[4].misc.sb.user = 0;
+    ENTITY(reg_a6)[5].misc.sb.user = 0;
+    ENTITY(reg_a6)[6].misc.sb.user = 0;
     func_001F35B0();
 }
 
@@ -1301,7 +1301,7 @@ block_4:
             boss_movement_start();
             ENTITY(reg_a6)->move.sb.speed = 0xC;
 #ifdef DEATH_LABEL
-            *(s8 *)(reg_a6 + 0x21B) = 0xC;
+            ENTITY(reg_a6)[16].move.sb.speed = 0xC;
 #endif
             *(s16 *)reg_a4 = 0;
         }
@@ -1361,7 +1361,7 @@ void func_001F37A0() {
                 boss_attack_start();
                 ENTITY(reg_a6)->move.sb.speed = 4;
 #ifdef DEATH_LABEL
-                *(s8 *)(reg_a6 + 0x21B) = 4;
+                ENTITY(reg_a6)[16].move.sb.speed = 4;
 #endif
                 goto block_4;
             }

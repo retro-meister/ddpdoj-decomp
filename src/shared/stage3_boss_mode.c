@@ -286,15 +286,15 @@ void func_001D30F0(void) {
     boss_movement_start();
     reg_d0.w = 4;
     boss_animation_start();
-    temp_a0 = *(u8 *)(reg_a6 + 0x115);
+    temp_a0 = ENTITY(reg_a6)[8].hit_x_plus.b[1];
     *(u8 *)(reg_a0 + 3) = temp_a0;
     *(s8 *)(reg_a0 + 2) = 1;
-    temp_v0 = *(u8 *)(reg_a6 + 0x115);
+    temp_v0 = ENTITY(reg_a6)[8].hit_x_plus.b[1];
     if ((s32) temp_v0 < 0x11) {
         func_001D3170(temp_a0);
         return;
     }
-    *(u8 *)(reg_a6 + 0x115) = (u8) (temp_v0 - 0x30);
+    ENTITY(reg_a6)[8].hit_x_plus.b[1] = (u8) (temp_v0 - 0x30);
     func_001D3170(temp_a0);
 }
 
