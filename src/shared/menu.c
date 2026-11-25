@@ -4605,7 +4605,7 @@ void func_00224A30(void) {
     *(u16 *)(reg_a0 + 4) = 0x12;
 }
 
-s32 func_0011BEA0();
+s32 layers_reset();
 s32 func_0012FA50();
 s32 func_0012FB00();
 s32 func_0012FD00();
@@ -4634,7 +4634,7 @@ void func_00224A90(void) {
     func_0018DEE0();
     func_0012FA50();
     func_0012FB00();
-    func_0011BEA0();
+    layers_reset();
     D_0028E3C0_as_s16 = 0;
     D_0028EAFC = 0xFF;
     D_0028E378 = 0xFF;

@@ -1,4 +1,5 @@
 #include "common.h"
+#include "layers.h"
 #include "entity.h"
 #include "sdk/ps2sdk.h"
 
@@ -105,10 +106,9 @@ void func_001256C0(void) {
 }
 
 extern u16 g_enemies_stopped;
-extern u16 D_0028E0E4[];
 void func_001257B0(void) {
     if (g_enemies_stopped == 0) {
-        reg_d0.h[0] = D_0028E0E4[0];
+        reg_d0.h[0] = g_layer_b_shift[0];
         *(u16 *)(reg_a6 + 2) += reg_d0.h[0];
     }
 }

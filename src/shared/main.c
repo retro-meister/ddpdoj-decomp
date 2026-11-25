@@ -3,7 +3,7 @@ s32 memalign();
 s32 memset();
 s32 printf();
 
-s32 func_0011BEA0();
+s32 layers_reset();
 s32 func_0012FD00();
 s32 func_0012FD40();
 s32 func_00131490();
@@ -137,7 +137,7 @@ void func_002120D0(void) {
     func_0019AA90();
     func_00206D70();
     func_00135EC0();
-    func_0011BEA0();
+    layers_reset();
     func_00137C20();
     func_0013FD80();
     func_00137C50();

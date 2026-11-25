@@ -1608,7 +1608,7 @@ void glyph_queue_clear(void) {
 }
 
 
-extern u16 D_00269D60[];
+extern u16 g_wide_font_codes[];
 
 void glyph_queue_add(x, y, z, page, alpha, attr, wide)
     s32 x;
@@ -1664,7 +1664,7 @@ void glyph_queue_add(x, y, z, page, alpha, attr, wide)
         reg_d4.h[0] = reg_d4.b[0];
         if (wide) {
             reg_d4.h[0] -= 0x20;
-            reg_a1 = (u8 *)D_00269D60;
+            reg_a1 = (u8 *)g_wide_font_codes;
             reg_d4.h[0] += reg_d4.h[0];
             reg_a1 += reg_d4.h[0];
             reg_d4.h[0] = *(u16 *)reg_a1;

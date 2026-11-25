@@ -45,9 +45,9 @@ void func_0011F480(void) {
     ENTITY(reg_a6)->x.h = (u16) reg_tmp.h[0];
 }
 
-s32 func_0011C440();
-s32 func_00137BC0();
-s32 func_00137BE0();
+s32 bg_layer_cell_address();
+s32 debug_print_hex_stub_a();
+s32 debug_print_hex_stub_c();
 s32 func_0019D620();
 s32 entity_move_by_p2_stick();
 extern u16 g_side_scroll_x[];
@@ -152,7 +152,7 @@ void func_0011F4E0(void) {
     reg_d0.h[0] = 0;
     reg_d1.h[0] = 0x1F;
     reg_d2.h[0] = 0;
-    func_00137BC0();
+    debug_print_hex_stub_a();
     reg_d0.w = b1_d0;
     reg_d1.w = b1_d1;
     reg_d2.w = b1_d2;
@@ -188,7 +188,7 @@ void func_0011F4E0(void) {
     reg_d0.h[0] = 0;
     reg_d1.h[0] = 0x20;
     reg_d2.h[0] = 0;
-    func_00137BE0();
+    debug_print_hex_stub_c();
     reg_d0.w = b2_d0;
     reg_d1.w = b2_d1;
     reg_d2.w = b2_d2;
@@ -230,7 +230,7 @@ void func_0011F4E0(void) {
     reg_d0.h[0] = 0;
     reg_d1.h[0] = 0x22;
     reg_d2.h[0] = 0;
-    func_00137BE0();
+    debug_print_hex_stub_c();
     reg_d0.w = b3_d0;
     reg_d1.w = b3_d1;
     reg_d2.w = b3_d2;
@@ -274,7 +274,7 @@ void func_0011F4E0(void) {
     reg_d0.h[0] = 0;
     reg_d1.h[0] = 0x23;
     reg_d2.h[0] = 0;
-    func_00137BE0();
+    debug_print_hex_stub_c();
     reg_d0.w = b4_d0;
     reg_d1.w = b4_d1;
     reg_d2.w = b4_d2;
@@ -290,7 +290,7 @@ void func_0011F4E0(void) {
     reg_a4 = b4_a4;
     reg_a5 = b4_a5;
     reg_a6 = b4_a6;
-    func_0011C440();
+    bg_layer_cell_address();
     b5_a0 = reg_a0;
     b5_d0 = reg_d0.w;
     b5_d1 = reg_d1.w;
@@ -311,7 +311,7 @@ void func_0011F4E0(void) {
     reg_d0.h[0] = 0;
     reg_d1.h[0] = 0x21;
     reg_d2.h[0] = 0;
-    func_00137BC0();
+    debug_print_hex_stub_a();
     reg_d0.w = b5_d0;
     reg_d1.w = b5_d1;
     reg_d2.w = b5_d2;

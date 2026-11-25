@@ -77,7 +77,7 @@ extern u16 D_0029F110_as_u16_a[];
 extern u16 D_0029F180_as_u16_a[];
 extern u16 g_player2_as_u16_a[];
 extern u16 g_player1_as_u16_a[];
-extern u16 D_002A2400_as_u16_a[];
+extern u16 g_deferred_text_as_u16_a[];
 extern u16 D_002BAF30[];
 extern u16 D_002BAF3A[];
 extern u16 D_002BAF50[];
@@ -308,7 +308,7 @@ void func_0020F550(void) {
     STORE_POINTER(D_0026A0A6, D_002BF4F0_as_u16_a);
     STORE_POINTER(D_0026A0C6, D_00299D30_as_u16_a);
     STORE_POINTER(D_0026A0E6, D_0029A12C_as_u16_a);
-    STORE_POINTER(D_0026A106, D_002A2400_as_u16_a);
+    STORE_POINTER(D_0026A106, g_deferred_text_as_u16_a);
     STORE_POINTER(D_0026A126, D_002BAF50);
     STORE_POINTER(D_0026A146, D_002BAFAA);
     STORE_POINTER(D_0026A166, D_002BAF30);

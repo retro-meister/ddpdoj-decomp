@@ -180,7 +180,7 @@ void func_00137C90(void) {
 #endif
 
 #ifndef DEATH_LABEL
-s32 func_0011C4A0();
+s32 deferred_text_put();
 extern u32 D_0026A290[];
 extern u16 D_0028DEFC;
 
@@ -223,7 +223,7 @@ void func_00137CC0(void) {
     reg_d2.w = 5;
     reg_d3.w = 0x1B;
     reg_d1.h[0] = 0;
-    func_0011C4A0();
+    deferred_text_put();
     reg_d0.w = save_d0;
     reg_d1.w = save_d1;
     reg_d2.w = save_d2;
@@ -281,7 +281,7 @@ extern u8 D_006C58DF[];
 extern u8 D_006C5CA0[];
 
 void func_00137E00(void) {
-    s32 func_0011BEA0();
+    s32 layers_reset();
     s32 func_0012FA50();
     s32 func_0012FB00();
     u32 save_d0;
@@ -363,7 +363,7 @@ void func_00137E00(void) {
             D_0028ED74_as_s8 = 0;
             func_0012FA50();
             func_0012FB00();
-            func_0011BEA0();
+            layers_reset();
             func_00224B50();
             D_0028DF04 += 1;
             if ((s32) D_0028DF04 >= 3) {
@@ -468,8 +468,8 @@ extern u8 death_D_00291191;
 extern s8 death_D_00291195_as_s8;
 
 void func_00137E00(void) {
-    void func_0011BEA0(void);
-    void func_0011C4A0(void);
+    void layers_reset(void);
+    void deferred_text_put(void);
     void func_0012FA50(void);
     void func_0012FB00(void);
     u32 save_d0;
@@ -511,7 +511,7 @@ void func_00137E00(void) {
     reg_d1.h[0] = 0;
     reg_d2.w = 5;
     reg_d3.w = 0x1B;
-    func_0011C4A0();
+    deferred_text_put();
     reg_d0.h[0] = D_0028E3F0;
     if ((reg_d0.h[0] &= 1) == 0) {
         D_0028E81C += 4;
@@ -553,7 +553,7 @@ check_end:
         if (D_0028E820 == 0) {
             func_0012FA50();
             func_0012FB00();
-            func_0011BEA0();
+            layers_reset();
             goto finished;
         }
     }

@@ -33,8 +33,8 @@ segments:
     subsegments:
       - [0x80, asm, sdk]
       - [0x19b90, c, shared/unit_00119B10]
-      - [0x1bf20, c, shared/unit_0011BEA0]
-      - [0x1c840, c, shared/unit_0011C7C0]
+      - [0x1bf20, c, shared/layers]
+      - [0x1ca40, c, shared/unit_0011C9C0]
       - [0x1d590, c, shared/unit_0011D510]
       - [0x1de40, c, shared/unit_0011DDC0]
       - [0x1f460, c, shared/unit_0011F3E0]
@@ -50,7 +50,7 @@ segments:
       - [0x330f0, c, shared/unit_00133070]
       - [0x34120, c, shared/unit_001340A0]
       - [0x35030, c, shared/unit_00134FB0]
-      - [0x37990, c, shared/unit_00137910]
+      - [0x37990, c, shared/text_layer_print]
       - [0x37c70, c, shared/unit_00137BF0]
       - [0x38190, c, shared/unit_00138110]
       - [0x38a50, c, shared/unit_001389D0]
@@ -208,6 +208,8 @@ segments:
       - [0x18c0f0, sdata, sdata]
       - {type: .sbss, vram: 0x28de80, name: shared/credits_roll}
       - {type: sbss, vram: 0x28de8c, name: sbss_28de8c}
+      - {type: .sbss, vram: 0x28e0d4, name: shared/layers}
+      - {type: sbss, vram: 0x28e114, name: sbss_28e114}
       - {type: .sbss, vram: 0x28e1a4, name: shared/input}
       - {type: sbss, vram: 0x28e1bc, name: sbss_28e1bc}
       - {type: .sbss, vram: 0x28e98c, name: shared/splash}

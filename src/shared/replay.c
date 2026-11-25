@@ -872,7 +872,7 @@ void func_00237DF0(void) {
     reg_a6 = save_a6;
 }
 
-s32 func_0011C920();
+s32 deferred_text_reset();
 s32 func_00137CC0();
 s32 func_001A33C0();
 extern void gfx_draw_color_box(s32 x, s32 y, s32 w, s32 h, s32 depth, s32 alpha, s32 r, s32 g, s32 b);
@@ -973,7 +973,7 @@ void func_00238010(void) {
         D_0028E368 = 0;
         g_score_task_active = 0;
         if ((D_006C8E56[0] != 0) && (step < 0x65)) {
-            func_0011C920();
+            deferred_text_reset();
 #ifndef DEATH_LABEL
             if (D_0028E3C0 != 0) {
                 func_00137CC0();

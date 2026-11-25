@@ -180,7 +180,7 @@ void func_001A34C0(void) {
     }
 }
 
-s32 func_0011C7C0();
+s32 deferred_text_clear();
 void func_001A34E0(void) {
     reg_d1.h[0] = 0;
     reg_d0.h[0] = 0xDC;
@@ -191,7 +191,7 @@ void func_001A34E0(void) {
     reg_d4.w = 0;
     reg_d2.w = 1;
     reg_d3.w = 0xD;
-    func_0011C7C0();
+    deferred_text_clear();
 }
 
 
@@ -310,7 +310,7 @@ void func_001A37F0() {
     }
 }
 
-s32 func_0011C4A0();
+s32 deferred_text_put();
 extern u32 D_0026B2B0[];
 
 void func_001A3830(s32 arg3) {
@@ -356,7 +356,7 @@ void func_001A3830(s32 arg3) {
         reg_d1.h[0] = temp_a0;
         reg_d2.w = 1;
         reg_d3.w = 0xB;
-        func_0011C4A0();
+        deferred_text_put();
     }
 }
 
@@ -424,7 +424,7 @@ void func_001A39B0(s32 arg2, s32 arg3) {
         reg_d1.h[0] = *(u16 *)(reg_a5 + 0xA);
         reg_d3.w = 6;
         reg_d2.w = 0;
-        func_0011C4A0();
+        deferred_text_put();
     }
 }
 
@@ -473,6 +473,6 @@ void func_001A3BA0(s32 arg3) {
         reg_d1.h[0] = temp_a0;
         reg_d2.w = 1;
         reg_d3.w = 9;
-        func_0011C4A0();
+        deferred_text_put();
     }
 }

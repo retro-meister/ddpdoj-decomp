@@ -588,8 +588,8 @@ void func_001694A0(void) {
     }
 }
 
-s32 func_0011BEA0();
-s32 func_00137910();
+s32 layers_reset();
+s32 text_layer_print_wide();
 extern u8 D_00269140[];
 extern u8 D_0026A880[];
 
@@ -610,7 +610,7 @@ void func_001694F0() {
         *(u16 *)(reg_a5 + 8) = 0xB8U;
         *(u16 *)(reg_a5 + 0xA) = 1U;
         *(u16 *)(reg_a5 + 4) = 0x12CU;
-        func_0011BEA0();
+        layers_reset();
         return;
     }
     if ((*(u16 *)(reg_a5 + 6) != 0x1C0) && ((temp_v1 = *(u16 *)(reg_a5 + 0xA), (temp_v1 == 0)) || (*(u16 *)(reg_a5 + 0xA) = (u16) (temp_v1 - 1), (*(u16 *)(reg_a5 + 0xA) == 0)))) {
@@ -619,7 +619,7 @@ void func_001694F0() {
         reg_d0.h[0] = *(u16 *)(reg_a5 + 8);
         reg_d1.h[0] = 0;
         reg_d2.h[0] = 0;
-        func_00137910();
+        text_layer_print_wide();
         *(u16 *)(reg_a5 + 8) -= 0xC;
         *(u16 *)(reg_a5 + 6) += 0x20;
     }

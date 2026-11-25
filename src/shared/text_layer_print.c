@@ -1,9 +1,13 @@
 #include "common.h"
 
-s32 func_0011C610();
-extern u16 D_00269D60[];
+/* Printing strings on the text plane; reg_a0 has the string, reg_d0 and reg_d1 the position. */
 
-void func_00137910(void) {
+s32 deferred_text_put_sheet();
+extern u16 g_wide_font_codes[];
+
+/* Prints with the large font, through the queue of deferred writes. */
+
+void text_layer_print_wide(void) {
     u32 sv_d0;
     u32 sv_d1;
     u32 sv_d2;
@@ -38,12 +42,12 @@ void func_00137910(void) {
     sv_d6 = reg_d6.w;
     reg_d5.h[0] = reg_d2.h[0];
     reg_d2.w = 1;
-loop_1:
+next_character:
     reg_d4.w = 0;
     reg_d4.b[0] = *(s8 *)reg_a0;
     reg_a0 += 1;
-    if (reg_d4.b[0] == 0) goto next_1;
-    reg_a1 = (u8 *) D_00269D60;
+    if (reg_d4.b[0] == 0) goto end_of_string;
+    reg_a1 = (u8 *) g_wide_font_codes;
     reg_d4.h[0] &= 0xFF;
     reg_d4.h[0] -= 0x20;
     reg_d4.h[0] += reg_d4.h[0];
@@ -52,11 +56,11 @@ loop_1:
     reg_d4.h[0] = reg_d5.h[0];
     sv_d5 = reg_d5.w;
     reg_d5.h[0] = 0x10;
-    func_0011C610();
+    deferred_text_put_sheet();
     reg_d5.w = sv_d5;
     reg_d1.h[0] += 0x100;
-    goto loop_1;
-next_1:
+    goto next_character;
+end_of_string:
     reg_d5.w = sv_d5;
     reg_d7.w = sv_d7;
     reg_a0 = (u8 *)sv_a0;
@@ -95,7 +99,7 @@ void text_layer_print(void) {
     reg_d3.w = 0;
     reg_d5.h[0] = reg_d2.h[0];
     reg_d2.w = 0;
-loop_1:
+next_character:
     reg_d4.w = 0;
     reg_d4.b[0] = (u8) *(s8 *)reg_a0;
     reg_a0 += 1;
@@ -106,7 +110,7 @@ loop_1:
         reg_d4.h[0] = reg_d5.h[0];
         text_layer_put();
         reg_d0.h[0] += 1;
-        goto loop_1;
+        goto next_character;
     }
     reg_d0.w = save_d0;
     reg_d1.w = save_d1;
@@ -117,11 +121,12 @@ loop_1:
     reg_a0 = (u8 *)temp_s5;
 }
 
-void func_00137BC0(void) {
+/* The three number printers of the debug display are empty in this build. */
+void debug_print_hex_stub_a(void) {
 }
 
-void func_00137BD0(void) {
+void debug_print_hex_stub_b(void) {
 }
 
-void func_00137BE0(void) {
+void debug_print_hex_stub_c(void) {
 }

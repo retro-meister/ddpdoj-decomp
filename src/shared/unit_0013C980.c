@@ -1065,8 +1065,8 @@ void func_0013EBD0(void) {
     func_0013EC50();
 }
 
-s32 func_0011C4A0();
-s32 func_0011C610();
+s32 deferred_text_put();
+s32 deferred_text_put_sheet();
 extern void *reg_save_a6_as_void_p;
 
 void func_0013EC50(void) {
@@ -1076,7 +1076,7 @@ void func_0013EC50(void) {
     reg_d2.w = 2;
     reg_d3.w = 0;
     reg_d5.h[0] = 2;
-    func_0011C610();
+    deferred_text_put_sheet();
     reg_d1.h[0] += reg_d7.h[0];
     if ((s16) reg_d7.h[0] < 0) goto next_1;
     reg_d7.h[0] *= 2;
@@ -1093,7 +1093,7 @@ next_1:
     if (reg_d5.b[0] == 0) goto next_2;
     reg_d4.w = 0x02CC000A;
 loop_1:
-    func_0011C4A0();
+    deferred_text_put();
     reg_d1.h[0] += reg_d7.h[0];
     reg_d5.w -= 0x10001;
     if (reg_d5.h[0] != 0) goto loop_1;
@@ -1106,7 +1106,7 @@ next_2:
     if (reg_tmp5.h[0] == 0) goto next_3;
     reg_d4.w = 0x02C0000A;
 loop_2:
-    func_0011C4A0();
+    deferred_text_put();
     reg_d1.h[0] += reg_d7.h[0];
     tmp = reg_d5.h[0] - 1;
     reg_d5.h[0] = tmp;
@@ -1115,14 +1115,14 @@ next_3:
     if ((s8) reg_d6.b[0] < 0) goto next_4;
     reg_d4.w = 0x02C6000A;
 loop_3:
-    func_0011C4A0();
+    deferred_text_put();
     reg_d1.h[0] += reg_d7.h[0];
     tmp = reg_d6.h[0] - 1;
     reg_d6.h[0] = tmp;
     if (((s64) ((s64) (tmp & 0xFFFF) << 0x30) >> 0x30) >= 0) goto loop_3;
 next_4:
     reg_d4.w = 0x02D2000A;
-    func_0011C4A0();
+    deferred_text_put();
     reg_d0.w = reg_save_d0;
     reg_d1.w = reg_save_d1;
     reg_d2.w = reg_save_d2;
@@ -1160,7 +1160,7 @@ void func_0013EEA0(void) {
     reg_d3.w = 1;
     reg_d6.h[0] = temp_a0 << 9;
     reg_d1.h[0] += reg_d6.h[0];
-    func_0011C4A0(temp_a0);
+    deferred_text_put(temp_a0);
 }
 
 void func_0013EEE0(void) {
@@ -1186,17 +1186,17 @@ void func_0013EEE0(void) {
     reg_d0.h[0] = 8;
     reg_d2.w = 2;
     reg_d5.h[0] = 2;
-    func_0011C610();
+    deferred_text_put_sheet();
     reg_d3.w = 1;
     reg_d1.h[0] += 0x100;
     reg_d4.w = 0x02C6000A;
     reg_d7.w = 5;
     do {
-        func_0011C4A0();
+        deferred_text_put();
         reg_d1.h[0] += 0x200;
     } while ((s16)(--reg_d7.h[0]) >= 0);
     reg_d4.w = 0x02D2000A;
-    func_0011C4A0();
+    deferred_text_put();
     reg_d0.w = save_d0;
     reg_d1.w = save_d1;
     reg_d2.w = save_d2;
@@ -1230,17 +1230,17 @@ void func_0013F000(void) {
     reg_d0.h[0] = 8;
     reg_d2.w = 2;
     reg_d5.h[0] = 2;
-    func_0011C610();
+    deferred_text_put_sheet();
     reg_d3.w = 1;
     reg_d1.h[0] -= 0x200;
     reg_d4.w = 0x02C6000A;
     reg_d7.w = 5;
     do {
-        func_0011C4A0();
+        deferred_text_put();
         reg_d1.h[0] -= 0x200;
     } while ((s16)(--reg_d7.h[0]) >= 0);
     reg_d4.w = 0x02D2000A;
-    func_0011C4A0();
+    deferred_text_put();
     reg_d0.w = save_d0;
     reg_d1.w = save_d1;
     reg_d2.w = save_d2;
@@ -1297,7 +1297,7 @@ void func_0013F200(void) {
     reg_d3.w = 0xB;
     reg_d4.h[0] -= 1;
     reg_d4.w = *(u32 *)(D_00255550 + (reg_d4.h[0] * 4));
-    func_0011C4A0();
+    deferred_text_put();
     reg_d0.w = reg_save_d0;
     reg_d1.w = reg_save_d1;
     reg_d2.w = reg_save_d2;

@@ -32,10 +32,10 @@ segments:
     bss_size: 0x402880
     subsegments:
       - [0x80, asm, sdk]
-      - [0x19b90, c, shared/unit_00137910]
+      - [0x19b90, c, shared/text_layer_print]
       - [0x19e70, c, shared/unit_00119B10]
-      - [0x1c200, c, shared/unit_0011BEA0]
-      - [0x1cb20, c, shared/unit_0011C7C0]
+      - [0x1c200, c, shared/layers]
+      - [0x1cd20, c, shared/unit_0011C9C0]
       - [0x1d870, c, shared/unit_0011D510]
       - [0x1e120, c, shared/unit_0011DDC0]
       - [0x1f740, c, shared/unit_0011F3E0]
@@ -220,6 +220,8 @@ segments:
       - {type: sbss, vram: 0x290400, name: sbss_290400}
       - {type: .sbss, vram: 0x290490, name: shared/credits_roll}
       - {type: sbss, vram: 0x29049c, name: sbss_29049c}
+      - {type: .sbss, vram: 0x2906a4, name: shared/layers}
+      - {type: sbss, vram: 0x2906e4, name: sbss_2906e4}
       - {type: .sbss, vram: 0x290774, name: shared/input}
       - {type: sbss, vram: 0x29078c, name: sbss_29078c}
       - {type: .sbss, vram: 0x290b54, name: shared/system}

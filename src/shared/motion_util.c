@@ -1,4 +1,5 @@
 #include "common.h"
+#include "layers.h"
 #include "entity.h"
 
 void func_00201920(void);
@@ -236,14 +237,12 @@ void func_00201B30(void) {
 }
 #pragma pop
 
-extern u16 D_0028E0E4[];
-extern u16 D_0028E0E6[];
 extern u16 g_enemies_stopped;
 
 void entity_follow_scroll(void) {
     if (g_enemies_stopped == 0) {
-        reg_d0.h[1] = D_0028E0E4[0];
-        reg_d0.h[0] = D_0028E0E6[0];
+        reg_d0.h[1] = g_layer_b_shift[0];
+        reg_d0.h[0] = g_layer_b_shift[1];
         reg_tmp.h[0] = reg_d0.h[0];
         reg_d0.h[0] = reg_d0.h[1];
         reg_d0.h[1] = reg_tmp.h[0];
@@ -253,8 +252,8 @@ void entity_follow_scroll(void) {
 
 void func_00201BE0(void) {
     if (g_enemies_stopped == 0) {
-        reg_d2.h[0] = D_0028E0E4[0];
-        reg_d3.h[0] = D_0028E0E6[0];
+        reg_d2.h[0] = g_layer_b_shift[0];
+        reg_d3.h[0] = g_layer_b_shift[1];
         return;
     }
     reg_d2.w = 0;

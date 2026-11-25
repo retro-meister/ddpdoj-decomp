@@ -37,9 +37,9 @@ void func_00138A40(void) {
     D_0029C074_as_s16_a[0] = 2;
 }
 
-s32 func_0011BEA0();
-s32 func_0011BF30();
-s32 func_0011C0B0();
+s32 layers_reset();
+s32 layer_a_scroll();
+s32 layer_b_scroll();
 s32 func_0014C450();
 s32 func_0014C8A0();
 s32 func_001A3250();
@@ -71,7 +71,7 @@ void func_00138A50(void) {
         *(u16 *)reg_a0 = 0U;
         reg_a0 += 2;
     } while ((s16)(--reg_d1.h[0]) >= 0);
-    func_0011BEA0();
+    layers_reset();
     *(s16 *)(reg_a5 + 0x1C) = 0x20;
     *(s16 *)(reg_a5 + 0x22) = 0x20;
     reg_d0.w = 0;
@@ -82,10 +82,10 @@ void func_00138A50(void) {
     *(u16 *)(reg_a5 + 0x20) = (u16) reg_d0.h[0];
     reg_d1.w = 0;
     reg_d1.h[0] = 0x800;
-    func_0011C0B0();
+    layer_b_scroll();
     reg_d1.w = 0;
     reg_d1.h[0] = 0x800;
-    func_0011BF30();
+    layer_a_scroll();
     *(u16 *)(reg_a5 + 0x1E) = 0U;
     temp_a1 = *(u16 *)(reg_a5 + 0x1E);
     reg_a0 = (u8 *)D_00252700;
@@ -124,7 +124,7 @@ void func_00138A50(void) {
     *(u8 *)(reg_a5 + 2) |= 4;
 }
 
-s32 func_0011C3C0();
+s32 bg_layer_put();
 
 void func_00138CC0(void) {
     reg_tmp.h[1] = *(u16 *) (reg_a5 + 0xA);
@@ -138,7 +138,7 @@ loop_1:
 loop_2:
     reg_d4.w = *(u32 *) reg_a0;
     reg_a0 += 4;
-    func_0011C3C0();
+    bg_layer_put();
     reg_d0.h[0] += 1;
     if ((s16)(--reg_d6.h[0]) >= 0) {
         goto loop_2;
@@ -436,7 +436,7 @@ void func_001391B0(void) {
         reg_d0.w = 0;
         reg_d0.h[0] = reg_d6.h[0];
         reg_d5.h[0] += reg_d6.h[0];
-        func_0011BF30();
+        layer_a_scroll();
         if ((s16)(reg_d5.h[0]) >= 0x200) {
             reg_d5.h[0] -= 0x200;
             if (*(u16 *)(reg_a5 + 8) == 0) {
@@ -460,7 +460,7 @@ void func_001391B0(void) {
             do {
                 reg_d4.w = *(u32 *)reg_a0;
                 reg_a0 += 4;
-                func_0011C3C0();
+                bg_layer_put();
                 reg_d0.h[0] += 1;
             } while ((s16)(--reg_d6.h[0]) >= 0);
             reg_tmp.w = (u32)reg_a0;
@@ -478,7 +478,7 @@ void func_001391B0(void) {
         reg_d1.h[0] = D_0029C064[0];
         reg_d0.w = 0;
         reg_d0.h[0] = reg_d6.h[0];
-        func_0011C0B0();
+        layer_b_scroll();
     }
     func_0014C4B0();
     func_00170A50(0, 0, 0);
