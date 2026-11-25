@@ -62,11 +62,6 @@ extern u8 test_palette_1[];
 extern u8 test_palette_2[];
 extern u8 test_palette_3[];
 extern u8 test_palette_4[];
-extern u8 D_00286E20[];
-extern u8 D_00286E40[];
-extern u8 D_00286E60[];
-extern u8 D_00286E78[];
-extern u8 D_00286E88[];
 extern u8 D_0028DF08;
 #ifdef DEATH_LABEL
 extern u8 g_game_mode;
@@ -104,9 +99,9 @@ void func_002120D0(void) {
     g_game_mode = 2;
 #endif
     g_cd_async_state = 0;
-    printf(D_00286E20, 0x9A8);
-    printf(D_00286E40, 0x206EC);
-    printf(D_00286E60, 0x202E8);
+    printf("--card   size[%d]\n", 0x9A8);
+    printf("--replay size[%d]\n", 0x206EC);
+    printf("--replay_data size[%d]\n", 0x202E8);
     func_00236900();
     memset(D_006C58A0, 0, 0x202E8);
     memset(D_006A4800, 0, 0x202E8);
@@ -161,11 +156,11 @@ void func_002120D0(void) {
     reg_d0.h[0] = TASK_ATTRACT;
     task_start();
     *(s16 *)(reg_a0 + 4) = 0x11;
-    printf(D_00286E78, memalign(0x40, 0x10));
+    printf("memory[%x]\n", memalign(0x40, 0x10));
     g_cd_async_state = 0;
     t3 = 0;
     func_00225630();
-    printf(D_00286E88);
+    printf("cd_read start\n");
     do {
         sys_begin_frame();
         switch (t3) {

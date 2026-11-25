@@ -428,18 +428,6 @@ s32 sprite_palette_load();
 s32 func_001AD720();
 s32 func_00237790();
 extern u16 D_00269840[];
-extern u8 D_00273EC0[];
-extern u8 D_00273EE0[];
-extern u8 D_00273F00[];
-extern u8 D_00273F20[];
-extern u8 D_00273F40[];
-extern u8 D_00273F60[];
-extern u8 D_00273F80[];
-extern u8 D_00273FA0[];
-extern u8 D_00273FC0[];
-extern u8 D_00273FE0[];
-extern u8 D_00274000[];
-extern u8 D_00274020[];
 extern s16 D_0028DFBC_as_s16;
 extern s16 D_0028DFC4_as_s16;
 extern u8 g_game_frame_ran;
@@ -502,12 +490,12 @@ void func_00131880(void) {
             *(u8 *)(reg_a5 + 3) = 2U;
             return;
         }
-        printf((const char *)D_00273EC0, g_p1_score_as_s32);
-        printf((const char *)D_00273EE0, (s32) g_p1_score_digits);
-        printf((const char *)D_00273F00, (s32) g_p1_score_billions);
-        printf((const char *)D_00273F20, g_p2_score_as_s32);
-        printf((const char *)D_00273F40, (s32) g_p2_score_digits);
-        printf((const char *)D_00273F60, (s32) g_p2_score_billions);
+        printf((const char *)"end sco1up  [%x]\n", g_p1_score_as_s32);
+        printf((const char *)"end sco1cnt [%x]\n", (s32) g_p1_score_digits);
+        printf((const char *)"end sco1oku [%x]\n", (s32) g_p1_score_billions);
+        printf((const char *)"end sco2up  [%x]\n", g_p2_score_as_s32);
+        printf((const char *)"end sco2cnt [%x]\n", (s32) g_p2_score_digits);
+        printf((const char *)"end sco2oku [%x]\n", (s32) g_p2_score_billions);
         g_game_frame_ran = 0;
         func_00135070();
         *(s8 *)(reg_a5 + 7) = 0x1E;
@@ -522,12 +510,12 @@ void func_00131880(void) {
             D_0028E961 &= 0xFC;
         }
         if (g_game_frame_ran != 0) {
-            printf((const char *)D_00273F80, g_p1_score_as_s32);
-            printf((const char *)D_00273FA0, (s32) g_p1_score_digits);
-            printf((const char *)D_00273FC0, (s32) g_p1_score_billions);
-            printf((const char *)D_00273FE0, g_p2_score_as_s32);
-            printf((const char *)D_00274000, (s32) g_p2_score_digits);
-            printf((const char *)D_00274020, (s32) g_p2_score_billions);
+            printf((const char *)"begin sco1up  [%x]\n", g_p1_score_as_s32);
+            printf((const char *)"begin sco1cnt [%x]\n", (s32) g_p1_score_digits);
+            printf((const char *)"begin sco1oku [%x]\n", (s32) g_p1_score_billions);
+            printf((const char *)"begin sco2up  [%x]\n", g_p2_score_as_s32);
+            printf((const char *)"begin sco2cnt [%x]\n", (s32) g_p2_score_digits);
+            printf((const char *)"begin sco2oku [%x]\n", (s32) g_p2_score_billions);
             *(s8 *)(reg_a5 + 7) = 4;
         }
     }

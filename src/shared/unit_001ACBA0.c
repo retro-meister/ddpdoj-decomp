@@ -190,9 +190,6 @@ block_50:
 }
 
 extern s8 D_0025F6B0[];
-extern u8 D_0027D910[];
-extern u8 D_0027D930[];
-extern u8 D_0027D948[];
 extern u8 g_game_mode;
 extern s32 D_0028EAFC;
 extern u8 D_0028ED7C;
@@ -217,7 +214,7 @@ void func_001ACF80(void) {
     save_a6 = reg_a6;
     cond_flag = 0;
     if (D_0028ED7C == 2) {
-        printf((const char *)D_0027D910);
+        printf((const char *)"replay nameentry skip\n");
         cond_flag = 1;
         goto block_rts;
     }
@@ -229,7 +226,7 @@ void func_001ACF80(void) {
     cond_flag = 0;
     if (g_game_mode == 2) {
         D_0028EAFC = 4 - reg_d1.w;
-        printf((const char *)D_0027D930, D_0028EAFC);
+        printf((const char *)"---death--rank[%d]\n", D_0028EAFC);
         if (D_0028EAFC != 4) {
             for (i = 4; D_0028EAFC < i; i--) {
                 for (j = 0; j < 30; j++) {
@@ -239,7 +236,7 @@ void func_001ACF80(void) {
         }
     } else {
         D_0028EAFC = 4 - reg_d1.w;
-        printf((const char *)D_0027D948, D_0028EAFC);
+        printf((const char *)"-----rank[%d]\n", D_0028EAFC);
         if (D_0028EAFC != 4) {
             for (i = 4; D_0028EAFC < i; i--) {
                 for (j = 0; j < 30; j++) {

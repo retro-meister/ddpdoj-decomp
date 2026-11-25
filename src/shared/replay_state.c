@@ -61,12 +61,6 @@ typedef struct {
     Row16 f5512;
 } Buf;
 
-extern char D_0028BF40[];
-extern char D_0028BF58[];
-extern char D_0028BF68[];
-extern char D_0028BF78[];
-extern char D_0028BF88[];
-extern char D_0028BF98[];
 extern u16 D_0028DFB4;
 extern u16 D_0028DFB8;
 extern u16 D_0028DFBC;
@@ -377,7 +371,7 @@ void func_00238B90(Buf *buf) {
     s32 v;
     u8 *p = (u8 *)buf;
 
-    printf(D_0028BF40, 0x5534);
+    printf("replay size[%d]\n", 0x5534);
     for (i = 0; i < 0xC08; i++) {
         buf->f0000[i] = D_002BF4F0[i];
     }
@@ -755,16 +749,16 @@ void func_00238B90(Buf *buf) {
             D_006C58B6_as_s16_a[0] = 7;
         }
         if (*(u8 *)g_player1_as_u8_a & 2) {
-            printf(D_0028BF58);
+            printf("------1  on-\n");
         } else {
-            printf(D_0028BF68);
+            printf("------1  off-\n");
         }
         if (D_0029F261[0] & 0x40) {
-            printf(D_0028BF78);
+            printf("------6  on-\n");
         } else {
-            printf(D_0028BF88);
+            printf("------6  off-\n");
         }
-        printf(D_0028BF98, *(u16 *)D_0029CD90_as_f32_a);
+        printf("------[%d]\n", *(u16 *)D_0029CD90_as_f32_a);
 #endif
         if (D_0029CD9C[0] != 0) {
             v = (u16)D_0029CD9C[0] - 1;
@@ -831,16 +825,16 @@ void func_00238B90(Buf *buf) {
             D_006C58B6_as_s16_a[0] = 7;
         }
         if (*(u8 *)g_player2_as_u8_a & 2) {
-            printf(D_0028BF58);
+            printf("------1  on-\n");
         } else {
-            printf(D_0028BF68);
+            printf("------1  off-\n");
         }
         if (D_0029F1F1[0] & 0x40) {
-            printf(D_0028BF78);
+            printf("------6  on-\n");
         } else {
-            printf(D_0028BF88);
+            printf("------6  off-\n");
         }
-        printf(D_0028BF98, *(u16 *)D_0029CD80_as_f32_a);
+        printf("------[%d]\n", *(u16 *)D_0029CD80_as_f32_a);
 #endif
         if (D_0029CD8C[0] != 0) {
             v = (u16)D_0029CD8C[0] - 1;

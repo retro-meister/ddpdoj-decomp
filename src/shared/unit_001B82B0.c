@@ -84,7 +84,6 @@ s32 func_00201F20();
 extern u8 D_00250780[];
 extern u8 D_002507A0[];
 extern u8 D_00262570[];
-extern u8 D_0027F2F0[];
 extern u16 D_0028E3E0;
 extern u16 D_0028E3EC;
 extern u16 g_game_frame;
@@ -307,7 +306,7 @@ next_15:
     reg_d3.h[0] *= 0xFFFF;
     goto next_ret;
 next_16:
-    printf((const char *)D_0027F2F0);
+    printf((const char *)"jmp err \n");
     goto block_rts;
 next_anim:
     reg_d2.w = 3;

@@ -365,7 +365,6 @@ void fade_start_in(void);
 void func_0021D570(void);
 s32 func_0022BB80(u8 *);
 void func_00235890(void);
-extern const char D_00275840[];
 extern s8 D_0028E25C_as_s8;
 extern s8 D_0028E284_as_s8;
 extern s8 D_0028E288_as_s8;
@@ -452,7 +451,7 @@ void func_00169140(void) {
                     D_0028E2BC = 0;
                 }
             }
-            printf((const char *)D_00275840, D_0028E2B8_as_u8, D_0028E2B9, D_0028E2BA, D_0028E2BB, D_0028E2BC);
+            printf((const char *)"--date [%d][%d][%d][%d][%d]\n", D_0028E2B8_as_u8, D_0028E2B9, D_0028E2BA, D_0028E2BB, D_0028E2BC);
 #endif
             D_0028DF84 = 0;
             reg_d0.h[0] = 0x13;
@@ -483,7 +482,7 @@ void func_00169140(void) {
                     D_0028E2BC = 0;
                 }
             }
-            printf((const char *)D_00275840, D_0028E2B8_as_u8, D_0028E2B9, D_0028E2BA, D_0028E2BB, D_0028E2BC);
+            printf((const char *)"--date [%d][%d][%d][%d][%d]\n", D_0028E2B8_as_u8, D_0028E2B9, D_0028E2BA, D_0028E2BB, D_0028E2BC);
             reg_d0.h[0] = 0xE;
             func_00168BA0();
         }
@@ -502,7 +501,6 @@ s32 func_00137E00();                            /* extern */
 s32 sound_stop_effects();                            /* extern */
 s32 stage_map_reset();                            /* extern */
 extern s32 g_default_text_palette_as_s32_a[];
-extern s32 D_00275860[];
 
 void func_00169320(void) {
     s32 text_layer_clear();
@@ -521,7 +519,7 @@ void func_00169320(void) {
     }
     func_00137E00();
     if (cond_flag == 0) {
-        printf((const char *)D_00275860);
+        printf((const char *)"demo end\n");
         task_reset_all();
         func_0013B190();
         func_00137C50();
@@ -787,7 +785,6 @@ void func_00169900(void) {
 s32 func_0022C6F0();
 s32 func_0022C710();
 s32 func_00234EF0();
-extern u8 D_00275870[];
 extern u8 D_0028ECF4;
 extern s32 D_0028ED0C;
 extern s32 D_006A0E40[];
@@ -807,7 +804,7 @@ void func_00169950(void) {
         func_0022C710(temp_a0, temp_a1);
         if (D_0028ED0C != 0) {
             D_0028ED0C = 0;
-            printf((const char *)D_00275870, D_0028ECF4);
+            printf((const char *)"-----[%d]---\n", D_0028ECF4);
             if (D_0028ECF4 & 0xC) {
                 *(u8 *)(reg_a5 + 2) = 2U;
                 break;

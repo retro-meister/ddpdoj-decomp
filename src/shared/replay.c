@@ -7,8 +7,6 @@ void func_00237D50();
 
 #ifdef DEATH_LABEL
 extern void voice_ok(void);
-extern char death_D_00277690[];
-extern char death_D_002776B0[];
 extern u16 g_attract_demo;
 extern u16 g_p2_score_digits;
 extern u16 g_p1_score_digits;
@@ -58,7 +56,7 @@ void replay_filter_input(void) {
     case 1:
         if (D_0028ED70_as_u32 == 0x1A5E0) {
             D_0028ED70_as_u32 = 0x1A5DF;
-            printf(death_D_00277690);
+            printf("replay buffer over!!!\n");
         }
         switch (D_0028ED7C) {
         case 0:
@@ -74,7 +72,7 @@ void replay_filter_input(void) {
                 }
                 if (D_0028ED58 != 0) {
                     voice_ok();
-                    printf(death_D_002776B0);
+                    printf("override start\n");
                 }
             }
             if (D_0028ED58 != 0) {
@@ -134,8 +132,6 @@ void replay_filter_input(void) {
 }
 #else
 extern void voice_ok(void);
-extern char D_0028BEB0[];
-extern char D_0028BED0[];
 extern u16 g_attract_demo;
 extern u16 g_p2_score_digits;
 extern u16 g_p1_score_digits;
@@ -179,7 +175,7 @@ void replay_filter_input(void) {
     case 1:
         if (D_0028ED70_as_u32 == 0x1A5E0) {
             D_0028ED70_as_u32 = 0x1A5DF;
-            printf((const char *)D_0028BEB0);
+            printf((const char *)"replay buffer over!!!\n");
         }
         switch (D_0028ED7C) {
         case 0:
@@ -195,7 +191,7 @@ void replay_filter_input(void) {
                 }
                 if (D_0028ED58 != 0) {
                     voice_ok();
-                    printf((const char *)D_0028BED0);
+                    printf((const char *)"override start\n");
                 }
             }
             if (D_0028ED58 != 0) {
@@ -625,8 +621,6 @@ void func_00237870(void) {
 extern void srand(u32 seed);
 extern s32 rand(void);
 extern void func_00238B90(u8 *data);
-extern char D_0028BEE0[];
-extern char D_0028BF00[];
 extern u16 g_input_p2_previous;
 extern u16 g_input_p2_pressed;
 extern u16 g_input_p2_held;
@@ -671,7 +665,7 @@ void func_00237AC0() {
     D_0028ED74 = 1;
     D_0028ED64 = 0;
     D_0028ED70 = 0;
-    printf((const char *)D_0028BEE0);
+    printf((const char *)"replay recording start!!\n");
     memset(save, 0, 0x400);
     memset(D_006CB5A8, 0, 0x1A5E0);
     memset(data, 0, 0x5534);
@@ -709,7 +703,7 @@ void func_00237AC0() {
     }
     save[5] = g_setting_difficulty;
     save[18] = D_0028E2E4;
-    printf((const char *)D_0028BF00, g_scroll_line, D_0028E8AC);
+    printf((const char *)"real_l[%d] real_l_scr[%d]\n", g_scroll_line, D_0028E8AC);
     }
 }
 
@@ -872,7 +866,6 @@ s32 func_001A33C0();
 extern void gfx_draw_color_box(s32 x, s32 y, s32 w, s32 h, s32 depth, s32 alpha, s32 r, s32 g, s32 b);
 extern void replay_header_apply(void);
 s32 func_0023B6B0();
-extern char D_0028BF20[];
 extern u8 D_0028DEF8;
 extern u16 D_0028DFC0;
 extern u8 D_0028E2EC;
@@ -1058,7 +1051,7 @@ void func_00238010(void) {
 #ifndef DEATH_LABEL
                 D_0028DEF8 = 1;
 #endif
-                printf((const char *)D_0028BF20, g_scroll_line);
+                printf((const char *)"replay play start!!\n", g_scroll_line);
             }
             break;
         }
@@ -1076,7 +1069,7 @@ void func_00238010(void) {
 #endif
                     func_00135110();
                     step += 1;
-                    printf((const char *)D_0028BF20);
+                    printf((const char *)"replay play start!!\n");
                 }
             }
             break;
