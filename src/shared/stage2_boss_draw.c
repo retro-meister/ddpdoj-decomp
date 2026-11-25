@@ -4,7 +4,7 @@
 extern u8 D_0026C2A0[];
 
 void func_001C3EC0(void) {
-    s32 func_0019C670();
+    s32 sprite_draw_layer2_keep();
     reg_a0 = (u8 *)D_0026C2A0;
     reg_a0 += *(u16 *) (reg_a6 + 0x28);
     reg_tmp.h[0] = *(u16 *) (reg_a6 + 0x28);
@@ -16,13 +16,13 @@ void func_001C3EC0(void) {
     reg_d3.h[0] = 0x1480;
     reg_d4.h[0] = *(u16 *) (reg_a6 + 0x1C);
     reg_d4.b[0] = reg_a6[0x127];
-    func_0019C670();
+    sprite_draw_layer2_keep();
 }
 
 extern u8 D_0026C2C0[];
 
 void func_001C3F50(void) {
-    s32 func_0019C670();
+    s32 sprite_draw_layer2_keep();
     u16 temp_a0;
     u16 temp_a2;
 
@@ -38,13 +38,13 @@ void func_001C3F50(void) {
     reg_d3.h[0] = 0x1230;
     reg_d4.h[0] = *(u16 *)(reg_a6 + 0x1C);
     reg_d4.b[0] = *(u8 *)(reg_a6 + 0x126);
-    func_0019C670();
+    sprite_draw_layer2_keep();
 }
 
 extern u8 D_0026C2F0[];
 
 void func_001C3FD0(void) {
-    s32 func_0019C670();
+    s32 sprite_draw_layer2_keep();
     u16 temp_a2;
     u32 temp_a3;
 
@@ -65,13 +65,13 @@ void func_001C3FD0(void) {
     reg_d3.h[0] = 0x1298;
     reg_d4.h[0] = *(u16 *)(reg_a6 + 0x1C);
     reg_d4.b[0] = *(u8 *)(reg_a6 + 0x129);
-    func_0019C670();
+    sprite_draw_layer2_keep();
 }
 
 extern u8 D_0026C330[];
 
 void func_001C4090(void) {
-    s32 func_0019C670();
+    s32 sprite_draw_layer2_keep();
     u16 temp_a1;
     u16 temp_a3;
 
@@ -88,13 +88,13 @@ void func_001C4090(void) {
     reg_d3.h[0] = 0xC98;
     reg_d4.h[0] = *(u16 *)(reg_a6 + 0x1C);
     reg_d4.b[0] = *(u8 *)(reg_a6 + 0x131);
-    func_0019C670();
+    sprite_draw_layer2_keep();
 }
 
 extern u8 D_0026C3B0[];
 
 void func_001C4120(void) {
-    s32 func_0019C670();
+    s32 sprite_draw_layer2_keep();
     u16 temp_a1;
     u16 temp_a3;
     u32 temp_a2;
@@ -116,13 +116,13 @@ void func_001C4120(void) {
     reg_d3.h[0] = 0xA20;
     reg_d4.h[0] = *(u16 *)(reg_a6 + 0x1C);
     reg_d4.b[0] = *(u8 *)(reg_a6 + 0x12C);
-    func_0019C670();
+    sprite_draw_layer2_keep();
 }
 
 extern u8 D_0026C370[];
 
 void func_001C41D0(void) {
-    s32 func_0019C670();
+    s32 sprite_draw_layer2_keep();
     u16 temp_a1;
     u16 temp_a3;
     u32 temp_a2;
@@ -144,13 +144,13 @@ void func_001C41D0(void) {
     reg_d3.h[0] = 0xA20;
     reg_d4.h[0] = *(u16 *)(reg_a6 + 0x1C);
     reg_d4.b[0] = *(u8 *)(reg_a6 + 0x12F);
-    func_0019C670();
+    sprite_draw_layer2_keep();
 }
 
 extern u8 D_0026C3F0[];
 
 void func_001C4280(void) {
-    s32 func_0019C670();
+    s32 sprite_draw_layer2_keep();
     u16 temp_a0;
 
     reg_d2.w = 0;
@@ -167,11 +167,11 @@ void func_001C4280(void) {
     reg_d3.h[0] = 0x620;
     reg_d4.h[0] = *(u16 *)(reg_a6 + 0x1C);
     reg_d4.b[0] = *(u8 *)(reg_a6 + 0x128);
-    func_0019C670();
+    sprite_draw_layer2_keep();
 }
 
 void func_001C4320(void) {
-    s32 func_0019C670();
+    s32 sprite_draw_layer2_keep();
     u16 temp_a0;
 
     reg_d2.w = 0;
@@ -188,13 +188,13 @@ void func_001C4320(void) {
     reg_d3.h[0] = 0x620;
     reg_d4.h[0] = *(u16 *)(reg_a6 + 0x1C);
     reg_d4.b[0] = *(u8 *)(reg_a6 + 0x12B);
-    func_0019C670();
+    sprite_draw_layer2_keep();
 }
 
 extern u8 D_0026C470[];
 
 void func_001C43C0(void) {
-    s32 func_0019C670();
+    s32 sprite_draw_layer2_keep();
     u16 temp_a0;
 
     reg_d2.w = 0;
@@ -211,11 +211,11 @@ void func_001C43C0(void) {
     reg_d3.h[0] = 0xA30;
     reg_d4.h[0] = *(u16 *)(reg_a6 + 0x1C);
     reg_d4.b[0] = *(u8 *)(reg_a6 + 0x12A);
-    func_0019C670();
+    sprite_draw_layer2_keep();
 }
 
 void func_001C4460(void) {
-    s32 func_0019C670();
+    s32 sprite_draw_layer2_keep();
     u16 temp_a0;
 
     reg_d2.w = 0;
@@ -232,13 +232,13 @@ void func_001C4460(void) {
     reg_d3.h[0] = 0xA30;
     reg_d4.h[0] = *(u16 *)(reg_a6 + 0x1C);
     reg_d4.b[0] = *(u8 *)(reg_a6 + 0x12D);
-    func_0019C670();
+    sprite_draw_layer2_keep();
 }
 
 extern u8 D_0026C4F0[];
 
 void func_001C4500(void) {
-    void func_0019C670();
+    void sprite_draw_layer2_keep();
     reg_d0.w = 0;
     reg_a0 = D_0026C4F0;
     reg_d0.b[0] = *(u8 *)(reg_a6 + 0x11A);
@@ -252,5 +252,5 @@ void func_001C4500(void) {
     reg_d3.h[0] = 0x418;
     reg_d4.h[0] = *(u16 *)(reg_a6 + 0x1C);
     reg_d4.b[0] = *(u8 *)(reg_a6 + 0x12E);
-    func_0019C670();
+    sprite_draw_layer2_keep();
 }

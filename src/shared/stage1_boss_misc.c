@@ -40,7 +40,7 @@ void func_0014F000(void) {
 
 s32 explosion_spawn();
 s32 enemy_remove();
-s32 func_0019BF80();
+s32 entity_draw_layer4();
 s32 func_001D27A0();
 s32 entity_velocity();
 extern u8 D_0028E855;
@@ -93,7 +93,7 @@ next_3:
     *(u16 *)(reg_a5 + 0x20) += 4;
     *(u16 *)(reg_a5 + 0x20) &= 0xF;
 next_2:
-    func_0019BF80();
+    entity_draw_layer4();
 }
 
 void func_0014F430(void) {
@@ -463,7 +463,7 @@ void func_00150140(void) {
     }
 }
 
-s32 func_0019C470();
+s32 sprite_draw_layer1();
 s32 entity_follow_scroll();
 extern u8 D_0026E820[];
 
@@ -514,7 +514,7 @@ block_13:
     reg_d1.h[0] = temp_a0;
     reg_d3.h[0] = 0x1488;
     reg_d4.w = 0x13;
-    func_0019C470();
+    sprite_draw_layer1();
     reg_a0 = (u8 *)D_0026E820;
     reg_a0 += *(u16 *)(reg_a5 + 0x18);
     reg_d2.h[1] = *(u16 *)reg_a0;
@@ -525,5 +525,5 @@ block_13:
     reg_d1.w += 0xFDC00080;
     reg_d3.h[0] = 0x1488;
     reg_d4.w = 0x13;
-    func_0019C470();
+    sprite_draw_layer1();
 }

@@ -1,13 +1,13 @@
 #include "common.h"
 
-void func_0019C730(void);
+void sprite_draw_layer4_keep(void);
 
 void func_001DC160(void) {
-    func_0019C730();
+    sprite_draw_layer4_keep();
 }
 
 void func_001DC170(void) {
-    func_0019C730();
+    sprite_draw_layer4_keep();
 }
 
 extern u32 D_0026EE10[];
@@ -176,7 +176,7 @@ void func_001DC5D0(void) {
     func_001DC160();
 }
 
-s32 func_0019C4B0();
+s32 sprite_draw_layer2();
 extern u8 D_0026EFD0[];
 extern u8 D_0026EFF0[];
 
@@ -195,7 +195,7 @@ void func_001DC6D0(void) {
     reg_d3.h[0] = 0x1040;
     reg_d4.h[0] = *(u16 *)(reg_a6 + 0x9C);
     reg_d4.b[0] = *(u8 *)(reg_a6 + 0x14D);
-    func_0019C4B0();
+    sprite_draw_layer2();
     reg_a0 = (u8 *)D_0026EFF0;
     reg_a0 += *(u16 *)(reg_a6 + 0x88);
     reg_d2.h[1] = *(u16 *)reg_a0;
@@ -208,7 +208,7 @@ void func_001DC6D0(void) {
     reg_d3.h[0] = 0x620;
     reg_d4.h[0] = *(u16 *)(reg_a6 + 0x9C);
     reg_d4.b[0] = *(u8 *)(reg_a6 + 0x14D);
-    func_0019C4B0();
+    sprite_draw_layer2();
 }
 
 extern u8 D_0026F020[];
@@ -228,7 +228,7 @@ void func_001DC7E0(void) {
     reg_d3.h[0] = 0x1040;
     reg_d4.h[0] = *(u16 *)(reg_a6 + 0xBC);
     reg_d4.b[0] = *(u8 *)(reg_a6 + 0x14C);
-    func_0019C4B0();
+    sprite_draw_layer2();
     reg_a0 = (u8 *)D_0026EFF0;
     reg_a0 += *(u16 *)(reg_a6 + 0xA8);
     reg_d2.h[1] = *(u16 *)reg_a0;
@@ -241,10 +241,10 @@ void func_001DC7E0(void) {
     reg_d3.h[0] = 0x620;
     reg_d4.h[0] = *(u16 *)(reg_a6 + 0xBC);
     reg_d4.b[0] = *(u8 *)(reg_a6 + 0x14D);
-    func_0019C4B0();
+    sprite_draw_layer2();
 }
 
-extern void func_0019C570(void);
+extern void sprite_draw_layer5(void);
 extern u32 D_0026F040[];
 
 void func_001DC8F0(void) {
@@ -261,7 +261,7 @@ void func_001DC8F0(void) {
     reg_d1.w += 0xD800E800U;
     reg_d3.h[0] = 0x28C0;
     reg_d4.w = 0x15;
-    func_0019C570();
+    sprite_draw_layer5();
 }
 
 extern u8 D_0026F080[];
@@ -280,5 +280,5 @@ void func_001DC960(void) {
     reg_d1.w += 0xDC00EE00U;
     reg_d3.h[0] = 0x2490;
     reg_d4.w = 0x15;
-    func_0019C570();
+    sprite_draw_layer5();
 }

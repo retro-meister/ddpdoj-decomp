@@ -138,7 +138,7 @@ void func_00172250(void) {
     D_0028E784_as_u16 = 0xFFFF;
 }
 
-s32 func_0019C470();
+s32 sprite_draw_layer1();
 s32 func_0019D710();
 extern u8 D_0026B280[];
 
@@ -159,6 +159,6 @@ void func_00172260(void) {
             func_0019D710();
             return;
         }
-        func_0019C470();
+        sprite_draw_layer1();
     }
 }

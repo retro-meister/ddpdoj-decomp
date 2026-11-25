@@ -244,7 +244,7 @@ void func_0016CCE0(void) {
 s32 func_00137C10();                            /* extern */
 s32 func_0016A8E0();                            /* extern */
 s32 func_0016A9B0();                            /* extern */
-s32 func_0019BE80();                            /* extern */
+s32 entity_draw();                            /* extern */
 s32 func_00203670();                            /* extern */
 
 void func_0016CD40(void) {
@@ -266,5 +266,5 @@ void func_0016CD40(void) {
             }
         }
     }
-    func_0019BE80();
+    entity_draw();
 }

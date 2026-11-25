@@ -55,7 +55,7 @@ void func_001DE200(void) {
 s32 enemy_hitbox_debug_draw();
 s32 enemy_remove();
 s32 func_0014EA50();
-s32 func_0019BF00();
+s32 entity_draw_layer2();
 s32 func_001A9000();
 extern u16 g_enemies_stopped;
 extern u16 D_0029C06C[];
@@ -111,10 +111,10 @@ block_5:
                 }
             }
         }
-        func_0019BF00();
+        entity_draw_layer2();
         if ((s32) *(u16 *)(reg_a5 + 0x18) < 0x2680) {
             reg_a6 += 0x20;
-            func_0019BF00();
+            entity_draw_layer2();
         }
     }
 }
@@ -195,7 +195,7 @@ s32 func_0011B220();
 s32 bullet_fire256_2way();
 s32 explosion_spawn();
 s32 func_0018D580();
-s32 func_0019BF40();
+s32 entity_draw_layer3();
 s32 func_001A91A0();
 extern u16 D_0028E8B8;
 
@@ -322,7 +322,7 @@ next_240:
 block_objset:
     reg_a0 = reg_a6;
     enemy_hitbox_debug_draw();
-    func_0019BF40();
+    entity_draw_layer3();
     reg_d7.w = 4;
     reg_d6.w = 0;
     reg_a0 = (u8 *)func_0011B220;
@@ -352,7 +352,7 @@ block_explos:
     enemy_remove();
     goto block_rts;
 next_exp10:
-    func_0019BF40();
+    entity_draw_layer3();
     goto block_rts;
 block_dead:
     reg_d0.w = 0x133;
@@ -669,8 +669,8 @@ s32 enemy_switch_target_player();
 s32 func_0018D500();
 s32 func_0018D520();
 s32 func_0018D5C0();
-s32 func_0019BF80();
-s32 func_0019C530();
+s32 entity_draw_layer4();
+s32 sprite_draw_layer4();
 s32 func_00201270();
 s32 func_002012F0();
 s32 func_00201800();
@@ -1011,7 +1011,7 @@ block_e:
     reg_a0 = reg_a6 + 0x40;
     enemy_hitbox_debug_draw();
     func_001E4410();
-    func_0019BF80();
+    entity_draw_layer4();
     if (ENTITY(reg_a6)->flags.sb[0] < 0) goto block_rts;
     if (*(u16 *)(reg_a5 + 0x18) != 2) goto block_rts;
     reg_d2.h[0] = *(u16 *)(reg_a5 + 0x22);
@@ -1025,7 +1025,7 @@ block_e:
     reg_d1.h[0] += 0xF200;
     reg_d3.h[0] = 0x2470;
     reg_d4.h[0] = 0x11;
-    func_0019C530();
+    sprite_draw_layer4();
 block_rts:
     return;
 block_c:
@@ -1384,7 +1384,7 @@ block_9:
     if (*(s16 *)(reg_a5 + 0x1A) < 0) {
         goto block_9b;
     }
-    func_0019BF40();
+    entity_draw_layer3();
     return;
 block_9b:
     func_0019D620();
@@ -1456,8 +1456,8 @@ s32 func_0018DB70();
 s32 func_0018DBC0();
 s32 func_0018DDA0();
 s32 func_0018DDB0();
-s32 func_0019BEC0();
-s32 func_0019C470();
+s32 entity_draw_layer1();
+s32 sprite_draw_layer1();
 s32 func_00201710();
 
 void func_001E1390(void) {
@@ -1611,10 +1611,10 @@ next_16:
     if (*(u16 *)(reg_a5 + 0x24) != reg_d0.h[0]) goto next_17;
     *(u16 *)(reg_a5 + 0x24) = (u16) *(u16 *)(reg_a5 + 0x28);
 next_17:
-    func_0019BEC0();
+    entity_draw_layer1();
     if (!((s16) *(u16 *)(reg_a6 + 0x22) > -0x800)) goto next_18;
     reg_a6 += 0x20;
-    func_0019BEC0();
+    entity_draw_layer1();
     reg_tmp.h[1] = *(u16 *)(reg_a5 + 6);
     reg_tmp.h[0] = *(u16 *)(reg_a5 + 8);
     reg_a6 = (u8 *) reg_tmp.w;
@@ -1639,7 +1639,7 @@ next_19:
     reg_d3.h[0] = 0x1860;
     reg_d4.h[0] = 0x14;
     reg_d1.h[1] += 0xB800;
-    func_0019C470();
+    sprite_draw_layer1();
     goto block_rts;
 block_b:
     *(u16 *)(reg_a5 + 0x3A) = (u16) reg_d1.h[0];
@@ -1658,7 +1658,7 @@ block_b:
     func_0013B920();
     *(u16 *)(reg_a5 + 0x34) = (u16) reg_d0.h[1];
     *(u16 *)(reg_a5 + 0x36) = (u16) reg_d0.h[0];
-    func_0019BEC0();
+    entity_draw_layer1();
     goto block_rts;
 block_c:
     if (*(u16 *)(reg_a5 + 0x2C) != 0) goto next_22;
@@ -1741,7 +1741,7 @@ next_25:
     reg_d0.h[0] += reg_d1.h[0];
     *(u16 *)(reg_a0 + 0x28) = (u16) reg_d0.h[0];
 next_26:
-    func_0019BEC0();
+    entity_draw_layer1();
 block_rts:
     return;
 }
@@ -1931,7 +1931,7 @@ block_5:
                 *(u16 *)(reg_a5 + 0x1A) = 0x3CU;
             }
         }
-        func_0019BF00();
+        entity_draw_layer2();
     }
 }
 
@@ -2166,7 +2166,7 @@ block_45:
                     }
                 }
 block_objset:
-                func_0019BF40();
+                entity_draw_layer3();
                 reg_a0 = reg_a6;
                 enemy_hitbox_debug_draw();
                 return;
@@ -2479,11 +2479,11 @@ next_m100:
     if ((s16) reg_d0.h[0] <= 0x1400) goto block_objset;
     *(u16 *)(reg_a5 + 0x2A) = 0xFF80;
 block_objset:
-    func_0019BF40();
+    entity_draw_layer3();
     reg_d0.h[0] = *(u16 *)(reg_a5 + 0x2C);
     *(u16 *)(reg_a6 + 0x24) += reg_d0.h[0];
     reg_a6 += 0x20;
-    func_0019BF40();
+    entity_draw_layer3();
     reg_a0 = (u8 *)(reg_a6);
     enemy_hitbox_debug_draw();
     goto block_rts;
@@ -2792,10 +2792,10 @@ void func_001E4160(u8 *arg0, u8 *arg1) {
     enemy_remove();
     return;
 next_100:
-    func_0019BF80();
+    entity_draw_layer4();
     return;
 next_200:
-    func_0019BF80();
+    entity_draw_layer4();
     reg_d1.h[1] = *(u16 *)(reg_a5 + 0x1C);
     reg_d1.h[0] = *(u16 *)(reg_a5 + 0x1E);
     reg_tmp.h[1] = ENTITY(reg_a6)->offset_y.h;
@@ -2805,17 +2805,17 @@ next_200:
     reg_d2.h[0] = ENTITY(reg_a6)->sprite.h;
     reg_d3.h[0] = ENTITY(reg_a6)->look.h;
     reg_d4.h[0] = *(u16 *)(reg_a6 + 0x1C);
-    func_0019C530();
+    sprite_draw_layer4();
 }
 
-s32 func_0019BF80();                            /* extern */
+s32 entity_draw_layer4();                            /* extern */
 extern u32 reg_a6_as_u32;
 
 void func_001E4410(void) {
     reg_a6_as_u32 += 0x20;
-    func_0019BF80();
+    entity_draw_layer4();
     reg_a6_as_u32 += 0x20;
-    func_0019BF80();
+    entity_draw_layer4();
     reg_tmp.h[1] = *(u16 *)(reg_a5 + 6);
     reg_tmp.h[0] = *(u16 *)(reg_a5 + 8);
     reg_a6_as_u32 = reg_tmp.w;

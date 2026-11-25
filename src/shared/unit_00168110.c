@@ -73,8 +73,8 @@ s32 explosion_spawn();
 s32 enemy_hitbox_debug_draw();
 s32 func_0014EA50();
 s32 func_0018D540();
-s32 func_0019BFC0();
-s32 func_0019C530();
+s32 entity_draw_layer5();
+s32 sprite_draw_layer4();
 s32 func_001A9000();
 s32 func_001A91A0();
 s32 direction_between();
@@ -231,7 +231,7 @@ next_3:
                     }
                 }
             }
-            func_0019BFC0();
+            entity_draw_layer5();
             reg_a0 = (u8 *)(reg_a6);
             enemy_hitbox_debug_draw();
             switch (D_0028E3EC) {
@@ -254,7 +254,7 @@ next_3:
                 reg_d3.h[0] = 0x410;
                 reg_d4.h[0] = *(u16 *)(reg_a6 + 0x1C);
                 reg_d4.b[0] = 0x18;
-                func_0019C530();
+                sprite_draw_layer4();
             }
         } else {
             reg_d0.w = 0x11;

@@ -7,7 +7,7 @@ s32 entity_follow_scroll();
 extern u8 D_0028E290;
 extern u8 D_0028E2C8;
 extern u8 D_0028ED80;
-extern void func_0019C4B0();
+extern void sprite_draw_layer2();
 
 void func_0011F3E0(void) {
     if (((D_0028ED80 != 0) && (D_0028E2C8 != 0)) || (D_0028E290 == 2)) {
@@ -20,7 +20,7 @@ void func_0011F3E0(void) {
         return;
     }
     entity_follow_scroll();
-    func_00171330((void *)func_0019C4B0);
+    func_00171330((void *)sprite_draw_layer2);
 }
 
 void enemy_set_entity_count(s32 arg0);

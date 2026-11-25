@@ -14,7 +14,7 @@ s32 entity_follow_scroll();
 extern u8 D_0028E290;
 extern u8 D_0028E2C8;
 extern u8 D_0028ED80;
-extern void func_0019C4F0();
+extern void sprite_draw_layer3();
 
 void func_0011D510(void) {
     if (((D_0028ED80 != 0) && (D_0028E2C8 != 0)) || (D_0028E290 == 2)) {
@@ -27,7 +27,7 @@ void func_0011D510(void) {
         return;
     }
     entity_follow_scroll();
-    func_00171330((void *)func_0019C4F0);
+    func_00171330((void *)sprite_draw_layer3);
 }
 
 
@@ -53,7 +53,7 @@ void func_0011D600(void) {
         return;
     }
     entity_follow_scroll();
-    func_00171330((void *)func_0019C4F0);
+    func_00171330((void *)sprite_draw_layer3);
 }
 
 
@@ -68,7 +68,7 @@ void func_0011D690(void) {
     *(s8 *)(reg_a6 + 0xC) = 0x11;
 }
 
-extern void func_0019C4B0();
+extern void sprite_draw_layer2();
 
 void func_0011D6F0(void) {
     if (((D_0028ED80 != 0) && (D_0028E2C8 != 0)) || (D_0028E290 == 2)) {
@@ -81,7 +81,7 @@ void func_0011D6F0(void) {
         return;
     }
     entity_follow_scroll();
-    func_00171330((void *)func_0019C4B0);
+    func_00171330((void *)sprite_draw_layer2);
 }
 
 
@@ -103,7 +103,7 @@ void func_0011D7E0(void) {
         return;
     }
     entity_follow_scroll();
-    func_00171330((void *)func_0019C4F0);
+    func_00171330((void *)sprite_draw_layer3);
 }
 
 void func_0011D840(void) {
@@ -136,7 +136,7 @@ void func_0011D900(void) {
         return;
     }
     entity_follow_scroll();
-    func_00171330((void *)func_0019C4F0);
+    func_00171330((void *)sprite_draw_layer3);
 }
 
 void func_0011D960(void) {
@@ -173,7 +173,7 @@ void func_0011DA20(void) {
         return;
     }
     entity_follow_scroll();
-    func_00171330((void *)func_0019C4F0);
+    func_00171330((void *)sprite_draw_layer3);
 }
 
 
@@ -192,8 +192,8 @@ void func_0011DAB0(void) {
     ENTITY(reg_a6)->hp.sb[0] = 2;
 }
 
-s32 func_0019C530();
-s32 func_0019C730();
+s32 sprite_draw_layer4();
+s32 sprite_draw_layer4_keep();
 extern u16 D_002524E0[];
 extern u8 D_0028E2C0;
 extern u16 g_scroll_line;
@@ -228,7 +228,7 @@ void func_0011DB40(void) {
         }
     }
     if (((s32) g_scroll_line < 0x21A) && ((reg_d1.h[1] = ENTITY(reg_a6)->y.h, reg_d1.h[0] = ENTITY(reg_a6)->x.h, temp_a3 = reg_d1.w, reg_d1.w = temp_a3 + 0xFE00DC00, reg_d2.h[1] = ENTITY(reg_a6)->hit_y_plus.h, temp_a2 = ENTITY(reg_a6)->hit_y_minus.h, reg_d2.h[0] = temp_a2, reg_d3.h[0] = 0x2720, reg_d4.h[0] = 0x15, (D_0028ED80 == 0)) || (D_0028E2C8 == 0) || (D_0028E2C0 == 0)) && ((D_0028E290 != 2) || (D_0028E2C0 == 0))) {
-        func_0019C730();
+        sprite_draw_layer4_keep();
     }
     reg_d1.h[0] = ENTITY(reg_a6)->y.h;
     reg_d1.h[0] += 0x4C00;
@@ -243,6 +243,6 @@ void func_0011DB40(void) {
     reg_d3.h[0] = 0x2320;
     reg_d4.h[0] = 0x15;
     if (((D_0028ED80 == 0) || (D_0028E2C8 == 0) || (D_0028E2C0 == 0)) && ((D_0028E290 != 2) || (D_0028E2C0 == 0))) {
-        func_0019C530();
+        sprite_draw_layer4();
     }
 }

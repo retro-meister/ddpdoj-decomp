@@ -742,14 +742,14 @@ block_25:
 }
 
 extern s32 reg_a1_as_s32;
-extern void func_0019C470(void);
+extern void sprite_draw_layer1(void);
 
 void func_00132210(void)
 {
     reg_d2.h[0] = (s16)reg_d7.h[0] & 0xF;
     reg_d2.w = ((u32 *)reg_a1_as_s32)[reg_d2.h[0]];
     reg_d1.h[0] -= 0x200;
-    func_0019C470();
+    sprite_draw_layer1();
 }
 
 extern u16 D_00269AB0[];

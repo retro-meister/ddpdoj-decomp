@@ -43,7 +43,7 @@ void func_001E76A0(void) {
 }
 
 s32 func_0016A8B0();
-s32 func_0019C5B0();
+s32 sprite_draw_keep();
 s32 func_002093F0();
 extern u32 D_00264050[];
 void func_001E7770(void) {
@@ -61,11 +61,11 @@ void func_001E7770(void) {
     do {
         reg_d1.w = reg_d6.w;
         reg_d2.w = *var_s0;
-        func_0019C5B0();
+        sprite_draw_keep();
         reg_d1.w += 0xFE000000;
-        func_0019C5B0();
+        sprite_draw_keep();
         reg_d1.w += 0xFE000000;
-        func_0019C5B0();
+        sprite_draw_keep();
         var_s0 += 1;
         reg_d6.h[0] += 0x200;
     } while ((s16)(--reg_d7.h[0]) >= 0);
@@ -77,11 +77,11 @@ void func_001E7770(void) {
     do {
         reg_d1.w = reg_d6.w;
         reg_d2.w = *var_s0_2;
-        func_0019C5B0();
+        sprite_draw_keep();
         reg_d1.w += 0xFE000000;
-        func_0019C5B0();
+        sprite_draw_keep();
         reg_d1.w += 0xFE000000;
-        func_0019C5B0();
+        sprite_draw_keep();
         var_s0_2 += 1;
         reg_d6.h[0] += 0x200;
     } while ((s16)(--reg_d7.h[0]) >= 0);
@@ -93,11 +93,11 @@ void func_001E7770(void) {
     do {
         reg_d1.w = reg_d6.w;
         reg_d2.w = *var_s0_3;
-        func_0019C5B0();
+        sprite_draw_keep();
         reg_d1.w += 0xFE000000;
-        func_0019C5B0();
+        sprite_draw_keep();
         reg_d1.w += 0xFE000000;
-        func_0019C5B0();
+        sprite_draw_keep();
         var_s0_3 += 1;
         reg_d6.h[0] += 0x200;
     } while ((s16)(--reg_d7.h[0]) >= 0);
@@ -109,11 +109,11 @@ void func_001E7770(void) {
     do {
         reg_d1.w = reg_d6.w;
         reg_d2.w = *var_s0_4;
-        func_0019C5B0();
+        sprite_draw_keep();
         reg_d1.w += 0xFE000000;
-        func_0019C5B0();
+        sprite_draw_keep();
         reg_d1.w += 0xFE000000;
-        func_0019C5B0();
+        sprite_draw_keep();
         var_s0_4 += 1;
         reg_d6.h[0] += 0x200;
     } while ((s16)(--reg_d7.h[0]) >= 0);

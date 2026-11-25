@@ -129,7 +129,7 @@ extern u8 D_0028E290;
 extern u8 D_0028E2C8;
 extern u16 g_enemy_signal_1;
 extern u8 D_0028ED80;
-extern void func_0019C4F0();
+extern void sprite_draw_layer3();
 
 void func_0011CA20(void) {
     if (((D_0028ED80 != 0) && (D_0028E2C8 != 0)) || (D_0028E290 == 2)) {
@@ -141,7 +141,7 @@ void func_0011CA20(void) {
         return;
     }
     entity_follow_scroll();
-    func_00171330((void *)func_0019C4F0);
+    func_00171330((void *)sprite_draw_layer3);
 }
 
 
@@ -167,7 +167,7 @@ void func_0011CB20(void) {
         return;
     }
     entity_follow_scroll();
-    func_00171330((void *)func_0019C4F0);
+    func_00171330((void *)sprite_draw_layer3);
 }
 
 
@@ -193,7 +193,7 @@ void func_0011CC10(void) {
         return;
     }
     entity_follow_scroll();
-    func_00171330((void *)func_0019C4F0);
+    func_00171330((void *)sprite_draw_layer3);
 }
 
 
@@ -219,7 +219,7 @@ void func_0011CD00(void) {
         return;
     }
     entity_follow_scroll();
-    func_00171330((void *)func_0019C4F0);
+    func_00171330((void *)sprite_draw_layer3);
 }
 
 
@@ -245,7 +245,7 @@ void func_0011CDF0(void) {
         return;
     }
     entity_follow_scroll();
-    func_00171330((void *)func_0019C4F0);
+    func_00171330((void *)sprite_draw_layer3);
 }
 
 
@@ -271,7 +271,7 @@ void func_0011CEE0(void) {
         return;
     }
     entity_follow_scroll();
-    func_00171330((void *)func_0019C4F0);
+    func_00171330((void *)sprite_draw_layer3);
 }
 
 
@@ -297,7 +297,7 @@ void func_0011CFD0(void) {
         return;
     }
     entity_follow_scroll();
-    func_00171330((void *)func_0019C4F0);
+    func_00171330((void *)sprite_draw_layer3);
 }
 
 
@@ -323,7 +323,7 @@ void func_0011D0C0(void) {
         return;
     }
     entity_follow_scroll();
-    func_00171330((void *)func_0019C4F0);
+    func_00171330((void *)sprite_draw_layer3);
 }
 
 
@@ -349,7 +349,7 @@ void func_0011D1B0(void) {
         return;
     }
     entity_follow_scroll();
-    func_00171330((void *)func_0019C4F0);
+    func_00171330((void *)sprite_draw_layer3);
 }
 
 
@@ -375,7 +375,7 @@ void func_0011D2A0(void) {
         return;
     }
     entity_follow_scroll();
-    func_00171330((void *)func_0019C4F0);
+    func_00171330((void *)sprite_draw_layer3);
 }
 
 
@@ -397,7 +397,7 @@ void func_0011D390(void) {
         return;
     }
     entity_follow_scroll();
-    func_00171330((void *)func_0019C4F0);
+    func_00171330((void *)sprite_draw_layer3);
 }
 
 
@@ -419,7 +419,7 @@ void func_0011D450(void) {
         return;
     }
     entity_follow_scroll();
-    func_00171330((void *)func_0019C4F0);
+    func_00171330((void *)sprite_draw_layer3);
 }
 
 extern void func_0011D510(void);

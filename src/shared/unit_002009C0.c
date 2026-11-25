@@ -36,7 +36,7 @@ void func_00200A10(void)
 }
 
 #ifndef DEATH_LABEL
-s32 func_0019C5B0();
+s32 sprite_draw_keep();
 extern u8 D_0024E2E0[];
 extern u8 D_0024E440[];
 extern u8 D_0024E5C0[];
@@ -108,7 +108,7 @@ loop_7:
     reg_d6.h[0] += reg_d6.h[0];
     reg_d6.h[0] += reg_d6.h[0];
     reg_d2.w = *(u32 *)(reg_a2 + reg_d6.h[0]);
-    func_0019C5B0();
+    sprite_draw_keep();
     if (ENTITY(reg_a6)->offset_y.h != 0) goto next_8;
     reg_d1.h[0] += 0x400;
     goto loop_7;

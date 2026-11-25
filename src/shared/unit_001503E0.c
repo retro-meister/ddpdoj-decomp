@@ -26,7 +26,7 @@ void func_001503F0(void) {
 
 s32 func_00137C10();                            /* extern */
 s32 func_0016A8E0();                            /* extern */
-s32 func_0019BE80();                            /* extern */
+s32 entity_draw();                            /* extern */
 s32 func_001B82F0();                            /* extern */
 s32 func_00203670();                            /* extern */
 
@@ -52,5 +52,5 @@ void func_00150450(void) {
             }
         }
     }
-    func_0019BE80();
+    entity_draw();
 }

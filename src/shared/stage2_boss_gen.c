@@ -46,7 +46,7 @@ s32 enemy_remove();
 s32 func_0014EA50();
 s32 func_00170D00();
 s32 func_0018D580();
-s32 func_0019BEC0();
+s32 entity_draw_layer1();
 s32 func_001A9000();
 s32 func_001A91A0();
 s32 func_00201270();
@@ -132,7 +132,7 @@ next_50:
 next_90:
     *(u8 *)(reg_a6 + 0x1C) = (u8) reg_d0.b[0];
 block_objset:
-    func_0019BEC0();
+    entity_draw_layer1();
     reg_a0 = reg_a6;
     enemy_hitbox_debug_draw();
     return;
@@ -1276,8 +1276,8 @@ void func_001C7AA0(void)
     }
 }
 
-s32 func_0019BF80();
-s32 func_0019C530();
+s32 entity_draw_layer4();
+s32 sprite_draw_layer4();
 extern u16 D_00262F00[];
 extern u16 g_scroll_line;
 
@@ -1310,7 +1310,7 @@ void func_001C7AF0(void) {
             }
         }
         if ((s32) g_scroll_line < 0x21A) {
-            func_0019BF80();
+            entity_draw_layer4();
         }
         reg_d1.h[0] = ENTITY(reg_a6)->y.h;
         reg_d1.h[0] += 0x4C00;
@@ -1324,6 +1324,6 @@ void func_001C7AF0(void) {
         reg_d2.h[0] = *(u16 *)(reg_a5 + 0x20);
         reg_d3.h[0] = 0x2320;
         reg_d4.h[0] = *(u16 *)(reg_a6 + 0x1C);
-        func_0019C530();
+        sprite_draw_layer4();
     }
 }

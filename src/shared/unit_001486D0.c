@@ -1263,7 +1263,7 @@ void func_0014BF90() {
 
 s32 func_00133070();
 s32 func_0018D410();
-s32 func_0019C470();
+s32 sprite_draw_layer1();
 s32 rng_next_masked();
 s32 func_0022B660();
 s32 func_002376F0();
@@ -1358,7 +1358,7 @@ next_8:
     reg_d2.h[0] = *(u16 *)(reg_a5 + 0xE);
     reg_d3.h[0] = 0x1AE0;
     reg_d4.h[0] = 2;
-    func_0019C470();
+    sprite_draw_layer1();
 }
 
 extern u16 D_00252740[];

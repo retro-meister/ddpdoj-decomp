@@ -197,7 +197,7 @@ s32 bullet_fire256_2way();
 s32 explosion_spawn();
 s32 enemy_hitbox_debug_draw();
 s32 func_0018D4E0();
-s32 func_0019C4F0();
+s32 sprite_draw_layer3();
 s32 func_0019D6A0();
 s32 func_001A9000();
 s32 func_001A91A0();
@@ -655,7 +655,7 @@ next_700:
     reg_d1.h[0] = ENTITY(reg_a6)->x.h;
     reg_d1.w += 0xFA00FC00;
     if (*(u8 *)(reg_a6 + 0x70) == 1) goto next_710;
-    func_0019C4F0();
+    sprite_draw_layer3();
     return;
 next_710:
     func_0019D6A0();

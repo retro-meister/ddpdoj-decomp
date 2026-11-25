@@ -30,18 +30,18 @@ extern s16 D_0028E180_as_s16;
 extern s16 D_0028E184_as_s16;
 extern s16 D_0028E188_as_s16;
 extern s16 D_0028E18C_as_s16;
-extern s16 D_0028E190_as_s16;
-extern s16 D_0028E194_as_s16;
-extern s16 D_0028E198_as_s16;
-extern s16 D_0028E19C_as_s16;
-extern s16 D_0028E1A0_as_s16;
+extern s16 g_sprite_layer5_used_as_s16;
+extern s16 g_sprite_layer4_used_as_s16;
+extern s16 g_sprite_layer3_used_as_s16;
+extern s16 g_sprite_layer2_used_as_s16;
+extern s16 g_sprite_layer1_used_as_s16;
 
 void func_0019AA90(void) {
-    D_0028E1A0_as_s16 = 0;
-    D_0028E19C_as_s16 = 0;
-    D_0028E198_as_s16 = 0;
-    D_0028E194_as_s16 = 0;
-    D_0028E190_as_s16 = 0;
+    g_sprite_layer1_used_as_s16 = 0;
+    g_sprite_layer2_used_as_s16 = 0;
+    g_sprite_layer3_used_as_s16 = 0;
+    g_sprite_layer4_used_as_s16 = 0;
+    g_sprite_layer5_used_as_s16 = 0;
     D_0028E18C_as_s16 = 0;
     D_0028E188_as_s16 = 0;
     D_0028E184_as_s16 = 0;
@@ -105,11 +105,11 @@ extern u16 D_0028E180;
 extern u16 D_0028E184;
 extern u16 D_0028E188;
 extern u16 D_0028E18C;
-extern u16 D_0028E190;
-extern u16 D_0028E194;
-extern u16 D_0028E198;
-extern u16 D_0028E19C;
-extern u16 D_0028E1A0;
+extern u16 g_sprite_layer5_used;
+extern u16 g_sprite_layer4_used;
+extern u16 g_sprite_layer3_used;
+extern u16 g_sprite_layer2_used;
+extern u16 g_sprite_layer1_used;
 extern u8 D_0028E308;
 extern u8 D_0028E30C;
 extern u8 D_002A3C80[];
@@ -138,11 +138,11 @@ extern u8 D_002A6680[];
 extern u8 D_002A67B0[];
 extern u8 D_002A68E0[];
 extern u8 D_002A6C30[];
-extern u8 D_002A9AE0[];
-extern u8 D_002AB240[];
-extern u8 D_002AC9A0[];
-extern u8 D_002AE100[];
-extern u16 D_002AF860_as_u16_a[];
+extern u8 g_sprite_layer5_buf[];
+extern u8 g_sprite_layer4_buf[];
+extern u8 g_sprite_layer3_buf[];
+extern u8 g_sprite_layer2_buf[];
+extern u16 g_sprite_layer1_buf_as_u16_a[];
 extern u8 g_arcade_sprites[];
 
 void func_0019AB20(void) {
@@ -150,12 +150,12 @@ void func_0019AB20(void) {
     u8 bits;
 
     func_00206D30();
-    reg_d0.h[0] = D_0028E1A0;
-    reg_d0.h[0] += D_0028E19C;
-    reg_d0.h[0] += D_0028E198;
-    reg_d0.h[0] += D_0028E194;
+    reg_d0.h[0] = g_sprite_layer1_used;
+    reg_d0.h[0] += g_sprite_layer2_used;
+    reg_d0.h[0] += g_sprite_layer3_used;
+    reg_d0.h[0] += g_sprite_layer4_used;
     reg_d0.h[0] += D_0028E178;
-    reg_d0.h[0] += D_0028E190;
+    reg_d0.h[0] += g_sprite_layer5_used;
     reg_d0.h[0] += D_0028E174;
     reg_d0.h[0] += D_0028E17C;
     reg_d0.h[0] += D_0028E188;
@@ -204,16 +204,16 @@ void func_0019AB20(void) {
             D_0028E174 = 0;
         }
     }
-    reg_a0 = (u8 *)D_002AE100;
-    reg_a1 = (u8 *)(&D_0028E19C);
+    reg_a0 = (u8 *)g_sprite_layer2_buf;
+    reg_a1 = (u8 *)(&g_sprite_layer2_used);
     func_0019B510();
     if (cond_flag != 0) goto next_50;
-    reg_a0 = (u8 *)D_002AC9A0;
-    reg_a1 = (u8 *)(&D_0028E198);
+    reg_a0 = (u8 *)g_sprite_layer3_buf;
+    reg_a1 = (u8 *)(&g_sprite_layer3_used);
     func_0019B510();
     if (cond_flag != 0) goto next_50;
-    reg_a0 = (u8 *)D_002AB240;
-    reg_a1 = (u8 *)(&D_0028E194);
+    reg_a0 = (u8 *)g_sprite_layer4_buf;
+    reg_a1 = (u8 *)(&g_sprite_layer4_used);
     func_0019B510();
     if (cond_flag != 0) goto next_50;
     reg_a0 = (u8 *)D_002A67B0;
@@ -228,8 +228,8 @@ void func_0019AB20(void) {
     reg_a1 = (u8 *)(&D_0028E178);
     func_0019B510();
     if (cond_flag != 0) goto next_50;
-    reg_a0 = (u8 *)D_002A9AE0;
-    reg_a1 = (u8 *)(&D_0028E190);
+    reg_a0 = (u8 *)g_sprite_layer5_buf;
+    reg_a1 = (u8 *)(&g_sprite_layer5_used);
     func_0019B510();
     if (cond_flag != 0) goto next_50;
     reg_a0 = (u8 *)D_002A68E0;
@@ -334,7 +334,7 @@ next_40:
     reg_a1 = (u8 *)(&D_0028E130);
     func_0019B510();
 next_50:
-    count = D_0028E1A0;
+    count = g_sprite_layer1_used;
     reg_a0 = (u8 *)g_arcade_sprites;
     reg_d7.h[0] = D_0028E124;
     reg_d1.h[0] = 0xA;
@@ -343,7 +343,7 @@ next_50:
     reg_d3.h[0] = count;
     reg_d7.h[0] -= count;
     if (reg_d0.h[0] != 0) {
-        reg_a1 = (u8 *)(D_002AF860_as_u16_a);
+        reg_a1 = (u8 *)(g_sprite_layer1_buf_as_u16_a);
         if (reg_d0.h[0] > MAIN_OR_DEATH_LABEL(0x1758, 0x36C0)) {
             reg_d0.h[0] = MAIN_OR_DEATH_LABEL(0x1758, 0x36C0);
         }
@@ -394,7 +394,7 @@ next_50:
             reg_d2.h[0] += 0xC;
             reg_d0.h[0] -= 0xC;
         } while (reg_d0.h[0] != 0);
-        D_0028E1A0 = reg_d0.h[0];
+        g_sprite_layer1_used = reg_d0.h[0];
         if (reg_d1.h[0] != MAIN_OR_DEATH_LABEL(0x1758, 0x36C0)) {
             goto block_51;
         }
@@ -411,11 +411,11 @@ block_51:
         *(u16 *)reg_a0 = 0U;
         reg_a0 += 2;
     }
-    D_0028E1A0 = 0;
-    D_0028E19C = 0;
-    D_0028E198 = 0;
-    D_0028E194 = 0;
-    D_0028E190 = 0;
+    g_sprite_layer1_used = 0;
+    g_sprite_layer2_used = 0;
+    g_sprite_layer3_used = 0;
+    g_sprite_layer4_used = 0;
+    g_sprite_layer5_used = 0;
     D_0028E188 = 0;
     D_0028E184 = 0;
     D_0028E180 = 0;
@@ -453,8 +453,8 @@ void func_0019B510(void) {
     case 0:
         goto block_rts;
     default:
-        reg_a2 = (u8 *)D_002AF860_as_u16_a;
-        reg_a2 += D_0028E1A0;
+        reg_a2 = (u8 *)g_sprite_layer1_buf_as_u16_a;
+        reg_a2 += g_sprite_layer1_used;
 loop_1:
         *(u16 *)reg_a2 = *(u16 *)reg_a0;
         reg_a0 += 2;
@@ -480,8 +480,8 @@ loop_1:
         *(u16 *)reg_a2 = *(u16 *)reg_a0;
         reg_a0 += 2;
         reg_a2 += 2;
-        D_0028E1A0 += 0xC;
-        if (D_0028E1A0 != MAIN_OR_DEATH_LABEL(0x1758, 0x36C0)) {
+        g_sprite_layer1_used += 0xC;
+        if (g_sprite_layer1_used != MAIN_OR_DEATH_LABEL(0x1758, 0x36C0)) {
             reg_d0.h[0] -= 0xC;
             if (reg_d0.h[0] != 0) goto loop_1;
             *(u16 *)reg_a1 = reg_d0.h[0];
@@ -496,7 +496,7 @@ block_rts:
 }
 
 
-void func_0019B6E0(void) {
+void sprite_entry_from_entity(void) {
     u32 temp_a3;
     u32 temp_t0;
 
@@ -605,7 +605,7 @@ void func_0019B9B0(void) {
 
 extern u16 *reg_a0_as_u16_p;
 
-void func_0019BB40(void) {
+void sprite_entry_from_regs(void) {
     reg_d0.w = reg_d1.w;
     reg_d0.w = (u32) ((s32) reg_d0.w >> 6);
     reg_d0.w &= 0x07FF03FF;
@@ -689,53 +689,53 @@ void func_0019BD40(void) {
     reg_a0 += 2;
 }
 
-extern u8 D_002AF860[];
+extern u8 g_sprite_layer1_buf[];
 
-void func_0019BE80(void) {
-    reg_a0 = D_002AF860;
-    reg_a0 += D_0028E1A0;
-    func_0019B6E0();
-    D_0028E1A0 += 0xC;
+void entity_draw(void) {
+    reg_a0 = g_sprite_layer1_buf;
+    reg_a0 += g_sprite_layer1_used;
+    sprite_entry_from_entity();
+    g_sprite_layer1_used += 0xC;
 }
 
-void func_0019BEC0(void) {
-    reg_a0 = D_002AF860;
-    reg_a0 += D_0028E1A0;
-    func_0019B6E0();
-    D_0028E1A0 += 0xC;
+void entity_draw_layer1(void) {
+    reg_a0 = g_sprite_layer1_buf;
+    reg_a0 += g_sprite_layer1_used;
+    sprite_entry_from_entity();
+    g_sprite_layer1_used += 0xC;
 }
 
-void func_0019BF00(void) {
-    reg_a0 = D_002AE100;
-    reg_a0 += D_0028E19C;
-    func_0019B6E0();
-    D_0028E19C += 0xC;
+void entity_draw_layer2(void) {
+    reg_a0 = g_sprite_layer2_buf;
+    reg_a0 += g_sprite_layer2_used;
+    sprite_entry_from_entity();
+    g_sprite_layer2_used += 0xC;
 }
 
-void func_0019BF40(void) {
-    reg_a0 = D_002AC9A0;
-    reg_a0 += D_0028E198;
-    func_0019B6E0();
-    D_0028E198 += 0xC;
+void entity_draw_layer3(void) {
+    reg_a0 = g_sprite_layer3_buf;
+    reg_a0 += g_sprite_layer3_used;
+    sprite_entry_from_entity();
+    g_sprite_layer3_used += 0xC;
 }
 
-void func_0019BF80(void) {
-    reg_a0 = D_002AB240;
-    reg_a0 += D_0028E194;
-    func_0019B6E0();
-    D_0028E194 += 0xC;
+void entity_draw_layer4(void) {
+    reg_a0 = g_sprite_layer4_buf;
+    reg_a0 += g_sprite_layer4_used;
+    sprite_entry_from_entity();
+    g_sprite_layer4_used += 0xC;
 }
 
-void func_0019BFC0(void) {
-    reg_a0 = D_002A9AE0;
-    reg_a0 += D_0028E190;
-    func_0019B6E0();
-    D_0028E190 += 0xC;
+void entity_draw_layer5(void) {
+    reg_a0 = g_sprite_layer5_buf;
+    reg_a0 += g_sprite_layer5_used;
+    sprite_entry_from_entity();
+    g_sprite_layer5_used += 0xC;
 }
 
 extern s32 reg_a1_as_s32;
 
-void func_0019C000(void) {
+void entity_draw_keep(void) {
     u8 *temp_s1;
     s32 temp_s2;
     u32 temp_s0;
@@ -743,16 +743,16 @@ void func_0019C000(void) {
     temp_s1 = reg_a0;
     temp_s0 = reg_d0.w;
     temp_s2 = reg_a1_as_s32;
-    reg_a0 = D_002AF860;
-    reg_a0 += D_0028E1A0;
-    func_0019B6E0();
+    reg_a0 = g_sprite_layer1_buf;
+    reg_a0 += g_sprite_layer1_used;
+    sprite_entry_from_entity();
     reg_d0.w = temp_s0;
     reg_a0 = temp_s1;
     reg_a1_as_s32 = temp_s2;
-    D_0028E1A0 += 0xC;
+    g_sprite_layer1_used += 0xC;
 }
 
-void func_0019C070(void) {
+void entity_draw_layer1_keep(void) {
     u8 *temp_s1;
     s32 temp_s2;
     u32 temp_s0;
@@ -760,16 +760,16 @@ void func_0019C070(void) {
     temp_s1 = reg_a0;
     temp_s0 = reg_d0.w;
     temp_s2 = reg_a1_as_s32;
-    reg_a0 = D_002AF860;
-    reg_a0 += D_0028E1A0;
-    func_0019B6E0();
+    reg_a0 = g_sprite_layer1_buf;
+    reg_a0 += g_sprite_layer1_used;
+    sprite_entry_from_entity();
     reg_d0.w = temp_s0;
     reg_a0 = temp_s1;
     reg_a1_as_s32 = temp_s2;
-    D_0028E1A0 += 0xC;
+    g_sprite_layer1_used += 0xC;
 }
 
-void func_0019C0E0(void) {
+void entity_draw_layer2_keep(void) {
     u8 *temp_s1;
     s32 temp_s2;
     u32 temp_s0;
@@ -777,16 +777,16 @@ void func_0019C0E0(void) {
     temp_s1 = reg_a0;
     temp_s0 = reg_d0.w;
     temp_s2 = reg_a1_as_s32;
-    reg_a0 = D_002AE100;
-    reg_a0 += D_0028E19C;
-    func_0019B6E0();
+    reg_a0 = g_sprite_layer2_buf;
+    reg_a0 += g_sprite_layer2_used;
+    sprite_entry_from_entity();
     reg_d0.w = temp_s0;
     reg_a0 = temp_s1;
     reg_a1_as_s32 = temp_s2;
-    D_0028E19C += 0xC;
+    g_sprite_layer2_used += 0xC;
 }
 
-void func_0019C150(void) {
+void entity_draw_layer3_keep(void) {
     u8 *temp_s1;
     s32 temp_s2;
     u32 temp_s0;
@@ -794,16 +794,16 @@ void func_0019C150(void) {
     temp_s1 = reg_a0;
     temp_s0 = reg_d0.w;
     temp_s2 = reg_a1_as_s32;
-    reg_a0 = D_002AC9A0;
-    reg_a0 += D_0028E198;
-    func_0019B6E0();
+    reg_a0 = g_sprite_layer3_buf;
+    reg_a0 += g_sprite_layer3_used;
+    sprite_entry_from_entity();
     reg_d0.w = temp_s0;
     reg_a0 = temp_s1;
     reg_a1_as_s32 = temp_s2;
-    D_0028E198 += 0xC;
+    g_sprite_layer3_used += 0xC;
 }
 
-void func_0019C1C0(void) {
+void entity_draw_layer4_keep(void) {
     u8 *temp_s1;
     s32 temp_s2;
     u32 temp_s0;
@@ -811,16 +811,16 @@ void func_0019C1C0(void) {
     temp_s1 = reg_a0;
     temp_s0 = reg_d0.w;
     temp_s2 = reg_a1_as_s32;
-    reg_a0 = D_002AB240;
-    reg_a0 += D_0028E194;
-    func_0019B6E0();
+    reg_a0 = g_sprite_layer4_buf;
+    reg_a0 += g_sprite_layer4_used;
+    sprite_entry_from_entity();
     reg_d0.w = temp_s0;
     reg_a0 = temp_s1;
     reg_a1_as_s32 = temp_s2;
-    D_0028E194 += 0xC;
+    g_sprite_layer4_used += 0xC;
 }
 
-void func_0019C230(void) {
+void entity_draw_layer5_keep(void) {
     u8 *temp_s1;
     s32 temp_s2;
     u32 temp_s0;
@@ -828,194 +828,194 @@ void func_0019C230(void) {
     temp_s1 = reg_a0;
     temp_s0 = reg_d0.w;
     temp_s2 = reg_a1_as_s32;
-    reg_a0 = D_002A9AE0;
-    reg_a0 += D_0028E190;
-    func_0019B6E0();
+    reg_a0 = g_sprite_layer5_buf;
+    reg_a0 += g_sprite_layer5_used;
+    sprite_entry_from_entity();
     reg_d0.w = temp_s0;
     reg_a0 = temp_s1;
     reg_a1_as_s32 = temp_s2;
-    D_0028E190 += 0xC;
+    g_sprite_layer5_used += 0xC;
 }
 
 
-void func_0019C2A0(void) {
+void entity_draw_layer1_zoom(void) {
     func_0019B880();
-    reg_a0 = D_002AF860;
-    reg_a0 += D_0028E1A0;
+    reg_a0 = g_sprite_layer1_buf;
+    reg_a0 += g_sprite_layer1_used;
     func_0019B9B0();
-    D_0028E1A0 += 0xC;
+    g_sprite_layer1_used += 0xC;
 }
 
-void func_0019C2F0(void) {
+void entity_draw_layer2_zoom(void) {
     func_0019B880();
-    reg_a0 = D_002AE100;
-    reg_a0 += D_0028E19C;
+    reg_a0 = g_sprite_layer2_buf;
+    reg_a0 += g_sprite_layer2_used;
     func_0019B9B0();
-    D_0028E19C += 0xC;
+    g_sprite_layer2_used += 0xC;
 }
 
-void func_0019C340(void) {
+void entity_draw_layer3_zoom(void) {
     func_0019B880();
-    reg_a0 = D_002AC9A0;
-    reg_a0 += D_0028E198;
+    reg_a0 = g_sprite_layer3_buf;
+    reg_a0 += g_sprite_layer3_used;
     func_0019B9B0();
-    D_0028E198 += 0xC;
+    g_sprite_layer3_used += 0xC;
 }
 
-void func_0019C390(void) {
+void entity_draw_layer4_zoom(void) {
     func_0019B880();
-    reg_a0 = D_002AB240;
-    reg_a0 += D_0028E194;
+    reg_a0 = g_sprite_layer4_buf;
+    reg_a0 += g_sprite_layer4_used;
     func_0019B9B0();
-    D_0028E194 += 0xC;
+    g_sprite_layer4_used += 0xC;
 }
 
-void func_0019C3E0(void) {
+void entity_draw_layer5_zoom(void) {
     func_0019B880();
-    reg_a0 = D_002A9AE0;
-    reg_a0 += D_0028E190;
+    reg_a0 = g_sprite_layer5_buf;
+    reg_a0 += g_sprite_layer5_used;
     func_0019B9B0();
-    D_0028E190 += 0xC;
+    g_sprite_layer5_used += 0xC;
 }
 
 
-void func_0019C430(void) {
-    reg_a0 = D_002AF860;
-    reg_a0 += D_0028E1A0;
-    func_0019BB40();
-    D_0028E1A0 += 0xC;
+void sprite_draw(void) {
+    reg_a0 = g_sprite_layer1_buf;
+    reg_a0 += g_sprite_layer1_used;
+    sprite_entry_from_regs();
+    g_sprite_layer1_used += 0xC;
 }
 
-void func_0019C470(void) {
-    reg_a0 = D_002AF860;
-    reg_a0 += D_0028E1A0;
-    func_0019BB40();
-    D_0028E1A0 += 0xC;
+void sprite_draw_layer1(void) {
+    reg_a0 = g_sprite_layer1_buf;
+    reg_a0 += g_sprite_layer1_used;
+    sprite_entry_from_regs();
+    g_sprite_layer1_used += 0xC;
 }
 
-void func_0019C4B0(void) {
-    reg_a0 = D_002AE100;
-    reg_a0 += D_0028E19C;
-    func_0019BB40();
-    D_0028E19C += 0xC;
+void sprite_draw_layer2(void) {
+    reg_a0 = g_sprite_layer2_buf;
+    reg_a0 += g_sprite_layer2_used;
+    sprite_entry_from_regs();
+    g_sprite_layer2_used += 0xC;
 }
 
-void func_0019C4F0(void) {
-    reg_a0 = D_002AC9A0;
-    reg_a0 += D_0028E198;
-    func_0019BB40();
-    D_0028E198 += 0xC;
+void sprite_draw_layer3(void) {
+    reg_a0 = g_sprite_layer3_buf;
+    reg_a0 += g_sprite_layer3_used;
+    sprite_entry_from_regs();
+    g_sprite_layer3_used += 0xC;
 }
 
-void func_0019C530(void) {
-    reg_a0 = D_002AB240;
-    reg_a0 += D_0028E194;
-    func_0019BB40();
-    D_0028E194 += 0xC;
+void sprite_draw_layer4(void) {
+    reg_a0 = g_sprite_layer4_buf;
+    reg_a0 += g_sprite_layer4_used;
+    sprite_entry_from_regs();
+    g_sprite_layer4_used += 0xC;
 }
 
-void func_0019C570(void) {
-    reg_a0 = D_002A9AE0;
-    reg_a0 += D_0028E190;
-    func_0019BB40();
-    D_0028E190 += 0xC;
+void sprite_draw_layer5(void) {
+    reg_a0 = g_sprite_layer5_buf;
+    reg_a0 += g_sprite_layer5_used;
+    sprite_entry_from_regs();
+    g_sprite_layer5_used += 0xC;
 }
 
-void func_0019C5B0(void) {
+void sprite_draw_keep(void) {
     u8 *temp_s0;
     u32 temp_s1;
 
     temp_s0 = reg_a0;
     temp_s1 = reg_d0.w;
-    reg_a0 = D_002AF860;
-    reg_a0 += D_0028E1A0;
-    func_0019BB40();
+    reg_a0 = g_sprite_layer1_buf;
+    reg_a0 += g_sprite_layer1_used;
+    sprite_entry_from_regs();
     reg_d0.w = temp_s1;
     reg_a0 = temp_s0;
-    D_0028E1A0 += 0xC;
+    g_sprite_layer1_used += 0xC;
 }
 
-void func_0019C610(void) {
+void sprite_draw_layer1_keep(void) {
     u8 *temp_s0;
     u32 temp_s1;
 
     temp_s0 = reg_a0;
     temp_s1 = reg_d0.w;
-    reg_a0 = D_002AF860;
-    reg_a0 += D_0028E1A0;
-    func_0019BB40();
+    reg_a0 = g_sprite_layer1_buf;
+    reg_a0 += g_sprite_layer1_used;
+    sprite_entry_from_regs();
     reg_d0.w = temp_s1;
     reg_a0 = temp_s0;
-    D_0028E1A0 += 0xC;
+    g_sprite_layer1_used += 0xC;
 }
 
-void func_0019C670(void) {
+void sprite_draw_layer2_keep(void) {
     u8 *temp_s0;
     u32 temp_s1;
 
     temp_s0 = reg_a0;
     temp_s1 = reg_d0.w;
-    reg_a0 = D_002AE100;
-    reg_a0 += D_0028E19C;
-    func_0019BB40();
+    reg_a0 = g_sprite_layer2_buf;
+    reg_a0 += g_sprite_layer2_used;
+    sprite_entry_from_regs();
     reg_d0.w = temp_s1;
     reg_a0 = temp_s0;
-    D_0028E19C += 0xC;
+    g_sprite_layer2_used += 0xC;
 }
 
-void func_0019C6D0(void) {
+void sprite_draw_layer3_keep(void) {
     u8 *temp_s0;
     u32 temp_s1;
 
     temp_s0 = reg_a0;
     temp_s1 = reg_d0.w;
-    reg_a0 = D_002AC9A0;
-    reg_a0 += D_0028E198;
-    func_0019BB40();
+    reg_a0 = g_sprite_layer3_buf;
+    reg_a0 += g_sprite_layer3_used;
+    sprite_entry_from_regs();
     reg_d0.w = temp_s1;
     reg_a0 = temp_s0;
-    D_0028E198 += 0xC;
+    g_sprite_layer3_used += 0xC;
 }
 
-void func_0019C730(void) {
+void sprite_draw_layer4_keep(void) {
     u8 *temp_s0;
     u32 temp_s1;
 
     temp_s0 = reg_a0;
     temp_s1 = reg_d0.w;
-    reg_a0 = D_002AB240;
-    reg_a0 += D_0028E194;
-    func_0019BB40();
+    reg_a0 = g_sprite_layer4_buf;
+    reg_a0 += g_sprite_layer4_used;
+    sprite_entry_from_regs();
     reg_d0.w = temp_s1;
     reg_a0 = temp_s0;
-    D_0028E194 += 0xC;
+    g_sprite_layer4_used += 0xC;
 }
 
-void func_0019C790(void) {
+void sprite_draw_layer5_keep(void) {
     u8 *temp_s0;
     u32 temp_s1;
 
     temp_s0 = reg_a0;
     temp_s1 = reg_d0.w;
-    reg_a0 = D_002A9AE0;
-    reg_a0 += D_0028E190;
-    func_0019BB40();
+    reg_a0 = g_sprite_layer5_buf;
+    reg_a0 += g_sprite_layer5_used;
+    sprite_entry_from_regs();
     reg_d0.w = temp_s1;
     reg_a0 = temp_s0;
-    D_0028E190 += 0xC;
+    g_sprite_layer5_used += 0xC;
 }
 
 
-void func_0019C7F0(void) {
+void sprite_draw_layer5_zoom(void) {
     func_0019BC10();
-    reg_a0 = D_002A9AE0;
-    reg_a0 += D_0028E190;
+    reg_a0 = g_sprite_layer5_buf;
+    reg_a0 += g_sprite_layer5_used;
     func_0019BD40();
-    D_0028E190 += 0xC;
+    g_sprite_layer5_used += 0xC;
 }
 
 
-void func_0019C840(void)
+void sprite_draw_layer1_zoom_keep(void)
 {
     u8 *savedA0;
     u32 savedD4;
@@ -1026,17 +1026,17 @@ void func_0019C840(void)
     savedA0 = reg_a0;
     func_0019BC10();
 
-    reg_a0 = D_002AF860;
-    reg_a0 += D_0028E1A0;
+    reg_a0 = g_sprite_layer1_buf;
+    reg_a0 += g_sprite_layer1_used;
     func_0019BD40();
 
     reg_d4.w = savedD4;
     reg_d7.w = savedD7;
     reg_a0 = savedA0;
-    D_0028E1A0 += 0xC;
+    g_sprite_layer1_used += 0xC;
 }
 
-void func_0019C8C0(void)
+void sprite_draw_layer2_zoom_keep(void)
 {
     u8 *savedAddress;
     u32 savedD4;
@@ -1047,17 +1047,17 @@ void func_0019C8C0(void)
     savedAddress = reg_a0;
     func_0019BC10();
 
-    reg_a0 = D_002AE100;
-    reg_a0 += D_0028E19C;
+    reg_a0 = g_sprite_layer2_buf;
+    reg_a0 += g_sprite_layer2_used;
     func_0019BD40();
 
     reg_d4.w = savedD4;
     reg_d7.w = savedD7;
     reg_a0 = savedAddress;
-    D_0028E19C += 0xC;
+    g_sprite_layer2_used += 0xC;
 }
 
-void func_0019C940(void)
+void sprite_draw_layer3_zoom_keep(void)
 {
     u8 *saved_a0;
     u32 saved_d4;
@@ -1068,17 +1068,17 @@ void func_0019C940(void)
     saved_a0 = reg_a0;
 
     func_0019BC10();
-    reg_a0 = D_002AC9A0;
-    reg_a0 += D_0028E198;
+    reg_a0 = g_sprite_layer3_buf;
+    reg_a0 += g_sprite_layer3_used;
     func_0019BD40();
 
     reg_d4.w = saved_d4;
     reg_d7.w = saved_d7;
     reg_a0 = saved_a0;
-    D_0028E198 += 0xC;
+    g_sprite_layer3_used += 0xC;
 }
 
-void func_0019C9C0(void)
+void sprite_draw_layer4_zoom_keep(void)
 {
     u8 *savedAddress;
     u32 savedD4;
@@ -1089,17 +1089,17 @@ void func_0019C9C0(void)
     savedAddress = reg_a0;
 
     func_0019BC10();
-    reg_a0 = D_002AB240;
-    reg_a0 += D_0028E194;
+    reg_a0 = g_sprite_layer4_buf;
+    reg_a0 += g_sprite_layer4_used;
     func_0019BD40();
 
     reg_d4.w = savedD4;
     reg_d7.w = savedD7;
     reg_a0 = savedAddress;
-    D_0028E194 += 0xC;
+    g_sprite_layer4_used += 0xC;
 }
 
-void func_0019CA40(void)
+void sprite_draw_layer5_zoom_keep(void)
 {
     u8 *saved_a0;
     u32 saved_d4;
@@ -1110,14 +1110,14 @@ void func_0019CA40(void)
     saved_a0 = reg_a0;
 
     func_0019BC10();
-    reg_a0 = D_002A9AE0;
-    reg_a0 += D_0028E190;
+    reg_a0 = g_sprite_layer5_buf;
+    reg_a0 += g_sprite_layer5_used;
     func_0019BD40();
 
     reg_d4.w = saved_d4;
     reg_d7.w = saved_d7;
     reg_a0 = saved_a0;
-    D_0028E190 += 0xC;
+    g_sprite_layer5_used += 0xC;
 }
 
 void func_0019CAC0(void) {
@@ -1392,7 +1392,7 @@ void func_0019D200(void) {
 
 void func_0019D230(void) {
     func_0019D200();
-    func_0019BB40();
+    sprite_entry_from_regs();
 }
 
 void func_0019D260(void) {
@@ -1409,12 +1409,12 @@ void func_0019D260(void) {
 
 void func_0019D290(void) {
     func_0019D260();
-    func_0019B6E0();
+    sprite_entry_from_entity();
 }
 
 void func_0019D2C0(void) {
     func_0019D260();
-    func_0019BB40();
+    sprite_entry_from_regs();
 }
 
 extern s32 reg_a0_as_s32;
@@ -1426,7 +1426,7 @@ void func_0019D2F0(void) {
     temp_s0 = reg_a0_as_s32;
     temp_s1 = reg_d0.w;
     func_0019D260();
-    func_0019BB40();
+    sprite_entry_from_regs();
     reg_d0.w = temp_s1;
     reg_a0_as_s32 = temp_s0;
 }
@@ -1445,7 +1445,7 @@ void func_0019D330(void) {
 
 void func_0019D360(void) {
     func_0019D330();
-    func_0019BB40();
+    sprite_entry_from_regs();
 }
 
 void func_0019D390(void) {
@@ -1455,7 +1455,7 @@ void func_0019D390(void) {
     temp_s0 = reg_a0_as_s32;
     temp_s1 = reg_d0.w;
     func_0019D330();
-    func_0019BB40();
+    sprite_entry_from_regs();
     reg_d0.w = temp_s1;
     reg_a0_as_s32 = temp_s0;
 }
@@ -1474,12 +1474,12 @@ void func_0019D3D0(void) {
 
 void func_0019D400(void) {
     func_0019D3D0();
-    func_0019B6E0();
+    sprite_entry_from_entity();
 }
 
 void func_0019D430(void) {
     func_0019D3D0();
-    func_0019BB40();
+    sprite_entry_from_regs();
 }
 
 void func_0019D460(void) {
@@ -1489,7 +1489,7 @@ void func_0019D460(void) {
     temp_s0 = reg_a0_as_s32;
     temp_s1 = reg_d0.w;
     func_0019D3D0();
-    func_0019BB40();
+    sprite_entry_from_regs();
     reg_d0.w = temp_s1;
     reg_a0_as_s32 = temp_s0;
 }
@@ -1508,7 +1508,7 @@ void func_0019D4A0(void) {
 
 void func_0019D4D0(void) {
     func_0019D4A0();
-    func_0019B6E0();
+    sprite_entry_from_entity();
 }
 
 void func_0019D500(void) {
@@ -1525,7 +1525,7 @@ void func_0019D500(void) {
 
 void func_0019D530(void) {
     func_0019D500();
-    func_0019B6E0();
+    sprite_entry_from_entity();
 }
 
 
@@ -1549,7 +1549,7 @@ void func_0019D590(void) {
 
 void func_0019D5C0(void) {
     func_0019D590();
-    func_0019B6E0();
+    sprite_entry_from_entity();
 }
 
 void func_0019D5F0(void) {
@@ -1564,7 +1564,7 @@ void func_0019D5F0(void) {
 
 void func_0019D620(void) {
     func_0019D5F0();
-    func_0019B6E0();
+    sprite_entry_from_entity();
 }
 
 
@@ -1579,7 +1579,7 @@ void func_0019D650(void)
     saved_a1 = reg_a1_as_s32;
 
     func_0019D5F0();
-    func_0019B6E0();
+    sprite_entry_from_entity();
 
     reg_d0.w = saved_d0;
     reg_a0_as_s32 = saved_a0;
@@ -1588,7 +1588,7 @@ void func_0019D650(void)
 
 void func_0019D6A0(void) {
     func_0019D5F0();
-    func_0019BB40();
+    sprite_entry_from_regs();
 }
 
 void func_0019D6D0(void) {
@@ -1598,7 +1598,7 @@ void func_0019D6D0(void) {
     temp_s0 = reg_a0_as_s32;
     temp_s1 = reg_d0.w;
     func_0019D5F0();
-    func_0019BB40();
+    sprite_entry_from_regs();
     reg_d0.w = temp_s1;
     reg_a0_as_s32 = temp_s0;
 }

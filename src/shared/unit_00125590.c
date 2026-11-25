@@ -1430,7 +1430,7 @@ void func_00127CA0(void) {
     ENTITY(reg_a6)->move.h = reg_d3.h[0];
 }
 
-void func_0019C3E0(void);
+void entity_draw_layer5_zoom(void);
 
 void func_00127FA0(void) {
     u32 sd6;
@@ -1470,7 +1470,7 @@ block_2:
 block_1:
     sd6 = reg_d6.w;
     reg_d6.w = 0x40004000;
-    func_0019C3E0();
+    entity_draw_layer5_zoom();
     reg_d6.w = sd6;
     goto block_4;
 block_3:
@@ -1522,7 +1522,7 @@ block_2:
 block_1:
     sd6 = reg_d6.w;
     reg_d6.w = 0x40004000;
-    func_0019C3E0();
+    entity_draw_layer5_zoom();
     reg_d6.w = sd6;
     if ((s32)*(u8 *)(reg_a6 + 0x15) < 3) return;
     reg_d1.h[1] = *(u16 *)(reg_a6 + 2);

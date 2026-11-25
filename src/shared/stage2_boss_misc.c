@@ -28,7 +28,7 @@ void func_001C45B0(void) {
 
 
 s32 enemy_remove();
-s32 func_0019C570();
+s32 sprite_draw_layer5();
 s32 entity_velocity();
 s32 func_00203060();
 extern u16 D_0028E574[];
@@ -72,7 +72,7 @@ block_7:
     reg_d2.h[0] += reg_d2.h[0];
     reg_d2.h[1] = (reg_d2.h[0] != 0) ? *(u16 *)((u8 *)reg_a0 + ((s16)reg_d2.h[0] & ~1)) : *(u16 *)reg_a0;
     reg_d2.h[0] = ((reg_d2.h[0] + 2) != 0) ? *(u16 *)((u8 *)reg_a0 + ((s16)(reg_d2.h[0] + 2) & ~1)) : *(u16 *)reg_a0;
-    func_0019C570();
+    sprite_draw_layer5();
 }
 
 void func_001C4820(void) {
@@ -173,7 +173,7 @@ void func_001C4BC0(void) {
 }
 
 s32 explosion_spawn();
-s32 func_0019BFC0();
+s32 entity_draw_layer5();
 extern u8 D_0028DB10[];
 
 void func_001C4C90(void) {
@@ -224,7 +224,7 @@ block_4:
         *(u16 *)(reg_a5 + 0x20) += 4;
         *(u16 *)(reg_a5 + 0x20) &= 7;
     }
-    func_0019BFC0();
+    entity_draw_layer5();
 }
 
 void func_001C4EE0(void) {
@@ -281,7 +281,7 @@ void func_001C4FD0(void) {
     *(s16 *)(reg_a5 + 0x20) = 0;
 }
 
-s32 func_0019C470();
+s32 sprite_draw_layer1();
 s32 entity_follow_scroll();
 extern u32 D_0026C610[];
 
@@ -321,5 +321,5 @@ block_4:
     reg_d1.w += 0xFA00FC00;
     reg_d3.h[0] = 0x620;
     reg_d4.w = 0x17;
-    func_0019C470();
+    sprite_draw_layer1();
 }

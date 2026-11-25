@@ -54,7 +54,7 @@ s32 sceGsSyncPath(s32 mode, u32 timeout);
 s32 rand(void);
 s32 func_0012FAB0();
 s32 func_0019AB20();
-s32 func_0019C5B0();
+s32 sprite_draw_keep();
 s32 sprite_palette_load();
 s32 text_queue_clear();
 void text_queue_sjis_vertical(s16 x, s16 y, const char *text, u16 texturePage, u16 glyphWidth, u16 glyphHeight, u16 alpha, u16 depth);
@@ -178,7 +178,7 @@ void death_func_00138ED0(TextScript *script) {
             reg_d3.h[0] = 0x1CE0;
             reg_d4.h[0] = 1;
             reg_d4.h[0] += D_00295E40[0];
-            func_0019C5B0();
+            sprite_draw_keep();
             reg_a0 = ((script->frame >> 1) & 1) ? (u8 *) D_002624F0 : (u8 *) D_00262530;
             reg_d0.h[0] = 1;
             sprite_palette_load();

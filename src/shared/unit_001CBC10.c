@@ -161,11 +161,11 @@ s32 func_0014EA50();
 s32 enemy_switch_target_player();
 s32 func_0018D5C0();
 s32 func_0018DDC0();
-s32 func_0019BEC0();
-s32 func_0019BFC0();
-s32 func_0019C470();
-s32 func_0019C530();
-s32 func_0019C570();
+s32 entity_draw_layer1();
+s32 entity_draw_layer5();
+s32 sprite_draw_layer1();
+s32 sprite_draw_layer4();
+s32 sprite_draw_layer5();
 s32 func_001A9000();
 s32 func_001A91A0();
 s32 func_002010D0();
@@ -496,13 +496,13 @@ next_480:
     *(u16 *)(reg_a5 + 0x2E) = (reg_d1.h[0] != 0) ? *(u16 *)(reg_a3 + ((s16) reg_d1.h[0] & ~1)) : *(u16 *)reg_a3;
     *(u16 *)(reg_a5 + 0x30) = ((reg_d1.h[0] + 2) != 0) ? *(u16 *)(reg_a3 + ((s16) (reg_d1.h[0] + 2) & ~1)) : *(u16 *)reg_a3;
 next_500:
-    reg_a2 = (u8 *) func_0019BFC0;
-    reg_a3 = (u8 *) func_0019C570;
-    reg_a4 = (u8 *) func_0019C530;
+    reg_a2 = (u8 *) entity_draw_layer5;
+    reg_a3 = (u8 *) sprite_draw_layer5;
+    reg_a4 = (u8 *) sprite_draw_layer4;
     if (!((s32) g_scroll_line < 0x11E)) goto next_510;
-    reg_a2 = (u8 *) func_0019BEC0;
-    reg_a3 = (u8 *) func_0019C470;
-    reg_a4 = (u8 *) func_0019C470;
+    reg_a2 = (u8 *) entity_draw_layer1;
+    reg_a3 = (u8 *) sprite_draw_layer1;
+    reg_a4 = (u8 *) sprite_draw_layer1;
 next_510:
     jtbl_0028E3F4 = (Fn) reg_a2;
     jtbl_0028E3F4();

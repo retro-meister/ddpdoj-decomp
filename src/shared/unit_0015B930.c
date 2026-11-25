@@ -113,7 +113,7 @@ void func_0015BA20(void) {
     reg_a6 = save_a6;
 }
 
-s32 func_0019C5B0();
+s32 sprite_draw_keep();
 extern u8 D_0026A400[];
 extern u8 D_0026A440[];
 
@@ -132,7 +132,7 @@ loop_1:
         reg_d2.w = temp_a0_2;
         reg_d3.h[0] = 0x208;
         reg_d4.h[0] = 2;
-        func_0019C5B0();
+        sprite_draw_keep();
         var_s0 += 8;
         goto loop_1;
     }
@@ -429,24 +429,24 @@ void func_0015C1F0(void)
     sprite_palette_load();
 }
 
-extern void func_0019C430(void);
+extern void sprite_draw(void);
 void func_0015C250(void) {
     reg_d1.w = 0x0E000200;
     reg_d2.sw = 0x155C;
     reg_d4.sh[0] = 0;
     reg_d3.sh[0] = 0x30C0;
-    func_0019C430();
+    sprite_draw();
 }
 
 extern Reg32 reg_d1;
-void func_0019C430(void);
+void sprite_draw(void);
 
 void func_0015C280(void) {
     reg_d1.w = 0x1A000800;
     reg_d2.sw = 0x155A;
     reg_d3.sh[0] = 0x20A0;
     reg_d4.sh[0] = 1;
-    func_0019C430();
+    sprite_draw();
 }
 
 void func_0015C2B0(void) {
@@ -454,7 +454,7 @@ void func_0015C2B0(void) {
     reg_d2.sw = 0x1559;
     reg_d4.sh[0] = 0;
     reg_d3.sh[0] = 0x260;
-    func_0019C430();
+    sprite_draw();
 }
 
 void func_0015C2E0(void) {
@@ -462,7 +462,7 @@ void func_0015C2E0(void) {
     reg_d2.sw = 0x1558;
     reg_d4.sh[0] = 0;
     reg_d3.sh[0] = 0x410;
-    func_0019C430();
+    sprite_draw();
 }
 
 void func_0015C310(void) {
@@ -470,7 +470,7 @@ void func_0015C310(void) {
     reg_d2.sw = 0x155B;
     reg_d4.sh[0] = 0;
     reg_d3.sh[0] = 0x620;
-    func_0019C430();
+    sprite_draw();
 }
 
 extern u8 D_0028E38C;

@@ -1486,7 +1486,7 @@ next_6:
     func_001A53E0();
 }
 
-s32 func_0019C670();
+s32 sprite_draw_layer2_keep();
 extern u8 D_0026BFA0[];
 
 void func_001A7B30(void) {
@@ -1513,7 +1513,7 @@ next_0:
     reg_d2.h[0] += reg_d2.h[0];
     reg_a0 += reg_d2.h[0];
     reg_d2.w = *(u32 *)reg_a0;
-    func_0019C670();
+    sprite_draw_layer2_keep();
 next_1:
     reg_d1.h[0] += 0x400;
     if ((s16)(reg_d7.h[0] -= 1) >= 0) goto loop_0;

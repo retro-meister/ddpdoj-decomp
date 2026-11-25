@@ -27,7 +27,7 @@ void func_0013ABD0(void) {
 s32 explosion_spawn();
 s32 func_0016A8C0();
 s32 func_0016A8E0();
-s32 func_0019C790();
+s32 sprite_draw_layer5_keep();
 extern u16 D_00253220[];
 extern u16 D_0028C190_as_u16;
 
@@ -90,14 +90,14 @@ void func_0013AC30(void) {
         reg_d3.h[0] = 0x208;
         reg_d4.h[0] = 0;
         reg_d1.h[0] += 0x7FFF + 0x7F01;
-        func_0019C790();
+        sprite_draw_layer5_keep();
         reg_d1.w += 0xFC000400;
         temp_v1_2 = *(u16 *)reg_a1;
         reg_a1 += 2;
         reg_d2.h[1] = temp_v1_2;
         reg_d2.h[0] = *(u16 *)reg_a1;
         reg_a1 += 2;
-        func_0019C790();
+        sprite_draw_layer5_keep();
         reg_a0 += 4;
     } while ((s16)(--reg_d7.h[0]) >= 0);
 }

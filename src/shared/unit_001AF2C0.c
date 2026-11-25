@@ -671,15 +671,15 @@ void func_001B03E0(void) {
     *(u16 *)(reg_a1 + 0x1A) = (u16) reg_d0.h[0];
 }
 
-s32 func_0019C570();                            /* extern */
-s32 func_0019CA40();                            /* extern */
+s32 sprite_draw_layer5();                            /* extern */
+s32 sprite_draw_layer5_zoom_keep();                            /* extern */
 
 void func_001B0470(void) {
     if (D_0028E3F0 & 2) {
-        func_0019C570();
+        sprite_draw_layer5();
         return;
     }
-    func_0019CA40();
+    sprite_draw_layer5_zoom_keep();
 }
 
 extern s32 D_0029BEE0_as_s32_a[];
@@ -861,8 +861,8 @@ void func_001B07E0(void) {
     reg_a6 = save_a6;
 }
 
-s32 func_0019C570();
-s32 func_0019CA40();
+s32 sprite_draw_layer5();
+s32 sprite_draw_layer5_zoom_keep();
 extern u8 D_00251C20[];
 extern u8 D_00251D70[];
 extern u8 D_00251DF0[];
@@ -900,7 +900,7 @@ void func_001B0950(void) {
     reg_d2.h[0] = *(u16 *)(reg_a0 + 2);
     reg_d3.h[0] = 0xCE0;
     reg_d4.h[0] = 0x16;
-    func_0019C570();
+    sprite_draw_layer5();
     if (ENTITY(reg_a6)->sprite.h != 0) {
         ENTITY(reg_a6)->sprite.h -= 1;
         reg_tmp.h[1] = (*(u16 *)(reg_a6 + (0x20)));
@@ -919,7 +919,7 @@ void func_001B0950(void) {
         reg_d1.h[0] += 0x7FFF + 0x6E01;
         reg_d4.h[0] = (*(u16 *)(reg_a6 + (0xE)));
         reg_d6.w = 0x80008000;
-        func_0019CA40();
+        sprite_draw_layer5_zoom_keep();
         if (D_0028E3E0 != 0) {
             reg_a1 = (u8 *)D_00251DF0;
             reg_d0.h[0] = 0x1E;
@@ -928,7 +928,7 @@ void func_001B0950(void) {
             reg_d0.h[0] += reg_d0.h[0];
             reg_a1 += reg_d0.h[0];
         }
-        func_0019CA40();
+        sprite_draw_layer5_zoom_keep();
         reg_d2.h[1] = (*(u16 *)(reg_a0 + (0)));
         reg_a0 += 2;
         reg_d2.h[0] = (*(u16 *)(reg_a0 + (0)));

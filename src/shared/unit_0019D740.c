@@ -19,12 +19,12 @@ void func_0019D740(void) {
 
 
 void func_0019D770(void) {
-    s32 func_0019B6E0();
+    s32 sprite_entry_from_entity();
     func_0019D740();
-    func_0019B6E0();
+    sprite_entry_from_entity();
 }
 
-s32 func_0019BB40();                            /* extern */
+s32 sprite_entry_from_regs();                            /* extern */
 extern s32 reg_a0_as_s32;
 
 void func_0019D7A0(void) {
@@ -34,7 +34,7 @@ void func_0019D7A0(void) {
     temp_s0 = reg_a0_as_s32;
     temp_s1 = reg_d0.w;
     func_0019D740();
-    func_0019BB40();
+    sprite_entry_from_regs();
     reg_d0.w = temp_s1;
     reg_a0_as_s32 = temp_s0;
 }
@@ -54,7 +54,7 @@ void func_0019D7E0(void) {
 
 void func_0019D810(void) {
     func_0019D7E0();
-    func_0019BB40();
+    sprite_entry_from_regs();
 }
 
 void func_0019D840(void) {
@@ -64,7 +64,7 @@ void func_0019D840(void) {
     temp_s0 = reg_a0_as_s32;
     temp_s1 = reg_d0.w;
     func_0019D7E0();
-    func_0019BB40();
+    sprite_entry_from_regs();
     reg_d0.w = temp_s1;
     reg_a0_as_s32 = temp_s0;
 }
@@ -89,7 +89,7 @@ void func_0019D8B0(void) {
     temp_s0 = reg_a0_as_s32;
     temp_s1 = reg_d0.w;
     func_0019D880();
-    func_0019BB40();
+    sprite_entry_from_regs();
     reg_d0.w = temp_s1;
     reg_a0_as_s32 = temp_s0;
 }
@@ -115,7 +115,7 @@ void func_0019D920(void) {
     temp_s0 = reg_a0_as_s32;
     temp_s1 = reg_d0.w;
     func_0019D8F0();
-    func_0019BB40();
+    sprite_entry_from_regs();
     reg_d0.w = temp_s1;
     reg_a0_as_s32 = temp_s0;
 }
@@ -128,9 +128,9 @@ void func_0019D960(void) {
 
 
 void func_0019D990(void) {
-    s32 func_0019B6E0();
+    s32 sprite_entry_from_entity();
     func_0019D960();
-    func_0019B6E0();
+    sprite_entry_from_entity();
 }
 
 extern s32 reg_a1_as_s32;
@@ -138,7 +138,7 @@ extern s32 reg_a1_as_s32;
 
 void func_0019D9C0(void)
 {
-    extern void func_0019B6E0(void);
+    extern void sprite_entry_from_entity(void);
     s32 saved_a0;
     s32 saved_a1;
     u32 saved_d0;
@@ -147,7 +147,7 @@ void func_0019D9C0(void)
     saved_a0 = reg_a0_as_s32;
     saved_a1 = reg_a1_as_s32;
     func_0019D960();
-    func_0019B6E0();
+    sprite_entry_from_entity();
     reg_d0.w = saved_d0;
     reg_a0_as_s32 = saved_a0;
     reg_a1_as_s32 = saved_a1;
@@ -160,7 +160,7 @@ void func_0019DA10(void) {
     temp_s0 = reg_a0_as_s32;
     temp_s1 = reg_d0.w;
     func_0019D960();
-    func_0019BB40();
+    sprite_entry_from_regs();
     reg_d0.w = temp_s1;
     reg_a0_as_s32 = temp_s0;
 }
@@ -187,7 +187,7 @@ void func_0019DA80(void) {
     temp_s0 = reg_a0_as_s32;
     temp_s1 = reg_d0.w;
     func_0019DA50();
-    func_0019BB40();
+    sprite_entry_from_regs();
     reg_d0.w = temp_s1;
     reg_a0_as_s32 = temp_s0;
 }
@@ -207,7 +207,7 @@ void func_0019DAC0(void) {
 
 void func_0019DAF0(void) {
     func_0019DAC0();
-    func_0019BB40();
+    sprite_entry_from_regs();
 }
 
 extern u16 D_0028E130;
@@ -227,7 +227,7 @@ void func_0019DB20(void) {
 
 void func_0019DB50(void) {
     func_0019DB20();
-    func_0019BB40();
+    sprite_entry_from_regs();
 }
 
 extern u16 D_0028E12C;
@@ -245,7 +245,7 @@ void func_0019DB80(void) {
 
 void func_0019DBB0(void) {
     func_0019DB80();
-    func_0019BB40();
+    sprite_entry_from_regs();
 }
 
 void func_0019DBE0(void) {
@@ -255,7 +255,7 @@ void func_0019DBE0(void) {
     temp_s0 = reg_a0_as_s32;
     temp_s1 = reg_d0.w;
     func_0019DB80();
-    func_0019BB40();
+    sprite_entry_from_regs();
     reg_d0.w = temp_s1;
     reg_a0_as_s32 = temp_s0;
 }
@@ -369,7 +369,7 @@ void func_0019DD20(void) {
     reg_a0 += 2;
 }
 
-s32 func_0019C000();
+s32 entity_draw_keep();
 extern u8 D_0025ECF0[];
 extern u8 D_0025ED80[];
 extern u8 D_0028D960;
@@ -451,7 +451,7 @@ next_4:
     push_a6 = reg_a6;
     func_0019DD20();
     reg_a6 = reg_a0 - 0x2C;
-    func_0019C000();
+    entity_draw_keep();
     reg_a6 = push_a6;
 next_5:
     reg_a0 = reg_a3;
@@ -465,7 +465,7 @@ next_6:
     reg_a1 = reg_a2;
     func_0019DD20();
     reg_a6 = reg_a0 - 0x2C;
-    func_0019C000();
+    entity_draw_keep();
 next_7:
     reg_d6.w = save_d6;
     reg_d7.w = save_d7;
@@ -667,7 +667,7 @@ void func_0019E980(void) {
         *(u8 *)(reg_a0 - 0xF) |= 0x40;
     }
     reg_a6 = reg_a0 - 0x2C;
-    func_0019C000();
+    entity_draw_keep();
     *(u16 *)(reg_a6 + 4) += reg_d1.h[0];
     reg_a1 = save_a1;
     reg_a6 = save_a6;

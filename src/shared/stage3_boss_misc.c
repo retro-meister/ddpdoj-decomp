@@ -63,7 +63,7 @@ s32 bullet_fire256_fixed();
 s32 explosion_spawn();
 s32 enemy_hitbox_debug_draw();
 s32 func_0018D520();
-s32 func_0019BFC0();
+s32 entity_draw_layer5();
 s32 func_00201F20();
 s32 aim256_at_player();
 extern u8 D_0026D360[];
@@ -184,7 +184,7 @@ next_200:
     *(u16 *)(reg_a5 + 0x18) = 1;
     goto next_100;
 block_objset:
-    func_0019BFC0();
+    entity_draw_layer5();
     reg_a0 = reg_a6;
     enemy_hitbox_debug_draw();
     reg_a0 = reg_a6 + 0x20;

@@ -47,7 +47,7 @@ s32 func_001389D0();
 s32 enemy_hitbox_debug_draw();
 s32 enemy_remove();
 s32 func_0018D5C0();
-s32 func_0019C470();
+s32 sprite_draw_layer1();
 s32 func_001A9000();
 s32 func_001A91A0();
 s32 func_001D5040();
@@ -287,7 +287,7 @@ block_33:
         reg_d3.h[0] = 0x1CB0;
         reg_d4.w = 0;
         reg_d4.b[0] = *(u8 *)(reg_a6 + 0x1C);
-        func_0019C470();
+        sprite_draw_layer1();
         reg_a0 = reg_a6;
         enemy_hitbox_debug_draw();
     }
