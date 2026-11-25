@@ -1,5 +1,6 @@
 #include "common.h"
 #include "entity.h"
+#include "stage1_boss.h"
 
 void stage1_boss_mode_enter_start(void);
 void stage1_boss_mode_enter(void);
@@ -49,16 +50,9 @@ u16 stage1_boss_gatling_levels[] = {
     0x0006, 0x0003, 0x0008, 0x0004, 0x0008, 0x0004, 0x0009, 0x0005,
 };
 
-/* Two bytes of a boss slot that are set together as one word: a reload value and its countdown. */
-typedef union {
-    u16 h;
-    s16 sh;
-    struct { u8 reload; u8 count; } t;
-} SlotTimer;
-
 /*
  * The mode part of the boss slot (reg_a4), one record per mode. `running` is cleared when the mode hands over.
- * Fields named *_argN are copied to offset N of the slot of the attack they start.
+ * The attack records it fills in are in stage1_boss.h.
  */
 typedef struct {
     /* 0x00 */ s16 running;
@@ -69,18 +63,18 @@ typedef struct {
     /* 0x00 */ s16 running;
     /* 0x02 */ u8 unused_02;
     /* 0x03 */ u8 step;
-    /* 0x04 */ SlotTimer gatling;      /* wait between two gatling attacks */
+    /* 0x04 */ SlotTimer turrets;      /* wait between two turret attacks */
     /* 0x06 */ union {
-        u16 h;
-        struct { u8 rate; u8 zero; } b;
-    } gatling_arg2;
+        u16 h;                         /* becomes the turret attack's shot timer */
+        struct { u8 wait; u8 zero; } b;
+    } turret_shot;
     /* 0x08 */ u8 unused_08;
-    /* 0x09 */ u8 gatling_arg5;
-    /* 0x0A */ SlotTimer side_guns;    /* wait between two side gun attacks */
+    /* 0x09 */ u8 turret_volleys;
+    /* 0x0A */ SlotTimer beams;        /* wait between two beam attacks */
     /* 0x0C */ u8 unused_0C;
     /* 0x0D */ union { u8 b; s8 sb; } side; /* 1: the right side fires next, -1: the left */
-    /* 0x0E */ u16 side_gun_level;
-    /* 0x10 */ u16 side_arg10;
+    /* 0x0E */ u16 beam_level;
+    /* 0x10 */ u16 beam_speed;
     /* 0x12 */ s16 unused_12;
     /* 0x14 */ u8 unused_14;
     /* 0x15 */ u8 pause;
@@ -121,11 +115,11 @@ typedef struct {
     /* 0x04 */ SlotTimer aim;            /* frames between two steps of turning the gun toward the player */
     /* 0x06 */ u16 sweep_side;           /* 1 or -1, changes with every volley */
     /* 0x08 */ u8 unused_08;
-    /* 0x09 */ u8 volley_arg5;
+    /* 0x09 */ u8 volley_speed;
     /* 0x0A */ SlotTimer volley;         /* wait between two volleys; gets shorter */
     /* 0x0C */ u16 volleys_left;
-    /* 0x0E */ u16 volley_arg6;
-    /* 0x10 */ u8 volley_arg4;
+    /* 0x0E */ u16 volley_shots;
+    /* 0x10 */ u8 volley_number;
     /* 0x11 */ u8 aiming;
     /* 0x12 */ u16 end_delay;
     /* 0x14 */ s16 unused_14;
@@ -182,21 +176,21 @@ void stage1_boss_mode_normal_start(void) {
     reg_d0.w = 5;
     boss_movement_start();
     NORMAL_MODE(reg_a4)->step = 0;
-    NORMAL_MODE(reg_a4)->gatling.sh = 0x1000;
+    NORMAL_MODE(reg_a4)->turrets.sh = 0x1000;
     func_001713B0();
     reg_d1.b[0] = *(stage1_boss_turret_volleys + reg_d0.b[0]);
     reg_d1.b[0] += ENTITY(reg_a6)[8].sprite.b[1];
     if ((s32) reg_d1.b[0] >= 0x80) {
         reg_d1.b[0] = 0x80;
     }
-    NORMAL_MODE(reg_a4)->gatling_arg5 = (u8) reg_d1.b[0];
+    NORMAL_MODE(reg_a4)->turret_volleys = (u8) reg_d1.b[0];
     reg_d1.b[0] = *(stage1_boss_turret_shot_waits + reg_d0.b[0]);
     reg_d1.b[0] -= ENTITY(reg_a6)[8].draw.b.flip;
     if ((s8) reg_d1.b[0] < 3) {
         reg_d1.b[0] = 3;
     }
-    NORMAL_MODE(reg_a4)->gatling_arg2.b.zero = 0;
-    NORMAL_MODE(reg_a4)->gatling_arg2.b.rate = (u8) reg_d1.b[0];
+    NORMAL_MODE(reg_a4)->turret_shot.b.zero = 0;
+    NORMAL_MODE(reg_a4)->turret_shot.b.wait = (u8) reg_d1.b[0];
     ENTITY(reg_a6)[8].sprite.b[1] += 2;
     if ((s32) ENTITY(reg_a6)[8].sprite.b[1] >= 0x80) {
         ENTITY(reg_a6)[8].sprite.b[1] = 0x80U;
@@ -205,12 +199,12 @@ void stage1_boss_mode_normal_start(void) {
     if ((s8) ENTITY(reg_a6)[8].draw.b.flip < 3) {
         ENTITY(reg_a6)[8].draw.b.flip = 3U;
     }
-    NORMAL_MODE(reg_a4)->side_guns.sh = 0x6000;
+    NORMAL_MODE(reg_a4)->beams.sh = 0x6000;
     NORMAL_MODE(reg_a4)->side.sb = 1;
     NORMAL_MODE(reg_a4)->unused_0C = 4;
     func_001713B0();
     reg_d1.b[0] = *(stage1_boss_beam_waits + reg_d0.b[0]);
-    NORMAL_MODE(reg_a4)->side_guns.t.reload = reg_d1.b[0];
+    NORMAL_MODE(reg_a4)->beams.t.reload = reg_d1.b[0];
     reg_a0 = (u8 *)(stage1_boss_beam_levels);
     reg_d0.h[0] += reg_d0.h[0];
     reg_d1.h[0] = (reg_d0.h[0] != 0) ? *(u16 *)((u8 *)reg_a0 + ((s16)reg_d0.h[0] & ~1)) : *(u16 *)reg_a0;
@@ -218,7 +212,7 @@ void stage1_boss_mode_normal_start(void) {
     if ((s16) reg_d1.h[0] > 4) {
         reg_d1.h[0] = 4;
     }
-    NORMAL_MODE(reg_a4)->side_gun_level = (u16) reg_d1.h[0];
+    NORMAL_MODE(reg_a4)->beam_level = (u16) reg_d1.h[0];
     ENTITY(reg_a6)[8].look.h += 1;
     if ((s16) ENTITY(reg_a6)[8].look.h > 4) {
         ENTITY(reg_a6)[8].look.h = 4U;
@@ -229,7 +223,7 @@ void stage1_boss_mode_normal_start(void) {
     if ((s16) reg_d1.h[0] > 0x20) {
         reg_d1.h[0] = 0x20;
     }
-    NORMAL_MODE(reg_a4)->side_arg10 = (u16) reg_d1.h[0];
+    NORMAL_MODE(reg_a4)->beam_speed = (u16) reg_d1.h[0];
     ENTITY(reg_a6)[8].hit_y_plus.h += 2;
     if ((s16) ENTITY(reg_a6)[8].hit_y_plus.h > 0x20) {
         ENTITY(reg_a6)[8].hit_y_plus.h = 0x20U;
@@ -247,16 +241,16 @@ void stage1_boss_mode_normal(void) {
         reg_d0.w = 1;
         boss_attack_running();
         if (cond_flag == 0) {
-            reg_tmp.b[0] = NORMAL_MODE(reg_a4)->gatling.t.count;
-            NORMAL_MODE(reg_a4)->gatling.t.count -= 1;
+            reg_tmp.b[0] = NORMAL_MODE(reg_a4)->turrets.t.count;
+            NORMAL_MODE(reg_a4)->turrets.t.count -= 1;
             if ((s32) reg_tmp.b[0] <= 0) {
-                NORMAL_MODE(reg_a4)->gatling.t.count = (u8) NORMAL_MODE(reg_a4)->gatling.t.reload;
+                NORMAL_MODE(reg_a4)->turrets.t.count = (u8) NORMAL_MODE(reg_a4)->turrets.t.reload;
                 NORMAL_MODE(reg_a4)->step = 1U;
                 reg_d0.w = 1;
                 boss_attack_start();
-                *(u16 *)(reg_a0 + 2) = (u16) NORMAL_MODE(reg_a4)->gatling_arg2.h;
-                *(u8 *)(reg_a0 + 5) = (u8) NORMAL_MODE(reg_a4)->gatling_arg5;
-                *(u16 *)(reg_a0 + 0xC) = (u16) ENTITY(reg_a6)[8].offset_x.h;
+                TURRETS(reg_a0)->shot.h = (u16) NORMAL_MODE(reg_a4)->turret_shot.h;
+                TURRETS(reg_a0)->volleys_left = (u8) NORMAL_MODE(reg_a4)->turret_volleys;
+                TURRETS(reg_a0)->speed = (u16) ENTITY(reg_a6)[8].offset_x.h;
                 ENTITY(reg_a6)[8].offset_x.h += 2;
                 if ((s16) ENTITY(reg_a6)[8].offset_x.h > 0xC) {
                     ENTITY(reg_a6)[8].offset_x.h = 0xCU;
@@ -280,22 +274,22 @@ void stage1_boss_mode_normal(void) {
                     reg_d0.b[0] += 0x20;
                     NORMAL_MODE(reg_a4)->pause = (u8) reg_d0.b[0];
                 } else {
-                    reg_tmp.b[0] = NORMAL_MODE(reg_a4)->side_guns.t.count;
-                    NORMAL_MODE(reg_a4)->side_guns.t.count -= 1;
+                    reg_tmp.b[0] = NORMAL_MODE(reg_a4)->beams.t.count;
+                    NORMAL_MODE(reg_a4)->beams.t.count -= 1;
                     if ((s32) reg_tmp.b[0] <= 0) {
-                        NORMAL_MODE(reg_a4)->side_guns.t.count = (u8) NORMAL_MODE(reg_a4)->side_guns.t.reload;
+                        NORMAL_MODE(reg_a4)->beams.t.count = (u8) NORMAL_MODE(reg_a4)->beams.t.reload;
                         reg_d0.w = 3;
                         if (NORMAL_MODE(reg_a4)->side.sb < 0) {
                             reg_d0.w = 4;
                         }
                         boss_attack_start();
-                        *(s8 *)(reg_a0 + 3) = 4;
-                        *(u8 *)(reg_a0 + 2) = 0;
+                        BEAM(reg_a0)->shots_left = 4;
+                        BEAM(reg_a0)->kind = 0;
                         NORMAL_MODE(reg_a4)->side.b *= -1;
                         if (NORMAL_MODE(reg_a4)->side.sb >= 0) {
-                            NORMAL_MODE(reg_a4)->side_gun_level += 1;
-                            if ((s16) NORMAL_MODE(reg_a4)->side_gun_level > 4) {
-                                NORMAL_MODE(reg_a4)->side_gun_level = 4U;
+                            NORMAL_MODE(reg_a4)->beam_level += 1;
+                            if ((s16) NORMAL_MODE(reg_a4)->beam_level > 4) {
+                                NORMAL_MODE(reg_a4)->beam_level = 4U;
                             }
                         }
                     }
@@ -318,15 +312,15 @@ void stage1_boss_mode_normal(void) {
                     reg_d0.w = 3;
                     reg_d7.h[0] += 1;
                     boss_attack_start();
-                    *(s8 *)(reg_a0 + 3) = 8;
-                    *(u8 *)(reg_a0 + 2) = (u8) reg_d7.b[0];
-                    temp_a0_3 = NORMAL_MODE(reg_a4)->side_arg10;
-                    *(u16 *)(reg_a0 + 0x10) = temp_a0_3;
+                    BEAM(reg_a0)->shots_left = 8;
+                    BEAM(reg_a0)->kind = (u8) reg_d7.b[0];
+                    temp_a0_3 = NORMAL_MODE(reg_a4)->beam_speed;
+                    BEAM(reg_a0)->speed = temp_a0_3;
                     reg_d0.w = 4;
                     boss_attack_start();
-                    *(s8 *)(reg_a0 + 3) = 8;
-                    *(u8 *)(reg_a0 + 2) = (u8) reg_d7.b[0];
-                    *(u16 *)(reg_a0 + 0x10) = (u16) NORMAL_MODE(reg_a4)->side_arg10;
+                    BEAM(reg_a0)->shots_left = 8;
+                    BEAM(reg_a0)->kind = (u8) reg_d7.b[0];
+                    BEAM(reg_a0)->speed = (u16) NORMAL_MODE(reg_a4)->beam_speed;
                     NORMAL_MODE(reg_a4)->step = 3U;
                 }
             }
@@ -656,17 +650,17 @@ void stage1_boss_mode_both_sides_lost() {
 void stage1_boss_mode_gatling_start(void) {
     GATLING_MODE(reg_a4)->step = 0;
     GATLING_MODE(reg_a4)->aim.sh = 0x202;
-    GATLING_MODE(reg_a4)->volley_arg5 = 0xD;
+    GATLING_MODE(reg_a4)->volley_speed = 0xD;
     GATLING_MODE(reg_a4)->volley.sh = 0x7050;
     GATLING_MODE(reg_a4)->unused_14 = 0x2040;
     GATLING_MODE(reg_a4)->aiming = 1;
-    GATLING_MODE(reg_a4)->volley_arg4 = 1;
+    GATLING_MODE(reg_a4)->volley_number = 1;
     func_001713B0();
     reg_a0 = (u8 *)(stage1_boss_gatling_levels);
     reg_d0.h[0] += reg_d0.h[0];
     reg_d0.h[0] += reg_d0.h[0];
     reg_a0 += reg_d0.h[0];
-    GATLING_MODE(reg_a4)->volley_arg6 = (u16) *(u16 *)reg_a0;
+    GATLING_MODE(reg_a4)->volley_shots = (u16) *(u16 *)reg_a0;
     reg_a0 += 2;
     reg_d1.h[0] = *(u16 *)reg_a0;
     reg_d1.h[0] += ENTITY(reg_a6)[8].hp.h;
@@ -746,12 +740,12 @@ void stage1_boss_mode_gatling(void) {
                 GATLING_MODE(reg_a4)->volley.t.count = (u8) GATLING_MODE(reg_a4)->volley.t.reload;
                 reg_d0.w = 0xD;
                 boss_attack_start();
-                *(u8 *)(reg_a0 + 5) = (u8) GATLING_MODE(reg_a4)->volley_arg5;
-                *(u8 *)(reg_a0 + 4) = (u8) GATLING_MODE(reg_a4)->volley_arg4;
-                *(u16 *)(reg_a0 + 6) = (u16) GATLING_MODE(reg_a4)->volley_arg6;
-                GATLING_MODE(reg_a4)->volley_arg5 += 4;
-                GATLING_MODE(reg_a4)->volley_arg4 += 1;
-                GATLING_MODE(reg_a4)->volley_arg6 += 2;
+                GATLING_C(reg_a0)->speed = (u8) GATLING_MODE(reg_a4)->volley_speed;
+                GATLING_C(reg_a0)->volley_number = (u8) GATLING_MODE(reg_a4)->volley_number;
+                GATLING_C(reg_a0)->shots_left = (u16) GATLING_MODE(reg_a4)->volley_shots;
+                GATLING_MODE(reg_a4)->volley_speed += 4;
+                GATLING_MODE(reg_a4)->volley_number += 1;
+                GATLING_MODE(reg_a4)->volley_shots += 2;
                 GATLING_MODE(reg_a4)->aiming = 1U;
                 GATLING_MODE(reg_a4)->sweep_side *= 0xFFFF;
                 GATLING_MODE(reg_a4)->volleys_left -= 1;

@@ -1,5 +1,6 @@
 #include "common.h"
 #include "entity.h"
+#include "stage1_boss.h"
 
 void stage1_boss_fire_body_ports_rage_start(void);
 void stage1_boss_fire_body_ports_rage(void);
@@ -32,89 +33,6 @@ void stage1_boss_fire_body_ports_aimed(void);
 void stage1_boss_fire_front_guns_rage(void);
 void stage1_boss_fire_front_guns_rage_spread(void);
 void stage1_boss_fire_side_spread(void);
-/* Two bytes of a boss slot that are set together as one word: a reload value and its countdown. */
-typedef union {
-    u16 h;
-    s16 sh;
-    struct { u8 reload; u8 count; } t;
-} SlotTimer;
-
-/*
- * The attack part of the boss slot (reg_a4), one record per attack. `running` is cleared when the attack is over.
- * The mode that starts an attack fills in some of its fields. Directions are in 1/256 of a turn where the
- * bullets are fired with the 256-step routines, otherwise in 1/64.
- */
-typedef struct {
-    /* 0x00 */ s16 running;
-    /* 0x02 */ SlotTimer shot;
-    /* 0x04 */ u16 speed;
-    /* 0x06 */ u16 shots_left;
-    /* 0x08 */ u16 spread;        /* angle between the pairs; grows by spread_step with every shot */
-    /* 0x0A */ u8 unused_0A;
-    /* 0x0B */ u8 direction;
-    /* 0x0C */ u16 spread_step;
-} BodyPortsRage;
-
-typedef struct {
-    /* 0x00 */ s16 running;
-    /* 0x02 */ SlotTimer shot;
-    /* 0x04 */ u8 swing;          /* one bit per turret: swinging back */
-    /* 0x05 */ u8 volleys_left;
-    /* 0x06 */ u8 unused_06;
-    /* 0x07 */ u8 aimed;          /* every turret has reached its start angle */
-    /* 0x08 */ u8 start_angle[4];
-    /* 0x0C */ u16 speed;
-} TurretsScatter;
-
-typedef struct {
-    /* 0x00 */ s16 running;
-    /* 0x02 */ SlotTimer aim_wait;
-    /* 0x04 */ u8 target_angle;
-    /* 0x05 */ u8 step;
-    /* 0x06 */ SlotTimer turn;
-    /* 0x08 */ SlotTimer shot;
-    /* 0x0A */ u16 shots_left;
-    /* 0x0C */ u16 speed;
-} GatlingA;
-
-/* The beams of the right and the left side. */
-typedef struct {
-    /* 0x00 */ s16 running;
-    /* 0x02 */ u8 kind;           /* 0: one aimed line, otherwise a fan */
-    /* 0x03 */ u8 shots_left;
-    /* 0x04 */ SlotTimer shot;
-    /* 0x06 */ Field16 spare;
-    /* 0x08 */ u16 y;             /* where the bullets start */
-    /* 0x0A */ u16 x;
-    /* 0x0C */ u8 unused_0C;
-    /* 0x0D */ u8 direction;
-    /* 0x0E */ u16 unused_0E;
-    /* 0x10 */ u16 speed;
-} SideBeam;
-
-/* The main guns of the right and the left side. */
-typedef struct {
-    /* 0x00 */ s16 running;
-    /* 0x02 */ u8 interval;       /* frames between two shots; gets shorter */
-    /* 0x03 */ u8 wait;
-    /* 0x04 */ s16 unused_04;
-    /* 0x06 */ s16 unused_06;
-    /* 0x08 */ u8 unused_08[3];
-    /* 0x0B */ u8 direction;      /* turns with every shot */
-    /* 0x0C */ u8 unused_0C[2];
-    /* 0x0E */ SlotTimer speedup; /* shots between two steps of the interval */
-    /* 0x10 */ SlotTimer spare;
-    /* 0x12 */ u8 unused_12;
-    /* 0x13 */ u8 unused_13;
-    /* 0x14 */ u16 speed;
-} SideMainGun;
-
-#define RAGE(pointer) ((BodyPortsRage *)(pointer))
-#define TURRETS(pointer) ((TurretsScatter *)(pointer))
-#define GATLING_A(pointer) ((GatlingA *)(pointer))
-#define BEAM(pointer) ((SideBeam *)(pointer))
-#define MAIN_GUN(pointer) ((SideMainGun *)(pointer))
-
 /* The set-up routine and the per-frame routine of every attack, by attack number. */
 void (*stage1_boss_fire_routines[])(void) = {
     stage1_boss_fire_body_ports_rage_start,
@@ -166,7 +84,7 @@ void stage1_boss_fire_side_spread();
 extern u16 *reg_a4_as_u16_p;
 
 void stage1_boss_fire_clear(void) {
-    *reg_a4_as_u16_p = 0;
+    RAGE(reg_a4)->running = 0;
 }
 
 
@@ -422,13 +340,13 @@ void stage1_boss_fire_turrets_sweep(void) {
 }
 
 void stage1_boss_fire_gatling_a_start(void) {
-    GATLING_A(reg_a4)->aim_wait.h = 0;
-    GATLING_A(reg_a4)->step = 0;
-    GATLING_A(reg_a4)->target_angle = 0x20;
-    GATLING_A(reg_a4)->turn.h = 0x101;
-    GATLING_A(reg_a4)->shot.h = 4;
-    GATLING_A(reg_a4)->shots_left = 0x10;
-    GATLING_A(reg_a4)->speed = 0xFFFC;
+    GATLING(reg_a4)->aim_wait.h = 0;
+    GATLING(reg_a4)->step = 0;
+    GATLING(reg_a4)->target_angle = 0x20;
+    GATLING(reg_a4)->turn.h = 0x101;
+    GATLING(reg_a4)->shot.h = 4;
+    GATLING(reg_a4)->shots_left = 0x10;
+    GATLING(reg_a4)->speed = 0xFFFC;
 }
 
 s32 bullet_fire256_fixed();
@@ -441,12 +359,12 @@ void stage1_boss_fire_gatling_a(void) {
     u16 temp_a0_2;
     u8 temp_a0;
 
-    if (GATLING_A(reg_a4)->step == 0) {
-        reg_tmp.b[0] = GATLING_A(reg_a4)->aim_wait.t.count;
-        GATLING_A(reg_a4)->aim_wait.t.count -= 1;
+    if (GATLING(reg_a4)->step == 0) {
+        reg_tmp.b[0] = GATLING(reg_a4)->aim_wait.t.count;
+        GATLING(reg_a4)->aim_wait.t.count -= 1;
         if ((s32) reg_tmp.b[0] <= 0) {
-            GATLING_A(reg_a4)->aim_wait.t.count = (u8) GATLING_A(reg_a4)->aim_wait.t.reload;
-            GATLING_A(reg_a4)->step = 1U;
+            GATLING(reg_a4)->aim_wait.t.count = (u8) GATLING(reg_a4)->aim_wait.t.reload;
+            GATLING(reg_a4)->step = 1U;
             reg_d0.h[0] = ENTITY(reg_a6)[5].y.h;
             reg_d1.h[0] = ENTITY(reg_a6)[5].x.h;
             aim_at_player();
@@ -457,19 +375,19 @@ void stage1_boss_fire_gatling_a(void) {
                 if ((s8) reg_d1.b[0] < 0x19) {
                     reg_d1.w = 0x19;
                 }
-                GATLING_A(reg_a4)->target_angle = (u8) reg_d1.b[0];
+                GATLING(reg_a4)->target_angle = (u8) reg_d1.b[0];
             }
         }
     }
-    temp_a0 = GATLING_A(reg_a4)->step;
+    temp_a0 = GATLING(reg_a4)->step;
     if (temp_a0 == 1) {
-        reg_tmp.b[0] = GATLING_A(reg_a4)->turn.t.count;
-        GATLING_A(reg_a4)->turn.t.count -= 1;
+        reg_tmp.b[0] = GATLING(reg_a4)->turn.t.count;
+        GATLING(reg_a4)->turn.t.count -= 1;
         if ((s32) reg_tmp.b[0] <= 0) {
-            GATLING_A(reg_a4)->turn.t.count = (u8) GATLING_A(reg_a4)->turn.t.reload;
+            GATLING(reg_a4)->turn.t.count = (u8) GATLING(reg_a4)->turn.t.reload;
             reg_d0.w = 0;
             reg_d1.w = 0;
-            reg_d1.b[0] = GATLING_A(reg_a4)->target_angle;
+            reg_d1.b[0] = GATLING(reg_a4)->target_angle;
             reg_d0.h[0] = ENTITY(reg_a6)[5].sprite.h;
             reg_d0.h[0] += 0x20;
             direction_turn_toward();
@@ -477,24 +395,24 @@ void stage1_boss_fire_gatling_a(void) {
             reg_d0.h[0] = (u16) reg_d0.b[0];
             reg_d0.h[0] -= 0x20;
             ENTITY(reg_a6)[5].sprite.h = (u16) reg_d0.h[0];
-            if (GATLING_A(reg_a4)->target_angle == reg_d1.b[0]) {
-                GATLING_A(reg_a4)->step = 2U;
+            if (GATLING(reg_a4)->target_angle == reg_d1.b[0]) {
+                GATLING(reg_a4)->step = 2U;
             }
         }
     }
-    if (GATLING_A(reg_a4)->step == 2) {
-        reg_tmp.b[0] = GATLING_A(reg_a4)->shot.t.count;
-        GATLING_A(reg_a4)->shot.t.count -= 1;
+    if (GATLING(reg_a4)->step == 2) {
+        reg_tmp.b[0] = GATLING(reg_a4)->shot.t.count;
+        GATLING(reg_a4)->shot.t.count -= 1;
         if ((s32) reg_tmp.b[0] <= 0) {
-            GATLING_A(reg_a4)->shot.t.count = (u8) GATLING_A(reg_a4)->shot.t.reload;
-            reg_d0.h[0] = GATLING_A(reg_a4)->speed;
+            GATLING(reg_a4)->shot.t.count = (u8) GATLING(reg_a4)->shot.t.reload;
+            reg_d0.h[0] = GATLING(reg_a4)->speed;
             reg_d0.h[0] += 0x14;
             reg_tmp.w = reg_d0.w;
             reg_d0.h[1] = reg_d0.h[0];
             reg_d0.h[0] = 7;
             func_00201200();
             reg_d5.b[0] -= 1;
-            reg_d5.b[0] += GATLING_A(reg_a4)->target_angle;
+            reg_d5.b[0] += GATLING(reg_a4)->target_angle;
             reg_a0 = (u8 *)(D_0026E0C0);
             reg_d5.h[0] &= 0x3F;
             reg_d1.h[0] = reg_d5.h[0];
@@ -511,10 +429,10 @@ void stage1_boss_fire_gatling_a(void) {
             reg_d4.w = 0;
             reg_d2.w += reg_tmp.w;
             bullet_fire256_fixed();
-            GATLING_A(reg_a4)->speed += 2;
-            GATLING_A(reg_a4)->shots_left -= 1;
-            if (GATLING_A(reg_a4)->shots_left == 0) {
-                GATLING_A(reg_a4)->running = 0;
+            GATLING(reg_a4)->speed += 2;
+            GATLING(reg_a4)->shots_left -= 1;
+            if (GATLING(reg_a4)->shots_left == 0) {
+                GATLING(reg_a4)->running = 0;
             }
         }
     }
@@ -833,36 +751,36 @@ void stage1_boss_fire_left_main_gun() {
 }
 
 void stage1_boss_fire_gatling_b_start(void) {
-    *(s8 *)(reg_a4 + 5) = 0;
-    *(s8 *)(reg_a4 + 4) = 0x20;
-    *(u16 *)(reg_a4 + 6) = 0x202;
-    *(u16 *)(reg_a4 + 8) = 8;
-    *(u16 *)(reg_a4 + 0xA) = 6;
-    *(u16 *)(reg_a4 + 0xC) = 0xFFF8;
+    GATLING(reg_a4)->step = 0;
+    GATLING(reg_a4)->target_angle = 0x20;
+    GATLING(reg_a4)->turn.h = 0x202;
+    GATLING(reg_a4)->shot.h = 8;
+    GATLING(reg_a4)->shots_left = 6;
+    GATLING(reg_a4)->speed = 0xFFF8;
 }
 
 void stage1_boss_fire_gatling_b(void) {
     u16 temp_a0;
 
-    if (*(u8 *)(reg_a4 + 5) == 0) {
-        *(u8 *)(reg_a4 + 5) = 1U;
+    if (GATLING(reg_a4)->step == 0) {
+        GATLING(reg_a4)->step = 1U;
     }
-    if (*(u8 *)(reg_a4 + 5) == 1) {
-        *(u8 *)(reg_a4 + 5) = 2U;
+    if (GATLING(reg_a4)->step == 1) {
+        GATLING(reg_a4)->step = 2U;
     }
-    if (*(u8 *)(reg_a4 + 5) == 2) {
-        reg_tmp.b[0] = *(u8 *)(reg_a4 + 9);
-        *(u8 *)(reg_a4 + 9) -= 1;
+    if (GATLING(reg_a4)->step == 2) {
+        reg_tmp.b[0] = GATLING(reg_a4)->shot.t.count;
+        GATLING(reg_a4)->shot.t.count -= 1;
         if ((s32) reg_tmp.b[0] <= 0) {
-            *(u8 *)(reg_a4 + 9) = (u8) *(u8 *)(reg_a4 + 8);
-            reg_d0.h[0] = *(u16 *)(reg_a4 + 0xC);
+            GATLING(reg_a4)->shot.t.count = (u8) GATLING(reg_a4)->shot.t.reload;
+            reg_d0.h[0] = GATLING(reg_a4)->speed;
             reg_d0.h[0] += 0x14;
             reg_tmp.w = reg_d0.w;
             reg_d0.h[1] = reg_d0.h[0];
             reg_d0.h[0] = 7;
             func_00201200();
             reg_d5.b[0] -= 1;
-            reg_d5.b[0] += *(u8 *)(reg_a4 + 4);
+            reg_d5.b[0] += GATLING(reg_a4)->target_angle;
             reg_a0 = (u8 *)(D_0026E0C0);
             reg_d5.h[0] &= 0x3F;
             reg_d1.h[0] = reg_d5.h[0];
@@ -879,10 +797,10 @@ void stage1_boss_fire_gatling_b(void) {
             reg_d4.w = 0;
             reg_d2.w += reg_tmp.w;
             bullet_fire256_fixed();
-            *(u16 *)(reg_a4 + 0xC) += 1;
-            *(u16 *)(reg_a4 + 0xA) -= 1;
-            if (*(u16 *)(reg_a4 + 0xA) == 0) {
-                *(s16 *)reg_a4 = 0;
+            GATLING(reg_a4)->speed += 1;
+            GATLING(reg_a4)->shots_left -= 1;
+            if (GATLING(reg_a4)->shots_left == 0) {
+                GATLING(reg_a4)->running = 0;
             }
         }
     }
@@ -896,31 +814,31 @@ void stage1_boss_fire_main_guns_burst_start(void) {
     func_001713B0();
     reg_d0.h[0] += reg_d0.h[0];
     reg_a0 = (u8 *)(D_0026E110);
-    *(u16 *)(reg_a4 + 2) = (reg_d0.h[0] != 0) ? *(u16 *)((u8 *)reg_a0 + ((s16)reg_d0.h[0] & ~1)) : *(u16 *)reg_a0;
+    BURST(reg_a4)->shell_arg1E = (reg_d0.h[0] != 0) ? *(u16 *)((u8 *)reg_a0 + ((s16)reg_d0.h[0] & ~1)) : *(u16 *)reg_a0;
     reg_a0 = (u8 *)(D_0026E100);
-    *(u16 *)(reg_a4 + 4) = (reg_d0.h[0] != 0) ? *(u16 *)((u8 *)reg_a0 + ((s16)reg_d0.h[0] & ~1)) : *(u16 *)reg_a0;
-    *(s16 *)(reg_a4 + 6) = 0x18;
-    *(u16 *)(reg_a4 + 8) = 0U;
-    *(s16 *)(reg_a4 + 0xA) = 2;
+    BURST(reg_a4)->shell_arg1C = (reg_d0.h[0] != 0) ? *(u16 *)((u8 *)reg_a0 + ((s16)reg_d0.h[0] & ~1)) : *(u16 *)reg_a0;
+    BURST(reg_a4)->shot.sh = 0x18;
+    BURST(reg_a4)->side = 0U;
+    BURST(reg_a4)->volleys_left = 2;
     rng_next_unsigned();
     reg_d0.h[0] &= 1;
-    *(u16 *)(reg_a4 + 8) = (u16) reg_d0.h[0];
+    BURST(reg_a4)->side = (u16) reg_d0.h[0];
     stage1_boss_fire_main_guns_burst();
 }
 
 s32 spawn_request_add();
 
 void stage1_boss_fire_main_guns_burst(void) {
-    reg_tmp.b[0] = reg_a4[7];
-    reg_a4[7] -= 1;
+    reg_tmp.b[0] = BURST(reg_a4)->shot.t.count;
+    BURST(reg_a4)->shot.t.count -= 1;
     if ((s32) reg_tmp.b[0] > 0) {
         return;
     }
-    reg_a4[7] = reg_a4[6];
+    BURST(reg_a4)->shot.t.count = BURST(reg_a4)->shot.t.reload;
     if (ENTITY(reg_a6)[1].misc.b.draw_layer != 0) {
         goto skip_1;
     }
-    if (*(u16 *)(reg_a4 + 8) != 0) {
+    if (BURST(reg_a4)->side != 0) {
         goto skip_1;
     }
     reg_d0.w = 0x1E;
@@ -931,8 +849,8 @@ void stage1_boss_fire_main_guns_burst(void) {
     *(u16 *)(reg_a0 + 0x16) = reg_d0.h[1];
     *(u16 *)(reg_a0 + 0x18) = reg_d0.h[0];
     *(u16 *)(reg_a0 + 0x1A) = 0x2020;
-    *(u16 *)(reg_a0 + 0x1C) = *(u16 *)(reg_a4 + 4);
-    *(u16 *)(reg_a0 + 0x1E) = *(u16 *)(reg_a4 + 2);
+    *(u16 *)(reg_a0 + 0x1C) = BURST(reg_a4)->shell_arg1C;
+    *(u16 *)(reg_a0 + 0x1E) = BURST(reg_a4)->shell_arg1E;
     if (g_loop == 0) {
         goto skip_1;
     }
@@ -944,13 +862,13 @@ void stage1_boss_fire_main_guns_burst(void) {
     *(u16 *)(reg_a0 + 0x16) = reg_d0.h[1];
     *(u16 *)(reg_a0 + 0x18) = reg_d0.h[0];
     *(u16 *)(reg_a0 + 0x1A) = 0x1A28;
-    *(u16 *)(reg_a0 + 0x1C) = *(u16 *)(reg_a4 + 4);
-    *(u16 *)(reg_a0 + 0x1E) = *(u16 *)(reg_a4 + 2);
+    *(u16 *)(reg_a0 + 0x1C) = BURST(reg_a4)->shell_arg1C;
+    *(u16 *)(reg_a0 + 0x1E) = BURST(reg_a4)->shell_arg1E;
 skip_1:
     if (ENTITY(reg_a6)[3].misc.b.draw_layer != 0) {
         goto skip_2;
     }
-    if (*(u16 *)(reg_a4 + 8) == 0) {
+    if (BURST(reg_a4)->side == 0) {
         goto skip_2;
     }
     reg_d0.w = 0x1E;
@@ -961,8 +879,8 @@ skip_1:
     *(u16 *)(reg_a0 + 0x16) = reg_d0.h[1];
     *(u16 *)(reg_a0 + 0x18) = reg_d0.h[0];
     *(u16 *)(reg_a0 + 0x1A) = 0x2020;
-    *(u16 *)(reg_a0 + 0x1C) = *(u16 *)(reg_a4 + 4);
-    *(u16 *)(reg_a0 + 0x1E) = *(u16 *)(reg_a4 + 2);
+    *(u16 *)(reg_a0 + 0x1C) = BURST(reg_a4)->shell_arg1C;
+    *(u16 *)(reg_a0 + 0x1E) = BURST(reg_a4)->shell_arg1E;
     if (g_loop == 0) {
         goto skip_2;
     }
@@ -974,15 +892,15 @@ skip_1:
     *(u16 *)(reg_a0 + 0x16) = reg_d0.h[1];
     *(u16 *)(reg_a0 + 0x18) = reg_d0.h[0];
     *(u16 *)(reg_a0 + 0x1A) = 0x1A18;
-    *(u16 *)(reg_a0 + 0x1C) = *(u16 *)(reg_a4 + 4);
-    *(u16 *)(reg_a0 + 0x1E) = *(u16 *)(reg_a4 + 2);
+    *(u16 *)(reg_a0 + 0x1C) = BURST(reg_a4)->shell_arg1C;
+    *(u16 *)(reg_a0 + 0x1E) = BURST(reg_a4)->shell_arg1E;
 skip_2:
-    *(u16 *)(reg_a4 + 4) += 1;
-    *(u16 *)(reg_a4 + 8) += 1;
-    *(u16 *)(reg_a4 + 8) &= 1;
-    *(u16 *)(reg_a4 + 0xA) -= 1;
-    if (*(u16 *)(reg_a4 + 0xA) == 0) {
-        *(u16 *)reg_a4 = 0;
+    BURST(reg_a4)->shell_arg1C += 1;
+    BURST(reg_a4)->side += 1;
+    BURST(reg_a4)->side &= 1;
+    BURST(reg_a4)->volleys_left -= 1;
+    if (BURST(reg_a4)->volleys_left == 0) {
+        BURST(reg_a4)->running = 0;
     }
 }
 
@@ -994,9 +912,9 @@ void stage1_boss_fire_body_ports_rapid_start(void) {
     reg_d0.h[0] += reg_d0.h[0];
     reg_d0.h[0] += reg_d0.h[0];
     reg_a0 += reg_d0.h[0];
-    *(u16 *)(reg_a4 + 8) = *(u16 *)reg_a0;
+    PORTS(reg_a4)->shot.h = *(u16 *)reg_a0;
     reg_a0 += 2;
-    *(u16 *)(reg_a4 + 0xA) = *(u16 *)reg_a0;
+    PORTS(reg_a4)->shots_left = *(u16 *)reg_a0;
     stage1_boss_fire_body_ports_rapid();
 }
 
@@ -1005,10 +923,10 @@ s32 bullet_fire256();
 void stage1_boss_fire_body_ports_rapid() {
     u16 temp_a2;
 
-    reg_tmp.b[0] = *(u8 *)(reg_a4 + 9);
-    *(u8 *)(reg_a4 + 9) -= 1;
+    reg_tmp.b[0] = PORTS(reg_a4)->shot.t.count;
+    PORTS(reg_a4)->shot.t.count -= 1;
     if ((s32) reg_tmp.b[0] <= 0) {
-        *(u8 *)(reg_a4 + 9) = (u8) *(u8 *)(reg_a4 + 8);
+        PORTS(reg_a4)->shot.t.count = (u8) PORTS(reg_a4)->shot.t.reload;
         reg_d1.w = 0;
         reg_d1.b[0] = 0x80;
         reg_d2.h[1] = ENTITY(reg_a6)->y.h;
@@ -1032,9 +950,9 @@ void stage1_boss_fire_body_ports_rapid() {
         reg_d3.h[1] = D_0026E098[0];
         reg_d3.h[0] = D_0026E09A[0];
         bullet_fire256();
-        *(u16 *)(reg_a4 + 0xA) -= 1;
-        if (*(u16 *)(reg_a4 + 0xA) == 0) {
-            *(s16 *)reg_a4 = 0;
+        PORTS(reg_a4)->shots_left -= 1;
+        if (PORTS(reg_a4)->shots_left == 0) {
+            PORTS(reg_a4)->running = 0;
         }
     }
 }
@@ -1049,11 +967,11 @@ void stage1_boss_fire_body_ports_aimed_start(void) {
     reg_d0.h[0] += reg_d0.h[0];
     reg_d0.h[0] += reg_d0.h[0];
     reg_a0 += reg_d0.h[0];
-    *(u16 *)(reg_a4 + 8) = (u16) *(u16 *)reg_a0;
+    PORTS(reg_a4)->shot.h = (u16) *(u16 *)reg_a0;
     reg_a0 += 2;
     temp_a0 = *(u16 *)reg_a0;
-    *(u16 *)(reg_a4 + 0xA) = temp_a0;
-    *(s8 *)(reg_a4 + 0xD) = 0x20;
+    PORTS(reg_a4)->shots_left = temp_a0;
+    PORTS(reg_a4)->direction = 0x20;
     stage1_boss_fire_body_ports_aimed();
 }
 
@@ -1061,15 +979,15 @@ void stage1_boss_fire_body_ports_aimed() {
     u16 temp_a2;
     u8 temp_a0;
 
-    reg_tmp.b[0] = *(u8 *)(reg_a4 + 9);
-    *(u8 *)(reg_a4 + 9) -= 1;
+    reg_tmp.b[0] = PORTS(reg_a4)->shot.t.count;
+    PORTS(reg_a4)->shot.t.count -= 1;
     if ((s32) reg_tmp.b[0] <= 0) {
-        *(u8 *)(reg_a4 + 9) = (u8) *(u8 *)(reg_a4 + 8);
+        PORTS(reg_a4)->shot.t.count = (u8) PORTS(reg_a4)->shot.t.reload;
         reg_d0.h[0] = ENTITY(reg_a6)->y.h;
         reg_d1.h[0] = ENTITY(reg_a6)->x.h;
         aim256_at_player();
         if (cond_flag == 0) {
-            *(u8 *)(reg_a4 + 0xD) = (u8) reg_d1.b[0];
+            PORTS(reg_a4)->direction = (u8) reg_d1.b[0];
         }
         reg_d2.h[1] = ENTITY(reg_a6)->y.h;
         temp_a2 = ENTITY(reg_a6)->x.h;
@@ -1077,7 +995,7 @@ void stage1_boss_fire_body_ports_aimed() {
         reg_d0.w = 0x20009;
         reg_d4.w = 0;
         reg_d1.w = 0;
-        temp_a0 = *(u8 *)(reg_a4 + 0xD);
+        temp_a0 = PORTS(reg_a4)->direction;
         reg_d1.b[0] = temp_a0;
         reg_d3.h[1] = D_0026E094[0];
         reg_d3.h[0] = D_0026E096[0];
@@ -1091,9 +1009,9 @@ void stage1_boss_fire_body_ports_aimed() {
         reg_d3.h[1] = D_0026E098[0];
         reg_d3.h[0] = D_0026E09A[0];
         bullet_fire256();
-        *(u16 *)(reg_a4 + 0xA) -= 1;
-        if (*(u16 *)(reg_a4 + 0xA) == 0) {
-            *(s16 *)reg_a4 = 0;
+        PORTS(reg_a4)->shots_left -= 1;
+        if (PORTS(reg_a4)->shots_left == 0) {
+            PORTS(reg_a4)->running = 0;
         }
     }
 }
@@ -1101,11 +1019,11 @@ void stage1_boss_fire_body_ports_aimed() {
 extern u16 D_0026E160[];
 
 void stage1_boss_fire_front_guns_rage_start(void) {
-    *(s16 *)(reg_a4 + 2) = 8;
+    FRONT_GUNS(reg_a4)->shot.sh = 8;
     func_001713B0();
     reg_d0.h[0] += reg_d0.h[0];
     reg_a0 = (u8 *)D_0026E160;
-    *(u16 *)(reg_a4 + 4) = (reg_d0.h[0] != 0) ? *(u16 *)((u8 *)((u16 *)reg_a0) + ((s16)reg_d0.h[0] & ~1)) : *(u16 *)reg_a0;
+    FRONT_GUNS(reg_a4)->shots_left = (reg_d0.h[0] != 0) ? *(u16 *)((u8 *)((u16 *)reg_a0) + ((s16)reg_d0.h[0] & ~1)) : *(u16 *)reg_a0;
     stage1_boss_fire_front_guns_rage();
 }
 
@@ -1121,10 +1039,10 @@ extern u16 D_0026E17E[];
 void stage1_boss_fire_front_guns_rage(void) {
     u16 temp_a2;
 
-    reg_tmp.b[0] = *(u8 *)(reg_a4 + 3);
-    *(u8 *)(reg_a4 + 3) -= 1;
+    reg_tmp.b[0] = FRONT_GUNS(reg_a4)->shot.t.count;
+    FRONT_GUNS(reg_a4)->shot.t.count -= 1;
     if ((s32) reg_tmp.b[0] <= 0) {
-        *(u8 *)(reg_a4 + 3) = (u8) *(u8 *)(reg_a4 + 2);
+        FRONT_GUNS(reg_a4)->shot.t.count = (u8) FRONT_GUNS(reg_a4)->shot.t.reload;
         reg_d2.h[1] = ENTITY(reg_a6)->y.h;
         temp_a2 = ENTITY(reg_a6)->x.h;
         reg_d1.w = 0;
@@ -1144,9 +1062,9 @@ void stage1_boss_fire_front_guns_rage(void) {
         reg_d3.h[1] = D_0026E178[0];
         reg_d3.h[0] = D_0026E17A[0];
         bullet_fire256_fixed();
-        *(u16 *)(reg_a4 + 4) -= 1;
-        if (*(u16 *)(reg_a4 + 4) == 0) {
-            *(s16 *)reg_a4 = 0;
+        FRONT_GUNS(reg_a4)->shots_left -= 1;
+        if (FRONT_GUNS(reg_a4)->shots_left == 0) {
+            FRONT_GUNS(reg_a4)->running = 0;
         }
     }
 }
@@ -1157,18 +1075,18 @@ void stage1_boss_fire_front_guns_rage_spread_start(void) {
     func_001713B0();
     reg_d0.h[0] += reg_d0.h[0];
     reg_a0 = (u8 *)D_0026E180;
-    *(u16 *)(reg_a4 + 2) = (reg_d0.h[0] != 0) ? *(u16 *)((u8 *)((u16 *)reg_a0) + ((s16)reg_d0.h[0] & ~1)) : *(u16 *)reg_a0;
-    *(s16 *)(reg_a4 + 4) = 2;
+    FRONT_GUNS(reg_a4)->shot.h = (reg_d0.h[0] != 0) ? *(u16 *)((u8 *)((u16 *)reg_a0) + ((s16)reg_d0.h[0] & ~1)) : *(u16 *)reg_a0;
+    FRONT_GUNS(reg_a4)->shots_left = 2;
     stage1_boss_fire_front_guns_rage_spread();
 }
 
 void stage1_boss_fire_front_guns_rage_spread(void) {
     u16 temp_a2;
 
-    reg_tmp.b[0] = *(u8 *)(reg_a4 + 3);
-    *(u8 *)(reg_a4 + 3) -= 1;
+    reg_tmp.b[0] = FRONT_GUNS(reg_a4)->shot.t.count;
+    FRONT_GUNS(reg_a4)->shot.t.count -= 1;
     if ((s32) reg_tmp.b[0] <= 0) {
-        *(u8 *)(reg_a4 + 3) = (u8) *(u8 *)(reg_a4 + 2);
+        FRONT_GUNS(reg_a4)->shot.t.count = (u8) FRONT_GUNS(reg_a4)->shot.t.reload;
         reg_d2.h[1] = ENTITY(reg_a6)->y.h;
         temp_a2 = ENTITY(reg_a6)->x.h;
         reg_d1.w = 0;
@@ -1199,27 +1117,27 @@ void stage1_boss_fire_front_guns_rage_spread(void) {
         bullet_fire256_2way();
         reg_d1.b[0] -= 0xC;
         bullet_fire256_2way();
-        *(u16 *)(reg_a4 + 4) -= 1;
-        if (*(u16 *)(reg_a4 + 4) == 0) {
-            *(s16 *)reg_a4 = 0;
+        FRONT_GUNS(reg_a4)->shots_left -= 1;
+        if (FRONT_GUNS(reg_a4)->shots_left == 0) {
+            FRONT_GUNS(reg_a4)->running = 0;
         }
     }
 }
 
 void stage1_boss_fire_gatling_c_start(void) {
-    *(s16 *)(reg_a4 + 8) = 8;
-    *(s16 *)(reg_a4 + 0xA) = 0;
-    *(s16 *)(reg_a4 + 0xC) = 0;
+    GATLING_C(reg_a4)->unused_08 = 8;
+    GATLING_C(reg_a4)->spare_0A = 0;
+    GATLING_C(reg_a4)->spare_0C = 0;
     reg_d0.h[0] = ENTITY(reg_a6)[5].sprite.h;
     reg_d0.h[0] += 0x20;
     reg_d0.b[0] += reg_d0.b[0];
     reg_d0.b[0] += reg_d0.b[0];
-    *(u8 *)(reg_a4 + 0x11) = (u8) reg_d0.b[0];
+    GATLING_C(reg_a4)->direction = (u8) reg_d0.b[0];
     reg_d0.h[0] = ENTITY(reg_a6)[5].y.h;
     reg_d1.h[0] = ENTITY(reg_a6)[5].x.h;
     aim256_at_player();
     if (cond_flag == 0) {
-        *(u8 *)(reg_a4 + 0x11) = (u8) reg_d1.b[0];
+        GATLING_C(reg_a4)->direction = (u8) reg_d1.b[0];
     }
     enemy_switch_target_player();
 }
@@ -1278,15 +1196,15 @@ void stage1_boss_fire_gatling_c(void) {
         do {
             rng_next_word();
             reg_d0.h[0] = (u16) ((s16) reg_d0.h[0] >> 3);
-            *(u16 *)(reg_a4 + 0x12) = (u16) reg_d0.h[0];
+            GATLING_C(reg_a4)->jitter = (u16) reg_d0.h[0];
             reg_d0.w = 0;
-            reg_d0.b[0] = *(u8 *)(reg_a4 + 5);
+            reg_d0.b[0] = GATLING_C(reg_a4)->speed;
             reg_d0.h[0] -= 0x14;
             temp_a2 = reg_d0.h[0];
             reg_tmp.w = reg_d0.w;
             reg_d0.h[1] = temp_a2;
             reg_d0.h[0] = 7;
-            reg_d1.b[0] = *(u8 *)(reg_a4 + 0x11);
+            reg_d1.b[0] = GATLING_C(reg_a4)->direction;
             reg_a0 = (u8 *)(D_0026E0C0);
             reg_d2.h[0] = ENTITY(reg_a6)[5].sprite.h;
             reg_d2.h[0] += 7;
@@ -1299,24 +1217,24 @@ void stage1_boss_fire_gatling_c(void) {
             reg_tmp.h[1] = temp_a1;
             reg_tmp.h[0] = ENTITY(reg_a6)[5].x.h;
             reg_d2.w = temp_a0_3 + reg_tmp.w;
-            reg_d2.h[0] += *(u16 *)(reg_a4 + 0x12);
+            reg_d2.h[0] += GATLING_C(reg_a4)->jitter;
             reg_d3.w = 0;
             reg_d4.w = 0;
             bullet_fire256_fixed();
-            *(u8 *)(reg_a4 + 5) += 2;
-            *(u16 *)(reg_a4 + 0xA) += 2;
-            *(u16 *)(reg_a4 + 0xC) += 2;
+            GATLING_C(reg_a4)->speed += 2;
+            GATLING_C(reg_a4)->spare_0A += 2;
+            GATLING_C(reg_a4)->spare_0C += 2;
             rng_next_word();
             reg_d0.h[0] = (u16) ((s16) reg_d0.h[0] >> 3);
-            *(u16 *)(reg_a4 + 0x12) = (u16) reg_d0.h[0];
+            GATLING_C(reg_a4)->jitter = (u16) reg_d0.h[0];
             reg_d0.w = 0;
-            reg_d0.b[0] = *(u8 *)(reg_a4 + 5);
+            reg_d0.b[0] = GATLING_C(reg_a4)->speed;
             reg_d0.h[0] -= 0x15;
             temp_a2_2 = reg_d0.h[0];
             reg_tmp.w = reg_d0.w;
             reg_d0.h[1] = temp_a2_2;
             reg_d0.h[0] = 7;
-            reg_d1.b[0] = *(u8 *)(reg_a4 + 0x11);
+            reg_d1.b[0] = GATLING_C(reg_a4)->direction;
             reg_a0 = (u8 *)(D_0026E0C0);
             reg_d1.b[0] += 3;
             reg_d2.h[0] = ENTITY(reg_a6)[5].sprite.h;
@@ -1330,21 +1248,21 @@ void stage1_boss_fire_gatling_c(void) {
             reg_tmp.h[1] = temp_a1_2;
             reg_tmp.h[0] = ENTITY(reg_a6)[5].x.h;
             reg_d2.w = temp_a0_5 + reg_tmp.w;
-            reg_d2.h[0] += *(u16 *)(reg_a4 + 0x12);
+            reg_d2.h[0] += GATLING_C(reg_a4)->jitter;
             reg_d3.w = 0;
             reg_d4.w = 0;
             bullet_fire256_fixed();
             rng_next_word();
             reg_d0.h[0] = (u16) ((s16) reg_d0.h[0] >> 3);
-            *(u16 *)(reg_a4 + 0x12) = (u16) reg_d0.h[0];
+            GATLING_C(reg_a4)->jitter = (u16) reg_d0.h[0];
             reg_d0.w = 0;
-            reg_d0.b[0] = *(u8 *)(reg_a4 + 5);
+            reg_d0.b[0] = GATLING_C(reg_a4)->speed;
             reg_d0.h[0] -= 0x16;
             temp_a2_3 = reg_d0.h[0];
             reg_tmp.w = reg_d0.w;
             reg_d0.h[1] = temp_a2_3;
             reg_d0.h[0] = 7;
-            reg_d1.b[0] = *(u8 *)(reg_a4 + 0x11);
+            reg_d1.b[0] = GATLING_C(reg_a4)->direction;
             reg_a0 = (u8 *)(D_0026E0C0);
             reg_d1.b[0] -= 3;
             reg_d2.h[0] = ENTITY(reg_a6)[5].sprite.h;
@@ -1358,14 +1276,14 @@ void stage1_boss_fire_gatling_c(void) {
             reg_tmp.h[1] = temp_a1_3;
             reg_tmp.h[0] = ENTITY(reg_a6)[5].x.h;
             reg_d2.w = temp_a0_7 + reg_tmp.w;
-            reg_d2.h[0] += *(u16 *)(reg_a4 + 0x12);
+            reg_d2.h[0] += GATLING_C(reg_a4)->jitter;
             reg_d3.w = 0;
             reg_d4.w = 0;
             bullet_fire256_fixed();
-            *(u16 *)(reg_a4 + 6) -= 1;
-        } while (*(u16 *)(reg_a4 + 6) != 0);
+            GATLING_C(reg_a4)->shots_left -= 1;
+        } while (GATLING_C(reg_a4)->shots_left != 0);
     }
-    *(s16 *)reg_a4 = 0;
+    GATLING_C(reg_a4)->running = 0;
 }
 
 void func_001B7620(void) {
@@ -1392,21 +1310,14 @@ loop_1:
     if (((s64) ((s64) (u16) tmp << 0x30) >> 0x30) >= 0) goto loop_1;
 }
 
-typedef struct WorkRegA4 {
-    u8 pad0[4];
-    u16 unk4;
-    u16 unk6;
-    u16 unk8;
-    u16 unkA;
-} WorkRegA4;
 
 
 
 void stage1_boss_fire_side_spread_start(void) {
-    ((WorkRegA4 *)reg_a4)->unk4 = 0x9050;
-    ((WorkRegA4 *)reg_a4)->unk6 = 0;
-    ((WorkRegA4 *)reg_a4)->unk8 = 1;
-    ((WorkRegA4 *)reg_a4)->unkA = 0xC;
+    SIDE_SPREAD(reg_a4)->round.h = 0x9050;
+    SIDE_SPREAD(reg_a4)->side = 0;
+    SIDE_SPREAD(reg_a4)->volleys.h = 1;
+    SIDE_SPREAD(reg_a4)->shot.h = 0xC;
     stage1_boss_fire_side_spread(1, 0x9050);
 }
 
@@ -1414,24 +1325,24 @@ void stage1_boss_fire_side_spread_start(void) {
 void stage1_boss_fire_side_spread() {
     u8 temp_v1;
 
-    if (*(u8 *)(reg_a4 + 9) == 0) {
-        reg_tmp.b[0] = *(u8 *)(reg_a4 + 5);
-        *(u8 *)(reg_a4 + 5) -= 1;
+    if (SIDE_SPREAD(reg_a4)->volleys.t.count == 0) {
+        reg_tmp.b[0] = SIDE_SPREAD(reg_a4)->round.t.count;
+        SIDE_SPREAD(reg_a4)->round.t.count -= 1;
         if ((s32) reg_tmp.b[0] <= 0) {
-            temp_v1 = *(u8 *)(reg_a4 + 4);
+            temp_v1 = SIDE_SPREAD(reg_a4)->round.t.reload;
             if ((s32) temp_v1 > 0x10) {
-                *(u8 *)(reg_a4 + 4) = (u8) (temp_v1 - 4);
+                SIDE_SPREAD(reg_a4)->round.t.reload = (u8) (temp_v1 - 4);
             }
-            *(u8 *)(reg_a4 + 5) = (u8) *(u8 *)(reg_a4 + 4);
-            *(u8 *)(reg_a4 + 9) = (u8) *(u8 *)(reg_a4 + 8);
+            SIDE_SPREAD(reg_a4)->round.t.count = (u8) SIDE_SPREAD(reg_a4)->round.t.reload;
+            SIDE_SPREAD(reg_a4)->volleys.t.count = (u8) SIDE_SPREAD(reg_a4)->volleys.t.reload;
             goto block_5;
         }
     } else {
 block_5:
-        reg_tmp.b[0] = *(u8 *)(reg_a4 + 0xB);
-        *(u8 *)(reg_a4 + 0xB) -= 1;
+        reg_tmp.b[0] = SIDE_SPREAD(reg_a4)->shot.t.count;
+        SIDE_SPREAD(reg_a4)->shot.t.count -= 1;
         if ((s32) reg_tmp.b[0] <= 0) {
-            *(u8 *)(reg_a4 + 0xB) = (u8) *(u8 *)(reg_a4 + 0xA);
+            SIDE_SPREAD(reg_a4)->shot.t.count = (u8) SIDE_SPREAD(reg_a4)->shot.t.reload;
             enemy_switch_target_player();
             if (ENTITY(reg_a6)[1].misc.b.draw_layer == 0) {
                 reg_d0.h[0] = ENTITY(reg_a6)[1].y.h;
@@ -1459,10 +1370,10 @@ block_5:
                     func_001B7620();
                 }
             }
-            *(u8 *)(reg_a4 + 9) -= 1;
-            if (*(u8 *)(reg_a4 + 9) == 0) {
-                *(u16 *)(reg_a4 + 6) += 1;
-                *(u16 *)(reg_a4 + 6) &= 1;
+            SIDE_SPREAD(reg_a4)->volleys.t.count -= 1;
+            if (SIDE_SPREAD(reg_a4)->volleys.t.count == 0) {
+                SIDE_SPREAD(reg_a4)->side += 1;
+                SIDE_SPREAD(reg_a4)->side &= 1;
             }
         }
     }
