@@ -151,7 +151,8 @@ def integrate_unit(local, source, base, sections, symbols, text, functions, do_b
     rel = source.relative_to(ROOT)
     in_main = rel.parts[:2] == ("src", "main")
     in_shared = rel.parts[:2] == ("src", "game")
-    stub = ("game/" if in_main or in_shared else "death/") + source.stem
+    inner = "/".join(rel.parts[2:-1] + (source.stem,))
+    stub = ("game/" if in_main or in_shared else "death/") + inner
     dest = ROOT / "src" / f"{stub}.c"
     if dest.exists() and dest != source:
         raise ValueError(f"{dest.relative_to(ROOT)} already exists")
@@ -178,10 +179,10 @@ def integrate_unit(local, source, base, sections, symbols, text, functions, do_b
 
         yaml_file = ROOT / "config" / DEATH / "splat.yaml"
         lines = yaml_file.read_text(encoding="utf-8").splitlines()
-        patch_death_text(lines, [{"death_address": base, "size": len(section["data"]), "stub": "x/" + source.stem}], image,
+        patch_death_text(lines, [{"death_address": base, "size": len(section["data"]), "stub": "x/" + inner}], image,
                          file_address, code_end)
         text_yaml = "\n".join(lines) + "\n"
-        yaml_file.write_text(text_yaml.replace(f", c, game/{source.stem}]", f", c, {stub}]"), encoding="utf-8")
+        yaml_file.write_text(text_yaml.replace(f", c, game/{inner}]", f", c, {stub}]"), encoding="utf-8")
         for address, size in rodata:
             patch_splat_rodata(DEATH, address - file_address, size, stub)
         if in_main:

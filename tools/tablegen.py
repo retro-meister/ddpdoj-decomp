@@ -15,7 +15,7 @@
 Addresses that the split assembly shows as plain numbers in both executables are taken from the last
 `tools/shiftcheck.py` run of each executable (build/shiftcheck/addresses_<target>.txt).
 
-Writes the data-only file src/game/FILE.c with the bytes of the stretches (.data / .sdata, main executable
+Writes the data-only file src/game/FILE.c (FILE may name a folder, e.g. play/item_tables) with the bytes of the stretches (.data / .sdata, main executable
 addresses, hex) and gives the file those stretches in both splat.yaml files. Run after
 `uv run tools/build.py --map` and `uv run tools/tablegen.py --refresh` (which reads the symbol references of
 the split assembly and keeps them for the runs that follow); build afterwards (the change re-splits).

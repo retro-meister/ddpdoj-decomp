@@ -33,79 +33,79 @@ segments:
     subsegments:
       - [0x80, asm, sdk]
       - [0x19b90, c, game/enemy/enemy_turret]
-      - [0x1bf20, c, game/layers]
+      - [0x1bf20, c, game/stage/layers]
       - [0x1ca40, c, game/stage1/stage1_scenery]
       - [0x1d620, c, game/stage2/stage2_scenery]
       - [0x1de40, c, game/stage3/stage3_scenery]
       - [0x1eb60, c, game/stage4/stage4_scenery]
       - [0x1f130, c, game/stage5/stage5_scenery]
-      - [0x1f4f0, c, game/map_cell_test]
-      - [0x1fa00, c, game/bomb]
-      - [0x22c60, c, game/splash]
-      - [0x22d60, c, game/ending]
-      - [0x243a0, c, game/boss_slots]
-      - [0x25610, c, game/pickup]
-      - [0x29e30, c, game/bullet]
-      - [0x2fa70, c, game/screen_clear]
-      - [0x2fdc0, c, game/coin]
-      - [0x31280, c, game/frame_services]
-      - [0x31610, c, game/stage_clear]
-      - [0x330f0, c, game/continue_draw]
-      - [0x34120, c, game/continue_screen]
-      - [0x35030, c, game/game]
-      - [0x37990, c, game/text_layer_print]
+      - [0x1f4f0, c, game/test/map_cell_test]
+      - [0x1fa00, c, game/player/bomb]
+      - [0x22c60, c, game/frontend/splash]
+      - [0x22d60, c, game/frontend/ending]
+      - [0x243a0, c, game/stage/boss_slots]
+      - [0x25610, c, game/play/pickup]
+      - [0x29e30, c, game/play/bullet]
+      - [0x2fa70, c, game/graphics/screen_clear]
+      - [0x2fdc0, c, game/frontend/coin]
+      - [0x31280, c, game/system/frame_services]
+      - [0x31610, c, game/stage/stage_clear]
+      - [0x330f0, c, game/frontend/continue_draw]
+      - [0x34120, c, game/frontend/continue_screen]
+      - [0x35030, c, game/play/game]
+      - [0x37990, c, game/system/text_layer_print]
       - [0x37c70, c, game/debug]
-      - [0x38190, c, game/difficulty]
-      - [0x38a50, c, game/ground]
-      - [0x39ba0, c, game/explosion]
-      - [0x3a9b0, c, game/explosion_burst]
-      - [0x3ac40, c, game/explosion_test]
-      - [0x3af90, c, game/fade]
+      - [0x38190, c, game/play/difficulty]
+      - [0x38a50, c, game/stage/ground]
+      - [0x39ba0, c, game/effects/explosion]
+      - [0x3a9b0, c, game/effects/explosion_burst]
+      - [0x3ac40, c, game/test/explosion_test]
+      - [0x3af90, c, game/effects/fade]
       - [0x3ca00, c, game/player/player_support]
       - [0x3fa10, c, game/player/player]
       - [0x45dc0, c, game/player/player_laser]
       - [0x48750, c, game/player/player_shot]
-      - [0x4beb0, c, game/hud_task]
-      - [0x4bf40, c, game/game_over]
-      - [0x4c430, c, game/scroll_events]
+      - [0x4beb0, c, game/play/hud_task]
+      - [0x4bf40, c, game/frontend/game_over]
+      - [0x4c430, c, game/stage/scroll_events]
       - [0x4d2a0, c, game/enemy/enemy]
       - [0x4f070, c, game/stage1/stage1_boss_misc]
-      - [0x50460, c, game/debris_test]
+      - [0x50460, c, game/test/debris_test]
       - [0x50590, c, game/enemy/enemy_heli]
       - [0x536d0, c, game/enemy/enemy_ground]
       - [0x5b980, c, game/enemy/enemy_dummy]
       - [0x5b9b0, c, game/enemy/enemy_common]
       - [0x5c4f0, c, game/enemy/enemy_mid]
       - [0x68190, c, game/enemy/enemy_mid_test]
-      - [0x68b20, c, game/formation_fire_timer]
-      - [0x68c20, c, game/attract]
-      - [0x6a770, c, game/input]
-      - [0x6a970, c, game/item]
-      - [0x6c530, c, game/item_test]
+      - [0x68b20, c, game/stage/formation_fire_timer]
+      - [0x68c20, c, game/frontend/attract]
+      - [0x6a770, c, game/system/input]
+      - [0x6a970, c, game/play/item]
+      - [0x6c530, c, game/test/item_test]
       - [0x6ce50, c, game/enemy/enemy_small]
       - [0x70ad0, c, game/enemy/enemy_util]
-      - [0x71510, c, game/stage_clear_objects]
-      - [0x71f50, c, game/stage_clear_colors]
+      - [0x71510, c, game/stage/stage_clear_objects]
+      - [0x71f50, c, game/stage/stage_clear_colors]
       - [0x723a0, c, game/pointer_tables]
-      - [0x8c600, c, game/sound_rpc]
+      - [0x8c600, c, game/system/sound_rpc]
       - [0x8e620, c, game/table_checks]
-      - [0x97fe0, c, game/name_entry]
-      - [0x9ab10, c, game/sprite_queue]
-      - [0x9dca0, c, game/option_shot]
+      - [0x97fe0, c, game/frontend/name_entry]
+      - [0x9ab10, c, game/graphics/sprite_queue]
+      - [0x9dca0, c, game/player/option_shot]
       - [0x9f2f0, c, game/player/player_options]
-      - [0xa2980, c, game/palette]
+      - [0xa2980, c, game/graphics/palette]
       - [0xa3120, c, game/player/player_panel]
-      - [0xa3da0, c, game/ranking]
+      - [0xa3da0, c, game/frontend/ranking]
       - [0xa5020, c, game/enemy/enemy_spawner]
-      - [0xa5430, c, game/hud]
-      - [0xa9040, c, game/score_add]
-      - [0xacc20, c, game/scoring]
-      - [0xaf340, c, game/ship_select_player]
-      - [0xb0ee0, c, game/ship_select]
+      - [0xa5430, c, game/play/hud]
+      - [0xa9040, c, game/play/score_add]
+      - [0xacc20, c, game/play/scoring]
+      - [0xaf340, c, game/frontend/ship_select_player]
+      - [0xb0ee0, c, game/frontend/ship_select]
       - [0xb2440, c, game/stage1/stage1_boss_anim]
       - [0xb4c50, c, game/stage1/stage1_boss_attack]
       - [0xb7960, c, game/stage1/stage1_boss_draw]
-      - [0xb8330, c, game/debris]
+      - [0xb8330, c, game/effects/debris]
       - [0xb9470, c, game/stage1/stage1_boss_mode]
       - [0xba8a0, c, game/stage1/stage1_boss_move]
       - [0xbb6b0, c, game/stage1/stage1_boss]
@@ -154,13 +154,13 @@ segments:
       - [0xf9740, c, game/stage5/stage5_midboss_3]
       - [0xfa410, c, game/stage5/stage5_midboss_4]
       - [0xfc960, c, game/stage5/stage5_midboss_5]
-      - [0x100a90, c, game/credits_roll]
+      - [0x100a90, c, game/frontend/credits_roll]
       - [0x100db0, c, game/game_util]
       - [0x101790, c, game/motion_util]
-      - [0x1038d0, c, game/select_common]
-      - [0x106990, c, game/display_control]
-      - [0x106df0, c, game/task]
-      - [0x107730, c, game/zoom]
+      - [0x1038d0, c, game/frontend/select_common]
+      - [0x106990, c, game/system/display_control]
+      - [0x106df0, c, game/system/task]
+      - [0x107730, c, game/effects/zoom]
       - [0x1077a0, c, game/test/test_crosshatch]
       - [0x107860, c, game/test/test_game]
       - [0x107f60, c, game/test/test_input]
@@ -171,82 +171,82 @@ segments:
       - [0x108e40, c, game/test/test_sound]
       - [0x109280, c, game/test/test_common]
       - [0x109790, c, game/test/test_system]
-      - [0x109ee0, c, game/sparks]
-      - [0x10b710, c, game/collision]
-      - [0x10eb20, c, game/slowdown]
-      - [0x10eda0, c, game/select_join]
-      - [0x10f5d0, c, game/wreck]
-      - [0x112040, c, game/wreck_test]
-      - [0x112150, c, game/main]
+      - [0x109ee0, c, game/effects/sparks]
+      - [0x10b710, c, game/play/collision]
+      - [0x10eb20, c, game/stage/slowdown]
+      - [0x10eda0, c, game/frontend/select_join]
+      - [0x10f5d0, c, game/effects/wreck]
+      - [0x112040, c, game/test/wreck_test]
+      - [0x112150, c, game/system/main]
       - [0x112690, c, game/test/test_default]
-      - [0x1127a0, c, game/text]
-      - [0x1162d0, c, game/system]
-      - [0x117fb0, c, game/glyph_cache]
-      - [0x118520, c, game/gfx]
-      - [0x11c5b0, c, game/arcade_sprite]
-      - [0x11d490, c, game/menu]
-      - [0x12c620, c, game/memcard]
-      - [0x136cd0, c, game/replay_header]
-      - [0x136fc0, c, game/replay]
-      - [0x138c10, c, game/replay_state]
+      - [0x1127a0, c, game/system/text]
+      - [0x1162d0, c, game/system/system]
+      - [0x117fb0, c, game/system/glyph_cache]
+      - [0x118520, c, game/system/gfx]
+      - [0x11c5b0, c, game/graphics/arcade_sprite]
+      - [0x11d490, c, game/frontend/menu]
+      - [0x12c620, c, game/system/memcard]
+      - [0x136cd0, c, game/system/replay_header]
+      - [0x136fc0, c, game/system/replay]
+      - [0x138c10, c, game/system/replay_state]
       - [0x13dcb0, pad]
       - [0x13dd00, data, data]
-      - [0x1417a0, .data, game/bomb]
+      - [0x1417a0, .data, game/player/bomb]
       - [0x142088, .data, game/enemy/enemy_turret_tables]
       - [0x142170, .data, game/stage1/stage1_tables]
       - [0x144ab0, .data, game/stage2/stage2_tables]
       - [0x146d10, .data, game/stage3/stage3_tables]
       - [0x147900, .data, game/stage4/stage4_tables]
       - [0x149f50, .data, game/stage5/stage5_tables]
-      - [0x14cc40, .data, game/map_cell_test_tables]
-      - [0x14cc60, .data, game/ending_tables]
-      - [0x14e120, .data, game/credits_roll_tables]
-      - [0x14e7c0, .data, game/bullet_tables]
-      - [0x14f3c0, .data, game/coin_tables]
-      - [0x14f428, .data, game/game_tables]
-      - [0x14f5f0, .data, game/explosion_tables]
-      - [0x150800, .data, game/debris_tables]
-      - [0x150d80, .data, game/sparks_data]
+      - [0x14cc40, .data, game/test/map_cell_test_tables]
+      - [0x14cc60, .data, game/frontend/ending_tables]
+      - [0x14e120, .data, game/frontend/credits_roll_tables]
+      - [0x14e7c0, .data, game/play/bullet_tables]
+      - [0x14f3c0, .data, game/frontend/coin_tables]
+      - [0x14f428, .data, game/play/game_tables]
+      - [0x14f5f0, .data, game/effects/explosion_tables]
+      - [0x150800, .data, game/effects/debris_tables]
+      - [0x150d80, .data, game/effects/sparks_data]
       - [0x1517a0, .data, game/enemy/enemy_shared_tables]
-      - [0x151b00, .data, game/difficulty_tables]
+      - [0x151b00, .data, game/play/difficulty_tables]
       - [0x151b30, .data, game/player/player_laser]
-      - [0x151b60, .data, game/ship_select_player]
-      - [0x151f70, .data, game/select_common]
-      - [0x152460, .data, game/select_join]
+      - [0x151b60, .data, game/frontend/ship_select_player]
+      - [0x151f70, .data, game/frontend/select_common]
+      - [0x152460, .data, game/frontend/select_join]
       - [0x152560, .data, game/stage2/stage2_scenery_tables]
-      - [0x152730, .data, game/scroll_events_tables]
-      - [0x153280, .data, game/explosion_test_tables]
+      - [0x152730, .data, game/stage/scroll_events_tables]
+      - [0x153280, .data, game/test/explosion_test_tables]
       - [0x153328, .data, game/player/player_shot_1_tables]
       - [0x153c28, .data, game/player/player_shot_2_tables]
       - [0x154490, .data, game/player/player_shot_5_tables]
       - [0x154cd0, .data, game/player/player_shot_6_tables]
-      - [0x155470, .data, game/fade_tables]
+      - [0x155470, .data, game/effects/fade_tables]
       - [0x155590, .data, game/player/player_support]
       - [0x155640, .data, game/player/player_tables]
       - [0x1561b0, .data, game/player/player_laser_tables]
       - [0x157880, .data, game/player/player_shot_tables]
-      - [0x1578e0, .data, game/debris_test_tables]
+      - [0x1578e0, .data, game/test/debris_test_tables]
       - [0x157900, .data, game/enemy/enemy_heli_tables]
       - [0x157c90, .data, game/enemy/enemy_ground_tables]
       - [0x158a70, .data, game/enemy/enemy_pattern_tables]
       - [0x15a0f0, .data, game/enemy/enemy_mid_tables]
       - [0x15af70, .data, game/enemy/enemy_mid_test_tables]
-      - [0x15b140, .data, game/formation_fire_timer_tables]
-      - [0x15b160, .data, game/item_test_tables]
+      - [0x15b140, .data, game/stage/formation_fire_timer_tables]
+      - [0x15b160, .data, game/test/item_test_tables]
       - [0x15b180, .data, game/enemy/enemy_small_tables]
-      - [0x15bb40, .data, game/sound_tables]
-      - [0x15bde0, .data, game/name_entry_tables]
+      - [0x15bb40, .data, game/system/sound_tables]
+      - [0x15bde0, .data, game/frontend/name_entry_tables]
       - [0x15c548, .data, game/player/player_shot_3_tables]
       - [0x15ced8, .data, game/player/player_shot_4_tables]
       - [0x15d870, .data, game/player/player_shot_7_tables]
       - [0x15e1f0, .data, game/player/player_shot_8_tables]
-      - [0x15eb70, .data, game/sprite_queue_tables]
-      - [0x15ed70, .data, game/option_shot_tables]
+      - [0x15eb70, .data, game/graphics/sprite_queue_tables]
+      - [0x15ed70, .data, game/player/option_shot_tables]
       - [0x15efb0, .data, game/player/player_options_tables]
       - [0x15f6a0, .data, game/player/player_panel_tables]
       - [0x15f710, .data, game/enemy/enemy_spawner_tables]
-      - [0x15f730, .data, game/scoring]
-      - [0x15f7f0, .data, game/sprite_palettes]
+      - [0x15f730, .data, game/play/scoring]
+      - [0x15f7f0, .data, game/graphics/sprite_palettes]
       - [0x162700, .data, game/stage1/stage1_midboss_data]
       - [0x162cc0, .data, game/stage2/stage2_boss_gen_data]
       - [0x163080, .data, game/stage2/stage2_midboss]
@@ -268,8 +268,8 @@ segments:
       - [0x166248, .data, game/stage5/stage5_midboss_5_data]
       - [0x166750, .data, game/game_util_data]
       - [0x167130, .data, game/motion_util_data]
-      - [0x167920, .data, game/task]
-      - [0x1679d0, .data, game/zoom]
+      - [0x167920, .data, game/system/task]
+      - [0x1679d0, .data, game/effects/zoom]
       - [0x167a10, .data, game/test/test_crosshatch]
       - [0x167a30, .data, game/test/test_game_data]
       - [0x167dc0, .data, game/test/test_input_data]
@@ -279,33 +279,33 @@ segments:
       - [0x168150, .data, game/test/test_output]
       - [0x1681a0, .data, game/test/test_sound_data]
       - [0x1683d0, .data, game/test/test_system_data]
-      - [0x168830, .data, game/screen_palettes]
-      - [0x169280, .data, game/game]
+      - [0x168830, .data, game/graphics/screen_palettes]
+      - [0x169280, .data, game/play/game]
       - [0x1693a0, .data, game/debug]
-      - [0x1693c0, .data, game/continue_screen]
-      - [0x1693e0, .data, game/slowdown]
-      - [0x169460, .data, game/pickup_data]
-      - [0x169880, .data, game/bullet]
-      - [0x1698c0, .data, game/stage_clear]
-      - [0x169bf0, .data, game/continue_screen_data_b]
-      - [0x169d90, .data, game/game_data_b]
+      - [0x1693c0, .data, game/frontend/continue_screen]
+      - [0x1693e0, .data, game/stage/slowdown]
+      - [0x169460, .data, game/play/pickup_data]
+      - [0x169880, .data, game/play/bullet]
+      - [0x1698c0, .data, game/stage/stage_clear]
+      - [0x169bf0, .data, game/frontend/continue_screen_data_b]
+      - [0x169d90, .data, game/play/game_data_b]
       - [0x16a310, .data, game/debug_data_b]
-      - [0x16a320, .data, game/difficulty_data]
+      - [0x16a320, .data, game/play/difficulty_data]
       - [0x16a330, .data, game/enemy/enemy_data]
-      - [0x16a400, .data, game/game_over]
+      - [0x16a400, .data, game/frontend/game_over]
       - [0x16a480, .data, game/enemy/enemy_common_data_b]
-      - [0x16a8b0, .data, game/attract_data]
-      - [0x16ae20, .data, game/item_data]
-      - [0x16b110, .data, game/item_test_data]
-      - [0x16b1f0, .data, game/stage_clear_objects]
-      - [0x16b290, .data, game/stage_clear_colors_data]
+      - [0x16a8b0, .data, game/frontend/attract_data]
+      - [0x16ae20, .data, game/play/item_data]
+      - [0x16b110, .data, game/test/item_test_data]
+      - [0x16b1f0, .data, game/stage/stage_clear_objects]
+      - [0x16b290, .data, game/stage/stage_clear_colors_data]
       - [0x16b320, .data, game/player/player_panel_data]
-      - [0x16b3f0, .data, game/ranking]
-      - [0x16b6c0, .data, game/hud_data]
-      - [0x16b918, .data, game/score_add]
-      - [0x16b9a0, .data, game/scoring_data_b]
-      - [0x16baf0, .data, game/hud_data_b]
-      - [0x16c070, .data, game/score_add_data_b]
+      - [0x16b3f0, .data, game/frontend/ranking]
+      - [0x16b6c0, .data, game/play/hud_data]
+      - [0x16b918, .data, game/play/score_add]
+      - [0x16b9a0, .data, game/play/scoring_data_b]
+      - [0x16baf0, .data, game/play/hud_data_b]
+      - [0x16c070, .data, game/play/score_add_data_b]
       - [0x16c0b0, .data, game/stage2/stage2_boss_anim]
       - [0x16c140, .data, game/stage2/stage2_boss_attack]
       - [0x16c1c0, .data, game/stage2/stage2_boss_attack_data]
@@ -342,63 +342,63 @@ segments:
       - [0x16f470, .data, game/stage4/stage4_boss_move]
       - [0x16f550, .data, game/stage4/stage4_boss]
       - [0x16f6c0, .data, game/stage4/stage4_boss_damage]
-      - [0x16f720, .data, game/wreck_test]
-      - [0x16f740, .data, game/main]
+      - [0x16f720, .data, game/test/wreck_test]
+      - [0x16f740, .data, game/system/main]
       - [0x16f7e0, .data, game/test/test_default]
-      - [0x16f820, .data, game/text]
-      - [0x16f8f0, .data, game/gfx]
-      - [0x16fc20, .data, game/arcade_sprite]
-      - [0x170890, .data, game/menu]
-      - [0x171da0, .data, game/memcard]
-      - [0x172190, .data, game/replay]
-      - [0x1721a8, .data, game/replay_state]
+      - [0x16f820, .data, game/system/text]
+      - [0x16f8f0, .data, game/system/gfx]
+      - [0x16fc20, .data, game/graphics/arcade_sprite]
+      - [0x170890, .data, game/frontend/menu]
+      - [0x171da0, .data, game/system/memcard]
+      - [0x172190, .data, game/system/replay]
+      - [0x1721a8, .data, game/system/replay_state]
       - [0x172a70, data, data_172a70]
-      - [0x173eb0, .rodata, game/bullet]
-      - [0x173f40, .rodata, game/stage_clear]
+      - [0x173eb0, .rodata, game/play/bullet]
+      - [0x173f40, .rodata, game/stage/stage_clear]
       - [0x1740b8, rodata, rodata_1740b8]
-      - [0x1740c0, .rodata, game/wreck_tables_a]
-      - [0x1748c0, .rodata, game/wreck_tables_b]
-      - [0x1750c0, .rodata, game/wreck_tables_c]
-      - [0x1758c0, .rodata, game/attract]
+      - [0x1740c0, .rodata, game/effects/wreck_tables_a]
+      - [0x1748c0, .rodata, game/effects/wreck_tables_b]
+      - [0x1750c0, .rodata, game/effects/wreck_tables_c]
+      - [0x1758c0, .rodata, game/frontend/attract]
       - [0x175900, .rodata, game/pointer_tables]
-      - [0x177ff8, .rodata, game/sound_rpc]
-      - [0x178058, .rodata, game/sound_tables]
+      - [0x177ff8, .rodata, game/system/sound_rpc]
+      - [0x178058, .rodata, game/system/sound_tables]
       - [0x178560, .rodata, game/table_checks]
-      - [0x17d840, .rodata, game/name_entry]
+      - [0x17d840, .rodata, game/frontend/name_entry]
       - [0x17d988, rodata, rodata_17d988]
-      - [0x17d990, .rodata, game/scoring]
+      - [0x17d990, .rodata, game/play/scoring]
       - [0x17d9d8, rodata, rodata_17d9d8]
       - [0x17d9e0, .rodata, game/enemy/enemy_stage_tables_a]
-      - [0x17f370, .rodata, game/debris]
+      - [0x17f370, .rodata, game/effects/debris]
       - [0x17f380, .rodata, game/enemy/enemy_stage_tables_b]
       - [0x186e60, .rodata, game/stage5/stage5_midboss_5]
       - [0x186e80, .rodata, game/motion_util]
-      - [0x186ea0, .rodata, game/main]
-      - [0x186f40, .rodata, game/text]
-      - [0x186fa0, .rodata, game/system]
-      - [0x1870d8, .rodata, game/gfx]
-      - [0x187140, .rodata, game/menu]
-      - [0x189fd0, .rodata, game/memcard]
+      - [0x186ea0, .rodata, game/system/main]
+      - [0x186f40, .rodata, game/system/text]
+      - [0x186fa0, .rodata, game/system/system]
+      - [0x1870d8, .rodata, game/system/gfx]
+      - [0x187140, .rodata, game/frontend/menu]
+      - [0x189fd0, .rodata, game/system/memcard]
       - [0x18be28, rodata, rodata_18be28]
-      - [0x18be30, .rodata, game/replay_header]
-      - [0x18bf30, .rodata, game/replay]
+      - [0x18be30, .rodata, game/system/replay_header]
+      - [0x18bf30, .rodata, game/system/replay]
       - [0x18bfb8, rodata, rodata_18bfb8]
-      - [0x18bfc0, .rodata, game/replay_state]
+      - [0x18bfc0, .rodata, game/system/replay_state]
       - [0x18c028, rodata, rodata_18c028]
       - [0x18c0f0, sdata, sdata]
       - [0x18c100, .sdata, game/enemy/enemy_turret_tables]
-      - [0x18c108, .sdata, game/map_cell_test_tables]
-      - [0x18c110, .sdata, game/ending_tables]
-      - [0x18c120, .sdata, game/credits_roll_tables]
-      - [0x18c128, .sdata, game/coin_tables]
+      - [0x18c108, .sdata, game/test/map_cell_test_tables]
+      - [0x18c110, .sdata, game/frontend/ending_tables]
+      - [0x18c120, .sdata, game/frontend/credits_roll_tables]
+      - [0x18c128, .sdata, game/frontend/coin_tables]
       - [0x18c140, .sdata, game/enemy/enemy_shared_tables]
-      - [0x18c178, .sdata, game/default_settings]
-      - [0x18c180, .sdata, game/difficulty_tables]
+      - [0x18c178, .sdata, game/system/default_settings]
+      - [0x18c180, .sdata, game/play/difficulty_tables]
       - [0x18c198, .sdata, game/player/player_laser]
-      - [0x18c1a8, .sdata, game/ship_select_player]
-      - [0x18c1c0, .sdata, game/select_common]
-      - [0x18c1e0, .sdata, game/scroll_events_tables]
-      - [0x18c208, .sdata, game/explosion_test_tables]
+      - [0x18c1a8, .sdata, game/frontend/ship_select_player]
+      - [0x18c1c0, .sdata, game/frontend/select_common]
+      - [0x18c1e0, .sdata, game/stage/scroll_events_tables]
+      - [0x18c208, .sdata, game/test/explosion_test_tables]
       - [0x18c218, .sdata, game/player/player_shot_1_tables]
       - [0x18c358, .sdata, game/player/player_shot_2_tables]
       - [0x18c498, .sdata, game/player/player_shot_5_tables]
@@ -406,10 +406,10 @@ segments:
       - [0x18c658, .sdata, game/player/player_support_small_data]
       - [0x18c678, .sdata, game/player/player_tables]
       - [0x18c9d0, .sdata, game/player/player_laser_tables]
-      - [0x18ca28, .sdata, game/debris_test_tables]
+      - [0x18ca28, .sdata, game/test/debris_test_tables]
       - [0x18ca30, .sdata, game/enemy/enemy_ground_tables]
       - [0x18ca60, .sdata, game/enemy/enemy_mid_tables]
-      - [0x18ca80, .sdata, game/item_test_tables]
+      - [0x18ca80, .sdata, game/test/item_test_tables]
       - [0x18ca84, .sdata, game/player/player_shot_3_tables]
       - [0x18cf10, .sdata, game/player/player_shot_4_tables]
       - [0x18d3a0, .sdata, game/player/player_shot_7_tables]
@@ -426,16 +426,16 @@ segments:
       - [0x18dab8, .sdata, game/stage5/stage5_midboss_5_data]
       - [0x18dae0, .sdata, game/test/test_input_data]
       - [0x18db14, .sdata, game/test/test_memory_data]
-      - [0x18db38, .sdata, game/difficulty_data]
-      - [0x18db40, .sdata, game/stage_clear_objects]
-      - [0x18db50, .sdata, game/hud_small_data]
+      - [0x18db38, .sdata, game/play/difficulty_data]
+      - [0x18db40, .sdata, game/stage/stage_clear_objects]
+      - [0x18db50, .sdata, game/play/hud_small_data]
       - [0x18db88, .sdata, game/stage2/stage2_boss_attack_data]
       - [0x18db90, .sdata, game/stage2/stage2_boss_misc]
       - [0x18db98, .sdata, game/stage2/stage2_boss]
       - [0x18dba0, .sdata, game/stage3/stage3_boss_attack_data]
       - [0x18dc90, .sdata, game/stage3/stage3_boss_misc_data]
       - [0x18dc98, .sdata, game/stage3/stage3_boss]
-      - [0x18dca0, .sdata, game/stage_clear_objects_small_data_b]
+      - [0x18dca0, .sdata, game/stage/stage_clear_objects_small_data_b]
       - [0x18dca8, .sdata, game/stage1/stage1_boss_anim]
       - [0x18dcb8, .sdata, game/stage1/stage1_boss_attack]
       - [0x18dcc0, .sdata, game/stage1/stage1_boss_mode]
@@ -444,104 +444,104 @@ segments:
       - [0x18dd04, .sdata, game/stage4/stage4_boss_move]
       - [0x18dd08, .sdata, game/stage4/stage4_boss]
       - [0x18dd10, .sdata, game/stage1/stage1_boss]
-      - [0x18dd14, .sdata, game/wreck_test]
-      - [0x18dd18, .sdata, game/screen_mode_data]
-      - [0x18dd20, .sdata, game/menu]
-      - [0x18de38, .sdata, game/memcard]
-      - [0x18dec0, .sdata, game/replay]
-      - [0x18ded0, .sdata, game/replay_state_small_data]
+      - [0x18dd14, .sdata, game/test/wreck_test]
+      - [0x18dd18, .sdata, game/system/screen_mode_data]
+      - [0x18dd20, .sdata, game/frontend/menu]
+      - [0x18de38, .sdata, game/system/memcard]
+      - [0x18dec0, .sdata, game/system/replay]
+      - [0x18ded0, .sdata, game/system/replay_state_small_data]
       - [0x18df00, sdata, sdata_18df00]
-      - {type: .sbss, vram: 0x28de80, name: game/credits_roll}
-      - {type: .sbss, vram: 0x28de8c, name: game/pickup}
-      - {type: .sbss, vram: 0x28deb8, name: game/game}
+      - {type: .sbss, vram: 0x28de80, name: game/frontend/credits_roll}
+      - {type: .sbss, vram: 0x28de8c, name: game/play/pickup}
+      - {type: .sbss, vram: 0x28deb8, name: game/play/game}
       - {type: .sbss, vram: 0x28def4, name: game/debug}
-      - {type: .sbss, vram: 0x28df0c, name: game/ship_select}
-      - {type: .sbss, vram: 0x28df1c, name: game/ground}
-      - {type: .sbss, vram: 0x28df20, name: game/fade}
+      - {type: .sbss, vram: 0x28df0c, name: game/frontend/ship_select}
+      - {type: .sbss, vram: 0x28df1c, name: game/stage/ground}
+      - {type: .sbss, vram: 0x28df20, name: game/effects/fade}
       - {type: .sbss, vram: 0x28df3c, name: game/enemy/enemy}
       - {type: .sbss, vram: 0x28df48, name: game/enemy/enemy_common}
-      - {type: .sbss, vram: 0x28df84, name: game/attract}
-      - {type: .sbss, vram: 0x28df88, name: game/sound_rpc}
+      - {type: .sbss, vram: 0x28df84, name: game/frontend/attract}
+      - {type: .sbss, vram: 0x28df88, name: game/system/sound_rpc}
       - {type: .sbss, vram: 0x28df9c, name: game/test/test_mode}
       - {type: .sbss, vram: 0x28dfb4, name: game/player/player}
-      - {type: .sbss, vram: 0x28e08c, name: game/collision}
-      - {type: .sbss, vram: 0x28e0ac, name: game/palette}
-      - {type: .sbss, vram: 0x28e0c4, name: game/task}
-      - {type: .sbss, vram: 0x28e0d4, name: game/layers}
-      - {type: .sbss, vram: 0x28e114, name: game/sprite_queue}
-      - {type: .sbss, vram: 0x28e1a4, name: game/input}
-      - {type: .sbss, vram: 0x28e1bc, name: game/system_state}
-      - {type: .sbss, vram: 0x28e4b4, name: game/ranking}
-      - {type: .sbss, vram: 0x28e4f0, name: game/scoring}
-      - {type: .sbss, vram: 0x28e52c, name: game/debris}
-      - {type: .sbss, vram: 0x28e530, name: game/sparks}
+      - {type: .sbss, vram: 0x28e08c, name: game/play/collision}
+      - {type: .sbss, vram: 0x28e0ac, name: game/graphics/palette}
+      - {type: .sbss, vram: 0x28e0c4, name: game/system/task}
+      - {type: .sbss, vram: 0x28e0d4, name: game/stage/layers}
+      - {type: .sbss, vram: 0x28e114, name: game/graphics/sprite_queue}
+      - {type: .sbss, vram: 0x28e1a4, name: game/system/input}
+      - {type: .sbss, vram: 0x28e1bc, name: game/system/system_state}
+      - {type: .sbss, vram: 0x28e4b4, name: game/frontend/ranking}
+      - {type: .sbss, vram: 0x28e4f0, name: game/play/scoring}
+      - {type: .sbss, vram: 0x28e52c, name: game/effects/debris}
+      - {type: .sbss, vram: 0x28e530, name: game/effects/sparks}
       - {type: .sbss, vram: 0x28e574, name: game/stage2/stage2_boss_misc}
-      - {type: .sbss, vram: 0x28e578, name: game/scoring_state}
-      - {type: .sbss, vram: 0x28e76c, name: game/ranking_state}
+      - {type: .sbss, vram: 0x28e578, name: game/play/scoring_state}
+      - {type: .sbss, vram: 0x28e76c, name: game/frontend/ranking_state}
       - {type: .sbss, vram: 0x28e77c, name: game/player/player_panel}
-      - {type: .sbss, vram: 0x28e784, name: game/stage_clear_colors}
-      - {type: .sbss, vram: 0x28e798, name: game/stage_clear_objects}
-      - {type: .sbss, vram: 0x28e7a4, name: game/item}
-      - {type: .sbss, vram: 0x28e7b4, name: game/attract_state}
+      - {type: .sbss, vram: 0x28e784, name: game/stage/stage_clear_colors}
+      - {type: .sbss, vram: 0x28e798, name: game/stage/stage_clear_objects}
+      - {type: .sbss, vram: 0x28e7a4, name: game/play/item}
+      - {type: .sbss, vram: 0x28e7b4, name: game/frontend/attract_state}
       - {type: .sbss, vram: 0x28e7c0, name: game/enemy/enemy_common_state}
       - {type: .sbss, vram: 0x28e7d4, name: game/enemy/enemy_state}
-      - {type: .sbss, vram: 0x28e7f0, name: game/difficulty}
+      - {type: .sbss, vram: 0x28e7f0, name: game/play/difficulty}
       - {type: .sbss, vram: 0x28e7f8, name: game/debug_state}
-      - {type: .sbss, vram: 0x28e83c, name: game/game_state}
-      - {type: .sbss, vram: 0x28e948, name: game/stage_clear_state}
-      - {type: .sbss, vram: 0x28e964, name: game/bullet}
-      - {type: .sbss, vram: 0x28e970, name: game/pickup_state}
-      - {type: .sbss, vram: 0x28e98c, name: game/splash}
+      - {type: .sbss, vram: 0x28e83c, name: game/play/game_state}
+      - {type: .sbss, vram: 0x28e948, name: game/stage/stage_clear_state}
+      - {type: .sbss, vram: 0x28e964, name: game/play/bullet}
+      - {type: .sbss, vram: 0x28e970, name: game/play/pickup_state}
+      - {type: .sbss, vram: 0x28e98c, name: game/frontend/splash}
       - {type: .sbss, vram: 0x28e998, name: game/unowned_state}
-      - {type: .sbss, vram: 0x28e9a4, name: game/main}
-      - {type: .sbss, vram: 0x28e9b8, name: game/text}
-      - {type: .sbss, vram: 0x28e9dc, name: game/system}
-      - {type: .sbss, vram: 0x28ea48, name: game/gfx}
-      - {type: .sbss, vram: 0x28ea84, name: game/arcade_sprite}
-      - {type: .sbss, vram: 0x28eaa8, name: game/menu}
-      - {type: .sbss, vram: 0x28ec70, name: game/memcard}
-      - {type: .sbss, vram: 0x28ed3c, name: game/replay}
-      - {type: .sbss, vram: 0x28ed88, name: game/replay_state}
+      - {type: .sbss, vram: 0x28e9a4, name: game/system/main}
+      - {type: .sbss, vram: 0x28e9b8, name: game/system/text}
+      - {type: .sbss, vram: 0x28e9dc, name: game/system/system}
+      - {type: .sbss, vram: 0x28ea48, name: game/system/gfx}
+      - {type: .sbss, vram: 0x28ea84, name: game/graphics/arcade_sprite}
+      - {type: .sbss, vram: 0x28eaa8, name: game/frontend/menu}
+      - {type: .sbss, vram: 0x28ec70, name: game/system/memcard}
+      - {type: .sbss, vram: 0x28ed3c, name: game/system/replay}
+      - {type: .sbss, vram: 0x28ed88, name: game/system/replay_state}
       - {type: sbss, vram: 0x28ed8c, name: sbss_28ed8c}
       - {type: bss, vram: 0x28f000, name: bss_28f000}
-      - {type: .bss, vram: 0x295e00, name: game/ending}
-      - {type: .bss, vram: 0x295e50, name: game/boss_slots}
-      - {type: .bss, vram: 0x2962e0, name: game/bullet}
-      - {type: .bss, vram: 0x299780, name: game/wreck}
-      - {type: .bss, vram: 0x299d30, name: game/sparks}
-      - {type: .bss, vram: 0x29a530, name: game/debris}
-      - {type: .bss, vram: 0x29aa40, name: game/explosion}
-      - {type: .bss, vram: 0x29bc00, name: game/game}
-      - {type: .bss, vram: 0x29bd80, name: game/ship_select}
-      - {type: .bss, vram: 0x29bee0, name: game/ship_select_player}
-      - {type: .bss, vram: 0x29bf50, name: game/scroll_events}
-      - {type: .bss, vram: 0x29c0c0, name: game/fade}
-      - {type: .bss, vram: 0x29ca10, name: game/sound_rpc}
+      - {type: .bss, vram: 0x295e00, name: game/frontend/ending}
+      - {type: .bss, vram: 0x295e50, name: game/stage/boss_slots}
+      - {type: .bss, vram: 0x2962e0, name: game/play/bullet}
+      - {type: .bss, vram: 0x299780, name: game/effects/wreck}
+      - {type: .bss, vram: 0x299d30, name: game/effects/sparks}
+      - {type: .bss, vram: 0x29a530, name: game/effects/debris}
+      - {type: .bss, vram: 0x29aa40, name: game/effects/explosion}
+      - {type: .bss, vram: 0x29bc00, name: game/play/game}
+      - {type: .bss, vram: 0x29bd80, name: game/frontend/ship_select}
+      - {type: .bss, vram: 0x29bee0, name: game/frontend/ship_select_player}
+      - {type: .bss, vram: 0x29bf50, name: game/stage/scroll_events}
+      - {type: .bss, vram: 0x29c0c0, name: game/effects/fade}
+      - {type: .bss, vram: 0x29ca10, name: game/system/sound_rpc}
       - {type: .bss, vram: 0x29cd80, name: game/player/player}
-      - {type: .bss, vram: 0x29f2d0, name: game/palette}
-      - {type: .bss, vram: 0x2a04b0, name: game/task}
-      - {type: .bss, vram: 0x2a17c0, name: game/layers}
-      - {type: .bss, vram: 0x2a3c80, name: game/sprite_queue}
-      - {type: .bss, vram: 0x2b2710, name: game/zoom}
-      - {type: .bss, vram: 0x2b2750, name: game/screen_clear}
-      - {type: .bss, vram: 0x2bad50, name: game/name_entry}
-      - {type: .bss, vram: 0x2bae90, name: game/wreck_state}
-      - {type: .bss, vram: 0x2baeb0, name: game/scoring_state}
-      - {type: .bss, vram: 0x2bb430, name: game/stage_clear_colors}
-      - {type: .bss, vram: 0x2bb4b0, name: game/item}
+      - {type: .bss, vram: 0x29f2d0, name: game/graphics/palette}
+      - {type: .bss, vram: 0x2a04b0, name: game/system/task}
+      - {type: .bss, vram: 0x2a17c0, name: game/stage/layers}
+      - {type: .bss, vram: 0x2a3c80, name: game/graphics/sprite_queue}
+      - {type: .bss, vram: 0x2b2710, name: game/effects/zoom}
+      - {type: .bss, vram: 0x2b2750, name: game/graphics/screen_clear}
+      - {type: .bss, vram: 0x2bad50, name: game/frontend/name_entry}
+      - {type: .bss, vram: 0x2bae90, name: game/effects/wreck_state}
+      - {type: .bss, vram: 0x2baeb0, name: game/play/scoring_state}
+      - {type: .bss, vram: 0x2bb430, name: game/stage/stage_clear_colors}
+      - {type: .bss, vram: 0x2bb4b0, name: game/play/item}
       - {type: .bss, vram: 0x2bbaf0, name: game/enemy/enemy_state}
       - {type: .bss, vram: 0x2bf350, name: game/debug_state}
-      - {type: .bss, vram: 0x2bf390, name: game/game_state}
-      - {type: .bss, vram: 0x2bf3e0, name: game/continue_screen}
-      - {type: .bss, vram: 0x2bf400, name: game/stage_clear_state}
-      - {type: .bss, vram: 0x2bf4f0, name: game/pickup_state}
-      - {type: .bss, vram: 0x2c0100, name: game/text}
-      - {type: .bss, vram: 0x2c4f00, name: game/system}
-      - {type: .bss, vram: 0x57cf80, name: game/glyph_cache}
-      - {type: .bss, vram: 0x586ff0, name: game/gfx}
-      - {type: .bss, vram: 0x684c80, name: game/menu}
-      - {type: .bss, vram: 0x68e1b0, name: game/memcard}
-      - {type: .bss, vram: 0x6c58a0, name: game/replay}
+      - {type: .bss, vram: 0x2bf390, name: game/play/game_state}
+      - {type: .bss, vram: 0x2bf3e0, name: game/frontend/continue_screen}
+      - {type: .bss, vram: 0x2bf400, name: game/stage/stage_clear_state}
+      - {type: .bss, vram: 0x2bf4f0, name: game/play/pickup_state}
+      - {type: .bss, vram: 0x2c0100, name: game/system/text}
+      - {type: .bss, vram: 0x2c4f00, name: game/system/system}
+      - {type: .bss, vram: 0x57cf80, name: game/system/glyph_cache}
+      - {type: .bss, vram: 0x586ff0, name: game/system/gfx}
+      - {type: .bss, vram: 0x684c80, name: game/frontend/menu}
+      - {type: .bss, vram: 0x68e1b0, name: game/system/memcard}
+      - {type: .bss, vram: 0x6c58a0, name: game/system/replay}
       - {type: bss, vram: 0x6e5c40, name: bss_6e5c40}
   - name: elf_tail
     type: bin
