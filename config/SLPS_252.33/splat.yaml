@@ -155,7 +155,7 @@ segments:
       - [0x1038d0, c, shared/unit_00203850]
       - [0x106990, c, shared/unit_00206910]
       - [0x106df0, c, shared/task]
-      - [0x107730, c, shared/func_002076B0]
+      - [0x107730, c, shared/zoom]
       - [0x1077a0, c, shared/unit_00207720]
       - [0x108460, c, shared/unit_002083E0]
       - [0x108690, c, shared/unit_00208610]

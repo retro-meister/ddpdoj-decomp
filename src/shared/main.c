@@ -33,7 +33,7 @@ s32 func_00206D60();
 s32 task_reset_all();
 s32 task_run_all();
 s32 task_start();
-s32 func_002076B0();
+s32 zoom_init();
 s32 func_00208B60();
 s32 func_00209410();
 s32 func_0020B690();
@@ -128,7 +128,7 @@ void func_002120D0(void) {
     func_0018DE80();
     func_0020B690();
     func_0020EAA0();
-    func_002076B0();
+    zoom_init();
     func_0012FD00();
     func_0012FD40();
     input_clear();
