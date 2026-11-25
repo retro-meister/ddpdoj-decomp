@@ -311,7 +311,7 @@ for sec, start, end in stretches:
         # an 8-byte object that Death Label has off an 8-byte boundary is two 4-byte objects
         o2 = []; d2 = []
         for (a, size, nxt), da in zip(objs, dstarts):
-            if size == 8 and da is not None and da % 8 and dend_given.get((sec, start)) == da + 4 \
+            if size == 8 and da is not None and dend_given.get((sec, start)) == da + 4 \
                     and not any(rom[a - OFF + 4:a - OFF + 8]):
                 o2.append((a, 4, nxt)); d2.append(da)   # 4 bytes; Main pads before an object on 8
             elif size == 8 and da is not None and da % 8:
@@ -554,7 +554,8 @@ if separate:
             for x in list(ms):
                 q = main_rel[x][0]; qa = sym_addr(q, main_named)
                 known = q in defined or q in used or any(s_ <= qa < e_ for s_, e_, d_, _ in obj_by_main) \
-                    or not re.fullmatch(PLACE, q) or qa < TEXT_END
+                    or not re.fullmatch(PLACE, q) or qa < TEXT_END \
+                    or (0x270000 <= qa < 0x291000 and qa % 4 == 0)   # the PS2 part's strings and tables
                 # nothing to check an address against here: a placeholder nothing else uses must be confirmed
                 assert known or ('%x' % x) in confirmed, 'unverified pointer %s at %x in %s: pass --address %x or --number %x' % (q, x, n, x, x)
                 if ('%x' % x) in numbers: main_rel.pop(x); ms.remove(x)
