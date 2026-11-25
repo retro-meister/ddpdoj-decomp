@@ -10,6 +10,8 @@ later section pushed down by a multiple of --shift. Then it reports:
 3. values in the retail image that look like addresses of the image but carry no relocation: a word of data,
    a `lui` + low-half pair, or a jump. Each one is either a number that only looks like an address or an
    address that would not follow a shift; --list prints them for review.
+4. for the two game executables, the same data words sorted by what the other executable holds in the same
+   place: an address differs between the two, a number does not.
 """
 import argparse
 import bisect
@@ -138,11 +140,44 @@ def unrelocated(target, base, text_end):
     return data, sorted(set(pairs)), jumps
 
 
+def against_twin(base, other, twin, data):
+    """Sort the unrelocated address-like data words by what the twin executable holds in the same place.
+
+    The two game executables share their data but place nearly all of it at different addresses, so a word
+    that is an address differs between them and a word that is a number does not."""
+    _, other_image, _ = retail_image(twin)
+    other_start = other.image()[0]
+    common = sorted((value, name) for name, value in base.symbols.items() if name in other.symbols)
+    keys = [value for value, _ in common]
+
+    def moved(address):
+        index = bisect.bisect_right(keys, address) - 1
+        if index < 0:
+            return None
+        return other.symbols[common[index][1]] + address - common[index][0]
+
+    numbers, unmoved, differ, unplaced, follow = [], [], [], [], []
+    for address, value in data:
+        place = moved(address)
+        if place is None or not 0 <= place - other_start <= len(other_image) - 4:
+            unplaced.append((address, value, 0))
+            continue
+        there, = struct.unpack_from("<I", other_image, place - other_start)
+        if there != value:
+            (follow if there == moved(value) else differ).append((address, value, there))
+        elif moved(value) == value:
+            unmoved.append((address, value, there))
+        else:
+            numbers.append((address, value, there))
+    return numbers, unmoved, differ, unplaced, follow
+
+
 def main():
     parser = argparse.ArgumentParser(description=__doc__, formatter_class=argparse.RawDescriptionHelpFormatter)
     parser.add_argument("--target", default="SLPS_252.33")
     parser.add_argument("--shift", type=lambda v: int(v, 0), default=0x40)
     parser.add_argument("--list", action="store_true")
+    parser.add_argument("--no-twin", action="store_true", help="skip the comparison with the other game executable")
     args = parser.parse_args()
     work = BUILD / "shiftcheck"
     base = link(args.target, 0, work / "base")
@@ -171,6 +206,20 @@ def main():
              if name not in ignored and not (name.startswith("D_") and value >= text_end)}
     hits = [(address, value) for address, value in data + pairs if value in exact]
     print(f"of those, values that are exactly the address of a label: {len(hits)}")
+    twin = {"SLPS_252.33": "DEATH.ELF", "DEATH.ELF": "SLPS_252.33"}.get(args.target)
+    if twin and not args.no_twin:
+        numbers, unmoved, differ, unplaced, follow = against_twin(base, link(twin, 0, work / "twin"), twin, data)
+        print(f"data words checked against {twin}: {len(numbers)} hold the same value there although what they "
+              f"would point at moved (numbers), {len(unmoved)} the same value and the target did not move, "
+              f"{len(differ)} an unrelated value, {len(unplaced)} with no counterpart")
+        print(f"data words that follow the move like an address but carry no relocation: {len(follow)}")
+        for address, value, there in follow[:None if args.list else 20]:
+            print(f"  {address:#x} -> {value:#x} (twin {there:#x})")
+        if args.list:
+            for title, rows in (("unrelated value in the twin", differ), ("target did not move", unmoved)):
+                print(title)
+                for address, value, other in rows:
+                    print(f"  {address:#x} -> {value:#x} (twin {other:#x})")
     if args.list:
         labels = sorted((value, name) for name, value in base.symbols.items())
         keys = [value for value, _ in labels]
