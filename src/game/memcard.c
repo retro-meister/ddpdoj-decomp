@@ -2,6 +2,298 @@
 #include "sdk/ps2sdk.h"
 #include "pad.h"
 
+/*
+ * The unit's tables, in the order of the source: the order in which the text they mention lies in
+ * `.rodata`.  Tables of up to eight bytes are in `.sdata`, the others in `.data`.  In the messages
+ * "／" ends a line and "￥" the message.  A message that is only "￥" has two zero bytes written
+ * after it: the retail literal is aligned like one of five bytes or more.
+ */
+char g_mc_icon_cd_path_a[20] = "\\DATA\\DDON3_1.ICO;1";
+
+char g_mc_icon_cd_path_b[20] = "\\DATA\\DDON3_2.ICO;1";
+
+s32 g_mc_needed_kilobytes[22] = {
+    0x28, 0x28, 0xAA, 0xAA, 0xAA, 0xAA, 0xAA, 0xAA,
+    0xAA, 0xAA, 0xAA, 0xAA, 0xAA, 0xAA, 0xAA, 0xAA,
+    0xAA, 0xAA, 0xAA, 0xAA, 0xAA, 0xAA,
+};
+
+char *g_mc_msg_busy_game[5] = {
+    SJIS("ゲームデータを／セーブしています＠"),
+    SJIS("ゲームデータを／ロードしています＠"),
+    SJIS("ゲームデータを／ロードしています＠"),
+    SJIS("フォーマットをしていま／す＠"),
+    SJIS("アンフォーマットしてい／ます＠"),
+};
+
+char *g_mc_msg_busy_replay[5] = {
+    SJIS("リプレイデータを／セーブしています＠"),
+    SJIS("リプレイデータを／ロードしています＠"),
+    SJIS("リプレイデータを／ロードしています＠"),
+    SJIS("フォーマットをしていま／す＠"),
+    SJIS("アンフォーマットしてい／ます＠"),
+};
+
+char *g_mc_msg_do_not_remove = SJIS("メモリーカード（PS2）を／抜いたり、／電源を切ったり、／リセットしないで下さい。￥");
+
+char *g_mc_msg_slot_name[2] = {
+    SJIS("　MEMORY CARD差込口1　￥"),
+    SJIS("　MEMORY CARD差込口2　￥"),
+};
+
+char *g_mc_msg_no_card[2] = {
+    SJIS("メモリーカード（PS2）が／MEMORY CARD差込口1に／差されていません。￥"),
+    SJIS("メモリーカード（PS2）が／MEMORY CARD差込口2に／差されていません。￥"),
+};
+
+char *g_mc_msg_checking = SJIS("メモリーカード（PS2）を／チェックしています。￥");
+
+char *g_mc_msg_damaged[11] = {
+    SJIS("現在保存されている／「ゲームデータ」は／破損しています。／“PlayStation 2”本体／ブラウザ画面にて／削除して下さい。￥"),
+    SJIS("現在保存されている／「リプレイデータ」は／破損しています。／“PlayStation 2”本体／ブラウザ画面にて／削除して下さい。￥"),
+    SJIS("現在保存されている／「リプレイデータ」は／破損しています。／“PlayStation 2”本体／ブラウザ画面にて／削除して下さい。￥"),
+    SJIS("現在保存されている／「リプレイデータ」は／破損しています。／“PlayStation 2”本体／ブラウザ画面にて／削除して下さい。￥"),
+    SJIS("現在保存されている／「リプレイデータ」は／破損しています。／“PlayStation 2”本体／ブラウザ画面にて／削除して下さい。￥"),
+    SJIS("現在保存されている／「リプレイデータ」は／破損しています。／“PlayStation 2”本体／ブラウザ画面にて／削除して下さい。￥"),
+    SJIS("現在保存されている／「リプレイデータ」は／破損しています。／“PlayStation 2”本体／ブラウザ画面にて／削除して下さい。￥"),
+    SJIS("現在保存されている／「リプレイデータ」は／破損しています。／“PlayStation 2”本体／ブラウザ画面にて／削除して下さい。￥"),
+    SJIS("現在保存されている／「リプレイデータ」は／破損しています。／“PlayStation 2”本体／ブラウザ画面にて／削除して下さい。￥"),
+    SJIS("現在保存されている／「リプレイデータ」は／破損しています。／“PlayStation 2”本体／ブラウザ画面にて／削除して下さい。￥"),
+    SJIS("現在保存されている／「リプレイデータ」は／破損しています。／“PlayStation 2”本体／ブラウザ画面にて／削除して下さい。￥"),
+};
+
+char *g_mc_msg_delete_to_save = SJIS("削除しないと／セーブできません。￥");
+
+char *g_mc_msg_confirm_button = SJIS("　　　　　　　　確認○￥");
+
+char *g_mc_msg_title[8] = {
+    SJIS("　　　　セーブ　　　　￥"),
+    SJIS("　　　　ロード　　　　￥"),
+    SJIS(" 　アンフォーマット　 ￥"),
+    SJIS("￥\0\0"),
+    SJIS(" 　　オートロード　　 ￥"),
+    SJIS("￥\0\0"),
+    SJIS("￥\0\0"),
+    SJIS("￥\0\0"),
+};
+
+char *g_mc_msg_title_auto[9] = {
+    SJIS(" 　　オートセーブ　　 ￥"),
+    SJIS("　　　　ロード　　　　￥"),
+    SJIS("￥\0\0"),
+    SJIS("￥\0\0"),
+    SJIS(" 　　オートロード　　 ￥"),
+    SJIS("￥\0\0"),
+    SJIS("￥\0\0"),
+    SJIS("￥\0\0"),
+    SJIS("￥\0\0"),
+};
+
+char *g_mc_msg_on_card[2] = {
+    SJIS("MEMORY CARD差込口1の／メモリーカード（PS2）に￥"),
+    SJIS("MEMORY CARD差込口2の／メモリーカード（PS2）に￥"),
+};
+
+char *g_mc_msg_no_data[12] = {
+    SJIS("ゲームデータが／存在しません。￥"),
+    SJIS("リプレイデータが／存在しません。￥"),
+    SJIS("リプレイデータが／存在しません。￥"),
+    SJIS("リプレイデータが／存在しません。￥"),
+    SJIS("リプレイデータが／存在しません。￥"),
+    SJIS("リプレイデータが／存在しません。￥"),
+    SJIS("リプレイデータが／存在しません。￥"),
+    SJIS("リプレイデータが／存在しません。￥"),
+    SJIS("リプレイデータが／存在しません。￥"),
+    SJIS("リプレイデータが／存在しません。￥"),
+    SJIS("リプレイデータが／存在しません。￥"),
+    SJIS("ゲームデータが／存在しません。￥"),
+};
+
+char *g_mc_msg_unformat_ask = SJIS("アンフォーマットします／か？￥");
+
+char *g_mc_msg_unformat_done = SJIS("アンフォーマットに成功／しました。￥");
+
+char *g_mc_msg_unformat_failed = SJIS("アンフォーマットに失敗／しました。￥");
+
+char *g_mc_msg_format_ask[2] = {
+    SJIS("MEMORY CARD差込口1の／メモリーカード（PS2）は／フォーマットされており／ません。フォーマットを／行ないますか？￥"),
+    SJIS("MEMORY CARD差込口2の／メモリーカード（PS2）は／フォーマットされており／ません。フォーマットを／行ないますか？￥"),
+};
+
+char *g_mc_msg_format_done = SJIS("フォーマットが／完了しました。￥");
+
+char *g_mc_msg_format_failed = SJIS("フォーマットに／失敗しました。￥");
+
+char *g_mc_msg_start_no_card = SJIS("MEMORY CARD差込口1に／メモリーカード（PS2）が／差されていません。／このゲームのデータを／セーブするには空き容量／ 40KB以上必要です。／このまま開始しますか？￥");
+
+char *g_mc_msg_start_no_space = SJIS("メモリーカード（PS2）の／空き容量が／不足しています。／・ゲームデータ／(空き容量:40KB以上）￥");
+
+char *g_mc_msg_start_without_save = SJIS("このままゲームを／開始すると、／ゲームデータを／セーブできません。／よろしいですか？￥");
+
+char *g_mc_msg_no_card_no_system_data = SJIS("MEMORY CARD差込口1に／メモリーカード（PS2）が／差されていません。／このままでは／システムデータを／作成出来ません。￥");
+
+char *g_mc_msg_save_ask[11] = {
+    SJIS("ゲームデータの／セーブには40KB以上の／空き容量が必要です。／セーブしますか？￥"),
+    SJIS("リプレイデータの／セーブには170KB以上の／空き容量が必要です。／セーブしますか？￥"),
+    SJIS("リプレイデータの／セーブには170KB以上の／空き容量が必要です。／セーブしますか？￥"),
+    SJIS("リプレイデータの／セーブには170KB以上の／空き容量が必要です。／セーブしますか？￥"),
+    SJIS("リプレイデータの／セーブには170KB以上の／空き容量が必要です。／セーブしますか？￥"),
+    SJIS("リプレイデータの／セーブには170KB以上の／空き容量が必要です。／セーブしますか？￥"),
+    SJIS("リプレイデータの／セーブには170KB以上の／空き容量が必要です。／セーブしますか？￥"),
+    SJIS("リプレイデータの／セーブには170KB以上の／空き容量が必要です。／セーブしますか？￥"),
+    SJIS("リプレイデータの／セーブには170KB以上の／空き容量が必要です。／セーブしますか？￥"),
+    SJIS("リプレイデータの／セーブには170KB以上の／空き容量が必要です。／セーブしますか？￥"),
+    SJIS("リプレイデータの／セーブには170KB以上の／空き容量が必要です。／セーブしますか？￥"),
+};
+
+char *g_mc_msg_save_continue = SJIS("セーブを続けますか？￥");
+
+char *g_mc_msg_save_done = SJIS("セーブが完了しました。￥");
+
+char *g_mc_msg_save_failed = SJIS("セーブに失敗しました。￥");
+
+char *g_mc_msg_overwrite_ask[11] = {
+    SJIS("ゲームデータが／存在します。／上書きセーブしますか？￥"),
+    SJIS("リプレイデータが／存在します。／上書きセーブしますか？￥"),
+    SJIS("リプレイデータが／存在します。／上書きセーブしますか？￥"),
+    SJIS("リプレイデータが／存在します。／上書きセーブしますか？￥"),
+    SJIS("リプレイデータが／存在します。／上書きセーブしますか？￥"),
+    SJIS("リプレイデータが／存在します。／上書きセーブしますか？￥"),
+    SJIS("リプレイデータが／存在します。／上書きセーブしますか？￥"),
+    SJIS("リプレイデータが／存在します。／上書きセーブしますか？￥"),
+    SJIS("リプレイデータが／存在します。／上書きセーブしますか？￥"),
+    SJIS("リプレイデータが／存在します。／上書きセーブしますか？￥"),
+    SJIS("リプレイデータが／存在します。／上書きセーブしますか？￥"),
+};
+
+char *g_mc_msg_save_to_card_ask[11] = {
+    SJIS("ゲームデータを、／メモリーカード（PS2）に／セーブしますか？￥"),
+    SJIS("リプレイデータを、／メモリーカード（PS2）に／セーブしますか？￥"),
+    SJIS("リプレイデータを、／メモリーカード（PS2）に／セーブしますか？￥"),
+    SJIS("リプレイデータを、／メモリーカード（PS2）に／セーブしますか？￥"),
+    SJIS("リプレイデータを、／メモリーカード（PS2）に／セーブしますか？￥"),
+    SJIS("リプレイデータを、／メモリーカード（PS2）に／セーブしますか？￥"),
+    SJIS("リプレイデータを、／メモリーカード（PS2）に／セーブしますか？￥"),
+    SJIS("リプレイデータを、／メモリーカード（PS2）に／セーブしますか？￥"),
+    SJIS("リプレイデータを、／メモリーカード（PS2）に／セーブしますか？￥"),
+    SJIS("リプレイデータを、／メモリーカード（PS2）に／セーブしますか？￥"),
+    SJIS("リプレイデータを、／メモリーカード（PS2）に／セーブしますか？￥"),
+};
+
+char *g_mc_msg_no_space = SJIS("メモリーカード（PS2）の／空き容量が／不足しています。￥");
+
+char *g_mc_msg_to_save[11] = {
+    SJIS("ゲームデータをセーブ／するには￥"),
+    SJIS("リプレイデータをセーブ／するには￥"),
+    SJIS("リプレイデータをセーブ／するには￥"),
+    SJIS("リプレイデータをセーブ／するには￥"),
+    SJIS("リプレイデータをセーブ／するには￥"),
+    SJIS("リプレイデータをセーブ／するには￥"),
+    SJIS("リプレイデータをセーブ／するには￥"),
+    SJIS("リプレイデータをセーブ／するには￥"),
+    SJIS("リプレイデータをセーブ／するには￥"),
+    SJIS("リプレイデータをセーブ／するには￥"),
+    SJIS("リプレイデータをセーブ／するには￥"),
+};
+
+char *g_mc_msg_needed_space[2] = {
+    SJIS("MEMORY CARD差込口1の／メモリーカード（PS2）に／空き容量   KB以上が／必要です。￥"),
+    SJIS("MEMORY CARD差込口2の／メモリーカード（PS2）に／空き容量   KB以上が／必要です。￥"),
+};
+
+char *g_mc_msg_load_ask[12] = {
+    SJIS("ゲームデータを／メモリーカード（PS2）／からロードしますか？￥"),
+    SJIS("リプレイデータを／メモリーカード（PS2）／からロードしますか？￥"),
+    SJIS("リプレイデータを／メモリーカード（PS2）／からロードしますか？￥"),
+    SJIS("リプレイデータを／メモリーカード（PS2）／からロードしますか？￥"),
+    SJIS("リプレイデータを／メモリーカード（PS2）／からロードしますか？￥"),
+    SJIS("リプレイデータを／メモリーカード（PS2）／からロードしますか？￥"),
+    SJIS("リプレイデータを／メモリーカード（PS2）／からロードしますか？￥"),
+    SJIS("リプレイデータを／メモリーカード（PS2）／からロードしますか？￥"),
+    SJIS("リプレイデータを／メモリーカード（PS2）／からロードしますか？￥"),
+    SJIS("リプレイデータを／メモリーカード（PS2）／からロードしますか？￥"),
+    SJIS("リプレイデータを／メモリーカード（PS2）／からロードしますか？￥"),
+    SJIS(" 　ゲームデータを／ メモリーカード（PS2）／ からロードしますか？￥"),
+};
+
+char *g_mc_msg_load_continue = SJIS("ロードを続けますか？￥");
+
+char *g_mc_msg_load_done = SJIS("ロードが完了しました。￥");
+
+char *g_mc_msg_load_failed = SJIS("ロードに失敗しました。￥");
+
+char *g_mc_msg_not_formatted = SJIS("MEMORY CARD差込口1の／メモリーカード（PS2）は／フォーマットされて／いません。￥");
+
+char *g_mc_msg_option_unlocked[4] = {
+    SJIS("エクストラオプションに／START ROUND／が追加されました。￥"),
+    SJIS("エクストラオプションに／HIT DISP／が追加されました。￥"),
+    SJIS("エクストラオプションに／ROUND SET／が追加されました。￥"),
+    SJIS("エクストラオプションに／BULLET／が追加されました。￥"),
+};
+
+char *g_mc_dir_names[11] = {
+    "/BISLPS-25233",
+    "/BISLPS-25233REPLAY1",
+    "/BISLPS-25233REPLAY2",
+    "/BISLPS-25233REPLAY3",
+    "/BISLPS-25233REPLAY4",
+    "/BISLPS-25233REPLAY5",
+    "/BISLPS-25233REPLAY6",
+    "/BISLPS-25233REPLAY7",
+    "/BISLPS-25233REPLAY8",
+    "/BISLPS-25233REPLAY9",
+    "/BISLPS-25233REPLAY10",
+};
+
+char *g_mc_dir_patterns[11] = {
+    "/BISLPS-25233/*",
+    "/BISLPS-25233REPLAY1/*",
+    "/BISLPS-25233REPLAY2/*",
+    "/BISLPS-25233REPLAY3/*",
+    "/BISLPS-25233REPLAY4/*",
+    "/BISLPS-25233REPLAY5/*",
+    "/BISLPS-25233REPLAY6/*",
+    "/BISLPS-25233REPLAY7/*",
+    "/BISLPS-25233REPLAY8/*",
+    "/BISLPS-25233REPLAY9/*",
+    "/BISLPS-25233REPLAY10/*",
+};
+
+char *g_mc_file_paths[11] = {
+    "/BISLPS-25233/BISLPS-25233",
+    "/BISLPS-25233REPLAY1/BISLPS-25233REPLAY1",
+    "/BISLPS-25233REPLAY2/BISLPS-25233REPLAY2",
+    "/BISLPS-25233REPLAY3/BISLPS-25233REPLAY3",
+    "/BISLPS-25233REPLAY4/BISLPS-25233REPLAY4",
+    "/BISLPS-25233REPLAY5/BISLPS-25233REPLAY5",
+    "/BISLPS-25233REPLAY6/BISLPS-25233REPLAY6",
+    "/BISLPS-25233REPLAY7/BISLPS-25233REPLAY7",
+    "/BISLPS-25233REPLAY8/BISLPS-25233REPLAY8",
+    "/BISLPS-25233REPLAY9/BISLPS-25233REPLAY9",
+    "/BISLPS-25233REPLAY10/BISLPS-25233REPLAY10",
+};
+
+s32 g_mc_icon_bg_color[16] = {
+    0x80, 0, 0, 0, 0, 0x80, 0, 0,
+    0, 0, 0x80, 0, 0x80, 0x80, 0x80, 0,
+};
+
+float g_mc_icon_light_dir[12] = {
+    0.0f, 1.0f, 1.0f, 0.0f,
+    0.0f, 1.0f, 1.0f, 0.0f,
+    0.0f, 1.0f, 1.0f, 0.0f,
+};
+
+float g_mc_icon_light_color[12] = {
+    0.5f, 0.5f, 0.5f, 0.0f,
+    0.0f, 0.0f, 0.0f, 0.0f,
+    0.0f, 0.0f, 0.0f, 0.0f,
+};
+
+float g_mc_icon_ambient[4] = {
+    0.2f, 0.2f, 0.2f, 0.0f,
+};
+
 void func_0022C7B0(void);
 void func_0022C870();
 void func_0022C960(void);
@@ -69,19 +361,17 @@ void func_0022C5A0(void) {
 
 extern void func_00222F90(s32 x, s32 y, s32 value);
 
-void func_0022C5E0(s64 x, s32 bufferAddress, s32 unusedA2, s32 unusedA3,
+void mc_message_draw(s64 x, char *text, s32 unusedA2, s32 unusedA3,
                    s32 unusedT0, s32 value)
 {
     s32 saved_state_address = (s32)reg_a0;
 
-    reg_a0 = (u8 *)bufferAddress;
+    reg_a0 = (u8 *)text;
     func_00222F90(0x1C0 - (s16)x, 0x18, value & 0xFFFF);
     reg_a0 = (u8 *)saved_state_address;
 }
 
 s32 cd_load_file(s32 *, s32 *);        /* extern */
-extern s32 D_00271D20[];
-extern s32 D_00271D40[];
 extern s32 g_cd_last_read_size_as_s32;
 extern s8 D_0028ECD4;
 extern s32 D_0028ED00;
@@ -95,9 +385,9 @@ extern s32 D_0068E580_as_s32_a[];
 extern s32 D_00696D80_as_s32_a[];
 
 void func_0022C630(void) {
-    cd_load_file(D_00696D80_as_s32_a, D_00271D20);
+    cd_load_file(D_00696D80_as_s32_a, (s32 *)g_mc_icon_cd_path_a);
     D_0028ED28 = g_cd_last_read_size_as_s32;
-    cd_load_file(D_0068E580_as_s32_a, D_00271D40);
+    cd_load_file(D_0068E580_as_s32_a, (s32 *)g_mc_icon_cd_path_b);
     D_0028ED24 = g_cd_last_read_size_as_s32;
     func_0022D2C0();
     D_0028ED0C = 0;
@@ -506,20 +796,17 @@ void func_0022CDB0(s32 arg0) {
     }
 }
 
-extern char *D_00271E30[];
-extern char *D_00271E50[];
-extern char *D_0028DDC0[2];
 extern u8 D_0028ECE8;
 extern u16 D_0028ED10_as_u16;
 
 void func_0022CF20(void) {
-    void func_0022C5E0(s32 x, char *text, s32 a, s32 b, s32 c, s32 d, s32 e);
+    void mc_message_draw(s32 x, char *text, s32 a, s32 b, s32 c, s32 d, s32 e);
     if (D_0028ECBC != 0) {
-        func_0022C5E0(0x64, D_00271E50[D_0028ED20], 0, 0x14, 0xE, D_0028ED10_as_u16, 0x64);
+        mc_message_draw(0x64, g_mc_msg_title_auto[D_0028ED20], 0, 0x14, 0xE, D_0028ED10_as_u16, 0x64);
     } else {
-        func_0022C5E0(0x64, D_00271E30[D_0028ED20], 0, 0x14, 0xE, D_0028ED10_as_u16, 0x64);
+        mc_message_draw(0x64, g_mc_msg_title[D_0028ED20], 0, 0x14, 0xE, D_0028ED10_as_u16, 0x64);
     }
-    func_0022C5E0(0x78, D_0028DDC0[D_0028ECE8], 0, 0x14, 0xE, D_0028ED10_as_u16, 0x64);
+    mc_message_draw(0x78, g_mc_msg_slot_name[D_0028ECE8], 0, 0x14, 0xE, D_0028ED10_as_u16, 0x64);
 }
 
 extern u8 g_mc_task;
@@ -734,15 +1021,12 @@ void func_0022D380(void) {
     }
     func_00233F50();
 }
-
-extern s32 D_00271D60[];
-extern s32 D_00271FE0_as_s32_a[];
 extern u8 g_mc_wait;
 extern u8 g_mc_dir[];
 
 void func_0022D550(void) {
     s32 sceMcSync(s32 arg0, s32 arg1, s32 *arg2);
-    s32 sceMcGetDir(s32 arg0, s32 arg1, s32 arg2, s32 arg3, s32 arg4, void *arg5);
+    s32 sceMcGetDir(s32 arg0, s32 arg1, char * arg2, s32 arg3, s32 arg4, void *arg5);
     s32 strcmp(const char *a, const char *b);
     s32 result;
     s32 missing;
@@ -802,7 +1086,7 @@ void func_0022D550(void) {
         }
         break;
     case 3:
-        if (sceMcGetDir(g_mc_port, g_mc_slot, D_00271FE0_as_s32_a[g_mc_file], 0, 5, g_mc_dir) == 0) {
+        if (sceMcGetDir(g_mc_port, g_mc_slot, g_mc_dir_patterns[g_mc_file], 0, 5, g_mc_dir) == 0) {
             g_mc_step += 1;
             break;
         }
@@ -814,7 +1098,7 @@ void func_0022D550(void) {
     case 4:
         if (sceMcSync(1, 0, &result) != 0) {
             if (result <= 0) {
-                if (D_0028ECB4 < D_00271D60[g_mc_file * 2]) {
+                if (D_0028ECB4 < g_mc_needed_kilobytes[g_mc_file * 2]) {
                     g_mc_step = 50;
                 } else {
                     g_mc_step = 0;
@@ -1017,8 +1301,7 @@ void func_0022D550(void) {
     }
 }
 
-s32 sceMcMkdir(s32 arg0, s32 arg1, s32 arg2);
-extern s32 D_00271FB0[];
+s32 sceMcMkdir(s32 arg0, s32 arg1, char * arg2);
 extern u8 D_0028ECD8;
 
 void func_0022DFF0(void) {
@@ -1038,7 +1321,7 @@ void func_0022DFF0(void) {
                 break;
             }
             D_0028ECC0 = 0;
-            if (sceMcMkdir(g_mc_port, g_mc_slot, D_00271FB0[g_mc_file]) == 0) {
+            if (sceMcMkdir(g_mc_port, g_mc_slot, g_mc_dir_names[g_mc_file]) == 0) {
                 g_mc_step += 1;
                 break;
             }
@@ -1310,13 +1593,6 @@ typedef struct {
 
 s32 sceMcWrite(s32 arg0, void *arg1, s32 arg2);
 char *strcpy(u8 *dst, const char *src);
-
-extern char *D_00272010_as_char_p_a[];
-extern u8 D_00272040[];
-extern u8 D_00272080[];
-extern u8 D_002720B0[];
-extern u8 D_002720E0[];
-extern s32 D_0028DE1C;
 extern s32 g_mc_fd;
 extern u8 D_0068E1B0[];
 extern s16 D_0068E1B6[];
@@ -1332,10 +1608,10 @@ extern u8 D_0068E334[];
 extern u8 D_00696D80[];
 extern u8 g_mc_save_buf[];
 void func_0022E710(void) {
-    s32 sceMcOpen(s32 arg0, s32 arg1, void *arg2, s32 arg3);
+    s32 sceMcOpen(s32 arg0, s32 arg1, char *arg2, s32 arg3);
     s32 sceMcClose(s32 arg0);
     s32 sceMcSync(s32 arg0, s32 arg1, s32 *arg2);
-    extern void func_0022C5E0(s32, s32, s32, s32, s32, u16, s32);
+    extern void mc_message_draw(s32, char *, s32, s32, s32, u16, s32);
     s32 result;
     NameSet names = { "icon1.ico", "icon1.ico", "icon1.ico" };
 
@@ -1383,10 +1659,10 @@ void func_0022E710(void) {
         strcpy(D_0068E270, (char *)SJIS("怒首領蜂大往生ゲームデータ"));
         D_0068E1B6[0] = 0xE;
         D_0068E1BC[0] = 0x60;
-        memcpy(D_0068E1C0, D_00272040, 0x40);
-        memcpy(D_0068E200, D_00272080, 0x30);
-        memcpy(D_0068E230, D_002720B0, 0x30);
-        memcpy(D_0068E260, D_002720E0, 0x10);
+        memcpy(D_0068E1C0, g_mc_icon_bg_color, 0x40);
+        memcpy(D_0068E200, g_mc_icon_light_dir, 0x30);
+        memcpy(D_0068E230, g_mc_icon_light_color, 0x30);
+        memcpy(D_0068E260, g_mc_icon_ambient, 0x10);
         strcpy(D_0068E2B4, names.name[0]);
         strcpy(D_0068E2F4, names.name[1]);
         strcpy(D_0068E334, names.name[2]);
@@ -1507,7 +1783,7 @@ void func_0022E710(void) {
         }
         break;
     case 0x24:
-        if (sceMcOpen(g_mc_port, g_mc_slot, D_00272010_as_char_p_a[g_mc_file], 0x203) == 0) {
+        if (sceMcOpen(g_mc_port, g_mc_slot, g_mc_file_paths[g_mc_file], 0x203) == 0) {
             g_mc_step += 1;
         } else {
             g_mc_wait -= 1;
@@ -1573,7 +1849,7 @@ void func_0022E710(void) {
         }
         break;
     case 0x32:
-        func_0022C5E0(0xC8, D_0028DE1C, 0, 0x14, 0xE, D_0028ED10, 0x64);
+        mc_message_draw(0xC8, g_mc_msg_save_done, 0, 0x14, 0xE, D_0028ED10, 0x64);
         func_00233EE0();
         if (g_pad_trigger[2] & 0x20) {
             g_mc_step += 1;
@@ -1621,10 +1897,10 @@ void func_0022E710(void) {
 extern u8 D_0068E580[];
 extern u8 g_replay_file_loaded[];
 void func_0022F070(void) {
-    s32 sceMcOpen(s32 arg0, s32 arg1, void *arg2, s32 arg3);
+    s32 sceMcOpen(s32 arg0, s32 arg1, char *arg2, s32 arg3);
     s32 sceMcClose(s32 arg0);
     s32 sceMcSync(s32 arg0, s32 arg1, s32 *arg2);
-    extern void func_0022C5E0(s32, s32, s32, s32, s32, u16, s32);
+    extern void mc_message_draw(s32, char *, s32, s32, s32, u16, s32);
     s32 ret;
     s32 result;
     NameSet names = { "icon1.ico", "icon1.ico", "icon1.ico" };
@@ -1733,10 +2009,10 @@ void func_0022F070(void) {
         }
         D_0068E1B6[0] = 0xE;
         D_0068E1BC[0] = 0x60;
-        memcpy(D_0068E1C0, D_00272040, 0x40);
-        memcpy(D_0068E200, D_00272080, 0x30);
-        memcpy(D_0068E230, D_002720B0, 0x30);
-        memcpy(D_0068E260, D_002720E0, 0x10);
+        memcpy(D_0068E1C0, g_mc_icon_bg_color, 0x40);
+        memcpy(D_0068E200, g_mc_icon_light_dir, 0x30);
+        memcpy(D_0068E230, g_mc_icon_light_color, 0x30);
+        memcpy(D_0068E260, g_mc_icon_ambient, 0x10);
         strcpy(D_0068E2B4, names.name[0]);
         strcpy(D_0068E2F4, names.name[1]);
         strcpy(D_0068E334, names.name[2]);
@@ -1887,7 +2163,7 @@ void func_0022F070(void) {
         }
         break;
     case 0x24:
-        if (sceMcOpen(g_mc_port, g_mc_slot, D_00272010_as_char_p_a[g_mc_file], 0x203) == 0) {
+        if (sceMcOpen(g_mc_port, g_mc_slot, g_mc_file_paths[g_mc_file], 0x203) == 0) {
             g_mc_step += 1;
         } else {
             g_mc_wait -= 1;
@@ -1953,7 +2229,7 @@ void func_0022F070(void) {
         }
         break;
     case 0x32:
-        func_0022C5E0(0xC8, D_0028DE1C, 0, 0x14, 0xE, D_0028ED10, 0x64);
+        mc_message_draw(0xC8, g_mc_msg_save_done, 0, 0x14, 0xE, D_0028ED10, 0x64);
         func_00233EE0();
         if (g_pad_trigger[2] & 0x20) {
             g_mc_step += 1;
@@ -1998,15 +2274,14 @@ void func_0022F070(void) {
     }
 }
 
-extern s32 D_0028DE18;
 
 void func_0022FE40(void) {
-    extern void func_0022C5E0(s32, s32, s32, s32, s32, u16, s32);
+    extern void mc_message_draw(s32, char *, s32, s32, s32, u16, s32);
     s32 diff;
     s32 step;
 
     func_0022CF20();
-    func_0022C5E0(200, D_0028DE18, 0, 20, 14, D_0028ED10, 100);
+    mc_message_draw(200, g_mc_msg_save_continue, 0, 20, 14, D_0028ED10, 100);
     switch (g_mc_step) {
     case 0:
         g_mc_choice = 0;
@@ -2149,13 +2424,12 @@ void func_00230010(void) {
     func_00233F50();
 }
 
-extern s32 D_00272010[];
 extern s32 D_0028EC90;
 extern s32 D_0069F590[];
 
 void func_00230230(void) {
     s32 sceMcSync(s32 arg0, s32 arg1, s32 *arg2);
-    s32 sceMcGetDir(s32 arg0, s32 arg1, s32 arg2, s32 arg3, s32 arg4, void *arg5);
+    s32 sceMcGetDir(s32 arg0, s32 arg1, char * arg2, s32 arg3, s32 arg4, void *arg5);
     s32 result;
     s32 error;
 
@@ -2214,7 +2488,7 @@ void func_00230230(void) {
         }
         break;
     case 3:
-        if (sceMcGetDir(g_mc_port, g_mc_slot, D_00272010[g_mc_file], 0, 99, g_mc_dir) == 0) {
+        if (sceMcGetDir(g_mc_port, g_mc_slot, g_mc_file_paths[g_mc_file], 0, 99, g_mc_dir) == 0) {
             g_mc_step += 1;
             break;
         }
@@ -2266,7 +2540,7 @@ void func_00230230(void) {
         break;
     case 60:
         D_0028EC90 = 0;
-        if (sceMcGetDir(g_mc_port, g_mc_slot, D_00272010[0], 0, 99, g_mc_dir) == 0) {
+        if (sceMcGetDir(g_mc_port, g_mc_slot, g_mc_file_paths[0], 0, 99, g_mc_dir) == 0) {
             g_mc_step += 1;
             break;
         }
@@ -2368,7 +2642,7 @@ extern s32 D_0028EC98;
 extern u8 D_0028ECD4_as_u8;
 
 void func_00230840(void) {
-    s32 sceMcOpen(s32 arg0, s32 arg1, s32 arg2, s32 arg3);
+    s32 sceMcOpen(s32 arg0, s32 arg1, char * arg2, s32 arg3);
     s32 sceMcClose(s32 arg0);
     s32 sceMcRead(s32 arg0, void *arg1, s32 arg2);
     s32 sceMcSync(s32 arg0, s32 arg1, s32 *arg2);
@@ -2392,7 +2666,7 @@ void func_00230840(void) {
         }
         break;
     case 2:
-        status = sceMcOpen(g_mc_port, g_mc_slot, D_00272010[g_mc_file_as_u32], 3);
+        status = sceMcOpen(g_mc_port, g_mc_slot, g_mc_file_paths[g_mc_file_as_u32], 3);
         if (status == 0) {
             g_mc_step += 1;
         } else {
@@ -2645,11 +2919,11 @@ void func_00230CD0(void) {
 
 
 void func_00230FC0(void) {
-    s32 sceMcOpen(s32 arg0, s32 arg1, s32 arg2, s32 arg3);
+    s32 sceMcOpen(s32 arg0, s32 arg1, char * arg2, s32 arg3);
     s32 sceMcClose(s32 arg0);
     s32 sceMcRead(s32 arg0, void *arg1, s32 arg2);
     s32 sceMcSync(s32 arg0, s32 arg1, s32 *arg2);
-    s32 sceMcGetDir(s32 arg0, s32 arg1, s32 arg2, s32 arg3, s32 arg4, void *arg5);
+    s32 sceMcGetDir(s32 arg0, s32 arg1, char * arg2, s32 arg3, s32 arg4, void *arg5);
     s32 result;
     s32 error;
     s32 status;
@@ -2676,7 +2950,7 @@ void func_00230FC0(void) {
         }
         break;
     case 2:
-        if (sceMcGetDir(g_mc_port, g_mc_slot, D_00272010[g_mc_file], 0, 99, g_mc_dir) == 0) {
+        if (sceMcGetDir(g_mc_port, g_mc_slot, g_mc_file_paths[g_mc_file], 0, 99, g_mc_dir) == 0) {
             g_mc_step += 1;
             break;
         }
@@ -2696,7 +2970,7 @@ void func_00230FC0(void) {
         }
         break;
     case 4:
-        if (sceMcOpen(g_mc_port, g_mc_slot, D_00272010[g_mc_file], 3) == 0) {
+        if (sceMcOpen(g_mc_port, g_mc_slot, g_mc_file_paths[g_mc_file], 3) == 0) {
             g_mc_step += 1;
             break;
         }
@@ -2980,9 +3254,6 @@ found:
     printf("[%d][%d][%d][%d][%d]-[%d] no[%d]\n", D_006A0E88[k], D_006A0E89[k], D_006A0E8A[k], D_006A0E8B[k], D_006A0E8C[k], D_006A0E8D[k], i + 1);
     return i + 1;
 }
-
-extern u8 D_00271FE0[];
-extern u8 D_00272010_as_u8_a[];
 typedef struct {
     u8 pad0[0x10];
     s16 state;
@@ -3027,7 +3298,7 @@ void func_002319B0(void) {
         }
         break;
     case 2:
-        if (sceMcGetDir(g_mc_port, g_mc_slot, *(u32 *)(D_00271FE0 + (g_mc_file * 4)), 0, 5, g_mc_dir) == 0) {
+        if (sceMcGetDir(g_mc_port, g_mc_slot, g_mc_dir_patterns[g_mc_file], 0, 5, g_mc_dir) == 0) {
             g_mc_step += 1;
             break;
         }
@@ -3120,7 +3391,7 @@ void func_002319B0(void) {
         }
         break;
     case 4:
-        if (sceMcOpen(g_mc_port, g_mc_slot, *(u32 *)(D_00272010_as_u8_a + (g_mc_file * 4)), 3) == 0) {
+        if (sceMcOpen(g_mc_port, g_mc_slot, g_mc_file_paths[g_mc_file], 3) == 0) {
             g_mc_step += 1;
             break;
         }
@@ -3243,15 +3514,14 @@ void func_002319B0(void) {
     }
 }
 
-extern s32 D_0028DE30;
 
 void func_00232270(void) {
-    extern void func_0022C5E0(s32, s32, s32, s32, s32, u16, s32);
+    extern void mc_message_draw(s32, char *, s32, s32, s32, u16, s32);
     s32 diff;
     s32 step;
 
     func_0022CF20();
-    func_0022C5E0(200, D_0028DE30, 0, 20, 14, D_0028ED10, 100);
+    mc_message_draw(200, g_mc_msg_load_continue, 0, 20, 14, D_0028ED10, 100);
     switch (g_mc_step) {
     case 0:
         g_mc_choice = 1;
@@ -3308,16 +3578,15 @@ void func_00232270(void) {
     func_00233F50();
 }
 
-extern s32 D_0028DDF8;
 
 void func_00232430(void) {
-    extern void func_0022C5E0(s32, s32, s32, s32, s32, u16, s32);
+    extern void mc_message_draw(s32, char *, s32, s32, s32, u16, s32);
     s32 diff;
     s32 step;
 
     func_0022CF20();
     if ((g_mc_step != 20) && (g_mc_step != 0)) {
-        func_0022C5E0(200, (&D_0028DDF8)[D_0028ECE8], 0, 20, 14, D_0028ED10, 100);
+        mc_message_draw(200, g_mc_msg_format_ask[D_0028ECE8], 0, 20, 14, D_0028ED10, 100);
         func_00233F50();
     }
     switch (g_mc_step) {
@@ -3411,13 +3680,11 @@ void func_00232430(void) {
 }
 
 s32 sceMcFormat(s32 arg0, s32 arg1);
-extern s32 D_0028DE00;
-extern s32 D_0028DE04;
 
 void func_00232710(void) {
     s32 sceMcSync(s32 arg0, s32 arg1, s32 *arg2);
     s32 sceMcGetInfo(s32 arg0, s32 arg1, s32 *arg2, s32 *arg3, s32 *arg4);
-    extern void func_0022C5E0(s32, s32, s32, s32, s32, u16, s32);
+    extern void mc_message_draw(s32, char *, s32, s32, s32, u16, s32);
     s32 result;
 
     func_0022CF20();
@@ -3482,7 +3749,7 @@ void func_00232710(void) {
         }
         break;
     case 6:
-        func_0022C5E0(200, D_0028DE00, 0, 20, 14, D_0028ED10, 100);
+        mc_message_draw(200, g_mc_msg_format_done, 0, 20, 14, D_0028ED10, 100);
         func_00233EE0();
         if (g_pad_trigger[2] & 0x20) {
             g_mc_step += 1;
@@ -3493,7 +3760,7 @@ void func_00232710(void) {
         g_mc_task = 11;
         break;
     case 10:
-        func_0022C5E0(200, D_0028DE04, 0, 20, 14, D_0028ED10, 100);
+        mc_message_draw(200, g_mc_msg_format_failed, 0, 20, 14, D_0028ED10, 100);
         func_00233EE0();
         if (g_pad_trigger[2] & 0x20) {
             g_mc_step = 7;
@@ -3509,15 +3776,14 @@ void func_00232710(void) {
     }
 }
 
-extern s32 D_0028DDE8;
 
 void func_002329F0(void) {
-    extern void func_0022C5E0(s32, s32, s32, s32, s32, u16, s32);
+    extern void mc_message_draw(s32, char *, s32, s32, s32, u16, s32);
     s32 diff;
     s32 step;
 
     if (g_mc_step != 20) {
-        func_0022C5E0(200, D_0028DDE8, 0, 20, 14, D_0028ED10, 100);
+        mc_message_draw(200, g_mc_msg_unformat_ask, 0, 20, 14, D_0028ED10, 100);
         func_00233F50();
     }
     switch (g_mc_step) {
@@ -3585,12 +3851,10 @@ void func_002329F0(void) {
 }
 
 s32 sceMcUnformat(s32 arg0, s32 arg1);
-extern s32 D_0028DDEC;
-extern s32 D_0028DDF0;
 
 void func_00232BE0(void) {
     s32 sceMcSync(s32 arg0, s32 arg1, s32 *arg2);
-    extern void func_0022C5E0(s32, s32, s32, s32, s32, u16, s32);
+    extern void mc_message_draw(s32, char *, s32, s32, s32, u16, s32);
     s32 result;
     s32 status;
 
@@ -3620,7 +3884,7 @@ void func_00232BE0(void) {
         }
         break;
     case 3:
-        func_0022C5E0(200, D_0028DDEC, 0, 20, 14, D_0028ED10, 100);
+        mc_message_draw(200, g_mc_msg_unformat_done, 0, 20, 14, D_0028ED10, 100);
         func_00233EE0();
         if (g_pad_trigger[2] & 0x20) {
             g_mc_step += 1;
@@ -3637,7 +3901,7 @@ void func_00232BE0(void) {
         }
         break;
     case 10:
-        func_0022C5E0(200, D_0028DDF0, 0, 20, 14, D_0028ED10, 100);
+        mc_message_draw(200, g_mc_msg_unformat_failed, 0, 20, 14, D_0028ED10, 100);
         func_00233EE0();
         if (g_pad_trigger[2] & 0x20) {
             g_mc_step = 4;
@@ -3652,21 +3916,6 @@ void func_00232BE0(void) {
         break;
     }
 }
-
-extern char *D_00271FB0_as_char_p_a[];
-extern char *D_00271FB4[];
-extern char *D_00271FB8[];
-extern char *D_00271FBC[];
-extern char *D_00271FC0[];
-extern char *D_00271FC4[];
-extern char *D_00271FC8[];
-extern char *D_00271FCC[];
-extern char *D_00271FD0[];
-extern char *D_00271FD4[];
-extern char *D_00271FD8[];
-extern s32 D_0028DE08;
-extern s32 D_0028DE0C;
-extern s32 D_0028DE10;
 extern s32 D_0028EC80;
 extern s32 D_0028EC84;
 extern s32 D_0028EC88;
@@ -3677,7 +3926,7 @@ extern u8 D_0028EC8F;
 extern u8 D_0028ECF4;
 
 void func_00232DE0(void) {
-    extern void func_0022C5E0(s32, s32, s32, s32, s32, u16, s32);
+    extern void mc_message_draw(s32, char *, s32, s32, s32, u16, s32);
     s32 sceMcSync(s32, s32, s32 *);
     s32 sceMcGetDir(s32, s32, char *, s32, s32, void *);
     s32 result;
@@ -3685,12 +3934,12 @@ void func_00232DE0(void) {
     s32 step;
 
     if ((g_mc_step == 3) || (g_mc_step == 4) || (g_mc_step == 30) || (g_mc_step == 31)) {
-        func_0022C5E0(120, D_0028DE08, 0, 20, 14, D_0028ED10, 100);
+        mc_message_draw(120, g_mc_msg_start_no_card, 0, 20, 14, D_0028ED10, 100);
         func_00233F50();
     }
     if ((g_mc_step == 11) || (g_mc_step == 12) || (g_mc_step == 40) || (g_mc_step == 41)) {
-        func_0022C5E0(120, D_0028DE0C, 0, 20, 14, D_0028ED10, 100);
-        func_0022C5E0(240, D_0028DE10, 0, 20, 14, D_0028ED10, 100);
+        mc_message_draw(120, g_mc_msg_start_no_space, 0, 20, 14, D_0028ED10, 100);
+        mc_message_draw(240, g_mc_msg_start_without_save, 0, 20, 14, D_0028ED10, 100);
         func_00233F50();
     }
     switch (g_mc_step) {
@@ -3801,7 +4050,7 @@ void func_00232DE0(void) {
         D_0028EC8F = 0;
         D_0028EC80 = 0;
         D_0028EC84 = 0;
-        sceMcGetDir(g_mc_port, g_mc_slot, D_00271FB0_as_char_p_a[0], 0, 99, g_mc_dir);
+        sceMcGetDir(g_mc_port, g_mc_slot, g_mc_dir_names[0], 0, 99, g_mc_dir);
         g_mc_step += 1;
         break;
     case 0x33:
@@ -3809,7 +4058,7 @@ void func_00232DE0(void) {
         if (sceMcSync(1, 0, &result) != 0) {
             if (result <= 0) {
                 D_0028EC8D = 1;
-                D_0028EC88 += D_00271D60[0];
+                D_0028EC88 += g_mc_needed_kilobytes[0];
             } else {
                 D_0028EC80 = 1;
             }
@@ -3818,7 +4067,7 @@ void func_00232DE0(void) {
         break;
     case 0x34:
         func_00234230();
-        sceMcGetDir(g_mc_port, g_mc_slot, D_00271FB4[0], 0, 99, g_mc_dir);
+        sceMcGetDir(g_mc_port, g_mc_slot, g_mc_dir_names[1], 0, 99, g_mc_dir);
         g_mc_step += 1;
         break;
     case 0x35:
@@ -3832,7 +4081,7 @@ void func_00232DE0(void) {
         break;
     case 0x36:
         func_00234230();
-        sceMcGetDir(g_mc_port, g_mc_slot, D_00271FB8[0], 0, 99, g_mc_dir);
+        sceMcGetDir(g_mc_port, g_mc_slot, g_mc_dir_names[2], 0, 99, g_mc_dir);
         g_mc_step += 1;
         break;
     case 0x37:
@@ -3846,7 +4095,7 @@ void func_00232DE0(void) {
         break;
     case 0x38:
         func_00234230();
-        sceMcGetDir(g_mc_port, g_mc_slot, D_00271FBC[0], 0, 99, g_mc_dir);
+        sceMcGetDir(g_mc_port, g_mc_slot, g_mc_dir_names[3], 0, 99, g_mc_dir);
         g_mc_step += 1;
         break;
     case 0x39:
@@ -3860,7 +4109,7 @@ void func_00232DE0(void) {
         break;
     case 0x3A:
         func_00234230();
-        sceMcGetDir(g_mc_port, g_mc_slot, D_00271FC0[0], 0, 99, g_mc_dir);
+        sceMcGetDir(g_mc_port, g_mc_slot, g_mc_dir_names[4], 0, 99, g_mc_dir);
         g_mc_step += 1;
         break;
     case 0x3B:
@@ -3874,7 +4123,7 @@ void func_00232DE0(void) {
         break;
     case 0x3C:
         func_00234230();
-        sceMcGetDir(g_mc_port, g_mc_slot, D_00271FC4[0], 0, 99, g_mc_dir);
+        sceMcGetDir(g_mc_port, g_mc_slot, g_mc_dir_names[5], 0, 99, g_mc_dir);
         g_mc_step += 1;
         break;
     case 0x3D:
@@ -3888,7 +4137,7 @@ void func_00232DE0(void) {
         break;
     case 0x3E:
         func_00234230();
-        sceMcGetDir(g_mc_port, g_mc_slot, D_00271FC8[0], 0, 99, g_mc_dir);
+        sceMcGetDir(g_mc_port, g_mc_slot, g_mc_dir_names[6], 0, 99, g_mc_dir);
         g_mc_step += 1;
         break;
     case 0x3F:
@@ -3902,7 +4151,7 @@ void func_00232DE0(void) {
         break;
     case 0x40:
         func_00234230();
-        sceMcGetDir(g_mc_port, g_mc_slot, D_00271FCC[0], 0, 99, g_mc_dir);
+        sceMcGetDir(g_mc_port, g_mc_slot, g_mc_dir_names[7], 0, 99, g_mc_dir);
         g_mc_step += 1;
         break;
     case 0x41:
@@ -3916,7 +4165,7 @@ void func_00232DE0(void) {
         break;
     case 0x42:
         func_00234230();
-        sceMcGetDir(g_mc_port, g_mc_slot, D_00271FD0[0], 0, 99, g_mc_dir);
+        sceMcGetDir(g_mc_port, g_mc_slot, g_mc_dir_names[8], 0, 99, g_mc_dir);
         g_mc_step += 1;
         break;
     case 0x43:
@@ -3930,7 +4179,7 @@ void func_00232DE0(void) {
         break;
     case 0x44:
         func_00234230();
-        sceMcGetDir(g_mc_port, g_mc_slot, D_00271FD4[0], 0, 99, g_mc_dir);
+        sceMcGetDir(g_mc_port, g_mc_slot, g_mc_dir_names[9], 0, 99, g_mc_dir);
         g_mc_step += 1;
         break;
     case 0x45:
@@ -3944,7 +4193,7 @@ void func_00232DE0(void) {
         break;
     case 0x46:
         func_00234230();
-        sceMcGetDir(g_mc_port, g_mc_slot, D_00271FD8[0], 0, 99, g_mc_dir);
+        sceMcGetDir(g_mc_port, g_mc_slot, g_mc_dir_names[10], 0, 99, g_mc_dir);
         g_mc_step += 1;
         break;
     case 0x47:
@@ -4094,10 +4343,9 @@ void func_00232DE0(void) {
     }
 }
 
-extern s32 D_0028DE14;
 
 void func_00233BE0(void) {
-    extern void func_0022C5E0(s32, s32, s32, s32, s32, u16, s32);
+    extern void mc_message_draw(s32, char *, s32, s32, s32, u16, s32);
     func_0022CF20();
     switch (g_mc_step) {
     case 0:
@@ -4154,7 +4402,7 @@ void func_00233BE0(void) {
         } else {
             g_memcard_watch_delay += 1;
         }
-        func_0022C5E0(200, D_0028DE14, 0, 20, 14, D_0028ED10, 100);
+        mc_message_draw(200, g_mc_msg_no_card_no_system_data, 0, 20, 14, D_0028ED10, 100);
         func_00233EE0();
         if (g_pad_trigger[2] & 0x20) {
             g_mc_step = 3;
@@ -4212,16 +4460,15 @@ void memcard_watch_recheck(void) {
     g_memcard_watch_delay_as_s8 = 0x1E;
 }
 
-extern s32 D_0028DDD8;
 
 
 void func_00233EE0(void)
 {
-    extern void func_0022C5E0(s32, s32, s32, s32, s32, u16, s32);
+    extern void mc_message_draw(s32, char *, s32, s32, s32, u16, s32);
     s32 displayValue = D_0028ED10_as_u16;
-    s32 displayData = D_0028DDD8;
+    char *displayData = g_mc_msg_confirm_button;
 
-    func_0022C5E0(0x168, displayData, 0, 0x14, 0xE, displayValue, 0x64);
+    mc_message_draw(0x168, displayData, 0, 0x14, 0xE, displayValue, 0x64);
     if (g_pad_trigger[2] & 0x20) {
         menu_sfx_play(2);
     }
@@ -4269,131 +4516,111 @@ void func_00233F50(void) {
     }
 }
 
-extern s32 D_00271DC0[];
-extern s32 D_00271DE0[];
-extern s32 D_0028DDB8;
 
 void func_00234150(s32 arg0) {
-    extern void func_0022C5E0(s32, s32, s32, s32, s32, u16, s32);
+    extern void mc_message_draw(s32, char *, s32, s32, s32, u16, s32);
     if (g_mc_file == 0) {
-        func_0022C5E0(200, D_00271DC0[arg0], 0, 20, 14, D_0028ED10, 100);
+        mc_message_draw(200, g_mc_msg_busy_game[arg0], 0, 20, 14, D_0028ED10, 100);
     } else {
-        func_0022C5E0(200, D_00271DE0[arg0], 0, 20, 14, D_0028ED10, 100);
+        mc_message_draw(200, g_mc_msg_busy_replay[arg0], 0, 20, 14, D_0028ED10, 100);
     }
-    func_0022C5E0(300, D_0028DDB8, 0, 20, 14, D_0028ED10, 100);
+    mc_message_draw(300, g_mc_msg_do_not_remove, 0, 20, 14, D_0028ED10, 100);
 }
 
-extern s32 D_0028DDC8;
 
 
 void func_00234200(void) {
-    void func_0022C5E0(s32, s32, s32, s32, s32, u16, s32);
-    func_0022C5E0(0xC8, (&D_0028DDC8)[D_0028ECE8], 0, 0x14, 0xE, D_0028ED10_as_u16, 0x64);
+    void mc_message_draw(s32, char *, s32, s32, s32, u16, s32);
+    mc_message_draw(0xC8, g_mc_msg_no_card[D_0028ECE8], 0, 0x14, 0xE, D_0028ED10_as_u16, 0x64);
 }
 
-extern s32 D_0028DDD0;
 void func_00234230(void) {
-    void func_0022C5E0(s32, s32, s32, s32, s32, u16, s32);
+    void mc_message_draw(s32, char *, s32, s32, s32, u16, s32);
     s32 t = D_0028ED10_as_u16;
-    func_0022C5E0(0xC8, D_0028DDD0, 0, 0x14, 0xE, t, 0x64);
+    mc_message_draw(0xC8, g_mc_msg_checking, 0, 0x14, 0xE, t, 0x64);
 }
 
-extern s32 D_00271E00[];
-extern s32 D_0028DDD4;
 void func_00234250(s32 arg0, s32 arg1) {
-    extern void func_0022C5E0(s32, s32, s32, s32, s32, u16, s32);
-    func_0022C5E0(0xB4, D_00271E00[arg1], 0, 0x14, 14, D_0028ED10_as_u16, 100);
+    extern void mc_message_draw(s32, char *, s32, s32, s32, u16, s32);
+    mc_message_draw(0xB4, g_mc_msg_damaged[arg1], 0, 0x14, 14, D_0028ED10_as_u16, 100);
     if (arg0 == 1) {
         s32 t = D_0028ED10_as_u16;
-        func_0022C5E0(300, D_0028DDD4, 0, 0x14, 14, t, 100);
+        mc_message_draw(300, g_mc_msg_delete_to_save, 0, 0x14, 14, t, 100);
     }
 }
 
-extern s32 D_0028DE20;
 void func_002342D0(void) {
-    void func_0022C5E0(s32, s32, s32, s32, s32, u16, s32);
+    void mc_message_draw(s32, char *, s32, s32, s32, u16, s32);
     s32 t = D_0028ED10_as_u16;
-    func_0022C5E0(0xC8, D_0028DE20, 0, 0x14, 0xE, t, 0x64);
+    mc_message_draw(0xC8, g_mc_msg_save_failed, 0, 0x14, 0xE, t, 0x64);
 }
 
-extern s32 D_00271E80[];
-extern s32 D_0028DDE0[2];
 
 void func_002342F0(s32 arg0) {
-    extern void func_0022C5E0(s32, s32, s32, s32, s32, u16, s32);
-    func_0022C5E0(0xC8, D_0028DDE0[D_0028ECE8], 0, 0x14, 14, D_0028ED10_as_u16, 100);
-    func_0022C5E0(0xF0, D_00271E80[arg0], 0, 0x14, 14, D_0028ED10_as_u16, 100);
+    extern void mc_message_draw(s32, char *, s32, s32, s32, u16, s32);
+    mc_message_draw(0xC8, g_mc_msg_on_card[D_0028ECE8], 0, 0x14, 14, D_0028ED10_as_u16, 100);
+    mc_message_draw(0xF0, g_mc_msg_no_data[arg0], 0, 0x14, 14, D_0028ED10_as_u16, 100);
 }
 
-extern s32 D_00271F70[];
 
 void func_00234370(s32 index) {
-    extern void func_0022C5E0(s32, s32, s32, s32, s32, u16, s32);
-    func_0022C5E0(0xC8, D_00271F70[index], 0, 0x14, 0xE, D_0028ED10_as_u16, 0x64);
+    extern void mc_message_draw(s32, char *, s32, s32, s32, u16, s32);
+    mc_message_draw(0xC8, g_mc_msg_load_ask[index], 0, 0x14, 0xE, D_0028ED10_as_u16, 0x64);
 }
 
-extern s32 D_0028DE34;
 
 
 void func_002343A0(void) {
-    void func_0022C5E0(s32, s32, s32, s32, s32, s32, s32);
-    func_0022C5E0(0xC8, D_0028DE34, 0, 0x14, 0xE, D_0028ED10_as_u16, 0x64);
+    void mc_message_draw(s32, char *, s32, s32, s32, s32, s32);
+    mc_message_draw(0xC8, g_mc_msg_load_done, 0, 0x14, 0xE, D_0028ED10_as_u16, 0x64);
 }
 
-extern s32 D_0028DE38;
 
 
 void func_002343C0(void) {
-    void func_0022C5E0(s32, s32, s32, s32, s32, s32, s32);
-    func_0022C5E0(0xC8, D_0028DE38, 0, 0x14, 0xE, D_0028ED10_as_u16, 0x64);
+    void mc_message_draw(s32, char *, s32, s32, s32, s32, s32);
+    mc_message_draw(0xC8, g_mc_msg_load_failed, 0, 0x14, 0xE, D_0028ED10_as_u16, 0x64);
 }
 
-extern s32 D_0028DE3C;
 void func_002343E0(void) {
-    void func_0022C5E0(s32, s32, s32, s32, s32, u16, s32);
+    void mc_message_draw(s32, char *, s32, s32, s32, u16, s32);
     s32 t = D_0028ED10_as_u16;
-    func_0022C5E0(0xC8, D_0028DE3C, 0, 0x14, 0xE, t, 0x64);
+    mc_message_draw(0xC8, g_mc_msg_not_formatted, 0, 0x14, 0xE, t, 0x64);
 }
 
-extern s32 D_00271EE0[];
 
 
 void func_00234400(s32 index) {
-    void func_0022C5E0(s32, s32, s32, s32, s32, u16, s32);
-    func_0022C5E0(0xC8, D_00271EE0[index], 0, 0x14, 0xE, D_0028ED10_as_u16, 0x64);
+    void mc_message_draw(s32, char *, s32, s32, s32, u16, s32);
+    mc_message_draw(0xC8, g_mc_msg_overwrite_ask[index], 0, 0x14, 0xE, D_0028ED10_as_u16, 0x64);
 }
 
-extern s32 D_00271F10[];
 
 void func_00234430(s32 index) {
-    extern void func_0022C5E0(s32, s32, s32, s32, s32, u16, s32);
-    func_0022C5E0(0xC8, D_00271F10[index], 0, 0x14, 0xE, D_0028ED10_as_u16, 0x64);
+    extern void mc_message_draw(s32, char *, s32, s32, s32, u16, s32);
+    mc_message_draw(0xC8, g_mc_msg_save_to_card_ask[index], 0, 0x14, 0xE, D_0028ED10_as_u16, 0x64);
 }
 
 s32 sprintf(char *buf, const char *format, ...);
-extern s32 D_00271F40[];
-extern s32 D_0028DE24;
-extern s32 D_0028DE28;
 extern s32 g_pad_dma_buf_as_s32;
 
 void func_00234460(s32 arg0) {
-    extern void func_0022C5E0(s32, s32, s32, s32, s32, u16, s32);
-    func_0022C5E0(160, D_0028DE24, 0, 20, 14, D_0028ED10, 100);
-    func_0022C5E0(220, D_00271F40[arg0], 0, 20, 14, D_0028ED10, 100);
-    func_0022C5E0(260, (&D_0028DE28)[D_0028ECE8], 0, 20, 14, D_0028ED10, 100);
+    extern void mc_message_draw(s32, char *, s32, s32, s32, u16, s32);
+    mc_message_draw(160, g_mc_msg_no_space, 0, 20, 14, D_0028ED10, 100);
+    mc_message_draw(220, g_mc_msg_to_save[arg0], 0, 20, 14, D_0028ED10, 100);
+    mc_message_draw(260, g_mc_msg_needed_space[D_0028ECE8], 0, 20, 14, D_0028ED10, 100);
     if (arg0 == 0) {
-        sprintf((char *)g_pad_dma_buf_as_s32, SJIS("　　　　 %2d "), D_00271D60[g_mc_file * 2]);
+        sprintf((char *)g_pad_dma_buf_as_s32, SJIS("　　　　 %2d "), g_mc_needed_kilobytes[g_mc_file * 2]);
     } else {
-        sprintf((char *)g_pad_dma_buf_as_s32, SJIS("　　　　%3d "), D_00271D60[g_mc_file * 2]);
+        sprintf((char *)g_pad_dma_buf_as_s32, SJIS("　　　　%3d "), g_mc_needed_kilobytes[g_mc_file * 2]);
     }
-    func_0022C5E0(300, g_pad_dma_buf_as_s32, 0, 20, 14, D_0028ED10, 100);
+    mc_message_draw(300, (char *)g_pad_dma_buf_as_s32, 0, 20, 14, D_0028ED10, 100);
 }
 
-extern s32 D_00271EB0[];
 
 s32 func_00234580(s32 index) {
-    s32 func_0022C5E0(s32, s32, s32, s32, s32, s32, s32);
-    return func_0022C5E0(0xC8, D_00271EB0[index], 0, 0x14, 0xE, D_0028ED10_as_u16, 0x64);
+    s32 mc_message_draw(s32, char *, s32, s32, s32, s32, s32);
+    return mc_message_draw(0xC8, g_mc_msg_save_ask[index], 0, 0x14, 0xE, D_0028ED10_as_u16, 0x64);
 }
 
 typedef struct {
@@ -5070,13 +5297,10 @@ s32 func_002365A0(void) {
 }
 
 extern void sfx_extend(void);
-extern s32 D_00271FA0[];
-extern s32 D_00271FA4[];
-extern s32 D_00271FA8[];
 extern s16 D_0028E2FC_as_s16;
 
 void func_00236680(void) {
-    extern void func_0022C5E0(s32, s32, s32, s32, s32, u16, s32);
+    extern void mc_message_draw(s32, char *, s32, s32, s32, u16, s32);
     s16 pressed;
 
     switch (g_mc_step) {
@@ -5098,7 +5322,7 @@ void func_00236680(void) {
         }
         break;
     case 2:
-        func_0022C5E0(200, D_00271FA0[0], 0, 20, 14, D_0028ED10, 100);
+        mc_message_draw(200, g_mc_msg_option_unlocked[0], 0, 20, 14, D_0028ED10, 100);
         func_00233EE0();
         if (g_pad_trigger[2] & 0x20) {
             g_mc_step++;
@@ -5113,7 +5337,7 @@ void func_00236680(void) {
         }
         break;
     case 4:
-        func_0022C5E0(200, D_00271FA4[0], 0, 20, 14, D_0028ED10, 100);
+        mc_message_draw(200, g_mc_msg_option_unlocked[1], 0, 20, 14, D_0028ED10, 100);
         func_00233EE0();
         if (g_pad_trigger[2] & 0x20) {
             g_mc_step++;
@@ -5128,7 +5352,7 @@ void func_00236680(void) {
         }
         break;
     case 6:
-        func_0022C5E0(200, D_00271FA8[0], 0, 20, 14, D_0028ED10, 100);
+        mc_message_draw(200, g_mc_msg_option_unlocked[2], 0, 20, 14, D_0028ED10, 100);
         func_00233EE0();
         if (g_pad_trigger[2] & 0x20) {
             g_mc_step++;
