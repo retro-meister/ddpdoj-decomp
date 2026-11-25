@@ -150,7 +150,6 @@ D_0028BB98_as_char_a = 0x28bb98; // alias of D_0028BB98
 D_0028BBB0_as_char_a = 0x28bbb0; // alias of D_0028BBB0
 D_0028C0A8_as_u8 = 0x28c0a8; // alias of D_0028C0A8
 D_0028C148_as_u16_a = 0x28c148; // alias of D_0028C148
-D_0028C190_as_u16 = 0x28c190; // alias of D_0028C190
 D_0028C608_as_u16_a = 0x28c608; // alias of D_0028C608
 D_0028C610_as_u16_a = 0x28c610; // alias of D_0028C610
 D_0028C618_as_u8_a = 0x28c618; // alias of D_0028C618

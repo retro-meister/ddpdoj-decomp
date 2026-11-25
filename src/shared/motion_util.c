@@ -1154,12 +1154,12 @@ void func_00203660(void) {
 }
 
 s32 input_get_p2_held();
-extern s8 D_002670B0[];
+extern s8 g_stick_directions[];
 
-void func_00203670(void) {
+void entity_move_by_p2_stick(void) {
     input_get_p2_held();
     reg_d0.h[0] &= 0xF;
-    ENTITY(reg_a6)->move.sb.dir = D_002670B0[reg_d0.h[0]];
+    ENTITY(reg_a6)->move.sb.dir = g_stick_directions[reg_d0.h[0]];
     if (ENTITY(reg_a6)->move.sb.dir >= 0) {
         entity_velocity();
         return;

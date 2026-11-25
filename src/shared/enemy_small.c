@@ -40,7 +40,7 @@ void func_0016CEA0(void) {
     *(s16 *)(reg_a0 + 0x10) = 1;
 }
 
-s32 func_002114C0();
+s32 wreck_spawn();
 extern u16 D_0025B150[];
 
 void func_0016CF40(void) {
@@ -49,7 +49,7 @@ void func_0016CF40(void) {
     reg_a0 = (u8 *)D_0025B150;
     reg_d1.h[0] += reg_d1.h[0];
     reg_d1.h[0] = (reg_d1.h[0] != 0) ? *(u16 *)((u8 *)((u16 *)reg_a0) + ((s16)reg_d1.h[0] & ~1)) : *(u16 *)reg_a0;
-    func_002114C0();
+    wreck_spawn();
 }
 
 typedef void (*Fn)(void);

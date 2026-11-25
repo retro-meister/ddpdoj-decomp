@@ -219,7 +219,7 @@ loop_1:
 
 typedef void (*Fn)();
 
-s32 func_001B82F0();
+s32 debris_spawn();
 s32 entity_follow_scroll();
 s32 velocity_from_dir256();
 extern u16 D_0024F570[];
@@ -300,7 +300,7 @@ block_fire:
     reg_d0.h[0] = reg_tmp.h[1];
     reg_d0.h[0] = *(u16 *)(reg_a6 + 0x14);
     *(u8 *)(reg_a6 + 0x1C) = *(u8 *)(reg_a6 + 0x17);
-    func_001B82F0();
+    debris_spawn();
     *(u16 *)(reg_a6 + 0x1C) = x_save;
     *(u16 *)(reg_a6 + 0x12) = 0xFFFF;
 block_debris:

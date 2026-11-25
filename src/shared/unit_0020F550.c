@@ -860,7 +860,7 @@ void func_002114A0(void) {
 }
 
 
-void func_002114C0(void) {
+void wreck_spawn(void) {
     u32 tmp;
 
     func_00211470();

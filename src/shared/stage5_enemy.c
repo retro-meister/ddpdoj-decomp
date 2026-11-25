@@ -1636,14 +1636,14 @@ void func_001F93D0(void) {
     sprite_palette_load();
 }
 
-s32 func_00203670();
+s32 entity_move_by_p2_stick();
 extern u8 D_00265A20[];
 
 void func_001F9450(void) {
     s32 enemy_hitbox_debug_draw();
     u16 temp_a0;
 
-    func_00203670();
+    entity_move_by_p2_stick();
     reg_tmp.b[0] = *(u8 *)(reg_a5 + 0x1D);
     *(u8 *)(reg_a5 + 0x1D) -= 1;
     if ((s32) reg_tmp.b[0] <= 0) {
@@ -1697,7 +1697,7 @@ void func_001F95D0(void) {
     s32 enemy_hitbox_debug_draw();
     u16 temp_a0;
 
-    func_00203670();
+    entity_move_by_p2_stick();
     reg_tmp.b[0] = *(u8 *)(reg_a5 + 0x1D);
     *(u8 *)(reg_a5 + 0x1D) -= 1;
     if ((s32) reg_tmp.b[0] <= 0) {

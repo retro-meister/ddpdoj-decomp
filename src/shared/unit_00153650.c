@@ -3628,7 +3628,7 @@ extern u8 D_0025B610[];
 s32 func_0016D040();
 s32 func_001A9130();
 s32 func_002031E0();
-s32 func_002114C0();
+s32 wreck_spawn();
 extern u16 D_0028E3EC;
 extern u16 g_rank_10_16;
 extern void (*jtbl_0028E3F4)();
@@ -3783,7 +3783,7 @@ block_dead:
     *(u16 *)(reg_a0 + 0x14) = 0;
     reg_d0.w = 4;
     reg_d1.h[0] = 4;
-    func_002114C0();
+    wreck_spawn();
     func_0018D4E0();
     enemy_remove();
 }

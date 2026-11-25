@@ -240,24 +240,24 @@ void func_0016CCE0(void) {
     ENTITY(reg_a6)->x.h = (u16) reg_tmp.h[0];
 }
 
-s32 func_00137C10();                            /* extern */
+s32 debug_number_get();                            /* extern */
 s32 input_get_p2_pressed();                            /* extern */
 s32 func_0016A9B0();                            /* extern */
 s32 entity_draw();                            /* extern */
-s32 func_00203670();                            /* extern */
+s32 entity_move_by_p2_stick();                            /* extern */
 
 void func_0016CD40(void) {
     s64 temp_v0_2;
     u16 temp_v0;
 
-    func_00203670();
+    entity_move_by_p2_stick();
     temp_v0 = *(u16 *)(reg_a5 + 0x18);
     if (temp_v0 != 0) {
         *(u16 *)(reg_a5 + 0x18) = (u16) (temp_v0 - 1);
     } else {
         input_get_p2_pressed();
         if (reg_d0.w & 0x40) {
-            func_00137C10();
+            debug_number_get();
             temp_v0_2 = (s64) ((s64) reg_d0.h[0] << 0x30) >> 0x30;
             if ((temp_v0_2 < 5) && (temp_v0_2 >= 0)) {
                 reg_d0.h[0] *= 4;

@@ -26,7 +26,7 @@ extern u16 g_loop;
 extern u16 g_two_player_game;
 extern u16 D_0029A530[];
 
-void func_001B82F0(void) {
+void debris_spawn(void) {
     u32 tmp;
     s32 tmp2;
 

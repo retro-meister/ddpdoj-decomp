@@ -14,10 +14,10 @@ void func_00137BF0(void) {
     D_0028E82C = reg_d0.h[0];
 }
 
-extern u16 D_002BF372[];
+extern u16 g_debug_number[];
 
-void func_00137C10(void) {
-    *(u16 *)&reg_d0 = D_002BF372[0];
+void debug_number_get(void) {
+    *(u16 *)&reg_d0 = g_debug_number[0];
 }
 
 extern s32 D_0028DE80_as_s32;

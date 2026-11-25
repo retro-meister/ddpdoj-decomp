@@ -2547,14 +2547,14 @@ void func_00162740(void)
 }
 
 s32 bullet_fire();
-s32 func_00137C10();
+s32 debug_number_get();
 s32 func_00145D40();
 s32 entity_draw_layer2();
 s32 func_00201D10();
 s32 func_00202180();
 s32 aim256_at_player();
 s32 func_00202D50();
-s32 func_00203670();
+s32 entity_move_by_p2_stick();
 extern u16 D_0028E3F0;
 
 void func_001627C0(void) {
@@ -2573,7 +2573,7 @@ void func_001627C0(void) {
             *(u16 *)(reg_a0 + 4) = (u16) ENTITY(reg_a6)->x.h;
             func_00202180();
             reg_d0.w = 0;
-            func_00137C10();
+            debug_number_get();
             if ((s32) reg_d0.b[0] < 0x1B) {
                 reg_d2.h[1] = ENTITY(reg_a6)->y.h;
                 reg_d2.h[0] = ENTITY(reg_a6)->x.h;
@@ -2586,7 +2586,7 @@ void func_001627C0(void) {
                 reg_d1.h[0] += 0x800;
                 aim256_at_player();
                 reg_d0.w = 0;
-                func_00137C10();
+                debug_number_get();
                 reg_d2.h[1] = ENTITY(reg_a6)->y.h;
                 reg_d2.h[0] = ENTITY(reg_a6)->x.h;
                 reg_d3.w = 0x800;
@@ -2595,7 +2595,7 @@ void func_001627C0(void) {
             }
         }
     }
-    func_00203670();
+    entity_move_by_p2_stick();
     reg_d1.w = 0x5C;
     ptr = (u8 *)(reg_a6 + 1);
     reg_d1.b[0] &= ENTITY(reg_a6)->flags.b[1];
@@ -3147,7 +3147,7 @@ s32 func_00170B20();
 s32 func_00170CA0();
 s32 func_00170DE0();
 s32 func_0018D4E0();
-s32 func_002114C0();
+s32 wreck_spawn();
 extern s16 g_player2[];
 extern s16 g_player1[];
 
@@ -3278,7 +3278,7 @@ block_21:
         func_0018D4E0();
         func_00170CA0();
         reg_d0.w = 8;
-        func_002114C0();
+        wreck_spawn();
         reg_d0.w = 8;
         func_00170DE0();
         func_00125EB0();
@@ -3980,7 +3980,7 @@ block_22:
         func_0018D4E0();
         func_00170CA0();
         reg_d0.w = 8;
-        func_002114C0();
+        wreck_spawn();
         reg_d0.w = 8;
         func_00170DE0();
         func_00125EB0();
@@ -4195,7 +4195,7 @@ next_11:
     score_add();
     func_00170CA0();
     reg_d0.w = 8;
-    func_002114C0();
+    wreck_spawn();
     reg_d0.w = 8;
     func_00170DE0();
     func_00125EB0();

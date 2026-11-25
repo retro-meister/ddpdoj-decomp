@@ -49,7 +49,7 @@ s32 func_0011C440();
 s32 func_00137BC0();
 s32 func_00137BE0();
 s32 func_0019D620();
-s32 func_00203670();
+s32 entity_move_by_p2_stick();
 extern u16 g_side_scroll_x[];
 extern u16 D_0029C07C[];
 extern u16 D_0029C07E[];
@@ -131,7 +131,7 @@ void func_0011F4E0(void) {
     u32 b4_d1;
     u32 b4_d7;
 
-    func_00203670();
+    entity_move_by_p2_stick();
     b1_d0 = reg_d0.w;
     b1_d1 = reg_d1.w;
     b1_d2 = reg_d2.w;

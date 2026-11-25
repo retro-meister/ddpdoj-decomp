@@ -5937,11 +5937,11 @@ void func_00186310(void) {
 extern u16 D_00253250[];
 extern u16 D_00253280[];
 
-extern u16 D_0028C190[];
+extern u16 g_explosion_test_labels[];
 extern u16 D_0028C194[];
 
 void func_00186760(void) {
-    STORE_POINTER(D_0028C190, D_00253250);
+    STORE_POINTER(g_explosion_test_labels, D_00253250);
     STORE_POINTER(D_0028C194, D_00253280);
 }
 
