@@ -242,6 +242,9 @@ def main():
               f"would point at moved (numbers), {len(unmoved)} the same value and the target did not move, "
               f"{len(differ)} an unrelated value, {len(unplaced)} with no counterpart")
         print(f"data words that follow the move like an address but carry no relocation: {len(follow)}")
+        # tools/tablegen.py reads this list and writes those words as symbols
+        (work / f"addresses_{args.target}.txt").write_text(
+            "".join(f"{address:#x} {value:#x}\n" for address, value, _ in follow), encoding="ascii")
         for address, value, there in follow[:None if args.list else 20]:
             print(f"  {address:#x} -> {value:#x} (twin {there:#x})")
         false = relocated_numbers(args.target, base, link(twin, 0, work / "twin"), twin, text_end)

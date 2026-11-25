@@ -7,6 +7,10 @@
                                       definitions, from its own labels, under `#ifdef DEATH_LABEL`)
     options: --main-only START:END   objects inside a stretch that Death Label does not have (repeatable)
              --at MAIN=DEATH         the Death Label address of the object at MAIN (repeatable)
+             --redo                  write the file again (its splat.yaml entries stay as they are)
+
+Addresses that the split assembly shows as plain numbers in both executables are taken from the last
+`tools/shiftcheck.py` run of each executable (build/shiftcheck/addresses_<target>.txt).
 
 Writes the data-only file src/shared/FILE.c with the bytes of the stretches (.data / .sdata, main executable
 addresses, hex) and gives the file those stretches in both splat.yaml files. Run after
@@ -32,6 +36,8 @@ OFF = 0xFFF80
 args = sys.argv[1:]
 dry = '--dry' in args
 if dry: args.remove('--dry')
+redo = '--redo' in args
+if redo: args.remove('--redo')
 separate = '--separate' in args
 if separate: args.remove('--separate')
 desc = None
@@ -88,6 +94,18 @@ def symfile(t):
             else: named[m.group(1)] = int(m.group(2), 16)
     return named, ignored
 main_named, main_ignored = symfile('SLPS_252.33'); death_named, death_ignored = symfile('DEATH.ELF')
+def add_checked_addresses(target, rel, named):
+    """Words the shift check found to be addresses although nothing marks them."""
+    path = R / 'build/shiftcheck' / ('addresses_%s.txt' % target)
+    if not path.exists(): return
+    at = {}
+    for v, ks in named.items(): at[v] = [k for k in ks if not k.startswith('alabel')]
+    for line in path.read_text().split('\n'):
+        if not line: continue
+        site, value = (int(x, 16) for x in line.split())
+        if site in rel: continue
+        names = sorted(at.get(value, ()), key=lambda q: (bool(re.fullmatch(r'(?:death_)?D_[0-9A-F]{8}', q)), q))
+        rel[site] = [names[0] if names else 'D_%08X' % value, 0]
 aliases = set()
 for t in ('SLPS_252.33', 'DEATH.ELF'):
     for l in open(R / f'config/{t}/aliases.txt'):
@@ -115,6 +133,8 @@ def read_labels(target, ignored):
         if n in aliases or n in ignored or n.startswith(('main_', 'jtbl_')) or '_as_' in n: continue
         out.setdefault(a, set()).add(n)
     return out
+death_labels = read_labels('DEATH.ELF', death_ignored)
+add_checked_addresses('SLPS_252.33', main_rel, labels); add_checked_addresses('DEATH.ELF', death_rel, death_labels)
 def pick(a):
     ns = labels[a]
     named = sorted(n for n in ns if n in main_named and not re.fullmatch(r'D_[0-9A-F]{8}', n))
@@ -378,7 +398,14 @@ def fields_of(a, size, raw, rel, target):
     fields = []; vals = []; p = 0; k = 0
     while p < size:
         if a + p in rel:
-            fields.append('void *p%d;' % k); vals.append(target(a + p)); p += 4
+            q = p; run = []
+            while q < size and (a + q) in rel: run.append(target(a + q)); q += 4
+            if len(run) == 1:
+                fields.append('void *p%d;' % k); vals.append(run[0])
+            else:
+                fields.append('void *p%d[%d];' % (k, len(run)))
+                vals.append('{\n' + '\n'.join('        %s,' % v for v in run) + '\n    }')
+            p = q
         else:
             q = p
             while q < size and (a + q) not in rel: q += 2
@@ -549,7 +576,7 @@ if separate:
         return dict(externs), ds_, fs_, dict(defined), inside, any(sites[n][0] for n in sites), len(objs_all)
     keep = (labels, rom, main_named, main_rel)
     m_ext, m_decl, m_def, m_names, m_inside, m_ptr, m_count = side('SLPS_252.33', labels, rom, main_named, main_rel, [(q[0], q[1], q[2]) for q in sep_stretches])
-    d_ext, d_decl, d_def, d_names, d_inside, d_ptr, d_count = side('DEATH.ELF', read_labels('DEATH.ELF', death_ignored), drom, death_named, death_rel, [(q[0], q[3], q[4]) for q in sep_stretches])
+    d_ext, d_decl, d_def, d_names, d_inside, d_ptr, d_count = side('DEATH.ELF', death_labels, drom, death_named, death_rel, [(q[0], q[3], q[4]) for q in sep_stretches])
     labels, rom, main_named, main_rel = keep
     def block(ext, decl, defs_, ptr):
         head_ = ('\n'.join(sorted(ext.values())) + '\n\n' + '\n'.join(decl) + '\n\n') if ptr else ''
@@ -570,7 +597,7 @@ if dry:
     sys.exit()
 
 yaml_out = {}
-for t in ('SLPS_252.33', 'DEATH.ELF'):
+for t in () if redo else ('SLPS_252.33', 'DEATH.ELF'):
     p = R / f'config/{t}/splat.yaml'; lines = p.read_text().split('\n')
     for sec, start, end, ds_, de_, objs in plan:
         if t == 'DEATH.ELF' and ds_ is None: continue
@@ -593,7 +620,7 @@ for t in ('SLPS_252.33', 'DEATH.ELF'):
     yaml_out[t] = '\n'.join(lines)
 
 path = R / 'src/shared' / (name + '.c')
-assert not path.exists(), path
+assert redo or not path.exists(), path
 head = '#include "common.h"\n\n'
 if desc: head = '/* %s */\n' % desc + head
 if separate:
