@@ -663,8 +663,8 @@ s32 direction256_between();
 extern u16 g_bullets_blocked;
 extern u16 g_enemies_stopped;
 extern u16 g_rank_4_16;
-extern u16 D_0029F1F0_as_u16_a[];
-extern u16 D_0029F260_as_u16_a[];
+extern u16 g_player2_as_u16_a[];
+extern u16 g_player1_as_u16_a[];
 
 void func_001C6640(void) {
     s16 *temp_v1;
@@ -737,8 +737,8 @@ block_12:
                         *(u8 *)(reg_a5 + 0x1D) = (u8) *(u8 *)(reg_a5 + 0x16);
                         func_0016D290();
                         if (cond_flag == 0) {
-                            reg_a0 = (u8 *)(D_0029F260_as_u16_a);
-                            reg_a1 = (u8 *)(D_0029F1F0_as_u16_a);
+                            reg_a0 = (u8 *)(g_player1_as_u16_a);
+                            reg_a1 = (u8 *)(g_player2_as_u16_a);
                             if (*(u8 *)(reg_a5 + 2) != 0) {
                                 reg_atmp = (u8 *)(reg_a0);
                                 reg_a0 = (u8 *)(reg_a1);
@@ -985,8 +985,8 @@ block_18:
                         if ((s32) reg_tmp.b[0] <= 0) {
                             *(u8 *)(reg_a5 + 0x1D) = (u8) *(u8 *)(reg_a5 + 0x16);
                             if ((s16) ENTITY(reg_a6)->y.h >= 0x1000) {
-                                reg_a0 = (u8 *)(D_0029F260_as_u16_a);
-                                reg_a1 = (u8 *)(D_0029F1F0_as_u16_a);
+                                reg_a0 = (u8 *)(g_player1_as_u16_a);
+                                reg_a1 = (u8 *)(g_player2_as_u16_a);
                                 if (*(u8 *)(reg_a5 + 2) != 0) {
                                     reg_atmp = (u8 *)(reg_a0);
                                     reg_a0 = (u8 *)(reg_a1);

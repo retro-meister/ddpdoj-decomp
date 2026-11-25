@@ -122,9 +122,9 @@ void func_002018E0(void) {
     func_00201B30();
 }
 
-extern s16 D_0029F1F0[];
+extern s16 g_player2[];
 extern u8 D_0029F1F1[];
-extern s16 D_0029F260[];
+extern s16 g_player1[];
 extern u8 D_0029F261[];
 
 void func_00201920(void) {
@@ -144,10 +144,10 @@ void func_00201920(void) {
     reg_save_a5 = reg_a5;
     reg_save_a6 = reg_a6;
     reg_d1.h[0] = 0x8000;
-    if ((D_0029F260[0] < 0) && !(D_0029F261[0] & 1)) {
+    if ((g_player1[0] < 0) && !(D_0029F261[0] & 1)) {
         reg_d1.h[0] |= 0x10;
     }
-    if ((D_0029F1F0[0] < 0) && !(D_0029F1F1[0] & 1)) {
+    if ((g_player2[0] < 0) && !(D_0029F1F1[0] & 1)) {
         reg_d1.h[0] |= 8;
     }
     func_00201A00();
@@ -735,19 +735,19 @@ block_rts:
 }
 #pragma pop
 
-extern u8 D_0029F1F0_as_u8_a[];
-extern u8 D_0029F260_as_u8_a[];
+extern u8 g_player2_as_u8_a[];
+extern u8 g_player1_as_u8_a[];
 
 
 void func_00202A80(void)
 {
     s16 firstResult;
 
-    reg_a0 = D_0029F260_as_u8_a;
+    reg_a0 = g_player1_as_u8_a;
     func_00202AE0();
     firstResult = (s16)reg_d0.h[0];
 
-    reg_a0 = D_0029F1F0_as_u8_a;
+    reg_a0 = g_player2_as_u8_a;
     func_00202AE0();
     reg_d1.h[0] = (u16)firstResult;
 
@@ -817,13 +817,13 @@ void func_00202C50(void) {
     s16 *temp_s0;
 
     reg_d0.h[0] = 0x7FFF;
-    reg_a0 = (u8 *)(D_0029F260);
+    reg_a0 = (u8 *)(g_player1);
     reg_d1.h[0] = reg_d0.h[0];
     if (*(s16 *)reg_a0 < 0) {
         func_00202D00();
     }
     temp_s0 = (s16 *)(reg_a0);
-    reg_a0 = (u8 *)(D_0029F1F0);
+    reg_a0 = (u8 *)(g_player2);
     if (*(s16 *)reg_a0 < 0) {
         reg_d1.h[0] = reg_d0.h[0];
         func_00202D00();
@@ -1010,9 +1010,9 @@ extern u32 reg_save_atmp_as_u32;
 
 void target_player_get(void)
 {
-    reg_a0 = (u8 *)((u32)D_0029F260_as_u8_a);
+    reg_a0 = (u8 *)((u32)g_player1_as_u8_a);
     cond_flag = 0;
-    reg_a1 = (u8 *)((u32)D_0029F1F0_as_u8_a);
+    reg_a1 = (u8 *)((u32)g_player2_as_u8_a);
 
     if (((u8 *)((u32)reg_a5))[2] != 0) {
         reg_save_atmp_as_u32 = (u32)reg_a1;
@@ -1043,12 +1043,12 @@ block_4:
 }
 
 extern s32 *reg_save_atmp_as_s32_p;
-extern s32 D_0029F1F0_as_s32_a[];
-extern s32 D_0029F260_as_s32_a[];
+extern s32 g_player2_as_s32_a[];
+extern s32 g_player1_as_s32_a[];
 
 void func_00203330(void) {
-    reg_a0 = (u8 *)D_0029F260_as_s32_a;
-    reg_a1 = (u8 *)D_0029F1F0_as_s32_a;
+    reg_a0 = (u8 *)g_player1_as_s32_a;
+    reg_a1 = (u8 *)g_player2_as_s32_a;
     if (*(u8 *)(reg_a6 + 0x2B) != 0) {
         reg_save_atmp_as_s32_p = (s32 *)reg_a1;
         reg_a1 = (u8 *)(((s32 *)reg_a0));
@@ -1071,10 +1071,10 @@ void func_00203380(void) {
 
 void func_00203400(void) {
     reg_d0.w = 0;
-    if ((D_0029F260[0] < 0) && !(D_0029F261[0] & 1)) {
+    if ((g_player1[0] < 0) && !(D_0029F261[0] & 1)) {
         reg_d0.w = 0x10;
     }
-    if ((D_0029F1F0[0] < 0) && !(D_0029F1F1[0] & 1)) {
+    if ((g_player2[0] < 0) && !(D_0029F1F1[0] & 1)) {
         reg_d0.h[0] += 8;
     }
 }
@@ -1086,10 +1086,10 @@ extern u8 D_0029F29F[];
 void func_00203460(void) {
     func_0018DEE0();
     D_0028DFC4_as_s16 = 1;
-    if (D_0029F260[0] < 0) {
+    if (g_player1[0] < 0) {
         D_0029F29F[0] = 0xFF;
     }
-    if (D_0029F1F0[0] < 0) {
+    if (g_player2[0] < 0) {
         D_0029F22F[0] = 0xFF;
     }
 }
@@ -1103,15 +1103,15 @@ void func_002034C0(void) {
     D_0028DFBC_as_s16 = 1;
     D_0028E855 |= 8;
     D_0028E855 &= 0xEF;
-    if (*(s16 *)D_0029F260 < 0) goto block_1;
+    if (*(s16 *)g_player1 < 0) goto block_1;
     if (!(D_0029F261[0] & 1)) goto next_1;
-    if (*(u8 *)D_0029F260 & 0x80) goto next_1;
+    if (*(u8 *)g_player1 & 0x80) goto next_1;
 block_1:
     D_0029F261[0] |= 0x20;
 next_1:
-    if (*(s16 *)D_0029F1F0 < 0) goto block_2;
+    if (*(s16 *)g_player2 < 0) goto block_2;
     if (!(D_0029F1F1[0] & 1)) goto next_2;
-    if (*(u8 *)D_0029F1F0 & 0x80) goto next_2;
+    if (*(u8 *)g_player2 & 0x80) goto next_2;
 block_2:
     D_0029F1F1[0] |= 0x20;
 next_2:
@@ -1174,9 +1174,9 @@ void func_002036F0(void) {
     u16 temp_a0;
 
     cond_flag = 0;
-    reg_a0 = D_0029F260_as_u8_a;
+    reg_a0 = g_player1_as_u8_a;
     if (*(u8 *)(reg_a5 + 2) & 1) {
-        reg_a0 = D_0029F1F0_as_u8_a;
+        reg_a0 = g_player2_as_u8_a;
     }
     reg_d0.h[0] = *(u16 *)(reg_a0 + 4);
     reg_d6.h[0] = ENTITY(reg_a6)->x.h;

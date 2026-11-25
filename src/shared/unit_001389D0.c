@@ -505,8 +505,8 @@ extern u16 g_p2_score_digits;
 extern u16 g_p1_score_digits;
 extern u16 g_loop;
 extern s8 D_0028EC58;
-extern s16 D_0029F1F0[];
-extern s16 D_0029F260[];
+extern s16 g_player2[];
+extern s16 g_player1[];
 
 void func_001394A0(void) {
     stage_load_step();
@@ -546,23 +546,23 @@ void func_001394A0(void) {
         }
 #endif
         if ((D_0028ED80 == 0) && (g_loop == 1) && (g_stage == 0)) {
-            if (D_0029F260[0] < 0) {
+            if (g_player1[0] < 0) {
                 if (g_p1_hyper_items != 0) {
                     g_p1_hyper_time_as_s16 = 0;
                     D_0028E288_as_s8 = 0x78;
                 }
-            } else if ((D_0029F1F0[0] < 0) && (g_p2_hyper_items != 0)) {
+            } else if ((g_player2[0] < 0) && (g_p2_hyper_items != 0)) {
                 g_p2_hyper_time_as_s16 = 0;
                 D_0028E284_as_s8 = 0x78;
             }
         }
         if ((D_0028ED80 == 0) && (D_0028ED7C != 2)) {
-            if ((g_p1_score_digits == 0) && (D_0029F260[0] < 0)) {
+            if ((g_p1_score_digits == 0) && (g_player1[0] < 0)) {
                 D_0028E25C = g_stage + (g_loop * 5);
                 if (D_0028E304 != 0) {
                     D_0028E25C = g_stage + 5;
                 }
-            } else if ((g_p2_score_digits == 0) && (D_0029F1F0[0] < 0)) {
+            } else if ((g_p2_score_digits == 0) && (g_player2[0] < 0)) {
                 D_0028E25C = g_stage + (g_loop * 5);
                 if (D_0028E304 != 0) {
                     D_0028E25C = g_stage + 5;
@@ -676,36 +676,36 @@ extern u16 D_0029C068[];
 extern u16 D_0029C06A[];
 extern u16 D_0029C06C[];
 extern u16 D_0029C06E[];
-extern u16 D_0029F1F0_as_u16_a[];
-extern u16 D_0029F260_as_u16_a[];
+extern u16 g_player2_as_u16_a[];
+extern u16 g_player1_as_u16_a[];
 
 void func_00139930(void) {
     if (D_0029C062_as_u16_a[0] != 0) {
         goto next_1;
     }
-    reg_d0.h[0] = D_0029F260_as_u16_a[0];
-    reg_d1.h[0] = D_0029F1F0_as_u16_a[0];
+    reg_d0.h[0] = g_player1_as_u16_a[0];
+    reg_d1.h[0] = g_player2_as_u16_a[0];
     reg_d1.h[0] ^= reg_d0.h[0];
     if (0 > (s64) (s16) reg_d1.h[0]) {
         goto next_2;
     }
 next_1:
     reg_a5[0x31] &= 0x3F;
-    reg_a1 = (u8 *) D_0029F260_as_u16_a;
+    reg_a1 = (u8 *) g_player1_as_u16_a;
     func_00139790();
-    reg_a1 = (u8 *) D_0029F1F0_as_u16_a;
+    reg_a1 = (u8 *) g_player2_as_u16_a;
     func_00139790();
-    reg_a1 = (u8 *) D_0029F260_as_u16_a;
+    reg_a1 = (u8 *) g_player1_as_u16_a;
     func_00139800();
-    reg_a1 = (u8 *) D_0029F1F0_as_u16_a;
+    reg_a1 = (u8 *) g_player2_as_u16_a;
     func_00139800();
     goto next_4;
 next_2:
-    reg_a6 = (u8 *) D_0029F260_as_u16_a;
-    if (0 > (s64) (s16) D_0029F260_as_u16_a[0]) {
+    reg_a6 = (u8 *) g_player1_as_u16_a;
+    if (0 > (s64) (s16) g_player1_as_u16_a[0]) {
         goto next_3;
     }
-    reg_a6 = (u8 *) D_0029F1F0_as_u16_a;
+    reg_a6 = (u8 *) g_player2_as_u16_a;
 next_3:
     reg_d0.w = 0;
     reg_d0.h[0] = *(u16 *) (reg_a6 + 4);

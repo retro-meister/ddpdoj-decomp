@@ -984,8 +984,8 @@ extern u8 D_0028ED80;
 extern u16 D_006E5C06[];
 #ifdef DEATH_LABEL
 extern u8 death_D_00290DBC;
-extern s16 D_0029F1F0[];
-extern s16 D_0029F260[];
+extern s16 g_player2[];
+extern s16 g_player1[];
 extern u16 death_D_0068DAA6[];
 extern u16 death_D_0068DAA8[];
 extern u16 death_D_0068DAB0[];
@@ -1009,14 +1009,14 @@ void func_001AEB10(void) {
 
 #ifdef DEATH_LABEL
     if (death_D_00290DBC != 0) {
-        if (D_0029F260[0] < 0) {
+        if (g_player1[0] < 0) {
             death_D_0068DAA8[0] = 0;
             D_002BAF30[0] = 1;
             death_D_0068DAA6[0] = 0xC030;
             g_p1_score = D_0028ED50_as_u32;
             g_p1_score_billions = D_0028ED4C;
         }
-        if (D_0029F1F0[0] < 0) {
+        if (g_player2[0] < 0) {
             death_D_0068DAB2[0] = 0;
             D_002BAF3A[0] = 1;
             death_D_0068DAB0[0] = 0xC030;

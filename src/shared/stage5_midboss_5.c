@@ -752,9 +752,9 @@ s32 bullet_fire_fast();
 s32 rng_next_unsigned();
 extern u8 D_00259870_as_u8_a[];
 extern u16 D_0028E3DC;
-extern s16 D_0029F1F0[];
+extern s16 g_player2[];
 extern u16 D_0029F1F2[];
-extern s16 D_0029F260[];
+extern s16 g_player1[];
 extern u16 D_0029F262[];
 
 void func_001FE330(void) {
@@ -772,11 +772,11 @@ void func_001FE330(void) {
         if (ENTITY(reg_a6)[3].sprite.h == 0) {
             if (D_0028E3DC == 0) {
                 reg_d0.w = 0;
-                if (D_0029F260[0] < 0) {
+                if (g_player1[0] < 0) {
                     reg_d0.h[0] = D_0029F262[0];
                 }
                 reg_d1.w = 0;
-                if (D_0029F1F0[0] < 0) {
+                if (g_player2[0] < 0) {
                     reg_d1.h[0] = D_0029F1F2[0];
                 }
                 if ((s32) reg_d0.h[0] <= (s32) reg_d1.h[0]) {

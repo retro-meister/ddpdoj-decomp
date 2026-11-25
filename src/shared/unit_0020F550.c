@@ -75,8 +75,8 @@ extern u16 D_0029E390_as_u16_a[];
 extern u16 D_0029EA50_as_u16_a[];
 extern u16 D_0029F110_as_u16_a[];
 extern u16 D_0029F180_as_u16_a[];
-extern u16 D_0029F1F0_as_u16_a[];
-extern u16 D_0029F260_as_u16_a[];
+extern u16 g_player2_as_u16_a[];
+extern u16 g_player1_as_u16_a[];
 extern u16 D_002A2400_as_u16_a[];
 extern u16 D_002BAF30[];
 extern u16 D_002BAF3A[];
@@ -526,10 +526,10 @@ void func_0020F550(void) {
     reg_tmp.w = (u32)D_0029CEA0;
     D_00269E26[0] = reg_tmp.h[1];
     D_00269E28[0] = reg_tmp.h[0];
-    reg_tmp.w = (u32)D_0029F260_as_u16_a;
+    reg_tmp.w = (u32)g_player1_as_u16_a;
     D_00269E46[0] = reg_tmp.h[1];
     D_00269E48[0] = reg_tmp.h[0];
-    reg_tmp.w = (u32)D_0029F1F0_as_u16_a;
+    reg_tmp.w = (u32)g_player2_as_u16_a;
     D_00269E66[0] = reg_tmp.h[1];
     D_00269E68[0] = reg_tmp.h[0];
     reg_tmp.w = (u32)D_0029F180_as_u16_a;
@@ -1080,7 +1080,7 @@ extern s32 g_p1_extend_score;
 extern u16 g_p1_score_digits;
 extern u16 g_p1_lives;
 extern u16 D_0029CD90[];
-extern s16 D_0029F260[];
+extern s16 g_player1[];
 extern u8 D_0029F261[];
 extern u8 D_0029F285[];
 #ifdef DEATH_LABEL
@@ -1094,7 +1094,7 @@ void func_00210EA0(void) {
         goto block_3;
     }
     *(u8 *)(reg_a6 + 5) |= 1;
-    if (D_0029F260[0] >= 0) {
+    if (g_player1[0] >= 0) {
         goto block_2;
     }
     g_p1_extend_score = -1;
@@ -1193,7 +1193,7 @@ extern s32 g_p2_extend_score;
 extern u16 g_p2_score_digits;
 extern u16 g_p2_lives;
 extern u16 D_0029CD80[];
-extern s16 D_0029F1F0[];
+extern s16 g_player2[];
 extern u8 D_0029F1F1[];
 extern u8 D_0029F215[];
 #ifdef DEATH_LABEL
@@ -1207,7 +1207,7 @@ void func_00211140(void) {
         goto block_3;
     }
     *(u8 *)(reg_a6 + 4) |= 1;
-    if (D_0029F1F0[0] >= 0) {
+    if (g_player2[0] >= 0) {
         goto block_2;
     }
     g_p2_extend_score = -1;

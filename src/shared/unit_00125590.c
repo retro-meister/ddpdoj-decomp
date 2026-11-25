@@ -1195,11 +1195,11 @@ void func_00127730(void) {
 }
 
 extern u8 D_002695D0_as_u8_a[];
-extern u8 D_0029F1F0_as_u8_a[];
+extern u8 g_player2_as_u8_a[];
 
 void func_00127760(void) {
     reg_a3 = D_002695D0_as_u8_a;
-    reg_tmp.w = (u32) D_0029F1F0_as_u8_a;
+    reg_tmp.w = (u32) g_player2_as_u8_a;
     *(u16 *)(reg_a0 + 0x24) = (u16) reg_tmp.h[1];
     *(u16 *)(reg_a0 + 0x26) = (u16) reg_tmp.h[0];
     func_001278D0();
@@ -1209,7 +1209,7 @@ extern u8 D_002695A0_as_u8_a[];
 
 void func_001277A0(void) {
     reg_a3 = D_002695A0_as_u8_a;
-    reg_tmp.w = (u32) D_0029F1F0_as_u8_a;
+    reg_tmp.w = (u32) g_player2_as_u8_a;
     *(u16 *)(reg_a0 + 0x24) = (u16) reg_tmp.h[1];
     *(u16 *)(reg_a0 + 0x26) = (u16) reg_tmp.h[0];
     func_001278D0();
@@ -1219,7 +1219,7 @@ extern u8 D_002695B0_as_u8_a[];
 
 void func_001277E0(void) {
     reg_a3 = D_002695B0_as_u8_a;
-    reg_tmp.w = (u32) D_0029F1F0_as_u8_a;
+    reg_tmp.w = (u32) g_player2_as_u8_a;
     *(u16 *)(reg_a0 + 0x24) = (u16) reg_tmp.h[1];
     *(u16 *)(reg_a0 + 0x26) = (u16) reg_tmp.h[0];
     func_001278D0();
@@ -1229,7 +1229,7 @@ extern u8 D_002695C0_as_u8_a[];
 
 void func_00127820(void) {
     reg_a3 = D_002695C0_as_u8_a;
-    reg_tmp.w = (u32) D_0029F1F0_as_u8_a;
+    reg_tmp.w = (u32) g_player2_as_u8_a;
     *(u16 *)(reg_a0 + 0x24) = (u16) reg_tmp.h[1];
     *(u16 *)(reg_a0 + 0x26) = (u16) reg_tmp.h[0];
     func_001278D0();
@@ -1266,9 +1266,9 @@ void func_00127890(void)
     func_001278A0();
 }
 
-extern u8 D_0029F260_as_u8_a[];
+extern u8 g_player1_as_u8_a[];
 void func_001278A0(void) {
-    reg_tmp.w = (u32)D_0029F260_as_u8_a;
+    reg_tmp.w = (u32)g_player1_as_u8_a;
     *(u16 *)(reg_a0 + 0x24) = reg_tmp.h[1];
     *(u16 *)(reg_a0 + 0x26) = reg_tmp.h[0];
     func_001278D0();

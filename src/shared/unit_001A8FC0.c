@@ -1648,12 +1648,12 @@ extern u8 g_p1_hyper_effect_delay_as_u8;
 extern u8 D_0028E57D;
 extern u16 g_p1_hyper_effect_flag;
 extern u32 g_p1_hyper_effect_sprite_as_u32;
-extern s16 D_0029F260[];
+extern s16 g_player1[];
 extern u16 D_0029F262[];
 extern u16 D_0029F264[];
 void func_001AB940(void) {
     if (g_p1_hyper_effect_flag != 0) {
-        if (D_0029F260[0] < 0) {
+        if (g_player1[0] < 0) {
             reg_d1.h[1] = D_0029F262[0];
             reg_d1.h[0] = D_0029F264[0];
             reg_d2.w = g_p1_hyper_effect_sprite_as_u32;
@@ -1678,7 +1678,7 @@ void func_001AB9D0(void) {
         reg_d0.h[0] = g_p1_hyper_effect_frame;
         reg_a0 = D_0026B8D0;
         g_p1_hyper_effect_sprite_as_u32 = *(u32 *)(reg_a0 + reg_d0.h[0]);
-        if (D_0029F260[0] < 0) {
+        if (g_player1[0] < 0) {
             reg_d1.h[1] = D_0029F262[0];
             reg_d1.h[0] = D_0029F264[0];
             reg_d2.w = g_p1_hyper_effect_sprite_as_u32;
@@ -1702,12 +1702,12 @@ extern u8 g_p2_hyper_effect_delay_as_u8;
 extern u8 D_0028E579;
 extern u16 g_p2_hyper_effect_flag;
 extern u32 g_p2_hyper_effect_sprite_as_u32;
-extern s16 D_0029F1F0[];
+extern s16 g_player2[];
 extern u16 D_0029F1F2[];
 extern u16 D_0029F1F4[];
 void func_001ABA70(void) {
     if (g_p2_hyper_effect_flag != 0) {
-        if (D_0029F1F0[0] < 0) {
+        if (g_player2[0] < 0) {
             reg_d1.h[1] = D_0029F1F2[0];
             reg_d1.h[0] = D_0029F1F4[0];
             reg_d2.w = g_p2_hyper_effect_sprite_as_u32;
@@ -1731,7 +1731,7 @@ void func_001ABB00(void) {
         reg_d0.h[0] = g_p2_hyper_effect_frame;
         reg_a0 = D_0026B8D0;
         g_p2_hyper_effect_sprite_as_u32 = *(u32 *)(reg_a0 + reg_d0.h[0]);
-        if (D_0029F1F0[0] < 0) {
+        if (g_player2[0] < 0) {
             reg_d1.h[1] = D_0029F1F2[0];
             reg_d1.h[0] = D_0029F1F4[0];
             reg_d2.w = g_p2_hyper_effect_sprite_as_u32;
@@ -1755,7 +1755,7 @@ void func_001ABB80(void) {
     s32 temp_s4;
     u16 var_a0;
     if (g_boss_hyper_wait != 0) {
-        if (D_0029F260[0] >= 0) {
+        if (g_player1[0] >= 0) {
             if (g_p1_lives_as_s16 >= 0) {
                 return;
             }
@@ -1844,7 +1844,7 @@ void func_001ABD80(void) {
     s32 temp_s4;
     u16 var_a0;
     if (g_boss_hyper_wait != 0) {
-        if (D_0029F1F0[0] >= 0) {
+        if (g_player2[0] >= 0) {
             if (g_p2_lives_as_s16 >= 0) {
                 return;
             }
@@ -1949,13 +1949,13 @@ void func_001ABF90(void) {
     }
     g_p1_hyper_gauge = 0;
     switch (g_boss_hyper_wait) { case 0: goto next_1; }
-    if (D_0029F260[0] >= 0) goto next_2;
+    if (g_player1[0] >= 0) goto next_2;
     if (D_0029F285[0] != 0) goto next_2;
 next_1:
     if (g_p1_hyper_active == 0) goto next_3;
 next_2:
     g_p1_hyper_items_pending += 1;
-    if (D_0029F260[0] < 0) {
+    if (g_player1[0] < 0) {
         reg_a0 = (u8 *)(D_00255740);
         reg_d0.h[0] = g_p1_hyper_items_pending;
         reg_d0.h[0] -= 1;
@@ -2009,13 +2009,13 @@ void func_001AC160(void) {
     }
     g_p2_hyper_gauge = 0;
     switch (g_boss_hyper_wait) { case 0: goto next_1; }
-    if (D_0029F1F0[0] >= 0) goto next_2;
+    if (g_player2[0] >= 0) goto next_2;
     if (D_0029F215[0] != 0) goto next_2;
 next_1:
     if (g_p2_hyper_active == 0) goto next_3;
 next_2:
     g_p2_hyper_items_pending += 1;
-    if (D_0029F1F0[0] < 0) {
+    if (g_player2[0] < 0) {
         reg_a0 = (u8 *)(D_00255740);
         reg_d0.h[0] = g_p2_hyper_items_pending;
         reg_d0.h[0] -= 1;

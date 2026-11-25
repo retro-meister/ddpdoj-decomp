@@ -316,8 +316,8 @@ void func_001EE9D0(void) {
 
 s32 rng_next();
 s32 direction256_between();
-extern s16 D_0029F1F0[];
-extern s16 D_0029F260[];
+extern s16 g_player2[];
+extern s16 g_player1[];
 
 void func_001EEB90(s16 *arg1) {
     s32 bullet_fire256();
@@ -337,8 +337,8 @@ void func_001EEB90(s16 *arg1) {
         reg_d0.b[0] = *(u8 *)(reg_a4 + 5);
         reg_d0.h[0] &= 0xF;
         if (reg_d0.h[0] == 0) {
-            reg_a0 = (u8 *)(D_0029F260);
-            reg_a1 = (u8 *)(D_0029F1F0);
+            reg_a0 = (u8 *)(g_player1);
+            reg_a1 = (u8 *)(g_player2);
             if (*(u8 *)(reg_a5 + 2) != 0) {
                 reg_atmp = (u8 *)(reg_a0);
                 reg_a0 = (u8 *)(reg_a1);
@@ -563,8 +563,8 @@ void func_001EF2B0(void) {
         ENTITY(reg_a6)[5].misc.sb.user = 1;
         ENTITY(reg_a6)[6].misc.sb.user = 1;
         if (*(u8 *)(reg_a4 + 5) & 2) {
-            reg_a0 = (u8 *)(D_0029F260);
-            reg_a1 = (u8 *)(D_0029F1F0);
+            reg_a0 = (u8 *)(g_player1);
+            reg_a1 = (u8 *)(g_player2);
             if (*(u8 *)(reg_a5 + 2) != 0) {
                 reg_atmp = (u8 *)(reg_a0);
                 reg_a0 = (u8 *)(reg_a1);
@@ -785,8 +785,8 @@ void func_001EFAB0(void) {
             func_00201270();
             *(u8 *)(reg_a4 + 0x15) = (u8) reg_d0.b[0];
         }
-        reg_a0 = (u8 *)(D_0029F260);
-        reg_a1 = (u8 *)(D_0029F1F0);
+        reg_a0 = (u8 *)(g_player1);
+        reg_a1 = (u8 *)(g_player2);
         if (*(u8 *)(reg_a5 + 2) != 0) {
             reg_atmp = (u8 *)(reg_a0);
             reg_a0 = (u8 *)(reg_a1);

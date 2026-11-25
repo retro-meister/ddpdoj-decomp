@@ -444,8 +444,8 @@ s32 boss_attack_stop();
 s32 bullet_fire256_2way();
 s32 bullet_fire256_3way();
 s32 direction256_between();
-extern s16 D_0029F1F0[];
-extern s16 D_0029F260[];
+extern s16 g_player2[];
+extern s16 g_player1[];
 
 void func_001CF800(void) {
     s32 bullet_fire256_fast();
@@ -467,8 +467,8 @@ void func_001CF800(void) {
     *(u8 *)(reg_a4 + 3) -= 1;
     if (reg_tmp.b[0] == 0) {
         *(u8 *)(reg_a4 + 3) = (u8) *(u8 *)(reg_a4 + 7);
-        reg_a0 = (u8 *)(D_0029F260);
-        reg_a1 = (u8 *)(D_0029F1F0);
+        reg_a0 = (u8 *)(g_player1);
+        reg_a1 = (u8 *)(g_player2);
         if (*(u8 *)(reg_a5 + 2) != 0) {
             t1 = (s16 *)(reg_a1);
             reg_a1 = (u8 *)(reg_a0);
@@ -688,8 +688,8 @@ void func_001CFF10(void) {
     *(u8 *)(reg_a4 + 3) -= 1;
     if (reg_tmp.b[0] == 0) {
         *(u8 *)(reg_a4 + 3) = (u8) *(u8 *)(reg_a4 + 9);
-        reg_a0 = (u8 *)(D_0029F260);
-        reg_a1 = (u8 *)(D_0029F1F0);
+        reg_a0 = (u8 *)(g_player1);
+        reg_a1 = (u8 *)(g_player2);
         switch (*(u8 *)(reg_a5 + 2)) { case 0: break; default:
             reg_save_atmp = (s16 *)(reg_a1);
             reg_a1 = (u8 *)(reg_a0);
@@ -1110,8 +1110,8 @@ void func_001D0C80(void) {
 }
 
 extern u16 D_0026D1B8[];
-extern u16 D_0029F1F0_as_u16_a[];
-extern u16 D_0029F260_as_u16_a[];
+extern u16 g_player2_as_u16_a[];
+extern u16 g_player1_as_u16_a[];
 
 void func_001D0E60(void) {
     s16 *temp_a0_2;
@@ -1131,8 +1131,8 @@ void func_001D0E60(void) {
         temp_a0 = *(u8 *)(reg_a4 + 0x1B);
         if (!(temp_a0 & 1)) {
             *(u8 *)(reg_a4 + 0x1B) = (u8) (temp_a0 | 1);
-            reg_a0 = (u8 *)(D_0029F260_as_u16_a);
-            reg_a1 = (u8 *)(D_0029F1F0_as_u16_a);
+            reg_a0 = (u8 *)(g_player1_as_u16_a);
+            reg_a1 = (u8 *)(g_player2_as_u16_a);
             if (*(u8 *)(reg_a5 + 2) != 0) {
                 reg_save_atmp = (s16 *)(reg_a1);
                 reg_a1 = (u8 *)(reg_a0);

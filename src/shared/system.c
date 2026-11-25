@@ -474,8 +474,8 @@ extern u8 g_pause_lock_timer;
 extern u8 D_0028E368;
 extern u8 g_paused;
 extern s8 D_0028EC24;
-extern s16 D_0029F1F0[];
-extern s16 D_0029F260[];
+extern s16 g_player2[];
+extern s16 g_player1[];
 
 void pause_check_start_button(void) {
     s32 state;
@@ -519,7 +519,7 @@ void pause_check_start_button(void) {
         if (!(g_pad_trigger[D_0028EC24] & 0x800)) {
             return;
         }
-        if (D_0028ED58 != 0 && D_0029F260[0] == 0 && D_0029F1F0[0] == 0) {
+        if (D_0028ED58 != 0 && g_player1[0] == 0 && g_player2[0] == 0) {
             return;
         }
         func_0018DA30();
@@ -528,13 +528,13 @@ void pause_check_start_button(void) {
 block_rts:
         return;
     }
-    if ((g_pad_trigger[0] & 0x800) && D_0029F260[0] < 0) {
+    if ((g_pad_trigger[0] & 0x800) && g_player1[0] < 0) {
         func_0018DA30();
         g_pause_player_as_s16 = 0;
         g_paused = 1;
         return;
     }
-    if ((g_pad_trigger[1] & 0x800) && D_0029F1F0[0] < 0) {
+    if ((g_pad_trigger[1] & 0x800) && g_player2[0] < 0) {
         func_0018DA30();
         g_paused = 1;
         g_pause_player_as_s16 = 1;
@@ -869,7 +869,7 @@ void vibration_start_pad1(s16 arg0, s16 arg1) {
             if (D_0028ED58 != 0) {
                 vibration_start_active_pad(arg0, arg1);
             }
-        } else if (D_0029F260[0] < 0) {
+        } else if (g_player1[0] < 0) {
             g_pad_vib_power_p1 = arg0;
             g_pad_vib_state_p1 = 1;
             g_pad_vib_timer_p1 = arg1;
@@ -886,7 +886,7 @@ void vibration_start_pad2(s16 arg0, s16 arg1) {
             if (D_0028ED58 != 0) {
                 vibration_start_active_pad(arg0, arg1);
             }
-        } else if (D_0029F1F0[0] < 0) {
+        } else if (g_player2[0] < 0) {
             g_pad_vib_power_p2 = arg0;
             g_pad_vib_state_p2 = 1;
             g_pad_vib_timer_p2 = arg1;

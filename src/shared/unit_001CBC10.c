@@ -194,8 +194,8 @@ extern u16 D_0028E8B8;
 extern u16 g_rank_1_16;
 extern u16 g_rank_5_16;
 extern u16 D_0029C068[];
-extern u16 D_0029F1F0_as_u16_a[];
-extern u16 D_0029F260_as_u16_a[];
+extern u16 g_player2_as_u16_a[];
+extern u16 g_player1_as_u16_a[];
 extern void (*jtbl_0028E3F4)();
 
 void func_001CC0A0(void) {
@@ -354,8 +354,8 @@ next_220:
     reg_d1.h[0] >>= 2;
     reg_d0.b[0] -= reg_d1.b[0];
     *(u8 *)(reg_a5 + 0x1F) = reg_d0.b[0];
-    reg_a0 = (u8 *) D_0029F260_as_u16_a;
-    reg_a1 = (u8 *) D_0029F1F0_as_u16_a;
+    reg_a0 = (u8 *) g_player1_as_u16_a;
+    reg_a1 = (u8 *) g_player2_as_u16_a;
     if (*(u8 *)(reg_a5 + 2) == 0) goto next_240;
     reg_atmp = (u8 *) reg_a0;
     reg_a0 = reg_a1;
@@ -441,8 +441,8 @@ next_400:
     reg_a0 += 2;
     ENTITY(reg_a6)[1].hit_x_minus.h = *(u16 *)reg_a0;
     reg_a0 += 2;
-    reg_a0 = (u8 *) D_0029F260_as_u16_a;
-    reg_a1 = (u8 *) D_0029F1F0_as_u16_a;
+    reg_a0 = (u8 *) g_player1_as_u16_a;
+    reg_a1 = (u8 *) g_player2_as_u16_a;
     if (*(u8 *)(reg_a5 + 2) == 0) goto next_420;
     reg_atmp = (u8 *) reg_a0;
     reg_a0 = reg_a1;
@@ -642,8 +642,8 @@ next_820:
     reg_d1.h[0] = reg_d0.h[0];
     goto next_870;
 next_830:
-    reg_a0 = (u8 *) D_0029F260_as_u16_a;
-    reg_a1 = (u8 *) D_0029F1F0_as_u16_a;
+    reg_a0 = (u8 *) g_player1_as_u16_a;
+    reg_a1 = (u8 *) g_player2_as_u16_a;
     if (*(u8 *)(reg_a5 + 2) == 0) goto next_840;
     reg_atmp = (u8 *) reg_a0;
     reg_a0 = reg_a1;

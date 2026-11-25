@@ -333,13 +333,13 @@ extern u8 D_0029DD90[];
 extern u8 D_0029E390[];
 extern u8 D_0029F110[];
 extern u8 D_0029F180[];
-extern u8 D_0029F1F0_as_u8_a[];
+extern u8 g_player2_as_u8_a[];
 extern u8 D_0029F1F1[];
 extern u16 D_0029F210[];
 extern u16 D_0029F212[];
 extern u8 D_0029F214[];
 extern u8 D_0029F215[];
-extern u8 D_0029F260_as_u8_a[];
+extern u8 g_player1_as_u8_a[];
 extern u8 D_0029F261[];
 extern u16 D_0029F280[];
 extern u16 D_0029F282[];
@@ -389,8 +389,8 @@ void func_00238B90(Buf *buf) {
     *(u16 *)(p + 0xC12) = D_0028E974;
     *(u16 *)(p + 0xC14) = D_0028E970;
     for (i = 0; i < 98; i++) {
-        buf->fC16[i] = D_0029F260_as_u8_a[i];
-        buf->fC78[i] = D_0029F1F0_as_u8_a[i];
+        buf->fC16[i] = g_player1_as_u8_a[i];
+        buf->fC78[i] = g_player2_as_u8_a[i];
     }
     for (i = 0; i < 100; i++) {
         buf->fCDA[i] = D_0029F180[i];
@@ -690,7 +690,7 @@ void func_00238B90(Buf *buf) {
     D_006C58D6_as_s16_a[0] = MAIN_OR_DEATH_LABEL(0xCB, 0x6E);
     D_006C58AA_as_s16_a[0] = D_0028E38C;
     D_006C58C8_as_s16_a[0] = D_0028E388;
-    if (*(s16 *)D_0029F260_as_u8_a < 0) {
+    if (*(s16 *)g_player1_as_u8_a < 0) {
         D_006C58C6[0] = g_p1_lives;
     } else {
         D_006C58C6[0] = g_p2_lives;
@@ -702,7 +702,7 @@ void func_00238B90(Buf *buf) {
     D_006C58D4[0] = 0;
 #endif
     D_006C58C0[0] = g_rank;
-    if (*(s16 *)D_0029F260_as_u8_a < 0) {
+    if (*(s16 *)g_player1_as_u8_a < 0) {
 #ifndef DEATH_LABEL
         D_006C58D4[0] = D_0028E02C;
         if (D_006C58D4[0] > 8) {
@@ -747,14 +747,14 @@ void func_00238B90(Buf *buf) {
         }
         D_006C58B6_as_s16_a[0] = D_0029F285[0];
 #ifdef DEATH_LABEL
-        if (D_0029F260_as_u8_a[0] & 2) {
+        if (g_player1_as_u8_a[0] & 2) {
             D_006C58B6_as_s16_a[0] = 7;
         }
 #else
-        if ((D_0029F260_as_u8_a[0] & 2) && !(D_0029F261[0] & 0x40) && *(u16 *)D_0029CD90_as_f32_a != 0) {
+        if ((g_player1_as_u8_a[0] & 2) && !(D_0029F261[0] & 0x40) && *(u16 *)D_0029CD90_as_f32_a != 0) {
             D_006C58B6_as_s16_a[0] = 7;
         }
-        if (*(u8 *)D_0029F260_as_u8_a & 2) {
+        if (*(u8 *)g_player1_as_u8_a & 2) {
             printf(D_0028BF58);
         } else {
             printf(D_0028BF68);
@@ -823,14 +823,14 @@ void func_00238B90(Buf *buf) {
         }
         D_006C58B6_as_s16_a[0] = D_0029F215[0];
 #ifdef DEATH_LABEL
-        if (D_0029F1F0_as_u8_a[0] & 2) {
+        if (g_player2_as_u8_a[0] & 2) {
             D_006C58B6_as_s16_a[0] = 7;
         }
 #else
-        if ((D_0029F1F0_as_u8_a[0] & 2) && !(D_0029F1F1[0] & 0x40) && *(u16 *)D_0029CD80_as_f32_a != 0) {
+        if ((g_player2_as_u8_a[0] & 2) && !(D_0029F1F1[0] & 0x40) && *(u16 *)D_0029CD80_as_f32_a != 0) {
             D_006C58B6_as_s16_a[0] = 7;
         }
-        if (*(u8 *)D_0029F1F0_as_u8_a & 2) {
+        if (*(u8 *)g_player2_as_u8_a & 2) {
             printf(D_0028BF58);
         } else {
             printf(D_0028BF68);
@@ -892,8 +892,8 @@ void func_0023A490(u8 *p) {
     D_0028E974 = *(u16 *)(p + 0xC12);
     D_0028E970 = *(u16 *)(p + 0xC14);
     for (i = 0; i < 98; i++) {
-        D_0029F260_as_u8_a[i] = p[0xC16 + i];
-        D_0029F1F0_as_u8_a[i] = p[0xC78 + i];
+        g_player1_as_u8_a[i] = p[0xC16 + i];
+        g_player2_as_u8_a[i] = p[0xC78 + i];
     }
     for (i = 0; i < 100; i++) {
         D_0029F180[i] = p[0xCDA + i];
@@ -1237,8 +1237,8 @@ void func_0023B720(u8 *p) {
     D_0028E974 = *(u16 *)(p + 0x8);
     D_0028E970 = *(u16 *)(p + 0xA);
     for (i = 0; i < 98; i++) {
-        D_0029F260_as_u8_a[i] = p[12 + i];
-        D_0029F1F0_as_u8_a[i] = p[110 + i];
+        g_player1_as_u8_a[i] = p[12 + i];
+        g_player2_as_u8_a[i] = p[110 + i];
     }
     *(Vec4 *)D_0029CD90_as_u8_a = *(Vec4 *)(p + 0xD0);
     *(Vec4 *)D_0029CD80_as_u8_a = *(Vec4 *)(p + 0xE0);
@@ -1485,8 +1485,8 @@ void func_0023C1E0(Buf2 *buf) {
     *(u16 *)(p + 0x8) = D_0028E974;
     *(u16 *)(p + 0xA) = D_0028E970;
     for (i = 0; i < 98; i++) {
-        p[12 + i] = D_0029F260_as_u8_a[i];
-        p[110 + i] = D_0029F1F0_as_u8_a[i];
+        p[12 + i] = g_player1_as_u8_a[i];
+        p[110 + i] = g_player2_as_u8_a[i];
     }
     *(Vec4 *)(p + 0xD0) = *(Vec4 *)D_0029CD90_as_u8_a;
     *(Vec4 *)(p + 0xE0) = *(Vec4 *)D_0029CD80_as_u8_a;

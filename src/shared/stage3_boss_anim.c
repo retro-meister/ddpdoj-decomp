@@ -43,8 +43,8 @@ void func_001CDE90(void) {
 
 s32 direction_between();
 s32 direction_turn_toward();
-extern s16 D_0029F1F0[];
-extern s16 D_0029F260[];
+extern s16 g_player2[];
+extern s16 g_player1[];
 
 void func_001CDEA0(void) {
     s16 *temp_a0;
@@ -55,8 +55,8 @@ void func_001CDEA0(void) {
     *(u8 *)(reg_a4 + 3) -= 1;
     if ((s32) reg_tmp.b[0] <= 0) {
         *(u8 *)(reg_a4 + 3) = (u8) *(u8 *)(reg_a4 + 2);
-        reg_a0 = (u8 *)(D_0029F260);
-        reg_a1 = (u8 *)(D_0029F1F0);
+        reg_a0 = (u8 *)(g_player1);
+        reg_a1 = (u8 *)(g_player2);
         if (*(u8 *)(reg_a5 + 2) != 0) {
             reg_atmp = (u8 *)(reg_a0);
             reg_a0 = (u8 *)(reg_a1);

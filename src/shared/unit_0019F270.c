@@ -249,11 +249,11 @@ void func_0019F930(void) {
 
 extern s32 D_0029D730_as_s32_a[];
 extern s16 D_0029F180_as_s16_a[];
-extern s32 D_0029F260_as_s32_a[];
+extern s32 g_player1_as_s32_a[];
 
 void func_0019FC70(void) {
     reg_a6 = (u8 *)D_0029F180_as_s16_a;
-    reg_a4 = (u8 *)D_0029F260_as_s32_a;
+    reg_a4 = (u8 *)g_player1_as_s32_a;
     reg_a2 = (u8 *)D_0029D730_as_s32_a;
     reg_d7.w = 1;
     if (*(s16 *)reg_a6 < 0) {
@@ -266,11 +266,11 @@ void func_0019FC70(void) {
 
 extern s32 D_0029D710_as_s32_a[];
 extern s16 D_0029F110_as_s16_a[];
-extern s32 D_0029F1F0_as_s32_a[];
+extern s32 g_player2_as_s32_a[];
 
 void func_0019FCE0(void) {
     reg_a6 = (u8 *)D_0029F110_as_s16_a;
-    reg_a4 = (u8 *)D_0029F1F0_as_s32_a;
+    reg_a4 = (u8 *)g_player2_as_s32_a;
     reg_a2 = (u8 *)D_0029D710_as_s32_a;
     if (*(s16 *)reg_a6 < 0) {
         func_0019FD30();
@@ -295,7 +295,7 @@ extern u8 D_0028E370;
 extern s32 D_0028ED70;
 extern u8 D_0028ED7C;
 extern u8 D_0029D710[];
-extern u8 D_0029F1F0_as_u8_a[];
+extern u8 g_player2_as_u8_a[];
 extern void (*jtbl_0028E3F4)();
 
 void func_0019FD30(void) {
@@ -306,7 +306,7 @@ void func_0019FD30(void) {
     goto next_20;
 loop_10:
     reg_a6 = (u8 *)D_0029F110;
-    reg_a4 = (u8 *)D_0029F1F0_as_u8_a;
+    reg_a4 = (u8 *)g_player2_as_u8_a;
     reg_a2 = (u8 *)D_0029D710;
     if (*(s16 *)reg_a6 < 0) goto next_20;
     return;

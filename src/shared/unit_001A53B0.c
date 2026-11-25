@@ -1128,8 +1128,8 @@ extern u32 g_boss_score_as_u32;
 extern u32 g_boss_hit_bonus_as_u32;
 extern u16 g_boss_hit_bonus_timer;
 extern u8 D_0028ED80;
-extern s16 D_0029F1F0[];
-extern s16 D_0029F260[];
+extern s16 g_player2[];
+extern s16 g_player1[];
 
 void func_001A7080(void) {
     u8 flags;
@@ -1249,10 +1249,10 @@ next_14:
     func_0018DA10();
     reg_d0.w = reg_d1.w;
     reg_d0.w >>= 4;
-    if (D_0029F260[0] >= 0) goto next_16;
+    if (g_player1[0] >= 0) goto next_16;
     func_001A9180();
 next_16:
-    if (D_0029F1F0[0] >= 0) goto next_17;
+    if (g_player2[0] >= 0) goto next_17;
     func_001A9190();
 next_17:
     reg_d0.w = 0;
@@ -1276,13 +1276,13 @@ void func_001A7410(void) {
         return;
     }
     reg_d0.w = 0;
-    if (D_0029F260[0] < 0) {
+    if (g_player1[0] < 0) {
         func_0016A8B0();
         if ((D_0028ED7C == 2) && (D_0028EC24 == 1)) {
             func_0016A8C0();
         }
     }
-    if (D_0029F1F0[0] < 0) {
+    if (g_player2[0] < 0) {
         temp_s0 = reg_d0.h[0];
         func_0016A8C0();
         if ((D_0028ED7C == 2) && (D_0028EC24 == 0)) {

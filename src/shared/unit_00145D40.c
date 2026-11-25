@@ -84,7 +84,7 @@ void func_00145D40(void) {
 extern u8 D_002555E0[];
 extern u8 D_0028E078[];
 extern u8 D_0028E080[];
-extern u8 D_0029F260_as_u8_a[];
+extern u8 g_player1_as_u8_a[];
 
 void func_00145E70(u8 *arg0) {
     u8 *sa0;
@@ -102,7 +102,7 @@ void func_00145E70(u8 *arg0) {
     sd0 = reg_d0.w;
     sd1 = reg_d1.w;
     stmp = reg_tmp.w;
-    if (D_0029F260_as_u8_a == arg0) {
+    if (g_player1_as_u8_a == arg0) {
         reg_a4 = (u8 *)D_0028E080;
     } else {
         reg_a4 = (u8 *)D_0028E078;
@@ -403,15 +403,15 @@ extern u16 g_p2_hyper_active;
 extern u16 g_p1_hyper_active;
 extern u16 D_0029D790_as_u16_a[];
 extern u16 D_0029DD90_as_u16_a[];
-extern s16 D_0029F1F0[];
-extern s16 D_0029F260[];
+extern s16 g_player2[];
+extern s16 g_player1[];
 
 void func_00146760(void) {
     s32 temp_s0;
     temp_s0 = (s32)reg_a5;
     g_hyper_hit_scratch = 0;
     D_0028DFE4 = 0;
-    if (D_0029F260[0] < 0) {
+    if (g_player1[0] < 0) {
         reg_a6 = (u8 *)(D_0029DD90_as_u16_a);
         reg_d7.w = 0x1F;
         g_hyper_hit_scratch = g_p1_hyper_active;
@@ -426,7 +426,7 @@ void func_00146760(void) {
             reg_a6 += 0x30;
         } while ((s16)(--reg_d7.h[0]) >= 0);
     }
-    if (D_0029F1F0[0] < 0) {
+    if (g_player2[0] < 0) {
         reg_a6 = (u8 *)(D_0029D790_as_u16_a);
         reg_d7.w = 0x1F;
         g_hyper_hit_scratch = g_p2_hyper_active;
@@ -1129,7 +1129,7 @@ extern u8 D_0028DFD4_as_u8;
 extern u8 D_0028DFD8_as_u8;
 extern u8 D_0029DD30[];
 extern u8 D_0029E330[];
-extern u8 D_0029F1F0_as_u8_a[];
+extern u8 g_player2_as_u8_a[];
 
 void func_00147CA0(void) {
     u8 *temp_a3;
@@ -1141,12 +1141,12 @@ void func_00147CA0(void) {
     reg_a2 = (u8 *)D_0029D770;
     reg_a3 = (u8 *)D_0029E330;
     reg_a4 = &D_0028DFD8_as_u8;
-    reg_a5 = (u8 *)D_0029F260_as_u8_a;
+    reg_a5 = (u8 *)g_player1_as_u8_a;
     if (ENTITY(reg_a6)->move.h == 0) {
         reg_a2 = (u8 *)D_0029D750;
         reg_a3 = (u8 *)D_0029DD30;
         reg_a4 = &D_0028DFD4_as_u8;
-        reg_a5 = (u8 *)D_0029F1F0_as_u8_a;
+        reg_a5 = (u8 *)g_player2_as_u8_a;
     }
     reg_tmp.h[1] = *(u16 *)(reg_a6 + 0x2C);
     reg_tmp.h[0] = *(u16 *)(reg_a6 + 0x2E);
@@ -1217,12 +1217,12 @@ void func_00147F90(void) {
     reg_d1.h[0] = D_0028DFD8;
     reg_a0 = (u8 *)D_0029D730;
     reg_a2 = (u8 *)D_0029D770;
-    reg_a5 = (u8 *)D_0029F260_as_u8_a;
+    reg_a5 = (u8 *)g_player1_as_u8_a;
     if (ENTITY(reg_a6)->move.h != 0) goto block_1;
     reg_d1.h[0] = D_0028DFD4;
     reg_a0 = (u8 *)D_0029D710;
     reg_a2 = (u8 *)D_0029D750;
-    reg_a5 = (u8 *)D_0029F1F0_as_u8_a;
+    reg_a5 = (u8 *)g_player2_as_u8_a;
 block_1:
     switch (*(u8 *)(reg_a2 + 1) & 0x10) {
     case 0:

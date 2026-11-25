@@ -820,8 +820,8 @@ extern s8 D_0028EC24;
 extern s8 D_0028ED60_as_s8;
 extern u16 D_0029C068[];
 extern u16 D_0029C06C[];
-extern s16 D_0029F1F0[];
-extern s16 D_0029F260[];
+extern s16 g_player2[];
+extern s16 g_player1[];
 
 #ifdef DEATH_LABEL
 s32 func_00141640();
@@ -831,8 +831,8 @@ s32 func_0013FCA0();
 s32 func_0013FCE0();
 s32 func_0013EAF0();
 s32 func_0013EB60();
-extern s16 D_0029F1F0[];
-extern s16 D_0029F260[];
+extern s16 g_player2[];
+extern s16 g_player1[];
 extern u8 D_0028E290;
 extern u8 death_D_00290568;
 #endif
@@ -991,11 +991,11 @@ block_15:
                     *(u16 *)(reg_a6 + 6) = 0xFFFF;
                 }
             }
-            if (D_0029F260[0] >= 0) {
+            if (g_player1[0] >= 0) {
                 *(u16 *)(reg_a6 + 8) = 0U;
                 *(u16 *)(reg_a6 + 0xA) = 0U;
             }
-            if (D_0029F1F0[0] >= 0) {
+            if (g_player2[0] >= 0) {
                 *(u16 *)(reg_a6 + 0xC) = 0x40U;
                 *(u16 *)(reg_a6 + 0xE) = 0x40U;
             }
@@ -1011,7 +1011,7 @@ block_15:
             *(u8 *)(reg_a6 + 3) = (u8) (v1 | 2);
             *(u16 *)(reg_a6 + 0x2C) = 0x18U;
             reg_d7.w = 0;
-            if (D_0029F260[0] < 0) {
+            if (g_player1[0] < 0) {
                 reg_d0.h[0] = D_0028E97C;
                 reg_d0.h[0] += D_0028E978;
                 if (reg_d0.h[0] != 0) {
@@ -1032,7 +1032,7 @@ block_15:
                     *(u16 *)(reg_a6 + 0x1E) = (u16) reg_d5.h[0];
                 }
             }
-            if (D_0029F1F0[0] < 0) {
+            if (g_player2[0] < 0) {
                 reg_d0.h[1] = D_0028E974;
                 reg_d0.h[0] = D_0028E970;
                 if (reg_d0.w != 0) {
@@ -1182,12 +1182,12 @@ next_499:
                     *(u8 *)(reg_a5 + 7) = 0x15U;
                     D_0028ED60_as_s8 = 1;
                     func_00141640();
-                    if (D_0029F260[0] < 0) {
+                    if (g_player1[0] < 0) {
                         func_001A7E90();
                         func_0013FCA0();
                         func_0013EAF0();
                     }
-                    if (D_0029F1F0[0] < 0) {
+                    if (g_player2[0] < 0) {
                         func_001A8070();
                         func_0013FCE0();
                         func_0013EB60();
@@ -1199,12 +1199,12 @@ next_499:
                     reg_a0 = (u8 *)(D_00269920_as_u16_a);
                     *(u8 *)(reg_a5 + 7) = 0x16U;
                     func_00141640();
-                    if (D_0029F260[0] < 0) {
+                    if (g_player1[0] < 0) {
                         func_001A7E90();
                         func_0013FCA0();
                         func_0013EAF0();
                     }
-                    if (D_0029F1F0[0] < 0) {
+                    if (g_player2[0] < 0) {
                         func_001A8070();
                         func_0013FCE0();
                         func_0013EB60();

@@ -65,8 +65,8 @@ extern u8 D_0029E2A0[];
 extern u8 D_0029E330[];
 extern u8 D_0029E390[];
 extern u8 D_0029EA50[];
-extern u16 D_0029F1F0_as_u16_a[];
-extern u16 D_0029F260_as_u16_a[];
+extern u16 g_player2_as_u16_a[];
+extern u16 g_player1_as_u16_a[];
 
 void func_00139B80(void) {
     u16 t1;
@@ -106,13 +106,13 @@ void func_00139B80(void) {
     func_0013D560();
     func_00170A50(0, 0x1F, 0);
     if (g_two_player_game != 0) {
-        reg_d4.h[0] = D_0029F260_as_u16_a[0];
-        if (D_0029F260_as_u16_a[0] != 0) {
+        reg_d4.h[0] = g_player1_as_u16_a[0];
+        if (g_player1_as_u16_a[0] != 0) {
             reg_a0 = (u8 *)D_0029E390;
             reg_a1 = (u8 *)D_0029D770;
             reg_a2 = (u8 *)D_0029E2A0;
             reg_a3 = (u8 *)D_0029E330;
-            reg_a4 = (u8 *)(D_0029F260_as_u16_a);
+            reg_a4 = (u8 *)(g_player1_as_u16_a);
             reg_d0.h[0] = 0x1000;
             t2 = g_p1_hyper_active;
             t1 = g_p1_hyper_level;
@@ -124,13 +124,13 @@ void func_00139B80(void) {
             }
             goto next_1;
         }
-        reg_d4.h[0] = D_0029F1F0_as_u16_a[0];
-        if (D_0029F1F0_as_u16_a[0] != 0) {
+        reg_d4.h[0] = g_player2_as_u16_a[0];
+        if (g_player2_as_u16_a[0] != 0) {
             reg_a0 = (u8 *)D_0029EA50;
             reg_a1 = (u8 *)D_0029D750;
             reg_a2 = (u8 *)D_0029DCA0;
             reg_a3 = (u8 *)D_0029DD30;
-            reg_a4 = (u8 *)(D_0029F1F0_as_u16_a);
+            reg_a4 = (u8 *)(g_player2_as_u16_a);
             reg_d0.h[0] = 0x800;
             t2 = g_p2_hyper_active;
             t1 = g_p2_hyper_level;
@@ -154,7 +154,7 @@ next_1:
             reg_a1 = (u8 *)D_0029D770;
             reg_a2 = (u8 *)D_0029E2A0;
             reg_a3 = (u8 *)D_0029E330;
-            reg_a4 = (u8 *)(D_0029F260_as_u16_a);
+            reg_a4 = (u8 *)(g_player1_as_u16_a);
             reg_d0.h[0] = 0x1000;
             reg_d1.h[0] = g_p1_hyper_active;
             reg_d2.h[0] = g_p1_hyper_level;
@@ -165,7 +165,7 @@ next_1:
         reg_a1 = (u8 *)D_0029D750;
         reg_a2 = (u8 *)D_0029DCA0;
         reg_a3 = (u8 *)D_0029DD30;
-        reg_a4 = (u8 *)(D_0029F1F0_as_u16_a);
+        reg_a4 = (u8 *)(g_player2_as_u16_a);
         reg_d0.h[0] = 0x800;
         reg_d1.h[0] = g_p2_hyper_active;
         reg_d2.h[0] = g_p2_hyper_level;

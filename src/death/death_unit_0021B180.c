@@ -273,8 +273,8 @@ void death_func_0021BBB0(void) {
 s32 enemy_switch_target_player();
 s32 direction256_between();
 extern u16 g_bullets_blocked;
-extern u16 D_0029F1F0_as_u16_a[];
-extern u16 D_0029F260_as_u16_a[];
+extern u16 g_player2_as_u16_a[];
+extern u16 g_player1_as_u16_a[];
 
 void death_func_0021BC30(arg0, arg1)
     u8 *arg0;
@@ -295,8 +295,8 @@ void death_func_0021BC30(arg0, arg1)
             *(u8 *)(reg_a4 + 3) = (u8) *(u8 *)(reg_a4 + 7);
             reg_d2.b[0] = *(u8 *)(reg_a4 + 5);
             if (*(u8 *)(reg_a4 + 4) == reg_d2.b[0]) {
-                reg_a0 = (u8 *)(D_0029F260_as_u16_a);
-                reg_a1 = (u8 *)(D_0029F1F0_as_u16_a);
+                reg_a0 = (u8 *)(g_player1_as_u16_a);
+                reg_a1 = (u8 *)(g_player2_as_u16_a);
                 if (*(u8 *)(reg_a5 + 2) != 0) {
                     reg_atmp = (u8 *)(reg_a0);
                     reg_a0 = (u8 *)(reg_a1);
@@ -404,8 +404,8 @@ s32 velocity_from_dir256();
 extern s16 D_00262A50[];
 extern u16 g_enemy_signal_1;
 extern u16 g_enemy_signal_0;
-extern s16 D_0029F1F0[];
-extern s16 D_0029F260[];
+extern s16 g_player2[];
+extern s16 g_player1[];
 
 void death_func_0021BFC0(void) {
     s16 *t1;
@@ -428,8 +428,8 @@ void death_func_0021BFC0(void) {
         *(u8 *)(reg_a4 + 3) = (u8) *(u8 *)(reg_a4 + 9);
         reg_d0.b[0] = *(u8 *)(reg_a4 + 5);
         if (*(u8 *)(reg_a4 + 4) == reg_d0.b[0]) {
-            reg_a0 = (u8 *)(D_0029F260);
-            reg_a1 = (u8 *)(D_0029F1F0);
+            reg_a0 = (u8 *)(g_player1);
+            reg_a1 = (u8 *)(g_player2);
             if (*(u8 *)(reg_a5 + 2) != 0) {
                 reg_atmp = (u8 *)(reg_a0);
                 reg_a0 = (u8 *)(reg_a1);
@@ -692,8 +692,8 @@ void death_func_0021C9A0(void) {
     *(u8 *)(reg_a4 + 3) -= 1;
     if (reg_tmp.b[0] == 0) {
         *(u8 *)(reg_a4 + 3) = (u8) *(u8 *)(reg_a4 + 7);
-        reg_a0 = (u8 *)(D_0029F260);
-        reg_a1 = (u8 *)(D_0029F1F0);
+        reg_a0 = (u8 *)(g_player1);
+        reg_a1 = (u8 *)(g_player2);
         if (*(u8 *)(reg_a5 + 2) != 0) {
             reg_atmp = (u8 *)(reg_a0);
             reg_a0 = (u8 *)(reg_a1);
@@ -961,8 +961,8 @@ void death_func_0021D2E0(void) {
     *(u8 *)(reg_a4 + 3) -= 1;
     if (reg_tmp.b[0] == 0) {
         *(u8 *)(reg_a4 + 3) = (u8) *(u8 *)(reg_a4 + 7);
-        reg_a0 = (u8 *)(D_0029F260);
-        reg_a1 = (u8 *)(D_0029F1F0);
+        reg_a0 = (u8 *)(g_player1);
+        reg_a1 = (u8 *)(g_player2);
         if (*(u8 *)(reg_a5 + 2) != 0) {
             reg_atmp = (u8 *)(reg_a0);
             reg_a0 = (u8 *)(reg_a1);

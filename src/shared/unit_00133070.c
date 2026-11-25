@@ -19,8 +19,8 @@ s32 func_00133070(void) {
 
 s32 sprite_draw_layer1();
 s32 sprite_draw_layer3();
-extern s16 D_0029F1F0[];
-extern s16 D_0029F260[];
+extern s16 g_player2[];
+extern s16 g_player1[];
 
 void func_001330F0(void) {
     ENTITY(reg_a6)->hit_y_plus.b[1] -= 1;
@@ -140,7 +140,7 @@ void func_001330F0(void) {
     reg_d3.h[0] = 0x8A0;
     reg_d4.h[0] = 0x14;
     sprite_draw_layer3();
-    if (D_0029F260[0] >= 0) goto next_110;
+    if (g_player1[0] >= 0) goto next_110;
     reg_d1.h[1] = ENTITY(reg_a6)[2].flags.h;
     reg_d1.h[0] = ENTITY(reg_a6)[2].y.h;
     reg_d1.w += 0xF400F200;
@@ -172,7 +172,7 @@ void func_001330F0(void) {
     sprite_draw_layer1();
 next_110:
     ;
-    if (D_0029F1F0[0] >= 0) goto next_120;
+    if (g_player2[0] >= 0) goto next_120;
     reg_d1.h[1] = ENTITY(reg_a6)[2].x.h;
     reg_d1.h[0] = ENTITY(reg_a6)[2].offset_y.h;
     reg_d1.w += 0xF400F200;
@@ -213,7 +213,7 @@ extern u8 D_00269A30[];
 void func_00133840(void) {
     u32 sh;
 
-    if (D_0029F260[0] >= 0) goto next_7;
+    if (g_player1[0] >= 0) goto next_7;
     reg_d7.h[0] = ENTITY(reg_a6)->hp.h;
     reg_d2.w = 0xF;
     reg_d2.h[0] &= reg_d7.h[0];
@@ -323,7 +323,7 @@ next_3:
     if (sh == 0) goto next_7;
     func_00132210();
 next_7:
-    if (D_0029F1F0[0] >= 0) goto block_rts;
+    if (g_player2[0] >= 0) goto block_rts;
     reg_d7.h[0] = ENTITY(reg_a6)[1].y.h;
     reg_d2.w = 0xF;
     reg_d2.h[0] &= reg_d7.h[0];

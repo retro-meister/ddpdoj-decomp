@@ -133,17 +133,17 @@ void func_0016D040(void) {
 
 extern u16 D_0025B160[];
 extern u16 g_stage;
-extern s16 D_0029F1F0[];
+extern s16 g_player2[];
 extern u16 D_0029F1F2[];
 extern u16 D_0029F1F4[];
-extern s16 D_0029F260[];
+extern s16 g_player1[];
 extern u16 D_0029F262[];
 extern u16 D_0029F264[];
 
 
 void func_0016D290(void) {
     reg_d0.h[0] = 0x7FFF;
-    if (D_0029F260[0] < 0) {
+    if (g_player1[0] < 0) {
         reg_d2.h[0] = D_0029F262[0];
         reg_d3.h[0] = D_0029F264[0];
         reg_d0.h[0] = ENTITY(reg_a6)->y.h;
@@ -169,7 +169,7 @@ void func_0016D290(void) {
     }
     reg_d4.h[0] = reg_d0.h[0];
     reg_d0.h[0] = 0x7FFF;
-    if (D_0029F1F0[0] < 0) {
+    if (g_player2[0] < 0) {
         reg_d2.h[0] = D_0029F1F2[0];
         reg_d3.h[0] = D_0029F1F4[0];
         reg_d0.h[0] = ENTITY(reg_a6)->y.h;
@@ -824,8 +824,8 @@ extern u16 D_00259370[];
 extern u16 D_00259870[];
 extern u16 g_bullets_blocked;
 extern u16 D_0028E8B8;
-extern u16 D_0029F1F0_as_u16_a[];
-extern u16 D_0029F260_as_u16_a[];
+extern u16 g_player2_as_u16_a[];
+extern u16 g_player1_as_u16_a[];
 
 void func_0016ED40(void) {
     s16 *t1;
@@ -909,8 +909,8 @@ next_2:
                 reg_tmp.b[0] = *(u8 *)(reg_a5 + 0x23);
                 *(u8 *)(reg_a5 + 0x23) -= 1;
                 if (((s32) reg_tmp.b[0] <= 0) && (*(u8 *)(reg_a5 + 0x23) = (u8) *(u8 *)(reg_a5 + 0x22), reg_d0.b[0] = *(u8 *)(reg_a5 + 0x21), (*(u8 *)(reg_a5 + 0x20) == reg_d0.b[0]))) {
-                    reg_a0 = (u8 *)(D_0029F260_as_u16_a);
-                    reg_a1 = (u8 *)(D_0029F1F0_as_u16_a);
+                    reg_a0 = (u8 *)(g_player1_as_u16_a);
+                    reg_a1 = (u8 *)(g_player2_as_u16_a);
                     if (*(u8 *)(reg_a5 + 2) != 0) {
                         reg_atmp = (u8 *)(reg_a0);
                         reg_a0 = (u8 *)(reg_a1);

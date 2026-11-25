@@ -361,8 +361,8 @@ extern u8 D_00259A70[];
 extern u8 D_00259A74[];
 extern u8 D_00259E70[];
 extern u16 D_0029C068[];
-extern u8 D_0029F1F0_as_u8_a[];
-extern u8 D_0029F260_as_u8_a[];
+extern u8 g_player2_as_u8_a[];
+extern u8 g_player1_as_u8_a[];
 
 void func_0014DDB0(void) {
     s8 temp_s0;
@@ -394,10 +394,10 @@ void func_0014DDB0(void) {
         }
         *(u16 *)(reg_a5 + 0x4C) = (u16) reg_tmp.h[1];
         *(u16 *)(reg_a5 + 0x4E) = (u16) reg_tmp.h[0];
-        reg_a0 = (u8 *)D_0029F260_as_u8_a;
+        reg_a0 = (u8 *)g_player1_as_u8_a;
         reg_d0.w = 0;
         if (*(u8 *)reg_a5 & 1) {
-            reg_a0 = (u8 *)D_0029F1F0_as_u8_a;
+            reg_a0 = (u8 *)g_player2_as_u8_a;
             reg_d0.w = 1;
         }
         *(u8 *)(reg_a5 + 2) = (u8) reg_d0.b[0];

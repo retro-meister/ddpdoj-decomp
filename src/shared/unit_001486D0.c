@@ -67,8 +67,8 @@ extern u8 g_p2_hyper_active_as_u8;
 extern u8 g_p1_hyper_active_as_u8;
 extern u16 D_0029C06C[];
 extern u8 D_0029E390[];
-extern u8 D_0029F1F0_as_u8_a[];
-extern u8 D_0029F260_as_u8_a[];
+extern u8 g_player2_as_u8_a[];
+extern u8 g_player1_as_u8_a[];
 
 void func_001488C0(void) {
     u8 *saved_a4;
@@ -80,7 +80,7 @@ void func_001488C0(void) {
     D_0028DFE8 = 0;
     saved_a4 = reg_a4;
     saved_a5 = reg_a5;
-    reg_a4 = (u8 *)D_0029F260_as_u8_a;
+    reg_a4 = (u8 *)g_player1_as_u8_a;
     reg_a5 = &g_p1_hyper_active_as_u8;
     reg_tmp6.h[0] = reg_d6.h[0];
     reg_d6.h[0] = 1;
@@ -103,7 +103,7 @@ next_1:
     t = reg_d7.h[0] - 1;
     reg_d7.h[0] = t;
     if (((s64) ((s64) (u16) t << 0x30) >> 0x30) >= 0) goto loop_2;
-    reg_a4 = (u8 *)D_0029F1F0_as_u8_a;
+    reg_a4 = (u8 *)g_player2_as_u8_a;
     reg_a5 = &g_p2_hyper_active_as_u8;
     reg_tmp6.h[0] = reg_d6.h[0];
     reg_d6.h[0] = reg_d6.h[1];

@@ -515,10 +515,10 @@ s32 func_0023C1E0();
 extern s16 D_0028E3B4_as_s16;
 extern u16 D_0028E934;
 extern u16 D_0028E938;
-extern s16 D_0029F1F0[];
+extern s16 g_player2[];
 extern u16 D_0029F248[];
 extern u16 D_0029F24A[];
-extern s16 D_0029F260[];
+extern s16 g_player1[];
 extern u16 D_0029F2B8[];
 extern u16 D_0029F2BA[];
 extern u8 D_006CB1D4[];
@@ -562,9 +562,9 @@ void func_001B1D70(void) {
     *(s16 *)(reg_a5 + 0xA) = 0;
     reg_a0 = (u8 *)D_0029BE00;
     reg_d0.w = 0;
-    if (0 > D_0029F260[0]) {
+    if (0 > g_player1[0]) {
         reg_d0.h[0] = 1;
-    } else if (0 > D_0029F1F0[0]) {
+    } else if (0 > g_player2[0]) {
         reg_d0.h[0] = 2;
     }
     reg_a6 = (u8 *)D_0029BE00;

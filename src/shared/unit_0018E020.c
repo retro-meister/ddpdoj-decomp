@@ -6284,8 +6284,8 @@ extern u8 D_00261FB0[];
 extern u16 D_0028E4B0;
 extern u8 D_0028E8B4;
 extern u16 g_two_player_seen;
-extern s16 D_0029F1F0[];
-extern s16 D_0029F260[];
+extern s16 g_player2[];
+extern s16 g_player1[];
 extern u8 D_002BAE00[];
 
 void func_00197F60() {
@@ -6308,13 +6308,13 @@ void func_00197F60() {
     reg_a0 = (u8 *)D_00261EF0;
     reg_d0.h[0] = 5;
     sprite_palette_load();
-    if (0 > D_0029F260[0]) {
+    if (0 > g_player1[0]) {
         func_001ACBA0();
         if (cond_flag == 0) {
             D_0028E8B4 |= 1;
         }
     }
-    if (0 > D_0029F1F0[0]) {
+    if (0 > g_player2[0]) {
         func_001ACC60();
         if (cond_flag == 0) {
             D_0028E8B4 |= 2;

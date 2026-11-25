@@ -4408,3 +4408,5 @@ g_mc_dir = 0x69f580;
 g_mc_choice = 0x28ecec;
 g_mc_cursor_target_x = 0x28ec9c;
 g_mc_cursor_x = 0x28eca4;
+g_player1 = 0x29f260;
+g_player2 = 0x29f1f0;
