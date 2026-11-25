@@ -39,14 +39,14 @@ void func_001BB8E0(void) {
             (*(u8 *)((u8 *)(v2) + (1))) &= reg_d0.b[0];
             *(u16 *)(reg_a6 + 0xEA) = (u16) reg_d1.h[0];
             score_add_no_chain();
-            reg_d0.b[0] = *(u8 *)(reg_a6 + 0x1C);
+            reg_d0.b[0] = ENTITY(reg_a6)->attr.b.palette;
             if (reg_d0.b[0] == 0x19) {
-                *(u8 *)(reg_a6 + 0x1C) = 0x13U;
+                ENTITY(reg_a6)->attr.b.palette = 0x13U;
                 *(u8 *)(reg_a6 + 0xBC) = 0x16U;
             }
-            reg_d0.b[0] = *(u8 *)(reg_a6 + 0x1C);
+            reg_d0.b[0] = ENTITY(reg_a6)->attr.b.palette;
             reg_d0.b[0] ^= 0xC;
-            *(u8 *)(reg_a6 + 0x1C) = (u8) reg_d0.b[0];
+            ENTITY(reg_a6)->attr.b.palette = (u8) reg_d0.b[0];
             reg_d0.b[0] = *(u8 *)(reg_a6 + 0xBC);
             reg_d0.b[0] ^= 9;
             *(u8 *)(reg_a6 + 0xBC) = (u8) reg_d0.b[0];
@@ -82,7 +82,7 @@ void func_001BB8E0(void) {
             reg_tmp.h[1] = (*(u16 *)((u8 *)(v1) + (0x16)));
             reg_tmp.h[0] = (*(u16 *)((u8 *)(v1) + (0x18)));
             if (((u32) reg_tmp.w <= (u32) reg_d2.w) && (D_0028E8B8 == 0)) {
-                *(u8 *)(reg_a6 + 0x1C) = 0x19U;
+                ENTITY(reg_a6)->attr.b.palette = 0x19U;
                 *(u8 *)(reg_a6 + 0xBC) = 0x19U;
             }
         }
@@ -318,9 +318,9 @@ void func_001BC160() {
     reg_tmp.w = -1U;
     *(u16 *)(reg_a5 + 0x16) = (u16) reg_tmp.h[1];
     *(u16 *)(reg_a5 + 0x18) = (u16) reg_tmp.h[0];
-    *(s8 *)(reg_a6 + 0x1E) = 1;
+    ENTITY(reg_a6)->misc.sb.draw_layer = 1;
     ENTITY(reg_a6)->flags.h = 0x8000;
-    *(s8 *)(reg_a6 + 0x1C) = 0x13;
+    ENTITY(reg_a6)->attr.sb.palette = 0x13;
     *(s8 *)(reg_a6 + 0xBC) = 0x16;
     reg_d0.w = 1;
     boss_movement_start();

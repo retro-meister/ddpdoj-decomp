@@ -24,7 +24,7 @@ void func_0014F000(void) {
     reg_d1.b[0] += 1;
     reg_d1.h[0] &= 0xFE;
     reg_d0.h[0] = (reg_d1.h[0] != 0) ? *(u16 *)((u8 *)reg_a0 + ((s16)reg_d1.h[0] & ~1)) : *(u16 *)reg_a0;
-    *(u8 *)(reg_a6 + 0x1D) = (u8) reg_d0.b[0];
+    ENTITY(reg_a6)->attr.b.flip = (u8) reg_d0.b[0];
     reg_a0 = (u8 *)(D_0024EC80);
     reg_d1.h[0] += reg_d1.h[0];
     reg_d1.h[0] += reg_d1.h[0];
@@ -318,10 +318,10 @@ extern u16 g_bullets_blocked;
 void func_0014FB30(void) {
     if (D_0028E855 & 0x40) goto next_1;
     reg_d1.w = 0x5C;
-    reg_d1.b[0] &= reg_a6[1];
+    reg_d1.b[0] &= ENTITY(reg_a6)->flags.b[1];
     if (reg_d1.b[0] == 0) goto next_2;
     reg_d0.b[0] = 0xA3;
-    reg_a6[1] &= reg_d0.b[0];
+    ENTITY(reg_a6)->flags.b[1] &= reg_d0.b[0];
     W(0x18) = 0x7FFF;
     goto next_2;
 next_1:
@@ -329,8 +329,8 @@ next_1:
     explosion_spawn();
     AW(2) = W(2);
     AW(4) = W(4);
-    reg_a0[0x1B] = reg_a6[0x1B];
-    reg_d0.b[0] = reg_a6[0x1A];
+    reg_a0[0x1B] = ENTITY(reg_a6)->move.b.speed;
+    reg_d0.b[0] = ENTITY(reg_a6)->move.b.dir;
     reg_d0.b[0] += reg_d0.b[0];
     reg_d0.b[0] += reg_d0.b[0];
     reg_a0[0x1A] = reg_d0.b[0];
@@ -343,15 +343,15 @@ next_2:
     reg_a5[0x27] -= 1;
     if ((s32) reg_tmp.b[0] > 0) goto next_3;
     reg_a5[0x27] = reg_a5[0x26];
-    reg_a6[0x1B] -= 1;
+    ENTITY(reg_a6)->move.b.speed -= 1;
 next_3:
-    if (reg_a6[0x1B] != 0) goto block_saku;
+    if (ENTITY(reg_a6)->move.b.speed != 0) goto block_saku;
     reg_d0.w = 1;
     explosion_spawn();
     AW(2) = W(2);
     AW(4) = W(4);
-    reg_a0[0x1B] = reg_a6[0x1B];
-    reg_d0.b[0] = reg_a6[0x1A];
+    reg_a0[0x1B] = ENTITY(reg_a6)->move.b.speed;
+    reg_d0.b[0] = ENTITY(reg_a6)->move.b.dir;
     reg_d0.b[0] += reg_d0.b[0];
     reg_d0.b[0] += reg_d0.b[0];
     reg_a0[0x1A] = reg_d0.b[0];

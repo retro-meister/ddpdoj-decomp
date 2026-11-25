@@ -347,7 +347,7 @@ next_54:
     func_00136010();
     goto next_60;
 block_end:
-    reg_a6[0] = 8;
+    ENTITY(reg_a6)->flags.b[0] = 8;
     reg_a0[0] = 8;
 next_60:
     if ((s32) W(0x32) < 0xAA) goto next_700;

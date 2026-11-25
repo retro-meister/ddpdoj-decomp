@@ -217,8 +217,8 @@ block_11:
 
 
 void func_001F4030(void) {
-    reg_a6[0x1B] = 3;
-    reg_a6[0x1A] = 0x20;
+    ENTITY(reg_a6)->move.b.speed = 3;
+    ENTITY(reg_a6)->move.b.dir = 0x20;
     func_001F4050(3);
 }
 
@@ -440,7 +440,7 @@ void func_001F4600(void) {
     reg_a4[1] = reg_d0.b[0];
     value = reg_d0.b[0];
     reg_a4[0] = value;
-    reg_a6[0x1B] = 2;
+    ENTITY(reg_a6)->move.b.speed = 2;
     func_001F4630(value);
 }
 
@@ -539,7 +539,7 @@ u8 func_001F4890(void) {
     reg_a4[1] = reg_d0.b[0];
     zero_byte = reg_d0.b[0];
     reg_a4[0] = reg_d0.b[0];
-    reg_a6[0x1B] = 4;
+    ENTITY(reg_a6)->move.b.speed = 4;
     return func_001F48C0(zero_byte);
 }
 

@@ -477,7 +477,7 @@ void func_001CB6B0(void) {
     reg_tmp.w = -1U;
     *(u16 *)(reg_a5 + 0x16) = (u16) reg_tmp.h[1];
     *(u16 *)(reg_a5 + 0x18) = (u16) reg_tmp.h[0];
-    *(s8 *)(reg_a6 + 0x1E) = 1;
+    ENTITY(reg_a6)->misc.sb.draw_layer = 1;
     ENTITY(reg_a6)->flags.h = 0x8000;
     *(u16 *)(reg_a6 + 0x20) = 0x8000;
     *(u16 *)(reg_a6 + 0xC0) = 0x8000;

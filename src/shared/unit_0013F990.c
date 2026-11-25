@@ -1031,7 +1031,7 @@ next_60:
         g_p1_hyper_in_effect = 1;
         g_p1_hyper_active = 1;
         D_0028DFB8 = 1;
-        reg_a6[0] |= 1;
+        ENTITY(reg_a6)->flags.b[0] |= 1;
         g_p1_hyper_level = n;
         g_p1_hyper_items = 0;
         if (D_0028E2AC != 0) {
@@ -1054,7 +1054,7 @@ next_60:
         g_p2_hyper_in_effect = 1;
         g_p2_hyper_active = 1;
         D_0028DFB4 = 1;
-        reg_a6[0] |= 1;
+        ENTITY(reg_a6)->flags.b[0] |= 1;
         g_p2_hyper_level = n;
         g_p2_hyper_items = 0;
         if (D_0028E2AC != 0) {
@@ -1090,12 +1090,12 @@ next_85:
     reg_a0 += 2;
     ENTITY(reg_a6)->x.h = *(u16 *)reg_a0;
     reg_a0 += 2;
-    *(u16 *)(reg_a6 + 0x1C) = *(u16 *)reg_a0;
+    ENTITY(reg_a6)->attr.h = *(u16 *)reg_a0;
     reg_a0 += 2;
     reg_a6[0x55] = reg_a0[1];
     reg_a6[0x54] = reg_a0[0];
     reg_a0 += 2;
-    reg_a6[0x3A] = reg_a6[0x1C];
+    reg_a6[0x3A] = ENTITY(reg_a6)->attr.b.palette;
     reg_a6[0x57] = reg_a6[0x55];
     ENTITY(reg_a6)->y.h = *(u16 *)(reg_a5 + 8);
     ENTITY(reg_a6)->x.h = *(u16 *)(reg_a5 + 0xA);
@@ -1122,7 +1122,7 @@ next_85:
     reg_d1.h[0] += reg_d2.h[0];
     reg_a0 = (u8 *)D_002555D0;
     reg_a0 += reg_d0.h[0];
-    reg_a6[0x1B] = reg_a0[1];
+    ENTITY(reg_a6)->move.b.speed = reg_a0[1];
     reg_a6[0x38] = reg_a0[1];
     reg_a6[0x39] = reg_a0[0];
     reg_a0 = (u8 *)D_002556E0;

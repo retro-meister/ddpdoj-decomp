@@ -85,12 +85,12 @@ void func_00119B10(void) {
     reg_a0 += 2;
     *(u16 *)(reg_a6 + 0x34) = (u16) *(u16 *)reg_a0;
     *(u16 *)(reg_a6 + 0x36) = (u16) *(u16 *)(reg_a0 + 2);
-    temp_v1 = *(u8 *)(reg_a6 + 0x1F);
+    temp_v1 = ENTITY(reg_a6)->misc.b.user;
     if (temp_v1 != 0) {
         reg_d1.b[0] = temp_v1;
     }
     reg_d1.h[0] += reg_d1.h[0];
-    *(u8 *)(reg_a6 + 0x1F) = (u8) reg_d1.b[0];
+    ENTITY(reg_a6)->misc.b.user = (u8) reg_d1.b[0];
     reg_d7.b[0] = ENTITY(reg_a6)->move.b.dir;
     reg_d1.w = 0x3E;
     reg_a0 = (u8 *)D_0025B2C0;
@@ -107,7 +107,7 @@ void func_00119B10(void) {
     reg_a0 = (u8 *)D_00242008;
     reg_d0.h[0] = g_stage_x2;
     reg_a0 += reg_d0.h[0];
-    *(s8 *)(reg_a6 + 0x1C) = (s8) *(s8 *)reg_a0;
+    ENTITY(reg_a6)->attr.sb.palette = (s8) *(s8 *)reg_a0;
     *(s8 *)(reg_a6 + 0x39) = (s8) *(s8 *)reg_a0;
     reg_a0 += 1;
     *(s8 *)(reg_a6 + 0x38) = (s8) *(s8 *)reg_a0;
@@ -557,12 +557,12 @@ void func_0011AD50(void) {
     reg_a0 += 2;
     *(u16 *)(reg_a6 + 0x34) = (u16) *(u16 *)reg_a0;
     *(u16 *)(reg_a6 + 0x36) = (u16) *(u16 *)(reg_a0 + 2);
-    temp_v1 = *(u8 *)(reg_a6 + 0x1F);
+    temp_v1 = ENTITY(reg_a6)->misc.b.user;
     if (temp_v1 != 0) {
         reg_d1.b[0] = temp_v1;
     }
     reg_d1.h[0] += reg_d1.h[0];
-    *(u8 *)(reg_a6 + 0x1F) = (u8) reg_d1.b[0];
+    ENTITY(reg_a6)->misc.b.user = (u8) reg_d1.b[0];
     reg_d7.b[0] = ENTITY(reg_a6)->move.b.dir;
     reg_d1.w = 0x3E;
     reg_a0 = (u8 *)D_0025B510;
@@ -579,7 +579,7 @@ void func_0011AD50(void) {
     reg_a0 = (u8 *)D_00242058;
     reg_d0.h[0] = g_stage_x2;
     reg_a0 += reg_d0.h[0];
-    *(s8 *)(reg_a6 + 0x1C) = (s8) *(s8 *)reg_a0;
+    ENTITY(reg_a6)->attr.sb.palette = (s8) *(s8 *)reg_a0;
     *(s8 *)(reg_a6 + 0x39) = (s8) *(s8 *)reg_a0;
     reg_a0 += 1;
     *(s8 *)(reg_a6 + 0x38) = (s8) *(s8 *)reg_a0;

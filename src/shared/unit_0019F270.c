@@ -68,7 +68,7 @@ void func_0019F2E0(void) {
     reg_d1.h[1] = reg_tmp1.h[0];
     reg_d1.w += 0xFE00FF00;
     reg_d3.h[0] = 0x208;
-    reg_d4.h[0] = *(u16 *)(reg_a6 + 0x1C);
+    reg_d4.h[0] = ENTITY(reg_a6)->attr.h;
     reg_d4.b[0] = 0x18;
     reg_d2.w = reg_d6.w;
     func_0019D390();
@@ -94,7 +94,7 @@ void func_0019F410(void) {
         reg_d1.h[1] = reg_tmp1.h[0];
         reg_d1.w += 0xFE00FF00;
         reg_d3.h[0] = 0x208;
-        reg_d4.h[0] = *(u16 *)(reg_a6 + 0x1C);
+        reg_d4.h[0] = ENTITY(reg_a6)->attr.h;
         reg_d4.b[0] = 0x18;
         reg_d2.h[1] = *(u16 *)(reg_a6 + 0x5C);
         reg_d2.h[0] = *(u16 *)(reg_a6 + 0x5E);
@@ -924,9 +924,9 @@ void func_001A1510(void) {
     reg_d2.w = 0;
     reg_d1.h[0] &= 0x3F;
     reg_d5.h[0] = reg_d1.h[0];
-    *(u8 *)(reg_a6 + 0x1D) &= 0xBF;
+    ENTITY(reg_a6)->attr.b.flip &= 0xBF;
     if ((s32) reg_d5.b[0] > 0x20) {
-        *(u8 *)(reg_a6 + 0x1D) |= 0x40;
+        ENTITY(reg_a6)->attr.b.flip |= 0x40;
         reg_d5.b[0] *= -1;
         reg_d2.w = 1;
         reg_d5.h[0] &= 0x3F;
@@ -994,7 +994,7 @@ void func_001A18B0(void) {
     reg_a0 += 2;
     *(u16 *)(reg_a6 + 0x5E) = (u16) *(u16 *)reg_a0;
     reg_a0 += 2;
-    *(u16 *)(reg_a6 + 0x1E) = (u16) *(u16 *)reg_a0;
+    ENTITY(reg_a6)->misc.h = (u16) *(u16 *)reg_a0;
     reg_a0 += 2;
     ENTITY(reg_a6)->hit_y_minus.h = (u16) *(u16 *)reg_a0;
     reg_a0 += 2;
@@ -1064,7 +1064,7 @@ extern u16 D_0029F290[];
 void func_001A1B60(void) {
     u32 cnt;
 
-    switch (reg_a6[1] & 0x20) {
+    switch (ENTITY(reg_a6)->flags.b[1] & 0x20) {
     case 0:
         goto next_100;
     }
@@ -1093,8 +1093,8 @@ next_10:
     if (*(u16 *)(reg_a2 + 0x16) != 0) goto next_60;
 next_20:
     *(u16 *)(reg_a3 + 6) += 0x800;
-    reg_tmp.b[0] = reg_a6[0];
-    reg_a6[0] |= 0x80;
+    reg_tmp.b[0] = ENTITY(reg_a6)->flags.b[0];
+    ENTITY(reg_a6)->flags.b[0] |= 0x80;
     if (!(reg_tmp.b[0] & 0x80)) goto block_sen;
     goto next_60;
 next_30:
@@ -1102,7 +1102,7 @@ next_30:
     *(u16 *)(reg_a3 + 0xE) = *(u16 *)(reg_a3 + 0x1C);
     *(u16 *)(reg_a3 + 0xC) = 0;
 next_40:
-    reg_a6[0] &= 0x7F;
+    ENTITY(reg_a6)->flags.b[0] &= 0x7F;
     reg_d0.h[0] = *(u16 *)(reg_a3 + 0x10);
     reg_d1.h[0] = reg_d0.h[0];
     *(u16 *)reg_a0 = reg_d1.h[0];

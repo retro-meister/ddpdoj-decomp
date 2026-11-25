@@ -126,11 +126,11 @@ next_1:
 next_2:
     reg_a6 += 0x40;
 loop_2:
-    reg_d0.b[0] = reg_a6[1];
+    reg_d0.b[0] = ENTITY(reg_a6)->flags.b[1];
     if (reg_d0.b[0] == 0) goto next_2;
     reg_a2 = reg_a6 + 2;
     reg_a4 = reg_a6 + 0x1A;
-    if (0 <= (s64) *(s16 *)(reg_a6 + 0x1E)) goto next_3;
+    if (0 <= (s64) ENTITY(reg_a6)->misc.sh) goto next_3;
     if (0 <= (s64) (s32) reg_d5.w) goto next_dir;
     goto next_boss;
 next_3:
@@ -148,7 +148,7 @@ next_6:
     reg_d0.w = 0;
     reg_d1.w = 0;
     reg_d0.b[0] = reg_a4[1];
-    reg_d1.b[0] = reg_a6[0x1A];
+    reg_d1.b[0] = ENTITY(reg_a6)->move.b.dir;
     goto next_speed;
 next_ret:
     *(u16 *)(reg_a2 + 0) += reg_d2.h[0];
@@ -157,7 +157,7 @@ next_ret:
     reg_d3.h[0] -= reg_d0.h[0];
     *(u16 *)(reg_a2 + 2) += reg_d3.h[0];
 next_4:
-    reg_d0.h[0] = *(u16 *)(reg_a6 + 0x1E);
+    reg_d0.h[0] = ENTITY(reg_a6)->misc.h;
     reg_d1.w = 0;
     reg_d1.b[0] = reg_a4[1];
     reg_d1.h[0] += reg_d1.h[0];
@@ -205,8 +205,8 @@ next_set:
     if (((s64) ((s64) (cnt & 0xFFFF) << 0x30) >> 0x30) >= 0) goto loop_2;
     goto block_rts;
 next_8:
-    reg_a6[0x18] -= 1;
-    if (reg_a6[0x18] == 0) goto next_clr;
+    ENTITY(reg_a6)->hp.b[0] -= 1;
+    if (ENTITY(reg_a6)->hp.b[0] == 0) goto next_clr;
     if (reg_d6.h[0] == 0) goto next_9;
     reg_a0 = (u8 *)D_00250780;
     reg_d0.h[0] = *(u16 *)(reg_a6 + 0x24);
@@ -243,14 +243,14 @@ next_12:
     reg_a2 = save;
 next_10:
     *(u16 *)(reg_a2 + 0) -= 0x20;
-    reg_d0.h[0] = *(u16 *)(reg_a6 + 0x1E);
+    reg_d0.h[0] = ENTITY(reg_a6)->misc.h;
     reg_d0.h[0] = ~(s16) reg_d0.h[0];
     goto next_7;
 next_boss:
     save = reg_a2;
     func_00201F20();
     reg_a2 = save;
-    reg_d0.h[0] = *(u16 *)(reg_a6 + 0x1E);
+    reg_d0.h[0] = ENTITY(reg_a6)->misc.h;
     reg_d1.w = 0;
     reg_d0.h[0] = ~(s16) reg_d0.h[0];
     reg_d1.b[0] = reg_a6[0x21];

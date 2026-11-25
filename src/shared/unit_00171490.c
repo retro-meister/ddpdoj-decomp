@@ -50,7 +50,7 @@ void func_00171580(void) {
         ENTITY(reg_a6)->hp.h >>= 1;
         ENTITY(reg_a6)->hit_y_plus.h >>= 1;
         reg_d0.h[0] = ENTITY(reg_a6)->hit_y_plus.h;
-        if (*(s16 *)(reg_a6 + 0x1E) > (s16) reg_d0.h[0]) {
+        if (ENTITY(reg_a6)->misc.sh > (s16) reg_d0.h[0]) {
             ENTITY(reg_a6)->y.h = 0x3800U;
             ENTITY(reg_a6)->hit_y_plus.h = 0U;
             *(u16 *)reg_a4 -= 1;
@@ -74,7 +74,7 @@ void func_00171670(void) {
         ENTITY(reg_a6)->hp.h >>= 1;
         ENTITY(reg_a6)->hit_y_plus.h >>= 1;
         reg_d0.h[0] = ENTITY(reg_a6)->hit_y_plus.h;
-        if (*(s16 *)(reg_a6 + 0x1E) > (s16) reg_d0.h[0]) {
+        if (ENTITY(reg_a6)->misc.sh > (s16) reg_d0.h[0]) {
             ENTITY(reg_a6)->x.h = (u16) ENTITY(reg_a6)->hit_x_minus.h;
             ENTITY(reg_a6)->hit_y_plus.h = 0U;
             *(u16 *)reg_a4 -= 1;
@@ -98,7 +98,7 @@ void func_00171770(void) {
     reg_d2.h[1] = ENTITY(reg_a6)->draw.h;
     reg_d2.h[0] = ENTITY(reg_a6)->sprite.h;
     reg_d3.h[0] = ENTITY(reg_a6)->look.h;
-    reg_d4.h[0] = *(u16 *)(reg_a6 + 0x1C);
+    reg_d4.h[0] = ENTITY(reg_a6)->attr.h;
     reg_d2.w = 0x11C6;
     func_0019D6D0();
 }
@@ -120,7 +120,7 @@ void func_00171820(void) {
     reg_d2.h[1] = ENTITY(reg_a6)->draw.h;
     reg_d2.h[0] = ENTITY(reg_a6)->sprite.h;
     reg_d3.h[0] = ENTITY(reg_a6)->look.h;
-    reg_d4.h[0] = *(u16 *)(reg_a6 + 0x1C);
+    reg_d4.h[0] = ENTITY(reg_a6)->attr.h;
     reg_d2.w = 0x11C4;
     func_0019D6D0();
 }
@@ -225,7 +225,7 @@ void func_00171A30(void) {
         temp_a2 = reg_d0.h[0];
         temp_a1 = temp_a2 & ~1;
         reg_d0.h[0] = *(u16 *)(D_0026B170 + temp_a1);
-        *(u8 *)(reg_a6 + 0x1C) = (u8) reg_d0.b[0];
+        ENTITY(reg_a6)->attr.b.palette = (u8) reg_d0.b[0];
         *(u8 *)(reg_a6 + 0x3C) = (u8) reg_d0.b[0];
         reg_a0 = (u8 *)D_002554B0;
         sprite_palette_load();
@@ -241,7 +241,7 @@ void func_00171A30(void) {
         reg_d1.w = 0;
         reg_d2.w = 0x10AA;
         reg_d3.h[0] = ENTITY(reg_a6)->look.h;
-        reg_d4.h[0] = *(u16 *)(reg_a6 + 0x1C);
+        reg_d4.h[0] = ENTITY(reg_a6)->attr.h;
         func_0019D6D0();
         return;
     }
@@ -291,7 +291,7 @@ void func_00171B90(void) {
         temp_a2 = reg_d0.h[0];
         temp_a1 = temp_a2 & ~1;
         reg_d0.h[0] = *(u16 *)(D_0026B1C0 + temp_a1);
-        *(u8 *)(reg_a6 + 0x1C) = (u8) reg_d0.b[0];
+        ENTITY(reg_a6)->attr.b.palette = (u8) reg_d0.b[0];
         *(u8 *)(reg_a6 + 0x3C) = (u8) reg_d0.b[0];
         reg_a0 = (u8 *)D_002554B0;
         sprite_palette_load();

@@ -275,9 +275,9 @@ void func_00201C20(void) {
 void entity_velocity(void)
 {
     reg_d0.w = 0;
-    reg_d0.b[0] = reg_a6[0x1B];
+    reg_d0.b[0] = ENTITY(reg_a6)->move.b.speed;
     reg_d1.w = 0x3F;
-    reg_d1.b[0] &= reg_a6[0x1A];
+    reg_d1.b[0] &= ENTITY(reg_a6)->move.b.dir;
 
     if (g_enemies_stopped != 0) {
         reg_d2.w = 0;
@@ -554,7 +554,7 @@ void func_002024C0(void) {
 
 
 void func_002024F0(void) {
-    *(u8 *)&reg_d0 = reg_a6[0x1A];
+    *(u8 *)&reg_d0 = ENTITY(reg_a6)->move.b.dir;
     direction_turn_toward();
 }
 

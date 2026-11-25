@@ -204,10 +204,10 @@ loop_1:
     reg_d0.b[0] = 0xA3;
     ENTITY(reg_a6)->flags.b[1] &= reg_d0.b[0];
     score_add_no_chain();
-    reg_d0.b[0] = *(u8 *)(reg_a6 + 0x1C);
-    reg_d2.b[0] = *(u8 *)(reg_a6 + 0x1E);
+    reg_d0.b[0] = ENTITY(reg_a6)->attr.b.palette;
+    reg_d2.b[0] = ENTITY(reg_a6)->misc.b.draw_layer;
     reg_d0.b[0] ^= reg_d2.b[0];
-    *(u8 *)(reg_a6 + 0x1C) = reg_d0.b[0];
+    ENTITY(reg_a6)->attr.b.palette = reg_d0.b[0];
     reg_d0.w = 0x7FFF;
     reg_d0.h[0] -= ENTITY(reg_a6)->hp.h;
     if (*(u16 *)(reg_a5 + 0x2E) == 0) goto next_4;
@@ -242,7 +242,7 @@ next_5:
     *(u8 *)(reg_a5 + 0x25) = 1;
     g_enemy_signal_4 = 0;
 next_6:
-    *(u8 *)(reg_a6 + 0x1C) = *(u8 *)(reg_a6 + 0x1F);
+    ENTITY(reg_a6)->attr.b.palette = ENTITY(reg_a6)->misc.b.user;
 next_7:
     if (*(u8 *)(reg_a5 + 0x1F) != 0) goto next_8;
     reg_tmp.h[1] = *(u16 *)(reg_a5 + 0x20);
@@ -1130,7 +1130,7 @@ void func_001D6990(void) {
     reg_d1.h[0] = temp_a0;
     reg_d1.w += 0xF200F100;
     reg_d3.h[0] = 0xE78;
-    reg_d4.h[0] = *(u16 *)(reg_a6 + 0x1C);
+    reg_d4.h[0] = ENTITY(reg_a6)->attr.h;
     sprite_draw_layer4();
 }
 

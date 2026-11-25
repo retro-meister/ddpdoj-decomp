@@ -557,7 +557,7 @@ void enemy_remove(void) {
 void enemy_remove_entities()
 {
     do {
-        reg_a6[1] = *(u8 *)&reg_d0;
+        ENTITY(reg_a6)->flags.b[1] = *(u8 *)&reg_d0;
         reg_a6 += 0x20;
     } while ((s16)(--reg_d1.h[0]) >= 0);
 
@@ -864,9 +864,9 @@ void func_0014ECE0(void)
     reg_d0.b[0] -= 1;
 
     if (reg_d0.b[0] == 0) {
-        reg_a6[1] &= 0xDF;
+        ENTITY(reg_a6)->flags.b[1] &= 0xDF;
     } else {
-        reg_a6[1] |= 0x20;
+        ENTITY(reg_a6)->flags.b[1] |= 0x20;
     }
 }
 

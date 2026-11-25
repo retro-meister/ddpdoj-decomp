@@ -19,7 +19,7 @@ void func_001D13B0(void) {
     reg_d1.w += 0xE4400000;
     reg_d1.w += 0xEC00E800;
     reg_d3.h[0] = 0x14C0;
-    reg_d4.h[0] = *(u16 *)(reg_a6 + 0x1C);
+    reg_d4.h[0] = ENTITY(reg_a6)->attr.h;
     reg_d4.b[0] = *(u8 *)(reg_a6 + 0x69);
     sprite_draw_layer2_keep();
 }

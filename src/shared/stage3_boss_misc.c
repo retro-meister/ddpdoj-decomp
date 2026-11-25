@@ -28,7 +28,7 @@ void func_001D1A60(void) {
     ENTITY(reg_a6)->y.h = (u16) *(u16 *)(reg_a5 + 0x16);
     ENTITY(reg_a6)->x.h = (u16) *(u16 *)(reg_a5 + 0x18);
     temp_a0 = *(u16 *)(reg_a5 + 0x1A);
-    *(u16 *)(reg_a6 + 0x1C) = temp_a0;
+    ENTITY(reg_a6)->attr.h = temp_a0;
     reg_a0 = D_0026D5E0;
     reg_d0.w = ((u32) D_0028DC10 >> 1) - 1;
     enemy_set_task_work();
@@ -79,9 +79,9 @@ void func_001D1C00(void) {
     u8 bits;
     u16 hp;
 
-    bits = *(u8 *)(reg_a6 + 0x1F);
+    bits = ENTITY(reg_a6)->misc.b.user;
     if (bits == 0) goto next_20;
-    *(u8 *)(reg_a6 + 0x1F) = bits - 1;
+    ENTITY(reg_a6)->misc.b.user = bits - 1;
 next_20:
     if (D_0028E855 & 0x40) goto block_dead;
     func_00201F20();
@@ -115,7 +115,7 @@ next_50:
     reg_d0.h[0] = 0xA3;
     ENTITY(reg_a6)->flags.b[1] &= reg_d0.b[0];
     *(u8 *)(reg_a6 + 0x21) &= reg_d0.b[0];
-    *(u8 *)(reg_a6 + 0x1F) = 2;
+    ENTITY(reg_a6)->misc.b.user = 2;
     reg_d2.w = 1;
     if (!(reg_d1.w & 4)) goto next_53;
     reg_d2.w = 2;
@@ -124,7 +124,7 @@ next_53:
     if (ENTITY(reg_a6)->move.sb.speed >= 3) goto next_55;
     ENTITY(reg_a6)->move.b.speed = 3;
 next_55:
-    reg_d0.b[0] = *(u8 *)(reg_a6 + 0x1C);
+    reg_d0.b[0] = ENTITY(reg_a6)->attr.b.palette;
     if (reg_d0.b[0] != 0x19) goto next_60;
     reg_d0.b[0] = *(u8 *)(reg_a5 + 0x1D);
 next_60:
@@ -139,7 +139,7 @@ next_80:
     *(u16 *)(reg_a6 + 0x38) = reg_d4.h[0];
     if (ENTITY(reg_a6)->hp.sh < 0) goto block_dead;
 next_90:
-    *(u8 *)(reg_a6 + 0x1C) = reg_d0.b[0];
+    ENTITY(reg_a6)->attr.b.palette = reg_d0.b[0];
     if (*(u16 *)(reg_a5 + 0x18) == 0) goto next_200;
 next_100:
     reg_tmp.b[0] = *(u8 *)(reg_a5 + 0x2D);

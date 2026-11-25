@@ -42,7 +42,7 @@ void func_001F4EB0(void) {
         func_001F5850();
         return;
     }
-    reg_d1.b[0] = reg_a6[1];
+    reg_d1.b[0] = ENTITY(reg_a6)->flags.b[1];
     reg_d1.b[0] |= reg_a6[0x21];
     reg_d1.b[0] |= reg_a6[0x41];
     reg_d1.b[0] |= reg_a6[0x61];
@@ -68,7 +68,7 @@ void func_001F4EB0(void) {
     goto block_chk;
 next_1:
     reg_d0.b[0] = 0xA3;
-    reg_a6[1] &= reg_d0.b[0];
+    ENTITY(reg_a6)->flags.b[1] &= reg_d0.b[0];
     reg_a6[0x21] &= reg_d0.b[0];
     reg_a6[0x41] &= reg_d0.b[0];
     reg_a6[0x61] &= reg_d0.b[0];
@@ -249,7 +249,7 @@ void func_001F5520(void) {
         D_0028E855 |= 0x40;
         D_0028E855 |= 0x80;
         func_00203460();
-        *(s8 *)(reg_a6 + 0x1E) = 1;
+        ENTITY(reg_a6)->misc.sb.draw_layer = 1;
     } else {
         *(s16 *)(reg_a5 + 0x1A) = 0x6270;
     }

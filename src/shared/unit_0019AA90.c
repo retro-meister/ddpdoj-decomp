@@ -533,7 +533,7 @@ void sprite_entry_from_entity(void) {
     *(u16 *)reg_a0 = *(u16 *)reg_a1;
     reg_a1 += 2;
     reg_a0 += 2;
-    *(u16 *)reg_a0 = *(u16 *)(reg_a6 + 0x1C);
+    *(u16 *)reg_a0 = ENTITY(reg_a6)->attr.h;
     reg_a0 += 2;
 }
 
@@ -599,7 +599,7 @@ void func_0019B9B0(void) {
     *(u16 *)reg_a0 = *(u16 *)reg_a1;
     reg_a1 += 2;
     reg_a0 += 2;
-    *(u16 *)reg_a0 = *(u16 *)(reg_a6 + 0x1C);
+    *(u16 *)reg_a0 = ENTITY(reg_a6)->attr.h;
     reg_a0 += 2;
 }
 

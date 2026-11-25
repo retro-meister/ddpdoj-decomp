@@ -630,9 +630,9 @@ void func_0016B780(void)
     reg_d2.h[0] = 0x4600;
     reg_d3.h[0] = 0x1C00;
     func_002021D0();
-    reg_a6[0x1A] = reg_d1.b[0];
+    ENTITY(reg_a6)->move.b.dir = reg_d1.b[0];
     reg_d1.h[0] = savedD1;
-    *(u16 *)(reg_a6 + 0x1E) = 0x714;
+    ENTITY(reg_a6)->misc.h = 0x714;
 }
 
 s32 func_00202B50();
@@ -670,14 +670,14 @@ void func_0016B7F0(void) {
         } else if (g_enemies_stopped == 0) {
             ENTITY(reg_a6)->hp.h -= 1;
             if ((s16) ENTITY(reg_a6)->hp.h >= 0) {
-                *(u8 *)(reg_a6 + 0x1F) -= 1;
-                if (*(u8 *)(reg_a6 + 0x1F) == 0) {
+                ENTITY(reg_a6)->misc.b.user -= 1;
+                if (ENTITY(reg_a6)->misc.b.user == 0) {
                     ENTITY(reg_a6)->move.b.dir += 0x10;
                     ENTITY(reg_a6)->move.b.dir &= 0x3F;
                     if (g_enemies_stopped == 0) {
-                        *(u8 *)(reg_a6 + 0x1E) += 8;
+                        ENTITY(reg_a6)->misc.b.draw_layer += 8;
                     }
-                    *(u8 *)(reg_a6 + 0x1F) = (u8) *(u8 *)(reg_a6 + 0x1E);
+                    ENTITY(reg_a6)->misc.b.user = (u8) ENTITY(reg_a6)->misc.b.draw_layer;
                 }
             }
         }
@@ -704,7 +704,7 @@ void func_0016B9B0(void) {
     u32 saved_d7;
 
     if (!(reg_d1.w & 0x2000)) {
-        reg_a6[1] |= 0x20;
+        ENTITY(reg_a6)->flags.b[1] |= 0x20;
         func_0016BCC0();
         if (ENTITY(reg_a6)->look.sh < 0) {
             ENTITY(reg_a6)->x.sh = 0x1400;
@@ -810,14 +810,14 @@ extern u8 D_00269490[];
 
 void func_0016BCC0(void) {
     (ENTITY(reg_a6)->hp.sb[0]) = 1;
-    reg_d0.h[0] = (*(u16 *)(reg_a6 + 0x1E));
+    reg_d0.h[0] = (ENTITY(reg_a6)->misc.h);
     reg_a0 = D_00269490;
     reg_a0 += reg_d0.h[0];
-    (*(u16 *)(reg_a6 + 0x1E)) = *(u16 *)reg_a0;
+    (ENTITY(reg_a6)->misc.h) = *(u16 *)reg_a0;
     reg_a0 += 2;
     (ENTITY(reg_a6)->move.h) = *(u16 *)reg_a0;
     reg_a0 += 2;
-    (*(u16 *)(reg_a6 + 0x1C)) = *(u16 *)reg_a0;
+    (ENTITY(reg_a6)->attr.h) = *(u16 *)reg_a0;
     reg_a0 += 2;
 }
 
@@ -852,21 +852,21 @@ void func_0016BD50(void) {
             return;
         }
 block_7:
-        *(u8 *)(reg_a6 + 0x1E) -= 1;
-        if (*(u8 *)(reg_a6 + 0x1E) == 0) {
+        ENTITY(reg_a6)->misc.b.draw_layer -= 1;
+        if (ENTITY(reg_a6)->misc.b.draw_layer == 0) {
             reg_d0.w = 0;
-            reg_d0.b[0] = *(u8 *)(reg_a6 + 0x1F);
+            reg_d0.b[0] = ENTITY(reg_a6)->misc.b.user;
             reg_a0 = (u8 *)(D_00269490_as_u16_a);
             reg_a0 += reg_d0.h[0];
-            *(u16 *)(reg_a6 + 0x1E) = *(u16 *)reg_a0;
+            ENTITY(reg_a6)->misc.h = *(u16 *)reg_a0;
             reg_a0 += 2;
             ENTITY(reg_a6)->move.h = (u16) *(u16 *)reg_a0;
             reg_a0 += 2;
-            *(u16 *)(reg_a6 + 0x1C) = (u16) *(u16 *)reg_a0;
+            ENTITY(reg_a6)->attr.h = (u16) *(u16 *)reg_a0;
             reg_a0 += 2;
         }
         reg_d0.h[0] = ENTITY(reg_a6)->move.h;
-        reg_d1.h[0] = *(u16 *)(reg_a6 + 0x1C);
+        reg_d1.h[0] = ENTITY(reg_a6)->attr.h;
         ENTITY(reg_a6)->y.h += reg_d0.h[0];
         ENTITY(reg_a6)->x.h += reg_d1.h[0];
         goto block_10;
@@ -963,7 +963,7 @@ void func_0016C110(void) {
     u32 saved_d7;
 
     if (!(reg_d1.w & 0x2000)) {
-        reg_a6[1] |= 0x20;
+        ENTITY(reg_a6)->flags.b[1] |= 0x20;
         func_0016BCC0();
         if (ENTITY(reg_a6)->look.sh < 0) {
             ENTITY(reg_a6)->x.sh = 0x2400;

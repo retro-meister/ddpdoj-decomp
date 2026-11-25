@@ -156,7 +156,7 @@ next_1:
         reg_d0.b[0] ^= reg_d2.b[0];
         if ((s16) (*(u16 *)((u8 *)(t2) + (0x18))) >= 0) {
 next_2:
-            *(u8 *)(reg_a6 + 0x1C) = (u8) reg_d0.b[0];
+            ENTITY(reg_a6)->attr.b.palette = (u8) reg_d0.b[0];
             if ((g_enemies_stopped == 0) && (g_bullets_blocked == 0)) {
                 reg_a0 = (u8 *)(D_0029F260_as_u16_a);
                 reg_a1 = (u8 *)(D_0029F1F0_as_u16_a);
@@ -252,7 +252,7 @@ next_3:
                 t4 = *(u16 *)(reg_a5 + 0x24);
                 reg_d2.h[0] = t4;
                 reg_d3.h[0] = 0x410;
-                reg_d4.h[0] = *(u16 *)(reg_a6 + 0x1C);
+                reg_d4.h[0] = ENTITY(reg_a6)->attr.h;
                 reg_d4.b[0] = 0x18;
                 sprite_draw_layer4();
             }

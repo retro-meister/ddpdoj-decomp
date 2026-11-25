@@ -14,7 +14,7 @@ void func_001BF080(void);
 
 void func_001BE1E0(void) {
     reg_d0.b[0] = reg_a4[3];
-    reg_d1.b[0] = reg_a6[0x1B];
+    reg_d1.b[0] = ENTITY(reg_a6)->move.b.speed;
     reg_tmp.b[0] = reg_a4[5];
     reg_a4[5] -= 1;
     if ((s32) reg_tmp.b[0] > 0) goto block_1;
@@ -26,7 +26,7 @@ void func_001BE1E0(void) {
 next_1:
     reg_d1.b[0] -= 1;
 block_1:
-    reg_a6[0x1B] = reg_d1.b[0];
+    ENTITY(reg_a6)->move.b.speed = reg_d1.b[0];
 }
 
 
@@ -251,8 +251,8 @@ void func_001BE8F0(void) {
 
 
 void func_001BE9F0(void) {
-    reg_a6[0x1B] = 0;
-    reg_a6[0x1A] = 0x20;
+    ENTITY(reg_a6)->move.b.speed = 0;
+    ENTITY(reg_a6)->move.b.dir = 0x20;
     reg_a4[0x3] = 0x20;
     *(u16 *)(reg_a4 + 0x4) = 0x303;
     func_001BEA20(0x20);
@@ -370,7 +370,7 @@ void func_001BEC10(void) {
 
 
 void func_001BEDA0(void) {
-    reg_a6[0x1A] = 0x20;
+    ENTITY(reg_a6)->move.b.dir = 0x20;
     reg_a4[0x3] = 1;
     *(u16 *)&reg_a4[0x4] = 0;
     func_001BEDD0(0x20);
@@ -382,8 +382,8 @@ void func_001BEDD0() {
 
 
 void func_001BEDE0(void) {
-    reg_a6[0x1B] = 0;
-    reg_a6[0x1A] = 0x20;
+    ENTITY(reg_a6)->move.b.speed = 0;
+    ENTITY(reg_a6)->move.b.dir = 0x20;
     reg_a4[3] = 0;
     *(u16 *)&reg_a4[4] = 0;
     func_001BEE10();

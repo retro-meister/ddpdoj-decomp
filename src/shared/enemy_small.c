@@ -9,7 +9,7 @@ void func_0016CDD0(void) {
     u8 temp_v1;
 
     reg_d0.w = 0;
-    reg_d0.b[0] = *(u8 *)(reg_a6 + 0x1E);
+    reg_d0.b[0] = ENTITY(reg_a6)->misc.b.draw_layer;
     reg_a0 = D_0025B100;
     reg_d1.h[0] = reg_d0.h[0];
     reg_d0.h[0] *= 8;
@@ -20,12 +20,12 @@ void func_0016CDD0(void) {
     reg_a0 += 2;
     *(u16 *)(reg_a5 + 0x2E) = (u16) *(u16 *)reg_a0;
     *(u16 *)(reg_a5 + 0x30) = (u16) *(u16 *)(reg_a0 + 2);
-    temp_v1 = *(u8 *)(reg_a6 + 0x1F);
+    temp_v1 = ENTITY(reg_a6)->misc.b.user;
     if (temp_v1 != 0) {
         reg_d1.b[0] = temp_v1;
     }
     reg_d1.h[0] += reg_d1.h[0];
-    *(u8 *)(reg_a6 + 0x1F) = (u8) reg_d1.b[0];
+    ENTITY(reg_a6)->misc.b.user = (u8) reg_d1.b[0];
 }
 
 s32 explosion_spawn();
@@ -36,7 +36,7 @@ void func_0016CEA0(void) {
     *(u16 *)(reg_a0 + 2) = (u16) ENTITY(reg_a6)->y.h;
     *(u16 *)(reg_a0 + 4) = (u16) ENTITY(reg_a6)->x.h;
     reg_d0.w = 0;
-    reg_d0.b[0] = *(u8 *)(reg_a6 + 0x1F);
+    reg_d0.b[0] = ENTITY(reg_a6)->misc.b.user;
     *(u16 *)(reg_a0 + 0x1E) = (reg_d0.h[0] != 0) ? *(u16 *)((u8 *)reg_a1_as_u16_p + ((s16)reg_d0.h[0] & ~1)) : *reg_a1_as_u16_p;
     *(s16 *)(reg_a0 + 0x10) = 1;
 }
@@ -47,7 +47,7 @@ extern u16 *reg_a0_as_u16_p;
 
 void func_0016CF40(void) {
     reg_d1.w = 0;
-    reg_d1.b[0] = *(u8 *)(reg_a6 + 0x1E);
+    reg_d1.b[0] = ENTITY(reg_a6)->misc.b.draw_layer;
     reg_a0_as_u16_p = D_0025B150;
     reg_d1.h[0] += reg_d1.h[0];
     reg_d1.h[0] = (reg_d1.h[0] != 0) ? *(u16 *)((u8 *)reg_a0_as_u16_p + ((s16)reg_d1.h[0] & ~1)) : *reg_a0_as_u16_p;
@@ -249,7 +249,7 @@ void func_0016D530(void) {
             *(s8 *)(reg_a5 + 0x33) = 1;
         }
         if (g_stage == 2) {
-            *(s8 *)(reg_a6 + 0x1E) = 2;
+            ENTITY(reg_a6)->misc.sb.draw_layer = 2;
         }
         func_0016CDD0();
         reg_tmp.h[1] = *(u16 *)(reg_a5 + 6);
@@ -266,7 +266,7 @@ void func_0016D530(void) {
         reg_a0 = (u8 *)(D_0025B170);
         reg_d0.h[0] = g_stage_x2;
         reg_a0 += reg_d0.h[0];
-        *(s8 *)(reg_a6 + 0x1C) = *(s8 *)reg_a0;
+        ENTITY(reg_a6)->attr.sb.palette = *(s8 *)reg_a0;
         *(s8 *)(reg_a5 + 0x35) = *(s8 *)reg_a0;
         reg_a0 += 1;
         *(s8 *)(reg_a5 + 0x34) = *(s8 *)reg_a0;
@@ -340,7 +340,7 @@ next_3:
     switch (reg_d1.b[0]) { case 0: goto next_4; }
     ENTITY(reg_a6)->flags.b[1] &= 0xA3;
     reg_d0.b[0] = *(u8 *)(reg_a5 + 0x34);
-    *(u8 *)(reg_a6 + 0x1C) ^= reg_d0.b[0];
+    ENTITY(reg_a6)->attr.b.palette ^= reg_d0.b[0];
     score_add_no_chain();
     if (ENTITY(reg_a6)->hp.sh >= 0) goto next_5;
     if (*(s8 *)(reg_a5 + 0x21) < 0) goto block_e;
@@ -357,7 +357,7 @@ next_3:
     *(s16 *)(reg_a0 + 0x14) = 0;
     goto next_5;
 next_4:
-    *(u8 *)(reg_a6 + 0x1C) = *(u8 *)(reg_a5 + 0x35);
+    ENTITY(reg_a6)->attr.b.palette = *(u8 *)(reg_a5 + 0x35);
 next_5:
     if (g_enemies_stopped != 0) goto next_7;
     reg_d7.h[0] = ENTITY(reg_a6)->move.h;
@@ -418,7 +418,7 @@ block_c:
     reg_d2.h[1] = *(u16 *)(reg_a5 + 0x22);
     reg_d2.h[0] = *(u16 *)(reg_a5 + 0x24);
     reg_d3.h[0] = 0x830;
-    reg_d4.h[0] = *(u16 *)(reg_a6 + 0x1C);
+    reg_d4.h[0] = ENTITY(reg_a6)->attr.h;
     reg_tmp.h[1] = *(u16 *)(reg_a5 + 0x2E);
     reg_tmp.h[0] = *(u16 *)(reg_a5 + 0x30);
     reg_a0 = (u8 *) reg_tmp.w;
@@ -531,7 +531,7 @@ void func_0016E010(void) {
     enemy_path_start();
     if (enemy_move_end_requested == 0) {
         if (g_stage == 2) {
-            *(s8 *)(reg_a6 + 0x1E) = 2;
+            ENTITY(reg_a6)->misc.sb.draw_layer = 2;
         }
         func_0016CDD0();
         reg_tmp.h[1] = *(u16 *)(reg_a5 + 6);
@@ -548,7 +548,7 @@ void func_0016E010(void) {
         reg_a0 = (u8 *)(D_0025B440);
         reg_d0.h[0] = g_stage_x2;
         reg_a0 += reg_d0.h[0];
-        *(s8 *)(reg_a6 + 0x1C) = *(s8 *)reg_a0;
+        ENTITY(reg_a6)->attr.sb.palette = *(s8 *)reg_a0;
         *(s8 *)(reg_a5 + 0x35) = *(s8 *)reg_a0;
         reg_a0 += 1;
         *(s8 *)(reg_a5 + 0x34) = *(s8 *)reg_a0;
@@ -602,11 +602,11 @@ next_40:
     *(u16 *)(reg_a5 + 0x16) = 1;
 next_50:
     reg_d1.w = 0x5C;
-    reg_d1.b[0] &= reg_a6[1];
+    reg_d1.b[0] &= ENTITY(reg_a6)->flags.b[1];
     if (reg_d1.b[0] == 0) goto next_100;
-    reg_a6[1] &= 0xA3;
+    ENTITY(reg_a6)->flags.b[1] &= 0xA3;
     reg_d0.b[0] = reg_a5[0x34];
-    reg_a6[0x1C] ^= reg_d0.b[0];
+    ENTITY(reg_a6)->attr.b.palette ^= reg_d0.b[0];
     score_add_no_chain();
     if (ENTITY(reg_a6)->hp.sh >= 0) goto next_110;
     if ((s8) reg_a5[0x21] < 0) goto block_70;
@@ -624,7 +624,7 @@ next_50:
     *(u16 *)(reg_a0 + 0x14) = 0;
     goto next_110;
 next_100:
-    reg_a6[0x1C] = reg_a5[0x35];
+    ENTITY(reg_a6)->attr.b.palette = reg_a5[0x35];
 next_110:
     if (g_enemies_stopped != 0) goto next_225;
     reg_d7.h[0] = ENTITY(reg_a6)->move.h;
@@ -675,7 +675,7 @@ next_300:
     *(u16 *)(reg_a5 + 0x22) = (reg_d1.h[0] != 0) ? *(u16 *)((u8 *)reg_a0 + ((s16)reg_d1.h[0] & ~1)) : *(u16 *)reg_a0;
     *(u16 *)(reg_a5 + 0x24) = ((reg_d1.h[0] + 2) != 0) ? *(u16 *)((u8 *)reg_a0 + ((s16)(reg_d1.h[0] + 2) & ~1)) : *(u16 *)reg_a0;
 next_500:
-    if (!(reg_a6[1] & 0x20)) goto block_objset;
+    if (!(ENTITY(reg_a6)->flags.b[1] & 0x20)) goto block_objset;
     reg_a5[0x29] -= 1;
     if (reg_a5[0x29] == 0) goto block_shot;
 block_objset:
@@ -685,7 +685,7 @@ block_objset:
     reg_d2.h[1] = *(u16 *)(reg_a5 + 0x22);
     reg_d2.h[0] = *(u16 *)(reg_a5 + 0x24);
     reg_d3.h[0] = 0x620;
-    reg_d4.h[0] = *(u16 *)(reg_a6 + 0x1C);
+    reg_d4.h[0] = ENTITY(reg_a6)->attr.h;
     reg_tmp.h[1] = *(u16 *)(reg_a5 + 0x2E);
     reg_tmp.h[0] = *(u16 *)(reg_a5 + 0x30);
     reg_a0 = (u8 *) reg_tmp.w;
@@ -710,7 +710,7 @@ next_610:
     if (g_stage != 1) goto next_620;
     if (g_enemy_signal_0 != 0) goto block_objset;
 next_620:
-    if (!(reg_a6[1] & 0x20)) goto block_objset;
+    if (!(ENTITY(reg_a6)->flags.b[1] & 0x20)) goto block_objset;
     reg_d1.b[0] = reg_a5[0x32];
     reg_a0 = (u8 *) D_0025B490_as_u16_a;
     reg_d1.b[0] += 2;
@@ -867,7 +867,7 @@ next_1:
         }
         (*(u8 *)((u8 *)(t1) + (1))) &= 0xA3;
         score_add_no_chain();
-        reg_d0.b[0] = *(u8 *)(reg_a6 + 0x1C);
+        reg_d0.b[0] = ENTITY(reg_a6)->attr.b.palette;
         if (reg_d0.b[0] == 0x19) {
             reg_d0.b[0] = *(u8 *)(reg_a5 + 0x1D);
         }
@@ -875,7 +875,7 @@ next_1:
         reg_d0.b[0] ^= reg_d2.b[0];
         if ((s16) ENTITY(reg_a6)->hp.h >= 0) {
 next_2:
-            *(u8 *)(reg_a6 + 0x1C) = (u8) reg_d0.b[0];
+            ENTITY(reg_a6)->attr.b.palette = (u8) reg_d0.b[0];
             func_001368E0();
             if (g_enemies_stopped == 0) {
                 ENTITY(reg_a6)->offset_y.h = 0xF000U;
@@ -1005,7 +1005,7 @@ next_4:
             reg_d2.h[1] = *(u16 *)(reg_a5 + 0x24);
             reg_d2.h[0] = *(u16 *)(reg_a5 + 0x26);
             reg_d3.h[0] = 0x620;
-            reg_d4.h[0] = *(u16 *)(reg_a6 + 0x1C);
+            reg_d4.h[0] = ENTITY(reg_a6)->attr.h;
             sprite_draw_layer1();
             reg_a0 = (u8 *)(reg_a6);
             enemy_hitbox_debug_draw();
@@ -1227,7 +1227,7 @@ next_1:
         }
         (*(u8 *)((u8 *)(t1) + (1))) &= 0xA3;
         score_add_no_chain();
-        reg_d0.b[0] = *(u8 *)(reg_a6 + 0x1C);
+        reg_d0.b[0] = ENTITY(reg_a6)->attr.b.palette;
         if (reg_d0.b[0] == 0x19) {
             reg_d0.b[0] = *(u8 *)(reg_a5 + 0x1D);
         }
@@ -1235,7 +1235,7 @@ next_1:
         reg_d0.b[0] ^= reg_d2.b[0];
         if ((s16) ENTITY(reg_a6)->hp.h >= 0) {
 next_2:
-            *(u8 *)(reg_a6 + 0x1C) = (u8) reg_d0.b[0];
+            ENTITY(reg_a6)->attr.b.palette = (u8) reg_d0.b[0];
             func_001368E0();
             if (g_enemies_stopped == 0) {
                 ENTITY(reg_a6)->offset_y.h = 0xF400U;
@@ -1372,7 +1372,7 @@ next_2:
             reg_d2.h[1] = *(u16 *)(reg_a6 + 0x2A);
             reg_d2.h[0] = *(u16 *)(reg_a6 + 0x2C);
             reg_d3.h[0] = 0x230;
-            reg_d4.h[0] = *(u16 *)(reg_a6 + 0x1C);
+            reg_d4.h[0] = ENTITY(reg_a6)->attr.h;
             sprite_draw_layer4();
             entity_draw_layer4();
             reg_d1.h[1] = ENTITY(reg_a6)->y.h;
@@ -1391,7 +1391,7 @@ next_2:
             reg_d2.h[1] = *(u16 *)(reg_a5 + 0x26);
             reg_d2.h[0] = *(u16 *)(reg_a5 + 0x28);
             reg_d3.h[0] = 0x430;
-            reg_d4.h[0] = *(u16 *)(reg_a6 + 0x1C);
+            reg_d4.h[0] = ENTITY(reg_a6)->attr.h;
             sprite_draw_layer4();
             reg_a0 = reg_a6;
             enemy_hitbox_debug_draw();
@@ -1531,7 +1531,7 @@ void func_00170720(void) {
     reg_d6.h[0] = g_stage_x2;
     reg_a1 = (u8 *)(D_0025B820);
     reg_d0.h[0] = (reg_d6.h[0] != 0) ? *(u16 *)((u8 *)reg_a1 + ((s16)reg_d6.h[0] & ~1)) : *(u16 *)reg_a1;
-    *(u8 *)(reg_a6 + 0x1C) = (u8) reg_d0.b[0];
+    ENTITY(reg_a6)->attr.b.palette = (u8) reg_d0.b[0];
     sprite_palette_load();
     reg_a0 = D_00261C30;
     reg_a1 = (u8 *)(D_0025B830);

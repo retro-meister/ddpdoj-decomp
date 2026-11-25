@@ -836,7 +836,7 @@ void func_001BDEE0(void) {
     reg_d1.h[0] += 0x7FFF + 0x7401;
     reg_d1.h[1] += 0x7FFF + 0x6601;
     reg_d3.h[0] = 0x1A60;
-    reg_d4.h[0] = *(u16 *)(reg_a6 + 0x1C);
+    reg_d4.h[0] = ENTITY(reg_a6)->attr.h;
     sprite_draw_layer4();
 }
 

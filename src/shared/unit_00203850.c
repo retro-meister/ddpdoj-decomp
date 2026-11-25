@@ -691,8 +691,8 @@ block_31:
             }
             goto block_41;
         }
-        *(s16 *)(reg_a6 + 0x1C) = 0x60;
-        *(s16 *)(reg_a6 + 0x1E) = 0xC00;
+        ENTITY(reg_a6)->attr.sh = 0x60;
+        ENTITY(reg_a6)->misc.sh = 0xC00;
         reg_d0.h[0] = *(u16 *)(reg_a6 + 0x20);
         reg_d1.h[0] = *(u16 *)(reg_a1 + 4);
         if (reg_d7.h[0] == 0) {

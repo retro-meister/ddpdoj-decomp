@@ -46,6 +46,18 @@ typedef struct {
         struct { u8 dir; u8 speed; } b;
         struct { s8 dir; s8 speed; } sb;
     } move;
+    /* 0x1C */ union {               /* how the sprite queue draws it */
+        u16 h;
+        s16 sh;
+        struct { u8 palette; u8 flip; } b;
+        struct { s8 palette; s8 flip; } sb;
+    } attr;
+    /* 0x1E */ union {
+        u16 h;
+        s16 sh;
+        struct { u8 draw_layer; u8 user; } b;   /* user: free for the object's own routine */
+        struct { s8 draw_layer; s8 user; } sb;
+    } misc;
 } Entity;
 
 #define ENTITY(pointer) ((Entity *)(pointer))

@@ -132,7 +132,7 @@ void func_001C9B10(void) {
 void func_001C9B60(void)
 {
     reg_d0.b[0] = reg_a4[3];
-    reg_d1.b[0] = reg_a6[0x1B];
+    reg_d1.b[0] = ENTITY(reg_a6)->move.b.speed;
 
     if (reg_d0.b[0] != reg_d1.b[0]) {
         if ((s8)reg_d0.b[0] >= (s8)reg_d1.b[0]) {
@@ -142,7 +142,7 @@ void func_001C9B60(void)
         }
     }
 
-    reg_a6[0x1B] = reg_d1.b[0];
+    ENTITY(reg_a6)->move.b.speed = reg_d1.b[0];
 }
 
 extern u8 D_0026C860[];
@@ -388,7 +388,7 @@ extern s16 *reg_a4_as_s16_p;
 
 void func_001CA350(void) {
     *reg_a4_as_s16_p = 0;
-    reg_a6[0x1B] = 8;
+    ENTITY(reg_a6)->move.b.speed = 8;
     func_001CA370();
 }
 

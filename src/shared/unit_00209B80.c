@@ -583,7 +583,7 @@ void func_0020AAA0(void) {
     reg_a2 += 2;
     if (0 > (s16) reg_d3.h[0]) {
         reg_d3.w = 0;
-        reg_d3.b[0] = *(u8 *)(reg_a6 + 0x1C);
+        reg_d3.b[0] = ENTITY(reg_a6)->attr.b.palette;
     }
     func_00201200();
     if (reg_d5.h[0] == 0) {

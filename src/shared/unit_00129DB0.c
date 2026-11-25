@@ -275,7 +275,7 @@ block_12:
     if (reg_d0.h[0] != 0) {
         goto L_not_plain;
     }
-    reg_d0.h[1] = *(u16 *)(reg_a6 + 0x1E);
+    reg_d0.h[1] = ENTITY(reg_a6)->misc.h;
     reg_d0.h[0] = *(u16 *)(reg_a6 + 0x20);
     reg_d0.h[0] -= reg_d6.h[0];
     ENTITY(reg_a6)->x.h += reg_d0.h[0];
@@ -336,7 +336,7 @@ block_12:
     reg_a4_as_u16_p += 1;
     *reg_a4_as_u16_p = *(u16 *)(reg_a1 + 0);
     reg_a4_as_u16_p += 1;
-    *reg_a4_as_u16_p = *(u16 *)(reg_a6 + 0x1C);
+    *reg_a4_as_u16_p = ENTITY(reg_a6)->attr.h;
     reg_a4_as_u16_p += 1;
     func_0012DCC0();
     reg_tmp.h[1] = *(u16 *)(reg_a6 + 0x22);
@@ -368,7 +368,7 @@ L_not_plain:
     reg_d0.b[0] = ENTITY(reg_a6)->move.b.speed;
     reg_d1.b[0] = ENTITY(reg_a6)->move.b.dir;
     func_0012DA30();
-    *(u16 *)(reg_a6 + 0x1E) = reg_d2.h[0];
+    ENTITY(reg_a6)->misc.h = reg_d2.h[0];
     *(u16 *)(reg_a6 + 0x20) = reg_d3.h[0];
     reg_d0.w = 0x3F;
     reg_d0.h[0] &= ENTITY(reg_a6)->flags.h;
@@ -453,7 +453,7 @@ L_0012A5DC:
     return;
 
 L_0012A68C:
-    reg_d0.h[1] = *(u16 *)(reg_a6 + 0x1E);
+    reg_d0.h[1] = ENTITY(reg_a6)->misc.h;
     reg_d0.h[0] = *(u16 *)(reg_a6 + 0x20);
     ENTITY(reg_a6)->x.h += reg_d0.h[0];
     reg_tmp.w = reg_d0.w;
@@ -492,7 +492,7 @@ block_33:
         var_a1_2 = (void *)reg_tmp.h[0];
         ENTITY(reg_a6)->offset_x.h = (u16)var_a1_2;
         ENTITY(reg_a6)->hit_x_minus.h = 0x10U;
-        *(u16 *)(reg_a6 + 0x1E) = (u16)((s16)*(u16 *)(reg_a6 + 0x1E) >> 1);
+        ENTITY(reg_a6)->misc.h = (u16)((s16)ENTITY(reg_a6)->misc.h >> 1);
         *(u16 *)(reg_a6 + 0x20) = (u16)((s16)*(u16 *)(reg_a6 + 0x20) >> 1);
     }
     reg_tmp.h[1] = ENTITY(reg_a6)->draw.h;
@@ -963,7 +963,7 @@ block_44:
                                 }
 block_143:
                                 *(u8 *)(reg_a6 + 0x35) |= 8;
-                                *(u16 *)(reg_a6 + 0x1E) = (u16) *(u16 *)(reg_a6 + 0x30);
+                                ENTITY(reg_a6)->misc.h = (u16) *(u16 *)(reg_a6 + 0x30);
                                 *(u16 *)(reg_a6 + 0x20) = (u16) *(u16 *)(reg_a6 + 0x32);
 block_144:
                                 reg_a6 += 0x40;
@@ -1067,7 +1067,7 @@ L_clr_block_143:
                                 }
 block_166:
                                 *(u8 *)(reg_a6 + 0x35) |= 8;
-                                *(u16 *)(reg_a6 + 0x1E) = (u16) *(u16 *)(reg_a6 + 0x30);
+                                ENTITY(reg_a6)->misc.h = (u16) *(u16 *)(reg_a6 + 0x30);
                                 *(u16 *)(reg_a6 + 0x20) = (u16) *(u16 *)(reg_a6 + 0x32);
 block_167:
                                 reg_a6 += 0x40;
@@ -1105,7 +1105,7 @@ L_clr_block_166:
                                     if ((s32) reg_tmp.b[0] <= 0) {
                                         *(u8 *)(reg_a6 + 0x2D) = (u8) *(u8 *)(reg_a6 + 0x2C);
                                         reg_d0.h[0] = *(u16 *)(reg_a6 + 0x2E);
-                                        *(u16 *)(reg_a6 + 0x1E) -= reg_d0.h[0];
+                                        ENTITY(reg_a6)->misc.h -= reg_d0.h[0];
                                     }
                                 }
                                 reg_a6 += 0x40;
@@ -1147,7 +1147,7 @@ L_clr_block_166:
                                         if ((s32) reg_tmp.b[0] <= 0) {
                                             *(u8 *)(reg_a6 + 0x2D) = (u8) *(u8 *)(reg_a6 + 0x2C);
                                             reg_d0.h[0] = *(u16 *)(reg_a6 + 0x2E);
-                                            *(u16 *)(reg_a6 + 0x1E) -= reg_d0.h[0];
+                                            ENTITY(reg_a6)->misc.h -= reg_d0.h[0];
                                         }
                                     }
                                     reg_a6 += 0x40;
@@ -1157,7 +1157,7 @@ L_clr_block_166:
                                     return;
                                 }
                                 *(u8 *)(reg_a6 + 0x35) = (u8) (temp_a1_7 | 8);
-                                *(u16 *)(reg_a6 + 0x1E) = (u16) *(u16 *)(reg_a6 + 0x30);
+                                ENTITY(reg_a6)->misc.h = (u16) *(u16 *)(reg_a6 + 0x30);
                                 *(u16 *)(reg_a6 + 0x20) = (u16) *(u16 *)(reg_a6 + 0x32);
                                 reg_a6 += 0x40;
                                 if ((s16)(--reg_d7.h[0]) >= 0) {
@@ -1173,7 +1173,7 @@ L_clr_block_166:
                                         reg_d1.b[0] = ENTITY(reg_a6)->move.b.dir;
                                         reg_d1.b[0] *= -1;
                                         ENTITY(reg_a6)->move.b.dir = (u8) reg_d1.b[0];
-                                        *(u8 *)(reg_a6 + 0x1D) ^= 0x40;
+                                        ENTITY(reg_a6)->attr.b.flip ^= 0x40;
                                         goto block_202;
                                     }
                                     if ((s32) reg_d0.h[0] > 0x3600) {
@@ -1181,7 +1181,7 @@ L_clr_block_166:
                                         reg_d1.b[0] = ENTITY(reg_a6)->move.b.dir;
                                         reg_d1.b[0] *= -1;
                                         ENTITY(reg_a6)->move.b.dir = (u8) reg_d1.b[0];
-                                        *(u8 *)(reg_a6 + 0x1D) ^= 0x40;
+                                        ENTITY(reg_a6)->attr.b.flip ^= 0x40;
                                         goto block_202;
                                     }
                                     reg_tmp.w = reg_d0.w;
@@ -1193,12 +1193,12 @@ L_clr_block_166:
                                         reg_d1.b[0] *= -1;
                                         reg_d1.b[0] += 0x80;
                                         ENTITY(reg_a6)->move.b.dir = (u8) reg_d1.b[0];
-                                        *(u8 *)(reg_a6 + 0x1D) ^= 0x20;
+                                        ENTITY(reg_a6)->attr.b.flip ^= 0x20;
 block_202:
                                         reg_d0.w = 0;
                                         reg_d0.b[0] = ENTITY(reg_a6)->move.b.speed;
                                         func_0012DA30();
-                                        *(u16 *)(reg_a6 + 0x1E) = (u16) reg_d2.h[0];
+                                        ENTITY(reg_a6)->misc.h = (u16) reg_d2.h[0];
                                         *(u16 *)(reg_a6 + 0x20) = (u16) reg_d3.h[0];
                                         reg_tmp.w = 0x14;
                                         reg_tmp1.h[1] = ENTITY(reg_a6)->draw.h;
@@ -1375,7 +1375,7 @@ block_202:
                                             reg_d3.h[0] *= 0xFFFF;
                                             break;
                                         }
-                                        *(u16 *)(reg_a6 + 0x1E) = (u16) reg_d2.h[0];
+                                        ENTITY(reg_a6)->misc.h = (u16) reg_d2.h[0];
                                         *(u16 *)(reg_a6 + 0x20) = (u16) reg_d3.h[0];
                                     }
                                 }
@@ -1439,13 +1439,13 @@ block_202:
                                     if ((s32) reg_d0.h[0] < 0x200) {
                                         reg_d1.h[0] = 0x40;
                                         ENTITY(reg_a6)->move.b.dir = (u8) reg_d1.b[0];
-                                        *(u8 *)(reg_a6 + 0x1D) ^= 0x40;
+                                        ENTITY(reg_a6)->attr.b.flip ^= 0x40;
                                         goto block_261;
                                     }
                                     if ((s32) reg_d0.h[0] > 0x3600) {
                                         reg_d1.h[0] = 0xC0;
                                         ENTITY(reg_a6)->move.b.dir = (u8) reg_d1.b[0];
-                                        *(u8 *)(reg_a6 + 0x1D) ^= 0x40;
+                                        ENTITY(reg_a6)->attr.b.flip ^= 0x40;
                                         goto block_261;
                                     }
                                     reg_tmp.w = reg_d0.w;
@@ -1454,27 +1454,27 @@ block_202:
                                     if ((s32) reg_d0.h[0] < 0x600) {
                                         reg_d1.h[0] = 0;
                                         ENTITY(reg_a6)->move.b.dir = (u8) reg_d1.b[0];
-                                        *(u8 *)(reg_a6 + 0x1D) ^= 0x20;
+                                        ENTITY(reg_a6)->attr.b.flip ^= 0x20;
                                         reg_d0.w = 0;
                                         reg_d0.b[0] = ENTITY(reg_a6)->move.b.speed;
                                         func_0012DA30();
                                         reg_d2.w = (u32) ((s32) reg_d2.w >> 1);
                                         reg_d3.w = (u32) ((s32) reg_d3.w >> 1);
-                                        *(u16 *)(reg_a6 + 0x1E) = reg_d2.h[0];
+                                        ENTITY(reg_a6)->misc.h = reg_d2.h[0];
                                         *(u16 *)(reg_a6 + 0x20) = reg_d3.h[0];
                                         goto block_262;
                                     }
                                     if ((s32) reg_d0.h[0] > 0x6E00) {
                                         reg_d1.h[0] = 0x80;
                                         ENTITY(reg_a6)->move.b.dir = (u8) reg_d1.b[0];
-                                        *(u8 *)(reg_a6 + 0x1D) ^= 0x20;
+                                        ENTITY(reg_a6)->attr.b.flip ^= 0x20;
 block_261:
                                         reg_d0.w = 0;
                                         reg_d0.b[0] = ENTITY(reg_a6)->move.b.speed;
                                         func_0012DA30();
                                         reg_d2.h[0] = (u16) ((s16) reg_d2.h[0] >> 1);
                                         reg_d3.h[0] = (u16) ((s16) reg_d3.h[0] >> 1);
-                                        *(u16 *)(reg_a6 + 0x1E) = reg_d2.h[0];
+                                        ENTITY(reg_a6)->misc.h = reg_d2.h[0];
                                         *(u16 *)(reg_a6 + 0x20) = reg_d3.h[0];
 block_262:
                                         reg_tmp.w = 0x14;
@@ -1550,7 +1550,7 @@ block_262:
                                     if ((s32) reg_tmp.b[0] <= 0) {
                                         *(u8 *)(reg_a6 + 0x2D) = (u8) *(u8 *)(reg_a6 + 0x2C);
                                         reg_d0.h[0] = *(u16 *)(reg_a6 + 0x30);
-                                        *(u16 *)(reg_a6 + 0x1E) += reg_d0.h[0];
+                                        ENTITY(reg_a6)->misc.h += reg_d0.h[0];
                                         reg_d0.h[0] = *(u16 *)(reg_a6 + 0x32);
                                         *(u16 *)(reg_a6 + 0x20) += reg_d0.h[0];
                                     }
@@ -1585,7 +1585,7 @@ block_262:
                                     if ((s32) reg_tmp.b[0] <= 0) {
                                         *(u8 *)(reg_a6 + 0x2D) = (u8) *(u8 *)(reg_a6 + 0x2C);
                                         reg_d0.h[0] = *(u16 *)(reg_a6 + 0x30);
-                                        *(u16 *)(reg_a6 + 0x1E) += reg_d0.h[0];
+                                        ENTITY(reg_a6)->misc.h += reg_d0.h[0];
                                         reg_d0.h[0] = *(u16 *)(reg_a6 + 0x32);
                                         *(u16 *)(reg_a6 + 0x20) += reg_d0.h[0];
                                     }
@@ -1645,7 +1645,7 @@ block_262:
                                     reg_d0.b[0] = ENTITY(reg_a6)->move.b.speed;
                                     reg_d1.b[0] = ENTITY(reg_a6)->move.b.dir;
                                     func_0012DA30();
-                                    *(u16 *)(reg_a6 + 0x1E) = (u16) reg_d2.h[0];
+                                    ENTITY(reg_a6)->misc.h = (u16) reg_d2.h[0];
                                     *(u16 *)(reg_a6 + 0x20) = (u16) reg_d3.h[0];
                                 }
                                 reg_a6 += 0x40;
@@ -1682,7 +1682,7 @@ block_262:
                                         reg_d1.b[0] = ENTITY(reg_a6)->move.b.dir;
                                         reg_d1.b[0] += 0x80;
                                         ENTITY(reg_a6)->move.b.dir = (u8) reg_d1.b[0];
-                                        *(u8 *)(reg_a6 + 0x1D) ^= 0x40;
+                                        ENTITY(reg_a6)->attr.b.flip ^= 0x40;
                                         goto block_314;
                                     }
                                     if ((s32) reg_d0.h[0] > 0x3600) {
@@ -1690,7 +1690,7 @@ block_262:
                                         reg_d1.b[0] = ENTITY(reg_a6)->move.b.dir;
                                         reg_d1.b[0] += 0x80;
                                         ENTITY(reg_a6)->move.b.dir = (u8) reg_d1.b[0];
-                                        *(u8 *)(reg_a6 + 0x1D) ^= 0x40;
+                                        ENTITY(reg_a6)->attr.b.flip ^= 0x40;
                                         goto block_314;
                                     }
                                     reg_tmp.w = reg_d0.w;
@@ -1701,11 +1701,11 @@ block_262:
                                         reg_d1.b[0] = ENTITY(reg_a6)->move.b.dir;
                                         reg_d1.b[0] += 0x80;
                                         ENTITY(reg_a6)->move.b.dir = (u8) reg_d1.b[0];
-                                        *(u8 *)(reg_a6 + 0x1D) ^= 0x20;
+                                        ENTITY(reg_a6)->attr.b.flip ^= 0x20;
                                         reg_d0.w = 0;
                                         reg_d0.b[0] = ENTITY(reg_a6)->move.b.speed;
                                         func_0012DA30();
-                                        *(u16 *)(reg_a6 + 0x1E) = reg_d2.h[0];
+                                        ENTITY(reg_a6)->misc.h = reg_d2.h[0];
                                         *(u16 *)(reg_a6 + 0x20) = reg_d3.h[0];
                                         goto block_315;
                                     }
@@ -1714,12 +1714,12 @@ block_262:
                                         reg_d1.b[0] = ENTITY(reg_a6)->move.b.dir;
                                         reg_d1.b[0] += 0x80;
                                         ENTITY(reg_a6)->move.b.dir = (u8) reg_d1.b[0];
-                                        *(u8 *)(reg_a6 + 0x1D) ^= 0x20;
+                                        ENTITY(reg_a6)->attr.b.flip ^= 0x20;
 block_314:
                                         reg_d0.w = 0;
                                         reg_d0.b[0] = ENTITY(reg_a6)->move.b.speed;
                                         func_0012DA30();
-                                        *(u16 *)(reg_a6 + 0x1E) = reg_d2.h[0];
+                                        ENTITY(reg_a6)->misc.h = reg_d2.h[0];
                                         *(u16 *)(reg_a6 + 0x20) = reg_d3.h[0];
 block_315:
                                         reg_tmp.w = 0x14;
@@ -2032,7 +2032,7 @@ void func_0012DB30(void) {
     reg_a4 += 2;
     *(u16 *)reg_a4 = *(u16 *)reg_a1;
     reg_a4 += 2;
-    *(u16 *)reg_a4 = *(u16 *)(reg_a6 + 0x1C);
+    *(u16 *)reg_a4 = ENTITY(reg_a6)->attr.h;
     reg_a4 += 2;
     func_0012DCC0();
 }
@@ -2079,7 +2079,7 @@ void func_0012DCD0(void) {
     *(u16 *)(reg_a0 + 2) = (u16) reg_tmp.h[0];
     reg_d0.h[0] = *(u16 *)reg_a1;
     reg_a1 += 2;
-    *(u16 *)(reg_a6 + 0x1C) |= reg_d0.h[0];
+    ENTITY(reg_a6)->attr.h |= reg_d0.h[0];
     func_0012DB30();
 }
 
@@ -2094,7 +2094,7 @@ void func_0012DE90(void) {
     reg_tmp.w = 0x140;
     ENTITY(reg_a6)->draw.h = (u16) reg_tmp.h[1];
     ENTITY(reg_a6)->sprite.h = (u16) reg_tmp.h[0];
-    *(s8 *)(reg_a6 + 0x1C) = 0x1A;
+    ENTITY(reg_a6)->attr.sb.palette = 0x1A;
     reg_tmp.w = 0xFE00FF00;
     ENTITY(reg_a6)->offset_y.h = (u16) reg_tmp.h[1];
     ENTITY(reg_a6)->offset_x.h = (u16) reg_tmp.h[0];
@@ -2113,7 +2113,7 @@ void func_0012DF50(void) {
     reg_tmp.w = 0x146;
     ENTITY(reg_a6)->draw.h = (u16) reg_tmp.h[1];
     ENTITY(reg_a6)->sprite.h = (u16) reg_tmp.h[0];
-    *(s8 *)(reg_a6 + 0x1C) = 0x1A;
+    ENTITY(reg_a6)->attr.sb.palette = 0x1A;
     reg_tmp.w = 0xFE00FE00;
     ENTITY(reg_a6)->offset_y.h = (u16) reg_tmp.h[1];
     ENTITY(reg_a6)->offset_x.h = (u16) reg_tmp.h[0];
@@ -2131,7 +2131,7 @@ void func_0012E010(void) {
     reg_d1.h[0] = D_00299762[0];
     reg_a1 = D_0024EF30;
     func_0012DCD0();
-    *(s8 *)(reg_a6 + 0x1C) = 0x1A;
+    ENTITY(reg_a6)->attr.sb.palette = 0x1A;
     reg_a0 = D_0024EBC0;
     reg_tmp.w = 0xC000C;
     ENTITY(reg_a6)->hit_x_minus.h = (u16) reg_tmp.h[1];
@@ -2146,7 +2146,7 @@ void func_0012E010(void) {
 
 void func_0012E0B0(void) {
     func_0012E3D0();
-    *(u16 *)(reg_a6 + 0x1E) = (u16) *(u16 *)(reg_a6 + 0x30);
+    ENTITY(reg_a6)->misc.h = (u16) *(u16 *)(reg_a6 + 0x30);
     *(u16 *)(reg_a6 + 0x20) = (u16) *(u16 *)(reg_a6 + 0x32);
     reg_tmp.w = 0x19E;
     ENTITY(reg_a6)->draw.h = (u16) reg_tmp.h[1];
@@ -2158,7 +2158,7 @@ void func_0012E0B0(void) {
 
 void func_0012E130(void) {
     func_0012E3D0();
-    *(u16 *)(reg_a6 + 0x1E) = (u16) *(u16 *)(reg_a6 + 0x30);
+    ENTITY(reg_a6)->misc.h = (u16) *(u16 *)(reg_a6 + 0x30);
     *(u16 *)(reg_a6 + 0x20) = (u16) *(u16 *)(reg_a6 + 0x32);
     reg_tmp.w = 0x1A2;
     ENTITY(reg_a6)->draw.h = (u16) reg_tmp.h[1];
@@ -2170,7 +2170,7 @@ void func_0012E130(void) {
 
 void func_0012E1B0(void) {
     func_0012E3D0();
-    *(u16 *)(reg_a6 + 0x1E) = (u16) *(u16 *)(reg_a6 + 0x30);
+    ENTITY(reg_a6)->misc.h = (u16) *(u16 *)(reg_a6 + 0x30);
     *(u16 *)(reg_a6 + 0x20) = (u16) *(u16 *)(reg_a6 + 0x32);
     reg_tmp.w = 0x1A6;
     ENTITY(reg_a6)->draw.h = (u16) reg_tmp.h[1];
@@ -2182,7 +2182,7 @@ void func_0012E1B0(void) {
 
 void func_0012E230(void) {
     func_0012E3D0();
-    *(u16 *)(reg_a6 + 0x1E) = (u16) *(u16 *)(reg_a6 + 0x30);
+    ENTITY(reg_a6)->misc.h = (u16) *(u16 *)(reg_a6 + 0x30);
     *(u16 *)(reg_a6 + 0x20) = (u16) *(u16 *)(reg_a6 + 0x32);
     reg_tmp.w = 0x1AA;
     ENTITY(reg_a6)->draw.h = (u16) reg_tmp.h[1];
@@ -2199,7 +2199,7 @@ void func_0012E2B0(void) {
     reg_d1.h[0] = D_00299762[0];
     reg_a1 = D_0024EF30;
     func_0012DCD0();
-    *(s8 *)(reg_a6 + 0x1C) = 0x1A;
+    ENTITY(reg_a6)->attr.sb.palette = 0x1A;
     reg_tmp.w = 3;
     ENTITY(reg_a6)->hit_x_plus.h = (u16) reg_tmp.h[1];
     ENTITY(reg_a6)->hit_x_minus.h = (u16) reg_tmp.h[0];
@@ -2217,7 +2217,7 @@ void func_0012E350(void) {
     reg_a1 = D_0024EF30;
     func_0012DCD0();
     ENTITY(reg_a6)->flags.b[1] &= 0xFE;
-    *(s8 *)(reg_a6 + 0x1C) = 0x1A;
+    ENTITY(reg_a6)->attr.sb.palette = 0x1A;
     reg_tmp.w = 0xFE00FE00;
     ENTITY(reg_a6)->offset_y.h = reg_tmp.h[1];
     ENTITY(reg_a6)->offset_x.h = reg_tmp.h[0];
@@ -2229,10 +2229,10 @@ void func_0012E3D0(void) {
     reg_tmp.w = 0x1B4;
     ENTITY(reg_a6)->draw.h = (u16) reg_tmp.h[1];
     ENTITY(reg_a6)->sprite.h = (u16) reg_tmp.h[0];
-    *(s8 *)(reg_a6 + 0x1C) = 0x1A;
-    *(u16 *)(reg_a6 + 0x30) = (u16) *(u16 *)(reg_a6 + 0x1E);
+    ENTITY(reg_a6)->attr.sb.palette = 0x1A;
+    *(u16 *)(reg_a6 + 0x30) = (u16) ENTITY(reg_a6)->misc.h;
     *(u16 *)(reg_a6 + 0x32) = (u16) *(u16 *)(reg_a6 + 0x20);
-    *(u16 *)(reg_a6 + 0x1E) = 0U;
+    ENTITY(reg_a6)->misc.h = 0U;
     *(u16 *)(reg_a6 + 0x20) = 0U;
 }
 
@@ -2310,7 +2310,7 @@ void func_0012E6E0(void) {
     reg_d1.h[0] = D_00299762[0];
     reg_a1 = D_0024EF30;
     func_0012DCD0();
-    *(s8 *)(reg_a6 + 0x1C) = 0x1A;
+    ENTITY(reg_a6)->attr.sb.palette = 0x1A;
     reg_a0 = D_0024EBC0;
     reg_tmp.w = 0xC000C;
     ENTITY(reg_a6)->hit_x_minus.h = (u16) reg_tmp.h[1];
@@ -2329,7 +2329,7 @@ void func_0012E7A0(void) {
     reg_d1.h[0] = D_00299762[0];
     reg_a1 = D_0024EF30;
     func_0012DCD0();
-    *(s8 *)(reg_a6 + 0x1C) = 0x1A;
+    ENTITY(reg_a6)->attr.sb.palette = 0x1A;
     reg_a0 = D_0024EBC0;
     reg_tmp.w = 0xC000C;
     ENTITY(reg_a6)->hit_x_minus.h = (u16) reg_tmp.h[1];
@@ -2349,7 +2349,7 @@ void func_0012E860(void) {
     reg_d1.h[0] = D_00299762[0];
     reg_a1 = D_0024EF30;
     func_0012DCD0();
-    *(s8 *)(reg_a6 + 0x1C) = 0x1A;
+    ENTITY(reg_a6)->attr.sb.palette = 0x1A;
     reg_a0 = D_0024EBC0;
     reg_tmp.w = 0xC000C;
     ENTITY(reg_a6)->hit_x_minus.h = (u16) reg_tmp.h[1];
@@ -2373,10 +2373,10 @@ void func_0012E920(void) {
     ENTITY(reg_a6)->offset_y.h = (u16) reg_tmp.h[1];
     ENTITY(reg_a6)->offset_x.h = (u16) reg_tmp.h[0];
     ENTITY(reg_a6)->look.sh = 0x410;
-    *(s8 *)(reg_a6 + 0x1C) = 0x1A;
-    *(u16 *)(reg_a6 + 0x30) = (u16) *(u16 *)(reg_a6 + 0x1E);
+    ENTITY(reg_a6)->attr.sb.palette = 0x1A;
+    *(u16 *)(reg_a6 + 0x30) = (u16) ENTITY(reg_a6)->misc.h;
     *(u16 *)(reg_a6 + 0x32) = (u16) *(u16 *)(reg_a6 + 0x20);
-    *(u16 *)(reg_a6 + 0x1E) = 0U;
+    ENTITY(reg_a6)->misc.h = 0U;
     *(u16 *)(reg_a6 + 0x20) = 0U;
     reg_tmp.w = 0x13;
     *(u16 *)(reg_a6 + 0x22) = (u16) reg_tmp.h[1];
@@ -2392,7 +2392,7 @@ void func_0012E9E0(void) {
     reg_tmp.w = 0x1AE;
     ENTITY(reg_a6)->draw.h = (u16) reg_tmp.h[1];
     ENTITY(reg_a6)->sprite.h = (u16) reg_tmp.h[0];
-    *(s8 *)(reg_a6 + 0x1C) = 0x1A;
+    ENTITY(reg_a6)->attr.sb.palette = 0x1A;
     reg_tmp.w = 0xFE00FE00;
     ENTITY(reg_a6)->offset_y.h = (u16) reg_tmp.h[1];
     ENTITY(reg_a6)->offset_x.h = (u16) reg_tmp.h[0];
@@ -2409,7 +2409,7 @@ void func_0012EAA0(void) {
     reg_d1.h[0] = D_00299762[0];
     reg_a1 = D_0024EF30;
     func_0012DCD0();
-    *(s8 *)(reg_a6 + 0x1C) = 0x1A;
+    ENTITY(reg_a6)->attr.sb.palette = 0x1A;
     reg_a0 = D_0024EDB0;
     reg_tmp.w = 0xC000C;
     ENTITY(reg_a6)->hit_x_minus.h = (u16) reg_tmp.h[1];
@@ -2430,10 +2430,10 @@ void func_0012EB40(void) {
     ENTITY(reg_a6)->offset_y.h = (u16) reg_tmp.h[1];
     ENTITY(reg_a6)->offset_x.h = (u16) reg_tmp.h[0];
     ENTITY(reg_a6)->look.sh = 0x410;
-    *(s8 *)(reg_a6 + 0x1C) = 0x1A;
-    *(u16 *)(reg_a6 + 0x30) = (u16) *(u16 *)(reg_a6 + 0x1E);
+    ENTITY(reg_a6)->attr.sb.palette = 0x1A;
+    *(u16 *)(reg_a6 + 0x30) = (u16) ENTITY(reg_a6)->misc.h;
     *(u16 *)(reg_a6 + 0x32) = (u16) *(u16 *)(reg_a6 + 0x20);
-    *(u16 *)(reg_a6 + 0x1E) = 0U;
+    ENTITY(reg_a6)->misc.h = 0U;
     *(u16 *)(reg_a6 + 0x20) = 0U;
     reg_tmp.w = 0x16;
     *(u16 *)(reg_a6 + 0x22) = (u16) reg_tmp.h[1];
@@ -2463,10 +2463,10 @@ void func_0012EC90(void) {
     ENTITY(reg_a6)->offset_y.h = (u16) reg_tmp.h[1];
     ENTITY(reg_a6)->offset_x.h = (u16) reg_tmp.h[0];
     ENTITY(reg_a6)->look.sh = 0x410;
-    *(s8 *)(reg_a6 + 0x1C) = 0x1A;
-    *(u16 *)(reg_a6 + 0x30) = (u16) *(u16 *)(reg_a6 + 0x1E);
+    ENTITY(reg_a6)->attr.sb.palette = 0x1A;
+    *(u16 *)(reg_a6 + 0x30) = (u16) ENTITY(reg_a6)->misc.h;
     *(u16 *)(reg_a6 + 0x32) = (u16) *(u16 *)(reg_a6 + 0x20);
-    *(u16 *)(reg_a6 + 0x1E) = 0U;
+    ENTITY(reg_a6)->misc.h = 0U;
     *(u16 *)(reg_a6 + 0x20) = 0U;
     reg_tmp.w = 0x18;
     *(u16 *)(reg_a6 + 0x22) = (u16) reg_tmp.h[1];
@@ -2486,7 +2486,7 @@ void func_0012ED50(void) {
     ENTITY(reg_a6)->offset_y.h = (u16) reg_tmp.h[1];
     ENTITY(reg_a6)->offset_x.h = (u16) reg_tmp.h[0];
     ENTITY(reg_a6)->look.sh = 0x410;
-    *(s8 *)(reg_a6 + 0x1C) = 0x1A;
+    ENTITY(reg_a6)->attr.sb.palette = 0x1A;
 }
 
 extern u8 D_0024EE60[];
@@ -2496,7 +2496,7 @@ void func_0012EDF0(void) {
     reg_d1.h[0] = D_00299762[0];
     reg_a1 = D_0024EF30;
     func_0012DCD0();
-    *(s8 *)(reg_a6 + 0x1C) = 0x1A;
+    ENTITY(reg_a6)->attr.sb.palette = 0x1A;
     reg_tmp.w = 3;
     ENTITY(reg_a6)->hit_x_plus.h = (u16) reg_tmp.h[1];
     ENTITY(reg_a6)->hit_x_minus.h = (u16) reg_tmp.h[0];

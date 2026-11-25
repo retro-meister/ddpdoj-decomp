@@ -232,7 +232,7 @@ void func_001BAF40(void)
     u8 *currentByte;
 
     reg_d0.b[0] = reg_a4[3];
-    currentByte = &reg_a6[0x1B];
+    currentByte = &ENTITY(reg_a6)->move.b.speed;
     reg_d1.b[0] = *currentByte;
 
     if (reg_d0.b[0] != reg_d1.b[0]) {
@@ -250,7 +250,7 @@ void func_001BAF40(void)
 void func_001BAFA0(void) {
     *(u16 *)reg_a4 = 0;
     ENTITY(reg_a6)->move.h = 0x20;
-    reg_a4[3] = reg_a6[0x1B];
+    reg_a4[3] = ENTITY(reg_a6)->move.b.speed;
     func_001BAEC0();
 }
 
@@ -316,7 +316,7 @@ void func_001BB0D0() {
 
 void func_001BB180(void) {
     *(u16 *)reg_a4 = 0;
-    reg_a4[3] = reg_a6[0x1B];
+    reg_a4[3] = ENTITY(reg_a6)->move.b.speed;
     func_001BAEC0();
 }
 
@@ -382,7 +382,7 @@ void func_001BB300() {
 
 void func_001BB390(void) {
     *(u16 *)reg_a4 = 0;
-    reg_a4[3] = reg_a6[0x1B];
+    reg_a4[3] = ENTITY(reg_a6)->move.b.speed;
 }
 
 void func_001BB3B0() {
@@ -414,7 +414,7 @@ void func_001BB460(void) {
     u8 value;
 
     *reg_a4_as_s16_p = 0;
-    value = reg_a6[0x1B];
+    value = ENTITY(reg_a6)->move.b.speed;
     ((u8 *)reg_a4_as_s16_p)[3] = value;
     func_001BAEC0();
 }
@@ -448,7 +448,7 @@ void func_001BB480(void) {
 
 void func_001BB560(void) {
     *(u16 *)reg_a4 = 0;
-    reg_a4[3] = reg_a6[0x1B];
+    reg_a4[3] = ENTITY(reg_a6)->move.b.speed;
 }
 
 void func_001BB580() {

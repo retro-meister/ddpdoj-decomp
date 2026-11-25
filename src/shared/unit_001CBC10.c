@@ -244,7 +244,7 @@ next_20:
 next_30:
     *(u8 *)(reg_a5 + 0x17) = 1;
 next_40:
-    if (*(u8 *)(reg_a6 + 0x1F) != 0) goto next_45;
+    if (ENTITY(reg_a6)->misc.b.user != 0) goto next_45;
     reg_tmp.w = 0xB000;
     *(u16 *)(reg_a6 + 0x3C) = reg_tmp.h[1];
     *(u16 *)(reg_a6 + 0x3E) = reg_tmp.h[0];
@@ -267,7 +267,7 @@ next_50:
     ENTITY(reg_a6)->flags.b[1] &= reg_d0.b[0];
     *(u8 *)(reg_a6 + 0x21) &= reg_d0.b[0];
     score_add_no_chain();
-    reg_d0.b[0] = *(u8 *)(reg_a6 + 0x1C);
+    reg_d0.b[0] = ENTITY(reg_a6)->attr.b.palette;
     reg_d3.b[0] = *(u8 *)(reg_a6 + 0x47);
     reg_d5.b[0] = *(u8 *)(reg_a6 + 0x46);
     if (reg_d0.b[0] != 0x19) goto next_60;
@@ -296,7 +296,7 @@ next_80:
     *(u16 *)(reg_a6 + 0x3E) = reg_tmp.h[0];
     if ((s32) reg_tmp.w < 0) goto next_700;
 next_90:
-    *(u8 *)(reg_a6 + 0x1C) = reg_d0.b[0];
+    ENTITY(reg_a6)->attr.b.palette = reg_d0.b[0];
     *(u8 *)(reg_a6 + 0x47) = reg_d3.b[0];
     *(u8 *)(reg_a6 + 0x46) = reg_d5.b[0];
     reg_d0.h[1] = *(u16 *)(reg_a6 + 0x3C);
@@ -526,7 +526,7 @@ next_510:
     reg_d2.h[1] = *(u16 *)(reg_a5 + 0x28);
     reg_d2.h[0] = *(u16 *)(reg_a5 + 0x2A);
     reg_d3.h[0] = 0x418;
-    reg_d4.h[0] = *(u16 *)(reg_a6 + 0x1C);
+    reg_d4.h[0] = ENTITY(reg_a6)->attr.h;
     jtbl_0028E3F4 = (Fn) reg_a3;
     jtbl_0028E3F4();
     reg_d1.h[0] = ENTITY(reg_a6)->x.h;

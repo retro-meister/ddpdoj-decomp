@@ -1479,7 +1479,7 @@ block_1:
     }
 block_2:
     reg_d0.w = 0;
-    reg_d0.b[0] = *(u8 *)(reg_a6 + 0x1F);
+    reg_d0.b[0] = ENTITY(reg_a6)->misc.b.user;
     reg_a0 = *(u8 **)(reg_a4 + reg_d0.h[0]);
     jtbl_0028E3F4_as_u8_p = reg_a0;
     ((Fn)jtbl_0028E3F4_as_u8_p)();

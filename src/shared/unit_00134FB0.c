@@ -195,8 +195,8 @@ void func_00135220(void) {
         ENTITY(reg_a6)->draw.h = (u16) *(u16 *)(reg_a0 + 0xE);
         ENTITY(reg_a6)->hp.sh = 0;
         ENTITY(reg_a6)->move.sh = 0;
-        *(s16 *)(reg_a6 + 0x1C) = 0;
-        *(s16 *)(reg_a6 + 0x1E) = 0;
+        ENTITY(reg_a6)->attr.sh = 0;
+        ENTITY(reg_a6)->misc.sh = 0;
         ENTITY(reg_a6)->x.sh = 0;
         ENTITY(reg_a6)->offset_y.sh = 0;
         *(s16 *)(reg_a6 + 0x20) = 0;
@@ -1529,7 +1529,7 @@ void func_00137820(void) {
     reg_d2.h[0] = ENTITY(reg_a6)->hit_x_minus.h;
     reg_d3.h[1] = ENTITY(reg_a6)->hp.h;
     reg_d3.h[0] = ENTITY(reg_a6)->move.h;
-    reg_tmp.h[1] = *(u16 *)(reg_a6 + 0x1E);
+    reg_tmp.h[1] = ENTITY(reg_a6)->misc.h;
     reg_tmp.h[0] = *(u16 *)(reg_a6 + 0x20);
     reg_a2_as_u32 = reg_tmp.w;
     if (ENTITY(reg_a6)->flags.b[1] & 2) {

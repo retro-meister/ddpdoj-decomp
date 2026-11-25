@@ -99,7 +99,7 @@ void func_001C4830(void) {
     reg_d1.b[0] = (u8) ((s8) reg_d1.b[0] >> 2);
     reg_d1.h[0] &= 0x3E;
     reg_d0.h[0] = (reg_d1.h[0] != 0) ? *(u16 *)((u8 *)reg_a0 + ((s16)reg_d1.h[0] & ~1)) : *(u16 *)reg_a0;
-    *(u8 *)(reg_a6 + 0x1D) = (u8) reg_d0.b[0];
+    ENTITY(reg_a6)->attr.b.flip = (u8) reg_d0.b[0];
     reg_a0 = (u8 *)(D_0024EC80);
     reg_d1.h[0] += reg_d1.h[0];
     reg_d1.h[0] += reg_d1.h[0];

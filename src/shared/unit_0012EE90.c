@@ -39,7 +39,7 @@ void func_0012EF80(void) {
     ENTITY(reg_a6)->offset_y.h = (u16) reg_tmp.h[1];
     ENTITY(reg_a6)->offset_x.h = (u16) reg_tmp.h[0];
     ENTITY(reg_a6)->look.sh = 0x410;
-    *(s8 *)(reg_a6 + 0x1C) = 0x1A;
+    ENTITY(reg_a6)->attr.sb.palette = 0x1A;
 }
 
 void func_0012F020(void) {
@@ -55,7 +55,7 @@ void func_0012F020(void) {
     ENTITY(reg_a6)->offset_y.h = (u16) reg_tmp.h[1];
     ENTITY(reg_a6)->offset_x.h = (u16) reg_tmp.h[0];
     ENTITY(reg_a6)->look.sh = 0x410;
-    *(s8 *)(reg_a6 + 0x1C) = 0x1A;
+    ENTITY(reg_a6)->attr.sb.palette = 0x1A;
 }
 
 s32 func_0012DA30();
@@ -130,7 +130,7 @@ void func_0012F330(void) {
     reg_tmp.w = 0x1B4;
     ENTITY(reg_a6)->draw.h = (u16) reg_tmp.h[1];
     ENTITY(reg_a6)->sprite.h = (u16) reg_tmp.h[0];
-    *(s8 *)(reg_a6 + 0x1C) = 0x1A;
+    ENTITY(reg_a6)->attr.sb.palette = 0x1A;
     *(s16 *)(reg_a6 + 0x2C) = 0x14;
     *(s16 *)(reg_a6 + 0x2E) = 0x101;
     reg_tmp.w = 0x21;
@@ -151,7 +151,7 @@ void func_0012F3B0(void) {
     ENTITY(reg_a6)->offset_y.h = (u16) reg_tmp.h[1];
     ENTITY(reg_a6)->offset_x.h = (u16) reg_tmp.h[0];
     ENTITY(reg_a6)->look.sh = 0x410;
-    *(s8 *)(reg_a6 + 0x1C) = 0x1A;
+    ENTITY(reg_a6)->attr.sb.palette = 0x1A;
 }
 
 s32 func_0012E3D0();                            /* extern */
@@ -207,7 +207,7 @@ void death_func_0012E5B0(void) {
     ENTITY(reg_a6)->offset_y.h = reg_tmp.h[1];
     ENTITY(reg_a6)->offset_x.h = reg_tmp.h[0];
     ENTITY(reg_a6)->look.h = 0;
-    *(u8 *)(reg_a6 + 0x1C) = 0x1A;
+    ENTITY(reg_a6)->attr.b.palette = 0x1A;
 }
 #endif
 

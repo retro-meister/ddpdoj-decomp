@@ -267,7 +267,7 @@ void velocity_from_dir256(void);
 void func_00202760(void);
 
 void func_00125C80(void) {
-    if (*(u8 *)(reg_a6 + 0x1F) == 0) {
+    if (ENTITY(reg_a6)->misc.b.user == 0) {
         reg_tmp.h[1] = *(u16 *)(reg_a6 + 0x24);
         reg_tmp.h[0] = *(u16 *)(reg_a6 + 0x26);
         reg_a0 = (u8 *)reg_tmp.w;
@@ -277,7 +277,7 @@ void func_00125C80(void) {
         velocity_from_dir256();
         *(u16 *)(reg_a6 + 0x20) = reg_d2.h[0];
         *(u16 *)(reg_a6 + 0x22) = reg_d3.h[0];
-        *(u8 *)(reg_a6 + 0x1F) = 1;
+        ENTITY(reg_a6)->misc.b.user = 1;
     }
     reg_d0.h[0] = D_0028E3E0;
     if ((reg_d0.b[0] &= ENTITY(reg_a6)->move.b.speed) == 0) {
@@ -558,13 +558,13 @@ next_4:
     return;
 next_5:
     ENTITY(reg_a6)->y.h -= 0x60;
-    *(u8 *)(reg_a6 + 0x1E) -= 1;
-    if (*(u8 *)(reg_a6 + 0x1E) != 0) goto next_6;
+    ENTITY(reg_a6)->misc.b.draw_layer -= 1;
+    if (ENTITY(reg_a6)->misc.b.draw_layer != 0) goto next_6;
     reg_d0.w = 0;
-    reg_d0.b[0] = *(u8 *)(reg_a6 + 0x1F);
+    reg_d0.b[0] = ENTITY(reg_a6)->misc.b.user;
     reg_a0 = (u8 *)(D_00269490);
     reg_a0 += reg_d0.h[0];
-    *(u16 *)(reg_a6 + 0x1E) = *(u16 *)reg_a0;
+    ENTITY(reg_a6)->misc.h = *(u16 *)reg_a0;
     reg_a0 += 2;
     *(u16 *)(reg_a6 + 0x20) = *(u16 *)reg_a0;
     reg_a0 += 2;
@@ -1413,7 +1413,7 @@ void func_00127CA0(void) {
     reg_a0 += 2;
     ENTITY(reg_a6)->hp.sb[1] = 7;
     ENTITY(reg_a6)->hp.sb[0] = 0xF;
-    *(s16 *)(reg_a6 + 0x1C) = 0x1D;
+    ENTITY(reg_a6)->attr.sh = 0x1D;
     reg_d0.h[0] = D_0029C06C[0];
     reg_d0.h[0] = (s16)reg_d0.h[0] + ENTITY(reg_a6)->x.sh;
     reg_d1.w = 0x30;
@@ -1558,7 +1558,7 @@ void func_00128320(void) {
     sd7 = reg_d7.w;
     reg_d1.h[0] += 0x480;
     reg_d1.h[1] += 0x7FFF + 0x7F41;
-    reg_d0.h[0] = *(u16 *)(reg_a6 + 0x1E);
+    reg_d0.h[0] = ENTITY(reg_a6)->misc.h;
     reg_d7.w = 1;
     reg_d6.w = 0;
     do {

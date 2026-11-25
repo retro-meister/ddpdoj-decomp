@@ -264,7 +264,7 @@ next_1:
     if (reg_d7.w == 0) goto next_2;
     func_00132210();
 next_2:
-    reg_d7.h[0] = *(u16 *)(reg_a6 + 0x1C);
+    reg_d7.h[0] = ENTITY(reg_a6)->attr.h;
     reg_d2.w = 0xF;
     reg_d2.h[0] &= reg_d7.h[0];
     reg_a1 = (u8 *)D_00269A30;
@@ -293,11 +293,11 @@ next_3:
     reg_d3.h[0] = 0x208;
     reg_d4.h[0] = 0x16;
     sprite_draw_layer1();
-    reg_d0.h[0] = *(u16 *)(reg_a6 + 0x1E);
+    reg_d0.h[0] = ENTITY(reg_a6)->misc.h;
     if (reg_d0.h[0] == 0) goto next_7;
     reg_d1.h[0] -= 0x200;
     sprite_draw_layer1();
-    reg_d0.h[0] = *(u16 *)(reg_a6 + 0x1E);
+    reg_d0.h[0] = ENTITY(reg_a6)->misc.h;
     func_00200EE0();
     reg_d7.w = reg_d2.w;
     reg_d2.w = 0xF;

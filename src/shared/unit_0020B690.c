@@ -751,7 +751,7 @@ block_120:
                 reg_d6.h[0] = D_0028E0A8;
                 reg_d7.h[0] = 0x95;
                 reg_d5.w = 0x50;
-                if (*(u16 *)(reg_a6 + 0x1E) == 0) {
+                if (ENTITY(reg_a6)->misc.h == 0) {
                     reg_d5.w = 1;
                 }
 loop_130:
