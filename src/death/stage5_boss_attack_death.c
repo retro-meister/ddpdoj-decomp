@@ -1037,7 +1037,6 @@ void death_func_0021D520(void) {
     death_D_006901D4[0] = death_D_0068FFB4[0];
 }
 
-extern char death_D_0028E398[];
 
 void death_func_0021D550(void) {
     u8 *save_a6;
@@ -1047,7 +1046,7 @@ void death_func_0021D550(void) {
     death_func_0021D4B0();
     death_func_0021B8F0();
     reg_a6 = save_a6;
-    printf(death_D_0028E398);
+    printf("att b1\n");
 }
 
 
@@ -1061,7 +1060,6 @@ void death_func_0021D5A0(void) {
     reg_a6 = save_a6;
 }
 
-extern char death_D_0028E3A0[];
 
 void death_func_0021D5E0(void) {
     u8 *save_a6;
@@ -1071,7 +1069,7 @@ void death_func_0021D5E0(void) {
     death_func_0021D4B0();
     death_func_0021BBB0();
     reg_a6 = save_a6;
-    printf(death_D_0028E3A0);
+    printf("att c1\n");
 }
 
 
@@ -1085,7 +1083,6 @@ void death_func_0021D630(void) {
     reg_a6 = save_a6;
 }
 
-extern char death_D_0028E3A8[];
 
 void death_func_0021D670(void) {
     u8 *save_a6;
@@ -1095,7 +1092,7 @@ void death_func_0021D670(void) {
     death_func_0021D4B0();
     death_func_0021BE80();
     reg_a6 = save_a6;
-    printf(death_D_0028E3A8);
+    printf("att d1\n");
 }
 
 
@@ -1109,7 +1106,6 @@ void death_func_0021D6C0(void) {
     reg_a6 = save_a6;
 }
 
-extern char death_D_0028E3B0[];
 
 void death_func_0021D700(void) {
     u8 *save_a6;
@@ -1119,7 +1115,7 @@ void death_func_0021D700(void) {
     death_func_0021D4B0();
     death_func_0021C430();
     reg_a6 = save_a6;
-    printf(death_D_0028E3B0);
+    printf("att hak1\n");
 }
 
 
@@ -1133,7 +1129,6 @@ void death_func_0021D750(void) {
     reg_a6 = save_a6;
 }
 
-extern char death_D_0028E3C0[];
 
 void death_func_0021D790(void) {
     u8 *save_a6;
@@ -1143,7 +1138,7 @@ void death_func_0021D790(void) {
     death_func_0021D4B0();
     death_func_0021C8A0();
     reg_a6 = save_a6;
-    printf(death_D_0028E3C0);
+    printf("att doku1\n");
 }
 
 
@@ -1157,7 +1152,6 @@ void death_func_0021D7E0(void) {
     reg_a6 = save_a6;
 }
 
-extern char death_D_0028E3D0[];
 
 void death_func_0021D820(void) {
     u8 *save_a6;
@@ -1167,7 +1161,7 @@ void death_func_0021D820(void) {
     death_func_0021D4B0();
     death_func_0021CE10();
     reg_a6 = save_a6;
-    printf(death_D_0028E3D0);
+    printf("att hak r1 1\n");
 }
 
 
@@ -1181,7 +1175,6 @@ void death_func_0021D870(void) {
     reg_a6 = save_a6;
 }
 
-extern char death_D_0028E3E0[];
 
 void death_func_0021D8B0(void) {
     u8 *save_a6;
@@ -1191,7 +1184,7 @@ void death_func_0021D8B0(void) {
     death_func_0021D4B0();
     death_func_0021D210();
     reg_a6 = save_a6;
-    printf(death_D_0028E3E0);
+    printf("att jet1\n");
 }
 
 
@@ -1205,7 +1198,6 @@ void death_func_0021D900(void) {
     reg_a6 = save_a6;
 }
 
-extern char death_D_0028E3F0[];
 extern u8 death_D_006901F0[];
 
 void death_func_0021D940(void) {
@@ -1216,7 +1208,7 @@ void death_func_0021D940(void) {
     death_func_0021D4B0();
     death_func_0021B8F0();
     reg_a6 = save_a6;
-    printf(death_D_0028E3F0);
+    printf("att b2\n");
 }
 
 void death_func_0021D990(void) {
@@ -1229,7 +1221,6 @@ void death_func_0021D990(void) {
     reg_a6 = save_a6;
 }
 
-extern char death_D_0028E3F8[];
 
 void death_func_0021D9D0(void) {
     u8 *save_a6;
@@ -1239,7 +1230,7 @@ void death_func_0021D9D0(void) {
     death_func_0021D4B0();
     death_func_0021BBB0();
     reg_a6 = save_a6;
-    printf(death_D_0028E3F8);
+    printf("att c2\n");
 }
 
 void death_func_0021DA20(void) {
@@ -1252,7 +1243,6 @@ void death_func_0021DA20(void) {
     reg_a6 = save_a6;
 }
 
-extern char death_D_0028E400[];
 
 void death_func_0021DA60(void) {
     u8 *save_a6;
@@ -1262,7 +1252,7 @@ void death_func_0021DA60(void) {
     death_func_0021D4B0();
     death_func_0021BE80();
     reg_a6 = save_a6;
-    printf(death_D_0028E400);
+    printf("att d2\n");
 }
 
 void death_func_0021DAB0(void) {
@@ -1275,7 +1265,6 @@ void death_func_0021DAB0(void) {
     reg_a6 = save_a6;
 }
 
-extern char death_D_0028E408[];
 
 void death_func_0021DAF0(void) {
     u8 *save_a6;
@@ -1285,7 +1274,7 @@ void death_func_0021DAF0(void) {
     death_func_0021D4B0();
     death_func_0021C430();
     reg_a6 = save_a6;
-    printf(death_D_0028E408);
+    printf("att hak2\n");
 }
 
 void death_func_0021DB40(void) {
@@ -1298,7 +1287,6 @@ void death_func_0021DB40(void) {
     reg_a6 = save_a6;
 }
 
-extern char death_D_0028E418[];
 
 void death_func_0021DB80(void) {
     u8 *save_a6;
@@ -1308,7 +1296,7 @@ void death_func_0021DB80(void) {
     death_func_0021D4B0();
     death_func_0021C8A0();
     reg_a6 = save_a6;
-    printf(death_D_0028E418);
+    printf("att doku2\n");
 }
 
 void death_func_0021DBD0(void) {
@@ -1321,7 +1309,6 @@ void death_func_0021DBD0(void) {
     reg_a6 = save_a6;
 }
 
-extern char death_D_0028E428[];
 
 void death_func_0021DC10(void) {
     u8 *save_a6;
@@ -1331,7 +1318,7 @@ void death_func_0021DC10(void) {
     death_func_0021D4B0();
     death_func_0021CE10();
     reg_a6 = save_a6;
-    printf(death_D_0028E428);
+    printf("att hak r1 2\n");
 }
 
 void death_func_0021DC60(void) {
@@ -1344,7 +1331,6 @@ void death_func_0021DC60(void) {
     reg_a6 = save_a6;
 }
 
-extern char death_D_0028E438[];
 
 void death_func_0021DCA0(void) {
     u8 *save_a6;
@@ -1354,7 +1340,7 @@ void death_func_0021DCA0(void) {
     death_func_0021D4B0();
     death_func_0021D210();
     reg_a6 = save_a6;
-    printf(death_D_0028E438);
+    printf("att jet2\n");
 }
 
 void death_func_0021DCF0(void) {

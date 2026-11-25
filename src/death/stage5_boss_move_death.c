@@ -24,7 +24,11 @@ typedef struct {
 s32 rng_next();
 s32 entity_velocity();
 s32 func_002024C0();
-extern Range death_D_0028E490[];
+const Range death_D_0028E490[2] = { { 13312, 16384 }, { 18432, 21504 } };
+const Range death_D_0028E4A0[2] = { { 12288, 15360 }, { 19456, 22528 } };
+const Range death_D_0028E4B0[2] = { { 11264, 16384 }, { 18432, 23552 } };
+const Range death_D_0028E4C0[2] = { { 12288, 15872 }, { 18944, 22528 } };
+const Range death_D_0028E4D0[2] = { { 12288, 14848 }, { 19968, 22528 } };
 
 void death_func_00224F20(u8 index) {
     entity_velocity();
@@ -72,7 +76,6 @@ void death_func_00225060(u8 index) {
     death_func_00225090(index);
 }
 
-extern Range death_D_0028E4A0[];
 
 void death_func_00225090(u8 index) {
     entity_velocity();
@@ -119,7 +122,6 @@ void death_func_002251D0(u8 index) {
     death_func_002251F0(index);
 }
 
-extern Range death_D_0028E4B0[];
 
 void death_func_002251F0(u8 index) {
     entity_velocity();
@@ -167,7 +169,6 @@ void death_func_00225330(u8 index) {
     death_func_00225360(index);
 }
 
-extern Range death_D_0028E4C0[];
 
 void death_func_00225360(u8 index) {
     entity_velocity();
@@ -218,7 +219,6 @@ void death_func_002254A0(u8 index) {
     death_func_00225500(index);
 }
 
-extern Range death_D_0028E4D0[];
 
 void death_func_00225500(u8 index) {
     entity_velocity();
