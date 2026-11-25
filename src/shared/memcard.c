@@ -85,7 +85,7 @@ extern s32 D_00271D40[];
 extern s32 g_cd_last_read_size_as_s32;
 extern s8 D_0028ECD4;
 extern s32 D_0028ED00;
-extern s32 D_0028ED04;
+extern s32 g_memcard_watch_step;
 extern s32 D_0028ED0C;
 extern s32 D_0028ED14;
 extern s32 D_0028ED18;
@@ -104,7 +104,7 @@ void func_0022C630(void) {
     D_0028ED18 = 0;
     D_0028ED14 = 0;
     D_0028ED10 = 0;
-    D_0028ED04 = 0;
+    g_memcard_watch_step = 0;
     D_0028ED00 = 0;
     D_0028ECD4 = 0;
 }
@@ -267,7 +267,7 @@ void func_0022C870() {
 }
 
 extern u32 g_mc_file_as_u32;
-extern s8 D_006A4800_as_s8_a[];
+extern s8 g_replay_file_loaded_as_s8_a[];
 extern s32 D_006C4AE8[];
 extern s8 g_mc_save_buf_as_s8_a[];
 extern s32 D_006C5494[];
@@ -294,7 +294,7 @@ void func_0022C960(void) {
     case 9:
     case 10:
         size = 0x202E8;
-        data = D_006A4800_as_s8_a;
+        data = g_replay_file_loaded_as_s8_a;
         break;
     }
     sum = 0;
@@ -345,7 +345,7 @@ s32 func_0022CAB0(void) {
     case 9:
     case 10:
         size = 0x202E8;
-        data = D_006A4800_as_s8_a;
+        data = g_replay_file_loaded_as_s8_a;
         break;
     }
     sum = 0;
@@ -617,7 +617,7 @@ void func_0022D240(s32 arg0) {
     }
 }
 
-extern s8 D_0028ECE0_as_s8;
+extern s8 g_memcard_watch_delay_as_s8;
 extern s8 D_0028ECE4_as_s8;
 extern s8 D_0028ECE8_as_s8;
 extern s8 g_mc_choice_as_s8;
@@ -629,7 +629,7 @@ void func_0022D2C0(void) {
     D_0028ECE8_as_s8 = 0;
     g_mc_choice_as_s8 = 1;
     g_mc_step_as_s8 = 0;
-    D_0028ECE0_as_s8 = 0;
+    g_memcard_watch_delay_as_s8 = 0;
     D_0028ECE4_as_s8 = 0;
     g_mc_wait_as_s8 = 0;
     D_0028ECD8_as_s8 = 0;
@@ -1080,7 +1080,7 @@ void func_0022DFF0(void) {
 
 extern u16 D_0028ECA0;
 extern u8 D_0028ECDC;
-extern u8 D_0028ECE0;
+extern u8 g_memcard_watch_delay;
 extern u8 D_0028ECE4;
 
 void func_0022E180(void) {
@@ -1099,7 +1099,7 @@ void func_0022E180(void) {
         D_0028ECA0 = 206;
         g_mc_cursor_x = 324;
         g_mc_step += 1;
-        D_0028ECE0 = 0;
+        g_memcard_watch_delay = 0;
         break;
     case 1:
         D_0028ECE4 -= 1;
@@ -1108,17 +1108,17 @@ void func_0022E180(void) {
         }
         break;
     case 2:
-        if (D_0028ECE0 > 60) {
+        if (g_memcard_watch_delay > 60) {
             func_0022CDB0(1);
             if (D_0028ECD0 == 0) {
-                D_0028ECE0 = 0;
+                g_memcard_watch_delay = 0;
                 if (D_0028ECC8 != 0) {
                     g_mc_step = 20;
                     break;
                 }
             }
         } else {
-            D_0028ECE0 += 1;
+            g_memcard_watch_delay += 1;
         }
         if (g_pad_trigger[2] & 0x20) {
             func_0022D240(2);
@@ -1199,7 +1199,7 @@ void func_0022E410(void) {
         D_0028ECA0 = 206;
         g_mc_cursor_x = 324;
         g_mc_step += 1;
-        D_0028ECE0 = 0;
+        g_memcard_watch_delay = 0;
         break;
     case 1:
         D_0028ECE4 -= 1;
@@ -1208,17 +1208,17 @@ void func_0022E410(void) {
         }
         break;
     case 2:
-        if (D_0028ECE0 > 60) {
+        if (g_memcard_watch_delay > 60) {
             func_0022CDB0(1);
             if (D_0028ECD0 == 0) {
-                D_0028ECE0 = 0;
+                g_memcard_watch_delay = 0;
                 if (D_0028ECC8 != 0) {
                     g_mc_step = 20;
                     break;
                 }
             }
         } else {
-            D_0028ECE0 += 1;
+            g_memcard_watch_delay += 1;
         }
         if (g_pad_trigger[2] & 0x20) {
             func_0022D240(2);
@@ -1619,7 +1619,7 @@ void func_0022E710(void) {
 }
 
 extern u8 D_0068E580[];
-extern u8 D_006A4800[];
+extern u8 g_replay_file_loaded[];
 void func_0022F070(void) {
     s32 sceMcOpen(s32 arg0, s32 arg1, void *arg2, s32 arg3);
     s32 sceMcClose(s32 arg0);
@@ -1908,7 +1908,7 @@ void func_0022F070(void) {
         }
         break;
     case 0x26:
-        if (sceMcWrite(g_mc_fd, D_006A4800, 0x206EC) == 0) {
+        if (sceMcWrite(g_mc_fd, g_replay_file_loaded, 0x206EC) == 0) {
             g_mc_step += 1;
         } else {
             g_mc_wait -= 1;
@@ -2428,7 +2428,7 @@ void func_00230840(void) {
         case 8:
         case 9:
         case 10:
-            status = sceMcRead(g_mc_fd, D_006A4800, 0x206EC);
+            status = sceMcRead(g_mc_fd, g_replay_file_loaded, 0x206EC);
             break;
         }
         if (status == 0) {
@@ -2939,7 +2939,7 @@ void func_00231520(void) {
 
 extern u8 D_0028ED30;
 extern u8 D_0028ED35;
-extern u8 D_006A0E50[];
+extern u8 g_replay_slot_infos[];
 extern u8 D_006A0E88[];
 extern u8 D_006A0E89[];
 extern u8 D_006A0E8A[];
@@ -2959,7 +2959,7 @@ s32 func_00231840(void) {
     if (D_0028ED35 < 11) {
         printf("--next no[%d]\n", D_0028ED35);
         for (i = 0, offset = 0; i < 10; i++, offset += 0x400) {
-            save = D_006A0E50 + offset;
+            save = g_replay_slot_infos + offset;
             printf("[%d][%d][%d][%d][%d]-[%d] no[%d]\n", save[0x38], save[0x39], save[0x3A], save[0x3B], save[0x3C], save[0x3D], i);
             count = 0;
             if (*(u16 *)save == 1) {
@@ -3144,7 +3144,7 @@ void func_002319B0(void) {
         }
         break;
     case 6:
-        if (sceMcRead(g_mc_fd, D_006A0E50 + ((g_mc_file - 1) << 0xA), 0x400) == 0) {
+        if (sceMcRead(g_mc_fd, g_replay_slot_infos + ((g_mc_file - 1) << 0xA), 0x400) == 0) {
             g_mc_step += 1;
             break;
         }
@@ -3228,7 +3228,7 @@ void func_002319B0(void) {
                 break;
             }
             printf("--hason[%d]\n", g_mc_file);
-            *(s16 *)(D_006A0E50 + ((g_mc_file - 1) << 0xA)) = 2;
+            *(s16 *)(g_replay_slot_infos + ((g_mc_file - 1) << 0xA)) = 2;
             g_mc_step = 0;
             D_0028ED14 += 1;
             break;
@@ -3236,7 +3236,7 @@ void func_002319B0(void) {
         break;
     case 37:
         printf("--hason[%d]\n", g_mc_file);
-        *(s16 *)(D_006A0E50 + ((g_mc_file - 1) << 0xA)) = 2;
+        *(s16 *)(g_replay_slot_infos + ((g_mc_file - 1) << 0xA)) = 2;
         g_mc_step = 0;
         D_0028ED14 += 1;
         break;
@@ -3327,7 +3327,7 @@ void func_00232430(void) {
         D_0028ECA0 = 210;
         g_mc_cursor_x = 324;
         g_mc_step += 1;
-        D_0028ECE0 = 0;
+        g_memcard_watch_delay = 0;
         break;
     case 1:
         D_0028ECE4 -= 1;
@@ -3336,17 +3336,17 @@ void func_00232430(void) {
         }
         break;
     case 2:
-        if (D_0028ECE0 > 60) {
+        if (g_memcard_watch_delay > 60) {
             func_0022CDB0(1);
             if (D_0028ECD0 == 0) {
-                D_0028ECE0 = 0;
+                g_memcard_watch_delay = 0;
                 if ((D_0028ECC8 == 4) || (D_0028ECC8 == 3)) {
                     g_mc_step = 20;
                     break;
                 }
             }
         } else {
-            D_0028ECE0 += 1;
+            g_memcard_watch_delay += 1;
         }
         if (g_pad_trigger[2] & 0x20) {
             func_0022D240(2);
@@ -3526,7 +3526,7 @@ void func_002329F0(void) {
         D_0028ECA0 = 180;
         D_0028ECE4 = 3;
         g_mc_cursor_x = 222;
-        D_0028ECE0 = 70;
+        g_memcard_watch_delay = 70;
         g_mc_step += 1;
         break;
     case 1:
@@ -3724,7 +3724,7 @@ void func_00232DE0(void) {
                 g_mc_step = 50;
             } else {
                 g_mc_choice = 1;
-                D_0028ECE0 = 0;
+                g_memcard_watch_delay = 0;
                 D_0028ECA0 = 232;
                 g_mc_cursor_x = 324;
                 g_mc_step += 1;
@@ -3732,7 +3732,7 @@ void func_00232DE0(void) {
         }
         break;
     case 3:
-        if (D_0028ECE0 > 60) {
+        if (g_memcard_watch_delay > 60) {
             g_mc_port = 0;
             g_mc_slot = 0;
             func_0022CDB0(1);
@@ -3741,10 +3741,10 @@ void func_00232DE0(void) {
                     g_mc_step = 0;
                     break;
                 }
-                D_0028ECE0 = 0;
+                g_memcard_watch_delay = 0;
             }
         } else {
-            D_0028ECE0 += 1;
+            g_memcard_watch_delay += 1;
         }
         if (g_pad_trigger[2] & 0x20) {
             func_0022D240(2);
@@ -3980,16 +3980,16 @@ void func_00232DE0(void) {
             g_mc_step = 20;
             break;
         }
-        D_0028ECE0 = 0;
+        g_memcard_watch_delay = 0;
         g_mc_step += 1;
         g_mc_choice = 1;
         D_0028ECA0 = 256;
         g_mc_cursor_x = 324;
         break;
     case 11:
-        if (D_0028ECE0 == 71) {
-            D_0028ECE0 = 0;
-        } else if (D_0028ECE0 > 60) {
+        if (g_memcard_watch_delay == 71) {
+            g_memcard_watch_delay = 0;
+        } else if (g_memcard_watch_delay > 60) {
             g_mc_port = 0;
             g_mc_slot = 0;
             func_0022CDB0(1);
@@ -3998,10 +3998,10 @@ void func_00232DE0(void) {
                     g_mc_step = 0;
                     break;
                 }
-                D_0028ECE0 = 71;
+                g_memcard_watch_delay = 71;
             }
         } else {
-            D_0028ECE0 += 1;
+            g_memcard_watch_delay += 1;
         }
         if (g_pad_trigger[2] & 0x20) {
             func_0022D240(2);
@@ -4063,7 +4063,7 @@ void func_00232DE0(void) {
                 g_mc_step = 0;
                 break;
             }
-            D_0028ECE0 = 0;
+            g_memcard_watch_delay = 0;
             g_mc_step = 0;
             if (g_mc_choice == 0) {
                 g_mc_step = 5;
@@ -4077,7 +4077,7 @@ void func_00232DE0(void) {
                 g_mc_step = 0;
                 break;
             }
-            D_0028ECE0 = 0;
+            g_memcard_watch_delay = 0;
             g_mc_step = 0;
             if (g_mc_choice == 0) {
                 g_mc_step = 21;
@@ -4103,7 +4103,7 @@ void func_00233BE0(void) {
     case 0:
         D_0028ECC4 = 0;
         g_mc_step += 1;
-        D_0028ECE0 = 0;
+        g_memcard_watch_delay = 0;
         g_mc_wait = 60;
         break;
     case 1:
@@ -4140,7 +4140,7 @@ void func_00233BE0(void) {
         }
         break;
     case 20:
-        if (D_0028ECE0 > 60) {
+        if (g_memcard_watch_delay > 60) {
             g_mc_port = 0;
             g_mc_slot = 0;
             func_0022CDB0(1);
@@ -4149,10 +4149,10 @@ void func_00233BE0(void) {
                     g_mc_step = 0;
                     break;
                 }
-                D_0028ECE0 = 0;
+                g_memcard_watch_delay = 0;
             }
         } else {
-            D_0028ECE0 += 1;
+            g_memcard_watch_delay += 1;
         }
         func_0022C5E0(200, D_0028DE14, 0, 20, 14, D_0028ED10, 100);
         func_00233EE0();
@@ -4164,24 +4164,24 @@ void func_00233BE0(void) {
 }
 
 
-s32 func_00233DA0(void) {
-    switch (D_0028ED04) {
+s32 memcard_watch_update(void) {
+    switch (g_memcard_watch_step) {
     case 0:
         D_0028ED0C = 0;
-        D_0028ED04 += 1;
+        g_memcard_watch_step += 1;
         break;
     case 1:
         func_0022C730();
         if (D_0028ED0C != 0) {
             D_0028ED0C = 0;
-            D_0028ECE0 = 30;
-            D_0028ED04 += 1;
+            g_memcard_watch_delay = 30;
+            g_memcard_watch_step += 1;
         }
         break;
     case 2:
-        D_0028ECE0 -= 1;
-        if ((s32)D_0028ECE0 <= 0) {
-            D_0028ED04 += 1;
+        g_memcard_watch_delay -= 1;
+        if ((s32)g_memcard_watch_delay <= 0) {
+            g_memcard_watch_step += 1;
         }
         break;
     case 3:
@@ -4189,27 +4189,27 @@ s32 func_00233DA0(void) {
         if (D_0028ECD0 == 0) {
             switch (D_0028ECC8) {
             case 4:
-                D_0028ED04 = 0;
+                g_memcard_watch_step = 0;
                 break;
             case 1:
             case 2:
             case 3:
                 func_00236900();
             default:
-                D_0028ECE0 = 30;
-                D_0028ED04 = 2;
+                g_memcard_watch_delay = 30;
+                g_memcard_watch_step = 2;
                 break;
             }
         }
         break;
     }
-    return D_0028ED04 >= 2;
+    return g_memcard_watch_step >= 2;
 }
 
-void func_00233EC0(void) {
+void memcard_watch_recheck(void) {
     D_0028ED0C = 0;
-    D_0028ED04 = 2;
-    D_0028ECE0_as_s8 = 0x1E;
+    g_memcard_watch_step = 2;
+    g_memcard_watch_delay_as_s8 = 0x1E;
 }
 
 extern s32 D_0028DDD8;
@@ -5168,7 +5168,7 @@ void func_00236900(void)
     blockOffset = 0;
 
     do {
-        buffer = D_006A0E50;
+        buffer = g_replay_slot_infos;
         cursor = buffer + blockOffset;
         bytesCleared = 0;
 
@@ -5190,7 +5190,7 @@ void func_00236900(void)
     } while (blockIndex < 12);
 }
 
-extern u16 D_006A0E50_as_u16_a[];
+extern u16 g_replay_slot_infos_as_u16_a[];
 extern u16 D_006A0E52[];
 extern u16 D_006A0E54[];
 extern u16 D_006A0E56[];
@@ -5255,7 +5255,7 @@ void func_00236960(s32 slot) {
     D_006A0E5A[off] = D_006C58AA[0];
     D_006A0E5C[off] = D_006C58AC[0];
     D_006A0E5E[off] = D_006C58AE[0];
-    D_006A0E50_as_u16_a[off] = g_replay_file_as_u16_a[0];
+    g_replay_slot_infos_as_u16_a[off] = g_replay_file_as_u16_a[0];
     D_006A0E60[off] = D_006C58B0[0];
     D_006A0E62[off] = D_006C58B2[0];
     D_006A0E6C[off] = D_006C58BC[0];
@@ -5274,6 +5274,6 @@ void func_00236960(s32 slot) {
     D_006A0E80[off] = D_006C58D0[0];
     D_006A0E82[off] = D_006C58D2[0];
     D_006A0E86[off] = D_006C58D6[0];
-    D_006A0E50_as_u16_a[off] = 1;
+    g_replay_slot_infos_as_u16_a[off] = 1;
     D_006A0E90[off] = 0;
 }

@@ -2971,7 +2971,7 @@ extern s8 D_0028EBFA;
 extern s8 D_0028EC02;
 extern s8 D_0028EC0A;
 extern s8 D_0028EC12;
-extern u8 D_0028EC3C_as_u8;
+extern u8 g_replay_slots_state_as_u8;
 extern s32 D_0028EC7C;
 #ifdef DEATH_LABEL
 extern u8 *death_D_0028FFDC;
@@ -3124,7 +3124,7 @@ void func_00221550(void) {
         }
     }
     if (D_0028EB84 == 0xB) {
-        state = D_0028EC3C_as_u8;
+        state = g_replay_slots_state_as_u8;
         if (state != 0 && (u32)(state - 1) > 1 && (u32)(state - 5) > 1) {
             reg_a0 = (u8 *)MAIN_OR_DEATH_LABEL(D_0028DCFC, death_D_0028FFDC);
             func_002228D0(0x36, 8);
@@ -3135,7 +3135,7 @@ void func_00221550(void) {
         func_002228D0(0x36, 8);
     }
     if (D_0028EB84 == 0x14) {
-        state = D_0028EC3C_as_u8;
+        state = g_replay_slots_state_as_u8;
         if (state != 0 && (u32)(state - 1) > 1 && (u32)(state - 5) > 1) {
             reg_a0 = (u8 *)D_0028DD04;
             func_002228D0(0x36, 8);
@@ -3322,7 +3322,7 @@ extern s8 death_D_00290C4C;
 #endif
 
 void func_00221FF0() {
-    s32 func_002263C0();
+    s32 replay_slots_reset();
     D_0028EBB8 = 0;
     D_0028EBB4 = 0;
     D_0028EBB0 = 0;
@@ -3393,7 +3393,7 @@ void func_00221FF0() {
     memset(&D_0028EBE8, 0, 6);
     memset(&D_0028EBE0, 0, 6);
     memset(&D_0028EBD8, 0, 6);
-    func_002263C0();
+    replay_slots_reset();
     D_0028E368_as_s8 = 0;
     D_0028EB00 = 1;
     func_00222170();
@@ -5174,14 +5174,14 @@ extern s8 D_0028EACC;
 
 
 void func_00225B70(void) {
-    extern void func_002263C0(void);
+    extern void replay_slots_reset(void);
     D_0028EAC4 = 0;
     D_0028EACC = 1;
     D_0028EAC0 = 1;
     D_0028EB04 = 1;
     D_0028EB90 = 0;
     D_0028EB8C = 0;
-    func_002263C0();
+    replay_slots_reset();
 }
 
 extern s8 D_0028EAC8;
@@ -5235,12 +5235,12 @@ void func_00225CB0(void) {
     }
 }
 
-s32 func_00226260();
-s32 func_002263D0();
+s32 replay_slots_update();
+s32 replay_slots_open();
 s32 func_0022A870();
 
 s8 func_00225CD0(void) {
-    s32 func_002263C0();
+    s32 replay_slots_reset();
     s8 var_s0;
 
     var_s0 = 0;
@@ -5264,11 +5264,11 @@ s8 func_00225CD0(void) {
         D_0028EACC = 0;
         break;
     case 0x40:
-        func_002263D0(1, D_0028EC24, 0);
+        replay_slots_open(1, D_0028EC24, 0);
         D_0028EACC += 1;
         break;
     case 0x41:
-        switch (func_00226260()) {
+        switch (replay_slots_update()) {
         case 0:
             D_0028EACC = 1;
             D_0028EAC0 = 1;
@@ -5285,7 +5285,7 @@ s8 func_00225CD0(void) {
         D_0028EB04 = 1;
         D_0028EB90 = 0;
         D_0028EB8C = 0;
-        func_002263C0();
+        replay_slots_reset();
         break;
     }
     return var_s0;
@@ -5321,7 +5321,7 @@ void func_00225E20(void) {
     }
 }
 
-extern void func_00227000(void);
+extern void replay_slots_draw(void);
 extern void func_0022AA20(void);
 extern u8 *D_00271CC0[];
 extern Point D_00271CE0_as_Point_a[];
@@ -5371,7 +5371,7 @@ void func_00225EF0(void) {
         } else {
             func_00225E20();
             func_002260F0();
-            func_00227000();
+            replay_slots_draw();
             glyph_queue_clear();
             alpha = D_0028EAC4 * 2;
             for (i = 0; i < 3; i++) {
@@ -5434,7 +5434,7 @@ void func_002260F0(void) {
             gfx_draw_color_box(0xC, 8, 0x40, 0xD0, 0x12C, alpha, 1, 1, 0x40);
         }
         if (D_0028EACC >= 0x40) {
-            if (D_0028EC3C_as_u8 != 0 && (u32)(D_0028EC3C_as_u8 - 1) > 1 && (u32)(D_0028EC3C_as_u8 - 5) > 1) {
+            if (g_replay_slots_state_as_u8 != 0 && (u32)(g_replay_slots_state_as_u8 - 1) > 1 && (u32)(g_replay_slots_state_as_u8 - 5) > 1) {
                 reg_a0 = (u8 *)D_0028DDA8;
                 func_002228D0(0x36, 8);
             }

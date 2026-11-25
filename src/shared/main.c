@@ -87,7 +87,7 @@ extern u16 D_0028E9B4;
 extern s8 g_cd_async_state;
 extern s8 g_cd_async_busy;
 extern s8 D_0028EC58;
-extern u8 D_006A4800[];
+extern u8 g_replay_file_loaded[];
 extern u8 g_replay_file[];
 
 void func_002120D0(void) {
@@ -104,7 +104,7 @@ void func_002120D0(void) {
     printf("--replay_data size[%d]\n", 0x202E8);
     func_00236900();
     memset(g_replay_file, 0, 0x202E8);
-    memset(D_006A4800, 0, 0x202E8);
+    memset(g_replay_file_loaded, 0, 0x202E8);
     func_0021D8C0();
     sys_start();
     pointer_tables_init();

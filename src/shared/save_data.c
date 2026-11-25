@@ -19,81 +19,81 @@ s32 func_0022B4B0(void);
 s32 func_0022B540(void);
 void func_0022B7A0(s32 arg0);
 void func_0022BA60(void);
-s32 func_0022BC60(void);
-s32 func_0022BE60(u8 arg0);
+s32 replay_disc_headers_load(void);
+s32 replay_disc_file_load(u8 arg0);
 void func_0022BFD0();
 void func_0022C1E0();
 void func_0022C1F0();
 void func_0022C450();
 
-extern s8 D_0028EC3C;
-extern s32 D_0028EC48;
+extern s8 g_replay_slots_state;
+extern s32 g_replay_slots_alpha;
 
-void func_00226830(void) {
-    if (D_0028EC48 == 0) {
-        D_0028EC3C = 0;
+void replay_slots_closing(void) {
+    if (g_replay_slots_alpha == 0) {
+        g_replay_slots_state = 0;
     }
 }
 
 extern s8 D_0028EB04;
 extern s32 D_0028EB90;
-extern s8 D_0028EC44;
+extern s8 g_replay_slots_fade;
 
-void func_00226850(void) {
-    if (func_0022BC60() != 0) {
-        D_0028EC3C = 3;
-        D_0028EC44 = 1;
+void replay_slots_disc_scan(void) {
+    if (replay_disc_headers_load() != 0) {
+        g_replay_slots_state = 3;
+        g_replay_slots_fade = 1;
         D_0028EB90 = 0x40;
         D_0028EB04 = 1;
     }
 }
 
-extern u8 D_0028EC3C_as_u8;
+extern u8 g_replay_slots_state_as_u8;
 
-void func_00226890(void) {
-    D_0028EC3C_as_u8 = 4;
+void replay_slots_disc_ready(void) {
+    g_replay_slots_state_as_u8 = 4;
 }
 
 s32 sfx_menu_move();
-s32 func_002263F0();
-extern u8 D_0028EC34;
-extern s8 D_0028EC40;
-extern u8 D_006A0E50[];
-void func_002268A0(void) {
+s32 replay_slots_close();
+extern u8 g_replay_slots_pad;
+extern s8 g_replay_slots_cursor;
+extern u8 g_replay_slot_infos[];
+void replay_slots_disc_select(void) {
     s32 sfx_menu_confirm();
     s32 temp_a0;
     s32 temp_a0_3;
     u16 temp_a0_2;
 
-    temp_a0 = g_pad_trigger[D_0028EC34];
+    temp_a0 = g_pad_trigger[g_replay_slots_pad];
     if (temp_a0 & 0x40) {
         sfx_menu_confirm();
-        func_002263F0();
+        replay_slots_close();
     } else if (temp_a0 & 0x20) {
-        temp_a0_2 = *(u16 *)(D_006A0E50 + (D_0028EC40 << 0xA));
+        temp_a0_2 = *(u16 *)(g_replay_slot_infos + (g_replay_slots_cursor << 0xA));
         if ((temp_a0_2 != 0) && (temp_a0_2 != 3)) {
-            D_0028EC3C = 6;
+            g_replay_slots_state = 6;
             sfx_menu_confirm();
         }
     }
-    temp_a0_3 = g_pad_repeat[D_0028EC34];
+    temp_a0_3 = g_pad_repeat[g_replay_slots_pad];
     if (temp_a0_3 & 0x1000) {
         sfx_menu_move();
-        D_0028EC40 -= 1;
-        if (0 > D_0028EC40) {
-            D_0028EC40 = 9;
+        g_replay_slots_cursor -= 1;
+        if (0 > g_replay_slots_cursor) {
+            g_replay_slots_cursor = 9;
         }
     } else if (temp_a0_3 & 0x4000) {
         sfx_menu_move();
-        D_0028EC40 += 1;
-        if (D_0028EC40 >= 0xA) {
-            D_0028EC40 = 0;
+        g_replay_slots_cursor += 1;
+        if (g_replay_slots_cursor >= 0xA) {
+            g_replay_slots_cursor = 0;
         }
     }
 }
 
-extern s8 D_0028EC28;
-extern u8 D_0028EC40_as_u8;
+extern s8 g_replay_slot_loaded;
+extern u8 g_replay_slots_cursor_as_u8;
 extern u8 D_0028ED30;
 extern u8 D_0028ED31;
 extern u8 D_0028ED32;
@@ -102,7 +102,7 @@ extern u8 D_0028ED34;
 extern u8 D_0028ED35;
 extern u8 D_0028ED36;
 extern u8 D_0028ED37;
-extern u8 D_006A4800[];
+extern u8 g_replay_file_loaded[];
 extern u8 g_replay_file[];
 extern u8 D_006C58D8[];
 extern u8 D_006C58D9[];
@@ -113,14 +113,14 @@ extern u8 D_006C58DD[];
 extern u8 D_006C58DE[];
 extern u8 D_006C58DF[];
 extern u8 g_replay_snapshot[];
-s32 func_002269B0(void) {
+s32 replay_slots_disc_load(void) {
     s32 delta_encode();
     s32 replay_file_pointers_decode();
-    if (func_0022BE60(D_0028EC40_as_u8) != 0) {
-        D_0028EC28 = *(s8 *)&D_0028EC40_as_u8;
+    if (replay_disc_file_load(g_replay_slots_cursor_as_u8) != 0) {
+        g_replay_slot_loaded = *(s8 *)&g_replay_slots_cursor_as_u8;
         D_0028EB04 = 1;
         D_0028EB90 = 0x40;
-        memcpy(g_replay_file, D_006A4800, 0x202E8);
+        memcpy(g_replay_file, g_replay_file_loaded, 0x202E8);
         delta_encode(g_replay_snapshot);
         replay_file_pointers_decode(g_replay_file);
         D_0028ED30 = D_006C58D8[0];
@@ -170,7 +170,7 @@ extern char D_00289E18[];
 extern char D_00289E20[];
 extern char D_00289E28[];
 
-void func_00226A90(s32 slot, s32 x, s32 y, s32 alpha, s32 selected, SaveInfo *info) {
+void replay_slot_draw(s32 slot, s32 x, s32 y, s32 alpha, s32 selected, SaveInfo *info) {
     extern void text_queue_clear(void);
     extern void text_flush(void);
     extern void gfx_draw_color_box(s32 x, s32 y, s32 w, s32 h, s32 depth, s32 alpha, s32 r, s32 g, s32 b);
@@ -279,38 +279,38 @@ void func_00226A90(s32 slot, s32 x, s32 y, s32 alpha, s32 selected, SaveInfo *in
     reg_a6 = save_a6;
 }
 
-extern u8 D_0028EC44_as_u8;
-extern u8 D_006A0E50_as_u8_a_a0x400[][0x400];
+extern u8 g_replay_slots_fade_as_u8;
+extern u8 g_replay_slot_infos_as_u8_a_a0x400[][0x400];
 
-s32 func_00227000(void) {
+s32 replay_slots_draw(void) {
     s32 i;
     s32 y;
 
-    if (D_0028EC3C_as_u8 == 0) {
+    if (g_replay_slots_state_as_u8 == 0) {
         return 0;
     }
-    switch (D_0028EC44_as_u8) {
+    switch (g_replay_slots_fade_as_u8) {
     case 0:
         break;
     case 1:
-        D_0028EC48 += 4;
-        if (D_0028EC48 >= 0x80) {
-            D_0028EC44_as_u8 = 0;
-            D_0028EC48 = 0x80;
+        g_replay_slots_alpha += 4;
+        if (g_replay_slots_alpha >= 0x80) {
+            g_replay_slots_fade_as_u8 = 0;
+            g_replay_slots_alpha = 0x80;
         }
         break;
     case 2:
-        D_0028EC48 -= 4;
-        if (0 >= D_0028EC48) {
-            D_0028EC48 = 0;
-            D_0028EC44_as_u8 = 0;
+        g_replay_slots_alpha -= 4;
+        if (0 >= g_replay_slots_alpha) {
+            g_replay_slots_alpha = 0;
+            g_replay_slots_fade_as_u8 = 0;
         }
         break;
     }
-    if (0 < D_0028EC48) {
+    if (0 < g_replay_slots_alpha) {
         y = 0x18A;
         for (i = 0; i < 10; i++) {
-            func_00226A90(i, y, 0, D_0028EC48, (i == D_0028EC40) ? 1 : 0, (SaveInfo *)D_006A0E50_as_u8_a_a0x400[i]);
+            replay_slot_draw(i, y, 0, g_replay_slots_alpha, (i == g_replay_slots_cursor) ? 1 : 0, (SaveInfo *)g_replay_slot_infos_as_u8_a_a0x400[i]);
             y -= 0x22;
         }
     }
@@ -344,7 +344,7 @@ void func_00227120(void) {
 }
 
 extern u8 D_0028EBE0;
-extern u8 D_0028EC30;
+extern u8 g_replay_slots_from_disc;
 void func_002271D0(void) {
     u8 sp10[0x16];
     u8 sp30[0xA];
@@ -358,7 +358,7 @@ void func_002271D0(void) {
     memcpy(D_0068DEF0, sp10, 0x16);
     memcpy(D_0068DED8, sp30, 0xA);
     memcpy(D_0068DEC8, sp40, 0xC);
-    if (D_0028EC30 == 0) {
+    if (g_replay_slots_from_disc == 0) {
         D_0028EBE0 = 0;
         D_0028EB84 = 0xB;
         func_00227C90();
@@ -867,12 +867,12 @@ void func_00227B70(void) {
 }
 
 void func_00227C90(void) {
-    s32 func_002263D0(s32, s8, s32);
+    s32 replay_slots_open(s32, s8, s32);
     func_00227310(&D_0028EBE0_as_Fade);
     func_00222260(0xB);
     D_0028EC20 = 0;
     g_replay_mode_as_s8 = 0;
-    func_002263D0(0, D_0028EC24, 0);
+    replay_slots_open(0, D_0028EC24, 0);
 }
 
 void func_00227CD0(void) {
@@ -882,11 +882,11 @@ void func_00227CD0(void) {
 }
 
 void func_00227D00(void) {
-    s32 func_00226260();
+    s32 replay_slots_update();
     s32 temp_v0;
 
     func_002273E0();
-    temp_v0 = func_00226260();
+    temp_v0 = replay_slots_update();
     switch (temp_v0) {
     case 0:
         D_0028EC18_as_Fade.flag = 3;
@@ -924,24 +924,24 @@ void func_00227D90(void) {
 
 void func_00227E00(void) {
     func_00227440(&D_0028EBE0_as_Fade);
-    func_00227000();
+    replay_slots_draw();
 }
 
 void func_00227E30(void) {
-    s32 func_002263D0(s32, s8, s32);
+    s32 replay_slots_open(s32, s8, s32);
     func_00227310(&D_0028EBE0_as_Fade);
     func_00222260(0xB);
     D_0028EC20 = 0;
     g_replay_mode_as_s8 = 0;
-    func_002263D0(0, D_0028EC24, 1);
+    replay_slots_open(0, D_0028EC24, 1);
 }
 
 void func_00227E70(void) {
-    s32 func_00226260();
+    s32 replay_slots_update();
     s32 temp_v0;
 
     func_002273E0();
-    temp_v0 = func_00226260();
+    temp_v0 = replay_slots_update();
     switch (temp_v0) {
     case 0:
         D_0028EC18_as_Fade.flag = 4;
@@ -994,11 +994,11 @@ void func_00227F70(void) {
 }
 
 void func_00227FE0(void) {
-    s32 func_00226260();
+    s32 replay_slots_update();
     s32 temp_v0;
 
     func_002273E0();
-    temp_v0 = func_00226260();
+    temp_v0 = replay_slots_update();
     switch (temp_v0) {
     case 0:
         D_0028EB54 = 0;
@@ -1011,7 +1011,7 @@ void func_00227FE0(void) {
         break;
     case 3:
         func_00228060();
-        func_002263F0();
+        replay_slots_close();
         break;
     }
 }
@@ -2431,7 +2431,7 @@ void func_0022B1D0(void) {
 
 
 void func_0022B2F0(void) {
-    if (D_0028EC30 == 0) {
+    if (g_replay_slots_from_disc == 0) {
         func_0022B4B0();
         return;
     }
@@ -2476,14 +2476,14 @@ void func_0022B330(void) {
 
     count = 0;
     for (i = 0; i < 6; i++) {
-        if (D_0028ED30_as_u8_a8[i] == D_006A4800[0x38 + i]) {
+        if (D_0028ED30_as_u8_a8[i] == g_replay_file_loaded[0x38 + i]) {
             count++;
         }
     }
     if (count == 6) {
         data = (SaveBody *)D_006A4C00;
         delta_encode((u8 *)data);
-        replay_file_pointers_decode(D_006A4800);
+        replay_file_pointers_decode(g_replay_file_loaded);
         printf(D_00289E50, D_0028ED50, data->score1);
         printf(D_00289E70, D_0028ED54, data->count1);
         printf(D_00289E90, D_0028ED4C, data->stage1);
@@ -2493,7 +2493,7 @@ void func_0022B330(void) {
         if (D_0028ED54 == data->count1 && D_0028ED50 == data->score1 &&
             D_0028ED4C == data->stage1 && D_0028ED48 == data->count2 &&
             D_0028ED44 == data->score2 && D_0028ED40 == data->stage2) {
-            memcpy(g_replay_file, D_006A4800, 0x202E8);
+            memcpy(g_replay_file, g_replay_file_loaded, 0x202E8);
             g_replay_watch_after_run = 1;
         }
     }
@@ -2552,7 +2552,7 @@ s32 func_0022B540(void) {
         }
         break;
     case 2:
-        if (func_0022BE60(D_0028EAB8) != 0) {
+        if (replay_disc_file_load(D_0028EAB8) != 0) {
             D_0028EC50 += 1;
             func_0022B330();
         }
@@ -2581,15 +2581,15 @@ void func_0022B620(void) {
     D_0028ED40 = g_p2_score_billions;
 }
 
-extern void func_002263C0(void);
+extern void replay_slots_reset(void);
 extern void replay_file_pointers_encode(void *data);
 extern u8 D_0028E2B8[8];
 extern u8 D_0028E368;
 extern s32 D_0028EB8C;
 
 s32 func_0022B660(void) {
-    extern s32 func_00226260(void);
-    extern void func_002263D0(s32 a, s32 b, s32 c);
+    extern s32 replay_slots_update(void);
+    extern void replay_slots_open(s32 a, s32 b, s32 c);
     u8 *save = g_replay_file;
     s32 state;
 
@@ -2609,18 +2609,18 @@ s32 func_0022B660(void) {
         D_0028E378 = 0xFF;
         D_0028EC4C = 1;
         D_0028E368 = 0;
-        memcpy(D_006A4800, save, 0x202E8);
-        replay_file_pointers_encode(D_006A4800);
+        memcpy(g_replay_file_loaded, save, 0x202E8);
+        replay_file_pointers_encode(g_replay_file_loaded);
         func_0022B7A0((s32)D_006A4C00);
-        func_002263C0();
-        func_002263D0(1, 2, 0);
+        replay_slots_reset();
+        replay_slots_open(1, 2, 0);
         D_0028EB90 = 0;
         D_0028EB04 = 1;
         D_0028EB8C = 0;
         D_0028EC50++;
         break;
     case 1:
-        if (func_00226260() == 0) {
+        if (replay_slots_update() == 0) {
             D_0028EC50++;
             D_0028EB04 = 2;
         }
@@ -2723,7 +2723,7 @@ void func_0022B870(void) {
         gfx_draw_color_box(0, 0, 0x1C2, 0xE0, 0x50, D_0028EB90 / 2, 1, 1, 1);
         if (g_replay_mode == 1) {
             func_0022BA60();
-            func_00227000();
+            replay_slots_draw();
         }
         glyph_queue_flush();
         reg_d0.w = save_d0;
@@ -2764,7 +2764,7 @@ void func_0022BA60(void) {
             frame_draw_left_panel(D_0028EB90);
             gfx_draw_color_box(0xC, 8, 0x40, 0xD0, 0x12C, var_s0, 1, 1, 0x40);
         }
-        if ((D_0028EC3C_as_u8 != 0) && ((u32) (D_0028EC3C_as_u8 - 1) > 1U) && ((u32) (D_0028EC3C_as_u8 - 5) > 1U)) {
+        if ((g_replay_slots_state_as_u8 != 0) && ((u32) (g_replay_slots_state_as_u8 - 1) > 1U) && ((u32) (g_replay_slots_state_as_u8 - 5) > 1U)) {
             reg_a0 = (u8 *)D_0028DDA8_as_s32;
             func_002228D0(0x36, 8);
         }
@@ -2824,14 +2824,14 @@ typedef struct {
 
 extern void func_00236900(void);
 extern Row g_replay_file_headers_as_Row_a[];
-extern s16 D_006A0E50_as_s16_a_a512[][512];
+extern s16 g_replay_slot_infos_as_s16_a_a512[][512];
 
-s32 func_0022BC60(void) {
+s32 replay_disc_headers_load(void) {
     s32 i;
 
     func_00236900();
     for (i = 0; i < 10; i++) {
-        *(Row *)D_006A0E50_as_s16_a_a512[i] = g_replay_file_headers_as_Row_a[i];
+        *(Row *)g_replay_slot_infos_as_s16_a_a512[i] = g_replay_file_headers_as_Row_a[i];
     }
     return 1;
 }
@@ -2841,38 +2841,38 @@ extern char D_00289F10[];
 extern char D_00289F30[];
 extern s8 g_cd_async_state;
 extern s8 g_cd_async_busy;
-extern u8 *D_0028EAAC;
-extern u8 D_0028EAB0;
-extern u8 D_0028EAB4;
+extern u8 *g_replay_disc_load_buf;
+extern u8 g_replay_disc_load_slot;
+extern u8 g_replay_disc_load_step;
 extern u8 g_load_buf[];
-s32 func_0022BE60(u8 arg0) {
+s32 replay_disc_file_load(u8 arg0) {
     u32 state;
 
-    state = D_0028EAB4;
+    state = g_replay_disc_load_step;
     switch (state) {
     case 0:
-        D_0028EAB0 = arg0;
-        D_0028EAB4 = state + 1;
-        D_0028EAAC = g_load_buf;
+        g_replay_disc_load_slot = arg0;
+        g_replay_disc_load_step = state + 1;
+        g_replay_disc_load_buf = g_load_buf;
         music_stop();
         printf(D_00289F10);
         break;
     case 1:
         if (g_cd_async_busy != 0) {
             g_cd_async_busy = 1;
-            D_0028EAB4 = state + 1;
+            g_replay_disc_load_step = state + 1;
             g_cd_async_state = 0;
         }
         break;
     case 2:
-        cd_read_async(D_0028EAAC, g_replay_files[D_0028EAB0].size, g_replay_files[D_0028EAB0].lba);
+        cd_read_async(g_replay_disc_load_buf, g_replay_files[g_replay_disc_load_slot].size, g_replay_files[g_replay_disc_load_slot].lba);
         if (g_cd_async_busy == 0) {
 #ifndef DEATH_LABEL
             g_cd_async_busy = 1;
             g_cd_async_state = 0;
 #endif
-            D_0028EAB4 = 0;
-            memcpy(D_006A4800, D_0028EAAC, 0x202E8);
+            g_replay_disc_load_step = 0;
+            memcpy(g_replay_file_loaded, g_replay_disc_load_buf, 0x202E8);
             printf(D_00289F30);
             return 1;
         }

@@ -246,8 +246,8 @@ void func_00137CC0(void) {
 s32 text_palette_load();
 s32 delta_encode();
 s32 func_00224B50();
-s32 func_0022BC60();
-s32 func_0022BE60();
+s32 replay_disc_headers_load();
+s32 replay_disc_file_load();
 s32 replay_file_pointers_decode();
 extern u8 D_00269320[];
 extern u8 D_0028DEF4;
@@ -267,7 +267,7 @@ extern u8 D_0028ED36;
 extern u8 D_0028ED37;
 extern s8 g_replay_buffer_state_as_s8;
 extern s8 g_replay_mode_as_s8;
-extern u8 D_006A4800[];
+extern u8 g_replay_file_loaded[];
 extern u8 g_replay_file[];
 extern u8 D_006C58D8[];
 extern u8 D_006C58D9[];
@@ -319,15 +319,15 @@ void func_00137E00(void) {
     switch (temp_a1) {                              /* irregular */
     case 0:
         D_0028DF08 = temp_a1 + 1;
-        func_0022BC60(4, temp_a1, 1);
+        replay_disc_headers_load(4, temp_a1, 1);
         reg_a0 = (u8 *)D_00269320;
         reg_d0.h[0] = 0xC;
         text_palette_load();
         /* fallthrough */
     case 1:
-        if (func_0022BE60(D_0028DF04) != 0) {
+        if (replay_disc_file_load(D_0028DF04) != 0) {
             D_0028DF08 += 1;
-            memcpy(g_replay_file, D_006A4800, 0x202E8);
+            memcpy(g_replay_file, g_replay_file_loaded, 0x202E8);
             delta_encode(g_replay_snapshot);
             replay_file_pointers_decode(g_replay_file);
             g_replay_mode_as_s8 = 2;
