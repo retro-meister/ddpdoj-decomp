@@ -23,7 +23,7 @@ extern u8 D_0025FAF0[];
 extern u8 D_0025FB70[];
 extern void (*stage1_boss_anim_routines[])(void);
 extern void (*stage1_boss_fire_routines[])(void);
-extern u8 D_0026E190[];
+extern void (*stage1_boss_draw_routines[])(void);
 extern void (*stage1_boss_mode_routines[])(void);
 extern void (*stage1_boss_move_routines[])(void);
 extern u8 D_0026E9E0[];
@@ -59,7 +59,7 @@ void stage1_boss_start(void) {
     ENTITY(reg_a6)->x.h -= reg_d0.h[0];
     reg_a0 = (u8 *)stage1_boss_move_routines;
     reg_a1 = (u8 *)stage1_boss_fire_routines;
-    reg_a2 = (u8 *)D_0026E190;
+    reg_a2 = (u8 *)stage1_boss_draw_routines;
     reg_a3 = (u8 *)stage1_boss_anim_routines;
     reg_a4 = (u8 *)stage1_boss_mode_routines;
     boss_slots_init();

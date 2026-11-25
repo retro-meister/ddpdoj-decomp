@@ -199,6 +199,8 @@ segments:
       - [0x16dc50, data, data_16dc50]
       - [0x16e070, .data, shared/stage1_boss_attack]
       - [0x16e0f0, data, data_16e0f0]
+      - [0x16e210, .data, shared/stage1_boss_draw]
+      - [0x16e7c0, data, data_16e7c0]
       - [0x16e8e0, .data, shared/stage1_boss_mode]
       - [0x16e960, .data, shared/stage1_boss_move]
       - [0x16ea60, data, data_16ea60]
