@@ -82,6 +82,7 @@ extern u8 *reg_atmp; /* scratch address register (exchanges) */
     (words)[0] = reg_tmp.h[1]; \
     (words)[1] = reg_tmp.h[0]
 extern s8 cond_flag; /* result of the last routine that reports through the condition codes */
+extern void (*reg_call_target)(); /* 0x28E3F4: address of the routine an indirect call goes through */
 extern s8 rng_values[256];
 
 #endif

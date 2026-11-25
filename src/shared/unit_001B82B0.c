@@ -346,7 +346,6 @@ s32 rng_next_bit();
 s32 func_00201390();
 extern u16 D_00250CE0[];
 extern u8 D_0028E52F;
-extern void (*reg_call_target)();
 
 void func_001B8D00(void) {
     u8 flag;

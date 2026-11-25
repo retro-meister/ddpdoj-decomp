@@ -545,8 +545,8 @@ extern u8 D_00251BA0[];
 extern u8 D_00251BC0[];
 extern u8 D_00251BE0[];
 extern u8 D_00251C00[];
-extern u8 D_0028E390;
-extern u8 D_0028E39C;
+extern u8 g_setting_chute_type;
+extern u8 g_setting_coin_mode;
 
 void func_001B0160(void) {
     void text_layer_print(void);
@@ -554,7 +554,7 @@ void func_001B0160(void) {
     if (*(u8 *)(reg_a5 + 6) == 0) {
         goto next_1;
     }
-    if (D_0028E390 != 1) {
+    if (g_setting_chute_type != 1) {
         goto next_1;
     }
     reg_d0.h[0] = reg_d1.h[0];
@@ -562,7 +562,7 @@ next_1:
     if (reg_d0.h[0] != 0) {
         goto block_50;
     }
-    reg_d0.b[0] = D_0028E39C;
+    reg_d0.b[0] = g_setting_coin_mode;
     if (reg_d0.b[0] == 0x12) {
         goto block_51;
     }

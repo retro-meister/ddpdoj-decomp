@@ -3,7 +3,7 @@
 
 extern s32 D_0026A2A0[];
 extern u8 D_0028DAB8[];
-extern u8 D_0028E38C;
+extern u8 g_setting_difficulty;
 extern u16 D_0028E7F0;
 extern s32 D_0028E7F4;
 
@@ -13,7 +13,7 @@ extern u16 g_attract_demo;
 
 void func_00138110(void) {
     reg_d0.w = 0;
-    reg_d0.b[0] = D_0028E38C;
+    reg_d0.b[0] = g_setting_difficulty;
 #ifdef DEATH_LABEL
     if (g_attract_demo != 0) {
         reg_d0.b[0] = 1;

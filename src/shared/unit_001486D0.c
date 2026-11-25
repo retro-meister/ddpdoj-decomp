@@ -1607,7 +1607,6 @@ extern u8 D_002526D0[];
 extern u16 D_0029C0BA[];
 extern u16 D_0029C0BC[];
 extern u16 D_0029C0BE[];
-extern void (*reg_call_target)();
 
 void func_0014CAE0(void) {
     u16 temp_a0;

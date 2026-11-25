@@ -1257,8 +1257,8 @@ s32 func_00130CC0();
 extern u8 D_00251BC0[];
 extern u8 D_00251BE0[];
 extern u8 D_00251C00[];
-extern u8 D_0028E390;
-extern u8 D_0028E39C;
+extern u8 g_setting_chute_type;
+extern u8 g_setting_coin_mode;
 
 void func_00206690(void) {
     cond_flag = 0;
@@ -1268,11 +1268,11 @@ void func_00206690(void) {
 next_1:
     func_001301B0();
     if (reg_d7.h[0] != 0) goto next_2;
-    if (D_0028E390 != 1) goto next_2;
+    if (g_setting_chute_type != 1) goto next_2;
     reg_d0.h[0] = reg_d1.h[0];
 next_2:
     if (reg_d0.h[0] != 0) goto block_4;
-    reg_d0.b[0] = D_0028E39C;
+    reg_d0.b[0] = g_setting_coin_mode;
     if (reg_d0.b[0] == 0x12) goto block_5;
     if (reg_d0.b[0] == 0x11) goto block_7;
     if ((s8) reg_d0.b[0] > 8) goto block_7;

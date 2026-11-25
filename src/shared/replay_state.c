@@ -123,9 +123,9 @@ extern u8 D_0028E284;
 extern u8 D_0028E288;
 extern u8 D_0028E2EC;
 extern u8 D_0028E304;
-extern u8 D_0028E384;
-extern u8 D_0028E388;
-extern u8 D_0028E38C;
+extern u8 g_setting_ship_stock;
+extern u8 g_setting_extend;
+extern u8 g_setting_difficulty;
 extern u16 D_0028E3DC;
 extern u16 D_0028E3E0;
 extern u16 D_0028E3E4;
@@ -670,9 +670,9 @@ void func_00238B90(Buf *buf) {
     *(u16 *)(p + 0x34FA) = g_p2_hyper_effect_flag;
     *(u16 *)(p + 0x34FC) = g_p1_hyper_effect_delay;
     *(u16 *)(p + 0x34FE) = g_p2_hyper_effect_delay;
-    p[0x350C] = D_0028E38C;
-    p[0x350D] = D_0028E388;
-    p[0x350E] = D_0028E384;
+    p[0x350C] = g_setting_difficulty;
+    p[0x350D] = g_setting_extend;
+    p[0x350E] = g_setting_ship_stock;
     p[0x350F] = D_0028E2EC;
     p[0x3510] = D_0028E304;
     *(u16 *)(p + 0x3500) = g_game_frame;
@@ -688,8 +688,8 @@ void func_00238B90(Buf *buf) {
     p[0x5532] = D_0028E288;
     p[0x5533] = D_0028E284;
     D_006C58D6_as_s16_a[0] = MAIN_OR_DEATH_LABEL(0xCB, 0x6E);
-    D_006C58AA_as_s16_a[0] = D_0028E38C;
-    D_006C58C8_as_s16_a[0] = D_0028E388;
+    D_006C58AA_as_s16_a[0] = g_setting_difficulty;
+    D_006C58C8_as_s16_a[0] = g_setting_extend;
     if (*(s16 *)g_player1_as_u8_a < 0) {
         D_006C58C6[0] = g_p1_lives;
     } else {
@@ -1175,9 +1175,9 @@ void func_0023A490(u8 *p) {
     g_p2_hyper_effect_flag = *(u16 *)(p + 0x34FA);
     g_p1_hyper_effect_delay = *(u16 *)(p + 0x34FC);
     g_p2_hyper_effect_delay = *(u16 *)(p + 0x34FE);
-    D_0028E38C = p[0x350C];
-    D_0028E388 = p[0x350D];
-    D_0028E384 = p[0x350E];
+    g_setting_difficulty = p[0x350C];
+    g_setting_extend = p[0x350D];
+    g_setting_ship_stock = p[0x350E];
     D_0028E2EC = p[0x350F];
     D_0028E304 = p[0x3510];
     g_game_frame = *(u16 *)(p + 0x3500);

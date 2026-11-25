@@ -409,7 +409,7 @@ void func_00123540(void) {
 }
 #endif
 
-s32 func_0012FD00();
+s32 layers_clear_all();
 s32 sound_stop_effects();
 s32 sound_stop_loops();
 s32 music_stop();
@@ -435,7 +435,7 @@ void func_00123780(void) {
     ENTITY(reg_a6)->hit_y_plus.h = (u16) reg_d0.h[0];
     D_00295E3E_as_s16_a[0] = 0x101;
     D_00295E40_as_s16_a[0] = 0;
-    func_0012FD00();
+    layers_clear_all();
     music_stop();
     sound_stop_effects();
     sound_stop_loops();

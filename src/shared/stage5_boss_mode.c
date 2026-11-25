@@ -130,7 +130,6 @@ s32 vibration_start_pad2();
 extern u16 D_00264BB0[];
 extern u16 D_00264C10[];
 extern u8 g_slowdown_timer;
-extern void (*reg_call_target)();
 
 void func_001F1680() {
     s16 t1;

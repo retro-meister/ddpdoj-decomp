@@ -135,7 +135,6 @@ s32 enemy_init_entities_n();
 s32 rng_next_unsigned();
 extern u8 D_002637F0[];
 extern u8 D_00263810[];
-extern void (*reg_call_target)();
 
 void func_001DE510(void) {
     reg_a0 = (u8 *)D_00263860;

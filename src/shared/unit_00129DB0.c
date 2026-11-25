@@ -107,7 +107,6 @@ extern u16 D_0029976E[];
 extern u8 *D_00299770[];
 extern u16 g_side_scroll_step[];
 extern u8 D_0029CEA0_as_u8_a[];
-extern void (*reg_call_target)();
 extern u16 *reg_a4_as_u16_p;
 
 #define SLOT_PHASE MAIN_OR_DEATH_LABEL(D_00299762[0], *(u16 *)(D_002962E0 + 0x10682))

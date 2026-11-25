@@ -45,11 +45,11 @@ s32 func_00137C50();
 s32 sfx_coin();
 s32 sound_stop_effects();
 s32 func_00224B50();
-extern u8 D_00269160[];
+extern u8 test_palette_0[];
 extern u8 D_0026A830[];
 extern s8 D_0028DF84;
 extern u8 g_stage_load_state;
-extern u8 D_0028E39C;
+extern u8 g_setting_coin_mode;
 extern u16 g_attract_demo;
 extern u16 D_0028E7B8;
 extern s8 g_cd_async_state;
@@ -88,7 +88,7 @@ next_2:
     if (reg_d0.h[0] == 15) goto block_3;
     if (reg_d0.h[0] == 16) goto block_3;
     if (reg_d0.h[0] == 19) goto block_3;
-    if (D_0028E39C != 0x12) goto next_3;
+    if (g_setting_coin_mode != 0x12) goto next_3;
     if (g_stage_load_state != 0) goto next_3;
     if (g_pad_trigger[2] & 0x800) goto block_1;
 next_3:
@@ -117,7 +117,7 @@ next_4:
     sound_stop_effects();
 next_5:
     reg_d0.w = 0;
-    reg_a0 = (u8 *)D_00269160;
+    reg_a0 = (u8 *)test_palette_0;
     text_palette_load();
     text_layer_clear();
     func_0012FB00();
@@ -208,7 +208,7 @@ void func_00168EF0(void) {
         *(u8 *)(reg_a5 + 2) = 1U;
         text_layer_clear();
         reg_d0.w = 0;
-        reg_a0 = D_00269160;
+        reg_a0 = test_palette_0;
         text_palette_load();
         D_0028E304 = 0;
         func_0020EAA0();
@@ -282,7 +282,7 @@ void func_00168FD0(void) {
             func_002256B0();
         }
     }
-    if (D_0028E39C != 0x12) {
+    if (g_setting_coin_mode != 0x12) {
         func_0015BD00();
         if (g_stage_load_state == 0) {
             func_00169B40();
@@ -330,7 +330,7 @@ void death_func_00136FF0(void) {
         func_0012FB00();
         text_layer_clear();
         reg_d0.w = 0;
-        reg_a0 = D_00269160;
+        reg_a0 = test_palette_0;
         text_palette_load();
         func_0013B190();
         music_stop();
@@ -558,7 +558,7 @@ void func_00169410(void) {
     if (cond_flag == 0) {
         reg_d0.h[0] = 1;
         g_splash_visible = 0;
-        if (D_0028E39C == 0x12) {
+        if (g_setting_coin_mode == 0x12) {
             reg_d0.h[0] = 3;
         }
         func_00168BA0();
@@ -885,17 +885,17 @@ extern s8 D_0028EB88;
 
 void func_00169B40(void) {
     if (g_pad_trigger[2] & 0x800) {
-        if (D_0028E39C == 0x12) {
+        if (g_setting_coin_mode == 0x12) {
             D_0028EB88 = 0;
             reg_d0.h[0] = 0xF;
-            func_00168BA0(D_0028E39C);
+            func_00168BA0(g_setting_coin_mode);
             sfx_confirm();
             return;
         }
         if (D_0028E1E6[0] != 0) {
             D_0028EB88 = 0;
             reg_d0.h[0] = 0xF;
-            func_00168BA0(D_0028E39C);
+            func_00168BA0(g_setting_coin_mode);
         }
     }
 }
@@ -920,10 +920,10 @@ void func_00169BC0(void) {
 }
 
 #ifndef DEATH_LABEL
-extern u8 D_0028E390;
+extern u8 g_setting_chute_type;
 
 void func_00169C60(void) {
-    reg_d0.b[0] = D_0028E390;
+    reg_d0.b[0] = g_setting_chute_type;
     if (reg_d0.b[0] == 1) {
         func_0016A140();
         return;
@@ -933,7 +933,7 @@ void func_00169C60(void) {
         func_00169DA0();
         return;
     }
-    reg_d0.b[0] = D_0028E39C;
+    reg_d0.b[0] = g_setting_coin_mode;
     if (reg_d0.b[0] == 0x12) {
         func_00169DA0();
         return;
@@ -1130,7 +1130,7 @@ void func_0016A170(void) {
         func_0016A2D0();
         return;
     }
-    reg_d0.b[0] = D_0028E39C;
+    reg_d0.b[0] = g_setting_coin_mode;
     if (reg_d0.b[0] == 0x12) {
         func_0016A2D0();
         return;
@@ -1156,7 +1156,7 @@ void func_0016A220(void) {
         func_0016A2E0();
         return;
     }
-    reg_d0.b[0] = D_0028E39C;
+    reg_d0.b[0] = g_setting_coin_mode;
     if (reg_d0.b[0] == 0x12) {
         func_0016A2E0();
         return;

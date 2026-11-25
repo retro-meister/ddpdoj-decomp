@@ -1680,7 +1680,7 @@ extern u16 D_0028E078_as_u16_a[];
 extern u16 D_0028E07A[];
 extern u16 D_0028E080_as_u16_a[];
 extern u16 D_0028E082[];
-extern u8 D_0028E380;
+extern u8 g_setting_rapid_fire;
 extern s16 D_0028E3A0;
 extern s16 D_0028E3B0;
 extern u8 g_p2_hyper_in_effect_as_u8;
@@ -1694,7 +1694,6 @@ extern u16 g_two_player_game;
 extern u16 D_00299764[];
 extern u16 D_00299766[];
 extern u16 g_side_scroll_step[];
-extern void (*reg_call_target)();
 
 void func_001420E0(void) {
     u32 tmp_dec;
@@ -1885,7 +1884,7 @@ block_13:
             reg_d3.h[0] -= reg_d0.h[0];
             PLAYER(reg_a6)->x.h = (u16) reg_d3.h[0];
         }
-        if ((D_0028E380 != 0) && (PLAYER(reg_a6)->input.b.raw & 0x40) && (PLAYER(reg_a6)->fire_lockout.b[1] == 0)) {
+        if ((g_setting_rapid_fire != 0) && (PLAYER(reg_a6)->input.b.raw & 0x40) && (PLAYER(reg_a6)->fire_lockout.b[1] == 0)) {
             reg_a0 = (u8 *)D_0029F180;
             if (*(u8 *)(reg_a5 + 6) != 0) {
                 reg_a0 = (u8 *)D_0029F110;

@@ -4476,14 +4476,14 @@ extern u8 D_0028E358;
 extern u8 g_pad_vib_state_p2;
 extern u8 g_pad_vib_state_p1;
 extern u8 D_0028E37C;
-extern u8 D_0028E380;
-extern u8 D_0028E384;
-extern u8 D_0028E388;
-extern u8 D_0028E38C;
-extern u8 D_0028E390;
-extern u8 D_0028E394;
-extern u8 D_0028E398;
-extern u8 D_0028E39C;
+extern u8 g_setting_rapid_fire;
+extern u8 g_setting_ship_stock;
+extern u8 g_setting_extend;
+extern u8 g_setting_difficulty;
+extern u8 g_setting_chute_type;
+extern u8 g_setting_demo_sound;
+extern u8 g_setting_continue;
+extern u8 g_setting_coin_mode;
 extern u8 D_002BB060[5][30];
 extern u8 D_002BB100[5][30];
 extern u16 D_002BB268[5];
@@ -4564,15 +4564,15 @@ void func_002345B0(void) {
             g_mc_save_buf_as_SaveBlock.aCC[i] = D_002BB3B0[i];
         }
     }
-    g_mc_save_buf_as_SaveBlock.b25C = D_0028E39C;
-    g_mc_save_buf_as_SaveBlock.b25D = D_0028E398;
-    g_mc_save_buf_as_SaveBlock.b25E = D_0028E394;
-    g_mc_save_buf_as_SaveBlock.b25F = D_0028E390;
+    g_mc_save_buf_as_SaveBlock.b25C = g_setting_coin_mode;
+    g_mc_save_buf_as_SaveBlock.b25D = g_setting_continue;
+    g_mc_save_buf_as_SaveBlock.b25E = g_setting_demo_sound;
+    g_mc_save_buf_as_SaveBlock.b25F = g_setting_chute_type;
     g_mc_save_buf_as_SaveBlock.b260 = D_0028E358;
-    g_mc_save_buf_as_SaveBlock.b261 = D_0028E38C;
-    g_mc_save_buf_as_SaveBlock.b262 = D_0028E388;
-    g_mc_save_buf_as_SaveBlock.b263 = D_0028E384;
-    g_mc_save_buf_as_SaveBlock.b264 = D_0028E380;
+    g_mc_save_buf_as_SaveBlock.b261 = g_setting_difficulty;
+    g_mc_save_buf_as_SaveBlock.b262 = g_setting_extend;
+    g_mc_save_buf_as_SaveBlock.b263 = g_setting_ship_stock;
+    g_mc_save_buf_as_SaveBlock.b264 = g_setting_rapid_fire;
     g_mc_save_buf_as_SaveBlock.b265 = D_0028E37C;
     g_mc_save_buf_as_SaveBlock.b266 = g_pad_vib_state_p1;
     g_mc_save_buf_as_SaveBlock.b267 = g_pad_vib_state_p2;
@@ -4716,15 +4716,15 @@ void func_00234EF0(void) {
             D_002BB3B0[i] = g_mc_save_buf_as_SaveBlock.aCC[i];
         }
     }
-    D_0028E39C = g_mc_save_buf_as_SaveBlock.b25C;
-    D_0028E398 = g_mc_save_buf_as_SaveBlock.b25D;
-    D_0028E394 = g_mc_save_buf_as_SaveBlock.b25E;
-    D_0028E390 = g_mc_save_buf_as_SaveBlock.b25F;
+    g_setting_coin_mode = g_mc_save_buf_as_SaveBlock.b25C;
+    g_setting_continue = g_mc_save_buf_as_SaveBlock.b25D;
+    g_setting_demo_sound = g_mc_save_buf_as_SaveBlock.b25E;
+    g_setting_chute_type = g_mc_save_buf_as_SaveBlock.b25F;
     D_0028E358 = g_mc_save_buf_as_SaveBlock.b260;
-    D_0028E38C = g_mc_save_buf_as_SaveBlock.b261;
-    D_0028E388 = g_mc_save_buf_as_SaveBlock.b262;
-    D_0028E384 = g_mc_save_buf_as_SaveBlock.b263;
-    D_0028E380 = g_mc_save_buf_as_SaveBlock.b264;
+    g_setting_difficulty = g_mc_save_buf_as_SaveBlock.b261;
+    g_setting_extend = g_mc_save_buf_as_SaveBlock.b262;
+    g_setting_ship_stock = g_mc_save_buf_as_SaveBlock.b263;
+    g_setting_rapid_fire = g_mc_save_buf_as_SaveBlock.b264;
     D_0028E37C = g_mc_save_buf_as_SaveBlock.b265;
     g_pad_vib_state_p1 = g_mc_save_buf_as_SaveBlock.b266;
     g_pad_vib_state_p2 = g_mc_save_buf_as_SaveBlock.b267;
@@ -4814,15 +4814,15 @@ void func_00235890(void) {
             D_006A3E50.a1C6[i][j] = D_002BB060[i][j];
         }
     }
-    D_006A3E50.b25C = D_0028E39C;
-    D_006A3E50.b25D = D_0028E398;
-    D_006A3E50.b25E = D_0028E394;
-    D_006A3E50.b25F = D_0028E390;
+    D_006A3E50.b25C = g_setting_coin_mode;
+    D_006A3E50.b25D = g_setting_continue;
+    D_006A3E50.b25E = g_setting_demo_sound;
+    D_006A3E50.b25F = g_setting_chute_type;
     D_006A3E50.b260 = D_0028E358;
-    D_006A3E50.b261 = D_0028E38C;
-    D_006A3E50.b262 = D_0028E388;
-    D_006A3E50.b263 = D_0028E384;
-    D_006A3E50.b264 = D_0028E380;
+    D_006A3E50.b261 = g_setting_difficulty;
+    D_006A3E50.b262 = g_setting_extend;
+    D_006A3E50.b263 = g_setting_ship_stock;
+    D_006A3E50.b264 = g_setting_rapid_fire;
     D_006A3E50.b265 = D_0028E37C;
     D_006A3E50.b266 = g_pad_vib_state_p1;
     D_006A3E50.b267 = g_pad_vib_state_p2;
@@ -4915,19 +4915,19 @@ s32 func_00235ED0(void) {
             }
         }
     }
-    if (D_006A3E50.b25C != D_0028E39C) {
+    if (D_006A3E50.b25C != g_setting_coin_mode) {
         goto fail;
     }
     stage++;
-    if (D_006A3E50.b25D != D_0028E398) {
+    if (D_006A3E50.b25D != g_setting_continue) {
         goto fail;
     }
     stage++;
-    if (D_006A3E50.b25E != D_0028E394) {
+    if (D_006A3E50.b25E != g_setting_demo_sound) {
         goto fail;
     }
     stage++;
-    if (D_006A3E50.b25F != D_0028E390) {
+    if (D_006A3E50.b25F != g_setting_chute_type) {
         goto fail;
     }
     stage++;
@@ -4935,19 +4935,19 @@ s32 func_00235ED0(void) {
         goto fail;
     }
     stage++;
-    if (D_006A3E50.b261 != D_0028E38C) {
+    if (D_006A3E50.b261 != g_setting_difficulty) {
         goto fail;
     }
     stage++;
-    if (D_006A3E50.b262 != D_0028E388) {
+    if (D_006A3E50.b262 != g_setting_extend) {
         goto fail;
     }
     stage++;
-    if (D_006A3E50.b263 != D_0028E384) {
+    if (D_006A3E50.b263 != g_setting_ship_stock) {
         goto fail;
     }
     stage++;
-    if (D_006A3E50.b264 != D_0028E380) {
+    if (D_006A3E50.b264 != g_setting_rapid_fire) {
         goto fail;
     }
     stage++;

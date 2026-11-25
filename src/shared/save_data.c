@@ -3060,9 +3060,9 @@ extern u8 D_0028E2C4;
 extern u8 g_simulation_boss_start;
 extern u8 D_0028E2D4;
 extern u8 D_0028E2E4;
-extern u8 D_0028E384;
-extern u8 D_0028E388;
-extern u8 D_0028E38C;
+extern u8 g_setting_ship_stock;
+extern u8 g_setting_extend;
+extern u8 g_setting_difficulty;
 extern u16 g_score_panel_intro;
 extern u16 g_loop;
 extern u8 D_00684C88[];
@@ -3131,9 +3131,9 @@ void func_0022C1F0() {
         D_0028E2E4 = 0;
         D_0028E2D4 = 0xFF;
         D_0028E2C4 = 0;
-        D_0028E38C = D_00684C88[0];
-        D_0028E388 = D_00684C90[0];
-        D_0028E384 = D_00684C8E[0];
+        g_setting_difficulty = D_00684C88[0];
+        g_setting_extend = D_00684C90[0];
+        g_setting_ship_stock = D_00684C8E[0];
         func_0022C450(D_00684C88[0]);
         g_pad_input_locked = 1;
 #ifdef DEATH_LABEL

@@ -389,7 +389,6 @@ void func_001D8730(void) {
 s32 rng_next();
 s32 rng_next_unsigned();
 extern u8 D_0026ECC0[];
-extern void (*reg_call_target)();
 
 void func_001D8740(s32 arg0, s32 arg1, void *arg2) {
     s32 aim256_at_player();

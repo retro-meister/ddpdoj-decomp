@@ -1,0 +1,271 @@
+#include "common.h"
+#include "test_mode.h"
+
+s32 input_get_p1_pressed();
+s32 sfx_confirm();
+s32 sfx_cursor_move();
+
+extern u16 test_game_cursor_rows[];
+extern s32 test_game_text_title[];
+extern s32 test_game_text_help_select[];
+extern s32 test_game_text_help_setting[];
+extern u8 test_game_text_difficulty[];
+extern u8 test_game_text_extend[];
+extern u8 test_game_text_ship_stock[];
+extern u8 test_game_text_rapid_fire[];
+extern u8 test_game_text_exit[];
+extern u8 *test_game_item_texts[];
+extern u8 test_game_difficulty_names[];
+extern u8 test_game_extend_names[];
+extern u8 test_game_ship_stock_names[];
+extern u8 test_game_rapid_fire_names[];
+extern u8 *test_game_value_printers[];
+
+void test_game_cursor_erase(void) {
+    reg_d0.w = 3;
+    reg_d1.w = 4;
+    reg_a0 = (u8 *)test_game_cursor_rows;
+    reg_d1.b[0] -= *(u8 *)&g_test_cursor;
+    reg_d1.h[0] += reg_d1.h[0];
+    reg_d1.h[0] = (reg_d1.h[0] != 0) ? *(u16 *)((u8 *)((u16 *)reg_a0) + ((s16)reg_d1.h[0] & ~1)) : *(u16 *)reg_a0;
+    reg_d2.w = -2U;
+    test_cursor_put();
+}
+
+void test_game_cursor_draw(void) {
+    reg_d0.w = 3;
+    reg_d1.w = 4;
+    reg_a0 = (u8 *)test_game_cursor_rows;
+    reg_d1.b[0] -= *(u8 *)&g_test_cursor;
+    reg_d1.h[0] += reg_d1.h[0];
+    reg_d1.h[0] = (reg_d1.h[0] != 0) ? *(u16 *)((u8 *)((u16 *)reg_a0) + ((s16)reg_d1.h[0] & ~1)) : *(u16 *)reg_a0;
+    reg_d2.w = 0;
+    test_cursor_put();
+}
+
+void test_game_begin(void) {
+    layers_clear_all();
+    test_palettes_load();
+    g_test_cursor = 0;
+    g_test_redraw = 1;
+    reg_d0.h[0] = 0;
+    reg_a0 = (u8 *)test_game_text_title;
+    test_print_lines();
+    reg_a0 = (u8 *)test_game_text_help_select;
+    test_print_lines();
+    reg_a0 = (u8 *)test_game_text_help_setting;
+    test_print_lines();
+    test_game_cursor_draw();
+    reg_d0.w = 0;
+}
+
+void test_game_print_items(void) {
+    u8 **table;
+
+    reg_a0 = (u8 *)test_game_text_difficulty;
+    reg_d0.h[0] = 0;
+    test_print_lines();
+    reg_a0 = (u8 *)test_game_text_extend;
+    test_print_lines();
+    reg_a0 = (u8 *)test_game_text_ship_stock;
+    test_print_lines();
+    reg_a0 = (u8 *)test_game_text_rapid_fire;
+    test_print_lines();
+    reg_a0 = (u8 *)test_game_text_exit;
+    test_print_lines();
+    table = test_game_item_texts;
+    reg_d0.w = 0;
+    reg_d0.b[0] = g_test_cursor;
+    table += reg_d0.h[0];
+    reg_a0 = *table;
+    reg_d0.h[0] = 2;
+    test_print_lines();
+}
+
+void test_game_print_difficulty(void) {
+    reg_a0 = test_game_difficulty_names;
+    reg_d0.w = 0;
+    reg_d0.b[0] = g_setting_difficulty;
+    reg_d0.h[0] <<= 5;
+    reg_a0 += reg_d0.h[0];
+    reg_d0.h[0] = 7;
+    reg_d1.h[0] = 0x2A;
+    reg_d2.h[0] = reg_d7.h[0];
+    test_print_at();
+}
+
+void test_game_print_extend(void) {
+    reg_a0 = test_game_extend_names;
+    reg_d0.w = 0;
+    reg_d0.b[0] = g_setting_extend;
+    reg_d0.h[0] <<= 6;
+    reg_a0 += reg_d0.h[0];
+    reg_d0.h[0] = 7;
+    reg_d1.h[0] = 0x24;
+    reg_d2.h[0] = reg_d7.h[0];
+    test_print_at();
+    reg_d1.h[0] = 0x23;
+    reg_a0 += 0x20;
+    test_print_at();
+}
+
+void test_game_print_ship_stock(void)
+{
+    reg_d0.w = 0;
+    reg_d0.b[0] = g_setting_ship_stock;
+    reg_d0.h[0] <<= 5;
+    reg_a0 = test_game_ship_stock_names;
+    reg_a0 += reg_d0.h[0];
+    reg_d0.h[0] = 7;
+    reg_d1.h[0] = 0x1E;
+    reg_d2.h[0] = reg_d7.h[0];
+    test_print_at();
+}
+
+void test_game_print_rapid_fire(void)
+{
+    u8 selection;
+    u8 *entry;
+
+    selection = g_setting_rapid_fire;
+    reg_d0.w = 0;
+    reg_a0 = test_game_rapid_fire_names;
+    reg_d0.b[0] = selection;
+    reg_d0.h[0] <<= 5;
+    entry = reg_a0 + reg_d0.h[0];
+    reg_d0.h[0] = 7;
+    reg_d1.h[0] = 0x18;
+    reg_d2.h[0] = reg_d7.h[0];
+    reg_a0 = entry;
+    test_print_at();
+}
+
+#pragma push
+#pragma opt_propagation off
+typedef void (*Fn)(void);
+
+void test_game_print_values(void) {
+    u8 **table;
+    u8 *entry;
+
+    reg_d7.h[0] = 0;
+    test_game_print_difficulty();
+    reg_d7.h[0] = 0;
+    test_game_print_extend();
+    reg_d7.h[0] = 0;
+    test_game_print_ship_stock();
+    reg_d7.h[0] = 0;
+    test_game_print_rapid_fire();
+    table = test_game_value_printers;
+    reg_d0.w = 0;
+    reg_d0.b[0] = g_test_cursor;
+    table += reg_d0.h[0];
+    entry = *table;
+    if (entry == (u8 *)-1) {
+        return;
+    }
+    reg_a0 = entry;
+    reg_d7.h[0] = 2;
+    reg_call_target = (Fn)reg_a0;
+    reg_call_target();
+}
+#pragma pop
+
+void test_game_update(void) {
+    s64 selected;
+    s64 selected_2;
+
+    input_get_p1_pressed();
+    if (reg_d0.w & 1) {
+        g_test_redraw = 1;
+        sfx_cursor_move();
+        test_game_cursor_erase();
+        g_test_cursor -= 1;
+        if (0 > g_test_cursor) {
+            g_test_cursor = 4;
+        }
+        test_game_cursor_draw();
+    }
+    input_get_p1_pressed();
+    if (reg_d0.w & 2) {
+        g_test_redraw = 1;
+        sfx_cursor_move();
+        test_game_cursor_erase();
+        g_test_cursor += 1;
+        if (g_test_cursor > 4) {
+            g_test_cursor = 0;
+        }
+        test_game_cursor_draw();
+    }
+    input_get_p1_pressed();
+    if (reg_d0.w & 4) {
+        g_test_redraw = 1;
+        if (g_test_cursor != 4) {
+            sfx_cursor_move();
+        }
+        if (g_test_cursor == 0) {
+            g_setting_difficulty -= 1;
+            if (0 > (s8) g_setting_difficulty) {
+                g_setting_difficulty = 3;
+            }
+        }
+        selected = g_test_cursor;
+        if (selected == 1) {
+            g_setting_extend -= 1;
+            if (0 > (s8) g_setting_extend) {
+                g_setting_extend = 3;
+            }
+        }
+        if (selected == 2) {
+            g_setting_ship_stock -= 1;
+            if (0 > (s8) g_setting_ship_stock) {
+                g_setting_ship_stock = 4;
+            }
+        }
+        if (selected == 3) {
+            g_setting_rapid_fire -= 1;
+            g_setting_rapid_fire &= 1;
+        }
+    }
+    input_get_p1_pressed();
+    if (reg_d0.w & 8) {
+        g_test_redraw = 1;
+        if (g_test_cursor != 4) {
+            sfx_cursor_move();
+        }
+        if (g_test_cursor == 0) {
+            g_setting_difficulty += 1;
+            if ((s8) g_setting_difficulty >= 4) {
+                g_setting_difficulty = 0;
+            }
+        }
+        selected_2 = g_test_cursor;
+        if (selected_2 == 1) {
+            g_setting_extend += 1;
+            if ((s8) g_setting_extend >= 4) {
+                g_setting_extend = 0;
+            }
+        }
+        if (selected_2 == 2) {
+            g_setting_ship_stock += 1;
+            if ((s8) g_setting_ship_stock >= 5) {
+                g_setting_ship_stock = 0;
+            }
+        }
+        if (selected_2 == 3) {
+            g_setting_rapid_fire += 1;
+            g_setting_rapid_fire &= 1;
+        }
+    }
+    input_get_p1_pressed();
+    if ((reg_d0.w & 0x10) && (g_test_cursor == 4)) {
+        sfx_confirm();
+        reg_d0.w = 0;
+        test_screen_request();
+    } else if (g_test_redraw != 0) {
+        g_test_redraw = 0;
+        test_game_print_items();
+        test_game_print_values();
+    }
+    reg_d0.w = 0;
+}

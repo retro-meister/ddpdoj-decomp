@@ -740,18 +740,18 @@ void func_0021E000(void) {
 }
 
 extern s8 g_pad_vib_enabled_as_s8;
-extern s8 D_0028E384_as_s8;
-extern s8 D_0028E388_as_s8;
-extern s8 D_0028E38C_as_s8;
+extern s8 g_setting_ship_stock_as_s8;
+extern s8 g_setting_extend_as_s8;
+extern s8 g_setting_difficulty_as_s8;
 extern s8 D_0068DC21[];
 extern s8 D_0068DC22[];
 extern s8 D_0068DC23[];
 extern s8 D_0068DC24[];
 
 void func_0021E160(void) {
-    D_0028E38C_as_s8 = D_0068DC21[0];
-    D_0028E384_as_s8 = D_0068DC22[0];
-    D_0028E388_as_s8 = D_0068DC23[0];
+    g_setting_difficulty_as_s8 = D_0068DC21[0];
+    g_setting_ship_stock_as_s8 = D_0068DC22[0];
+    g_setting_extend_as_s8 = D_0068DC23[0];
     g_pad_vib_enabled_as_s8 = D_0068DC24[0];
 }
 
@@ -775,9 +775,9 @@ extern u8 D_0028E304;
 extern u8 D_0028E308;
 extern u8 D_0028E30C;
 extern u8 D_0028E32C_as_u8;
-extern u8 D_0028E384;
-extern u8 D_0028E388;
-extern u8 D_0028E38C;
+extern u8 g_setting_ship_stock;
+extern u8 g_setting_extend;
+extern u8 g_setting_difficulty;
 extern u8 D_0068DC21_as_u8_a[];
 extern u8 D_0068DC22_as_u8_a[];
 extern u8 D_0068DC23_as_u8_a[];
@@ -811,9 +811,9 @@ extern u8 death_D_00628DC6[];
 #endif
 
 void func_0021E1A0(void) {
-    D_0068DC21_as_u8_a[0] = D_0028E38C;
-    D_0068DC22_as_u8_a[0] = D_0028E384;
-    D_0068DC23_as_u8_a[0] = D_0028E388;
+    D_0068DC21_as_u8_a[0] = g_setting_difficulty;
+    D_0068DC22_as_u8_a[0] = g_setting_ship_stock;
+    D_0068DC23_as_u8_a[0] = g_setting_extend;
     D_0068DC24_as_u8_a[0] = g_pad_vib_enabled;
     D_0068DC33[0] = D_0028E278;
     D_0068DCF4[0] = D_0028E2D8;
@@ -4608,7 +4608,7 @@ void func_00224A30(void) {
 s32 layers_reset();
 s32 func_0012FA50();
 s32 func_0012FB00();
-s32 func_0012FD00();
+s32 layers_clear_all();
 s32 func_0013B190();
 s32 sound_stop_effects();
 s32 music_stop();
@@ -4653,7 +4653,7 @@ void func_00224A90(void) {
 #ifndef DEATH_LABEL
     D_0028E3B4_as_s16 = 0;
 #endif
-    func_0012FD00();
+    layers_clear_all();
     task_reset_all();
     func_0013B190();
     stage_map_reset();
@@ -4665,9 +4665,9 @@ void func_00224A90(void) {
 }
 
 void func_00224B50(void) {
-    D_0028E38C_as_s8 = D_0068DC21[0];
-    D_0028E384_as_s8 = D_0068DC22[0];
-    D_0028E388_as_s8 = D_0068DC23[0];
+    g_setting_difficulty_as_s8 = D_0068DC21[0];
+    g_setting_ship_stock_as_s8 = D_0068DC22[0];
+    g_setting_extend_as_s8 = D_0068DC23[0];
     D_0028E2EC_as_s8 = D_0068DC44[0];
     D_0028E304_as_s8 = D_0068DC41[0];
 #ifndef DEATH_LABEL

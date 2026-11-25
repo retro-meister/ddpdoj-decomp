@@ -454,7 +454,7 @@ s32 func_001AC980();
 extern u16 D_0024F3A8[];
 extern void *D_0028DEB8;
 extern u32 D_0028DED0_as_u32;
-extern u8 D_0028E384;
+extern u8 g_setting_ship_stock;
 
 void func_001358A0(void) {
     u16 temp_a0;
@@ -462,7 +462,7 @@ void func_001358A0(void) {
     D_0028E850 -= 1;
     reg_tmp.h[1] = *(u16 *)(reg_a6 + 8);
     reg_tmp.h[0] = *(u16 *)(reg_a6 + 0xA);
-    reg_d0.b[0] = D_0028E384;
+    reg_d0.b[0] = g_setting_ship_stock;
     reg_a1 = (u8 *)(D_0024F3A8);
     reg_a0 = (u8 *)reg_tmp.w;
     reg_d0.h[0] += reg_d0.h[0];
@@ -529,7 +529,7 @@ void func_00135AD0(void) {
     u16 temp_a0;
     reg_tmp.h[1] = *(u16 *)(reg_a6 + 8);
     temp_a0 = *(u16 *)(reg_a6 + 0xA);
-    reg_d0.b[0] = D_0028E384;
+    reg_d0.b[0] = g_setting_ship_stock;
     reg_a1 = (u8 *)(D_0024F3A8);
     reg_tmp.h[0] = temp_a0;
     reg_a0 = (u8 *)reg_tmp.w;
@@ -953,11 +953,11 @@ s32 func_0013FD80();
 s32 func_00171ED0();
 s32 func_001AACC0();
 s32 func_001AE490();
-extern u8 D_00269160[];
-extern u8 D_00269180[];
-extern u8 D_002691A0[];
-extern u8 D_002691C0[];
-extern u8 D_002691E0[];
+extern u8 test_palette_0[];
+extern u8 test_palette_1[];
+extern u8 test_palette_2[];
+extern u8 test_palette_3[];
+extern u8 test_palette_4[];
 extern u8 D_00269200[];
 extern u8 D_002692A0[];
 extern u8 D_002692C0[];
@@ -967,19 +967,19 @@ extern u16 D_0028E93C;
 
 void func_00136450(void) {
     *(s8 *)(reg_a5 + 3) = 1;
-    reg_a0 = (u8 *)D_00269160;
+    reg_a0 = (u8 *)test_palette_0;
     reg_d0.w = 0;
     text_palette_load();
-    reg_a0 = (u8 *)D_00269180;
+    reg_a0 = (u8 *)test_palette_1;
     reg_d0.w = 1;
     text_palette_load();
-    reg_a0 = (u8 *)D_002691A0;
+    reg_a0 = (u8 *)test_palette_2;
     reg_d0.w = 2;
     text_palette_load();
-    reg_a0 = (u8 *)D_002691C0;
+    reg_a0 = (u8 *)test_palette_3;
     reg_d0.w = 3;
     text_palette_load();
-    reg_a0 = (u8 *)D_002691E0;
+    reg_a0 = (u8 *)test_palette_4;
     reg_d0.w = 4;
     text_palette_load();
     reg_a0 = (u8 *)D_00269200;
@@ -1342,7 +1342,6 @@ extern u8 D_002BC7C0[];
 extern u16 D_0028E3EC;
 extern s8 D_0028E855_as_s8;
 extern u8 D_0029BC00[];
-extern void (*reg_call_target)();
 
 void func_00136F30(void) {
     u32 count;

@@ -134,7 +134,7 @@ void func_0012FCD0(void) {
 }
 
 
-void func_0012FD00(void) {
+void layers_clear_all(void) {
     func_0012FA80();
     func_0012FB50();
     func_0012FB80();
@@ -164,7 +164,7 @@ extern s8 D_0028E208_as_s8;
 extern s8 D_0028E20C_as_s8;
 extern s8 D_0028E210_as_s8;
 extern s16 D_0028E214;
-extern u8 D_0028E39C;
+extern u8 g_setting_coin_mode;
 
 void func_0012FD40(void) {
     s8 temp_v1;
@@ -173,7 +173,7 @@ void func_0012FD40(void) {
     reg_d0.w = 0;
     D_0028E1E4_as_s8_a[0] = 0;
     D_0028E1E6_as_s8_a[0] = 0;
-    reg_d0.b[0] = D_0028E39C;
+    reg_d0.b[0] = g_setting_coin_mode;
     D_0028E1D8_as_s8_a[0] = 0;
     D_0028E214 = 0;
     D_0028E210_as_s8 = 0;
@@ -233,12 +233,12 @@ void func_0012FE80(void) {
 
 extern u8 D_0028E1D4;
 extern u8 D_0028E1D8[];
-extern u8 D_0028E390;
+extern u8 g_setting_chute_type;
 
 void func_0012FEE0(void) {
     extern void func_0012FFC0(u8);
     reg_d0.b[0] = D_0028E1E4[0];
-    if (D_0028E390 == 1) {
+    if (g_setting_chute_type == 1) {
         reg_d0.b[0] = D_0028E1D8[0];
     }
     reg_d1.b[0] = D_0028E1D4;
@@ -257,7 +257,7 @@ void func_0012FF50(u8 arg0) {
     extern void func_0012FFD0(u8);
     extern void func_0012FFC0(u8);
     reg_d0.b[0] = D_0028E1E6[0];
-    if (D_0028E390 == 1) {
+    if (g_setting_chute_type == 1) {
         reg_d0.b[0] = D_0028E1DA[0];
     }
     reg_d1.b[0] = D_0028E1D0;
@@ -281,7 +281,7 @@ void func_0012FFD0() {
 extern u8 D_0028E1EC;
 
 void func_0012FFE0(void) {
-    reg_d0.b[0] = D_0028E39C;
+    reg_d0.b[0] = g_setting_coin_mode;
     if (reg_d0.b[0] == 0x12) {
         reg_d0.w = 0;
         reg_d1.w = 0;
@@ -301,7 +301,7 @@ void func_0012FFE0(void) {
 extern u8 D_0028E1D9[];
 
 void func_00130050(void) {
-    reg_d0.b[0] = D_0028E39C;
+    reg_d0.b[0] = g_setting_coin_mode;
     if (reg_d0.b[0] == 0x12) {
         reg_d0.w = 0;
         reg_d1.w = 0;
@@ -310,7 +310,7 @@ void func_00130050(void) {
     if (reg_d0.b[0] == 0x11) {
         reg_d0.w = 0;
         reg_d1.w = 0;
-        if (D_0028E390 != 1) {
+        if (g_setting_chute_type != 1) {
             reg_d0.b[0] = D_0028E1D9[0];
             reg_d1.b[0] = D_0028E1E4[0];
             return;
@@ -321,7 +321,7 @@ void func_00130050(void) {
     }
     reg_d0.w = 0;
     reg_d1.w = 0;
-    if (D_0028E390 != 1) {
+    if (g_setting_chute_type != 1) {
         reg_d0.b[0] = D_0028E1EC;
         reg_d1.b[0] = D_0028E1E4[0];
         return;
@@ -361,7 +361,7 @@ void func_00130110(void) {
 }
 
 void func_001301B0(void) {
-    reg_d0.b[0] = D_0028E39C;
+    reg_d0.b[0] = g_setting_coin_mode;
     if (reg_d0.b[0] == 0x12) {
         reg_d0.w = 0;
         reg_d1.w = 0;
@@ -374,7 +374,7 @@ void func_001301B0(void) {
 }
 
 void func_00130200(void) {
-    reg_d0.b[0] = D_0028E39C;
+    reg_d0.b[0] = g_setting_coin_mode;
     if (reg_d0.b[0] == 0x12) {
         reg_d0.w = 0;
         reg_d1.w = 0;
@@ -406,7 +406,7 @@ s32 func_00131340();
 s32 func_001313A0();
 
 void func_00130280(void) {
-    reg_d0.b[0] = D_0028E39C;
+    reg_d0.b[0] = g_setting_coin_mode;
     if (reg_d0.b[0] == 0x12) {
         func_001305C0();
         return;
@@ -452,12 +452,12 @@ s32 func_00131370();
 s32 func_001313E0();
 
 void func_001303B0(void) {
-    reg_d0.b[0] = D_0028E39C;
+    reg_d0.b[0] = g_setting_coin_mode;
     if (reg_d0.b[0] == 0x12) {
         func_001305C0();
         return;
     }
-    reg_d1.b[0] = D_0028E390;
+    reg_d1.b[0] = g_setting_chute_type;
     if (reg_d1.b[0] != 1) {
         if (reg_d0.b[0] == 0x11) {
             func_00130200();
@@ -539,7 +539,7 @@ void func_001305E0(void) {
     s1 = reg_d1.w;
     reg_d0.b[0] = *(s8 *)(reg_a0 + 2);
     if (reg_d0.b[0] == 9) goto block_end;
-    reg_d0.b[0] = D_0028E39C;
+    reg_d0.b[0] = g_setting_coin_mode;
     if (reg_d0.b[0] == 0x12) goto block_end;
     if (reg_d0.b[0] == 0x11) {
         *(s8 *)(reg_a0 + 0) += 1;
@@ -596,7 +596,7 @@ void func_00130790(void) {
     u32 count;
 
     if (g_stage_load_state != 0) return;
-    if (D_0028E39C == 0x12) return;
+    if (g_setting_coin_mode == 0x12) return;
     sd0 = reg_d0.w;
     sd1 = reg_d1.w;
     sd2 = reg_d2.w;
@@ -706,7 +706,7 @@ extern u16 g_arcade_coin_port_as_u16;
 
 void func_00130A60(void) {
     if (g_stage_load_state != 0) return;
-    if (D_0028E39C == 0x12) return;
+    if (g_setting_coin_mode == 0x12) return;
     reg_a0 = (u8 *)&g_arcade_coin_port_as_u16;
     reg_d0.h[0] = *(u16 *)reg_a0;
     reg_d1.h[0] = D_0028E1F4;
@@ -728,7 +728,7 @@ void func_00130A60(void) {
         sfx_coin();
         reg_a0 = (u8 *)D_0028E1E4_as_u16_a;
         func_001305E0();
-        reg_d0.b[0] = D_0028E39C;
+        reg_d0.b[0] = g_setting_coin_mode;
         if (reg_d0.b[0] != 0x12) {
             D_0028E208 += 1;
         }
@@ -736,12 +736,12 @@ void func_00130A60(void) {
     if (reg_d1.w & 2) {
         sfx_coin();
         reg_a0 = (u8 *)D_0028E1D8_as_u16_a;
-        reg_d0.b[0] = D_0028E390;
+        reg_d0.b[0] = g_setting_chute_type;
         if (reg_d0.b[0] != 1) {
             reg_a0 = (u8 *)D_0028E1E4_as_u16_a;
         }
         func_001305E0();
-        reg_d0.b[0] = D_0028E39C;
+        reg_d0.b[0] = g_setting_coin_mode;
         if (reg_d0.b[0] != 0x12) {
             D_0028E204 += 1;
         }
@@ -750,7 +750,7 @@ void func_00130A60(void) {
     if (D_0028E210 == 0) {
         func_00130110();
         if (cond_flag != 0) {
-            reg_d1.b[0] = D_0028E390;
+            reg_d1.b[0] = g_setting_chute_type;
             if (reg_d1.b[0] != 0) {
                 *(u16 *)reg_a0 = reg_d0.h[0];
             } else {

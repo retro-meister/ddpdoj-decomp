@@ -100,11 +100,11 @@ void boss_slots_end(void) {
 #pragma push
 #pragma opt_propagation off
 #pragma divbyzerocheck on
-extern u8 D_0028E38C;
+extern u8 g_setting_difficulty;
 extern u16 g_rank;
 
 void boss_level_get(void) {
-    u8 val = D_0028E38C;
+    u8 val = g_setting_difficulty;
     s32 quotient;
 
     reg_d1.w = 0;
@@ -188,7 +188,6 @@ extern u16 D_00295F44[];
 extern u16 D_002960B0[];
 extern u8 *D_00296210[];
 extern u16 D_00296214[];
-extern void (*reg_call_target)();
 
 void boss_slots_step(void) {
     u32 t1;

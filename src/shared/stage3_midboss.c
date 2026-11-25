@@ -135,7 +135,6 @@ extern u16 g_enemy_signal_4;
 extern u16 g_side_scroll_step[];
 extern u16 D_002BDAA4[];
 extern u16 D_002BDAA6[];
-extern void (*reg_call_target)();
 
 void func_001D4930(void) {
     u32 saved;

@@ -63,7 +63,6 @@ s32 rng_next_unsigned();
 s32 rng_next_word();
 extern u16 D_0026D810[];
 extern u16 D_0026D8A0[];
-extern void (*reg_call_target)();
 
 void func_001D2930() {
     u8 bits;

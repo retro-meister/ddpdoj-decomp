@@ -65,7 +65,6 @@ s32 boss_phase_start();
 s32 boss_part_hide();
 s32 func_001CBA00();
 extern u8 D_0026C680[];
-extern void (*reg_call_target)();
 
 void func_001C7DA0() {
     if (*(u8 *)(reg_a4 + 3) == 0) {

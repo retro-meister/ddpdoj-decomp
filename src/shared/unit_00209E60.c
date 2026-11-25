@@ -12,112 +12,18 @@ void func_0020B640(void);
 s32 input_get_p1_pressed();
 s32 sfx_confirm();
 s32 sfx_cursor_move();
-s32 func_002093F0();
-s32 func_00209710();
-s32 func_00209790();
-s32 func_00209880();
-s32 func_00209AF0();
-extern s8 D_0028DF9C;
-extern s8 D_0028DFA0;
-extern u8 D_0028E390;
-extern u8 D_0028E394;
-extern u8 D_0028E398;
-extern u8 D_0028E39C;
+s32 test_screen_request();
+s32 test_system_cursor_erase();
+s32 test_system_cursor_draw();
+s32 test_system_print_items();
+s32 test_system_print_values();
+extern s8 g_test_redraw;
+extern s8 g_test_cursor;
+extern u8 g_setting_chute_type;
+extern u8 g_setting_demo_sound;
+extern u8 g_setting_continue;
+extern u8 g_setting_coin_mode;
 
-void func_00209B80(void) {
-    s64 temp_v1;
-    s64 temp_v1_2;
-
-    input_get_p1_pressed();
-    if (reg_d0.w & 1) {
-        D_0028DF9C = 1;
-        sfx_cursor_move();
-        func_00209710();
-        D_0028DFA0 -= 1;
-        if (0 > D_0028DFA0) {
-            D_0028DFA0 = 4;
-        }
-        func_00209790();
-    }
-    input_get_p1_pressed();
-    if (reg_d0.w & 2) {
-        D_0028DF9C = 1;
-        sfx_cursor_move();
-        func_00209710();
-        D_0028DFA0 += 1;
-        if (D_0028DFA0 > 4) {
-            D_0028DFA0 = 0;
-        }
-        func_00209790();
-    }
-    input_get_p1_pressed();
-    if (reg_d0.w & 4) {
-        D_0028DF9C = 1;
-        if (D_0028DFA0 != 4) {
-            sfx_cursor_move();
-        }
-        if (D_0028DFA0 == 0) {
-            D_0028E39C -= 1;
-            if (0 > (s8) D_0028E39C) {
-                D_0028E39C = 0x12;
-            }
-        }
-        temp_v1 = D_0028DFA0;
-        if (temp_v1 == 1) {
-            D_0028E398 -= 1;
-            D_0028E398 &= 1;
-        }
-        if (temp_v1 == 2) {
-            D_0028E394 -= 1;
-            D_0028E394 &= 1;
-        }
-        if (temp_v1 == 3) {
-            D_0028E390 -= 1;
-            if (0 > (s8) D_0028E390) {
-                D_0028E390 = 2;
-            }
-        }
-    }
-    input_get_p1_pressed();
-    if (reg_d0.w & 8) {
-        D_0028DF9C = 1;
-        if (D_0028DFA0 != 4) {
-            sfx_cursor_move();
-        }
-        if (D_0028DFA0 == 0) {
-            D_0028E39C += 1;
-            if ((s8) D_0028E39C >= 0x13) {
-                D_0028E39C = 0;
-            }
-        }
-        temp_v1_2 = D_0028DFA0;
-        if (temp_v1_2 == 1) {
-            D_0028E398 += 1;
-            D_0028E398 &= 1;
-        }
-        if (temp_v1_2 == 2) {
-            D_0028E394 += 1;
-            D_0028E394 &= 1;
-        }
-        if (temp_v1_2 == 3) {
-            D_0028E390 += 1;
-            if ((s8) D_0028E390 >= 3) {
-                D_0028E390 = 0;
-            }
-        }
-    }
-    input_get_p1_pressed();
-    if ((reg_d0.w & 0x10) && (D_0028DFA0 == 4)) {
-        sfx_confirm();
-        reg_d0.w = 0;
-        func_002093F0();
-    } else if (D_0028DF9C != 0) {
-        D_0028DF9C = 0;
-        func_00209880();
-        func_00209AF0();
-    }
-    cond_flag = 0;
-}
 
 extern u8 D_00299D30[];
 

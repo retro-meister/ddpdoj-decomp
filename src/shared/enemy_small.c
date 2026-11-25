@@ -295,7 +295,6 @@ extern u16 g_enemy_signal_0;
 extern u16 g_enemies_stopped;
 extern u16 g_rank_3_16;
 extern u16 g_side_scroll_x[];
-extern void (*reg_call_target)();
 
 void func_0016D790(void) {
     enemy_path_step();

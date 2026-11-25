@@ -272,7 +272,7 @@ void func_002372C0(void) {
     }
 }
 
-extern u8 D_00269160[];
+extern u8 test_palette_0[];
 extern s8 D_0028DF84;
 
 void func_00237330(void) {
@@ -311,7 +311,7 @@ void func_00237330(void) {
     save_a6 = reg_a6;
     text_layer_clear();
     reg_d0.w = 0;
-    reg_a0 = (u8 *)D_00269160;
+    reg_a0 = (u8 *)test_palette_0;
     text_palette_load();
     D_0028DF84 = 0;
     *(s8 *)(reg_a5 + 3) = 1;
@@ -505,7 +505,7 @@ s32 text_layer_clear();                            /* extern */
 s32 func_0013B350();                            /* extern */
 s32 text_palette_load();                            /* extern */
 s32 func_00225B70();                            /* extern */
-extern s32 D_00269160_as_s32_a[];
+extern s32 test_palette_0_as_s32_a[];
 extern s32 D_0026B580_as_s32_a[];
 extern u32 D_0028ED84;
 
@@ -517,7 +517,7 @@ void func_002377F0(void) {
     temp_s1 = reg_d0.w;
     text_layer_clear();
     reg_d0.w = 0;
-    reg_a0 = (u8 *)D_00269160_as_s32_a;
+    reg_a0 = (u8 *)test_palette_0_as_s32_a;
     text_palette_load();
     *(s8 *)(reg_a5 + 3) = 1;
     *(s16 *)(reg_a5 + 6) = 0;
@@ -641,7 +641,7 @@ extern u16 g_input_p1_held;
 extern u8 D_0028E2BB;
 extern u8 D_0028E2BC;
 extern u8 D_0028E2E4;
-extern u8 D_0028E38C;
+extern u8 g_setting_difficulty;
 extern u16 g_scroll_line;
 extern u16 D_0028E8AC;
 extern u16 g_loop;
@@ -712,7 +712,7 @@ void func_00237AC0() {
         save[4] = 0xFF;
         save[3] = 0xFF;
     }
-    save[5] = D_0028E38C;
+    save[5] = g_setting_difficulty;
     save[18] = D_0028E2E4;
     printf((const char *)D_0028BF00, g_scroll_line, D_0028E8AC);
     }
@@ -883,8 +883,8 @@ extern u8 D_0028DEF8;
 extern u16 D_0028DFC0;
 extern u8 D_0028E2EC;
 extern u8 D_0028E304;
-extern u8 D_0028E384;
-extern u8 D_0028E388;
+extern u8 g_setting_ship_stock;
+extern u8 g_setting_extend;
 extern u16 D_0028E3DC;
 extern u16 D_0028E3E0;
 extern u16 D_0028E3E4;
@@ -996,9 +996,9 @@ void func_00238010(void) {
         }
         break;
     case 0x10:
-        D_0028E38C = D_006C91AC[0];
-        D_0028E384 = D_006C91AE[0];
-        D_0028E388 = D_006C91AD[0];
+        g_setting_difficulty = D_006C91AC[0];
+        g_setting_ship_stock = D_006C91AE[0];
+        g_setting_extend = D_006C91AD[0];
         D_0028E2EC = D_006C91AF[0];
         D_0028E304 = D_006C91B0[0];
         D_0028E2E4 = D_006C58C4[0];
@@ -1246,7 +1246,7 @@ void func_00238690(void) {
         step++;
         break;
     case 16:
-        D_0028E38C = *(u8 *)&g_replay_header.difficulty;
+        g_setting_difficulty = *(u8 *)&g_replay_header.difficulty;
         D_0028E2E4 = *(u8 *)&g_replay_header.bullet;
         g_simulation_boss_start = *(u8 *)&g_replay_header.start;
         D_0028E2C4 = *(u8 *)&g_replay_header.death;

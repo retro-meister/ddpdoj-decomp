@@ -465,7 +465,7 @@ void func_0015C310(void) {
     sprite_draw();
 }
 
-extern u8 D_0028E38C;
+extern u8 g_setting_difficulty;
 extern u8 *D_0026A690[];
 
 
@@ -474,7 +474,7 @@ void func_0015C340(void)
     extern void text_layer_print(void);
     reg_d0.w = 0;
     reg_a0 = (u8 *)D_0026A690;
-    reg_d0.b[0] = D_0028E38C;
+    reg_d0.b[0] = g_setting_difficulty;
     reg_d0.w += reg_d0.w;
     reg_d0.w += reg_d0.w;
     reg_a0 = *(u8 **)(reg_a0 + reg_d0.h[0]);
@@ -485,7 +485,7 @@ void func_0015C340(void)
 }
 
 extern u8 D_0026A720[];
-extern u8 D_0028E388;
+extern u8 g_setting_extend;
 
 void func_0015C3A0(void) {
     s32 text_layer_print();
@@ -493,7 +493,7 @@ void func_0015C3A0(void) {
 
     reg_a0 = D_0026A720;
     reg_d0.w = 0;
-    reg_d0.b[0] = D_0028E388;
+    reg_d0.b[0] = g_setting_extend;
     reg_d0.w += reg_d0.w;
     reg_d0.w += reg_d0.w;
     temp_a0 = reg_d0.h[0];
@@ -509,7 +509,7 @@ void func_0015C3A0(void) {
 
 #ifdef DEATH_LABEL
 void text_layer_print(void);
-extern u8 D_0028E380;
+extern u8 g_setting_rapid_fire;
 extern u8 death_D_002901F0[];
 #endif
 
@@ -517,7 +517,7 @@ void func_0015C430(void) {
 #ifdef DEATH_LABEL
     reg_d0.w = 0;
     reg_a0 = death_D_002901F0;
-    reg_d0.b[0] = D_0028E380;
+    reg_d0.b[0] = g_setting_rapid_fire;
     reg_d0.w += reg_d0.w;
     reg_d0.w += reg_d0.w;
     reg_a0 = *(u8 **)(reg_a0 + reg_d0.h[0]);

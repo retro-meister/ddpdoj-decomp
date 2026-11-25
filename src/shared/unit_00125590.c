@@ -577,7 +577,6 @@ next_6:
 }
 
 extern u8 D_0028E855;
-extern void (*reg_call_target)();
 
 void func_00126410(void) {
     s32 bullet_release();

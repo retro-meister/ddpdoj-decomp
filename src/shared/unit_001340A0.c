@@ -613,7 +613,7 @@ s32 func_00125EA0();
 s32 func_0012FE10();
 s32 func_00135100();
 s32 func_001351F0();
-extern u8 D_0028E398;
+extern u8 g_setting_continue;
 extern u8 g_simulation_active;
 extern u8 D_002BF3EA[];
 extern u8 *reg_call_target_as_u8_p;
@@ -642,7 +642,7 @@ void func_00134C40(void) {
     if (g_loop != 0) {
         goto next_8;
     }
-    if (D_0028E398 == 0) {
+    if (g_setting_continue == 0) {
         goto next_8;
     }
     if (g_simulation_active != 0) {

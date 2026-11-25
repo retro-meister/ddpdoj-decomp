@@ -196,7 +196,6 @@ extern u16 g_rank_5_16;
 extern u16 g_side_scroll_x[];
 extern u16 g_player2_as_u16_a[];
 extern u16 g_player1_as_u16_a[];
-extern void (*reg_call_target)();
 
 void func_001CC0A0(void) {
     u32 cnt;

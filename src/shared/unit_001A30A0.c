@@ -236,18 +236,18 @@ void func_001A35F0(void) {
     reg_a4 = temp_s0;
 }
 
-extern u8 D_0028E390;
-extern s8 D_0028E39C_as_s8;
+extern u8 g_setting_chute_type;
+extern s8 g_setting_coin_mode_as_s8;
 extern u16 g_loop;
 
 void func_001A3630(void) {
     u8 *temp_s0;
 
-    if (D_0028E39C_as_s8 >= 9) {
+    if (g_setting_coin_mode_as_s8 >= 9) {
         func_001A3560();
         return;
     }
-    if (D_0028E390 == 1) {
+    if (g_setting_chute_type == 1) {
         func_001A3560();
         return;
     }
@@ -278,7 +278,6 @@ void func_001A36E0(void) {
 typedef void (*Fn)();
 
 extern u8 D_0026B2A0[];
-extern void (*reg_call_target)();
 
 void func_001A3730(void) {
     if (*(u8 *)(reg_a5 + 3) == 0) {

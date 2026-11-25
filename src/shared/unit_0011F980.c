@@ -78,7 +78,6 @@ extern u8 D_00241870[];
 extern u16 D_0028E3EC;
 extern u16 g_side_scroll_step[];
 extern u8 D_0029CEA0_as_u8_a[];
-extern void (*reg_call_target)();
 
 void func_0011FA90(void) {
     u8 temp;

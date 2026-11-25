@@ -78,7 +78,7 @@ void func_001AF560();
 void func_001B1960();
 void func_001B2200();
 void func_00200DD0();
-void func_00208BA0();
+void test_mode_task();
 void func_00210D00();
 void func_0022BF60();
 void func_002372C0();
@@ -132,7 +132,7 @@ void func_00172410(void) {
     reg_tmp.w = (u32) (void *) func_00200DD0;
     g_task_table[60] = reg_tmp.h[1];
     g_task_table[61] = reg_tmp.h[0];
-    reg_tmp.w = (u32) (void *) func_00208BA0;
+    reg_tmp.w = (u32) (void *) test_mode_task;
     g_task_table[64] = reg_tmp.h[1];
     g_task_table[65] = reg_tmp.h[0];
     reg_tmp.w = (u32) (void *) func_001B2200;

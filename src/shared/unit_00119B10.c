@@ -149,7 +149,6 @@ extern u16 D_0025B140[];
 extern u16 D_0028E3EC;
 extern u16 g_enemies_stopped;
 extern u16 g_rank_3_16;
-extern void (*reg_call_target)();
 
 void func_00119FE0(void) {
     u8 *save_a0;

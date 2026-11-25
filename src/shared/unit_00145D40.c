@@ -666,7 +666,6 @@ void func_00146D70(void) {
     func_00146DB0(highWord);
 }
 
-extern void (*reg_call_target)();
 
 void func_00146DB0() {
     s64 temp_v1;

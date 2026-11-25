@@ -50,7 +50,6 @@ typedef void (*Fn)();
 extern u16 D_0026C140[];
 extern u16 D_0026C1C0[];
 extern u16 D_0028DB08[];
-extern void (*reg_call_target)();
 
 void func_001BF2A0() {
     reg_tmp.b[0] = *(u8 *)(reg_a4 + 3);

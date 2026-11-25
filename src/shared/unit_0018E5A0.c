@@ -5286,7 +5286,7 @@ s32 sound_stop_effects();                            /* extern */
 s32 text_palette_load();                            /* extern */
 s32 task_start();                            /* extern */
 s32 task_stop_self();                            /* extern */
-extern s32 D_00269160_as_s32_a[];
+extern s32 test_palette_0_as_s32_a[];
 extern u8 D_0028E258;
 extern u8 D_0028E25C;
 extern u8 g_game_mode;
@@ -5300,7 +5300,7 @@ void func_001980A0() {
     sound_stop_effects();
     text_layer_clear();
     reg_d0.w = 0;
-    reg_a0 = (u8 *)D_00269160_as_s32_a;
+    reg_a0 = (u8 *)test_palette_0_as_s32_a;
     text_palette_load();
     if ((s32) D_0028E258 < (s32) D_0028E25C) {
         D_0028E258 = D_0028E25C;
@@ -5332,14 +5332,14 @@ u8 func_00198170(s32 a, s32 b) {
 }
 
 extern u8 D_0027D7C0[];
-extern u8 D_0028E384;
-extern u8 D_0028E388;
-extern u8 D_0028E38C;
+extern u8 g_setting_ship_stock;
+extern u8 g_setting_extend;
+extern u8 g_setting_difficulty;
 extern u16 g_p2_score_digits;
 extern u16 g_p1_score_digits;
 
 s32 func_001981F0(void) {
-    if ((D_0028E38C == 1) && (D_0028E388 == 0) && (D_0028E384 == 0) && (g_game_mode == 0) && (g_p1_score_digits == 0) && (g_p2_score_digits == 0) && (MAIN_OR_DEATH_LABEL(D_0028E4B0, g_two_player_seen) != 3)) {
+    if ((g_setting_difficulty == 1) && (g_setting_extend == 0) && (g_setting_ship_stock == 0) && (g_game_mode == 0) && (g_p1_score_digits == 0) && (g_p2_score_digits == 0) && (MAIN_OR_DEATH_LABEL(D_0028E4B0, g_two_player_seen) != 3)) {
 #ifdef DEATH_LABEL
         printf((const char *)D_0027D7C0);
 #else

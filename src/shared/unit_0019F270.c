@@ -296,7 +296,6 @@ extern s32 D_0028ED70;
 extern u8 D_0028ED7C;
 extern u8 D_0029D710[];
 extern u8 g_player2_as_u8_a[];
-extern void (*reg_call_target)();
 
 void func_0019FD30(void) {
     u32 temp;

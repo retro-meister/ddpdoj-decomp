@@ -3631,7 +3631,6 @@ s32 func_002031E0();
 s32 wreck_spawn();
 extern u16 D_0028E3EC;
 extern u16 g_rank_10_16;
-extern void (*reg_call_target)();
 
 void func_0015B210(void) {
     s32 enemy_remove();

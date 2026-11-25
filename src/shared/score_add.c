@@ -1123,14 +1123,14 @@ void func_001AAB70(void) {
 }
 
 extern s32 D_0026C010[];
-extern u8 D_0028E388;
+extern u8 g_setting_extend;
 extern u8 D_006E5C08[];
 extern u16 *reg_a1_as_u16_p;
 
 void func_001AAB90(void)
 {
     reg_d0.w = 0;
-    reg_d0.b[0] = D_0028E388;
+    reg_d0.b[0] = g_setting_extend;
     if (g_simulation_active != 0) {
         reg_d0.b[0] = D_006E5C08[0];
     }

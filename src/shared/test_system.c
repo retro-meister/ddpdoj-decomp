@@ -1,0 +1,276 @@
+#include "common.h"
+#include "test_mode.h"
+
+s32 input_get_p1_pressed();
+void test_system_print_blank_note(void);
+s32 sfx_confirm();
+s32 sfx_cursor_move();
+
+extern u16 test_system_cursor_rows[];
+extern s32 test_system_text_title[];
+extern s32 test_system_text_help_select[];
+extern s32 test_system_text_help_setting[];
+extern u8 test_system_text_coin_mode[];
+extern u8 test_system_text_continue[];
+extern u8 test_system_text_demo_sound[];
+extern u8 test_system_text_chute_type[];
+extern u8 test_system_text_exit[];
+extern u8 test_system_item_texts[];
+extern u8 test_system_coin_mode_names[];
+extern u8 test_system_coin_continue_note[];
+extern s32 test_system_blank_note[];
+extern u8 test_system_off_on_names[];
+extern u8 test_system_chute_type_names[];
+extern u8 test_system_value_printers[];
+
+void test_system_cursor_erase(void) {
+    reg_d0.w = 3;
+    reg_d1.w = 4;
+    reg_a0 = (u8 *)test_system_cursor_rows;
+    reg_d1.b[0] -= *(u8 *)&g_test_cursor;
+    reg_d1.h[0] += reg_d1.h[0];
+    reg_d0.h[0] = (reg_d1.h[0] != 0) ? *(u16 *)((u8 *)((u16 *)reg_a0) + ((s16)reg_d1.h[0] & ~1)) : *(u16 *)reg_a0;
+    reg_d2.w = -2U;
+    test_cursor_put();
+}
+
+void test_system_cursor_draw(void) {
+    reg_d0.w = 3;
+    reg_d1.w = 4;
+    reg_a0 = (u8 *)test_system_cursor_rows;
+    reg_d1.b[0] -= *(u8 *)&g_test_cursor;
+    reg_d1.h[0] += reg_d1.h[0];
+    reg_d1.h[0] = (reg_d1.h[0] != 0) ? *(u16 *)((u8 *)((u16 *)reg_a0) + ((s16)reg_d1.h[0] & ~1)) : *(u16 *)reg_a0;
+    reg_d2.w = 0;
+    test_cursor_put();
+}
+
+void test_system_begin(void) {
+    layers_clear_all();
+    test_palettes_load();
+    g_test_cursor = 0;
+    g_test_redraw = 1;
+    reg_d0.h[0] = 0;
+    reg_a0 = (u8 *)test_system_text_title;
+    test_print_lines();
+    reg_a0 = (u8 *)test_system_text_help_select;
+    test_print_lines();
+    reg_a0 = (u8 *)test_system_text_help_setting;
+    test_print_lines();
+    test_system_cursor_draw();
+    reg_d0.w = 0;
+}
+
+void test_system_print_items(void) {
+    s32 offset;
+
+    reg_a0 = test_system_text_coin_mode;
+    reg_d0.h[0] = 0;
+    test_print_lines();
+    reg_a0 = test_system_text_continue;
+    test_print_lines();
+    reg_a0 = test_system_text_demo_sound;
+    test_print_lines();
+    reg_a0 = test_system_text_chute_type;
+    test_print_lines();
+    reg_a0 = test_system_text_exit;
+    test_print_lines();
+    reg_d0.w = 0;
+    reg_d0.b[0] = (u8) g_test_cursor;
+    offset = reg_d0.h[0] * 4;
+    reg_a0 = *(u8 **)((u8 *)test_system_item_texts + offset);
+    reg_d0.h[0] = 2;
+    test_print_lines();
+}
+
+void test_system_print_coin_mode(void) {
+    reg_a0 = (u8 *)test_system_coin_mode_names;
+    reg_d0.w = 0;
+    reg_d0.b[0] = g_setting_coin_mode;
+    reg_d0.h[0] <<= 5;
+    reg_a0 += reg_d0.h[0];
+    reg_d0.h[0] = 7;
+    reg_d1.h[0] = 0x2A;
+    reg_d2.h[0] = reg_d7.h[0];
+    test_print_at();
+    if (g_setting_coin_mode != 0x11) {
+        test_system_print_blank_note();
+        return;
+    }
+    reg_a0 = (u8 *)test_system_coin_continue_note;
+    reg_d0.h[0] = 7;
+    reg_d1.h[0] = 0x29;
+    reg_d2.h[0] = reg_d7.h[0];
+    test_print_at();
+}
+
+void test_system_print_blank_note(void) {
+    reg_a0 = (u8 *)test_system_blank_note;
+    reg_d0.h[0] = 7;
+    reg_d1.h[0] = 0x29;
+    reg_d2.h[0] = reg_d7.h[0];
+    test_print_at();
+}
+
+void test_system_print_continue(void)
+{
+    u8 *label;
+
+    reg_d0.w = 0;
+    reg_d0.b[0] = g_setting_continue;
+    reg_a0 = test_system_off_on_names;
+    reg_d0.h[0] <<= 5;
+    label = reg_a0 + reg_d0.h[0];
+    reg_d0.h[0] = 7;
+    reg_d1.h[0] = 0x24;
+    reg_d2.h[0] = reg_d7.h[0];
+    reg_a0 = label;
+    test_print_at();
+}
+
+void test_system_print_demo_sound(void)
+{
+    reg_d0.w = 0;
+    reg_d0.b[0] = g_setting_demo_sound;
+    reg_d0.h[0] <<= 5;
+    reg_a0 = test_system_off_on_names;
+    reg_a0 += reg_d0.h[0];
+    reg_d0.h[0] = 7;
+    reg_d1.h[0] = 0x1E;
+    reg_d2.h[0] = reg_d7.h[0];
+    test_print_at();
+}
+
+void test_system_print_chute_type(void) {
+    reg_a0 = test_system_chute_type_names;
+    reg_d0.w = 0;
+    reg_d0.b[0] = g_setting_chute_type;
+    reg_d0.h[0] <<= 5;
+    reg_a0 += reg_d0.h[0];
+    reg_d0.h[0] = 7;
+    reg_d1.h[0] = 0x18;
+    reg_d2.h[0] = reg_d7.h[0];
+    test_print_at();
+}
+
+typedef void (*Fn)();
+
+void test_system_print_values(void) {
+    s32 offset;
+
+    reg_d7.h[0] = 0;
+    test_system_print_coin_mode();
+    reg_d7.h[0] = 0;
+    test_system_print_continue();
+    reg_d7.h[0] = 0;
+    test_system_print_demo_sound();
+    reg_d7.h[0] = 0;
+    test_system_print_chute_type();
+    reg_d0.w = 0;
+    reg_d0.b[0] = (u8) g_test_cursor;
+    offset = reg_d0.h[0] * 4;
+    reg_d0.w = *(u32 *)(test_system_value_printers + offset);
+    if (reg_d0.w != -1U) {
+        reg_a0 = (u8 *)reg_d0.w;
+        reg_d7.h[0] = 2;
+        reg_call_target = (Fn)reg_a0;
+        reg_call_target();
+    }
+}
+#include "entity.h"
+#include "sdk/ps2sdk.h"
+
+void test_system_update(void) {
+    s64 selected;
+    s64 selected_2;
+
+    input_get_p1_pressed();
+    if (reg_d0.w & 1) {
+        g_test_redraw = 1;
+        sfx_cursor_move();
+        test_system_cursor_erase();
+        g_test_cursor -= 1;
+        if (0 > g_test_cursor) {
+            g_test_cursor = 4;
+        }
+        test_system_cursor_draw();
+    }
+    input_get_p1_pressed();
+    if (reg_d0.w & 2) {
+        g_test_redraw = 1;
+        sfx_cursor_move();
+        test_system_cursor_erase();
+        g_test_cursor += 1;
+        if (g_test_cursor > 4) {
+            g_test_cursor = 0;
+        }
+        test_system_cursor_draw();
+    }
+    input_get_p1_pressed();
+    if (reg_d0.w & 4) {
+        g_test_redraw = 1;
+        if (g_test_cursor != 4) {
+            sfx_cursor_move();
+        }
+        if (g_test_cursor == 0) {
+            g_setting_coin_mode -= 1;
+            if (0 > (s8) g_setting_coin_mode) {
+                g_setting_coin_mode = 0x12;
+            }
+        }
+        selected = g_test_cursor;
+        if (selected == 1) {
+            g_setting_continue -= 1;
+            g_setting_continue &= 1;
+        }
+        if (selected == 2) {
+            g_setting_demo_sound -= 1;
+            g_setting_demo_sound &= 1;
+        }
+        if (selected == 3) {
+            g_setting_chute_type -= 1;
+            if (0 > (s8) g_setting_chute_type) {
+                g_setting_chute_type = 2;
+            }
+        }
+    }
+    input_get_p1_pressed();
+    if (reg_d0.w & 8) {
+        g_test_redraw = 1;
+        if (g_test_cursor != 4) {
+            sfx_cursor_move();
+        }
+        if (g_test_cursor == 0) {
+            g_setting_coin_mode += 1;
+            if ((s8) g_setting_coin_mode >= 0x13) {
+                g_setting_coin_mode = 0;
+            }
+        }
+        selected_2 = g_test_cursor;
+        if (selected_2 == 1) {
+            g_setting_continue += 1;
+            g_setting_continue &= 1;
+        }
+        if (selected_2 == 2) {
+            g_setting_demo_sound += 1;
+            g_setting_demo_sound &= 1;
+        }
+        if (selected_2 == 3) {
+            g_setting_chute_type += 1;
+            if ((s8) g_setting_chute_type >= 3) {
+                g_setting_chute_type = 0;
+            }
+        }
+    }
+    input_get_p1_pressed();
+    if ((reg_d0.w & 0x10) && (g_test_cursor == 4)) {
+        sfx_confirm();
+        reg_d0.w = 0;
+        test_screen_request();
+    } else if (g_test_redraw != 0) {
+        g_test_redraw = 0;
+        test_system_print_items();
+        test_system_print_values();
+    }
+    cond_flag = 0;
+}
