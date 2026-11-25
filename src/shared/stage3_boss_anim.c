@@ -268,7 +268,7 @@ s32 func_0013B2E0();
 s32 func_001D4550();
 s32 func_001D4560();
 extern u8 D_0026CBC0[];
-extern u8 D_0028E855;
+extern u8 g_boss_present_b1;
 
 void func_001CE5F0() {
     u16 t1;
@@ -298,8 +298,8 @@ next_40:
         t1 = ENTITY(reg_a6)[5].attr.h;
         if (t1 == 0x1E0) {
             *(s16 *)reg_a4 = 0;
-            D_0028E855 |= 2;
-            D_0028E855 |= 0x10;
+            g_boss_present_b1 |= 2;
+            g_boss_present_b1 |= 0x10;
             func_001D4550();
             func_001D4560();
             reg_d0.w = 9;

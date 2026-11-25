@@ -49,7 +49,7 @@ extern s32 D_0028DF1C;
 extern s8 g_slowdown_timer_as_s8;
 extern s8 g_pause_lock_timer_as_s8;
 extern u16 g_scroll_line;
-extern u16 D_0028E8AC;
+extern u16 g_scroll_line_offset;
 extern u16 g_stage_x4;
 extern u8 D_0029C060_as_u8_a[];
 
@@ -89,7 +89,7 @@ void func_00138A50(void) {
     *(u16 *)(reg_a5 + 0x1E) = 0U;
     temp_a1 = *(u16 *)(reg_a5 + 0x1E);
     reg_a0 = (u8 *)stage_background_palettes;
-    D_0028E8AC = temp_a1;
+    g_scroll_line_offset = temp_a1;
     reg_a0 += g_stage_x4;
     temp_a0 = (u8 *)(reg_a0);
     reg_tmp.h[1] = (*(u16 *)((u8 *)(temp_a0) + (0)));
@@ -445,7 +445,7 @@ void func_001391B0(void) {
         }
         *(u16 *)(reg_a5 + 0x1E) = (u16) reg_d5.h[0];
         temp_a0_2 = reg_d5.h[0];
-        D_0028E8AC = temp_a0_2;
+        g_scroll_line_offset = temp_a0_2;
         reg_d5.h[0] = *(u16 *)(reg_a5 + 0x20);
         reg_d5.h[0] += reg_d6.h[0];
         if ((s16)(reg_d5.h[0]) >= 0x800) {

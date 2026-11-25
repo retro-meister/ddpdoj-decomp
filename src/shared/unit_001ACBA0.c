@@ -30,8 +30,8 @@ extern u16 g_p1_max_hits;
 extern u16 g_p1_score_digits;
 extern u16 g_p1_score_billions;
 extern u32 g_p1_score;
-extern u16 D_0028E930;
-extern u16 D_0028E938;
+extern u16 g_p1_power_style;
+extern u16 g_p1_ship_type;
 extern u8 D_002BB420[];
 
 void func_001ACBA0(void) {
@@ -54,8 +54,8 @@ void func_001ACBA0(void) {
     reg_d6.w = 0xFF;
     reg_d7.w = g_p1_score;
     reg_d5.h[0] = g_p1_score_billions;
-    reg_d0.h[0] = D_0028E938;
-    reg_d1.h[0] = D_0028E930;
+    reg_d0.h[0] = g_p1_ship_type;
+    reg_d1.h[0] = g_p1_power_style;
     reg_d2.h[0] = g_p1_max_hits;
     reg_d3.h[0] = g_p1_score_digits;
     func_001ACD30();
@@ -65,8 +65,8 @@ extern u16 g_p2_max_hits;
 extern u16 g_p2_score_digits;
 extern u16 g_p2_score_billions;
 extern u32 g_p2_score;
-extern u16 D_0028E92C;
-extern u16 D_0028E934;
+extern u16 g_p2_power_style;
+extern u16 g_p2_ship_type;
 extern u8 D_002BB410[];
 
 void func_001ACC60(void) {
@@ -89,9 +89,9 @@ void func_001ACC60(void) {
     reg_d6.w = 0xFE;
     reg_d7.w = g_p2_score;
     reg_d5.h[0] = g_p2_score_billions;
-    reg_d0.h[0] = D_0028E934;
+    reg_d0.h[0] = g_p2_ship_type;
     reg_d0.h[0] += 4;
-    reg_d1.h[0] = D_0028E92C;
+    reg_d1.h[0] = g_p2_power_style;
     reg_d2.h[0] = g_p2_max_hits;
     reg_d3.h[0] = g_p2_score_digits;
     func_001ACD30();
@@ -1266,11 +1266,11 @@ block_set:
 }
 
 void func_001AF1A0() {
-    reg_d6.h[0] = D_0028E938;
-    reg_d7.h[0] = D_0028E930;
+    reg_d6.h[0] = g_p1_ship_type;
+    reg_d7.h[0] = g_p1_power_style;
     if (*(u8 *)(reg_a5 + 6) != 0) {
-        reg_d6.h[0] = D_0028E934;
-        reg_d7.h[0] = D_0028E92C;
+        reg_d6.h[0] = g_p2_ship_type;
+        reg_d7.h[0] = g_p2_power_style;
     }
     reg_d5.w = 0;
     reg_d5.b[0] = *(u8 *)(reg_a5 + 6);

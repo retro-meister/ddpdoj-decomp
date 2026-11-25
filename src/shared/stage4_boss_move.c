@@ -119,7 +119,7 @@ s32 sprite_palette_load();
 s32 velocity_from_dir256();
 extern u8 D_0025FEF0[];
 extern u8 D_0026F440[];
-extern u8 D_0028E855;
+extern u8 g_boss_present_b1;
 extern u16 g_side_scroll_x[];
 
 void func_001BE5F0(void) {
@@ -175,9 +175,9 @@ void func_001BE5F0(void) {
                 reg_d0.h[0] = 0x15;
                 reg_a0 = (u8 *)D_0025FEF0;
                 sprite_palette_load();
-                D_0028E855 |= 0x10;
+                g_boss_present_b1 |= 0x10;
                 reg_d0.w = 1;
-                D_0028E855 |= 2;
+                g_boss_present_b1 |= 2;
                 boss_movement_start();
                 reg_d0.w = 3;
                 boss_phase_start();

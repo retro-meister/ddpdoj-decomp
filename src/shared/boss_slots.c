@@ -127,7 +127,7 @@ typedef void (*Fn)();
 extern u16 D_0028E3EC;
 extern u16 g_p2_hyper_active;
 extern u16 g_p1_hyper_active;
-extern u8 D_0028E855;
+extern u8 g_boss_present_b1;
 extern u16 g_enemies_stopped;
 extern s16 g_true_last_boss_as_s16;
 extern s32 D_00295E9C_as_s32_a[];
@@ -146,7 +146,7 @@ void boss_slots_run(void) {
     }
     if (g_enemies_stopped == 0) {
         boss_slots_step();
-        if (!(D_0028E855 & 0x40) && (D_0028E855 & 0x10)) {
+        if (!(g_boss_present_b1 & 0x40) && (g_boss_present_b1 & 0x10)) {
             reg_d0.h[0] = g_p1_hyper_active;
             temp_v0 = reg_d0.h[0] | g_p2_hyper_active;
             reg_d0.h[0] = temp_v0;

@@ -63,8 +63,8 @@ s32 func_001CBBF0();
 s32 entity_follow_scroll();
 extern u8 D_0025FCB0[];
 extern u8 D_0026C8C0[];
-extern u8 D_0028E854;
-extern u8 D_0028E855;
+extern u8 g_boss_present;
+extern u8 g_boss_present_b1;
 
 void func_001C9950(void) {
     entity_follow_scroll();
@@ -80,7 +80,7 @@ void func_001C9950(void) {
             return;
         }
         *(u8 *)(reg_a4 + 3) = 1U;
-        D_0028E854 |= 1;
+        g_boss_present |= 1;
         func_001C9750();
         return;
     }
@@ -101,8 +101,8 @@ void func_001C9950(void) {
         func_001C9750();
         return;
     }
-    D_0028E855 |= 0x10;
-    D_0028E855 |= 2;
+    g_boss_present_b1 |= 0x10;
+    g_boss_present_b1 |= 2;
     reg_d0.w = 3;
     boss_phase_start();
     func_001CBBF0();

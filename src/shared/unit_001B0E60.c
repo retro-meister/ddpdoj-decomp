@@ -510,8 +510,8 @@ s32 func_001A33C0();
 s32 func_001A35A0();
 s32 replay_start_state_save();
 extern s16 D_0028E3B4_as_s16;
-extern u16 D_0028E934;
-extern u16 D_0028E938;
+extern u16 g_p2_ship_type;
+extern u16 g_p1_ship_type;
 extern s16 g_player2[];
 extern u16 D_0029F248[];
 extern u16 D_0029F24A[];
@@ -574,7 +574,7 @@ void func_001B1D70(void) {
         *(u8 *)(reg_a5 + 6) = (u8) reg_d1.b[0];
         *(s8 *)(reg_a6 + 0x70) = 3;
         reg_d1.w = 0;
-        if (D_0028E934 != 0) {
+        if (g_p2_ship_type != 0) {
             reg_d1.w = 1;
         }
         *(u16 *)(reg_a6 + 0x72) = (u16) reg_d1.h[0];
@@ -591,7 +591,7 @@ void func_001B1D70(void) {
         *(u8 *)(reg_a5 + 7) = (u8) reg_d1.b[0];
         ENTITY(reg_a6)->flags.sb[0] = 3;
         reg_d1.w = 0;
-        if (D_0028E938 != 0) {
+        if (g_p1_ship_type != 0) {
             reg_d1.w = 1;
         }
         ENTITY(reg_a6)->y.h = (u16) reg_d1.h[0];

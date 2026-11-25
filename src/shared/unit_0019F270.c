@@ -37,13 +37,13 @@ void func_0019F270(void) {
 }
 
 void sprite_draw_with_player_shadows_keep(void);
-extern u16 D_0028DFC0;
+extern u16 g_players_hidden;
 extern u16 D_0028E3EC;
 extern u16 g_loop;
 extern u16 g_stage;
 
 void func_0019F2E0(void) {
-    if (D_0028DFC0 != 0) return;
+    if (g_players_hidden != 0) return;
     if (D_0028E3EC != 0) return;
     if (g_loop != 0) return;
     if (g_stage == 2) return;
@@ -72,7 +72,7 @@ void func_0019F2E0(void) {
 }
 
 void func_0019F410(void) {
-    if ((D_0028DFC0 == 0) && (D_0028E3EC == 0) && (g_loop == 0) && (g_stage != 2)) {
+    if ((g_players_hidden == 0) && (D_0028E3EC == 0) && (g_loop == 0) && (g_stage != 2)) {
         reg_d1.h[1] = ENTITY(reg_a6)->y.h;
         reg_d1.h[0] = ENTITY(reg_a6)->x.h;
         reg_d5.h[0] = 0x1C00;
@@ -123,7 +123,7 @@ void func_0019F410(void) {
 }
 
 void func_0019F620(void) {
-    if ((D_0028DFC0 == 0) && (g_loop == 0) && (D_0028E3EC == 0) && (g_stage != 2)) {
+    if ((g_players_hidden == 0) && (g_loop == 0) && (D_0028E3EC == 0) && (g_stage != 2)) {
         reg_d1.h[1] = ENTITY(reg_a6)->y.h;
         reg_d1.h[0] = ENTITY(reg_a6)->x.h;
         reg_d5.h[0] = 0x1C00;
@@ -943,7 +943,7 @@ void func_001A1510(void) {
     ENTITY(reg_a6)->y.h += reg_d0.h[0];
     p0 = ENTITY(reg_a6)->x.h;
     ENTITY(reg_a6)->x.h = (u16) (p0 + reg_d5.h[0]);
-    if (D_0028DFC0 == 0) {
+    if (g_players_hidden == 0) {
         func_0019F2E0();
         entity_draw_with_options();
     }
@@ -1043,8 +1043,8 @@ extern u16 option_hyper_sprites_b[];
 extern u16 option_sprites_a_tables_as_u16;
 extern u16 option_sprites_b_tables_as_u16;
 extern u16 option_strong_sprites_b_tables_as_u16;
-extern u16 D_0028DFD4;
-extern u16 D_0028DFD8;
+extern u16 g_p2_laser_stop_y;
+extern u16 g_p1_laser_stop_y;
 extern u8 D_0029D730[];
 extern u8 D_0029D750[];
 extern u8 D_0029D770[];
@@ -1061,13 +1061,13 @@ void func_001A1B60(void) {
     case 0:
         goto next_100;
     }
-    reg_a0 = (u8 *)&D_0028DFD8;
+    reg_a0 = (u8 *)&g_p1_laser_stop_y;
     reg_a1 = (u8 *)D_0029DD90;
     reg_a2 = (u8 *)D_0029D730;
     reg_a3 = (u8 *)D_0029D770;
     reg_d4.h[0] = D_0029F290[0];
     if (reg_d7.h[0] != 0) goto next_10;
-    reg_a0 = (u8 *)&D_0028DFD4;
+    reg_a0 = (u8 *)&g_p2_laser_stop_y;
     reg_a1 = (u8 *)D_0029D790;
     reg_a2 = (u8 *)D_0029D710;
     reg_a3 = (u8 *)D_0029D750;
@@ -1302,7 +1302,7 @@ void func_001A2680(void) {
     reg_d3.h[0] += reg_d0.h[0];
     temp_a0 = ENTITY(reg_a6)->x.h;
     ENTITY(reg_a6)->x.h = (u16) (temp_a0 + reg_d3.h[0]);
-    if (D_0028DFC0 == 0) {
+    if (g_players_hidden == 0) {
         if ((s8) *(u8 *)reg_a4 >= 0) {
             entity_draw_with_options();
             return;

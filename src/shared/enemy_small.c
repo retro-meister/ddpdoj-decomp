@@ -822,7 +822,7 @@ s32 func_00211550();
 extern u16 D_00259370[];
 extern u16 D_00259870[];
 extern u16 g_bullets_blocked;
-extern u16 D_0028E8B8;
+extern u16 g_damage_blink_counter;
 extern u16 g_player2_as_u16_a[];
 extern u16 g_player1_as_u16_a[];
 
@@ -857,7 +857,7 @@ next_1:
         reg_d1.b[0] &= (*(u8 *)((u8 *)(t1) + (1)));
         if (reg_d1.b[0] == 0) {
             reg_d0.b[0] = *(u8 *)(reg_a5 + 0x1D);
-            if (((s32) (*(u16 *)((u8 *)(t1) + (0x18))) < 0x7C0) && (D_0028E8B8 == 0)) {
+            if (((s32) (*(u16 *)((u8 *)(t1) + (0x18))) < 0x7C0) && (g_damage_blink_counter == 0)) {
                 reg_d0.w = 0x19;
             }
             goto next_2;
@@ -1217,7 +1217,7 @@ next_1:
         reg_d1.b[0] &= (*(u8 *)((u8 *)(t1) + (1)));
         if (reg_d1.b[0] == 0) {
             reg_d0.b[0] = *(u8 *)(reg_a5 + 0x1D);
-            if (((s32) (*(u16 *)((u8 *)(t1) + (0x18))) < 0x380) && (D_0028E8B8 == 0)) {
+            if (((s32) (*(u16 *)((u8 *)(t1) + (0x18))) < 0x380) && (g_damage_blink_counter == 0)) {
                 reg_d0.w = 0x19;
             }
             goto next_2;

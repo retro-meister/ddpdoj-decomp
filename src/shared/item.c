@@ -320,12 +320,12 @@ void func_0016AF30(void)
 s32 rng_next();
 s32 entity_velocity();
 s32 entity_check_bounds();
-extern u8 D_0028E855;
+extern u8 g_boss_present_b1;
 extern u16 g_enemies_stopped;
 
 void func_0016AF90(void) {
     s32 func_0016C260();
-    if (D_0028E855 & 0x40) {
+    if (g_boss_present_b1 & 0x40) {
         goto block_7;
     }
     switch (ENTITY(reg_a6)->hp.h) {
@@ -476,7 +476,7 @@ void func_0016B360(void)
 
 void func_0016B3B0(void) {
     s32 func_0016C260();
-    if (D_0028E855 & 0x40) {
+    if (g_boss_present_b1 & 0x40) {
         goto block_7;
     }
     switch (ENTITY(reg_a6)->hp.h) {
@@ -640,7 +640,7 @@ extern u16 D_0028E3E0;
 void func_0016B7F0(void) {
     s32 func_0016C260();
     s32 func_002021D0();
-    if (!(D_0028E855 & 0x40)) {
+    if (!(g_boss_present_b1 & 0x40)) {
         if (!(ENTITY(reg_a6)->flags.b[1] & 1)) {
             if (D_0028E3E0 == 0) {
                 reg_d2.h[0] = 0x4600;

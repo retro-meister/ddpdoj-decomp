@@ -82,8 +82,8 @@ void func_00145D40(void) {
 }
 
 extern u8 player_weapon_tables[];
-extern u8 D_0028E078[];
-extern u8 D_0028E080[];
+extern u8 g_p2_weapon_level_data[];
+extern u8 g_p1_weapon_level_data[];
 extern u8 g_player1_as_u8_a[];
 
 void func_00145E70(u8 *arg0) {
@@ -103,9 +103,9 @@ void func_00145E70(u8 *arg0) {
     sd1 = reg_d1.w;
     stmp = reg_tmp.w;
     if (g_player1_as_u8_a == arg0) {
-        reg_a4 = (u8 *)D_0028E080;
+        reg_a4 = (u8 *)g_p1_weapon_level_data;
     } else {
-        reg_a4 = (u8 *)D_0028E078;
+        reg_a4 = (u8 *)g_p2_weapon_level_data;
     }
     reg_d1.w = 0;
     reg_d1.h[0] = *(u16 *)(arg0 + 0x20);
@@ -397,7 +397,7 @@ void func_00146720(void) {
 
 extern u8 D_00257760[];
 extern u8 D_002577B0[];
-extern u16 D_0028DFE4;
+extern u16 g_player_laser_count;
 extern u16 g_hyper_hit_scratch;
 extern u16 g_p2_hyper_active;
 extern u16 g_p1_hyper_active;
@@ -410,7 +410,7 @@ void func_00146760(void) {
     s32 temp_s0;
     temp_s0 = (s32)reg_a5;
     g_hyper_hit_scratch = 0;
-    D_0028DFE4 = 0;
+    g_player_laser_count = 0;
     if (g_player1[0] < 0) {
         reg_a6 = (u8 *)(D_0029DD90_as_u16_a);
         reg_d7.w = 0x1F;
@@ -419,7 +419,7 @@ void func_00146760(void) {
             reg_d0.h[0] = ENTITY(reg_a6)->flags.h;
             if (reg_d0.h[0] != 0) {
                 reg_d1.w = 0x1F;
-                D_0028DFE4 += 1;
+                g_player_laser_count += 1;
                 reg_d1.h[0] &= reg_d0.h[0];
                 ((Fn)*(u32 *)((u8 *)D_00257760 + (reg_d1.h[0] * 4)))();
             }
@@ -434,7 +434,7 @@ void func_00146760(void) {
             reg_d0.h[0] = ENTITY(reg_a6)->flags.h;
             if (reg_d0.h[0] != 0) {
                 reg_d1.w = 0x1F;
-                D_0028DFE4 += 1;
+                g_player_laser_count += 1;
                 reg_d1.h[0] &= reg_d0.h[0];
                 ((Fn)*(u32 *)((u8 *)D_002577B0 + (reg_d1.h[0] * 4)))();
             }
@@ -562,8 +562,8 @@ void func_00146A50(void)
 }
 
 void func_0020A040(void);
-extern u16 D_0028E000;
-extern u16 D_0028E004;
+extern u16 g_p2_laser_bomb_active;
+extern u16 g_p1_laser_bomb_active;
 
 void func_00146A90() {
     reg_d1.h[0] += 0x800;
@@ -601,9 +601,9 @@ block_1:
     if (*(s16 *)reg_a1 < 0) goto block_3;
     ENTITY(reg_a6)->flags.b[1] |= 1;
 block_2:
-    reg_a0 = (u8 *)&D_0028E004;
+    reg_a0 = (u8 *)&g_p1_laser_bomb_active;
     if (ENTITY(reg_a6)->move.h == 0) goto block_5;
-    if (D_0028E004 == 0) goto block_6;
+    if (g_p1_laser_bomb_active == 0) goto block_6;
     return;
 block_3:
     ENTITY(reg_a6)->flags.h = 0;
@@ -612,7 +612,7 @@ block_4:
     func_00147F30();
     return;
 block_5:
-    if (D_0028E000 != 0) return;
+    if (g_p2_laser_bomb_active != 0) return;
 block_6:
     func_00146690();
 }
@@ -687,11 +687,11 @@ void func_00146DB0() {
             return;
         }
         if (ENTITY(reg_a6)->move.h != 0) {
-            if (D_0028E004 == 0) {
+            if (g_p1_laser_bomb_active == 0) {
                 goto block_7;
             }
             goto block_8;
-        } else if (D_0028E000 == 0) {
+        } else if (g_p2_laser_bomb_active == 0) {
 block_7:
             reg_call_target = (Fn)(reg_a3);
             reg_call_target();
@@ -791,11 +791,11 @@ void func_00147050() {
             return;
         }
         if (ENTITY(reg_a6)->move.h != 0) {
-            if (D_0028E004 == 0) {
+            if (g_p1_laser_bomb_active == 0) {
                 goto block_7;
             }
             goto block_8;
-        } else if (D_0028E000 == 0) {
+        } else if (g_p2_laser_bomb_active == 0) {
 block_7:
             reg_call_target = (Fn)(reg_a3);
             reg_call_target();
@@ -883,12 +883,12 @@ void func_00147250(void) {
             *(u16 *)(reg_a6 + 0x24) = (u16) *(u16 *)(reg_a6 + 0x22);
         }
         if (ENTITY(reg_a6)->move.h != 0) {
-            if (D_0028E004 != 0) {
+            if (g_p1_laser_bomb_active != 0) {
                 return;
             }
             goto block_15;
         }
-        if (D_0028E000 == 0) {
+        if (g_p2_laser_bomb_active == 0) {
 block_15:
             entity_draw_with_player_lasers();
         }
@@ -983,10 +983,10 @@ next_1:
     *(u16 *) (reg_a6 + 0x24) = *(u16 *) (reg_a6 + 0x26);
 next_2:
     switch (*(u16 *) (reg_a6 + 0x1A)) { case 0: goto next_3; }
-    if (D_0028E004 == 0) goto next_4;
+    if (g_p1_laser_bomb_active == 0) goto next_4;
     return;
 next_3:
-    if (D_0028E000 != 0) return;
+    if (g_p2_laser_bomb_active != 0) return;
 next_4:
     func_00146690();
 }
@@ -1124,8 +1124,8 @@ void func_001478A0(void) {
 }
 
 extern u8 D_00256130[];
-extern u8 D_0028DFD4_as_u8;
-extern u8 D_0028DFD8_as_u8;
+extern u8 g_p2_laser_stop_y_as_u8;
+extern u8 g_p1_laser_stop_y_as_u8;
 extern u8 D_0029DD30[];
 extern u8 D_0029E330[];
 extern u8 g_player2_as_u8_a[];
@@ -1139,12 +1139,12 @@ void func_00147CA0(void) {
     (*(u8 *)((u8 *)(temp_a3) + (1))) |= 0x20;
     reg_a2 = (u8 *)D_0029D770;
     reg_a3 = (u8 *)D_0029E330;
-    reg_a4 = &D_0028DFD8_as_u8;
+    reg_a4 = &g_p1_laser_stop_y_as_u8;
     reg_a5 = (u8 *)g_player1_as_u8_a;
     if (ENTITY(reg_a6)->move.h == 0) {
         reg_a2 = (u8 *)D_0029D750;
         reg_a3 = (u8 *)D_0029DD30;
-        reg_a4 = &D_0028DFD4_as_u8;
+        reg_a4 = &g_p2_laser_stop_y_as_u8;
         reg_a5 = (u8 *)g_player2_as_u8_a;
     }
     reg_tmp.h[1] = *(u16 *)(reg_a6 + 0x2C);
@@ -1209,16 +1209,16 @@ void func_00147F30(void) {
     ENTITY(reg_a6)->flags.sh = 0;
 }
 
-extern u16 D_0028DFD4;
-extern u16 D_0028DFD8;
+extern u16 g_p2_laser_stop_y;
+extern u16 g_p1_laser_stop_y;
 
 void func_00147F90(void) {
-    reg_d1.h[0] = D_0028DFD8;
+    reg_d1.h[0] = g_p1_laser_stop_y;
     reg_a0 = (u8 *)D_0029D730;
     reg_a2 = (u8 *)D_0029D770;
     reg_a5 = (u8 *)g_player1_as_u8_a;
     if (ENTITY(reg_a6)->move.h != 0) goto block_1;
-    reg_d1.h[0] = D_0028DFD4;
+    reg_d1.h[0] = g_p2_laser_stop_y;
     reg_a0 = (u8 *)D_0029D710;
     reg_a2 = (u8 *)D_0029D750;
     reg_a5 = (u8 *)g_player2_as_u8_a;
@@ -1252,12 +1252,12 @@ block_4:
 
 void func_001480C0(void) {
     if (ENTITY(reg_a6)->move.h != 0) {
-        if (D_0028E004 != 0) {
+        if (g_p1_laser_bomb_active != 0) {
             return;
         }
         goto block_4;
     }
-    if (D_0028E000 == 0) {
+    if (g_p2_laser_bomb_active == 0) {
 block_4:
         func_00146690();
     }
@@ -1313,10 +1313,10 @@ void func_001482C0(void) {
 
     reg_a6 = (u8 *)D_0029D730;
     if (ENTITY(reg_a6)->flags.sh < 0) {
-        if ((D_0028E3EC != 0) && (g_two_player_game != 0) && (D_0028E004 == 0)) {
+        if ((D_0028E3EC != 0) && (g_two_player_game != 0) && (g_p1_laser_bomb_active == 0)) {
             func_0020A120();
         }
-        reg_d0.h[0] = D_0028DFD8;
+        reg_d0.h[0] = g_p1_laser_stop_y;
         reg_d1.h[0] = D_0029F182[0];
         reg_d0.h[0] += 0x180;
         reg_d1.h[0] += 0x400;
@@ -1354,16 +1354,16 @@ void func_001482C0(void) {
         if ((s32) reg_tmp.h[0] < 0xA) {
             ENTITY(reg_a6)->hit_y_plus.h = (u16) ENTITY(reg_a6)->hp.h;
         }
-        if (D_0028E004 == 0) {
+        if (g_p1_laser_bomb_active == 0) {
             func_001466E0();
         }
     }
     reg_a6 = (u8 *)D_0029D710;
     if (ENTITY(reg_a6)->flags.sh < 0) {
-        if ((D_0028E3EC == 0) && (g_two_player_game != 0) && (D_0028E000 == 0)) {
+        if ((D_0028E3EC == 0) && (g_two_player_game != 0) && (g_p2_laser_bomb_active == 0)) {
             func_0020A1C0();
         }
-        reg_d0.h[0] = D_0028DFD4;
+        reg_d0.h[0] = g_p2_laser_stop_y;
         reg_d1.h[0] = D_0029F112[0];
         reg_d1.h[0] += 0x400;
         if ((s32) reg_d1.h[0] > (s32) reg_d0.h[0]) {
@@ -1400,7 +1400,7 @@ void func_001482C0(void) {
         if ((s32) reg_tmp.h[0] < 0xA) {
             ENTITY(reg_a6)->hit_y_plus.h = (u16) ENTITY(reg_a6)->hp.h;
         }
-        if (D_0028E000 == 0) {
+        if (g_p2_laser_bomb_active == 0) {
             func_00146720();
         }
     }

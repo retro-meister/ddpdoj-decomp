@@ -103,7 +103,7 @@ s32 entity_velocity();
 s32 direction_turn_toward();
 s32 func_00202B50();
 extern u16 D_0026E930[];
-extern u8 D_0028E855;
+extern u8 g_boss_present_b1;
 extern u16 g_side_scroll_x[];
 extern u16 g_spare_entities_as_u16_a[];
 
@@ -158,8 +158,8 @@ void func_001BAB40(void) {
             *(u8 *)(reg_a4 + 7) = (u8) *(u8 *)(reg_a4 + 6);
             ENTITY(reg_a6)[8].move.h += 0x10;
             if (ENTITY(reg_a6)[8].move.h == 0x180) {
-                D_0028E855 |= 0x10;
-                D_0028E855 |= 2;
+                g_boss_present_b1 |= 0x10;
+                g_boss_present_b1 |= 2;
                 reg_d0.w = 2;
                 boss_movement_start();
                 reg_d0.w = 1;

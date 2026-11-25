@@ -204,8 +204,8 @@ void func_0020BD10(void)
     }
 }
 
-extern u32 D_0028DFF4_as_u32;
-extern u16 D_0028DFF8;
+extern u32 g_laser_bomb_hit_entity_as_u32;
+extern u16 g_laser_bomb_hit_position;
 extern u16 D_0028E094;
 extern u16 D_0028E0A0_as_u16_a[];
 extern u8 g_game_mode;
@@ -743,8 +743,8 @@ block_120:
         reg_d5.h[0] = ENTITY(reg_a6)->flags.h;
         if (((s16)(reg_d5.h[0]) < 0) && (*(u8 *)reg_a4 & 0x40)) {
             reg_d0.w = 0;
-            D_0028DFF8 = 0x7800;
-            D_0028DFF4_as_u32 = reg_d0.w;
+            g_laser_bomb_hit_position = 0x7800;
+            g_laser_bomb_hit_entity_as_u32 = reg_d0.w;
             if (!(reg_d5.h[0] & 0xFFFF & 1)) {
                 reg_a5 = (u8 *) D_002BC7C0_as_u16_a;
                 reg_d6.h[0] = D_0028E0A8;
@@ -905,14 +905,14 @@ loop_145:
             if ((s32) reg_d5.h[0] > (s32) reg_d2.h[0]) goto next_145;
             reg_d4.h[0] = reg_d1.h[0];
             reg_d4.h[0] -= reg_d6.h[0];
-            if (!((s32) reg_d4.h[0] < (s32) D_0028DFF8)) goto next_145;
+            if (!((s32) reg_d4.h[0] < (s32) g_laser_bomb_hit_position)) goto next_145;
             reg_d5.h[0] = *(u16 *)(reg_a4 + 2);
             reg_d5.h[0] += 0xC00;
             if ((s32) reg_d5.h[0] < (s32) reg_d4.h[0]) goto store_145;
             reg_d4.h[0] = reg_d5.h[0];
 store_145:
-            D_0028DFF4_as_u32 = (u32) reg_a5;
-            D_0028DFF8 = reg_d4.h[0];
+            g_laser_bomb_hit_entity_as_u32 = (u32) reg_a5;
+            g_laser_bomb_hit_position = reg_d4.h[0];
 next_145:
             reg_a6 += 0x30;
             tmp_dec2 = reg_d7.h[0] - 1; reg_d7.h[0] = tmp_dec2;
@@ -924,8 +924,8 @@ next_145:
             tmp_dec = reg_d7.h[0] - 1; reg_d7.h[0] = tmp_dec;
             if (((s64) ((s64) (tmp_dec & 0xFFFF) << 0x30) >> 0x30) >= 0) goto loop_140;
 done_140:
-            if (D_0028DFF4_as_u32 != 0) {
-                reg_a5 = (u8 *) D_0028DFF4_as_u32;
+            if (g_laser_bomb_hit_entity_as_u32 != 0) {
+                reg_a5 = (u8 *) g_laser_bomb_hit_entity_as_u32;
                 reg_d4.h[0] = D_0028E0A8;
                 reg_d4.h[0] |= 0x400;
                 *(u16 *)reg_a5 |= reg_d4.h[0];
@@ -1026,8 +1026,8 @@ hit_150:
             if ((s32) reg_tmp.h[0] > (s32) reg_d0.h[0]) goto skip_150;
             reg_d4.h[0] = *(u16 *)(reg_a5 + 2);
             if (!((s32) reg_d4.h[0] < 0x7000)) goto skip_150;
-            if (D_0028DFF4_as_u32 == 0) goto scan_150;
-            if (!((s32) reg_d4.h[0] < (s32) D_0028DFF8)) goto skip_150;
+            if (g_laser_bomb_hit_entity_as_u32 == 0) goto scan_150;
+            if (!((s32) reg_d4.h[0] < (s32) g_laser_bomb_hit_position)) goto skip_150;
 scan_150:
             reg_tmp7.h[0] = reg_d7.h[0];
             reg_d7.h[0] = reg_d7.h[1];
@@ -1083,8 +1083,8 @@ start_160:
 loop_160:
             reg_d0.h[0] = *(u16 *)reg_a5;
             if ((s16) reg_d0.h[0] < 0) goto next_160;
-            if (D_0028DFF4_as_u32 == 0) goto hit_160;
-            if ((s32) D_0028DFF8 <= (s32) (reg_d0.h[0] & 0xFFFF)) goto next_160;
+            if (g_laser_bomb_hit_entity_as_u32 == 0) goto hit_160;
+            if ((s32) g_laser_bomb_hit_position <= (s32) (reg_d0.h[0] & 0xFFFF)) goto next_160;
 hit_160:
             reg_d0.h[0] += reg_d6.h[0];
             reg_d2.h[0] = *(u16 *)(reg_a5 + 2);
@@ -1316,7 +1316,7 @@ next_70:
     func_0020E6F0();
 }
 
-extern u8 D_0028E855;
+extern u8 g_boss_present_b1;
 extern u8 D_002BD440_as_u8_a[];
 
 void func_0020E6F0(void) {
@@ -1331,7 +1331,7 @@ next_5:
     reg_d5.h[0] = *(u16 *) (reg_a1 + 0x1C);
     reg_d4.h[0] = reg_d5.h[0];
     reg_d4.h[0] >>= 1;
-    if (D_0028E855 & 1) goto loop_6;
+    if (g_boss_present_b1 & 1) goto loop_6;
     reg_d4.h[0] >>= 1;
 loop_6:
     reg_d5.h[0] += reg_d4.h[0];

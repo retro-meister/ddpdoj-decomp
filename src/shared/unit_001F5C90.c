@@ -34,7 +34,7 @@ s32 func_001F6140();
 s32 func_002016D0();
 extern s32 g_boss_score;
 extern u16 g_bullets_blocked;
-extern u16 D_0028E8B8;
+extern u16 g_damage_blink_counter;
 extern s16 D_00299768[];
 extern s16 D_0029976A[];
 extern s16 D_0029976C_as_s16_a[];
@@ -62,7 +62,7 @@ next_1:
     if (reg_tmp.w >= 0x1ECCC) {
         goto next_7;
     }
-    if (D_0028E8B8 != 0) {
+    if (g_damage_blink_counter != 0) {
         goto next_7;
     }
     reg_d0.w = 0x19;

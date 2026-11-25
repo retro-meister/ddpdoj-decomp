@@ -12,12 +12,12 @@ void func_00141640(void);
 void func_001A7E90(void);
 void func_001A8070(void);
 extern u8 D_0028C608[];
-extern u8 D_0028E008_as_u8;
-extern u8 D_0028E00C_as_u8;
-extern u16 D_0028E018;
-extern u16 D_0028E01C;
-extern u16 D_0028E028;
-extern u16 D_0028E02C;
+extern u8 g_p2_loop2_extend_ok_as_u8;
+extern u8 g_p1_loop2_extend_ok_as_u8;
+extern u16 g_p2_bombs_used;
+extern u16 g_p1_bombs_used;
+extern u16 g_p2_death_count;
+extern u16 g_p1_death_count;
 extern u8 g_game_mode;
 extern u8 D_0028E2EC;
 extern s16 g_boss_hyper_wait_as_s16;
@@ -50,18 +50,18 @@ void func_00122CE0(void) {
     func_00141640();
     g_boss_hyper_wait_as_s16 = 0;
     if (g_two_player_seen == 3) goto block_1;
-    reg_a0 = &D_0028E00C_as_u8;
+    reg_a0 = &g_p1_loop2_extend_ok_as_u8;
     reg_d0.h[0] = D_0028E980;
     reg_a1 = (u8 *)g_player1_as_u8_a;
-    reg_d1.h[0] = D_0028E01C;
+    reg_d1.h[0] = g_p1_bombs_used;
     reg_d2.h[0] = g_p1_score_digits;
-    reg_d3.h[0] = D_0028E02C;
+    reg_d3.h[0] = g_p1_death_count;
     if (0 > g_p1_lives_as_s16) {
-        reg_a0 = &D_0028E008_as_u8;
-        reg_d1.h[0] = D_0028E018;
+        reg_a0 = &g_p2_loop2_extend_ok_as_u8;
+        reg_d1.h[0] = g_p2_bombs_used;
         reg_a1 = (u8 *)g_player2_as_u8_a;
         reg_d2.h[0] = g_p2_score_digits;
-        reg_d3.h[0] = D_0028E028;
+        reg_d3.h[0] = g_p2_death_count;
     }
     if (reg_d2.h[0] != 0) goto block_1;
     if (reg_d3.h[0] == 0 || reg_d1.h[0] == 0) {
@@ -446,8 +446,8 @@ void func_00123780(void) {
     }
 }
 
-extern u16 D_0028E92C;
-extern u16 D_0028E930;
+extern u16 g_p2_power_style;
+extern u16 g_p1_power_style;
 extern s16 D_00295E2C_as_s16_a[];
 extern s8 D_0029F261_as_s8_a[];
 
@@ -460,14 +460,14 @@ void func_00123870(void) {
     D_00295E2C_as_s16_a[0] = 0;
     reg_a6 = (u8 *)D_00295E00;
     if (ENTITY(reg_a6)->hit_y_plus.h != 1) goto next_0;
-    reg_d0.h[0] = D_0028E930;
+    reg_d0.h[0] = g_p1_power_style;
     if (0 > D_0029F261_as_s8_a[0]) goto next_1;
-    reg_d0.h[0] = D_0028E92C;
+    reg_d0.h[0] = g_p2_power_style;
     goto next_1;
 next_0:
-    reg_d0.h[0] = D_0028E930;
+    reg_d0.h[0] = g_p1_power_style;
     if (ENTITY(reg_a6)->hit_y_minus.h == 0) goto next_1;
-    reg_d0.h[0] = D_0028E92C;
+    reg_d0.h[0] = g_p2_power_style;
 next_1:
     if (reg_d0.h[0] == 2) {
         ENTITY(reg_a6)->look.h = 0U;

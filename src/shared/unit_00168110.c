@@ -87,7 +87,7 @@ extern u16 g_enemy_signal_1;
 extern u16 g_bullets_blocked;
 extern u16 g_enemies_stopped;
 extern u16 g_scroll_line;
-extern u16 D_0028E8B8;
+extern u16 g_damage_blink_counter;
 extern u16 g_rank_4_16;
 extern u16 g_loop;
 extern u16 g_side_scroll_x[];
@@ -140,7 +140,7 @@ next_1:
         reg_d1.b[0] &= (*(u8 *)((u8 *)(t2) + (1)));
         if (reg_d1.b[0] == 0) {
             reg_d0.b[0] = *(u8 *)(reg_a5 + 0x19);
-            if (((s32) (*(u16 *)((u8 *)(t2) + (0x18))) < 0x1C) && (D_0028E8B8 == 0)) {
+            if (((s32) (*(u16 *)((u8 *)(t2) + (0x18))) < 0x1C) && (g_damage_blink_counter == 0)) {
                 reg_d0.w = 0x19;
             }
             goto next_2;

@@ -576,13 +576,13 @@ next_6:
     entity_draw_with_special_items();
 }
 
-extern u8 D_0028E855;
+extern u8 g_boss_present_b1;
 
 void func_00126410(void) {
     s32 bullet_release();
     u32 t;
 
-    if ((s16)(D_0028E855) < 0) goto next_2;
+    if ((s16)(g_boss_present_b1) < 0) goto next_2;
     t = reg_d1.h[0] & 0x1800;
     reg_d1.h[0] = t;
     if (!(t & 0xFFFF)) goto next_1;
@@ -634,7 +634,7 @@ void func_001265B0(void) {
     s32 bullet_release();
     u32 t;
 
-    if ((s16)(D_0028E855) < 0) goto next_2;
+    if ((s16)(g_boss_present_b1) < 0) goto next_2;
     t = reg_d1.h[0] & 0x1800;
     reg_d1.h[0] = t;
     if (!(t & 0xFFFF)) goto next_1;

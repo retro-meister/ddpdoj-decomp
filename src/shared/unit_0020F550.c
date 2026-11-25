@@ -81,10 +81,10 @@ extern u16 D_002697B0[];
 extern u16 D_00274040[];
 extern u16 D_00274840[];
 extern u16 D_00275040[];
-extern u32 D_0028DFD4_as_u32;
-extern u32 D_0028DFD8_as_u32;
-extern u16 D_0028E078_as_u16_a[];
-extern u16 D_0028E080_as_u16_a[];
+extern u32 g_p2_laser_stop_y_as_u32;
+extern u32 g_p1_laser_stop_y_as_u32;
+extern u16 g_p2_weapon_level_data_as_u16_a[];
+extern u16 g_p1_weapon_level_data_as_u16_a[];
 extern u32 g_p2_lives_as_u32;
 extern u32 g_p1_lives_as_u32;
 extern u16 D_002962E0_as_u16_a[];
@@ -229,13 +229,13 @@ void func_0020F550(void) {
     STORE_POINTER(D_00269F66, D_0029D750_as_u16_a);
     STORE_POINTER(D_00269F86, D_0029D730_as_u16_a);
     STORE_POINTER(D_00269FA6, D_0029D710_as_u16_a);
-    STORE_POINTER(D_00269FC6, D_0028E080_as_u16_a);
-    STORE_POINTER(D_00269FE6, D_0028E078_as_u16_a);
+    STORE_POINTER(D_00269FC6, g_p1_weapon_level_data_as_u16_a);
+    STORE_POINTER(D_00269FE6, g_p2_weapon_level_data_as_u16_a);
     STORE_POINTER(D_0026A006, D_002BC7C0_as_u16_a);
     STORE_POINTER(D_0026A026, D_002BD440);
     STORE_POINTER(D_0026A046, D_002BB4B0_as_u16_a);
-    STORE_POINTER(D_0026A066, &D_0028DFD8_as_u32);
-    STORE_POINTER(D_0026A086, &D_0028DFD4_as_u32);
+    STORE_POINTER(D_0026A066, &g_p1_laser_stop_y_as_u32);
+    STORE_POINTER(D_0026A086, &g_p2_laser_stop_y_as_u32);
     STORE_POINTER(D_0026A0A6, D_002BF4F0_as_u16_a);
     STORE_POINTER(D_0026A0C6, D_00299D30_as_u16_a);
     STORE_POINTER(D_0026A0E6, D_0029A12C_as_u16_a);
@@ -929,7 +929,7 @@ s32 rng_next_bit();
 s32 func_00201230();
 s32 func_00201270();
 s32 func_00202B50();
-extern u8 D_0028E855;
+extern u8 g_boss_present_b1;
 extern u16 D_00299D22[];
 extern u16 D_00299D24[];
 
@@ -949,7 +949,7 @@ void func_002119A0(void) {
     u32 save_d7;
 
     if (g_stage != 4) goto next_1;
-    if (D_0028E855 & 0x40) goto block_set;
+    if (g_boss_present_b1 & 0x40) goto block_set;
 next_1:
     save_d0 = reg_d0.w;
     save_d1 = reg_d1.w;

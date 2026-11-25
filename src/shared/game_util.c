@@ -334,14 +334,14 @@ extern u8 *reg_save_a3_as_u8_p;
 extern u8 *reg_save_a2;
 extern u8 *reg_save_a1;
 extern u8 *reg_save_a0_as_u8_p;
-extern u8 D_0028E855;
+extern u8 g_boss_present_b1;
 
 void func_002014D0(void) {
     func_00201450();
     if (cond_flag == 0) {
         D_00299764[0] = 1;
         D_00299766[0] = 0xFFFF;
-        if (D_0028E855 & 2) {
+        if (g_boss_present_b1 & 2) {
             func_00201B30();
             return;
         }
@@ -370,7 +370,7 @@ void func_002015B0(void) {
     if (cond_flag == 0) {
         D_00299764[0] = 1;
         D_00299766[0] = 0xFFFF;
-        if (D_0028E855 & 2) {
+        if (g_boss_present_b1 & 2) {
             func_00201B30();
             return;
         }

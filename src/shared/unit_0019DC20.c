@@ -116,10 +116,10 @@ s32 entity_draw_keep();
 extern u8 option_shot_lists_1[];
 extern u8 option_shot_lists_2[];
 extern u8 D_0028D960;
-extern u16 D_0028E07C[];
-extern u16 D_0028E07E[];
-extern u16 D_0028E084[];
-extern u16 D_0028E086[];
+extern u16 g_p2_option_level_data[];
+extern u16 g_p2_option_level_data_lo[];
+extern u16 g_p1_option_level_data[];
+extern u16 g_p1_option_level_data_lo[];
 extern u16 g_two_player_game;
 extern u8 D_0029E390[];
 extern u8 D_0029EA50[];
@@ -138,13 +138,13 @@ void func_0019E130(void) {
     save_a5 = reg_a5;
     save_a6 = reg_a6;
     reg_a0 = (u8 *)D_0029E390;
-    reg_tmp.h[1] = D_0028E084[0];
-    reg_tmp.h[0] = D_0028E086[0];
+    reg_tmp.h[1] = g_p1_option_level_data[0];
+    reg_tmp.h[0] = g_p1_option_level_data_lo[0];
     reg_a1 = (u8 *)reg_tmp.w;
     if (reg_d7.h[0] != 0) goto next_0;
     reg_a0 = (u8 *)D_0029EA50;
-    reg_tmp.h[1] = D_0028E07C[0];
-    reg_tmp.h[0] = D_0028E07E[0];
+    reg_tmp.h[1] = g_p2_option_level_data[0];
+    reg_tmp.h[0] = g_p2_option_level_data_lo[0];
     reg_a1 = (u8 *)reg_tmp.w;
 next_0:
     reg_d0.h[0] = 0x150;
@@ -232,13 +232,13 @@ void func_0019E5B0(void) {
     save_a5 = reg_a5;
     save_a6 = reg_a6;
     reg_a0 = (u8 *)D_0029E390;
-    reg_tmp.h[1] = D_0028E084[0];
-    reg_tmp.h[0] = D_0028E086[0];
+    reg_tmp.h[1] = g_p1_option_level_data[0];
+    reg_tmp.h[0] = g_p1_option_level_data_lo[0];
     reg_a1 = (u8 *)reg_tmp.w;
     if (reg_d7.h[0] != 0) goto next_0;
     reg_a0 = (u8 *)D_0029EA50;
-    reg_tmp.h[1] = D_0028E07C[0];
-    reg_tmp.h[0] = D_0028E07E[0];
+    reg_tmp.h[1] = g_p2_option_level_data[0];
+    reg_tmp.h[0] = g_p2_option_level_data_lo[0];
     reg_a1 = (u8 *)reg_tmp.w;
 next_0:
     reg_d0.h[0] = 0x450;
@@ -432,13 +432,13 @@ void func_0019EF20(void) {
     save_a5 = reg_a5;
     save_a6 = reg_a6;
     reg_a0 = (u8 *)D_0029E390;
-    reg_tmp.h[1] = D_0028E084[0];
-    reg_tmp.h[0] = D_0028E086[0];
+    reg_tmp.h[1] = g_p1_option_level_data[0];
+    reg_tmp.h[0] = g_p1_option_level_data_lo[0];
     reg_a1 = (u8 *)reg_tmp.w;
     if (reg_d7.h[0] != 0) goto next_0;
     reg_a0 = (u8 *)D_0029EA50;
-    reg_tmp.h[1] = D_0028E07C[0];
-    reg_tmp.h[0] = D_0028E07E[0];
+    reg_tmp.h[1] = g_p2_option_level_data[0];
+    reg_tmp.h[0] = g_p2_option_level_data_lo[0];
     reg_a1 = (u8 *)reg_tmp.w;
 next_0:
     reg_d0.h[0] = 0x150;

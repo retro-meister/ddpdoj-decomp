@@ -17,7 +17,7 @@ s32 func_002016D0();
 extern u8 g_game_mode;
 extern u16 D_0028E2E8;
 extern s32 g_boss_score;
-extern u16 D_0028E8B8;
+extern u16 g_damage_blink_counter;
 
 #define W(o) (*(u16 *)(reg_a6 + (o)))
 #define TW(o) (*(u16 *)(reg_a5 + (o)))
@@ -59,7 +59,7 @@ void func_001F4EB0(void) {
     reg_tmp.h[1] = TW(0x16);
     reg_tmp.h[0] = TW(0x18);
     if (reg_tmp.w >= 0x15000) goto block_chk;
-    if (D_0028E8B8 != 0) goto block_chk;
+    if (g_damage_blink_counter != 0) goto block_chk;
     reg_d0.w = 0x19;
     ENTITY(reg_a6)[7].offset_y.b[1] = reg_d0.b[0];
     ENTITY(reg_a6)[7].offset_y.b[0] = reg_d0.b[0];
@@ -239,15 +239,15 @@ s32 music_stop();                            /* extern */
 s32 func_002016D0();                            /* extern */
 s32 func_00203460();                            /* extern */
 s32 func_0020ED10();                            /* extern */
-extern u8 D_0028E855;
+extern u8 g_boss_present_b1;
 
 void func_001F5520(void) {
     s32 boss_phase_start(s32, s32, s32, s32);
     music_stop();
     func_0020ED10();
     if (D_0028E2E8 == 0) {
-        D_0028E855 |= 0x40;
-        D_0028E855 |= 0x80;
+        g_boss_present_b1 |= 0x40;
+        g_boss_present_b1 |= 0x80;
         func_00203460();
         ENTITY(reg_a6)->misc.sb.draw_layer = 1;
     } else {
@@ -380,7 +380,7 @@ void func_001F5850(void) {
     if (reg_tmp.w >= 0xE000) {
         goto next_9;
     }
-    if (D_0028E8B8 != 0) {
+    if (g_damage_blink_counter != 0) {
         goto next_9;
     }
     reg_d0.w = 0x19;

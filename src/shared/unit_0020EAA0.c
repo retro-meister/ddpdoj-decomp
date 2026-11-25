@@ -18,8 +18,8 @@ extern u8 D_00269360[];
 extern u8 D_00269380[];
 extern u8 D_00269398[];
 extern u8 D_002693A8[];
-extern u16 D_0028DFE4;
-extern u16 D_0028DFE8;
+extern u16 g_player_laser_count;
+extern u16 g_player_shot_count;
 extern u8 g_paused;
 extern u8 D_0028E378;
 extern u16 D_0028E3A0_as_u16;
@@ -52,9 +52,9 @@ void func_0020EAB0(void) {
     if (D_0028E7E4 == 0) goto next_5;
     if (D_0028E3A8_as_u16 == 0) return;
 next_5:
-    reg_d0.h[0] += D_0028DFE8;
-    reg_d0.h[0] += D_0028DFE4;
-    reg_d0.h[0] += D_0028DFE4;
+    reg_d0.h[0] += g_player_shot_count;
+    reg_d0.h[0] += g_player_laser_count;
+    reg_d0.h[0] += g_player_laser_count;
     reg_d1.w = 0;
     tbl = D_00269360;
     if (g_loop == 0) goto next_8;

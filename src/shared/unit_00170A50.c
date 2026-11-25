@@ -79,14 +79,14 @@ void func_00170DE0(void) {
 s32 func_001ABF90();
 s32 func_00200EE0();
 s32 func_00201010();
-extern u16 D_0028E024;
+extern u16 g_p1_stage_misses;
 extern u16 g_p1_hyper_gauge;
 extern s16 g_p1_hyper_active_as_s16;
 extern u16 g_boss_hits;
 extern u16 g_boss_hit_decay_timer;
 extern u16 g_p1_hits;
 extern u16 g_p1_combo_timer;
-extern u8 D_0028E855;
+extern u8 g_boss_present_b1;
 
 void func_00170DF0(void) {
     u32 save_d0;
@@ -97,10 +97,10 @@ void func_00170DF0(void) {
     u32 save_d5;
     s64 t;
 
-    reg_d3.h[0] = D_0028E024;
+    reg_d3.h[0] = g_p1_stage_misses;
     reg_d4.h[0] = g_p1_combo_timer;
     reg_d5.h[0] = g_p1_hits;
-    if (D_0028E855 & 2) {
+    if (g_boss_present_b1 & 2) {
         reg_d0.h[0] = g_boss_hits;
         if ((s16) reg_d0.h[0] >= 0) {
             func_00200EE0();
@@ -149,7 +149,7 @@ loop_11:
 }
 
 s32 func_001AC160();
-extern u16 D_0028E020;
+extern u16 g_p2_stage_misses;
 extern u16 g_p2_hyper_gauge;
 extern s16 g_p2_hyper_active_as_s16;
 extern u16 g_p2_hits;
@@ -164,10 +164,10 @@ void func_00170F80(void) {
     u32 save_d5;
     s64 t;
 
-    reg_d3.h[0] = D_0028E020;
+    reg_d3.h[0] = g_p2_stage_misses;
     reg_d4.h[0] = g_p2_combo_timer;
     reg_d5.h[0] = g_p2_hits;
-    if (D_0028E855 & 2) {
+    if (g_boss_present_b1 & 2) {
         reg_d0.h[0] = g_boss_hits;
         if ((s16) reg_d0.h[0] >= 0) {
             func_00200EE0();

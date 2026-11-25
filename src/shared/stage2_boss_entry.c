@@ -21,7 +21,7 @@ s32 func_002016D0();
 s32 func_00203400();
 extern u8 g_game_mode;
 extern s32 g_boss_score;
-extern u16 D_0028E8B8;
+extern u16 g_damage_blink_counter;
 
 void func_001CA730(void) {
     s32 m;
@@ -146,7 +146,7 @@ next_100:
     reg_tmp.h[1] = *(u16 *)(reg_a5 + 0x16);
     reg_tmp.h[0] = *(u16 *)(reg_a5 + 0x18);
     if (reg_tmp.w > reg_d2.w) goto next_110;
-    if (D_0028E8B8 != 0) goto next_110;
+    if (g_damage_blink_counter != 0) goto next_110;
     ENTITY(reg_a6)[9].offset_y.b[0] = 0x19;
     ENTITY(reg_a6)[9].offset_y.b[1] = 0x19;
     ENTITY(reg_a6)[9].offset_x.b[1] = 0x19;
@@ -199,7 +199,7 @@ next_25:
     ENTITY(reg_a6)[9].offset_x.b[0] = 0x11;
     reg_d2.h[0] = 0x1800;
     if ((s32) ENTITY(reg_a6)[2].hp.h > (s32) reg_d2.h[0]) goto next_29;
-    if (D_0028E8B8 != 0) goto next_29;
+    if (g_damage_blink_counter != 0) goto next_29;
     ENTITY(reg_a6)[9].offset_x.b[0] = 0x19;
 next_29:
     if (ENTITY(reg_a6)[3].flags.h == 0x8000) goto next_39;
@@ -232,7 +232,7 @@ next_35:
     ENTITY(reg_a6)[9].draw.b.priority = 0x11;
     reg_d2.h[0] = 0x1800;
     if ((s32) ENTITY(reg_a6)[3].hp.h > (s32) reg_d2.h[0]) goto next_39;
-    if (D_0028E8B8 != 0) goto next_39;
+    if (g_damage_blink_counter != 0) goto next_39;
     ENTITY(reg_a6)[9].draw.b.priority = 0x19;
 next_39:
     if (ENTITY(reg_a6)[4].flags.h == 0x8000) goto next_49;
@@ -265,7 +265,7 @@ next_45:
     ENTITY(reg_a6)[9].draw.b.flip = 0x12;
     reg_d2.h[0] = 0x1800;
     if ((s32) ENTITY(reg_a6)[4].hp.h > (s32) reg_d2.h[0]) goto next_49;
-    if (D_0028E8B8 != 0) goto next_49;
+    if (g_damage_blink_counter != 0) goto next_49;
     ENTITY(reg_a6)[9].draw.b.flip = 0x19;
 next_49:
     if (ENTITY(reg_a6)[5].flags.h == 0x8000) goto next_59;
@@ -298,7 +298,7 @@ next_55:
     ENTITY(reg_a6)[9].sprite.b[1] = 0x12;
     reg_d2.h[0] = 0x1800;
     if ((s32) ENTITY(reg_a6)[5].hp.h > (s32) reg_d2.h[0]) goto next_59;
-    if (D_0028E8B8 != 0) goto next_59;
+    if (g_damage_blink_counter != 0) goto next_59;
     ENTITY(reg_a6)[9].sprite.b[1] = 0x19;
 next_59:
     if (ENTITY(reg_a6)[8].flags.h == 0x8000) goto next_610;
@@ -463,11 +463,11 @@ s32 func_0013F3C0();
 s32 func_001CBCD0();
 s32 func_00203460();
 s32 func_0020ED10();
-extern u8 D_0028E855;
+extern u8 g_boss_present_b1;
 
 void func_001CB6B0(void) {
-    D_0028E855 |= 0x40;
-    D_0028E855 |= 0x80;
+    g_boss_present_b1 |= 0x40;
+    g_boss_present_b1 |= 0x80;
     func_0020ED10();
     func_0013F3C0();
     func_00203460();

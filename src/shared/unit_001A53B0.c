@@ -275,14 +275,14 @@ void func_001A5A80(void) {
     func_001A5AD0();
 }
 
-extern u8 D_0028E854;
+extern u8 g_boss_present;
 extern u8 D_0028E961;
 
 void func_001A5AD0(void) {
     func_001A7D00();
     func_001A7EE0();
     func_001A5A00();
-    if (D_0028E854 & 1) {
+    if (g_boss_present & 1) {
         func_001A6050();
         return;
     }
@@ -293,7 +293,7 @@ void func_001A5AD0(void) {
     func_001A5B50();
 }
 
-extern u16 D_0028E074;
+extern u16 g_p1_maximum_level;
 extern u16 g_game_frame;
 extern u8 g_p1_hyper_combo_decay_as_u8;
 extern u8 D_0028E5DD;
@@ -317,7 +317,7 @@ void func_001A5B50(void) {
         return;
     }
     func_001A80C0();
-    if (!(D_0028E854 & 1) || (g_boss_hp_bar_flags < 0)) {
+    if (!(g_boss_present & 1) || (g_boss_hp_bar_flags < 0)) {
         if (g_p1_hyper_active != 0) {
             if (!(g_p1_score_panel_flags & 1)) {
                 g_p1_score_panel_flags |= 1;
@@ -341,7 +341,7 @@ void func_001A5B50(void) {
                     } else {
                         reg_d0.h[0] = 0xD4;
                         reg_d1.h[0] = 0x200;
-                        reg_d5.h[0] = D_0028E074;
+                        reg_d5.h[0] = g_p1_maximum_level;
                         func_001A8A60();
                     }
                 } else {
@@ -402,7 +402,7 @@ block_29:
     func_001A5DD0();
 }
 
-extern u16 D_0028E070;
+extern u16 g_p2_maximum_level;
 extern u8 g_p2_hyper_combo_decay_as_u8;
 extern u8 D_0028E5D9;
 extern u16 g_p2_max_hits;
@@ -422,7 +422,7 @@ void func_001A5DD0(void) {
         return;
     }
     func_001A8510();
-    if (!(D_0028E854 & 1) || (g_boss_hp_bar_flags < 0)) {
+    if (!(g_boss_present & 1) || (g_boss_hp_bar_flags < 0)) {
         if (g_p2_hyper_active != 0) {
             if (!(g_p2_score_panel_flags & 1)) {
                 g_p2_score_panel_flags |= 1;
@@ -446,7 +446,7 @@ void func_001A5DD0(void) {
                     } else {
                         reg_d0.h[0] = 0xD4;
                         reg_d1.h[0] = 0x1400;
-                        reg_d5.h[0] = D_0028E070;
+                        reg_d5.h[0] = g_p2_maximum_level;
                         func_001A8A60();
                     }
                 } else {
@@ -520,7 +520,7 @@ extern u16 g_lives_display_move_x;
 extern u16 g_lives_display_move_y;
 extern u16 g_boss_hp_bar_move_count;
 extern u8 D_0028E635;
-extern u8 D_0028E855;
+extern u8 g_boss_present_b1;
 extern u16 g_loop;
 extern u16 g_stage;
 extern u16 D_0029CEA0[];
@@ -530,7 +530,7 @@ void func_001A6050(void) {
     s32 flag;
     s32 bits;
 
-    if (D_0028E855 & 8) {
+    if (g_boss_present_b1 & 8) {
         func_001A6650();
         return;
     }
@@ -699,7 +699,7 @@ void func_001A6510(void) {
     u32 flags;
     u32 hit;
 
-    flags = D_0028E855;
+    flags = g_boss_present_b1;
     if (!(flags & 4)) goto next_7;
     hit = g_boss_hits;
     if ((s16)hit >= 0) goto next_0;
@@ -738,7 +738,7 @@ next_6:
     g_boss_hits = 0;
     g_boss_hit_decay_timer = 0;
 next_7:
-    if (D_0028E855 & 8) {
+    if (g_boss_present_b1 & 8) {
         func_001A7080();
     }
 }
@@ -850,7 +850,7 @@ extern u16 g_p2_lives;
 extern u16 g_p1_lives;
 
 void func_001A68B0(void) {
-    if (!(D_0028E854 & 1)) goto next_2;
+    if (!(g_boss_present & 1)) goto next_2;
     if ((s16)g_p1_lives < 0) goto next_0;
     func_001AA8F0();
     func_001AC3A0();
@@ -1135,24 +1135,24 @@ void func_001A7080(void) {
     u8 flags;
     u8 *p;
 
-    flags = D_0028E854;
+    flags = g_boss_present;
     switch (flags & 8) {
     case 0:
         return;
     }
     if (flags & 0x10) goto next_0;
-    D_0028E854 = flags | 0x10;
+    g_boss_present = flags | 0x10;
     g_boss_hit_bonus_timer = 7;
     reg_a0 = (u8 *)&g_boss_hit_bonus_timer;
     reg_d0.w = g_boss_score_as_u32;
     reg_d0.w <<= 4;
     func_001A97F0();
 next_0:
-    if (!(D_0028E854 & 4)) {
+    if (!(g_boss_present & 4)) {
         func_001A7B30();
         return;
     }
-    if (D_0028E854 & 2) {
+    if (g_boss_present & 2) {
         func_001A7B30();
         return;
     }
@@ -1195,7 +1195,7 @@ next_7:
     if (reg_tmp.h[1] != 0) goto next_10;
     D_0028E2A0_as_s8 = 0;
     D_0028E2A4_as_s8 = 0;
-    D_0028E854 |= 2;
+    g_boss_present |= 2;
     if (g_simulation_active == 0) goto next_11;
     D_0028E2A4_as_s8 = 0x78;
     music_fade_out();
@@ -1595,7 +1595,7 @@ block_9:
             g_p1_hit10_display_timer = 0x78;
             g_p1_chain_points_display_timer = 0x78;
         }
-        if (!(D_0028E855 & 0x40) && (D_0028E3B4 == 0) && (D_0028EC4C == 0) && (g_game_frame_ran != 0)) {
+        if (!(g_boss_present_b1 & 0x40) && (D_0028E3B4 == 0) && (D_0028EC4C == 0) && (g_game_frame_ran != 0)) {
             g_p1_hyper_time -= 2;
             if ((s16) g_p1_hyper_time < 0) {
                 func_001A7E90();
@@ -1683,7 +1683,7 @@ block_9:
             g_p2_hit10_display_timer = 0x78;
             g_p2_chain_points_display_timer = 0x78;
         }
-        if (!(D_0028E855 & 0x40) && (D_0028E3B4 == 0) && (D_0028EC4C == 0) && (g_game_frame_ran != 0)) {
+        if (!(g_boss_present_b1 & 0x40) && (D_0028E3B4 == 0) && (D_0028EC4C == 0) && (g_game_frame_ran != 0)) {
             g_p2_hyper_time -= 2;
             if ((s16) g_p2_hyper_time < 0) {
                 func_001A8070();
@@ -1748,7 +1748,7 @@ void func_001A80D0(void) {
     t1 = reg_d1.h[0];
     reg_d1.h[1] = t1;
     reg_d1.h[0] = 0x400;
-    if (!(D_0028E854 & 1)) goto next_1;
+    if (!(g_boss_present & 1)) goto next_1;
     if (g_boss_hp_bar_flags < 0) goto next_1;
     if (D_0028E635 & 0x10) goto next_2;
     reg_d1.h[0] = 0x60C0;
@@ -1763,7 +1763,7 @@ void func_001A80D0(void) {
     reg_d1.h[0] += reg_d0.h[0];
     goto next_1;
 next_2:
-    if (D_0028E855 & 8) goto next_3;
+    if (g_boss_present_b1 & 8) goto next_3;
     reg_d1.h[0] = 0x60C0;
     reg_tmp1.w = reg_d1.w;
     reg_d1.h[1] = reg_d1.h[0];
@@ -1874,7 +1874,7 @@ void func_001A8520(void) {
     t1 = reg_d1.h[0];
     reg_d1.h[1] = t1;
     reg_d1.h[0] = 0x2800;
-    if (!(D_0028E854 & 1)) goto next_1;
+    if (!(g_boss_present & 1)) goto next_1;
     if (g_boss_hp_bar_flags < 0) goto next_1;
     if (D_0028E635 & 0x10) goto next_2;
     reg_d1.h[0] = 0x60C0;
@@ -1889,7 +1889,7 @@ void func_001A8520(void) {
     reg_d1.h[0] -= reg_d0.h[0];
     goto next_1;
 next_2:
-    if (D_0028E855 & 8) goto next_3;
+    if (g_boss_present_b1 & 8) goto next_3;
     reg_d1.h[0] = 0x60C0;
     reg_tmp1.w = reg_d1.w;
     reg_d1.h[1] = reg_d1.h[0];

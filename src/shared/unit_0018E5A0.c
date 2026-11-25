@@ -3240,7 +3240,7 @@ extern u8 D_00261F30_as_u8_a[];
 extern u8 D_00261F70[];
 extern u8 D_00261FB0[];
 extern u16 D_0028E4B0;
-extern u8 D_0028E8B4;
+extern u8 g_name_entry_player;
 extern u16 g_two_player_seen;
 extern s16 g_player2[];
 extern s16 g_player1[];
@@ -3269,16 +3269,16 @@ void func_00197F60() {
     if (0 > g_player1[0]) {
         func_001ACBA0();
         if (cond_flag == 0) {
-            D_0028E8B4 |= 1;
+            g_name_entry_player |= 1;
         }
     }
     if (0 > g_player2[0]) {
         func_001ACC60();
         if (cond_flag == 0) {
-            D_0028E8B4 |= 2;
+            g_name_entry_player |= 2;
         }
     }
-    *(u8 *)(reg_a5 + 4) = (u8) D_0028E8B4;
+    *(u8 *)(reg_a5 + 4) = (u8) g_name_entry_player;
     if (*(u8 *)(reg_a5 + 4) != 0) {
         music_play_bgm13();
     }

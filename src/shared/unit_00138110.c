@@ -31,7 +31,7 @@ extern u16 g_p2_hyper_total;
 extern u16 g_p1_hyper_total;
 extern u16 g_p2_hyper_active;
 extern u16 g_p1_hyper_active;
-extern u32 D_0028E8BC_as_u32;
+extern u32 g_play_time_as_u32;
 extern u8 g_rank_1_16_as_u8;
 extern u8 g_rank_2_16_as_u8;
 extern u8 g_rank_3_16_as_u8;
@@ -58,7 +58,7 @@ void func_00138170(void) {
     reg_d2.h[0] = g_stage;
     reg_d1.w = 0;
     reg_d1.b[0] = *(s8 *) (reg_a0 + reg_d2.h[0]);
-    reg_d2.w = D_0028E8BC_as_u32;
+    reg_d2.w = g_play_time_as_u32;
     reg_d3.w = 8;
     if (g_simulation_active != 0 && D_006E5C02[0] != 0) {
         reg_d1.b[0] = D_0028E2D4;

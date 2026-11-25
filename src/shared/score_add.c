@@ -39,12 +39,12 @@ extern u16 g_p2_hyper_active;
 extern u16 g_p1_hyper_active;
 extern u8 D_0028E71C_as_u8;
 extern u8 D_0028E720;
-extern u8 D_0028E855;
+extern u8 g_boss_present_b1;
 extern u16 D_0029CEA0[];
 
 void score_add_no_chain(void) {
     if (!(ENTITY(reg_a6)->flags.b[1] & 2)) {
-        if ((D_0028E855 & 4) && (reg_d2.h[0] = D_0029CEA0[0], ((s16) reg_d2.h[0] < 0)) && (reg_d2.w & 1) && (reg_d0.w = 1, ((s8) reg_d2.b[0] >= 0))) {
+        if ((g_boss_present_b1 & 4) && (reg_d2.h[0] = D_0029CEA0[0], ((s16) reg_d2.h[0] < 0)) && (reg_d2.w & 1) && (reg_d0.w = 1, ((s8) reg_d2.b[0] >= 0))) {
             if (reg_d1.w & 0x10) {
                 reg_d0.h[0] += g_p1_hyper_active;
                 func_001AA0D0();
@@ -194,7 +194,7 @@ extern u32 g_p1_chain_first_score_shown_as_u32;
 extern u32 g_p1_chain_first_score_as_u32;
 extern u16 D_0028E6E4;
 extern u16 D_0028E720_as_u16;
-extern u8 D_0028E854;
+extern u8 g_boss_present;
 extern u16 D_0029F2B8[];
 
 void func_001A9370(void) {
@@ -213,7 +213,7 @@ void func_001A9370(void) {
         goto block_11;
     }
 next_1:
-    if (D_0028E854 & 1) {
+    if (g_boss_present & 1) {
         goto block_12;
     }
     g_p1_laser_hit_timer_as_s16 = 0x1E;
@@ -323,7 +323,7 @@ void func_001A95B0(void) {
         goto block_11;
     }
 next_1:
-    if (D_0028E854 & 1) {
+    if (g_boss_present & 1) {
         goto block_12;
     }
     g_p2_laser_hit_timer_as_s16 = 0x1E;
@@ -618,7 +618,7 @@ extern u16 D_0029F2BA[];
 void func_001A9D80(void) {
     u16 saved_d0;
 
-    switch (D_0028E855 & 4) {
+    switch (g_boss_present_b1 & 4) {
     case 0:
         break;
     default:
@@ -847,7 +847,7 @@ extern u16 D_0029F24A[];
 void func_001AA380(void) {
     u16 saved_d0;
 
-    switch (D_0028E855 & 4) {
+    switch (g_boss_present_b1 & 4) {
     case 0:
         break;
     default:
@@ -1050,7 +1050,7 @@ void func_001AA8F0(void) {
     s32 deferred_text_put();
     reg_d0.h[0] = 0xC8;
     reg_d1.h[0] = 0x200;
-    if ((D_0028E854 & 1) && (g_boss_hp_bar_flags >= 0)) {
+    if ((g_boss_present & 1) && (g_boss_hp_bar_flags >= 0)) {
         if (D_0028E635 & 0x10) {
             reg_d1.h[0] = 0;
             reg_d0.h[0] = 0xCC;
@@ -1079,7 +1079,7 @@ void func_001AAA20(void) {
     s32 deferred_text_put();
     reg_d0.h[0] = 0xC8;
     reg_d1.h[0] = 0x1400;
-    if ((D_0028E854 & 1) && (g_boss_hp_bar_flags >= 0)) {
+    if ((g_boss_present & 1) && (g_boss_hp_bar_flags >= 0)) {
         if (D_0028E635 & 0x10) {
             reg_d0.h[0] = 0xCC;
             reg_d1.h[0] = 0x1600;
@@ -1617,14 +1617,14 @@ void func_001AB860(void)
     reg_a0_as_u32 = saved_a0;
 }
 
-extern u16 D_0028DFC0;
+extern u16 g_players_hidden;
 extern void sprite_draw_with_hyper_display(u32 originalD1);
 
 void func_001AB8D0(void)
 {
     u32 originalD1;
 
-    if (D_0028DFC0 == 0) {
+    if (g_players_hidden == 0) {
         originalD1 = reg_d1.w;
         reg_d1.w = originalD1 + 0xF200F600u;
         reg_d3.h[0] = 0xE50;
@@ -2082,7 +2082,7 @@ void func_001AC370(void) {
 
 extern u16 D_0028DAF8[];
 extern u16 g_p1_lives;
-extern u16 D_0028E938;
+extern u16 g_p1_ship_type;
 
 void func_001AC3A0(void) {
     s32 deferred_text_put();
@@ -2108,7 +2108,7 @@ void func_001AC3A0(void) {
     save_a0 = reg_a0;
     reg_d0.h[0] = 0xBC;
     reg_d1.h[0] = 0x200;
-    if ((D_0028E854 & 1) && (g_boss_hp_bar_flags >= 0)) {
+    if ((g_boss_present & 1) && (g_boss_hp_bar_flags >= 0)) {
         if (D_0028E635 & 0x10) {
             reg_d1.h[0] = 0;
             reg_d0.h[0] = 0xC0;
@@ -2128,7 +2128,7 @@ block_4:
             }
             reg_a0 = (u8 *)(D_0028DAF8);
             reg_d7.h[0] -= reg_d6.h[0];
-            reg_d4.h[0] = D_0028E938;
+            reg_d4.h[0] = g_p1_ship_type;
             reg_d4.h[0] += reg_d4.h[0];
             reg_d4.h[1] = (reg_d4.h[0] != 0) ? *(u16 *)((u8 *)reg_a0 + ((s16)reg_d4.h[0] & ~1)) : *(u16 *)reg_a0;
             reg_d4.h[0] = ((reg_d4.h[0] + 2) != 0) ? *(u16 *)((u8 *)reg_a0 + ((s16)(reg_d4.h[0] + 2) & ~1)) : *(u16 *)reg_a0;
@@ -2160,7 +2160,7 @@ block_end:
 
 extern u16 D_0028DB00[];
 extern u16 g_p2_lives;
-extern u16 D_0028E934;
+extern u16 g_p2_ship_type;
 
 void func_001AC5F0(void) {
     s32 deferred_text_put();
@@ -2186,7 +2186,7 @@ void func_001AC5F0(void) {
     save_a0 = reg_a0;
     reg_d0.h[0] = 0xBC;
     reg_d1.h[0] = 0x1900;
-    if ((D_0028E854 & 1) && (g_boss_hp_bar_flags >= 0)) {
+    if ((g_boss_present & 1) && (g_boss_hp_bar_flags >= 0)) {
         if (D_0028E635 & 0x10) {
             reg_d0.h[0] = 0xC0;
             reg_d1.h[0] = 0x1B00;
@@ -2206,7 +2206,7 @@ block_4:
             }
             reg_a0 = (u8 *)(D_0028DB00);
             reg_d7.h[0] -= reg_d6.h[0];
-            reg_d4.h[0] = D_0028E934;
+            reg_d4.h[0] = g_p2_ship_type;
             reg_d4.h[0] += reg_d4.h[0];
             reg_d4.h[1] = (reg_d4.h[0] != 0) ? *(u16 *)((u8 *)reg_a0 + ((s16)reg_d4.h[0] & ~1)) : *(u16 *)reg_a0;
             reg_d4.h[0] = ((reg_d4.h[0] + 2) != 0) ? *(u16 *)((u8 *)reg_a0 + ((s16)(reg_d4.h[0] + 2) & ~1)) : *(u16 *)reg_a0;
@@ -2243,7 +2243,7 @@ extern u8 g_replay_mode;
 extern u16 D_006C8E5C[];
 
 void func_001AC840(void) {
-    if (!(D_0028E854 & 1)) {
+    if (!(g_boss_present & 1)) {
         g_boss_hp_bar_move_count = 0x53;
         if (g_stage == 0 && g_replay_mode == 2) {
             if (D_006C8E5C[0] == 0) {
@@ -2279,7 +2279,7 @@ void func_001AC8E0(void) {
 
 
 void func_001AC900(void) {
-    if (!(D_0028E854 & 1)) {
+    if (!(g_boss_present & 1)) {
         func_001AC950();
         return;
     }
@@ -2303,7 +2303,7 @@ void func_001AC950(void) {
 
 
 void func_001AC980(void) {
-    if (!(D_0028E854 & 1)) {
+    if (!(g_boss_present & 1)) {
         func_001AC9D0();
         return;
     }
@@ -2330,7 +2330,7 @@ void func_001ACA00(void)
     reg_d2.h[0] = 7;
     reg_d3.h[0] = 7;
 
-    if ((D_0028E854 & 1) && g_boss_hp_bar_flags >= 0) {
+    if ((g_boss_present & 1) && g_boss_hp_bar_flags >= 0) {
         if (!(D_0028E635 & 0x10)) {
             return;
         }
@@ -2350,7 +2350,7 @@ void func_001ACA80(void) {
     reg_d1.h[0] = 0x1400;
     reg_d2.h[0] = 7;
     reg_d3.h[0] = 7;
-    if ((D_0028E854 & 1) && (g_boss_hp_bar_flags >= 0)) {
+    if ((g_boss_present & 1) && (g_boss_hp_bar_flags >= 0)) {
         if (D_0028E635 & 0x10) {
             reg_d0.h[0] = 0xCC;
             reg_d1.h[0] = 0x1600;

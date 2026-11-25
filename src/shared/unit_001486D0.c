@@ -62,7 +62,7 @@ void func_00148860() {
 typedef void (*Fn)();
 
 extern u8 D_00257820[];
-extern u16 D_0028DFE8;
+extern u16 g_player_shot_count;
 extern u8 g_p2_hyper_active_as_u8;
 extern u8 g_p1_hyper_active_as_u8;
 extern u16 g_side_scroll_step[];
@@ -77,7 +77,7 @@ void func_001488C0(void) {
 
     reg_a6 = (u8 *)D_0029E390;
     reg_d6.h[0] = g_side_scroll_step[0];
-    D_0028DFE8 = 0;
+    g_player_shot_count = 0;
     saved_a4 = reg_a4;
     saved_a5 = reg_a5;
     reg_a4 = (u8 *)g_player1_as_u8_a;
@@ -93,7 +93,7 @@ loop_1:
 loop_2:
     reg_d1.h[0] = ENTITY(reg_a6)->flags.h;
     if (reg_d1.h[0] == 0) goto next_1;
-    D_0028DFE8 += 1;
+    g_player_shot_count += 1;
     ENTITY(reg_a6)->x.h -= reg_d6.h[0];
     reg_d0.w = 0xF;
     reg_d0.h[0] &= reg_d1.h[0];

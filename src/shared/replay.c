@@ -638,7 +638,7 @@ extern u8 D_0028E2BC;
 extern u8 D_0028E2E4;
 extern u8 g_setting_difficulty;
 extern u16 g_scroll_line;
-extern u16 D_0028E8AC;
+extern u16 g_scroll_line_offset;
 extern u16 g_loop;
 extern u8 D_0028ED64;
 extern s32 g_replay_position;
@@ -709,7 +709,7 @@ void replay_record_begin() {
     }
     save[5] = g_setting_difficulty;
     save[18] = D_0028E2E4;
-    printf((const char *)"real_l[%d] real_l_scr[%d]\n", g_scroll_line, D_0028E8AC);
+    printf((const char *)"real_l[%d] real_l_scr[%d]\n", g_scroll_line, g_scroll_line_offset);
     }
 }
 
@@ -873,7 +873,7 @@ extern void gfx_draw_color_box(s32 x, s32 y, s32 w, s32 h, s32 depth, s32 alpha,
 extern void replay_header_apply(void);
 s32 replay_text_layer_load();
 extern u8 D_0028DEF8;
-extern u16 D_0028DFC0;
+extern u16 g_players_hidden;
 extern u8 D_0028E2EC;
 extern u8 D_0028E304;
 extern u8 g_setting_ship_stock;
@@ -886,7 +886,7 @@ extern u16 D_0028E3EC;
 extern u16 g_game_frame;
 extern u16 g_score_task_active;
 extern u16 g_score_panel_intro;
-extern s32 D_0028E8BC;
+extern s32 g_play_time;
 extern u16 g_p2_lives;
 extern u16 g_p1_lives;
 extern s32 D_0028E998;
@@ -1029,15 +1029,15 @@ void replay_playback_start(void) {
                     g_player1_as_u16_a[0] = 0;
                     g_player2_as_u16_a[0] = 0;
                 } else {
-                    D_0028DFC0 = 1;
+                    g_players_hidden = 1;
                 }
             }
             break;
         case 0x65:
-            if ((g_loop != 0) && (g_scroll_line == 0x69) && (D_0028E8AC == 0x140)) {
+            if ((g_loop != 0) && (g_scroll_line == 0x69) && (g_scroll_line_offset == 0x140)) {
                 memcpy(g_player1_as_u16_a, D_006C68B6, 0x62);
                 memcpy(g_player2_as_u16_a, D_006C6918, 0x62);
-                D_0028DFC0 = 0;
+                g_players_hidden = 0;
                 D_0028ED5C = 0;
             }
             if (g_scroll_line == 0x38) {
@@ -1048,9 +1048,9 @@ void replay_playback_start(void) {
                 D_0028E3DC = 0xA;
                 D_0028E3E8 = 0;
                 base = D_006C91A0[0] - 0x11A;
-                D_0028E8BC = D_006C8E88[0] - base + 1;
+                g_play_time = D_006C8E88[0] - base + 1;
             }
-            if ((g_scroll_line == D_006C8E90[0]) && (D_0028E8AC == D_006C8E94[0])) {
+            if ((g_scroll_line == D_006C8E90[0]) && (g_scroll_line_offset == D_006C8E94[0])) {
                 g_score_task_active = 1;
                 g_replay_begin_pending = 1;
                 step = 0xC8;

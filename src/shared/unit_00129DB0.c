@@ -20,7 +20,7 @@ extern u16 g_sprite_bullets2_used;
 extern u16 g_sprite_bullets_used;
 extern s8 g_slowdown_timer_as_s8;
 extern u8 D_0028E37C;
-extern u8 D_0028E855;
+extern u8 g_boss_present_b1;
 extern u16 g_loop;
 extern u16 g_stage;
 extern s16 D_00299760_as_s16_a[];
@@ -59,7 +59,7 @@ void func_00129DB0(void) {
         }
         reg_tmp.h[0] = (s16) g_sprite_bullets2_used + (s16) g_sprite_bullets_used;
         reg_tmp.h[0] /= 0xC;
-        if ((D_0028E855 & 2) && (reg_tmp.h[0] >= *limit)) {
+        if ((g_boss_present_b1 & 2) && (reg_tmp.h[0] >= *limit)) {
             D_0028E37C |= 0x80;
             g_slowdown_timer_as_s8 = 1;
         }
@@ -68,7 +68,7 @@ void func_00129DB0(void) {
     if (D_0028E37C != 0) {
         reg_tmp.h[0] = (s16) g_sprite_bullets2_used + (s16) g_sprite_bullets_used;
         reg_tmp.h[0] /= 0xC;
-        if ((D_0028E855 & 2) && (g_loop != 0) && (reg_tmp.h[0] > D_0024F330[g_stage])) {
+        if ((g_boss_present_b1 & 2) && (g_loop != 0) && (reg_tmp.h[0] > D_0024F330[g_stage])) {
             g_slowdown_timer_as_s8 = 2;
         }
     }
@@ -92,7 +92,7 @@ extern u8 D_0024F0F0[];
 extern u8 D_00262570[];
 extern u32 D_0028DEA4;
 extern u16 D_0028E3EC;
-extern u16 D_0028E854_as_u16;
+extern u16 g_boss_present_as_u16;
 extern u16 g_enemy_signal_2;
 #ifdef DEATH_LABEL
 extern u8 death_D_00290858;
@@ -241,7 +241,7 @@ void func_00129EF0(void) {
 
 L_bom_bui:
     reg_d1.h[0] = *(u16 *)D_0029CEA0_as_u8_a;
-    if ((reg_d1.h[0] != 0) && (reg_d1.w & 1) && (0 <= (s64)(s16)D_0028E854_as_u16)) {
+    if ((reg_d1.h[0] != 0) && (reg_d1.w & 1) && (0 <= (s64)(s16)g_boss_present_as_u16)) {
         goto block_12;
     }
     reg_d0.w = 0;
@@ -264,7 +264,7 @@ loop_10:
     }
     D_00299760[0] += 1;
     reg_d1.h[0] = *(u16 *)D_0029CEA0_as_u8_a;
-    if ((s16)(reg_d1.h[0] |= (s16)D_0028E854_as_u16) < 0) {
+    if ((s16)(reg_d1.h[0] |= (s16)g_boss_present_as_u16) < 0) {
         goto L_bom_bui;
     }
 

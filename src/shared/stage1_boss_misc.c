@@ -43,14 +43,14 @@ s32 enemy_remove();
 s32 entity_draw_layer4();
 s32 func_001D27A0();
 s32 entity_velocity();
-extern u8 D_0028E855;
+extern u8 g_boss_present_b1;
 extern u16 g_enemies_stopped;
 
 #define W(o) (*(u16 *)(reg_a6 + (o)))
 #define B(o) (*(u8 *)(reg_a6 + (o)))
 
 void func_0014F1D0(void) {
-    if (!(D_0028E855 & 0x40)) goto block_5;
+    if (!(g_boss_present_b1 & 0x40)) goto block_5;
     reg_d1.b[0] = B(1);
     func_001D27A0();
     if (cond_flag != 0) goto block_6;
@@ -158,7 +158,7 @@ void func_0014F5E0(void) {
 
     W(0x22) = W(2);
     W(0x24) = W(4);
-    if (!(D_0028E855 & 0x40)) goto block_20;
+    if (!(g_boss_present_b1 & 0x40)) goto block_20;
     reg_d1.b[0] = B(1);
     func_001D27A0();
     if (cond_flag != 0) goto block_end;
@@ -315,7 +315,7 @@ extern u16 g_bullets_blocked;
 #define LOOKUP(d) (((d) != 0) ? *(u16 *)((u8 *)reg_a0 + ((s16)(d) & ~1)) : *(u16 *)reg_a0)
 
 void func_0014FB30(void) {
-    if (D_0028E855 & 0x40) goto next_1;
+    if (g_boss_present_b1 & 0x40) goto next_1;
     reg_d1.w = 0x5C;
     reg_d1.b[0] &= ENTITY(reg_a6)->flags.b[1];
     if (reg_d1.b[0] == 0) goto next_2;

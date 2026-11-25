@@ -689,7 +689,7 @@ next_2:
 }
 
 extern u8 D_0026A350[];
-extern u16 D_0028E8A4;
+extern u16 g_scroll_line_step;
 extern s8 enemy_move_end_requested;
 
 void enemy_path_start(void) {
@@ -744,7 +744,7 @@ next_1:
     *(u16 *)(reg_a5 + 0x14) = (u16) reg_tmp.h[0];
     *(u8 *)(reg_a6 + 0x1A) = (u8) reg_d1.b[0];
     reg_d0.h[0] = *(u16 *)(reg_a5 + 0xA);
-    reg_d0.h[0] -= D_0028E8A4;
+    reg_d0.h[0] -= g_scroll_line_step;
     reg_d0.h[0] &= 0x7F;
     reg_tmp.h[0] = reg_d0.h[0];
     reg_d0.h[0] >>= 7;

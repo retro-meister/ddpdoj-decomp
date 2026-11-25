@@ -51,7 +51,7 @@ s32 score_add_no_chain();
 s32 score_add();
 s32 func_00201270();
 extern u8 D_0028D998;
-extern u16 D_0028E8B8;
+extern u16 g_damage_blink_counter;
 
 void func_001C5240(void) {
     u32 t;
@@ -98,7 +98,7 @@ next_45:
     if (reg_d1.b[0] != 0) goto next_50;
     reg_d0.b[0] = *(u8 *)(reg_a5 + 0x1B);
     if ((s32) ENTITY(reg_a6)->hp.h >= 0x400) goto next_90;
-    if (D_0028E8B8 != 0) goto next_90;
+    if (g_damage_blink_counter != 0) goto next_90;
     reg_d0.w = 0x19;
     goto next_90;
 next_50:
@@ -246,7 +246,7 @@ next_1:
     if (reg_d1.b[0] != 0) goto next_50;
     reg_d0.b[0] = *(u8 *)(reg_a5 + 0x19);
     if ((s32) ENTITY(reg_a6)->hp.h >= 0x380) goto next_90;
-    if (D_0028E8B8 != 0) goto next_90;
+    if (g_damage_blink_counter != 0) goto next_90;
     reg_d0.w = 0x19;
     goto next_90;
 next_50:
@@ -393,7 +393,7 @@ next_1:
     if (reg_d1.b[0] != 0) goto next_50;
     reg_d0.b[0] = *(u8 *)(reg_a5 + 0x19);
     if ((s32) ENTITY(reg_a6)->hp.h >= 0x380) goto next_90;
-    if (D_0028E8B8 != 0) goto next_90;
+    if (g_damage_blink_counter != 0) goto next_90;
     reg_d0.w = 0x19;
     goto next_90;
 next_50:
@@ -518,7 +518,7 @@ next_1:
     if (reg_d1.b[0] != 0) goto next_50;
     reg_d0.b[0] = *(u8 *)(reg_a5 + 0x19);
     if ((s32) ENTITY(reg_a6)->hp.h >= 0x380) goto next_90;
-    if (D_0028E8B8 != 0) goto next_90;
+    if (g_damage_blink_counter != 0) goto next_90;
     reg_d0.w = 0x19;
     goto next_90;
 next_50:
@@ -694,7 +694,7 @@ block_5:
         reg_d1.b[0] &= ENTITY(reg_a6)->flags.b[1];
         if (reg_d1.b[0] == 0) {
             reg_d0.b[0] = *(u8 *)(reg_a5 + 0x1B);
-            if (((s32) ENTITY(reg_a6)->hp.h < 0x180) && (D_0028E8B8 == 0)) {
+            if (((s32) ENTITY(reg_a6)->hp.h < 0x180) && (g_damage_blink_counter == 0)) {
                 reg_d0.w = 0x19;
             }
             goto block_12;
@@ -937,7 +937,7 @@ block_6:
             reg_d1.b[0] &= ENTITY(reg_a6)->flags.b[1];
             if (reg_d1.b[0] == 0) {
                 reg_d0.b[0] = *(u8 *)(reg_a5 + 0x1B);
-                if (((s32) ENTITY(reg_a6)->hp.h < 0x180) && (D_0028E8B8 == 0)) {
+                if (((s32) ENTITY(reg_a6)->hp.h < 0x180) && (g_damage_blink_counter == 0)) {
                     reg_d0.w = 0x19;
                 }
                 goto block_18;

@@ -20,7 +20,7 @@ s32 score_add();
 s32 func_002016D0();
 extern u8 g_game_mode;
 extern s32 g_boss_score;
-extern u16 D_0028E8B8;
+extern u16 g_damage_blink_counter;
 
 void func_001BB8E0(void) {
     s32 func_00203400();
@@ -81,7 +81,7 @@ void func_001BB8E0(void) {
             reg_d2.w = 0x6D33;
             reg_tmp.h[1] = (*(u16 *)((u8 *)(v1) + (0x16)));
             reg_tmp.h[0] = (*(u16 *)((u8 *)(v1) + (0x18)));
-            if (((u32) reg_tmp.w <= (u32) reg_d2.w) && (D_0028E8B8 == 0)) {
+            if (((u32) reg_tmp.w <= (u32) reg_d2.w) && (g_damage_blink_counter == 0)) {
                 ENTITY(reg_a6)->attr.b.palette = 0x19U;
                 ENTITY(reg_a6)[5].attr.b.palette = 0x19U;
             }
@@ -145,7 +145,7 @@ next_1:
                 reg_d2.w = 0x2B33;
                 reg_tmp.h[1] = *(u16 *)(reg_a5 + 0x1A);
                 reg_tmp.h[0] = *(u16 *)(reg_a5 + 0x1C);
-                if (((u32) reg_tmp.w <= (u32) reg_d2.w) && (D_0028E8B8 == 0)) {
+                if (((u32) reg_tmp.w <= (u32) reg_d2.w) && (g_damage_blink_counter == 0)) {
                     ENTITY(reg_a6)[1].attr.b.palette = 0x19U;
                 }
             }
@@ -227,7 +227,7 @@ next_3:
                 reg_d2.w = 0x2B33;
                 reg_tmp.h[1] = *(u16 *)(reg_a5 + 0x1E);
                 reg_tmp.h[0] = *(u16 *)(reg_a5 + 0x20);
-                if (((u32) reg_tmp.w <= (u32) reg_d2.w) && (D_0028E8B8 == 0)) {
+                if (((u32) reg_tmp.w <= (u32) reg_d2.w) && (g_damage_blink_counter == 0)) {
                     ENTITY(reg_a6)[3].attr.b.palette = 0x19U;
                 }
             }
@@ -302,11 +302,11 @@ s32 boss_attack_stop_all();
 s32 func_0013F3C0();
 s32 func_00203460();
 s32 func_0020ED10();
-extern u8 D_0028E855;
+extern u8 g_boss_present_b1;
 
 void func_001BC160() {
-    D_0028E855 |= 0x40;
-    D_0028E855 |= 0x80;
+    g_boss_present_b1 |= 0x40;
+    g_boss_present_b1 |= 0x80;
     func_0020ED10();
     func_0013F3C0();
     func_00203460();

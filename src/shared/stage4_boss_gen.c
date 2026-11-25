@@ -196,7 +196,7 @@ s32 explosion_spawn();
 s32 sfx_explosion_ground_large();
 s32 entity_draw_layer3();
 s32 score_add();
-extern u16 D_0028E8B8;
+extern u16 g_damage_blink_counter;
 
 void func_001DE720(void) {
     u32 saved;
@@ -241,7 +241,7 @@ next_40:
     if (reg_d1.b[0] != 0) goto next_50;
     reg_d0.b[0] = *(u8 *)(reg_a5 + 0x23);
     if ((s32)ENTITY(reg_a6)->hp.h >= 0x480) goto next_90;
-    if (D_0028E8B8 != 0) goto next_90;
+    if (g_damage_blink_counter != 0) goto next_90;
     reg_d0.w = 0x19;
     goto next_90;
 next_50:
@@ -728,7 +728,7 @@ next_45:
     if (reg_d1.b[0] != 0) goto next_50;
     reg_d0.b[0] = *(u8 *)(reg_a5 + 0x1B);
     if (!((s32) ENTITY(reg_a6)->hp.h < 0x1C00)) goto next_90;
-    if (D_0028E8B8 != 0) goto next_90;
+    if (g_damage_blink_counter != 0) goto next_90;
     reg_d0.w = 0x19;
     goto next_90;
 next_50:
@@ -778,7 +778,7 @@ next_140:
     if (reg_d1.b[0] != 0) goto next_150;
     reg_d0.b[0] = *(u8 *)(reg_a5 + 0x1B);
     if (!((s32) ENTITY(reg_a6)[1].hp.h < 0x880)) goto next_190;
-    if (D_0028E8B8 != 0) goto next_190;
+    if (g_damage_blink_counter != 0) goto next_190;
     reg_d0.w = 0x19;
     goto next_190;
 next_150:
@@ -819,7 +819,7 @@ next_240:
     if (reg_d1.b[0] != 0) goto next_250;
     reg_d0.b[0] = *(u8 *)(reg_a5 + 0x1B);
     if (!((s32) ENTITY(reg_a6)[2].hp.h < 0x880)) goto next_290;
-    if (D_0028E8B8 != 0) goto next_290;
+    if (g_damage_blink_counter != 0) goto next_290;
     reg_d0.w = 0x19;
     goto next_290;
 next_250:
@@ -1260,7 +1260,7 @@ void func_001E0DF0(void) {
     if (ENTITY(reg_a6)->hp.h >= 0x100) {
         goto block_3;
     }
-    if (D_0028E8B8 != 0) {
+    if (g_damage_blink_counter != 0) {
         goto block_3;
     }
     reg_d0.w = 0x19;
@@ -1500,7 +1500,7 @@ next_3:
     if (reg_d1.h[0] != 0) goto next_4;
     reg_d0.b[0] = 0x13;
     if (!((s32) ENTITY(reg_a6)->hp.h < 0x1E00)) goto next_7;
-    if (D_0028E8B8 != 0) goto next_7;
+    if (g_damage_blink_counter != 0) goto next_7;
     reg_d0.w = 0x19;
     goto next_7;
 next_4:
@@ -2021,7 +2021,7 @@ block_5:
             reg_d1.b[0] &= (*(u8 *)((u8 *)(var_a0) + (1)));
             if (reg_d1.b[0] == 0) {
                 reg_d0.b[0] = *(u8 *)(reg_a5 + 0x1B);
-                if (((s32) (*(u16 *)((u8 *)(var_a0) + (0x18))) < 0x580) && (D_0028E8B8 == 0)) {
+                if (((s32) (*(u16 *)((u8 *)(var_a0) + (0x18))) < 0x580) && (g_damage_blink_counter == 0)) {
                     reg_d0.w = 0x19;
                 }
                 goto block_13;
@@ -2313,7 +2313,7 @@ next_40:
     reg_d0.b[0] = *(u8 *)(reg_a5 + 0x1B);
     reg_d3.b[0] = *(u8 *)(reg_a5 + 0x27);
     if (!((s32) ENTITY(reg_a6)[1].hp.h < 0x780)) goto next_90;
-    if (D_0028E8B8 != 0) goto next_90;
+    if (g_damage_blink_counter != 0) goto next_90;
     reg_d0.w = 0x19;
     reg_d3.w = 0x19;
     goto next_90;

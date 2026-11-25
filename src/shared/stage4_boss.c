@@ -29,8 +29,8 @@ extern u8 D_0028DC88[];
 extern s16 g_boss_hyper_wait_as_s16;
 extern u8 *g_boss_hp;
 extern s32 g_boss_hp_unit;
-extern u8 D_0028E854;
-extern u8 D_0028E855;
+extern u8 g_boss_present;
+extern u8 g_boss_present_b1;
 extern s16 g_enemy_signal_c_as_s16;
 extern s16 g_enemy_signal_9_as_s16;
 extern s16 g_enemy_signal_8_as_s16;
@@ -74,13 +74,13 @@ void func_001E7A20(void) {
     if (g_loop != 0) {
         D_0029976C_as_s16_a[0] = 1;
     }
-    D_0028E855 |= 1;
-    D_0028E855 |= 4;
+    g_boss_present_b1 |= 1;
+    g_boss_present_b1 |= 4;
     g_boss_hp_unit = 0x500;
     g_enemy_signal_c_as_s16 = 0;
     g_enemy_signal_6_as_s16 = 0;
     g_enemy_signal_7_as_s16 = 0;
-    D_0028E854 |= 1;
+    g_boss_present |= 1;
     reg_a0 = reg_a5;
     g_enemy_signal_8_as_s16 = 0;
     g_enemy_signal_9_as_s16 = 0;

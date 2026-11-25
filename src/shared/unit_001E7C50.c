@@ -31,7 +31,7 @@ extern u16 g_enemy_signal_c;
 extern u16 g_enemy_signal_9;
 extern u16 g_enemy_signal_8;
 extern u16 g_enemy_signal_7;
-extern u16 D_0028E8B8;
+extern u16 g_damage_blink_counter;
 extern s16 D_0029CEA0_as_s16_a[];
 #ifdef DEATH_LABEL
 extern u8 death_D_00290DC0;
@@ -192,7 +192,7 @@ next_100:
     reg_tmp.h[1] = *(u16 *)(reg_a5 + 0x16);
     reg_tmp.h[0] = *(u16 *)(reg_a5 + 0x18);
     if (reg_tmp.w > reg_d2.w) goto next_110;
-    if (D_0028E8B8 != 0) goto next_110;
+    if (g_damage_blink_counter != 0) goto next_110;
     reg_d0.w = 0x19;
     ENTITY(reg_a6)[10].offset_y.b[1] = reg_d0.b[0];
     ENTITY(reg_a6)[10].offset_y.b[0] = reg_d0.b[0];
@@ -302,12 +302,12 @@ s32 func_0013F3C0();
 s32 func_00201490();
 s32 func_00203460();
 s32 func_0020ED10();
-extern u8 D_0028E855;
+extern u8 g_boss_present_b1;
 
 void func_001E8480(void) {
-    D_0028E855 |= 0x40;
+    g_boss_present_b1 |= 0x40;
     g_enemy_signal_c = 1;
-    D_0028E855 |= 0x80;
+    g_boss_present_b1 |= 0x80;
     func_0020ED10();
     func_0013F3C0();
     func_00203460();

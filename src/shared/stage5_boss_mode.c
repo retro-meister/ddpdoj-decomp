@@ -60,8 +60,8 @@ extern u8 stage5_boss_fade_palettes_b[];
 extern s16 g_boss_hyper_wait_as_s16;
 extern u8 *g_boss_hp;
 extern s32 g_boss_hp_unit;
-extern u8 D_0028E854;
-extern u8 D_0028E855;
+extern u8 g_boss_present;
+extern u8 g_boss_present_b1;
 extern s16 g_true_last_boss_as_s16;
 
 void func_001F1540() {
@@ -73,9 +73,9 @@ void func_001F1540() {
         *(u16 *)(reg_a4 + 4) = (u16) (temp_v1 - 1);
         if (*(u16 *)(reg_a4 + 4) == 0) {
             reg_tmp.w = 0x69000;
-            D_0028E855 |= 1;
-            D_0028E855 |= 4;
-            D_0028E854 |= 1;
+            g_boss_present_b1 |= 1;
+            g_boss_present_b1 |= 4;
+            g_boss_present |= 1;
             *(u16 *)(reg_a5 + 0x16) = (u16) reg_tmp.h[1];
             var_a1 = reg_tmp.h[0];
             *(u16 *)(reg_a5 + 0x18) = var_a1;
@@ -88,8 +88,8 @@ void func_001F1540() {
     if (*(u16 *)(reg_a4 + 2) == 0) {
         g_boss_hyper_wait_as_s16 = 1;
         if (D_0028E2E8 == 0) {
-            D_0028E855 |= 2;
-            D_0028E855 |= 0x10;
+            g_boss_present_b1 |= 2;
+            g_boss_present_b1 |= 0x10;
         } else {
             g_true_last_boss_as_s16 = 1;
         }
@@ -633,9 +633,9 @@ void func_001F2640() {
     if (t1 != 0) {
         *(u16 *)(reg_a4 + 2) = (u16) (t1 - 1);
         if (*(u16 *)(reg_a4 + 2) == 0) {
-            D_0028E855 |= 2;
+            g_boss_present_b1 |= 2;
             reg_d0.w = 0xB;
-            D_0028E855 |= 0x10;
+            g_boss_present_b1 |= 0x10;
             boss_part_hide();
             reg_d0.w = 0xC;
             boss_part_hide();
@@ -667,9 +667,9 @@ void func_001F2640() {
             g_boss_hp_unit = 0x580;
             reg_a0 = (u8 *)(reg_a5 + 0x16);
             g_boss_hp_as_void_p = (void *)reg_a0;
-            D_0028E855 |= 1;
-            D_0028E855 |= 4;
-            D_0028E854 |= 1;
+            g_boss_present_b1 |= 1;
+            g_boss_present_b1 |= 4;
+            g_boss_present |= 1;
             func_001F5630();
             func_001F5730();
             func_001F57C0();

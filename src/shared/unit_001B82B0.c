@@ -87,7 +87,7 @@ extern u8 D_00262570[];
 extern u16 D_0028E3E0;
 extern u16 D_0028E3EC;
 extern u16 g_game_frame;
-extern u16 D_0028E854_as_u16;
+extern u16 g_boss_present_as_u16;
 extern u8 D_0029A530_as_u8_a[];
 extern u16 g_side_scroll_step[];
 extern u8 *reg_call_target_as_u8_p;
@@ -113,7 +113,7 @@ void func_001B8440(void) {
     reg_tmp.w = reg_d6.w;
     reg_d6.h[0] = D_0028E3EC;
     reg_d6.h[1] = reg_tmp.h[0];
-    if (D_0028E854_as_u16 == 0) goto next_1;
+    if (g_boss_present_as_u16 == 0) goto next_1;
     reg_d5.h[0] = 0x8000;
 next_1:
     reg_tmp.w = reg_d5.w;

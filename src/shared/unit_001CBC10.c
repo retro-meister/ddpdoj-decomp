@@ -190,7 +190,7 @@ extern u16 g_game_frame;
 extern u16 g_enemy_signal_0;
 extern u16 g_bullets_blocked;
 extern u16 g_scroll_line;
-extern u16 D_0028E8B8;
+extern u16 g_damage_blink_counter;
 extern u16 g_rank_1_16;
 extern u16 g_rank_5_16;
 extern u16 g_side_scroll_x[];
@@ -258,7 +258,7 @@ next_45:
     reg_d3.b[0] = ENTITY(reg_a6)[2].offset_x.b[1];
     reg_d5.b[0] = ENTITY(reg_a6)[2].draw.b.priority;
     if (!((s32) ENTITY(reg_a6)->hp.h < 0x2C00)) goto next_90;
-    if (D_0028E8B8 != 0) goto next_90;
+    if (g_damage_blink_counter != 0) goto next_90;
     reg_d0.w = 0x19;
     goto next_90;
 next_50:

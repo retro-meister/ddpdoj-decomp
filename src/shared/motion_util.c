@@ -49,7 +49,7 @@ extern u8 *reg_save_a3_as_u8_p;
 extern u8 *reg_save_a2;
 extern u8 *reg_save_a1;
 extern u8 *reg_save_a0_as_u8_p;
-extern u8 D_0028E855;
+extern u8 g_boss_present_b1;
 extern u16 D_00299764[];
 extern u16 D_00299766[];
 
@@ -58,7 +58,7 @@ void func_00201710(void) {
     if (cond_flag == 0) {
         D_00299764[0] = 1;
         D_00299766[0] = 0xFFFF;
-        if (D_0028E855 & 2) {
+        if (g_boss_present_b1 & 2) {
             func_00201B30();
             return;
         }
@@ -90,7 +90,7 @@ void func_00201800(void) {
     if (cond_flag == 0) {
         D_00299766_as_s16_a[0] = 0;
         D_00299764_as_s16_a[0] = 1;
-        if (D_0028E855 & 2) {
+        if (g_boss_present_b1 & 2) {
             func_00201B30();
             return;
         }
@@ -116,7 +116,7 @@ void func_00201800(void) {
 
 
 void func_002018E0(void) {
-    if (!(D_0028E855 & 2)) {
+    if (!(g_boss_present_b1 & 2)) {
         func_00201920();
         return;
     }
@@ -1079,12 +1079,12 @@ void func_00203400(void) {
 }
 
 s32 music_stop();
-extern s16 D_0028DFC4_as_s16;
+extern s16 g_player_shots_disabled_as_s16;
 extern u8 D_0029F22F[];
 extern u8 D_0029F29F[];
 void func_00203460(void) {
     music_stop();
-    D_0028DFC4_as_s16 = 1;
+    g_player_shots_disabled_as_s16 = 1;
     if (g_player1[0] < 0) {
         D_0029F29F[0] = 0xFF;
     }
@@ -1095,13 +1095,13 @@ void func_00203460(void) {
 
 s32 music_play_bgm10();
 s32 func_0020ECE0();
-extern s16 D_0028DFBC_as_s16;
+extern s16 g_players_stage_clear_as_s16;
 void func_002034C0(void) {
     func_0020ECE0();
     music_play_bgm10();
-    D_0028DFBC_as_s16 = 1;
-    D_0028E855 |= 8;
-    D_0028E855 &= 0xEF;
+    g_players_stage_clear_as_s16 = 1;
+    g_boss_present_b1 |= 8;
+    g_boss_present_b1 &= 0xEF;
     if (*(s16 *)g_player1 < 0) goto block_1;
     if (!(D_0029F261[0] & 1)) goto next_1;
     if (*(u8 *)g_player1 & 0x80) goto next_1;

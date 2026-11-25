@@ -237,7 +237,7 @@ void func_00131610(void) {
     cond_flag = 0;
 }
 
-extern s16 D_0028E948;
+extern s16 g_game_task_handle;
 extern s16 D_0028E94C;
 extern s16 D_0028E950_as_s16;
 extern s16 D_0028E954_as_s16;
@@ -268,7 +268,7 @@ void func_00131630(void) {
         (*(s8 *)((u8 *)(temp_a2) + (6))) = 0;
         (*(s8 *)((u8 *)(temp_a2) + (7))) = 0;
     } while (var_a1 < 0x60);
-    D_0028E948 = 0;
+    g_game_task_handle = 0;
     var_t1 = 0;
     D_0028E94C = 0;
     var_a2 = 0;
@@ -308,7 +308,7 @@ s32 func_00172060();
 s32 func_001AD690();
 s32 vibration_stop_all(s32, s32);
 s32 stage_map_hide();
-extern s16 D_0028DFC0_as_s16;
+extern s16 g_players_hidden_as_s16;
 extern u8 D_0028E378;
 extern u8 D_0028E961;
 extern u8 D_0028ED60;
@@ -347,7 +347,7 @@ void func_00131700(void) {
     func_00172060();
     func_00134FB0();
     D_0028ED60 = 0;
-    D_0028DFC0_as_s16 = 1;
+    g_players_hidden_as_s16 = 1;
     g_replay_buffer_state = 2;
 #ifdef DEATH_LABEL
     death_D_00290434 = g_p1_lives;
@@ -374,7 +374,7 @@ extern u8 death_D_00290DC0;
 extern u16 g_game_completed;
 #endif
 extern s16 g_score_panel_intro_as_s16;
-extern s16 D_0028E854_as_s16;
+extern s16 g_boss_present_as_s16;
 
 void func_001317E0(void) {
     func_0013B190();
@@ -382,7 +382,7 @@ void func_001317E0(void) {
     func_00131630();
     func_00125E80();
     func_001AD720();
-    D_0028E854_as_s16 = 0;
+    g_boss_present_as_s16 = 0;
     func_0013E7C0();
     func_0013E850();
     g_score_panel_intro_as_s16 = 0;
@@ -428,8 +428,8 @@ s32 sprite_palette_load();
 s32 func_001AD720();
 s32 replay_start_run_end();
 extern u16 D_00269840[];
-extern s16 D_0028DFBC_as_s16;
-extern s16 D_0028DFC4_as_s16;
+extern s16 g_players_stage_clear_as_s16;
+extern s16 g_player_shots_disabled_as_s16;
 extern u8 g_game_frame_ran;
 extern u16 g_p2_score_digits;
 extern u16 g_p1_score_digits;
@@ -506,7 +506,7 @@ void func_00131880(void) {
             if (g_replay_mode == 1) {
                 g_replay_begin_pending_as_s8 = 1;
             }
-            D_0028DFBC_as_s16 = 0;
+            g_players_stage_clear_as_s16 = 0;
             D_0028E961 &= 0xFC;
         }
         if (g_game_frame_ran != 0) {
@@ -533,7 +533,7 @@ block_after:
         g_game_frame_ran = 0;
         func_001719A0();
         func_001AD720();
-        D_0028DFC0_as_s16 = 0;
+        g_players_hidden_as_s16 = 0;
         *(u8 *)(reg_a5 + 7) = 3U;
         goto block_25;
     }
@@ -584,8 +584,8 @@ block_25:
             func_0013C300();
             func_0013E7C0();
             func_0013E850();
-            D_0028E854_as_s16 = 0;
-            D_0028DFC4_as_s16 = 0;
+            g_boss_present_as_s16 = 0;
+            g_player_shots_disabled_as_s16 = 0;
             D_0028E961 &= 0xF7;
             *(u8 *)(reg_a5 + 7) = 2U;
             return;
@@ -795,7 +795,7 @@ extern u8 D_0028E2A0;
 extern u8 D_0028E2A4;
 extern s16 g_loaded_stage;
 extern u16 g_boss_hits;
-extern u8 D_0028E854;
+extern u8 g_boss_present;
 extern u16 g_stage;
 extern u16 D_0028E970;
 extern u16 D_0028E974;
@@ -985,7 +985,7 @@ block_15:
                 *(u16 *)(reg_a6 + 0xE) = 0x40U;
             }
             if (*(s16 *)(reg_a6 + 6) < 0) {
-                D_0028E854 |= 8;
+                g_boss_present |= 8;
             }
             func_001330F0();
             return;
@@ -1150,11 +1150,11 @@ next_499:
             if (*(s16 *)(reg_a6 + 0x3E) >= 0) {
                 func_00132250();
                 if (*(s16 *)(reg_a6 + 0x3E) < 0) {
-                    D_0028E854 |= 4;
+                    g_boss_present |= 4;
                 }
             }
 #ifdef DEATH_LABEL
-            if ((D_0028E854 & 2) && (v2 = *(u8 *)(reg_a5 + 7), (v2 != 0xB)) && (v2 != 0x15) && (v2 != 0x16)) {
+            if ((g_boss_present & 2) && (v2 = *(u8 *)(reg_a5 + 7), (v2 != 0xB)) && (v2 != 0x15) && (v2 != 0x16)) {
                 if (*(u16 *)(reg_a5 + 4) != 0) {
                     reg_d0.h[0] = *(u16 *)(reg_a5 + 4);
                     func_00134FE0();
@@ -1211,7 +1211,7 @@ next_499:
                 music_fade_out();
             }
 #else
-            if ((D_0028E854 & 2) && (v2 = *(u8 *)(reg_a5 + 7), (v2 != 0xB)) && (v2 != 0x15)) {
+            if ((g_boss_present & 2) && (v2 = *(u8 *)(reg_a5 + 7), (v2 != 0xB)) && (v2 != 0x15)) {
                 if ((g_simulation_active != 0) || (v2 = g_replay_mode, (v2 == 2))) {
                     if (D_0028E2A4 != 0) {
                         D_0028E2A4 -= 1;

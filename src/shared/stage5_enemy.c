@@ -13,11 +13,11 @@ s32 func_001F57D0();
 s32 func_002016D0();
 s32 func_00203460();
 s32 func_0020ED10();
-extern u8 D_0028E855;
+extern u8 g_boss_present_b1;
 
 void func_001F6080() {
-    D_0028E855 |= 0x40;
-    D_0028E855 |= 0x80;
+    g_boss_present_b1 |= 0x40;
+    g_boss_present_b1 |= 0x80;
     func_0020ED10();
     func_0013F3C0();
     func_00203460();

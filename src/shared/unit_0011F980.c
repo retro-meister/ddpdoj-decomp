@@ -13,7 +13,7 @@ void func_00122A60(void);
 void func_00122B00(void);
 void func_00122B20(void);
 
-extern u16 D_0028DFC8;
+extern u16 g_bomb_afterglow_timer;
 extern u16 D_0029CEA0[];
 extern u8 D_0029F110[];
 extern u8 D_0029F180[];
@@ -26,9 +26,9 @@ void func_0011F980(void) {
     reg_a6 = (u8 *)(D_0029CEA0);
     reg_d0.h[0] = ENTITY(reg_a6)->flags.h;
     if ((s16) reg_d0.h[0] >= 0) {
-        if (D_0028DFC8 != 0) {
-            D_0028DFC8 -= 1;
-            if (D_0028DFC8 == 0) {
+        if (g_bomb_afterglow_timer != 0) {
+            g_bomb_afterglow_timer -= 1;
+            if (g_bomb_afterglow_timer == 0) {
                 func_00122B00();
             }
         }
@@ -353,7 +353,7 @@ next_6:
     if ((s32) *(u8 *)(reg_a0 + 0x1B) <= (s32) reg_d0.b[0]) goto next_7;
     *(u8 *)(reg_a0 + 0x1B) = (u8) reg_d0.b[0];
 next_7:
-    D_0028DFC8 = 0x28;
+    g_bomb_afterglow_timer = 0x28;
     func_00122B20();
 block_rts:
     return;
@@ -369,8 +369,8 @@ extern u8 D_00241C10[];
 extern u8 D_00241C20[];
 extern u8 D_00241C30[];
 extern u8 D_00241CD0[];
-extern s16 D_0028DFC8_as_s16;
-extern u16 D_0028DFD0;
+extern s16 g_bomb_afterglow_timer_as_s16;
+extern u16 g_laser_bomb_sizzle;
 
 void func_00120770(arg3)
     u16 arg3;
@@ -642,7 +642,7 @@ void func_00120770(arg3)
         *(u16 *)(reg_a6 + 0x7E2) = reg_d0.h[0];
         reg_a0 = (u8 *)sfx_laser_bomb_a;
         reg_d0.w = 0;
-        D_0028DFD0 = reg_d0.h[0];
+        g_laser_bomb_sizzle = reg_d0.h[0];
         if (ENTITY(reg_a6)->flags.b[0] & 2) {
             reg_tmp.w = (u32) D_00241BF0;
             ENTITY(reg_a6)->misc.h = (u16) reg_tmp.h[1];
@@ -769,15 +769,15 @@ block_40:
         func_00122650();
         goto block_36;
     } else {
-        D_0028DFC8_as_s16 = 0x28;
+        g_bomb_afterglow_timer_as_s16 = 0x28;
         func_00122A60();
         func_00122B20();
     }
 }
 
 extern u16 D_00241FF0[];
-extern s32 D_0028DFF4;
-extern u16 D_0028DFF8;
+extern s32 g_laser_bomb_hit_entity;
+extern u16 g_laser_bomb_hit_position;
 extern u16 D_0029CED0[];
 
 #define W(o) (*(u16 *)(reg_a6 + (o)))
@@ -864,8 +864,8 @@ next_100:
     reg_d0.h[0] = W(2);
     reg_d0.h[0] += 0x200;
     reg_d0.h[0] += *(u16 *)(reg_a5 + 0x30);
-    if (D_0028DFF4 == 0) goto next_120;
-    if (D_0028DFF8 < reg_d0.h[0]) goto next_140;
+    if (g_laser_bomb_hit_entity == 0) goto next_120;
+    if (g_laser_bomb_hit_position < reg_d0.h[0]) goto next_140;
 next_120:
     if ((s32) reg_d0.h[0] < 0x7800) goto next_160;
 next_140:
@@ -948,13 +948,13 @@ next_0:
     reg_d0.h[0] = ENTITY(reg_a6)->y.h;
     reg_d0.h[0] += 0x200;
     reg_d0.h[0] += *(u16 *)(reg_a5 + 0x30);
-    if (D_0028DFF4 != 0) goto next_1;
+    if (g_laser_bomb_hit_entity != 0) goto next_1;
     if (*(u16 *)(reg_a3 + 0x868) == 0) goto next_2;
     if (*(u8 *)(reg_a3 + 1) & 0x40) goto next_2;
     if ((s32)*(u16 *)(reg_a3 + 0x842) < (s32)reg_d0.h[0]) goto next_3;
     goto next_2;
 next_1:
-    if ((s32)D_0028DFF8 < (s32)reg_d0.h[0]) goto next_3;
+    if ((s32)g_laser_bomb_hit_position < (s32)reg_d0.h[0]) goto next_3;
 next_2:
     if ((s32)reg_d0.h[0] < 0x7800) goto next_4;
 next_3:
@@ -980,7 +980,7 @@ void func_00122420(void) {
     reg_a0 = reg_a6;
     reg_a6 += 0x7E0;
     if (*(u16 *)(reg_a6 + 0x28) == 0) {
-        if ((D_0028DFF4 == 0) && ((*(u16 *)(reg_a0 + 0x868) == 0) || (*(u8 *)(reg_a0 + 1) & 0x40))) {
+        if ((g_laser_bomb_hit_entity == 0) && ((*(u16 *)(reg_a0 + 0x868) == 0) || (*(u8 *)(reg_a0 + 1) & 0x40))) {
             ENTITY(reg_a6)->flags.b[1] &= 0xFD;
             reg_d0.h[0] = ENTITY(reg_a6)->y.h;
             reg_d0.h[0] += 0x400;
@@ -1004,8 +1004,8 @@ void func_001224F0(void) {
 void func_00122500(void) {
     reg_a0 = reg_a6;
     reg_a6 += 0x840;
-    reg_d1.h[0] = D_0028DFF8;
-    if (D_0028DFF4 != 0) goto block_1;
+    reg_d1.h[0] = g_laser_bomb_hit_position;
+    if (g_laser_bomb_hit_entity != 0) goto block_1;
     if (*(u16 *)(reg_a6 + 0x28) == 0) goto block_3;
     reg_d1.h[0] = ENTITY(reg_a6)->y.h;
     reg_tmp.b[0] = *(u8 *)(reg_a0 + 1);
@@ -1081,7 +1081,7 @@ next_40:
     reg_d6.h[0] = reg_d6.h[1];
     reg_d6.h[1] = reg_tmp6.h[0];
     reg_d6.h[0] += 0x400;
-    if (D_0028DFF4 != 0) goto next_80;
+    if (g_laser_bomb_hit_entity != 0) goto next_80;
     if (*(u8 *) (reg_a6 + 0x841) & 2) goto next_60;
     if ((s32) *(u16 *) (reg_a6 + 0x842) > (s32) reg_d6.h[0]) goto next_120;
     *(u16 *) (reg_a6 + 0x842) = reg_d6.h[0];
@@ -1136,8 +1136,8 @@ next_160:
 
 s32 func_0013C980();                            /* extern */
 s32 func_0013CA90();                            /* extern */
-extern s16 D_0028E000_as_s16;
-extern s16 D_0028E004_as_s16;
+extern s16 g_p2_laser_bomb_active_as_s16;
+extern s16 g_p1_laser_bomb_active_as_s16;
 extern s8 D_0029CEA0_as_s8_a[];
 
 void func_00122A60(void) {
@@ -1145,17 +1145,17 @@ void func_00122A60(void) {
     if (*(s8 *)reg_a6 >= 0) {
         reg_a0 = g_player1_as_u8_a;
         func_0013C980();
-        D_0028E004_as_s16 = 0;
+        g_p1_laser_bomb_active_as_s16 = 0;
         g_player1_as_u8_a[0] &= 0xBF;
     } else {
         reg_a0 = g_player2_as_u8_a;
         func_0013CA90();
-        D_0028E000_as_s16 = 0;
+        g_p2_laser_bomb_active_as_s16 = 0;
         g_player2_as_u8_a[0] &= 0xBF;
     }
     *reg_a0 &= 0x7F;
     reg_d0.w = 0;
-    D_0028DFF4 = 0;
+    g_laser_bomb_hit_entity = 0;
 }
 
 extern u8 D_0029F22F[];
@@ -1181,8 +1181,8 @@ void func_00122B20(void) {
         func_001AC370();
     }
     reg_d7.w = 0x2C;
-    D_0028E004_as_s16 = 0;
-    D_0028E000_as_s16 = 0;
+    g_p1_laser_bomb_active_as_s16 = 0;
+    g_p2_laser_bomb_active_as_s16 = 0;
     reg_a0 = (u8 *)(D_0029CEA0);
     reg_d0.w = 0;
     g_player1_as_u8_a[0] &= 0xBF;
