@@ -349,7 +349,7 @@ s32 func_001368E0();
 s32 func_001389D0();
 s32 func_0013B2E0();
 s32 enemy_hitbox_debug_draw();
-s32 func_0014E030();
+s32 spawn_request_add();
 s32 enemy_remove();
 s32 sfx_explosion_air_small();
 s32 score_add_no_chain();
@@ -425,7 +425,7 @@ void stage1_midboss_main(void) {
             if ((s16) ENTITY(reg_a6)->hp.h < 0) {
                 g_enemy_signal_1 = 1;
                 reg_d0.w = 0x1C;
-                func_0014E030();
+                spawn_request_add();
                 *(u16 *)(reg_a5 + 0x28) = (u16) reg_d1.h[0];
                 reg_d0.w = 0x353;
                 score_add();

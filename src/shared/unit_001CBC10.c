@@ -33,7 +33,7 @@ void func_001CBCD0(void) {
 }
 
 s32 func_001CB6B0();
-void func_00203400(void);
+void active_players_mask(void);
 extern u16 g_enemies_stopped;
 
 void func_001CBCE0(void) {
@@ -42,7 +42,7 @@ void func_001CBCE0(void) {
 #else
     if ((g_enemies_stopped == 0) && (*(u16 *)(reg_a5 + 0x1A) -= 1, *(u16 *)(reg_a5 + 0x1A) == 0)) {
 #endif
-        func_00203400();
+        active_players_mask();
         if (reg_d0.h[0] == 0) {
             *(u16 *)(reg_a5 + 0x1A) = 0x78U;
             return;

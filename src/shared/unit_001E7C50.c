@@ -39,7 +39,7 @@ extern u16 D_00684C80[];
 #endif
 
 void func_001E7C90(void) {
-    s32 func_00203400();
+    s32 active_players_mask();
     s32 hp;
     s32 mid;
     s32 low;
@@ -250,7 +250,7 @@ next_hl_110:
     reg_tmp.h[1] = *(u16 *)(reg_a5 + 0x16);
     reg_tmp.h[0] = *(u16 *)(reg_a5 + 0x18);
     if ((s32)reg_tmp.w >= 0) goto next_death_chk;
-    func_00203400();
+    active_players_mask();
     if (reg_d0.h[0] != 0) goto next_elix;
     reg_tmp.w = 0x200;
     *(u16 *)(reg_a5 + 0x16) = reg_tmp.h[1];
@@ -417,13 +417,13 @@ void func_001E8790(void) {
 extern u16 g_enemies_stopped;
 
 void func_001E87A0(void) {
-    void func_00203400(void);
+    void active_players_mask(void);
 #ifdef DEATH_LABEL
     if ((g_enemies_stopped == 0) && (ENTITY(reg_a6)[11].sprite.b[1] != 0) && (*(u16 *)(reg_a5 + 0x1C) == 0)) {
 #else
     if ((g_enemies_stopped == 0) && (ENTITY(reg_a6)[11].sprite.b[1] != 0) && (*(u16 *)(reg_a5 + 0x1C) -= 1, *(u16 *)(reg_a5 + 0x1C) == 0)) {
 #endif
-        func_00203400();
+        active_players_mask();
         if (reg_d0.h[0] == 0) {
             *(u16 *)(reg_a5 + 0x1C) = 0x78U;
             return;

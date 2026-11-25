@@ -5,13 +5,13 @@ s32 func_001F5BB0();
 extern u16 g_enemies_stopped;
 
 void func_001F5C90(void) {
-    void func_00203400(void);
+    void active_players_mask(void);
 #ifdef DEATH_LABEL
     if ((g_enemies_stopped == 0) && (*(u16 *)(reg_a5 + 0x1A) == 0)) {
 #else
     if ((g_enemies_stopped == 0) && (*(u16 *)(reg_a5 + 0x1A) -= 1, *(u16 *)(reg_a5 + 0x1A) == 0)) {
 #endif
-        func_00203400();
+        active_players_mask();
         if (reg_d0.h[0] == 0) {
             *(u16 *)(reg_a5 + 0x1A) = 0x78U;
             return;
@@ -42,7 +42,7 @@ extern s16 D_0029976E_as_s16_a[];
 extern u16 g_bomb_entities[];
 
 void func_001F5D00(void) {
-    s32 func_00203400();
+    s32 active_players_mask();
 #ifdef DEATH_LABEL
     u16 hp;
 
@@ -128,7 +128,7 @@ next_5:
     if (0 <= (s64) (s32) reg_tmp.w) {
         goto next_7;
     }
-    func_00203400();
+    active_players_mask();
     if (reg_d0.b[0] != 0) {
         goto next_6;
     }

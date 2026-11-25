@@ -767,11 +767,11 @@ block_51:
     }
 }
 
-s32 func_00201D10();
+s32 velocity_from_direction();
 
 void func_00205320(void) {
     reg_d0.h[0] = *(u16 *)reg_a2;
-    func_00201D10();
+    velocity_from_direction();
     *(u16 *)(reg_a2 + 4) += reg_d3.h[0];
     reg_d2.h[0] = reg_d5.h[0];
     reg_d0.h[0] = *(u16 *)(reg_a2 + 4);
@@ -1253,7 +1253,7 @@ void func_00206520(void) {
 s32 func_0012FFE0();
 s32 func_00130050();
 s32 func_001301B0();
-s32 func_00130CC0();
+s32 text_layer_put_hex_digit();
 extern u8 D_00251BC0[];
 extern u8 D_00251BE0[];
 extern u8 D_00251C00[];
@@ -1309,7 +1309,7 @@ next_10:
     text_layer_print();
     reg_d0.h[0] = 1;
     reg_d0.h[0] += *(u16 *)(reg_a4 + 2);
-    func_00130CC0();
+    text_layer_put_hex_digit();
     cond_flag = 1;
     return;
 next_11:
@@ -1327,7 +1327,7 @@ next_11:
     text_layer_print();
     reg_d0.h[0] = 1;
     reg_d0.h[0] += *(u16 *)(reg_a4 + 2);
-    func_00130CC0();
+    text_layer_put_hex_digit();
     cond_flag = 1;
     return;
 next_12:

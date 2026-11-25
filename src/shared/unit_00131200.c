@@ -776,7 +776,7 @@ s32 func_0013B920();
 s32 input_get_p1_pressed();
 s32 input_get_p2_pressed();
 s32 music_fade_out();
-s32 func_001A9130();
+s32 score_add_masked();
 s32 func_00200EE0();
 s32 stage_load_step();
 s32 func_0022B660();
@@ -1076,7 +1076,7 @@ block_15:
                     reg_d0.w = 0x50;
                     reg_d7.h[0] = 1;
                     reg_d1.w = 0x10;
-                    func_001A9130();
+                    score_add_masked();
                     func_00131590();
                     reg_d6.w = 1;
                 }
@@ -1087,7 +1087,7 @@ block_15:
 block_48:
                     reg_d7.h[0] = 1;
                     reg_d1.w = 0x10;
-                    func_001A9130();
+                    score_add_masked();
                     if (reg_d6.h[0] == 0) {
                         func_00131590();
                     }
@@ -1118,7 +1118,7 @@ block_48:
                     reg_d0.w = 0x50;
                     reg_d7.h[0] = 1;
                     reg_d1.w = 8;
-                    func_001A9130();
+                    score_add_masked();
                     func_001315D0();
                     reg_d6.w = 1;
                 }
@@ -1129,7 +1129,7 @@ block_48:
 block_60:
                     reg_d7.h[0] = 1;
                     reg_d1.w = 8;
-                    func_001A9130();
+                    score_add_masked();
                     if (reg_d6.h[0] == 0) {
                         func_001315D0();
                     }

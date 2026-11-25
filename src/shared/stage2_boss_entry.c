@@ -18,7 +18,7 @@ s32 score_add_no_chain();
 s32 score_add();
 s32 func_001CBCE0();
 s32 func_002016D0();
-s32 func_00203400();
+s32 active_players_mask();
 extern u8 g_game_mode;
 extern s32 g_boss_score;
 extern u16 g_damage_blink_counter;
@@ -158,7 +158,7 @@ next_110:
     reg_tmp.h[1] = *(u16 *)(reg_a5 + 0x16);
     reg_tmp.h[0] = *(u16 *)(reg_a5 + 0x18);
     if ((s32) reg_tmp.w >= 0) goto next_130;
-    func_00203400();
+    active_players_mask();
     if (reg_d0.h[0] != 0) goto next_120;
     reg_tmp.w = 0x200;
     *(u16 *)(reg_a5 + 0x16) = reg_tmp.h[1];

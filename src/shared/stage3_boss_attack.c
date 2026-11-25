@@ -15,7 +15,7 @@ void stage3_boss_fire_timber_start(void) {
 }
 
 s32 boss_part_hide();
-s32 func_0014E030();
+s32 spawn_request_add();
 s32 rng_next();
 
 void stage3_boss_fire_timber(void) {
@@ -30,7 +30,7 @@ void stage3_boss_fire_timber(void) {
         return;
     }
     reg_d0.h[0] = 0x99;
-    func_0014E030();
+    spawn_request_add();
     reg_d0.h[1] = ENTITY(reg_a6)->y.h;
     reg_d0.h[0] = ENTITY(reg_a6)->x.h;
     reg_d0.h[1] += 0x4C0;
@@ -45,7 +45,7 @@ void stage3_boss_fire_timber(void) {
     temp_s0 = reg_d0.w;
     *(u8 *)(reg_a0 + 0x37) = (u8) reg_d0.b[0];
     reg_d0.h[0] = 0x99;
-    func_0014E030();
+    spawn_request_add();
     reg_d0.h[1] = ENTITY(reg_a6)->y.h;
     reg_d0.h[0] = ENTITY(reg_a6)->x.h;
     reg_d0.h[1] += 0x4C0;
@@ -330,7 +330,7 @@ void stage3_boss_fire_lid_six_gun(void) {
     if (reg_tmp.b[0] == 0) {
         *(u8 *)(reg_a4 + 3) = (u8) *(u8 *)(reg_a4 + 0xB);
         reg_d0.h[0] = 0x9A;
-        func_0014E030();
+        spawn_request_add();
         reg_d0.h[1] = ENTITY(reg_a6)->y.h;
         reg_d0.h[0] = ENTITY(reg_a6)->x.h;
         reg_d0.h[1] += 0x7FFF + 0x5C81;
@@ -359,7 +359,7 @@ void stage3_boss_fire_lid_six_gun(void) {
     if (reg_tmp.b[0] == 0) {
         *(u8 *)(reg_a4 + 7) = (u8) *(u8 *)(reg_a4 + 0xB);
         reg_d0.h[0] = 0x9A;
-        func_0014E030();
+        spawn_request_add();
         reg_d0.h[1] = ENTITY(reg_a6)->y.h;
         reg_d0.h[0] = ENTITY(reg_a6)->x.h;
         reg_d0.h[1] += 0x7FFF + 0x5C81;

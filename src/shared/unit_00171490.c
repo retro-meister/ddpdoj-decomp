@@ -32,13 +32,13 @@ void func_00171520(void) {
     } while ((s16)(--reg_d0.h[0]) >= 0);
 }
 
-s32 func_00201D10();
+s32 velocity_from_direction();
 
 void func_00171580(void) {
     reg_d0.h[0] = ENTITY(reg_a6)->hp.h;
     reg_d1.w = 0;
     reg_d1.b[0] = ENTITY(reg_a6)->move.b.speed;
-    func_00201D10();
+    velocity_from_direction();
     ENTITY(reg_a6)->y.h += reg_d2.h[0];
     reg_d2.h[0] = ENTITY(reg_a6)->hit_x_plus.h;
     reg_d0.h[0] = ENTITY(reg_a6)->y.h;
@@ -62,7 +62,7 @@ void func_00171670(void) {
     reg_d0.h[0] = ENTITY(reg_a6)->hp.h;
     reg_d1.w = 0;
     reg_d1.b[0] = ENTITY(reg_a6)->move.b.dir;
-    func_00201D10();
+    velocity_from_direction();
     ENTITY(reg_a6)->x.h += reg_d3.h[0];
     reg_d2.h[0] = ENTITY(reg_a6)->hit_x_minus.h;
     reg_d0.h[0] = ENTITY(reg_a6)->x.h;
@@ -322,7 +322,7 @@ void func_00171B90(void) {
                 reg_d1.w = 0;
                 reg_d0.w = 0x30;
                 reg_d1.b[0] = ENTITY(reg_a6)->move.b.speed;
-                func_00201D10();
+                velocity_from_direction();
                 ENTITY(reg_a6)->y.h += reg_d2.h[0];
                 reg_d2.h[0] = ENTITY(reg_a6)->hit_x_plus.h;
                 reg_d0.h[0] = ENTITY(reg_a6)->y.h;
@@ -356,7 +356,7 @@ block_35:
                 reg_d1.w = 0;
                 reg_d0.w = 0x30;
                 reg_d1.b[0] = ENTITY(reg_a6)->move.b.dir;
-                func_00201D10();
+                velocity_from_direction();
                 ENTITY(reg_a6)->x.h += reg_d3.h[0];
                 var_a0_2 = (u8 *)(reg_a6);
                 reg_d2.h[0] = (*(u16 *)((u8 *)(var_a0_2) + (0x16)));

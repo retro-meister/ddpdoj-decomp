@@ -24,7 +24,7 @@ extern u16 g_damage_blink_counter;
 
 void func_001F4EB0(void) {
     s32 boss_phase_start();
-    s32 func_00203400();
+    s32 active_players_mask();
     s32 top;
     s32 p1;
     s32 p2;
@@ -194,7 +194,7 @@ skip_5:;
     if (0 > (s32) reg_tmp.w) goto next_9;
     goto block_chk;
 next_9:
-    func_00203400();
+    active_players_mask();
     if (reg_d0.h[0] != 0) goto next_6;
     reg_tmp.w = 0x200;
     TW(0x16) = reg_tmp.h[1];
@@ -338,13 +338,13 @@ void func_001F57D0(void) {
 extern u16 g_enemies_stopped;
 
 void func_001F57E0(void) {
-    void func_00203400(void);
+    void active_players_mask(void);
 #ifdef DEATH_LABEL
     if ((g_enemies_stopped == 0) && (*(u16 *)(reg_a5 + 0x1A) == 0)) {
 #else
     if ((g_enemies_stopped == 0) && (*(u16 *)(reg_a5 + 0x1A) -= 1, *(u16 *)(reg_a5 + 0x1A) == 0)) {
 #endif
-        func_00203400();
+        active_players_mask();
         if (reg_d0.h[0] == 0) {
             *(u16 *)(reg_a5 + 0x1A) = 0x78U;
             return;
@@ -358,7 +358,7 @@ s32 func_001F5C90();
 s32 func_001F5D00();
 
 void func_001F5850(void) {
-    s32 func_00203400();
+    s32 active_players_mask();
     u32 big;
     u16 t;
 
@@ -458,7 +458,7 @@ next_7:
     if (0 <= (s64) (s32) reg_tmp.w) {
         goto next_9;
     }
-    func_00203400();
+    active_players_mask();
     if (reg_d0.h[0] != 0) {
         goto next_8;
     }

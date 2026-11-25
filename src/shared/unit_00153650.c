@@ -1955,7 +1955,7 @@ void func_00157D90(void) {
     *(s16 *)(reg_a5 + 0x18) = 6;
 }
 
-s32 func_0014E030();
+s32 spawn_request_add();
 extern u16 g_enemy_signal_0;
 
 void func_00157DC0() {
@@ -1970,7 +1970,7 @@ void func_00157DC0() {
         if ((s32) reg_tmp.b[0] <= 0) {
             *(u8 *)(reg_a5 + 0x19) = (u8) *(u8 *)(reg_a5 + 0x18);
             reg_d0.w = 0x3F;
-            func_0014E030();
+            spawn_request_add();
         }
     }
 }
@@ -2003,7 +2003,7 @@ void stage3_cloud_start(void) {
 }
 
 s32 entity_draw_layer3_keep();
-s32 func_00201D10();
+s32 velocity_from_direction();
 extern u8 D_00258450[];
 
 void stage3_cloud(void) {
@@ -2026,7 +2026,7 @@ void stage3_cloud(void) {
         reg_d0.w = 0;
         reg_d0.b[0] = ENTITY(reg_a6)->move.b.speed;
         reg_d1.b[0] = ENTITY(reg_a6)->move.b.dir;
-        func_00201D10();
+        velocity_from_direction();
         ENTITY(reg_a6)->y.h += reg_d2.h[0];
         ENTITY(reg_a6)[1].y.h += reg_d2.h[0];
         ENTITY(reg_a6)[1].x.h = (u16) ENTITY(reg_a6)->x.h;
@@ -3626,7 +3626,7 @@ extern u8 D_0025B510[];
 extern u8 D_0025B610[];
 
 s32 func_0016D040();
-s32 func_001A9130();
+s32 score_add_masked();
 s32 func_002031E0();
 s32 wreck_spawn();
 extern u16 g_frame_mod2;
@@ -3657,7 +3657,7 @@ block_touch:
     if (*(s8 *)(reg_a5 + 0x21) < 0) goto block_dead;
     ENTITY(reg_a6)->hp.h = *(u16 *)(reg_a5 + 0x26);
     reg_d0.w = 8;
-    func_001A9130();
+    score_add_masked();
     *(u8 *)(reg_a5 + 0x21) |= 0x80;
     reg_d0.w = 3;
     explosion_spawn();

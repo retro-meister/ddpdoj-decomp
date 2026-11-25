@@ -379,11 +379,11 @@ void stage2_boss_fire_side_gun() {
     }
 }
 
-s32 func_0014E030();
+s32 spawn_request_add();
 
 void stage2_boss_fire_shoulder_shot(void) {
     reg_d0.w = 0x32;
-    func_0014E030();
+    spawn_request_add();
     if (*(s16 *)(reg_a4 + 8) >= 0) {
         reg_d2.h[1] = ENTITY(reg_a6)[4].y.h;
         reg_d2.h[0] = ENTITY(reg_a6)[4].x.h;
@@ -416,34 +416,34 @@ void stage2_boss_fire_shoulder_triple(void) {
     reg_d2.h[1] = ENTITY(reg_a6)[4].y.h;
     reg_d2.h[0] = ENTITY(reg_a6)[4].x.h;
     reg_d0.w = 0x32;
-    func_0014E030();
+    spawn_request_add();
     *(u16 *)(reg_a0 + 0x16) = (u16) reg_d2.h[1];
     *(u16 *)(reg_a0 + 0x18) = (u16) reg_d2.h[0];
     *(s8 *)(reg_a0 + 0x1B) = 0x18;
     *(u8 *)(reg_a0 + 0x1A) = (u8) reg_d6.b[0];
     reg_d0.w = 0x32;
-    func_0014E030();
-    *(u16 *)(reg_a0 + 0x16) = (u16) reg_d2.h[1];
-    *(u16 *)(reg_a0 + 0x18) = (u16) reg_d2.h[0];
-    *(s8 *)(reg_a0 + 0x1B) = 0x18;
-    reg_d6.h[0] += 2;
-    *(u8 *)(reg_a0 + 0x1A) = (u8) reg_d6.b[0];
-    reg_d0.w = 0x32;
-    func_0014E030();
+    spawn_request_add();
     *(u16 *)(reg_a0 + 0x16) = (u16) reg_d2.h[1];
     *(u16 *)(reg_a0 + 0x18) = (u16) reg_d2.h[0];
     *(s8 *)(reg_a0 + 0x1B) = 0x18;
     reg_d6.h[0] += 2;
     *(u8 *)(reg_a0 + 0x1A) = (u8) reg_d6.b[0];
     reg_d0.w = 0x32;
-    func_0014E030();
+    spawn_request_add();
     *(u16 *)(reg_a0 + 0x16) = (u16) reg_d2.h[1];
     *(u16 *)(reg_a0 + 0x18) = (u16) reg_d2.h[0];
     *(s8 *)(reg_a0 + 0x1B) = 0x18;
     reg_d6.h[0] += 2;
     *(u8 *)(reg_a0 + 0x1A) = (u8) reg_d6.b[0];
     reg_d0.w = 0x32;
-    func_0014E030();
+    spawn_request_add();
+    *(u16 *)(reg_a0 + 0x16) = (u16) reg_d2.h[1];
+    *(u16 *)(reg_a0 + 0x18) = (u16) reg_d2.h[0];
+    *(s8 *)(reg_a0 + 0x1B) = 0x18;
+    reg_d6.h[0] += 2;
+    *(u8 *)(reg_a0 + 0x1A) = (u8) reg_d6.b[0];
+    reg_d0.w = 0x32;
+    spawn_request_add();
     *(u16 *)(reg_a0 + 0x16) = (u16) reg_d2.h[1];
     *(u16 *)(reg_a0 + 0x18) = (u16) reg_d2.h[0];
     *(s8 *)(reg_a0 + 0x1B) = 0x18;

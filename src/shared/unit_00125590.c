@@ -168,7 +168,7 @@ void p2_stage_stars_small_add(void) {
 extern u16 g_frame_mod8;
 
 void func_00125930(void) {
-    s32 func_00201D10();
+    s32 velocity_from_direction();
     if (g_frame_mod8 == 0) {
         if (g_enemies_stopped == 0) {
             ENTITY(reg_a6)->move.b.speed += 1;
@@ -177,7 +177,7 @@ void func_00125930(void) {
         reg_d0.b[0] = ENTITY(reg_a6)->move.b.speed;
         reg_d1.w = 0x3F;
         reg_d1.b[0] &= ENTITY(reg_a6)->move.b.dir;
-        func_00201D10();
+        velocity_from_direction();
         *(u16 *)(reg_a6 + 0x20) = reg_d2.h[0];
         *(u16 *)(reg_a6 + 0x22) = reg_d3.h[0];
     }
@@ -460,7 +460,7 @@ loop_1:
 }
 
 s32 sfx_score_item_pickup();
-s32 func_001A9130();
+s32 score_add_masked();
 
 void func_001260B0() {
     reg_d0.w = 1;
@@ -470,7 +470,7 @@ void func_001260B0() {
     ENTITY(reg_a6)->hit_y_minus.h = (u16) reg_tmp.h[0];
     reg_d0.w = 0x50;
     reg_d1.b[0] = ENTITY(reg_a6)->flags.b[1];
-    func_001A9130();
+    score_add_masked();
     sfx_score_item_pickup();
     ENTITY(reg_a6)->flags.b[0] = 0x84;
     func_00127CA0();
@@ -593,7 +593,7 @@ void score_pickup_ground_star_small(void) {
     ENTITY(reg_a6)->hit_y_minus.h = reg_tmp.h[0];
     reg_d0.w = 0x50;
     reg_d1.b[0] = ENTITY(reg_a6)->flags.b[1];
-    func_001A9130();
+    score_add_masked();
     sfx_score_item_pickup();
     ENTITY(reg_a6)->flags.b[0] = 0x84;
     func_00127CA0();
@@ -645,7 +645,7 @@ void score_pickup_ground_star_large(void) {
     ENTITY(reg_a6)->hit_y_minus.h = reg_tmp.h[0];
     reg_d0.w = 0x1000;
     reg_d1.b[0] = ENTITY(reg_a6)->flags.b[1];
-    func_001A9130();
+    score_add_masked();
     sfx_score_item_pickup_2();
     ENTITY(reg_a6)->flags.b[0] = 0x84;
     func_00127CA0();
@@ -697,7 +697,7 @@ void score_pickup_air_star_medium(void) {
         ENTITY(reg_a6)->hit_y_minus.h = (u16) reg_tmp.h[0];
         reg_d0.w = 0x100;
         reg_d1.b[0] = ENTITY(reg_a6)->flags.b[1];
-        func_001A9130();
+        score_add_masked();
         sfx_score_item_pickup();
         ENTITY(reg_a6)->flags.b[0] = 0x84;
         func_00127CA0();
@@ -729,7 +729,7 @@ void score_pickup_air_star_large(void) {
         ENTITY(reg_a6)->hit_y_minus.h = (u16) reg_tmp.h[0];
         reg_d0.w = 0x500;
         reg_d1.b[0] = ENTITY(reg_a6)->flags.b[1];
-        func_001A9130();
+        score_add_masked();
         sfx_score_item_pickup();
         ENTITY(reg_a6)->flags.b[0] = 0x84;
         func_00127CA0();
@@ -761,7 +761,7 @@ void score_pickup_air_star_huge(void) {
         ENTITY(reg_a6)->hit_y_minus.h = (u16) reg_tmp.h[0];
         reg_d0.w = 0x1000;
         reg_d1.b[0] = ENTITY(reg_a6)->flags.b[1];
-        func_001A9130();
+        score_add_masked();
         sfx_score_item_pickup_2();
         ENTITY(reg_a6)->flags.b[0] = 0x84;
         func_00127CA0();
@@ -788,7 +788,7 @@ void score_pickup_p1_homing_star_small() {
         ENTITY(reg_a6)->hit_y_minus.h = (u16) reg_tmp.h[0];
         reg_d0.w = 0x50;
         reg_d1.b[0] = ENTITY(reg_a6)->flags.b[1];
-        func_001A9130();
+        score_add_masked();
         sfx_score_item_pickup();
         bullet_release();
         return;
@@ -808,7 +808,7 @@ void score_pickup_p1_homing_star_medium() {
         ENTITY(reg_a6)->hit_y_minus.h = (u16) reg_tmp.h[0];
         reg_d0.w = 0x100;
         reg_d1.b[0] = ENTITY(reg_a6)->flags.b[1];
-        func_001A9130();
+        score_add_masked();
         sfx_score_item_pickup();
         bullet_release();
         return;
@@ -828,7 +828,7 @@ void score_pickup_p1_homing_star_large() {
         ENTITY(reg_a6)->hit_y_minus.h = (u16) reg_tmp.h[0];
         reg_d0.w = 0x500;
         reg_d1.b[0] = ENTITY(reg_a6)->flags.b[1];
-        func_001A9130();
+        score_add_masked();
         sfx_score_item_pickup();
         bullet_release();
         return;
@@ -848,7 +848,7 @@ void score_pickup_p1_homing_star_huge() {
         ENTITY(reg_a6)->hit_y_minus.h = (u16) reg_tmp.h[0];
         reg_d0.w = 0x1000;
         reg_d1.b[0] = ENTITY(reg_a6)->flags.b[1];
-        func_001A9130();
+        score_add_masked();
         sfx_score_item_pickup();
         bullet_release();
         return;
@@ -870,7 +870,7 @@ void score_pickup_p2_homing_star_small() {
         ENTITY(reg_a6)->hit_y_minus.h = (u16) reg_tmp.h[0];
         reg_d0.w = 0x50;
         reg_d1.b[0] = ENTITY(reg_a6)->flags.b[1];
-        func_001A9130();
+        score_add_masked();
         sfx_score_item_pickup();
         bullet_release();
         return;
@@ -890,7 +890,7 @@ void score_pickup_p2_homing_star_medium() {
         ENTITY(reg_a6)->hit_y_minus.h = (u16) reg_tmp.h[0];
         reg_d0.w = 0x100;
         reg_d1.b[0] = ENTITY(reg_a6)->flags.b[1];
-        func_001A9130();
+        score_add_masked();
         sfx_score_item_pickup();
         bullet_release();
         return;
@@ -910,7 +910,7 @@ void score_pickup_p2_homing_star_large() {
         ENTITY(reg_a6)->hit_y_minus.h = (u16) reg_tmp.h[0];
         reg_d0.w = 0x500;
         reg_d1.b[0] = ENTITY(reg_a6)->flags.b[1];
-        func_001A9130();
+        score_add_masked();
         sfx_score_item_pickup();
         bullet_release();
         return;
@@ -930,7 +930,7 @@ void score_pickup_p2_homing_star_huge() {
         ENTITY(reg_a6)->hit_y_minus.h = (u16) reg_tmp.h[0];
         reg_d0.w = 0x1000;
         reg_d1.b[0] = ENTITY(reg_a6)->flags.b[1];
-        func_001A9130();
+        score_add_masked();
         sfx_score_item_pickup();
         bullet_release();
         return;
@@ -1083,7 +1083,7 @@ void func_001273D0(void) {
 s32 rng_next_bit();
 
 void func_00127400(void) {
-    s32 func_00201D10();
+    s32 velocity_from_direction();
     u32 save_d0;
     u32 save_d2;
     u32 save_d3;
@@ -1107,7 +1107,7 @@ void func_00127400(void) {
     reg_a0 = reg_a6;
     reg_atmp = temp_a1;
     reg_a6 = temp_a1;
-    func_00201D10();
+    velocity_from_direction();
     reg_atmp = (u8 *)reg_a0;
     reg_a0 = reg_a6;
     reg_a6 = (u8 *)reg_atmp;
@@ -1363,7 +1363,7 @@ void rng_next(void);
 extern u8 D_00269708[];
 
 void func_00127CA0(void) {
-    void func_00201D10(void);
+    void velocity_from_direction(void);
     reg_d0.h[1] = ENTITY(reg_a6)->hit_y_plus.h;
     reg_d0.h[0] = ENTITY(reg_a6)->hit_y_minus.h;
     reg_a0 = (u8 *)D_00269708;
@@ -1420,7 +1420,7 @@ void func_00127CA0(void) {
     }
     reg_d0.h[0] &= 6;
     reg_d0.h[0] += 6;
-    func_00201D10();
+    velocity_from_direction();
     ENTITY(reg_a6)->move.h = reg_d3.h[0];
 }
 

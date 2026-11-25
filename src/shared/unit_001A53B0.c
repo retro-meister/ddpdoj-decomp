@@ -1122,7 +1122,7 @@ s32 sfx_bonus_count();
 s32 music_fade_out();
 s32 func_001A9180();
 s32 func_001A9190();
-s32 func_001A97F0();
+s32 score_value_add();
 extern s8 D_0028E2A0_as_s8;
 extern s8 D_0028E2A4_as_s8;
 extern u32 g_boss_score_as_u32;
@@ -1147,7 +1147,7 @@ void func_001A7080(void) {
     reg_a0 = (u8 *)&g_boss_hit_bonus_timer;
     reg_d0.w = g_boss_score_as_u32;
     reg_d0.w <<= 4;
-    func_001A97F0();
+    score_value_add();
 next_0:
     if (!(g_boss_present & 4)) {
         func_001A7B30();
@@ -1226,15 +1226,15 @@ next_8:
 loop_0:
     p = (u8 *)&g_boss_hit_bonus_timer;
     reg_a0 = p;
-    func_001A97F0();
+    score_value_add();
     reg_a0 = p;
-    func_001A97F0();
+    score_value_add();
     reg_a0 = p;
-    func_001A97F0();
+    score_value_add();
     reg_a0 = p;
-    func_001A97F0();
+    score_value_add();
     reg_a0 = p;
-    func_001A97F0();
+    score_value_add();
     if ((s16)(reg_d7.h[0] -= 1) >= 0) goto loop_0;
 next_9:
     if (g_boss_hits == 0) goto next_13;

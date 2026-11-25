@@ -7,7 +7,7 @@ void func_00201920(void);
 void func_00201A00(void);
 void func_00201B30(void);
 void velocity_from_dir(void);
-void func_00201D10(void);
+void velocity_from_direction(void);
 void func_00201F70();
 void func_00201FE0(void);
 void func_00202040(void);
@@ -287,7 +287,7 @@ void entity_velocity(void)
 
 
 void velocity_from_dir(void) {
-    func_00201D10();
+    velocity_from_direction();
     ENTITY(reg_a6)->y.h += reg_d2.h[0];
     ENTITY(reg_a6)->x.h += reg_d3.h[0];
 }
@@ -296,7 +296,7 @@ extern u8 D_00262570[];
 extern u8 D_00262572[];
 extern u8 D_002671E0[];
 
-void func_00201D10(void) {
+void velocity_from_direction(void) {
     s32 t;
 
     reg_d1.h[0] *= 4;
@@ -1067,7 +1067,7 @@ void func_00203380(void) {
     }
 }
 
-void func_00203400(void) {
+void active_players_mask(void) {
     reg_d0.w = 0;
     if ((g_player1[0] < 0) && !(PLAYER(g_player1)->flags.b[1] & 1)) {
         reg_d0.w = 0x10;

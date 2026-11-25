@@ -662,7 +662,7 @@ s32 bullet_fire256_double();
 s32 bullet_fire256_3way();
 s32 func_001368E0();
 s32 func_0013B2E0();
-s32 func_0014E030();
+s32 spawn_request_add();
 s32 func_0016A9B0();
 s32 enemy_switch_target_player();
 s32 sfx_explosion_air_medium();
@@ -971,7 +971,7 @@ next_500:
     *(u16 *)(reg_a5 + 0x20) += 4;
     if (*(u16 *)(reg_a5 + 0x20) != 0x28) goto next_520;
     reg_d0.h[0] = 0x9E;
-    func_0014E030();
+    spawn_request_add();
     reg_d0.h[1] = ENTITY(reg_a6)->y.h;
     reg_d0.h[0] = ENTITY(reg_a6)->x.h;
     reg_d0.h[1] += 0x1E00;
@@ -1559,7 +1559,7 @@ next_11:
     sfx_charge_loop_start();
 next_12:
     reg_d0.h[0] = 0xA4;
-    func_0014E030();
+    spawn_request_add();
     reg_a1 = reg_a6 + 0x20;
     reg_tmp.w = (u32) reg_a1;
     *(u16 *)(reg_a0 + 0x24) = (u16) reg_tmp.h[1];

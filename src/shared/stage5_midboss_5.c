@@ -678,7 +678,7 @@ void func_001FE100(void) {
     ((FuncFe100Obj *)reg_a6)->unk4C = 0;
 }
 
-s32 func_0014E030();
+s32 spawn_request_add();
 extern u16 g_game_frame;
 
 void func_001FE120(void) {
@@ -700,7 +700,7 @@ void func_001FE120(void) {
                 if (reg_d0.h[0] == 0) {
                     ENTITY(reg_a6)[2].sprite.h = 1U;
                     reg_d0.w = 0x4E;
-                    func_0014E030();
+                    spawn_request_add();
                     reg_d0.h[1] = ENTITY(reg_a6)->y.h;
                     reg_d0.h[0] = ENTITY(reg_a6)->x.h;
                     reg_d0.w += 0xFC3FEC80;
@@ -708,7 +708,7 @@ void func_001FE120(void) {
                     *(u16 *)(reg_a0 + 0x18) = (u16) reg_d0.h[0];
                     *(u16 *)(reg_a0 + 0x1A) = 0xFA00;
                     reg_d0.w = 0x4E;
-                    func_0014E030();
+                    spawn_request_add();
                     reg_d0.h[1] = ENTITY(reg_a6)->y.h;
                     reg_d0.h[0] = ENTITY(reg_a6)->x.h;
                     reg_d0.w += 0xFC401380;
@@ -815,7 +815,7 @@ void func_001FE330(void) {
                     reg_d0.h[0] &= 1;
                     if (reg_d0.h[0] == 0) {
                         reg_d0.w = 0x50;
-                        func_0014E030();
+                        spawn_request_add();
                         reg_d0.h[1] = ENTITY(reg_a6)->y.h;
                         reg_d0.h[0] = ENTITY(reg_a6)->x.h;
                         reg_d0.w += 0xF47FFC00;
@@ -824,7 +824,7 @@ void func_001FE330(void) {
                         ENTITY(reg_a6)[3].sprite.h = 1;
                     } else {
                         reg_d0.w = 0x50;
-                        func_0014E030();
+                        spawn_request_add();
                         reg_d0.h[1] = ENTITY(reg_a6)->y.h;
                         reg_d0.h[0] = ENTITY(reg_a6)->x.h;
                         reg_d0.w += 0xF4800400;
@@ -893,7 +893,7 @@ void func_001FE6D0(void) {
             reg_d0.h[0] *= 4;
             reg_a4 += reg_d0.h[0];
             reg_d0.w = 0x52;
-            func_0014E030();
+            spawn_request_add();
             reg_d0.h[1] = ENTITY(reg_a6)->y.h;
             reg_d0.h[0] = ENTITY(reg_a6)->x.h;
             reg_d0.w += 0x0C7FF600;
@@ -907,7 +907,7 @@ void func_001FE6D0(void) {
             ENTITY(reg_a6)[1].draw.b.priority += 4;
             ENTITY(reg_a6)[1].draw.b.priority &= 0x3F;
             reg_d0.w = 0x52;
-            func_0014E030();
+            spawn_request_add();
             reg_d0.h[1] = ENTITY(reg_a6)->y.h;
             reg_d0.h[0] = ENTITY(reg_a6)->x.h;
             reg_d0.w += 0x0C800A00;
@@ -1031,7 +1031,7 @@ void func_001FEA90(void) {
             reg_d0.h[0] *= 4;
             reg_a4 += reg_d0.h[0];
             reg_d0.w = 0x58;
-            func_0014E030();
+            spawn_request_add();
             reg_d0.h[1] = ENTITY(reg_a6)->y.h;
             reg_d0.h[0] = ENTITY(reg_a6)->x.h;
             reg_d0.w += 0x0C7FF600;
@@ -1049,7 +1049,7 @@ void func_001FEA90(void) {
             ENTITY(reg_a6)[1].hit_x_plus.b[1] += 1;
             ENTITY(reg_a6)[1].hit_x_plus.b[1] &= 7;
             reg_d0.w = 0x58;
-            func_0014E030();
+            spawn_request_add();
             reg_d0.h[1] = ENTITY(reg_a6)->y.h;
             reg_d0.h[0] = ENTITY(reg_a6)->x.h;
             reg_d0.w += 0x0C800A00;
@@ -1293,7 +1293,7 @@ void stage5_midboss5_small_missile_start() {
 }
 
 s32 sprite_draw_layer3();
-s32 func_00201D10();
+s32 velocity_from_direction();
 extern u8 D_0028E2E4;
 
 void stage5_midboss5_small_missile(void) {
@@ -1303,17 +1303,17 @@ void stage5_midboss5_small_missile(void) {
     reg_d0.w = 0;
     reg_d0.b[0] = ENTITY(reg_a6)->move.b.speed;
     reg_d1.b[0] = ENTITY(reg_a6)->move.b.dir;
-    func_00201D10();
+    velocity_from_direction();
     ENTITY(reg_a6)->y.h += reg_d2.h[0];
     ENTITY(reg_a6)->x.h += reg_d3.h[0];
     *(u16 *)(reg_a5 + 0x18) -= 1;
     if (*(u16 *)(reg_a5 + 0x18) != 0) goto block_disp;
     reg_d0.w = 0x4F;
-    func_0014E030();
+    spawn_request_add();
     *(u16 *)(reg_a0 + 0x16) = ENTITY(reg_a6)->y.h;
     *(u16 *)(reg_a0 + 0x18) = ENTITY(reg_a6)->x.h;
     reg_d0.w = 0x4F;
-    func_0014E030();
+    spawn_request_add();
     *(u16 *)(reg_a0 + 0x16) = ENTITY(reg_a6)->y.h;
     *(u16 *)(reg_a0 + 0x18) = ENTITY(reg_a6)->x.h;
     *(u16 *)(reg_a0 + 0x16) += 0xA00;
@@ -1387,7 +1387,7 @@ next_1:
         reg_d0.w = 0;
         reg_d0.b[0] = ENTITY(reg_a6)->move.b.speed;
         reg_d1.b[0] = ENTITY(reg_a6)->move.b.dir;
-        func_00201D10();
+        velocity_from_direction();
         ENTITY(reg_a6)->y.h += reg_d2.h[0];
         t1 = (u8 *)(reg_a6);
         (*(u16 *)((u8 *)(t1) + (4))) += reg_d3.h[0];
@@ -1468,13 +1468,13 @@ void stage5_midboss5_large_missile(void) {
     reg_d0.w = 0;
     reg_d0.b[0] = ENTITY(reg_a6)->move.b.speed;
     reg_d1.b[0] = ENTITY(reg_a6)->move.b.dir;
-    func_00201D10();
+    velocity_from_direction();
     ENTITY(reg_a6)->y.h += reg_d2.h[0];
     ENTITY(reg_a6)->x.h += reg_d3.h[0];
     *(u16 *)(reg_a5 + 0x18) -= 1;
     if (*(u16 *)(reg_a5 + 0x18) != 0) goto next_1;
     reg_d0.w = 0x51;
-    func_0014E030();
+    spawn_request_add();
     *(u16 *)(reg_a0 + 0x16) = ENTITY(reg_a6)->y.h;
     *(u16 *)(reg_a0 + 0x18) = ENTITY(reg_a6)->x.h;
 block_1:
@@ -1554,7 +1554,7 @@ next_1:
         reg_d0.w = 0;
         reg_d0.b[0] = ENTITY(reg_a6)->move.b.speed;
         reg_d1.b[0] = ENTITY(reg_a6)->move.b.dir;
-        func_00201D10();
+        velocity_from_direction();
         ENTITY(reg_a6)->y.h += reg_d2.h[0];
         t1 = (u8 *)(reg_a6);
         (*(u16 *)((u8 *)(t1) + (4))) += reg_d3.h[0];
@@ -1759,7 +1759,7 @@ next_15:
     reg_d1.b[0] += 0x20;
     reg_d1.b[0] &= 0x3F;
     reg_d0.w = 0x30;
-    func_00201D10();
+    velocity_from_direction();
     ENTITY(reg_a6)->y.h += reg_d2.h[0];
     ENTITY(reg_a6)->x.h += reg_d3.h[0];
 block_2:
@@ -1884,7 +1884,7 @@ void stage5_midboss5_spin_drone_start() {
     reg_d0.w = 0;
     reg_d0.b[0] = ENTITY(reg_a6)->move.b.speed;
     reg_d1.b[0] = ENTITY(reg_a6)->move.b.dir;
-    func_00201D10();
+    velocity_from_direction();
     *(u16 *)(reg_a5 + 0x1E) = (u16) reg_d2.h[0];
     *(u16 *)(reg_a5 + 0x20) = (u16) reg_d3.h[0];
     *(u8 *)(reg_a5 + 0x1D) = 0x20U;

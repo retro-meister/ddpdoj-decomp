@@ -11,7 +11,7 @@ s32 boss_attack_stop_all();
 s32 score_add_no_chain();
 s32 func_001D4630();
 s32 func_002016D0();
-s32 func_00203400();
+s32 active_players_mask();
 extern u8 g_game_mode;
 extern s32 g_boss_score;
 extern u16 g_damage_blink_counter;
@@ -111,7 +111,7 @@ next_20:
     *(u16 *)(reg_a5 + 0x16) = reg_tmp5.h[1];
     *(u16 *)(reg_a5 + 0x18) = reg_tmp5.h[0];
     if ((s32) reg_tmp5.w >= 0) goto block_check;
-    func_00203400();
+    active_players_mask();
     if (reg_d0.h[0] != 0) goto next_30;
     reg_tmp.w = 0x200;
     *(u16 *)(reg_a5 + 0x16) = reg_tmp.h[1];

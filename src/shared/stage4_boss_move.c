@@ -327,7 +327,7 @@ void stage4_boss_move_wander_high_b_start(void) {
     stage4_boss_move_wander_high_b();
 }
 
-s32 func_00201D10();
+s32 velocity_from_direction();
 extern u8 D_0026F490[];
 
 void stage4_boss_move_wander_high_b(void) {
@@ -362,7 +362,7 @@ void stage4_boss_move_wander_high_b(void) {
     reg_d1.w = 0;
     reg_d0.b[0] = ENTITY(reg_a6)[1].move.b.speed;
     reg_d1.b[0] = ENTITY(reg_a6)[1].move.b.dir;
-    func_00201D10();
+    velocity_from_direction();
     ENTITY(reg_a6)[12].hit_x_plus.h += reg_d2.h[0];
     ENTITY(reg_a6)[12].hit_x_minus.h += reg_d3.h[0];
     func_001BE270();
@@ -459,7 +459,7 @@ void stage4_boss_move_hover_high(void) {
     reg_d1.w = 0;
     reg_d0.b[0] = ENTITY(reg_a6)[1].move.b.speed;
     reg_d1.b[0] = ENTITY(reg_a6)[1].move.b.dir;
-    func_00201D10();
+    velocity_from_direction();
     ENTITY(reg_a6)[12].hit_x_plus.h += reg_d2.h[0];
     ENTITY(reg_a6)[12].hit_x_minus.h += reg_d3.h[0];
     func_001BE270();
@@ -512,7 +512,7 @@ void stage4_boss_move_rage(void) {
     reg_d1.w = 0;
     reg_d0.b[0] = ENTITY(reg_a6)[1].move.b.speed;
     reg_d1.b[0] = ENTITY(reg_a6)[1].move.b.dir;
-    func_00201D10();
+    velocity_from_direction();
     ENTITY(reg_a6)[12].hit_x_plus.h += reg_d2.h[0];
     ENTITY(reg_a6)[12].hit_x_minus.h += reg_d3.h[0];
     func_001BE270();

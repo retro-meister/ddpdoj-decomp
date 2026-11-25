@@ -23,7 +23,7 @@ extern s32 g_boss_score;
 extern u16 g_damage_blink_counter;
 
 void func_001BB8E0(void) {
-    s32 func_00203400();
+    s32 active_players_mask();
     u32 hp;
     u8 *v1;
     u8 *v2;
@@ -89,7 +89,7 @@ void func_001BB8E0(void) {
         reg_tmp.h[1] = *(u16 *)(reg_a5 + 0x16);
         reg_tmp.h[0] = *(u16 *)(reg_a5 + 0x18);
         if ((s32) reg_tmp.w < 0) {
-            func_00203400();
+            active_players_mask();
             if (reg_d0.h[0] == 0) {
                 reg_tmp.w = 0x200;
                 *(u16 *)(reg_a5 + 0x16) = (u16) reg_tmp.h[1];
@@ -408,13 +408,13 @@ void func_001BC430(void) {
 extern u16 g_enemies_stopped;
 
 void func_001BC440(void) {
-    void func_00203400(void);
+    void active_players_mask(void);
 #ifdef DEATH_LABEL
     if ((g_enemies_stopped == 0) && (*(u16 *)(reg_a5 + 0x22) == 0)) {
 #else
     if ((g_enemies_stopped == 0) && (*(u16 *)(reg_a5 + 0x22) -= 1, *(u16 *)(reg_a5 + 0x22) == 0)) {
 #endif
-        func_00203400();
+        active_players_mask();
         if (reg_d0.h[0] == 0) {
             *(u16 *)(reg_a5 + 0x22) = 0x78U;
             return;

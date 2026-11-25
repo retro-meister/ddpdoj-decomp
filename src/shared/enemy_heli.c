@@ -297,7 +297,7 @@ void func_00150F40(void) {
 
 s32 entity_draw_layer5();
 
-void func_00150F70(void) {
+void heli_set_direction_sprite(void) {
     reg_a0 = (u8 *)(D_002578D0);
     reg_d1.h[0] &= 0x3E;
     reg_d1.h[0] += reg_d1.h[0];
@@ -486,7 +486,7 @@ void heli_c(void) {
     if (cond_flag != 0) return;
     reg_d1.b[0] = *(u8 *)(reg_a5 + 0x22);
     if (g_enemies_stopped != 0) {
-        func_00150F70();
+        heli_set_direction_sprite();
         return;
     }
     entity_velocity();
@@ -540,19 +540,19 @@ next_5:
     reg_d1.b[0] &= 0x3C;
     ENTITY(reg_a6)->move.b.dir = reg_d1.b[0];
     if (*(u8 *)(reg_a5 + 0x23) != reg_d1.b[0]) {
-        func_00150F70();
+        heli_set_direction_sprite();
         return;
     }
     *(u16 *)(reg_a5 + 0x1C) = 1;
 next_6:
     reg_d1.b[0] = ENTITY(reg_a6)->move.b.dir;
-    func_00150F70();
+    heli_set_direction_sprite();
     return;
 next_7:
     reg_tmp.b[0] = *(u8 *)(reg_a5 + 0x19);
     *(u8 *)(reg_a5 + 0x19) -= 1;
     if ((s32)reg_tmp.b[0] > 0) {
-        func_00150F70();
+        heli_set_direction_sprite();
         return;
     }
     reg_d0.w = 0x58;
@@ -561,12 +561,12 @@ next_7:
     *(u8 *)(reg_a5 + 0x19) = reg_d0.b[0];
     func_00202D50();
     if (cond_flag != 0) {
-        func_00150F70();
+        heli_set_direction_sprite();
         return;
     }
     func_00202180();
     if (cond_flag != 0) {
-        func_00150F70();
+        heli_set_direction_sprite();
         return;
     }
     func_00150670(reg_d1.b[0]);
@@ -577,7 +577,7 @@ next_7:
     func_00150730();
     reg_d3.w = 0;
     bullet_fire();
-    func_00150F70();
+    heli_set_direction_sprite();
 }
 
 void heli_d_first(void) {
@@ -642,7 +642,7 @@ void heli_d(void) {
     if (cond_flag != 0) return;
     reg_d1.b[0] = *(u8 *)(reg_a5 + 0x22);
     if (g_enemies_stopped != 0) {
-        func_00150F70();
+        heli_set_direction_sprite();
         return;
     }
     entity_velocity();
@@ -687,7 +687,7 @@ next_5:
     *(u8 *)(reg_a5 + 0x1B) = *(u8 *)(reg_a5 + 0x1A);
     *(u16 *)(reg_a5 + 0x28) -= 1;
     func_00202490();
-    func_00150F70();
+    heli_set_direction_sprite();
     return;
 #else
     if (*(u16 *)(reg_a5 + 0x1C) != 0) goto next_6;
@@ -700,20 +700,20 @@ next_5:
     reg_d1.b[0] &= 0x3C;
     ENTITY(reg_a6)->move.b.dir = reg_d1.b[0];
     if (*(u8 *)(reg_a5 + 0x23) != reg_d1.b[0]) {
-        func_00150F70();
+        heli_set_direction_sprite();
         return;
     }
     *(u16 *)(reg_a5 + 0x1C) = 1;
 #endif
 next_6:
     reg_d1.b[0] = ENTITY(reg_a6)->move.b.dir;
-    func_00150F70();
+    heli_set_direction_sprite();
     return;
 next_7:
     reg_tmp.b[0] = *(u8 *)(reg_a5 + 0x19);
     *(u8 *)(reg_a5 + 0x19) -= 1;
     if ((s32)reg_tmp.b[0] > 0) {
-        func_00150F70();
+        heli_set_direction_sprite();
         return;
     }
     reg_d0.w = 0x58;
@@ -722,12 +722,12 @@ next_7:
     *(u8 *)(reg_a5 + 0x19) = reg_d0.b[0];
     func_00202D50();
     if (cond_flag != 0) {
-        func_00150F70();
+        heli_set_direction_sprite();
         return;
     }
     func_00202180();
     if (cond_flag != 0) {
-        func_00150F70();
+        heli_set_direction_sprite();
         return;
     }
     func_00150670(reg_d1.b[0]);
@@ -738,7 +738,7 @@ next_7:
     func_00150730();
     reg_d3.w = 0;
     bullet_fire();
-    func_00150F70();
+    heli_set_direction_sprite();
 }
 
 void heli_e_first(void) {
@@ -796,7 +796,7 @@ void heli_e(void) {
     if ((cond_flag == 0) && (func_00171430(), (cond_flag == 0))) {
         reg_d1.b[0] = *(u8 *)(reg_a5 + 0x22);
         if (g_enemies_stopped != 0) {
-            func_00150F70();
+            heli_set_direction_sprite();
             return;
         }
         entity_velocity();
@@ -853,14 +853,14 @@ void heli_e(void) {
         }
         reg_d1.b[0] = *(u8 *)(reg_a5 + 0x22);
         if (g_frame_mod4 != 0) {
-            func_00150F70();
+            heli_set_direction_sprite();
             return;
         }
         func_00202180();
         reg_d0.b[0] = *(u8 *)(reg_a5 + 0x22);
         direction_turn_toward();
         *(u8 *)(reg_a5 + 0x22) = (u8) reg_d1.b[0];
-        func_00150F70();
+        heli_set_direction_sprite();
     }
 }
 
@@ -913,7 +913,7 @@ void heli_f(void) {
     if ((cond_flag == 0) && (func_00171430(), (cond_flag == 0))) {
         reg_d1.b[0] = *(u8 *)(reg_a5 + 0x22);
         if (g_enemies_stopped != 0) {
-            func_00150F70();
+            heli_set_direction_sprite();
             return;
         }
         entity_velocity();
@@ -941,14 +941,14 @@ void heli_f(void) {
         }
         reg_d1.b[0] = *(u8 *)(reg_a5 + 0x22);
         if (g_frame_mod4 != 0) {
-            func_00150F70();
+            heli_set_direction_sprite();
             return;
         }
         func_00202180();
         reg_d0.b[0] = *(u8 *)(reg_a5 + 0x22);
         direction_turn_toward();
         *(u8 *)(reg_a5 + 0x22) = (u8) reg_d1.b[0];
-        func_00150F70();
+        heli_set_direction_sprite();
     }
 }
 
@@ -1025,7 +1025,7 @@ void heli_g(void) {
     if ((cond_flag == 0) && (func_00171430(), (cond_flag == 0))) {
         reg_d1.b[0] = *(u8 *)(reg_a5 + 0x22);
         if (g_enemies_stopped != 0) {
-            func_00150F70();
+            heli_set_direction_sprite();
             return;
         }
         entity_velocity();
@@ -1074,18 +1074,18 @@ void heli_g(void) {
             }
             reg_d1.b[0] = *(u8 *)(reg_a5 + 0x22);
             if (g_frame_mod4 != 0) {
-                func_00150F70();
+                heli_set_direction_sprite();
                 return;
             }
             func_00202180();
             if (cond_flag != 0) {
-                func_00150F70();
+                heli_set_direction_sprite();
                 return;
             }
             reg_d0.b[0] = *(u8 *)(reg_a5 + 0x22);
             direction_turn_toward();
             *(u8 *)(reg_a5 + 0x22) = (u8) reg_d1.b[0];
-            func_00150F70();
+            heli_set_direction_sprite();
             return;
         }
         if (*(u8 *)(reg_a5 + 0x26) != 0) {
@@ -1128,7 +1128,7 @@ void heli_g(void) {
                 reg_d1.b[0] &= 0x3C;
                 ENTITY(reg_a6)->move.b.dir = (u8) reg_d1.b[0];
                 if (*(u8 *)(reg_a5 + 0x23) != reg_d1.b[0]) {
-                    func_00150F70();
+                    heli_set_direction_sprite();
                     return;
                 }
                 *(u16 *)(reg_a5 + 0x1C) = 1U;
@@ -1137,7 +1137,7 @@ void heli_g(void) {
         }
 block_33:
         reg_d1.b[0] = ENTITY(reg_a6)->move.b.dir;
-        func_00150F70();
+        heli_set_direction_sprite();
     }
 }
 
@@ -1192,7 +1192,7 @@ void heli_h(void) {
     if ((cond_flag == 0) && (func_00171430(), (cond_flag == 0))) {
         reg_d1.b[0] = *(u8 *)(reg_a5 + 0x22);
         if (g_enemies_stopped != 0) {
-            func_00150F70();
+            heli_set_direction_sprite();
             return;
         }
         if (*(u16 *)(reg_a5 + 0x1C) != 0) {
@@ -1225,7 +1225,7 @@ block_7:
             reg_tmp.b[0] = *(u8 *)(reg_a5 + 0x19);
             *(u8 *)(reg_a5 + 0x19) -= 1;
             if ((s32) reg_tmp.b[0] > 0) {
-                func_00150F70();
+                heli_set_direction_sprite();
                 return;
             }
             reg_d0.w = 0x58;
@@ -1234,12 +1234,12 @@ block_7:
             *(u8 *)(reg_a5 + 0x19) = (u8) reg_d0.b[0];
             func_00202D50();
             if (cond_flag != 0) {
-                func_00150F70();
+                heli_set_direction_sprite();
                 return;
             }
             func_00202180();
             if (cond_flag != 0) {
-                func_00150F70();
+                heli_set_direction_sprite();
                 return;
             }
             func_00150670(reg_d1.b[0]);
@@ -1251,7 +1251,7 @@ block_7:
             func_00150730();
             reg_d3.w = 0;
             bullet_fire();
-            func_00150F70();
+            heli_set_direction_sprite();
         }
     }
 }

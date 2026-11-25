@@ -84,7 +84,7 @@ void death_func_00128A90();
 void func_00128640();
 void bullet_fire256_direct();
 void bullet_spawn256();
-void func_0014E030();
+void spawn_request_add();
 void func_00202760();
 void func_00203330();
 extern u8 bullet_type_records_as_u8_a[];
@@ -884,7 +884,7 @@ block_44:
                                 *(u16 *)(reg_a6 + 0x34) -= 1;
                                 if (0 > (s64)*(s16 *)(reg_a6 + 0x34)) {
                                     reg_d0.w = 0x35;
-                                    func_0014E030();
+                                    spawn_request_add();
                                     *(u16 *)(reg_a0 + 0x16) = (u16) ENTITY(reg_a6)->y.h;
                                     *(u16 *)(reg_a0 + 0x18) = (u16) ENTITY(reg_a6)->x.h;
                                     goto block_16;

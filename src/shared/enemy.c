@@ -4,7 +4,7 @@
 void func_0014D4A0(void);
 void func_0014DA80(void);
 void func_0014DDB0(void);
-void func_0014E070();
+void spawn_request_alloc();
 void func_0014E130(void);
 void enemy_remove_entities();
 void enemy_init_entities_n(void);
@@ -24,15 +24,15 @@ void enemy_hitbox_debug_draw(void) {
 #endif
 }
 
-extern s16 D_0028E7D4_as_s16;
+extern s16 g_spawn_request_end_as_s16;
 extern s16 D_0028E7D8;
 extern s16 D_0028E7DC;
 extern s16 D_0028E7E0;
 extern s16 D_0028E7E4_as_s16;
 extern s16 D_0028E7E8_as_s16;
 extern s16 D_0028E7EC_as_s16;
-extern s8 D_002BBAF0_as_s8_a[];
-extern s8 D_002BBB40_as_s8_a[];
+extern s8 g_spawn_request_spare_as_s8_a[];
+extern s8 g_spawn_requests_as_s8_a[];
 typedef struct { s8 a[0xC80]; s8 b[0x640]; s8 c[0x640]; } S1;
 extern S1 D_002BC7C0_as_S1;
 typedef struct { s8 a[0xA0]; s8 b[0x280]; s8 c[0xF00]; s8 d[0x50]; } S0;
@@ -62,7 +62,7 @@ void func_0014D260(void) {
     for (i = 0; i < 0x640; i++) {
         D_002BC7C0_as_S1.c[i] = 0;
     }
-    D_0028E7D4_as_s16 = 0;
+    g_spawn_request_end_as_s16 = 0;
     D_0028E7D8 = 0;
     D_0028E7DC = 0;
     D_0028E7E0 = 0;
@@ -70,10 +70,10 @@ void func_0014D260(void) {
     D_0028E7E8_as_s16 = 0;
     D_0028E7EC_as_s16 = 0;
     for (i = 0; i < 0xC80; i++) {
-        D_002BBB40_as_s8_a[i] = 0;
+        g_spawn_requests_as_s8_a[i] = 0;
     }
     for (i = 0; i < 0x50; i++) {
-        D_002BBAF0_as_s8_a[i] = 0;
+        g_spawn_request_spare_as_s8_a[i] = 0;
     }
     func_0014D4A0();
 }
@@ -109,13 +109,13 @@ void func_0014D4A0(void) {
     reg_a0 += 2;
     *(u16 *)(reg_a4 + 8) = (u16) reg_d0.h[1];
     *(u16 *)(reg_a4 + 0xA) = (u16) reg_d0.h[0];
-    D_0028E7D4_as_s16 = 0;
+    g_spawn_request_end_as_s16 = 0;
 }
 
 
-extern u16 D_0028E7D4;
+extern u16 g_spawn_request_end;
 extern u16 g_scroll_line;
-extern u8 D_002BBB40[];
+extern u8 g_spawn_requests[];
 extern u8 D_002BF2E0[];
 
 void func_0014D5D0(void) {
@@ -169,9 +169,9 @@ next_3:
     *(u16 *)reg_a3 = (u16) reg_tmp.h[1];
     *(u16 *)(reg_a3 + 2) = (u16) reg_tmp.h[0];
 loop_11:
-    reg_d6.h[0] = D_0028E7D4;
-    if (D_0028E7D4 != 0) {
-        reg_a4 = (u8 *)D_002BBB40;
+    reg_d6.h[0] = g_spawn_request_end;
+    if (g_spawn_request_end != 0) {
+        reg_a4 = (u8 *)g_spawn_requests;
         reg_d6.h[0] -= 0x50;
         reg_a4 += reg_d6.h[0];
         reg_d0.h[0] = *(u16 *)(reg_a4 + 2);
@@ -210,12 +210,12 @@ loop_11:
             *(u16 *)(reg_a0 + 0x48) = (u16) *(u16 *)(reg_a4 + 0x48);
             *(u16 *)(reg_a0 + 0x4A) = (u16) *(u16 *)(reg_a4 + 0x4A);
         }
-        D_0028E7D4 = reg_d6.h[0];
+        g_spawn_request_end = reg_d6.h[0];
         if (D_002BF2E0 != reg_a0) {
             reg_a5 = reg_a0;
             func_0014DDB0();
         }
-        if (D_0028E7D4 != 0) {
+        if (g_spawn_request_end != 0) {
             goto loop_11;
         }
     }
@@ -281,7 +281,7 @@ void func_0014DA80(void) {
     D_0028E7D8 = 0;
 }
 
-s32 func_00203400();
+s32 active_players_mask();
 extern u8 D_002BC7C0[];
 
 void func_0014DBF0(u8 *arg1) {
@@ -294,7 +294,7 @@ void func_0014DBF0(u8 *arg1) {
     do {
         temp_a0 = *(u8 *)(reg_a0 + 1);
         if (temp_a0 & 0x20) {
-            func_00203400();
+            active_players_mask();
             var_a1 = (u8 *)(reg_a0);
             (*(u8 *)((u8 *)(var_a1) + (1))) |= reg_d0.b[0];
             goto block_4;
@@ -430,16 +430,16 @@ void enemy_request_start(void) {
     D_0028DF40 = reg_d1.w;
     D_0028DF3C = reg_d2.sw;
     reg_d1.h[0] = 0x80;
-    func_0014E070();
+    spawn_request_alloc();
 }
 
 
-void func_0014E030(void) {
+void spawn_request_add(void) {
     D_0028DF40 = reg_d1.w;
     D_0028DF44 = reg_d0.w;
     D_0028DF3C = reg_d2.sw;
     *(u16 *)&reg_d1 = 0;
-    func_0014E070(reg_d0.w);
+    spawn_request_alloc(reg_d0.w);
 }
 
 
@@ -447,28 +447,28 @@ void enemy_request_start_flags(void) {
     D_0028DF44 = reg_d0.w;
     D_0028DF40 = reg_d1.w;
     D_0028DF3C = reg_d2.w;
-    func_0014E070(reg_d0.w);
+    spawn_request_alloc(reg_d0.w);
 }
 
-extern u8 D_002BBAF0[];
+extern u8 g_spawn_request_spare[];
 
-void func_0014E070() {
-    reg_d2.h[0] = D_0028E7D4;
+void spawn_request_alloc() {
+    reg_d2.h[0] = g_spawn_request_end;
     if (reg_d2.h[0] == 0xC80) goto next_1;
-    reg_a0 = (u8 *)D_002BBB40;
+    reg_a0 = (u8 *)g_spawn_requests;
     reg_a0 += reg_d2.h[0];
     *(u16 *) (reg_a0 + 2) = reg_d0.h[0];
     *(u16 *) (reg_a0 + 4) = reg_d1.h[0];
     *(s16 *) (reg_a0 + 0x12) = 0;
     *(s16 *) (reg_a0 + 0x14) = 0;
     reg_d2.h[0] += 0x50;
-    D_0028E7D4 = reg_d2.h[0];
+    g_spawn_request_end = reg_d2.h[0];
     reg_d0.w = D_0028DF44;
     reg_d1.w = D_0028DF40;
     reg_d2.w = D_0028DF3C;
     return;
 next_1:
-    reg_a0 = (u8 *)D_002BBAF0;
+    reg_a0 = (u8 *)g_spawn_request_spare;
     reg_d0.w = D_0028DF44;
     reg_d1.w = D_0028DF40;
     reg_d2.w = D_0028DF3C;

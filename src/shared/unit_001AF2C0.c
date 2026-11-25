@@ -537,7 +537,7 @@ void func_001B0100(void) {
 
 void func_0012FFE0(void);
 void func_00130050(void);
-void func_00130CC0(void);
+void text_layer_put_hex_digit(void);
 void func_001A3520(void);
 extern u8 D_00251B60[];
 extern u8 D_00251B80[];
@@ -619,7 +619,7 @@ next_4:
     text_layer_print();
     reg_d0.h[0] = 1;
     reg_d0.h[0] += *(u16 *)(reg_a4 + 2);
-    func_00130CC0();
+    text_layer_put_hex_digit();
     return;
 next_5:
     reg_d0.h[0] -= reg_d1.h[0];
@@ -640,7 +640,7 @@ next_5:
     text_layer_print();
     reg_d0.h[0] = 1;
     reg_d0.h[0] += *(u16 *)(reg_a4 + 2);
-    func_00130CC0();
+    text_layer_put_hex_digit();
     return;
 next_6:
     reg_a0 = (u8 *)D_00251C00;

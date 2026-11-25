@@ -213,7 +213,7 @@ loop_11:
     }
 }
 
-s32 func_001A9130();
+s32 score_add_masked();
 extern u16 D_00269430[];
 extern u16 D_00269460[];
 extern u16 g_bee_value_step;
@@ -253,7 +253,7 @@ loop_3:
     reg_tmp3.w -= 1;
     if (reg_tmp3.h[1] != 0) goto next_4;
 loop_4:
-    func_001A9130();
+    score_add_masked();
     t2 = reg_d3.h[0] - 1;
     reg_d3.h[0] = t2;
     if (((s64) ((s64) (u16) t2 << 0x30) >> 0x30) >= 0) goto loop_4;
@@ -267,7 +267,7 @@ next_4:
 next_5:
     ENTITY(reg_a6)->misc.h = 1;
     reg_d1.b[0] = ENTITY(reg_a6)->flags.b[1];
-    func_001A9130();
+    score_add_masked();
 }
 
 #pragma push

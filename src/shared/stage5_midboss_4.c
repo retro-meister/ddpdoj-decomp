@@ -830,7 +830,7 @@ void func_001FB770() {
     }
 }
 
-s32 func_0014E030();
+s32 spawn_request_add();
 
 void func_001FBD90(arg1)
     u16 arg1;
@@ -854,7 +854,7 @@ void func_001FBD90(arg1)
         *(u8 *)(reg_a4 + 1) = *(u8 *)reg_a4;
         if (g_bullets_blocked == 0) {
             reg_d0.w = 0x53;
-            func_0014E030();
+            spawn_request_add();
             reg_tmp.w = (u32) reg_a6;
             *(u16 *)(reg_a0 + 0x16) = (u16) reg_tmp.h[1];
             *(u16 *)(reg_a0 + 0x18) = (u16) reg_tmp.h[0];

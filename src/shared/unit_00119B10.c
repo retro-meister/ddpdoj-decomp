@@ -600,7 +600,7 @@ void func_0011AD50(void) {
 }
 
 extern u8 D_0025B490[];
-s32 func_001A9130();
+s32 score_add_masked();
 extern u16 g_rank_10_16;
 
 void func_0011B220(void) {
@@ -815,7 +815,7 @@ block_e:
     if (*(u8 *)reg_a6 & 0x40) goto block_f;
     *(s16 *)(reg_a6 + 0x18) = 0x70;
     reg_d0.w = 8;
-    func_001A9130();
+    score_add_masked();
     *(u8 *)reg_a6 |= 0x40;
     reg_d0.w = 3;
     explosion_spawn();

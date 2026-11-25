@@ -2551,7 +2551,7 @@ s32 bullet_fire();
 s32 debug_number_get();
 s32 func_00145D40();
 s32 entity_draw_layer2();
-s32 func_00201D10();
+s32 velocity_from_direction();
 s32 func_00202180();
 s32 aim256_at_player();
 s32 func_00202D50();
@@ -2633,7 +2633,7 @@ void shooter_drone(void) {
     reg_d1.h[0] &= 0x7E;
     reg_d1.h[0] >>= 1;
     reg_d7.h[0] = reg_d1.h[0];
-    func_00201D10();
+    velocity_from_direction();
     save_d0 = reg_d0.w; save_d1 = reg_d1.w; save_d2 = reg_d2.w; save_d3 = reg_d3.w;
     save_d4 = reg_d4.w; save_d5 = reg_d5.w; save_d6 = reg_d6.w; save_d7 = reg_d7.w;
     save_a0 = reg_a0; save_a1 = reg_a1; save_a2 = reg_a2; save_a3 = reg_a3;

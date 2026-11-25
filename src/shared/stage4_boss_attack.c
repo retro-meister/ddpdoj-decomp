@@ -1050,7 +1050,7 @@ void stage4_boss_fire_center_hatch_start(void) {
     func_001DA580();
 }
 
-s32 func_0014E030();
+s32 spawn_request_add();
 extern u8 D_0026EBD0[];
 extern u8 D_0026EBE0[];
 
@@ -1073,7 +1073,7 @@ void func_001DA580(arg1)
             temp_a0 = *(u16 *)(reg_a4 + 6);
             reg_a3 += temp_a0;
             reg_d0.w = 0x41;
-            func_0014E030();
+            spawn_request_add();
             reg_d2.h[1] = ENTITY(reg_a6)[3].y.h;
             reg_d2.h[0] = ENTITY(reg_a6)[3].x.h;
             temp_a0_2 = reg_d2.w;
@@ -1095,7 +1095,7 @@ void func_001DA580(arg1)
             temp_a0_3 = *(u16 *)(reg_a4 + 6);
             reg_a3 += temp_a0_3;
             reg_d0.w = 0x41;
-            func_0014E030();
+            spawn_request_add();
             reg_d2.h[1] = ENTITY(reg_a6)[3].y.h;
             reg_d2.h[0] = ENTITY(reg_a6)[3].x.h;
             temp_a0_4 = reg_d2.w;
@@ -1415,7 +1415,7 @@ void stage4_boss_fire_cutters(void) {
             reg_d7.h[0] -= 1;
             do {
                 reg_d0.w = 0x42;
-                func_0014E030();
+                spawn_request_add();
                 var_a0 = 0xFF;
                 reg_d2.h[1] = ENTITY(reg_a6)[1].y.h;
                 reg_d2.h[0] = ENTITY(reg_a6)[1].x.h;
@@ -1478,7 +1478,7 @@ void func_001DB2B0(arg1)
         reg_d7.h[0] -= 1;
         do {
             reg_d0.w = 0x42;
-            func_0014E030();
+            spawn_request_add();
             reg_d2.h[1] = ENTITY(reg_a6)[1].y.h;
             reg_d2.h[0] = ENTITY(reg_a6)[1].x.h;
             *(u16 *)(reg_a0 + 0x16) = (u16) reg_d2.h[1];

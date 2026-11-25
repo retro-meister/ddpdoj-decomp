@@ -358,7 +358,7 @@ void stage2_boss_ripple_request_start(void) {
     stage2_boss_ripple_request();
 }
 
-s32 func_0014E030();
+s32 spawn_request_add();
 extern u8 D_0026C0B0[];
 
 void stage2_boss_ripple_request(void) {
@@ -367,7 +367,7 @@ void stage2_boss_ripple_request(void) {
     if ((s32) reg_tmp.b[0] <= 0) {
         *(u8 *)(reg_a4 + 3) = (u8) *(u8 *)(reg_a4 + 2);
         reg_d0.w = 0x4D;
-        func_0014E030();
+        spawn_request_add();
         reg_d0.h[1] = ENTITY(reg_a6)[1].y.h;
         reg_d0.h[0] = ENTITY(reg_a6)[1].x.h;
         reg_a1 = D_0026C0B0;

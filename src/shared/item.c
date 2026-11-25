@@ -1022,7 +1022,7 @@ void func_0016C260(void) {
     D_0028E7B0 -= 1;
 }
 
-s32 func_001A9130();
+s32 score_add_masked();
 
 void func_0016C2A0() {
     u32 temp_s0;
@@ -1032,7 +1032,7 @@ void func_0016C2A0() {
     temp_s1 = (u32)reg_a0;
     reg_d1.b[0] = ENTITY(reg_a6)->flags.b[1];
     reg_d0.w = 0x10;
-    func_001A9130();
+    score_add_masked();
     reg_d1.w = temp_s0;
     reg_a0 = (u8 *)temp_s1;
     ENTITY(reg_a6)->flags.b[1] = 0x80U;
@@ -1057,7 +1057,7 @@ void func_0016C350(void) {
     temp_s1 = (u8 *)(reg_a0);
     reg_d1.b[0] = ENTITY(reg_a6)->flags.b[1];
     reg_d0.w = 0x1000;
-    func_001A9130();
+    score_add_masked();
     reg_d1.w = temp_s0;
     reg_a0 = temp_s1;
     ENTITY(reg_a6)->flags.b[1] = 0x80U;

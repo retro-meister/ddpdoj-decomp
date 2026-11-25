@@ -776,7 +776,7 @@ void func_00130A60(void) {
 
 s32 text_layer_put();
 
-void func_00130CC0(void) {
+void text_layer_put_hex_digit(void) {
     u32 temp_s0;
     u32 temp_s1;
     u32 temp_s2;
@@ -859,7 +859,7 @@ void func_00130E00(void) {
     reg_d0.h[0] += 6;
     reg_d4.b[0] = D_0028E1E4[0];
     reg_d4.b[0] += D_0028E1D8[0];
-    func_00130CC0();
+    text_layer_put_hex_digit();
 }
 #endif
 
@@ -875,7 +875,7 @@ void func_00130E70(void) {
     text_layer_print();
     reg_d0.h[0] += 6;
     reg_d4.b[0] = D_0028E1E4[0];
-    func_00130CC0();
+    text_layer_put_hex_digit();
 }
 #endif
 
@@ -889,7 +889,7 @@ void func_00130EC0(void) {
     text_layer_print();
     reg_d0.h[0] += 6;
     reg_d4.b[0] = D_0028E1D8[0];
-    func_00130CC0();
+    text_layer_put_hex_digit();
 }
 #endif
 
@@ -905,14 +905,14 @@ void func_00130F10(void) {
     text_layer_print();
     reg_d0.h[0] += 0xC;
     reg_d4.b[0] = D_0028E1EC;
-    func_00130CC0();
+    text_layer_put_hex_digit();
     reg_d0.h[0] -= 2;
     reg_d4.b[0] = D_0028E1E4[0];
     reg_d4.b[0] += D_0028E1D8[0];
-    func_00130CC0();
+    text_layer_put_hex_digit();
     reg_d0.h[0] -= 2;
     reg_d4.b[0] = D_0028E1E6[0];
-    func_00130CC0();
+    text_layer_put_hex_digit();
 }
 #endif
 
@@ -932,13 +932,13 @@ void func_00130FB0(void) {
     text_layer_print();
     reg_d0.h[0] += 5;
     reg_d4.b[0] = D_0028E1EC;
-    func_00130CC0();
+    text_layer_put_hex_digit();
     reg_d0.h[0] -= 2;
     reg_d4.b[0] = D_0028E1E4[0];
-    func_00130CC0();
+    text_layer_put_hex_digit();
     reg_d0.h[0] -= 2;
     reg_d4.b[0] = D_0028E1E6[0];
-    func_00130CC0();
+    text_layer_put_hex_digit();
 }
 #endif
 
@@ -955,13 +955,13 @@ void func_00131050(void) {
     text_layer_print();
     reg_d0.h[0] += 5;
     reg_d4.b[0] = D_0028E1EC;
-    func_00130CC0();
+    text_layer_put_hex_digit();
     reg_d0.h[0] -= 2;
     reg_d4.b[0] = D_0028E1D8[0];
-    func_00130CC0();
+    text_layer_put_hex_digit();
     reg_d0.h[0] -= 2;
     reg_d4.b[0] = D_0028E1DA[0];
-    func_00130CC0();
+    text_layer_put_hex_digit();
 }
 #endif
 
@@ -977,7 +977,7 @@ void func_001310F0(void) {
     text_layer_print();
     reg_d0.h[0] += 8;
     reg_d4.b[0] = D_0028E1E6[0];
-    func_00130CC0();
+    text_layer_put_hex_digit();
 }
 #endif
 
@@ -991,7 +991,7 @@ void func_00131150(void) {
     text_layer_print();
     reg_d0.h[0] += 8;
     reg_d4.b[0] = D_0028E1E6[0];
-    func_00130CC0();
+    text_layer_put_hex_digit();
 }
 #endif
 
@@ -1005,6 +1005,6 @@ void func_001311A0(void) {
     text_layer_print();
     reg_d0.h[0] += 8;
     reg_d4.b[0] = D_0028E1DA[0];
-    func_00130CC0();
+    text_layer_put_hex_digit();
 }
 #endif

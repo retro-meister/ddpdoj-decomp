@@ -1270,7 +1270,7 @@ next_sen10:
 }
 
 s32 func_00201C20();
-s32 func_00201D10();
+s32 velocity_from_direction();
 extern u16 D_0025F5A8[];
 extern u16 option_offsets[];
 
@@ -1281,7 +1281,7 @@ void option_move(void) {
     reg_d0.w = 0;
     reg_d0.b[0] = ENTITY(reg_a6)->move.b.speed;
     reg_d1.b[0] &= ENTITY(reg_a6)->move.b.dir;
-    func_00201D10();
+    velocity_from_direction();
     reg_d0.h[0] = reg_d2.h[0];
     reg_d0.h[0] = (u16) ((s16) reg_d0.h[0] >> 3);
     reg_d2.h[0] -= reg_d0.h[0];

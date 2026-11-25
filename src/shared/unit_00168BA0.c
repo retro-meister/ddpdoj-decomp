@@ -1009,7 +1009,7 @@ void func_00169E20(void) {
 
 #ifndef DEATH_LABEL
 s32 func_0012FFE0();
-s32 func_00130CC0();
+s32 text_layer_put_hex_digit();
 extern u8 D_0026ABC0[];
 
 void func_00169EA0(void) {
@@ -1032,7 +1032,7 @@ void func_00169EA0(void) {
     text_layer_print();
     reg_d1.h[0] += 2;
     reg_d0.h[0] = 0xE;
-    func_00130CC0();
+    text_layer_put_hex_digit();
 }
 #endif
 
@@ -1061,7 +1061,7 @@ void func_00169F50(void) {
     text_layer_print();
     reg_d1.h[0] += 2;
     reg_d0.h[0] = 0xC;
-    func_00130CC0();
+    text_layer_put_hex_digit();
 }
 #endif
 
@@ -1263,7 +1263,7 @@ void func_0016A420(void) {
     text_layer_print();
     reg_d0.h[0] = 3;
     reg_d0.h[0] += reg_d7.h[0];
-    func_00130CC0();
+    text_layer_put_hex_digit();
 }
 #endif
 
@@ -1289,7 +1289,7 @@ void func_0016A4A0(void) {
     text_layer_print();
     reg_d0.h[0] = 2;
     reg_d0.h[0] += reg_d7.h[0];
-    func_00130CC0();
+    text_layer_put_hex_digit();
 }
 #endif
 

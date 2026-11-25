@@ -758,7 +758,7 @@ void stage1_boss_fire_main_guns_burst_start(void) {
     stage1_boss_fire_main_guns_burst();
 }
 
-s32 func_0014E030();
+s32 spawn_request_add();
 
 void stage1_boss_fire_main_guns_burst(void) {
     reg_tmp.b[0] = reg_a4[7];
@@ -774,7 +774,7 @@ void stage1_boss_fire_main_guns_burst(void) {
         goto skip_1;
     }
     reg_d0.w = 0x1E;
-    func_0014E030();
+    spawn_request_add();
     reg_d0.h[1] = ENTITY(reg_a6)[1].y.h;
     reg_d0.h[0] = ENTITY(reg_a6)[1].x.h;
     reg_d0.w += 0xF6C00140;
@@ -787,7 +787,7 @@ void stage1_boss_fire_main_guns_burst(void) {
         goto skip_1;
     }
     reg_d0.w = 0x1E;
-    func_0014E030();
+    spawn_request_add();
     reg_d0.h[1] = ENTITY(reg_a6)[1].y.h;
     reg_d0.h[0] = ENTITY(reg_a6)[1].x.h;
     reg_d0.w += 0xF6C00140;
@@ -804,7 +804,7 @@ skip_1:
         goto skip_2;
     }
     reg_d0.w = 0x1E;
-    func_0014E030();
+    spawn_request_add();
     reg_d0.h[1] = ENTITY(reg_a6)[3].y.h;
     reg_d0.h[0] = ENTITY(reg_a6)[3].x.h;
     reg_d0.w += 0xF6BFFEC0;
@@ -817,7 +817,7 @@ skip_1:
         goto skip_2;
     }
     reg_d0.w = 0x1E;
-    func_0014E030();
+    spawn_request_add();
     reg_d0.h[1] = ENTITY(reg_a6)[3].y.h;
     reg_d0.h[0] = ENTITY(reg_a6)[3].x.h;
     reg_d0.w += 0xF6BFFEC0;

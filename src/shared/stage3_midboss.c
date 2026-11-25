@@ -21,7 +21,7 @@ void func_001D4620(void) {
 }
 
 s32 func_001D4400();
-void func_00203400(void);
+void active_players_mask(void);
 extern u16 g_enemies_stopped;
 
 void func_001D4630(void) {
@@ -30,7 +30,7 @@ void func_001D4630(void) {
 #else
     if ((g_enemies_stopped == 0) && (*(u16 *)(reg_a5 + 0x1A) -= 1, *(u16 *)(reg_a5 + 0x1A) == 0)) {
 #endif
-        func_00203400();
+        active_players_mask();
         if (reg_d0.h[0] == 0) {
             *(u16 *)(reg_a5 + 0x1A) = 0x78U;
             return;
@@ -554,7 +554,7 @@ void func_001D5670(void) {
     }
 }
 
-s32 func_0014E030();
+s32 spawn_request_add();
 
 void stage3_midboss_mode_00(void) {
     if (*(u8 *)(reg_a5 + 0x1B) == 0) {
@@ -565,7 +565,7 @@ void stage3_midboss_mode_00(void) {
             if (0 >= (s16) ENTITY(reg_a6)[3].offset_y.h) {
                 *(u8 *)(reg_a5 + 0x1B) = 1U;
                 reg_d0.w = 0x14;
-                func_0014E030();
+                spawn_request_add();
                 func_001D55B0();
                 ENTITY(reg_a6)->flags.h = 0xA001;
                 ENTITY(reg_a6)[1].flags.h = 0xA001;
@@ -915,7 +915,7 @@ void func_001D61B0(arg1, arg2)
                     func_00202730();
                     reg_d7.b[0] = reg_d1.b[0];
                     reg_d0.w = 0x13;
-                    func_0014E030();
+                    spawn_request_add();
                     *(u16 *)(reg_a0 + 0x16) = (u16) ENTITY(reg_a6)->y.h;
                     *(u16 *)(reg_a0 + 0x18) = (u16) ENTITY(reg_a6)->x.h;
                     *(u16 *)(reg_a0 + 0x16) -= 0x800;

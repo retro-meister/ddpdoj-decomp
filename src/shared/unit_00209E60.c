@@ -522,7 +522,7 @@ void func_0020AAA0(void) {
 
 s32 rng_next_masked();
 s32 rng_next_unsigned();
-s32 func_00201D10();
+s32 velocity_from_direction();
 extern u16 D_00250D20[];
 
 void func_0020AD50(void) {
@@ -546,7 +546,7 @@ void func_0020AD50(void) {
     rng_next_masked();
     temp_s0 = reg_d1.w;
     reg_d0.b[0] += 4;
-    func_00201D10();
+    velocity_from_direction();
     *(u16 *)reg_a0 = (u16) reg_d2.h[0];
     reg_a0 += 2;
     *(u16 *)reg_a0 = (u16) reg_d3.h[0];
@@ -571,7 +571,7 @@ void func_0020AD50(void) {
         (*(u8 *)((u8 *)(reg_a0) + (-0x12))) = (u8) reg_d3.b[0];
     }
     reg_d1.w = temp_s0;
-    func_00201D10();
+    velocity_from_direction();
     (*(u16 *)((u8 *)(reg_a0) + (-0x1A))) += reg_d3.h[0];
     reg_d0.w = temp_s1;
     reg_d1.w = temp_s2;
@@ -602,7 +602,7 @@ void func_0020AF20(void) {
     }
     func_0020B5F0();
     reg_d1.h[0] &= 0x3F;
-    func_00201D10();
+    velocity_from_direction();
     *(u16 *)reg_a0 = (u16) reg_d2.h[0];
     reg_a0 += 2;
     *(u16 *)reg_a0 = (u16) reg_d3.h[0];
@@ -668,7 +668,7 @@ void func_0020B140(void) {
     func_0020B5F0();
     reg_d1.b[0] += ENTITY(reg_a6)->move.b.dir;
     reg_d1.h[0] &= 0x3F;
-    func_00201D10();
+    velocity_from_direction();
     *(u16 *)reg_a0 = (u16) reg_d2.h[0];
     reg_a0 += 2;
     *(u16 *)reg_a0 = (u16) reg_d3.h[0];
@@ -734,7 +734,7 @@ void func_0020B390(void) {
     reg_d1.b[0] = ENTITY(reg_a6)->move.b.dir;
     reg_d1.b[0] += 0x20;
     reg_d1.h[0] &= 0x3F;
-    func_00201D10();
+    velocity_from_direction();
     *(u16 *)reg_a0 = (u16) reg_d2.h[0];
     reg_a0 += 2;
     *(u16 *)reg_a0 = (u16) reg_d3.h[0];

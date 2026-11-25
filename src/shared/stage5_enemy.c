@@ -40,7 +40,7 @@ void func_001F6080() {
     boss_phase_start();
 }
 
-void func_00203400(void);
+void active_players_mask(void);
 extern u16 g_enemies_stopped;
 
 void func_001F6140(void) {
@@ -49,7 +49,7 @@ void func_001F6140(void) {
 #else
     if ((g_enemies_stopped == 0) && (*(u16 *)(reg_a5 + 0x1A) -= 1, *(u16 *)(reg_a5 + 0x1A) == 0)) {
 #endif
-        func_00203400();
+        active_players_mask();
         if (reg_d0.h[0] == 0) {
             *(u16 *)(reg_a5 + 0x1A) = 0x78U;
             return;
@@ -313,7 +313,7 @@ void stage5_bee_hatch_start(void) {
     }
 }
 
-s32 func_0014E030();
+s32 spawn_request_add();
 s32 rng_next_unsigned();
 extern u8 D_002651A0[];
 
@@ -379,7 +379,7 @@ block_4:
             if ((s32) reg_tmp.b[0] <= 0) {
                 *(u8 *)(reg_a5 + 0x1F) = *(u8 *)(reg_a5 + 0x1E);
                 reg_d0.w = 0x55;
-                func_0014E030();
+                spawn_request_add();
                 *(u16 *)(reg_a0 + 0x16) = (u16) ENTITY(reg_a6)->y.h;
                 *(u16 *)(reg_a0 + 0x18) = ENTITY(reg_a6)->x.h;
                 reg_tmp.w = (u32) reg_a5;
