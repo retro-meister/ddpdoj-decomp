@@ -8,7 +8,7 @@ s32 layers_reset();
 s32 layers_clear_all();
 s32 func_0012FD40();
 s32 func_00131490();
-s32 func_00131500();
+s32 frame_counters_advance();
 s32 func_00135EC0();
 s32 func_00137C20();
 s32 func_00137C50();
@@ -35,8 +35,8 @@ s32 zoom_init();
 s32 test_mode_init();
 s32 settings_reset();
 s32 func_0020B690();
-s32 func_0020EAA0();
-s32 func_0020EAB0();
+s32 slowdown_init();
+s32 slowdown_update();
 s32 func_0020F550();
 s32 func_002108C0();
 s32 font_load_async();
@@ -120,7 +120,7 @@ void func_002120D0(void) {
     func_00131490();
     sound_unused();
     func_0020B690();
-    func_0020EAA0();
+    slowdown_init();
     zoom_init();
     layers_clear_all();
     func_0012FD40();
@@ -228,7 +228,7 @@ loop_15:
         }
     } else {
         task_run_all();
-        func_00131500();
+        frame_counters_advance();
         func_0013C3F0();
         sprite_lists_build();
         if (D_0028EC58 != 0) {
@@ -244,7 +244,7 @@ loop_15:
         D_0028E9A4 = g_arcade_input_port[0];
         D_0028E9A5 = D_0028E249[0];
     }
-    func_0020EAB0();
+    slowdown_update();
 #ifndef DEATH_LABEL
     if ((g_attract_demo != 0) && ((s32) D_0028DF08 < 4)) {
         text_layer_clear_edge_top();

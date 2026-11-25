@@ -1094,10 +1094,10 @@ void func_00203460(void) {
 }
 
 s32 music_play_bgm10();
-s32 func_0020ECE0();
+s32 slowdown_reset();
 extern s16 g_players_stage_clear_as_s16;
 void func_002034C0(void) {
-    func_0020ECE0();
+    slowdown_reset();
     music_play_bgm10();
     g_players_stage_clear_as_s16 = 1;
     g_boss_present_b1 |= 8;

@@ -17,7 +17,7 @@ s32 enemy_set_task_work();
 s32 enemy_init_entities();
 s32 enemy_path_start();
 s32 sprite_palette_load();
-s32 func_0020ED00();
+s32 slowdown_allow_with_boss();
 extern u8 D_00261AF0[];
 extern u8 D_00265AB0[];
 extern u8 D_00265AD0[];
@@ -38,7 +38,7 @@ void func_001F96D0(void) {
         g_enemy_signal_2_as_s16 = 1;
         reg_a0 = D_00261AF0;
         sprite_palette_load();
-        func_0020ED00();
+        slowdown_allow_with_boss();
     }
 }
 
@@ -57,8 +57,8 @@ s32 vibration_start_pad1();
 s32 vibration_start_pad2();
 extern u8 D_00265B40[];
 extern u8 D_00265B60[];
-extern u16 D_0028E3A4_as_u16;
-extern u16 D_0028E3A8_as_u16;
+extern u16 g_slowdown_off_as_u16;
+extern u16 g_slowdown_boss_allowed_as_u16;
 extern u16 g_enemy_signal_2;
 extern u16 g_bullets_blocked;
 extern u16 g_enemies_stopped;
@@ -155,8 +155,8 @@ block_11:
                     *(u16 *)(reg_a5 + 0x1A) += 4;
                     if ((s32) *(u16 *)(reg_a5 + 0x1A) >= 0x1C) {
                         *(u16 *)(reg_a5 + 0x1A) = 0x1CU;
-                        D_0028E3A8_as_u16 = 0;
-                        D_0028E3A4_as_u16 = 0;
+                        g_slowdown_boss_allowed_as_u16 = 0;
+                        g_slowdown_off_as_u16 = 0;
                         *(u8 *)(reg_a5 + 0x16) = 2U;
                         *(s16 *)(reg_a5 + 0x1E) = 0x1020;
                         *(s16 *)(reg_a5 + 0x20) = 0x606;

@@ -635,14 +635,14 @@ void func_0016B780(void)
 }
 
 s32 func_00202B50();
-extern u16 D_0028E3E0;
+extern u16 g_frame_mod8;
 
 void func_0016B7F0(void) {
     s32 func_0016C260();
     s32 func_002021D0();
     if (!(g_boss_present_b1 & 0x40)) {
         if (!(ENTITY(reg_a6)->flags.b[1] & 1)) {
-            if (D_0028E3E0 == 0) {
+            if (g_frame_mod8 == 0) {
                 reg_d2.h[0] = 0x4600;
                 reg_d3.h[0] = 0x1C00;
                 func_002021D0();
@@ -693,7 +693,7 @@ s32 func_00125EB0();
 s32 func_0013E6C0();
 s32 sfx_hyper_pickup();
 extern u8 D_0026AF40[];
-extern u16 D_0028E3EC;
+extern u16 g_frame_mod2;
 extern u16 g_p1_hyper_items;
 extern u16 g_p1_hyper_active;
 extern u16 D_0028E958_as_u16;
@@ -733,7 +733,7 @@ next_1:
     }
     reg_d4.h[0] = 5;
     if (reg_d0.h[0] == 4) {
-        if (D_0028E3EC == 0) {
+        if (g_frame_mod2 == 0) {
             reg_d4.h[0] = 5;
         }
     }
@@ -776,7 +776,7 @@ void func_0016BAF0(void) {
         reg_d1.h[0] += reg_d5.h[0];
         reg_d3.h[0] = 0x638;
         sprite_draw_with_items();
-        if (D_0028E3EC != 0) {
+        if (g_frame_mod2 != 0) {
             reg_d1.h[0] = *(u16 *)(reg_a6 + 2);
             reg_d1.h[0] += 0xFC00;
             reg_tmp1.w = reg_d1.w;
@@ -992,7 +992,7 @@ next_1:
     }
     reg_d4.h[0] = 5;
     if (reg_d0.h[0] == 4) {
-        if (D_0028E3EC == 0) {
+        if (g_frame_mod2 == 0) {
             reg_d4.h[0] = 5;
         }
     }

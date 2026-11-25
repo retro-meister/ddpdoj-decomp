@@ -84,8 +84,8 @@ s32 func_00201F20();
 extern u8 D_00250780[];
 extern u8 D_002507A0[];
 extern u8 D_00262570[];
-extern u16 D_0028E3E0;
-extern u16 D_0028E3EC;
+extern u16 g_frame_mod8;
+extern u16 g_frame_mod2;
 extern u16 g_game_frame;
 extern u16 g_boss_present_as_u16;
 extern u8 D_0029A530_as_u8_a[];
@@ -108,10 +108,10 @@ void func_001B8440(void) {
         goto next_clr;
     }
     reg_d5.w = 0;
-    reg_d6.h[0] = D_0028E3E0;
+    reg_d6.h[0] = g_frame_mod8;
     reg_d6.h[0] *= 0xFFFF;
     reg_tmp.w = reg_d6.w;
-    reg_d6.h[0] = D_0028E3EC;
+    reg_d6.h[0] = g_frame_mod2;
     reg_d6.h[1] = reg_tmp.h[0];
     if (g_boss_present_as_u16 == 0) goto next_1;
     reg_d5.h[0] = 0x8000;

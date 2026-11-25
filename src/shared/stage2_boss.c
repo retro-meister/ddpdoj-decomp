@@ -29,7 +29,7 @@ extern u8 D_0026C630[];
 extern u8 D_0026C820[];
 extern u8 D_0026C920[];
 extern u8 D_0028DB18[];
-extern s16 D_0028E3A8;
+extern s16 g_slowdown_boss_allowed;
 extern s16 g_boss_hyper_wait_as_s16;
 extern u8 *g_boss_hp;
 extern s32 g_boss_hp_unit;
@@ -56,7 +56,7 @@ void func_001CA460(void) {
     reg_a2 = (u8 *)D_0026C270;
     reg_a3 = (u8 *)D_0026C030;
     reg_a4 = (u8 *)D_0026C630;
-    D_0028E3A8 = 0;
+    g_slowdown_boss_allowed = 0;
     boss_slots_init();
     boss_part_show_all();
     reg_d0.w = 0;

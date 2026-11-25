@@ -1308,7 +1308,7 @@ extern u8 D_00261C90[];
 extern u8 D_00261CD0[];
 extern u8 D_0026B640[];
 extern u8 D_0026B660[];
-extern u16 D_0028E3EC;
+extern u16 g_frame_mod2;
 
 void func_001A7520(void) {
     u32 save_d0;
@@ -1317,7 +1317,7 @@ void func_001A7520(void) {
     reg_d1.h[1] = 0x4FC0;
     reg_d3.h[0] = 0x610;
     reg_d5.w = 0xCCB;
-    if (D_0028E3EC != 0) goto next_0;
+    if (g_frame_mod2 != 0) goto next_0;
     reg_d5.w = 0xCD5;
 next_0:
     if (reg_d2.h[0] == 0) goto next_1;
@@ -1399,7 +1399,7 @@ void func_001A77A0(void) {
     goto next_2;
 next_1:
     reg_d2.w = 0xD78;
-    if (D_0028E3EC != 0) goto next_2;
+    if (g_frame_mod2 != 0) goto next_2;
     reg_d2.w = 0xD78;
 next_2:
     reg_d3.h[0] = 0x420;
@@ -1541,7 +1541,7 @@ s32 func_001AB940();
 s32 func_001AB9D0();
 extern u8 D_0028E288;
 extern u8 g_game_frame_ran;
-extern u16 D_0028E3B4;
+extern u16 g_select_screen_active;
 extern u16 g_p1_hyper_in_effect;
 extern u16 g_p1_hyper_level;
 extern s8 g_p1_hyper_combo_decay_as_s8;
@@ -1595,7 +1595,7 @@ block_9:
             g_p1_hit10_display_timer = 0x78;
             g_p1_chain_points_display_timer = 0x78;
         }
-        if (!(g_boss_present_b1 & 0x40) && (D_0028E3B4 == 0) && (D_0028EC4C == 0) && (g_game_frame_ran != 0)) {
+        if (!(g_boss_present_b1 & 0x40) && (g_select_screen_active == 0) && (D_0028EC4C == 0) && (g_game_frame_ran != 0)) {
             g_p1_hyper_time -= 2;
             if ((s16) g_p1_hyper_time < 0) {
                 func_001A7E90();
@@ -1683,7 +1683,7 @@ block_9:
             g_p2_hit10_display_timer = 0x78;
             g_p2_chain_points_display_timer = 0x78;
         }
-        if (!(g_boss_present_b1 & 0x40) && (D_0028E3B4 == 0) && (D_0028EC4C == 0) && (g_game_frame_ran != 0)) {
+        if (!(g_boss_present_b1 & 0x40) && (g_select_screen_active == 0) && (D_0028EC4C == 0) && (g_game_frame_ran != 0)) {
             g_p2_hyper_time -= 2;
             if ((s16) g_p2_hyper_time < 0) {
                 func_001A8070();

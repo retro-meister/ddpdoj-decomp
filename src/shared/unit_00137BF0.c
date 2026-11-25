@@ -70,7 +70,7 @@ s32 func_00171910();
 s32 text_palette_load();
 extern u8 death_D_0026EE20[];
 extern u32 death_D_0026FD90[];
-extern u16 D_0028E3BC;
+extern u16 g_attract_demo_stage;
 extern u16 g_attract_demo;
 extern u32 D_0028E7F8;
 extern u8 *D_0028E7FC;
@@ -117,7 +117,7 @@ void func_00137C90(void) {
     D_0028E824 = 0x10;
     D_0028E820 = 0x960;
     reg_a0 = (u8 *) death_D_0026FD90;
-    reg_d2.h[0] = D_0028E3BC;
+    reg_d2.h[0] = g_attract_demo_stage;
     reg_tmp.w = death_D_0026FD90[reg_d2.h[0]];
     reg_a0 = (u8 *) reg_tmp.w;
     reg_d7.h[0] = *(u16 *)reg_a0;
@@ -397,7 +397,7 @@ void func_00137E00(void) {
 #endif
 
 #ifdef DEATH_LABEL
-void func_00131440(void);
+void frame_counters_reset(void);
 extern u8 *D_0028E7FC;
 extern u16 D_0028E800;
 extern u16 D_0028E804;
@@ -423,7 +423,7 @@ void scripted_input_apply(void) {
             reg_d0.h[0] = 0;
         } else if (D_0028E80C == 1) {
             D_0028E80C = 2;
-            func_00131440();
+            frame_counters_reset();
             reg_d0.b[0] = 0;
         } else {
             reg_d0.b[0] = death_D_00291195;
@@ -454,7 +454,7 @@ void func_001719A0(void);
 void func_001719D0(void);
 extern u8 death_D_0026FDA0[];
 extern u8 g_game_frame_ran;
-extern u16 D_0028E3BC;
+extern u16 g_attract_demo_stage;
 extern u16 g_attract_demo;
 extern u16 g_game_frame;
 extern u16 D_0028E814;
@@ -530,7 +530,7 @@ void func_00137E00(void) {
         D_0028E804 = reg_d0.h[0];
         death_D_00291195_as_s8 = *(s8 *)(reg_a0 + 1);
         D_0028E800 += 2;
-        func_00131440();
+        frame_counters_reset();
         g_game_frame_ran = 0;
         func_001719A0();
         reg_d0.w = 0;
@@ -574,10 +574,10 @@ check_end:
     cond_flag = 1;
     return;
 finished:
-    D_0028E3BC += 1;
+    g_attract_demo_stage += 1;
     D_0028E80C = 0;
-    if ((s16) D_0028E3BC >= 3) {
-        D_0028E3BC = 0;
+    if ((s16) g_attract_demo_stage >= 3) {
+        g_attract_demo_stage = 0;
     }
     g_attract_demo = 0;
     cond_flag = 0;

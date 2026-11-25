@@ -100,7 +100,7 @@ s32 music_play_bgm1();
 s32 voice_select();
 s32 text_palette_load();
 s32 func_001B04B0();
-s32 func_0020ECE0();
+s32 slowdown_reset();
 s32 replay_header_clear();
 extern u8 D_0025F770[];
 extern u8 D_00260930[];
@@ -133,7 +133,7 @@ void func_001B1080(void) {
     replay_header_clear();
     g_replay_mode = 1;
     g_replay_buffer_state = 2;
-    func_0020ECE0();
+    slowdown_reset();
     D_0028DF14 = 0;
     D_0028DF0C = 0;
     reg_a0 = (u8 *)D_0029BE00;
@@ -509,7 +509,7 @@ void ship_select_task(void) {
 s32 func_001A33C0();
 s32 func_001A35A0();
 s32 replay_start_state_save();
-extern s16 D_0028E3B4_as_s16;
+extern s16 g_select_screen_active_as_s16;
 extern u16 g_p2_ship_type;
 extern u16 g_p1_ship_type;
 extern s16 g_player2[];
@@ -524,7 +524,7 @@ void func_001B1D70(void) {
     *(s8 *)(reg_a5 + 3) = 1;
     func_001B04B0();
     D_0028DF14 = 0;
-    D_0028E3B4_as_s16 = 1;
+    g_select_screen_active_as_s16 = 1;
     reg_a0 = (u8 *)D_0029BE00;
     reg_d0.h[0] = 0x6F;
     do {
@@ -655,7 +655,7 @@ void func_001B1D70(void) {
 }
 
 void func_001B21F0(void) {
-    D_0028E3B4_as_s16 = 0;
+    g_select_screen_active_as_s16 = 0;
     task_stop_self();
 }
 

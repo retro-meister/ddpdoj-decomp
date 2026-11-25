@@ -1,33 +1,33 @@
 #include "common.h"
 #include "entity.h"
 
-void func_0020EC90(void);
-void func_0020ECE0(void);
+void frame_layers_flush(void);
+void slowdown_reset(void);
 
 extern u8 D_0028E218;
-extern u8 D_0028E21C;
+extern u8 g_slowdown_frame_state;
 
 
-void func_0020EAA0(void) {
-    D_0028E21C = 0;
+void slowdown_init(void) {
+    g_slowdown_frame_state = 0;
     D_0028E218 = 0;
-    func_0020ECE0();
+    slowdown_reset();
 }
 
-extern u8 D_00269360[];
-extern u8 D_00269380[];
-extern u8 D_00269398[];
-extern u8 D_002693A8[];
+extern u8 slowdown_load_thresholds[];
+extern u8 slowdown_load_thresholds_loop2[];
+extern u8 slowdown_budget_limits[];
+extern u8 slowdown_budget_limits_loop2[];
 extern u16 g_player_laser_count;
 extern u16 g_player_shot_count;
 extern u8 g_paused;
 extern u8 D_0028E378;
-extern u16 D_0028E3A0_as_u16;
-extern u16 D_0028E3A4_as_u16;
-extern u16 D_0028E3A8_as_u16;
-extern u16 D_0028E3AC;
-extern u16 D_0028E3B0_as_u16;
-extern u16 D_0028E3E8;
+extern u16 g_slowdown_loop2_allowed_as_u16;
+extern u16 g_slowdown_off_as_u16;
+extern u16 g_slowdown_boss_allowed_as_u16;
+extern u16 g_slowdown_budget;
+extern u16 g_slowdown_forced_frames_as_u16;
+extern u16 g_frame_mod3;
 extern u16 g_p2_hyper_active;
 extern u16 g_p1_hyper_active;
 extern u16 D_0028E7E4;
@@ -36,30 +36,30 @@ extern u16 g_stage_x4;
 extern u16 g_stage_x2;
 extern u16 D_00299760[];
 extern u16 D_0029976A_as_u16_a[];
-void func_0020EAB0(void) {
+void slowdown_update(void) {
     u8 *tbl;
 
-    func_0020EC90();
+    frame_layers_flush();
     if (g_paused != 0) return;
-    D_0028E21C = 1;
-    if (D_0028E3E8 != 0) return;
-    if (D_0028E3B0_as_u16 != 0) {
-        D_0028E3B0_as_u16 -= 1;
+    g_slowdown_frame_state = 1;
+    if (g_frame_mod3 != 0) return;
+    if (g_slowdown_forced_frames_as_u16 != 0) {
+        g_slowdown_forced_frames_as_u16 -= 1;
         goto next_20;
     }
-    if (D_0028E3A4_as_u16 != 0) return;
+    if (g_slowdown_off_as_u16 != 0) return;
     reg_d0.h[0] = D_00299760[0];
     if (D_0028E7E4 == 0) goto next_5;
-    if (D_0028E3A8_as_u16 == 0) return;
+    if (g_slowdown_boss_allowed_as_u16 == 0) return;
 next_5:
     reg_d0.h[0] += g_player_shot_count;
     reg_d0.h[0] += g_player_laser_count;
     reg_d0.h[0] += g_player_laser_count;
     reg_d1.w = 0;
-    tbl = D_00269360;
+    tbl = slowdown_load_thresholds;
     if (g_loop == 0) goto next_8;
-    tbl = D_00269380;
-    if (D_0028E3A0_as_u16 == 0) return;
+    tbl = slowdown_load_thresholds_loop2;
+    if (g_slowdown_loop2_allowed_as_u16 == 0) return;
     reg_d1.h[0] += 0x28;
 next_8:
     reg_d2.h[0] = g_stage_x4;
@@ -74,22 +74,22 @@ next_10:
     reg_d1.h[0] += 0x1E;
 next_12:
     if (!((s32) reg_d1.h[0] > (s32) reg_d0.h[0])) goto next_15;
-    if (D_0028E3AC == 0) return;
-    D_0028E3AC -= 1;
+    if (g_slowdown_budget == 0) return;
+    g_slowdown_budget -= 1;
     goto next_20;
 next_15:
-    tbl = D_00269398;
+    tbl = slowdown_budget_limits;
     if (g_loop == 0) goto next_17;
-    tbl = D_002693A8;
+    tbl = slowdown_budget_limits_loop2;
 next_17:
     reg_d2.h[0] = (s32) g_stage_x2 >> 1;
     reg_d2.h[0] = ((s16 *) tbl)[reg_d2.h[0]];
-    if (!((s32) D_0028E3AC < (s32) reg_d2.h[0])) goto next_20;
-    D_0028E3AC += 2;
+    if (!((s32) g_slowdown_budget < (s32) reg_d2.h[0])) goto next_20;
+    g_slowdown_budget += 2;
 next_20:
-    D_0028E21C = 2;
+    g_slowdown_frame_state = 2;
     if (D_0028E378 == 0xFF) {
-        D_0028E21C = 0;
+        g_slowdown_frame_state = 0;
     }
 }
 
@@ -101,7 +101,7 @@ s32 func_001A2C80();                            /* extern */
 s32 func_001AB5C0();                            /* extern */
 s32 func_00206CB0();                            /* extern */
 
-void func_0020EC90(void) {
+void frame_layers_flush(void) {
     func_00130790();
     func_00130A60();
     func_001A2C80();
@@ -111,28 +111,28 @@ void func_0020EC90(void) {
     func_00206CB0();
 }
 
-extern s16 D_0028E3A0;
-extern s16 D_0028E3A4;
-extern s16 D_0028E3A8;
-extern s16 D_0028E3AC_as_s16;
-extern s16 D_0028E3B0;
+extern s16 g_slowdown_loop2_allowed;
+extern s16 g_slowdown_off;
+extern s16 g_slowdown_boss_allowed;
+extern s16 g_slowdown_budget_as_s16;
+extern s16 g_slowdown_forced_frames;
 
-void func_0020ECE0(void) {
-    D_0028E3B0 = 0;
-    D_0028E3AC_as_s16 = 0;
-    D_0028E3A8 = 0;
-    D_0028E3A4 = 0;
-    D_0028E3A0 = 0;
+void slowdown_reset(void) {
+    g_slowdown_forced_frames = 0;
+    g_slowdown_budget_as_s16 = 0;
+    g_slowdown_boss_allowed = 0;
+    g_slowdown_off = 0;
+    g_slowdown_loop2_allowed = 0;
 }
 
-void func_0020ED00(void) {
-    D_0028E3A4 = 0;
-    D_0028E3A8 = 1;
+void slowdown_allow_with_boss(void) {
+    g_slowdown_off = 0;
+    g_slowdown_boss_allowed = 1;
 }
 
-void func_0020ED10(void) {
-    D_0028E3A8 = 0;
-    D_0028E3A4 = 1;
+void slowdown_turn_off(void) {
+    g_slowdown_boss_allowed = 0;
+    g_slowdown_off = 1;
 }
 
 void func_0020ED20(void) {

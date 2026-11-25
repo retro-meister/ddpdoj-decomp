@@ -484,7 +484,7 @@ void func_001391B0(void) {
     func_00170A50(0, 0, 0);
 }
 
-s32 func_00131440();
+s32 frame_counters_reset();
 s32 func_00138110();
 s32 stage_load_step();
 s32 stage_map_show();
@@ -514,7 +514,7 @@ void func_001394A0(void) {
     if (D_0028EC58 == 0) {
         if ((g_loaded_stage == g_stage) && (D_0028DF1C >= 0)) {
             D_0028EC58 = 1;
-            func_00131440();
+            frame_counters_reset();
         }
     } else if (g_game_frame_ran != 0) {
         if (g_attract_demo == 0) {

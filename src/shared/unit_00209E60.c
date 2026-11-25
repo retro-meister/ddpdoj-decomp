@@ -309,8 +309,8 @@ next_3:
     reg_a6 = (u8 *)reg_save4_a6_as_s32;
 }
 
-extern u16 D_0028E3E0;
-extern u16 D_0028E3EC;
+extern u16 g_frame_mod8;
+extern u16 g_frame_mod2;
 extern u8 *D_0028E570;
 extern u16 D_0029A52A[];
 extern u8 g_sprite_sparks_buf[];
@@ -328,11 +328,11 @@ void func_0020A540(void) {
     reg_d7.h[0] = D_0029A528[0];
     if (reg_d7.h[0] == 0) return;
     reg_d7.h[0] -= 1;
-    reg_d6.h[0] = D_0028E3E0;
+    reg_d6.h[0] = g_frame_mod8;
     reg_d6.h[0] = -reg_d6.sh[0];
     reg_tmp.w = reg_d6.w;
     reg_d6.h[1] = reg_tmp.h[0];
-    reg_d6.h[0] = D_0028E3EC;
+    reg_d6.h[0] = g_frame_mod2;
     reg_d5.h[0] = 0x7000;
     reg_tmp.w = reg_d5.w;
     reg_d5.h[1] = reg_tmp.h[0];

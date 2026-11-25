@@ -4,7 +4,7 @@
 void func_001F0E70(void);
 
 s32 func_001EFF10();
-s32 func_0020ED00();
+s32 slowdown_allow_with_boss();
 extern u8 D_00262A50_as_u8_a[];
 
 void func_001F00D0(void) {
@@ -20,7 +20,7 @@ void func_001F00D0(void) {
         reg_tmp.h[0] = *(u16 *)(reg_a5 + 0x18);
         if ((u32) reg_tmp.w < 0x15000U) {
             reg_d0.b[0] -= 2;
-            func_0020ED00();
+            slowdown_allow_with_boss();
         }
         *(u8 *)(reg_a4 + 3) = (u8) reg_d0.b[0];
         reg_a1 = (u8 *)D_00262A50_as_u8_a;
@@ -60,7 +60,7 @@ void func_001F00D0(void) {
                 if ((s32) temp_v1 > 7) {
                     *(u8 *)(reg_a4 + 9) = (u8) (temp_v1 - 2);
                     if ((s32) *(u8 *)(reg_a4 + 9) < 8) {
-                        func_0020ED00();
+                        slowdown_allow_with_boss();
                     }
                 }
                 temp_v1_2 = *(u8 *)(reg_a4 + 4);
@@ -505,7 +505,7 @@ void func_001F11D0(void) {
 
 s32 sprite_draw_with_last_boss_keep();
 extern u8 D_00264A50[];
-extern u16 D_0028E3E8;
+extern u16 g_frame_mod3;
 
 void func_001F1270(void) {
     s32 sprite_draw_layer2_keep();
@@ -529,7 +529,7 @@ void func_001F1270(void) {
         reg_d3.h[0] = 0xC38;
         reg_d4.w = 0;
         reg_d4.b[0] = ENTITY(reg_a6)[7].sprite.b[0];
-        if ((ENTITY(reg_a6)[10].misc.b.draw_layer == 0) && (D_0028E3E8 != 0)) {
+        if ((ENTITY(reg_a6)[10].misc.b.draw_layer == 0) && (g_frame_mod3 != 0)) {
             sprite_draw_with_last_boss_keep();
         } else {
             sprite_draw_layer2_keep();
@@ -549,7 +549,7 @@ void func_001F1270(void) {
     reg_d3.h[0] = 0xC38;
     reg_d4.w = 0;
     reg_d4.b[0] = ENTITY(reg_a6)[7].sprite.b[0];
-    if ((ENTITY(reg_a6)[10].misc.b.draw_layer == 0) && (D_0028E3E8 != 0)) {
+    if ((ENTITY(reg_a6)[10].misc.b.draw_layer == 0) && (g_frame_mod3 != 0)) {
         sprite_draw_with_last_boss_keep();
         return;
     }
@@ -601,7 +601,7 @@ void func_001F1320(void) {
 }
 
 extern u8 D_00264AC0[];
-extern u16 D_0028E3EC;
+extern u16 g_frame_mod2;
 
 void func_001F1420(void) {
     s32 sprite_draw_layer2_keep();
@@ -610,7 +610,7 @@ void func_001F1420(void) {
     u16 x;
     u16 y;
 
-    if (D_0028E3EC == 0) {
+    if (g_frame_mod2 == 0) {
         return;
     }
     x = ENTITY(reg_a6)->y.h;
@@ -634,7 +634,7 @@ void func_001F1420(void) {
 #else
     u16 temp_a1;
 
-    if (D_0028E3EC != 0) {
+    if (g_frame_mod2 != 0) {
         reg_a0 = (u8 *)D_00264AC0;
         reg_a0 += ENTITY(reg_a6)[9].hp.h;
         reg_d2.h[1] = *(u16 *)reg_a0;

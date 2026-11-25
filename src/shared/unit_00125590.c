@@ -29,7 +29,7 @@ void bullet_spawn256(void);
 void bullet_type_setup_32(void);
 void bullet_type_setup_31(void);
 
-extern u16 D_0028E3EC;
+extern u16 g_frame_mod2;
 extern u16 g_bullet_count;
 
 void func_00125590(u16 arg0) {
@@ -37,7 +37,7 @@ void func_00125590(u16 arg0) {
     if (g_bullet_count >= 0x34) {
         reg_d0.w = 1;
         reg_d0.h[0] &= reg_d7.h[0];
-        arg0 = D_0028E3EC;
+        arg0 = g_frame_mod2;
         if (arg0 == reg_d0.h[0]) {
             return;
         }
@@ -64,7 +64,7 @@ void func_001255F0(void) {
     if (reg_d0.h[0] < 0x600) goto call;
     reg_d0.w = 1;
     reg_d0.h[0] &= reg_d7.h[0];
-    if (D_0028E3EC != reg_d0.h[0]) {
+    if (g_frame_mod2 != reg_d0.h[0]) {
 call:
         entity_draw_with_special_items();
         return;
@@ -165,11 +165,11 @@ void func_001258F0(void) {
     }
 }
 
-extern u16 D_0028E3E0;
+extern u16 g_frame_mod8;
 
 void func_00125930(void) {
     s32 func_00201D10();
-    if (D_0028E3E0 == 0) {
+    if (g_frame_mod8 == 0) {
         if (g_enemies_stopped == 0) {
             ENTITY(reg_a6)->move.b.speed += 1;
         }
@@ -278,7 +278,7 @@ void func_00125C80(void) {
         *(u16 *)(reg_a6 + 0x22) = reg_d3.h[0];
         ENTITY(reg_a6)->misc.b.user = 1;
     }
-    reg_d0.h[0] = D_0028E3E0;
+    reg_d0.h[0] = g_frame_mod8;
     if ((reg_d0.b[0] &= ENTITY(reg_a6)->move.b.speed) == 0) {
         reg_tmp.h[1] = *(u16 *)(reg_a6 + 0x24);
         reg_tmp.h[0] = *(u16 *)(reg_a6 + 0x26);
@@ -1483,7 +1483,7 @@ void func_00128130(void) {
     u32 sd6;
     u8 t;
 
-    if ((reg_d1.w & 0x2000) && (D_0028E3EC != 0)) {
+    if ((reg_d1.w & 0x2000) && (g_frame_mod2 != 0)) {
         *(u8 *)(reg_a6 + 0x1C) ^= 0x10;
     }
     reg_d0.h[0] = *(u16 *)(reg_a6 + 0x1A);

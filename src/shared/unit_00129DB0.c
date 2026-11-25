@@ -91,7 +91,7 @@ extern u8 bullet_type_records_as_u8_a[];
 extern u8 D_0024F0F0[];
 extern u8 D_00262570[];
 extern u32 D_0028DEA4;
-extern u16 D_0028E3EC;
+extern u16 g_frame_mod2;
 extern u16 g_boss_present_as_u16;
 extern u16 g_enemy_signal_2;
 #ifdef DEATH_LABEL
@@ -979,7 +979,7 @@ L_clr_block_143:
                                 return;
                             case 20:                /* switch 1 */
                                 reg_a6 += 0xA;
-                                if (D_0028E3EC != 0) {
+                                if (g_frame_mod2 != 0) {
                                     reg_tmp.h[1] = ENTITY(reg_a6)->flags.h;
                                     reg_tmp.h[0] = ENTITY(reg_a6)->y.h;
                                     reg_tmp.w += 1;
@@ -1854,7 +1854,7 @@ block_315:
 #endif
                             case 2:                 /* switch 1 */
                             case 21:                /* switch 1 */
-                                if (D_0028E3EC != 0) {
+                                if (g_frame_mod2 != 0) {
                                     reg_a0 = reg_a6 + 0x12;
                                     reg_tmp.h[1] = *(u16 *)reg_a0;
                                     reg_a0 += 2;

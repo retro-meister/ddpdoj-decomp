@@ -146,7 +146,7 @@ s32 aim_at_player();
 s32 direction_turn_toward();
 extern u16 D_0025B130[];
 extern u16 D_0025B140[];
-extern u16 D_0028E3EC;
+extern u16 g_frame_mod2;
 extern u16 g_enemies_stopped;
 extern u16 g_rank_3_16;
 
@@ -220,7 +220,7 @@ block_a:
     reg_a0 = reg_a6;
     enemy_hitbox_debug_draw();
     if (!(*(u8 *)reg_a6 & 0x40)) goto block_b;
-    if (D_0028E3EC == 0) goto block_rts;
+    if (g_frame_mod2 == 0) goto block_rts;
     reg_d1.h[1] = *(u16 *)(reg_a6 + 2);
     reg_d1.h[0] = *(u16 *)(reg_a6 + 4);
     reg_d2.w = 0;
@@ -672,7 +672,7 @@ block_a:
     reg_a0 = reg_a6;
     enemy_hitbox_debug_draw();
     if (!(*(u8 *)reg_a6 & 0x40)) goto block_b;
-    if (D_0028E3EC == 0) goto block_rts;
+    if (g_frame_mod2 == 0) goto block_rts;
     reg_d1.h[1] = *(u16 *)(reg_a6 + 2);
     reg_d1.h[0] = *(u16 *)(reg_a6 + 4);
     reg_d2.w = 0;

@@ -866,8 +866,8 @@ extern u8 D_00251C20[];
 extern u8 D_00251D70[];
 extern u8 D_00251DF0[];
 extern u8 D_00260F70[];
-extern u16 D_0028E3E0;
-extern u16 D_0028E3EC;
+extern u16 g_frame_mod8;
+extern u16 g_frame_mod2;
 
 void func_001B0950(void) {
     s32 sprite_palette_load();
@@ -919,7 +919,7 @@ void func_001B0950(void) {
         reg_d4.h[0] = (*(u16 *)(reg_a6 + (0xE)));
         reg_d6.w = 0x80008000;
         sprite_draw_layer5_zoom_keep();
-        if (D_0028E3E0 != 0) {
+        if (g_frame_mod8 != 0) {
             reg_a1 = (u8 *)D_00251DF0;
             reg_d0.h[0] = 0x1E;
             reg_d6.w = 0x80005000;
@@ -947,7 +947,7 @@ skip_3:
         if (ENTITY(reg_a6)->move.h == 0x280) goto skip_4;
         ENTITY(reg_a6)->move.h += 8;
 skip_4:
-        if (D_0028E3EC != 0) {
+        if (g_frame_mod2 != 0) {
             reg_a0 = (u8 *)D_00251D70;
             reg_d0.h[0] = 0x1E;
             reg_d0.h[0] &= g_game_frame;

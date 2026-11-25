@@ -148,7 +148,7 @@ block_3:
 }
 
 s32 func_0012FBD0();                            /* extern */
-s32 func_0020ECE0();                            /* extern */
+s32 slowdown_reset();                            /* extern */
 extern s8 D_0028E7B4_as_s8;
 extern s16 D_0028E7B8_as_s16;
 
@@ -159,7 +159,7 @@ void func_00168E30(void) {
     D_0028E7B4_as_s8 = 0;
     D_0028E7B8_as_s16 = 0;
     func_0012FBD0();
-    func_0020ECE0();
+    slowdown_reset();
 }
 
 s32 func_0015BBD0();                            /* extern */
@@ -204,7 +204,7 @@ extern u8 g_cd_async_busy_as_u8;
 void func_00168EF0(void) {
     s32 text_layer_clear();
     s32 text_palette_load();
-    s32 func_0020EAA0();
+    s32 slowdown_init();
     if (*(u8 *)(reg_a5 + 2) == 0) {
         *(u8 *)(reg_a5 + 2) = 1U;
         text_layer_clear();
@@ -212,7 +212,7 @@ void func_00168EF0(void) {
         reg_a0 = test_palette_0;
         text_palette_load();
         D_0028E304 = 0;
-        func_0020EAA0();
+        slowdown_init();
         g_slowdown_timer = 0;
         D_0028E294 = 0;
         func_001A3D30();
@@ -393,12 +393,12 @@ void func_00169140(void) {
     void func_0013B190(void);
     void func_0015BA20(void);
     void func_0015BD00(void);
-    void func_0020EAA0(void);
+    void slowdown_init(void);
     if (*(u8 *)(reg_a5 + 2) == 0) {
         *(u8 *)(reg_a5 + 2) = 1;
         func_0013B190();
         func_0015BA20();
-        func_0020EAA0();
+        slowdown_init();
         g_slowdown_timer_as_s8 = 0;
         D_0028E288_as_s8 = 0;
         D_0028E284_as_s8 = 0;

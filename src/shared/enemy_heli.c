@@ -95,7 +95,7 @@ s32 enemy_hitbox_debug_draw(void);
 s32 sprite_draw_layer4(void);
 s32 sprite_draw_layer5(void);
 extern u8 D_00257880[];
-extern u16 D_0028E3EC;
+extern u16 g_frame_mod2;
 extern u16 g_loop;
 
 void func_001507E0(void) {
@@ -103,7 +103,7 @@ void func_001507E0(void) {
 
     reg_a0 = reg_a6;
     enemy_hitbox_debug_draw();
-    if (D_0028E3EC != 0) {
+    if (g_frame_mod2 != 0) {
         reg_d1.h[0] = ENTITY(reg_a6)->y.h;
         reg_d1.h[0] += 0x7FFF + 0x7901;
         reg_tmp1.h[0] = reg_d1.h[0];
@@ -477,7 +477,7 @@ void func_00151610(void) {
 }
 
 s32 direction_turn_toward();
-extern u16 D_0028E3E4;
+extern u16 g_frame_mod4;
 
 void func_00151880(void) {
     func_00150510(8);
@@ -513,7 +513,7 @@ next_0:
     *(u8 *)(reg_a5 + 0x1E) = 4;
 next_1:
     reg_d1.b[0] = *(u8 *)(reg_a5 + 0x22);
-    if (D_0028E3E4 != 0) goto next_2;
+    if (g_frame_mod4 != 0) goto next_2;
     func_00202180();
     reg_d0.b[0] = *(u8 *)(reg_a5 + 0x22);
     direction_turn_toward();
@@ -662,7 +662,7 @@ void func_00151EC0(void) {
     *(u8 *)(reg_a5 + 0x1B) = 0x30;
 next_1:
     reg_d1.b[0] = *(u8 *)(reg_a5 + 0x22);
-    if (D_0028E3E4 != 0) goto next_2;
+    if (g_frame_mod4 != 0) goto next_2;
     func_00202180();
     reg_d0.b[0] = *(u8 *)(reg_a5 + 0x22);
     direction_turn_toward();
@@ -852,7 +852,7 @@ void func_00152480(void) {
             }
         }
         reg_d1.b[0] = *(u8 *)(reg_a5 + 0x22);
-        if (D_0028E3E4 != 0) {
+        if (g_frame_mod4 != 0) {
             func_00150F70();
             return;
         }
@@ -940,7 +940,7 @@ void func_00152910(void) {
             }
         }
         reg_d1.b[0] = *(u8 *)(reg_a5 + 0x22);
-        if (D_0028E3E4 != 0) {
+        if (g_frame_mod4 != 0) {
             func_00150F70();
             return;
         }
@@ -1073,7 +1073,7 @@ void func_00152DA0(void) {
                 }
             }
             reg_d1.b[0] = *(u8 *)(reg_a5 + 0x22);
-            if (D_0028E3E4 != 0) {
+            if (g_frame_mod4 != 0) {
                 func_00150F70();
                 return;
             }

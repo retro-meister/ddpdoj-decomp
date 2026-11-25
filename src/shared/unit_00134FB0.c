@@ -1334,7 +1334,7 @@ extern u8 D_0024F460[];
 extern u8 D_0024F480[];
 extern u8 D_0024F4A0[];
 extern u8 D_002BC7C0[];
-extern u16 D_0028E3EC;
+extern u16 g_frame_mod2;
 extern s8 g_boss_present_b1_as_s8;
 extern u8 D_0029BC00[];
 
@@ -1374,7 +1374,7 @@ loop_40:
     if (0 > (s8)reg_d1.b[0]) goto block_clr;
     if (0 > g_boss_present_b1_as_s8) goto block_clr;
 next_50:
-    if (D_0028E3EC == 0) goto next_90;
+    if (g_frame_mod2 == 0) goto next_90;
     if (0 > (s8)reg_d2.b[0]) goto next_60;
     *(u16 *)(reg_a6 + 0x22) -= 1;
     if (*(u16 *)(reg_a6 + 0x22) != 0) goto next_60;

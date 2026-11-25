@@ -81,7 +81,7 @@ s32 direction_between();
 s32 direction_turn_toward();
 s32 func_00202730();
 extern u16 D_0025B040[];
-extern u16 D_0028E3EC;
+extern u16 g_frame_mod2;
 extern s16 *reg_save_atmp;
 extern u16 g_enemy_signal_1;
 extern u16 g_bullets_blocked;
@@ -234,7 +234,7 @@ next_3:
             entity_draw_layer5();
             reg_a0 = (u8 *)(reg_a6);
             enemy_hitbox_debug_draw();
-            switch (D_0028E3EC) {
+            switch (g_frame_mod2) {
             case 0:
                 return;
             default:

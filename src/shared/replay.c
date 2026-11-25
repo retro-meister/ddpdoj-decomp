@@ -878,11 +878,11 @@ extern u8 D_0028E2EC;
 extern u8 D_0028E304;
 extern u8 g_setting_ship_stock;
 extern u8 g_setting_extend;
-extern u16 D_0028E3DC;
-extern u16 D_0028E3E0;
-extern u16 D_0028E3E4;
-extern u16 D_0028E3E8;
-extern u16 D_0028E3EC;
+extern u16 g_frame_mod16;
+extern u16 g_frame_mod8;
+extern u16 g_frame_mod4;
+extern u16 g_frame_mod3;
+extern u16 g_frame_mod2;
 extern u16 g_game_frame;
 extern u16 g_score_task_active;
 extern u16 g_score_panel_intro;
@@ -1042,11 +1042,11 @@ void replay_playback_start(void) {
             }
             if (g_scroll_line == 0x38) {
                 g_game_frame = 0x11A;
-                D_0028E3E4 = 2;
-                D_0028E3E0 = 2;
-                D_0028E3EC = 0;
-                D_0028E3DC = 0xA;
-                D_0028E3E8 = 0;
+                g_frame_mod4 = 2;
+                g_frame_mod8 = 2;
+                g_frame_mod2 = 0;
+                g_frame_mod16 = 0xA;
+                g_frame_mod3 = 0;
                 base = D_006C91A0[0] - 0x11A;
                 g_play_time = D_006C8E88[0] - base + 1;
             }
@@ -1177,7 +1177,7 @@ void replay_run_begin(void) {
     reg_a6 = save_a6;
 }
 
-extern void func_00131440(void);
+extern void frame_counters_reset(void);
 extern s8 g_pad_input_locked_as_s8;
 extern u8 D_0028E2A8;
 extern u16 D_0028E2AC;
@@ -1258,7 +1258,7 @@ void replay_run_start(void) {
         }
         break;
     case 18:
-        func_00131440();
+        frame_counters_reset();
         if (g_game_frame_ran != 0) {
             g_pad_input_locked_as_s8 = 0;
             step++;

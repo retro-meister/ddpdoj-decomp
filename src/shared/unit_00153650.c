@@ -2274,7 +2274,7 @@ void func_00158690(void) {
 
 extern u8 D_002584B0[];
 extern u8 D_002584E0[];
-extern s16 D_0028E3A8;
+extern s16 g_slowdown_boss_allowed;
 
 void func_001586A0() {
     s32 enemy_set_task_work();
@@ -2291,13 +2291,13 @@ void func_001586A0() {
     reg_d0.w = 0x11;
     enemy_set_task_work();
     D_00299768[0] = 1;
-    D_0028E3A8 = 1;
+    g_slowdown_boss_allowed = 1;
 }
 
 s32 sprite_draw_layer4();
 s32 func_00201710();
 extern u8 D_00258520[];
-extern u16 D_0028E3A8_as_u16;
+extern u16 g_slowdown_boss_allowed_as_u16;
 
 void func_00158720(void) {
     s32 enemy_remove();
@@ -2335,7 +2335,7 @@ void func_00158720(void) {
             reg_d0.w = 0x234;
             score_add();
             var_a0 = (u8 *)((void *)0x8000);
-            D_0028E3A8_as_u16 = 0;
+            g_slowdown_boss_allowed_as_u16 = 0;
             ENTITY(reg_a6)->flags.h = 0x8000;
             *(u16 *)(reg_a5 + 0x2E) = 1U;
             goto block_5;
@@ -2382,7 +2382,7 @@ block_5:
             ENTITY(reg_a6)->y.h = (u16) (temp_a1 + reg_d0.h[0]);
             temp_a0_3 = ENTITY(reg_a6)->y.h;
             if ((s32) temp_a0_3 >= 0x9800) {
-                D_0028E3A8_as_u16 = 0;
+                g_slowdown_boss_allowed_as_u16 = 0;
                 enemy_remove();
                 return;
             }
@@ -3629,7 +3629,7 @@ s32 func_0016D040();
 s32 func_001A9130();
 s32 func_002031E0();
 s32 wreck_spawn();
-extern u16 D_0028E3EC;
+extern u16 g_frame_mod2;
 extern u16 g_rank_10_16;
 
 void func_0015B210(void) {
@@ -3691,7 +3691,7 @@ block_obj:
     reg_a0 = reg_a6;
     enemy_hitbox_debug_draw();
     if (*(s8 *)(reg_a5 + 0x21) >= 0) goto block_turret;
-    if (D_0028E3EC == 0) return;
+    if (g_frame_mod2 == 0) return;
     reg_d1.h[1] = ENTITY(reg_a6)->y.h;
     reg_d1.h[0] = ENTITY(reg_a6)->x.h;
     reg_d2.w = 0;

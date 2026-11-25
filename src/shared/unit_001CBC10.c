@@ -185,7 +185,7 @@ extern u16 D_00263270[];
 extern u16 D_00263280[];
 extern u16 D_00263290[];
 extern u8 g_slowdown_timer;
-extern u16 D_0028E3EC;
+extern u16 g_frame_mod2;
 extern u16 g_game_frame;
 extern u16 g_enemy_signal_0;
 extern u16 g_bullets_blocked;
@@ -546,7 +546,7 @@ next_510:
     reg_call_target = (Fn) reg_a3;
     reg_call_target();
     if (g_loop != 0) goto next_540;
-    if (D_0028E3EC == 0) goto next_540;
+    if (g_frame_mod2 == 0) goto next_540;
     reg_d1.h[1] = ENTITY(reg_a6)->y.h;
     reg_d1.h[0] = ENTITY(reg_a6)->x.h;
     reg_d1.h[1] += 0xD600;

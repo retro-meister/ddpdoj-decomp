@@ -24,7 +24,7 @@ void func_001F3950(void);
 void func_001F39C0(void);
 
 s32 boss_animation_start();                            /* extern */
-s32 func_0020ED10();                            /* extern */
+s32 slowdown_turn_off();                            /* extern */
 extern u16 D_0028E2E8;
 
 #ifdef DEATH_LABEL
@@ -42,7 +42,7 @@ void func_001F14C0(void) {
     boss_animation_start();
     reg_d0.w = 0;
     boss_movement_start();
-    func_0020ED10();
+    slowdown_turn_off();
     *(s16 *)(reg_a4 + 2) = 0x260;
     *(s16 *)(reg_a4 + 4) = 0x160;
     if (D_0028E2E8 == 0) {
@@ -345,7 +345,7 @@ s32 boss_part_hide();
 s32 func_001F5630();
 s32 func_001F56F0();
 s32 func_001F57C0();
-s32 func_0020ED10();
+s32 slowdown_turn_off();
 
 void func_001F1E20() {
     s32 boss_movement_start();
@@ -395,7 +395,7 @@ void func_001F1E20() {
             func_001F5630();
             func_001F56F0();
             func_001F57C0();
-            func_0020ED10();
+            slowdown_turn_off();
         }
     } else {
         *(u16 *)(reg_a4 + 4) -= 1;
@@ -677,7 +677,7 @@ void func_001F2640() {
             D_0029976A_as_u16_a[0] = 1;
             D_0029976C[0] = 1;
             D_0029976E[0] = 1;
-            func_0020ED10();
+            slowdown_turn_off();
             music_play_bgm9();
         }
     } else {

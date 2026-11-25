@@ -824,7 +824,7 @@ void death_func_0021CE10(void) {
     } while ((s16)(--reg_d0.h[0]) >= 0);
 }
 
-s32 func_0020ED00();
+s32 slowdown_allow_with_boss();
 extern u8 D_00262A50_as_u8_a[];
 
 void death_func_0021CE90(void) {
@@ -840,7 +840,7 @@ void death_func_0021CE90(void) {
         reg_tmp.h[0] = *(u16 *)(reg_a5 + 0x18);
         if ((u32) reg_tmp.w < 0xE000U) {
             reg_d0.b[0] -= 2;
-            func_0020ED00();
+            slowdown_allow_with_boss();
         }
         *(u8 *)(reg_a4 + 3) = (u8) reg_d0.b[0];
         reg_a1 = (u8 *)D_00262A50_as_u8_a;
@@ -880,7 +880,7 @@ void death_func_0021CE90(void) {
                 if ((s32) temp_v1 > 7) {
                     *(u8 *)(reg_a4 + 9) = (u8) (temp_v1 - 2);
                     if ((s32) *(u8 *)(reg_a4 + 9) < 8) {
-                        func_0020ED00();
+                        slowdown_allow_with_boss();
                     }
                 }
                 temp_v1_2 = *(u8 *)(reg_a4 + 4);

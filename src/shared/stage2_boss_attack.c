@@ -1709,7 +1709,7 @@ s32 bullet_fire256_double();
 s32 bullet_fire256_2way();
 s32 rng_next_word();
 s32 func_00202730();
-extern u16 D_0028E3EC;
+extern u16 g_frame_mod2;
 
 void func_001C3C80(void) {
     u8 t;
@@ -1725,7 +1725,7 @@ void func_001C3C80(void) {
     reg_tmp.h[0] = *(u16 *)(reg_a5 + 0x18);
     if (!((s32) reg_tmp.w < 0x2F99)) goto loop_1;
     reg_d6.w = 3;
-    if (D_0028E3EC != 0) goto loop_1;
+    if (g_frame_mod2 != 0) goto loop_1;
     reg_d7.w = 1;
 loop_1:
     func_00202730();

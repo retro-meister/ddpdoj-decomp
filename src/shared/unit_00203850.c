@@ -240,21 +240,21 @@ void func_002039B0(void) {
 
 extern u8 D_0028C148[];
 extern u8 D_0028C868_as_u8_a[];
-extern u16 D_0028E3E4;
-extern u16 D_0028E3EC;
+extern u16 g_frame_mod4;
+extern u16 g_frame_mod2;
 
 void func_00203F50(void) {
     u32 i;
 
     if (*(u16 *)(reg_a6 + 0x54) == 0) goto block_rts;
-    if (D_0028E3EC == 0) goto block_rts;
+    if (g_frame_mod2 == 0) goto block_rts;
     reg_a0 = (u8 *)D_0028C148;
     reg_a1 = (u8 *)D_0028C868_as_u8_a;
     i = reg_d5.h[0];
     reg_tmp.h[1] = (i != 0) ? *(u16 *)(reg_a0 + ((s16) i & ~1)) : *(u16 *)reg_a0;
     reg_tmp.h[0] = (((u16) i + 2) != 0) ? *(u16 *)(reg_a0 + ((s16) ((u16) i + 2) & ~1)) : *(u16 *)reg_a0;
     reg_a0 = (u8 *) reg_tmp.w;
-    reg_d0.h[0] = D_0028E3E4;
+    reg_d0.h[0] = g_frame_mod4;
     reg_d0.h[0] *= 2;
     reg_d0.h[0] &= 4;
     reg_d2.h[1] = (reg_d0.h[0] != 0) ? *(u16 *)(reg_a0 + ((s16) reg_d0.h[0] & ~1)) : *(u16 *)reg_a0;
@@ -904,7 +904,7 @@ block_c:
 block_d:
     reg_d4.h[0] = 0x12;
     sprite_draw_keep();
-    if (D_0028E3EC == 0) goto next_4;
+    if (g_frame_mod2 == 0) goto next_4;
     reg_d1.h[0] = *(u16 *)reg_a0;
     reg_a0 += 2;
     reg_d1.h[0] += 0xE600 & 0xFFFF;
@@ -1066,7 +1066,7 @@ next_1:
     reg_a0 += 2;
     reg_d1.h[0] = *(u16 *)reg_a0;
     reg_a0 += 2;
-    if (D_0028E3EC == 0) goto next_3;
+    if (g_frame_mod2 == 0) goto next_3;
     reg_d2.w = 0xA9D;
     if (ENTITY(reg_a6)->flags.b[0] != 4) goto next_4;
     reg_d2.w = 0xA9E;

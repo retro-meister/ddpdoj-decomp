@@ -75,7 +75,7 @@ s32 vibration_start_pad2();
 extern u8 D_00241780[];
 extern u8 D_00241810[];
 extern u8 D_00241870[];
-extern u16 D_0028E3EC;
+extern u16 g_frame_mod2;
 extern u16 g_side_scroll_step[];
 extern u8 D_0029CEA0_as_u8_a[];
 
@@ -250,7 +250,7 @@ block_c:
     reg_d1.h[0] *= 0xFFFF;
 next_3:
     ENTITY(reg_a6)->x.h += reg_d1.h[0];
-    if (D_0028E3EC != 0) goto block_rts;
+    if (g_frame_mod2 != 0) goto block_rts;
     reg_d0.h[0] = *(u16 *)(reg_a6 + 0x24);
     reg_tmp.h[1] = ENTITY(reg_a6)->misc.h;
     reg_tmp.h[0] = *(u16 *)(reg_a6 + 0x20);

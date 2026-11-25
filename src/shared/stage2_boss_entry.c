@@ -462,13 +462,13 @@ s32 boss_animation_stop(s32, s32, s32, s32);
 s32 func_0013F3C0();
 s32 func_001CBCD0();
 s32 func_00203460();
-s32 func_0020ED10();
+s32 slowdown_turn_off();
 extern u8 g_boss_present_b1;
 
 void func_001CB6B0(void) {
     g_boss_present_b1 |= 0x40;
     g_boss_present_b1 |= 0x80;
-    func_0020ED10();
+    slowdown_turn_off();
     func_0013F3C0();
     func_00203460();
     func_001CBCD0();

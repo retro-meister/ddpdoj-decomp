@@ -238,13 +238,13 @@ s32 func_0013F3C0();                            /* extern */
 s32 music_stop();                            /* extern */
 s32 func_002016D0();                            /* extern */
 s32 func_00203460();                            /* extern */
-s32 func_0020ED10();                            /* extern */
+s32 slowdown_turn_off();                            /* extern */
 extern u8 g_boss_present_b1;
 
 void func_001F5520(void) {
     s32 boss_phase_start(s32, s32, s32, s32);
     music_stop();
-    func_0020ED10();
+    slowdown_turn_off();
     if (D_0028E2E8 == 0) {
         g_boss_present_b1 |= 0x40;
         g_boss_present_b1 |= 0x80;
@@ -479,12 +479,12 @@ next_9:
 s32 boss_part_hide();
 s32 func_0013F3C0();
 s32 music_stop();
-s32 func_0020ED10();
+s32 slowdown_turn_off();
 
 void func_001F5BB0(void) {
     s32 boss_phase_start();
     music_stop();
-    func_0020ED10();
+    slowdown_turn_off();
     *(u16 *)(reg_a5 + 0x1A) = 0x6270;
     func_0013F3C0();
     func_002016D0();

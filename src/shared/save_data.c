@@ -3049,7 +3049,7 @@ void func_0022C1E0() {
 }
 
 
-s32 func_00131440();
+s32 frame_counters_reset();
 s32 func_00135110();
 s32 func_001719A0();
 s32 func_001719B0();
@@ -3157,7 +3157,7 @@ void func_0022C1F0() {
         }
         break;
     case MAIN_OR_DEATH_LABEL(18, 19):
-        func_00131440();
+        frame_counters_reset();
         if (g_game_frame_ran != 0) {
             g_pad_input_locked = 0;
             D_00684C94[0] += 1;

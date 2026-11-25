@@ -50,7 +50,7 @@ s32 func_0020A540();
 s32 func_0020BD10();
 s32 func_0020BD60();
 s32 func_00211670();
-extern u16 D_0028E3EC;
+extern u16 g_frame_mod2;
 extern u16 g_p2_hyper_level;
 extern u16 g_p1_hyper_level;
 extern u16 g_p2_hyper_active;
@@ -118,7 +118,7 @@ void func_00139B80(void) {
             t1 = g_p1_hyper_level;
             reg_d1.h[0] = t2;
             reg_d2.h[0] = t1;
-            if (D_0028E3EC == 0) {
+            if (g_frame_mod2 == 0) {
                 func_0020BD60();
                 return;
             }
@@ -136,7 +136,7 @@ void func_00139B80(void) {
             t1 = g_p2_hyper_level;
             reg_d1.h[0] = t2;
             reg_d2.h[0] = t1;
-            if (D_0028E3EC != 0) {
+            if (g_frame_mod2 != 0) {
                 func_0020BD60();
                 return;
             }
@@ -149,7 +149,7 @@ next_1:
             }
         }
     } else {
-        if (D_0028E3EC == 0) {
+        if (g_frame_mod2 == 0) {
             reg_a0 = (u8 *)D_0029E390;
             reg_a1 = (u8 *)D_0029D770;
             reg_a2 = (u8 *)D_0029E2A0;

@@ -123,7 +123,7 @@ s32 direction256_between();
 extern u16 D_002596F0[];
 extern u16 D_00259870[];
 extern u16 D_00259970[];
-extern u16 D_0028E3EC;
+extern u16 g_frame_mod2;
 extern u16 g_bullets_blocked;
 extern u16 g_enemies_stopped;
 extern u16 g_damage_blink_counter;
@@ -379,7 +379,7 @@ next_500:
     reg_d2.h[0] = *(u16 *)(reg_a5 + 0x30);
     sprite_draw_layer5();
     if (g_loop != 0) goto next_520;
-    if (D_0028E3EC == 0) goto next_520;
+    if (g_frame_mod2 == 0) goto next_520;
     reg_d1.h[1] = ENTITY(reg_a6)->y.h;
     reg_d1.h[0] = ENTITY(reg_a6)->x.h;
     reg_d1.h[1] += 0xD600;
@@ -857,7 +857,7 @@ block_join:
             reg_d2.h[1] = ENTITY(reg_a6)[1].sprite.h;
             reg_d2.h[0] = ENTITY(reg_a6)[1].look.h;
             sprite_draw_layer5();
-            if ((g_loop == 0) && (D_0028E3EC != 0)) {
+            if ((g_loop == 0) && (g_frame_mod2 != 0)) {
                 reg_d1.h[1] = ENTITY(reg_a6)->y.h;
                 reg_d1.h[0] = ENTITY(reg_a6)->x.h;
                 reg_d1.h[1] += 0xD400;
@@ -1349,7 +1349,7 @@ block_42:
             reg_d3.h[0] = 0x620;
             reg_d4.h[0] = ENTITY(reg_a6)->attr.h;
             sprite_draw_layer5();
-            if ((g_loop == 0) && (D_0028E3EC != 0)) {
+            if ((g_loop == 0) && (g_frame_mod2 != 0)) {
                 reg_d1.h[1] = ENTITY(reg_a6)->y.h;
                 reg_d1.h[0] = ENTITY(reg_a6)->x.h;
                 reg_d1.h[1] += 0xE200;
@@ -1632,7 +1632,7 @@ next_500:
     sprite_draw_layer5();
     if (g_loop != 0) goto next_520;
     if (g_stage == 2) goto next_520;
-    if (D_0028E3EC == 0) goto next_520;
+    if (g_frame_mod2 == 0) goto next_520;
     reg_d1.h[1] = ENTITY(reg_a6)->y.h;
     reg_d1.h[0] = ENTITY(reg_a6)->x.h;
     reg_d1.h[0] += 0x900;
@@ -2405,7 +2405,7 @@ block_23:
             reg_d3.h[0] = 0x620;
             reg_d4.h[0] = ENTITY(reg_a6)->attr.h;
             sprite_draw_layer5();
-            if ((g_loop == 0) && (D_0028E3EC != 0) && (g_stage != 2)) {
+            if ((g_loop == 0) && (g_frame_mod2 != 0) && (g_stage != 2)) {
                 reg_d1.h[1] = ENTITY(reg_a6)->y.h;
                 reg_d1.h[0] = ENTITY(reg_a6)->x.h;
                 reg_d1.h[1] += 0xE400;
@@ -3653,7 +3653,7 @@ next_120:
 block_base:
     func_00170A60();
     func_00164C30();
-    if (D_0028E3EC == 0) goto next_150;
+    if (g_frame_mod2 == 0) goto next_150;
     reg_d1.h[1] = ENTITY(reg_a6)->y.h;
     reg_d1.h[0] = ENTITY(reg_a6)->x.h;
     reg_d1.h[1] += 0x100;
@@ -4551,7 +4551,7 @@ block_58:
             reg_d3.h[0] = 0x648;
             reg_d4.h[0] = ENTITY(reg_a6)->attr.h;
             sprite_draw_layer5();
-            if ((g_loop == 0) && (D_0028E3EC != 0) && ((g_stage != 1) || ((s32) g_scroll_line < 0x16C))) {
+            if ((g_loop == 0) && (g_frame_mod2 != 0) && ((g_stage != 1) || ((s32) g_scroll_line < 0x16C))) {
                 reg_d1.h[1] = ENTITY(reg_a6)->y.h;
                 reg_d1.h[0] = ENTITY(reg_a6)->x.h;
                 reg_d1.h[1] += 0x7FFF + 0x5801;

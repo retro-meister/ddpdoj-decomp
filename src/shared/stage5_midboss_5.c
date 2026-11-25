@@ -751,7 +751,7 @@ void func_001FE2F0(void) {
 s32 bullet_fire_fast();
 s32 rng_next_unsigned();
 extern u8 D_00259870_as_u8_a[];
-extern u16 D_0028E3DC;
+extern u16 g_frame_mod16;
 extern s16 g_player2[];
 extern u16 D_0029F1F2[];
 extern s16 g_player1[];
@@ -770,7 +770,7 @@ void func_001FE330(void) {
             ENTITY(reg_a6)[3].sprite.h = 0U;
         }
         if (ENTITY(reg_a6)[3].sprite.h == 0) {
-            if (D_0028E3DC == 0) {
+            if (g_frame_mod16 == 0) {
                 reg_d0.w = 0;
                 if (g_player1[0] < 0) {
                     reg_d0.h[0] = D_0029F262[0];
@@ -1361,7 +1361,7 @@ s32 sprite_draw_layer5_zoom();
 s32 sprite_draw_with_bullets_zoom();
 s32 entity_check_bounds();
 extern u8 D_00266380[];
-extern u16 D_0028E3E4;
+extern u16 g_frame_mod4;
 
 void func_001FF670(void) {
     s32 enemy_remove();
@@ -1429,7 +1429,7 @@ next_1:
         t3 = ENTITY(reg_a6)->attr.b.palette;
         reg_d4.b[0] = t3;
         reg_d6.w = 0xF800F800;
-        if (D_0028E3E4 != 0) {
+        if (g_frame_mod4 != 0) {
             sprite_draw_with_bullets_zoom();
         } else {
             sprite_draw_layer5_zoom();
@@ -1603,7 +1603,7 @@ next_1:
         t3 = ENTITY(reg_a6)->attr.b.palette;
         reg_d4.b[0] = t3;
         reg_d6.w = 0xF800F800;
-        if (D_0028E3E4 != 0) {
+        if (g_frame_mod4 != 0) {
             sprite_draw_with_bullets_zoom();
         } else {
             sprite_draw_layer5_zoom();

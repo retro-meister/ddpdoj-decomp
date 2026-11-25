@@ -4619,8 +4619,8 @@ extern u8 D_0028E1E6[];
 extern u8 D_0028E2A0;
 extern s16 D_0028E324_as_s16;
 extern u8 D_0028E368;
-extern s16 D_0028E3A0;
-extern s16 D_0028E3B4_as_s16;
+extern s16 g_slowdown_loop2_allowed;
+extern s16 g_select_screen_active_as_s16;
 extern s16 g_attract_demo_as_s16;
 extern s16 g_loop_as_s16;
 extern u8 D_0028EC4C;
@@ -4650,7 +4650,7 @@ void func_00224A90(void) {
     D_0028ED64 = 0;
     g_replay_position = 0;
 #ifndef DEATH_LABEL
-    D_0028E3B4_as_s16 = 0;
+    g_select_screen_active_as_s16 = 0;
 #endif
     layers_clear_all();
     task_reset_all();
@@ -4660,7 +4660,7 @@ void func_00224A90(void) {
     D_0028E1DA[0] = 0;
     D_0028E324_as_s16 = 0;
     D_0028E1E6[0] = 0;
-    D_0028E3A0 = 0;
+    g_slowdown_loop2_allowed = 0;
 }
 
 void func_00224B50(void) {

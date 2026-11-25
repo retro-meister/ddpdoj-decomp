@@ -12,13 +12,13 @@ s32 func_0013F3C0();
 s32 func_001F57D0();
 s32 func_002016D0();
 s32 func_00203460();
-s32 func_0020ED10();
+s32 slowdown_turn_off();
 extern u8 g_boss_present_b1;
 
 void func_001F6080() {
     g_boss_present_b1 |= 0x40;
     g_boss_present_b1 |= 0x80;
-    func_0020ED10();
+    slowdown_turn_off();
     func_0013F3C0();
     func_00203460();
     func_002016D0();
@@ -1141,7 +1141,7 @@ s32 func_00202730();
 s32 entity_check_bounds();
 extern u8 D_00265830[];
 extern u8 D_0028DA28;
-extern u16 D_0028E3EC;
+extern u16 g_frame_mod2;
 extern u16 g_game_frame;
 
 void func_001F8120(void) {
@@ -1308,7 +1308,7 @@ block_26:
     reg_d1.w += 0xFE00FE00;
     reg_d3.h[0] = 0x210;
     reg_d4.b[0] = 0x19;
-    if (D_0028E3EC != 0) {
+    if (g_frame_mod2 != 0) {
         reg_a1 = (u8 *)D_00265830;
         reg_a1 += *(u16 *)(reg_a5 + 0x26);
         reg_d6.h[1] = *(u16 *)reg_a1;

@@ -7,7 +7,7 @@ extern u16 D_0028DC68[];
 
 extern u8 D_00269920[];
 
-extern u16 D_002693A8[];
+extern u16 slowdown_budget_limits_loop2[];
 extern u16 D_00269708[];
 extern u16 D_00269800[];
 extern u16 D_00269840[];
@@ -165,8 +165,8 @@ extern u16 D_0026A278[];
 extern u16 D_0026A288[];
 
 void func_0020F550(void) {
-    STORE_POINTER(D_002693A8 + 16, D_002624B0);
-    STORE_POINTER(D_002693A8 + 23, g_default_sprite_palette_as_u16_a);
+    STORE_POINTER(slowdown_budget_limits_loop2 + 16, D_002624B0);
+    STORE_POINTER(slowdown_budget_limits_loop2 + 23, g_default_sprite_palette_as_u16_a);
     STORE_POINTER(D_00269708 + 8, D_00269750);
     STORE_POINTER(D_00269708 + 16, D_00269780);
     STORE_POINTER(D_00269708 + 24, D_002697B0);
@@ -821,8 +821,8 @@ next_1:
 }
 
 extern u8 D_002515A0[];
-extern u16 D_0028E3E0;
-extern u16 D_0028E3EC;
+extern u16 g_frame_mod8;
+extern u16 g_frame_mod2;
 extern u16 D_00299D20[];
 
 void func_00211670(void) {
@@ -834,7 +834,7 @@ void func_00211670(void) {
         reg_d7.h[0] -= 1;
         reg_d4.h[0] = 0xFFC0;
         reg_d2.h[0] = 0x3FF;
-        reg_d6.h[0] = D_0028E3EC;
+        reg_d6.h[0] = g_frame_mod2;
         reg_a4 = D_002515A0;
         reg_tmp.h[0] = reg_d6.h[0];
         reg_d6.h[0] <<= 0xF;
@@ -842,7 +842,7 @@ void func_00211670(void) {
         reg_tmp.h[0] >>= 1;
         reg_d6.h[0] = temp_a0 | reg_tmp.h[0];
         reg_tmp.w = reg_d6.w;
-        reg_d6.h[0] = D_0028E3E0;
+        reg_d6.h[0] = g_frame_mod8;
         reg_d6.h[1] = reg_tmp.h[0];
         func_00211720();
     }

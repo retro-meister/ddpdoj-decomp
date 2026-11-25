@@ -1543,8 +1543,8 @@ extern u8 player_ship_sprite_tables[];
 extern u16 player_ship_hitbox_tables[];
 extern u16 player_ship_shadow_tables[];
 extern u8 g_game_frame_ran;
-extern u16 D_0028E3B4;
-extern u16 D_0028E3EC;
+extern u16 g_select_screen_active;
+extern u16 g_frame_mod2;
 extern u8 D_0028E718_as_u8;
 extern u8 D_0028E71C_as_u8;
 extern u8 g_boss_present_b1;
@@ -1573,7 +1573,7 @@ void func_00141B50(void) {
     reg_a0 = (u8 *) reg_tmp.w;
     PLAYER(reg_a6)->hit_x_plus.h = (reg_d0.h[0] != 0) ? *(u16 *)((u8 *)reg_a0 + ((s16)reg_d0.h[0] & ~1)) : *(u16 *)reg_a0;
     PLAYER(reg_a6)->hit_x_minus.h = ((reg_d0.h[0] + 2) != 0) ? *(u16 *)((u8 *)reg_a0 + ((s16)(reg_d0.h[0] + 2) & ~1)) : *(u16 *)reg_a0;
-    if ((g_players_hidden == 0) && (D_0028E3EC == 0) && (g_loop == 0) && (g_stage != 2)) {
+    if ((g_players_hidden == 0) && (g_frame_mod2 == 0) && (g_loop == 0) && (g_stage != 2)) {
         reg_d1.h[1] = PLAYER(reg_a6)->y.h;
         reg_d1.h[0] = PLAYER(reg_a6)->x.h;
         reg_d5.h[0] = 0x1C00;
@@ -1605,7 +1605,7 @@ void func_00141B50(void) {
         reg_d4.h[0] = 0x18;
         sprite_draw_with_player_shadows();
     }
-    if ((g_game_frame_ran != 0) && (D_0028EC4C == 0) && (D_0028E3B4 == 0) && !(g_boss_present_b1 & 1) && (g_true_last_boss == 0) && !(PLAYER(reg_a6)->flags.b[1] & 0x40)) {
+    if ((g_game_frame_ran != 0) && (D_0028EC4C == 0) && (g_select_screen_active == 0) && !(g_boss_present_b1 & 1) && (g_true_last_boss == 0) && !(PLAYER(reg_a6)->flags.b[1] & 0x40)) {
         if (*(u8 *)(reg_a5 + 6) == 0) {
             if (g_p1_maximum_anim_delay == 0) {
                 p0 = &D_0028E71C_as_u8;
@@ -1681,8 +1681,8 @@ extern u16 g_p2_weapon_level_data_lo[];
 extern u16 g_p1_weapon_level_data_as_u16_a[];
 extern u16 g_p1_weapon_level_data_lo[];
 extern u8 g_setting_rapid_fire;
-extern s16 D_0028E3A0;
-extern s16 D_0028E3B0;
+extern s16 g_slowdown_loop2_allowed;
+extern s16 g_slowdown_forced_frames;
 extern u8 g_p2_hyper_in_effect_as_u8;
 extern u8 g_p1_hyper_in_effect_as_u8;
 extern u16 g_p2_combo_timer;
@@ -1941,7 +1941,7 @@ block_13:
                 reg_call_target = (Fn)(reg_a0);
                 reg_call_target();
                 PLAYER(reg_a6)->state.b.invincible = 2U;
-                D_0028E3B0 = 0x14;
+                g_slowdown_forced_frames = 0x14;
                 if ((PLAYER(reg_a6)->flags.b[1] & 0x40) || (reg_d7.h[0] == 0)) {
                     func_0013EBD0();
                 }
@@ -1954,7 +1954,7 @@ block_13:
                     reg_a1 = (u8 *)g_p2_hyper_effect_flag_as_u8_a4;
                 }
                 if ((*(u16 *)reg_a1 == 0) && (reg_a1 = (u8 *)D_0029CEA0_as_u8_a, ((s16) *(u16 *)reg_a1 >= 0))) {
-                    D_0028E3A0 = 1;
+                    g_slowdown_loop2_allowed = 1;
                     PLAYER(reg_a6)->bombs.b.count -= 1;
                     if (PLAYER(reg_a6)->bombs.b.count == 0) {
                         if (*(u8 *)(reg_a5 + 6) == 0) {
@@ -2380,7 +2380,7 @@ block_244:
     reg_a0 = (u8 *) reg_tmp.w;
     PLAYER(reg_a6)->hit_x_plus.h = (reg_d0.h[0] != 0) ? *(u16 *)((u8 *)reg_a0 + ((s16)reg_d0.h[0] & ~1)) : *(u16 *)reg_a0;
     PLAYER(reg_a6)->hit_x_minus.h = ((reg_d0.h[0] + 2) != 0) ? *(u16 *)((u8 *)reg_a0 + ((s16)(reg_d0.h[0] + 2) & ~1)) : *(u16 *)reg_a0;
-    if ((g_players_hidden == 0) && (D_0028E3EC == 0) && (g_loop == 0) && (g_stage != 2)) {
+    if ((g_players_hidden == 0) && (g_frame_mod2 == 0) && (g_loop == 0) && (g_stage != 2)) {
         reg_d1.h[1] = PLAYER(reg_a6)->y.h;
         reg_d1.h[0] = PLAYER(reg_a6)->x.h;
         reg_d5.h[0] = 0x1C00;
@@ -2412,7 +2412,7 @@ block_244:
         reg_d4.h[0] = 0x18;
         sprite_draw_with_player_shadows();
     }
-    if ((g_game_frame_ran != 0) && (D_0028EC4C == 0) && (D_0028E3B4 == 0) && !(g_boss_present_b1 & 1) && (g_true_last_boss == 0) && !(PLAYER(reg_a6)->flags.b[1] & 0x40)) {
+    if ((g_game_frame_ran != 0) && (D_0028EC4C == 0) && (g_select_screen_active == 0) && !(g_boss_present_b1 & 1) && (g_true_last_boss == 0) && !(PLAYER(reg_a6)->flags.b[1] & 0x40)) {
         if (*(u8 *)(reg_a5 + 6) == 0) {
             if (g_p1_maximum_anim_delay == 0) {
                 p0 = &D_0028E71C_as_u8;
@@ -2501,7 +2501,7 @@ void func_001440D0(void) {
         func_0013EBD0();
     }
     sfx_player_explosion();
-    D_0028E3A0 = 1;
+    g_slowdown_loop2_allowed = 1;
     if (*(u8 *)(reg_a5 + 6) == 0) {
         vibration_start_pad1(0xC8, 0x28);
         func_0013C9A0();
@@ -2926,7 +2926,7 @@ void func_00144F00(void) {
     if (g_players_hidden != 0) return;
     if ((s8)reg_d0.b[0] < 0) goto next_30;
     if (PLAYER(reg_a6)->state.b.invincible == 0) goto next_100;
-    if (D_0028E3EC == 0) goto next_100;
+    if (g_frame_mod2 == 0) goto next_100;
     reg_d1.h[1] = PLAYER(reg_a6)->y.h;
     reg_d1.h[0] = PLAYER(reg_a6)->x.h;
     reg_d1.h[0] += 0x7FFF + 0x7B01;
@@ -2990,7 +2990,7 @@ next_110:
     reg_a0 = reg_a6;
     func_0013F3F0();
 next_120:
-    if (D_0028E3EC == 0) return;
+    if (g_frame_mod2 == 0) return;
     reg_d4.h[0] = 0x1A;
     reg_d7.h[0] = PLAYER(reg_a6)->ship_type.h;
     reg_d7.h[0] *= 2;
@@ -3036,7 +3036,7 @@ next_210:
 }
 
 extern u16 player_ship_sprite_tables_as_u16_a[];
-extern u16 D_0028E3E4;
+extern u16 g_frame_mod4;
 
 void func_00145640(void) {
     s32 entity_draw_with_players();
@@ -3057,7 +3057,7 @@ void func_00145640(void) {
     entity_draw_with_players();
     *(u16 *) (reg_a6 + 0xA) = save_a;
     *(u16 *) (reg_a6 + 0xC) = save_c;
-    if (D_0028E3EC == 0) {
+    if (g_frame_mod2 == 0) {
         return;
     }
     reg_d4.h[0] = 0x1A;
@@ -3072,7 +3072,7 @@ void func_00145640(void) {
     reg_tmp.h[1] = (reg_d6.h[0] != 0) ? *(u16 *) (reg_a0 + ((s16) reg_d6.h[0] & ~1)) : *(u16 *) reg_a0;
     reg_tmp.h[0] = (((u16) reg_d6.h[0] + 2) != 0) ? *(u16 *) (reg_a0 + ((s16) ((u16) reg_d6.h[0] + 2) & ~1)) : *(u16 *) reg_a0;
     reg_a0 = (u8 *) reg_tmp.w;
-    reg_d0.h[0] = (D_0028E3E4 / 2) * 4;
+    reg_d0.h[0] = (g_frame_mod4 / 2) * 4;
     reg_d2.h[1] = (reg_d0.h[0] != 0) ? *(u16 *) (reg_a0 + ((s16) reg_d0.h[0] & ~1)) : *(u16 *) reg_a0;
     reg_d2.h[0] = (((u16) reg_d0.h[0] + 2) != 0) ? *(u16 *) (reg_a0 + ((s16) ((u16) reg_d0.h[0] + 2) & ~1)) : *(u16 *) reg_a0;
     reg_tmp.h[1] = (reg_d7.h[0]) ? *(u16 *) (reg_a1 + ((s16) reg_d7.h[0] & ~1)) : *(u16 *) reg_a1;
@@ -3091,7 +3091,7 @@ void func_00145640(void) {
     reg_d1.h[0] += *(u16 *) (reg_a6 + 4);
     reg_d3.h[0] = *(u16 *) reg_a1;
     reg_a1 += 2;
-    reg_tmp.h[0] = (D_0028E3E4 / 2) * 4;
+    reg_tmp.h[0] = (g_frame_mod4 / 2) * 4;
     sprite_draw_with_players();
 }
 

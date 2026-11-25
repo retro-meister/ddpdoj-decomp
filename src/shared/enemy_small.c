@@ -289,7 +289,7 @@ s32 aim_at_player();
 s32 direction_turn_toward();
 extern u8 D_0025B130_as_u8_a[];
 extern u8 D_0025B140_as_u8_a[];
-extern u16 D_0028E3EC;
+extern u16 g_frame_mod2;
 extern u16 g_game_frame;
 extern u16 g_enemy_signal_0;
 extern u16 g_enemies_stopped;
@@ -377,7 +377,7 @@ next_7:
     reg_a0 = reg_a6;
     enemy_hitbox_debug_draw();
     if (*(s8 *)(reg_a5 + 0x21) >= 0) goto block_b;
-    if (D_0028E3EC == 0) goto block_rts;
+    if (g_frame_mod2 == 0) goto block_rts;
     reg_d1.h[1] = ENTITY(reg_a6)->y.h;
     reg_d1.h[0] = ENTITY(reg_a6)->x.h;
     reg_d1.w += 0xFE00;
@@ -644,7 +644,7 @@ next_225:
     reg_a0 = reg_a6;
     enemy_hitbox_debug_draw();
     if ((s8) reg_a5[0x21] >= 0) goto next_300;
-    if (D_0028E3EC == 0) goto block_rts;
+    if (g_frame_mod2 == 0) goto block_rts;
     reg_d1.h[1] = ENTITY(reg_a6)->y.h;
     reg_d1.h[0] = ENTITY(reg_a6)->x.h;
     reg_d1.w += 0x100FE00;
@@ -1580,7 +1580,7 @@ next_200:
     return;
 block_objset:
     entity_draw_with_warning();
-    switch (D_0028E3EC) {
+    switch (g_frame_mod2) {
     case 0:
         return;
     default:

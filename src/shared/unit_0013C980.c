@@ -180,7 +180,7 @@ void func_0013CCF0() {
 
 void sprite_draw_with_hyper_display_keep(void);
 extern u16 g_players_hidden;
-extern u16 D_0028E3EC;
+extern u16 g_frame_mod2;
 extern u16 g_game_frame;
 extern u16 g_loop;
 
@@ -236,7 +236,7 @@ loop_2:
         reg_d1.h[0] = reg_d1.h[1];
         reg_d1.h[1] = reg_tmp1.h[0];
         reg_d1.h[0] += reg_d6.h[0];
-        if (((s16) reg_d1.h[0] >= -0x500) && ((g_loop == 0) || (*(u8 *)(reg_a1 + 0x3E) == 0) || (D_0028E3EC == 0))) {
+        if (((s16) reg_d1.h[0] >= -0x500) && ((g_loop == 0) || (*(u8 *)(reg_a1 + 0x3E) == 0) || (g_frame_mod2 == 0))) {
             reg_tmp1.h[0] = reg_d1.h[0];
             reg_d1.h[0] = reg_d1.h[1];
             reg_d1.h[1] = reg_tmp1.h[0];
@@ -299,7 +299,7 @@ extern u16 g_p1_maximum_anim_delay_reset;
 extern u16 g_p1_maximum_anim_delay;
 extern u16 g_p2_maximum_level;
 extern u16 g_p1_maximum_level;
-extern u16 D_0028E3B4;
+extern u16 g_select_screen_active;
 extern u8 g_boss_present_b1;
 extern u16 g_true_last_boss;
 extern u16 D_0029CD80[];
@@ -310,7 +310,7 @@ extern u16 g_player1_as_u16_a[];
 extern u8 D_0029F2B0[];
 
 void func_0013D090(void) {
-    if (D_0028E3B4 == 0) {
+    if (g_select_screen_active == 0) {
         reg_d0.h[0] = g_player1_as_u16_a[0];
         if (((s16)(reg_d0.h[0]) < 0) && !(reg_d0.h[0] & 0xFFFF & 0x4000) && (D_0029CD90[0] != 0)) {
             reg_a1 = (u8 *)D_0029F2B0;
@@ -321,7 +321,7 @@ void func_0013D090(void) {
             if ((s32) reg_tmp.h[0] <= 0) {
                 g_p1_maximum_anim_delay = g_p1_maximum_anim_delay_reset;
             }
-            switch (D_0028E3EC) { case 0: break; default:
+            switch (g_frame_mod2) { case 0: break; default:
                 reg_a0 = (u8 *)(D_00255568);
                 reg_d4.h[1] = (reg_d0.h[0] != 0) ? *(u16 *)((u8 *)reg_a0 + ((s16)reg_d0.h[0] & ~1)) : *(u16 *)reg_a0;
                 reg_d4.h[0] = (((reg_d0.h[0] & 0xFFFF) + 2) != 0) ? *(u16 *)((u8 *)reg_a0 + ((s16)((reg_d0.h[0] & 0xFFFF) + 2) & ~1)) : *(u16 *)reg_a0;
@@ -354,7 +354,7 @@ void func_0013D090(void) {
             if ((s32) reg_tmp.h[0] <= 0) {
                 g_p2_maximum_anim_delay = g_p2_maximum_anim_delay_reset;
             }
-            if (D_0028E3EC != 0) {
+            if (g_frame_mod2 != 0) {
                 reg_a0 = (u8 *)(D_00255568);
                 reg_d4.h[1] = (reg_d0.h[0] != 0) ? *(u16 *)((u8 *)reg_a0 + ((s16)reg_d0.h[0] & ~1)) : *(u16 *)reg_a0;
                 reg_d4.h[0] = (((reg_d0.h[0] & 0xFFFF) + 2) != 0) ? *(u16 *)((u8 *)reg_a0 + ((s16)((reg_d0.h[0] & 0xFFFF) + 2) & ~1)) : *(u16 *)reg_a0;
@@ -410,13 +410,13 @@ extern s32 g_p2_hyper_ready_anim_delay_as_s32;
 extern s32 g_p1_hyper_ready_anim_delay_as_s32;
 extern s32 g_p2_hyper_ready_sprite;
 extern s32 g_p1_hyper_ready_sprite;
-extern u16 D_0028E3E4;
+extern u16 g_frame_mod4;
 
 void func_0013D560(void) {
     extern void func_0013D470(u16);
-    if (D_0028E3B4 == 0) {
+    if (g_select_screen_active == 0) {
         reg_d0.h[0] = g_player1_as_u16_a[0];
-        if ((((s64) ((s64) reg_d0.h[0] << 0x30) >> 0x30) < 0) && (g_p1_hyper_items != 0) && ((reg_d0.h[0] & 0xFFFF & 0x4000) || (D_0029CD90[0] == 0) || (D_0028E3E4 != 0))) {
+        if ((((s64) ((s64) reg_d0.h[0] << 0x30) >> 0x30) < 0) && (g_p1_hyper_items != 0) && ((reg_d0.h[0] & 0xFFFF & 0x4000) || (D_0029CD90[0] == 0) || (g_frame_mod4 != 0))) {
             reg_a0 = (u8 *)(&g_p1_hyper_ready_anim_delay_as_s32);
             reg_a1 = (u8 *)(&g_p1_hyper_ready_sprite);
             reg_d1.w = 0x810000;
@@ -1491,7 +1491,7 @@ loop_2:
         *(u16 *)(reg_a2 + 2) = ENTITY(reg_a6)->x.h;
         return;
     }
-    if (D_0028E3EC == 0) {
+    if (g_frame_mod2 == 0) {
         goto next_1;
     }
     reg_d1.h[1] = *(u16 *)(reg_a0 + 0);

@@ -357,7 +357,7 @@ void func_00146470(void) {
 }
 
 s32 entity_draw_with_player_lasers();
-extern u16 D_0028E3EC;
+extern u16 g_frame_mod2;
 extern u16 g_two_player_game;
 
 void func_00146690(arg0)
@@ -371,7 +371,7 @@ void func_00146690(arg0)
         if (ENTITY(reg_a6)->move.h != 0) {
             reg_d2.w = 1;
         }
-        var_a0 = D_0028E3EC;
+        var_a0 = g_frame_mod2;
         if (var_a0 != reg_d2.h[0]) {
             goto block_4;
         }
@@ -384,13 +384,13 @@ block_4:
 s32 entity_draw_with_player_lasers();                            /* extern */
 
 void func_001466E0(void) {
-    if ((g_two_player_game != 0) || (D_0028E3EC == 0)) {
+    if ((g_two_player_game != 0) || (g_frame_mod2 == 0)) {
         entity_draw_with_player_lasers();
     }
 }
 
 void func_00146720(void) {
-    if ((g_two_player_game != 0) || (D_0028E3EC != 0)) {
+    if ((g_two_player_game != 0) || (g_frame_mod2 != 0)) {
         entity_draw_with_player_lasers();
     }
 }
@@ -870,7 +870,7 @@ void func_00147250(void) {
     switch (ENTITY(reg_a6)->move.h) { case 0: break; default:
         reg_d0.w = 1;
     }
-    if (D_0028E3EC != reg_d0.h[0]) {
+    if (g_frame_mod2 != reg_d0.h[0]) {
         reg_d0.h[0] = *(u16 *)(reg_a6 + 0x24);
         reg_tmp.h[1] = ENTITY(reg_a6)->misc.h;
         reg_tmp.h[0] = *(u16 *)(reg_a6 + 0x20);
@@ -1313,7 +1313,7 @@ void func_001482C0(void) {
 
     reg_a6 = (u8 *)D_0029D730;
     if (ENTITY(reg_a6)->flags.sh < 0) {
-        if ((D_0028E3EC != 0) && (g_two_player_game != 0) && (g_p1_laser_bomb_active == 0)) {
+        if ((g_frame_mod2 != 0) && (g_two_player_game != 0) && (g_p1_laser_bomb_active == 0)) {
             func_0020A120();
         }
         reg_d0.h[0] = g_p1_laser_stop_y;
@@ -1360,7 +1360,7 @@ void func_001482C0(void) {
     }
     reg_a6 = (u8 *)D_0029D710;
     if (ENTITY(reg_a6)->flags.sh < 0) {
-        if ((D_0028E3EC == 0) && (g_two_player_game != 0) && (g_p2_laser_bomb_active == 0)) {
+        if ((g_frame_mod2 == 0) && (g_two_player_game != 0) && (g_p2_laser_bomb_active == 0)) {
             func_0020A1C0();
         }
         reg_d0.h[0] = g_p2_laser_stop_y;

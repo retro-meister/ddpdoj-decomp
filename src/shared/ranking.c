@@ -278,7 +278,7 @@ void func_001A42A0(void) {
     reg_d4.w = temp_s3;
 }
 
-extern u16 D_0028E3EC;
+extern u16 g_frame_mod2;
 
 void func_001A4320(void) {
     s32 sprite_draw();
@@ -294,7 +294,7 @@ void func_001A4320(void) {
         reg_d3.h[0] = 0x8C0;
         reg_d4.h[0] = 6;
         sprite_draw();
-        if (D_0028E3EC != 0) {
+        if (g_frame_mod2 != 0) {
             reg_d1.w = 0x63000800;
             reg_d2.w = 0x1547;
             reg_d3.h[0] = 0x4A0;

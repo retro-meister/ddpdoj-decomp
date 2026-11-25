@@ -146,7 +146,7 @@ s32 func_002256C0();
 s32 func_00225EF0();
 s32 func_0022B870();
 s32 func_0022C5A0();
-extern u8 D_0028E21C;
+extern u8 g_slowdown_frame_state;
 extern u8 g_slowdown_timer;
 extern u16 D_0028E32C;
 extern u8 D_0028E378;
@@ -194,7 +194,7 @@ void sys_end_frame(void) {
     if (D_0028E378 == 1) {
         D_0028E378 = 0;
     } else if (D_0028E37C != 0) {
-        if (D_0028E21C == 2) {
+        if (g_slowdown_frame_state == 2) {
             sceGsSyncV(0);
         } else {
             if (g_slowdown_timer != 0) {
@@ -206,7 +206,7 @@ void sys_end_frame(void) {
         }
         D_0028E37C &= 1;
     }
-    D_0028E21C = 0;
+    g_slowdown_frame_state = 0;
     if ((g_screen_mode != 2) && (g_screen_mode != 3)) {
         if (g_frame_counter & 1) {
             sceGsSetHalfOffset(&g_gs_dbuff.draw11, 0x800, 0x800, half);

@@ -124,7 +124,7 @@ void boss_level_get(void) {
 typedef void (*Fn)();
 
 
-extern u16 D_0028E3EC;
+extern u16 g_frame_mod2;
 extern u16 g_p2_hyper_active;
 extern u16 g_p1_hyper_active;
 extern u8 g_boss_present_b1;
@@ -150,7 +150,7 @@ void boss_slots_run(void) {
             reg_d0.h[0] = g_p1_hyper_active;
             temp_v0 = reg_d0.h[0] | g_p2_hyper_active;
             reg_d0.h[0] = temp_v0;
-            if ((temp_v0 & 0xFFFF) && (0 <= g_true_last_boss_as_s16) && (D_0028E3EC != 0)) {
+            if ((temp_v0 & 0xFFFF) && (0 <= g_true_last_boss_as_s16) && (g_frame_mod2 != 0)) {
                 boss_slots_step();
             }
         }

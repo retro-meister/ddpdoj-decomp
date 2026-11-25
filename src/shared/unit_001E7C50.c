@@ -301,14 +301,14 @@ next_hakyo_chk:
 s32 func_0013F3C0();
 s32 func_00201490();
 s32 func_00203460();
-s32 func_0020ED10();
+s32 slowdown_turn_off();
 extern u8 g_boss_present_b1;
 
 void func_001E8480(void) {
     g_boss_present_b1 |= 0x40;
     g_enemy_signal_c = 1;
     g_boss_present_b1 |= 0x80;
-    func_0020ED10();
+    slowdown_turn_off();
     func_0013F3C0();
     func_00203460();
     func_00201490();
