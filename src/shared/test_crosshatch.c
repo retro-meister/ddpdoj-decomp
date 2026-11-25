@@ -38,3 +38,7 @@ void test_crosshatch_update(void) {
     }
     reg_d0.w = 0;
 }
+
+s32 test_crosshatch_text_exit[8] = {
+    1157627907, 542394712, 1345396797, 1096045344, 639652946, 1330139936, -14667436, 0,
+};

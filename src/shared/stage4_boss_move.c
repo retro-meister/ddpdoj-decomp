@@ -607,3 +607,7 @@ void stage4_boss_move_rage(void) {
     ENTITY(reg_a6)[12].hit_x_minus.h += reg_d3.h[0];
     stage4_boss_parts_follow();
 }
+
+u8 D_0028DC84[4] = {
+    0x00, 0x60, 0x00, 0x1C,
+};

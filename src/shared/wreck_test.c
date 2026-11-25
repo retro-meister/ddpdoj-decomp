@@ -64,3 +64,9 @@ void wreck_test_main(void) {
     }
     entity_draw();
 }
+
+s32 g_wreck_test_entities[8] = {
+    -33521664, 65024, 34603243, 0, 0, 268435456, 0, 0,
+};
+
+s32 g_wreck_test_work = 262144;
