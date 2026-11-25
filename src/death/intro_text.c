@@ -326,3 +326,6 @@ void death_func_00139380(void) {
         break;
     }
 }
+
+/* .bss */
+TextScript death_D_002AB800;

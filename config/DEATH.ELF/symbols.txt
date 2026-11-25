@@ -10893,7 +10893,6 @@ death_func_00138BE0 = 0x138be0; // type:func size:0x70
 death_func_00138C50 = 0x138c50; // type:func size:0x278
 death_func_00138ED0 = 0x138ed0; // type:func size:0xec
 death_func_00138FC0 = 0x138fc0; // type:func size:0x3b8
-death_D_002AB800 = 0x2ab800;
 death_D_0068DEA0 = 0x68dea0;
 death_D_0068DECA = 0x68deca;
 death_D_0068DECC = 0x68decc;
