@@ -496,73 +496,73 @@ void death_func_00225CB0(void) {
     reg_a4 = save_a4;
 }
 
-s32 func_001F3A10();
+s32 stage5_boss_parts_follow();
 
 void death_func_00225D20(void) {
     death_func_00225640();
     death_func_002256C0();
-    func_001F3A10();
+    stage5_boss_parts_follow();
 }
 
 
 void death_func_00225D50(void) {
     death_func_00225680();
     death_func_00225730();
-    func_001F3A10();
+    stage5_boss_parts_follow();
 }
 
 
 void death_func_00225D80(void) {
     death_func_002257A0();
     death_func_00225820();
-    func_001F3A10();
+    stage5_boss_parts_follow();
 }
 
 
 void death_func_00225DB0(void) {
     death_func_002257E0();
     death_func_00225890();
-    func_001F3A10();
+    stage5_boss_parts_follow();
 }
 
 
 void death_func_00225DE0(void) {
     death_func_00225900();
     death_func_00225980();
-    func_001F3A10();
+    stage5_boss_parts_follow();
 }
 
 
 void death_func_00225E10(void) {
     death_func_00225940();
     death_func_002259F0();
-    func_001F3A10();
+    stage5_boss_parts_follow();
 }
 
 
 void death_func_00225E40(void) {
     death_func_00225A60();
     death_func_00225AE0();
-    func_001F3A10();
+    stage5_boss_parts_follow();
 }
 
 
 void death_func_00225E70(void) {
     death_func_00225AA0();
     death_func_00225B50();
-    func_001F3A10();
+    stage5_boss_parts_follow();
 }
 
 
 void death_func_00225EA0(void) {
     death_func_00225BC0();
     death_func_00225C40();
-    func_001F3A10();
+    stage5_boss_parts_follow();
 }
 
 
 void death_func_00225ED0(void) {
     death_func_00225C00();
     death_func_00225CB0();
-    func_001F3A10();
+    stage5_boss_parts_follow();
 }
