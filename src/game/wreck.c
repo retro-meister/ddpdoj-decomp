@@ -1095,3 +1095,8 @@ void func_00211F40(void) {
     *(u16 *)(reg_a0 + 4) = reg_d2.h[0];
     func_002119A0();
 }
+
+/* .sbss (the compiler lays these out in reverse) */
+#ifdef DEATH_LABEL
+u8 death_D_00290568 __attribute__((aligned(4)));
+#endif

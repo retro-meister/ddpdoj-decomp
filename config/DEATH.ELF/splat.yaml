@@ -477,11 +477,10 @@ segments:
       - [0x19044c, .sdata, game/wreck_test]
       - [0x190450, sdata, sdata_190450]
       - {type: .sbss, vram: 0x290400, name: game/pickup}
-      - {type: sbss, vram: 0x290434, name: sbss_290434}
+      - {type: .sbss, vram: 0x290434, name: game/stage_clear}
       - {type: .sbss, vram: 0x29043c, name: game/game}
       - {type: .sbss, vram: 0x290478, name: game/attract}
       - {type: .sbss, vram: 0x29047c, name: game/ship_select}
-      - {type: sbss, vram: 0x29048c, name: sbss_29048c}
       - {type: .sbss, vram: 0x290490, name: game/credits_roll}
       - {type: .sbss, vram: 0x29049c, name: game/enemy/enemy}
       - {type: .sbss, vram: 0x2904a8, name: game/fade}
@@ -490,7 +489,7 @@ segments:
       - {type: .sbss, vram: 0x290514, name: game/debris}
       - {type: .sbss, vram: 0x290518, name: game/enemy/enemy_common}
       - {type: .sbss, vram: 0x290554, name: game/sound_rpc}
-      - {type: sbss, vram: 0x290568, name: sbss_290568}
+      - {type: .sbss, vram: 0x290568, name: game/wreck}
       - {type: .sbss, vram: 0x29056c, name: game/test/test_mode}
       - {type: .sbss, vram: 0x290584, name: game/player/player}
       - {type: .sbss, vram: 0x29065c, name: game/collision}

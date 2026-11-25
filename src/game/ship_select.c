@@ -718,6 +718,9 @@ void func_001B2200(void) {
 }
 
 /* .sbss (the compiler lays these out in reverse) */
+#ifdef DEATH_LABEL
+s32 death_D_0029048C;
+#endif
 s16 D_0028DF18 __attribute__((aligned(4)));
 s16 D_0028DF14 __attribute__((aligned(4)));
 u8 D_0028DF10 __attribute__((aligned(4)));

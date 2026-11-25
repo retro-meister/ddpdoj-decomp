@@ -1129,3 +1129,9 @@ u16 D_00269840[408] = {
     0x0100, 0x0000, 0xFFC0, 0x0000, 0x0000, 0x0040, 0x0000, 0x0000,
     0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000,
 };
+
+/* .sbss (the compiler lays these out in reverse) */
+#ifdef DEATH_LABEL
+u16 death_D_00290438 __attribute__((aligned(4)));
+u16 death_D_00290434 __attribute__((aligned(4)));
+#endif
