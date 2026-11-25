@@ -115,14 +115,14 @@ extern u8 D_006C58DF[];
 extern u8 g_replay_snapshot[];
 s32 func_002269B0(void) {
     s32 delta_encode();
-    s32 func_0023DBF0();
+    s32 replay_file_pointers_decode();
     if (func_0022BE60(D_0028EC40_as_u8) != 0) {
         D_0028EC28 = *(s8 *)&D_0028EC40_as_u8;
         D_0028EB04 = 1;
         D_0028EB90 = 0x40;
         memcpy(g_replay_file, D_006A4800, 0x202E8);
         delta_encode(g_replay_snapshot);
-        func_0023DBF0(g_replay_file);
+        replay_file_pointers_decode(g_replay_file);
         D_0028ED30 = D_006C58D8[0];
         D_0028ED31 = D_006C58D9[0];
         D_0028ED32 = D_006C58DA[0];
@@ -2469,7 +2469,7 @@ typedef struct {
 
 void func_0022B330(void) {
     extern void delta_encode(u8 *buf);
-    extern void func_0023DBF0(void *data);
+    extern void replay_file_pointers_decode(void *data);
     s32 count;
     s32 i;
     SaveBody *data;
@@ -2483,7 +2483,7 @@ void func_0022B330(void) {
     if (count == 6) {
         data = (SaveBody *)D_006A4C00;
         delta_encode((u8 *)data);
-        func_0023DBF0(D_006A4800);
+        replay_file_pointers_decode(D_006A4800);
         printf(D_00289E50, D_0028ED50, data->score1);
         printf(D_00289E70, D_0028ED54, data->count1);
         printf(D_00289E90, D_0028ED4C, data->stage1);
@@ -2582,7 +2582,7 @@ void func_0022B620(void) {
 }
 
 extern void func_002263C0(void);
-extern void func_0023D4A0(void *data);
+extern void replay_file_pointers_encode(void *data);
 extern u8 D_0028E2B8[8];
 extern u8 D_0028E368;
 extern s32 D_0028EB8C;
@@ -2610,7 +2610,7 @@ s32 func_0022B660(void) {
         D_0028EC4C = 1;
         D_0028E368 = 0;
         memcpy(D_006A4800, save, 0x202E8);
-        func_0023D4A0(D_006A4800);
+        replay_file_pointers_encode(D_006A4800);
         func_0022B7A0((s32)D_006A4C00);
         func_002263C0();
         func_002263D0(1, 2, 0);
@@ -2772,7 +2772,7 @@ void func_0022BA60(void) {
     }
 }
 
-s32 func_0022BB20(const u8 *data)
+s32 replay_snapshot_checksum(const u8 *data)
 {
     s32 checksum = 0;
     s32 offset = 0;

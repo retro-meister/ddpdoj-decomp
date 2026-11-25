@@ -508,7 +508,7 @@ void ship_select_task(void) {
 
 s32 func_001A33C0();
 s32 func_001A35A0();
-s32 func_0023C1E0();
+s32 replay_start_state_save();
 extern s16 D_0028E3B4_as_s16;
 extern u16 D_0028E934;
 extern u16 D_0028E938;
@@ -518,7 +518,7 @@ extern u16 D_0029F24A[];
 extern s16 g_player1[];
 extern u16 D_0029F2B8[];
 extern u16 D_0029F2BA[];
-extern u8 D_006CB1D4[];
+extern u8 g_replay_start_state[];
 
 void func_001B1D70(void) {
     *(s8 *)(reg_a5 + 3) = 1;
@@ -647,7 +647,7 @@ void func_001B1D70(void) {
     reg_d0.w = 0x11;
     sprite_palette_load();
     if (g_replay_mode == 1) {
-        func_0023C1E0(D_006CB1D4);
+        replay_start_state_save(g_replay_start_state);
     }
     reg_d0.h[0] = TASK_GAME;
     task_start();

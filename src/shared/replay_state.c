@@ -1,12 +1,1084 @@
 #include "common.h"
 #include "sdk/ps2sdk.h"
 
+/* Everything a saved pointer field may point at, by field kind. Pointers are
+   stored as an index into one of these tables so that a snapshot does not depend
+   on where the tables are in memory. */
+extern u8 option_style_param_00_04[];
+extern u8 option_style_param_01_04[];
+extern u8 option_style_param_02_04[];
+extern u8 option_style_param_00_15[];
+extern u8 option_style_param_01_15[];
+extern u8 option_style_param_02_15[];
+extern u8 option_style_param_00_19[];
+extern u8 option_style_param_01_19[];
+extern u8 option_style_param_02_19[];
+extern u8 ship0_shot_list_1_00_00_07[];
+extern u8 ship0_shot_list_1_00_01_07[];
+extern u8 ship0_shot_list_1_00_02_07[];
+extern u8 ship0_shot_list_1_00_03_07[];
+extern u8 ship0_shot_list_1_00_04_07[];
+extern u8 ship0_shot_list_1_02_00_07[];
+extern u8 ship0_shot_list_1_02_01_07[];
+extern u8 ship0_shot_list_1_02_02_07[];
+extern u8 ship0_shot_list_1_02_03_07[];
+extern u8 ship0_shot_list_1_02_04_07[];
+extern u8 ship0_shot_list_1_04_00_07[];
+extern u8 ship0_shot_list_1_04_01_07[];
+extern u8 ship0_shot_list_1_04_02_07[];
+extern u8 ship0_shot_list_1_04_03_07[];
+extern u8 ship0_shot_list_1_04_04_07[];
+extern u8 option_shot_list_1_00_00_07[];
+extern u8 option_shot_list_1_00_01_07[];
+extern u8 option_shot_list_1_00_02_07[];
+extern u8 option_shot_list_1_00_03_07[];
+extern u8 option_shot_list_1_00_04_07[];
+extern u8 option_shot_list_3_00_00_00_00_01[];
+extern u8 option_shot_list_3_00_00_00_01_01[];
+extern u8 option_shot_list_3_00_00_00_02_01[];
+extern u8 option_shot_list_3_00_00_00_03_01[];
+extern u8 option_shot_list_3_00_00_00_04_01[];
+extern u8 option_shot_list_3_00_00_00_05_01[];
+extern u8 option_shot_list_3_00_00_00_06_01[];
+extern u8 option_shot_list_3_00_00_00_07_01[];
+extern u8 option_shot_list_3_00_00_00_08_01[];
+extern u8 option_shot_list_3_00_00_00_09_01[];
+extern u8 option_shot_list_3_00_00_00_10_01[];
+extern u8 option_shot_list_3_00_00_00_11_01[];
+extern u8 option_shot_list_3_00_00_00_12_01[];
+extern u8 option_shot_list_3_00_00_00_13_01[];
+extern u8 option_shot_list_3_00_00_00_14_01[];
+extern u8 option_shot_list_3_00_00_00_15_01[];
+extern u8 option_shot_list_3_00_00_00_16_01[];
+extern u8 option_shot_list_3_00_01_00_00_01[];
+extern u8 option_shot_list_3_00_01_00_01_01[];
+extern u8 option_shot_list_3_00_01_00_02_01[];
+extern u8 option_shot_list_3_00_01_00_03_01[];
+extern u8 option_shot_list_3_00_01_00_04_01[];
+extern u8 option_shot_list_3_00_01_00_05_01[];
+extern u8 option_shot_list_3_00_01_00_06_01[];
+extern u8 option_shot_list_3_00_01_00_07_01[];
+extern u8 option_shot_list_3_00_01_00_08_01[];
+extern u8 option_shot_list_3_00_01_00_09_01[];
+extern u8 option_shot_list_3_00_01_00_10_01[];
+extern u8 option_shot_list_3_00_01_00_11_01[];
+extern u8 option_shot_list_3_00_01_00_12_01[];
+extern u8 option_shot_list_3_00_01_00_13_01[];
+extern u8 option_shot_list_3_00_01_00_14_01[];
+extern u8 option_shot_list_3_00_01_00_15_01[];
+extern u8 option_shot_list_3_00_01_00_16_01[];
+extern u8 option_shot_list_3_00_02_00_00_01[];
+extern u8 option_shot_list_3_00_02_00_01_01[];
+extern u8 option_shot_list_3_00_02_00_02_01[];
+extern u8 option_shot_list_3_00_02_00_03_01[];
+extern u8 option_shot_list_3_00_02_00_04_01[];
+extern u8 option_shot_list_3_00_02_00_05_01[];
+extern u8 option_shot_list_3_00_02_00_06_01[];
+extern u8 option_shot_list_3_00_02_00_07_01[];
+extern u8 option_shot_list_3_00_02_00_08_01[];
+extern u8 option_shot_list_3_00_02_00_09_01[];
+extern u8 option_shot_list_3_00_02_00_10_01[];
+extern u8 option_shot_list_3_00_02_00_11_01[];
+extern u8 option_shot_list_3_00_02_00_12_01[];
+extern u8 option_shot_list_3_00_02_00_13_01[];
+extern u8 option_shot_list_3_00_02_00_14_01[];
+extern u8 option_shot_list_3_00_02_00_15_01[];
+extern u8 option_shot_list_3_00_02_00_16_01[];
+extern u8 option_shot_list_3_00_03_00_00_01[];
+extern u8 option_shot_list_3_00_03_00_01_01[];
+extern u8 option_shot_list_3_00_03_00_02_01[];
+extern u8 option_shot_list_3_00_03_00_03_01[];
+extern u8 option_shot_list_3_00_03_00_04_01[];
+extern u8 option_shot_list_3_00_03_00_05_01[];
+extern u8 option_shot_list_3_00_03_00_06_01[];
+extern u8 option_shot_list_3_00_03_00_07_01[];
+extern u8 option_shot_list_3_00_03_00_08_01[];
+extern u8 option_shot_list_3_00_03_00_09_01[];
+extern u8 option_shot_list_3_00_03_00_10_01[];
+extern u8 option_shot_list_3_00_03_00_11_01[];
+extern u8 option_shot_list_3_00_03_00_12_01[];
+extern u8 option_shot_list_3_00_03_00_13_01[];
+extern u8 option_shot_list_3_00_03_00_14_01[];
+extern u8 option_shot_list_3_00_03_00_15_01[];
+extern u8 option_shot_list_3_00_03_00_16_01[];
+extern u8 option_shot_list_3_00_04_00_00_01[];
+extern u8 option_shot_list_3_00_04_00_01_01[];
+extern u8 option_shot_list_3_00_04_00_02_01[];
+extern u8 option_shot_list_3_00_04_00_03_01[];
+extern u8 option_shot_list_3_00_04_00_04_01[];
+extern u8 option_shot_list_3_00_04_00_05_01[];
+extern u8 option_shot_list_3_00_04_00_06_01[];
+extern u8 option_shot_list_3_00_04_00_07_01[];
+extern u8 option_shot_list_3_00_04_00_08_01[];
+extern u8 option_shot_list_3_00_04_00_09_01[];
+extern u8 option_shot_list_3_00_04_00_10_01[];
+extern u8 option_shot_list_3_00_04_00_11_01[];
+extern u8 option_shot_list_3_00_04_00_12_01[];
+extern u8 option_shot_list_3_00_04_00_13_01[];
+extern u8 option_shot_list_3_00_04_00_14_01[];
+extern u8 option_shot_list_3_00_04_00_15_01[];
+extern u8 option_shot_list_3_00_04_00_16_01[];
+extern u8 option_shot_list_4_00_00_07[];
+extern u8 option_shot_list_4_00_01_07[];
+extern u8 option_shot_list_4_00_02_07[];
+extern u8 option_shot_list_4_00_03_07[];
+extern u8 option_shot_list_4_00_04_07[];
+extern u8 player_shot_3_impact_frames_00[];
+extern u8 player_shot_3_impact_frames_04[];
+extern u8 player_shot_3_impact_frames_08[];
+extern u8 player_shot_3_impact_frames_10[];
+extern u8 player_shot_3_impact_frames_12[];
+extern u8 player_shot_3_impact_frames_14[];
+extern u8 player_shot_3_impact_frames_15[];
+extern u8 player_shot_3_impact_frames_19[];
+extern u8 player_shot_3_impact_frames_23[];
+extern u8 player_shot_5_impact_frames_00[];
+extern u8 player_shot_5_impact_frames_02[];
+extern u8 player_shot_5_impact_frames_04[];
+extern u8 player_shot_5_impact_frames_06[];
+extern u8 player_shot_5_impact_frames_08[];
+extern u8 player_shot_5_impact_frames_10[];
+extern u8 player_shot_5_impact_frames_11[];
+extern u8 player_shot_5_impact_frames_12[];
+extern u8 player_shot_5_impact_frames_13[];
+extern u8 player_shot_5_impact_frames_14[];
+extern u8 player_shot_5_impact_frames_15[];
+extern u8 player_shot_5_impact_frames_17[];
+extern u8 player_shot_5_impact_frames_19[];
+extern u8 player_shot_5_impact_frames_21[];
+extern u8 player_shot_5_impact_frames_23[];
+extern u8 option_shot_list_1_01_00_07[];
+extern u8 player_shot_7_flight_028_01[];
+extern u8 player_shot_7_flight_048_01[];
+extern u8 player_shot_7_flight_068_01[];
+extern u8 player_shot_7_flight_088_01[];
+extern u8 player_shot_7_direction_5_00_01[];
+extern u8 option_shot_list_4_01_00_07[];
+extern u8 ship0_shot_list_1_01_00_07[];
+extern u8 ship0_shot_list_1_03_00_07[];
+extern u8 ship0_shot_list_1_05_00_07[];
+extern u8 player_shot_7_impact_frames_00[];
+extern u8 player_shot_7_impact_frames_02[];
+extern u8 player_shot_7_impact_frames_06[];
+extern u8 player_shot_7_impact_frames_10[];
+extern u8 player_shot_7_impact_frames_11[];
+extern u8 player_shot_7_impact_frames_13[];
+extern u8 player_shot_7_impact_frames_15[];
+extern u8 player_shot_7_impact_frames_17[];
+extern u8 player_shot_7_impact_frames_21[];
+extern u8 ship0_shot_list_3_00_00_07[];
+extern u8 ship0_shot_list_3_00_01_07[];
+extern u8 ship0_shot_list_3_00_02_07[];
+extern u8 ship0_shot_list_3_00_03_07[];
+extern u8 ship0_shot_list_3_00_04_07[];
+extern u8 ship0_shot_list_3_02_00_07[];
+extern u8 ship0_shot_list_3_02_01_07[];
+extern u8 ship0_shot_list_3_02_02_07[];
+extern u8 ship0_shot_list_3_02_03_07[];
+extern u8 ship0_shot_list_3_02_04_07[];
+extern u8 ship0_shot_list_3_04_00_07[];
+extern u8 ship0_shot_list_3_04_01_07[];
+extern u8 ship0_shot_list_3_04_02_07[];
+extern u8 ship0_shot_list_3_04_03_07[];
+extern u8 ship0_shot_list_3_04_04_07[];
+extern u8 option_shot_list_1_02_00_07[];
+extern u8 option_shot_list_1_02_01_07[];
+extern u8 option_shot_list_1_02_02_07[];
+extern u8 option_shot_list_1_02_03_07[];
+extern u8 option_shot_list_1_02_04_07[];
+extern u8 option_shot_list_3_02_00_00_00_01[];
+extern u8 option_shot_list_3_02_00_00_01_01[];
+extern u8 option_shot_list_3_02_00_00_02_01[];
+extern u8 option_shot_list_3_02_00_00_03_01[];
+extern u8 option_shot_list_3_02_00_00_04_01[];
+extern u8 option_shot_list_3_02_00_00_05_01[];
+extern u8 option_shot_list_3_02_00_00_06_01[];
+extern u8 option_shot_list_3_02_00_00_07_01[];
+extern u8 option_shot_list_3_02_00_00_08_01[];
+extern u8 option_shot_list_3_02_00_00_09_01[];
+extern u8 option_shot_list_3_02_00_00_10_01[];
+extern u8 option_shot_list_3_02_00_00_11_01[];
+extern u8 option_shot_list_3_02_00_00_12_01[];
+extern u8 option_shot_list_3_02_00_00_13_01[];
+extern u8 option_shot_list_3_02_00_00_14_01[];
+extern u8 option_shot_list_3_02_00_00_15_01[];
+extern u8 option_shot_list_3_02_00_00_16_01[];
+extern u8 option_shot_list_3_02_01_00_00_01[];
+extern u8 option_shot_list_3_02_01_00_01_01[];
+extern u8 option_shot_list_3_02_01_00_02_01[];
+extern u8 option_shot_list_3_02_01_00_03_01[];
+extern u8 option_shot_list_3_02_01_00_04_01[];
+extern u8 option_shot_list_3_02_01_00_05_01[];
+extern u8 option_shot_list_3_02_01_00_06_01[];
+extern u8 option_shot_list_3_02_01_00_07_01[];
+extern u8 option_shot_list_3_02_01_00_08_01[];
+extern u8 option_shot_list_3_02_01_00_09_01[];
+extern u8 option_shot_list_3_02_01_00_10_01[];
+extern u8 option_shot_list_3_02_01_00_11_01[];
+extern u8 option_shot_list_3_02_01_00_12_01[];
+extern u8 option_shot_list_3_02_01_00_13_01[];
+extern u8 option_shot_list_3_02_01_00_14_01[];
+extern u8 option_shot_list_3_02_01_00_15_01[];
+extern u8 option_shot_list_3_02_01_00_16_01[];
+extern u8 option_shot_list_3_02_02_00_00_01[];
+extern u8 option_shot_list_3_02_02_00_01_01[];
+extern u8 option_shot_list_3_02_02_00_02_01[];
+extern u8 option_shot_list_3_02_02_00_03_01[];
+extern u8 option_shot_list_3_02_02_00_04_01[];
+extern u8 option_shot_list_3_02_02_00_05_01[];
+extern u8 option_shot_list_3_02_02_00_06_01[];
+extern u8 option_shot_list_3_02_02_00_07_01[];
+extern u8 option_shot_list_3_02_02_00_08_01[];
+extern u8 option_shot_list_3_02_02_00_09_01[];
+extern u8 option_shot_list_3_02_02_00_10_01[];
+extern u8 option_shot_list_3_02_02_00_11_01[];
+extern u8 option_shot_list_3_02_02_00_12_01[];
+extern u8 option_shot_list_3_02_02_00_13_01[];
+extern u8 option_shot_list_3_02_02_00_14_01[];
+extern u8 option_shot_list_3_02_02_00_15_01[];
+extern u8 option_shot_list_3_02_02_00_16_01[];
+extern u8 option_shot_list_3_02_03_00_00_01[];
+extern u8 option_shot_list_3_02_03_00_01_01[];
+extern u8 option_shot_list_3_02_03_00_02_01[];
+extern u8 option_shot_list_3_02_03_00_03_01[];
+extern u8 option_shot_list_3_02_03_00_04_01[];
+extern u8 option_shot_list_3_02_03_00_05_01[];
+extern u8 option_shot_list_3_02_03_00_06_01[];
+extern u8 option_shot_list_3_02_03_00_07_01[];
+extern u8 option_shot_list_3_02_03_00_08_01[];
+extern u8 option_shot_list_3_02_03_00_09_01[];
+extern u8 option_shot_list_3_02_03_00_10_01[];
+extern u8 option_shot_list_3_02_03_00_11_01[];
+extern u8 option_shot_list_3_02_03_00_12_01[];
+extern u8 option_shot_list_3_02_03_00_13_01[];
+extern u8 option_shot_list_3_02_03_00_14_01[];
+extern u8 option_shot_list_3_02_03_00_15_01[];
+extern u8 option_shot_list_3_02_03_00_16_01[];
+extern u8 option_shot_list_3_02_04_00_00_01[];
+extern u8 option_shot_list_3_02_04_00_01_01[];
+extern u8 option_shot_list_3_02_04_00_02_01[];
+extern u8 option_shot_list_3_02_04_00_03_01[];
+extern u8 option_shot_list_3_02_04_00_04_01[];
+extern u8 option_shot_list_3_02_04_00_05_01[];
+extern u8 option_shot_list_3_02_04_00_06_01[];
+extern u8 option_shot_list_3_02_04_00_07_01[];
+extern u8 option_shot_list_3_02_04_00_08_01[];
+extern u8 option_shot_list_3_02_04_00_09_01[];
+extern u8 option_shot_list_3_02_04_00_10_01[];
+extern u8 option_shot_list_3_02_04_00_11_01[];
+extern u8 option_shot_list_3_02_04_00_12_01[];
+extern u8 option_shot_list_3_02_04_00_13_01[];
+extern u8 option_shot_list_3_02_04_00_14_01[];
+extern u8 option_shot_list_3_02_04_00_15_01[];
+extern u8 option_shot_list_3_02_04_00_16_01[];
+extern u8 option_shot_list_4_02_00_07[];
+extern u8 option_shot_list_4_02_01_07[];
+extern u8 option_shot_list_4_02_02_07[];
+extern u8 option_shot_list_4_02_03_07[];
+extern u8 option_shot_list_4_02_04_07[];
+extern u8 player_shot_4_impact_frames_00[];
+extern u8 player_shot_4_impact_frames_04[];
+extern u8 player_shot_4_impact_frames_08[];
+extern u8 player_shot_4_impact_frames_10[];
+extern u8 player_shot_4_impact_frames_12[];
+extern u8 player_shot_4_impact_frames_14[];
+extern u8 player_shot_4_impact_frames_15[];
+extern u8 player_shot_4_impact_frames_19[];
+extern u8 player_shot_4_impact_frames_23[];
+extern u8 player_shot_6_impact_frames_00[];
+extern u8 player_shot_6_impact_frames_02[];
+extern u8 player_shot_6_impact_frames_04[];
+extern u8 player_shot_6_impact_frames_06[];
+extern u8 player_shot_6_impact_frames_08[];
+extern u8 player_shot_6_impact_frames_10[];
+extern u8 player_shot_6_impact_frames_11[];
+extern u8 player_shot_6_impact_frames_12[];
+extern u8 player_shot_6_impact_frames_13[];
+extern u8 player_shot_6_impact_frames_14[];
+extern u8 player_shot_6_impact_frames_15[];
+extern u8 player_shot_6_impact_frames_17[];
+extern u8 player_shot_6_impact_frames_19[];
+extern u8 player_shot_6_impact_frames_21[];
+extern u8 player_shot_6_impact_frames_23[];
+extern u8 option_shot_list_1_03_00_07[];
+extern u8 player_shot_8_flight_028_01[];
+extern u8 player_shot_8_flight_048_01[];
+extern u8 player_shot_8_flight_068_01[];
+extern u8 player_shot_8_flight_088_01[];
+extern u8 D_0025E1F0[];
+extern u8 option_shot_list_4_03_00_07[];
+extern u8 ship0_shot_list_3_01_00_07[];
+extern u8 ship0_shot_list_3_03_00_07[];
+extern u8 ship0_shot_list_3_05_00_07[];
+extern u8 player_shot_8_impact_frames_00[];
+extern u8 player_shot_8_impact_frames_02[];
+extern u8 player_shot_8_impact_frames_06[];
+extern u8 player_shot_8_impact_frames_10[];
+extern u8 player_shot_8_impact_frames_11[];
+extern u8 player_shot_8_impact_frames_13[];
+extern u8 player_shot_8_impact_frames_15[];
+extern u8 player_shot_8_impact_frames_17[];
+extern u8 player_shot_8_impact_frames_21[];
+extern u8 player_shot_1_impact_frames_00[];
+extern u8 player_shot_1_impact_frames_02[];
+extern u8 player_shot_1_impact_frames_04[];
+extern u8 player_shot_1_impact_frames_06[];
+extern u8 player_shot_1_impact_frames_08[];
+extern u8 player_shot_1_impact_frames_10[];
+extern u8 player_shot_1_impact_frames_11[];
+extern u8 player_shot_1_impact_frames_12[];
+extern u8 player_shot_1_impact_frames_13[];
+extern u8 player_shot_1_impact_frames_14[];
+extern u8 player_shot_1_impact_frames_15[];
+extern u8 player_shot_1_impact_frames_17[];
+extern u8 player_shot_1_impact_frames_19[];
+extern u8 player_shot_1_impact_frames_21[];
+extern u8 player_shot_1_impact_frames_23[];
+extern u8 player_shot_2_impact_frames_00[];
+extern u8 player_shot_2_impact_frames_02[];
+extern u8 player_shot_2_impact_frames_04[];
+extern u8 player_shot_2_impact_frames_06[];
+extern u8 player_shot_2_impact_frames_08[];
+extern u8 player_shot_2_impact_frames_10[];
+extern u8 player_shot_2_impact_frames_11[];
+extern u8 player_shot_2_impact_frames_12[];
+extern u8 player_shot_2_impact_frames_13[];
+extern u8 player_shot_2_impact_frames_14[];
+extern u8 player_shot_2_impact_frames_15[];
+extern u8 player_shot_2_impact_frames_17[];
+extern u8 player_shot_2_impact_frames_19[];
+extern u8 player_shot_2_impact_frames_21[];
+extern u8 player_shot_2_impact_frames_23[];
+extern u8 option_sprites_b_00_00_05[];
+extern u8 option_sprites_b_00_01_05[];
+extern u8 option_sprites_b_00_02_05[];
+extern u8 option_sprites_b_00_03_05[];
+extern u8 option_sprites_b_00_04_05[];
+extern u8 option_sprites_b_01_00_05[];
+extern u8 option_sprites_b_01_01_05[];
+extern u8 option_sprites_b_01_02_05[];
+extern u8 option_sprites_b_01_03_05[];
+extern u8 option_sprites_b_01_04_05[];
+extern u8 option_hyper_sprite_b_00_05[];
+extern u8 D_00256E50[];
+extern u8 D_00256E70[];
+extern u8 D_00256E90[];
+extern u8 D_00256EB0[];
+extern u8 D_00256FC0[];
+extern u8 D_00257030[];
+extern u8 D_002570A0[];
+extern u8 D_00257110[];
+extern u8 option_power_value_00[];
+extern u8 option_power_value_01[];
+extern u8 option_power_value_02[];
+extern u8 option_power_value_03[];
+extern u8 option_power_value_04[];
+extern u8 option_power_value_05[];
+extern u8 option_power_value_06[];
+extern u8 option_power_value_07[];
+extern u8 option_power_value_08[];
+extern u8 option_power_value_09[];
+extern u8 option_strong_param_00[];
+extern u8 option_strong_param_01[];
+extern u8 option_strong_param_02[];
+extern u8 option_strong_param_03[];
+extern u8 option_strong_param_04[];
+extern u8 option_strong_param_05[];
+extern u8 option_strong_param_06[];
+extern u8 option_strong_param_07[];
+extern u8 option_strong_param_08[];
+extern u8 option_strong_param_09[];
+extern u8 option_hyper_param_00[];
+extern u8 option_hyper_param_01[];
+extern u8 option_hyper_param_02[];
+extern u8 option_hyper_param_03[];
+extern u8 option_hyper_param_04[];
+extern u8 option_power_value_00_07[];
+extern u8 option_power_value_05_07[];
+extern u8 option_strong_param_00_07[];
+extern u8 option_strong_param_05_07[];
+extern u8 option_hyper_param_00_07[];
+extern u8 option_power_value_00_05[];
+extern u8 option_power_value_05_05[];
+extern u8 option_strong_param_00_05[];
+extern u8 option_hyper_param_00_05[];
+extern u8 option_power_value_00_08[];
+extern u8 option_power_value_01_08[];
+extern u8 option_power_value_02_08[];
+extern u8 option_power_value_03_08[];
+extern u8 option_power_value_04_08[];
+extern u8 option_power_value_05_08[];
+extern u8 option_power_value_06_08[];
+extern u8 option_power_value_07_08[];
+extern u8 option_power_value_08_08[];
+extern u8 option_power_value_09_08[];
+extern u8 option_strong_param_00_08[];
+extern u8 option_strong_param_01_08[];
+extern u8 option_strong_param_02_08[];
+extern u8 option_strong_param_03_08[];
+extern u8 option_strong_param_04_08[];
+extern u8 D_00257368[];
+extern u8 D_00257378[];
+extern u8 D_00257388[];
+extern u8 D_00257398[];
+extern u8 option_hyper_param_00_08[];
+extern u8 D_00257138[];
+extern u8 D_00257148[];
+extern u8 D_00257158[];
+extern u8 D_00257168[];
+extern u8 D_00257178[];
+extern u8 D_00257188[];
+extern u8 D_00257198[];
+extern u8 D_002571A8[];
+extern u8 D_002571B8[];
+extern u8 D_002571C8[];
+extern u8 D_002571D8[];
+extern u8 D_002571E8[];
+extern u8 D_002571F8[];
+extern u8 D_00257208[];
+extern u8 D_00257218[];
+extern u8 D_00257228[];
+extern u8 D_00257238[];
+extern u8 D_00257248[];
+extern u8 D_00257258[];
+extern u8 D_00257268[];
+extern u8 D_00241740[];
+extern u8 D_00241780[];
+extern u8 D_002417F0[];
+extern u8 D_00241810[];
+extern u8 D_00241850[];
+extern u8 D_00241870[];
+extern u8 D_00241888[];
+extern u8 D_00241898[];
+extern u8 D_002418A8[];
+extern u8 D_002418B8[];
+extern u8 D_002418D0[];
+extern u8 D_002418F0[];
+extern u8 D_00241900[];
+extern u8 D_00241910[];
+extern u8 D_00241920[];
+extern u8 D_00241930[];
+extern u8 D_00241940[];
+extern u8 D_00241950[];
+extern u8 D_00241960[];
+extern u8 D_00241970[];
+extern u8 D_00241A70[];
+extern u8 D_00241A90[];
+extern u8 D_00241AB0[];
+extern u8 D_00241AD0[];
+extern u8 D_00241AF0[];
+extern u8 D_00241B10[];
+extern u8 D_00241B30[];
+extern u8 D_00241B50[];
+extern u8 D_00241B70[];
+extern u8 D_00241B90[];
+extern u8 D_00241BB0[];
+extern u8 D_00241BD0[];
+extern u8 D_00241BF0[];
+extern u8 D_00241C00[];
+extern u8 D_00241C10[];
+extern u8 D_00241C20[];
+extern u8 D_00241C30[];
+extern u8 D_00241C50[];
+extern u8 D_00241C60[];
+extern u8 D_00241C70[];
+extern u8 D_00241C80[];
+extern u8 D_00241C90[];
+extern u8 D_00241CA0[];
+extern u8 D_00241CB0[];
+extern u8 D_00241CC0[];
+extern u8 D_00241CD0[];
+extern u8 D_00241DD0[];
+extern u8 D_00241DF0[];
+extern u8 D_00241E10[];
+extern u8 D_00241E30[];
+extern u8 D_00241E50[];
+extern u8 D_00241E70[];
+extern u8 D_00241E90[];
+extern u8 D_00241EB0[];
+extern u8 D_00241ED0[];
+extern u8 D_00241EF0[];
+extern u8 D_00241F10[];
+extern u8 D_00241F30[];
+extern u8 D_00241F50[];
+extern u8 D_00241FF0[];
+extern u8 player_shot_levels_0[];
+extern u8 player_laser_levels_0[];
+extern u8 player_shot_levels_1[];
+extern u8 player_laser_levels_1[];
+extern u8 player_shot_levels_2[];
+extern u8 player_laser_levels_2[];
+extern u8 player_shot_levels_3[];
+extern u8 player_laser_levels_3[];
+extern u8 player_shot_levels_4[];
+extern u8 player_laser_levels_4[];
+extern u8 player_shot_levels_5[];
+extern u8 player_laser_levels_5[];
+
+void *replay_targets_option_style_a[] = {
+    option_style_param_00_04,
+    option_style_param_01_04,
+    option_style_param_02_04,
+};
+
+void *replay_targets_option_style_b[] = {
+    option_style_param_00_15,
+    option_style_param_01_15,
+    option_style_param_02_15,
+};
+
+void *replay_targets_option_style_c[] = {
+    option_style_param_00_19,
+    option_style_param_01_19,
+    option_style_param_02_19,
+};
+
+void *replay_targets_shot_lists[] = {
+    ship0_shot_list_1_00_00_07,
+    ship0_shot_list_1_00_01_07,
+    ship0_shot_list_1_00_02_07,
+    ship0_shot_list_1_00_03_07,
+    ship0_shot_list_1_00_04_07,
+    ship0_shot_list_1_02_00_07,
+    ship0_shot_list_1_02_01_07,
+    ship0_shot_list_1_02_02_07,
+    ship0_shot_list_1_02_03_07,
+    ship0_shot_list_1_02_04_07,
+    ship0_shot_list_1_04_00_07,
+    ship0_shot_list_1_04_01_07,
+    ship0_shot_list_1_04_02_07,
+    ship0_shot_list_1_04_03_07,
+    ship0_shot_list_1_04_04_07,
+    option_shot_list_1_00_00_07,
+    option_shot_list_1_00_01_07,
+    option_shot_list_1_00_02_07,
+    option_shot_list_1_00_03_07,
+    option_shot_list_1_00_04_07,
+    option_shot_list_3_00_00_00_00_01,
+    option_shot_list_3_00_00_00_01_01,
+    option_shot_list_3_00_00_00_02_01,
+    option_shot_list_3_00_00_00_03_01,
+    option_shot_list_3_00_00_00_04_01,
+    option_shot_list_3_00_00_00_05_01,
+    option_shot_list_3_00_00_00_06_01,
+    option_shot_list_3_00_00_00_07_01,
+    option_shot_list_3_00_00_00_08_01,
+    option_shot_list_3_00_00_00_09_01,
+    option_shot_list_3_00_00_00_10_01,
+    option_shot_list_3_00_00_00_11_01,
+    option_shot_list_3_00_00_00_12_01,
+    option_shot_list_3_00_00_00_13_01,
+    option_shot_list_3_00_00_00_14_01,
+    option_shot_list_3_00_00_00_15_01,
+    option_shot_list_3_00_00_00_16_01,
+    option_shot_list_3_00_01_00_00_01,
+    option_shot_list_3_00_01_00_01_01,
+    option_shot_list_3_00_01_00_02_01,
+    option_shot_list_3_00_01_00_03_01,
+    option_shot_list_3_00_01_00_04_01,
+    option_shot_list_3_00_01_00_05_01,
+    option_shot_list_3_00_01_00_06_01,
+    option_shot_list_3_00_01_00_07_01,
+    option_shot_list_3_00_01_00_08_01,
+    option_shot_list_3_00_01_00_09_01,
+    option_shot_list_3_00_01_00_10_01,
+    option_shot_list_3_00_01_00_11_01,
+    option_shot_list_3_00_01_00_12_01,
+    option_shot_list_3_00_01_00_13_01,
+    option_shot_list_3_00_01_00_14_01,
+    option_shot_list_3_00_01_00_15_01,
+    option_shot_list_3_00_01_00_16_01,
+    option_shot_list_3_00_02_00_00_01,
+    option_shot_list_3_00_02_00_01_01,
+    option_shot_list_3_00_02_00_02_01,
+    option_shot_list_3_00_02_00_03_01,
+    option_shot_list_3_00_02_00_04_01,
+    option_shot_list_3_00_02_00_05_01,
+    option_shot_list_3_00_02_00_06_01,
+    option_shot_list_3_00_02_00_07_01,
+    option_shot_list_3_00_02_00_08_01,
+    option_shot_list_3_00_02_00_09_01,
+    option_shot_list_3_00_02_00_10_01,
+    option_shot_list_3_00_02_00_11_01,
+    option_shot_list_3_00_02_00_12_01,
+    option_shot_list_3_00_02_00_13_01,
+    option_shot_list_3_00_02_00_14_01,
+    option_shot_list_3_00_02_00_15_01,
+    option_shot_list_3_00_02_00_16_01,
+    option_shot_list_3_00_03_00_00_01,
+    option_shot_list_3_00_03_00_01_01,
+    option_shot_list_3_00_03_00_02_01,
+    option_shot_list_3_00_03_00_03_01,
+    option_shot_list_3_00_03_00_04_01,
+    option_shot_list_3_00_03_00_05_01,
+    option_shot_list_3_00_03_00_06_01,
+    option_shot_list_3_00_03_00_07_01,
+    option_shot_list_3_00_03_00_08_01,
+    option_shot_list_3_00_03_00_09_01,
+    option_shot_list_3_00_03_00_10_01,
+    option_shot_list_3_00_03_00_11_01,
+    option_shot_list_3_00_03_00_12_01,
+    option_shot_list_3_00_03_00_13_01,
+    option_shot_list_3_00_03_00_14_01,
+    option_shot_list_3_00_03_00_15_01,
+    option_shot_list_3_00_03_00_16_01,
+    option_shot_list_3_00_04_00_00_01,
+    option_shot_list_3_00_04_00_01_01,
+    option_shot_list_3_00_04_00_02_01,
+    option_shot_list_3_00_04_00_03_01,
+    option_shot_list_3_00_04_00_04_01,
+    option_shot_list_3_00_04_00_05_01,
+    option_shot_list_3_00_04_00_06_01,
+    option_shot_list_3_00_04_00_07_01,
+    option_shot_list_3_00_04_00_08_01,
+    option_shot_list_3_00_04_00_09_01,
+    option_shot_list_3_00_04_00_10_01,
+    option_shot_list_3_00_04_00_11_01,
+    option_shot_list_3_00_04_00_12_01,
+    option_shot_list_3_00_04_00_13_01,
+    option_shot_list_3_00_04_00_14_01,
+    option_shot_list_3_00_04_00_15_01,
+    option_shot_list_3_00_04_00_16_01,
+    option_shot_list_4_00_00_07,
+    option_shot_list_4_00_01_07,
+    option_shot_list_4_00_02_07,
+    option_shot_list_4_00_03_07,
+    option_shot_list_4_00_04_07,
+    player_shot_3_impact_frames_00,
+    player_shot_3_impact_frames_04,
+    player_shot_3_impact_frames_08,
+    player_shot_3_impact_frames_10,
+    player_shot_3_impact_frames_12,
+    player_shot_3_impact_frames_14,
+    player_shot_3_impact_frames_15,
+    player_shot_3_impact_frames_19,
+    player_shot_3_impact_frames_23,
+    player_shot_5_impact_frames_00,
+    player_shot_5_impact_frames_02,
+    player_shot_5_impact_frames_04,
+    player_shot_5_impact_frames_06,
+    player_shot_5_impact_frames_08,
+    player_shot_5_impact_frames_10,
+    player_shot_5_impact_frames_11,
+    player_shot_5_impact_frames_12,
+    player_shot_5_impact_frames_13,
+    player_shot_5_impact_frames_14,
+    player_shot_5_impact_frames_15,
+    player_shot_5_impact_frames_17,
+    player_shot_5_impact_frames_19,
+    player_shot_5_impact_frames_21,
+    player_shot_5_impact_frames_23,
+    option_shot_list_1_01_00_07,
+    player_shot_7_flight_028_01,
+    player_shot_7_flight_048_01,
+    player_shot_7_flight_068_01,
+    player_shot_7_flight_088_01,
+    player_shot_7_direction_5_00_01,
+    option_shot_list_4_01_00_07,
+    ship0_shot_list_1_01_00_07,
+    ship0_shot_list_1_03_00_07,
+    ship0_shot_list_1_05_00_07,
+    player_shot_7_impact_frames_00,
+    player_shot_7_impact_frames_02,
+    player_shot_7_impact_frames_06,
+    player_shot_7_impact_frames_10,
+    player_shot_7_impact_frames_11,
+    player_shot_7_impact_frames_13,
+    player_shot_7_impact_frames_15,
+    player_shot_7_impact_frames_17,
+    player_shot_7_impact_frames_21,
+    ship0_shot_list_3_00_00_07,
+    ship0_shot_list_3_00_01_07,
+    ship0_shot_list_3_00_02_07,
+    ship0_shot_list_3_00_03_07,
+    ship0_shot_list_3_00_04_07,
+    ship0_shot_list_3_02_00_07,
+    ship0_shot_list_3_02_01_07,
+    ship0_shot_list_3_02_02_07,
+    ship0_shot_list_3_02_03_07,
+    ship0_shot_list_3_02_04_07,
+    ship0_shot_list_3_04_00_07,
+    ship0_shot_list_3_04_01_07,
+    ship0_shot_list_3_04_02_07,
+    ship0_shot_list_3_04_03_07,
+    ship0_shot_list_3_04_04_07,
+    option_shot_list_1_02_00_07,
+    option_shot_list_1_02_01_07,
+    option_shot_list_1_02_02_07,
+    option_shot_list_1_02_03_07,
+    option_shot_list_1_02_04_07,
+    option_shot_list_3_02_00_00_00_01,
+    option_shot_list_3_02_00_00_01_01,
+    option_shot_list_3_02_00_00_02_01,
+    option_shot_list_3_02_00_00_03_01,
+    option_shot_list_3_02_00_00_04_01,
+    option_shot_list_3_02_00_00_05_01,
+    option_shot_list_3_02_00_00_06_01,
+    option_shot_list_3_02_00_00_07_01,
+    option_shot_list_3_02_00_00_08_01,
+    option_shot_list_3_02_00_00_09_01,
+    option_shot_list_3_02_00_00_10_01,
+    option_shot_list_3_02_00_00_11_01,
+    option_shot_list_3_02_00_00_12_01,
+    option_shot_list_3_02_00_00_13_01,
+    option_shot_list_3_02_00_00_14_01,
+    option_shot_list_3_02_00_00_15_01,
+    option_shot_list_3_02_00_00_16_01,
+    option_shot_list_3_02_01_00_00_01,
+    option_shot_list_3_02_01_00_01_01,
+    option_shot_list_3_02_01_00_02_01,
+    option_shot_list_3_02_01_00_03_01,
+    option_shot_list_3_02_01_00_04_01,
+    option_shot_list_3_02_01_00_05_01,
+    option_shot_list_3_02_01_00_06_01,
+    option_shot_list_3_02_01_00_07_01,
+    option_shot_list_3_02_01_00_08_01,
+    option_shot_list_3_02_01_00_09_01,
+    option_shot_list_3_02_01_00_10_01,
+    option_shot_list_3_02_01_00_11_01,
+    option_shot_list_3_02_01_00_12_01,
+    option_shot_list_3_02_01_00_13_01,
+    option_shot_list_3_02_01_00_14_01,
+    option_shot_list_3_02_01_00_15_01,
+    option_shot_list_3_02_01_00_16_01,
+    option_shot_list_3_02_02_00_00_01,
+    option_shot_list_3_02_02_00_01_01,
+    option_shot_list_3_02_02_00_02_01,
+    option_shot_list_3_02_02_00_03_01,
+    option_shot_list_3_02_02_00_04_01,
+    option_shot_list_3_02_02_00_05_01,
+    option_shot_list_3_02_02_00_06_01,
+    option_shot_list_3_02_02_00_07_01,
+    option_shot_list_3_02_02_00_08_01,
+    option_shot_list_3_02_02_00_09_01,
+    option_shot_list_3_02_02_00_10_01,
+    option_shot_list_3_02_02_00_11_01,
+    option_shot_list_3_02_02_00_12_01,
+    option_shot_list_3_02_02_00_13_01,
+    option_shot_list_3_02_02_00_14_01,
+    option_shot_list_3_02_02_00_15_01,
+    option_shot_list_3_02_02_00_16_01,
+    option_shot_list_3_02_03_00_00_01,
+    option_shot_list_3_02_03_00_01_01,
+    option_shot_list_3_02_03_00_02_01,
+    option_shot_list_3_02_03_00_03_01,
+    option_shot_list_3_02_03_00_04_01,
+    option_shot_list_3_02_03_00_05_01,
+    option_shot_list_3_02_03_00_06_01,
+    option_shot_list_3_02_03_00_07_01,
+    option_shot_list_3_02_03_00_08_01,
+    option_shot_list_3_02_03_00_09_01,
+    option_shot_list_3_02_03_00_10_01,
+    option_shot_list_3_02_03_00_11_01,
+    option_shot_list_3_02_03_00_12_01,
+    option_shot_list_3_02_03_00_13_01,
+    option_shot_list_3_02_03_00_14_01,
+    option_shot_list_3_02_03_00_15_01,
+    option_shot_list_3_02_03_00_16_01,
+    option_shot_list_3_02_04_00_00_01,
+    option_shot_list_3_02_04_00_01_01,
+    option_shot_list_3_02_04_00_02_01,
+    option_shot_list_3_02_04_00_03_01,
+    option_shot_list_3_02_04_00_04_01,
+    option_shot_list_3_02_04_00_05_01,
+    option_shot_list_3_02_04_00_06_01,
+    option_shot_list_3_02_04_00_07_01,
+    option_shot_list_3_02_04_00_08_01,
+    option_shot_list_3_02_04_00_09_01,
+    option_shot_list_3_02_04_00_10_01,
+    option_shot_list_3_02_04_00_11_01,
+    option_shot_list_3_02_04_00_12_01,
+    option_shot_list_3_02_04_00_13_01,
+    option_shot_list_3_02_04_00_14_01,
+    option_shot_list_3_02_04_00_15_01,
+    option_shot_list_3_02_04_00_16_01,
+    option_shot_list_4_02_00_07,
+    option_shot_list_4_02_01_07,
+    option_shot_list_4_02_02_07,
+    option_shot_list_4_02_03_07,
+    option_shot_list_4_02_04_07,
+    player_shot_4_impact_frames_00,
+    player_shot_4_impact_frames_04,
+    player_shot_4_impact_frames_08,
+    player_shot_4_impact_frames_10,
+    player_shot_4_impact_frames_12,
+    player_shot_4_impact_frames_14,
+    player_shot_4_impact_frames_15,
+    player_shot_4_impact_frames_19,
+    player_shot_4_impact_frames_23,
+    player_shot_6_impact_frames_00,
+    player_shot_6_impact_frames_02,
+    player_shot_6_impact_frames_04,
+    player_shot_6_impact_frames_06,
+    player_shot_6_impact_frames_08,
+    player_shot_6_impact_frames_10,
+    player_shot_6_impact_frames_11,
+    player_shot_6_impact_frames_12,
+    player_shot_6_impact_frames_13,
+    player_shot_6_impact_frames_14,
+    player_shot_6_impact_frames_15,
+    player_shot_6_impact_frames_17,
+    player_shot_6_impact_frames_19,
+    player_shot_6_impact_frames_21,
+    player_shot_6_impact_frames_23,
+    option_shot_list_1_03_00_07,
+    player_shot_8_flight_028_01,
+    player_shot_8_flight_048_01,
+    player_shot_8_flight_068_01,
+    player_shot_8_flight_088_01,
+    D_0025E1F0,
+    option_shot_list_4_03_00_07,
+    ship0_shot_list_3_01_00_07,
+    ship0_shot_list_3_03_00_07,
+    ship0_shot_list_3_05_00_07,
+    player_shot_8_impact_frames_00,
+    player_shot_8_impact_frames_02,
+    player_shot_8_impact_frames_06,
+    player_shot_8_impact_frames_10,
+    player_shot_8_impact_frames_11,
+    player_shot_8_impact_frames_13,
+    player_shot_8_impact_frames_15,
+    player_shot_8_impact_frames_17,
+    player_shot_8_impact_frames_21,
+    player_shot_1_impact_frames_00,
+    player_shot_1_impact_frames_02,
+    player_shot_1_impact_frames_04,
+    player_shot_1_impact_frames_06,
+    player_shot_1_impact_frames_08,
+    player_shot_1_impact_frames_10,
+    player_shot_1_impact_frames_11,
+    player_shot_1_impact_frames_12,
+    player_shot_1_impact_frames_13,
+    player_shot_1_impact_frames_14,
+    player_shot_1_impact_frames_15,
+    player_shot_1_impact_frames_17,
+    player_shot_1_impact_frames_19,
+    player_shot_1_impact_frames_21,
+    player_shot_1_impact_frames_23,
+    player_shot_2_impact_frames_00,
+    player_shot_2_impact_frames_02,
+    player_shot_2_impact_frames_04,
+    player_shot_2_impact_frames_06,
+    player_shot_2_impact_frames_08,
+    player_shot_2_impact_frames_10,
+    player_shot_2_impact_frames_11,
+    player_shot_2_impact_frames_12,
+    player_shot_2_impact_frames_13,
+    player_shot_2_impact_frames_14,
+    player_shot_2_impact_frames_15,
+    player_shot_2_impact_frames_17,
+    player_shot_2_impact_frames_19,
+    player_shot_2_impact_frames_21,
+    player_shot_2_impact_frames_23,
+};
+
+void *replay_targets_option_sprites[] = {
+    option_sprites_b_00_00_05,
+    option_sprites_b_00_01_05,
+    option_sprites_b_00_02_05,
+    option_sprites_b_00_03_05,
+    option_sprites_b_00_04_05,
+    option_sprites_b_01_00_05,
+    option_sprites_b_01_01_05,
+    option_sprites_b_01_02_05,
+    option_sprites_b_01_03_05,
+    option_sprites_b_01_04_05,
+    option_hyper_sprite_b_00_05,
+    D_00256E50,
+    D_00256E70,
+    D_00256E90,
+    D_00256EB0,
+    D_00256FC0,
+    D_00257030,
+    D_002570A0,
+    D_00257110,
+    option_power_value_00,
+    option_power_value_01,
+    option_power_value_02,
+    option_power_value_03,
+    option_power_value_04,
+    option_power_value_05,
+    option_power_value_06,
+    option_power_value_07,
+    option_power_value_08,
+    option_power_value_09,
+    option_strong_param_00,
+    option_strong_param_01,
+    option_strong_param_02,
+    option_strong_param_03,
+    option_strong_param_04,
+    option_strong_param_05,
+    option_strong_param_06,
+    option_strong_param_07,
+    option_strong_param_08,
+    option_strong_param_09,
+    option_hyper_param_00,
+    option_hyper_param_01,
+    option_hyper_param_02,
+    option_hyper_param_03,
+    option_hyper_param_04,
+};
+
+void *replay_targets_option_params_a[] = {
+    option_power_value_00_07,
+    option_power_value_05_07,
+    option_strong_param_00_07,
+    option_strong_param_05_07,
+    option_hyper_param_00_07,
+};
+
+void *replay_blocks_option_params[] = {
+    option_power_value_00_05,
+    option_power_value_05_05,
+    option_strong_param_00_05,
+    option_hyper_param_00_05,
+    option_power_value_00_08,
+    option_power_value_01_08,
+    option_power_value_02_08,
+    option_power_value_03_08,
+    option_power_value_04_08,
+    option_power_value_05_08,
+    option_power_value_06_08,
+    option_power_value_07_08,
+    option_power_value_08_08,
+    option_power_value_09_08,
+    option_strong_param_00_08,
+    option_strong_param_01_08,
+    option_strong_param_02_08,
+    option_strong_param_03_08,
+    option_strong_param_04_08,
+    D_00257368,
+    D_00257378,
+    D_00257388,
+    D_00257398,
+    option_hyper_param_00_08,
+};
+
+s32 replay_block_sizes_option_params[] = {
+    50, 50, 50, 50, 14, 14, 14, 14,
+    14, 14, 14, 14, 14, 14, 14, 14,
+    14, 14, 14,
+};
+
+void *replay_targets_option_params_b[] = {
+    D_00257138,
+    D_00257148,
+    D_00257158,
+    D_00257168,
+    D_00257178,
+    D_00257188,
+    D_00257198,
+    D_002571A8,
+    D_002571B8,
+    D_002571C8,
+    D_002571D8,
+    D_002571E8,
+    D_002571F8,
+    D_00257208,
+    D_00257218,
+    D_00257228,
+    D_00257238,
+    D_00257248,
+    D_00257258,
+    D_00257268,
+};
+
+void *replay_blocks_bomb[] = {
+    D_00241740,
+    D_00241780,
+    D_002417F0,
+    D_00241810,
+    D_00241850,
+    D_00241870,
+};
+
+s32 replay_block_sizes_bomb[] = {
+    50, 50, 32, 32, 20, 20,
+};
+
+void *replay_targets_bomb[] = {
+    D_00241888,
+    D_00241898,
+    D_002418A8,
+    D_002418B8,
+    D_002418D0,
+    D_002418F0,
+    D_00241900,
+    D_00241910,
+    D_00241920,
+    D_00241930,
+    D_00241940,
+    D_00241950,
+    D_00241960,
+    D_00241970,
+    D_00241A70,
+    D_00241A90,
+    D_00241AB0,
+    D_00241AD0,
+    D_00241AF0,
+    D_00241B10,
+    D_00241B30,
+    D_00241B50,
+    D_00241B70,
+    D_00241B90,
+    D_00241BB0,
+    D_00241BD0,
+    D_00241BF0,
+    D_00241C00,
+    D_00241C10,
+    D_00241C20,
+    D_00241C30,
+    D_00241C50,
+    D_00241C60,
+    D_00241C70,
+    D_00241C80,
+    D_00241C90,
+    D_00241CA0,
+    D_00241CB0,
+    D_00241CC0,
+    D_00241CD0,
+    D_00241DD0,
+    D_00241DF0,
+    D_00241E10,
+    D_00241E30,
+    D_00241E50,
+    D_00241E70,
+    D_00241E90,
+    D_00241EB0,
+    D_00241ED0,
+    D_00241EF0,
+    D_00241F10,
+    D_00241F30,
+    D_00241F50,
+    D_00241FF0,
+};
+
+void *replay_blocks_weapon_levels[] = {
+    player_shot_levels_0,
+    player_laser_levels_0,
+    player_shot_levels_1,
+    player_laser_levels_1,
+    player_shot_levels_2,
+    player_laser_levels_2,
+    player_shot_levels_3,
+    player_laser_levels_3,
+    player_shot_levels_4,
+    player_laser_levels_4,
+    player_shot_levels_5,
+    player_laser_levels_5,
+};
+
+s32 replay_block_sizes_weapon_levels[] = {
+    10, 10, 10, 10, 10, 10, 10, 10,
+    10, 10, 10, 10,
+};
+
 typedef struct {
     u8 pad[0x3511];
     s8 data[0x2000];
 } Src;
 
-void func_0023B6B0(const Src *src);
+void replay_text_layer_load(const Src *src);
 
 typedef struct {
     f32 v[4];
@@ -366,7 +1438,7 @@ extern s16 D_006C58D0_as_s16_a[];
 extern u16 D_006C58D2[];
 extern u16 D_006C58D4[];
 extern s16 D_006C58D6_as_s16_a[];
-void func_00238B90(Buf *buf) {
+void replay_snapshot_save(Buf *buf) {
     s32 i;
     s32 v;
     u8 *p = (u8 *)buf;
@@ -872,7 +1944,7 @@ typedef struct {
 
 extern u8 D_0029CD80_as_u8_a[];
 extern u8 D_0029CD90_as_u8_a[];
-void func_0023A490(u8 *p) {
+void replay_snapshot_load(u8 *p) {
     s32 i;
 
     for (i = 0; i < 0xC08; i++) {
@@ -1183,12 +2255,12 @@ void func_0023A490(u8 *p) {
     *(Row16 *)D_0029C060_as_s16_a = ((RowSrc *)p)->row;
     D_0028E288 = p[0x5532];
     D_0028E284 = p[0x5533];
-    func_0023B6B0((const Src *)p);
+    replay_text_layer_load((const Src *)p);
 }
 
 extern s8 g_text_layer_as_s8_a0x2000[0x2000];
 
-void func_0023B6B0(const Src *src) {
+void replay_text_layer_load(const Src *src) {
     s32 i;
     for (i = 0; i < 0x2000; i++) {
         g_text_layer_as_s8_a0x2000[i] = src->data[i];
@@ -1208,7 +2280,7 @@ extern void func_001AE490(void);
 extern void func_001B82D0(void);
 extern void func_00209E60(void);
 extern void func_002114A0(void);
-void func_0023B720(u8 *p) {
+void replay_start_state_load(u8 *p) {
     s32 i;
 
     func_0014D260();
@@ -1468,7 +2540,7 @@ typedef struct {
     u8 d[10];
 } Buf2;
 
-void func_0023C1E0(Buf2 *buf) {
+void replay_start_state_save(Buf2 *buf) {
     s32 i;
     u8 *p = (u8 *)buf;
 
@@ -1708,9 +2780,9 @@ void func_0023C1E0(Buf2 *buf) {
     *(u16 *)(p + 0x3A2) = g_p2_hyper_effect_delay;
 }
 
-extern s32 D_0028ED88;
+extern s32 g_replay_pointer_not_found;
 
-s32 func_0023CC30(Reg32 *entry, Reg32 *table, s32 count) {
+s32 pointer_to_table_index(Reg32 *entry, Reg32 *table, s32 count) {
     Reg32 key;
     Reg32 cur;
     s32 offset;
@@ -1732,7 +2804,7 @@ s32 func_0023CC30(Reg32 *entry, Reg32 *table, s32 count) {
         }
         table++;
     }
-    D_0028ED88 = 1;
+    g_replay_pointer_not_found = 1;
     return 0;
 }
 
@@ -1742,7 +2814,7 @@ typedef union {
 } HalfPair;
 
 
-s32 func_0023CCD0(u16 *addr, u16 *starts, s32 *sizes, s32 count) {
+s32 pointer_to_block_offset(u16 *addr, u16 *starts, s32 *sizes, s32 count) {
     HalfPair target;
     HalfPair start;
     s32 i;
@@ -1776,11 +2848,11 @@ s32 func_0023CCD0(u16 *addr, u16 *starts, s32 *sizes, s32 count) {
         }
         starts += 2;
     }
-    D_0028ED88 = 1;
+    g_replay_pointer_not_found = 1;
     return 0;
 }
 
-s32 func_0023CDA0(Reg32 *entry, u8 *code, u32 count, u32 stride) {
+s32 pointer_to_array_offset(Reg32 *entry, u8 *code, u32 count, u32 stride) {
     Reg32 key;
     u32 offset;
     u8 *mark = &entry->b[2];
@@ -1799,11 +2871,11 @@ s32 func_0023CDA0(Reg32 *entry, u8 *code, u32 count, u32 stride) {
         }
         code += stride;
     }
-    D_0028ED88 = 1;
+    g_replay_pointer_not_found = 1;
     return 0;
 }
 
-s32 func_0023CE20(Reg32 *entry, u8 *code, u32 count, u32 stride) {
+s32 pointer_to_array_offset_swapped(Reg32 *entry, u8 *code, u32 count, u32 stride) {
     Reg32 key;
     u32 offset;
     u8 *mark = &entry->b[2];
@@ -1822,31 +2894,17 @@ s32 func_0023CE20(Reg32 *entry, u8 *code, u32 count, u32 stride) {
         }
         code += stride;
     }
-    D_0028ED88 = 1;
+    g_replay_pointer_not_found = 1;
     return 0;
 }
 
-extern u16 D_00269530[];
-extern u16 D_00272128[];
-extern u16 D_00272138[];
-extern u16 D_00272148[];
-extern u16 D_00272160[];
-extern u16 D_002726A0[];
-extern u16 D_00272750[];
-extern u16 D_00272770[];
-extern s32 D_002727D0[];
-extern u16 D_00272820[];
-extern u16 D_00272870[];
-extern s32 D_00272890[];
-extern u16 D_002728B0[];
-extern u16 D_00272990[];
-extern s32 D_002729C0[];
-extern u16 D_0028DE50[4];
-extern u16 D_0028DE58[4];
+extern u16 entity_draw_layer_routines[];
+extern u16 replay_targets_players[4];
+extern u16 replay_targets_lives[4];
 extern u16 g_text_layer_as_u16_a[];
 extern u16 D_002BD440[];
 
-void func_0023CEA0(u8 *base) {
+void replay_snapshot_pointers_encode(u8 *base) {
     s32 off;
     u8 *p;
     u8 *q;
@@ -1859,76 +2917,76 @@ void func_0023CEA0(u8 *base) {
 
     for (off = 0; off < 0xC08; off += 0x2C) {
         p = base + off;
-        func_0023CC30((void *)(p + 0x24), (void *)D_0028DE50, 2);
-        func_0023CC30((void *)(p + 0x28), (void *)D_00269530, 6);
+        pointer_to_table_index((void *)(p + 0x24), (void *)replay_targets_players, 2);
+        pointer_to_table_index((void *)(p + 0x28), (void *)entity_draw_layer_routines, 6);
     }
-    func_0023CC30((void *)(base + 0xCF0), (void *)D_00272128, 3);
-    func_0023CC30((void *)(base + 0xD0A), (void *)D_00272128, 3);
-    func_0023CC30((void *)(base + 0xD20), (void *)D_00272138, 3);
-    func_0023CC30((void *)(base + 0xD32), (void *)D_00272148, 3);
-    func_0023CC30((void *)(base + 0xD54), (void *)D_00272128, 3);
-    func_0023CC30((void *)(base + 0xD6E), (void *)D_00272128, 3);
-    func_0023CC30((void *)(base + 0xD84), (void *)D_00272138, 3);
-    func_0023CC30((void *)(base + 0xD96), (void *)D_00272148, 3);
+    pointer_to_table_index((void *)(base + 0xCF0), (void *)replay_targets_option_style_a, 3);
+    pointer_to_table_index((void *)(base + 0xD0A), (void *)replay_targets_option_style_a, 3);
+    pointer_to_table_index((void *)(base + 0xD20), (void *)replay_targets_option_style_b, 3);
+    pointer_to_table_index((void *)(base + 0xD32), (void *)replay_targets_option_style_c, 3);
+    pointer_to_table_index((void *)(base + 0xD54), (void *)replay_targets_option_style_a, 3);
+    pointer_to_table_index((void *)(base + 0xD6E), (void *)replay_targets_option_style_a, 3);
+    pointer_to_table_index((void *)(base + 0xD84), (void *)replay_targets_option_style_b, 3);
+    pointer_to_table_index((void *)(base + 0xD96), (void *)replay_targets_option_style_c, 3);
     for (off = 0; off < 0xD80; off += 0x30) {
-        func_0023CC30((void *)(base + off + 0xDC0), (void *)D_00272160, 0x150);
+        pointer_to_table_index((void *)(base + off + 0xDC0), (void *)replay_targets_shot_lists, 0x150);
     }
     for (j = 0; j < 0x510; j += 0x30) {
         q = base + j;
-        func_0023CC30((void *)(q + 0x1B40), (void *)D_002726A0, 0x2C);
-        func_0023CC30((void *)(q + 0x1B4A), (void *)D_00272750, 5);
-        func_0023CCD0((void *)(q + 0x1B4E), (void *)D_00272770, (void *)D_002727D0, 0x18);
-        func_0023CC30((void *)(q + 0x2140), (void *)D_002726A0, 0x2C);
-        func_0023CC30((void *)(q + 0x214A), (void *)D_00272750, 5);
-        func_0023CCD0((void *)(q + 0x214E), (void *)D_00272770, (void *)D_002727D0, 0x18);
+        pointer_to_table_index((void *)(q + 0x1B40), (void *)replay_targets_option_sprites, 0x2C);
+        pointer_to_table_index((void *)(q + 0x1B4A), (void *)replay_targets_option_params_a, 5);
+        pointer_to_block_offset((void *)(q + 0x1B4E), (void *)replay_blocks_option_params, (void *)replay_block_sizes_option_params, 0x18);
+        pointer_to_table_index((void *)(q + 0x2140), (void *)replay_targets_option_sprites, 0x2C);
+        pointer_to_table_index((void *)(q + 0x214A), (void *)replay_targets_option_params_a, 5);
+        pointer_to_block_offset((void *)(q + 0x214E), (void *)replay_blocks_option_params, (void *)replay_block_sizes_option_params, 0x18);
     }
     q = base + j;
-    func_0023CC30((void *)(q + 0x1B40), (void *)D_002726A0, 0x2C);
-    func_0023CC30((void *)(q + 0x1B4A), (void *)D_00272750, 5);
-    func_0023CCD0((void *)(q + 0x1B4E), (void *)D_00272770, (void *)D_002727D0, 0x18);
-    func_0023CC30((void *)(q + 0x2140), (void *)D_002726A0, 0x2C);
-    func_0023CC30((void *)(q + 0x214A), (void *)D_00272750, 5);
-    func_0023CCD0((void *)(q + 0x214E), (void *)D_00272770, (void *)D_002727D0, 0x18);
+    pointer_to_table_index((void *)(q + 0x1B40), (void *)replay_targets_option_sprites, 0x2C);
+    pointer_to_table_index((void *)(q + 0x1B4A), (void *)replay_targets_option_params_a, 5);
+    pointer_to_block_offset((void *)(q + 0x1B4E), (void *)replay_blocks_option_params, (void *)replay_block_sizes_option_params, 0x18);
+    pointer_to_table_index((void *)(q + 0x2140), (void *)replay_targets_option_sprites, 0x2C);
+    pointer_to_table_index((void *)(q + 0x214A), (void *)replay_targets_option_params_a, 5);
+    pointer_to_block_offset((void *)(q + 0x214E), (void *)replay_blocks_option_params, (void *)replay_block_sizes_option_params, 0x18);
     for (k = 0x540; k < 0x5A0; k += 0x30) {
         r = base + k;
-        func_0023CCD0((void *)(r + 0x1B40), (void *)D_00272770, (void *)D_002727D0, 0x18);
-        func_0023CC30((void *)(r + 0x1B4A), (void *)D_00272750, 5);
-        func_0023CCD0((void *)(r + 0x1B4E), (void *)D_00272770, (void *)D_002727D0, 0x18);
-        func_0023CCD0((void *)(r + 0x2140), (void *)D_00272770, (void *)D_002727D0, 0x18);
-        func_0023CC30((void *)(r + 0x214A), (void *)D_00272750, 5);
-        func_0023CCD0((void *)(r + 0x214E), (void *)D_00272770, (void *)D_002727D0, 0x18);
+        pointer_to_block_offset((void *)(r + 0x1B40), (void *)replay_blocks_option_params, (void *)replay_block_sizes_option_params, 0x18);
+        pointer_to_table_index((void *)(r + 0x1B4A), (void *)replay_targets_option_params_a, 5);
+        pointer_to_block_offset((void *)(r + 0x1B4E), (void *)replay_blocks_option_params, (void *)replay_block_sizes_option_params, 0x18);
+        pointer_to_block_offset((void *)(r + 0x2140), (void *)replay_blocks_option_params, (void *)replay_block_sizes_option_params, 0x18);
+        pointer_to_table_index((void *)(r + 0x214A), (void *)replay_targets_option_params_a, 5);
+        pointer_to_block_offset((void *)(r + 0x214E), (void *)replay_blocks_option_params, (void *)replay_block_sizes_option_params, 0x18);
     }
     r = base + k;
-    func_0023CC30((void *)(r + 0x1B40), (void *)D_002726A0, 0x2C);
-    func_0023CC30((void *)(r + 0x1B4A), (void *)D_00272750, 5);
-    func_0023CCD0((void *)(r + 0x1B4E), (void *)D_00272770, (void *)D_002727D0, 0x18);
-    func_0023CC30((void *)(r + 0x2140), (void *)D_002726A0, 0x2C);
-    func_0023CC30((void *)(r + 0x214A), (void *)D_00272750, 5);
-    func_0023CCD0((void *)(r + 0x214E), (void *)D_00272770, (void *)D_002727D0, 0x18);
+    pointer_to_table_index((void *)(r + 0x1B40), (void *)replay_targets_option_sprites, 0x2C);
+    pointer_to_table_index((void *)(r + 0x1B4A), (void *)replay_targets_option_params_a, 5);
+    pointer_to_block_offset((void *)(r + 0x1B4E), (void *)replay_blocks_option_params, (void *)replay_block_sizes_option_params, 0x18);
+    pointer_to_table_index((void *)(r + 0x2140), (void *)replay_targets_option_sprites, 0x2C);
+    pointer_to_table_index((void *)(r + 0x214A), (void *)replay_targets_option_params_a, 5);
+    pointer_to_block_offset((void *)(r + 0x214E), (void *)replay_blocks_option_params, (void *)replay_block_sizes_option_params, 0x18);
     r = base + (k + 0x30);
-    func_0023CC30((void *)(r + 0x1B40), (void *)D_002726A0, 0x2C);
-    func_0023CC30((void *)(r + 0x1B4C), (void *)D_00272820, 0x14);
-    func_0023CC30((void *)(r + 0x2140), (void *)D_002726A0, 0x2C);
-    func_0023CC30((void *)(r + 0x214C), (void *)D_00272820, 0x14);
+    pointer_to_table_index((void *)(r + 0x1B40), (void *)replay_targets_option_sprites, 0x2C);
+    pointer_to_table_index((void *)(r + 0x1B4C), (void *)replay_targets_option_params_b, 0x14);
+    pointer_to_table_index((void *)(r + 0x2140), (void *)replay_targets_option_sprites, 0x2C);
+    pointer_to_table_index((void *)(r + 0x214C), (void *)replay_targets_option_params_b, 0x14);
     for (m = 0; m < 0x7E0; m += 0x30) {
         t = base + m + 0x27C0;
-        if (func_0023CC30((void *)(t), (void *)D_002728B0, 0x36) == 0 && func_0023CCD0((void *)(t), (void *)D_00272870, (void *)D_00272890, 6) != 0) {
-            D_0028ED88 = 0;
+        if (pointer_to_table_index((void *)(t), (void *)replay_targets_bomb, 0x36) == 0 && pointer_to_block_offset((void *)(t), (void *)replay_blocks_bomb, (void *)replay_block_sizes_bomb, 6) != 0) {
+            g_replay_pointer_not_found = 0;
         }
     }
     for (off = 0x7E0; off < 0x870; off += 0x30) {
-        func_0023CC30((void *)(base + off + 0x27C0), (void *)D_002728B0, 0x36);
+        pointer_to_table_index((void *)(base + off + 0x27C0), (void *)replay_targets_bomb, 0x36);
     }
-    func_0023CCD0((void *)(base + 0x301C), (void *)D_00272990, (void *)D_002729C0, 0xC);
-    func_0023CCD0((void *)(base + 0x3020), (void *)D_00272990, (void *)D_002729C0, 0xC);
-    func_0023CCD0((void *)(base + 0x3024), (void *)D_00272990, (void *)D_002729C0, 0xC);
-    func_0023CCD0((void *)(base + 0x3028), (void *)D_00272990, (void *)D_002729C0, 0xC);
-    func_0023CE20((void *)(base + 0x318C), (void *)D_002BD440, 0x32, 0x20);
-    func_0023CC30((void *)(base + 0x3226), (void *)D_0028DE58, 2);
-    func_0023CC30((void *)(base + 0x324A), (void *)D_0028DE58, 2);
+    pointer_to_block_offset((void *)(base + 0x301C), (void *)replay_blocks_weapon_levels, (void *)replay_block_sizes_weapon_levels, 0xC);
+    pointer_to_block_offset((void *)(base + 0x3020), (void *)replay_blocks_weapon_levels, (void *)replay_block_sizes_weapon_levels, 0xC);
+    pointer_to_block_offset((void *)(base + 0x3024), (void *)replay_blocks_weapon_levels, (void *)replay_block_sizes_weapon_levels, 0xC);
+    pointer_to_block_offset((void *)(base + 0x3028), (void *)replay_blocks_weapon_levels, (void *)replay_block_sizes_weapon_levels, 0xC);
+    pointer_to_array_offset_swapped((void *)(base + 0x318C), (void *)D_002BD440, 0x32, 0x20);
+    pointer_to_table_index((void *)(base + 0x3226), (void *)replay_targets_lives, 2);
+    pointer_to_table_index((void *)(base + 0x324A), (void *)replay_targets_lives, 2);
     for (n = 0; n < 0x5A; n += 10) {
-        func_0023CDA0((void *)(&((u8 (*)[10])(base + 0x32B6))[0][n]), (void *)g_text_layer_as_u16_a, 0x800, 4);
-        func_0023CDA0((void *)(&((u8 (*)[10])(base + 0x3310))[0][n]), (void *)g_text_layer_as_u16_a, 0x800, 4);
+        pointer_to_array_offset((void *)(&((u8 (*)[10])(base + 0x32B6))[0][n]), (void *)g_text_layer_as_u16_a, 0x800, 4);
+        pointer_to_array_offset((void *)(&((u8 (*)[10])(base + 0x3310))[0][n]), (void *)g_text_layer_as_u16_a, 0x800, 4);
     }
 }
 
@@ -1937,25 +2995,25 @@ void func_0023CEA0(u8 *base) {
 extern u8 g_text_layer[];
 
 
-void func_0023D420(s32 baseAddress)
+void replay_text_pointers_encode(s32 baseAddress)
 {
     s32 entryOffset = 0;
 
     do {
-        func_0023CDA0((void *)(entryOffset + baseAddress + 0x1EE), (void *)g_text_layer, 0x800, 4);
-        func_0023CDA0((void *)(entryOffset + baseAddress + 0x248), (void *)g_text_layer, 0x800, 4);
+        pointer_to_array_offset((void *)(entryOffset + baseAddress + 0x1EE), (void *)g_text_layer, 0x800, 4);
+        pointer_to_array_offset((void *)(entryOffset + baseAddress + 0x248), (void *)g_text_layer, 0x800, 4);
         entryOffset += 0xA;
     } while (entryOffset < 0x5A);
 }
 #pragma pop
 
-s32 func_0022BB20();
+s32 replay_snapshot_checksum();
 
-void func_0023D4A0(u8 *arg0) {
-    D_0028ED88 = 0;
-    func_0023CEA0(arg0 + 0x400);
-    func_0023D420((s32)(arg0 + 0x5934));
-    (*(s32 *)((u8 *)(arg0) + (0x5CE4))) = func_0022BB20(arg0 + 0x400);
+void replay_file_pointers_encode(u8 *arg0) {
+    g_replay_pointer_not_found = 0;
+    replay_snapshot_pointers_encode(arg0 + 0x400);
+    replay_text_pointers_encode((s32)(arg0 + 0x5934));
+    (*(s32 *)((u8 *)(arg0) + (0x5CE4))) = replay_snapshot_checksum(arg0 + 0x400);
 }
 
 typedef union {
@@ -1963,7 +3021,7 @@ typedef union {
     u16 h[2];
 } Pair;
 
-static inline void func_0023D4E0_read(u16 *dst, u16 *mem, s32 addr) {
+static inline void pointer_decode_read(u16 *dst, u16 *mem, s32 addr) {
     u16 value;
 
     if (addr != 0) {
@@ -1974,7 +3032,7 @@ static inline void func_0023D4E0_read(u16 *dst, u16 *mem, s32 addr) {
     *dst = value;
 }
 
-s32 func_0023D4E0(u8 *entry, u16 *mem, s32 op) {
+s32 pointer_decode(u8 *entry, u16 *mem, s32 op) {
     Pair r;
     u8 *tag;
     u16 addr;
@@ -1991,16 +3049,16 @@ s32 func_0023D4E0(u8 *entry, u16 *mem, s32 op) {
     switch (op) {
     case 0x80:
         addr = *(u16 *)entry;
-        func_0023D4E0_read(&r.h[0], mem, addr);
-        func_0023D4E0_read(&r.h[1], mem, addr + 2);
+        pointer_decode_read(&r.h[0], mem, addr);
+        pointer_decode_read(&r.h[1], mem, addr + 2);
         *(u16 *)entry = r.h[1];
         *(u16 *)tag = r.h[0];
         break;
     case 0x81:
         lo = entry[1];
         base = entry[0];
-        func_0023D4E0_read(&r.h[0], mem, lo);
-        func_0023D4E0_read(&r.h[1], mem, lo + 2);
+        pointer_decode_read(&r.h[0], mem, lo);
+        pointer_decode_read(&r.h[1], mem, lo + 2);
         r.w += base;
         *(u16 *)entry = r.h[1];
         *(u16 *)tag = r.h[0];
@@ -2022,7 +3080,7 @@ s32 func_0023D4E0(u8 *entry, u16 *mem, s32 op) {
 }
 
 
-void func_0023D6A0(u8 *base) {
+void replay_snapshot_pointers_decode(u8 *base) {
     s32 off;
     u8 *p;
     u8 *q;
@@ -2035,95 +3093,95 @@ void func_0023D6A0(u8 *base) {
 
     for (off = 0; off < 0xC08; off += 0x2C) {
         p = base + off;
-        func_0023D4E0(p + 0x24, D_0028DE50, 0x80);
-        func_0023D4E0(p + 0x28, D_00269530, 0x80);
+        pointer_decode(p + 0x24, replay_targets_players, 0x80);
+        pointer_decode(p + 0x28, entity_draw_layer_routines, 0x80);
     }
-    func_0023D4E0(base + 0xCF0, D_00272128, 0x80);
-    func_0023D4E0(base + 0xD0A, D_00272128, 0x80);
-    func_0023D4E0(base + 0xD20, D_00272138, 0x80);
-    func_0023D4E0(base + 0xD32, D_00272148, 0x80);
-    func_0023D4E0(base + 0xD54, D_00272128, 0x80);
-    func_0023D4E0(base + 0xD6E, D_00272128, 0x80);
-    func_0023D4E0(base + 0xD84, D_00272138, 0x80);
-    func_0023D4E0(base + 0xD96, D_00272148, 0x80);
+    pointer_decode(base + 0xCF0, (u16 *)replay_targets_option_style_a, 0x80);
+    pointer_decode(base + 0xD0A, (u16 *)replay_targets_option_style_a, 0x80);
+    pointer_decode(base + 0xD20, (u16 *)replay_targets_option_style_b, 0x80);
+    pointer_decode(base + 0xD32, (u16 *)replay_targets_option_style_c, 0x80);
+    pointer_decode(base + 0xD54, (u16 *)replay_targets_option_style_a, 0x80);
+    pointer_decode(base + 0xD6E, (u16 *)replay_targets_option_style_a, 0x80);
+    pointer_decode(base + 0xD84, (u16 *)replay_targets_option_style_b, 0x80);
+    pointer_decode(base + 0xD96, (u16 *)replay_targets_option_style_c, 0x80);
     for (off = 0; off < 0xD80; off += 0x30) {
-        func_0023D4E0(base + off + 0xDC0, D_00272160, 0x80);
+        pointer_decode(base + off + 0xDC0, (u16 *)replay_targets_shot_lists, 0x80);
     }
     for (j = 0; j < 0x510; j += 0x30) {
         q = base + j;
-        func_0023D4E0(q + 0x1B40, D_002726A0, 0x80);
-        func_0023D4E0(q + 0x1B4A, D_00272750, 0x80);
-        func_0023D4E0(q + 0x1B4E, D_00272770, 0x81);
-        func_0023D4E0(q + 0x2140, D_002726A0, 0x80);
-        func_0023D4E0(q + 0x214A, D_00272750, 0x80);
-        func_0023D4E0(q + 0x214E, D_00272770, 0x81);
+        pointer_decode(q + 0x1B40, (u16 *)replay_targets_option_sprites, 0x80);
+        pointer_decode(q + 0x1B4A, (u16 *)replay_targets_option_params_a, 0x80);
+        pointer_decode(q + 0x1B4E, (u16 *)replay_blocks_option_params, 0x81);
+        pointer_decode(q + 0x2140, (u16 *)replay_targets_option_sprites, 0x80);
+        pointer_decode(q + 0x214A, (u16 *)replay_targets_option_params_a, 0x80);
+        pointer_decode(q + 0x214E, (u16 *)replay_blocks_option_params, 0x81);
     }
     q = base + j;
-    func_0023D4E0(q + 0x1B40, D_002726A0, 0x80);
-    func_0023D4E0(q + 0x1B4A, D_00272750, 0x80);
-    func_0023D4E0(q + 0x1B4E, D_00272770, 0x81);
-    func_0023D4E0(q + 0x2140, D_002726A0, 0x80);
-    func_0023D4E0(q + 0x214A, D_00272750, 0x80);
-    func_0023D4E0(q + 0x214E, D_00272770, 0x81);
+    pointer_decode(q + 0x1B40, (u16 *)replay_targets_option_sprites, 0x80);
+    pointer_decode(q + 0x1B4A, (u16 *)replay_targets_option_params_a, 0x80);
+    pointer_decode(q + 0x1B4E, (u16 *)replay_blocks_option_params, 0x81);
+    pointer_decode(q + 0x2140, (u16 *)replay_targets_option_sprites, 0x80);
+    pointer_decode(q + 0x214A, (u16 *)replay_targets_option_params_a, 0x80);
+    pointer_decode(q + 0x214E, (u16 *)replay_blocks_option_params, 0x81);
     for (k = 0x540; k < 0x5A0; k += 0x30) {
         r = base + k;
-        func_0023D4E0(r + 0x1B40, D_00272770, 0x81);
-        func_0023D4E0(r + 0x1B4A, D_00272750, 0x80);
-        func_0023D4E0(r + 0x1B4E, D_00272770, 0x81);
-        func_0023D4E0(r + 0x2140, D_00272770, 0x81);
-        func_0023D4E0(r + 0x214A, D_00272750, 0x80);
-        func_0023D4E0(r + 0x214E, D_00272770, 0x81);
+        pointer_decode(r + 0x1B40, (u16 *)replay_blocks_option_params, 0x81);
+        pointer_decode(r + 0x1B4A, (u16 *)replay_targets_option_params_a, 0x80);
+        pointer_decode(r + 0x1B4E, (u16 *)replay_blocks_option_params, 0x81);
+        pointer_decode(r + 0x2140, (u16 *)replay_blocks_option_params, 0x81);
+        pointer_decode(r + 0x214A, (u16 *)replay_targets_option_params_a, 0x80);
+        pointer_decode(r + 0x214E, (u16 *)replay_blocks_option_params, 0x81);
     }
     r = base + k;
-    func_0023D4E0(r + 0x1B40, D_002726A0, 0x80);
-    func_0023D4E0(r + 0x1B4A, D_00272750, 0x80);
-    func_0023D4E0(r + 0x1B4E, D_00272770, 0x81);
-    func_0023D4E0(r + 0x2140, D_002726A0, 0x80);
-    func_0023D4E0(r + 0x214A, D_00272750, 0x80);
-    func_0023D4E0(r + 0x214E, D_00272770, 0x81);
+    pointer_decode(r + 0x1B40, (u16 *)replay_targets_option_sprites, 0x80);
+    pointer_decode(r + 0x1B4A, (u16 *)replay_targets_option_params_a, 0x80);
+    pointer_decode(r + 0x1B4E, (u16 *)replay_blocks_option_params, 0x81);
+    pointer_decode(r + 0x2140, (u16 *)replay_targets_option_sprites, 0x80);
+    pointer_decode(r + 0x214A, (u16 *)replay_targets_option_params_a, 0x80);
+    pointer_decode(r + 0x214E, (u16 *)replay_blocks_option_params, 0x81);
     r = base + (k + 0x30);
-    func_0023D4E0(r + 0x1B40, D_002726A0, 0x80);
-    func_0023D4E0(r + 0x1B4C, D_00272820, 0x80);
-    func_0023D4E0(r + 0x2140, D_002726A0, 0x80);
-    func_0023D4E0(r + 0x214C, D_00272820, 0x80);
+    pointer_decode(r + 0x1B40, (u16 *)replay_targets_option_sprites, 0x80);
+    pointer_decode(r + 0x1B4C, (u16 *)replay_targets_option_params_b, 0x80);
+    pointer_decode(r + 0x2140, (u16 *)replay_targets_option_sprites, 0x80);
+    pointer_decode(r + 0x214C, (u16 *)replay_targets_option_params_b, 0x80);
     for (m = 0; m < 0x7E0; m += 0x30) {
         t = base + m + 0x27C0;
-        func_0023D4E0(t, D_002728B0, 0x80);
-        func_0023D4E0(t, D_00272870, 0x81);
+        pointer_decode(t, (u16 *)replay_targets_bomb, 0x80);
+        pointer_decode(t, (u16 *)replay_blocks_bomb, 0x81);
     }
     for (off = 0x7E0; off < 0x870; off += 0x30) {
-        func_0023D4E0(base + off + 0x27C0, D_002728B0, 0x80);
+        pointer_decode(base + off + 0x27C0, (u16 *)replay_targets_bomb, 0x80);
     }
-    func_0023D4E0(base + 0x301C, D_00272990, 0x81);
-    func_0023D4E0(base + 0x3020, D_00272990, 0x81);
-    func_0023D4E0(base + 0x3024, D_00272990, 0x81);
-    func_0023D4E0(base + 0x3028, D_00272990, 0x81);
-    func_0023D4E0(base + 0x318C, D_002BD440, 0x83);
-    func_0023D4E0(base + 0x3226, D_0028DE58, 0x80);
-    func_0023D4E0(base + 0x324A, D_0028DE58, 0x80);
+    pointer_decode(base + 0x301C, (u16 *)replay_blocks_weapon_levels, 0x81);
+    pointer_decode(base + 0x3020, (u16 *)replay_blocks_weapon_levels, 0x81);
+    pointer_decode(base + 0x3024, (u16 *)replay_blocks_weapon_levels, 0x81);
+    pointer_decode(base + 0x3028, (u16 *)replay_blocks_weapon_levels, 0x81);
+    pointer_decode(base + 0x318C, D_002BD440, 0x83);
+    pointer_decode(base + 0x3226, replay_targets_lives, 0x80);
+    pointer_decode(base + 0x324A, replay_targets_lives, 0x80);
     for (n = 0; n < 0x5A; n += 10) {
-        func_0023D4E0(&((u8 (*)[10])(base + 0x32B6))[0][n], g_text_layer_as_u16_a, 0x82);
-        func_0023D4E0(&((u8 (*)[10])(base + 0x3310))[0][n], g_text_layer_as_u16_a, 0x82);
+        pointer_decode(&((u8 (*)[10])(base + 0x32B6))[0][n], g_text_layer_as_u16_a, 0x82);
+        pointer_decode(&((u8 (*)[10])(base + 0x3310))[0][n], g_text_layer_as_u16_a, 0x82);
     }
 }
 
 
-void func_0023DB80(u8 *base)
+void replay_text_pointers_decode(u8 *base)
 {
     s32 offset = 0;
 
     do {
-        func_0023D4E0((void *)((u8 *)offset + (s32)base + 0x1EE), (void *)g_text_layer, 0x82);
-        func_0023D4E0((void *)((u8 *)(offset + (s32)base) + 0x248), (void *)g_text_layer, 0x82);
+        pointer_decode((void *)((u8 *)offset + (s32)base + 0x1EE), (void *)g_text_layer, 0x82);
+        pointer_decode((void *)((u8 *)(offset + (s32)base) + 0x248), (void *)g_text_layer, 0x82);
         offset += 0xA;
     } while (offset < 0x5A);
 }
 
-s32 func_0022BB20(s32);                             /* extern */
-extern s32 D_0028ED3C;
+s32 replay_snapshot_checksum(s32);                             /* extern */
+extern s32 g_replay_checksum;
 
-void func_0023DBF0(s32 arg0) {
-    D_0028ED3C = func_0022BB20(arg0 + 0x400);
-    func_0023D6A0((void *)(arg0 + 0x400));
-    func_0023DB80((void *)(arg0 + 0x5934));
+void replay_file_pointers_decode(s32 arg0) {
+    g_replay_checksum = replay_snapshot_checksum(arg0 + 0x400);
+    replay_snapshot_pointers_decode((void *)(arg0 + 0x400));
+    replay_text_pointers_decode((void *)(arg0 + 0x5934));
 }

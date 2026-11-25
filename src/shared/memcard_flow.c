@@ -231,7 +231,7 @@ s32 func_00226620(void) {
 s32 delta_encode(s32 *);                   /* extern */
 s32 func_0022C760(s32);                         /* extern */
 s32 func_00233EC0();                            /* extern */
-s32 func_0023DBF0(s32 *);                   /* extern */
+s32 replay_file_pointers_decode(s32 *);                   /* extern */
 extern s8 D_0028EC28;
 extern s32 D_0028ECC4;
 extern u8 D_0028ED30;
@@ -273,7 +273,7 @@ s32 func_00226700(void) {
             if (D_0028ECC4 != 0) {
                 memcpy(g_replay_file_as_s32_a, D_006A4800_as_s32_a, 0x202E8);
                 delta_encode(g_replay_snapshot_as_s32_a);
-                func_0023DBF0(g_replay_file_as_s32_a);
+                replay_file_pointers_decode(g_replay_file_as_s32_a);
                 D_0028ED30 = D_006C58D8[0];
                 D_0028ED31 = D_006C58D9[0];
                 D_0028ED32 = D_006C58DA[0];

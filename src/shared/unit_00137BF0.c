@@ -248,7 +248,7 @@ s32 delta_encode();
 s32 func_00224B50();
 s32 func_0022BC60();
 s32 func_0022BE60();
-s32 func_0023DBF0();
+s32 replay_file_pointers_decode();
 extern u8 D_00269320[];
 extern u8 D_0028DEF4;
 extern u8 D_0028DEF8;
@@ -329,7 +329,7 @@ void func_00137E00(void) {
             D_0028DF08 += 1;
             memcpy(g_replay_file, D_006A4800, 0x202E8);
             delta_encode(g_replay_snapshot);
-            func_0023DBF0(g_replay_file);
+            replay_file_pointers_decode(g_replay_file);
             g_replay_mode_as_s8 = 2;
             D_0028ED30 = D_006C58D8[0];
             reg_d0.h[0] = 0x14;

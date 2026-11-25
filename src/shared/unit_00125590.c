@@ -952,7 +952,7 @@ void func_00126ED0(void) {
     reg_a0 = D_0028DE8C_as_void_p;
 }
 
-extern u8 D_00269530_as_u8_a[];
+extern u8 entity_draw_layer_routines_as_u8_a[];
 extern u8 D_00269550[];
 extern u8 D_002695E0[];
 
@@ -1036,7 +1036,7 @@ void func_00126F10(void) {
     reg_a0 += 2;
     reg_a0 -= 0x1E;
     save_a1 = reg_a1;
-    reg_a1 = (u8 *)D_00269530_as_u8_a;
+    reg_a1 = (u8 *)entity_draw_layer_routines_as_u8_a;
     reg_a1 += reg_d2.h[0];
     *(u16 *) (reg_a0 + 0x28) = *(u16 *) (reg_a1 + 2);
     *(u16 *) (reg_a0 + 0x2A) = *(u16 *) (reg_a1 + 0);
