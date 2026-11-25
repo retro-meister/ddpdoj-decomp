@@ -1,4 +1,5 @@
 import argparse
+import bisect
 import hashlib
 import json
 from pathlib import Path
@@ -222,7 +223,62 @@ def _scan_data_dlabels(folder):
     return labels
 
 
-def _prepare_shiftable_mod_link(folder, work_target, original, binutils):
+def _elf_symbols(path):
+    """[(name, value, section index, binding)] of an ELF file's symbol table."""
+    data = Path(path).read_bytes()
+    shoff, = struct.unpack_from("<I", data, 0x20)
+    shentsize, shnum = struct.unpack_from("<HH", data, 0x2E)
+    headers = [struct.unpack_from("<10I", data, shoff + i * shentsize) for i in range(shnum)]
+    out = []
+    for header in headers:
+        if header[1] != 2:
+            continue
+        strtab = headers[header[6]][4]
+        for name, value, _, info, _, shndx in struct.iter_unpack("<IIIBBH", data[header[4]:header[4] + header[5]]):
+            end = data.index(0, strtab + name)
+            out.append((data[strtab + name:end].decode("ascii", "replace"), value, shndx, info >> 4))
+    return out
+
+
+def _relative_symbols(folder, main_ld, retail_elf, load_vaddr, bss_end, retail_gp):
+    """Script lines that define every symbol no object defines as `label + offset`, so that it moves with the
+    label when the image shifts. Symbols outside the image stay absolute numbers."""
+    defined = set()
+    for obj in dict.fromkeys(re.findall(r"^\s*(\S+\.o)\(", main_ld, re.M)):
+        for name, _, shndx, binding in _elf_symbols(ROOT / obj):
+            if shndx and binding:
+                defined.add(name)
+    retail = {name: value for name, value, shndx, binding in _elf_symbols(retail_elf) if binding}
+    labels = sorted((retail[name], name) for name in defined
+                    if name in retail and not name.endswith(".NON_MATCHING") and load_vaddr <= retail[name] < bss_end)
+    label_addresses = [address for address, _ in labels]
+    wanted = {}
+    for source in ("undefined_syms.txt", "symbols.ld"):
+        for line in (folder / source).read_text(encoding="utf-8").splitlines():
+            m = SYM_ASSIGN_RE.match(line)
+            if m and m.group(1) not in defined:
+                wanted[m.group(1)] = int(m.group(2), 16)
+    lines, absolute = [], []
+    for name, address in wanted.items():
+        if retail_gp is not None and address == retail_gp:
+            lines.append(f"{name} = _gp;")
+        elif address == bss_end:
+            lines.append(f"{name} = main_BSS_END;")
+        elif load_vaddr <= address < bss_end:
+            index = bisect.bisect_right(label_addresses, address) - 1
+            if index < 0:
+                lines.append(f"{name} = {address:#x};")
+                absolute.append(name)
+                continue
+            base_address, base = labels[index]
+            delta = address - base_address
+            lines.append(f"{name} = {base} + {delta:#x};" if delta else f"{name} = {base};")
+        else:
+            lines.append(f"{name} = {address:#x};")
+    return lines, absolute
+
+
+def _prepare_shiftable_mod_link(folder, work_target, original, binutils, retail_elf=None, shift=0):
     """Build a shiftable real-ELF linker script + relocatable .bss object for --mod builds."""
     e_entry, load_vaddr, bss_start, bss_end = _parse_elf_layout(original)
     main_ld = (folder / "main.ld").read_text(encoding="utf-8")
@@ -230,6 +286,9 @@ def _prepare_shiftable_mod_link(folder, work_target, original, binutils):
     retail_gp = int(gp_match.group(1), 16) if gp_match else None
 
     has_explicit_sbss = "main_SBSS_START" in main_ld
+    relative_lines = None
+    if has_explicit_sbss and retail_elf is not None:
+        relative_lines, _ = _relative_symbols(folder, main_ld, retail_elf, load_vaddr, bss_end, retail_gp)
 
     # Parse undefined_syms.txt + symbols.ld to classify relocatable vs fixed symbols.
     undef_syms = []
@@ -328,6 +387,8 @@ def _prepare_shiftable_mod_link(folder, work_target, original, binutils):
     for name, addr in extra_syms_ld:
         if name not in defined_bss_names and name not in gp_sym_names:
             sym_lines.append(f"{name} = {addr:#x};")
+    if relative_lines is not None:
+        sym_lines = relative_lines
     mod_syms_ld = work_target / "mod_syms.ld"
     mod_syms_ld.write_text("\n".join(sym_lines) + "\n", encoding="ascii")
 
@@ -342,8 +403,17 @@ def _prepare_shiftable_mod_link(folder, work_target, original, binutils):
     ]
     in_main = False
     inserted_sdata_start = False
+    shifted_sections = set()
     for line in main_ld.splitlines():
         stripped = line.strip()
+        if shift and in_main:
+            # shift test: move the game code and every later section by its own amount
+            rule = SEC_RULE_RE.match(line)
+            first_game_code = rule and rule.group(3) == ".text" and "/src/" in rule.group(2)
+            if (first_game_code and ".text" not in shifted_sections) or stripped in (
+                    "main_DATA_START = .;", "main_RODATA_START = .;", "main_SDATA_START = .;"):
+                shifted_sections.add(".text" if first_game_code else stripped)
+                out_lines.append(f"        . += {shift * len(shifted_sections):#x};")
         if stripped.startswith(".main "):
             in_main = True
             out_lines.append(f"    .main {load_vaddr:#x} :")
@@ -388,6 +458,11 @@ def _prepare_shiftable_mod_link(folder, work_target, original, binutils):
             if stripped == "}":
                 out_lines.append("    } :main")
                 break
+            if shift and stripped in ("main_SBSS_START = .;", "main_BSS_START = .;"):
+                shifted_sections.add(stripped)
+                out_lines.append(f"        . += {shift * len(shifted_sections):#x};")
+                out_lines.append(line)
+                continue
             if stripped == "main_SBSS_END = .;":
                 out_lines.append("        *(.sbss .sbss.*);")
             elif stripped == "main_BSS_END = .;":
@@ -513,7 +588,8 @@ def _prepare_compact_link(folder, work_target, binutils, chunk_size=64):
     return compact_ld
 
 
-def link_target(folder, work_target, filename, original, target, units, version, objects, binutils, matching, write_map=False):
+def link_target(folder, work_target, filename, original, target, units, version, objects, binutils, matching, write_map=False,
+                shift=0, emit_relocs=False):
     name = filename
     assemble_split(folder, binutils)
     objects_root = folder / "objects"
@@ -552,10 +628,24 @@ def link_target(folder, work_target, filename, original, target, units, version,
             raise ValueError(f"{filename}: size changed from {len(original)} to {len(executable)}")
         verify(executable, target["sha256"], filename)
     else:
-        e_entry, mod_ld, mod_syms_ld = _prepare_shiftable_mod_link(folder, work_target, original, binutils)
+        # link the retail layout once: its symbol table gives every label's retail address, which is what the
+        # shiftable script needs to express the remaining script-level symbols as label + offset
+        compact_ld = _prepare_compact_link(folder, work_target, binutils)
         run(
             binutils["ld"], "-EL",
-            "-e", f"{e_entry:#x}",
+            "-T", str(compact_ld.relative_to(ROOT)),
+            "-T", rel / "undefined_funcs.txt",
+            "-T", rel / "undefined_syms.txt",
+            "-T", rel / "symbols.ld",
+            "-o", str(elf),
+            cwd=ROOT,
+        )
+        e_entry, mod_ld, mod_syms_ld = _prepare_shiftable_mod_link(folder, work_target, original, binutils, elf, shift)
+        entry = next((name for name, value, _, binding in _elf_symbols(elf) if binding and value == e_entry
+                      and not name.endswith(".NON_MATCHING")), f"{e_entry:#x}")
+        run(
+            binutils["ld"], "-EL", *(["--emit-relocs"] if emit_relocs else []),
+            "-e", entry,
             "-T", str(mod_ld),
             "-T", rel / "undefined_funcs.txt",
             "-T", str(mod_syms_ld),
@@ -565,7 +655,7 @@ def link_target(folder, work_target, filename, original, target, units, version,
         )
 
 
-def build(local, target=None, mod=False, compiler=None, iso=None, write_map=False):
+def build(local, target=None, mod=False, compiler=None, iso=None, write_map=False, shift=0, emit_relocs=False, output=None):
     names = [target] if target else list(TARGETS)
     originals = {
         name: verify((BASEROM / name).read_bytes(), TARGETS[name]["sha256"], f"baserom/{name}")
@@ -584,14 +674,14 @@ def build(local, target=None, mod=False, compiler=None, iso=None, write_map=Fals
     split_folders = {name: split(name) for name in names}
     objects = compile_units(local, jobs)
 
-    output = BUILD / "mod" if mod else BUILD
+    output = Path(output) if output else BUILD / "mod" if mod else BUILD
     output.mkdir(parents=True, exist_ok=True)
     with TemporaryDirectory(prefix=".link-", dir=output) as temporary:
         work = Path(temporary)
         for name in names:
             link_target(split_folders[name], work / name, name, originals[name], TARGETS[name],
                         units_by_target[name], versions[name], objects, local["binutils"],
-                        matching=not mod, write_map=write_map)
+                        matching=not mod, write_map=write_map, shift=shift, emit_relocs=emit_relocs)
         full_mod = mod and target is None
         if full_mod:
             hashes = {name: hashlib.sha256((work / name / name).read_bytes()).hexdigest()
