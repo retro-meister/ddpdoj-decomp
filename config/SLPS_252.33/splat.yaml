@@ -139,7 +139,7 @@ segments:
       - [0xe88a0, c, shared/stage5_boss_anim]
       - [0xe91d0, c, shared/stage5_boss_attack]
       - [0xee170, c, shared/stage5_boss_attack1]
-      - [0xf0150, c, shared/stage5_boss_draw]
+      - [0xf03b0, c, shared/stage5_boss_draw]
       - [0xf1540, c, shared/stage5_boss_mode]
       - [0xf3a90, c, shared/stage5_boss_move]
       - [0xf4bd0, c, shared/stage5_boss]

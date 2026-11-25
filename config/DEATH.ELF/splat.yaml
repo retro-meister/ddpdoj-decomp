@@ -155,7 +155,7 @@ segments:
       - [0x116260, c, shared/stage5_boss_attack]
       - [0x11b200, c, death/death_unit_0021B180]
       - [0x11ddb0, c, shared/stage5_boss_attack1]
-      - [0x11fd70, c, shared/stage5_boss_draw]
+      - [0x11ffd0, c, shared/stage5_boss_draw]
       - [0x121210, c, shared/stage5_boss_mode]
       - [0x123830, c, death/death_unit_002237B0]
       - [0x123e30, c, shared/stage5_boss_move]
