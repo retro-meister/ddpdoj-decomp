@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 """Define a unit's small zero-initialised variables (.sbss) in its C file, for both game executables.
 
-    uv run tools/sbssgen.py [--dry] [--section .sbss|.bss] UNIT START END [UNIT START END ...]
+    uv run tools/sbssgen.py [--dry] [--section .sbss|.bss] [--array ADDR:TYPE:COUNT] UNIT START END [UNIT START END ...]
 
 UNIT is the unit's file name without `.c` (found under src/game or src/death). START and END are Main
 addresses; every label in the range becomes a definition appended to the unit, from the highest address
@@ -9,6 +9,9 @@ down, because the compiler emits them in reverse. The type is the one the unit i
 with, else one another unit declares, else one chosen by size. The Death Label block is found through
 the names and must have the same layout. The yaml of both executables gets the unit's entry, and the
 names leave both symbols.txt files.
+
+`--array` says that the label at a Main address starts an array, so the labels of its elements are not variables
+of their own. A unit that has no file yet gets `src/game/UNIT.c`.
 
 Run after `uv run tools/build.py --map` (it reads the split assembly). Nothing is written when a block
 cannot be laid out as the executable has it.
@@ -29,6 +32,9 @@ if dry: args.remove('--dry')
 section = '.sbss'
 if '--section' in args:
     i = args.index('--section'); section = args[i + 1]; del args[i:i + 2]
+arrays = {}
+while '--array' in args:
+    i = args.index('--array'); a_, t_, c_ = args[i + 1].split(':'); arrays[int(a_, 16)] = (t_, int(c_)); del args[i:i + 2]
 assert section in ('.sbss', '.bss') and args and len(args) % 3 == 0, __doc__
 kind = section[1:]
 jobs = [(args[i], int(args[i + 1], 16), int(args[i + 2], 16)) for i in range(0, len(args), 3)]
@@ -72,6 +78,16 @@ for p, text in sources.items():
         declared.setdefault(m.group(2), []).append((p, ' '.join(m.group(1).split()), m.group(3)))
 
 
+for p, text in sources.items():
+    for m in re.finditer(r'^extern\s+([\w \*]+?\(\s*\*\s*)(\w+)(\s*\)\s*\([^;]*\))\s*;', text, re.M):
+        declared.setdefault(m.group(2), []).append((p, 'FP:' + m.group(1) + '%s' + m.group(3), ''))
+
+
+def written(base, name, dims, attribute):
+    if base.startswith('FP:'): return base[3:] % name + attribute + ';\n'
+    return '%s%s%s%s%s;\n' % (base, '' if base.endswith('*') else ' ', name, dims, attribute)
+
+
 def measure(base, dims):
     """(element size, count, known) of a declaration; count None when a dimension is left open."""
     if '*' in base: element = 4
@@ -105,6 +121,9 @@ def bound(name, path):
 
 def choose(name, gap, path):
     """(type, dimensions, size, alignment) for a name with `gap` bytes to the next variable."""
+    if name in forced:
+        base, count = forced[name]
+        return base, '[%d]' % count, SIZES[base] * count, alignment(SIZES[base], '[]', SIZES[base] * count)
     others = [d for d in declared.get(name, ()) if d not in bound(name, path)]
     for group, binding in ((bound(name, path), True), (others, False)):
         for _, base, dims in group:
@@ -127,25 +146,75 @@ def choose(name, gap, path):
     return base, dims, gap, alignment(element, dims, gap)
 
 
-def lay_out(labels, start, end, path):
-    """([(address, name, type, dims, attribute)] ascending, [(address, name)] of labels inside a variable), or
-    raise when the block cannot be reproduced."""
-    rows = []
-    interior = []
-    position = start
+def placeholder(name, address=None):
+    """A name that only spells an address (in Death Label it may spell the Main one)."""
+    return bool(re.fullmatch(r'(death_)?D_[0-9A-F]{8}', name))
+
+
+def longest(name):
+    """The most bytes any declaration gives a name."""
+    sizes = [measure(base, dims) for _, base, dims in declared.get(name, ())]
+    return max([e * c for e, c in sizes if e and c] or [0])
+
+
+def variables(labels, start, end, keep=()):
+    """([address] of the variables, [(address, name)] of labels inside one, [address] of padding). A label
+    declared as an array cannot start off a word: it is a view into the variable before it, and so is a
+    placeholder inside what the variable before it is declared to cover. An unused placeholder off a word is
+    the padding after a short variable."""
     inside = sorted(a for a in labels if start <= a < end)
     assert inside and inside[0] == start, f'no label at {start:#x}'
-    # a label declared as an array cannot start off a word: it is a view into the variable before it
-    views = {a for a in inside if a % 4 and any(d[2] for d in declared.get(labels[a][0], ()))}
-    assert start not in views
-    for n, a in enumerate(inside):
-        name, gap = labels[a]
-        if a < position or a in views:
-            interior.append((a, name)); continue
-        following = [b for b in inside[n + 1:] if b not in views]
-        gap = (following[0] if following else end) - a
-        if following: gap = min(gap, sum(labels[b][1] for b in inside[n:] if b < following[0]))
+    found, interior, padding = [], [], []
+    for a in inside:
+        name = labels[a][0]
+        if a in keep: found.append(a)
+        elif a % 4 and any(d[2] for d in declared.get(name, ())): interior.append((a, name))
+        elif a % 4 and placeholder(name, a) and name not in used: padding.append(a)
+        elif a % 4 and placeholder(name, a) and found and found[-1] + longest(labels[found[-1]][0]) > a: interior.append((a, name))
+        else: found.append(a)
+    for a in list(found):
+        if labels[a][0] in forced:
+            base, count = forced[labels[a][0]]
+            inner = [b for b in found if a < b < a + SIZES[base] * count]
+            interior += [(b, labels[b][0]) for b in inner]
+            found = [b for b in found if b not in inner]
+    return found, interior, padding
+
+
+class Gap(AssertionError):
+    pass
+
+
+def arrange(labels, start, end, path, keep=(), invent=False):
+    """The variables of a block laid out; padding labels become variables where no alignment explains a gap."""
+    keep = set(keep)
+    while True:
+        found, interior, padding = variables(labels, start, end, keep)
+        absorb(labels, found, interior, end, path)
+        try:
+            return lay_out(labels, found, end, path), interior
+        except Gap as gap:
+            position, address = gap.args[1], gap.args[2]
+            more = [a for a in padding if position <= a < address]
+            if not more:
+                # no label for the bytes in between: they are bytes nothing refers to
+                if not invent: raise
+                more = list(range(position, address))
+                for a in more: labels[a] = ('D_%08X' % a, 1)
+            keep.update(more)
+
+
+def lay_out(labels, found, end, path):
+    """[(address, name, type, dims, attribute)] ascending, or raise when the block cannot be reproduced."""
+    rows = []
+    position = found[0]
+    for n, a in enumerate(found):
+        name = labels[a][0]
+        gap = (found[n + 1] if n + 1 < len(found) else end) - a
         base, dims, size, align = choose(name, gap, path)
+        if size > gap:
+            # the unit declares it longer than the room up to the next label: that label is inside it
+            raise AssertionError(f'{name} at {a:#x} is declared {base}{dims}, longer than the {gap} bytes it has')
         attribute = ''
         if not rows and align < 4 and a % 4 == 0:
             attribute = ' __attribute__((aligned(4)))'
@@ -154,11 +223,70 @@ def lay_out(labels, start, end, path):
                 if wider > align and a % wider == 0 and (position + wider - 1) // wider * wider == a:
                     attribute = ' __attribute__((aligned(%d)))' % wider; break
             else:
-                raise AssertionError(f'{name} at {a:#x} ({base}{dims}): cannot follow a variable ending at {position:#x}')
+                raise Gap(f'{name} at {a:#x} ({base}{dims}): cannot follow a variable ending at {position:#x}', position, a)
         rows.append((a, name, base, dims, attribute))
         position = a + size
     assert position <= end and end - position < 4, f'{end - position:#x} bytes unexplained before {end:#x}'
-    return rows, interior
+    return rows
+
+
+def absorb(labels, found, interior, end, path):
+    """Labels inside a variable its unit declares longer than the gap to the next label."""
+    while True:
+        for n, a in enumerate(found[:-1]):
+            base, dims, size, align = choose(labels[a][0], found[n + 1] - a, path)
+            if size > found[n + 1] - a:
+                interior.append((found[n + 1], labels[found[n + 1]][0])); del found[n + 1]; break
+        else:
+            return
+
+
+def in_death(labels, found, start, end):
+    """Where Death Label has the block: (its labels with Main names where it has none, its start, its end,
+    the Main-only addresses). A variable Death Label does not name is taken to be there when the named ones
+    around it are as far apart as in Main, and to be Main's own when they are closer by its size."""
+    named = [a for a in found if labels[a][0] in death_at]
+    if not named: return None
+    view = dict(death_labels)
+    main_only = set()
+    keep = set()
+    delta = death_at[labels[named[0]][0]] - named[0]
+    death_start = start + delta
+    position = {}
+    for n, a in enumerate(found):
+        name = labels[a][0]
+        if a in main_only: continue
+        if name in death_at:
+            delta = death_at[name] - a; position[a] = a + delta; continue
+        later = [b for b in found[n + 1:] if labels[b][0] in death_at]
+        after = death_at[labels[later[0]][0]] - later[0] if later else delta
+        if after >= delta:
+            position[a] = a + delta
+        else:
+            run = [b for b in found[n:] if not later or b < later[0]]
+            size = (later[0] if later else end) - a
+            assert delta - after == size, f'{name} at {a:#x}: Death Label is {delta - after:#x} bytes closer there'
+            main_only.update(run)
+    for a, da in position.items():
+        name = labels[a][0]
+        if name in death_at: continue
+        if da in view:
+            other = view[da][0]
+            if not placeholder(other, da) or other in used:
+                # Death Label's code has a variable of its own there
+                main_only.add(a); continue
+            view[da] = (name, view[da][1])
+        else:
+            if a < named[0] or a > named[-1]:
+                # nothing shows Death Label has it too, at the edge of the block
+                main_only.add(a); continue
+            view[da] = (name, 0)
+        keep.add(da)
+    there = [a for a in found if a not in main_only]
+    last = found.index(there[-1])
+    death_start = position[there[0]] - (there[0] - start if there[0] == found[0] else 0)
+    death_end = position[there[-1]] + (found[last + 1] if last + 1 < len(found) else end) - there[-1]
+    return view, death_start, death_end, main_only, keep
 
 
 def claim(text, target, start, end, stub):
@@ -184,6 +312,7 @@ def claim(text, target, start, end, stub):
 
 
 main_labels, death_labels = read_labels(TARGETS[0]), read_labels(TARGETS[1])
+forced = {main_labels[a][0]: v for a, v in arrays.items()}
 death_at = {name: a for a, (name, _) in death_labels.items()}
 yamls = {t: (R / f'config/{t}/splat.yaml').read_text() for t in TARGETS}
 symbols = {t: (R / f'config/{t}/symbols.txt').read_text() for t in TARGETS}
@@ -197,33 +326,68 @@ appended = {}
 failed = []
 for unit, start, end in jobs:
     try:
-        path = unit_path(unit)
+        found_paths = list((R / 'src/game').rglob(unit + '.c')) + list((R / 'src/death').rglob(unit + '.c'))
+        path = found_paths[0] if found_paths else R / 'src/game' / (unit + '.c')
+        assert len(found_paths) <= 1, found_paths
         stub = str(path.relative_to(R / 'src'))[:-2]
-        rows, interior = lay_out(main_labels, start, end, path)
-        missing = [r[1] for r in rows if r[1] not in death_at]
-        assert not missing, f'Death Label has no {missing[:4]}'
-        death_start = death_at[rows[0][1]]
-        death_end = death_at[rows[-1][1]] + end - rows[-1][0]
-        death_rows, death_interior = lay_out(death_labels, death_start, death_end, path)
-        shared = {r[1] for r in rows}
-        assert [r[1:] for r in death_rows if r[1] in shared] == [r[1:] for r in rows], 'Death Label needs different definitions'
-        death_only = {r[1] for r in death_rows} - shared
-        clash = sorted(n for n in death_only if n in main_names or (n in used and n not in declared))
-        assert not clash, f'Death Label only {clash[:4]} spell names of Main'
-        delta = death_start - start
-        text = appended.get(path, sources[path])
-        for r in rows:
+        rows, interior = arrange(main_labels, start, end, path, invent=True)
+        found = [r[0] for r in rows]
+        there = in_death(main_labels, found, start, end)
+        if there is None:
+            death_rows, death_interior, main_only, death_only, death_start, death_end = [], [], {r[1] for r in rows}, set(), None, None
+        else:
+            view, death_start, death_end, only_at, keep = there
+            death_rows, death_interior = arrange(view, death_start, death_end, path, keep)
+            main_only = {main_labels[a][0] for a in only_at}
+            shared = {r[1] for r in rows} - main_only
+            death_only = {r[1] for r in death_rows} - shared
+            # an alignment only one of the two needs does no harm where the other is aligned anyway
+            wanted = {}
+            for r in rows + death_rows:
+                width = int(re.search(r'\d+', r[4]).group()) if r[4] else 0
+                wanted[r[1]] = max(wanted.get(r[1], 0), width)
+            def widen(group):
+                out = []
+                for a, name, base, dims, attribute in group:
+                    width = wanted[name]
+                    if width and name in shared:
+                        assert a % width == 0, f'{name} cannot be aligned to {width} in both'
+                        attribute = ' __attribute__((aligned(%d)))' % width
+                    out.append((a, name, base, dims, attribute))
+                return out
+            rows, death_rows = widen(rows), widen(death_rows)
+            assert [r[1:] for r in death_rows if r[1] in shared] == [r[1:] for r in rows if r[1] in shared], \
+                'Death Label needs different definitions: %s' % [(x[1:], y[1:]) for x, y in zip([r for r in death_rows if r[1] in shared], [r for r in rows if r[1] in shared]) if x[1:] != y[1:]][:3]
+            clash = sorted(n for n in death_only if n in main_names)
+            assert not clash, f'Death Label only {clash[:4]} spell names of Main'
+        shared = {r[1] for r in rows} - main_only
+        text = appended.get(path, sources.get(path, '#include "common.h"\n'))
+        for r in rows + death_rows:
             assert not re.search(r'^(?!extern\b)\w[\w \*]*\b%s\b(\[[^\]]*\])*( __attribute__\(\(aligned\(\d+\)\)\))?;' % r[1], text, re.M), f'{r[1]} is already defined'
+        # one list in Main's order with Death Label's own variables where it has them
+        merged = []
+        j = 0
+        for r in rows:
+            if r[1] in main_only:
+                merged.append(('main', r)); continue
+            while death_rows[j][1] in death_only:
+                merged.append(('death', death_rows[j])); j += 1
+            merged.append(('both', r)); j += 1
+        merged += [('death', r) for r in death_rows[j:]]
         body = '\n/* %s (the compiler lays these out in reverse) */\n' % section
-        for _, name, base, dims, attribute in reversed(death_rows):
-            line = '%s%s%s%s%s;\n' % (base, '' if base.endswith('*') else ' ', name, dims, attribute)
-            body += '#ifdef DEATH_LABEL\n%s#endif\n' % line if name in death_only else line
-        body = body.replace('#endif\n#ifdef DEATH_LABEL\n', '')
+        previous = 'both'
+        for where, (_, name, base, dims, attribute) in reversed(merged):
+            if where != previous:
+                if previous != 'both': body += '#endif\n'
+                if where != 'both': body += '#ifdef DEATH_LABEL\n' if where == 'death' else '#ifndef DEATH_LABEL\n'
+                previous = where
+            body += written(base, name, dims, attribute)
+        if previous != 'both': body += '#endif\n'
         yamls[TARGETS[0]] = claim(yamls[TARGETS[0]], TARGETS[0], start, end, stub)
-        yamls[TARGETS[1]] = claim(yamls[TARGETS[1]], TARGETS[1], death_start, death_end, stub)
+        if death_rows: yamls[TARGETS[1]] = claim(yamls[TARGETS[1]], TARGETS[1], death_start, death_end, stub)
         appended[path] = text.rstrip('\n') + '\n' + body
         for t in TARGETS:
-            names = shared | (death_only if t == TARGETS[1] else set())
+            names = shared | (death_only if t == TARGETS[1] else main_only)
             kept = []
             for line in symbols[t].split('\n'):
                 m = re.match(r'(\w+)\s*=\s*0x', line)
@@ -240,11 +404,11 @@ for unit, start, end in jobs:
             if auto != name and (auto in used or auto in main_names) and not re.search(r'^death_%s\s*=' % auto, symbols[TARGETS[1]], re.M):
                 add.append('death_%s = 0x%x;' % (auto, a))
         if add: symbols[TARGETS[1]] = symbols[TARGETS[1]].rstrip('\n') + '\n' + '\n'.join(add) + '\n'
-        print('OK   %-22s %x..%x (Death Label %x..%x) %d variables, %d more in Death Label' % (unit, start, end, death_start, death_end, len(rows), len(death_only)))
+        print('OK   %-22s %x..%x (Death Label %s) %d variables, %d only in Main, %d only in Death Label' % (unit, start, end, '%x..%x' % (death_start, death_end) if death_rows else 'has none', len(rows), len(main_only), len(death_only)))
         if dry: print(body)
     except AssertionError as error:
         failed.append(unit)
-        print('FAIL %-22s %x..%x: %s' % (unit, start, end, error))
+        print('FAIL %-22s %x..%x: %s' % (unit, start, end, error.args[0] if error.args else error))
 if not dry:
     for path, text in appended.items(): path.write_text(text)
     for t in TARGETS:

@@ -463,7 +463,7 @@ segments:
       - {type: .sbss, vram: 0x28de80, name: game/credits_roll}
       - {type: .sbss, vram: 0x28de8c, name: game/pickup}
       - {type: .sbss, vram: 0x28deb8, name: game/game}
-      - {type: sbss, vram: 0x28def4, name: sbss_28def4}
+      - {type: .sbss, vram: 0x28def4, name: game/debug}
       - {type: .sbss, vram: 0x28df0c, name: game/ship_select}
       - {type: .sbss, vram: 0x28df1c, name: game/ground}
       - {type: .sbss, vram: 0x28df20, name: game/fade}
@@ -479,14 +479,21 @@ segments:
       - {type: .sbss, vram: 0x28e0d4, name: game/layers}
       - {type: .sbss, vram: 0x28e114, name: game/sprite_queue}
       - {type: .sbss, vram: 0x28e1a4, name: game/input}
-      - {type: sbss, vram: 0x28e1bc, name: sbss_28e1bc}
-      - {type: .sbss, vram: 0x28e98c, name: game/splash}
-      - {type: sbss, vram: 0x28e998, name: sbss_28e998}
+      - {type: .sbss, vram: 0x28e1bc, name: game/system_state}
+      - {type: .sbss, vram: 0x28e4b4, name: game/ranking}
+      - {type: .sbss, vram: 0x28e4f0, name: game/scoring}
+      - {type: .sbss, vram: 0x28e52c, name: game/debris}
+      - {type: .sbss, vram: 0x28e530, name: game/play_state}
+      - {type: .sbss, vram: 0x28e9a4, name: game/main}
       - {type: .sbss, vram: 0x28e9b8, name: game/text}
       - {type: .sbss, vram: 0x28e9dc, name: game/system}
       - {type: .sbss, vram: 0x28ea48, name: game/gfx}
       - {type: .sbss, vram: 0x28ea84, name: game/arcade_sprite}
-      - {type: sbss, vram: 0x28eaa8, name: sbss_28eaa8}
+      - {type: .sbss, vram: 0x28eaa8, name: game/menu}
+      - {type: .sbss, vram: 0x28ec70, name: game/memcard}
+      - {type: .sbss, vram: 0x28ed3c, name: game/replay}
+      - {type: .sbss, vram: 0x28ed88, name: game/replay_state}
+      - {type: sbss, vram: 0x28ed8c, name: sbss_28ed8c}
       - {type: bss, vram: 0x28f000, name: bss_28f000}
       - {type: .bss, vram: 0x2c0100, name: game/text}
       - {type: .bss, vram: 0x2c4f00, name: game/system}

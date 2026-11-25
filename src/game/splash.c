@@ -13,10 +13,9 @@ enum {
 
 #define SPLASH_HOLD_FRAMES 240
 
-/* (the compiler lays these out in reverse) */
-u16 g_splash_step __attribute__((aligned(4)));
-u16 g_splash_timer __attribute__((aligned(4)));
-s32 g_splash_unused;
+extern u16 g_splash_step;
+extern u16 g_splash_timer;
+extern s32 g_splash_unused;
 
 void splash_begin(void) {
     g_splash_timer = SPLASH_HOLD_FRAMES;

@@ -495,3 +495,6 @@ void func_001B9300(void) {
     *(u16 *)(reg_a0 + 0xA) = (reg_d0.h[0] != 0) ? *(u16 *)((u8 *)reg_a1 + ((s16)reg_d0.h[0] & ~1)) : *(u16 *)reg_a1;
     *(u16 *)(reg_a0 + 0xC) = ((reg_d0.h[0] + 2) != 0) ? *(u16 *)((u8 *)reg_a1 + ((s16)(reg_d0.h[0] + 2) & ~1)) : *(u16 *)reg_a1;
 }
+
+/* .sbss (the compiler lays these out in reverse) */
+u32 D_0028E52C;

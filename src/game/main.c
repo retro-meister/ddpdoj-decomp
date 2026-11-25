@@ -305,3 +305,11 @@ u8 D_0026F6C0[160] = {
     0x2E, 0x39, 0x39, 0x3B, 0x31, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00,
 };
 #endif
+
+/* .sbss (the compiler lays these out in reverse) */
+u16 D_0028E9B4 __attribute__((aligned(4)));
+u16 D_0028E9B0 __attribute__((aligned(4)));
+u16 D_0028E9AC __attribute__((aligned(4)));
+u16 D_0028E9A8 __attribute__((aligned(4)));
+s8 D_0028E9A5;
+s8 D_0028E9A4 __attribute__((aligned(4)));

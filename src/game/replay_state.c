@@ -3176,3 +3176,6 @@ void replay_file_pointers_decode(s32 arg0) {
     replay_snapshot_pointers_decode((void *)(arg0 + 0x400));
     replay_text_pointers_decode((void *)(arg0 + 0x5934));
 }
+
+/* .sbss (the compiler lays these out in reverse) */
+s32 g_replay_pointer_not_found;

@@ -485,9 +485,9 @@ segments:
       - {type: .sbss, vram: 0x290490, name: game/credits_roll}
       - {type: .sbss, vram: 0x29049c, name: game/enemy/enemy}
       - {type: .sbss, vram: 0x2904a8, name: game/fade}
-      - {type: sbss, vram: 0x2904c4, name: sbss_2904c4}
+      - {type: .sbss, vram: 0x2904c4, name: game/replay}
       - {type: .sbss, vram: 0x290510, name: game/ground}
-      - {type: sbss, vram: 0x290514, name: sbss_290514}
+      - {type: .sbss, vram: 0x290514, name: game/debris}
       - {type: .sbss, vram: 0x290518, name: game/enemy/enemy_common}
       - {type: .sbss, vram: 0x290554, name: game/sound_rpc}
       - {type: sbss, vram: 0x290568, name: sbss_290568}
@@ -499,16 +499,19 @@ segments:
       - {type: .sbss, vram: 0x2906a4, name: game/layers}
       - {type: .sbss, vram: 0x2906e4, name: game/sprite_queue}
       - {type: .sbss, vram: 0x290774, name: game/input}
-      - {type: sbss, vram: 0x29078c, name: sbss_29078c}
+      - {type: .sbss, vram: 0x29078c, name: game/system_state}
+      - {type: .sbss, vram: 0x290a88, name: game/memcard}
       - {type: .sbss, vram: 0x290b54, name: game/system}
       - {type: .sbss, vram: 0x290bc8, name: game/text}
-      - {type: sbss, vram: 0x290bec, name: sbss_290bec}
+      - {type: .sbss, vram: 0x290bec, name: game/menu}
+      - {type: .sbss, vram: 0x290dcc, name: game/replay_state}
       - {type: .sbss, vram: 0x290dd0, name: game/gfx}
-      - {type: sbss, vram: 0x290e0c, name: sbss_290e0c}
+      - {type: .sbss, vram: 0x290e0c, name: game/ranking}
+      - {type: .sbss, vram: 0x290e48, name: game/scoring}
       - {type: .sbss, vram: 0x290e84, name: game/arcade_sprite}
-      - {type: sbss, vram: 0x290ea8, name: sbss_290ea8}
-      - {type: .sbss, vram: 0x291318, name: game/splash}
-      - {type: sbss, vram: 0x291324, name: sbss_291324}
+      - {type: .sbss, vram: 0x290ea8, name: game/main}
+      - {type: .sbss, vram: 0x290ebc, name: game/play_state}
+      - {type: sbss, vram: 0x291330, name: sbss_291330}
       - {type: bss, vram: 0x291580, name: bss_291580}
       - {type: .bss, vram: 0x301010, name: game/glyph_cache}
       - {type: bss, vram: 0x30b080, name: bss_30b080}

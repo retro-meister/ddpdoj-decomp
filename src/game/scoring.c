@@ -1317,3 +1317,20 @@ s8 D_0025F6B0[192] = {
     45, 45, 45, 45, 45, 45, 45, 45, 45, 45, 45, 45, 0, 0, 0, 0,
     0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
 };
+
+/* .sbss (the compiler lays these out in reverse) */
+u32 reg_save3_d0;
+u32 reg_save3_d1;
+u32 reg_save3_d2;
+u32 reg_save3_d3;
+u32 reg_save3_d4;
+u32 reg_save3_d5;
+u32 reg_save3_d6;
+u32 reg_save3_d7;
+u8 *reg_save3_a0;
+u8 *reg_save3_a1;
+u8 *reg_save3_a2;
+u8 *reg_save3_a3;
+u8 *reg_save3_a4;
+u8 *reg_save3_a5;
+u8 *reg_save3_a6;

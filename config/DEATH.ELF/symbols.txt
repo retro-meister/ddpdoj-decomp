@@ -12909,3 +12909,6 @@ D_0026FD70 = 0x26fd70;
 D_0026FD80 = 0x26fd80;
 D_00270360 = 0x270360;
 D_0028DE8C = 0x290400;
+g_splash_unused = 0x291318;
+g_splash_timer = 0x29131c;
+g_splash_step = 0x291320;

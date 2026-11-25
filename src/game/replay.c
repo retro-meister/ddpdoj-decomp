@@ -1436,3 +1436,24 @@ u8 D_0028DE44[4] = {
 u8 D_0028DE48[8] = {
     0x00, 0x02, 0x04, 0x06, 0x08, 0x00, 0x00, 0x00,
 };
+
+/* .sbss (the compiler lays these out in reverse) */
+u32 g_replay_fade_id;
+u8 g_simulation_active __attribute__((aligned(4)));
+u8 g_replay_mode __attribute__((aligned(4)));
+u8 g_replay_mode_begun __attribute__((aligned(4)));
+u8 g_replay_buffer_state;
+s32 g_replay_position;
+u8 g_replay_begin_pending __attribute__((aligned(4)));
+u8 g_replay_watch_after_run __attribute__((aligned(4)));
+u8 D_0028ED64 __attribute__((aligned(4)));
+u8 D_0028ED60 __attribute__((aligned(4)));
+u8 D_0028ED5C __attribute__((aligned(4)));
+u8 g_replay_taken_over __attribute__((aligned(4)));
+u16 D_0028ED54;
+s32 D_0028ED50;
+u16 D_0028ED4C __attribute__((aligned(4)));
+u16 D_0028ED48;
+s32 D_0028ED44;
+u16 D_0028ED40;
+s32 g_replay_checksum;

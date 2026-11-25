@@ -5445,3 +5445,152 @@ void func_002260F0(void) {
         text_flush();
     }
 }
+
+/* .sbss (the compiler lays these out in reverse) */
+s32 D_0028EC6C;
+s32 D_0028EC68;
+#ifdef DEATH_LABEL
+u8 death_D_00290DC0 __attribute__((aligned(4)));
+u8 death_D_00290DBC;
+u32 death_D_00290DB8;
+u32 death_D_00290DB4;
+#endif
+s8 D_0028EC64 __attribute__((aligned(4)));
+s8 D_0028EC60 __attribute__((aligned(4)));
+s16 D_0028EC5C __attribute__((aligned(4)));
+s8 D_0028EC58 __attribute__((aligned(4)));
+#ifndef DEATH_LABEL
+u8 D_0028EC54;
+#endif
+s32 D_0028EC50;
+u8 D_0028EC4C;
+s32 g_replay_slots_alpha;
+s8 g_replay_slots_fade __attribute__((aligned(4)));
+s8 g_replay_slots_cursor __attribute__((aligned(4)));
+s8 g_replay_slots_state __attribute__((aligned(4)));
+u8 g_replay_slots_step __attribute__((aligned(4)));
+u8 g_replay_slots_pad __attribute__((aligned(4)));
+u8 g_replay_slots_from_disc __attribute__((aligned(4)));
+s8 g_replay_slots_saving __attribute__((aligned(4)));
+s8 g_replay_slot_loaded __attribute__((aligned(4)));
+s8 D_0028EC24 __attribute__((aligned(4)));
+s8 D_0028EC20;
+s32 D_0028EC1C;
+s8 D_0028EC1A;
+u8 D_0028EC19;
+u8 D_0028EC18;
+s32 D_0028EC14;
+s8 D_0028EC12;
+u8 D_0028EC11;
+u8 D_0028EC10;
+s32 D_0028EC0C;
+s8 D_0028EC0A;
+u8 D_0028EC09;
+u8 D_0028EC08;
+s32 D_0028EC04;
+s8 D_0028EC02;
+u8 D_0028EC01;
+u8 D_0028EC00;
+s32 D_0028EBFC;
+s8 D_0028EBFA;
+s16 D_0028EBF8 __attribute__((aligned(8)));
+s8 D_0028EBF2;
+u8 D_0028EBF1;
+u8 D_0028EBF0;
+s32 D_0028EBEC;
+s8 D_0028EBEA;
+u8 D_0028EBE9;
+u8 D_0028EBE8;
+s32 D_0028EBE4;
+u8 D_0028EBE0;
+s32 D_0028EBDC;
+u8 D_0028EBD8 __attribute__((aligned(8)));
+s8 D_0028EBD0 __attribute__((aligned(4)));
+u8 D_0028EBCC __attribute__((aligned(4)));
+s16 D_0028EBC8 __attribute__((aligned(4)));
+s8 D_0028EBC4 __attribute__((aligned(4)));
+s8 D_0028EBC0 __attribute__((aligned(4)));
+u8 D_0028EBBC;
+s32 D_0028EBB8;
+s32 D_0028EBB4;
+s32 D_0028EBB0;
+s32 D_0028EBAC;
+s32 D_0028EBA8;
+s32 D_0028EBA4;
+s32 D_0028EBA0;
+s32 D_0028EB9C;
+s32 D_0028EB98;
+#ifdef DEATH_LABEL
+s32 death_D_00290CE4;
+#endif
+s32 D_0028EB94;
+s32 D_0028EB90;
+s32 D_0028EB8C;
+s8 D_0028EB88 __attribute__((aligned(4)));
+s8 D_0028EB84 __attribute__((aligned(4)));
+s8 D_0028EB80 __attribute__((aligned(4)));
+s8 D_0028EB7C __attribute__((aligned(4)));
+s8 D_0028EB78 __attribute__((aligned(4)));
+s8 D_0028EB74 __attribute__((aligned(4)));
+s8 D_0028EB70 __attribute__((aligned(4)));
+s8 D_0028EB6C __attribute__((aligned(4)));
+s8 D_0028EB68 __attribute__((aligned(4)));
+s8 D_0028EB64 __attribute__((aligned(4)));
+s8 D_0028EB60 __attribute__((aligned(4)));
+#ifdef DEATH_LABEL
+s8 death_D_00290CA8 __attribute__((aligned(4)));
+#endif
+s8 D_0028EB5C __attribute__((aligned(4)));
+s8 D_0028EB58 __attribute__((aligned(4)));
+s8 D_0028EB54 __attribute__((aligned(4)));
+s8 D_0028EB50 __attribute__((aligned(4)));
+s8 D_0028EB4C __attribute__((aligned(4)));
+s8 D_0028EB48 __attribute__((aligned(4)));
+s8 D_0028EB44 __attribute__((aligned(4)));
+s8 D_0028EB40 __attribute__((aligned(4)));
+s8 D_0028EB3C __attribute__((aligned(4)));
+s8 D_0028EB38 __attribute__((aligned(4)));
+s8 D_0028EB34 __attribute__((aligned(4)));
+s8 D_0028EB30 __attribute__((aligned(4)));
+#ifdef DEATH_LABEL
+s8 death_D_00290C74 __attribute__((aligned(4)));
+#endif
+s8 D_0028EB2C __attribute__((aligned(4)));
+s8 D_0028EB28 __attribute__((aligned(4)));
+s8 D_0028EB24 __attribute__((aligned(4)));
+s8 D_0028EB20 __attribute__((aligned(4)));
+s8 D_0028EB1C __attribute__((aligned(4)));
+s8 D_0028EB18 __attribute__((aligned(4)));
+s8 D_0028EB14 __attribute__((aligned(4)));
+s8 D_0028EB10 __attribute__((aligned(4)));
+s8 D_0028EB0C __attribute__((aligned(4)));
+#ifdef DEATH_LABEL
+s8 death_D_00290C4C __attribute__((aligned(4)));
+#endif
+s8 D_0028EB08 __attribute__((aligned(4)));
+s8 D_0028EB04 __attribute__((aligned(4)));
+s8 D_0028EB00;
+s32 D_0028EAFC;
+s32 D_0028EAF8;
+s32 D_0028EAF4;
+s32 D_0028EAF0;
+s32 D_0028EAEC;
+s8 D_0028EAE8 __attribute__((aligned(4)));
+s8 D_0028EAE4 __attribute__((aligned(4)));
+s8 D_0028EAE0 __attribute__((aligned(4)));
+s8 D_0028EADC;
+s32 D_0028EAD8;
+s32 D_0028EAD4;
+s32 D_0028EAD0;
+s8 D_0028EACC __attribute__((aligned(4)));
+s8 D_0028EAC8;
+s32 D_0028EAC4;
+s32 D_0028EAC0;
+s32 D_0028EABC;
+u8 D_0028EAB8 __attribute__((aligned(4)));
+u8 g_replay_disc_load_step __attribute__((aligned(4)));
+u8 g_replay_disc_load_slot;
+u8 *g_replay_disc_load_buf;
+#ifndef DEATH_LABEL
+s8 D_0028EAA8 __attribute__((aligned(4)));
+#endif
