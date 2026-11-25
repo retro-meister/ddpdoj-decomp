@@ -947,14 +947,14 @@ void death_func_0021D210(void) {
     *(u8 *)(reg_a4 + 4) += reg_d0.b[0];
 }
 
-s32 func_001EBA00();
+s32 stage5_boss_fire_form2_jet_start();
 extern u8 death_D_00269860[];
 
 void death_func_0021D2E0(void) {
     s16 *temp_v1;
 
     if (g_bullets_blocked != 0) {
-        func_001EBA00();
+        stage5_boss_fire_form2_jet_start();
         return;
     }
     reg_tmp.b[0] = *(u8 *)(reg_a4 + 3);

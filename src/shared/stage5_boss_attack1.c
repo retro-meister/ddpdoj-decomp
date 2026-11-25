@@ -1,29 +1,29 @@
 #include "common.h"
 #include "entity.h"
 
-void func_001EE410(void);
-void func_001EE540(void);
-void func_001EE9D0(void);
-void func_001EEB90(s16 *arg1);
-void func_001EF150(void);
-void func_001EF2B0(void);
-void func_001EF9A0(void);
-void func_001EFAB0(void);
-void func_001F0050(void);
-void func_001F00D0(void);
+void stage5_boss_fire_loop1_form1_arm_guns_aimed_start(void);
+void stage5_boss_fire_loop1_form1_arm_guns_aimed(void);
+void stage5_boss_fire_loop1_form1_mouth_start(void);
+void stage5_boss_fire_loop1_form1_mouth(s16 *arg1);
+void stage5_boss_fire_loop1_form1_arm_guns_fixed_start(void);
+void stage5_boss_fire_loop1_form1_arm_guns_fixed(void);
+void stage5_boss_fire_loop1_form1_horn_start(void);
+void stage5_boss_fire_loop1_form1_horn(void);
+void stage5_boss_fire_loop1_form1_rage_start(void);
+void stage5_boss_fire_loop1_form1_rage(void);
 
 /* The set-up routine and the per-frame routine of every attack, by attack number. */
 void (*stage5_boss_fire_loop1_routines[])(void) = {
-    func_001EE410,
-    func_001EE540,
-    func_001EE9D0,
-    (void (*)(void))func_001EEB90,
-    func_001EF150,
-    func_001EF2B0,
-    func_001EF9A0,
-    func_001EFAB0,
-    func_001F0050,
-    func_001F00D0,
+    stage5_boss_fire_loop1_form1_arm_guns_aimed_start,
+    stage5_boss_fire_loop1_form1_arm_guns_aimed,
+    stage5_boss_fire_loop1_form1_mouth_start,
+    (void (*)(void))stage5_boss_fire_loop1_form1_mouth,
+    stage5_boss_fire_loop1_form1_arm_guns_fixed_start,
+    stage5_boss_fire_loop1_form1_arm_guns_fixed,
+    stage5_boss_fire_loop1_form1_horn_start,
+    stage5_boss_fire_loop1_form1_horn,
+    stage5_boss_fire_loop1_form1_rage_start,
+    stage5_boss_fire_loop1_form1_rage,
     0,
     0,
 };
@@ -147,7 +147,7 @@ void func_001EE390(void) {
 extern u16 D_002645E0[];
 extern u32 D_0028DA04;
 
-void func_001EE410(void) {
+void stage5_boss_fire_loop1_form1_arm_guns_aimed_start(void) {
     u16 *temp_a0;
     reg_a0 = (u8 *)(D_002645E0);
     reg_a1 = (u8 *)(reg_a4 + 2);
@@ -177,7 +177,7 @@ extern u16 D_00262A50_as_u16_a[];
 extern u16 D_00264600_as_u16_a[];
 extern u16 D_00264620[];
 
-void func_001EE540(void) {
+void stage5_boss_fire_loop1_form1_arm_guns_aimed(void) {
     s32 bullet_fire256();
     u32 t1;
     u32 t2;
@@ -304,7 +304,7 @@ s32 func_00201270();
 extern u16 D_00264760[];
 extern u32 D_0028DA08;
 
-void func_001EE9D0(void) {
+void stage5_boss_fire_loop1_form1_mouth_start(void) {
     u16 *temp_a0;
     reg_a0 = (u8 *)(D_00264760);
     reg_a1 = (u8 *)(reg_a4 + 2);
@@ -346,7 +346,7 @@ s32 direction256_between();
 extern s16 g_player2[];
 extern s16 g_player1[];
 
-void func_001EEB90(s16 *arg1) {
+void stage5_boss_fire_loop1_form1_mouth(s16 *arg1) {
     s32 bullet_fire256();
     s16 *temp_a0;
     s16 *var_a1;
@@ -536,7 +536,7 @@ extern u32 D_0028DA0C;
 extern u16 *reg_a0_as_u16_p;
 extern u16 *reg_a1_as_u16_p;
 
-void func_001EF150(void) {
+void stage5_boss_fire_loop1_form1_arm_guns_fixed_start(void) {
     reg_a0_as_u16_p = D_00264780;
     reg_a1_as_u16_p = (u16 *)(reg_a4 + 2);
     reg_d0.w = ((u32) D_0028DA0C >> 1) - 1;
@@ -570,7 +570,7 @@ void func_001EF150(void) {
 s32 func_00201100();
 extern u8 D_00264600[];
 
-void func_001EF2B0(void) {
+void stage5_boss_fire_loop1_form1_arm_guns_fixed(void) {
     s32 bullet_fire256();
     s16 *temp_a0;
     s16 *var_a1;
@@ -764,7 +764,7 @@ void func_001EF990(void) {
 extern u16 D_002647A0[];
 extern u32 D_0028DA10;
 
-void func_001EF9A0(void) {
+void stage5_boss_fire_loop1_form1_horn_start(void) {
     reg_a0_as_u16_p = D_002647A0;
     reg_a1_as_u16_p = (u16 *)(reg_a4 + 2);
     reg_d0.w = ((u32) D_0028DA10 >> 1) - 1;
@@ -788,7 +788,7 @@ void func_001EF9A0(void) {
 
 extern u16 D_002647C0[];
 
-void func_001EFAB0(void) {
+void stage5_boss_fire_loop1_form1_horn(void) {
     s16 *temp_a0_2;
     s8 temp_a0_5;
     s8 temp_a0_6;
@@ -965,7 +965,7 @@ extern u16 D_00264800[];
 extern u32 D_0028DA14;
 extern s32 reg_a4_as_s32;
 
-void func_001F0050(void) {
+void stage5_boss_fire_loop1_form1_rage_start(void) {
     reg_a0_as_u16_p = D_00264800;
     reg_a1_as_u16_p = (u16 *)(reg_a4_as_s32 + 2);
     reg_d0.w = ((u32) D_0028DA14 >> 1) - 1;

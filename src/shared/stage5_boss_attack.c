@@ -1,65 +1,65 @@
 #include "common.h"
 #include "entity.h"
 
-void func_001E94A0(void);
-void func_001E95D0(void);
-void func_001E9AA0(void);
-void func_001E9C60(s16 *arg1);
-void func_001EA1A0(void);
-void func_001EA300(void);
-void func_001EA9A0(void);
-void func_001EAAB0(void);
-void func_001EB060(void);
-void func_001EB0E0(void);
-void func_001EB300(void);
-void func_001EB440(s16 *arg1);
-void func_001EBA00(void);
+void stage5_boss_fire_form1_arm_guns_aimed_start(void);
+void stage5_boss_fire_form1_arm_guns_aimed(void);
+void stage5_boss_fire_form1_mouth_start(void);
+void stage5_boss_fire_form1_mouth(s16 *arg1);
+void stage5_boss_fire_form1_arm_guns_fixed_start(void);
+void stage5_boss_fire_form1_arm_guns_fixed(void);
+void stage5_boss_fire_form1_horn_start(void);
+void stage5_boss_fire_form1_horn(void);
+void stage5_boss_fire_form1_rage_start(void);
+void stage5_boss_fire_form1_rage(void);
+void stage5_boss_fire_form2_mouth_start(void);
+void stage5_boss_fire_form2_mouth(s16 *arg1);
+void stage5_boss_fire_form2_jet_start(void);
 void stage5_boss_fire_form2_jet(void);
-void func_001EBE90(void);
-void func_001EBF40(void);
+void stage5_boss_fire_form2_horn_start(void);
+void stage5_boss_fire_form2_horn(void);
 void stage5_boss_fire_form2_stinger_start(void);
 void stage5_boss_fire_form2_stinger(void);
-void func_001EC810(void);
-void func_001EC920(void);
-void func_001ECD10(void);
-void func_001ECE40(void);
-void func_001ED160(void);
-void func_001ED1E0(u8 *arg0, s16 *arg1);
-void func_001ED410(void);
+void stage5_boss_fire_form3_attack_a_start(void);
+void stage5_boss_fire_form3_attack_a(void);
+void stage5_boss_fire_form3_attack_b_start(void);
+void stage5_boss_fire_form3_attack_b(void);
+void stage5_boss_fire_form3_attack_c_start(void);
+void stage5_boss_fire_form3_attack_c(u8 *arg0, s16 *arg1);
+void stage5_boss_fire_form3_spiral_start(void);
 void stage5_boss_fire_form3_spiral(void);
-void func_001EDC80(void);
-void func_001EDD50(void);
+void stage5_boss_fire_form3_rage_start(void);
+void stage5_boss_fire_form3_rage(void);
 
 /* The set-up routine and the per-frame routine of every attack, by attack number. */
 void (*stage5_boss_fire_routines[])(void) = {
-    func_001E94A0,
-    func_001E95D0,
-    func_001E9AA0,
-    (void (*)(void))func_001E9C60,
-    func_001EA1A0,
-    func_001EA300,
-    func_001EA9A0,
-    func_001EAAB0,
-    func_001EB060,
-    func_001EB0E0,
-    func_001EB300,
-    (void (*)(void))func_001EB440,
-    func_001EBA00,
+    stage5_boss_fire_form1_arm_guns_aimed_start,
+    stage5_boss_fire_form1_arm_guns_aimed,
+    stage5_boss_fire_form1_mouth_start,
+    (void (*)(void))stage5_boss_fire_form1_mouth,
+    stage5_boss_fire_form1_arm_guns_fixed_start,
+    stage5_boss_fire_form1_arm_guns_fixed,
+    stage5_boss_fire_form1_horn_start,
+    stage5_boss_fire_form1_horn,
+    stage5_boss_fire_form1_rage_start,
+    stage5_boss_fire_form1_rage,
+    stage5_boss_fire_form2_mouth_start,
+    (void (*)(void))stage5_boss_fire_form2_mouth,
+    stage5_boss_fire_form2_jet_start,
     stage5_boss_fire_form2_jet,
-    func_001EBE90,
-    func_001EBF40,
+    stage5_boss_fire_form2_horn_start,
+    stage5_boss_fire_form2_horn,
     stage5_boss_fire_form2_stinger_start,
     stage5_boss_fire_form2_stinger,
-    func_001EC810,
-    func_001EC920,
-    func_001ECD10,
-    func_001ECE40,
-    func_001ED160,
-    (void (*)(void))func_001ED1E0,
-    func_001ED410,
+    stage5_boss_fire_form3_attack_a_start,
+    stage5_boss_fire_form3_attack_a,
+    stage5_boss_fire_form3_attack_b_start,
+    stage5_boss_fire_form3_attack_b,
+    stage5_boss_fire_form3_attack_c_start,
+    (void (*)(void))stage5_boss_fire_form3_attack_c,
+    stage5_boss_fire_form3_spiral_start,
     stage5_boss_fire_form3_spiral,
-    func_001EDC80,
-    func_001EDD50,
+    stage5_boss_fire_form3_rage_start,
+    stage5_boss_fire_form3_rage,
 };
 
 s32 bullet_fire256_fixed();
@@ -184,7 +184,7 @@ void func_001E9420(void) {
 extern u16 D_00264140[];
 extern u32 D_0028D9CC;
 
-void func_001E94A0(void) {
+void stage5_boss_fire_form1_arm_guns_aimed_start(void) {
     u16 *temp_a0;
     reg_a0 = (u8 *)(D_00264140);
     reg_a1 = (u8 *)(reg_a4 + 2);
@@ -214,7 +214,7 @@ extern u16 D_00264160_as_u16_a[];
 extern u16 D_00264180[];
 extern u16 g_bullets_blocked;
 
-void func_001E95D0(void) {
+void stage5_boss_fire_form1_arm_guns_aimed(void) {
     u32 t1;
     u32 t2;
     u32 t3;
@@ -226,7 +226,7 @@ void func_001E95D0(void) {
     u8 t9;
 
     if (g_bullets_blocked != 0) {
-        func_001E94A0();
+        stage5_boss_fire_form1_arm_guns_aimed_start();
         return;
     }
     reg_tmp.b[0] = *(u8 *)(reg_a4 + 3);
@@ -356,7 +356,7 @@ s32 func_00201270();
 extern u16 D_002642C0[];
 extern u32 D_0028D9D0;
 
-void func_001E9AA0(void) {
+void stage5_boss_fire_form1_mouth_start(void) {
     u16 *temp_a0;
     reg_a0 = (u8 *)(D_002642C0);
     reg_a1 = (u8 *)(reg_a4 + 2);
@@ -400,7 +400,7 @@ s32 direction256_between();
 extern s16 g_player2[];
 extern s16 g_player1[];
 
-void func_001E9C60(s16 *arg1) {
+void stage5_boss_fire_form1_mouth(s16 *arg1) {
     s16 *temp_a0;
     s16 *var_a1;
     u32 temp_v1;
@@ -409,7 +409,7 @@ void func_001E9C60(s16 *arg1) {
 
     var_a1 = (s16 *)(arg1);
     if (g_bullets_blocked != 0) {
-        func_001E9AA0();
+        stage5_boss_fire_form1_mouth_start();
         return;
     }
     reg_tmp.b[0] = *(u8 *)(reg_a4 + 3);
@@ -570,7 +570,7 @@ extern u32 D_0028D9D4;
 extern u16 *reg_a0_as_u16_p;
 extern u16 *reg_a1_as_u16_p;
 
-void func_001EA1A0(void) {
+void stage5_boss_fire_form1_arm_guns_fixed_start(void) {
     reg_a0_as_u16_p = D_002642E0;
     reg_a1_as_u16_p = (u16 *)(reg_a4 + 2);
     reg_d0.w = ((u32) D_0028D9D4 >> 1) - 1;
@@ -604,7 +604,7 @@ void func_001EA1A0(void) {
 s32 func_00201100();
 extern u8 D_00264160[];
 
-void func_001EA300(void) {
+void stage5_boss_fire_form1_arm_guns_fixed(void) {
     s16 *temp_a0;
     s16 *var_a1;
     u16 temp_a0_2;
@@ -612,7 +612,7 @@ void func_001EA300(void) {
     u16 temp_v0_2;
 
     if (g_bullets_blocked != 0) {
-        func_001EA1A0();
+        stage5_boss_fire_form1_arm_guns_fixed_start();
         return;
     }
     reg_tmp.b[0] = *(u8 *)(reg_a4 + 3);
@@ -790,7 +790,7 @@ void bullet_fire256_double_entry(void) {
 extern u16 D_00264300[];
 extern u32 D_0028D9D8;
 
-void func_001EA9A0(void) {
+void stage5_boss_fire_form1_horn_start(void) {
     reg_a0_as_u16_p = D_00264300;
     reg_a1_as_u16_p = (u16 *)(reg_a4 + 2);
     reg_d0.w = ((u32) D_0028D9D8 >> 1) - 1;
@@ -812,7 +812,7 @@ void func_001EA9A0(void) {
 
 extern u16 D_00264320[];
 
-void func_001EAAB0(void) {
+void stage5_boss_fire_form1_horn(void) {
     s16 *t1;
     s8 t2;
     s8 t3;
@@ -826,7 +826,7 @@ void func_001EAAB0(void) {
     u8 t11;
 
     if (g_bullets_blocked != 0) {
-        func_001EA9A0();
+        stage5_boss_fire_form1_horn_start();
         return;
     }
     reg_tmp.b[0] = *(u8 *)(reg_a4 + 3);
@@ -1004,7 +1004,7 @@ extern u16 D_00264360[];
 extern u32 D_0028D9DC;
 extern s32 reg_a4_as_s32;
 
-void func_001EB060(void) {
+void stage5_boss_fire_form1_rage_start(void) {
     reg_a0_as_u16_p = D_00264360;
     reg_a1_as_u16_p = (u16 *)(reg_a4_as_s32 + 2);
     reg_d0.w = ((u32) D_0028D9DC >> 1) - 1;
@@ -1017,13 +1017,13 @@ void func_001EB060(void) {
 
 extern u8 D_00262A50_as_u8_a[];
 
-void func_001EB0E0(void) {
+void stage5_boss_fire_form1_rage(void) {
     u32 temp_a0;
     u8 temp_v1;
     u8 temp_v1_2;
 
     if (g_bullets_blocked != 0) {
-        func_001EB060();
+        stage5_boss_fire_form1_rage_start();
         return;
     }
     reg_tmp.b[0] = *(u8 *)(reg_a4 + 3);
@@ -1081,7 +1081,7 @@ s32 rng_next_masked();
 extern u16 D_00264380[];
 extern u32 D_0028D9E0;
 
-void func_001EB300(void) {
+void stage5_boss_fire_form2_mouth_start(void) {
     u16 *temp_a0;
     reg_a0 = (u8 *)(D_00264380);
     reg_a1 = (u8 *)(reg_a4 + 2);
@@ -1110,7 +1110,7 @@ void func_001EB300(void) {
 
 extern s16 D_00262A50[];
 
-void func_001EB440(s16 *arg1) {
+void stage5_boss_fire_form2_mouth(s16 *arg1) {
     s32 bullet_fire256_direct();
     s16 *t1;
     s16 *t2;
@@ -1121,7 +1121,7 @@ void func_001EB440(s16 *arg1) {
 
     t2 = (s16 *)(arg1);
     if (g_bullets_blocked != 0) {
-        func_001EB300();
+        stage5_boss_fire_form2_mouth_start();
         return;
     }
     reg_tmp.b[0] = *(u8 *)(reg_a4 + 3);
@@ -1278,7 +1278,7 @@ void func_001EB8E0(void) {
 extern u16 D_00264390[];
 extern u32 D_0028D9E4;
 
-void func_001EBA00(void) {
+void stage5_boss_fire_form2_jet_start(void) {
     reg_a0_as_u16_p = D_00264390;
     reg_a1_as_u16_p = (u16 *)(reg_a4 + 2);
     reg_d0.w = ((u32) D_0028D9E4 >> 1) - 1;
@@ -1302,7 +1302,7 @@ void stage5_boss_fire_form2_jet(void) {
     u8 temp_v0;
 
     if (g_bullets_blocked != 0) {
-        func_001EBA00();
+        stage5_boss_fire_form2_jet_start();
         return;
     }
     reg_tmp.b[0] = *(u8 *)(reg_a4 + 3);
@@ -1412,7 +1412,7 @@ void func_001EBD30(void) {
 extern u16 D_002643C0[];
 extern u32 D_0028D9E8;
 
-void func_001EBE90(void) {
+void stage5_boss_fire_form2_horn_start(void) {
     reg_a0_as_u16_p = D_002643C0;
     reg_a1_as_u16_p = (u16 *)(reg_a4 + 2);
     reg_d0.w = ((u32) D_0028D9E8 >> 1) - 1;
@@ -1429,7 +1429,7 @@ void func_001EBE90(void) {
 
 extern u8 stage5_boss_horn_shot_offsets[];
 
-void func_001EBF40(void) {
+void stage5_boss_fire_form2_horn(void) {
     s16 *temp_a0;
     u16 temp_a0_2;
     u16 temp_v0_2;
@@ -1438,7 +1438,7 @@ void func_001EBF40(void) {
     u8 *var_a1;
 
     if (g_bullets_blocked != 0) {
-        func_001EBE90();
+        stage5_boss_fire_form2_horn_start();
         return;
     }
     reg_tmp.b[0] = *(u8 *)(reg_a4 + 3);
@@ -1701,7 +1701,7 @@ void func_001EC790(void) {
 extern u16 D_00264540[];
 extern u32 D_0028D9F0;
 
-void func_001EC810(void) {
+void stage5_boss_fire_form3_attack_a_start(void) {
     u16 *temp_a0;
     reg_a0 = (u8 *)(D_00264540);
     reg_a1 = (u8 *)(reg_a4 + 2);
@@ -1725,7 +1725,7 @@ void func_001EC810(void) {
 }
 
 
-void func_001EC920(void) {
+void stage5_boss_fire_form3_attack_a(void) {
     s16 *temp_v1;
     s16 *var_a0;
     u16 temp_v0_2;
@@ -1850,7 +1850,7 @@ void func_001ECBD0(void) {
 extern u16 D_00264550[];
 extern u32 D_0028D9F4;
 
-void func_001ECD10(void) {
+void stage5_boss_fire_form3_attack_b_start(void) {
     reg_a0_as_u16_p = D_00264550;
     reg_a1_as_u16_p = (u16 *)(reg_a4 + 2);
     reg_d0.w = ((u32) D_0028D9F4 >> 1) - 1;
@@ -1876,7 +1876,7 @@ void func_001ECD10(void) {
 s32 func_00202A80();
 extern s16 g_enemy_signal_2_as_s16;
 
-void func_001ECE40() {
+void stage5_boss_fire_form3_attack_b() {
     u16 temp_v0_2;
     u16 temp_v0_3;
     u8 temp_v0;
@@ -1964,7 +1964,7 @@ void func_001ECF90(void) {
 extern u16 D_00264560[];
 extern u32 D_0028D9F8;
 
-void func_001ED160(void) {
+void stage5_boss_fire_form3_attack_c_start(void) {
     reg_a0_as_u16_p = D_00264560;
     reg_a1_as_u16_p = (u16 *)(reg_a4 + 2);
     reg_d0.w = ((u32) D_0028D9F8 >> 1) - 1;
@@ -1979,7 +1979,7 @@ void func_001ED160(void) {
 extern u16 g_player2_as_u16_a[];
 extern u16 g_player1_as_u16_a[];
 
-void func_001ED1E0(u8 *arg0, s16 *arg1) {
+void stage5_boss_fire_form3_attack_c(u8 *arg0, s16 *arg1) {
     s16 *temp_a0;
     s16 *var_a1;
     u8 temp_a1;
@@ -2067,7 +2067,7 @@ s32 func_00201230();
 extern u16 D_00264570[];
 extern u32 D_0028D9FC;
 
-void func_001ED410(void) {
+void stage5_boss_fire_form3_spiral_start(void) {
     u16 *temp_a0;
     reg_a0 = (u8 *)(D_00264570);
     reg_a1 = (u8 *)(reg_a4 + 2);
@@ -2108,7 +2108,7 @@ void stage5_boss_fire_form3_spiral(void) {
     reg_d0.w = 0xC;
     boss_attack_stop();
     if (g_bullets_blocked != 0) {
-        func_001ED410();
+        stage5_boss_fire_form3_spiral_start();
         return;
     }
     reg_tmp.b[0] = *(u8 *)(reg_a4 + 3);
@@ -2289,7 +2289,7 @@ void func_001EDB00(void) {
 extern u16 D_00264590[];
 extern u32 D_0028DA00;
 
-void func_001EDC80(void) {
+void stage5_boss_fire_form3_rage_start(void) {
     u16 *temp_a0;
     reg_a0 = (u8 *)(D_00264590);
     reg_a1 = (u8 *)(reg_a4 + 2);
@@ -2314,7 +2314,7 @@ extern u16 D_00259870[];
 extern s16 g_enemy_signal_1_as_s16;
 extern s16 g_enemy_signal_0_as_s16;
 
-void func_001EDD50(void) {
+void stage5_boss_fire_form3_rage(void) {
     s32 bullet_fire256_direct();
     u8 *p;
     u8 t;

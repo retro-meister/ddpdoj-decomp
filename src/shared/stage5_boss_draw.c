@@ -51,7 +51,7 @@ s32 func_001EFF10();
 s32 slowdown_allow_with_boss();
 extern u8 D_00262A50_as_u8_a[];
 
-void func_001F00D0(void) {
+void stage5_boss_fire_loop1_form1_rage(void) {
     u32 temp_a0;
     u8 temp_v1;
     u8 temp_v1_2;
