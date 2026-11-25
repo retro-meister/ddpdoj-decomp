@@ -76,6 +76,11 @@ extern u8 *reg_atmp; /* scratch address register (exchanges) */
     (words)[0] = reg_tmp.h[1]; \
     (words)[1] = reg_tmp.h[0]
 
+/* The same store written without the scratch register. */
+#define STORE_POINTER_DIRECT(words, target) \
+    (words)[0] = ((u32)(target)) >> 16; \
+    (words)[1] = ((u32)(target)) & 0xFFFF
+
 /* The same for any other 32-bit value kept as two words. */
 #define STORE_LONG(words, value) \
     reg_tmp.w = (u32)(value); \
