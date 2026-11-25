@@ -1,5 +1,6 @@
 /* State every unit shares: the registers the arcade-derived code computes in, the frame counters, the build,
-   test and option settings. Both executables keep it as one block; no unit of code owns it. */
+   test and option settings. Both executables keep it as one block, and its order follows no order of the
+   code, so it is one object file's variables and not a run per unit; no unit of code owns it. */
 #include "common.h"
 
 /* .sbss (the compiler lays these out in reverse) */

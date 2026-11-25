@@ -483,7 +483,25 @@ segments:
       - {type: .sbss, vram: 0x28e4b4, name: game/ranking}
       - {type: .sbss, vram: 0x28e4f0, name: game/scoring}
       - {type: .sbss, vram: 0x28e52c, name: game/debris}
-      - {type: .sbss, vram: 0x28e530, name: game/play_state}
+      - {type: .sbss, vram: 0x28e530, name: game/sparks}
+      - {type: .sbss, vram: 0x28e574, name: game/stage2/stage2_boss_misc}
+      - {type: .sbss, vram: 0x28e578, name: game/scoring_state}
+      - {type: .sbss, vram: 0x28e76c, name: game/ranking_state}
+      - {type: .sbss, vram: 0x28e77c, name: game/player/player_panel}
+      - {type: .sbss, vram: 0x28e784, name: game/stage_clear_colors}
+      - {type: .sbss, vram: 0x28e798, name: game/stage_clear_objects}
+      - {type: .sbss, vram: 0x28e7a4, name: game/item}
+      - {type: .sbss, vram: 0x28e7b4, name: game/attract_state}
+      - {type: .sbss, vram: 0x28e7c0, name: game/enemy/enemy_common_state}
+      - {type: .sbss, vram: 0x28e7d4, name: game/enemy/enemy_state}
+      - {type: .sbss, vram: 0x28e7f0, name: game/difficulty}
+      - {type: .sbss, vram: 0x28e7f8, name: game/debug_state}
+      - {type: .sbss, vram: 0x28e83c, name: game/game_state}
+      - {type: .sbss, vram: 0x28e948, name: game/stage_clear_state}
+      - {type: .sbss, vram: 0x28e964, name: game/bullet}
+      - {type: .sbss, vram: 0x28e970, name: game/pickup_state}
+      - {type: .sbss, vram: 0x28e98c, name: game/splash}
+      - {type: .sbss, vram: 0x28e998, name: game/unowned_state}
       - {type: .sbss, vram: 0x28e9a4, name: game/main}
       - {type: .sbss, vram: 0x28e9b8, name: game/text}
       - {type: .sbss, vram: 0x28e9dc, name: game/system}
@@ -516,7 +534,16 @@ segments:
       - {type: .bss, vram: 0x2b2710, name: game/zoom}
       - {type: .bss, vram: 0x2b2750, name: game/screen_clear}
       - {type: .bss, vram: 0x2bad50, name: game/name_entry}
-      - {type: .bss, vram: 0x2bae90, name: game/play_state}
+      - {type: .bss, vram: 0x2bae90, name: game/wreck_state}
+      - {type: .bss, vram: 0x2baeb0, name: game/scoring_state}
+      - {type: .bss, vram: 0x2bb430, name: game/stage_clear_colors}
+      - {type: .bss, vram: 0x2bb4b0, name: game/item}
+      - {type: .bss, vram: 0x2bbaf0, name: game/enemy/enemy_state}
+      - {type: .bss, vram: 0x2bf350, name: game/debug_state}
+      - {type: .bss, vram: 0x2bf390, name: game/game_state}
+      - {type: .bss, vram: 0x2bf3e0, name: game/continue_screen}
+      - {type: .bss, vram: 0x2bf400, name: game/stage_clear_state}
+      - {type: .bss, vram: 0x2bf4f0, name: game/pickup_state}
       - {type: .bss, vram: 0x2c0100, name: game/text}
       - {type: .bss, vram: 0x2c4f00, name: game/system}
       - {type: .bss, vram: 0x57cf80, name: game/glyph_cache}

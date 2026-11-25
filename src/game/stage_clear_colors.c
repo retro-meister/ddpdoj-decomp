@@ -162,3 +162,16 @@ void func_00172260(void) {
         sprite_draw_layer1();
     }
 }
+
+/* .sbss (the compiler lays these out in reverse) */
+u16 D_0028E794 __attribute__((aligned(4)));
+u8 D_0028E791;
+u8 D_0028E790 __attribute__((aligned(4)));
+u16 D_0028E78C __attribute__((aligned(4)));
+u16 D_0028E788 __attribute__((aligned(4)));
+s16 D_0028E784 __attribute__((aligned(4)));
+
+/* .bss (the compiler lays these out in reverse) */
+u8 D_002BB470[64];
+s16 D_002BB460[8];
+s8 D_002BB430[48];

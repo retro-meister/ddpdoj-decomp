@@ -53,3 +53,8 @@ void splash_update(void) {
     }
     cond_flag = 1;
 }
+
+/* .sbss (the compiler lays these out in reverse) */
+u16 g_splash_step __attribute__((aligned(4)));
+u16 g_splash_timer;
+s32 g_splash_unused;

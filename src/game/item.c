@@ -1090,3 +1090,17 @@ void func_0016C410() {
     reg_d0.h[0] += 7;
     ENTITY(reg_a6)->move.b.speed = (u8) reg_d0.b[0];
 }
+
+/* .sbss (the compiler lays these out in reverse) */
+u16 D_0028E7B0 __attribute__((aligned(4)));
+u16 D_0028E7AC;
+u8 D_0028E7A8[4];
+u8 D_0028E7A4[4];
+
+/* .bss (the compiler lays these out in reverse) */
+u8 D_002BBAB0[64];
+u8 D_002BB930[384];
+u8 D_002BB7B0[384];
+u8 D_002BB730[128];
+u8 D_002BB6B0[128];
+u8 D_002BB4B0[512];

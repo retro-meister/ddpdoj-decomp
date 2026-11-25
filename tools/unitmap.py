@@ -314,10 +314,14 @@ def coverage(target):
     out = {}
     for section in SECTION_ORDER:
         start, end = target.bounds[section]
-        owned = 0
+        # a C object places every variable as a piece of its own: count from its first piece to its last,
+        # so that the alignment fill between two short variables is not taken for bytes left in assembly
+        spans = {}
         for kind, address, size, path in target.placements:
             if kind == section and address and "/objects/src/" in path:
-                owned += size
+                low, high = spans.get(path, (address, address + size))
+                spans[path] = (min(low, address), max(high, address + size))
+        owned = sum(high - low for low, high in spans.values())
         if section == ".text":
             owned = end - GAME_START
         out[section] = (owned, end - start)

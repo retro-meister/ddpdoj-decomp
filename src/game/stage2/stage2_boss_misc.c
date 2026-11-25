@@ -335,3 +335,6 @@ s32 D_0026C570[48] = {
 u8 D_0028DB10[8] = {
     0xB8, 0x01, 0x00, 0x00, 0xB7, 0x01, 0x00, 0x00,
 };
+
+/* .sbss (the compiler lays these out in reverse) */
+u16 D_0028E574[2];

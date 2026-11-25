@@ -2881,3 +2881,8 @@ u8 D_002962E0[67216];
 #else
 u8 D_002962E0[13456];
 #endif
+
+/* .sbss (the compiler lays these out in reverse) */
+u16 D_0028E96C __attribute__((aligned(4)));
+u16 D_0028E968;
+u32 D_0028E964;

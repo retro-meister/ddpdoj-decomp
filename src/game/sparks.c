@@ -818,3 +818,22 @@ void func_0020B640(void)
 
 /* .bss (the compiler lays these out in reverse) */
 u8 D_00299D30[2048];
+
+/* .sbss (the compiler lays these out in reverse) */
+u8 *D_0028E570;
+u8 *reg_save4_a0;
+u8 *reg_save4_a1;
+u8 *reg_save4_a2;
+u8 *reg_save4_a3;
+u8 *reg_save4_a4;
+u8 *reg_save4_a5;
+u8 *reg_save4_a6;
+u32 reg_save4_d0;
+u32 reg_save4_d1;
+u32 reg_save4_d2;
+u32 reg_save4_d3;
+u32 reg_save4_d4;
+u32 reg_save4_d5;
+u32 reg_save4_d6;
+u32 reg_save4_d7;
+s32 D_0028E530;

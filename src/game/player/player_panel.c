@@ -475,3 +475,7 @@ void func_001A3BA0(s32 arg3) {
         deferred_text_put();
     }
 }
+
+/* .sbss (the compiler lays these out in reverse) */
+s32 D_0028E780;
+s32 D_0028E77C;

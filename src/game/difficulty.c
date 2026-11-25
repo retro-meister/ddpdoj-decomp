@@ -343,3 +343,7 @@ void func_00138750(void) {
     func_00206080();
     reg_a4 = temp_s0;
 }
+
+/* .sbss (the compiler lays these out in reverse) */
+s32 D_0028E7F4;
+u16 D_0028E7F0 __attribute__((aligned(4)));

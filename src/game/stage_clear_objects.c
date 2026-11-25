@@ -398,3 +398,8 @@ u8 D_0028DAC0[8] = {
 u8 D_0028DAC8[8] = {
     0x02, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00,
 };
+
+/* .sbss (the compiler lays these out in reverse) */
+s16 D_0028E7A0 __attribute__((aligned(4)));
+s16 D_0028E79C __attribute__((aligned(4)));
+s16 D_0028E798 __attribute__((aligned(4)));
