@@ -1,4 +1,5 @@
 #include "common.h"
+#include "player.h"
 #include "entity.h"
 
 extern void enemy_set_entity_count(s32);
@@ -3322,8 +3323,6 @@ void func_00164590(void) {
 s32 entity_follow_scroll();
 s32 func_00203380();
 extern s8 g_boss_present_b1_as_s8;
-extern u16 D_0029F1F4[];
-extern u16 D_0029F264[];
 
 void func_00164600(void) {
     u32 saved;
@@ -3378,7 +3377,7 @@ next_4:
     func_00203380();
     if (reg_d0.h[0] == 0) goto block_rts;
     if (!(reg_d0.h[0] & 1)) goto next_6;
-    reg_d2.h[0] = D_0029F264[0];
+    reg_d2.h[0] = PLAYER(g_player1)->x.h;
     reg_d1.h[0] = ENTITY(reg_a6)->x.h;
     reg_d1.h[0] -= reg_d2.h[0];
     if ((s16) reg_d1.h[0] >= 0) goto next_5;
@@ -3387,7 +3386,7 @@ next_5:
     if ((s32) reg_d1.h[0] < 0x240) goto next_8;
     if (!(reg_d0.h[0] & 2)) goto block_rts;
 next_6:
-    reg_d2.h[0] = D_0029F1F4[0];
+    reg_d2.h[0] = PLAYER(g_player2)->x.h;
     reg_d1.h[0] = ENTITY(reg_a6)->x.h;
     reg_d1.h[0] -= reg_d2.h[0];
     if ((s16) reg_d1.h[0] >= 0) goto next_7;

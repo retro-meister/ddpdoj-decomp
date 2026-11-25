@@ -1,4 +1,5 @@
 #include "common.h"
+#include "player.h"
 #include "entity.h"
 
 void func_0019FCE0(void);
@@ -1050,8 +1051,6 @@ extern u8 D_0029D750[];
 extern u8 D_0029D770[];
 extern u8 D_0029D790[];
 extern u8 D_0029DD90[];
-extern u16 D_0029F220[];
-extern u16 D_0029F290[];
 
 
 void func_001A1B60(void) {
@@ -1065,13 +1064,13 @@ void func_001A1B60(void) {
     reg_a1 = (u8 *)D_0029DD90;
     reg_a2 = (u8 *)D_0029D730;
     reg_a3 = (u8 *)D_0029D770;
-    reg_d4.h[0] = D_0029F290[0];
+    reg_d4.h[0] = PLAYER(g_player1_as_s32_a)->moved_y.h;
     if (reg_d7.h[0] != 0) goto next_10;
     reg_a0 = (u8 *)&g_p2_laser_stop_y;
     reg_a1 = (u8 *)D_0029D790;
     reg_a2 = (u8 *)D_0029D710;
     reg_a3 = (u8 *)D_0029D750;
-    reg_d4.h[0] = D_0029F220[0];
+    reg_d4.h[0] = PLAYER(g_player2_as_u8_a)->moved_y.h;
 next_10:
     reg_d4.h[0] += 0x300;
     reg_d0.h[1] = *(u16 *)(reg_a4 + 2);

@@ -1,4 +1,5 @@
 #include "common.h"
+#include "player.h"
 #include "task.h"
 #include "entity.h"
 
@@ -513,11 +514,7 @@ extern s16 g_select_screen_active_as_s16;
 extern u16 g_p2_ship_type;
 extern u16 g_p1_ship_type;
 extern s16 g_player2[];
-extern u16 D_0029F248[];
-extern u16 D_0029F24A[];
 extern s16 g_player1[];
-extern u16 D_0029F2B8[];
-extern u16 D_0029F2BA[];
 extern u8 g_replay_start_state[];
 
 void func_001B1D70(void) {
@@ -567,9 +564,9 @@ void func_001B1D70(void) {
     reg_a6 = (u8 *)D_0029BE00;
     if (reg_d0.b[0] == 2) {
         *(s8 *)(reg_a0 + 0x71) = 1;
-        reg_d1.h[0] = D_0029F248[0];
+        reg_d1.h[0] = PLAYER(g_player2)->ship_type.h;
         *(u8 *)(reg_a5 + 8) = (u8) reg_d1.b[0];
-        reg_d1.h[0] = D_0029F24A[0];
+        reg_d1.h[0] = PLAYER(g_player2)->power_style.h;
         *(u8 *)(reg_a5 + 4) = (u8) reg_d1.b[0];
         *(u8 *)(reg_a5 + 6) = (u8) reg_d1.b[0];
         *(s8 *)(reg_a6 + 0x70) = 3;
@@ -584,9 +581,9 @@ void func_001B1D70(void) {
         func_001A35A0();
     } else if (reg_d0.b[0] == 1) {
         *(s8 *)(reg_a0 + 1) = 1;
-        reg_d1.h[0] = D_0029F2B8[0];
+        reg_d1.h[0] = PLAYER(g_player1)->ship_type.h;
         *(u8 *)(reg_a5 + 9) = (u8) reg_d1.b[0];
-        reg_d1.h[0] = D_0029F2BA[0];
+        reg_d1.h[0] = PLAYER(g_player1)->power_style.h;
         *(u8 *)(reg_a5 + 5) = (u8) reg_d1.b[0];
         *(u8 *)(reg_a5 + 7) = (u8) reg_d1.b[0];
         ENTITY(reg_a6)->flags.sb[0] = 3;

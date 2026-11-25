@@ -1,4 +1,5 @@
 #include "common.h"
+#include "player.h"
 #include "sdk/ps2sdk.h"
 
 /* Everything a saved pointer field may point at, by field kind. Pointers are
@@ -1400,17 +1401,7 @@ extern u8 D_0029E390[];
 extern u8 g_p2_options[];
 extern u8 g_p1_options[];
 extern u8 g_player2_as_u8_a[];
-extern u8 D_0029F1F1[];
-extern u16 D_0029F210[];
-extern u16 D_0029F212[];
-extern u8 D_0029F214[];
-extern u8 D_0029F215[];
 extern u8 g_player1_as_u8_a[];
-extern u8 D_0029F261[];
-extern u16 D_0029F280[];
-extern u16 D_0029F282[];
-extern u8 D_0029F284[];
-extern u8 D_0029F285[];
 extern s8 g_text_layer_as_s8_a[];
 extern s32 D_002BAEB0[];
 extern s32 D_002BAEF0[];
@@ -1775,12 +1766,12 @@ void replay_snapshot_save(Buf *buf) {
             D_006C58D4[0] = 8;
         }
 #endif
-        v = D_0029F280[0];
+        v = PLAYER(g_player1_as_u8_a)->shot_power.h;
         if (v != 0) {
             v /= 2;
         }
         D_006C58B2[0] = v;
-        v = D_0029F282[0];
+        v = PLAYER(g_player1_as_u8_a)->laser_power.h;
         if (v != 0) {
             v /= 2;
         }
@@ -1807,17 +1798,17 @@ void replay_snapshot_save(Buf *buf) {
             D_006C58CC_as_s16_a[0] = 0;
             D_006C58BC[0] = g_p1_hyper_items;
         }
-        D_006C58B4[0] = D_0029F284[0];
+        D_006C58B4[0] = PLAYER(g_player1_as_u8_a)->bombs.b.capacity;
         if (D_006C58B4[0] != 0) {
             D_006C58B4[0] -= 1;
         }
-        D_006C58B6_as_s16_a[0] = D_0029F285[0];
+        D_006C58B6_as_s16_a[0] = PLAYER(g_player1_as_u8_a)->bombs.b.count;
 #ifdef DEATH_LABEL
         if (g_player1_as_u8_a[0] & 2) {
             D_006C58B6_as_s16_a[0] = 7;
         }
 #else
-        if ((g_player1_as_u8_a[0] & 2) && !(D_0029F261[0] & 0x40) && *(u16 *)D_0029CD90_as_f32_a != 0) {
+        if ((g_player1_as_u8_a[0] & 2) && !(PLAYER(g_player1_as_u8_a)->flags.b[1] & 0x40) && *(u16 *)D_0029CD90_as_f32_a != 0) {
             D_006C58B6_as_s16_a[0] = 7;
         }
         if (*(u8 *)g_player1_as_u8_a & 2) {
@@ -1825,7 +1816,7 @@ void replay_snapshot_save(Buf *buf) {
         } else {
             printf("------1  off-\n");
         }
-        if (D_0029F261[0] & 0x40) {
+        if (PLAYER(g_player1_as_u8_a)->flags.b[1] & 0x40) {
             printf("------6  on-\n");
         } else {
             printf("------6  off-\n");
@@ -1851,12 +1842,12 @@ void replay_snapshot_save(Buf *buf) {
             D_006C58D4[0] = 8;
         }
 #endif
-        v = D_0029F210[0];
+        v = PLAYER(g_player2_as_u8_a)->shot_power.h;
         if (v != 0) {
             v /= 2;
         }
         D_006C58B2[0] = v;
-        v = D_0029F212[0];
+        v = PLAYER(g_player2_as_u8_a)->laser_power.h;
         if (v != 0) {
             v /= 2;
         }
@@ -1883,17 +1874,17 @@ void replay_snapshot_save(Buf *buf) {
             D_006C58CC_as_s16_a[0] = 0;
             D_006C58BC[0] = g_p2_hyper_items;
         }
-        D_006C58B4[0] = D_0029F214[0];
+        D_006C58B4[0] = PLAYER(g_player2_as_u8_a)->bombs.b.capacity;
         if (D_006C58B4[0] != 0) {
             D_006C58B4[0] -= 1;
         }
-        D_006C58B6_as_s16_a[0] = D_0029F215[0];
+        D_006C58B6_as_s16_a[0] = PLAYER(g_player2_as_u8_a)->bombs.b.count;
 #ifdef DEATH_LABEL
         if (g_player2_as_u8_a[0] & 2) {
             D_006C58B6_as_s16_a[0] = 7;
         }
 #else
-        if ((g_player2_as_u8_a[0] & 2) && !(D_0029F1F1[0] & 0x40) && *(u16 *)D_0029CD80_as_f32_a != 0) {
+        if ((g_player2_as_u8_a[0] & 2) && !(PLAYER(g_player2_as_u8_a)->flags.b[1] & 0x40) && *(u16 *)D_0029CD80_as_f32_a != 0) {
             D_006C58B6_as_s16_a[0] = 7;
         }
         if (*(u8 *)g_player2_as_u8_a & 2) {
@@ -1901,7 +1892,7 @@ void replay_snapshot_save(Buf *buf) {
         } else {
             printf("------1  off-\n");
         }
-        if (D_0029F1F1[0] & 0x40) {
+        if (PLAYER(g_player2_as_u8_a)->flags.b[1] & 0x40) {
             printf("------6  on-\n");
         } else {
             printf("------6  off-\n");

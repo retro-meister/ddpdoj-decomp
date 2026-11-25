@@ -1,4 +1,5 @@
 #include "common.h"
+#include "player.h"
 #include "entity.h"
 
 void func_0016D290(void);
@@ -134,18 +135,14 @@ void func_0016D040(void) {
 extern u16 D_0025B160[];
 extern u16 g_stage;
 extern s16 g_player2[];
-extern u16 D_0029F1F2[];
-extern u16 D_0029F1F4[];
 extern s16 g_player1[];
-extern u16 D_0029F262[];
-extern u16 D_0029F264[];
 
 
 void func_0016D290(void) {
     reg_d0.h[0] = 0x7FFF;
     if (g_player1[0] < 0) {
-        reg_d2.h[0] = D_0029F262[0];
-        reg_d3.h[0] = D_0029F264[0];
+        reg_d2.h[0] = PLAYER(g_player1)->y.h;
+        reg_d3.h[0] = PLAYER(g_player1)->x.h;
         reg_d0.h[0] = ENTITY(reg_a6)->y.h;
         reg_d1.h[0] = ENTITY(reg_a6)->x.h;
         reg_d0.h[0] -= reg_d2.h[0];
@@ -170,8 +167,8 @@ void func_0016D290(void) {
     reg_d4.h[0] = reg_d0.h[0];
     reg_d0.h[0] = 0x7FFF;
     if (g_player2[0] < 0) {
-        reg_d2.h[0] = D_0029F1F2[0];
-        reg_d3.h[0] = D_0029F1F4[0];
+        reg_d2.h[0] = PLAYER(g_player2)->y.h;
+        reg_d3.h[0] = PLAYER(g_player2)->x.h;
         reg_d0.h[0] = ENTITY(reg_a6)->y.h;
         reg_d1.h[0] = ENTITY(reg_a6)->x.h;
         reg_d0.h[0] -= reg_d2.h[0];

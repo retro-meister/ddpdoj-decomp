@@ -1,4 +1,7 @@
 #include "common.h"
+extern u8 g_player1_as_u8_a[];
+#include "player.h"
+extern u8 g_player2_as_u8_a[];
 
 void func_001A5AD0(void);
 void func_001A5B50(void);
@@ -100,7 +103,6 @@ extern u8 D_0026BFD0[];
 extern u8 D_0028DAE8[];
 extern u16 g_p1_hyper_items;
 extern u16 g_p1_hyper_active;
-extern u16 D_0029F2B8[];
 
 void func_001A54C0(void) {
     u32 save_d1;
@@ -110,7 +112,7 @@ void func_001A54C0(void) {
     reg_d5.w = reg_d1.w;
     reg_d1.h[0] += 0xFF00;
     reg_d1.h[1] += 0xFE00;
-    reg_d2.h[0] = D_0029F2B8[0];
+    reg_d2.h[0] = PLAYER(g_player1_as_u8_a)->ship_type.h;
     reg_d2.h[0] += reg_d2.h[0];
     reg_a0 = (u8 *)D_0028DAE8;
     reg_d2.w = *(u32 *)(reg_a0 + reg_d2.h[0]);
@@ -139,14 +141,13 @@ next_1:
 extern u8 D_0028DAF0[];
 extern u16 g_p2_hyper_items;
 extern u16 g_p2_hyper_active;
-extern u16 D_0029F248[];
 
 void func_001A5600(void) {
     if ((s16)reg_d0.h[0] < 0) goto next_0;
     reg_d5.w = reg_d1.w;
     reg_d1.h[0] += 0xFF00;
     reg_d1.h[1] += 0xFE00;
-    reg_d2.h[0] = D_0029F248[0];
+    reg_d2.h[0] = PLAYER(g_player2_as_u8_a)->ship_type.h;
     reg_d2.h[0] += reg_d2.h[0];
     reg_a0 = (u8 *)D_0028DAF0;
     reg_d2.w = *(u32 *)(reg_a0 + reg_d2.h[0]);
@@ -183,7 +184,7 @@ void func_001A5740(arg0)
     if ((s16) reg_d7.h[0] >= 0) {
         reg_d2.h[0] = 1;
         reg_a0 = (u8 *)(D_0028DAF8);
-        reg_d4.h[0] = D_0029F2B8[0];
+        reg_d4.h[0] = PLAYER(g_player1_as_u8_a)->ship_type.h;
         reg_d4.h[0] += reg_d4.h[0];
         reg_d3.h[0] = 0;
         reg_d4.h[1] = (reg_d4.h[0] != 0) ? *(u16 *)((u8 *)reg_a0 + ((s16)reg_d4.h[0] & ~1)) : *(u16 *)reg_a0;
@@ -205,7 +206,7 @@ void func_001A5850(void) {
     if ((s16)reg_d7.h[0] >= 0) {
         reg_d2.h[0] = 1;
         reg_a0 = (u8 *)D_0028DB00;
-        reg_d4.h[0] = D_0029F248[0];
+        reg_d4.h[0] = PLAYER(g_player2_as_u8_a)->ship_type.h;
         reg_d4.h[0] += reg_d4.h[0];
         reg_d3.h[0] = 0;
         reg_d4.h[1] = (reg_d4.h[0] != 0) ? *(u16 *)(reg_a0 + ((s16)reg_d4.h[0] & ~1)) : *(u16 *)reg_a0;

@@ -1,4 +1,5 @@
 #include "common.h"
+#include "player.h"
 #include "entity.h"
 #include "sdk/ps2sdk.h"
 
@@ -490,8 +491,6 @@ extern u16 g_p1_score_digits;
 extern u16 g_p1_lives;
 extern u16 D_0029CD90[];
 extern s16 g_player1[];
-extern u8 D_0029F261[];
-extern u8 D_0029F285[];
 #ifdef DEATH_LABEL
 extern u16 D_00684C80[];
 #endif
@@ -556,7 +555,7 @@ block_3:
             *(u16 *)(reg_a6 + 6) = 3;
         }
     } else if (*(u16 *)(reg_a6 + 6) == 3) {
-        if (!(D_0029F261[0] & 0x40) && D_0029CD90[0] != 0) {
+        if (!(PLAYER(g_player1)->flags.b[1] & 0x40) && D_0029CD90[0] != 0) {
             reg_d0.w = 0x10000000;
             func_001A9180();
             D_0029CD90[0] = 0;
@@ -570,7 +569,7 @@ block_3:
             *(u16 *)(reg_a6 + 6) = 4;
         }
     } else {
-        p = (u8 *)(u32)D_0029F285;
+        p = (u8 *)(u32)(&PLAYER(g_player1)->bombs.b.count);
         if (*p == 0) {
             goto block_1;
         }
@@ -603,8 +602,6 @@ extern u16 g_p2_score_digits;
 extern u16 g_p2_lives;
 extern u16 D_0029CD80[];
 extern s16 g_player2[];
-extern u8 D_0029F1F1[];
-extern u8 D_0029F215[];
 #ifdef DEATH_LABEL
 extern u16 D_00684C80[];
 #endif
@@ -679,7 +676,7 @@ block_3:
         return;
     }
     if (*(u16 *)(reg_a6 + 8) == 3) {
-        if (!(D_0029F1F1[0] & 0x40) && D_0029CD80[0] != 0) {
+        if (!(PLAYER(g_player2)->flags.b[1] & 0x40) && D_0029CD80[0] != 0) {
             reg_d0.w = 0x10000000;
             func_001A9190();
             D_0029CD80[0] = 0;
@@ -697,7 +694,7 @@ block_3:
         *(u16 *)(reg_a6 + 8) = 4;
         return;
     }
-    p = (u8 *)(u32)D_0029F215;
+    p = (u8 *)(u32)(&PLAYER(g_player2)->bombs.b.count);
     if (*p == 0) {
         goto block_1;
     }

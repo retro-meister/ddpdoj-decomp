@@ -1,4 +1,6 @@
 #include "common.h"
+#include "player.h"
+extern u8 g_player2_as_u8_a[];
 #include "entity.h"
 #include "sdk/ps2sdk.h"
 
@@ -522,8 +524,6 @@ s32 rng_next_masked();
 s32 rng_next_unsigned();
 s32 func_00201D10();
 extern u16 D_00250D20[];
-extern u16 D_0029F212[];
-extern u16 D_0029F282[];
 
 void func_0020AD50(void) {
     u32 temp_a0;
@@ -556,9 +556,9 @@ void func_0020AD50(void) {
     reg_d0.h[0] = 0xC0;
     if (0 <= (s16)(reg_d7.h[0])) {
         if (reg_d7.h[0] & 0xFFFF) {
-            reg_d1.h[0] = D_0029F212[0];
+            reg_d1.h[0] = PLAYER(g_player2_as_u8_a)->laser_power.h;
         } else {
-            reg_d1.h[0] = D_0029F282[0];
+            reg_d1.h[0] = PLAYER(g_player1_as_u8_a)->laser_power.h;
         }
         reg_a2 = (u8 *)(D_00250D20);
         reg_a2 += reg_d1.h[0];

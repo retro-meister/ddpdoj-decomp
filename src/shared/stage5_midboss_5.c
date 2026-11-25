@@ -1,4 +1,5 @@
 #include "common.h"
+#include "player.h"
 #include "entity.h"
 
 void func_001FDAB0(void);
@@ -753,9 +754,7 @@ s32 rng_next_unsigned();
 extern u8 D_00259870_as_u8_a[];
 extern u16 g_frame_mod16;
 extern s16 g_player2[];
-extern u16 D_0029F1F2[];
 extern s16 g_player1[];
-extern u16 D_0029F262[];
 
 void func_001FE330(void) {
     u16 t1;
@@ -773,11 +772,11 @@ void func_001FE330(void) {
             if (g_frame_mod16 == 0) {
                 reg_d0.w = 0;
                 if (g_player1[0] < 0) {
-                    reg_d0.h[0] = D_0029F262[0];
+                    reg_d0.h[0] = PLAYER(g_player1)->y.h;
                 }
                 reg_d1.w = 0;
                 if (g_player2[0] < 0) {
-                    reg_d1.h[0] = D_0029F1F2[0];
+                    reg_d1.h[0] = PLAYER(g_player2)->y.h;
                 }
                 if ((s32) reg_d0.h[0] <= (s32) reg_d1.h[0]) {
                     reg_d0.h[0] = reg_d1.h[0];

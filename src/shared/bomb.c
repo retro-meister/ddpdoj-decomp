@@ -1,4 +1,5 @@
 #include "common.h"
+#include "player.h"
 #include "entity.h"
 
 void spread_bomb_update(void);
@@ -1158,13 +1159,10 @@ void laser_bomb_end(void) {
     g_laser_bomb_hit_entity = 0;
 }
 
-extern u8 D_0029F22F[];
-extern u8 D_0029F29F[];
-
 void bomb_afterglow_end(void) {
     reg_d0.w = 0;
-    D_0029F29F[0] = reg_d0.b[0];
-    D_0029F22F[0] = reg_d0.b[0];
+    PLAYER(g_player1_as_u8_a)->state.b.invincible = reg_d0.b[0];
+    PLAYER(g_player2_as_u8_a)->state.b.invincible = reg_d0.b[0];
 }
 
 s32 p1_chain_reset();

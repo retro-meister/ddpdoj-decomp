@@ -1141,8 +1141,6 @@ extern u16 g_p2_maximum_anim_delay_reset;
 extern u16 g_p2_maximum_anim_delay;
 extern u16 g_p1_maximum_anim_delay_reset;
 extern u16 g_p1_maximum_anim_delay;
-extern u8 D_0029F1F1[];
-extern u8 D_0029F261[];
 extern u16 D_006E5BF4[];
 extern u16 D_006E5BF6[];
 extern u16 D_006E5C0E[];
@@ -1202,7 +1200,7 @@ void func_00141300(void) {
         } else if (D_006E5BF6[0] == 7) {
             PLAYER(reg_a6)->bombs.b.count = PLAYER(reg_a6)->bombs.b.capacity;
             if (reg_a6 == g_player1_as_u8_a) {
-                D_0029F261[0] &= 0xBF;
+                PLAYER(g_player1_as_u8_a)->flags.b[1] &= 0xBF;
                 g_player1_as_u8_a[0] |= 2;
                 D_0029CD9C_as_s16_a[0] = D_006E5C10[0] + 1;
                 D_0029CD90_as_s16_a[0] = (D_006E5C10[0] + 1) * 0x16;
@@ -1213,7 +1211,7 @@ void func_00141300(void) {
                 g_p1_maximum_anim_delay_reset = 2 - v1;
                 g_p1_maximum_anim_delay = g_p1_maximum_anim_delay_reset;
             } else {
-                D_0029F1F1[0] &= 0xBF;
+                PLAYER(g_player2_as_u8_a)->flags.b[1] &= 0xBF;
                 g_player2_as_u8_a[0] |= 2;
                 D_0029CD8C_as_s16_a[0] = D_006E5C10[0] + 1;
                 D_0029CD80_as_s16_a[0] = (D_006E5C10[0] + 1) * 0x16;
@@ -1510,12 +1508,12 @@ void func_001417D0(void) {
     if (reg_a6 == g_player1_as_u8_a) {
         D_0029CD90_as_s16_a[0] = 0;
         D_0029CD9C_as_s16_a[0] = 0;
-        D_0029F261[0] |= 0x40;
+        PLAYER(g_player1_as_u8_a)->flags.b[1] |= 0x40;
         g_player1_as_u8_a[0] &= 0xFD;
     } else {
         D_0029CD80_as_s16_a[0] = 0;
         D_0029CD8C_as_s16_a[0] = 0;
-        D_0029F1F1[0] |= 0x40;
+        PLAYER(g_player2_as_u8_a)->flags.b[1] |= 0x40;
         g_player2_as_u8_a[0] &= 0xFD;
     }
     reg_d0.w = 0;

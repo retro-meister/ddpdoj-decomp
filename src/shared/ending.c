@@ -1,4 +1,5 @@
 #include "common.h"
+#include "player.h"
 #include "task.h"
 #include "entity.h"
 #include "sdk/ps2sdk.h"
@@ -449,7 +450,6 @@ void func_00123780(void) {
 extern u16 g_p2_power_style;
 extern u16 g_p1_power_style;
 extern s16 D_00295E2C_as_s16_a[];
-extern s8 D_0029F261_as_s8_a[];
 
 void func_00123870(void) {
     *(s8 *)(reg_a5 + 3) = 1;
@@ -461,7 +461,7 @@ void func_00123870(void) {
     reg_a6 = (u8 *)D_00295E00;
     if (ENTITY(reg_a6)->hit_y_plus.h != 1) goto next_0;
     reg_d0.h[0] = g_p1_power_style;
-    if (0 > D_0029F261_as_s8_a[0]) goto next_1;
+    if (0 > PLAYER(g_player1_as_u8_a)->flags.sb[1]) goto next_1;
     reg_d0.h[0] = g_p2_power_style;
     goto next_1;
 next_0:

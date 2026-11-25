@@ -1,4 +1,5 @@
 #include "common.h"
+#include "player.h"
 #include "entity.h"
 
 void func_0013C9A0(void);
@@ -257,26 +258,20 @@ loop_2:
         goto loop_1;
     }
 }
-
-extern u16 D_0029F1F2[];
-extern u16 D_0029F1F4[];
 extern u8 D_002BAEB0_as_u8_a[];
 
 void func_0013CFD0(void) {
-    u16 src = D_0029F1F2[0];
+    u16 src = PLAYER(g_player2)->y.h;
     reg_d1.h[1] = src;
-    reg_d1.h[0] = D_0029F1F4[0];
+    reg_d1.h[0] = PLAYER(g_player2)->x.h;
     reg_a0 = (u8 *)D_002BAEB0_as_u8_a;
     func_0013D030(src);
 }
 
-extern u16 D_0029F262[];
-extern u16 D_0029F264[];
-
 void func_0013D000(void) {
-    u16 src = D_0029F262[0];
+    u16 src = PLAYER(g_player1)->y.h;
     reg_d1.h[1] = src;
-    reg_d1.h[0] = D_0029F264[0];
+    reg_d1.h[0] = PLAYER(g_player1)->x.h;
     reg_a0 = (u8 *)D_002BAEF0_as_u8_a;
     func_0013D030(src);
 }
@@ -305,15 +300,13 @@ extern u16 g_true_last_boss;
 extern u16 D_0029CD80[];
 extern u16 D_0029CD90[];
 extern u16 g_player2_as_u16_a[];
-extern u8 D_0029F240[];
 extern u16 g_player1_as_u16_a[];
-extern u8 D_0029F2B0[];
 
 void func_0013D090(void) {
     if (g_select_screen_active == 0) {
         reg_d0.h[0] = g_player1_as_u16_a[0];
         if (((s16)(reg_d0.h[0]) < 0) && !(reg_d0.h[0] & 0xFFFF & 0x4000) && (D_0029CD90[0] != 0)) {
-            reg_a1 = (u8 *)D_0029F2B0;
+            reg_a1 = (u8 *)(&PLAYER(g_player1)->max_text_sprite_hi.b[0]);
             reg_d0.h[0] = g_p1_maximum_level;
             reg_d4.h[0] = 7;
             reg_tmp.h[0] = g_p1_maximum_anim_delay;
@@ -346,7 +339,7 @@ void func_0013D090(void) {
         }
         reg_d0.h[0] = g_player2_as_u16_a[0];
         if (((s16)(reg_d0.h[0]) < 0) && !(reg_d0.h[0] & 0xFFFF & 0x4000) && (D_0029CD80[0] != 0)) {
-            reg_a1 = (u8 *)D_0029F240;
+            reg_a1 = (u8 *)(&PLAYER(g_player2)->max_text_sprite_hi.b[0]);
             reg_d0.h[0] = g_p2_maximum_level;
             reg_d4.h[0] = 8;
             reg_tmp.h[0] = g_p2_maximum_anim_delay;
@@ -475,26 +468,23 @@ extern u8 player_weapon_tables[];
 extern u8 g_p1_weapon_level_data[];
 extern u8 g_p1_option_level_data_as_u8_a[];
 extern s16 D_0029F1D0[];
-extern u16 D_0029F280[];
-extern u16 D_0029F282[];
-extern u16 D_0029F2BA[];
 
 void func_0013D7A0(void) {
-    reg_d0.h[0] = *(u16 *)(u32)D_0029F280;
-    reg_d0.h[0] += *(u16 *)(u32)D_0029F282;
+    reg_d0.h[0] = PLAYER(g_player1)->shot_power.h;
+    reg_d0.h[0] += PLAYER(g_player1)->laser_power.h;
     if (reg_d0.h[0] == 0x10) {
         func_0013DA80();
         return;
     }
-    if (*(u16 *)(u32)D_0029F282 != 8) {
-        *(u16 *)(u32)D_0029F282 += 2;
+    if (PLAYER(g_player1)->laser_power.h != 8) {
+        PLAYER(g_player1)->laser_power.h += 2;
         func_0013C980();
         D_0029F1D0[0] = 0;
     }
-    if (*(u16 *)(u32)D_0029F280 != 8) {
-        *(u16 *)(u32)D_0029F280 += 2;
+    if (PLAYER(g_player1)->shot_power.h != 8) {
+        PLAYER(g_player1)->shot_power.h += 2;
         reg_a0 = (u8 *)player_weapon_tables;
-        reg_d0.h[0] = D_0029F2BA[0];
+        reg_d0.h[0] = PLAYER(g_player1)->power_style.h;
         reg_d0.h[0] -= 2;
         reg_d0.h[0] <<= 1;
         reg_d0.h[0] += D_0029F2B8[0];
@@ -541,26 +531,23 @@ void func_0013DA80(void) {
 extern u8 g_p2_weapon_level_data[];
 extern u8 g_p2_option_level_data_as_u8_a[];
 extern s16 D_0029F160[];
-extern u16 D_0029F210[];
-extern u16 D_0029F212[];
-extern u16 D_0029F24A[];
 
 void func_0013DA90(void) {
-    reg_d0.h[0] = *(u16 *)(u32)D_0029F210;
-    reg_d0.h[0] += *(u16 *)(u32)D_0029F212;
+    reg_d0.h[0] = PLAYER(g_player2)->shot_power.h;
+    reg_d0.h[0] += PLAYER(g_player2)->laser_power.h;
     if (reg_d0.h[0] == 0x10) {
         func_0013DA80();
         return;
     }
-    if (*(u16 *)(u32)D_0029F212 != 8) {
-        *(u16 *)(u32)D_0029F212 += 2;
+    if (PLAYER(g_player2)->laser_power.h != 8) {
+        PLAYER(g_player2)->laser_power.h += 2;
         func_0013CA90();
         D_0029F160[0] = 0;
     }
-    if (*(u16 *)(u32)D_0029F210 != 8) {
-        *(u16 *)(u32)D_0029F210 += 2;
+    if (PLAYER(g_player2)->shot_power.h != 8) {
+        PLAYER(g_player2)->shot_power.h += 2;
         reg_a0 = (u8 *)player_weapon_tables;
-        reg_d0.h[0] = D_0029F24A[0];
+        reg_d0.h[0] = PLAYER(g_player2)->power_style.h;
         reg_d0.h[0] -= 2;
         reg_d0.h[0] <<= 1;
         reg_d0.h[0] += D_0029F248[0];
@@ -601,22 +588,22 @@ void func_0013DA90(void) {
 
 
 void func_0013DD70(void) {
-    reg_d0.h[0] = *(u16 *)(u32)D_0029F280;
-    reg_d0.h[0] += *(u16 *)(u32)D_0029F282;
+    reg_d0.h[0] = PLAYER(g_player1)->shot_power.h;
+    reg_d0.h[0] += PLAYER(g_player1)->laser_power.h;
     if (reg_d0.h[0] == 0x10) {
         func_0013DFE0();
         return;
     }
-    if (*(u16 *)(u32)D_0029F282 != 8) {
-        *(u16 *)(u32)D_0029F282 = 8;
+    if (PLAYER(g_player1)->laser_power.h != 8) {
+        PLAYER(g_player1)->laser_power.h = 8;
         func_0013C980();
         D_0029F1D0[0] = 0;
-        if (*(u16 *)(u32)D_0029F280 == 8) goto block_end;
+        if (PLAYER(g_player1)->shot_power.h == 8) goto block_end;
     }
-    *(u16 *)(u32)D_0029F280 = 8;
+    PLAYER(g_player1)->shot_power.h = 8;
     reg_a0 = (u8 *)player_weapon_tables;
     reg_a1 = (u8 *)g_p1_weapon_level_data;
-    reg_d0.h[0] = D_0029F2BA[0];
+    reg_d0.h[0] = PLAYER(g_player1)->power_style.h;
     reg_d0.h[0] -= 2;
     reg_d0.h[0] <<= 1;
     reg_d0.h[0] += D_0029F2B8[0];
@@ -644,22 +631,22 @@ void func_0013DFE0(void) {
 }
 
 void func_0013DFF0(void) {
-    reg_d0.h[0] = *(u16 *)(u32)D_0029F210;
-    reg_d0.h[0] += *(u16 *)(u32)D_0029F212;
+    reg_d0.h[0] = PLAYER(g_player2)->shot_power.h;
+    reg_d0.h[0] += PLAYER(g_player2)->laser_power.h;
     if (reg_d0.h[0] == 0x10) {
         func_0013DFE0();
         return;
     }
-    if (*(u16 *)(u32)D_0029F212 != 8) {
-        *(u16 *)(u32)D_0029F212 = 8;
+    if (PLAYER(g_player2)->laser_power.h != 8) {
+        PLAYER(g_player2)->laser_power.h = 8;
         func_0013CA90();
         D_0029F160[0] = 0;
-        if (*(u16 *)(u32)D_0029F210 == 8) goto block_end;
+        if (PLAYER(g_player2)->shot_power.h == 8) goto block_end;
     }
-    *(u16 *)(u32)D_0029F210 = 8;
+    PLAYER(g_player2)->shot_power.h = 8;
     reg_a0 = (u8 *)player_weapon_tables;
     reg_a1 = (u8 *)g_p2_weapon_level_data;
-    reg_d0.h[0] = D_0029F24A[0];
+    reg_d0.h[0] = PLAYER(g_player2)->power_style.h;
     reg_d0.h[0] -= 2;
     reg_d0.h[0] <<= 1;
     reg_d0.h[0] += D_0029F248[0];
@@ -730,18 +717,15 @@ void func_0013E2E0(void) {
 }
 
 extern u8 g_player1_as_u8_a[];
-extern u8 D_0029F261[];
-extern u8 D_0029F284[];
-extern u8 D_0029F285[];
 
 void func_0013E360(void) {
-    reg_d6.b[0] = *(u8 *)(u32)D_0029F285;
-    if (*(u8 *)(u32)D_0029F284 == reg_d6.b[0]) goto block_50;
+    reg_d6.b[0] = *(u8 *)(u32)(&PLAYER(g_player1_as_u8_a)->bombs.b.count);
+    if (*(u8 *)(u32)(&PLAYER(g_player1_as_u8_a)->bombs.b.capacity) == reg_d6.b[0]) goto block_50;
     reg_d5.h[0] = reg_d6.h[0];
     reg_d5.b[0] += 1;
-    *(u8 *)(u32)D_0029F285 = reg_d5.b[0];
-    if (*(u8 *)(u32)D_0029F284 != reg_d5.b[0]) goto block_51;
-    D_0029F261[0] &= 0xBF;
+    *(u8 *)(u32)(&PLAYER(g_player1_as_u8_a)->bombs.b.count) = reg_d5.b[0];
+    if (*(u8 *)(u32)(&PLAYER(g_player1_as_u8_a)->bombs.b.capacity) != reg_d5.b[0]) goto block_51;
+    PLAYER(g_player1_as_u8_a)->flags.b[1] &= 0xBF;
     g_player1_as_u8_a[0] |= 2;
     if (D_0029CD9C[0] == 0x63) goto block_end;
     D_0029CD90[0] += 0x16;
@@ -759,8 +743,8 @@ block_50:
     if (D_0029CD9C[0] == 0x63) goto block_end;
     D_0029CD90[0] += 0x16;
     D_0029CD9C[0] += 1;
-    reg_tmp.b[0] = *(u8 *)(u32)D_0029F261;
-    *(u8 *)(u32)D_0029F261 &= 0xBF;
+    reg_tmp.b[0] = *(u8 *)(u32)(&PLAYER(g_player1_as_u8_a)->flags.b[1]);
+    *(u8 *)(u32)(&PLAYER(g_player1_as_u8_a)->flags.b[1]) &= 0xBF;
     if (reg_tmp.b[0] & 0x40) goto block_52;
     reg_tmp.b[0] = g_player1_as_u8_a[0];
     g_player1_as_u8_a[0] |= 2;
@@ -774,18 +758,15 @@ block_52:
 }
 
 extern u8 g_player2_as_u8_a[];
-extern u8 D_0029F1F1[];
-extern u8 D_0029F214[];
-extern u8 D_0029F215[];
 
 void func_0013E510(void) {
-    reg_d6.b[0] = *(u8 *)(u32)D_0029F215;
-    if (*(u8 *)(u32)D_0029F214 == reg_d6.b[0]) goto block_50;
+    reg_d6.b[0] = *(u8 *)(u32)(&PLAYER(g_player2_as_u8_a)->bombs.b.count);
+    if (*(u8 *)(u32)(&PLAYER(g_player2_as_u8_a)->bombs.b.capacity) == reg_d6.b[0]) goto block_50;
     reg_d5.h[0] = reg_d6.h[0];
     reg_d5.b[0] += 1;
-    *(u8 *)(u32)D_0029F215 = reg_d5.b[0];
-    if (*(u8 *)(u32)D_0029F214 != reg_d5.b[0]) goto block_51;
-    D_0029F1F1[0] &= 0xBF;
+    *(u8 *)(u32)(&PLAYER(g_player2_as_u8_a)->bombs.b.count) = reg_d5.b[0];
+    if (*(u8 *)(u32)(&PLAYER(g_player2_as_u8_a)->bombs.b.capacity) != reg_d5.b[0]) goto block_51;
+    PLAYER(g_player2_as_u8_a)->flags.b[1] &= 0xBF;
     g_player2_as_u8_a[0] |= 2;
     if (D_0029CD8C[0] == 0x63) goto block_end;
     D_0029CD80[0] += 0x16;
@@ -803,8 +784,8 @@ block_50:
     if (D_0029CD8C[0] == 0x63) goto block_end;
     D_0029CD80[0] += 0x16;
     D_0029CD8C[0] += 1;
-    reg_tmp.b[0] = *(u8 *)(u32)D_0029F1F1;
-    *(u8 *)(u32)D_0029F1F1 &= 0xBF;
+    reg_tmp.b[0] = *(u8 *)(u32)(&PLAYER(g_player2_as_u8_a)->flags.b[1]);
+    *(u8 *)(u32)(&PLAYER(g_player2_as_u8_a)->flags.b[1]) &= 0xBF;
     if (reg_tmp.b[0] & 0x40) goto block_52;
     reg_tmp.b[0] = g_player2_as_u8_a[0];
     g_player2_as_u8_a[0] |= 2;
@@ -884,7 +865,7 @@ void func_0013E7C0(void) {
         func_0013F9A0();
         g_p1_stage_misses_as_s16 = 0;
         g_p1_stage_bomb_used_as_s16 = 0;
-        if (!(D_0029F261[0] & 0x40) && (D_0029CD94[0] != 0)) {
+        if (!(PLAYER(g_player1_as_u8_a)->flags.b[1] & 0x40) && (D_0029CD94[0] != 0)) {
             temp_a0 = g_p1_maximum_level;
             if (temp_a0 != 8) {
                 g_p1_maximum_level = temp_a0 + 4;
@@ -907,7 +888,7 @@ void func_0013E850(void) {
         func_0013FB20();
         g_p2_stage_misses_as_s16 = 0;
         g_p2_stage_bomb_used_as_s16 = 0;
-        if (!(D_0029F1F1[0] & 0x40) && (D_0029CD84[0] != 0)) {
+        if (!(PLAYER(g_player2_as_u8_a)->flags.b[1] & 0x40) && (D_0029CD84[0] != 0)) {
             temp_a0 = g_p2_maximum_level;
             if (temp_a0 != 8) {
                 g_p2_maximum_level = temp_a0 + 4;
@@ -958,17 +939,13 @@ void func_0013E970() {
     func_001A3130();
 }
 
-extern u8 D_0029F29F[];
-
 void func_0013EA00(void) {
     reg_d0.b[0] = 0x50;
     if (g_boss_present_b1 & 4) {
         reg_d0.b[0] = 0x78;
     }
-    D_0029F29F[0] = reg_d0.b[0];
+    PLAYER(g_player1_as_u8_a)->state.b.invincible = reg_d0.b[0];
 }
-
-extern u8 D_0029F22F[];
 
 void func_0013EA30(void)
 {
@@ -979,7 +956,7 @@ void func_0013EA30(void)
         reg_d0.b[0] = 0x78;
     }
 
-    destinationAddress = (u32)D_0029F22F;
+    destinationAddress = (u32)(&PLAYER(g_player2_as_u8_a)->state.b.invincible);
     *(u8 *)destinationAddress = reg_d0.b[0];
     *(u8 *)destinationAddress = 0x50;
 }
@@ -1267,7 +1244,7 @@ void func_0013F120(void)
 
     reg_d1.h[0] = 0x100;
     reg_d4.w = 0;
-    *(u8 *)&reg_d4.w = D_0029F284[0];
+    *(u8 *)&reg_d4.w = PLAYER(g_player1_as_u8_a)->bombs.b.capacity;
     func_0013F200();
 }
 
@@ -1285,7 +1262,7 @@ void func_0013F190(void)
 
     reg_d1.h[0] = 0xF00;
     reg_d4.w = 0;
-    *(u8 *)&reg_d4.w = D_0029F214[0];
+    *(u8 *)&reg_d4.w = PLAYER(g_player2_as_u8_a)->bombs.b.capacity;
     func_0013F200();
 }
 
@@ -1313,7 +1290,7 @@ extern s8 D_0028E3F8;
 
 void func_0013F2A0(void) {
     D_0028E3F8 = 1;
-    if ((g_p1_hyper_items != 0) || (!(D_0029F261[0] & 0x40) && (D_0029CD90[0] != 0))) {
+    if ((g_p1_hyper_items != 0) || (!(PLAYER(g_player1_as_u8_a)->flags.b[1] & 0x40) && (D_0029CD90[0] != 0))) {
         func_0013EAF0();
         func_0013F120();
         return;
@@ -1324,7 +1301,7 @@ void func_0013F2A0(void) {
 
 void func_0013F310(void) {
     D_0028E3F8 = 1;
-    if ((g_p2_hyper_items != 0) || (!(D_0029F1F1[0] & 0x40) && (D_0029CD80[0] != 0))) {
+    if ((g_p2_hyper_items != 0) || (!(PLAYER(g_player2_as_u8_a)->flags.b[1] & 0x40) && (D_0029CD80[0] != 0))) {
         func_0013EB60();
         func_0013F190();
         return;

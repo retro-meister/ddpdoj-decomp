@@ -1,4 +1,5 @@
 #include "common.h"
+#include "player.h"
 #include "layers.h"
 #include "entity.h"
 
@@ -124,9 +125,7 @@ void func_002018E0(void) {
 }
 
 extern s16 g_player2[];
-extern u8 D_0029F1F1[];
 extern s16 g_player1[];
-extern u8 D_0029F261[];
 
 void func_00201920(void) {
     reg_save_d0 = reg_d0.w;
@@ -145,10 +144,10 @@ void func_00201920(void) {
     reg_save_a5 = reg_a5;
     reg_save_a6 = reg_a6;
     reg_d1.h[0] = 0x8000;
-    if ((g_player1[0] < 0) && !(D_0029F261[0] & 1)) {
+    if ((g_player1[0] < 0) && !(PLAYER(g_player1)->flags.b[1] & 1)) {
         reg_d1.h[0] |= 0x10;
     }
-    if ((g_player2[0] < 0) && !(D_0029F1F1[0] & 1)) {
+    if ((g_player2[0] < 0) && !(PLAYER(g_player2)->flags.b[1] & 1)) {
         reg_d1.h[0] |= 8;
     }
     func_00201A00();
@@ -1057,12 +1056,12 @@ void func_00203330(void) {
 }
 
 void func_00203380(void) {
-    reg_d1.b[0] = D_0029F261[0];
+    reg_d1.b[0] = PLAYER(g_player1)->flags.b[1];
     reg_d0.w = 0;
     if (((s8) reg_d1.b[0] < 0) && !(reg_d1.h[0] & (1 << reg_d0.h[0]))) {
         reg_d0.w = 1;
     }
-    reg_d1.b[0] = D_0029F1F1[0];
+    reg_d1.b[0] = PLAYER(g_player2)->flags.b[1];
     if (((s8) reg_d1.b[0] < 0) && !(reg_d1.h[0] & 1)) {
         reg_d0.h[0] += 2;
     }
@@ -1070,26 +1069,24 @@ void func_00203380(void) {
 
 void func_00203400(void) {
     reg_d0.w = 0;
-    if ((g_player1[0] < 0) && !(D_0029F261[0] & 1)) {
+    if ((g_player1[0] < 0) && !(PLAYER(g_player1)->flags.b[1] & 1)) {
         reg_d0.w = 0x10;
     }
-    if ((g_player2[0] < 0) && !(D_0029F1F1[0] & 1)) {
+    if ((g_player2[0] < 0) && !(PLAYER(g_player2)->flags.b[1] & 1)) {
         reg_d0.h[0] += 8;
     }
 }
 
 s32 music_stop();
 extern s16 g_player_shots_disabled_as_s16;
-extern u8 D_0029F22F[];
-extern u8 D_0029F29F[];
 void func_00203460(void) {
     music_stop();
     g_player_shots_disabled_as_s16 = 1;
     if (g_player1[0] < 0) {
-        D_0029F29F[0] = 0xFF;
+        PLAYER(g_player1_as_u8_a)->state.b.invincible = 0xFF;
     }
     if (g_player2[0] < 0) {
-        D_0029F22F[0] = 0xFF;
+        PLAYER(g_player2_as_u8_a)->state.b.invincible = 0xFF;
     }
 }
 
@@ -1103,16 +1100,16 @@ void func_002034C0(void) {
     g_boss_present_b1 |= 8;
     g_boss_present_b1 &= 0xEF;
     if (*(s16 *)g_player1 < 0) goto block_1;
-    if (!(D_0029F261[0] & 1)) goto next_1;
+    if (!(PLAYER(g_player1)->flags.b[1] & 1)) goto next_1;
     if (*(u8 *)g_player1 & 0x80) goto next_1;
 block_1:
-    D_0029F261[0] |= 0x20;
+    PLAYER(g_player1)->flags.b[1] |= 0x20;
 next_1:
     if (*(s16 *)g_player2 < 0) goto block_2;
-    if (!(D_0029F1F1[0] & 1)) goto next_2;
+    if (!(PLAYER(g_player2)->flags.b[1] & 1)) goto next_2;
     if (*(u8 *)g_player2 & 0x80) goto next_2;
 block_2:
-    D_0029F1F1[0] |= 0x20;
+    PLAYER(g_player2)->flags.b[1] |= 0x20;
 next_2:
     return;
 }
