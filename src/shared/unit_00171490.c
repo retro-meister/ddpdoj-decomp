@@ -82,11 +82,11 @@ void func_00171670(void) {
     }
 }
 
-s32 func_0019D650();
-s32 func_0019D6D0();
+s32 entity_draw_with_bullets_keep();
+s32 sprite_draw_with_bullets_keep();
 
 void func_00171770(void) {
-    func_0019D650();
+    entity_draw_with_bullets_keep();
     reg_d0.h[0] = 0x3800;
     reg_d0.h[0] -= ENTITY(reg_a6)->y.h;
     reg_d0.h[0] += reg_d0.h[0];
@@ -100,11 +100,11 @@ void func_00171770(void) {
     reg_d3.h[0] = ENTITY(reg_a6)->look.h;
     reg_d4.h[0] = ENTITY(reg_a6)->attr.h;
     reg_d2.w = 0x11C6;
-    func_0019D6D0();
+    sprite_draw_with_bullets_keep();
 }
 
 void func_00171820(void) {
-    func_0019D650();
+    entity_draw_with_bullets_keep();
     reg_d0.h[0] = 0x3800;
     reg_d0.h[0] -= ENTITY(reg_a6)->y.h;
     reg_d0.h[1] = 0x1C00;
@@ -122,7 +122,7 @@ void func_00171820(void) {
     reg_d3.h[0] = ENTITY(reg_a6)->look.h;
     reg_d4.h[0] = ENTITY(reg_a6)->attr.h;
     reg_d2.w = 0x11C4;
-    func_0019D6D0();
+    sprite_draw_with_bullets_keep();
 }
 
 extern s16 D_0028E798;
@@ -240,7 +240,7 @@ void func_00171A30(void) {
         reg_d2.w = 0x10AA;
         reg_d3.h[0] = ENTITY(reg_a6)->look.h;
         reg_d4.h[0] = ENTITY(reg_a6)->attr.h;
-        func_0019D6D0();
+        sprite_draw_with_bullets_keep();
         return;
     }
     if (ENTITY(reg_a6)->hit_y_plus.h != 0) {

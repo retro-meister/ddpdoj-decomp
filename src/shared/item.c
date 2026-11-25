@@ -244,7 +244,7 @@ s32 func_0013D7A0();
 s32 func_0013DA90();
 s32 sfx_item_pickup();
 s32 voice_power_up();
-s32 func_0019D230();
+s32 sprite_draw_with_items();
 extern u32 D_0026ADC0[];
 extern u32 D_0026AFC0[];
 
@@ -301,7 +301,7 @@ next_2:
         reg_d2.w = t3;
         reg_d3.h[0] = 0x618;
         reg_d4.h[0] = 0x1B;
-        func_0019D230();
+        sprite_draw_with_items();
     }
 }
 
@@ -461,7 +461,7 @@ next_2:
         reg_d2.w = t3;
         reg_d3.h[0] = 0x420;
         reg_d4.h[0] = 0x1B;
-        func_0019D230();
+        sprite_draw_with_items();
     }
 }
 
@@ -614,7 +614,7 @@ next_2:
         reg_d2.w = t3;
         reg_d3.h[0] = 0x618;
         reg_d4.h[0] = 0x1B;
-        func_0019D230();
+        sprite_draw_with_items();
     }
 }
 
@@ -775,7 +775,7 @@ void func_0016BAF0(void) {
         reg_d1.h[0] = *(u16 *)(reg_a6 + 4);
         reg_d1.h[0] += reg_d5.h[0];
         reg_d3.h[0] = 0x638;
-        func_0019D230();
+        sprite_draw_with_items();
         if (D_0028E3EC != 0) {
             reg_d1.h[0] = *(u16 *)(reg_a6 + 2);
             reg_d1.h[0] += 0xFC00;
@@ -786,7 +786,7 @@ void func_0016BAF0(void) {
             reg_d2.w = 0xB5C;
             reg_d1.h[0] += 0xFD00;
             reg_d3.h[0] = 0x418;
-            func_0019D230();
+            sprite_draw_with_items();
         }
         reg_d1.h[0] = *(u16 *)(reg_a6 + 2);
         reg_d1.h[0] += 0xFC00;
@@ -801,7 +801,7 @@ void func_0016BAF0(void) {
         t2 = *(u32 *)reg_a0;
         reg_d2.w = t2;
         reg_d3.h[0] = 0x418;
-        func_0019D230();
+        sprite_draw_with_items();
     }
 }
 
@@ -934,7 +934,7 @@ void func_0016BFD0(void) {
     reg_d2.w = temp_a0;
     reg_d3.h[0] = 0x420;
     reg_d4.h[0] = 0x1C;
-    func_0019D230();
+    sprite_draw_with_items();
 }
 
 void func_0016C0B0(void) {

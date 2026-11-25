@@ -26,7 +26,7 @@ void func_001DC9E0(void) {
 
 
 s32 enemy_remove();
-s32 func_0019D710();
+s32 sprite_draw_with_bullets_zoom();
 s32 func_001D27A0();
 s32 entity_velocity();
 s32 func_00202180();
@@ -116,7 +116,7 @@ block_8:
             reg_d1.h[0] = temp_a0;
             reg_d1.w += 0xFE00FE00;
             reg_d6.w = 0xF800F800;
-            func_0019D710();
+            sprite_draw_with_bullets_zoom();
             return;
         }
         goto block_6;
@@ -198,7 +198,7 @@ s32 explosion_spawn();
 s32 enemy_hitbox_debug_draw();
 s32 sfx_explosion_air_small();
 s32 sprite_draw_layer3();
-s32 func_0019D6A0();
+s32 sprite_draw_with_bullets();
 s32 score_add_no_chain();
 s32 score_add();
 s32 func_00201F20();
@@ -658,7 +658,7 @@ next_700:
     sprite_draw_layer3();
     return;
 next_710:
-    func_0019D6A0();
+    sprite_draw_with_bullets();
 block_rts:
     return;
 }

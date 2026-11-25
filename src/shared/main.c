@@ -21,8 +21,8 @@ s32 pointer_tables_init();
 s32 sound_init();
 s32 sound_unused();
 s32 func_0018E5A0();
-s32 func_0019AA90();
-s32 func_0019AB20();
+s32 sprite_lists_reset();
+s32 sprite_lists_build();
 s32 func_001A2900();
 s32 text_palette_load();
 s32 func_001A53C0();
@@ -127,7 +127,7 @@ void func_002120D0(void) {
     input_clear();
     func_001A2900();
     func_0013B190();
-    func_0019AA90();
+    sprite_lists_reset();
     task_reset_all();
     func_00135EC0();
     layers_reset();
@@ -230,7 +230,7 @@ loop_15:
         task_run_all();
         func_00131500();
         func_0013C3F0();
-        func_0019AB20();
+        sprite_lists_build();
         if (D_0028EC58 != 0) {
             g_game_frame_ran_as_s8 = 1;
         }

@@ -139,7 +139,7 @@ void func_00172250(void) {
 }
 
 s32 sprite_draw_layer1();
-s32 func_0019D710();
+s32 sprite_draw_with_bullets_zoom();
 extern u8 D_0026B280[];
 
 void func_00172260(void) {
@@ -156,7 +156,7 @@ void func_00172260(void) {
         reg_d4.h[0] = 0x17;
         if ((u16) D_0028E784 == 0) {
             reg_d6.w = *(u32 *)(D_0026B280 + (D_0028E78C * 4));
-            func_0019D710();
+            sprite_draw_with_bullets_zoom();
             return;
         }
         sprite_draw_layer1();

@@ -4,7 +4,7 @@
 void func_0016C620(void);
 
 s32 func_0016C260();
-s32 func_0019D230();
+s32 sprite_draw_with_items();
 s32 entity_velocity();
 
 void func_0016C4B0(void) {
@@ -36,7 +36,7 @@ void func_0016C4B0(void) {
     reg_d2.h[1] = *(u16 *)reg_a0;
     reg_d2.h[0] = *(u16 *)(reg_a0 + 2);
     reg_d4.h[0] = 0x1D;
-    func_0019D230();
+    sprite_draw_with_items();
     if (*(u8 *)(reg_a6 + 0xF) != 0) {
         *(u16 *)(reg_a6 + 2) += 0x20;
     } else {
@@ -78,7 +78,7 @@ void func_0016C620(void) {
     reg_d2.h[1] = *(u16 *)reg_a0;
     reg_d2.h[0] = *(u16 *)(reg_a0 + 2);
     reg_d4.h[0] = 0x1D;
-    func_0019D230();
+    sprite_draw_with_items();
     if (*(u8 *)(reg_a6 + 0xF) != 0) {
         *(u16 *)(reg_a6 + 2) += 0x20;
     } else {

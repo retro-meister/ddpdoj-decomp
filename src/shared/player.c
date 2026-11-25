@@ -1538,7 +1538,7 @@ void func_001417D0(void) {
     reg_d7.w = save_d7;
 }
 
-s32 func_0019D360();
+s32 sprite_draw_with_player_effects();
 extern u8 player_ship_sprite_tables[];
 extern u16 player_ship_hitbox_tables[];
 extern u16 player_ship_shadow_tables[];
@@ -1603,7 +1603,7 @@ void func_00141B50(void) {
         reg_d2.h[0] = (((u16)reg_d0.h[0] + 2) != 0) ? *(u16 *)((u8 *)reg_a0 + ((s16)((u16)reg_d0.h[0] + 2) & ~1)) : *(u16 *)reg_a0;
         reg_d3.h[0] = 0x210;
         reg_d4.h[0] = 0x18;
-        func_0019D360();
+        sprite_draw_with_player_effects();
     }
     if ((g_game_frame_ran != 0) && (D_0028EC4C == 0) && (D_0028E3B4 == 0) && !(D_0028E855 & 1) && (g_true_last_boss == 0) && !(PLAYER(reg_a6)->flags.b[1] & 0x40)) {
         if (*(u8 *)(reg_a5 + 6) == 0) {
@@ -2410,7 +2410,7 @@ block_244:
         reg_d2.h[0] = (((u16)reg_d0.h[0] + 2) != 0) ? *(u16 *)((u8 *)reg_a0 + ((s16)((u16)reg_d0.h[0] + 2) & ~1)) : *(u16 *)reg_a0;
         reg_d3.h[0] = 0x210;
         reg_d4.h[0] = 0x18;
-        func_0019D360();
+        sprite_draw_with_player_effects();
     }
     if ((g_game_frame_ran != 0) && (D_0028EC4C == 0) && (D_0028E3B4 == 0) && !(D_0028E855 & 1) && (g_true_last_boss == 0) && !(PLAYER(reg_a6)->flags.b[1] & 0x40)) {
         if (*(u8 *)(reg_a5 + 6) == 0) {
@@ -2910,7 +2910,7 @@ void func_00144EA0(void) {
 
 s32 func_0013F3F0();
 s32 func_0013F400();
-s32 func_0019D430();
+s32 sprite_draw_with_players();
 extern u16 player_shield_start_sprites[];
 extern u16 D_0028C628[];
 extern u16 player_shield_palettes[];
@@ -2922,7 +2922,7 @@ extern u16 D_0028C880[];
 extern u8 D_0028E30C;
 
 void func_00144F00(void) {
-    s32 func_0019D400();
+    s32 entity_draw_with_players();
     if (D_0028DFC0 != 0) return;
     if ((s8)reg_d0.b[0] < 0) goto next_30;
     if (PLAYER(reg_a6)->state.b.invincible == 0) goto next_100;
@@ -2980,10 +2980,10 @@ next_30:
     if ((s32)reg_tmp.h[0] >= 4) goto next_60;
     PLAYER(reg_a6)->shield_anim_frame.h = 0xC;
 next_60:
-    func_0019D430();
+    sprite_draw_with_players();
 next_100:
     if (D_0028E30C != 0) goto next_110;
-    func_0019D400();
+    entity_draw_with_players();
 next_110:
     func_0013F400();
     if (D_0028E30C == 0) goto next_120;
@@ -3032,14 +3032,14 @@ next_200:
     if ((s32)reg_tmp.h[0] >= 4) goto next_210;
     PLAYER(reg_a6)->exhaust_frame.h = 4;
 next_210:
-    func_0019D430();
+    sprite_draw_with_players();
 }
 
 extern u16 player_ship_sprite_tables_as_u16_a[];
 extern u16 D_0028E3E4;
 
 void func_00145640(void) {
-    s32 func_0019D400();
+    s32 entity_draw_with_players();
     u16 save_a;
     u16 save_c;
 
@@ -3054,7 +3054,7 @@ void func_00145640(void) {
     reg_d0.h[0] = 0;
     *(u16 *) (reg_a6 + 0xA) = (reg_d0.h[0] != 0) ? *(u16 *) (reg_a0 + ((s16) reg_d0.h[0] & ~1)) : *(u16 *) reg_a0;
     *(u16 *) (reg_a6 + 0xC) = ((reg_d0.h[0] + 2) != 0) ? *(u16 *) (reg_a0 + ((s16) (reg_d0.h[0] + 2) & ~1)) : *(u16 *) reg_a0;
-    func_0019D400();
+    entity_draw_with_players();
     *(u16 *) (reg_a6 + 0xA) = save_a;
     *(u16 *) (reg_a6 + 0xC) = save_c;
     if (D_0028E3EC == 0) {
@@ -3092,17 +3092,17 @@ void func_00145640(void) {
     reg_d3.h[0] = *(u16 *) reg_a1;
     reg_a1 += 2;
     reg_tmp.h[0] = (D_0028E3E4 / 2) * 4;
-    func_0019D430();
+    sprite_draw_with_players();
 }
 
-void func_0019D460(void);
+void sprite_draw_with_players_keep(void);
 
 void func_00145A80() {
-    void func_0019D400(void);
+    void entity_draw_with_players(void);
     if (PLAYER(reg_a6)->flags.b[1] & 4) return;
     if (PLAYER(reg_a6)->input.h != 0) {
         PLAYER(reg_a6)->input.h -= 1;
-        func_0019D400();
+        entity_draw_with_players();
     }
     reg_tmp.h[1] = PLAYER(reg_a6)->hit_x_plus.h;
     reg_tmp.h[0] = PLAYER(reg_a6)->hit_x_minus.h;
@@ -3134,7 +3134,7 @@ loop_1:
     reg_d1.w += reg_tmp.w;
     reg_d3.h[0] = PLAYER(reg_a6)->gun_flash_count.h;
     reg_d4.h[0] = PLAYER(reg_a6)->shield_anim_frame.h;
-    func_0019D460();
+    sprite_draw_with_players_keep();
     goto loop_1;
 block_1:
     PLAYER(reg_a6)->x.h = *(u16 *)reg_a2;
@@ -3158,7 +3158,7 @@ block_2:
         reg_d3.h[0] >>= 6;
         reg_d3.h[0] += 0x400;
         reg_d4.h[0] = PLAYER(reg_a6)->shield_anim_frame.h;
-        func_0019D460();
+        sprite_draw_with_players_keep();
     }
     reg_d4.h[0] = PLAYER(reg_a6)->x.h;
     reg_d4.h[0] += 0x1000;
@@ -3169,7 +3169,7 @@ block_2:
         reg_d3.h[0] >>= 6;
         reg_d3.h[0] += 0x400;
         reg_d4.h[0] = PLAYER(reg_a6)->shield_anim_frame.h;
-        func_0019D460();
+        sprite_draw_with_players_keep();
     }
     goto loop_1;
 }

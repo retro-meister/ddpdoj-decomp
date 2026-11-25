@@ -5,21 +5,21 @@
 void func_0014BE20(void);
 void func_0014CAE0(void);
 
-s32 func_0019D530();                            /* extern */
+s32 entity_draw_with_player_shots();                            /* extern */
 
 void func_001486D0(void) {
     reg_a0 = (u8 *)(((s32)reg_a6));
     func_0014BE20();
-    func_0019D530();
+    entity_draw_with_player_shots();
 }
 
 void func_00148700(void) {
     reg_a0 = (u8 *)(((s32)reg_a6));
     func_0014BE20();
-    func_0019D530();
+    entity_draw_with_player_shots();
 }
 
-s32 func_0019D560();
+s32 entity_draw_with_player_shots_zoom();
 extern u16 D_00257800[];
 
 void func_00148730(void) {
@@ -31,7 +31,7 @@ void func_00148730(void) {
     reg_d6.h[0] *= 2;
     reg_d6.h[1] = (reg_d6.h[0] != 0) ? *(u16 *)((u8 *)reg_a0 + ((s16)reg_d6.h[0] & ~1)) : *(u16 *)reg_a0;
     reg_d6.h[0] = ((reg_d6.h[0] + 2) != 0) ? *(u16 *)((u8 *)reg_a0 + ((s16)(reg_d6.h[0] + 2) & ~1)) : *(u16 *)reg_a0;
-    func_0019D560();
+    entity_draw_with_player_shots_zoom();
     reg_d6.w = temp_s0;
     reg_a0 = (u8 *)(reg_a6);
     func_0014BE20();

@@ -36,7 +36,7 @@ void func_0019F270(void) {
     reg_a6 = (u8 *)temp_s0_2;
 }
 
-void func_0019D390(void);
+void sprite_draw_with_player_effects_keep(void);
 extern u16 D_0028DFC0;
 extern u16 D_0028E3EC;
 extern u16 g_loop;
@@ -68,7 +68,7 @@ void func_0019F2E0(void) {
     reg_d4.h[0] = ENTITY(reg_a6)->attr.h;
     reg_d4.b[0] = 0x18;
     reg_d2.w = reg_d6.w;
-    func_0019D390();
+    sprite_draw_with_player_effects_keep();
 }
 
 void func_0019F410(void) {
@@ -95,7 +95,7 @@ void func_0019F410(void) {
         reg_d4.b[0] = 0x18;
         reg_d2.h[1] = *(u16 *)(reg_a6 + 0x5C);
         reg_d2.h[0] = *(u16 *)(reg_a6 + 0x5E);
-        func_0019D390();
+        sprite_draw_with_player_effects_keep();
         reg_d1.h[1] = *(u16 *)(reg_a6 + 0x22);
         reg_d1.h[0] = *(u16 *)(reg_a6 + 0x24);
         reg_d5.h[0] = 0x1C00;
@@ -118,7 +118,7 @@ void func_0019F410(void) {
         reg_d4.b[0] = 0x18;
         reg_d2.h[1] = *(u16 *)(reg_a6 + 0x60);
         reg_d2.h[0] = *(u16 *)(reg_a6 + 0x62);
-        func_0019D390();
+        sprite_draw_with_player_effects_keep();
     }
 }
 
@@ -145,7 +145,7 @@ void func_0019F620(void) {
         reg_d4.h[0] = 0x18;
         reg_d2.h[1] = *(u16 *)(reg_a6 + 0x5C);
         reg_d2.h[0] = *(u16 *)(reg_a6 + 0x5E);
-        func_0019D390();
+        sprite_draw_with_player_effects_keep();
     }
 }
 
@@ -907,7 +907,7 @@ block_13:
     }
 }
 
-s32 func_0019D4D0();
+s32 entity_draw_with_lasers();
 extern u16 D_0025F1D0[];
 
 void func_001A1510(void) {
@@ -945,7 +945,7 @@ void func_001A1510(void) {
     ENTITY(reg_a6)->x.h = (u16) (p0 + reg_d5.h[0]);
     if (D_0028DFC0 == 0) {
         func_0019F2E0();
-        func_0019D4D0();
+        entity_draw_with_lasers();
     }
 }
 
@@ -1175,7 +1175,7 @@ next_80:
 next_100:
     if ((s8)reg_a4[0] < 0) return;
     func_0019F620();
-    func_0019D4D0();
+    entity_draw_with_lasers();
     return;
 block_sen:
     reg_a2 = reg_a1;
@@ -1267,7 +1267,7 @@ block_sen:
 next_sen10:
     *(u16 *)(reg_a6 + 0x4E) = 2;
     func_0019F620();
-    func_0019D4D0();
+    entity_draw_with_lasers();
 }
 
 s32 func_00201C20();
@@ -1304,7 +1304,7 @@ void func_001A2680(void) {
     ENTITY(reg_a6)->x.h = (u16) (temp_a0 + reg_d3.h[0]);
     if (D_0028DFC0 == 0) {
         if ((s8) *(u8 *)reg_a4 >= 0) {
-            func_0019D4D0();
+            entity_draw_with_lasers();
             return;
         }
         reg_d0.h[0] = *(u16 *)(reg_a6 + 0x38);
@@ -1314,7 +1314,7 @@ void func_001A2680(void) {
             ENTITY(reg_a6)->y.h -= reg_d0.h[0];
             *(u16 *)(reg_a6 + 0x38) -= 2;
             func_0019F620();
-            func_0019D4D0();
+            entity_draw_with_lasers();
         }
         reg_d0.h[0] = *(u16 *)(reg_a6 + 0x56);
         *(u16 *)(reg_a6 + 0x56) -= 4;
@@ -1327,6 +1327,6 @@ void func_001A2680(void) {
         reg_d0.h[0] = (temp_a0_2 != 0) ? *(u16 *)((u8 *)reg_a0 + ((s16)temp_a0_2 & ~1)) : *(u16 *)reg_a0;
         func_00201C20();
         func_0019F620();
-        func_0019D4D0();
+        entity_draw_with_lasers();
     }
 }

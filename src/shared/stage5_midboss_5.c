@@ -1358,7 +1358,7 @@ void func_001FF610() {
 }
 
 s32 sprite_draw_layer5_zoom();
-s32 func_0019D710();
+s32 sprite_draw_with_bullets_zoom();
 s32 entity_check_bounds();
 extern u8 D_00266380[];
 extern u16 D_0028E3E4;
@@ -1430,7 +1430,7 @@ next_1:
         reg_d4.b[0] = t3;
         reg_d6.w = 0xF800F800;
         if (D_0028E3E4 != 0) {
-            func_0019D710();
+            sprite_draw_with_bullets_zoom();
         } else {
             sprite_draw_layer5_zoom();
         }
@@ -1604,7 +1604,7 @@ next_1:
         reg_d4.b[0] = t3;
         reg_d6.w = 0xF800F800;
         if (D_0028E3E4 != 0) {
-            func_0019D710();
+            sprite_draw_with_bullets_zoom();
         } else {
             sprite_draw_layer5_zoom();
         }

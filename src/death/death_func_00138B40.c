@@ -53,7 +53,7 @@ s32 sceGsSetDefLoadImage();
 s32 sceGsSyncPath(s32 mode, u32 timeout);
 s32 rand(void);
 s32 text_layer_clear();
-s32 func_0019AB20();
+s32 sprite_lists_build();
 s32 sprite_draw_keep();
 s32 sprite_palette_load();
 s32 text_queue_clear();
@@ -182,7 +182,7 @@ void death_func_00138ED0(TextScript *script) {
             reg_a0 = ((script->frame >> 1) & 1) ? (u8 *) ending_fade_in_05 : (u8 *) ending_fade_in_09;
             reg_d0.h[0] = 1;
             sprite_palette_load();
-            func_0019AB20();
+            sprite_lists_build();
             arcade_sprite_draw();
             head = (ListHead *) g_arcade_sprites_as_u16_a;
             head->e = 0;

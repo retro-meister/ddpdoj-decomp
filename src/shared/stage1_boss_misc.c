@@ -301,7 +301,7 @@ void func_0014FAB0(void) {
 }
 
 s32 bullet_fire_fixed();
-s32 func_0019D6A0();
+s32 sprite_draw_with_bullets();
 s32 rng_next_unsigned();
 extern u16 D_00259770[];
 extern u16 D_00259870[];
@@ -432,7 +432,7 @@ next_4:
     reg_d1.w += 0xFA00FD00;
     reg_d3.h[0] = 0x618;
     reg_d4.w = 0x11;
-    func_0019D6A0();
+    sprite_draw_with_bullets();
 }
 
 void func_00150130(void) {
