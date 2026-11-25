@@ -18,7 +18,7 @@ u16 g_explosion_test_positions[68] = {
     0x0000, 0x0048, 0x0000, 0x0000,
 };
 
-u16 g_explosion_test_work[4] = {
+u16 g_explosion_test_state[4] = {
     0x0000, 0x1070, 0x0000, 0x0000,
 };
 

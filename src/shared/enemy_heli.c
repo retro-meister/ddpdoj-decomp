@@ -153,7 +153,7 @@ void heli_a_first(void) {
 }
 
 
-s32 enemy_set_task_work();
+s32 enemy_set_task_state();
 s32 enemy_init_entities();
 s32 enemy_path_start();
 s32 func_002036F0();
@@ -172,7 +172,7 @@ extern s8 enemy_move_end_requested;
 void heli_a_start(void) {
     s32 enemy_remove();
     func_00150740();
-    if ((cond_flag == 0) && (reg_a0 = (u8 *)D_002578B0, enemy_init_entities(), reg_a0 = (u8 *)D_00257890, reg_d0.h[0] = 0xC, enemy_set_task_work(), ENTITY(reg_a6)->attr.b.palette = (u8) *(u8 *)(reg_a5 + 0x2B), enemy_path_start(), (enemy_move_end_requested == 0))) {
+    if ((cond_flag == 0) && (reg_a0 = (u8 *)D_002578B0, enemy_init_entities(), reg_a0 = (u8 *)D_00257890, reg_d0.h[0] = 0xC, enemy_set_task_state(), ENTITY(reg_a6)->attr.b.palette = (u8) *(u8 *)(reg_a5 + 0x2B), enemy_path_start(), (enemy_move_end_requested == 0))) {
         reg_a0 = (u8 *)(D_002578D0);
         reg_d1.b[0] = ENTITY(reg_a6)->move.b.dir;
         reg_d1.h[0] &= 0x3E;
@@ -326,7 +326,7 @@ void heli_b_start(void) {
             enemy_init_entities();
             reg_a0 = (u8 *)(D_00257A50);
             reg_d0.h[0] = 0xA;
-            enemy_set_task_work();
+            enemy_set_task_state();
             ENTITY(reg_a6)->attr.b.palette = (u8) *(u8 *)(reg_a5 + 0x2B);
             enemy_path_start();
             if (enemy_move_end_requested == 0) {
@@ -440,7 +440,7 @@ void heli_c_start(void) {
             enemy_init_entities();
             reg_a0 = (u8 *)(D_00257A90);
             reg_d0.h[0] = 0xA;
-            enemy_set_task_work();
+            enemy_set_task_state();
             ENTITY(reg_a6)->attr.b.palette = (u8) *(u8 *)(reg_a5 + 0x2B);
             enemy_path_start();
             if (enemy_move_end_requested == 0) {
@@ -592,7 +592,7 @@ extern u16 g_enemy_signal_6;
 void heli_d_start(void) {
     s32 enemy_remove();
     func_00150740();
-    if ((cond_flag == 0) && (func_00150790(), (cond_flag == 0)) && (reg_a0 = (u8 *)D_00257AF0, enemy_init_entities(), reg_a0 = (u8 *)D_00257AD0, reg_d0.h[0] = 0xA, enemy_set_task_work(), ENTITY(reg_a6)->attr.b.palette = (u8) *(u8 *)(reg_a5 + 0x2B), enemy_path_start(), (enemy_move_end_requested == 0))) {
+    if ((cond_flag == 0) && (func_00150790(), (cond_flag == 0)) && (reg_a0 = (u8 *)D_00257AF0, enemy_init_entities(), reg_a0 = (u8 *)D_00257AD0, reg_d0.h[0] = 0xA, enemy_set_task_state(), ENTITY(reg_a6)->attr.b.palette = (u8) *(u8 *)(reg_a5 + 0x2B), enemy_path_start(), (enemy_move_end_requested == 0))) {
         reg_a0 = (u8 *)(D_002578D0);
         reg_d1.b[0] = ENTITY(reg_a6)->move.b.dir;
         reg_d1.h[0] &= 0x3E;
@@ -755,7 +755,7 @@ void heli_e_start(void) {
         enemy_init_entities();
         reg_a0 = (u8 *)(D_00257B10);
         reg_d0.h[0] = 0xA;
-        enemy_set_task_work();
+        enemy_set_task_state();
         ENTITY(reg_a6)->attr.b.palette = (u8) *(u8 *)(reg_a5 + 0x2B);
         enemy_path_start();
         if (enemy_move_end_requested == 0) {
@@ -878,7 +878,7 @@ void heli_f_start(void) {
         enemy_init_entities();
         reg_a0 = (u8 *)(D_00257B50);
         reg_d0.h[0] = 0xA;
-        enemy_set_task_work();
+        enemy_set_task_state();
         ENTITY(reg_a6)->attr.b.palette = (u8) *(u8 *)(reg_a5 + 0x2B);
         enemy_path_start();
         if (enemy_move_end_requested == 0) {
@@ -965,7 +965,7 @@ extern s16 g_scroll_line_as_s16;
 void heli_g_start(void) {
     s32 enemy_remove();
     func_00150740();
-    if ((cond_flag == 0) && (func_00150790(), (cond_flag == 0)) && (reg_a0 = (u8 *)D_00257BB0, enemy_init_entities(), reg_a0 = (u8 *)D_00257B90, reg_d0.h[0] = 0xA, enemy_set_task_work(), ENTITY(reg_a6)->attr.b.palette = (u8) *(u8 *)(reg_a5 + 0x2B), enemy_path_start(), (enemy_move_end_requested == 0))) {
+    if ((cond_flag == 0) && (func_00150790(), (cond_flag == 0)) && (reg_a0 = (u8 *)D_00257BB0, enemy_init_entities(), reg_a0 = (u8 *)D_00257B90, reg_d0.h[0] = 0xA, enemy_set_task_state(), ENTITY(reg_a6)->attr.b.palette = (u8) *(u8 *)(reg_a5 + 0x2B), enemy_path_start(), (enemy_move_end_requested == 0))) {
         reg_a0 = (u8 *)(D_002578D0);
         reg_d1.b[0] = ENTITY(reg_a6)->move.b.dir;
         reg_d1.h[0] &= 0x3E;
@@ -1152,7 +1152,7 @@ extern u16 g_rank_4_16;
 void heli_h_start(void) {
     s32 enemy_remove();
     func_00150740();
-    if ((cond_flag == 0) && (func_00150790(), (cond_flag == 0)) && (reg_a0 = (u8 *)D_00257BF0, enemy_init_entities(), reg_a0 = (u8 *)D_00257BD0, reg_d0.h[0] = 0xA, enemy_set_task_work(), ENTITY(reg_a6)->attr.b.palette = (u8) *(u8 *)(reg_a5 + 0x2B), enemy_path_start(), (enemy_move_end_requested == 0))) {
+    if ((cond_flag == 0) && (func_00150790(), (cond_flag == 0)) && (reg_a0 = (u8 *)D_00257BF0, enemy_init_entities(), reg_a0 = (u8 *)D_00257BD0, reg_d0.h[0] = 0xA, enemy_set_task_state(), ENTITY(reg_a6)->attr.b.palette = (u8) *(u8 *)(reg_a5 + 0x2B), enemy_path_start(), (enemy_move_end_requested == 0))) {
         reg_a0 = (u8 *)(D_002578D0);
         reg_d1.b[0] = ENTITY(reg_a6)->move.b.dir;
         reg_d1.h[0] &= 0x3E;

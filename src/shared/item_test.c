@@ -224,7 +224,7 @@ void func_0016CCD0(void) {
     enemy_set_entity_count(0);
 }
 
-s32 enemy_set_task_work();                            /* extern */
+s32 enemy_set_task_state();                            /* extern */
 s32 enemy_init_entities();                            /* extern */
 extern s32 D_0025B0E0[];
 extern s32 D_0028CA00;
@@ -234,7 +234,7 @@ void func_0016CCE0(void) {
     enemy_init_entities();
     reg_a0 = (u8 *)(&D_0028CA00);
     reg_d0.w = 1;
-    enemy_set_task_work();
+    enemy_set_task_state();
     reg_tmp.w = 0x38001C00;
     ENTITY(reg_a6)->y.h = (u16) reg_tmp.h[1];
     ENTITY(reg_a6)->x.h = (u16) reg_tmp.h[0];

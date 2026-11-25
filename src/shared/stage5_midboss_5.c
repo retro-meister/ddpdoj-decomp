@@ -328,7 +328,7 @@ void stage5_midboss5_first(void) {
     enemy_set_entity_count(4);
 }
 
-s32 enemy_set_task_work();
+s32 enemy_set_task_state();
 s32 enemy_init_entities();
 s32 sprite_palette_load();
 extern u8 D_00260470[];
@@ -346,7 +346,7 @@ void stage5_midboss5_start(void) {
     enemy_init_entities();
     reg_a0 = (u8 *)D_002661C8;
     reg_d0.h[0] = 5;
-    enemy_set_task_work();
+    enemy_set_task_state();
     reg_tmp.w = 0xF4001C00;
     ENTITY(reg_a6)->y.h = reg_tmp.h[1];
     ENTITY(reg_a6)->x.h = reg_tmp.h[0];
@@ -1289,7 +1289,7 @@ void stage5_midboss5_small_missile_start() {
     ENTITY(reg_a6)->x.h = temp_a1;
     reg_a0 = &D_0028DA38;
     reg_d0.h[0] = 1;
-    enemy_set_task_work();
+    enemy_set_task_state();
 }
 
 s32 sprite_draw_layer3();
@@ -1353,7 +1353,7 @@ void stage5_midboss5_small_blast_start() {
     ENTITY(reg_a6)->x.h = temp_a1;
     reg_a0 = &D_0028DA40;
     reg_d0.h[0] = 2;
-    enemy_set_task_work();
+    enemy_set_task_state();
 }
 
 s32 sprite_draw_layer5_zoom();
@@ -1454,7 +1454,7 @@ void stage5_midboss5_large_missile_start() {
     ENTITY(reg_a6)->x.h = temp_a1;
     reg_a0 = &D_0028DA48;
     reg_d0.h[0] = 1;
-    enemy_set_task_work();
+    enemy_set_task_state();
 }
 
 void stage5_midboss5_large_missile(void) {
@@ -1526,7 +1526,7 @@ void stage5_midboss5_large_blast_start() {
     ENTITY(reg_a6)->x.h = temp_a1;
     reg_a0 = &D_0028DA50;
     reg_d0.h[0] = 2;
-    enemy_set_task_work();
+    enemy_set_task_state();
 }
 
 extern u8 D_00266400[];
@@ -1629,7 +1629,7 @@ void stage5_midboss5_drone_start() {
     ENTITY(reg_a6)->move.b.dir = temp_a1;
     reg_a0 = D_00266440;
     reg_d0.h[0] = 8;
-    enemy_set_task_work();
+    enemy_set_task_state();
 }
 
 s32 sfx_explosion_ground_medium();
@@ -1879,7 +1879,7 @@ void stage5_midboss5_spin_drone_start() {
     ENTITY(reg_a6)->move.b.dir = temp_a1;
     reg_a0 = D_002666A0;
     reg_d0.h[0] = 7;
-    enemy_set_task_work();
+    enemy_set_task_state();
     reg_d1.w = 0;
     reg_d0.w = 0;
     reg_d0.b[0] = ENTITY(reg_a6)->move.b.speed;

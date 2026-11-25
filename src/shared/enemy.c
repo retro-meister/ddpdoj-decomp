@@ -564,7 +564,7 @@ void enemy_remove_entities()
 extern u16 *reg_a0_as_u16_p;
 extern u16 *reg_a1_as_u16_p;
 
-void enemy_set_task_work(void)
+void enemy_set_task_state(void)
 {
     u32 savedCounter;
     u16 *savedSource;
@@ -881,7 +881,7 @@ void enemy_script_air_collision(void)
 }
 
 
-void enemy_script_set_work_22(void) {
+void enemy_script_set_state_22(void) {
     *(s8 *)(reg_a5 + 0x23) = *(s8 *)reg_a0;
     reg_a0 += 1;
 }
@@ -933,7 +933,7 @@ void enemy_script_poke_entity(void) {
     *(u16 *)(reg_a6 + ((s32) reg_d0.h[0] >> 1)) = reg_d1.h[0];
 }
 
-void enemy_script_set_work_24(void) {
+void enemy_script_set_state_24(void) {
     *(s8 *)(reg_a5 + 0x25) = *(s8 *)reg_a0;
     reg_a0 += 1;
 }

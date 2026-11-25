@@ -109,7 +109,7 @@ extern s8 enemy_move_end_requested;
 
 void stage5_small_turret_start(void)
 {
-    extern void enemy_set_task_work(void);
+    extern void enemy_set_task_state(void);
     extern void enemy_init_entities(void);
     extern void enemy_path_start(void);
     reg_a0 = D_00265130;
@@ -117,7 +117,7 @@ void stage5_small_turret_start(void)
 
     reg_a0 = D_00265110;
     reg_d0.w = 8;
-    enemy_set_task_work();
+    enemy_set_task_state();
     enemy_path_start();
 
     if (enemy_move_end_requested == 0) {
@@ -284,14 +284,14 @@ extern u8 D_00265180[];
 extern u16 g_scroll_line;
 
 void stage5_bee_hatch_start(void) {
-    s32 enemy_set_task_work();
+    s32 enemy_set_task_state();
     s32 enemy_init_entities();
     s32 enemy_path_start();
     reg_a0 = D_00265180;
     enemy_init_entities();
     reg_a0 = D_00265170;
     reg_d0.w = 6;
-    enemy_set_task_work();
+    enemy_set_task_state();
     enemy_path_start();
     if (enemy_move_end_requested == 0) {
         *(u16 *)(reg_a5 + 0x22) = (u16) g_scroll_line;
@@ -426,14 +426,14 @@ extern u8 D_002651E0[];
 extern s16 D_0029976A[];
 
 void stage5_small_spider_turret_start(void) {
-    s32 enemy_set_task_work();
+    s32 enemy_set_task_state();
     s32 enemy_init_entities();
     s32 enemy_path_start();
     reg_a0 = D_002651E0;
     enemy_init_entities();
     reg_a0 = D_002651C0;
     reg_d0.w = 8;
-    enemy_set_task_work();
+    enemy_set_task_state();
     enemy_path_start();
     if (enemy_move_end_requested == 0) {
         if (g_scroll_line == 0x201) {
@@ -608,14 +608,14 @@ extern s16 g_enemy_signal_6_as_s16;
 extern s16 g_enemy_signal_4_as_s16;
 
 void stage5_small_spider_head_start(void) {
-    s32 enemy_set_task_work();
+    s32 enemy_set_task_state();
     s32 enemy_init_entities();
     s32 enemy_path_start();
     reg_a0 = (u8 *)(D_00265290);
     enemy_init_entities();
     reg_a0 = (u8 *)(D_00265280);
     reg_d0.w = 6;
-    enemy_set_task_work();
+    enemy_set_task_state();
     enemy_path_start();
     if (enemy_move_end_requested != 0) return;
     if (g_scroll_line != 0x1F3) goto next_1;
@@ -768,14 +768,14 @@ extern u8 D_002654F0[];
 extern u8 D_00265510[];
 
 void stage5_large_spider_turret_start(void) {
-    s32 enemy_set_task_work();
+    s32 enemy_set_task_state();
     s32 enemy_init_entities();
     s32 enemy_path_start();
     reg_a0 = D_00265510;
     enemy_init_entities();
     reg_a0 = D_002654F0;
     reg_d0.w = 8;
-    enemy_set_task_work();
+    enemy_set_task_state();
     enemy_path_start();
     if (enemy_move_end_requested == 0) {
         if (g_scroll_line == 0x2B6) {
@@ -948,14 +948,14 @@ extern s16 g_enemy_signal_7_as_s16;
 extern s16 g_enemy_signal_5_as_s16;
 
 void stage5_large_spider_head_start(void) {
-    s32 enemy_set_task_work();
+    s32 enemy_set_task_state();
     s32 enemy_init_entities();
     s32 enemy_path_start();
     reg_a0 = (u8 *)(D_00265600);
     enemy_init_entities();
     reg_a0 = (u8 *)(D_002655E0);
     reg_d0.w = 9;
-    enemy_set_task_work();
+    enemy_set_task_state();
     enemy_path_start();
     if (enemy_move_end_requested != 0) return;
     if (g_scroll_line != 0x299) goto next_1;
@@ -1112,7 +1112,7 @@ extern u8 D_002657F0[];
 extern u8 D_00265810[];
 
 void stage5_spiderling_start(void) {
-    s32 enemy_set_task_work();
+    s32 enemy_set_task_state();
     s32 enemy_init_entities();
     reg_a0 = D_00265810;
     enemy_init_entities();
@@ -1123,7 +1123,7 @@ void stage5_spiderling_start(void) {
     ENTITY(reg_a6)->misc.h -= 1;
     reg_a0 = D_002657F0;
     reg_d0.w = 0xB;
-    enemy_set_task_work();
+    enemy_set_task_state();
     reg_d0.h[0] = 0x15;
     reg_a0 = D_00261BB0;
     sprite_palette_load();
@@ -1332,7 +1332,7 @@ extern u8 D_00265870[];
 extern u8 D_00265890[];
 
 void stage5_bee_drone_start(void) {
-    s32 enemy_set_task_work();
+    s32 enemy_set_task_state();
     s32 enemy_init_entities();
     u16 temp_a0;
     u32 temp_a2;
@@ -1350,7 +1350,7 @@ void stage5_bee_drone_start(void) {
     *(u16 *)(reg_a5 + 0x32) = temp_a0;
     reg_a0 = D_00265870;
     reg_d0.w = 0xE;
-    enemy_set_task_work();
+    enemy_set_task_state();
     if ((s16) ENTITY(reg_a6)->y.h < 0x2801) {
         enemy_remove();
         return;
@@ -1621,13 +1621,13 @@ extern u8 D_002659F0[];
 extern u8 D_00265A00[];
 
 void func_001F93D0(void) {
-    s32 enemy_set_task_work();
+    s32 enemy_set_task_state();
     s32 enemy_init_entities();
     reg_a0 = D_00265A00;
     enemy_init_entities();
     reg_a0 = D_002659F0;
     reg_d0.w = 4;
-    enemy_set_task_work();
+    enemy_set_task_state();
     reg_tmp.w = 0x38001C00;
     ENTITY(reg_a6)->y.h = reg_tmp.h[1];
     ENTITY(reg_a6)->x.h = reg_tmp.h[0];
@@ -1676,13 +1676,13 @@ extern u8 D_00265A60[];
 extern u8 D_00265A70[];
 
 void func_001F9550(void) {
-    s32 enemy_set_task_work();
+    s32 enemy_set_task_state();
     s32 enemy_init_entities();
     reg_a0 = D_00265A70;
     enemy_init_entities();
     reg_a0 = D_00265A60;
     reg_d0.w = 4;
-    enemy_set_task_work();
+    enemy_set_task_state();
     reg_tmp.w = 0x38001C00;
     ENTITY(reg_a6)->y.h = reg_tmp.h[1];
     ENTITY(reg_a6)->x.h = reg_tmp.h[0];

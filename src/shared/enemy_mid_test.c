@@ -9,7 +9,7 @@ void func_00168110(void) {
 
 
 s32 enemy_remove();
-s32 enemy_set_task_work();
+s32 enemy_set_task_state();
 s32 enemy_init_entities();
 s32 enemy_path_start();
 s32 func_00202180();
@@ -36,7 +36,7 @@ void func_00168120(void) {
     *(u16 *)(reg_a5 + 0x46) = (u16) reg_tmp.h[0];
     reg_a0 = (u8 *)(D_0025AF00);
     reg_d0.w = 8;
-    enemy_set_task_work();
+    enemy_set_task_state();
     enemy_path_start();
     if (enemy_move_end_requested == 0) {
         func_00202180();

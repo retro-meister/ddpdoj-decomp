@@ -7,10 +7,10 @@
  */
 
 void enemy_set_entity_count(s32 arg0);
-s32 enemy_set_task_work();                            /* extern */
+s32 enemy_set_task_state();                            /* extern */
 s32 enemy_init_entities();                            /* extern */
 extern s32 g_map_cell_test_entities[];
-extern s32 g_map_cell_test_work;
+extern s32 g_map_cell_test_state;
 s32 bg_layer_cell_address();
 s32 debug_print_hex8_stub();
 s32 debug_print_hex4_stub();
@@ -27,9 +27,9 @@ void map_cell_test_first(void) {
 void map_cell_test_setup(void) {
     reg_a0 = (u8 *)g_map_cell_test_entities;
     enemy_init_entities();
-    reg_a0 = (u8 *)(&g_map_cell_test_work);
+    reg_a0 = (u8 *)(&g_map_cell_test_state);
     reg_d0.w = 1;
-    enemy_set_task_work();
+    enemy_set_task_state();
     reg_tmp.w = 0x38001C00;
     ENTITY(reg_a6)->y.h = (u16) reg_tmp.h[1];
     ENTITY(reg_a6)->x.h = (u16) reg_tmp.h[0];

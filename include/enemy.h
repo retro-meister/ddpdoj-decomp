@@ -5,7 +5,7 @@
 #include "entity.h"
 
 /*
- * Work block of one running enemy, 0x50 bytes. The enemy's routines get it in reg_a5 and its first entity in
+ * State block of one running enemy, 0x50 bytes. The enemy's routines get it in reg_a5 and its first entity in
  * reg_a6. A request to start an enemy is a block of the same layout, copied into a free slot when it is served.
  * Only the fields every enemy shares are named here; `own` belongs to the enemy's routines, and each unit
  * describes its use of it with a record type of its own.
@@ -25,10 +25,10 @@ typedef struct {
     /* 0x48 */ u16 start_y;
     /* 0x4A */ u16 start_x;
     /* 0x4C */ u16 routine[2];       /* address of the routine run every frame, high word first */
-} EnemyWork;
+} EnemyState;
 
-#define ENEMY_WORK(pointer) ((EnemyWork *)(pointer))
+#define ENEMY_WORK(pointer) ((EnemyState *)(pointer))
 
-#define ENEMY_FLAG_FROM_SPAWNER 0x40 /* EnemyWork.flags: started by a spawner, at start_y/start_x */
+#define ENEMY_FLAG_FROM_SPAWNER 0x40 /* EnemyState.flags: started by a spawner, at start_y/start_x */
 
 #endif

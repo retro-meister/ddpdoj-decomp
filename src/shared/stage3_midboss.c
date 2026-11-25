@@ -68,7 +68,7 @@ void stage3_midboss_first(void) {
     enemy_set_entity_count(6);
 }
 
-s32 enemy_set_task_work();
+s32 enemy_set_task_state();
 s32 enemy_init_entities();
 s32 sprite_palette_load();
 extern u16 D_00260330[];
@@ -89,7 +89,7 @@ void stage3_midboss_start(void) {
     *(u16 *)(reg_a5 + 0x46) = (u16) reg_tmp.h[0];
     reg_a0_as_u16_p = D_00263370;
     reg_d0.h[0] = 0xE;
-    enemy_set_task_work();
+    enemy_set_task_state();
     reg_tmp.w = 0xF0001C00;
     ENTITY(reg_a6)->y.h = (u16) reg_tmp.h[1];
     ENTITY(reg_a6)->x.h = (u16) reg_tmp.h[0];

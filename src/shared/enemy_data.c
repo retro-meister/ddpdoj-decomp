@@ -30,8 +30,8 @@ void enemy_script_poke_entity();
 void enemy_script_poke_task();
 void enemy_script_set_entity_1e();
 void enemy_script_set_entity_1f();
-void enemy_script_set_work_22();
-void enemy_script_set_work_24();
+void enemy_script_set_state_22();
+void enemy_script_set_state_24();
 void enemy_script_unused();
 
 struct D0026a2b0Record { void *p0[3]; u16 w1[2]; void *p2[3]; u16 w3[2]; void *p4[3]; u16 w5[2]; void *p6[3]; u16 w7[2]; void *p8[3]; u16 w9[2]; void *p10[3]; u16 w11[2]; void *p12[3]; u16 w13[2]; void *p14[3]; u16 w15[2]; void *p16[3]; u16 w17[2]; void *p18[3]; u16 w19[2]; void *p20[12]; };
@@ -103,10 +103,10 @@ struct D0026a2b0Record D_0026A2B0 = {
         enemy_script_set_entity_1f,
         enemy_script_ground_collision,
         enemy_script_air_collision,
-        enemy_script_set_work_22,
+        enemy_script_set_state_22,
         enemy_script_poke_task,
         enemy_script_poke_entity,
-        enemy_script_set_work_24,
+        enemy_script_set_state_24,
         enemy_script_set_entity_1e,
         enemy_script_air_scroll_check,
         enemy_script_end,

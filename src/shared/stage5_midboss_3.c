@@ -13,7 +13,7 @@ s32 stage5_midboss3_first(void) {
     return enemy_set_entity_count(3);
 }
 
-s32 enemy_set_task_work();
+s32 enemy_set_task_state();
 s32 enemy_init_entities();
 s32 enemy_path_start();
 s32 sprite_palette_load();
@@ -30,7 +30,7 @@ void stage5_midboss3_start(void) {
     enemy_init_entities();
     reg_a0 = D_00265AB0;
     reg_d0.h[0] = 0xF;
-    enemy_set_task_work();
+    enemy_set_task_state();
     enemy_path_start();
     if (enemy_move_end_requested == 0) {
         reg_d0.h[0] = 0x10;

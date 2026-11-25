@@ -198,19 +198,19 @@ void stage4_boss_mode_attack_a() {
     }
 }
 
-typedef struct WorkRegA4 {
+typedef struct PartRegA4 {
     u8 pad0[3];
     u8 flag3;
     s16 field4;
     s16 field6;
-} WorkRegA4;
+} PartRegA4;
 
 
 
 void stage4_boss_mode_attack_b_start(void) {
-    ((WorkRegA4 *)reg_a4)->flag3 = 0;
-    ((WorkRegA4 *)reg_a4)->field4 = 0x20;
-    ((WorkRegA4 *)reg_a4)->field6 = 0;
+    ((PartRegA4 *)reg_a4)->flag3 = 0;
+    ((PartRegA4 *)reg_a4)->field4 = 0x20;
+    ((PartRegA4 *)reg_a4)->field6 = 0;
     stage4_boss_mode_attack_b();
 }
 

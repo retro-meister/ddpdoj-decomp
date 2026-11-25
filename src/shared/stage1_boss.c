@@ -2,7 +2,7 @@
 #include "entity.h"
 #include "stage1_boss.h"
 
-u16 stage1_boss_work_init[] = {
+u16 stage1_boss_state_init[] = {
     0x0001, 0x6C00, 0x0000, 0x9000, 0x0000, 0x9000, 0x2A30,
 };
 
@@ -25,7 +25,7 @@ void stage1_boss_first(void) {
 s32 boss_slots_init();
 s32 boss_phase_start();
 s32 boss_part_show();
-s32 enemy_set_task_work();
+s32 enemy_set_task_state();
 s32 enemy_init_entities();
 s32 sprite_palette_load();
 s32 stage1_boss_damage_init();
@@ -58,13 +58,13 @@ void stage1_boss_start(void) {
 
     reg_a0 = (u8 *)stage1_boss_entities;
     enemy_init_entities();
-    reg_a0 = (u8 *)stage1_boss_work_init;
+    reg_a0 = (u8 *)stage1_boss_state_init;
     t = (s32) D_0028DC90 >> 1;
     if (D_0028DC90 < 0) {
         t = (s32) (D_0028DC90 + 1) >> 1;
     }
     reg_d0.h[0] = t - 1;
-    enemy_set_task_work();
+    enemy_set_task_state();
     reg_tmp.w = 0x97FFFE00;
     ENTITY(reg_a6)->y.h = (u16) reg_tmp.h[1];
     ENTITY(reg_a6)->x.h = (u16) reg_tmp.h[0];

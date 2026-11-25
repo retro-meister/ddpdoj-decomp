@@ -26,7 +26,7 @@ void stage5_midboss4_arrival_first(void) {
     enemy_set_entity_count(0);
 }
 
-s32 enemy_set_task_work();
+s32 enemy_set_task_state();
 s32 enemy_init_entities();
 s32 sprite_palette_load();
 extern u8 D_002603F0[];
@@ -42,7 +42,7 @@ void stage5_midboss4_arrival_start(void) {
     enemy_init_entities();
     reg_a0 = D_00265C20;
     reg_d0.h[0] = 4;
-    enemy_set_task_work();
+    enemy_set_task_state();
     reg_tmp.w = 0x30001C00;
     ENTITY(reg_a6)->y.h = (u16) reg_tmp.h[1];
     ENTITY(reg_a6)->x.h = (u16) reg_tmp.h[0];
@@ -149,7 +149,7 @@ void stage5_midboss4_start() {
     ENTITY(reg_a6)->x.h = temp_a1;
     reg_a0 = &D_0028DA30;
     reg_d0.h[0] = 2;
-    enemy_set_task_work();
+    enemy_set_task_state();
     g_enemy_signal_1_as_s16 = 1;
     D_00299768[0] = 1;
 }

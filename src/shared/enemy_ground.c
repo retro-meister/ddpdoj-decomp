@@ -140,7 +140,7 @@ extern s8 enemy_move_end_requested;
 
 void battleship_start(void) {
     s32 enemy_remove();
-    s32 enemy_set_task_work();
+    s32 enemy_set_task_state();
     s32 enemy_init_entities();
     s32 enemy_path_start();
     reg_a0 = (u8 *)D_00257C10;
@@ -150,7 +150,7 @@ void battleship_start(void) {
     *(u16 *)(reg_a5 + 0x46) = (u16) reg_tmp.h[0];
     reg_a0 = &D_0028C9B0;
     reg_d0.w = 3;
-    enemy_set_task_work();
+    enemy_set_task_state();
     enemy_path_start();
     if (enemy_move_end_requested != 0) return;
     ENTITY(reg_a6)[2].attr.sb.flip = 0x10;
@@ -931,7 +931,7 @@ extern u32 D_00257D90[];
 
 void stage3_gun_a_start(void)
 {
-    extern void enemy_set_task_work(void);
+    extern void enemy_set_task_state(void);
     extern void enemy_init_entities(void);
     extern void enemy_path_start(void);
     reg_a0 = (u8 *)D_00257D90;
@@ -939,7 +939,7 @@ void stage3_gun_a_start(void)
 
     reg_a0 = (u8 *)D_00257D70;
     reg_d0.w = 0xD;
-    enemy_set_task_work();
+    enemy_set_task_state();
     enemy_path_start();
 
     if (enemy_move_end_requested == 0) {
@@ -1149,7 +1149,7 @@ extern u8 D_00258060[];
 
 void stage3_gun_b_start(void)
 {
-    extern void enemy_set_task_work(void);
+    extern void enemy_set_task_state(void);
     extern void enemy_init_entities(void);
     extern void enemy_path_start(void);
     reg_a0 = D_00258060;
@@ -1157,7 +1157,7 @@ void stage3_gun_b_start(void)
 
     reg_a0 = D_00258040;
     reg_d0.w = 0xD;
-    enemy_set_task_work();
+    enemy_set_task_state();
     enemy_path_start();
 
     if (enemy_move_end_requested == 0) {
@@ -1175,7 +1175,7 @@ extern u8 D_002580A0[];
 
 void stage3_gun_c_start(void)
 {
-    extern void enemy_set_task_work(void);
+    extern void enemy_set_task_state(void);
     extern void enemy_init_entities(void);
     extern void enemy_path_start(void);
     reg_a0 = D_002580A0;
@@ -1183,7 +1183,7 @@ void stage3_gun_c_start(void)
 
     reg_a0 = D_00258080;
     reg_d0.w = 0xD;
-    enemy_set_task_work();
+    enemy_set_task_state();
     enemy_path_start();
 
     if (enemy_move_end_requested == 0) {
@@ -1200,7 +1200,7 @@ extern u8 D_002580E0[];
 
 void stage3_gun_d_start(void)
 {
-    extern void enemy_set_task_work(void);
+    extern void enemy_set_task_state(void);
     extern void enemy_init_entities(void);
     extern void enemy_path_start(void);
     reg_a0 = D_002580E0;
@@ -1208,7 +1208,7 @@ void stage3_gun_d_start(void)
 
     reg_a0 = D_002580C0;
     reg_d0.w = 0xD;
-    enemy_set_task_work();
+    enemy_set_task_state();
     enemy_path_start();
 
     if (enemy_move_end_requested == 0) {
@@ -1239,14 +1239,14 @@ extern s16 g_enemy_signal_0_as_s16;
 extern s16 D_00299768[];
 
 void stage3_large_gun_start(void) {
-    s32 enemy_set_task_work();
+    s32 enemy_set_task_state();
     s32 enemy_init_entities();
     s32 enemy_path_start();
     reg_a0 = D_00258130;
     enemy_init_entities();
     reg_a0 = D_00258100;
     reg_d0.w = 0x14;
-    enemy_set_task_work();
+    enemy_set_task_state();
     enemy_path_start();
     if (enemy_move_end_requested == 0) {
         D_00299768[0] = 1;
@@ -1586,14 +1586,14 @@ extern s16 g_scroll_line_as_s16;
 
 void func_001571E0(void) {
     s32 enemy_remove();
-    s32 enemy_set_task_work();
+    s32 enemy_set_task_state();
     s32 enemy_init_entities();
     s32 enemy_path_start();
     reg_a0 = D_00258240;
     enemy_init_entities();
     reg_a0 = D_00258220;
     reg_d0.w = 9;
-    enemy_set_task_work();
+    enemy_set_task_state();
     enemy_path_start();
     if ((enemy_move_end_requested == 0) && (g_scroll_line_as_s16 > 0x10) && (g_scroll_line_as_s16 < 0x36) && (g_enemy_signal_d != 0)) {
         enemy_remove();
@@ -1785,14 +1785,14 @@ extern u8 D_002583A0[];
 extern u16 g_side_scroll_x[];
 
 void func_001578B0(void) {
-    s32 enemy_set_task_work();
+    s32 enemy_set_task_state();
     s32 enemy_init_entities();
     s32 enemy_path_start();
     reg_a0 = D_002583A0;
     enemy_init_entities();
     reg_a0 = D_00258380;
     reg_d0.w = 9;
-    enemy_set_task_work();
+    enemy_set_task_state();
     if (g_stage == 4) {
         *(s8 *)(reg_a5 + 0x19) = 0xF;
         *(s8 *)(reg_a5 + 0x18) = 0x10;
@@ -1984,13 +1984,13 @@ extern u8 D_00258410[];
 extern u16 g_side_scroll_x_prev[];
 
 void stage3_cloud_start(void) {
-    s32 enemy_set_task_work();
+    s32 enemy_set_task_state();
     s32 enemy_init_entities();
     reg_a0 = D_00258410;
     enemy_init_entities();
     reg_a0 = D_00258400;
     reg_d0.w = 6;
-    enemy_set_task_work();
+    enemy_set_task_state();
     reg_tmp.w = 0x70000000;
     ENTITY(reg_a6)->y.h = (u16) reg_tmp.h[1];
     ENTITY(reg_a6)->x.h = (u16) reg_tmp.h[0];
@@ -2089,14 +2089,14 @@ extern u8 D_00258460[];
 extern u8 D_00258490[];
 
 void func_001581F0(void) {
-    s32 enemy_set_task_work();
+    s32 enemy_set_task_state();
     s32 enemy_init_entities();
     s32 enemy_path_start();
     reg_a0 = (u8 *)D_00258490;
     enemy_init_entities();
     reg_a0 = (u8 *)D_00258460;
     reg_d0.w = 0x10;
-    enemy_set_task_work();
+    enemy_set_task_state();
     enemy_path_start();
     if (enemy_move_end_requested == 0) {
         if (g_scroll_line == 0x168) {
@@ -2277,7 +2277,7 @@ extern u8 D_002584E0[];
 extern s16 g_slowdown_boss_allowed;
 
 void battleship_b_start() {
-    s32 enemy_set_task_work();
+    s32 enemy_set_task_state();
     s32 enemy_init_entities();
     u16 temp_a1;
 
@@ -2289,7 +2289,7 @@ void battleship_b_start() {
     ENTITY(reg_a6)->move.h = temp_a1;
     reg_a0 = D_002584B0;
     reg_d0.w = 0x11;
-    enemy_set_task_work();
+    enemy_set_task_state();
     D_00299768[0] = 1;
     g_slowdown_boss_allowed = 1;
 }
@@ -2604,7 +2604,7 @@ extern u8 D_00258580[];
 extern u8 D_002585B0[];
 
 void func_00159040() {
-    s32 enemy_set_task_work();
+    s32 enemy_set_task_state();
     s32 enemy_init_entities();
     u16 temp_a1;
 
@@ -2616,7 +2616,7 @@ void func_00159040() {
     ENTITY(reg_a6)->move.h = temp_a1;
     reg_a0 = D_00258580;
     reg_d0.w = 0x11;
-    enemy_set_task_work();
+    enemy_set_task_state();
 }
 
 extern u8 D_00258620[];
@@ -2999,7 +2999,7 @@ extern u8 D_00258720[];
 
 void func_00159C60(void)
 {
-    extern void enemy_set_task_work(void);
+    extern void enemy_set_task_state(void);
     extern void enemy_init_entities(void);
     extern void enemy_path_start(void);
     reg_a0 = D_00258720;
@@ -3007,7 +3007,7 @@ void func_00159C60(void)
 
     reg_a0 = D_002586F0;
     reg_d0.w = 0x11;
-    enemy_set_task_work();
+    enemy_set_task_state();
 
     enemy_path_start();
     if (enemy_move_end_requested != 0) {
@@ -3268,14 +3268,14 @@ extern u8 D_002587C0[];
 extern u8 D_002587E0[];
 
 void func_0015A510(void) {
-    s32 enemy_set_task_work();
+    s32 enemy_set_task_state();
     s32 enemy_init_entities();
     s32 enemy_path_start();
     reg_a0 = D_002587E0;
     enemy_init_entities();
     reg_a0 = D_002587C0;
     reg_d0.w = 0xA;
-    enemy_set_task_work();
+    enemy_set_task_state();
     enemy_path_start();
     if (enemy_move_end_requested == 0) {
         reg_d1.b[0] = ENTITY(reg_a6)->move.b.dir;
@@ -3555,7 +3555,7 @@ void entity_draw_layer2();
 
 void func_0015AF00(void) {
     s32 enemy_remove();
-    s32 enemy_set_task_work();
+    s32 enemy_set_task_state();
     s32 enemy_init_entities();
     s32 enemy_path_start();
     void sprite_draw_layer2();
@@ -3566,7 +3566,7 @@ void func_0015AF00(void) {
     enemy_init_entities();
     reg_a0 = (u8 *)(D_002589B0);
     reg_d0.w = 0xF;
-    enemy_set_task_work();
+    enemy_set_task_state();
     reg_d0.h[0] = g_rank_6_16;
     *(u8 *)(reg_a5 + 0x29) -= reg_d0.b[0];
     *(u8 *)(reg_a5 + 0x1B) -= reg_d0.b[0];

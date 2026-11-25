@@ -17,7 +17,7 @@ void stage4_gate_first(void) {
     enemy_set_entity_count(1);
 }
 
-s32 enemy_set_task_work();
+s32 enemy_set_task_state();
 s32 enemy_init_entities();
 s32 enemy_path_start();
 s32 sprite_palette_load();
@@ -34,7 +34,7 @@ void stage4_gate_start(void) {
     enemy_init_entities();
     reg_a0 = &D_0028D9AC;
     reg_d0.w = 1;
-    enemy_set_task_work();
+    enemy_set_task_state();
     enemy_path_start();
     if (enemy_move_end_requested == 0) {
         ENTITY(reg_a6)[1].y.h = (u16) ENTITY(reg_a6)->y.h;
@@ -142,7 +142,7 @@ void stage4_lift_start(void) {
     enemy_init_entities_n();
     reg_a0 = (u8 *)D_00263840;
     reg_d0.w = 0xB;
-    enemy_set_task_work();
+    enemy_set_task_state();
     enemy_path_start();
     if (enemy_move_end_requested != 0) {
         return;
@@ -630,7 +630,7 @@ void stage4_heavy_cannon_start(void) {
     *(u16 *)(reg_a5 + 0x46) = (u16) reg_tmp.h[0];
     reg_a0 = D_00263890;
     reg_d0.w = 0xF;
-    enemy_set_task_work();
+    enemy_set_task_state();
     enemy_path_start();
     if (enemy_move_end_requested == 0) {
         reg_d0.h[0] = g_rank_6_16;
@@ -1227,7 +1227,7 @@ void stage4_heavy_cannon_casing_start(void) {
     ENTITY(reg_a6)->x.h = temp_a1;
     reg_a0 = D_00263EF0;
     reg_d0.w = 7;
-    enemy_set_task_work();
+    enemy_set_task_state();
     rng_next();
     reg_tmp.h[0] = (u16) (s8) reg_d0.b[0];
     reg_d0.h[0] = reg_tmp.h[0];
@@ -1424,7 +1424,7 @@ void stage4_wave_cannon_start(void) {
     *(u16 *)(reg_a5 + 0x46) = (u16) reg_tmp.h[0];
     reg_a0 = D_00263B50;
     reg_d0.w = 0x12;
-    enemy_set_task_work();
+    enemy_set_task_state();
     enemy_path_start();
     if (enemy_move_end_requested == 0) {
         reg_a0 = D_002618B0;
@@ -1886,7 +1886,7 @@ void stage4_reactor_start(void) {
     *(u16 *)(reg_a5 + 0x46) = reg_tmp.h[0];
     reg_a0 = &D_0028D9B0;
     reg_d0.w = 2;
-    enemy_set_task_work();
+    enemy_set_task_state();
     enemy_path_start();
     if (enemy_move_end_requested == 0) {
         reg_a0 = D_002618B0;
@@ -1952,7 +1952,7 @@ void crane_turret_start(void) {
     enemy_init_entities();
     reg_a0_as_s8_p = D_00263D70;
     reg_d0.w = 0xE;
-    enemy_set_task_work();
+    enemy_set_task_state();
     enemy_path_start();
     if (enemy_move_end_requested == 0) {
         reg_d0.h[0] = g_rank_3_16;
@@ -2248,7 +2248,7 @@ void rail_turret_start(void) {
     enemy_init_entities();
     reg_a0 = D_00263E10;
     reg_d0.w = 0x13;
-    enemy_set_task_work();
+    enemy_set_task_state();
     enemy_path_start();
     if (enemy_move_end_requested == 0) {
         temp_a0 = ENTITY(reg_a6)->x.h;
@@ -2692,7 +2692,7 @@ void stage4_tachyon_particle_start(void) {
     enemy_init_entities();
     reg_a0 = (u8 *)(D_00263EB8);
     reg_d0.w = 6;
-    enemy_set_task_work();
+    enemy_set_task_state();
     reg_tmp.w = 0x1C00;
     ENTITY(reg_a6)->y.h = (u16) reg_tmp.h[1];
     ENTITY(reg_a6)->x.h = (u16) reg_tmp.h[0];

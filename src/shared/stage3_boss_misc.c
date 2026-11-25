@@ -10,7 +10,7 @@ void stage3_boss_timber_first(void) {
     enemy_set_entity_count(1);
 }
 
-s32 enemy_set_task_work();
+s32 enemy_set_task_state();
 s32 enemy_init_entities();
 s32 func_001713C0();
 extern u8 D_0026D5C0[];
@@ -31,7 +31,7 @@ void stage3_boss_timber_start(void) {
     ENTITY(reg_a6)->attr.h = temp_a0;
     reg_a0 = D_0026D5E0;
     reg_d0.w = ((u32) D_0028DC10 >> 1) - 1;
-    enemy_set_task_work();
+    enemy_set_task_state();
     reg_d0.b[0] = *(u8 *)(reg_a5 + 0x37);
     *(u8 *)(reg_a5 + 0x1F) += reg_d0.b[0];
     func_001713C0();

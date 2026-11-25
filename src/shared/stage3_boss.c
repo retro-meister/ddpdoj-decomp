@@ -10,7 +10,7 @@ void stage3_boss_first(void) {
 s32 boss_slots_init();
 s32 boss_phase_start();
 s32 boss_part_show();
-s32 enemy_set_task_work();
+s32 enemy_set_task_state();
 s32 enemy_init_entities();
 s32 sprite_palette_load();
 s32 func_001D45D0();
@@ -42,7 +42,7 @@ void stage3_boss_start(void) {
     enemy_init_entities();
     reg_a0 = (u8 *)D_0028DC18;
     reg_d0.h[0] = 2;
-    enemy_set_task_work();
+    enemy_set_task_state();
     reg_tmp.w = 0x38001C00;
     ENTITY(reg_a6)->y.h = (u16) reg_tmp.h[1];
     ENTITY(reg_a6)->x.h = (u16) reg_tmp.h[0];

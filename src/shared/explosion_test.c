@@ -4,17 +4,17 @@
 /*
  * Debug enemy: sets off nine explosions in a 3 by 3 grid again and again, with each one's number drawn next to it.
  * Up or down on the second player's stick switches between the two pages of explosion kinds, and the second
- * player's B button selects the alternate set. This is its own part of the enemy work block (reg_a5).
+ * player's B button selects the alternate set. This is its own part of the enemy state block (reg_a5).
  */
 typedef struct {
-    /* 0x00 */ u8 common[0x16];   /* EnemyWork */
+    /* 0x00 */ u8 common[0x16];   /* EnemyState */
     /* 0x16 */ u8 page;
     /* 0x17 */ u8 seen_on_screen;
     /* 0x18 */ u8 interval;
     /* 0x19 */ u8 countdown;
-} ExplosionTestWork;
+} ExplosionTestState;
 
-#define EXPLOSION_TEST(pointer) ((ExplosionTestWork *)(pointer))
+#define EXPLOSION_TEST(pointer) ((ExplosionTestState *)(pointer))
 
 void enemy_set_entity_count(s32);
 
@@ -22,17 +22,17 @@ void explosion_test_first(void) {
     enemy_set_entity_count(0);
 }
 
-s32 enemy_set_task_work();                            /* extern */
+s32 enemy_set_task_state();                            /* extern */
 s32 enemy_init_entities();                            /* extern */
 extern s32 g_explosion_test_entities[];
-extern s32 g_explosion_test_work;
+extern s32 g_explosion_test_state;
 
 void explosion_test_setup(void) {
     reg_a0 = (u8 *)g_explosion_test_entities;
     enemy_init_entities();
-    reg_a0 = (u8 *)(&g_explosion_test_work);
+    reg_a0 = (u8 *)(&g_explosion_test_state);
     reg_d0.w = 1;
-    enemy_set_task_work();
+    enemy_set_task_state();
     reg_tmp.w = 0x38001C00;
     ENTITY(reg_a6)->y.h = (u16) reg_tmp.h[1];
     ENTITY(reg_a6)->x.h = (u16) reg_tmp.h[0];

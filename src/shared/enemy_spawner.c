@@ -4,17 +4,17 @@
 
 /*
  * An invisible enemy that starts other enemies at a fixed interval from its own position, a set number of times
- * or until it leaves the screen. This is its own part of the enemy work block (reg_a5).
+ * or until it leaves the screen. This is its own part of the enemy state block (reg_a5).
  */
 typedef struct {
-    /* 0x00 */ u8 common[0x16];   /* EnemyWork */
+    /* 0x00 */ u8 common[0x16];   /* EnemyState */
     /* 0x16 */ u16 kind;          /* which enemy it starts */
     /* 0x18 */ Field16 remaining; /* how many are left to start; 0 from the beginning: no limit */
     /* 0x1A */ u8 interval;
     /* 0x1B */ u8 countdown;
-} SpawnerWork;
+} SpawnerState;
 
-#define SPAWNER(pointer) ((SpawnerWork *)(pointer))
+#define SPAWNER(pointer) ((SpawnerState *)(pointer))
 
 void enemy_set_entity_count(s32);
 

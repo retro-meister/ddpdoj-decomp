@@ -69,14 +69,14 @@ void func_0022C5A0(void) {
 
 extern void func_00222F90(s32 x, s32 y, s32 value);
 
-void func_0022C5E0(s64 x, s32 workAddress, s32 unusedA2, s32 unusedA3,
+void func_0022C5E0(s64 x, s32 bufferAddress, s32 unusedA2, s32 unusedA3,
                    s32 unusedT0, s32 value)
 {
-    s32 savedWorkAddress = (s32)reg_a0;
+    s32 saved_state_address = (s32)reg_a0;
 
-    reg_a0 = (u8 *)workAddress;
+    reg_a0 = (u8 *)bufferAddress;
     func_00222F90(0x1C0 - (s16)x, 0x18, value & 0xFFFF);
-    reg_a0 = (u8 *)savedWorkAddress;
+    reg_a0 = (u8 *)saved_state_address;
 }
 
 s32 cd_load_file(s32 *, s32 *);        /* extern */

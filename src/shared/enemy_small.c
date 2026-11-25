@@ -210,7 +210,7 @@ void small_tank_a_first(void) {
     enemy_set_entity_count(0);
 }
 
-s32 enemy_set_task_work();
+s32 enemy_set_task_state();
 s32 enemy_init_entities();
 s32 enemy_path_start();
 extern u16 D_0025B170[];
@@ -227,7 +227,7 @@ void small_tank_a_start(void) {
     enemy_init_entities();
     reg_a0 = (u8 *)(D_0025B180);
     reg_d0.w = 0xF;
-    enemy_set_task_work();
+    enemy_set_task_state();
     reg_d0.h[0] = g_stage;
     reg_d0.h[0] >>= 1;
     reg_d0.h[0] += 2;
@@ -506,7 +506,7 @@ void small_tank_b_start(void) {
     enemy_init_entities();
     reg_a0 = (u8 *)(D_0025B450);
     reg_d0.w = 0xF;
-    enemy_set_task_work();
+    enemy_set_task_state();
     reg_d0.h[0] = g_rank_6_16;
     *(u8 *)(reg_a5 + 0x29) -= reg_d0.b[0];
     *(u8 *)(reg_a5 + 0x1B) -= reg_d0.b[0];
@@ -765,7 +765,7 @@ void func_0016EAA0(void) {
     *(u16 *)(reg_a5 + 0x46) = (u16) reg_tmp.h[0];
     reg_a0 = (u8 *)(D_0025B6A0);
     reg_d0.w = 0xE;
-    enemy_set_task_work();
+    enemy_set_task_state();
     reg_d0.b[0] = 4;
     reg_d2.b[0] = 2;
     reg_d1.b[0] = 4;
@@ -1146,7 +1146,7 @@ void func_0016F940(void) {
     *(u16 *)(reg_a5 + 0x46) = (u16) reg_tmp.h[0];
     reg_a0 = (u8 *)(D_0025B760);
     reg_d0.w = 0xE;
-    enemy_set_task_work();
+    enemy_set_task_state();
     reg_d0.b[0] = 4;
     reg_d1.b[0] = 4;
     if ((s32) g_stage > 1) {
@@ -1516,7 +1516,7 @@ void warning_sign_start(void) {
     enemy_init_entities();
     reg_a0 = D_0025B840;
     reg_d0.w = 5;
-    enemy_set_task_work();
+    enemy_set_task_state();
     reg_tmp.w = 0x40001C00;
     ENTITY(reg_a6)->y.h = (u16) reg_tmp.h[1];
     ENTITY(reg_a6)->x.h = (u16) reg_tmp.h[0];

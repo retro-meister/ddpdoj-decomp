@@ -15,14 +15,14 @@ extern s8 enemy_move_end_requested;
 extern s8 *reg_a0_as_s8_p;
 
 void stage2_blooming_base_start(void) {
-    s32 enemy_set_task_work();
+    s32 enemy_set_task_state();
     s32 enemy_init_entities();
     s32 enemy_path_start();
     reg_a0_as_s8_p = D_00262C60;
     enemy_init_entities();
     reg_a0_as_s8_p = D_00262C50;
     reg_d0.w = 5;
-    enemy_set_task_work();
+    enemy_set_task_state();
     enemy_path_start();
     if (enemy_move_end_requested == 0) {
         reg_a0_as_s8_p = D_00262C40;
@@ -187,7 +187,7 @@ void stage2_long_warehouse_first(void) {
     enemy_set_entity_count(0);
 }
 
-s32 enemy_set_task_work();                            /* extern */
+s32 enemy_set_task_state();                            /* extern */
 s32 enemy_init_entities();                            /* extern */
 s32 enemy_path_start();                            /* extern */
 extern s8 D_00262C80[];
@@ -199,7 +199,7 @@ void stage2_long_warehouse_start(void) {
     enemy_init_entities();
     reg_a0_as_s8_p = &D_0028D9A0;
     reg_d0.w = 1;
-    enemy_set_task_work();
+    enemy_set_task_state();
     enemy_path_start();
     if (enemy_move_end_requested == 0) {
         reg_a0_as_s8_p = D_00262C80;
@@ -338,14 +338,14 @@ extern s8 D_00262CE0[];
 extern s8 D_0028D9A4;
 
 void stage2_square_warehouse_start(void) {
-    s32 enemy_set_task_work();
+    s32 enemy_set_task_state();
     s32 enemy_init_entities();
     s32 enemy_path_start();
     reg_a0_as_s8_p = D_00262CE0;
     enemy_init_entities();
     reg_a0_as_s8_p = &D_0028D9A4;
     reg_d0.w = 1;
-    enemy_set_task_work();
+    enemy_set_task_state();
     enemy_path_start();
     if (enemy_move_end_requested == 0) {
         reg_a0_as_s8_p = D_00262CD0;
@@ -462,7 +462,7 @@ void stage2_gymnasium_first(void) {
     enemy_set_entity_count(0);
 }
 
-s32 enemy_set_task_work();                            /* extern */
+s32 enemy_set_task_state();                            /* extern */
 s32 enemy_init_entities();                            /* extern */
 s32 enemy_path_start();                            /* extern */
 extern s8 D_00262D00[];
@@ -474,7 +474,7 @@ void stage2_gymnasium_start(void) {
     enemy_init_entities();
     reg_a0_as_s8_p = &D_0028D9A8;
     reg_d0.w = 1;
-    enemy_set_task_work();
+    enemy_set_task_state();
     enemy_path_start();
     if (enemy_move_end_requested == 0) {
         reg_a0_as_s8_p = D_00262D00;
@@ -605,14 +605,14 @@ extern u16 g_rank_6_16;
 extern u16 g_stage;
 
 void stage2_sliding_gun_start(void) {
-    s32 enemy_set_task_work();
+    s32 enemy_set_task_state();
     s32 enemy_init_entities();
     s32 enemy_path_start();
     reg_a0 = (u8 *)(D_00262D60);
     enemy_init_entities();
     reg_a0 = (u8 *)(D_00262D40);
     reg_d0.w = 9;
-    enemy_set_task_work();
+    enemy_set_task_state();
     enemy_path_start();
     if (enemy_move_end_requested == 0) {
         reg_d0.b[0] = 6;
@@ -852,14 +852,14 @@ extern s8 D_00262E30[];
 extern u16 g_rank_1_16;
 
 void stage2_wrecker_gun_start(void) {
-    s32 enemy_set_task_work();
+    s32 enemy_set_task_state();
     s32 enemy_init_entities();
     s32 enemy_path_start();
     reg_a0_as_s8_p = D_00262E30;
     enemy_init_entities();
     reg_a0_as_s8_p = D_00262E10;
     reg_d0.w = 0xB;
-    enemy_set_task_work();
+    enemy_set_task_state();
     enemy_path_start();
     if (enemy_move_end_requested == 0) {
         reg_d0.b[0] = 6;
@@ -1259,7 +1259,7 @@ extern u32 D_00262EE0[];
 
 void stage2_boss_hangar_start(void)
 {
-    extern void enemy_set_task_work(void);
+    extern void enemy_set_task_state(void);
     extern void enemy_init_entities(void);
     extern void enemy_path_start(void);
     reg_a0 = (u8 *)((u32)D_00262EE0);
@@ -1267,7 +1267,7 @@ void stage2_boss_hangar_start(void)
 
     reg_a0 = (u8 *)((u32)D_00262ED0);
     reg_d0.w = 5;
-    enemy_set_task_work();
+    enemy_set_task_state();
     enemy_path_start();
 
     if (enemy_move_end_requested) {

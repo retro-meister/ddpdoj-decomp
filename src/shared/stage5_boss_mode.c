@@ -683,11 +683,11 @@ block_join:
     }
 }
 
-typedef struct WorkRegA4 {
+typedef struct PartRegA4 {
     s16 unk0;
     s16 unk2;
     s16 unk4;
-} WorkRegA4;
+} PartRegA4;
 
 extern s16 g_enemy_signal_2_as_s16;
 
@@ -700,8 +700,8 @@ void stage5_boss_mode_form2_to_form3_start(void) {
 #ifdef DEATH_LABEL
     death_D_0029085C_as_s8 = 2;
 #endif
-    ((WorkRegA4 *)reg_a4)->unk2 = 1;
-    ((WorkRegA4 *)reg_a4)->unk4 = 0x80;
+    ((PartRegA4 *)reg_a4)->unk2 = 1;
+    ((PartRegA4 *)reg_a4)->unk4 = 0x80;
     g_enemy_signal_2_as_s16 = 0;
     stage5_boss_mode_form2_to_form3(1);
 }

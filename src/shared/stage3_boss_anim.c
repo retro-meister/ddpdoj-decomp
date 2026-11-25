@@ -323,10 +323,10 @@ block_3:
 }
 
 
-typedef struct WorkRegBC {
+typedef struct PartRegBC {
     u8 pad0[0xBC];
     s16 unkBC;
-} WorkRegBC;
+} PartRegBC;
 
 
 
@@ -334,7 +334,7 @@ void stage3_boss_entrance_anim_start(void) {
     ENTRANCE(reg_a4)->frame.sh = 1;
     ENTRANCE(reg_a4)->pace.sh = 0x202;
     ENTRANCE(reg_a4)->delay = 0xC0;
-    ((WorkRegBC *)reg_a6)->unkBC = 0;
+    ((PartRegBC *)reg_a6)->unkBC = 0;
     stage3_boss_entrance_anim(0x202, 1);
 }
 

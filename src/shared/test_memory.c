@@ -4,7 +4,7 @@
 void test_memory_print_labels(void);
 
 extern s32 test_memory_text_title[];
-extern s32 test_memory_text_work_ram[];
+extern s32 test_memory_text_main_ram[];
 extern s32 test_memory_text_bg_ram[];
 extern s32 test_memory_text_text_ram[];
 extern s32 test_memory_text_line_offset_ram[];
@@ -24,7 +24,7 @@ void test_memory_begin(void) {
 }
 
 void test_memory_print_labels(void) {
-    reg_a0 = (u8 *)test_memory_text_work_ram;
+    reg_a0 = (u8 *)test_memory_text_main_ram;
     reg_d0.h[0] = 0;
     test_print_lines();
     reg_a0 = (u8 *)test_memory_text_bg_ram;

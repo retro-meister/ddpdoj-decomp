@@ -303,7 +303,7 @@ void stage1_midboss_first(void) {
     enemy_set_entity_count(0x10);
 }
 
-s32 enemy_set_task_work();
+s32 enemy_set_task_state();
 s32 enemy_init_entities();
 s32 enemy_path_start();
 s32 sprite_palette_load();
@@ -324,7 +324,7 @@ void stage1_midboss_start() {
     *(u16 *)(reg_a5 + 0x46) = (u16) reg_tmp.h[0];
     reg_a0 = D_00262700;
     reg_d0.h[0] = 9;
-    enemy_set_task_work();
+    enemy_set_task_state();
     enemy_path_start();
     if (enemy_move_end_requested == 0) {
         ENTITY(reg_a6)->y.h += 0xA40;
@@ -861,7 +861,7 @@ void stage1_midboss_wreck_first(void) {
     enemy_set_entity_count(0);
 }
 
-s32 enemy_set_task_work();                            /* extern */
+s32 enemy_set_task_state();                            /* extern */
 s32 enemy_init_entities();                            /* extern */
 extern s32 D_00262C20[];
 extern s32 D_0028D990;
@@ -871,7 +871,7 @@ void stage1_midboss_wreck_start(void) {
     enemy_init_entities();
     reg_d0.w = 0;
     reg_a0 = (u8 *)(&D_0028D990);
-    enemy_set_task_work();
+    enemy_set_task_state();
     reg_tmp.w = 0x38001C00;
     ENTITY(reg_a6)->y.h = (u16) reg_tmp.h[1];
     ENTITY(reg_a6)->x.h = (u16) reg_tmp.h[0];

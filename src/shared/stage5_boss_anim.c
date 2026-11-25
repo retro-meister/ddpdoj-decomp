@@ -284,14 +284,14 @@ block_6:
     }
 }
 
-typedef struct WorkReg {
+typedef struct PartReg {
     s16 unk0;
     s16 unk2;
-} WorkReg;
+} PartReg;
 
 
 void stage5_boss_form3_body_anim_start(void) {
-    ((WorkReg *)reg_a4)->unk2 = 1;
+    ((PartReg *)reg_a4)->unk2 = 1;
     *(s16 *)((u8 *)((void *)reg_a6) + 0x132) = 0;
     stage5_boss_form3_body_anim();
 }

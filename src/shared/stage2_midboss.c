@@ -60,7 +60,7 @@ void func_001CBD50(void) {
 
 
 s32 func_0013B2E0();
-s32 enemy_set_task_work();
+s32 enemy_set_task_state();
 s32 enemy_init_entities();
 s32 enemy_path_start();
 s32 sfx_heli_start();
@@ -84,7 +84,7 @@ void func_001CBD60(void) {
     *(u16 *)(reg_a5 + 0x46) = (u16) reg_tmp.h[0];
     reg_a0 = D_00263000;
     reg_d0.w = 0x14;
-    enemy_set_task_work();
+    enemy_set_task_state();
     enemy_path_start();
     if (enemy_move_end_requested == 0) {
         reg_d0.h[0] = ENTITY(reg_a6)->flags.h;

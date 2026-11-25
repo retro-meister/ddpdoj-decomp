@@ -3,7 +3,7 @@
 
 #include "types.h"
 
-/* A 16-bit field of a work record, with the byte and signed views the code uses. b[0] is the low byte. */
+/* A 16-bit field of a state record, with the byte and signed views the code uses. b[0] is the low byte. */
 typedef union {
     u16 h;
     s16 sh;
