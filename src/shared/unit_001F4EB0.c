@@ -11,8 +11,8 @@ void func_001F5BB0(void);
 
 s32 boss_phase_stop_all();
 s32 boss_attack_stop_all();
-s32 func_001A9000();
-s32 func_001A91A0();
+s32 score_add_no_chain();
+s32 score_add();
 s32 func_002016D0();
 extern u8 D_0028E290;
 extern u16 D_0028E2E8;
@@ -77,7 +77,7 @@ next_1:
     reg_a6[0xC1] &= reg_d0.b[0];
     reg_a6[0x1A1] &= reg_d0.b[0];
     W(0x10A) = reg_d1.h[0];
-    func_001A9000();
+    score_add_no_chain();
     reg_d0.b[0] = reg_a6[0xE7];
     reg_d2.b[0] = reg_a6[0xE6];
     reg_d3.b[0] = reg_a6[0xE9];
@@ -208,7 +208,7 @@ next_6:
 next_7:
     reg_d1.h[0] = W(0x10A);
     reg_d0.w = 0x70000;
-    func_001A91A0();
+    score_add();
     func_001F5520();
     return;
 block_chk:
@@ -394,7 +394,7 @@ next_1:
     reg_a6[0x141] &= reg_d0.b[0];
     reg_a6[0x161] &= reg_d0.b[0];
     *(u16 *) (reg_a6 + 0x10A) = reg_d1.h[0];
-    func_001A9000();
+    score_add_no_chain();
     reg_d0.b[0] = reg_a6[0xE7];
     reg_d2.b[0] = reg_a6[0xE6];
     reg_d3.b[0] = reg_a6[0xE9];
@@ -470,7 +470,7 @@ next_7:
 next_8:
     reg_d1.h[0] = *(u16 *) (reg_a6 + 0x10A);
     reg_d0.w = 0x80000;
-    func_001A91A0();
+    score_add();
     func_001F5BB0();
     return;
 next_9:

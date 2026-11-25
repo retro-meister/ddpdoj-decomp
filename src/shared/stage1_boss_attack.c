@@ -1075,7 +1075,7 @@ void func_001B6E90(void) {
     enemy_switch_target_player();
 }
 
-s32 func_002012F0();
+s32 rng_next_word();
 extern u16 D_00259970[];
 
 void func_001B6F40(void) {
@@ -1127,7 +1127,7 @@ void func_001B6F40(void) {
             reg_d1.b[0] += 0x10;
         } while ((s16)(--reg_d7.h[0]) >= 0);
         do {
-            func_002012F0();
+            rng_next_word();
             reg_d0.h[0] = (u16) ((s16) reg_d0.h[0] >> 3);
             *(u16 *)(reg_a4 + 0x12) = (u16) reg_d0.h[0];
             reg_d0.w = 0;
@@ -1157,7 +1157,7 @@ void func_001B6F40(void) {
             *(u8 *)(reg_a4 + 5) += 2;
             *(u16 *)(reg_a4 + 0xA) += 2;
             *(u16 *)(reg_a4 + 0xC) += 2;
-            func_002012F0();
+            rng_next_word();
             reg_d0.h[0] = (u16) ((s16) reg_d0.h[0] >> 3);
             *(u16 *)(reg_a4 + 0x12) = (u16) reg_d0.h[0];
             reg_d0.w = 0;
@@ -1185,7 +1185,7 @@ void func_001B6F40(void) {
             reg_d3.w = 0;
             reg_d4.w = 0;
             bullet_fire256_fixed();
-            func_002012F0();
+            rng_next_word();
             reg_d0.h[0] = (u16) ((s16) reg_d0.h[0] >> 3);
             *(u16 *)(reg_a4 + 0x12) = (u16) reg_d0.h[0];
             reg_d0.w = 0;

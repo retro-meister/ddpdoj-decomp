@@ -1710,7 +1710,7 @@ void func_001C3C40(void) {
 
 s32 bullet_fire256_double();
 s32 bullet_fire256_2way();
-s32 func_002012F0();
+s32 rng_next_word();
 s32 func_00202730();
 extern u16 D_0028E3EC;
 
@@ -1733,10 +1733,10 @@ void func_001C3C80(void) {
 loop_1:
     func_00202730();
     if (cond_flag != 0) goto block_rts;
-    func_002012F0();
+    rng_next_word();
     reg_d0.h[0] = (s16) reg_d0.h[0] >> 3;
     reg_d3.h[0] = reg_d0.h[0];
-    func_002012F0();
+    rng_next_word();
     reg_d0.h[0] = (s16) reg_d0.h[0] >> 3;
     reg_tmp3.w = reg_d3.w;
     reg_d3.h[1] = reg_d3.h[0];

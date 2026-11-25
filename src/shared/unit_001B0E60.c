@@ -93,7 +93,7 @@ block_exit:
     reg_a6 = s_a6;
 }
 
-s32 func_0012FAB0();
+s32 text_layer_clear();
 s32 func_00137C50();
 s32 func_0018D150();
 s32 func_0018DD20();
@@ -180,7 +180,7 @@ void func_001B1080(void) {
     *(u8 *)(reg_a5 + 9) = 0xFFU;
     *(u8 *)(reg_a5 + 8) = 0xFFU;
     *(s16 *)(reg_a5 + 0xA) = 0;
-    func_0012FAB0();
+    text_layer_clear();
     reg_a0 = (u8 *)D_00269140;
     reg_d0.w = 0;
     text_palette_load();
@@ -357,7 +357,7 @@ s32 func_00204800();
 s32 func_0020ED40();
 s32 func_0020EE20();
 #ifdef DEATH_LABEL
-s32 func_0012FAB0();
+s32 text_layer_clear();
 s32 func_0018DD40();
 s32 func_0018DEE0();
 s32 text_palette_load();
@@ -400,7 +400,7 @@ void func_001B1960(void) {
                 fade_reset();
                 death_func_001B1220();
                 D_0028E290 = 2;
-                func_0012FAB0();
+                text_layer_clear();
                 reg_d0.w = 0;
                 reg_a0 = (u8 *)D_00269140;
                 text_palette_load();
@@ -603,7 +603,7 @@ void func_001B1D70(void) {
         reg_d0.w = 0;
         func_001A35A0();
     }
-    func_0012FAB0();
+    text_layer_clear();
     reg_a0 = (u8 *)D_00269140;
     reg_d0.w = 0;
     text_palette_load();

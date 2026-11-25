@@ -138,8 +138,8 @@ s32 explosion_spawn();
 s32 enemy_hitbox_debug_draw();
 s32 func_0016D290();
 s32 func_0018D4E0();
-s32 func_001A9000();
-s32 func_001A91A0();
+s32 score_add_no_chain();
+s32 score_add();
 s32 rng_next_bit();
 s32 func_00201230();
 s32 aim_at_player();
@@ -205,7 +205,7 @@ next_1:
     goto next_3;
 next_2:
     *(u8 *)(reg_a6 + 1) &= 0xA3;
-    func_001A9000();
+    score_add_no_chain();
     reg_d0.b[0] = *(u8 *)(reg_a6 + 0x1C);
     reg_d2.b[0] = *(u8 *)(reg_a6 + 0x38);
     reg_d0.b[0] ^= reg_d2.b[0];
@@ -385,7 +385,7 @@ block_e:
     *(u8 *)(reg_a6 + 1) &= 0xFD;
     *(s16 *)(reg_a6 + 0x18) = 0xE0;
     reg_d0.w = 8;
-    func_001A91A0();
+    score_add();
     *(u8 *)reg_a6 |= 0x40;
     reg_d0.w = 3;
     explosion_spawn();
@@ -403,7 +403,7 @@ block_e:
     goto block_a;
 block_f:
     reg_d0.w = 0x10;
-    func_001A91A0();
+    score_add();
 block_g:
     reg_d0.w = 4;
     explosion_spawn();
@@ -657,7 +657,7 @@ next_1:
     goto next_3;
 next_2:
     *(u8 *)(reg_a6 + 1) &= 0xA3;
-    func_001A9000();
+    score_add_no_chain();
     reg_d0.b[0] = *(u8 *)(reg_a6 + 0x1C);
     reg_d2.b[0] = *(u8 *)(reg_a6 + 0x38);
     reg_d0.b[0] ^= reg_d2.b[0];
@@ -834,7 +834,7 @@ block_e:
     goto block_a;
 block_f:
     reg_d0.w = 0x10;
-    func_001A91A0();
+    score_add();
     reg_d0.w = 7;
     explosion_spawn();
     *(u16 *)(reg_a0 + 2) = (u16) *(u16 *)(reg_a6 + 2);

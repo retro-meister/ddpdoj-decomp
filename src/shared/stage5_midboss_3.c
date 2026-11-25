@@ -48,8 +48,8 @@ s32 enemy_hitbox_debug_draw();
 s32 enemy_remove();
 s32 func_0018D5C0();
 s32 sprite_draw_layer1();
-s32 func_001A9000();
-s32 func_001A91A0();
+s32 score_add_no_chain();
+s32 score_add();
 s32 func_001D5040();
 s32 entity_follow_scroll();
 s32 aim_at_player();
@@ -87,7 +87,7 @@ void func_001F9750(void) {
             reg_d0.b[0] = 0xA3;
             ENTITY(reg_a6)->flags.b[1] &= reg_d0.b[0];
             *(u16 *)(reg_a6 + 0x6E) = (u16) reg_d1.h[0];
-            func_001A9000();
+            score_add_no_chain();
             reg_d0.b[0] = *(u8 *)(reg_a6 + 0x1C);
             reg_d0.b[0] ^= 0xF;
             *(u8 *)(reg_a6 + 0x1C) = (u8) reg_d0.b[0];
@@ -103,7 +103,7 @@ void func_001F9750(void) {
             reg_tmp.h[0] = *(u16 *)(reg_a5 + 0x34);
             if ((s32) reg_tmp.w < 0) {
                 reg_d0.w = 0x1000;
-                func_001A91A0();
+                score_add();
                 vibration_start_pad1(0xB4, 0x50);
                 vibration_start_pad2(0xB4, 0x50);
                 reg_d0.h[0] = 0x20;

@@ -124,7 +124,7 @@ s32 func_0018D660();
 s32 func_001E1F30();
 s32 rng_next_unsigned();
 s32 func_00201270();
-s32 func_002012F0();
+s32 rng_next_word();
 s32 func_00211550();
 s32 vibration_start_pad1();
 s32 vibration_start_pad2();
@@ -314,14 +314,14 @@ block_rts:
     *(u8 *)(reg_a0 + 0x1B) = (u8) reg_d0.b[0];
     rng_next_unsigned();
     *(u8 *)(reg_a0 + 0x1A) = reg_d0.b[0];
-    func_002012F0();
+    rng_next_word();
     t4 = reg_d0.h[0];
     reg_d1.h[0] = t4;
     reg_d1.h[0] = (u16) ((s16) reg_d1.h[0] >> 1);
     reg_d0.h[0] = t4 + reg_d1.h[0];
     reg_d0.h[0] += 0x7FFF + 0x7801;
     *(u16 *)(reg_a0 + 0x26) = (u16) reg_d0.h[0];
-    func_002012F0();
+    rng_next_word();
     reg_d0.h[0] = (u16) ((s16) reg_d0.h[0] >> 1);
     *(u16 *)(reg_a0 + 0x28) = (u16) reg_d0.h[0];
 }
@@ -575,11 +575,11 @@ block_join:
         *(u8 *)(reg_a0 + 0x1B) = (u8) reg_d0.b[0];
         rng_next_unsigned();
         *(u8 *)(reg_a0 + 0x1A) = reg_d0.b[0];
-        func_002012F0();
+        rng_next_word();
         reg_d1.h[0] = reg_d0.h[0];
         reg_d0.h[0] += 0xF800;
         *(u16 *)(reg_a0 + 0x26) = (u16) reg_d0.h[0];
-        func_002012F0();
+        rng_next_word();
         reg_d0.h[0] = (u16) ((s16) reg_d0.h[0] >> 1);
         *(u16 *)(reg_a0 + 0x28) = (u16) reg_d0.h[0];
     }
@@ -819,13 +819,13 @@ block_1:
     reg_d1.b[0] = reg_d0.b[0];
     reg_d2.h[1] = BOSS_X;
     reg_d2.h[0] = BOSS_Y;
-    func_002012F0();
+    rng_next_word();
     reg_d0.h[0] = (s16)reg_d0.h[0] >> 2;
     reg_d2.h[0] += reg_d0.h[0];
     reg_tmp.w = reg_d2.w;
     reg_d2.h[1] = reg_tmp.h[0];
     reg_d2.h[0] = reg_tmp.h[1];
-    func_002012F0();
+    rng_next_word();
     reg_d0.h[0] = (s16)reg_d0.h[0] >> 1;
     reg_d2.h[0] += reg_d0.h[0];
     reg_d2.h[0] -= 0x1000;

@@ -764,7 +764,7 @@ s32 entity_follow_scroll();
 s32 entity_velocity();
 extern u16 g_enemies_stopped;
 
-void func_0014EA50(void) {
+void enemy_path_step(void) {
     u8 *p;
     s8 v;
     u8 c;

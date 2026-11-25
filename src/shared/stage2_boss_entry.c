@@ -14,8 +14,8 @@ void func_001CA720(void) {
 s32 boss_phase_start();
 s32 boss_phase_stop_all();
 s32 boss_attack_stop_all();
-s32 func_001A9000();
-s32 func_001A91A0();
+s32 score_add_no_chain();
+s32 score_add();
 s32 func_001CBCE0();
 s32 func_002016D0();
 s32 func_00203400();
@@ -45,7 +45,7 @@ void func_001CA730(void) {
     *(u8 *)(reg_a6 + 0xC1) &= reg_d0.b[0];
     *(u8 *)(reg_a6 + 0xE1) &= reg_d0.b[0];
     *(u16 *)(reg_a6 + 0x14A) = reg_d1.h[0];
-    func_001A9000();
+    score_add_no_chain();
     reg_d0.b[0] = *(u8 *)(reg_a6 + 0x126);
     if (reg_d0.b[0] != 0x19) goto next_101;
     *(u8 *)(reg_a6 + 0x126) = 0x10;
@@ -178,7 +178,7 @@ next_130:
     reg_d0.b[0] = 0xA3;
     *(u8 *)(reg_a6 + 0x41) &= reg_d0.b[0];
     *(u16 *)(reg_a6 + 0x14A) = reg_d1.h[0];
-    func_001A9000();
+    score_add_no_chain();
     reg_d0.b[0] = *(u8 *)(reg_a6 + 0x128);
     if (reg_d0.b[0] != 0x19) goto next_21;
     *(u8 *)(reg_a6 + 0x128) = 0x11;
@@ -192,7 +192,7 @@ next_22:
     if (*(s16 *)(reg_a6 + 0x58) >= 0) goto next_29;
     reg_d1.h[0] = *(u16 *)(reg_a6 + 0x14A);
     reg_d0.w = 0x800;
-    func_001A91A0();
+    score_add();
     func_001CB7E0();
     goto next_29;
 next_25:
@@ -211,7 +211,7 @@ next_29:
     reg_d0.b[0] = 0xA3;
     *(u8 *)(reg_a6 + 0x61) &= reg_d0.b[0];
     *(u16 *)(reg_a6 + 0x14A) = reg_d1.h[0];
-    func_001A9000();
+    score_add_no_chain();
     reg_d0.b[0] = *(u8 *)(reg_a6 + 0x12B);
     if (reg_d0.b[0] != 0x19) goto next_31;
     *(u8 *)(reg_a6 + 0x12B) = 0x11;
@@ -225,7 +225,7 @@ next_32:
     if (*(s16 *)(reg_a6 + 0x78) >= 0) goto next_39;
     reg_d1.h[0] = *(u16 *)(reg_a6 + 0x14A);
     reg_d0.w = 0x800;
-    func_001A91A0();
+    score_add();
     func_001CB890();
     goto next_39;
 next_35:
@@ -244,7 +244,7 @@ next_39:
     reg_d0.b[0] = 0xA3;
     *(u8 *)(reg_a6 + 0x81) &= reg_d0.b[0];
     *(u16 *)(reg_a6 + 0x14A) = reg_d1.h[0];
-    func_001A9000();
+    score_add_no_chain();
     reg_d0.b[0] = *(u8 *)(reg_a6 + 0x12A);
     if (reg_d0.b[0] != 0x19) goto next_41;
     *(u8 *)(reg_a6 + 0x12A) = 0x12;
@@ -258,7 +258,7 @@ next_42:
     if (*(s16 *)(reg_a6 + 0x98) >= 0) goto next_49;
     reg_d1.h[0] = *(u16 *)(reg_a6 + 0x14A);
     reg_d0.w = 0x800;
-    func_001A91A0();
+    score_add();
     func_001CB940();
     goto next_49;
 next_45:
@@ -277,7 +277,7 @@ next_49:
     reg_d0.b[0] = 0xA3;
     *(u8 *)(reg_a6 + 0xA1) &= reg_d0.b[0];
     *(u16 *)(reg_a6 + 0x14A) = reg_d1.h[0];
-    func_001A9000();
+    score_add_no_chain();
     reg_d0.b[0] = *(u8 *)(reg_a6 + 0x12D);
     if (reg_d0.b[0] != 0x19) goto next_51;
     *(u8 *)(reg_a6 + 0x12D) = 0x12;
@@ -291,7 +291,7 @@ next_52:
     if (*(s16 *)(reg_a6 + 0xB8) >= 0) goto next_59;
     reg_d1.h[0] = *(u16 *)(reg_a6 + 0x14A);
     reg_d0.w = 0x800;
-    func_001A91A0();
+    score_add();
     func_001CBB10();
     goto next_59;
 next_55:
@@ -313,7 +313,7 @@ next_59:
     *(u8 *)(reg_a6 + 0xC1) &= reg_d0.b[0];
     *(u8 *)(reg_a6 + 0xE1) &= reg_d0.b[0];
     *(u16 *)(reg_a6 + 0x14A) = reg_d1.h[0];
-    func_001A9000();
+    score_add_no_chain();
     reg_d0.b[0] = *(u8 *)(reg_a6 + 0x12E);
     if (reg_d0.b[0] != 0x19) goto next_601;
     *(u8 *)(reg_a6 + 0x126) = 0x10;

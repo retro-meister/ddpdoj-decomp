@@ -21,8 +21,8 @@ s32 boss_phase_start();
 s32 boss_phase_stop();
 s32 boss_phase_stop_all();
 s32 boss_attack_stop_all();
-s32 func_001A9000();
-s32 func_001A91A0();
+s32 score_add_no_chain();
+s32 score_add();
 s32 func_002016D0();
 extern u8 D_0028E290;
 extern s32 g_boss_score;
@@ -60,7 +60,7 @@ next_100_set:
     *(u8 *)(reg_a6 + 0x21) &= reg_d0.b[0];
     *(u8 *)(reg_a6 + 0x41) &= reg_d0.b[0];
     *(u8 *)(reg_a6 + 0x61) &= reg_d0.b[0];
-    func_001A9000();
+    score_add_no_chain();
     reg_d0.b[0] = *(u8 *)(reg_a6 + 0x147);
     if (reg_d0.b[0] != 0x19) goto next_r_pal;
     *(u8 *)(reg_a6 + 0x147) = 0x13;
@@ -258,7 +258,7 @@ next_hl_110:
 next_elix:
     reg_d1.h[0] = *(u16 *)(reg_a6 + 0x16A);
     reg_d0.w = 0x60000;
-    func_001A91A0();
+    score_add();
     g_boss_score = 0x60000;
     func_001E8480();
     return;

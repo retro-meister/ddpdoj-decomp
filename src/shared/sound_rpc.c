@@ -36,7 +36,7 @@ loop_2:
 extern s32 D_0029CD40_as_s32_a[];
 extern s32 D_0029CD44[];
 
-s32 func_0018C600(s32 arg0, s32 arg1, s32 arg2) {
+s32 sound_rpc_call(s32 arg0, s32 arg1, s32 arg2) {
     s32 t = arg0 & 0xFFF0;
 
     if (t == 0x8020 || t == 0x550 || t == 0x560) {
@@ -92,19 +92,19 @@ void func_0018C730(void) {
     D_0029CA40[0] = 0;
     D_0029CA34[0] = 0;
     D_0029CA5C[0] = 0;
-    func_0018C600(0xD0, 0, 0);
-    func_0018C600(0x540, 0, 0);
-    func_0018C600(0xA0, 0x3FFF3FFF, 0);
-    func_0018C600(0xA1, 0x3FFF3FFF, 0);
-    func_0018C600(0x80, 0x3FFF3FFF, 0);
-    func_0018C600(0x81, 0x3FFF3FFF, 0);
-    func_0018C600(0x550, (s32)((s32) D_0025BAC0), 0);
-    func_0018C600(0x560, (s32)((s32) D_0025BB00), 0);
-    func_0018C600(0x560, (s32)((s32) D_0025BB40), 0);
-    func_0018C600(0x560, (s32)((s32) D_0025BB80), 0);
-    func_0018C600(0x560, (s32)((s32) D_0025BBC0), 0);
-    func_0018C600(0x560, (s32)((s32) D_0025BC00), 0);
-    func_0018C600(0x560, (s32)((s32) D_0025BC40), 0);
+    sound_rpc_call(0xD0, 0, 0);
+    sound_rpc_call(0x540, 0, 0);
+    sound_rpc_call(0xA0, 0x3FFF3FFF, 0);
+    sound_rpc_call(0xA1, 0x3FFF3FFF, 0);
+    sound_rpc_call(0x80, 0x3FFF3FFF, 0);
+    sound_rpc_call(0x81, 0x3FFF3FFF, 0);
+    sound_rpc_call(0x550, (s32)((s32) D_0025BAC0), 0);
+    sound_rpc_call(0x560, (s32)((s32) D_0025BB00), 0);
+    sound_rpc_call(0x560, (s32)((s32) D_0025BB40), 0);
+    sound_rpc_call(0x560, (s32)((s32) D_0025BB80), 0);
+    sound_rpc_call(0x560, (s32)((s32) D_0025BBC0), 0);
+    sound_rpc_call(0x560, (s32)((s32) D_0025BC00), 0);
+    sound_rpc_call(0x560, (s32)((s32) D_0025BC40), 0);
 }
 
 s32 func_0018E300();                            /* extern */
@@ -133,10 +133,10 @@ void func_0018C8D0(s32 arg0) {
     if (*p1 == 0) {
         p2 = (s32 *)(D_0029CA14 + off);
         if (*p2 == 0) {
-            func_0018C600(arg0 | 0x110, 0, 0);
+            sound_rpc_call(arg0 | 0x110, 0, 0);
         }
-        func_0018C600(arg0 | 0x30, 0, 0);
-        func_0018C600(arg0 | 0x10, 0, 0);
+        sound_rpc_call(arg0 | 0x30, 0, 0);
+        sound_rpc_call(arg0 | 0x10, 0, 0);
         *p1 = 1;
         *p2 = 1;
         *(s32 *)(D_0029CA18 + off) = 0;
@@ -154,9 +154,9 @@ void func_0018C990(void) {
     s32 *f;
     s32 t;
 
-    v[0] = func_0018C600(0x80B0, 0, 0) & ~0xFFF;
-    v[1] = func_0018C600(0x80B1, 0, 0) & ~0xFFF;
-    func_0018C600(0x520, 0, 0);
+    v[0] = sound_rpc_call(0x80B0, 0, 0) & ~0xFFF;
+    v[1] = sound_rpc_call(0x80B1, 0, 0) & ~0xFFF;
+    sound_rpc_call(0x520, 0, 0);
     i = 0;
     o4 = 0;
     o28 = 0;
@@ -167,7 +167,7 @@ void func_0018C990(void) {
             f = (s32 *)(p + 8);
             t = *f;
             if (t == 2) {
-                func_0018C600(i | 0x60, 0, 0);
+                sound_rpc_call(i | 0x60, 0, 0);
                 *(s32 *)(p + 4) = 1;
                 *f = 0;
                 *(s32 *)(p + 0x24) = 0;
@@ -207,8 +207,8 @@ void func_0018CAD0(void) {
                 *f = 3;
                 func_0018CF30(i);
             } else {
-                func_0018C600(i | 0xE0, 0, 0);
-                func_0018C600(i | 0x50, 0, 0);
+                sound_rpc_call(i | 0xE0, 0, 0);
+                sound_rpc_call(i | 0x50, 0, 0);
                 *(s32 *)(p + 4) = 0;
                 *f = 3;
                 func_0018CF30(i);
@@ -223,12 +223,12 @@ void func_0018CBB0(void) {
     s32 v[2];
     s32 i;
 
-    v[0] = func_0018C600(0x80B0, 0, 0) & ~0xFFF;
-    v[1] = func_0018C600(0x80B1, 0, 0) & ~0xFFF;
-    func_0018C600(0x520, 0, 0);
+    v[0] = sound_rpc_call(0x80B0, 0, 0) & ~0xFFF;
+    v[1] = sound_rpc_call(0x80B1, 0, 0) & ~0xFFF;
+    sound_rpc_call(0x520, 0, 0);
     for (i = 0; i < 2; i++) {
         if (v[i] & 0x1000) {
-            func_0018C600(i | 0x60, 0, 0);
+            sound_rpc_call(i | 0x60, 0, 0);
             *(s32 *)(D_0029CA10 + i * 0x28 + 4) = 1;
             *(s32 *)(D_0029CA10 + i * 0x28 + 8) = 0;
         }
@@ -240,8 +240,8 @@ void func_0018CBB0(void) {
 }
 
 void func_0018CCA0(s32 arg0) {
-    u32 v = func_0018C600(arg0 | 0x80B0, 0, 0) & ~0xFFF; if (v & 0x1000) {
-        func_0018C600(arg0 | 0x60, 0, 0);
+    u32 v = sound_rpc_call(arg0 | 0x80B0, 0, 0) & ~0xFFF; if (v & 0x1000) {
+        sound_rpc_call(arg0 | 0x60, 0, 0);
         *(s32 *)(D_0029CA14 + arg0 * 0x28) = 1;
         *(s32 *)(D_0029CA18 + arg0 * 0x28) = 0;
     }
@@ -267,7 +267,7 @@ void func_0018CD20(s32 arg0) {
     off = arg0 * 0x28;
     if (*(s32 *)(D_0029CA10 + off) == 1) return;
     if (*(s32 *)(D_0029CA14 + off) == 1) return;
-    v = func_0018C600(arg0 | 0x80B0, 0, 0) & ~0xFFF;
+    v = sound_rpc_call(arg0 | 0x80B0, 0, 0) & ~0xFFF;
     if (!(v & 0x1000)) return;
     p = (s32 *)(D_0029CA1C + off);
     *(s32 *)(D_0029CA20 + off) = *p;
@@ -360,7 +360,7 @@ void func_0018D010(s32 arg0) {
         if ((arg0 == 2) || (arg0 == 0xA) || (arg0 == 0x12) || (arg0 == 0x2D) || (arg0 == 0x32) || (arg0 == 0x25)) {
             var_a1 |= 0x80;
         }
-        D_0028DF90 = func_0018C600(0x500, (s32)var_a1, (s32)((s32)var_a2));
+        D_0028DF90 = sound_rpc_call(0x500, (s32)var_a1, (s32)((s32)var_a2));
     }
 }
 
@@ -391,12 +391,12 @@ void func_0018D0A0(s32 arg0) {
 
 
 void func_0018D130(void) {
-    func_0018C600(0x510, (s32)D_0028DF88, 0);
+    sound_rpc_call(0x510, (s32)D_0028DF88, 0);
 }
 
 
 void func_0018D140(void) {
-    func_0018C600(0x520, 0, 0);
+    sound_rpc_call(0x520, 0, 0);
 }
 
 extern u8 D_0028E2E0;
@@ -1031,20 +1031,20 @@ void func_0018DEF0(s32 arg0, s32 arg1) {
     if (D_0028E3C0 != 0) return;
     g_pause_lock_timer = 0x46;
     D_0029CA18_as_s32_a[0] = 0;
-    func_0018C600(0x100, 1, 0);
+    sound_rpc_call(0x100, 1, 0);
     func_0018C8D0(0);
-    func_0018C600(0x200, 0, 0);
+    sound_rpc_call(0x200, 0, 0);
     printf((const char *)D_00277F98);
-    func_0018C600(0x8000, 0x30000, 0);
+    sound_rpc_call(0x8000, 0x30000, 0);
     if (arg1 != 0) {
-        func_0018C600(0x80C0, 2, 0);
+        sound_rpc_call(0x80C0, 2, 0);
     } else {
-        func_0018C600(0x80C0, 0, 0);
+        sound_rpc_call(0x80C0, 0, 0);
     }
-    func_0018C600(0x160, g_bgm_files[arg0].size, g_bgm_files[arg0].lba);
+    sound_rpc_call(0x160, g_bgm_files[arg0].size, g_bgm_files[arg0].lba);
     D_0029CA1C_as_s32_a[0] = 0x64;
     D_0029CA20_as_s32_a[0] = D_0029CA1C_as_s32_a[0];
-    func_0018C600(0x80, 0x7FFF7FFF, 0);
-    func_0018C600(0x140, 0, 0);
+    sound_rpc_call(0x80, 0x7FFF7FFF, 0);
+    sound_rpc_call(0x140, 0, 0);
     D_0028DF98_as_u8 = 1;
 }

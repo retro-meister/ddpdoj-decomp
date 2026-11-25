@@ -250,7 +250,7 @@ void func_002012B0(void)
 
 extern s16 D_002669D0[];
 
-void func_002012F0(void)
+void rng_next_word(void)
 {
     *(u8 *)&rng_cursor += 1;
     reg_d0.w = rng_cursor & 0x7F;

@@ -548,7 +548,7 @@ void func_00123980(void) {
 }
 
 #ifndef DEATH_LABEL
-s32 func_0012FAB0();
+s32 text_layer_clear();
 s32 func_0018D3D0();
 extern u8 D_0024D628[];
 
@@ -556,7 +556,7 @@ void func_00123B00(void) {
     u16 temp_a0;
     u8 *temp_a2;
 
-    func_0012FAB0();
+    text_layer_clear();
     if (ENTITY(reg_a6)->offset_y.h == 0) {
         ENTITY(reg_a6)->offset_y.h = 1U;
         func_00123240();

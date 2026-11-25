@@ -313,7 +313,7 @@ extern u16 D_0028E978;
 extern u16 D_0028E97C;
 extern u16 D_0028E980;
 extern u16 D_0028E984;
-extern u16 D_0028E988;
+extern u16 g_bullet_count;
 extern s16 D_0029C060_as_s16_a[];
 extern f32 D_0029CD80_as_f32_a[];
 extern u16 D_0029CD8C[];
@@ -381,7 +381,7 @@ void func_00238B90(Buf *buf) {
     for (i = 0; i < 0xC08; i++) {
         buf->f0000[i] = D_002BF4F0[i];
     }
-    *(u16 *)(p + 0xC08) = D_0028E988;
+    *(u16 *)(p + 0xC08) = g_bullet_count;
     *(u16 *)(p + 0xC0A) = D_0028E984;
     *(u16 *)(p + 0xC0C) = D_0028E980;
     *(u16 *)(p + 0xC0E) = D_0028E97C;
@@ -884,7 +884,7 @@ void func_0023A490(u8 *p) {
     for (i = 0; i < 0xC08; i++) {
         D_002BF4F0[i] = p[0x0 + i];
     }
-    D_0028E988 = *(u16 *)(p + 0xC08);
+    g_bullet_count = *(u16 *)(p + 0xC08);
     D_0028E984 = *(u16 *)(p + 0xC0A);
     D_0028E980 = *(u16 *)(p + 0xC0C);
     D_0028E97C = *(u16 *)(p + 0xC0E);

@@ -334,10 +334,10 @@ void enemy_switch_target_player(void) {
 }
 
 s32 enemy_remove();                           /* extern */
-s32 func_00203060();                            /* extern */
+s32 entity_check_bounds();                            /* extern */
 
 void func_00171430(void) {
-    func_00203060();
+    entity_check_bounds();
     if (cond_flag != 0) {
         if (*(u8 *)(reg_a5 + 0x17) != 0) {
             enemy_remove();

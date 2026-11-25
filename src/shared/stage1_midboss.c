@@ -352,8 +352,8 @@ s32 enemy_hitbox_debug_draw();
 s32 func_0014E030();
 s32 enemy_remove();
 s32 func_0018D4E0();
-s32 func_001A9000();
-s32 func_001A91A0();
+s32 score_add_no_chain();
+s32 score_add();
 s32 func_00201800();
 s32 entity_follow_scroll();
 s32 aim256_at_player();
@@ -407,7 +407,7 @@ void func_001BD010(void) {
         if (reg_d1.b[0] != 0) {
             reg_d0.b[0] = 0xA3;
             *(u8 *)(reg_a6 + 1) &= reg_d0.b[0];
-            func_001A9000();
+            score_add_no_chain();
             reg_d0.b[0] = *(u8 *)(reg_a6 + 0x1C);
             reg_d2.b[0] = *(u8 *)(reg_a6 + 0x1E);
             reg_d0.b[0] ^= reg_d2.b[0];
@@ -428,7 +428,7 @@ void func_001BD010(void) {
                 func_0014E030();
                 *(u16 *)(reg_a5 + 0x28) = (u16) reg_d1.h[0];
                 reg_d0.w = 0x353;
-                func_001A91A0();
+                score_add();
                 func_001BC6F0();
                 vibration_start_pad1(0xB4, 0x50);
                 vibration_start_pad2(0xB4, 0x50);
@@ -457,7 +457,7 @@ block_18:
                     if (reg_d1.b[0] != 0) {
                         reg_d0.b[0] = 0xA3;
                         (*(u8 *)((u8 *)(var_a0) + (1))) &= reg_d0.b[0];
-                        func_001A9000();
+                        score_add_no_chain();
                         var_a0 = (u8 *)(reg_a4);
                         reg_d0.b[0] = (*(u8 *)((u8 *)(var_a0) + (0x1C)));
                         reg_d2.b[0] = (*(u8 *)((u8 *)(var_a0) + (0x1E)));
@@ -468,7 +468,7 @@ block_18:
                         }
                         if (*(s16 *)(reg_a4 + 0x18) < 0) {
                             reg_d0.w = 0x26;
-                            func_001A91A0();
+                            score_add();
 block_27:
                             func_0018D4E0();
                             reg_d0.h[0] = 0x85;

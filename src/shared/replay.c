@@ -276,7 +276,7 @@ extern u8 D_00269160[];
 extern s8 D_0028DF84;
 
 void func_00237330(void) {
-    s32 func_0012FAB0();
+    s32 text_layer_clear();
     s32 text_palette_load();
     u32 save_d0;
     u32 save_d1;
@@ -309,7 +309,7 @@ void func_00237330(void) {
     save_a4 = reg_a4;
     save_a5 = reg_a5;
     save_a6 = reg_a6;
-    func_0012FAB0();
+    text_layer_clear();
     reg_d0.w = 0;
     reg_a0 = (u8 *)D_00269160;
     text_palette_load();
@@ -501,7 +501,7 @@ void func_00237790(void) {
     reg_a0 = temp_s1;
 }
 
-s32 func_0012FAB0();                            /* extern */
+s32 text_layer_clear();                            /* extern */
 s32 func_0013B350();                            /* extern */
 s32 text_palette_load();                            /* extern */
 s32 func_00225B70();                            /* extern */
@@ -516,7 +516,7 @@ void func_002377F0(void) {
 
     temp_s0 = reg_a0_as_s32_p;
     temp_s1 = reg_d0.w;
-    func_0012FAB0();
+    text_layer_clear();
     reg_d0.w = 0;
     reg_a0_as_s32_p = D_00269160_as_s32_a;
     text_palette_load();
@@ -785,7 +785,7 @@ extern u16 D_006C8E56[];
 extern u16 D_006C8E5C[];
 
 void func_00237DF0(void) {
-    extern void func_0012FAB0(void);
+    extern void text_layer_clear(void);
     extern void func_00171910(void);
     extern void text_palette_load(void);
     extern void task_start(void);
@@ -850,7 +850,7 @@ void func_00237DF0(void) {
     task_start();
     *(u16 *)(reg_a0 + 4) = g_replay_header.stage;
     func_00171910();
-    func_0012FAB0();
+    text_layer_clear();
     reg_d0.w = 0;
     reg_a0 = (u8 *)D_00269140;
     text_palette_load();
@@ -1117,7 +1117,7 @@ extern s8 D_0028ED5C_as_s8;
 extern s8 D_0028ED80_as_s8;
 
 void func_00238520(void) {
-    s32 func_0012FAB0();
+    s32 text_layer_clear();
     s32 func_00171910();
     s32 text_palette_load();
     s32 task_start();
@@ -1164,7 +1164,7 @@ void func_00238520(void) {
     task_start();
     *(u16 *)(reg_a0 + 4) = g_replay_header.stage;
     func_00171910();
-    func_0012FAB0();
+    text_layer_clear();
     reg_d0.w = 0;
     reg_a0 = (u8 *)D_00269140;
     text_palette_load();

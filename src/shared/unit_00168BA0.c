@@ -58,7 +58,7 @@ extern s8 D_0028ED7C_as_s8;
 extern s8 D_0028ED80_as_s8;
 
 void func_00168BC0(void) {
-    s32 func_0012FAB0();
+    s32 text_layer_clear();
     s32 func_0013B190();
     s32 text_palette_load();
     s32 func_00206D70();
@@ -119,7 +119,7 @@ next_5:
     reg_d0.w = 0;
     reg_a0 = (u8 *)D_00269160;
     text_palette_load();
-    func_0012FAB0();
+    text_layer_clear();
     func_0012FB00();
     reg_d0.h[0] = 8;
     task_start();
@@ -166,11 +166,11 @@ extern s16 D_0028E314_as_s16;
 extern s16 D_0028E318_as_s16;
 
 void func_00168E80(void) {
-    s32 func_0012FAB0();
+    s32 text_layer_clear();
     s32 func_0015BA20();
     if (*(u8 *)(reg_a5 + 2) == 0) {
         *(u8 *)(reg_a5 + 2) = 1U;
-        func_0012FAB0();
+        text_layer_clear();
         func_0015BA20();
     }
     func_0015BBD0();
@@ -201,12 +201,12 @@ extern u8 g_cd_async_state_as_u8;
 extern u8 g_cd_async_busy_as_u8;
 
 void func_00168EF0(void) {
-    s32 func_0012FAB0();
+    s32 text_layer_clear();
     s32 text_palette_load();
     s32 func_0020EAA0();
     if (*(u8 *)(reg_a5 + 2) == 0) {
         *(u8 *)(reg_a5 + 2) = 1U;
-        func_0012FAB0();
+        text_layer_clear();
         reg_d0.w = 0;
         reg_a0 = D_00269160;
         text_palette_load();
@@ -253,13 +253,13 @@ extern u8 D_0028E2E4;
 extern u8 g_splash_visible;
 
 void func_00168FD0(void) {
-    s32 func_0012FAB0();
+    s32 text_layer_clear();
     s32 func_0013B190();
     s32 func_0015BA20();
     s32 func_0015BD00();
     if (reg_a5[2] == 0) {
         reg_a5[2] = 1U;
-        func_0012FAB0();
+        text_layer_clear();
         func_0013B190();
         func_0015BA20();
         func_0018DEE0();
@@ -322,13 +322,13 @@ extern s8 g_cd_async_busy;
 extern s8 D_0028EB88;
 
 void death_func_00136FF0(void) {
-    s32 func_0012FAB0();
+    s32 text_layer_clear();
     s32 func_0013B190();
     s32 text_palette_load();
     if (reg_a5[2] == 0) {
         reg_a5[2] = 1U;
         func_0012FB00();
-        func_0012FAB0();
+        text_layer_clear();
         reg_d0.w = 0;
         reg_a0 = D_00269160;
         text_palette_load();
@@ -389,7 +389,7 @@ extern s8 D_0028EB00;
 extern s32 D_0028EB94;
 
 void func_00169140(void) {
-    void func_0012FAB0(void);
+    void text_layer_clear(void);
     void func_0013B190(void);
     void func_0015BA20(void);
     void func_0015BD00(void);
@@ -406,7 +406,7 @@ void func_00169140(void) {
         D_0028E2A4_as_s8 = 0;
         D_0028E2A0_as_s8 = 0;
         D_0028E368_as_s8 = 0;
-        func_0012FAB0();
+        text_layer_clear();
 #ifdef DEATH_LABEL
         func_00235890();
 #else
@@ -505,7 +505,7 @@ extern s32 D_00275860[];
 extern s32 *reg_a0_as_s32_p;
 
 void func_00169320(void) {
-    s32 func_0012FAB0();
+    s32 text_layer_clear();
     s32 func_0013B190();
     s32 text_palette_load();
     s32 func_00206D70();
@@ -513,7 +513,7 @@ void func_00169320(void) {
     if (*(u8 *)(reg_a5 + 2) == 0) {
         *(u8 *)(reg_a5 + 2) = 1U;
         func_00137C90();
-        func_0012FAB0();
+        text_layer_clear();
         *(s16 *)(reg_a5 + 4) = 0;
         reg_a0_as_s32_p = D_00269140_as_s32_a;
         reg_d0.w = 0;
@@ -526,7 +526,7 @@ void func_00169320(void) {
         func_0013B190();
         func_00137C50();
         stage_map_reset();
-        func_0012FAB0();
+        text_layer_clear();
         reg_d0.h[0] = 8;
         task_start();
         (*(s16 *)((u8 *)(reg_a0_as_s32_p) + (4))) = 2;
@@ -595,7 +595,7 @@ extern u8 D_00269140[];
 extern u8 D_0026A880[];
 
 void func_001694F0() {
-    s32 func_0012FAB0();
+    s32 text_layer_clear();
     s32 text_palette_load();
     u16 temp_v1;
     u16 temp_v1_2;
@@ -603,7 +603,7 @@ void func_001694F0() {
     if (*(u8 *)(reg_a5 + 2) == 0) {
         D_0028DF84_as_u8 = 0;
         *(u8 *)(reg_a5 + 2) = 1U;
-        func_0012FAB0();
+        text_layer_clear();
         reg_d0.w = 0;
         reg_a0 = D_00269140;
         text_palette_load();
@@ -631,7 +631,7 @@ void func_001694F0() {
         if (*(u16 *)(reg_a5 + 4) == 0) {
             reg_d0.h[0] = 2;
             func_00168BA0();
-            func_0012FAB0();
+            text_layer_clear();
         }
     }
 }
@@ -703,7 +703,7 @@ extern s16 D_006E5C12_as_s16_a[];
 extern s16 D_006E5C14_as_s16_a[];
 
 void func_00169680(void) {
-    void func_0012FAB0(void);
+    void text_layer_clear(void);
     void text_palette_load(void);
     void func_00206D70(void);
     void task_start(void);
@@ -713,7 +713,7 @@ void func_00169680(void) {
 
     D_0028E290_as_s8 = 0;
     func_00206D70();
-    func_0012FAB0();
+    text_layer_clear();
     reg_d0.w = 0;
     reg_a0 = (u8 *)D_00269140;
     text_palette_load();
@@ -764,7 +764,7 @@ extern u8 death_D_00290DC0;
 #endif
 
 void func_00169900(void) {
-    s32 func_0012FAB0();
+    s32 text_layer_clear();
     s32 text_palette_load();
     s32 func_00206D70();
     s32 task_start();
@@ -773,7 +773,7 @@ void func_00169900(void) {
     death_D_00290DC0 = 0;
 #endif
     func_00206D70();
-    func_0012FAB0();
+    text_layer_clear();
     reg_d0.w = 0;
     reg_a0_as_s32_p = D_00269140_as_s32_a;
     text_palette_load();
@@ -843,13 +843,13 @@ extern s32 D_0028EC78;
 extern s32 D_0028EC7C;
 
 void func_00169A50(void) {
-    s32 func_0012FAB0();
+    s32 text_layer_clear();
     u8 temp_a0;
 
     temp_a0 = *(u8 *)(reg_a5 + 2);
     switch (temp_a0) {                              /* irregular */
     case 0:
-        func_0012FAB0();
+        text_layer_clear();
         func_0012FB00();
         func_0018DEE0();
         *(u8 *)(reg_a5 + 2) = 1U;

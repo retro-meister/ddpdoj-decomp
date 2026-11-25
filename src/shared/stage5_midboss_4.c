@@ -157,7 +157,7 @@ void func_001FA680() {
 s32 func_001389D0();
 s32 func_0013B8B0();
 s32 enemy_hitbox_debug_draw();
-s32 func_001A9000();
+s32 score_add_no_chain();
 extern u8 D_00265F60[];
 extern u16 g_enemy_signal_1;
 extern u16 g_scroll_line;
@@ -191,7 +191,7 @@ void func_001FA6F0(void) {
             ENTITY(reg_a6)->flags.b[1] &= reg_d0.b[0];
             *(u8 *)(reg_a6 + 0x21) &= reg_d0.b[0];
             *(u8 *)(reg_a6 + 0x41) &= reg_d0.b[0];
-            func_001A9000();
+            score_add_no_chain();
             reg_d0.b[0] = *(u8 *)(reg_a6 + 0x1C);
             reg_d0.b[0] ^= 0xD;
             *(u8 *)(reg_a6 + 0x1C) = (u8) reg_d0.b[0];

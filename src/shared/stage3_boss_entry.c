@@ -8,7 +8,7 @@ void func_001D4540(void);
 s32 boss_phase_start();
 s32 boss_phase_stop_all();
 s32 boss_attack_stop_all();
-s32 func_001A9000();
+s32 score_add_no_chain();
 s32 func_001D4630();
 s32 func_002016D0();
 s32 func_00203400();
@@ -57,7 +57,7 @@ next_10:
     B(0xC1) &= reg_d0.b[0];
     B(0xE1) &= reg_d0.b[0];
     W(0x8A) = reg_d1.h[0];
-    func_001A9000();
+    score_add_no_chain();
     reg_d0.b[0] = B(0x67);
     reg_d2.b[0] = B(0x66);
     reg_d3.b[0] = B(0x69);

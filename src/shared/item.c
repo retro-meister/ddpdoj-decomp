@@ -320,7 +320,7 @@ void func_0016AF30(void)
 
 s32 rng_next();
 s32 entity_velocity();
-s32 func_00203060();
+s32 entity_check_bounds();
 extern u8 D_0028E855;
 extern u16 g_enemies_stopped;
 
@@ -399,7 +399,7 @@ block_5:
 block_7:
     entity_velocity();
     cond_flag = 0;
-    func_00203060();
+    entity_check_bounds();
     if (cond_flag != 0) {
         func_0016C260();
     }
@@ -550,7 +550,7 @@ block_5:
 block_7:
     entity_velocity();
     cond_flag = 0;
-    func_00203060();
+    entity_check_bounds();
     if (cond_flag != 0) {
         func_0016C260();
     }
@@ -684,7 +684,7 @@ void func_0016B7F0(void) {
     }
     entity_velocity();
     cond_flag = 0;
-    func_00203060();
+    entity_check_bounds();
     if (cond_flag != 0) {
         func_0016C260();
     }
@@ -948,7 +948,7 @@ void func_0016C0C0() {
     func_00201BE0();
     ENTITY(reg_a6)->y.h += reg_d2.h[0];
     cond_flag = 0;
-    func_00203060();
+    entity_check_bounds();
     if (cond_flag != 0) {
         func_0016C260();
     }

@@ -53,7 +53,7 @@ void func_0012FA80(void) {
 extern s32 g_text_layer_as_s32_a[];
 extern s32 *reg_a0_as_s32_p;
 
-void func_0012FAB0(void) {
+void text_layer_clear(void) {
     reg_a0_as_s32_p = g_text_layer_as_s32_a;
     reg_d0.h[0] = 0x7FF;
     do {
@@ -75,7 +75,7 @@ void func_0012FB00(void) {
 
 
 void func_0012FB50(void) {
-    func_0012FAB0();
+    text_layer_clear();
     func_0012FB00();
 }
 

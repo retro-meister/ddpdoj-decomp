@@ -28,11 +28,11 @@ void func_0019A5B0(void);
 void func_0019A640(void);
 void func_0019A870(void);
 
-s32 func_0018C600(s32, s32, s32);   /* extern */
+s32 sound_rpc_call(s32, s32, s32);   /* extern */
 extern s8 D_0028DF98;
 
 void func_0018E020(void) {
-    func_0018C600(0x530, 0, 0);
+    sound_rpc_call(0x530, 0, 0);
     if (D_0028DF98 != 0) {
         func_0018E060();
     }
@@ -43,15 +43,15 @@ extern s32 D_0029CA10_as_s32_a[];
 extern s32 D_0029CA14_as_s32_a[];
 
 void func_0018E060(void) {
-    if (func_0018C600(0x100, 0, 0) == 0) {
-        func_0018C600(0x150, 0, 0);
+    if (sound_rpc_call(0x100, 0, 0) == 0) {
+        sound_rpc_call(0x150, 0, 0);
         D_0028DF98 = 0;
         D_0029CA10_as_s32_a[0] = 0;
         D_0029CA14_as_s32_a[0] = 0;
     }
 }
 
-extern s32 func_0018C600(s32, s32, s32);
+extern s32 sound_rpc_call(s32, s32, s32);
 extern void func_0018CCA0(s32);
 extern u8 D_00277FB0[];
 extern u8 D_00277FC8[];
@@ -91,7 +91,7 @@ void func_0018E0B0(void) {
                     return;
                 }
                 if (t == 4) {
-                    func_0018C600(i | 0x60, 0, 0);
+                    sound_rpc_call(i | 0x60, 0, 0);
                     *(s32 *)(D_0029CA18 + i * 0x28) = 0;
                     return;
                 }
@@ -120,7 +120,7 @@ void func_0018E0B0(void) {
             }
             hi = v << 16;
             hi |= v;
-            func_0018C600(i | 0x80, hi, 0);
+            sound_rpc_call(i | 0x80, hi, 0);
         }
         i += 1;
         off += 0x28;
@@ -6271,7 +6271,7 @@ void func_0018E5A0(void) {
 }
 
 
-s32 func_0012FAB0();
+s32 text_layer_clear();
 s32 func_0018D450();
 s32 sprite_palette_load();
 s32 func_001ACBA0();
@@ -6293,7 +6293,7 @@ void func_00197F60() {
 #ifndef DEATH_LABEL
     D_0028E4B0 = g_two_player_seen;
 #endif
-    func_0012FAB0();
+    text_layer_clear();
     *(s8 *)(reg_a5 + 3) = 1;
     memset(D_002BAE00, 0, 0x84);
     reg_a0 = (u8 *)D_00261F30_as_u8_a;
@@ -6326,7 +6326,7 @@ void func_00197F60() {
     }
 }
 
-s32 func_0012FAB0();                            /* extern */
+s32 text_layer_clear();                            /* extern */
 s32 func_00135ED0();                            /* extern */
 s32 func_00137C20();                            /* extern */
 s32 func_0013FD80();                            /* extern */
@@ -6347,7 +6347,7 @@ void func_001980A0() {
     func_00135ED0();
     func_002075F0();
     func_0018DE90();
-    func_0012FAB0();
+    text_layer_clear();
     reg_d0.w = 0;
     reg_a0_as_s32_p = D_00269160_as_s32_a;
     text_palette_load();

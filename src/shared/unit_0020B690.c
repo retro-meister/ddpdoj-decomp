@@ -214,7 +214,7 @@ extern u16 D_0028E7B0;
 extern u16 D_0028E7E4;
 extern u16 D_0028E7E8;
 extern u16 g_two_player_game;
-extern u16 D_0028E988;
+extern u16 g_bullet_count;
 extern u8 D_002962E0[];
 extern u16 D_00299768_as_u16_a[];
 extern u16 D_0029976A_as_u16_a[];
@@ -292,7 +292,7 @@ loop_5:
                 tmp_dec = reg_d6.h[0] - 1; reg_d6.h[0] = tmp_dec;
                 if (((s64) ((s64) (tmp_dec & 0xFFFF) << 0x30) >> 0x30) >= 0) goto loop_5;
             }
-            reg_d6.h[0] = D_0028E988;
+            reg_d6.h[0] = g_bullet_count;
             if (reg_d6.h[0] != 0) {
                 reg_a6 = (u8 *)D_002BF4F0_as_u16_a;
                 goto loop_17;

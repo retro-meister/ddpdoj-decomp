@@ -2899,7 +2899,7 @@ void func_0022BF60(void) {
     }
 }
 
-extern void func_0012FAB0(void);
+extern void text_layer_clear(void);
 extern void func_00171910(void);
 extern void text_palette_load(void);
 extern void task_start(void);
@@ -3020,7 +3020,7 @@ void func_0022BFD0() {
     *(u16 *)(reg_a0 + 4) = D_00684C80[6];
     func_00171910();
 #endif
-    func_0012FAB0();
+    text_layer_clear();
     reg_d0.w = 0;
     reg_a0 = (u8 *)D_00269140;
     text_palette_load();

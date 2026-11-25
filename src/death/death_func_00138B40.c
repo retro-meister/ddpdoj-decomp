@@ -52,7 +52,7 @@ s32 sceGsExecLoadImage();
 s32 sceGsSetDefLoadImage();
 s32 sceGsSyncPath(s32 mode, u32 timeout);
 s32 rand(void);
-s32 func_0012FAB0();
+s32 text_layer_clear();
 s32 func_0019AB20();
 s32 sprite_draw_keep();
 s32 sprite_palette_load();
@@ -311,7 +311,7 @@ void death_func_00139380(void) {
     switch (ENTITY(reg_a6)->offset_y.h) {
     case 0:
         ENTITY(reg_a6)->offset_y.h = 1;
-        func_0012FAB0();
+        text_layer_clear();
         ENTITY(reg_a6)->sprite.h = 0;
         memset(&death_D_002AB800, 0, sizeof(TextScript));
         death_D_002AB800.cursor = death_D_002549A0;

@@ -71,12 +71,12 @@ s32 bullet_fire_fast();
 s32 bullet_fire256_double();
 s32 explosion_spawn();
 s32 enemy_hitbox_debug_draw();
-s32 func_0014EA50();
+s32 enemy_path_step();
 s32 func_0018D540();
 s32 entity_draw_layer5();
 s32 sprite_draw_layer4();
-s32 func_001A9000();
-s32 func_001A91A0();
+s32 score_add_no_chain();
+s32 score_add();
 s32 direction_between();
 s32 direction_turn_toward();
 s32 func_00202730();
@@ -102,7 +102,7 @@ void func_001683C0(void) {
     u16 t4;
     u16 t5;
 
-    func_0014EA50();
+    enemy_path_step();
     if (enemy_move_end_requested != 0) return;
     {
         reg_d0.h[1] = ENTITY(reg_a6)->y.h;
@@ -146,7 +146,7 @@ next_1:
             goto next_2;
         }
         (*(u8 *)((u8 *)(t2) + (1))) &= 0xA3;
-        func_001A9000();
+        score_add_no_chain();
         t2 = (s16 *)(reg_a6);
         reg_d0.b[0] = (*(u8 *)((u8 *)(t2) + (0x1C)));
         if (reg_d0.b[0] == 0x19) {
@@ -258,7 +258,7 @@ next_3:
             }
         } else {
             reg_d0.w = 0x11;
-            func_001A91A0();
+            score_add();
             if (g_loop != 0) {
                 func_00202730();
                 if (cond_flag == 0) {

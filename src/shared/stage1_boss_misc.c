@@ -145,10 +145,10 @@ void func_0014F440(void) {
 s32 bullet_fire256_fixed();
 s32 enemy_hitbox_debug_draw();
 s32 func_0019D620();
-s32 func_001A9000();
+s32 score_add_no_chain();
 s32 rng_next();
 s32 velocity_from_dir256();
-s32 func_00203060();
+s32 entity_check_bounds();
 
 #define W(o) (*(u16 *)(reg_a6 + (o)))
 #define B(o) (*(u8 *)(reg_a6 + (o)))
@@ -174,7 +174,7 @@ void func_0014F5E0(void) {
     reg_d2.b[0] = B(0x3C);
     reg_d0.b[0] ^= reg_d2.b[0];
     B(0x1C) = reg_d0.b[0];
-    func_001A9000();
+    score_add_no_chain();
     reg_d2.w = 0x7FFF;
     reg_d2.h[0] -= W(0x18);
     reg_d3.w = 0x7FFF;
@@ -246,7 +246,7 @@ next_100:
     velocity_from_dir256();
     W(2) += reg_d2.h[0];
     W(4) += reg_d3.h[0];
-    func_00203060();
+    entity_check_bounds();
     if (cond_flag == 0) goto next_110;
     enemy_remove();
     return;

@@ -940,7 +940,7 @@ void func_00202F50(void) {
 extern u16 D_0029C068[];
 
 
-void func_00203060(void) {
+void entity_check_bounds(void) {
     reg_d0.h[1] = ENTITY(reg_a6)->y.h;
     reg_d0.h[0] = ENTITY(reg_a6)->x.h;
     reg_tmp.w = 0;

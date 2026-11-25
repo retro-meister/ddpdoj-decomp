@@ -276,7 +276,7 @@ void func_001C9EE0(void) {
 }
 
 s32 boss_attack_stop();
-s32 func_002012F0();
+s32 rng_next_word();
 
 void func_001C9FC0(void) {
     u16 temp_a0;
@@ -292,10 +292,10 @@ void func_001C9FC0(void) {
     *(u16 *)(reg_a4 + 6) = (u16) reg_d0.h[0];
     *(u16 *)(reg_a4 + 8) = (u16) reg_d0.h[1];
     *(u16 *)(reg_a4 + 0xA) = (u16) reg_d0.h[0];
-    func_002012F0();
+    rng_next_word();
     reg_d0.h[0] = (u16) ((s16) reg_d0.h[0] >> 2);
     *(u16 *)(reg_a4 + 8) += reg_d0.h[0];
-    func_002012F0();
+    rng_next_word();
     reg_d0.h[0] = (u16) ((s16) reg_d0.h[0] >> 2);
     *(u16 *)(reg_a4 + 0xA) += reg_d0.h[0];
     func_001CA090();
@@ -326,10 +326,10 @@ void func_001CA090() {
         reg_d0.h[0] = *(u16 *)(reg_a4 + 6);
         *(u16 *)(reg_a4 + 8) = (u16) reg_d0.h[1];
         *(u16 *)(reg_a4 + 0xA) = (u16) reg_d0.h[0];
-        func_002012F0();
+        rng_next_word();
         reg_d0.h[0] = (u16) ((s16) reg_d0.h[0] >> 2);
         *(u16 *)(reg_a4 + 8) += reg_d0.h[0];
-        func_002012F0();
+        rng_next_word();
         reg_d0.h[0] = (u16) ((s16) reg_d0.h[0] >> 2);
         *(u16 *)(reg_a4 + 0xA) += reg_d0.h[0];
     }

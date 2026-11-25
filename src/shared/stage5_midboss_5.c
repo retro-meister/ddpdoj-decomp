@@ -369,8 +369,8 @@ void func_001FD760(void) {
 s32 func_001389D0();
 s32 func_0013B8B0();
 s32 enemy_hitbox_debug_draw();
-s32 func_001A9000();
-s32 func_001A91A0();
+s32 score_add_no_chain();
+s32 score_add();
 extern u8 D_00266330[];
 extern u16 g_enemy_signal_4;
 extern u16 g_enemy_signal_3;
@@ -400,7 +400,7 @@ void func_001FD840() {
             reg_d0.b[0] = 0xA3;
             ENTITY(reg_a6)->flags.b[1] &= reg_d0.b[0];
             *(u16 *)(reg_a6 + 0x8E) = (u16) reg_d1.h[0];
-            func_001A9000();
+            score_add_no_chain();
             reg_d0.b[0] = *(u8 *)(reg_a6 + 0x1C);
             reg_d0.b[0] ^= 0xD;
             *(u8 *)(reg_a6 + 0x1C) = (u8) reg_d0.b[0];
@@ -418,7 +418,7 @@ void func_001FD840() {
             reg_tmp.h[0] = *(u16 *)(reg_a5 + 0x1C);
             if ((s32) reg_tmp.w < 0) {
                 reg_d0.w = 0x1000;
-                func_001A91A0();
+                score_add();
                 ENTITY(reg_a6)->flags.h = 0x8000;
                 *(u8 *)(reg_a6 + 0x9E) = 1U;
                 reg_d0.h[0] = 0x20;
@@ -1362,7 +1362,7 @@ void func_001FF610() {
 
 s32 sprite_draw_layer5_zoom();
 s32 func_0019D710();
-s32 func_00203060();
+s32 entity_check_bounds();
 extern u8 D_00266380[];
 extern u16 D_0028E3E4;
 
@@ -1378,7 +1378,7 @@ void func_001FF670(void) {
             func_001FFA50();
             return;
         }
-        func_00203060();
+        entity_check_bounds();
         if (cond_flag != 0) {
             if (*(u8 *)(reg_a5 + 0x17) == 0) goto next_1;
 block_end1:
@@ -1545,7 +1545,7 @@ void func_001FFB10(void) {
 
     if (D_0028E2E4 != 0) goto block_end1;
     {
-        func_00203060();
+        entity_check_bounds();
         if (cond_flag != 0) {
             if (*(u8 *)(reg_a5 + 0x17) == 0) goto next_1;
 block_end1:
@@ -1654,7 +1654,7 @@ void func_001FFDE0(void) {
     if (reg_d1.b[0] == 0) goto next_1;
     reg_d0.b[0] = 0xA3;
     ENTITY(reg_a6)->flags.b[1] &= reg_d0.b[0];
-    func_001A9000();
+    score_add_no_chain();
     reg_d0.b[0] = *(u8 *)(reg_a6 + 0x1C);
     reg_d0.b[0] ^= 0xC;
     *(u8 *)(reg_a6 + 0x1C) = reg_d0.b[0];
@@ -1920,7 +1920,7 @@ next_1:
     if (reg_d1.b[0] == 0) goto next_2;
     reg_d0.b[0] = 0xA3;
     ENTITY(reg_a6)->flags.b[1] &= reg_d0.b[0];
-    func_001A9000();
+    score_add_no_chain();
     reg_d0.b[0] = *(u8 *)(reg_a6 + 0x1C);
     reg_d0.b[0] ^= 0xC;
     *(u8 *)(reg_a6 + 0x1C) = reg_d0.b[0];

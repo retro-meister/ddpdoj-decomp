@@ -1211,7 +1211,7 @@ block_2:
 }
 
 s32 func_0012FA80();
-s32 func_0012FAB0();
+s32 text_layer_clear();
 s32 func_0012FB00();
 s32 func_0013B2E0(s32, s32, s32, s32);
 s32 stage_map_reset();
@@ -1225,7 +1225,7 @@ void func_0014BEC0(void) {
     D_0028E378 = 0xFF;
     D_0028E368 = 0;
     func_0012FA80();
-    func_0012FAB0();
+    text_layer_clear();
     func_0012FB00();
     stage_map_reset();
     *(s8 *)(reg_a5 + 3) = 1;

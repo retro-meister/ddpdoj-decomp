@@ -30,7 +30,7 @@ void func_001C45B0(void) {
 s32 enemy_remove();
 s32 sprite_draw_layer5();
 s32 entity_velocity();
-s32 func_00203060();
+s32 entity_check_bounds();
 extern u16 D_0028E574[];
 
 void func_001C4650(void) {
@@ -45,7 +45,7 @@ void func_001C4650(void) {
             enemy_remove();
         }
     }
-    func_00203060();
+    entity_check_bounds();
     if (cond_flag != 0) {
         if (*(u8 *)(reg_a5 + 0x17) != 0) {
             enemy_remove();
@@ -177,7 +177,7 @@ s32 entity_draw_layer5();
 extern u8 D_0028DB10[];
 
 void func_001C4C90(void) {
-    func_00203060();
+    entity_check_bounds();
     if (cond_flag != 0) {
         if (*(u8 *)(reg_a5 + 0x17) != 0) {
             enemy_remove();
@@ -289,7 +289,7 @@ void func_001C5030(void) {
     u16 temp_a1;
     u16 temp_a2;
 
-    func_00203060();
+    entity_check_bounds();
     if (cond_flag != 0) {
         if (*(u8 *)(reg_a5 + 0x17) != 0) {
             enemy_remove();

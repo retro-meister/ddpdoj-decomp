@@ -30,7 +30,7 @@ s32 func_0019D710();
 s32 func_001D27A0();
 s32 entity_velocity();
 s32 func_00202180();
-s32 func_00203060();
+s32 entity_check_bounds();
 extern u8 D_0024EBC0[];
 extern u8 D_0024EC80_as_u8_a[];
 extern u8 D_0024EEF0_as_u8_a[];
@@ -50,7 +50,7 @@ void func_001DCA80(void) {
         }
         func_001D27A0();
         if (cond_flag == 0) {
-            func_00203060();
+            entity_check_bounds();
             if (cond_flag != 0) {
                 if (*(u8 *)(reg_a5 + 0x17) != 0) {
 block_6:
@@ -199,8 +199,8 @@ s32 enemy_hitbox_debug_draw();
 s32 func_0018D4E0();
 s32 sprite_draw_layer3();
 s32 func_0019D6A0();
-s32 func_001A9000();
-s32 func_001A91A0();
+s32 score_add_no_chain();
+s32 score_add();
 s32 func_00201F20();
 s32 direction256_between();
 s32 func_00202B70();
@@ -238,7 +238,7 @@ next_10:
     if (reg_d1.b[0] == 0) goto next_100;
     reg_d0.b[0] = 0xA3;
     ENTITY(reg_a6)->flags.b[1] &= reg_d0.b[0];
-    func_001A9000();
+    score_add_no_chain();
     reg_d0.h[0] = 0x7FFF;
     reg_d0.h[0] -= ENTITY(reg_a6)->hp.h;
     if (!((s16) g_enemy_signal_8 < (s16) reg_d0.h[0])) goto next_20;
@@ -252,7 +252,7 @@ next_20:
     *(u8 *)(reg_a6 + 0x1C) = reg_d0.b[0];
     if (ENTITY(reg_a6)->hp.sh >= 0) goto next_110;
     reg_d0.w = 0x20;
-    func_001A91A0();
+    score_add();
     reg_d0.w = 2;
     explosion_spawn();
     *(u16 *)(reg_a0 + 2) = ENTITY(reg_a6)->y.h;
@@ -273,7 +273,7 @@ next_110:
     if (*(u8 *)(reg_a5 + 0x3B) != 1) goto next_130;
     if (ENTITY(reg_a6)->x.sh <= -0x400) goto block_b;
     if (!(ENTITY(reg_a6)->x.sh < 0x3C00)) goto block_b;
-    func_00203060();
+    entity_check_bounds();
     if ((s8) (*(u8 *)&cond_flag) == 0) goto next_120;
     if (*(u8 *)(reg_a5 + 0x17) == 0) goto next_130;
 block_b:

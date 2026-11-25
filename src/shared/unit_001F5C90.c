@@ -26,7 +26,7 @@ s32 boss_movement_start();
 s32 boss_part_show();
 s32 boss_part_hide();
 s32 boss_attack_stop_all();
-s32 func_001A9000();
+s32 score_add_no_chain();
 s32 func_001F5620();
 s32 func_001F6080();
 s32 func_001F6140();
@@ -96,7 +96,7 @@ next_4:
     if (*(u16 *) (reg_a6 + 0x13A) != 0) {
         goto next_3;
     }
-    func_001A9000();
+    score_add_no_chain();
     reg_d0.b[0] = reg_a6[0xEC];
     if (reg_d0.b[0] != 0x19) {
         goto next_5;

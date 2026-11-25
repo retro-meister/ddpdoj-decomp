@@ -15,8 +15,8 @@ void func_001BB8D0(void) {
 s32 boss_phase_start();
 s32 boss_phase_running();
 s32 func_0016A9B0();
-s32 func_001A9000();
-s32 func_001A91A0();
+s32 score_add_no_chain();
+s32 score_add();
 s32 func_002016D0();
 extern u8 D_0028E290;
 extern s32 g_boss_score;
@@ -38,7 +38,7 @@ void func_001BB8E0(void) {
             reg_d0.b[0] = 0xA3;
             (*(u8 *)((u8 *)(v2) + (1))) &= reg_d0.b[0];
             *(u16 *)(reg_a6 + 0xEA) = (u16) reg_d1.h[0];
-            func_001A9000();
+            score_add_no_chain();
             reg_d0.b[0] = *(u8 *)(reg_a6 + 0x1C);
             if (reg_d0.b[0] == 0x19) {
                 *(u8 *)(reg_a6 + 0x1C) = 0x13U;
@@ -109,7 +109,7 @@ next_1:
                 reg_d0.b[0] = 0xA3;
                 *(u8 *)(reg_a6 + 0x21) &= reg_d0.b[0];
                 *(u16 *)(reg_a6 + 0xEA) = (u16) reg_d1.h[0];
-                func_001A9000();
+                score_add_no_chain();
                 reg_d0.b[0] = *(u8 *)(reg_a6 + 0x3C);
                 if (reg_d0.b[0] == 0x19) {
                     *(u8 *)(reg_a6 + 0x3C) = 0x15U;
@@ -155,7 +155,7 @@ next_1:
                 if ((s32) reg_tmp.w < 0) {
                     reg_d1.h[0] = *(u16 *)(reg_a6 + 0xEA);
                     reg_d0.w = 0x1000;
-                    func_001A91A0();
+                    score_add();
                     reg_d0.w = 0xC;
                     if (!(reg_d1.w & 0x10)) {
                         reg_d0.w = 0x14;
@@ -191,7 +191,7 @@ next_3:
                 reg_d0.b[0] = 0xA3;
                 *(u8 *)(reg_a6 + 0x61) &= reg_d0.b[0];
                 *(u16 *)(reg_a6 + 0xEA) = (u16) reg_d1.h[0];
-                func_001A9000();
+                score_add_no_chain();
                 reg_d0.b[0] = *(u8 *)(reg_a6 + 0x7C);
                 if (reg_d0.b[0] == 0x19) {
                     *(u8 *)(reg_a6 + 0x7C) = 0x15U;
@@ -237,7 +237,7 @@ next_3:
                 if ((s32) reg_tmp.w < 0) {
                     reg_d1.h[0] = *(u16 *)(reg_a6 + 0xEA);
                     reg_d0.w = 0x1000;
-                    func_001A91A0();
+                    score_add();
                     reg_d0.w = 0xC;
                     if (!(reg_d1.w & 0x10)) {
                         reg_d0.w = 0x14;

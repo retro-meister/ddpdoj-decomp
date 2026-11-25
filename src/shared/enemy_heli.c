@@ -6,8 +6,8 @@ void func_00150F40(void);
 
 s32 explosion_spawn();
 s32 func_0018D540();
-s32 func_001A9000();
-s32 func_001A91A0();
+s32 score_add_no_chain();
+s32 score_add();
 
 void func_00150510(u32 arg0) {
     s32 enemy_remove();
@@ -19,14 +19,14 @@ void func_00150510(u32 arg0) {
     if (reg_d1.b[0] != 0) {
         reg_d0.b[0] = 0xA3;
         ENTITY(reg_a6)->flags.b[1] &= reg_d0.b[0];
-        func_001A9000();
+        score_add_no_chain();
         reg_d0.b[0] = *(u8 *)(reg_a5 + 0x2B);
         reg_d2.b[0] = *(u8 *)(reg_a5 + 0x2A);
         reg_d0.b[0] ^= reg_d2.b[0];
         *(u8 *)(reg_a6 + 0x1C) = (u8) reg_d0.b[0];
         if (ENTITY(reg_a6)->hp.sh < 0) {
             reg_d0.w = arg0;
-            func_001A91A0();
+            score_add();
             reg_d0.w = 2;
             explosion_spawn();
             *(u16 *)(reg_a0 + 2) = (u16) ENTITY(reg_a6)->y.h;
@@ -350,7 +350,7 @@ void func_001510D0(void) {
     }
 }
 
-s32 func_0014EA50();
+s32 enemy_path_step();
 
 void func_001512D0(void) {
     u16 temp_a0_2;
@@ -364,7 +364,7 @@ void func_001512D0(void) {
             entity_velocity();
             goto block_7;
         }
-        func_0014EA50();
+        enemy_path_step();
         if (enemy_move_end_requested == 0) {
 block_7:
             if ((s32) ENTITY(reg_a6)->move.b.dir >= 0x40) {
@@ -1199,7 +1199,7 @@ void func_00153400(void) {
             entity_velocity();
             goto block_7;
         }
-        func_0014EA50();
+        enemy_path_step();
         if (enemy_move_end_requested == 0) {
 block_7:
             if ((s32) ENTITY(reg_a6)->move.b.dir >= 0x40) {
