@@ -28,7 +28,7 @@ extern u16 D_0026D8A0[];
 extern u16 D_0026D990[];
 extern u16 D_0026DF70[];
 extern u16 D_0026DFC0[];
-extern u16 D_0026E930[];
+extern u16 stage1_boss_enter_flash[];
 extern u16 D_0026F320[];
 extern u16 D_0026F340[];
 extern u16 D_0026F440[];
@@ -330,11 +330,11 @@ void func_002108C0(void) {
     STORE_POINTER(D_0026DF70 + 32, D_00244930);
     STORE_POINTER(D_0026DFC0 + 4, D_002610F0);
     STORE_POINTER(D_0026DFC0 + 11, D_00244930);
-    STORE_POINTER(D_0026E930 + 4, D_0025FA30_as_u16_a);
-    STORE_POINTER(D_0026E930 + 11, D_0025FA70_as_u16_a);
-    STORE_POINTER(D_0026E930 + 18, D_0025FA70_as_u16_a);
-    STORE_POINTER(D_0026E930 + 25, D_0025FA70_as_u16_a);
-    STORE_POINTER(D_0026E930 + 32, D_00261D70);
+    STORE_POINTER(stage1_boss_enter_flash + 4, D_0025FA30_as_u16_a);
+    STORE_POINTER(stage1_boss_enter_flash + 11, D_0025FA70_as_u16_a);
+    STORE_POINTER(stage1_boss_enter_flash + 18, D_0025FA70_as_u16_a);
+    STORE_POINTER(stage1_boss_enter_flash + 25, D_0025FA70_as_u16_a);
+    STORE_POINTER(stage1_boss_enter_flash + 32, D_00261D70);
     STORE_POINTER(D_0026ED10_as_u16_a, D_0026ED30);
     STORE_POINTER(D_0026ED10 + 2, D_0026ED40);
     STORE_POINTER(D_0026ED10 + 4, D_0026ED50);
@@ -925,7 +925,7 @@ void func_00211920(void) {
 s32 rng_next_bit();
 s32 func_00201230();
 s32 func_00201270();
-s32 func_00202B50();
+s32 entity_distance_to();
 extern u8 g_boss_present_b1;
 extern u16 D_00299D22[];
 extern u16 D_00299D24[];
@@ -981,13 +981,13 @@ next_3:
     if (reg_tmp.h[0] == 0) goto block_kill;
     reg_d3.h[0] = reg_d7.h[0];
     reg_d2.h[0] = reg_d5.h[0];
-    func_00202B50();
+    entity_distance_to();
     if (reg_d0.h[0] >= 0xA00) goto next_6;
     goto block_kill;
 next_4:
     reg_d3.h[0] = reg_d7.h[0];
     reg_d2.h[0] = reg_d5.h[0];
-    func_00202B50();
+    entity_distance_to();
     if (reg_d0.h[0] >= 0x800) goto next_6;
 block_kill:
     W0(0) = 0;

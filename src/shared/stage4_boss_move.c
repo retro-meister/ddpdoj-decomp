@@ -221,7 +221,7 @@ extern u8 D_0026F480[];
 
 void stage4_boss_move_wander_high(void) {
     s32 direction_between(void *);
-    s32 func_00202B70(u16, void *);
+    s32 distance_between(u16, void *);
     u16 temp_a0;
 
     reg_a0 = D_0026F480;
@@ -241,7 +241,7 @@ void stage4_boss_move_wander_high(void) {
     reg_a0 += *(u16 *)(reg_a4 + 6);
     reg_d2.h[0] = *(u16 *)reg_a0;
     reg_d3.h[0] = *(u16 *)(reg_a0 + 2);
-    func_00202B70(temp_a0, reg_a6);
+    distance_between(temp_a0, reg_a6);
     if ((s16) reg_d0.h[0] < 0x201) {
         *(u16 *)(reg_a4 + 6) += 4;
         *(u16 *)(reg_a4 + 6) &= 0xF;
@@ -279,7 +279,7 @@ extern u8 D_0028DC84[];
 
 void stage4_boss_move_to_form2_b(void) {
     s32 direction_between();
-    s32 func_00202B70();
+    s32 distance_between();
     reg_a0 = D_0028DC84;
     reg_d2.h[0] = *(u16 *)reg_a0;
     reg_d3.h[0] = *(u16 *)(reg_a0 + 2);
@@ -294,7 +294,7 @@ void stage4_boss_move_to_form2_b(void) {
     reg_d2.h[0] = *(u16 *)reg_a0;
     reg_d3.h[0] = *(u16 *)(reg_a0 + 2);
     reg_d3.h[0] -= g_side_scroll_x[0];
-    func_00202B70();
+    distance_between();
     if ((s16) reg_d0.h[0] < 0x1401) {
         if (*(u8 *)(reg_a4 + 7) == 0) {
             *(u8 *)(reg_a4 + 7) = 1U;
@@ -332,7 +332,7 @@ extern u8 D_0026F490[];
 
 void stage4_boss_move_wander_high_b(void) {
     s32 direction_between();
-    s32 func_00202B70();
+    s32 distance_between();
     reg_a0 = (u8 *)D_0026F490;
     reg_a0 += *(u16 *)(reg_a4 + 6);
     reg_d2.h[0] = *(u16 *)reg_a0;
@@ -353,7 +353,7 @@ void stage4_boss_move_wander_high_b(void) {
     reg_a0 += *(u16 *)(reg_a4 + 6);
     reg_d2.h[0] = *(u16 *)reg_a0;
     reg_d3.h[0] = *(u16 *)(reg_a0 + 2);
-    func_00202B70();
+    distance_between();
     if ((s16) reg_d0.h[0] < 0x401) {
         *(u16 *)(reg_a4 + 6) += 4;
         *(u16 *)(reg_a4 + 6) &= 0xF;
@@ -415,7 +415,7 @@ extern u8 D_0026F4A0[];
 
 void stage4_boss_move_hover_high(void) {
     s32 direction_between();
-    s32 func_00202B70();
+    s32 distance_between();
     u8 temp_v0;
 
     reg_tmp.b[0] = *(u8 *)(reg_a4 + 9);
@@ -450,7 +450,7 @@ void stage4_boss_move_hover_high(void) {
     reg_a0 += *(u16 *)(reg_a4 + 6);
     reg_d2.h[0] = *(u16 *)reg_a0;
     reg_d3.h[0] = *(u16 *)(reg_a0 + 2);
-    func_00202B70();
+    distance_between();
     if ((s16) reg_d0.h[0] < 0x201) {
         *(u16 *)(reg_a4 + 6) += 4;
         *(u16 *)(reg_a4 + 6) &= 0xF;
@@ -480,7 +480,7 @@ extern u8 D_0026F4B0[];
 
 void stage4_boss_move_rage(void) {
     s32 direction_between();
-    s32 func_00202B70();
+    s32 distance_between();
     reg_a0 = (u8 *)D_0026F4B0;
     reg_a0 += *(u16 *)(reg_a4 + 6);
     reg_d2.h[0] = *(u16 *)reg_a0;
@@ -501,7 +501,7 @@ void stage4_boss_move_rage(void) {
     reg_a0 += *(u16 *)(reg_a4 + 6);
     reg_d2.h[0] = *(u16 *)reg_a0;
     reg_d3.h[0] = *(u16 *)(reg_a0 + 2);
-    func_00202B70();
+    distance_between();
     if ((s16) reg_d0.h[0] < 0x401) {
         *(u16 *)(reg_a4 + 6) += 4;
         if ((s16) *(u16 *)(reg_a4 + 6) > 0x1C) {

@@ -203,7 +203,7 @@ s32 score_add_no_chain();
 s32 score_add();
 s32 func_00201F20();
 s32 direction256_between();
-s32 func_00202B70();
+s32 distance_between();
 extern u8 D_0026F150[];
 extern u16 D_0026F170[];
 extern u16 g_game_frame;
@@ -323,7 +323,7 @@ next_150:
     reg_d1.h[0] = ENTITY(reg_a6)->x.h;
     reg_d2.h[0] = ENTITY(reg_a6)->offset_y.h;
     reg_d3.h[0] = ENTITY(reg_a6)->offset_x.h;
-    func_00202B70();
+    distance_between();
     ENTITY(reg_a6)->move.b.speed = 0x40;
     reg_a4_as_u16_p = (u16 *)D_0026F170;
 loop_160:

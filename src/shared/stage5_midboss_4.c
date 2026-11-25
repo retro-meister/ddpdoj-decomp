@@ -395,7 +395,7 @@ void func_001FAD30(void) {
 
 s32 rng_next_unsigned();
 s32 direction256_between();
-s32 func_00202B70();
+s32 distance_between();
 extern u8 D_00265D40[];
 extern u16 D_00265D70[];
 
@@ -423,7 +423,7 @@ void func_001FADE0(void) {
     reg_d2.h[0] = *(u16 *)reg_a0;
     reg_d3.h[0] = *(u16 *)(reg_a0 + 2);
     reg_d3.h[0] -= g_side_scroll_x[0];
-    func_00202B70();
+    distance_between();
     if ((s16) reg_d0.h[0] < 0x81) {
         ENTITY(reg_a6)[3].draw.h += 4;
         if ((s16) ENTITY(reg_a6)[3].draw.h >= 0x24) {
@@ -496,7 +496,7 @@ block_5:
     reg_d3.w = temp_s1;
     reg_d0.h[0] = ENTITY(reg_a6)->y.h;
     reg_d1.h[0] = ENTITY(reg_a6)->x.h;
-    func_00202B70();
+    distance_between();
     if ((s16) reg_d0.h[0] < 0x601) {
         ENTITY(reg_a6)[3].offset_x.h = 2U;
     }
@@ -563,7 +563,7 @@ void func_001FB1F0(void) {
         reg_d0.h[0] = temp_a0_2;
         reg_d1.h[0] = ENTITY(reg_a6)->x.h;
         reg_d3.h[0] -= g_side_scroll_x[0];
-        func_00202B70();
+        distance_between();
         if ((s16) reg_d0.h[0] < 0x81) {
             ENTITY(reg_a6)[3].offset_x.h = 2U;
             ENTITY(reg_a6)[3].sprite.h += 0x100;
@@ -603,7 +603,7 @@ loop_8:
         reg_d0.h[0] = temp_a0_4;
         reg_d1.h[0] = ENTITY(reg_a6)->x.h;
         reg_d3.h[0] -= g_side_scroll_x[0];
-        func_00202B70();
+        distance_between();
         ENTITY(reg_a6)[3].hit_y_minus.b[1] = 4U;
         if ((ENTITY(reg_a6)->move.b.speed == 4) && ((s16) reg_d0.h[0] < 0x1001)) {
             ENTITY(reg_a6)[3].sprite.h += 0x1C00;
@@ -635,7 +635,7 @@ loop_8:
         reg_d0.h[0] = temp_a0_6;
         reg_d1.h[0] = ENTITY(reg_a6)->x.h;
         reg_d3.h[0] -= g_side_scroll_x[0];
-        func_00202B70();
+        distance_between();
         ENTITY(reg_a6)[3].hit_y_minus.b[1] = 0xAU;
         if ((s16) reg_d0.h[0] < 0x1001) {
             func_001FB6C0();

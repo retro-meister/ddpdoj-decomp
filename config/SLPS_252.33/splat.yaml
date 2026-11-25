@@ -195,6 +195,8 @@ segments:
       - [0x155640, data, data_155640]
       - [0x1693e0, .data, shared/slowdown]
       - [0x169440, data, data_169440]
+      - [0x16e9b0, .data, shared/stage1_boss_move]
+      - [0x16ea60, data, data_16ea60]
       - [0x16f820, .data, shared/text]
       - [0x16f8f0, .data, shared/gfx]
       - [0x16fc20, .data, shared/arcade_sprite]

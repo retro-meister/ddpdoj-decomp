@@ -1,14 +1,59 @@
 #include "common.h"
 #include "entity.h"
 
+u16 stage1_boss_enter_flash[] = {
+    0x0005, 0x7FFF, 0x0000, 0x04C0, 0x0004, 0x0005, 0x001F, 0x0003,
+    0x7FFF, 0x0000, 0x0540, 0x000B, 0x000C, 0x001F, 0x0003, 0x7FFF,
+    0x0000, 0x0580, 0x0012, 0x0013, 0x001F, 0x0003, 0x7FFF, 0x0000,
+    0x05C0, 0x0019, 0x001A, 0x001F, 0x0003, 0x7FFF, 0x0000, 0x07C0,
+    0x0020, 0x0021, 0x001F, 0x0003,
+};
+
+u16 stage1_boss_wander_waypoints[] = {
+    0x5C00, 0x2200, 0x6000, 0x2400, 0x5E00, 0x1800, 0x5800, 0x2200,
+    0x5A00, 0x1400, 0x6000, 0x2000, 0x5E00, 0x1400, 0x5800, 0x2000,
+};
+
+u16 stage1_boss_sway_waypoints[] = {
+    0x6A00, 0x2200, 0x6800, 0x2400, 0x6C00, 0x1800, 0x6800, 0x2200,
+    0x6A00, 0x1400, 0x6C00, 0x2000, 0x6C00, 0x1400, 0x6800, 0x2000,
+};
+
+u16 stage1_boss_sway_b_waypoints[] = {
+    0x7400, 0x2200, 0x7200, 0x2400, 0x7600, 0x1800, 0x7200, 0x2200,
+    0x7400, 0x1400, 0x7600, 0x2000, 0x7600, 0x1400, 0x7200, 0x2000,
+};
+
+/*
+ * The movement part of the boss slot (reg_a4) as the stage 1 boss uses it. Waypoints are (y, x) pairs.
+ */
+typedef struct {
+    /* 0x00 */ u16 waypoint;      /* offset of the current waypoint in the table */
+    /* 0x02 */ union {
+        s16 sh;
+        struct { u8 reload; u8 count; } brake;  /* entering: frames between two steps of slowing down */
+        struct { u8 unused; u8 target; } speed; /* afterwards: the speed to ease toward */
+    } pace;
+    /* 0x04 */ u8 unused_04;
+    /* 0x05 */ u8 arrived;        /* entering: within reach of the first position */
+    /* 0x06 */ union {
+        s16 sh;
+        struct { u8 reload; u8 count; } b;      /* entering: frames between two steps of the gatling frame */
+    } step;
+} Stage1BossMove;
+
+#define MOVE(pointer) ((Stage1BossMove *)(pointer))
+
 void stage1_boss_move_down(void);
 
 s32 velocity_from_dir256();
-extern u16 D_002BDA90[];
-extern u16 D_002BDA92[];
-extern u8 D_002BDA94[];
+s32 direction_between();
 
-void func_001BA820(void) {
+/* The last five positions of the body, oldest last; the side parts follow the body with this delay. */
+extern u16 g_spare_entities_as_u16_a[];
+#define POSITION_HISTORY g_spare_entities_as_u16_a
+
+void stage1_boss_parts_follow(void) {
     u32 t;
     u32 t1;
     u16 *p;
@@ -23,23 +68,23 @@ void func_001BA820(void) {
     reg_d1.w += 0xE0000000;
     ENTITY(reg_a6)[5].y.h = reg_d1.h[1];
     ENTITY(reg_a6)[5].x.h = reg_d1.h[0];
-    reg_a0 = (u8 *)D_002BDA94;
-    p = D_002BDA90;
+    reg_a0 = (u8 *)&POSITION_HISTORY[10];
+    p = &POSITION_HISTORY[8];
     reg_a1 = (u8 *)p;
     reg_d1.w = 3;
-loop_1:
+shift_history:
     reg_a0 -= 4;
     reg_a1 -= 4;
     *(u16 *)(reg_a0 + 0) = *(u16 *)(reg_a1 + 0);
     *(u16 *)(reg_a0 + 2) = *(u16 *)(reg_a1 + 2);
     t = reg_d1.h[0] - 1;
     reg_d1.h[0] = t;
-    if (((s64) ((s64) (t & 0xFFFF) << 0x30) >> 0x30) >= 0) goto loop_1;
+    if (((s64) ((s64) (t & 0xFFFF) << 0x30) >> 0x30) >= 0) goto shift_history;
     *(u16 *)(reg_a1 + 0) = reg_d0.h[1];
     *(u16 *)(reg_a1 + 2) = reg_d0.h[0];
-    if (ENTITY(reg_a6)[1].misc.b.draw_layer != 0) goto next_2;
+    if (ENTITY(reg_a6)[1].misc.b.draw_layer != 0) goto right_side_done;
     reg_d0.h[1] = *p;
-    reg_d0.h[0] = D_002BDA92[0];
+    reg_d0.h[0] = POSITION_HISTORY[9];
     reg_tmp.h[1] = ENTITY(reg_a6)[1].offset_y.h;
     reg_tmp.h[0] = ENTITY(reg_a6)[1].offset_x.h;
     reg_d0.w += reg_tmp.w;
@@ -58,10 +103,10 @@ loop_1:
     ENTITY(reg_a6)[1].x.h += reg_d3.h[0];
     reg_d0.h[0] = ENTITY(reg_a6)[2].sprite.h;
     ENTITY(reg_a6)[1].y.h -= reg_d0.h[0];
-next_2:
-    if (ENTITY(reg_a6)[3].misc.b.draw_layer != 0) goto next_3;
+right_side_done:
+    if (ENTITY(reg_a6)[3].misc.b.draw_layer != 0) goto left_side_done;
     reg_d0.h[1] = *p;
-    reg_d0.h[0] = D_002BDA92[0];
+    reg_d0.h[0] = POSITION_HISTORY[9];
     reg_tmp.h[1] = ENTITY(reg_a6)[3].offset_y.h;
     reg_tmp.h[0] = ENTITY(reg_a6)[3].offset_x.h;
     reg_d0.w += reg_tmp.w;
@@ -80,16 +125,16 @@ next_2:
     ENTITY(reg_a6)[3].x.h += reg_d3.h[0];
     reg_d0.h[0] = ENTITY(reg_a6)[4].sprite.h;
     ENTITY(reg_a6)[3].y.h -= reg_d0.h[0];
-next_3:
+left_side_done:
     return;
 }
 
 
 void stage1_boss_move_enter_start(void) {
     ENTITY(reg_a6)->move.sh = 0x1E20;
-    *(s16 *)(reg_a4 + 0x2) = 0x101;
-    reg_a4[0x5] = 0;
-    *(s16 *)(reg_a4 + 0x6) = 0x101;
+    MOVE(reg_a4)->pace.sh = 0x101;
+    MOVE(reg_a4)->arrived = 0;
+    MOVE(reg_a4)->step.sh = 0x101;
 }
 
 s32 boss_phase_start();
@@ -98,17 +143,14 @@ s32 boss_part_show();
 s32 boss_animation_start();
 s32 func_0013B2E0();
 s32 func_001BC3A0();
-s32 func_001BC3B0();
+s32 stage1_boss_parts_enable();
 s32 entity_velocity();
 s32 direction_turn_toward();
-s32 func_00202B50();
-extern u16 D_0026E930[];
+s32 entity_distance_to();
 extern u8 g_boss_present_b1;
 extern u16 g_side_scroll_x[];
-extern u16 g_spare_entities_as_u16_a[];
 
 void stage1_boss_move_enter(void) {
-    s32 direction_between();
     u8 temp_v0_2;
 
     reg_d2.h[0] = 0x5400;
@@ -121,7 +163,7 @@ void stage1_boss_move_enter(void) {
     direction_turn_toward();
     ENTITY(reg_a6)->move.b.dir = (u8) reg_d1.b[0];
     entity_velocity();
-    reg_a0 = (u8 *)(g_spare_entities_as_u16_a);
+    reg_a0 = (u8 *)POSITION_HISTORY;
     reg_d1.h[1] = ENTITY(reg_a6)->y.h;
     reg_d1.h[0] = ENTITY(reg_a6)->x.h;
     reg_d0.w = 4;
@@ -134,28 +176,28 @@ void stage1_boss_move_enter(void) {
     reg_d2.h[0] = 0x5400;
     reg_d3.h[0] = 0x1C00;
     reg_d3.h[0] -= g_side_scroll_x[0];
-    func_00202B50();
+    entity_distance_to();
     if ((s16) reg_d0.h[0] < 0x1801) {
-        *(u8 *)(reg_a4 + 5) = 1U;
-        reg_tmp.b[0] = *(u8 *)(reg_a4 + 3);
-        *(u8 *)(reg_a4 + 3) -= 1;
+        MOVE(reg_a4)->arrived = 1U;
+        reg_tmp.b[0] = MOVE(reg_a4)->pace.brake.count;
+        MOVE(reg_a4)->pace.brake.count -= 1;
         if ((s32) reg_tmp.b[0] <= 0) {
-            *(u8 *)(reg_a4 + 3) = (u8) *(u8 *)(reg_a4 + 2);
+            MOVE(reg_a4)->pace.brake.count = (u8) MOVE(reg_a4)->pace.brake.reload;
             temp_v0_2 = ENTITY(reg_a6)->move.b.speed;
             if (temp_v0_2 != 0) {
                 ENTITY(reg_a6)->move.b.speed = (u8) (temp_v0_2 - 1);
             }
         }
     }
-    if (*(u8 *)(reg_a4 + 5) == 0) {
+    if (MOVE(reg_a4)->arrived == 0) {
         ENTITY(reg_a6)[8].move.h += 0x10;
         ENTITY(reg_a6)[8].move.h &= 0x3F;
     }
-    if (*(u8 *)(reg_a4 + 5) == 1) {
-        reg_tmp.b[0] = *(u8 *)(reg_a4 + 7);
-        *(u8 *)(reg_a4 + 7) -= 1;
+    if (MOVE(reg_a4)->arrived == 1) {
+        reg_tmp.b[0] = MOVE(reg_a4)->step.b.count;
+        MOVE(reg_a4)->step.b.count -= 1;
         if ((s32) reg_tmp.b[0] <= 0) {
-            *(u8 *)(reg_a4 + 7) = (u8) *(u8 *)(reg_a4 + 6);
+            MOVE(reg_a4)->step.b.count = (u8) MOVE(reg_a4)->step.b.reload;
             ENTITY(reg_a6)[8].move.h += 0x10;
             if (ENTITY(reg_a6)[8].move.h == 0x180) {
                 g_boss_present_b1 |= 0x10;
@@ -165,7 +207,7 @@ void stage1_boss_move_enter(void) {
                 reg_d0.w = 1;
                 boss_phase_start();
                 func_001BC3A0();
-                func_001BC3B0();
+                stage1_boss_parts_enable();
                 reg_d0.w = 0;
                 boss_animation_start();
                 reg_d0.w = 1;
@@ -189,12 +231,12 @@ void stage1_boss_move_enter(void) {
                 reg_d0.w = 5;
                 boss_part_show();
                 reg_d0.w = 6;
-                reg_a0 = (u8 *)(D_0026E930);
+                reg_a0 = (u8 *)(stage1_boss_enter_flash);
                 func_0013B2E0();
             }
         }
     }
-    func_001BA820();
+    stage1_boss_parts_follow();
 }
 
 void stage1_boss_move_dying_start(void) {
@@ -215,23 +257,23 @@ void stage1_boss_move_dying(void) {
 
 s32 rng_next_masked();
 
-void func_001BAEC0(void) {
+void stage1_boss_waypoint_pick(void) {
     rng_next_masked();
     reg_d0.h[0] &= 7;
     reg_d0.h[0] += reg_d0.h[0];
     reg_d0.h[0] += reg_d0.h[0];
-    *(u16 *)reg_a4 = (u16) reg_d0.h[0];
+    MOVE(reg_a4)->waypoint = (u16) reg_d0.h[0];
     rng_next_masked();
     reg_d0.b[0] &= 3;
     reg_d0.b[0] += 2;
-    *(u8 *)(reg_a4 + 3) = (u8) reg_d0.b[0];
+    MOVE(reg_a4)->pace.speed.target = (u8) reg_d0.b[0];
 }
 
-void func_001BAF40(void)
+void stage1_boss_speed_approach(void)
 {
     u8 *currentByte;
 
-    reg_d0.b[0] = reg_a4[3];
+    reg_d0.b[0] = MOVE(reg_a4)->pace.speed.target;
     currentByte = &ENTITY(reg_a6)->move.b.speed;
     reg_d1.b[0] = *currentByte;
 
@@ -248,18 +290,15 @@ void func_001BAF40(void)
 
 
 void stage1_boss_move_wander_start(void) {
-    *(u16 *)reg_a4 = 0;
+    MOVE(reg_a4)->waypoint = 0;
     ENTITY(reg_a6)->move.h = 0x20;
-    reg_a4[3] = ENTITY(reg_a6)->move.b.speed;
-    func_001BAEC0();
+    MOVE(reg_a4)->pace.speed.target = ENTITY(reg_a6)->move.b.speed;
+    stage1_boss_waypoint_pick();
 }
 
-extern u8 D_0026E980[];
-
 void stage1_boss_move_wander(void) {
-    s32 direction_between(void *);
-    reg_a0 = D_0026E980;
-    reg_a0 += *(u16 *)reg_a4;
+    reg_a0 = ((u8 *)stage1_boss_wander_waypoints);
+    reg_a0 += MOVE(reg_a4)->waypoint;
     reg_d2.h[0] = *(u16 *)reg_a0;
     reg_d3.h[0] = *(u16 *)(reg_a0 + 2);
     reg_d0.h[0] = ENTITY(reg_a6)->y.h;
@@ -268,29 +307,25 @@ void stage1_boss_move_wander(void) {
     reg_d0.b[0] = ENTITY(reg_a6)->move.b.dir;
     direction_turn_toward();
     ENTITY(reg_a6)->move.b.dir = (u8) reg_d1.b[0];
-    func_001BAF40();
+    stage1_boss_speed_approach();
     entity_velocity();
-    reg_a0 = D_0026E980;
-    reg_a0 += *(u16 *)reg_a4;
+    reg_a0 = ((u8 *)stage1_boss_wander_waypoints);
+    reg_a0 += MOVE(reg_a4)->waypoint;
     reg_d2.h[0] = *(u16 *)reg_a0;
     reg_d3.h[0] = *(u16 *)(reg_a0 + 2);
-    func_00202B50();
+    entity_distance_to();
     if ((s16) reg_d0.h[0] < 0x101) {
-        func_001BAEC0();
+        stage1_boss_waypoint_pick();
     }
-    func_001BA820();
+    stage1_boss_parts_follow();
 }
 
-extern void *reg_a6_as_void_p;
-extern void *reg_a4_as_void_p;
-
 void stage1_boss_move_up_start(void) {
-    *(u16 *)reg_a4_as_void_p = 0;
-    ((u8 *)reg_a4_as_void_p)[3] = ((u8 *)reg_a6_as_void_p)[0x1B];
+    MOVE(reg_a4)->waypoint = 0;
+    MOVE(reg_a4)->pace.speed.target = ENTITY(reg_a6)->move.b.speed;
 }
 
 void stage1_boss_move_up() {
-    s32 direction_between();
     reg_d2.h[0] = 0x6A00;
     reg_d3.h[0] = 0x1C00;
     reg_d0.h[0] = ENTITY(reg_a6)->y.h;
@@ -299,32 +334,29 @@ void stage1_boss_move_up() {
     ENTITY(reg_a6)->move.b.dir = (u8) reg_d1.b[0];
     reg_d2.h[0] = 0x6A00;
     reg_d3.h[0] = 0x1C00;
-    func_00202B50();
+    entity_distance_to();
     reg_d1.h[0] = reg_d0.h[0];
     reg_d1.h[0] = (u16) ((s32) reg_d1.h[0] >> 7);
-    *(u8 *)(reg_a4 + 3) = (u8) reg_d1.b[0];
+    MOVE(reg_a4)->pace.speed.target = (u8) reg_d1.b[0];
     if ((s16) reg_d0.h[0] < 0x101) {
         reg_d0.w = 4;
         boss_movement_start();
     }
-    func_001BAF40();
+    stage1_boss_speed_approach();
     entity_velocity();
-    func_001BA820();
+    stage1_boss_parts_follow();
 }
 
 
 void stage1_boss_move_sway_start(void) {
-    *(u16 *)reg_a4 = 0;
-    reg_a4[3] = ENTITY(reg_a6)->move.b.speed;
-    func_001BAEC0();
+    MOVE(reg_a4)->waypoint = 0;
+    MOVE(reg_a4)->pace.speed.target = ENTITY(reg_a6)->move.b.speed;
+    stage1_boss_waypoint_pick();
 }
 
-extern u8 D_0026E9A0[];
-
 void stage1_boss_move_sway(void) {
-    s32 direction_between(void *);
-    reg_a0 = D_0026E9A0;
-    reg_a0 += *(u16 *)reg_a4;
+    reg_a0 = ((u8 *)stage1_boss_sway_waypoints);
+    reg_a0 += MOVE(reg_a4)->waypoint;
     reg_d2.h[0] = *(u16 *)reg_a0;
     reg_d3.h[0] = *(u16 *)(reg_a0 + 2);
     reg_d0.h[0] = ENTITY(reg_a6)->y.h;
@@ -333,24 +365,24 @@ void stage1_boss_move_sway(void) {
     reg_d0.b[0] = ENTITY(reg_a6)->move.b.dir;
     direction_turn_toward();
     ENTITY(reg_a6)->move.b.dir = (u8) reg_d1.b[0];
-    func_001BAF40();
+    stage1_boss_speed_approach();
     entity_velocity();
-    reg_a0 = D_0026E9A0;
-    reg_a0 += *(u16 *)reg_a4;
+    reg_a0 = ((u8 *)stage1_boss_sway_waypoints);
+    reg_a0 += MOVE(reg_a4)->waypoint;
     reg_d2.h[0] = *(u16 *)reg_a0;
     reg_d3.h[0] = *(u16 *)(reg_a0 + 2);
-    func_00202B50();
+    entity_distance_to();
     if ((s16) reg_d0.h[0] < 0x101) {
-        func_001BAEC0();
+        stage1_boss_waypoint_pick();
     }
-    func_001BA820();
+    stage1_boss_parts_follow();
 }
 
 
 void stage1_boss_move_down_start(void) {
-    *(s16 *)(reg_a4 + 0) = 0;
+    MOVE(reg_a4)->waypoint = 0;
     ENTITY(reg_a6)->move.b.speed = 4U;
-    *(u8 *)(reg_a4 + 3) = ENTITY(reg_a6)->move.b.speed;
+    MOVE(reg_a4)->pace.speed.target = ENTITY(reg_a6)->move.b.speed;
     reg_d0.b[0] = ENTITY(reg_a6)[1].misc.b.draw_layer;
     reg_d0.b[0] += ENTITY(reg_a6)[3].misc.b.draw_layer;
     if (reg_d0.b[0] != 2) {
@@ -361,7 +393,6 @@ void stage1_boss_move_down_start(void) {
 }
 
 void stage1_boss_move_down() {
-    s32 direction_between();
     reg_d2.h[0] = 0x5C00;
     reg_d3.h[0] = 0x1C00;
     reg_d0.h[0] = ENTITY(reg_a6)->y.h;
@@ -370,22 +401,21 @@ void stage1_boss_move_down() {
     ENTITY(reg_a6)->move.b.dir = (u8) reg_d1.b[0];
     reg_d2.h[0] = 0x5C00;
     reg_d3.h[0] = 0x1C00;
-    func_00202B50();
+    entity_distance_to();
     if ((s16) reg_d0.h[0] < 0x101) {
         reg_d0.w = 2;
         boss_movement_start();
     }
     entity_velocity();
-    func_001BA820();
+    stage1_boss_parts_follow();
 }
 
 void stage1_boss_move_up_b_start(void) {
-    *(u16 *)reg_a4 = 0;
-    reg_a4[3] = ENTITY(reg_a6)->move.b.speed;
+    MOVE(reg_a4)->waypoint = 0;
+    MOVE(reg_a4)->pace.speed.target = ENTITY(reg_a6)->move.b.speed;
 }
 
 void stage1_boss_move_up_b() {
-    s32 direction_between();
     reg_d2.h[0] = 0x7400;
     reg_d3.h[0] = 0x1C00;
     reg_d0.h[0] = ENTITY(reg_a6)->y.h;
@@ -394,36 +424,31 @@ void stage1_boss_move_up_b() {
     ENTITY(reg_a6)->move.b.dir = (u8) reg_d1.b[0];
     reg_d2.h[0] = 0x7400;
     reg_d3.h[0] = 0x1C00;
-    func_00202B50();
+    entity_distance_to();
     reg_d1.h[0] = reg_d0.h[0];
     reg_d1.h[0] = (u16) ((s32) reg_d1.h[0] >> 7);
-    *(u8 *)(reg_a4 + 3) = (u8) reg_d1.b[0];
+    MOVE(reg_a4)->pace.speed.target = (u8) reg_d1.b[0];
     if ((s16) reg_d0.h[0] < 0x101) {
         reg_d0.w = 7;
         boss_movement_start();
     }
-    func_001BAF40();
+    stage1_boss_speed_approach();
     entity_velocity();
-    func_001BA820();
+    stage1_boss_parts_follow();
 }
-
-extern s16 *reg_a4_as_s16_p;
 
 void stage1_boss_move_sway_b_start(void) {
     u8 value;
 
-    *reg_a4_as_s16_p = 0;
+    MOVE(reg_a4)->waypoint = 0;
     value = ENTITY(reg_a6)->move.b.speed;
-    ((u8 *)reg_a4_as_s16_p)[3] = value;
-    func_001BAEC0();
+    MOVE(reg_a4)->pace.speed.target = value;
+    stage1_boss_waypoint_pick();
 }
 
-extern u8 D_0026E9C0[];
-
 void stage1_boss_move_sway_b(void) {
-    s32 direction_between(void *);
-    reg_a0 = D_0026E9C0;
-    reg_a0 += *(u16 *)reg_a4;
+    reg_a0 = ((u8 *)stage1_boss_sway_b_waypoints);
+    reg_a0 += MOVE(reg_a4)->waypoint;
     reg_d2.h[0] = *(u16 *)reg_a0;
     reg_d3.h[0] = *(u16 *)(reg_a0 + 2);
     reg_d0.h[0] = ENTITY(reg_a6)->y.h;
@@ -432,26 +457,25 @@ void stage1_boss_move_sway_b(void) {
     reg_d0.b[0] = ENTITY(reg_a6)->move.b.dir;
     direction_turn_toward();
     ENTITY(reg_a6)->move.b.dir = (u8) reg_d1.b[0];
-    func_001BAF40();
+    stage1_boss_speed_approach();
     entity_velocity();
-    reg_a0 = D_0026E9C0;
-    reg_a0 += *(u16 *)reg_a4;
+    reg_a0 = ((u8 *)stage1_boss_sway_b_waypoints);
+    reg_a0 += MOVE(reg_a4)->waypoint;
     reg_d2.h[0] = *(u16 *)reg_a0;
     reg_d3.h[0] = *(u16 *)(reg_a0 + 2);
-    func_00202B50();
+    entity_distance_to();
     if ((s16) reg_d0.h[0] < 0x101) {
-        func_001BAEC0();
+        stage1_boss_waypoint_pick();
     }
-    func_001BA820();
+    stage1_boss_parts_follow();
 }
 
 void stage1_boss_move_up_c_start(void) {
-    *(u16 *)reg_a4 = 0;
-    reg_a4[3] = ENTITY(reg_a6)->move.b.speed;
+    MOVE(reg_a4)->waypoint = 0;
+    MOVE(reg_a4)->pace.speed.target = ENTITY(reg_a6)->move.b.speed;
 }
 
 void stage1_boss_move_up_c() {
-    s32 direction_between();
     reg_d2.h[0] = 0x7400;
     reg_d3.h[0] = 0x1C00;
     reg_d0.h[0] = ENTITY(reg_a6)->y.h;
@@ -460,15 +484,15 @@ void stage1_boss_move_up_c() {
     ENTITY(reg_a6)->move.b.dir = (u8) reg_d1.b[0];
     reg_d2.h[0] = 0x7400;
     reg_d3.h[0] = 0x1C00;
-    func_00202B50();
+    entity_distance_to();
     reg_d1.h[0] = reg_d0.h[0];
     reg_d1.h[0] = (u16) ((s32) reg_d1.h[0] >> 7);
-    *(u8 *)(reg_a4 + 3) = (u8) reg_d1.b[0];
+    MOVE(reg_a4)->pace.speed.target = (u8) reg_d1.b[0];
     if ((s16) reg_d0.h[0] < 0x101) {
         reg_d0.w = 4;
         boss_movement_start();
     }
-    func_001BAF40();
+    stage1_boss_speed_approach();
     entity_velocity();
-    func_001BA820();
+    stage1_boss_parts_follow();
 }

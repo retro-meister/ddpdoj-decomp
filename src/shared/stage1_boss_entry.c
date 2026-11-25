@@ -386,7 +386,7 @@ void func_001BC3A0(void) {
     ENTITY(reg_a6)[7].offset_x.sh = 0;
 }
 
-void func_001BC3B0(void) {
+void stage1_boss_parts_enable(void) {
     reg_d0.h[0] = 0xA001;
     ENTITY(reg_a6)->flags.h |= reg_d0.h[0];
     ENTITY(reg_a6)[1].flags.h |= reg_d0.h[0];

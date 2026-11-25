@@ -634,7 +634,7 @@ void func_0016B780(void)
     ENTITY(reg_a6)->misc.h = 0x714;
 }
 
-s32 func_00202B50();
+s32 entity_distance_to();
 extern u16 g_frame_mod8;
 
 void func_0016B7F0(void) {
@@ -650,7 +650,7 @@ void func_0016B7F0(void) {
             }
             reg_d2.h[0] = 0x4600;
             reg_d3.h[0] = 0x1C00;
-            func_00202B50();
+            entity_distance_to();
             if ((s32) reg_d0.h[0] < 0x201) {
                 ENTITY(reg_a6)->flags.b[1] |= 1;
                 ENTITY(reg_a6)->move.sb.speed = 0xA;

@@ -165,7 +165,7 @@ void stage2_boss_move_hover_high_start(void) {
 s32 rng_next_bit();
 s32 entity_velocity();
 s32 direction_turn_toward();
-s32 func_00202B50();
+s32 entity_distance_to();
 
 void stage2_boss_move_hover_high() {
     s32 direction_between();
@@ -184,7 +184,7 @@ void stage2_boss_move_hover_high() {
     reg_a0 += *reg_a4_as_u16_p;
     reg_d2.h[0] = *(u16 *)reg_a0;
     reg_d3.h[0] = *(u16 *)(reg_a0 + 2);
-    func_00202B50();
+    entity_distance_to();
     if ((s16) reg_d0.h[0] < 0x101) {
         *reg_a4_as_u16_p += 4;
         *reg_a4_as_u16_p &= 0x3F;
@@ -218,7 +218,7 @@ void stage2_boss_move_dive(void) {
     ENTITY(reg_a6)->move.b.dir = (u8) reg_d1.b[0];
     reg_d2.h[0] = *(u16 *)(reg_a4 + 8);
     reg_d3.h[0] = *(u16 *)(reg_a4 + 0xA);
-    func_00202B50();
+    entity_distance_to();
     reg_d1.h[0] = reg_d0.h[0];
     reg_d1.h[0] >>= 8;
     *(u8 *)(reg_a4 + 3) = (u8) reg_d1.b[0];
@@ -257,7 +257,7 @@ void stage2_boss_move_rise(void) {
     ENTITY(reg_a6)->move.b.dir = (u8) reg_d1.b[0];
     reg_d2.h[0] = *(u16 *)(reg_a4 + 8);
     reg_d3.h[0] = *(u16 *)(reg_a4 + 0xA);
-    func_00202B50();
+    entity_distance_to();
     reg_d1.h[0] = reg_d0.h[0];
     reg_d1.h[0] >>= 7;
     *(u8 *)(reg_a4 + 3) = (u8) reg_d1.b[0];
@@ -320,7 +320,7 @@ void stage2_boss_move_wander() {
     entity_velocity();
     reg_d2.h[0] = *(u16 *)(reg_a4 + 8);
     reg_d3.h[0] = *(u16 *)(reg_a4 + 0xA);
-    func_00202B50();
+    entity_distance_to();
     if ((s16) reg_d0.h[0] < 0x101) {
         reg_d0.h[1] = *(u16 *)(reg_a4 + 4);
         reg_d0.h[0] = *(u16 *)(reg_a4 + 6);
@@ -355,7 +355,7 @@ void stage2_boss_move_rise_sway(void) {
         ENTITY(reg_a6)->move.b.dir = (u8) reg_d1.b[0];
         reg_d2.h[0] = *(u16 *)(reg_a4 + 8);
         reg_d3.h[0] = *(u16 *)(reg_a4 + 0xA);
-        func_00202B50();
+        entity_distance_to();
         reg_d1.h[0] = reg_d0.h[0];
         reg_d1.h[0] >>= 7;
         if ((s16)(reg_d1.b[0]) < 3) {
@@ -411,7 +411,7 @@ void stage2_boss_move_dash_sideways(void) {
     reg_a0 += *(u16 *)reg_a4;
     reg_d2.h[0] = *(u16 *)reg_a0;
     reg_d3.h[0] = *(u16 *)(reg_a0 + 2);
-    func_00202B50();
+    entity_distance_to();
     if ((s16) reg_d0.h[0] < 0x201) {
         func_001C9B10();
     }

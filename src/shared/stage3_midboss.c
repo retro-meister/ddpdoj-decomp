@@ -523,7 +523,7 @@ void func_001D55B0(void) {
 s32 entity_velocity();
 s32 direction_between();
 s32 direction_turn_toward();
-s32 func_00202B50();
+s32 entity_distance_to();
 extern u8 stage3_midboss2_state_routines_0[];
 
 void func_001D5670(void) {
@@ -547,7 +547,7 @@ void func_001D5670(void) {
     reg_a0 += ENTITY(reg_a6)[4].offset_y.h;
     reg_d2.h[0] = *(u16 *)reg_a0;
     reg_d3.h[0] = *(u16 *)(reg_a0 + 2);
-    func_00202B50();
+    entity_distance_to();
     if ((s16) reg_d0.h[0] < 0x101) {
         ENTITY(reg_a6)[4].offset_y.h += 4;
         ENTITY(reg_a6)[4].offset_y.h &= 0xF;

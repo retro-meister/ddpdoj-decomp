@@ -22,8 +22,8 @@ void func_00202780(void);
 void direction256_between(void);
 void func_00202AE0(void);
 void func_00202B30(void);
-void func_00202B50(void);
-void func_00202B70(void);
+void entity_distance_to(void);
+void distance_between(void);
 void func_00202C40(void);
 void func_00202D00(void);
 void target_player_get(void);
@@ -768,17 +768,17 @@ void func_00202AE0(void) {
 void func_00202B30(void) {
     reg_d2.h[0] = *(u16 *)(reg_a0 + 2);
     reg_d3.h[0] = *(u16 *)(reg_a0 + 4);
-    func_00202B50();
+    entity_distance_to();
 }
 
 
-void func_00202B50(void) {
+void entity_distance_to(void) {
     reg_d0.h[0] = *(u16 *)(reg_a6 + 2);
     reg_d1.h[0] = *(u16 *)(reg_a6 + 4);
-    func_00202B70();
+    distance_between();
 }
 
-void func_00202B70(void) {
+void distance_between(void) {
     u32 temp_a0;
     u32 temp_a1;
 

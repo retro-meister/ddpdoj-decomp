@@ -1143,12 +1143,12 @@ void func_001FEF70(void) {
 
 s32 func_002021D0();                            /* extern */
 s32 func_002024F0();                            /* extern */
-s32 func_00202B50();                            /* extern */
+s32 entity_distance_to();                            /* extern */
 
 void func_001FF000(void) {
     reg_d0.h[0] = g_side_scroll_x[0];
     reg_d3.h[0] -= reg_d0.h[0];
-    func_00202B50();
+    entity_distance_to();
     if (((s16) reg_d0.h[0] >= 0x200) || (ENTITY(reg_a6)->move.sb.speed = 8, (((s16) reg_d0.h[0] < 0x100) == 0)) || (ENTITY(reg_a6)->move.sb.speed = 6, (((s16) reg_d0.h[0] < 0x40) == 0))) {
         func_002021D0();
         func_002024F0();
