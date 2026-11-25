@@ -397,7 +397,7 @@ extern u8 D_0026C8A0[];
 void func_001CA370(void) {
     s32 direction_between(void *);
     reg_a0 = D_0026C8A0;
-    reg_a0 += *reg_a4_as_u16_p;
+    reg_a0 += *(u16 *)reg_a4;
     reg_d2.h[0] = *(u16 *)reg_a0;
     reg_d3.h[0] = *(u16 *)(reg_a0 + 2);
     reg_d0.h[0] = ENTITY(reg_a6)->y.h;
@@ -408,7 +408,7 @@ void func_001CA370(void) {
     ENTITY(reg_a6)->move.b.dir = (u8) reg_d1.b[0];
     entity_velocity();
     reg_a0 = D_0026C8A0;
-    reg_a0 += *reg_a4_as_u16_p;
+    reg_a0 += *(u16 *)reg_a4;
     reg_d2.h[0] = *(u16 *)reg_a0;
     reg_d3.h[0] = *(u16 *)(reg_a0 + 2);
     func_00202B50();

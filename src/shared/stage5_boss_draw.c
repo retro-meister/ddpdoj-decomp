@@ -418,7 +418,6 @@ void func_001F0F50(void) {
     sprite_draw_layer2_keep(reg_a0, temp_a1, temp_a2, reg_tmp.h[0]);
 }
 
-extern void *reg_a6_as_void_p;
 
 void func_001F1040(void)
 {
@@ -426,7 +425,7 @@ void func_001F1040(void)
     u8 *source;
 
     reg_d2.w = 0x1E51;
-    source = (u8 *)reg_a6_as_void_p;
+    source = (u8 *)((void *)reg_a6);
     reg_d1.h[1] = *(u16 *)(source + 2);
     reg_d1.h[0] = *(u16 *)(source + 4);
     reg_d1.w = reg_d1.w + 0x0200FFC0U;

@@ -132,10 +132,9 @@ void func_00209E80(void) {
     D_0029A528[0] -= 1;
 }
 
-extern void *reg_a6_as_void_p;
 
 void func_00209EA0(void) {
-    *(u16 *)((u8 *)reg_a6_as_void_p - 4) = 0;
+    *(u16 *)((u8 *)((void *)reg_a6) - 4) = 0;
     D_0029A528[0] -= 1;
 }
 
@@ -144,13 +143,12 @@ void func_00209EC0(void) {
     D_0029A528[0] -= 1;
 }
 
-extern s32 reg_a4_as_s32;
 extern s32 D_0028E570_as_s32;
 extern u16 D_0028E160;
 
 void func_00209EE0(void) {
-    reg_a4_as_s32 -= D_0028E570_as_s32;
-    reg_tmp.sw = reg_a4_as_s32;
+    reg_a4 -= D_0028E570_as_s32;
+    reg_tmp.sw = (s32)reg_a4;
     D_0028E160 = reg_tmp.h[0];
 }
 
@@ -676,10 +674,9 @@ void func_0020AD50(void) {
     reg_a2 = (u8 *)(D_0028E530_as_u16_p);
 }
 
-extern s32 reg_a0_as_s32;
 
 void func_0020AF10(void) {
-    reg_a0_as_s32 += 6;
+    reg_a0 += 6;
 }
 
 extern s32 D_0028E530;
@@ -882,18 +879,17 @@ void func_0020B4C0(void) {
 }
 
 extern s8 D_00251520[];
-extern s8 *reg_a2_as_s8_p;
 
 void func_0020B5F0(void)
 {
     u32 cursor = *(u8 *)&rng_cursor;
 
     reg_d1.w = 0x3F;
-    reg_a2_as_s8_p = D_00251520;
+    reg_a2 = (u8 *)D_00251520;
     *(u8 *)&rng_cursor = cursor + 1U;
     reg_d1.h[0] &= rng_cursor;
-    reg_a2_as_s8_p += reg_d1.h[0];
-    reg_d1.b[0] = (u8)*reg_a2_as_s8_p;
+    reg_a2 += reg_d1.h[0];
+    reg_d1.b[0] = (u8)*(s8 *)reg_a2;
 }
 
 extern s8 D_00251560[];
@@ -907,9 +903,9 @@ void func_0020B640(void)
     reg_d1.w = 0x3F;
     table = D_00251560;
     mask = reg_d1.h[0];
-    reg_a2_as_s8_p = table;
+    reg_a2 = (u8 *)table;
     *(u8 *)&rng_cursor = (u8)(cursor + 1U);
     reg_d1.h[0] = (u16)(mask & (u32)rng_cursor);
-    reg_a2_as_s8_p += reg_d1.h[0];
-    reg_d1.b[0] = (u8)*reg_a2_as_s8_p;
+    reg_a2 += reg_d1.h[0];
+    reg_d1.b[0] = (u8)*(s8 *)reg_a2;
 }

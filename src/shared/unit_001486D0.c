@@ -6,17 +6,15 @@ void func_0014BE20(void);
 void func_0014CAE0(void);
 
 s32 func_0019D530();                            /* extern */
-extern s32 reg_a0_as_s32;
-extern s32 reg_a6_as_s32;
 
 void func_001486D0(void) {
-    reg_a0_as_s32 = reg_a6_as_s32;
+    reg_a0 = (u8 *)(((s32)reg_a6));
     func_0014BE20();
     func_0019D530();
 }
 
 void func_00148700(void) {
-    reg_a0_as_s32 = reg_a6_as_s32;
+    reg_a0 = (u8 *)(((s32)reg_a6));
     func_0014BE20();
     func_0019D530();
 }
@@ -1731,14 +1729,12 @@ void func_0014CEA0(void) {
     reg_a1_as_u16_p += 1;
 }
 
-extern u16 *reg_a6_as_u16_p;
-extern u16 *reg_a5_as_u16_p;
 
 void func_0014CEE0(void) {
-    reg_a5_as_u16_p[4] = 1;
+    *(u16 *)(reg_a5 + 8) = 1;
     reg_d0.h[0] = g_scroll_line;
     reg_d0.h[0] += 4;
-    reg_a6_as_u16_p[12] = (u16) reg_d0.h[0];
+    *(u16 *)(reg_a6 + 0x18) = (u16) reg_d0.h[0];
 }
 
 extern u16 D_0029C066[];
@@ -1748,14 +1744,14 @@ void func_0014CF10(void) {
     u16 *temp_a0;
     u16 temp_a1;
 
-    reg_d0.h[0] = *reg_a1_as_u16_p;
-    reg_a1_as_u16_p += 1;
-    reg_d1.h[1] = *reg_a1_as_u16_p;
-    reg_a1_as_u16_p += 1;
-    temp_a1 = *reg_a1_as_u16_p;
-    temp_a0 = reg_a1_as_u16_p + 1;
+    reg_d0.h[0] = *(u16 *)reg_a1;
+    reg_a1 += 2;
+    reg_d1.h[1] = *(u16 *)reg_a1;
+    reg_a1 += 2;
+    temp_a1 = *(u16 *)reg_a1;
+    temp_a0 = ((u16 *)reg_a1) + 1;
     reg_d1.h[0] = temp_a1;
-    reg_a1_as_u16_p = temp_a0;
+    reg_a1 = (u8 *)temp_a0;
     if (D_0029C080[0] == 0) {
         reg_d1.h[0] -= 0x800;
         reg_d1.h[0] -= D_0029C066[0];
@@ -1797,12 +1793,12 @@ loop_1:
 }
 
 void func_0014D0F0(void) {
-    D_0029C0BA[0] = *reg_a2_as_u16_p;
-    reg_a2_as_u16_p += 1;
-    D_0029C0BC[0] = *reg_a2_as_u16_p;
-    reg_a2_as_u16_p += 1;
-    D_0029C0BE[0] = *reg_a2_as_u16_p;
-    reg_a2_as_u16_p += 1;
+    D_0029C0BA[0] = *(u16 *)reg_a2;
+    reg_a2 += 2;
+    D_0029C0BC[0] = *(u16 *)reg_a2;
+    reg_a2 += 2;
+    D_0029C0BE[0] = *(u16 *)reg_a2;
+    reg_a2 += 2;
 }
 
 void func_0018DEE0(void);
@@ -1814,8 +1810,8 @@ void func_0014D140(void) {
 extern void func_0018DED0(void);
 
 void func_0014D150(void) {
-    reg_d1.h[0] = *reg_a2_as_u16_p;
-    reg_a2_as_u16_p++;
+    reg_d1.h[0] = *(u16 *)reg_a2;
+    reg_a2 += 2;
     func_0018DED0();
 }
 
@@ -1825,8 +1821,8 @@ extern s16 D_0029976C_as_s16_a[];
 extern s16 D_0029976E_as_s16_a[];
 
 void func_0014D170(void) {
-    reg_d0.h[0] = *reg_a1_as_u16_p;
-    reg_a1_as_u16_p += 1;
+    reg_d0.h[0] = *(u16 *)reg_a1;
+    reg_a1 += 2;
     if (reg_d0.h[0] == 1) {
         D_00299768[0] = 1;
     }

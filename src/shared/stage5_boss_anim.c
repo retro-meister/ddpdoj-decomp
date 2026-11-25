@@ -31,12 +31,10 @@ void func_001E8840(void) {
     }
 }
 
-extern s16 *reg_a4_as_s16_p;
-extern s16 *reg_a6_as_s16_p;
 
 void func_001E88B0(void) {
-    reg_a4_as_s16_p[1] = 2;
-    reg_a6_as_s16_p[0x94] = 0;
+    *(s16 *)(reg_a4 + 2) = 2;
+    *(s16 *)(reg_a6 + 0x128) = 0;
     func_001E88D0();
 }
 
@@ -54,7 +52,7 @@ void func_001E88D0(void) {
 
 
 void func_001E8940(void) {
-    reg_a4_as_s16_p[1] = 1;
+    *(s16 *)(reg_a4 + 2) = 1;
     func_001E8950();
 }
 
@@ -181,12 +179,10 @@ void func_001E8C90(void) {
     }
 }
 
-extern void *reg_a4_as_void_p;
-extern void *reg_a6_as_void_p;
 
 void func_001E8D00(void) {
-    ((u16 *)reg_a4_as_void_p)[1] = 1;
-    *(u16 *)((u8 *)reg_a6_as_void_p + 0x12C) = 0;
+    ((u16 *)((void *)reg_a4))[1] = 1;
+    *(u16 *)((u8 *)((void *)reg_a6) + 0x12C) = 0;
     func_001E8D20();
 }
 
@@ -204,7 +200,7 @@ void func_001E8D20(void) {
 
 
 void func_001E8D90(void) {
-    *(s16 *)((u8 *)reg_a4_as_void_p + 2) = 1;
+    *(s16 *)((u8 *)((void *)reg_a4) + 2) = 1;
     func_001E8DA0();
 }
 
@@ -256,11 +252,10 @@ typedef struct WorkReg {
     s16 unk2;
 } WorkReg;
 
-extern WorkReg *reg_a4_as_WorkReg_p;
 
 void func_001E8ED0(void) {
-    reg_a4_as_WorkReg_p->unk2 = 1;
-    *(s16 *)((u8 *)reg_a6_as_void_p + 0x132) = 0;
+    ((WorkReg *)reg_a4)->unk2 = 1;
+    *(s16 *)((u8 *)((void *)reg_a6) + 0x132) = 0;
     func_001E8EF0();
 }
 
@@ -278,8 +273,8 @@ void func_001E8EF0(void) {
 
 
 void func_001E8F60(void) {
-    ((s16 *)reg_a4_as_void_p)[1] = 1;
-    *(s16 *)((u8 *)reg_a6_as_void_p + 0x138) = 0;
+    ((s16 *)((void *)reg_a4))[1] = 1;
+    *(s16 *)((u8 *)((void *)reg_a6) + 0x138) = 0;
     func_001E8F80();
 }
 

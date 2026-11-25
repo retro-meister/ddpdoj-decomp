@@ -502,7 +502,6 @@ s32 func_0018DE90();                            /* extern */
 s32 stage_map_reset();                            /* extern */
 extern s32 D_00269140_as_s32_a[];
 extern s32 D_00275860[];
-extern s32 *reg_a0_as_s32_p;
 
 void func_00169320(void) {
     s32 text_layer_clear();
@@ -515,7 +514,7 @@ void func_00169320(void) {
         func_00137C90();
         text_layer_clear();
         *(s16 *)(reg_a5 + 4) = 0;
-        reg_a0_as_s32_p = D_00269140_as_s32_a;
+        reg_a0 = (u8 *)D_00269140_as_s32_a;
         reg_d0.w = 0;
         text_palette_load();
     }
@@ -529,7 +528,7 @@ void func_00169320(void) {
         text_layer_clear();
         reg_d0.h[0] = 8;
         task_start();
-        (*(s16 *)((u8 *)(reg_a0_as_s32_p) + (4))) = 2;
+        (*(s16 *)((u8 *)((s32 *)reg_a0) + (4))) = 2;
         func_0018DE90();
     }
 }
@@ -775,12 +774,12 @@ void func_00169900(void) {
     func_00206D70();
     text_layer_clear();
     reg_d0.w = 0;
-    reg_a0_as_s32_p = D_00269140_as_s32_a;
+    reg_a0 = (u8 *)D_00269140_as_s32_a;
     text_palette_load();
     reg_d0.h[0] = MAIN_OR_DEATH_LABEL(0x15, 9);
     task_start();
 #ifdef DEATH_LABEL
-    *((u8 *)reg_a0_as_s32_p + 5) = D_0028E7B4;
+    *((u8 *)((s32 *)reg_a0) + 5) = D_0028E7B4;
 #endif
 }
 
@@ -1176,10 +1175,9 @@ void func_0016A220(void) {
 
 #ifndef DEATH_LABEL
 extern char D_0026ACE0[];
-extern char *reg_a0_as_char_p;
 
 void func_0016A2D0(void) {
-    reg_a0_as_char_p = D_0026ACE0;
+    reg_a0 = (u8 *)D_0026ACE0;
     func_0016A2F0();
 }
 #endif
@@ -1189,21 +1187,20 @@ extern char D_0026AD00[];
 
 
 void func_0016A2E0(void) {
-    reg_a0_as_char_p = D_0026AD00;
+    reg_a0 = (u8 *)D_0026AD00;
     func_0016A2F0();
 }
 #endif
 
 #ifndef DEATH_LABEL
 s32 func_00137AD0();                            /* extern */
-extern s32 reg_a0_as_s32;
 
 void func_0016A2F0(void) {
     reg_d2.h[0] = 0;
     reg_d0.h[0] = reg_d7.h[0];
     reg_d1.h[0] = reg_d6.h[0];
     func_00137AD0();
-    reg_a0_as_s32 += 0x10;
+    reg_a0 += 0x10;
     reg_d1.h[0] -= 1;
     func_00137AD0();
 }

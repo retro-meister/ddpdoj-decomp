@@ -1140,11 +1140,10 @@ s32 func_0013CA90();                            /* extern */
 extern s16 D_0028E000_as_s16;
 extern s16 D_0028E004_as_s16;
 extern s8 D_0029CEA0_as_s8_a[];
-extern s8 *reg_a6_as_s8_p;
 
 void func_00122A60(void) {
-    reg_a6_as_s8_p = D_0029CEA0_as_s8_a;
-    if (*reg_a6_as_s8_p >= 0) {
+    reg_a6 = (u8 *)D_0029CEA0_as_s8_a;
+    if (*(s8 *)reg_a6 >= 0) {
         reg_a0 = D_0029F260_as_u8_a;
         func_0013C980();
         D_0028E004_as_s16 = 0;

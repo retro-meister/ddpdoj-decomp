@@ -2,7 +2,6 @@
 
 s32 func_0011C610();
 extern u16 D_00269D60[];
-extern s8 *reg_a0_as_s8_p;
 
 void func_00137910(void) {
     u32 sv_d0;
@@ -23,7 +22,7 @@ void func_00137910(void) {
     sv_d0 = reg_d0.w;
     sv_d5 = reg_d5.w;
     sv_d7 = reg_d7.w;
-    sv_a0 = reg_a0_as_s8_p;
+    sv_a0 = (s8 *)reg_a0;
     sv_a1 = reg_a1;
     sv_a2 = reg_a2;
     sv_d1 = reg_d1.w;
@@ -41,8 +40,8 @@ void func_00137910(void) {
     reg_d2.w = 1;
 loop_1:
     reg_d4.w = 0;
-    reg_d4.b[0] = *reg_a0_as_s8_p;
-    reg_a0_as_s8_p += 1;
+    reg_d4.b[0] = *(s8 *)reg_a0;
+    reg_a0 += 1;
     if (reg_d4.b[0] == 0) goto next_1;
     reg_a1 = (u8 *) D_00269D60;
     reg_d4.h[0] &= 0xFF;
@@ -60,7 +59,7 @@ loop_1:
 next_1:
     reg_d5.w = sv_d5;
     reg_d7.w = sv_d7;
-    reg_a0_as_s8_p = sv_a0;
+    reg_a0 = (u8 *)sv_a0;
     reg_a1 = sv_a1;
     reg_a2 = sv_a2;
     reg_d0.w = sv_d0;
@@ -92,14 +91,14 @@ void func_00137AD0(void) {
     save_d3 = reg_d3.w;
     save_d4 = reg_d4.w;
     save_d5 = reg_d5.w;
-    temp_s5 = (s8 *)(reg_a0_as_s8_p);
+    temp_s5 = (s8 *)((s8 *)reg_a0);
     reg_d3.w = 0;
     reg_d5.h[0] = reg_d2.h[0];
     reg_d2.w = 0;
 loop_1:
     reg_d4.w = 0;
-    reg_d4.b[0] = (u8) *reg_a0_as_s8_p;
-    reg_a0_as_s8_p += 1;
+    reg_d4.b[0] = (u8) *(s8 *)reg_a0;
+    reg_a0 += 1;
     if (reg_d4.b[0] != 0) {
         reg_d4.h[0] = reg_d4.w & 0xFF;
         reg_tmp4.w = reg_d4.w;
@@ -115,7 +114,7 @@ loop_1:
     reg_d3.w = save_d3;
     reg_d4.w = save_d4;
     reg_d5.w = save_d5;
-    reg_a0_as_s8_p = temp_s5;
+    reg_a0 = (u8 *)temp_s5;
 }
 
 void func_00137BC0(void) {

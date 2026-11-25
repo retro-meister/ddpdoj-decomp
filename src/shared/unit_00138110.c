@@ -160,24 +160,23 @@ next_5:
 
 extern u16 D_0028C108[4];
 extern u16 D_0028C110[4];
-extern u16 *reg_a0_as_u16_p;
 
 void func_00138470(void)
 {
-    reg_a0_as_u16_p = D_0028C108;
+    reg_a0 = (u8 *)D_0028C108;
     if (reg_d7.h[0] == 0) {
-        reg_a0_as_u16_p = D_0028C110;
+        reg_a0 = (u8 *)D_0028C110;
     }
 
     reg_d1.w = 2;
     do {
-        if (*reg_a0_as_u16_p != reg_d0.h[0]) {
+        if (*(u16 *)reg_a0 != reg_d0.h[0]) {
             break;
         }
-        reg_a0_as_u16_p++;
+        reg_a0 += 2;
     } while ((s16)(--reg_d1.h[0]) >= 0);
 
-    reg_d0.h[0] = *reg_a0_as_u16_p;
+    reg_d0.h[0] = *(u16 *)reg_a0;
 }
 
 extern u8 D_00251A80[];

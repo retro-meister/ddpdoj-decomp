@@ -31,10 +31,9 @@ void func_001D28B0(void) {
 
 s32 func_0013B8B0();                            /* extern */
 extern s32 D_0026D990[];
-extern s32 *reg_a0_as_s32_p;
 
 void func_001D28C0(void) {
-    reg_a0_as_s32_p = D_0026D990;
+    reg_a0 = (u8 *)D_0026D990;
     func_0013B8B0();
     *(s16 *)(reg_a4 + 2) = 0;
     *(s16 *)(reg_a4 + 6) = 0x101;
@@ -391,7 +390,7 @@ void func_001D32E0(void) {
 
 
 void func_001D3330(void) {
-    reg_a4_as_s16_p[1] = 0;
+    *(s16 *)(reg_a4 + 2) = 0;
     func_001D3340();
 }
 
@@ -459,12 +458,11 @@ typedef struct WorkRegA4 {
     u16 unk6;
 } WorkRegA4;
 
-extern WorkRegA4 *reg_a4_as_WorkRegA4_p;
 
 void func_001D3490(void) {
-    reg_a4_as_WorkRegA4_p->unk2 = 0x40;
-    reg_a4_as_WorkRegA4_p->unk4 = 0x404;
-    reg_a4_as_WorkRegA4_p->unk6 = 0x17;
+    ((WorkRegA4 *)reg_a4)->unk2 = 0x40;
+    ((WorkRegA4 *)reg_a4)->unk4 = 0x404;
+    ((WorkRegA4 *)reg_a4)->unk6 = 0x17;
     func_001D34C0(0x404, 0x40);
 }
 

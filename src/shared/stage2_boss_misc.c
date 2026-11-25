@@ -8,10 +8,9 @@ void func_001C45A0(void) {
 
 s32 enemy_init_entities();                            /* extern */
 extern s32 D_0026C570[];
-extern s32 *reg_a0_as_s32_p;
 
 void func_001C45B0(void) {
-    reg_a0_as_s32_p = D_0026C570;
+    reg_a0 = (u8 *)D_0026C570;
     enemy_init_entities();
     ENTITY(reg_a6)->y.h = (u16) *(u16 *)(reg_a5 + 0x16);
     ENTITY(reg_a6)->x.h = (u16) *(u16 *)(reg_a5 + 0x18);
@@ -272,7 +271,7 @@ s32 enemy_init_entities();                            /* extern */
 extern s32 D_0026C5F0[];
 
 void func_001C4FD0(void) {
-    reg_a0_as_s32_p = D_0026C5F0;
+    reg_a0 = (u8 *)D_0026C5F0;
     enemy_init_entities();
     ENTITY(reg_a6)->y.h = (u16) *(u16 *)(reg_a5 + 0x16);
     ENTITY(reg_a6)->x.h = (u16) *(u16 *)(reg_a5 + 0x18);

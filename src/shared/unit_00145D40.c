@@ -617,8 +617,6 @@ block_6:
     func_00146690();
 }
 
-extern u32 reg_a3_as_u32;
-extern u32 reg_a4_as_u32;
 extern u16 D_0029F180_as_u16_a[];
 extern u16 D_0029F182[];
 extern u16 D_0029F184[];
@@ -626,9 +624,9 @@ void func_00146CB0(void)
 {
     extern void func_0018D750(void);
   unsigned int highWord = D_0029F182[0];
-  reg_a4_as_u32 = (u32) D_0029F180_as_u16_a;
+  reg_a4 = (u8 *)((u32) D_0029F180_as_u16_a);
   reg_d0.h[0] = D_0029F184[0];
-  reg_a3_as_u32 = (u32) (&func_0018D750);
+  reg_a3 = (u8 *)((u32) (&func_0018D750));
   reg_d0.h[1] = highWord;
   func_00146DB0(highWord);
 }
@@ -636,9 +634,9 @@ void func_00146CB0(void)
 void func_00146CF0(void) {
     extern void func_0018D770(void);
     unsigned int highWord = D_0029F182[0];
-    reg_a4_as_u32 = (u32)D_0029F180_as_u16_a;
+    reg_a4 = (u8 *)((u32)D_0029F180_as_u16_a);
     reg_d0.h[0] = D_0029F184[0];
-    reg_a3_as_u32 = (u32)(&func_0018D770);
+    reg_a3 = (u8 *)((u32)(&func_0018D770));
     reg_d0.h[1] = highWord;
     func_00146DB0(highWord);
 }
@@ -651,9 +649,9 @@ void func_00146D30(void)
     extern void func_0018D7D0(void);
   u16 highWord = D_0029F112[0];
   reg_d0.h[1] = highWord;
-  reg_a4_as_u32 = (u32) D_0029F110_as_u16_a;
+  reg_a4 = (u8 *)((u32) D_0029F110_as_u16_a);
   reg_d0.h[0] = D_0029F114[0];
-  reg_a3_as_u32 = (u32) func_0018D7D0;
+  reg_a3 = (u8 *)((u32) func_0018D7D0);
   reg_d0.h[0] = D_0029F114[0];
   func_00146DB0(highWord);
 }
@@ -661,9 +659,9 @@ void func_00146D30(void)
 void func_00146D70(void) {
     extern void func_0018D7F0(void);
     unsigned int highWord = D_0029F112[0];
-    reg_a4_as_u32 = (u32)D_0029F110_as_u16_a;
+    reg_a4 = (u8 *)((u32)D_0029F110_as_u16_a);
     reg_d0.h[0] = D_0029F114[0];
-    reg_a3_as_u32 = (u32)(&func_0018D7F0);
+    reg_a3 = (u8 *)((u32)(&func_0018D7F0));
     reg_d0.h[1] = highWord;
     func_00146DB0(highWord);
 }
@@ -739,9 +737,9 @@ extern void func_0018D790(void);
 
 void func_00146F80(void) {
     unsigned int highWord = D_0029F182[0];
-    reg_a4_as_u32 = (u32)D_0029F180_as_u16_a;
+    reg_a4 = (u8 *)((u32)D_0029F180_as_u16_a);
     reg_d0.h[0] = D_0029F184[0];
-    reg_a3_as_u32 = (u32)(&func_0018D790);
+    reg_a3 = (u8 *)((u32)(&func_0018D790));
     reg_d0.h[1] = highWord;
     func_00147050(highWord);
 }
@@ -767,9 +765,9 @@ extern void func_0018D810(void);
 
 void func_00147010(void) {
     unsigned int highWord = D_0029F112[0];
-    reg_a4_as_u32 = (u32)D_0029F110_as_u16_a;
+    reg_a4 = (u8 *)((u32)D_0029F110_as_u16_a);
     reg_d0.h[0] = D_0029F114[0];
-    reg_a3_as_u32 = (u32)(&func_0018D810);
+    reg_a3 = (u8 *)((u32)(&func_0018D810));
     reg_d0.h[1] = highWord;
     func_00147050(highWord);
 }

@@ -14,11 +14,10 @@ void func_001E7420(void);
 void func_001E7520(void);
 void func_001E75C0(void);
 
-extern void *reg_a6_as_void_p;
 
 void func_001E6BE0(void) {
-    *(s16 *)((u8 *)reg_a6_as_void_p + 0x26) = 2;
-    *(s16 *)((u8 *)reg_a6_as_void_p + 0x28) = 0;
+    *(s16 *)((u8 *)((void *)reg_a6) + 0x26) = 2;
+    *(s16 *)((u8 *)((void *)reg_a6) + 0x28) = 0;
     func_001E6C00();
 }
 
@@ -35,20 +34,19 @@ void func_001E6C00(void) {
     }
 }
 
-extern void *reg_a4_as_void_p;
 extern void rng_next_masked(void);
 
 void func_001E6C70(void)
 {
     extern void rng_next_bit(void);
-    *(u16 *)((u8 *)reg_a4_as_void_p + 4) = 0;
+    *(u16 *)((u8 *)((void *)reg_a4) + 4) = 0;
     rng_next_bit();
-    ((u8 *)reg_a4_as_void_p)[4] = reg_d0.b[0];
+    ((u8 *)((void *)reg_a4))[4] = reg_d0.b[0];
     rng_next_masked();
-    ((u8 *)reg_a4_as_void_p)[2] = reg_d0.b[0];
+    ((u8 *)((void *)reg_a4))[2] = reg_d0.b[0];
     rng_next_masked();
-    *(u16 *)((u8 *)reg_a4_as_void_p + 6) = reg_d0.h[0];
-    ((u8 *)reg_a4_as_void_p)[3] = 0;
+    *(u16 *)((u8 *)((void *)reg_a4) + 6) = reg_d0.h[0];
+    ((u8 *)((void *)reg_a4))[3] = 0;
 }
 
 
@@ -89,12 +87,11 @@ void func_001E6D00() {
     }
 }
 
-extern s16 *reg_a4_as_s16_p;
 
 
 void func_001E6DD0(void) {
-    reg_a4_as_s16_p[1] = 3;
-    reg_a4_as_s16_p[2] = 0;
+    *(s16 *)(reg_a4 + 2) = 3;
+    *(s16 *)(reg_a4 + 4) = 0;
     func_001E6DF0();
 }
 
@@ -182,8 +179,8 @@ void func_001E6FC0(void) {
 
 
 void func_001E7080(void) {
-    *(u16 *)((u8 *)reg_a4_as_void_p + 2) = 2;
-    *(u16 *)((u8 *)reg_a4_as_void_p + 4) = 0;
+    *(u16 *)((u8 *)((void *)reg_a4) + 2) = 2;
+    *(u16 *)((u8 *)((void *)reg_a4) + 4) = 0;
     func_001E70A0();
 }
 
@@ -199,12 +196,11 @@ void func_001E70A0(void) {
     }
 }
 
-extern u16 *reg_a4_as_u16_p;
 
 
 void func_001E7110(void) {
-    reg_a4_as_u16_p[1] = 0x2002;
-    reg_a4_as_u16_p[2] = 0;
+    *(u16 *)(reg_a4 + 2) = 0x2002;
+    *(u16 *)(reg_a4 + 4) = 0;
     func_001E7130();
 }
 
@@ -267,7 +263,7 @@ void func_001E71D0(void) {
 
 
 void func_001E7310(void) {
-    reg_a4_as_s16_p[1] = 1;
+    *(s16 *)(reg_a4 + 2) = 1;
     func_001E7320();
 }
 

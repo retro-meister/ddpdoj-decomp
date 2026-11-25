@@ -2809,16 +2809,15 @@ next_200:
 }
 
 s32 entity_draw_layer4();                            /* extern */
-extern u32 reg_a6_as_u32;
 
 void func_001E4410(void) {
-    reg_a6_as_u32 += 0x20;
+    reg_a6 += 0x20;
     entity_draw_layer4();
-    reg_a6_as_u32 += 0x20;
+    reg_a6 += 0x20;
     entity_draw_layer4();
     reg_tmp.h[1] = *(u16 *)(reg_a5 + 6);
     reg_tmp.h[0] = *(u16 *)(reg_a5 + 8);
-    reg_a6_as_u32 = reg_tmp.w;
+    reg_a6 = (u8 *)reg_tmp.w;
 }
 
 s32 func_0018D580();                            /* extern */

@@ -191,7 +191,6 @@ next_9:
 extern u16 D_0028E0A8;
 extern u16 g_hyper_level_hit_scratch;
 extern u16 g_hyper_hit_scratch;
-extern s16 *reg_a4_as_s16_p;
 
 void func_0020BD10(void)
 {
@@ -200,7 +199,7 @@ void func_0020BD10(void)
     reg_d7.h[0] = 0x2800;
     g_hyper_level_hit_scratch = reg_d2.h[0];
 
-    if (*reg_a4_as_s16_p < 0) {
+    if (*(s16 *)reg_a4 < 0) {
         func_0020E020();
     }
 }

@@ -69,7 +69,7 @@ void func_001D7210() {
 
 
 void func_001D7310(void) {
-    reg_a4_as_s16_p[1] = 0x202;
+    *(s16 *)(reg_a4 + 2) = 0x202;
     func_001D7320();
 }
 
@@ -88,10 +88,9 @@ void func_001D7320() {
     }
 }
 
-extern u16 *reg_a4_as_u16_p;
 
 void func_001D7390(void) {
-    reg_a4_as_u16_p[1] = 0x202;
+    *(u16 *)(reg_a4 + 2) = 0x202;
     func_001D73A0();
 }
 
@@ -109,7 +108,7 @@ void func_001D73A0() {
 
 
 void func_001D7410(void) {
-    reg_a4_as_u16_p[1] = 1;
+    *(u16 *)(reg_a4 + 2) = 1;
     func_001D7420();
 }
 
@@ -173,7 +172,7 @@ void func_001D7540() {
 
 
 void func_001D75C0(void) {
-    reg_a4_as_s16_p[1] = 1;
+    *(s16 *)(reg_a4 + 2) = 1;
     func_001D75D0();
 }
 
@@ -197,7 +196,7 @@ void func_001D75D0(void)
 
 
 void func_001D7650(void) {
-    reg_a4_as_s16_p[1] = 1;
+    *(s16 *)(reg_a4 + 2) = 1;
     func_001D7660();
 }
 

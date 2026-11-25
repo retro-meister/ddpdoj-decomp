@@ -1253,7 +1253,6 @@ void func_001C7A90(void) {
     enemy_set_entity_count(0);
 }
 
-extern u32 reg_a0_as_u32;
 extern u32 D_00262ED0[];
 extern u32 D_00262EE0[];
 
@@ -1263,10 +1262,10 @@ void func_001C7AA0(void)
     extern void enemy_set_task_work(void);
     extern void enemy_init_entities(void);
     extern void enemy_path_start(void);
-    reg_a0_as_u32 = (u32)D_00262EE0;
+    reg_a0 = (u8 *)((u32)D_00262EE0);
     enemy_init_entities();
 
-    reg_a0_as_u32 = (u32)D_00262ED0;
+    reg_a0 = (u8 *)((u32)D_00262ED0);
     reg_d0.w = 5;
     enemy_set_task_work();
     enemy_path_start();

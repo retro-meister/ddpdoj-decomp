@@ -6339,7 +6339,6 @@ extern u8 D_0028E258;
 extern u8 D_0028E25C;
 extern u8 D_0028E290;
 extern s32 D_0028EAFC;
-extern s32 *reg_a0_as_s32_p;
 
 void func_001980A0() {
     func_0013FD80();
@@ -6349,7 +6348,7 @@ void func_001980A0() {
     func_0018DE90();
     text_layer_clear();
     reg_d0.w = 0;
-    reg_a0_as_s32_p = D_00269160_as_s32_a;
+    reg_a0 = (u8 *)D_00269160_as_s32_a;
     text_palette_load();
     if ((s32) D_0028E258 < (s32) D_0028E25C) {
         D_0028E258 = D_0028E25C;
@@ -6363,7 +6362,7 @@ void func_001980A0() {
     }
     reg_d0.h[0] = 8;
     task_start();
-    (*(s16 *)((u8 *)(reg_a0_as_s32_p) + (4))) = 0x12;
+    (*(s16 *)((u8 *)((s32 *)reg_a0) + (4))) = 0x12;
 }
 
 u8 func_00198170(s32 a, s32 b) {

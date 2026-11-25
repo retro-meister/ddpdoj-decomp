@@ -378,11 +378,10 @@ void func_00201F70() {
     ENTITY(reg_a6)->x.h += reg_d3.h[0];
 }
 
-extern void *reg_a6_as_void_p;
 
 
 void func_00201FC0(void) {
-    u8 *base = (u8 *)reg_a6_as_void_p;
+    u8 *base = (u8 *)((void *)reg_a6);
 
     reg_d0.w = 0;
     reg_d0.b[0] = base[0x1B];
@@ -447,21 +446,19 @@ void func_00202180(void) {
     }
 }
 
-extern void *reg_a0_as_void_p;
 
 
 void func_002021B0(void) {
-    u8 *base = (u8 *)reg_a0_as_void_p;
+    u8 *base = (u8 *)((void *)reg_a0);
     reg_d2.h[0] = *(u16 *)(base + 0x2);
     reg_d3.h[0] = *(u16 *)(base + 0x4);
     func_002021D0();
 }
 
-extern u16 *reg_a6_as_u16_p;
 
 void func_002021D0(void) {
-    reg_d0.h[0] = reg_a6_as_u16_p[1];
-    reg_d1.h[0] = reg_a6_as_u16_p[2];
+    reg_d0.h[0] = *(u16 *)(reg_a6 + 2);
+    reg_d1.h[0] = *(u16 *)(reg_a6 + 4);
     direction_between();
 }
 
@@ -639,19 +636,18 @@ void func_00202730(void) {
     }
 }
 
-extern u16 *reg_a0_as_u16_p;
 
 
 void func_00202760(void) {
-    reg_d2.h[0] = reg_a0_as_u16_p[1];
-    reg_d3.h[0] = reg_a0_as_u16_p[2];
+    reg_d2.h[0] = *(u16 *)(reg_a0 + 2);
+    reg_d3.h[0] = *(u16 *)(reg_a0 + 4);
     func_00202780();
 }
 
 
 void func_00202780(void) {
-    reg_d0.h[0] = reg_a6_as_u16_p[1];
-    reg_d1.h[0] = reg_a6_as_u16_p[2];
+    reg_d0.h[0] = *(u16 *)(reg_a6 + 2);
+    reg_d1.h[0] = *(u16 *)(reg_a6 + 4);
     direction256_between();
 }
 
@@ -760,11 +756,10 @@ void func_00202A80(void)
     }
 }
 
-extern s16 *reg_a0_as_s16_p;
 
 void func_00202AE0(void) {
     reg_d0.h[0] = 0x7FFF;
-    if (*reg_a0_as_s16_p >= 0) {
+    if (*(s16 *)reg_a0 >= 0) {
         func_00202C40();
         return;
     }
@@ -773,15 +768,15 @@ void func_00202AE0(void) {
 
 
 void func_00202B30(void) {
-    reg_d2.h[0] = reg_a0_as_u16_p[1];
-    reg_d3.h[0] = reg_a0_as_u16_p[2];
+    reg_d2.h[0] = *(u16 *)(reg_a0 + 2);
+    reg_d3.h[0] = *(u16 *)(reg_a0 + 4);
     func_00202B50();
 }
 
 
 void func_00202B50(void) {
-    reg_d0.h[0] = reg_a6_as_u16_p[1];
-    reg_d1.h[0] = reg_a6_as_u16_p[2];
+    reg_d0.h[0] = *(u16 *)(reg_a6 + 2);
+    reg_d1.h[0] = *(u16 *)(reg_a6 + 4);
     func_00202B70();
 }
 
@@ -1012,39 +1007,35 @@ next_1:
 
 
 extern u32 reg_save_atmp_as_u32;
-extern u32 reg_a0_as_u32;
-extern u32 reg_a1_as_u32;
-extern u32 reg_a5_as_u32;
 
 void target_player_get(void)
 {
-    reg_a0_as_u32 = (u32)D_0029F260_as_u8_a;
+    reg_a0 = (u8 *)((u32)D_0029F260_as_u8_a);
     cond_flag = 0;
-    reg_a1_as_u32 = (u32)D_0029F1F0_as_u8_a;
+    reg_a1 = (u8 *)((u32)D_0029F1F0_as_u8_a);
 
-    if (((u8 *)reg_a5_as_u32)[2] != 0) {
-        reg_save_atmp_as_u32 = reg_a1_as_u32;
-        reg_a1_as_u32 = reg_a0_as_u32;
-        reg_a0_as_u32 = reg_save_atmp_as_u32;
+    if (((u8 *)((u32)reg_a5))[2] != 0) {
+        reg_save_atmp_as_u32 = (u32)reg_a1;
+        reg_a1 = (u8 *)(((u32)reg_a0));
+        reg_a0 = (u8 *)reg_save_atmp_as_u32;
     }
 
     func_002032F0();
 }
 
-extern s16 *reg_a1_as_s16_p;
 
 void func_002032F0(void) {
     s16 *temp_a0;
 
-    temp_a0 = reg_a0_as_s16_p;
+    temp_a0 = (s16 *)reg_a0;
     if (*temp_a0 >= 0) {
-        if (*reg_a1_as_s16_p >= 0) {
+        if (*(s16 *)reg_a1 >= 0) {
             cond_flag = 1;
             return;
         }
-        reg_a0_as_s16_p = reg_a1_as_s16_p;
+        reg_a0 = (u8 *)(((s16 *)reg_a1));
         reg_atmp = (u8 *)temp_a0;
-        reg_a1_as_s16_p = temp_a0;
+        reg_a1 = (u8 *)temp_a0;
         goto block_4;
     }
 block_4:
@@ -1054,16 +1045,14 @@ block_4:
 extern s32 *reg_save_atmp_as_s32_p;
 extern s32 D_0029F1F0_as_s32_a[];
 extern s32 D_0029F260_as_s32_a[];
-extern s32 *reg_a0_as_s32_p;
-extern s32 *reg_a1_as_s32_p;
 
 void func_00203330(void) {
-    reg_a0_as_s32_p = D_0029F260_as_s32_a;
-    reg_a1_as_s32_p = D_0029F1F0_as_s32_a;
+    reg_a0 = (u8 *)D_0029F260_as_s32_a;
+    reg_a1 = (u8 *)D_0029F1F0_as_s32_a;
     if (*(u8 *)(reg_a6 + 0x2B) != 0) {
-        reg_save_atmp_as_s32_p = reg_a1_as_s32_p;
-        reg_a1_as_s32_p = reg_a0_as_s32_p;
-        reg_a0_as_s32_p = reg_save_atmp_as_s32_p;
+        reg_save_atmp_as_s32_p = (s32 *)reg_a1;
+        reg_a1 = (u8 *)(((s32 *)reg_a0));
+        reg_a0 = (u8 *)reg_save_atmp_as_s32_p;
     }
     func_002032F0();
 }
@@ -1210,7 +1199,7 @@ void func_002037B0(void) {
     u32 scaled = (u32)reg_d6.h[0] << 16;
     reg_d6.h[0] = (u16)(scaled - reg_d6.h[0]);
     reg_d6.h[0] += 0x1C00;
-    *(u16 *)((u8 *)reg_a6_as_void_p + 4) = reg_d6.h[0];
+    *(u16 *)((u8 *)((void *)reg_a6) + 4) = reg_d6.h[0];
 }
 
 

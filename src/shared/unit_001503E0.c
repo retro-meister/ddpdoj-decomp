@@ -11,12 +11,11 @@ s32 enemy_set_task_work();                            /* extern */
 s32 enemy_init_entities();                            /* extern */
 extern s32 D_00257860[];
 extern s32 D_0028C9A8;
-extern s32 *reg_a0_as_s32_p;
 
 void func_001503F0(void) {
-    reg_a0_as_s32_p = D_00257860;
+    reg_a0 = (u8 *)D_00257860;
     enemy_init_entities();
-    reg_a0_as_s32_p = &D_0028C9A8;
+    reg_a0 = (u8 *)(&D_0028C9A8);
     reg_d0.w = 1;
     enemy_set_task_work();
     reg_tmp.w = 0x38001C00;

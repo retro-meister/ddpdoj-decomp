@@ -308,7 +308,6 @@ s32 func_0013C350();                            /* extern */
 extern s32 D_0026A660[];
 extern u8 g_stage_load_state;
 extern u16 D_0028E7C4_as_u16;
-extern s32 *reg_a0_as_s32_p;
 
 void func_0015BFD0(void) {
     if (D_0028E7C4_as_u16 != 0) {
@@ -322,7 +321,7 @@ void func_0015BFD0(void) {
             func_0015C090();
             return;
         }
-        reg_a0_as_s32_p = D_0026A660;
+        reg_a0 = (u8 *)D_0026A660;
         func_0013BE50();
         D_0028E7C0 = reg_d0.w;
         func_0015C090();
@@ -381,13 +380,6 @@ extern s32 D_0028DF58_as_s32;
 extern s32 D_0028DF5C_as_s32;
 
 extern s32 D_0028DF60_as_s32;
-extern s32 reg_a0_as_s32;
-extern s32 reg_a1_as_s32;
-extern s32 reg_a2_as_s32;
-extern s32 reg_a3_as_s32;
-extern s32 reg_a4_as_s32;
-extern s32 reg_a5_as_s32;
-extern s32 reg_a6_as_s32;
 
 void func_0015C170(void) {
     reg_d0.w = D_0028DF80;
@@ -398,13 +390,13 @@ void func_0015C170(void) {
     reg_d5.w = D_0028DF6C;
     reg_d6.w = D_0028DF68;
     reg_d7.w = D_0028DF64;
-    reg_a0_as_s32 = D_0028DF60_as_s32;
-    reg_a1_as_s32 = D_0028DF5C_as_s32;
-    reg_a2_as_s32 = D_0028DF58_as_s32;
-    reg_a3_as_s32 = D_0028DF54_as_s32;
-    reg_a4_as_s32 = D_0028DF50_as_s32;
-    reg_a5_as_s32 = D_0028DF4C_as_s32;
-    reg_a6_as_s32 = D_0028DF48_as_s32;
+    reg_a0 = (u8 *)D_0028DF60_as_s32;
+    reg_a1 = (u8 *)D_0028DF5C_as_s32;
+    reg_a2 = (u8 *)D_0028DF58_as_s32;
+    reg_a3 = (u8 *)D_0028DF54_as_s32;
+    reg_a4 = (u8 *)D_0028DF50_as_s32;
+    reg_a5 = (u8 *)D_0028DF4C_as_s32;
+    reg_a6 = (u8 *)D_0028DF48_as_s32;
     cond_flag = 0;
 }
 

@@ -102,12 +102,11 @@ void func_001C7DA0() {
 s32 boss_movement_start();                            /* extern */
 s32 func_0013B8B0();                            /* extern */
 extern s32 D_0026C7B0[];
-extern s32 *reg_a0_as_s32_p;
 
 void func_001C7EE0(void) {
     reg_d0.w = 1;
     boss_movement_start();
-    reg_a0_as_s32_p = D_0026C7B0;
+    reg_a0 = (u8 *)D_0026C7B0;
     func_0013B8B0();
     *(s8 *)(reg_a4 + 3) = 0;
     *(s16 *)(reg_a4 + 6) = 0x101;

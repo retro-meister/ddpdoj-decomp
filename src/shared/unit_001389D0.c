@@ -598,11 +598,9 @@ void func_001396B0(void) {
     reg_d0.h[0] -= reg_d1.h[0];
 }
 
-extern void *reg_a1_as_void_p;
-extern void *reg_a5_as_void_p;
 
 void func_00139790(void) {
-    u8 *entry = reg_a1_as_void_p;
+    u8 *entry = (void *)reg_a1;
 
     if (0 <= (s64)*(s16 *)entry) {
         return;
@@ -618,7 +616,7 @@ void func_00139790(void) {
         }
     }
 
-    ((u8 *)reg_a5_as_void_p)[0x31] |= (u8)(1 << (s8)reg_d3.b[0]);
+    ((u8 *)((void *)reg_a5))[0x31] |= (u8)(1 << (s8)reg_d3.b[0]);
 }
 
 void func_00139800(void) {
@@ -640,7 +638,7 @@ void func_00139800(void) {
     }
     reg_d4.w = 7;
 next_1:
-    if ((1U << reg_d4.b[0]) & ((u8 *) reg_a5_as_void_p)[0x31]) {
+    if ((1U << reg_d4.b[0]) & ((u8 *) ((void *)reg_a5))[0x31]) {
         goto block_rts;
     }
     reg_d1.h[0] = D_0029C060[0];

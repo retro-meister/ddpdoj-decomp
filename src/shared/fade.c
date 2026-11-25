@@ -145,11 +145,6 @@ extern s32 reg_save_a2_as_s32;
 extern s32 reg_save_a1_as_s32;
 extern s32 reg_save_a0;
 
-extern s32 reg_a0_as_s32;
-extern s32 reg_a1_as_s32;
-extern s32 reg_a2_as_s32;
-extern s32 reg_a3_as_s32;
-extern s32 reg_a4_as_s32;
 
 void func_0013B2E0(void)
 {
@@ -160,11 +155,11 @@ void func_0013B2E0(void)
     reg_save_d5 = reg_d5.w;
     reg_save_d6 = reg_d6.w;
     reg_save_d7 = reg_d7.w;
-    reg_save_a0 = reg_a0_as_s32;
-    reg_save_a1_as_s32 = reg_a1_as_s32;
-    reg_save_a2_as_s32 = reg_a2_as_s32;
-    reg_save_a3 = reg_a3_as_s32;
-    reg_save_a4 = reg_a4_as_s32;
+    reg_save_a0 = (s32)reg_a0;
+    reg_save_a1_as_s32 = (s32)reg_a1;
+    reg_save_a2_as_s32 = (s32)reg_a2;
+    reg_save_a3 = (s32)reg_a3;
+    reg_save_a4 = (s32)reg_a4;
 
     reg_d6.h[0] = 1;
     func_0013B3C0();
@@ -179,11 +174,11 @@ void func_0013B350(void)
     reg_save_d5 = reg_d5.w;
     reg_save_d6 = reg_d6.w;
     reg_save_d7 = reg_d7.w;
-    reg_save_a0 = reg_a0_as_s32;
-    reg_save_a1_as_s32 = reg_a1_as_s32;
-    reg_save_a2_as_s32 = reg_a2_as_s32;
-    reg_save_a3 = reg_a3_as_s32;
-    reg_save_a4 = reg_a4_as_s32;
+    reg_save_a0 = (s32)reg_a0;
+    reg_save_a1_as_s32 = (s32)reg_a1;
+    reg_save_a2_as_s32 = (s32)reg_a2;
+    reg_save_a3 = (s32)reg_a3;
+    reg_save_a4 = (s32)reg_a4;
     reg_d6.h[0] = 0;
     func_0013B3C0();
 }
@@ -348,11 +343,11 @@ void func_0013B8B0(void)
     reg_save_d6 = reg_d6.w;
     reg_d6.h[0] = 1;
     reg_save_d7 = reg_d7.w;
-    reg_save_a0 = reg_a0_as_s32;
-    reg_save_a1_as_s32 = reg_a1_as_s32;
-    reg_save_a2_as_s32 = reg_a2_as_s32;
-    reg_save_a3 = reg_a3_as_s32;
-    reg_save_a4 = reg_a4_as_s32;
+    reg_save_a0 = (s32)reg_a0;
+    reg_save_a1_as_s32 = (s32)reg_a1;
+    reg_save_a2_as_s32 = (s32)reg_a2;
+    reg_save_a3 = (s32)reg_a3;
+    reg_save_a4 = (s32)reg_a4;
     func_0013B990();
 }
 
@@ -365,11 +360,11 @@ void func_0013B920(void)
     reg_save_d5 = reg_d5.w;
     reg_save_d6 = reg_d6.w;
     reg_save_d7 = reg_d7.w;
-    reg_save_a0 = reg_a0_as_s32;
-    reg_save_a1_as_s32 = reg_a1_as_s32;
-    reg_save_a2_as_s32 = reg_a2_as_s32;
-    reg_save_a3 = reg_a3_as_s32;
-    reg_save_a4 = reg_a4_as_s32;
+    reg_save_a0 = (s32)reg_a0;
+    reg_save_a1_as_s32 = (s32)reg_a1;
+    reg_save_a2_as_s32 = (s32)reg_a2;
+    reg_save_a3 = (s32)reg_a3;
+    reg_save_a4 = (s32)reg_a4;
     reg_d6.h[0] = 0;
     func_0013B990();
 }
@@ -510,11 +505,11 @@ void func_0013BDE0(void)
     reg_save_d5 = reg_d5.w;
     reg_save_d6 = reg_d6.w;
     reg_save_d7 = reg_d7.w;
-    reg_save_a0 = reg_a0_as_s32;
-    reg_save_a1_as_s32 = reg_a1_as_s32;
-    reg_save_a2_as_s32 = reg_a2_as_s32;
-    reg_save_a3 = reg_a3_as_s32;
-    reg_save_a4 = reg_a4_as_s32;
+    reg_save_a0 = (s32)reg_a0;
+    reg_save_a1_as_s32 = (s32)reg_a1;
+    reg_save_a2_as_s32 = (s32)reg_a2;
+    reg_save_a3 = (s32)reg_a3;
+    reg_save_a4 = (s32)reg_a4;
     reg_d6.h[0] = 1;
     func_0013BEC0();
 }
@@ -528,11 +523,11 @@ void func_0013BE50(void)
     reg_save_d5 = reg_d5.w;
     reg_save_d6 = reg_d6.w;
     reg_save_d7 = reg_d7.w;
-    reg_save_a0 = reg_a0_as_s32;
-    reg_save_a1_as_s32 = reg_a1_as_s32;
-    reg_save_a2_as_s32 = reg_a2_as_s32;
-    reg_save_a3 = reg_a3_as_s32;
-    reg_save_a4 = reg_a4_as_s32;
+    reg_save_a0 = (s32)reg_a0;
+    reg_save_a1_as_s32 = (s32)reg_a1;
+    reg_save_a2_as_s32 = (s32)reg_a2;
+    reg_save_a3 = (s32)reg_a3;
+    reg_save_a4 = (s32)reg_a4;
     reg_d6.h[0] = 0;
     func_0013BEC0();
 }
@@ -662,24 +657,23 @@ next_5:
     reg_a4 = (u8 *) reg_save_a4_as_u16_p;
 }
 
-extern u32 reg_a0_as_u32;
 
 void func_0013C300(void)
 {
     u32 saved_data_register = reg_d0.w;
-    u32 saved_address_register = reg_a0_as_u32;
+    u32 saved_address_register = (u32)reg_a0;
     u16 *entry;
 
     do {
-        reg_a0_as_u32 = reg_d0.w;
-        ((u16 *)reg_a0_as_u32)[0] = 0;
-        ((u16 *)reg_a0_as_u32)[2] = 0;
-        entry = (u16 *)reg_a0_as_u32;
+        reg_a0 = (u8 *)reg_d0.w;
+        ((u16 *)((u32)reg_a0))[0] = 0;
+        ((u16 *)((u32)reg_a0))[2] = 0;
+        entry = (u16 *)((u32)reg_a0);
         reg_d0.h[1] = entry[0x16];
         reg_d0.h[0] = entry[0x17];
     } while (reg_d0.w != 0);
 
-    reg_a0_as_u32 = saved_address_register;
+    reg_a0 = (u8 *)saved_address_register;
     reg_d0.w = saved_data_register;
 }
 

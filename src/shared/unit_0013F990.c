@@ -2847,21 +2847,20 @@ void func_00144CB0(void) {
 extern s32 D_0028ED70;
 extern u16 D_0029F260_as_u16_a[];
 extern u16 D_006C68B6_as_u16_a[];
-extern u16 *reg_a6_as_u16_p;
 
 void func_00144D00(u8 arg0) {
     u8 var_a0;
 
     var_a0 = arg0;
     if ((g_stage == 0) && (var_a0 = D_0028ED7C, (var_a0 == 2)) && (D_0028ED70 == 0)) {
-        reg_a6_as_u16_p = D_006C68B6_as_u16_a;
-        reg_d0.h[0] = *reg_a6_as_u16_p;
+        reg_a6 = (u8 *)D_006C68B6_as_u16_a;
+        reg_d0.h[0] = *(u16 *)reg_a6;
         if ((s16) reg_d0.h[0] < 0) {
             func_00145640();
         }
     } else {
-        reg_a6_as_u16_p = D_0029F260_as_u16_a;
-        reg_d0.h[0] = *reg_a6_as_u16_p;
+        reg_a6 = (u8 *)D_0029F260_as_u16_a;
+        reg_d0.h[0] = *(u16 *)reg_a6;
         if ((s16) reg_d0.h[0] < 0) {
             func_00144F00();
         }
@@ -2876,14 +2875,14 @@ void func_00144DA0(u8 arg0) {
 
     var_a0 = arg0;
     if ((g_stage == 0) && (var_a0 = D_0028ED7C, (var_a0 == 2)) && (D_0028ED70 == 0)) {
-        reg_a6_as_u16_p = D_006C6918_as_u16_a;
-        reg_d0.h[0] = *reg_a6_as_u16_p;
+        reg_a6 = (u8 *)D_006C6918_as_u16_a;
+        reg_d0.h[0] = *(u16 *)reg_a6;
         if ((s16) reg_d0.h[0] < 0) {
             func_00145640();
         }
     } else {
-        reg_a6_as_u16_p = D_0029F1F0_as_u16_a;
-        reg_d0.h[0] = *reg_a6_as_u16_p;
+        reg_a6 = (u8 *)D_0029F1F0_as_u16_a;
+        reg_d0.h[0] = *(u16 *)reg_a6;
         if ((s16) reg_d0.h[0] < 0) {
             func_00144F00();
         }
@@ -2893,8 +2892,8 @@ void func_00144DA0(u8 arg0) {
 
 void func_00144E40(void) {
     extern void func_00145A80(u16);
-    reg_a6_as_u16_p = D_0029F260_as_u16_a;
-    reg_d0.h[0] = *reg_a6_as_u16_p;
+    reg_a6 = (u8 *)D_0029F260_as_u16_a;
+    reg_d0.h[0] = *(u16 *)reg_a6;
     if ((((s64) ((s64) reg_d0.h[0] << 0x30) >> 0x30) >= 0) && (reg_d0.h[0] & 0xFFFF & 0x100)) {
         func_00145A80(reg_d0.h[0]);
     }
@@ -2902,8 +2901,8 @@ void func_00144E40(void) {
 
 void func_00144EA0(void) {
     extern void func_00145A80(u16);
-    reg_a6_as_u16_p = D_0029F1F0_as_u16_a;
-    reg_d0.h[0] = *reg_a6_as_u16_p;
+    reg_a6 = (u8 *)D_0029F1F0_as_u16_a;
+    reg_d0.h[0] = *(u16 *)reg_a6;
     if ((((s64) ((s64) reg_d0.h[0] << 0x30) >> 0x30) >= 0) && (reg_d0.h[0] & 0xFFFF & 0x100)) {
         func_00145A80(reg_d0.h[0]);
     }

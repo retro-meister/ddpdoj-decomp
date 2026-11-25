@@ -29,7 +29,6 @@ void func_0016CDD0(void) {
 }
 
 s32 explosion_spawn();
-extern u16 *reg_a1_as_u16_p;
 
 void func_0016CEA0(void) {
     explosion_spawn();
@@ -37,20 +36,19 @@ void func_0016CEA0(void) {
     *(u16 *)(reg_a0 + 4) = (u16) ENTITY(reg_a6)->x.h;
     reg_d0.w = 0;
     reg_d0.b[0] = ENTITY(reg_a6)->misc.b.user;
-    *(u16 *)(reg_a0 + 0x1E) = (reg_d0.h[0] != 0) ? *(u16 *)((u8 *)reg_a1_as_u16_p + ((s16)reg_d0.h[0] & ~1)) : *reg_a1_as_u16_p;
+    *(u16 *)(reg_a0 + 0x1E) = (reg_d0.h[0] != 0) ? *(u16 *)((u8 *)((u16 *)reg_a1) + ((s16)reg_d0.h[0] & ~1)) : *(u16 *)reg_a1;
     *(s16 *)(reg_a0 + 0x10) = 1;
 }
 
 s32 func_002114C0();
 extern u16 D_0025B150[];
-extern u16 *reg_a0_as_u16_p;
 
 void func_0016CF40(void) {
     reg_d1.w = 0;
     reg_d1.b[0] = ENTITY(reg_a6)->misc.b.draw_layer;
-    reg_a0_as_u16_p = D_0025B150;
+    reg_a0 = (u8 *)D_0025B150;
     reg_d1.h[0] += reg_d1.h[0];
-    reg_d1.h[0] = (reg_d1.h[0] != 0) ? *(u16 *)((u8 *)reg_a0_as_u16_p + ((s16)reg_d1.h[0] & ~1)) : *reg_a0_as_u16_p;
+    reg_d1.h[0] = (reg_d1.h[0] != 0) ? *(u16 *)((u8 *)((u16 *)reg_a0) + ((s16)reg_d1.h[0] & ~1)) : *(u16 *)reg_a0;
     func_002114C0();
 }
 
@@ -617,7 +615,7 @@ next_50:
     if (D_0028E7E0_as_u16 != 0) goto next_110;
     D_0028E7E0_as_u16 = 1;
     reg_d0.w = 3;
-    reg_a1_as_u16_p = (u16 *)D_0025B140;
+    reg_a1 = (u8 *)((u16 *)D_0025B140);
     func_0016CEA0();
     *(u16 *)(reg_a0 + 0x26) = 0xFE00;
     *(u16 *)(reg_a0 + 0x12) = 0;
@@ -733,7 +731,7 @@ block_70:
     reg_d0.w = 0x10;
     score_add();
     reg_d0.w = 7;
-    reg_a1_as_u16_p = (u16 *)D_0025B130;
+    reg_a1 = (u8 *)((u16 *)D_0025B130);
     func_0016CEA0();
     *(u16 *)(reg_a0 + 0x26) = 0xFE00;
     *(u16 *)(reg_a0 + 0x12) = 0;

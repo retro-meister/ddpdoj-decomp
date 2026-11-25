@@ -655,16 +655,15 @@ block_54:
 }
 
 extern u16 D_0028C138[];
-extern u16 *reg_a0_as_u16_p;
 
 void func_001B03E0(void) {
-    reg_a0_as_u16_p = D_0028C138;
-    *(u16 *)(reg_a1 + 2) = (u16) *reg_a0_as_u16_p;
-    reg_a0_as_u16_p += 1;
-    *(u16 *)(reg_a1 + 0x10) = (u16) *reg_a0_as_u16_p;
-    reg_a0_as_u16_p += 1;
-    reg_d0.h[0] = *reg_a0_as_u16_p;
-    reg_a0_as_u16_p += 1;
+    reg_a0 = (u8 *)D_0028C138;
+    *(u16 *)(reg_a1 + 2) = (u16) *(u16 *)reg_a0;
+    reg_a0 += 2;
+    *(u16 *)(reg_a1 + 0x10) = (u16) *(u16 *)reg_a0;
+    reg_a0 += 2;
+    reg_d0.h[0] = *(u16 *)reg_a0;
+    reg_a0 += 2;
     *(u16 *)(reg_a1 + 0x14) = (u16) reg_d0.h[0];
     *(u16 *)(reg_a1 + 0x16) = (u16) reg_d0.h[0];
     *(u16 *)(reg_a1 + 0x18) = (u16) reg_d0.h[0];

@@ -949,14 +949,13 @@ void func_001B69E0() {
 }
 
 extern u16 D_0026E160[];
-extern u16 *reg_a0_as_u16_p;
 
 void func_001B6B20(void) {
     *(s16 *)(reg_a4 + 2) = 8;
     func_001713B0();
     reg_d0.h[0] += reg_d0.h[0];
-    reg_a0_as_u16_p = D_0026E160;
-    *(u16 *)(reg_a4 + 4) = (reg_d0.h[0] != 0) ? *(u16 *)((u8 *)reg_a0_as_u16_p + ((s16)reg_d0.h[0] & ~1)) : *reg_a0_as_u16_p;
+    reg_a0 = (u8 *)D_0026E160;
+    *(u16 *)(reg_a4 + 4) = (reg_d0.h[0] != 0) ? *(u16 *)((u8 *)((u16 *)reg_a0) + ((s16)reg_d0.h[0] & ~1)) : *(u16 *)reg_a0;
     func_001B6BA0();
 }
 
@@ -1007,8 +1006,8 @@ extern u16 D_0026E180[];
 void func_001B6CB0(void) {
     func_001713B0();
     reg_d0.h[0] += reg_d0.h[0];
-    reg_a0_as_u16_p = D_0026E180;
-    *(u16 *)(reg_a4 + 2) = (reg_d0.h[0] != 0) ? *(u16 *)((u8 *)reg_a0_as_u16_p + ((s16)reg_d0.h[0] & ~1)) : *reg_a0_as_u16_p;
+    reg_a0 = (u8 *)D_0026E180;
+    *(u16 *)(reg_a4 + 2) = (reg_d0.h[0] != 0) ? *(u16 *)((u8 *)((u16 *)reg_a0) + ((s16)reg_d0.h[0] & ~1)) : *(u16 *)reg_a0;
     *(s16 *)(reg_a4 + 4) = 2;
     func_001B6D30();
 }
@@ -1251,14 +1250,13 @@ typedef struct WorkRegA4 {
     u16 unkA;
 } WorkRegA4;
 
-extern WorkRegA4 *reg_a4_as_WorkRegA4_p;
 
 
 void func_001B76D0(void) {
-    reg_a4_as_WorkRegA4_p->unk4 = 0x9050;
-    reg_a4_as_WorkRegA4_p->unk6 = 0;
-    reg_a4_as_WorkRegA4_p->unk8 = 1;
-    reg_a4_as_WorkRegA4_p->unkA = 0xC;
+    ((WorkRegA4 *)reg_a4)->unk4 = 0x9050;
+    ((WorkRegA4 *)reg_a4)->unk6 = 0;
+    ((WorkRegA4 *)reg_a4)->unk8 = 1;
+    ((WorkRegA4 *)reg_a4)->unkA = 0xC;
     func_001B7700(1, 0x9050);
 }
 

@@ -93,11 +93,10 @@ s32 boss_movement_start();                            /* extern */
 s32 boss_part_show();                            /* extern */
 s32 sprite_palette_load();                            /* extern */
 extern s32 D_0025FF30_as_s32_a[];
-extern s32 *reg_a0_as_s32_p;
 
 void func_001E5B90(void) {
     reg_d0.h[0] = 0x15;
-    reg_a0_as_s32_p = D_0025FF30_as_s32_a;
+    reg_a0 = (u8 *)D_0025FF30_as_s32_a;
     sprite_palette_load();
     reg_d0.w = 0;
     boss_movement_start();

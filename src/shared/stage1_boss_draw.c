@@ -1,7 +1,6 @@
 #include "common.h"
 #include "entity.h"
 
-extern void *reg_a6_as_void_p;
 
 void func_001B78E0(void)
 {
@@ -9,7 +8,7 @@ void func_001B78E0(void)
     u16 *work;
 
     reg_d2.w = 0x195E;
-    work = (u16 *)reg_a6_as_void_p;
+    work = (u16 *)((void *)reg_a6);
     reg_d1.h[1] = work[1];
     reg_d1.h[0] = work[2];
     reg_d1.w += 0xE600F400U;
@@ -128,16 +127,14 @@ void func_001B7D90(void) {
 }
 
 extern u32 D_0026E530[];
-extern u16 *reg_a2_as_u16_p;
-extern u16 *reg_a6_as_u16_p;
 
 void func_001B7E30(void) {
     extern void sprite_draw_layer3_keep(void);
-    reg_a2_as_u16_p = (u16 *)D_0026E530;
-    reg_d2.h[1] = reg_a2_as_u16_p[0];
-    reg_d2.h[0] = reg_a2_as_u16_p[1];
-    reg_d1.h[1] = reg_a6_as_u16_p[1];
-    reg_d1.h[0] = reg_a6_as_u16_p[2];
+    reg_a2 = (u8 *)((u16 *)D_0026E530);
+    reg_d2.h[1] = *(u16 *)reg_a2;
+    reg_d2.h[0] = *(u16 *)(reg_a2 + 2);
+    reg_d1.h[1] = *(u16 *)(reg_a6 + 2);
+    reg_d1.h[0] = *(u16 *)(reg_a6 + 4);
     reg_d1.w += 0xFC00FC00U;
     reg_d1.w += 0xF2000000U;
     reg_d3.h[0] = 0x420;

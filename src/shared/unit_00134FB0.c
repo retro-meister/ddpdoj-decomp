@@ -13,11 +13,10 @@ void func_00137820(void);
 
 s32 func_00207490();                            /* extern */
 extern s32 D_0028E84C;
-extern s32 *reg_a0_as_s32_p;
 
 void func_00134FB0(void) {
     func_00135100();
-    reg_a0_as_s32_p = &D_0028E84C;
+    reg_a0 = (u8 *)(&D_0028E84C);
     func_00207490();
 }
 
@@ -129,20 +128,18 @@ extern u16 g_two_player_state;
 extern u16 g_two_player_game;
 extern s32 D_002BF390_as_s32_a[];
 extern s32 D_002BF3B4_as_s32_a[];
-extern s32 *reg_a2_as_s32_p;
-extern s32 *reg_a3_as_s32_p;
 
 void func_00135120(void) {
-    reg_a2_as_s32_p = D_002BF390_as_s32_a;
+    reg_a2 = (u8 *)D_002BF390_as_s32_a;
     g_two_player_game = 0;
-    reg_a3_as_s32_p = D_002BF3B4_as_s32_a;
-    reg_d0.h[1] = (*(u16 *)((u8 *)(reg_a2_as_s32_p) + (0x18)));
-    reg_d0.h[0] = (*(u16 *)((u8 *)(reg_a2_as_s32_p) + (0x1A)));
+    reg_a3 = (u8 *)D_002BF3B4_as_s32_a;
+    reg_d0.h[1] = (*(u16 *)((u8 *)((s32 *)reg_a2) + (0x18)));
+    reg_d0.h[0] = (*(u16 *)((u8 *)((s32 *)reg_a2) + (0x1A)));
     if (reg_d0.w != 0) {
         g_two_player_game += 1;
     }
-    reg_d0.h[1] = (*(u16 *)((u8 *)(reg_a3_as_s32_p) + (0x18)));
-    reg_d0.h[0] = (*(u16 *)((u8 *)(reg_a3_as_s32_p) + (0x1A)));
+    reg_d0.h[1] = (*(u16 *)((u8 *)((s32 *)reg_a3) + (0x18)));
+    reg_d0.h[0] = (*(u16 *)((u8 *)((s32 *)reg_a3) + (0x1A)));
     if (reg_d0.w != 0) {
         g_two_player_game += 1;
     }
@@ -229,12 +226,12 @@ void func_00135220(void) {
 }
 
 void func_001353E0(void) {
-    reg_a0_as_s32_p = D_002BF390_as_s32_a;
+    reg_a0 = (u8 *)D_002BF390_as_s32_a;
     if (reg_d0.h[0] != 0) {
-        reg_a0_as_s32_p = D_002BF3B4_as_s32_a;
+        reg_a0 = (u8 *)D_002BF3B4_as_s32_a;
     }
-    (*(u16 *)((u8 *)(reg_a0_as_s32_p) + (0))) = (u16) reg_d1.h[0];
-    (*(s16 *)((u8 *)(reg_a0_as_s32_p) + (2))) = 0;
+    (*(u16 *)((u8 *)((s32 *)reg_a0) + (0))) = (u16) reg_d1.h[0];
+    (*(s16 *)((u8 *)((s32 *)reg_a0) + (2))) = 0;
 }
 
 typedef void (*Fn)();
@@ -420,13 +417,6 @@ extern s32 D_0028DEC4_as_s32;
 extern s32 D_0028DEC8_as_s32;
 extern s32 D_0028DECC_as_s32;
 extern s32 D_0028DED0_as_s32;
-extern s32 reg_a0_as_s32;
-extern s32 reg_a1_as_s32;
-extern s32 reg_a2_as_s32;
-extern s32 reg_a3_as_s32;
-extern s32 reg_a4_as_s32;
-extern s32 reg_a5_as_s32;
-extern s32 reg_a6_as_s32;
 
 void func_00135820(void) {
     D_0028DEF0 = reg_d0.w;
@@ -437,13 +427,13 @@ void func_00135820(void) {
     D_0028DEDC = reg_d5.w;
     D_0028DED8 = reg_d6.w;
     D_0028DED4 = reg_d7.w;
-    D_0028DED0_as_s32 = reg_a0_as_s32;
-    D_0028DECC_as_s32 = reg_a1_as_s32;
-    D_0028DEC8_as_s32 = reg_a2_as_s32;
-    D_0028DEC4_as_s32 = reg_a3_as_s32;
-    D_0028DEC0_as_s32 = reg_a4_as_s32;
-    D_0028DEBC_as_s32 = reg_a5_as_s32;
-    D_0028DEB8_as_s32 = reg_a6_as_s32;
+    D_0028DED0_as_s32 = (s32)reg_a0;
+    D_0028DECC_as_s32 = (s32)reg_a1;
+    D_0028DEC8_as_s32 = (s32)reg_a2;
+    D_0028DEC4_as_s32 = (s32)reg_a3;
+    D_0028DEC0_as_s32 = (s32)reg_a4;
+    D_0028DEBC_as_s32 = (s32)reg_a5;
+    D_0028DEB8_as_s32 = (s32)reg_a6;
     func_001358A0();
 }
 
@@ -633,13 +623,11 @@ typedef struct {
     s16 unk2;
 } HalfPair;
 
-extern FlagByte3 *reg_a5_as_FlagByte3_p;
-extern HalfPair *reg_a6_as_HalfPair_p;
 
 void func_00135D70(void) {
-    reg_a5_as_FlagByte3_p->unk3 = 2;
-    reg_a6_as_HalfPair_p->unk0 = 0;
-    reg_a6_as_HalfPair_p->unk2 = 0;
+    ((FlagByte3 *)reg_a5)->unk3 = 2;
+    ((HalfPair *)reg_a6)->unk0 = 0;
+    ((HalfPair *)reg_a6)->unk2 = 0;
 }
 
 s32 func_00207600();                            /* extern */
@@ -655,14 +643,14 @@ void func_00135D90(void) {
 }
 
 void func_00135DF0(void) {
-    reg_a2_as_s32_p = D_002BF390_as_s32_a;
-    reg_a3_as_s32_p = D_002BF3B4_as_s32_a;
-    reg_d0.h[1] = (*(u16 *)((u8 *)(reg_a2_as_s32_p) + (0x20)));
-    reg_d0.h[0] = (*(u16 *)((u8 *)(reg_a2_as_s32_p) + (0x22)));
+    reg_a2 = (u8 *)D_002BF390_as_s32_a;
+    reg_a3 = (u8 *)D_002BF3B4_as_s32_a;
+    reg_d0.h[1] = (*(u16 *)((u8 *)((s32 *)reg_a2) + (0x20)));
+    reg_d0.h[0] = (*(u16 *)((u8 *)((s32 *)reg_a2) + (0x22)));
     func_00207600();
     *(s8 *)(reg_a0 + 4) = 0;
-    reg_d0.h[1] = (*(u16 *)((u8 *)(reg_a3_as_s32_p) + (0x20)));
-    reg_d0.h[0] = (*(u16 *)((u8 *)(reg_a3_as_s32_p) + (0x22)));
+    reg_d0.h[1] = (*(u16 *)((u8 *)((s32 *)reg_a3) + (0x20)));
+    reg_d0.h[0] = (*(u16 *)((u8 *)((s32 *)reg_a3) + (0x22)));
     func_00207600();
     *(s8 *)(reg_a0 + 4) = 0;
     ENTITY(reg_a6)->flags.sh = 0;
@@ -896,9 +884,9 @@ void func_00136260(void) {
 extern u16 D_0028E940;
 
 void func_001362F0(void) {
-    reg_a0_as_s32_p = &D_0028E848;
+    reg_a0 = (u8 *)(&D_0028E848);
     func_00207490();
-    reg_a0_as_s32_p = &D_0028E84C;
+    reg_a0 = (u8 *)(&D_0028E84C);
     func_00207490();
     if (D_0028E940 != 0) {
         func_00136260();
@@ -1517,8 +1505,6 @@ next_obj10:
     if (((s64)((s64)(count & 0xFFFF) << 0x30) >> 0x30) >= 0) goto loop_40;
 }
 
-extern u32 reg_a1_as_u32;
-extern u32 reg_a2_as_u32;
 
 void func_00137820(void) {
     u32 temp_s0;
@@ -1531,16 +1517,16 @@ void func_00137820(void) {
     reg_d3.h[0] = ENTITY(reg_a6)->move.h;
     reg_tmp.h[1] = ENTITY(reg_a6)->misc.h;
     reg_tmp.h[0] = *(u16 *)(reg_a6 + 0x20);
-    reg_a2_as_u32 = reg_tmp.w;
+    reg_a2 = (u8 *)reg_tmp.w;
     if (ENTITY(reg_a6)->flags.b[1] & 2) {
         temp_s0 = reg_d1.w;
         reg_a0 = reg_a6;
         func_00136BB0();
-        reg_a1_as_u32 = temp_s0;
+        reg_a1 = (u8 *)temp_s0;
         *(u8 *)(reg_a0 + 1) |= 2;
-        *(u16 *)(reg_a0 + 2) = (u16) (*(u16 *)((u8 *)(reg_a1_as_u32) + (2)));
-        *(u16 *)(reg_a0 + 4) = (u16) (*(u16 *)((u8 *)(reg_a1_as_u32) + (4)));
-        reg_tmp.w = reg_a1_as_u32;
+        *(u16 *)(reg_a0 + 2) = (u16) (*(u16 *)((u8 *)((u32)reg_a1) + (2)));
+        *(u16 *)(reg_a0 + 4) = (u16) (*(u16 *)((u8 *)((u32)reg_a1) + (4)));
+        reg_tmp.w = (u32)reg_a1;
         *(u16 *)(reg_a0 + 0x10) = (u16) reg_tmp.h[1];
         *(u16 *)(reg_a0 + 0x12) = (u16) reg_tmp.h[0];
         return;

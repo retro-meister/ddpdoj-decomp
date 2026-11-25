@@ -30,7 +30,6 @@ void func_002004E0(void);
 s32 bullet_fire_fixed();
 extern u16 D_00259970[];
 extern u16 g_loop;
-extern u32 reg_a4_as_u32;
 
 void func_001FC8E0(void) {
     u16 temp_a0;
@@ -59,7 +58,7 @@ void func_001FC8E0(void) {
 
     reg_tmp.h[1] = *(u16 *)(reg_a5 + 0x16);
     reg_tmp.h[0] = *(u16 *)(reg_a5 + 0x18);
-    reg_a4_as_u32 = reg_tmp.w;
+    reg_a4 = (u8 *)reg_tmp.w;
     if (*(u16 *)(reg_a5 + 0x1A) != 0) {
         reg_d6.b[0] = 0xFD;
         reg_d1.b[0] = 0x1B;
@@ -77,8 +76,8 @@ void func_001FC8E0(void) {
             reg_d1.b[0] = 0x22;
         }
     }
-    reg_d2.h[1] = (*(u16 *)((u8 *)(reg_a4_as_u32) + (2)));
-    temp_a0 = (*(u16 *)((u8 *)(reg_a4_as_u32) + (4)));
+    reg_d2.h[1] = (*(u16 *)((u8 *)((u32)reg_a4) + (2)));
+    temp_a0 = (*(u16 *)((u8 *)((u32)reg_a4) + (4)));
     reg_d2.h[0] = temp_a0;
     reg_a0 = (u8 *)(D_00259970);
     reg_d4.w = 0;
@@ -529,14 +528,13 @@ void func_001FDC80(void) {
     func_001FDBD0();
 }
 
-extern void *reg_a6_as_void_p;
 
 void func_001FDCF0(void)
 {
     u8 *object;
 
     reg_d2.w = 0x1E93;
-    object = reg_a6_as_void_p;
+    object = (void *)reg_a6;
     reg_d1.h[1] = *(u16 *)(object + 0x02);
     reg_d1.h[0] = *(u16 *)(object + 0x04);
     reg_d1.h[1] += *(u16 *)(object + 0x68);
@@ -564,9 +562,9 @@ void func_001FDD60(void) {
 }
 
 void func_001FDDD0(void) {
-    if (((u16 *)reg_a6_as_void_p)[0x26 / 2] != reg_d0.h[0]) {
-        ((u16 *)reg_a6_as_void_p)[0x26 / 2] = (u16) reg_d0.h[0];
-        ((u16 *)reg_a6_as_void_p)[0x28 / 2] = 0;
+    if (((u16 *)((void *)reg_a6))[0x26 / 2] != reg_d0.h[0]) {
+        ((u16 *)((void *)reg_a6))[0x26 / 2] = (u16) reg_d0.h[0];
+        ((u16 *)((void *)reg_a6))[0x28 / 2] = 0;
     }
 }
 
@@ -673,11 +671,10 @@ typedef struct FuncFe100Obj {
     s16 unk4C;
 } FuncFe100Obj;
 
-extern FuncFe100Obj *reg_a6_as_FuncFe100Obj_p;
 
 void func_001FE100(void) {
-    reg_a6_as_FuncFe100Obj_p->unk46 = 1;
-    reg_a6_as_FuncFe100Obj_p->unk4C = 0;
+    ((FuncFe100Obj *)reg_a6)->unk46 = 1;
+    ((FuncFe100Obj *)reg_a6)->unk4C = 0;
 }
 
 s32 func_0014E030();

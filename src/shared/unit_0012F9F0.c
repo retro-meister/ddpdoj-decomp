@@ -809,13 +809,12 @@ void func_00130CC0(void) {
 
 #ifndef DEATH_LABEL
 extern char D_0024F378[];
-extern char *reg_a0_as_char_p;
 
 void func_00130D80(void) {
     extern void func_00137AD0(void);
     reg_d0.h[0] = 10;
     reg_d1.h[0] = 3;
-    reg_a0_as_char_p = D_0024F378;
+    reg_a0 = (u8 *)D_0024F378;
     reg_d2.sh[0] = 0;
     func_00137AD0();
 }
@@ -842,7 +841,7 @@ void func_00130DC0(void) {
 void func_00130DE0(void) {
     extern void func_00137AD0(void);
     reg_d2.sh[0] = 0;
-    reg_a0_as_char_p = D_0024F378;
+    reg_a0 = (u8 *)D_0024F378;
     func_00137AD0();
 }
 #endif
@@ -871,7 +870,7 @@ void func_00130E70(void) {
     s32 func_00137AD0();
     reg_d0.h[0] = 4;
     reg_d1.h[0] = 3;
-    reg_a0_as_s32_p = &D_0028C0A8;
+    reg_a0 = (u8 *)(&D_0028C0A8);
     reg_d2.h[0] = 0;
     func_00137AD0();
     reg_d0.h[0] += 6;
@@ -885,7 +884,7 @@ void func_00130EC0(void) {
     s32 func_00137AD0();
     reg_d0.h[0] = 0x12;
     reg_d1.h[0] = 3;
-    reg_a0_as_s32_p = &D_0028C0A8;
+    reg_a0 = (u8 *)(&D_0028C0A8);
     reg_d2.h[0] = 0;
     func_00137AD0();
     reg_d0.h[0] += 6;
@@ -925,10 +924,10 @@ void func_00130FB0(void) {
     s32 func_00137AD0();
     reg_d0.h[0] = 3;
     reg_d1.h[0] = 4;
-    reg_a0_as_s32_p = &D_0028C0B0;
+    reg_a0 = (u8 *)(&D_0028C0B0);
     reg_d2.h[0] = 0;
     func_00137AD0();
-    reg_a0_as_s32_p = &D_0028C0B8;
+    reg_a0 = (u8 *)(&D_0028C0B8);
     reg_d1.h[0] = 3;
     func_00137AD0();
     reg_d0.h[0] += 5;
@@ -948,10 +947,10 @@ void func_00131050(void) {
     s32 func_00137AD0();
     reg_d0.h[0] = 0x11;
     reg_d1.h[0] = 4;
-    reg_a0_as_s32_p = &D_0028C0B0;
+    reg_a0 = (u8 *)(&D_0028C0B0);
     reg_d2.h[0] = 0;
     func_00137AD0();
-    reg_a0_as_s32_p = &D_0028C0B8;
+    reg_a0 = (u8 *)(&D_0028C0B8);
     reg_d1.h[0] = 3;
     func_00137AD0();
     reg_d0.h[0] += 5;
@@ -974,7 +973,7 @@ void func_001310F0(void) {
     reg_d0.h[0] = 0xA;
     reg_d1.h[0] = 3;
     reg_d2.h[0] = 0;
-    reg_a0_as_s32_p = D_0024F398;
+    reg_a0 = (u8 *)D_0024F398;
     func_00137AD0();
     reg_d0.h[0] += 8;
     reg_d4.b[0] = D_0028E1E6[0];
@@ -986,7 +985,7 @@ void func_001310F0(void) {
 void func_00131150(void) {
     s32 func_00137AD0();
     reg_d0.h[0] = 3;
-    reg_a0_as_s32_p = D_0024F398;
+    reg_a0 = (u8 *)D_0024F398;
     reg_d1.h[0] = 3;
     reg_d2.h[0] = 0;
     func_00137AD0();
@@ -1002,7 +1001,7 @@ void func_001311A0(void) {
     reg_d0.h[0] = 0x11;
     reg_d1.h[0] = 3;
     reg_d2.h[0] = 0;
-    reg_a0_as_s32_p = D_0024F398;
+    reg_a0 = (u8 *)D_0024F398;
     func_00137AD0();
     reg_d0.h[0] += 8;
     reg_d4.b[0] = D_0028E1DA[0];

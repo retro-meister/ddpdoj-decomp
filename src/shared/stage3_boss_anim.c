@@ -101,15 +101,13 @@ block_6:
     }
 }
 
-extern u16 *reg_a4_as_u16_p;
-extern u16 *reg_a6_as_u16_p;
 
 void func_001CE040(void) {
     u16 flag = 0x8001;
-    reg_a4_as_u16_p[1] = flag;
+    *(u16 *)(reg_a4 + 2) = flag;
     reg_d0.w = 4;
-    reg_a6_as_u16_p[21] = (u16) reg_d0.h[0];
-    reg_a6_as_u16_p[37] = (u16) reg_d0.h[0];
+    *(u16 *)(reg_a6 + 0x2A) = (u16) reg_d0.h[0];
+    *(u16 *)(reg_a6 + 0x4A) = (u16) reg_d0.h[0];
     func_001CE070(flag);
 }
 
@@ -217,13 +215,11 @@ void func_001CE4C0(void) {
     }
 }
 
-extern void *reg_a4_as_void_p;
-extern void *reg_a6_as_void_p;
 
 
 void func_001CE520(void) {
-    *(s16 *)((u8 *)reg_a4_as_void_p + 2) = 0;
-    *(s16 *)((u8 *)reg_a6_as_void_p + 0xBE) = 0;
+    *(s16 *)((u8 *)((void *)reg_a4) + 2) = 0;
+    *(s16 *)((u8 *)((void *)reg_a6) + 0xBE) = 0;
     func_001CE540();
 }
 
@@ -256,15 +252,13 @@ typedef struct WorkRegBC {
     s16 unkBC;
 } WorkRegBC;
 
-extern WorkReg *reg_a4_as_WorkReg_p;
-extern WorkRegBC *reg_a6_as_WorkRegBC_p;
 
 
 void func_001CE5C0(void) {
-    reg_a4_as_WorkReg_p->unk2 = 1;
-    reg_a4_as_WorkReg_p->unk4 = 0x202;
-    reg_a4_as_WorkReg_p->unk6 = 0xC0;
-    reg_a6_as_WorkRegBC_p->unkBC = 0;
+    ((WorkReg *)reg_a4)->unk2 = 1;
+    ((WorkReg *)reg_a4)->unk4 = 0x202;
+    ((WorkReg *)reg_a4)->unk6 = 0xC0;
+    ((WorkRegBC *)reg_a6)->unkBC = 0;
     func_001CE5F0(0x202, 1);
 }
 

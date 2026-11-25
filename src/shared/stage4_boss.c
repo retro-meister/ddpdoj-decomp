@@ -96,8 +96,6 @@ s32 boss_slots_run();                            /* extern */
 s32 enemy_hitbox_debug_draw();                            /* extern */
 s32 func_001E7C60();                            /* extern */
 s32 func_002035A0();                            /* extern */
-extern s32 reg_a0_as_s32;
-extern s32 reg_a6_as_s32;
 
 void func_001E7BB0(void) {
     boss_slots_run();
@@ -107,14 +105,14 @@ void func_001E7BB0(void) {
         return;
     }
     func_001E7C60();
-    reg_a0_as_s32 = reg_a6_as_s32 + 0x20;
+    reg_a0 = (u8 *)(((s32)reg_a6) + 0x20);
     enemy_hitbox_debug_draw();
-    reg_a0_as_s32 = reg_a6_as_s32 + 0x40;
+    reg_a0 = (u8 *)(((s32)reg_a6) + 0x40);
     enemy_hitbox_debug_draw();
-    reg_a0_as_s32 = reg_a6_as_s32 + 0x60;
+    reg_a0 = (u8 *)(((s32)reg_a6) + 0x60);
     enemy_hitbox_debug_draw();
-    reg_a0_as_s32 = reg_a6_as_s32 + 0x80;
+    reg_a0 = (u8 *)(((s32)reg_a6) + 0x80);
     enemy_hitbox_debug_draw();
-    reg_a0_as_s32 = reg_a6_as_s32 + 0xA0;
+    reg_a0 = (u8 *)(((s32)reg_a6) + 0xA0);
     enemy_hitbox_debug_draw();
 }

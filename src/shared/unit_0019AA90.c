@@ -733,7 +733,6 @@ void entity_draw_layer5(void) {
     g_sprite_layer5_used += 0xC;
 }
 
-extern s32 reg_a1_as_s32;
 
 void entity_draw_keep(void) {
     u8 *temp_s1;
@@ -742,13 +741,13 @@ void entity_draw_keep(void) {
 
     temp_s1 = reg_a0;
     temp_s0 = reg_d0.w;
-    temp_s2 = reg_a1_as_s32;
+    temp_s2 = (s32)reg_a1;
     reg_a0 = g_sprite_layer1_buf;
     reg_a0 += g_sprite_layer1_used;
     sprite_entry_from_entity();
     reg_d0.w = temp_s0;
     reg_a0 = temp_s1;
-    reg_a1_as_s32 = temp_s2;
+    reg_a1 = (u8 *)temp_s2;
     g_sprite_layer1_used += 0xC;
 }
 
@@ -759,13 +758,13 @@ void entity_draw_layer1_keep(void) {
 
     temp_s1 = reg_a0;
     temp_s0 = reg_d0.w;
-    temp_s2 = reg_a1_as_s32;
+    temp_s2 = (s32)reg_a1;
     reg_a0 = g_sprite_layer1_buf;
     reg_a0 += g_sprite_layer1_used;
     sprite_entry_from_entity();
     reg_d0.w = temp_s0;
     reg_a0 = temp_s1;
-    reg_a1_as_s32 = temp_s2;
+    reg_a1 = (u8 *)temp_s2;
     g_sprite_layer1_used += 0xC;
 }
 
@@ -776,13 +775,13 @@ void entity_draw_layer2_keep(void) {
 
     temp_s1 = reg_a0;
     temp_s0 = reg_d0.w;
-    temp_s2 = reg_a1_as_s32;
+    temp_s2 = (s32)reg_a1;
     reg_a0 = g_sprite_layer2_buf;
     reg_a0 += g_sprite_layer2_used;
     sprite_entry_from_entity();
     reg_d0.w = temp_s0;
     reg_a0 = temp_s1;
-    reg_a1_as_s32 = temp_s2;
+    reg_a1 = (u8 *)temp_s2;
     g_sprite_layer2_used += 0xC;
 }
 
@@ -793,13 +792,13 @@ void entity_draw_layer3_keep(void) {
 
     temp_s1 = reg_a0;
     temp_s0 = reg_d0.w;
-    temp_s2 = reg_a1_as_s32;
+    temp_s2 = (s32)reg_a1;
     reg_a0 = g_sprite_layer3_buf;
     reg_a0 += g_sprite_layer3_used;
     sprite_entry_from_entity();
     reg_d0.w = temp_s0;
     reg_a0 = temp_s1;
-    reg_a1_as_s32 = temp_s2;
+    reg_a1 = (u8 *)temp_s2;
     g_sprite_layer3_used += 0xC;
 }
 
@@ -810,13 +809,13 @@ void entity_draw_layer4_keep(void) {
 
     temp_s1 = reg_a0;
     temp_s0 = reg_d0.w;
-    temp_s2 = reg_a1_as_s32;
+    temp_s2 = (s32)reg_a1;
     reg_a0 = g_sprite_layer4_buf;
     reg_a0 += g_sprite_layer4_used;
     sprite_entry_from_entity();
     reg_d0.w = temp_s0;
     reg_a0 = temp_s1;
-    reg_a1_as_s32 = temp_s2;
+    reg_a1 = (u8 *)temp_s2;
     g_sprite_layer4_used += 0xC;
 }
 
@@ -827,13 +826,13 @@ void entity_draw_layer5_keep(void) {
 
     temp_s1 = reg_a0;
     temp_s0 = reg_d0.w;
-    temp_s2 = reg_a1_as_s32;
+    temp_s2 = (s32)reg_a1;
     reg_a0 = g_sprite_layer5_buf;
     reg_a0 += g_sprite_layer5_used;
     sprite_entry_from_entity();
     reg_d0.w = temp_s0;
     reg_a0 = temp_s1;
-    reg_a1_as_s32 = temp_s2;
+    reg_a1 = (u8 *)temp_s2;
     g_sprite_layer5_used += 0xC;
 }
 
@@ -1417,18 +1416,17 @@ void func_0019D2C0(void) {
     sprite_entry_from_regs();
 }
 
-extern s32 reg_a0_as_s32;
 
 void func_0019D2F0(void) {
     s32 temp_s0;
     u32 temp_s1;
 
-    temp_s0 = reg_a0_as_s32;
+    temp_s0 = (s32)reg_a0;
     temp_s1 = reg_d0.w;
     func_0019D260();
     sprite_entry_from_regs();
     reg_d0.w = temp_s1;
-    reg_a0_as_s32 = temp_s0;
+    reg_a0 = (u8 *)temp_s0;
 }
 
 void func_0019D330(void) {
@@ -1452,12 +1450,12 @@ void func_0019D390(void) {
     s32 temp_s0;
     u32 temp_s1;
 
-    temp_s0 = reg_a0_as_s32;
+    temp_s0 = (s32)reg_a0;
     temp_s1 = reg_d0.w;
     func_0019D330();
     sprite_entry_from_regs();
     reg_d0.w = temp_s1;
-    reg_a0_as_s32 = temp_s0;
+    reg_a0 = (u8 *)temp_s0;
 }
 
 void func_0019D3D0(void) {
@@ -1486,12 +1484,12 @@ void func_0019D460(void) {
     s32 temp_s0;
     u32 temp_s1;
 
-    temp_s0 = reg_a0_as_s32;
+    temp_s0 = (s32)reg_a0;
     temp_s1 = reg_d0.w;
     func_0019D3D0();
     sprite_entry_from_regs();
     reg_d0.w = temp_s1;
-    reg_a0_as_s32 = temp_s0;
+    reg_a0 = (u8 *)temp_s0;
 }
 
 void func_0019D4A0(void) {
@@ -1575,15 +1573,15 @@ void func_0019D650(void)
     u32 saved_d0;
 
     saved_d0 = reg_d0.w;
-    saved_a0 = reg_a0_as_s32;
-    saved_a1 = reg_a1_as_s32;
+    saved_a0 = (s32)reg_a0;
+    saved_a1 = (s32)reg_a1;
 
     func_0019D5F0();
     sprite_entry_from_entity();
 
     reg_d0.w = saved_d0;
-    reg_a0_as_s32 = saved_a0;
-    reg_a1_as_s32 = saved_a1;
+    reg_a0 = (u8 *)saved_a0;
+    reg_a1 = (u8 *)saved_a1;
 }
 
 void func_0019D6A0(void) {
@@ -1595,12 +1593,12 @@ void func_0019D6D0(void) {
     s32 temp_s0;
     u32 temp_s1;
 
-    temp_s0 = reg_a0_as_s32;
+    temp_s0 = (s32)reg_a0;
     temp_s1 = reg_d0.w;
     func_0019D5F0();
     sprite_entry_from_regs();
     reg_d0.w = temp_s1;
-    reg_a0_as_s32 = temp_s0;
+    reg_a0 = (u8 *)temp_s0;
 }
 
 

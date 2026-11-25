@@ -190,13 +190,6 @@ extern s32 reg_save2_a3_as_s32;
 extern s32 reg_save2_a2_as_s32;
 extern s32 reg_save2_a1_as_s32;
 extern s32 reg_save2_a0_as_s32;
-extern s32 reg_a0_as_s32;
-extern s32 reg_a1_as_s32;
-extern s32 reg_a2_as_s32;
-extern s32 reg_a3_as_s32;
-extern s32 reg_a4_as_s32;
-extern s32 reg_a5_as_s32;
-extern s32 reg_a6_as_s32;
 
 void func_001A40A0(void) {
     void func_0018DEE0(void);
@@ -209,14 +202,14 @@ void func_001A40A0(void) {
     reg_d5.w = reg_save2_d5;
     reg_d6.w = reg_save2_d6;
     reg_d7.w = reg_save2_d7;
-    reg_a0_as_s32 = reg_save2_a0_as_s32;
-    reg_a1_as_s32 = reg_save2_a1_as_s32;
-    reg_a2_as_s32 = reg_save2_a2_as_s32;
-    reg_a3_as_s32 = reg_save2_a3_as_s32;
+    reg_a0 = (u8 *)reg_save2_a0_as_s32;
+    reg_a1 = (u8 *)reg_save2_a1_as_s32;
+    reg_a2 = (u8 *)reg_save2_a2_as_s32;
+    reg_a3 = (u8 *)reg_save2_a3_as_s32;
     cond_flag = 0;
-    reg_a4_as_s32 = reg_save2_a4_as_s32;
-    reg_a5_as_s32 = reg_save2_a5_as_s32;
-    reg_a6_as_s32 = reg_save2_a6_as_s32;
+    reg_a4 = (u8 *)reg_save2_a4_as_s32;
+    reg_a5 = (u8 *)reg_save2_a5_as_s32;
+    reg_a6 = (u8 *)reg_save2_a6_as_s32;
 }
 
 void func_001A4140(void) {

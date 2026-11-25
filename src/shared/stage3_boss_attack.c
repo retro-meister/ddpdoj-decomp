@@ -8,10 +8,9 @@ void func_001D03B0(void);
 void func_001D08C0(void);
 void func_001D0E60(void);
 
-extern s16 *reg_a4_as_s16_p;
 
 void func_001CE7F0(void) {
-    reg_a4_as_s16_p[1] = 0;
+    *(s16 *)(reg_a4 + 2) = 0;
     func_001CE800();
 }
 

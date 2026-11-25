@@ -46,32 +46,30 @@ void func_00170BE0(void) {
 }
 
 extern u16 D_0025AEA8[];
-extern u16 *reg_a0_as_u16_p;
 
 void func_00170CA0(void) {
     reg_d0.h[0] = ENTITY(reg_a6)->misc.h;
-    reg_a0_as_u16_p = D_0025AEA8;
+    reg_a0 = (u8 *)D_0025AEA8;
     reg_d0.h[0] += reg_d0.h[0];
-    reg_d1.h[0] = (reg_d0.h[0] != 0) ? *(u16 *)((u8 *)reg_a0_as_u16_p + ((s16)reg_d0.h[0] & ~1)) : *reg_a0_as_u16_p;
+    reg_d1.h[0] = (reg_d0.h[0] != 0) ? *(u16 *)((u8 *)((u16 *)reg_a0) + ((s16)reg_d0.h[0] & ~1)) : *(u16 *)reg_a0;
 }
 
 extern u16 D_0025AEB8[];
-extern u16 *reg_a1_as_u16_p;
 
 void func_00170D00(void) {
     reg_d0.h[0] = ENTITY(reg_a6)->misc.h;
-    reg_a1_as_u16_p = D_0025AEB8;
+    reg_a1 = (u8 *)D_0025AEB8;
     reg_d0.h[0] += reg_d0.h[0];
-    *(u16 *)(reg_a0 + 0x1E) = (reg_d0.h[0] != 0) ? *(u16 *)((u8 *)reg_a1_as_u16_p + ((s16)reg_d0.h[0] & ~1)) : *reg_a1_as_u16_p;
+    *(u16 *)(reg_a0 + 0x1E) = (reg_d0.h[0] != 0) ? *(u16 *)((u8 *)((u16 *)reg_a1) + ((s16)reg_d0.h[0] & ~1)) : *(u16 *)reg_a1;
 }
 
 extern u16 D_0025AEC8[];
 
 void func_00170D70(void) {
     reg_d0.h[0] = ENTITY(reg_a6)->misc.h;
-    reg_a1_as_u16_p = D_0025AEC8;
+    reg_a1 = (u8 *)D_0025AEC8;
     reg_d0.h[0] += reg_d0.h[0];
-    *(u16 *)(reg_a0 + 0x1E) = (reg_d0.h[0] != 0) ? *(u16 *)((u8 *)reg_a1_as_u16_p + ((s16)reg_d0.h[0] & ~1)) : *reg_a1_as_u16_p;
+    *(u16 *)(reg_a0 + 0x1E) = (reg_d0.h[0] != 0) ? *(u16 *)((u8 *)((u16 *)reg_a1) + ((s16)reg_d0.h[0] & ~1)) : *(u16 *)reg_a1;
 }
 
 void func_00170DE0(void) {
@@ -275,13 +273,12 @@ next_5:
 #pragma push
 #pragma opt_propagation off
 extern u8 D_0028E2C0;
-extern void *reg_a6_as_void_p;
 extern void (*jtbl_0028E3F4_as_fn)(void);
 
 void func_00171330(void (*callback)(void))
 {
     if (D_0028E2C0 == 0) {
-        const u16 *state = (const u16 *)reg_a6_as_void_p;
+        const u16 *state = (const u16 *)((void *)reg_a6);
 
         reg_d1.h[1] = state[1];
         reg_d1.h[0] = state[2];
@@ -313,10 +310,9 @@ void func_001713C0(void) {
     reg_d0.w = 4;
 }
 
-extern u16 *reg_a5_as_u16_p;
 
 void enemy_set_entity_count(u16 val) {
-    reg_a5_as_u16_p[2] = val;
+    *(u16 *)(reg_a5 + 4) = val;
 }
 
 

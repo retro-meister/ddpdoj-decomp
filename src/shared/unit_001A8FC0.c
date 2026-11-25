@@ -82,25 +82,24 @@ extern s32 *reg_a0_as_s32_p;
 
 void func_001A9130(void) {
     if (reg_d1.w & 0x10) {
-        reg_a0_as_s32_p = &D_0028E720_as_s32;
+        reg_a0 = (u8 *)(&D_0028E720_as_s32);
         func_001A97F0();
     }
     if (reg_d1.w & 8) {
-        reg_a0_as_s32_p = &D_0028E71C;
+        reg_a0 = (u8 *)(&D_0028E71C);
         func_001A97F0();
     }
 }
 
-extern void *reg_a0_as_void_p;
 
 
 void func_001A9180(void) {
-    reg_a0_as_void_p = &D_0028E720;
+    reg_a0 = (u8 *)(&D_0028E720);
     func_001A97F0();
 }
 
 void func_001A9190(void) {
-    reg_a0_as_void_p = &D_0028E71C;
+    reg_a0 = (u8 *)(&D_0028E71C);
     func_001A97F0();
 }
 
@@ -1037,7 +1036,7 @@ void func_001AA8A0()
     }
 
     reg_d0.w = reg_d3.w;
-    reg_a0_as_void_p = &D_0028E71C_as_u8;
+    reg_a0 = (u8 *)(&D_0028E71C_as_u8);
     func_001A97F0();
     g_boss_hit_decay_timer_as_s16 = 10;
     g_boss_hit_palette = 7;
@@ -1109,18 +1108,17 @@ extern s32 g_p1_extend_setting_as_s32;
 extern s32 g_p1_extend_score;
 
 void func_001AAB50(void) {
-    reg_a0_as_s32_p = &g_p1_extend_score;
-    reg_a1_as_s32_p = &g_p1_extend_setting_as_s32;
+    reg_a0 = (u8 *)(&g_p1_extend_score);
+    reg_a1 = (u8 *)(&g_p1_extend_setting_as_s32);
     func_001AAB90();
 }
 
-extern void *reg_a1_as_void_p;
 extern u8 g_p2_extend_setting_as_u8;
 extern u8 g_p2_extend_score_as_u8;
 
 void func_001AAB70(void) {
-    reg_a0_as_void_p = &g_p2_extend_score_as_u8;
-    reg_a1_as_void_p = &g_p2_extend_setting_as_u8;
+    reg_a0 = (u8 *)(&g_p2_extend_score_as_u8);
+    reg_a1 = (u8 *)(&g_p2_extend_setting_as_u8);
     func_001AAB90();
 }
 

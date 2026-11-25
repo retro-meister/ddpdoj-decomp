@@ -15,10 +15,9 @@ void func_001D6990(void);
 void func_001D6A40(void);
 void func_001D6B60(void);
 
-extern void *reg_a6_as_void_p;
 
 void func_001D4620(void) {
-    *(s16 *)((u8 *)reg_a6_as_void_p + 0x86) = 1;
+    *(s16 *)((u8 *)((void *)reg_a6) + 0x86) = 1;
 }
 
 s32 func_001D4400();

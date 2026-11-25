@@ -204,7 +204,6 @@ extern u16 g_bullets_blocked;
 extern u16 g_enemies_stopped;
 extern u16 g_rank_1_16;
 extern u16 g_rank_2_16;
-extern u16 *reg_a1_as_u16_p;
 
 void func_00153DF0(void) {
     s32 enemy_remove();
@@ -390,23 +389,23 @@ block_4:
             if ((s32) reg_tmp.w < 0) {
                 reg_d0.w = 0x174;
                 score_add();
-                reg_a1_as_u16_p = (u16 *)D_00257D20;
+                reg_a1 = (u8 *)((u16 *)D_00257D20);
 loop_19:
-                temp_a0 = *reg_a1_as_u16_p;
+                temp_a0 = *(u16 *)reg_a1;
                 reg_d1.h[0] = temp_a0;
-                reg_a1_as_u16_p += 1;
+                reg_a1 += 2;
                 if ((s16) reg_d1.h[0] != -1) {
-                    reg_d0.h[0] = *reg_a1_as_u16_p;
-                    reg_a1_as_u16_p += 1;
+                    reg_d0.h[0] = *(u16 *)reg_a1;
+                    reg_a1 += 2;
                     explosion_spawn();
-                    reg_d0.h[0] = *reg_a1_as_u16_p;
-                    reg_a1_as_u16_p += 1;
+                    reg_d0.h[0] = *(u16 *)reg_a1;
+                    reg_a1 += 2;
                     *(u8 *)(reg_a0 + 0x1D) = (u8) reg_d0.b[0];
                     *(u16 *)(reg_a0 + 0x18) = (u16) reg_d1.h[0];
-                    *(u16 *)(reg_a0 + 0x26) = (u16) *reg_a1_as_u16_p;
-                    reg_a1_as_u16_p += 1;
-                    *(u16 *)(reg_a0 + 0x28) = (u16) *reg_a1_as_u16_p;
-                    reg_a1_as_u16_p += 1;
+                    *(u16 *)(reg_a0 + 0x26) = (u16) *(u16 *)reg_a1;
+                    reg_a1 += 2;
+                    *(u16 *)(reg_a0 + 0x28) = (u16) *(u16 *)reg_a1;
+                    reg_a1 += 2;
                     *(u16 *)(reg_a0 + 2) = ENTITY(reg_a6)->y.h;
                     *(u16 *)(reg_a0 + 4) = (u16) ENTITY(reg_a6)->x.h;
                     *(s16 *)(reg_a0 + 0x1E) = 0x10;
@@ -416,7 +415,7 @@ loop_19:
                     reg_d0.b[0] = ENTITY(reg_a6)->move.b.dir;
                     reg_d0.b[0] *= 4;
                     *(u8 *)(reg_a0 + 0x1A) = (u8) reg_d0.b[0];
-                    reg_a1_as_u16_p += 1;
+                    reg_a1 += 2;
                     goto loop_19;
                 }
                 func_0018D580();
@@ -1949,10 +1948,9 @@ void func_00157D80(void) {
 
 s32 enemy_init_entities();                            /* extern */
 extern s32 D_002583E0[];
-extern s32 *reg_a0_as_s32_p;
 
 void func_00157D90(void) {
-    reg_a0_as_s32_p = D_002583E0;
+    reg_a0 = (u8 *)D_002583E0;
     enemy_init_entities();
     *(s16 *)(reg_a5 + 0x18) = 6;
 }
@@ -3218,17 +3216,16 @@ loop_1:
 
 extern s8 D_0028C9C8;
 extern u8 D_0028C9D0;
-extern s8 *reg_a3_as_s8_p;
 
 void func_0015A390(void) {
     u16 temp_a0;
     reg_a4 = D_00258740;
-    reg_a3_as_s8_p = &D_0028C9C8;
+    reg_a3 = (u8 *)(&D_0028C9C8);
     reg_a2 = &D_0028C9D0;
     reg_d7.w = 5;
     do {
         reg_d1.w = 0;
-        reg_d1.b[0] = (u8) *reg_a3_as_s8_p;
+        reg_d1.b[0] = (u8) *(s8 *)reg_a3;
         reg_d2.h[1] = ENTITY(reg_a6)->y.h;
         reg_d2.h[0] = ENTITY(reg_a6)->x.h;
         reg_d4.w = (u32) reg_a6;
@@ -3257,7 +3254,7 @@ void func_0015A390(void) {
             bullet_fire256_fixed();
         }
         reg_a4 += 4;
-        reg_a3_as_s8_p += 1;
+        reg_a3 += 1;
         reg_a2 += 1;
     } while ((s16)(--reg_d7.h[0]) >= 0);
 }
@@ -3515,7 +3512,7 @@ s32 enemy_init_entities();                            /* extern */
 extern s32 D_00258980[];
 
 void func_0015AE10(void) {
-    reg_a0_as_s32_p = D_00258980;
+    reg_a0 = (u8 *)D_00258980;
     enemy_init_entities();
     reg_tmp.w = 0x38001C00;
     ENTITY(reg_a6)->y.h = (u16) reg_tmp.h[1];

@@ -298,18 +298,17 @@ void func_001F56F0(void) {
     *(u16 *)(reg_a6 + 0x160) |= reg_d0.h[0];
 }
 
-extern void *reg_a6_as_void_p;
 
 void func_001F5730(void) {
     u16 *flags;
     u32 combined;
 
     reg_d0.h[0] = 0xA001;
-    flags = (u16 *)reg_a6_as_void_p;
+    flags = (u16 *)((void *)reg_a6);
     combined = (u32)flags[0xC0] | (u32)reg_d0.h[0];
     flags[0xC0] = (u16)combined;
 #ifdef DEATH_LABEL
-    flags = (u16 *)reg_a6_as_void_p;
+    flags = (u16 *)((void *)reg_a6);
     combined = (u32)flags[0x100] | (u32)reg_d0.h[0];
     flags[0x100] = (u16)combined;
 #endif

@@ -227,18 +227,16 @@ void func_001F4050() {
     entity_velocity();
 }
 
-extern void *reg_a4_as_void_p;
-extern void *reg_a6_as_void_p;
 
 void func_001F4060(void) {
     u8 val;
 
     reg_d0.w = 0;
     val = reg_d0.b[0];
-    *((u8 *)reg_a4_as_void_p + 1) = reg_d0.b[0];
+    *((u8 *)((void *)reg_a4) + 1) = reg_d0.b[0];
     val = reg_d0.b[0];
-    *((u8 *)reg_a4_as_void_p + 0) = reg_d0.b[0];
-    *((u8 *)reg_a6_as_void_p + 0x1B) = 6;
+    *((u8 *)((void *)reg_a4) + 0) = reg_d0.b[0];
+    *((u8 *)((void *)reg_a6) + 0x1B) = 6;
     func_001F4090(val);
 }
 

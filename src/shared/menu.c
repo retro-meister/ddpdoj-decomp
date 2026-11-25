@@ -3663,7 +3663,6 @@ found2:
 
 void text_queue_sjis(s16 x, s16 y, u8 *text, s32 a3, s32 w, s32 h, u16 attr, s32 z);
 void text_queue_ascii(s16 x, s16 y, u8 *text, s32 a3, s32 w, s32 h, u16 attr, s32 z);
-extern s8 *reg_a0_as_s8_p;
 extern u16 D_0028E3F0;
 
 void func_002228D0(s32 x, s32 y) {
@@ -3678,15 +3677,15 @@ void func_002228D0(s32 x, s32 y) {
     cy = y;
     cx = x;
     for (i = 0; i < 0x100; i++) {
-        buf[0] = *reg_a0_as_s8_p;
-        reg_a0_as_s8_p++;
+        buf[0] = *(s8 *)reg_a0;
+        reg_a0 += 1;
         if (buf[0] < 0x81) {
             buf[1] = 0;
             single = 1;
         } else {
             single = 0;
-            buf[1] = *reg_a0_as_s8_p;
-            reg_a0_as_s8_p++;
+            buf[1] = *(s8 *)reg_a0;
+            reg_a0 += 1;
         }
         *(u16 *)&buf[2] = 0;
         switch (*(u16 *)buf) {
@@ -3753,15 +3752,15 @@ void func_00222C30(s32 x, s32 y, s32 attr) {
     cy = y;
     cx = x;
     for (i = 0; i < 0x100; i++) {
-        buf[0] = *reg_a0_as_s8_p;
-        reg_a0_as_s8_p++;
+        buf[0] = *(s8 *)reg_a0;
+        reg_a0 += 1;
         if (buf[0] < 0x81) {
             buf[1] = 0;
             single = 1;
         } else {
             single = 0;
-            buf[1] = *reg_a0_as_s8_p;
-            reg_a0_as_s8_p++;
+            buf[1] = *(s8 *)reg_a0;
+            reg_a0 += 1;
         }
         *(u16 *)&buf[2] = 0;
         switch (*(u16 *)buf) {
@@ -3831,15 +3830,15 @@ void func_00222F90(s32 x, s32 y, s32 attr) {
     cy = y;
     cx = x;
     for (i = 0; i < 0x100; i++) {
-        buf[0] = *reg_a0_as_s8_p;
-        reg_a0_as_s8_p++;
+        buf[0] = *(s8 *)reg_a0;
+        reg_a0 += 1;
         if (buf[0] < 0x81) {
             buf[1] = 0;
             single = 1;
         } else {
             single = 0;
-            buf[1] = *reg_a0_as_s8_p;
-            reg_a0_as_s8_p++;
+            buf[1] = *(s8 *)reg_a0;
+            reg_a0 += 1;
         }
         *(u16 *)&buf[2] = 0;
         switch (*(u16 *)buf) {

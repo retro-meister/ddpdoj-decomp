@@ -17,26 +17,23 @@ void func_001A2680(void);
 
 s32 entity_draw_keep();                            /* extern */
 s32 func_0019DD20();                            /* extern */
-extern s32 reg_a0_as_s32;
-extern s32 reg_a3_as_s32;
-extern s32 reg_a6_as_s32;
 
 void func_0019F270(void) {
     s32 temp_s0;
     s32 temp_s0_2;
 
-    temp_s0 = reg_a6_as_s32;
+    temp_s0 = (s32)reg_a6;
     func_0019DD20();
-    reg_a6_as_s32 = reg_a0_as_s32 - 0x2C;
+    reg_a6 = (u8 *)(((s32)reg_a0) - 0x2C);
     entity_draw_keep();
-    reg_a6_as_s32 = temp_s0;
-    reg_a6_as_s32 += 0x20;
-    temp_s0_2 = reg_a6_as_s32;
-    reg_a0_as_s32 = reg_a3_as_s32;
+    reg_a6 = (u8 *)temp_s0;
+    reg_a6 += 0x20;
+    temp_s0_2 = (s32)reg_a6;
+    reg_a0 = (u8 *)(((s32)reg_a3));
     func_0019DD20();
-    reg_a6_as_s32 = reg_a0_as_s32 - 0x2C;
+    reg_a6 = (u8 *)(((s32)reg_a0) - 0x2C);
     entity_draw_keep();
-    reg_a6_as_s32 = temp_s0_2;
+    reg_a6 = (u8 *)temp_s0_2;
 }
 
 void func_0019D390(void);
@@ -253,16 +250,13 @@ void func_0019F930(void) {
 extern s32 D_0029D730_as_s32_a[];
 extern s16 D_0029F180_as_s16_a[];
 extern s32 D_0029F260_as_s32_a[];
-extern s32 *reg_a2_as_s32_p;
-extern s32 *reg_a4_as_s32_p;
-extern s16 *reg_a6_as_s16_p;
 
 void func_0019FC70(void) {
-    reg_a6_as_s16_p = D_0029F180_as_s16_a;
-    reg_a4_as_s32_p = D_0029F260_as_s32_a;
-    reg_a2_as_s32_p = D_0029D730_as_s32_a;
+    reg_a6 = (u8 *)D_0029F180_as_s16_a;
+    reg_a4 = (u8 *)D_0029F260_as_s32_a;
+    reg_a2 = (u8 *)D_0029D730_as_s32_a;
     reg_d7.w = 1;
-    if (*reg_a6_as_s16_p < 0) {
+    if (*(s16 *)reg_a6 < 0) {
         func_0019FD30();
         return;
     }
@@ -275,10 +269,10 @@ extern s16 D_0029F110_as_s16_a[];
 extern s32 D_0029F1F0_as_s32_a[];
 
 void func_0019FCE0(void) {
-    reg_a6_as_s16_p = D_0029F110_as_s16_a;
-    reg_a4_as_s32_p = D_0029F1F0_as_s32_a;
-    reg_a2_as_s32_p = D_0029D710_as_s32_a;
-    if (*reg_a6_as_s16_p < 0) {
+    reg_a6 = (u8 *)D_0029F110_as_s16_a;
+    reg_a4 = (u8 *)D_0029F1F0_as_s32_a;
+    reg_a2 = (u8 *)D_0029D710_as_s32_a;
+    if (*(s16 *)reg_a6 < 0) {
         func_0019FD30();
     }
 }

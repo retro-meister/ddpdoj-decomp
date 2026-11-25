@@ -722,6 +722,11 @@ def main():
     parser.add_argument("--strings", metavar="SOURCE", help="turn the unit's string references into literals")
     parser.add_argument("--move", nargs=2, metavar=("SOURCE", "NEW"), help="rename or move a unit, e.g. src/shared/a.c src/engine/b.c")
     args = parser.parse_args()
+    # sources are named relative to the repository root; accept absolute paths too
+    for option in ("check", "strings", "rodata", "data"):
+        value = getattr(args, option, None)
+        if value and Path(value).is_absolute():
+            setattr(args, option, Path(value).resolve().relative_to(ROOT.resolve()).as_posix())
     if args.move:
         old, new = (Path(value).relative_to("src").with_suffix("").as_posix() for value in args.move)
         for target in (MAIN, DEATH):

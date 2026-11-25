@@ -230,11 +230,10 @@ void func_001A2F20(void)
     } while ((s16)(--reg_d0.h[0]) >= 0);
 }
 
-extern s32 reg_a0_as_s32;
 
 void text_palette_load(void) {
     u32 temp_s0 = reg_d0.w;
-    s32 temp_s1 = reg_a0_as_s32;
+    s32 temp_s1 = (s32)reg_a0;
     u8 *temp_s2 = reg_a1;
 
     reg_a1 = D_0029F2D0;
@@ -244,13 +243,13 @@ void text_palette_load(void) {
     func_001A2F20();
     reg_d0.w = temp_s0;
     D_0028E0B8 = 1;
-    reg_a0_as_s32 = temp_s1;
+    reg_a0 = (u8 *)temp_s1;
     reg_a1 = temp_s2;
 }
 
 void sprite_palette_load(void) {
     u32 temp_s0 = reg_d0.w;
-    s32 temp_s1 = reg_a0_as_s32;
+    s32 temp_s1 = (s32)reg_a0;
     u8 *temp_s2 = reg_a1;
 
     reg_a1 = D_0029FCB0;
@@ -260,6 +259,6 @@ void sprite_palette_load(void) {
     func_001A2F20();
     reg_d0.w = temp_s0;
     D_0028E0C0 = 1;
-    reg_a0_as_s32 = temp_s1;
+    reg_a0 = (u8 *)temp_s1;
     reg_a1 = temp_s2;
 }

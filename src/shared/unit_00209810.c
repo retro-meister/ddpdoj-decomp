@@ -11,7 +11,6 @@ extern s32 D_002683F0[];
 extern s32 D_00268410[];
 extern s8 D_0028DF9C;
 extern s8 D_0028DFA0;
-extern s32 *reg_a0_as_s32_p;
 
 void func_00209810(void) {
     func_0012FD00();
@@ -19,11 +18,11 @@ void func_00209810(void) {
     D_0028DFA0 = 0;
     D_0028DF9C = 1;
     reg_d0.h[0] = 0;
-    reg_a0_as_s32_p = D_00268360;
+    reg_a0 = (u8 *)D_00268360;
     func_00209200();
-    reg_a0_as_s32_p = D_002683F0;
+    reg_a0 = (u8 *)D_002683F0;
     func_00209200();
-    reg_a0_as_s32_p = D_00268410;
+    reg_a0 = (u8 *)D_00268410;
     func_00209200();
     func_00209790();
     reg_d0.w = 0;
@@ -89,7 +88,7 @@ extern s32 D_00268770[];
 
 void func_002099D0(void) {
     void func_002092F0(void);
-    reg_a0_as_s32_p = D_00268770;
+    reg_a0 = (u8 *)D_00268770;
     reg_d0.h[0] = 7;
     reg_d1.h[0] = 0x29;
     reg_d2.h[0] = reg_d7.h[0];

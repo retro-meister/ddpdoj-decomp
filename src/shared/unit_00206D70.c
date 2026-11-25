@@ -300,11 +300,9 @@ loop_1:
     if (D_0028E0CC != 0) goto loop_1;
 }
 
-extern s32 reg_a5_as_s32;
-extern s32 reg_a0_as_s32;
 
 void func_002075F0(void) {
-    reg_a0_as_s32 = reg_a5_as_s32 + 0x4C;
+    reg_a0 = (u8 *)(((s32)reg_a5) + 0x4C);
     func_00207490();
 }
 

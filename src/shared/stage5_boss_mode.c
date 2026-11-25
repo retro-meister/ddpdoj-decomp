@@ -102,11 +102,10 @@ void func_001F1540() {
     }
 }
 
-extern void *reg_a4_as_void_p;
 
 void func_001F1660(void) {
-    ((u16 *)reg_a4_as_void_p)[1] = 0xC0;
-    ((u16 *)reg_a4_as_void_p)[2] = 0x303;
+    ((u16 *)((void *)reg_a4))[1] = 0xC0;
+    ((u16 *)((void *)reg_a4))[2] = 0x303;
     func_001F1680(0xC0);
 }
 
@@ -327,7 +326,6 @@ block_rts:
 }
 
 extern s16 *reg_a4_as_s16_p;
-extern s16 *reg_a5_as_s16_p;
 
 #ifdef DEATH_LABEL
 extern s8 death_D_0029085C_as_s8;
@@ -337,9 +335,9 @@ void func_001F1DF0(void) {
 #ifdef DEATH_LABEL
     death_D_0029085C_as_s8 = 1;
 #endif
-    reg_a4_as_s16_p[1] = 1;
-    reg_a4_as_s16_p[2] = 0x80;
-    reg_a5_as_s16_p[13] = 0x6270;
+    *(s16 *)(reg_a4 + 2) = 1;
+    *(s16 *)(reg_a4 + 4) = 0x80;
+    *(s16 *)(reg_a5 + 0x1A) = 0x6270;
     func_001F1E20(0x80, 1);
 }
 
@@ -591,7 +589,6 @@ typedef struct WorkRegA4 {
     s16 unk4;
 } WorkRegA4;
 
-extern WorkRegA4 *reg_a4_as_WorkRegA4_p;
 extern s16 g_enemy_signal_2_as_s16;
 
 
@@ -603,8 +600,8 @@ void func_001F2620(void) {
 #ifdef DEATH_LABEL
     death_D_0029085C_as_s8 = 2;
 #endif
-    reg_a4_as_WorkRegA4_p->unk2 = 1;
-    reg_a4_as_WorkRegA4_p->unk4 = 0x80;
+    ((WorkRegA4 *)reg_a4)->unk2 = 1;
+    ((WorkRegA4 *)reg_a4)->unk4 = 0x80;
     g_enemy_signal_2_as_s16 = 0;
     func_001F2640(1);
 }
@@ -698,13 +695,12 @@ s32 func_0013B8B0();                            /* extern */
 s32 sprite_palette_load();                            /* extern */
 extern s32 D_002554B0_as_s32_a[];
 extern s32 D_00264E80[];
-extern s32 *reg_a0_as_s32_p;
 
 void func_001F2810(void) {
     reg_d0.h[0] = 0xE;
-    reg_a0_as_s32_p = D_002554B0_as_s32_a;
+    reg_a0 = (u8 *)D_002554B0_as_s32_a;
     sprite_palette_load();
-    reg_a0_as_s32_p = D_00264E80;
+    reg_a0 = (u8 *)D_00264E80;
     func_0013B8B0();
     *(s16 *)(reg_a4 + 2) = 0;
     *(s16 *)(reg_a4 + 6) = 0x101;
@@ -985,11 +981,10 @@ void func_001F3010(void) {
     }
 }
 
-extern u16 *reg_a4_as_u16_p;
 
 
 void func_001F3050(void) {
-    reg_a4_as_u16_p[1] = 0x60;
+    *(u16 *)(reg_a4 + 2) = 0x60;
     func_001F3060();
 }
 
@@ -1024,7 +1019,7 @@ block_4:
 
 
 void func_001F30E0(void) {
-    reg_a4_as_s16_p[1] = 0x60;
+    *(s16 *)(reg_a4 + 2) = 0x60;
     func_001F30F0();
 }
 
@@ -1055,8 +1050,8 @@ block_4:
 
 
 void func_001F3170(void) {
-    ((s16 *)reg_a4_as_void_p)[1] = 0x60;
-    ((s16 *)reg_a4_as_void_p)[2] = 0x40;
+    ((s16 *)((void *)reg_a4))[1] = 0x60;
+    ((s16 *)((void *)reg_a4))[2] = 0x40;
     func_001F3190(0x60);
 }
 
@@ -1090,7 +1085,7 @@ block_4:
 
 
 void func_001F3230(void) {
-    reg_a4_as_u16_p[1] = 1;
+    *(u16 *)(reg_a4 + 2) = 1;
     func_001F3240();
 }
 
@@ -1121,7 +1116,7 @@ block_4:
 
 
 void func_001F32C0(void) {
-    reg_a4_as_s16_p[1] = 0x40;
+    *(s16 *)(reg_a4 + 2) = 0x40;
     func_001F32D0();
 }
 
@@ -1349,7 +1344,7 @@ block_4:
 
 
 void func_001F3790(void) {
-    reg_a4_as_u16_p[1] = 0x60;
+    *(u16 *)(reg_a4 + 2) = 0x60;
     func_001F37A0();
 }
 
@@ -1387,8 +1382,8 @@ block_4:
 
 
 void func_001F3840(void) {
-    ((s16 *)reg_a4_as_void_p)[1] = 0x60;
-    ((s16 *)reg_a4_as_void_p)[2] = 0x40;
+    ((s16 *)((void *)reg_a4))[1] = 0x60;
+    ((s16 *)((void *)reg_a4))[2] = 0x40;
     func_001F3860(0x60);
 }
 
@@ -1448,7 +1443,7 @@ void func_001F3950() {
 
 
 void func_001F39B0(void) {
-    reg_a4_as_s16_p[1] = 0x80;
+    *(s16 *)(reg_a4 + 2) = 0x80;
     func_001F39C0();
 }
 

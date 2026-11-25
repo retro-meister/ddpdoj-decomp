@@ -106,8 +106,6 @@ s32 enemy_hitbox_debug_draw();                            /* extern */
 s32 func_001BB8E0();                            /* extern */
 s32 func_002016D0();                            /* extern */
 s32 func_002035A0();                            /* extern */
-extern s32 reg_a0_as_s32;
-extern s32 reg_a6_as_s32;
 
 void func_001BB830(void) {
     u16 temp_v0;
@@ -124,10 +122,10 @@ void func_001BB830(void) {
         enemy_remove();
         return;
     }
-    reg_a0_as_s32 = reg_a6_as_s32;
+    reg_a0 = (u8 *)(((s32)reg_a6));
     enemy_hitbox_debug_draw();
-    reg_a0_as_s32 = reg_a6_as_s32 + 0x20;
+    reg_a0 = (u8 *)(((s32)reg_a6) + 0x20);
     enemy_hitbox_debug_draw();
-    reg_a0_as_s32 = reg_a6_as_s32 + 0x60;
+    reg_a0 = (u8 *)(((s32)reg_a6) + 0x60);
     enemy_hitbox_debug_draw();
 }

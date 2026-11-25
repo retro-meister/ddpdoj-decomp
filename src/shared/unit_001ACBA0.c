@@ -953,28 +953,22 @@ extern s32 g_p1_score_as_s32;
 extern s32 D_0028E76C_as_s32;
 extern s32 g_p2_lives_as_s32;
 extern s32 g_p1_lives_as_s32;
-extern s32 *reg_a0_as_s32_p;
-extern s32 *reg_a1_as_s32_p;
-extern s32 *reg_a2_as_s32_p;
-extern s32 *reg_a3_as_s32_p;
-extern s32 *reg_a4_as_s32_p;
-extern s32 *reg_a6_as_s32_p;
 
 void func_001AEA80(void) {
-    reg_a0_as_s32_p = &D_0028E76C_as_s32;
-    reg_a1_as_s32_p = &D_0028E71C;
-    reg_a2_as_s32_p = &g_p1_extend_score;
-    reg_a3_as_s32_p = &g_p1_lives_as_s32;
-    reg_a4_as_s32_p = &g_p1_extend_setting_as_s32;
-    reg_a6_as_s32_p = &g_p1_score_billions_as_s32;
+    reg_a0 = (u8 *)(&D_0028E76C_as_s32);
+    reg_a1 = (u8 *)(&D_0028E71C);
+    reg_a2 = (u8 *)(&g_p1_extend_score);
+    reg_a3 = (u8 *)(&g_p1_lives_as_s32);
+    reg_a4 = (u8 *)(&g_p1_extend_setting_as_s32);
+    reg_a6 = (u8 *)(&g_p1_score_billions_as_s32);
     reg_d7.w = 0;
     func_001AEB10();
-    reg_a0_as_s32_p = &g_p1_score_as_s32;
-    reg_a1_as_s32_p = &D_0028E718;
-    reg_a2_as_s32_p = &g_p2_extend_score;
-    reg_a3_as_s32_p = &g_p2_lives_as_s32;
-    reg_a4_as_s32_p = &g_p2_extend_setting_as_s32;
-    reg_a6_as_s32_p = &g_p2_score_billions_as_s32;
+    reg_a0 = (u8 *)(&g_p1_score_as_s32);
+    reg_a1 = (u8 *)(&D_0028E718);
+    reg_a2 = (u8 *)(&g_p2_extend_score);
+    reg_a3 = (u8 *)(&g_p2_lives_as_s32);
+    reg_a4 = (u8 *)(&g_p2_extend_setting_as_s32);
+    reg_a6 = (u8 *)(&g_p2_score_billions_as_s32);
     reg_d7.w = 1;
     func_001AEB10();
 }
@@ -1102,12 +1096,11 @@ next_1:
 }
 
 extern Reg32 reg_d0;
-extern u32 *reg_a0_as_u32_p;
 extern u8 D_002BAF50_as_u8_a[];
 
 
 void func_001AED30(void) {
-    reg_a0_as_u32_p = (u32 *)D_002BAF50_as_u8_a;
+    reg_a0 = (u8 *)((u32 *)D_002BAF50_as_u8_a);
     reg_d0.w = g_p1_score;
     reg_d6.h[0] = g_p1_score_digits;
     reg_d4.w = reg_d0.w;
