@@ -23,12 +23,12 @@ extern u8 D_002600B0[];
 extern u8 D_002600F0[];
 extern u8 D_00260130[];
 extern u8 D_00260170[];
-extern u8 D_00264090[];
-extern u8 D_002640D0[];
-extern u8 D_002645B0[];
-extern u8 D_00264820[];
-extern u8 D_00264B00[];
-extern u8 D_00264EE0[];
+extern void (*stage5_boss_anim_routines[])(void);
+extern void (*stage5_boss_fire_routines[])(void);
+extern void (*stage5_boss_fire_loop1_routines[])(void);
+extern void (*stage5_boss_draw_routines[])(void);
+extern void (*stage5_boss_mode_routines[])(void);
+extern void (*stage5_boss_move_routines[])(void);
 extern u8 D_00264F40[];
 extern u8 D_00264F50[];
 extern u32 D_0028D9C8;
@@ -48,17 +48,17 @@ void stage5_boss_start(void) {
     reg_tmp.w = 0x38001C00;
     ENTITY(reg_a6)->y.h = (u16) reg_tmp.h[1];
     ENTITY(reg_a6)->x.h = (u16) reg_tmp.h[0];
-    reg_a0 = D_00264EE0;
-    reg_a1 = D_002640D0;
-    reg_a2 = D_00264820;
-    reg_a3 = D_00264090;
-    reg_a4 = D_00264B00;
+    reg_a0 = (u8 *)stage5_boss_move_routines;
+    reg_a1 = (u8 *)stage5_boss_fire_routines;
+    reg_a2 = (u8 *)stage5_boss_draw_routines;
+    reg_a3 = (u8 *)stage5_boss_anim_routines;
+    reg_a4 = (u8 *)stage5_boss_mode_routines;
     D_0028E2E8 = g_loop;
     if (g_game_mode == 2) {
         D_0028E2E8 = 1;
     }
     if (D_0028E2E8 == 0) {
-        reg_a1 = D_002645B0;
+        reg_a1 = (u8 *)stage5_boss_fire_loop1_routines;
     }
     boss_slots_init();
     reg_d0.w = 0;

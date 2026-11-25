@@ -10,7 +10,7 @@ void stage2_boss_mode_final_explosion(void);
 void stage2_boss_mode_high_slow_start(void);
 void stage2_boss_mode_high_slow(void);
 void stage2_boss_mode_high_fast_start(void);
-void func_001C8CB0(void);
+void stage2_boss_mode_high_fast(void);
 void stage2_boss_mode_recoil_start(void);
 void stage2_boss_mode_recoil(void);
 void stage2_boss_mode_rise_start(void);
@@ -31,7 +31,7 @@ void (*stage2_boss_mode_routines[])(void) = {
     stage2_boss_mode_high_slow_start,
     stage2_boss_mode_high_slow,
     stage2_boss_mode_high_fast_start,
-    func_001C8CB0,
+    stage2_boss_mode_high_fast,
     stage2_boss_mode_recoil_start,
     stage2_boss_mode_recoil,
     stage2_boss_mode_rise_start,
@@ -48,7 +48,7 @@ void stage2_boss_mode_enter(void);
 void stage2_boss_mode_second_phase();
 void stage2_boss_mode_final_explosion();
 void stage2_boss_mode_high_slow();
-void func_001C8CB0();
+void stage2_boss_mode_high_fast();
 void stage2_boss_mode_recoil();
 void stage2_boss_mode_rise_sway(void);
 void func_001C9640(void);
@@ -598,13 +598,13 @@ void stage2_boss_mode_high_fast_start(void) {
     *(s8 *)(reg_a4 + 0x14) = 0;
     *(s8 *)(reg_a4 + 0x19) = 2;
     *(s8 *)(reg_a4 + 0x18) = 2;
-    func_001C8CB0();
+    stage2_boss_mode_high_fast();
 }
 
 s32 boss_animation_start();
 s32 boss_animation_running();
 
-void func_001C8CB0(arg1)
+void stage2_boss_mode_high_fast(arg1)
     s32 arg1;
 {
     s32 var_a1;

@@ -1,6 +1,50 @@
 #include "common.h"
 #include "entity.h"
 
+void stage5_boss_draw_belly(void);
+void stage5_boss_draw_chest(void);
+void stage5_boss_draw_stinger(void);
+void stage5_boss_draw_left_arm_gun_low(void);
+void stage5_boss_draw_left_arm_gun_mid(void);
+void stage5_boss_draw_left_arm_gun_high(void);
+void stage5_boss_draw_right_arm_gun_low(void);
+void stage5_boss_draw_right_arm_gun_mid(void);
+void stage5_boss_draw_right_arm_gun_high(void);
+void stage5_boss_draw_head(void);
+void stage5_boss_draw_form2_wings(void);
+void stage5_boss_draw_form2_belly(void);
+void stage5_boss_draw_form2_stinger(void);
+void stage5_boss_draw_form2_chest(void);
+void stage5_boss_draw_form2_exhaust(void);
+void stage5_boss_draw_form2_head(void);
+void stage5_boss_draw_form3_body(void);
+void stage5_boss_draw_form3_tail(void);
+void stage5_boss_draw_form3_bomb_barrier(void);
+
+/* The draw routine of every part of the boss, by part number. */
+void (*stage5_boss_draw_routines[])(void) = {
+    stage5_boss_draw_belly,
+    stage5_boss_draw_chest,
+    stage5_boss_draw_stinger,
+    stage5_boss_draw_left_arm_gun_low,
+    stage5_boss_draw_left_arm_gun_mid,
+    stage5_boss_draw_left_arm_gun_high,
+    stage5_boss_draw_right_arm_gun_low,
+    stage5_boss_draw_right_arm_gun_mid,
+    stage5_boss_draw_right_arm_gun_high,
+    stage5_boss_draw_head,
+    stage5_boss_draw_form2_wings,
+    stage5_boss_draw_form2_belly,
+    stage5_boss_draw_form2_stinger,
+    stage5_boss_draw_form2_chest,
+    stage5_boss_draw_form2_exhaust,
+    stage5_boss_draw_form2_head,
+    stage5_boss_draw_form3_body,
+    stage5_boss_draw_form3_tail,
+    stage5_boss_draw_form3_bomb_barrier,
+    (void (*)(void))-1,
+};
+
 void stage5_boss_draw_form2_head(void);
 
 s32 func_001EFF10();

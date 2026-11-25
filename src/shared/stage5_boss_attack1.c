@@ -1,6 +1,33 @@
 #include "common.h"
 #include "entity.h"
 
+void func_001EE410(void);
+void func_001EE540(void);
+void func_001EE9D0(void);
+void func_001EEB90(s16 *arg1);
+void func_001EF150(void);
+void func_001EF2B0(void);
+void func_001EF9A0(void);
+void func_001EFAB0(void);
+void func_001F0050(void);
+void func_001F00D0(void);
+
+/* The set-up routine and the per-frame routine of every attack, by attack number. */
+void (*stage5_boss_fire_loop1_routines[])(void) = {
+    func_001EE410,
+    func_001EE540,
+    func_001EE9D0,
+    (void (*)(void))func_001EEB90,
+    func_001EF150,
+    func_001EF2B0,
+    func_001EF9A0,
+    func_001EFAB0,
+    func_001F0050,
+    func_001F00D0,
+    0,
+    0,
+};
+
 extern u8 D_00264660[];
 
 void func_001EE0F0(void) {

@@ -1,6 +1,43 @@
 #include "common.h"
 #include "entity.h"
 
+void stage5_boss_head_anim_start(void);
+void stage5_boss_head_anim(void);
+void stage5_boss_belly_anim_start(void);
+void stage5_boss_belly_anim(void);
+void stage5_boss_arm_guns_track_start(void);
+void stage5_boss_arm_guns_track(void);
+void stage5_boss_form2_exhaust_anim_start(void);
+void stage5_boss_form2_exhaust_anim(void);
+void stage5_boss_form2_wings_anim_start(void);
+void stage5_boss_form2_wings_anim(void);
+void stage5_boss_form3_tail_track_start(void);
+void stage5_boss_form3_tail_track(void);
+void stage5_boss_form3_body_anim_start(void);
+void stage5_boss_form3_body_anim(void);
+void stage5_boss_form3_bomb_barrier_anim_start(void);
+void stage5_boss_form3_bomb_barrier_anim(void);
+
+/* The set-up routine and the per-frame routine of every animation, by animation number. */
+void (*stage5_boss_anim_routines[])(void) = {
+    stage5_boss_head_anim_start,
+    stage5_boss_head_anim,
+    stage5_boss_belly_anim_start,
+    stage5_boss_belly_anim,
+    stage5_boss_arm_guns_track_start,
+    stage5_boss_arm_guns_track,
+    stage5_boss_form2_exhaust_anim_start,
+    stage5_boss_form2_exhaust_anim,
+    stage5_boss_form2_wings_anim_start,
+    stage5_boss_form2_wings_anim,
+    stage5_boss_form3_tail_track_start,
+    stage5_boss_form3_tail_track,
+    stage5_boss_form3_body_anim_start,
+    stage5_boss_form3_body_anim,
+    stage5_boss_form3_bomb_barrier_anim_start,
+    stage5_boss_form3_bomb_barrier_anim,
+};
+
 void stage5_boss_head_anim(void);
 void stage5_boss_belly_anim(void);
 void stage5_boss_arm_guns_track(void);

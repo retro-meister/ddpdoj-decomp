@@ -1,6 +1,67 @@
 #include "common.h"
 #include "entity.h"
 
+void func_001E94A0(void);
+void func_001E95D0(void);
+void func_001E9AA0(void);
+void func_001E9C60(s16 *arg1);
+void func_001EA1A0(void);
+void func_001EA300(void);
+void func_001EA9A0(void);
+void func_001EAAB0(void);
+void func_001EB060(void);
+void func_001EB0E0(void);
+void func_001EB300(void);
+void func_001EB440(s16 *arg1);
+void func_001EBA00(void);
+void stage5_boss_fire_form2_jet(void);
+void func_001EBE90(void);
+void func_001EBF40(void);
+void stage5_boss_fire_form2_stinger_start(void);
+void stage5_boss_fire_form2_stinger(void);
+void func_001EC810(void);
+void func_001EC920(void);
+void func_001ECD10(void);
+void func_001ECE40(void);
+void func_001ED160(void);
+void func_001ED1E0(u8 *arg0, s16 *arg1);
+void func_001ED410(void);
+void stage5_boss_fire_form3_spiral(void);
+void func_001EDC80(void);
+void func_001EDD50(void);
+
+/* The set-up routine and the per-frame routine of every attack, by attack number. */
+void (*stage5_boss_fire_routines[])(void) = {
+    func_001E94A0,
+    func_001E95D0,
+    func_001E9AA0,
+    (void (*)(void))func_001E9C60,
+    func_001EA1A0,
+    func_001EA300,
+    func_001EA9A0,
+    func_001EAAB0,
+    func_001EB060,
+    func_001EB0E0,
+    func_001EB300,
+    (void (*)(void))func_001EB440,
+    func_001EBA00,
+    stage5_boss_fire_form2_jet,
+    func_001EBE90,
+    func_001EBF40,
+    stage5_boss_fire_form2_stinger_start,
+    stage5_boss_fire_form2_stinger,
+    func_001EC810,
+    func_001EC920,
+    func_001ECD10,
+    func_001ECE40,
+    func_001ED160,
+    (void (*)(void))func_001ED1E0,
+    func_001ED410,
+    stage5_boss_fire_form3_spiral,
+    func_001EDC80,
+    func_001EDD50,
+};
+
 s32 bullet_fire256_fixed();
 extern u8 D_002641C0[];
 

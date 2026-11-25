@@ -1,6 +1,59 @@
 #include "common.h"
 #include "entity.h"
 
+void stage5_boss_move_enter_start(void);
+void stage5_boss_move_enter(void);
+void stage5_boss_move_form2_ascend_start(void);
+void stage5_boss_move_form2_ascend(void);
+void stage5_boss_move_form2_mouth_wander_start(void);
+void stage5_boss_move_form2_mouth_wander(void);
+void stage5_boss_move_form2_death_descend_start(void);
+void stage5_boss_move_form2_death_descend(void);
+void stage5_boss_move_form3_wander_a_start(void);
+void stage5_boss_move_form3_wander_a(void);
+void stage5_boss_move_form2_jet_wander_start(void);
+void stage5_boss_move_form2_jet_wander(void);
+void stage5_boss_move_form2_horn_wander_start(void);
+void stage5_boss_move_form2_horn_wander(void);
+void stage5_boss_move_form2_stinger_wander_start(void);
+void stage5_boss_move_form2_stinger_wander(void);
+void stage5_boss_move_form3_wander_b_start(void);
+void stage5_boss_move_form3_wander_b(void);
+void stage5_boss_move_form3_wander_c_start(void);
+void stage5_boss_move_form3_wander_c(void);
+u8 stage5_boss_move_form3_wander_d_start(void);
+u8 stage5_boss_move_form3_wander_d(u8 arg0);
+void stage5_boss_move_form3_rage_wander_start(void);
+void stage5_boss_move_form3_rage_wander(void);
+
+/* The set-up routine and the per-frame routine of every movement, by movement number. */
+void (*stage5_boss_move_routines[])(void) = {
+    stage5_boss_move_enter_start,
+    stage5_boss_move_enter,
+    stage5_boss_move_form2_ascend_start,
+    stage5_boss_move_form2_ascend,
+    stage5_boss_move_form2_mouth_wander_start,
+    stage5_boss_move_form2_mouth_wander,
+    stage5_boss_move_form2_death_descend_start,
+    stage5_boss_move_form2_death_descend,
+    stage5_boss_move_form3_wander_a_start,
+    stage5_boss_move_form3_wander_a,
+    stage5_boss_move_form2_jet_wander_start,
+    stage5_boss_move_form2_jet_wander,
+    stage5_boss_move_form2_horn_wander_start,
+    stage5_boss_move_form2_horn_wander,
+    stage5_boss_move_form2_stinger_wander_start,
+    stage5_boss_move_form2_stinger_wander,
+    stage5_boss_move_form3_wander_b_start,
+    stage5_boss_move_form3_wander_b,
+    stage5_boss_move_form3_wander_c_start,
+    stage5_boss_move_form3_wander_c,
+    (void (*)(void))stage5_boss_move_form3_wander_d_start,
+    (void (*)(void))stage5_boss_move_form3_wander_d,
+    stage5_boss_move_form3_rage_wander_start,
+    stage5_boss_move_form3_rage_wander,
+};
+
 void stage5_boss_move_enter(void);
 void stage5_boss_move_form2_ascend(void);
 void stage5_boss_move_form2_mouth_wander(void);

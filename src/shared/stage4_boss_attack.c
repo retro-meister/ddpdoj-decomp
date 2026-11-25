@@ -12,7 +12,7 @@ void stage4_boss_fire_aimed_gun(void);
 void stage4_boss_fire_both_spinners_start(void);
 void stage4_boss_fire_both_spinners(void);
 void stage4_boss_fire_center_hatch_start(void);
-void func_001DA580(void);
+void stage4_boss_fire_center_hatch(void);
 void stage4_boss_fire_right_pod_start(void);
 void stage4_boss_fire_right_pod(void);
 void stage4_boss_fire_left_pod_start(void);
@@ -24,7 +24,7 @@ void stage4_boss_fire_cutters(void);
 void stage4_boss_fire_cutter_bay_b_start(void);
 void stage4_boss_fire_cutter_bay_b(void);
 void stage4_boss_fire_cutters_b_start(void);
-void func_001DB2B0(void);
+void stage4_boss_fire_cutters_b(void);
 void stage4_boss_fire_aimed_gun_b_start(void);
 void stage4_boss_fire_aimed_gun_b(void);
 void stage4_boss_fire_both_sides_start(void);
@@ -45,7 +45,7 @@ void (*stage4_boss_fire_routines[])(void) = {
     stage4_boss_fire_both_spinners_start,
     stage4_boss_fire_both_spinners,
     stage4_boss_fire_center_hatch_start,
-    func_001DA580,
+    stage4_boss_fire_center_hatch,
     stage4_boss_fire_right_pod_start,
     stage4_boss_fire_right_pod,
     stage4_boss_fire_left_pod_start,
@@ -57,7 +57,7 @@ void (*stage4_boss_fire_routines[])(void) = {
     stage4_boss_fire_cutter_bay_b_start,
     stage4_boss_fire_cutter_bay_b,
     stage4_boss_fire_cutters_b_start,
-    func_001DB2B0,
+    stage4_boss_fire_cutters_b,
     stage4_boss_fire_aimed_gun_b_start,
     stage4_boss_fire_aimed_gun_b,
     stage4_boss_fire_both_sides_start,
@@ -72,13 +72,13 @@ void stage4_boss_fire_basic(void);
 void stage4_boss_fire_right_spinner(void);
 void stage4_boss_fire_left_spinner(void);
 void stage4_boss_fire_both_spinners(void);
-void func_001DA580();
+void stage4_boss_fire_center_hatch();
 void stage4_boss_fire_right_pod(void);
 void stage4_boss_fire_left_pod(void);
 void stage4_boss_fire_cutter_bay();
 void func_001DAF90(void);
 void stage4_boss_fire_cutters(void);
-void func_001DB2B0();
+void stage4_boss_fire_cutters_b();
 void stage4_boss_fire_cutter_bay_b(void);
 void stage4_boss_fire_aimed_gun_b(void);
 void stage4_boss_fire_both_sides(void);
@@ -1114,14 +1114,14 @@ next_2:
 
 void stage4_boss_fire_center_hatch_start(void) {
     *(u16 *)(reg_a4 + 6) = 0;
-    func_001DA580();
+    stage4_boss_fire_center_hatch();
 }
 
 s32 spawn_request_add();
 extern u8 D_0026EBD0[];
 extern u8 D_0026EBE0[];
 
-void func_001DA580(arg1)
+void stage4_boss_fire_center_hatch(arg1)
     u8 arg1;
 {
     u16 temp_a0;
@@ -1519,12 +1519,12 @@ void stage4_boss_fire_cutters_b_start(void)
     ((u8 *)((void *)reg_a4))[9] = 0x48;
     ((u8 *)((void *)reg_a4))[8] = 0xA0;
     g_enemy_signal_c = 0;
-    func_001DB2B0();
+    stage4_boss_fire_cutters_b();
 }
 
 extern u8 D_0028DC68[];
 
-void func_001DB2B0(arg1)
+void stage4_boss_fire_cutters_b(arg1)
     u8 *arg1;
 {
     u8 *var_a0;

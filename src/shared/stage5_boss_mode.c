@@ -1,6 +1,107 @@
 #include "common.h"
 #include "entity.h"
 
+void stage5_boss_mode_form1_idle_start(void);
+void stage5_boss_mode_form1_idle(void);
+void stage5_boss_mode_form1_explosion_start(void);
+void stage5_boss_mode_form1_explosion(void);
+void stage5_boss_mode_form1_to_form2_start(void);
+void stage5_boss_mode_form1_to_form2(void);
+void stage5_boss_mode_form2_explosion_start(void);
+void stage5_boss_mode_form2_explosion(void);
+void stage5_boss_mode_form2_to_form3_start(void);
+void stage5_boss_mode_form2_to_form3(void);
+void stage5_boss_mode_form3_explosion_start(void);
+void stage5_boss_mode_form3_explosion(void);
+void stage5_boss_mode_form1_arm_guns_aimed_start(void);
+void stage5_boss_mode_form1_arm_guns_aimed(void);
+void stage5_boss_mode_form1_mouth_start(void);
+void stage5_boss_mode_form1_mouth(void);
+void stage5_boss_mode_form1_arm_guns_fixed_start(void);
+void stage5_boss_mode_form1_arm_guns_fixed(void);
+void stage5_boss_mode_form1_horn_start(void);
+void stage5_boss_mode_form1_horn(void);
+void stage5_boss_mode_form2_mouth_start(void);
+void stage5_boss_mode_form2_mouth(void);
+void stage5_boss_mode_form2_jet_start(void);
+void stage5_boss_mode_form2_jet(void);
+void stage5_boss_mode_form2_horn_start(void);
+void stage5_boss_mode_form2_horn(void);
+void stage5_boss_mode_form2_stinger_start(void);
+void stage5_boss_mode_form2_stinger(void);
+void stage5_boss_mode_form1_rage_start(void);
+void stage5_boss_mode_form1_rage(void);
+void stage5_boss_mode_form3_attack_a_start(void);
+void stage5_boss_mode_form3_attack_a(void);
+void stage5_boss_mode_form3_attack_b_start(void);
+void stage5_boss_mode_form3_attack_b(void);
+void stage5_boss_mode_form3_attack_c_start(void);
+void stage5_boss_mode_form3_attack_c(void);
+void stage5_boss_mode_form3_attack_d_start(void);
+void stage5_boss_mode_form3_attack_d(void);
+void stage5_boss_mode_form3_rage_start(void);
+void stage5_boss_mode_form3_rage(void);
+void stage5_boss_mode_form1_explosion_afterglow_start(void);
+void stage5_boss_mode_form1_explosion_afterglow(void);
+
+#ifdef DEATH_LABEL
+void death_func_002237B0(void);
+void death_func_00223870(void);
+#endif
+
+/* The set-up routine and the per-frame routine of every mode, by mode number. */
+void (*stage5_boss_mode_routines[])(void) = {
+    stage5_boss_mode_form1_idle_start,
+    stage5_boss_mode_form1_idle,
+    stage5_boss_mode_form1_explosion_start,
+    stage5_boss_mode_form1_explosion,
+    stage5_boss_mode_form1_to_form2_start,
+    stage5_boss_mode_form1_to_form2,
+    stage5_boss_mode_form2_explosion_start,
+    stage5_boss_mode_form2_explosion,
+    stage5_boss_mode_form2_to_form3_start,
+    stage5_boss_mode_form2_to_form3,
+    stage5_boss_mode_form3_explosion_start,
+    stage5_boss_mode_form3_explosion,
+    stage5_boss_mode_form1_arm_guns_aimed_start,
+    stage5_boss_mode_form1_arm_guns_aimed,
+    stage5_boss_mode_form1_mouth_start,
+    stage5_boss_mode_form1_mouth,
+    stage5_boss_mode_form1_arm_guns_fixed_start,
+    stage5_boss_mode_form1_arm_guns_fixed,
+    stage5_boss_mode_form1_horn_start,
+    stage5_boss_mode_form1_horn,
+    stage5_boss_mode_form2_mouth_start,
+    stage5_boss_mode_form2_mouth,
+    stage5_boss_mode_form2_jet_start,
+    stage5_boss_mode_form2_jet,
+    stage5_boss_mode_form2_horn_start,
+    stage5_boss_mode_form2_horn,
+    stage5_boss_mode_form2_stinger_start,
+    stage5_boss_mode_form2_stinger,
+    stage5_boss_mode_form1_rage_start,
+    stage5_boss_mode_form1_rage,
+    stage5_boss_mode_form3_attack_a_start,
+    stage5_boss_mode_form3_attack_a,
+    stage5_boss_mode_form3_attack_b_start,
+    stage5_boss_mode_form3_attack_b,
+    stage5_boss_mode_form3_attack_c_start,
+    stage5_boss_mode_form3_attack_c,
+    stage5_boss_mode_form3_attack_d_start,
+    stage5_boss_mode_form3_attack_d,
+    stage5_boss_mode_form3_rage_start,
+    stage5_boss_mode_form3_rage,
+    stage5_boss_mode_form1_explosion_afterglow_start,
+    stage5_boss_mode_form1_explosion_afterglow,
+#ifdef DEATH_LABEL
+    death_func_002237B0, /* a mode only Death Label has */
+    death_func_00223870,
+#else
+    0,
+    0,
+#endif
+};
+
 void stage5_boss_mode_form1_idle();
 void stage5_boss_mode_form1_explosion();
 void stage5_boss_mode_form1_to_form2();
