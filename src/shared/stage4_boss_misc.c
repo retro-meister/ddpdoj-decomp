@@ -1,7 +1,7 @@
 #include "common.h"
 #include "entity.h"
 
-void func_001DC9D0(void) {
+void stage4_boss_missile_first(void) {
     void enemy_set_entity_count(s32);
     enemy_set_entity_count(0);
 }
@@ -9,7 +9,7 @@ void func_001DC9D0(void) {
 s32 enemy_init_entities();
 extern u8 D_0026F0A0[];
 
-void func_001DC9E0(void) {
+void stage4_boss_missile_start(void) {
     reg_a0 = D_0026F0A0;
     enemy_init_entities();
     ENTITY(reg_a6)->y.h = (u16) *(u16 *)(reg_a5 + 0x16);
@@ -36,7 +36,7 @@ extern u8 D_0024EC80_as_u8_a[];
 extern u8 D_0024EEF0_as_u8_a[];
 extern u8 D_0028E2E4;
 
-void func_001DCA80(void) {
+void stage4_boss_missile(void) {
     u16 temp_a0;
     u16 temp_a1;
     u8 temp_v1;
@@ -124,7 +124,7 @@ block_8:
     goto block_6;
 }
 
-void func_001DCE10(void) {
+void stage4_boss_cutter_first(void) {
     void enemy_set_entity_count(s32 mode);
     enemy_set_entity_count(4);
 }
@@ -132,7 +132,7 @@ void func_001DCE10(void) {
 s32 velocity_from_dir256();
 extern u8 D_0026F0C0[];
 
-void func_001DCE20(void) {
+void stage4_boss_cutter_start(void) {
     u8 temp_a0;
 
     reg_a0 = (u8 *)D_0026F0C0;
@@ -218,7 +218,7 @@ extern u16 g_enemies_stopped;
 extern u16 g_side_scroll_step[];
 extern u16 *reg_a4_as_u16_p;
 
-void func_001DD090(void) {
+void stage4_boss_cutter(void) {
     switch (g_enemy_signal_c) { case 0: goto next_10; }
     g_enemy_signal_8 = 0;
     g_enemy_signal_9 = 0;

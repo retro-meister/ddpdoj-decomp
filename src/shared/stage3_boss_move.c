@@ -1,10 +1,10 @@
 #include "common.h"
 #include "entity.h"
 
-void func_001D3810(void);
-void func_001D38E0(void);
-void func_001D3A20(void);
-void func_001D3B70(void);
+void stage3_boss_move_enter(void);
+void stage3_boss_move_wander_low(void);
+void stage3_boss_move_wander_high(void);
+void stage3_boss_move_wander_mid(void);
 
 
 void func_001D36C0(void) {
@@ -33,14 +33,14 @@ void func_001D36C0(void) {
 extern s16 *reg_a4_as_s16_p;
 extern void *reg_a6_as_void_p;
 
-void func_001D37D0(void)
+void stage3_boss_move_enter_start(void)
 {
     *reg_a4_as_s16_p = 0x1818;
     ((u8 *)reg_a6_as_void_p)[0x1B] = 0xC;
     ((u8 *)reg_a6_as_void_p)[0x1A] = 0xE;
     ((u16 *)reg_a6_as_void_p)[1] = 0x4400;
     ((u16 *)reg_a6_as_void_p)[2] = 0xEC00;
-    func_001D3810();
+    stage3_boss_move_enter();
 }
 
 s32 boss_phase_start();
@@ -48,7 +48,7 @@ s32 boss_phase_stop();
 s32 boss_animation_running(void *);
 s32 entity_velocity();
 
-void func_001D3810(void) {
+void stage3_boss_move_enter(void) {
     u8 temp_v1;
 
     reg_tmp.b[0] = *(u8 *)(reg_a4 + 1);
@@ -79,17 +79,17 @@ block_5:
 
 
 
-void func_001D38C0(void) {
+void stage3_boss_move_wander_low_start(void) {
     reg_d0.w = 0;
     ((u8 *)((void *)reg_a4))[1] = reg_d0.b[0];
     ((u8 *)((void *)reg_a4))[0] = reg_d0.b[0];
-    func_001D38E0();
+    stage3_boss_move_wander_low();
 }
 
 s32 rng_next();
 s32 func_002024C0();
 
-void func_001D38E0(void) {
+void stage3_boss_move_wander_low(void) {
     entity_velocity();
     if (*(u8 *)reg_a4 != 0) {
         reg_d1.b[0] = *(u8 *)(reg_a4 + 1);
@@ -129,14 +129,14 @@ block_12:
 }
 
 
-void func_001D3A00(void) {
+void stage3_boss_move_wander_high_start(void) {
     reg_d0.w = 0;
     reg_a4[1] = reg_d0.b[0];
     reg_a4[0] = reg_d0.b[0];
-    func_001D3A20();
+    stage3_boss_move_wander_high();
 }
 
-void func_001D3A20(void) {
+void stage3_boss_move_wander_high(void) {
     entity_velocity();
     if (*(u8 *)reg_a4 != 0) {
         reg_d1.b[0] = *(u8 *)(reg_a4 + 1);
@@ -176,14 +176,14 @@ block_12:
 }
 
 
-void func_001D3B50(void) {
+void stage3_boss_move_wander_mid_start(void) {
     reg_d0.w = 0;
     reg_a4[1] = reg_d0.b[0];
     reg_a4[0] = reg_d0.b[0];
-    func_001D3B70();
+    stage3_boss_move_wander_mid();
 }
 
-void func_001D3B70(void) {
+void stage3_boss_move_wander_mid(void) {
     entity_velocity();
     if (*(u8 *)reg_a4 != 0) {
         reg_d1.b[0] = *(u8 *)(reg_a4 + 1);

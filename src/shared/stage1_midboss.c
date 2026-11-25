@@ -298,7 +298,7 @@ next_9:
 }
 
 
-void func_001BCF20(void) {
+void stage1_midboss_first(void) {
     void enemy_set_entity_count(s32);
     enemy_set_entity_count(0x10);
 }
@@ -316,7 +316,7 @@ extern s16 g_enemy_signal_1_as_s16;
 extern s16 g_enemy_signal_0_as_s16;
 extern s8 enemy_move_end_requested;
 
-void func_001BCF30() {
+void stage1_midboss_start() {
     reg_a0 = D_00262720;
     enemy_init_entities();
     reg_tmp.w = (u32) reg_a0;
@@ -367,7 +367,7 @@ extern u16 g_enemy_signal_0;
 extern u16 g_enemies_stopped;
 extern u16 g_scroll_line;
 
-void func_001BD010(void) {
+void stage1_midboss_main(void) {
     u16 temp_v1;
     u8 temp_a0;
     u32 temp_a0_2;
@@ -856,7 +856,7 @@ void func_001BDFC0(void) {
     sprite_draw_layer4();
 }
 
-void func_001BE030(void) {
+void stage1_midboss_wreck_first(void) {
     void enemy_set_entity_count(s32 mode);
     enemy_set_entity_count(0);
 }
@@ -866,7 +866,7 @@ s32 enemy_init_entities();                            /* extern */
 extern s32 D_00262C20[];
 extern s32 D_0028D990;
 
-void func_001BE040(void) {
+void stage1_midboss_wreck_start(void) {
     reg_a0 = (u8 *)D_00262C20;
     enemy_init_entities();
     reg_d0.w = 0;
@@ -885,7 +885,7 @@ extern u32 g_bg_layer_as_u32_a[];
 extern u32 D_002B6DF4[];
 extern u32 D_002B6E0C[];
 
-void func_001BE0A0(void) {
+void stage1_midboss_wreck(void) {
     s32 flag;
     u32 *dst;
     u32 *src;

@@ -1,24 +1,24 @@
 #include "common.h"
 #include "entity.h"
 
-void func_001CDE10(void);
-void func_001CDEA0(void);
-void func_001CE070();
-void func_001CE260();
-void func_001CE440(void);
-void func_001CE4C0(void);
-void func_001CE540(void);
-void func_001CE5F0();
+void stage3_boss_legs_walk(void);
+void stage3_boss_side_turrets_track(void);
+void stage3_boss_lid_open();
+void stage3_boss_lid_close();
+void stage3_boss_six_gun_open(void);
+void stage3_boss_six_gun_close(void);
+void stage3_boss_lid_idle(void);
+void stage3_boss_entrance_anim();
 
 
 
-void func_001CDDF0(void) {
+void stage3_boss_legs_walk_start(void) {
     *(u16 *)(reg_a4 + 2) = 1;
     ENTITY(reg_a6)[5].offset_y.h = 0;
-    func_001CDE10();
+    stage3_boss_legs_walk();
 }
 
-void func_001CDE10(void) {
+void stage3_boss_legs_walk(void) {
     if (ENTITY(reg_a6)[4].sprite.b[1] == 0) {
         reg_tmp.b[0] = *(u8 *)(reg_a4 + 3);
         *(u8 *)(reg_a4 + 3) -= 1;
@@ -36,9 +36,9 @@ block_3:
 }
 
 
-void func_001CDE90(void) {
+void stage3_boss_side_turrets_track_start(void) {
     *(s16 *)(reg_a4 + 2) = 1;
-    func_001CDEA0();
+    stage3_boss_side_turrets_track();
 }
 
 s32 direction_between();
@@ -46,7 +46,7 @@ s32 direction_turn_toward();
 extern s16 g_player2[];
 extern s16 g_player1[];
 
-void func_001CDEA0(void) {
+void stage3_boss_side_turrets_track(void) {
     s16 *temp_a0;
     u32 temp_s0;
     u32 temp_s1;
@@ -103,20 +103,20 @@ block_6:
 }
 
 
-void func_001CE040(void) {
+void stage3_boss_lid_open_start(void) {
     u16 flag = 0x8001;
     *(u16 *)(reg_a4 + 2) = flag;
     reg_d0.w = 4;
     ENTITY(reg_a6)[1].draw.h = (u16) reg_d0.h[0];
     ENTITY(reg_a6)[2].draw.h = (u16) reg_d0.h[0];
-    func_001CE070(flag);
+    stage3_boss_lid_open(flag);
 }
 
 s32 boss_animation_start();
 s32 boss_attack_start();
 extern u16 D_0026CB20[];
 
-void func_001CE070() {
+void stage3_boss_lid_open() {
     u16 temp_a0;
     reg_tmp.b[0] = *(u8 *)(reg_a4 + 3);
     *(u8 *)(reg_a4 + 3) -= 1;
@@ -144,17 +144,17 @@ void func_001CE070() {
 }
 
 
-void func_001CE230(void) {
+void stage3_boss_lid_close_start(void) {
     *(u16 *)(reg_a4 + 2) = 0x6001;
     reg_d0.h[0] = 0x84;
     ENTITY(reg_a6)[1].draw.h = reg_d0.h[0];
     ENTITY(reg_a6)[2].draw.h = reg_d0.h[0];
-    func_001CE260(0x6001);
+    stage3_boss_lid_close(0x6001);
 }
 
 s32 boss_part_show();
 
-void func_001CE260() {
+void stage3_boss_lid_close() {
     reg_tmp.b[0] = *(u8 *)(reg_a4 + 3);
     *(u8 *)(reg_a4 + 3) -= 1;
     if ((s32) reg_tmp.b[0] <= 0) {
@@ -182,11 +182,11 @@ void func_001CE260() {
 }
 
 
-void func_001CE430(void) {
-    func_001CE440();
+void stage3_boss_six_gun_open_start(void) {
+    stage3_boss_six_gun_open();
 }
 
-void func_001CE440(void) {
+void stage3_boss_six_gun_open(void) {
     reg_tmp.b[0] = *(u8 *)(reg_a4 + 3);
     *(u8 *)(reg_a4 + 3) -= 1;
     if ((s32) reg_tmp.b[0] <= 0) {
@@ -199,12 +199,12 @@ void func_001CE440(void) {
 }
 
 
-void func_001CE4B0(void) {
+void stage3_boss_six_gun_close_start(void) {
     *(u16 *)(reg_a4 + 2) = 1;
-    func_001CE4C0();
+    stage3_boss_six_gun_close();
 }
 
-void func_001CE4C0(void) {
+void stage3_boss_six_gun_close(void) {
     reg_tmp.b[0] = *(u8 *)(reg_a4 + 3);
     *(u8 *)(reg_a4 + 3) -= 1;
     if ((s32) reg_tmp.b[0] <= 0) {
@@ -218,13 +218,13 @@ void func_001CE4C0(void) {
 
 
 
-void func_001CE520(void) {
+void stage3_boss_lid_idle_start(void) {
     *(s16 *)((u8 *)((void *)reg_a4) + 2) = 0;
     *(s16 *)((u8 *)((void *)reg_a6) + 0xBE) = 0;
-    func_001CE540();
+    stage3_boss_lid_idle();
 }
 
-void func_001CE540(void) {
+void stage3_boss_lid_idle(void) {
     if (ENTITY(reg_a6)[4].sprite.b[1] == 0) {
         reg_tmp.b[0] = *(u8 *)(reg_a4 + 3);
         *(u8 *)(reg_a4 + 3) -= 1;
@@ -255,12 +255,12 @@ typedef struct WorkRegBC {
 
 
 
-void func_001CE5C0(void) {
+void stage3_boss_entrance_anim_start(void) {
     ((WorkReg *)reg_a4)->unk2 = 1;
     ((WorkReg *)reg_a4)->unk4 = 0x202;
     ((WorkReg *)reg_a4)->unk6 = 0xC0;
     ((WorkRegBC *)reg_a6)->unkBC = 0;
-    func_001CE5F0(0x202, 1);
+    stage3_boss_entrance_anim(0x202, 1);
 }
 
 s32 boss_part_hide();
@@ -270,7 +270,7 @@ s32 func_001D4560();
 extern u8 D_0026CBC0[];
 extern u8 g_boss_present_b1;
 
-void func_001CE5F0() {
+void stage3_boss_entrance_anim() {
     u16 t1;
 
     if (*(u16 *)(reg_a4 + 6) == 0) goto next_40;

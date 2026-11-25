@@ -1,11 +1,11 @@
 #include "common.h"
 #include "entity.h"
 
-void func_001D1C00(void);
+void stage3_boss_timber(void);
 void func_001D2550(void);
 void func_001D27A0(void);
 
-void func_001D1A50(void) {
+void stage3_boss_timber_first(void) {
     void enemy_set_entity_count(s32 mode);
     enemy_set_entity_count(1);
 }
@@ -19,7 +19,7 @@ extern u8 D_0026D600[];
 extern u32 D_0028DC10;
 extern u16 g_loop;
 
-void func_001D1A60(void) {
+void stage3_boss_timber_start(void) {
     s32 temp_a0_2;
     u16 temp_a0;
 
@@ -50,12 +50,12 @@ void func_001D1A60(void) {
     ENTITY(reg_a6)->hp.h = (u16) *(u16 *)reg_a0;
     ENTITY(reg_a6)[1].hp.h = (u16) *(u16 *)reg_a0;
     if (g_loop == 0) {
-        func_001D1C00();
+        stage3_boss_timber();
         return;
     }
     *(u8 *)(reg_a5 + 0x23) = 0xDU;
     *(u16 *)(reg_a5 + 0x30) = 1U;
-    func_001D1C00();
+    stage3_boss_timber();
 }
 
 
@@ -74,7 +74,7 @@ extern u16 g_bullets_blocked;
 extern u16 g_enemies_stopped;
 extern u16 g_damage_blink_counter;
 
-void func_001D1C00(void) {
+void stage3_boss_timber(void) {
     s32 enemy_remove();
     u8 bits;
     u16 hp;
@@ -294,12 +294,12 @@ block_dead:
     enemy_remove();
 }
 
-void func_001D24B0(void) {
+void stage3_boss_lid_bullet_first(void) {
     void enemy_set_entity_count(s32);
     enemy_set_entity_count(0);
 }
 
-void func_001D24C0(void) {
+void stage3_boss_lid_bullet_start(void) {
     void enemy_remove(void);
     enemy_remove();
 }
@@ -327,7 +327,7 @@ void func_001D2550(void) {
 
 extern u8 D_0026D7B0[];
 
-void func_001D2560(void) {
+void stage3_boss_lid_bullet(void) {
     s32 enemy_remove();
     s32 entity_draw_with_bullets();
     u32 var_a0;

@@ -1,9 +1,9 @@
 #include "common.h"
 #include "entity.h"
 
-void func_001E5BE0(void);
-void func_001E5C60();
-void func_001E62B0();
+void stage4_boss_mode_enter(void);
+void stage4_boss_mode_second_form();
+void stage4_boss_mode_final_explosion();
 void func_001E6540();
 void func_001E6B40(void);
 
@@ -94,7 +94,7 @@ s32 boss_part_show();                            /* extern */
 s32 sprite_palette_load();                            /* extern */
 extern s32 D_0025FF30_as_s32_a[];
 
-void func_001E5B90(void) {
+void stage4_boss_mode_enter_start(void) {
     reg_d0.h[0] = 0x15;
     reg_a0 = (u8 *)D_0025FF30_as_s32_a;
     sprite_palette_load();
@@ -102,12 +102,12 @@ void func_001E5B90(void) {
     boss_movement_start();
     reg_d0.w = 0xA;
     boss_part_show();
-    func_001E5BE0();
+    stage4_boss_mode_enter();
 }
 
 extern u16 *reg_a4_as_u16_p;
 
-void func_001E5BE0(void) {
+void stage4_boss_mode_enter(void) {
     *reg_a4_as_u16_p = 0;
 }
 
@@ -115,7 +115,7 @@ s32 boss_movement_start();
 s32 func_001E8700();
 s32 func_001E8760();
 
-void func_001E5BF0(void) {
+void stage4_boss_mode_second_form_start(void) {
     func_001E8700();
     reg_d0.h[0] = 0x40;
     func_001E8760();
@@ -127,7 +127,7 @@ void func_001E5BF0(void) {
     *(u16 *)(reg_a4 + 4) = 1;
     *(u16 *)(reg_a4 + 6) = 0xFF02;
     *(u16 *)(reg_a4 + 8) = 0xFF04;
-    func_001E5C60(0xFF02, 1);
+    stage4_boss_mode_second_form(0xFF02, 1);
 }
 
 s32 boss_part_hide();
@@ -141,7 +141,7 @@ extern u8 D_0026F280[];
 extern u8 D_0026F290[];
 extern u8 D_0026F2D0[];
 
-void func_001E5C60() {
+void stage4_boss_mode_second_form() {
     u16 temp_a0_4;
     u16 temp_a0_5;
     u8 temp_a0;
@@ -313,7 +313,7 @@ void func_001E5C60() {
 s32 func_0013B8B0();
 extern u8 D_0026F340[];
 
-void func_001E6210(void) {
+void stage4_boss_mode_final_explosion_start(void) {
     reg_d0.w = 5;
     boss_movement_start();
     reg_a0 = D_0026F340;
@@ -327,12 +327,12 @@ void func_001E6210(void) {
     *(u16 *)(reg_a4 + 0xE) = 3;
     *(u16 *)(reg_a4 + 0x10) = 4;
     *(u16 *)(reg_a4 + 0x12) = 0;
-    func_001E62B0(3, 0xC0C, 0xFF04, 0xFF02);
+    stage4_boss_mode_final_explosion(3, 0xC0C, 0xFF04, 0xFF02);
 }
 
 s32 boss_slots_end();
 
-void func_001E62B0() {
+void stage4_boss_mode_final_explosion() {
     u8 temp_a0;
     u8 temp_a1;
     u8 temp_a1_2;

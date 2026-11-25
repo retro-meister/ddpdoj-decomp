@@ -1,16 +1,16 @@
 #include "common.h"
 #include "entity.h"
 
-void func_001D7320(void);
-void func_001D73A0(void);
-void func_001D7420(void);
-void func_001D74B0(void);
-void func_001D7540(void);
-void func_001D75D0(void);
-void func_001D7660(void);
-void func_001D76F0(void);
-void func_001D7780(void);
-void func_001D77F0(void);
+void stage4_boss_center_hatch_open(void);
+void stage4_boss_center_hatch_close(void);
+void stage4_boss_cutter_bay_open(void);
+void stage4_boss_cutter_bay_close(void);
+void stage4_boss_right_pod_open(void);
+void stage4_boss_right_pod_close(void);
+void stage4_boss_left_pod_open(void);
+void stage4_boss_left_pod_close(void);
+void stage4_boss_aimed_gun_track(void);
+void stage4_boss_body_anim(void);
 
 extern s16 *reg_a4_as_s16_p;
 
@@ -21,7 +21,7 @@ void func_001D71C0(void) {
 s32 boss_part_show();                            /* extern */
 s32 boss_part_hide();                            /* extern */
 
-void func_001D71D0(void) {
+void stage4_boss_form2_spin_start(void) {
     ENTITY(reg_a6)[8].offset_y.sh = 0;
     reg_d0.w = 0;
     boss_part_hide();
@@ -35,7 +35,7 @@ s32 boss_part_hide();
 s32 func_001E8710();
 s32 func_001E8730();
 
-void func_001D7210() {
+void stage4_boss_form2_spin() {
     u16 temp_a0;
 
     reg_tmp.b[0] = *(u8 *)(reg_a4 + 3);
@@ -69,12 +69,12 @@ void func_001D7210() {
 }
 
 
-void func_001D7310(void) {
+void stage4_boss_center_hatch_open_start(void) {
     *(s16 *)(reg_a4 + 2) = 0x202;
-    func_001D7320();
+    stage4_boss_center_hatch_open();
 }
 
-void func_001D7320() {
+void stage4_boss_center_hatch_open() {
     u16 temp_a0;
 
     reg_tmp.b[0] = *(u8 *)(reg_a4 + 3);
@@ -90,12 +90,12 @@ void func_001D7320() {
 }
 
 
-void func_001D7390(void) {
+void stage4_boss_center_hatch_close_start(void) {
     *(u16 *)(reg_a4 + 2) = 0x202;
-    func_001D73A0();
+    stage4_boss_center_hatch_close();
 }
 
-void func_001D73A0() {
+void stage4_boss_center_hatch_close() {
     reg_tmp.b[0] = *(u8 *)(reg_a4 + 3);
     *(u8 *)(reg_a4 + 3) -= 1;
     if ((s32) reg_tmp.b[0] <= 0) {
@@ -108,12 +108,12 @@ void func_001D73A0() {
 }
 
 
-void func_001D7410(void) {
+void stage4_boss_cutter_bay_open_start(void) {
     *(u16 *)(reg_a4 + 2) = 1;
-    func_001D7420();
+    stage4_boss_cutter_bay_open();
 }
 
-void func_001D7420() {
+void stage4_boss_cutter_bay_open() {
     reg_tmp.b[0] = *(u8 *)(reg_a4 + 3);
     *(u8 *)(reg_a4 + 3) -= 1;
     if ((s32) reg_tmp.b[0] <= 0) {
@@ -127,13 +127,13 @@ void func_001D7420() {
 }
 
 
-void func_001D74A0(void) {
+void stage4_boss_cutter_bay_close_start(void) {
     *(s16 *)(reg_a4 + 2) = 1;
-    func_001D74B0();
+    stage4_boss_cutter_bay_close();
 }
 
 
-void func_001D74B0(void)
+void stage4_boss_cutter_bay_close(void)
 {
     s32 remainingIsPositive;
 
@@ -153,12 +153,12 @@ void func_001D74B0(void)
 }
 
 
-void func_001D7530(void) {
+void stage4_boss_right_pod_open_start(void) {
     *(s16 *)(reg_a4 + 2) = 1;
-    func_001D7540();
+    stage4_boss_right_pod_open();
 }
 
-void func_001D7540() {
+void stage4_boss_right_pod_open() {
     reg_tmp.b[0] = *(u8 *)(reg_a4 + 3);
     *(u8 *)(reg_a4 + 3) -= 1;
     if ((s32) reg_tmp.b[0] <= 0) {
@@ -172,12 +172,12 @@ void func_001D7540() {
 }
 
 
-void func_001D75C0(void) {
+void stage4_boss_right_pod_close_start(void) {
     *(s16 *)(reg_a4 + 2) = 1;
-    func_001D75D0();
+    stage4_boss_right_pod_close();
 }
 
-void func_001D75D0(void)
+void stage4_boss_right_pod_close(void)
 {
     reg_tmp.b[0] = reg_a4[3];
     reg_a4[3]--;
@@ -196,12 +196,12 @@ void func_001D75D0(void)
 }
 
 
-void func_001D7650(void) {
+void stage4_boss_left_pod_open_start(void) {
     *(s16 *)(reg_a4 + 2) = 1;
-    func_001D7660();
+    stage4_boss_left_pod_open();
 }
 
-void func_001D7660() {
+void stage4_boss_left_pod_open() {
     reg_tmp.b[0] = *(u8 *)(reg_a4 + 3);
     *(u8 *)(reg_a4 + 3) -= 1;
     if ((s32) reg_tmp.b[0] <= 0) {
@@ -215,12 +215,12 @@ void func_001D7660() {
 }
 
 
-void func_001D76E0(void) {
+void stage4_boss_left_pod_close_start(void) {
     *(u16 *)(reg_a4 + 2) = 1;
-    func_001D76F0();
+    stage4_boss_left_pod_close();
 }
 
-void func_001D76F0(void)
+void stage4_boss_left_pod_close(void)
 {
     reg_tmp.b[0] = reg_a4[3];
     reg_a4[3] -= 1;
@@ -239,14 +239,14 @@ void func_001D76F0(void)
 }
 
 
-void func_001D7770(void) {
-    func_001D7780();
+void stage4_boss_aimed_gun_track_start(void) {
+    stage4_boss_aimed_gun_track();
 }
 
 s32 aim_at_player();                            /* extern */
 s32 direction_turn_toward();                            /* extern */
 
-void func_001D7780(void) {
+void stage4_boss_aimed_gun_track(void) {
     reg_d0.h[0] = ENTITY(reg_a6)[8].y.h;
     reg_d1.h[0] = ENTITY(reg_a6)[8].x.h;
     aim_at_player();
@@ -258,11 +258,11 @@ void func_001D7780(void) {
 }
 
 
-void func_001D77E0(void) {
-    func_001D77F0();
+void stage4_boss_body_anim_start(void) {
+    stage4_boss_body_anim();
 }
 
-void func_001D77F0(void) {
+void stage4_boss_body_anim(void) {
     ENTITY(reg_a6)[1].offset_y.h += 4;
     ENTITY(reg_a6)[1].offset_y.h &= 0x1F;
     ENTITY(reg_a6)[2].offset_y.h += 4;

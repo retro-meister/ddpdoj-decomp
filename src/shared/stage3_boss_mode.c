@@ -1,38 +1,38 @@
 #include "common.h"
 #include "entity.h"
 
-void func_001D28B0(void);
-void func_001D2930();
-void func_001D30B0(void);
-void func_001D3170(u8 arg0);
-void func_001D31D0(void);
-void func_001D3270(void);
-void func_001D32E0(void);
-void func_001D3340(void);
-void func_001D3420(void);
-void func_001D34C0();
+void stage3_boss_mode_enter(void);
+void stage3_boss_mode_final_explosion();
+void stage3_boss_mode_low_main_gun_b(void);
+void stage3_boss_mode_high_six_gun(u8 arg0);
+void stage3_boss_mode_six_gun_close_wait(void);
+void stage3_boss_mode_mid_lid_guns(void);
+void stage3_boss_mode_high_six_gun_b(void);
+void stage3_boss_mode_six_gun_b_close_wait(void);
+void stage3_boss_mode_low_all_guns(void);
+void stage3_boss_mode_phase_explosion();
 
 s32 boss_movement_start();                            /* extern */
 s32 boss_animation_start();                            /* extern */
 
-void func_001D2880(void) {
+void stage3_boss_mode_enter_start(void) {
     reg_d0.w = 0;
     boss_movement_start();
     reg_d0.w = 7;
     boss_animation_start();
-    func_001D28B0();
+    stage3_boss_mode_enter();
 }
 
 extern s16 *reg_a4_as_s16_p;
 
-void func_001D28B0(void) {
+void stage3_boss_mode_enter(void) {
     *reg_a4_as_s16_p = 0;
 }
 
 s32 func_0013B8B0();                            /* extern */
 extern s32 D_0026D990[];
 
-void func_001D28C0(void) {
+void stage3_boss_mode_final_explosion_start(void) {
     reg_a0 = (u8 *)D_0026D990;
     func_0013B8B0();
     *(s16 *)(reg_a4 + 2) = 0;
@@ -42,7 +42,7 @@ void func_001D28C0(void) {
     *(s8 *)(reg_a4 + 0xD) = 0;
     *(s16 *)(reg_a4 + 0x10) = 0x2020;
     *(s16 *)(reg_a4 + 0x12) = 0;
-    func_001D2930(1, 0x101);
+    stage3_boss_mode_final_explosion(1, 0x101);
 }
 
 typedef void (*Fn)();
@@ -64,7 +64,7 @@ s32 rng_next_word();
 extern u16 D_0026D810[];
 extern u16 D_0026D8A0[];
 
-void func_001D2930() {
+void stage3_boss_mode_final_explosion() {
     u8 bits;
 
     if (*(u16 *)(reg_a4 + 2) != 4) goto next_s3;
@@ -251,20 +251,20 @@ block_rts:
 s32 boss_movement_start();                            /* extern */
 s32 boss_attack_start();                            /* extern */
 
-void func_001D3070(void) {
+void stage3_boss_mode_low_main_gun_b_start(void) {
     reg_d0.w = 1;
     boss_movement_start();
     reg_d0.w = 6;
     boss_attack_start();
     reg_d0.w = 7;
     boss_attack_start();
-    func_001D30B0();
+    stage3_boss_mode_low_main_gun_b();
 }
 
 s32 boss_phase_start();                            /* extern */
 s32 boss_attack_running();                            /* extern */
 
-void func_001D30B0(void) {
+void stage3_boss_mode_low_main_gun_b(void) {
     reg_d0.w = 6;
     boss_attack_running();
     if (cond_flag == 0) {
@@ -277,7 +277,7 @@ void func_001D30B0(void) {
 s32 boss_movement_start();                            /* extern */
 s32 boss_animation_start();                            /* extern */
 
-void func_001D30F0(void) {
+void stage3_boss_mode_high_six_gun_start(void) {
     u8 temp_a0;
     u8 temp_v0;
 
@@ -290,18 +290,18 @@ void func_001D30F0(void) {
     *(s8 *)(reg_a0 + 2) = 1;
     temp_v0 = ENTITY(reg_a6)[8].hit_x_plus.b[1];
     if ((s32) temp_v0 < 0x11) {
-        func_001D3170(temp_a0);
+        stage3_boss_mode_high_six_gun(temp_a0);
         return;
     }
     ENTITY(reg_a6)[8].hit_x_plus.b[1] = (u8) (temp_v0 - 0x30);
-    func_001D3170(temp_a0);
+    stage3_boss_mode_high_six_gun(temp_a0);
 }
 
 s32 boss_phase_start();                            /* extern */
 s32 boss_animation_running();                            /* extern */
 s32 boss_attack_start();                            /* extern */
 
-void func_001D3170(u8 arg0) {
+void stage3_boss_mode_high_six_gun(u8 arg0) {
     reg_d0.w = 4;
     boss_animation_running();
     if (cond_flag == 0) {
@@ -314,15 +314,15 @@ void func_001D3170(u8 arg0) {
 }
 
 
-void func_001D31C0(void) {
-    func_001D31D0();
+void stage3_boss_mode_six_gun_close_wait_start(void) {
+    stage3_boss_mode_six_gun_close_wait();
 }
 
 s32 boss_phase_start();                            /* extern */
 s32 boss_animation_running();                            /* extern */
 s32 boss_attack_running();                            /* extern */
 
-void func_001D31D0(void) {
+void stage3_boss_mode_six_gun_close_wait(void) {
     reg_d0.w = 5;
     boss_attack_running();
     if (cond_flag == 0) {
@@ -339,20 +339,20 @@ void func_001D31D0(void) {
 s32 boss_movement_start();                            /* extern */
 s32 boss_attack_start();                            /* extern */
 
-void func_001D3230(void) {
+void stage3_boss_mode_mid_lid_guns_start(void) {
     reg_d0.w = 3;
     boss_movement_start();
     reg_d0.w = 3;
     boss_attack_start();
     reg_d0.w = 4;
     boss_attack_start();
-    func_001D3270();
+    stage3_boss_mode_mid_lid_guns();
 }
 
 s32 boss_phase_start();                            /* extern */
 s32 boss_attack_running();                            /* extern */
 
-void func_001D3270(void) {
+void stage3_boss_mode_mid_lid_guns(void) {
     reg_d0.w = 4;
     boss_attack_running();
     if (cond_flag == 0) {
@@ -364,18 +364,18 @@ void func_001D3270(void) {
 
 s32 boss_animation_start();                            /* extern */
 
-void func_001D32B0(void) {
+void stage3_boss_mode_high_six_gun_b_start(void) {
     reg_d0.w = 4;
     boss_animation_start();
     *(s16 *)(reg_a0 + 2) = 0x5001;
-    func_001D32E0();
+    stage3_boss_mode_high_six_gun_b();
 }
 
 s32 boss_phase_start();                            /* extern */
 s32 boss_animation_running();                            /* extern */
 s32 boss_attack_start();                            /* extern */
 
-void func_001D32E0(void) {
+void stage3_boss_mode_high_six_gun_b(void) {
     reg_d0.w = 4;
     boss_animation_running();
     if (cond_flag == 0) {
@@ -388,16 +388,16 @@ void func_001D32E0(void) {
 }
 
 
-void func_001D3330(void) {
+void stage3_boss_mode_six_gun_b_close_wait_start(void) {
     *(s16 *)(reg_a4 + 2) = 0;
-    func_001D3340();
+    stage3_boss_mode_six_gun_b_close_wait();
 }
 
 s32 boss_phase_start(void *);                      /* extern */
 s32 boss_animation_running();                            /* extern */
 s32 boss_attack_running(void *);                      /* extern */
 
-void func_001D3340(void) {
+void stage3_boss_mode_six_gun_b_close_wait(void) {
     u16 temp_v1;
     u8 *temp_a0;
 
@@ -425,18 +425,18 @@ void func_001D3340(void) {
 
 s32 boss_movement_start(s32);                     /* extern */
 
-void func_001D33E0(void) {
+void stage3_boss_mode_low_all_guns_start(void) {
     *(s16 *)(reg_a4 + 2) = 0x80;
     reg_d0.w = 1;
     boss_movement_start(0x80);
-    func_001D3420();
+    stage3_boss_mode_low_all_guns();
 }
 
 s32 boss_animation_start();
 s32 boss_attack_start();
 s32 func_001D4550();
 
-void func_001D3420() {
+void stage3_boss_mode_low_all_guns() {
     *(u16 *)(reg_a4 + 2) -= 1;
     if ((s16) *(u16 *)(reg_a4 + 2) < 0) {
         reg_d0.w = 2;
@@ -458,11 +458,11 @@ typedef struct WorkRegA4 {
 } WorkRegA4;
 
 
-void func_001D3490(void) {
+void stage3_boss_mode_phase_explosion_start(void) {
     ((WorkRegA4 *)reg_a4)->unk2 = 0x40;
     ((WorkRegA4 *)reg_a4)->unk4 = 0x404;
     ((WorkRegA4 *)reg_a4)->unk6 = 0x17;
-    func_001D34C0(0x404, 0x40);
+    stage3_boss_mode_phase_explosion(0x404, 0x40);
 }
 
 s32 boss_phase_start();
@@ -471,7 +471,7 @@ s32 rng_next_masked();
 s32 func_002013F0();
 extern u8 D_0026D9C0[];
 
-void func_001D34C0() {
+void stage3_boss_mode_phase_explosion() {
     u16 temp_a2;
     u16 temp_v1;
 

@@ -12,7 +12,7 @@ void func_001E44F0(void);
 void func_001E4520(void);
 
 
-void func_001DE1F0(void) {
+void stage4_gate_first(void) {
     void enemy_set_entity_count(s32);
     enemy_set_entity_count(1);
 }
@@ -28,7 +28,7 @@ extern u16 g_scroll_line;
 extern u16 g_side_scroll_x[];
 extern s8 enemy_move_end_requested;
 
-void func_001DE200(void) {
+void stage4_gate_start(void) {
 
     reg_a0 = D_002637B0;
     enemy_init_entities();
@@ -60,7 +60,7 @@ s32 score_add_no_chain();
 extern u16 g_enemies_stopped;
 extern u16 g_side_scroll_step[];
 
-void func_001DE2E0(void) {
+void stage4_gate(void) {
     enemy_path_step();
     if (enemy_move_end_requested == 0) {
         reg_d0.h[0] = ENTITY(reg_a6)->y.h;
@@ -119,7 +119,7 @@ block_5:
     }
 }
 
-void func_001DE500(void) {
+void stage4_lift_first(void) {
     void enemy_set_entity_count(s32 id);
     enemy_set_entity_count(10);
 }
@@ -136,7 +136,7 @@ s32 rng_next_unsigned();
 extern u8 D_002637F0[];
 extern u8 D_00263810[];
 
-void func_001DE510(void) {
+void stage4_lift_start(void) {
     reg_a0 = (u8 *)D_00263860;
     reg_d7.w = 0;
     enemy_init_entities_n();
@@ -198,7 +198,7 @@ s32 entity_draw_layer3();
 s32 score_add();
 extern u16 g_damage_blink_counter;
 
-void func_001DE720(void) {
+void stage4_lift(void) {
     u32 saved;
     u8 bits;
 
@@ -606,7 +606,7 @@ void func_001DF350() {
     *(u16 *)(reg_a0 + 0x18) = 8;
 }
 
-s32 func_001DF790(void) {
+s32 stage4_heavy_cannon_first(void) {
     s32 enemy_set_entity_count(s32 id);
     return enemy_set_entity_count(2);
 }
@@ -621,7 +621,7 @@ extern s16 g_enemy_signal_0_as_s16;
 extern u16 g_rank_6_16;
 extern s16 D_00299768[];
 
-void func_001DF7A0(void) {
+void stage4_heavy_cannon_start(void) {
 
     reg_a0 = D_002638B0;
     enemy_init_entities();
@@ -681,7 +681,7 @@ extern u16 g_enemy_signal_2;
 extern u16 g_enemy_signal_0;
 extern u16 g_bomb_entities[];
 
-void func_001DF890(void) {
+void stage4_heavy_cannon(void) {
     s16 saved_x;
     s32 saved_d0;
     u32 temp;
@@ -1208,7 +1208,7 @@ block_st:
     *(s8 *)(reg_a5 + 0x2D) = 4;
 }
 
-void func_001E0D10(void) {
+void stage4_heavy_cannon_casing_first(void) {
     void enemy_set_entity_count(s32);
     enemy_set_entity_count(0);
 }
@@ -1217,7 +1217,7 @@ s32 rng_next();
 extern u8 D_00263A30[];
 extern u8 D_00263EF0[];
 
-void func_001E0D20(void) {
+void stage4_heavy_cannon_casing_start(void) {
     u16 temp_a1;
 
     reg_a0 = D_00263A30;
@@ -1244,7 +1244,7 @@ s32 entity_draw_with_bullets();
 extern u8 D_00263A50[];
 extern u8 D_0028E2E4;
 
-void func_001E0DF0(void) {
+void stage4_heavy_cannon_casing(void) {
     if (D_0028E2E4 != 0) {
         goto block_7a;
     }
@@ -1405,7 +1405,7 @@ block_11:
     enemy_remove();
 }
 
-void func_001E12C0(void) {
+void stage4_wave_cannon_first(void) {
     void enemy_set_entity_count(s32 mode);
     enemy_set_entity_count(2);
 }
@@ -1416,7 +1416,7 @@ extern u8 D_002618F0[];
 extern u8 D_00263B50[];
 extern u8 D_00263B80[];
 
-void func_001E12D0(void) {
+void stage4_wave_cannon_start(void) {
     reg_a0 = D_00263B80;
     enemy_init_entities();
     reg_tmp.w = (u32) reg_a0;
@@ -1459,7 +1459,7 @@ s32 entity_draw_layer1();
 s32 sprite_draw_layer1();
 s32 func_00201710();
 
-void func_001E1390(void) {
+void stage4_wave_cannon(void) {
     s16 x_save;
 
     enemy_path_step();
@@ -1870,7 +1870,7 @@ void func_001E1F30() {
     *(u16 *)(reg_a0 + 0x18) = 0xA;
 }
 
-void func_001E2460(void) {
+void stage4_reactor_first(void) {
     void enemy_set_entity_count(s32 mode);
     enemy_set_entity_count(0);
 }
@@ -1878,7 +1878,7 @@ void func_001E2460(void) {
 extern u8 D_00263D00[];
 extern u8 D_0028D9B0;
 
-void func_001E2470(void) {
+void stage4_reactor_start(void) {
     reg_a0 = D_00263D00;
     enemy_init_entities();
     reg_tmp.w = (u32)reg_a0;
@@ -1897,7 +1897,7 @@ void func_001E2470(void) {
 
 extern u16 D_00263D20[];
 
-void func_001E24F0(void) {
+void stage4_reactor(void) {
     enemy_path_step();
     if (enemy_move_end_requested == 0) {
         reg_d0.h[0] = ENTITY(reg_a6)->y.h;
@@ -1934,7 +1934,7 @@ block_5:
     }
 }
 
-void func_001E2690(void) {
+void crane_turret_first(void) {
     void enemy_set_entity_count(s32 mode);
     enemy_set_entity_count(0);
 }
@@ -1947,7 +1947,7 @@ extern u16 g_rank_4_16;
 extern u16 g_stage_x2;
 extern s8 *reg_a0_as_s8_p;
 
-void func_001E26A0(void) {
+void crane_turret_start(void) {
     reg_a0_as_s8_p = D_00263D90;
     enemy_init_entities();
     reg_a0_as_s8_p = D_00263D70;
@@ -1985,7 +1985,7 @@ void func_001E26A0(void) {
 
 extern u8 D_00263DB0[];
 
-void func_001E2840(void) {
+void crane_turret(void) {
     u8 *var_a0;
     u32 temp_a3;
     u32 temp_a3_2;
@@ -2233,7 +2233,7 @@ void func_001E2FD0(void) {
     *(u16 *)(reg_a0 + 0x10) = 2;
 }
 
-void func_001E3050(void) {
+void rail_turret_first(void) {
     void enemy_set_entity_count(s32 mode);
     enemy_set_entity_count(1);
 }
@@ -2241,7 +2241,7 @@ void func_001E3050(void) {
 extern u8 D_00263E10[];
 extern u8 D_00263E40[];
 
-void func_001E3060(void) {
+void rail_turret_start(void) {
     u16 temp_a0;
 
     reg_a0 = D_00263E40;
@@ -2284,7 +2284,7 @@ extern u16 g_rank_2_16;
 extern u16 g_loop;
 extern u16 g_player2_as_u16_a[];
 extern u16 g_player1_as_u16_a[];
-void func_001E3190(void) {
+void rail_turret(void) {
     u8 *temp;
 
     if (ENTITY(reg_a6)->flags.sb[0] < 0) goto block_explos;
@@ -2676,7 +2676,7 @@ block_rts:
     return;
 }
 
-void func_001E3FB0(void) {
+void stage4_tachyon_particle_first(void) {
     void enemy_set_entity_count(s32);
     enemy_set_entity_count(0);
 }
@@ -2687,7 +2687,7 @@ extern u16 D_00263EA0[];
 extern u16 D_00263EB8[];
 extern u16 D_00263ED0[];
 
-void func_001E3FC0(void) {
+void stage4_tachyon_particle_start(void) {
     reg_a0 = (u8 *)(D_00263ED0);
     enemy_init_entities();
     reg_a0 = (u8 *)(D_00263EB8);
@@ -2730,7 +2730,7 @@ void func_001E3FC0(void) {
 s32 func_00201FC0();
 s32 func_00202040();
 
-void func_001E4160(u8 *arg0, u8 *arg1) {
+void stage4_tachyon_particle(u8 *arg0, u8 *arg1) {
     u8 *t1;
     u8 *t2;
 

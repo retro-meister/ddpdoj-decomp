@@ -64,7 +64,7 @@ void func_001D61B0();
 
 void enemy_set_entity_count(s32);
 
-void func_001D47B0(void) {
+void stage3_midboss_first(void) {
     enemy_set_entity_count(6);
 }
 
@@ -81,7 +81,7 @@ extern s16 g_enemy_signal_4_as_s16;
 extern u16 g_spare_entities_as_u16_a[];
 extern u16 *reg_a0_as_u16_p;
 
-void func_001D47C0(void) {
+void stage3_midboss_start(void) {
     reg_a0_as_u16_p = stage3_midboss_table;
     enemy_init_entities();
     reg_tmp.w = (u32) reg_a0_as_u16_p;
@@ -136,7 +136,7 @@ extern u16 g_side_scroll_step[];
 extern u16 D_002BDAA4[];
 extern u16 D_002BDAA6[];
 
-void func_001D4930(void) {
+void stage3_midboss_main(void) {
     u32 saved;
     u32 saved_d1;
     u8 *p;

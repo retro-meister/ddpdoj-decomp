@@ -1,14 +1,14 @@
 #include "common.h"
 #include "entity.h"
 
-void func_001E4640();
-void func_001E4B70(void);
-void func_001E4EF0(void);
-void func_001E56D0(void);
+void stage4_boss_mode_attack_a();
+void stage4_boss_mode_attack_b(void);
+void stage4_boss_mode_attack_c(void);
+void stage4_boss_mode_rage(void);
 
 s32 rng_next_unsigned();                            /* extern */
 
-void func_001E4580(void) {
+void stage4_boss_mode_attack_a_start(void) {
     *(s8 *)(reg_a4 + 3) = 0;
     *(s16 *)(reg_a4 + 4) = 0x200C;
     *(s16 *)(reg_a4 + 6) = 0;
@@ -25,7 +25,7 @@ void func_001E4580(void) {
     *(s8 *)(reg_a4 + 0x12) = 2;
     *(s8 *)(reg_a4 + 0x15) = 2;
     *(s8 *)(reg_a4 + 0x14) = 0x10;
-    func_001E4640(2, 0x808, 0x20, 0x101);
+    stage4_boss_mode_attack_a(2, 0x808, 0x20, 0x101);
 }
 
 
@@ -36,7 +36,7 @@ s32 func_001D7880();
 s32 func_001D7900();
 extern u8 D_0028DC80[];
 
-void func_001E4640() {
+void stage4_boss_mode_attack_a() {
     u16 temp_a0;
     u16 temp_a0_2;
     u8 temp_a0_3;
@@ -207,18 +207,18 @@ typedef struct WorkRegA4 {
 
 
 
-void func_001E4B50(void) {
+void stage4_boss_mode_attack_b_start(void) {
     ((WorkRegA4 *)reg_a4)->flag3 = 0;
     ((WorkRegA4 *)reg_a4)->field4 = 0x20;
     ((WorkRegA4 *)reg_a4)->field6 = 0;
-    func_001E4B70();
+    stage4_boss_mode_attack_b();
 }
 
 s32 boss_animation_start();
 s32 boss_attack_stop();
 extern u8 D_0026F1E0[];
 
-void func_001E4B70(void) {
+void stage4_boss_mode_attack_b(void) {
     u16 temp_v1;
     u8 temp_a0;
 
@@ -326,20 +326,20 @@ block_rts:
 
 s32 boss_movement_start();                            /* extern */
 
-void func_001E4EA0(void) {
+void stage4_boss_mode_attack_c_start(void) {
     reg_d0.w = 4;
     boss_movement_start();
     *(s8 *)(reg_a4 + 3) = 1;
     *(s8 *)(reg_a4 + 2) = 0;
     *(s16 *)(reg_a4 + 4) = 0;
     *(s16 *)(reg_a4 + 6) = 0;
-    func_001E4EF0();
+    stage4_boss_mode_attack_c();
 }
 
 s32 boss_movement_start();
 s32 boss_animation_running();
 
-void func_001E4EF0(void) {
+void stage4_boss_mode_attack_c(void) {
     u32 t;
 
     if (!(reg_a4[3] & 1)) {
@@ -603,7 +603,7 @@ extern u16 g_enemy_signal_b;
 extern u16 g_enemy_signal_a;
 extern u16 g_loop;
 
-void func_001E55D0() {
+void stage4_boss_mode_rage_start() {
     g_enemy_signal_e = 2;
     g_enemy_signal_a = 0xFFFF;
     reg_d0.w = 8;
@@ -635,13 +635,13 @@ void func_001E55D0() {
     *(s16 *)(reg_a4 + 0xC) = 8;
     *(s16 *)(reg_a4 + 0xE) = 8;
     g_enemy_signal_d = 0;
-    func_001E56D0();
+    stage4_boss_mode_rage();
 }
 
 s32 rng_next_unsigned();
 extern s16 g_enemy_signal_d_as_s16;
 
-void func_001E56D0() {
+void stage4_boss_mode_rage() {
     u16 temp_a0;
     u16 temp_a0_2;
     u16 temp_a0_3;
