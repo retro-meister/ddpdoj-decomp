@@ -7,9 +7,6 @@ extern u8 D_00252640[];
 extern u8 D_00252680[];
 extern u8 D_002526A0[];
 void func_00100008();
-#ifdef DEATH_LABEL
-extern u8 D_0027D8D0[];
-#endif
 
 struct D002526b0Record { void *p0; void *p1; void *p2; void *p3; void *p4; u16 w5[6]; };
 extern struct D002526b0Record D_002526B0;
@@ -23,31 +20,16 @@ extern u16 stage1_music_list[7];
 struct Stage1GroundSetupRecord { u16 w0[242]; void *p1; u16 w2[28]; };
 extern struct Stage1GroundSetupRecord stage1_ground_setup;
 extern u16 stage2_palette_list[80];
-#ifdef DEATH_LABEL
-struct Stage2MusicListRecord { void *p0; u16 w1[14]; };
-extern struct Stage2MusicListRecord stage2_music_list;
-#else
 extern u16 stage2_music_list[16];
-#endif
 extern u16 stage2_ground_setup[120];
 extern u16 stage3_palette_list[80];
-#ifdef DEATH_LABEL
-struct Stage3MusicListRecord { void *p0; u16 w1[14]; };
-extern struct Stage3MusicListRecord stage3_music_list;
-#else
 extern u16 stage3_music_list[16];
-#endif
 extern u16 stage3_ground_setup[144];
 extern u16 stage4_palette_list[72];
 extern u16 stage4_music_list[16];
 extern u16 stage4_ground_setup[144];
 extern u16 stage5_palette_list[64];
-#ifdef DEATH_LABEL
-struct Stage5MusicListRecord { void *p0; u16 w1[14]; };
-extern struct Stage5MusicListRecord stage5_music_list;
-#else
 extern u16 stage5_music_list[16];
-#endif
 #ifdef DEATH_LABEL
 struct Stage5GroundSetupRecord { u16 w0[44]; void *p1; u16 w2[28]; void *p3; u16 w4[10]; void *p5; u16 w6[22]; void *p7; u16 w8[6]; void *p9; u16 w10[46]; void *p11; u16 w12[10]; void *p13; u16 w14[10]; void *p15; u16 w16[10]; void *p17; u16 w18[6]; void *p19; u16 w20[28]; };
 extern struct Stage5GroundSetupRecord stage5_ground_setup;
@@ -134,17 +116,10 @@ u16 stage2_palette_list[80] = {
     0x0048, 0x0049, 0x0014, 0x004B, 0x004C, 0x0015, 0xFFFF, 0xFFFF,
 };
 
-#ifdef DEATH_LABEL
-struct Stage2MusicListRecord stage2_music_list = {
-    D_0027D8D0,
-    { 0x0002, 0x0003, 0x0002, 0x0000, 0x0000, 0x0000, 0x0008, 0x0009, 0xFFFF, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000 },
-};
-#else
 u16 stage2_music_list[16] = {
     0x0000, 0x0028, 0x0002, 0x0003, 0x0002, 0x0000, 0x0000, 0x0000,
     0x0008, 0x0009, 0xFFFF, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000,
 };
-#endif
 
 u16 stage2_ground_setup[120] = {
     0x0000, 0x0001, 0x0002, 0x0003, 0x0000, 0xFFFF, 0x0000, 0x0014,
@@ -177,17 +152,10 @@ u16 stage3_palette_list[80] = {
     0xFFFF, 0xFFFF, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000,
 };
 
-#ifdef DEATH_LABEL
-struct Stage3MusicListRecord stage3_music_list = {
-    D_0027D8D0,
-    { 0x0002, 0x0003, 0x0002, 0x0000, 0x0000, 0x0000, 0x0008, 0x0009, 0xFFFF, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000 },
-};
-#else
 u16 stage3_music_list[16] = {
     0x0000, 0x0028, 0x0002, 0x0003, 0x0002, 0x0000, 0x0000, 0x0000,
     0x0008, 0x0009, 0xFFFF, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000,
 };
-#endif
 
 u16 stage3_ground_setup[144] = {
     0x0000, 0x0001, 0x0002, 0x0003, 0x0000, 0xFFFF, 0x0014, 0x0001,
@@ -259,17 +227,10 @@ u16 stage5_palette_list[64] = {
     0x0017, 0x0039, 0x003A, 0x0016, 0xFFFF, 0x0000, 0x0000, 0x0000,
 };
 
-#ifdef DEATH_LABEL
-struct Stage5MusicListRecord stage5_music_list = {
-    D_0027D8D0,
-    { 0x0002, 0x0003, 0x0002, 0x0000, 0x0000, 0x0000, 0x0008, 0x0009, 0xFFFF, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000 },
-};
-#else
 u16 stage5_music_list[16] = {
     0x0000, 0x0028, 0x0002, 0x0003, 0x0002, 0x0000, 0x0000, 0x0000,
     0x0008, 0x0009, 0xFFFF, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000,
 };
-#endif
 
 #ifdef DEATH_LABEL
 struct Stage5GroundSetupRecord stage5_ground_setup = {

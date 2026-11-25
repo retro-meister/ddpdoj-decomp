@@ -11,7 +11,8 @@ later section pushed down by a multiple of --shift. Then it reports:
    a `lui` + low-half pair, or a jump. Each one is either a number that only looks like an address or an
    address that would not follow a shift; --list prints them for review.
 4. for the two game executables, the same data words sorted by what the other executable holds in the same
-   place: an address differs between the two, a number does not.
+   place: an address differs between the two, a number does not. Both ways of getting it wrong are listed:
+   an address without a relocation, and a number with one.
 """
 import argparse
 import bisect
@@ -172,6 +173,33 @@ def against_twin(base, other, twin, data):
     return numbers, unmoved, differ, unplaced, follow
 
 
+def relocated_numbers(target, base, other, twin, text_end):
+    """Data words that carry a relocation but hold the same value in the twin although the target moved:
+    numbers taken for addresses, which a shift would corrupt."""
+    start, image, _ = retail_image(target)
+    _, other_image, _ = retail_image(twin)
+    other_start = other.image()[0]
+    common = sorted((value, name) for name, value in base.symbols.items() if name in other.symbols)
+    keys = [value for value, _ in common]
+
+    def moved(address):
+        index = bisect.bisect_right(keys, address) - 1
+        return None if index < 0 else other.symbols[common[index][1]] + address - common[index][0]
+
+    found = []
+    for site, (kind, name) in sorted(base.relocations.items()):
+        if kind != R_MIPS_32 or site < text_end or not start <= site <= start + len(image) - 4:
+            continue
+        place = moved(site)
+        if place is None or not 0 <= place - other_start <= len(other_image) - 4:
+            continue
+        value, = struct.unpack_from("<I", image, site - start)
+        there, = struct.unpack_from("<I", other_image, place - other_start)
+        if value == there and moved(value) not in (None, value):
+            found.append((site, value, name))
+    return found
+
+
 def main():
     parser = argparse.ArgumentParser(description=__doc__, formatter_class=argparse.RawDescriptionHelpFormatter)
     parser.add_argument("--target", default="SLPS_252.33")
@@ -215,6 +243,10 @@ def main():
         print(f"data words that follow the move like an address but carry no relocation: {len(follow)}")
         for address, value, there in follow[:None if args.list else 20]:
             print(f"  {address:#x} -> {value:#x} (twin {there:#x})")
+        false = relocated_numbers(args.target, base, link(twin, 0, work / "twin"), twin, text_end)
+        print(f"data words with a relocation that hold the same value in {twin} although the target moved: {len(false)}")
+        for address, value, name in false[:None if args.list else 20]:
+            print(f"  {address:#x} -> {value:#x} ({name})")
         if args.list:
             for title, rows in (("unrelated value in the twin", differ), ("target did not move", unmoved)):
                 print(title)
