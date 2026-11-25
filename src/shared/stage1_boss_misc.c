@@ -1,7 +1,7 @@
 #include "common.h"
 #include "entity.h"
 
-void func_0014EFF0(void) {
+void stage1_boss_breakable_bullet_first(void) {
     void enemy_set_entity_count(s32);
     enemy_set_entity_count(0);
 }
@@ -12,7 +12,7 @@ extern u16 D_0024EC80[];
 extern u16 D_0024EEF0[];
 extern u16 D_0026E740[];
 
-void func_0014F000(void) {
+void stage1_boss_breakable_bullet_start(void) {
     reg_a0 = (u8 *)(D_0026E740);
     enemy_init_entities();
     ENTITY(reg_a6)->y.h = (u16) *(u16 *)(reg_a5 + 0x16);
@@ -49,7 +49,7 @@ extern u16 g_enemies_stopped;
 #define W(o) (*(u16 *)(reg_a6 + (o)))
 #define B(o) (*(u8 *)(reg_a6 + (o)))
 
-void func_0014F1D0(void) {
+void stage1_boss_breakable_bullet(void) {
     if (!(g_boss_present_b1 & 0x40)) goto block_5;
     reg_d1.b[0] = B(1);
     func_001D27A0();
@@ -96,7 +96,7 @@ next_2:
     entity_draw_layer4();
 }
 
-void func_0014F430(void) {
+void stage1_boss_breakable_bullet_b_first(void) {
     extern void enemy_set_entity_count(s32 flag);
     enemy_set_entity_count(1);
 }
@@ -105,7 +105,7 @@ extern u8 D_0024ED80[];
 extern u16 D_0024EEB0[];
 extern u8 D_0026E760[];
 
-void func_0014F440(void) {
+void stage1_boss_breakable_bullet_b_start(void) {
     reg_a0 = D_0026E760;
     enemy_init_entities();
     ENTITY(reg_a6)->y.h = (u16) *(u16 *)(reg_a5 + 0x16);
@@ -153,7 +153,7 @@ s32 entity_check_bounds();
 #define W(o) (*(u16 *)(reg_a6 + (o)))
 #define B(o) (*(u8 *)(reg_a6 + (o)))
 
-void func_0014F5E0(void) {
+void stage1_boss_breakable_bullet_b(void) {
     u32 count;
 
     W(0x22) = W(2);
@@ -280,7 +280,7 @@ next_120:
     entity_draw_with_bullets();
 }
 
-void func_0014FAA0(void) {
+void stage1_boss_side_bullet_first(void) {
     void enemy_set_entity_count(s32);
     enemy_set_entity_count(0);
 }
@@ -288,7 +288,7 @@ void func_0014FAA0(void) {
 s32 enemy_init_entities();                            /* extern */
 extern s32 D_0026E7A0[];
 
-void func_0014FAB0(void) {
+void stage1_boss_side_bullet_start(void) {
     reg_a0 = (u8 *)D_0026E7A0;
     enemy_init_entities();
     ENTITY(reg_a6)->y.h = (u16) *(u16 *)(reg_a5 + 0x16);
@@ -314,7 +314,7 @@ extern u16 g_bullets_blocked;
 #define AW(o) (*(u16 *)(reg_a0 + (o)))
 #define LOOKUP(d) (((d) != 0) ? *(u16 *)((u8 *)reg_a0 + ((s16)(d) & ~1)) : *(u16 *)reg_a0)
 
-void func_0014FB30(void) {
+void stage1_boss_side_bullet(void) {
     if (g_boss_present_b1 & 0x40) goto next_1;
     reg_d1.w = 0x5C;
     reg_d1.b[0] &= ENTITY(reg_a6)->flags.b[1];
@@ -435,7 +435,7 @@ next_4:
     sprite_draw_with_bullets();
 }
 
-void func_00150130(void) {
+void stage1_boss_entrance_first(void) {
     void enemy_set_entity_count(s32 mode);
     enemy_set_entity_count(0);
 }
@@ -446,7 +446,7 @@ extern u8 D_0025FB30[];
 extern u8 D_0026E800[];
 extern s8 enemy_move_end_requested;
 
-void func_00150140(void) {
+void stage1_boss_entrance_start(void) {
     reg_a0 = D_0026E800;
     enemy_init_entities();
     reg_d0.h[0] = 0x13;
@@ -466,7 +466,7 @@ s32 sprite_draw_layer1();
 s32 entity_follow_scroll();
 extern u8 D_0026E820[];
 
-void func_001501C0(void) {
+void stage1_boss_entrance(void) {
     u16 temp_a0;
     u16 temp_a1;
 

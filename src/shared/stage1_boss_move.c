@@ -1,7 +1,7 @@
 #include "common.h"
 #include "entity.h"
 
-void func_001BB300(void);
+void stage1_boss_move_down(void);
 
 s32 velocity_from_dir256();
 extern u16 D_002BDA90[];
@@ -85,7 +85,7 @@ next_3:
 }
 
 
-void func_001BAB10(void) {
+void stage1_boss_move_enter_start(void) {
     ENTITY(reg_a6)->move.sh = 0x1E20;
     *(s16 *)(reg_a4 + 0x2) = 0x101;
     reg_a4[0x5] = 0;
@@ -107,7 +107,7 @@ extern u8 g_boss_present_b1;
 extern u16 g_side_scroll_x[];
 extern u16 g_spare_entities_as_u16_a[];
 
-void func_001BAB40(void) {
+void stage1_boss_move_enter(void) {
     s32 direction_between();
     u8 temp_v0_2;
 
@@ -197,10 +197,10 @@ void func_001BAB40(void) {
     func_001BA820();
 }
 
-void func_001BAE30(void) {
+void stage1_boss_move_dying_start(void) {
 }
 
-void func_001BAE40(void) {
+void stage1_boss_move_dying(void) {
     ENTITY(reg_a6)->y.h -= 0x10;
     reg_d0.h[1] = ENTITY(reg_a6)->y.h;
     reg_d0.h[0] = ENTITY(reg_a6)->x.h;
@@ -247,7 +247,7 @@ void func_001BAF40(void)
 }
 
 
-void func_001BAFA0(void) {
+void stage1_boss_move_wander_start(void) {
     *(u16 *)reg_a4 = 0;
     ENTITY(reg_a6)->move.h = 0x20;
     reg_a4[3] = ENTITY(reg_a6)->move.b.speed;
@@ -256,7 +256,7 @@ void func_001BAFA0(void) {
 
 extern u8 D_0026E980[];
 
-void func_001BAFD0(void) {
+void stage1_boss_move_wander(void) {
     s32 direction_between(void *);
     reg_a0 = D_0026E980;
     reg_a0 += *(u16 *)reg_a4;
@@ -284,12 +284,12 @@ void func_001BAFD0(void) {
 extern void *reg_a6_as_void_p;
 extern void *reg_a4_as_void_p;
 
-void func_001BB0B0(void) {
+void stage1_boss_move_up_start(void) {
     *(u16 *)reg_a4_as_void_p = 0;
     ((u8 *)reg_a4_as_void_p)[3] = ((u8 *)reg_a6_as_void_p)[0x1B];
 }
 
-void func_001BB0D0() {
+void stage1_boss_move_up() {
     s32 direction_between();
     reg_d2.h[0] = 0x6A00;
     reg_d3.h[0] = 0x1C00;
@@ -313,7 +313,7 @@ void func_001BB0D0() {
 }
 
 
-void func_001BB180(void) {
+void stage1_boss_move_sway_start(void) {
     *(u16 *)reg_a4 = 0;
     reg_a4[3] = ENTITY(reg_a6)->move.b.speed;
     func_001BAEC0();
@@ -321,7 +321,7 @@ void func_001BB180(void) {
 
 extern u8 D_0026E9A0[];
 
-void func_001BB1A0(void) {
+void stage1_boss_move_sway(void) {
     s32 direction_between(void *);
     reg_a0 = D_0026E9A0;
     reg_a0 += *(u16 *)reg_a4;
@@ -347,20 +347,20 @@ void func_001BB1A0(void) {
 }
 
 
-void func_001BB280(void) {
+void stage1_boss_move_down_start(void) {
     *(s16 *)(reg_a4 + 0) = 0;
     ENTITY(reg_a6)->move.b.speed = 4U;
     *(u8 *)(reg_a4 + 3) = ENTITY(reg_a6)->move.b.speed;
     reg_d0.b[0] = ENTITY(reg_a6)[1].misc.b.draw_layer;
     reg_d0.b[0] += ENTITY(reg_a6)[3].misc.b.draw_layer;
     if (reg_d0.b[0] != 2) {
-        func_001BB300();
+        stage1_boss_move_down();
         return;
     }
     ENTITY(reg_a6)->move.b.speed = 8U;
 }
 
-void func_001BB300() {
+void stage1_boss_move_down() {
     s32 direction_between();
     reg_d2.h[0] = 0x5C00;
     reg_d3.h[0] = 0x1C00;
@@ -379,12 +379,12 @@ void func_001BB300() {
     func_001BA820();
 }
 
-void func_001BB390(void) {
+void stage1_boss_move_up_b_start(void) {
     *(u16 *)reg_a4 = 0;
     reg_a4[3] = ENTITY(reg_a6)->move.b.speed;
 }
 
-void func_001BB3B0() {
+void stage1_boss_move_up_b() {
     s32 direction_between();
     reg_d2.h[0] = 0x7400;
     reg_d3.h[0] = 0x1C00;
@@ -409,7 +409,7 @@ void func_001BB3B0() {
 
 extern s16 *reg_a4_as_s16_p;
 
-void func_001BB460(void) {
+void stage1_boss_move_sway_b_start(void) {
     u8 value;
 
     *reg_a4_as_s16_p = 0;
@@ -420,7 +420,7 @@ void func_001BB460(void) {
 
 extern u8 D_0026E9C0[];
 
-void func_001BB480(void) {
+void stage1_boss_move_sway_b(void) {
     s32 direction_between(void *);
     reg_a0 = D_0026E9C0;
     reg_a0 += *(u16 *)reg_a4;
@@ -445,12 +445,12 @@ void func_001BB480(void) {
     func_001BA820();
 }
 
-void func_001BB560(void) {
+void stage1_boss_move_up_c_start(void) {
     *(u16 *)reg_a4 = 0;
     reg_a4[3] = ENTITY(reg_a6)->move.b.speed;
 }
 
-void func_001BB580() {
+void stage1_boss_move_up_c() {
     s32 direction_between();
     reg_d2.h[0] = 0x7400;
     reg_d3.h[0] = 0x1C00;

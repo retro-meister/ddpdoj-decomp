@@ -3,7 +3,7 @@
 
 void enemy_set_entity_count(s32 id);
 
-void func_001BB630(void) {
+void stage1_boss_first(void) {
     enemy_set_entity_count(8);
 }
 
@@ -40,7 +40,7 @@ extern s16 D_0029976A[];
 extern s16 D_0029976C_as_s16_a[];
 extern u16 g_side_scroll_x[];
 
-void func_001BB640(void) {
+void stage1_boss_start(void) {
     s32 t;
 
     reg_a0 = (u8 *)D_0026E9F0;
@@ -107,7 +107,7 @@ s32 func_001BB8E0();                            /* extern */
 s32 func_002016D0();                            /* extern */
 s32 func_002035A0();                            /* extern */
 
-void func_001BB830(void) {
+void stage1_boss_main(void) {
     u16 temp_v0;
 
     func_001BB8E0();

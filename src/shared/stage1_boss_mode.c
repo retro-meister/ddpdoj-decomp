@@ -5,14 +5,14 @@ void func_001B9DE0(void);
 void func_001BA0E0(void);
 
 
-void func_001B93F0(void) {
+void stage1_boss_mode_enter_start(void) {
     *(u16 *)(reg_a4 + 2) = 0xC0;
 }
 
 s32 sprite_palette_load();
 extern u8 D_0025FA30[];
 
-void func_001B9400() {
+void stage1_boss_mode_enter() {
     s32 boss_movement_start();
     *(u16 *)(reg_a4 + 2) -= 1;
     if ((s16) *(u16 *)(reg_a4 + 2) == 0) {
@@ -32,7 +32,7 @@ extern u8 D_0028DC40[];
 extern u8 D_0028DC48[];
 extern u8 D_0028DC50[];
 
-void func_001B9460(void) {
+void stage1_boss_mode_normal_start(void) {
     s32 boss_movement_start();
     reg_d0.w = 5;
     boss_movement_start();
@@ -100,7 +100,7 @@ s32 rng_next();
 s32 rng_next_bit();
 extern u8 D_0028DC58[];
 
-void func_001B9750(void) {
+void stage1_boss_mode_normal(void) {
     u16 temp_a0_3;
     u8 temp_a0;
     u8 temp_a0_2;
@@ -228,7 +228,7 @@ void func_001B9750(void) {
 }
 
 
-void func_001B9B30(void) {
+void stage1_boss_mode_vulcan_start(void) {
     void boss_movement_start(void);
     reg_d0.b[0] = ENTITY(reg_a6)[1].misc.b.draw_layer;
     reg_d0.b[0] += ENTITY(reg_a6)[3].misc.b.draw_layer;
@@ -248,7 +248,7 @@ s32 boss_movement_current();
 s32 boss_animation_start();
 s32 boss_animation_running();
 
-void func_001B9BC0(void) {
+void stage1_boss_mode_vulcan(void) {
     s32 boss_movement_start();
     u8 temp_a0;
     u8 temp_a0_2;
@@ -338,7 +338,7 @@ void func_001B9DE0(void) {
 }
 
 
-void func_001B9E10(void) {
+void stage1_boss_mode_side_attack_start(void) {
     s32 boss_movement_start();
     reg_d0.b[0] = ENTITY(reg_a6)[1].misc.b.draw_layer;
     reg_d0.b[0] += ENTITY(reg_a6)[3].misc.b.draw_layer;
@@ -353,7 +353,7 @@ void func_001B9E10(void) {
     boss_movement_start();
 }
 
-void func_001B9E90(void) {
+void stage1_boss_mode_side_attack(void) {
     s32 boss_movement_start();
     u8 temp_a0;
     u8 temp_a0_2;
@@ -446,7 +446,7 @@ void func_001BA0E0(void) {
     *reg_a4_as_s16_p = 0;
 }
 
-void func_001BA110(void) {
+void stage1_boss_mode_one_side_lost_start(void) {
     *(s8 *)(reg_a4 + 3) = 0;
     *(s16 *)(reg_a4 + 4) = 0x80;
     *(s16 *)(reg_a4 + 6) = 0x40;
@@ -455,7 +455,7 @@ void func_001BA110(void) {
     *(s16 *)(reg_a4 + 0xC) = 0x404;
 }
 
-void func_001BA160() {
+void stage1_boss_mode_one_side_lost() {
     u8 temp_a0;
     u8 temp_a0_2;
 
@@ -511,13 +511,13 @@ typedef struct WorkRegA4 {
 } WorkRegA4;
 
 
-void func_001BA2E0(void) {
+void stage1_boss_mode_both_sides_lost_start(void) {
     ((WorkRegA4 *)reg_a4)->unk3 = 0;
     ((WorkRegA4 *)reg_a4)->unk4 = 0x40;
     ((WorkRegA4 *)reg_a4)->unk6 = 0x404;
 }
 
-void func_001BA310() {
+void stage1_boss_mode_both_sides_lost() {
     u8 temp_a0;
 
     if (*(u8 *)(reg_a4 + 3) == 0) {
@@ -541,7 +541,7 @@ void func_001BA310() {
 
 extern u16 D_0026E8C0[];
 
-void func_001BA3A0(void) {
+void stage1_boss_mode_gatling_start(void) {
     s32 boss_movement_start();
     *(s8 *)(reg_a4 + 3) = 0;
     *(s16 *)(reg_a4 + 4) = 0x202;
@@ -575,7 +575,7 @@ s32 boss_animation_stop();
 s32 aim_at_player();
 s32 direction_turn_toward();
 
-void func_001BA4D0(void) {
+void stage1_boss_mode_gatling(void) {
     u8 temp_a0;
     u8 temp_a0_2;
 

@@ -1,17 +1,17 @@
 #include "common.h"
 #include "entity.h"
 
-void func_001B39F0(void);
+void stage1_boss_gatling_spin(void);
 
 extern u16 *reg_a4_as_u16_p;
 
-void func_001B23C0(void) {
+void stage1_boss_anim_clear(void) {
     *reg_a4_as_u16_p = 0;
 }
 
 s32 rng_next_unsigned();                            /* extern */
 
-void func_001B23D0(void) {
+void stage1_boss_right_hover_start(void) {
     rng_next_unsigned();
     *(u8 *)(reg_a4 + 5) = (u8) reg_d0.b[0];
     rng_next_unsigned();
@@ -20,11 +20,11 @@ void func_001B23D0(void) {
 
 s32 velocity_from_dir256();
 
-void func_001B2410(void) {
+void stage1_boss_right_hover(void) {
     u32 temp_a0;
 
     if (ENTITY(reg_a6)[1].misc.b.draw_layer != 0) {
-        func_001B23C0();
+        stage1_boss_anim_clear();
         return;
     }
     reg_d1.w = 0;
@@ -44,18 +44,18 @@ void func_001B2410(void) {
 
 s32 rng_next_unsigned();                            /* extern */
 
-void func_001B24C0(void) {
+void stage1_boss_left_hover_start(void) {
     rng_next_unsigned();
     *(u8 *)(reg_a4 + 5) = (u8) reg_d0.b[0];
     rng_next_unsigned();
     *(u8 *)(reg_a4 + 4) = (u8) reg_d0.b[0];
 }
 
-void func_001B2500(void) {
+void stage1_boss_left_hover(void) {
     u32 temp_a0;
 
     if (ENTITY(reg_a6)[3].misc.b.draw_layer != 0) {
-        func_001B23C0();
+        stage1_boss_anim_clear();
         return;
     }
     reg_d1.w = 0;
@@ -73,13 +73,13 @@ void func_001B2500(void) {
     *(u8 *)(reg_a4 + 4) += 1;
 }
 
-void func_001B25B0(void) {
+void stage1_boss_right_rotor_start(void) {
     reg_a4_as_u16_p[1] = 0;
 }
 
-void func_001B25C0(void) {
+void stage1_boss_right_rotor(void) {
     if (ENTITY(reg_a6)[1].misc.b.draw_layer != 0) {
-        func_001B23C0();
+        stage1_boss_anim_clear();
         return;
     }
     reg_tmp.b[0] = *(u8 *)(reg_a4 + 3);
@@ -93,13 +93,13 @@ void func_001B25C0(void) {
     }
 }
 
-void func_001B2650(void) {
+void stage1_boss_left_rotor_start(void) {
     reg_a4_as_u16_p[1] = 0;
 }
 
-void func_001B2660(void) {
+void stage1_boss_left_rotor(void) {
     if (ENTITY(reg_a6)[3].misc.b.draw_layer != 0) {
-        func_001B23C0();
+        stage1_boss_anim_clear();
         return;
     }
     reg_tmp.b[0] = *(u8 *)(reg_a4 + 3);
@@ -189,7 +189,7 @@ void func_001B2830(void) {
     }
 }
 
-void func_001B2960(void) {
+void stage1_boss_right_wreck_start(void) {
     *(s8 *)(reg_a4 + 3) = 0;
     *(s8 *)(reg_a4 + 2) = 0;
     *(s16 *)(reg_a4 + 4) = 8;
@@ -206,7 +206,7 @@ extern u8 D_0026DBD0[];
 extern u8 D_0026DC40[];
 extern u16 g_side_scroll_step[];
 
-void func_001B29B0(void) {
+void stage1_boss_right_wreck(void) {
     u32 temp_a1;
     u8 temp_a0;
     u8 temp_v1;
@@ -258,7 +258,7 @@ void func_001B29B0(void) {
     ENTITY(reg_a6)[1].y.h -= reg_d0.h[0];
 }
 
-void func_001B2B70(void) {
+void stage1_boss_left_wreck_start(void) {
     *(s8 *)(reg_a4 + 3) = 0;
     *(s8 *)(reg_a4 + 2) = 0;
     *(s16 *)(reg_a4 + 4) = 8;
@@ -271,7 +271,7 @@ void func_001B2B70(void) {
 extern u8 D_0026DC80[];
 extern u8 D_0026DCF0[];
 
-void func_001B2BC0(void) {
+void stage1_boss_left_wreck(void) {
     u8 temp_a0;
     u8 temp_v1;
     u8 *var_a1;
@@ -382,7 +382,7 @@ void func_001B2BC0(void) {
     ENTITY(reg_a6)[3].y.h -= reg_d0.h[0];
 }
 
-void func_001B2FC0(void) {
+void stage1_boss_body_explode_start(void) {
     *(s8 *)(reg_a4 + 3) = 0;
     *(s8 *)(reg_a4 + 2) = 0;
     *(s16 *)(reg_a4 + 4) = 8;
@@ -414,7 +414,7 @@ extern u8 D_0026DF70[];
 extern u8 D_0026DFC0[];
 extern u8 g_slowdown_timer;
 
-void func_001B3030(void) {
+void stage1_boss_body_explode(void) {
     u16 *temp_a3_2;
     u16 temp_a0_3;
     u16 temp_a0_4;
@@ -686,11 +686,11 @@ void func_001B3030(void) {
 }
 
 
-void func_001B39E0(void) {
-    func_001B39F0();
+void stage1_boss_gatling_spin_start(void) {
+    stage1_boss_gatling_spin();
 }
 
-void func_001B39F0(void) {
+void stage1_boss_gatling_spin(void) {
     u8 temp_a0;
 
     reg_tmp.b[0] = (ENTITY(reg_a6)[5].look.b.size);
@@ -712,7 +712,7 @@ void func_001B39F0(void) {
     }
 }
 
-void func_001B3A90(void) {
+void stage1_boss_right_open_start(void) {
     *(u16 *)(reg_a4 + 2) = 0;
     reg_a4[7] = 0;
 }
@@ -720,11 +720,11 @@ void func_001B3A90(void) {
 s32 boss_animation_start();
 s32 boss_animation_stop();
 
-void func_001B3AB0() {
+void stage1_boss_right_open() {
     u16 temp_a0;
 
     if (ENTITY(reg_a6)[1].misc.b.draw_layer != 0) {
-        func_001B23C0();
+        stage1_boss_anim_clear();
         return;
     }
     if ((*(u8 *)(reg_a4 + 7) == 0) && (ENTITY(reg_a6)[1].draw.h == 0)) {
@@ -759,17 +759,17 @@ typedef struct WorkRegA4 {
 } WorkRegA4;
 
 
-void func_001B3BC0(void) {
+void stage1_boss_left_open_start(void) {
     extern WorkRegA4 *reg_a4_as_WorkRegA4_p;
     reg_a4_as_WorkRegA4_p->unk2 = 0;
     reg_a4_as_WorkRegA4_p->unk7 = 0;
 }
 
-void func_001B3BE0() {
+void stage1_boss_left_open() {
     u16 temp_a0;
 
     if (ENTITY(reg_a6)[3].misc.b.draw_layer != 0) {
-        func_001B23C0();
+        stage1_boss_anim_clear();
         return;
     }
     if ((*(u8 *)(reg_a4 + 7) == 0) && (ENTITY(reg_a6)[3].draw.h == 0)) {
@@ -797,13 +797,13 @@ void func_001B3BE0() {
 }
 
 
-void func_001B3CF0(void) {
+void stage1_boss_right_rotor_opened_start(void) {
     *(u16*)(reg_a4 + 2) = 0;
 }
 
-void func_001B3D00(void) {
+void stage1_boss_right_rotor_opened(void) {
     if (ENTITY(reg_a6)[1].misc.b.draw_layer != 0) {
-        func_001B23C0();
+        stage1_boss_anim_clear();
         return;
     }
     reg_tmp.b[0] = *(u8 *)(reg_a4 + 3);
@@ -819,13 +819,13 @@ void func_001B3D00(void) {
 
 extern s16 *reg_a4_as_s16_p;
 
-void func_001B3D90(void) {
+void stage1_boss_left_rotor_opened_start(void) {
     reg_a4_as_s16_p[1] = 0;
 }
 
-void func_001B3DA0(void) {
+void stage1_boss_left_rotor_opened(void) {
     if (ENTITY(reg_a6)[3].misc.b.draw_layer != 0) {
-        func_001B23C0();
+        stage1_boss_anim_clear();
         return;
     }
     reg_tmp.b[0] = *(u8 *)(reg_a4 + 3);
@@ -846,7 +846,7 @@ extern u8 D_0026DFE0[];
 extern u8 D_0028DC28[];
 extern u8 D_0028DC30[];
 
-void func_001B3E30(void) {
+void stage1_boss_spin_start(void) {
     ENTITY(reg_a6)[8].hit_x_plus.sh = 0;
     *(u8 *)(reg_a4 + 3) = 1U;
     rng_next_bit();
@@ -910,7 +910,7 @@ void func_001B3E30(void) {
 
 s32 boss_attack_stop();
 
-void func_001B40C0(void) {
+void stage1_boss_spin(void) {
     u16 temp_v1;
 
     if (*(u8 *)(reg_a4 + 7) == 0) {
@@ -998,20 +998,20 @@ typedef struct WorkRegA42 {
 } WorkRegA42;
 
 
-void func_001B4360(void) {
+void stage1_boss_right_close_start(void) {
     extern WorkRegA42 *reg_a4_as_WorkRegA4_p;
     reg_a4_as_WorkRegA4_p->unk2 = 0;
     reg_a4_as_WorkRegA4_p->unk4 = 0x20;
     reg_a4_as_WorkRegA4_p->unk7 = 0;
 }
 
-void func_001B4380() {
+void stage1_boss_right_close() {
     u16 temp_a0;
     u16 temp_a0_2;
     u16 temp_v1;
 
     if (ENTITY(reg_a6)[1].misc.b.draw_layer != 0) {
-        func_001B23C0();
+        stage1_boss_anim_clear();
         return;
     }
     if (*(u8 *)(reg_a4 + 7) == 0) {
@@ -1045,19 +1045,19 @@ void func_001B4380() {
     }
 }
 
-void func_001B44A0(void) {
+void stage1_boss_left_close_start(void) {
     *(u16 *)(reg_a4 + 2) = 0;
     *(u16 *)(reg_a4 + 4) = 0x20;
     reg_a4[7] = 0;
 }
 
-void func_001B44C0() {
+void stage1_boss_left_close() {
     u16 temp_a0;
     u16 temp_a0_2;
     u16 temp_v1;
 
     if (ENTITY(reg_a6)[3].misc.b.draw_layer != 0) {
-        func_001B23C0();
+        stage1_boss_anim_clear();
         return;
     }
     if (*(u8 *)(reg_a4 + 7) == 0) {
@@ -1091,13 +1091,13 @@ void func_001B44C0() {
     }
 }
 
-void func_001B45E0(void) {
+void stage1_boss_gatling_recenter_start(void) {
     *(u16 *)(reg_a4 + 2) = 0x101;
 }
 
 s32 direction_turn_toward();
 
-void func_001B45F0() {
+void stage1_boss_gatling_recenter() {
     reg_tmp.b[0] = *(u8 *)(reg_a4 + 3);
     *(u8 *)(reg_a4 + 3) -= 1;
     if ((s32) reg_tmp.b[0] <= 0) {
@@ -1118,16 +1118,16 @@ void func_001B45F0() {
     }
 }
 
-void func_001B46A0(void) {
+void stage1_boss_right_open_wide_start(void) {
     *(u16 *)(reg_a4 + 2) = 0;
     reg_a4[7] = 0;
 }
 
-void func_001B46C0() {
+void stage1_boss_right_open_wide() {
     u16 temp_a0;
 
     if (ENTITY(reg_a6)[1].misc.b.draw_layer != 0) {
-        func_001B23C0();
+        stage1_boss_anim_clear();
         return;
     }
     if ((*(u8 *)(reg_a4 + 7) == 0) && (ENTITY(reg_a6)[1].draw.h == 0)) {
@@ -1162,17 +1162,17 @@ struct WorkRegA4b {
 };
 
 
-void func_001B47D0(void) {
+void stage1_boss_left_open_wide_start(void) {
     extern struct WorkRegA4b *reg_a4_as_WorkRegA4_p;
     reg_a4_as_WorkRegA4_p->unk2 = 0;
     reg_a4_as_WorkRegA4_p->unk7 = 0;
 }
 
-void func_001B47F0() {
+void stage1_boss_left_open_wide() {
     u16 temp_a0;
 
     if (ENTITY(reg_a6)[3].misc.b.draw_layer != 0) {
-        func_001B23C0();
+        stage1_boss_anim_clear();
         return;
     }
     if ((*(u8 *)(reg_a4 + 7) == 0) && (ENTITY(reg_a6)[3].draw.h == 0)) {
@@ -1208,20 +1208,20 @@ typedef struct WorkRegA43 {
 } WorkRegA43;
 
 
-void func_001B4900(void) {
+void stage1_boss_right_close_wide_start(void) {
     extern WorkRegA43 *reg_a4_as_WorkRegA4_p;
     reg_a4_as_WorkRegA4_p->unk2 = 0;
     reg_a4_as_WorkRegA4_p->unk4 = 0x20;
     reg_a4_as_WorkRegA4_p->unk7 = 0;
 }
 
-void func_001B4920() {
+void stage1_boss_right_close_wide() {
     u16 temp_a0;
     u16 temp_a0_2;
     u16 temp_v1;
 
     if (ENTITY(reg_a6)[1].misc.b.draw_layer != 0) {
-        func_001B23C0();
+        stage1_boss_anim_clear();
         return;
     }
     if (*(u8 *)(reg_a4 + 7) == 0) {
@@ -1255,19 +1255,19 @@ void func_001B4920() {
     }
 }
 
-void func_001B4A40(void) {
+void stage1_boss_left_close_wide_start(void) {
     *(u16 *)(reg_a4 + 2) = 0;
     *(u16 *)(reg_a4 + 4) = 0x20;
     reg_a4[7] = 0;
 }
 
-void func_001B4A60() {
+void stage1_boss_left_close_wide() {
     u16 temp_a0;
     u16 temp_a0_2;
     u16 temp_v1;
 
     if (ENTITY(reg_a6)[3].misc.b.draw_layer != 0) {
-        func_001B23C0();
+        stage1_boss_anim_clear();
         return;
     }
     if (*(u8 *)(reg_a4 + 7) == 0) {
@@ -1301,11 +1301,11 @@ void func_001B4A60() {
     }
 }
 
-void func_001B4B80(void) {
+void stage1_boss_gatling_fast_spin_start(void) {
     ENTITY(reg_a6)[5].look.sh = 0;
 }
 
-void func_001B4B90(void) {
+void stage1_boss_gatling_fast_spin(void) {
     ENTITY(reg_a6)[5].draw.h += 4;
     if ((s16) ENTITY(reg_a6)[5].draw.h >= 0x1C) {
         ENTITY(reg_a6)[5].draw.h = 0U;
