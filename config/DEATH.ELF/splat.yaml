@@ -385,7 +385,7 @@ segments:
       - [0x1777b0, .rodata, game/wreck_tables_b]
       - [0x177fb0, .rodata, game/pointer_tables]
       - [0x17a6a8, .rodata, game/sound_rpc]
-      - [0x17a708, .rodata, game/sound_paths]
+      - [0x17a708, .rodata, game/sound_tables]
       - [0x17ac30, .rodata, game/table_checks]
       - [0x17ff70, .rodata, game/name_entry]
       - [0x1800b8, rodata, rodata_1800b8]

@@ -366,7 +366,7 @@ segments:
       - [0x1758c0, .rodata, game/attract]
       - [0x175900, .rodata, game/pointer_tables]
       - [0x177ff8, .rodata, game/sound_rpc]
-      - [0x178058, .rodata, game/sound_paths]
+      - [0x178058, .rodata, game/sound_tables]
       - [0x178560, .rodata, game/table_checks]
       - [0x17d840, .rodata, game/name_entry]
       - [0x17d988, rodata, rodata_17d988]

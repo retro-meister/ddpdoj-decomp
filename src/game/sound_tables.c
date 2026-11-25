@@ -1,84 +1,6 @@
 /* Tables of the sound requests. */
 #include "common.h"
 
-extern u8 D_00277FD8[];
-extern u8 D_00277FE8[];
-extern u8 D_00277FF8[];
-extern u8 D_00278008[];
-extern u8 D_00278018[];
-extern u8 D_00278028[];
-extern u8 D_00278038[];
-extern u8 D_00278048[];
-extern u8 D_00278058[];
-extern u8 D_00278070[];
-extern u8 D_00278080[];
-extern u8 D_00278090[];
-extern u8 D_002780A0[];
-extern u8 D_002780B0[];
-extern u8 D_002780C0[];
-extern u8 D_002780D0[];
-extern u8 D_002780E0[];
-extern u8 D_002780F0[];
-extern u8 D_00278100[];
-extern u8 D_00278110[];
-extern u8 D_00278120[];
-extern u8 D_00278130[];
-extern u8 D_00278140[];
-extern u8 D_00278150[];
-extern u8 D_00278160[];
-extern u8 D_00278170[];
-extern u8 D_00278180[];
-extern u8 D_002781A0[];
-extern u8 D_002781C0[];
-extern u8 D_002781E0[];
-extern u8 D_00278200[];
-extern u8 D_00278220[];
-extern u8 D_00278240[];
-extern u8 D_00278260[];
-extern u8 D_00278280[];
-extern u8 D_002782A0[];
-extern u8 D_002782C0[];
-extern u8 D_002782D0[];
-extern u8 D_002782F0[];
-extern u8 D_00278310[];
-extern u8 D_00278330[];
-extern u8 D_00278350[];
-extern u8 D_00278370[];
-extern u8 D_00278390[];
-extern u8 D_002783B0[];
-extern u8 D_002783D0[];
-extern u8 D_002783F0[];
-extern u8 D_00278408[];
-extern u8 D_00278420[];
-extern u8 D_00278430[];
-extern u8 D_00278440[];
-extern u8 D_00278450[];
-extern u8 D_00278460[];
-extern u8 D_00278470[];
-extern u8 D_00278480[];
-extern u8 D_00278490[];
-extern u8 D_002784A0[];
-extern u8 D_002784B0[];
-extern u8 D_002784C0[];
-extern u8 D_002784D0[];
-#ifdef DEATH_LABEL
-extern u8 D_0027A970[];
-extern u8 D_0027AAB8[];
-extern u8 D_0027AAD0[];
-extern u8 D_0027AAF0[];
-extern u8 death_D_0027A980[];
-extern u8 death_D_0027A9A0[];
-extern u8 death_D_0027A9C0[];
-extern u8 death_D_0027A9E0[];
-extern u8 death_D_0027AA00[];
-extern u8 death_D_0027AA20[];
-extern u8 death_D_0027AA40[];
-extern u8 death_D_0027AA60[];
-extern u8 death_D_0027AA80[];
-extern u8 death_D_0027AAA0[];
-extern u8 death_D_0027AAE0[];
-extern u8 death_D_0027AB00[];
-#endif
 
 extern u8 g_se_vag_path_1[64];
 extern u8 g_se_vag_path_2[64];
@@ -87,159 +9,114 @@ extern u8 g_se_vag_path_4[64];
 extern u8 g_se_vag_path_5[64];
 extern u8 g_se_vag_path_6[64];
 extern u8 g_se_vag_path_7[16];
-struct GBgmFilePathsRecord { void *p0; void *p1; void *p2; void *p3; void *p4; void *p5; void *p6; void *p7; void *p8; void *p9; void *p10; void *p11; void *p12; void *p13; void *p14; void *p15; void *p16; void *p17; void *p18; void *p19; void *p20; void *p21; void *p22; void *p23; void *p24; void *p25; u16 w26[4]; };
-extern struct GBgmFilePathsRecord g_bgm_file_paths;
-struct GStageBgPathsRecord { void *p0; void *p1; void *p2; void *p3; void *p4; void *p5; void *p6; void *p7; void *p8; void *p9; u16 w10[4]; };
-extern struct GStageBgPathsRecord g_stage_bg_paths;
+
+u8 g_se_vag_path_1[64] = "\\DATA\\SE1.VAG;1";
+
+u8 g_se_vag_path_2[64] = "\\DATA\\SE2.VAG;1";
+
+u8 g_se_vag_path_3[64] = "\\DATA\\SE3.VAG;1";
+
+u8 g_se_vag_path_4[64] = "\\DATA\\SE4.VAG;1";
+
+u8 g_se_vag_path_5[64] = "\\DATA\\SE5.VAG;1";
+
+u8 g_se_vag_path_6[64] = "\\DATA\\SE6.VAG;1";
+
+u8 g_se_vag_path_7[16] = "\\DATA\\SE7.VAG;1";
+
+/* The music files, by music number. */
+char *g_bgm_file_paths[26] = {
+    "\\BGM\\BGM1.D2;1",
+    "\\BGM\\BGM2.D2;1",
+    "\\BGM\\BGM3.D2;1",
+    "\\BGM\\BGM4.D2;1",
+    "\\BGM\\BGM5.D2;1",
+    "\\BGM\\BGM6.D2;1",
+    "\\BGM\\BGM7.D2;1",
+    "\\BGM\\BGM8.D2;1",
+    "\\BGM\\BGM9.D2;1",
+    "\\BGM\\BGM10.D2;1",
+    "\\BGM\\BGM11.D2;1",
+    "\\BGM\\BGM12.D2;1",
+    "\\BGM\\BGM13.D2;1",
+    "\\BGM\\BGM21.D2;1",
+    "\\BGM\\BGM22.D2;1",
+    "\\BGM\\BGM23.D2;1",
+    "\\BGM\\BGM24.D2;1",
+    "\\BGM\\BGM25.D2;1",
+    "\\BGM\\BGM26.D2;1",
+    "\\BGM\\BGM27.D2;1",
+    "\\BGM\\BGM28.D2;1",
+    "\\BGM\\BGM29.D2;1",
+    "\\BGM\\BGM30.D2;1",
+    "\\BGM\\BGM31.D2;1",
+    "\\BGM\\BGM32.D2;1",
+    "\\BGM\\BGM33.D2;1",
+};
+
+/* Header and picture file of each stage's background. */
+char *g_stage_bg_paths[10] = {
+    "\\SPRITE\\ST1BG.PHD;1",
+    "\\SPRITE\\ST1BG.PRS;1",
+    "\\SPRITE\\ST2BG.PHD;1",
+    "\\SPRITE\\ST2BG.PRS;1",
+    "\\SPRITE\\ST3BG.PHD;1",
+    "\\SPRITE\\ST3BG.PRS;1",
+    "\\SPRITE\\ST4BG.PHD;1",
+    "\\SPRITE\\ST4BG.PRS;1",
+    "\\SPRITE\\ST5BG.PHD;1",
+    "\\SPRITE\\ST5BG.PRS;1",
+};
+
+/* The font, sprite and data files loaded at start. */
 #ifdef DEATH_LABEL
-struct GDataFilePathsRecord { void *p0; void *p1; void *p2; void *p3; void *p4; void *p5; void *p6; void *p7; void *p8; void *p9; void *p10; void *p11; void *p12; void *p13; void *p14; void *p15; };
-extern struct GDataFilePathsRecord g_data_file_paths;
-#else
-struct GDataFilePathsRecord { void *p0; void *p1; void *p2; void *p3; void *p4; void *p5; void *p6; void *p7; void *p8; void *p9; void *p10; void *p11; void *p12; void *p13; u16 w14[4]; };
-extern struct GDataFilePathsRecord g_data_file_paths;
-#endif
-struct GReplayFilePathsRecord { void *p0; void *p1; void *p2; void *p3; void *p4; void *p5; void *p6; void *p7; void *p8; void *p9; u16 w10[4]; };
-extern struct GReplayFilePathsRecord g_replay_file_paths;
-
-u8 g_se_vag_path_1[64] = {
-    0x5C, 0x44, 0x41, 0x54, 0x41, 0x5C, 0x53, 0x45, 0x31, 0x2E, 0x56, 0x41, 0x47, 0x3B, 0x31, 0x00,
-    0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00,
-    0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00,
-    0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00,
-};
-
-u8 g_se_vag_path_2[64] = {
-    0x5C, 0x44, 0x41, 0x54, 0x41, 0x5C, 0x53, 0x45, 0x32, 0x2E, 0x56, 0x41, 0x47, 0x3B, 0x31, 0x00,
-    0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00,
-    0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00,
-    0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00,
-};
-
-u8 g_se_vag_path_3[64] = {
-    0x5C, 0x44, 0x41, 0x54, 0x41, 0x5C, 0x53, 0x45, 0x33, 0x2E, 0x56, 0x41, 0x47, 0x3B, 0x31, 0x00,
-    0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00,
-    0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00,
-    0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00,
-};
-
-u8 g_se_vag_path_4[64] = {
-    0x5C, 0x44, 0x41, 0x54, 0x41, 0x5C, 0x53, 0x45, 0x34, 0x2E, 0x56, 0x41, 0x47, 0x3B, 0x31, 0x00,
-    0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00,
-    0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00,
-    0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00,
-};
-
-u8 g_se_vag_path_5[64] = {
-    0x5C, 0x44, 0x41, 0x54, 0x41, 0x5C, 0x53, 0x45, 0x35, 0x2E, 0x56, 0x41, 0x47, 0x3B, 0x31, 0x00,
-    0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00,
-    0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00,
-    0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00,
-};
-
-u8 g_se_vag_path_6[64] = {
-    0x5C, 0x44, 0x41, 0x54, 0x41, 0x5C, 0x53, 0x45, 0x36, 0x2E, 0x56, 0x41, 0x47, 0x3B, 0x31, 0x00,
-    0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00,
-    0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00,
-    0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00,
-};
-
-u8 g_se_vag_path_7[16] = {
-    0x5C, 0x44, 0x41, 0x54, 0x41, 0x5C, 0x53, 0x45, 0x37, 0x2E, 0x56, 0x41, 0x47, 0x3B, 0x31, 0x00,
-};
-
-struct GBgmFilePathsRecord g_bgm_file_paths = {
-    D_00277FD8,
-    D_00277FE8,
-    D_00277FF8,
-    D_00278008,
-    D_00278018,
-    D_00278028,
-    D_00278038,
-    D_00278048,
-    D_00278058,
-    D_00278070,
-    D_00278080,
-    D_00278090,
-    D_002780A0,
-    D_002780B0,
-    D_002780C0,
-    D_002780D0,
-    D_002780E0,
-    D_002780F0,
-    D_00278100,
-    D_00278110,
-    D_00278120,
-    D_00278130,
-    D_00278140,
-    D_00278150,
-    D_00278160,
-    D_00278170,
-    { 0x0000, 0x0000, 0x0000, 0x0000 },
-};
-
-struct GStageBgPathsRecord g_stage_bg_paths = {
-    D_00278180,
-    D_002781A0,
-    D_002781C0,
-    D_002781E0,
-    D_00278200,
-    D_00278220,
-    D_00278240,
-    D_00278260,
-    D_00278280,
-    D_002782A0,
-    { 0x0000, 0x0000, 0x0000, 0x0000 },
-};
-
-#ifdef DEATH_LABEL
-struct GDataFilePathsRecord g_data_file_paths = {
-    D_0027A970,
-    death_D_0027A980,
-    death_D_0027A9A0,
-    death_D_0027A9C0,
-    death_D_0027A9E0,
-    death_D_0027AA00,
-    death_D_0027AA20,
-    death_D_0027AA40,
-    death_D_0027AA60,
-    death_D_0027AA80,
-    death_D_0027AAA0,
-    D_0027AAB8,
-    D_0027AAD0,
-    death_D_0027AAE0,
-    D_0027AAF0,
-    death_D_0027AB00,
+char *g_data_file_paths[16] = {
+    "\\DATA\\FONT.GF;1",
+    "\\SPRITE\\BULLET.DAT;1",
+    "\\SPRITE\\EXP.DAT;1",
+    "\\SPRITE\\SPDAT.PRS;1",
+    "\\SPRITE\\SPHED.PRS;1",
+    "\\SPRITE\\ST1SP.PRS;1",
+    "\\SPRITE\\ST2SP.PRS;1",
+    "\\SPRITE\\ST3SP.PRS;1",
+    "\\SPRITE\\ST4SP.PRS;1",
+    "\\SPRITE\\ST5SP.PRS;1",
+    "\\DATA\\DDON3_02.DAT;1",
+    "\\DATA\\WAKU.8;1",
+    "\\DATA\\ARIKA.8;1",
+    "\\DATA\\MAP2.8;1",
+    "\\DATA\\DON.8;1",
+    "\\DATA\\NOIZU.8;1",
 };
 #else
-struct GDataFilePathsRecord g_data_file_paths = {
-    D_002782C0,
-    D_002782D0,
-    D_002782F0,
-    D_00278310,
-    D_00278330,
-    D_00278350,
-    D_00278370,
-    D_00278390,
-    D_002783B0,
-    D_002783D0,
-    D_002783F0,
-    D_00278408,
-    D_00278420,
-    D_00278430,
-    { 0x0000, 0x0000, 0x0000, 0x0000 },
+char *g_data_file_paths[14] = {
+    "\\DATA\\FONT.GF;1",
+    "\\SPRITE\\BULLET.DAT;1",
+    "\\SPRITE\\EXP.DAT;1",
+    "\\SPRITE\\SPDAT.PRS;1",
+    "\\SPRITE\\SPHED.PRS;1",
+    "\\SPRITE\\ST1SP.PRS;1",
+    "\\SPRITE\\ST2SP.PRS;1",
+    "\\SPRITE\\ST3SP.PRS;1",
+    "\\SPRITE\\ST4SP.PRS;1",
+    "\\SPRITE\\ST5SP.PRS;1",
+    "\\DATA\\DDON3_02.DAT;1",
+    "\\DATA\\WAKU.8;1",
+    "\\DATA\\ARIKA.8;1",
+    "\\DATA\\MAP2.8;1",
 };
 #endif
 
-struct GReplayFilePathsRecord g_replay_file_paths = {
-    D_00278440,
-    D_00278450,
-    D_00278460,
-    D_00278470,
-    D_00278480,
-    D_00278490,
-    D_002784A0,
-    D_002784B0,
-    D_002784C0,
-    D_002784D0,
-    { 0x0000, 0x0000, 0x0000, 0x0000 },
+/* Files of the built-in replays. */
+char *g_replay_file_paths[10] = {
+    "\\REP\\SP00.DAT;1",
+    "\\REP\\SP01.DAT;1",
+    "\\REP\\SP02.DAT;1",
+    "\\REP\\SP03.DAT;1",
+    "\\REP\\SP04.DAT;1",
+    "\\REP\\SP05.DAT;1",
+    "\\REP\\SP06.DAT;1",
+    "\\REP\\SP07.DAT;1",
+    "\\REP\\SP08.DAT;1",
+    "\\REP\\SP09.DAT;1",
 };
