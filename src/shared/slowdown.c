@@ -1,6 +1,18 @@
 #include "common.h"
 #include "entity.h"
 
+/* How many objects a frame may hold before the game slows down, by stage: the base number, and what is
+   added while a boss is on screen. */
+s16 slowdown_load_thresholds[5][2] = {
+    { 110, 20 }, { 105, 20 }, { 100, 20 }, { 95, 20 }, { 90, 20 },
+};
+s16 slowdown_load_thresholds_loop2[5][2] = {
+    { 90, 20 }, { 90, 20 }, { 90, 20 }, { 90, 20 }, { 90, 20 },
+};
+/* How far the slow frame budget may build up, by stage. */
+s16 slowdown_budget_limits[5] = { 4, 8, 12, 16, 20 };
+s16 slowdown_budget_limits_loop2[5] = { 20, 20, 20, 20, 20 };
+
 void frame_layers_flush(void);
 void slowdown_reset(void);
 
@@ -14,10 +26,6 @@ void slowdown_init(void) {
     slowdown_reset();
 }
 
-extern u8 slowdown_load_thresholds[];
-extern u8 slowdown_load_thresholds_loop2[];
-extern u8 slowdown_budget_limits[];
-extern u8 slowdown_budget_limits_loop2[];
 extern u16 g_player_laser_count;
 extern u16 g_player_shot_count;
 extern u8 g_paused;
@@ -56,9 +64,9 @@ next_5:
     reg_d0.h[0] += g_player_laser_count;
     reg_d0.h[0] += g_player_laser_count;
     reg_d1.w = 0;
-    tbl = slowdown_load_thresholds;
+    tbl = (u8 *)slowdown_load_thresholds;
     if (g_loop == 0) goto next_8;
-    tbl = slowdown_load_thresholds_loop2;
+    tbl = (u8 *)slowdown_load_thresholds_loop2;
     if (g_slowdown_loop2_allowed_as_u16 == 0) return;
     reg_d1.h[0] += 0x28;
 next_8:
@@ -78,9 +86,9 @@ next_12:
     g_slowdown_budget -= 1;
     goto next_20;
 next_15:
-    tbl = slowdown_budget_limits;
+    tbl = (u8 *)slowdown_budget_limits;
     if (g_loop == 0) goto next_17;
-    tbl = slowdown_budget_limits_loop2;
+    tbl = (u8 *)slowdown_budget_limits_loop2;
 next_17:
     reg_d2.h[0] = (s32) g_stage_x2 >> 1;
     reg_d2.h[0] = ((s16 *) tbl)[reg_d2.h[0]];
