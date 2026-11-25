@@ -1,5 +1,6 @@
 #include "common.h"
 #include "entity.h"
+#include "enemy_tables.h"
 
 void func_0014D4A0(void);
 void func_0014DA80(void);
@@ -78,8 +79,6 @@ void func_0014D260(void) {
     func_0014D4A0();
 }
 
-extern u16 D_0026A2B0[];
-extern u16 D_0026A300[];
 extern u8 g_game_mode;
 extern u8 g_simulation_boss_start;
 extern u16 g_stage_x4;
@@ -87,12 +86,12 @@ extern u8 D_002BF330[];
 
 void func_0014D4A0(void) {
     reg_a4 = D_002BF330;
-    reg_a0 = (u8 *)(D_0026A2B0);
+    reg_a0 = (u8 *)g_stage_enemies;
     reg_d0.h[0] = g_stage_x4;
     reg_d0.h[0] += reg_d0.h[0];
     reg_d0.h[0] += reg_d0.h[0];
     if (((g_simulation_active != 0) && (g_simulation_boss_start != 0)) || (g_game_mode == 2)) {
-        reg_a0 = (u8 *)(D_0026A300);
+        reg_a0 = (u8 *)g_stage_boss_start_enemies;
     }
     reg_a0 += reg_d0.h[0];
     *(u16 *)(reg_a4 + 2) = (u16) *(u16 *)reg_a0;
@@ -688,7 +687,7 @@ next_2:
     }
 }
 
-extern u8 D_0026A350[];
+extern void (*g_enemy_path_commands[12])();
 extern u16 g_scroll_line_step;
 extern s8 enemy_move_end_requested;
 
@@ -735,7 +734,7 @@ loop_1:
     }
     enemy_move_end_requested = 0;
     reg_d1.h[0] &= 0xF;
-    ((Fn)*(u32 *)((u8 *)D_0026A350 + (reg_d1.h[0] * 4)))();
+    ((Fn)*(u32 *)((u8 *)g_enemy_path_commands + (reg_d1.h[0] * 4)))();
     if (enemy_move_end_requested == 0) goto loop_1;
     return;
 next_1:
@@ -826,7 +825,7 @@ block_5:
 block_6:
     enemy_move_end_requested = 0;
     reg_d1.h[0] &= 0xF;
-    ((Fn) *(u32 *)(D_0026A350 + reg_d1.h[0] * 4))();
+    ((Fn) *(u32 *)((u8 *)g_enemy_path_commands + reg_d1.h[0] * 4))();
     if (enemy_move_end_requested == 0) goto block_4;
     cond_flag = 0;
     return;
@@ -960,6 +959,40 @@ void enemy_script_end(void) {
 void enemy_script_unused(void) {
 
 }
+
+/* .data */
+/* By stage: where the tables of its enemies are. */
+StageEnemies g_stage_enemies[5] = {
+    { g_stage1_enemy_placements, g_stage1_enemy_path_offsets, g_stage1_enemy_paths },
+    { g_stage2_enemy_placements, g_stage2_enemy_path_offsets, g_stage2_enemy_paths },
+    { g_stage3_enemy_placements, g_stage3_enemy_path_offsets, g_stage3_enemy_paths },
+    { g_stage4_enemy_placements, g_stage4_enemy_path_offsets, g_stage4_enemy_paths },
+    { g_stage5_enemy_placements, g_stage5_enemy_path_offsets, g_stage5_enemy_paths },
+};
+
+StageEnemies g_stage_boss_start_enemies[5] = {
+    { g_stage1_boss_start_placements, g_stage1_enemy_path_offsets, g_stage1_enemy_paths },
+    { g_stage2_boss_start_placements, g_stage2_enemy_path_offsets, g_stage2_enemy_paths },
+    { g_stage3_boss_start_placements, g_stage3_enemy_path_offsets, g_stage3_enemy_paths },
+    { g_stage4_boss_start_placements, g_stage4_enemy_path_offsets, g_stage4_enemy_paths },
+    { g_stage5_boss_start_placements, g_stage5_enemy_path_offsets, g_stage5_enemy_paths },
+};
+
+/* The routines of the path commands 0x80 to 0x8B. */
+void (*g_enemy_path_commands[12])() = {
+    enemy_script_loop,
+    enemy_script_set_entity_1f,
+    enemy_script_ground_collision,
+    enemy_script_air_collision,
+    enemy_script_set_state_22,
+    enemy_script_poke_task,
+    enemy_script_poke_entity,
+    enemy_script_set_state_24,
+    enemy_script_set_entity_1e,
+    enemy_script_air_scroll_check,
+    enemy_script_end,
+    enemy_script_unused,
+};
 
 /* .sbss (the compiler lays these out in reverse) */
 u32 D_0028DF44;

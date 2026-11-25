@@ -315,7 +315,7 @@ segments:
       - [0x16fe10, .data, death/debug_death_data]
       - [0x16fe20, .data, game/debug_data_b]
       - [0x16fe30, .data, game/play/difficulty_data]
-      - [0x16fe40, .data, game/enemy/enemy_data]
+      - [0x16fe40, .data, game/enemy/enemy]
       - [0x16ff10, .data, game/frontend/game_over]
       - [0x16ff90, .data, game/enemy/enemy_common_data_b]
       - [0x1703c0, .data, game/frontend/attract_data]
