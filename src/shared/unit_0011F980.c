@@ -66,9 +66,9 @@ extern u8 D_002417C0[];
 extern u8 D_00241830[];
 s32 sfx_spread_bomb_a();
 s32 sfx_spread_bomb_b();
-s32 func_0019D990();
-s32 func_0019D9C0();
-s32 func_0019DA10();
+s32 entity_draw_with_bombs();
+s32 entity_draw_with_bombs_keep();
+s32 sprite_draw_with_bombs_keep();
 s32 rng_next_bit();
 s32 vibration_start_pad1();
 s32 vibration_start_pad2();
@@ -172,7 +172,7 @@ block_a:
     reg_a0 += 2;
     reg_d4.h[0] = *(u16 *)reg_a0;
     reg_a0 += 2;
-    func_0019DA10();
+    sprite_draw_with_bombs_keep();
     reg_tmp.b[0] = *(u8 *)(reg_a6 + 0x23);
     *(u8 *)(reg_a6 + 0x23) -= 1;
     if ((s32) reg_tmp.b[0] > 0) goto block_rts_2;
@@ -264,7 +264,7 @@ next_3:
     if (*(u16 *)(reg_a6 + 0x2A) == 0) goto block_d;
     *(u16 *)(reg_a6 + 0x24) = 0x1C;
 next_4:
-    func_0019D990();
+    entity_draw_with_bombs();
     return;
 block_d:
     reg_a0 = (u8 *)D_00241830;
@@ -333,7 +333,7 @@ block_f:
     reg_a0 += 2;
     ENTITY(reg_a6)->sprite.h = (u16) *(u16 *)reg_a0;
     reg_a0 += 2;
-    func_0019D9C0();
+    entity_draw_with_bombs_keep();
     reg_tmp.h[1] = *(u16 *)reg_a0;
     reg_tmp.h[0] = *(u16 *)(reg_a0 + 2);
     if (reg_tmp.w == -1U) goto block_g;
@@ -721,16 +721,16 @@ block_36:
         func_00122420();
         func_001224F0();
         func_00122500();
-        func_0019D990();
+        entity_draw_with_bombs();
         reg_a6 += 0x7E0;
         if (!(ENTITY(reg_a6)->flags.b[1] & 2)) {
-            func_0019D990();
+            entity_draw_with_bombs();
         }
         reg_a6 += 0x30;
-        func_0019D990();
+        entity_draw_with_bombs();
         reg_a6 += 0x30;
         if (!(ENTITY(reg_a6)->flags.b[1] & 2)) {
-            func_0019D990();
+            entity_draw_with_bombs();
             reg_d0.w = 2;
             func_0020A270();
         }
@@ -880,7 +880,7 @@ next_160:
     W(2) = reg_d0.h[1];
     W(4) = reg_d0.h[0];
 next_180:
-    func_0019D9C0();
+    entity_draw_with_bombs_keep();
 next_190:
     reg_a6 += 0x30;
     if ((s16) --reg_d7.h[0] >= 0) goto loop_40;
@@ -969,7 +969,7 @@ next_4:
     ENTITY(reg_a6)->y.h = reg_d0.h[1];
     ENTITY(reg_a6)->x.h = reg_d0.h[0];
 next_5:
-    func_0019D9C0();
+    entity_draw_with_bombs_keep();
 next_6:
     reg_a6 += 0x30;
     if ((s16)(reg_d7.h[0] -= 1) >= 0) goto loop_0;

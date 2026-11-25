@@ -1537,7 +1537,7 @@ void func_00170720(void) {
 }
 
 s32 sfx_warning();
-s32 func_0019D770();
+s32 entity_draw_with_warning();
 
 void func_00170840(void) {
     u16 m;
@@ -1579,7 +1579,7 @@ next_200:
     enemy_remove();
     return;
 block_objset:
-    func_0019D770();
+    entity_draw_with_warning();
     switch (D_0028E3EC) {
     case 0:
         return;
@@ -1588,11 +1588,11 @@ block_objset:
     }
     if (g_game_frame & 2) {
         ENTITY(reg_a6)->y.h -= 0x40;
-        func_0019D770();
+        entity_draw_with_warning();
         ENTITY(reg_a6)->y.h += 0x40;
         return;
     }
     ENTITY(reg_a6)->y.h += 0x40;
-    func_0019D770();
+    entity_draw_with_warning();
     ENTITY(reg_a6)->y.h -= 0x40;
 }

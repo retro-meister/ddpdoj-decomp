@@ -40,20 +40,20 @@ void func_001A53C0(void) {
     func_001A53B0();
 }
 
-void func_0019D810(void);
+void sprite_draw_with_score(void);
 
 void func_001A53D0() {
-    func_0019D810();
+    sprite_draw_with_score();
 }
 
 void func_001A53E0(void) {
-    func_0019D810();
+    sprite_draw_with_score();
 }
 
-void func_0019D840(void);
+void sprite_draw_with_score_keep(void);
 
 void func_001A53F0(void) {
-    func_0019D840();
+    sprite_draw_with_score_keep();
 }
 
 void func_001A5400(void) {

@@ -771,7 +771,7 @@ void boss_flash_running(void) {
     cond_flag = 1;
 }
 
-s32 func_0019D7A0();
+s32 sprite_draw_with_warning_keep();
 extern u16 D_002962D8[];
 extern u16 D_002962DA[];
 extern u16 D_002962DC[];
@@ -797,5 +797,5 @@ next_2:
     reg_d3.h[0] |= D_002962DA[0];
     reg_d2.w = 0x10AA;
     reg_d4.h[0] = D_002962D6[0];
-    func_0019D7A0();
+    sprite_draw_with_warning_keep();
 }

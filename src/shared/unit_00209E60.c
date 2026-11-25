@@ -50,12 +50,12 @@ void func_00209EC0(void) {
 }
 
 extern s32 D_0028E570_as_s32;
-extern u16 D_0028E160;
+extern u16 g_sprite_sparks_used;
 
 void func_00209EE0(void) {
     reg_a4 -= D_0028E570_as_s32;
     reg_tmp.sw = (s32)reg_a4;
-    D_0028E160 = reg_tmp.h[0];
+    g_sprite_sparks_used = reg_tmp.h[0];
 }
 
 

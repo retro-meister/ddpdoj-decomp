@@ -91,7 +91,7 @@ segments:
       - [0x8d5e0, c, shared/sound_rpc]
       - [0x8f600, c, shared/unit_0018E5A0]
       - [0x9bc10, c, shared/sprite_queue]
-      - [0x9e8c0, c, shared/unit_0019D740]
+      - [0x9eda0, c, shared/unit_0019DC20]
       - [0xa03f0, c, shared/unit_0019F270]
       - [0xa3a80, c, shared/palette]
       - [0xa4220, c, shared/unit_001A30A0]

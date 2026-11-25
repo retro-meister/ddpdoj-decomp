@@ -1538,7 +1538,7 @@ void func_001417D0(void) {
     reg_d7.w = save_d7;
 }
 
-s32 sprite_draw_with_player_effects();
+s32 sprite_draw_with_player_shadows();
 extern u8 player_ship_sprite_tables[];
 extern u16 player_ship_hitbox_tables[];
 extern u16 player_ship_shadow_tables[];
@@ -1603,7 +1603,7 @@ void func_00141B50(void) {
         reg_d2.h[0] = (((u16)reg_d0.h[0] + 2) != 0) ? *(u16 *)((u8 *)reg_a0 + ((s16)((u16)reg_d0.h[0] + 2) & ~1)) : *(u16 *)reg_a0;
         reg_d3.h[0] = 0x210;
         reg_d4.h[0] = 0x18;
-        sprite_draw_with_player_effects();
+        sprite_draw_with_player_shadows();
     }
     if ((g_game_frame_ran != 0) && (D_0028EC4C == 0) && (D_0028E3B4 == 0) && !(D_0028E855 & 1) && (g_true_last_boss == 0) && !(PLAYER(reg_a6)->flags.b[1] & 0x40)) {
         if (*(u8 *)(reg_a5 + 6) == 0) {
@@ -2410,7 +2410,7 @@ block_244:
         reg_d2.h[0] = (((u16)reg_d0.h[0] + 2) != 0) ? *(u16 *)((u8 *)reg_a0 + ((s16)((u16)reg_d0.h[0] + 2) & ~1)) : *(u16 *)reg_a0;
         reg_d3.h[0] = 0x210;
         reg_d4.h[0] = 0x18;
-        sprite_draw_with_player_effects();
+        sprite_draw_with_player_shadows();
     }
     if ((g_game_frame_ran != 0) && (D_0028EC4C == 0) && (D_0028E3B4 == 0) && !(D_0028E855 & 1) && (g_true_last_boss == 0) && !(PLAYER(reg_a6)->flags.b[1] & 0x40)) {
         if (*(u8 *)(reg_a5 + 6) == 0) {

@@ -503,7 +503,7 @@ void func_001F11D0(void) {
     sprite_draw_layer2_keep();
 }
 
-s32 func_0019D920();
+s32 sprite_draw_with_last_boss_keep();
 extern u8 D_00264A50[];
 extern u16 D_0028E3E8;
 
@@ -530,7 +530,7 @@ void func_001F1270(void) {
         reg_d4.w = 0;
         reg_d4.b[0] = ENTITY(reg_a6)[7].sprite.b[0];
         if ((ENTITY(reg_a6)[10].misc.b.draw_layer == 0) && (D_0028E3E8 != 0)) {
-            func_0019D920();
+            sprite_draw_with_last_boss_keep();
         } else {
             sprite_draw_layer2_keep();
         }
@@ -550,7 +550,7 @@ void func_001F1270(void) {
     reg_d4.w = 0;
     reg_d4.b[0] = ENTITY(reg_a6)[7].sprite.b[0];
     if ((ENTITY(reg_a6)[10].misc.b.draw_layer == 0) && (D_0028E3E8 != 0)) {
-        func_0019D920();
+        sprite_draw_with_last_boss_keep();
         return;
     }
     sprite_draw_layer2_keep();

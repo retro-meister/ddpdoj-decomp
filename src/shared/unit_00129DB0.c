@@ -16,7 +16,7 @@ void func_0012E3D0(void);
 s32 func_00129BE0();
 extern s16 D_0024F330[];
 extern u8 *D_0028DEAC;
-extern u16 D_0028E158;
+extern u16 g_sprite_bullets2_used;
 extern u16 g_sprite_bullets_used;
 extern s8 g_slowdown_timer_as_s8;
 extern u8 D_0028E37C;
@@ -47,7 +47,7 @@ void func_00129DB0(void) {
     reg_a4 = (u8 *)((u32)reg_a4 - (u32)D_0028DEAC);
     reg_tmp.w = (u32) reg_a4;
     g_sprite_bullets_used = reg_d0.h[0];
-    D_0028E158 = reg_tmp.h[0];
+    g_sprite_bullets2_used = reg_tmp.h[0];
 #ifdef DEATH_LABEL
     if (D_0028E37C != 0) {
         s16 *limit;
@@ -57,7 +57,7 @@ void func_00129DB0(void) {
         } else {
             limit = &death_D_002512B0[g_stage];
         }
-        reg_tmp.h[0] = (s16) D_0028E158 + (s16) g_sprite_bullets_used;
+        reg_tmp.h[0] = (s16) g_sprite_bullets2_used + (s16) g_sprite_bullets_used;
         reg_tmp.h[0] /= 0xC;
         if ((D_0028E855 & 2) && (reg_tmp.h[0] >= *limit)) {
             D_0028E37C |= 0x80;
@@ -66,7 +66,7 @@ void func_00129DB0(void) {
     }
 #else
     if (D_0028E37C != 0) {
-        reg_tmp.h[0] = (s16) D_0028E158 + (s16) g_sprite_bullets_used;
+        reg_tmp.h[0] = (s16) g_sprite_bullets2_used + (s16) g_sprite_bullets_used;
         reg_tmp.h[0] /= 0xC;
         if ((D_0028E855 & 2) && (g_loop != 0) && (reg_tmp.h[0] > D_0024F330[g_stage])) {
             g_slowdown_timer_as_s8 = 2;

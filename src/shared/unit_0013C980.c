@@ -178,7 +178,7 @@ void func_0013CCF0() {
     func_0013CD00();
 }
 
-void func_0019DBE0(void);
+void sprite_draw_with_hyper_display_keep(void);
 extern u16 D_0028DFC0;
 extern u16 D_0028E3EC;
 extern u16 g_game_frame;
@@ -241,7 +241,7 @@ loop_2:
             reg_d1.h[0] = reg_d1.h[1];
             reg_d1.h[1] = reg_tmp1.h[0];
             reg_d1.h[0] += 0xFCC0;
-            func_0019DBE0();
+            sprite_draw_with_hyper_display_keep();
         }
     }
     reg_d2.w += 1;
@@ -291,7 +291,7 @@ void func_0013D030() {
     } while ((s16)(--reg_d0.h[0]) >= 0);
 }
 
-s32 func_0019DAF0();
+s32 sprite_draw_with_maximum();
 extern u16 D_00255568[];
 extern u16 D_0028E060;
 extern u16 D_0028E064;
@@ -342,7 +342,7 @@ void func_0013D090(void) {
             reg_d2.h[1] = *(u16 *)reg_a1;
             reg_d2.h[0] = *(u16 *)(reg_a1 + 2);
             reg_d3.h[0] = 0x460;
-            func_0019DAF0();
+            sprite_draw_with_maximum();
         }
         reg_d0.h[0] = g_player2_as_u16_a[0];
         if (((s16)(reg_d0.h[0]) < 0) && !(reg_d0.h[0] & 0xFFFF & 0x4000) && (D_0029CD80[0] != 0)) {
@@ -375,12 +375,12 @@ void func_0013D090(void) {
             reg_d2.h[1] = *(u16 *)reg_a1;
             reg_d2.h[0] = *(u16 *)(reg_a1 + 2);
             reg_d3.h[0] = 0x460;
-            func_0019DAF0();
+            sprite_draw_with_maximum();
         }
     }
 }
 
-s32 func_0019DB50();
+s32 sprite_draw_with_hyper_ready();
 
 void func_0013D470() {
     u16 temp_a0;
@@ -403,7 +403,7 @@ void func_0013D470() {
     reg_d2.h[0] = temp_a0;
     reg_d3.h[0] = 0x270;
     reg_d4.h[0] = 9;
-    func_0019DB50();
+    sprite_draw_with_hyper_ready();
 }
 
 extern s32 D_0028E050_as_s32;
@@ -1448,7 +1448,7 @@ void func_0013F5A0(void) {
     func_0013F5C0();
 }
 
-void func_0019D8B0(void);
+void sprite_draw_with_laser_trail_keep(void);
 
 void func_0013F5C0(void) {
     u32 tmp;
@@ -1504,7 +1504,7 @@ loop_2:
     reg_d1.w += 0xFA00FC00;
     reg_d2.h[1] = *(u16 *)(reg_a1 + 0);
     reg_d2.h[0] = *(u16 *)(reg_a1 + 2);
-    func_0019D8B0();
+    sprite_draw_with_laser_trail_keep();
 next_1:
     tmp = reg_d7.h[0] - 1;
     reg_d7.h[0] = tmp;

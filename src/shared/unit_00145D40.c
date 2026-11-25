@@ -356,7 +356,7 @@ void func_00146470(void) {
     reg_a4 = temp_s0;
 }
 
-s32 func_0019D5C0();
+s32 entity_draw_with_player_lasers();
 extern u16 D_0028E3EC;
 extern u16 g_two_player_game;
 
@@ -377,21 +377,21 @@ void func_00146690(arg0)
         }
     } else {
 block_4:
-        func_0019D5C0();
+        entity_draw_with_player_lasers();
     }
 }
 
-s32 func_0019D5C0();                            /* extern */
+s32 entity_draw_with_player_lasers();                            /* extern */
 
 void func_001466E0(void) {
     if ((g_two_player_game != 0) || (D_0028E3EC == 0)) {
-        func_0019D5C0();
+        entity_draw_with_player_lasers();
     }
 }
 
 void func_00146720(void) {
     if ((g_two_player_game != 0) || (D_0028E3EC != 0)) {
-        func_0019D5C0();
+        entity_draw_with_player_lasers();
     }
 }
 
@@ -890,7 +890,7 @@ void func_00147250(void) {
         }
         if (D_0028E000 == 0) {
 block_15:
-            func_0019D5C0();
+            entity_draw_with_player_lasers();
         }
     }
 }

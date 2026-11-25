@@ -33,7 +33,7 @@ extern u16 D_0028E3EC;
 extern u16 g_bullet_count;
 
 void func_00125590(u16 arg0) {
-    extern void func_0019D290(u16);
+    extern void entity_draw_with_special_items(u16);
     if (g_bullet_count >= 0x34) {
         reg_d0.w = 1;
         reg_d0.h[0] &= reg_d7.h[0];
@@ -42,12 +42,12 @@ void func_00125590(u16 arg0) {
             return;
         }
     }
-    func_0019D290(arg0);
+    entity_draw_with_special_items(arg0);
 }
 
 
 void func_001255F0(void) {
-    s32 func_0019D290();
+    s32 entity_draw_with_special_items();
     u16 t;
 
     if (g_bullet_count < 35) goto call;
@@ -66,7 +66,7 @@ void func_001255F0(void) {
     reg_d0.h[0] &= reg_d7.h[0];
     if (D_0028E3EC != reg_d0.h[0]) {
 call:
-        func_0019D290();
+        entity_draw_with_special_items();
         return;
     }
 }
@@ -505,7 +505,7 @@ extern u8 D_00269490[];
 extern u8 *reg_call_target_as_u8_p;
 
 void func_001261A0(void) {
-    s32 func_0019D290();
+    s32 entity_draw_with_special_items();
     s32 bullet_release();
     u32 t;
 
@@ -573,7 +573,7 @@ next_6:
     reg_d1.h[0] = *(u16 *)(reg_a6 + 0x22);
     ENTITY(reg_a6)->y.h += reg_d0.h[0];
     ENTITY(reg_a6)->x.h += reg_d1.h[0];
-    func_0019D290();
+    entity_draw_with_special_items();
 }
 
 extern u8 D_0028E855;
@@ -1532,12 +1532,12 @@ block_3:
     bullet_release();
 }
 
-void func_0019D2F0(void);
+void sprite_draw_with_special_items_keep(void);
 extern u16 g_loop;
 extern u16 g_stage;
 
 void func_00128320(void) {
-    void func_0019D2C0(void);
+    void sprite_draw_with_special_items(void);
     u32 sd6;
     u32 sd7;
 
@@ -1546,7 +1546,7 @@ void func_00128320(void) {
     reg_d2.w = 0x11E0;
     reg_d3.h[0] = 0x210;
     reg_d4.h[0] = 0x1D;
-    func_0019D2C0();
+    sprite_draw_with_special_items();
     reg_d3.h[0] = 0x410;
     sd6 = reg_d6.w;
     sd7 = reg_d7.w;
@@ -1581,7 +1581,7 @@ void func_00128320(void) {
             }
             reg_d2.w += reg_d5.w;
             reg_d4.h[0] = 0x1D;
-            func_0019D2F0();
+            sprite_draw_with_special_items_keep();
             reg_d1.h[0] += 0x400;
         }
     } while ((s16)(--reg_d7.h[0]) >= 0);
@@ -1596,7 +1596,7 @@ void func_00128320(void) {
     reg_d3.h[0] = 0x210;
     reg_d4.h[0] = 0x1D;
     reg_d1.h[1] += 0xC0;
-    func_0019D2F0();
+    sprite_draw_with_special_items_keep();
     reg_d6.w = sd6;
     reg_d7.w = sd7;
     reg_d1.w += 0xFF400000;
@@ -1605,7 +1605,7 @@ void func_00128320(void) {
 extern u32 D_002697E0[];
 
 void func_001285A0(void) {
-    s32 func_0019D2C0();
+    s32 sprite_draw_with_special_items();
     u16 temp_a2;
     u16 temp_a3;
     u32 temp_a0;
@@ -1621,7 +1621,7 @@ void func_001285A0(void) {
     reg_d2.w = temp_a0;
     reg_d3.h[0] = 0x420;
     reg_d4.h[0] = 0x1D;
-    func_0019D2C0();
+    sprite_draw_with_special_items();
     ENTITY(reg_a6)->hit_y_minus.h -= 4;
     if ((s16) ENTITY(reg_a6)->hit_y_minus.h < 0) {
         ENTITY(reg_a6)->hit_y_minus.h = 0x10U;

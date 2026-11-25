@@ -292,7 +292,7 @@ typedef void (*Fn)();
 
 s32 sfx_confirm();
 s32 sfx_cursor_move();
-s32 func_0019DA80();
+s32 sprite_draw_with_ship_select_keep();
 extern u16 D_00251B20[];
 extern u16 D_00251B30[];
 extern u16 D_0028C128[];
@@ -347,7 +347,7 @@ void func_001AF8F0(void) {
     reg_d3.h[0] = 0x630;
     reg_d7.w = reg_d1.w;
     reg_d4.h[0] = *(u16 *)(reg_a4 + 0x14);
-    func_0019DA80();
+    sprite_draw_with_ship_select_keep();
     if (*(u8 *)(reg_a5 + 6) == 0) {
         temp_a1 = reg_d1.w;
         reg_d1.w = temp_a1 + 0x04000100;
@@ -355,13 +355,13 @@ void func_001AF8F0(void) {
         reg_d3.h[0] = 0x410;
         reg_d4.w = 0;
         reg_d4.h[0] = *(u16 *)(reg_a4 + 0x16);
-        func_0019DA80();
+        sprite_draw_with_ship_select_keep();
         reg_d2.w = 0x1554;
         reg_d4.w = 0;
         reg_d3.h[0] = 0x410;
         reg_d1.w += 0x600;
         reg_d4.h[0] = *(u16 *)(reg_a4 + 0x18);
-        func_0019DA80();
+        sprite_draw_with_ship_select_keep();
     } else {
         temp_a1_2 = reg_d1.w;
         reg_d1.w = temp_a1_2 + 0x04000100;
@@ -369,13 +369,13 @@ void func_001AF8F0(void) {
         reg_d3.h[0] = 0x410;
         reg_d4.w = 0;
         reg_d4.h[0] = *(u16 *)(reg_a4 + 0x16);
-        func_0019DA80();
+        sprite_draw_with_ship_select_keep();
         reg_d2.w = 0x1556;
         reg_d4.w = 0;
         reg_d3.h[0] = 0x410;
         reg_d1.w += 0x600;
         reg_d4.h[0] = *(u16 *)(reg_a4 + 0x18);
-        func_0019DA80();
+        sprite_draw_with_ship_select_keep();
     }
     reg_d0.w = 0;
     reg_d1.w = reg_d7.w;
@@ -400,7 +400,7 @@ void func_001AF8F0(void) {
     reg_d4.w = 0;
     reg_d3.h[0] = 0x618;
     reg_d4.h[0] = *(u16 *)(reg_a4 + 0x14);
-    func_0019DA80();
+    sprite_draw_with_ship_select_keep();
     reg_d0.w = 0;
     cond_flag = 0;
 }
@@ -470,7 +470,7 @@ void func_001AFCC0(void) {
     reg_d3.h[0] = 0x648;
     reg_d7.w = reg_d1.w;
     reg_d4.h[0] = *(u16 *)(reg_a4 + 0x14);
-    func_0019DA80();
+    sprite_draw_with_ship_select_keep();
     reg_d0.w = 0;
     reg_d1.w = reg_d7.w;
     reg_d0.b[0] = *(u8 *)(reg_a5 + 0xE);
@@ -496,7 +496,7 @@ void func_001AFCC0(void) {
     reg_d4.w = 0;
     reg_d3.h[0] = 0x618;
     reg_d4.h[0] = *(u16 *)(reg_a4 + 0x14);
-    func_0019DA80();
+    sprite_draw_with_ship_select_keep();
     func_001AF2C0();
     if (0 <= (s16)(reg_d0.h[0])) {
         reg_d0.h[0] += reg_d0.h[0];
@@ -508,7 +508,7 @@ void func_001AFCC0(void) {
         reg_d3.h[0] = 0x618;
         reg_d4.w = 0;
         reg_d4.h[0] = *(u16 *)(reg_a4 + 0x14);
-        func_0019DA80();
+        sprite_draw_with_ship_select_keep();
     }
 }
 
