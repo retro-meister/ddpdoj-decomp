@@ -1,6 +1,39 @@
 #include "common.h"
 #include "entity.h"
 
+void stage1_boss_mode_enter_start(void);
+void stage1_boss_mode_enter(void);
+void stage1_boss_mode_normal_start(void);
+void stage1_boss_mode_normal(void);
+void stage1_boss_mode_vulcan_start(void);
+void stage1_boss_mode_vulcan(void);
+void stage1_boss_mode_side_attack_start(void);
+void stage1_boss_mode_side_attack(void);
+void stage1_boss_mode_one_side_lost_start(void);
+void stage1_boss_mode_one_side_lost(void);
+void stage1_boss_mode_both_sides_lost_start(void);
+void stage1_boss_mode_both_sides_lost(void);
+void stage1_boss_mode_gatling_start(void);
+void stage1_boss_mode_gatling(void);
+
+/* The set-up routine and the per-frame routine of every mode, by mode number. */
+void (*stage1_boss_mode_routines[])(void) = {
+    stage1_boss_mode_enter_start,
+    stage1_boss_mode_enter,
+    stage1_boss_mode_normal_start,
+    stage1_boss_mode_normal,
+    stage1_boss_mode_vulcan_start,
+    stage1_boss_mode_vulcan,
+    stage1_boss_mode_side_attack_start,
+    stage1_boss_mode_side_attack,
+    stage1_boss_mode_one_side_lost_start,
+    stage1_boss_mode_one_side_lost,
+    stage1_boss_mode_both_sides_lost_start,
+    stage1_boss_mode_both_sides_lost,
+    stage1_boss_mode_gatling_start,
+    stage1_boss_mode_gatling,
+};
+
 u16 stage1_boss_side_gun_levels[] = {
     0xFFFC, 0xFFFD, 0xFFFE, 0xFFFF, 0x0000, 0x0001, 0x0002, 0x0003,
 };
@@ -12,22 +45,6 @@ u16 stage1_boss_side_arg10_levels[] = {
 u16 stage1_boss_gatling_levels[] = {
     0x0003, 0x0001, 0x0003, 0x0001, 0x0004, 0x0002, 0x0005, 0x0003,
     0x0006, 0x0003, 0x0008, 0x0004, 0x0008, 0x0004, 0x0009, 0x0005,
-};
-
-u16 stage1_boss_start_flash[] = {
-#ifdef DEATH_LABEL
-    0x5760, 0x001E, 0x5790, 0x001E, 0x5A80, 0x001E, 0x5A90, 0x001E,
-    0x5BF0, 0x001E, 0x5C20, 0x001E, 0x5D00, 0x001E, 0x5D20, 0x001E,
-    0x5DD0, 0x001E, 0x5DF0, 0x001E, 0x5ED0, 0x001E, 0x5F50, 0x001E,
-    0x5FE0, 0x001E, 0x6000, 0x001E, 0x60B0, 0x001E, 0x60D0, 0x001E,
-    0x61B0, 0x001E, 0x61D0, 0x001E,
-#else
-    0xAB10, 0x001B, 0xAB40, 0x001B, 0xAE30, 0x001B, 0xAE40, 0x001B,
-    0xAFA0, 0x001B, 0xAFD0, 0x001B, 0xB0B0, 0x001B, 0xB0D0, 0x001B,
-    0xB180, 0x001B, 0xB1A0, 0x001B, 0xB280, 0x001B, 0xB300, 0x001B,
-    0xB390, 0x001B, 0xB3B0, 0x001B, 0xB460, 0x001B, 0xB480, 0x001B,
-    0xB560, 0x001B, 0xB580, 0x001B,
-#endif
 };
 
 /* Two bytes of a boss slot that are set together as one word: a reload value and its countdown. */

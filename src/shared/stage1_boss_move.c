@@ -1,6 +1,47 @@
 #include "common.h"
 #include "entity.h"
 
+void stage1_boss_move_enter_start(void);
+void stage1_boss_move_enter(void);
+void stage1_boss_move_dying_start(void);
+void stage1_boss_move_dying(void);
+void stage1_boss_move_wander_start(void);
+void stage1_boss_move_wander(void);
+void stage1_boss_move_up_start(void);
+void stage1_boss_move_up(void);
+void stage1_boss_move_sway_start(void);
+void stage1_boss_move_sway(void);
+void stage1_boss_move_down_start(void);
+void stage1_boss_move_down(void);
+void stage1_boss_move_up_b_start(void);
+void stage1_boss_move_up_b(void);
+void stage1_boss_move_sway_b_start(void);
+void stage1_boss_move_sway_b(void);
+void stage1_boss_move_up_c_start(void);
+void stage1_boss_move_up_c(void);
+
+/* The set-up routine and the per-frame routine of every movement, by movement number. */
+void (*stage1_boss_move_routines[])(void) = {
+    stage1_boss_move_enter_start,
+    stage1_boss_move_enter,
+    stage1_boss_move_dying_start,
+    stage1_boss_move_dying,
+    stage1_boss_move_wander_start,
+    stage1_boss_move_wander,
+    stage1_boss_move_up_start,
+    stage1_boss_move_up,
+    stage1_boss_move_sway_start,
+    stage1_boss_move_sway,
+    stage1_boss_move_down_start,
+    stage1_boss_move_down,
+    stage1_boss_move_up_b_start,
+    stage1_boss_move_up_b,
+    stage1_boss_move_sway_b_start,
+    stage1_boss_move_sway_b,
+    stage1_boss_move_up_c_start,
+    stage1_boss_move_up_c,
+};
+
 u16 stage1_boss_enter_flash[] = {
     0x0005, 0x7FFF, 0x0000, 0x04C0, 0x0004, 0x0005, 0x001F, 0x0003,
     0x7FFF, 0x0000, 0x0540, 0x000B, 0x000C, 0x001F, 0x0003, 0x7FFF,
@@ -44,7 +85,6 @@ typedef struct {
 
 #define MOVE(pointer) ((Stage1BossMove *)(pointer))
 
-void stage1_boss_move_down(void);
 
 s32 velocity_from_dir256();
 s32 direction_between();
