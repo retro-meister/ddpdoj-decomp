@@ -242,7 +242,7 @@ segments:
       - [0x16f280, .data, shared/stage4_boss_mode]
       - [0x16f2c0, data, data_16f2c0]
       - [0x16f470, .data, shared/stage4_boss_move]
-      - [0x16f4c0, data, data_16f4c0]
+      - [0x16f550, data, data_16f550]
       - [0x16f820, .data, shared/text]
       - [0x16f8f0, .data, shared/gfx]
       - [0x16fc20, .data, shared/arcade_sprite]

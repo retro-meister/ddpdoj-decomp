@@ -257,7 +257,7 @@ segments:
       - [0x174a70, .data, shared/stage4_boss_mode]
       - [0x174ab0, data, data_174ab0]
       - [0x174c60, .data, shared/stage4_boss_move]
-      - [0x174cb0, data, data_174cb0]
+      - [0x174d40, data, data_174d40]
       - [0x1763b0, .rodata, shared/unit_00129DB0]
       - [0x176450, .rodata, shared/unit_00131200]
       - [0x1765c8, rodata, rodata_1765c8]

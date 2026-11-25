@@ -31,7 +31,7 @@ extern u16 stage1_boss_final_flash[];
 extern u16 stage1_boss_enter_flash[];
 extern u16 D_0026F320[];
 extern u16 D_0026F340[];
-extern u16 D_0026F440[];
+extern u16 stage4_boss_enter_flash[];
 
 void func_00210EA0(void);
 void func_00211140(void);
@@ -348,10 +348,10 @@ void func_002108C0(void) {
     STORE_POINTER(D_0026F320 + 4, D_002610F0);
     STORE_POINTER(D_0026F320 + 11, D_00249E90);
     STORE_POINTER(D_0026F340 + 3, D_00261D30);
-    STORE_POINTER(D_0026F440 + 4, D_0025FE70_as_u16_a);
-    STORE_POINTER(D_0026F440 + 11, D_0025FEB0_as_u16_a);
-    STORE_POINTER(D_0026F440 + 18, D_0025FEF0_as_u16_a);
-    STORE_POINTER(D_0026F440 + 25, D_00261D70);
+    STORE_POINTER(stage4_boss_enter_flash + 4, D_0025FE70_as_u16_a);
+    STORE_POINTER(stage4_boss_enter_flash + 11, D_0025FEB0_as_u16_a);
+    STORE_POINTER(stage4_boss_enter_flash + 18, D_0025FEF0_as_u16_a);
+    STORE_POINTER(stage4_boss_enter_flash + 25, D_00261D70);
 }
 
 extern u8 D_002BAE90[];
