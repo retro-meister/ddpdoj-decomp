@@ -306,7 +306,7 @@ void func_0020F550(void) {
 
 extern u16 D_00244930[];
 extern u16 D_00249E90[];
-extern u16 D_0025FA30_as_u16_a[];
+extern u16 stage1_boss_palette_as_u16_a[];
 extern u16 D_0025FA70_as_u16_a[];
 extern u16 D_0025FE70_as_u16_a[];
 extern u16 D_0025FEB0_as_u16_a[];
@@ -323,14 +323,14 @@ extern u16 D_0026ED10_as_u16_a[];
 extern u16 D_0028DC68_as_u16_a[];
 
 void func_002108C0(void) {
-    STORE_POINTER(D_0026DF70 + 4, D_0025FA30_as_u16_a);
+    STORE_POINTER(D_0026DF70 + 4, stage1_boss_palette_as_u16_a);
     STORE_POINTER(D_0026DF70 + 11, D_0025FA70_as_u16_a);
     STORE_POINTER(D_0026DF70 + 18, D_0025FA70_as_u16_a);
     STORE_POINTER(D_0026DF70 + 25, D_0025FA70_as_u16_a);
     STORE_POINTER(D_0026DF70 + 32, D_00244930);
     STORE_POINTER(D_0026DFC0 + 4, D_002610F0);
     STORE_POINTER(D_0026DFC0 + 11, D_00244930);
-    STORE_POINTER(stage1_boss_enter_flash + 4, D_0025FA30_as_u16_a);
+    STORE_POINTER(stage1_boss_enter_flash + 4, stage1_boss_palette_as_u16_a);
     STORE_POINTER(stage1_boss_enter_flash + 11, D_0025FA70_as_u16_a);
     STORE_POINTER(stage1_boss_enter_flash + 18, D_0025FA70_as_u16_a);
     STORE_POINTER(stage1_boss_enter_flash + 25, D_0025FA70_as_u16_a);
