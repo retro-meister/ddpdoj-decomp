@@ -199,7 +199,7 @@ void func_0020A1C0(void) {
 
 s32 func_00201230();
 extern u8 D_00250D88[];
-extern u8 D_0029CEA0_as_u8_a[];
+extern u8 g_bomb_entities_as_u8_a[];
 
 void func_0020A270(void) {
     s32 temp_a1;
@@ -228,7 +228,7 @@ void func_0020A270(void) {
     reg_d7.h[0] = 0xFFFF;
     reg_a0 = (u8 *)D_00299D30;
     reg_d0.w = 0;
-    if (!(D_0029CEA0_as_u8_a[0] & 0x80)) {
+    if (!(g_bomb_entities_as_u8_a[0] & 0x80)) {
         func_0020A370();
         return;
     }
@@ -565,7 +565,7 @@ void func_0020AD50(void) {
         reg_d0.h[0] = *(u16 *)reg_a2;
     } else {
         reg_d3.h[0] = 2;
-        if (D_0029CEA0_as_u8_a[0] & 0x80) {
+        if (g_bomb_entities_as_u8_a[0] & 0x80) {
             reg_d3.h[0] = 3;
         }
         (*(u8 *)((u8 *)(reg_a0) + (-0x12))) = (u8) reg_d3.b[0];

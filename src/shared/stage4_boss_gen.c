@@ -679,7 +679,7 @@ s32 vibration_start_pad1();
 s32 vibration_start_pad2();
 extern u16 g_enemy_signal_2;
 extern u16 g_enemy_signal_0;
-extern u16 D_0029CEA0[];
+extern u16 g_bomb_entities[];
 
 void func_001DF890(void) {
     s16 saved_x;
@@ -1045,7 +1045,7 @@ next_720:
     func_001E4520();
     *(u16 *)(reg_a5 + 0x2E) = 0;
 next_740:
-    if (*(s16 *)D_0029CEA0 == 0) goto block_e;
+    if (*(s16 *)g_bomb_entities == 0) goto block_e;
     *(u16 *)(reg_a5 + 0x2E) = 0;
     goto block_e;
 block_b:

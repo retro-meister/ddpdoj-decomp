@@ -106,7 +106,7 @@ extern u16 D_0029976C[];
 extern u16 D_0029976E[];
 extern u8 *D_00299770[];
 extern u16 g_side_scroll_step[];
-extern u8 D_0029CEA0_as_u8_a[];
+extern u8 g_bomb_entities_as_u8_a[];
 extern u16 *reg_a4_as_u16_p;
 
 #define SLOT_PHASE MAIN_OR_DEATH_LABEL(D_00299762[0], *(u16 *)(D_002962E0 + 0x10682))
@@ -240,7 +240,7 @@ void func_00129EF0(void) {
     goto loop_10;
 
 L_bom_bui:
-    reg_d1.h[0] = *(u16 *)D_0029CEA0_as_u8_a;
+    reg_d1.h[0] = *(u16 *)g_bomb_entities_as_u8_a;
     if ((reg_d1.h[0] != 0) && (reg_d1.w & 1) && (0 <= (s64)(s16)g_boss_present_as_u16)) {
         goto block_12;
     }
@@ -263,7 +263,7 @@ loop_10:
         goto block_9;
     }
     D_00299760[0] += 1;
-    reg_d1.h[0] = *(u16 *)D_0029CEA0_as_u8_a;
+    reg_d1.h[0] = *(u16 *)g_bomb_entities_as_u8_a;
     if ((s16)(reg_d1.h[0] |= (s16)g_boss_present_as_u16) < 0) {
         goto L_bom_bui;
     }

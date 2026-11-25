@@ -41,7 +41,7 @@ segments:
       - [0x1ee40, c, shared/stage4_scenery]
       - [0x1f410, c, shared/stage5_scenery]
       - [0x1f7d0, c, shared/map_cell_test]
-      - [0x1fce0, c, shared/unit_0011F980]
+      - [0x1fce0, c, shared/bomb]
       - [0x22f40, c, shared/boss_slots]
       - [0x241b0, c, shared/unit_00125590]
       - [0x28b10, c, death/death_func_00128A90]

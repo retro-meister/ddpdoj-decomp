@@ -395,7 +395,7 @@ extern s16 g_p1_chain_points_display_timer;
 extern u16 g_p1_combo_timer;
 extern s32 g_p1_chain_first_score_shown;
 extern s32 g_p1_chain_first_score;
-extern s16 D_0028E6D4_as_s16;
+extern s16 g_score_player_flag_as_s16;
 
 void func_001AD690(void) {
     g_p2_laser_hit_step_as_s16 = 0;
@@ -420,7 +420,7 @@ void func_001AD690(void) {
     g_p1_hit_display_timer_as_s16 = 0;
     g_p1_chain_points_display_timer = 0;
     g_p1_chain_first_score = g_p1_chain_first_score_shown = (g_p1_combo_timer = 0);
-    D_0028E6D4_as_s16 = 0;
+    g_score_player_flag_as_s16 = 0;
 }
 
 extern s16 g_boss_explosion_flash_as_s16;
@@ -698,7 +698,7 @@ extern s32 g_p2_hyper_effect_sprite;
 extern s32 g_p1_hyper_effect_sprite;
 extern s16 g_score_task_active_as_s16;
 extern s16 g_score_panel_intro_as_s16;
-extern u16 D_0028E5A0;
+extern u16 g_hyper_debug_check;
 extern s16 g_boss_double_speed_as_s16;
 extern s16 g_hyper_level_hit_scratch_as_s16;
 extern s16 g_hyper_hit_scratch_as_s16;
@@ -731,8 +731,8 @@ extern s16 g_p1_max_hits_as_s16;
 extern u16 g_boss_near_death;
 extern s16 g_boss_hit_carry_as_s16;
 extern s16 g_max_combo_time_as_s16;
-extern s16 D_0028E6E0_as_s16;
-extern u16 D_0028E6E4;
+extern s16 g_p2_combo_at_bomb_as_s16;
+extern u16 g_p1_combo_at_bomb;
 extern s32 g_score_scratch;
 extern s16 g_max_level_display_timer_as_s16;
 extern s32 g_maximum_text_anim_sprite;
@@ -743,12 +743,12 @@ extern s16 g_hyper_text_anim_frame_as_s16;
 extern s16 g_hyper_text_anim_delay_as_s16;
 extern u8 g_p2_score_panel_flags;
 extern u8 g_p1_score_panel_flags;
-extern u16 D_0028E710;
-extern s32 D_0028E714;
-extern s32 D_0028E718;
-extern s32 D_0028E71C;
-extern s32 D_0028E720_as_s32;
-extern s32 D_0028E724;
+extern u16 g_score_check_billions;
+extern s32 g_score_check_scratch;
+extern s32 g_p2_score_pending;
+extern s32 g_p1_score_pending;
+extern s32 g_p2_extend_table_as_s32;
+extern s32 g_p1_extend_table;
 extern s16 g_p2_extend_setting_as_s16;
 extern u16 g_p1_extend_setting;
 extern u32 g_p2_extend_score_as_u32;
@@ -771,10 +771,10 @@ void func_001AE490(void) {
     for (i = 0; i < 0x24; i++) {
         ((u16 *)D_002BB010)[i] = 0;
     }
-    D_0028E718 = 0;
-    D_0028E71C = 0;
-    D_0028E720_as_s32 = 0;
-    D_0028E724 = 0;
+    g_p2_score_pending = 0;
+    g_p1_score_pending = 0;
+    g_p2_extend_table_as_s32 = 0;
+    g_p1_extend_table = 0;
     g_p2_extend_setting_as_s16 = 0;
     g_p1_extend_score_as_u32 = g_p2_extend_score_as_u32 = (g_p1_extend_setting = 0);
     g_p2_score_billions_saved = 0;
@@ -795,7 +795,7 @@ void func_001AE490(void) {
         D_002BAF30_as_Pair10.b[i] = 0;
     }
     g_p2_score_panel_flags = 0;
-    D_0028E714 = D_0028E710 = (g_p1_score_panel_flags = 0);
+    g_score_check_scratch = g_score_check_billions = (g_p1_score_panel_flags = 0);
     g_maximum_text_anim_sprite = 0;
     g_maximum_text_anim_frame_as_s16 = 0;
     g_hyper_text_anim_sprite = (g_maximum_text_anim_delay = 0);
@@ -803,13 +803,13 @@ void func_001AE490(void) {
     g_hyper_text_anim_delay_as_s16 = 0;
     g_boss_hit_carry_as_s16 = 0;
     g_max_combo_time_as_s16 = 0;
-    D_0028E6E0_as_s16 = 0;
-    g_score_scratch = (D_0028E6E4 = 0);
+    g_p2_combo_at_bomb_as_s16 = 0;
+    g_score_scratch = (g_p1_combo_at_bomb = 0);
     g_max_level_display_timer_as_s16 = 0;
     g_p1_hit_display_timer_as_s16 = 0;
     g_p1_chain_points_display_timer = 0;
     g_p1_chain_first_score = g_p1_chain_first_score_shown = (g_p1_combo_timer = 0);
-    D_0028E6D4_as_s16 = 0;
+    g_score_player_flag_as_s16 = 0;
     g_p1_hit10_anim_count_as_s16 = 0;
     g_p1_hit10_color_timer_as_s16 = 0;
     g_p1_hit10_display_timer = 0;
@@ -883,7 +883,7 @@ void func_001AE490(void) {
     g_p1_hyper_items_pending = 0;
     g_score_task_active_as_s16 = 0;
     g_score_panel_intro_as_s16 = 0;
-    D_0028E5A0 = 0;
+    g_hyper_debug_check = 0;
     g_p2_hyper_effect_delay = 0;
     g_p1_hyper_effect_delay_as_s16 = 0;
     g_p2_hyper_effect_flag_as_s16 = 0;
@@ -953,7 +953,7 @@ extern s32 g_p1_lives_as_s32;
 
 void func_001AEA80(void) {
     reg_a0 = (u8 *)(&D_0028E76C_as_s32);
-    reg_a1 = (u8 *)(&D_0028E71C);
+    reg_a1 = (u8 *)(&g_p1_score_pending);
     reg_a2 = (u8 *)(&g_p1_extend_score);
     reg_a3 = (u8 *)(&g_p1_lives_as_s32);
     reg_a4 = (u8 *)(&g_p1_extend_setting_as_s32);
@@ -961,7 +961,7 @@ void func_001AEA80(void) {
     reg_d7.w = 0;
     func_001AEB10();
     reg_a0 = (u8 *)(&g_p1_score_as_s32);
-    reg_a1 = (u8 *)(&D_0028E718);
+    reg_a1 = (u8 *)(&g_p2_score_pending);
     reg_a2 = (u8 *)(&g_p2_extend_score);
     reg_a3 = (u8 *)(&g_p2_lives_as_s32);
     reg_a4 = (u8 *)(&g_p2_extend_setting_as_s32);
@@ -1020,8 +1020,8 @@ void func_001AEB10(void) {
             g_p2_score = D_0028ED44_as_u32;
             g_p2_score_billions = D_0028ED40;
         }
-        D_0028E710 = 0;
-        D_0028E714 = 0;
+        g_score_check_billions = 0;
+        g_score_check_scratch = 0;
         goto no_extend;
     }
 #endif
@@ -1036,8 +1036,8 @@ void func_001AEB10(void) {
             *(u32 *)(reg_a1 - 4) = (u32) reg_d6.w;
             return;
         }
-        D_0028E714 = *(s32 *)(reg_a0 - 4);
-        D_0028E710 = ENTITY(reg_a6)->flags.h;
+        g_score_check_scratch = *(s32 *)(reg_a0 - 4);
+        g_score_check_billions = ENTITY(reg_a6)->flags.h;
         reg_a0 -= 4;
         reg_a1 -= 4;
         cond_flag = 0;
@@ -1114,7 +1114,7 @@ void func_001AED60(void) {
     func_001AED90();
 }
 
-extern u32 D_0028E714_as_u32;
+extern u32 g_score_check_scratch_as_u32;
 
 void func_001AED90(void) {
     u32 tmp;
@@ -1125,7 +1125,7 @@ void func_001AED90(void) {
     reg_d7.h[1] = reg_d7.h[0];
     reg_d7.h[0] = 0;
     reg_d1.h[0] = ENTITY(reg_a6)->flags.h;
-    if (D_0028E710 != reg_d1.h[0]) {
+    if (g_score_check_billions != reg_d1.h[0]) {
         reg_d7.h[0] = 1;
         *(s16 *)(reg_a0 + 0) = 1;
         reg_d1.h[0] += 0xC030;
@@ -1134,7 +1134,7 @@ void func_001AED90(void) {
     if (reg_d1.h[0] != 0) {
         reg_d7.h[0] = 1;
     }
-    reg_d1.w = D_0028E714_as_u32;
+    reg_d1.w = g_score_check_scratch_as_u32;
     goto next_2;
 loop_1:
     reg_d2.w = 0xF;

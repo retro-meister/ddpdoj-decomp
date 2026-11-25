@@ -617,14 +617,14 @@ block_6:
     func_00146690();
 }
 
-extern u16 D_0029F180_as_u16_a[];
+extern u16 g_p1_options_as_u16_a[];
 extern u16 D_0029F182[];
 extern u16 D_0029F184[];
 void func_00146CB0(void)
 {
     extern void sfx_p1_laser_a_start(void);
   unsigned int highWord = D_0029F182[0];
-  reg_a4 = (u8 *)((u32) D_0029F180_as_u16_a);
+  reg_a4 = (u8 *)((u32) g_p1_options_as_u16_a);
   reg_d0.h[0] = D_0029F184[0];
   reg_a3 = (u8 *)((u32) (&sfx_p1_laser_a_start));
   reg_d0.h[1] = highWord;
@@ -634,14 +634,14 @@ void func_00146CB0(void)
 void func_00146CF0(void) {
     extern void sfx_p1_laser_b_start(void);
     unsigned int highWord = D_0029F182[0];
-    reg_a4 = (u8 *)((u32)D_0029F180_as_u16_a);
+    reg_a4 = (u8 *)((u32)g_p1_options_as_u16_a);
     reg_d0.h[0] = D_0029F184[0];
     reg_a3 = (u8 *)((u32)(&sfx_p1_laser_b_start));
     reg_d0.h[1] = highWord;
     func_00146DB0(highWord);
 }
 
-extern u16 D_0029F110_as_u16_a[];
+extern u16 g_p2_options_as_u16_a[];
 extern u16 D_0029F112[];
 extern u16 D_0029F114[];
 void func_00146D30(void)
@@ -649,7 +649,7 @@ void func_00146D30(void)
     extern void sfx_p2_laser_a_start(void);
   u16 highWord = D_0029F112[0];
   reg_d0.h[1] = highWord;
-  reg_a4 = (u8 *)((u32) D_0029F110_as_u16_a);
+  reg_a4 = (u8 *)((u32) g_p2_options_as_u16_a);
   reg_d0.h[0] = D_0029F114[0];
   reg_a3 = (u8 *)((u32) sfx_p2_laser_a_start);
   reg_d0.h[0] = D_0029F114[0];
@@ -659,7 +659,7 @@ void func_00146D30(void)
 void func_00146D70(void) {
     extern void sfx_p2_laser_b_start(void);
     unsigned int highWord = D_0029F112[0];
-    reg_a4 = (u8 *)((u32)D_0029F110_as_u16_a);
+    reg_a4 = (u8 *)((u32)g_p2_options_as_u16_a);
     reg_d0.h[0] = D_0029F114[0];
     reg_a3 = (u8 *)((u32)(&sfx_p2_laser_b_start));
     reg_d0.h[1] = highWord;
@@ -713,14 +713,14 @@ block_9:
     func_00146690();
 }
 
-extern u8 D_0029F180[];
+extern u8 g_p1_options[];
 extern u16 D_0029F2B8[];
 
 void func_00146F10(void) {
     extern void func_00147050(u16);
     extern void sfx_p1_laser_a_start();
     extern void sfx_p1_laser_b_start();
-    reg_a4 = D_0029F180;
+    reg_a4 = g_p1_options;
     reg_a3 = (void *)sfx_p1_laser_a_start;
     reg_d0.h[1] = D_0029F182[0];
     reg_d0.h[0] = D_0029F184[0];
@@ -736,21 +736,21 @@ extern void sfx_p1_laser_hyper_start(void);
 
 void func_00146F80(void) {
     unsigned int highWord = D_0029F182[0];
-    reg_a4 = (u8 *)((u32)D_0029F180_as_u16_a);
+    reg_a4 = (u8 *)((u32)g_p1_options_as_u16_a);
     reg_d0.h[0] = D_0029F184[0];
     reg_a3 = (u8 *)((u32)(&sfx_p1_laser_hyper_start));
     reg_d0.h[1] = highWord;
     func_00147050(highWord);
 }
 
-extern u8 D_0029F110[];
+extern u8 g_p2_options[];
 extern u16 D_0029F248[];
 
 void func_00146FC0(void) {
     extern void func_00147050(u16);
     extern void sfx_p2_laser_a_start();
     extern void sfx_p2_laser_b_start();
-    reg_a4 = D_0029F110;
+    reg_a4 = g_p2_options;
     reg_a3 = (void *)sfx_p2_laser_a_start;
     reg_d0.h[1] = D_0029F112[0];
     reg_d0.h[0] = D_0029F114[0];
@@ -764,7 +764,7 @@ extern void sfx_p2_laser_hyper_start(void);
 
 void func_00147010(void) {
     unsigned int highWord = D_0029F112[0];
-    reg_a4 = (u8 *)((u32)D_0029F110_as_u16_a);
+    reg_a4 = (u8 *)((u32)g_p2_options_as_u16_a);
     reg_d0.h[0] = D_0029F114[0];
     reg_a3 = (u8 *)((u32)(&sfx_p2_laser_hyper_start));
     reg_d0.h[1] = highWord;

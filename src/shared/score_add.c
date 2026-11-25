@@ -37,14 +37,14 @@ void func_001A8FC0(void) {
 
 extern u16 g_p2_hyper_active;
 extern u16 g_p1_hyper_active;
-extern u8 D_0028E71C_as_u8;
-extern u8 D_0028E720;
+extern u8 g_p1_score_pending_as_u8;
+extern u8 g_p2_extend_table;
 extern u8 g_boss_present_b1;
-extern u16 D_0029CEA0[];
+extern u16 g_bomb_entities[];
 
 void score_add_no_chain(void) {
     if (!(ENTITY(reg_a6)->flags.b[1] & 2)) {
-        if ((g_boss_present_b1 & 4) && (reg_d2.h[0] = D_0029CEA0[0], ((s16) reg_d2.h[0] < 0)) && (reg_d2.w & 1) && (reg_d0.w = 1, ((s8) reg_d2.b[0] >= 0))) {
+        if ((g_boss_present_b1 & 4) && (reg_d2.h[0] = g_bomb_entities[0], ((s16) reg_d2.h[0] < 0)) && (reg_d2.w & 1) && (reg_d0.w = 1, ((s8) reg_d2.b[0] >= 0))) {
             if (reg_d1.w & 0x10) {
                 reg_d0.h[0] += g_p1_hyper_active;
                 func_001AA0D0();
@@ -58,7 +58,7 @@ block_7:
                 if (reg_d1.w & 4) {
                     func_001A9D80();
                 } else {
-                    reg_a0 = &D_0028E720;
+                    reg_a0 = &g_p2_extend_table;
                     func_001A97F0();
                 }
             }
@@ -70,23 +70,23 @@ block_7:
                 func_001AA380();
                 return;
             }
-            reg_a0 = &D_0028E71C_as_u8;
+            reg_a0 = &g_p1_score_pending_as_u8;
             func_001A97F0();
         }
     }
 }
 
-extern s32 D_0028E71C;
-extern s32 D_0028E720_as_s32;
+extern s32 g_p1_score_pending;
+extern s32 g_p2_extend_table_as_s32;
 extern s32 *reg_a0_as_s32_p;
 
 void func_001A9130(void) {
     if (reg_d1.w & 0x10) {
-        reg_a0 = (u8 *)(&D_0028E720_as_s32);
+        reg_a0 = (u8 *)(&g_p2_extend_table_as_s32);
         func_001A97F0();
     }
     if (reg_d1.w & 8) {
-        reg_a0 = (u8 *)(&D_0028E71C);
+        reg_a0 = (u8 *)(&g_p1_score_pending);
         func_001A97F0();
     }
 }
@@ -94,12 +94,12 @@ void func_001A9130(void) {
 
 
 void func_001A9180(void) {
-    reg_a0 = (u8 *)(&D_0028E720);
+    reg_a0 = (u8 *)(&g_p2_extend_table);
     func_001A97F0();
 }
 
 void func_001A9190(void) {
-    reg_a0 = (u8 *)(&D_0028E71C);
+    reg_a0 = (u8 *)(&g_p1_score_pending);
     func_001A97F0();
 }
 
@@ -192,8 +192,8 @@ extern s16 g_p1_chain_points_display_timer;
 extern u16 g_p1_combo_timer;
 extern u32 g_p1_chain_first_score_shown_as_u32;
 extern u32 g_p1_chain_first_score_as_u32;
-extern u16 D_0028E6E4;
-extern u16 D_0028E720_as_u16;
+extern u16 g_p1_combo_at_bomb;
+extern u16 g_p2_extend_table_as_u16;
 extern u8 g_boss_present;
 extern u16 D_0029F2B8[];
 
@@ -202,14 +202,14 @@ void func_001A9370(void) {
     reg_d2.h[0] = D_0029F2B8[0];
     reg_a0 = (u8 *)D_0028DADC;
     g_p1_laser_hit_step = (reg_d2.h[0] != 0) ? *(u16 *)((u8 *)reg_a0 + ((s16)reg_d2.h[0] & ~1)) : *(u16 *)reg_a0;
-    reg_d2.h[0] = D_0029CEA0[0];
+    reg_d2.h[0] = g_bomb_entities[0];
     if ((s16) reg_d2.h[0] >= 0) {
         goto next_1;
     }
     if (reg_d2.w & 0x80) {
         goto next_1;
     }
-    if (D_0028E6E4 == 0) {
+    if (g_p1_combo_at_bomb == 0) {
         goto block_11;
     }
 next_1:
@@ -228,7 +228,7 @@ block_11:
     g_p1_hits = 0;
 block_12:
     reg_d0.w = reg_d3.w;
-    reg_a0 = (u8 *)&D_0028E720_as_u16;
+    reg_a0 = (u8 *)&g_p2_extend_table_as_u16;
     func_001A97F0();
     g_p1_chain_first_score_as_u32 = reg_d3.w;
     g_p1_chain_first_score_shown_as_u32 = reg_d3.w;
@@ -263,7 +263,7 @@ next_2:
     func_001A97F0();
     func_001A9820();
     reg_d0.w = g_p1_chain_points_as_u32;
-    reg_a0 = (u8 *)&D_0028E720_as_u16;
+    reg_a0 = (u8 *)&g_p2_extend_table_as_u16;
     func_001A97F0();
     if ((s32) g_p1_hits < 0x10) {
         if ((s32) g_p1_hits > 1) {
@@ -303,8 +303,8 @@ extern s16 g_p2_chain_points_display_timer;
 extern u16 g_p2_combo_timer;
 extern u32 g_p2_chain_first_score_shown_as_u32;
 extern u32 g_p2_chain_first_score_as_u32;
-extern u16 D_0028E6E0;
-extern u16 D_0028E71C_as_u16;
+extern u16 g_p2_combo_at_bomb;
+extern u16 g_p1_score_pending_as_u16;
 extern u16 D_0029F248[];
 
 void func_001A95B0(void) {
@@ -312,14 +312,14 @@ void func_001A95B0(void) {
     reg_d2.h[0] = D_0029F248[0];
     reg_a0 = (u8 *)D_0028DADC;
     g_p1_laser_hit_step = (reg_d2.h[0] != 0) ? *(u16 *)((u8 *)reg_a0 + ((s16)reg_d2.h[0] & ~1)) : *(u16 *)reg_a0;
-    reg_d2.h[0] = D_0029CEA0[0];
+    reg_d2.h[0] = g_bomb_entities[0];
     if ((s16) reg_d2.h[0] >= 0) {
         goto next_1;
     }
     if (!(reg_d2.w & 0x80)) {
         goto next_1;
     }
-    if (D_0028E6E0 == 0) {
+    if (g_p2_combo_at_bomb == 0) {
         goto block_11;
     }
 next_1:
@@ -338,7 +338,7 @@ block_11:
     g_p2_hits = 0;
 block_12:
     reg_d0.w = reg_d3.w;
-    reg_a0 = (u8 *)&D_0028E71C_as_u16;
+    reg_a0 = (u8 *)&g_p1_score_pending_as_u16;
     func_001A97F0();
     g_p2_chain_first_score_as_u32 = reg_d3.w;
     g_p2_chain_first_score_shown_as_u32 = reg_d3.w;
@@ -373,7 +373,7 @@ next_2:
     func_001A97F0();
     func_001A99C0();
     reg_d0.w = g_p2_chain_points_as_u32;
-    reg_a0 = (u8 *)&D_0028E71C_as_u16;
+    reg_a0 = (u8 *)&g_p1_score_pending_as_u16;
     func_001A97F0();
     if ((s32) g_p2_hits < 0x10) {
         if ((s32) g_p2_hits > 1) {
@@ -610,8 +610,8 @@ void func_001A9CF0(void) {
 }
 
 extern u16 g_p1_laser_hit_timer;
-extern u32 D_0028E720_as_u32;
-extern s16 D_0029CEA0_as_s16_a[];
+extern u32 g_p2_extend_table_as_u32;
+extern s16 g_bomb_entities_as_s16_a[];
 extern u16 D_0029F282[];
 extern u16 D_0029F2BA[];
 
@@ -626,7 +626,7 @@ void func_001A9D80(void) {
         return;
     }
     reg_d3.w = reg_d0.w;
-    if ((D_0029CEA0_as_s16_a[0] >= 0) && (g_p1_combo_timer == 0)) {
+    if ((g_bomb_entities_as_s16_a[0] >= 0) && (g_p1_combo_timer == 0)) {
         reg_d0.w = 0;
         g_p1_combo_timer = 0xA;
         reg_d2.w = 8;
@@ -696,7 +696,7 @@ void func_001A9D80(void) {
         reg_a0 = (u8 *)&g_p1_chain_points_as_u32;
         func_001A97F0();
         reg_d0.w = g_p1_chain_points_as_u32;
-        reg_a0 = (u8 *)&D_0028E720_as_u32;
+        reg_a0 = (u8 *)&g_p2_extend_table_as_u32;
         func_001A97F0();
     }
     if (g_p1_hyper_active == 0) {
@@ -751,7 +751,7 @@ void func_001AA0D0(void) {
 
 void func_001AA160(void) {
     reg_d3.w = reg_d0.w;
-    if (D_0029CEA0_as_s16_a[0] < 0) {
+    if (g_bomb_entities_as_s16_a[0] < 0) {
         func_001AA210();
         return;
     }
@@ -833,14 +833,14 @@ void func_001AA330()
     }
 
     reg_d0.w = reg_d3.w;
-    reg_a0 = &D_0028E720;
+    reg_a0 = &g_p2_extend_table;
     func_001A97F0();
     g_boss_hit_decay_timer_as_s16 = 10;
     g_boss_hit_palette = 7;
 }
 
 extern u16 g_p2_laser_hit_timer;
-extern u32 D_0028E71C_as_u32;
+extern u32 g_p1_score_pending_as_u32;
 extern u16 D_0029F212[];
 extern u16 D_0029F24A[];
 
@@ -855,7 +855,7 @@ void func_001AA380(void) {
         return;
     }
     reg_d3.w = reg_d0.w;
-    if ((D_0029CEA0_as_s16_a[0] >= 0) && (g_p2_combo_timer == 0)) {
+    if ((g_bomb_entities_as_s16_a[0] >= 0) && (g_p2_combo_timer == 0)) {
         reg_d0.w = 0;
         g_p2_combo_timer = 0xA;
         reg_d2.w = 8;
@@ -925,7 +925,7 @@ void func_001AA380(void) {
         reg_a0 = (u8 *)&g_p2_chain_points_as_u32;
         func_001A97F0();
         reg_d0.w = g_p2_chain_points_as_u32;
-        reg_a0 = (u8 *)&D_0028E71C_as_u32;
+        reg_a0 = (u8 *)&g_p1_score_pending_as_u32;
         func_001A97F0();
     }
     if (g_p2_hyper_active == 0) {
@@ -959,7 +959,7 @@ void func_001AA380(void) {
 
 void func_001AA6D0(void) {
     reg_d3.w = reg_d0.w;
-    if (D_0029CEA0_as_s16_a[0] < 0) {
+    if (g_bomb_entities_as_s16_a[0] < 0) {
         func_001AA780();
         return;
     }
@@ -1036,7 +1036,7 @@ void func_001AA8A0()
     }
 
     reg_d0.w = reg_d3.w;
-    reg_a0 = (u8 *)(&D_0028E71C_as_u8);
+    reg_a0 = (u8 *)(&g_p1_score_pending_as_u8);
     func_001A97F0();
     g_boss_hit_decay_timer_as_s16 = 10;
     g_boss_hit_palette = 7;
@@ -2058,7 +2058,7 @@ void func_001AC320(void) {
     g_boss_hit_decay_timer = halfword;
 }
 
-void func_001AC340(void) {
+void p1_chain_reset(void) {
     reg_d0.w = 0;
     g_p1_chain_first_score_as_u32 = reg_d0.w;
     g_p1_chain_first_score_shown_as_u32 = reg_d0.w;
@@ -2069,7 +2069,7 @@ void func_001AC340(void) {
     g_p1_chain_points_shown_as_u32 = reg_d0.w;
 }
 
-void func_001AC370(void) {
+void p2_chain_reset(void) {
     reg_d0.w = 0;
     g_p2_chain_first_score_as_u32 = reg_d0.w;
     g_p2_chain_first_score_shown_as_u32 = reg_d0.w;

@@ -32,7 +32,7 @@ extern u16 g_enemy_signal_9;
 extern u16 g_enemy_signal_8;
 extern u16 g_enemy_signal_7;
 extern u16 g_damage_blink_counter;
-extern s16 D_0029CEA0_as_s16_a[];
+extern s16 g_bomb_entities_as_s16_a[];
 #ifdef DEATH_LABEL
 extern u8 death_D_00290DC0;
 extern u16 D_00684C80[];
@@ -119,7 +119,7 @@ next_dmg1:
     reg_d0.h[0] = (s32)(reg_d0.h[0] & 0xFFFF) >> 1;
     g_enemy_signal_8 = 0;
     reg_d2.w = reg_d0.w;
-    if (D_0029CEA0_as_s16_a[0] >= 0) goto next_flag7;
+    if (g_bomb_entities_as_s16_a[0] >= 0) goto next_flag7;
 #ifdef DEATH_LABEL
     hp = reg_d2.w;
     if (hp != 0) {

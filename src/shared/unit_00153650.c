@@ -1295,7 +1295,7 @@ extern u8 D_00258150[];
 extern u8 D_00258190[];
 extern u8 D_002581D0[];
 extern u16 g_rank;
-extern u16 D_0029CEA0[];
+extern u16 g_bomb_entities[];
 
 void func_00156860(void) {
     s32 enemy_remove();
@@ -1323,7 +1323,7 @@ block_4:
     if (*(s16 *)(reg_a5 + 0x3E) >= 0) {
         ENTITY(reg_a6)->hp.sh = 0x7FFF;
         reg_d0.h[0] = 1;
-        if (D_0029CEA0[0] != 0) {
+        if (g_bomb_entities[0] != 0) {
             reg_d0.h[0] = 2;
         }
         reg_tmp.h[0] = *(u16 *)(reg_a5 + 0x3E);

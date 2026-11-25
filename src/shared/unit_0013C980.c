@@ -24,10 +24,10 @@ void func_0013F5A0(void);
 void func_0013F5C0(void);
 void func_0013F8A0(void);
 
-extern u16 D_0029F180_as_u16_a[];
+extern u16 g_p1_options_as_u16_a[];
 
 void func_0013C980(void) {
-    D_0029F180_as_u16_a[0] &= 0xDFFB;
+    g_p1_options_as_u16_a[0] &= 0xDFFB;
     func_0013C9A0();
 }
 
@@ -46,7 +46,7 @@ extern u16 g_p1_hyper_active;
 extern u8 D_0029D730[];
 extern u8 D_0029D770[];
 extern u8 D_0029DD90[];
-extern u8 D_0029F180[];
+extern u8 g_p1_options[];
 extern u16 D_0029F2B8[];
 extern Fn reg_call_target_as_Fn;
 
@@ -72,15 +72,15 @@ void func_0013C9A0(void) {
     reg_a6 = (u8 *)D_0029DD90;
     reg_a0 = (u8 *)D_0029D770;
     reg_a1 = (u8 *)D_0029D730;
-    reg_a2 = (u8 *)D_0029F180;
+    reg_a2 = (u8 *)g_p1_options;
     func_0013CBA0();
 }
 
-extern u16 D_0029F110_as_u16_a[];
+extern u16 g_p2_options_as_u16_a[];
 
 
 void func_0013CA90(void) {
-    D_0029F110_as_u16_a[0] &= 0xDFFB;
+    g_p2_options_as_u16_a[0] &= 0xDFFB;
     func_0013CAB0();
 }
 
@@ -89,7 +89,7 @@ extern u16 g_p2_hyper_active;
 extern u8 D_0029D710[];
 extern u8 D_0029D750[];
 extern u8 D_0029D790[];
-extern u8 D_0029F110[];
+extern u8 g_p2_options[];
 extern u16 D_0029F248[];
 
 void sfx_p2_laser_hyper_stop(void);
@@ -114,7 +114,7 @@ void func_0013CAB0(void) {
     reg_a6 = (u8 *)D_0029D790;
     reg_a0 = (u8 *)D_0029D750;
     reg_a1 = (u8 *)D_0029D710;
-    reg_a2 = (u8 *)D_0029F110;
+    reg_a2 = (u8 *)g_p2_options;
     func_0013CBA0();
 }
 

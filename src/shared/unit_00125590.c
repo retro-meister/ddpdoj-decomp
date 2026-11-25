@@ -1811,7 +1811,7 @@ extern u16 D_00299768_as_u16_a[];
 extern u16 D_0029976A_as_u16_a[];
 extern u16 D_0029976C[];
 extern u16 D_0029976E[];
-extern u16 D_0029CEA0[];
+extern u16 g_bomb_entities[];
 #ifdef DEATH_LABEL
 extern u16 g_attract_demo;
 extern u8 death_D_00290858;
@@ -1835,7 +1835,7 @@ void bullet_spawn(void) {
     D_0028DEB0_as_u16_p = (u16 *) reg_a1;
     reg_d7.h[0] = g_bullets_blocked;
     reg_d7.h[0] += g_enemies_stopped;
-    reg_d7.h[0] += D_0029CEA0[0];
+    reg_d7.h[0] += g_bomb_entities[0];
     if (reg_d7.h[0] != 0) {
         goto next_3;
     }
@@ -1888,10 +1888,10 @@ loop_2:
     cond_flag = 1;
     return;
 next_3:
-    if (0 <= (s64) (s16) D_0029CEA0[0]) {
+    if (0 <= (s64) (s16) g_bomb_entities[0]) {
         goto next_4;
     }
-    if (*(u8 *) D_0029CEA0 & 1) {
+    if (*(u8 *) g_bomb_entities & 1) {
         goto next_1;
     }
 next_4:
@@ -2175,7 +2175,7 @@ void bullet_spawn256(void) {
     D_0028DEB0_as_u16_p = (u16 *) reg_a1;
     reg_d7.h[0] = g_bullets_blocked;
     reg_d7.h[0] += g_enemies_stopped;
-    reg_d7.h[0] += D_0029CEA0[0];
+    reg_d7.h[0] += g_bomb_entities[0];
     if (reg_d7.h[0] != 0) {
         goto next_3;
     }
@@ -2228,10 +2228,10 @@ loop_2:
     cond_flag = 1;
     return;
 next_3:
-    if (0 <= (s64) (s16) D_0029CEA0[0]) {
+    if (0 <= (s64) (s16) g_bomb_entities[0]) {
         goto next_4;
     }
-    if (*(u8 *) D_0029CEA0 & 1) {
+    if (*(u8 *) g_bomb_entities & 1) {
         goto next_1;
     }
 next_4:

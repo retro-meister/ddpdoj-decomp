@@ -523,7 +523,7 @@ extern u8 D_0028E635;
 extern u8 g_boss_present_b1;
 extern u16 g_loop;
 extern u16 g_stage;
-extern u16 D_0029CEA0[];
+extern u16 g_bomb_entities[];
 
 void func_001A6050(void) {
     s32 deferred_text_put();
@@ -660,7 +660,7 @@ next_180:
     if (g_stage == 4) goto next_240;
 next_200:
     reg_d4.h[0] = 0x19;
-    reg_d2.h[0] = D_0029CEA0[0];
+    reg_d2.h[0] = g_bomb_entities[0];
     if ((s16) reg_d2.h[0] >= 0) goto next_220;
     if (reg_d2.w & 1) goto next_240;
 next_220:

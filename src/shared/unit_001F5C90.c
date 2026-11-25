@@ -39,7 +39,7 @@ extern s16 D_00299768[];
 extern s16 D_0029976A[];
 extern s16 D_0029976C_as_s16_a[];
 extern s16 D_0029976E_as_s16_a[];
-extern u16 D_0029CEA0[];
+extern u16 g_bomb_entities[];
 
 void func_001F5D00(void) {
     s32 func_00203400();
@@ -78,7 +78,7 @@ next_2:
     if (g_bullets_blocked != 0) {
         goto next_3;
     }
-    if (D_0029CEA0[0] == 0) {
+    if (g_bomb_entities[0] == 0) {
         goto next_4;
     }
     *(u16 *) (reg_a6 + 0x13A) = 40;
@@ -160,7 +160,7 @@ next_8:
     if (g_bullets_blocked != 0) {
         goto next_9;
     }
-    if (D_0029CEA0[0] != 0) {
+    if (g_bomb_entities[0] != 0) {
         goto next_9;
     }
     if (*(u16 *) (reg_a6 + 0x13A) != 0) {

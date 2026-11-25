@@ -401,16 +401,16 @@ s32 func_00125EE0();
 extern u16 g_boss_present_as_u16;
 extern u16 D_00299764[];
 extern u16 D_00299766[];
-extern u16 D_0029CEA0[];
+extern u16 g_bomb_entities[];
 
 void func_001D27A0(void) {
     u32 temp_v1;
 
-    reg_d0.h[0] = D_0029CEA0[0];
+    reg_d0.h[0] = g_bomb_entities[0];
     reg_d0.h[0] |= g_boss_present_as_u16;
     if ((s16) reg_d0.h[0] < 0) {
-        reg_d0.h[0] = D_0029CEA0[0];
-        if ((D_0029CEA0[0] & 0xFFFF) && (reg_d0.w & 1)) {
+        reg_d0.h[0] = g_bomb_entities[0];
+        if ((g_bomb_entities[0] & 0xFFFF) && (reg_d0.w & 1)) {
             temp_v1 = reg_d1.b[0] & 0x5C;
             reg_d1.b[0] = temp_v1;
             if (!(temp_v1 & 0xFF)) {

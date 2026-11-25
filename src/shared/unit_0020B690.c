@@ -123,7 +123,7 @@ next_9:
     reg_a1 = save_a1;
 }
 
-extern u8 D_0029CEA0_as_u8_a[];
+extern u8 g_bomb_entities_as_u8_a[];
 
 void func_0020BA40(void) {
     reg_d0.h[0] = 0xF800;
@@ -137,7 +137,7 @@ void func_0020BA40(void) {
     *(u16 *) reg_a5 = 0x7C00;
     reg_a5 += 2;
     reg_d5.h[0] = 0x2C;
-    reg_a6 = (u8 *)D_0029CEA0_as_u8_a;
+    reg_a6 = (u8 *)g_bomb_entities_as_u8_a;
 loop_1:
     reg_tmp.h[0] = *(u16 *) reg_a6;
     reg_a6 += 2;
@@ -219,7 +219,7 @@ extern u16 D_00299768_as_u16_a[];
 extern u16 D_0029976A_as_u16_a[];
 extern u16 D_0029976C[];
 extern u16 D_0029976E[];
-extern u16 D_0029CEA0[];
+extern u16 g_bomb_entities[];
 extern u16 D_002BB4B2[];
 extern u16 D_002BC7C0_as_u16_a[];
 extern u16 D_002BD440[];
@@ -738,7 +738,7 @@ next_110:
         if (((s64) ((s64) (tmp_dec & 0xFFFF) << 0x30) >> 0x30) >= 0) goto loop_110;
         func_0020E230();
 block_120:
-        reg_a6 = (u8 *)(D_0029CEA0);
+        reg_a6 = (u8 *)(g_bomb_entities);
         reg_a0 = (u8 *)(reg_a6);
         reg_d5.h[0] = ENTITY(reg_a6)->flags.h;
         if (((s16)(reg_d5.h[0]) < 0) && (*(u8 *)reg_a4 & 0x40)) {

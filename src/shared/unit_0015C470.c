@@ -129,7 +129,7 @@ extern u16 g_enemies_stopped;
 extern u16 g_damage_blink_counter;
 extern u16 g_rank_3_16;
 extern u16 g_side_scroll_x[];
-extern u16 D_0029CEA0[];
+extern u16 g_bomb_entities[];
 extern u16 g_player2_as_u16_a[];
 extern u16 g_player1_as_u16_a[];
 
@@ -176,7 +176,7 @@ next_40:
     ENTITY(reg_a6)->hp.h = reg_d0.h[0];
     ENTITY(reg_a6)[1].hp.h = reg_d0.h[0];
     reg_d0.h[0] = 1;
-    if (D_0029CEA0[0] == 0) goto next_42;
+    if (g_bomb_entities[0] == 0) goto next_42;
     reg_d0.h[0] = 2;
 next_42:
     reg_tmp.h[0] = *(u16 *)(reg_a5 + 0x36);
@@ -591,7 +591,7 @@ extern u16 D_00259770[];
 extern u16 D_0025A1E0[];
 extern u16 g_rank_4_16;
 extern u16 g_rank_6_16;
-extern s16 D_0029CEA0_as_s16_a[];
+extern s16 g_bomb_entities_as_s16_a[];
 
 void func_0015DC20(void) {
     s16 *temp_a0;
@@ -628,7 +628,7 @@ block_5:
         if (*(s16 *)(reg_a5 + 0x2A) >= 0) {
             ENTITY(reg_a6)->hp.h = 0x7FFFU;
             reg_d0.w = 1;
-            if (D_0029CEA0_as_s16_a[0] < 0) {
+            if (g_bomb_entities_as_s16_a[0] < 0) {
                 reg_d0.w = 2;
             }
             reg_tmp.h[0] = *(u16 *)(reg_a5 + 0x2A);
@@ -3374,7 +3374,7 @@ next_3:
     ENTITY(reg_a6)->flags.b[1] &= 0xA3;
     if (ENTITY(reg_a6)->hp.sh < 0) goto block_3;
 next_4:
-    if (D_0029CEA0[0] != 0) goto next_9;
+    if (g_bomb_entities[0] != 0) goto next_9;
     func_00203380();
     if (reg_d0.h[0] == 0) goto block_rts;
     if (!(reg_d0.h[0] & 1)) goto next_6;

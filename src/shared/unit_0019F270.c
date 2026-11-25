@@ -248,11 +248,11 @@ void func_0019F930(void) {
 }
 
 extern s32 D_0029D730_as_s32_a[];
-extern s16 D_0029F180_as_s16_a[];
+extern s16 g_p1_options_as_s16_a[];
 extern s32 g_player1_as_s32_a[];
 
 void func_0019FC70(void) {
-    reg_a6 = (u8 *)D_0029F180_as_s16_a;
+    reg_a6 = (u8 *)g_p1_options_as_s16_a;
     reg_a4 = (u8 *)g_player1_as_s32_a;
     reg_a2 = (u8 *)D_0029D730_as_s32_a;
     reg_d7.w = 1;
@@ -265,11 +265,11 @@ void func_0019FC70(void) {
 }
 
 extern s32 D_0029D710_as_s32_a[];
-extern s16 D_0029F110_as_s16_a[];
+extern s16 g_p2_options_as_s16_a[];
 extern s32 g_player2_as_s32_a[];
 
 void func_0019FCE0(void) {
-    reg_a6 = (u8 *)D_0029F110_as_s16_a;
+    reg_a6 = (u8 *)g_p2_options_as_s16_a;
     reg_a4 = (u8 *)g_player2_as_s32_a;
     reg_a2 = (u8 *)D_0029D710_as_s32_a;
     if (*(s16 *)reg_a6 < 0) {
@@ -283,7 +283,7 @@ extern u8 option_style_params[];
 extern u8 D_0025F3C0[];
 extern u8 option_strong_params[];
 extern u8 option_hyper_params[];
-extern u8 D_0029F110[];
+extern u8 g_p2_options[];
 
 s32 func_0013C9A0();
 s32 func_0013CAB0();
@@ -304,7 +304,7 @@ void func_0019FD30(void) {
 
     goto next_20;
 loop_10:
-    reg_a6 = (u8 *)D_0029F110;
+    reg_a6 = (u8 *)g_p2_options;
     reg_a4 = (u8 *)g_player2_as_u8_a;
     reg_a2 = (u8 *)D_0029D710;
     if (*(s16 *)reg_a6 < 0) goto next_20;
@@ -964,10 +964,10 @@ void func_001A17C0(void) {
     }
 }
 
-extern u16 D_0029CEA0[];
+extern u16 g_bomb_entities[];
 
 void func_001A1850(void) {
-    if ((D_0029CEA0[0] == 0) || !(*(u8 *)reg_a4 & 0x40)) {
+    if ((g_bomb_entities[0] == 0) || !(*(u8 *)reg_a4 & 0x40)) {
         reg_d0.b[0] = *(u8 *)(reg_a4 + 0x1B);
         if (*(u8 *)(reg_a4 + 0x38) != reg_d0.b[0]) {
             *(u8 *)(reg_a4 + 0x1B) += 1;

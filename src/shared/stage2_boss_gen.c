@@ -886,7 +886,7 @@ s32 func_00201710();
 extern u16 D_00259970[];
 extern u16 D_00262E50[];
 extern u16 g_rank_2_16;
-extern s16 D_0029CEA0_as_s16_a[];
+extern s16 g_bomb_entities_as_s16_a[];
 
 void func_001C6D10(s32 arg0, s32 arg1, s32 arg2, s32 arg3) {
     s16 *temp_v1;
@@ -925,7 +925,7 @@ block_6:
             if (*(s16 *)(reg_a5 + 0x24) >= 0) {
                 ENTITY(reg_a6)->hp.h = 0x7FFFU;
                 reg_d0.w = 1;
-                if (D_0029CEA0_as_s16_a[0] < 0) {
+                if (g_bomb_entities_as_s16_a[0] < 0) {
                     reg_d0.w = 2;
                 }
                 *(u16 *)(reg_a5 + 0x24) -= reg_d0.h[0];

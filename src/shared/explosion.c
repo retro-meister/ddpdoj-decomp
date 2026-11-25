@@ -25,7 +25,7 @@ void func_00139B20(void) {
     *(s8 *)(reg_a5 + 3) = 1;
 }
 
-s32 func_0011F980();
+s32 bombs_update();
 s32 func_00125FA0();
 s32 func_00129DB0();
 s32 func_00136F30();
@@ -85,7 +85,7 @@ void func_00139B80(void) {
     func_0013A020();
     func_001B8410();
     func_00170A50(0x1F, 0, 0);
-    func_0011F980();
+    bombs_update();
     func_001488C0();
     func_0019FC70();
     func_00146760();
@@ -229,7 +229,7 @@ extern u16 g_game_frame;
 extern u8 D_0029AA40[];
 extern u16 D_0029BBF8[];
 extern u16 g_side_scroll_step[];
-extern u8 D_0029CEA0_as_u8_a[];
+extern u8 g_bomb_entities_as_u8_a[];
 
 void func_0013A020(void) {
     u16 x_save;
@@ -391,7 +391,7 @@ block_anim:
     *(u16 *)(reg_a6 + 0x2A) = reg_tmp.h[1];
     *(u16 *)(reg_a6 + 0x2C) = reg_tmp.h[0];
 block_disp:
-    reg_a0 = (u8 *)D_0029CEA0_as_u8_a;
+    reg_a0 = (u8 *)g_bomb_entities_as_u8_a;
     if (!(0 > *(s16 *)reg_a0)) goto block_draw;
     reg_d0.h[0] = g_game_frame;
     reg_d0.h[0] &= 1;

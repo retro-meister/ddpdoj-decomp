@@ -1,43 +1,43 @@
 #include "common.h"
 #include "entity.h"
 
-void func_0011FA90(void);
-void func_00120770();
-void func_00121B60(void);
-void func_00122070(void);
-void func_00122420(void);
-void func_001224F0(void);
-void func_00122500(void);
-void func_00122650(void);
-void func_00122A60(void);
-void func_00122B00(void);
-void func_00122B20(void);
+void spread_bomb_update(void);
+void laser_bomb_update();
+void laser_bomb_beam_draw(void);
+void laser_bomb_beam_draw_fading(void);
+void laser_bomb_tip_update(void);
+void laser_bomb_muzzle_update(void);
+void laser_bomb_impact_update(void);
+void laser_bomb_beam_rebuild(void);
+void laser_bomb_end(void);
+void bomb_afterglow_end(void);
+void bombs_clear(void);
 
 extern u16 g_bomb_afterglow_timer;
-extern u16 D_0029CEA0[];
-extern u8 D_0029F110[];
-extern u8 D_0029F180[];
+extern u16 g_bomb_entities[];
+extern u8 g_p2_options[];
+extern u8 g_p1_options[];
 extern u8 g_player2_as_u8_a[];
 extern u8 g_player1_as_u8_a[];
 
-void func_0011F980(void) {
+void bombs_update(void) {
     u8 *sa5;
 
-    reg_a6 = (u8 *)(D_0029CEA0);
+    reg_a6 = (u8 *)(g_bomb_entities);
     reg_d0.h[0] = ENTITY(reg_a6)->flags.h;
     if ((s16) reg_d0.h[0] >= 0) {
         if (g_bomb_afterglow_timer != 0) {
             g_bomb_afterglow_timer -= 1;
             if (g_bomb_afterglow_timer == 0) {
-                func_00122B00();
+                bomb_afterglow_end();
             }
         }
     } else {
         sa5 = (u8 *)(reg_a5);
-        reg_a4 = (u8 *)D_0029F180;
+        reg_a4 = (u8 *)g_p1_options;
         reg_a5 = (u8 *)g_player1_as_u8_a;
         if (ENTITY(reg_a6)->flags.sb[0] < 0) {
-            reg_a4 = (u8 *)D_0029F110;
+            reg_a4 = (u8 *)g_p2_options;
             reg_a5 = (u8 *)g_player2_as_u8_a;
         }
         reg_d0.h[0] &= 7;
@@ -48,11 +48,11 @@ void func_0011F980(void) {
         switch (reg_d0.h[0]) {
         case 0:
         case 2:
-            func_0011FA90();
+            spread_bomb_update();
             break;
         case 1:
         block_1:
-            func_00120770();
+            laser_bomb_update();
             break;
         }
         reg_a5 = sa5;
@@ -61,9 +61,9 @@ void func_0011F980(void) {
 
 typedef void (*Fn)();
 
-extern u8 D_00241720[];
-extern u8 D_002417C0[];
-extern u8 D_00241830[];
+extern u8 spread_bomb_phase1_template[];
+extern u8 spread_bomb_phase2_template[];
+extern u8 spread_bomb_phase3_template[];
 s32 sfx_spread_bomb_a();
 s32 sfx_spread_bomb_b();
 s32 entity_draw_with_bombs();
@@ -72,14 +72,14 @@ s32 sprite_draw_with_bombs_keep();
 s32 rng_next_bit();
 s32 vibration_start_pad1();
 s32 vibration_start_pad2();
-extern u8 D_00241780[];
-extern u8 D_00241810[];
-extern u8 D_00241870[];
+extern u8 spread_bomb_b_phase1_frames[];
+extern u8 spread_bomb_b_phase2_frames[];
+extern u8 spread_bomb_b_phase3_frames[];
 extern u16 g_frame_mod2;
 extern u16 g_side_scroll_step[];
-extern u8 D_0029CEA0_as_u8_a[];
+extern u8 g_bomb_entities_as_u8_a[];
 
-void func_0011FA90(void) {
+void spread_bomb_update(void) {
     u8 temp;
 
     reg_d1.h[0] = g_side_scroll_step[0];
@@ -87,7 +87,7 @@ void func_0011FA90(void) {
     temp = ENTITY(reg_a6)->flags.b[1];
     if (temp & 1) goto block_a;
     ENTITY(reg_a6)->flags.b[1] = (u8) (temp | 1);
-    reg_a0 = (u8 *)D_00241720;
+    reg_a0 = (u8 *)spread_bomb_phase1_template;
     reg_a1 = (u8 *)(reg_a6 + 2);
     *(u16 *)reg_a1 = *(u16 *)reg_a0;
     reg_a0 += 2;
@@ -138,7 +138,7 @@ void func_0011FA90(void) {
     reg_a0 = (u8 *)sfx_spread_bomb_a;
     reg_a1 += 2;
     switch (ENTITY(reg_a6)->flags.b[0] & 2) { case 0: goto next_1; }
-    reg_tmp.w = (u32) D_00241780;
+    reg_tmp.w = (u32) spread_bomb_b_phase1_frames;
     ENTITY(reg_a6)->misc.h = (u16) reg_tmp.h[1];
     *(u16 *)(reg_a6 + 0x20) = (u16) reg_tmp.h[0];
     reg_a0 = (u8 *)sfx_spread_bomb_b;
@@ -184,7 +184,7 @@ block_a:
 block_rts_2:
     return;
 block_b:
-    reg_a0 = (u8 *)D_002417C0;
+    reg_a0 = (u8 *)spread_bomb_phase2_template;
     reg_a1 = (u8 *)(reg_a6 + 6);
     *(u16 *)reg_a1 = *(u16 *)reg_a0;
     reg_a0 += 2;
@@ -239,7 +239,7 @@ block_b:
     reg_a0 += 2;
     reg_a1 += 2;
     if (!(ENTITY(reg_a6)->flags.b[0] & 2)) goto block_c;
-    reg_tmp.w = (u32) D_00241810;
+    reg_tmp.w = (u32) spread_bomb_b_phase2_frames;
     ENTITY(reg_a6)->misc.h = (u16) reg_tmp.h[1];
     *(u16 *)(reg_a6 + 0x20) = (u16) reg_tmp.h[0];
 block_c:
@@ -267,7 +267,7 @@ next_4:
     entity_draw_with_bombs();
     return;
 block_d:
-    reg_a0 = (u8 *)D_00241830;
+    reg_a0 = (u8 *)spread_bomb_phase3_template;
     reg_a1 = (u8 *)(reg_a6 + 6);
     *(u16 *)reg_a1 = *(u16 *)reg_a0;
     reg_a0 += 2;
@@ -314,7 +314,7 @@ block_d:
     reg_a0 += 2;
     reg_a1 += 2;
     if (!(ENTITY(reg_a6)->flags.b[0] & 2)) goto block_e;
-    reg_tmp.w = (u32) D_00241870;
+    reg_tmp.w = (u32) spread_bomb_b_phase3_frames;
     ENTITY(reg_a6)->misc.h = (u16) reg_tmp.h[1];
     *(u16 *)(reg_a6 + 0x20) = (u16) reg_tmp.h[0];
 block_e:
@@ -344,7 +344,7 @@ block_f:
 block_g:
     reg_a0 = (u8 *)g_player1_as_u8_a;
     reg_d1.w = 0;
-    reg_a6 = (u8 *)D_0029CEA0_as_u8_a;
+    reg_a6 = (u8 *)g_bomb_entities_as_u8_a;
     if (ENTITY(reg_a6)->flags.sb[0] >= 0) goto next_6;
     reg_a0 = (u8 *)g_player2_as_u8_a;
     reg_d1.w = 2;
@@ -354,25 +354,25 @@ next_6:
     *(u8 *)(reg_a0 + 0x1B) = (u8) reg_d0.b[0];
 next_7:
     g_bomb_afterglow_timer = 0x28;
-    func_00122B20();
+    bombs_clear();
 block_rts:
     return;
 }
 
-extern u8 D_00241F50[];
+extern u8 laser_bomb_template[];
 s32 sfx_laser_bomb_a();
 s32 sfx_laser_bomb_b();
 s32 func_0020A270();
-extern u8 D_00241BF0[];
-extern u8 D_00241C00[];
-extern u8 D_00241C10[];
-extern u8 D_00241C20[];
-extern u8 D_00241C30[];
-extern u8 D_00241CD0[];
+extern u8 laser_bomb_b_base_frames[];
+extern u8 laser_bomb_b_muzzle_frames[];
+extern u8 laser_bomb_b_tip_frames[];
+extern u8 laser_bomb_b_impact_frames[];
+extern u8 laser_bomb_b_beam_frames[];
+extern u8 laser_bomb_b_beam_table[];
 extern s16 g_bomb_afterglow_timer_as_s16;
 extern u16 g_laser_bomb_sizzle;
 
-void func_00120770(arg3)
+void laser_bomb_update(arg3)
     u16 arg3;
 {
     u8 *temp_a1;
@@ -388,7 +388,7 @@ void func_00120770(arg3)
     reg_tmp.b[0] = ENTITY(reg_a6)->flags.b[1];
     ENTITY(reg_a6)->flags.b[1] |= 1;
     if (!(reg_tmp.b[0] & 1)) {
-        reg_a0 = D_00241F50;
+        reg_a0 = laser_bomb_template;
         reg_a1 = (u8 *)(reg_a6 + 6);
         *(u16 *)reg_a1 = *(u16 *)reg_a0;
         reg_a0 += 2;
@@ -644,25 +644,25 @@ void func_00120770(arg3)
         reg_d0.w = 0;
         g_laser_bomb_sizzle = reg_d0.h[0];
         if (ENTITY(reg_a6)->flags.b[0] & 2) {
-            reg_tmp.w = (u32) D_00241BF0;
+            reg_tmp.w = (u32) laser_bomb_b_base_frames;
             ENTITY(reg_a6)->misc.h = (u16) reg_tmp.h[1];
             *(u16 *)(reg_a6 + 0x20) = (u16) reg_tmp.h[0];
-            reg_tmp.w = (u32) D_00241CD0;
+            reg_tmp.w = (u32) laser_bomb_b_beam_table;
             *(u16 *)(reg_a6 + 0x28) = (u16) reg_tmp.h[1];
             *(u16 *)(reg_a6 + 0x2A) = (u16) reg_tmp.h[0];
-            reg_tmp.w = (u32) D_00241C30;
+            reg_tmp.w = (u32) laser_bomb_b_beam_frames;
             *(u16 *)(reg_a6 + 0x2C) = (u16) reg_tmp.h[1];
             var_a3 = reg_tmp.h[0];
             *(u16 *)(reg_a6 + 0x2E) = var_a3;
-            reg_tmp.w = (u32) D_00241C10;
+            reg_tmp.w = (u32) laser_bomb_b_tip_frames;
             *(u16 *)(reg_a6 + 0x7FE) = (u16) reg_tmp.h[1];
             var_a2 = (u8 *) reg_tmp.h[0];
             *(u16 *)(reg_a6 + 0x800) = (u16) var_a2;
-            reg_tmp.w = (u32) D_00241C00;
+            reg_tmp.w = (u32) laser_bomb_b_muzzle_frames;
             *(u16 *)(reg_a6 + 0x82E) = (u16) reg_tmp.h[1];
             var_a1 = (u16 *) reg_tmp.h[0];
             *(u16 *)(reg_a6 + 0x830) = (u16) var_a1;
-            reg_tmp.w = (u32) D_00241C20;
+            reg_tmp.w = (u32) laser_bomb_b_impact_frames;
             *(u16 *)(reg_a6 + 0x85E) = (u16) reg_tmp.h[1];
             var_a0 = reg_tmp.h[0];
             *(u16 *)(reg_a6 + 0x860) = var_a0;
@@ -717,10 +717,10 @@ void func_00120770(arg3)
             goto block_40;
         }
 block_36:
-        func_00121B60();
-        func_00122420();
-        func_001224F0();
-        func_00122500();
+        laser_bomb_beam_draw();
+        laser_bomb_tip_update();
+        laser_bomb_muzzle_update();
+        laser_bomb_impact_update();
         entity_draw_with_bombs();
         reg_a6 += 0x7E0;
         if (!(ENTITY(reg_a6)->flags.b[1] & 2)) {
@@ -766,23 +766,23 @@ block_40:
         reg_tmp.w = (u32) reg_a0;
         *(u16 *)(reg_a6 + 0x28) = (u16) reg_tmp.h[1];
         *(u16 *)(reg_a6 + 0x2A) = (u16) reg_tmp.h[0];
-        func_00122650();
+        laser_bomb_beam_rebuild();
         goto block_36;
     } else {
         g_bomb_afterglow_timer_as_s16 = 0x28;
-        func_00122A60();
-        func_00122B20();
+        laser_bomb_end();
+        bombs_clear();
     }
 }
 
-extern u16 D_00241FF0[];
+extern u16 laser_bomb_segment_template[];
 extern s32 g_laser_bomb_hit_entity;
 extern u16 g_laser_bomb_hit_position;
-extern u16 D_0029CED0[];
+extern u16 g_bomb_entities_1[];
 
 #define W(o) (*(u16 *)(reg_a6 + (o)))
 
-void func_00121B60(void) {
+void laser_bomb_beam_draw(void) {
     reg_tmp.h[0] = W(0x80A);
     W(0x80A) -= 4;
     if ((s32) reg_tmp.h[0] >= 4) goto next_20;
@@ -790,7 +790,7 @@ void func_00121B60(void) {
 next_20:
     reg_a3 = reg_a6;
     if (W(0x18) != 0) {
-        func_00122070();
+        laser_bomb_beam_draw_fading();
         return;
     }
     reg_d0.h[0] = W(0x80A);
@@ -805,8 +805,8 @@ next_20:
     reg_a0 += reg_d4.h[0];
     reg_d7.w = 0x28;
     reg_d6.w = 0;
-    reg_a6 = (u8 *) D_0029CED0;
-    reg_a2 = (u8 *) D_00241FF0;
+    reg_a6 = (u8 *) g_bomb_entities_1;
+    reg_a2 = (u8 *) laser_bomb_segment_template;
 loop_40:
     if ((s16) W(0) < 0) goto next_100;
     if (reg_d6.h[0] != 0) goto next_190;
@@ -887,7 +887,7 @@ next_190:
     reg_a6 = reg_a3;
 }
 
-void func_00122070(void) {
+void laser_bomb_beam_draw_fading(void) {
     u32 base;
 
     reg_tmp.h[1] = *(u16 *)(reg_a6 + 0x2C);
@@ -895,9 +895,9 @@ void func_00122070(void) {
     reg_a0 = (u8 *)reg_tmp.w;
     base = (u32)(reg_a0 + *(u16 *)(reg_a6 + 0x80A));
     reg_d7.w = 0x28;
-    reg_a6 = (u8 *)D_0029CED0;
+    reg_a6 = (u8 *)g_bomb_entities_1;
     reg_a0 = (u8 *)base;
-    reg_a2 = (u8 *)D_00241FF0;
+    reg_a2 = (u8 *)laser_bomb_segment_template;
     reg_d6.w = 0;
 loop_0:
     if ((s16)ENTITY(reg_a6)->flags.h < 0) goto next_0;
@@ -976,7 +976,7 @@ next_6:
     reg_a6 = reg_a3;
 }
 
-void func_00122420(void) {
+void laser_bomb_tip_update(void) {
     reg_a0 = reg_a6;
     reg_a6 += 0x7E0;
     if (*(u16 *)(reg_a6 + 0x28) == 0) {
@@ -998,10 +998,10 @@ block_6:
     reg_a6 -= 0x7E0;
 }
 
-void func_001224F0(void) {
+void laser_bomb_muzzle_update(void) {
 }
 
-void func_00122500(void) {
+void laser_bomb_impact_update(void) {
     reg_a0 = reg_a6;
     reg_a6 += 0x840;
     reg_d1.h[0] = g_laser_bomb_hit_position;
@@ -1038,9 +1038,9 @@ block_4:
 }
 
 
-void func_00122650(void) {
+void laser_bomb_beam_rebuild(void) {
     reg_d7.w = 0x28;
-    reg_a1 = (u8 *) D_0029CED0;
+    reg_a1 = (u8 *) g_bomb_entities_1;
     reg_d6.h[1] = *(u16 *) (reg_a5 + 2);
     reg_d6.h[0] = *(u16 *) (reg_a5 + 4);
     reg_tmp6.h[0] = reg_d6.h[0];
@@ -1063,7 +1063,7 @@ next_40:
     reg_tmp.h[0] = *(u16 *) (reg_a6 + 0x2E);
     reg_a0 = (u8 *) reg_tmp.w;
     reg_a0 += *(u16 *) (reg_a6 + 0x80A);
-    reg_a2 = (u8 *) D_00241FF0;
+    reg_a2 = (u8 *) laser_bomb_segment_template;
     *(u16 *) reg_a1 = *(u16 *) reg_a2;
     reg_a2 += 2;
     reg_a1 += 2;
@@ -1138,10 +1138,10 @@ s32 func_0013C980();                            /* extern */
 s32 func_0013CA90();                            /* extern */
 extern s16 g_p2_laser_bomb_active_as_s16;
 extern s16 g_p1_laser_bomb_active_as_s16;
-extern s8 D_0029CEA0_as_s8_a[];
+extern s8 g_bomb_entities_as_s8_a[];
 
-void func_00122A60(void) {
-    reg_a6 = (u8 *)D_0029CEA0_as_s8_a;
+void laser_bomb_end(void) {
+    reg_a6 = (u8 *)g_bomb_entities_as_s8_a;
     if (*(s8 *)reg_a6 >= 0) {
         reg_a0 = g_player1_as_u8_a;
         func_0013C980();
@@ -1161,29 +1161,29 @@ void func_00122A60(void) {
 extern u8 D_0029F22F[];
 extern u8 D_0029F29F[];
 
-void func_00122B00(void) {
+void bomb_afterglow_end(void) {
     reg_d0.w = 0;
     D_0029F29F[0] = reg_d0.b[0];
     D_0029F22F[0] = reg_d0.b[0];
 }
 
-s32 func_001AC340();
-s32 func_001AC370();
-extern u16 D_0028E6E0;
-extern u16 D_0028E6E4;
+s32 p1_chain_reset();
+s32 p2_chain_reset();
+extern u16 g_p2_combo_at_bomb;
+extern u16 g_p1_combo_at_bomb;
 
-void func_00122B20(void) {
+void bombs_clear(void) {
     reg_d0.w = 0;
-    if (D_0028E6E4 != 0) {
-        func_001AC340();
+    if (g_p1_combo_at_bomb != 0) {
+        p1_chain_reset();
     }
-    if (D_0028E6E0 != 0) {
-        func_001AC370();
+    if (g_p2_combo_at_bomb != 0) {
+        p2_chain_reset();
     }
     reg_d7.w = 0x2C;
     g_p1_laser_bomb_active_as_s16 = 0;
     g_p2_laser_bomb_active_as_s16 = 0;
-    reg_a0 = (u8 *)(D_0029CEA0);
+    reg_a0 = (u8 *)(g_bomb_entities);
     reg_d0.w = 0;
     g_player1_as_u8_a[0] &= 0xBF;
     g_player2_as_u8_a[0] &= 0xBF;
