@@ -313,7 +313,7 @@ extern u16 D_0028E3E0;
 extern u16 D_0028E3EC;
 extern u8 *D_0028E570;
 extern u16 D_0029A52A[];
-extern u8 D_002A5A30[];
+extern u8 g_sprite_sparks_buf[];
 
 #define W(o) (*(u16 *)(reg_a6 + (o)))
 #define LOOKUP(d) (((d) != 0) ? *(u16 *)(reg_a0 + ((s16)(d) & ~1)) : *(u16 *)reg_a0)
@@ -342,7 +342,7 @@ void func_0020A540(void) {
     reg_d2.w = 0x80008000;
     reg_d1.w = 0x1A;
     reg_a6 = (u8 *)D_00299D30;
-    reg_a4 = (u8 *)D_002A5A30;
+    reg_a4 = (u8 *)g_sprite_sparks_buf;
     D_0028E570 = reg_a4;
     goto loop_2;
 loop_1:

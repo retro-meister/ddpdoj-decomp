@@ -29,13 +29,13 @@ extern u8 D_002962E0[];
 extern s16 death_D_002512A0[];
 extern s16 death_D_002512B0[];
 #endif
-extern u8 D_002A4670[];
+extern u8 g_sprite_bullets2_buf[];
 extern u8 g_sprite_bullets_buf[];
 
 void func_00129DB0(void) {
     func_00129BE0();
     D_00299760_as_s16_a[0] = 0;
-    reg_a4 = (u8 *)D_002A4670;
+    reg_a4 = (u8 *)g_sprite_bullets2_buf;
     reg_a0 = (u8 *)g_sprite_bullets_buf;
     D_0028DEAC = (u8 *)(reg_a4);
     reg_a0 += g_sprite_bullets_used;
