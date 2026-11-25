@@ -241,8 +241,8 @@ s32 sfx_countdown();
 extern u8 D_00269B90[];
 extern u8 D_00269BA0[];
 #ifdef DEATH_LABEL
-extern u8 death_D_00251300[];
-extern u8 death_D_00251310[];
+extern u8 credit_label_p1[];
+extern u8 credit_label_p2[];
 extern u16 D_0028E314;
 extern u16 D_0028E318;
 #endif
@@ -320,7 +320,7 @@ void func_00134410(void) {
     if (*(u16 *)(reg_a4 + 4) == 0) {
         reg_d0.h[0] = 1;
         reg_d1.h[0] = 0x32;
-        reg_a0 = (u8 *)death_D_00251300;
+        reg_a0 = (u8 *)credit_label_p1;
         reg_d2.h[0] = 2;
         text_layer_print();
         reg_d0.h[0] = 1;
@@ -333,7 +333,7 @@ void func_00134410(void) {
     } else {
         reg_d0.h[0] = 0xF;
         reg_d1.h[0] = 0x32;
-        reg_a0 = (u8 *)death_D_00251310;
+        reg_a0 = (u8 *)credit_label_p2;
         reg_d2.h[0] = 2;
         text_layer_print();
         reg_d0.h[0] = 0xF;
@@ -400,8 +400,8 @@ extern u8 D_00269C00[];
 extern s16 D_002BF3F6_as_s16_a[];
 #ifdef DEATH_LABEL
 s32 text_layer_put_hex_digit();
-extern u8 death_D_00251300[];
-extern u8 death_D_00251310[];
+extern u8 credit_label_p1[];
+extern u8 credit_label_p2[];
 extern u16 D_0028E314;
 extern u16 D_0028E318;
 #endif
@@ -434,7 +434,7 @@ void func_00134750(void) {
 #ifdef DEATH_LABEL
     reg_d0.h[0] = 1;
     reg_d1.h[0] = 0x32;
-    reg_a0 = (u8 *)death_D_00251300;
+    reg_a0 = (u8 *)credit_label_p1;
     reg_d2.h[0] = 2;
     text_layer_print();
     reg_d0.h[0] = 1;
@@ -446,7 +446,7 @@ void func_00134750(void) {
     text_layer_put_hex_digit();
     reg_d0.h[0] = 0xF;
     reg_d1.h[0] = 0x32;
-    reg_a0 = (u8 *)death_D_00251310;
+    reg_a0 = (u8 *)credit_label_p2;
     reg_d2.h[0] = 2;
     text_layer_print();
     reg_d0.h[0] = 0xF;
