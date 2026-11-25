@@ -85,6 +85,34 @@ def compile_source(local, source, output, version, defines=()):
     run(*(runner or []), compiler, *TOOLCHAINS["compiler_flags"], *defines, "-o", output.relative_to(ROOT), compile_input)
 
 
+# What compile_units does to an object after the compiler; part of the object's stamp, so a change here
+# recompiles everything.
+OBJECT_RULES = "rodata-align-8"
+
+
+def raise_rodata_alignment(obj_path):
+    """The compiler aligns a constant of up to four bytes to 4 (a string literal like "ON" is its own
+    .rodata input section with alignment 4). In the retail executables every such piece lies on a
+    multiple of 8, so the original link raised it. The rule cannot be written in the linker script:
+    a unit's literals are many input sections of one object, taken by one `obj(.rodata)` line, and
+    SUBALIGN would also lower the 16 of the longer ones. So the alignment is raised in the object,
+    here, for every object the build compiles (compile_units is the only caller)."""
+    data = bytearray(obj_path.read_bytes())
+    e_shoff, = struct.unpack_from("<I", data, 0x20)
+    e_shentsize, e_shnum, e_shstrndx = struct.unpack_from("<HHH", data, 0x2E)
+    str_off, = struct.unpack_from("<I", data, e_shoff + e_shstrndx * e_shentsize + 16)
+    changed = False
+    for i in range(e_shnum):
+        header = e_shoff + i * e_shentsize
+        sh_name, = struct.unpack_from("<I", data, header)
+        end = data.index(b"\x00", str_off + sh_name)
+        if data[str_off + sh_name:end] == b".rodata" and struct.unpack_from("<I", data, header + 32)[0] < 8:
+            struct.pack_into("<I", data, header + 32, 8)
+            changed = True
+    if changed:
+        obj_path.write_bytes(bytes(data))
+
+
 def uses_qemu_runner(local):
     runner = local.get("runner")
     if not runner:
@@ -113,6 +141,8 @@ def unit_stamp(version, source, include_hash, defines=()):
     hasher.update("\0".join([*TOOLCHAINS["compiler_flags"], *defines]).encode("utf-8"))
     hasher.update(b"\0")
     hasher.update(include_hash.encode("ascii"))
+    hasher.update(b"\0")
+    hasher.update(OBJECT_RULES.encode("ascii"))
     hasher.update(b"\0")
     hasher.update((ROOT / source).read_bytes())
     return hasher.hexdigest()
@@ -149,6 +179,7 @@ def compile_units(local, jobs, data_only=()):
                 compile_source(local, source, obj, version, defines)
         for _, source, _, obj, stamp_file, expected in dirty:
             validate_object(obj, code=source not in data_only)
+            raise_rodata_alignment(obj)
             stamp_file.write_text(expected + "\n", encoding="ascii")
     return objects
 

@@ -1,8 +1,7 @@
 import struct
 
 ALLOWED_ALLOC_SECTIONS = {
-    ".text", ".rodata", ".data", ".sdata", ".sbss", ".bss", ".lit4", ".lit8",
-}
+    ".text", ".rodata", ".data", ".sdata", ".sbss", ".bss", ".lit4", ".lit8", ".unused"}  # ".unused": objects the retail link dropped; the link script discards it
 
 
 def parse_object(path):

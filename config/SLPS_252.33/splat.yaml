@@ -184,10 +184,7 @@ segments:
       - [0x117fb0, c, game/glyph_cache]
       - [0x118520, c, game/gfx]
       - [0x11c5b0, c, game/arcade_sprite]
-      - [0x11d490, c, game/delta_encode]
-      - [0x11d580, c, game/menu]
-      - [0x1262e0, c, game/replay_slots]
-      - [0x1268b0, c, game/save_data]
+      - [0x11d490, c, game/menu]
       - [0x12c620, c, game/memcard]
       - [0x136cd0, c, game/replay_header]
       - [0x136fc0, c, game/replay]
@@ -351,7 +348,7 @@ segments:
       - [0x16f820, .data, game/text]
       - [0x16f8f0, .data, game/gfx]
       - [0x16fc20, .data, game/arcade_sprite]
-      - [0x170890, .data, game/menu_data]
+      - [0x170890, .data, game/menu]
       - [0x171da0, .data, game/memcard]
       - [0x172190, .data, game/replay]
       - [0x1721a8, .data, game/replay_state]
@@ -380,11 +377,7 @@ segments:
       - [0x186f40, .rodata, game/text]
       - [0x186fa0, .rodata, game/system]
       - [0x1870d8, .rodata, game/gfx]
-      - [0x187140, .rodata, game/menu_text]
-      - [0x189af0, .rodata, game/menu]
-      - [0x189ce0, .rodata, game/menu_text_b]
-      - [0x189da0, .rodata, game/replay_slots]
-      - [0x189df0, .rodata, game/save_data_text]
+      - [0x187140, .rodata, game/menu]
       - [0x189fd0, .rodata, game/memcard]
       - [0x18be28, rodata, rodata_18be28]
       - [0x18be30, .rodata, game/replay_header]
@@ -453,7 +446,7 @@ segments:
       - [0x18dd10, .sdata, game/stage1/stage1_boss]
       - [0x18dd14, .sdata, game/wreck_test]
       - [0x18dd18, .sdata, game/screen_mode_data]
-      - [0x18dd20, .sdata, game/menu_small_data]
+      - [0x18dd20, .sdata, game/menu]
       - [0x18de38, .sdata, game/memcard]
       - [0x18dec0, .sdata, game/replay]
       - [0x18ded0, .sdata, game/replay_state_small_data]
@@ -546,7 +539,7 @@ segments:
       - {type: .bss, vram: 0x2c4f00, name: game/system}
       - {type: .bss, vram: 0x57cf80, name: game/glyph_cache}
       - {type: .bss, vram: 0x586ff0, name: game/gfx}
-      - {type: .bss, vram: 0x684c80, name: game/save_data}
+      - {type: .bss, vram: 0x684c80, name: game/menu}
       - {type: .bss, vram: 0x68e1b0, name: game/memcard}
       - {type: .bss, vram: 0x6c58a0, name: game/replay}
       - {type: bss, vram: 0x6e5c40, name: bss_6e5c40}

@@ -105,9 +105,6 @@ segments:
       - [0xafac0, c, game/system]
       - [0xb1770, c, game/text]
       - [0xb52a0, c, game/menu]
-      - [0xbe5e0, c, game/replay_slots]
-      - [0xbebb0, c, game/delta_encode]
-      - [0xbeca0, c, game/save_data]
       - [0xc4a60, c, game/replay_state]
       - [0xc9970, c, game/gfx]
       - [0xcd890, c, game/ranking]
@@ -258,7 +255,7 @@ segments:
       - [0x161d20, .data, game/player/player_panel_tables]
       - [0x161d90, .data, game/memcard]
       - [0x162180, .data, game/text]
-      - [0x162250, .data, game/menu_data]
+      - [0x162250, .data, game/menu]
       - [0x163720, .data, game/replay_state]
       - [0x163fe0, .data, game/gfx]
       - [0x164330, .data, game/enemy/enemy_spawner_tables]
@@ -393,12 +390,7 @@ segments:
       - [0x181f20, .rodata, game/system]
       - [0x182058, rodata, rodata_182058]
       - [0x182060, .rodata, game/text]
-      - [0x1820c0, .rodata, game/menu_text]
-      - [0x184990, .rodata, game/menu]
-      - [0x184b78, .rodata, game/menu_text_b]
-      - [0x184c10, .rodata, game/replay_slots]
-      - [0x184c60, .rodata, game/save_data_text]
-      - [0x184e30, .rodata, game/save_data]
+      - [0x1820c0, .rodata, game/menu]
       - [0x184e50, .rodata, game/replay_state]
       - [0x184e68, .rodata, game/gfx]
       - [0x184ed0, .rodata, game/scoring]
@@ -439,7 +431,7 @@ segments:
       - [0x18fc28, .sdata, game/player/player_shot_8_tables]
       - [0x18ff50, .sdata, game/player/player_options_tables]
       - [0x18ff78, .sdata, game/memcard]
-      - [0x190000, .sdata, game/menu_small_data]
+      - [0x190000, .sdata, game/menu]
       - [0x190130, .sdata, game/replay_state_small_data]
       - [0x190140, .sdata, game/screen_mode_data]
       - [0x190144, .sdata, game/stage1/stage1_midboss_data]
@@ -556,7 +548,7 @@ segments:
       - {type: bss, vram: 0x3427a0, name: bss_3427a0}
       - {type: .bss, vram: 0x342800, name: game/system}
       - {type: .bss, vram: 0x61b000, name: game/text}
-      - {type: .bss, vram: 0x61fe00, name: game/save_data}
+      - {type: .bss, vram: 0x61fe00, name: game/menu}
       - {type: .bss, vram: 0x629330, name: game/gfx}
       - {type: .bss, vram: 0x68da00, name: game/wreck_state}
       - {type: .bss, vram: 0x68da20, name: game/scoring_state}

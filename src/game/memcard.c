@@ -5,8 +5,7 @@
 /*
  * The unit's tables, in the order of the source: the order in which the text they mention lies in
  * `.rodata`.  Tables of up to eight bytes are in `.sdata`, the others in `.data`.  In the messages
- * "／" ends a line and "￥" the message.  A message that is only "￥" has two zero bytes written
- * after it: the retail literal is aligned like one of five bytes or more.
+ * "／" ends a line and "￥" the message.
  */
 char g_mc_icon_cd_path_a[20] = "\\DATA\\DDON3_1.ICO;1";
 
@@ -70,23 +69,23 @@ char *g_mc_msg_title[8] = {
     SJIS("　　　　セーブ　　　　￥"),
     SJIS("　　　　ロード　　　　￥"),
     SJIS(" 　アンフォーマット　 ￥"),
-    SJIS("￥\0\0"),
+    SJIS("￥"),
     SJIS(" 　　オートロード　　 ￥"),
-    SJIS("￥\0\0"),
-    SJIS("￥\0\0"),
-    SJIS("￥\0\0"),
+    SJIS("￥"),
+    SJIS("￥"),
+    SJIS("￥"),
 };
 
 char *g_mc_msg_title_auto[9] = {
     SJIS(" 　　オートセーブ　　 ￥"),
     SJIS("　　　　ロード　　　　￥"),
-    SJIS("￥\0\0"),
-    SJIS("￥\0\0"),
+    SJIS("￥"),
+    SJIS("￥"),
     SJIS(" 　　オートロード　　 ￥"),
-    SJIS("￥\0\0"),
-    SJIS("￥\0\0"),
-    SJIS("￥\0\0"),
-    SJIS("￥\0\0"),
+    SJIS("￥"),
+    SJIS("￥"),
+    SJIS("￥"),
+    SJIS("￥"),
 };
 
 char *g_mc_msg_on_card[2] = {

@@ -5,6 +5,10 @@
 
 #define SJIS(s) s
 
+#ifndef NULL
+#define NULL 0
+#endif
+
 /* A value that differs between the main game and the Death Label executable. */
 #ifdef DEATH_LABEL
 #define MAIN_OR_DEATH_LABEL(main, death) (death)
