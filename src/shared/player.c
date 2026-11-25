@@ -749,7 +749,7 @@ s32 func_001ABCA0();
 s32 func_001ABEA0();
 extern u16 D_002555C0[];
 extern u16 D_002555D0[];
-extern u16 D_002555E0_as_u16_a[];
+extern u16 player_weapon_tables_as_u16_a[];
 extern u16 D_002556E0[];
 extern u16 D_002560C0[];
 extern u16 D_0028C5F8[];
@@ -847,7 +847,7 @@ next_25:
     reg_d0.h[0] -= 2;
     reg_d0.h[0] <<= 1;
     reg_d0.h[0] += PLAYER(reg_a6)->ship_type.h;
-    reg_a2 = (u8 *)D_002555E0_as_u16_a;
+    reg_a2 = (u8 *)player_weapon_tables_as_u16_a;
     reg_d0.h[0] <<= 2;
     *(u16 *)(reg_a4 + 0) = (reg_d0.h[0] != 0) ? *(u16 *)((u8 *)reg_a2 + ((s16)reg_d0.h[0] & ~1)) : *(u16 *)reg_a2;
     *(u16 *)(reg_a4 + 2) = ((reg_d0.h[0] + 2) != 0) ? *(u16 *)((u8 *)reg_a2 + ((s16)(reg_d0.h[0] + 2) & ~1)) : *(u16 *)reg_a2;
@@ -870,7 +870,7 @@ next_30:
         reg_d0.h[0] -= 2;
         reg_d0.h[0] <<= 1;
         reg_d0.h[0] += PLAYER(reg_a6)->ship_type.h;
-        reg_a2 = (u8 *)D_002555E0_as_u16_a;
+        reg_a2 = (u8 *)player_weapon_tables_as_u16_a;
         reg_d0.h[0] <<= 2;
         *(u16 *)(reg_a4 + 0) = (reg_d0.h[0] != 0) ? *(u16 *)((u8 *)reg_a2 + ((s16)reg_d0.h[0] & ~1)) : *(u16 *)reg_a2;
         *(u16 *)(reg_a4 + 2) = ((reg_d0.h[0] + 2) != 0) ? *(u16 *)((u8 *)reg_a2 + ((s16)(reg_d0.h[0] + 2) & ~1)) : *(u16 *)reg_a2;
@@ -1539,9 +1539,9 @@ void func_001417D0(void) {
 }
 
 s32 func_0019D360();
-extern u8 D_0028C610[];
-extern u16 D_0028C618[];
-extern u16 D_0028C620[];
+extern u8 player_ship_sprite_tables[];
+extern u16 player_ship_hitbox_tables[];
+extern u16 player_ship_shadow_tables[];
 extern u8 g_game_frame_ran;
 extern u16 D_0028E3B4;
 extern u16 D_0028E3EC;
@@ -1556,7 +1556,7 @@ void func_00141B50(void) {
     s32 *p1;
     u16 idx;
 
-    reg_a0 = (u8 *)D_0028C610;
+    reg_a0 = (u8 *)player_ship_sprite_tables;
     reg_d0.h[0] = PLAYER(reg_a6)->ship_type.h;
     reg_d0.h[0] *= 2;
     reg_tmp.h[1] = (reg_d0.h[0] != 0) ? *(u16 *)((u8 *)reg_a0 + ((s16)reg_d0.h[0] & ~1)) : *(u16 *)reg_a0;
@@ -1565,7 +1565,7 @@ void func_00141B50(void) {
     reg_d0.h[0] = PLAYER(reg_a6)->roll_frame.h;
     PLAYER(reg_a6)->sprite_hi.h = (reg_d0.h[0] != 0) ? *(u16 *)((u8 *)reg_a0 + ((s16)reg_d0.h[0] & ~1)) : *(u16 *)reg_a0;
     PLAYER(reg_a6)->sprite_lo.h = ((reg_d0.h[0] + 2) != 0) ? *(u16 *)((u8 *)reg_a0 + ((s16)(reg_d0.h[0] + 2) & ~1)) : *(u16 *)reg_a0;
-    reg_a0 = (u8 *)D_0028C618;
+    reg_a0 = (u8 *)player_ship_hitbox_tables;
     reg_d1.w = 0;
     reg_d1.h[0] *= 4;
     reg_tmp.h[1] = (reg_d1.h[0] != 0) ? *(u16 *)((u8 *)reg_a0 + ((s16)reg_d1.h[0] & ~1)) : *(u16 *)reg_a0;
@@ -1591,7 +1591,7 @@ void func_00141B50(void) {
         reg_d1.h[0] = reg_d1.h[1];
         reg_d1.h[1] = reg_tmp1.h[0];
         reg_d1.w += 0xFE00FE00;
-        reg_a0 = (u8 *)D_0028C620;
+        reg_a0 = (u8 *)player_ship_shadow_tables;
         reg_d0.h[0] = PLAYER(reg_a6)->ship_type.h;
         reg_d0.h[0] *= 2;
         idx = reg_d0.h[0];
@@ -1634,11 +1634,11 @@ typedef void (*Fn)();
 
 extern u8 D_00255510[];
 extern u8 D_00255710[];
-extern u8 D_00255950[];
-extern u8 D_00255970[];
-extern u8 D_00255990[];
-extern u8 D_0028C618_as_u8_a[];
-extern u8 D_0028C620_as_u8_a[];
+extern u8 ship0_shot_lists_1[];
+extern u8 ship0_shot_lists_2[];
+extern u8 ship0_shot_lists_3[];
+extern u8 player_ship_hitbox_tables_as_u8_a[];
+extern u8 player_ship_shadow_tables_as_u8_a[];
 extern u8 D_0028C948[4];
 extern u8 D_0028C94C[4];
 extern u8 g_p2_hyper_effect_flag_as_u8_a4[4];
@@ -2162,7 +2162,7 @@ block_135:
                                     reg_d0.h[0] += 4;
                                 }
                                 var_a3 = reg_d0.h[0];
-                                reg_a1 = (u8 *)D_00255950;
+                                reg_a1 = (u8 *)ship0_shot_lists_1;
                                 reg_d5.h[0] = var_a3;
                                 reg_tmp.h[1] = (var_a3 != 0) ? *(u16 *)((u8 *)reg_a1 + ((s16)var_a3 & ~1)) : *(u16 *)reg_a1;
                                 reg_tmp.h[0] = (((var_a3 & 0xFFFF) + 2) != 0) ? *(u16 *)((u8 *)reg_a1 + ((s16)((var_a3 & 0xFFFF) + 2) & ~1)) : *(u16 *)reg_a1;
@@ -2190,7 +2190,7 @@ loop_164:
                                     } else {
                                         func_00144AD0();
                                     }
-                                    reg_a1 = (u8 *)D_00255970;
+                                    reg_a1 = (u8 *)ship0_shot_lists_2;
                                     reg_tmp.h[1] = (reg_d5.h[0] != 0) ? *(u16 *)((u8 *)reg_a1 + ((s16)reg_d5.h[0] & ~1)) : *(u16 *)reg_a1;
                                     reg_tmp.h[0] = (((u16)reg_d5.h[0] + 2) != 0) ? *(u16 *)((u8 *)reg_a1 + ((s16)((u16)reg_d5.h[0] + 2) & ~1)) : *(u16 *)reg_a1;
                                     reg_a1 = (u8 *) reg_tmp.w;
@@ -2272,7 +2272,7 @@ block_196:
                                 if (PLAYER(reg_a6)->flags.b[0] & 1) {
                                     reg_d0.h[0] += 4;
                                 }
-                                reg_a1 = (u8 *)D_00255990;
+                                reg_a1 = (u8 *)ship0_shot_lists_3;
                                 reg_tmp.h[1] = (reg_d0.h[0] != 0) ? *(u16 *)((u8 *)reg_a1 + ((s16)reg_d0.h[0] & ~1)) : *(u16 *)reg_a1;
                                 reg_tmp.h[0] = (((u16)reg_d0.h[0] + 2) != 0) ? *(u16 *)((u8 *)reg_a1 + ((s16)((u16)reg_d0.h[0] + 2) & ~1)) : *(u16 *)reg_a1;
                                 reg_a1 = (u8 *) reg_tmp.w;
@@ -2363,7 +2363,7 @@ block_240:
         }
     }
 block_244:
-    reg_a0 = (u8 *)D_0028C610;
+    reg_a0 = (u8 *)player_ship_sprite_tables;
     reg_d0.h[0] = PLAYER(reg_a6)->ship_type.h;
     reg_d0.h[0] *= 2;
     reg_tmp.h[1] = (reg_d0.h[0] != 0) ? *(u16 *)((u8 *)reg_a0 + ((s16)reg_d0.h[0] & ~1)) : *(u16 *)reg_a0;
@@ -2372,7 +2372,7 @@ block_244:
     reg_d0.h[0] = PLAYER(reg_a6)->roll_frame.h;
     PLAYER(reg_a6)->sprite_hi.h = (reg_d0.h[0] != 0) ? *(u16 *)((u8 *)reg_a0 + ((s16)reg_d0.h[0] & ~1)) : *(u16 *)reg_a0;
     PLAYER(reg_a6)->sprite_lo.h = ((reg_d0.h[0] + 2) != 0) ? *(u16 *)((u8 *)reg_a0 + ((s16)(reg_d0.h[0] + 2) & ~1)) : *(u16 *)reg_a0;
-    reg_a0 = (u8 *)D_0028C618_as_u8_a;
+    reg_a0 = (u8 *)player_ship_hitbox_tables_as_u8_a;
     reg_d1.w = 0;
     reg_d1.h[0] *= 4;
     reg_tmp.h[1] = (reg_d1.h[0] != 0) ? *(u16 *)((u8 *)reg_a0 + ((s16)reg_d1.h[0] & ~1)) : *(u16 *)reg_a0;
@@ -2398,7 +2398,7 @@ block_244:
         reg_d1.h[0] = reg_d1.h[1];
         reg_d1.h[1] = reg_tmp1.h[0];
         reg_d1.w += 0xFE00FE00;
-        reg_a0 = (u8 *)D_0028C620_as_u8_a;
+        reg_a0 = (u8 *)player_ship_shadow_tables_as_u8_a;
         reg_d0.h[0] = PLAYER(reg_a6)->ship_type.h;
         reg_d0.h[0] *= 2;
         temp_a1_9 = reg_d0.h[0];
@@ -2911,12 +2911,12 @@ void func_00144EA0(void) {
 s32 func_0013F3F0();
 s32 func_0013F400();
 s32 func_0019D430();
-extern u16 D_00255BB0[];
+extern u16 player_shield_start_sprites[];
 extern u16 D_0028C628[];
-extern u16 D_0028C62C[];
-extern u16 D_0028C630[];
-extern u16 D_0028C638[];
-extern u16 D_0028C750[];
+extern u16 player_shield_palettes[];
+extern u16 player_shield_sprite_tables[];
+extern u16 player_exhaust_sprite_tables[];
+extern u16 player_exhaust_slow_sprite_tables[];
 extern u16 D_0028C868[];
 extern u16 D_0028C880[];
 extern u8 D_0028E30C;
@@ -2937,7 +2937,7 @@ void func_00144F00(void) {
     reg_tmp1.h[0] = reg_d1.h[0];
     reg_d1.h[0] = reg_d1.h[1];
     reg_d1.h[1] = reg_tmp1.h[0];
-    reg_a0 = (u8 *)(D_00255BB0);
+    reg_a0 = (u8 *)(player_shield_start_sprites);
     reg_d2.h[0] = PLAYER(reg_a6)->shield_anim_frame.h;
     reg_d2.h[1] = ((reg_d2.h[0]) != 0) ? *(u16 *)((u8 *)reg_a0 + ((s16)(reg_d2.h[0]) & ~1)) : *(u16 *)reg_a0;
     reg_d2.h[0] = ((reg_d2.h[0] + 2) != 0) ? *(u16 *)((u8 *)reg_a0 + ((s16)(reg_d2.h[0] + 2) & ~1)) : *(u16 *)reg_a0;
@@ -2957,7 +2957,7 @@ next_30:
     reg_d1.h[0] = PLAYER(reg_a6)->x.h;
     reg_d1.w += 0xF800FA00;
     reg_d2.h[0] = PLAYER(reg_a6)->ship_type.h;
-    reg_a0 = (u8 *)(D_0028C630);
+    reg_a0 = (u8 *)(player_shield_sprite_tables);
     reg_d2.h[0] *= 2;
     reg_tmp.h[1] = ((reg_d2.h[0]) != 0) ? *(u16 *)((u8 *)reg_a0 + ((s16)(reg_d2.h[0]) & ~1)) : *(u16 *)reg_a0;
     reg_tmp.h[0] = (((reg_d2.h[0] & 0xFFFF) + 2) != 0) ? *(u16 *)((u8 *)reg_a0 + ((s16)((reg_d2.h[0] & 0xFFFF) + 2) & ~1)) : *(u16 *)reg_a0;
@@ -2968,7 +2968,7 @@ next_30:
     reg_d3.h[0] = 0x830;
     reg_d4.w = 0;
     reg_d4.b[0] = PLAYER(reg_a6)->who.b.side;
-    reg_a0 = (u8 *)(D_0028C62C);
+    reg_a0 = (u8 *)(player_shield_palettes);
     reg_d4.h[0] *= 2;
     reg_d4.h[0] = ((reg_d4.h[0]) != 0) ? *(u16 *)((u8 *)reg_a0 + ((s16)(reg_d4.h[0]) & ~1)) : *(u16 *)reg_a0;
     reg_tmp.b[0] = PLAYER(reg_a6)->shield_anim_delay.b[1];
@@ -2995,11 +2995,11 @@ next_120:
     reg_d7.h[0] = PLAYER(reg_a6)->ship_type.h;
     reg_d7.h[0] *= 2;
     reg_d6.h[0] = PLAYER(reg_a6)->roll_frame.h;
-    reg_a0 = (u8 *)(D_0028C638);
+    reg_a0 = (u8 *)(player_exhaust_sprite_tables);
     reg_a1 = (u8 *)(D_0028C868);
     if (!(PLAYER(reg_a6)->input.b.raw & 2)) goto next_200;
     if (PLAYER(reg_a6)->ship_type.h == 0) goto next_200;
-    reg_a0 = (u8 *)(D_0028C750);
+    reg_a0 = (u8 *)(player_exhaust_slow_sprite_tables);
     reg_a1 = (u8 *)(D_0028C880);
 next_200:
     reg_tmp.h[1] = (((s32)reg_d7.h[0]) != 0) ? *(u16 *)((u8 *)reg_a0 + ((s16)((s32)reg_d7.h[0]) & ~1)) : *(u16 *)reg_a0;
@@ -3035,7 +3035,7 @@ next_210:
     func_0019D430();
 }
 
-extern u16 D_0028C610_as_u16_a[];
+extern u16 player_ship_sprite_tables_as_u16_a[];
 extern u16 D_0028E3E4;
 
 void func_00145640(void) {
@@ -3045,7 +3045,7 @@ void func_00145640(void) {
 
     save_a = *(u16 *) (reg_a6 + 0xA);
     save_c = *(u16 *) (reg_a6 + 0xC);
-    reg_a0 = (u8 *) D_0028C610_as_u16_a;
+    reg_a0 = (u8 *) player_ship_sprite_tables_as_u16_a;
     reg_d0.h[0] = *(u16 *) (reg_a6 + 0x58);
     reg_d0.h[0] *= 2;
     reg_tmp.h[1] = (reg_d0.h[0] != 0) ? *(u16 *) (reg_a0 + ((s16) reg_d0.h[0] & ~1)) : *(u16 *) reg_a0;
@@ -3064,7 +3064,7 @@ void func_00145640(void) {
     reg_d7.h[0] = *(u16 *) (reg_a6 + 0x58);
     reg_d7.h[0] *= 2;
     reg_d6.h[0] = 0;
-    reg_a0 = (u8 *) D_0028C638;
+    reg_a0 = (u8 *) player_exhaust_sprite_tables;
     reg_a1 = (u8 *) D_0028C868;
     reg_tmp.h[1] = (reg_d7.h[0] != 0) ? *(u16 *) (reg_a0 + ((s16) reg_d7.h[0] & ~1)) : *(u16 *) reg_a0;
     reg_tmp.h[0] = (((u16) reg_d7.h[0] + 2) != 0) ? *(u16 *) (reg_a0 + ((s16) ((u16) reg_d7.h[0] + 2) & ~1)) : *(u16 *) reg_a0;

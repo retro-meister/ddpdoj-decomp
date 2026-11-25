@@ -471,7 +471,7 @@ next_1:
     g_hyper_bullet_speed = MAIN_OR_DEATH_LABEL(reg_d0.h[0], 0xA);
 }
 
-extern u8 D_002555E0[];
+extern u8 player_weapon_tables[];
 extern u8 D_0028E080[];
 extern u8 D_0028E084_as_u8_a[];
 extern s16 D_0029F1D0[];
@@ -493,7 +493,7 @@ void func_0013D7A0(void) {
     }
     if (*(u16 *)(u32)D_0029F280 != 8) {
         *(u16 *)(u32)D_0029F280 += 2;
-        reg_a0 = (u8 *)D_002555E0;
+        reg_a0 = (u8 *)player_weapon_tables;
         reg_d0.h[0] = D_0029F2BA[0];
         reg_d0.h[0] -= 2;
         reg_d0.h[0] <<= 1;
@@ -559,7 +559,7 @@ void func_0013DA90(void) {
     }
     if (*(u16 *)(u32)D_0029F210 != 8) {
         *(u16 *)(u32)D_0029F210 += 2;
-        reg_a0 = (u8 *)D_002555E0;
+        reg_a0 = (u8 *)player_weapon_tables;
         reg_d0.h[0] = D_0029F24A[0];
         reg_d0.h[0] -= 2;
         reg_d0.h[0] <<= 1;
@@ -614,7 +614,7 @@ void func_0013DD70(void) {
         if (*(u16 *)(u32)D_0029F280 == 8) goto block_end;
     }
     *(u16 *)(u32)D_0029F280 = 8;
-    reg_a0 = (u8 *)D_002555E0;
+    reg_a0 = (u8 *)player_weapon_tables;
     reg_a1 = (u8 *)D_0028E080;
     reg_d0.h[0] = D_0029F2BA[0];
     reg_d0.h[0] -= 2;
@@ -657,7 +657,7 @@ void func_0013DFF0(void) {
         if (*(u16 *)(u32)D_0029F210 == 8) goto block_end;
     }
     *(u16 *)(u32)D_0029F210 = 8;
-    reg_a0 = (u8 *)D_002555E0;
+    reg_a0 = (u8 *)player_weapon_tables;
     reg_a1 = (u8 *)D_0028E078;
     reg_d0.h[0] = D_0029F24A[0];
     reg_d0.h[0] -= 2;

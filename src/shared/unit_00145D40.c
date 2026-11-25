@@ -81,7 +81,7 @@ void func_00145D40(void) {
     reg_a6 = save_a6;
 }
 
-extern u8 D_002555E0[];
+extern u8 player_weapon_tables[];
 extern u8 D_0028E078[];
 extern u8 D_0028E080[];
 extern u8 g_player1_as_u8_a[];
@@ -114,7 +114,7 @@ void func_00145E70(u8 *arg0) {
     reg_d0.h[0] <<= 1;
     reg_d0.h[0] += *(u16 *)(arg0 + 0x58);
     reg_d0.h[0] <<= 2;
-    reg_a2 = (u8 *)D_002555E0;
+    reg_a2 = (u8 *)player_weapon_tables;
     *(u16 *)(reg_a4 + 0) = (reg_d0.h[0] != 0) ? *(u16 *)(reg_a2 + ((s16)reg_d0.h[0] & ~1)) : *(u16 *)reg_a2;
     *(u16 *)(reg_a4 + 2) = (((u16)reg_d0.h[0] + 2) != 0) ? *(u16 *)(reg_a2 + ((s16)((u16)reg_d0.h[0] + 2) & ~1)) : *(u16 *)reg_a2;
     *(u16 *)(reg_a4 + 4) = (((u16)reg_d0.h[0] + 4) != 0) ? *(u16 *)(reg_a2 + ((s16)((u16)reg_d0.h[0] + 4) & ~1)) : *(u16 *)reg_a2;
