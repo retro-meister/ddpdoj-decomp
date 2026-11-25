@@ -1,6 +1,9 @@
 """Define stretches of assembly data as C, for both game executables.
 
     uv run tools/tablegen.py FILE [--desc TEXT] [--dry] SECTION:START:END[:DEATH_START[:DEATH_END]] ...
+    uv run tools/tablegen.py FILE ... SECTION:START:END:-          (a stretch Death Label does not have)
+    options: --main-only START:END   objects inside a stretch that Death Label does not have (repeatable)
+             --at MAIN=DEATH         the Death Label address of the object at MAIN (repeatable)
 
 Writes the data-only file src/shared/FILE.c with the bytes of the stretches (.data / .sdata, main executable
 addresses, hex) and gives the file those stretches in both splat.yaml files. Run after
@@ -29,12 +32,21 @@ if dry: args.remove('--dry')
 desc = None
 if '--desc' in args:
     i = args.index('--desc'); desc = args[i + 1]; del args[i:i + 2]
+only_ranges = []; pins = {}
+while '--main-only' in args:
+    i = args.index('--main-only'); a_, b_ = args[i + 1].split(':'); only_ranges.append((int(a_, 16), int(b_, 16))); del args[i:i + 2]
+while '--at' in args:
+    i = args.index('--at'); a_, b_ = args[i + 1].split('='); pins[int(a_, 16)] = int(b_, 16); del args[i:i + 2]
+forced = {x for r in only_ranges for x in r} | set(pins)
+def is_main_only(a): return any(s_ <= a < e_ for s_, e_ in only_ranges)
 name = args[0]
 stretches = []
 dstart_given = {}
+main_only = set()
 for a in args[1:]:
     parts = a.split(':'); sec, s, e = parts[:3]; stretches.append((sec, int(s, 16), int(e, 16)))
-    if len(parts) > 3: dstart_given[(sec, int(s, 16))] = int(parts[3], 16)
+    if len(parts) > 3 and parts[3] == '-': main_only.add((sec, int(s, 16)))
+    elif len(parts) > 3: dstart_given[(sec, int(s, 16))] = int(parts[3], 16)
 def symbol_references(target):
     """{address of a data word: (symbol, addend)} for every symbol reference in the target's split assembly data."""
     found = {}
@@ -82,6 +94,31 @@ rom = (R / 'baserom/SLPS_252.33').read_bytes(); drom = (R / 'baserom/DEATH.ELF')
 alltext = ''.join(p.read_text() for p in (R / 'src').rglob('*.c') if 'gallery' not in str(p)) + \
           ''.join(p.read_text() for p in (R / 'include').rglob('*.h'))
 used = set(re.findall(r'\b[A-Za-z_]\w*\b', alltext))
+# element types the code already declares its tables with: {name: (type, count or None)}
+WIDTH = {'s8': 1, 'u8': 1, 's16': 2, 'u16': 2, 's32': 4, 'u32': 4}
+declared = {}
+for m in re.finditer(r'^extern\s+(s8|u8|s16|u16|s32|u32)\s+(\w+)\[(\d*)\];', alltext, re.M):
+    declared.setdefault(m.group(2), set()).add((m.group(1), int(m.group(3)) if m.group(3) else None))
+def declared_as(n):
+    """(type, count) when every declaration of the name agrees on the element type."""
+    ds_ = declared.get(n, ())
+    types = {t for t, _ in ds_}
+    if len(types) != 1: return None
+    counts = {c for _, c in ds_ if c}
+    return next(iter(types)), (next(iter(counts)) if len(counts) == 1 else None)
+def split_declared(objs):
+    """An object the code declares shorter than its slot ends there when the layout allows it; the rest is an
+    object of its own."""
+    out = []
+    for a, size, nxt in objs:
+        n = pick(a) if a in labels else None
+        d = declared_as(n) if n else None
+        if d and d[1]:
+            b = WIDTH[d[0]] * d[1]
+            if 16 <= b < size and (a + b) % 16 == 0 and size - b >= 16:
+                out += [(a, b, a + b), (a + b, size - b, nxt)]; continue
+        out.append((a, size, nxt))
+    return out
 
 def death_delta(start, end):
     deltas = {}
@@ -108,7 +145,7 @@ def is_named(a):
 def partition_data(start, end):
     """Cheapest valid way to cut the stretch into objects: named labels are starts wherever the layout rules
     allow it, placeholder labels only where an object must start."""
-    cands = sorted(a for a in labels if start <= a < end and a % 8 == 0)
+    cands = sorted({a for a in labels if start <= a < end and a % 8 == 0} | {a for a in forced if start < a < end})
     if start not in cands: cands.insert(0, start)
     cands.append(end)
     n = len(cands)
@@ -117,11 +154,18 @@ def partition_data(start, end):
         if a % 16 == 8:
             return L in (16, 24) and not any(rom[a - OFF + 15:a - OFF + L])
         return L >= 16
+    # a label where Death Label's distance from Main changes starts an object too
+    moved = {a for a in forced if start < a < end}; last = None
+    for a in cands[:-1]:
+        ds_ = [death_named[q] - a for q in labels.get(a, ()) if q in death_named]
+        if ds_:
+            if last is not None and ds_[0] != last: moved.add(a)
+            last = ds_[0]
     INF = float('inf')
     best = [INF] * n; back = [None] * n
     best[n - 1] = 0
     for i in range(n - 2, -1, -1):
-        own = -1 if is_named(cands[i]) or i == 0 else 1000
+        own = -1 if is_named(cands[i]) or i == 0 or cands[i] in moved else 1000
         for j in range(i + 1, n):
             if cands[i] % 16 == 8 and cands[j] - cands[i] > 24: break
             if best[j] is INF or not valid(i, j): continue
@@ -160,7 +204,7 @@ def fmt(raw, size):
         return '\n'.join('    ' + ', '.join('0x%04X' % x for x in w[j:j + 8]) + ',' for j in range(0, len(w), 8))
     return '\n'.join('    ' + ', '.join('0x%02X' % x for x in raw[j:j + 12]) + ',' for j in range(0, size, 12))
 
-death_add = {}; death_alias = {}
+death_add = {}; death_alias = {}; main_numbers = set()
 defs = []; defined = {}; plan = []; decls = []; kinds = {}; externs = {}; dexterns = {}
 dend_given = {}
 for arg in args[1:]:
@@ -174,12 +218,24 @@ def sym_addr(sym, named):
 PLACE = r'(?:death_)?(?:D|func)_[0-9A-F]{8}'
 objects = []   # (sec, a, size, nxt, da, dsize, dn, name)
 for sec, start, end in stretches:
-    objs = partition_data(start, end) if sec == '.data' else partition_sdata(start, end)
+    objs = split_declared(partition_data(start, end)) if sec == '.data' else partition_sdata(start, end)
+    if (sec, start) in main_only:
+        plan.append((sec, start, end, None, None, objs))
+        for a, size, nxt in objs:
+            n = pick(a) if a in labels else 'D_%08X' % a
+            assert n not in defined, n
+            defined[n] = a
+            objects.append((sec, a, size, nxt, None, size, None, n))
+        continue
     dstarts = []
     for i, (a, size, nxt) in enumerate(objs):
         n = pick(a) if a in labels else 'D_%08X' % a
-        if n in death_named and (not re.fullmatch(PLACE, n) or True) and not (re.fullmatch(r'D_[0-9A-F]{8}', n) and death_named[n] == a and i):
+        if is_main_only(a): dstarts.append(None)
+        elif a in pins: dstarts.append(pins[a])
+        elif n in death_named and (not re.fullmatch(PLACE, n) or True) and not (re.fullmatch(r'D_[0-9A-F]{8}', n) and death_named[n] == a and i):
             dstarts.append(death_named[n])
+        elif i and dstarts[-1] is None:
+            raise SystemExit('give the Death Label address of %x with --at' % a)
         elif i == 0:
             if (sec, start) in dstart_given: dstarts.append(dstart_given[(sec, start)])
             else:
@@ -190,13 +246,37 @@ for sec, start, end in stretches:
         else:
             dstarts.append(dstarts[-1] + a - objs[i - 1][0])
     if (sec, start) in dstart_given: assert dstarts[0] == dstart_given[(sec, start)], 'Death Label start disagrees'
-    dend = dend_given.get((sec, start), dstarts[-1] + end - objs[-1][0])
-    plan.append((sec, start, end, dstarts[0], dend, objs))
-    pos = dstarts[0]
+    if sec == '.sdata':
+        # an 8-byte object that Death Label has off an 8-byte boundary is two 4-byte objects
+        o2 = []; d2 = []
+        for (a, size, nxt), da in zip(objs, dstarts):
+            if size == 8 and da is not None and da % 8:
+                o2 += [(a, 4, a + 4), (a + 4, 4, nxt)]; d2 += [da, da + 4]
+            else:
+                o2.append((a, size, nxt)); d2.append(da)
+        objs, dstarts = o2, d2
+    there = [i for i, d in enumerate(dstarts) if d is not None]
+    assert there, 'nothing of the stretch is in Death Label: use SECTION:START:END:-'
+    dend = dend_given.get((sec, start), dstarts[there[-1]] + objs[there[-1]][2] - objs[there[-1]][0])
+    plan.append((sec, start, end, dstarts[there[0]], dend, objs))
+    pos = dstarts[there[0]]
     for i, (a, size, nxt) in enumerate(objs):
-        da = dstarts[i]; dn = dstarts[i + 1] if i + 1 < len(objs) else dend
+        da = dstarts[i]
+        if da is None:
+            n = pick(a) if a in labels else 'D_%08X' % a
+            assert n not in defined, n
+            defined[n] = a
+            objects.append((sec, a, size, nxt, None, size, None, n)); continue
+        later = [j for j in there if j > i]
+        dn = dstarts[later[0]] if later else dend
         assert dn > da, 'Death Label order differs at %x' % a
         same = dn - da == nxt - a
+        if sec == '.data' and not same and nxt - a == 16 and a % 16 == 0 and da % 16 == 8 and dn - da == 24 \
+                and not any(rom[a - OFF + 14:a - OFF + 16]):
+            # under 16 bytes: on 8 in Death Label, with the next object on 16 in both
+            size = 12 if not any(rom[a - OFF + 12:a - OFF + 14]) else 14
+            assert not any(drom[da - OFF + size:dn - OFF]), 'padding not zero at %x' % a
+            same = True
         dsize = size if same else dn - da
         if not same: assert sec == '.data' and dsize >= 16 and da % 16 == 0, 'Death Label object at %x cannot be laid out' % a
         al = (16 if dsize >= 16 else 8) if sec == '.data' else (8 if dsize > 4 else 4)
@@ -209,8 +289,17 @@ for sec, start, end in stretches:
         objects.append((sec, a, size, nxt, da, dsize, dn, n))
     al_end = 16 if sec == '.data' else 4
     assert (pos + al_end - 1) // al_end * al_end == (dend + al_end - 1) // al_end * al_end, 'Death Label stretch ends elsewhere'
-obj_by_main = [(a, a + size, da - a, n) for sec, a, size, nxt, da, dsize, dn, n in objects]
+obj_by_main = [(a, a + size, None if da is None else da - a, n) for sec, a, size, nxt, da, dsize, dn, n in objects]
 def carray(n, raw, size):
+    d = declared_as(n)
+    if d and size % WIDTH[d[0]] == 0 and (d[1] is None or d[1] * WIDTH[d[0]] == size):
+        ctype, w = d[0], WIDTH[d[0]]; count = size // w
+        vals = [int.from_bytes(raw[j:j + w], 'little', signed=ctype[0] == 's') for j in range(0, size, w)]
+        if ctype[0] == 's': text = ['%d' % v for v in vals]
+        else: text = [('0x%%0%dX' % (2 * w)) % v for v in vals]
+        per = 16 if w == 1 else 8
+        body = '\n'.join('    ' + ', '.join(text[j:j + per]) + ',' for j in range(0, count, per))
+        return ctype, count, '%s %s[%d] = {\n%s\n};\n' % (ctype, n, count, body)
     ctype = 'u16' if size % 2 == 0 else 'u8'
     count = size // 2 if size % 2 == 0 else size
     return ctype, count, '%s %s[%d] = {\n%s\n};\n' % (ctype, n, count, fmt(raw, size))
@@ -218,6 +307,12 @@ def main_target(x):
     sym, add = main_rel[x]
     if sym in defined:
         base = sym if kinds.get(sym) != 'record' else '&' + sym
+    elif re.fullmatch(r'D_[0-9A-F]{8}', sym) and sym not in used and any(s_ <= int(sym[2:], 16) < e_ for s_, e_, d_, _ in obj_by_main):
+        # a placeholder inside an object of this file: the object plus the distance
+        addr = int(sym[2:], 16)
+        s_, o_ = [(s_, n_) for s_, e_, d_, n_ in obj_by_main if s_ <= addr < e_][0]
+        base = o_ if kinds.get(o_) != 'record' else '&' + o_
+        add += addr - s_
     else:
         addr = sym_addr(sym, main_named)
         is_code = sym.startswith('func_') or addr < TEXT_END
@@ -256,7 +351,7 @@ def corresponds(a, size, da):
         ma = sym_addr(msym, main_named) + madd; dta = sym_addr(dsym, death_named) + dadd
         inside = [d_ for s_, e_, d_, _ in obj_by_main if s_ <= ma < e_]
         if inside:
-            if dta != ma + inside[0]: return False
+            if inside[0] is None or dta != ma + inside[0]: return False
             if msym not in defined: pend[msym] = sym_addr(msym, main_named) + inside[0]
             continue
         if msym == dsym and madd == dadd: continue
@@ -269,7 +364,24 @@ def corresponds(a, size, da):
 # decide kinds first (a pointer to a record needs &)
 info = {}
 for sec, a, size, nxt, da, dsize, dn, n in objects:
-    raw = rom[a - OFF:a - OFF + size]; draw = drom[da - OFF:da - OFF + dsize]
+    raw = rom[a - OFF:a - OFF + size]
+    if da is None:
+        assert not any(rom[a - OFF + size:nxt - OFF]), 'padding not zero at %x' % a
+        ms = [x for x in range(a, a + size - 3) if x in main_rel]
+        for x in list(ms):
+            q = main_rel[x][0]
+            if re.fullmatch(r'D_[0-9A-F]{8}', q) and q not in used and q not in defined \
+                    and not any(s_ <= int(q[2:], 16) < e_ for s_, e_, d_, _ in obj_by_main):
+                # nothing to check it against: only a placeholder past the data sections is taken for a number
+                assert int(q[2:], 16) >= 0x28F000, 'unverified pointer %s in %s (not in Death Label, nothing else uses the target)' % (q, n)
+                main_numbers.add(q); main_rel.pop(x); ms.remove(x)
+        assert all((x - a) % 4 == 0 for x in ms), 'odd pointer position in %s' % n
+        mk = 'plain' if not ms else ('table' if len(ms) * 4 == size else 'record')
+        kinds[n] = 'record' if mk == 'record' else 'array'
+        info[n] = (raw, None, ms, [], mk, None)
+        continue
+    draw = drom[da - OFF:da - OFF + dsize]
+    assert not any(rom[a - OFF + size:nxt - OFF]), 'padding not zero at %x' % a
     if dn - da == nxt - a:
         assert not any(rom[a - OFF + size:nxt - OFF]) and not any(drom[da - OFF + size:dn - OFF]), 'padding not zero at %x' % a
     ms = [x for x in range(a, a + size - 3) if x in main_rel]; ds = [x for x in range(da, da + dsize - 3) if x in death_rel]
@@ -280,6 +392,25 @@ for sec, a, size, nxt, da, dsize, dn, n in objects:
         for x in set(ms) - set(ms2): main_rel.pop(x)
         for x in set(ds) - set(ds2): death_rel.pop(x)
         ms, ds = ms2, ds2
+        # a word that is an address in one executable and differs in the other is an address there too, also
+        # where the split assembly shows it as something else (a short string, say)
+        for x in ms:
+            y = x - a + da
+            if y not in death_rel:
+                v = int.from_bytes(draw[x - a:x - a + 4], 'little')
+                if not v: continue
+                q = sorted(k for k, val in death_named.items() if val == v)
+                death_rel[y] = [q[0] if q else 'D_%08X' % v, 0]; ds.append(y)
+                print('Death Label %x: 0x%x taken for an address (it is one in Main)' % (y, v))
+        for y in list(ds):
+            x = y - da + a
+            if x not in main_rel:
+                v = int.from_bytes(raw[y - da:y - da + 4], 'little')
+                if not v: continue
+                q = sorted(k for k, val in main_named.items() if val == v)
+                main_rel[x] = [q[0] if q else 'D_%08X' % v, 0]; ms.append(x)
+                print('Main %x: 0x%x taken for an address (it is one in Death Label)' % (x, v))
+        ms.sort(); ds.sort()
     assert all((x - a) % 4 == 0 for x in ms) and all((x - da) % 4 == 0 for x in ds), 'odd pointer position in %s' % n
     if ms or ds: assert size % 2 == 0 and dsize % 2 == 0
     mk = 'plain' if not ms else ('table' if len(ms) * 4 == size else 'record')
@@ -299,6 +430,10 @@ def one(n, a, size, raw, sites, kind, rel, target):
             'struct %s %s = {\n%s\n};\n' % (tname, n, '\n'.join('    %s,' % v for v in vals)))
 for sec, a, size, nxt, da, dsize, dn, n in objects:
     raw, draw, ms, ds, mk, dk = info[n]
+    if da is None:
+        md, mt = one(n, a, size, raw, ms, mk, main_rel, main_target)
+        decls.append('#ifndef DEATH_LABEL\n%s\n#endif' % md)
+        defs.append((sec, '#ifndef DEATH_LABEL\n%s#endif\n' % mt)); continue
     shared = False
     if size == dsize and mk == dk:
         if not ms: shared = raw == draw
@@ -312,11 +447,13 @@ for sec, a, size, nxt, da, dsize, dn, n in objects:
     for x in ms:
         q = main_rel[x][0]
         qa = sym_addr(q, main_named)
-        assert q in defined or q in used or any(s_ <= qa < e_ for s_, e_, d_, _ in obj_by_main) or not re.fullmatch(r'D_[0-9A-F]{8}', q), \
+        twin = size == dsize and (x - a + da) in death_rel   # an address at the same place in Death Label
+        assert twin or q in defined or q in used or any(s_ <= qa < e_ for s_, e_, d_, _ in obj_by_main) or not re.fullmatch(r'D_[0-9A-F]{8}', q), \
             'unverified pointer %s in %s (differs from Death Label, nothing else uses the target)' % (q, n)
     for x in ds:
         q = death_rel[x][0]
-        assert not (re.fullmatch(r'D_[0-9A-F]{8}', q) and int(q[2:], 16) >= 0x28FF00), 'unverified Death Label pointer %s in %s' % (q, n)
+        twin = size == dsize and (x - da + a) in main_rel
+        assert twin or not (re.fullmatch(r'D_[0-9A-F]{8}', q) and int(q[2:], 16) >= 0x28FF00), 'unverified Death Label pointer %s in %s' % (q, n)
     dd, dt = one(n, da, dsize, draw, ds, dk, death_rel, death_target)
     decls.append(md if md == dd else '#ifdef DEATH_LABEL\n%s\n#else\n%s\n#endif' % (dd, md))
     defs.append((sec, '#ifdef DEATH_LABEL\n%s#else\n%s#endif\n' % (dt, mt)))
@@ -326,13 +463,14 @@ total = sum(e - s for _, s, e in stretches)
 print('%s: %d objects, %d bytes' % (name, len(defs), total))
 if dry:
     for sec, start, end, ds_, de_, objs in plan:
-        print(sec, '%x..%x' % (start, end), 'death %x..%x' % (ds_, de_), len(objs), 'objects', len(pointer_objs), 'with pointers')
+        print(sec, '%x..%x' % (start, end), 'not in Death Label' if ds_ is None else 'death %x..%x' % (ds_, de_), len(objs), 'objects')
     sys.exit()
 
 yaml_out = {}
 for t in ('SLPS_252.33', 'DEATH.ELF'):
     p = R / f'config/{t}/splat.yaml'; lines = p.read_text().split('\n')
     for sec, start, end, ds_, de_, objs in plan:
+        if t == 'DEATH.ELF' and ds_ is None: continue
         s, e = (start, end) if t == 'SLPS_252.33' else (ds_, de_)
         plain = sec[1:]
         ents = [(i, int(m.group(1), 16), m.group(2), m.group(3)) for i, l in enumerate(lines)
@@ -374,18 +512,31 @@ for t, named in (('SLPS_252.33', main_named), ('DEATH.ELF', death_named)):
     add = []
     for s_, e_, d_, n_o in obj_by_main:
         for a_ in sorted(labels):
-            if s_ < a_ < e_:
+            if s_ < a_ < e_ and not (t == 'DEATH.ELF' and d_ is None):
                 for n_ in labels[a_]:
                     if n_ in used and n_ not in have:
                         add.append('%s = 0x%x;\n' % (n_, a_ + (d_ if t == 'DEATH.ELF' else 0)))
     if t == 'DEATH.ELF':
         for n_, a_ in sorted(death_add.items()):
             if n_ not in defined and not re.search(r'^%s = ' % n_, text, re.M): add.append('%s = 0x%x;\n' % (n_, a_))
+        # an address Death Label already names takes the new name as an alias
+        taken = {}
+        for l in text.split('\n'):
+            m = re.match(r'(\w+)\s*=\s*0x([0-9A-Fa-f]+);', l)
+            if m and 'ignore:true' not in l: taken.setdefault(int(m.group(2), 16), m.group(1))
+        keep = []
+        for l in add:
+            n_, a_ = l.split(' = '); a_ = int(a_.rstrip(';\n'), 16)
+            if a_ in taken and taken[a_] != n_: death_alias[n_] = (a_, taken[a_])
+            else: keep.append(l); taken[a_] = n_
+        add = keep
         ap = R / 'config/DEATH.ELF/aliases.txt'; at = ap.read_text()
         for n_, (a_, other) in sorted(death_alias.items()):
             if not re.search(r'^%s = ' % n_, at, re.M): at = at.rstrip('\n') + '\n%s = 0x%x; // alias of %s\n' % (n_, a_, other)
         ap.write_text(at)
     else:
+        for n_ in sorted(main_numbers):
+            if n_ not in have: add.append('%s = 0x%x; // ignore:true\n' % (n_, int(n_[2:], 16)))
         for n_ in sorted(set(death_add) | set(death_alias)):
             if n_ not in defined and n_ not in have and re.fullmatch(r'D_[0-9A-F]{8}', n_):
                 add.append('%s = 0x%x;\n' % (n_, int(n_[2:], 16)))

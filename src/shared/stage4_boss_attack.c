@@ -167,24 +167,24 @@ void stage4_boss_fire_basic(void) {
     }
 }
 
-extern void (*jtbl_0026EC80[])(void);
+extern void (*stage4_boss_right_spinner_routines[])(void);
 
 void stage4_boss_fire_right_spinner_start(void)
 {
     reg_d0.h[0] = ((u16 *)((void *)reg_a4))[1];
     reg_d0.h[0] <<= 1;
-    jtbl_0026EC80[(u16)reg_d0.h[0]]();
+    stage4_boss_right_spinner_routines[(u16)reg_d0.h[0]]();
     stage4_boss_fire_right_spinner();
 }
 
 typedef void (*Fn)(void);
-extern Fn jtbl_0026EC80[];
+extern Fn stage4_boss_right_spinner_routines[];
 
 void stage4_boss_fire_right_spinner(void) {
     reg_d0.h[0] = *(u16 *)(reg_a4 + 2);
     reg_d0.h[0] <<= 1;
     reg_d0.h[0] += 1;
-    (*(Fn *)((u8 *)jtbl_0026EC80 + (reg_d0.h[0] << 2)))();
+    (*(Fn *)((u8 *)stage4_boss_right_spinner_routines + (reg_d0.h[0] << 2)))();
 }
 
 void func_001D7C20(s32 id) {
@@ -865,23 +865,23 @@ void func_001D9B20(void) {
     func_001D9670(0xC6, 0xC2, (void *)func_001D78C0, 0x188);
 }
 
-extern void (*jtbl_0026ECD0[])(void);
+extern void (*stage4_boss_left_spinner_routines[])(void);
 
 void stage4_boss_fire_left_spinner_start(void)
 {
     reg_d0.h[0] = ((u16 *)((void *)reg_a4))[1];
     reg_d0.h[0] *= 2;
-    jtbl_0026ECD0[(u16)reg_d0.h[0]]();
+    stage4_boss_left_spinner_routines[(u16)reg_d0.h[0]]();
     stage4_boss_fire_left_spinner();
 }
 
-extern Fn jtbl_0026ECD0[];
+extern Fn stage4_boss_left_spinner_routines[];
 
 void stage4_boss_fire_left_spinner(void) {
     reg_d0.h[0] = *(u16 *)(reg_a4 + 2);
     reg_d0.h[0] <<= 1;
     reg_d0.h[0] += 1;
-    (*(Fn *)((u8 *)jtbl_0026ECD0 + (reg_d0.h[0] << 2)))();
+    (*(Fn *)((u8 *)stage4_boss_left_spinner_routines + (reg_d0.h[0] << 2)))();
 }
 
 void func_001D9BF0(void) {

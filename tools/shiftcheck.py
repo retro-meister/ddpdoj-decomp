@@ -165,7 +165,8 @@ def against_twin(base, other, twin, data):
             continue
         there, = struct.unpack_from("<I", other_image, place - other_start)
         if there != value:
-            (follow if there == moved(value) else differ).append((address, value, there))
+            # an address when the twin holds the moved address, or when the twin's word carries a relocation
+            (follow if there == moved(value) or place in other.relocations else differ).append((address, value, there))
         elif moved(value) == value:
             unmoved.append((address, value, there))
         else:
