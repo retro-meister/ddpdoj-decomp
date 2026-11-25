@@ -32,6 +32,8 @@ void (*stage1_boss_mode_routines[])(void) = {
     stage1_boss_mode_both_sides_lost,
     stage1_boss_mode_gatling_start,
     stage1_boss_mode_gatling,
+    0,
+    0,
 };
 
 u16 stage1_boss_side_gun_levels[] = {

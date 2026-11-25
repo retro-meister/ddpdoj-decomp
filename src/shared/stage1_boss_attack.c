@@ -1,6 +1,73 @@
 #include "common.h"
 #include "entity.h"
 
+void stage1_boss_fire_body_ports_rage_start(void);
+void stage1_boss_fire_body_ports_rage(void);
+void stage1_boss_fire_turrets_scatter_start(void);
+void stage1_boss_fire_turrets_scatter(void);
+void stage1_boss_fire_gatling_a_start(void);
+void stage1_boss_fire_gatling_a(void);
+void stage1_boss_fire_right_beam_start(void);
+void stage1_boss_fire_left_beam_start(void);
+void stage1_boss_fire_right_main_gun_start(void);
+void stage1_boss_fire_left_main_gun_start(void);
+void stage1_boss_fire_gatling_b_start(void);
+void stage1_boss_fire_gatling_b(void);
+void stage1_boss_fire_main_guns_burst_start(void);
+void stage1_boss_fire_body_ports_rapid_start(void);
+void stage1_boss_fire_body_ports_aimed_start(void);
+void stage1_boss_fire_front_guns_rage_start(void);
+void stage1_boss_fire_front_guns_rage_spread_start(void);
+void stage1_boss_fire_gatling_c_start(void);
+void stage1_boss_fire_gatling_c(void);
+void stage1_boss_fire_side_spread_start(void);
+
+void stage1_boss_fire_right_beam(void);
+void stage1_boss_fire_left_beam(void);
+void stage1_boss_fire_right_main_gun(void);
+void stage1_boss_fire_left_main_gun(void);
+void stage1_boss_fire_main_guns_burst(void);
+void stage1_boss_fire_body_ports_rapid(void);
+void stage1_boss_fire_body_ports_aimed(void);
+void stage1_boss_fire_front_guns_rage(void);
+void stage1_boss_fire_front_guns_rage_spread(void);
+void stage1_boss_fire_side_spread(void);
+/* The set-up routine and the per-frame routine of every attack, by attack number. */
+void (*stage1_boss_fire_routines[])(void) = {
+    stage1_boss_fire_body_ports_rage_start,
+    stage1_boss_fire_body_ports_rage,
+    stage1_boss_fire_turrets_scatter_start,
+    stage1_boss_fire_turrets_scatter,
+    stage1_boss_fire_gatling_a_start,
+    stage1_boss_fire_gatling_a,
+    stage1_boss_fire_right_beam_start,
+    stage1_boss_fire_right_beam,
+    stage1_boss_fire_left_beam_start,
+    stage1_boss_fire_left_beam,
+    stage1_boss_fire_right_main_gun_start,
+    stage1_boss_fire_right_main_gun,
+    stage1_boss_fire_left_main_gun_start,
+    stage1_boss_fire_left_main_gun,
+    stage1_boss_fire_gatling_b_start,
+    stage1_boss_fire_gatling_b,
+    stage1_boss_fire_main_guns_burst_start,
+    stage1_boss_fire_main_guns_burst,
+    stage1_boss_fire_body_ports_rapid_start,
+    stage1_boss_fire_body_ports_rapid,
+    stage1_boss_fire_body_ports_aimed_start,
+    stage1_boss_fire_body_ports_aimed,
+    stage1_boss_fire_front_guns_rage_start,
+    stage1_boss_fire_front_guns_rage,
+    stage1_boss_fire_front_guns_rage_spread_start,
+    stage1_boss_fire_front_guns_rage_spread,
+    stage1_boss_fire_gatling_c_start,
+    stage1_boss_fire_gatling_c,
+    stage1_boss_fire_side_spread_start,
+    stage1_boss_fire_side_spread,
+    0,
+    0,
+};
+
 void func_001B5110(void);
 void stage1_boss_fire_right_beam(void);
 void stage1_boss_fire_left_beam(void);

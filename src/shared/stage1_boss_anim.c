@@ -1,6 +1,95 @@
 #include "common.h"
 #include "entity.h"
 
+void stage1_boss_right_hover_start(void);
+void stage1_boss_right_hover(void);
+void stage1_boss_left_hover_start(void);
+void stage1_boss_left_hover(void);
+void stage1_boss_right_rotor_start(void);
+void stage1_boss_right_rotor(void);
+void stage1_boss_left_rotor_start(void);
+void stage1_boss_left_rotor(void);
+void stage1_boss_right_wreck_start(void);
+void stage1_boss_right_wreck(void);
+void stage1_boss_left_wreck_start(void);
+void stage1_boss_left_wreck(void);
+void stage1_boss_body_explode_start(void);
+void stage1_boss_body_explode(void);
+void stage1_boss_gatling_spin_start(void);
+void stage1_boss_right_open_start(void);
+void stage1_boss_right_open(void);
+void stage1_boss_left_open_start(void);
+void stage1_boss_left_open(void);
+void stage1_boss_right_rotor_opened_start(void);
+void stage1_boss_right_rotor_opened(void);
+void stage1_boss_left_rotor_opened_start(void);
+void stage1_boss_left_rotor_opened(void);
+void stage1_boss_right_close_start(void);
+void stage1_boss_right_close(void);
+void stage1_boss_left_close_start(void);
+void stage1_boss_left_close(void);
+void stage1_boss_spin_start(void);
+void stage1_boss_spin(void);
+void stage1_boss_gatling_recenter_start(void);
+void stage1_boss_gatling_recenter(void);
+void stage1_boss_right_open_wide_start(void);
+void stage1_boss_right_open_wide(void);
+void stage1_boss_left_open_wide_start(void);
+void stage1_boss_left_open_wide(void);
+void stage1_boss_right_close_wide_start(void);
+void stage1_boss_right_close_wide(void);
+void stage1_boss_left_close_wide_start(void);
+void stage1_boss_left_close_wide(void);
+void stage1_boss_gatling_fast_spin_start(void);
+void stage1_boss_gatling_fast_spin(void);
+
+void stage1_boss_gatling_spin(void);
+/* The set-up routine and the per-frame routine of every animation, by animation number. */
+void (*stage1_boss_anim_routines[])(void) = {
+    stage1_boss_right_hover_start,
+    stage1_boss_right_hover,
+    stage1_boss_left_hover_start,
+    stage1_boss_left_hover,
+    stage1_boss_right_rotor_start,
+    stage1_boss_right_rotor,
+    stage1_boss_left_rotor_start,
+    stage1_boss_left_rotor,
+    stage1_boss_right_wreck_start,
+    stage1_boss_right_wreck,
+    stage1_boss_left_wreck_start,
+    stage1_boss_left_wreck,
+    stage1_boss_body_explode_start,
+    stage1_boss_body_explode,
+    stage1_boss_gatling_spin_start,
+    stage1_boss_gatling_spin,
+    stage1_boss_right_open_start,
+    stage1_boss_right_open,
+    stage1_boss_left_open_start,
+    stage1_boss_left_open,
+    stage1_boss_right_rotor_opened_start,
+    stage1_boss_right_rotor_opened,
+    stage1_boss_left_rotor_opened_start,
+    stage1_boss_left_rotor_opened,
+    stage1_boss_right_close_start,
+    stage1_boss_right_close,
+    stage1_boss_left_close_start,
+    stage1_boss_left_close,
+    stage1_boss_spin_start,
+    stage1_boss_spin,
+    stage1_boss_gatling_recenter_start,
+    stage1_boss_gatling_recenter,
+    stage1_boss_right_open_wide_start,
+    stage1_boss_right_open_wide,
+    stage1_boss_left_open_wide_start,
+    stage1_boss_left_open_wide,
+    stage1_boss_right_close_wide_start,
+    stage1_boss_right_close_wide,
+    stage1_boss_left_close_wide_start,
+    stage1_boss_left_close_wide,
+    stage1_boss_gatling_fast_spin_start,
+    stage1_boss_gatling_fast_spin,
+};
+
 void stage1_boss_gatling_spin(void);
 
 extern u16 *reg_a4_as_u16_p;
