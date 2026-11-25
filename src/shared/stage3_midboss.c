@@ -75,14 +75,14 @@ extern u16 D_00260330[];
 extern u16 D_00260370[];
 extern u16 D_002603B0[];
 extern u16 D_00263370[];
-extern u16 D_00263390[];
+extern u16 stage3_midboss_table[];
 extern s16 g_enemy_signal_e_as_s16;
 extern s16 g_enemy_signal_4_as_s16;
 extern u16 g_spare_entities_as_u16_a[];
 extern u16 *reg_a0_as_u16_p;
 
 void func_001D47C0(void) {
-    reg_a0_as_u16_p = D_00263390;
+    reg_a0_as_u16_p = stage3_midboss_table;
     enemy_init_entities();
     reg_tmp.w = (u32) reg_a0_as_u16_p;
     *(u16 *)(reg_a5 + 0x44) = (u16) reg_tmp.h[1];
@@ -122,7 +122,7 @@ void func_001D47C0(void) {
 
 typedef void (*Fn)();
 
-extern u8 D_002635C0[];
+extern u8 stage3_midboss_mode_routines[];
 extern u8 D_002BDAA8[];
 s32 enemy_hitbox_debug_draw();
 s32 enemy_remove();
@@ -145,7 +145,7 @@ void func_001D4930(void) {
     reg_d7.h[1] = ENTITY(reg_a6)->y.h;
     reg_d7.h[0] = ENTITY(reg_a6)->x.h;
     saved = reg_d7.w;
-    reg_a0 = (u8 *)D_002635C0;
+    reg_a0 = (u8 *)stage3_midboss_mode_routines;
     reg_d0.h[0] = *(u16 *)(reg_a5 + 0x18);
     reg_d0.h[0] *= 4;
     reg_tmp.h[1] = (reg_d0.h[0] != 0) ? *(u16 *)((u8 *)reg_a0 + ((s16)reg_d0.h[0] & ~1)) : *(u16 *)(reg_a0 + 0);
@@ -387,7 +387,7 @@ s32 sfx_explosion_extra_1();
 s32 rng_next();
 extern u16 D_002634F0[];
 extern u16 D_00263540[];
-extern u8 D_00263590[];
+extern u8 stage3_midboss_flash_palettes[];
 
 void func_001D5230(void) {
     u16 temp_a0_2;
@@ -411,7 +411,7 @@ void func_001D5230(void) {
             (*(u8 *)((u8 *)(var_a1) + (0x27))) -= 1;
             if (*(u8 *)(reg_a5 + 0x27) == 0) {
                 *(s16 *)(reg_a5 + 0x2C) = 0;
-                reg_a0 = (u8 *)D_00263590;
+                reg_a0 = (u8 *)stage3_midboss_flash_palettes;
                 func_0013B2E0();
                 reg_d2.h[1] = ENTITY(reg_a6)->y.h;
                 reg_d2.h[0] = ENTITY(reg_a6)->x.h;
@@ -524,7 +524,7 @@ s32 entity_velocity();
 s32 direction_between();
 s32 direction_turn_toward();
 s32 func_00202B50();
-extern u8 D_002635E0[];
+extern u8 stage3_midboss2_state_routines_0[];
 
 void func_001D5670(void) {
     if (*(u8 *)(reg_a5 + 0x25) != 0) {
@@ -532,7 +532,7 @@ void func_001D5670(void) {
         entity_velocity();
         return;
     }
-    reg_a0 = D_002635E0;
+    reg_a0 = stage3_midboss2_state_routines_0;
     reg_a0 += ENTITY(reg_a6)[4].offset_y.h;
     reg_d2.h[0] = *(u16 *)reg_a0;
     reg_d3.h[0] = *(u16 *)(reg_a0 + 2);
@@ -543,7 +543,7 @@ void func_001D5670(void) {
     direction_turn_toward();
     ENTITY(reg_a6)->move.b.dir = reg_d1.b[0];
     entity_velocity();
-    reg_a0 = D_002635E0;
+    reg_a0 = stage3_midboss2_state_routines_0;
     reg_a0 += ENTITY(reg_a6)[4].offset_y.h;
     reg_d2.h[0] = *(u16 *)reg_a0;
     reg_d3.h[0] = *(u16 *)(reg_a0 + 2);
@@ -556,7 +556,7 @@ void func_001D5670(void) {
 
 s32 func_0014E030();
 
-void func_001D5780(void) {
+void stage3_midboss_mode_00(void) {
     if (*(u8 *)(reg_a5 + 0x1B) == 0) {
         reg_d0.h[0] = ENTITY(reg_a6)[3].offset_y.h;
         ENTITY(reg_a6)->y.h += reg_d0.h[0];
@@ -713,7 +713,7 @@ block_28:
     }
 }
 
-extern u8 D_00263610[];
+extern u8 stage3_midboss2_state_routines_1[];
 
 
 void func_001D5CA0(void) {
@@ -769,7 +769,7 @@ void func_001D5CA0(void) {
                 if (reg_d0.b[0] != 0) {
                     ENTITY(reg_a6)[5].draw.b.flip = 8;
                 }
-                reg_a4 = (u8 *)D_00263610;
+                reg_a4 = (u8 *)stage3_midboss2_state_routines_1;
                 reg_a4 += ENTITY(reg_a6)[5].look.h;
                 reg_tmp.h[1] = *(u16 *)reg_a4;
                 reg_tmp.h[0] = *(u16 *)(reg_a4 + 2);
@@ -843,7 +843,7 @@ block_29:
 extern void bullet_fire256_fixed(void);
 extern u32 D_00259970_as_u32_a[];
 
-void func_001D60F0(void)
+void stage3_midboss2_state_0_04(void)
 {
     reg_d0.w = 0x80004;
     reg_d4.w = 0;

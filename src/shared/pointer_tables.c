@@ -22,9 +22,9 @@ extern u16 laser_hyper_params[];
 extern u16 player_ship_sprite_tables[];
 extern u16 D_0028C9D8[];
 
-extern u16 D_00263390[];
-extern u16 D_00263590[];
-extern u16 D_002635E0[];
+extern u16 stage3_midboss_table[];
+extern u16 stage3_midboss_flash_palettes[];
+extern u16 stage3_midboss2_state_routines_0[];
 
 extern u16 ship0_shot_list_1_00_00[];
 extern u16 ship0_shot_list_2_00_00[];
@@ -498,21 +498,21 @@ void func_001727F0(void) {
     STORE_POINTER(D_00241F50 + 70, D_002418B8);
 }
 
-extern u16 D_002532A8[];
-extern u16 D_002532B8[];
-extern u16 D_002532C8[];
-extern u16 D_002532D8[];
-extern u16 D_002532E8[];
+extern u16 ship0_shot_list_1_00_00_02[];
+extern u16 ship0_shot_list_1_00_01_02[];
+extern u16 ship0_shot_list_1_00_02_02[];
+extern u16 ship0_shot_list_1_00_03_02[];
+extern u16 ship0_shot_list_1_00_04_02[];
 extern u16 ship0_shot_list_1_02_00_02[];
 extern u16 ship0_shot_list_1_02_01_02[];
 extern u16 ship0_shot_list_1_02_02_02[];
 extern u16 ship0_shot_list_1_02_03_02[];
 extern u16 ship0_shot_list_1_02_04_02[];
-extern u16 D_00253348[];
-extern u16 D_00253358[];
-extern u16 D_00253368[];
-extern u16 D_00253378[];
-extern u16 D_00253388[];
+extern u16 ship0_shot_list_1_04_00_02[];
+extern u16 ship0_shot_list_1_04_01_02[];
+extern u16 ship0_shot_list_1_04_02_02[];
+extern u16 ship0_shot_list_1_04_03_02[];
+extern u16 ship0_shot_list_1_04_04_02[];
 extern u16 player_shot_1_impact_frames_00[];
 extern u16 player_shot_1_impact_frames_02[];
 extern u16 player_shot_1_impact_frames_04[];
@@ -553,21 +553,21 @@ extern u16 player_shot_1_impact_21[];
 extern u16 player_shot_1_impact_22[];
 extern u16 player_shot_1_impact_23[];
 extern u16 player_shot_1_impact_24[];
-extern u16 D_0028C198[];
-extern u16 D_0028C1A0[];
-extern u16 D_0028C1A8[];
-extern u16 D_0028C1B0[];
-extern u16 D_0028C1B8[];
+extern u16 ship0_shot_list_1_00_00_07[];
+extern u16 ship0_shot_list_1_00_01_07[];
+extern u16 ship0_shot_list_1_00_02_07[];
+extern u16 ship0_shot_list_1_00_03_07[];
+extern u16 ship0_shot_list_1_00_04_07[];
 extern u16 ship0_shot_list_1_02_00_07[];
 extern u16 ship0_shot_list_1_02_01_07[];
 extern u16 ship0_shot_list_1_02_02_07[];
 extern u16 ship0_shot_list_1_02_03_07[];
 extern u16 ship0_shot_list_1_02_04_07[];
-extern u16 D_0028C1E8[];
-extern u16 D_0028C1F0[];
-extern u16 D_0028C1F8[];
-extern u16 D_0028C200[];
-extern u16 D_0028C208[];
+extern u16 ship0_shot_list_1_04_00_07[];
+extern u16 ship0_shot_list_1_04_01_07[];
+extern u16 ship0_shot_list_1_04_02_07[];
+extern u16 ship0_shot_list_1_04_03_07[];
+extern u16 ship0_shot_list_1_04_04_07[];
 extern u16 player_shot_1_flight_00[];
 extern u16 player_shot_1_flight_01[];
 extern u16 player_shot_1_flight_02[];
@@ -598,26 +598,26 @@ extern u16 player_shot_1_flight_table[];
 extern u16 player_shot_1_impact_table[];
 
 void player_shot_1_tables_init(void) {
-    STORE_POINTER(ship0_shot_list_1_00_00 + 5, D_002532A8);
-    STORE_POINTER(ship0_shot_list_1_00_00 + 15, D_0028C198);
-    STORE_POINTER(ship0_shot_list_2_00_00 + 5, D_002532A8);
-    STORE_POINTER(ship0_shot_list_2_00_00 + 15, D_0028C198);
-    STORE_POINTER(ship0_shot_list_1_00_01 + 5, D_002532B8);
-    STORE_POINTER(ship0_shot_list_1_00_01 + 15, D_0028C1A0);
-    STORE_POINTER(ship0_shot_list_2_00_01 + 5, D_002532B8);
-    STORE_POINTER(ship0_shot_list_2_00_01 + 15, D_0028C1A0);
-    STORE_POINTER(ship0_shot_list_1_00_02 + 5, D_002532C8);
-    STORE_POINTER(ship0_shot_list_1_00_02 + 15, D_0028C1A8);
-    STORE_POINTER(ship0_shot_list_2_00_02 + 5, D_002532C8);
-    STORE_POINTER(ship0_shot_list_2_00_02 + 15, D_0028C1A8);
-    STORE_POINTER(ship0_shot_list_1_00_03 + 5, D_002532D8);
-    STORE_POINTER(ship0_shot_list_1_00_03 + 15, D_0028C1B0);
-    STORE_POINTER(ship0_shot_list_2_00_03 + 5, D_002532D8);
-    STORE_POINTER(ship0_shot_list_2_00_03 + 15, D_0028C1B0);
-    STORE_POINTER(ship0_shot_list_1_00_04 + 5, D_002532E8);
-    STORE_POINTER(ship0_shot_list_1_00_04 + 15, D_0028C1B8);
-    STORE_POINTER(ship0_shot_list_2_00_04 + 5, D_002532E8);
-    STORE_POINTER(ship0_shot_list_2_00_04 + 15, D_0028C1B8);
+    STORE_POINTER(ship0_shot_list_1_00_00 + 5, ship0_shot_list_1_00_00_02);
+    STORE_POINTER(ship0_shot_list_1_00_00 + 15, ship0_shot_list_1_00_00_07);
+    STORE_POINTER(ship0_shot_list_2_00_00 + 5, ship0_shot_list_1_00_00_02);
+    STORE_POINTER(ship0_shot_list_2_00_00 + 15, ship0_shot_list_1_00_00_07);
+    STORE_POINTER(ship0_shot_list_1_00_01 + 5, ship0_shot_list_1_00_01_02);
+    STORE_POINTER(ship0_shot_list_1_00_01 + 15, ship0_shot_list_1_00_01_07);
+    STORE_POINTER(ship0_shot_list_2_00_01 + 5, ship0_shot_list_1_00_01_02);
+    STORE_POINTER(ship0_shot_list_2_00_01 + 15, ship0_shot_list_1_00_01_07);
+    STORE_POINTER(ship0_shot_list_1_00_02 + 5, ship0_shot_list_1_00_02_02);
+    STORE_POINTER(ship0_shot_list_1_00_02 + 15, ship0_shot_list_1_00_02_07);
+    STORE_POINTER(ship0_shot_list_2_00_02 + 5, ship0_shot_list_1_00_02_02);
+    STORE_POINTER(ship0_shot_list_2_00_02 + 15, ship0_shot_list_1_00_02_07);
+    STORE_POINTER(ship0_shot_list_1_00_03 + 5, ship0_shot_list_1_00_03_02);
+    STORE_POINTER(ship0_shot_list_1_00_03 + 15, ship0_shot_list_1_00_03_07);
+    STORE_POINTER(ship0_shot_list_2_00_03 + 5, ship0_shot_list_1_00_03_02);
+    STORE_POINTER(ship0_shot_list_2_00_03 + 15, ship0_shot_list_1_00_03_07);
+    STORE_POINTER(ship0_shot_list_1_00_04 + 5, ship0_shot_list_1_00_04_02);
+    STORE_POINTER(ship0_shot_list_1_00_04 + 15, ship0_shot_list_1_00_04_07);
+    STORE_POINTER(ship0_shot_list_2_00_04 + 5, ship0_shot_list_1_00_04_02);
+    STORE_POINTER(ship0_shot_list_2_00_04 + 15, ship0_shot_list_1_00_04_07);
     STORE_POINTER(ship0_shot_list_1_02_00 + 5, ship0_shot_list_1_02_00_02);
     STORE_POINTER(ship0_shot_list_1_02_00 + 15, ship0_shot_list_1_02_00_07);
     STORE_POINTER(ship0_shot_list_1_02_01 + 5, ship0_shot_list_1_02_01_02);
@@ -628,26 +628,26 @@ void player_shot_1_tables_init(void) {
     STORE_POINTER(ship0_shot_list_1_02_03 + 15, ship0_shot_list_1_02_03_07);
     STORE_POINTER(ship0_shot_list_1_02_04 + 5, ship0_shot_list_1_02_04_02);
     STORE_POINTER(ship0_shot_list_1_02_04 + 15, ship0_shot_list_1_02_04_07);
-    STORE_POINTER(ship0_shot_list_1_04_00 + 5, D_00253348);
-    STORE_POINTER(ship0_shot_list_1_04_00 + 15, D_0028C1E8);
-    STORE_POINTER(ship0_shot_list_2_04_00 + 5, D_00253348);
-    STORE_POINTER(ship0_shot_list_2_04_00 + 15, D_0028C1E8);
-    STORE_POINTER(ship0_shot_list_1_04_01 + 5, D_00253358);
-    STORE_POINTER(ship0_shot_list_1_04_01 + 15, D_0028C1F0);
-    STORE_POINTER(ship0_shot_list_2_04_01 + 5, D_00253358);
-    STORE_POINTER(ship0_shot_list_2_04_01 + 15, D_0028C1F0);
-    STORE_POINTER(ship0_shot_list_1_04_02 + 5, D_00253368);
-    STORE_POINTER(ship0_shot_list_1_04_02 + 15, D_0028C1F8);
-    STORE_POINTER(ship0_shot_list_2_04_02 + 5, D_00253368);
-    STORE_POINTER(ship0_shot_list_2_04_02 + 15, D_0028C1F8);
-    STORE_POINTER(ship0_shot_list_1_04_03 + 5, D_00253378);
-    STORE_POINTER(ship0_shot_list_1_04_03 + 15, D_0028C200);
-    STORE_POINTER(ship0_shot_list_2_04_03 + 5, D_00253378);
-    STORE_POINTER(ship0_shot_list_2_04_03 + 15, D_0028C200);
-    STORE_POINTER(ship0_shot_list_1_04_04 + 5, D_00253388);
-    STORE_POINTER(ship0_shot_list_1_04_04 + 15, D_0028C208);
-    STORE_POINTER(ship0_shot_list_2_04_04 + 5, D_00253388);
-    STORE_POINTER(ship0_shot_list_2_04_04 + 15, D_0028C208);
+    STORE_POINTER(ship0_shot_list_1_04_00 + 5, ship0_shot_list_1_04_00_02);
+    STORE_POINTER(ship0_shot_list_1_04_00 + 15, ship0_shot_list_1_04_00_07);
+    STORE_POINTER(ship0_shot_list_2_04_00 + 5, ship0_shot_list_1_04_00_02);
+    STORE_POINTER(ship0_shot_list_2_04_00 + 15, ship0_shot_list_1_04_00_07);
+    STORE_POINTER(ship0_shot_list_1_04_01 + 5, ship0_shot_list_1_04_01_02);
+    STORE_POINTER(ship0_shot_list_1_04_01 + 15, ship0_shot_list_1_04_01_07);
+    STORE_POINTER(ship0_shot_list_2_04_01 + 5, ship0_shot_list_1_04_01_02);
+    STORE_POINTER(ship0_shot_list_2_04_01 + 15, ship0_shot_list_1_04_01_07);
+    STORE_POINTER(ship0_shot_list_1_04_02 + 5, ship0_shot_list_1_04_02_02);
+    STORE_POINTER(ship0_shot_list_1_04_02 + 15, ship0_shot_list_1_04_02_07);
+    STORE_POINTER(ship0_shot_list_2_04_02 + 5, ship0_shot_list_1_04_02_02);
+    STORE_POINTER(ship0_shot_list_2_04_02 + 15, ship0_shot_list_1_04_02_07);
+    STORE_POINTER(ship0_shot_list_1_04_03 + 5, ship0_shot_list_1_04_03_02);
+    STORE_POINTER(ship0_shot_list_1_04_03 + 15, ship0_shot_list_1_04_03_07);
+    STORE_POINTER(ship0_shot_list_2_04_03 + 5, ship0_shot_list_1_04_03_02);
+    STORE_POINTER(ship0_shot_list_2_04_03 + 15, ship0_shot_list_1_04_03_07);
+    STORE_POINTER(ship0_shot_list_1_04_04 + 5, ship0_shot_list_1_04_04_02);
+    STORE_POINTER(ship0_shot_list_1_04_04 + 15, ship0_shot_list_1_04_04_07);
+    STORE_POINTER(ship0_shot_list_2_04_04 + 5, ship0_shot_list_1_04_04_02);
+    STORE_POINTER(ship0_shot_list_2_04_04 + 15, ship0_shot_list_1_04_04_07);
     STORE_POINTER(player_shot_1_flight_table, player_shot_1_flight_00);
     STORE_POINTER(player_shot_1_flight_table + 2, player_shot_1_flight_01);
     STORE_POINTER(player_shot_1_flight_table + 4, player_shot_1_flight_02);
@@ -952,9 +952,9 @@ void player_shot_2_tables_init(void) {
     STORE_POINTER(player_shot_2_impact_24 + 3, player_shot_2_impact_frames_23);
 }
 
-extern u16 D_00254410[];
-extern u16 D_00254420[];
-extern u16 D_00254430[];
+extern u16 ship0_shot_list_1_01_00_02[];
+extern u16 ship0_shot_list_1_03_00_02[];
+extern u16 ship0_shot_list_1_05_00_02[];
 extern u16 player_shot_5_impact_frames_00[];
 extern u16 player_shot_5_impact_frames_02[];
 extern u16 player_shot_5_impact_frames_04[];
@@ -995,9 +995,9 @@ extern u16 player_shot_5_impact_21[];
 extern u16 player_shot_5_impact_22[];
 extern u16 player_shot_5_impact_23[];
 extern u16 player_shot_5_impact_24[];
-extern u16 D_0028C418[];
-extern u16 D_0028C420[];
-extern u16 D_0028C428[];
+extern u16 ship0_shot_list_1_01_00_07[];
+extern u16 ship0_shot_list_1_03_00_07[];
+extern u16 ship0_shot_list_1_05_00_07[];
 extern u16 player_shot_5_flight_00[];
 extern u16 player_shot_5_flight_01[];
 extern u16 player_shot_5_flight_02[];
@@ -1028,56 +1028,56 @@ extern u16 player_shot_5_flight_table[];
 extern u16 player_shot_5_impact_table[];
 
 void player_shot_5_tables_init(void) {
-    STORE_POINTER(ship0_shot_list_1_01_00 + 5, D_00254410);
-    STORE_POINTER(ship0_shot_list_1_01_00 + 15, D_0028C418);
-    STORE_POINTER(ship0_shot_list_2_01_00 + 5, D_00254410);
-    STORE_POINTER(ship0_shot_list_2_01_00 + 15, D_0028C418);
-    STORE_POINTER(ship0_shot_list_1_01_01 + 5, D_00254410);
-    STORE_POINTER(ship0_shot_list_1_01_01 + 15, D_0028C418);
-    STORE_POINTER(ship0_shot_list_2_01_01 + 5, D_00254410);
-    STORE_POINTER(ship0_shot_list_2_01_01 + 15, D_0028C418);
-    STORE_POINTER(ship0_shot_list_1_01_02 + 5, D_00254410);
-    STORE_POINTER(ship0_shot_list_1_01_02 + 15, D_0028C418);
-    STORE_POINTER(ship0_shot_list_2_01_02 + 5, D_00254410);
-    STORE_POINTER(ship0_shot_list_2_01_02 + 15, D_0028C418);
-    STORE_POINTER(ship0_shot_list_1_01_03 + 5, D_00254410);
-    STORE_POINTER(ship0_shot_list_1_01_03 + 15, D_0028C418);
-    STORE_POINTER(ship0_shot_list_2_01_03 + 5, D_00254410);
-    STORE_POINTER(ship0_shot_list_2_01_03 + 15, D_0028C418);
-    STORE_POINTER(ship0_shot_list_1_01_04 + 5, D_00254410);
-    STORE_POINTER(ship0_shot_list_1_01_04 + 15, D_0028C418);
-    STORE_POINTER(ship0_shot_list_2_01_04 + 5, D_00254410);
-    STORE_POINTER(ship0_shot_list_2_01_04 + 15, D_0028C418);
-    STORE_POINTER(ship0_shot_list_1_03_00 + 5, D_00254420);
-    STORE_POINTER(ship0_shot_list_1_03_00 + 15, D_0028C420);
-    STORE_POINTER(ship0_shot_list_1_03_01 + 5, D_00254420);
-    STORE_POINTER(ship0_shot_list_1_03_01 + 15, D_0028C420);
-    STORE_POINTER(ship0_shot_list_1_03_02 + 5, D_00254420);
-    STORE_POINTER(ship0_shot_list_1_03_02 + 15, D_0028C420);
-    STORE_POINTER(ship0_shot_list_1_03_03 + 5, D_00254420);
-    STORE_POINTER(ship0_shot_list_1_03_03 + 15, D_0028C420);
-    STORE_POINTER(ship0_shot_list_1_03_04 + 5, D_00254420);
-    STORE_POINTER(ship0_shot_list_1_03_04 + 15, D_0028C420);
-    STORE_POINTER(ship0_shot_list_1_05_00 + 5, D_00254430);
-    STORE_POINTER(ship0_shot_list_1_05_00 + 15, D_0028C428);
-    STORE_POINTER(ship0_shot_list_2_05_00 + 5, D_00254430);
-    STORE_POINTER(ship0_shot_list_2_05_00 + 15, D_0028C428);
-    STORE_POINTER(ship0_shot_list_1_05_01 + 5, D_00254430);
-    STORE_POINTER(ship0_shot_list_1_05_01 + 15, D_0028C428);
-    STORE_POINTER(ship0_shot_list_2_05_01 + 5, D_00254430);
-    STORE_POINTER(ship0_shot_list_2_05_01 + 15, D_0028C428);
-    STORE_POINTER(ship0_shot_list_1_05_02 + 5, D_00254430);
-    STORE_POINTER(ship0_shot_list_1_05_02 + 15, D_0028C428);
-    STORE_POINTER(ship0_shot_list_2_05_02 + 5, D_00254430);
-    STORE_POINTER(ship0_shot_list_2_05_02 + 15, D_0028C428);
-    STORE_POINTER(ship0_shot_list_1_05_03 + 5, D_00254430);
-    STORE_POINTER(ship0_shot_list_1_05_03 + 15, D_0028C428);
-    STORE_POINTER(ship0_shot_list_2_05_03 + 5, D_00254430);
-    STORE_POINTER(ship0_shot_list_2_05_03 + 15, D_0028C428);
-    STORE_POINTER(ship0_shot_list_1_05_04 + 5, D_00254430);
-    STORE_POINTER(ship0_shot_list_1_05_04 + 15, D_0028C428);
-    STORE_POINTER(ship0_shot_list_2_05_04 + 5, D_00254430);
-    STORE_POINTER(ship0_shot_list_2_05_04 + 15, D_0028C428);
+    STORE_POINTER(ship0_shot_list_1_01_00 + 5, ship0_shot_list_1_01_00_02);
+    STORE_POINTER(ship0_shot_list_1_01_00 + 15, ship0_shot_list_1_01_00_07);
+    STORE_POINTER(ship0_shot_list_2_01_00 + 5, ship0_shot_list_1_01_00_02);
+    STORE_POINTER(ship0_shot_list_2_01_00 + 15, ship0_shot_list_1_01_00_07);
+    STORE_POINTER(ship0_shot_list_1_01_01 + 5, ship0_shot_list_1_01_00_02);
+    STORE_POINTER(ship0_shot_list_1_01_01 + 15, ship0_shot_list_1_01_00_07);
+    STORE_POINTER(ship0_shot_list_2_01_01 + 5, ship0_shot_list_1_01_00_02);
+    STORE_POINTER(ship0_shot_list_2_01_01 + 15, ship0_shot_list_1_01_00_07);
+    STORE_POINTER(ship0_shot_list_1_01_02 + 5, ship0_shot_list_1_01_00_02);
+    STORE_POINTER(ship0_shot_list_1_01_02 + 15, ship0_shot_list_1_01_00_07);
+    STORE_POINTER(ship0_shot_list_2_01_02 + 5, ship0_shot_list_1_01_00_02);
+    STORE_POINTER(ship0_shot_list_2_01_02 + 15, ship0_shot_list_1_01_00_07);
+    STORE_POINTER(ship0_shot_list_1_01_03 + 5, ship0_shot_list_1_01_00_02);
+    STORE_POINTER(ship0_shot_list_1_01_03 + 15, ship0_shot_list_1_01_00_07);
+    STORE_POINTER(ship0_shot_list_2_01_03 + 5, ship0_shot_list_1_01_00_02);
+    STORE_POINTER(ship0_shot_list_2_01_03 + 15, ship0_shot_list_1_01_00_07);
+    STORE_POINTER(ship0_shot_list_1_01_04 + 5, ship0_shot_list_1_01_00_02);
+    STORE_POINTER(ship0_shot_list_1_01_04 + 15, ship0_shot_list_1_01_00_07);
+    STORE_POINTER(ship0_shot_list_2_01_04 + 5, ship0_shot_list_1_01_00_02);
+    STORE_POINTER(ship0_shot_list_2_01_04 + 15, ship0_shot_list_1_01_00_07);
+    STORE_POINTER(ship0_shot_list_1_03_00 + 5, ship0_shot_list_1_03_00_02);
+    STORE_POINTER(ship0_shot_list_1_03_00 + 15, ship0_shot_list_1_03_00_07);
+    STORE_POINTER(ship0_shot_list_1_03_01 + 5, ship0_shot_list_1_03_00_02);
+    STORE_POINTER(ship0_shot_list_1_03_01 + 15, ship0_shot_list_1_03_00_07);
+    STORE_POINTER(ship0_shot_list_1_03_02 + 5, ship0_shot_list_1_03_00_02);
+    STORE_POINTER(ship0_shot_list_1_03_02 + 15, ship0_shot_list_1_03_00_07);
+    STORE_POINTER(ship0_shot_list_1_03_03 + 5, ship0_shot_list_1_03_00_02);
+    STORE_POINTER(ship0_shot_list_1_03_03 + 15, ship0_shot_list_1_03_00_07);
+    STORE_POINTER(ship0_shot_list_1_03_04 + 5, ship0_shot_list_1_03_00_02);
+    STORE_POINTER(ship0_shot_list_1_03_04 + 15, ship0_shot_list_1_03_00_07);
+    STORE_POINTER(ship0_shot_list_1_05_00 + 5, ship0_shot_list_1_05_00_02);
+    STORE_POINTER(ship0_shot_list_1_05_00 + 15, ship0_shot_list_1_05_00_07);
+    STORE_POINTER(ship0_shot_list_2_05_00 + 5, ship0_shot_list_1_05_00_02);
+    STORE_POINTER(ship0_shot_list_2_05_00 + 15, ship0_shot_list_1_05_00_07);
+    STORE_POINTER(ship0_shot_list_1_05_01 + 5, ship0_shot_list_1_05_00_02);
+    STORE_POINTER(ship0_shot_list_1_05_01 + 15, ship0_shot_list_1_05_00_07);
+    STORE_POINTER(ship0_shot_list_2_05_01 + 5, ship0_shot_list_1_05_00_02);
+    STORE_POINTER(ship0_shot_list_2_05_01 + 15, ship0_shot_list_1_05_00_07);
+    STORE_POINTER(ship0_shot_list_1_05_02 + 5, ship0_shot_list_1_05_00_02);
+    STORE_POINTER(ship0_shot_list_1_05_02 + 15, ship0_shot_list_1_05_00_07);
+    STORE_POINTER(ship0_shot_list_2_05_02 + 5, ship0_shot_list_1_05_00_02);
+    STORE_POINTER(ship0_shot_list_2_05_02 + 15, ship0_shot_list_1_05_00_07);
+    STORE_POINTER(ship0_shot_list_1_05_03 + 5, ship0_shot_list_1_05_00_02);
+    STORE_POINTER(ship0_shot_list_1_05_03 + 15, ship0_shot_list_1_05_00_07);
+    STORE_POINTER(ship0_shot_list_2_05_03 + 5, ship0_shot_list_1_05_00_02);
+    STORE_POINTER(ship0_shot_list_2_05_03 + 15, ship0_shot_list_1_05_00_07);
+    STORE_POINTER(ship0_shot_list_1_05_04 + 5, ship0_shot_list_1_05_00_02);
+    STORE_POINTER(ship0_shot_list_1_05_04 + 15, ship0_shot_list_1_05_00_07);
+    STORE_POINTER(ship0_shot_list_2_05_04 + 5, ship0_shot_list_1_05_00_02);
+    STORE_POINTER(ship0_shot_list_2_05_04 + 15, ship0_shot_list_1_05_00_07);
     STORE_POINTER(player_shot_5_flight_table, player_shot_5_flight_00);
     STORE_POINTER(player_shot_5_flight_table + 2, player_shot_5_flight_01);
     STORE_POINTER(player_shot_5_flight_table + 4, player_shot_5_flight_02);
@@ -1155,9 +1155,9 @@ void player_shot_5_tables_init(void) {
     STORE_POINTER(player_shot_5_impact_24 + 3, player_shot_5_impact_frames_23);
 }
 
-extern u16 D_00254C50[];
-extern u16 D_00254C60[];
-extern u16 D_00254C70[];
+extern u16 ship0_shot_list_3_01_00_02[];
+extern u16 ship0_shot_list_3_03_00_02[];
+extern u16 ship0_shot_list_3_05_00_02[];
 extern u16 player_shot_6_impact_frames_00[];
 extern u16 player_shot_6_impact_frames_02[];
 extern u16 player_shot_6_impact_frames_04[];
@@ -1198,9 +1198,9 @@ extern u16 player_shot_6_impact_21[];
 extern u16 player_shot_6_impact_22[];
 extern u16 player_shot_6_impact_23[];
 extern u16 player_shot_6_impact_24[];
-extern u16 D_0028C4F8[];
-extern u16 D_0028C500[];
-extern u16 D_0028C508[];
+extern u16 ship0_shot_list_3_01_00_07[];
+extern u16 ship0_shot_list_3_03_00_07[];
+extern u16 ship0_shot_list_3_05_00_07[];
 extern u16 player_shot_6_flight_00[];
 extern u16 player_shot_6_flight_01[];
 extern u16 player_shot_6_flight_02[];
@@ -1231,56 +1231,56 @@ extern u16 player_shot_6_flight_table[];
 extern u16 player_shot_6_impact_table[];
 
 void player_shot_6_tables_init(void) {
-    STORE_POINTER(ship0_shot_list_3_01_00 + 5, D_00254C50);
-    STORE_POINTER(ship0_shot_list_3_01_00 + 15, D_0028C4F8);
-    STORE_POINTER(ship0_shot_list_3_01_00 + 24, D_00254C50);
-    STORE_POINTER(ship0_shot_list_3_01_00 + 34, D_0028C4F8);
-    STORE_POINTER(ship0_shot_list_3_01_01 + 5, D_00254C50);
-    STORE_POINTER(ship0_shot_list_3_01_01 + 15, D_0028C4F8);
-    STORE_POINTER(ship0_shot_list_3_01_01 + 24, D_00254C50);
-    STORE_POINTER(ship0_shot_list_3_01_01 + 34, D_0028C4F8);
-    STORE_POINTER(ship0_shot_list_3_01_02 + 5, D_00254C50);
-    STORE_POINTER(ship0_shot_list_3_01_02 + 15, D_0028C4F8);
-    STORE_POINTER(ship0_shot_list_3_01_02 + 24, D_00254C50);
-    STORE_POINTER(ship0_shot_list_3_01_02 + 34, D_0028C4F8);
-    STORE_POINTER(ship0_shot_list_3_01_03 + 5, D_00254C50);
-    STORE_POINTER(ship0_shot_list_3_01_03 + 15, D_0028C4F8);
-    STORE_POINTER(ship0_shot_list_3_01_03 + 24, D_00254C50);
-    STORE_POINTER(ship0_shot_list_3_01_03 + 34, D_0028C4F8);
-    STORE_POINTER(ship0_shot_list_3_01_04 + 5, D_00254C50);
-    STORE_POINTER(ship0_shot_list_3_01_04 + 15, D_0028C4F8);
-    STORE_POINTER(ship0_shot_list_3_01_04 + 24, D_00254C50);
-    STORE_POINTER(ship0_shot_list_3_01_04 + 34, D_0028C4F8);
-    STORE_POINTER(ship0_shot_list_3_03_00 + 5, D_00254C60);
-    STORE_POINTER(ship0_shot_list_3_03_00 + 15, D_0028C500);
-    STORE_POINTER(ship0_shot_list_3_03_01 + 5, D_00254C60);
-    STORE_POINTER(ship0_shot_list_3_03_01 + 15, D_0028C500);
-    STORE_POINTER(ship0_shot_list_3_03_02 + 5, D_00254C60);
-    STORE_POINTER(ship0_shot_list_3_03_02 + 15, D_0028C500);
-    STORE_POINTER(ship0_shot_list_3_03_03 + 5, D_00254C60);
-    STORE_POINTER(ship0_shot_list_3_03_03 + 15, D_0028C500);
-    STORE_POINTER(ship0_shot_list_3_03_04 + 5, D_00254C60);
-    STORE_POINTER(ship0_shot_list_3_03_04 + 15, D_0028C500);
-    STORE_POINTER(ship0_shot_list_3_05_00 + 5, D_00254C70);
-    STORE_POINTER(ship0_shot_list_3_05_00 + 15, D_0028C508);
-    STORE_POINTER(ship0_shot_list_3_05_00 + 24, D_00254C70);
-    STORE_POINTER(ship0_shot_list_3_05_00 + 34, D_0028C508);
-    STORE_POINTER(ship0_shot_list_3_05_01 + 5, D_00254C70);
-    STORE_POINTER(ship0_shot_list_3_05_01 + 15, D_0028C508);
-    STORE_POINTER(ship0_shot_list_3_05_01 + 24, D_00254C70);
-    STORE_POINTER(ship0_shot_list_3_05_01 + 34, D_0028C508);
-    STORE_POINTER(ship0_shot_list_3_05_02 + 5, D_00254C70);
-    STORE_POINTER(ship0_shot_list_3_05_02 + 15, D_0028C508);
-    STORE_POINTER(ship0_shot_list_3_05_02 + 24, D_00254C70);
-    STORE_POINTER(ship0_shot_list_3_05_02 + 34, D_0028C508);
-    STORE_POINTER(ship0_shot_list_3_05_03 + 5, D_00254C70);
-    STORE_POINTER(ship0_shot_list_3_05_03 + 15, D_0028C508);
-    STORE_POINTER(ship0_shot_list_3_05_03 + 24, D_00254C70);
-    STORE_POINTER(ship0_shot_list_3_05_03 + 34, D_0028C508);
-    STORE_POINTER(ship0_shot_list_3_05_04 + 5, D_00254C70);
-    STORE_POINTER(ship0_shot_list_3_05_04 + 15, D_0028C508);
-    STORE_POINTER(ship0_shot_list_3_05_04 + 24, D_00254C70);
-    STORE_POINTER(ship0_shot_list_3_05_04 + 34, D_0028C508);
+    STORE_POINTER(ship0_shot_list_3_01_00 + 5, ship0_shot_list_3_01_00_02);
+    STORE_POINTER(ship0_shot_list_3_01_00 + 15, ship0_shot_list_3_01_00_07);
+    STORE_POINTER(ship0_shot_list_3_01_00 + 24, ship0_shot_list_3_01_00_02);
+    STORE_POINTER(ship0_shot_list_3_01_00 + 34, ship0_shot_list_3_01_00_07);
+    STORE_POINTER(ship0_shot_list_3_01_01 + 5, ship0_shot_list_3_01_00_02);
+    STORE_POINTER(ship0_shot_list_3_01_01 + 15, ship0_shot_list_3_01_00_07);
+    STORE_POINTER(ship0_shot_list_3_01_01 + 24, ship0_shot_list_3_01_00_02);
+    STORE_POINTER(ship0_shot_list_3_01_01 + 34, ship0_shot_list_3_01_00_07);
+    STORE_POINTER(ship0_shot_list_3_01_02 + 5, ship0_shot_list_3_01_00_02);
+    STORE_POINTER(ship0_shot_list_3_01_02 + 15, ship0_shot_list_3_01_00_07);
+    STORE_POINTER(ship0_shot_list_3_01_02 + 24, ship0_shot_list_3_01_00_02);
+    STORE_POINTER(ship0_shot_list_3_01_02 + 34, ship0_shot_list_3_01_00_07);
+    STORE_POINTER(ship0_shot_list_3_01_03 + 5, ship0_shot_list_3_01_00_02);
+    STORE_POINTER(ship0_shot_list_3_01_03 + 15, ship0_shot_list_3_01_00_07);
+    STORE_POINTER(ship0_shot_list_3_01_03 + 24, ship0_shot_list_3_01_00_02);
+    STORE_POINTER(ship0_shot_list_3_01_03 + 34, ship0_shot_list_3_01_00_07);
+    STORE_POINTER(ship0_shot_list_3_01_04 + 5, ship0_shot_list_3_01_00_02);
+    STORE_POINTER(ship0_shot_list_3_01_04 + 15, ship0_shot_list_3_01_00_07);
+    STORE_POINTER(ship0_shot_list_3_01_04 + 24, ship0_shot_list_3_01_00_02);
+    STORE_POINTER(ship0_shot_list_3_01_04 + 34, ship0_shot_list_3_01_00_07);
+    STORE_POINTER(ship0_shot_list_3_03_00 + 5, ship0_shot_list_3_03_00_02);
+    STORE_POINTER(ship0_shot_list_3_03_00 + 15, ship0_shot_list_3_03_00_07);
+    STORE_POINTER(ship0_shot_list_3_03_01 + 5, ship0_shot_list_3_03_00_02);
+    STORE_POINTER(ship0_shot_list_3_03_01 + 15, ship0_shot_list_3_03_00_07);
+    STORE_POINTER(ship0_shot_list_3_03_02 + 5, ship0_shot_list_3_03_00_02);
+    STORE_POINTER(ship0_shot_list_3_03_02 + 15, ship0_shot_list_3_03_00_07);
+    STORE_POINTER(ship0_shot_list_3_03_03 + 5, ship0_shot_list_3_03_00_02);
+    STORE_POINTER(ship0_shot_list_3_03_03 + 15, ship0_shot_list_3_03_00_07);
+    STORE_POINTER(ship0_shot_list_3_03_04 + 5, ship0_shot_list_3_03_00_02);
+    STORE_POINTER(ship0_shot_list_3_03_04 + 15, ship0_shot_list_3_03_00_07);
+    STORE_POINTER(ship0_shot_list_3_05_00 + 5, ship0_shot_list_3_05_00_02);
+    STORE_POINTER(ship0_shot_list_3_05_00 + 15, ship0_shot_list_3_05_00_07);
+    STORE_POINTER(ship0_shot_list_3_05_00 + 24, ship0_shot_list_3_05_00_02);
+    STORE_POINTER(ship0_shot_list_3_05_00 + 34, ship0_shot_list_3_05_00_07);
+    STORE_POINTER(ship0_shot_list_3_05_01 + 5, ship0_shot_list_3_05_00_02);
+    STORE_POINTER(ship0_shot_list_3_05_01 + 15, ship0_shot_list_3_05_00_07);
+    STORE_POINTER(ship0_shot_list_3_05_01 + 24, ship0_shot_list_3_05_00_02);
+    STORE_POINTER(ship0_shot_list_3_05_01 + 34, ship0_shot_list_3_05_00_07);
+    STORE_POINTER(ship0_shot_list_3_05_02 + 5, ship0_shot_list_3_05_00_02);
+    STORE_POINTER(ship0_shot_list_3_05_02 + 15, ship0_shot_list_3_05_00_07);
+    STORE_POINTER(ship0_shot_list_3_05_02 + 24, ship0_shot_list_3_05_00_02);
+    STORE_POINTER(ship0_shot_list_3_05_02 + 34, ship0_shot_list_3_05_00_07);
+    STORE_POINTER(ship0_shot_list_3_05_03 + 5, ship0_shot_list_3_05_00_02);
+    STORE_POINTER(ship0_shot_list_3_05_03 + 15, ship0_shot_list_3_05_00_07);
+    STORE_POINTER(ship0_shot_list_3_05_03 + 24, ship0_shot_list_3_05_00_02);
+    STORE_POINTER(ship0_shot_list_3_05_03 + 34, ship0_shot_list_3_05_00_07);
+    STORE_POINTER(ship0_shot_list_3_05_04 + 5, ship0_shot_list_3_05_00_02);
+    STORE_POINTER(ship0_shot_list_3_05_04 + 15, ship0_shot_list_3_05_00_07);
+    STORE_POINTER(ship0_shot_list_3_05_04 + 24, ship0_shot_list_3_05_00_02);
+    STORE_POINTER(ship0_shot_list_3_05_04 + 34, ship0_shot_list_3_05_00_07);
     STORE_POINTER(player_shot_6_flight_table, player_shot_6_flight_00);
     STORE_POINTER(player_shot_6_flight_table + 2, player_shot_6_flight_01);
     STORE_POINTER(player_shot_6_flight_table + 4, player_shot_6_flight_02);
@@ -1358,14 +1358,14 @@ void player_shot_6_tables_init(void) {
     STORE_POINTER(player_shot_6_impact_24 + 3, player_shot_6_impact_frames_23);
 }
 
-extern u16 D_0025C4C8[];
-extern u16 D_0025C4D8[];
-extern u16 D_0025C4E8[];
-extern u16 D_0025C4F8[];
-extern u16 D_0025C508[];
+extern u16 option_shot_list_1_00_00_02[];
+extern u16 option_shot_list_1_00_02_02[];
+extern u16 option_shot_list_1_00_04_02[];
+extern u16 option_shot_list_3_00_00_02[];
+extern u16 option_shot_list_3_00_02_02[];
 extern u16 option_shot_list_3_00_04_02[];
-extern u16 D_0025C528[];
-extern u16 D_0025C538[];
+extern u16 option_shot_list_4_00_00_02[];
+extern u16 option_shot_list_4_00_02_02[];
 extern u16 option_shot_list_4_00_04_02[];
 extern u16 player_shot_3_impact_frames_00[];
 extern u16 player_shot_3_impact_frames_04[];
@@ -1398,11 +1398,11 @@ extern u16 player_shot_3_impact_17[];
 extern u16 player_shot_3_impact_19[];
 extern u16 player_shot_3_impact_21[];
 extern u16 player_shot_3_impact_23[];
-extern u16 D_0028CA04[];
-extern u16 D_0028CA08[];
-extern u16 D_0028CA0C[];
-extern u16 D_0028CA10[];
-extern u16 D_0028CA14[];
+extern u16 option_shot_list_1_00_00_07[];
+extern u16 option_shot_list_1_00_01_07[];
+extern u16 option_shot_list_1_00_02_07[];
+extern u16 option_shot_list_1_00_03_07[];
+extern u16 option_shot_list_1_00_04_07[];
 extern u16 option_shot_list_3_00_00_00_00_01[];
 extern u16 option_shot_list_3_00_00_00_01_01[];
 extern u16 option_shot_list_3_00_00_00_02_01[];
@@ -1596,51 +1596,51 @@ extern u16 player_shot_3_flight_table[];
 extern u16 player_shot_3_impact_table[];
 
 void player_shot_3_tables_init(void) {
-    STORE_POINTER(option_shot_list_1_00_00 + 5, D_0025C4C8);
-    STORE_POINTER(option_shot_list_1_00_00 + 15, D_0028CA04);
-    STORE_POINTER(option_shot_list_2_00_00 + 5, D_0025C4C8);
-    STORE_POINTER(option_shot_list_2_00_00 + 15, D_0028CA04);
-    STORE_POINTER(option_shot_list_1_00_01 + 5, D_0025C4C8);
-    STORE_POINTER(option_shot_list_1_00_01 + 15, D_0028CA08);
-    STORE_POINTER(option_shot_list_2_00_01 + 5, D_0025C4C8);
-    STORE_POINTER(option_shot_list_2_00_01 + 15, D_0028CA08);
-    STORE_POINTER(option_shot_list_1_00_02 + 5, D_0025C4D8);
-    STORE_POINTER(option_shot_list_1_00_02 + 15, D_0028CA0C);
-    STORE_POINTER(option_shot_list_2_00_02 + 5, D_0025C4D8);
-    STORE_POINTER(option_shot_list_2_00_02 + 15, D_0028CA0C);
-    STORE_POINTER(option_shot_list_1_00_03 + 5, D_0025C4D8);
-    STORE_POINTER(option_shot_list_1_00_03 + 15, D_0028CA10);
-    STORE_POINTER(option_shot_list_2_00_03 + 5, D_0025C4D8);
-    STORE_POINTER(option_shot_list_2_00_03 + 15, D_0028CA10);
-    STORE_POINTER(option_shot_list_1_00_04 + 5, D_0025C4E8);
-    STORE_POINTER(option_shot_list_1_00_04 + 15, D_0028CA14);
-    STORE_POINTER(option_shot_list_2_00_04 + 5, D_0025C4E8);
-    STORE_POINTER(option_shot_list_2_00_04 + 15, D_0028CA14);
+    STORE_POINTER(option_shot_list_1_00_00 + 5, option_shot_list_1_00_00_02);
+    STORE_POINTER(option_shot_list_1_00_00 + 15, option_shot_list_1_00_00_07);
+    STORE_POINTER(option_shot_list_2_00_00 + 5, option_shot_list_1_00_00_02);
+    STORE_POINTER(option_shot_list_2_00_00 + 15, option_shot_list_1_00_00_07);
+    STORE_POINTER(option_shot_list_1_00_01 + 5, option_shot_list_1_00_00_02);
+    STORE_POINTER(option_shot_list_1_00_01 + 15, option_shot_list_1_00_01_07);
+    STORE_POINTER(option_shot_list_2_00_01 + 5, option_shot_list_1_00_00_02);
+    STORE_POINTER(option_shot_list_2_00_01 + 15, option_shot_list_1_00_01_07);
+    STORE_POINTER(option_shot_list_1_00_02 + 5, option_shot_list_1_00_02_02);
+    STORE_POINTER(option_shot_list_1_00_02 + 15, option_shot_list_1_00_02_07);
+    STORE_POINTER(option_shot_list_2_00_02 + 5, option_shot_list_1_00_02_02);
+    STORE_POINTER(option_shot_list_2_00_02 + 15, option_shot_list_1_00_02_07);
+    STORE_POINTER(option_shot_list_1_00_03 + 5, option_shot_list_1_00_02_02);
+    STORE_POINTER(option_shot_list_1_00_03 + 15, option_shot_list_1_00_03_07);
+    STORE_POINTER(option_shot_list_2_00_03 + 5, option_shot_list_1_00_02_02);
+    STORE_POINTER(option_shot_list_2_00_03 + 15, option_shot_list_1_00_03_07);
+    STORE_POINTER(option_shot_list_1_00_04 + 5, option_shot_list_1_00_04_02);
+    STORE_POINTER(option_shot_list_1_00_04 + 15, option_shot_list_1_00_04_07);
+    STORE_POINTER(option_shot_list_2_00_04 + 5, option_shot_list_1_00_04_02);
+    STORE_POINTER(option_shot_list_2_00_04 + 15, option_shot_list_1_00_04_07);
     STORE_POINTER(option_shot_list_3_00_00 + 1, option_shot_list_3_00_00_00);
-    STORE_POINTER(option_shot_list_3_00_00 + 5, D_0025C4F8);
+    STORE_POINTER(option_shot_list_3_00_00 + 5, option_shot_list_3_00_00_02);
     STORE_POINTER(option_shot_list_3_00_01 + 1, option_shot_list_3_00_01_00);
-    STORE_POINTER(option_shot_list_3_00_01 + 5, D_0025C4F8);
+    STORE_POINTER(option_shot_list_3_00_01 + 5, option_shot_list_3_00_00_02);
     STORE_POINTER(option_shot_list_3_00_02 + 1, option_shot_list_3_00_02_00);
-    STORE_POINTER(option_shot_list_3_00_02 + 5, D_0025C508);
+    STORE_POINTER(option_shot_list_3_00_02 + 5, option_shot_list_3_00_02_02);
     STORE_POINTER(option_shot_list_3_00_03 + 1, option_shot_list_3_00_03_00);
-    STORE_POINTER(option_shot_list_3_00_03 + 5, D_0025C508);
+    STORE_POINTER(option_shot_list_3_00_03 + 5, option_shot_list_3_00_02_02);
     STORE_POINTER(option_shot_list_3_00_04 + 1, option_shot_list_3_00_04_00);
     STORE_POINTER(option_shot_list_3_00_04 + 5, option_shot_list_3_00_04_02);
-    STORE_POINTER(option_shot_list_4_00_00 + 5, D_0025C528);
+    STORE_POINTER(option_shot_list_4_00_00 + 5, option_shot_list_4_00_00_02);
     STORE_POINTER(option_shot_list_4_00_00 + 15, option_shot_list_4_00_00_07);
-    STORE_POINTER(option_shot_list_4_00_00 + 24, D_0025C528);
+    STORE_POINTER(option_shot_list_4_00_00 + 24, option_shot_list_4_00_00_02);
     STORE_POINTER(option_shot_list_4_00_00 + 34, option_shot_list_4_00_00_07);
-    STORE_POINTER(option_shot_list_4_00_01 + 5, D_0025C528);
+    STORE_POINTER(option_shot_list_4_00_01 + 5, option_shot_list_4_00_00_02);
     STORE_POINTER(option_shot_list_4_00_01 + 15, option_shot_list_4_00_01_07);
-    STORE_POINTER(option_shot_list_4_00_01 + 24, D_0025C528);
+    STORE_POINTER(option_shot_list_4_00_01 + 24, option_shot_list_4_00_00_02);
     STORE_POINTER(option_shot_list_4_00_01 + 34, option_shot_list_4_00_01_07);
-    STORE_POINTER(option_shot_list_4_00_02 + 5, D_0025C538);
+    STORE_POINTER(option_shot_list_4_00_02 + 5, option_shot_list_4_00_02_02);
     STORE_POINTER(option_shot_list_4_00_02 + 15, option_shot_list_4_00_02_07);
-    STORE_POINTER(option_shot_list_4_00_02 + 24, D_0025C538);
+    STORE_POINTER(option_shot_list_4_00_02 + 24, option_shot_list_4_00_02_02);
     STORE_POINTER(option_shot_list_4_00_02 + 34, option_shot_list_4_00_02_07);
-    STORE_POINTER(option_shot_list_4_00_03 + 5, D_0025C538);
+    STORE_POINTER(option_shot_list_4_00_03 + 5, option_shot_list_4_00_02_02);
     STORE_POINTER(option_shot_list_4_00_03 + 15, option_shot_list_4_00_03_07);
-    STORE_POINTER(option_shot_list_4_00_03 + 24, D_0025C538);
+    STORE_POINTER(option_shot_list_4_00_03 + 24, option_shot_list_4_00_02_02);
     STORE_POINTER(option_shot_list_4_00_03 + 34, option_shot_list_4_00_03_07);
     STORE_POINTER(option_shot_list_4_00_04 + 5, option_shot_list_4_00_04_02);
     STORE_POINTER(option_shot_list_4_00_04 + 15, option_shot_list_4_00_04_07);
@@ -1883,14 +1883,14 @@ void player_shot_3_tables_init(void) {
     STORE_POINTER(player_shot_3_impact_23 + 3, player_shot_3_impact_frames_23);
 }
 
-extern u16 D_0025CE58[];
-extern u16 D_0025CE68[];
-extern u16 D_0025CE78[];
-extern u16 D_0025CE88[];
-extern u16 D_0025CE98[];
+extern u16 option_shot_list_1_02_00_02[];
+extern u16 option_shot_list_1_02_02_02[];
+extern u16 option_shot_list_1_02_04_02[];
+extern u16 option_shot_list_3_02_00_02[];
+extern u16 option_shot_list_3_02_02_02[];
 extern u16 option_shot_list_3_02_04_02[];
-extern u16 D_0025CEB8[];
-extern u16 D_0025CEC8[];
+extern u16 option_shot_list_4_02_00_02[];
+extern u16 option_shot_list_4_02_02_02[];
 extern u16 option_shot_list_4_02_04_02[];
 extern u16 player_shot_4_impact_frames_00[];
 extern u16 player_shot_4_impact_frames_04[];
@@ -1923,11 +1923,11 @@ extern u16 player_shot_4_impact_17[];
 extern u16 player_shot_4_impact_19[];
 extern u16 player_shot_4_impact_21[];
 extern u16 player_shot_4_impact_23[];
-extern u16 D_0028CE90[];
-extern u16 D_0028CE94[];
-extern u16 D_0028CE98[];
-extern u16 D_0028CE9C[];
-extern u16 D_0028CEA0[];
+extern u16 option_shot_list_1_02_00_07[];
+extern u16 option_shot_list_1_02_01_07[];
+extern u16 option_shot_list_1_02_02_07[];
+extern u16 option_shot_list_1_02_03_07[];
+extern u16 option_shot_list_1_02_04_07[];
 extern u16 option_shot_list_3_02_00_00_00_01[];
 extern u16 option_shot_list_3_02_00_00_01_01[];
 extern u16 option_shot_list_3_02_00_00_02_01[];
@@ -2121,51 +2121,51 @@ extern u16 player_shot_4_flight_table[];
 extern u16 player_shot_4_impact_table[];
 
 void player_shot_4_tables_init(void) {
-    STORE_POINTER(option_shot_list_1_02_00 + 5, D_0025CE58);
-    STORE_POINTER(option_shot_list_1_02_00 + 15, D_0028CE90);
-    STORE_POINTER(option_shot_list_2_02_00 + 5, D_0025CE58);
-    STORE_POINTER(option_shot_list_2_02_00 + 15, D_0028CE90);
-    STORE_POINTER(option_shot_list_1_02_01 + 5, D_0025CE58);
-    STORE_POINTER(option_shot_list_1_02_01 + 15, D_0028CE94);
-    STORE_POINTER(option_shot_list_2_02_01 + 5, D_0025CE58);
-    STORE_POINTER(option_shot_list_2_02_01 + 15, D_0028CE94);
-    STORE_POINTER(option_shot_list_1_02_02 + 5, D_0025CE68);
-    STORE_POINTER(option_shot_list_1_02_02 + 15, D_0028CE98);
-    STORE_POINTER(option_shot_list_2_02_02 + 5, D_0025CE68);
-    STORE_POINTER(option_shot_list_2_02_02 + 15, D_0028CE98);
-    STORE_POINTER(option_shot_list_1_02_03 + 5, D_0025CE68);
-    STORE_POINTER(option_shot_list_1_02_03 + 15, D_0028CE9C);
-    STORE_POINTER(option_shot_list_2_02_03 + 5, D_0025CE68);
-    STORE_POINTER(option_shot_list_2_02_03 + 15, D_0028CE9C);
-    STORE_POINTER(option_shot_list_1_02_04 + 5, D_0025CE78);
-    STORE_POINTER(option_shot_list_1_02_04 + 15, D_0028CEA0);
-    STORE_POINTER(option_shot_list_2_02_04 + 5, D_0025CE78);
-    STORE_POINTER(option_shot_list_2_02_04 + 15, D_0028CEA0);
+    STORE_POINTER(option_shot_list_1_02_00 + 5, option_shot_list_1_02_00_02);
+    STORE_POINTER(option_shot_list_1_02_00 + 15, option_shot_list_1_02_00_07);
+    STORE_POINTER(option_shot_list_2_02_00 + 5, option_shot_list_1_02_00_02);
+    STORE_POINTER(option_shot_list_2_02_00 + 15, option_shot_list_1_02_00_07);
+    STORE_POINTER(option_shot_list_1_02_01 + 5, option_shot_list_1_02_00_02);
+    STORE_POINTER(option_shot_list_1_02_01 + 15, option_shot_list_1_02_01_07);
+    STORE_POINTER(option_shot_list_2_02_01 + 5, option_shot_list_1_02_00_02);
+    STORE_POINTER(option_shot_list_2_02_01 + 15, option_shot_list_1_02_01_07);
+    STORE_POINTER(option_shot_list_1_02_02 + 5, option_shot_list_1_02_02_02);
+    STORE_POINTER(option_shot_list_1_02_02 + 15, option_shot_list_1_02_02_07);
+    STORE_POINTER(option_shot_list_2_02_02 + 5, option_shot_list_1_02_02_02);
+    STORE_POINTER(option_shot_list_2_02_02 + 15, option_shot_list_1_02_02_07);
+    STORE_POINTER(option_shot_list_1_02_03 + 5, option_shot_list_1_02_02_02);
+    STORE_POINTER(option_shot_list_1_02_03 + 15, option_shot_list_1_02_03_07);
+    STORE_POINTER(option_shot_list_2_02_03 + 5, option_shot_list_1_02_02_02);
+    STORE_POINTER(option_shot_list_2_02_03 + 15, option_shot_list_1_02_03_07);
+    STORE_POINTER(option_shot_list_1_02_04 + 5, option_shot_list_1_02_04_02);
+    STORE_POINTER(option_shot_list_1_02_04 + 15, option_shot_list_1_02_04_07);
+    STORE_POINTER(option_shot_list_2_02_04 + 5, option_shot_list_1_02_04_02);
+    STORE_POINTER(option_shot_list_2_02_04 + 15, option_shot_list_1_02_04_07);
     STORE_POINTER(option_shot_list_3_02_00 + 1, option_shot_list_3_02_00_00);
-    STORE_POINTER(option_shot_list_3_02_00 + 5, D_0025CE88);
+    STORE_POINTER(option_shot_list_3_02_00 + 5, option_shot_list_3_02_00_02);
     STORE_POINTER(option_shot_list_3_02_01 + 1, option_shot_list_3_02_01_00);
-    STORE_POINTER(option_shot_list_3_02_01 + 5, D_0025CE88);
+    STORE_POINTER(option_shot_list_3_02_01 + 5, option_shot_list_3_02_00_02);
     STORE_POINTER(option_shot_list_3_02_02 + 1, option_shot_list_3_02_02_00);
-    STORE_POINTER(option_shot_list_3_02_02 + 5, D_0025CE98);
+    STORE_POINTER(option_shot_list_3_02_02 + 5, option_shot_list_3_02_02_02);
     STORE_POINTER(option_shot_list_3_02_03 + 1, option_shot_list_3_02_03_00);
-    STORE_POINTER(option_shot_list_3_02_03 + 5, D_0025CE98);
+    STORE_POINTER(option_shot_list_3_02_03 + 5, option_shot_list_3_02_02_02);
     STORE_POINTER(option_shot_list_3_02_04 + 1, option_shot_list_3_02_04_00);
     STORE_POINTER(option_shot_list_3_02_04 + 5, option_shot_list_3_02_04_02);
-    STORE_POINTER(option_shot_list_4_02_00 + 5, D_0025CEB8);
+    STORE_POINTER(option_shot_list_4_02_00 + 5, option_shot_list_4_02_00_02);
     STORE_POINTER(option_shot_list_4_02_00 + 15, option_shot_list_4_02_00_07);
-    STORE_POINTER(option_shot_list_4_02_00 + 24, D_0025CEB8);
+    STORE_POINTER(option_shot_list_4_02_00 + 24, option_shot_list_4_02_00_02);
     STORE_POINTER(option_shot_list_4_02_00 + 34, option_shot_list_4_02_00_07);
-    STORE_POINTER(option_shot_list_4_02_01 + 5, D_0025CEB8);
+    STORE_POINTER(option_shot_list_4_02_01 + 5, option_shot_list_4_02_00_02);
     STORE_POINTER(option_shot_list_4_02_01 + 15, option_shot_list_4_02_01_07);
-    STORE_POINTER(option_shot_list_4_02_01 + 24, D_0025CEB8);
+    STORE_POINTER(option_shot_list_4_02_01 + 24, option_shot_list_4_02_00_02);
     STORE_POINTER(option_shot_list_4_02_01 + 34, option_shot_list_4_02_01_07);
-    STORE_POINTER(option_shot_list_4_02_02 + 5, D_0025CEC8);
+    STORE_POINTER(option_shot_list_4_02_02 + 5, option_shot_list_4_02_02_02);
     STORE_POINTER(option_shot_list_4_02_02 + 15, option_shot_list_4_02_02_07);
-    STORE_POINTER(option_shot_list_4_02_02 + 24, D_0025CEC8);
+    STORE_POINTER(option_shot_list_4_02_02 + 24, option_shot_list_4_02_02_02);
     STORE_POINTER(option_shot_list_4_02_02 + 34, option_shot_list_4_02_02_07);
-    STORE_POINTER(option_shot_list_4_02_03 + 5, D_0025CEC8);
+    STORE_POINTER(option_shot_list_4_02_03 + 5, option_shot_list_4_02_02_02);
     STORE_POINTER(option_shot_list_4_02_03 + 15, option_shot_list_4_02_03_07);
-    STORE_POINTER(option_shot_list_4_02_03 + 24, D_0025CEC8);
+    STORE_POINTER(option_shot_list_4_02_03 + 24, option_shot_list_4_02_02_02);
     STORE_POINTER(option_shot_list_4_02_03 + 34, option_shot_list_4_02_03_07);
     STORE_POINTER(option_shot_list_4_02_04 + 5, option_shot_list_4_02_04_02);
     STORE_POINTER(option_shot_list_4_02_04 + 15, option_shot_list_4_02_04_07);
@@ -2408,16 +2408,16 @@ void player_shot_4_tables_init(void) {
     STORE_POINTER(player_shot_4_impact_23 + 3, player_shot_4_impact_frames_23);
 }
 
-extern u16 D_0025E170[];
-extern u16 D_0025E180[];
-extern u16 D_0025E190[];
-extern u16 D_0025E1A0[];
-extern u16 D_0025E1B0[];
-extern u16 D_0025E1C0[];
-extern u16 D_0025E1D0[];
-extern u16 D_0025E1E0[];
+extern u16 option_shot_list_1_03_00_02[];
+extern u16 option_shot_list_3_03_00_02[];
+extern u16 option_shot_list_4_03_00_02[];
+extern u16 option_shot_list_1_03_00_07[];
+extern u16 player_shot_8_flight_028_01[];
+extern u16 player_shot_8_flight_048_01[];
+extern u16 player_shot_8_flight_068_01[];
+extern u16 player_shot_8_flight_088_01[];
 extern u16 D_0025E1F0[];
-extern u16 D_0025E200[];
+extern u16 option_shot_list_4_03_00_07[];
 extern u16 player_shot_8_impact_frames_00[];
 extern u16 player_shot_8_impact_frames_02[];
 extern u16 player_shot_8_impact_frames_06[];
@@ -2427,7 +2427,7 @@ extern u16 player_shot_8_impact_frames_13[];
 extern u16 player_shot_8_impact_frames_15[];
 extern u16 player_shot_8_impact_frames_17[];
 extern u16 player_shot_8_impact_frames_21[];
-extern u16 D_0025E940[];
+extern u16 option_shot_list_3_03_00_00[];
 extern u16 player_shot_8_impact_00[];
 extern u16 player_shot_8_impact_02[];
 extern u16 player_shot_8_impact_04[];
@@ -2548,56 +2548,56 @@ extern u16 player_shot_8_flight_table[];
 extern u16 player_shot_8_impact_table[];
 
 void player_shot_8_tables_init(void) {
-    STORE_POINTER(option_shot_list_1_03_00 + 5, D_0025E170);
-    STORE_POINTER(option_shot_list_1_03_00 + 15, D_0025E1A0);
-    STORE_POINTER(option_shot_list_2_03_00 + 5, D_0025E170);
-    STORE_POINTER(option_shot_list_2_03_00 + 15, D_0025E1A0);
-    STORE_POINTER(option_shot_list_1_03_01 + 5, D_0025E170);
-    STORE_POINTER(option_shot_list_1_03_01 + 15, D_0025E1A0);
-    STORE_POINTER(option_shot_list_2_03_01 + 5, D_0025E170);
-    STORE_POINTER(option_shot_list_2_03_01 + 15, D_0025E1A0);
-    STORE_POINTER(option_shot_list_1_03_02 + 5, D_0025E170);
-    STORE_POINTER(option_shot_list_1_03_02 + 15, D_0025E1A0);
-    STORE_POINTER(option_shot_list_2_03_02 + 5, D_0025E170);
-    STORE_POINTER(option_shot_list_2_03_02 + 15, D_0025E1A0);
-    STORE_POINTER(option_shot_list_1_03_03 + 5, D_0025E170);
-    STORE_POINTER(option_shot_list_1_03_03 + 15, D_0025E1A0);
-    STORE_POINTER(option_shot_list_2_03_03 + 5, D_0025E170);
-    STORE_POINTER(option_shot_list_2_03_03 + 15, D_0025E1A0);
-    STORE_POINTER(option_shot_list_1_03_04 + 5, D_0025E170);
-    STORE_POINTER(option_shot_list_1_03_04 + 15, D_0025E1A0);
-    STORE_POINTER(option_shot_list_2_03_04 + 5, D_0025E170);
-    STORE_POINTER(option_shot_list_2_03_04 + 15, D_0025E1A0);
-    STORE_POINTER(option_shot_list_3_03_00 + 1, D_0025E940);
-    STORE_POINTER(option_shot_list_3_03_00 + 5, D_0025E180);
-    STORE_POINTER(option_shot_list_3_03_01 + 1, D_0025E940);
-    STORE_POINTER(option_shot_list_3_03_01 + 5, D_0025E180);
-    STORE_POINTER(option_shot_list_3_03_02 + 1, D_0025E940);
-    STORE_POINTER(option_shot_list_3_03_02 + 5, D_0025E180);
-    STORE_POINTER(option_shot_list_3_03_03 + 1, D_0025E940);
-    STORE_POINTER(option_shot_list_3_03_03 + 5, D_0025E180);
-    STORE_POINTER(option_shot_list_3_03_04 + 1, D_0025E940);
-    STORE_POINTER(option_shot_list_3_03_04 + 5, D_0025E180);
-    STORE_POINTER(option_shot_list_4_03_00 + 5, D_0025E190);
-    STORE_POINTER(option_shot_list_4_03_00 + 15, D_0025E200);
-    STORE_POINTER(option_shot_list_4_03_00 + 24, D_0025E190);
-    STORE_POINTER(option_shot_list_4_03_00 + 34, D_0025E200);
-    STORE_POINTER(option_shot_list_4_03_01 + 5, D_0025E190);
-    STORE_POINTER(option_shot_list_4_03_01 + 15, D_0025E200);
-    STORE_POINTER(option_shot_list_4_03_01 + 24, D_0025E190);
-    STORE_POINTER(option_shot_list_4_03_01 + 34, D_0025E200);
-    STORE_POINTER(option_shot_list_4_03_02 + 5, D_0025E190);
-    STORE_POINTER(option_shot_list_4_03_02 + 15, D_0025E200);
-    STORE_POINTER(option_shot_list_4_03_02 + 24, D_0025E190);
-    STORE_POINTER(option_shot_list_4_03_02 + 34, D_0025E200);
-    STORE_POINTER(option_shot_list_4_03_03 + 5, D_0025E190);
-    STORE_POINTER(option_shot_list_4_03_03 + 15, D_0025E200);
-    STORE_POINTER(option_shot_list_4_03_03 + 24, D_0025E190);
-    STORE_POINTER(option_shot_list_4_03_03 + 34, D_0025E200);
-    STORE_POINTER(option_shot_list_4_03_04 + 5, D_0025E190);
-    STORE_POINTER(option_shot_list_4_03_04 + 15, D_0025E200);
-    STORE_POINTER(option_shot_list_4_03_04 + 24, D_0025E190);
-    STORE_POINTER(option_shot_list_4_03_04 + 34, D_0025E200);
+    STORE_POINTER(option_shot_list_1_03_00 + 5, option_shot_list_1_03_00_02);
+    STORE_POINTER(option_shot_list_1_03_00 + 15, option_shot_list_1_03_00_07);
+    STORE_POINTER(option_shot_list_2_03_00 + 5, option_shot_list_1_03_00_02);
+    STORE_POINTER(option_shot_list_2_03_00 + 15, option_shot_list_1_03_00_07);
+    STORE_POINTER(option_shot_list_1_03_01 + 5, option_shot_list_1_03_00_02);
+    STORE_POINTER(option_shot_list_1_03_01 + 15, option_shot_list_1_03_00_07);
+    STORE_POINTER(option_shot_list_2_03_01 + 5, option_shot_list_1_03_00_02);
+    STORE_POINTER(option_shot_list_2_03_01 + 15, option_shot_list_1_03_00_07);
+    STORE_POINTER(option_shot_list_1_03_02 + 5, option_shot_list_1_03_00_02);
+    STORE_POINTER(option_shot_list_1_03_02 + 15, option_shot_list_1_03_00_07);
+    STORE_POINTER(option_shot_list_2_03_02 + 5, option_shot_list_1_03_00_02);
+    STORE_POINTER(option_shot_list_2_03_02 + 15, option_shot_list_1_03_00_07);
+    STORE_POINTER(option_shot_list_1_03_03 + 5, option_shot_list_1_03_00_02);
+    STORE_POINTER(option_shot_list_1_03_03 + 15, option_shot_list_1_03_00_07);
+    STORE_POINTER(option_shot_list_2_03_03 + 5, option_shot_list_1_03_00_02);
+    STORE_POINTER(option_shot_list_2_03_03 + 15, option_shot_list_1_03_00_07);
+    STORE_POINTER(option_shot_list_1_03_04 + 5, option_shot_list_1_03_00_02);
+    STORE_POINTER(option_shot_list_1_03_04 + 15, option_shot_list_1_03_00_07);
+    STORE_POINTER(option_shot_list_2_03_04 + 5, option_shot_list_1_03_00_02);
+    STORE_POINTER(option_shot_list_2_03_04 + 15, option_shot_list_1_03_00_07);
+    STORE_POINTER(option_shot_list_3_03_00 + 1, option_shot_list_3_03_00_00);
+    STORE_POINTER(option_shot_list_3_03_00 + 5, option_shot_list_3_03_00_02);
+    STORE_POINTER(option_shot_list_3_03_01 + 1, option_shot_list_3_03_00_00);
+    STORE_POINTER(option_shot_list_3_03_01 + 5, option_shot_list_3_03_00_02);
+    STORE_POINTER(option_shot_list_3_03_02 + 1, option_shot_list_3_03_00_00);
+    STORE_POINTER(option_shot_list_3_03_02 + 5, option_shot_list_3_03_00_02);
+    STORE_POINTER(option_shot_list_3_03_03 + 1, option_shot_list_3_03_00_00);
+    STORE_POINTER(option_shot_list_3_03_03 + 5, option_shot_list_3_03_00_02);
+    STORE_POINTER(option_shot_list_3_03_04 + 1, option_shot_list_3_03_00_00);
+    STORE_POINTER(option_shot_list_3_03_04 + 5, option_shot_list_3_03_00_02);
+    STORE_POINTER(option_shot_list_4_03_00 + 5, option_shot_list_4_03_00_02);
+    STORE_POINTER(option_shot_list_4_03_00 + 15, option_shot_list_4_03_00_07);
+    STORE_POINTER(option_shot_list_4_03_00 + 24, option_shot_list_4_03_00_02);
+    STORE_POINTER(option_shot_list_4_03_00 + 34, option_shot_list_4_03_00_07);
+    STORE_POINTER(option_shot_list_4_03_01 + 5, option_shot_list_4_03_00_02);
+    STORE_POINTER(option_shot_list_4_03_01 + 15, option_shot_list_4_03_00_07);
+    STORE_POINTER(option_shot_list_4_03_01 + 24, option_shot_list_4_03_00_02);
+    STORE_POINTER(option_shot_list_4_03_01 + 34, option_shot_list_4_03_00_07);
+    STORE_POINTER(option_shot_list_4_03_02 + 5, option_shot_list_4_03_00_02);
+    STORE_POINTER(option_shot_list_4_03_02 + 15, option_shot_list_4_03_00_07);
+    STORE_POINTER(option_shot_list_4_03_02 + 24, option_shot_list_4_03_00_02);
+    STORE_POINTER(option_shot_list_4_03_02 + 34, option_shot_list_4_03_00_07);
+    STORE_POINTER(option_shot_list_4_03_03 + 5, option_shot_list_4_03_00_02);
+    STORE_POINTER(option_shot_list_4_03_03 + 15, option_shot_list_4_03_00_07);
+    STORE_POINTER(option_shot_list_4_03_03 + 24, option_shot_list_4_03_00_02);
+    STORE_POINTER(option_shot_list_4_03_03 + 34, option_shot_list_4_03_00_07);
+    STORE_POINTER(option_shot_list_4_03_04 + 5, option_shot_list_4_03_00_02);
+    STORE_POINTER(option_shot_list_4_03_04 + 15, option_shot_list_4_03_00_07);
+    STORE_POINTER(option_shot_list_4_03_04 + 24, option_shot_list_4_03_00_02);
+    STORE_POINTER(option_shot_list_4_03_04 + 34, option_shot_list_4_03_00_07);
     STORE_POINTER(player_shot_8_flight_table, player_shot_8_flight_000);
     STORE_POINTER(player_shot_8_flight_table + 2, player_shot_8_flight_000);
     STORE_POINTER(player_shot_8_flight_table + 4, player_shot_8_flight_002);
@@ -2640,23 +2640,23 @@ void player_shot_8_tables_init(void) {
     STORE_POINTER(player_shot_8_flight_table + 84, player_shot_8_flight_042);
     STORE_POINTER(player_shot_8_flight_table + 86, player_shot_8_flight_043);
     STORE_POINTER(player_shot_8_flight_table + 88, player_shot_8_flight_044);
-    STORE_POINTER(player_shot_8_flight_028 + 2, D_0025E1B0);
-    STORE_POINTER(player_shot_8_flight_029 + 2, D_0025E1B0);
-    STORE_POINTER(player_shot_8_flight_030 + 2, D_0025E1B0);
-    STORE_POINTER(player_shot_8_flight_031 + 2, D_0025E1B0);
-    STORE_POINTER(player_shot_8_flight_032 + 2, D_0025E1B0);
-    STORE_POINTER(player_shot_8_flight_033 + 2, D_0025E1B0);
-    STORE_POINTER(player_shot_8_flight_034 + 2, D_0025E1B0);
-    STORE_POINTER(player_shot_8_flight_035 + 2, D_0025E1B0);
-    STORE_POINTER(player_shot_8_flight_036 + 2, D_0025E1B0);
-    STORE_POINTER(player_shot_8_flight_037 + 2, D_0025E1B0);
-    STORE_POINTER(player_shot_8_flight_038 + 2, D_0025E1B0);
-    STORE_POINTER(player_shot_8_flight_039 + 2, D_0025E1B0);
-    STORE_POINTER(player_shot_8_flight_040 + 2, D_0025E1B0);
-    STORE_POINTER(player_shot_8_flight_041 + 2, D_0025E1B0);
-    STORE_POINTER(player_shot_8_flight_042 + 2, D_0025E1B0);
-    STORE_POINTER(player_shot_8_flight_043 + 2, D_0025E1B0);
-    STORE_POINTER(player_shot_8_flight_044 + 2, D_0025E1B0);
+    STORE_POINTER(player_shot_8_flight_028 + 2, player_shot_8_flight_028_01);
+    STORE_POINTER(player_shot_8_flight_029 + 2, player_shot_8_flight_028_01);
+    STORE_POINTER(player_shot_8_flight_030 + 2, player_shot_8_flight_028_01);
+    STORE_POINTER(player_shot_8_flight_031 + 2, player_shot_8_flight_028_01);
+    STORE_POINTER(player_shot_8_flight_032 + 2, player_shot_8_flight_028_01);
+    STORE_POINTER(player_shot_8_flight_033 + 2, player_shot_8_flight_028_01);
+    STORE_POINTER(player_shot_8_flight_034 + 2, player_shot_8_flight_028_01);
+    STORE_POINTER(player_shot_8_flight_035 + 2, player_shot_8_flight_028_01);
+    STORE_POINTER(player_shot_8_flight_036 + 2, player_shot_8_flight_028_01);
+    STORE_POINTER(player_shot_8_flight_037 + 2, player_shot_8_flight_028_01);
+    STORE_POINTER(player_shot_8_flight_038 + 2, player_shot_8_flight_028_01);
+    STORE_POINTER(player_shot_8_flight_039 + 2, player_shot_8_flight_028_01);
+    STORE_POINTER(player_shot_8_flight_040 + 2, player_shot_8_flight_028_01);
+    STORE_POINTER(player_shot_8_flight_041 + 2, player_shot_8_flight_028_01);
+    STORE_POINTER(player_shot_8_flight_042 + 2, player_shot_8_flight_028_01);
+    STORE_POINTER(player_shot_8_flight_043 + 2, player_shot_8_flight_028_01);
+    STORE_POINTER(player_shot_8_flight_044 + 2, player_shot_8_flight_028_01);
     STORE_POINTER(player_shot_8_flight_table + 96, player_shot_8_flight_048);
     STORE_POINTER(player_shot_8_flight_table + 98, player_shot_8_flight_049);
     STORE_POINTER(player_shot_8_flight_table + 100, player_shot_8_flight_050);
@@ -2674,23 +2674,23 @@ void player_shot_8_tables_init(void) {
     STORE_POINTER(player_shot_8_flight_table + 124, player_shot_8_flight_062);
     STORE_POINTER(player_shot_8_flight_table + 126, player_shot_8_flight_063);
     STORE_POINTER(player_shot_8_flight_table + 128, player_shot_8_flight_064);
-    STORE_POINTER(player_shot_8_flight_048 + 2, D_0025E1C0);
-    STORE_POINTER(player_shot_8_flight_049 + 2, D_0025E1C0);
-    STORE_POINTER(player_shot_8_flight_050 + 2, D_0025E1C0);
-    STORE_POINTER(player_shot_8_flight_051 + 2, D_0025E1C0);
-    STORE_POINTER(player_shot_8_flight_052 + 2, D_0025E1C0);
-    STORE_POINTER(player_shot_8_flight_053 + 2, D_0025E1C0);
-    STORE_POINTER(player_shot_8_flight_054 + 2, D_0025E1C0);
-    STORE_POINTER(player_shot_8_flight_055 + 2, D_0025E1C0);
-    STORE_POINTER(player_shot_8_flight_056 + 2, D_0025E1C0);
-    STORE_POINTER(player_shot_8_flight_057 + 2, D_0025E1C0);
-    STORE_POINTER(player_shot_8_flight_058 + 2, D_0025E1C0);
-    STORE_POINTER(player_shot_8_flight_059 + 2, D_0025E1C0);
-    STORE_POINTER(player_shot_8_flight_060 + 2, D_0025E1C0);
-    STORE_POINTER(player_shot_8_flight_061 + 2, D_0025E1C0);
-    STORE_POINTER(player_shot_8_flight_062 + 2, D_0025E1C0);
-    STORE_POINTER(player_shot_8_flight_063 + 2, D_0025E1C0);
-    STORE_POINTER(player_shot_8_flight_064 + 2, D_0025E1C0);
+    STORE_POINTER(player_shot_8_flight_048 + 2, player_shot_8_flight_048_01);
+    STORE_POINTER(player_shot_8_flight_049 + 2, player_shot_8_flight_048_01);
+    STORE_POINTER(player_shot_8_flight_050 + 2, player_shot_8_flight_048_01);
+    STORE_POINTER(player_shot_8_flight_051 + 2, player_shot_8_flight_048_01);
+    STORE_POINTER(player_shot_8_flight_052 + 2, player_shot_8_flight_048_01);
+    STORE_POINTER(player_shot_8_flight_053 + 2, player_shot_8_flight_048_01);
+    STORE_POINTER(player_shot_8_flight_054 + 2, player_shot_8_flight_048_01);
+    STORE_POINTER(player_shot_8_flight_055 + 2, player_shot_8_flight_048_01);
+    STORE_POINTER(player_shot_8_flight_056 + 2, player_shot_8_flight_048_01);
+    STORE_POINTER(player_shot_8_flight_057 + 2, player_shot_8_flight_048_01);
+    STORE_POINTER(player_shot_8_flight_058 + 2, player_shot_8_flight_048_01);
+    STORE_POINTER(player_shot_8_flight_059 + 2, player_shot_8_flight_048_01);
+    STORE_POINTER(player_shot_8_flight_060 + 2, player_shot_8_flight_048_01);
+    STORE_POINTER(player_shot_8_flight_061 + 2, player_shot_8_flight_048_01);
+    STORE_POINTER(player_shot_8_flight_062 + 2, player_shot_8_flight_048_01);
+    STORE_POINTER(player_shot_8_flight_063 + 2, player_shot_8_flight_048_01);
+    STORE_POINTER(player_shot_8_flight_064 + 2, player_shot_8_flight_048_01);
     STORE_POINTER(player_shot_8_flight_table + 136, player_shot_8_flight_068);
     STORE_POINTER(player_shot_8_flight_table + 138, player_shot_8_flight_069);
     STORE_POINTER(player_shot_8_flight_table + 140, player_shot_8_flight_070);
@@ -2708,23 +2708,23 @@ void player_shot_8_tables_init(void) {
     STORE_POINTER(player_shot_8_flight_table + 164, player_shot_8_flight_082);
     STORE_POINTER(player_shot_8_flight_table + 166, player_shot_8_flight_083);
     STORE_POINTER(player_shot_8_flight_table + 168, player_shot_8_flight_084);
-    STORE_POINTER(player_shot_8_flight_068 + 2, D_0025E1D0);
-    STORE_POINTER(player_shot_8_flight_069 + 2, D_0025E1D0);
-    STORE_POINTER(player_shot_8_flight_070 + 2, D_0025E1D0);
-    STORE_POINTER(player_shot_8_flight_071 + 2, D_0025E1D0);
-    STORE_POINTER(player_shot_8_flight_072 + 2, D_0025E1D0);
-    STORE_POINTER(player_shot_8_flight_073 + 2, D_0025E1D0);
-    STORE_POINTER(player_shot_8_flight_074 + 2, D_0025E1D0);
-    STORE_POINTER(player_shot_8_flight_075 + 2, D_0025E1D0);
-    STORE_POINTER(player_shot_8_flight_076 + 2, D_0025E1D0);
-    STORE_POINTER(player_shot_8_flight_077 + 2, D_0025E1D0);
-    STORE_POINTER(player_shot_8_flight_078 + 2, D_0025E1D0);
-    STORE_POINTER(player_shot_8_flight_079 + 2, D_0025E1D0);
-    STORE_POINTER(player_shot_8_flight_080 + 2, D_0025E1D0);
-    STORE_POINTER(player_shot_8_flight_081 + 2, D_0025E1D0);
-    STORE_POINTER(player_shot_8_flight_082 + 2, D_0025E1D0);
-    STORE_POINTER(player_shot_8_flight_083 + 2, D_0025E1D0);
-    STORE_POINTER(player_shot_8_flight_084 + 2, D_0025E1D0);
+    STORE_POINTER(player_shot_8_flight_068 + 2, player_shot_8_flight_068_01);
+    STORE_POINTER(player_shot_8_flight_069 + 2, player_shot_8_flight_068_01);
+    STORE_POINTER(player_shot_8_flight_070 + 2, player_shot_8_flight_068_01);
+    STORE_POINTER(player_shot_8_flight_071 + 2, player_shot_8_flight_068_01);
+    STORE_POINTER(player_shot_8_flight_072 + 2, player_shot_8_flight_068_01);
+    STORE_POINTER(player_shot_8_flight_073 + 2, player_shot_8_flight_068_01);
+    STORE_POINTER(player_shot_8_flight_074 + 2, player_shot_8_flight_068_01);
+    STORE_POINTER(player_shot_8_flight_075 + 2, player_shot_8_flight_068_01);
+    STORE_POINTER(player_shot_8_flight_076 + 2, player_shot_8_flight_068_01);
+    STORE_POINTER(player_shot_8_flight_077 + 2, player_shot_8_flight_068_01);
+    STORE_POINTER(player_shot_8_flight_078 + 2, player_shot_8_flight_068_01);
+    STORE_POINTER(player_shot_8_flight_079 + 2, player_shot_8_flight_068_01);
+    STORE_POINTER(player_shot_8_flight_080 + 2, player_shot_8_flight_068_01);
+    STORE_POINTER(player_shot_8_flight_081 + 2, player_shot_8_flight_068_01);
+    STORE_POINTER(player_shot_8_flight_082 + 2, player_shot_8_flight_068_01);
+    STORE_POINTER(player_shot_8_flight_083 + 2, player_shot_8_flight_068_01);
+    STORE_POINTER(player_shot_8_flight_084 + 2, player_shot_8_flight_068_01);
     STORE_POINTER(player_shot_8_flight_table + 176, player_shot_8_flight_088);
     STORE_POINTER(player_shot_8_flight_table + 178, player_shot_8_flight_089);
     STORE_POINTER(player_shot_8_flight_table + 180, player_shot_8_flight_090);
@@ -2742,40 +2742,40 @@ void player_shot_8_tables_init(void) {
     STORE_POINTER(player_shot_8_flight_table + 204, player_shot_8_flight_102);
     STORE_POINTER(player_shot_8_flight_table + 206, player_shot_8_flight_103);
     STORE_POINTER(player_shot_8_flight_table + 208, player_shot_8_flight_104);
-    STORE_POINTER(player_shot_8_flight_088 + 2, D_0025E1E0);
-    STORE_POINTER(player_shot_8_flight_089 + 2, D_0025E1E0);
-    STORE_POINTER(player_shot_8_flight_090 + 2, D_0025E1E0);
-    STORE_POINTER(player_shot_8_flight_091 + 2, D_0025E1E0);
-    STORE_POINTER(player_shot_8_flight_092 + 2, D_0025E1E0);
-    STORE_POINTER(player_shot_8_flight_093 + 2, D_0025E1E0);
-    STORE_POINTER(player_shot_8_flight_094 + 2, D_0025E1E0);
-    STORE_POINTER(player_shot_8_flight_095 + 2, D_0025E1E0);
-    STORE_POINTER(player_shot_8_flight_096 + 2, D_0025E1E0);
-    STORE_POINTER(player_shot_8_flight_097 + 2, D_0025E1E0);
-    STORE_POINTER(player_shot_8_flight_098 + 2, D_0025E1E0);
-    STORE_POINTER(player_shot_8_flight_099 + 2, D_0025E1E0);
-    STORE_POINTER(player_shot_8_flight_100 + 2, D_0025E1E0);
-    STORE_POINTER(player_shot_8_flight_101 + 2, D_0025E1E0);
-    STORE_POINTER(player_shot_8_flight_102 + 2, D_0025E1E0);
-    STORE_POINTER(player_shot_8_flight_103 + 2, D_0025E1E0);
-    STORE_POINTER(player_shot_8_flight_104 + 2, D_0025E1E0);
-    STORE_POINTER(D_0025E940, D_0028D8D8);
-    STORE_POINTER(D_0025E940 + 2, D_0028D8E0);
-    STORE_POINTER(D_0025E940 + 4, D_0028D8E8);
-    STORE_POINTER(D_0025E940 + 6, D_0028D8F0);
-    STORE_POINTER(D_0025E940 + 8, D_0028D8F8);
-    STORE_POINTER(D_0025E940 + 10, D_0028D900);
-    STORE_POINTER(D_0025E940 + 12, D_0028D908);
-    STORE_POINTER(D_0025E940 + 14, D_0028D910);
-    STORE_POINTER(D_0025E940 + 16, D_0028D918);
-    STORE_POINTER(D_0025E940 + 18, D_0028D920);
-    STORE_POINTER(D_0025E940 + 20, D_0028D928);
-    STORE_POINTER(D_0025E940 + 22, D_0028D930);
-    STORE_POINTER(D_0025E940 + 24, D_0028D938);
-    STORE_POINTER(D_0025E940 + 26, D_0028D940);
-    STORE_POINTER(D_0025E940 + 28, D_0028D948);
-    STORE_POINTER(D_0025E940 + 30, D_0028D950);
-    STORE_POINTER(D_0025E940 + 32, D_0028D958);
+    STORE_POINTER(player_shot_8_flight_088 + 2, player_shot_8_flight_088_01);
+    STORE_POINTER(player_shot_8_flight_089 + 2, player_shot_8_flight_088_01);
+    STORE_POINTER(player_shot_8_flight_090 + 2, player_shot_8_flight_088_01);
+    STORE_POINTER(player_shot_8_flight_091 + 2, player_shot_8_flight_088_01);
+    STORE_POINTER(player_shot_8_flight_092 + 2, player_shot_8_flight_088_01);
+    STORE_POINTER(player_shot_8_flight_093 + 2, player_shot_8_flight_088_01);
+    STORE_POINTER(player_shot_8_flight_094 + 2, player_shot_8_flight_088_01);
+    STORE_POINTER(player_shot_8_flight_095 + 2, player_shot_8_flight_088_01);
+    STORE_POINTER(player_shot_8_flight_096 + 2, player_shot_8_flight_088_01);
+    STORE_POINTER(player_shot_8_flight_097 + 2, player_shot_8_flight_088_01);
+    STORE_POINTER(player_shot_8_flight_098 + 2, player_shot_8_flight_088_01);
+    STORE_POINTER(player_shot_8_flight_099 + 2, player_shot_8_flight_088_01);
+    STORE_POINTER(player_shot_8_flight_100 + 2, player_shot_8_flight_088_01);
+    STORE_POINTER(player_shot_8_flight_101 + 2, player_shot_8_flight_088_01);
+    STORE_POINTER(player_shot_8_flight_102 + 2, player_shot_8_flight_088_01);
+    STORE_POINTER(player_shot_8_flight_103 + 2, player_shot_8_flight_088_01);
+    STORE_POINTER(player_shot_8_flight_104 + 2, player_shot_8_flight_088_01);
+    STORE_POINTER(option_shot_list_3_03_00_00, D_0028D8D8);
+    STORE_POINTER(option_shot_list_3_03_00_00 + 2, D_0028D8E0);
+    STORE_POINTER(option_shot_list_3_03_00_00 + 4, D_0028D8E8);
+    STORE_POINTER(option_shot_list_3_03_00_00 + 6, D_0028D8F0);
+    STORE_POINTER(option_shot_list_3_03_00_00 + 8, D_0028D8F8);
+    STORE_POINTER(option_shot_list_3_03_00_00 + 10, D_0028D900);
+    STORE_POINTER(option_shot_list_3_03_00_00 + 12, D_0028D908);
+    STORE_POINTER(option_shot_list_3_03_00_00 + 14, D_0028D910);
+    STORE_POINTER(option_shot_list_3_03_00_00 + 16, D_0028D918);
+    STORE_POINTER(option_shot_list_3_03_00_00 + 18, D_0028D920);
+    STORE_POINTER(option_shot_list_3_03_00_00 + 20, D_0028D928);
+    STORE_POINTER(option_shot_list_3_03_00_00 + 22, D_0028D930);
+    STORE_POINTER(option_shot_list_3_03_00_00 + 24, D_0028D938);
+    STORE_POINTER(option_shot_list_3_03_00_00 + 26, D_0028D940);
+    STORE_POINTER(option_shot_list_3_03_00_00 + 28, D_0028D948);
+    STORE_POINTER(option_shot_list_3_03_00_00 + 30, D_0028D950);
+    STORE_POINTER(option_shot_list_3_03_00_00 + 32, D_0028D958);
     STORE_POINTER(D_0028D8D8 + 2, D_0025E1F0);
     STORE_POINTER(D_0028D8E0 + 2, D_0025E1F0);
     STORE_POINTER(D_0028D8E8 + 2, D_0025E1F0);
@@ -3383,10 +3383,10 @@ void func_001828A0(void) {
     STORE_POINTER(D_0028C5E0 + 8, D_00261EB0);
 }
 
-extern u16 D_00256180[];
-extern u16 D_002561C0[];
-extern u16 D_00256200[];
-extern u16 D_00256240[];
+extern u16 laser_power_length_00_05[];
+extern u16 laser_power_length_05_05[];
+extern u16 laser_strong_param_00_05[];
+extern u16 laser_hyper_param_00_05[];
 extern u16 laser_head_sprites_00_00_01[];
 extern u16 laser_head_sprites_00_01_01[];
 extern u16 laser_head_sprites_00_02_01[];
@@ -3407,11 +3407,11 @@ extern u16 D_00256E50[];
 extern u16 D_00256E70[];
 extern u16 D_00256E90[];
 extern u16 D_00256EB0[];
-extern u16 D_00256ED0[];
-extern u16 D_00256F00[];
-extern u16 D_00256F30[];
-extern u16 D_00256F60[];
-extern u16 D_00256F90[];
+extern u16 laser_power_length_00_07[];
+extern u16 laser_power_length_05_07[];
+extern u16 laser_strong_param_00_07[];
+extern u16 laser_strong_param_05_07[];
+extern u16 laser_hyper_param_00_07[];
 extern u16 D_00256FC0[];
 extern u16 D_00256FD8[];
 extern u16 D_00256FE8[];
@@ -3458,12 +3458,12 @@ extern u16 laser_power_length_06_08[];
 extern u16 laser_power_length_07_08[];
 extern u16 laser_power_length_08_08[];
 extern u16 laser_power_length_09_08[];
-extern u16 D_00257318[];
-extern u16 D_00257328[];
-extern u16 D_00257338[];
-extern u16 D_00257348[];
-extern u16 D_00257358[];
-extern u16 D_002573A8[];
+extern u16 laser_strong_param_00_08[];
+extern u16 laser_strong_param_01_08[];
+extern u16 laser_strong_param_02_08[];
+extern u16 laser_strong_param_03_08[];
+extern u16 laser_strong_param_04_08[];
+extern u16 laser_hyper_param_00_08[];
 extern u16 D_002573C0[];
 extern u16 D_002573F0[];
 extern u16 D_00257420[];
@@ -3480,95 +3480,95 @@ extern u16 D_00257600[];
 extern u16 D_00257630[];
 extern u16 D_00257660[];
 extern u16 D_00257690[];
-extern u16 D_0028C950[];
-extern u16 D_0028C958[];
-extern u16 D_0028C960[];
-extern u16 D_0028C968[];
-extern u16 D_0028C970[];
-extern u16 D_0028C978[];
-extern u16 D_0028C980[];
-extern u16 D_0028C988[];
-extern u16 D_0028C990[];
-extern u16 D_0028C998[];
-extern u16 D_0028C9A0[];
+extern u16 laser_beam_sprites_00_00_05[];
+extern u16 laser_beam_sprites_00_01_05[];
+extern u16 laser_beam_sprites_00_02_05[];
+extern u16 laser_beam_sprites_00_03_05[];
+extern u16 laser_beam_sprites_00_04_05[];
+extern u16 laser_beam_sprites_01_00_05[];
+extern u16 laser_beam_sprites_01_01_05[];
+extern u16 laser_beam_sprites_01_02_05[];
+extern u16 laser_beam_sprites_01_03_05[];
+extern u16 laser_beam_sprites_01_04_05[];
+extern u16 laser_hyper_beam_sprite_00_05[];
 
 
 void func_001829B0(void) {
-    STORE_POINTER(laser_power_length_00 + 10, D_00256180);
-    STORE_POINTER(laser_power_length_00 + 15, D_00256ED0);
+    STORE_POINTER(laser_power_length_00 + 10, laser_power_length_00_05);
+    STORE_POINTER(laser_power_length_00 + 15, laser_power_length_00_07);
     STORE_POINTER(laser_power_length_00 + 17, laser_power_length_00_08);
-    STORE_POINTER(laser_power_length_01 + 10, D_00256180);
-    STORE_POINTER(laser_power_length_01 + 15, D_00256ED0);
+    STORE_POINTER(laser_power_length_01 + 10, laser_power_length_00_05);
+    STORE_POINTER(laser_power_length_01 + 15, laser_power_length_00_07);
     STORE_POINTER(laser_power_length_01 + 17, laser_power_length_01_08);
-    STORE_POINTER(laser_power_length_02 + 10, D_00256180);
-    STORE_POINTER(laser_power_length_02 + 15, D_00256ED0);
+    STORE_POINTER(laser_power_length_02 + 10, laser_power_length_00_05);
+    STORE_POINTER(laser_power_length_02 + 15, laser_power_length_00_07);
     STORE_POINTER(laser_power_length_02 + 17, laser_power_length_02_08);
-    STORE_POINTER(laser_power_length_03 + 10, D_00256180);
-    STORE_POINTER(laser_power_length_03 + 15, D_00256ED0);
+    STORE_POINTER(laser_power_length_03 + 10, laser_power_length_00_05);
+    STORE_POINTER(laser_power_length_03 + 15, laser_power_length_00_07);
     STORE_POINTER(laser_power_length_03 + 17, laser_power_length_03_08);
-    STORE_POINTER(laser_power_length_04 + 10, D_00256180);
-    STORE_POINTER(laser_power_length_04 + 15, D_00256ED0);
+    STORE_POINTER(laser_power_length_04 + 10, laser_power_length_00_05);
+    STORE_POINTER(laser_power_length_04 + 15, laser_power_length_00_07);
     STORE_POINTER(laser_power_length_04 + 17, laser_power_length_04_08);
-    STORE_POINTER(laser_power_length_05 + 10, D_002561C0);
-    STORE_POINTER(laser_power_length_05 + 15, D_00256F00);
+    STORE_POINTER(laser_power_length_05 + 10, laser_power_length_05_05);
+    STORE_POINTER(laser_power_length_05 + 15, laser_power_length_05_07);
     STORE_POINTER(laser_power_length_05 + 17, laser_power_length_05_08);
-    STORE_POINTER(laser_power_length_06 + 10, D_002561C0);
-    STORE_POINTER(laser_power_length_06 + 15, D_00256F00);
+    STORE_POINTER(laser_power_length_06 + 10, laser_power_length_05_05);
+    STORE_POINTER(laser_power_length_06 + 15, laser_power_length_05_07);
     STORE_POINTER(laser_power_length_06 + 17, laser_power_length_06_08);
-    STORE_POINTER(laser_power_length_07 + 10, D_002561C0);
-    STORE_POINTER(laser_power_length_07 + 15, D_00256F00);
+    STORE_POINTER(laser_power_length_07 + 10, laser_power_length_05_05);
+    STORE_POINTER(laser_power_length_07 + 15, laser_power_length_05_07);
     STORE_POINTER(laser_power_length_07 + 17, laser_power_length_07_08);
-    STORE_POINTER(laser_power_length_08 + 10, D_002561C0);
-    STORE_POINTER(laser_power_length_08 + 15, D_00256F00);
+    STORE_POINTER(laser_power_length_08 + 10, laser_power_length_05_05);
+    STORE_POINTER(laser_power_length_08 + 15, laser_power_length_05_07);
     STORE_POINTER(laser_power_length_08 + 17, laser_power_length_08_08);
-    STORE_POINTER(laser_power_length_09 + 10, D_002561C0);
-    STORE_POINTER(laser_power_length_09 + 15, D_00256F00);
+    STORE_POINTER(laser_power_length_09 + 10, laser_power_length_05_05);
+    STORE_POINTER(laser_power_length_09 + 15, laser_power_length_05_07);
     STORE_POINTER(laser_power_length_09 + 17, laser_power_length_09_08);
-    STORE_POINTER(laser_strong_param_00 + 10, D_00256200);
-    STORE_POINTER(laser_strong_param_00 + 15, D_00256F30);
-    STORE_POINTER(laser_strong_param_00 + 17, D_00257318);
-    STORE_POINTER(laser_strong_param_01 + 10, D_00256200);
-    STORE_POINTER(laser_strong_param_01 + 15, D_00256F30);
-    STORE_POINTER(laser_strong_param_01 + 17, D_00257328);
-    STORE_POINTER(laser_strong_param_02 + 10, D_00256200);
-    STORE_POINTER(laser_strong_param_02 + 15, D_00256F30);
-    STORE_POINTER(laser_strong_param_02 + 17, D_00257338);
-    STORE_POINTER(laser_strong_param_03 + 10, D_00256200);
-    STORE_POINTER(laser_strong_param_03 + 15, D_00256F30);
-    STORE_POINTER(laser_strong_param_03 + 17, D_00257348);
-    STORE_POINTER(laser_strong_param_04 + 10, D_00256200);
-    STORE_POINTER(laser_strong_param_04 + 15, D_00256F30);
-    STORE_POINTER(laser_strong_param_04 + 17, D_00257358);
-    STORE_POINTER(laser_strong_param_05 + 10, D_00256200);
-    STORE_POINTER(laser_strong_param_05 + 15, D_00256F60);
-    STORE_POINTER(laser_strong_param_05 + 17, D_00257318);
-    STORE_POINTER(laser_strong_param_06 + 10, D_00256200);
-    STORE_POINTER(laser_strong_param_06 + 15, D_00256F60);
-    STORE_POINTER(laser_strong_param_06 + 17, D_00257328);
-    STORE_POINTER(laser_strong_param_07 + 10, D_00256200);
-    STORE_POINTER(laser_strong_param_07 + 15, D_00256F60);
-    STORE_POINTER(laser_strong_param_07 + 17, D_00257338);
-    STORE_POINTER(laser_strong_param_08 + 10, D_00256200);
-    STORE_POINTER(laser_strong_param_08 + 15, D_00256F60);
-    STORE_POINTER(laser_strong_param_08 + 17, D_00257348);
-    STORE_POINTER(laser_strong_param_09 + 10, D_00256200);
-    STORE_POINTER(laser_strong_param_09 + 15, D_00256F60);
-    STORE_POINTER(laser_strong_param_09 + 17, D_00257358);
-    STORE_POINTER(laser_hyper_param_00 + 10, D_00256240);
-    STORE_POINTER(laser_hyper_param_00 + 15, D_00256F90);
-    STORE_POINTER(laser_hyper_param_00 + 17, D_002573A8);
-    STORE_POINTER(laser_hyper_param_01 + 10, D_00256240);
-    STORE_POINTER(laser_hyper_param_01 + 15, D_00256F90);
-    STORE_POINTER(laser_hyper_param_01 + 17, D_002573A8);
-    STORE_POINTER(laser_hyper_param_02 + 10, D_00256240);
-    STORE_POINTER(laser_hyper_param_02 + 15, D_00256F90);
-    STORE_POINTER(laser_hyper_param_02 + 17, D_002573A8);
-    STORE_POINTER(laser_hyper_param_03 + 10, D_00256240);
-    STORE_POINTER(laser_hyper_param_03 + 15, D_00256F90);
-    STORE_POINTER(laser_hyper_param_03 + 17, D_002573A8);
-    STORE_POINTER(laser_hyper_param_04 + 10, D_00256240);
-    STORE_POINTER(laser_hyper_param_04 + 15, D_00256F90);
-    STORE_POINTER(laser_hyper_param_04 + 17, D_002573A8);
+    STORE_POINTER(laser_strong_param_00 + 10, laser_strong_param_00_05);
+    STORE_POINTER(laser_strong_param_00 + 15, laser_strong_param_00_07);
+    STORE_POINTER(laser_strong_param_00 + 17, laser_strong_param_00_08);
+    STORE_POINTER(laser_strong_param_01 + 10, laser_strong_param_00_05);
+    STORE_POINTER(laser_strong_param_01 + 15, laser_strong_param_00_07);
+    STORE_POINTER(laser_strong_param_01 + 17, laser_strong_param_01_08);
+    STORE_POINTER(laser_strong_param_02 + 10, laser_strong_param_00_05);
+    STORE_POINTER(laser_strong_param_02 + 15, laser_strong_param_00_07);
+    STORE_POINTER(laser_strong_param_02 + 17, laser_strong_param_02_08);
+    STORE_POINTER(laser_strong_param_03 + 10, laser_strong_param_00_05);
+    STORE_POINTER(laser_strong_param_03 + 15, laser_strong_param_00_07);
+    STORE_POINTER(laser_strong_param_03 + 17, laser_strong_param_03_08);
+    STORE_POINTER(laser_strong_param_04 + 10, laser_strong_param_00_05);
+    STORE_POINTER(laser_strong_param_04 + 15, laser_strong_param_00_07);
+    STORE_POINTER(laser_strong_param_04 + 17, laser_strong_param_04_08);
+    STORE_POINTER(laser_strong_param_05 + 10, laser_strong_param_00_05);
+    STORE_POINTER(laser_strong_param_05 + 15, laser_strong_param_05_07);
+    STORE_POINTER(laser_strong_param_05 + 17, laser_strong_param_00_08);
+    STORE_POINTER(laser_strong_param_06 + 10, laser_strong_param_00_05);
+    STORE_POINTER(laser_strong_param_06 + 15, laser_strong_param_05_07);
+    STORE_POINTER(laser_strong_param_06 + 17, laser_strong_param_01_08);
+    STORE_POINTER(laser_strong_param_07 + 10, laser_strong_param_00_05);
+    STORE_POINTER(laser_strong_param_07 + 15, laser_strong_param_05_07);
+    STORE_POINTER(laser_strong_param_07 + 17, laser_strong_param_02_08);
+    STORE_POINTER(laser_strong_param_08 + 10, laser_strong_param_00_05);
+    STORE_POINTER(laser_strong_param_08 + 15, laser_strong_param_05_07);
+    STORE_POINTER(laser_strong_param_08 + 17, laser_strong_param_03_08);
+    STORE_POINTER(laser_strong_param_09 + 10, laser_strong_param_00_05);
+    STORE_POINTER(laser_strong_param_09 + 15, laser_strong_param_05_07);
+    STORE_POINTER(laser_strong_param_09 + 17, laser_strong_param_04_08);
+    STORE_POINTER(laser_hyper_param_00 + 10, laser_hyper_param_00_05);
+    STORE_POINTER(laser_hyper_param_00 + 15, laser_hyper_param_00_07);
+    STORE_POINTER(laser_hyper_param_00 + 17, laser_hyper_param_00_08);
+    STORE_POINTER(laser_hyper_param_01 + 10, laser_hyper_param_00_05);
+    STORE_POINTER(laser_hyper_param_01 + 15, laser_hyper_param_00_07);
+    STORE_POINTER(laser_hyper_param_01 + 17, laser_hyper_param_00_08);
+    STORE_POINTER(laser_hyper_param_02 + 10, laser_hyper_param_00_05);
+    STORE_POINTER(laser_hyper_param_02 + 15, laser_hyper_param_00_07);
+    STORE_POINTER(laser_hyper_param_02 + 17, laser_hyper_param_00_08);
+    STORE_POINTER(laser_hyper_param_03 + 10, laser_hyper_param_00_05);
+    STORE_POINTER(laser_hyper_param_03 + 15, laser_hyper_param_00_07);
+    STORE_POINTER(laser_hyper_param_03 + 17, laser_hyper_param_00_08);
+    STORE_POINTER(laser_hyper_param_04 + 10, laser_hyper_param_00_05);
+    STORE_POINTER(laser_hyper_param_04 + 15, laser_hyper_param_00_07);
+    STORE_POINTER(laser_hyper_param_04 + 17, laser_hyper_param_00_08);
     STORE_POINTER(laser_head_sprites_00_00 + 3, laser_head_sprites_00_00_01);
     STORE_POINTER(laser_head_sprites_00_01 + 3, laser_head_sprites_00_01_01);
     STORE_POINTER(laser_head_sprites_00_02 + 3, laser_head_sprites_00_02_01);
@@ -3585,41 +3585,41 @@ void func_001829B0(void) {
     STORE_POINTER(laser_strong_head_sprite_03 + 3, laser_strong_head_sprite_03_01);
     STORE_POINTER(laser_strong_head_sprite_04 + 3, laser_strong_head_sprite_04_01);
     STORE_POINTER(laser_hyper_head_sprite_00 + 3, laser_hyper_head_sprite_00_01);
-    STORE_POINTER(laser_beam_sprites_00_00 + 10, D_0028C950);
-    STORE_POINTER(laser_beam_sprites_00_01 + 10, D_0028C958);
-    STORE_POINTER(laser_beam_sprites_00_02 + 10, D_0028C960);
-    STORE_POINTER(laser_beam_sprites_00_03 + 10, D_0028C968);
-    STORE_POINTER(laser_beam_sprites_00_04 + 10, D_0028C970);
-    STORE_POINTER(laser_beam_sprites_01_00 + 10, D_0028C978);
-    STORE_POINTER(laser_beam_sprites_01_01 + 10, D_0028C980);
-    STORE_POINTER(laser_beam_sprites_01_02 + 10, D_0028C988);
-    STORE_POINTER(laser_beam_sprites_01_03 + 10, D_0028C990);
-    STORE_POINTER(laser_beam_sprites_01_04 + 10, D_0028C998);
-    STORE_POINTER(laser_strong_beam_sprites_00_00 + 10, D_0028C950);
-    STORE_POINTER(laser_strong_beam_sprites_00_01 + 10, D_0028C958);
-    STORE_POINTER(laser_strong_beam_sprites_00_02 + 10, D_0028C960);
-    STORE_POINTER(laser_strong_beam_sprites_00_03 + 10, D_0028C968);
-    STORE_POINTER(laser_strong_beam_sprites_00_04 + 10, D_0028C970);
-    STORE_POINTER(laser_strong_beam_sprites_01_00 + 10, D_0028C978);
-    STORE_POINTER(laser_strong_beam_sprites_01_01 + 10, D_0028C980);
-    STORE_POINTER(laser_strong_beam_sprites_01_02 + 10, D_0028C988);
-    STORE_POINTER(laser_strong_beam_sprites_01_03 + 10, D_0028C990);
-    STORE_POINTER(laser_strong_beam_sprites_01_04 + 10, D_0028C998);
-    STORE_POINTER(laser_hyper_beam_sprite_00 + 10, D_0028C9A0);
-    STORE_POINTER(laser_hyper_beam_sprite_01 + 10, D_0028C9A0);
-    STORE_POINTER(laser_hyper_beam_sprite_02 + 10, D_0028C9A0);
-    STORE_POINTER(laser_hyper_beam_sprite_03 + 10, D_0028C9A0);
-    STORE_POINTER(laser_hyper_beam_sprite_04 + 10, D_0028C9A0);
-    STORE_POINTER(D_00256ED0 + 9, D_00256E50);
-    STORE_POINTER(D_00256ED0 + 15, D_00256FC0);
-    STORE_POINTER(D_00256F00 + 9, D_00256E70);
-    STORE_POINTER(D_00256F00 + 15, D_00257030);
-    STORE_POINTER(D_00256F30 + 9, D_00256E90);
-    STORE_POINTER(D_00256F30 + 15, D_002570A0);
-    STORE_POINTER(D_00256F60 + 9, D_00256E90);
-    STORE_POINTER(D_00256F60 + 15, D_002570A0);
-    STORE_POINTER(D_00256F90 + 9, D_00256EB0);
-    STORE_POINTER(D_00256F90 + 15, D_00257110);
+    STORE_POINTER(laser_beam_sprites_00_00 + 10, laser_beam_sprites_00_00_05);
+    STORE_POINTER(laser_beam_sprites_00_01 + 10, laser_beam_sprites_00_01_05);
+    STORE_POINTER(laser_beam_sprites_00_02 + 10, laser_beam_sprites_00_02_05);
+    STORE_POINTER(laser_beam_sprites_00_03 + 10, laser_beam_sprites_00_03_05);
+    STORE_POINTER(laser_beam_sprites_00_04 + 10, laser_beam_sprites_00_04_05);
+    STORE_POINTER(laser_beam_sprites_01_00 + 10, laser_beam_sprites_01_00_05);
+    STORE_POINTER(laser_beam_sprites_01_01 + 10, laser_beam_sprites_01_01_05);
+    STORE_POINTER(laser_beam_sprites_01_02 + 10, laser_beam_sprites_01_02_05);
+    STORE_POINTER(laser_beam_sprites_01_03 + 10, laser_beam_sprites_01_03_05);
+    STORE_POINTER(laser_beam_sprites_01_04 + 10, laser_beam_sprites_01_04_05);
+    STORE_POINTER(laser_strong_beam_sprites_00_00 + 10, laser_beam_sprites_00_00_05);
+    STORE_POINTER(laser_strong_beam_sprites_00_01 + 10, laser_beam_sprites_00_01_05);
+    STORE_POINTER(laser_strong_beam_sprites_00_02 + 10, laser_beam_sprites_00_02_05);
+    STORE_POINTER(laser_strong_beam_sprites_00_03 + 10, laser_beam_sprites_00_03_05);
+    STORE_POINTER(laser_strong_beam_sprites_00_04 + 10, laser_beam_sprites_00_04_05);
+    STORE_POINTER(laser_strong_beam_sprites_01_00 + 10, laser_beam_sprites_01_00_05);
+    STORE_POINTER(laser_strong_beam_sprites_01_01 + 10, laser_beam_sprites_01_01_05);
+    STORE_POINTER(laser_strong_beam_sprites_01_02 + 10, laser_beam_sprites_01_02_05);
+    STORE_POINTER(laser_strong_beam_sprites_01_03 + 10, laser_beam_sprites_01_03_05);
+    STORE_POINTER(laser_strong_beam_sprites_01_04 + 10, laser_beam_sprites_01_04_05);
+    STORE_POINTER(laser_hyper_beam_sprite_00 + 10, laser_hyper_beam_sprite_00_05);
+    STORE_POINTER(laser_hyper_beam_sprite_01 + 10, laser_hyper_beam_sprite_00_05);
+    STORE_POINTER(laser_hyper_beam_sprite_02 + 10, laser_hyper_beam_sprite_00_05);
+    STORE_POINTER(laser_hyper_beam_sprite_03 + 10, laser_hyper_beam_sprite_00_05);
+    STORE_POINTER(laser_hyper_beam_sprite_04 + 10, laser_hyper_beam_sprite_00_05);
+    STORE_POINTER(laser_power_length_00_07 + 9, D_00256E50);
+    STORE_POINTER(laser_power_length_00_07 + 15, D_00256FC0);
+    STORE_POINTER(laser_power_length_05_07 + 9, D_00256E70);
+    STORE_POINTER(laser_power_length_05_07 + 15, D_00257030);
+    STORE_POINTER(laser_strong_param_00_07 + 9, D_00256E90);
+    STORE_POINTER(laser_strong_param_00_07 + 15, D_002570A0);
+    STORE_POINTER(laser_strong_param_05_07 + 9, D_00256E90);
+    STORE_POINTER(laser_strong_param_05_07 + 15, D_002570A0);
+    STORE_POINTER(laser_hyper_param_00_07 + 9, D_00256EB0);
+    STORE_POINTER(laser_hyper_param_00_07 + 15, D_00257110);
     STORE_POINTER(D_00256FC0, D_00256FD8);
     STORE_POINTER(D_00256FC0 + 2, D_00256FE8);
     STORE_POINTER(D_00256FC0 + 4, D_00256FF8);
@@ -4219,41 +4219,41 @@ void func_00186A80(void) {
 
 
 extern u16 D_00247080[];
-extern u16 D_00261630[];
-extern void func_001D5780(void);
+extern u16 stage3_midboss_flash_palettes_05[];
+extern void stage3_midboss_mode_00(void);
 extern void func_001D58F0(void);
 extern void func_001D5CA0(void);
-extern void func_001D60F0(void);
+extern void stage3_midboss2_state_0_04(void);
 extern void func_001D6160(void);
 extern void func_001D6410(void);
 extern void func_001D6830(void);
 
-extern u16 D_002635C0_as_u16_a[];
+extern u16 stage3_midboss_mode_routines_as_u16_a[];
 extern u16 D_002635C2[];
-extern u16 D_00263610_as_u16_a[];
+extern u16 stage3_midboss2_state_routines_1_as_u16_a[];
 extern u16 D_00263612[];
 
 void func_00186CA0(void) {
-    if (D_00263390[103] != 0x67) {
+    if (stage3_midboss_table[103] != 0x67) {
         printf("error! st3mb_tbl[103]\n");
     }
-    STORE_POINTER(D_00263390 + 103, D_0028C0D0);
-    if (D_00263590[4] != 0x4) {
+    STORE_POINTER(stage3_midboss_table + 103, D_0028C0D0);
+    if (stage3_midboss_flash_palettes[4] != 0x4) {
         printf("error! st3mbflush0_tbl[4]\n");
     }
-    STORE_POINTER(D_00263590 + 4, D_002610F0);
-    if (D_00263590[11] != 0xb) {
+    STORE_POINTER(stage3_midboss_flash_palettes + 4, D_002610F0);
+    if (stage3_midboss_flash_palettes[11] != 0xb) {
         printf("error! st3mbflush0_tbl[11]\n");
     }
-    STORE_POINTER(D_00263590 + 11, D_00261630);
-    if (D_00263590[18] != 0x12) {
+    STORE_POINTER(stage3_midboss_flash_palettes + 11, stage3_midboss_flash_palettes_05);
+    if (stage3_midboss_flash_palettes[18] != 0x12) {
         printf("error! st3mbflush0_tbl[18]\n");
     }
-    STORE_POINTER(D_00263590 + 18, D_00247080);
-    if (D_002635C0_as_u16_a[0] != 0x0) {
+    STORE_POINTER(stage3_midboss_flash_palettes + 18, D_00247080);
+    if (stage3_midboss_mode_routines_as_u16_a[0] != 0x0) {
         printf("error! st3mb_md_tbl[0]\n");
     }
-    STORE_POINTER(D_002635C0_as_u16_a, func_001D5780);
+    STORE_POINTER(stage3_midboss_mode_routines_as_u16_a, stage3_midboss_mode_00);
     if (D_002635C2[1] != 0x2) {
         printf("error! st3mb_md_tbl[2]\n");
     }
@@ -4278,42 +4278,42 @@ void func_00186CA0(void) {
         printf("error! st3mb_md_tbl[12]\n");
     }
     STORE_POINTER(D_002635C2 + 11, func_001D6830);
-    if (D_002635E0[8] != 0x0) {
+    if (stage3_midboss2_state_routines_0[8] != 0x0) {
         printf("error! s3mm2_st_tbl0[0]\n");
     }
-    STORE_POINTER(D_002635E0 + 8, func_001D60F0);
-    if (D_002635E0[10] != 0x2) {
+    STORE_POINTER(stage3_midboss2_state_routines_0 + 8, stage3_midboss2_state_0_04);
+    if (stage3_midboss2_state_routines_0[10] != 0x2) {
         printf("error! s3mm2_st_tbl0[2]\n");
     }
-    STORE_POINTER(D_002635E0 + 10, func_001D60F0);
-    if (D_002635E0[12] != 0x4) {
+    STORE_POINTER(stage3_midboss2_state_routines_0 + 10, stage3_midboss2_state_0_04);
+    if (stage3_midboss2_state_routines_0[12] != 0x4) {
         printf("error! s3mm2_st_tbl0[4]\n");
     }
-    STORE_POINTER(D_002635E0 + 12, func_001D60F0);
-    if (D_002635E0[14] != 0x6) {
+    STORE_POINTER(stage3_midboss2_state_routines_0 + 12, stage3_midboss2_state_0_04);
+    if (stage3_midboss2_state_routines_0[14] != 0x6) {
         printf("error! s3mm2_st_tbl0[6]\n");
     }
-    STORE_POINTER(D_002635E0 + 14, func_001D60F0);
-    if (D_002635E0[16] != 0x8) {
+    STORE_POINTER(stage3_midboss2_state_routines_0 + 14, stage3_midboss2_state_0_04);
+    if (stage3_midboss2_state_routines_0[16] != 0x8) {
         printf("error! s3mm2_st_tbl0[8]\n");
     }
-    STORE_POINTER(D_002635E0 + 16, func_001D60F0);
-    if (D_002635E0[18] != 0xa) {
+    STORE_POINTER(stage3_midboss2_state_routines_0 + 16, stage3_midboss2_state_0_04);
+    if (stage3_midboss2_state_routines_0[18] != 0xa) {
         printf("error! s3mm2_st_tbl0[10]\n");
     }
-    STORE_POINTER(D_002635E0 + 18, func_001D60F0);
-    if (D_002635E0[20] != 0xc) {
+    STORE_POINTER(stage3_midboss2_state_routines_0 + 18, stage3_midboss2_state_0_04);
+    if (stage3_midboss2_state_routines_0[20] != 0xc) {
         printf("error! s3mm2_st_tbl0[12]\n");
     }
-    STORE_POINTER(D_002635E0 + 20, func_001D60F0);
-    if (D_002635E0[22] != 0xe) {
+    STORE_POINTER(stage3_midboss2_state_routines_0 + 20, stage3_midboss2_state_0_04);
+    if (stage3_midboss2_state_routines_0[22] != 0xe) {
         printf("error! s3mm2_st_tbl0[14]\n");
     }
-    STORE_POINTER(D_002635E0 + 22, func_001D60F0);
-    if (D_00263610_as_u16_a[0] != 0x0) {
+    STORE_POINTER(stage3_midboss2_state_routines_0 + 22, stage3_midboss2_state_0_04);
+    if (stage3_midboss2_state_routines_1_as_u16_a[0] != 0x0) {
         printf("error! s3mm2_st_tbl1[0]\n");
     }
-    STORE_POINTER(D_00263610_as_u16_a, func_001D6160);
+    STORE_POINTER(stage3_midboss2_state_routines_1_as_u16_a, func_001D6160);
     if (D_00263612[1] != 0x2) {
         printf("error! s3mm2_st_tbl1[2]\n");
     }
@@ -4540,16 +4540,16 @@ void func_001882D0(void) {
 }
 
 
-extern u16 D_0025D7F0[];
+extern u16 option_shot_list_1_01_00_02[];
 extern u16 D_0025D800[];
-extern u16 D_0025D810[];
-extern u16 D_0025D820[];
-extern u16 D_0025D830[];
-extern u16 D_0025D840[];
-extern u16 D_0025D850[];
-extern u16 D_0025D860[];
-extern u16 D_0025D870[];
-extern u16 D_0025D880[];
+extern u16 option_shot_list_4_01_00_02[];
+extern u16 option_shot_list_1_01_00_07[];
+extern u16 player_shot_7_flight_028_01[];
+extern u16 player_shot_7_flight_048_01[];
+extern u16 player_shot_7_flight_068_01[];
+extern u16 player_shot_7_flight_088_01[];
+extern u16 player_shot_7_direction_5_00_01[];
+extern u16 option_shot_list_4_01_00_07[];
 extern u16 player_shot_7_impact_frames_00[];
 extern u16 player_shot_7_impact_frames_02[];
 extern u16 player_shot_7_impact_frames_06[];
@@ -4559,7 +4559,7 @@ extern u16 player_shot_7_impact_frames_13[];
 extern u16 player_shot_7_impact_frames_15[];
 extern u16 player_shot_7_impact_frames_17[];
 extern u16 player_shot_7_impact_frames_21[];
-extern u16 D_0025DFC0[];
+extern u16 player_shot_7_directions_5[];
 extern u16 player_shot_7_impact_00[];
 extern u16 player_shot_7_impact_02[];
 extern u16 player_shot_7_impact_04[];
@@ -4658,23 +4658,23 @@ extern u16 player_shot_7_flight_101[];
 extern u16 player_shot_7_flight_102[];
 extern u16 player_shot_7_flight_103[];
 extern u16 player_shot_7_flight_104[];
-extern u16 D_0028D5B8[];
-extern u16 D_0028D5C0[];
-extern u16 D_0028D5C8[];
-extern u16 D_0028D5D0[];
-extern u16 D_0028D5D8[];
-extern u16 D_0028D5E0[];
-extern u16 D_0028D5E8[];
-extern u16 D_0028D5F0[];
-extern u16 D_0028D5F8[];
-extern u16 D_0028D600[];
-extern u16 D_0028D608[];
-extern u16 D_0028D610[];
-extern u16 D_0028D618[];
-extern u16 D_0028D620[];
-extern u16 D_0028D628[];
-extern u16 D_0028D630[];
-extern u16 D_0028D638[];
+extern u16 player_shot_7_direction_5_00[];
+extern u16 player_shot_7_direction_5_01[];
+extern u16 player_shot_7_direction_5_02[];
+extern u16 player_shot_7_direction_5_03[];
+extern u16 player_shot_7_direction_5_04[];
+extern u16 player_shot_7_direction_5_05[];
+extern u16 player_shot_7_direction_5_06[];
+extern u16 player_shot_7_direction_5_07[];
+extern u16 player_shot_7_direction_5_08[];
+extern u16 player_shot_7_direction_5_09[];
+extern u16 player_shot_7_direction_5_10[];
+extern u16 player_shot_7_direction_5_11[];
+extern u16 player_shot_7_direction_5_12[];
+extern u16 player_shot_7_direction_5_13[];
+extern u16 player_shot_7_direction_5_14[];
+extern u16 player_shot_7_direction_5_15[];
+extern u16 player_shot_7_direction_5_16[];
 
 extern u16 D_0025DB94[];
 extern u16 D_0025DBC4[];
@@ -4688,87 +4688,87 @@ void player_shot_7_tables_init(void) {
     if (option_shot_list_1_01_00[5] != 0x5) {
         printf("error! hoshot_a_sh_r_p1[5]\n");
     }
-    STORE_POINTER(option_shot_list_1_01_00 + 5, D_0025D7F0);
+    STORE_POINTER(option_shot_list_1_01_00 + 5, option_shot_list_1_01_00_02);
     if (option_shot_list_1_01_00[15] != 0xf) {
         printf("error! hoshot_a_sh_r_p1[15]\n");
     }
-    STORE_POINTER(option_shot_list_1_01_00 + 15, D_0025D820);
+    STORE_POINTER(option_shot_list_1_01_00 + 15, option_shot_list_1_01_00_07);
     if (option_shot_list_2_01_00[5] != 0x5) {
         printf("error! hoshot_a_sh_l_p1[5]\n");
     }
-    STORE_POINTER(option_shot_list_2_01_00 + 5, D_0025D7F0);
+    STORE_POINTER(option_shot_list_2_01_00 + 5, option_shot_list_1_01_00_02);
     if (option_shot_list_2_01_00[15] != 0xf) {
         printf("error! hoshot_a_sh_l_p1[15]\n");
     }
-    STORE_POINTER(option_shot_list_2_01_00 + 15, D_0025D820);
+    STORE_POINTER(option_shot_list_2_01_00 + 15, option_shot_list_1_01_00_07);
     if (option_shot_list_1_01_01[5] != 0x5) {
         printf("error! hoshot_a_sh_r_p2[5]\n");
     }
-    STORE_POINTER(option_shot_list_1_01_01 + 5, D_0025D7F0);
+    STORE_POINTER(option_shot_list_1_01_01 + 5, option_shot_list_1_01_00_02);
     if (option_shot_list_1_01_01[15] != 0xf) {
         printf("error! hoshot_a_sh_r_p2[15]\n");
     }
-    STORE_POINTER(option_shot_list_1_01_01 + 15, D_0025D820);
+    STORE_POINTER(option_shot_list_1_01_01 + 15, option_shot_list_1_01_00_07);
     if (option_shot_list_2_01_01[5] != 0x5) {
         printf("error! hoshot_a_sh_l_p2[5]\n");
     }
-    STORE_POINTER(option_shot_list_2_01_01 + 5, D_0025D7F0);
+    STORE_POINTER(option_shot_list_2_01_01 + 5, option_shot_list_1_01_00_02);
     if (option_shot_list_2_01_01[15] != 0xf) {
         printf("error! hoshot_a_sh_l_p2[15]\n");
     }
-    STORE_POINTER(option_shot_list_2_01_01 + 15, D_0025D820);
+    STORE_POINTER(option_shot_list_2_01_01 + 15, option_shot_list_1_01_00_07);
     if (option_shot_list_1_01_02[5] != 0x5) {
         printf("error! hoshot_a_sh_r_p3[5]\n");
     }
-    STORE_POINTER(option_shot_list_1_01_02 + 5, D_0025D7F0);
+    STORE_POINTER(option_shot_list_1_01_02 + 5, option_shot_list_1_01_00_02);
     if (option_shot_list_1_01_02[15] != 0xf) {
         printf("error! hoshot_a_sh_r_p3[15]\n");
     }
-    STORE_POINTER(option_shot_list_1_01_02 + 15, D_0025D820);
+    STORE_POINTER(option_shot_list_1_01_02 + 15, option_shot_list_1_01_00_07);
     if (option_shot_list_2_01_02[5] != 0x5) {
         printf("error! hoshot_a_sh_l_p3[5]\n");
     }
-    STORE_POINTER(option_shot_list_2_01_02 + 5, D_0025D7F0);
+    STORE_POINTER(option_shot_list_2_01_02 + 5, option_shot_list_1_01_00_02);
     if (option_shot_list_2_01_02[15] != 0xf) {
         printf("error! hoshot_a_sh_l_p3[15]\n");
     }
-    STORE_POINTER(option_shot_list_2_01_02 + 15, D_0025D820);
+    STORE_POINTER(option_shot_list_2_01_02 + 15, option_shot_list_1_01_00_07);
     if (option_shot_list_1_01_03[5] != 0x5) {
         printf("error! hoshot_a_sh_r_p4[5]\n");
     }
-    STORE_POINTER(option_shot_list_1_01_03 + 5, D_0025D7F0);
+    STORE_POINTER(option_shot_list_1_01_03 + 5, option_shot_list_1_01_00_02);
     if (option_shot_list_1_01_03[15] != 0xf) {
         printf("error! hoshot_a_sh_r_p4[15]\n");
     }
-    STORE_POINTER(option_shot_list_1_01_03 + 15, D_0025D820);
+    STORE_POINTER(option_shot_list_1_01_03 + 15, option_shot_list_1_01_00_07);
     if (option_shot_list_2_01_03[5] != 0x5) {
         printf("error! hoshot_a_sh_l_p4[5]\n");
     }
-    STORE_POINTER(option_shot_list_2_01_03 + 5, D_0025D7F0);
+    STORE_POINTER(option_shot_list_2_01_03 + 5, option_shot_list_1_01_00_02);
     if (option_shot_list_2_01_03[15] != 0xf) {
         printf("error! hoshot_a_sh_l_p4[15]\n");
     }
-    STORE_POINTER(option_shot_list_2_01_03 + 15, D_0025D820);
+    STORE_POINTER(option_shot_list_2_01_03 + 15, option_shot_list_1_01_00_07);
     if (option_shot_list_1_01_04[5] != 0x5) {
         printf("error! hoshot_a_sh_r_p5[5]\n");
     }
-    STORE_POINTER(option_shot_list_1_01_04 + 5, D_0025D7F0);
+    STORE_POINTER(option_shot_list_1_01_04 + 5, option_shot_list_1_01_00_02);
     if (option_shot_list_1_01_04[15] != 0xf) {
         printf("error! hoshot_a_sh_r_p5[15]\n");
     }
-    STORE_POINTER(option_shot_list_1_01_04 + 15, D_0025D820);
+    STORE_POINTER(option_shot_list_1_01_04 + 15, option_shot_list_1_01_00_07);
     if (option_shot_list_2_01_04[5] != 0x5) {
         printf("error! hoshot_a_sh_l_p5[5]\n");
     }
-    STORE_POINTER(option_shot_list_2_01_04 + 5, D_0025D7F0);
+    STORE_POINTER(option_shot_list_2_01_04 + 5, option_shot_list_1_01_00_02);
     if (option_shot_list_2_01_04[15] != 0xf) {
         printf("error! hoshot_a_sh_l_p5[15]\n");
     }
-    STORE_POINTER(option_shot_list_2_01_04 + 15, D_0025D820);
+    STORE_POINTER(option_shot_list_2_01_04 + 15, option_shot_list_1_01_00_07);
     if (option_shot_list_3_01_00[1] != 0x1) {
         printf("error! hoshot_a_la_p1[1]\n");
     }
-    STORE_POINTER(option_shot_list_3_01_00 + 1, D_0025DFC0);
+    STORE_POINTER(option_shot_list_3_01_00 + 1, player_shot_7_directions_5);
     if (D_0025DB94[3] != 0x5) {
         printf("error! hoshot_a_la_p1[5]\n");
     }
@@ -4776,7 +4776,7 @@ void player_shot_7_tables_init(void) {
     if (option_shot_list_3_01_01[1] != 0x1) {
         printf("error! hoshot_a_la_p2[1]\n");
     }
-    STORE_POINTER(option_shot_list_3_01_01 + 1, D_0025DFC0);
+    STORE_POINTER(option_shot_list_3_01_01 + 1, player_shot_7_directions_5);
     if (D_0025DBC4[3] != 0x5) {
         printf("error! hoshot_a_la_p2[5]\n");
     }
@@ -4784,7 +4784,7 @@ void player_shot_7_tables_init(void) {
     if (option_shot_list_3_01_02[1] != 0x1) {
         printf("error! hoshot_a_la_p3[1]\n");
     }
-    STORE_POINTER(option_shot_list_3_01_02 + 1, D_0025DFC0);
+    STORE_POINTER(option_shot_list_3_01_02 + 1, player_shot_7_directions_5);
     if (D_0025DBF4[3] != 0x5) {
         printf("error! hoshot_a_la_p3[5]\n");
     }
@@ -4792,7 +4792,7 @@ void player_shot_7_tables_init(void) {
     if (option_shot_list_3_01_03[1] != 0x1) {
         printf("error! hoshot_a_la_p4[1]\n");
     }
-    STORE_POINTER(option_shot_list_3_01_03 + 1, D_0025DFC0);
+    STORE_POINTER(option_shot_list_3_01_03 + 1, player_shot_7_directions_5);
     if (D_0025DC24[3] != 0x5) {
         printf("error! hoshot_a_la_p4[5]\n");
     }
@@ -4800,7 +4800,7 @@ void player_shot_7_tables_init(void) {
     if (option_shot_list_3_01_04[1] != 0x1) {
         printf("error! hoshot_a_la_p5[1]\n");
     }
-    STORE_POINTER(option_shot_list_3_01_04 + 1, D_0025DFC0);
+    STORE_POINTER(option_shot_list_3_01_04 + 1, player_shot_7_directions_5);
     if (D_0025DC54[3] != 0x5) {
         printf("error! hoshot_a_la_p5[5]\n");
     }
@@ -4808,83 +4808,83 @@ void player_shot_7_tables_init(void) {
     if (option_shot_list_4_01_00[5] != 0x5) {
         printf("error! hoshot_a_ex_p1[5]\n");
     }
-    STORE_POINTER(option_shot_list_4_01_00 + 5, D_0025D810);
+    STORE_POINTER(option_shot_list_4_01_00 + 5, option_shot_list_4_01_00_02);
     if (option_shot_list_4_01_00[15] != 0xf) {
         printf("error! hoshot_a_ex_p1[15]\n");
     }
-    STORE_POINTER(option_shot_list_4_01_00 + 15, D_0025D880);
+    STORE_POINTER(option_shot_list_4_01_00 + 15, option_shot_list_4_01_00_07);
     if (option_shot_list_4_01_00[24] != 0x18) {
         printf("error! hoshot_a_ex_p1[24]\n");
     }
-    STORE_POINTER(option_shot_list_4_01_00 + 24, D_0025D810);
+    STORE_POINTER(option_shot_list_4_01_00 + 24, option_shot_list_4_01_00_02);
     if (option_shot_list_4_01_00[34] != 0x22) {
         printf("error! hoshot_a_ex_p1[34]\n");
     }
-    STORE_POINTER(option_shot_list_4_01_00 + 34, D_0025D880);
+    STORE_POINTER(option_shot_list_4_01_00 + 34, option_shot_list_4_01_00_07);
     if (option_shot_list_4_01_01[5] != 0x5) {
         printf("error! hoshot_a_ex_p2[5]\n");
     }
-    STORE_POINTER(option_shot_list_4_01_01 + 5, D_0025D810);
+    STORE_POINTER(option_shot_list_4_01_01 + 5, option_shot_list_4_01_00_02);
     if (option_shot_list_4_01_01[15] != 0xf) {
         printf("error! hoshot_a_ex_p2[15]\n");
     }
-    STORE_POINTER(option_shot_list_4_01_01 + 15, D_0025D880);
+    STORE_POINTER(option_shot_list_4_01_01 + 15, option_shot_list_4_01_00_07);
     if (option_shot_list_4_01_01[24] != 0x18) {
         printf("error! hoshot_a_ex_p2[24]\n");
     }
-    STORE_POINTER(option_shot_list_4_01_01 + 24, D_0025D810);
+    STORE_POINTER(option_shot_list_4_01_01 + 24, option_shot_list_4_01_00_02);
     if (option_shot_list_4_01_01[34] != 0x22) {
         printf("error! hoshot_a_ex_p2[34]\n");
     }
-    STORE_POINTER(option_shot_list_4_01_01 + 34, D_0025D880);
+    STORE_POINTER(option_shot_list_4_01_01 + 34, option_shot_list_4_01_00_07);
     if (option_shot_list_4_01_02[5] != 0x5) {
         printf("error! hoshot_a_ex_p3[5]\n");
     }
-    STORE_POINTER(option_shot_list_4_01_02 + 5, D_0025D810);
+    STORE_POINTER(option_shot_list_4_01_02 + 5, option_shot_list_4_01_00_02);
     if (option_shot_list_4_01_02[15] != 0xf) {
         printf("error! hoshot_a_ex_p3[15]\n");
     }
-    STORE_POINTER(option_shot_list_4_01_02 + 15, D_0025D880);
+    STORE_POINTER(option_shot_list_4_01_02 + 15, option_shot_list_4_01_00_07);
     if (option_shot_list_4_01_02[24] != 0x18) {
         printf("error! hoshot_a_ex_p3[24]\n");
     }
-    STORE_POINTER(option_shot_list_4_01_02 + 24, D_0025D810);
+    STORE_POINTER(option_shot_list_4_01_02 + 24, option_shot_list_4_01_00_02);
     if (option_shot_list_4_01_02[34] != 0x22) {
         printf("error! hoshot_a_ex_p3[34]\n");
     }
-    STORE_POINTER(option_shot_list_4_01_02 + 34, D_0025D880);
+    STORE_POINTER(option_shot_list_4_01_02 + 34, option_shot_list_4_01_00_07);
     if (option_shot_list_4_01_03[5] != 0x5) {
         printf("error! hoshot_a_ex_p4[5]\n");
     }
-    STORE_POINTER(option_shot_list_4_01_03 + 5, D_0025D810);
+    STORE_POINTER(option_shot_list_4_01_03 + 5, option_shot_list_4_01_00_02);
     if (option_shot_list_4_01_03[15] != 0xf) {
         printf("error! hoshot_a_ex_p4[15]\n");
     }
-    STORE_POINTER(option_shot_list_4_01_03 + 15, D_0025D880);
+    STORE_POINTER(option_shot_list_4_01_03 + 15, option_shot_list_4_01_00_07);
     if (option_shot_list_4_01_03[24] != 0x18) {
         printf("error! hoshot_a_ex_p4[24]\n");
     }
-    STORE_POINTER(option_shot_list_4_01_03 + 24, D_0025D810);
+    STORE_POINTER(option_shot_list_4_01_03 + 24, option_shot_list_4_01_00_02);
     if (option_shot_list_4_01_03[34] != 0x22) {
         printf("error! hoshot_a_ex_p4[34]\n");
     }
-    STORE_POINTER(option_shot_list_4_01_03 + 34, D_0025D880);
+    STORE_POINTER(option_shot_list_4_01_03 + 34, option_shot_list_4_01_00_07);
     if (option_shot_list_4_01_04[5] != 0x5) {
         printf("error! hoshot_a_ex_p5[5]\n");
     }
-    STORE_POINTER(option_shot_list_4_01_04 + 5, D_0025D810);
+    STORE_POINTER(option_shot_list_4_01_04 + 5, option_shot_list_4_01_00_02);
     if (option_shot_list_4_01_04[15] != 0xf) {
         printf("error! hoshot_a_ex_p5[15]\n");
     }
-    STORE_POINTER(option_shot_list_4_01_04 + 15, D_0025D880);
+    STORE_POINTER(option_shot_list_4_01_04 + 15, option_shot_list_4_01_00_07);
     if (option_shot_list_4_01_04[24] != 0x18) {
         printf("error! hoshot_a_ex_p5[24]\n");
     }
-    STORE_POINTER(option_shot_list_4_01_04 + 24, D_0025D810);
+    STORE_POINTER(option_shot_list_4_01_04 + 24, option_shot_list_4_01_00_02);
     if (option_shot_list_4_01_04[34] != 0x22) {
         printf("error! hoshot_a_ex_p5[34]\n");
     }
-    STORE_POINTER(option_shot_list_4_01_04 + 34, D_0025D880);
+    STORE_POINTER(option_shot_list_4_01_04 + 34, option_shot_list_4_01_00_07);
     if (player_shot_7_flight_table[0] != 0x0) {
         printf("error! hoa_data[0]\n");
     }
@@ -5056,71 +5056,71 @@ void player_shot_7_tables_init(void) {
     if (player_shot_7_flight_028[2] != 0x2) {
         printf("error! hop_la_a1_d00[2]\n");
     }
-    STORE_POINTER(player_shot_7_flight_028 + 2, D_0025D830);
+    STORE_POINTER(player_shot_7_flight_028 + 2, player_shot_7_flight_028_01);
     if (player_shot_7_flight_029[2] != 0x2) {
         printf("error! hop_la_a1_d02[2]\n");
     }
-    STORE_POINTER(player_shot_7_flight_029 + 2, D_0025D830);
+    STORE_POINTER(player_shot_7_flight_029 + 2, player_shot_7_flight_028_01);
     if (player_shot_7_flight_030[2] != 0x2) {
         printf("error! hop_la_a1_d04[2]\n");
     }
-    STORE_POINTER(player_shot_7_flight_030 + 2, D_0025D830);
+    STORE_POINTER(player_shot_7_flight_030 + 2, player_shot_7_flight_028_01);
     if (player_shot_7_flight_031[2] != 0x2) {
         printf("error! hop_la_a1_d06[2]\n");
     }
-    STORE_POINTER(player_shot_7_flight_031 + 2, D_0025D830);
+    STORE_POINTER(player_shot_7_flight_031 + 2, player_shot_7_flight_028_01);
     if (player_shot_7_flight_032[2] != 0x2) {
         printf("error! hop_la_a1_d08[2]\n");
     }
-    STORE_POINTER(player_shot_7_flight_032 + 2, D_0025D830);
+    STORE_POINTER(player_shot_7_flight_032 + 2, player_shot_7_flight_028_01);
     if (player_shot_7_flight_033[2] != 0x2) {
         printf("error! hop_la_a1_d0a[2]\n");
     }
-    STORE_POINTER(player_shot_7_flight_033 + 2, D_0025D830);
+    STORE_POINTER(player_shot_7_flight_033 + 2, player_shot_7_flight_028_01);
     if (player_shot_7_flight_034[2] != 0x2) {
         printf("error! hop_la_a1_d0c[2]\n");
     }
-    STORE_POINTER(player_shot_7_flight_034 + 2, D_0025D830);
+    STORE_POINTER(player_shot_7_flight_034 + 2, player_shot_7_flight_028_01);
     if (player_shot_7_flight_035[2] != 0x2) {
         printf("error! hop_la_a1_d0e[2]\n");
     }
-    STORE_POINTER(player_shot_7_flight_035 + 2, D_0025D830);
+    STORE_POINTER(player_shot_7_flight_035 + 2, player_shot_7_flight_028_01);
     if (player_shot_7_flight_036[2] != 0x2) {
         printf("error! hop_la_a1_d10[2]\n");
     }
-    STORE_POINTER(player_shot_7_flight_036 + 2, D_0025D830);
+    STORE_POINTER(player_shot_7_flight_036 + 2, player_shot_7_flight_028_01);
     if (player_shot_7_flight_037[2] != 0x2) {
         printf("error! hop_la_a1_d12[2]\n");
     }
-    STORE_POINTER(player_shot_7_flight_037 + 2, D_0025D830);
+    STORE_POINTER(player_shot_7_flight_037 + 2, player_shot_7_flight_028_01);
     if (player_shot_7_flight_038[2] != 0x2) {
         printf("error! hop_la_a1_d14[2]\n");
     }
-    STORE_POINTER(player_shot_7_flight_038 + 2, D_0025D830);
+    STORE_POINTER(player_shot_7_flight_038 + 2, player_shot_7_flight_028_01);
     if (player_shot_7_flight_039[2] != 0x2) {
         printf("error! hop_la_a1_d16[2]\n");
     }
-    STORE_POINTER(player_shot_7_flight_039 + 2, D_0025D830);
+    STORE_POINTER(player_shot_7_flight_039 + 2, player_shot_7_flight_028_01);
     if (player_shot_7_flight_040[2] != 0x2) {
         printf("error! hop_la_a1_d18[2]\n");
     }
-    STORE_POINTER(player_shot_7_flight_040 + 2, D_0025D830);
+    STORE_POINTER(player_shot_7_flight_040 + 2, player_shot_7_flight_028_01);
     if (player_shot_7_flight_041[2] != 0x2) {
         printf("error! hop_la_a1_d1a[2]\n");
     }
-    STORE_POINTER(player_shot_7_flight_041 + 2, D_0025D830);
+    STORE_POINTER(player_shot_7_flight_041 + 2, player_shot_7_flight_028_01);
     if (player_shot_7_flight_042[2] != 0x2) {
         printf("error! hop_la_a1_d1c[2]\n");
     }
-    STORE_POINTER(player_shot_7_flight_042 + 2, D_0025D830);
+    STORE_POINTER(player_shot_7_flight_042 + 2, player_shot_7_flight_028_01);
     if (player_shot_7_flight_043[2] != 0x2) {
         printf("error! hop_la_a1_d1e[2]\n");
     }
-    STORE_POINTER(player_shot_7_flight_043 + 2, D_0025D830);
+    STORE_POINTER(player_shot_7_flight_043 + 2, player_shot_7_flight_028_01);
     if (player_shot_7_flight_044[2] != 0x2) {
         printf("error! hop_la_a1_d20[2]\n");
     }
-    STORE_POINTER(player_shot_7_flight_044 + 2, D_0025D830);
+    STORE_POINTER(player_shot_7_flight_044 + 2, player_shot_7_flight_028_01);
     if (player_shot_7_flight_table[96] != 0x0) {
         printf("error! hopt_la_a2_shdip[0]\n");
     }
@@ -5192,71 +5192,71 @@ void player_shot_7_tables_init(void) {
     if (player_shot_7_flight_048[2] != 0x2) {
         printf("error! hop_la_a2_d00[2]\n");
     }
-    STORE_POINTER(player_shot_7_flight_048 + 2, D_0025D840);
+    STORE_POINTER(player_shot_7_flight_048 + 2, player_shot_7_flight_048_01);
     if (player_shot_7_flight_049[2] != 0x2) {
         printf("error! hop_la_a2_d02[2]\n");
     }
-    STORE_POINTER(player_shot_7_flight_049 + 2, D_0025D840);
+    STORE_POINTER(player_shot_7_flight_049 + 2, player_shot_7_flight_048_01);
     if (player_shot_7_flight_050[2] != 0x2) {
         printf("error! hop_la_a2_d04[2]\n");
     }
-    STORE_POINTER(player_shot_7_flight_050 + 2, D_0025D840);
+    STORE_POINTER(player_shot_7_flight_050 + 2, player_shot_7_flight_048_01);
     if (player_shot_7_flight_051[2] != 0x2) {
         printf("error! hop_la_a2_d06[2]\n");
     }
-    STORE_POINTER(player_shot_7_flight_051 + 2, D_0025D840);
+    STORE_POINTER(player_shot_7_flight_051 + 2, player_shot_7_flight_048_01);
     if (player_shot_7_flight_052[2] != 0x2) {
         printf("error! hop_la_a2_d08[2]\n");
     }
-    STORE_POINTER(player_shot_7_flight_052 + 2, D_0025D840);
+    STORE_POINTER(player_shot_7_flight_052 + 2, player_shot_7_flight_048_01);
     if (player_shot_7_flight_053[2] != 0x2) {
         printf("error! hop_la_a2_d0a[2]\n");
     }
-    STORE_POINTER(player_shot_7_flight_053 + 2, D_0025D840);
+    STORE_POINTER(player_shot_7_flight_053 + 2, player_shot_7_flight_048_01);
     if (player_shot_7_flight_054[2] != 0x2) {
         printf("error! hop_la_a2_d0c[2]\n");
     }
-    STORE_POINTER(player_shot_7_flight_054 + 2, D_0025D840);
+    STORE_POINTER(player_shot_7_flight_054 + 2, player_shot_7_flight_048_01);
     if (player_shot_7_flight_055[2] != 0x2) {
         printf("error! hop_la_a2_d0e[2]\n");
     }
-    STORE_POINTER(player_shot_7_flight_055 + 2, D_0025D840);
+    STORE_POINTER(player_shot_7_flight_055 + 2, player_shot_7_flight_048_01);
     if (player_shot_7_flight_056[2] != 0x2) {
         printf("error! hop_la_a2_d10[2]\n");
     }
-    STORE_POINTER(player_shot_7_flight_056 + 2, D_0025D840);
+    STORE_POINTER(player_shot_7_flight_056 + 2, player_shot_7_flight_048_01);
     if (player_shot_7_flight_057[2] != 0x2) {
         printf("error! hop_la_a2_d12[2]\n");
     }
-    STORE_POINTER(player_shot_7_flight_057 + 2, D_0025D840);
+    STORE_POINTER(player_shot_7_flight_057 + 2, player_shot_7_flight_048_01);
     if (player_shot_7_flight_058[2] != 0x2) {
         printf("error! hop_la_a2_d14[2]\n");
     }
-    STORE_POINTER(player_shot_7_flight_058 + 2, D_0025D840);
+    STORE_POINTER(player_shot_7_flight_058 + 2, player_shot_7_flight_048_01);
     if (player_shot_7_flight_059[2] != 0x2) {
         printf("error! hop_la_a2_d16[2]\n");
     }
-    STORE_POINTER(player_shot_7_flight_059 + 2, D_0025D840);
+    STORE_POINTER(player_shot_7_flight_059 + 2, player_shot_7_flight_048_01);
     if (player_shot_7_flight_060[2] != 0x2) {
         printf("error! hop_la_a2_d18[2]\n");
     }
-    STORE_POINTER(player_shot_7_flight_060 + 2, D_0025D840);
+    STORE_POINTER(player_shot_7_flight_060 + 2, player_shot_7_flight_048_01);
     if (player_shot_7_flight_061[2] != 0x2) {
         printf("error! hop_la_a2_d1a[2]\n");
     }
-    STORE_POINTER(player_shot_7_flight_061 + 2, D_0025D840);
+    STORE_POINTER(player_shot_7_flight_061 + 2, player_shot_7_flight_048_01);
     if (player_shot_7_flight_062[2] != 0x2) {
         printf("error! hop_la_a2_d1c[2]\n");
     }
-    STORE_POINTER(player_shot_7_flight_062 + 2, D_0025D840);
+    STORE_POINTER(player_shot_7_flight_062 + 2, player_shot_7_flight_048_01);
     if (player_shot_7_flight_063[2] != 0x2) {
         printf("error! hop_la_a2_d1e[2]\n");
     }
-    STORE_POINTER(player_shot_7_flight_063 + 2, D_0025D840);
+    STORE_POINTER(player_shot_7_flight_063 + 2, player_shot_7_flight_048_01);
     if (player_shot_7_flight_064[2] != 0x2) {
         printf("error! hop_la_a2_d20[2]\n");
     }
-    STORE_POINTER(player_shot_7_flight_064 + 2, D_0025D840);
+    STORE_POINTER(player_shot_7_flight_064 + 2, player_shot_7_flight_048_01);
     if (player_shot_7_flight_table[136] != 0x0) {
         printf("error! hopt_la_a3_shdip[0]\n");
     }
@@ -5328,71 +5328,71 @@ void player_shot_7_tables_init(void) {
     if (player_shot_7_flight_068[2] != 0x2) {
         printf("error! hop_la_a3_d00[2]\n");
     }
-    STORE_POINTER(player_shot_7_flight_068 + 2, D_0025D850);
+    STORE_POINTER(player_shot_7_flight_068 + 2, player_shot_7_flight_068_01);
     if (player_shot_7_flight_069[2] != 0x2) {
         printf("error! hop_la_a3_d02[2]\n");
     }
-    STORE_POINTER(player_shot_7_flight_069 + 2, D_0025D850);
+    STORE_POINTER(player_shot_7_flight_069 + 2, player_shot_7_flight_068_01);
     if (player_shot_7_flight_070[2] != 0x2) {
         printf("error! hop_la_a3_d04[2]\n");
     }
-    STORE_POINTER(player_shot_7_flight_070 + 2, D_0025D850);
+    STORE_POINTER(player_shot_7_flight_070 + 2, player_shot_7_flight_068_01);
     if (player_shot_7_flight_071[2] != 0x2) {
         printf("error! hop_la_a3_d06[2]\n");
     }
-    STORE_POINTER(player_shot_7_flight_071 + 2, D_0025D850);
+    STORE_POINTER(player_shot_7_flight_071 + 2, player_shot_7_flight_068_01);
     if (player_shot_7_flight_072[2] != 0x2) {
         printf("error! hop_la_a3_d08[2]\n");
     }
-    STORE_POINTER(player_shot_7_flight_072 + 2, D_0025D850);
+    STORE_POINTER(player_shot_7_flight_072 + 2, player_shot_7_flight_068_01);
     if (player_shot_7_flight_073[2] != 0x2) {
         printf("error! hop_la_a3_d0a[2]\n");
     }
-    STORE_POINTER(player_shot_7_flight_073 + 2, D_0025D850);
+    STORE_POINTER(player_shot_7_flight_073 + 2, player_shot_7_flight_068_01);
     if (player_shot_7_flight_074[2] != 0x2) {
         printf("error! hop_la_a3_d0c[2]\n");
     }
-    STORE_POINTER(player_shot_7_flight_074 + 2, D_0025D850);
+    STORE_POINTER(player_shot_7_flight_074 + 2, player_shot_7_flight_068_01);
     if (player_shot_7_flight_075[2] != 0x2) {
         printf("error! hop_la_a3_d0e[2]\n");
     }
-    STORE_POINTER(player_shot_7_flight_075 + 2, D_0025D850);
+    STORE_POINTER(player_shot_7_flight_075 + 2, player_shot_7_flight_068_01);
     if (player_shot_7_flight_076[2] != 0x2) {
         printf("error! hop_la_a3_d10[2]\n");
     }
-    STORE_POINTER(player_shot_7_flight_076 + 2, D_0025D850);
+    STORE_POINTER(player_shot_7_flight_076 + 2, player_shot_7_flight_068_01);
     if (player_shot_7_flight_077[2] != 0x2) {
         printf("error! hop_la_a3_d12[2]\n");
     }
-    STORE_POINTER(player_shot_7_flight_077 + 2, D_0025D850);
+    STORE_POINTER(player_shot_7_flight_077 + 2, player_shot_7_flight_068_01);
     if (player_shot_7_flight_078[2] != 0x2) {
         printf("error! hop_la_a3_d14[2]\n");
     }
-    STORE_POINTER(player_shot_7_flight_078 + 2, D_0025D850);
+    STORE_POINTER(player_shot_7_flight_078 + 2, player_shot_7_flight_068_01);
     if (player_shot_7_flight_079[2] != 0x2) {
         printf("error! hop_la_a3_d16[2]\n");
     }
-    STORE_POINTER(player_shot_7_flight_079 + 2, D_0025D850);
+    STORE_POINTER(player_shot_7_flight_079 + 2, player_shot_7_flight_068_01);
     if (player_shot_7_flight_080[2] != 0x2) {
         printf("error! hop_la_a3_d18[2]\n");
     }
-    STORE_POINTER(player_shot_7_flight_080 + 2, D_0025D850);
+    STORE_POINTER(player_shot_7_flight_080 + 2, player_shot_7_flight_068_01);
     if (player_shot_7_flight_081[2] != 0x2) {
         printf("error! hop_la_a3_d1a[2]\n");
     }
-    STORE_POINTER(player_shot_7_flight_081 + 2, D_0025D850);
+    STORE_POINTER(player_shot_7_flight_081 + 2, player_shot_7_flight_068_01);
     if (player_shot_7_flight_082[2] != 0x2) {
         printf("error! hop_la_a3_d1c[2]\n");
     }
-    STORE_POINTER(player_shot_7_flight_082 + 2, D_0025D850);
+    STORE_POINTER(player_shot_7_flight_082 + 2, player_shot_7_flight_068_01);
     if (player_shot_7_flight_083[2] != 0x2) {
         printf("error! hop_la_a3_d1e[2]\n");
     }
-    STORE_POINTER(player_shot_7_flight_083 + 2, D_0025D850);
+    STORE_POINTER(player_shot_7_flight_083 + 2, player_shot_7_flight_068_01);
     if (player_shot_7_flight_084[2] != 0x2) {
         printf("error! hop_la_a3_d20[2]\n");
     }
-    STORE_POINTER(player_shot_7_flight_084 + 2, D_0025D850);
+    STORE_POINTER(player_shot_7_flight_084 + 2, player_shot_7_flight_068_01);
     if (player_shot_7_flight_table[176] != 0x0) {
         printf("error! hopt_la_a4_shdip[0]\n");
     }
@@ -5464,207 +5464,207 @@ void player_shot_7_tables_init(void) {
     if (player_shot_7_flight_088[2] != 0x2) {
         printf("error! hop_la_a4_d00[2]\n");
     }
-    STORE_POINTER(player_shot_7_flight_088 + 2, D_0025D860);
+    STORE_POINTER(player_shot_7_flight_088 + 2, player_shot_7_flight_088_01);
     if (player_shot_7_flight_089[2] != 0x2) {
         printf("error! hop_la_a4_d02[2]\n");
     }
-    STORE_POINTER(player_shot_7_flight_089 + 2, D_0025D860);
+    STORE_POINTER(player_shot_7_flight_089 + 2, player_shot_7_flight_088_01);
     if (player_shot_7_flight_090[2] != 0x2) {
         printf("error! hop_la_a4_d04[2]\n");
     }
-    STORE_POINTER(player_shot_7_flight_090 + 2, D_0025D860);
+    STORE_POINTER(player_shot_7_flight_090 + 2, player_shot_7_flight_088_01);
     if (player_shot_7_flight_091[2] != 0x2) {
         printf("error! hop_la_a4_d06[2]\n");
     }
-    STORE_POINTER(player_shot_7_flight_091 + 2, D_0025D860);
+    STORE_POINTER(player_shot_7_flight_091 + 2, player_shot_7_flight_088_01);
     if (player_shot_7_flight_092[2] != 0x2) {
         printf("error! hop_la_a4_d08[2]\n");
     }
-    STORE_POINTER(player_shot_7_flight_092 + 2, D_0025D860);
+    STORE_POINTER(player_shot_7_flight_092 + 2, player_shot_7_flight_088_01);
     if (player_shot_7_flight_093[2] != 0x2) {
         printf("error! hop_la_a4_d0a[2]\n");
     }
-    STORE_POINTER(player_shot_7_flight_093 + 2, D_0025D860);
+    STORE_POINTER(player_shot_7_flight_093 + 2, player_shot_7_flight_088_01);
     if (player_shot_7_flight_094[2] != 0x2) {
         printf("error! hop_la_a4_d0c[2]\n");
     }
-    STORE_POINTER(player_shot_7_flight_094 + 2, D_0025D860);
+    STORE_POINTER(player_shot_7_flight_094 + 2, player_shot_7_flight_088_01);
     if (player_shot_7_flight_095[2] != 0x2) {
         printf("error! hop_la_a4_d0e[2]\n");
     }
-    STORE_POINTER(player_shot_7_flight_095 + 2, D_0025D860);
+    STORE_POINTER(player_shot_7_flight_095 + 2, player_shot_7_flight_088_01);
     if (player_shot_7_flight_096[2] != 0x2) {
         printf("error! hop_la_a4_d10[2]\n");
     }
-    STORE_POINTER(player_shot_7_flight_096 + 2, D_0025D860);
+    STORE_POINTER(player_shot_7_flight_096 + 2, player_shot_7_flight_088_01);
     if (player_shot_7_flight_097[2] != 0x2) {
         printf("error! hop_la_a4_d12[2]\n");
     }
-    STORE_POINTER(player_shot_7_flight_097 + 2, D_0025D860);
+    STORE_POINTER(player_shot_7_flight_097 + 2, player_shot_7_flight_088_01);
     if (player_shot_7_flight_098[2] != 0x2) {
         printf("error! hop_la_a4_d14[2]\n");
     }
-    STORE_POINTER(player_shot_7_flight_098 + 2, D_0025D860);
+    STORE_POINTER(player_shot_7_flight_098 + 2, player_shot_7_flight_088_01);
     if (player_shot_7_flight_099[2] != 0x2) {
         printf("error! hop_la_a4_d16[2]\n");
     }
-    STORE_POINTER(player_shot_7_flight_099 + 2, D_0025D860);
+    STORE_POINTER(player_shot_7_flight_099 + 2, player_shot_7_flight_088_01);
     if (player_shot_7_flight_100[2] != 0x2) {
         printf("error! hop_la_a4_d18[2]\n");
     }
-    STORE_POINTER(player_shot_7_flight_100 + 2, D_0025D860);
+    STORE_POINTER(player_shot_7_flight_100 + 2, player_shot_7_flight_088_01);
     if (player_shot_7_flight_101[2] != 0x2) {
         printf("error! hop_la_a4_d1a[2]\n");
     }
-    STORE_POINTER(player_shot_7_flight_101 + 2, D_0025D860);
+    STORE_POINTER(player_shot_7_flight_101 + 2, player_shot_7_flight_088_01);
     if (player_shot_7_flight_102[2] != 0x2) {
         printf("error! hop_la_a4_d1c[2]\n");
     }
-    STORE_POINTER(player_shot_7_flight_102 + 2, D_0025D860);
+    STORE_POINTER(player_shot_7_flight_102 + 2, player_shot_7_flight_088_01);
     if (player_shot_7_flight_103[2] != 0x2) {
         printf("error! hop_la_a4_d1e[2]\n");
     }
-    STORE_POINTER(player_shot_7_flight_103 + 2, D_0025D860);
+    STORE_POINTER(player_shot_7_flight_103 + 2, player_shot_7_flight_088_01);
     if (player_shot_7_flight_104[2] != 0x2) {
         printf("error! hop_la_a4_d20[2]\n");
     }
-    STORE_POINTER(player_shot_7_flight_104 + 2, D_0025D860);
-    if (D_0025DFC0[0] != 0x0) {
+    STORE_POINTER(player_shot_7_flight_104 + 2, player_shot_7_flight_088_01);
+    if (player_shot_7_directions_5[0] != 0x0) {
         printf("error! hopt_la_a5_shdip[0]\n");
     }
-    STORE_POINTER(D_0025DFC0, D_0028D5B8);
-    if (D_0025DFC0[2] != 0x2) {
+    STORE_POINTER(player_shot_7_directions_5, player_shot_7_direction_5_00);
+    if (player_shot_7_directions_5[2] != 0x2) {
         printf("error! hopt_la_a5_shdip[2]\n");
     }
-    STORE_POINTER(D_0025DFC0 + 2, D_0028D5C0);
-    if (D_0025DFC0[4] != 0x4) {
+    STORE_POINTER(player_shot_7_directions_5 + 2, player_shot_7_direction_5_01);
+    if (player_shot_7_directions_5[4] != 0x4) {
         printf("error! hopt_la_a5_shdip[4]\n");
     }
-    STORE_POINTER(D_0025DFC0 + 4, D_0028D5C8);
-    if (D_0025DFC0[6] != 0x6) {
+    STORE_POINTER(player_shot_7_directions_5 + 4, player_shot_7_direction_5_02);
+    if (player_shot_7_directions_5[6] != 0x6) {
         printf("error! hopt_la_a5_shdip[6]\n");
     }
-    STORE_POINTER(D_0025DFC0 + 6, D_0028D5D0);
-    if (D_0025DFC0[8] != 0x8) {
+    STORE_POINTER(player_shot_7_directions_5 + 6, player_shot_7_direction_5_03);
+    if (player_shot_7_directions_5[8] != 0x8) {
         printf("error! hopt_la_a5_shdip[8]\n");
     }
-    STORE_POINTER(D_0025DFC0 + 8, D_0028D5D8);
-    if (D_0025DFC0[10] != 0xa) {
+    STORE_POINTER(player_shot_7_directions_5 + 8, player_shot_7_direction_5_04);
+    if (player_shot_7_directions_5[10] != 0xa) {
         printf("error! hopt_la_a5_shdip[10]\n");
     }
-    STORE_POINTER(D_0025DFC0 + 10, D_0028D5E0);
-    if (D_0025DFC0[12] != 0xc) {
+    STORE_POINTER(player_shot_7_directions_5 + 10, player_shot_7_direction_5_05);
+    if (player_shot_7_directions_5[12] != 0xc) {
         printf("error! hopt_la_a5_shdip[12]\n");
     }
-    STORE_POINTER(D_0025DFC0 + 12, D_0028D5E8);
-    if (D_0025DFC0[14] != 0xe) {
+    STORE_POINTER(player_shot_7_directions_5 + 12, player_shot_7_direction_5_06);
+    if (player_shot_7_directions_5[14] != 0xe) {
         printf("error! hopt_la_a5_shdip[14]\n");
     }
-    STORE_POINTER(D_0025DFC0 + 14, D_0028D5F0);
-    if (D_0025DFC0[16] != 0x10) {
+    STORE_POINTER(player_shot_7_directions_5 + 14, player_shot_7_direction_5_07);
+    if (player_shot_7_directions_5[16] != 0x10) {
         printf("error! hopt_la_a5_shdip[16]\n");
     }
-    STORE_POINTER(D_0025DFC0 + 16, D_0028D5F8);
-    if (D_0025DFC0[18] != 0x12) {
+    STORE_POINTER(player_shot_7_directions_5 + 16, player_shot_7_direction_5_08);
+    if (player_shot_7_directions_5[18] != 0x12) {
         printf("error! hopt_la_a5_shdip[18]\n");
     }
-    STORE_POINTER(D_0025DFC0 + 18, D_0028D600);
-    if (D_0025DFC0[20] != 0x14) {
+    STORE_POINTER(player_shot_7_directions_5 + 18, player_shot_7_direction_5_09);
+    if (player_shot_7_directions_5[20] != 0x14) {
         printf("error! hopt_la_a5_shdip[20]\n");
     }
-    STORE_POINTER(D_0025DFC0 + 20, D_0028D608);
-    if (D_0025DFC0[22] != 0x16) {
+    STORE_POINTER(player_shot_7_directions_5 + 20, player_shot_7_direction_5_10);
+    if (player_shot_7_directions_5[22] != 0x16) {
         printf("error! hopt_la_a5_shdip[22]\n");
     }
-    STORE_POINTER(D_0025DFC0 + 22, D_0028D610);
-    if (D_0025DFC0[24] != 0x18) {
+    STORE_POINTER(player_shot_7_directions_5 + 22, player_shot_7_direction_5_11);
+    if (player_shot_7_directions_5[24] != 0x18) {
         printf("error! hopt_la_a5_shdip[24]\n");
     }
-    STORE_POINTER(D_0025DFC0 + 24, D_0028D618);
-    if (D_0025DFC0[26] != 0x1a) {
+    STORE_POINTER(player_shot_7_directions_5 + 24, player_shot_7_direction_5_12);
+    if (player_shot_7_directions_5[26] != 0x1a) {
         printf("error! hopt_la_a5_shdip[26]\n");
     }
-    STORE_POINTER(D_0025DFC0 + 26, D_0028D620);
-    if (D_0025DFC0[28] != 0x1c) {
+    STORE_POINTER(player_shot_7_directions_5 + 26, player_shot_7_direction_5_13);
+    if (player_shot_7_directions_5[28] != 0x1c) {
         printf("error! hopt_la_a5_shdip[28]\n");
     }
-    STORE_POINTER(D_0025DFC0 + 28, D_0028D628);
-    if (D_0025DFC0[30] != 0x1e) {
+    STORE_POINTER(player_shot_7_directions_5 + 28, player_shot_7_direction_5_14);
+    if (player_shot_7_directions_5[30] != 0x1e) {
         printf("error! hopt_la_a5_shdip[30]\n");
     }
-    STORE_POINTER(D_0025DFC0 + 30, D_0028D630);
-    if (D_0025DFC0[32] != 0x20) {
+    STORE_POINTER(player_shot_7_directions_5 + 30, player_shot_7_direction_5_15);
+    if (player_shot_7_directions_5[32] != 0x20) {
         printf("error! hopt_la_a5_shdip[32]\n");
     }
-    STORE_POINTER(D_0025DFC0 + 32, D_0028D638);
-    if (D_0028D5B8[2] != 0x2) {
+    STORE_POINTER(player_shot_7_directions_5 + 32, player_shot_7_direction_5_16);
+    if (player_shot_7_direction_5_00[2] != 0x2) {
         printf("error! hop_la_a5_d00[2]\n");
     }
-    STORE_POINTER(D_0028D5B8 + 2, D_0025D870);
-    if (D_0028D5C0[2] != 0x2) {
+    STORE_POINTER(player_shot_7_direction_5_00 + 2, player_shot_7_direction_5_00_01);
+    if (player_shot_7_direction_5_01[2] != 0x2) {
         printf("error! hop_la_a5_d02[2]\n");
     }
-    STORE_POINTER(D_0028D5C0 + 2, D_0025D870);
-    if (D_0028D5C8[2] != 0x2) {
+    STORE_POINTER(player_shot_7_direction_5_01 + 2, player_shot_7_direction_5_00_01);
+    if (player_shot_7_direction_5_02[2] != 0x2) {
         printf("error! hop_la_a5_d04[2]\n");
     }
-    STORE_POINTER(D_0028D5C8 + 2, D_0025D870);
-    if (D_0028D5D0[2] != 0x2) {
+    STORE_POINTER(player_shot_7_direction_5_02 + 2, player_shot_7_direction_5_00_01);
+    if (player_shot_7_direction_5_03[2] != 0x2) {
         printf("error! hop_la_a5_d06[2]\n");
     }
-    STORE_POINTER(D_0028D5D0 + 2, D_0025D870);
-    if (D_0028D5D8[2] != 0x2) {
+    STORE_POINTER(player_shot_7_direction_5_03 + 2, player_shot_7_direction_5_00_01);
+    if (player_shot_7_direction_5_04[2] != 0x2) {
         printf("error! hop_la_a5_d08[2]\n");
     }
-    STORE_POINTER(D_0028D5D8 + 2, D_0025D870);
-    if (D_0028D5E0[2] != 0x2) {
+    STORE_POINTER(player_shot_7_direction_5_04 + 2, player_shot_7_direction_5_00_01);
+    if (player_shot_7_direction_5_05[2] != 0x2) {
         printf("error! hop_la_a5_d0a[2]\n");
     }
-    STORE_POINTER(D_0028D5E0 + 2, D_0025D870);
-    if (D_0028D5E8[2] != 0x2) {
+    STORE_POINTER(player_shot_7_direction_5_05 + 2, player_shot_7_direction_5_00_01);
+    if (player_shot_7_direction_5_06[2] != 0x2) {
         printf("error! hop_la_a5_d0c[2]\n");
     }
-    STORE_POINTER(D_0028D5E8 + 2, D_0025D870);
-    if (D_0028D5F0[2] != 0x2) {
+    STORE_POINTER(player_shot_7_direction_5_06 + 2, player_shot_7_direction_5_00_01);
+    if (player_shot_7_direction_5_07[2] != 0x2) {
         printf("error! hop_la_a5_d0e[2]\n");
     }
-    STORE_POINTER(D_0028D5F0 + 2, D_0025D870);
-    if (D_0028D5F8[2] != 0x2) {
+    STORE_POINTER(player_shot_7_direction_5_07 + 2, player_shot_7_direction_5_00_01);
+    if (player_shot_7_direction_5_08[2] != 0x2) {
         printf("error! hop_la_a5_d10[2]\n");
     }
-    STORE_POINTER(D_0028D5F8 + 2, D_0025D870);
-    if (D_0028D600[2] != 0x2) {
+    STORE_POINTER(player_shot_7_direction_5_08 + 2, player_shot_7_direction_5_00_01);
+    if (player_shot_7_direction_5_09[2] != 0x2) {
         printf("error! hop_la_a5_d12[2]\n");
     }
-    STORE_POINTER(D_0028D600 + 2, D_0025D870);
-    if (D_0028D608[2] != 0x2) {
+    STORE_POINTER(player_shot_7_direction_5_09 + 2, player_shot_7_direction_5_00_01);
+    if (player_shot_7_direction_5_10[2] != 0x2) {
         printf("error! hop_la_a5_d14[2]\n");
     }
-    STORE_POINTER(D_0028D608 + 2, D_0025D870);
-    if (D_0028D610[2] != 0x2) {
+    STORE_POINTER(player_shot_7_direction_5_10 + 2, player_shot_7_direction_5_00_01);
+    if (player_shot_7_direction_5_11[2] != 0x2) {
         printf("error! hop_la_a5_d16[2]\n");
     }
-    STORE_POINTER(D_0028D610 + 2, D_0025D870);
-    if (D_0028D618[2] != 0x2) {
+    STORE_POINTER(player_shot_7_direction_5_11 + 2, player_shot_7_direction_5_00_01);
+    if (player_shot_7_direction_5_12[2] != 0x2) {
         printf("error! hop_la_a5_d18[2]\n");
     }
-    STORE_POINTER(D_0028D618 + 2, D_0025D870);
-    if (D_0028D620[2] != 0x2) {
+    STORE_POINTER(player_shot_7_direction_5_12 + 2, player_shot_7_direction_5_00_01);
+    if (player_shot_7_direction_5_13[2] != 0x2) {
         printf("error! hop_la_a5_d1a[2]\n");
     }
-    STORE_POINTER(D_0028D620 + 2, D_0025D870);
-    if (D_0028D628[2] != 0x2) {
+    STORE_POINTER(player_shot_7_direction_5_13 + 2, player_shot_7_direction_5_00_01);
+    if (player_shot_7_direction_5_14[2] != 0x2) {
         printf("error! hop_la_a5_d1c[2]\n");
     }
-    STORE_POINTER(D_0028D628 + 2, D_0025D870);
-    if (D_0028D630[2] != 0x2) {
+    STORE_POINTER(player_shot_7_direction_5_14 + 2, player_shot_7_direction_5_00_01);
+    if (player_shot_7_direction_5_15[2] != 0x2) {
         printf("error! hop_la_a5_d1e[2]\n");
     }
-    STORE_POINTER(D_0028D630 + 2, D_0025D870);
-    if (D_0028D638[2] != 0x2) {
+    STORE_POINTER(player_shot_7_direction_5_15 + 2, player_shot_7_direction_5_00_01);
+    if (player_shot_7_direction_5_16[2] != 0x2) {
         printf("error! hop_la_a5_d20[2]\n");
     }
-    STORE_POINTER(D_0028D638 + 2, D_0025D870);
+    STORE_POINTER(player_shot_7_direction_5_16 + 2, player_shot_7_direction_5_00_01);
     if (player_shot_7_impact_table[0] != 0x0) {
         printf("error! hoa_tou_data[0]\n");
     }

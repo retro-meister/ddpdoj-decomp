@@ -69,12 +69,12 @@ extern u16 D_00247880[];
 extern u16 D_00249610[];
 extern u16 D_00249ED0[];
 extern u16 D_0024C240[];
-extern u16 D_0024CA40[];
-extern u16 D_0024CA80[];
-extern u16 D_0024CAC0[];
-extern u16 D_0024CB00[];
-extern u16 D_0024CB40[];
-extern u16 D_0024CB80[];
+extern u16 stage5_boss_flash_palettes_a_30[];
+extern u16 stage5_boss_flash_palettes_a_33[];
+extern u16 stage5_boss_flash_palettes_a_37[];
+extern u16 stage5_boss_flash_palettes_a_40[];
+extern u16 stage5_boss_flash_palettes_a_44[];
+extern u16 stage5_boss_flash_palettes_a_47[];
 extern u16 D_0024D030_as_u16_a[];
 extern u16 credits_text_01[];
 extern u16 credits_text_02[];
@@ -189,20 +189,20 @@ extern u16 explosion_script_16[];
 extern u16 explosion_script_17[];
 extern u16 explosion_script_18[];
 extern u16 explosion_script_19[];
-extern u16 D_00250260[];
-extern u16 D_002502C0[];
-extern u16 D_002502F0[];
-extern u16 D_002503A0[];
-extern u16 D_002503F0[];
-extern u16 D_00250490[];
-extern u16 D_002504D0[];
-extern u16 D_00250570[];
-extern u16 D_002505C0[];
-extern u16 D_00250600[];
-extern u16 D_00250620[];
-extern u16 D_002506B0[];
+extern u16 explosion_scripts_20[];
+extern u16 explosion_scripts_21[];
+extern u16 explosion_scripts_22[];
+extern u16 explosion_scripts_23[];
+extern u16 explosion_scripts_24[];
+extern u16 explosion_scripts_25[];
+extern u16 explosion_scripts_26[];
+extern u16 explosion_scripts_27[];
+extern u16 explosion_scripts_28[];
+extern u16 explosion_scripts_29[];
+extern u16 explosion_scripts_30[];
+extern u16 explosion_scripts_31[];
 extern u16 D_002506F0[];
-extern u16 D_00250740[];
+extern u16 explosion_scripts_33[];
 extern u16 debris_pattern_0[];
 extern u16 debris_pattern_1[];
 extern u16 debris_pattern_2[];
@@ -325,24 +325,24 @@ extern u16 D_00260130_as_u16_a[];
 extern u16 D_00260170_as_u16_a[];
 extern u16 D_00260570[];
 extern u16 D_002605B0[];
-extern u16 D_002605F0[];
-extern u16 D_00260630[];
-extern u16 D_00260670[];
-extern u16 D_002606B0[];
-extern u16 D_002606F0[];
-extern u16 D_00260730[];
+extern u16 stage2_palette_18[];
+extern u16 stage1_palette_03[];
+extern u16 stage1_palette_04[];
+extern u16 stage1_palette_01[];
+extern u16 stage1_palette_00[];
+extern u16 stage1_palette_07[];
 extern u16 D_00260770[];
 extern u16 D_002607B0[];
 extern u16 D_002607F0[];
 extern u16 D_00260830[];
-extern u16 D_002608B0[];
+extern u16 stage3_palette_16[];
 extern u16 D_002608F0[];
 extern u16 D_00260EB0[];
 extern u16 D_00260EF0[];
 extern u16 D_00260F30[];
-extern u16 D_00260FB0[];
+extern u16 stage1_palette_13[];
 extern u16 D_00260FF0[];
-extern u16 D_00261030[];
+extern u16 stage1_palette_18[];
 extern u16 D_002610B0_as_u16_a[];
 extern u16 D_002610F0[];
 extern u16 D_00261130[];
@@ -365,7 +365,7 @@ extern u16 D_00261530[];
 extern u16 D_00261570[];
 extern u16 D_002615B0[];
 extern u16 D_002615F0[];
-extern u16 D_00261630[];
+extern u16 stage3_midboss_flash_palettes_05[];
 extern u16 D_00261670[];
 extern u16 D_002616B0[];
 extern u16 D_00261730_as_u16_a[];
@@ -380,13 +380,13 @@ extern u16 D_00261B30[];
 extern u16 D_00261B70[];
 extern u16 D_00261D30[];
 extern u16 D_00261D70[];
-extern u16 D_00261DB0[];
+extern u16 stage1_palette_10[];
 extern u16 D_00261EF0_as_u16_a[];
 extern u16 D_00261F30[];
 extern u16 D_00261F70_as_u16_a[];
 extern u16 D_00261FB0_as_u16_a[];
-extern u16 D_002624F0[];
-extern u16 D_00262530[];
+extern u16 ending_fade_in_05[];
+extern u16 ending_fade_in_09[];
 extern u16 D_002643F0[];
 extern u16 D_00264440[];
 extern u16 D_00264490[];
@@ -1175,51 +1175,51 @@ void func_0018E5A0(void) {
     if (explosion_scripts[40] != 0x28) {
         printf("error! exp_tbl[40]\n");
     }
-    STORE_POINTER_DIRECT(explosion_scripts + 40, D_00250260);
+    STORE_POINTER_DIRECT(explosion_scripts + 40, explosion_scripts_20);
     if (explosion_scripts[42] != 0x2a) {
         printf("error! exp_tbl[42]\n");
     }
-    STORE_POINTER_DIRECT(explosion_scripts + 42, D_002502C0);
+    STORE_POINTER_DIRECT(explosion_scripts + 42, explosion_scripts_21);
     if (explosion_scripts[44] != 0x2c) {
         printf("error! exp_tbl[44]\n");
     }
-    STORE_POINTER_DIRECT(explosion_scripts + 44, D_002502F0);
+    STORE_POINTER_DIRECT(explosion_scripts + 44, explosion_scripts_22);
     if (explosion_scripts[46] != 0x2e) {
         printf("error! exp_tbl[46]\n");
     }
-    STORE_POINTER_DIRECT(explosion_scripts + 46, D_002503A0);
+    STORE_POINTER_DIRECT(explosion_scripts + 46, explosion_scripts_23);
     if (explosion_scripts[48] != 0x30) {
         printf("error! exp_tbl[48]\n");
     }
-    STORE_POINTER_DIRECT(explosion_scripts + 48, D_002503F0);
+    STORE_POINTER_DIRECT(explosion_scripts + 48, explosion_scripts_24);
     if (explosion_scripts[50] != 0x32) {
         printf("error! exp_tbl[50]\n");
     }
-    STORE_POINTER_DIRECT(explosion_scripts + 50, D_00250490);
+    STORE_POINTER_DIRECT(explosion_scripts + 50, explosion_scripts_25);
     if (explosion_scripts[52] != 0x34) {
         printf("error! exp_tbl[52]\n");
     }
-    STORE_POINTER_DIRECT(explosion_scripts + 52, D_002504D0);
+    STORE_POINTER_DIRECT(explosion_scripts + 52, explosion_scripts_26);
     if (explosion_scripts[54] != 0x36) {
         printf("error! exp_tbl[54]\n");
     }
-    STORE_POINTER_DIRECT(explosion_scripts + 54, D_00250570);
+    STORE_POINTER_DIRECT(explosion_scripts + 54, explosion_scripts_27);
     if (explosion_scripts[56] != 0x38) {
         printf("error! exp_tbl[56]\n");
     }
-    STORE_POINTER_DIRECT(explosion_scripts + 56, D_002505C0);
+    STORE_POINTER_DIRECT(explosion_scripts + 56, explosion_scripts_28);
     if (explosion_scripts[58] != 0x3a) {
         printf("error! exp_tbl[58]\n");
     }
-    STORE_POINTER_DIRECT(explosion_scripts + 58, D_00250600);
+    STORE_POINTER_DIRECT(explosion_scripts + 58, explosion_scripts_29);
     if (explosion_scripts[60] != 0x3c) {
         printf("error! exp_tbl[60]\n");
     }
-    STORE_POINTER_DIRECT(explosion_scripts + 60, D_00250620);
+    STORE_POINTER_DIRECT(explosion_scripts + 60, explosion_scripts_30);
     if (explosion_scripts[62] != 0x3e) {
         printf("error! exp_tbl[62]\n");
     }
-    STORE_POINTER_DIRECT(explosion_scripts + 62, D_002506B0);
+    STORE_POINTER_DIRECT(explosion_scripts + 62, explosion_scripts_31);
     if (explosion_scripts[64] != 0x40) {
         printf("error! exp_tbl[64]\n");
     }
@@ -1227,7 +1227,7 @@ void func_0018E5A0(void) {
     if (explosion_scripts[66] != 0x42) {
         printf("error! exp_tbl[66]\n");
     }
-    STORE_POINTER_DIRECT(explosion_scripts + 66, D_00250740);
+    STORE_POINTER_DIRECT(explosion_scripts + 66, explosion_scripts_33);
     if (explosion_scripts[68] != 0x44) {
         printf("error! exp_tbl[68]\n");
     }
@@ -1311,51 +1311,51 @@ void func_0018E5A0(void) {
     if (explosion_scripts[108] != 0x6c) {
         printf("error! exp_tbl[108]\n");
     }
-    STORE_POINTER_DIRECT(explosion_scripts + 108, D_00250260);
+    STORE_POINTER_DIRECT(explosion_scripts + 108, explosion_scripts_20);
     if (explosion_scripts[110] != 0x6e) {
         printf("error! exp_tbl[110]\n");
     }
-    STORE_POINTER_DIRECT(explosion_scripts + 110, D_002502C0);
+    STORE_POINTER_DIRECT(explosion_scripts + 110, explosion_scripts_21);
     if (explosion_scripts[112] != 0x70) {
         printf("error! exp_tbl[112]\n");
     }
-    STORE_POINTER_DIRECT(explosion_scripts + 112, D_002502F0);
+    STORE_POINTER_DIRECT(explosion_scripts + 112, explosion_scripts_22);
     if (explosion_scripts[114] != 0x72) {
         printf("error! exp_tbl[114]\n");
     }
-    STORE_POINTER_DIRECT(explosion_scripts + 114, D_002503A0);
+    STORE_POINTER_DIRECT(explosion_scripts + 114, explosion_scripts_23);
     if (explosion_scripts[116] != 0x74) {
         printf("error! exp_tbl[116]\n");
     }
-    STORE_POINTER_DIRECT(explosion_scripts + 116, D_002503F0);
+    STORE_POINTER_DIRECT(explosion_scripts + 116, explosion_scripts_24);
     if (explosion_scripts[118] != 0x76) {
         printf("error! exp_tbl[118]\n");
     }
-    STORE_POINTER_DIRECT(explosion_scripts + 118, D_00250490);
+    STORE_POINTER_DIRECT(explosion_scripts + 118, explosion_scripts_25);
     if (explosion_scripts[120] != 0x78) {
         printf("error! exp_tbl[120]\n");
     }
-    STORE_POINTER_DIRECT(explosion_scripts + 120, D_002504D0);
+    STORE_POINTER_DIRECT(explosion_scripts + 120, explosion_scripts_26);
     if (explosion_scripts[122] != 0x7a) {
         printf("error! exp_tbl[122]\n");
     }
-    STORE_POINTER_DIRECT(explosion_scripts + 122, D_00250570);
+    STORE_POINTER_DIRECT(explosion_scripts + 122, explosion_scripts_27);
     if (explosion_scripts[124] != 0x7c) {
         printf("error! exp_tbl[124]\n");
     }
-    STORE_POINTER_DIRECT(explosion_scripts + 124, D_002505C0);
+    STORE_POINTER_DIRECT(explosion_scripts + 124, explosion_scripts_28);
     if (explosion_scripts[126] != 0x7e) {
         printf("error! exp_tbl[126]\n");
     }
-    STORE_POINTER_DIRECT(explosion_scripts + 126, D_00250600);
+    STORE_POINTER_DIRECT(explosion_scripts + 126, explosion_scripts_29);
     if (explosion_scripts[128] != 0x80) {
         printf("error! exp_tbl[128]\n");
     }
-    STORE_POINTER_DIRECT(explosion_scripts + 128, D_00250620);
+    STORE_POINTER_DIRECT(explosion_scripts + 128, explosion_scripts_30);
     if (explosion_scripts[130] != 0x82) {
         printf("error! exp_tbl[130]\n");
     }
-    STORE_POINTER_DIRECT(explosion_scripts + 130, D_002506B0);
+    STORE_POINTER_DIRECT(explosion_scripts + 130, explosion_scripts_31);
     if (explosion_scripts[132] != 0x84) {
         printf("error! exp_tbl[132]\n");
     }
@@ -1363,7 +1363,7 @@ void func_0018E5A0(void) {
     if (explosion_scripts[134] != 0x86) {
         printf("error! exp_tbl[134]\n");
     }
-    STORE_POINTER_DIRECT(explosion_scripts + 134, D_00250740);
+    STORE_POINTER_DIRECT(explosion_scripts + 134, explosion_scripts_33);
     if (explosion_scripts_b[0] != 0x0) {
         printf("error! exp_tbl_80[0]\n");
     }
@@ -1415,83 +1415,83 @@ void func_0018E5A0(void) {
     if (explosion_scripts_b[24] != 0x18) {
         printf("error! exp_tbl_80[24]\n");
     }
-    STORE_POINTER_DIRECT(explosion_scripts_b + 24, D_00250260);
+    STORE_POINTER_DIRECT(explosion_scripts_b + 24, explosion_scripts_20);
     if (explosion_scripts_b[26] != 0x1a) {
         printf("error! exp_tbl_80[26]\n");
     }
-    STORE_POINTER_DIRECT(explosion_scripts_b + 26, D_002502C0);
+    STORE_POINTER_DIRECT(explosion_scripts_b + 26, explosion_scripts_21);
     if (explosion_scripts_b[28] != 0x1c) {
         printf("error! exp_tbl_80[28]\n");
     }
-    STORE_POINTER_DIRECT(explosion_scripts_b + 28, D_002502F0);
+    STORE_POINTER_DIRECT(explosion_scripts_b + 28, explosion_scripts_22);
     if (explosion_scripts_b[30] != 0x1e) {
         printf("error! exp_tbl_80[30]\n");
     }
-    STORE_POINTER_DIRECT(explosion_scripts_b + 30, D_002503A0);
+    STORE_POINTER_DIRECT(explosion_scripts_b + 30, explosion_scripts_23);
     if (explosion_scripts_b[32] != 0x20) {
         printf("error! exp_tbl_80[32]\n");
     }
-    STORE_POINTER_DIRECT(explosion_scripts_b + 32, D_002503F0);
+    STORE_POINTER_DIRECT(explosion_scripts_b + 32, explosion_scripts_24);
     if (explosion_scripts_b[34] != 0x22) {
         printf("error! exp_tbl_80[34]\n");
     }
-    STORE_POINTER_DIRECT(explosion_scripts_b + 34, D_00250490);
+    STORE_POINTER_DIRECT(explosion_scripts_b + 34, explosion_scripts_25);
     if (explosion_scripts_b[36] != 0x24) {
         printf("error! exp_tbl_80[36]\n");
     }
-    STORE_POINTER_DIRECT(explosion_scripts_b + 36, D_002504D0);
+    STORE_POINTER_DIRECT(explosion_scripts_b + 36, explosion_scripts_26);
     if (explosion_scripts_b[38] != 0x26) {
         printf("error! exp_tbl_80[38]\n");
     }
-    STORE_POINTER_DIRECT(explosion_scripts_b + 38, D_00250570);
+    STORE_POINTER_DIRECT(explosion_scripts_b + 38, explosion_scripts_27);
     if (explosion_scripts_b[40] != 0x28) {
         printf("error! exp_tbl_80[40]\n");
     }
-    STORE_POINTER_DIRECT(explosion_scripts_b + 40, D_00250260);
+    STORE_POINTER_DIRECT(explosion_scripts_b + 40, explosion_scripts_20);
     if (explosion_scripts_b[42] != 0x2a) {
         printf("error! exp_tbl_80[42]\n");
     }
-    STORE_POINTER_DIRECT(explosion_scripts_b + 42, D_002502C0);
+    STORE_POINTER_DIRECT(explosion_scripts_b + 42, explosion_scripts_21);
     if (explosion_scripts_b[44] != 0x2c) {
         printf("error! exp_tbl_80[44]\n");
     }
-    STORE_POINTER_DIRECT(explosion_scripts_b + 44, D_002502F0);
+    STORE_POINTER_DIRECT(explosion_scripts_b + 44, explosion_scripts_22);
     if (explosion_scripts_b[46] != 0x2e) {
         printf("error! exp_tbl_80[46]\n");
     }
-    STORE_POINTER_DIRECT(explosion_scripts_b + 46, D_002503A0);
+    STORE_POINTER_DIRECT(explosion_scripts_b + 46, explosion_scripts_23);
     if (explosion_scripts_b[48] != 0x30) {
         printf("error! exp_tbl_80[48]\n");
     }
-    STORE_POINTER_DIRECT(explosion_scripts_b + 48, D_002503F0);
+    STORE_POINTER_DIRECT(explosion_scripts_b + 48, explosion_scripts_24);
     if (explosion_scripts_b[50] != 0x32) {
         printf("error! exp_tbl_80[50]\n");
     }
-    STORE_POINTER_DIRECT(explosion_scripts_b + 50, D_00250490);
+    STORE_POINTER_DIRECT(explosion_scripts_b + 50, explosion_scripts_25);
     if (explosion_scripts_b[52] != 0x34) {
         printf("error! exp_tbl_80[52]\n");
     }
-    STORE_POINTER_DIRECT(explosion_scripts_b + 52, D_002504D0);
+    STORE_POINTER_DIRECT(explosion_scripts_b + 52, explosion_scripts_26);
     if (explosion_scripts_b[54] != 0x36) {
         printf("error! exp_tbl_80[54]\n");
     }
-    STORE_POINTER_DIRECT(explosion_scripts_b + 54, D_00250570);
+    STORE_POINTER_DIRECT(explosion_scripts_b + 54, explosion_scripts_27);
     if (explosion_scripts_b[56] != 0x38) {
         printf("error! exp_tbl_80[56]\n");
     }
-    STORE_POINTER_DIRECT(explosion_scripts_b + 56, D_002505C0);
+    STORE_POINTER_DIRECT(explosion_scripts_b + 56, explosion_scripts_28);
     if (explosion_scripts_b[58] != 0x3a) {
         printf("error! exp_tbl_80[58]\n");
     }
-    STORE_POINTER_DIRECT(explosion_scripts_b + 58, D_00250600);
+    STORE_POINTER_DIRECT(explosion_scripts_b + 58, explosion_scripts_29);
     if (explosion_scripts_b[60] != 0x3c) {
         printf("error! exp_tbl_80[60]\n");
     }
-    STORE_POINTER_DIRECT(explosion_scripts_b + 60, D_00250620);
+    STORE_POINTER_DIRECT(explosion_scripts_b + 60, explosion_scripts_30);
     if (explosion_scripts_b[62] != 0x3e) {
         printf("error! exp_tbl_80[62]\n");
     }
-    STORE_POINTER_DIRECT(explosion_scripts_b + 62, D_002506B0);
+    STORE_POINTER_DIRECT(explosion_scripts_b + 62, explosion_scripts_31);
     if (explosion_scripts_b[64] != 0x40) {
         printf("error! exp_tbl_80[64]\n");
     }
@@ -1499,7 +1499,7 @@ void func_0018E5A0(void) {
     if (explosion_scripts_b[66] != 0x42) {
         printf("error! exp_tbl_80[66]\n");
     }
-    STORE_POINTER_DIRECT(explosion_scripts_b + 66, D_00250740);
+    STORE_POINTER_DIRECT(explosion_scripts_b + 66, explosion_scripts_33);
     if (explosion_scripts_b[68] != 0x44) {
         printf("error! exp_tbl_80[68]\n");
     }
@@ -1551,83 +1551,83 @@ void func_0018E5A0(void) {
     if (explosion_scripts_b[92] != 0x5c) {
         printf("error! exp_tbl_80[92]\n");
     }
-    STORE_POINTER_DIRECT(explosion_scripts_b + 92, D_00250260);
+    STORE_POINTER_DIRECT(explosion_scripts_b + 92, explosion_scripts_20);
     if (explosion_scripts_b[94] != 0x5e) {
         printf("error! exp_tbl_80[94]\n");
     }
-    STORE_POINTER_DIRECT(explosion_scripts_b + 94, D_002502C0);
+    STORE_POINTER_DIRECT(explosion_scripts_b + 94, explosion_scripts_21);
     if (explosion_scripts_b[96] != 0x60) {
         printf("error! exp_tbl_80[96]\n");
     }
-    STORE_POINTER_DIRECT(explosion_scripts_b + 96, D_002502F0);
+    STORE_POINTER_DIRECT(explosion_scripts_b + 96, explosion_scripts_22);
     if (explosion_scripts_b[98] != 0x62) {
         printf("error! exp_tbl_80[98]\n");
     }
-    STORE_POINTER_DIRECT(explosion_scripts_b + 98, D_002503A0);
+    STORE_POINTER_DIRECT(explosion_scripts_b + 98, explosion_scripts_23);
     if (explosion_scripts_b[100] != 0x64) {
         printf("error! exp_tbl_80[100]\n");
     }
-    STORE_POINTER_DIRECT(explosion_scripts_b + 100, D_002503F0);
+    STORE_POINTER_DIRECT(explosion_scripts_b + 100, explosion_scripts_24);
     if (explosion_scripts_b[102] != 0x66) {
         printf("error! exp_tbl_80[102]\n");
     }
-    STORE_POINTER_DIRECT(explosion_scripts_b + 102, D_00250490);
+    STORE_POINTER_DIRECT(explosion_scripts_b + 102, explosion_scripts_25);
     if (explosion_scripts_b[104] != 0x68) {
         printf("error! exp_tbl_80[104]\n");
     }
-    STORE_POINTER_DIRECT(explosion_scripts_b + 104, D_002504D0);
+    STORE_POINTER_DIRECT(explosion_scripts_b + 104, explosion_scripts_26);
     if (explosion_scripts_b[106] != 0x6a) {
         printf("error! exp_tbl_80[106]\n");
     }
-    STORE_POINTER_DIRECT(explosion_scripts_b + 106, D_00250570);
+    STORE_POINTER_DIRECT(explosion_scripts_b + 106, explosion_scripts_27);
     if (explosion_scripts_b[108] != 0x6c) {
         printf("error! exp_tbl_80[108]\n");
     }
-    STORE_POINTER_DIRECT(explosion_scripts_b + 108, D_00250260);
+    STORE_POINTER_DIRECT(explosion_scripts_b + 108, explosion_scripts_20);
     if (explosion_scripts_b[110] != 0x6e) {
         printf("error! exp_tbl_80[110]\n");
     }
-    STORE_POINTER_DIRECT(explosion_scripts_b + 110, D_002502C0);
+    STORE_POINTER_DIRECT(explosion_scripts_b + 110, explosion_scripts_21);
     if (explosion_scripts_b[112] != 0x70) {
         printf("error! exp_tbl_80[112]\n");
     }
-    STORE_POINTER_DIRECT(explosion_scripts_b + 112, D_002502F0);
+    STORE_POINTER_DIRECT(explosion_scripts_b + 112, explosion_scripts_22);
     if (explosion_scripts_b[114] != 0x72) {
         printf("error! exp_tbl_80[114]\n");
     }
-    STORE_POINTER_DIRECT(explosion_scripts_b + 114, D_002503A0);
+    STORE_POINTER_DIRECT(explosion_scripts_b + 114, explosion_scripts_23);
     if (explosion_scripts_b[116] != 0x74) {
         printf("error! exp_tbl_80[116]\n");
     }
-    STORE_POINTER_DIRECT(explosion_scripts_b + 116, D_002503F0);
+    STORE_POINTER_DIRECT(explosion_scripts_b + 116, explosion_scripts_24);
     if (explosion_scripts_b[118] != 0x76) {
         printf("error! exp_tbl_80[118]\n");
     }
-    STORE_POINTER_DIRECT(explosion_scripts_b + 118, D_00250490);
+    STORE_POINTER_DIRECT(explosion_scripts_b + 118, explosion_scripts_25);
     if (explosion_scripts_b[120] != 0x78) {
         printf("error! exp_tbl_80[120]\n");
     }
-    STORE_POINTER_DIRECT(explosion_scripts_b + 120, D_002504D0);
+    STORE_POINTER_DIRECT(explosion_scripts_b + 120, explosion_scripts_26);
     if (explosion_scripts_b[122] != 0x7a) {
         printf("error! exp_tbl_80[122]\n");
     }
-    STORE_POINTER_DIRECT(explosion_scripts_b + 122, D_00250570);
+    STORE_POINTER_DIRECT(explosion_scripts_b + 122, explosion_scripts_27);
     if (explosion_scripts_b[124] != 0x7c) {
         printf("error! exp_tbl_80[124]\n");
     }
-    STORE_POINTER_DIRECT(explosion_scripts_b + 124, D_002505C0);
+    STORE_POINTER_DIRECT(explosion_scripts_b + 124, explosion_scripts_28);
     if (explosion_scripts_b[126] != 0x7e) {
         printf("error! exp_tbl_80[126]\n");
     }
-    STORE_POINTER_DIRECT(explosion_scripts_b + 126, D_00250600);
+    STORE_POINTER_DIRECT(explosion_scripts_b + 126, explosion_scripts_29);
     if (explosion_scripts_b[128] != 0x80) {
         printf("error! exp_tbl_80[128]\n");
     }
-    STORE_POINTER_DIRECT(explosion_scripts_b + 128, D_00250620);
+    STORE_POINTER_DIRECT(explosion_scripts_b + 128, explosion_scripts_30);
     if (explosion_scripts_b[130] != 0x82) {
         printf("error! exp_tbl_80[130]\n");
     }
-    STORE_POINTER_DIRECT(explosion_scripts_b + 130, D_002506B0);
+    STORE_POINTER_DIRECT(explosion_scripts_b + 130, explosion_scripts_31);
     if (explosion_scripts_b[132] != 0x84) {
         printf("error! exp_tbl_80[132]\n");
     }
@@ -1635,7 +1635,7 @@ void func_0018E5A0(void) {
     if (explosion_scripts_b[134] != 0x86) {
         printf("error! exp_tbl_80[134]\n");
     }
-    STORE_POINTER_DIRECT(explosion_scripts_b + 134, D_00250740);
+    STORE_POINTER_DIRECT(explosion_scripts_b + 134, explosion_scripts_33);
     if (debris_pattern_0[67] != 0x3) {
         printf("error! hah_n00[3]\n");
     }
@@ -1800,51 +1800,51 @@ void func_0018E5A0(void) {
     if (ending_fade_in_table[11] != 0xb) {
         printf("error! end_fadein_tbl[11]\n");
     }
-    STORE_POINTER_DIRECT(ending_fade_in_table + 11, D_002624F0);
+    STORE_POINTER_DIRECT(ending_fade_in_table + 11, ending_fade_in_05);
     if (ending_fade_in_table[18] != 0x12) {
         printf("error! end_fadein_tbl[18]\n");
     }
-    STORE_POINTER_DIRECT(ending_fade_in_table + 18, D_00262530);
+    STORE_POINTER_DIRECT(ending_fade_in_table + 18, ending_fade_in_09);
     if (ending_fade_in_group_0[4] != 0x4) {
         printf("error! end_fadein_g_tbl0[4]\n");
     }
-    STORE_POINTER_DIRECT(ending_fade_in_group_0 + 4, D_002624F0);
+    STORE_POINTER_DIRECT(ending_fade_in_group_0 + 4, ending_fade_in_05);
     if (ending_fade_in_group_0[11] != 0xb) {
         printf("error! end_fadein_g_tbl0[11]\n");
     }
-    STORE_POINTER_DIRECT(ending_fade_in_group_0 + 11, D_00262530);
+    STORE_POINTER_DIRECT(ending_fade_in_group_0 + 11, ending_fade_in_09);
     if (ending_fade_in_group_1[4] != 0x4) {
         printf("error! end_fadein_g_tbl1[4]\n");
     }
-    STORE_POINTER_DIRECT(ending_fade_in_group_1 + 4, D_002624F0);
+    STORE_POINTER_DIRECT(ending_fade_in_group_1 + 4, ending_fade_in_05);
     if (ending_fade_in_group_1[11] != 0xb) {
         printf("error! end_fadein_g_tbl1[11]\n");
     }
-    STORE_POINTER_DIRECT(ending_fade_in_group_1 + 11, D_00262530);
+    STORE_POINTER_DIRECT(ending_fade_in_group_1 + 11, ending_fade_in_09);
     if (ending_fade_in_group_2[4] != 0x4) {
         printf("error! end_fadein_g_tbl2[4]\n");
     }
-    STORE_POINTER_DIRECT(ending_fade_in_group_2 + 4, D_002624F0);
+    STORE_POINTER_DIRECT(ending_fade_in_group_2 + 4, ending_fade_in_05);
     if (ending_fade_in_group_2[11] != 0xb) {
         printf("error! end_fadein_g_tbl2[11]\n");
     }
-    STORE_POINTER_DIRECT(ending_fade_in_group_2 + 11, D_00262530);
+    STORE_POINTER_DIRECT(ending_fade_in_group_2 + 11, ending_fade_in_09);
     if (ending_fade_in_group_3[4] != 0x4) {
         printf("error! end_fadein_g_tbl3[4]\n");
     }
-    STORE_POINTER_DIRECT(ending_fade_in_group_3 + 4, D_002624F0);
+    STORE_POINTER_DIRECT(ending_fade_in_group_3 + 4, ending_fade_in_05);
     if (ending_fade_in_group_3[11] != 0xb) {
         printf("error! end_fadein_g_tbl3[11]\n");
     }
-    STORE_POINTER_DIRECT(ending_fade_in_group_3 + 11, D_00262530);
+    STORE_POINTER_DIRECT(ending_fade_in_group_3 + 11, ending_fade_in_09);
     if (ending_fade_in_group_4[4] != 0x4) {
         printf("error! end_fadein_g_tbl4[4]\n");
     }
-    STORE_POINTER_DIRECT(ending_fade_in_group_4 + 4, D_002624F0);
+    STORE_POINTER_DIRECT(ending_fade_in_group_4 + 4, ending_fade_in_05);
     if (ending_fade_in_group_4[11] != 0xb) {
         printf("error! end_fadein_g_tbl4[11]\n");
     }
-    STORE_POINTER_DIRECT(ending_fade_in_group_4 + 11, D_00262530);
+    STORE_POINTER_DIRECT(ending_fade_in_group_4 + 11, ending_fade_in_09);
     if (g_credits_script[3] != 0x3) {
         printf("error! stf_tbl[3]\n");
     }
@@ -2135,19 +2135,19 @@ void func_0018E5A0(void) {
     if (stage1_palette_list[0] != 0x0) {
         printf("error! avram_pal_tbl1[0]\n");
     }
-    STORE_POINTER(stage1_palette_list, D_002606F0);
+    STORE_POINTER(stage1_palette_list, stage1_palette_00);
     if (stage1_palette_list[3] != 0x3) {
         printf("error! avram_pal_tbl1[3]\n");
     }
-    STORE_POINTER(stage1_palette_list + 3, D_002606B0);
+    STORE_POINTER(stage1_palette_list + 3, stage1_palette_01);
     if (stage1_palette_list[6] != 0x6) {
         printf("error! avram_pal_tbl1[6]\n");
     }
-    STORE_POINTER(stage1_palette_list + 6, D_00260630);
+    STORE_POINTER(stage1_palette_list + 6, stage1_palette_03);
     if (stage1_palette_list[9] != 0x9) {
         printf("error! avram_pal_tbl1[9]\n");
     }
-    STORE_POINTER(stage1_palette_list + 9, D_00260670);
+    STORE_POINTER(stage1_palette_list + 9, stage1_palette_04);
     if (stage1_palette_list[12] != 0xc) {
         printf("error! avram_pal_tbl1[12]\n");
     }
@@ -2155,7 +2155,7 @@ void func_0018E5A0(void) {
     if (stage1_palette_list[15] != 0xf) {
         printf("error! avram_pal_tbl1[15]\n");
     }
-    STORE_POINTER(stage1_palette_list + 15, D_00260730);
+    STORE_POINTER(stage1_palette_list + 15, stage1_palette_07);
     if (stage1_palette_list[18] != 0x12) {
         printf("error! avram_pal_tbl1[18]\n");
     }
@@ -2163,7 +2163,7 @@ void func_0018E5A0(void) {
     if (stage1_palette_list[21] != 0x15) {
         printf("error! avram_pal_tbl1[21]\n");
     }
-    STORE_POINTER(stage1_palette_list + 21, D_00261DB0);
+    STORE_POINTER(stage1_palette_list + 21, stage1_palette_10);
     if (stage1_palette_list[24] != 0x18) {
         printf("error! avram_pal_tbl1[24]\n");
     }
@@ -2171,7 +2171,7 @@ void func_0018E5A0(void) {
     if (stage1_palette_list[27] != 0x1b) {
         printf("error! avram_pal_tbl1[27]\n");
     }
-    STORE_POINTER(stage1_palette_list + 27, D_00260FB0);
+    STORE_POINTER(stage1_palette_list + 27, stage1_palette_13);
     if (stage1_palette_list[30] != 0x1e) {
         printf("error! avram_pal_tbl1[30]\n");
     }
@@ -2183,7 +2183,7 @@ void func_0018E5A0(void) {
     if (stage1_palette_list[36] != 0x24) {
         printf("error! avram_pal_tbl1[36]\n");
     }
-    STORE_POINTER(stage1_palette_list + 36, D_00261030);
+    STORE_POINTER(stage1_palette_list + 36, stage1_palette_18);
     if (stage1_palette_list[39] != 0x27) {
         printf("error! avram_pal_tbl1[39]\n");
     }
@@ -2211,7 +2211,7 @@ void func_0018E5A0(void) {
     if (stage1_palette_list[57] != 0x39) {
         printf("error! avram_pal_tbl1[57]\n");
     }
-    STORE_POINTER(stage1_palette_list + 57, D_00260730);
+    STORE_POINTER(stage1_palette_list + 57, stage1_palette_07);
     if (stage1_palette_list[60] != 0x3c) {
         printf("error! avram_pal_tbl1[60]\n");
     }
@@ -2239,7 +2239,7 @@ void func_0018E5A0(void) {
     if (stage2_palette_list[3] != 0x3) {
         printf("error! avram_pal_tbl2[3]\n");
     }
-    STORE_POINTER(stage2_palette_list + 3, D_00261DB0);
+    STORE_POINTER(stage2_palette_list + 3, stage1_palette_10);
     if (stage2_palette_list[6] != 0x6) {
         printf("error! avram_pal_tbl2[6]\n");
     }
@@ -2247,7 +2247,7 @@ void func_0018E5A0(void) {
     if (stage2_palette_list[9] != 0x9) {
         printf("error! avram_pal_tbl2[9]\n");
     }
-    STORE_POINTER(stage2_palette_list + 9, D_00260FB0);
+    STORE_POINTER(stage2_palette_list + 9, stage1_palette_13);
     if (stage2_palette_list[12] != 0xc) {
         printf("error! avram_pal_tbl2[12]\n");
     }
@@ -2259,7 +2259,7 @@ void func_0018E5A0(void) {
     if (stage2_palette_list[18] != 0x12) {
         printf("error! avram_pal_tbl2[18]\n");
     }
-    STORE_POINTER(stage2_palette_list + 18, D_00261030);
+    STORE_POINTER(stage2_palette_list + 18, stage1_palette_18);
     if (stage2_palette_list[21] != 0x15) {
         printf("error! avram_pal_tbl2[21]\n");
     }
@@ -2267,15 +2267,15 @@ void func_0018E5A0(void) {
     if (stage2_palette_list[24] != 0x18) {
         printf("error! avram_pal_tbl2[24]\n");
     }
-    STORE_POINTER(stage2_palette_list + 24, D_002606F0);
+    STORE_POINTER(stage2_palette_list + 24, stage1_palette_00);
     if (stage2_palette_list[27] != 0x1b) {
         printf("error! avram_pal_tbl2[27]\n");
     }
-    STORE_POINTER(stage2_palette_list + 27, D_002606B0);
+    STORE_POINTER(stage2_palette_list + 27, stage1_palette_01);
     if (stage2_palette_list[30] != 0x1e) {
         printf("error! avram_pal_tbl2[30]\n");
     }
-    STORE_POINTER(stage2_palette_list + 30, D_00260630);
+    STORE_POINTER(stage2_palette_list + 30, stage1_palette_03);
     if (stage2_palette_list[33] != 0x21) {
         printf("error! avram_pal_tbl2[33]\n");
     }
@@ -2283,15 +2283,15 @@ void func_0018E5A0(void) {
     if (stage2_palette_list[36] != 0x24) {
         printf("error! avram_pal_tbl2[36]\n");
     }
-    STORE_POINTER(stage2_palette_list + 36, D_002605F0);
+    STORE_POINTER(stage2_palette_list + 36, stage2_palette_18);
     if (stage2_palette_list[39] != 0x27) {
         printf("error! avram_pal_tbl2[39]\n");
     }
-    STORE_POINTER(stage2_palette_list + 39, D_00260730);
+    STORE_POINTER(stage2_palette_list + 39, stage1_palette_07);
     if (stage2_palette_list[42] != 0x2a) {
         printf("error! avram_pal_tbl2[42]\n");
     }
-    STORE_POINTER(stage2_palette_list + 42, D_00260670);
+    STORE_POINTER(stage2_palette_list + 42, stage1_palette_04);
     if (stage2_palette_list[45] != 0x2d) {
         printf("error! avram_pal_tbl2[45]\n");
     }
@@ -2359,7 +2359,7 @@ void func_0018E5A0(void) {
     if (stage3_palette_list[3] != 0x3) {
         printf("error! avram_pal_tbl3[3]\n");
     }
-    STORE_POINTER(stage3_palette_list + 3, D_00261DB0);
+    STORE_POINTER(stage3_palette_list + 3, stage1_palette_10);
     if (stage3_palette_list[6] != 0x6) {
         printf("error! avram_pal_tbl3[6]\n");
     }
@@ -2367,7 +2367,7 @@ void func_0018E5A0(void) {
     if (stage3_palette_list[9] != 0x9) {
         printf("error! avram_pal_tbl3[9]\n");
     }
-    STORE_POINTER(stage3_palette_list + 9, D_00260FB0);
+    STORE_POINTER(stage3_palette_list + 9, stage1_palette_13);
     if (stage3_palette_list[12] != 0xc) {
         printf("error! avram_pal_tbl3[12]\n");
     }
@@ -2379,7 +2379,7 @@ void func_0018E5A0(void) {
     if (stage3_palette_list[18] != 0x12) {
         printf("error! avram_pal_tbl3[18]\n");
     }
-    STORE_POINTER(stage3_palette_list + 18, D_00261030);
+    STORE_POINTER(stage3_palette_list + 18, stage1_palette_18);
     if (stage3_palette_list[21] != 0x15) {
         printf("error! avram_pal_tbl3[21]\n");
     }
@@ -2387,35 +2387,35 @@ void func_0018E5A0(void) {
     if (stage3_palette_list[24] != 0x18) {
         printf("error! avram_pal_tbl3[24]\n");
     }
-    STORE_POINTER(stage3_palette_list + 24, D_002606F0);
+    STORE_POINTER(stage3_palette_list + 24, stage1_palette_00);
     if (stage3_palette_list[27] != 0x1b) {
         printf("error! avram_pal_tbl3[27]\n");
     }
-    STORE_POINTER(stage3_palette_list + 27, D_002606B0);
+    STORE_POINTER(stage3_palette_list + 27, stage1_palette_01);
     if (stage3_palette_list[30] != 0x1e) {
         printf("error! avram_pal_tbl3[30]\n");
     }
-    STORE_POINTER(stage3_palette_list + 30, D_00260630);
+    STORE_POINTER(stage3_palette_list + 30, stage1_palette_03);
     if (stage3_palette_list[33] != 0x21) {
         printf("error! avram_pal_tbl3[33]\n");
     }
-    STORE_POINTER(stage3_palette_list + 33, D_002608B0);
+    STORE_POINTER(stage3_palette_list + 33, stage3_palette_16);
     if (stage3_palette_list[36] != 0x24) {
         printf("error! avram_pal_tbl3[36]\n");
     }
-    STORE_POINTER(stage3_palette_list + 36, D_002605F0);
+    STORE_POINTER(stage3_palette_list + 36, stage2_palette_18);
     if (stage3_palette_list[39] != 0x27) {
         printf("error! avram_pal_tbl3[39]\n");
     }
-    STORE_POINTER(stage3_palette_list + 39, D_00260730);
+    STORE_POINTER(stage3_palette_list + 39, stage1_palette_07);
     if (stage3_palette_list[42] != 0x2a) {
         printf("error! avram_pal_tbl3[42]\n");
     }
-    STORE_POINTER(stage3_palette_list + 42, D_00260670);
+    STORE_POINTER(stage3_palette_list + 42, stage1_palette_04);
     if (stage3_palette_list[45] != 0x2d) {
         printf("error! avram_pal_tbl3[45]\n");
     }
-    STORE_POINTER(stage3_palette_list + 45, D_00260630);
+    STORE_POINTER(stage3_palette_list + 45, stage1_palette_03);
     if (stage3_palette_list[48] != 0x30) {
         printf("error! avram_pal_tbl3[48]\n");
     }
@@ -2423,7 +2423,7 @@ void func_0018E5A0(void) {
     if (stage3_palette_list[51] != 0x33) {
         printf("error! avram_pal_tbl3[51]\n");
     }
-    STORE_POINTER(stage3_palette_list + 51, D_002606B0);
+    STORE_POINTER(stage3_palette_list + 51, stage1_palette_01);
     if (stage3_palette_list[54] != 0x36) {
         printf("error! avram_pal_tbl3[54]\n");
     }
@@ -2435,7 +2435,7 @@ void func_0018E5A0(void) {
     if (stage3_palette_list[60] != 0x3c) {
         printf("error! avram_pal_tbl3[60]\n");
     }
-    STORE_POINTER(stage3_palette_list + 60, D_00261630);
+    STORE_POINTER(stage3_palette_list + 60, stage3_midboss_flash_palettes_05);
     if (stage3_palette_list[63] != 0x3f) {
         printf("error! avram_pal_tbl3[63]\n");
     }
@@ -2471,7 +2471,7 @@ void func_0018E5A0(void) {
     if (stage4_palette_list[3] != 0x3) {
         printf("error! avram_pal_tbl4[3]\n");
     }
-    STORE_POINTER(stage4_palette_list + 3, D_00261DB0);
+    STORE_POINTER(stage4_palette_list + 3, stage1_palette_10);
     if (stage4_palette_list[6] != 0x6) {
         printf("error! avram_pal_tbl4[6]\n");
     }
@@ -2479,7 +2479,7 @@ void func_0018E5A0(void) {
     if (stage4_palette_list[9] != 0x9) {
         printf("error! avram_pal_tbl4[9]\n");
     }
-    STORE_POINTER(stage4_palette_list + 9, D_00260FB0);
+    STORE_POINTER(stage4_palette_list + 9, stage1_palette_13);
     if (stage4_palette_list[12] != 0xc) {
         printf("error! avram_pal_tbl4[12]\n");
     }
@@ -2491,7 +2491,7 @@ void func_0018E5A0(void) {
     if (stage4_palette_list[18] != 0x12) {
         printf("error! avram_pal_tbl4[18]\n");
     }
-    STORE_POINTER(stage4_palette_list + 18, D_00261030);
+    STORE_POINTER(stage4_palette_list + 18, stage1_palette_18);
     if (stage4_palette_list[21] != 0x15) {
         printf("error! avram_pal_tbl4[21]\n");
     }
@@ -2499,23 +2499,23 @@ void func_0018E5A0(void) {
     if (stage4_palette_list[24] != 0x18) {
         printf("error! avram_pal_tbl4[24]\n");
     }
-    STORE_POINTER(stage4_palette_list + 24, D_002606F0);
+    STORE_POINTER(stage4_palette_list + 24, stage1_palette_00);
     if (stage4_palette_list[27] != 0x1b) {
         printf("error! avram_pal_tbl4[27]\n");
     }
-    STORE_POINTER(stage4_palette_list + 27, D_002606B0);
+    STORE_POINTER(stage4_palette_list + 27, stage1_palette_01);
     if (stage4_palette_list[30] != 0x1e) {
         printf("error! avram_pal_tbl4[30]\n");
     }
-    STORE_POINTER(stage4_palette_list + 30, D_00260630);
+    STORE_POINTER(stage4_palette_list + 30, stage1_palette_03);
     if (stage4_palette_list[33] != 0x21) {
         printf("error! avram_pal_tbl4[33]\n");
     }
-    STORE_POINTER(stage4_palette_list + 33, D_002605F0);
+    STORE_POINTER(stage4_palette_list + 33, stage2_palette_18);
     if (stage4_palette_list[36] != 0x24) {
         printf("error! avram_pal_tbl4[36]\n");
     }
-    STORE_POINTER(stage4_palette_list + 36, D_00260730);
+    STORE_POINTER(stage4_palette_list + 36, stage1_palette_07);
     if (stage4_palette_list[39] != 0x27) {
         printf("error! avram_pal_tbl4[39]\n");
     }
@@ -2575,7 +2575,7 @@ void func_0018E5A0(void) {
     if (stage5_palette_list[3] != 0x3) {
         printf("error! avram_pal_tbl5[3]\n");
     }
-    STORE_POINTER(stage5_palette_list + 3, D_00261DB0);
+    STORE_POINTER(stage5_palette_list + 3, stage1_palette_10);
     if (stage5_palette_list[6] != 0x6) {
         printf("error! avram_pal_tbl5[6]\n");
     }
@@ -2583,7 +2583,7 @@ void func_0018E5A0(void) {
     if (stage5_palette_list[9] != 0x9) {
         printf("error! avram_pal_tbl5[9]\n");
     }
-    STORE_POINTER(stage5_palette_list + 9, D_00260FB0);
+    STORE_POINTER(stage5_palette_list + 9, stage1_palette_13);
     if (stage5_palette_list[12] != 0xc) {
         printf("error! avram_pal_tbl5[12]\n");
     }
@@ -2595,7 +2595,7 @@ void func_0018E5A0(void) {
     if (stage5_palette_list[18] != 0x12) {
         printf("error! avram_pal_tbl5[18]\n");
     }
-    STORE_POINTER(stage5_palette_list + 18, D_00261030);
+    STORE_POINTER(stage5_palette_list + 18, stage1_palette_18);
     if (stage5_palette_list[21] != 0x15) {
         printf("error! avram_pal_tbl5[21]\n");
     }
@@ -2603,27 +2603,27 @@ void func_0018E5A0(void) {
     if (stage5_palette_list[24] != 0x18) {
         printf("error! avram_pal_tbl5[24]\n");
     }
-    STORE_POINTER(stage5_palette_list + 24, D_002606F0);
+    STORE_POINTER(stage5_palette_list + 24, stage1_palette_00);
     if (stage5_palette_list[27] != 0x1b) {
         printf("error! avram_pal_tbl5[27]\n");
     }
-    STORE_POINTER(stage5_palette_list + 27, D_002606B0);
+    STORE_POINTER(stage5_palette_list + 27, stage1_palette_01);
     if (stage5_palette_list[30] != 0x1e) {
         printf("error! avram_pal_tbl5[30]\n");
     }
-    STORE_POINTER(stage5_palette_list + 30, D_00260630);
+    STORE_POINTER(stage5_palette_list + 30, stage1_palette_03);
     if (stage5_palette_list[33] != 0x21) {
         printf("error! avram_pal_tbl5[33]\n");
     }
-    STORE_POINTER(stage5_palette_list + 33, D_002605F0);
+    STORE_POINTER(stage5_palette_list + 33, stage2_palette_18);
     if (stage5_palette_list[36] != 0x24) {
         printf("error! avram_pal_tbl5[36]\n");
     }
-    STORE_POINTER(stage5_palette_list + 36, D_00260730);
+    STORE_POINTER(stage5_palette_list + 36, stage1_palette_07);
     if (stage5_palette_list[39] != 0x27) {
         printf("error! avram_pal_tbl5[39]\n");
     }
-    STORE_POINTER(stage5_palette_list + 39, D_002608B0);
+    STORE_POINTER(stage5_palette_list + 39, stage3_palette_16);
     if (stage5_palette_list[42] != 0x2a) {
         printf("error! avram_pal_tbl5[42]\n");
     }
@@ -2635,7 +2635,7 @@ void func_0018E5A0(void) {
     if (stage5_palette_list[48] != 0x30) {
         printf("error! avram_pal_tbl5[48]\n");
     }
-    STORE_POINTER(stage5_palette_list + 48, D_00260670);
+    STORE_POINTER(stage5_palette_list + 48, stage1_palette_04);
     if (stage5_palette_list[51] != 0x33) {
         printf("error! avram_pal_tbl5[51]\n");
     }
@@ -3117,27 +3117,27 @@ void func_0018E5A0(void) {
     if (stage5_boss_flash_palettes_a[60] != 0x3c) {
         printf("error! st5b_mo1_flush_tbl[60]\n");
     }
-    STORE_POINTER(stage5_boss_flash_palettes_a + 60, D_0024CA40);
+    STORE_POINTER(stage5_boss_flash_palettes_a + 60, stage5_boss_flash_palettes_a_30);
     if (stage5_boss_flash_palettes_a[67] != 0x43) {
         printf("error! st5b_mo1_flush_tbl[67]\n");
     }
-    STORE_POINTER(stage5_boss_flash_palettes_a + 67, D_0024CA80);
+    STORE_POINTER(stage5_boss_flash_palettes_a + 67, stage5_boss_flash_palettes_a_33);
     if (stage5_boss_flash_palettes_a[74] != 0x4a) {
         printf("error! st5b_mo1_flush_tbl[74]\n");
     }
-    STORE_POINTER(stage5_boss_flash_palettes_a + 74, D_0024CAC0);
+    STORE_POINTER(stage5_boss_flash_palettes_a + 74, stage5_boss_flash_palettes_a_37);
     if (stage5_boss_flash_palettes_a[81] != 0x51) {
         printf("error! st5b_mo1_flush_tbl[81]\n");
     }
-    STORE_POINTER(stage5_boss_flash_palettes_a + 81, D_0024CB00);
+    STORE_POINTER(stage5_boss_flash_palettes_a + 81, stage5_boss_flash_palettes_a_40);
     if (stage5_boss_flash_palettes_a[88] != 0x58) {
         printf("error! st5b_mo1_flush_tbl[88]\n");
     }
-    STORE_POINTER(stage5_boss_flash_palettes_a + 88, D_0024CB40);
+    STORE_POINTER(stage5_boss_flash_palettes_a + 88, stage5_boss_flash_palettes_a_44);
     if (stage5_boss_flash_palettes_a[95] != 0x5f) {
         printf("error! st5b_mo1_flush_tbl[95]\n");
     }
-    STORE_POINTER(stage5_boss_flash_palettes_a + 95, D_0024CB80);
+    STORE_POINTER(stage5_boss_flash_palettes_a + 95, stage5_boss_flash_palettes_a_47);
     if (stage5_boss_flash_palettes_b[4] != 0x4) {
         printf("error! st5b_mo3_flush_tbl[4]\n");
     }
@@ -3153,27 +3153,27 @@ void func_0018E5A0(void) {
     if (stage5_boss_flash_palettes_b[25] != 0x19) {
         printf("error! st5b_mo3_flush_tbl[25]\n");
     }
-    STORE_POINTER(stage5_boss_flash_palettes_b + 25, D_0024CA40);
+    STORE_POINTER(stage5_boss_flash_palettes_b + 25, stage5_boss_flash_palettes_a_30);
     if (stage5_boss_flash_palettes_b[32] != 0x20) {
         printf("error! st5b_mo3_flush_tbl[32]\n");
     }
-    STORE_POINTER(stage5_boss_flash_palettes_b + 32, D_0024CA80);
+    STORE_POINTER(stage5_boss_flash_palettes_b + 32, stage5_boss_flash_palettes_a_33);
     if (stage5_boss_flash_palettes_b[39] != 0x27) {
         printf("error! st5b_mo3_flush_tbl[39]\n");
     }
-    STORE_POINTER(stage5_boss_flash_palettes_b + 39, D_0024CAC0);
+    STORE_POINTER(stage5_boss_flash_palettes_b + 39, stage5_boss_flash_palettes_a_37);
     if (stage5_boss_flash_palettes_b[46] != 0x2e) {
         printf("error! st5b_mo3_flush_tbl[46]\n");
     }
-    STORE_POINTER(stage5_boss_flash_palettes_b + 46, D_0024CB00);
+    STORE_POINTER(stage5_boss_flash_palettes_b + 46, stage5_boss_flash_palettes_a_40);
     if (stage5_boss_flash_palettes_b[53] != 0x35) {
         printf("error! st5b_mo3_flush_tbl[53]\n");
     }
-    STORE_POINTER(stage5_boss_flash_palettes_b + 53, D_0024CB40);
+    STORE_POINTER(stage5_boss_flash_palettes_b + 53, stage5_boss_flash_palettes_a_44);
     if (stage5_boss_flash_palettes_b[60] != 0x3c) {
         printf("error! st5b_mo3_flush_tbl[60]\n");
     }
-    STORE_POINTER(stage5_boss_flash_palettes_b + 60, D_0024CB80);
+    STORE_POINTER(stage5_boss_flash_palettes_b + 60, stage5_boss_flash_palettes_a_47);
     if (stage5_boss_flash_palettes_c[4] != 0x4) {
         printf("error! st5bflush0_tbl[4]\n");
     }
@@ -3181,27 +3181,27 @@ void func_0018E5A0(void) {
     if (stage5_boss_flash_palettes_c[11] != 0xb) {
         printf("error! st5bflush0_tbl[11]\n");
     }
-    STORE_POINTER(stage5_boss_flash_palettes_c + 11, D_0024CA40);
+    STORE_POINTER(stage5_boss_flash_palettes_c + 11, stage5_boss_flash_palettes_a_30);
     if (stage5_boss_flash_palettes_c[18] != 0x12) {
         printf("error! st5bflush0_tbl[18]\n");
     }
-    STORE_POINTER(stage5_boss_flash_palettes_c + 18, D_0024CA80);
+    STORE_POINTER(stage5_boss_flash_palettes_c + 18, stage5_boss_flash_palettes_a_33);
     if (stage5_boss_flash_palettes_c[25] != 0x19) {
         printf("error! st5bflush0_tbl[25]\n");
     }
-    STORE_POINTER(stage5_boss_flash_palettes_c + 25, D_0024CAC0);
+    STORE_POINTER(stage5_boss_flash_palettes_c + 25, stage5_boss_flash_palettes_a_37);
     if (stage5_boss_flash_palettes_c[32] != 0x20) {
         printf("error! st5bflush0_tbl[32]\n");
     }
-    STORE_POINTER(stage5_boss_flash_palettes_c + 32, D_0024CB00);
+    STORE_POINTER(stage5_boss_flash_palettes_c + 32, stage5_boss_flash_palettes_a_40);
     if (stage5_boss_flash_palettes_c[39] != 0x27) {
         printf("error! st5bflush0_tbl[39]\n");
     }
-    STORE_POINTER(stage5_boss_flash_palettes_c + 39, D_0024CB40);
+    STORE_POINTER(stage5_boss_flash_palettes_c + 39, stage5_boss_flash_palettes_a_44);
     if (stage5_boss_flash_palettes_c[46] != 0x2e) {
         printf("error! st5bflush0_tbl[46]\n");
     }
-    STORE_POINTER(stage5_boss_flash_palettes_c + 46, D_0024CB80);
+    STORE_POINTER(stage5_boss_flash_palettes_c + 46, stage5_boss_flash_palettes_a_47);
     if (stage5_boss_fade_palettes_a[3] != 0x3) {
         printf("error! st5bmd2_fade_tbl0[3]\n");
     }
