@@ -360,7 +360,7 @@ segments:
       - [0x16f8f0, .data, shared/gfx]
       - [0x16fc20, .data, shared/arcade_sprite]
       - [0x170890, .data, shared/menu_data]
-      - [0x171da0, data, data_171da0]
+      - [0x171da0, .data, shared/memcard_data]
       - [0x172170, .data, shared/memcard]
       - [0x172190, .data, shared/replay]
       - [0x1721a8, .data, shared/replay_state]
@@ -458,10 +458,11 @@ segments:
       - [0x18dd10, .sdata, shared/stage1_boss_small_data]
       - [0x18dd14, .sdata, shared/wreck_test_data]
       - [0x18dd18, .sdata, shared/screen_mode_data]
-      - [0x18dd20, sdata, sdata_18dd20]
+      - [0x18dd20, .sdata, shared/menu_small_data]
       - [0x18de38, .sdata, shared/memcard_small_data]
       - [0x18dec0, .sdata, shared/replay_small_data]
-      - [0x18ded0, sdata, sdata_18ded0]
+      - [0x18ded0, .sdata, shared/replay_state_small_data]
+      - [0x18df00, sdata, sdata_18df00]
       - {type: .sbss, vram: 0x28de80, name: shared/credits_roll}
       - {type: sbss, vram: 0x28de8c, name: sbss_28de8c}
       - {type: .sbss, vram: 0x28e0c4, name: shared/task}

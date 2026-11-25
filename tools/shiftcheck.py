@@ -157,6 +157,15 @@ def against_twin(base, other, twin, data):
             return None
         return other.symbols[common[index][1]] + address - common[index][0]
 
+    base_start, base_image, _ = base.image()
+
+    def same_target(value, there, length=16):
+        a, b = value - base_start, there - other_start
+        if address % 4 or not (0 <= a <= len(base_image) - length and 0 <= b <= len(other_image) - length):
+            return False
+        left = base_image[a:a + length]
+        return left == other_image[b:b + length] and any(left)
+
     numbers, unmoved, differ, unplaced, follow = [], [], [], [], []
     for address, value in data:
         place = moved(address)
@@ -165,8 +174,10 @@ def against_twin(base, other, twin, data):
             continue
         there, = struct.unpack_from("<I", other_image, place - other_start)
         if there != value:
-            # an address when the twin holds the moved address, or when the twin's word carries a relocation
-            (follow if there == moved(value) or place in other.relocations else differ).append((address, value, there))
+            # an address when the twin holds the moved address, when the twin's word carries a relocation, or
+            # when both words point into their images at the same contents
+            (follow if there == moved(value) or place in other.relocations or same_target(value, there)
+             else differ).append((address, value, there))
         elif moved(value) == value:
             unmoved.append((address, value, there))
         else:

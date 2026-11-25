@@ -1,6 +1,26 @@
 /* Data of the enemy unit, still to be merged into it. */
 #include "common.h"
 
+extern u8 D_0027D960[];
+extern u8 D_0027E400[];
+extern u8 D_0027E420[];
+extern u8 D_0027E570[];
+extern u8 D_0027F300[];
+extern u8 D_0027FD70[];
+extern u8 D_0027FD90[];
+extern u8 D_0027FEF0[];
+extern u8 D_00281020[];
+extern u8 D_00281D20[];
+extern u8 D_00281D40[];
+extern u8 D_00281E40[];
+extern u8 D_00282650[];
+extern u8 D_00283250[];
+extern u8 D_00283270[];
+extern u8 D_002833B0[];
+extern u8 D_00284750[];
+extern u8 D_00285F70[];
+extern u8 D_00285FA0[];
+extern u8 D_002861B0[];
 void enemy_script_air_collision();
 void enemy_script_air_scroll_check();
 void enemy_script_end();
@@ -14,12 +34,70 @@ void enemy_script_set_work_22();
 void enemy_script_set_work_24();
 void enemy_script_unused();
 
-struct D0026a2b0Record { u16 w0[80]; void *p1[12]; };
+struct D0026a2b0Record { void *p0[3]; u16 w1[2]; void *p2[3]; u16 w3[2]; void *p4[3]; u16 w5[2]; void *p6[3]; u16 w7[2]; void *p8[3]; u16 w9[2]; void *p10[3]; u16 w11[2]; void *p12[3]; u16 w13[2]; void *p14[3]; u16 w15[2]; void *p16[3]; u16 w17[2]; void *p18[3]; u16 w19[2]; void *p20[12]; };
 extern struct D0026a2b0Record D_0026A2B0;
 
-#ifdef DEATH_LABEL
 struct D0026a2b0Record D_0026A2B0 = {
-    { 0x4EA0, 0x0028, 0x5960, 0x0028, 0x5AB0, 0x0028, 0x0000, 0x0000, 0x68D0, 0x0028, 0x7360, 0x0028, 0x74C0, 0x0028, 0x0000, 0x0000, 0x85F0, 0x0028, 0x9310, 0x0028, 0x9410, 0x0028, 0x0000, 0x0000, 0x9C20, 0x0028, 0xA840, 0x0028, 0xA980, 0x0028, 0x0000, 0x0000, 0xBD20, 0x0028, 0xD560, 0x0028, 0xD770, 0x0028, 0x0000, 0x0000, 0x5940, 0x0028, 0x5960, 0x0028, 0x5AB0, 0x0028, 0x0000, 0x0000, 0x7340, 0x0028, 0x7360, 0x0028, 0x74C0, 0x0028, 0x0000, 0x0000, 0x92F0, 0x0028, 0x9310, 0x0028, 0x9410, 0x0028, 0x0000, 0x0000, 0xA820, 0x0028, 0xA840, 0x0028, 0xA980, 0x0028, 0x0000, 0x0000, 0xD540, 0x0028, 0xD560, 0x0028, 0xD770, 0x0028, 0x0000, 0x0000 },
+    {
+        D_0027D960,
+        D_0027E420,
+        D_0027E570,
+    },
+    { 0x0000, 0x0000 },
+    {
+        D_0027F300,
+        D_0027FD90,
+        D_0027FEF0,
+    },
+    { 0x0000, 0x0000 },
+    {
+        D_00281020,
+        D_00281D40,
+        D_00281E40,
+    },
+    { 0x0000, 0x0000 },
+    {
+        D_00282650,
+        D_00283270,
+        D_002833B0,
+    },
+    { 0x0000, 0x0000 },
+    {
+        D_00284750,
+        D_00285FA0,
+        D_002861B0,
+    },
+    { 0x0000, 0x0000 },
+    {
+        D_0027E400,
+        D_0027E420,
+        D_0027E570,
+    },
+    { 0x0000, 0x0000 },
+    {
+        D_0027FD70,
+        D_0027FD90,
+        D_0027FEF0,
+    },
+    { 0x0000, 0x0000 },
+    {
+        D_00281D20,
+        D_00281D40,
+        D_00281E40,
+    },
+    { 0x0000, 0x0000 },
+    {
+        D_00283250,
+        D_00283270,
+        D_002833B0,
+    },
+    { 0x0000, 0x0000 },
+    {
+        D_00285F70,
+        D_00285FA0,
+        D_002861B0,
+    },
+    { 0x0000, 0x0000 },
     {
         enemy_script_loop,
         enemy_script_set_entity_1f,
@@ -35,22 +113,3 @@ struct D0026a2b0Record D_0026A2B0 = {
         enemy_script_unused,
     },
 };
-#else
-struct D0026a2b0Record D_0026A2B0 = {
-    { 0xD960, 0x0027, 0xE420, 0x0027, 0xE570, 0x0027, 0x0000, 0x0000, 0xF300, 0x0027, 0xFD90, 0x0027, 0xFEF0, 0x0027, 0x0000, 0x0000, 0x1020, 0x0028, 0x1D40, 0x0028, 0x1E40, 0x0028, 0x0000, 0x0000, 0x2650, 0x0028, 0x3270, 0x0028, 0x33B0, 0x0028, 0x0000, 0x0000, 0x4750, 0x0028, 0x5FA0, 0x0028, 0x61B0, 0x0028, 0x0000, 0x0000, 0xE400, 0x0027, 0xE420, 0x0027, 0xE570, 0x0027, 0x0000, 0x0000, 0xFD70, 0x0027, 0xFD90, 0x0027, 0xFEF0, 0x0027, 0x0000, 0x0000, 0x1D20, 0x0028, 0x1D40, 0x0028, 0x1E40, 0x0028, 0x0000, 0x0000, 0x3250, 0x0028, 0x3270, 0x0028, 0x33B0, 0x0028, 0x0000, 0x0000, 0x5F70, 0x0028, 0x5FA0, 0x0028, 0x61B0, 0x0028, 0x0000, 0x0000 },
-    {
-        enemy_script_loop,
-        enemy_script_set_entity_1f,
-        enemy_script_ground_collision,
-        enemy_script_air_collision,
-        enemy_script_set_work_22,
-        enemy_script_poke_task,
-        enemy_script_poke_entity,
-        enemy_script_set_work_24,
-        enemy_script_set_entity_1e,
-        enemy_script_air_scroll_check,
-        enemy_script_end,
-        enemy_script_unused,
-    },
-};
-#endif

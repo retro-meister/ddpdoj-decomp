@@ -14,7 +14,8 @@ Addresses that the split assembly shows as plain numbers in both executables are
 
 Writes the data-only file src/shared/FILE.c with the bytes of the stretches (.data / .sdata, main executable
 addresses, hex) and gives the file those stretches in both splat.yaml files. Run after
-`uv run tools/build.py --map`; build afterwards (the change re-splits).
+`uv run tools/build.py --map` and `uv run tools/tablegen.py --refresh` (which reads the symbol references of
+the split assembly and keeps them for the runs that follow); build afterwards (the change re-splits).
 
 Objects start at the labels the link map knows in the stretch. A label that cannot start an object under the
 compiler's layout rules stays a name inside the object before it and is kept in symbols.txt at its address.
@@ -36,6 +37,7 @@ OFF = 0xFFF80
 args = sys.argv[1:]
 dry = '--dry' in args
 if dry: args.remove('--dry')
+refresh = '--refresh' in args
 redo = '--redo' in args
 if redo: args.remove('--redo')
 separate = '--separate' in args
@@ -67,20 +69,31 @@ for a in args[1:]:
 def symbol_references(target):
     """{address of a data word: (symbol, addend)} for every symbol reference in the target's split assembly data."""
     found = {}
-    # the split assembly goes away with the next re-split; the last reading is kept beside it
+    # the split assembly changes under a batch (every config change re-splits), so it is read once, with
+    # --refresh after a `tools/build.py --map`, and kept
     cache = R / 'build' / ('tablegen_refs_%s.json' % target)
-    if not any((R / 'build/split' / target / 'asm/data').glob('*.s')):
-        assert cache.exists(), 'no split assembly: run tools/build.py --map first'
+    if not refresh:
+        assert cache.exists(), 'run tools/build.py --map and then tools/tablegen.py --refresh'
         return {int(k): v for k, v in json.loads(cache.read_text()).items()}
+    assert any((R / 'build/split' / target / 'asm/data').glob('*.s')), 'no split assembly: run tools/build.py --map first'
+    covered = set()
     for path in (R / 'build/split' / target / 'asm/data').glob('*.s'):
         for line in path.read_text().splitlines():
+            c = re.match(r'\s*/\* [0-9A-F]+ ([0-9A-F]{8}) ', line)
+            if c: covered.add(int(c.group(1), 16))
             m = re.match(r'\s*/\* [0-9A-F]+ ([0-9A-F]{8}) [0-9A-F]{8} \*/\s+\.word\s+([A-Za-z_][\w.]*)(?:\s*\+\s*(0x[0-9A-Fa-f]+|\d+))?\s*$', line)
             if m: found[int(m.group(1), 16)] = [m.group(2), int(m.group(3), 0) if m.group(3) else 0]
+    # what was read earlier for data that has since left the assembly stays (for --redo)
+    if cache.exists():
+        for k, v in json.loads(cache.read_text()).items():
+            if int(k) not in covered: found.setdefault(int(k), v)
     cache.write_text(json.dumps(found))
+    print(target, len(found), 'symbol references in the split data')
     return found
 from common import matching_lock
 with matching_lock(shared=True, name='split.lock'):   # not while a re-split is writing it
     main_rel = symbol_references('SLPS_252.33'); death_rel = symbol_references('DEATH.ELF')
+if refresh: sys.exit()
 main_rel = {k: v for k, v in main_rel.items() if not re.fullmatch(r'D_[0-9A-F]{1,7}', v[0])}
 death_rel = {k: v for k, v in death_rel.items() if not re.fullmatch(r'D_[0-9A-F]{1,7}', v[0])}
 TEXT_END = 0x23DC80
@@ -94,6 +107,19 @@ def symfile(t):
             else: named[m.group(1)] = int(m.group(2), 16)
     return named, ignored
 main_named, main_ignored = symfile('SLPS_252.33'); death_named, death_ignored = symfile('DEATH.ELF')
+new_syms = {'SLPS_252.33': {}, 'DEATH.ELF': {}}
+def invent(target, v):
+    """A placeholder name for an address nothing names yet; it gets a line in the target's symbols.txt."""
+    n = 'D_%08X' % v
+    if target == 'DEATH.ELF' and (death_named.get(n, v) != v or n in main_named or n in used): n = 'death_' + n
+    new_syms[target][n] = v
+    return n
+def target_name(target, names, v):
+    """The name for an address a word points at: a known one, unless it is a Death Label placeholder that spells
+    a name the shared code uses for something else."""
+    if names and not (target == 'DEATH.ELF' and names[0] == 'D_%08X' % v and (names[0] in used or death_named.get(names[0], v) != v)):
+        return names[0]
+    return invent(target, v)
 def add_checked_addresses(target, rel, named):
     """Words the shift check found to be addresses although nothing marks them."""
     path = R / 'build/shiftcheck' / ('addresses_%s.txt' % target)
@@ -105,7 +131,7 @@ def add_checked_addresses(target, rel, named):
         site, value = (int(x, 16) for x in line.split())
         if site in rel: continue
         names = sorted(at.get(value, ()), key=lambda q: (bool(re.fullmatch(r'(?:death_)?D_[0-9A-F]{8}', q)), q))
-        rel[site] = [names[0] if names else 'D_%08X' % value, 0]
+        rel[site] = [target_name(target, names, value), 0]
 aliases = set()
 for t in ('SLPS_252.33', 'DEATH.ELF'):
     for l in open(R / f'config/{t}/aliases.txt'):
@@ -134,7 +160,6 @@ def read_labels(target, ignored):
         out.setdefault(a, set()).add(n)
     return out
 death_labels = read_labels('DEATH.ELF', death_ignored)
-add_checked_addresses('SLPS_252.33', main_rel, labels); add_checked_addresses('DEATH.ELF', death_rel, death_labels)
 def pick(a):
     ns = labels[a]
     named = sorted(n for n in ns if n in main_named and not re.fullmatch(r'D_[0-9A-F]{8}', n))
@@ -146,6 +171,13 @@ rom = (R / 'baserom/SLPS_252.33').read_bytes(); drom = (R / 'baserom/DEATH.ELF')
 alltext = ''.join(p.read_text() for p in (R / 'src').rglob('*.c') if 'gallery' not in str(p)) + \
           ''.join(p.read_text() for p in (R / 'include').rglob('*.h'))
 used = set(re.findall(r'\b[A-Za-z_]\w*\b', alltext))
+# a Death Label placeholder read from an earlier split may since have become a Main name for something else
+for site_, ref_ in death_rel.items():
+    m = re.fullmatch(r'D_([0-9A-F]{8})', ref_[0])
+    if m and int(m.group(1), 16) + ref_[1] == int.from_bytes(drom[site_ - OFF:site_ - OFF + 4], 'little') \
+            and death_named.get(ref_[0], int(m.group(1), 16)) != int(m.group(1), 16):
+        ref_[0] = 'death_' + ref_[0]; new_syms['DEATH.ELF'][ref_[0]] = int(m.group(1), 16)
+add_checked_addresses('SLPS_252.33', main_rel, labels); add_checked_addresses('DEATH.ELF', death_rel, death_labels)
 # element types the code already declares its tables with: {name: (type, count or None)}
 WIDTH = {'s8': 1, 'u8': 1, 's16': 2, 'u16': 2, 's32': 4, 'u32': 4}
 declared = {}
@@ -204,6 +236,8 @@ def partition_data(start, end):
     def valid(i, j):
         a, L = cands[i], cands[j] - cands[i]
         if a % 16 == 8:
+            if any(x in main_rel for x in range(a, a + 16, 4)) and any(rom[a - OFF + 12:a - OFF + 16]):
+                return False   # addresses fill it up to 16 bytes: it cannot sit on an odd 8
             return L in (16, 24) and not any(rom[a - OFF + 15:a - OFF + L])
         return L >= 16
     # a label where Death Label's distance from Main changes starts an object too
@@ -232,6 +266,10 @@ def partition_data(start, end):
         j = back[i]; a = cands[i]; nxt = cands[j]
         if a % 16 == 8:
             size = 14 if not rom[a - OFF + 14] else 15
+            if any(x in main_rel for x in range(a, a + 16, 4)):
+                # with addresses in it the object is whole words: three of them at most, to stay under 16 bytes
+                assert not any(rom[a - OFF + 12:a - OFF + 16]), 'no object can start at %x' % a
+                size = 12
         else:
             size = nxt - a
         out.append((a, size, nxt)); i = j
@@ -482,6 +520,20 @@ for sec, a, size, nxt, da, dsize, dn, n in objects:
                 q = sorted(k for k, val in main_named.items() if val == v)
                 main_rel[x] = [q[0] if q else 'D_%08X' % v, 0]; ms.append(x)
                 print('Main %x: 0x%x taken for an address (it is one in Death Label)' % (x, v))
+        # neither split marks it, but the two words differ and point into their images at the same contents
+        for x in range(a, a + size - 3, 4):
+            y = x - a + da
+            if x in main_rel or y in death_rel: continue
+            v = int.from_bytes(raw[x - a:x - a + 4], 'little'); w = int.from_bytes(draw[x - a:x - a + 4], 'little')
+            if v == w or not (0x100000 <= v < 0x6F0000 and 0x100000 <= w < 0x6F0000): continue
+            left = rom[v - OFF:v - OFF + 16]
+            if len(left) == 16 and any(left) and left == drom[w - OFF:w - OFF + 16]:
+                for t_, rel_, val_, labs_, site_, lst_ in (('SLPS_252.33', main_rel, v, labels, x, ms), ('DEATH.ELF', death_rel, w, death_labels, y, ds)):
+                    names = sorted((q for q in labs_.get(val_, ()) if not q.startswith('alabel')),
+                                   key=lambda q: (bool(re.fullmatch(r'(?:death_)?D_[0-9A-F]{8}', q)), q))
+                    rel_[site_] = [target_name(t_, names, val_), 0]; lst_.append(site_)
+            else:
+                print('%s: 0x%x / 0x%x at %x differ and look like addresses, left as numbers' % (n, v, w, x))
         ms.sort(); ds.sort()
     assert all((x - a) % 4 == 0 for x in ms) and all((x - da) % 4 == 0 for x in ds), 'odd pointer position in %s' % n
     if ms or ds: assert size % 2 == 0 and dsize % 2 == 0
@@ -494,9 +546,10 @@ def one(n, a, size, raw, sites, kind, rel, target):
     if kind == 'plain':
         ctype, count, text = carray(n, raw, size)
         return 'extern %s %s[%d];' % (ctype, n, count), text
-    fields, vals = fields_of(a, size, raw, rel, target)
     if kind == 'table' and kinds[n] == 'array':
+        vals = [target(a + q) for q in range(0, size, 4)]; fields = vals
         return 'extern void *%s[%d];' % (n, len(fields)), 'void *%s[%d] = {\n%s\n};\n' % (n, len(fields), '\n'.join('    %s,' % v for v in vals))
+    fields, vals = fields_of(a, size, raw, rel, target)
     tname = ''.join(w.capitalize() for w in n.split('_')) + 'Record'
     return ('struct %s { %s };\nextern struct %s %s;' % (tname, ' '.join(fields), tname, n),
             'struct %s %s = {\n%s\n};\n' % (tname, n, '\n'.join('    %s,' % v for v in vals)))
@@ -537,13 +590,26 @@ if separate:
         labels, rom, main_named, main_rel = t_labels, t_rom, t_named, t_rel
         externs = {}; kinds = {}; defined = {}; obj_by_main = []
         objs_all = []
+        other = drom if target == 'SLPS_252.33' else keep[1]
         for sec, start, end in pieces:
+            # words neither split marks: a value inside the data of the image whose contents the other
+            # executable has too is an address
+            for x in range(start, end - 3, 4):
+                if x in main_rel: continue
+                v = int.from_bytes(rom[x - OFF:x - OFF + 4], 'little')
+                if not (0x241700 <= v < 0x291000): continue
+                there = rom[v - OFF:v - OFF + 16]
+                if any(there) and (other.find(there, 0x241700 - OFF, 0x291000 - OFF) >= 0 or (v >= 0x261000 and v % 4 == 0)):
+                    names = sorted((q for q in labels.get(v, ()) if not q.startswith('alabel')),
+                                   key=lambda q: (bool(re.fullmatch(r'(?:death_)?D_[0-9A-F]{8}', q)), q))
+                    main_rel[x] = [target_name(target, names, v), 0]
+                else:
+                    print('0x%x at %x looks like an address, left as a number' % (v, x))
             objs = split_declared(partition_data(start, end)) if sec == '.data' else partition_sdata(start, end)
             for a, size, nxt in objs:
-                if a in labels: n = pick(a)
-                else:
-                    n = 'D_%08X' % a
-                    if target == 'DEATH.ELF' and n in used: n = 'death_' + n
+                n = pick(a) if a in labels else 'D_%08X' % a
+                # a Death Label placeholder that spells a name the shared code uses for something else
+                if target == 'DEATH.ELF' and n == 'D_%08X' % a and n in used: n = 'death_' + n
                 assert n not in defined, n
                 assert not any(rom[a - OFF + size:nxt - OFF]), 'padding not zero at %x' % a
                 defined[n] = a; objs_all.append((sec, a, size, n))
@@ -637,16 +703,34 @@ for t, named in (('SLPS_252.33', main_named), ('DEATH.ELF', death_named)):
     have = set()
     for l in open(sp):
         m = re.match(r'(\w+)\s*=\s*0x', l)
-        gone = sep_defined if separate and t == 'DEATH.ELF' else defined
+        # Death Label's own definitions keep their lines: a Main name at a Death Label address is only known there
+        gone = {} if separate and t == 'DEATH.ELF' else defined
         if m and m.group(1) in gone and 'ignore:true' not in l: continue
         if m: have.add(m.group(1))
         out.append(l)
     text = ''.join(out)
     if not text.endswith('\n'): text += '\n'
     add = []
+    # a placeholder the file points at keeps existing only while the assembly refers to it: give it a line
+    ext_ = (m_ext if t == 'SLPS_252.33' else d_ext) if separate else (externs if t == 'SLPS_252.33' else dexterns)
+    for n_ in sorted(ext_):
+        m = re.fullmatch(r'(?:death_)?D_([0-9A-F]{8})', n_)
+        if m and n_ not in have and n_ not in defined and n_ not in sep_defined and n_ not in death_add and n_ not in death_alias:
+            new_syms[t].setdefault(n_, int(m.group(1), 16))
+    for n_, a_ in sorted(new_syms[t].items()):
+        if n_ not in have and n_ not in defined and n_ not in sep_defined: add.append('%s = 0x%x;\n' % (n_, a_)); have.add(n_)
     if separate:
         for n_, a_ in (sep_death_lines if t == 'DEATH.ELF' else main_inside):
             if n_ not in have: add.append('%s = 0x%x;\n' % (n_, a_)); have.add(n_)
+        if t == 'DEATH.ELF':
+            named_at = {int(m.group(2), 16) for m in re.finditer(r'^(\w+)\s*=\s*0x([0-9A-Fa-f]+);(?!.*ignore)', text, re.M)}
+            for n_, a_ in sorted(sep_defined.items()):
+                if n_ not in have: add.append('%s = 0x%x;\n' % (n_, a_)); have.add(n_)
+                m = re.fullmatch(r'D_([0-9A-F]{8})', n_)
+                # what Death Label has at the address the name spells needs its own name
+                if m and int(m.group(1), 16) != a_ and int(m.group(1), 16) not in named_at and 0x100000 <= int(m.group(1), 16) < 0x700000 \
+                        and 'death_' + n_ not in have:
+                    add.append('death_%s = 0x%x;\n' % (n_, int(m.group(1), 16))); have.add('death_' + n_)
     for s_, e_, d_, n_o in obj_by_main:
         for a_ in sorted(labels):
             if s_ < a_ < e_ and not (t == 'DEATH.ELF' and d_ is None):
@@ -666,6 +750,13 @@ for t, named in (('SLPS_252.33', main_named), ('DEATH.ELF', death_named)):
             n_, a_ = l.split(' = '); a_ = int(a_.rstrip(';\n'), 16)
             if a_ in taken and taken[a_] != n_: death_alias[n_] = (a_, taken[a_])
             else: keep.append(l); taken[a_] = n_
+        # a Main placeholder name given a Death Label address: whatever Death Label has at the address the
+        # name spells needs a name of its own, or the split would call it the same
+        for l in list(keep):
+            n_, a_ = l.split(' = '); a_ = int(a_.rstrip(';\n'), 16)
+            m = re.fullmatch(r'D_([0-9A-F]{8})', n_)
+            if m and int(m.group(1), 16) != a_ and int(m.group(1), 16) not in taken and 0x100000 <= int(m.group(1), 16) < 0x700000:
+                keep.append('death_%s = 0x%x;\n' % (n_, int(m.group(1), 16))); taken[int(m.group(1), 16)] = 'death_' + n_
         add = keep
         ap = R / 'config/DEATH.ELF/aliases.txt'; at = ap.read_text()
         for n_, (a_, other) in sorted(death_alias.items()):
