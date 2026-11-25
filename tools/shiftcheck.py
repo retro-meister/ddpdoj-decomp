@@ -164,7 +164,7 @@ def against_twin(base, other, twin, data):
 
     def same_target(value, there, length=16):
         a, b = value - base_start, there - other_start
-        if address % 4 or not (0 <= a <= len(base_image) - length and 0 <= b <= len(other_image) - length):
+        if address % 4 or value % 2 or not (0 <= a <= len(base_image) - length and 0 <= b <= len(other_image) - length):
             return False
         left = base_image[a:a + length]
         return left == other_image[b:b + length] and len(set(left)) >= 4   # not padding or a fill pattern
