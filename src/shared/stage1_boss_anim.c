@@ -1,5 +1,6 @@
 #include "common.h"
 #include "entity.h"
+#include "stage1_boss.h"
 
 void stage1_boss_right_hover_start(void);
 void stage1_boss_right_hover(void);
@@ -44,6 +45,36 @@ void stage1_boss_gatling_fast_spin_start(void);
 void stage1_boss_gatling_fast_spin(void);
 
 void stage1_boss_gatling_spin(void);
+/*
+ * The animation part of the boss slot (reg_a4), one record per kind of animation. `running` is cleared when
+ * the animation is over.
+ */
+typedef struct {
+    /* 0x00 */ s16 running;
+    /* 0x02 */ u16 unused_02;
+    /* 0x04 */ u8 x_phase;        /* a side part sways around its place */
+    /* 0x05 */ u8 y_phase;
+} SideHover;
+
+/* A rotor turning, or the gatling gun turning back to the middle: one step every few frames. */
+typedef struct {
+    /* 0x00 */ s16 running;
+    /* 0x02 */ SlotTimer frame;
+} FrameStep;
+
+/* A side part opening or closing. */
+typedef struct {
+    /* 0x00 */ s16 running;
+    /* 0x02 */ SlotTimer frame;
+    /* 0x04 */ u16 delay;         /* closing: frames to wait first */
+    /* 0x06 */ u8 unused_06;
+    /* 0x07 */ u8 moving;
+} SideDoor;
+
+#define HOVER(pointer) ((SideHover *)(pointer))
+#define ROTOR(pointer) ((FrameStep *)(pointer))
+#define DOOR(pointer) ((SideDoor *)(pointer))
+
 /* The set-up routine and the per-frame routine of every animation, by animation number. */
 void (*stage1_boss_anim_routines[])(void) = {
     stage1_boss_right_hover_start,
@@ -102,9 +133,9 @@ s32 rng_next_unsigned();                            /* extern */
 
 void stage1_boss_right_hover_start(void) {
     rng_next_unsigned();
-    *(u8 *)(reg_a4 + 5) = (u8) reg_d0.b[0];
+    HOVER(reg_a4)->y_phase = (u8) reg_d0.b[0];
     rng_next_unsigned();
-    *(u8 *)(reg_a4 + 4) = (u8) reg_d0.b[0];
+    HOVER(reg_a4)->x_phase = (u8) reg_d0.b[0];
 }
 
 s32 velocity_from_dir256();
@@ -118,26 +149,26 @@ void stage1_boss_right_hover(void) {
     }
     reg_d1.w = 0;
     reg_d0.w = 2;
-    reg_d1.b[0] = *(u8 *)(reg_a4 + 5);
+    reg_d1.b[0] = HOVER(reg_a4)->y_phase;
     velocity_from_dir256();
     temp_a0 = ENTITY(reg_a6)[1].offset_y.h;
     ENTITY(reg_a6)[1].offset_y.h = (u16) (temp_a0 + reg_d2.h[0]);
     reg_d0.w = 1;
     reg_d1.w = 0;
-    reg_d1.b[0] = *(u8 *)(reg_a4 + 4);
+    reg_d1.b[0] = HOVER(reg_a4)->x_phase;
     velocity_from_dir256();
     ENTITY(reg_a6)[1].offset_x.h += reg_d3.h[0];
-    *(u8 *)(reg_a4 + 5) += 2;
-    *(u8 *)(reg_a4 + 4) += 1;
+    HOVER(reg_a4)->y_phase += 2;
+    HOVER(reg_a4)->x_phase += 1;
 }
 
 s32 rng_next_unsigned();                            /* extern */
 
 void stage1_boss_left_hover_start(void) {
     rng_next_unsigned();
-    *(u8 *)(reg_a4 + 5) = (u8) reg_d0.b[0];
+    HOVER(reg_a4)->y_phase = (u8) reg_d0.b[0];
     rng_next_unsigned();
-    *(u8 *)(reg_a4 + 4) = (u8) reg_d0.b[0];
+    HOVER(reg_a4)->x_phase = (u8) reg_d0.b[0];
 }
 
 void stage1_boss_left_hover(void) {
@@ -149,21 +180,21 @@ void stage1_boss_left_hover(void) {
     }
     reg_d1.w = 0;
     reg_d0.w = 2;
-    reg_d1.b[0] = *(u8 *)(reg_a4 + 5);
+    reg_d1.b[0] = HOVER(reg_a4)->y_phase;
     velocity_from_dir256();
     temp_a0 = ENTITY(reg_a6)[3].offset_y.h;
     ENTITY(reg_a6)[3].offset_y.h = (u16) (temp_a0 + reg_d2.h[0]);
     reg_d0.w = 1;
     reg_d1.w = 0;
-    reg_d1.b[0] = *(u8 *)(reg_a4 + 4);
+    reg_d1.b[0] = HOVER(reg_a4)->x_phase;
     velocity_from_dir256();
     ENTITY(reg_a6)[3].offset_x.h += reg_d3.h[0];
-    *(u8 *)(reg_a4 + 5) += 2;
-    *(u8 *)(reg_a4 + 4) += 1;
+    HOVER(reg_a4)->y_phase += 2;
+    HOVER(reg_a4)->x_phase += 1;
 }
 
 void stage1_boss_right_rotor_start(void) {
-    reg_a4_as_u16_p[1] = 0;
+    ROTOR(reg_a4)->frame.h = 0;
 }
 
 void stage1_boss_right_rotor(void) {
@@ -171,10 +202,10 @@ void stage1_boss_right_rotor(void) {
         stage1_boss_anim_clear();
         return;
     }
-    reg_tmp.b[0] = *(u8 *)(reg_a4 + 3);
-    *(u8 *)(reg_a4 + 3) -= 1;
+    reg_tmp.b[0] = ROTOR(reg_a4)->frame.t.count;
+    ROTOR(reg_a4)->frame.t.count -= 1;
     if ((s32) reg_tmp.b[0] <= 0) {
-        *(u8 *)(reg_a4 + 3) = (u8) *(u8 *)(reg_a4 + 2);
+        ROTOR(reg_a4)->frame.t.count = (u8) ROTOR(reg_a4)->frame.t.reload;
         ENTITY(reg_a6)[1].draw.h += 4;
         if (ENTITY(reg_a6)[1].draw.sh > 0xc) {
             ENTITY(reg_a6)[1].draw.h = 0U;
@@ -183,7 +214,7 @@ void stage1_boss_right_rotor(void) {
 }
 
 void stage1_boss_left_rotor_start(void) {
-    reg_a4_as_u16_p[1] = 0;
+    ROTOR(reg_a4)->frame.h = 0;
 }
 
 void stage1_boss_left_rotor(void) {
@@ -191,10 +222,10 @@ void stage1_boss_left_rotor(void) {
         stage1_boss_anim_clear();
         return;
     }
-    reg_tmp.b[0] = *(u8 *)(reg_a4 + 3);
-    *(u8 *)(reg_a4 + 3) -= 1;
+    reg_tmp.b[0] = ROTOR(reg_a4)->frame.t.count;
+    ROTOR(reg_a4)->frame.t.count -= 1;
     if ((s32) reg_tmp.b[0] <= 0) {
-        *(u8 *)(reg_a4 + 3) = (u8) *(u8 *)(reg_a4 + 2);
+        ROTOR(reg_a4)->frame.t.count = (u8) ROTOR(reg_a4)->frame.t.reload;
         ENTITY(reg_a6)[3].draw.h += 4;
         if (ENTITY(reg_a6)[3].draw.sh > 0xc) {
             ENTITY(reg_a6)[3].draw.h = 0U;
@@ -237,7 +268,7 @@ loop_1:
         reg_a1 += 2;
         if (reg_d0.h[0] != 0) {
             reg_d0.h[0] -= 1;
-            *(u8 *)(reg_a4 + 2) |= ((1 << (s8) reg_d0.b[0]) & 0xFF);
+            ROTOR(reg_a4)->frame.t.reload |= ((1 << (s8) reg_d0.b[0]) & 0xFF);
         }
         goto loop_1;
     }
@@ -802,8 +833,8 @@ void stage1_boss_gatling_spin(void) {
 }
 
 void stage1_boss_right_open_start(void) {
-    *(u16 *)(reg_a4 + 2) = 0;
-    reg_a4[7] = 0;
+    DOOR(reg_a4)->frame.h = 0;
+    DOOR(reg_a4)->moving = 0;
 }
 
 s32 boss_animation_start();
@@ -816,17 +847,17 @@ void stage1_boss_right_open() {
         stage1_boss_anim_clear();
         return;
     }
-    if ((*(u8 *)(reg_a4 + 7) == 0) && (ENTITY(reg_a6)[1].draw.h == 0)) {
+    if ((DOOR(reg_a4)->moving == 0) && (ENTITY(reg_a6)[1].draw.h == 0)) {
         reg_d0.w = 2;
         boss_animation_stop();
         ENTITY(reg_a6)[1].draw.h = 0x10U;
-        *(u8 *)(reg_a4 + 7) = 1U;
+        DOOR(reg_a4)->moving = 1U;
     }
-    if (*(u8 *)(reg_a4 + 7) == 1) {
-        reg_tmp.b[0] = *(u8 *)(reg_a4 + 3);
-        *(u8 *)(reg_a4 + 3) -= 1;
+    if (DOOR(reg_a4)->moving == 1) {
+        reg_tmp.b[0] = DOOR(reg_a4)->frame.t.count;
+        DOOR(reg_a4)->frame.t.count -= 1;
         if ((s32) reg_tmp.b[0] <= 0) {
-            *(u8 *)(reg_a4 + 3) = (u8) *(u8 *)(reg_a4 + 2);
+            DOOR(reg_a4)->frame.t.count = (u8) DOOR(reg_a4)->frame.t.reload;
             ENTITY(reg_a6)[2].sprite.h += 0xC0;
             ENTITY(reg_a6)[2].draw.b.priority += 2;
             ENTITY(reg_a6)[1].draw.h += 4;
@@ -834,7 +865,7 @@ void stage1_boss_right_open() {
             if (temp_a0 == 0x68) {
                 reg_d0.w = 0xA;
                 boss_animation_start();
-                *(s16 *)reg_a4 = 0;
+                DOOR(reg_a4)->running = 0;
             }
         }
     }
@@ -849,9 +880,8 @@ typedef struct WorkRegA4 {
 
 
 void stage1_boss_left_open_start(void) {
-    extern WorkRegA4 *reg_a4_as_WorkRegA4_p;
-    reg_a4_as_WorkRegA4_p->unk2 = 0;
-    reg_a4_as_WorkRegA4_p->unk7 = 0;
+    DOOR(reg_a4)->frame.h = 0;
+    DOOR(reg_a4)->moving = 0;
 }
 
 void stage1_boss_left_open() {
@@ -861,17 +891,17 @@ void stage1_boss_left_open() {
         stage1_boss_anim_clear();
         return;
     }
-    if ((*(u8 *)(reg_a4 + 7) == 0) && (ENTITY(reg_a6)[3].draw.h == 0)) {
+    if ((DOOR(reg_a4)->moving == 0) && (ENTITY(reg_a6)[3].draw.h == 0)) {
         reg_d0.w = 3;
         boss_animation_stop();
         ENTITY(reg_a6)[3].draw.h = 0x10U;
-        *(u8 *)(reg_a4 + 7) = 1U;
+        DOOR(reg_a4)->moving = 1U;
     }
-    if (*(u8 *)(reg_a4 + 7) == 1) {
-        reg_tmp.b[0] = *(u8 *)(reg_a4 + 3);
-        *(u8 *)(reg_a4 + 3) -= 1;
+    if (DOOR(reg_a4)->moving == 1) {
+        reg_tmp.b[0] = DOOR(reg_a4)->frame.t.count;
+        DOOR(reg_a4)->frame.t.count -= 1;
         if ((s32) reg_tmp.b[0] <= 0) {
-            *(u8 *)(reg_a4 + 3) = (u8) *(u8 *)(reg_a4 + 2);
+            DOOR(reg_a4)->frame.t.count = (u8) DOOR(reg_a4)->frame.t.reload;
             ENTITY(reg_a6)[4].sprite.h += 0xC0;
             ENTITY(reg_a6)[4].draw.b.priority += 2;
             ENTITY(reg_a6)[3].draw.h += 4;
@@ -879,7 +909,7 @@ void stage1_boss_left_open() {
             if (temp_a0 == 0x68) {
                 reg_d0.w = 0xB;
                 boss_animation_start();
-                *(s16 *)reg_a4 = 0;
+                DOOR(reg_a4)->running = 0;
             }
         }
     }
@@ -895,10 +925,10 @@ void stage1_boss_right_rotor_opened(void) {
         stage1_boss_anim_clear();
         return;
     }
-    reg_tmp.b[0] = *(u8 *)(reg_a4 + 3);
-    *(u8 *)(reg_a4 + 3) -= 1;
+    reg_tmp.b[0] = ROTOR(reg_a4)->frame.t.count;
+    ROTOR(reg_a4)->frame.t.count -= 1;
     if ((s32) reg_tmp.b[0] <= 0) {
-        *(u8 *)(reg_a4 + 3) = (u8) *(u8 *)(reg_a4 + 2);
+        ROTOR(reg_a4)->frame.t.count = (u8) ROTOR(reg_a4)->frame.t.reload;
         ENTITY(reg_a6)[1].draw.h += 4;
         if (ENTITY(reg_a6)[1].draw.sh > 0x74) {
             ENTITY(reg_a6)[1].draw.h = 0x68U;
@@ -917,10 +947,10 @@ void stage1_boss_left_rotor_opened(void) {
         stage1_boss_anim_clear();
         return;
     }
-    reg_tmp.b[0] = *(u8 *)(reg_a4 + 3);
-    *(u8 *)(reg_a4 + 3) -= 1;
+    reg_tmp.b[0] = ROTOR(reg_a4)->frame.t.count;
+    ROTOR(reg_a4)->frame.t.count -= 1;
     if ((s32) reg_tmp.b[0] <= 0) {
-        *(u8 *)(reg_a4 + 3) = (u8) *(u8 *)(reg_a4 + 2);
+        ROTOR(reg_a4)->frame.t.count = (u8) ROTOR(reg_a4)->frame.t.reload;
         ENTITY(reg_a6)[3].draw.h += 4;
         if (ENTITY(reg_a6)[3].draw.sh > 0x74) {
             ENTITY(reg_a6)[3].draw.h = 0x68U;
@@ -1088,10 +1118,9 @@ typedef struct WorkRegA42 {
 
 
 void stage1_boss_right_close_start(void) {
-    extern WorkRegA42 *reg_a4_as_WorkRegA4_p;
-    reg_a4_as_WorkRegA4_p->unk2 = 0;
-    reg_a4_as_WorkRegA4_p->unk4 = 0x20;
-    reg_a4_as_WorkRegA4_p->unk7 = 0;
+    DOOR(reg_a4)->frame.h = 0;
+    DOOR(reg_a4)->delay = 0x20;
+    DOOR(reg_a4)->moving = 0;
 }
 
 void stage1_boss_right_close() {
@@ -1103,24 +1132,24 @@ void stage1_boss_right_close() {
         stage1_boss_anim_clear();
         return;
     }
-    if (*(u8 *)(reg_a4 + 7) == 0) {
-        temp_v1 = *(u16 *)(reg_a4 + 4);
+    if (DOOR(reg_a4)->moving == 0) {
+        temp_v1 = DOOR(reg_a4)->delay;
         if (temp_v1 != 0) {
-            *(u16 *)(reg_a4 + 4) = (u16) (temp_v1 - 1);
+            DOOR(reg_a4)->delay = (u16) (temp_v1 - 1);
         } else {
             temp_a0 = ENTITY(reg_a6)[1].draw.h;
             if (temp_a0 == 0x68) {
                 reg_d0.w = 0xA;
                 boss_animation_stop();
-                *(u8 *)(reg_a4 + 7) = 1U;
+                DOOR(reg_a4)->moving = 1U;
             }
         }
     }
-    if (*(u8 *)(reg_a4 + 7) == 1) {
-        reg_tmp.b[0] = *(u8 *)(reg_a4 + 3);
-        *(u8 *)(reg_a4 + 3) -= 1;
+    if (DOOR(reg_a4)->moving == 1) {
+        reg_tmp.b[0] = DOOR(reg_a4)->frame.t.count;
+        DOOR(reg_a4)->frame.t.count -= 1;
         if ((s32) reg_tmp.b[0] <= 0) {
-            *(u8 *)(reg_a4 + 3) = (u8) *(u8 *)(reg_a4 + 2);
+            DOOR(reg_a4)->frame.t.count = (u8) DOOR(reg_a4)->frame.t.reload;
             ENTITY(reg_a6)[2].sprite.h -= 0xC0;
             ENTITY(reg_a6)[2].draw.b.priority -= 2;
             ENTITY(reg_a6)[1].draw.h -= 4;
@@ -1128,16 +1157,16 @@ void stage1_boss_right_close() {
             if (temp_a0_2 == 0x10) {
                 reg_d0.w = 2;
                 boss_animation_start();
-                *(s16 *)reg_a4 = 0;
+                DOOR(reg_a4)->running = 0;
             }
         }
     }
 }
 
 void stage1_boss_left_close_start(void) {
-    *(u16 *)(reg_a4 + 2) = 0;
-    *(u16 *)(reg_a4 + 4) = 0x20;
-    reg_a4[7] = 0;
+    DOOR(reg_a4)->frame.h = 0;
+    DOOR(reg_a4)->delay = 0x20;
+    DOOR(reg_a4)->moving = 0;
 }
 
 void stage1_boss_left_close() {
@@ -1149,24 +1178,24 @@ void stage1_boss_left_close() {
         stage1_boss_anim_clear();
         return;
     }
-    if (*(u8 *)(reg_a4 + 7) == 0) {
-        temp_v1 = *(u16 *)(reg_a4 + 4);
+    if (DOOR(reg_a4)->moving == 0) {
+        temp_v1 = DOOR(reg_a4)->delay;
         if (temp_v1 != 0) {
-            *(u16 *)(reg_a4 + 4) = (u16) (temp_v1 - 1);
+            DOOR(reg_a4)->delay = (u16) (temp_v1 - 1);
         } else {
             temp_a0 = ENTITY(reg_a6)[3].draw.h;
             if (temp_a0 == 0x68) {
                 reg_d0.w = 0xB;
                 boss_animation_stop();
-                *(u8 *)(reg_a4 + 7) = 1U;
+                DOOR(reg_a4)->moving = 1U;
             }
         }
     }
-    if (*(u8 *)(reg_a4 + 7) == 1) {
-        reg_tmp.b[0] = *(u8 *)(reg_a4 + 3);
-        *(u8 *)(reg_a4 + 3) -= 1;
+    if (DOOR(reg_a4)->moving == 1) {
+        reg_tmp.b[0] = DOOR(reg_a4)->frame.t.count;
+        DOOR(reg_a4)->frame.t.count -= 1;
         if ((s32) reg_tmp.b[0] <= 0) {
-            *(u8 *)(reg_a4 + 3) = (u8) *(u8 *)(reg_a4 + 2);
+            DOOR(reg_a4)->frame.t.count = (u8) DOOR(reg_a4)->frame.t.reload;
             ENTITY(reg_a6)[4].sprite.h -= 0xC0;
             ENTITY(reg_a6)[4].draw.b.priority -= 2;
             ENTITY(reg_a6)[3].draw.h -= 4;
@@ -1174,23 +1203,23 @@ void stage1_boss_left_close() {
             if (temp_a0_2 == 0x10) {
                 reg_d0.w = 3;
                 boss_animation_start();
-                *(s16 *)reg_a4 = 0;
+                DOOR(reg_a4)->running = 0;
             }
         }
     }
 }
 
 void stage1_boss_gatling_recenter_start(void) {
-    *(u16 *)(reg_a4 + 2) = 0x101;
+    ROTOR(reg_a4)->frame.h = 0x101;
 }
 
 s32 direction_turn_toward();
 
 void stage1_boss_gatling_recenter() {
-    reg_tmp.b[0] = *(u8 *)(reg_a4 + 3);
-    *(u8 *)(reg_a4 + 3) -= 1;
+    reg_tmp.b[0] = ROTOR(reg_a4)->frame.t.count;
+    ROTOR(reg_a4)->frame.t.count -= 1;
     if ((s32) reg_tmp.b[0] <= 0) {
-        *(u8 *)(reg_a4 + 3) = (u8) *(u8 *)(reg_a4 + 2);
+        ROTOR(reg_a4)->frame.t.count = (u8) ROTOR(reg_a4)->frame.t.reload;
         reg_d1.w = 0;
         reg_d1.b[0] = 0x20;
         reg_d0.w = 0;
@@ -1202,14 +1231,14 @@ void stage1_boss_gatling_recenter() {
         reg_d0.h[0] -= 0x20;
         ENTITY(reg_a6)[5].sprite.h = (u16) reg_d0.h[0];
         if (reg_d1.b[0] == 0x20) {
-            *(s16 *)reg_a4 = 0;
+            ROTOR(reg_a4)->running = 0;
         }
     }
 }
 
 void stage1_boss_right_open_wide_start(void) {
-    *(u16 *)(reg_a4 + 2) = 0;
-    reg_a4[7] = 0;
+    DOOR(reg_a4)->frame.h = 0;
+    DOOR(reg_a4)->moving = 0;
 }
 
 void stage1_boss_right_open_wide() {
@@ -1219,17 +1248,17 @@ void stage1_boss_right_open_wide() {
         stage1_boss_anim_clear();
         return;
     }
-    if ((*(u8 *)(reg_a4 + 7) == 0) && (ENTITY(reg_a6)[1].draw.h == 0)) {
+    if ((DOOR(reg_a4)->moving == 0) && (ENTITY(reg_a6)[1].draw.h == 0)) {
         reg_d0.w = 2;
         boss_animation_stop();
         ENTITY(reg_a6)[1].draw.h = 0x10U;
-        *(u8 *)(reg_a4 + 7) = 1U;
+        DOOR(reg_a4)->moving = 1U;
     }
-    if (*(u8 *)(reg_a4 + 7) == 1) {
-        reg_tmp.b[0] = *(u8 *)(reg_a4 + 3);
-        *(u8 *)(reg_a4 + 3) -= 1;
+    if (DOOR(reg_a4)->moving == 1) {
+        reg_tmp.b[0] = DOOR(reg_a4)->frame.t.count;
+        DOOR(reg_a4)->frame.t.count -= 1;
         if ((s32) reg_tmp.b[0] <= 0) {
-            *(u8 *)(reg_a4 + 3) = (u8) *(u8 *)(reg_a4 + 2);
+            DOOR(reg_a4)->frame.t.count = (u8) DOOR(reg_a4)->frame.t.reload;
             ENTITY(reg_a6)[2].sprite.h += 0xC0;
             ENTITY(reg_a6)[2].draw.b.priority -= 2;
             ENTITY(reg_a6)[1].draw.h += 4;
@@ -1237,7 +1266,7 @@ void stage1_boss_right_open_wide() {
             if (temp_a0 == 0x68) {
                 reg_d0.w = 0xA;
                 boss_animation_start();
-                *(s16 *)reg_a4 = 0;
+                DOOR(reg_a4)->running = 0;
             }
         }
     }
@@ -1253,8 +1282,8 @@ struct WorkRegA4b {
 
 void stage1_boss_left_open_wide_start(void) {
     extern struct WorkRegA4b *reg_a4_as_WorkRegA4_p;
-    reg_a4_as_WorkRegA4_p->unk2 = 0;
-    reg_a4_as_WorkRegA4_p->unk7 = 0;
+    DOOR(reg_a4)->frame.h = 0;
+    DOOR(reg_a4)->moving = 0;
 }
 
 void stage1_boss_left_open_wide() {
@@ -1264,17 +1293,17 @@ void stage1_boss_left_open_wide() {
         stage1_boss_anim_clear();
         return;
     }
-    if ((*(u8 *)(reg_a4 + 7) == 0) && (ENTITY(reg_a6)[3].draw.h == 0)) {
+    if ((DOOR(reg_a4)->moving == 0) && (ENTITY(reg_a6)[3].draw.h == 0)) {
         reg_d0.w = 3;
         boss_animation_stop();
         ENTITY(reg_a6)[3].draw.h = 0x10U;
-        *(u8 *)(reg_a4 + 7) = 1U;
+        DOOR(reg_a4)->moving = 1U;
     }
-    if (*(u8 *)(reg_a4 + 7) == 1) {
-        reg_tmp.b[0] = *(u8 *)(reg_a4 + 3);
-        *(u8 *)(reg_a4 + 3) -= 1;
+    if (DOOR(reg_a4)->moving == 1) {
+        reg_tmp.b[0] = DOOR(reg_a4)->frame.t.count;
+        DOOR(reg_a4)->frame.t.count -= 1;
         if ((s32) reg_tmp.b[0] <= 0) {
-            *(u8 *)(reg_a4 + 3) = (u8) *(u8 *)(reg_a4 + 2);
+            DOOR(reg_a4)->frame.t.count = (u8) DOOR(reg_a4)->frame.t.reload;
             ENTITY(reg_a6)[4].sprite.h += 0xC0;
             ENTITY(reg_a6)[4].draw.b.priority -= 2;
             ENTITY(reg_a6)[3].draw.h += 4;
@@ -1282,7 +1311,7 @@ void stage1_boss_left_open_wide() {
             if (temp_a0 == 0x68) {
                 reg_d0.w = 0xB;
                 boss_animation_start();
-                *(s16 *)reg_a4 = 0;
+                DOOR(reg_a4)->running = 0;
             }
         }
     }
@@ -1299,9 +1328,9 @@ typedef struct WorkRegA43 {
 
 void stage1_boss_right_close_wide_start(void) {
     extern WorkRegA43 *reg_a4_as_WorkRegA4_p;
-    reg_a4_as_WorkRegA4_p->unk2 = 0;
-    reg_a4_as_WorkRegA4_p->unk4 = 0x20;
-    reg_a4_as_WorkRegA4_p->unk7 = 0;
+    DOOR(reg_a4)->frame.h = 0;
+    DOOR(reg_a4)->delay = 0x20;
+    DOOR(reg_a4)->moving = 0;
 }
 
 void stage1_boss_right_close_wide() {
@@ -1313,24 +1342,24 @@ void stage1_boss_right_close_wide() {
         stage1_boss_anim_clear();
         return;
     }
-    if (*(u8 *)(reg_a4 + 7) == 0) {
-        temp_v1 = *(u16 *)(reg_a4 + 4);
+    if (DOOR(reg_a4)->moving == 0) {
+        temp_v1 = DOOR(reg_a4)->delay;
         if (temp_v1 != 0) {
-            *(u16 *)(reg_a4 + 4) = (u16) (temp_v1 - 1);
+            DOOR(reg_a4)->delay = (u16) (temp_v1 - 1);
         } else {
             temp_a0 = ENTITY(reg_a6)[1].draw.h;
             if (temp_a0 == 0x68) {
                 reg_d0.w = 0xA;
                 boss_animation_stop();
-                *(u8 *)(reg_a4 + 7) = 1U;
+                DOOR(reg_a4)->moving = 1U;
             }
         }
     }
-    if (*(u8 *)(reg_a4 + 7) == 1) {
-        reg_tmp.b[0] = *(u8 *)(reg_a4 + 3);
-        *(u8 *)(reg_a4 + 3) -= 1;
+    if (DOOR(reg_a4)->moving == 1) {
+        reg_tmp.b[0] = DOOR(reg_a4)->frame.t.count;
+        DOOR(reg_a4)->frame.t.count -= 1;
         if ((s32) reg_tmp.b[0] <= 0) {
-            *(u8 *)(reg_a4 + 3) = (u8) *(u8 *)(reg_a4 + 2);
+            DOOR(reg_a4)->frame.t.count = (u8) DOOR(reg_a4)->frame.t.reload;
             ENTITY(reg_a6)[2].sprite.h -= 0xC0;
             ENTITY(reg_a6)[2].draw.b.priority += 2;
             ENTITY(reg_a6)[1].draw.h -= 4;
@@ -1338,16 +1367,16 @@ void stage1_boss_right_close_wide() {
             if (temp_a0_2 == 0x10) {
                 reg_d0.w = 2;
                 boss_animation_start();
-                *(s16 *)reg_a4 = 0;
+                DOOR(reg_a4)->running = 0;
             }
         }
     }
 }
 
 void stage1_boss_left_close_wide_start(void) {
-    *(u16 *)(reg_a4 + 2) = 0;
-    *(u16 *)(reg_a4 + 4) = 0x20;
-    reg_a4[7] = 0;
+    DOOR(reg_a4)->frame.h = 0;
+    DOOR(reg_a4)->delay = 0x20;
+    DOOR(reg_a4)->moving = 0;
 }
 
 void stage1_boss_left_close_wide() {
@@ -1359,24 +1388,24 @@ void stage1_boss_left_close_wide() {
         stage1_boss_anim_clear();
         return;
     }
-    if (*(u8 *)(reg_a4 + 7) == 0) {
-        temp_v1 = *(u16 *)(reg_a4 + 4);
+    if (DOOR(reg_a4)->moving == 0) {
+        temp_v1 = DOOR(reg_a4)->delay;
         if (temp_v1 != 0) {
-            *(u16 *)(reg_a4 + 4) = (u16) (temp_v1 - 1);
+            DOOR(reg_a4)->delay = (u16) (temp_v1 - 1);
         } else {
             temp_a0 = ENTITY(reg_a6)[3].draw.h;
             if (temp_a0 == 0x68) {
                 reg_d0.w = 0xB;
                 boss_animation_stop();
-                *(u8 *)(reg_a4 + 7) = 1U;
+                DOOR(reg_a4)->moving = 1U;
             }
         }
     }
-    if (*(u8 *)(reg_a4 + 7) == 1) {
-        reg_tmp.b[0] = *(u8 *)(reg_a4 + 3);
-        *(u8 *)(reg_a4 + 3) -= 1;
+    if (DOOR(reg_a4)->moving == 1) {
+        reg_tmp.b[0] = DOOR(reg_a4)->frame.t.count;
+        DOOR(reg_a4)->frame.t.count -= 1;
         if ((s32) reg_tmp.b[0] <= 0) {
-            *(u8 *)(reg_a4 + 3) = (u8) *(u8 *)(reg_a4 + 2);
+            DOOR(reg_a4)->frame.t.count = (u8) DOOR(reg_a4)->frame.t.reload;
             ENTITY(reg_a6)[4].sprite.h -= 0xC0;
             ENTITY(reg_a6)[4].draw.b.priority += 2;
             ENTITY(reg_a6)[3].draw.h -= 4;
@@ -1384,7 +1413,7 @@ void stage1_boss_left_close_wide() {
             if (temp_a0_2 == 0x10) {
                 reg_d0.w = 3;
                 boss_animation_start();
-                *(s16 *)reg_a4 = 0;
+                DOOR(reg_a4)->running = 0;
             }
         }
     }
