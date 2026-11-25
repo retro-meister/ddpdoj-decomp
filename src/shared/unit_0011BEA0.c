@@ -147,7 +147,7 @@ void func_0011C250(void) {
 
 extern u8 g_text_layer[];
 
-void func_0011C2B0(void) {
+void text_layer_put(void) {
     u8 *a0;
     u32 d0;
     u32 d1;

@@ -471,7 +471,7 @@ extern u8 *D_0026A690[];
 
 void func_0015C340(void)
 {
-    extern void func_00137AD0(void);
+    extern void text_layer_print(void);
     reg_d0.w = 0;
     reg_a0 = (u8 *)D_0026A690;
     reg_d0.b[0] = D_0028E38C;
@@ -481,14 +481,14 @@ void func_0015C340(void)
     reg_d1.h[0] = 0xD;
     reg_d0.h[0] = 0;
     reg_d2.h[0] = 0;
-    func_00137AD0();
+    text_layer_print();
 }
 
 extern u8 D_0026A720[];
 extern u8 D_0028E388;
 
 void func_0015C3A0(void) {
-    s32 func_00137AD0();
+    s32 text_layer_print();
     u16 temp_a0;
 
     reg_a0 = D_0026A720;
@@ -501,14 +501,14 @@ void func_0015C3A0(void) {
     reg_d1.h[0] = 0xF;
     reg_d0.h[0] = 0;
     reg_d2.h[0] = 0;
-    func_00137AD0();
+    text_layer_print();
     reg_a0 += 0x20;
     reg_d1.h[0] -= 1;
-    func_00137AD0();
+    text_layer_print();
 }
 
 #ifdef DEATH_LABEL
-void func_00137AD0(void);
+void text_layer_print(void);
 extern u8 D_0028E380;
 extern u8 death_D_002901F0[];
 #endif
@@ -524,7 +524,7 @@ void func_0015C430(void) {
     reg_d1.h[0] = 0xC;
     reg_d0.h[0] = 0;
     reg_d2.h[0] = 0;
-    func_00137AD0();
+    text_layer_print();
 #endif
 }
 

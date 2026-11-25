@@ -126,7 +126,7 @@ s32 boss_part_hide_all();
 s32 boss_flash_start();
 s32 boss_flash_running();
 s32 explosion_spawn();
-s32 func_0013AAB0();
+s32 explosion_burst_medium();
 s32 func_0013B2E0();
 s32 func_0018D560();
 s32 func_0018D660();
@@ -245,7 +245,7 @@ loop_6:
                 reg_d2.h[0] = reg_tmp2.h[1];
                 reg_d3.h[0] = 8;
                 reg_d0.h[0] = 0;
-                func_0013AAB0();
+                explosion_burst_medium();
                 func_0018D560();
             }
             reg_tmp.b[0] = *(u8 *)(reg_a4 + 0xF);

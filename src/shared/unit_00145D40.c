@@ -240,7 +240,7 @@ void func_001460A0(void) {
     D_0028E1A8 = 0;
 }
 
-s32 func_00137AD0();
+s32 text_layer_print();
 s32 func_001A33C0();
 extern u16 D_00251AD0[];
 extern u16 D_0028C118[];
@@ -271,7 +271,7 @@ void func_00146350(void) {
     reg_d1.h[0] >>= 6;
     reg_d1.h[0] >>= 3;
     reg_d1.h[0] += 8;
-    func_00137AD0();
+    text_layer_print();
     *(s8 *)reg_a6 = 3;
 }
 

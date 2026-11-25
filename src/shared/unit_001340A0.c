@@ -235,7 +235,7 @@ void func_00134380(u16 *arg0) {
 s32 func_0011C7C0();
 s32 func_00130CC0();
 s32 func_00131610();
-s32 func_00137AD0();
+s32 text_layer_print();
 s32 func_0018D9F0();
 extern u8 D_00269B90[];
 extern u8 D_00269BA0[];
@@ -259,22 +259,22 @@ void func_00134410(void) {
         reg_d1.h[0] = 0x33;
         reg_a0 = (u8 *)D_00269BA0;
         reg_d2.h[0] = 2;
-        func_00137AD0();
+        text_layer_print();
         reg_d0.h[0] = 0xF;
         reg_d1.h[0] = 0x33;
         reg_a0 = (u8 *)D_00269BA0;
         reg_d2.h[0] = 2;
-        func_00137AD0();
+        text_layer_print();
         reg_d0.h[0] = 1;
         reg_d1.h[0] = 0x32;
         reg_a0 = (u8 *)D_00269BA0;
         reg_d2.h[0] = 2;
-        func_00137AD0();
+        text_layer_print();
         reg_d0.h[0] = 0xF;
         reg_d1.h[0] = 0x32;
         reg_a0 = (u8 *)D_00269BA0;
         reg_d2.h[0] = 2;
-        func_00137AD0();
+        text_layer_print();
         *(u16 *)(reg_a4 + 2) = 1U;
         *(u8 *)(reg_a4 + 0xD) = 0U;
         reg_d0.h[0] = 0x8C;
@@ -301,7 +301,7 @@ void func_00134410(void) {
     reg_d0.h[0] = temp_a0;
     reg_a0 = (u8 *)D_00269B90;
     reg_d2.h[0] = 2;
-    func_00137AD0();
+    text_layer_print();
     reg_d4.w = 0;
     reg_d4.b[0] = (u8) *(s8 *)(reg_a4 + 0xA);
     if (*(u8 *)(reg_a4 + 0xD) != reg_d4.b[0]) {
@@ -321,7 +321,7 @@ void func_00134410(void) {
         reg_d1.h[0] = 0x32;
         reg_a0 = (u8 *)death_D_00251300;
         reg_d2.h[0] = 2;
-        func_00137AD0();
+        text_layer_print();
         reg_d0.h[0] = 1;
         reg_d4.w = 0;
         reg_d1.h[0] = 0x32;
@@ -334,7 +334,7 @@ void func_00134410(void) {
         reg_d1.h[0] = 0x32;
         reg_a0 = (u8 *)death_D_00251310;
         reg_d2.h[0] = 2;
-        func_00137AD0();
+        text_layer_print();
         reg_d0.h[0] = 0xF;
         reg_d4.w = 0;
         reg_d1.h[0] = 0x32;
@@ -368,21 +368,21 @@ void func_00134660() {
     *(u16 *)(reg_a4 + 8) = (u16) reg_d0.h[0];
     reg_a0 = D_00269BA0;
     reg_d2.h[0] = 2;
-    func_00137AD0();
+    text_layer_print();
     func_00134740();
     if (*(u16 *)(reg_a4 + 4) == 0) {
         reg_d0.h[0] = 1;
         reg_d1.h[0] = 0x32;
         reg_a0 = D_00269BA0;
         reg_d2.h[0] = 2;
-        func_00137AD0();
+        text_layer_print();
         return;
     }
     reg_d0.h[0] = 0xF;
     reg_d1.h[0] = 0x32;
     reg_a0 = D_00269BA0;
     reg_d2.h[0] = 2;
-    func_00137AD0();
+    text_layer_print();
 }
 
 extern s16 *reg_a4_as_s16_p;
@@ -422,12 +422,12 @@ void func_00134750(void) {
         reg_d1.h[0] = 0x33;
         reg_a0 = (u8 *)(D_00269BA0_as_u32_a);
         reg_d2.h[0] = 2;
-        func_00137AD0();
+        text_layer_print();
         reg_d0.h[0] = 0xF;
         reg_d1.h[0] = 0x33;
         reg_a0 = (u8 *)(D_00269BA0_as_u32_a);
         reg_d2.h[0] = 2;
-        func_00137AD0();
+        text_layer_print();
         D_002BF3F6_as_s16_a[0] = 0;
     }
 #ifdef DEATH_LABEL
@@ -435,7 +435,7 @@ void func_00134750(void) {
     reg_d1.h[0] = 0x32;
     reg_a0 = (u8 *)death_D_00251300;
     reg_d2.h[0] = 2;
-    func_00137AD0();
+    text_layer_print();
     reg_d0.h[0] = 1;
     reg_d4.w = 0;
     reg_d1.h[0] = 0x32;
@@ -447,7 +447,7 @@ void func_00134750(void) {
     reg_d1.h[0] = 0x32;
     reg_a0 = (u8 *)death_D_00251310;
     reg_d2.h[0] = 2;
-    func_00137AD0();
+    text_layer_print();
     reg_d0.h[0] = 0xF;
     reg_d4.w = 0;
     reg_d1.h[0] = 0x32;
@@ -519,12 +519,12 @@ void func_001349A0() {
         reg_d1.h[0] = 0x32;
         reg_a0 = D_00269BA0;
         reg_d2.h[0] = 2;
-        func_00137AD0();
+        text_layer_print();
         reg_d0.h[0] = 0xF;
         reg_d1.h[0] = 0x32;
         reg_a0 = D_00269BA0;
         reg_d2.h[0] = 2;
-        func_00137AD0();
+        text_layer_print();
     }
     *(s16 *)reg_a4 = 0;
 }

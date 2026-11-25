@@ -1161,7 +1161,7 @@ void func_001FF000(void) {
 }
 
 s32 explosion_spawn();
-s32 func_0013AB50();
+s32 explosion_burst_small();
 s32 func_0018D500();
 s32 func_0018D5C0();
 s32 func_001D5040();
@@ -1203,7 +1203,7 @@ void func_001FF0B0(void) {
                 reg_d2.w += 0xF8000800;
                 reg_d3.h[0] = 0xC;
                 reg_d0.h[0] = 0;
-                func_0013AB50();
+                explosion_burst_small();
                 rng_next();
                 reg_d0.b[0] = (s8) reg_d0.b[0] * 2;
                 reg_d1.b[0] = reg_d0.b[0];
@@ -1214,7 +1214,7 @@ void func_001FF0B0(void) {
                 reg_d2.w += 0x01FFF800;
                 reg_d3.h[0] = 0xC;
                 reg_d0.h[0] = 0;
-                func_0013AB50();
+                explosion_burst_small();
                 func_0018D5C0();
                 ENTITY(reg_a6)[4].offset_x.b[1] = 0x10U;
                 ENTITY(reg_a6)[4].offset_y.b[1] = 2U;

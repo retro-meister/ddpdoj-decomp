@@ -717,7 +717,7 @@ extern u8 D_00264E10[];
 s32 boss_slots_end();
 s32 boss_flash_start();
 s32 boss_flash_running();
-s32 func_0013AAB0();
+s32 explosion_burst_medium();
 s32 func_0018D560();
 s32 rng_next();
 extern u16 D_00264D80[];
@@ -830,7 +830,7 @@ block_1:
     reg_d2.h[0] = reg_tmp.h[1];
     reg_d3.h[0] = 8;
     reg_d0.h[0] = 0;
-    func_0013AAB0();
+    explosion_burst_medium();
 #ifdef DEATH_LABEL
         x = ENTITY(reg_a6)[16].y.h;
         y = ENTITY(reg_a6)[16].x.h;

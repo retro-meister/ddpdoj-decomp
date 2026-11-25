@@ -131,7 +131,7 @@ void func_001E5BF0(void) {
 }
 
 s32 boss_part_hide();
-s32 func_0013AB50();
+s32 explosion_burst_small();
 s32 func_0018D4E0();
 s32 func_0018D500();
 s32 func_0018D560();
@@ -237,7 +237,7 @@ void func_001E5C60() {
             reg_d2.h[0] = ENTITY(reg_a6)[6].x.h;
             reg_d3.h[0] = 0x10;
             reg_d0.h[0] = 0;
-            func_0013AB50();
+            explosion_burst_small();
             reg_d2.h[1] = ENTITY(reg_a6)[6].y.h;
             reg_d2.h[0] = ENTITY(reg_a6)[6].x.h;
             reg_a1 = (u8 *)D_0026F280;
@@ -285,7 +285,7 @@ void func_001E5C60() {
             reg_d2.w += 0xF0000400;
             reg_d3.h[0] = 0x10;
             reg_d0.h[0] = 0;
-            func_0013AB50();
+            explosion_burst_small();
             rng_next();
             reg_d1.b[0] = reg_d0.b[0];
             reg_d1.b[0] += 0xD0;
@@ -295,7 +295,7 @@ void func_001E5C60() {
             reg_d2.w += 0xEBFFFC00;
             reg_d3.h[0] = 0x10;
             reg_d0.h[0] = 0;
-            func_0013AB50();
+            explosion_burst_small();
             reg_d2.h[1] = ENTITY(reg_a6)[2].y.h;
             reg_d2.h[0] = ENTITY(reg_a6)[2].x.h;
             reg_a1 = (u8 *)D_0026F2D0;
@@ -443,7 +443,7 @@ void func_001E6540(arg1)
         reg_d2.w += 0xF8000400;
         reg_d3.h[0] = 0xC;
         reg_d0.h[0] = 0;
-        func_0013AB50();
+        explosion_burst_small();
         rng_next();
         reg_d0.h[0] = (s16) reg_d0.h[0] * 2;
         reg_d1.b[0] = reg_d0.b[0];
@@ -454,7 +454,7 @@ void func_001E6540(arg1)
         reg_d2.w += 0x01FFFA00;
         reg_d3.h[0] = 0xC;
         reg_d0.h[0] = 0;
-        func_0013AB50();
+        explosion_burst_small();
         func_0018D660();
         var_a1 = 5;
         *(u8 *)(reg_a4 + 3) = 5U;

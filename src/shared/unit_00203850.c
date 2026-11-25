@@ -1181,7 +1181,7 @@ void func_00206510(void) {
     func_00206690();
 }
 
-s32 func_00137AD0();
+s32 text_layer_print();
 extern u8 D_00251B40[];
 extern u8 D_0028C158[];
 extern u8 D_0028C15C[];
@@ -1229,10 +1229,10 @@ void func_00206520(void) {
     reg_d0.h[0] = *(u16 *)(reg_a4 + 2);
     reg_d1.h[0] = *(u16 *)reg_a4;
     reg_d2.h[0] = 0;
-    func_00137AD0();
+    text_layer_print();
     reg_a0 += 0x10;
     reg_d1.h[0] -= 1;
-    func_00137AD0();
+    text_layer_print();
     reg_d0.w = save_d0;
     reg_d1.w = save_d1;
     reg_d2.w = save_d2;
@@ -1303,10 +1303,10 @@ next_10:
     reg_d0.h[0] = *(u16 *)(reg_a4 + 2);
     reg_d1.h[0] = *(u16 *)(reg_a4 + 0);
     reg_d2.h[0] = 0;
-    func_00137AD0();
+    text_layer_print();
     reg_a0 += 0x10;
     reg_d1.h[0] -= 1;
-    func_00137AD0();
+    text_layer_print();
     reg_d0.h[0] = 1;
     reg_d0.h[0] += *(u16 *)(reg_a4 + 2);
     func_00130CC0();
@@ -1321,10 +1321,10 @@ next_11:
     reg_d0.h[0] = *(u16 *)(reg_a4 + 2);
     reg_d1.h[0] = *(u16 *)(reg_a4 + 0);
     reg_d2.h[0] = 0;
-    func_00137AD0();
+    text_layer_print();
     reg_a0 += 0x10;
     reg_d1.h[0] -= 1;
-    func_00137AD0();
+    text_layer_print();
     reg_d0.h[0] = 1;
     reg_d0.h[0] += *(u16 *)(reg_a4 + 2);
     func_00130CC0();
@@ -1335,9 +1335,9 @@ next_12:
     reg_d0.h[0] = *(u16 *)(reg_a4 + 2);
     reg_d1.h[0] = *(u16 *)(reg_a4 + 0);
     reg_d2.h[0] = 0;
-    func_00137AD0();
+    text_layer_print();
     reg_a0 += 0x10;
     reg_d1.h[0] -= 1;
-    func_00137AD0();
+    text_layer_print();
     cond_flag = 1;
 }

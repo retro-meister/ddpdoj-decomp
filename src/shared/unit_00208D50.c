@@ -75,7 +75,7 @@ void func_00208E20(void) {
 
 
 void func_00208EB0(void) {
-    s32 func_0011C2B0();
+    s32 text_layer_put();
     s32 s_d0;
     s32 s_d1;
     s32 s_d2;
@@ -126,7 +126,7 @@ next_1:
     reg_d4.h[0] = reg_d4.h[1];
     reg_d4.h[1] = reg_tmp4.h[0];
     reg_d4.h[0] = reg_d6.h[0];
-    func_0011C2B0();
+    text_layer_put();
     reg_d0.h[0] += 1;
     if ((s16)(--reg_d7.h[0]) >= 0) goto loop_1;
     reg_d0.w = s_d0;
@@ -206,7 +206,7 @@ next_6:
 
 
 void func_00209200(void) {
-    s32 func_0011C2B0(void);
+    s32 text_layer_put(void);
     u32 saved;
 
     saved = reg_d0.w;
@@ -233,7 +233,7 @@ loop_2:
         reg_tmp4.h[0] = reg_d4.h[0];
         reg_d4.h[0] = reg_d5.h[0];
         reg_d4.h[1] = reg_tmp4.h[0];
-        func_0011C2B0();
+        text_layer_put();
         reg_d0.h[0] += 1;
         goto loop_2;
     }
@@ -241,7 +241,7 @@ loop_2:
 }
 
 void func_002092F0(void) {
-    s32 func_0011C2B0();
+    s32 text_layer_put();
     u8 *a0;
     u32 d0;
     u32 d1;
@@ -263,7 +263,7 @@ loop_1:
     reg_tmp4.h[0] = reg_d4.h[0];
     reg_d4.h[0] = reg_d5.h[0];
     reg_d4.h[1] = reg_tmp4.h[0];
-    func_0011C2B0();
+    text_layer_put();
     reg_d0.h[0] += 1;
     goto loop_1;
 next_1:
@@ -274,7 +274,7 @@ next_1:
 }
 
 void func_002093C0(void) {
-    void func_0011C2B0(void);
+    void text_layer_put(void);
     s32 value = 0x200002;
 
     reg_d4.sw = value;
@@ -284,7 +284,7 @@ void func_002093C0(void) {
     }
     reg_d3.sw = value;
     reg_d2.sw = 0;
-    func_0011C2B0();
+    text_layer_put();
 }
 
 extern u8 D_0028DFA8;

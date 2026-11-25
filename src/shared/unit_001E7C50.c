@@ -333,7 +333,7 @@ void func_001E8480(void) {
 }
 
 s32 boss_part_hide(s32, s32, s32);
-s32 func_0013AB50(void *);
+s32 explosion_burst_small(void *);
 s32 func_0018D560();
 s32 func_001E58E0();
 s32 rng_next_unsigned();
@@ -358,7 +358,7 @@ void func_001E8580(void) {
         reg_d2.h[0] = ENTITY(reg_a6)[4].x.h;
         reg_d3.h[0] = 0x10;
         reg_d0.h[0] = 0;
-        func_0013AB50(reg_a6);
+        explosion_burst_small(reg_a6);
     }
 }
 
@@ -383,7 +383,7 @@ void func_001E8640(void) {
         reg_d2.h[0] = ENTITY(reg_a6)[5].x.h;
         reg_d3.h[0] = 0x10;
         reg_d0.h[0] = 0;
-        func_0013AB50(reg_a6);
+        explosion_burst_small(reg_a6);
     }
 }
 

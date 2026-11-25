@@ -538,7 +538,7 @@ void func_001CB890(void) {
     }
 }
 
-s32 func_0013AB50(void *);
+s32 explosion_burst_small(void *);
 s32 rng_next_unsigned();
 extern u8 D_0026CA80[];
 
@@ -560,7 +560,7 @@ void func_001CB940(void) {
         reg_d2.h[0] = ENTITY(reg_a6)[4].x.h;
         reg_d3.h[0] = 8;
         reg_d0.h[0] = 0;
-        func_0013AB50(reg_a6);
+        explosion_burst_small(reg_a6);
     }
 }
 
@@ -619,7 +619,7 @@ void func_001CBB10(void) {
         reg_d2.h[0] = ENTITY(reg_a6)[5].x.h;
         reg_d3.h[0] = 8;
         reg_d0.h[0] = 0;
-        func_0013AB50(reg_a6);
+        explosion_burst_small(reg_a6);
     }
 }
 

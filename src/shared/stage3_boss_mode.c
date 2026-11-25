@@ -52,7 +52,7 @@ s32 boss_part_hide_all();
 s32 boss_flash_start();
 s32 boss_flash_running();
 s32 explosion_spawn();
-s32 func_0013AAB0();
+s32 explosion_burst_medium();
 s32 func_0013B2E0();
 s32 func_0018D500();
 s32 func_0018D520();
@@ -145,7 +145,7 @@ next_s1:
     reg_d2.h[0] = reg_tmp2.h[1];
     reg_d3.h[0] = 8;
     reg_d0.h[0] = 0;
-    func_0013AAB0();
+    explosion_burst_medium();
     if (reg_a4[6] == 2) goto next_reon;
     func_0018D560();
 next_reon:

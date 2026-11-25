@@ -58,7 +58,7 @@ segments:
       - [0x38bc0, c, death/death_func_00138B40]
       - [0x394d0, c, shared/enemy]
       - [0x3b270, c, shared/unit_00139B20]
-      - [0x3c080, c, shared/unit_0013A930]
+      - [0x3c080, c, shared/explosion_burst]
       - [0x3c310, c, shared/unit_0013ABC0]
       - [0x3c660, c, shared/fade]
       - [0x3e0d0, c, shared/unit_0013C980]

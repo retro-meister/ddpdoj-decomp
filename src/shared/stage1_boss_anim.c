@@ -400,8 +400,8 @@ typedef void (*Fn)();
 s32 boss_slots_end();
 s32 boss_flash_start();
 s32 boss_flash_running();
-s32 func_0013A9E0();
-s32 func_0013AB50();
+s32 explosion_burst_large();
+s32 explosion_burst_small();
 s32 func_0013B2E0();
 s32 func_0018D660();
 s32 rng_next_unsigned();
@@ -505,7 +505,7 @@ void func_001B3030(void) {
         reg_d2.w += 0xF8000A00;
         reg_d3.h[0] = 0xC;
         reg_d0.h[0] = 0;
-        func_0013A9E0();
+        explosion_burst_large();
         rng_next();
         reg_d0.h[0] = (s16) reg_d0.h[0] * 4;
         reg_d1.b[0] = reg_d0.b[0];
@@ -515,7 +515,7 @@ void func_001B3030(void) {
         reg_d3.h[0] = 0xC;
         reg_d0.h[0] = 0;
         reg_d2.w -= 0x800;
-        func_0013A9E0();
+        explosion_burst_large();
         rng_next();
         reg_d0.h[0] = (s16) reg_d0.h[0] * 4;
         reg_d1.b[0] = reg_d0.b[0];
@@ -525,7 +525,7 @@ void func_001B3030(void) {
         reg_d2.w += 0xF4000000;
         reg_d3.h[0] = 0xC;
         reg_d0.h[0] = 0;
-        func_0013A9E0();
+        explosion_burst_large();
         var_a1 = (u8 *)((void *)0x80);
         *(u16 *)(reg_a4 + 0xA) = 0x80U;
         *(u8 *)(reg_a4 + 3) = 6U;
@@ -647,7 +647,7 @@ void func_001B3030(void) {
                     reg_d2.h[0] = ENTITY(reg_a6)->x.h;
                     reg_d3.h[0] = 0xC;
                     reg_d0.h[0] = 0;
-                    func_0013AB50();
+                    explosion_burst_small();
                     func_0018D540();
                 }
                 *(u16 *)(reg_a4 + 0xE) += 0x10;

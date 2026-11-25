@@ -55,7 +55,7 @@ segments:
       - [0x38190, c, shared/unit_00138110]
       - [0x38a50, c, shared/unit_001389D0]
       - [0x39ba0, c, shared/unit_00139B20]
-      - [0x3a9b0, c, shared/unit_0013A930]
+      - [0x3a9b0, c, shared/explosion_burst]
       - [0x3ac40, c, shared/unit_0013ABC0]
       - [0x3af90, c, shared/fade]
       - [0x3ca00, c, shared/unit_0013C980]

@@ -224,7 +224,7 @@ next_5:
     *(s8 *) reg_a6 = 4;
 }
 
-s32 func_00137AD0();
+s32 text_layer_print();
 extern u16 D_00251AA0[];
 extern u16 D_0028C100;
 
@@ -250,7 +250,7 @@ void func_00138650(void) {
     reg_d1.h[0] >>= 6;
     reg_d1.h[0] >>= 3;
     reg_d1.h[0] += 8;
-    func_00137AD0();
+    text_layer_print();
     *(s8 *)reg_a6 = 6;
 }
 

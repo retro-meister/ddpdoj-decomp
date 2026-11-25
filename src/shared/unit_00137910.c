@@ -74,9 +74,9 @@ next_1:
     reg_d6.w = sv_d6;
 }
 
-s32 func_0011C2B0();
+s32 text_layer_put();
 
-void func_00137AD0(void) {
+void text_layer_print(void) {
     u32 save_d0;
     u32 save_d1;
     u32 save_d2;
@@ -104,7 +104,7 @@ loop_1:
         reg_tmp4.w = reg_d4.w;
         reg_d4.h[1] = reg_d4.h[0];
         reg_d4.h[0] = reg_d5.h[0];
-        func_0011C2B0();
+        text_layer_put();
         reg_d0.h[0] += 1;
         goto loop_1;
     }

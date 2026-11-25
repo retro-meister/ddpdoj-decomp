@@ -951,7 +951,7 @@ void func_00169C60(void) {
 #endif
 
 #ifndef DEATH_LABEL
-s32 func_00137AD0();
+s32 text_layer_print();
 extern u8 D_0026AA40[];
 
 void func_00169D30(void) {
@@ -959,13 +959,13 @@ void func_00169D30(void) {
     reg_d0.h[0] = 0;
     reg_d1.h[0] = 0x13;
     reg_d2.h[0] = 0;
-    func_00137AD0();
+    text_layer_print();
     reg_a0 += 0x20;
     reg_d1.h[0] -= 1;
-    func_00137AD0();
+    text_layer_print();
     reg_a0 += 0x20;
     reg_d1.h[0] -= 1;
-    func_00137AD0();
+    text_layer_print();
 }
 #endif
 
@@ -978,13 +978,13 @@ void func_00169DA0(void) {
         reg_d2.h[0] = 0;
         reg_a0 = D_0026AAA0;
         reg_d1.h[0] = 0x13;
-        func_00137AD0();
+        text_layer_print();
         reg_a0 += 0x20;
         reg_d1.h[0] -= 1;
-        func_00137AD0();
+        text_layer_print();
         reg_a0 += 0x20;
         reg_d1.h[0] -= 1;
-        func_00137AD0();
+        text_layer_print();
     }
 }
 #endif
@@ -998,13 +998,13 @@ void func_00169E20(void) {
         reg_d2.h[0] = 0;
         reg_a0 = D_0026AC80;
         reg_d1.h[0] = 0x13;
-        func_00137AD0();
+        text_layer_print();
         reg_a0 += 0x20;
         reg_d1.h[0] -= 1;
-        func_00137AD0();
+        text_layer_print();
         reg_a0 += 0x20;
         reg_d1.h[0] -= 1;
-        func_00137AD0();
+        text_layer_print();
     }
 }
 #endif
@@ -1025,13 +1025,13 @@ void func_00169EA0(void) {
     reg_d1.h[0] = 0x13;
     reg_d4.h[0] = reg_d0.h[0];
     reg_d0.h[0] = 0;
-    func_00137AD0();
+    text_layer_print();
     reg_a0 += 0x20;
     reg_d1.h[0] -= 1;
-    func_00137AD0();
+    text_layer_print();
     reg_a0 += 0x20;
     reg_d1.h[0] -= 1;
-    func_00137AD0();
+    text_layer_print();
     reg_d1.h[0] += 2;
     reg_d0.h[0] = 0xE;
     func_00130CC0();
@@ -1054,13 +1054,13 @@ void func_00169F50(void) {
     reg_d2.h[0] = 0;
     reg_a0 = D_0026AC20;
     reg_d1.h[0] = 0x13;
-    func_00137AD0();
+    text_layer_print();
     reg_a0 += 0x20;
     reg_d1.h[0] -= 1;
-    func_00137AD0();
+    text_layer_print();
     reg_a0 += 0x20;
     reg_d1.h[0] -= 1;
-    func_00137AD0();
+    text_layer_print();
     reg_d1.h[0] += 2;
     reg_d0.h[0] = 0xC;
     func_00130CC0();
@@ -1084,13 +1084,13 @@ void func_0016A010(void) {
     reg_d2.h[0] = 0;
     reg_a0 = D_0026AB00;
     reg_d1.h[0] = 0x13;
-    func_00137AD0();
+    text_layer_print();
     reg_a0 += 0x20;
     reg_d1.h[0] -= 1;
-    func_00137AD0();
+    text_layer_print();
     reg_a0 += 0x20;
     reg_d1.h[0] -= 1;
-    func_00137AD0();
+    text_layer_print();
 }
 #endif
 
@@ -1102,13 +1102,13 @@ void func_0016A0D0(void) {
     reg_d0.h[0] = 0;
     reg_d1.h[0] = 0x13;
     reg_d2.h[0] = 0;
-    func_00137AD0();
+    text_layer_print();
     reg_a0 += 0x20;
     reg_d1.h[0] -= 1;
-    func_00137AD0();
+    text_layer_print();
     reg_a0 += 0x20;
     reg_d1.h[0] -= 1;
-    func_00137AD0();
+    text_layer_print();
 }
 #endif
 
@@ -1193,16 +1193,16 @@ void func_0016A2E0(void) {
 #endif
 
 #ifndef DEATH_LABEL
-s32 func_00137AD0();                            /* extern */
+s32 text_layer_print();                            /* extern */
 
 void func_0016A2F0(void) {
     reg_d2.h[0] = 0;
     reg_d0.h[0] = reg_d7.h[0];
     reg_d1.h[0] = reg_d6.h[0];
-    func_00137AD0();
+    text_layer_print();
     reg_a0 += 0x10;
     reg_d1.h[0] -= 1;
-    func_00137AD0();
+    text_layer_print();
 }
 #endif
 
@@ -1214,10 +1214,10 @@ void func_0016A340(void) {
     reg_d2.h[0] = 0;
     reg_d0.h[0] = reg_d7.h[0];
     reg_d1.h[0] = reg_d6.h[0];
-    func_00137AD0();
+    text_layer_print();
     reg_a0 += 0x10;
     reg_d1.h[0] -= 1;
-    func_00137AD0();
+    text_layer_print();
 }
 #endif
 
@@ -1259,10 +1259,10 @@ void func_0016A420(void) {
     reg_d4.h[0] = temp_a0;
     reg_d0.h[0] = reg_d7.h[0];
     reg_d1.h[0] = reg_d6.h[0];
-    func_00137AD0(temp_a0);
+    text_layer_print(temp_a0);
     reg_a0 += 0x10;
     reg_d1.h[0] -= 1;
-    func_00137AD0();
+    text_layer_print();
     reg_d0.h[0] = 3;
     reg_d0.h[0] += reg_d7.h[0];
     func_00130CC0();
@@ -1285,10 +1285,10 @@ void func_0016A4A0(void) {
     reg_a0 = D_0026AD80;
     reg_d0.h[0] = reg_d7.h[0];
     reg_d1.h[0] = reg_d6.h[0];
-    func_00137AD0();
+    text_layer_print();
     reg_a0 += 0x10;
     reg_d1.h[0] -= 1;
-    func_00137AD0();
+    text_layer_print();
     reg_d0.h[0] = 2;
     reg_d0.h[0] += reg_d7.h[0];
     func_00130CC0();
@@ -1333,10 +1333,10 @@ void func_0016A630(void) {
     reg_d2.h[0] = 0;
     reg_d0.h[0] = reg_d7.h[0];
     reg_d1.h[0] = reg_d6.h[0];
-    func_00137AD0();
+    text_layer_print();
     reg_a0 += 0x10;
     reg_d1.h[0] -= 1;
-    func_00137AD0();
+    text_layer_print();
 }
 #endif
 
@@ -1348,9 +1348,9 @@ void func_0016A690(void) {
     reg_d2.h[0] = 0;
     reg_d0.h[0] = reg_d7.h[0];
     reg_d1.h[0] = reg_d6.h[0];
-    func_00137AD0();
+    text_layer_print();
     reg_a0 += 0x10;
     reg_d1.h[0] -= 1;
-    func_00137AD0();
+    text_layer_print();
 }
 #endif

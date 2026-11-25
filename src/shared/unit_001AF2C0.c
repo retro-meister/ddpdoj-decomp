@@ -524,15 +524,15 @@ void func_001B00D0(void) {
 extern u8 D_00251B40[];
 
 void func_001B0100(void) {
-    s32 func_00137AD0();
+    s32 text_layer_print();
     reg_a0 = D_00251B40;
     reg_d0.h[0] = *(u16 *)(reg_a4 + 2);
     reg_d1.h[0] = *(u16 *)reg_a4;
     reg_d2.h[0] = 0;
-    func_00137AD0();
+    text_layer_print();
     reg_a0 += 0x10;
     reg_d1.h[0] -= 1;
-    func_00137AD0();
+    text_layer_print();
 }
 
 void func_0012FFE0(void);
@@ -549,7 +549,7 @@ extern u8 D_0028E390;
 extern u8 D_0028E39C;
 
 void func_001B0160(void) {
-    void func_00137AD0(void);
+    void text_layer_print(void);
     func_001301B0();
     if (*(u8 *)(reg_a5 + 6) == 0) {
         goto next_1;
@@ -613,10 +613,10 @@ next_4:
     reg_d0.h[0] = *(u16 *)(reg_a4 + 2);
     reg_d1.h[0] = *(u16 *)(reg_a4 + 0);
     reg_d2.h[0] = 0;
-    func_00137AD0();
+    text_layer_print();
     reg_a0 += 0x10;
     reg_d1.h[0] -= 1;
-    func_00137AD0();
+    text_layer_print();
     reg_d0.h[0] = 1;
     reg_d0.h[0] += *(u16 *)(reg_a4 + 2);
     func_00130CC0();
@@ -634,10 +634,10 @@ next_5:
     reg_d0.h[0] = *(u16 *)(reg_a4 + 2);
     reg_d1.h[0] = *(u16 *)(reg_a4 + 0);
     reg_d2.h[0] = 0;
-    func_00137AD0();
+    text_layer_print();
     reg_a0 += 0x10;
     reg_d1.h[0] -= 1;
-    func_00137AD0();
+    text_layer_print();
     reg_d0.h[0] = 1;
     reg_d0.h[0] += *(u16 *)(reg_a4 + 2);
     func_00130CC0();
@@ -648,10 +648,10 @@ block_54:
     reg_d0.h[0] = *(u16 *)(reg_a4 + 2);
     reg_d1.h[0] = *(u16 *)(reg_a4 + 0);
     reg_d2.h[0] = 0;
-    func_00137AD0();
+    text_layer_print();
     reg_a0 += 0x10;
     reg_d1.h[0] -= 1;
-    func_00137AD0();
+    text_layer_print();
 }
 
 extern u16 D_0028C138[];
