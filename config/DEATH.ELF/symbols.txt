@@ -14015,3 +14015,5 @@ D_0061002A = 0x61002a; // ignore:true
 D_00610500 = 0x610500; // ignore:true
 D_00610800 = 0x610800; // ignore:true
 D_00610B00 = 0x610b00; // ignore:true
+D_00280018 = 0x280018; // ignore:true
+D_00280024 = 0x280024; // ignore:true

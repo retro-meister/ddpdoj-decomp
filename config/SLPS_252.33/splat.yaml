@@ -198,6 +198,8 @@ segments:
       - [0x173f40, rodata, rodata_173f40]
       - [0x177ff8, .rodata, shared/sound_rpc]
       - [0x178058, rodata, rodata_178058]
+      - [0x178560, .rodata, shared/unit_0018E5A0]
+      - [0x17d988, rodata, rodata_17d988]
       - [0x186e60, .rodata, shared/stage5_midboss_5]
       - [0x186e80, .rodata, shared/motion_util]
       - [0x186ea0, rodata, rodata_186ea0]

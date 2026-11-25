@@ -206,6 +206,8 @@ segments:
       - [0x177710, rodata, rodata_177710]
       - [0x17a6a8, .rodata, shared/sound_rpc]
       - [0x17a708, rodata, rodata_17a708]
+      - [0x17ac30, .rodata, shared/unit_0018E5A0]
+      - [0x1800b8, rodata, rodata_1800b8]
       - [0x181420, .rodata, shared/memcard]
       - [0x181f18, rodata, rodata_181f18]
       - [0x181f20, .rodata, shared/system]
