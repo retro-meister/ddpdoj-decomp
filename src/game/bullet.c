@@ -2875,9 +2875,7 @@ u8 D_00269800[64] = {
 };
 
 /* .bss (the compiler lays these out in reverse) */
-#ifndef DEATH_LABEL
 u8 *D_00299770[4];
-#endif
 #ifdef DEATH_LABEL
 u8 D_002962E0[67216];
 #else

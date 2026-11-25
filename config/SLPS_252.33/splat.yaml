@@ -520,7 +520,11 @@ segments:
       - {type: .bss, vram: 0x2c0100, name: game/text}
       - {type: .bss, vram: 0x2c4f00, name: game/system}
       - {type: .bss, vram: 0x57cf80, name: game/glyph_cache}
-      - {type: bss, vram: 0x586ff0, name: bss_586ff0}
+      - {type: .bss, vram: 0x586ff0, name: game/gfx}
+      - {type: .bss, vram: 0x684c80, name: game/save_data}
+      - {type: .bss, vram: 0x68e1b0, name: game/memcard}
+      - {type: .bss, vram: 0x6c58a0, name: game/replay}
+      - {type: bss, vram: 0x6e5c40, name: bss_6e5c40}
   - name: elf_tail
     type: bin
     start: 0x18df00

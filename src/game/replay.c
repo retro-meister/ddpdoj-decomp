@@ -1457,3 +1457,14 @@ u16 D_0028ED48;
 s32 D_0028ED44;
 u16 D_0028ED40;
 s32 g_replay_checksum;
+
+/* .bss (the compiler lays these out in reverse) */
+ReplayHeader g_replay_header;
+ReplayHeader g_replay_header_saved;
+u16 D_006CB580[54024];
+u8 D_006C91B0[9168];
+u16 D_006C91A0[8];
+u16 D_006C8E90[392];
+u8 g_replay_snapshot[12784];
+u16 D_006C58D0[488];
+u8 g_replay_file[48];

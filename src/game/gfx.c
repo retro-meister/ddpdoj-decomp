@@ -1768,3 +1768,25 @@ s32 g_screen_width;
 s32 g_screen_margin;
 s32 g_label_timer;
 s32 g_label_fade;
+
+/* .bss (the compiler lays these out in reverse) */
+#ifdef DEATH_LABEL
+u32 g_image_unpack_buf[65536];
+#else
+u32 g_image_unpack_buf[196608];
+#endif
+#ifdef DEATH_LABEL
+Quad g_quad_queue[2001];
+#else
+Quad g_quad_queue[4000];
+#endif
+GlyphQueueEntry g_glyph_queue[1024];
+s16 g_clut_buf[1024];
+s16 g_sprite_clut_buf[2048];
+s16 g_bg_clut_buf[2048];
+#ifdef DEATH_LABEL
+s32 g_bg_tile_offsets[4624];
+#else
+s32 g_bg_tile_offsets[4608];
+#endif
+RenderTarget g_render_target;

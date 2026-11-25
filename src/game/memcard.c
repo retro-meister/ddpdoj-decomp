@@ -5338,3 +5338,24 @@ s32 D_0028EC7C;
 s32 D_0028EC78;
 s32 g_mc_slot;
 s32 g_mc_port;
+
+/* .bss (the compiler lays these out in reverse) */
+u8 g_mc_save_buf[2480];
+u8 D_006A4C00[131824];
+u8 g_replay_file_loaded[1024];
+u8 D_006A3E50[2480];
+u16 D_006A0E90[6112];
+s32 D_0069F590[1600];
+u8 g_mc_dir[16];
+#ifdef DEATH_LABEL
+u8 D_00696D80[34864];
+#else
+u8 D_00696D80[34816];
+#endif
+u8 D_0068E580[34816];
+u8 D_0068E270[784];
+u8 D_0068E260[16];
+u8 D_0068E230[48];
+u8 D_0068E200[48];
+u8 D_0068E1C0[64];
+u8 D_0068E1B0[16];

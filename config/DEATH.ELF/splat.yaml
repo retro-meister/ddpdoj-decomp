@@ -514,7 +514,6 @@ segments:
       - {type: bss, vram: 0x291580, name: bss_291580}
       - {type: .bss, vram: 0x2984c0, name: game/boss_slots}
       - {type: .bss, vram: 0x298990, name: game/bullet}
-      - {type: bss, vram: 0x2a9020, name: bss_2a9020}
       - {type: .bss, vram: 0x2a9030, name: game/wreck}
       - {type: .bss, vram: 0x2a95e0, name: game/sparks}
       - {type: .bss, vram: 0x2a9de0, name: game/debris}
@@ -525,7 +524,7 @@ segments:
       - {type: bss, vram: 0x2ab800, name: bss_2ab800}
       - {type: .bss, vram: 0x2ab850, name: game/ending}
       - {type: .bss, vram: 0x2ab8a0, name: game/fade}
-      - {type: bss, vram: 0x2ac1f0, name: bss_2ac1f0}
+      - {type: .bss, vram: 0x2ac1f0, name: game/replay}
       - {type: .bss, vram: 0x2cc580, name: game/scroll_events}
       - {type: .bss, vram: 0x2cc6f0, name: game/sound_rpc}
       - {type: .bss, vram: 0x2cca40, name: game/player/player}
@@ -537,10 +536,12 @@ segments:
       - {type: .bss, vram: 0x2f6df0, name: game/screen_clear}
       - {type: .bss, vram: 0x300ed0, name: game/name_entry}
       - {type: .bss, vram: 0x301010, name: game/glyph_cache}
-      - {type: bss, vram: 0x30b080, name: bss_30b080}
+      - {type: .bss, vram: 0x30b080, name: game/memcard}
+      - {type: bss, vram: 0x3427a0, name: bss_3427a0}
       - {type: .bss, vram: 0x342800, name: game/system}
       - {type: .bss, vram: 0x61b000, name: game/text}
-      - {type: bss, vram: 0x61fe00, name: bss_61fe00}
+      - {type: .bss, vram: 0x61fe00, name: game/save_data}
+      - {type: .bss, vram: 0x629330, name: game/gfx}
       - {type: .bss, vram: 0x68da00, name: game/play_state}
       - {type: bss, vram: 0x692c68, name: bss_692c68}
   - name: elf_tail

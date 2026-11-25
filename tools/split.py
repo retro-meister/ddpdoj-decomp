@@ -220,6 +220,9 @@ def align_rodata_subsegments(folder):
             continue
         offset = int(match.group(1), 16)
         power = 4 if offset % 16 == 0 else 3 if offset % 8 == 0 else 0
+        if path.name.startswith("bss_") and offset % 64 == 0:
+            # a C unit's last object may end short of the 64 the next object here is aligned to
+            power = 6
         if path.name.startswith(("sbss_", "sdata_")):
             # a C unit's last small variable may be 2 bytes long; the next slice still starts on a word
             power = max(power, 2) if offset % 4 == 0 else 0

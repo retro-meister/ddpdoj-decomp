@@ -3252,3 +3252,31 @@ void func_0022C450() {
     reg_a4 = save_a4;
     reg_a5 = save_a5;
 }
+
+/* .bss (the compiler lays these out in reverse) */
+u8 g_replay_file_headers[672];
+s16 D_0068DF00[8];
+s16 D_0068DEE0[16];
+s32 D_0068DEB0[12];
+s32 D_0068DEA0[4];
+s32 D_0068DE90[4];
+#ifdef DEATH_LABEL
+s8 death_D_00628F00[272];
+#endif
+#ifdef DEATH_LABEL
+u8 D_0068DD10[112];
+#else
+u8 D_0068DD10[384];
+#endif
+s8 D_0068DD00[16];
+s8 D_0068DCF0[16];
+s8 D_0068DC40[176];
+s8 D_0068DC30[16];
+s8 D_0068DC20[16];
+s8 D_0068DC10[16];
+s32 D_006880A0[5852];
+u8 D_00685010[12432];
+s32 D_00684CF0[10][4][5];
+u8 D_00684CA0[80];
+u8 D_00684C90[16];
+u16 D_00684C80[8];
