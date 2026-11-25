@@ -161,6 +161,25 @@ def target_units(name):
     return units
 
 
+def data_units(name):
+    """Sources that define data only: named in a `.data`-style entry of the splat config with no `c` entry.
+    Splat links such an entry from `src/<name>.c` like any other unit's section."""
+    config = load_splat_config(name)
+    main = next(seg for seg in config["segments"] if isinstance(seg, dict) and seg.get("name") == "main")
+    src_path = Path(config["options"].get("src_path", "src"))
+    code, data = set(), []
+    for sub in main["subsegments"]:
+        if isinstance(sub, dict):
+            kind, stub = sub.get("type", ""), sub.get("name")
+        else:
+            kind, stub = (sub[1], sub[2]) if len(sub) >= 3 else ("", None)
+        if kind == "c":
+            code.add(stub)
+        elif kind.startswith(".") and stub and stub not in data:
+            data.append(stub)
+    return [{"stub": stub, "source": (src_path / f"{stub}.c").as_posix()} for stub in data if stub not in code]
+
+
 def aliases_path(name):
     """Second names for objects that some sources still declare with another type (tools/typealias.py).
     Splat allows one name per address, so these are kept out of symbols.txt and only reach the linker."""
@@ -196,12 +215,12 @@ def align_rodata_subsegments(folder):
     for path in list(data_dir.glob("*data_*.*data.s")) + list(data_dir.glob("bss_*.bss.s")) + list(data_dir.glob("sbss_*.sbss.s")):
         # the same holds for a `data_<offset>` slice that follows a C unit's .data, and for a
         # `bss_<address>` / `sbss_<address>` slice that follows a C unit's .bss / .sbss
-        match = re.fullmatch(r"(?:(?:ro)?data|s?bss)_([0-9a-f]+)\.(?:(?:ro)?data|s?bss)\.s", path.name)
+        match = re.fullmatch(r"(?:(?:ro|s)?data|s?bss)_([0-9a-f]+)\.(?:(?:ro|s)?data|s?bss)\.s", path.name)
         if not match:
             continue
         offset = int(match.group(1), 16)
         power = 4 if offset % 16 == 0 else 3 if offset % 8 == 0 else 0
-        if path.name.startswith("sbss_"):
+        if path.name.startswith(("sbss_", "sdata_")):
             # a C unit's last small variable may be 2 bytes long; the next slice still starts on a word
             power = max(power, 2) if offset % 4 == 0 else 0
         elif power <= 2:

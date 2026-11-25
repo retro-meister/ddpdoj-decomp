@@ -14,7 +14,7 @@ from common import compiler_path, require_local, run, target_compiler, verify, v
 from gallery_da import sync_gallery_iso
 from objects import validate_object
 from qemu_runner import compile_batch
-from split import split, target_units
+from split import data_units, split, target_units
 
 BUILD = ROOT / "build"
 OBJ_CACHE = BUILD / "obj"
@@ -118,7 +118,7 @@ def unit_stamp(version, source, include_hash, defines=()):
     return hasher.hexdigest()
 
 
-def compile_units(local, jobs):
+def compile_units(local, jobs, data_only=()):
     include_hash = headers_digest()
     objects = {}
     dirty = []
@@ -147,8 +147,8 @@ def compile_units(local, jobs):
         else:
             for version, source, defines, obj, _, _ in dirty:
                 compile_source(local, source, obj, version, defines)
-        for _, _, _, obj, stamp_file, expected in dirty:
-            validate_object(obj)
+        for _, source, _, obj, stamp_file, expected in dirty:
+            validate_object(obj, code=source not in data_only)
             stamp_file.write_text(expected + "\n", encoding="ascii")
     return objects
 
@@ -661,7 +661,7 @@ def build(local, target=None, mod=False, compiler=None, iso=None, write_map=Fals
         name: verify((BASEROM / name).read_bytes(), TARGETS[name]["sha256"], f"baserom/{name}")
         for name in names
     }
-    units_by_target = {name: target_units(name) for name in names}
+    units_by_target = {name: target_units(name) + data_units(name) for name in names}
     versions = {name: target_compiler(name, local, compiler) for name in names}
     jobs = sorted({
         (versions[name], unit["source"], target_defines(name, unit["source"]))
@@ -672,7 +672,8 @@ def build(local, target=None, mod=False, compiler=None, iso=None, write_map=Fals
         verify_compiler(version)
 
     split_folders = {name: split(name) for name in names}
-    objects = compile_units(local, jobs)
+    data_only = {unit["source"] for name in names for unit in data_units(name)}
+    objects = compile_units(local, jobs, data_only)
 
     output = Path(output) if output else BUILD / "mod" if mod else BUILD
     output.mkdir(parents=True, exist_ok=True)

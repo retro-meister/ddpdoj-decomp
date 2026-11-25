@@ -33,7 +33,13 @@ def parse_object(path):
     return sections, named, functions
 
 
-def validate_object(path):
+def validate_object(path, code=True):
+    """Check a compiled unit; code=False is a unit that defines data only."""
+    if not code:
+        data = path.read_bytes()
+        if data[:7] != b"\x7fELF\x01\x01\x01" or data[16:20] != b"\x01\x00\x08\x00":
+            raise ValueError(f"{path.name}: expected a relocatable PS2 ELF object")
+        return {}
     sections, named, functions = parse_object(path)
     unsupported = [
         name for name, i in named.items()

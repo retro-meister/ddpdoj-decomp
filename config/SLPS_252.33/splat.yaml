@@ -191,6 +191,8 @@ segments:
       - [0x13dd00, data, data]
       - [0x1417a0, .data, shared/bomb]
       - [0x142088, data, data_142088]
+      - [0x153328, .data, shared/player_shot_1_tables]
+      - [0x153c28, data, data_153c28]
       - [0x155590, .data, shared/player_support]
       - [0x155640, data, data_155640]
       - [0x164110, .data, shared/stage5_boss_anim]
@@ -281,6 +283,8 @@ segments:
       - [0x18bfc0, .rodata, shared/replay_state]
       - [0x18c028, rodata, rodata_18c028]
       - [0x18c0f0, sdata, sdata]
+      - [0x18c218, .sdata, shared/player_shot_1_tables]
+      - [0x18c358, sdata, sdata_18c358]
       - {type: .sbss, vram: 0x28de80, name: shared/credits_roll}
       - {type: sbss, vram: 0x28de8c, name: sbss_28de8c}
       - {type: .sbss, vram: 0x28e0c4, name: shared/task}
