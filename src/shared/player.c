@@ -657,8 +657,8 @@ extern s16 g_p1_hyper_effect_flag_as_s16;
 extern u16 g_two_player_seen;
 extern u16 D_0028E930;
 extern u16 D_0028E938;
-extern s8 D_0028ED6C_as_s8;
-extern u8 D_0028ED7C;
+extern s8 g_replay_begin_pending_as_s8;
+extern u8 g_replay_mode;
 extern u8 D_0029CD90_as_u8_a[];
 
 void player1_task() {
@@ -672,8 +672,8 @@ void player1_task() {
         return;
     }
     g_p1_hyper_effect_flag_as_s16 = 0;
-    if (D_0028ED7C == 1) {
-        D_0028ED6C_as_s8 = 1;
+    if (g_replay_mode == 1) {
+        g_replay_begin_pending_as_s8 = 1;
     }
     reg_a3 = D_0029CD90_as_u8_a;
     reg_a4 = D_0028E080;
@@ -717,8 +717,8 @@ void player2_task() {
         return;
     }
     g_p2_hyper_effect_flag_as_s16 = 0;
-    if (D_0028ED7C == 1) {
-        D_0028ED6C_as_s8 = 1;
+    if (g_replay_mode == 1) {
+        g_replay_begin_pending_as_s8 = 1;
     }
     reg_a3 = D_0029CD80_as_u8_a;
     reg_a4 = D_0028E078;
@@ -2844,7 +2844,7 @@ void func_00144CB0(void) {
     }
 }
 
-extern s32 D_0028ED70;
+extern s32 g_replay_position;
 extern u16 g_player1_as_u16_a[];
 extern u16 D_006C68B6_as_u16_a[];
 
@@ -2852,7 +2852,7 @@ void func_00144D00(u8 arg0) {
     u8 var_a0;
 
     var_a0 = arg0;
-    if ((g_stage == 0) && (var_a0 = D_0028ED7C, (var_a0 == 2)) && (D_0028ED70 == 0)) {
+    if ((g_stage == 0) && (var_a0 = g_replay_mode, (var_a0 == 2)) && (g_replay_position == 0)) {
         reg_a6 = (u8 *)D_006C68B6_as_u16_a;
         reg_d0.h[0] = PLAYER(reg_a6)->flags.h;
         if ((s16) reg_d0.h[0] < 0) {
@@ -2874,7 +2874,7 @@ void func_00144DA0(u8 arg0) {
     u8 var_a0;
 
     var_a0 = arg0;
-    if ((g_stage == 0) && (var_a0 = D_0028ED7C, (var_a0 == 2)) && (D_0028ED70 == 0)) {
+    if ((g_stage == 0) && (var_a0 = g_replay_mode, (var_a0 == 2)) && (g_replay_position == 0)) {
         reg_a6 = (u8 *)D_006C6918_as_u16_a;
         reg_d0.h[0] = PLAYER(reg_a6)->flags.h;
         if ((s16) reg_d0.h[0] < 0) {

@@ -54,8 +54,8 @@ extern u8 g_setting_coin_mode;
 extern u16 g_attract_demo;
 extern u16 D_0028E7B8;
 extern s8 g_cd_async_state;
-extern s8 D_0028ED74_as_s8;
-extern s8 D_0028ED7C_as_s8;
+extern s8 g_replay_buffer_state_as_s8;
+extern s8 g_replay_mode_as_s8;
 extern s8 g_simulation_active_as_s8;
 
 void attract_task(void) {
@@ -108,8 +108,8 @@ block_1:
     g_attract_demo = 0;
     replay_header_clear();
     g_simulation_active_as_s8 = 0;
-    D_0028ED7C_as_s8 = 0;
-    D_0028ED74_as_s8 = 0;
+    g_replay_mode_as_s8 = 0;
+    g_replay_buffer_state_as_s8 = 0;
     sound_stop_effects();
     sfx_coin();
     func_00224B50();
@@ -650,7 +650,7 @@ extern u8 D_0028DE44[];
 extern u8 D_0028DE48[];
 extern s8 g_game_mode_as_s8;
 extern s8 D_0028EC24;
-extern u8 D_0028ED7C;
+extern u8 g_replay_mode;
 extern s16 D_0068DEC8_as_s16_a[];
 extern s16 D_0068DECA[];
 extern s16 D_0068DECC[];
@@ -749,7 +749,7 @@ void func_00169680(void) {
     D_006E5C14_as_s16_a[0] = D_0068DED2[0];
     reg_d0.h[0] = TASK_REPLAY;
     task_start();
-    if (D_0028ED7C == 2) {
+    if (g_replay_mode == 2) {
         *(s8 *)(reg_a0 + 5) = 3;
         return;
     }

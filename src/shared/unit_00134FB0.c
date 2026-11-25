@@ -1024,7 +1024,7 @@ void func_00136450(void) {
 s32 func_001AEF50();
 extern s32 D_0028E998;
 extern s32 D_0028E99C;
-extern u8 D_0028ED7C;
+extern u8 g_replay_mode;
 
 void ship_select_apply(void) {
     u32 save_d0;
@@ -1078,7 +1078,7 @@ void ship_select_apply(void) {
         var_v0 = g_simulation_active == 1;
         reg_d7.w = 0;
         if (var_v0 == 0) {
-            var_v0 = D_0028ED7C == 2;
+            var_v0 = g_replay_mode == 2;
         }
         if (((var_v0 != 0) || (g_attract_demo != 0)) && (g_stage == 0)) {
             reg_d7.h[0] = 0x38;

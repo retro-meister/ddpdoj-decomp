@@ -5217,7 +5217,7 @@ extern u16 D_006A0E80[];
 extern u16 D_006A0E82[];
 extern u16 D_006A0E86[];
 extern u16 D_006A0E90[];
-extern u16 D_006C58A0_as_u16_a[];
+extern u16 g_replay_file_as_u16_a[];
 extern u16 D_006C58A2[];
 extern u16 D_006C58A4[];
 extern u16 D_006C58A6[];
@@ -5255,7 +5255,7 @@ void func_00236960(s32 slot) {
     D_006A0E5A[off] = D_006C58AA[0];
     D_006A0E5C[off] = D_006C58AC[0];
     D_006A0E5E[off] = D_006C58AE[0];
-    D_006A0E50_as_u16_a[off] = D_006C58A0_as_u16_a[0];
+    D_006A0E50_as_u16_a[off] = g_replay_file_as_u16_a[0];
     D_006A0E60[off] = D_006C58B0[0];
     D_006A0E62[off] = D_006C58B2[0];
     D_006A0E6C[off] = D_006C58BC[0];

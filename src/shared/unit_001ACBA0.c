@@ -192,7 +192,7 @@ block_50:
 extern s8 D_0025F6B0[];
 extern u8 g_game_mode;
 extern s32 D_0028EAFC;
-extern u8 D_0028ED7C;
+extern u8 g_replay_mode;
 extern u8 D_002BB060[5][30];
 extern u8 D_002BB100[5][30];
 extern u8 D_002BB352[];
@@ -213,7 +213,7 @@ void func_001ACF80(void) {
     save_a5 = reg_a5;
     save_a6 = reg_a6;
     cond_flag = 0;
-    if (D_0028ED7C == 2) {
+    if (g_replay_mode == 2) {
         printf((const char *)"replay nameentry skip\n");
         cond_flag = 1;
         goto block_rts;

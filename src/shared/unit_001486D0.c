@@ -1184,7 +1184,7 @@ s32 task_stop_self();
 extern u8 g_game_frame_ran;
 extern s16 g_score_task_active_as_s16;
 extern u16 g_stage;
-extern u8 D_0028ED7C;
+extern u8 g_replay_mode;
 
 void score_task(void) {
     switch (reg_a5[3]) {
@@ -1193,7 +1193,7 @@ void score_task(void) {
     }
     if (reg_a5[3] == 2) goto block_2;
     func_001AEA80();
-    if (D_0028ED7C != 2) goto next_1;
+    if (g_replay_mode != 2) goto next_1;
     if (g_stage != 0) goto next_1;
     if (g_game_frame_ran == 0) return;
 next_1:
@@ -1216,10 +1216,10 @@ s32 stage_map_reset();
 extern u8 D_0026A3F0[];
 extern u8 D_0028E368;
 extern u8 D_0028E378;
-extern u8 D_0028ED74;
+extern u8 g_replay_buffer_state;
 
 void func_0014BEC0(void) {
-    D_0028ED74 = 2;
+    g_replay_buffer_state = 2;
     D_0028E378 = 0xFF;
     D_0028E368 = 0;
     func_0012FA80();
@@ -1264,7 +1264,7 @@ s32 music_play_bgm12();
 s32 sprite_draw_layer1();
 s32 rng_next_masked();
 s32 func_0022B660();
-s32 func_002376F0();
+s32 replay_start_result();
 extern u16 D_0026A380[];
 extern u16 D_0026A3A0[];
 extern u16 D_0026A3C0[];
@@ -1287,12 +1287,12 @@ void game_over_task(void) {
             }
             goto block_1;
         }
-        if ((D_0028ED7C == 2) || (g_simulation_active != 0)) {
-            func_002376F0();
+        if ((g_replay_mode == 2) || (g_simulation_active != 0)) {
+            replay_start_result();
             return;
         }
 block_1:
-        D_0028ED7C = 0;
+        g_replay_mode = 0;
         func_0014BF90();
         return;
     }

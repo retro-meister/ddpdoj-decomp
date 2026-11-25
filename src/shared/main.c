@@ -55,7 +55,7 @@ s32 func_002232F0();
 s32 func_00225630();
 s32 func_002256B0();
 s32 func_00236900();
-s32 func_00237CC0();
+s32 replay_begin_pending();
 extern u8 D_002620F0[];
 extern u8 test_palette_0[];
 extern u8 test_palette_1[];
@@ -88,7 +88,7 @@ extern s8 g_cd_async_state;
 extern s8 g_cd_async_busy;
 extern s8 D_0028EC58;
 extern u8 D_006A4800[];
-extern u8 D_006C58A0[];
+extern u8 g_replay_file[];
 
 void func_002120D0(void) {
     s32 t1;
@@ -103,7 +103,7 @@ void func_002120D0(void) {
     printf("--replay size[%d]\n", 0x206EC);
     printf("--replay_data size[%d]\n", 0x202E8);
     func_00236900();
-    memset(D_006C58A0, 0, 0x202E8);
+    memset(g_replay_file, 0, 0x202E8);
     memset(D_006A4800, 0, 0x202E8);
     func_0021D8C0();
     sys_start();
@@ -255,7 +255,7 @@ loop_15:
     if (t2 == 0) {
         goto loop_15;
     }
-    func_00237CC0();
+    replay_begin_pending();
     goto loop_15;
 }
 

@@ -114,8 +114,8 @@ extern u16 D_0028E314;
 extern u16 D_0028E318;
 extern u16 g_attract_demo;
 extern u16 g_loop;
-extern u8 D_0028ED58;
-extern u8 D_0028ED7C;
+extern u8 g_replay_taken_over;
+extern u8 g_replay_mode;
 extern u8 g_simulation_active;
 extern u8 *reg_call_target_as_u8_p;
 
@@ -152,11 +152,11 @@ void func_001AF560(void) {
         goto block_50;
     }
 #ifdef DEATH_LABEL
-    if ((D_0028ED7C == 2) && (D_0028ED58 == 0)) {
+    if ((g_replay_mode == 2) && (g_replay_taken_over == 0)) {
         goto block_50;
     }
 #else
-    if ((g_attract_demo == 0) && (D_0028ED7C == 2) && (D_0028ED58 == 0)) {
+    if ((g_attract_demo == 0) && (g_replay_mode == 2) && (g_replay_taken_over == 0)) {
         goto block_50;
     }
 #endif
@@ -202,11 +202,11 @@ block_51:
         goto block_52;
     }
 #ifdef DEATH_LABEL
-    if ((D_0028ED7C == 2) && (D_0028ED58 == 0)) {
+    if ((g_replay_mode == 2) && (g_replay_taken_over == 0)) {
         goto block_50;
     }
 #else
-    if ((g_attract_demo == 0) && (D_0028ED7C == 2) && (D_0028ED58 == 0)) {
+    if ((g_attract_demo == 0) && (g_replay_mode == 2) && (g_replay_taken_over == 0)) {
         goto block_50;
     }
 #endif

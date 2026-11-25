@@ -226,9 +226,9 @@ void sys_end_frame(void) {
 extern u8 g_game_frame_ran;
 extern u16 g_attract_demo;
 extern s8 D_0028E3F8;
-extern u8 D_0028ED58;
-extern u8 D_0028ED74;
-extern u8 D_0028ED7C;
+extern u8 g_replay_taken_over;
+extern u8 g_replay_buffer_state;
+extern u8 g_replay_mode;
 extern u16 D_006C58A4[];
 
 void sys_draw_replay_label(void) {
@@ -236,11 +236,11 @@ void sys_draw_replay_label(void) {
     s32 var_a2_2;
 
 #ifdef DEATH_LABEL
-    if ((g_game_frame_ran != 0) && (D_0028E3F8 != 0) && (D_0028ED74 == 1) && (D_0028ED7C == 2)) {
+    if ((g_game_frame_ran != 0) && (D_0028E3F8 != 0) && (g_replay_buffer_state == 1) && (g_replay_mode == 2)) {
 #else
-    if ((g_game_frame_ran != 0) && (D_0028E3F8 != 0) && (g_attract_demo == 0) && (D_0028ED74 == 1) && (D_0028ED7C == 2)) {
+    if ((g_game_frame_ran != 0) && (D_0028E3F8 != 0) && (g_attract_demo == 0) && (g_replay_buffer_state == 1) && (g_replay_mode == 2)) {
 #endif
-        if (D_0028ED58 != 0) {
+        if (g_replay_taken_over != 0) {
             var_a2 = 0x88;
             if (D_006C58A4[0] == 0xFF) {
                 var_a2 = 0x18;
@@ -515,11 +515,11 @@ void pause_check_start_button(void) {
     if ((u8)state == 0xB) {
         return;
     }
-    if (D_0028ED7C == 2) {
+    if (g_replay_mode == 2) {
         if (!(g_pad_trigger[D_0028EC24] & 0x800)) {
             return;
         }
-        if (D_0028ED58 != 0 && g_player1[0] == 0 && g_player2[0] == 0) {
+        if (g_replay_taken_over != 0 && g_player1[0] == 0 && g_player2[0] == 0) {
             return;
         }
         sfx_confirm();
@@ -865,8 +865,8 @@ void vibration_start_pad1(s16 arg0, s16 arg1) {
     extern s16 g_pad_vib_timer_p1;
     extern s8 g_pad_vib_state_p1;
     if ((g_attract_demo == 0) && (g_pad_vib_enabled != 0)) {
-        if (D_0028ED7C == 2) {
-            if (D_0028ED58 != 0) {
+        if (g_replay_mode == 2) {
+            if (g_replay_taken_over != 0) {
                 vibration_start_active_pad(arg0, arg1);
             }
         } else if (g_player1[0] < 0) {
@@ -882,8 +882,8 @@ void vibration_start_pad2(s16 arg0, s16 arg1) {
     extern s16 g_pad_vib_timer_p2;
     extern s8 g_pad_vib_state_p2;
     if ((g_attract_demo == 0) && (g_pad_vib_enabled != 0)) {
-        if (D_0028ED7C == 2) {
-            if (D_0028ED58 != 0) {
+        if (g_replay_mode == 2) {
+            if (g_replay_taken_over != 0) {
                 vibration_start_active_pad(arg0, arg1);
             }
         } else if (g_player2[0] < 0) {

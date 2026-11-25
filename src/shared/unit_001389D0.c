@@ -195,7 +195,7 @@ extern u16 g_stage;
 extern u8 g_cd_async_state_as_u8;
 extern u8 g_cd_async_busy_as_u8;
 extern u8 D_0028EC58_as_u8;
-extern u8 D_0028ED7C;
+extern u8 g_replay_mode;
 extern u8 g_simulation_active;
 
 void func_00138DA0(void) {
@@ -255,7 +255,7 @@ void func_00138DA0(void) {
         goto next_2;
     }
 #endif
-    if (D_0028ED7C != 2) {
+    if (g_replay_mode != 2) {
         goto next_2;
     }
 next_1:
@@ -556,7 +556,7 @@ void func_001394A0(void) {
                 D_0028E284_as_s8 = 0x78;
             }
         }
-        if ((g_simulation_active == 0) && (D_0028ED7C != 2)) {
+        if ((g_simulation_active == 0) && (g_replay_mode != 2)) {
             if ((g_p1_score_digits == 0) && (g_player1[0] < 0)) {
                 D_0028E25C = g_stage + (g_loop * 5);
                 if (D_0028E304 != 0) {

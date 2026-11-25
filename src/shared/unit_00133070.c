@@ -7,11 +7,11 @@ extern u8 D_0028E304;
 extern u16 g_p2_score_digits;
 extern u16 g_p1_score_digits;
 extern u16 g_two_player_seen;
-extern u8 D_0028ED7C;
+extern u8 g_replay_mode;
 extern u8 g_simulation_active;
 
 s32 func_00133070(void) {
-    if ((g_game_mode != 2) && (g_simulation_active == 0) && (D_0028E2D8 != 0) && (D_0028ED7C == 1) && (D_0028E304 == 0) && (g_two_player_seen != 3) && (g_p1_score_digits == 0) && (g_p2_score_digits == 0)) {
+    if ((g_game_mode != 2) && (g_simulation_active == 0) && (D_0028E2D8 != 0) && (g_replay_mode == 1) && (D_0028E304 == 0) && (g_two_player_seen != 3) && (g_p1_score_digits == 0) && (g_p2_score_digits == 0)) {
         return 1;
     }
     return 0;

@@ -120,8 +120,8 @@ extern u8 g_default_text_palette[];
 extern s16 D_0028DF14;
 extern s16 D_0028DF18;
 extern s16 g_attract_demo_as_s16;
-extern u8 D_0028ED74;
-extern u8 D_0028ED7C;
+extern u8 g_replay_buffer_state;
+extern u8 g_replay_mode;
 extern u8 g_simulation_active;
 
 void func_001B1080(void) {
@@ -131,8 +131,8 @@ void func_001B1080(void) {
     g_attract_demo_as_s16 = 0;
     g_simulation_active = 0;
     replay_header_clear();
-    D_0028ED7C = 1;
-    D_0028ED74 = 2;
+    g_replay_mode = 1;
+    g_replay_buffer_state = 2;
     func_0020ECE0();
     D_0028DF14 = 0;
     D_0028DF0C = 0;
@@ -646,7 +646,7 @@ void func_001B1D70(void) {
     reg_a0 = (u8 *)D_00260D30;
     reg_d0.w = 0x11;
     sprite_palette_load();
-    if (D_0028ED7C == 1) {
+    if (g_replay_mode == 1) {
         func_0023C1E0(D_006CB1D4);
     }
     reg_d0.h[0] = TASK_GAME;

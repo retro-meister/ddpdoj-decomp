@@ -103,7 +103,7 @@ extern u8 D_0028ED35;
 extern u8 D_0028ED36;
 extern u8 D_0028ED37;
 extern u8 D_006A4800[];
-extern u8 D_006C58A0[];
+extern u8 g_replay_file[];
 extern u8 D_006C58D8[];
 extern u8 D_006C58D9[];
 extern u8 D_006C58DA[];
@@ -112,7 +112,7 @@ extern u8 D_006C58DC[];
 extern u8 D_006C58DD[];
 extern u8 D_006C58DE[];
 extern u8 D_006C58DF[];
-extern u8 D_006C5CA0[];
+extern u8 g_replay_snapshot[];
 s32 func_002269B0(void) {
     s32 delta_encode();
     s32 func_0023DBF0();
@@ -120,9 +120,9 @@ s32 func_002269B0(void) {
         D_0028EC28 = *(s8 *)&D_0028EC40_as_u8;
         D_0028EB04 = 1;
         D_0028EB90 = 0x40;
-        memcpy(D_006C58A0, D_006A4800, 0x202E8);
-        delta_encode(D_006C5CA0);
-        func_0023DBF0(D_006C58A0);
+        memcpy(g_replay_file, D_006A4800, 0x202E8);
+        delta_encode(g_replay_snapshot);
+        func_0023DBF0(g_replay_file);
         D_0028ED30 = D_006C58D8[0];
         D_0028ED31 = D_006C58D9[0];
         D_0028ED32 = D_006C58DA[0];
@@ -432,7 +432,7 @@ extern u8 D_0028E280;
 extern u8 *D_00271480[];
 extern s32 D_0028DCF8;
 extern s8 D_0028EC20;
-extern s8 D_0028ED7C_as_s8;
+extern s8 g_replay_mode_as_s8;
 extern s16 D_00270810_as_s16_a[];
 extern s16 D_00270828_as_s16_a[];
 extern s16 D_00270838_as_s16_a[];
@@ -871,7 +871,7 @@ void func_00227C90(void) {
     func_00227310(&D_0028EBE0_as_Fade);
     func_00222260(0xB);
     D_0028EC20 = 0;
-    D_0028ED7C_as_s8 = 0;
+    g_replay_mode_as_s8 = 0;
     func_002263D0(0, D_0028EC24, 0);
 }
 
@@ -898,7 +898,7 @@ void func_00227D00(void) {
         D_0028EC18_as_Fade.step = 0;
         return;
     case 3:
-        D_0028ED7C_as_s8 = 2;
+        g_replay_mode_as_s8 = 2;
         D_0028EC20 = 1;
         D_0028EBE0_as_Fade.step += 1;
         func_002272D0();
@@ -932,7 +932,7 @@ void func_00227E30(void) {
     func_00227310(&D_0028EBE0_as_Fade);
     func_00222260(0xB);
     D_0028EC20 = 0;
-    D_0028ED7C_as_s8 = 0;
+    g_replay_mode_as_s8 = 0;
     func_002263D0(0, D_0028EC24, 1);
 }
 
@@ -953,7 +953,7 @@ void func_00227E70(void) {
         D_0028EC18_as_Fade.step = 0;
         break;
     case 3:
-        D_0028ED7C_as_s8 = 2;
+        g_replay_mode_as_s8 = 2;
         D_0028EC20 = 1;
         D_0028EBE0_as_Fade.step += 1;
         func_002272D0();
@@ -2451,7 +2451,7 @@ extern u16 D_0028ED48;
 extern u16 D_0028ED4C;
 extern s32 D_0028ED50;
 extern u16 D_0028ED54;
-extern u8 D_0028ED68;
+extern u8 g_replay_watch_after_run;
 extern u8 D_006A4C00[];
 
 typedef struct {
@@ -2493,8 +2493,8 @@ void func_0022B330(void) {
         if (D_0028ED54 == data->count1 && D_0028ED50 == data->score1 &&
             D_0028ED4C == data->stage1 && D_0028ED48 == data->count2 &&
             D_0028ED44 == data->score2 && D_0028ED40 == data->stage2) {
-            memcpy(D_006C58A0, D_006A4800, 0x202E8);
-            D_0028ED68 = 1;
+            memcpy(g_replay_file, D_006A4800, 0x202E8);
+            g_replay_watch_after_run = 1;
         }
     }
 }
@@ -2512,7 +2512,7 @@ s32 func_0022B4B0(void) {
         D_0028EC4C = 1;
         D_0028ED0C = 0;
         D_0028EC50 += 1;
-        D_0028ED68 = 0;
+        g_replay_watch_after_run = 0;
         D_0028E378 = 0xFF;
         /* fallthrough */
     case 1:
@@ -2538,7 +2538,7 @@ s32 func_0022B540(void) {
     switch (D_0028EC50) {
     case 0:
         D_0028EC4C = 1;
-        D_0028ED68 = 0;
+        g_replay_watch_after_run = 0;
         D_0028EC50 += 1;
         D_0028E378 = 0xFF;
         /* fallthrough */
@@ -2590,7 +2590,7 @@ extern s32 D_0028EB8C;
 s32 func_0022B660(void) {
     extern s32 func_00226260(void);
     extern void func_002263D0(s32 a, s32 b, s32 c);
-    u8 *save = D_006C58A0;
+    u8 *save = g_replay_file;
     s32 state;
 
     switch (state = D_0028EC50) {
@@ -2665,7 +2665,7 @@ void func_0022B7A0(s32 arg0) {
     }
 }
 
-extern u8 D_0028ED7C;
+extern u8 g_replay_mode;
 
 void func_0022B870(void) {
     extern void gfx_draw_color_box(s32 x, s32 y, s32 w, s32 h, s32 depth, s32 alpha, s32 r, s32 g, s32 b);
@@ -2721,7 +2721,7 @@ void func_0022B870(void) {
             break;
         }
         gfx_draw_color_box(0, 0, 0x1C2, 0xE0, 0x50, D_0028EB90 / 2, 1, 1, 1);
-        if (D_0028ED7C == 1) {
+        if (g_replay_mode == 1) {
             func_0022BA60();
             func_00227000();
         }

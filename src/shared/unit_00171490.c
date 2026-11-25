@@ -265,7 +265,7 @@ extern u16 g_p2_hyper_active;
 extern u16 g_p1_hyper_active;
 extern u16 g_stage;
 extern u8 D_0028ED5C;
-extern u8 D_0028ED7C;
+extern u8 g_replay_mode;
 extern u8 g_simulation_active;
 extern s16 g_player2[];
 extern s16 g_player1[];
@@ -298,7 +298,7 @@ void func_00171B90(void) {
     if (*(u16 *)reg_a4 == 0) {
         *(s16 *)(reg_a4 + 2) = 1;
         g_boss_hyper_wait_as_s16 = 0;
-        if ((D_0028ED7C != 2) || (g_stage != 0)) {
+        if ((g_replay_mode != 2) || (g_stage != 0)) {
             if ((g_player1[0] < 0) && (g_p1_hyper_active == 0)) {
                 func_001ABB80();
             }
@@ -310,7 +310,7 @@ void func_00171B90(void) {
         ENTITY(reg_a6)->flags.sh = 0;
         return;
     }
-    if ((g_game_frame_ran != 0) && ((var_a0 = D_0028ED7C, (var_a0 != 2)) || (D_0028ED5C == 0)) && ((g_simulation_active == 0) || (D_0028ED5C == 0))) {
+    if ((g_game_frame_ran != 0) && ((var_a0 = g_replay_mode, (var_a0 != 2)) || (D_0028ED5C == 0)) && ((g_simulation_active == 0) || (D_0028ED5C == 0))) {
         var_a0 = ENTITY(reg_a6)->hit_y_plus.h;
         if (var_a0 != 0) {
             temp_v1 = ENTITY(reg_a6)->hit_y_minus.h;
@@ -343,7 +343,7 @@ block_25:
     }
     var_a0_2 = (u8 *)(reg_a6 + 0x20);
     reg_a6 = var_a0_2;
-    if ((g_game_frame_ran != 0) && ((var_a0_2 = (void *) D_0028ED7C, (var_a0_2 != (void *)2)) || (D_0028ED5C == 0)) && ((g_simulation_active == 0) || (D_0028ED5C == 0))) {
+    if ((g_game_frame_ran != 0) && ((var_a0_2 = (void *) g_replay_mode, (var_a0_2 != (void *)2)) || (D_0028ED5C == 0)) && ((g_simulation_active == 0) || (D_0028ED5C == 0))) {
         temp_a0 = ENTITY(reg_a6)->hit_y_plus.h;
         if (temp_a0 != 0) {
             temp_v1_2 = ENTITY(reg_a6)->hit_y_minus.h;

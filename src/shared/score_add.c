@@ -2239,13 +2239,13 @@ block_end:
 extern s16 g_score_panel_intro_as_s16;
 extern u16 g_boss_hp_bar_move_count;
 extern u16 g_stage;
-extern u8 D_0028ED7C;
+extern u8 g_replay_mode;
 extern u16 D_006C8E5C[];
 
 void func_001AC840(void) {
     if (!(D_0028E854 & 1)) {
         g_boss_hp_bar_move_count = 0x53;
-        if (g_stage == 0 && D_0028ED7C == 2) {
+        if (g_stage == 0 && g_replay_mode == 2) {
             if (D_006C8E5C[0] == 0) {
                 g_boss_hp_bar_move_count += 0x42;
             } else {

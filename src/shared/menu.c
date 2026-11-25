@@ -3988,7 +3988,7 @@ extern u8 D_0028EBBC;
 extern s16 D_0028EBC8;
 extern u8 D_0028EBCC;
 extern u8 D_0028EBD0_as_u8;
-extern u8 D_0028ED74;
+extern u8 g_replay_buffer_state;
 
 void func_002234C0(void) {
     g_paused++;
@@ -4007,8 +4007,8 @@ void func_002234C0(void) {
     vibration_suspend();
     vibration_stop_all();
     streams_pause();
-    if (D_0028ED74 == 1) {
-        D_0028ED74 = 3;
+    if (g_replay_buffer_state == 1) {
+        g_replay_buffer_state = 3;
     }
 }
 
@@ -4034,9 +4034,9 @@ extern s8 D_0028EBD0;
 s32 streams_resume();
 s32 vibration_resume();
 extern s8 g_pause_lock_timer_as_s8;
-s32 func_00237670();
-s32 func_002376F0();
-extern u8 D_0028ED7C;
+s32 replay_start_run();
+s32 replay_start_result();
+extern u8 g_replay_mode;
 extern u8 g_simulation_active;
 extern s16 D_00271C8C[];
 extern s16 D_00271C90[];
@@ -4194,8 +4194,8 @@ void func_00223A60(void) {
     streams_resume();
     g_pause_lock_timer_as_s8 = 0x3C;
     vibration_resume();
-    if (D_0028ED74 == 3) {
-        D_0028ED74 = 1;
+    if (g_replay_buffer_state == 3) {
+        g_replay_buffer_state = 1;
     }
 }
 
@@ -4207,15 +4207,15 @@ void func_00223AA0(void) {
     buttons = g_pad_trigger[g_pause_player];
     if (buttons & 0x20) {
         if (D_0028EBC4 == 0) {
-            if (g_simulation_active == 0 && D_0028ED7C != 2) {
+            if (g_simulation_active == 0 && g_replay_mode != 2) {
                 func_00224A30();
             } else {
                 sfx_menu_confirm();
                 if (D_0028EBD0 == 7) {
-                    func_002376F0();
+                    replay_start_result();
                 } else {
                     func_00224A90();
-                    func_00237670();
+                    replay_start_run();
                 }
             }
         } else {
@@ -4361,7 +4361,7 @@ void func_00223E80(void) {
             gfx_draw_color_box(0xC, 8, 0x40, 0xD0, 0x12C, alpha, 1, 1, 0x40);
         }
         if (g_paused != 5) {
-            if (D_0028ED7C == 2) {
+            if (g_replay_mode == 2) {
                 reg_a0 = D_00271B90[D_0028EBD0];
 #ifndef DEATH_LABEL
             } else if (g_simulation_active != 0) {
@@ -4398,7 +4398,7 @@ void func_00224020(s32 x, s32 y) {
     h = (s32)(s8)D_0028EBC0 + 16;
     if (D_0028EBD0 == 6) {
         reg_a0 = D_00271BD0[0];
-    } else if (D_0028ED7C == 2) {
+    } else if (g_replay_mode == 2) {
         reg_a0 = D_00271BCC[0];
 #ifndef DEATH_LABEL
     } else if (g_simulation_active != 0) {
@@ -4625,8 +4625,8 @@ extern s16 g_attract_demo_as_s16;
 extern s16 g_loop_as_s16;
 extern u8 D_0028EC4C;
 extern u8 D_0028ED64;
-extern u8 D_0028ED6C;
-extern s32 D_0028ED70;
+extern u8 g_replay_begin_pending;
+extern s32 g_replay_position;
 
 void func_00224A90(void) {
     sound_stop_effects();
@@ -4643,12 +4643,12 @@ void func_00224A90(void) {
     func_00224B50();
     g_simulation_active = 0;
     replay_header_clear();
-    D_0028ED7C = 0;
-    D_0028ED74 = 0;
+    g_replay_mode = 0;
+    g_replay_buffer_state = 0;
     D_0028EC4C = 0;
-    D_0028ED6C = 0;
+    g_replay_begin_pending = 0;
     D_0028ED64 = 0;
-    D_0028ED70 = 0;
+    g_replay_position = 0;
 #ifndef DEATH_LABEL
     D_0028E3B4_as_s16 = 0;
 #endif

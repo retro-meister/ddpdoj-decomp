@@ -292,8 +292,8 @@ s32 func_0013F850();
 s32 func_0013F960();
 s32 func_0013F990();
 extern u8 g_game_frame_ran;
-extern s32 D_0028ED70;
-extern u8 D_0028ED7C;
+extern s32 g_replay_position;
+extern u8 g_replay_mode;
 extern u8 D_0029D710[];
 extern u8 g_player2_as_u8_a[];
 
@@ -614,8 +614,8 @@ block_b:
     reg_d0.h[0] = *(u16 *)(reg_a4 + 0x5A);
     reg_d0.h[0] -= 2;
     if (g_game_frame_ran == 0) goto next_520;
-    if (D_0028ED7C != 2) goto next_510;
-    if (D_0028ED70 == 0) goto next_520;
+    if (g_replay_mode != 2) goto next_510;
+    if (g_replay_position == 0) goto next_520;
 next_510:
     switch ((s32) reg_d0.h[0] >> 1) {
     case 0:
@@ -643,8 +643,8 @@ next_540:
     return;
 block_c:
     if (g_game_frame_ran == 0) goto block_rts;
-    if (D_0028ED7C != 2) goto next_610;
-    if (D_0028ED70 == 0) goto block_rts;
+    if (g_replay_mode != 2) goto next_610;
+    if (g_replay_position == 0) goto block_rts;
 next_610:
     *(u8 *)(reg_a6 + 0x1B) += 8;
     reg_d1.h[0] = *(u16 *)(reg_a4 + 0x58);

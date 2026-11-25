@@ -265,10 +265,10 @@ extern u8 D_0028ED34;
 extern u8 D_0028ED35;
 extern u8 D_0028ED36;
 extern u8 D_0028ED37;
-extern s8 D_0028ED74_as_s8;
-extern s8 D_0028ED7C_as_s8;
+extern s8 g_replay_buffer_state_as_s8;
+extern s8 g_replay_mode_as_s8;
 extern u8 D_006A4800[];
-extern u8 D_006C58A0[];
+extern u8 g_replay_file[];
 extern u8 D_006C58D8[];
 extern u8 D_006C58D9[];
 extern u8 D_006C58DA[];
@@ -277,7 +277,7 @@ extern u8 D_006C58DC[];
 extern u8 D_006C58DD[];
 extern u8 D_006C58DE[];
 extern u8 D_006C58DF[];
-extern u8 D_006C5CA0[];
+extern u8 g_replay_snapshot[];
 
 void func_00137E00(void) {
     s32 layers_reset();
@@ -327,10 +327,10 @@ void func_00137E00(void) {
     case 1:
         if (func_0022BE60(D_0028DF04) != 0) {
             D_0028DF08 += 1;
-            memcpy(D_006C58A0, D_006A4800, 0x202E8);
-            delta_encode(D_006C5CA0);
-            func_0023DBF0(D_006C58A0);
-            D_0028ED7C_as_s8 = 2;
+            memcpy(g_replay_file, D_006A4800, 0x202E8);
+            delta_encode(g_replay_snapshot);
+            func_0023DBF0(g_replay_file);
+            g_replay_mode_as_s8 = 2;
             D_0028ED30 = D_006C58D8[0];
             reg_d0.h[0] = 0x14;
             D_0028ED31 = D_006C58D9[0];
@@ -358,8 +358,8 @@ void func_00137E00(void) {
             D_0028DF08 = 0;
             cond_flag = 0;
             g_attract_demo_as_s16 = 0;
-            D_0028ED7C_as_s8 = 0;
-            D_0028ED74_as_s8 = 0;
+            g_replay_mode_as_s8 = 0;
+            g_replay_buffer_state_as_s8 = 0;
             func_0012FA50();
             func_0012FB00();
             layers_reset();

@@ -390,12 +390,12 @@ s32 func_0013B920();
 s32 func_0013C300();
 s32 func_0013C350();
 s32 func_0022B660();
-s32 func_002376F0();
-s32 func_00237790();
+s32 replay_start_result();
+s32 replay_start_run_end();
 extern u8 D_00269920[];
 extern u16 g_loop;
 extern u16 g_stage;
-extern u8 D_0028ED7C;
+extern u8 g_replay_mode;
 #ifdef DEATH_LABEL
 s32 stage_load_step();
 extern u8 D_0028E2A4;
@@ -464,12 +464,12 @@ void func_00210D00() {
                 reg_d0.h[1] = ENTITY(reg_a6)->hit_y_minus.h;
                 reg_d0.h[0] = ENTITY(reg_a6)->hit_x_plus.h;
                 func_0013C300();
-                if (D_0028ED7C == 2) {
+                if (g_replay_mode == 2) {
                     if ((g_loop == 1) && (g_stage == 4)) {
-                        func_002376F0();
+                        replay_start_result();
                         return;
                     }
-                    func_00237790();
+                    replay_start_run_end();
                     return;
                 }
                 func_001317E0();
