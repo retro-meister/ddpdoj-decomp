@@ -2,7 +2,7 @@
 
 s32 rng_next_unsigned();
 extern s8 D_0026B210[];
-extern u16 D_0028E3F0;
+extern u16 g_game_frame;
 extern s8 D_002BB430[];
 extern s8 *reg_a0_as_s8_p;
 extern s8 *reg_a3_as_s8_p;
@@ -16,7 +16,7 @@ void func_00171ED0(void) {
 loop_1:
         rng_next_unsigned();
         reg_a0_as_s8_p = (s8 *)D_0026B210;
-        reg_d0.h[0] += D_0028E3F0;
+        reg_d0.h[0] += g_game_frame;
         reg_d0.h[0] &= 0x1F;
         reg_a0_as_s8_p = &reg_a0_as_s8_p[reg_d0.h[0]];
         reg_d0.w = 0;

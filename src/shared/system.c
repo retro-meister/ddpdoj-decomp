@@ -82,7 +82,7 @@ void sys_start(void) {
     sys_init();
 }
 
-s32 func_0018C890();
+s32 disc_files_locate();
 s32 font_init();
 s32 func_0022C630();
 extern s16 g_loaded_stage;
@@ -107,7 +107,7 @@ void sys_init(void) {
     g_display_reset_pending = 0;
     D_0028EB00_as_u8 = 0;
     fade_reset();
-    func_0018C890();
+    disc_files_locate();
     tex_load_common();
     font_init();
     sceMcInit();
@@ -136,7 +136,7 @@ void sys_begin_frame(void) {
     render_target_begin(&g_render_target, g_gif_buf);
 }
 
-s32 func_0018E020();
+s32 sound_update();
 s32 text_flush_rects();
 s32 arcade_sprite_draw();
 s32 func_0021FA50();
@@ -147,11 +147,11 @@ s32 func_00225EF0();
 s32 func_0022B870();
 s32 func_0022C5A0();
 extern u8 D_0028E21C;
-extern u8 D_0028E310;
+extern u8 g_slowdown_timer;
 extern u16 D_0028E32C;
 extern u8 D_0028E378;
 extern u8 D_0028E37C;
-extern u16 D_0028E3F0;
+extern u16 g_game_frame;
 extern u16 g_scroll_line;
 void sys_end_frame(void) {
     s32 half;
@@ -185,7 +185,7 @@ void sys_end_frame(void) {
     pause_check_start_button();
     stage_map_update();
     text_flush_rects();
-    func_0018E020();
+    sound_update();
     vibration_update();
     sceGsSyncPath(0, 0);
     g_frame_counter += 1;
@@ -197,10 +197,10 @@ void sys_end_frame(void) {
         if (D_0028E21C == 2) {
             sceGsSyncV(0);
         } else {
-            if (D_0028E310 != 0) {
-                D_0028E310 -= 1;
+            if (g_slowdown_timer != 0) {
+                g_slowdown_timer -= 1;
             }
-            if ((D_0028E310 != 0) && (D_0028E3F0 & 1)) {
+            if ((g_slowdown_timer != 0) && (g_game_frame & 1)) {
                 sceGsSyncV(0);
             }
         }
@@ -224,7 +224,7 @@ void sys_end_frame(void) {
 }
 
 extern u8 D_0028E370;
-extern u16 D_0028E3C0;
+extern u16 g_attract_demo;
 extern s8 D_0028E3F8;
 extern u8 D_0028ED58;
 extern u8 D_0028ED74;
@@ -238,7 +238,7 @@ void sys_draw_replay_label(void) {
 #ifdef DEATH_LABEL
     if ((D_0028E370 != 0) && (D_0028E3F8 != 0) && (D_0028ED74 == 1) && (D_0028ED7C == 2)) {
 #else
-    if ((D_0028E370 != 0) && (D_0028E3F8 != 0) && (D_0028E3C0 == 0) && (D_0028ED74 == 1) && (D_0028ED7C == 2)) {
+    if ((D_0028E370 != 0) && (D_0028E3F8 != 0) && (g_attract_demo == 0) && (D_0028ED74 == 1) && (D_0028ED7C == 2)) {
 #endif
         if (D_0028ED58 != 0) {
             var_a2 = 0x88;
@@ -467,7 +467,7 @@ void pad_mask_game_inputs(void) {
     }
 }
 
-extern void func_0018DA30(void);
+extern void sfx_confirm(void);
 extern s16 g_pause_player_as_s16;
 extern u8 g_stage_load_state;
 extern u8 g_pause_lock_timer;
@@ -494,7 +494,7 @@ void pause_check_start_button(void) {
     if (busy != 0) {
         return;
     }
-    if (D_0028E3C0 != 0) {
+    if (g_attract_demo != 0) {
         return;
     }
     wait = g_pause_lock_timer;
@@ -522,20 +522,20 @@ void pause_check_start_button(void) {
         if (D_0028ED58 != 0 && g_player1[0] == 0 && g_player2[0] == 0) {
             return;
         }
-        func_0018DA30();
+        sfx_confirm();
         g_paused = 1;
         g_pause_player_as_s16 = D_0028EC24;
 block_rts:
         return;
     }
     if ((g_pad_trigger[0] & 0x800) && g_player1[0] < 0) {
-        func_0018DA30();
+        sfx_confirm();
         g_pause_player_as_s16 = 0;
         g_paused = 1;
         return;
     }
     if ((g_pad_trigger[1] & 0x800) && g_player2[0] < 0) {
-        func_0018DA30();
+        sfx_confirm();
         g_paused = 1;
         g_pause_player_as_s16 = 1;
     }
@@ -864,7 +864,7 @@ void vibration_start_pad1(s16 arg0, s16 arg1) {
     extern s16 g_pad_vib_power_p1;
     extern s16 g_pad_vib_timer_p1;
     extern s8 g_pad_vib_state_p1;
-    if ((D_0028E3C0 == 0) && (g_pad_vib_enabled != 0)) {
+    if ((g_attract_demo == 0) && (g_pad_vib_enabled != 0)) {
         if (D_0028ED7C == 2) {
             if (D_0028ED58 != 0) {
                 vibration_start_active_pad(arg0, arg1);
@@ -881,7 +881,7 @@ void vibration_start_pad2(s16 arg0, s16 arg1) {
     extern s16 g_pad_vib_power_p2;
     extern s16 g_pad_vib_timer_p2;
     extern s8 g_pad_vib_state_p2;
-    if ((D_0028E3C0 == 0) && (g_pad_vib_enabled != 0)) {
+    if ((g_attract_demo == 0) && (g_pad_vib_enabled != 0)) {
         if (D_0028ED7C == 2) {
             if (D_0028ED58 != 0) {
                 vibration_start_active_pad(arg0, arg1);
@@ -973,7 +973,7 @@ void vibration_update(void) {
     extern u8 g_pad_vib_state_p1;
     s32 slot;
 
-    if (D_0028E3C0 != 0) {
+    if (g_attract_demo != 0) {
         return;
     }
     slot = 0;

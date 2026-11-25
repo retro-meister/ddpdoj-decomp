@@ -1078,12 +1078,12 @@ void func_00203400(void) {
     }
 }
 
-s32 func_0018DEE0();
+s32 music_stop();
 extern s16 D_0028DFC4_as_s16;
 extern u8 D_0029F22F[];
 extern u8 D_0029F29F[];
 void func_00203460(void) {
-    func_0018DEE0();
+    music_stop();
     D_0028DFC4_as_s16 = 1;
     if (g_player1[0] < 0) {
         D_0029F29F[0] = 0xFF;
@@ -1093,12 +1093,12 @@ void func_00203460(void) {
     }
 }
 
-s32 func_0018D390();
+s32 music_play_bgm10();
 s32 func_0020ECE0();
 extern s16 D_0028DFBC_as_s16;
 void func_002034C0(void) {
     func_0020ECE0();
-    func_0018D390();
+    music_play_bgm10();
     D_0028DFBC_as_s16 = 1;
     D_0028E855 |= 8;
     D_0028E855 &= 0xEF;

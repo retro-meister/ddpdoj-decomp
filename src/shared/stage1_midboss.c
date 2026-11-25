@@ -47,7 +47,7 @@ void func_001BC5D0(void) {
 }
 
 s32 explosion_spawn();
-s32 func_0018D5C0();
+s32 sfx_explosion_extra_1();
 extern u8 D_00262680[];
 
 void func_001BC6F0(arg1)
@@ -78,7 +78,7 @@ void func_001BC6F0(arg1)
         *(s8 *)(reg_a4 + 8) = 1;
         reg_a4 += 0x40;
     } while ((s16)(--reg_d7.h[0]) >= 0);
-    func_0018D5C0();
+    sfx_explosion_extra_1();
     reg_a4 = (u8 *)D_00262680;
 loop_5:
     temp_a1 = *(u16 *)reg_a4;
@@ -351,7 +351,7 @@ s32 func_0013B2E0();
 s32 enemy_hitbox_debug_draw();
 s32 func_0014E030();
 s32 enemy_remove();
-s32 func_0018D4E0();
+s32 sfx_explosion_air_small();
 s32 score_add_no_chain();
 s32 score_add();
 s32 func_00201800();
@@ -361,7 +361,7 @@ s32 vibration_start_pad1();
 s32 vibration_start_pad2();
 extern u8 D_00259970_as_u8_a[];
 extern u8 D_00262B50[];
-extern u8 D_0028E310;
+extern u8 g_slowdown_timer;
 extern u16 g_enemy_signal_1;
 extern u16 g_enemy_signal_0;
 extern u16 g_enemies_stopped;
@@ -432,7 +432,7 @@ void func_001BD010(void) {
                 func_001BC6F0();
                 vibration_start_pad1(0xB4, 0x50);
                 vibration_start_pad2(0xB4, 0x50);
-                D_0028E310 = MAIN_OR_DEATH_LABEL(0x54, 0x5A);
+                g_slowdown_timer = MAIN_OR_DEATH_LABEL(0x54, 0x5A);
                 reg_a0 = D_00262B50;
                 func_0013B2E0();
                 reg_d1.h[0] = *(u16 *)(reg_a5 + 0x28);
@@ -470,7 +470,7 @@ block_18:
                             reg_d0.w = 0x26;
                             score_add();
 block_27:
-                            func_0018D4E0();
+                            sfx_explosion_air_small();
                             reg_d0.h[0] = 0x85;
                             explosion_spawn();
                             var_a0 = (u8 *)((void *)1);
@@ -878,7 +878,7 @@ void func_001BE040(void) {
 }
 
 extern u32 D_00251720[];
-extern u16 D_0028E3C0;
+extern u16 g_attract_demo;
 extern u8 D_0028ED7C;
 extern u8 g_simulation_active;
 extern u32 g_bg_layer_as_u32_a[];
@@ -903,7 +903,7 @@ void func_001BE0A0(void) {
     if (flag == 0) {
         flag = D_0028ED7C == 2;
     }
-    if ((flag != 0) || (D_0028E3C0 != 0)) {
+    if ((flag != 0) || (g_attract_demo != 0)) {
         reg_a0 = (u8 *)(D_002B6DF4);
         reg_tmp.w = 0xA4;
     }

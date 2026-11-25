@@ -115,7 +115,7 @@ next_1:
     reg_a5 = saved_a5;
 }
 
-s32 func_0018DA70();
+s32 sfx_enemy_fire_0();
 s32 velocity_from_dir256();
 s32 func_00209F20();
 extern u16 D_00253940[];
@@ -237,7 +237,7 @@ skip_4:
     reg_d2.h[0] = (s16)reg_d2.h[0] >> 2;
     *(u16 *)(reg_a6 + 0x2C) = reg_d0.h[0];
     *(u16 *)(reg_a6 + 0x2E) = reg_d2.h[0];
-    func_0018DA70();
+    sfx_enemy_fire_0();
     reg_d0.h[0] = *(u16 *)(reg_a6 + 0x26);
     reg_a0 = (u8 *)D_002539B0;
     reg_tmp.h[1] = (reg_d0.h[0] != 0) ? *(u16 *)(reg_a0 + ((s16)reg_d0.h[0] & ~1)) : *(u16 *)reg_a0;
@@ -380,7 +380,7 @@ next_240:
     reg_d2.h[0] = (s16) reg_d2.h[0] >> 2;
     W(0x2C) = reg_d0.h[0];
     W(0x2E) = reg_d2.h[0];
-    func_0018DA70();
+    sfx_enemy_fire_0();
     reg_d0.h[0] = W(0x26);
     reg_a0 = (u8 *) D_00254210;
     reg_tmp.h[1] = (reg_d0.h[0] != 0) ? *(u16 *)((u8 *)reg_a0 + ((s16)reg_d0.h[0] & ~1)) : *(u16 *)reg_a0;
@@ -500,7 +500,7 @@ next_220:
     reg_d2.h[0] = (s16) reg_d2.h[0] >> 2;
     W(0x2C) = reg_d0.h[0];
     W(0x2E) = reg_d2.h[0];
-    func_0018DA70();
+    sfx_enemy_fire_0();
     reg_d0.h[0] = W(0x26);
     reg_a0 = (u8 *) D_0025CD00;
     reg_tmp.h[1] = (reg_d0.h[0] != 0) ? *(u16 *)((u8 *)reg_a0 + ((s16)reg_d0.h[0] & ~1)) : *(u16 *)reg_a0;
@@ -620,7 +620,7 @@ next_220:
     reg_d2.h[0] = (s16) reg_d2.h[0] >> 2;
     W(0x2C) = reg_d0.h[0];
     W(0x2E) = reg_d2.h[0];
-    func_0018DA70();
+    sfx_enemy_fire_0();
     reg_d0.h[0] = W(0x26);
     reg_a0 = (u8 *) D_0025D690;
     reg_tmp.h[1] = (reg_d0.h[0] != 0) ? *(u16 *)((u8 *)reg_a0 + ((s16)reg_d0.h[0] & ~1)) : *(u16 *)reg_a0;
@@ -757,7 +757,7 @@ next_220:
     reg_d2.h[0] = (s16) reg_d2.h[0] >> 2;
     W(0x2C) = reg_d0.h[0];
     W(0x2E) = reg_d2.h[0];
-    func_0018DA70();
+    sfx_enemy_fire_0();
     reg_d0.h[0] = W(0x26);
     reg_a0 = (u8 *) D_00254A50;
     reg_tmp.h[1] = (reg_d0.h[0] != 0) ? *(u16 *)((u8 *)reg_a0 + ((s16)reg_d0.h[0] & ~1)) : *(u16 *)reg_a0;
@@ -894,7 +894,7 @@ next_220:
     reg_d2.h[0] = (s16) reg_d2.h[0] >> 2;
     W(0x2C) = reg_d0.h[0];
     W(0x2E) = reg_d2.h[0];
-    func_0018DA70();
+    sfx_enemy_fire_0();
     reg_d0.h[0] = W(0x26);
     reg_a0 = (u8 *) D_002551F0;
     reg_tmp.h[1] = (reg_d0.h[0] != 0) ? *(u16 *)((u8 *)reg_a0 + ((s16)reg_d0.h[0] & ~1)) : *(u16 *)reg_a0;
@@ -1022,7 +1022,7 @@ next_220:
     reg_d2.h[0] = (s16) reg_d2.h[0] >> 2;
     W(0x2C) = reg_d0.h[0];
     W(0x2E) = reg_d2.h[0];
-    func_0018DA70();
+    sfx_enemy_fire_0();
     reg_d0.h[0] = W(0x26);
     reg_a0 = (u8 *) D_0025E010;
     reg_tmp.h[1] = (reg_d0.h[0] != 0) ? *(u16 *)((u8 *)reg_a0 + ((s16)reg_d0.h[0] & ~1)) : *(u16 *)reg_a0;
@@ -1150,7 +1150,7 @@ next_220:
     reg_d2.h[0] = (s16) reg_d2.h[0] >> 2;
     W(0x2C) = reg_d0.h[0];
     W(0x2E) = reg_d2.h[0];
-    func_0018DA70();
+    sfx_enemy_fire_0();
     reg_d0.h[0] = W(0x26);
     reg_a0 = (u8 *) D_0025E990;
     reg_tmp.h[1] = (reg_d0.h[0] != 0) ? *(u16 *)((u8 *)reg_a0 + ((s16)reg_d0.h[0] & ~1)) : *(u16 *)reg_a0;
@@ -1260,7 +1260,7 @@ void func_0014BF90() {
 }
 
 s32 func_00133070();
-s32 func_0018D410();
+s32 music_play_bgm12();
 s32 sprite_draw_layer1();
 s32 rng_next_masked();
 s32 func_0022B660();
@@ -1300,7 +1300,7 @@ block_1:
     if (t == 0) goto next_1;
     *(u16 *)(reg_a5 + 0x1A) = t - 1;
     if (*(u16 *)(reg_a5 + 0x1A) != 0) goto next_1;
-    func_0018D410();
+    music_play_bgm12();
 next_1:
     *(u16 *)(reg_a5 + 4) -= 1;
     if ((s16) *(u16 *)(reg_a5 + 4) >= 0) goto next_2;
@@ -1801,18 +1801,18 @@ void func_0014D0F0(void) {
     reg_a2 += 2;
 }
 
-void func_0018DEE0(void);
+void music_stop(void);
 
 void func_0014D140(void) {
-    func_0018DEE0();
+    music_stop();
 }
 
-extern void func_0018DED0(void);
+extern void music_fade_out(void);
 
 void func_0014D150(void) {
     reg_d1.h[0] = *(u16 *)reg_a2;
     reg_a2 += 2;
-    func_0018DED0();
+    music_fade_out();
 }
 
 extern s16 D_00299768[];

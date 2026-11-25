@@ -131,7 +131,7 @@ extern u16 D_0028E3E0;
 extern u16 D_0028E3E4;
 extern u16 D_0028E3E8;
 extern u16 D_0028E3EC;
-extern u16 D_0028E3F0;
+extern u16 g_game_frame;
 extern u16 g_p2_hyper_effect_delay;
 extern u16 g_p1_hyper_effect_delay;
 extern u16 g_p2_hyper_effect_flag;
@@ -675,7 +675,7 @@ void func_00238B90(Buf *buf) {
     p[0x350E] = D_0028E384;
     p[0x350F] = D_0028E2EC;
     p[0x3510] = D_0028E304;
-    *(u16 *)(p + 0x3500) = D_0028E3F0;
+    *(u16 *)(p + 0x3500) = g_game_frame;
     *(u16 *)(p + 0x3502) = D_0028E3EC;
     *(u16 *)(p + 0x3504) = D_0028E3E8;
     *(u16 *)(p + 0x3506) = D_0028E3E4;
@@ -1180,7 +1180,7 @@ void func_0023A490(u8 *p) {
     D_0028E384 = p[0x350E];
     D_0028E2EC = p[0x350F];
     D_0028E304 = p[0x3510];
-    D_0028E3F0 = *(u16 *)(p + 0x3500);
+    g_game_frame = *(u16 *)(p + 0x3500);
     D_0028E3EC = *(u16 *)(p + 0x3502);
     D_0028E3E8 = *(u16 *)(p + 0x3504);
     D_0028E3E4 = *(u16 *)(p + 0x3506);

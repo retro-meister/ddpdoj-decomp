@@ -116,10 +116,10 @@ s32 boss_part_hide_all();
 s32 func_001389D0();
 s32 func_00139EB0();
 s32 explosion_spawn();
-s32 func_0018D500();
-s32 func_0018D520();
-s32 func_0018D5C0();
-s32 func_0018D660();
+s32 sfx_explosion_air_medium();
+s32 sfx_explosion_air_large();
+s32 sfx_explosion_extra_1();
+s32 sfx_explosion_boss();
 s32 func_001E1F30();
 s32 rng_next_unsigned();
 s32 func_00201270();
@@ -129,7 +129,7 @@ s32 vibration_start_pad1();
 s32 vibration_start_pad2();
 extern u16 D_00264BB0[];
 extern u16 D_00264C10[];
-extern u8 D_0028E310;
+extern u8 g_slowdown_timer;
 extern void (*reg_call_target)();
 
 void func_001F1680() {
@@ -251,7 +251,7 @@ void func_001F1680() {
         reg_a0 = (u8 *)D_00264C30;
         func_0013B2E0();
         if (D_0028E2E8 == 0) {
-            func_0018D660();
+            sfx_explosion_boss();
             boss_part_hide_all();
             reg_d7.w = 0x14;
             reg_a3 = (u8 *)(D_00264BB0);
@@ -272,8 +272,8 @@ void func_001F1680() {
         }
         vibration_start_pad1(0xC8, 0x50);
         vibration_start_pad2(0xC8, 0x50);
-        D_0028E310 = 0x50;
-        func_0018D5C0();
+        g_slowdown_timer = 0x50;
+        sfx_explosion_extra_1();
         reg_d0.h[0] = 0x10;
         reg_d1.h[0] = 0x10;
         func_001389D0();
@@ -289,10 +289,10 @@ block_rts:
         goto block_rts;
     }
     *(u8 *)(reg_a4 + 5) = (u8) *(u8 *)(reg_a4 + 4);
-    reg_a0 = (u8 *)func_0018D500;
+    reg_a0 = (u8 *)sfx_explosion_air_medium;
     rng_next_unsigned();
     if (0 > reg_d0.sb[0]) {
-        reg_a0 = (u8 *)func_0018D520;
+        reg_a0 = (u8 *)sfx_explosion_air_large;
     }
     reg_call_target = (Fn)(reg_a0);
     reg_call_target();
@@ -425,7 +425,7 @@ void func_001F1FE0(void) {
     u16 temp_a3;
     *(u16 *)(reg_a4 + 2) -= 1;
     if (*(u16 *)(reg_a4 + 2) == 0) {
-        func_0018D5C0();
+        sfx_explosion_extra_1();
         reg_d0.h[0] = 0xD;
         explosion_spawn();
         *(u16 *)(reg_a0 + 2) = (u16) ENTITY(reg_a6)->y.h;
@@ -543,10 +543,10 @@ block_rts:
     }
     {
         *(u8 *)(reg_a4 + 5) = (u8) *(u8 *)(reg_a4 + 4);
-        reg_a0 = (u8 *)func_0018D500;
+        reg_a0 = (u8 *)sfx_explosion_air_medium;
         rng_next_unsigned();
         if (0 > reg_d0.sb[0]) {
-            reg_a0 = (u8 *)func_0018D520;
+            reg_a0 = (u8 *)sfx_explosion_air_large;
         }
         reg_call_target = (Fn)(reg_a0);
         reg_call_target();
@@ -608,7 +608,7 @@ void func_001F2620(void) {
 
 s32 boss_movement_stop();
 s32 boss_animation_start();
-s32 func_0018D350();
+s32 music_play_bgm9();
 s32 func_001F5730();
 extern void *g_boss_hp_as_void_p;
 extern u16 g_true_last_boss;
@@ -679,7 +679,7 @@ void func_001F2640() {
             D_0029976C[0] = 1;
             D_0029976E[0] = 1;
             func_0020ED10();
-            func_0018D350();
+            music_play_bgm9();
         }
     } else {
         *(u16 *)(reg_a4 + 4) -= 1;
@@ -718,7 +718,7 @@ s32 boss_slots_end();
 s32 boss_flash_start();
 s32 boss_flash_running();
 s32 explosion_burst_medium();
-s32 func_0018D560();
+s32 sfx_explosion_ground_medium();
 s32 rng_next();
 extern u16 D_00264D80[];
 
@@ -788,7 +788,7 @@ block_3_end:
 #endif
     *(u16 *)(reg_a4 + 4) = 0x80;
     *(u16 *)(reg_a4 + 2) = 4;
-    func_0018D660();
+    sfx_explosion_boss();
     return;
 block_2:
     if (*(u16 *)(reg_a4 + 2) != 2) goto block_1;
@@ -837,7 +837,7 @@ block_1:
     }
 #endif
     switch (*(u8 *)(reg_a4 + 6)) { case 2: goto next_1; }
-    func_0018D560();
+    sfx_explosion_ground_medium();
 next_1:
     reg_tmp.b[0] = *(u8 *)(reg_a4 + 0xF);
     *(u8 *)(reg_a4 + 0xF) -= 1;
@@ -856,7 +856,7 @@ next_2:
     *(u8 *)(reg_a4 + 0x12) -= 1;
     if ((s32)reg_tmp.b[0] > 0) goto next_3;
     *(u8 *)(reg_a4 + 0x12) = 4;
-    func_0018D520();
+    sfx_explosion_air_large();
 next_3:
 #ifdef DEATH_LABEL
     y = ENTITY(reg_a6)->x.h;
@@ -911,10 +911,10 @@ block_0:
         goto next_4;
     }
     *(u8 *)(reg_a4 + 0x13) |= 1;
-    reg_a0 = (u8 *)func_0018D500;
+    reg_a0 = (u8 *)sfx_explosion_air_medium;
     rng_next_unsigned();
     if (!(0 > reg_d0.sb[0])) goto next_5;
-    reg_a0 = (u8 *)func_0018D520;
+    reg_a0 = (u8 *)sfx_explosion_air_large;
 next_5:
     reg_call_target = (Fn)reg_a0;
     reg_call_target();

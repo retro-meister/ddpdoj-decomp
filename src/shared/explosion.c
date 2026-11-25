@@ -225,7 +225,7 @@ s32 velocity_from_dir256();
 extern u16 D_0024F570[];
 extern u16 D_0024F680[];
 extern u8 D_00250760[];
-extern u16 D_0028E3F0;
+extern u16 g_game_frame;
 extern u8 D_0029AA40[];
 extern u16 D_0029BBF8[];
 extern u16 g_side_scroll_step[];
@@ -393,7 +393,7 @@ block_anim:
 block_disp:
     reg_a0 = (u8 *)D_0029CEA0_as_u8_a;
     if (!(0 > *(s16 *)reg_a0)) goto block_draw;
-    reg_d0.h[0] = D_0028E3F0;
+    reg_d0.h[0] = g_game_frame;
     reg_d0.h[0] &= 1;
     if ((s16)reg_d0.h[0] == 0) goto next_1;
 block_draw:

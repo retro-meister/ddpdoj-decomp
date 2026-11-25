@@ -143,9 +143,9 @@ typedef void (*Fn)();
 
 s32 input_get_p1_held();
 s32 input_get_p1_pressed();
-s32 func_0018DE90();
-s32 func_0018DEA0();
-s32 func_0018DEE0();
+s32 sound_stop_effects();
+s32 sound_stop_loops();
+s32 music_stop();
 extern u8 D_00268230[];
 extern void (*reg_call_target)();
 
@@ -182,9 +182,9 @@ next_4:
     reg_call_target();
 next_5:
     if (!(reg_d0.w & 0x20)) goto next_6;
-    func_0018DEE0();
-    func_0018DE90();
-    func_0018DEA0();
+    music_stop();
+    sound_stop_effects();
+    sound_stop_loops();
 next_6:
     reg_d3.w = 0;
     reg_d0.h[0] = 0x13;
@@ -197,9 +197,9 @@ next_6:
     if ((t & 0x8000) && (t & 0x10)) {
         reg_d0.w = 0;
         func_002093F0();
-        func_0018DEE0();
-        func_0018DE90();
-        func_0018DEA0();
+        music_stop();
+        sound_stop_effects();
+        sound_stop_loops();
     }
     reg_d0.w = 0;
 }
@@ -343,7 +343,7 @@ extern u8 D_0028E2D0;
 extern u8 D_0028E2D4;
 extern u8 D_0028E2D8;
 extern u8 g_screen_wide;
-extern u8 D_0028E2E0;
+extern u8 g_bgm_alternate_set;
 extern u8 D_0028E2E4;
 extern u8 D_0028E2EC;
 extern u8 g_splash_visible;
@@ -353,7 +353,7 @@ extern s16 D_0028E300_as_s16;
 extern u8 D_0028E304;
 extern u8 D_0028E308;
 extern u8 D_0028E30C;
-extern u8 D_0028E310;
+extern u8 g_slowdown_timer;
 extern s16 D_0028E324_as_s16;
 extern s16 D_0028E328_as_s16;
 extern s16 D_0028E32C_as_s16;
@@ -427,7 +427,7 @@ void func_00209410(void) {
     D_0028E278 = 0;
     g_pad_vib_enabled = 0;
     D_0028E2D8 = 0;
-    D_0028E2E0 = 0;
+    g_bgm_alternate_set = 0;
     g_simulation_boss_start = 0;
     D_0028E2C4 = 0;
     D_0028E2CC = 0;
@@ -442,7 +442,7 @@ void func_00209410(void) {
     D_0028E324_as_s16 = 0;
     D_0028E2EC = 0;
     D_0028E2E4 = 0;
-    D_0028E310 = 0;
+    g_slowdown_timer = 0;
     g_display_offset_x_as_u8 = 0;
     g_display_offset_y_as_u8 = 0;
     g_pad_tate_rotate = 0;

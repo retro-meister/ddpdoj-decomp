@@ -530,7 +530,7 @@ loop_12:
 
 s32 func_00202590();
 extern u16 D_00265E50[];
-extern u16 D_0028E3F0;
+extern u16 g_game_frame;
 
 void func_001FB1F0(void) {
     u16 temp_a0;
@@ -647,7 +647,7 @@ loop_8:
             }
         }
     }
-    reg_d0.h[0] = D_0028E3F0;
+    reg_d0.h[0] = g_game_frame;
     reg_d0.h[0] &= 3;
     if (reg_d0.h[0] == 0) {
         reg_d1.b[0] = ENTITY(reg_a6)->move.b.speed;
@@ -867,8 +867,8 @@ void func_001FBD90(arg1)
 
 s32 explosion_spawn();
 s32 explosion_burst_small();
-s32 func_0018D500();
-s32 func_0018D5C0();
+s32 sfx_explosion_air_medium();
+s32 sfx_explosion_extra_1();
 s32 func_001D5040();
 s32 rng_next();
 s32 func_00201710();
@@ -919,7 +919,7 @@ void func_001FBE90(void) {
                 reg_d3.h[0] = 0xC;
                 reg_d0.h[0] = 0;
                 explosion_burst_small();
-                func_0018D5C0();
+                sfx_explosion_extra_1();
                 ENTITY(reg_a6)[5].offset_x.b[1] = 0x10U;
                 ENTITY(reg_a6)[5].offset_y.b[1] = 2U;
                 vibration_start_pad1(0xB4, 0x3C, 0x10);
@@ -931,7 +931,7 @@ void func_001FBE90(void) {
             ENTITY(reg_a6)[5].offset_x.b[1] -= 1;
             if ((s32) reg_tmp.b[0] <= 0) {
                 ENTITY(reg_a6)[5].offset_x.b[1] = (u8) ENTITY(reg_a6)[5].offset_x.b[0];
-                func_0018D500();
+                sfx_explosion_air_medium();
                 reg_a1 = (u8 *)(D_00265EC0);
                 reg_a1 += ENTITY(reg_a6)[5].draw.h;
                 reg_d1.h[0] = *(u16 *)reg_a1;
@@ -1000,7 +1000,7 @@ void func_001FC200(void) {
     }
 }
 
-s32 func_0018DAF0();
+s32 sfx_shockwave();
 s32 func_001FC8E0();
 extern u8 D_00266160[];
 extern u8 D_0028E2E4;
@@ -1032,7 +1032,7 @@ void func_001FC2B0(void) {
     *(u8 *)(reg_a5 + 0x1D) &= 0xFE;
     *(u8 *)(reg_a5 + 0x1D) |= 0xE;
     func_001FC8E0();
-    func_0018DAF0();
+    sfx_shockwave();
     ENTITY(reg_a6)->flags.h = 0x8001;
 skip_1:
     if (!(*(u8 *)(reg_a5 + 0x1D) & 2)) goto skip_2;

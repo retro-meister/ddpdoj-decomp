@@ -298,7 +298,7 @@ void tex_load_common(void) {
     printf("tex load end\n");
 }
 
-extern void func_0018DEE0(void);
+extern void music_stop(void);
 extern u8 g_stage_load_state;
 extern s16 g_loaded_stage;
 extern s8 g_cd_async_state;
@@ -319,7 +319,7 @@ void stage_load_step(void) {
 #else
         printf("stage load start[%d]\n", g_stage);
 #endif
-        func_0018DEE0();
+        music_stop();
         glyph_cache_init();
         g_stage_load_state++;
         break;

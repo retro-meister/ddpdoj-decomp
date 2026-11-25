@@ -28,7 +28,7 @@ extern u32 D_0028E770;
 extern s16 D_0028E778_as_s16;
 
 void func_001A3D30(void) {
-    s32 func_0018DEE0();
+    s32 music_stop();
     u32 save_d0;
     u32 save_d1;
     u32 save_d2;
@@ -60,7 +60,7 @@ void func_001A3D30(void) {
     save_a4 = reg_a4;
     save_a5 = reg_a5;
     save_a6 = reg_a6;
-    func_0018DEE0();
+    music_stop();
     D_0028E770 = (u16)(D_0028E76C = 0);
     D_0028E778_as_s16 = 0;
     D_0028E774 = 0xF0;
@@ -192,8 +192,8 @@ extern s32 reg_save2_a1_as_s32;
 extern s32 reg_save2_a0_as_s32;
 
 void func_001A40A0(void) {
-    void func_0018DEE0(void);
-    func_0018DEE0();
+    void music_stop(void);
+    music_stop();
     reg_d0.w = reg_save2_d0;
     reg_d1.w = reg_save2_d1;
     reg_d2.w = reg_save2_d2;

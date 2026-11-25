@@ -63,7 +63,7 @@ s32 func_0013B2E0();
 s32 enemy_set_task_work();
 s32 enemy_init_entities();
 s32 enemy_path_start();
-s32 func_0018DAD0();
+s32 sfx_heli_start();
 s32 aim256_at_player();
 extern u16 D_002590F0[];
 extern u8 D_00263000[];
@@ -136,7 +136,7 @@ void func_001CBD60(void) {
         reg_a0 = D_002630D0;
         func_0013B2E0();
         g_enemy_signal_0_as_s16 = 1;
-        func_0018DAD0();
+        sfx_heli_start();
         D_00299768[0] = 1;
         if (g_loop != 0) {
             D_0029976A[0] = 1;
@@ -159,8 +159,8 @@ s32 enemy_hitbox_debug_draw();
 s32 enemy_remove();
 s32 enemy_path_step();
 s32 enemy_switch_target_player();
-s32 func_0018D5C0();
-s32 func_0018DDC0();
+s32 sfx_explosion_extra_1();
+s32 sfx_beam_loop_stop();
 s32 entity_draw_layer1();
 s32 entity_draw_layer5();
 s32 sprite_draw_layer1();
@@ -184,9 +184,9 @@ extern u16 D_00263240[];
 extern u16 D_00263270[];
 extern u16 D_00263280[];
 extern u16 D_00263290[];
-extern u8 D_0028E310;
+extern u8 g_slowdown_timer;
 extern u16 D_0028E3EC;
-extern u16 D_0028E3F0;
+extern u16 g_game_frame;
 extern u16 g_enemy_signal_0;
 extern u16 g_bullets_blocked;
 extern u16 g_scroll_line;
@@ -238,7 +238,7 @@ void func_001CC0A0(void) {
 next_20:
     if (*(u8 *)(reg_a5 + 0x17) == 0) goto next_40;
     g_enemy_signal_0 = 0;
-    func_0018DDC0();
+    sfx_beam_loop_stop();
     enemy_remove();
     return;
 next_30:
@@ -554,7 +554,7 @@ next_510:
     reg_d2.w = 0x1B9F;
     reg_d3.h[0] = 0xC48;
     reg_d4.h[0] = 0x18;
-    if (!(D_0028E3F0 & 2)) goto next_520;
+    if (!(g_game_frame & 2)) goto next_520;
     reg_d4.h[0] |= 0x4000;
 next_520:
     reg_call_target = (Fn) reg_a4;
@@ -713,14 +713,14 @@ next_890:
 next_900:
     return;
 next_700:
-    func_0018DDC0();
-    func_0018D5C0();
+    sfx_beam_loop_stop();
+    sfx_explosion_extra_1();
     ENTITY(reg_a6)[2].look.h = reg_d1.h[0];
     reg_d0.w = 0x457;
     score_add();
     vibration_start_pad1(0xB4, 0x3C);
     vibration_start_pad2(0xB4, 0x3C);
-    D_0028E310 = 0x3C;
+    g_slowdown_timer = 0x3C;
     reg_a0 = (u8 *) D_00263290;
     func_0013B2E0();
     reg_d0.h[0] = 0x8080;
@@ -865,7 +865,7 @@ skip_1:
     func_00201800();
     ENTITY(reg_a6)[2].sprite.h -= 1;
     if (ENTITY(reg_a6)[2].sprite.h == 0) {
-        func_0018DDC0();
+        sfx_beam_loop_stop();
         enemy_remove();
     }
 }

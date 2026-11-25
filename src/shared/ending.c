@@ -410,9 +410,9 @@ void func_00123540(void) {
 #endif
 
 s32 func_0012FD00();
-s32 func_0018DE90();
-s32 func_0018DEA0();
-s32 func_0018DEE0();
+s32 sound_stop_effects();
+s32 sound_stop_loops();
+s32 music_stop();
 extern s16 g_ending_started;
 extern s16 D_00295E3E_as_s16_a[];
 extern s16 D_00295E40_as_s16_a[];
@@ -436,9 +436,9 @@ void func_00123780(void) {
     D_00295E3E_as_s16_a[0] = 0x101;
     D_00295E40_as_s16_a[0] = 0;
     func_0012FD00();
-    func_0018DEE0();
-    func_0018DE90();
-    func_0018DEA0();
+    music_stop();
+    sound_stop_effects();
+    sound_stop_loops();
     func_00123870();
     func_00122CE0();
     if (cond_flag != 0) {
@@ -548,7 +548,7 @@ void func_00123980(void) {
 
 #ifndef DEATH_LABEL
 s32 text_layer_clear();
-s32 func_0018D3D0();
+s32 music_play_bgm11();
 extern u8 D_0024D628[];
 
 void func_00123B00(void) {
@@ -560,7 +560,7 @@ void func_00123B00(void) {
         ENTITY(reg_a6)->offset_y.h = 1U;
         func_00123240();
         ENTITY(reg_a6)->sprite.h = 0U;
-        func_0018D3D0();
+        music_play_bgm11();
     }
     if (ENTITY(reg_a6)->offset_y.h == 1) {
         reg_a0 = (u8 *)D_0024D628;
@@ -590,8 +590,8 @@ void func_00123B00(void) {
 #endif
 
 #ifndef DEATH_LABEL
-s32 func_0018DA30();
-s32 func_0018DA50();
+s32 sfx_confirm();
+s32 sfx_cursor_move();
 s32 sprite_draw_layer5_keep();
 extern u32 D_0024D640[];
 extern u32 D_0024D660[];
@@ -648,7 +648,7 @@ next_20:
     ((Fn) reg_call_target_as_u32)();
     if (!(reg_d0.h[0] & 4)) goto next_25;
     D_00295E38[0] += 1;
-    func_0018DA50();
+    sfx_cursor_move();
 next_25:
     reg_tmp.h[1] = W(0x18);
     reg_tmp.h[0] = W(0x1A);
@@ -656,7 +656,7 @@ next_25:
     ((Fn) reg_call_target_as_u32)();
     if (!(reg_d0.h[0] & 8)) goto next_28;
     D_00295E38[0] += 1;
-    func_0018DA50();
+    sfx_cursor_move();
 next_28:
     D_00295E38[0] &= 1;
     reg_tmp.h[1] = W(0x18);
@@ -666,7 +666,7 @@ next_28:
     reg_d0.h[0] &= 0x70;
     if (reg_d0.h[0] == 0) goto next_35;
 next_32:
-    func_0018DA30();
+    sfx_confirm();
     reg_a0 = (u8 *) D_0024D640;
     func_0013BE50();
     W(0x14) = reg_d0.h[1];

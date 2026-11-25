@@ -973,7 +973,7 @@ void func_001AEA80(void) {
     func_001AEB10();
 }
 
-s32 func_0018D9B0();
+s32 sfx_extend();
 s32 func_001AAC00();
 s32 func_001AC3A0();
 s32 func_001AC5F0();
@@ -1061,7 +1061,7 @@ no_extend:
                 if (t2 != 0x14) {
                     *(s16 *)reg_a3 = t2 + 1;
                     func_001AAC00();
-                    func_0018D9B0();
+                    sfx_extend();
                     if (reg_d7.h[0] == 0) {
                         func_001AC3A0();
                     } else {

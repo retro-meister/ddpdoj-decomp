@@ -459,7 +459,7 @@ loop_1:
     }
 }
 
-s32 func_0018D930();
+s32 sfx_score_item_pickup();
 s32 func_001A9130();
 
 void func_001260B0() {
@@ -471,7 +471,7 @@ void func_001260B0() {
     reg_d0.w = 0x50;
     reg_d1.b[0] = ENTITY(reg_a6)->flags.b[1];
     func_001A9130();
-    func_0018D930();
+    sfx_score_item_pickup();
     ENTITY(reg_a6)->flags.b[0] = 0x84;
     func_00127CA0();
 }
@@ -500,7 +500,7 @@ void func_00126120(void) {
 s32 func_00170DF0();
 s32 func_00170F80();
 s32 func_00171100();
-s32 func_0018D970();
+s32 sfx_bee_pickup();
 extern u8 D_00269490[];
 extern u8 *reg_call_target_as_u8_p;
 
@@ -522,7 +522,7 @@ next_1:
     func_00170DF0();
 next_2:
     func_00171100();
-    func_0018D970();
+    sfx_bee_pickup();
     ENTITY(reg_a6)->flags.b[0] |= 1;
     func_00127CA0();
     return;
@@ -595,7 +595,7 @@ void func_00126410(void) {
     reg_d0.w = 0x50;
     reg_d1.b[0] = ENTITY(reg_a6)->flags.b[1];
     func_001A9130();
-    func_0018D930();
+    sfx_score_item_pickup();
     ENTITY(reg_a6)->flags.b[0] = 0x84;
     func_00127CA0();
     return;
@@ -629,7 +629,7 @@ next_1:
     reg_call_target();
 }
 
-s32 func_0018D950();
+s32 sfx_score_item_pickup_2();
 
 void func_001265B0(void) {
     s32 bullet_release();
@@ -647,7 +647,7 @@ void func_001265B0(void) {
     reg_d0.w = 0x1000;
     reg_d1.b[0] = ENTITY(reg_a6)->flags.b[1];
     func_001A9130();
-    func_0018D950();
+    sfx_score_item_pickup_2();
     ENTITY(reg_a6)->flags.b[0] = 0x84;
     func_00127CA0();
     return;
@@ -699,7 +699,7 @@ void func_00126760(void) {
         reg_d0.w = 0x100;
         reg_d1.b[0] = ENTITY(reg_a6)->flags.b[1];
         func_001A9130();
-        func_0018D930();
+        sfx_score_item_pickup();
         ENTITY(reg_a6)->flags.b[0] = 0x84;
         func_00127CA0();
         return;
@@ -731,7 +731,7 @@ void func_00126830(void) {
         reg_d0.w = 0x500;
         reg_d1.b[0] = ENTITY(reg_a6)->flags.b[1];
         func_001A9130();
-        func_0018D930();
+        sfx_score_item_pickup();
         ENTITY(reg_a6)->flags.b[0] = 0x84;
         func_00127CA0();
         return;
@@ -763,7 +763,7 @@ void func_00126900(void) {
         reg_d0.w = 0x1000;
         reg_d1.b[0] = ENTITY(reg_a6)->flags.b[1];
         func_001A9130();
-        func_0018D950();
+        sfx_score_item_pickup_2();
         ENTITY(reg_a6)->flags.b[0] = 0x84;
         func_00127CA0();
         return;
@@ -790,7 +790,7 @@ void func_001269D0() {
         reg_d0.w = 0x50;
         reg_d1.b[0] = ENTITY(reg_a6)->flags.b[1];
         func_001A9130();
-        func_0018D930();
+        sfx_score_item_pickup();
         bullet_release();
         return;
     }
@@ -810,7 +810,7 @@ void func_00126A70() {
         reg_d0.w = 0x100;
         reg_d1.b[0] = ENTITY(reg_a6)->flags.b[1];
         func_001A9130();
-        func_0018D930();
+        sfx_score_item_pickup();
         bullet_release();
         return;
     }
@@ -830,7 +830,7 @@ void func_00126B10() {
         reg_d0.w = 0x500;
         reg_d1.b[0] = ENTITY(reg_a6)->flags.b[1];
         func_001A9130();
-        func_0018D930();
+        sfx_score_item_pickup();
         bullet_release();
         return;
     }
@@ -850,7 +850,7 @@ void func_00126BB0() {
         reg_d0.w = 0x1000;
         reg_d1.b[0] = ENTITY(reg_a6)->flags.b[1];
         func_001A9130();
-        func_0018D930();
+        sfx_score_item_pickup();
         bullet_release();
         return;
     }
@@ -872,7 +872,7 @@ void func_00126C50() {
         reg_d0.w = 0x50;
         reg_d1.b[0] = ENTITY(reg_a6)->flags.b[1];
         func_001A9130();
-        func_0018D930();
+        sfx_score_item_pickup();
         bullet_release();
         return;
     }
@@ -892,7 +892,7 @@ void func_00126CF0() {
         reg_d0.w = 0x100;
         reg_d1.b[0] = ENTITY(reg_a6)->flags.b[1];
         func_001A9130();
-        func_0018D930();
+        sfx_score_item_pickup();
         bullet_release();
         return;
     }
@@ -912,7 +912,7 @@ void func_00126D90() {
         reg_d0.w = 0x500;
         reg_d1.b[0] = ENTITY(reg_a6)->flags.b[1];
         func_001A9130();
-        func_0018D930();
+        sfx_score_item_pickup();
         bullet_release();
         return;
     }
@@ -932,7 +932,7 @@ void func_00126E30() {
         reg_d0.w = 0x1000;
         reg_d1.b[0] = ENTITY(reg_a6)->flags.b[1];
         func_001A9130();
-        func_0018D930();
+        sfx_score_item_pickup();
         bullet_release();
         return;
     }
@@ -1814,7 +1814,7 @@ extern u16 D_0029976C[];
 extern u16 D_0029976E[];
 extern u16 D_0029CEA0[];
 #ifdef DEATH_LABEL
-extern u16 D_0028E3C0;
+extern u16 g_attract_demo;
 extern u8 death_D_00290858;
 extern u8 death_D_0029085C;
 #endif
@@ -1823,7 +1823,7 @@ void bullet_spawn(void) {
     s16 hi;
 
 #ifdef DEATH_LABEL
-    if ((D_0028E3C0 == 0) && (D_0028E2E4 != 0)) {
+    if ((g_attract_demo == 0) && (D_0028E2E4 != 0)) {
         return;
     }
 #else
@@ -2154,7 +2154,7 @@ void bullet_fire256_direct(void) {
 }
 
 #ifdef DEATH_LABEL
-extern u16 D_0028E3C0;
+extern u16 g_attract_demo;
 extern u8 death_D_00290858;
 extern u8 death_D_0029085C;
 #endif
@@ -2163,7 +2163,7 @@ void bullet_spawn256(void) {
     s16 hi;
 
 #ifdef DEATH_LABEL
-    if ((D_0028E3C0 == 0) && (D_0028E2E4 != 0)) {
+    if ((g_attract_demo == 0) && (D_0028E2E4 != 0)) {
         return;
     }
 #else

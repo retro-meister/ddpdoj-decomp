@@ -499,7 +499,7 @@ extern u8 D_00251F90[];
 extern u8 D_00251FB0[];
 extern u8 D_00251FD0[];
 extern u8 D_00251FF0[];
-extern u16 D_0028E3F0;
+extern u16 g_game_frame;
 extern u16 g_loop;
 
 void func_00204A20(void) {
@@ -569,7 +569,7 @@ block_11:
             reg_d1.h[0] += 0x7FFF + 0x7001;
             reg_d1.h[0] += *(u16 *)(reg_a1 + 0x14);
             reg_d2.w = 3;
-            reg_d2.h[0] &= D_0028E3F0;
+            reg_d2.h[0] &= g_game_frame;
             reg_tmp.h[1] = *(u16 *)(reg_a0 + 0x14);
             reg_tmp.h[0] = *(u16 *)(reg_a0 + 0x16);
             reg_d2.w += reg_tmp.w;
@@ -624,7 +624,7 @@ block_20:
             reg_d1.h[0] += 0x7FFF + 0x7001;
             reg_d1.h[0] += *(u16 *)(reg_a1 + 0x18);
             reg_d2.w = 3;
-            reg_d2.h[0] &= D_0028E3F0;
+            reg_d2.h[0] &= g_game_frame;
             reg_tmp.h[1] = *(u16 *)(reg_a0 + 0x18);
             reg_tmp.h[0] = *(u16 *)(reg_a0 + 0x1A);
             reg_d2.w += reg_tmp.w;
@@ -878,7 +878,7 @@ block_b:
     reg_a3 += 2;
     reg_d2.w = 0xE;
     reg_a0 = (u8 *) reg_tmp.w;
-    reg_d2.h[0] &= D_0028E3F0;
+    reg_d2.h[0] &= g_game_frame;
     reg_d2.h[0] += reg_d2.h[0];
     reg_d2.h[1] = (reg_d2.h[0] != 0) ? *(u16 *)((u8 *)reg_a0 + ((s16)reg_d2.h[0] & ~1)) : *(u16 *)reg_a0;
     reg_d2.h[0] = ((reg_d2.h[0] + 2) != 0) ? *(u16 *)((u8 *)reg_a0 + ((s16)(reg_d2.h[0] + 2) & ~1)) : *(u16 *)reg_a0;
@@ -935,7 +935,7 @@ loop_1:
     reg_a2 += 2;
     reg_a0 = (u8 *) reg_tmp.w;
     reg_d2.w = 0xE;
-    reg_d2.h[0] &= D_0028E3F0;
+    reg_d2.h[0] &= g_game_frame;
     reg_d2.h[0] += reg_d2.h[0];
     reg_d2.h[1] = (reg_d2.h[0] != 0) ? *(u16 *)((u8 *)reg_a0 + ((s16)reg_d2.h[0] & ~1)) : *(u16 *)reg_a0;
     reg_d2.h[0] = ((reg_d2.h[0] + 2) != 0) ? *(u16 *)((u8 *)reg_a0 + ((s16)(reg_d2.h[0] + 2) & ~1)) : *(u16 *)reg_a0;

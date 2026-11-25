@@ -42,15 +42,15 @@ s32 func_001301B0();
 s32 func_00130200();
 s32 func_00131200();
 s32 func_00137C50();
-s32 func_0018D8F0();
-s32 func_0018DE90();
+s32 sfx_coin();
+s32 sound_stop_effects();
 s32 func_00224B50();
 extern u8 D_00269160[];
 extern u8 D_0026A830[];
 extern s8 D_0028DF84;
 extern u8 g_stage_load_state;
 extern u8 D_0028E39C;
-extern u16 D_0028E3C0;
+extern u16 g_attract_demo;
 extern u16 D_0028E7B8;
 extern s8 g_cd_async_state;
 extern s8 D_0028ED74_as_s8;
@@ -74,7 +74,7 @@ void func_00168BC0(void) {
     }
 #ifndef DEATH_LABEL
     reg_d0.h[0] = D_0028E7BC;
-    if (D_0028E3C0 != 0) goto next_1;
+    if (g_attract_demo != 0) goto next_1;
     if (g_stage_load_state != 0) goto block_3;
     goto next_2;
 next_1:
@@ -103,18 +103,18 @@ block_1:
     task_reset_all();
     func_0013B190();
     func_00137C50();
-    if (D_0028E3C0 == 0) goto next_4;
-    D_0028E3C0 = 0;
+    if (g_attract_demo == 0) goto next_4;
+    g_attract_demo = 0;
     replay_header_clear();
     g_simulation_active_as_s8 = 0;
     D_0028ED7C_as_s8 = 0;
     D_0028ED74_as_s8 = 0;
-    func_0018DE90();
-    func_0018D8F0();
+    sound_stop_effects();
+    sfx_coin();
     func_00224B50();
 next_4:
     if (D_0028E7BC != 0xC) goto next_5;
-    func_0018DE90();
+    sound_stop_effects();
 next_5:
     reg_d0.w = 0;
     reg_a0 = (u8 *)D_00269160;
@@ -192,7 +192,7 @@ s32 func_002256B0();
 extern u8 D_0028DF84_as_u8;
 extern u8 D_0028E294;
 extern u8 D_0028E304;
-extern u8 D_0028E310;
+extern u8 g_slowdown_timer;
 extern u8 D_0028E368;
 extern u8 D_0028E378;
 extern s16 g_loaded_stage;
@@ -212,7 +212,7 @@ void func_00168EF0(void) {
         text_palette_load();
         D_0028E304 = 0;
         func_0020EAA0();
-        D_0028E310 = 0;
+        g_slowdown_timer = 0;
         D_0028E294 = 0;
         func_001A3D30();
         D_0028E368 = 0;
@@ -242,7 +242,7 @@ void func_00168EF0(void) {
 #ifndef DEATH_LABEL
 s32 func_0015BBD0();
 s32 func_0015BEF0();
-s32 func_0018DEE0();
+s32 music_stop();
 s32 fade_reset();
 s32 boot_scratch_clear();
 s32 stage_map_reset();
@@ -262,7 +262,7 @@ void func_00168FD0(void) {
         text_layer_clear();
         func_0013B190();
         func_0015BA20();
-        func_0018DEE0();
+        music_stop();
         D_0028E368 = 0;
         D_0028E378 = 0xFF;
         g_splash_visible = 0;
@@ -314,7 +314,7 @@ void func_00168FD0(void) {
 #endif
 
 #ifdef DEATH_LABEL
-s32 func_0018DEE0();
+s32 music_stop();
 s32 fade_reset();
 s32 stage_map_reset();
 extern u8 g_splash_visible;
@@ -333,7 +333,7 @@ void death_func_00136FF0(void) {
         reg_a0 = D_00269160;
         text_palette_load();
         func_0013B190();
-        func_0018DEE0();
+        music_stop();
         D_0028E368 = 0;
         D_0028E378 = 0xFF;
         g_splash_visible = 0;
@@ -381,7 +381,7 @@ extern s8 D_0028E2BE;
 extern s8 D_0028E2BF;
 extern u16 D_0028E2FC;
 extern u16 D_0028E300;
-extern s8 D_0028E310_as_s8;
+extern s8 g_slowdown_timer_as_s8;
 extern s8 D_0028E368_as_s8;
 extern s8 D_0028E370_as_s8;
 extern s8 D_0028E3F8;
@@ -399,7 +399,7 @@ void func_00169140(void) {
         func_0013B190();
         func_0015BA20();
         func_0020EAA0();
-        D_0028E310_as_s8 = 0;
+        g_slowdown_timer_as_s8 = 0;
         D_0028E288_as_s8 = 0;
         D_0028E284_as_s8 = 0;
         g_pad_input_locked_as_s8 = 0;
@@ -498,7 +498,7 @@ void func_00169310(void) {
 s32 func_00137C50();                            /* extern */
 s32 func_00137C90();                            /* extern */
 s32 func_00137E00();                            /* extern */
-s32 func_0018DE90();                            /* extern */
+s32 sound_stop_effects();                            /* extern */
 s32 stage_map_reset();                            /* extern */
 extern s32 D_00269140_as_s32_a[];
 extern s32 D_00275860[];
@@ -529,7 +529,7 @@ void func_00169320(void) {
         reg_d0.h[0] = 8;
         task_start();
         (*(s16 *)((u8 *)((s32 *)reg_a0) + (4))) = 2;
-        func_0018DE90();
+        sound_stop_effects();
     }
 }
 
@@ -833,7 +833,7 @@ void func_00169950(void) {
     }
 }
 
-s32 func_0018DEE0();
+s32 music_stop();
 s32 func_00221C20();
 s32 func_002365A0();
 s32 func_002368E0();
@@ -850,7 +850,7 @@ void func_00169A50(void) {
     case 0:
         text_layer_clear();
         func_0012FB00();
-        func_0018DEE0();
+        music_stop();
         *(u8 *)(reg_a5 + 2) = 1U;
         D_0028EC7C = 0;
         D_0028EAF8 = 0;
@@ -879,7 +879,7 @@ void func_00169A50(void) {
 }
 
 #ifndef DEATH_LABEL
-s32 func_0018DA30();                            /* extern */
+s32 sfx_confirm();                            /* extern */
 extern u8 D_0028E1E6[];
 extern s8 D_0028EB88;
 
@@ -889,7 +889,7 @@ void func_00169B40(void) {
             D_0028EB88 = 0;
             reg_d0.h[0] = 0xF;
             func_00168BA0(D_0028E39C);
-            func_0018DA30();
+            sfx_confirm();
             return;
         }
         if (D_0028E1E6[0] != 0) {

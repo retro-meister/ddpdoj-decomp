@@ -235,8 +235,8 @@ void func_00207B60(void) {
 #pragma pop
 
 s32 input_get_p1_pressed();
-s32 func_0018DA30();
-s32 func_0018DA50();
+s32 sfx_confirm();
+s32 sfx_cursor_move();
 
 void func_00207BF0(void) {
     s32 func_002093F0();
@@ -246,7 +246,7 @@ void func_00207BF0(void) {
     input_get_p1_pressed();
     if (reg_d0.w & 1) {
         D_0028DF9C = 1;
-        func_0018DA50();
+        sfx_cursor_move();
         func_002077E0();
         D_0028DFA0 -= 1;
         if (0 > D_0028DFA0) {
@@ -257,7 +257,7 @@ void func_00207BF0(void) {
     input_get_p1_pressed();
     if (reg_d0.w & 2) {
         D_0028DF9C = 1;
-        func_0018DA50();
+        sfx_cursor_move();
         func_002077E0();
         D_0028DFA0 += 1;
         if (D_0028DFA0 > 4) {
@@ -269,7 +269,7 @@ void func_00207BF0(void) {
     if (reg_d0.w & 4) {
         D_0028DF9C = 1;
         if (D_0028DFA0 != 4) {
-            func_0018DA50();
+            sfx_cursor_move();
         }
         if (D_0028DFA0 == 0) {
             D_0028E38C -= 1;
@@ -299,7 +299,7 @@ void func_00207BF0(void) {
     if (reg_d0.w & 8) {
         D_0028DF9C = 1;
         if (D_0028DFA0 != 4) {
-            func_0018DA50();
+            sfx_cursor_move();
         }
         if (D_0028DFA0 == 0) {
             D_0028E38C += 1;
@@ -327,7 +327,7 @@ void func_00207BF0(void) {
     }
     input_get_p1_pressed();
     if ((reg_d0.w & 0x10) && (D_0028DFA0 == 4)) {
-        func_0018DA30();
+        sfx_confirm();
         reg_d0.w = 0;
         func_002093F0();
     } else if (D_0028DF9C != 0) {

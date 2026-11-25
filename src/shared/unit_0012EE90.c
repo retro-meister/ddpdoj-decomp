@@ -2,14 +2,14 @@
 #include "entity.h"
 
 s32 func_0012E3D0();
-extern u16 D_0028E3F0;
+extern u16 g_game_frame;
 
 void func_0012EE90(void) {
     func_0012E3D0();
     reg_tmp.w = 0x19D;
     ENTITY(reg_a6)->draw.h = (u16) reg_tmp.h[1];
     ENTITY(reg_a6)->sprite.h = (u16) reg_tmp.h[0];
-    reg_d0.h[0] = D_0028E3F0;
+    reg_d0.h[0] = g_game_frame;
     reg_d0.h[0] >>= 2;
     reg_d0.h[0] &= 3;
     do {
@@ -278,7 +278,7 @@ void func_0012F9F0(void);
 void func_0013BE50(void);
 void func_0013C300(void);
 void func_0013C350(void);
-void func_0018DD80(void);
+void voice_logo(void);
 extern u8 D_00269820[];
 extern u16 D_0028E968;
 extern u16 D_0028E96C;
@@ -308,7 +308,7 @@ void func_0012F7D0(void) {
         if (cond_flag == 0) {
             func_0013C300();
             D_0028E96C = 1;
-            func_0018DD80();
+            voice_logo();
         }
     }
     if (D_0028E96C == 1) {

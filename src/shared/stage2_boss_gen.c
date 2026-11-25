@@ -45,7 +45,7 @@ s32 enemy_hitbox_debug_draw();
 s32 enemy_remove();
 s32 enemy_path_step();
 s32 func_00170D00();
-s32 func_0018D580();
+s32 sfx_explosion_ground_large();
 s32 entity_draw_layer1();
 s32 score_add_no_chain();
 s32 score_add();
@@ -137,7 +137,7 @@ block_objset:
     enemy_hitbox_debug_draw();
     return;
 block_dead:
-    func_0018D580();
+    sfx_explosion_ground_large();
     reg_d0.w = 0x32;
     score_add();
     ENTITY(reg_a6)->flags.h = 0x8080;
@@ -268,7 +268,7 @@ block_objset:
     enemy_hitbox_debug_draw();
     return;
 block_dead:
-    func_0018D580();
+    sfx_explosion_ground_large();
     reg_d0.w = 0x13;
     score_add();
     ENTITY(reg_a6)->flags.h = 0x8080;
@@ -415,7 +415,7 @@ next_4:
     enemy_hitbox_debug_draw();
     return;
 next_3:
-    func_0018D580();
+    sfx_explosion_ground_large();
     reg_d0.w = 0x14;
     score_add();
     ENTITY(reg_a6)->flags.h = 0x8080;
@@ -540,7 +540,7 @@ next_4:
     enemy_hitbox_debug_draw();
     return;
 next_3:
-    func_0018D580();
+    sfx_explosion_ground_large();
     reg_d0.w = 0x15;
     score_add();
     ENTITY(reg_a6)->flags.h = 0x8080;
@@ -658,7 +658,7 @@ s32 func_00125EB0();
 s32 bullet_fire256_2way();
 s32 func_0016D290();
 s32 func_00170DE0();
-s32 func_0018D560();
+s32 sfx_explosion_ground_medium();
 s32 direction256_between();
 extern u16 g_bullets_blocked;
 extern u16 g_enemies_stopped;
@@ -821,7 +821,7 @@ block_38:
             enemy_hitbox_debug_draw();
             return;
         }
-        func_0018D560();
+        sfx_explosion_ground_medium();
         reg_d0.w = 0x34;
         score_add();
         reg_d0.w = 8;
@@ -1095,7 +1095,7 @@ block_60:
             *(u16 *)(reg_a5 + 0x2C) = (u16) reg_d1.h[0];
             reg_d0.w = 0x256;
             score_add();
-            func_0018D580();
+            sfx_explosion_ground_large();
             ENTITY(reg_a6)->flags.h = 0x8080;
             temp_a0 = *(u8 *)(reg_a5 + 0x1B);
             ENTITY(reg_a6)->attr.b.palette = temp_a0;

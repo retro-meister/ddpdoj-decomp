@@ -46,7 +46,7 @@ void func_001F96D0(void) {
 s32 func_001389D0();
 s32 enemy_hitbox_debug_draw();
 s32 enemy_remove();
-s32 func_0018D5C0();
+s32 sfx_explosion_extra_1();
 s32 sprite_draw_layer1();
 s32 score_add_no_chain();
 s32 score_add();
@@ -116,7 +116,7 @@ void func_001F9750(void) {
                 reg_d2.h[0] = ENTITY(reg_a6)->x.h;
                 reg_a1 = D_00265B60;
                 func_001D5040();
-                func_0018D5C0();
+                sfx_explosion_extra_1();
                 goto block_6;
             }
         } else {
@@ -353,7 +353,7 @@ void func_001F9F90(void) {
     cond_flag = 0;
 }
 
-extern u16 D_0028E3F0;
+extern u16 g_game_frame;
 extern u16 g_loop;
 
 void func_001FA0E0(void) {
@@ -364,7 +364,7 @@ void func_001FA0E0(void) {
     if (g_loop != 0) {
         reg_d0.w = 2;
     }
-    if (!(D_0028E3F0 & 2)) {
+    if (!(g_game_frame & 2)) {
         ENTITY(reg_a6)[2].offset_x.b[1] += reg_d0.b[0];
     }
     ENTITY(reg_a6)[2].offset_x.b[0] += reg_d0.b[0];

@@ -242,8 +242,8 @@ void func_0016AD50(void)
 
 s32 func_0013D7A0();
 s32 func_0013DA90();
-s32 func_0018D910();
-s32 func_0018DC60();
+s32 sfx_item_pickup();
+s32 voice_power_up();
 s32 func_0019D230();
 extern u32 D_0026ADC0[];
 extern u32 D_0026AFC0[];
@@ -268,8 +268,8 @@ void func_0016AD60(void) {
         func_0016C350();
         return;
 next_1:
-        func_0018D910();
-        func_0018DC60();
+        sfx_item_pickup();
+        voice_power_up();
         reg_a0 = (u8 *)(D_0026AFC0);
         func_0016C2A0();
         return;
@@ -428,8 +428,8 @@ void func_0016B190(void) {
         func_0016C350();
         return;
 next_1:
-        func_0018D910();
-        func_0018DC60();
+        sfx_item_pickup();
+        voice_power_up();
         reg_a0 = (u8 *)(D_0026AFC0);
         func_0016C2A0();
         return;
@@ -557,7 +557,7 @@ block_7:
 
 s32 func_0013E360();
 s32 func_0013E510();
-s32 func_0018DC80();
+s32 voice_bomb();
 extern u32 D_0026ADE0[];
 extern u32 D_0026AEC0[];
 
@@ -581,8 +581,8 @@ void func_0016B5B0(void) {
         func_0016C350();
         return;
 next_1:
-        func_0018D910();
-        func_0018DC80();
+        sfx_item_pickup();
+        voice_bomb();
         reg_a0 = (u8 *)(D_0026AEC0);
         func_0016C2A0();
         return;
@@ -691,7 +691,7 @@ void func_0016B7F0(void) {
 
 s32 func_00125EB0();
 s32 func_0013E6C0();
-s32 func_0018D990();
+s32 sfx_hyper_pickup();
 extern u8 D_0026AF40[];
 extern u16 D_0028E3EC;
 extern u16 g_p1_hyper_items;
@@ -744,7 +744,7 @@ next_1:
         return;
     }
     func_0013E6C0();
-    func_0018D990();
+    sfx_hyper_pickup();
     reg_a0 = (u8 *)D_0026AF40;
     func_0016C2A0();
     return;
@@ -877,7 +877,7 @@ block_10:
 
 s32 func_0013E760();
 s32 func_0013E790();
-s32 func_0018D9B0();
+s32 sfx_extend();
 extern u8 D_0026AE40[];
 
 void func_0016BF00(void) {
@@ -892,7 +892,7 @@ void func_0016BF00(void) {
     temp_v0 = reg_d1.h[0] & 0x1800;
     reg_d1.h[0] = temp_v0;
     if (temp_v0 & 0xFFFF) {
-        func_0018D9B0();
+        sfx_extend();
         if (reg_d1.w & 0x1000) {
             func_0013E760();
         } else {
@@ -1003,7 +1003,7 @@ next_1:
         return;
     }
     func_0013E710();
-    func_0018D990();
+    sfx_hyper_pickup();
     reg_a0 = (u8 *)D_0026AF40;
     func_0016C2A0();
     return;
@@ -1052,7 +1052,7 @@ void func_0016C350(void) {
     u32 temp_s0;
     u8 *temp_s1;
 
-    func_0018D910();
+    sfx_item_pickup();
     temp_s0 = reg_d1.w;
     temp_s1 = (u8 *)(reg_a0);
     reg_d1.b[0] = ENTITY(reg_a6)->flags.b[1];

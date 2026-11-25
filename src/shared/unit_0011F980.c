@@ -64,8 +64,8 @@ typedef void (*Fn)();
 extern u8 D_00241720[];
 extern u8 D_002417C0[];
 extern u8 D_00241830[];
-s32 func_0018D890();
-s32 func_0018D8B0();
+s32 sfx_spread_bomb_a();
+s32 sfx_spread_bomb_b();
 s32 func_0019D990();
 s32 func_0019D9C0();
 s32 func_0019DA10();
@@ -136,13 +136,13 @@ void func_0011FA90(void) {
     reg_a1 += 2;
     reg_a1 += 2;
     *(u16 *)reg_a1 = *(u16 *)reg_a0;
-    reg_a0 = (u8 *)func_0018D890;
+    reg_a0 = (u8 *)sfx_spread_bomb_a;
     reg_a1 += 2;
     switch (ENTITY(reg_a6)->flags.b[0] & 2) { case 0: goto next_1; }
     reg_tmp.w = (u32) D_00241780;
     ENTITY(reg_a6)->misc.h = (u16) reg_tmp.h[1];
     *(u16 *)(reg_a6 + 0x20) = (u16) reg_tmp.h[0];
-    reg_a0 = (u8 *)func_0018D8B0;
+    reg_a0 = (u8 *)sfx_spread_bomb_b;
 next_1:
     reg_call_target = (Fn)(reg_a0);
     reg_call_target();
@@ -361,8 +361,8 @@ block_rts:
 }
 
 extern u8 D_00241F50[];
-s32 func_0018D850();
-s32 func_0018D870();
+s32 sfx_laser_bomb_a();
+s32 sfx_laser_bomb_b();
 s32 func_0020A270();
 extern u8 D_00241BF0[];
 extern u8 D_00241C00[];
@@ -641,7 +641,7 @@ void func_00120770(arg3)
         reg_d0.h[0] = *(u16 *)(reg_a5 + 2);
         reg_d0.h[0] += 0x7FFF + 0x7E01;
         *(u16 *)(reg_a6 + 0x7E2) = reg_d0.h[0];
-        reg_a0 = (u8 *)func_0018D850;
+        reg_a0 = (u8 *)sfx_laser_bomb_a;
         reg_d0.w = 0;
         D_0028DFD0 = reg_d0.h[0];
         if (ENTITY(reg_a6)->flags.b[0] & 2) {
@@ -667,7 +667,7 @@ void func_00120770(arg3)
             *(u16 *)(reg_a6 + 0x85E) = (u16) reg_tmp.h[1];
             var_a0 = reg_tmp.h[0];
             *(u16 *)(reg_a6 + 0x860) = var_a0;
-            reg_a0 = (u8 *)func_0018D870;
+            reg_a0 = (u8 *)sfx_laser_bomb_b;
         }
         reg_call_target = (Fn)(reg_a0);
         reg_call_target();

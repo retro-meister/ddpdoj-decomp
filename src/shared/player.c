@@ -26,7 +26,7 @@ void func_0013F990(void) {
     *(u16 *)(reg_a4 + 0x60) = 0;
 }
 
-s32 func_0018D9B0();
+s32 sfx_extend();
 s32 func_001AC3A0();
 extern u16 D_0028E014;
 extern u16 D_0028E024;
@@ -88,11 +88,11 @@ void func_0013F9A0(void) {
                 if (g_stage == 4) {
                     death_D_00290850 = 1;
                 }
-                func_0018D9B0();
+                sfx_extend();
             }
 #else
             if ((D_0028E3F8 == 0) && ((s32) g_stage < 4)) {
-                func_0018D9B0();
+                sfx_extend();
             }
 #endif
         }
@@ -172,11 +172,11 @@ void func_0013FB20(void) {
                 if (g_stage == 4) {
                     death_D_00290850 = 1;
                 }
-                func_0018D9B0();
+                sfx_extend();
             }
 #else
             if ((D_0028E3F8 == 0) && ((s32) g_stage < 4)) {
-                func_0018D9B0();
+                sfx_extend();
             }
 #endif
         }
@@ -777,7 +777,7 @@ extern u16 D_006E5C12[];
 extern u16 D_006E5C14[];
 
 #ifdef DEATH_LABEL
-extern u16 D_0028E3C0;
+extern u16 g_attract_demo;
 extern u16 D_0028E810;
 #endif
 
@@ -861,7 +861,7 @@ next_30:
     }
     func_001340B0();
 #ifdef DEATH_LABEL
-    if (D_0028E3C0 != 0) {
+    if (g_attract_demo != 0) {
         reg_d1.w = 0;
         reg_d1.h[0] = D_0028E810;
         PLAYER(reg_a6)->shot_power.h = reg_d1.h[0];
@@ -1658,10 +1658,10 @@ s32 input_get_p1_held();
 s32 input_get_p2_held();
 s32 input_get_p1_pressed();
 s32 input_get_p2_pressed();
-s32 func_0018D6F0();
-s32 func_0018D710();
-s32 func_0018D730();
-s32 func_0018DC20();
+s32 sfx_shot_a();
+s32 sfx_shot_b();
+s32 sfx_shot_hyper();
+s32 sfx_misc_2();
 s32 func_001ABB80();
 s32 func_001ABD80();
 s32 func_00200EE0();
@@ -1934,7 +1934,7 @@ block_13:
                 reg_call_target();
                 *(s16 *)reg_a2 = 1;
                 PLAYER(reg_a6)->flags.b[0] |= 1;
-                func_0018DC20();
+                sfx_misc_2();
                 reg_a0 = (u8 *)func_002014D0;
                 if (*(u8 *)(reg_a5 + 6) != 0) {
                     reg_a0 = (u8 *)func_002015B0;
@@ -2243,9 +2243,9 @@ loop_191:
 block_196:
                                         if (PLAYER(reg_a6)->aux.b.shot_sound_wait == 0) {
                                             PLAYER(reg_a6)->aux.b.shot_sound_wait = 2U;
-                                            reg_a0 = (u8 *)func_0018D6F0;
+                                            reg_a0 = (u8 *)sfx_shot_a;
                                             if (PLAYER(reg_a6)->flags.b[0] & 1) {
-                                                reg_a0 = (u8 *)func_0018D730;
+                                                reg_a0 = (u8 *)sfx_shot_hyper;
                                             }
                                             reg_call_target = (Fn)(reg_a0);
                                             reg_call_target();
@@ -2347,9 +2347,9 @@ loop_235:
 block_240:
                                         if (PLAYER(reg_a6)->aux.b.shot_sound_wait == 0) {
                                             PLAYER(reg_a6)->aux.b.shot_sound_wait = 2U;
-                                            reg_a0 = (u8 *)func_0018D710;
+                                            reg_a0 = (u8 *)sfx_shot_b;
                                             if (PLAYER(reg_a6)->flags.b[0] & 1) {
-                                                reg_a0 = (u8 *)func_0018D730;
+                                                reg_a0 = (u8 *)sfx_shot_hyper;
                                             }
                                             reg_call_target = (Fn)(reg_a0);
                                             reg_call_target();
@@ -2470,7 +2470,7 @@ s32 func_00125E40();
 s32 func_00125E60();
 s32 func_00138A00();
 s32 func_0016A9B0();
-s32 func_0018D6D0();
+s32 sfx_player_explosion();
 s32 func_001AA8F0();
 s32 func_001AAA20();
 s32 func_001ABF90();
@@ -2501,7 +2501,7 @@ void func_001440D0(void) {
     if (!(PLAYER(reg_a6)->flags.b[1] & 0x40)) {
         func_0013EBD0();
     }
-    func_0018D6D0();
+    sfx_player_explosion();
     D_0028E3A0 = 1;
     if (*(u8 *)(reg_a5 + 6) == 0) {
         vibration_start_pad1(0xC8, 0x28);

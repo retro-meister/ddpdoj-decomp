@@ -95,8 +95,8 @@ block_exit:
 
 s32 text_layer_clear();
 s32 func_00137C50();
-s32 func_0018D150();
-s32 func_0018DD20();
+s32 music_play_bgm1();
+s32 voice_select();
 s32 text_palette_load();
 s32 func_001B04B0();
 s32 task_start();
@@ -119,7 +119,7 @@ extern u8 D_00260E70[];
 extern u8 D_00269140[];
 extern s16 D_0028DF14;
 extern s16 D_0028DF18;
-extern s16 D_0028E3C0_as_s16;
+extern s16 g_attract_demo_as_s16;
 extern u8 D_0028ED74;
 extern u8 D_0028ED7C;
 extern u8 g_simulation_active;
@@ -128,7 +128,7 @@ void func_001B1080(void) {
     *(s8 *)(reg_a5 + 3) = 1;
     func_001B04B0();
     func_00137C50();
-    D_0028E3C0_as_s16 = 0;
+    g_attract_demo_as_s16 = 0;
     g_simulation_active = 0;
     replay_header_clear();
     D_0028ED7C = 1;
@@ -229,8 +229,8 @@ void func_001B1080(void) {
     reg_d0.h[0] = 0xA;
     task_start();
     *(s16 *)(reg_a0 + 4) = 0;
-    func_0018D150();
-    func_0018DD20();
+    music_play_bgm1();
+    voice_select();
     reg_a0 = (u8 *)D_00260CB0;
     reg_a1 = (u8 *)(D_0029BDC0);
     *(u16 *)reg_a1 = *(u16 *)reg_a0;
@@ -358,8 +358,8 @@ s32 func_0020ED40();
 s32 func_0020EE20();
 #ifdef DEATH_LABEL
 s32 text_layer_clear();
-s32 func_0018DD40();
-s32 func_0018DEE0();
+s32 voice_ok();
+s32 music_stop();
 s32 text_palette_load();
 s32 death_func_001B1220();
 s32 task_start();
@@ -419,8 +419,8 @@ void func_001B1960(void) {
                     D_00684C80[9] = D_00684C80[3];
                 }
                 task_stop_self();
-                func_0018DD40();
-                func_0018DEE0();
+                voice_ok();
+                music_stop();
                 reg_d0.h[0] = 0x15;
                 task_start();
                 return;

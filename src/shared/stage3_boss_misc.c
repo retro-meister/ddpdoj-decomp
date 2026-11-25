@@ -62,7 +62,7 @@ void func_001D1A60(void) {
 s32 bullet_fire256_fixed();
 s32 explosion_spawn();
 s32 enemy_hitbox_debug_draw();
-s32 func_0018D520();
+s32 sfx_explosion_air_large();
 s32 entity_draw_layer5();
 s32 func_00201F20();
 s32 aim256_at_player();
@@ -290,7 +290,7 @@ block_dead:
     *(u16 *)(reg_a0 + 0x26) = 0xFA00;
     *(s16 *)(reg_a0 + 0x28) = 0;
     *(s16 *)(reg_a0 + 0x18) = 0;
-    func_0018D520();
+    sfx_explosion_air_large();
     enemy_remove();
 }
 

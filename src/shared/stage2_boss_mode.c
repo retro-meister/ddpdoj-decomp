@@ -128,8 +128,8 @@ s32 boss_flash_running();
 s32 explosion_spawn();
 s32 explosion_burst_medium();
 s32 func_0013B2E0();
-s32 func_0018D560();
-s32 func_0018D660();
+s32 sfx_explosion_ground_medium();
+s32 sfx_explosion_boss();
 s32 rng_next();
 s32 rng_next_unsigned();
 s32 rng_next_word();
@@ -204,7 +204,7 @@ loop_6:
             *(u16 *)(reg_a0 + 0x26) = (u16) reg_tmp.h[1];
             *(u16 *)(reg_a0 + 0x28) = (u16) reg_tmp.h[0];
             *(s16 *)(reg_a0 + 0x1E) = 4;
-            func_0018D660();
+            sfx_explosion_boss();
             v1 = (u8 *)((void *)0x80);
             *(u16 *)(reg_a4 + 4) = 0x80U;
             *(u8 *)(reg_a4 + 3) = 4U;
@@ -246,7 +246,7 @@ loop_6:
                 reg_d3.h[0] = 8;
                 reg_d0.h[0] = 0;
                 explosion_burst_medium();
-                func_0018D560();
+                sfx_explosion_ground_medium();
             }
             reg_tmp.b[0] = *(u8 *)(reg_a4 + 0xF);
             *(u8 *)(reg_a4 + 0xF) -= 1;

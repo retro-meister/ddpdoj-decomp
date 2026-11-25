@@ -46,7 +46,7 @@ s32 func_001A3250();
 extern u8 D_00252700[];
 extern u8 D_00252720[];
 extern s32 D_0028DF1C;
-extern s8 D_0028E310_as_s8;
+extern s8 g_slowdown_timer_as_s8;
 extern s8 g_pause_lock_timer_as_s8;
 extern u16 g_scroll_line;
 extern u16 D_0028E8AC;
@@ -58,7 +58,7 @@ void func_00138A50(void) {
     u32 temp_a1;
     u32 temp_a1_2;
     g_pause_lock_timer_as_s8 = 0x3C;
-    D_0028E310_as_s8 = 0;
+    g_slowdown_timer_as_s8 = 0;
     D_0028DF1C = 0;
     g_scroll_line = *(u16 *)(reg_a5 + 6);
     memset(D_0029C060_as_u8_a, 0, 0x20);
@@ -189,7 +189,7 @@ extern u8 g_ground_no_draw;
 extern u8 g_simulation_boss_start;
 extern u8 g_stage_load_state;
 extern u8 D_0028E370;
-extern u16 D_0028E3C0;
+extern u16 g_attract_demo;
 extern s16 g_loaded_stage;
 extern u16 g_stage;
 extern u8 g_cd_async_state_as_u8;
@@ -251,7 +251,7 @@ void func_00138DA0(void) {
         goto next_1;
     }
 #ifndef DEATH_LABEL
-    if (D_0028E3C0 != 0) {
+    if (g_attract_demo != 0) {
         goto next_2;
     }
 #endif
@@ -517,12 +517,12 @@ void func_001394A0(void) {
             func_00131440();
         }
     } else if (D_0028E370 != 0) {
-        if (D_0028E3C0 == 0) {
+        if (g_attract_demo == 0) {
             D_0028E378_as_s8 = 0;
         }
         *(u8 *)(reg_a5 + 2) |= 2;
         D_0028EC58 = 0;
-        if (D_0028E3C0 == 0) {
+        if (g_attract_demo == 0) {
             D_0028E368_as_s8 = 1;
         }
         func_00138CC0();

@@ -137,7 +137,7 @@ s32 bullet_fire_fast();
 s32 explosion_spawn();
 s32 enemy_hitbox_debug_draw();
 s32 func_0016D290();
-s32 func_0018D4E0();
+s32 sfx_explosion_air_small();
 s32 score_add_no_chain();
 s32 score_add();
 s32 rng_next_bit();
@@ -439,7 +439,7 @@ next_8:
     *(u16 *)(reg_a6 + 0x12) = ((reg_d0.h[0] + 2) != 0) ? *(u16 *)((u8 *)reg_a0 + ((s16)(reg_d0.h[0] + 2) & ~1)) : *(u16 *)reg_a0;
     *(s16 *)(reg_a6 + 0x14) = 1;
     *(u16 *)(reg_a6 + 0x16) = 0xC;
-    func_0018D4E0();
+    sfx_explosion_air_small();
 block_h:
     reg_tmp.b[0] = *(u8 *)(reg_a6 + 0x15);
     *(u8 *)(reg_a6 + 0x15) -= 1;
@@ -869,7 +869,7 @@ next_8:
     *(u16 *)(reg_a6 + 0x12) = ((reg_d0.h[0] + 2) != 0) ? *(u16 *)((u8 *)reg_a0 + ((s16)(reg_d0.h[0] + 2) & ~1)) : *(u16 *)reg_a0;
     *(s16 *)(reg_a6 + 0x14) = 1;
     *(u16 *)(reg_a6 + 0x16) = 0xC;
-    func_0018D4E0();
+    sfx_explosion_air_small();
 block_h:
     reg_tmp.b[0] = *(u8 *)(reg_a6 + 0x15);
     *(u8 *)(reg_a6 + 0x15) -= 1;

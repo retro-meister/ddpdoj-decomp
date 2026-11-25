@@ -10,13 +10,13 @@ void enemy_remove_entities();
 void enemy_init_entities_n(void);
 
 extern u8 D_0028E30C;
-extern u16 D_0028E3C0;
+extern u16 g_attract_demo;
 extern u8 D_0028ED7C;
 extern u8 g_simulation_active;
 
 void enemy_hitbox_debug_draw(void) {
 #ifndef DEATH_LABEL
-    if (D_0028E3C0 == 0 && D_0028E30C != 0 && g_simulation_active != 0) {
+    if (g_attract_demo == 0 && D_0028E30C != 0 && g_simulation_active != 0) {
         if (D_0028ED7C == 2) {
             return;
         }

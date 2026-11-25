@@ -324,7 +324,7 @@ void func_001354C0(void) {
 
 s32 func_001ACBA0();
 s32 func_001ACC60();
-extern u16 D_0028E3C0;
+extern u16 g_attract_demo;
 extern u8 D_0028E8B4;
 
 void func_00135640(void) {
@@ -332,7 +332,7 @@ void func_00135640(void) {
 
     func_0012FBD0();
     func_00135120();
-    if (D_0028E3C0 == 0) {
+    if (g_attract_demo == 0) {
         if (*(u8 *)(reg_a6 + 0x16) == 0) {
             func_001ACBA0();
             if (cond_flag == 0) {
@@ -575,8 +575,8 @@ void func_00135AD0(void) {
     func_00135120();
 }
 
-s32 func_0018DE90();
-s32 func_0018DEE0();
+s32 sound_stop_effects();
+s32 music_stop();
 s32 task_request_stop();
 extern u8 D_0028E83C_as_u8;
 extern u8 D_0028E840_as_u8;
@@ -605,8 +605,8 @@ void func_00135C90(void) {
     task_request_stop();
     reg_a0 = &D_0028E83C_as_u8;
     task_request_stop();
-    func_0018DEE0();
-    func_0018DE90();
+    music_stop();
+    sound_stop_effects();
     reg_d0.h[0] = 0xE;
     task_start();
     ENTITY(reg_a6)->flags.sh = 0;
@@ -1084,7 +1084,7 @@ void func_00136600(void) {
         if (var_v0 == 0) {
             var_v0 = D_0028ED7C == 2;
         }
-        if (((var_v0 != 0) || (D_0028E3C0 != 0)) && (g_stage == 0)) {
+        if (((var_v0 != 0) || (g_attract_demo != 0)) && (g_stage == 0)) {
             reg_d7.h[0] = 0x38;
         }
         reg_d6.h[0] = D_0028E940;
@@ -1111,7 +1111,7 @@ s32 func_00134380();
 s32 func_00138170();
 s32 task_stop_self();
 extern u8 g_stage_load_state;
-extern u16 D_0028E3F0;
+extern u16 g_game_frame;
 extern u8 D_0028EC4C;
 extern s16 D_00299768[];
 
@@ -1132,7 +1132,7 @@ void func_001367C0(void) {
             }
         }
         reg_d0.w = 0xE;
-        reg_d0.h[0] &= D_0028E3F0;
+        reg_d0.h[0] &= g_game_frame;
         D_0028E8B8 = reg_d0.h[0];
         if ((g_enemies_stopped == 0) && (g_stage_load_state == 0) && (D_0028EC4C == 0)) {
             D_0028E8BC += 1;

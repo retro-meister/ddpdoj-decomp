@@ -334,7 +334,7 @@ void func_001E8480(void) {
 
 s32 boss_part_hide(s32, s32, s32);
 s32 explosion_burst_small(void *);
-s32 func_0018D560();
+s32 sfx_explosion_ground_medium();
 s32 func_001E58E0();
 s32 rng_next_unsigned();
 extern u8 D_0026F640[];
@@ -347,7 +347,7 @@ void func_001E8580(void) {
         ENTITY(reg_a6)[10].sprite.sb[1] = 0x13;
         reg_d0.w = 7;
         boss_part_hide(0x13, 0x8000, 1);
-        func_0018D560();
+        sfx_explosion_ground_medium();
         reg_a1 = D_0026F640;
         reg_d2.h[1] = ENTITY(reg_a6)[4].y.h;
         reg_d2.h[0] = ENTITY(reg_a6)[4].x.h;
@@ -372,7 +372,7 @@ void func_001E8640(void) {
         ENTITY(reg_a6)[10].sprite.sb[0] = 0x13;
         reg_d0.w = 8;
         boss_part_hide(0x13, 0x8000, 1);
-        func_0018D560();
+        sfx_explosion_ground_medium();
         reg_a1 = D_0026F670;
         reg_d2.h[1] = ENTITY(reg_a6)[5].y.h;
         reg_d2.h[0] = ENTITY(reg_a6)[5].x.h;

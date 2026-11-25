@@ -50,7 +50,7 @@ extern u8 D_0029F180[];
 extern u16 D_0029F2B8[];
 extern Fn reg_call_target_as_Fn;
 
-void func_0018DE10(void);
+void sfx_p1_laser_hyper_stop(void);
 
 void func_0013C9A0(void) {
     reg_save_d0 = reg_d0.w;
@@ -65,7 +65,7 @@ void func_0013C9A0(void) {
     reg_d0.h[0] <<= 1;
     reg_a0 = *(u8 **)(D_0028C5D8 + (reg_d0.h[0] & ~3));
     if (g_p1_hyper_active != 0) {
-        reg_a0 = (u8 *)func_0018DE10;
+        reg_a0 = (u8 *)sfx_p1_laser_hyper_stop;
     }
     reg_call_target_as_Fn = (Fn)reg_a0;
     reg_call_target_as_Fn();
@@ -92,7 +92,7 @@ extern u8 D_0029D790[];
 extern u8 D_0029F110[];
 extern u16 D_0029F248[];
 
-void func_0018DE40(void);
+void sfx_p2_laser_hyper_stop(void);
 
 void func_0013CAB0(void) {
     reg_save_d0 = reg_d0.w;
@@ -107,7 +107,7 @@ void func_0013CAB0(void) {
     reg_d0.h[0] <<= 1;
     reg_a0 = *(u8 **)(D_0028C5E0 + (reg_d0.h[0] & ~3));
     if (g_p2_hyper_active != 0) {
-        reg_a0 = (u8 *)func_0018DE40;
+        reg_a0 = (u8 *)sfx_p2_laser_hyper_stop;
     }
     reg_call_target_as_Fn = (Fn)reg_a0;
     reg_call_target_as_Fn();
@@ -181,19 +181,19 @@ void func_0013CCF0() {
 void func_0019DBE0(void);
 extern u16 D_0028DFC0;
 extern u16 D_0028E3EC;
-extern u16 D_0028E3F0;
+extern u16 g_game_frame;
 extern u16 g_loop;
 
 void func_0013CD00(void) {
     if (reg_d0.h[0] != 5) {
         reg_d4.h[0] = 5;
         reg_d2.w = 0x1E;
-        reg_d2.h[0] &= D_0028E3F0;
+        reg_d2.h[0] &= g_game_frame;
         reg_d2.h[0] <<= 1;
     } else {
         reg_d4.h[0] = 5;
         reg_d2.w = 0xF;
-        reg_d2.h[0] &= D_0028E3F0;
+        reg_d2.h[0] &= g_game_frame;
     }
     reg_d2.h[0] >>= 1;
     reg_d2.w += 0xB42;
@@ -423,7 +423,7 @@ void func_0013D560(void) {
             func_0013D470(reg_d0.h[0]);
         }
         reg_d0.h[0] = g_player2_as_u16_a[0];
-        if ((((s64) ((s64) reg_d0.h[0] << 0x30) >> 0x30) < 0) && (g_p2_hyper_items != 0) && ((reg_d0.h[0] & 0xFFFF & 0x4000) || (D_0029CD80[0] == 0) || (D_0028E3F0 & 2))) {
+        if ((((s64) ((s64) reg_d0.h[0] << 0x30) >> 0x30) < 0) && (g_p2_hyper_items != 0) && ((reg_d0.h[0] & 0xFFFF & 0x4000) || (D_0029CD80[0] == 0) || (g_game_frame & 2))) {
             reg_a0 = (u8 *)(&D_0028E050_as_s32);
             reg_a1 = (u8 *)(&D_0028E058);
             reg_d1.w = 0x811C00;

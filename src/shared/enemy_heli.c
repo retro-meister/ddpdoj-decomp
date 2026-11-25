@@ -5,7 +5,7 @@ void func_00150F40(void);
 
 
 s32 explosion_spawn();
-s32 func_0018D540();
+s32 sfx_explosion_ground_small();
 s32 score_add_no_chain();
 s32 score_add();
 
@@ -38,7 +38,7 @@ void func_00150510(u32 arg0) {
             reg_d1.b[0] *= 4;
             *(u8 *)(reg_a0 + 0x1A) = (u8) reg_d1.b[0];
             *(s16 *)(reg_a0 + 0x1E) = 0x10;
-            func_0018D540();
+            sfx_explosion_ground_small();
             enemy_remove();
             cond_flag = 1;
             return;

@@ -18,7 +18,7 @@ extern s16 D_0024F330[];
 extern u8 *D_0028DEAC;
 extern u16 D_0028E158;
 extern u16 g_sprite_bullets_used;
-extern s8 D_0028E310_as_s8;
+extern s8 g_slowdown_timer_as_s8;
 extern u8 D_0028E37C;
 extern u8 D_0028E855;
 extern u16 g_loop;
@@ -61,7 +61,7 @@ void func_00129DB0(void) {
         reg_tmp.h[0] /= 0xC;
         if ((D_0028E855 & 2) && (reg_tmp.h[0] >= *limit)) {
             D_0028E37C |= 0x80;
-            D_0028E310_as_s8 = 1;
+            g_slowdown_timer_as_s8 = 1;
         }
     }
 #else
@@ -69,7 +69,7 @@ void func_00129DB0(void) {
         reg_tmp.h[0] = (s16) D_0028E158 + (s16) g_sprite_bullets_used;
         reg_tmp.h[0] /= 0xC;
         if ((D_0028E855 & 2) && (g_loop != 0) && (reg_tmp.h[0] > D_0024F330[g_stage])) {
-            D_0028E310_as_s8 = 2;
+            g_slowdown_timer_as_s8 = 2;
         }
     }
 #endif

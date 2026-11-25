@@ -693,7 +693,7 @@ void func_00130A00(void) {
     }
 }
 
-void func_0018D8F0(void);
+void sfx_coin(void);
 extern u16 D_0028E1D8_as_u16_a[];
 extern u16 D_0028E1E4_as_u16_a[];
 extern u16 D_0028E1F0;
@@ -719,13 +719,13 @@ void func_00130A60(void) {
     func_00130A00();
     reg_d1.h[0] |= D_0028E1F0;
     if (reg_d1.h[0] & 0x20) {
-        func_0018D8F0();
+        sfx_coin();
         reg_a0 = (u8 *)D_0028E1E4_as_u16_a;
         func_001305E0();
         return;
     }
     if (reg_d1.w & 1) {
-        func_0018D8F0();
+        sfx_coin();
         reg_a0 = (u8 *)D_0028E1E4_as_u16_a;
         func_001305E0();
         reg_d0.b[0] = D_0028E39C;
@@ -734,7 +734,7 @@ void func_00130A60(void) {
         }
     }
     if (reg_d1.w & 2) {
-        func_0018D8F0();
+        sfx_coin();
         reg_a0 = (u8 *)D_0028E1D8_as_u16_a;
         reg_d0.b[0] = D_0028E390;
         if (reg_d0.b[0] != 1) {

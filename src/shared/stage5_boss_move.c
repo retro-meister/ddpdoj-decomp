@@ -103,7 +103,7 @@ void func_001F3CF0(void) {
 s32 boss_movement_start();
 s32 boss_part_show();
 s32 boss_animation_start();
-s32 func_0018D2D0();
+s32 music_play_bgm7();
 s32 func_001F56F0();
 s32 func_001F57C0();
 
@@ -115,7 +115,7 @@ void func_001F3D30(void) {
     if (temp_v0 != 0) {
         *(u16 *)(reg_a4 + 6) = (u16) (temp_v0 - 1);
         if (*(u16 *)(reg_a4 + 6) == 0) {
-            func_0018D2D0();
+            music_play_bgm7();
             reg_d0.w = 3;
             boss_animation_start();
             reg_d0.w = 4;

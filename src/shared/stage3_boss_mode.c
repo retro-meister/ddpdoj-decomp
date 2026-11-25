@@ -54,10 +54,10 @@ s32 boss_flash_running();
 s32 explosion_spawn();
 s32 explosion_burst_medium();
 s32 func_0013B2E0();
-s32 func_0018D500();
-s32 func_0018D520();
-s32 func_0018D560();
-s32 func_0018D660();
+s32 sfx_explosion_air_medium();
+s32 sfx_explosion_air_large();
+s32 sfx_explosion_ground_medium();
+s32 sfx_explosion_boss();
 s32 rng_next();
 s32 rng_next_unsigned();
 s32 rng_next_word();
@@ -108,7 +108,7 @@ loop_10:
 next_20:
     *(u16 *)(reg_a4 + 4) = 0x80;
     *(u16 *)(reg_a4 + 2) = 4;
-    func_0018D660();
+    sfx_explosion_boss();
     return;
 next_s2:
     if (*(u16 *)(reg_a4 + 2) != 2) goto next_s1;
@@ -147,7 +147,7 @@ next_s1:
     reg_d0.h[0] = 0;
     explosion_burst_medium();
     if (reg_a4[6] == 2) goto next_reon;
-    func_0018D560();
+    sfx_explosion_ground_medium();
 next_reon:
     reg_tmp.b[0] = reg_a4[0xF];
     reg_a4[0xF] -= 1;
@@ -166,7 +166,7 @@ next_intdec:
     reg_a4[0x12] -= 1;
     if ((s32) reg_tmp.b[0] > 0) goto next_intdec20;
     reg_a4[0x12] = 4;
-    func_0018D520();
+    sfx_explosion_air_large();
 next_intdec20:
     reg_a1 = (u8 *) D_0026D810;
     reg_a1 += *(u16 *)(reg_a4 + 8);
@@ -212,10 +212,10 @@ next_s0:
         goto next_40;
     }
     reg_a4[0x13] = bits | 1;
-    reg_a0 = (u8 *) func_0018D500;
+    reg_a0 = (u8 *) sfx_explosion_air_medium;
     rng_next_unsigned();
     if (reg_d0.sb[0] >= 0) goto next_30;
-    reg_a0 = (u8 *) func_0018D520;
+    reg_a0 = (u8 *) sfx_explosion_air_large;
 next_30:
     reg_call_target = (Fn) reg_a0;
     reg_call_target();
@@ -488,10 +488,10 @@ void func_001D34C0() {
     *(u8 *)(reg_a4 + 5) -= 1;
     if (reg_tmp.b[0] == 0) {
         *(u8 *)(reg_a4 + 5) = (u8) *(u8 *)(reg_a4 + 4);
-        reg_a0 = (u8 *)func_0018D500;
+        reg_a0 = (u8 *)sfx_explosion_air_medium;
         rng_next_unsigned();
         if ((s8) reg_d0.b[0] >= 0) {
-            reg_a0 = (u8 *)func_0018D520;
+            reg_a0 = (u8 *)sfx_explosion_air_large;
         }
         reg_call_target = (Fn)(reg_a0);
         reg_call_target();

@@ -17,8 +17,8 @@ s32 func_0013FD80();
 s32 input_clear();
 s32 input_update_pressed();
 s32 func_00172320();
-s32 func_0018DE70();
-s32 func_0018DE80();
+s32 sound_init();
+s32 sound_unused();
 s32 func_0018E5A0();
 s32 func_0019AA90();
 s32 func_0019AB20();
@@ -83,7 +83,7 @@ extern u8 g_stage_load_state;
 extern u8 g_paused;
 extern s8 D_0028E370_as_s8;
 extern u8 D_0028E374;
-extern u16 D_0028E3C0;
+extern u16 g_attract_demo;
 extern s16 g_stage_as_s16;
 extern s8 D_0028E9A4;
 extern s8 D_0028E9A5;
@@ -118,14 +118,14 @@ void func_002120D0(void) {
     func_0018E5A0();
     func_0020F550();
     func_002108C0();
-    func_0018DE70();
+    sound_init();
     arcade_sprite_init();
     func_00208B60();
     func_00209410();
     func_00206C20();
     func_001A53C0();
     func_00131490();
-    func_0018DE80();
+    sound_unused();
     func_0020B690();
     func_0020EAA0();
     zoom_init();
@@ -253,7 +253,7 @@ loop_15:
     }
     func_0020EAB0();
 #ifndef DEATH_LABEL
-    if ((D_0028E3C0 != 0) && ((s32) D_0028DF08 < 4)) {
+    if ((g_attract_demo != 0) && ((s32) D_0028DF08 < 4)) {
         text_layer_clear_edge_top();
         text_layer_clear_edge_bottom();
     }

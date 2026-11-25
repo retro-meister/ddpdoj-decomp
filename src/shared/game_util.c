@@ -50,7 +50,7 @@ void func_00200D60(void) {
 s32 func_0013BE50();
 s32 func_0013C300();
 s32 func_0013C350();
-s32 func_0018DED0();
+s32 music_fade_out();
 extern u8 D_0024E090[];
 
 void func_00200DD0() {
@@ -81,7 +81,7 @@ void func_00200DD0() {
             *(u16 *)(reg_a5 + 8) = (u16) reg_d0.h[1];
             *(u16 *)(reg_a5 + 0xA) = (u16) reg_d0.h[0];
             reg_d1.w = 0;
-            func_0018DED0();
+            music_fade_out();
         }
     }
     temp_a0 = *(u16 *)(reg_a5 + 4);

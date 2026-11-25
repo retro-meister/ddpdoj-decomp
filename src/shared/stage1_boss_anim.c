@@ -200,8 +200,8 @@ void func_001B2960(void) {
 }
 
 s32 boss_part_hide();
-s32 func_0018D540();
-s32 func_0018D560();
+s32 sfx_explosion_ground_small();
+s32 sfx_explosion_ground_medium();
 extern u8 D_0026DBD0[];
 extern u8 D_0026DC40[];
 extern u16 g_side_scroll_step[];
@@ -216,7 +216,7 @@ void func_001B29B0(void) {
     ENTITY(reg_a6)[1].x.h = (u16) (temp_a1 - reg_d0.h[0]);
     temp_a0 = *(u8 *)(reg_a4 + 3);
     if (temp_a0 == 2) {
-        func_0018D540();
+        sfx_explosion_ground_small();
         reg_d2.h[1] = ENTITY(reg_a6)[1].y.h;
         reg_d2.h[0] = ENTITY(reg_a6)[1].x.h;
         reg_a1 = (u8 *)D_0026DC40;
@@ -248,7 +248,7 @@ void func_001B29B0(void) {
     }
     if (*(u8 *)(reg_a4 + 3) == 0) {
         *(u8 *)(reg_a4 + 3) = 1U;
-        func_0018D560();
+        sfx_explosion_ground_medium();
         reg_d2.h[1] = ENTITY(reg_a6)[1].y.h;
         reg_d2.h[0] = ENTITY(reg_a6)[1].x.h;
         reg_a1 = (u8 *)D_0026DBD0;
@@ -340,7 +340,7 @@ void func_001B2BC0(void) {
     }
     temp_a0 = *(u8 *)(reg_a4 + 3);
     if (temp_a0 == 2) {
-        func_0018D540();
+        sfx_explosion_ground_small();
         reg_d2.h[1] = ENTITY(reg_a6)[3].y.h;
         reg_d2.h[0] = ENTITY(reg_a6)[3].x.h;
         reg_a1 = D_0026DCF0;
@@ -372,7 +372,7 @@ void func_001B2BC0(void) {
     }
     if (*(u8 *)(reg_a4 + 3) == 0) {
         *(u8 *)(reg_a4 + 3) = 1U;
-        func_0018D560();
+        sfx_explosion_ground_medium();
         reg_d2.h[1] = ENTITY(reg_a6)[3].y.h;
         reg_d2.h[0] = ENTITY(reg_a6)[3].x.h;
         reg_a1 = D_0026DC80;
@@ -403,7 +403,7 @@ s32 boss_flash_running();
 s32 explosion_burst_large();
 s32 explosion_burst_small();
 s32 func_0013B2E0();
-s32 func_0018D660();
+s32 sfx_explosion_boss();
 s32 rng_next_unsigned();
 extern u8 D_0026DD30[];
 extern u16 D_0026DD50[];
@@ -412,7 +412,7 @@ extern u16 D_0026DE00[];
 extern u16 D_0026DF00[];
 extern u8 D_0026DF70[];
 extern u8 D_0026DFC0[];
-extern u8 D_0028E310;
+extern u8 g_slowdown_timer;
 
 void func_001B3030(void) {
     u16 *temp_a3_2;
@@ -491,7 +491,7 @@ void func_001B3030(void) {
     }
     temp_a0_2 = *(u8 *)(reg_a4 + 3);
     if (temp_a0_2 == 5) {
-        func_0018D660();
+        sfx_explosion_boss();
         reg_d2.h[1] = ENTITY(reg_a6)->y.h;
         reg_d2.h[0] = ENTITY(reg_a6)->x.h;
         reg_a1 = (u8 *)(D_0026DF00);
@@ -534,7 +534,7 @@ void func_001B3030(void) {
     if (temp_a0_5 == 4) {
         boss_flash_running();
         if (cond_flag == 0) {
-            D_0028E310 = 0xA;
+            g_slowdown_timer = 0xA;
             reg_a0 = D_0026DFC0;
             func_0013B2E0();
             reg_d0.w = 2;
@@ -589,7 +589,7 @@ void func_001B3030(void) {
                 *(u8 *)(reg_a4 + 3) = 4U;
                 reg_d0.h[0] = 0x12;
                 boss_flash_start();
-                func_0018D560();
+                sfx_explosion_ground_medium();
             }
         }
     }
@@ -638,7 +638,7 @@ void func_001B3030(void) {
                 *(u16 *)(reg_a4 + 0x10) += 1;
                 *(u16 *)(reg_a4 + 0x10) &= 1;
                 if (*(u16 *)(reg_a4 + 0x10) == 0) {
-                    D_0028E310 = 0xA;
+                    g_slowdown_timer = 0xA;
                     reg_a0 = D_0026DF70;
                     func_0013B2E0();
                     rng_next_unsigned();
@@ -648,7 +648,7 @@ void func_001B3030(void) {
                     reg_d3.h[0] = 0xC;
                     reg_d0.h[0] = 0;
                     explosion_burst_small();
-                    func_0018D540();
+                    sfx_explosion_ground_small();
                 }
                 *(u16 *)(reg_a4 + 0xE) += 0x10;
                 if (*(u16 *)(reg_a4 + 0xE) == 0x80) {
@@ -677,7 +677,7 @@ void func_001B3030(void) {
     }
     if (*(u8 *)(reg_a4 + 3) == 0) {
         *(u8 *)(reg_a4 + 3) = 1U;
-        func_0018D560();
+        sfx_explosion_ground_medium();
         reg_d2.h[1] = ENTITY(reg_a6)->y.h;
         reg_d2.h[0] = ENTITY(reg_a6)->x.h;
         reg_a1 = (u8 *)(D_0026DD50);

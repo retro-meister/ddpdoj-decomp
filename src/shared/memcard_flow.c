@@ -139,8 +139,8 @@ void func_00226490(void) {
     D_0028EC3C = 4;
 }
 
-s32 sound_request();
-s32 func_0018D4D0();
+s32 sfx_menu_confirm();
+s32 sfx_menu_move();
 s32 func_00233DA0();
 extern u8 D_0028EC34;
 extern s8 D_0028EC38_as_s8;
@@ -156,30 +156,30 @@ void func_002264D0(void) {
     }
     temp_a0 = g_pad_trigger[D_0028EC34];
     if (temp_a0 & 0x40) {
-        sound_request();
+        sfx_menu_confirm();
         func_002263F0();
     } else if (temp_a0 & 0x20) {
         D_0028EC38_as_s8 = 0;
         if (D_0028EC2C == 1) {
             D_0028EC3C = 5;
-            sound_request();
+            sfx_menu_confirm();
         } else {
             temp_a0_2 = *(u16 *)(D_006A0E50 + (D_0028EC40 << 0xA));
             if ((temp_a0_2 != 0) && (temp_a0_2 != 3)) {
                 D_0028EC3C = 6;
-                sound_request();
+                sfx_menu_confirm();
             }
         }
     }
     temp_a0_3 = g_pad_repeat[D_0028EC34];
     if (temp_a0_3 & 0x1000) {
-        func_0018D4D0();
+        sfx_menu_move();
         D_0028EC40 -= 1;
         if (0 > D_0028EC40) {
             D_0028EC40 = 9;
         }
     } else if (temp_a0_3 & 0x4000) {
-        func_0018D4D0();
+        sfx_menu_move();
         D_0028EC40 += 1;
         if (D_0028EC40 >= 0xA) {
             D_0028EC40 = 0;

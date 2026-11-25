@@ -8,14 +8,14 @@ extern u16 D_0028E7F0;
 extern s32 D_0028E7F4;
 
 #ifdef DEATH_LABEL
-extern u16 D_0028E3C0;
+extern u16 g_attract_demo;
 #endif
 
 void func_00138110(void) {
     reg_d0.w = 0;
     reg_d0.b[0] = D_0028E38C;
 #ifdef DEATH_LABEL
-    if (D_0028E3C0 != 0) {
+    if (g_attract_demo != 0) {
         reg_d0.b[0] = 1;
     }
 #endif
@@ -256,8 +256,8 @@ void func_00138650(void) {
 
 typedef void (*Fn)();
 
-s32 func_0018DA30();
-s32 func_0018DA50();
+s32 sfx_confirm();
+s32 sfx_cursor_move();
 s32 func_00203850();
 s32 func_002039B0();
 s32 func_002046F0();
@@ -288,7 +288,7 @@ void func_00138750(void) {
     reg_call_target_as_u8_p = reg_a0;
     ((Fn)reg_call_target_as_u8_p)();
     if (reg_d0.w & 4) {
-        func_0018DA50();
+        sfx_cursor_move();
         *(s16 *)(reg_a6 + 0x28) = 1;
         reg_d1.h[0] = *(u16 *)(reg_a6 + 4);
         do {
@@ -300,7 +300,7 @@ void func_00138750(void) {
         *(u16 *)(reg_a6 + 4) = (u16) reg_d1.h[0];
     }
     if (reg_d0.w & 8) {
-        func_0018DA50();
+        sfx_cursor_move();
         *(s16 *)(reg_a6 + 0x28) = 1;
         reg_d1.h[0] = *(u16 *)(reg_a6 + 4);
         do {
@@ -317,7 +317,7 @@ void func_00138750(void) {
         *(s8 *)(reg_a5 + 6) = (s8) *(u8 *)(reg_a6 + 4);
     }
     if ((*(u8 *)(reg_a6 + 0x31) != 0) || (reg_d0.h[0] &= 0x70, (reg_d0.h[0] != 0))) {
-        func_0018DA30();
+        sfx_confirm();
         *(s8 *)reg_a6 = 5;
         *(s16 *)(reg_a6 + 0x2E) = 0;
     }

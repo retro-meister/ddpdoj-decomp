@@ -103,8 +103,8 @@ void func_00208710(void) {
 
 
 s32 input_get_p1_pressed();
-s32 func_0018DA30();
-s32 func_0018DA50();
+s32 sfx_confirm();
+s32 sfx_cursor_move();
 s32 func_002093F0();
 extern u8 D_00268010[];
 extern u8 D_00268030[];
@@ -113,7 +113,7 @@ void func_00208800(void) {
     s32 func_00209200();
     input_get_p1_pressed();
     if (reg_d0.w & 1) {
-        func_0018DA50();
+        sfx_cursor_move();
         func_00208610();
         D_0028DFA0 -= 1;
         if (0 > D_0028DFA0) {
@@ -131,7 +131,7 @@ void func_00208800(void) {
     }
     input_get_p1_pressed();
     if (reg_d0.w & 2) {
-        func_0018DA50();
+        sfx_cursor_move();
         func_00208610();
         D_0028DFA0 += 1;
         if (D_0028DFA0 > 9) {
@@ -149,7 +149,7 @@ void func_00208800(void) {
     }
     input_get_p1_pressed();
     if (reg_d0.w & 0x10) {
-        func_0018DA30();
+        sfx_confirm();
         if (D_0028DFA0 == 0) {
             reg_d0.w = 1;
             func_002093F0();
@@ -256,9 +256,9 @@ void func_00208B60(void) {
 typedef void (*Fn)();
 
 s32 func_00137C50();
-s32 func_0018DE90();
-s32 func_0018DEA0();
-s32 func_0018DEE0();
+s32 sound_stop_effects();
+s32 sound_stop_loops();
+s32 music_stop();
 extern u8 D_00268080[];
 extern s8 D_0028DFA8_as_s8;
 extern s8 D_0028DFAC;
@@ -290,9 +290,9 @@ void func_00208BA0(void) {
     D_0028DFAC = 1;
     func_00208AD0();
     *(u8 *)(reg_a5 + 3) = 1U;
-    func_0018DEE0();
-    func_0018DE90();
-    func_0018DEA0();
+    music_stop();
+    sound_stop_effects();
+    sound_stop_loops();
     func_00137C50();
     D_0028E3B8 = 1;
 }

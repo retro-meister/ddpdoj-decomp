@@ -4,8 +4,8 @@
 #include "cd.h"
 #include "replay.h"
 
-void func_0018E060(void);
-void func_0018E0B0(void);
+void music_start_when_ready(void);
+void sound_update_bgm_fade(void);
 s32 func_001981F0(void);
 void func_001984C0(void);
 void func_00198C40();
@@ -27,160 +27,6 @@ void func_0019A520(void);
 void func_0019A5B0(void);
 void func_0019A640(void);
 void func_0019A870(void);
-
-s32 sound_rpc_call(s32, s32, s32);   /* extern */
-extern s8 D_0028DF98;
-
-void func_0018E020(void) {
-    sound_rpc_call(0x530, 0, 0);
-    if (D_0028DF98 != 0) {
-        func_0018E060();
-    }
-    func_0018E0B0();
-}
-
-extern s32 D_0029CA10_as_s32_a[];
-extern s32 D_0029CA14_as_s32_a[];
-
-void func_0018E060(void) {
-    if (sound_rpc_call(0x100, 0, 0) == 0) {
-        sound_rpc_call(0x150, 0, 0);
-        D_0028DF98 = 0;
-        D_0029CA10_as_s32_a[0] = 0;
-        D_0029CA14_as_s32_a[0] = 0;
-    }
-}
-
-extern s32 sound_rpc_call(s32, s32, s32);
-extern void func_0018CCA0(s32);
-extern u8 D_00277FB0[];
-extern u8 D_00277FC8[];
-extern s8 D_0028DF94;
-extern u8 D_0029CA10[];
-extern u8 D_0029CA18[];
-
-void func_0018E0B0(void) {
-    s32 i;
-    s32 off;
-    u8 *p;
-    s32 *f;
-    s32 *c;
-    s32 *tg;
-    s32 t;
-    s32 v;
-    s32 hi;
-
-    off = 0;
-    i = 0;
-    do {
-        p = D_0029CA10 + off;
-        f = (s32 *)(p + 8);
-        if (*f != 0) {
-            *(s32 *)(p + 0x20) -= 1;
-            if (*(s32 *)(p + 0x20) <= 0) {
-                *(s32 *)(p + 0xC) = *(s32 *)(p + 0x14);
-                printf((const char *)D_00277FB0, *(s32 *)(p + 0xC));
-                t = *f;
-                if (t == 3) {
-                    D_0028DF94 = 0;
-                }
-                if (t == 2) {
-                    func_0018CCA0(i);
-                    *(s32 *)(D_0029CA18 + i * 0x28) = 0;
-                    printf((const char *)D_00277FC8);
-                    return;
-                }
-                if (t == 4) {
-                    sound_rpc_call(i | 0x60, 0, 0);
-                    *(s32 *)(D_0029CA18 + i * 0x28) = 0;
-                    return;
-                }
-                *f = 0;
-            }
-            c = (s32 *)(p + 0xC);
-            tg = (s32 *)(p + 0x14);
-            if (*c != *tg) {
-                if (*c < *tg) {
-                    *(s32 *)(p + 0x18) += *(s32 *)(p + 0x1C);
-                    *c = *(s32 *)(p + 0x18) / 100;
-                    if (*tg < *c) {
-                        *c = *tg;
-                    }
-                } else {
-                    *(s32 *)(p + 0x18) -= *(s32 *)(p + 0x1C);
-                    *c = *(s32 *)(p + 0x18) / 100;
-                    if (*c < *tg) {
-                        *c = *tg;
-                    }
-                }
-            }
-            v = *c;
-            if (v != 0) {
-                v = v * 0x7FFF / 100;
-            }
-            hi = v << 16;
-            hi |= v;
-            sound_rpc_call(i | 0x80, hi, 0);
-        }
-        i += 1;
-        off += 0x28;
-    } while (i < 2);
-}
-
-extern const char *D_0025BC50[];
-extern const char *D_0025BCC0[];
-extern const char *D_0025BCF0[];
-extern const char *D_0025BD30[];
-extern ReplayHeader D_0068DF10[];
-
-void func_0018E300(void) {
-    s32 i;
-
-    for (i = 0; i < 0x1A; i++) {
-        cd_search_file(D_0025BC50[i]);
-        g_bgm_files[i].size = g_cd_file.size;
-        g_bgm_files[i].lba = g_cd_file.lsn;
-    }
-}
-
-void func_0018E390(void) {
-    s32 i;
-
-    for (i = 0; i < 0xA; i++) {
-        cd_search_file(D_0025BCC0[i]);
-        g_stage_bg_files[i].size = g_cd_file.size;
-        g_stage_bg_files[i].lba = g_cd_file.lsn;
-    }
-}
-
-void func_0018E420(void) {
-    s32 i;
-
-    for (i = 0; i < MAIN_OR_DEATH_LABEL(0xE, 0x10); i++) {
-        cd_search_file(D_0025BCF0[i]);
-        g_data_files[i].size = g_cd_file.size;
-        g_data_files[i].lba = g_cd_file.lsn;
-    }
-}
-
-void func_0018E4B0(void) {
-    s32 i;
-    void *buf;
-    ReplayHeader *dst;
-
-    buf = memalign(0x40, 0x800);
-    for (i = 0; i < 10; i++) {
-        cd_search_file(D_0025BD30[i]);
-        g_replay_files[i].size = g_cd_file.size;
-        g_replay_files[i].lba = g_cd_file.lsn;
-        cd_read_sync(buf, 0x800, g_cd_file.lsn);
-        dst = &D_0068DF10[i];
-        memcpy(dst, buf, 0x42);
-        dst->unk00 = 1;
-    }
-    free(buf);
-}
-
 
 extern const char D_002784E0[];
 extern const char D_00278500[];
@@ -1251,12 +1097,12 @@ extern void func_0014D0F0(void);
 extern void func_0014D140(void);
 extern void func_0014D150(void);
 extern void func_0014D170(void);
-extern void func_0018D1D0(void);
-extern void func_0018D210(void);
-extern void func_0018D250(void);
-extern void func_0018D290(void);
-extern void func_0018D2D0(void);
-extern void func_0018D310(void);
+extern void music_play_bgm3(void);
+extern void music_play_bgm4(void);
+extern void music_play_bgm5(void);
+extern void music_play_bgm6(void);
+extern void music_play_bgm7(void);
+extern void music_play_bgm8(void);
 
 extern u16 D_0024D0B8[];
 extern u16 D_0024D0BA[];
@@ -4361,7 +4207,7 @@ void func_0018E5A0(void) {
     if (D_002527F0[0] != 0x4) {
         printf((const char *)D_0027B820);
     }
-    STORE_POINTER(D_002527F0, func_0018D2D0);
+    STORE_POINTER(D_002527F0, music_play_bgm7);
     if (D_00252800[0] != 0x0) {
         printf((const char *)D_0027B840);
     }
@@ -4477,11 +4323,11 @@ void func_0018E5A0(void) {
     if (D_00252AC4[0] != 0x2) {
         printf((const char *)D_0027BBC0);
     }
-    STORE_POINTER(D_00252AC4, func_0018D1D0);
+    STORE_POINTER(D_00252AC4, music_play_bgm3);
     if (D_00252AD0[0] != 0x8) {
         printf((const char *)D_0027BBE0);
     }
-    STORE_POINTER(D_00252AD0, func_0018D2D0);
+    STORE_POINTER(D_00252AD0, music_play_bgm7);
     if (D_00252AE0[0] != 0x0) {
         printf((const char *)D_0027BC00);
     }
@@ -4589,11 +4435,11 @@ void func_0018E5A0(void) {
     if (D_00252C74[0] != 0x2) {
         printf((const char *)D_0027BF40);
     }
-    STORE_POINTER(D_00252C74, func_0018D210);
+    STORE_POINTER(D_00252C74, music_play_bgm4);
     if (D_00252C80[0] != 0x8) {
         printf((const char *)D_0027BF60);
     }
-    STORE_POINTER(D_00252C80, func_0018D2D0);
+    STORE_POINTER(D_00252C80, music_play_bgm7);
     if (D_00252C90[0] != 0x0) {
         printf((const char *)D_0027BF80);
     }
@@ -4693,11 +4539,11 @@ void func_0018E5A0(void) {
     if (D_00252E44[0] != 0x2) {
         printf((const char *)D_0027C280);
     }
-    STORE_POINTER(D_00252E44, func_0018D250);
+    STORE_POINTER(D_00252E44, music_play_bgm5);
     if (D_00252E50[0] != 0x8) {
         printf((const char *)D_0027C2A0);
     }
-    STORE_POINTER(D_00252E50, func_0018D2D0);
+    STORE_POINTER(D_00252E50, music_play_bgm7);
     if (D_00252E60[0] != 0x0) {
         printf((const char *)D_0027C2C0);
     }
@@ -4789,11 +4635,11 @@ void func_0018E5A0(void) {
     if (D_00253004[0] != 0x2) {
         printf((const char *)D_0027C580);
     }
-    STORE_POINTER(D_00253004, func_0018D290);
+    STORE_POINTER(D_00253004, music_play_bgm6);
     if (D_00253010[0] != 0x8) {
         printf((const char *)D_0027C5A0);
     }
-    STORE_POINTER(D_00253010, func_0018D310);
+    STORE_POINTER(D_00253010, music_play_bgm8);
     if (D_00253020[0] != 0x0) {
         printf((const char *)D_0027C5C0);
     }
@@ -5378,7 +5224,7 @@ void func_0018E5A0(void) {
 
 
 s32 text_layer_clear();
-s32 func_0018D450();
+s32 music_play_bgm13();
 s32 sprite_palette_load();
 s32 func_001ACBA0();
 s32 func_001ACC60();
@@ -5428,7 +5274,7 @@ void func_00197F60() {
     }
     *(u8 *)(reg_a5 + 4) = (u8) D_0028E8B4;
     if (*(u8 *)(reg_a5 + 4) != 0) {
-        func_0018D450();
+        music_play_bgm13();
     }
 }
 
@@ -5436,7 +5282,7 @@ s32 text_layer_clear();                            /* extern */
 s32 func_00135ED0();                            /* extern */
 s32 func_00137C20();                            /* extern */
 s32 func_0013FD80();                            /* extern */
-s32 func_0018DE90();                            /* extern */
+s32 sound_stop_effects();                            /* extern */
 s32 text_palette_load();                            /* extern */
 s32 task_start();                            /* extern */
 s32 task_stop_self();                            /* extern */
@@ -5451,7 +5297,7 @@ void func_001980A0() {
     func_00137C20();
     func_00135ED0();
     task_stop_self();
-    func_0018DE90();
+    sound_stop_effects();
     text_layer_clear();
     reg_d0.w = 0;
     reg_a0 = (u8 *)D_00269160_as_s32_a;
@@ -5903,7 +5749,7 @@ void func_00198EF0() {
 }
 
 s32 func_0013BDE0();
-s32 func_0018DA30();
+s32 sfx_confirm();
 extern u8 D_0025BD60[];
 extern u8 D_0025BFD0[];
 extern u16 D_002BAE82_as_u16_a[];
@@ -5970,7 +5816,7 @@ next_8:
     func_00199A50();
     reg_d0.h[0] = W(0x36);
     if (!(reg_d0.w & 0x8000)) goto next_9;
-    func_0018DA30();
+    sfx_confirm();
     if (W(0x16) != 0) goto block_fill;
 block_default:
     reg_tmp.h[1] = W(0x30);
@@ -5991,7 +5837,7 @@ next_9:
     if (reg_d3.h[0] != 0) goto next_12;
     reg_d0.h[0] &= 0x50;
     if (reg_d0.h[0] == 0) return;
-    func_0018DA30();
+    sfx_confirm();
     reg_d0.h[0] = W(0x18);
     if (reg_d0.h[0] < 27) goto next_13;
     reg_tmp.h[1] = W(0x30);
@@ -6644,7 +6490,7 @@ next_9:
     func_0019A870();
 }
 
-s32 func_0018DA50();
+s32 sfx_cursor_move();
 extern u16 D_0025C430[];
 
 void func_0019A870(void) {
@@ -6674,7 +6520,7 @@ void func_0019A870(void) {
             reg_d0.h[0] += reg_d0.h[0];
             *(u16 *)(reg_a4 + 6) = (reg_d0.h[0] != 0) ? *(u16 *)((u8 *)reg_a0 + ((s16)reg_d0.h[0] & ~1)) : *(u16 *)reg_a0;
             *(u16 *)(reg_a4 + 8) = ((reg_d0.h[0] + 2) != 0) ? *(u16 *)((u8 *)reg_a0 + ((s16)(reg_d0.h[0] + 2) & ~1)) : *(u16 *)reg_a0;
-            func_0018DA50();
+            sfx_cursor_move();
         }
     }
 }

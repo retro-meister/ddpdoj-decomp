@@ -142,7 +142,7 @@ void func_0020ED20(void) {
     }
 }
 
-s32 func_0018DD40();
+s32 voice_ok();
 s32 func_001A35A0();
 s32 func_00206520();
 
@@ -152,7 +152,7 @@ void func_0020ED40(void) {
     reg_d0.w = 1;
     func_00206520();
     if (g_loop == 0) {
-        func_0018DD40();
+        voice_ok();
     }
     *(s16 *)(reg_a6 + 0x32) = 0;
     *(s16 *)(reg_a6 + 0x5A) = 0;
@@ -176,7 +176,7 @@ void func_0020ED40(void) {
 
 s32 func_00136010();
 s32 func_00136600();
-s32 func_0018D190();
+s32 music_play_bgm2();
 s32 sprite_palette_load();
 s32 func_001B04D0();
 s32 func_001B07E0();
@@ -229,7 +229,7 @@ next_5:
 next_6:
     if (D_0028DF14_as_u16 != 0) goto next_7;
     D_0028DF14_as_u16 = 1;
-    func_0018D190();
+    music_play_bgm2();
 next_7:
     W(0x32) += 1;
     if (!((s32) W(0x36) < 0x3800)) goto next_11;

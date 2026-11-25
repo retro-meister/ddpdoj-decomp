@@ -194,7 +194,7 @@ s32 func_00119FE0();
 s32 func_0011B220();
 s32 bullet_fire256_2way();
 s32 explosion_spawn();
-s32 func_0018D580();
+s32 sfx_explosion_ground_large();
 s32 entity_draw_layer3();
 s32 score_add();
 extern u16 D_0028E8B8;
@@ -357,7 +357,7 @@ next_exp10:
 block_dead:
     reg_d0.w = 0x133;
     score_add();
-    func_0018D580();
+    sfx_explosion_ground_large();
     ENTITY(reg_a6)->flags.h = 0x8080;
     ENTITY(reg_a6)->attr.b.palette = *(u8 *)(reg_a5 + 0x23);
     ENTITY(reg_a6)->hit_y_plus.sh = 0x18;
@@ -502,12 +502,12 @@ void func_001DF300(void) {
     }
 }
 
-s32 func_0018D560();
+s32 sfx_explosion_ground_medium();
 
 void func_001DF350() {
     u16 temp_a3;
 
-    func_0018D560();
+    sfx_explosion_ground_medium();
     reg_d0.h[0] = 0xD;
     explosion_spawn();
     *(u16 *)(reg_a0 + 2) = (u16) ENTITY(reg_a6)->y.h;
@@ -666,9 +666,9 @@ s32 func_0013B2E0();
 s32 func_0014E030();
 s32 func_0016A9B0();
 s32 enemy_switch_target_player();
-s32 func_0018D500();
-s32 func_0018D520();
-s32 func_0018D5C0();
+s32 sfx_explosion_air_medium();
+s32 sfx_explosion_air_large();
+s32 sfx_explosion_extra_1();
 s32 entity_draw_layer4();
 s32 sprite_draw_layer4();
 s32 func_00201270();
@@ -1032,7 +1032,7 @@ block_c:
     *(u16 *)(reg_a5 + 0x32) = reg_d1.h[0];
     reg_d0.w = 0x683;
     score_add();
-    func_0018D580();
+    sfx_explosion_ground_large();
     g_enemy_signal_0 = 0;
     ENTITY(reg_a6)->flags.h = 0x8080;
     ENTITY(reg_a6)->attr.b.palette = *(u8 *)(reg_a5 + 0x1B);
@@ -1098,17 +1098,17 @@ next_6200:
     func_0013B2E0();
     vibration_start_pad1(0xB4, 0x64);
     vibration_start_pad2(0xB4, 0x64);
-    func_0018D5C0();
+    sfx_explosion_extra_1();
     goto block_e;
 next_6240:
     reg_tmp.b[0] = *(u8 *)(reg_a5 + 0x27);
     *(u8 *)(reg_a5 + 0x27) -= 1;
     if ((s32) reg_tmp.b[0] > 0) goto block_e;
     *(u8 *)(reg_a5 + 0x27) = *(u8 *)(reg_a5 + 0x26);
-    reg_a0 = (u8 *) func_0018D500;
+    reg_a0 = (u8 *) sfx_explosion_air_medium;
     rng_next_unsigned();
     if ((s8) reg_d0.b[0] >= 0) goto next_6260;
-    reg_a0 = (u8 *) func_0018D520;
+    reg_a0 = (u8 *) sfx_explosion_air_large;
 next_6260:
     reg_call_target = (Fn) reg_a0;
     reg_call_target();
@@ -1402,7 +1402,7 @@ block_11:
     *(s16 *)(reg_a0 + 0x14) = 0x400;
     *(s16 *)(reg_a0 + 0x26) = 0;
     *(s16 *)(reg_a0 + 0x28) = 0;
-    func_0018D500();
+    sfx_explosion_air_medium();
     enemy_remove();
 }
 
@@ -1450,12 +1450,12 @@ extern u8 D_00263CF0[];
 s32 func_00139EB0();
 s32 func_0013B920();
 s32 func_0013C300();
-s32 func_0018DB30();
-s32 func_0018DB50();
-s32 func_0018DB70();
-s32 func_0018DBC0();
-s32 func_0018DDA0();
-s32 func_0018DDB0();
+s32 sfx_charge_begin();
+s32 sfx_charge_loop_start();
+s32 sfx_beam_fire();
+s32 sfx_beam_loop_start();
+s32 sfx_heli_stop();
+s32 sfx_charge_loop_stop();
 s32 entity_draw_layer1();
 s32 sprite_draw_layer1();
 s32 func_00201710();
@@ -1538,7 +1538,7 @@ next_9:
     if (!((s16) ENTITY(reg_a6)->y.h < 0x5001)) goto next_15;
     reg_a0 = (u8 *)D_00263C70;
     func_0013B920();
-    func_0018DB30();
+    sfx_charge_begin();
     *(u16 *)(reg_a5 + 0x38) = 0x20;
     *(u16 *)(reg_a5 + 0x18) = 2;
     goto next_15;
@@ -1557,7 +1557,7 @@ next_11:
     if (*(u16 *)(reg_a5 + 0x38) == 0) goto next_12;
     *(u16 *)(reg_a5 + 0x38) -= 1;
     if (*(u16 *)(reg_a5 + 0x38) != 0) goto next_12;
-    func_0018DB50();
+    sfx_charge_loop_start();
 next_12:
     reg_d0.h[0] = 0xA4;
     func_0014E030();
@@ -1578,7 +1578,7 @@ next_13:
     *(u16 *)(reg_a5 + 0x28) = 0x34;
     reg_a0 = (u8 *)D_00263CF0;
     func_0013B2E0();
-    func_0018DDB0();
+    sfx_charge_loop_stop();
     *(u16 *)(reg_a5 + 0x18) = 4;
     goto next_15;
 next_14:
@@ -1587,7 +1587,7 @@ next_14:
     reg_tmp.h[0] = ENTITY(reg_a6)[1].sprite.h;
     if (reg_tmp.w != 0x1DE6) goto next_15;
     ENTITY(reg_a6)[1].flags.h = 0xA001;
-    func_0018DB70();
+    sfx_beam_fire();
     *(u16 *)(reg_a5 + 0x38) = 0x40;
     *(u16 *)(reg_a5 + 0x18) = 5;
 next_15:
@@ -1596,7 +1596,7 @@ next_15:
     if ((s16) *(u16 *)(reg_a5 + 0x38) == -1) goto next_16;
     *(u16 *)(reg_a5 + 0x38) -= 1;
     if ((s16) *(u16 *)(reg_a5 + 0x38) != -1) goto next_16;
-    func_0018DBC0();
+    sfx_beam_loop_start();
 next_16:
     reg_tmp.b[0] = *(u8 *)(reg_a5 + 0x23);
     *(u8 *)(reg_a5 + 0x23) -= 1;
@@ -1621,7 +1621,7 @@ next_17:
     goto next_19;
 next_18:
     if ((s16) *(u16 *)(reg_a5 + 0x38) != -1) goto next_19;
-    func_0018DDA0();
+    sfx_heli_stop();
     *(u16 *)(reg_a5 + 0x38) = 0xFFFE;
 next_19:
     reg_a0 = reg_a6;
@@ -1645,9 +1645,9 @@ block_b:
     *(u16 *)(reg_a5 + 0x3A) = (u16) reg_d1.h[0];
     reg_d0.w = 0x788;
     score_add();
-    func_0018DDB0();
-    func_0018DDA0();
-    func_0018D5C0();
+    sfx_charge_loop_stop();
+    sfx_heli_stop();
+    sfx_explosion_extra_1();
     ENTITY(reg_a6)->flags.h = 0x8080;
     ENTITY(reg_a6)[1].flags.h = 0x8000;
     ENTITY(reg_a6)[2].flags.h = 0x8000;
@@ -1694,7 +1694,7 @@ next_23:
     ENTITY(reg_a6)->x.h += 0x1B00;
     func_001E1F30();
     ENTITY(reg_a6)->x.h = x_save;
-    func_0018D5C0();
+    sfx_explosion_extra_1();
     vibration_start_pad1(0xB4, 0x64);
     vibration_start_pad2(0xB4, 0x64);
     goto next_26;
@@ -1703,10 +1703,10 @@ next_24:
     *(u8 *)(reg_a5 + 0x2F) -= 1;
     if ((s32) reg_tmp.b[0] > 0) goto next_26;
     *(u8 *)(reg_a5 + 0x2F) = (u8) *(u8 *)(reg_a5 + 0x2E);
-    reg_a0 = (u8 *)func_0018D500;
+    reg_a0 = (u8 *)sfx_explosion_air_medium;
     rng_next_unsigned();
     if (reg_d0.sb[0] >= 0) goto next_25;
-    reg_a0 = (u8 *)func_0018D520;
+    reg_a0 = (u8 *)sfx_explosion_air_large;
 next_25:
     reg_call_target = (Fn)(reg_a0);
     reg_call_target();
@@ -1749,7 +1749,7 @@ block_rts:
 void func_001E1F30() {
     u16 temp_a3;
 
-    func_0018D560();
+    sfx_explosion_ground_medium();
     reg_d0.h[0] = 0xD;
     explosion_spawn();
     *(u16 *)(reg_a0 + 2) = (u16) ENTITY(reg_a6)->y.h;
@@ -2171,7 +2171,7 @@ block_objset:
                 enemy_hitbox_debug_draw();
                 return;
             }
-            func_0018D580();
+            sfx_explosion_ground_large();
             reg_d0.w = 0x46;
             score_add();
             ENTITY(reg_a6)->flags.h = 0x8080;
@@ -2222,7 +2222,7 @@ block_48:
 }
 
 void func_001E2FD0(void) {
-    func_0018D500();
+    sfx_explosion_air_medium();
     reg_d0.h[0] = 0xC;
     explosion_spawn();
     *(u16 *)(reg_a0 + 2) = (u16) ENTITY(reg_a6)->y.h;
@@ -2488,7 +2488,7 @@ block_objset:
     enemy_hitbox_debug_draw();
     goto block_rts;
 block_dead:
-    func_0018D580();
+    sfx_explosion_ground_large();
     reg_d0.w = 0x88;
     score_add();
     ENTITY(reg_a6)->flags.h = 0x8080;
@@ -2820,13 +2820,13 @@ void func_001E4410(void) {
     reg_a6 = (u8 *)reg_tmp.w;
 }
 
-s32 func_0018D580();                            /* extern */
+s32 sfx_explosion_ground_large();                            /* extern */
 s32 score_add();                            /* extern */
 
 void func_001E4460(void) {
     reg_d0.w = 0x385;
     score_add();
-    func_0018D580();
+    sfx_explosion_ground_large();
     func_001E4490();
 }
 
@@ -2845,7 +2845,7 @@ void func_001E4490(void) {
 void func_001E44F0(void) {
     reg_d0.w = 0x385;
     score_add();
-    func_0018D580();
+    sfx_explosion_ground_large();
     func_001E4520();
 }
 

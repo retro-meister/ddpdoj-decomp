@@ -132,10 +132,10 @@ void func_001E5BF0(void) {
 
 s32 boss_part_hide();
 s32 explosion_burst_small();
-s32 func_0018D4E0();
-s32 func_0018D500();
-s32 func_0018D560();
-s32 func_0018D580();
+s32 sfx_explosion_air_small();
+s32 sfx_explosion_air_medium();
+s32 sfx_explosion_ground_medium();
+s32 sfx_explosion_ground_large();
 extern u8 D_0026F260[];
 extern u8 D_0026F280[];
 extern u8 D_0026F290[];
@@ -222,7 +222,7 @@ void func_001E5C60() {
             func_001E58E0();
             reg_d0.w = 5;
             boss_part_hide();
-            func_0018D560();
+            sfx_explosion_ground_medium();
             *(u16 *)(reg_a4 + 4) = 8U;
             *(u8 *)(reg_a4 + 3) = 1U;
         }
@@ -250,7 +250,7 @@ void func_001E5C60() {
             boss_part_hide();
             reg_d0.w = 4;
             boss_part_hide();
-            func_0018D4E0();
+            sfx_explosion_air_small();
             *(u16 *)(reg_a4 + 4) = 8U;
             *(u8 *)(reg_a4 + 3) = 2U;
         }
@@ -259,7 +259,7 @@ void func_001E5C60() {
     if (temp_a0_3 == 2) {
         *(u16 *)(reg_a4 + 4) -= 1;
         if ((s16) *(u16 *)(reg_a4 + 4) < 0) {
-            func_0018D500();
+            sfx_explosion_air_medium();
             reg_d2.h[1] = ENTITY(reg_a6)[3].y.h;
             reg_d2.h[0] = ENTITY(reg_a6)[3].x.h;
             reg_a1 = (u8 *)D_0026F290;
@@ -304,7 +304,7 @@ void func_001E5C60() {
             boss_part_hide();
             reg_d0.w = 3;
             boss_movement_start();
-            func_0018D580();
+            sfx_explosion_ground_large();
             *(s16 *)reg_a4 = 0;
         }
     }
@@ -405,7 +405,7 @@ void func_001E62B0() {
 s32 boss_flash_start();
 s32 boss_flash_running();
 s32 func_0013B2E0();
-s32 func_0018D660();
+s32 sfx_explosion_boss();
 extern u8 D_0026F320[];
 extern u16 D_0026F350[];
 extern u16 D_0026F3A0[];
@@ -455,7 +455,7 @@ void func_001E6540(arg1)
         reg_d3.h[0] = 0xC;
         reg_d0.h[0] = 0;
         explosion_burst_small();
-        func_0018D660();
+        sfx_explosion_boss();
         var_a1 = 5;
         *(u8 *)(reg_a4 + 3) = 5U;
         *(u16 *)(reg_a4 + 4) = 0x80U;

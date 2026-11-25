@@ -72,7 +72,7 @@ s32 bullet_fire256_double();
 s32 explosion_spawn();
 s32 enemy_hitbox_debug_draw();
 s32 enemy_path_step();
-s32 func_0018D540();
+s32 sfx_explosion_ground_small();
 s32 entity_draw_layer5();
 s32 sprite_draw_layer4();
 s32 score_add_no_chain();
@@ -283,7 +283,7 @@ next_3:
             *(s16 *)(reg_a0 + 0x1E) = 0x10;
             *(s16 *)(reg_a0 + 0x12) = 0;
             *(s16 *)(reg_a0 + 0x14) = 0;
-            func_0018D540();
+            sfx_explosion_ground_small();
             enemy_remove();
         }
     }

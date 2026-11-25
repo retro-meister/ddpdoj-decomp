@@ -5,10 +5,10 @@
 void func_00237D50();
 
 #ifdef DEATH_LABEL
-extern void func_0018DD40(void);
+extern void voice_ok(void);
 extern char death_D_00277690[];
 extern char death_D_002776B0[];
-extern u16 D_0028E3C0;
+extern u16 g_attract_demo;
 extern u16 g_p2_score_digits;
 extern u16 g_p1_score_digits;
 extern u16 g_two_player_seen;
@@ -36,7 +36,7 @@ void replay_filter_input(void) {
     if (g_simulation_active != 0) {
         return;
     }
-    switch (D_0028E3C0) {
+    switch (g_attract_demo) {
     case 0:
         break;
     default:
@@ -72,7 +72,7 @@ void replay_filter_input(void) {
                     D_0028ED58 = 1;
                 }
                 if (D_0028ED58 != 0) {
-                    func_0018DD40();
+                    voice_ok();
                     printf(death_D_002776B0);
                 }
             }
@@ -132,10 +132,10 @@ void replay_filter_input(void) {
     reg_d7.w = save_d7;
 }
 #else
-extern void func_0018DD40(void);
+extern void voice_ok(void);
 extern char D_0028BEB0[];
 extern char D_0028BED0[];
-extern u16 D_0028E3C0;
+extern u16 g_attract_demo;
 extern u16 g_p2_score_digits;
 extern u16 g_p1_score_digits;
 extern u16 g_two_player_seen;
@@ -184,7 +184,7 @@ void replay_filter_input(void) {
         case 0:
             break;
         case 2:
-            if (D_0028ED70_as_u32 > 2 && D_0028ED58 == 0 && D_0028E3C0 == 0) {
+            if (D_0028ED70_as_u32 > 2 && D_0028ED58 == 0 && g_attract_demo == 0) {
                 if (D_0028EC24 == 0) {
                     if (reg_d0.b[0] & 0x7F) {
                         D_0028ED58 = 1;
@@ -193,7 +193,7 @@ void replay_filter_input(void) {
                     D_0028ED58 = 1;
                 }
                 if (D_0028ED58 != 0) {
-                    func_0018DD40();
+                    voice_ok();
                     printf((const char *)D_0028BED0);
                 }
             }
@@ -775,7 +775,7 @@ extern u16 D_0028E314;
 extern u16 D_0028E318;
 extern u8 D_0028E368;
 extern u8 D_0028E370;
-extern u16 D_0028E3C0;
+extern u16 g_attract_demo;
 extern u8 D_0028E3F8_as_u8;
 extern u8 D_0028ED58;
 extern u8 D_0028ED5C;
@@ -834,7 +834,7 @@ void func_00237DF0(void) {
         func_0023B720(D_006CB1D4);
     }
 #ifndef DEATH_LABEL
-    if (D_0028E3C0 == 0)
+    if (g_attract_demo == 0)
 #endif
     {
         if (D_006C58A4[0] != 0xFF) {
@@ -890,7 +890,7 @@ extern u16 D_0028E3E0;
 extern u16 D_0028E3E4;
 extern u16 D_0028E3E8;
 extern u16 D_0028E3EC;
-extern u16 D_0028E3F0;
+extern u16 g_game_frame;
 extern u16 g_score_task_active;
 extern u16 g_score_panel_intro;
 extern s32 D_0028E8BC;
@@ -921,7 +921,7 @@ void func_00238010(void) {
     s32 func_001719A0();
     s32 func_001719B0();
     s32 func_001719D0();
-    s32 func_0018D190();
+    s32 music_play_bgm2();
     s32 base;
     u32 save_d0;
     u32 save_d1;
@@ -975,7 +975,7 @@ void func_00238010(void) {
         if ((D_006C8E56[0] != 0) && (step < 0x65)) {
             deferred_text_reset();
 #ifndef DEATH_LABEL
-            if (D_0028E3C0 != 0) {
+            if (g_attract_demo != 0) {
                 func_00137CC0();
             }
 #endif
@@ -1024,9 +1024,9 @@ void func_00238010(void) {
 #ifdef DEATH_LABEL
                 if (g_replay_header.stage == 0) {
 #else
-                if ((g_replay_header.stage == 0) && (D_0028E3C0 == 0)) {
+                if ((g_replay_header.stage == 0) && (g_attract_demo == 0)) {
 #endif
-                    func_0018D190();
+                    music_play_bgm2();
                 }
                 func_00135110();
                 D_0028ED5C = 0;
@@ -1048,7 +1048,7 @@ void func_00238010(void) {
                 D_0028ED5C = 0;
             }
             if (g_scroll_line == 0x38) {
-                D_0028E3F0 = 0x11A;
+                g_game_frame = 0x11A;
                 D_0028E3E4 = 2;
                 D_0028E3E0 = 2;
                 D_0028E3EC = 0;
@@ -1200,7 +1200,7 @@ void func_00238690(void) {
     extern void func_001719A0(void);
     extern void func_001719B0(void);
     extern void func_001719D0(void);
-    extern void func_0018D190(void);
+    extern void music_play_bgm2(void);
     u32 save_d0;
     u32 save_d1;
     u32 save_d2;
@@ -1273,7 +1273,7 @@ void func_00238690(void) {
             g_loop = g_replay_header.round;
             func_00135110();
             if (g_replay_header.stage == 0) {
-                func_0018D190();
+                music_play_bgm2();
             }
         }
         break;

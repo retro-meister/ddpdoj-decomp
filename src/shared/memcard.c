@@ -598,22 +598,22 @@ void func_0022CFE0(void) {
     }
 }
 
-void func_0018D4E0(void);
-void func_0018D9B0(void);
-void func_0018D9F0(void);
-void func_0018DA30(void);
+void sfx_explosion_air_small(void);
+void sfx_extend(void);
+void sfx_countdown(void);
+void sfx_confirm(void);
 
 void func_0022D240(s32 arg0) {
     if (arg0 == 2) {
-        func_0018DA30();
+        sfx_confirm();
         return;
     }
     if (arg0 == 1) {
-        func_0018D9F0();
+        sfx_countdown();
     } else if (arg0 == 10) {
-        func_0018D9B0();
+        sfx_extend();
     } else if (arg0 == 11) {
-        func_0018D4E0();
+        sfx_explosion_air_small();
     }
 }
 
@@ -4468,7 +4468,7 @@ extern u8 g_pad_vib_enabled;
 extern u8 g_stage_map_enabled;
 extern u8 D_0028E2D8;
 extern u8 g_screen_wide;
-extern u8 D_0028E2E0;
+extern u8 g_bgm_alternate_set;
 extern u16 D_0028E300;
 extern u16 D_0028E32C;
 extern u8 D_0028E354;
@@ -4583,7 +4583,7 @@ void func_002345B0(void) {
     g_mc_save_buf_as_SaveBlock.b275 = g_display_offset_y;
     g_mc_save_buf_as_SaveBlock.b276 = D_0028E258;
     g_mc_save_buf_as_SaveBlock.h278 = D_0028E300;
-    g_mc_save_buf_as_SaveBlock.b59C = D_0028E2E0;
+    g_mc_save_buf_as_SaveBlock.b59C = g_bgm_alternate_set;
     g_mc_save_buf_as_SaveBlock.b59D = g_screen_wide;
     g_mc_save_buf_as_SaveBlock.b59E = D_0028E2D8;
     g_mc_save_buf_as_SaveBlock.b59F = D_0028E354;
@@ -4735,7 +4735,7 @@ void func_00234EF0(void) {
     g_display_offset_y = g_mc_save_buf_as_SaveBlock.b275;
     D_0028E258 = g_mc_save_buf_as_SaveBlock.b276;
     D_0028E300 = g_mc_save_buf_as_SaveBlock.h278;
-    D_0028E2E0 = g_mc_save_buf_as_SaveBlock.b59C;
+    g_bgm_alternate_set = g_mc_save_buf_as_SaveBlock.b59C;
     g_screen_wide = g_mc_save_buf_as_SaveBlock.b59D;
     D_0028E2D8 = g_mc_save_buf_as_SaveBlock.b59E;
     D_0028E354 = g_mc_save_buf_as_SaveBlock.b59F;
@@ -4833,7 +4833,7 @@ void func_00235890(void) {
     D_006A3E50.b275 = g_display_offset_y;
     D_006A3E50.b276 = D_0028E258;
     D_006A3E50.h278 = D_0028E300;
-    D_006A3E50.b59C = D_0028E2E0;
+    D_006A3E50.b59C = g_bgm_alternate_set;
     D_006A3E50.b59D = g_screen_wide;
     D_006A3E50.b59E = D_0028E2D8;
     D_006A3E50.b59F = D_0028E354;
@@ -4991,7 +4991,7 @@ s32 func_00235ED0(void) {
         goto fail;
     }
     stage++;
-    if (D_006A3E50.b59C != D_0028E2E0) {
+    if (D_006A3E50.b59C != g_bgm_alternate_set) {
         printf("com_bgm\n");
         goto fail;
     }
@@ -5069,7 +5069,7 @@ s32 func_002365A0(void) {
     return 0;
 }
 
-extern void func_0018D9B0(void);
+extern void sfx_extend(void);
 extern s32 D_00271FA0[];
 extern s32 D_00271FA4[];
 extern s32 D_00271FA8[];
@@ -5091,7 +5091,7 @@ void func_00236680(void) {
         break;
     case 1:
         if (pressed & 1) {
-            func_0018D9B0();
+            sfx_extend();
             g_mc_step++;
         } else {
             g_mc_step = 3;
@@ -5106,7 +5106,7 @@ void func_00236680(void) {
         break;
     case 3:
         if (pressed & 2) {
-            func_0018D9B0();
+            sfx_extend();
             g_mc_step++;
         } else {
             g_mc_step = 5;
@@ -5121,7 +5121,7 @@ void func_00236680(void) {
         break;
     case 5:
         if (pressed & 8) {
-            func_0018D9B0();
+            sfx_extend();
             g_mc_step++;
         } else {
             g_mc_step = 7;

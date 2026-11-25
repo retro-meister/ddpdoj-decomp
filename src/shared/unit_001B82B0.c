@@ -87,7 +87,7 @@ extern u8 D_00262570[];
 extern u8 D_0027F2F0[];
 extern u16 D_0028E3E0;
 extern u16 D_0028E3EC;
-extern u16 D_0028E3F0;
+extern u16 g_game_frame;
 extern u16 D_0028E854_as_u16;
 extern u8 D_0029A530_as_u8_a[];
 extern u16 g_side_scroll_step[];
@@ -119,7 +119,7 @@ void func_001B8440(void) {
 next_1:
     reg_tmp.w = reg_d5.w;
     reg_d5.h[1] = reg_tmp.h[0];
-    reg_d5.h[0] = D_0028E3F0;
+    reg_d5.h[0] = g_game_frame;
     reg_a6 = (u8 *)D_0029A530_as_u8_a;
     goto loop_2;
 next_2:

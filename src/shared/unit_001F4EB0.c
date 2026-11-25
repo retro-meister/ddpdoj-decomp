@@ -235,7 +235,7 @@ s32 boss_phase_stop_all();                            /* extern */
 s32 boss_animation_stop();                            /* extern */
 s32 boss_attack_stop_all();                            /* extern */
 s32 func_0013F3C0();                            /* extern */
-s32 func_0018DEE0();                            /* extern */
+s32 music_stop();                            /* extern */
 s32 func_002016D0();                            /* extern */
 s32 func_00203460();                            /* extern */
 s32 func_0020ED10();                            /* extern */
@@ -243,7 +243,7 @@ extern u8 D_0028E855;
 
 void func_001F5520(void) {
     s32 boss_phase_start(s32, s32, s32, s32);
-    func_0018DEE0();
+    music_stop();
     func_0020ED10();
     if (D_0028E2E8 == 0) {
         D_0028E855 |= 0x40;
@@ -478,12 +478,12 @@ next_9:
 
 s32 boss_part_hide();
 s32 func_0013F3C0();
-s32 func_0018DEE0();
+s32 music_stop();
 s32 func_0020ED10();
 
 void func_001F5BB0(void) {
     s32 boss_phase_start();
-    func_0018DEE0();
+    music_stop();
     func_0020ED10();
     *(u16 *)(reg_a5 + 0x1A) = 0x6270;
     func_0013F3C0();

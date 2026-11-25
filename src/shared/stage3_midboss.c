@@ -352,7 +352,7 @@ loop_1:
     }
 }
 
-s32 func_0018D580();
+s32 sfx_explosion_ground_large();
 extern u8 D_00263470[];
 
 void func_001D5150() {
@@ -363,7 +363,7 @@ void func_001D5150() {
         reg_d2.h[1] = ENTITY(reg_a6)[1].y.h;
         reg_d2.h[0] = ENTITY(reg_a6)[1].x.h;
         func_001D5040();
-        func_0018D580();
+        sfx_explosion_ground_large();
     }
 }
 
@@ -375,7 +375,7 @@ void func_001D51C0() {
         reg_d2.h[1] = ENTITY(reg_a6)[2].y.h;
         reg_d2.h[0] = ENTITY(reg_a6)[2].x.h;
         func_001D5040();
-        func_0018D580();
+        sfx_explosion_ground_large();
     }
 }
 
@@ -383,8 +383,8 @@ void func_001D51C0() {
 s32 func_00138A40();
 s32 explosion_burst_small();
 s32 func_0013B2E0();
-s32 func_0018D500();
-s32 func_0018D5C0();
+s32 sfx_explosion_air_medium();
+s32 sfx_explosion_extra_1();
 s32 rng_next();
 extern u16 D_002634F0[];
 extern u16 D_00263540[];
@@ -440,7 +440,7 @@ void func_001D5230(void) {
                 reg_d3.h[0] = 0xC;
                 reg_d0.h[0] = 0;
                 explosion_burst_small();
-                func_0018D5C0();
+                sfx_explosion_extra_1();
                 var_a1 = (u8 *)((void *)0x10);
                 *(u8 *)(reg_a5 + 0x27) = 0x10U;
                 *(u8 *)(reg_a5 + 0x24) = 2U;
@@ -451,7 +451,7 @@ void func_001D5230(void) {
             *(u8 *)(reg_a5 + 0x27) -= 1;
             if ((s32) reg_tmp.b[0] <= 0) {
                 *(u8 *)(reg_a5 + 0x27) = (u8) *(u8 *)(reg_a5 + 0x26);
-                func_0018D500();
+                sfx_explosion_air_medium();
                 reg_a1 = (u8 *)(D_002634F0);
                 reg_a1 += *(u16 *)(reg_a5 + 0x2A);
                 reg_d1.h[0] = *(u16 *)reg_a1;
@@ -1230,7 +1230,7 @@ void func_001D6C90(void) {
     *(s8 *)(reg_a5 + 0x17) = 0;
 }
 
-s32 func_0018D4E0();
+s32 sfx_explosion_air_small();
 s32 entity_draw_layer5_zoom();
 s32 func_00201F20();
 s32 entity_check_bounds();
@@ -1274,7 +1274,7 @@ next_2:
     *(u16 *) (reg_a0 + 4) = *(u16 *) (reg_a6 + 4);
     *(u16 *) (reg_a0 + 0x1A) = *(u16 *) (reg_a6 + 0x1A);
     *(u16 *) (reg_a0 + 0x1E) = 0x10;
-    func_0018D4E0();
+    sfx_explosion_air_small();
 next_1:
     enemy_remove();
     return;

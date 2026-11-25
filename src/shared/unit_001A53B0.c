@@ -294,7 +294,7 @@ void func_001A5AD0(void) {
 }
 
 extern u16 D_0028E074;
-extern u16 D_0028E3F0;
+extern u16 g_game_frame;
 extern u8 g_p1_hyper_combo_decay_as_u8;
 extern u8 D_0028E5DD;
 extern u16 g_p1_max_hits;
@@ -329,10 +329,10 @@ void func_001A5B50(void) {
             func_001A8A40();
         } else {
             g_p1_score_panel_flags &= 0xFE;
-            if (D_0028E3F0 & 0x40) {
+            if (g_game_frame & 0x40) {
                 if (!(D_0029F261[0] & 0x40) && (reg_d6.h[0] = D_0029CD9E[0], (D_0029CD9E[0] != 0))) {
                     reg_d0.w = 0x3F;
-                    reg_d0.h[0] &= D_0028E3F0;
+                    reg_d0.h[0] &= g_game_frame;
                     if ((s32) reg_d0.h[0] < 0x14) {
                         func_001A5400();
                         reg_d1.w = 0x64C00400;
@@ -434,10 +434,10 @@ void func_001A5DD0(void) {
             func_001A8A40();
         } else {
             g_p2_score_panel_flags &= 0xFE;
-            if (D_0028E3F0 & 0x40) {
+            if (g_game_frame & 0x40) {
                 if (!(D_0029F1F1[0] & 0x40) && (reg_d6.h[0] = D_0029CD8E[0], (D_0029CD8E[0] != 0))) {
                     reg_d0.w = 0x3F;
-                    reg_d0.h[0] &= D_0028E3F0;
+                    reg_d0.h[0] &= g_game_frame;
                     if ((s32) reg_d0.h[0] < 0x2C) {
                         func_001A5430();
                         reg_d1.w = 0x64C02800;
@@ -507,7 +507,7 @@ block_29:
     func_001A6510();
 }
 
-s32 func_0018DD00();
+s32 voice_hyper();
 s32 sprite_palette_load();
 s32 func_001AC8C0();
 s32 func_001AC8E0();
@@ -666,7 +666,7 @@ next_200:
 next_220:
     if (D_0028E61D & 1) goto next_240;
     D_0028E61D |= 1;
-    func_0018DD00();
+    voice_hyper();
 next_240:
     reg_d1.w = 0x67C001C0;
     reg_d2.w = 0xCA1;
@@ -1117,8 +1117,8 @@ void func_001A6E70(void) {
     }
 }
 
-s32 func_0018DA10();
-s32 func_0018DED0();
+s32 sfx_bonus_count();
+s32 music_fade_out();
 s32 func_001A9180();
 s32 func_001A9190();
 s32 func_001A97F0();
@@ -1161,7 +1161,7 @@ next_0:
     g_boss_hit_bonus_timer -= 1;
     if ((s16)g_boss_hit_bonus_timer >= 0) goto next_9;
     if (g_boss_hit_bonus_as_u32 == 0) goto next_1;
-    func_0018DA10();
+    sfx_bonus_count();
 next_1:
     reg_d0.w = 0x10;
     reg_d0.h[0] -= g_boss_hits;
@@ -1198,12 +1198,12 @@ next_7:
     D_0028E854 |= 2;
     if (g_simulation_active == 0) goto next_11;
     D_0028E2A4_as_s8 = 0x78;
-    func_0018DED0();
+    music_fade_out();
     goto next_12;
 next_11:
     if (g_stage == 4) goto next_12;
     D_0028E2A4_as_s8 = 0x78;
-    func_0018DED0();
+    music_fade_out();
 next_12:
     reg_d0.w = 0;
     g_boss_hits = reg_d0.h[0];
@@ -1246,7 +1246,7 @@ next_13:
 next_14:
     reg_d1.w = g_boss_hit_bonus_as_u32;
     if (reg_d1.w == 0) goto next_15;
-    func_0018DA10();
+    sfx_bonus_count();
     reg_d0.w = reg_d1.w;
     reg_d0.w >>= 4;
     if (g_player1[0] >= 0) goto next_16;
@@ -1458,7 +1458,7 @@ next_2:
 next_3:
     reg_d5.h[0] = reg_d2.h[0];
     reg_d2.w = 6;
-    reg_d2.h[0] &= D_0028E3F0;
+    reg_d2.h[0] &= g_game_frame;
     reg_a0 = (u8 *)D_0028DAD0;
     reg_d2.h[0] = (reg_d2.h[0] != 0) ? *(u16 *)((u8 *)reg_a0 + ((s16)reg_d2.h[0] & ~1)) : *(u16 *)reg_a0;
     reg_a0 = (u8 *)D_0026B870;
@@ -1998,7 +1998,7 @@ extern s32 g_maximum_text_anim_sprite;
 void func_001A89E0(void) {
     reg_d0.w = 0x3F;
     reg_a0 = (u8 *)D_0026BAB0;
-    reg_d0.h[0] &= D_0028E3F0;
+    reg_d0.h[0] &= g_game_frame;
     reg_d0.h[0] += reg_d0.h[0];
     reg_d0.h[0] += reg_d0.h[0];
     g_maximum_text_anim_sprite = *(s32 *)(reg_a0 + reg_d0.h[0]);

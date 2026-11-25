@@ -71,7 +71,7 @@ s32 task_start();
 extern u8 death_D_0026EE20[];
 extern u32 death_D_0026FD90[];
 extern u16 D_0028E3BC;
-extern u16 D_0028E3C0;
+extern u16 g_attract_demo;
 extern u32 D_0028E7F8;
 extern u8 *D_0028E7FC;
 extern u16 D_0028E810;
@@ -112,7 +112,7 @@ void func_00137C90(void) {
     save_a4 = reg_a4;
     save_a5 = reg_a5;
     save_a6 = reg_a6;
-    D_0028E3C0 = 1;
+    g_attract_demo = 1;
     func_00137C50();
     D_0028E824 = 0x10;
     D_0028E820 = 0x960;
@@ -166,14 +166,14 @@ extern s8 D_0028DEF8_as_s8;
 extern s16 D_0028DEFC_as_s16;
 extern s16 D_0028DF00_as_s16;
 extern s8 D_0028DF08_as_s8;
-extern s16 D_0028E3C0_as_s16;
+extern s16 g_attract_demo_as_s16;
 extern s8 D_0028EC24;
 
 void func_00137C90(void) {
     D_0028DF08_as_s8 = 0;
     D_0028DF00_as_s16 = 0x960;
     D_0028DEFC_as_s16 = 0;
-    D_0028E3C0_as_s16 = 1;
+    g_attract_demo_as_s16 = 1;
     D_0028DEF8_as_s8 = 1;
     D_0028EC24 = 0;
 }
@@ -257,7 +257,7 @@ extern u16 D_0028DEFC;
 extern u16 D_0028DF00;
 extern u8 D_0028DF04;
 extern u8 D_0028DF08;
-extern s16 D_0028E3C0_as_s16;
+extern s16 g_attract_demo_as_s16;
 extern u8 D_0028ED30;
 extern u8 D_0028ED31;
 extern u8 D_0028ED32;
@@ -358,7 +358,7 @@ void func_00137E00(void) {
         if (D_0028DF00 == 0) {
             D_0028DF08 = 0;
             cond_flag = 0;
-            D_0028E3C0_as_s16 = 0;
+            g_attract_demo_as_s16 = 0;
             D_0028ED7C_as_s8 = 0;
             D_0028ED74_as_s8 = 0;
             func_0012FA50();
@@ -456,8 +456,8 @@ void func_001719D0(void);
 extern u8 death_D_0026FDA0[];
 extern u8 D_0028E370;
 extern u16 D_0028E3BC;
-extern u16 D_0028E3C0;
-extern u16 D_0028E3F0;
+extern u16 g_attract_demo;
+extern u16 g_game_frame;
 extern u16 D_0028E814;
 extern u16 D_0028E818;
 extern u16 D_0028E81C;
@@ -512,7 +512,7 @@ void func_00137E00(void) {
     reg_d2.w = 5;
     reg_d3.w = 0x1B;
     deferred_text_put();
-    reg_d0.h[0] = D_0028E3F0;
+    reg_d0.h[0] = g_game_frame;
     if ((reg_d0.h[0] &= 1) == 0) {
         D_0028E81C += 4;
         D_0028E81C &= 0xF;
@@ -580,7 +580,7 @@ finished:
     if ((s16) D_0028E3BC >= 3) {
         D_0028E3BC = 0;
     }
-    D_0028E3C0 = 0;
+    g_attract_demo = 0;
     cond_flag = 0;
     reg_d0.w = save_d0;
     reg_d1.w = save_d1;

@@ -54,37 +54,37 @@ void func_00226890(void) {
     D_0028EC3C_as_u8 = 4;
 }
 
-s32 func_0018D4D0();
+s32 sfx_menu_move();
 s32 func_002263F0();
 extern u8 D_0028EC34;
 extern s8 D_0028EC40;
 extern u8 D_006A0E50[];
 void func_002268A0(void) {
-    s32 sound_request();
+    s32 sfx_menu_confirm();
     s32 temp_a0;
     s32 temp_a0_3;
     u16 temp_a0_2;
 
     temp_a0 = g_pad_trigger[D_0028EC34];
     if (temp_a0 & 0x40) {
-        sound_request();
+        sfx_menu_confirm();
         func_002263F0();
     } else if (temp_a0 & 0x20) {
         temp_a0_2 = *(u16 *)(D_006A0E50 + (D_0028EC40 << 0xA));
         if ((temp_a0_2 != 0) && (temp_a0_2 != 3)) {
             D_0028EC3C = 6;
-            sound_request();
+            sfx_menu_confirm();
         }
     }
     temp_a0_3 = g_pad_repeat[D_0028EC34];
     if (temp_a0_3 & 0x1000) {
-        func_0018D4D0();
+        sfx_menu_move();
         D_0028EC40 -= 1;
         if (0 > D_0028EC40) {
             D_0028EC40 = 9;
         }
     } else if (temp_a0_3 & 0x4000) {
-        func_0018D4D0();
+        sfx_menu_move();
         D_0028EC40 += 1;
         if (D_0028EC40 >= 0xA) {
             D_0028EC40 = 0;
@@ -667,7 +667,7 @@ void func_002276C0(void) {
     }
     D_0028EC18_as_Fade.flag = D_0028EB58;
     if (confirm != 0) {
-        sound_request();
+        sfx_menu_confirm();
         D_0028EC18_as_Fade.step += 1;
         if (last == D_0028EC18_as_Fade.flag) {
             func_00222260(0);
@@ -774,19 +774,19 @@ void func_002279A0(void) {
         if (last != D_0028EBE8_as_Fade.flag) {
             selected = D_0028EBE8_as_Fade.flag - 1;
             if (D_0028E258 < selected) {
-                func_0018D490();
+                sfx_menu_denied();
                 return;
             }
 #ifndef DEATH_LABEL
             D_0028E280 = selected;
             printf(D_00289E38, D_0028E280);
 #endif
-            sound_request();
+            sfx_menu_confirm();
             D_0028EBE8_as_Fade.step += 1;
             D_0068DF02[0] = D_0028EBE8_as_Fade.flag - 1;
             func_002272D0();
         } else {
-            sound_request();
+            sfx_menu_confirm();
             D_0028EC18_as_Fade.flag = 2;
             D_0028EBE8_as_Fade.state = 0;
             D_0028EB84 = 7;
@@ -1165,7 +1165,7 @@ void func_00228580(void) {
     if (confirm != 0) {
         switch (D_0028EB58) {
         case 1:
-            sound_request();
+            sfx_menu_confirm();
             D_0028EC10_as_Fade.state = 0;
             D_0028EB84 = 0x11;
             D_0028EC10_as_Fade.value = 0;
@@ -1175,7 +1175,7 @@ void func_00228580(void) {
             D_0028EC10_as_Fade.step += 1;
             break;
         case 2:
-            sound_request();
+            sfx_menu_confirm();
             D_0028EC10_as_Fade.state = 0;
             D_0028EB84 = 0x12;
             D_0028EC10_as_Fade.value = 0;
@@ -1185,7 +1185,7 @@ void func_00228580(void) {
             D_0028EC10_as_Fade.step += 1;
             break;
         case 3:
-            sound_request();
+            sfx_menu_confirm();
             D_0028EC10_as_Fade.state = 0;
             D_0028EB84 = 0x13;
             D_0028EC10_as_Fade.value = 0;
@@ -1195,7 +1195,7 @@ void func_00228580(void) {
             D_0028EC10_as_Fade.step += 1;
             break;
         case 4:
-            sound_request();
+            sfx_menu_confirm();
             D_0028EC10_as_Fade.state = 0;
             D_0028EB84 = 0x14;
             D_0028EC10_as_Fade.value = 0;
@@ -1205,7 +1205,7 @@ void func_00228580(void) {
             D_0028EC10_as_Fade.step += 1;
             break;
         case 5:
-            sound_request();
+            sfx_menu_confirm();
             D_0028EC10_as_Fade.state = 0;
             D_0028EC18_as_Fade.flag = 1;
             D_0028EC10_as_Fade.value = 0;
@@ -1317,11 +1317,11 @@ void func_00228910(void) {
     if (confirm != 0) {
         switch (D_0028EB58) {
         case 6:
-            sound_request();
+            sfx_menu_confirm();
             memcpy(D_0068DED8_as_s16_a, D_00270828_as_s16_a, 10);
             break;
         case 7:
-            sound_request();
+            sfx_menu_confirm();
             D_0028EC08_as_Fade.state = 0;
             D_0028EC10_as_Fade.flag = 1;
             D_0028EC08_as_Fade.value = 0;
@@ -1337,7 +1337,7 @@ void func_00228910(void) {
         if (!(0 > item)) {
             value = &D_0068DED8_as_s16_a[item];
             count = D_0028DCA8[item];
-            func_0018D4C0();
+            sfx_menu_tick();
             if (item == 2) {
                 D_0068DEF6[0] = 6;
                 D_0068DEF8[0] = 8;
@@ -1500,16 +1500,16 @@ void func_00228E80(void) {
     if (confirm != 0) {
         switch (sel) {
         case 3:
-            sound_request();
+            sfx_menu_confirm();
             D_0068DEF0_as_s16_a[10] += 1;
             D_0068DEF0_as_s16_a[10] &= 1;
             break;
         case 10:
-            sound_request();
+            sfx_menu_confirm();
             memcpy(D_0068DEF0_as_s16_a, D_00270810_as_s16_a, 0x16);
             break;
         case 11:
-            sound_request();
+            sfx_menu_confirm();
             D_0028EC00_as_Fade.state = 0;
             D_0028EC10_as_Fade.flag = 2;
             D_0028EC00_as_Fade.value = 0;
@@ -1532,11 +1532,11 @@ void func_00228E80(void) {
             pad = g_pad_fast_repeat_timer[D_0028EC24];
             if (pad == 0 || pad == 0xE) {
                 if (!(*value == 0 && dir == -1) && !(*value == count - 1 && dir == 1)) {
-                    func_0018D4C0();
+                    sfx_menu_tick();
                 }
             }
         } else {
-            func_0018D4C0();
+            sfx_menu_tick();
         }
         if (idx == 5) {
             if (D_0068DEF0_as_s16_a[5] == 0 && D_0068DEF0_as_s16_a[7] == 0) {
@@ -1869,11 +1869,11 @@ void func_00229E20(void) {
     if (confirm != 0) {
         switch (D_0028EB58) {
         case 7:
-            sound_request();
+            sfx_menu_confirm();
             memcpy(D_0068DEC8_as_s16_a, D_00270838_as_s16_a, 12);
             break;
         case 8:
-            sound_request();
+            sfx_menu_confirm();
             D_0028EBF8.state = 0;
             D_0028EC10_as_Fade.flag = 3;
             D_0028EBF8.value = 0;
@@ -1889,7 +1889,7 @@ void func_00229E20(void) {
         if (!(0 > item)) {
             value = &D_0068DEC8_as_s16_a[item];
             count = D_00271458[item];
-            func_0018D4C0();
+            sfx_menu_tick();
             if (dir == -1) {
                 (*value)--;
                 if (0 > *value) {
@@ -1992,14 +1992,14 @@ void func_0022A2E0(void) {
     temp_a0 = g_pad_repeat[D_0028EC24];
     var_a1 = 0;
     if (temp_a0 & 0x8000) {
-        func_0018D4C0();
+        sfx_menu_tick();
         D_0028EBD8_as_Fade.flag -= 1;
         if (D_0028EBD8_as_Fade.flag < 0) {
             D_0028EBD8_as_Fade.flag = 9;
         }
         var_a1 = 1;
     } else if (temp_a0 & 0x2000) {
-        func_0018D4C0();
+        sfx_menu_tick();
         D_0028EBD8_as_Fade.flag += 1;
         if (D_0028EBD8_as_Fade.flag > 9) {
             D_0028EBD8_as_Fade.flag = 0;
@@ -2010,7 +2010,7 @@ void func_0022A2E0(void) {
         var_s0 = 1;
     }
     if (var_s0 != 0) {
-        sound_request();
+        sfx_menu_confirm();
         D_0028EBD8_as_Fade.state = 0;
         D_0028EB04 = 1;
         D_0028EBD8_as_Fade.value = 0;
@@ -2202,9 +2202,9 @@ void func_0022A930() {
 
 void func_0022A9A0()
 {
-    extern void sound_request(void);
+    extern void sfx_menu_confirm(void);
     if (g_pad_trigger[D_0028EC24] & 0x60) {
-        sound_request();
+        sfx_menu_confirm();
         D_0028EB54 = 2;
         D_0028EB34 = 2;
         D_0028EB64 = D_0028EB64 + 1;
@@ -2823,7 +2823,7 @@ typedef struct {
 } Row;
 
 extern void func_00236900(void);
-extern Row D_0068DF10_as_Row_a[];
+extern Row g_replay_file_headers_as_Row_a[];
 extern s16 D_006A0E50_as_s16_a_a512[][512];
 
 s32 func_0022BC60(void) {
@@ -2831,12 +2831,12 @@ s32 func_0022BC60(void) {
 
     func_00236900();
     for (i = 0; i < 10; i++) {
-        *(Row *)D_006A0E50_as_s16_a_a512[i] = D_0068DF10_as_Row_a[i];
+        *(Row *)D_006A0E50_as_s16_a_a512[i] = g_replay_file_headers_as_Row_a[i];
     }
     return 1;
 }
 
-s32 func_0018DEE0();
+s32 music_stop();
 extern char D_00289F10[];
 extern char D_00289F30[];
 extern s8 g_cd_async_state;
@@ -2854,7 +2854,7 @@ s32 func_0022BE60(u8 arg0) {
         D_0028EAB0 = arg0;
         D_0028EAB4 = state + 1;
         D_0028EAAC = g_load_buf;
-        func_0018DEE0();
+        music_stop();
         printf(D_00289F10);
         break;
     case 1:
@@ -3054,7 +3054,7 @@ s32 func_00135110();
 s32 func_001719A0();
 s32 func_001719B0();
 s32 func_001719D0();
-s32 func_0018D190();
+s32 music_play_bgm2();
 extern u8 g_pad_input_locked;
 extern u8 D_0028E2C4;
 extern u8 g_simulation_boss_start;
@@ -3167,7 +3167,7 @@ void func_0022C1F0() {
             fade_reset();
 #endif
             if (D_00684C8C[0] == 0) {
-                func_0018D190();
+                music_play_bgm2();
             }
         }
         break;

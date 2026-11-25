@@ -18,7 +18,7 @@ extern s16 D_0028E094_as_s16;
 
 
 #ifdef DEATH_LABEL
-extern u16 D_0028E3C0;
+extern u16 g_attract_demo;
 s32 death_func_001271E0(void);
 #endif
 
@@ -34,7 +34,7 @@ void func_0020B6A0(void) {
     reg_d4.h[0] = ENTITY(reg_a6)->flags.h;
     reg_a6 += 2;
 #ifdef DEATH_LABEL
-    if (D_0028E3C0 != 0) {
+    if (g_attract_demo != 0) {
         return;
     }
 #endif
@@ -225,7 +225,7 @@ extern u16 D_002BC7C0_as_u16_a[];
 extern u16 D_002BD440[];
 extern u16 D_002BF4F0_as_u16_a[];
 #ifdef DEATH_LABEL
-extern u16 D_0028E3C0;
+extern u16 g_attract_demo;
 extern u16 g_stage;
 extern u8 death_D_0029085C;
 extern u8 death_D_00290DC0;
@@ -359,7 +359,7 @@ loop_30:
                 reg_d4.h[0] -= ENTITY(reg_a6)->hit_y_plus.h;
                 if (!((s32) reg_d4.h[0] < 0xF800)) goto next_30;
 #ifdef DEATH_LABEL
-                if (D_0028E3C0 != 0) goto block_23;
+                if (g_attract_demo != 0) goto block_23;
 #endif
                 *(u8 *)(reg_a4 + 1) |= 0x10;
                 reg_d4.h[0] = D_0028E0A8;

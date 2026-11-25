@@ -236,7 +236,7 @@ s32 deferred_text_clear();
 s32 func_00130CC0();
 s32 func_00131610();
 s32 text_layer_print();
-s32 func_0018D9F0();
+s32 sfx_countdown();
 extern u8 D_00269B90[];
 extern u8 D_00269BA0[];
 #ifdef DEATH_LABEL
@@ -306,7 +306,7 @@ void func_00134410(void) {
     reg_d4.b[0] = (u8) *(s8 *)(reg_a4 + 0xA);
     if (*(u8 *)(reg_a4 + 0xD) != reg_d4.b[0]) {
         *(u8 *)(reg_a4 + 0xD) = (u8) reg_d4.b[0];
-        func_0018D9F0();
+        sfx_countdown();
     }
     reg_d4.w = 0;
     reg_d4.b[0] = (u8) *(s8 *)(reg_a4 + 0xA);
@@ -498,7 +498,7 @@ void func_00134750(void) {
     temp_a0 = *(u8 *)(reg_a4 + 0xD);
     if (temp_a0 != reg_d4.b[0]) {
         *(u8 *)(reg_a4 + 0xD) = (u8) reg_d4.b[0];
-        func_0018D9F0();
+        sfx_countdown();
     }
 }
 
@@ -584,8 +584,8 @@ void func_00134BA0(void) {
 }
 
 s32 func_0013B190();                            /* extern */
-s32 func_0018DE90();                            /* extern */
-s32 func_0018DEE0();                            /* extern */
+s32 sound_stop_effects();                            /* extern */
+s32 music_stop();                            /* extern */
 s32 task_reset_all();                            /* extern */
 s32 task_start();                            /* extern */
 extern u16 g_loop;
@@ -593,8 +593,8 @@ extern u16 g_stage;
 extern s8 D_0028ED64_as_s8;
 
 void func_00134BD0(void) {
-    func_0018DEE0();
-    func_0018DE90();
+    music_stop();
+    sound_stop_effects();
     func_0013B190();
     task_reset_all();
     reg_d0.h[0] = 0xE;

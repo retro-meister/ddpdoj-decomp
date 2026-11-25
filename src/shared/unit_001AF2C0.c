@@ -112,7 +112,7 @@ extern u8 D_002623B0[];
 extern u8 D_0028E304;
 extern u16 D_0028E314;
 extern u16 D_0028E318;
-extern u16 D_0028E3C0;
+extern u16 g_attract_demo;
 extern u16 g_loop;
 extern u8 D_0028ED58;
 extern u8 D_0028ED7C;
@@ -156,7 +156,7 @@ void func_001AF560(void) {
         goto block_50;
     }
 #else
-    if ((D_0028E3C0 == 0) && (D_0028ED7C == 2) && (D_0028ED58 == 0)) {
+    if ((g_attract_demo == 0) && (D_0028ED7C == 2) && (D_0028ED58 == 0)) {
         goto block_50;
     }
 #endif
@@ -195,7 +195,7 @@ block_51:
     if (g_loop != 0) {
         goto block_52;
     }
-    if (D_0028E3C0 != 0) {
+    if (g_attract_demo != 0) {
         goto block_52;
     }
     if (g_simulation_active == 1) {
@@ -206,7 +206,7 @@ block_51:
         goto block_50;
     }
 #else
-    if ((D_0028E3C0 == 0) && (D_0028ED7C == 2) && (D_0028ED58 == 0)) {
+    if ((g_attract_demo == 0) && (D_0028ED7C == 2) && (D_0028ED58 == 0)) {
         goto block_50;
     }
 #endif
@@ -290,13 +290,13 @@ block_52:
 typedef void (*Fn)();
 
 
-s32 func_0018DA30();
-s32 func_0018DA50();
+s32 sfx_confirm();
+s32 sfx_cursor_move();
 s32 func_0019DA80();
 extern u16 D_00251B20[];
 extern u16 D_00251B30[];
 extern u16 D_0028C128[];
-extern u16 D_0028E3F0;
+extern u16 g_game_frame;
 extern s32 D_0028E998;
 extern s32 D_0028E99C;
 
@@ -314,12 +314,12 @@ void func_001AF8F0(void) {
     if (reg_d0.w & 4) {
         *(u8 *)(reg_a5 + 0xF) -= 1;
         *(s8 *)(reg_a5 + 0xC) = 1;
-        func_0018DA50();
+        sfx_cursor_move();
     }
     if (reg_d0.w & 8) {
         *(u8 *)(reg_a5 + 0xF) += 1;
         *(s8 *)(reg_a5 + 0xC) = 1;
-        func_0018DA50();
+        sfx_cursor_move();
     }
     *(u8 *)(reg_a5 + 0xF) &= 1;
     reg_tmp.h[1] = *(u16 *)(reg_a4 + 0x10);
@@ -328,7 +328,7 @@ void func_001AF8F0(void) {
     *(u8 *)(reg_a0 + 1) = (u8) *(u8 *)(reg_a5 + 0xF);
     *(u16 *)(reg_a5 + 0x12) -= 1;
     if ((*(u8 *)(reg_a5 + 0x13) == 0) || (reg_d0.h[0] &= 0x70, (reg_d0.h[0] != 0))) {
-        func_0018DA30();
+        sfx_confirm();
         *(u16 *)(reg_a5 + 0x12) = 0x4B0U;
         if (reg_a0 == D_0029BF40) {
             D_0028E99C = (s32) *(u8 *)(reg_a0 + 1);
@@ -390,7 +390,7 @@ void func_001AF8F0(void) {
     if (*(u8 *)(reg_a5 + 6) != 0) {
         reg_a2 = (u8 *)(D_00251B30);
     }
-    reg_d0.h[0] = D_0028E3F0;
+    reg_d0.h[0] = g_game_frame;
     reg_d0.h[0] = (u16) ((s16) reg_d0.h[0] >> 1);
     reg_d0.h[0] &= 3;
     reg_d0.h[0] += reg_d0.h[0];
@@ -448,7 +448,7 @@ void func_001AFCC0(void) {
         } while (cond_flag != 0);
     }
     if (reg_d6.b[0] != reg_d7.b[0]) {
-        func_0018DA50();
+        sfx_cursor_move();
     }
     *(u8 *)(reg_a5 + 0xE) = (u8) reg_d7.b[0];
     reg_tmp.h[1] = *(u16 *)(reg_a4 + 0x10);
@@ -457,7 +457,7 @@ void func_001AFCC0(void) {
     *(u8 *)reg_a0 = *(u8 *)(reg_a5 + 0xE);
     *(u16 *)(reg_a5 + 0x12) -= 1;
     if ((*(u16 *)(reg_a5 + 0x12) == 0) || (reg_d0.h[0] &= 0x70, (reg_d0.h[0] != 0))) {
-        func_0018DA30();
+        sfx_confirm();
         func_001AF460();
         return;
     }
@@ -486,7 +486,7 @@ void func_001AFCC0(void) {
     if (*(u8 *)(reg_a5 + 6) != 0) {
         reg_a2 = (u8 *)(D_00251B30);
     }
-    reg_d0.h[0] = D_0028E3F0;
+    reg_d0.h[0] = g_game_frame;
     reg_d0.h[0] = (u16) ((s16) reg_d0.h[0] >> 1);
     reg_d0.h[0] &= 3;
     reg_d0.h[0] += reg_d0.h[0];
@@ -674,7 +674,7 @@ s32 sprite_draw_layer5();                            /* extern */
 s32 sprite_draw_layer5_zoom_keep();                            /* extern */
 
 void func_001B0470(void) {
-    if (D_0028E3F0 & 2) {
+    if (g_game_frame & 2) {
         sprite_draw_layer5();
         return;
     }
@@ -923,7 +923,7 @@ void func_001B0950(void) {
             reg_a1 = (u8 *)D_00251DF0;
             reg_d0.h[0] = 0x1E;
             reg_d6.w = 0x80005000;
-            reg_d0.h[0] &= D_0028E3F0;
+            reg_d0.h[0] &= g_game_frame;
             reg_d0.h[0] += reg_d0.h[0];
             reg_a1 += reg_d0.h[0];
         }
@@ -950,7 +950,7 @@ skip_4:
         if (D_0028E3EC != 0) {
             reg_a0 = (u8 *)D_00251D70;
             reg_d0.h[0] = 0x1E;
-            reg_d0.h[0] &= D_0028E3F0;
+            reg_d0.h[0] &= g_game_frame;
             reg_d0.h[0] += reg_d0.h[0];
             reg_a0 += reg_d0.h[0];
             reg_d6.h[1] = (*(u16 *)(reg_a0 + (0)));

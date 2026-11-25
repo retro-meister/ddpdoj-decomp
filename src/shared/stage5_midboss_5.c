@@ -678,7 +678,7 @@ void func_001FE100(void) {
 }
 
 s32 func_0014E030();
-extern u16 D_0028E3F0;
+extern u16 g_game_frame;
 
 void func_001FE120(void) {
     u16 temp_v1;
@@ -695,7 +695,7 @@ void func_001FE120(void) {
             reg_d0.h[0] += ENTITY(reg_a6)[2].draw.h;
             if (reg_d0.h[0] == 0) {
                 reg_d0.w = 0;
-                reg_d0.h[0] &= D_0028E3F0;
+                reg_d0.h[0] &= g_game_frame;
                 if (reg_d0.h[0] == 0) {
                     ENTITY(reg_a6)[2].sprite.h = 1U;
                     reg_d0.w = 0x4E;
@@ -886,7 +886,7 @@ void func_001FE6D0(void) {
     }
     if (ENTITY(reg_a6)[1].offset_x.h == 3) {
         reg_d1.w = 1;
-        reg_d1.h[0] &= D_0028E3F0;
+        reg_d1.h[0] &= g_game_frame;
         if (reg_d1.h[0] == 0) {
             reg_d0.b[0] = ENTITY(reg_a6)[1].hit_x_plus.b[1];
             reg_a4 = (u8 *)D_00266270;
@@ -1023,7 +1023,7 @@ void func_001FEA90(void) {
         ENTITY(reg_a6)[1].hit_x_plus.b[1] = 0U;
     }
     if (ENTITY(reg_a6)[1].draw.b.priority == 2) {
-        reg_d1.h[0] = D_0028E3F0;
+        reg_d1.h[0] = g_game_frame;
         reg_d1.b[0] &= 7;
         if (reg_d1.b[0] == 0) {
             reg_d0.b[0] = ENTITY(reg_a6)[1].draw.b.flip;
@@ -1162,8 +1162,8 @@ void func_001FF000(void) {
 
 s32 explosion_spawn();
 s32 explosion_burst_small();
-s32 func_0018D500();
-s32 func_0018D5C0();
+s32 sfx_explosion_air_medium();
+s32 sfx_explosion_extra_1();
 s32 func_001D5040();
 s32 rng_next();
 s32 func_00201710();
@@ -1215,7 +1215,7 @@ void func_001FF0B0(void) {
                 reg_d3.h[0] = 0xC;
                 reg_d0.h[0] = 0;
                 explosion_burst_small();
-                func_0018D5C0();
+                sfx_explosion_extra_1();
                 ENTITY(reg_a6)[4].offset_x.b[1] = 0x10U;
                 ENTITY(reg_a6)[4].offset_y.b[1] = 2U;
                 vibration_start_pad1(0xB4, 0x3C, 0x10);
@@ -1227,7 +1227,7 @@ void func_001FF0B0(void) {
             ENTITY(reg_a6)[4].offset_x.b[1] -= 1;
             if ((s32) reg_tmp.b[0] <= 0) {
                 ENTITY(reg_a6)[4].offset_x.b[1] = (u8) ENTITY(reg_a6)[4].offset_x.b[0];
-                func_0018D500();
+                sfx_explosion_air_medium();
                 reg_a1 = (u8 *)(D_00266290);
                 reg_a1 += ENTITY(reg_a6)[4].draw.h;
                 reg_d1.h[0] = *(u16 *)reg_a1;
@@ -1633,7 +1633,7 @@ void func_001FFD70() {
     enemy_set_task_work();
 }
 
-s32 func_0018D560();
+s32 sfx_explosion_ground_medium();
 s32 func_00202490();
 s32 direction_turn_toward();
 
@@ -1662,7 +1662,7 @@ block_1:
     *(u16 *)(reg_a0 + 2) = ENTITY(reg_a6)->y.h;
     *(u16 *)(reg_a0 + 4) = ENTITY(reg_a6)->x.h;
     *(s16 *)(reg_a0 + 0x1E) = 0x10;
-    func_0018D560();
+    sfx_explosion_ground_medium();
     enemy_remove();
     return;
 next_1:
@@ -1693,7 +1693,7 @@ next_6:
 next_7:
     if (!(*(u8 *)(reg_a5 + 0x18) & 1)) goto next_8;
     *(s8 *)(reg_a5 + 0x16) = 1;
-    reg_d0.h[0] = D_0028E3F0;
+    reg_d0.h[0] = g_game_frame;
     reg_d0.h[0] &= 1;
     if (reg_d0.h[0] != 0) goto next_8;
     *(u16 *)(reg_a5 + 0x1A) += 4;
@@ -1706,7 +1706,7 @@ next_8:
     if (!(*(u8 *)(reg_a5 + 0x18) & 2)) goto next_11;
     *(s8 *)(reg_a5 + 0x16) = 1;
     if (*(u16 *)(reg_a5 + 0x1E) == 0) goto next_10;
-    reg_d0.h[0] = D_0028E3F0;
+    reg_d0.h[0] = g_game_frame;
     reg_d0.h[0] &= 1;
     if (reg_d0.h[0] != 0) goto next_11;
     *(u16 *)(reg_a5 + 0x1E) -= 1;
@@ -1745,7 +1745,7 @@ next_14:
 next_15:
     if (*(u16 *)(reg_a5 + 0x22) == 0) goto next_16;
     if (*(u8 *)(reg_a5 + 0x21) != 0) goto block_2;
-    reg_d0.h[0] = D_0028E3F0;
+    reg_d0.h[0] = g_game_frame;
     reg_d0.b[0] &= 7;
     if (reg_d0.b[0] != 0) goto next_17;
     reg_d2.h[1] = ENTITY(reg_a6)->y.h;
@@ -1928,14 +1928,14 @@ block_1:
     *(u16 *)(reg_a0 + 2) = ENTITY(reg_a6)->y.h;
     *(u16 *)(reg_a0 + 4) = ENTITY(reg_a6)->x.h;
     *(s16 *)(reg_a0 + 0x1E) = 0x10;
-    func_0018D560();
+    sfx_explosion_ground_medium();
     enemy_remove();
     return;
 next_2:
     ENTITY(reg_a6)->attr.b.palette = 0x13;
 next_3:
     reg_d0.w = 3;
-    reg_d0.h[0] &= D_0028E3F0;
+    reg_d0.h[0] &= g_game_frame;
     if (reg_d0.h[0] != 0) goto next_4;
     *(u16 *)(reg_a5 + 0x1A) += 4;
     *(u16 *)(reg_a5 + 0x1A) &= 0x1F;
