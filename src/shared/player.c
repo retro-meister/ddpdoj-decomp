@@ -2465,8 +2465,8 @@ L_else:
     goto block_244;
 }
 
-s32 func_00125E40();
-s32 func_00125E60();
+s32 p1_stage_counts_reset();
+s32 p2_stage_counts_reset();
 s32 func_00138A00();
 s32 func_0016A9B0();
 s32 sfx_player_explosion();
@@ -2508,7 +2508,7 @@ void func_001440D0(void) {
         g_p1_missed_as_s16 = 1;
         g_p1_past_first_ship_as_s16 = 1;
         g_p1_stage_misses += 2;
-        func_00125E40();
+        p1_stage_counts_reset();
         func_001ACB00();
         func_001ABF90();
         g_p1_maximum_level_as_s16 = 0;
@@ -2541,7 +2541,7 @@ void func_001440D0(void) {
         g_p2_missed_as_s16 = 1;
         g_p2_past_first_ship_as_s16 = 1;
         g_p2_stage_misses += 2;
-        func_00125E60();
+        p2_stage_counts_reset();
         func_001ACB50();
         func_001AC160();
         g_p2_maximum_level_as_s16 = 0;

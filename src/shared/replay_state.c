@@ -1373,12 +1373,12 @@ extern u16 g_stage;
 extern u16 g_two_player_seen;
 extern u16 g_two_player_state;
 extern u16 g_two_player_game;
-extern u16 D_0028E970;
-extern u16 D_0028E974;
-extern u16 D_0028E978;
-extern u16 D_0028E97C;
-extern u16 D_0028E980;
-extern u16 D_0028E984;
+extern u16 g_p2_stage_stars_small;
+extern u16 g_p2_stage_stars_large;
+extern u16 g_p1_stage_stars_small;
+extern u16 g_p1_stage_stars_large;
+extern u16 g_bee_value_step;
+extern u16 g_stage_bees_collected;
 extern u16 g_bullet_count;
 extern s16 D_0029C060_as_s16_a[];
 extern f32 D_0029CD80_as_f32_a[];
@@ -1448,12 +1448,12 @@ void replay_snapshot_save(Buf *buf) {
         buf->f0000[i] = D_002BF4F0[i];
     }
     *(u16 *)(p + 0xC08) = g_bullet_count;
-    *(u16 *)(p + 0xC0A) = D_0028E984;
-    *(u16 *)(p + 0xC0C) = D_0028E980;
-    *(u16 *)(p + 0xC0E) = D_0028E97C;
-    *(u16 *)(p + 0xC10) = D_0028E978;
-    *(u16 *)(p + 0xC12) = D_0028E974;
-    *(u16 *)(p + 0xC14) = D_0028E970;
+    *(u16 *)(p + 0xC0A) = g_stage_bees_collected;
+    *(u16 *)(p + 0xC0C) = g_bee_value_step;
+    *(u16 *)(p + 0xC0E) = g_p1_stage_stars_large;
+    *(u16 *)(p + 0xC10) = g_p1_stage_stars_small;
+    *(u16 *)(p + 0xC12) = g_p2_stage_stars_large;
+    *(u16 *)(p + 0xC14) = g_p2_stage_stars_small;
     for (i = 0; i < 98; i++) {
         buf->fC16[i] = g_player1_as_u8_a[i];
         buf->fC78[i] = g_player2_as_u8_a[i];
@@ -1951,12 +1951,12 @@ void replay_snapshot_load(u8 *p) {
         D_002BF4F0[i] = p[0x0 + i];
     }
     g_bullet_count = *(u16 *)(p + 0xC08);
-    D_0028E984 = *(u16 *)(p + 0xC0A);
-    D_0028E980 = *(u16 *)(p + 0xC0C);
-    D_0028E97C = *(u16 *)(p + 0xC0E);
-    D_0028E978 = *(u16 *)(p + 0xC10);
-    D_0028E974 = *(u16 *)(p + 0xC12);
-    D_0028E970 = *(u16 *)(p + 0xC14);
+    g_stage_bees_collected = *(u16 *)(p + 0xC0A);
+    g_bee_value_step = *(u16 *)(p + 0xC0C);
+    g_p1_stage_stars_large = *(u16 *)(p + 0xC0E);
+    g_p1_stage_stars_small = *(u16 *)(p + 0xC10);
+    g_p2_stage_stars_large = *(u16 *)(p + 0xC12);
+    g_p2_stage_stars_small = *(u16 *)(p + 0xC14);
     for (i = 0; i < 98; i++) {
         g_player1_as_u8_a[i] = p[0xC16 + i];
         g_player2_as_u8_a[i] = p[0xC78 + i];
@@ -2296,12 +2296,12 @@ void replay_start_state_load(u8 *p) {
     func_001AE490();
     func_001AACC0();
     func_0013FD80();
-    D_0028E984 = *(u16 *)(p + 0x0);
-    D_0028E980 = *(u16 *)(p + 0x2);
-    D_0028E97C = *(u16 *)(p + 0x4);
-    D_0028E978 = *(u16 *)(p + 0x6);
-    D_0028E974 = *(u16 *)(p + 0x8);
-    D_0028E970 = *(u16 *)(p + 0xA);
+    g_stage_bees_collected = *(u16 *)(p + 0x0);
+    g_bee_value_step = *(u16 *)(p + 0x2);
+    g_p1_stage_stars_large = *(u16 *)(p + 0x4);
+    g_p1_stage_stars_small = *(u16 *)(p + 0x6);
+    g_p2_stage_stars_large = *(u16 *)(p + 0x8);
+    g_p2_stage_stars_small = *(u16 *)(p + 0xA);
     for (i = 0; i < 98; i++) {
         g_player1_as_u8_a[i] = p[12 + i];
         g_player2_as_u8_a[i] = p[110 + i];
@@ -2544,12 +2544,12 @@ void replay_start_state_save(Buf2 *buf) {
     s32 i;
     u8 *p = (u8 *)buf;
 
-    *(u16 *)(p + 0x0) = D_0028E984;
-    *(u16 *)(p + 0x2) = D_0028E980;
-    *(u16 *)(p + 0x4) = D_0028E97C;
-    *(u16 *)(p + 0x6) = D_0028E978;
-    *(u16 *)(p + 0x8) = D_0028E974;
-    *(u16 *)(p + 0xA) = D_0028E970;
+    *(u16 *)(p + 0x0) = g_stage_bees_collected;
+    *(u16 *)(p + 0x2) = g_bee_value_step;
+    *(u16 *)(p + 0x4) = g_p1_stage_stars_large;
+    *(u16 *)(p + 0x6) = g_p1_stage_stars_small;
+    *(u16 *)(p + 0x8) = g_p2_stage_stars_large;
+    *(u16 *)(p + 0xA) = g_p2_stage_stars_small;
     for (i = 0; i < 98; i++) {
         p[12 + i] = g_player1_as_u8_a[i];
         p[110 + i] = g_player2_as_u8_a[i];

@@ -607,7 +607,7 @@ block_3:
     }
 }
 
-s32 func_00125EA0();
+s32 bee_counts_reset();
 s32 func_0012FE10();
 s32 func_00135100();
 s32 func_001351F0();
@@ -654,7 +654,7 @@ void func_00134C40(void) {
         goto next_1;
     }
     reg_a5[2] = 1;
-    func_00125EA0();
+    bee_counts_reset();
     func_00134A70();
 next_1:
     reg_d0.w = 3;

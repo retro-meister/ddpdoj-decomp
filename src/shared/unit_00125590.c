@@ -120,14 +120,14 @@ void bullet_release(void) {
     g_bullet_count -= 1;
 }
 
-extern u16 D_0028E970;
-extern u16 D_0028E978;
+extern u16 g_p2_stage_stars_small;
+extern u16 g_p1_stage_stars_small;
 extern u16 *reg_a0_as_u16_p;
 
-void func_00125810(void) {
-    reg_a0_as_u16_p = &D_0028E978;
+void stage_stars_small_add(void) {
+    reg_a0_as_u16_p = &g_p1_stage_stars_small;
     if (!(reg_d1.w & 0x1000)) {
-        reg_a0_as_u16_p = &D_0028E970;
+        reg_a0_as_u16_p = &g_p2_stage_stars_small;
     }
     *reg_a0_as_u16_p += reg_d0.h[0];
     if ((s32) *reg_a0_as_u16_p >= 0x3E8) {
@@ -135,13 +135,13 @@ void func_00125810(void) {
     }
 }
 
-extern u16 D_0028E974;
-extern u16 D_0028E97C;
+extern u16 g_p2_stage_stars_large;
+extern u16 g_p1_stage_stars_large;
 
-void func_00125860(void) {
-    reg_a0_as_u16_p = &D_0028E97C;
+void stage_stars_large_add(void) {
+    reg_a0_as_u16_p = &g_p1_stage_stars_large;
     if (!(reg_d1.w & 0x1000)) {
-        reg_a0_as_u16_p = &D_0028E974;
+        reg_a0_as_u16_p = &g_p2_stage_stars_large;
     }
     *reg_a0_as_u16_p += reg_d0.h[0];
     if ((s32) *reg_a0_as_u16_p >= 0x3E8) {
@@ -149,16 +149,16 @@ void func_00125860(void) {
     }
 }
 
-void func_001258B0(void) {
-    reg_a0_as_u16_p = &D_0028E978;
+void p1_stage_stars_small_add(void) {
+    reg_a0_as_u16_p = &g_p1_stage_stars_small;
     *reg_a0_as_u16_p += reg_d0.h[0];
     if ((s32) *reg_a0_as_u16_p >= 0x3E8) {
         *reg_a0_as_u16_p = 0x3E7;
     }
 }
 
-void func_001258F0(void) {
-    reg_a0_as_u16_p = &D_0028E970;
+void p2_stage_stars_small_add(void) {
+    reg_a0_as_u16_p = &g_p2_stage_stars_small;
     *reg_a0_as_u16_p += reg_d0.h[0];
     if ((s32) *reg_a0_as_u16_p >= 0x3E8) {
         *reg_a0_as_u16_p = 0x3E7;
@@ -302,12 +302,12 @@ void func_00125C80(void) {
     ENTITY(reg_a6)->x.h += reg_d3.h[0];
 }
 
-extern s16 D_0028E970_as_s16;
-extern s16 D_0028E974_as_s16;
-extern s16 D_0028E978_as_s16;
-extern s16 D_0028E97C_as_s16;
-extern s16 D_0028E980_as_s16;
-extern s16 D_0028E984_as_s16;
+extern s16 g_p2_stage_stars_small_as_s16;
+extern s16 g_p2_stage_stars_large_as_s16;
+extern s16 g_p1_stage_stars_small_as_s16;
+extern s16 g_p1_stage_stars_large_as_s16;
+extern s16 g_bee_value_step_as_s16;
+extern s16 g_stage_bees_collected_as_s16;
 extern s16 g_bullet_count_as_s16;
 extern u8 D_002BF4F0[];
 void func_00125DE0(void) {
@@ -327,44 +327,44 @@ void func_00125DE0(void) {
         (*(s8 *)((u8 *)(temp_a2) + (6))) = 0;
         (*(s8 *)((u8 *)(temp_a2) + (7))) = 0;
     } while (var_a1 < 0xC08);
-    D_0028E970_as_s16 = 0;
-    D_0028E974_as_s16 = 0;
-    D_0028E978_as_s16 = 0;
-    D_0028E97C_as_s16 = 0;
-    D_0028E980_as_s16 = 0;
-    D_0028E984_as_s16 = 0;
+    g_p2_stage_stars_small_as_s16 = 0;
+    g_p2_stage_stars_large_as_s16 = 0;
+    g_p1_stage_stars_small_as_s16 = 0;
+    g_p1_stage_stars_large_as_s16 = 0;
+    g_bee_value_step_as_s16 = 0;
+    g_stage_bees_collected_as_s16 = 0;
     g_bullet_count_as_s16 = 0;
 }
 
-extern u16 D_0028E984;
+extern u16 g_stage_bees_collected;
 
-void func_00125E40(void) {
+void p1_stage_counts_reset(void) {
     reg_d0.w = 0;
-    D_0028E984 = reg_d0.h[0];
-    D_0028E97C = reg_d0.h[0];
-    D_0028E978 = reg_d0.h[0];
+    g_stage_bees_collected = reg_d0.h[0];
+    g_p1_stage_stars_large = reg_d0.h[0];
+    g_p1_stage_stars_small = reg_d0.h[0];
 }
 
-void func_00125E60(void) {
+void p2_stage_counts_reset(void) {
     reg_d0.w = 0;
-    D_0028E984 = reg_d0.h[0];
-    D_0028E974 = reg_d0.h[0];
-    D_0028E970 = reg_d0.h[0];
+    g_stage_bees_collected = reg_d0.h[0];
+    g_p2_stage_stars_large = reg_d0.h[0];
+    g_p2_stage_stars_small = reg_d0.h[0];
 }
 
-void func_00125E80(void) {
+void stage_counts_reset(void) {
     reg_d0.w = 0;
-    D_0028E984 = reg_d0.h[0];
-    D_0028E97C = reg_d0.h[0];
-    D_0028E978 = reg_d0.h[0];
-    D_0028E974 = reg_d0.h[0];
-    D_0028E970 = reg_d0.h[0];
+    g_stage_bees_collected = reg_d0.h[0];
+    g_p1_stage_stars_large = reg_d0.h[0];
+    g_p1_stage_stars_small = reg_d0.h[0];
+    g_p2_stage_stars_large = reg_d0.h[0];
+    g_p2_stage_stars_small = reg_d0.h[0];
 }
 
 
-void func_00125EA0(void) {
-    D_0028E980_as_s16 = 0;
-    func_00125E80();
+void bee_counts_reset(void) {
+    g_bee_value_step_as_s16 = 0;
+    stage_counts_reset();
 }
 
 
@@ -464,7 +464,7 @@ s32 func_001A9130();
 
 void func_001260B0() {
     reg_d0.w = 1;
-    func_00125810();
+    stage_stars_small_add();
     reg_tmp.w = 0x50000;
     ENTITY(reg_a6)->hit_y_plus.h = (u16) reg_tmp.h[1];
     ENTITY(reg_a6)->hit_y_minus.h = (u16) reg_tmp.h[0];
@@ -587,7 +587,7 @@ void func_00126410(void) {
     reg_d1.h[0] = t;
     if (!(t & 0xFFFF)) goto next_1;
     reg_d0.w = 1;
-    func_00125860();
+    stage_stars_large_add();
     reg_tmp.w = 0x50000;
     ENTITY(reg_a6)->hit_y_plus.h = reg_tmp.h[1];
     ENTITY(reg_a6)->hit_y_minus.h = reg_tmp.h[0];
@@ -639,7 +639,7 @@ void func_001265B0(void) {
     reg_d1.h[0] = t;
     if (!(t & 0xFFFF)) goto next_1;
     reg_d0.w = 2;
-    func_00125860();
+    stage_stars_large_add();
     reg_tmp.w = 0x10008;
     ENTITY(reg_a6)->hit_y_plus.h = reg_tmp.h[1];
     ENTITY(reg_a6)->hit_y_minus.h = reg_tmp.h[0];
@@ -691,7 +691,7 @@ void func_00126760(void) {
     reg_d1.h[0] = temp_v0;
     if (temp_v0 & 0xFFFF) {
         reg_d0.w = 2;
-        func_00125810();
+        stage_stars_small_add();
         reg_tmp.w = 0x10004;
         ENTITY(reg_a6)->hit_y_plus.h = (u16) reg_tmp.h[1];
         ENTITY(reg_a6)->hit_y_minus.h = (u16) reg_tmp.h[0];
@@ -723,7 +723,7 @@ void func_00126830(void) {
     reg_d1.h[0] = temp_v0;
     if (temp_v0 & 0xFFFF) {
         reg_d0.w = 4;
-        func_00125810();
+        stage_stars_small_add();
         reg_tmp.w = 0x50004;
         ENTITY(reg_a6)->hit_y_plus.h = (u16) reg_tmp.h[1];
         ENTITY(reg_a6)->hit_y_minus.h = (u16) reg_tmp.h[0];
@@ -755,7 +755,7 @@ void func_00126900(void) {
     reg_d1.h[0] = temp_v0;
     if (temp_v0 & 0xFFFF) {
         reg_d0.w = 8;
-        func_00125810();
+        stage_stars_small_add();
         reg_tmp.w = 0x10008;
         ENTITY(reg_a6)->hit_y_plus.h = (u16) reg_tmp.h[1];
         ENTITY(reg_a6)->hit_y_minus.h = (u16) reg_tmp.h[0];
@@ -782,7 +782,7 @@ void func_001269D0() {
     s32 func_00125A00();
     if (reg_d1.w & 0x1000) {
         reg_d0.w = 1;
-        func_001258B0();
+        p1_stage_stars_small_add();
         reg_tmp.w = 0x50000;
         ENTITY(reg_a6)->hit_y_plus.h = (u16) reg_tmp.h[1];
         ENTITY(reg_a6)->hit_y_minus.h = (u16) reg_tmp.h[0];
@@ -802,7 +802,7 @@ void func_00126A70() {
     s32 bullet_release();
     if (reg_d1.w & 0x1000) {
         reg_d0.w = 2;
-        func_001258B0();
+        p1_stage_stars_small_add();
         reg_tmp.w = 0x10004;
         ENTITY(reg_a6)->hit_y_plus.h = (u16) reg_tmp.h[1];
         ENTITY(reg_a6)->hit_y_minus.h = (u16) reg_tmp.h[0];
@@ -822,7 +822,7 @@ void func_00126B10() {
     s32 bullet_release();
     if (reg_d1.w & 0x1000) {
         reg_d0.w = 4;
-        func_001258B0();
+        p1_stage_stars_small_add();
         reg_tmp.w = 0x50004;
         ENTITY(reg_a6)->hit_y_plus.h = (u16) reg_tmp.h[1];
         ENTITY(reg_a6)->hit_y_minus.h = (u16) reg_tmp.h[0];
@@ -842,7 +842,7 @@ void func_00126BB0() {
     s32 bullet_release();
     if (reg_d1.w & 0x1000) {
         reg_d0.w = 8;
-        func_001258B0();
+        p1_stage_stars_small_add();
         reg_tmp.w = 0x10008;
         ENTITY(reg_a6)->hit_y_plus.h = (u16) reg_tmp.h[1];
         ENTITY(reg_a6)->hit_y_minus.h = (u16) reg_tmp.h[0];
@@ -864,7 +864,7 @@ void func_00126C50() {
     s32 func_00125A00();
     if (reg_d1.w & 0x800) {
         reg_d0.w = 1;
-        func_001258F0();
+        p2_stage_stars_small_add();
         reg_tmp.w = 0x50000;
         ENTITY(reg_a6)->hit_y_plus.h = (u16) reg_tmp.h[1];
         ENTITY(reg_a6)->hit_y_minus.h = (u16) reg_tmp.h[0];
@@ -884,7 +884,7 @@ void func_00126CF0() {
     s32 bullet_release();
     if (reg_d1.w & 0x800) {
         reg_d0.w = 2;
-        func_001258F0();
+        p2_stage_stars_small_add();
         reg_tmp.w = 0x10004;
         ENTITY(reg_a6)->hit_y_plus.h = (u16) reg_tmp.h[1];
         ENTITY(reg_a6)->hit_y_minus.h = (u16) reg_tmp.h[0];
@@ -904,7 +904,7 @@ void func_00126D90() {
     s32 bullet_release();
     if (reg_d1.w & 0x800) {
         reg_d0.w = 4;
-        func_001258F0();
+        p2_stage_stars_small_add();
         reg_tmp.w = 0x50004;
         ENTITY(reg_a6)->hit_y_plus.h = (u16) reg_tmp.h[1];
         ENTITY(reg_a6)->hit_y_minus.h = (u16) reg_tmp.h[0];
@@ -924,7 +924,7 @@ void func_00126E30() {
     s32 bullet_release();
     if (reg_d1.w & 0x800) {
         reg_d0.w = 8;
-        func_001258F0();
+        p2_stage_stars_small_add();
         reg_tmp.w = 0x10008;
         ENTITY(reg_a6)->hit_y_plus.h = (u16) reg_tmp.h[1];
         ENTITY(reg_a6)->hit_y_minus.h = (u16) reg_tmp.h[0];

@@ -28,7 +28,7 @@ extern u16 g_p1_score_digits;
 extern s16 g_p1_lives_as_s16;
 extern u16 g_loop;
 extern u16 g_two_player_seen;
-extern u16 D_0028E980;
+extern u16 g_bee_value_step;
 extern u8 g_player2_as_u8_a[];
 extern u8 g_player1_as_u8_a[];
 
@@ -51,7 +51,7 @@ void func_00122CE0(void) {
     g_boss_hyper_wait_as_s16 = 0;
     if (g_two_player_seen == 3) goto block_1;
     reg_a0 = &g_p1_loop2_extend_ok_as_u8;
-    reg_d0.h[0] = D_0028E980;
+    reg_d0.h[0] = g_bee_value_step;
     reg_a1 = (u8 *)g_player1_as_u8_a;
     reg_d1.h[0] = g_p1_bombs_used;
     reg_d2.h[0] = g_p1_score_digits;

@@ -364,7 +364,7 @@ void func_001317D0(void) {
     task_stop_self();
 }
 
-s32 func_00125E80();                            /* extern */
+s32 stage_counts_reset();                            /* extern */
 s32 func_0013B190();                            /* extern */
 s32 func_0013E7C0();                            /* extern */
 s32 func_0013E850();                            /* extern */
@@ -380,7 +380,7 @@ void func_001317E0(void) {
     func_0013B190();
     task_reset_all();
     func_00131630();
-    func_00125E80();
+    stage_counts_reset();
     func_001AD720();
     g_boss_present_as_s16 = 0;
     func_0013E7C0();
@@ -408,7 +408,7 @@ void func_00131840(void) {
     *(s8 *)(reg_a0 + 5) = 1;
 }
 
-s32 func_00125E80();
+s32 stage_counts_reset();
 s32 func_00134FE0();
 s32 func_00135070();
 s32 func_0013AFF0();
@@ -527,7 +527,7 @@ block_after:
         }
         reg_d0.h[0] = *(u16 *)(reg_a5 + 4);
         func_00134FE0();
-        func_00125E80();
+        stage_counts_reset();
         D_0028E958 = 0;
         func_00172250();
         g_game_frame_ran = 0;
@@ -797,10 +797,10 @@ extern s16 g_loaded_stage;
 extern u16 g_boss_hits;
 extern u8 g_boss_present;
 extern u16 g_stage;
-extern u16 D_0028E970;
-extern u16 D_0028E974;
-extern u16 D_0028E978;
-extern u16 D_0028E97C;
+extern u16 g_p2_stage_stars_small;
+extern u16 g_p2_stage_stars_large;
+extern u16 g_p1_stage_stars_small;
+extern u16 g_p1_stage_stars_large;
 extern s8 D_0028EC24;
 extern s8 D_0028ED60_as_s8;
 extern u16 g_side_scroll_x[];
@@ -997,10 +997,10 @@ block_15:
             *(u16 *)(reg_a6 + 0x2C) = 0x18U;
             reg_d7.w = 0;
             if (g_player1[0] < 0) {
-                reg_d0.h[0] = D_0028E97C;
-                reg_d0.h[0] += D_0028E978;
+                reg_d0.h[0] = g_p1_stage_stars_large;
+                reg_d0.h[0] += g_p1_stage_stars_small;
                 if (reg_d0.h[0] != 0) {
-                    reg_d0.h[0] = D_0028E978;
+                    reg_d0.h[0] = g_p1_stage_stars_small;
                     reg_d7.w = 1;
                     reg_d5.h[0] = reg_d0.h[0];
                     func_00200EE0();
@@ -1008,7 +1008,7 @@ block_15:
                     t1 = reg_d5.h[0];
                     reg_d5.h[0] = t1 * 0xA;
                     *(u16 *)(reg_a6 + 0x1A) = (u16) reg_d5.h[0];
-                    reg_d0.h[0] = D_0028E97C;
+                    reg_d0.h[0] = g_p1_stage_stars_large;
                     reg_d5.h[0] = reg_d0.h[0];
                     func_00200EE0();
                     *(u16 *)(reg_a6 + 0x1C) = (u16) reg_d2.h[0];
@@ -1018,10 +1018,10 @@ block_15:
                 }
             }
             if (g_player2[0] < 0) {
-                reg_d0.h[1] = D_0028E974;
-                reg_d0.h[0] = D_0028E970;
+                reg_d0.h[1] = g_p2_stage_stars_large;
+                reg_d0.h[0] = g_p2_stage_stars_small;
                 if (reg_d0.w != 0) {
-                    reg_d0.h[0] = D_0028E970;
+                    reg_d0.h[0] = g_p2_stage_stars_small;
                     reg_d7.w = 1;
                     reg_d5.h[0] = reg_d0.h[0];
                     func_00200EE0();
@@ -1029,7 +1029,7 @@ block_15:
                     t2 = reg_d5.h[0];
                     reg_d5.h[0] = t2 * 0xA;
                     *(u16 *)(reg_a6 + 0x24) = (u16) reg_d5.h[0];
-                    reg_d0.h[0] = D_0028E974;
+                    reg_d0.h[0] = g_p2_stage_stars_large;
                     reg_d5.h[0] = reg_d0.h[0];
                     func_00200EE0();
                     *(u16 *)(reg_a6 + 0x26) = (u16) reg_d2.h[0];

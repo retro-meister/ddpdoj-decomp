@@ -216,19 +216,19 @@ loop_11:
 s32 func_001A9130();
 extern u16 D_00269430[];
 extern u16 D_00269460[];
-extern u16 D_0028E980;
-extern u16 D_0028E984;
+extern u16 g_bee_value_step;
+extern u16 g_stage_bees_collected;
 
 void func_00171100(void) {
     u32 t;
     s32 t2;
 
-    reg_d1.h[0] = D_0028E980;
-    D_0028E984 += 1;
-    if (D_0028E984 != 0xA) goto next_1;
+    reg_d1.h[0] = g_bee_value_step;
+    g_stage_bees_collected += 1;
+    if (g_stage_bees_collected != 0xA) goto next_1;
     if ((s16) reg_d3.h[0] != 0) goto next_1;
     ENTITY(reg_a6)->flags.b[1] |= 0x20;
-    D_0028E980 += 4;
+    g_bee_value_step += 4;
 next_1:
     reg_a0 = (u8 *)D_00269430;
     reg_d0.w = *(u32 *)((u8 *)D_00269430 + (reg_d1.h[0] & ~3));
