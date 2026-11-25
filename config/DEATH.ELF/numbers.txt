@@ -56,3 +56,4 @@
 0x28ca20
 0x28d0d8
 0x28e38c
+0x28e580  # 0x100000 after the last .rodata: a size (the stack's, by the look of it), not the start of the code

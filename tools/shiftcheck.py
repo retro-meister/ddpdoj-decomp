@@ -158,13 +158,16 @@ def against_twin(base, other, twin, data):
         return other.symbols[common[index][1]] + address - common[index][0]
 
     base_start, base_image, _ = base.image()
+    # code points at code and data at data: a twin relocation of the other kind means the two sites do not line up
+    text_end = next(value for name, value, _ in base.symbol_table if name == "main_DATA_START")
+    other_text_end = next(value for name, value, _ in other.symbol_table if name == "main_DATA_START")
 
     def same_target(value, there, length=16):
         a, b = value - base_start, there - other_start
         if address % 4 or not (0 <= a <= len(base_image) - length and 0 <= b <= len(other_image) - length):
             return False
         left = base_image[a:a + length]
-        return left == other_image[b:b + length] and any(left)
+        return left == other_image[b:b + length] and len(set(left)) >= 4   # not padding or a fill pattern
 
     numbers, unmoved, differ, unplaced, follow = [], [], [], [], []
     for address, value in data:
@@ -176,7 +179,8 @@ def against_twin(base, other, twin, data):
         if there != value:
             # an address when the twin holds the moved address, when the twin's word carries a relocation, or
             # when both words point into their images at the same contents
-            (follow if there == moved(value) or place in other.relocations or same_target(value, there)
+            twin_address = place in other.relocations and (value < text_end) == (there < other_text_end)
+            (follow if there == moved(value) or twin_address or same_target(value, there)
              else differ).append((address, value, there))
         elif moved(value) == value:
             unmoved.append((address, value, there))

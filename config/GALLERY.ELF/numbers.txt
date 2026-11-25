@@ -2,3 +2,4 @@
 # tools/split.py). One address per line.
 0x12567c  # page addresses in the SDK memory-map table
 0x12568c
+0x12b180  # 0x100000 after the last .rodata: a size (the stack's, by the look of it), not the start of the code

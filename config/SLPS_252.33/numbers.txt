@@ -31,3 +31,4 @@
 0x285c80
 0x285c90
 0x285c98
+0x28c000  # 0x100000 after the last .rodata: a size (the stack's, by the look of it), not the start of the code
