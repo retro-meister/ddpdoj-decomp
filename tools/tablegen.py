@@ -329,7 +329,9 @@ def constant(decl, text):
         if line.startswith('extern '): return line.replace('extern ', 'extern const ', 1)
         if re.match(r'(u8|s8|u16|s16|u32|s32|char) \w+\[', line): return 'const ' + line
         return line
-    return '\n'.join(fix(l) for l in decl.split('\n')), '\n'.join(fix(l) for l in text.split('\n'))
+    # what a constant points at may be a constant of the same file
+    def both(t): return '\n'.join(fix(l) for l in t.split('\n')).replace('void *', 'const void *')
+    return both(decl), both(text)
 
 def partition_sdata(start, end):
     cands = sorted(a for a in labels if start <= a < end and a % 4 == 0)
@@ -560,6 +562,13 @@ for sec, a, size, nxt, da, dsize, dn, n in objects:
             main_rel.pop(x, None); death_rel.pop(x - a + da, None)
     ms = [x for x in range(a, a + size - 3) if x in main_rel]; ds = [x for x in range(da, da + dsize - 3) if x in death_rel]
     if size == dsize:
+        # the same value in both although what it would point at (an object of this file) moved: a number
+        for x in list(ms):
+            y = x - a + da
+            if y in death_rel and raw[x - a:x - a + 4] == draw[x - a:x - a + 4]:
+                v = int.from_bytes(raw[x - a:x - a + 4], 'little')
+                if any(s_ <= v < e_ and d_ for s_, e_, d_, _ in obj_by_main):
+                    main_rel.pop(x); death_rel.pop(y); ms.remove(x); ds.remove(y)
         # a word that is a number in one executable and holds the same value in the other is a number in both
         ms2 = [x for x in ms if not ((x - a + da) not in death_rel and raw[x - a:x - a + 4] == draw[x - a:x - a + 4])]
         ds2 = [x for x in ds if not ((x - da + a) not in main_rel and raw[x - da:x - da + 4] == draw[x - da:x - da + 4])]
@@ -858,6 +867,17 @@ for t, named in (('SLPS_252.33', main_named), ('DEATH.ELF', death_named)):
     sp.write_text(text + ''.join(add))
     if add: print(t, 'kept', len(add), 'inside names as addresses')
 
+# words of config/<target>/numbers.txt that the file now owns need no entry there
+for t in ('SLPS_252.33', 'DEATH.ELF'):
+    np_ = R / f'config/{t}/numbers.txt'
+    if not np_.exists(): continue
+    spans = [((s_, e_) if t == 'SLPS_252.33' else (d_, de_)) for sec_, s_, e_, d_, de_, o_ in plan]
+    kept = []
+    for l in np_.read_text().split('\n'):
+        w = l.split('#')[0].strip()
+        if w and any(lo is not None and lo <= int(w, 16) < hi for lo, hi in spans): continue
+        kept.append(l)
+    np_.write_text('\n'.join(kept))
 for t in yaml_out:
     (R / f'config/{t}/splat.yaml').write_text(yaml_out[t])
 print('wrote', path)

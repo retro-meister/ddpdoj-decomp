@@ -24,7 +24,7 @@ extern u8 D_00282180[];
 extern u8 D_002821A0[];
 extern u8 D_002821B8[];
 extern u8 D_002821D0[];
-extern u8 D_00282200[];
+extern u8 death_D_00282200[];
 extern u8 D_00282230[];
 extern u8 D_00282280[];
 extern u8 D_002822B0[];
@@ -921,7 +921,7 @@ struct D002708b0Record D_002708B0 = {
     {
         D_00282088,
         D_002821D0,
-        D_00282200,
+        death_D_00282200,
         D_00282230,
         D_00282280,
         D_00282140,
