@@ -91,42 +91,42 @@ extern u16 D_0024E290[];
 extern u16 D_0024E2A0[];
 extern u16 D_0024E2B0[];
 extern u16 D_0024E2C8[];
-extern u16 D_0024E862[];
-extern u16 D_0024E876[];
-extern u16 D_0024E88A[];
-extern u16 D_0024E89E[];
-extern u16 D_0024E8B2[];
-extern u16 D_0024E8C6[];
-extern u16 D_0024E8DA[];
-extern u16 D_0024E8EE[];
-extern u16 D_0024E902[];
-extern u16 D_0024E916[];
-extern u16 D_0024E92A[];
-extern u16 D_0024E93E[];
-extern u16 D_0024E952[];
-extern u16 D_0024E966[];
-extern u16 D_0024E97A[];
-extern u16 D_0024E98E[];
-extern u16 D_0024E9A2[];
-extern u16 D_0024E9B6[];
-extern u16 D_0024E9CA[];
-extern u16 D_0024E9DE[];
-extern u16 D_0024E9F2[];
-extern u16 D_0024EA06[];
-extern u16 D_0024EA1A[];
-extern u16 D_0024EA2E[];
-extern u16 D_0024EA42[];
-extern u16 D_0024EA56[];
-extern u16 D_0024EA6A[];
-extern u16 D_0024EA7E[];
-extern u16 D_0024EA92[];
-extern u16 D_0024EAA6[];
-extern u16 D_0024EABA[];
-extern u16 D_0024EACE[];
-extern u16 D_0024EAE2[];
-extern u16 D_0024EAF6[];
-extern u16 D_0024EB0A[];
-extern u16 D_0024EB1E[];
+extern u16 bullet_type_record_00[];
+extern u16 bullet_type_record_01[];
+extern u16 bullet_type_record_02[];
+extern u16 bullet_type_record_03[];
+extern u16 bullet_type_record_04[];
+extern u16 bullet_type_record_05[];
+extern u16 bullet_type_record_06[];
+extern u16 bullet_type_record_07[];
+extern u16 bullet_type_record_08[];
+extern u16 bullet_type_record_09[];
+extern u16 bullet_type_record_10[];
+extern u16 bullet_type_record_11[];
+extern u16 bullet_type_record_12[];
+extern u16 bullet_type_record_13[];
+extern u16 bullet_type_record_14[];
+extern u16 bullet_type_record_15[];
+extern u16 bullet_type_record_16[];
+extern u16 bullet_type_record_17[];
+extern u16 bullet_type_record_18[];
+extern u16 bullet_type_record_19[];
+extern u16 bullet_type_record_20[];
+extern u16 bullet_type_record_21[];
+extern u16 bullet_type_record_22[];
+extern u16 bullet_type_record_23[];
+extern u16 bullet_type_record_24[];
+extern u16 bullet_type_record_25[];
+extern u16 bullet_type_record_26[];
+extern u16 bullet_type_record_27[];
+extern u16 bullet_type_record_28[];
+extern u16 bullet_type_record_29[];
+extern u16 bullet_type_record_30[];
+extern u16 bullet_type_record_31[];
+extern u16 bullet_type_record_32[];
+extern u16 bullet_type_record_33[];
+extern u16 bullet_type_record_34[];
+extern u16 bullet_type_record_35[];
 extern u16 D_0024EBF0[];
 extern u16 D_0024EC00[];
 extern u16 D_0024EC10[];
@@ -144,38 +144,38 @@ extern u16 D_0024EE20[];
 extern u16 D_0024EE30[];
 extern u16 D_0024EE40[];
 extern u16 D_0024EE50[];
-extern u16 D_0024F790[];
-extern u16 D_0024F7D0[];
-extern u16 D_0024F7F0[];
-extern u16 D_0024F850[];
-extern u16 D_0024F870[];
-extern u16 D_0024F8B0[];
-extern u16 D_0024F8D0[];
-extern u16 D_0024F930[];
-extern u16 D_0024F950[];
-extern u16 D_0024F990[];
-extern u16 D_0024F9B0[];
-extern u16 D_0024FA10[];
-extern u16 D_0024FA30[];
-extern u16 D_0024FAA0[];
-extern u16 D_0024FAE0[];
-extern u16 D_0024FB70[];
-extern u16 D_0024FBB0[];
-extern u16 D_0024FC30[];
-extern u16 D_0024FC70[];
-extern u16 D_0024FD10[];
-extern u16 D_0024FD50[];
-extern u16 D_0024FDE0[];
-extern u16 D_0024FE30[];
-extern u16 D_0024FED0[];
-extern u16 D_0024FF20[];
-extern u16 D_0024FF90[];
-extern u16 D_0024FFD0[];
-extern u16 D_00250060[];
-extern u16 D_002500B0[];
-extern u16 D_00250130[];
-extern u16 D_00250170[];
-extern u16 D_00250210[];
+extern u16 explosion_script_00[];
+extern u16 explosion_script_01[];
+extern u16 explosion_script_b_00[];
+extern u16 explosion_script_b_01[];
+extern u16 explosion_script_02[];
+extern u16 explosion_script_03[];
+extern u16 explosion_script_b_02[];
+extern u16 explosion_script_b_03[];
+extern u16 explosion_script_04[];
+extern u16 explosion_script_05[];
+extern u16 explosion_script_b_04[];
+extern u16 explosion_script_b_05[];
+extern u16 explosion_script_06[];
+extern u16 explosion_script_07[];
+extern u16 explosion_script_b_06[];
+extern u16 explosion_script_b_07[];
+extern u16 explosion_script_08[];
+extern u16 explosion_script_09[];
+extern u16 explosion_script_b_08[];
+extern u16 explosion_script_b_09[];
+extern u16 explosion_script_10[];
+extern u16 explosion_script_11[];
+extern u16 explosion_script_b_10[];
+extern u16 explosion_script_b_11[];
+extern u16 explosion_script_12[];
+extern u16 explosion_script_13[];
+extern u16 explosion_script_14[];
+extern u16 explosion_script_15[];
+extern u16 explosion_script_16[];
+extern u16 explosion_script_17[];
+extern u16 explosion_script_18[];
+extern u16 explosion_script_19[];
 extern u16 D_00250260[];
 extern u16 D_002502C0[];
 extern u16 D_002502F0[];
@@ -388,17 +388,17 @@ extern u16 D_0028C680[];
 extern u16 D_0028C708[];
 extern u16 D_0029BF30_as_u16_a[];
 extern u16 D_0029BF40_as_u16_a[];
-extern void func_001298A0(void);
-extern void func_001298D0(void);
-extern void func_00129930(void);
-extern void func_00129970(void);
-extern void func_001299B0(void);
-extern void func_00129A10(void);
-extern void func_00129A80(void);
-extern void func_00129A90(void);
+extern void bullet_type_setup_00(void);
+extern void bullet_type_setup_03(void);
+extern void bullet_type_setup_17(void);
+extern void bullet_type_setup_18(void);
+extern void bullet_type_setup_19(void);
+extern void bullet_type_setup_23(void);
+extern void bullet_type_setup_27(void);
+extern void bullet_type_setup_32(void);
 extern void func_00129B10(void);
-extern void func_00129B60(void);
-extern void func_00129B70(void);
+extern void bullet_type_setup_30(void);
+extern void bullet_type_setup_31(void);
 extern void func_0012D940(void);
 extern void func_0012D960(void);
 extern void func_0012D980(void);
@@ -407,40 +407,40 @@ extern void func_0012D9B0(void);
 extern void func_0012D9D0(void);
 extern void func_0012D9F0(void);
 extern void func_0012DA10(void);
-extern void func_0012DE90(void);
-extern void func_0012DF50(void);
-extern void func_0012E010(void);
-extern void func_0012E0B0(void);
-extern void func_0012E130(void);
-extern void func_0012E1B0(void);
-extern void func_0012E230(void);
-extern void func_0012E2B0(void);
-extern void func_0012E440(void);
-extern void func_0012E4D0(void);
-extern void func_0012E530(void);
-extern void func_0012E590(void);
-extern void func_0012E620(void);
-extern void func_0012E680(void);
-extern void func_0012E6E0(void);
-extern void func_0012E7A0(void);
-extern void func_0012E860(void);
-extern void func_0012E920(void);
-extern void func_0012E9E0(void);
-extern void func_0012EAA0(void);
-extern void func_0012EB40(void);
-extern void func_0012EC00(void);
-extern void func_0012EC90(void);
-extern void func_0012ED50(void);
-extern void func_0012EDF0(void);
-extern void func_0012EE90(void);
-extern void func_0012EF80(void);
-extern void func_0012F020(void);
-extern void func_0012F0C0(void);
-extern void func_0012F1B0(void);
-extern void func_0012F2A0(void);
-extern void func_0012F330(void);
-extern void func_0012F3B0(void);
-extern void func_0012F450(void);
+extern void bullet_move_type_00(void);
+extern void bullet_move_type_01(void);
+extern void bullet_move_type_02(void);
+extern void bullet_move_type_03(void);
+extern void bullet_move_type_04(void);
+extern void bullet_move_type_05(void);
+extern void bullet_move_type_06(void);
+extern void bullet_move_type_07(void);
+extern void bullet_move_type_08(void);
+extern void bullet_move_type_09(void);
+extern void bullet_move_type_10(void);
+extern void bullet_move_type_11(void);
+extern void bullet_move_type_12(void);
+extern void bullet_move_type_13(void);
+extern void bullet_move_type_16(void);
+extern void bullet_move_type_17(void);
+extern void bullet_move_type_18(void);
+extern void bullet_move_type_19(void);
+extern void bullet_move_type_20(void);
+extern void bullet_move_type_21(void);
+extern void bullet_move_type_22(void);
+extern void bullet_move_type_23(void);
+extern void bullet_move_type_24(void);
+extern void bullet_move_type_25(void);
+extern void bullet_move_type_26(void);
+extern void bullet_move_type_27(void);
+extern void bullet_move_type_28(void);
+extern void bullet_move_type_29(void);
+extern void bullet_move_type_30(void);
+extern void bullet_move_type_31(void);
+extern void bullet_move_type_32(void);
+extern void bullet_move_type_33(void);
+extern void bullet_move_type_34(void);
+extern void bullet_move_type_35(void);
 extern void func_00130270(void);
 extern void func_001303A0(void);
 extern void func_0014CC90(void);
@@ -576,115 +576,115 @@ void func_0018E5A0(void) {
     if (bullet_type_setup_routines_as_u16_a[0] != 0x0) {
         printf("error! shot_para_tbl[0]\n");
     }
-    STORE_POINTER_DIRECT(bullet_type_setup_routines_as_u16_a, func_001298A0);
+    STORE_POINTER_DIRECT(bullet_type_setup_routines_as_u16_a, bullet_type_setup_00);
     if (bullet_type_setup_routines[2] != 0x2) {
         printf("error! shot_para_tbl[2]\n");
     }
-    STORE_POINTER_DIRECT(bullet_type_setup_routines + 2, func_001298A0);
+    STORE_POINTER_DIRECT(bullet_type_setup_routines + 2, bullet_type_setup_00);
     if (bullet_type_setup_routines[4] != 0x4) {
         printf("error! shot_para_tbl[4]\n");
     }
-    STORE_POINTER_DIRECT(bullet_type_setup_routines + 4, func_001298A0);
+    STORE_POINTER_DIRECT(bullet_type_setup_routines + 4, bullet_type_setup_00);
     if (bullet_type_setup_routines[6] != 0x6) {
         printf("error! shot_para_tbl[6]\n");
     }
-    STORE_POINTER_DIRECT(bullet_type_setup_routines + 6, func_001298D0);
+    STORE_POINTER_DIRECT(bullet_type_setup_routines + 6, bullet_type_setup_03);
     if (bullet_type_setup_routines[8] != 0x8) {
         printf("error! shot_para_tbl[8]\n");
     }
-    STORE_POINTER_DIRECT(bullet_type_setup_routines + 8, func_001298D0);
+    STORE_POINTER_DIRECT(bullet_type_setup_routines + 8, bullet_type_setup_03);
     if (bullet_type_setup_routines[10] != 0xa) {
         printf("error! shot_para_tbl[10]\n");
     }
-    STORE_POINTER_DIRECT(bullet_type_setup_routines + 10, func_001298D0);
+    STORE_POINTER_DIRECT(bullet_type_setup_routines + 10, bullet_type_setup_03);
     if (bullet_type_setup_routines[12] != 0xc) {
         printf("error! shot_para_tbl[12]\n");
     }
-    STORE_POINTER_DIRECT(bullet_type_setup_routines + 12, func_001298D0);
+    STORE_POINTER_DIRECT(bullet_type_setup_routines + 12, bullet_type_setup_03);
     if (bullet_type_setup_routines[14] != 0xe) {
         printf("error! shot_para_tbl[14]\n");
     }
-    STORE_POINTER_DIRECT(bullet_type_setup_routines + 14, func_001298A0);
+    STORE_POINTER_DIRECT(bullet_type_setup_routines + 14, bullet_type_setup_00);
     if (bullet_type_setup_routines[16] != 0x10) {
         printf("error! shot_para_tbl[16]\n");
     }
-    STORE_POINTER_DIRECT(bullet_type_setup_routines + 16, func_001298A0);
+    STORE_POINTER_DIRECT(bullet_type_setup_routines + 16, bullet_type_setup_00);
     if (bullet_type_setup_routines[18] != 0x12) {
         printf("error! shot_para_tbl[18]\n");
     }
-    STORE_POINTER_DIRECT(bullet_type_setup_routines + 18, func_001298A0);
+    STORE_POINTER_DIRECT(bullet_type_setup_routines + 18, bullet_type_setup_00);
     if (bullet_type_setup_routines[20] != 0x14) {
         printf("error! shot_para_tbl[20]\n");
     }
-    STORE_POINTER_DIRECT(bullet_type_setup_routines + 20, func_001298A0);
+    STORE_POINTER_DIRECT(bullet_type_setup_routines + 20, bullet_type_setup_00);
     if (bullet_type_setup_routines[22] != 0x16) {
         printf("error! shot_para_tbl[22]\n");
     }
-    STORE_POINTER_DIRECT(bullet_type_setup_routines + 22, func_001298A0);
+    STORE_POINTER_DIRECT(bullet_type_setup_routines + 22, bullet_type_setup_00);
     if (bullet_type_setup_routines[24] != 0x18) {
         printf("error! shot_para_tbl[24]\n");
     }
-    STORE_POINTER_DIRECT(bullet_type_setup_routines + 24, func_001298A0);
+    STORE_POINTER_DIRECT(bullet_type_setup_routines + 24, bullet_type_setup_00);
     if (bullet_type_setup_routines[26] != 0x1a) {
         printf("error! shot_para_tbl[26]\n");
     }
-    STORE_POINTER_DIRECT(bullet_type_setup_routines + 26, func_001298A0);
+    STORE_POINTER_DIRECT(bullet_type_setup_routines + 26, bullet_type_setup_00);
     if (bullet_type_setup_routines[28] != 0x1c) {
         printf("error! shot_para_tbl[28]\n");
     }
-    STORE_POINTER_DIRECT(bullet_type_setup_routines + 28, func_001298A0);
+    STORE_POINTER_DIRECT(bullet_type_setup_routines + 28, bullet_type_setup_00);
     if (bullet_type_setup_routines[30] != 0x1e) {
         printf("error! shot_para_tbl[30]\n");
     }
-    STORE_POINTER_DIRECT(bullet_type_setup_routines + 30, func_001298A0);
+    STORE_POINTER_DIRECT(bullet_type_setup_routines + 30, bullet_type_setup_00);
     if (bullet_type_setup_routines[32] != 0x20) {
         printf("error! shot_para_tbl[32]\n");
     }
-    STORE_POINTER_DIRECT(bullet_type_setup_routines + 32, func_001298A0);
+    STORE_POINTER_DIRECT(bullet_type_setup_routines + 32, bullet_type_setup_00);
     if (bullet_type_setup_routines[34] != 0x22) {
         printf("error! shot_para_tbl[34]\n");
     }
-    STORE_POINTER_DIRECT(bullet_type_setup_routines + 34, func_00129930);
+    STORE_POINTER_DIRECT(bullet_type_setup_routines + 34, bullet_type_setup_17);
     if (bullet_type_setup_routines[36] != 0x24) {
         printf("error! shot_para_tbl[36]\n");
     }
-    STORE_POINTER_DIRECT(bullet_type_setup_routines + 36, func_00129970);
+    STORE_POINTER_DIRECT(bullet_type_setup_routines + 36, bullet_type_setup_18);
     if (bullet_type_setup_routines[38] != 0x26) {
         printf("error! shot_para_tbl[38]\n");
     }
-    STORE_POINTER_DIRECT(bullet_type_setup_routines + 38, func_001299B0);
+    STORE_POINTER_DIRECT(bullet_type_setup_routines + 38, bullet_type_setup_19);
     if (bullet_type_setup_routines[40] != 0x28) {
         printf("error! shot_para_tbl[40]\n");
     }
-    STORE_POINTER_DIRECT(bullet_type_setup_routines + 40, func_001298A0);
+    STORE_POINTER_DIRECT(bullet_type_setup_routines + 40, bullet_type_setup_00);
     if (bullet_type_setup_routines[42] != 0x2a) {
         printf("error! shot_para_tbl[42]\n");
     }
-    STORE_POINTER_DIRECT(bullet_type_setup_routines + 42, func_001298A0);
+    STORE_POINTER_DIRECT(bullet_type_setup_routines + 42, bullet_type_setup_00);
     if (bullet_type_setup_routines[44] != 0x2c) {
         printf("error! shot_para_tbl[44]\n");
     }
-    STORE_POINTER_DIRECT(bullet_type_setup_routines + 44, func_001299B0);
+    STORE_POINTER_DIRECT(bullet_type_setup_routines + 44, bullet_type_setup_19);
     if (bullet_type_setup_routines[46] != 0x2e) {
         printf("error! shot_para_tbl[46]\n");
     }
-    STORE_POINTER_DIRECT(bullet_type_setup_routines + 46, func_00129A10);
+    STORE_POINTER_DIRECT(bullet_type_setup_routines + 46, bullet_type_setup_23);
     if (bullet_type_setup_routines[48] != 0x30) {
         printf("error! shot_para_tbl[48]\n");
     }
-    STORE_POINTER_DIRECT(bullet_type_setup_routines + 48, func_00129A10);
+    STORE_POINTER_DIRECT(bullet_type_setup_routines + 48, bullet_type_setup_23);
     if (bullet_type_setup_routines[50] != 0x32) {
         printf("error! shot_para_tbl[50]\n");
     }
-    STORE_POINTER_DIRECT(bullet_type_setup_routines + 50, func_001298A0);
+    STORE_POINTER_DIRECT(bullet_type_setup_routines + 50, bullet_type_setup_00);
     if (bullet_type_setup_routines[52] != 0x34) {
         printf("error! shot_para_tbl[52]\n");
     }
-    STORE_POINTER_DIRECT(bullet_type_setup_routines + 52, func_001298A0);
+    STORE_POINTER_DIRECT(bullet_type_setup_routines + 52, bullet_type_setup_00);
     if (bullet_type_setup_routines[54] != 0x36) {
         printf("error! shot_para_tbl[54]\n");
     }
-    STORE_POINTER_DIRECT(bullet_type_setup_routines + 54, func_00129A80);
+    STORE_POINTER_DIRECT(bullet_type_setup_routines + 54, bullet_type_setup_27);
     if (bullet_type_setup_routines[56] != 0x38) {
         printf("error! shot_para_tbl[56]\n");
     }
@@ -692,31 +692,31 @@ void func_0018E5A0(void) {
     if (bullet_type_setup_routines[58] != 0x3a) {
         printf("error! shot_para_tbl[58]\n");
     }
-    STORE_POINTER_DIRECT(bullet_type_setup_routines + 58, func_001298A0);
+    STORE_POINTER_DIRECT(bullet_type_setup_routines + 58, bullet_type_setup_00);
     if (bullet_type_setup_routines[60] != 0x3c) {
         printf("error! shot_para_tbl[60]\n");
     }
-    STORE_POINTER_DIRECT(bullet_type_setup_routines + 60, func_00129B60);
+    STORE_POINTER_DIRECT(bullet_type_setup_routines + 60, bullet_type_setup_30);
     if (bullet_type_setup_routines[62] != 0x3e) {
         printf("error! shot_para_tbl[62]\n");
     }
-    STORE_POINTER_DIRECT(bullet_type_setup_routines + 62, func_00129B70);
+    STORE_POINTER_DIRECT(bullet_type_setup_routines + 62, bullet_type_setup_31);
     if (bullet_type_setup_routines[64] != 0x40) {
         printf("error! shot_para_tbl[64]\n");
     }
-    STORE_POINTER_DIRECT(bullet_type_setup_routines + 64, func_00129A90);
+    STORE_POINTER_DIRECT(bullet_type_setup_routines + 64, bullet_type_setup_32);
     if (bullet_type_setup_routines[66] != 0x42) {
         printf("error! shot_para_tbl[66]\n");
     }
-    STORE_POINTER_DIRECT(bullet_type_setup_routines + 66, func_001298A0);
+    STORE_POINTER_DIRECT(bullet_type_setup_routines + 66, bullet_type_setup_00);
     if (bullet_type_setup_routines[68] != 0x44) {
         printf("error! shot_para_tbl[68]\n");
     }
-    STORE_POINTER_DIRECT(bullet_type_setup_routines + 68, func_001298A0);
+    STORE_POINTER_DIRECT(bullet_type_setup_routines + 68, bullet_type_setup_00);
     if (bullet_type_setup_routines[70] != 0x46) {
         printf("error! shot_para_tbl[70]\n");
     }
-    STORE_POINTER_DIRECT(bullet_type_setup_routines + 70, func_001298D0);
+    STORE_POINTER_DIRECT(bullet_type_setup_routines + 70, bullet_type_setup_03);
 #ifdef DEATH_LABEL
     if (death_D_002506F0[0] != 0x48) {
         printf("error! shot_para_tbl[72]\n");
@@ -726,147 +726,147 @@ void func_0018E5A0(void) {
     if (bullet_type_records[0] != 0x0) {
         printf("error! shot_tbl[0]\n");
     }
-    STORE_POINTER_DIRECT(bullet_type_records, D_0024E862);
+    STORE_POINTER_DIRECT(bullet_type_records, bullet_type_record_00);
     if (bullet_type_records[2] != 0x2) {
         printf("error! shot_tbl[2]\n");
     }
-    STORE_POINTER_DIRECT(bullet_type_records + 2, D_0024E876);
+    STORE_POINTER_DIRECT(bullet_type_records + 2, bullet_type_record_01);
     if (bullet_type_records[4] != 0x4) {
         printf("error! shot_tbl[4]\n");
     }
-    STORE_POINTER_DIRECT(bullet_type_records + 4, D_0024E88A);
+    STORE_POINTER_DIRECT(bullet_type_records + 4, bullet_type_record_02);
     if (bullet_type_records[6] != 0x6) {
         printf("error! shot_tbl[6]\n");
     }
-    STORE_POINTER_DIRECT(bullet_type_records + 6, D_0024E89E);
+    STORE_POINTER_DIRECT(bullet_type_records + 6, bullet_type_record_03);
     if (bullet_type_records[8] != 0x8) {
         printf("error! shot_tbl[8]\n");
     }
-    STORE_POINTER_DIRECT(bullet_type_records + 8, D_0024E8B2);
+    STORE_POINTER_DIRECT(bullet_type_records + 8, bullet_type_record_04);
     if (bullet_type_records[10] != 0xa) {
         printf("error! shot_tbl[10]\n");
     }
-    STORE_POINTER_DIRECT(bullet_type_records + 10, D_0024E8C6);
+    STORE_POINTER_DIRECT(bullet_type_records + 10, bullet_type_record_05);
     if (bullet_type_records[12] != 0xc) {
         printf("error! shot_tbl[12]\n");
     }
-    STORE_POINTER_DIRECT(bullet_type_records + 12, D_0024E8DA);
+    STORE_POINTER_DIRECT(bullet_type_records + 12, bullet_type_record_06);
     if (bullet_type_records[14] != 0xe) {
         printf("error! shot_tbl[14]\n");
     }
-    STORE_POINTER_DIRECT(bullet_type_records + 14, D_0024E8EE);
+    STORE_POINTER_DIRECT(bullet_type_records + 14, bullet_type_record_07);
     if (bullet_type_records[16] != 0x10) {
         printf("error! shot_tbl[16]\n");
     }
-    STORE_POINTER_DIRECT(bullet_type_records + 16, D_0024E902);
+    STORE_POINTER_DIRECT(bullet_type_records + 16, bullet_type_record_08);
     if (bullet_type_records[18] != 0x12) {
         printf("error! shot_tbl[18]\n");
     }
-    STORE_POINTER_DIRECT(bullet_type_records + 18, D_0024E916);
+    STORE_POINTER_DIRECT(bullet_type_records + 18, bullet_type_record_09);
     if (bullet_type_records[20] != 0x14) {
         printf("error! shot_tbl[20]\n");
     }
-    STORE_POINTER_DIRECT(bullet_type_records + 20, D_0024E92A);
+    STORE_POINTER_DIRECT(bullet_type_records + 20, bullet_type_record_10);
     if (bullet_type_records[22] != 0x16) {
         printf("error! shot_tbl[22]\n");
     }
-    STORE_POINTER_DIRECT(bullet_type_records + 22, D_0024E93E);
+    STORE_POINTER_DIRECT(bullet_type_records + 22, bullet_type_record_11);
     if (bullet_type_records[24] != 0x18) {
         printf("error! shot_tbl[24]\n");
     }
-    STORE_POINTER_DIRECT(bullet_type_records + 24, D_0024E952);
+    STORE_POINTER_DIRECT(bullet_type_records + 24, bullet_type_record_12);
     if (bullet_type_records[26] != 0x1a) {
         printf("error! shot_tbl[26]\n");
     }
-    STORE_POINTER_DIRECT(bullet_type_records + 26, D_0024E966);
+    STORE_POINTER_DIRECT(bullet_type_records + 26, bullet_type_record_13);
     if (bullet_type_records[28] != 0x1c) {
         printf("error! shot_tbl[28]\n");
     }
-    STORE_POINTER_DIRECT(bullet_type_records + 28, D_0024E97A);
+    STORE_POINTER_DIRECT(bullet_type_records + 28, bullet_type_record_14);
     if (bullet_type_records[30] != 0x1e) {
         printf("error! shot_tbl[30]\n");
     }
-    STORE_POINTER_DIRECT(bullet_type_records + 30, D_0024E98E);
+    STORE_POINTER_DIRECT(bullet_type_records + 30, bullet_type_record_15);
     if (bullet_type_records[32] != 0x20) {
         printf("error! shot_tbl[32]\n");
     }
-    STORE_POINTER_DIRECT(bullet_type_records + 32, D_0024E9A2);
+    STORE_POINTER_DIRECT(bullet_type_records + 32, bullet_type_record_16);
     if (bullet_type_records[34] != 0x22) {
         printf("error! shot_tbl[34]\n");
     }
-    STORE_POINTER_DIRECT(bullet_type_records + 34, D_0024E9B6);
+    STORE_POINTER_DIRECT(bullet_type_records + 34, bullet_type_record_17);
     if (bullet_type_records[36] != 0x24) {
         printf("error! shot_tbl[36]\n");
     }
-    STORE_POINTER_DIRECT(bullet_type_records + 36, D_0024E9CA);
+    STORE_POINTER_DIRECT(bullet_type_records + 36, bullet_type_record_18);
     if (bullet_type_records[38] != 0x26) {
         printf("error! shot_tbl[38]\n");
     }
-    STORE_POINTER_DIRECT(bullet_type_records + 38, D_0024E9DE);
+    STORE_POINTER_DIRECT(bullet_type_records + 38, bullet_type_record_19);
     if (bullet_type_records[40] != 0x28) {
         printf("error! shot_tbl[40]\n");
     }
-    STORE_POINTER_DIRECT(bullet_type_records + 40, D_0024E9F2);
+    STORE_POINTER_DIRECT(bullet_type_records + 40, bullet_type_record_20);
     if (bullet_type_records[42] != 0x2a) {
         printf("error! shot_tbl[42]\n");
     }
-    STORE_POINTER_DIRECT(bullet_type_records + 42, D_0024EA06);
+    STORE_POINTER_DIRECT(bullet_type_records + 42, bullet_type_record_21);
     if (bullet_type_records[44] != 0x2c) {
         printf("error! shot_tbl[44]\n");
     }
-    STORE_POINTER_DIRECT(bullet_type_records + 44, D_0024EA1A);
+    STORE_POINTER_DIRECT(bullet_type_records + 44, bullet_type_record_22);
     if (bullet_type_records[46] != 0x2e) {
         printf("error! shot_tbl[46]\n");
     }
-    STORE_POINTER_DIRECT(bullet_type_records + 46, D_0024EA2E);
+    STORE_POINTER_DIRECT(bullet_type_records + 46, bullet_type_record_23);
     if (bullet_type_records[48] != 0x30) {
         printf("error! shot_tbl[48]\n");
     }
-    STORE_POINTER_DIRECT(bullet_type_records + 48, D_0024EA42);
+    STORE_POINTER_DIRECT(bullet_type_records + 48, bullet_type_record_24);
     if (bullet_type_records[50] != 0x32) {
         printf("error! shot_tbl[50]\n");
     }
-    STORE_POINTER_DIRECT(bullet_type_records + 50, D_0024EA56);
+    STORE_POINTER_DIRECT(bullet_type_records + 50, bullet_type_record_25);
     if (bullet_type_records[52] != 0x34) {
         printf("error! shot_tbl[52]\n");
     }
-    STORE_POINTER_DIRECT(bullet_type_records + 52, D_0024EA6A);
+    STORE_POINTER_DIRECT(bullet_type_records + 52, bullet_type_record_26);
     if (bullet_type_records[54] != 0x36) {
         printf("error! shot_tbl[54]\n");
     }
-    STORE_POINTER_DIRECT(bullet_type_records + 54, D_0024EA7E);
+    STORE_POINTER_DIRECT(bullet_type_records + 54, bullet_type_record_27);
     if (bullet_type_records[56] != 0x38) {
         printf("error! shot_tbl[56]\n");
     }
-    STORE_POINTER_DIRECT(bullet_type_records + 56, D_0024EA92);
+    STORE_POINTER_DIRECT(bullet_type_records + 56, bullet_type_record_28);
     if (bullet_type_records[58] != 0x3a) {
         printf("error! shot_tbl[58]\n");
     }
-    STORE_POINTER_DIRECT(bullet_type_records + 58, D_0024EAA6);
+    STORE_POINTER_DIRECT(bullet_type_records + 58, bullet_type_record_29);
     if (bullet_type_records[60] != 0x3c) {
         printf("error! shot_tbl[60]\n");
     }
-    STORE_POINTER_DIRECT(bullet_type_records + 60, D_0024EABA);
+    STORE_POINTER_DIRECT(bullet_type_records + 60, bullet_type_record_30);
     if (bullet_type_records[62] != 0x3e) {
         printf("error! shot_tbl[62]\n");
     }
-    STORE_POINTER_DIRECT(bullet_type_records + 62, D_0024EACE);
+    STORE_POINTER_DIRECT(bullet_type_records + 62, bullet_type_record_31);
     if (bullet_type_records[64] != 0x40) {
         printf("error! shot_tbl[64]\n");
     }
-    STORE_POINTER_DIRECT(bullet_type_records + 64, D_0024EAE2);
+    STORE_POINTER_DIRECT(bullet_type_records + 64, bullet_type_record_32);
     if (bullet_type_records[66] != 0x42) {
         printf("error! shot_tbl[66]\n");
     }
-    STORE_POINTER_DIRECT(bullet_type_records + 66, D_0024EAF6);
+    STORE_POINTER_DIRECT(bullet_type_records + 66, bullet_type_record_33);
     if (bullet_type_records[68] != 0x44) {
         printf("error! shot_tbl[68]\n");
     }
-    STORE_POINTER_DIRECT(bullet_type_records + 68, D_0024EB0A);
+    STORE_POINTER_DIRECT(bullet_type_records + 68, bullet_type_record_34);
     if (bullet_type_records[70] != 0x46) {
         printf("error! shot_tbl[70]\n");
     }
-    STORE_POINTER_DIRECT(bullet_type_records + 70, D_0024EB1E);
+    STORE_POINTER_DIRECT(bullet_type_records + 70, bullet_type_record_35);
 #ifdef DEATH_LABEL
     if (death_D_00250790[0] != 0x48) {
         printf("error! shot_tbl[72]\n");
@@ -876,147 +876,147 @@ void func_0018E5A0(void) {
     if (bullet_move_routines_as_u16_a[0] != 0x0) {
         printf("error! bulljmp[0]\n");
     }
-    STORE_POINTER_DIRECT(bullet_move_routines_as_u16_a, func_0012DE90);
+    STORE_POINTER_DIRECT(bullet_move_routines_as_u16_a, bullet_move_type_00);
     if (bullet_move_routines[2] != 0x2) {
         printf("error! bulljmp[2]\n");
     }
-    STORE_POINTER_DIRECT(bullet_move_routines + 2, func_0012DF50);
+    STORE_POINTER_DIRECT(bullet_move_routines + 2, bullet_move_type_01);
     if (bullet_move_routines[4] != 0x4) {
         printf("error! bulljmp[4]\n");
     }
-    STORE_POINTER_DIRECT(bullet_move_routines + 4, func_0012E010);
+    STORE_POINTER_DIRECT(bullet_move_routines + 4, bullet_move_type_02);
     if (bullet_move_routines[6] != 0x6) {
         printf("error! bulljmp[6]\n");
     }
-    STORE_POINTER_DIRECT(bullet_move_routines + 6, func_0012E0B0);
+    STORE_POINTER_DIRECT(bullet_move_routines + 6, bullet_move_type_03);
     if (bullet_move_routines[8] != 0x8) {
         printf("error! bulljmp[8]\n");
     }
-    STORE_POINTER_DIRECT(bullet_move_routines + 8, func_0012E130);
+    STORE_POINTER_DIRECT(bullet_move_routines + 8, bullet_move_type_04);
     if (bullet_move_routines[10] != 0xa) {
         printf("error! bulljmp[10]\n");
     }
-    STORE_POINTER_DIRECT(bullet_move_routines + 10, func_0012E1B0);
+    STORE_POINTER_DIRECT(bullet_move_routines + 10, bullet_move_type_05);
     if (bullet_move_routines[12] != 0xc) {
         printf("error! bulljmp[12]\n");
     }
-    STORE_POINTER_DIRECT(bullet_move_routines + 12, func_0012E230);
+    STORE_POINTER_DIRECT(bullet_move_routines + 12, bullet_move_type_06);
     if (bullet_move_routines[14] != 0xe) {
         printf("error! bulljmp[14]\n");
     }
-    STORE_POINTER_DIRECT(bullet_move_routines + 14, func_0012E2B0);
+    STORE_POINTER_DIRECT(bullet_move_routines + 14, bullet_move_type_07);
     if (bullet_move_routines[16] != 0x10) {
         printf("error! bulljmp[16]\n");
     }
-    STORE_POINTER_DIRECT(bullet_move_routines + 16, func_0012E440);
+    STORE_POINTER_DIRECT(bullet_move_routines + 16, bullet_move_type_08);
     if (bullet_move_routines[18] != 0x12) {
         printf("error! bulljmp[18]\n");
     }
-    STORE_POINTER_DIRECT(bullet_move_routines + 18, func_0012E4D0);
+    STORE_POINTER_DIRECT(bullet_move_routines + 18, bullet_move_type_09);
     if (bullet_move_routines[20] != 0x14) {
         printf("error! bulljmp[20]\n");
     }
-    STORE_POINTER_DIRECT(bullet_move_routines + 20, func_0012E530);
+    STORE_POINTER_DIRECT(bullet_move_routines + 20, bullet_move_type_10);
     if (bullet_move_routines[22] != 0x16) {
         printf("error! bulljmp[22]\n");
     }
-    STORE_POINTER_DIRECT(bullet_move_routines + 22, func_0012E590);
+    STORE_POINTER_DIRECT(bullet_move_routines + 22, bullet_move_type_11);
     if (bullet_move_routines[24] != 0x18) {
         printf("error! bulljmp[24]\n");
     }
-    STORE_POINTER_DIRECT(bullet_move_routines + 24, func_0012E620);
+    STORE_POINTER_DIRECT(bullet_move_routines + 24, bullet_move_type_12);
     if (bullet_move_routines[26] != 0x1a) {
         printf("error! bulljmp[26]\n");
     }
-    STORE_POINTER_DIRECT(bullet_move_routines + 26, func_0012E680);
+    STORE_POINTER_DIRECT(bullet_move_routines + 26, bullet_move_type_13);
     if (bullet_move_routines[28] != 0x1c) {
         printf("error! bulljmp[28]\n");
     }
-    STORE_POINTER_DIRECT(bullet_move_routines + 28, func_0012E530);
+    STORE_POINTER_DIRECT(bullet_move_routines + 28, bullet_move_type_10);
     if (bullet_move_routines[30] != 0x1e) {
         printf("error! bulljmp[30]\n");
     }
-    STORE_POINTER_DIRECT(bullet_move_routines + 30, func_0012E530);
+    STORE_POINTER_DIRECT(bullet_move_routines + 30, bullet_move_type_10);
     if (bullet_move_routines[32] != 0x20) {
         printf("error! bulljmp[32]\n");
     }
-    STORE_POINTER_DIRECT(bullet_move_routines + 32, func_0012E6E0);
+    STORE_POINTER_DIRECT(bullet_move_routines + 32, bullet_move_type_16);
     if (bullet_move_routines[34] != 0x22) {
         printf("error! bulljmp[34]\n");
     }
-    STORE_POINTER_DIRECT(bullet_move_routines + 34, func_0012E7A0);
+    STORE_POINTER_DIRECT(bullet_move_routines + 34, bullet_move_type_17);
     if (bullet_move_routines[36] != 0x24) {
         printf("error! bulljmp[36]\n");
     }
-    STORE_POINTER_DIRECT(bullet_move_routines + 36, func_0012E860);
+    STORE_POINTER_DIRECT(bullet_move_routines + 36, bullet_move_type_18);
     if (bullet_move_routines[38] != 0x26) {
         printf("error! bulljmp[38]\n");
     }
-    STORE_POINTER_DIRECT(bullet_move_routines + 38, func_0012E920);
+    STORE_POINTER_DIRECT(bullet_move_routines + 38, bullet_move_type_19);
     if (bullet_move_routines[40] != 0x28) {
         printf("error! bulljmp[40]\n");
     }
-    STORE_POINTER_DIRECT(bullet_move_routines + 40, func_0012E9E0);
+    STORE_POINTER_DIRECT(bullet_move_routines + 40, bullet_move_type_20);
     if (bullet_move_routines[42] != 0x2a) {
         printf("error! bulljmp[42]\n");
     }
-    STORE_POINTER_DIRECT(bullet_move_routines + 42, func_0012EAA0);
+    STORE_POINTER_DIRECT(bullet_move_routines + 42, bullet_move_type_21);
     if (bullet_move_routines[44] != 0x2c) {
         printf("error! bulljmp[44]\n");
     }
-    STORE_POINTER_DIRECT(bullet_move_routines + 44, func_0012EB40);
+    STORE_POINTER_DIRECT(bullet_move_routines + 44, bullet_move_type_22);
     if (bullet_move_routines[46] != 0x2e) {
         printf("error! bulljmp[46]\n");
     }
-    STORE_POINTER_DIRECT(bullet_move_routines + 46, func_0012EC00);
+    STORE_POINTER_DIRECT(bullet_move_routines + 46, bullet_move_type_23);
     if (bullet_move_routines[48] != 0x30) {
         printf("error! bulljmp[48]\n");
     }
-    STORE_POINTER_DIRECT(bullet_move_routines + 48, func_0012EC90);
+    STORE_POINTER_DIRECT(bullet_move_routines + 48, bullet_move_type_24);
     if (bullet_move_routines[50] != 0x32) {
         printf("error! bulljmp[50]\n");
     }
-    STORE_POINTER_DIRECT(bullet_move_routines + 50, func_0012ED50);
+    STORE_POINTER_DIRECT(bullet_move_routines + 50, bullet_move_type_25);
     if (bullet_move_routines[52] != 0x34) {
         printf("error! bulljmp[52]\n");
     }
-    STORE_POINTER_DIRECT(bullet_move_routines + 52, func_0012EDF0);
+    STORE_POINTER_DIRECT(bullet_move_routines + 52, bullet_move_type_26);
     if (bullet_move_routines[54] != 0x36) {
         printf("error! bulljmp[54]\n");
     }
-    STORE_POINTER_DIRECT(bullet_move_routines + 54, func_0012EE90);
+    STORE_POINTER_DIRECT(bullet_move_routines + 54, bullet_move_type_27);
     if (bullet_move_routines[56] != 0x38) {
         printf("error! bulljmp[56]\n");
     }
-    STORE_POINTER_DIRECT(bullet_move_routines + 56, func_0012EF80);
+    STORE_POINTER_DIRECT(bullet_move_routines + 56, bullet_move_type_28);
     if (bullet_move_routines[58] != 0x3a) {
         printf("error! bulljmp[58]\n");
     }
-    STORE_POINTER_DIRECT(bullet_move_routines + 58, func_0012F020);
+    STORE_POINTER_DIRECT(bullet_move_routines + 58, bullet_move_type_29);
     if (bullet_move_routines[60] != 0x3c) {
         printf("error! bulljmp[60]\n");
     }
-    STORE_POINTER_DIRECT(bullet_move_routines + 60, func_0012F0C0);
+    STORE_POINTER_DIRECT(bullet_move_routines + 60, bullet_move_type_30);
     if (bullet_move_routines[62] != 0x3e) {
         printf("error! bulljmp[62]\n");
     }
-    STORE_POINTER_DIRECT(bullet_move_routines + 62, func_0012F1B0);
+    STORE_POINTER_DIRECT(bullet_move_routines + 62, bullet_move_type_31);
     if (bullet_move_routines[64] != 0x40) {
         printf("error! bulljmp[64]\n");
     }
-    STORE_POINTER_DIRECT(bullet_move_routines + 64, func_0012F2A0);
+    STORE_POINTER_DIRECT(bullet_move_routines + 64, bullet_move_type_32);
     if (bullet_move_routines[66] != 0x42) {
         printf("error! bulljmp[66]\n");
     }
-    STORE_POINTER_DIRECT(bullet_move_routines + 66, func_0012F330);
+    STORE_POINTER_DIRECT(bullet_move_routines + 66, bullet_move_type_33);
     if (bullet_move_routines[68] != 0x44) {
         printf("error! bulljmp[68]\n");
     }
-    STORE_POINTER_DIRECT(bullet_move_routines + 68, func_0012F3B0);
+    STORE_POINTER_DIRECT(bullet_move_routines + 68, bullet_move_type_34);
     if (bullet_move_routines[70] != 0x46) {
         printf("error! bulljmp[70]\n");
     }
-    STORE_POINTER_DIRECT(bullet_move_routines + 70, func_0012F450);
+    STORE_POINTER_DIRECT(bullet_move_routines + 70, bullet_move_type_35);
 #ifdef DEATH_LABEL
     if (death_D_00250B20[0] != 0x48) {
         printf("error! bulljmp[72]\n");
@@ -1130,83 +1130,83 @@ void func_0018E5A0(void) {
     if (explosion_scripts[0] != 0x0) {
         printf("error! exp_tbl[0]\n");
     }
-    STORE_POINTER_DIRECT(explosion_scripts, D_0024F790);
+    STORE_POINTER_DIRECT(explosion_scripts, explosion_script_00);
     if (explosion_scripts[2] != 0x2) {
         printf("error! exp_tbl[2]\n");
     }
-    STORE_POINTER_DIRECT(explosion_scripts + 2, D_0024F7D0);
+    STORE_POINTER_DIRECT(explosion_scripts + 2, explosion_script_01);
     if (explosion_scripts[4] != 0x4) {
         printf("error! exp_tbl[4]\n");
     }
-    STORE_POINTER_DIRECT(explosion_scripts + 4, D_0024F870);
+    STORE_POINTER_DIRECT(explosion_scripts + 4, explosion_script_02);
     if (explosion_scripts[6] != 0x6) {
         printf("error! exp_tbl[6]\n");
     }
-    STORE_POINTER_DIRECT(explosion_scripts + 6, D_0024F8B0);
+    STORE_POINTER_DIRECT(explosion_scripts + 6, explosion_script_03);
     if (explosion_scripts[8] != 0x8) {
         printf("error! exp_tbl[8]\n");
     }
-    STORE_POINTER_DIRECT(explosion_scripts + 8, D_0024F950);
+    STORE_POINTER_DIRECT(explosion_scripts + 8, explosion_script_04);
     if (explosion_scripts[10] != 0xa) {
         printf("error! exp_tbl[10]\n");
     }
-    STORE_POINTER_DIRECT(explosion_scripts + 10, D_0024F990);
+    STORE_POINTER_DIRECT(explosion_scripts + 10, explosion_script_05);
     if (explosion_scripts[12] != 0xc) {
         printf("error! exp_tbl[12]\n");
     }
-    STORE_POINTER_DIRECT(explosion_scripts + 12, D_0024FA30);
+    STORE_POINTER_DIRECT(explosion_scripts + 12, explosion_script_06);
     if (explosion_scripts[14] != 0xe) {
         printf("error! exp_tbl[14]\n");
     }
-    STORE_POINTER_DIRECT(explosion_scripts + 14, D_0024FAA0);
+    STORE_POINTER_DIRECT(explosion_scripts + 14, explosion_script_07);
     if (explosion_scripts[16] != 0x10) {
         printf("error! exp_tbl[16]\n");
     }
-    STORE_POINTER_DIRECT(explosion_scripts + 16, D_0024FBB0);
+    STORE_POINTER_DIRECT(explosion_scripts + 16, explosion_script_08);
     if (explosion_scripts[18] != 0x12) {
         printf("error! exp_tbl[18]\n");
     }
-    STORE_POINTER_DIRECT(explosion_scripts + 18, D_0024FC30);
+    STORE_POINTER_DIRECT(explosion_scripts + 18, explosion_script_09);
     if (explosion_scripts[20] != 0x14) {
         printf("error! exp_tbl[20]\n");
     }
-    STORE_POINTER_DIRECT(explosion_scripts + 20, D_0024FD50);
+    STORE_POINTER_DIRECT(explosion_scripts + 20, explosion_script_10);
     if (explosion_scripts[22] != 0x16) {
         printf("error! exp_tbl[22]\n");
     }
-    STORE_POINTER_DIRECT(explosion_scripts + 22, D_0024FDE0);
+    STORE_POINTER_DIRECT(explosion_scripts + 22, explosion_script_11);
     if (explosion_scripts[24] != 0x18) {
         printf("error! exp_tbl[24]\n");
     }
-    STORE_POINTER_DIRECT(explosion_scripts + 24, D_0024FF20);
+    STORE_POINTER_DIRECT(explosion_scripts + 24, explosion_script_12);
     if (explosion_scripts[26] != 0x1a) {
         printf("error! exp_tbl[26]\n");
     }
-    STORE_POINTER_DIRECT(explosion_scripts + 26, D_0024FF90);
+    STORE_POINTER_DIRECT(explosion_scripts + 26, explosion_script_13);
     if (explosion_scripts[28] != 0x1c) {
         printf("error! exp_tbl[28]\n");
     }
-    STORE_POINTER_DIRECT(explosion_scripts + 28, D_0024FFD0);
+    STORE_POINTER_DIRECT(explosion_scripts + 28, explosion_script_14);
     if (explosion_scripts[30] != 0x1e) {
         printf("error! exp_tbl[30]\n");
     }
-    STORE_POINTER_DIRECT(explosion_scripts + 30, D_00250060);
+    STORE_POINTER_DIRECT(explosion_scripts + 30, explosion_script_15);
     if (explosion_scripts[32] != 0x20) {
         printf("error! exp_tbl[32]\n");
     }
-    STORE_POINTER_DIRECT(explosion_scripts + 32, D_002500B0);
+    STORE_POINTER_DIRECT(explosion_scripts + 32, explosion_script_16);
     if (explosion_scripts[34] != 0x22) {
         printf("error! exp_tbl[34]\n");
     }
-    STORE_POINTER_DIRECT(explosion_scripts + 34, D_00250130);
+    STORE_POINTER_DIRECT(explosion_scripts + 34, explosion_script_17);
     if (explosion_scripts[36] != 0x24) {
         printf("error! exp_tbl[36]\n");
     }
-    STORE_POINTER_DIRECT(explosion_scripts + 36, D_00250170);
+    STORE_POINTER_DIRECT(explosion_scripts + 36, explosion_script_18);
     if (explosion_scripts[38] != 0x26) {
         printf("error! exp_tbl[38]\n");
     }
-    STORE_POINTER_DIRECT(explosion_scripts + 38, D_00250210);
+    STORE_POINTER_DIRECT(explosion_scripts + 38, explosion_script_19);
     if (explosion_scripts[40] != 0x28) {
         printf("error! exp_tbl[40]\n");
     }
@@ -1266,83 +1266,83 @@ void func_0018E5A0(void) {
     if (explosion_scripts[68] != 0x44) {
         printf("error! exp_tbl[68]\n");
     }
-    STORE_POINTER_DIRECT(explosion_scripts + 68, D_0024F790);
+    STORE_POINTER_DIRECT(explosion_scripts + 68, explosion_script_00);
     if (explosion_scripts[70] != 0x46) {
         printf("error! exp_tbl[70]\n");
     }
-    STORE_POINTER_DIRECT(explosion_scripts + 70, D_0024F7D0);
+    STORE_POINTER_DIRECT(explosion_scripts + 70, explosion_script_01);
     if (explosion_scripts[72] != 0x48) {
         printf("error! exp_tbl[72]\n");
     }
-    STORE_POINTER_DIRECT(explosion_scripts + 72, D_0024F870);
+    STORE_POINTER_DIRECT(explosion_scripts + 72, explosion_script_02);
     if (explosion_scripts[74] != 0x4a) {
         printf("error! exp_tbl[74]\n");
     }
-    STORE_POINTER_DIRECT(explosion_scripts + 74, D_0024F8B0);
+    STORE_POINTER_DIRECT(explosion_scripts + 74, explosion_script_03);
     if (explosion_scripts[76] != 0x4c) {
         printf("error! exp_tbl[76]\n");
     }
-    STORE_POINTER_DIRECT(explosion_scripts + 76, D_0024F950);
+    STORE_POINTER_DIRECT(explosion_scripts + 76, explosion_script_04);
     if (explosion_scripts[78] != 0x4e) {
         printf("error! exp_tbl[78]\n");
     }
-    STORE_POINTER_DIRECT(explosion_scripts + 78, D_0024F990);
+    STORE_POINTER_DIRECT(explosion_scripts + 78, explosion_script_05);
     if (explosion_scripts[80] != 0x50) {
         printf("error! exp_tbl[80]\n");
     }
-    STORE_POINTER_DIRECT(explosion_scripts + 80, D_0024FA30);
+    STORE_POINTER_DIRECT(explosion_scripts + 80, explosion_script_06);
     if (explosion_scripts[82] != 0x52) {
         printf("error! exp_tbl[82]\n");
     }
-    STORE_POINTER_DIRECT(explosion_scripts + 82, D_0024FAA0);
+    STORE_POINTER_DIRECT(explosion_scripts + 82, explosion_script_07);
     if (explosion_scripts[84] != 0x54) {
         printf("error! exp_tbl[84]\n");
     }
-    STORE_POINTER_DIRECT(explosion_scripts + 84, D_0024FBB0);
+    STORE_POINTER_DIRECT(explosion_scripts + 84, explosion_script_08);
     if (explosion_scripts[86] != 0x56) {
         printf("error! exp_tbl[86]\n");
     }
-    STORE_POINTER_DIRECT(explosion_scripts + 86, D_0024FC30);
+    STORE_POINTER_DIRECT(explosion_scripts + 86, explosion_script_09);
     if (explosion_scripts[88] != 0x58) {
         printf("error! exp_tbl[88]\n");
     }
-    STORE_POINTER_DIRECT(explosion_scripts + 88, D_0024FD50);
+    STORE_POINTER_DIRECT(explosion_scripts + 88, explosion_script_10);
     if (explosion_scripts[90] != 0x5a) {
         printf("error! exp_tbl[90]\n");
     }
-    STORE_POINTER_DIRECT(explosion_scripts + 90, D_0024FDE0);
+    STORE_POINTER_DIRECT(explosion_scripts + 90, explosion_script_11);
     if (explosion_scripts[92] != 0x5c) {
         printf("error! exp_tbl[92]\n");
     }
-    STORE_POINTER_DIRECT(explosion_scripts + 92, D_0024FF20);
+    STORE_POINTER_DIRECT(explosion_scripts + 92, explosion_script_12);
     if (explosion_scripts[94] != 0x5e) {
         printf("error! exp_tbl[94]\n");
     }
-    STORE_POINTER_DIRECT(explosion_scripts + 94, D_0024FF90);
+    STORE_POINTER_DIRECT(explosion_scripts + 94, explosion_script_13);
     if (explosion_scripts[96] != 0x60) {
         printf("error! exp_tbl[96]\n");
     }
-    STORE_POINTER_DIRECT(explosion_scripts + 96, D_0024FFD0);
+    STORE_POINTER_DIRECT(explosion_scripts + 96, explosion_script_14);
     if (explosion_scripts[98] != 0x62) {
         printf("error! exp_tbl[98]\n");
     }
-    STORE_POINTER_DIRECT(explosion_scripts + 98, D_00250060);
+    STORE_POINTER_DIRECT(explosion_scripts + 98, explosion_script_15);
     if (explosion_scripts[100] != 0x64) {
         printf("error! exp_tbl[100]\n");
     }
-    STORE_POINTER_DIRECT(explosion_scripts + 100, D_002500B0);
+    STORE_POINTER_DIRECT(explosion_scripts + 100, explosion_script_16);
     if (explosion_scripts[102] != 0x66) {
         printf("error! exp_tbl[102]\n");
     }
-    STORE_POINTER_DIRECT(explosion_scripts + 102, D_00250130);
+    STORE_POINTER_DIRECT(explosion_scripts + 102, explosion_script_17);
     if (explosion_scripts[104] != 0x68) {
         printf("error! exp_tbl[104]\n");
     }
-    STORE_POINTER_DIRECT(explosion_scripts + 104, D_00250170);
+    STORE_POINTER_DIRECT(explosion_scripts + 104, explosion_script_18);
     if (explosion_scripts[106] != 0x6a) {
         printf("error! exp_tbl[106]\n");
     }
-    STORE_POINTER_DIRECT(explosion_scripts + 106, D_00250210);
+    STORE_POINTER_DIRECT(explosion_scripts + 106, explosion_script_19);
     if (explosion_scripts[108] != 0x6c) {
         printf("error! exp_tbl[108]\n");
     }
@@ -1402,51 +1402,51 @@ void func_0018E5A0(void) {
     if (explosion_scripts_b[0] != 0x0) {
         printf("error! exp_tbl_80[0]\n");
     }
-    STORE_POINTER_DIRECT(explosion_scripts_b, D_0024F7F0);
+    STORE_POINTER_DIRECT(explosion_scripts_b, explosion_script_b_00);
     if (explosion_scripts_b[2] != 0x2) {
         printf("error! exp_tbl_80[2]\n");
     }
-    STORE_POINTER_DIRECT(explosion_scripts_b + 2, D_0024F850);
+    STORE_POINTER_DIRECT(explosion_scripts_b + 2, explosion_script_b_01);
     if (explosion_scripts_b[4] != 0x4) {
         printf("error! exp_tbl_80[4]\n");
     }
-    STORE_POINTER_DIRECT(explosion_scripts_b + 4, D_0024F8D0);
+    STORE_POINTER_DIRECT(explosion_scripts_b + 4, explosion_script_b_02);
     if (explosion_scripts_b[6] != 0x6) {
         printf("error! exp_tbl_80[6]\n");
     }
-    STORE_POINTER_DIRECT(explosion_scripts_b + 6, D_0024F930);
+    STORE_POINTER_DIRECT(explosion_scripts_b + 6, explosion_script_b_03);
     if (explosion_scripts_b[8] != 0x8) {
         printf("error! exp_tbl_80[8]\n");
     }
-    STORE_POINTER_DIRECT(explosion_scripts_b + 8, D_0024F9B0);
+    STORE_POINTER_DIRECT(explosion_scripts_b + 8, explosion_script_b_04);
     if (explosion_scripts_b[10] != 0xa) {
         printf("error! exp_tbl_80[10]\n");
     }
-    STORE_POINTER_DIRECT(explosion_scripts_b + 10, D_0024FA10);
+    STORE_POINTER_DIRECT(explosion_scripts_b + 10, explosion_script_b_05);
     if (explosion_scripts_b[12] != 0xc) {
         printf("error! exp_tbl_80[12]\n");
     }
-    STORE_POINTER_DIRECT(explosion_scripts_b + 12, D_0024FAE0);
+    STORE_POINTER_DIRECT(explosion_scripts_b + 12, explosion_script_b_06);
     if (explosion_scripts_b[14] != 0xe) {
         printf("error! exp_tbl_80[14]\n");
     }
-    STORE_POINTER_DIRECT(explosion_scripts_b + 14, D_0024FB70);
+    STORE_POINTER_DIRECT(explosion_scripts_b + 14, explosion_script_b_07);
     if (explosion_scripts_b[16] != 0x10) {
         printf("error! exp_tbl_80[16]\n");
     }
-    STORE_POINTER_DIRECT(explosion_scripts_b + 16, D_0024FC70);
+    STORE_POINTER_DIRECT(explosion_scripts_b + 16, explosion_script_b_08);
     if (explosion_scripts_b[18] != 0x12) {
         printf("error! exp_tbl_80[18]\n");
     }
-    STORE_POINTER_DIRECT(explosion_scripts_b + 18, D_0024FD10);
+    STORE_POINTER_DIRECT(explosion_scripts_b + 18, explosion_script_b_09);
     if (explosion_scripts_b[20] != 0x14) {
         printf("error! exp_tbl_80[20]\n");
     }
-    STORE_POINTER_DIRECT(explosion_scripts_b + 20, D_0024FE30);
+    STORE_POINTER_DIRECT(explosion_scripts_b + 20, explosion_script_b_10);
     if (explosion_scripts_b[22] != 0x16) {
         printf("error! exp_tbl_80[22]\n");
     }
-    STORE_POINTER_DIRECT(explosion_scripts_b + 22, D_0024FED0);
+    STORE_POINTER_DIRECT(explosion_scripts_b + 22, explosion_script_b_11);
     if (explosion_scripts_b[24] != 0x18) {
         printf("error! exp_tbl_80[24]\n");
     }
@@ -1538,51 +1538,51 @@ void func_0018E5A0(void) {
     if (explosion_scripts_b[68] != 0x44) {
         printf("error! exp_tbl_80[68]\n");
     }
-    STORE_POINTER_DIRECT(explosion_scripts_b + 68, D_0024F7F0);
+    STORE_POINTER_DIRECT(explosion_scripts_b + 68, explosion_script_b_00);
     if (explosion_scripts_b[70] != 0x46) {
         printf("error! exp_tbl_80[70]\n");
     }
-    STORE_POINTER_DIRECT(explosion_scripts_b + 70, D_0024F850);
+    STORE_POINTER_DIRECT(explosion_scripts_b + 70, explosion_script_b_01);
     if (explosion_scripts_b[72] != 0x48) {
         printf("error! exp_tbl_80[72]\n");
     }
-    STORE_POINTER_DIRECT(explosion_scripts_b + 72, D_0024F8D0);
+    STORE_POINTER_DIRECT(explosion_scripts_b + 72, explosion_script_b_02);
     if (explosion_scripts_b[74] != 0x4a) {
         printf("error! exp_tbl_80[74]\n");
     }
-    STORE_POINTER_DIRECT(explosion_scripts_b + 74, D_0024F930);
+    STORE_POINTER_DIRECT(explosion_scripts_b + 74, explosion_script_b_03);
     if (explosion_scripts_b[76] != 0x4c) {
         printf("error! exp_tbl_80[76]\n");
     }
-    STORE_POINTER_DIRECT(explosion_scripts_b + 76, D_0024F9B0);
+    STORE_POINTER_DIRECT(explosion_scripts_b + 76, explosion_script_b_04);
     if (explosion_scripts_b[78] != 0x4e) {
         printf("error! exp_tbl_80[78]\n");
     }
-    STORE_POINTER_DIRECT(explosion_scripts_b + 78, D_0024FA10);
+    STORE_POINTER_DIRECT(explosion_scripts_b + 78, explosion_script_b_05);
     if (explosion_scripts_b[80] != 0x50) {
         printf("error! exp_tbl_80[80]\n");
     }
-    STORE_POINTER_DIRECT(explosion_scripts_b + 80, D_0024FAE0);
+    STORE_POINTER_DIRECT(explosion_scripts_b + 80, explosion_script_b_06);
     if (explosion_scripts_b[82] != 0x52) {
         printf("error! exp_tbl_80[82]\n");
     }
-    STORE_POINTER_DIRECT(explosion_scripts_b + 82, D_0024FB70);
+    STORE_POINTER_DIRECT(explosion_scripts_b + 82, explosion_script_b_07);
     if (explosion_scripts_b[84] != 0x54) {
         printf("error! exp_tbl_80[84]\n");
     }
-    STORE_POINTER_DIRECT(explosion_scripts_b + 84, D_0024FC70);
+    STORE_POINTER_DIRECT(explosion_scripts_b + 84, explosion_script_b_08);
     if (explosion_scripts_b[86] != 0x56) {
         printf("error! exp_tbl_80[86]\n");
     }
-    STORE_POINTER_DIRECT(explosion_scripts_b + 86, D_0024FD10);
+    STORE_POINTER_DIRECT(explosion_scripts_b + 86, explosion_script_b_09);
     if (explosion_scripts_b[88] != 0x58) {
         printf("error! exp_tbl_80[88]\n");
     }
-    STORE_POINTER_DIRECT(explosion_scripts_b + 88, D_0024FE30);
+    STORE_POINTER_DIRECT(explosion_scripts_b + 88, explosion_script_b_10);
     if (explosion_scripts_b[90] != 0x5a) {
         printf("error! exp_tbl_80[90]\n");
     }
-    STORE_POINTER_DIRECT(explosion_scripts_b + 90, D_0024FED0);
+    STORE_POINTER_DIRECT(explosion_scripts_b + 90, explosion_script_b_11);
     if (explosion_scripts_b[92] != 0x5c) {
         printf("error! exp_tbl_80[92]\n");
     }

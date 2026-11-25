@@ -2084,7 +2084,7 @@ void func_0012DCD0(void) {
 
 extern u8 D_0024EF30[];
 
-void func_0012DE90(void) {
+void bullet_move_type_00(void) {
     reg_d1.w = 0;
     reg_d1.h[0] = D_00299762[0];
     reg_a1 = D_0024EF30;
@@ -2103,7 +2103,7 @@ void func_0012DE90(void) {
     *(u16 *)(reg_a6 + 0x24) = (u16) reg_tmp.h[0];
 }
 
-void func_0012DF50(void) {
+void bullet_move_type_01(void) {
     reg_d1.w = 0;
     reg_d1.h[0] = D_00299762[0];
     reg_a1 = D_0024EF30;
@@ -2125,7 +2125,7 @@ void func_0012DF50(void) {
 s32 func_0012F4C0();
 extern u8 D_0024EBC0[];
 
-void func_0012E010(void) {
+void bullet_move_type_02(void) {
     reg_d1.w = 0;
     reg_d1.h[0] = D_00299762[0];
     reg_a1 = D_0024EF30;
@@ -2143,7 +2143,7 @@ void func_0012E010(void) {
 }
 
 
-void func_0012E0B0(void) {
+void bullet_move_type_03(void) {
     func_0012E3D0();
     ENTITY(reg_a6)->misc.h = (u16) *(u16 *)(reg_a6 + 0x30);
     *(u16 *)(reg_a6 + 0x20) = (u16) *(u16 *)(reg_a6 + 0x32);
@@ -2155,7 +2155,7 @@ void func_0012E0B0(void) {
     *(u16 *)(reg_a6 + 0x24) = (u16) reg_tmp.h[0];
 }
 
-void func_0012E130(void) {
+void bullet_move_type_04(void) {
     func_0012E3D0();
     ENTITY(reg_a6)->misc.h = (u16) *(u16 *)(reg_a6 + 0x30);
     *(u16 *)(reg_a6 + 0x20) = (u16) *(u16 *)(reg_a6 + 0x32);
@@ -2167,7 +2167,7 @@ void func_0012E130(void) {
     *(u16 *)(reg_a6 + 0x24) = (u16) reg_tmp.h[0];
 }
 
-void func_0012E1B0(void) {
+void bullet_move_type_05(void) {
     func_0012E3D0();
     ENTITY(reg_a6)->misc.h = (u16) *(u16 *)(reg_a6 + 0x30);
     *(u16 *)(reg_a6 + 0x20) = (u16) *(u16 *)(reg_a6 + 0x32);
@@ -2179,7 +2179,7 @@ void func_0012E1B0(void) {
     *(u16 *)(reg_a6 + 0x24) = (u16) reg_tmp.h[0];
 }
 
-void func_0012E230(void) {
+void bullet_move_type_06(void) {
     func_0012E3D0();
     ENTITY(reg_a6)->misc.h = (u16) *(u16 *)(reg_a6 + 0x30);
     *(u16 *)(reg_a6 + 0x20) = (u16) *(u16 *)(reg_a6 + 0x32);
@@ -2193,7 +2193,7 @@ void func_0012E230(void) {
 
 extern u8 D_0024ED80[];
 
-void func_0012E2B0(void) {
+void bullet_move_type_07(void) {
     reg_d1.w = 0;
     reg_d1.h[0] = D_00299762[0];
     reg_a1 = D_0024EF30;
@@ -2236,7 +2236,7 @@ void func_0012E3D0(void) {
 }
 
 
-void func_0012E440(void) {
+void bullet_move_type_08(void) {
     func_0012E350();
     reg_tmp.w = 0x1E6;
     ENTITY(reg_a6)->draw.h = (u16) reg_tmp.h[1];
@@ -2250,7 +2250,7 @@ void func_0012E440(void) {
     *(u16 *)(reg_a6 + 0x24) = (u16) reg_tmp.h[0];
 }
 
-void func_0012E4D0(void) {
+void bullet_move_type_09(void) {
     func_0012E350();
     reg_tmp.w = 0x1B9;
     ENTITY(reg_a6)->draw.h = (u16) reg_tmp.h[1];
@@ -2260,7 +2260,7 @@ void func_0012E4D0(void) {
     *(u16 *)(reg_a6 + 0x24) = (u16) reg_tmp.h[0];
 }
 
-void func_0012E530(void) {
+void bullet_move_type_10(void) {
     func_0012E350();
     reg_tmp.w = 0x1BF;
     ENTITY(reg_a6)->draw.h = (u16) reg_tmp.h[1];
@@ -2270,7 +2270,7 @@ void func_0012E530(void) {
     *(u16 *)(reg_a6 + 0x24) = (u16) reg_tmp.h[0];
 }
 
-void func_0012E590(void) {
+void bullet_move_type_11(void) {
     func_0012E350();
     reg_tmp.w = 0x220;
     ENTITY(reg_a6)->draw.h = (u16) reg_tmp.h[1];
@@ -2284,7 +2284,7 @@ void func_0012E590(void) {
     *(u16 *)(reg_a6 + 0x24) = (u16) reg_tmp.h[0];
 }
 
-void func_0012E620(void) {
+void bullet_move_type_12(void) {
     func_0012E350();
     reg_tmp.w = 0x20E;
     ENTITY(reg_a6)->draw.h = (u16) reg_tmp.h[1];
@@ -2294,7 +2294,7 @@ void func_0012E620(void) {
     *(u16 *)(reg_a6 + 0x24) = (u16) reg_tmp.h[0];
 }
 
-void func_0012E680(void) {
+void bullet_move_type_13(void) {
     func_0012E350();
     reg_tmp.w = 0x20E;
     ENTITY(reg_a6)->draw.h = (u16) reg_tmp.h[1];
@@ -2304,7 +2304,7 @@ void func_0012E680(void) {
     *(u16 *)(reg_a6 + 0x24) = (u16) reg_tmp.h[0];
 }
 
-void func_0012E6E0(void) {
+void bullet_move_type_16(void) {
     reg_d1.w = 0;
     reg_d1.h[0] = D_00299762[0];
     reg_a1 = D_0024EF30;
@@ -2323,7 +2323,7 @@ void func_0012E6E0(void) {
     func_0012F4C0();
 }
 
-void func_0012E7A0(void) {
+void bullet_move_type_17(void) {
     reg_d1.w = 0;
     reg_d1.h[0] = D_00299762[0];
     reg_a1 = D_0024EF30;
@@ -2343,7 +2343,7 @@ void func_0012E7A0(void) {
     func_0012F4C0();
 }
 
-void func_0012E860(void) {
+void bullet_move_type_18(void) {
     reg_d1.w = 0;
     reg_d1.h[0] = D_00299762[0];
     reg_a1 = D_0024EF30;
@@ -2363,7 +2363,7 @@ void func_0012E860(void) {
     func_0012F4C0();
 }
 
-void func_0012E920(void) {
+void bullet_move_type_19(void) {
     ENTITY(reg_a6)->flags.b[1] &= 0xFE;
     reg_tmp.w = 0x283;
     ENTITY(reg_a6)->draw.h = (u16) reg_tmp.h[1];
@@ -2382,7 +2382,7 @@ void func_0012E920(void) {
     *(u16 *)(reg_a6 + 0x24) = (u16) reg_tmp.h[0];
 }
 
-void func_0012E9E0(void) {
+void bullet_move_type_20(void) {
     reg_d1.w = 0;
     reg_d1.h[0] = D_00299762[0];
     reg_a1 = D_0024EF30;
@@ -2403,7 +2403,7 @@ void func_0012E9E0(void) {
 
 extern u8 D_0024EDB0[];
 
-void func_0012EAA0(void) {
+void bullet_move_type_21(void) {
     reg_d1.w = 0;
     reg_d1.h[0] = D_00299762[0];
     reg_a1 = D_0024EF30;
@@ -2420,7 +2420,7 @@ void func_0012EAA0(void) {
     func_0012F4C0();
 }
 
-void func_0012EB40(void) {
+void bullet_move_type_22(void) {
     ENTITY(reg_a6)->flags.b[1] &= 0xFE;
     reg_tmp.w = 0x297;
     ENTITY(reg_a6)->draw.h = (u16) reg_tmp.h[1];
@@ -2439,7 +2439,7 @@ void func_0012EB40(void) {
     *(u16 *)(reg_a6 + 0x24) = (u16) reg_tmp.h[0];
 }
 
-void func_0012EC00(void) {
+void bullet_move_type_23(void) {
     func_0012E350();
     reg_tmp.w = 0x220;
     ENTITY(reg_a6)->draw.h = (u16) reg_tmp.h[1];
@@ -2453,7 +2453,7 @@ void func_0012EC00(void) {
     *(u16 *)(reg_a6 + 0x24) = (u16) reg_tmp.h[0];
 }
 
-void func_0012EC90(void) {
+void bullet_move_type_24(void) {
     ENTITY(reg_a6)->flags.b[1] &= 0xFE;
     reg_tmp.w = 0x297;
     ENTITY(reg_a6)->draw.h = (u16) reg_tmp.h[1];
@@ -2472,7 +2472,7 @@ void func_0012EC90(void) {
     *(u16 *)(reg_a6 + 0x24) = (u16) reg_tmp.h[0];
 }
 
-void func_0012ED50(void) {
+void bullet_move_type_25(void) {
     *(s16 *)(reg_a6 + 0x2C) = 1;
     reg_tmp.w = 0x19;
     *(u16 *)(reg_a6 + 0x22) = (u16) reg_tmp.h[1];
@@ -2490,7 +2490,7 @@ void func_0012ED50(void) {
 
 extern u8 D_0024EE60[];
 
-void func_0012EDF0(void) {
+void bullet_move_type_26(void) {
     reg_d1.w = 0;
     reg_d1.h[0] = D_00299762[0];
     reg_a1 = D_0024EF30;

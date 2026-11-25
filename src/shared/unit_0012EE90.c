@@ -4,7 +4,7 @@
 s32 func_0012E3D0();
 extern u16 g_game_frame;
 
-void func_0012EE90(void) {
+void bullet_move_type_27(void) {
     func_0012E3D0();
     reg_tmp.w = 0x19D;
     ENTITY(reg_a6)->draw.h = (u16) reg_tmp.h[1];
@@ -26,7 +26,7 @@ void func_0012EE90(void) {
     *(s16 *)(reg_a6 + 0x30) = 0x20;
 }
 
-void func_0012EF80(void) {
+void bullet_move_type_28(void) {
     *(s16 *)(reg_a6 + 0x28) = 0x1410;
     reg_tmp.w = 0x1C;
     *(u16 *)(reg_a6 + 0x22) = (u16) reg_tmp.h[1];
@@ -42,7 +42,7 @@ void func_0012EF80(void) {
     ENTITY(reg_a6)->attr.sb.palette = 0x1A;
 }
 
-void func_0012F020(void) {
+void bullet_move_type_29(void) {
     *(s16 *)(reg_a6 + 0x2C) = 1;
     reg_tmp.w = 0x1D;
     *(u16 *)(reg_a6 + 0x22) = (u16) reg_tmp.h[1];
@@ -61,7 +61,7 @@ void func_0012F020(void) {
 s32 func_0012DA30();
 s32 func_0012E350();
 
-void func_0012F0C0() {
+void bullet_move_type_30() {
     func_0012E350();
     reg_tmp.w = 0x220;
     ENTITY(reg_a6)->draw.h = (u16) reg_tmp.h[1];
@@ -85,7 +85,7 @@ void func_0012F0C0() {
     *(u16 *)(reg_a6 + 0x32) = (u16) reg_d3.h[0];
 }
 
-void func_0012F1B0() {
+void bullet_move_type_31() {
     func_0012E350();
     reg_tmp.w = 0x220;
     ENTITY(reg_a6)->draw.h = (u16) reg_tmp.h[1];
@@ -111,7 +111,7 @@ void func_0012F1B0() {
 
 s32 func_0012E350();                            /* extern */
 
-void func_0012F2A0(void) {
+void bullet_move_type_32(void) {
     func_0012E350();
     reg_tmp.w = 0x1E6;
     ENTITY(reg_a6)->draw.h = (u16) reg_tmp.h[1];
@@ -125,7 +125,7 @@ void func_0012F2A0(void) {
     *(u16 *)(reg_a6 + 0x24) = (u16) reg_tmp.h[0];
 }
 
-void func_0012F330(void) {
+void bullet_move_type_33(void) {
     ENTITY(reg_a6)->flags.b[1] &= 0xFE;
     reg_tmp.w = 0x1B4;
     ENTITY(reg_a6)->draw.h = (u16) reg_tmp.h[1];
@@ -138,7 +138,7 @@ void func_0012F330(void) {
     *(u16 *)(reg_a6 + 0x24) = (u16) reg_tmp.h[0];
 }
 
-void func_0012F3B0(void) {
+void bullet_move_type_34(void) {
     *(s16 *)(reg_a6 + 0x2C) = 1;
     reg_tmp.w = 0x22;
     *(u16 *)(reg_a6 + 0x22) = (u16) reg_tmp.h[1];
@@ -156,7 +156,7 @@ void func_0012F3B0(void) {
 
 s32 func_0012E3D0();                            /* extern */
 
-void func_0012F450(void) {
+void bullet_move_type_35(void) {
     func_0012E3D0();
     reg_tmp.w = 0x23;
     *(u16 *)(reg_a6 + 0x22) = (u16) reg_tmp.h[1];

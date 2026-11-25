@@ -26,8 +26,8 @@ void bullet_fire256_loop2_double();
 void bullet_fire256_loop2_3way();
 void bullet_fire256_direct(void);
 void bullet_spawn256(void);
-void func_00129A90(void);
-void func_00129B70(void);
+void bullet_type_setup_32(void);
+void bullet_type_setup_31(void);
 
 extern u16 D_0028E3EC;
 extern u16 g_bullet_count;
@@ -2297,7 +2297,7 @@ extern s32 D_0028DEA4_as_s32;
 extern s32 D_0028DEB0;
 extern s32 D_0028DEB4_as_s32;
 
-void func_001298A0(void) {
+void bullet_type_setup_00(void) {
     cond_flag = 0;
     reg_d0.w = D_0028DEA8;
     reg_d7.sw = D_0028DEA4_as_s32;
@@ -2307,7 +2307,7 @@ void func_001298A0(void) {
 
 extern void *D_0028DEB4;
 
-void func_001298D0(void) {
+void bullet_type_setup_03(void) {
     *(u16 *)(reg_a0 + 0x18) = (u16) reg_d3.h[1];
     *(u16 *)(reg_a0 + 0x1A) = (u16) reg_d3.h[0];
     *(u16 *)(reg_a0 + 0x1C) = (u16) reg_d4.h[1];
@@ -2320,7 +2320,7 @@ void func_001298D0(void) {
     reg_a1 = (u8 *)D_0028DEB0;
 }
 
-void func_00129930(void) {
+void bullet_type_setup_17(void) {
     *(u8 *)(reg_a0 + 0x25) = (u8) reg_d4.b[0];
     cond_flag = 0;
     reg_d0.w = D_0028DEA8;
@@ -2329,7 +2329,7 @@ void func_00129930(void) {
     reg_a1 = (u8 *)D_0028DEB0;
 }
 
-void func_00129970(void) {
+void bullet_type_setup_18(void) {
     *(u16 *)(reg_a0 + 0x24) = (u16) reg_d4.h[0];
     cond_flag = 0;
     reg_d0.w = D_0028DEA8;
@@ -2338,7 +2338,7 @@ void func_00129970(void) {
     reg_a1 = (u8 *)D_0028DEB0;
 }
 
-void func_001299B0(void) {
+void bullet_type_setup_19(void) {
     *(u16 *)(reg_a0 + 0x18) = (u16) reg_d3.h[1];
     *(u16 *)(reg_a0 + 0x1A) = (u16) reg_d3.h[0];
     *(u16 *)(reg_a0 + 0x1C) = (u16) reg_d4.h[1];
@@ -2351,7 +2351,7 @@ void func_001299B0(void) {
     reg_a1 = (u8 *)D_0028DEB0;
 }
 
-void func_00129A10(void) {
+void bullet_type_setup_23(void) {
     *(u16 *)(reg_a0 + 0x18) = (u16) reg_d3.h[1];
     *(u16 *)(reg_a0 + 0x1A) = (u16) reg_d3.h[0];
     *(u16 *)(reg_a0 + 0x1C) = (u16) reg_d4.h[1];
@@ -2366,14 +2366,14 @@ void func_00129A10(void) {
 }
 
 
-void func_00129A80(void) {
-    func_00129A90();
+void bullet_type_setup_27(void) {
+    bullet_type_setup_32();
 }
 
 extern u16 g_enemy_signal_1;
 extern u16 g_enemy_signal_0;
 
-void func_00129A90(void) {
+void bullet_type_setup_32(void) {
     *(u16 *)(reg_a0 + 0x18) = (u16) g_enemy_signal_0;
     *(u16 *)(reg_a0 + 0x1A) = (u16) g_enemy_signal_1;
     *(u16 *)(reg_a0 + 0x1C) = (u16) reg_d4.h[1];
@@ -2400,11 +2400,11 @@ void func_00129B10(void) {
 }
 
 
-void func_00129B60(void) {
-    func_00129B70();
+void bullet_type_setup_30(void) {
+    bullet_type_setup_31();
 }
 
-void func_00129B70(void) {
+void bullet_type_setup_31(void) {
     *(u16 *)(reg_a0 + 0x18) = (u16) reg_d3.h[1];
     *(u16 *)(reg_a0 + 0x1A) = (u16) reg_d3.h[0];
     *(u16 *)(reg_a0 + 0x1C) = (u16) reg_d4.h[1];
