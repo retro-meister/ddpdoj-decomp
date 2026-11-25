@@ -5,31 +5,26 @@
 #include "gfx_types.h"
 #include "cd.h"
 
+/* One line of a menu screen: where it is drawn, and the slide that brings it there. Positions of the
+   slide are in 1/10000. */
 typedef struct {
     s32 x;
     s32 y;
-    u8 pad08[0x24];
+    s32 target_x;
+    s32 target_y;
+    s32 pos_x;
+    s32 pos_y;
+    s32 speed_x;
+    s32 speed_y;
+    s32 accel_x;
+    s32 accel_y;
+    s32 delay;
     s32 alpha;
     s32 z;
     s32 active;
-} Label;
+} MenuItem;
 
-typedef struct {
-    s32 x0;
-    s32 y0;
-    s32 x1;
-    s32 y1;
-    s32 fx;
-    s32 fy;
-    s32 vx;
-    s32 vy;
-    s32 dx;
-    s32 dy;
-    s32 timer;
-    s32 step;
-    s32 id;
-    s32 active;
-} MoveItem;
+#define MENU_ITEMS_PER_PAGE 16
 
 typedef struct {
     s16 x;
@@ -37,29 +32,9 @@ typedef struct {
 } Point16;
 
 typedef struct {
-    s32 x;
-    s32 y;
-    s32 targetX;
-    s32 targetY;
-    s32 posX;
-    s32 posY;
-    s32 speedX;
-    s32 speedY;
-    s32 accelX;
-    s32 accelY;
-    s32 delay;
-    u8 pad[0xC];
-} Mover;
-
-typedef struct {
     s32 a;
     s32 b;
 } Pair;
-
-typedef struct {
-    s16 x;
-    s16 y;
-} Point;
 
 typedef struct {
     u16 status;
@@ -113,6 +88,8 @@ typedef struct {
 typedef struct {
     s16 h[33];
 } Row;
+
+extern MenuItem g_menu_items[40][MENU_ITEMS_PER_PAGE];
 
 typedef struct {
     s32 image;
@@ -264,9 +241,9 @@ extern char *death_D_002630C8[3];
 #endif
 extern char *g_menu_pause_items[10];
 extern char *D_00271740[6];
-extern s16 g_menu_item_positions_a[32];
-extern s16 g_menu_item_positions_b[16][2];
-extern s16 g_menu_item_positions_c[16];
+extern Point16 g_menu_item_positions_a[16];
+extern Point16 g_menu_item_positions_b[16];
+extern Point16 g_menu_item_positions_c[8];
 extern s16 D_00271800[136];
 extern s32 D_00271910[64];
 extern u16 D_00271A10[8];
@@ -318,9 +295,9 @@ extern char *g_menu_pause_help_c[18];
 extern char g_menu_screen_adjust_help[128];
 extern Wallpaper g_menu_wallpapers[5];
 #ifdef DEATH_LABEL
-extern s16 D_00271C90[8];
+extern Point16 g_pause_menu_positions[4];
 #else
-extern s16 D_00271C90[24];
+extern Point16 g_pause_menu_positions[12];
 #endif
 #ifdef DEATH_LABEL
 extern u16 death_D_00263620[16];
@@ -332,7 +309,7 @@ extern s8 D_0028DDA0[2];
 extern char g_menu_arrow_text[2][2];
 extern char *g_menu_result_items[3];
 extern char *g_menu_result_help[3];
-extern s16 g_menu_result_positions[16];
+extern Point16 g_menu_result_positions[8];
 extern char *g_menu_save_file_help;
 extern char *g_replay_slot_ship_names[2];
 extern char *g_replay_slot_shot_names[4];
@@ -1640,23 +1617,53 @@ char *D_00271740[6] = {
     "OFF",
 };
 
-s16 g_menu_item_positions_a[32] = {
-    0x18c, 8, 0x164, 8, 0x14c, 8, 0x134, 8,
-    0x11c, 8, 0x104, 8, 0xec, 8, 0xd4, 8,
-    0xbc, 8, 0xa4, 8, 0x8c, 8, 0x74, 8,
-    0x5c, 8, 0x44, 8, 0x14, 8, -4, 8,
+Point16 g_menu_item_positions_a[16] = {
+    { 0x18c, 8 },
+    { 0x164, 8 },
+    { 0x14c, 8 },
+    { 0x134, 8 },
+    { 0x11c, 8 },
+    { 0x104, 8 },
+    { 0xec, 8 },
+    { 0xd4, 8 },
+    { 0xbc, 8 },
+    { 0xa4, 8 },
+    { 0x8c, 8 },
+    { 0x74, 8 },
+    { 0x5c, 8 },
+    { 0x44, 8 },
+    { 0x14, 8 },
+    { -4, 8 },
 };
 
-s16 g_menu_item_positions_b[16][2] = {
-    0x1a4, 8, 0x17c, 8, 0x164, 8, 0x14c, 8,
-    0x134, 8, 0x11c, 8, 0x104, 8, 0xec, 8,
-    0xd4, 8, 0xbc, 8, 0xa4, 8, 0x8c, 8,
-    0x74, 8, 0x5c, 8, 0x2c, 8, 0x14, 8,
+Point16 g_menu_item_positions_b[16] = {
+    { 0x1a4, 8 },
+    { 0x17c, 8 },
+    { 0x164, 8 },
+    { 0x14c, 8 },
+    { 0x134, 8 },
+    { 0x11c, 8 },
+    { 0x104, 8 },
+    { 0xec, 8 },
+    { 0xd4, 8 },
+    { 0xbc, 8 },
+    { 0xa4, 8 },
+    { 0x8c, 8 },
+    { 0x74, 8 },
+    { 0x5c, 8 },
+    { 0x2c, 8 },
+    { 0x14, 8 },
 };
 
-s16 g_menu_item_positions_c[16] = {
-    0x17e, 8, 0x137, 8, 0xf0, 8, 0xa9, 8,
-    0x62, 8, 0x62, 8, 0, 0, 0, 0,
+Point16 g_menu_item_positions_c[8] = {
+    { 0x17e, 8 },
+    { 0x137, 8 },
+    { 0xf0, 8 },
+    { 0xa9, 8 },
+    { 0x62, 8 },
+    { 0x62, 8 },
+    { 0, 0 },
+    { 0, 0 },
 };
 
 s16 D_00271800[136] = {
@@ -1966,14 +1973,26 @@ Wallpaper g_menu_wallpapers[5] = {
 };
 
 #ifdef DEATH_LABEL
-s16 D_00271C90[8] = {
-    0x160, 0x5c, 0x140, 0xc, 0x120, 0xc, 0x100, 0xc,
+Point16 g_pause_menu_positions[4] = {
+    { 0x160, 0x5c },
+    { 0x140, 0xc },
+    { 0x120, 0xc },
+    { 0x100, 0xc },
 };
 #else
-s16 D_00271C90[24] = {
-    0x160, 0x5c, 0x140, 0xc, 0x120, 0xc, 0x100, 0xc,
-    0xe0, 0xc, 0xc0, 0xc, 0xa0, 0xc, 0x80, 0xc,
-    0x60, 0xc, 0x40, 0xc, 0x20, 0xc, 0, 0xc,
+Point16 g_pause_menu_positions[12] = {
+    { 0x160, 0x5c },
+    { 0x140, 0xc },
+    { 0x120, 0xc },
+    { 0x100, 0xc },
+    { 0xe0, 0xc },
+    { 0xc0, 0xc },
+    { 0xa0, 0xc },
+    { 0x80, 0xc },
+    { 0x60, 0xc },
+    { 0x40, 0xc },
+    { 0x20, 0xc },
+    { 0, 0xc },
 };
 #endif
 
@@ -4252,14 +4271,11 @@ void func_0021FA50(void) {
     }
 }
 
-
-extern Label D_00685010_as_Label_a[];
-
 void menu_main_draw(void) {
     extern void glyph_queue_add(s32 x, s32 y, s32 z, s32 page, s32 bright, s32 alpha, s32 wide);
     s32 i;
     s32 count;
-    Label *label;
+    MenuItem *label;
     s32 x;
     s32 y;
     s32 z;
@@ -4284,7 +4300,7 @@ void menu_main_draw(void) {
         break;
     }
     for (i = 0; i < count; i++) {
-        label = &D_00685010_as_Label_a[i];
+        label = &g_menu_items[0][i];
         if (label->active != 0) {
             label->alpha = D_0028EBB4;
             reg_a0 = (u8 *)g_menu_main_items[i];
@@ -4301,7 +4317,6 @@ void menu_main_draw(void) {
 extern void text_queue_clear(void);
 extern void text_flush(void);
 extern s8 D_002714F1[];
-extern u8 D_00685010[];
 extern s8 D_0068DC10[];
 
 void menu_game_option_draw(void) {
@@ -4314,7 +4329,7 @@ void menu_game_option_draw(void) {
     s32 count;
     s32 index;
     s32 top;
-    u8 *item;
+    MenuItem *item;
     u8 **pair;
 
     count = D_002714F1[0];
@@ -4338,16 +4353,16 @@ void menu_game_option_draw(void) {
     }
     text_queue_clear();
     for (i = 0; i < count; i++) {
-        item = D_00685010 + i * 0x38;
-        if (*(s32 *)(item + 0x3B4) == 0) {
+        item = &g_menu_items[0][i];
+        if (item[MENU_PAGE_GAME_OPTION * MENU_ITEMS_PER_PAGE].active == 0) {
             continue;
         }
-        *(s32 *)(item + 0x3AC) = D_0028EBB0;
+        item[MENU_PAGE_GAME_OPTION * MENU_ITEMS_PER_PAGE].alpha = D_0028EBB0;
         reg_a0 = (u8 *)g_menu_game_option_items[i];
-        x = *(s32 *)(item + 0x380);
-        alpha = *(s32 *)(item + 0x3AC);
-        top = *(s32 *)(item + 0x384);
-        z = *(s32 *)(item + 0x3B0);
+        x = item[MENU_PAGE_GAME_OPTION * MENU_ITEMS_PER_PAGE].x;
+        alpha = item[MENU_PAGE_GAME_OPTION * MENU_ITEMS_PER_PAGE].alpha;
+        top = item[MENU_PAGE_GAME_OPTION * MENU_ITEMS_PER_PAGE].y;
+        z = item[MENU_PAGE_GAME_OPTION * MENU_ITEMS_PER_PAGE].z;
         if (alpha == 0) {
             continue;
         }
@@ -4406,7 +4421,7 @@ void menu_save_load_draw(void) {
     s32 top;
     s32 count;
     s32 index;
-    u8 *item;
+    MenuItem *item;
 
     count = D_002714F2[0];
     switch (D_0028EB44) {
@@ -4428,16 +4443,16 @@ void menu_save_load_draw(void) {
         break;
     }
     for (i = 0; i < count; i++) {
-        item = D_00685010 + i * 0x38;
-        if (*(s32 *)(item + 0x734) == 0) {
+        item = &g_menu_items[0][i];
+        if (item[MENU_PAGE_SAVE_LOAD * MENU_ITEMS_PER_PAGE].active == 0) {
             continue;
         }
-        *(s32 *)(item + 0x72C) = D_0028EBAC;
+        item[MENU_PAGE_SAVE_LOAD * MENU_ITEMS_PER_PAGE].alpha = D_0028EBAC;
         reg_a0 = (u8 *)g_menu_save_load_items[i];
-        x = *(s32 *)(item + 0x700);
-        alpha = *(s32 *)(item + 0x72C);
-        top = *(s32 *)(item + 0x704);
-        z = *(s32 *)(item + 0x730);
+        x = item[MENU_PAGE_SAVE_LOAD * MENU_ITEMS_PER_PAGE].x;
+        alpha = item[MENU_PAGE_SAVE_LOAD * MENU_ITEMS_PER_PAGE].alpha;
+        top = item[MENU_PAGE_SAVE_LOAD * MENU_ITEMS_PER_PAGE].y;
+        z = item[MENU_PAGE_SAVE_LOAD * MENU_ITEMS_PER_PAGE].z;
         if (alpha == 0) {
             continue;
         }
@@ -4468,7 +4483,7 @@ void menu_debug_option_draw(void) {
     s32 count;
     s32 index;
     s32 top;
-    u8 *item;
+    MenuItem *item;
 
     count = D_002714F3[0];
     switch (D_0028EB40) {
@@ -4491,16 +4506,16 @@ void menu_debug_option_draw(void) {
     }
     text_queue_clear();
     for (i = 0; i < count; i++) {
-        item = D_00685010 + i * 0x38;
-        if (*(s32 *)(item + 0xAB4) == 0) {
+        item = &g_menu_items[0][i];
+        if (item[MENU_PAGE_DEBUG_OPTION * MENU_ITEMS_PER_PAGE].active == 0) {
             continue;
         }
-        *(s32 *)(item + 0xAAC) = D_0028EBA8;
+        item[MENU_PAGE_DEBUG_OPTION * MENU_ITEMS_PER_PAGE].alpha = D_0028EBA8;
         reg_a0 = (u8 *)g_menu_debug_option_items[i];
-        x = *(s32 *)(item + 0xA80);
-        alpha = *(s32 *)(item + 0xAAC);
-        top = *(s32 *)(item + 0xA84);
-        z = *(s32 *)(item + 0xAB0);
+        x = item[MENU_PAGE_DEBUG_OPTION * MENU_ITEMS_PER_PAGE].x;
+        alpha = item[MENU_PAGE_DEBUG_OPTION * MENU_ITEMS_PER_PAGE].alpha;
+        top = item[MENU_PAGE_DEBUG_OPTION * MENU_ITEMS_PER_PAGE].y;
+        z = item[MENU_PAGE_DEBUG_OPTION * MENU_ITEMS_PER_PAGE].z;
         if (alpha == 0) {
             continue;
         }
@@ -4579,7 +4594,7 @@ void menu_arcade_draw(void) {
     s32 top;
     s32 count;
     s32 index;
-    u8 *item;
+    MenuItem *item;
 
     count = D_002714FE[0];
     switch (D_0028EB3C) {
@@ -4601,16 +4616,16 @@ void menu_arcade_draw(void) {
         break;
     }
     for (i = 0; i < count; i++) {
-        item = D_00685010 + i * 0x38;
-        if (*(s32 *)(item + 0x3134) == 0) {
+        item = &g_menu_items[0][i];
+        if (item[MENU_PAGE_ARCADE * MENU_ITEMS_PER_PAGE].active == 0) {
             continue;
         }
-        *(s32 *)(item + 0x312C) = D_0028EBA4;
+        item[MENU_PAGE_ARCADE * MENU_ITEMS_PER_PAGE].alpha = D_0028EBA4;
         reg_a0 = (u8 *)g_menu_arcade_items[i];
-        x = *(s32 *)(item + 0x3100);
-        alpha = *(s32 *)(item + 0x312C);
-        top = *(s32 *)(item + 0x3104);
-        z = *(s32 *)(item + 0x3130);
+        x = item[MENU_PAGE_ARCADE * MENU_ITEMS_PER_PAGE].x;
+        alpha = item[MENU_PAGE_ARCADE * MENU_ITEMS_PER_PAGE].alpha;
+        top = item[MENU_PAGE_ARCADE * MENU_ITEMS_PER_PAGE].y;
+        z = item[MENU_PAGE_ARCADE * MENU_ITEMS_PER_PAGE].z;
         if (alpha == 0) {
             continue;
         }
@@ -4644,7 +4659,7 @@ void menu_system_option_draw(void) {
     s32 top;
     s32 count;
     s32 index;
-    u8 *item;
+    MenuItem *item;
     u16 glyph;
 
     count = D_002714FF[0];
@@ -4668,16 +4683,16 @@ void menu_system_option_draw(void) {
     }
     text_queue_clear();
     for (i = 0; i < count; i++) {
-        item = D_00685010 + i * 0x38;
-        if (*(s32 *)(item + 0x34B4) == 0) {
+        item = &g_menu_items[0][i];
+        if (item[MENU_PAGE_SYSTEM_OPTION * MENU_ITEMS_PER_PAGE].active == 0) {
             continue;
         }
-        *(s32 *)(item + 0x34AC) = D_0028EBA0;
+        item[MENU_PAGE_SYSTEM_OPTION * MENU_ITEMS_PER_PAGE].alpha = D_0028EBA0;
         reg_a0 = (u8 *)g_menu_system_option_items[i];
-        x = *(s32 *)(item + 0x3480);
-        alpha = *(s32 *)(item + 0x34AC);
-        top = *(s32 *)(item + 0x3484);
-        z = *(s32 *)(item + 0x34B0);
+        x = item[MENU_PAGE_SYSTEM_OPTION * MENU_ITEMS_PER_PAGE].x;
+        alpha = item[MENU_PAGE_SYSTEM_OPTION * MENU_ITEMS_PER_PAGE].alpha;
+        top = item[MENU_PAGE_SYSTEM_OPTION * MENU_ITEMS_PER_PAGE].y;
+        z = item[MENU_PAGE_SYSTEM_OPTION * MENU_ITEMS_PER_PAGE].z;
         if (alpha == 0) {
             continue;
         }
@@ -4787,7 +4802,7 @@ void death_func_001B9120(void) {
     s32 top;
     s32 count;
     s32 index;
-    u8 *item;
+    MenuItem *item;
 
     count = death_D_00262EC7[0];
     switch (death_D_00290C74) {
@@ -4810,16 +4825,16 @@ void death_func_001B9120(void) {
     }
     text_queue_clear();
     for (i = 0; i < count; i++) {
-        item = D_00685010 + i * 0x38;
-        if (*(s32 *)(item + 0x50B4) == 0) {
+        item = &g_menu_items[0][i];
+        if (item[MENU_PAGE_23 * MENU_ITEMS_PER_PAGE].active == 0) {
             continue;
         }
-        *(s32 *)(item + 0x50AC) = death_D_00290CE4;
+        item[MENU_PAGE_23 * MENU_ITEMS_PER_PAGE].alpha = death_D_00290CE4;
         reg_a0 = (u8 *)death_D_00262FF0[i];
-        x = *(s32 *)(item + 0x5080);
-        alpha = *(s32 *)(item + 0x50AC);
-        top = *(s32 *)(item + 0x5084);
-        z = *(s32 *)(item + 0x50B0);
+        x = item[MENU_PAGE_23 * MENU_ITEMS_PER_PAGE].x;
+        alpha = item[MENU_PAGE_23 * MENU_ITEMS_PER_PAGE].alpha;
+        top = item[MENU_PAGE_23 * MENU_ITEMS_PER_PAGE].y;
+        z = item[MENU_PAGE_23 * MENU_ITEMS_PER_PAGE].z;
         if (alpha == 0) {
             continue;
         }
@@ -4973,14 +4988,12 @@ void func_00221360(void) {
         break;
     }
     if (g_menu_cursor != -1) {
-        x = g_menu_item_positions_c[g_menu_cursor * 2];
+        x = g_menu_item_positions_c[g_menu_cursor].x;
         if (g_menu_box_alpha != 0) {
             gfx_draw_color_box(x - 8, 0, 0x48, 0xE0, 0x5A, g_menu_box_alpha, 0xB4, 1, 1);
         }
     }
 }
-
-extern s16 g_menu_item_positions_b_as_s16_a[];
 
 void func_00221440(void) {
     extern void gfx_draw_color_box(s32 x, s32 y, s32 w, s32 h, s32 depth, s64 alpha, s32 r, s32 g, s32 b);
@@ -5008,9 +5021,9 @@ void func_00221440(void) {
     sel = g_menu_cursor;
     if (sel != -1) {
         if (g_menu_page == MENU_PAGE_SYSTEM_OPTION) {
-            x = g_menu_item_positions_b_as_s16_a[sel * 2];
+            x = g_menu_item_positions_b[sel].x;
         } else {
-            x = g_menu_item_positions_a[sel * 2];
+            x = g_menu_item_positions_a[sel].x;
         }
         if (g_menu_box_alpha != 0 && sel != 0) {
             gfx_draw_color_box(x - 8, 0, 0x12, 0xE0, 0x5A, g_menu_box_alpha, 0xB4, 1, 1);
@@ -5437,8 +5450,6 @@ void menu_reset() {
     func_00222170();
     func_0021E1A0();
 }
-
-extern Obj38 D_00685010_as_Obj38_a_a16[][16];
 extern u8 D_0068DC10_as_u8_a_a16[][16];
 
 void func_00222170(void) {
@@ -5447,16 +5458,14 @@ void func_00222170(void) {
 
     for (i = 0; i < 5; i++) {
         for (j = 0; j < 16; j++) {
-            D_00685010_as_Obj38_a_a16[i][j].active = 0;
+            g_menu_items[i][j].active = 0;
             D_0068DC10_as_u8_a_a16[i][j] = 0;
         }
     }
     for (j = 0; j < 16; j++) {
-        D_00685010_as_Obj38_a_a16[12][j].active = 0;
+        g_menu_items[12][j].active = 0;
     }
 }
-
-extern s16 g_menu_item_positions_a_as_s16_a_a2[][2];
 
 void menu_items_place(s32 group) {
     s32 i;
@@ -5469,34 +5478,29 @@ void menu_items_place(s32 group) {
     count = g_menu_page_item_counts[group];
     for (i = 0; i < count; i++) {
         if (group == 15) {
-            x = g_menu_item_positions_b[i][0];
-            D_00685010_as_Obj38_a_a16[group][i].x = x;
-            y = g_menu_item_positions_b[i][1];
-            D_00685010_as_Obj38_a_a16[group][i].y = y;
-            D_00685010_as_Obj38_a_a16[group][i].x2 = x;
-            D_00685010_as_Obj38_a_a16[group][i].y2 = y;
+            x = g_menu_item_positions_b[i].x;
+            g_menu_items[group][i].x = x;
+            y = g_menu_item_positions_b[i].y;
+            g_menu_items[group][i].y = y;
+            g_menu_items[group][i].target_x = x;
+            g_menu_items[group][i].target_y = y;
         } else {
-            x = g_menu_item_positions_a_as_s16_a_a2[i][0];
-            D_00685010_as_Obj38_a_a16[group][i].x = x;
-            y = g_menu_item_positions_a_as_s16_a_a2[i][1];
-            D_00685010_as_Obj38_a_a16[group][i].y = y;
-            D_00685010_as_Obj38_a_a16[group][i].x2 = x;
-            D_00685010_as_Obj38_a_a16[group][i].y2 = y;
+            x = g_menu_item_positions_a[i].x;
+            g_menu_items[group][i].x = x;
+            y = g_menu_item_positions_a[i].y;
+            g_menu_items[group][i].y = y;
+            g_menu_items[group][i].target_x = x;
+            g_menu_items[group][i].target_y = y;
         }
-        D_00685010_as_Obj38_a_a16[group][i].unk2C = 0;
-        D_00685010_as_Obj38_a_a16[group][i].timer = 0x3C;
-        D_00685010_as_Obj38_a_a16[group][i].id = id;
-        D_00685010_as_Obj38_a_a16[group][i].active = 1;
+        g_menu_items[group][i].alpha = 0;
+        g_menu_items[group][i].delay = 0x3C;
+        g_menu_items[group][i].z = id;
+        g_menu_items[group][i].active = 1;
     }
 }
 
 #pragma push
 #pragma divbyzerocheck on
-
-
-extern Point16 g_menu_item_positions_a_as_Point16_a[];
-extern Point16 g_menu_item_positions_b_as_Point16_a[];
-extern MoveItem D_00685010_as_MoveItem_a_a16[][16];
 
 void menu_items_slide_in(s32 group) {
     s32 i;
@@ -5509,40 +5513,40 @@ void menu_items_slide_in(s32 group) {
     count = g_menu_page_item_counts[group];
     for (i = 0; i < count; i++) {
         if (group == 15) {
-            D_00685010_as_MoveItem_a_a16[group][i].x0 = -g_menu_item_positions_b_as_Point16_a[i].x;
-            D_00685010_as_MoveItem_a_a16[group][i].y0 = g_menu_item_positions_b_as_Point16_a[i].y;
-            D_00685010_as_MoveItem_a_a16[group][i].x1 = g_menu_item_positions_b_as_Point16_a[i].x;
-            D_00685010_as_MoveItem_a_a16[group][i].y1 = g_menu_item_positions_b_as_Point16_a[i].y;
+            g_menu_items[group][i].x = -g_menu_item_positions_b[i].x;
+            g_menu_items[group][i].y = g_menu_item_positions_b[i].y;
+            g_menu_items[group][i].target_x = g_menu_item_positions_b[i].x;
+            g_menu_items[group][i].target_y = g_menu_item_positions_b[i].y;
         } else {
-            D_00685010_as_MoveItem_a_a16[group][i].x0 = -g_menu_item_positions_a_as_Point16_a[i].x;
-            D_00685010_as_MoveItem_a_a16[group][i].y0 = g_menu_item_positions_a_as_Point16_a[i].y;
-            D_00685010_as_MoveItem_a_a16[group][i].x1 = g_menu_item_positions_a_as_Point16_a[i].x;
-            D_00685010_as_MoveItem_a_a16[group][i].y1 = g_menu_item_positions_a_as_Point16_a[i].y;
+            g_menu_items[group][i].x = -g_menu_item_positions_a[i].x;
+            g_menu_items[group][i].y = g_menu_item_positions_a[i].y;
+            g_menu_items[group][i].target_x = g_menu_item_positions_a[i].x;
+            g_menu_items[group][i].target_y = g_menu_item_positions_a[i].y;
         }
-        D_00685010_as_MoveItem_a_a16[group][i].step = 0;
-        D_00685010_as_MoveItem_a_a16[group][i].timer = 60;
-        D_00685010_as_MoveItem_a_a16[group][i].id = tag;
-        D_00685010_as_MoveItem_a_a16[group][i].active = 1;
-        dx = D_00685010_as_MoveItem_a_a16[group][i].x1 - D_00685010_as_MoveItem_a_a16[group][i].x0;
-        dy = D_00685010_as_MoveItem_a_a16[group][i].y1 - D_00685010_as_MoveItem_a_a16[group][i].y0;
+        g_menu_items[group][i].alpha = 0;
+        g_menu_items[group][i].delay = 60;
+        g_menu_items[group][i].z = tag;
+        g_menu_items[group][i].active = 1;
+        dx = g_menu_items[group][i].target_x - g_menu_items[group][i].x;
+        dy = g_menu_items[group][i].target_y - g_menu_items[group][i].y;
         if (dx < 0) {
             dx = -dx;
         }
         if (dy < 0) {
             dy = -dy;
         }
-        D_00685010_as_MoveItem_a_a16[group][i].dx = 0;
-        D_00685010_as_MoveItem_a_a16[group][i].dy = 0;
+        g_menu_items[group][i].accel_x = 0;
+        g_menu_items[group][i].accel_y = 0;
         if (dx != 0) {
-            D_00685010_as_MoveItem_a_a16[group][i].dx = dx * 10000 / D_00271910[0];
+            g_menu_items[group][i].accel_x = dx * 10000 / D_00271910[0];
         }
         if (dy != 0) {
-            D_00685010_as_MoveItem_a_a16[group][i].dy = dy * 10000 / D_00271910[0];
+            g_menu_items[group][i].accel_y = dy * 10000 / D_00271910[0];
         }
-        D_00685010_as_MoveItem_a_a16[group][i].vx = D_00685010_as_MoveItem_a_a16[group][i].dx * 60;
-        D_00685010_as_MoveItem_a_a16[group][i].vy = D_00685010_as_MoveItem_a_a16[group][i].dy * 60;
-        D_00685010_as_MoveItem_a_a16[group][i].fx = D_00685010_as_MoveItem_a_a16[group][i].x0 * 10000;
-        D_00685010_as_MoveItem_a_a16[group][i].fy = D_00685010_as_MoveItem_a_a16[group][i].y0 * 10000;
+        g_menu_items[group][i].speed_x = g_menu_items[group][i].accel_x * 60;
+        g_menu_items[group][i].speed_y = g_menu_items[group][i].accel_y * 60;
+        g_menu_items[group][i].pos_x = g_menu_items[group][i].x * 10000;
+        g_menu_items[group][i].pos_y = g_menu_items[group][i].y * 10000;
     }
 }
 #pragma pop
@@ -5553,7 +5557,7 @@ s32 menu_items_slide_update(s32 group) {
     s32 i;
     s32 count;
     s32 done;
-    Mover *m;
+    MenuItem *m;
     s32 *delay;
     s32 off;
     s32 *target;
@@ -5565,49 +5569,49 @@ s32 menu_items_slide_update(s32 group) {
     if (i < count) {
         off = 0;
         do {
-            m = (Mover *)(D_00685010 + group * 0x380 + off);
+            m = (MenuItem *)((u8 *)g_menu_items + group * 0x380 + off);
             delay = &m->delay;
             if (*delay != 0) {
                 (*delay)--;
             }
             if (*delay <= 0) {
                 done++;
-                m->x = m->targetX;
-                m->y = m->targetY;
+                m->x = m->target_x;
+                m->y = m->target_y;
             }
             cur = &m->x;
-            target = &m->targetX;
-            if (m->x != m->targetX) {
-                if (m->x < m->targetX) {
-                    *cur = m->posX / 10000;
-                    m->posX += m->speedX;
-                    m->speedX -= m->accelX;
+            target = &m->target_x;
+            if (m->x != m->target_x) {
+                if (m->x < m->target_x) {
+                    *cur = m->pos_x / 10000;
+                    m->pos_x += m->speed_x;
+                    m->speed_x -= m->accel_x;
                     if (*cur > *target) {
                         *cur = *target;
                     }
                 } else {
-                    *cur = m->posX / 10000;
-                    m->posX -= m->speedX;
-                    m->speedX -= m->accelX;
+                    *cur = m->pos_x / 10000;
+                    m->pos_x -= m->speed_x;
+                    m->speed_x -= m->accel_x;
                     if (*cur < *target) {
                         *cur = *target;
                     }
                 }
             }
             cur = &m->y;
-            target = &m->targetY;
-            if (m->y != m->targetY) {
-                if (m->y < m->targetY) {
-                    *cur = m->posY / 10000;
-                    m->posY += m->speedY;
-                    m->speedY -= m->accelY;
+            target = &m->target_y;
+            if (m->y != m->target_y) {
+                if (m->y < m->target_y) {
+                    *cur = m->pos_y / 10000;
+                    m->pos_y += m->speed_y;
+                    m->speed_y -= m->accel_y;
                     if (*cur > *target) {
                         *cur = *target;
                     }
                 } else {
-                    *cur = m->posY / 10000;
-                    m->posY -= m->speedY;
-                    m->speedY -= m->accelY;
+                    *cur = m->pos_y / 10000;
+                    m->pos_y -= m->speed_y;
+                    m->speed_y -= m->accel_y;
                     if (*cur < *target) {
                         *cur = *target;
                     }
@@ -6315,7 +6319,7 @@ void func_00223D70(void) {
     if (g_simulation_active == 0 && g_pause_menu_cursor > 6) {
         x = D_00271C8C[g_pause_menu_cursor * 2];
     } else {
-        x = D_00271C90[g_pause_menu_cursor * 2];
+        x = g_pause_menu_positions[g_pause_menu_cursor].x;
     }
     if (D_0028EBC8 != 0) {
         gfx_draw_color_box(x - 8, 0, 0x12, 0xE0, 0x5A, D_0028EBC8, 0xB4, 1, 1);
@@ -6454,9 +6458,6 @@ void func_002242B0(s32 x, s32 y) {
     }
 }
 
-
-extern Point D_00271C90_as_Point_a[];
-
 void pause_menu_draw(void) {
     extern void gfx_draw_color_box(s32 x, s32 y, s32 w, s32 h, s32 depth, s32 alpha, s32 r, s32 g, s32 b);
     extern void glyph_queue_clear(void);
@@ -6505,12 +6506,12 @@ void pause_menu_draw(void) {
         func_00223D70();
         func_00223E80();
         glyph_queue_clear();
-        x = D_00271C90_as_Point_a[0].x;
-        y = D_00271C90_as_Point_a[0].y;
+        x = g_pause_menu_positions[0].x;
+        y = g_pause_menu_positions[0].y;
         reg_a0 = (u8 *)g_menu_pause_items[0];
         glyph_queue_add(x, y, 300, 0, 0x80, 0x80, 1);
-        x = D_00271C90_as_Point_a[1].x;
-        y = D_00271C90_as_Point_a[1].y;
+        x = g_pause_menu_positions[1].x;
+        y = g_pause_menu_positions[1].y;
         reg_a0 = (u8 *)g_menu_pause_items[1];
         glyph_queue_add(x, y, 300, 0, 0x80, 0x80, 1);
         if (D_0028E358 == 0) {
@@ -6522,8 +6523,8 @@ void pause_menu_draw(void) {
         if (g_pause_menu_cursor == 1) {
             menu_arrows_draw(x, y + 120, 300, 0, 0x80, 0x80, 1, 3);
         }
-        x = D_00271C90_as_Point_a[2].x;
-        y = D_00271C90_as_Point_a[2].y;
+        x = g_pause_menu_positions[2].x;
+        y = g_pause_menu_positions[2].y;
         reg_a0 = (u8 *)g_menu_pause_items[2];
         glyph_queue_add(x, y, 300, 0, 0x80, 0x80, 1);
         reg_a0 = (u8 *)D_0028DD18[g_pad_vib_enabled];
@@ -6531,8 +6532,8 @@ void pause_menu_draw(void) {
         if (g_pause_menu_cursor == 2) {
             menu_arrows_draw(x, y + 120, 300, 0, 0x80, 0x80, 1, 3);
         }
-        x = D_00271C90_as_Point_a[3].x;
-        y = D_00271C90_as_Point_a[3].y;
+        x = g_pause_menu_positions[3].x;
+        y = g_pause_menu_positions[3].y;
         reg_a0 = (u8 *)g_menu_pause_items[3];
         glyph_queue_add(x, y, 300, 0, 0x80, 0x80, 1);
         reg_a0 = (u8 *)D_00271740[D_0028E32C];
@@ -6540,8 +6541,8 @@ void pause_menu_draw(void) {
         if (g_pause_menu_cursor == 3) {
             menu_arrows_draw(x, y + 120, 300, 0, 0x80, 0x80, 1, 3);
         }
-        x = D_00271C90_as_Point_a[4].x;
-        y = D_00271C90_as_Point_a[4].y;
+        x = g_pause_menu_positions[4].x;
+        y = g_pause_menu_positions[4].y;
         reg_a0 = (u8 *)g_menu_pause_items[4];
         glyph_queue_add(x, y, 300, 0, 0x80, 0x80, 1);
         reg_a0 = (u8 *)D_0028DD18[g_stage_map_enabled];
@@ -6550,16 +6551,16 @@ void pause_menu_draw(void) {
             menu_arrows_draw(x, y + 120, 300, 0, 0x80, 0x80, 1, 3);
         }
         reg_a0 = (u8 *)g_menu_pause_items[5];
-        glyph_queue_add(D_00271C90_as_Point_a[5].x, D_00271C90_as_Point_a[5].y, 300, 0, 0x80, 0x80, 1);
+        glyph_queue_add(g_pause_menu_positions[5].x, g_pause_menu_positions[5].y, 300, 0, 0x80, 0x80, 1);
         n = 6;
         if (g_simulation_active != 0) {
             n++;
             reg_a0 = (u8 *)g_menu_pause_items[6];
-            glyph_queue_add(D_00271C90_as_Point_a[6].x, D_00271C90_as_Point_a[6].y, 300, 0, 0x80, 0x80, 1);
+            glyph_queue_add(g_pause_menu_positions[6].x, g_pause_menu_positions[6].y, 300, 0, 0x80, 0x80, 1);
         }
-        x = D_00271C90_as_Point_a[n].x;
+        x = g_pause_menu_positions[n].x;
         reg_a0 = (u8 *)g_menu_pause_items[7];
-        glyph_queue_add(x, D_00271C90_as_Point_a[n].y, 300, 0, 0x80, 0x80, 1);
+        glyph_queue_add(x, g_pause_menu_positions[n].y, 300, 0, 0x80, 0x80, 1);
         glyph_queue_flush();
         reg_d0.w = save_d0;
         reg_d1.w = save_d1;
@@ -7292,13 +7293,11 @@ void func_00225E20(void) {
         }
         break;
     }
-    x = g_menu_result_positions[D_0028EAC8 * 2];
+    x = g_menu_result_positions[D_0028EAC8].x;
     if (D_0028EAC4 != 0) {
         gfx_draw_color_box(x - 8, 0, 0x12, 0xE0, 0x5A, D_0028EAC4, 0xB4, 1, 1);
     }
 }
-
-extern Point g_menu_result_positions_as_Point_a[];
 
 void result_menu_items_draw(void) {
     extern void gfx_draw_color_box(s32 x, s32 y, s32 w, s32 h, s32 depth, s32 alpha, s32 r, s32 g, s32 b);
@@ -7350,7 +7349,7 @@ void result_menu_items_draw(void) {
             alpha = D_0028EAC4 * 2;
             for (i = 0; i < 3; i++) {
                 reg_a0 = (u8 *)g_menu_result_items[i];
-                glyph_queue_add(g_menu_result_positions_as_Point_a[i].x, g_menu_result_positions_as_Point_a[i].y, 0x12C, 0, 0x80, alpha, 1);
+                glyph_queue_add(g_menu_result_positions[i].x, g_menu_result_positions[i].y, 0x12C, 0, 0x80, alpha, 1);
             }
             glyph_queue_flush();
         }
@@ -7566,9 +7565,15 @@ char *g_menu_result_help[3] = {
 };
 #endif
 
-s16 g_menu_result_positions[16] = {
-    0x18c, 8, 0x164, 8, 0x14c, 8, 0x134, 8,
-    0x11c, 8, 0, 0, 0, 0, 0, 0,
+Point16 g_menu_result_positions[8] = {
+    { 0x18c, 8 },
+    { 0x164, 8 },
+    { 0x14c, 8 },
+    { 0x134, 8 },
+    { 0x11c, 8 },
+    { 0, 0 },
+    { 0, 0 },
+    { 0, 0 },
 };
 
 #ifdef DEATH_LABEL
@@ -8225,7 +8230,6 @@ void menu_close_begin(void) {
 
 extern s8 g_menu_cursor;
 extern u16 g_menu_idle_timer_as_u16;
-extern u8 D_00685010[];
 extern s8 g_menu_box_alpha;
 extern s8 D_002714F7[];
 extern s8 D_0028EB4C;
@@ -8296,8 +8300,6 @@ extern s8 D_00271502[];
 extern s8 D_00271503[];
 extern s8 D_002714FD[];
 extern u8 D_00684CA0[];
-extern s32 D_006880A0[];
-extern s32 D_006880A4[];
 
 static void menu_page_enter(MenuPage *fade) {
     g_menu_idle_timer_as_u16 = 0xE10;
@@ -8373,7 +8375,7 @@ void func_002274C0(MenuPage *arg0, u8 **arg1, s32 arg2) {
     s32 i;
     s32 offset;
     s32 index;
-    u8 *entry;
+    MenuItem *entry;
 
     count = g_menu_page_item_counts[arg2];
     if (arg0->alpha == 0) {
@@ -8384,11 +8386,11 @@ void func_002274C0(MenuPage *arg0, u8 **arg1, s32 arg2) {
         offset = 0;
         index = 0;
         do {
-            entry = offset + (D_00685010 + arg2 * 0x380);
-            if (*(s32 *)(entry + 0x34) != 0) {
-                *(s32 *)(entry + 0x2C) = arg0->alpha;
+            entry = (MenuItem *)(offset + ((u8 *)g_menu_items + arg2 * 0x380));
+            if (entry->active != 0) {
+                entry->alpha = arg0->alpha;
                 reg_a0 = *(u8 **)((u8 *)arg1 + index);
-                glyph_queue_add(*(s32 *)entry, *(s32 *)(entry + 4), *(s32 *)(entry + 0x30), 0, 128, arg0->alpha, 1);
+                glyph_queue_add(entry->x, entry->y, entry->z, 0, 128, arg0->alpha, 1);
             }
             i++;
             offset += 0x38;
@@ -8609,7 +8611,7 @@ void menu_stage_select_draw(void) {
     s32 offset;
     s32 index;
     s32 alpha;
-    u8 *entry;
+    MenuItem *entry;
     s32 x;
     s32 y;
     s32 sprite;
@@ -8629,14 +8631,14 @@ void menu_stage_select_draw(void) {
         offset = 0;
         index = 0;
         do {
-            entry = D_00685010 + offset;
-            if (*(s32 *)(entry + 0x2334) != 0) {
+            entry = (MenuItem *)((u8 *)g_menu_items + offset);
+            if (entry[MENU_PAGE_STAGE_SELECT * MENU_ITEMS_PER_PAGE].active != 0) {
                 value = g_menu_stage_select.alpha;
                 alpha = 128;
-                *(s32 *)(entry + 0x232C) = value;
-                x = *(s32 *)(entry + 0x2300);
-                y = *(s32 *)(entry + 0x2304);
-                sprite = *(s32 *)(entry + 0x2330);
+                entry[MENU_PAGE_STAGE_SELECT * MENU_ITEMS_PER_PAGE].alpha = value;
+                x = entry[MENU_PAGE_STAGE_SELECT * MENU_ITEMS_PER_PAGE].x;
+                y = entry[MENU_PAGE_STAGE_SELECT * MENU_ITEMS_PER_PAGE].y;
+                sprite = entry[MENU_PAGE_STAGE_SELECT * MENU_ITEMS_PER_PAGE].z;
                 reg_a0 = *(u8 **)((u8 *)g_menu_stage_select_items + index);
                 if ((i > 0) && (i < last) && (D_0028E258 < i - 1)) {
                     alpha = 64;
@@ -9021,7 +9023,7 @@ void menu_sim_setting_draw(void) {
     s32 i;
     s32 offset;
     s32 tableOffset;
-    u8 *entry;
+    MenuItem *entry;
 
     count = D_002714F8[0];
     menu_page_fade(&g_menu_sim_setting);
@@ -9033,13 +9035,13 @@ void menu_sim_setting_draw(void) {
         offset = 0;
         tableOffset = 0;
         do {
-            entry = D_00685010 + offset;
-            if (*(s32 *)(entry + 0x1C34) != 0) {
+            entry = (MenuItem *)((u8 *)g_menu_items + offset);
+            if (entry[MENU_PAGE_SIM_SETTING * MENU_ITEMS_PER_PAGE].active != 0) {
                 s32 value = g_menu_sim_setting.alpha;
 
-                *(s32 *)(entry + 0x1C2C) = value;
+                entry[MENU_PAGE_SIM_SETTING * MENU_ITEMS_PER_PAGE].alpha = value;
                 reg_a0 = *(u8 **)((u8 *)g_menu_sim_setting_items + tableOffset);
-                glyph_queue_add(*(s32 *)(entry + 0x1C00), *(s32 *)(entry + 0x1C04), *(s32 *)(entry + 0x1C30), 0, 0x80, value, 1);
+                glyph_queue_add(entry[MENU_PAGE_SIM_SETTING * MENU_ITEMS_PER_PAGE].x, entry[MENU_PAGE_SIM_SETTING * MENU_ITEMS_PER_PAGE].y, entry[MENU_PAGE_SIM_SETTING * MENU_ITEMS_PER_PAGE].z, 0, 0x80, value, 1);
             }
             i++;
             offset += 0x38;
@@ -9165,7 +9167,7 @@ void menu_sim_player_draw(void) {
     s32 alpha;
     u8 **entries;
     s8 index;
-    u8 *item;
+    MenuItem *item;
 
     count = D_00271501[0];
     menu_page_fade(&g_menu_sim_player);
@@ -9173,14 +9175,14 @@ void menu_sim_player_draw(void) {
         return;
     }
     for (i = 0; i < count; i++) {
-        item = D_00685010 + i * 0x38;
-        if (*(s32 *)(item + 0x3BB4) == 0) {
+        item = &g_menu_items[0][i];
+        if (item[MENU_PAGE_SIM_PLAYER * MENU_ITEMS_PER_PAGE].active == 0) {
             continue;
         }
-        *(s32 *)(item + 0x3BAC) = alpha = g_menu_sim_player.alpha;
-        x = *(s32 *)(item + 0x3B80);
-        y = *(s32 *)(item + 0x3B84);
-        z = *(s32 *)(item + 0x3BB0);
+        item[MENU_PAGE_SIM_PLAYER * MENU_ITEMS_PER_PAGE].alpha = alpha = g_menu_sim_player.alpha;
+        x = item[MENU_PAGE_SIM_PLAYER * MENU_ITEMS_PER_PAGE].x;
+        y = item[MENU_PAGE_SIM_PLAYER * MENU_ITEMS_PER_PAGE].y;
+        z = item[MENU_PAGE_SIM_PLAYER * MENU_ITEMS_PER_PAGE].z;
         reg_a0 = (u8 *)g_menu_sim_player_items[i];
         glyph_queue_add(x, y, z, 0, 0x80, alpha, 1);
         y += strlen((const char *)reg_a0) * 8;
@@ -9476,7 +9478,7 @@ void menu_sim_rules_draw(void) {
     s32 flag;
     s32 alpha;
     s8 index;
-    u8 *item;
+    MenuItem *item;
 
     count = D_00271502[0];
     menu_page_fade(&g_menu_sim_rules);
@@ -9484,14 +9486,14 @@ void menu_sim_rules_draw(void) {
         return;
     }
     for (i = 0; i < count; i++) {
-        item = D_00685010 + i * 0x38;
-        if (*(s32 *)(item + 0x3F34) == 0) {
+        item = &g_menu_items[0][i];
+        if (item[MENU_PAGE_SIM_RULES * MENU_ITEMS_PER_PAGE].active == 0) {
             continue;
         }
-        *(s32 *)(item + 0x3F2C) = alpha = g_menu_sim_rules.alpha;
-        x = *(s32 *)(item + 0x3F00);
-        y = *(s32 *)(item + 0x3F04);
-        z = *(s32 *)(item + 0x3F30);
+        item[MENU_PAGE_SIM_RULES * MENU_ITEMS_PER_PAGE].alpha = alpha = g_menu_sim_rules.alpha;
+        x = item[MENU_PAGE_SIM_RULES * MENU_ITEMS_PER_PAGE].x;
+        y = item[MENU_PAGE_SIM_RULES * MENU_ITEMS_PER_PAGE].y;
+        z = item[MENU_PAGE_SIM_RULES * MENU_ITEMS_PER_PAGE].z;
         bright = 0x80;
         if (D_0068DEFA[0] == 0 && i == 7) {
             bright = 0x40;
@@ -9710,7 +9712,7 @@ void menu_sim_param_draw(void) {
     s32 count;
     s8 index;
     s32 alpha;
-    u8 *item;
+    MenuItem *item;
 
     count = D_00271503[0];
     menu_page_fade(&g_menu_sim_param);
@@ -9718,14 +9720,14 @@ void menu_sim_param_draw(void) {
         return;
     }
     for (i = 0; i < count; i++) {
-        item = D_00685010 + i * 0x38;
-        if (*(s32 *)(item + 0x42B4) == 0) {
+        item = &g_menu_items[0][i];
+        if (item[MENU_PAGE_SIM_PARAM * MENU_ITEMS_PER_PAGE].active == 0) {
             continue;
         }
-        *(s32 *)(item + 0x42AC) = alpha = g_menu_sim_param.alpha;
-        y = *(s32 *)(item + 0x4284);
-        z = *(s32 *)(item + 0x42B0);
-        x = *(s32 *)(item + 0x4280);
+        item[MENU_PAGE_SIM_PARAM * MENU_ITEMS_PER_PAGE].alpha = alpha = g_menu_sim_param.alpha;
+        y = item[MENU_PAGE_SIM_PARAM * MENU_ITEMS_PER_PAGE].y;
+        z = item[MENU_PAGE_SIM_PARAM * MENU_ITEMS_PER_PAGE].z;
+        x = item[MENU_PAGE_SIM_PARAM * MENU_ITEMS_PER_PAGE].x;
         reg_a0 = (u8 *)g_menu_sim_param_items[i];
         glyph_queue_add(x, y, z, 0, 0x80, alpha, 1);
         y += strlen((const char *)reg_a0) * 8;
@@ -9829,7 +9831,7 @@ void menu_practice_ranking_draw(void) {
     s32 z;
     s32 alpha;
     s32 count;
-    u8 *item;
+    MenuItem *item;
 
     menu_page_fade(&g_menu_practice_ranking);
     if (g_menu_practice_ranking.alpha == 0) {
@@ -9838,16 +9840,16 @@ void menu_practice_ranking_draw(void) {
     count = D_002714FD[0];
     text_queue_clear();
     for (i = 0; i < count; i++) {
-        item = D_00685010 + i * 0x38;
-        if (*(s32 *)(item + 0x2DB4) == 0) {
+        item = &g_menu_items[0][i];
+        if (item[MENU_PAGE_PRACTICE_RANKING * MENU_ITEMS_PER_PAGE].active == 0) {
             continue;
         }
-        *(s32 *)(item + 0x2DAC) = g_menu_practice_ranking.alpha;
+        item[MENU_PAGE_PRACTICE_RANKING * MENU_ITEMS_PER_PAGE].alpha = g_menu_practice_ranking.alpha;
         reg_a0 = (u8 *)g_menu_practice_ranking_text[i];
-        x = *(s32 *)(item + 0x2D80);
-        alpha = *(s32 *)(item + 0x2DAC);
-        y = *(s32 *)(item + 0x2D84);
-        z = *(s32 *)(item + 0x2DB0);
+        x = item[MENU_PAGE_PRACTICE_RANKING * MENU_ITEMS_PER_PAGE].x;
+        alpha = item[MENU_PAGE_PRACTICE_RANKING * MENU_ITEMS_PER_PAGE].alpha;
+        y = item[MENU_PAGE_PRACTICE_RANKING * MENU_ITEMS_PER_PAGE].y;
+        z = item[MENU_PAGE_PRACTICE_RANKING * MENU_ITEMS_PER_PAGE].z;
         if (alpha == 0) {
             continue;
         }
@@ -9862,71 +9864,71 @@ void menu_practice_ranking_draw(void) {
     }
     menu_ranking_scores_format(g_menu_practice_ranking.cursor, 0);
     for (i = 3; i < 8; i++) {
-        item = D_00685010 + i * 0x38;
-        if (*(s32 *)(item + 0x2DB4) == 0) {
+        item = &g_menu_items[0][i];
+        if (item[MENU_PAGE_PRACTICE_RANKING * MENU_ITEMS_PER_PAGE].active == 0) {
             continue;
         }
-        *(s32 *)(item + 0x2DAC) = g_menu_practice_ranking.alpha;
+        item[MENU_PAGE_PRACTICE_RANKING * MENU_ITEMS_PER_PAGE].alpha = g_menu_practice_ranking.alpha;
         reg_a0 = (u8 *)D_00684CA0 + (i - 3) * 11;
-        y = *(s32 *)(item + 0x2D84) + 16;
-        x = *(s32 *)(item + 0x2D80);
-        z = *(s32 *)(item + 0x2DB0);
-        alpha = *(s32 *)(item + 0x2DAC);
+        y = item[MENU_PAGE_PRACTICE_RANKING * MENU_ITEMS_PER_PAGE].y + 16;
+        x = item[MENU_PAGE_PRACTICE_RANKING * MENU_ITEMS_PER_PAGE].x;
+        z = item[MENU_PAGE_PRACTICE_RANKING * MENU_ITEMS_PER_PAGE].z;
+        alpha = item[MENU_PAGE_PRACTICE_RANKING * MENU_ITEMS_PER_PAGE].alpha;
         if (alpha != 0) {
             glyph_queue_add(x, y, z, 0, 0x80, alpha, 1);
         }
     }
     menu_ranking_scores_format(g_menu_practice_ranking.cursor, 1);
     for (i = 3; i < 8; i++) {
-        item = D_00685010 + i * 0x38;
-        if (*(s32 *)(item + 0x2DB4) == 0) {
+        item = &g_menu_items[0][i];
+        if (item[MENU_PAGE_PRACTICE_RANKING * MENU_ITEMS_PER_PAGE].active == 0) {
             continue;
         }
-        *(s32 *)(item + 0x2DAC) = g_menu_practice_ranking.alpha;
+        item[MENU_PAGE_PRACTICE_RANKING * MENU_ITEMS_PER_PAGE].alpha = g_menu_practice_ranking.alpha;
         reg_a0 = (u8 *)D_00684CA0 + (i - 3) * 11;
-        y = *(s32 *)(item + 0x2D84) + 0x80;
-        x = *(s32 *)(item + 0x2D80);
-        z = *(s32 *)(item + 0x2DB0);
-        alpha = *(s32 *)(item + 0x2DAC);
+        y = item[MENU_PAGE_PRACTICE_RANKING * MENU_ITEMS_PER_PAGE].y + 0x80;
+        x = item[MENU_PAGE_PRACTICE_RANKING * MENU_ITEMS_PER_PAGE].x;
+        z = item[MENU_PAGE_PRACTICE_RANKING * MENU_ITEMS_PER_PAGE].z;
+        alpha = item[MENU_PAGE_PRACTICE_RANKING * MENU_ITEMS_PER_PAGE].alpha;
         if (alpha != 0) {
             glyph_queue_add(x, y, z, 0, 0x80, alpha, 1);
         }
     }
     menu_ranking_scores_format(g_menu_practice_ranking.cursor, 2);
     for (i = 9; i < 14; i++) {
-        item = D_00685010 + i * 0x38;
-        if (*(s32 *)(item + 0x2DB4) == 0) {
+        item = &g_menu_items[0][i];
+        if (item[MENU_PAGE_PRACTICE_RANKING * MENU_ITEMS_PER_PAGE].active == 0) {
             continue;
         }
-        *(s32 *)(item + 0x2DAC) = g_menu_practice_ranking.alpha;
+        item[MENU_PAGE_PRACTICE_RANKING * MENU_ITEMS_PER_PAGE].alpha = g_menu_practice_ranking.alpha;
         reg_a0 = (u8 *)D_00684CA0 + (i - 9) * 11;
-        y = *(s32 *)(item + 0x2D84) + 16;
-        x = *(s32 *)(item + 0x2D80);
-        z = *(s32 *)(item + 0x2DB0);
-        alpha = *(s32 *)(item + 0x2DAC);
+        y = item[MENU_PAGE_PRACTICE_RANKING * MENU_ITEMS_PER_PAGE].y + 16;
+        x = item[MENU_PAGE_PRACTICE_RANKING * MENU_ITEMS_PER_PAGE].x;
+        z = item[MENU_PAGE_PRACTICE_RANKING * MENU_ITEMS_PER_PAGE].z;
+        alpha = item[MENU_PAGE_PRACTICE_RANKING * MENU_ITEMS_PER_PAGE].alpha;
         if (alpha != 0) {
             glyph_queue_add(x, y, z, 0, 0x80, alpha, 1);
         }
     }
     menu_ranking_scores_format(g_menu_practice_ranking.cursor, 3);
     for (i = 9; i < 14; i++) {
-        item = D_00685010 + i * 0x38;
-        if (*(s32 *)(item + 0x2DB4) == 0) {
+        item = &g_menu_items[0][i];
+        if (item[MENU_PAGE_PRACTICE_RANKING * MENU_ITEMS_PER_PAGE].active == 0) {
             continue;
         }
-        *(s32 *)(item + 0x2DAC) = g_menu_practice_ranking.alpha;
+        item[MENU_PAGE_PRACTICE_RANKING * MENU_ITEMS_PER_PAGE].alpha = g_menu_practice_ranking.alpha;
         reg_a0 = (u8 *)D_00684CA0 + (i - 9) * 11;
-        y = *(s32 *)(item + 0x2D84) + 0x80;
-        x = *(s32 *)(item + 0x2D80);
-        z = *(s32 *)(item + 0x2DB0);
-        alpha = *(s32 *)(item + 0x2DAC);
+        y = item[MENU_PAGE_PRACTICE_RANKING * MENU_ITEMS_PER_PAGE].y + 0x80;
+        x = item[MENU_PAGE_PRACTICE_RANKING * MENU_ITEMS_PER_PAGE].x;
+        z = item[MENU_PAGE_PRACTICE_RANKING * MENU_ITEMS_PER_PAGE].z;
+        alpha = item[MENU_PAGE_PRACTICE_RANKING * MENU_ITEMS_PER_PAGE].alpha;
         if (alpha != 0) {
             glyph_queue_add(x, y, z, 0, 0x80, alpha, 1);
         }
     }
     g_menu_alpha = g_menu_practice_ranking.alpha;
     reg_a0 = (u8 *)g_menu_cancel_text;
-    menu_message_draw(D_006880A0[0] - 10, D_006880A4[0] + 0x58);
+    menu_message_draw(g_menu_items[13][14].x - 10, g_menu_items[13][14].y + 0x58);
     text_flush();
 }
 
@@ -10013,7 +10015,7 @@ void menu_ranking_draw(void) {
     s32 y;
     s32 z;
     s32 alpha;
-    u8 *item;
+    MenuItem *item;
 
     save = reg_a0;
     count = D_002714FC[0];
@@ -10041,16 +10043,16 @@ void menu_ranking_draw(void) {
     func_0022B1D0();
     glyph_queue_clear();
     for (i = 0; i < count; i++) {
-        item = D_00685010 + i * 0x38;
-        if (*(s32 *)(item + 0x2A34) == 0) {
+        item = &g_menu_items[0][i];
+        if (item[12 * MENU_ITEMS_PER_PAGE].active == 0) {
             continue;
         }
-        *(s32 *)(item + 0x2A2C) = D_0028EB9C;
+        item[12 * MENU_ITEMS_PER_PAGE].alpha = D_0028EB9C;
         reg_a0 = (u8 *)g_menu_ranking_page_text[i];
-        alpha = *(s32 *)(item + 0x2A2C);
-        x = *(s32 *)(item + 0x2A00);
-        y = *(s32 *)(item + 0x2A04);
-        z = *(s32 *)(item + 0x2A30);
+        alpha = item[12 * MENU_ITEMS_PER_PAGE].alpha;
+        x = item[12 * MENU_ITEMS_PER_PAGE].x;
+        y = item[12 * MENU_ITEMS_PER_PAGE].y;
+        z = item[12 * MENU_ITEMS_PER_PAGE].z;
         if (alpha == 0) {
             continue;
         }
@@ -10165,7 +10167,6 @@ void menu_ranking_scores_format(s32 arg0, s32 arg1) {
     }
 }
 
-extern s16 D_00271784[];
 
 void func_0022B1D0(void) {
     extern void gfx_draw_color_box(s32 x, s32 y, s32 w, s32 h, s32 depth, s64 alpha, s32 r, s32 g, s32 b);
@@ -10190,13 +10191,13 @@ void func_0022B1D0(void) {
         break;
     }
     if (g_menu_cursor != -1) {
-        x = g_menu_item_positions_a[g_menu_cursor * 2];
+        x = g_menu_item_positions_a[g_menu_cursor].x;
         if (g_menu_box_alpha != 0) {
             gfx_draw_color_box(x - 8, 0, 0x12, 0xE0, 0x5A, g_menu_box_alpha, 0xB4, 1, 1);
         }
     }
     if (g_menu_box_alpha != 0) {
-        gfx_draw_color_box(D_00271784[0] - 8, 0, 0x12, 0xE0, 0x5A, g_menu_box_alpha, 0xB4, 1, 1);
+        gfx_draw_color_box(g_menu_item_positions_a[9].x - 8, 0, 0x12, 0xE0, 0x5A, g_menu_box_alpha, 0xB4, 1, 1);
     }
 }
 
@@ -11005,8 +11006,7 @@ s8 D_0068DC40[176];
 s8 D_0068DC30[16];
 s8 D_0068DC20[16];
 s8 D_0068DC10[16];
-s32 D_006880A0[5852];
-u8 D_00685010[12432];
+MenuItem g_menu_items[40][MENU_ITEMS_PER_PAGE];
 s32 D_00684CF0[10][4][5];
 u8 D_00684CA0[80];
 u8 D_00684C90[16];
