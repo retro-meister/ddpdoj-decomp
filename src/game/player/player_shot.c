@@ -3,7 +3,7 @@
 #include "sdk/ps2sdk.h"
 
 void func_0014BE20(void);
-void func_0014CAE0(void);
+void scroll_events_run_line(void);
 
 s32 entity_draw_with_player_shots();                            /* extern */
 

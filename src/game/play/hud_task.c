@@ -1,7 +1,7 @@
 #include "common.h"
 #include "entity.h"
 #include "sdk/ps2sdk.h"
-void func_0014CAE0(void);
+void scroll_events_run_line(void);
 extern u16 g_side_scroll_step[];
 
 s32 func_001A5A80();

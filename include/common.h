@@ -58,6 +58,10 @@ extern u8 *reg_a5;
 extern u8 *reg_a6;
 extern u8 *reg_atmp; /* scratch address register (exchanges) */
 
+/* A pointer slot of a data table as the executable holds it: two words that each hold their own place in the
+   table, which the start-up routines check before they put the address in. */
+#define POINTER_SLOT(index) (index), (index) + 1
+
 /*
  * Data tables hold addresses as two 16-bit words, high word first. The tables that point at code or at other
  * tables are filled in at start-up with this.

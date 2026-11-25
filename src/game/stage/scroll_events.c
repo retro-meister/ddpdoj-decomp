@@ -3,29 +3,29 @@
 #include "sdk/ps2sdk.h"
 
 typedef void (*Fn)();
-void func_0014CAE0(void);
+void scroll_events_run_line(void);
 extern u16 g_side_scroll_step[];
 extern u16 g_stage;
 extern u8 g_simulation_active;
 
-extern u16 stage_ground_tables[];
+extern u16 stage_scroll_event_lists[];
 extern u16 g_stage_x4;
 
-void func_0014C3B0(void) {
-    reg_a0 = (u8 *)(stage_ground_tables);
+void scroll_event_lists_get(void) {
+    reg_a0 = (u8 *)(stage_scroll_event_lists);
     reg_d0.h[0] = g_stage_x4;
     reg_tmp.h[1] = (reg_d0.h[0] != 0) ? *(u16 *)((u8 *)reg_a0 + ((s16)reg_d0.h[0] & ~1)) : *(u16 *)reg_a0;
     reg_tmp.h[0] = (((reg_d0.h[0] & 0xFFFF) + 2) != 0) ? *(u16 *)((u8 *)reg_a0 + ((s16)((reg_d0.h[0] & 0xFFFF) + 2) & ~1)) : *(u16 *)reg_a0;
     reg_a0 = (u8 *) reg_tmp.w;
 }
 
-extern u8 D_002526B0[];
+extern u8 stage_ground_object_routines[];
 extern u8 D_0029BF50[];
 extern s32 D_0029C050_as_s32_a[];
 
-void func_0014C450(void) {
+void ground_objects_reset(void) {
     memset(D_0029BF50, 0, 0x104);
-    reg_a0 = D_002526B0;
+    reg_a0 = stage_ground_object_routines;
     reg_a0 += g_stage_x4;
     D_0029C050_as_s32_a[0] = *(s32 *)reg_a0;
 }
@@ -33,7 +33,7 @@ void func_0014C450(void) {
 extern u8 g_ground_no_draw;
 extern u8 *reg_call_target_as_u8_p;
 
-void func_0014C4B0(void) {
+void ground_objects_run(void) {
     u32 temp_s0;
 
     if ((g_simulation_active == 0) || (g_ground_no_draw == 0) || (g_stage != 2)) {
@@ -61,7 +61,7 @@ typedef void (*Fn)(void);
 extern u8 *D_0029C050[];
 extern Fn reg_call_target_as_Fn;
 
-void func_0014C590(void) {
+void ground_object_start(void) {
     u8 *save_a0;
     u8 *save_a1;
     u8 *save_a2;
@@ -149,7 +149,7 @@ next_1:
 extern u16 g_scroll_line;
 extern u8 D_0029C082[];
 
-void func_0014C7B0(void) {
+void scroll_map_loop_step(void) {
     reg_a0 = (u8 *)D_0029C082;
     reg_a1 = reg_a5 + 0xA;
     reg_tmp.h[1] = *(u16 *)(reg_a0 + 0xC);
@@ -183,12 +183,12 @@ extern u8 D_0029C09E[];
 extern s16 D_0029C0AA[];
 extern s16 D_0029C0AC[];
 
-void func_0014C8A0(void) {
+void scroll_events_start(void) {
     u8 *var_a0;
     u32 temp_s0;
     u32 temp_s1;
 
-    func_0014C3B0();
+    scroll_event_lists_get();
     memset(D_0029C080_as_s16_a, 0, 0x40);
     reg_a1 = (u8 *)D_0029C082;
     reg_d1.w = 1;
@@ -224,7 +224,7 @@ void func_0014C8A0(void) {
         reg_a4 = (u8 *)reg_tmp.w;
         temp_s1 = (u32)reg_a4;
         do {
-            func_0014CAE0();
+            scroll_events_run_line();
             var_a0 = (u8 *) g_scroll_line;
             reg_d7.h[0] += 1;
         } while ((u32)var_a0 != reg_d7.h[0]);
@@ -247,17 +247,17 @@ void func_0014C8A0(void) {
 }
 
 
-void func_0014CAD0(void) {
+void scroll_events_run(void) {
     reg_d7.h[0] = g_scroll_line;
-    func_0014CAE0();
+    scroll_events_run_line();
 }
 
-extern u8 ground_event_routines[];
+extern u8 scroll_event_routines[];
 extern u16 D_0029C0BA[];
 extern u16 D_0029C0BC[];
 extern u16 D_0029C0BE[];
 
-void func_0014CAE0(void) {
+void scroll_events_run_line(void) {
     u16 temp_a0;
     reg_a6 = (u8 *)D_0029C082;
     reg_d6.w = 1;
@@ -273,7 +273,7 @@ loop_1:
             temp_a0 = *(u16 *)reg_a1;
             reg_d2.h[0] = temp_a0;
             reg_a1 += 2;
-            reg_a2 = (u8 *)ground_event_routines;
+            reg_a2 = (u8 *)scroll_event_routines;
             reg_a2 += reg_d2.h[0];
             reg_tmp.h[1] = *(u16 *)reg_a2;
             reg_tmp.h[0] = *(u16 *)(reg_a2 + 2);
@@ -302,7 +302,7 @@ loop_1:
 
 s32 sprite_palette_load();
 
-void func_0014CC90(void) {
+void scroll_event_palettes(void) {
     u16 temp_a1;
 
     reg_d2.h[0] = *(u16 *)reg_a1;
@@ -332,7 +332,7 @@ loop_1:
     }
 }
 
-void ground_event_01(void) {
+void scroll_event_map_loop(void) {
     reg_a2 = reg_a5 + 0x10;
     if (reg_d6.h[0] != 0) {
         reg_a2 = reg_a5 + 0xA;
@@ -368,7 +368,7 @@ extern u16 *reg_a1_as_u16_p;
 extern u16 *reg_a2_as_u16_p;
 extern s32 reg_a5_as_s32;
 
-void ground_event_02(void) {
+void scroll_event_speed(void) {
     reg_a2_as_u16_p = (u16 *)(reg_a5_as_s32 + 0x22);
     if (reg_d6.h[0] != 0) {
         reg_a2_as_u16_p = (u16 *)(reg_a5_as_s32 + 0x1C);
@@ -378,7 +378,7 @@ void ground_event_02(void) {
 }
 
 
-void ground_event_03(void) {
+void scroll_event_line_hold(void) {
     *(u16 *)(reg_a5 + 8) = 1;
     reg_d0.h[0] = g_scroll_line;
     reg_d0.h[0] += 4;
@@ -388,7 +388,7 @@ void ground_event_03(void) {
 extern u16 g_side_scroll_x_prev[];
 extern u16 D_0029C080[];
 
-void ground_event_04(void) {
+void scroll_event_object(void) {
     u16 *temp_a0;
     u16 temp_a1;
 
@@ -403,13 +403,13 @@ void ground_event_04(void) {
     if (D_0029C080[0] == 0) {
         reg_d1.h[0] -= 0x800;
         reg_d1.h[0] -= g_side_scroll_x_prev[0];
-        func_0014C590();
+        ground_object_start();
     }
 }
 
-extern u8 ground_event_sound_routines[];
+extern u8 scroll_sound_routines[];
 
-void ground_event_05(void) {
+void scroll_event_sounds(void) {
     u32 temp_a1;
     reg_d2.h[0] = *(u16 *)reg_a1;
     reg_a1 += 2;
@@ -421,7 +421,7 @@ loop_1:
     temp_a1 = reg_d0.h[0];
     reg_a2 += 2;
     if ((s16)(temp_a1) != -1) {
-        reg_a3 = (u8 *)ground_event_sound_routines;
+        reg_a3 = (u8 *)scroll_sound_routines;
         reg_d0.h[0] = temp_a1 + temp_a1;
         reg_d0.h[0] += reg_d0.h[0];
         reg_tmp.h[1] = (reg_d0.h[0] != 0) ? *(u16 *)((u8 *)reg_a3 + ((s16)reg_d0.h[0] & ~1)) : *(u16 *)reg_a3;
@@ -440,7 +440,7 @@ loop_1:
     }
 }
 
-void func_0014D0F0(void) {
+void scroll_sound_call(void) {
     D_0029C0BA[0] = *(u16 *)reg_a2;
     reg_a2 += 2;
     D_0029C0BC[0] = *(u16 *)reg_a2;
@@ -451,13 +451,13 @@ void func_0014D0F0(void) {
 
 void music_stop(void);
 
-void ground_event_sound_01(void) {
+void scroll_sound_music_stop(void) {
     music_stop();
 }
 
 extern void music_fade_out(void);
 
-void ground_event_sound_02(void) {
+void scroll_sound_music_fade(void) {
     reg_d1.h[0] = *(u16 *)reg_a2;
     reg_a2 += 2;
     music_fade_out();
@@ -468,7 +468,7 @@ extern s16 D_0029976A[];
 extern s16 D_0029976C_as_s16_a[];
 extern s16 D_0029976E_as_s16_a[];
 
-void ground_event_06(void) {
+void scroll_event_flags(void) {
     reg_d0.h[0] = *(u16 *)reg_a1;
     reg_a1 += 2;
     if (reg_d0.h[0] == 1) {

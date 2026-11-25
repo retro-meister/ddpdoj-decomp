@@ -40,8 +40,8 @@ void func_00138A40(void) {
 s32 layers_reset();
 s32 layer_a_scroll();
 s32 layer_b_scroll();
-s32 func_0014C450();
-s32 func_0014C8A0();
+s32 ground_objects_reset();
+s32 scroll_events_start();
 s32 func_001A3250();
 extern u8 stage_background_palettes[];
 extern u8 stage_data_tables[];
@@ -118,8 +118,8 @@ void func_00138A50(void) {
     reg_tmp.w = (u32) reg_a1;
     *(u16 *)(reg_a5 + 0xA) = (u16) reg_tmp.h[1];
     *(u16 *)(reg_a5 + 0xC) = (u16) reg_tmp.h[0];
-    func_0014C8A0();
-    func_0014C450();
+    scroll_events_start();
+    ground_objects_reset();
     func_00138A00();
     *(u8 *)(reg_a5 + 2) |= 4;
 }
@@ -377,9 +377,9 @@ loop_6:
     g_sprite_bombs_used = save_00;
 }
 
-s32 func_0014C4B0();
-s32 func_0014C7B0();
-s32 func_0014CAD0();
+s32 ground_objects_run();
+s32 scroll_map_loop_step();
+s32 scroll_events_run();
 void func_00170A50(s32, s32, s32);
 extern u8 D_0028E284;
 extern u8 D_0028E288;
@@ -418,7 +418,7 @@ void func_001391B0(void) {
             *(u16 *)(reg_a5 + 0x22) = (u16) D_0029C07A[0];
         }
         func_00139930();
-        func_0014CAD0();
+        scroll_events_run();
         reg_d0.h[0] = D_0029C074[0];
         if (reg_d0.h[0] != 0) {
             D_0029C074[0] = 0;
@@ -450,7 +450,7 @@ void func_001391B0(void) {
         reg_d5.h[0] += reg_d6.h[0];
         if ((s16)(reg_d5.h[0]) >= 0x800) {
             reg_d5.h[0] -= 0x800;
-            func_0014C7B0();
+            scroll_map_loop_step();
             reg_tmp.h[1] = *(u16 *)(reg_a5 + 0xA);
             reg_tmp.h[0] = *(u16 *)(reg_a5 + 0xC);
             reg_a0 = (u8 *)(reg_tmp.w);
@@ -480,7 +480,7 @@ void func_001391B0(void) {
         reg_d0.h[0] = reg_d6.h[0];
         layer_b_scroll();
     }
-    func_0014C4B0();
+    ground_objects_run();
     func_00170A50(0, 0, 0);
 }
 
