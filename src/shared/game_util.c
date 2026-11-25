@@ -1,12 +1,10 @@
 #include "common.h"
+#include "task.h"
 #include "credits_roll.h"
 
-s32 task_start();                            /* extern */
 #ifdef DEATH_LABEL
-s32 task_reset_all();
 extern u8 death_D_00290DC0;
 #else
-s32 task_stop_self();                            /* extern */
 #endif
 
 void func_00200D30(void) {
@@ -16,7 +14,7 @@ void func_00200D30(void) {
     reg_d0.h[0] = 0x15;
     task_start();
 #else
-    reg_d0.h[0] = 0xE;
+    reg_d0.h[0] = TASK_GAME_OVER;
     task_start();
     g_ending_started = 0;
     task_stop_self();
@@ -53,7 +51,7 @@ s32 func_0013C350();
 s32 music_fade_out();
 extern u8 D_0024E090[];
 
-void func_00200DD0() {
+void credits_task() {
     u16 temp_a0;
     u8 temp_v1;
 

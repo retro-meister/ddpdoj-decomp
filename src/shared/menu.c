@@ -1,4 +1,5 @@
 #include "common.h"
+#include "task.h"
 #include "sdk/ps2sdk.h"
 #include "pad.h"
 #include "gfx_types.h"
@@ -4591,7 +4592,6 @@ void func_002244E0(void) {
 }
 
 extern u16 D_0028E7BC;
-extern void task_start(void);
 
 void func_00224A30(void) {
     extern void sfx_menu_confirm(void);
@@ -4600,7 +4600,7 @@ void func_00224A30(void) {
     }
     func_00224A90();
     sfx_menu_confirm();
-    reg_d0.h[0] = 8;
+    reg_d0.h[0] = TASK_ATTRACT;
     task_start();
     *(u16 *)(reg_a0 + 4) = 0x12;
 }
@@ -4612,7 +4612,6 @@ s32 layers_clear_all();
 s32 func_0013B190();
 s32 sound_stop_effects();
 s32 music_stop();
-s32 task_reset_all();
 s32 stage_map_reset();
 s32 replay_header_clear();
 extern u8 D_0028E1DA[];

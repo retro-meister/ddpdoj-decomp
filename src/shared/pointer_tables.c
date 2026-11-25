@@ -1,7 +1,8 @@
 #include "common.h"
+#include "task.h"
 #include "sdk/ps2sdk.h"
 
-void func_00172410(void);
+void task_table_init(void);
 void func_00172760(void);
 void func_001727F0(void);
 void func_00172FF0(void);
@@ -30,8 +31,8 @@ void func_001882D0(void);
 void func_001882E0(void);
 
 
-void func_00172320(void) {
-    func_00172410();
+void pointer_tables_init(void) {
+    task_table_init();
     func_00172760();
     func_001727F0();
     func_00172FF0();
@@ -61,95 +62,51 @@ void func_00172320(void) {
 }
 
 extern u16 g_task_table[];
-void func_00123980();
+void ending_task();
 void func_00131880();
 void func_00134C40();
-void func_001367C0();
+void game_task();
 void func_00138DA0();
 void func_00139B80();
-void func_001404B0();
-void func_001405D0();
-void func_0014BE30();
-void func_0014BFF0();
-void func_00168BC0();
+void player1_task();
+void player2_task();
+void score_task();
+void game_over_task();
+void attract_task();
 void func_00198B70();
 void func_001A3730();
 void func_001AF560();
-void func_001B1960();
+void ship_select_task();
 void func_001B2200();
-void func_00200DD0();
+void credits_task();
 void test_mode_task();
 void func_00210D00();
 void func_0022BF60();
-void func_002372C0();
+void replay_task();
 
-void func_00172410(void) {
-    reg_tmp.w = (u32) (void *) func_0014BE30;
-    g_task_table[0] = reg_tmp.h[1];
-    g_task_table[1] = reg_tmp.h[0];
-    reg_tmp.w = (u32) (void *) func_00138DA0;
-    g_task_table[4] = reg_tmp.h[1];
-    g_task_table[5] = reg_tmp.h[0];
-    reg_tmp.w = (u32) (void *) func_001404B0;
-    g_task_table[8] = reg_tmp.h[1];
-    g_task_table[9] = reg_tmp.h[0];
-    reg_tmp.w = (u32) (void *) func_001405D0;
-    g_task_table[12] = reg_tmp.h[1];
-    g_task_table[13] = reg_tmp.h[0];
-    reg_tmp.w = (u32) (void *) func_001A3730;
-    g_task_table[16] = reg_tmp.h[1];
-    g_task_table[17] = reg_tmp.h[0];
-    reg_tmp.w = (u32) (void *) func_00139B80;
-    g_task_table[20] = reg_tmp.h[1];
-    g_task_table[21] = reg_tmp.h[0];
-    reg_tmp.w = (u32) (void *) func_00131880;
-    g_task_table[24] = reg_tmp.h[1];
-    g_task_table[25] = reg_tmp.h[0];
-    reg_tmp.w = (u32) (void *) func_00123980;
-    g_task_table[28] = reg_tmp.h[1];
-    g_task_table[29] = reg_tmp.h[0];
-    reg_tmp.w = (u32) (void *) func_00168BC0;
-    g_task_table[32] = reg_tmp.h[1];
-    g_task_table[33] = reg_tmp.h[0];
-    reg_tmp.w = (u32) (void *) func_001B1960;
-    g_task_table[36] = reg_tmp.h[1];
-    g_task_table[37] = reg_tmp.h[0];
-    reg_tmp.w = (u32) (void *) func_001367C0;
-    g_task_table[40] = reg_tmp.h[1];
-    g_task_table[41] = reg_tmp.h[0];
-    reg_tmp.w = (u32) (void *) func_001AF560;
-    g_task_table[44] = reg_tmp.h[1];
-    g_task_table[45] = reg_tmp.h[0];
-    reg_tmp.w = (u32) (void *) func_00198B70;
-    g_task_table[48] = reg_tmp.h[1];
-    g_task_table[49] = reg_tmp.h[0];
-    reg_tmp.w = (u32) (void *) func_00134C40;
-    g_task_table[52] = reg_tmp.h[1];
-    g_task_table[53] = reg_tmp.h[0];
-    reg_tmp.w = (u32) (void *) func_0014BFF0;
-    g_task_table[56] = reg_tmp.h[1];
-    g_task_table[57] = reg_tmp.h[0];
-    reg_tmp.w = (u32) (void *) func_00200DD0;
-    g_task_table[60] = reg_tmp.h[1];
-    g_task_table[61] = reg_tmp.h[0];
-    reg_tmp.w = (u32) (void *) test_mode_task;
-    g_task_table[64] = reg_tmp.h[1];
-    g_task_table[65] = reg_tmp.h[0];
-    reg_tmp.w = (u32) (void *) func_001B2200;
-    g_task_table[68] = reg_tmp.h[1];
-    g_task_table[69] = reg_tmp.h[0];
-    reg_tmp.w = 0;
-    g_task_table[72] = reg_tmp.h[1];
-    g_task_table[73] = reg_tmp.h[0];
-    reg_tmp.w = (u32) (void *) func_00210D00;
-    g_task_table[76] = reg_tmp.h[1];
-    g_task_table[77] = reg_tmp.h[0];
-    reg_tmp.w = (u32) (void *) func_002372C0;
-    g_task_table[80] = reg_tmp.h[1];
-    g_task_table[81] = reg_tmp.h[0];
-    reg_tmp.w = (u32) (void *) func_0022BF60;
-    g_task_table[84] = reg_tmp.h[1];
-    g_task_table[85] = reg_tmp.h[0];
+void task_table_init(void) {
+    STORE_POINTER(g_task_table + 4 * TASK_SCORE, score_task);
+    STORE_POINTER(g_task_table + 4 * 1, func_00138DA0);
+    STORE_POINTER(g_task_table + 4 * TASK_PLAYER1, player1_task);
+    STORE_POINTER(g_task_table + 4 * TASK_PLAYER2, player2_task);
+    STORE_POINTER(g_task_table + 4 * 4, func_001A3730);
+    STORE_POINTER(g_task_table + 4 * 5, func_00139B80);
+    STORE_POINTER(g_task_table + 4 * 6, func_00131880);
+    STORE_POINTER(g_task_table + 4 * TASK_ENDING, ending_task);
+    STORE_POINTER(g_task_table + 4 * TASK_ATTRACT, attract_task);
+    STORE_POINTER(g_task_table + 4 * TASK_SHIP_SELECT, ship_select_task);
+    STORE_POINTER(g_task_table + 4 * TASK_GAME, game_task);
+    STORE_POINTER(g_task_table + 4 * 11, func_001AF560);
+    STORE_POINTER(g_task_table + 4 * 12, func_00198B70);
+    STORE_POINTER(g_task_table + 4 * 13, func_00134C40);
+    STORE_POINTER(g_task_table + 4 * TASK_GAME_OVER, game_over_task);
+    STORE_POINTER(g_task_table + 4 * TASK_CREDITS, credits_task);
+    STORE_POINTER(g_task_table + 4 * TASK_TEST_MODE, test_mode_task);
+    STORE_POINTER(g_task_table + 4 * 17, func_001B2200);
+    STORE_POINTER(g_task_table + 4 * 18, 0);
+    STORE_POINTER(g_task_table + 4 * 19, func_00210D00);
+    STORE_POINTER(g_task_table + 4 * TASK_REPLAY, replay_task);
+    STORE_POINTER(g_task_table + 4 * 21, func_0022BF60);
 }
 
 extern u16 D_00261070[];

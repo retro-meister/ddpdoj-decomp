@@ -1,4 +1,5 @@
 #include "common.h"
+#include "task.h"
 
 void func_001340E0(void);
 void func_00134660(void);
@@ -574,7 +575,6 @@ void func_00134B70(void) {
     func_00134BA0();
 }
 
-s32 task_stop_self();                            /* extern */
 
 void func_00134BA0(void) {
     reg_d1.w = 0;
@@ -586,8 +586,6 @@ void func_00134BA0(void) {
 s32 func_0013B190();                            /* extern */
 s32 sound_stop_effects();                            /* extern */
 s32 music_stop();                            /* extern */
-s32 task_reset_all();                            /* extern */
-s32 task_start();                            /* extern */
 extern u16 g_loop;
 extern u16 g_stage;
 extern s8 D_0028ED64_as_s8;
@@ -597,7 +595,7 @@ void func_00134BD0(void) {
     sound_stop_effects();
     func_0013B190();
     task_reset_all();
-    reg_d0.h[0] = 0xE;
+    reg_d0.h[0] = TASK_GAME_OVER;
     task_start();
     if (g_loop != 1) {
         if ((s32) 0 < g_stage) {

@@ -1,4 +1,5 @@
 #include "common.h"
+#include "task.h"
 #include "sdk/ps2sdk.h"
 
 extern u16 D_0028E82C;
@@ -67,7 +68,6 @@ void func_00137C50(void) {
 #ifdef DEATH_LABEL
 s32 func_00171910();
 s32 text_palette_load();
-s32 task_start();
 extern u8 death_D_0026EE20[];
 extern u32 death_D_0026FD90[];
 extern u16 D_0028E3BC;
@@ -138,7 +138,7 @@ void func_00137C90(void) {
     reg_tmp.h[0] = *(u16 *)reg_a0;
     reg_a0 += 2;
     D_0028E7F8 = reg_tmp.w;
-    reg_d0.h[0] = 0xA;
+    reg_d0.h[0] = TASK_GAME;
     task_start();
     *(u16 *)(reg_a0 + 4) = reg_d7.h[0];
     func_00171910();
@@ -244,7 +244,6 @@ void func_00137CC0(void) {
 #ifndef DEATH_LABEL
 
 s32 text_palette_load();
-s32 task_start();
 s32 delta_encode();
 s32 func_00224B50();
 s32 func_0022BC60();

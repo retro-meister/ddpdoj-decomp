@@ -1,4 +1,5 @@
 #include "common.h"
+#include "task.h"
 #include "entity.h"
 #include "sdk/ps2sdk.h"
 #include "cd.h"
@@ -5284,8 +5285,6 @@ s32 func_00137C20();                            /* extern */
 s32 func_0013FD80();                            /* extern */
 s32 sound_stop_effects();                            /* extern */
 s32 text_palette_load();                            /* extern */
-s32 task_start();                            /* extern */
-s32 task_stop_self();                            /* extern */
 extern s32 test_palette_0_as_s32_a[];
 extern u8 D_0028E258;
 extern u8 D_0028E25C;
@@ -5312,7 +5311,7 @@ void func_001980A0() {
     } else {
         D_0028EAFC = 0xFF;
     }
-    reg_d0.h[0] = 8;
+    reg_d0.h[0] = TASK_ATTRACT;
     task_start();
     (*(s16 *)((u8 *)((s32 *)reg_a0) + (4))) = 0x12;
 }

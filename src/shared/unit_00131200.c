@@ -1,4 +1,5 @@
 #include "common.h"
+#include "task.h"
 #include "entity.h"
 #include "sdk/ps2sdk.h"
 
@@ -356,7 +357,6 @@ void func_00131700(void) {
 
 extern u16 D_0028E960;
 
-void task_stop_self(void);
 
 void func_001317D0(void) {
     D_0028E960 = 0;
@@ -369,8 +369,6 @@ s32 func_0013B190();                            /* extern */
 s32 func_0013E7C0();                            /* extern */
 s32 func_0013E850();                            /* extern */
 s32 func_001AD720();                            /* extern */
-s32 task_reset_all();                            /* extern */
-s32 task_start();                            /* extern */
 #ifdef DEATH_LABEL
 extern u8 death_D_00290DC0;
 extern u16 g_game_completed;
@@ -405,7 +403,7 @@ s32 func_00224A90();                            /* extern */
 
 void func_00131840(void) {
     func_00224A90();
-    reg_d0.h[0] = 0x14;
+    reg_d0.h[0] = TASK_REPLAY;
     task_start();
     *(s8 *)(reg_a0 + 5) = 1;
 }
@@ -792,7 +790,6 @@ s32 input_get_p2_pressed();
 s32 music_fade_out();
 s32 func_001A9130();
 s32 func_00200EE0();
-s32 task_start();
 s32 stage_load_step();
 s32 func_0022B660();
 extern u16 D_00261F30[];

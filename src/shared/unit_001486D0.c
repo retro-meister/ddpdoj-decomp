@@ -1186,7 +1186,7 @@ extern s16 g_score_task_active_as_s16;
 extern u16 g_stage;
 extern u8 D_0028ED7C;
 
-void func_0014BE30(void) {
+void score_task(void) {
     switch (reg_a5[3]) {
     case 0:
         goto block_1;
@@ -1271,7 +1271,7 @@ extern u16 D_0026A3C0[];
 extern u8 D_0028ED64;
 extern u8 g_simulation_active;
 
-void func_0014BFF0(void) {
+void game_over_task(void) {
     u16 t;
     u8 st;
 

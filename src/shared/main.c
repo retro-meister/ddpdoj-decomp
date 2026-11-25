@@ -1,4 +1,5 @@
 #include "common.h"
+#include "task.h"
 s32 memalign();
 s32 memset();
 s32 printf();
@@ -16,7 +17,7 @@ s32 func_0013C3F0();
 s32 func_0013FD80();
 s32 input_clear();
 s32 input_update_pressed();
-s32 func_00172320();
+s32 pointer_tables_init();
 s32 sound_init();
 s32 sound_unused();
 s32 func_0018E5A0();
@@ -30,9 +31,6 @@ s32 func_001AE490();
 s32 func_00206C20();
 s32 func_00206D10();
 s32 func_00206D60();
-s32 task_reset_all();
-s32 task_run_all();
-s32 task_start();
 s32 zoom_init();
 s32 test_mode_init();
 s32 settings_reset();
@@ -114,7 +112,7 @@ void func_002120D0(void) {
     memset(D_006A4800, 0, 0x202E8);
     func_0021D8C0();
     sys_start();
-    func_00172320();
+    pointer_tables_init();
     func_0018E5A0();
     func_0020F550();
     func_002108C0();
@@ -160,7 +158,7 @@ void func_002120D0(void) {
     reg_a0 = (u8 *)test_palette_4;
     reg_d0.w = 4;
     text_palette_load();
-    reg_d0.h[0] = 8;
+    reg_d0.h[0] = TASK_ATTRACT;
     task_start();
     *(s16 *)(reg_a0 + 4) = 0x11;
     printf(D_00286E78, memalign(0x40, 0x10));

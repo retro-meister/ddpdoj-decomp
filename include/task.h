@@ -17,6 +17,22 @@ typedef struct {
 
 #define TASK(pointer) ((Task *)(pointer))
 
+/* Index into the task table (task_table_init); the numbers not listed are not identified yet. */
+enum {
+    TASK_SCORE = 0,
+    TASK_PLAYER1 = 2,
+    TASK_PLAYER2 = 3,
+    TASK_ENDING = 7,
+    TASK_ATTRACT = 8,
+    TASK_SHIP_SELECT = 9,
+    TASK_GAME = 10,
+    TASK_GAME_OVER = 14,
+    TASK_CREDITS = 15,
+    TASK_TEST_MODE = 16,
+    TASK_REPLAY = 20,
+    TASK_TABLE_COUNT = 22
+};
+
 #define TASK_COUNT 20
 #define TASK_BLOCKS_SIZE (TASK_COUNT * sizeof(Task)) /* 0x640 */
 

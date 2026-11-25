@@ -1,4 +1,5 @@
 #include "common.h"
+#include "task.h"
 #include "entity.h"
 #include "sdk/ps2sdk.h"
 
@@ -81,8 +82,6 @@ void func_00122CE0(void) {
     reg_a0 += 2;
 }
 
-s32 task_start();
-s32 task_stop_self();
 s32 stage_load_step();
 s32 func_00225630();
 s32 func_002256B0();
@@ -133,7 +132,7 @@ block_6:
             func_00123870();
             return;
         }
-        reg_d0.h[0] = 0xF;
+        reg_d0.h[0] = TASK_CREDITS;
         task_start();
         task_stop_self();
     }
@@ -502,7 +501,7 @@ extern u8 D_00295E3E[];
 extern u8 D_00295E3F[];
 extern u16 D_00295E40[];
 
-void func_00123980(void) {
+void ending_task(void) {
     u8 mode;
 
     mode = *(u8 *)(reg_a5 + 3);

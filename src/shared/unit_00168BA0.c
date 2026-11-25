@@ -1,4 +1,5 @@
 #include "common.h"
+#include "task.h"
 #include "sdk/ps2sdk.h"
 #include "pad.h"
 
@@ -57,7 +58,7 @@ extern s8 D_0028ED74_as_s8;
 extern s8 D_0028ED7C_as_s8;
 extern s8 g_simulation_active_as_s8;
 
-void func_00168BC0(void) {
+void attract_task(void) {
     s32 text_layer_clear();
     s32 func_0013B190();
     s32 text_palette_load();
@@ -121,7 +122,7 @@ next_5:
     text_palette_load();
     text_layer_clear();
     func_0012FB00();
-    reg_d0.h[0] = 8;
+    reg_d0.h[0] = TASK_ATTRACT;
     task_start();
     *(s16 *)(reg_a0 + 4) = 3;
     return;
@@ -526,7 +527,7 @@ void func_00169320(void) {
         func_00137C50();
         stage_map_reset();
         text_layer_clear();
-        reg_d0.h[0] = 8;
+        reg_d0.h[0] = TASK_ATTRACT;
         task_start();
         (*(s16 *)((u8 *)((s32 *)reg_a0) + (4))) = 2;
         sound_stop_effects();
@@ -641,7 +642,7 @@ void func_00169640(void) {
     s32 task_reset_all();
     s32 task_start();
     task_reset_all();
-    reg_d0.h[0] = 9;
+    reg_d0.h[0] = TASK_SHIP_SELECT;
     task_start();
     *(u8 *)(reg_a0 + 5) = (u8) D_0028E7B4;
 }
@@ -748,7 +749,7 @@ void func_00169680(void) {
     D_006E5BF0_as_s16_a[0] = D_0028DE48[D_0068DECE[0]];
     D_006E5BF2_as_s16_a[0] = D_0028DE48[D_0068DED0[0]];
     D_006E5C14_as_s16_a[0] = D_0068DED2[0];
-    reg_d0.h[0] = 0x14;
+    reg_d0.h[0] = TASK_REPLAY;
     task_start();
     if (D_0028ED7C == 2) {
         *(s8 *)(reg_a0 + 5) = 3;

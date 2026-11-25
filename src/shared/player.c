@@ -661,7 +661,7 @@ extern s8 D_0028ED6C_as_s8;
 extern u8 D_0028ED7C;
 extern u8 D_0029CD90_as_u8_a[];
 
-void func_001404B0() {
+void player1_task() {
     reg_a6 = g_player1_as_u8_a;
     reg_a2 = D_0029F180;
     g_two_player_seen |= 1;
@@ -706,7 +706,7 @@ extern u16 D_0028E92C;
 extern u16 D_0028E934;
 extern u8 D_0029CD80_as_u8_a[];
 
-void func_001405D0() {
+void player2_task() {
     reg_a6 = g_player2_as_u8_a;
     reg_a2 = D_0029F110;
     g_two_player_seen |= 2;

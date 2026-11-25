@@ -1,4 +1,5 @@
 #include "common.h"
+#include "task.h"
 #include "entity.h"
 
 s32 func_0013AFF0();
@@ -99,7 +100,6 @@ s32 music_play_bgm1();
 s32 voice_select();
 s32 text_palette_load();
 s32 func_001B04B0();
-s32 task_start();
 s32 func_0020ECE0();
 s32 replay_header_clear();
 extern u8 D_0025F770[];
@@ -226,7 +226,7 @@ void func_001B1080(void) {
     reg_a0 = (u8 *)D_00260D30;
     reg_d0.w = 0x11;
     sprite_palette_load();
-    reg_d0.h[0] = 0xA;
+    reg_d0.h[0] = TASK_GAME;
     task_start();
     *(s16 *)(reg_a0 + 4) = 0;
     music_play_bgm1();
@@ -335,7 +335,6 @@ extern u8 D_0028E304;
 extern u16 g_loop;
 
 void func_001B1920(void) {
-    s32 task_stop_self();
     task_stop_self();
     if ((D_0028E304 != 0) && (g_loop == 0)) {
         g_loop = 1;
@@ -362,8 +361,6 @@ s32 voice_ok();
 s32 music_stop();
 s32 text_palette_load();
 s32 death_func_001B1220();
-s32 task_start();
-s32 task_stop_self();
 s32 fade_reset();
 extern u8 g_default_text_palette[];
 extern u8 g_game_mode;
@@ -371,7 +368,7 @@ extern u8 D_0028E7B4;
 extern u16 D_00684C80[];
 #endif
 
-void func_001B1960(void) {
+void ship_select_task(void) {
     u8 t1;
 
     t1 = *(u8 *)(reg_a5 + 3);
@@ -652,13 +649,12 @@ void func_001B1D70(void) {
     if (D_0028ED7C == 1) {
         func_0023C1E0(D_006CB1D4);
     }
-    reg_d0.h[0] = 0xA;
+    reg_d0.h[0] = TASK_GAME;
     task_start();
     *(s16 *)(reg_a0 + 4) = 0;
 }
 
 void func_001B21F0(void) {
-    void task_stop_self(void);
     D_0028E3B4_as_s16 = 0;
     task_stop_self();
 }

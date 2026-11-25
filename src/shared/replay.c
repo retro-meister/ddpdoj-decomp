@@ -1,4 +1,5 @@
 #include "common.h"
+#include "task.h"
 #include "sdk/ps2sdk.h"
 #include "replay.h"
 
@@ -258,7 +259,7 @@ void replay_filter_input(void) {
 extern void replay_stop_task(void);
 extern void (*D_00272110[])(void);
 
-void func_002372C0(void) {
+void replay_task(void) {
     s32 index = reg_a5[5];
 
     switch (reg_a5[3]) {
@@ -348,7 +349,6 @@ extern u8 g_cd_async_busy_as_u8;
 extern s8 D_0028EC20;
 
 void func_00237470(void) {
-    extern void task_start(void);
     u32 save_d0;
     u32 save_d1;
     u32 save_d2;
@@ -414,7 +414,7 @@ void func_00237470(void) {
         }
         break;
     case 4:
-        reg_d0.h[0] = 8;
+        reg_d0.h[0] = TASK_ATTRACT;
         task_start();
         *(u16 *)(reg_a0 + 4) = 15;
         *(u8 *)(reg_a5 + 3) = 2;
@@ -439,12 +439,11 @@ void func_00237470(void) {
 
 
 void func_00237670(void) {
-    s32 task_start();
     u32 temp_s0 = reg_d0.w;
     u8 *temp_s1 = reg_a0;
 
     g_replay_header = g_replay_header_saved;
-    reg_d0.h[0] = 0x14;
+    reg_d0.h[0] = TASK_REPLAY;
     task_start();
     *(s8 *)(reg_a0 + 5) = 0;
     reg_d0.w = temp_s0;
@@ -455,7 +454,6 @@ extern u8 D_0028ED7C;
 extern u8 g_simulation_active;
 
 void func_002376F0() {
-    s32 task_start();
     s32 func_00224A90();
     u32 temp_s0;
     u8 *temp_s1;
@@ -471,7 +469,7 @@ void func_002376F0() {
         var_s2 = 0;
     }
     func_00224A90();
-    reg_d0.h[0] = 0x14;
+    reg_d0.h[0] = TASK_REPLAY;
     task_start();
     if (var_s2 != 0) {
         *(s8 *)(reg_a0 + 5) = 1;
@@ -482,7 +480,6 @@ void func_002376F0() {
     reg_a0 = temp_s1;
 }
 
-s32 task_start();                            /* extern */
 s32 func_00224A90();                            /* extern */
 s32 func_0022B620();                            /* extern */
 
@@ -494,7 +491,7 @@ void func_00237790(void) {
     temp_s1 = reg_a0;
     func_0022B620();
     func_00224A90();
-    reg_d0.h[0] = 0x14;
+    reg_d0.h[0] = TASK_REPLAY;
     task_start();
     *(s8 *)(reg_a0 + 5) = 4;
     reg_d0.w = temp_s0;
@@ -533,13 +530,11 @@ extern void func_0013BE50(void);
 extern void func_0013C300(void);
 extern void func_0013C350(void);
 extern void func_001A42A0(void);
-extern void task_reset_all(void);
 extern s32 func_00225CD0(void);
 extern u8 D_0026B5F0[];
 extern s8 D_0028EACC;
 
 void func_00237870(void) {
-    extern void task_start(void);
     extern void func_00224A90(void);
     s32 step;
     s32 done;
@@ -611,7 +606,7 @@ void func_00237870(void) {
     case 417:
         task_reset_all();
         func_00224A90();
-        reg_d0.h[0] = 20;
+        reg_d0.h[0] = TASK_REPLAY;
         task_start();
         done = 1;
         *(u8 *)(reg_a0 + 5) = 2;
@@ -787,7 +782,6 @@ void func_00237DF0(void) {
     extern void text_layer_clear(void);
     extern void func_00171910(void);
     extern void text_palette_load(void);
-    extern void task_start(void);
     extern void replay_header_save(void);
     u32 save_d0;
     u32 save_d1;
@@ -845,7 +839,7 @@ void func_00237DF0(void) {
             D_0028E314 = 9;
         }
     }
-    reg_d0.h[0] = 10;
+    reg_d0.h[0] = TASK_GAME;
     task_start();
     *(u16 *)(reg_a0 + 4) = g_replay_header.stage;
     func_00171910();
@@ -1119,7 +1113,6 @@ void func_00238520(void) {
     s32 text_layer_clear();
     s32 func_00171910();
     s32 text_palette_load();
-    s32 task_start();
     s32 replay_header_save();
     u32 save_d0;
     u32 save_d1;
@@ -1159,7 +1152,7 @@ void func_00238520(void) {
     save_d5 = reg_d5.w;
     save_a5[3] = 1;
     *(s16 *)(reg_a5 + 4) = 0;
-    reg_d0.h[0] = 0xA;
+    reg_d0.h[0] = TASK_GAME;
     task_start();
     *(u16 *)(reg_a0 + 4) = g_replay_header.stage;
     func_00171910();
@@ -1343,7 +1336,6 @@ static void func_00238910(void)
 }
 
 void func_00238980(void) {
-    extern void task_start(void);
     u32 save_d0;
     u32 save_d1;
     u32 save_d2;
@@ -1404,7 +1396,7 @@ void func_00238980(void) {
         D_0028E368_as_s8 = 1;
         D_0028ED7C_as_s8 = 2;
         task_reset_all();
-        reg_d0.h[0] = 20;
+        reg_d0.h[0] = TASK_REPLAY;
         task_start();
         *(u8 *)(reg_a0 + 5) = 3;
         return;

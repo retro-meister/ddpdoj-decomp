@@ -1,4 +1,5 @@
 #include "common.h"
+#include "task.h"
 #include "entity.h"
 #include "sdk/ps2sdk.h"
 
@@ -11,7 +12,6 @@ void func_00136A40(void);
 void func_00136BB0(void);
 void func_00137820(void);
 
-s32 task_request_stop();                            /* extern */
 extern s32 D_0028E84C;
 
 void func_00134FB0(void) {
@@ -92,7 +92,6 @@ s32 func_00139EB0();                            /* extern */
 s32 func_0014D260();                            /* extern */
 s32 func_0016AAB0();                            /* extern */
 s32 func_001B82D0();                            /* extern */
-s32 task_start();                            /* extern */
 s32 func_00209E60();                            /* extern */
 s32 func_002114A0();                            /* extern */
 extern u32 D_0028E84C_as_u32;
@@ -167,7 +166,6 @@ void func_001351F0(void) {
     cond_flag = 0;
 }
 
-s32 task_start();
 extern u8 D_00269D10[];
 extern u8 D_00269D20[];
 extern u32 D_0028E83C_as_u32;
@@ -201,7 +199,7 @@ void func_00135220(void) {
         reg_a0 = (u8 *)D_00269D20;
         reg_a6 += 0x24;
     } while ((s16)(--reg_d7.h[0]) >= 0);
-    reg_d0.h[0] = 0;
+    reg_d0.h[0] = TASK_SCORE;
     task_start();
     temp_a0 = reg_d0.h[1];
     reg_tmp.h[0] = temp_a0;
@@ -577,7 +575,6 @@ void func_00135AD0(void) {
 
 s32 sound_stop_effects();
 s32 music_stop();
-s32 task_request_stop();
 extern u8 D_0028E83C_as_u8;
 extern u8 D_0028E840_as_u8;
 extern u8 D_0028E844_as_u8;
@@ -607,7 +604,7 @@ void func_00135C90(void) {
     task_request_stop();
     music_stop();
     sound_stop_effects();
-    reg_d0.h[0] = 0xE;
+    reg_d0.h[0] = TASK_GAME_OVER;
     task_start();
     ENTITY(reg_a6)->flags.sh = 0;
     ENTITY(reg_a6)->y.sh = 0;
@@ -630,7 +627,6 @@ void func_00135D70(void) {
     ((HalfPair *)reg_a6)->unk2 = 0;
 }
 
-s32 task_find();                            /* extern */
 
 void func_00135D90(void) {
     D_0028E850 += 1;
@@ -1109,13 +1105,12 @@ void ship_select_apply(void) {
 
 s32 func_00134380();
 s32 func_00138170();
-s32 task_stop_self();
 extern u8 g_stage_load_state;
 extern u16 g_game_frame;
 extern u8 D_0028EC4C;
 extern s16 D_00299768[];
 
-void func_001367C0(void) {
+void game_task(void) {
     u8 t;
 
     t = *(u8 *)(reg_a5 + 3);
