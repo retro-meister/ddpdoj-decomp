@@ -39,7 +39,7 @@ segments:
       - [0x1de40, c, shared/stage3_scenery]
       - [0x1eb60, c, shared/stage4_scenery]
       - [0x1f130, c, shared/stage5_scenery]
-      - [0x1f4f0, c, shared/unit_0011F470]
+      - [0x1f4f0, c, shared/map_cell_test]
       - [0x1fa00, c, shared/unit_0011F980]
       - [0x22c60, c, shared/splash]
       - [0x22d60, c, shared/ending]

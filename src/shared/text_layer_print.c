@@ -121,12 +121,13 @@ next_character:
     reg_a0 = (u8 *)temp_s5;
 }
 
-/* The three number printers of the debug display are empty in this build. */
-void debug_print_hex_stub_a(void) {
+/* The number printers of the debug display are empty in this build (row, column, palette and value come in
+   reg_d0 to reg_d3). */
+void debug_print_hex8_stub(void) {
 }
 
-void debug_print_hex_stub_b(void) {
+void debug_print_hex_short_stub(void) {
 }
 
-void debug_print_hex_stub_c(void) {
+void debug_print_hex4_stub(void) {
 }

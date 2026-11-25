@@ -17,7 +17,7 @@ extern s16 D_0028E14C_as_s16;
 extern s16 D_0028E150_as_s16;
 extern s16 D_0028E154_as_s16;
 extern s16 D_0028E158_as_s16;
-extern s16 D_0028E15C_as_s16;
+extern s16 g_sprite_bullets_used_as_s16;
 extern s16 D_0028E160_as_s16;
 extern s16 D_0028E164_as_s16;
 extern s16 D_0028E168_as_s16;
@@ -50,7 +50,7 @@ void func_0019AA90(void) {
     D_0028E178_as_s16 = 0;
     D_0028E174_as_s16 = 0;
     D_0028E160_as_s16 = 0;
-    D_0028E15C_as_s16 = 0;
+    g_sprite_bullets_used_as_s16 = 0;
     D_0028E158_as_s16 = 0;
     D_0028E170_as_s16 = 0;
     D_0028E16C_as_s16 = 0;
@@ -92,7 +92,7 @@ extern u16 D_0028E14C;
 extern u16 D_0028E150;
 extern u16 D_0028E154;
 extern u16 D_0028E158;
-extern u16 D_0028E15C;
+extern u16 g_sprite_bullets_used;
 extern u16 D_0028E160;
 extern u16 D_0028E164;
 extern u16 D_0028E168;
@@ -125,7 +125,7 @@ extern u8 D_002A43B0[];
 extern u8 D_002A4430[];
 extern u8 D_002A45B0[];
 extern u8 D_002A4670[];
-extern u8 D_002A5050[];
+extern u8 g_sprite_bullets_buf[];
 extern u8 D_002A5A30[];
 extern u8 D_002A5D00[];
 extern u8 D_002A5DC0[];
@@ -167,7 +167,7 @@ void func_0019AB20(void) {
     reg_d0.h[0] += D_0028E164;
     reg_d0.h[0] += D_0028E160;
     if ((D_0028E30C == 0) || (D_0028E308 == 0)) {
-        reg_d0.h[0] += D_0028E15C;
+        reg_d0.h[0] += g_sprite_bullets_used;
         reg_d0.h[0] += D_0028E158;
     }
     if (D_0028E30C != 0) {
@@ -291,8 +291,8 @@ void func_0019AB20(void) {
     if (D_0028E30C == 0) goto next_30;
     if (D_0028E308 != 0) goto next_32;
 next_30:
-    reg_a0 = (u8 *)D_002A5050;
-    reg_a1 = (u8 *)(&D_0028E15C);
+    reg_a0 = (u8 *)g_sprite_bullets_buf;
+    reg_a1 = (u8 *)(&g_sprite_bullets_used);
     func_0019B510();
     if (cond_flag != 0) goto next_50;
 next_32:
@@ -427,7 +427,7 @@ block_51:
     D_0028E168 = 0;
     D_0028E164 = 0;
     D_0028E160 = 0;
-    D_0028E15C = 0;
+    g_sprite_bullets_used = 0;
     D_0028E158 = 0;
     D_0028E154 = 0;
     D_0028E150 = 0;
@@ -1550,18 +1550,18 @@ void func_0019D5C0(void) {
     sprite_entry_from_entity();
 }
 
-void func_0019D5F0(void) {
+void sprite_bullets_take_entry(void) {
     u32 offset;
 
-    reg_a0 = D_002A5050;
-    offset = D_0028E15C;
+    reg_a0 = g_sprite_bullets_buf;
+    offset = g_sprite_bullets_used;
     reg_a0 += offset;
-    D_0028E15C = offset + 0xC;
+    g_sprite_bullets_used = offset + 0xC;
 }
 
 
-void func_0019D620(void) {
-    func_0019D5F0();
+void entity_draw_with_bullets(void) {
+    sprite_bullets_take_entry();
     sprite_entry_from_entity();
 }
 
@@ -1576,7 +1576,7 @@ void func_0019D650(void)
     saved_a0 = (s32)reg_a0;
     saved_a1 = (s32)reg_a1;
 
-    func_0019D5F0();
+    sprite_bullets_take_entry();
     sprite_entry_from_entity();
 
     reg_d0.w = saved_d0;
@@ -1585,7 +1585,7 @@ void func_0019D650(void)
 }
 
 void func_0019D6A0(void) {
-    func_0019D5F0();
+    sprite_bullets_take_entry();
     sprite_entry_from_regs();
 }
 
@@ -1595,7 +1595,7 @@ void func_0019D6D0(void) {
 
     temp_s0 = (s32)reg_a0;
     temp_s1 = reg_d0.w;
-    func_0019D5F0();
+    sprite_bullets_take_entry();
     sprite_entry_from_regs();
     reg_d0.w = temp_s1;
     reg_a0 = (u8 *)temp_s0;
@@ -1604,6 +1604,6 @@ void func_0019D6D0(void) {
 
 void func_0019D710(void) {
     func_0019BC10();
-    func_0019D5F0();
+    sprite_bullets_take_entry();
     func_0019BD40();
 }

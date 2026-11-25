@@ -111,7 +111,7 @@ void func_001C4830(void) {
     *(s8 *)(reg_a5 + 0x17) = 0;
 }
 
-s32 func_0019D620();
+s32 entity_draw_with_bullets();
 s32 func_00201F20();
 
 void func_001C4A10(void) {
@@ -143,7 +143,7 @@ block_l1:
         *(u16 *)(reg_a5 + 0x20) += 4;
         *(u16 *)(reg_a5 + 0x20) &= 0xF;
     }
-    func_0019D620();
+    entity_draw_with_bullets();
 }
 
 void func_001C4BB0(void) {

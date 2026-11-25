@@ -1,32 +1,33 @@
 #include "common.h"
 #include "entity.h"
-s32 entity_release();
-s32 entity_follow_scroll();
-extern u8 g_game_mode;
-extern u8 g_simulation_boss_start;
-extern u8 g_simulation_active;
+
+/*
+ * Debug enemy: moved with the second player's stick, it shows the background map row, the offset within
+ * it, the map cell under it and that cell's address. The number printers it calls are empty in this build.
+ */
+
 void enemy_set_entity_count(s32 arg0);
 s32 enemy_set_task_work();                            /* extern */
 s32 enemy_init_entities();                            /* extern */
-extern s32 D_0024CBC0[];
-extern s32 D_0028C088;
+extern s32 g_map_cell_test_entities[];
+extern s32 g_map_cell_test_work;
 s32 bg_layer_cell_address();
-s32 debug_print_hex_stub_a();
-s32 debug_print_hex_stub_c();
-s32 func_0019D620();
+s32 debug_print_hex8_stub();
+s32 debug_print_hex4_stub();
+s32 entity_draw_with_bullets();
 s32 entity_move_by_p2_stick();
 extern u16 g_side_scroll_x[];
-extern u16 D_0029C07C[];
-extern u16 D_0029C07E[];
+extern u16 g_ground_map_row[];
+extern u16 g_ground_map_row_offset[];
 
-void func_0011F470(void) {
+void map_cell_test_first(void) {
     enemy_set_entity_count(0);
 }
 
-void func_0011F480(void) {
-    reg_a0 = (u8 *)D_0024CBC0;
+void map_cell_test_setup(void) {
+    reg_a0 = (u8 *)g_map_cell_test_entities;
     enemy_init_entities();
-    reg_a0 = (u8 *)(&D_0028C088);
+    reg_a0 = (u8 *)(&g_map_cell_test_work);
     reg_d0.w = 1;
     enemy_set_task_work();
     reg_tmp.w = 0x38001C00;
@@ -34,7 +35,7 @@ void func_0011F480(void) {
     ENTITY(reg_a6)->x.h = (u16) reg_tmp.h[0];
 }
 
-void func_0011F4E0(void) {
+void map_cell_test_main(void) {
     u32 b1_d0;
     u32 b1_d1;
     u32 b1_d2;
@@ -128,11 +129,11 @@ void func_0011F4E0(void) {
     b1_a5 = reg_a5;
     b1_a6 = reg_a6;
     reg_d3.w = 0;
-    reg_d3.h[0] = D_0029C07C[0];
+    reg_d3.h[0] = g_ground_map_row[0];
     reg_d0.h[0] = 0;
     reg_d1.h[0] = 0x1F;
     reg_d2.h[0] = 0;
-    debug_print_hex_stub_a();
+    debug_print_hex8_stub();
     reg_d0.w = b1_d0;
     reg_d1.w = b1_d1;
     reg_d2.w = b1_d2;
@@ -164,11 +165,11 @@ void func_0011F4E0(void) {
     b2_a5 = reg_a5;
     b2_a6 = reg_a6;
     reg_d3.w = 0;
-    reg_d3.h[0] = D_0029C07E[0];
+    reg_d3.h[0] = g_ground_map_row_offset[0];
     reg_d0.h[0] = 0;
     reg_d1.h[0] = 0x20;
     reg_d2.h[0] = 0;
-    debug_print_hex_stub_c();
+    debug_print_hex4_stub();
     reg_d0.w = b2_d0;
     reg_d1.w = b2_d1;
     reg_d2.w = b2_d2;
@@ -210,7 +211,7 @@ void func_0011F4E0(void) {
     reg_d0.h[0] = 0;
     reg_d1.h[0] = 0x22;
     reg_d2.h[0] = 0;
-    debug_print_hex_stub_c();
+    debug_print_hex4_stub();
     reg_d0.w = b3_d0;
     reg_d1.w = b3_d1;
     reg_d2.w = b3_d2;
@@ -226,11 +227,11 @@ void func_0011F4E0(void) {
     reg_a4 = b3_a4;
     reg_a5 = b3_a5;
     reg_a6 = b3_a6;
-    reg_d2.h[0] = D_0029C07E[0];
+    reg_d2.h[0] = g_ground_map_row_offset[0];
     reg_d2.h[0] += *(u16 *) (reg_a6 + 2);
     reg_d2.h[0] = (s16) reg_d2.h[0] >> 6;
     reg_d2.h[0] = (s16) reg_d2.h[0] >> 5;
-    reg_d1.h[0] = D_0029C07C[0];
+    reg_d1.h[0] = g_ground_map_row[0];
     reg_d1.h[0] -= 15;
     reg_d1.h[0] += reg_d2.h[0];
     reg_d1.h[0] &= 0x3F;
@@ -254,7 +255,7 @@ void func_0011F4E0(void) {
     reg_d0.h[0] = 0;
     reg_d1.h[0] = 0x23;
     reg_d2.h[0] = 0;
-    debug_print_hex_stub_c();
+    debug_print_hex4_stub();
     reg_d0.w = b4_d0;
     reg_d1.w = b4_d1;
     reg_d2.w = b4_d2;
@@ -291,7 +292,7 @@ void func_0011F4E0(void) {
     reg_d0.h[0] = 0;
     reg_d1.h[0] = 0x21;
     reg_d2.h[0] = 0;
-    debug_print_hex_stub_a();
+    debug_print_hex8_stub();
     reg_d0.w = b5_d0;
     reg_d1.w = b5_d1;
     reg_d2.w = b5_d2;
@@ -307,5 +308,5 @@ void func_0011F4E0(void) {
     reg_a4 = b5_a4;
     reg_a5 = b5_a5;
     reg_a6 = b5_a6;
-    func_0019D620();
+    entity_draw_with_bullets();
 }

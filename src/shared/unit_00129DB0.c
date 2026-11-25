@@ -17,7 +17,7 @@ s32 func_00129BE0();
 extern s16 D_0024F330[];
 extern u8 *D_0028DEAC;
 extern u16 D_0028E158;
-extern u16 D_0028E15C;
+extern u16 g_sprite_bullets_used;
 extern s8 D_0028E310_as_s8;
 extern u8 D_0028E37C;
 extern u8 D_0028E855;
@@ -30,23 +30,23 @@ extern s16 death_D_002512A0[];
 extern s16 death_D_002512B0[];
 #endif
 extern u8 D_002A4670[];
-extern u8 D_002A5050[];
+extern u8 g_sprite_bullets_buf[];
 
 void func_00129DB0(void) {
     func_00129BE0();
     D_00299760_as_s16_a[0] = 0;
     reg_a4 = (u8 *)D_002A4670;
-    reg_a0 = (u8 *)D_002A5050;
+    reg_a0 = (u8 *)g_sprite_bullets_buf;
     D_0028DEAC = (u8 *)(reg_a4);
-    reg_a0 += D_0028E15C;
+    reg_a0 += g_sprite_bullets_used;
     *(u8 **)(D_002962E0 + MAIN_OR_DEATH_LABEL(0x3490, 0x10690)) = reg_a0;
     func_00129EF0();
-    reg_d1.w = (u32) D_002A5050;
+    reg_d1.w = (u32) g_sprite_bullets_buf;
     reg_d0.w = (u32) *(u8 **)(D_002962E0 + MAIN_OR_DEATH_LABEL(0x3490, 0x10690));
     reg_d0.w -= reg_d1.w;
     reg_a4 = (u8 *)((u32)reg_a4 - (u32)D_0028DEAC);
     reg_tmp.w = (u32) reg_a4;
-    D_0028E15C = reg_d0.h[0];
+    g_sprite_bullets_used = reg_d0.h[0];
     D_0028E158 = reg_tmp.h[0];
 #ifdef DEATH_LABEL
     if (D_0028E37C != 0) {
@@ -57,7 +57,7 @@ void func_00129DB0(void) {
         } else {
             limit = &death_D_002512B0[g_stage];
         }
-        reg_tmp.h[0] = (s16) D_0028E158 + (s16) D_0028E15C;
+        reg_tmp.h[0] = (s16) D_0028E158 + (s16) g_sprite_bullets_used;
         reg_tmp.h[0] /= 0xC;
         if ((D_0028E855 & 2) && (reg_tmp.h[0] >= *limit)) {
             D_0028E37C |= 0x80;
@@ -66,7 +66,7 @@ void func_00129DB0(void) {
     }
 #else
     if (D_0028E37C != 0) {
-        reg_tmp.h[0] = (s16) D_0028E158 + (s16) D_0028E15C;
+        reg_tmp.h[0] = (s16) D_0028E158 + (s16) g_sprite_bullets_used;
         reg_tmp.h[0] /= 0xC;
         if ((D_0028E855 & 2) && (g_loop != 0) && (reg_tmp.h[0] > D_0024F330[g_stage])) {
             D_0028E310_as_s8 = 2;

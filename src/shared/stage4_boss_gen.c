@@ -1241,7 +1241,7 @@ void func_001E0D20(void) {
     }
 }
 
-s32 func_0019D620();
+s32 entity_draw_with_bullets();
 extern u8 D_00263A50[];
 extern u8 D_0028E2E4;
 
@@ -1387,7 +1387,7 @@ block_9:
     entity_draw_layer3();
     return;
 block_9b:
-    func_0019D620();
+    entity_draw_with_bullets();
     return;
 block_10:
     reg_d0.w = 0;

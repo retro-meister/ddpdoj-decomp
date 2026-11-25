@@ -23,8 +23,8 @@ void func_00147F90(void);
 void func_001480C0(void);
 void func_00148110(void);
 
-s32 debug_print_hex_stub_a();
-s32 debug_print_hex_stub_b();
+s32 debug_print_hex8_stub();
+s32 debug_print_hex_short_stub();
 
 void func_00145D40(void) {
     u8 *save_a0;
@@ -59,11 +59,11 @@ void func_00145D40(void) {
     save_a3 = reg_a3;
     save_a4 = reg_a4;
     save_a5 = reg_a5;
-    debug_print_hex_stub_a();
+    debug_print_hex8_stub();
     reg_d2.h[0] = 1;
     reg_d0.h[0] -= 2;
     reg_d3.h[0] = reg_d5.h[0];
-    debug_print_hex_stub_b();
+    debug_print_hex_short_stub();
     reg_d0.w = save_d0;
     reg_d1.w = save_d1;
     reg_d2.w = save_d2;

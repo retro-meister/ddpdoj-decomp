@@ -321,15 +321,15 @@ void func_001D24D0(void) {
 }
 
 void func_001D2550(void) {
-    void func_0019D620(void);
-    func_0019D620();
+    void entity_draw_with_bullets(void);
+    entity_draw_with_bullets();
 }
 
 extern u8 D_0026D7B0[];
 
 void func_001D2560(void) {
     s32 enemy_remove();
-    s32 func_0019D620();
+    s32 entity_draw_with_bullets();
     u32 var_a0;
 
     if (ENTITY(reg_a6)->flags.sb[0] < 0) {
@@ -390,7 +390,7 @@ block_10:
             *(u16 *)(reg_a5 + 0x1A) = 0xCU;
         }
     }
-    func_0019D620();
+    entity_draw_with_bullets();
     reg_a0 = reg_a6;
     enemy_hitbox_debug_draw();
     reg_a0 = reg_a6 + 0x20;

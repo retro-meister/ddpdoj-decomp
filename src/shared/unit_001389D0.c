@@ -167,7 +167,7 @@ extern u16 D_0028E14C;
 extern u16 D_0028E150;
 extern u16 D_0028E154;
 extern u16 D_0028E158;
-extern u16 D_0028E15C;
+extern u16 g_sprite_bullets_used;
 extern u16 D_0028E160;
 extern u16 D_0028E164;
 extern u16 D_0028E168;
@@ -314,7 +314,7 @@ next_5:
     save_09 = D_0028E168;
     save_08 = D_0028E164;
     save_07 = D_0028E160;
-    save_06 = D_0028E15C;
+    save_06 = g_sprite_bullets_used;
     save_05 = D_0028E158;
     save_04 = D_0028E154;
     save_03 = D_0028E150;
@@ -368,7 +368,7 @@ loop_6:
     D_0028E168 = save_09;
     D_0028E164 = save_08;
     D_0028E160 = save_07;
-    D_0028E15C = save_06;
+    g_sprite_bullets_used = save_06;
     D_0028E158 = save_05;
     D_0028E154 = save_04;
     D_0028E150 = save_03;
@@ -389,8 +389,8 @@ extern u16 g_enemies_stopped;
 extern u16 D_0029C064[];
 extern u16 D_0029C074[];
 extern u16 D_0029C076[];
-extern u16 D_0029C07C[];
-extern u16 D_0029C07E[];
+extern u16 g_ground_map_row[];
+extern u16 g_ground_map_row_offset[];
 
 void func_001391B0(void) {
     u16 temp_a0;
@@ -471,8 +471,8 @@ void func_001391B0(void) {
             *(u16 *)(reg_a5 + 0xE) = (u16) reg_d1.h[0];
         }
         *(u16 *)(reg_a5 + 0x20) = (u16) reg_d5.h[0];
-        D_0029C07C[0] = *(u16 *)(reg_a5 + 0xE);
-        D_0029C07E[0] = *(u16 *)(reg_a5 + 0x20);
+        g_ground_map_row[0] = *(u16 *)(reg_a5 + 0xE);
+        g_ground_map_row_offset[0] = *(u16 *)(reg_a5 + 0x20);
         reg_d6.h[0] = *(u16 *)(reg_a5 + 0x22);
         reg_d1.w = 0;
         reg_d1.h[0] = D_0029C064[0];

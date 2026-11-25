@@ -144,7 +144,7 @@ void func_0014F440(void) {
 
 s32 bullet_fire256_fixed();
 s32 enemy_hitbox_debug_draw();
-s32 func_0019D620();
+s32 entity_draw_with_bullets();
 s32 score_add_no_chain();
 s32 rng_next();
 s32 velocity_from_dir256();
@@ -277,7 +277,7 @@ next_120:
     enemy_hitbox_debug_draw();
     reg_a0 = reg_a6 + 0x20;
     enemy_hitbox_debug_draw();
-    func_0019D620();
+    entity_draw_with_bullets();
 }
 
 void func_0014FAA0(void) {
