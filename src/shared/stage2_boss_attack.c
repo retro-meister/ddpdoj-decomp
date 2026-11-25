@@ -1,6 +1,73 @@
 #include "common.h"
 #include "entity.h"
 
+void stage2_boss_fire_shoulder_spread_start(void);
+void stage2_boss_fire_shoulder_spread(void);
+void stage2_boss_fire_torso_rapid_start(void);
+void stage2_boss_fire_torso_rapid(void);
+void stage2_boss_fire_quad_gun_start(void);
+void stage2_boss_fire_quad_gun(void);
+void stage2_boss_fire_side_gun_start(void);
+void stage2_boss_fire_side_gun(void);
+void stage2_boss_fire_shoulder_shot(void);
+void stage2_boss_fire_shoulder_triple(void);
+void stage2_boss_fire_shoulder_sweep_a_start(void);
+void stage2_boss_fire_shoulder_sweep_a(void);
+void stage2_boss_fire_shoulder_sweep_b_start(void);
+void stage2_boss_fire_shoulder_sweep_b(void);
+void stage2_boss_fire_shoulder_sweep_c_start(void);
+void stage2_boss_fire_shoulder_sweep_c(void);
+void stage2_boss_fire_shoulder_sweep_d_start(void);
+void stage2_boss_fire_shoulder_sweep_d(void);
+void stage2_boss_fire_knee_gun_start(void);
+void stage2_boss_fire_knee_gun(void);
+void stage2_boss_fire_shoulder_missile_start(void);
+void stage2_boss_fire_shoulder_missile(void);
+void stage2_boss_fire_rotating_spread_start(void);
+void stage2_boss_fire_rotating_spread(void);
+void stage2_boss_fire_shoulder_cannon_start(void);
+void stage2_boss_fire_shoulder_cannon(void);
+void stage2_boss_fire_body_spread_start(void);
+void stage2_boss_fire_body_spread(void);
+void stage2_boss_fire_body_rage_start(void);
+void stage2_boss_fire_body_rage(void);
+
+/* The set-up routine and the per-frame routine of every attack, by attack number. */
+void (*stage2_boss_fire_routines[])(void) = {
+    stage2_boss_fire_shoulder_spread_start,
+    stage2_boss_fire_shoulder_spread,
+    stage2_boss_fire_torso_rapid_start,
+    stage2_boss_fire_torso_rapid,
+    stage2_boss_fire_quad_gun_start,
+    stage2_boss_fire_quad_gun,
+    stage2_boss_fire_side_gun_start,
+    stage2_boss_fire_side_gun,
+    stage2_boss_fire_shoulder_shot,
+    stage2_boss_fire_shoulder_shot,
+    stage2_boss_fire_shoulder_triple,
+    stage2_boss_fire_shoulder_triple,
+    stage2_boss_fire_shoulder_sweep_a_start,
+    stage2_boss_fire_shoulder_sweep_a,
+    stage2_boss_fire_shoulder_sweep_b_start,
+    stage2_boss_fire_shoulder_sweep_b,
+    stage2_boss_fire_shoulder_sweep_c_start,
+    stage2_boss_fire_shoulder_sweep_c,
+    stage2_boss_fire_shoulder_sweep_d_start,
+    stage2_boss_fire_shoulder_sweep_d,
+    stage2_boss_fire_knee_gun_start,
+    stage2_boss_fire_knee_gun,
+    stage2_boss_fire_shoulder_missile_start,
+    stage2_boss_fire_shoulder_missile,
+    stage2_boss_fire_rotating_spread_start,
+    stage2_boss_fire_rotating_spread,
+    stage2_boss_fire_shoulder_cannon_start,
+    stage2_boss_fire_shoulder_cannon,
+    stage2_boss_fire_body_spread_start,
+    stage2_boss_fire_body_spread,
+    stage2_boss_fire_body_rage_start,
+    stage2_boss_fire_body_rage,
+};
+
 void stage2_boss_fire_shoulder_spread();
 void stage2_boss_fire_torso_rapid(void);
 void stage2_boss_fire_quad_gun(void);

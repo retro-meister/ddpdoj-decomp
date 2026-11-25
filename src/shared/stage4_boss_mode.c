@@ -1,6 +1,41 @@
 #include "common.h"
 #include "entity.h"
 
+void stage4_boss_mode_enter_start(void);
+void stage4_boss_mode_enter(void);
+void stage4_boss_mode_second_form_start(void);
+void stage4_boss_mode_second_form(void);
+void stage4_boss_mode_final_explosion_start(void);
+void stage4_boss_mode_final_explosion(void);
+void stage4_boss_mode_attack_a_start(void);
+void stage4_boss_mode_attack_a(void);
+void stage4_boss_mode_attack_b_start(void);
+void stage4_boss_mode_attack_b(void);
+void stage4_boss_mode_attack_c_start(void);
+void stage4_boss_mode_attack_c(void);
+void stage4_boss_mode_rage_start(void);
+void stage4_boss_mode_rage(void);
+
+/* The set-up routine and the per-frame routine of every mode, by mode number. */
+void (*stage4_boss_mode_routines[])(void) = {
+    stage4_boss_mode_enter_start,
+    stage4_boss_mode_enter,
+    stage4_boss_mode_second_form_start,
+    stage4_boss_mode_second_form,
+    stage4_boss_mode_final_explosion_start,
+    stage4_boss_mode_final_explosion,
+    stage4_boss_mode_attack_a_start,
+    stage4_boss_mode_attack_a,
+    stage4_boss_mode_attack_b_start,
+    stage4_boss_mode_attack_b,
+    stage4_boss_mode_attack_c_start,
+    stage4_boss_mode_attack_c,
+    stage4_boss_mode_rage_start,
+    stage4_boss_mode_rage,
+    0,
+    0,
+};
+
 void stage4_boss_mode_enter(void);
 void stage4_boss_mode_second_form();
 void stage4_boss_mode_final_explosion();

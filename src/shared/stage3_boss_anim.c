@@ -1,6 +1,43 @@
 #include "common.h"
 #include "entity.h"
 
+void stage3_boss_legs_walk_start(void);
+void stage3_boss_legs_walk(void);
+void stage3_boss_side_turrets_track_start(void);
+void stage3_boss_side_turrets_track(void);
+void stage3_boss_lid_open_start(void);
+void stage3_boss_lid_open(void);
+void stage3_boss_lid_close_start(void);
+void stage3_boss_lid_close(void);
+void stage3_boss_six_gun_open_start(void);
+void stage3_boss_six_gun_open(void);
+void stage3_boss_six_gun_close_start(void);
+void stage3_boss_six_gun_close(void);
+void stage3_boss_lid_idle_start(void);
+void stage3_boss_lid_idle(void);
+void stage3_boss_entrance_anim_start(void);
+void stage3_boss_entrance_anim(void);
+
+/* The set-up routine and the per-frame routine of every animation, by animation number. */
+void (*stage3_boss_anim_routines[])(void) = {
+    stage3_boss_legs_walk_start,
+    stage3_boss_legs_walk,
+    stage3_boss_side_turrets_track_start,
+    stage3_boss_side_turrets_track,
+    stage3_boss_lid_open_start,
+    stage3_boss_lid_open,
+    stage3_boss_lid_close_start,
+    stage3_boss_lid_close,
+    stage3_boss_six_gun_open_start,
+    stage3_boss_six_gun_open,
+    stage3_boss_six_gun_close_start,
+    stage3_boss_six_gun_close,
+    stage3_boss_lid_idle_start,
+    stage3_boss_lid_idle,
+    stage3_boss_entrance_anim_start,
+    stage3_boss_entrance_anim,
+};
+
 void stage3_boss_legs_walk(void);
 void stage3_boss_side_turrets_track(void);
 void stage3_boss_lid_open();

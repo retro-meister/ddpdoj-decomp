@@ -1,6 +1,49 @@
 #include "common.h"
 #include "entity.h"
 
+void stage2_boss_mode_enter_start(void);
+void stage2_boss_mode_enter(void);
+void stage2_boss_mode_second_phase_start(void);
+void stage2_boss_mode_second_phase(void);
+void stage2_boss_mode_final_explosion_start(void);
+void stage2_boss_mode_final_explosion(void);
+void stage2_boss_mode_high_slow_start(void);
+void stage2_boss_mode_high_slow(void);
+void stage2_boss_mode_high_fast_start(void);
+void func_001C8CB0(void);
+void stage2_boss_mode_recoil_start(void);
+void stage2_boss_mode_recoil(void);
+void stage2_boss_mode_rise_start(void);
+void stage2_boss_mode_rise(void);
+void stage2_boss_mode_rise_sway_start(void);
+void stage2_boss_mode_rise_sway(void);
+void stage2_boss_mode_rage_start(void);
+void stage2_boss_mode_rage(void);
+
+/* The set-up routine and the per-frame routine of every mode, by mode number. */
+void (*stage2_boss_mode_routines[])(void) = {
+    stage2_boss_mode_enter_start,
+    stage2_boss_mode_enter,
+    stage2_boss_mode_second_phase_start,
+    stage2_boss_mode_second_phase,
+    stage2_boss_mode_final_explosion_start,
+    stage2_boss_mode_final_explosion,
+    stage2_boss_mode_high_slow_start,
+    stage2_boss_mode_high_slow,
+    stage2_boss_mode_high_fast_start,
+    func_001C8CB0,
+    stage2_boss_mode_recoil_start,
+    stage2_boss_mode_recoil,
+    stage2_boss_mode_rise_start,
+    stage2_boss_mode_rise,
+    stage2_boss_mode_rise_sway_start,
+    stage2_boss_mode_rise_sway,
+    stage2_boss_mode_rage_start,
+    stage2_boss_mode_rage,
+    0,
+    0,
+};
+
 void stage2_boss_mode_enter(void);
 void stage2_boss_mode_second_phase();
 void stage2_boss_mode_final_explosion();

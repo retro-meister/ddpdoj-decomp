@@ -1,6 +1,42 @@
 #include "common.h"
 #include "entity.h"
 
+void stage2_boss_move_enter_start(void);
+void stage2_boss_move_enter(void);
+void stage2_boss_move_retreat(void);
+void stage2_boss_move_hover_high_start(void);
+void stage2_boss_move_hover_high(void);
+void stage2_boss_move_dive_start(void);
+void stage2_boss_move_dive(void);
+void stage2_boss_move_rise_start(void);
+void stage2_boss_move_rise(void);
+void stage2_boss_move_wander_start(void);
+void stage2_boss_move_wander(void);
+void stage2_boss_move_rise_sway_start(void);
+void stage2_boss_move_rise_sway(void);
+void stage2_boss_move_dash_sideways_start(void);
+void stage2_boss_move_dash_sideways(void);
+
+/* The set-up routine and the per-frame routine of every movement, by movement number. */
+void (*stage2_boss_move_routines[])(void) = {
+    stage2_boss_move_enter_start,
+    stage2_boss_move_enter,
+    stage2_boss_move_retreat,
+    stage2_boss_move_retreat,
+    stage2_boss_move_hover_high_start,
+    stage2_boss_move_hover_high,
+    stage2_boss_move_dive_start,
+    stage2_boss_move_dive,
+    stage2_boss_move_rise_start,
+    stage2_boss_move_rise,
+    stage2_boss_move_wander_start,
+    stage2_boss_move_wander,
+    stage2_boss_move_rise_sway_start,
+    stage2_boss_move_rise_sway,
+    stage2_boss_move_dash_sideways_start,
+    stage2_boss_move_dash_sideways,
+};
+
 void stage2_boss_move_enter(void);
 void stage2_boss_move_hover_high(void);
 void stage2_boss_move_dive(void);

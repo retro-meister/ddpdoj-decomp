@@ -1,6 +1,36 @@
 #include "common.h"
 #include "entity.h"
 
+void func_001DC180(void);
+void func_001DC390(void);
+void func_001DC410(void);
+void func_001DC490(void);
+void func_001DC530(void);
+void func_001DC5D0(void);
+void func_001DC200(void);
+void func_001DC6D0(void);
+void func_001DC7E0(void);
+void func_001DC290(void);
+void func_001DC8F0(void);
+void func_001DC960(void);
+
+/* The draw routine of every part of the boss, by part number. */
+void (*stage4_boss_draw_routines[])(void) = {
+    func_001DC180,
+    func_001DC390,
+    func_001DC410,
+    func_001DC490,
+    func_001DC530,
+    func_001DC5D0,
+    func_001DC200,
+    func_001DC6D0,
+    func_001DC7E0,
+    func_001DC290,
+    func_001DC8F0,
+    func_001DC960,
+    (void (*)(void))-1,
+};
+
 void sprite_draw_layer4_keep(void);
 
 void sprite_draw_layer4_keep_entry(void) {

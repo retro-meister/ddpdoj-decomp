@@ -1,6 +1,32 @@
 #include "common.h"
 #include "entity.h"
 
+void func_001D13B0(void);
+void func_001D1440(void);
+void func_001D1490(void);
+void func_001D1530(void);
+void func_001D15D0(void);
+void func_001D1650(void);
+void func_001D1760(void);
+void func_001D1870(void);
+void func_001D16D0(void);
+void func_001D1980(void);
+
+/* The draw routine of every part of the boss, by part number. */
+void (*stage3_boss_draw_routines[])(void) = {
+    func_001D13B0,
+    func_001D1440,
+    func_001D1490,
+    func_001D1530,
+    func_001D15D0,
+    func_001D1650,
+    func_001D1760,
+    func_001D1870,
+    func_001D16D0,
+    func_001D1980,
+    (void (*)(void))-1,
+};
+
 extern u8 D_0026D320[];
 
 void func_001D13B0(void) {

@@ -1,6 +1,27 @@
 #include "common.h"
 #include "entity.h"
 
+void stage3_boss_move_enter_start(void);
+void stage3_boss_move_enter(void);
+void stage3_boss_move_wander_low_start(void);
+void stage3_boss_move_wander_low(void);
+void stage3_boss_move_wander_high_start(void);
+void stage3_boss_move_wander_high(void);
+void stage3_boss_move_wander_mid_start(void);
+void stage3_boss_move_wander_mid(void);
+
+/* The set-up routine and the per-frame routine of every movement, by movement number. */
+void (*stage3_boss_move_routines[])(void) = {
+    stage3_boss_move_enter_start,
+    stage3_boss_move_enter,
+    stage3_boss_move_wander_low_start,
+    stage3_boss_move_wander_low,
+    stage3_boss_move_wander_high_start,
+    stage3_boss_move_wander_high,
+    stage3_boss_move_wander_mid_start,
+    stage3_boss_move_wander_mid,
+};
+
 void stage3_boss_move_enter(void);
 void stage3_boss_move_wander_low(void);
 void stage3_boss_move_wander_high(void);

@@ -1,6 +1,49 @@
 #include "common.h"
 #include "entity.h"
 
+void stage4_boss_move_enter_start(void);
+void stage4_boss_move_enter(void);
+void stage4_boss_move_wander_high_start(void);
+void stage4_boss_move_wander_high(void);
+void stage4_boss_move_to_form2_start(void);
+void stage4_boss_move_to_form2(void);
+void stage4_boss_move_to_form2_b_start(void);
+void stage4_boss_move_to_form2_b(void);
+void stage4_boss_move_wander_high_b_start(void);
+void stage4_boss_move_wander_high_b(void);
+void stage4_boss_move_final_explosion_start(void);
+void stage4_boss_move_final_explosion(void);
+void stage4_boss_move_wait_start(void);
+void stage4_boss_move_wait(void);
+void stage4_boss_move_hover_high_start(void);
+void stage4_boss_move_hover_high(void);
+void stage4_boss_move_rage_start(void);
+void stage4_boss_move_rage(void);
+
+/* The set-up routine and the per-frame routine of every movement, by movement number. */
+void (*stage4_boss_move_routines[])(void) = {
+    stage4_boss_move_enter_start,
+    stage4_boss_move_enter,
+    stage4_boss_move_wander_high_start,
+    stage4_boss_move_wander_high,
+    stage4_boss_move_to_form2_start,
+    stage4_boss_move_to_form2,
+    stage4_boss_move_to_form2_b_start,
+    stage4_boss_move_to_form2_b,
+    stage4_boss_move_wander_high_b_start,
+    stage4_boss_move_wander_high_b,
+    stage4_boss_move_final_explosion_start,
+    stage4_boss_move_final_explosion,
+    stage4_boss_move_wait_start,
+    stage4_boss_move_wait,
+    stage4_boss_move_hover_high_start,
+    stage4_boss_move_hover_high,
+    stage4_boss_move_rage_start,
+    stage4_boss_move_rage,
+    0,
+    0,
+};
+
 void stage4_boss_move_enter(void);
 void stage4_boss_move_wander_high(void);
 void stage4_boss_move_to_form2();

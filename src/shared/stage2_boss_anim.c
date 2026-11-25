@@ -1,6 +1,65 @@
 #include "common.h"
 #include "entity.h"
 
+void stage2_boss_lower_splash_start(void);
+void stage2_boss_lower_splash(void);
+void stage2_boss_radome_idle_start(void);
+void stage2_boss_radome_idle(void);
+void stage2_boss_torso_idle_start(void);
+void stage2_boss_torso_idle(void);
+void stage2_boss_radome_spin_start(void);
+void stage2_boss_radome_spin(void);
+void stage2_boss_shoulder_turrets_aim(void);
+void stage2_boss_shoulder_turrets_aim_wide(void);
+void stage2_boss_torso_open_start(void);
+void stage2_boss_torso_open(void);
+void stage2_boss_torso_close_start(void);
+void stage2_boss_torso_close(void);
+void stage2_boss_recoil_start(void);
+void stage2_boss_recoil(void);
+void stage2_boss_shoulder_cannon_open_start(void);
+void stage2_boss_shoulder_cannon_open(void);
+void stage2_boss_shoulder_cannon_close_start(void);
+void stage2_boss_shoulder_cannon_close(void);
+void stage2_boss_shoulder_turret_anim_start(void);
+void stage2_boss_shoulder_turret_anim(void);
+void stage2_boss_side_gun_anim_start(void);
+void stage2_boss_side_gun_anim(void);
+void stage2_boss_ripple_request_start(void);
+void stage2_boss_ripple_request(void);
+
+/* The set-up routine and the per-frame routine of every animation, by animation number. */
+void (*stage2_boss_anim_routines[])(void) = {
+    stage2_boss_lower_splash_start,
+    stage2_boss_lower_splash,
+    stage2_boss_radome_idle_start,
+    stage2_boss_radome_idle,
+    stage2_boss_torso_idle_start,
+    stage2_boss_torso_idle,
+    stage2_boss_radome_spin_start,
+    stage2_boss_radome_spin,
+    stage2_boss_shoulder_turrets_aim,
+    stage2_boss_shoulder_turrets_aim,
+    stage2_boss_shoulder_turrets_aim_wide,
+    stage2_boss_shoulder_turrets_aim_wide,
+    stage2_boss_torso_open_start,
+    stage2_boss_torso_open,
+    stage2_boss_torso_close_start,
+    stage2_boss_torso_close,
+    stage2_boss_recoil_start,
+    stage2_boss_recoil,
+    stage2_boss_shoulder_cannon_open_start,
+    stage2_boss_shoulder_cannon_open,
+    stage2_boss_shoulder_cannon_close_start,
+    stage2_boss_shoulder_cannon_close,
+    stage2_boss_shoulder_turret_anim_start,
+    stage2_boss_shoulder_turret_anim,
+    stage2_boss_side_gun_anim_start,
+    stage2_boss_side_gun_anim,
+    stage2_boss_ripple_request_start,
+    stage2_boss_ripple_request,
+};
+
 void stage2_boss_lower_splash(void);
 void stage2_boss_radome_idle(void);
 void stage2_boss_torso_idle(void);

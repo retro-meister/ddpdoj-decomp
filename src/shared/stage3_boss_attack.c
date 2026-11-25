@@ -1,6 +1,49 @@
 #include "common.h"
 #include "entity.h"
 
+void stage3_boss_fire_timber_start(void);
+void stage3_boss_fire_timber(void);
+void stage3_boss_fire_main_gun_start(void);
+void stage3_boss_fire_main_gun(void);
+void stage3_boss_fire_side_turrets_start(void);
+void stage3_boss_fire_side_turrets(void);
+void stage3_boss_fire_lid_six_gun_start(void);
+void stage3_boss_fire_lid_six_gun(void);
+void stage3_boss_fire_body_six_gun_start(void);
+void stage3_boss_fire_body_six_gun(void);
+void stage3_boss_fire_six_gun_start(void);
+void stage3_boss_fire_six_gun(void);
+void stage3_boss_fire_main_gun_b_start(void);
+void stage3_boss_fire_main_gun_b(void);
+void stage3_boss_fire_side_turrets_b_start(void);
+void stage3_boss_fire_side_turrets_b(void);
+void stage3_boss_fire_six_gun_b_start(void);
+void stage3_boss_fire_six_gun_b(void);
+
+/* The set-up routine and the per-frame routine of every attack, by attack number. */
+void (*stage3_boss_fire_routines[])(void) = {
+    stage3_boss_fire_timber_start,
+    stage3_boss_fire_timber,
+    stage3_boss_fire_main_gun_start,
+    stage3_boss_fire_main_gun,
+    stage3_boss_fire_side_turrets_start,
+    stage3_boss_fire_side_turrets,
+    stage3_boss_fire_lid_six_gun_start,
+    stage3_boss_fire_lid_six_gun,
+    stage3_boss_fire_body_six_gun_start,
+    stage3_boss_fire_body_six_gun,
+    stage3_boss_fire_six_gun_start,
+    stage3_boss_fire_six_gun,
+    stage3_boss_fire_main_gun_b_start,
+    stage3_boss_fire_main_gun_b,
+    stage3_boss_fire_side_turrets_b_start,
+    stage3_boss_fire_side_turrets_b,
+    stage3_boss_fire_six_gun_b_start,
+    stage3_boss_fire_six_gun_b,
+    0,
+    0,
+};
+
 void stage3_boss_fire_timber(void);
 void stage3_boss_fire_body_six_gun(void);
 void stage3_boss_fire_main_gun_b(void);

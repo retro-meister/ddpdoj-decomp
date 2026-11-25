@@ -1,6 +1,57 @@
 #include "common.h"
 #include "entity.h"
 
+void stage4_boss_form2_spin_start(void);
+void stage4_boss_form2_spin(void);
+void stage4_boss_center_hatch_open_start(void);
+void stage4_boss_center_hatch_open(void);
+void stage4_boss_center_hatch_close_start(void);
+void stage4_boss_center_hatch_close(void);
+void stage4_boss_cutter_bay_open_start(void);
+void stage4_boss_cutter_bay_open(void);
+void stage4_boss_cutter_bay_close_start(void);
+void stage4_boss_cutter_bay_close(void);
+void stage4_boss_right_pod_open_start(void);
+void stage4_boss_right_pod_open(void);
+void stage4_boss_right_pod_close_start(void);
+void stage4_boss_right_pod_close(void);
+void stage4_boss_left_pod_open_start(void);
+void stage4_boss_left_pod_open(void);
+void stage4_boss_left_pod_close_start(void);
+void stage4_boss_left_pod_close(void);
+void stage4_boss_aimed_gun_track_start(void);
+void stage4_boss_aimed_gun_track(void);
+void stage4_boss_body_anim_start(void);
+void stage4_boss_body_anim(void);
+
+/* The set-up routine and the per-frame routine of every animation, by animation number. */
+void (*stage4_boss_anim_routines[])(void) = {
+    stage4_boss_form2_spin_start,
+    stage4_boss_form2_spin,
+    stage4_boss_center_hatch_open_start,
+    stage4_boss_center_hatch_open,
+    stage4_boss_center_hatch_close_start,
+    stage4_boss_center_hatch_close,
+    stage4_boss_cutter_bay_open_start,
+    stage4_boss_cutter_bay_open,
+    stage4_boss_cutter_bay_close_start,
+    stage4_boss_cutter_bay_close,
+    stage4_boss_right_pod_open_start,
+    stage4_boss_right_pod_open,
+    stage4_boss_right_pod_close_start,
+    stage4_boss_right_pod_close,
+    stage4_boss_left_pod_open_start,
+    stage4_boss_left_pod_open,
+    stage4_boss_left_pod_close_start,
+    stage4_boss_left_pod_close,
+    stage4_boss_aimed_gun_track_start,
+    stage4_boss_aimed_gun_track,
+    stage4_boss_body_anim_start,
+    stage4_boss_body_anim,
+    0,
+    0,
+};
+
 void stage4_boss_center_hatch_open(void);
 void stage4_boss_center_hatch_close(void);
 void stage4_boss_cutter_bay_open(void);

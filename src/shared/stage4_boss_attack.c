@@ -1,6 +1,73 @@
 #include "common.h"
 #include "entity.h"
 
+void stage4_boss_fire_basic_start(void);
+void stage4_boss_fire_basic(void);
+void stage4_boss_fire_right_spinner_start(void);
+void stage4_boss_fire_right_spinner(void);
+void stage4_boss_fire_left_spinner_start(void);
+void stage4_boss_fire_left_spinner(void);
+void stage4_boss_fire_aimed_gun_start(void);
+void stage4_boss_fire_aimed_gun(void);
+void stage4_boss_fire_both_spinners_start(void);
+void stage4_boss_fire_both_spinners(void);
+void stage4_boss_fire_center_hatch_start(void);
+void func_001DA580(void);
+void stage4_boss_fire_right_pod_start(void);
+void stage4_boss_fire_right_pod(void);
+void stage4_boss_fire_left_pod_start(void);
+void stage4_boss_fire_left_pod(void);
+void stage4_boss_fire_cutter_bay_start(void);
+void stage4_boss_fire_cutter_bay(void);
+void stage4_boss_fire_cutters_start(void);
+void stage4_boss_fire_cutters(void);
+void stage4_boss_fire_cutter_bay_b_start(void);
+void stage4_boss_fire_cutter_bay_b(void);
+void stage4_boss_fire_cutters_b_start(void);
+void func_001DB2B0(void);
+void stage4_boss_fire_aimed_gun_b_start(void);
+void stage4_boss_fire_aimed_gun_b(void);
+void stage4_boss_fire_both_sides_start(void);
+void stage4_boss_fire_both_sides(void);
+void stage4_boss_fire_rage_wings_start(void);
+void stage4_boss_fire_rage_wings(void);
+
+/* The set-up routine and the per-frame routine of every attack, by attack number. */
+void (*stage4_boss_fire_routines[])(void) = {
+    stage4_boss_fire_basic_start,
+    stage4_boss_fire_basic,
+    stage4_boss_fire_right_spinner_start,
+    stage4_boss_fire_right_spinner,
+    stage4_boss_fire_left_spinner_start,
+    stage4_boss_fire_left_spinner,
+    stage4_boss_fire_aimed_gun_start,
+    stage4_boss_fire_aimed_gun,
+    stage4_boss_fire_both_spinners_start,
+    stage4_boss_fire_both_spinners,
+    stage4_boss_fire_center_hatch_start,
+    func_001DA580,
+    stage4_boss_fire_right_pod_start,
+    stage4_boss_fire_right_pod,
+    stage4_boss_fire_left_pod_start,
+    stage4_boss_fire_left_pod,
+    stage4_boss_fire_cutter_bay_start,
+    stage4_boss_fire_cutter_bay,
+    stage4_boss_fire_cutters_start,
+    stage4_boss_fire_cutters,
+    stage4_boss_fire_cutter_bay_b_start,
+    stage4_boss_fire_cutter_bay_b,
+    stage4_boss_fire_cutters_b_start,
+    func_001DB2B0,
+    stage4_boss_fire_aimed_gun_b_start,
+    stage4_boss_fire_aimed_gun_b,
+    stage4_boss_fire_both_sides_start,
+    stage4_boss_fire_both_sides,
+    stage4_boss_fire_rage_wings_start,
+    stage4_boss_fire_rage_wings,
+    0,
+    0,
+};
+
 void stage4_boss_fire_basic(void);
 void stage4_boss_fire_right_spinner(void);
 void stage4_boss_fire_left_spinner(void);

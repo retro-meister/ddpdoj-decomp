@@ -1,6 +1,51 @@
 #include "common.h"
 #include "entity.h"
 
+void stage3_boss_mode_enter_start(void);
+void stage3_boss_mode_enter(void);
+void stage3_boss_mode_final_explosion_start(void);
+void stage3_boss_mode_final_explosion(void);
+void stage3_boss_mode_low_main_gun_b_start(void);
+void stage3_boss_mode_low_main_gun_b(void);
+void stage3_boss_mode_high_six_gun_start(void);
+void stage3_boss_mode_high_six_gun(u8 arg0);
+void stage3_boss_mode_mid_lid_guns_start(void);
+void stage3_boss_mode_mid_lid_guns(void);
+void stage3_boss_mode_high_six_gun_b_start(void);
+void stage3_boss_mode_high_six_gun_b(void);
+void stage3_boss_mode_six_gun_close_wait_start(void);
+void stage3_boss_mode_six_gun_close_wait(void);
+void stage3_boss_mode_six_gun_b_close_wait_start(void);
+void stage3_boss_mode_six_gun_b_close_wait(void);
+void stage3_boss_mode_low_all_guns_start(void);
+void stage3_boss_mode_low_all_guns(void);
+void stage3_boss_mode_phase_explosion_start(void);
+void stage3_boss_mode_phase_explosion(void);
+
+/* The set-up routine and the per-frame routine of every mode, by mode number. */
+void (*stage3_boss_mode_routines[])(void) = {
+    stage3_boss_mode_enter_start,
+    stage3_boss_mode_enter,
+    stage3_boss_mode_final_explosion_start,
+    stage3_boss_mode_final_explosion,
+    stage3_boss_mode_low_main_gun_b_start,
+    stage3_boss_mode_low_main_gun_b,
+    stage3_boss_mode_high_six_gun_start,
+    (void (*)(void))stage3_boss_mode_high_six_gun,
+    stage3_boss_mode_mid_lid_guns_start,
+    stage3_boss_mode_mid_lid_guns,
+    stage3_boss_mode_high_six_gun_b_start,
+    stage3_boss_mode_high_six_gun_b,
+    stage3_boss_mode_six_gun_close_wait_start,
+    stage3_boss_mode_six_gun_close_wait,
+    stage3_boss_mode_six_gun_b_close_wait_start,
+    stage3_boss_mode_six_gun_b_close_wait,
+    stage3_boss_mode_low_all_guns_start,
+    stage3_boss_mode_low_all_guns,
+    stage3_boss_mode_phase_explosion_start,
+    stage3_boss_mode_phase_explosion,
+};
+
 void stage3_boss_mode_enter(void);
 void stage3_boss_mode_final_explosion();
 void stage3_boss_mode_low_main_gun_b(void);
