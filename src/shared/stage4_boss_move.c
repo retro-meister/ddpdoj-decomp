@@ -120,7 +120,7 @@ s32 velocity_from_dir256();
 extern u8 D_0025FEF0[];
 extern u8 D_0026F440[];
 extern u8 D_0028E855;
-extern u16 D_0029C068[];
+extern u16 g_side_scroll_x[];
 
 void func_001BE5F0(void) {
     s32 boss_animation_start();
@@ -148,7 +148,7 @@ void func_001BE5F0(void) {
         ENTITY(reg_a6)[9].offset_y.h = (u16) reg_d1.h[0];
         reg_d0.h[0] = 0x1C00;
         reg_d0.h[0] += reg_d3.h[0];
-        reg_d0.h[0] -= D_0029C068[0];
+        reg_d0.h[0] -= g_side_scroll_x[0];
         ENTITY(reg_a6)->x.h = (u16) reg_d0.h[0];
         reg_d0.h[0] = *(u16 *)(reg_a4 + 8);
         ENTITY(reg_a6)->y.h += reg_d0.h[0];
@@ -283,7 +283,7 @@ void func_001BEA80(void) {
     reg_a0 = D_0028DC84;
     reg_d2.h[0] = *(u16 *)reg_a0;
     reg_d3.h[0] = *(u16 *)(reg_a0 + 2);
-    reg_d3.h[0] -= D_0029C068[0];
+    reg_d3.h[0] -= g_side_scroll_x[0];
     reg_d0.h[0] = ENTITY(reg_a6)->y.h;
     reg_d1.h[0] = ENTITY(reg_a6)->x.h;
     direction_between();
@@ -293,7 +293,7 @@ void func_001BEA80(void) {
     reg_d1.h[0] = ENTITY(reg_a6)->x.h;
     reg_d2.h[0] = *(u16 *)reg_a0;
     reg_d3.h[0] = *(u16 *)(reg_a0 + 2);
-    reg_d3.h[0] -= D_0029C068[0];
+    reg_d3.h[0] -= g_side_scroll_x[0];
     func_00202B70();
     if ((s16) reg_d0.h[0] < 0x1401) {
         if (*(u8 *)(reg_a4 + 7) == 0) {

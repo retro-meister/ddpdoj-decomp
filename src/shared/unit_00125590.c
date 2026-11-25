@@ -70,7 +70,7 @@ call:
     }
 }
 
-extern u16 D_0029C068[];
+extern u16 g_side_scroll_x[];
 
 void func_001256C0(void) {
     reg_d0.h[1] = ENTITY(reg_a6)->y.h;
@@ -78,7 +78,7 @@ void func_001256C0(void) {
     reg_tmp1.w = 0;
     reg_tmp.w = 0;
     reg_d0.h[0] += 0x1C00;
-    reg_d0.h[0] += D_0029C068[0];
+    reg_d0.h[0] += g_side_scroll_x[0];
     reg_tmp1.h[0] = 0x9000;
     reg_tmp.h[0] = reg_d0.h[0];
     reg_tmp.w += reg_tmp1.w;
@@ -417,7 +417,7 @@ next_1:
     reg_a0 = D_0028DE8C;
 }
 
-extern u16 D_0029C06C[];
+extern u16 g_side_scroll_step[];
 extern s32 D_002BF4F0_as_s32_a[];
 
 void func_00125FA0(void) {
@@ -425,7 +425,7 @@ void func_00125FA0(void) {
     if (reg_d7.h[0] != 0) {
         reg_a6 = (u8 *)D_002BF4F0_as_s32_a;
         reg_d7.w -= 1;
-        reg_d6.h[0] = D_0029C06C[0];
+        reg_d6.h[0] = g_side_scroll_step[0];
         func_00125FF0();
     }
 }
@@ -970,7 +970,7 @@ void func_00126F10(void) {
     reg_tmp1.h[1] = *(u16 *) (reg_a6 + 2);
     reg_tmp1.h[0] = *(u16 *) (reg_a6 + 4);
     reg_d1.w += reg_tmp1.w;
-    reg_d1.h[0] += (s32) D_0029C06C[0];
+    reg_d1.h[0] += (s32) g_side_scroll_step[0];
     *(u16 *) reg_a0 = reg_d1.h[1];
     reg_a0 += 2;
     *(u16 *) reg_a0 = reg_d1.h[0];
@@ -978,7 +978,7 @@ void func_00126F10(void) {
     reg_tmp.w = 0;
     reg_tmp.h[0] = 0xAC00;
     reg_d1.h[0] += 0xE00;
-    reg_d1.h[0] += (s32) D_0029C068[0];
+    reg_d1.h[0] += (s32) g_side_scroll_x[0];
     reg_tmp1.w = 0;
     reg_tmp1.h[0] = reg_d1.h[0];
     reg_tmp1.w += reg_tmp.w;
@@ -1409,7 +1409,7 @@ void func_00127CA0(void) {
     ENTITY(reg_a6)->hp.sb[1] = 7;
     ENTITY(reg_a6)->hp.sb[0] = 0xF;
     ENTITY(reg_a6)->attr.sh = 0x1D;
-    reg_d0.h[0] = D_0029C06C[0];
+    reg_d0.h[0] = g_side_scroll_step[0];
     reg_d0.h[0] = (s16)reg_d0.h[0] + ENTITY(reg_a6)->x.sh;
     reg_d1.w = 0x30;
     if ((s32)reg_d0.h[0] < 0x1C00) {

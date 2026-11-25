@@ -204,14 +204,14 @@ s32 func_0018D540();
 s32 func_0018D560();
 extern u8 D_0026DBD0[];
 extern u8 D_0026DC40[];
-extern u16 D_0029C06C[];
+extern u16 g_side_scroll_step[];
 
 void func_001B29B0(void) {
     u32 temp_a1;
     u8 temp_a0;
     u8 temp_v1;
 
-    reg_d0.h[0] = D_0029C06C[0];
+    reg_d0.h[0] = g_side_scroll_step[0];
     temp_a1 = ENTITY(reg_a6)[1].x.h;
     ENTITY(reg_a6)[1].x.h = (u16) (temp_a1 - reg_d0.h[0]);
     temp_a0 = *(u8 *)(reg_a4 + 3);
@@ -277,7 +277,7 @@ void func_001B2BC0(void) {
     u8 *var_a1;
 
     var_a1 = (u8 *)(reg_a6);
-    reg_d0.h[0] = D_0029C06C[0];
+    reg_d0.h[0] = g_side_scroll_step[0];
     (*(u16 *)((u8 *)(var_a1) + (0x64))) -= reg_d0.h[0];
     if (*(u8 *)(reg_a4 + 2) & 4) {
         reg_tmp.b[0] = *(u8 *)(reg_a4 + 9);

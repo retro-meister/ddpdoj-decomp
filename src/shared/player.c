@@ -1693,7 +1693,7 @@ extern u16 g_scroll_line;
 extern u16 g_two_player_game;
 extern u16 D_00299764[];
 extern u16 D_00299766[];
-extern u16 D_0029C06C[];
+extern u16 g_side_scroll_step[];
 extern void (*jtbl_0028E3F4)();
 
 void func_001420E0(void) {
@@ -1881,7 +1881,7 @@ block_13:
         PLAYER(reg_a6)->x.h = (u16) reg_d3.h[0];
         if ((g_two_player_game == 0) && !(PLAYER(reg_a6)->flags.b[0] & 0x20)) {
             reg_d3.h[0] = PLAYER(reg_a6)->x.h;
-            reg_d0.h[0] = D_0029C06C[0];
+            reg_d0.h[0] = g_side_scroll_step[0];
             reg_d3.h[0] -= reg_d0.h[0];
             PLAYER(reg_a6)->x.h = (u16) reg_d3.h[0];
         }

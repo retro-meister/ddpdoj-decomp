@@ -105,7 +105,7 @@ extern u16 D_0029976A_as_u16_a[];
 extern u16 D_0029976C[];
 extern u16 D_0029976E[];
 extern u8 *D_00299770[];
-extern u16 D_0029C06C[];
+extern u16 g_side_scroll_step[];
 extern u8 D_0029CEA0_as_u8_a[];
 extern void (*jtbl_0028E3F4)();
 extern u16 *reg_a4_as_u16_p;
@@ -225,7 +225,7 @@ void func_00129EF0(void) {
 
     reg_a6 = D_002962E0;
     reg_d7.h[0] = MAIN_OR_DEATH_LABEL(0x45, 0x15D);
-    reg_d6.h[0] = D_0029C06C[0];
+    reg_d6.h[0] = g_side_scroll_step[0];
     if (D_00299768_as_u16_a[0] != 0) {
         reg_d7.h[0] = MAIN_OR_DEATH_LABEL(0x6D, 0x225);
         if (D_0029976A_as_u16_a[0] != 0) {

@@ -89,7 +89,7 @@ segments:
       - [0xa2980, c, shared/palette]
       - [0xa3120, c, shared/unit_001A30A0]
       - [0xa3da0, c, shared/ranking]
-      - [0xa5020, c, shared/unit_001A4FA0]
+      - [0xa5020, c, shared/enemy_spawner]
       - [0xa5430, c, shared/unit_001A53B0]
       - [0xa9040, c, shared/score_add]
       - [0xacc20, c, shared/unit_001ACBA0]

@@ -236,7 +236,7 @@ typedef void (*Fn)();
 extern u16 D_0028E7E4;
 extern u16 D_0028E7E8;
 extern u16 D_0028E7EC;
-extern u16 D_0029C06C[];
+extern u16 g_side_scroll_step[];
 extern u8 D_002BE0C0[];
 extern u8 *jtbl_0028E3F4_as_u8_p;
 
@@ -252,7 +252,7 @@ void func_0014DA80(void) {
         if (*(u16 *)reg_a5 != 0) {
             reg_tmp.h[1] = *(u16 *)(reg_a5 + 6);
             reg_tmp.h[0] = *(u16 *)(reg_a5 + 8);
-            reg_d0.h[0] = D_0029C06C[0];
+            reg_d0.h[0] = g_side_scroll_step[0];
             reg_a6 = (u8 *)reg_tmp.w;
             ENTITY(reg_a6)->x.h -= reg_d0.h[0];
             reg_tmp.h[1] = *(u16 *)(reg_a5 + 0x4C);
@@ -360,7 +360,7 @@ extern u8 D_00258DF0[];
 extern u8 D_00259A70[];
 extern u8 D_00259A74[];
 extern u8 D_00259E70[];
-extern u16 D_0029C068[];
+extern u16 g_side_scroll_x[];
 extern u8 g_player2_as_u8_a[];
 extern u8 g_player1_as_u8_a[];
 
@@ -411,7 +411,7 @@ void func_0014DDB0(void) {
         if (reg_d0.b[0] & 1) {
             reg_tmp.h[1] = *(u16 *)(reg_a5 + 6);
             reg_tmp.h[0] = *(u16 *)(reg_a5 + 8);
-            reg_d0.h[0] = D_0029C068[0];
+            reg_d0.h[0] = g_side_scroll_x[0];
             reg_a6 = (u8 *)reg_tmp.w;
             ENTITY(reg_a6)->x.h -= reg_d0.h[0];
         }
@@ -425,7 +425,7 @@ void func_0014DDB0(void) {
 extern u32 D_0028DF3C;
 extern u32 D_0028DF40;
 extern u32 D_0028DF44;
-void func_0014E000(void) {
+void enemy_request_start(void) {
     D_0028DF44 = reg_d0.w;
     D_0028DF40 = reg_d1.w;
     D_0028DF3C = reg_d2.sw;
@@ -443,7 +443,7 @@ void func_0014E030(void) {
 }
 
 
-void func_0014E050(void) {
+void enemy_request_start_flags(void) {
     D_0028DF44 = reg_d0.w;
     D_0028DF40 = reg_d1.w;
     D_0028DF3C = reg_d2.w;
@@ -706,7 +706,7 @@ void enemy_path_start(void) {
     if (*(u8 *)(reg_a5 + 3) & 0x40) {
         *(u16 *)(reg_a6 + 2) = *(u16 *)(reg_a5 + 0x48);
         *(u16 *)(reg_a6 + 4) = *(u16 *)(reg_a5 + 0x4A);
-        reg_d0.h[0] = D_0029C068[0];
+        reg_d0.h[0] = g_side_scroll_x[0];
         *(u16 *)(reg_a6 + 4) += reg_d0.sh[0];
     } else {
         reg_d0.b[1] = *(s8 *)reg_a0;
@@ -944,7 +944,7 @@ void func_0014EF80(void) {
 }
 
 void func_0014EFA0(void) {
-    reg_d0.h[0] = D_0029C068[0];
+    reg_d0.h[0] = g_side_scroll_x[0];
     *(u16 *)(reg_a6 + 4) -= reg_d0.h[0];
     reg_a0 += 1;
 }

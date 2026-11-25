@@ -38,7 +38,7 @@ extern u16 g_loop;
 extern s16 D_00299768[];
 extern s16 D_0029976A[];
 extern s16 D_0029976C_as_s16_a[];
-extern u16 D_0029C068[];
+extern u16 g_side_scroll_x[];
 
 void func_001CA460(void) {
     reg_a0 = (u8 *)D_0026C920;
@@ -49,7 +49,7 @@ void func_001CA460(void) {
     reg_tmp.w = 0x9C001C00;
     ENTITY(reg_a6)->y.h = (u16) reg_tmp.h[1];
     ENTITY(reg_a6)->x.h = (u16) reg_tmp.h[0];
-    reg_d0.h[0] = D_0029C068[0];
+    reg_d0.h[0] = g_side_scroll_x[0];
     ENTITY(reg_a6)->x.h -= reg_d0.h[0];
     reg_a0 = (u8 *)D_0026C820;
     reg_a1 = (u8 *)D_0026C0C0;

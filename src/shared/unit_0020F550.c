@@ -830,11 +830,11 @@ void func_00211420(void) {
 }
 
 s32 entity_follow_scroll();
-extern u16 D_0029C06C[];
+extern u16 g_side_scroll_step[];
 
 void func_00211430(void) {
     entity_follow_scroll();
-    reg_d1.h[0] = D_0029C06C[0];
+    reg_d1.h[0] = g_side_scroll_step[0];
     ENTITY(reg_a6)->x.h -= reg_d1.h[0];
 }
 

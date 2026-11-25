@@ -25,7 +25,7 @@ extern u8 D_00261870[];
 extern u8 D_002637B0[];
 extern u8 D_0028D9AC;
 extern u16 g_scroll_line;
-extern u16 D_0029C068[];
+extern u16 g_side_scroll_x[];
 extern s8 enemy_move_end_requested;
 
 void func_001DE200(void) {
@@ -41,7 +41,7 @@ void func_001DE200(void) {
         ENTITY(reg_a6)[1].x.h = (u16) ENTITY(reg_a6)->x.h;
         ENTITY(reg_a6)->x.h += 0x1600;
         ENTITY(reg_a6)[1].x.h += 0x7FFF + 0x7801;
-        reg_d0.h[0] = D_0029C068[0];
+        reg_d0.h[0] = g_side_scroll_x[0];
         ENTITY(reg_a6)[1].x.h -= reg_d0.h[0];
         reg_a0 = D_00261870;
         reg_d0.h[0] = 0x16;
@@ -58,7 +58,7 @@ s32 enemy_path_step();
 s32 entity_draw_layer2();
 s32 score_add_no_chain();
 extern u16 g_enemies_stopped;
-extern u16 D_0029C06C[];
+extern u16 g_side_scroll_step[];
 
 void func_001DE2E0(void) {
     enemy_path_step();
@@ -81,7 +81,7 @@ void func_001DE2E0(void) {
         *(u8 *)(reg_a5 + 0x17) = 1U;
 block_5:
         ENTITY(reg_a6)[1].y.h = (u16) ENTITY(reg_a6)->y.h;
-        reg_d0.h[0] = D_0029C06C[0];
+        reg_d0.h[0] = g_side_scroll_step[0];
         ENTITY(reg_a6)[1].x.h -= reg_d0.h[0];
         reg_d1.b[0] = ENTITY(reg_a6)->flags.b[1];
         reg_d1.b[0] |= ENTITY(reg_a6)[1].flags.b[1];
@@ -210,7 +210,7 @@ void func_001DE720(void) {
     reg_tmp1.w = 0;
     reg_tmp.w = 0;
     reg_d0.h[0] += 0x1C00;
-    reg_d0.h[0] += D_0029C068[0];
+    reg_d0.h[0] += g_side_scroll_x[0];
     reg_tmp1.h[0] = 0x9000;
     reg_tmp.h[0] = reg_d0.h[0];
     saved = reg_tmp.w;
@@ -2255,7 +2255,7 @@ void func_001E3060(void) {
         temp_a0 = ENTITY(reg_a6)->x.h;
         reg_d0.h[0] = 0x1C00;
         reg_d7.h[0] = temp_a0;
-        reg_d0.h[0] -= D_0029C068[0];
+        reg_d0.h[0] -= g_side_scroll_x[0];
         ENTITY(reg_a6)->x.h = (u16) reg_d0.h[0];
         rng_next_word();
         reg_d0.h[0] = (u16) ((s16) reg_d0.h[0] >> 1);

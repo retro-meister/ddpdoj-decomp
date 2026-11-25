@@ -65,7 +65,7 @@ extern u8 D_00257820[];
 extern u16 D_0028DFE8;
 extern u8 g_p2_hyper_active_as_u8;
 extern u8 g_p1_hyper_active_as_u8;
-extern u16 D_0029C06C[];
+extern u16 g_side_scroll_step[];
 extern u8 D_0029E390[];
 extern u8 g_player2_as_u8_a[];
 extern u8 g_player1_as_u8_a[];
@@ -76,7 +76,7 @@ void func_001488C0(void) {
     u32 t;
 
     reg_a6 = (u8 *)D_0029E390;
-    reg_d6.h[0] = D_0029C06C[0];
+    reg_d6.h[0] = g_side_scroll_step[0];
     D_0028DFE8 = 0;
     saved_a4 = reg_a4;
     saved_a5 = reg_a5;
@@ -1392,7 +1392,7 @@ void func_0014C4B0(void) {
         reg_d7.w = 7;
         do {
             if (ENTITY(reg_a6)->flags.b[1] != 0) {
-                reg_d0.h[0] = D_0029C06C[0];
+                reg_d0.h[0] = g_side_scroll_step[0];
                 ENTITY(reg_a6)->x.h -= reg_d0.h[0];
                 reg_tmp.h[1] = ENTITY(reg_a6)->offset_x.h;
                 reg_tmp.h[0] = ENTITY(reg_a6)->draw.h;
@@ -1737,7 +1737,7 @@ void func_0014CEE0(void) {
     *(u16 *)(reg_a6 + 0x18) = (u16) reg_d0.h[0];
 }
 
-extern u16 D_0029C066[];
+extern u16 g_side_scroll_x_prev[];
 extern u16 D_0029C080[];
 
 void func_0014CF10(void) {
@@ -1754,7 +1754,7 @@ void func_0014CF10(void) {
     reg_a1 = (u8 *)temp_a0;
     if (D_0029C080[0] == 0) {
         reg_d1.h[0] -= 0x800;
-        reg_d1.h[0] -= D_0029C066[0];
+        reg_d1.h[0] -= g_side_scroll_x_prev[0];
         func_0014C590();
     }
 }

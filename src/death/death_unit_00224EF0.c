@@ -277,7 +277,7 @@ void death_func_00225680(void) {
     reg_a6 = save_a6;
 }
 
-extern u16 D_0029C06C[];
+extern u16 g_side_scroll_step[];
 extern u8 death_D_006901B0[];
 
 void death_func_002256C0(void) {
@@ -288,7 +288,7 @@ void death_func_002256C0(void) {
     save_a4 = reg_a4;
     reg_a6 = death_D_006901B0;
     reg_a4 += 0x10;
-    ENTITY(reg_a6)->x.h -= D_0029C06C[0];
+    ENTITY(reg_a6)->x.h -= g_side_scroll_step[0];
     death_func_00224EF0(1);
     reg_a6 = save_a6;
     reg_a4 = save_a4;
@@ -302,7 +302,7 @@ void death_func_00225730(void) {
     save_a4 = reg_a4;
     reg_a6 = death_D_006901B0;
     reg_a4 += 0x10;
-    ENTITY(reg_a6)->x.h -= D_0029C06C[0];
+    ENTITY(reg_a6)->x.h -= g_side_scroll_step[0];
     death_func_00224F20(1);
     reg_a6 = save_a6;
     reg_a4 = save_a4;
@@ -335,7 +335,7 @@ void death_func_00225820(void) {
     save_a4 = reg_a4;
     reg_a6 = death_D_006901B0;
     reg_a4 += 0x10;
-    ENTITY(reg_a6)->x.h -= D_0029C06C[0];
+    ENTITY(reg_a6)->x.h -= g_side_scroll_step[0];
     death_func_00225060(1);
     reg_a6 = save_a6;
     reg_a4 = save_a4;
@@ -349,7 +349,7 @@ void death_func_00225890(void) {
     save_a4 = reg_a4;
     reg_a6 = death_D_006901B0;
     reg_a4 += 0x10;
-    ENTITY(reg_a6)->x.h -= D_0029C06C[0];
+    ENTITY(reg_a6)->x.h -= g_side_scroll_step[0];
     death_func_00225090(1);
     reg_a6 = save_a6;
     reg_a4 = save_a4;
@@ -382,7 +382,7 @@ void death_func_00225980(void) {
     save_a4 = reg_a4;
     reg_a6 = death_D_006901B0;
     reg_a4 += 0x10;
-    ENTITY(reg_a6)->x.h -= D_0029C06C[0];
+    ENTITY(reg_a6)->x.h -= g_side_scroll_step[0];
     death_func_002251D0(1);
     reg_a6 = save_a6;
     reg_a4 = save_a4;
@@ -396,7 +396,7 @@ void death_func_002259F0(void) {
     save_a4 = reg_a4;
     reg_a6 = death_D_006901B0;
     reg_a4 += 0x10;
-    ENTITY(reg_a6)->x.h -= D_0029C06C[0];
+    ENTITY(reg_a6)->x.h -= g_side_scroll_step[0];
     death_func_002251F0(1);
     reg_a6 = save_a6;
     reg_a4 = save_a4;
@@ -429,7 +429,7 @@ void death_func_00225AE0(void) {
     save_a4 = reg_a4;
     reg_a6 = death_D_006901B0;
     reg_a4 += 0x10;
-    ENTITY(reg_a6)->x.h -= D_0029C06C[0];
+    ENTITY(reg_a6)->x.h -= g_side_scroll_step[0];
     death_func_00225330(1);
     reg_a6 = save_a6;
     reg_a4 = save_a4;
@@ -443,7 +443,7 @@ void death_func_00225B50(void) {
     save_a4 = reg_a4;
     reg_a6 = death_D_006901B0;
     reg_a4 += 0x10;
-    ENTITY(reg_a6)->x.h -= D_0029C06C[0];
+    ENTITY(reg_a6)->x.h -= g_side_scroll_step[0];
     death_func_00225360(1);
     reg_a6 = save_a6;
     reg_a4 = save_a4;
@@ -476,7 +476,7 @@ void death_func_00225C40(void) {
     save_a4 = reg_a4;
     reg_a6 = death_D_006901B0;
     reg_a4 += 0x10;
-    ENTITY(reg_a6)->x.h -= D_0029C06C[0];
+    ENTITY(reg_a6)->x.h -= g_side_scroll_step[0];
     death_func_002254A0(1);
     reg_a6 = save_a6;
     reg_a4 = save_a4;
@@ -490,7 +490,7 @@ void death_func_00225CB0(void) {
     save_a4 = reg_a4;
     reg_a6 = death_D_006901B0;
     reg_a4 += 0x10;
-    ENTITY(reg_a6)->x.h -= D_0029C06C[0];
+    ENTITY(reg_a6)->x.h -= g_side_scroll_step[0];
     death_func_00225500(1);
     reg_a6 = save_a6;
     reg_a4 = save_a4;

@@ -67,12 +67,12 @@ void func_001F3A10(void) {
 }
 
 s32 rng_next_unsigned();
-extern u16 D_0029C068[];
+extern u16 g_side_scroll_x[];
 
 void func_001F3C30() {
     ENTITY(reg_a6)->y.h = 0xB000;
     ENTITY(reg_a6)->x.h = 0x1C00U;
-    reg_d0.h[0] = D_0029C068[0];
+    reg_d0.h[0] = g_side_scroll_x[0];
     ENTITY(reg_a6)->x.h -= reg_d0.h[0];
     rng_next_unsigned();
     ENTITY(reg_a6)->move.b.dir = (u8) reg_d0.b[0];

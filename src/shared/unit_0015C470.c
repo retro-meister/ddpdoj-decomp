@@ -128,7 +128,7 @@ extern u16 g_bullets_blocked;
 extern u16 g_enemies_stopped;
 extern u16 D_0028E8B8;
 extern u16 g_rank_3_16;
-extern u16 D_0029C068[];
+extern u16 g_side_scroll_x[];
 extern u16 D_0029CEA0[];
 extern u16 g_player2_as_u16_a[];
 extern u16 g_player1_as_u16_a[];
@@ -143,7 +143,7 @@ void func_0015C870(void) {
     reg_d0.h[1] = ENTITY(reg_a6)->y.h;
     reg_d0.h[0] = ENTITY(reg_a6)->x.h;
     reg_d0.h[0] += 0x1800;
-    reg_d0.h[0] += D_0029C068[0];
+    reg_d0.h[0] += g_side_scroll_x[0];
     reg_tmp1.w = 0;
     reg_tmp1.h[0] = 0x9800;
     reg_tmp.w = 0;
@@ -1489,7 +1489,7 @@ void func_0015FDE0(void) {
     reg_d0.h[1] = ENTITY(reg_a6)->y.h;
     reg_d0.h[0] = ENTITY(reg_a6)->x.h;
     reg_d0.h[0] += 0x1600;
-    reg_d0.h[0] += D_0029C068[0];
+    reg_d0.h[0] += g_side_scroll_x[0];
     reg_tmp1.w = 0;
     reg_tmp1.h[0] = 0x9C00;
     reg_tmp.w = 0;
@@ -2794,7 +2794,7 @@ next_90:
     reg_tmp1.w = 0;
     reg_tmp.w = 0;
     reg_d0.h[0] += 0x1400;
-    reg_d0.h[0] += D_0029C068[0];
+    reg_d0.h[0] += g_side_scroll_x[0];
     reg_tmp1.h[0] = 0xA000;
     reg_tmp.h[0] = reg_d0.h[0];
     saved = reg_tmp.w;
@@ -3336,7 +3336,7 @@ void func_00164600(void) {
     reg_d0.h[1] = ENTITY(reg_a6)->y.h;
     reg_d0.h[0] = ENTITY(reg_a6)->x.h;
     reg_d0.h[0] += 0xC00;
-    reg_d0.h[0] += D_0029C068[0];
+    reg_d0.h[0] += g_side_scroll_x[0];
     reg_tmp.w = 0;
     reg_tmp.h[0] = reg_d0.h[0];
     saved = reg_tmp.w;
@@ -3474,7 +3474,7 @@ void func_00164A00(void) {
     reg_tmp.w = saved + reg_tmp1.w;
     reg_d0.h[0] += 0x8C00;
     if (reg_tmp.h[1] != 0) goto next_1;
-    reg_d0.h[0] = D_0029C068[0];
+    reg_d0.h[0] = g_side_scroll_x[0];
     reg_d0.h[0] = (s16) reg_d0.h[0] + 0x800;
     reg_d1.h[0] = ENTITY(reg_a6)->x.h;
     reg_d1.h[0] += 0x400;
@@ -4704,7 +4704,7 @@ void func_001676F0(void) {
                 *(s16 *)reg_a0 = t6 + reg_d3.h[0];
             }
         }
-        v1 = D_0029C068[0];
+        v1 = g_side_scroll_x[0];
         reg_d0.h[1] = ENTITY(reg_a6)->y.h;
         reg_d0.h[0] = ENTITY(reg_a6)->x.h;
         reg_tmp.w = 0;

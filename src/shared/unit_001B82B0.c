@@ -90,7 +90,7 @@ extern u16 D_0028E3EC;
 extern u16 D_0028E3F0;
 extern u16 D_0028E854_as_u16;
 extern u8 D_0029A530_as_u8_a[];
-extern u16 D_0029C06C[];
+extern u16 g_side_scroll_step[];
 extern u8 *jtbl_0028E3F4_as_u8_p;
 
 void func_001B8440(void) {
@@ -163,7 +163,7 @@ next_4:
     reg_d1.h[0] -= 0x58;
     *(u16 *)(reg_a2 + 0) += reg_d1.h[0];
 next_7:
-    reg_d1.h[0] = D_0029C06C[0];
+    reg_d1.h[0] = g_side_scroll_step[0];
     *(u16 *)(reg_a2 + 2) -= reg_d1.h[0];
     if (0 > (s64) (s32) reg_d6.w) goto next_anim;
     reg_d1.h[1] = *(u16 *)(reg_a2 + 0);

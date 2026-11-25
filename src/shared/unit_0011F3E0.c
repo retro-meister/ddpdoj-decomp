@@ -50,7 +50,7 @@ s32 func_00137BC0();
 s32 func_00137BE0();
 s32 func_0019D620();
 s32 func_00203670();
-extern u16 D_0029C068[];
+extern u16 g_side_scroll_x[];
 extern u16 D_0029C07C[];
 extern u16 D_0029C07E[];
 
@@ -205,7 +205,7 @@ void func_0011F4E0(void) {
     reg_a5 = b2_a5;
     reg_a6 = b2_a6;
     reg_d0.h[0] = *(u16 *) (reg_a6 + 4);
-    reg_d0.h[0] += (s16) D_0029C068[0];
+    reg_d0.h[0] += (s16) g_side_scroll_x[0];
     reg_d0.h[0] += 0x800;
     reg_d0.h[0] = (s16) reg_d0.h[0] >> 6;
     reg_d0.h[0] = (s16) reg_d0.h[0] >> 5;

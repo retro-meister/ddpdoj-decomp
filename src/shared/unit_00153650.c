@@ -1782,7 +1782,7 @@ void func_001578A0(void) {
 s32 rng_next_word();
 extern u8 D_00258380[];
 extern u8 D_002583A0[];
-extern u16 D_0029C068[];
+extern u16 g_side_scroll_x[];
 
 void func_001578B0(void) {
     s32 enemy_set_task_work();
@@ -1799,7 +1799,7 @@ void func_001578B0(void) {
         reg_tmp.w = 0x74001C00;
         ENTITY(reg_a6)->y.h = (u16) reg_tmp.h[1];
         ENTITY(reg_a6)->x.h = (u16) reg_tmp.h[0];
-        reg_d0.h[0] = D_0029C068[0];
+        reg_d0.h[0] = g_side_scroll_x[0];
         ENTITY(reg_a6)->x.h -= reg_d0.h[0];
         goto block_3;
     }
@@ -1981,7 +1981,7 @@ void func_00157E50(void) {
 
 extern u8 D_00258400[];
 extern u8 D_00258410[];
-extern u16 D_0029C066[];
+extern u16 g_side_scroll_x_prev[];
 
 void func_00157E60(void) {
     s32 enemy_set_task_work();
@@ -1996,7 +1996,7 @@ void func_00157E60(void) {
     ENTITY(reg_a6)->x.h = (u16) reg_tmp.h[0];
     reg_d1.w = 0;
     reg_d1.h[0] -= 0x800;
-    reg_d1.h[0] -= D_0029C066[0];
+    reg_d1.h[0] -= g_side_scroll_x_prev[0];
     ENTITY(reg_a6)->x.h = (u16) reg_d1.h[0];
     ENTITY(reg_a6)[1].y.h = (u16) ENTITY(reg_a6)->y.h;
     ENTITY(reg_a6)[1].x.h = (u16) ENTITY(reg_a6)->x.h;
@@ -2083,8 +2083,8 @@ void func_001581E0(void) {
     enemy_set_entity_count(0);
 }
 
-s32 func_0014E000();
-s32 func_0014E050();
+s32 enemy_request_start();
+s32 enemy_request_start_flags();
 extern u8 D_00258460[];
 extern u8 D_00258490[];
 
@@ -2101,7 +2101,7 @@ void func_001581F0(void) {
     if (enemy_move_end_requested == 0) {
         if (g_scroll_line == 0x168) {
             reg_d0.w = 0x18;
-            func_0014E000();
+            enemy_request_start();
             *(u16 *)(reg_a0 + 0x16) = (u16) ENTITY(reg_a6)->y.h;
             *(u16 *)(reg_a0 + 0x18) = (u16) ENTITY(reg_a6)->x.h;
             reg_tmp.h[1] = *(u16 *)(reg_a0 + 0x16);
@@ -2114,7 +2114,7 @@ void func_001581F0(void) {
         } else {
             reg_d0.w = 0x17;
             reg_d1.h[0] = 0x20;
-            func_0014E050();
+            enemy_request_start_flags();
             *(u16 *)(reg_a0 + 0x16) = (u16) ENTITY(reg_a6)->y.h;
             *(u16 *)(reg_a0 + 0x18) = (u16) ENTITY(reg_a6)->x.h;
             reg_tmp.h[1] = *(u16 *)(reg_a0 + 0x16);

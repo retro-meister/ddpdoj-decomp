@@ -90,7 +90,7 @@ extern u16 g_scroll_line;
 extern u16 D_0028E8B8;
 extern u16 g_rank_4_16;
 extern u16 g_loop;
-extern u16 D_0029C068[];
+extern u16 g_side_scroll_x[];
 extern u16 g_player2_as_u16_a[];
 extern u16 g_player1_as_u16_a[];
 
@@ -109,7 +109,7 @@ void func_001683C0(void) {
         reg_d0.h[0] = ENTITY(reg_a6)->x.h;
         reg_tmp1.w = 0;
         reg_tmp.w = 0;
-        reg_d0.h[0] += D_0029C068[0];
+        reg_d0.h[0] += g_side_scroll_x[0];
         reg_tmp1.h[0] = 0xAC00;
         reg_d0.h[0] += 0xE00;
         reg_tmp.h[0] = reg_d0.h[0];

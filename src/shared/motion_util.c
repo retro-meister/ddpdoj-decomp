@@ -932,7 +932,7 @@ void func_00202F50(void) {
     reg_a0 = save_a0;
 }
 
-extern u16 D_0029C068[];
+extern u16 g_side_scroll_x[];
 
 
 void entity_check_bounds(void) {
@@ -942,7 +942,7 @@ void entity_check_bounds(void) {
     reg_tmp.h[0] = 0x9000;
     reg_tmp1.w = 0;
     reg_d0.h[0] += 0x1C00;
-    reg_d0.h[0] += (s16) D_0029C068[0];
+    reg_d0.h[0] += (s16) g_side_scroll_x[0];
     reg_tmp1.h[0] = reg_d0.h[0];
     reg_tmp1.w += reg_tmp.w;
     if (reg_tmp1.h[1] == 0) {
@@ -966,7 +966,7 @@ void func_00203120(void) {
     reg_tmp.h[0] = 0x9000;
     reg_tmp1.w = 0;
     reg_d0.h[0] += 0x1C00;
-    reg_d0.h[0] += (s16) D_0029C068[0];
+    reg_d0.h[0] += (s16) g_side_scroll_x[0];
     reg_tmp1.h[0] = reg_d0.h[0];
     reg_tmp1.w += reg_tmp.w;
     if (reg_tmp1.h[1] != 0) goto next_1;
@@ -989,7 +989,7 @@ void func_002031E0(void) {
     reg_tmp.h[0] = 0xB000;
     reg_tmp1.w = 0;
     reg_d0.h[0] += 0xC00;
-    reg_d0.h[0] += (s16) D_0029C068[0];
+    reg_d0.h[0] += (s16) g_side_scroll_x[0];
     reg_tmp1.h[0] = reg_d0.h[0];
     reg_tmp1.w += reg_tmp.w;
     if (reg_tmp1.h[1] != 0) goto next_1;

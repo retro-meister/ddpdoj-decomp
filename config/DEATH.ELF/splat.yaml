@@ -104,7 +104,7 @@ segments:
       - [0xc4a60, c, shared/replay_state]
       - [0xc9970, c, shared/gfx]
       - [0xcd890, c, shared/ranking]
-      - [0xceb10, c, shared/unit_001A4FA0]
+      - [0xceb10, c, shared/enemy_spawner]
       - [0xcef20, c, shared/unit_001A53B0]
       - [0xd2b30, c, shared/score_add]
       - [0xd6550, c, shared/unit_001ACBA0]

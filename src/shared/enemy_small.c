@@ -294,7 +294,7 @@ extern u16 D_0028E3F0;
 extern u16 g_enemy_signal_0;
 extern u16 g_enemies_stopped;
 extern u16 g_rank_3_16;
-extern u16 D_0029C068[];
+extern u16 g_side_scroll_x[];
 extern void (*jtbl_0028E3F4)();
 
 void func_0016D790(void) {
@@ -305,7 +305,7 @@ void func_0016D790(void) {
     reg_tmp1.w = 0;
     reg_d0.h[0] += 0x1200;
     reg_tmp.w = 0;
-    reg_d0.h[0] += D_0029C068[0];
+    reg_d0.h[0] += g_side_scroll_x[0];
     reg_tmp1.h[0] = 0xA400;
     reg_tmp.h[0] = reg_d0.h[0];
     reg_tmp.w += reg_tmp1.w;
@@ -572,7 +572,7 @@ void func_0016E2A0(void) {
     reg_d0.h[1] = ENTITY(reg_a6)->y.h;
     reg_d0.h[0] = ENTITY(reg_a6)->x.h;
     reg_d0.h[0] += 0xE00;
-    reg_d0.h[0] += D_0029C068[0];
+    reg_d0.h[0] += g_side_scroll_x[0];
     reg_tmp.w = 0;
     reg_tmp.h[0] = reg_d0.h[0];
     reg_tmp1.w = 0;

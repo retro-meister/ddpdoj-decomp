@@ -818,8 +818,8 @@ extern u16 D_0028E978;
 extern u16 D_0028E97C;
 extern s8 D_0028EC24;
 extern s8 D_0028ED60_as_s8;
-extern u16 D_0029C068[];
-extern u16 D_0029C06C[];
+extern u16 g_side_scroll_x[];
+extern u16 g_side_scroll_step[];
 extern s16 g_player2[];
 extern s16 g_player1[];
 
@@ -866,8 +866,8 @@ void func_00132420(void) {
         D_0028E961 |= 2;
         reg_d0.w = 0;
         t5 = reg_d0.h[0];
-        D_0029C068[0] = t5;
-        D_0029C06C[0] = t5;
+        g_side_scroll_x[0] = t5;
+        g_side_scroll_step[0] = t5;
         reg_a0 = (u8 *)(D_00261F30);
         reg_d0.h[0] = 0x11;
         sprite_palette_load();

@@ -195,7 +195,7 @@ typedef void (*Fn)();
 s32 func_0016C4B0();
 extern u8 D_0026ADA0[];
 extern u16 D_0028E7B0;
-extern u16 D_0029C06C[];
+extern u16 g_side_scroll_step[];
 
 void func_0016AC30(void) {
     u32 cnt;
@@ -215,7 +215,7 @@ loop_1:
     if (reg_d1.h[0] == 0) {
         goto next_1;
     }
-    reg_d0.h[0] = D_0029C06C[0];
+    reg_d0.h[0] = g_side_scroll_step[0];
     ENTITY(reg_a6)->x.h -= reg_d0.h[0];
     flags = ENTITY(reg_a6)->flags.b[0];
     if ((flags & 0x80) || (flags & 1)) {
@@ -1075,7 +1075,7 @@ void func_0016C350(void) {
 void func_0016C410() {
     s16 temp_a0;
 
-    reg_d1.h[0] = D_0029C06C[0];
+    reg_d1.h[0] = g_side_scroll_step[0];
     temp_a0 = ENTITY(reg_a6)->x.sh;
     reg_d1.h[0] = (s16) reg_d1.h[0] + temp_a0;
     ENTITY(reg_a6)->move.sb.dir = 0x30;

@@ -104,7 +104,7 @@ s32 direction_turn_toward();
 s32 func_00202B50();
 extern u16 D_0026E930[];
 extern u8 D_0028E855;
-extern u16 D_0029C068[];
+extern u16 g_side_scroll_x[];
 extern u16 D_002BDA80_as_u16_a[];
 
 void func_001BAB40(void) {
@@ -113,7 +113,7 @@ void func_001BAB40(void) {
 
     reg_d2.h[0] = 0x5400;
     reg_d3.h[0] = 0x1C00;
-    reg_d3.h[0] -= D_0029C068[0];
+    reg_d3.h[0] -= g_side_scroll_x[0];
     reg_d0.h[0] = ENTITY(reg_a6)->y.h;
     reg_d1.h[0] = ENTITY(reg_a6)->x.h;
     direction_between();
@@ -133,7 +133,7 @@ void func_001BAB40(void) {
     } while ((s16)(--reg_d0.h[0]) >= 0);
     reg_d2.h[0] = 0x5400;
     reg_d3.h[0] = 0x1C00;
-    reg_d3.h[0] -= D_0029C068[0];
+    reg_d3.h[0] -= g_side_scroll_x[0];
     func_00202B50();
     if ((s16) reg_d0.h[0] < 0x1801) {
         *(u8 *)(reg_a4 + 5) = 1U;

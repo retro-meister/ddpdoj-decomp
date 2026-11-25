@@ -215,7 +215,7 @@ extern u16 g_enemy_signal_8;
 extern u8 g_enemy_signal_6_as_u8;
 extern u8 D_0028E87D;
 extern u16 g_enemies_stopped;
-extern u16 D_0029C06C[];
+extern u16 g_side_scroll_step[];
 extern u16 *reg_a4_as_u16_p;
 
 void func_001DD090(void) {
@@ -298,7 +298,7 @@ next_130:
     reg_d2.h[0] = (s16) reg_d2.h[0] * 8;
     reg_d3.h[0] = (s16) reg_d3.h[0] * 8;
     if (*(u8 *)(reg_a5 + 0x3B) != 1) goto next_140;
-    reg_d0.h[0] = D_0029C06C[0];
+    reg_d0.h[0] = g_side_scroll_step[0];
     ENTITY(reg_a6)[1].hit_y_minus.h -= reg_d0.h[0];
     reg_d2.h[0] += ENTITY(reg_a6)[1].hit_y_plus.h;
     reg_d3.h[0] += ENTITY(reg_a6)[1].hit_y_minus.h;

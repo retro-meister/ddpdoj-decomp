@@ -338,7 +338,7 @@ extern u8 D_002661E0[];
 extern s16 g_enemy_signal_4_as_s16;
 extern s16 g_enemy_signal_3_as_s16;
 extern s16 D_00299768[];
-extern u16 D_0029C068[];
+extern u16 g_side_scroll_x[];
 
 void func_001FD760(void) {
     reg_a0 = (u8 *)D_002661E0;
@@ -349,7 +349,7 @@ void func_001FD760(void) {
     reg_tmp.w = 0xF4001C00;
     ENTITY(reg_a6)->y.h = reg_tmp.h[1];
     ENTITY(reg_a6)->x.h = reg_tmp.h[0];
-    reg_d0.h[0] = D_0029C068[0];
+    reg_d0.h[0] = g_side_scroll_x[0];
     ENTITY(reg_a6)->x.h -= reg_d0.h[0];
     D_00299768[0] = 1;
     g_enemy_signal_3_as_s16 = 1;
@@ -1147,7 +1147,7 @@ s32 func_002024F0();                            /* extern */
 s32 func_00202B50();                            /* extern */
 
 void func_001FF000(void) {
-    reg_d0.h[0] = D_0029C068[0];
+    reg_d0.h[0] = g_side_scroll_x[0];
     reg_d3.h[0] -= reg_d0.h[0];
     func_00202B50();
     if (((s16) reg_d0.h[0] >= 0x200) || (ENTITY(reg_a6)->move.sb.speed = 8, (((s16) reg_d0.h[0] < 0x100) == 0)) || (ENTITY(reg_a6)->move.sb.speed = 6, (((s16) reg_d0.h[0] < 0x40) == 0))) {

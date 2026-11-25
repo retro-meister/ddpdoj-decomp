@@ -76,14 +76,14 @@ extern u8 D_00241780[];
 extern u8 D_00241810[];
 extern u8 D_00241870[];
 extern u16 D_0028E3EC;
-extern u16 D_0029C06C[];
+extern u16 g_side_scroll_step[];
 extern u8 D_0029CEA0_as_u8_a[];
 extern void (*jtbl_0028E3F4)();
 
 void func_0011FA90(void) {
     u8 temp;
 
-    reg_d1.h[0] = D_0029C06C[0];
+    reg_d1.h[0] = g_side_scroll_step[0];
     ENTITY(reg_a6)->x.h -= reg_d1.h[0];
     temp = ENTITY(reg_a6)->flags.b[1];
     if (temp & 1) goto block_a;

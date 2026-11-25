@@ -671,10 +671,10 @@ block_rts:;
 }
 
 extern u16 D_0029C062_as_u16_a[];
-extern u16 D_0029C066[];
-extern u16 D_0029C068[];
-extern u16 D_0029C06A[];
-extern u16 D_0029C06C[];
+extern u16 g_side_scroll_x_prev[];
+extern u16 g_side_scroll_x[];
+extern u16 g_side_scroll_pixels[];
+extern u16 g_side_scroll_step[];
 extern u16 D_0029C06E[];
 extern u16 g_player2_as_u16_a[];
 extern u16 g_player1_as_u16_a[];
@@ -721,12 +721,12 @@ next_4:
     reg_d1.h[0] >>= 6;
     reg_d2.h[0] = reg_d1.h[0];
     reg_d1.h[0] <<= 6;
-    D_0029C066[0] = D_0029C068[0];
-    D_0029C068[0] = reg_d1.h[0];
-    reg_d0.h[0] = D_0029C06A[0];
-    D_0029C06A[0] = reg_d2.h[0];
+    g_side_scroll_x_prev[0] = g_side_scroll_x[0];
+    g_side_scroll_x[0] = reg_d1.h[0];
+    reg_d0.h[0] = g_side_scroll_pixels[0];
+    g_side_scroll_pixels[0] = reg_d2.h[0];
     reg_d2.h[0] -= reg_d0.h[0];
     reg_d2.h[0] <<= 6;
-    D_0029C06C[0] = reg_d2.h[0];
+    g_side_scroll_step[0] = reg_d2.h[0];
     D_0029C06E[0] -= reg_d2.h[0];
 }

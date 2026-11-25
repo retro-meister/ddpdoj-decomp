@@ -228,7 +228,7 @@ extern u8 D_00250760[];
 extern u16 D_0028E3F0;
 extern u8 D_0029AA40[];
 extern u16 D_0029BBF8[];
-extern u16 D_0029C06C[];
+extern u16 g_side_scroll_step[];
 extern u8 D_0029CEA0_as_u8_a[];
 
 void func_0013A020(void) {
@@ -304,7 +304,7 @@ block_fire:
     *(u16 *)(reg_a6 + 0x1C) = x_save;
     *(u16 *)(reg_a6 + 0x12) = 0xFFFF;
 block_debris:
-    reg_d0.h[0] = D_0029C06C[0];
+    reg_d0.h[0] = g_side_scroll_step[0];
     *(u16 *)(reg_a6 + 4) -= reg_d0.h[0];
     if (*(u16 *)(reg_a6 + 0x10) == 0) goto block_shift;
     entity_follow_scroll();

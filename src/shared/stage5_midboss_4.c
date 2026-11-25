@@ -34,7 +34,7 @@ extern u8 D_00260430[];
 extern u8 D_00260530[];
 extern u8 D_00265C20[];
 extern u8 D_00265C30[];
-extern u16 D_0029C068[];
+extern u16 g_side_scroll_x[];
 
 void func_001FA3A0(void) {
 
@@ -46,7 +46,7 @@ void func_001FA3A0(void) {
     reg_tmp.w = 0x30001C00;
     ENTITY(reg_a6)->y.h = (u16) reg_tmp.h[1];
     ENTITY(reg_a6)->x.h = (u16) reg_tmp.h[0];
-    reg_d0.h[0] = D_0029C068[0];
+    reg_d0.h[0] = g_side_scroll_x[0];
     ENTITY(reg_a6)->x.h -= reg_d0.h[0];
     reg_d0.h[0] = 0x12;
     reg_a0 = D_002603F0;
@@ -59,7 +59,7 @@ void func_001FA3A0(void) {
     sprite_palette_load();
 }
 
-s32 func_0014E000();
+s32 enemy_request_start();
 s32 enemy_remove();
 s32 sprite_draw_layer1();
 s32 entity_follow_scroll();
@@ -104,7 +104,7 @@ void func_001FA470(void) {
                 }
                 if (temp_v1 == 0x3C) {
                     reg_d0.w = 0x44;
-                    func_0014E000();
+                    enemy_request_start();
                     *(u16 *)(reg_a0 + 0x16) = (u16) ENTITY(reg_a6)->y.h;
                     *(u16 *)(reg_a0 + 0x18) = (u16) ENTITY(reg_a6)->x.h;
                 }
@@ -413,7 +413,7 @@ void func_001FADE0(void) {
     reg_d1.h[0] = ENTITY(reg_a6)->x.h;
     reg_d2.h[0] = *(u16 *)reg_a0;
     reg_d3.h[0] = *(u16 *)(reg_a0 + 2);
-    reg_d3.h[0] -= D_0029C068[0];
+    reg_d3.h[0] -= g_side_scroll_x[0];
     direction256_between();
     ENTITY(reg_a6)->move.b.dir = (u8) reg_d1.b[0];
     reg_a0 = (u8 *)D_00265D40;
@@ -422,7 +422,7 @@ void func_001FADE0(void) {
     reg_d1.h[0] = ENTITY(reg_a6)->x.h;
     reg_d2.h[0] = *(u16 *)reg_a0;
     reg_d3.h[0] = *(u16 *)(reg_a0 + 2);
-    reg_d3.h[0] -= D_0029C068[0];
+    reg_d3.h[0] -= g_side_scroll_x[0];
     func_00202B70();
     if ((s16) reg_d0.h[0] < 0x81) {
         ENTITY(reg_a6)[3].draw.h += 4;
@@ -552,7 +552,7 @@ void func_001FB1F0(void) {
     if (temp_a0 == 1) {
         reg_d2.h[0] = ENTITY(reg_a6)[3].sprite.h;
         reg_d3.h[0] = ENTITY(reg_a6)[3].look.h;
-        reg_d3.h[0] -= D_0029C068[0];
+        reg_d3.h[0] -= g_side_scroll_x[0];
         reg_d0.h[0] = ENTITY(reg_a6)->y.h;
         reg_d1.h[0] = ENTITY(reg_a6)->x.h;
         direction256_between();
@@ -562,7 +562,7 @@ void func_001FB1F0(void) {
         temp_a0_2 = ENTITY(reg_a6)->y.h;
         reg_d0.h[0] = temp_a0_2;
         reg_d1.h[0] = ENTITY(reg_a6)->x.h;
-        reg_d3.h[0] -= D_0029C068[0];
+        reg_d3.h[0] -= g_side_scroll_x[0];
         func_00202B70();
         if ((s16) reg_d0.h[0] < 0x81) {
             ENTITY(reg_a6)[3].offset_x.h = 2U;
@@ -590,7 +590,7 @@ loop_8:
     if (temp_a0_3 == 2) {
         reg_d2.h[0] = ENTITY(reg_a6)[3].sprite.h;
         reg_d3.h[0] = ENTITY(reg_a6)[3].look.h;
-        reg_d3.h[0] -= D_0029C068[0];
+        reg_d3.h[0] -= g_side_scroll_x[0];
         reg_d0.h[0] = ENTITY(reg_a6)->y.h;
         reg_d1.h[0] = ENTITY(reg_a6)->x.h;
         direction256_between();
@@ -602,7 +602,7 @@ loop_8:
         temp_a0_4 = ENTITY(reg_a6)->y.h;
         reg_d0.h[0] = temp_a0_4;
         reg_d1.h[0] = ENTITY(reg_a6)->x.h;
-        reg_d3.h[0] -= D_0029C068[0];
+        reg_d3.h[0] -= g_side_scroll_x[0];
         func_00202B70();
         ENTITY(reg_a6)[3].hit_y_minus.b[1] = 4U;
         if ((ENTITY(reg_a6)->move.b.speed == 4) && ((s16) reg_d0.h[0] < 0x1001)) {
@@ -624,7 +624,7 @@ loop_8:
     if (temp_a0_5 == 3) {
         reg_d2.h[0] = ENTITY(reg_a6)[3].sprite.h;
         reg_d3.h[0] = ENTITY(reg_a6)[3].look.h;
-        reg_d3.h[0] -= D_0029C068[0];
+        reg_d3.h[0] -= g_side_scroll_x[0];
         reg_d0.h[0] = ENTITY(reg_a6)->y.h;
         reg_d1.h[0] = ENTITY(reg_a6)->x.h;
         direction256_between();
@@ -634,7 +634,7 @@ loop_8:
         temp_a0_6 = ENTITY(reg_a6)->y.h;
         reg_d0.h[0] = temp_a0_6;
         reg_d1.h[0] = ENTITY(reg_a6)->x.h;
-        reg_d3.h[0] -= D_0029C068[0];
+        reg_d3.h[0] -= g_side_scroll_x[0];
         func_00202B70();
         ENTITY(reg_a6)[3].hit_y_minus.b[1] = 0xAU;
         if ((s16) reg_d0.h[0] < 0x1001) {
