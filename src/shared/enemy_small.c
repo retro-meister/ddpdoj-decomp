@@ -205,7 +205,7 @@ void func_0016D290(void) {
     cond_flag = 0;
 }
 
-void func_0016D520(void) {
+void small_tank_a_first(void) {
     void enemy_set_entity_count(s32);
     enemy_set_entity_count(0);
 }
@@ -222,7 +222,7 @@ extern u16 g_rank_5_16;
 extern u16 g_stage_x2;
 extern s8 enemy_move_end_requested;
 
-void func_0016D530(void) {
+void small_tank_a_start(void) {
     reg_a0 = (u8 *)(D_0025B1A0);
     enemy_init_entities();
     reg_a0 = (u8 *)(D_0025B180);
@@ -293,7 +293,7 @@ extern u16 g_enemies_stopped;
 extern u16 g_rank_3_16;
 extern u16 g_side_scroll_x[];
 
-void func_0016D790(void) {
+void small_tank_a(void) {
     enemy_path_step();
     if (enemy_move_end_requested != 0) goto block_rts;
     reg_d0.h[1] = ENTITY(reg_a6)->y.h;
@@ -487,7 +487,7 @@ block_rts:
     return;
 }
 
-void func_0016E000(void) {
+void small_tank_b_first(void) {
     void enemy_set_entity_count(s32);
     enemy_set_entity_count(0);
 }
@@ -501,7 +501,7 @@ extern u16 g_scroll_line;
 extern u16 g_rank_2_16;
 extern u16 g_rank_6_16;
 
-void func_0016E010(void) {
+void small_tank_b_start(void) {
     reg_a0 = (u8 *)(D_0025B470);
     enemy_init_entities();
     reg_a0 = (u8 *)(D_0025B450);
@@ -558,7 +558,7 @@ extern u16 D_0028E7DC_as_u16;
 extern u16 D_0028E7E0_as_u16;
 extern u16 g_rank_10_16;
 
-void func_0016E2A0(void) {
+void small_tank_b(void) {
     u32 swap;
 
     enemy_path_step();
@@ -1497,7 +1497,7 @@ void func_00170690(void) {
     reg_a0 += 2;
 }
 
-void func_00170710(void) {
+void warning_sign_first(void) {
     void enemy_set_entity_count(s32);
     enemy_set_entity_count(0);
 }
@@ -1511,7 +1511,7 @@ extern u8 D_0025B850[];
 extern u8 D_00261C30[];
 extern u8 D_00261CF0[];
 
-void func_00170720(void) {
+void warning_sign_start(void) {
     reg_a0 = D_0025B850;
     enemy_init_entities();
     reg_a0 = D_0025B840;
@@ -1536,7 +1536,7 @@ void func_00170720(void) {
 s32 sfx_warning();
 s32 entity_draw_with_warning();
 
-void func_00170840(void) {
+void warning_sign(void) {
     u16 m;
 
     if (*(u16 *)(reg_a5 + 0x20) == 0) goto next_20;

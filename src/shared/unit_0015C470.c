@@ -4,7 +4,7 @@
 
 extern void enemy_set_entity_count(s32);
 
-void func_0015C470(void) {
+void mid_flyer_a_first(void) {
     enemy_set_entity_count(1);
 }
 
@@ -21,7 +21,7 @@ extern u16 g_stage;
 extern s8 enemy_move_end_requested;
 extern s8 *reg_a0_as_s8_p;
 
-void func_0015C480(void) {
+void mid_flyer_a_start(void) {
     s32 enemy_set_task_work();
     s32 enemy_init_entities();
     s32 enemy_path_start();
@@ -134,7 +134,7 @@ extern u16 g_bomb_entities[];
 extern u16 g_player2_as_u16_a[];
 extern u16 g_player1_as_u16_a[];
 
-void func_0015C870(void) {
+void mid_flyer_a(void) {
     u32 cnt;
     u8 bits;
     u8 *ptr;
@@ -509,7 +509,7 @@ next_700:
     enemy_remove();
 }
 
-void func_0015D8E0(void) {
+void mid_flyer_b_first(void) {
     enemy_set_entity_count(1);
 }
 
@@ -521,7 +521,7 @@ extern u16 g_rank_7_16;
 extern s16 D_00299768[];
 extern s16 D_0029976A[];
 
-void func_0015D8F0(void) {
+void mid_flyer_b_start(void) {
     s32 enemy_set_task_work();
     s32 enemy_init_entities();
     s32 enemy_path_start();
@@ -594,7 +594,7 @@ extern u16 g_rank_4_16;
 extern u16 g_rank_6_16;
 extern s16 g_bomb_entities_as_s16_a[];
 
-void func_0015DC20(void) {
+void mid_flyer_b(void) {
     s16 *temp_a0;
     s16 *temp_v1;
     s16 *temp_v1_2;
@@ -1057,7 +1057,7 @@ void func_0015EF60(void)
 
 void enemy_set_entity_count(s32);
 
-void func_0015EFC0(void) {
+void mid_flyer_c_first(void) {
     enemy_set_entity_count(1);
 }
 
@@ -1071,7 +1071,7 @@ extern u16 g_enemy_signal_1;
 extern u16 g_enemy_signal_0;
 extern u16 g_rank_5_16;
 
-void func_0015EFD0(void) {
+void mid_flyer_c_start(void) {
     s32 enemy_set_task_work();
     s32 enemy_init_entities();
     s32 enemy_path_start();
@@ -1153,7 +1153,7 @@ s32 sfx_explosion_air_medium();
 s32 entity_draw_layer5_zoom();
 s32 entity_check_bounds();
 
-void func_0015F290(void) {
+void mid_flyer_c(void) {
     s16 *temp_v1;
     s16 *temp_v1_2;
     s16 *var_a0;
@@ -1424,7 +1424,7 @@ block_42:
     }
 }
 
-void func_0015FC70(void) {
+void mid_flyer_d_first(void) {
     enemy_set_entity_count(1);
 }
 
@@ -1433,7 +1433,7 @@ extern s8 D_0025A2A0[];
 extern s8 D_0025A2C0[];
 extern u16 g_scroll_line;
 
-void func_0015FC80(void) {
+void mid_flyer_d_start(void) {
     s32 enemy_set_task_work();
     s32 enemy_init_entities();
     s32 enemy_path_start();
@@ -1481,7 +1481,7 @@ s32 func_002012B0();
 s32 func_00202C50();
 extern u16 D_0025A330[];
 
-void func_0015FDE0(void) {
+void mid_flyer_d(void) {
     u32 cnt;
     u8 *ptr;
 
@@ -1806,7 +1806,7 @@ next_700:
     enemy_remove();
 }
 
-void func_00160D10(void) {
+void mid_tank_vertical_first(void) {
     enemy_set_entity_count(1);
 }
 
@@ -1817,7 +1817,7 @@ extern u16 D_0025A430[];
 extern u16 g_rank_8_16;
 extern u16 g_rank_11_16;
 
-void func_00160D20(void) {
+void mid_tank_vertical_start(void) {
     s32 enemy_set_task_work();
     s32 enemy_init_entities();
     s32 enemy_path_start();
@@ -1886,7 +1886,7 @@ extern u16 D_0025A460[];
 extern u16 D_0028C9E0;
 extern u16 g_rank_1_16;
 
-void func_00160FA0(void) {
+void mid_tank_vertical(void) {
     s16 *temp_a0;
     s16 *temp_v1_3;
     u16 temp_v1_2;
@@ -2272,13 +2272,13 @@ void func_00161CC0(void) {
     }
 }
 
-void func_00161E40(void) {
+void item_carrier_first(void) {
     enemy_set_entity_count(1);
 }
 
 extern s8 D_0025A480[];
 
-void func_00161E50(void) {
+void item_carrier_start(void) {
     func_00161CC0();
     reg_a0_as_s8_p = D_0025A480;
     reg_d0.h[0] = g_stage_x2;
@@ -2295,7 +2295,7 @@ s32 func_0016A9B0();
 s32 func_00203120();
 extern u16 g_two_player_game;
 
-void func_00161EE0(void) {
+void item_carrier(void) {
     s16 *temp_v1;
     s16 *var_a0;
     s16 *var_a1;
@@ -2499,13 +2499,13 @@ block_23:
     }
 }
 
-void func_00162690(void) {
+void bomb_carrier_first(void) {
     enemy_set_entity_count(1);
 }
 
 extern s8 D_0025A518[];
 
-void func_001626A0(void) {
+void bomb_carrier_start(void) {
     func_00161CC0();
     reg_a0_as_s8_p = D_0025A518;
     reg_d0.h[0] = g_stage_x2;
@@ -2517,7 +2517,7 @@ void func_001626A0(void) {
     reg_a0_as_s8_p += 1;
 }
 
-void func_00162730(void) {
+void shooter_drone_first(void) {
     enemy_set_entity_count(0);
 }
 
@@ -2527,7 +2527,7 @@ extern u8 D_002623B0[];
 
 extern void sprite_palette_load(void);
 
-void func_00162740(void)
+void shooter_drone_start(void)
 {
     extern void enemy_set_task_work(void);
     extern void enemy_init_entities(void);
@@ -2558,7 +2558,7 @@ s32 func_00202D50();
 s32 entity_move_by_p2_stick();
 extern u16 g_game_frame;
 
-void func_001627C0(void) {
+void shooter_drone(void) {
     u8 *ptr;
     u32 save_d0, save_d1, save_d2, save_d3, save_d4, save_d5, save_d6, save_d7;
     u8 *save_a0, *save_a1, *save_a2, *save_a3, *save_a4, *save_a5, *save_a6;
@@ -2676,7 +2676,7 @@ void func_001627C0(void) {
     enemy_hitbox_debug_draw();
 }
 
-void func_00162C70(void) {
+void mid_tank_horizontal_first(void) {
     enemy_set_entity_count(1);
 }
 
@@ -2686,7 +2686,7 @@ extern u16 D_0025A580[];
 extern u16 D_0025A5A0[];
 extern u16 D_0025A610[];
 
-void func_00162C80(void) {
+void mid_tank_horizontal_start(void) {
     s32 enemy_set_task_work();
     s32 enemy_init_entities();
     s32 enemy_path_start();
@@ -2770,7 +2770,7 @@ s32 func_00170D00();
 extern u16 D_002594F0[];
 extern u16 D_0025A620[];
 
-void func_001630A0(void) {
+void mid_tank_horizontal(void) {
     s32 func_00170BE0();
     u8 bits;
     u8 *ptr;
@@ -3094,7 +3094,7 @@ block_d:
     enemy_remove();
 }
 
-void func_00163E40(void) {
+void ground_turret_a_first(void) {
     enemy_set_entity_count(0);
 }
 
@@ -3102,7 +3102,7 @@ extern u16 D_0025A640[];
 extern u16 D_0025A650[];
 extern u16 D_0025A660[];
 
-void func_00163E50(void) {
+void ground_turret_a_start(void) {
     s32 enemy_set_task_work();
     s32 enemy_init_entities();
     s32 enemy_path_start();
@@ -3152,7 +3152,7 @@ s32 wreck_spawn();
 extern s16 g_player2[];
 extern s16 g_player1[];
 
-void func_00164040(void) {
+void ground_turret_a(void) {
     s16 *temp_v1;
     s16 *var_a0;
 
@@ -3297,7 +3297,7 @@ block_21:
     }
 }
 
-void func_00164580(void) {
+void bee_container_first(void) {
     enemy_set_entity_count(0);
 }
 
@@ -3307,7 +3307,7 @@ s32 enemy_path_start();                            /* extern */
 extern s32 D_0025A680[];
 extern s32 D_0028C9E8;
 
-void func_00164590(void) {
+void bee_container_start(void) {
     reg_a0 = (u8 *)D_0025A680;
     enemy_init_entities();
     reg_a0 = (u8 *)(&D_0028C9E8);
@@ -3324,7 +3324,7 @@ s32 entity_follow_scroll();
 s32 func_00203380();
 extern s8 g_boss_present_b1_as_s8;
 
-void func_00164600(void) {
+void bee_container(void) {
     u32 saved;
     u8 t;
 
@@ -3430,7 +3430,7 @@ block_rts:
     return;
 }
 
-void func_00164970(void) {
+void star_container_first(void) {
     enemy_set_entity_count(0);
 }
 
@@ -3438,7 +3438,7 @@ extern u32 D_0025A6A0[];
 extern u32 D_0028C9F0;
 extern s16 g_scroll_line_as_s16;
 
-void func_00164980(void)
+void star_container_start(void)
 {
     extern void enemy_set_task_work(void);
     extern void enemy_init_entities(void);
@@ -3456,7 +3456,7 @@ void func_00164980(void)
     }
 }
 
-void func_00164A00(void) {
+void star_container(void) {
     u32 saved;
 
     if (g_boss_present_b1_as_s8 < 0) goto block_1;
@@ -3536,7 +3536,7 @@ void func_00164C30(void) {
     func_00170BE0();
 }
 
-void func_00164CA0(void) {
+void water_flower_turret_first(void) {
     enemy_set_entity_count(0);
 }
 
@@ -3547,7 +3547,7 @@ extern u16 D_0025A6D0[];
 extern u16 D_0025A6F0[];
 extern u16 D_0025A710[];
 
-void func_00164CB0(void) {
+void water_flower_turret_start(void) {
     s32 enemy_set_task_work();
     s32 enemy_init_entities();
     s32 enemy_path_start();
@@ -3591,7 +3591,7 @@ extern u16 D_0025A7B0[];
 extern u16 D_0025A830[];
 extern u16 D_0025AEE0[];
 
-void func_00164E90(void) {
+void water_flower_turret(void) {
     s32 func_00170BE0();
     u8 *ptr;
 
@@ -3797,7 +3797,7 @@ block_dead2:
     enemy_remove();
 }
 
-void func_001657C0(void) {
+void ground_turret_b_first(void) {
     enemy_set_entity_count(0);
 }
 
@@ -3806,7 +3806,7 @@ extern u16 D_0025AC38[];
 extern u16 D_0025AC48[];
 extern u16 D_0025AC60[];
 
-void func_001657D0(void) {
+void ground_turret_b_start(void) {
     s32 enemy_set_task_work();
     s32 enemy_init_entities();
     s32 enemy_path_start();
@@ -3848,7 +3848,7 @@ void func_001657D0(void) {
 
 extern u16 D_002595F0[];
 
-void func_001659C0(void) {
+void ground_turret_b(void) {
     s16 *temp_a0;
     s16 *temp_v1;
     u16 temp_a0_2;
@@ -3997,7 +3997,7 @@ block_22:
     }
 }
 
-void func_00165EE0(void) {
+void ground_turret_c_first(void) {
     enemy_set_entity_count(0);
 }
 
@@ -4006,7 +4006,7 @@ extern u16 D_0025AC80[];
 extern u16 D_0025AC90[];
 extern u16 D_0025ACA0[];
 
-void func_00165EF0(void) {
+void ground_turret_c_start(void) {
     s32 enemy_set_task_work();
     s32 enemy_init_entities();
     s32 enemy_path_start();
@@ -4046,7 +4046,7 @@ void func_00165EF0(void) {
 
 s32 func_00170D70();
 
-void func_001660C0(void) {
+void ground_turret_c(void) {
     u8 *swp;
 
     enemy_path_step();
@@ -4232,7 +4232,7 @@ void func_00166740(void) {
     bullet_fire256_fast();
 }
 
-void func_001667D0(void) {
+void mid_flyer_e_first(void) {
     enemy_set_entity_count(1);
 }
 
@@ -4244,7 +4244,7 @@ extern u16 g_enemy_signal_6;
 extern u16 g_enemy_signal_5;
 extern u16 g_enemy_signal_4;
 
-void func_001667E0(void) {
+void mid_flyer_e_start(void) {
     s32 enemy_set_task_work();
     s32 enemy_init_entities();
     s32 enemy_path_start();
@@ -4311,7 +4311,7 @@ block_10:
 extern u16 D_0025AD30[];
 extern u16 D_0028C9F8;
 
-void func_001669F0(void) {
+void mid_flyer_e(void) {
     s16 *temp_v1_2;
     s16 *var_a1;
     u16 temp_a0_2;
@@ -4603,7 +4603,7 @@ block_58:
     }
 }
 
-void func_00167420(void) {
+void mid_tank_horizontal_b_first(void) {
     enemy_set_entity_count(0);
 }
 
@@ -4612,7 +4612,7 @@ extern s8 D_0025AD50[];
 extern s8 D_0025AD60[];
 extern s8 D_0025AD90[];
 
-void func_00167430(void) {
+void mid_tank_horizontal_b_start(void) {
     s32 enemy_set_task_work();
     s32 enemy_init_entities();
     s32 enemy_path_start();
@@ -4681,7 +4681,7 @@ extern u16 D_00259370[];
 extern u16 D_0025ADE0[];
 extern u16 D_0025ADF0[];
 
-void func_001676F0(void) {
+void mid_tank_horizontal_b(void) {
     s32 func_00170BE0();
     s16 *t1;
     s16 *t2;

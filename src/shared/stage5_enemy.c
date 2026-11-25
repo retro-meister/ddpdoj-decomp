@@ -97,7 +97,7 @@ loop_1:
 }
 
 
-void func_001F62C0(void) {
+void stage5_small_turret_first(void) {
     void enemy_set_entity_count(s32);
     enemy_set_entity_count(0);
 }
@@ -107,7 +107,7 @@ extern u8 D_00265130[];
 extern s16 D_00299768[];
 extern s8 enemy_move_end_requested;
 
-void func_001F62D0(void)
+void stage5_small_turret_start(void)
 {
     extern void enemy_set_task_work(void);
     extern void enemy_init_entities(void);
@@ -137,7 +137,7 @@ s32 entity_follow_scroll();
 s32 func_00202180();
 extern u8 D_00265150[];
 
-void func_001F6340(void) {
+void stage5_small_turret(void) {
     s32 enemy_hitbox_debug_draw();
     s32 sprite_draw_layer1();
     u16 temp_a0;
@@ -274,7 +274,7 @@ block_20:
     enemy_hitbox_debug_draw();
 }
 
-void func_001F67C0(void) {
+void stage5_bee_hatch_first(void) {
     void enemy_set_entity_count(s32 mode);
     enemy_set_entity_count(0);
 }
@@ -283,7 +283,7 @@ extern u8 D_00265170[];
 extern u8 D_00265180[];
 extern u16 g_scroll_line;
 
-void func_001F67D0(void) {
+void stage5_bee_hatch_start(void) {
     s32 enemy_set_task_work();
     s32 enemy_init_entities();
     s32 enemy_path_start();
@@ -317,7 +317,7 @@ s32 func_0014E030();
 s32 rng_next_unsigned();
 extern u8 D_002651A0[];
 
-void func_001F68C0(void) {
+void stage5_bee_hatch(void) {
     s32 sprite_draw_layer1();
     s16 temp_v0;
     s16 temp_v0_2;
@@ -416,7 +416,7 @@ block_4:
     sprite_draw_layer1();
 }
 
-void func_001F6C60(void) {
+void stage5_small_spider_turret_first(void) {
     void enemy_set_entity_count(s32);
     enemy_set_entity_count(1);
 }
@@ -425,7 +425,7 @@ extern u8 D_002651C0[];
 extern u8 D_002651E0[];
 extern s16 D_0029976A[];
 
-void func_001F6C70(void) {
+void stage5_small_spider_turret_start(void) {
     s32 enemy_set_task_work();
     s32 enemy_init_entities();
     s32 enemy_path_start();
@@ -457,7 +457,7 @@ extern u8 D_00265240[];
 extern u8 D_0028DA18;
 extern u8 D_0028DA1C;
 
-void func_001F6D30(void) {
+void stage5_small_spider_turret(void) {
     if (ENTITY(reg_a6)[1].misc.b.draw_layer == 0) {
         if (ENTITY(reg_a6)->y.sh > 0x2800) {
             reg_d1.w = 0x5C;
@@ -597,7 +597,7 @@ void func_001F7100(void) {
 void func_001F71A0(void) {
 }
 
-void func_001F71B0(void) {
+void stage5_small_spider_head_first(void) {
     void enemy_set_entity_count(s32);
     enemy_set_entity_count(0);
 }
@@ -607,7 +607,7 @@ extern s16 D_00265290[];
 extern s16 g_enemy_signal_6_as_s16;
 extern s16 g_enemy_signal_4_as_s16;
 
-void func_001F71C0(void) {
+void stage5_small_spider_head_start(void) {
     s32 enemy_set_task_work();
     s32 enemy_init_entities();
     s32 enemy_path_start();
@@ -644,7 +644,7 @@ extern u8 D_00265430[];
 extern u8 D_002654B0[];
 extern u16 g_bullets_blocked;
 
-void func_001F72B0(void) {
+void stage5_small_spider_head(void) {
     s32 enemy_hitbox_debug_draw();
     s32 sprite_draw_layer1();
     u16 temp_a0;
@@ -759,7 +759,7 @@ block_8:
     sprite_draw_layer1();
 }
 
-void func_001F7640(void) {
+void stage5_large_spider_turret_first(void) {
     void enemy_set_entity_count(s32 mode);
     enemy_set_entity_count(1);
 }
@@ -767,7 +767,7 @@ void func_001F7640(void) {
 extern u8 D_002654F0[];
 extern u8 D_00265510[];
 
-void func_001F7650(void) {
+void stage5_large_spider_turret_start(void) {
     s32 enemy_set_task_work();
     s32 enemy_init_entities();
     s32 enemy_path_start();
@@ -797,7 +797,7 @@ extern u8 D_00265570[];
 extern u8 D_0028DA20;
 extern u8 D_0028DA24;
 
-void func_001F7710(void) {
+void stage5_large_spider_turret(void) {
     s32 enemy_hitbox_debug_draw();
     s32 sprite_draw_layer1();
     u32 temp_a0_3;
@@ -937,7 +937,7 @@ block_18:
     }
 }
 
-void func_001F7B70(void) {
+void stage5_large_spider_head_first(void) {
     void enemy_set_entity_count(s32 mode);
     enemy_set_entity_count(0);
 }
@@ -947,7 +947,7 @@ extern s16 D_00265600[];
 extern s16 g_enemy_signal_7_as_s16;
 extern s16 g_enemy_signal_5_as_s16;
 
-void func_001F7B80(void) {
+void stage5_large_spider_head_start(void) {
     s32 enemy_set_task_work();
     s32 enemy_init_entities();
     s32 enemy_path_start();
@@ -983,7 +983,7 @@ extern u8 D_002656F0[];
 extern u8 D_00265770[];
 extern u8 D_002657B0[];
 
-void func_001F7C80(void) {
+void stage5_large_spider_head(void) {
     s32 enemy_hitbox_debug_draw();
     s32 sprite_draw_layer1();
     u8 *temp_a1;
@@ -1101,7 +1101,7 @@ block_8:
     enemy_hitbox_debug_draw();
 }
 
-void func_001F8050(void) {
+void stage5_spiderling_first(void) {
     void enemy_set_entity_count(s32);
     enemy_set_entity_count(0);
 }
@@ -1111,7 +1111,7 @@ extern u8 D_00261BB0[];
 extern u8 D_002657F0[];
 extern u8 D_00265810[];
 
-void func_001F8060(void) {
+void stage5_spiderling_start(void) {
     s32 enemy_set_task_work();
     s32 enemy_init_entities();
     reg_a0 = D_00265810;
@@ -1144,7 +1144,7 @@ extern u8 D_0028DA28;
 extern u16 g_frame_mod2;
 extern u16 g_game_frame;
 
-void func_001F8120(void) {
+void stage5_spiderling(void) {
     s32 enemy_hitbox_debug_draw();
     u8 *var_a0;
     u16 temp_a0_2;
@@ -1322,7 +1322,7 @@ block_26:
     enemy_hitbox_debug_draw();
 }
 
-void func_001F8700(void) {
+void stage5_bee_drone_first(void) {
     void enemy_set_entity_count(s32);
     enemy_set_entity_count(0);
 }
@@ -1331,7 +1331,7 @@ extern u8 D_00260870[];
 extern u8 D_00265870[];
 extern u8 D_00265890[];
 
-void func_001F8710(void) {
+void stage5_bee_drone_start(void) {
     s32 enemy_set_task_work();
     s32 enemy_init_entities();
     u16 temp_a0;
@@ -1365,7 +1365,7 @@ extern u8 D_00259870_as_u8_a[];
 extern u8 D_002658B0[];
 extern u8 D_002659B0[];
 
-void func_001F87E0(void) {
+void stage5_bee_drone(void) {
     s32 enemy_hitbox_debug_draw();
     s64 temp_v0_10;
     s64 temp_v0_11;

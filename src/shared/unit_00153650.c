@@ -126,7 +126,7 @@ void func_00153770(void) {
 
 extern void enemy_set_entity_count(s32);
 
-void func_00153CA0(void) {
+void battleship_first(void) {
     enemy_set_entity_count(6);
 }
 
@@ -138,7 +138,7 @@ extern s16 g_enemy_signal_d_as_s16;
 extern u16 g_scroll_line;
 extern s8 enemy_move_end_requested;
 
-void func_00153CB0(void) {
+void battleship_start(void) {
     s32 enemy_remove();
     s32 enemy_set_task_work();
     s32 enemy_init_entities();
@@ -205,7 +205,7 @@ extern u16 g_enemies_stopped;
 extern u16 g_rank_1_16;
 extern u16 g_rank_2_16;
 
-void func_00153DF0(void) {
+void battleship(void) {
     s32 enemy_remove();
     s32 enemy_path_step();
     u16 temp_a0;
@@ -922,14 +922,14 @@ void func_00155920(void) {
     }
 }
 
-void func_00155EB0(void) {
+void stage3_gun_a_first(void) {
     enemy_set_entity_count(0);
 }
 
 extern u32 D_00257D70[];
 extern u32 D_00257D90[];
 
-void func_00155EC0(void)
+void stage3_gun_a_start(void)
 {
     extern void enemy_set_task_work(void);
     extern void enemy_init_entities(void);
@@ -957,7 +957,7 @@ s32 func_002115E0();
 extern u8 D_00257FB0[];
 extern u8 D_00258030[];
 
-void func_00155F30(void) {
+void stage3_gun_a(void) {
     s32 enemy_remove();
     s32 sprite_draw_layer3_keep();
     u32 temp_a0;
@@ -1140,14 +1140,14 @@ void func_001563B0(void) {
 
 void enemy_set_entity_count(s32);
 
-void func_00156530(void) {
+void stage3_gun_b_first(void) {
     enemy_set_entity_count(0);
 }
 
 extern u8 D_00258040[];
 extern u8 D_00258060[];
 
-void func_00156540(void)
+void stage3_gun_b_start(void)
 {
     extern void enemy_set_task_work(void);
     extern void enemy_init_entities(void);
@@ -1165,7 +1165,7 @@ void func_00156540(void)
     }
 }
 
-void func_001565A0(void) {
+void stage3_gun_c_first(void) {
     enemy_set_entity_count(0);
 }
 
@@ -1173,7 +1173,7 @@ extern u8 D_00258080[];
 extern u8 D_002580A0[];
 
 
-void func_001565B0(void)
+void stage3_gun_c_start(void)
 {
     extern void enemy_set_task_work(void);
     extern void enemy_init_entities(void);
@@ -1191,14 +1191,14 @@ void func_001565B0(void)
     }
 }
 
-void func_00156610(void) {
+void stage3_gun_d_first(void) {
     enemy_set_entity_count(0);
 }
 
 extern u8 D_002580C0[];
 extern u8 D_002580E0[];
 
-void func_00156620(void)
+void stage3_gun_d_start(void)
 {
     extern void enemy_set_task_work(void);
     extern void enemy_init_entities(void);
@@ -1226,7 +1226,7 @@ void func_00156690(void) {
     }
 }
 
-void func_001566B0(void) {
+void stage3_large_gun_first(void) {
     enemy_set_entity_count(0);
 }
 
@@ -1238,7 +1238,7 @@ extern s16 g_enemy_signal_1_as_s16;
 extern s16 g_enemy_signal_0_as_s16;
 extern s16 D_00299768[];
 
-void func_001566C0(void) {
+void stage3_large_gun_start(void) {
     s32 enemy_set_task_work();
     s32 enemy_init_entities();
     s32 enemy_path_start();
@@ -1297,7 +1297,7 @@ extern u8 D_002581D0[];
 extern u16 g_rank;
 extern u16 g_bomb_entities[];
 
-void func_00156860(void) {
+void stage3_large_gun(void) {
     s32 enemy_remove();
     s32 sprite_draw_layer3_keep();
     u16 temp_a0_2;
@@ -1975,7 +1975,7 @@ void func_00157DC0() {
     }
 }
 
-void func_00157E50(void) {
+void stage3_cloud_first(void) {
     enemy_set_entity_count(1);
 }
 
@@ -1983,7 +1983,7 @@ extern u8 D_00258400[];
 extern u8 D_00258410[];
 extern u16 g_side_scroll_x_prev[];
 
-void func_00157E60(void) {
+void stage3_cloud_start(void) {
     s32 enemy_set_task_work();
     s32 enemy_init_entities();
     reg_a0 = D_00258410;
@@ -2006,7 +2006,7 @@ s32 entity_draw_layer3_keep();
 s32 func_00201D10();
 extern u8 D_00258450[];
 
-void func_00157F10(void) {
+void stage3_cloud(void) {
     s32 enemy_remove();
     u16 t1;
 
@@ -2268,7 +2268,7 @@ next_5:
     sprite_draw_layer3_keep();
 }
 
-void func_00158690(void) {
+void battleship_b_first(void) {
     enemy_set_entity_count(1);
 }
 
@@ -2276,7 +2276,7 @@ extern u8 D_002584B0[];
 extern u8 D_002584E0[];
 extern s16 g_slowdown_boss_allowed;
 
-void func_001586A0() {
+void battleship_b_start() {
     s32 enemy_set_task_work();
     s32 enemy_init_entities();
     u16 temp_a1;
@@ -2299,7 +2299,7 @@ s32 func_00201710();
 extern u8 D_00258520[];
 extern u16 g_slowdown_boss_allowed_as_u16;
 
-void func_00158720(void) {
+void battleship_b(void) {
     s32 enemy_remove();
     s32 sprite_draw_layer2();
     s16 temp_v1_2;

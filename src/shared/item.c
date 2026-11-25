@@ -235,7 +235,7 @@ next_2:
 }
 
 
-void func_0016AD50(void)
+void item_kind7(void)
 {
 }
 
@@ -248,7 +248,7 @@ s32 sprite_draw_with_items();
 extern u32 D_0026ADC0[];
 extern u32 D_0026AFC0[];
 
-void func_0016AD60(void) {
+void item_powerup(void) {
     u32 t1;
     u32 t2;
     u32 t3;
@@ -408,7 +408,7 @@ s32 p1_power_max();
 s32 p2_power_max();
 extern u32 D_0026ADD0[];
 
-void func_0016B190(void) {
+void item_max_powerup(void) {
     u32 t1;
     u32 t2;
     u32 t3;
@@ -561,7 +561,7 @@ s32 voice_bomb();
 extern u32 D_0026ADE0[];
 extern u32 D_0026AEC0[];
 
-void func_0016B5B0(void) {
+void item_bomb(void) {
     u32 t1;
     u32 t2;
     u32 t3;
@@ -698,7 +698,7 @@ extern u16 g_p1_hyper_items;
 extern u16 g_p1_hyper_active;
 extern u16 D_0028E958_as_u16;
 
-void func_0016B9B0(void) {
+void item_hyper_p1(void) {
     s32 func_0016C260();
     u32 saved_d7;
 
@@ -880,7 +880,7 @@ s32 p2_life_add();
 s32 sfx_extend();
 extern u8 D_0026AE40[];
 
-void func_0016BF00(void) {
+void item_extend(void) {
     u32 temp_v0;
 
     if (!(reg_d1.w & 0x2000)) {
@@ -957,7 +957,7 @@ s32 p2_hyper_item_take();
 extern u16 g_p2_hyper_items;
 extern u16 g_p2_hyper_active;
 
-void func_0016C110(void) {
+void item_hyper_p2(void) {
     s32 func_0016C260();
     u32 saved_d7;
 
@@ -1009,7 +1009,7 @@ next_1:
     return;
 }
 
-void func_0016C250(void) {
+void item_kind6(void) {
     void func_0016C260(void);
     func_0016C260();
 }

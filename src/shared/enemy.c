@@ -838,7 +838,7 @@ block_7:
 
 extern s8 *reg_a0_as_s8_p;
 
-void func_0014EC80(void) {
+void enemy_script_loop(void) {
     reg_d0.w = 0;
     reg_d0.b[0] = (u8) *(s8 *)reg_a0;
     reg_a0 += 1;
@@ -847,13 +847,13 @@ void func_0014EC80(void) {
 }
 
 
-void func_0014ECC0(void) {
+void enemy_script_set_entity_1f(void) {
     *(s8 *)(reg_a6 + 0x1E) = *(s8 *)reg_a0;
     reg_a0 += 1;
 }
 
 
-void func_0014ECE0(void)
+void enemy_script_ground_collision(void)
 {
     reg_d0.b[0] = *reg_a0_as_s8_p++;
     reg_d0.b[0] -= 1;
@@ -867,7 +867,7 @@ void func_0014ECE0(void)
 
 extern u16 *reg_a6_as_u16_p;
 
-void func_0014ED40(void)
+void enemy_script_air_collision(void)
 {
     reg_d0.b[0] = (u8)*reg_a0_as_s8_p;
     reg_a0_as_s8_p += 1;
@@ -881,13 +881,13 @@ void func_0014ED40(void)
 }
 
 
-void func_0014EDA0(void) {
+void enemy_script_set_work_22(void) {
     *(s8 *)(reg_a5 + 0x23) = *(s8 *)reg_a0;
     reg_a0 += 1;
 }
 
 
-void func_0014EDC0(void) {
+void enemy_script_poke_task(void) {
     s8 temp_a2;
 
     reg_d0.h[0] = 0;
@@ -910,7 +910,7 @@ void func_0014EDC0(void) {
     *(u16 *)(reg_a5 + ((s32) reg_d0.h[0] >> 1)) = reg_d1.h[0];
 }
 
-void func_0014EE90(void) {
+void enemy_script_poke_entity(void) {
     s8 temp_a2;
 
     reg_d0.h[0] = 0;
@@ -933,17 +933,17 @@ void func_0014EE90(void) {
     *(u16 *)(reg_a6 + ((s32) reg_d0.h[0] >> 1)) = reg_d1.h[0];
 }
 
-void func_0014EF60(void) {
+void enemy_script_set_work_24(void) {
     *(s8 *)(reg_a5 + 0x25) = *(s8 *)reg_a0;
     reg_a0 += 1;
 }
 
-void func_0014EF80(void) {
+void enemy_script_set_entity_1e(void) {
     *(s8 *)(reg_a6 + 0x1F) = *(s8 *)reg_a0;
     reg_a0 += 1;
 }
 
-void func_0014EFA0(void) {
+void enemy_script_air_scroll_check(void) {
     reg_d0.h[0] = g_side_scroll_x[0];
     *(u16 *)(reg_a6 + 4) -= reg_d0.h[0];
     reg_a0 += 1;
@@ -952,11 +952,11 @@ void func_0014EFA0(void) {
 extern u8 enemy_move_end_requested_as_u8;
 
 
-void func_0014EFD0(void) {
+void enemy_script_end(void) {
     enemy_move_end_requested_as_u8 = 1;
     enemy_remove();
 }
 
-void func_0014EFE0(void) {
+void enemy_script_unused(void) {
 
 }

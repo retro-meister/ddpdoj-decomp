@@ -148,7 +148,7 @@ void func_001507E0(void) {
 
 extern void enemy_set_entity_count(s32);
 
-void func_001509C0(void) {
+void heli_a_first(void) {
     enemy_set_entity_count(0);
 }
 
@@ -169,7 +169,7 @@ extern u16 g_enemy_signal_1;
 extern u16 g_rank_2_16;
 extern s8 enemy_move_end_requested;
 
-void func_001509D0(void) {
+void heli_a_start(void) {
     s32 enemy_remove();
     func_00150740();
     if ((cond_flag == 0) && (reg_a0 = (u8 *)D_002578B0, enemy_init_entities(), reg_a0 = (u8 *)D_00257890, reg_d0.h[0] = 0xC, enemy_set_task_work(), ENTITY(reg_a6)->attr.b.palette = (u8) *(u8 *)(reg_a5 + 0x2B), enemy_path_start(), (enemy_move_end_requested == 0))) {
@@ -221,7 +221,7 @@ s32 func_00202D50();
 extern u16 g_enemies_stopped;
 extern u16 g_rank_5_16;
 
-void func_00150C50(void) {
+void heli_a(void) {
     u16 temp_a0_2;
     func_00150510(8);
     if ((cond_flag == 0) && (func_00171430(), (cond_flag == 0))) {
@@ -310,14 +310,14 @@ void func_00150F70(void) {
     func_001507E0();
 }
 
-void func_001510C0(void) {
+void heli_b_first(void) {
     enemy_set_entity_count(0);
 }
 
 extern u16 D_00257A50[];
 extern u16 D_00257A70[];
 
-void func_001510D0(void) {
+void heli_b_start(void) {
     func_00150740();
     if (cond_flag == 0) {
         func_00150790();
@@ -352,7 +352,7 @@ void func_001510D0(void) {
 
 s32 enemy_path_step();
 
-void func_001512D0(void) {
+void heli_b(void) {
     u16 temp_a0_2;
     func_00150510(8);
     if ((cond_flag == 0) && (func_00171430(), (cond_flag == 0))) {
@@ -424,14 +424,14 @@ block_13:
     }
 }
 
-void func_00151600(void) {
+void heli_c_first(void) {
     enemy_set_entity_count(0);
 }
 
 extern u16 D_00257A90[];
 extern u16 D_00257AB0[];
 
-void func_00151610(void) {
+void heli_c_start(void) {
     func_00150740();
     if (cond_flag == 0) {
         func_00150790();
@@ -479,7 +479,7 @@ void func_00151610(void) {
 s32 direction_turn_toward();
 extern u16 g_frame_mod4;
 
-void func_00151880(void) {
+void heli_c(void) {
     func_00150510(8);
     if (cond_flag != 0) return;
     func_00171430();
@@ -580,7 +580,7 @@ next_7:
     func_00150F70();
 }
 
-void func_00151C20(void) {
+void heli_d_first(void) {
     enemy_set_entity_count(0);
 }
 
@@ -589,7 +589,7 @@ extern u16 D_00257AF0[];
 extern u16 g_enemy_signal_7;
 extern u16 g_enemy_signal_6;
 
-void func_00151C30(void) {
+void heli_d_start(void) {
     s32 enemy_remove();
     func_00150740();
     if ((cond_flag == 0) && (func_00150790(), (cond_flag == 0)) && (reg_a0 = (u8 *)D_00257AF0, enemy_init_entities(), reg_a0 = (u8 *)D_00257AD0, reg_d0.h[0] = 0xA, enemy_set_task_work(), ENTITY(reg_a6)->attr.b.palette = (u8) *(u8 *)(reg_a5 + 0x2B), enemy_path_start(), (enemy_move_end_requested == 0))) {
@@ -635,7 +635,7 @@ void func_00151C30(void) {
 s32 func_00202490();
 #endif
 
-void func_00151EC0(void) {
+void heli_d(void) {
     func_00150510(8);
     if (cond_flag != 0) return;
     func_00171430();
@@ -741,14 +741,14 @@ next_7:
     func_00150F70();
 }
 
-void func_00152230(void) {
+void heli_e_first(void) {
     enemy_set_entity_count(0);
 }
 
 extern u16 D_00257B10[];
 extern u16 D_00257B30[];
 
-void func_00152240(void) {
+void heli_e_start(void) {
     func_00150740();
     if (cond_flag == 0) {
         reg_a0 = (u8 *)(D_00257B30);
@@ -787,7 +787,7 @@ void func_00152240(void) {
     }
 }
 
-void func_00152480(void) {
+void heli_e(void) {
     u16 temp_a0;
     u8 temp_v0;
     u8 *var_a0;
@@ -864,14 +864,14 @@ void func_00152480(void) {
     }
 }
 
-void func_001526F0(void) {
+void heli_f_first(void) {
     enemy_set_entity_count(0);
 }
 
 extern u16 D_00257B50[];
 extern u16 D_00257B70[];
 
-void func_00152700(void) {
+void heli_f_start(void) {
     func_00150740();
     if (cond_flag == 0) {
         reg_a0 = (u8 *)(D_00257B70);
@@ -906,7 +906,7 @@ void func_00152700(void) {
     }
 }
 
-void func_00152910(void) {
+void heli_f(void) {
     u16 temp_a0;
 
     func_00150510(8);
@@ -954,7 +954,7 @@ void func_00152910(void) {
 
 void enemy_set_entity_count(s32);
 
-void func_00152A80(void) {
+void heli_g_first(void) {
     enemy_set_entity_count(0);
 }
 
@@ -962,7 +962,7 @@ extern u16 D_00257B90[];
 extern u16 D_00257BB0[];
 extern s16 g_scroll_line_as_s16;
 
-void func_00152A90(void) {
+void heli_g_start(void) {
     s32 enemy_remove();
     func_00150740();
     if ((cond_flag == 0) && (func_00150790(), (cond_flag == 0)) && (reg_a0 = (u8 *)D_00257BB0, enemy_init_entities(), reg_a0 = (u8 *)D_00257B90, reg_d0.h[0] = 0xA, enemy_set_task_work(), ENTITY(reg_a6)->attr.b.palette = (u8) *(u8 *)(reg_a5 + 0x2B), enemy_path_start(), (enemy_move_end_requested == 0))) {
@@ -1016,7 +1016,7 @@ void func_00152A90(void) {
     }
 }
 
-void func_00152DA0(void) {
+void heli_g(void) {
     u16 temp_a0;
     u16 temp_a0_2;
     u8 temp_v1;
@@ -1141,7 +1141,7 @@ block_33:
     }
 }
 
-void func_00153190(void) {
+void heli_h_first(void) {
     enemy_set_entity_count(0);
 }
 
@@ -1149,7 +1149,7 @@ extern u16 D_00257BD0[];
 extern u16 D_00257BF0[];
 extern u16 g_rank_4_16;
 
-void func_001531A0(void) {
+void heli_h_start(void) {
     s32 enemy_remove();
     func_00150740();
     if ((cond_flag == 0) && (func_00150790(), (cond_flag == 0)) && (reg_a0 = (u8 *)D_00257BF0, enemy_init_entities(), reg_a0 = (u8 *)D_00257BD0, reg_d0.h[0] = 0xA, enemy_set_task_work(), ENTITY(reg_a6)->attr.b.palette = (u8) *(u8 *)(reg_a5 + 0x2B), enemy_path_start(), (enemy_move_end_requested == 0))) {
@@ -1185,7 +1185,7 @@ void func_001531A0(void) {
     }
 }
 
-void func_00153400(void) {
+void heli_h(void) {
     u16 temp_a0_2;
 
     func_00150510(8);
