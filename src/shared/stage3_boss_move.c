@@ -10,6 +10,26 @@ void stage3_boss_move_wander_high(void);
 void stage3_boss_move_wander_mid_start(void);
 void stage3_boss_move_wander_mid(void);
 
+/* Two bytes of a boss slot that are set together as one word: a reload value and its countdown. */
+typedef union {
+    u16 h;
+    s16 sh;
+    struct { u8 reload; u8 count; } t;
+} SlotTimer;
+
+/* The movement part of the boss slot (reg_a4). */
+typedef struct {
+    /* 0x00 */ SlotTimer brake;   /* entering: frames between two steps of slowing down */
+} MoveEnter;
+
+typedef struct {
+    /* 0x00 */ u8 turning;        /* still turning toward target_dir */
+    /* 0x01 */ u8 target_dir;
+} MoveWander;
+
+#define ENTER(pointer) ((MoveEnter *)(pointer))
+#define WANDER(pointer) ((MoveWander *)(pointer))
+
 /* The set-up routine and the per-frame routine of every movement, by movement number. */
 void (*stage3_boss_move_routines[])(void) = {
     stage3_boss_move_enter_start,
@@ -28,7 +48,7 @@ void stage3_boss_move_wander_high(void);
 void stage3_boss_move_wander_mid(void);
 
 
-void func_001D36C0(void) {
+void stage3_boss_parts_follow(void) {
     reg_d0.h[0] = ENTITY(reg_a6)->y.h;
     reg_d1.h[0] = ENTITY(reg_a6)->x.h;
     reg_d0.h[0] += 0xF800 & 0xFFFF;
@@ -51,12 +71,11 @@ void func_001D36C0(void) {
     ENTITY(reg_a6)[7].x.h = (u16) ENTITY(reg_a6)[2].x.h;
 }
 
-extern s16 *reg_a4_as_s16_p;
 extern void *reg_a6_as_void_p;
 
 void stage3_boss_move_enter_start(void)
 {
-    *reg_a4_as_s16_p = 0x1818;
+    ENTER(reg_a4)->brake.sh = 0x1818;
     ((u8 *)reg_a6_as_void_p)[0x1B] = 0xC;
     ((u8 *)reg_a6_as_void_p)[0x1A] = 0xE;
     ((u16 *)reg_a6_as_void_p)[1] = 0x4400;
@@ -72,10 +91,10 @@ s32 entity_velocity();
 void stage3_boss_move_enter(void) {
     u8 temp_v1;
 
-    reg_tmp.b[0] = *(u8 *)(reg_a4 + 1);
-    *(u8 *)(reg_a4 + 1) -= 1;
+    reg_tmp.b[0] = ENTER(reg_a4)->brake.t.count;
+    ENTER(reg_a4)->brake.t.count -= 1;
     if ((s32) reg_tmp.b[0] <= 0) {
-        *(u8 *)(reg_a4 + 1) = (u8) *(u8 *)reg_a4;
+        ENTER(reg_a4)->brake.t.count = (u8) ENTER(reg_a4)->brake.t.reload;
         temp_v1 = ENTITY(reg_a6)->move.b.speed;
         if (temp_v1 != 4) {
             ENTITY(reg_a6)->move.b.speed = (u8) (temp_v1 - 1);
@@ -88,22 +107,22 @@ void stage3_boss_move_enter(void) {
             boss_phase_stop();
             reg_d0.w = 2;
             boss_phase_start();
-            func_001D36C0();
+            stage3_boss_parts_follow();
             return;
         }
         goto block_5;
     }
 block_5:
     entity_velocity();
-    func_001D36C0();
+    stage3_boss_parts_follow();
 }
 
 
 
 void stage3_boss_move_wander_low_start(void) {
     reg_d0.w = 0;
-    ((u8 *)((void *)reg_a4))[1] = reg_d0.b[0];
-    ((u8 *)((void *)reg_a4))[0] = reg_d0.b[0];
+    WANDER(reg_a4)->target_dir = reg_d0.b[0];
+    WANDER(reg_a4)->turning = reg_d0.b[0];
     stage3_boss_move_wander_low();
 }
 
@@ -112,11 +131,11 @@ s32 func_002024C0();
 
 void stage3_boss_move_wander_low(void) {
     entity_velocity();
-    if (*(u8 *)reg_a4 != 0) {
-        reg_d1.b[0] = *(u8 *)(reg_a4 + 1);
+    if (WANDER(reg_a4)->turning != 0) {
+        reg_d1.b[0] = WANDER(reg_a4)->target_dir;
         func_002024C0();
-        if (*(u8 *)(reg_a4 + 1) == reg_d1.b[0]) {
-            *(u8 *)reg_a4 = 0U;
+        if (WANDER(reg_a4)->target_dir == reg_d1.b[0]) {
+            WANDER(reg_a4)->turning = 0U;
         }
     }
     rng_next();
@@ -136,7 +155,7 @@ void stage3_boss_move_wander_low(void) {
     reg_d1.h[0] = reg_tmp1.h[1];
     if ((s32) reg_d1.h[0] >= 0x5C00) {
         if ((s32) reg_d1.h[0] < 0x6400) {
-            func_001D36C0();
+            stage3_boss_parts_follow();
             return;
         }
         reg_d0.b[0] += 0x20;
@@ -144,26 +163,26 @@ void stage3_boss_move_wander_low(void) {
     }
 block_12:
     reg_d0.b[0] &= 0x3F;
-    *(u8 *)(reg_a4 + 1) = (u8) reg_d0.b[0];
-    *(u8 *)reg_a4 = 1U;
-    func_001D36C0();
+    WANDER(reg_a4)->target_dir = (u8) reg_d0.b[0];
+    WANDER(reg_a4)->turning = 1U;
+    stage3_boss_parts_follow();
 }
 
 
 void stage3_boss_move_wander_high_start(void) {
     reg_d0.w = 0;
-    reg_a4[1] = reg_d0.b[0];
-    reg_a4[0] = reg_d0.b[0];
+    WANDER(reg_a4)->target_dir = reg_d0.b[0];
+    WANDER(reg_a4)->turning = reg_d0.b[0];
     stage3_boss_move_wander_high();
 }
 
 void stage3_boss_move_wander_high(void) {
     entity_velocity();
-    if (*(u8 *)reg_a4 != 0) {
-        reg_d1.b[0] = *(u8 *)(reg_a4 + 1);
+    if (WANDER(reg_a4)->turning != 0) {
+        reg_d1.b[0] = WANDER(reg_a4)->target_dir;
         func_002024C0();
-        if (*(u8 *)(reg_a4 + 1) == reg_d1.b[0]) {
-            *(u8 *)reg_a4 = 0U;
+        if (WANDER(reg_a4)->target_dir == reg_d1.b[0]) {
+            WANDER(reg_a4)->turning = 0U;
         }
     }
     rng_next();
@@ -183,7 +202,7 @@ void stage3_boss_move_wander_high(void) {
     reg_d1.h[0] = reg_tmp1.h[1];
     if ((s32) reg_d1.h[0] >= 0x6600) {
         if ((s32) reg_d1.h[0] < 0x6A00) {
-            func_001D36C0();
+            stage3_boss_parts_follow();
             return;
         }
         reg_d0.b[0] += 0x20;
@@ -191,26 +210,26 @@ void stage3_boss_move_wander_high(void) {
     }
 block_12:
     reg_d0.b[0] &= 0x3F;
-    *(u8 *)(reg_a4 + 1) = (u8) reg_d0.b[0];
-    *(u8 *)reg_a4 = 1U;
-    func_001D36C0();
+    WANDER(reg_a4)->target_dir = (u8) reg_d0.b[0];
+    WANDER(reg_a4)->turning = 1U;
+    stage3_boss_parts_follow();
 }
 
 
 void stage3_boss_move_wander_mid_start(void) {
     reg_d0.w = 0;
-    reg_a4[1] = reg_d0.b[0];
-    reg_a4[0] = reg_d0.b[0];
+    WANDER(reg_a4)->target_dir = reg_d0.b[0];
+    WANDER(reg_a4)->turning = reg_d0.b[0];
     stage3_boss_move_wander_mid();
 }
 
 void stage3_boss_move_wander_mid(void) {
     entity_velocity();
-    if (*(u8 *)reg_a4 != 0) {
-        reg_d1.b[0] = *(u8 *)(reg_a4 + 1);
+    if (WANDER(reg_a4)->turning != 0) {
+        reg_d1.b[0] = WANDER(reg_a4)->target_dir;
         func_002024C0();
-        if (*(u8 *)(reg_a4 + 1) == reg_d1.b[0]) {
-            *(u8 *)reg_a4 = 0U;
+        if (WANDER(reg_a4)->target_dir == reg_d1.b[0]) {
+            WANDER(reg_a4)->turning = 0U;
         }
     }
     rng_next();
@@ -230,7 +249,7 @@ void stage3_boss_move_wander_mid(void) {
     reg_d1.h[0] = reg_tmp1.h[1];
     if ((s32) reg_d1.h[0] >= 0x5E00) {
         if ((s32) reg_d1.h[0] < 0x6600) {
-            func_001D36C0();
+            stage3_boss_parts_follow();
             return;
         }
         reg_d0.b[0] += 0x20;
@@ -238,7 +257,7 @@ void stage3_boss_move_wander_mid(void) {
     }
 block_12:
     reg_d0.b[0] &= 0x3F;
-    *(u8 *)(reg_a4 + 1) = (u8) reg_d0.b[0];
-    *(u8 *)reg_a4 = 1U;
-    func_001D36C0();
+    WANDER(reg_a4)->target_dir = (u8) reg_d0.b[0];
+    WANDER(reg_a4)->turning = 1U;
+    stage3_boss_parts_follow();
 }
