@@ -782,7 +782,7 @@ void func_00169900(void) {
 #endif
 }
 
-s32 func_0022C6F0();
+s32 mc_autoload_update();
 s32 func_0022C710();
 s32 func_00234EF0();
 extern u8 D_0028ECF4;
@@ -814,7 +814,7 @@ void func_00169950(void) {
         }
         break;
     case 2:
-        func_0022C6F0(temp_a0, temp_a1);
+        mc_autoload_update(temp_a0, temp_a1);
         if (D_0028ED0C != 0) {
             *(u8 *)(reg_a5 + 2) = 3U;
             if (D_006A0E40[0] != 0) {
