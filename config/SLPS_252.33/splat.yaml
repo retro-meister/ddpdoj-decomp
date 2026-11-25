@@ -189,6 +189,8 @@ segments:
       - [0x138c10, c, shared/replay_state]
       - [0x13dcb0, pad]
       - [0x13dd00, data, data]
+      - [0x1417a0, .data, shared/bomb]
+      - [0x142088, data, data_142088]
       - [0x1693e0, .data, shared/slowdown]
       - [0x169440, data, data_169440]
       - [0x16f820, .data, shared/text]

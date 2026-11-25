@@ -194,6 +194,8 @@ segments:
       - [0x141300, c, shared/unit_00206910]
       - [0x141760, pad]
       - [0x141780, data, data]
+      - [0x14fdf0, .data, shared/bomb]
+      - [0x1506d8, data, data_1506d8]
       - [0x1591e0, .data, shared/replay]
       - [0x1591f8, data, data_1591f8]
       - [0x162160, .data, shared/memcard]
