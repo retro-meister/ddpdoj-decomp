@@ -2795,9 +2795,7 @@ void func_0018E5A0(void) {
     if (D_00251A80_as_u16_a[1] != 0x1) {
         printf("error! dollsel_data_1p[1]\n");
     }
-    reg_tmp.w = (u32)input_get_p1_held;
-    D_00251A80_as_u16_a[1] = reg_tmp.h[1];
-    D_00251A84[0] = reg_tmp.h[0];
+    STORE_POINTER(D_00251A80_as_u16_a + 1, input_get_p1_held);
     if (D_00251A84[1] != 0x3) {
         printf("error! dollsel_data_1p[3]\n");
     }
@@ -2805,9 +2803,7 @@ void func_0018E5A0(void) {
     if (D_00251A90_as_u16_a[1] != 0x1) {
         printf("error! dollsel_data_2p[1]\n");
     }
-    reg_tmp.w = (u32)input_get_p2_held;
-    D_00251A90_as_u16_a[1] = reg_tmp.h[1];
-    D_00251A94[0] = reg_tmp.h[0];
+    STORE_POINTER(D_00251A90_as_u16_a + 1, input_get_p2_held);
     if (D_00251A94[1] != 0x3) {
         printf("error! dollsel_data_2p[3]\n");
     }
@@ -2815,9 +2811,7 @@ void func_0018E5A0(void) {
     if (D_00251AB0_as_u16_a[1] != 0x1) {
         printf("error! figsel_data_1p[1]\n");
     }
-    reg_tmp.w = (u32)input_get_p1_held;
-    D_00251AB0_as_u16_a[1] = reg_tmp.h[1];
-    D_00251AB4[0] = reg_tmp.h[0];
+    STORE_POINTER(D_00251AB0_as_u16_a + 1, input_get_p1_held);
     if (D_00251AB4[1] != 0x3) {
         printf("error! figsel_data_1p[3]\n");
     }
@@ -2825,9 +2819,7 @@ void func_0018E5A0(void) {
     if (D_00251AC0_as_u16_a[1] != 0x1) {
         printf("error! figsel_data_2p[1]\n");
     }
-    reg_tmp.w = (u32)input_get_p2_held;
-    D_00251AC0_as_u16_a[1] = reg_tmp.h[1];
-    D_00251AC4[0] = reg_tmp.h[0];
+    STORE_POINTER(D_00251AC0_as_u16_a + 1, input_get_p2_held);
     if (D_00251AC4[1] != 0x3) {
         printf("error! figsel_data_2p[3]\n");
     }
@@ -2891,9 +2883,7 @@ void func_0018E5A0(void) {
     if (D_0028C148_as_u16_a[0] != 0x0) {
         printf("error! subsel_fig_barner[0]\n");
     }
-    reg_tmp.w = (u32)D_0028C680;
-    D_0028C148_as_u16_a[0] = reg_tmp.h[1];
-    D_0028C14A[0] = reg_tmp.h[0];
+    STORE_POINTER(D_0028C148_as_u16_a, D_0028C680);
     if (D_0028C14A[1] != 0x2) {
         printf("error! subsel_fig_barner[2]\n");
     }
