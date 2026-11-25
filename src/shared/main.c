@@ -81,7 +81,7 @@ extern s8 g_arcade_input_port[];
 extern s8 D_0028E249[];
 extern u8 g_stage_load_state;
 extern u8 g_paused;
-extern s8 D_0028E370_as_s8;
+extern s8 g_game_frame_ran_as_s8;
 extern u8 D_0028E374;
 extern u16 g_attract_demo;
 extern s16 g_stage_as_s16;
@@ -239,7 +239,7 @@ loop_15:
         func_0013C3F0();
         func_0019AB20();
         if (D_0028EC58 != 0) {
-            D_0028E370_as_s8 = 1;
+            g_game_frame_ran_as_s8 = 1;
         }
         t2 = 1;
     }

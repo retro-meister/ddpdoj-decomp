@@ -1540,7 +1540,7 @@ s32 func_001AB920();
 s32 func_001AB940();
 s32 func_001AB9D0();
 extern u8 D_0028E288;
-extern u8 D_0028E370;
+extern u8 g_game_frame_ran;
 extern u16 D_0028E3B4;
 extern u16 g_p1_hyper_in_effect;
 extern u16 g_p1_hyper_level;
@@ -1595,7 +1595,7 @@ block_9:
             g_p1_hit10_display_timer = 0x78;
             g_p1_chain_points_display_timer = 0x78;
         }
-        if (!(D_0028E855 & 0x40) && (D_0028E3B4 == 0) && (D_0028EC4C == 0) && (D_0028E370 != 0)) {
+        if (!(D_0028E855 & 0x40) && (D_0028E3B4 == 0) && (D_0028EC4C == 0) && (g_game_frame_ran != 0)) {
             g_p1_hyper_time -= 2;
             if ((s16) g_p1_hyper_time < 0) {
                 func_001A7E90();
@@ -1683,7 +1683,7 @@ block_9:
             g_p2_hit10_display_timer = 0x78;
             g_p2_chain_points_display_timer = 0x78;
         }
-        if (!(D_0028E855 & 0x40) && (D_0028E3B4 == 0) && (D_0028EC4C == 0) && (D_0028E370 != 0)) {
+        if (!(D_0028E855 & 0x40) && (D_0028E3B4 == 0) && (D_0028EC4C == 0) && (g_game_frame_ran != 0)) {
             g_p2_hyper_time -= 2;
             if ((s16) g_p2_hyper_time < 0) {
                 func_001A8070();

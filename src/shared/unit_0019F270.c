@@ -291,7 +291,7 @@ s32 func_0013F800();
 s32 func_0013F850();
 s32 func_0013F960();
 s32 func_0013F990();
-extern u8 D_0028E370;
+extern u8 g_game_frame_ran;
 extern s32 D_0028ED70;
 extern u8 D_0028ED7C;
 extern u8 D_0029D710[];
@@ -614,7 +614,7 @@ block_b:
     if (*(u8 *)(reg_a6 + 0x1A) == 0) goto next_530;
     reg_d0.h[0] = *(u16 *)(reg_a4 + 0x5A);
     reg_d0.h[0] -= 2;
-    if (D_0028E370 == 0) goto next_520;
+    if (g_game_frame_ran == 0) goto next_520;
     if (D_0028ED7C != 2) goto next_510;
     if (D_0028ED70 == 0) goto next_520;
 next_510:
@@ -643,7 +643,7 @@ next_540:
     if (((s64) ((s64) (temp & 0xFFFF) << 0x30) >> 0x30) >= 0) goto loop_10;
     return;
 block_c:
-    if (D_0028E370 == 0) goto block_rts;
+    if (g_game_frame_ran == 0) goto block_rts;
     if (D_0028ED7C != 2) goto next_610;
     if (D_0028ED70 == 0) goto block_rts;
 next_610:

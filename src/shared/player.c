@@ -1542,7 +1542,7 @@ s32 func_0019D360();
 extern u8 D_0028C610[];
 extern u16 D_0028C618[];
 extern u16 D_0028C620[];
-extern u8 D_0028E370;
+extern u8 g_game_frame_ran;
 extern u16 D_0028E3B4;
 extern u16 D_0028E3EC;
 extern u8 D_0028E718_as_u8;
@@ -1605,7 +1605,7 @@ void func_00141B50(void) {
         reg_d4.h[0] = 0x18;
         func_0019D360();
     }
-    if ((D_0028E370 != 0) && (D_0028EC4C == 0) && (D_0028E3B4 == 0) && !(D_0028E855 & 1) && (g_true_last_boss == 0) && !(PLAYER(reg_a6)->flags.b[1] & 0x40)) {
+    if ((g_game_frame_ran != 0) && (D_0028EC4C == 0) && (D_0028E3B4 == 0) && !(D_0028E855 & 1) && (g_true_last_boss == 0) && !(PLAYER(reg_a6)->flags.b[1] & 0x40)) {
         if (*(u8 *)(reg_a5 + 6) == 0) {
             if (D_0028E06C == 0) {
                 p0 = &D_0028E71C_as_u8;
@@ -1752,7 +1752,7 @@ void func_001420E0(void) {
             (*(u8 *)((u8 *)(var_a0) + (1))) &= 0xEF;
             var_a0 = (u8 *)(reg_a6 + 0x3F);
             temp_v1 = PLAYER(reg_a6)->state.b.invincible;
-            if ((temp_v1 != 0xFF) && (D_0028E370 != 0)) {
+            if ((temp_v1 != 0xFF) && (g_game_frame_ran != 0)) {
                 PLAYER(reg_a6)->state.b.invincible = (u8) (temp_v1 - 1);
             }
             goto block_13;
@@ -2413,7 +2413,7 @@ block_244:
         reg_d4.h[0] = 0x18;
         func_0019D360();
     }
-    if ((D_0028E370 != 0) && (D_0028EC4C == 0) && (D_0028E3B4 == 0) && !(D_0028E855 & 1) && (g_true_last_boss == 0) && !(PLAYER(reg_a6)->flags.b[1] & 0x40)) {
+    if ((g_game_frame_ran != 0) && (D_0028EC4C == 0) && (D_0028E3B4 == 0) && !(D_0028E855 & 1) && (g_true_last_boss == 0) && !(PLAYER(reg_a6)->flags.b[1] & 0x40)) {
         if (*(u8 *)(reg_a5 + 6) == 0) {
             if (D_0028E06C == 0) {
                 p0 = &D_0028E71C_as_u8;

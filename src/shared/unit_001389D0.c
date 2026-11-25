@@ -188,7 +188,7 @@ extern u8 g_game_mode;
 extern u8 g_ground_no_draw;
 extern u8 g_simulation_boss_start;
 extern u8 g_stage_load_state;
-extern u8 D_0028E370;
+extern u8 g_game_frame_ran;
 extern u16 g_attract_demo;
 extern s16 g_loaded_stage;
 extern u16 g_stage;
@@ -266,7 +266,7 @@ next_2:
     g_stage_load_state = 0;
     g_cd_async_busy_as_u8 = 1;
     g_cd_async_state_as_u8 = 0;
-    D_0028E370 = 0;
+    g_game_frame_ran = 0;
     D_0028EC58_as_u8 = 0;
     return;
 next_3:
@@ -516,7 +516,7 @@ void func_001394A0(void) {
             D_0028EC58 = 1;
             func_00131440();
         }
-    } else if (D_0028E370 != 0) {
+    } else if (g_game_frame_ran != 0) {
         if (g_attract_demo == 0) {
             D_0028E378_as_s8 = 0;
         }

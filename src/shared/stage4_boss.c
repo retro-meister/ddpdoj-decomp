@@ -16,7 +16,7 @@ s32 func_001E7C50();
 s32 func_001E8700();
 s32 func_001E8720();
 s32 func_0020ED10();
-extern u8 D_002554B0[];
+extern u8 g_default_sprite_palette[];
 extern u8 D_0025FE70[];
 extern u8 D_0025FEB0[];
 extern u8 D_0026EAF0[];
@@ -65,7 +65,7 @@ void func_001E7A20(void) {
     reg_a0 = (u8 *)D_0025FEB0;
     sprite_palette_load();
     reg_d0.h[0] = 0x12;
-    reg_a0 = (u8 *)D_002554B0;
+    reg_a0 = (u8 *)g_default_sprite_palette;
     sprite_palette_load();
     g_boss_hyper_wait_as_s16 = 1;
     func_0020ED10();

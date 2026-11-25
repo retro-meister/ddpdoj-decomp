@@ -305,9 +305,9 @@ extern s8 g_cd_async_state;
 extern s8 g_cd_async_busy;
 extern s32 g_stage_unpack_state;
 extern u8 g_bg_tile_pixels[];
+extern s32 g_bg_tile_offsets[];
 
 void stage_load_step(void) {
-    extern u8 g_bg_tile_offsets[];
     u8 *buffer;
 
     buffer = g_stage_sprite_buf + 0x5DC800;
@@ -332,7 +332,7 @@ void stage_load_step(void) {
         g_cd_async_busy = 1;
         break;
     case 2:
-        cd_read_async(g_bg_tile_offsets, g_stage_bg_files[g_stage * 2].size, g_stage_bg_files[g_stage * 2].lba);
+        cd_read_async((u8 *)g_bg_tile_offsets, g_stage_bg_files[g_stage * 2].size, g_stage_bg_files[g_stage * 2].lba);
         if (g_cd_async_busy != 0) {
             break;
         }
@@ -384,8 +384,12 @@ void stage_load_step(void) {
     }
 }
 
-extern s16 D_00269140_as_s16_a[];
-extern s16 D_002554B0_as_s16_a[];
+extern s16 g_default_text_palette[];
+extern s16 g_default_sprite_palette[];
+
+extern u8 g_text_layer[];
+
+extern u8 g_stage_map_active;
 
 void clut_upload_defaults(void)
 {
@@ -401,7 +405,7 @@ void clut_upload_defaults(void)
     g_clut_upload_cbp = 0x3832;
     clut_upload((u8 *)g_clut_buf, 0, 1);
 
-    source = D_00269140_as_s16_a;
+    source = g_default_text_palette;
     palette = g_clut_buf;
     for (colorIndex = 0; colorIndex < 15; colorIndex++) {
         palette[colorIndex] = *source++ | 0x8000;
@@ -410,7 +414,7 @@ void clut_upload_defaults(void)
     g_clut_upload_cbp = 0x3830;
     clut_upload((u8 *)g_clut_buf, 0, 1);
 
-    source = D_002554B0_as_s16_a;
+    source = g_default_sprite_palette;
     palette = g_clut_buf;
     for (colorIndex = 0; colorIndex < 31; colorIndex++) {
         palette[colorIndex] = *source++ | 0x8000;
@@ -572,7 +576,6 @@ extern s32 g_stage_map_marker_level;
 extern s32 g_stage_map_alpha;
 
 void stage_map_reset(void) {
-    extern s8 g_stage_map_active;
     g_stage_map_active = 0;
     g_stage_map_marker_level = 0x80;
     g_stage_map_state = 0;
@@ -585,7 +588,6 @@ void stage_map_reset(void) {
 
 
 void stage_map_show(void) {
-    extern s8 g_stage_map_active;
     stage_map_reset();
     g_stage_map_alpha = 0;
     g_stage_map_active = 1;
@@ -593,7 +595,6 @@ void stage_map_show(void) {
 }
 
 void stage_map_hide(void) {
-    extern s8 g_stage_map_active;
     g_stage_map_active = 1;
     g_stage_map_state = 2;
     g_stage_map_alpha = 0x80;
@@ -604,7 +605,6 @@ extern u8 g_stage_map_enabled;
 extern u8 g_paused;
 
 void stage_map_update(void) {
-    extern u8 g_stage_map_active;
     s32 level;
     s32 top;
     s32 h;
@@ -692,7 +692,6 @@ void stage_map_draw(void) {
 #pragma push
 #pragma opt_common_subs off
 #pragma opt_propagation off
-extern u32 g_text_layer_as_u32_a[];
 
 
 void text_layer_clear_edge_top(void) {
@@ -707,14 +706,14 @@ void text_layer_clear_edge_top(void) {
     row = 0;
     do {
         x1 = 54;
-        p = g_text_layer_as_u32_a;
+        p = (u32 *)g_text_layer;
         p += x1 + row;
         *p = 0;
         x2 = 55;
         idx = x2 + row;
         i++;
         row += 64;
-        p = g_text_layer_as_u32_a;
+        p = (u32 *)g_text_layer;
         p += idx;
         *p = 0;
     } while (i < 14);
@@ -741,14 +740,14 @@ void text_layer_clear_edge_bottom(void) {
     row = 0x380;
     do {
         x1 = 54;
-        p = g_text_layer_as_u32_a;
+        p = (u32 *)g_text_layer;
         p += x1 + row;
         *p = 0;
         x2 = 55;
         idx = x2 + row;
         i++;
         row += 64;
-        p = g_text_layer_as_u32_a;
+        p = (u32 *)g_text_layer;
         p += idx;
         *p = 0;
     } while (i < 27);
@@ -758,11 +757,10 @@ void text_layer_clear_edge_bottom(void) {
 #pragma pop
 #endif
 
-extern u32 g_text_layer_as_u32_a[];
 
 void text_layer_draw(void) {
     s32 y;
-    u32 *p = g_text_layer_as_u32_a;
+    u32 *p = (u32 *)g_text_layer;
     s32 x;
 
     g_quad_count = 0;
@@ -870,7 +868,6 @@ void bg_layer_draw(void) {
 extern s16 g_bg_scroll_y;
 
 void bg_layer_queue_tile(s32 col, s32 row) {
-    extern s32 g_bg_tile_offsets[];
     s32 uploads;
     GlyphCacheEntry *cache;
     s32 u;

@@ -360,7 +360,7 @@ extern s16 D_0028E32C_as_s16;
 extern u8 D_0028E354;
 extern u8 D_0028E368;
 extern u8 g_paused;
-extern u8 D_0028E370;
+extern u8 g_game_frame_ran;
 extern u8 D_0028E374;
 extern u8 D_0028E378;
 extern u8 D_0028E37C;
@@ -435,7 +435,7 @@ void func_00209410(void) {
     D_0028E2AC_as_s16 = 0;
     D_0028E2A8 = 0;
     g_splash_visible = 0;
-    D_0028E370 = 0;
+    g_game_frame_ran = 0;
     D_0028E374 = 0;
     g_paused = 0;
     D_0028E368 = 0;

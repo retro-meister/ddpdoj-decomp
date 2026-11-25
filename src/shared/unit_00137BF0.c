@@ -450,11 +450,11 @@ void scripted_input_apply(void) {
 #endif
 
 #ifdef DEATH_LABEL
-void func_00136600(void);
+void ship_select_apply(void);
 void func_001719A0(void);
 void func_001719D0(void);
 extern u8 death_D_0026FDA0[];
-extern u8 D_0028E370;
+extern u8 g_game_frame_ran;
 extern u16 D_0028E3BC;
 extern u16 g_attract_demo;
 extern u16 g_game_frame;
@@ -532,7 +532,7 @@ void func_00137E00(void) {
         death_D_00291195_as_s8 = *(s8 *)(reg_a0 + 1);
         D_0028E800 += 2;
         func_00131440();
-        D_0028E370 = 0;
+        g_game_frame_ran = 0;
         func_001719A0();
         reg_d0.w = 0;
         reg_d1.w = 0;
@@ -541,9 +541,9 @@ void func_00137E00(void) {
         reg_d2.h[0] = 0xFF;
         reg_d3.h[0] = 0xFF;
         reg_d4.w = 1;
-        func_00136600();
+        ship_select_apply();
     }
-    if ((D_0028E828 == 2) && (D_0028E370 != 0)) {
+    if ((D_0028E828 == 2) && (g_game_frame_ran != 0)) {
         D_0028E80C = 1;
         D_0028E828 = 1;
     }

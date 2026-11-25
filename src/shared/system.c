@@ -223,7 +223,7 @@ void sys_end_frame(void) {
     sceGsSyncPath(0, 0);
 }
 
-extern u8 D_0028E370;
+extern u8 g_game_frame_ran;
 extern u16 g_attract_demo;
 extern s8 D_0028E3F8;
 extern u8 D_0028ED58;
@@ -236,9 +236,9 @@ void sys_draw_replay_label(void) {
     s32 var_a2_2;
 
 #ifdef DEATH_LABEL
-    if ((D_0028E370 != 0) && (D_0028E3F8 != 0) && (D_0028ED74 == 1) && (D_0028ED7C == 2)) {
+    if ((g_game_frame_ran != 0) && (D_0028E3F8 != 0) && (D_0028ED74 == 1) && (D_0028ED7C == 2)) {
 #else
-    if ((D_0028E370 != 0) && (D_0028E3F8 != 0) && (g_attract_demo == 0) && (D_0028ED74 == 1) && (D_0028ED7C == 2)) {
+    if ((g_game_frame_ran != 0) && (D_0028E3F8 != 0) && (g_attract_demo == 0) && (D_0028ED74 == 1) && (D_0028ED7C == 2)) {
 #endif
         if (D_0028ED58 != 0) {
             var_a2 = 0x88;

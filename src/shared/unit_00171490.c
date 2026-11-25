@@ -196,7 +196,7 @@ void func_001719D0(void) {
 }
 
 s32 sprite_palette_load();
-extern u8 D_002554B0[];
+extern u8 g_default_sprite_palette[];
 extern u8 D_0026B170[];
 extern u8 D_0026B180[];
 extern u8 D_0028DAC0[];
@@ -225,7 +225,7 @@ void func_00171A30(void) {
         reg_d0.h[0] = *(u16 *)(D_0026B170 + temp_a1);
         ENTITY(reg_a6)->attr.b.palette = (u8) reg_d0.b[0];
         *(u8 *)(reg_a6 + 0x3C) = (u8) reg_d0.b[0];
-        reg_a0 = (u8 *)D_002554B0;
+        reg_a0 = (u8 *)g_default_sprite_palette;
         sprite_palette_load();
         return;
     }
@@ -259,7 +259,7 @@ s32 func_001ABD80();
 extern u8 D_0026B1C0[];
 extern u8 D_0026B1D0[];
 extern u8 D_0028DAC8[];
-extern u8 D_0028E370;
+extern u8 g_game_frame_ran;
 extern s16 g_boss_hyper_wait_as_s16;
 extern u16 g_p2_hyper_active;
 extern u16 g_p1_hyper_active;
@@ -291,7 +291,7 @@ void func_00171B90(void) {
         reg_d0.h[0] = *(u16 *)(D_0026B1C0 + temp_a1);
         ENTITY(reg_a6)->attr.b.palette = (u8) reg_d0.b[0];
         *(u8 *)(reg_a6 + 0x3C) = (u8) reg_d0.b[0];
-        reg_a0 = (u8 *)D_002554B0;
+        reg_a0 = (u8 *)g_default_sprite_palette;
         sprite_palette_load();
     }
     var_a0 = 1;
@@ -310,7 +310,7 @@ void func_00171B90(void) {
         ENTITY(reg_a6)->flags.sh = 0;
         return;
     }
-    if ((D_0028E370 != 0) && ((var_a0 = D_0028ED7C, (var_a0 != 2)) || (D_0028ED5C == 0)) && ((g_simulation_active == 0) || (D_0028ED5C == 0))) {
+    if ((g_game_frame_ran != 0) && ((var_a0 = D_0028ED7C, (var_a0 != 2)) || (D_0028ED5C == 0)) && ((g_simulation_active == 0) || (D_0028ED5C == 0))) {
         var_a0 = ENTITY(reg_a6)->hit_y_plus.h;
         if (var_a0 != 0) {
             temp_v1 = ENTITY(reg_a6)->hit_y_minus.h;
@@ -343,7 +343,7 @@ block_25:
     }
     var_a0_2 = (u8 *)(reg_a6 + 0x20);
     reg_a6 = var_a0_2;
-    if ((D_0028E370 != 0) && ((var_a0_2 = (void *) D_0028ED7C, (var_a0_2 != (void *)2)) || (D_0028ED5C == 0)) && ((g_simulation_active == 0) || (D_0028ED5C == 0))) {
+    if ((g_game_frame_ran != 0) && ((var_a0_2 = (void *) D_0028ED7C, (var_a0_2 != (void *)2)) || (D_0028ED5C == 0)) && ((g_simulation_active == 0) || (D_0028ED5C == 0))) {
         temp_a0 = ENTITY(reg_a6)->hit_y_plus.h;
         if (temp_a0 != 0) {
             temp_v1_2 = ENTITY(reg_a6)->hit_y_minus.h;

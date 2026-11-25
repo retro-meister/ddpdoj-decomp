@@ -14,7 +14,7 @@ s32 enemy_set_task_work();
 s32 enemy_init_entities();
 s32 sprite_palette_load();
 s32 func_001D45D0();
-extern u8 D_002554B0[];
+extern u8 g_default_sprite_palette[];
 extern u8 D_0025FD30[];
 extern u8 D_0025FD70[];
 extern u8 D_0025FDB0[];
@@ -72,7 +72,7 @@ void func_001D3CA0(void) {
     reg_a0 = (u8 *)D_0025FE30;
     sprite_palette_load();
     reg_d0.h[0] = 0xA;
-    reg_a0 = (u8 *)D_002554B0;
+    reg_a0 = (u8 *)g_default_sprite_palette;
     sprite_palette_load();
     g_boss_hyper_wait_as_s16 = 1;
     D_0028E855 |= 1;

@@ -255,7 +255,7 @@ void replay_filter_input(void) {
 #endif
 
 
-extern void func_00236DA0(void);
+extern void replay_stop_task(void);
 extern void (*D_00272110[])(void);
 
 void func_002372C0(void) {
@@ -267,7 +267,7 @@ void func_002372C0(void) {
         D_00272110[index]();
         break;
     case 2:
-        func_00236DA0();
+        replay_stop_task();
         break;
     }
 }
@@ -770,11 +770,11 @@ void func_00237D50() {
 
 extern void label_draw(s32 a, s32 b, s32 c, s32 d);
 extern void func_0023B720(u8 *arg);
-extern u8 D_00269140[];
+extern u8 g_default_text_palette[];
 extern u16 D_0028E314;
 extern u16 D_0028E318;
 extern u8 D_0028E368;
-extern u8 D_0028E370;
+extern u8 g_game_frame_ran;
 extern u16 g_attract_demo;
 extern u8 D_0028E3F8_as_u8;
 extern u8 D_0028ED58;
@@ -805,7 +805,7 @@ void func_00237DF0(void) {
     u8 *save_a5;
     u8 *save_a6;
 
-    D_0028E370 = 0;
+    g_game_frame_ran = 0;
     D_0028E3F8_as_u8 = 0;
     D_0028ED74 = 0;
     D_0028ED70 = 0;
@@ -851,7 +851,7 @@ void func_00237DF0(void) {
     func_00171910();
     text_layer_clear();
     reg_d0.w = 0;
-    reg_a0 = (u8 *)D_00269140;
+    reg_a0 = (u8 *)g_default_text_palette;
     text_palette_load();
     label_draw(0, 0, 0, 0);
     replay_header_save();
@@ -1110,7 +1110,7 @@ void func_00238010(void) {
 }
 
 extern s8 D_0028E368_as_s8;
-extern s8 D_0028E370_as_s8;
+extern s8 g_game_frame_ran_as_s8;
 extern s8 D_0028E3F8;
 extern s8 D_0028ED5C_as_s8;
 extern s8 g_simulation_active_as_s8;
@@ -1147,7 +1147,7 @@ void func_00238520(void) {
     save_a4 = reg_a4;
     save_a5 = reg_a5;
     save_a6 = reg_a6;
-    D_0028E370_as_s8 = 0;
+    g_game_frame_ran_as_s8 = 0;
     save_d1 = reg_d1.w;
     D_0028E3F8 = 0;
     D_0028E368_as_s8 = 0;
@@ -1165,7 +1165,7 @@ void func_00238520(void) {
     func_00171910();
     text_layer_clear();
     reg_d0.w = 0;
-    reg_a0 = (u8 *)D_00269140;
+    reg_a0 = (u8 *)g_default_text_palette;
     text_palette_load();
     replay_header_save();
     reg_d0.w = save_d0;
@@ -1267,7 +1267,7 @@ void func_00238690(void) {
         break;
     case 18:
         func_00131440();
-        if (D_0028E370 != 0) {
+        if (g_game_frame_ran != 0) {
             g_pad_input_locked_as_s8 = 0;
             step++;
             g_loop = g_replay_header.round;

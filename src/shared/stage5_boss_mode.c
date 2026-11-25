@@ -693,12 +693,12 @@ void func_001F2640() {
 
 s32 func_0013B8B0();                            /* extern */
 s32 sprite_palette_load();                            /* extern */
-extern s32 D_002554B0_as_s32_a[];
+extern s32 g_default_sprite_palette_as_s32_a[];
 extern s32 D_00264E80[];
 
 void func_001F2810(void) {
     reg_d0.h[0] = 0xE;
-    reg_a0 = (u8 *)D_002554B0_as_s32_a;
+    reg_a0 = (u8 *)g_default_sprite_palette_as_s32_a;
     sprite_palette_load();
     reg_a0 = (u8 *)D_00264E80;
     func_0013B8B0();

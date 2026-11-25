@@ -28,7 +28,7 @@ void replay_header_clear(void) {
 
 void task_stop_self(void);
 
-void func_00236DA0(void) {
+void replay_stop_task(void) {
     task_stop_self();
 }
 
@@ -51,8 +51,8 @@ void replay_header_save(void)
         *(const s16 *)(sourceAddress + sizeof(StatePayload));
 }
 
-extern void func_00136600(void);
-extern u8 D_0028E370;
+extern void ship_select_apply(void);
+extern u8 g_game_frame_ran;
 
 void replay_header_apply(void) {
     u32 save_d0;
@@ -89,12 +89,12 @@ void replay_header_apply(void) {
     reg_d0.h[0] = g_replay_header.p1_type;
     reg_d1.h[0] = g_replay_header.p1_doll;
     reg_d2.w = 0;
-    D_0028E370 = 0;
+    g_game_frame_ran = 0;
     reg_d3.w = 0;
     reg_d4.w = 1;
     reg_d2.h[0] = g_replay_header.p2_type;
     reg_d3.h[0] = g_replay_header.p2_doll;
-    func_00136600();
+    ship_select_apply();
     replay_header_print(&g_replay_header);
     reg_d0.w = save_d0;
     reg_d1.w = save_d1;

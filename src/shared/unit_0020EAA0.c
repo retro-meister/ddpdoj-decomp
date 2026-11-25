@@ -175,7 +175,7 @@ void func_0020ED40(void) {
 }
 
 s32 func_00136010();
-s32 func_00136600();
+s32 ship_select_apply();
 s32 music_play_bgm2();
 s32 sprite_palette_load();
 s32 func_001B04D0();
@@ -273,7 +273,7 @@ next_31:
     reg_d3.b[0] = reg_a5[4];
     keep_9c = D_0028E99C;
     keep_98 = D_0028E998;
-    func_00136600();
+    ship_select_apply();
     D_0028E99C = keep_9c;
     D_0028E998 = keep_98;
     func_001B04D0();

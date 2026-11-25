@@ -896,7 +896,7 @@ void func_001362F0(void) {
 s32 func_00138110();
 s32 text_palette_load();
 s32 func_001A3300();
-extern u8 D_00269140[];
+extern u8 g_default_text_palette[];
 extern u32 D_0028E848_as_u32;
 extern u16 D_0028E944;
 
@@ -928,7 +928,7 @@ void func_00136330() {
         D_0028E940 = 0;
     }
     reg_d0.w = 0;
-    reg_a0 = D_00269140;
+    reg_a0 = g_default_text_palette;
     text_palette_load();
     func_001A3300();
     func_00138110();
@@ -1030,7 +1030,7 @@ extern s32 D_0028E998;
 extern s32 D_0028E99C;
 extern u8 D_0028ED7C;
 
-void func_00136600(void) {
+void ship_select_apply(void) {
     u32 save_d0;
     u32 save_d1;
     u32 save_d2;

@@ -444,7 +444,7 @@ extern u8 D_00274000[];
 extern u8 D_00274020[];
 extern s16 D_0028DFBC_as_s16;
 extern s16 D_0028DFC4_as_s16;
-extern u8 D_0028E370;
+extern u8 g_game_frame_ran;
 extern u16 g_p2_score_digits;
 extern u16 g_p1_score_digits;
 extern u16 g_p2_score_billions;
@@ -510,7 +510,7 @@ void func_00131880(void) {
         printf((const char *)D_00273F20, g_p2_score_as_s32);
         printf((const char *)D_00273F40, (s32) g_p2_score_digits);
         printf((const char *)D_00273F60, (s32) g_p2_score_billions);
-        D_0028E370 = 0;
+        g_game_frame_ran = 0;
         func_00135070();
         *(s8 *)(reg_a5 + 7) = 0x1E;
         goto block_after;
@@ -523,7 +523,7 @@ void func_00131880(void) {
             D_0028DFBC_as_s16 = 0;
             D_0028E961 &= 0xFC;
         }
-        if (D_0028E370 != 0) {
+        if (g_game_frame_ran != 0) {
             printf((const char *)D_00273F80, g_p1_score_as_s32);
             printf((const char *)D_00273FA0, (s32) g_p1_score_digits);
             printf((const char *)D_00273FC0, (s32) g_p1_score_billions);
@@ -544,7 +544,7 @@ block_after:
         func_00125E80();
         D_0028E958 = 0;
         func_00172250();
-        D_0028E370 = 0;
+        g_game_frame_ran = 0;
         func_001719A0();
         func_001AD720();
         D_0028DFC0_as_s16 = 0;

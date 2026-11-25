@@ -383,7 +383,7 @@ extern u16 D_0028E2FC;
 extern u16 D_0028E300;
 extern s8 g_slowdown_timer_as_s8;
 extern s8 D_0028E368_as_s8;
-extern s8 D_0028E370_as_s8;
+extern s8 g_game_frame_ran_as_s8;
 extern s8 D_0028E3F8;
 extern s8 D_0028EB00;
 extern s32 D_0028EB94;
@@ -427,7 +427,7 @@ void func_00169140(void) {
         } else if (D_0028EB00 == 30) {
             D_0028DF84 = 0;
             reg_d0.h[0] = 0x10;
-            D_0028E370_as_s8 = 0;
+            g_game_frame_ran_as_s8 = 0;
             D_0028E3F8 = 0;
             func_00168BA0();
         } else if (D_0028EB00 == 40) {
@@ -455,7 +455,7 @@ void func_00169140(void) {
 #endif
             D_0028DF84 = 0;
             reg_d0.h[0] = 0x13;
-            D_0028E370_as_s8 = 0;
+            g_game_frame_ran_as_s8 = 0;
             D_0028E3F8 = 0;
             func_00168BA0();
         } else {
@@ -500,7 +500,7 @@ s32 func_00137C90();                            /* extern */
 s32 func_00137E00();                            /* extern */
 s32 sound_stop_effects();                            /* extern */
 s32 stage_map_reset();                            /* extern */
-extern s32 D_00269140_as_s32_a[];
+extern s32 g_default_text_palette_as_s32_a[];
 extern s32 D_00275860[];
 
 void func_00169320(void) {
@@ -514,7 +514,7 @@ void func_00169320(void) {
         func_00137C90();
         text_layer_clear();
         *(s16 *)(reg_a5 + 4) = 0;
-        reg_a0 = (u8 *)D_00269140_as_s32_a;
+        reg_a0 = (u8 *)g_default_text_palette_as_s32_a;
         reg_d0.w = 0;
         text_palette_load();
     }
@@ -590,7 +590,7 @@ void func_001694A0(void) {
 
 s32 layers_reset();
 s32 text_layer_print_wide();
-extern u8 D_00269140[];
+extern u8 g_default_text_palette[];
 extern u8 D_0026A880[];
 
 void func_001694F0() {
@@ -604,7 +604,7 @@ void func_001694F0() {
         *(u8 *)(reg_a5 + 2) = 1U;
         text_layer_clear();
         reg_d0.w = 0;
-        reg_a0 = D_00269140;
+        reg_a0 = g_default_text_palette;
         text_palette_load();
         *(u16 *)(reg_a5 + 6) = 0U;
         *(u16 *)(reg_a5 + 8) = 0xB8U;
@@ -714,7 +714,7 @@ void func_00169680(void) {
     task_reset_all();
     text_layer_clear();
     reg_d0.w = 0;
-    reg_a0 = (u8 *)D_00269140;
+    reg_a0 = (u8 *)g_default_text_palette;
     text_palette_load();
     replay_header_clear();
     a = D_0068DEDA[0];
@@ -774,7 +774,7 @@ void func_00169900(void) {
     task_reset_all();
     text_layer_clear();
     reg_d0.w = 0;
-    reg_a0 = (u8 *)D_00269140_as_s32_a;
+    reg_a0 = (u8 *)g_default_text_palette_as_s32_a;
     text_palette_load();
     reg_d0.h[0] = MAIN_OR_DEATH_LABEL(0x15, 9);
     task_start();

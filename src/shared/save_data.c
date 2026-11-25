@@ -2903,11 +2903,11 @@ extern void text_layer_clear(void);
 extern void func_00171910(void);
 extern void text_palette_load(void);
 extern void task_start(void);
-extern u8 D_00269140[];
+extern u8 g_default_text_palette[];
 extern u8 D_0028DE40[];
 extern u8 D_0028DE44[];
 extern u8 g_game_mode;
-extern u8 D_0028E370;
+extern u8 g_game_frame_ran;
 extern u8 D_0028E3F8_as_u8;
 extern u8 D_0028E7B4;
 extern u16 D_00684C80[];
@@ -2980,7 +2980,7 @@ void func_0022BFD0() {
     death_D_0029085C = 0;
     death_D_00290850 = 0;
     death_D_00290DBC = 0;
-    D_0028E370 = 0;
+    g_game_frame_ran = 0;
     D_0028E3F8_as_u8 = 0;
     D_0028E368 = 0;
     if (death_D_00290DC0 != 0) {
@@ -3008,7 +3008,7 @@ void func_0022BFD0() {
     }
     D_00684C80[6] = 0;
     D_00684C80[4] = 3;
-    D_0028E370 = 0;
+    g_game_frame_ran = 0;
     D_0028E3F8_as_u8 = 0;
     D_00684C80[5] = 1;
     D_00684C80[8] = 3;
@@ -3022,7 +3022,7 @@ void func_0022BFD0() {
 #endif
     text_layer_clear();
     reg_d0.w = 0;
-    reg_a0 = (u8 *)D_00269140;
+    reg_a0 = (u8 *)g_default_text_palette;
     text_palette_load();
     *(u8 *)(reg_a5 + 3) = 1;
     reg_d0.w = save_d0;
@@ -3158,7 +3158,7 @@ void func_0022C1F0() {
         break;
     case MAIN_OR_DEATH_LABEL(18, 19):
         func_00131440();
-        if (D_0028E370 != 0) {
+        if (g_game_frame_ran != 0) {
             g_pad_input_locked = 0;
             D_00684C94[0] += 1;
             g_loop = D_00684C8A[0];
@@ -3194,7 +3194,7 @@ void func_0022C1F0() {
     reg_a5 = save_a5;
 }
 
-extern void func_00136600(void);
+extern void ship_select_apply(void);
 
 void func_0022C450() {
     u32 save_d0;
@@ -3231,12 +3231,12 @@ void func_0022C450() {
     reg_d0.h[0] = D_00684C80[0];
     reg_d1.h[0] = D_00684C80[1];
     reg_d2.w = 0;
-    D_0028E370 = 0;
+    g_game_frame_ran = 0;
     reg_d3.w = 0;
     reg_d4.w = 1;
     reg_d2.h[0] = D_00684C80[2];
     reg_d3.h[0] = D_00684C80[3];
-    func_00136600();
+    ship_select_apply();
     reg_d0.w = save_d0;
     reg_d1.w = save_d1;
     reg_d2.w = save_d2;

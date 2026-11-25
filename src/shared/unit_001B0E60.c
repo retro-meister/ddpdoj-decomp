@@ -116,7 +116,7 @@ extern u8 D_00260DB0[];
 extern u8 D_00260DF0[];
 extern u8 D_00260E30[];
 extern u8 D_00260E70[];
-extern u8 D_00269140[];
+extern u8 g_default_text_palette[];
 extern s16 D_0028DF14;
 extern s16 D_0028DF18;
 extern s16 g_attract_demo_as_s16;
@@ -181,7 +181,7 @@ void func_001B1080(void) {
     *(u8 *)(reg_a5 + 8) = 0xFFU;
     *(s16 *)(reg_a5 + 0xA) = 0;
     text_layer_clear();
-    reg_a0 = (u8 *)D_00269140;
+    reg_a0 = (u8 *)g_default_text_palette;
     reg_d0.w = 0;
     text_palette_load();
     reg_a0 = (u8 *)D_0025F770;
@@ -365,7 +365,7 @@ s32 death_func_001B1220();
 s32 task_start();
 s32 task_stop_self();
 s32 fade_reset();
-extern u8 D_00269140[];
+extern u8 g_default_text_palette[];
 extern u8 g_game_mode;
 extern u8 D_0028E7B4;
 extern u16 D_00684C80[];
@@ -402,7 +402,7 @@ void func_001B1960(void) {
                 g_game_mode = 2;
                 text_layer_clear();
                 reg_d0.w = 0;
-                reg_a0 = (u8 *)D_00269140;
+                reg_a0 = (u8 *)g_default_text_palette;
                 text_palette_load();
                 D_00684C80[0] = 0xFF;
                 D_00684C80[1] = 0xFF;
@@ -604,7 +604,7 @@ void func_001B1D70(void) {
         func_001A35A0();
     }
     text_layer_clear();
-    reg_a0 = (u8 *)D_00269140;
+    reg_a0 = (u8 *)g_default_text_palette;
     reg_d0.w = 0;
     text_palette_load();
     reg_a0 = (u8 *)D_0025F770;

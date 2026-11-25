@@ -5,7 +5,7 @@ void func_00207F40(void);
 s32 func_0012FD00();                            /* extern */
 s32 sprite_palette_load();                            /* extern */
 s32 func_00208AD0();                            /* extern */
-extern s32 D_002554B0_as_s32_a[];
+extern s32 g_default_sprite_palette_as_s32_a[];
 extern s32 D_00267990[];
 extern s8 D_0028DF9C;
 extern s8 D_0028DFA0;
@@ -15,7 +15,7 @@ void func_00207720(void) {
     func_0012FD00();
     func_00208AD0();
     reg_d0.h[0] = 0;
-    reg_a0 = (u8 *)D_002554B0_as_s32_a;
+    reg_a0 = (u8 *)g_default_sprite_palette_as_s32_a;
     sprite_palette_load();
     D_0028DFA0 = 0;
     D_0028DF9C = 1;
