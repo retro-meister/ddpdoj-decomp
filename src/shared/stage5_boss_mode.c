@@ -56,7 +56,7 @@ void func_001F14C0(void) {
 s32 boss_phase_start();
 s32 func_0013B2E0();
 s32 func_001F5640();
-extern u8 D_00264EA0[];
+extern u8 stage5_boss_fade_palettes_b[];
 extern s16 g_boss_hyper_wait_as_s16;
 extern u8 *g_boss_hp;
 extern s32 g_boss_hp_unit;
@@ -94,7 +94,7 @@ void func_001F1540() {
             g_true_last_boss_as_s16 = 1;
         }
         func_001F5640();
-        reg_a0 = (u8 *)D_00264EA0;
+        reg_a0 = (u8 *)stage5_boss_fade_palettes_b;
         func_0013B2E0();
         reg_d0.w = 6;
         boss_phase_start();
@@ -111,7 +111,7 @@ void func_001F1660(void) {
 
 typedef void (*Fn)();
 
-extern u8 D_00264C30[];
+extern u8 stage5_boss_flash_palettes_a[];
 s32 boss_part_hide_all();
 s32 func_001389D0();
 s32 func_00139EB0();
@@ -247,7 +247,7 @@ void func_001F1680() {
         func_001E1F30();
         ENTITY(reg_a6)->y.h = t1;
         ENTITY(reg_a6)->x.h = t2;
-        reg_a0 = (u8 *)D_00264C30;
+        reg_a0 = (u8 *)stage5_boss_flash_palettes_a;
         func_0013B2E0();
         if (D_0028E2E8 == 0) {
             sfx_explosion_boss();
@@ -417,7 +417,7 @@ void func_001F1FA0(void) {
     func_001F1FE0();
 }
 
-extern u8 D_00264D00[];
+extern u8 stage5_boss_flash_palettes_b[];
 
 void func_001F1FE0(void) {
     u16 temp_a1;
@@ -524,7 +524,7 @@ void func_001F1FE0(void) {
         *(s16 *)(reg_a0 + 0x18) = 8;
         vibration_start_pad1(0xC8, 0x50, 0x460, 0x400);
         vibration_start_pad2(0xC8, 0x50);
-        reg_a0 = (u8 *)D_00264D00;
+        reg_a0 = (u8 *)stage5_boss_flash_palettes_b;
         func_0013B2E0();
         reg_d0.h[0] = 0x200;
         reg_d1.h[0] = 0x200;
@@ -693,13 +693,13 @@ void func_001F2640() {
 s32 func_0013B8B0();                            /* extern */
 s32 sprite_palette_load();                            /* extern */
 extern s32 g_default_sprite_palette_as_s32_a[];
-extern s32 D_00264E80[];
+extern s32 stage5_boss_fade_palettes_a[];
 
 void func_001F2810(void) {
     reg_d0.h[0] = 0xE;
     reg_a0 = (u8 *)g_default_sprite_palette_as_s32_a;
     sprite_palette_load();
-    reg_a0 = (u8 *)D_00264E80;
+    reg_a0 = (u8 *)stage5_boss_fade_palettes_a;
     func_0013B8B0();
     *(s16 *)(reg_a4 + 2) = 0;
     *(s16 *)(reg_a4 + 6) = 0x101;
@@ -711,7 +711,7 @@ void func_001F2810(void) {
     func_001F28A0(1, 0x101);
 }
 
-extern u8 D_00264E10[];
+extern u8 stage5_boss_flash_palettes_c[];
 
 s32 boss_slots_end();
 s32 boss_flash_start();
@@ -793,7 +793,7 @@ block_2:
     if (*(u16 *)(reg_a4 + 2) != 2) goto block_1;
     boss_flash_running();
     if (cond_flag != 0) goto block_1;
-    reg_a0 = (u8 *)D_00264E10;
+    reg_a0 = (u8 *)stage5_boss_flash_palettes_c;
     func_0013B2E0();
     boss_part_hide_all();
     *(u16 *)(reg_a4 + 0xA) = 1;

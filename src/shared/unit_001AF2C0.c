@@ -48,15 +48,15 @@ next_3:
 
 s32 func_0013EEE0();
 s32 func_0013F000();
-extern u8 D_00251AE0[];
-extern u8 D_00251B00[];
+extern u8 join_select_p1_table[];
+extern u8 join_select_p2_table[];
 
 void func_001AF3A0() {
     s32 func_001A3560();
     *(s8 *)(reg_a5 + 3) = 1;
-    reg_a4 = D_00251AE0;
+    reg_a4 = join_select_p1_table;
     if (*(u8 *)(reg_a5 + 6) != 0) {
-        reg_a4 = D_00251B00;
+        reg_a4 = join_select_p2_table;
     }
     reg_tmp.w = (u32) reg_a4;
     *(u16 *)(reg_a5 + 8) = (u16) reg_tmp.h[1];

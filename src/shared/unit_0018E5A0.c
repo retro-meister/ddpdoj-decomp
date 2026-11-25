@@ -5,6 +5,19 @@
 #include "cd.h"
 #include "replay.h"
 
+extern u16 g_credits_script[];
+extern u16 ending_fade_in_table[];
+extern u16 ending_fade_in_group_0[];
+extern u16 ending_fade_in_group_1[];
+extern u16 ending_fade_in_group_2[];
+extern u16 ending_fade_in_group_3[];
+extern u16 ending_fade_in_group_4[];
+extern u16 ground_event_routines[];
+extern u16 ground_event_sound_routines[];
+extern u16 stage_background_palettes[];
+extern u16 stage_data_tables[];
+extern u16 stage5_boss_horn_shot_offsets[];
+
 extern u16 bullet_type_setup_routines[];
 extern u16 bullet_move_routines[];
 extern u16 D_0024EBC0[];
@@ -13,13 +26,13 @@ extern u16 D_0024EF30[];
 extern u16 debris_random_patterns[];
 extern u16 D_00250D20[];
 extern u16 D_00250E00[];
-extern u16 D_00251AE0[];
-extern u16 D_00251B00[];
-extern u16 D_00264C30[];
-extern u16 D_00264D00[];
-extern u16 D_00264E10[];
-extern u16 D_00264E80[];
-extern u16 D_00264EA0[];
+extern u16 join_select_p1_table[];
+extern u16 join_select_p2_table[];
+extern u16 stage5_boss_flash_palettes_a[];
+extern u16 stage5_boss_flash_palettes_b[];
+extern u16 stage5_boss_flash_palettes_c[];
+extern u16 stage5_boss_fade_palettes_a[];
+extern u16 stage5_boss_fade_palettes_b[];
 
 void music_start_when_ready(void);
 void sound_update_bgm_fade(void);
@@ -63,34 +76,34 @@ extern u16 D_0024CB00[];
 extern u16 D_0024CB40[];
 extern u16 D_0024CB80[];
 extern u16 D_0024D030_as_u16_a[];
-extern u16 D_0024E0A0[];
-extern u16 D_0024E0B0[];
-extern u16 D_0024E0C0[];
-extern u16 D_0024E0D0[];
-extern u16 D_0024E0E0[];
-extern u16 D_0024E0F8[];
-extern u16 D_0024E110[];
-extern u16 D_0024E130[];
-extern u16 D_0024E140[];
-extern u16 D_0024E150[];
-extern u16 D_0024E170[];
-extern u16 D_0024E188[];
-extern u16 D_0024E1A0[];
-extern u16 D_0024E1B8[];
-extern u16 D_0024E1C8[];
-extern u16 D_0024E1E0[];
-extern u16 D_0024E200[];
-extern u16 D_0024E210[];
-extern u16 D_0024E220[];
-extern u16 D_0024E230[];
-extern u16 D_0024E240[];
-extern u16 D_0024E250[];
-extern u16 D_0024E260[];
-extern u16 D_0024E280[];
-extern u16 D_0024E290[];
-extern u16 D_0024E2A0[];
-extern u16 D_0024E2B0[];
-extern u16 D_0024E2C8[];
+extern u16 credits_text_01[];
+extern u16 credits_text_02[];
+extern u16 credits_text_03[];
+extern u16 credits_text_04[];
+extern u16 credits_text_05[];
+extern u16 credits_text_07[];
+extern u16 credits_text_08[];
+extern u16 credits_text_25[];
+extern u16 credits_text_09[];
+extern u16 credits_text_10[];
+extern u16 credits_text_11[];
+extern u16 credits_text_12[];
+extern u16 credits_text_13[];
+extern u16 credits_text_15[];
+extern u16 credits_text_16[];
+extern u16 credits_text_17[];
+extern u16 credits_text_20[];
+extern u16 credits_text_22[];
+extern u16 credits_text_23[];
+extern u16 credits_text_26[];
+extern u16 credits_text_27[];
+extern u16 credits_text_28[];
+extern u16 credits_text_29[];
+extern u16 credits_text_31[];
+extern u16 credits_text_32[];
+extern u16 credits_text_33[];
+extern u16 credits_text_24[];
+extern u16 credits_text_30[];
 extern u16 bullet_type_record_00[];
 extern u16 bullet_type_record_01[];
 extern u16 bullet_type_record_02[];
@@ -378,7 +391,7 @@ extern u16 D_002643F0[];
 extern u16 D_00264440[];
 extern u16 D_00264490[];
 extern u16 D_002644E0[];
-extern u16 D_0028C0A0[];
+extern u16 credits_text_00[];
 extern u16 stage1_ground_table[];
 extern u16 stage2_ground_table[];
 extern u16 stage3_ground_table[];
@@ -444,69 +457,21 @@ extern void bullet_move_type_35(void);
 extern void func_00130270(void);
 extern void func_001303A0(void);
 extern void func_0014CC90(void);
-extern void func_0014CD70(void);
-extern void func_0014CEA0(void);
-extern void func_0014CEE0(void);
-extern void func_0014CF10(void);
-extern void func_0014CF90(void);
+extern void ground_event_01(void);
+extern void ground_event_02(void);
+extern void ground_event_03(void);
+extern void ground_event_04(void);
+extern void ground_event_05(void);
 extern void func_0014D0F0(void);
-extern void func_0014D140(void);
-extern void func_0014D150(void);
-extern void func_0014D170(void);
+extern void ground_event_sound_01(void);
+extern void ground_event_sound_02(void);
+extern void ground_event_06(void);
 extern void music_play_bgm3(void);
 extern void music_play_bgm4(void);
 extern void music_play_bgm5(void);
 extern void music_play_bgm6(void);
 extern void music_play_bgm7(void);
 extern void music_play_bgm8(void);
-
-extern u16 D_0024D0B8[];
-extern u16 D_0024D0C6[];
-extern u16 D_0024D0D4[];
-extern u16 D_0024D238[];
-extern u16 D_0024D246[];
-extern u16 D_0024D258[];
-extern u16 D_0024D266[];
-extern u16 D_0024D278[];
-extern u16 D_0024D286[];
-extern u16 D_0024D298[];
-extern u16 D_0024D2A6[];
-extern u16 D_0024D2B8[];
-extern u16 D_0024D2C6[];
-extern u16 D_0024E2E6[];
-extern u16 D_0024E2F0[];
-extern u16 D_0024E2FA[];
-extern u16 D_0024E304[];
-extern u16 D_0024E30E[];
-extern u16 D_0024E318[];
-extern u16 D_0024E322[];
-extern u16 D_0024E32C[];
-extern u16 D_0024E336[];
-extern u16 D_0024E340[];
-extern u16 D_0024E34A[];
-extern u16 D_0024E354[];
-extern u16 D_0024E35E[];
-extern u16 D_0024E368[];
-extern u16 D_0024E372[];
-extern u16 D_0024E37C[];
-extern u16 D_0024E386[];
-extern u16 D_0024E390[];
-extern u16 D_0024E39A[];
-extern u16 D_0024E3A4[];
-extern u16 D_0024E3AE[];
-extern u16 D_0024E3B8[];
-extern u16 D_0024E3C2[];
-extern u16 D_0024E3CC[];
-extern u16 D_0024E3D6[];
-extern u16 D_0024E3E0[];
-extern u16 D_0024E3EA[];
-extern u16 D_0024E3F4[];
-extern u16 D_0024E3FE[];
-extern u16 D_0024E408[];
-extern u16 D_0024E412[];
-extern u16 D_0024E41C[];
-extern u16 D_0024E426[];
-extern u16 D_0024E430[];
 extern u16 bullet_type_setup_routines_as_u16_a[];
 extern u16 bullet_type_records[];
 extern u16 bullet_move_routines_as_u16_a[];
@@ -528,13 +493,13 @@ extern u16 D_00252010[];
 extern u16 D_00252050[];
 extern u16 D_00252210[];
 extern u16 D_00252220[];
-extern u16 D_002526D0_as_u16_a[];
+extern u16 ground_event_routines_as_u16_a[];
 extern u16 D_002526D2[];
-extern u16 D_002526F0_as_u16_a[];
+extern u16 ground_event_sound_routines_as_u16_a[];
 extern u16 D_002526F2[];
-extern u16 D_00252700_as_u16_a[];
+extern u16 stage_background_palettes_as_u16_a[];
 extern u16 D_00252702[];
-extern u16 D_00252720_as_u16_a[];
+extern u16 stage_data_tables_as_u16_a[];
 extern u16 D_00252722[];
 extern u16 stage_ground_tables[];
 extern u16 D_0025BF98[];
@@ -542,7 +507,7 @@ extern u16 D_0025BFA6[];
 extern u16 D_0025BFB4[];
 extern u16 D_0025BFC2[];
 extern u16 name_entry_letter_table[];
-extern u16 D_002643E0_as_u16_a[];
+extern u16 stage5_boss_horn_shot_offsets_as_u16_a[];
 extern u16 D_002643E2[];
 extern u16 D_0028C148_as_u16_a[];
 extern u16 D_0028C14A[];
@@ -1828,285 +1793,285 @@ void func_0018E5A0(void) {
         printf("error! zan_n3[12]\n");
     }
     STORE_POINTER_DIRECT(D_00251670 + 68, D_00251670);
-    if (D_0024D0B8[0] != 0x4) {
+    if (ending_fade_in_table[4] != 0x4) {
         printf("error! end_fadein_tbl[4]\n");
     }
-    STORE_POINTER_DIRECT(D_0024D0B8, D_0024D030_as_u16_a);
-    if (D_0024D0C6[0] != 0xb) {
+    STORE_POINTER_DIRECT(ending_fade_in_table + 4, D_0024D030_as_u16_a);
+    if (ending_fade_in_table[11] != 0xb) {
         printf("error! end_fadein_tbl[11]\n");
     }
-    STORE_POINTER_DIRECT(D_0024D0C6, D_002624F0);
-    if (D_0024D0D4[0] != 0x12) {
+    STORE_POINTER_DIRECT(ending_fade_in_table + 11, D_002624F0);
+    if (ending_fade_in_table[18] != 0x12) {
         printf("error! end_fadein_tbl[18]\n");
     }
-    STORE_POINTER_DIRECT(D_0024D0D4, D_00262530);
-    if (D_0024D238[0] != 0x4) {
+    STORE_POINTER_DIRECT(ending_fade_in_table + 18, D_00262530);
+    if (ending_fade_in_group_0[4] != 0x4) {
         printf("error! end_fadein_g_tbl0[4]\n");
     }
-    STORE_POINTER_DIRECT(D_0024D238, D_002624F0);
-    if (D_0024D246[0] != 0xb) {
+    STORE_POINTER_DIRECT(ending_fade_in_group_0 + 4, D_002624F0);
+    if (ending_fade_in_group_0[11] != 0xb) {
         printf("error! end_fadein_g_tbl0[11]\n");
     }
-    STORE_POINTER_DIRECT(D_0024D246, D_00262530);
-    if (D_0024D258[0] != 0x4) {
+    STORE_POINTER_DIRECT(ending_fade_in_group_0 + 11, D_00262530);
+    if (ending_fade_in_group_1[4] != 0x4) {
         printf("error! end_fadein_g_tbl1[4]\n");
     }
-    STORE_POINTER_DIRECT(D_0024D258, D_002624F0);
-    if (D_0024D266[0] != 0xb) {
+    STORE_POINTER_DIRECT(ending_fade_in_group_1 + 4, D_002624F0);
+    if (ending_fade_in_group_1[11] != 0xb) {
         printf("error! end_fadein_g_tbl1[11]\n");
     }
-    STORE_POINTER_DIRECT(D_0024D266, D_00262530);
-    if (D_0024D278[0] != 0x4) {
+    STORE_POINTER_DIRECT(ending_fade_in_group_1 + 11, D_00262530);
+    if (ending_fade_in_group_2[4] != 0x4) {
         printf("error! end_fadein_g_tbl2[4]\n");
     }
-    STORE_POINTER_DIRECT(D_0024D278, D_002624F0);
-    if (D_0024D286[0] != 0xb) {
+    STORE_POINTER_DIRECT(ending_fade_in_group_2 + 4, D_002624F0);
+    if (ending_fade_in_group_2[11] != 0xb) {
         printf("error! end_fadein_g_tbl2[11]\n");
     }
-    STORE_POINTER_DIRECT(D_0024D286, D_00262530);
-    if (D_0024D298[0] != 0x4) {
+    STORE_POINTER_DIRECT(ending_fade_in_group_2 + 11, D_00262530);
+    if (ending_fade_in_group_3[4] != 0x4) {
         printf("error! end_fadein_g_tbl3[4]\n");
     }
-    STORE_POINTER_DIRECT(D_0024D298, D_002624F0);
-    if (D_0024D2A6[0] != 0xb) {
+    STORE_POINTER_DIRECT(ending_fade_in_group_3 + 4, D_002624F0);
+    if (ending_fade_in_group_3[11] != 0xb) {
         printf("error! end_fadein_g_tbl3[11]\n");
     }
-    STORE_POINTER_DIRECT(D_0024D2A6, D_00262530);
-    if (D_0024D2B8[0] != 0x4) {
+    STORE_POINTER_DIRECT(ending_fade_in_group_3 + 11, D_00262530);
+    if (ending_fade_in_group_4[4] != 0x4) {
         printf("error! end_fadein_g_tbl4[4]\n");
     }
-    STORE_POINTER_DIRECT(D_0024D2B8, D_002624F0);
-    if (D_0024D2C6[0] != 0xb) {
+    STORE_POINTER_DIRECT(ending_fade_in_group_4 + 4, D_002624F0);
+    if (ending_fade_in_group_4[11] != 0xb) {
         printf("error! end_fadein_g_tbl4[11]\n");
     }
-    STORE_POINTER_DIRECT(D_0024D2C6, D_00262530);
-    if (D_0024E2E6[0] != 0x3) {
+    STORE_POINTER_DIRECT(ending_fade_in_group_4 + 11, D_00262530);
+    if (g_credits_script[3] != 0x3) {
         printf("error! stf_tbl[3]\n");
     }
-    STORE_POINTER_DIRECT(D_0024E2E6, D_0028C0A0);
-    if (D_0024E2F0[0] != 0x8) {
+    STORE_POINTER_DIRECT(g_credits_script + 3, credits_text_00);
+    if (g_credits_script[8] != 0x8) {
         printf("error! stf_tbl[8]\n");
     }
-    STORE_POINTER_DIRECT(D_0024E2F0, D_0024E0A0);
-    if (D_0024E2FA[0] != 0xd) {
+    STORE_POINTER_DIRECT(g_credits_script + 8, credits_text_01);
+    if (g_credits_script[13] != 0xd) {
         printf("error! stf_tbl[13]\n");
     }
-    STORE_POINTER_DIRECT(D_0024E2FA, D_0024E0B0);
-    if (D_0024E304[0] != 0x12) {
+    STORE_POINTER_DIRECT(g_credits_script + 13, credits_text_02);
+    if (g_credits_script[18] != 0x12) {
         printf("error! stf_tbl[18]\n");
     }
-    STORE_POINTER_DIRECT(D_0024E304, D_0024E0C0);
-    if (D_0024E30E[0] != 0x17) {
+    STORE_POINTER_DIRECT(g_credits_script + 18, credits_text_03);
+    if (g_credits_script[23] != 0x17) {
         printf("error! stf_tbl[23]\n");
     }
-    STORE_POINTER_DIRECT(D_0024E30E, D_0024E0D0);
-    if (D_0024E318[0] != 0x1c) {
+    STORE_POINTER_DIRECT(g_credits_script + 23, credits_text_04);
+    if (g_credits_script[28] != 0x1c) {
         printf("error! stf_tbl[28]\n");
     }
-    STORE_POINTER_DIRECT(D_0024E318, D_0024E0E0);
-    if (D_0024E322[0] != 0x21) {
+    STORE_POINTER_DIRECT(g_credits_script + 28, credits_text_05);
+    if (g_credits_script[33] != 0x21) {
         printf("error! stf_tbl[33]\n");
     }
-    STORE_POINTER_DIRECT(D_0024E322, D_0024E0D0);
-    if (D_0024E32C[0] != 0x26) {
+    STORE_POINTER_DIRECT(g_credits_script + 33, credits_text_04);
+    if (g_credits_script[38] != 0x26) {
         printf("error! stf_tbl[38]\n");
     }
-    STORE_POINTER_DIRECT(D_0024E32C, D_0024E0F8);
-    if (D_0024E336[0] != 0x2b) {
+    STORE_POINTER_DIRECT(g_credits_script + 38, credits_text_07);
+    if (g_credits_script[43] != 0x2b) {
         printf("error! stf_tbl[43]\n");
     }
-    STORE_POINTER_DIRECT(D_0024E336, D_0024E110);
-    if (D_0024E340[0] != 0x30) {
+    STORE_POINTER_DIRECT(g_credits_script + 43, credits_text_08);
+    if (g_credits_script[48] != 0x30) {
         printf("error! stf_tbl[48]\n");
     }
-    STORE_POINTER_DIRECT(D_0024E340, D_0024E140);
-    if (D_0024E34A[0] != 0x35) {
+    STORE_POINTER_DIRECT(g_credits_script + 48, credits_text_09);
+    if (g_credits_script[53] != 0x35) {
         printf("error! stf_tbl[53]\n");
     }
-    STORE_POINTER_DIRECT(D_0024E34A, D_0024E150);
-    if (D_0024E354[0] != 0x3a) {
+    STORE_POINTER_DIRECT(g_credits_script + 53, credits_text_10);
+    if (g_credits_script[58] != 0x3a) {
         printf("error! stf_tbl[58]\n");
     }
-    STORE_POINTER_DIRECT(D_0024E354, D_0024E170);
-    if (D_0024E35E[0] != 0x3f) {
+    STORE_POINTER_DIRECT(g_credits_script + 58, credits_text_11);
+    if (g_credits_script[63] != 0x3f) {
         printf("error! stf_tbl[63]\n");
     }
-    STORE_POINTER_DIRECT(D_0024E35E, D_0024E188);
-    if (D_0024E368[0] != 0x44) {
+    STORE_POINTER_DIRECT(g_credits_script + 63, credits_text_12);
+    if (g_credits_script[68] != 0x44) {
         printf("error! stf_tbl[68]\n");
     }
-    STORE_POINTER_DIRECT(D_0024E368, D_0024E1A0);
-    if (D_0024E372[0] != 0x49) {
+    STORE_POINTER_DIRECT(g_credits_script + 68, credits_text_13);
+    if (g_credits_script[73] != 0x49) {
         printf("error! stf_tbl[73]\n");
     }
-    STORE_POINTER_DIRECT(D_0024E372, D_0024E150);
-    if (D_0024E37C[0] != 0x4e) {
+    STORE_POINTER_DIRECT(g_credits_script + 73, credits_text_10);
+    if (g_credits_script[78] != 0x4e) {
         printf("error! stf_tbl[78]\n");
     }
-    STORE_POINTER_DIRECT(D_0024E37C, D_0024E1B8);
-    if (D_0024E386[0] != 0x53) {
+    STORE_POINTER_DIRECT(g_credits_script + 78, credits_text_15);
+    if (g_credits_script[83] != 0x53) {
         printf("error! stf_tbl[83]\n");
     }
-    STORE_POINTER_DIRECT(D_0024E386, D_0024E1C8);
-    if (D_0024E390[0] != 0x58) {
+    STORE_POINTER_DIRECT(g_credits_script + 83, credits_text_16);
+    if (g_credits_script[88] != 0x58) {
         printf("error! stf_tbl[88]\n");
     }
-    STORE_POINTER_DIRECT(D_0024E390, D_0024E1E0);
-    if (D_0024E39A[0] != 0x5d) {
+    STORE_POINTER_DIRECT(g_credits_script + 88, credits_text_17);
+    if (g_credits_script[93] != 0x5d) {
         printf("error! stf_tbl[93]\n");
     }
-    STORE_POINTER_DIRECT(D_0024E39A, D_0024E1C8);
-    if (D_0024E3A4[0] != 0x62) {
+    STORE_POINTER_DIRECT(g_credits_script + 93, credits_text_16);
+    if (g_credits_script[98] != 0x62) {
         printf("error! stf_tbl[98]\n");
     }
-    STORE_POINTER_DIRECT(D_0024E3A4, D_0024E188);
-    if (D_0024E3AE[0] != 0x67) {
+    STORE_POINTER_DIRECT(g_credits_script + 98, credits_text_12);
+    if (g_credits_script[103] != 0x67) {
         printf("error! stf_tbl[103]\n");
     }
-    STORE_POINTER_DIRECT(D_0024E3AE, D_0024E200);
-    if (D_0024E3B8[0] != 0x6c) {
+    STORE_POINTER_DIRECT(g_credits_script + 103, credits_text_20);
+    if (g_credits_script[108] != 0x6c) {
         printf("error! stf_tbl[108]\n");
     }
-    STORE_POINTER_DIRECT(D_0024E3B8, D_0024E188);
-    if (D_0024E3C2[0] != 0x71) {
+    STORE_POINTER_DIRECT(g_credits_script + 108, credits_text_12);
+    if (g_credits_script[113] != 0x71) {
         printf("error! stf_tbl[113]\n");
     }
-    STORE_POINTER_DIRECT(D_0024E3C2, D_0024E210);
-    if (D_0024E3CC[0] != 0x76) {
+    STORE_POINTER_DIRECT(g_credits_script + 113, credits_text_22);
+    if (g_credits_script[118] != 0x76) {
         printf("error! stf_tbl[118]\n");
     }
-    STORE_POINTER_DIRECT(D_0024E3CC, D_0024E220);
-    if (D_0024E3D6[0] != 0x7b) {
+    STORE_POINTER_DIRECT(g_credits_script + 118, credits_text_23);
+    if (g_credits_script[123] != 0x7b) {
         printf("error! stf_tbl[123]\n");
     }
-    STORE_POINTER_DIRECT(D_0024E3D6, D_0024E2B0);
-    if (D_0024E3E0[0] != 0x80) {
+    STORE_POINTER_DIRECT(g_credits_script + 123, credits_text_24);
+    if (g_credits_script[128] != 0x80) {
         printf("error! stf_tbl[128]\n");
     }
-    STORE_POINTER_DIRECT(D_0024E3E0, D_0024E130);
-    if (D_0024E3EA[0] != 0x85) {
+    STORE_POINTER_DIRECT(g_credits_script + 128, credits_text_25);
+    if (g_credits_script[133] != 0x85) {
         printf("error! stf_tbl[133]\n");
     }
-    STORE_POINTER_DIRECT(D_0024E3EA, D_0024E230);
-    if (D_0024E3F4[0] != 0x8a) {
+    STORE_POINTER_DIRECT(g_credits_script + 133, credits_text_26);
+    if (g_credits_script[138] != 0x8a) {
         printf("error! stf_tbl[138]\n");
     }
-    STORE_POINTER_DIRECT(D_0024E3F4, D_0024E240);
-    if (D_0024E3FE[0] != 0x8f) {
+    STORE_POINTER_DIRECT(g_credits_script + 138, credits_text_27);
+    if (g_credits_script[143] != 0x8f) {
         printf("error! stf_tbl[143]\n");
     }
-    STORE_POINTER_DIRECT(D_0024E3FE, D_0024E250);
-    if (D_0024E408[0] != 0x94) {
+    STORE_POINTER_DIRECT(g_credits_script + 143, credits_text_28);
+    if (g_credits_script[148] != 0x94) {
         printf("error! stf_tbl[148]\n");
     }
-    STORE_POINTER_DIRECT(D_0024E408, D_0024E260);
-    if (D_0024E412[0] != 0x99) {
+    STORE_POINTER_DIRECT(g_credits_script + 148, credits_text_29);
+    if (g_credits_script[153] != 0x99) {
         printf("error! stf_tbl[153]\n");
     }
 #ifdef DEATH_LABEL
-    STORE_POINTER_DIRECT(D_0024E412, D_0024E2C8);
-    STORE_POINTER_DIRECT(D_0024E41C, death_D_00254748);
-    STORE_POINTER_DIRECT(D_0024E426, death_D_00254758);
-    STORE_POINTER_DIRECT(D_0024E430, death_D_00254768);
+    STORE_POINTER_DIRECT(g_credits_script + 153, credits_text_30);
+    STORE_POINTER_DIRECT(g_credits_script + 158, death_D_00254748);
+    STORE_POINTER_DIRECT(g_credits_script + 163, death_D_00254758);
+    STORE_POINTER_DIRECT(g_credits_script + 168, death_D_00254768);
     STORE_POINTER_DIRECT(death_D_0025495A, death_D_00254778);
     STORE_POINTER_DIRECT(death_D_00254964, death_D_00254790);
     STORE_POINTER_DIRECT(death_D_0025496E, death_D_002547A0);
     STORE_POINTER_DIRECT(death_D_00254978, death_D_002547B0);
     STORE_POINTER_DIRECT(death_D_00254982, death_D_002547C0);
 #else
-    STORE_POINTER_DIRECT(D_0024E412, D_0024E2C8);
-    STORE_POINTER_DIRECT(D_0024E41C, D_0024E280);
-    STORE_POINTER_DIRECT(D_0024E426, D_0024E290);
-    STORE_POINTER_DIRECT(D_0024E430, D_0024E2A0);
+    STORE_POINTER_DIRECT(g_credits_script + 153, credits_text_30);
+    STORE_POINTER_DIRECT(g_credits_script + 158, credits_text_31);
+    STORE_POINTER_DIRECT(g_credits_script + 163, credits_text_32);
+    STORE_POINTER_DIRECT(g_credits_script + 168, credits_text_33);
 #endif
-    if (D_002526D0_as_u16_a[0] != 0x0) {
+    if (ground_event_routines[0] != 0x0) {
         printf("error! groevent_tbl[0]\n");
     }
     reg_tmp.w = (u32)func_0014CC90;
-    D_002526D0_as_u16_a[0] = reg_tmp.h[1];
+    ground_event_routines_as_u16_a[0] = reg_tmp.h[1];
     D_002526D2[0] = reg_tmp.h[0];
-    if (D_002526D2[1] != 0x2) {
+    if (ground_event_routines[2] != 0x2) {
         printf("error! groevent_tbl[2]\n");
     }
-    STORE_POINTER(D_002526D2 + 1, func_0014CD70);
-    if (D_002526D2[3] != 0x4) {
+    STORE_POINTER(ground_event_routines + 2, ground_event_01);
+    if (ground_event_routines[4] != 0x4) {
         printf("error! groevent_tbl[4]\n");
     }
-    STORE_POINTER(D_002526D2 + 3, func_0014CEA0);
-    if (D_002526D2[5] != 0x6) {
+    STORE_POINTER(ground_event_routines + 4, ground_event_02);
+    if (ground_event_routines[6] != 0x6) {
         printf("error! groevent_tbl[6]\n");
     }
-    STORE_POINTER(D_002526D2 + 5, func_0014CEE0);
-    if (D_002526D2[7] != 0x8) {
+    STORE_POINTER(ground_event_routines + 6, ground_event_03);
+    if (ground_event_routines[8] != 0x8) {
         printf("error! groevent_tbl[8]\n");
     }
-    STORE_POINTER(D_002526D2 + 7, func_0014CF10);
-    if (D_002526D2[9] != 0xa) {
+    STORE_POINTER(ground_event_routines + 8, ground_event_04);
+    if (ground_event_routines[10] != 0xa) {
         printf("error! groevent_tbl[10]\n");
     }
-    STORE_POINTER(D_002526D2 + 9, func_0014CF90);
-    if (D_002526D2[11] != 0xc) {
+    STORE_POINTER(ground_event_routines + 10, ground_event_05);
+    if (ground_event_routines[12] != 0xc) {
         printf("error! groevent_tbl[12]\n");
     }
-    STORE_POINTER(D_002526D2 + 11, func_0014D170);
-    if (D_002526F0_as_u16_a[0] != 0x0) {
+    STORE_POINTER(ground_event_routines + 12, ground_event_06);
+    if (ground_event_sound_routines[0] != 0x0) {
         printf("error! gev_snd_proc_tbl[0]\n");
     }
     reg_tmp.w = (u32)func_0014D0F0;
-    D_002526F0_as_u16_a[0] = reg_tmp.h[1];
+    ground_event_sound_routines_as_u16_a[0] = reg_tmp.h[1];
     D_002526F2[0] = reg_tmp.h[0];
-    if (D_002526F2[1] != 0x2) {
+    if (ground_event_sound_routines[2] != 0x2) {
         printf("error! gev_snd_proc_tbl[2]\n");
     }
-    STORE_POINTER(D_002526F2 + 1, func_0014D140);
-    if (D_002526F2[3] != 0x4) {
+    STORE_POINTER(ground_event_sound_routines + 2, ground_event_sound_01);
+    if (ground_event_sound_routines[4] != 0x4) {
         printf("error! gev_snd_proc_tbl[4]\n");
     }
-    STORE_POINTER(D_002526F2 + 3, func_0014D150);
-    if (D_00252700_as_u16_a[0] != 0x0) {
+    STORE_POINTER(ground_event_sound_routines + 4, ground_event_sound_02);
+    if (stage_background_palettes[0] != 0x0) {
         printf("error! bg_pal_tbl[0]\n");
     }
     reg_tmp.w = (u32)D_00244070;
-    D_00252700_as_u16_a[0] = reg_tmp.h[1];
+    stage_background_palettes_as_u16_a[0] = reg_tmp.h[1];
     D_00252702[0] = reg_tmp.h[0];
-    if (D_00252702[1] != 0x2) {
+    if (stage_background_palettes[2] != 0x2) {
         printf("error! bg_pal_tbl[2]\n");
     }
-    STORE_POINTER(D_00252702 + 1, D_002461D0);
-    if (D_00252702[3] != 0x4) {
+    STORE_POINTER(stage_background_palettes + 2, D_002461D0);
+    if (stage_background_palettes[4] != 0x4) {
         printf("error! bg_pal_tbl[4]\n");
     }
-    STORE_POINTER(D_00252702 + 3, D_00247080);
-    if (D_00252702[5] != 0x6) {
+    STORE_POINTER(stage_background_palettes + 4, D_00247080);
+    if (stage_background_palettes[6] != 0x6) {
         printf("error! bg_pal_tbl[6]\n");
     }
-    STORE_POINTER(D_00252702 + 5, D_00249610);
-    if (D_00252702[7] != 0x8) {
+    STORE_POINTER(stage_background_palettes + 6, D_00249610);
+    if (stage_background_palettes[8] != 0x8) {
         printf("error! bg_pal_tbl[8]\n");
     }
-    STORE_POINTER(D_00252702 + 7, D_0024C240);
-    if (D_00252720_as_u16_a[0] != 0x0) {
+    STORE_POINTER(stage_background_palettes + 8, D_0024C240);
+    if (stage_data_tables[0] != 0x0) {
         printf("error! stg_tbl[0]\n");
     }
     reg_tmp.w = (u32)D_002420F0;
-    D_00252720_as_u16_a[0] = reg_tmp.h[1];
+    stage_data_tables_as_u16_a[0] = reg_tmp.h[1];
     D_00252722[0] = reg_tmp.h[0];
-    if (D_00252722[1] != 0x2) {
+    if (stage_data_tables[2] != 0x2) {
         printf("error! stg_tbl[2]\n");
     }
-    STORE_POINTER(D_00252722 + 1, D_00244A30);
-    if (D_00252722[3] != 0x4) {
+    STORE_POINTER(stage_data_tables + 2, D_00244A30);
+    if (stage_data_tables[4] != 0x4) {
         printf("error! stg_tbl[4]\n");
     }
-    STORE_POINTER(D_00252722 + 3, D_00246C90);
-    if (D_00252722[5] != 0x6) {
+    STORE_POINTER(stage_data_tables + 4, D_00246C90);
+    if (stage_data_tables[6] != 0x6) {
         printf("error! stg_tbl[6]\n");
     }
-    STORE_POINTER(D_00252722 + 5, D_00247880);
-    if (D_00252722[7] != 0x8) {
+    STORE_POINTER(stage_data_tables + 6, D_00247880);
+    if (stage_data_tables[8] != 0x8) {
         printf("error! stg_tbl[8]\n");
     }
-    STORE_POINTER(D_00252722 + 7, D_00249ED0);
+    STORE_POINTER(stage_data_tables + 8, D_00249ED0);
     if (stage1_ground_table[0] != 0x0) {
         printf("error! gro_stg1_tbl[0]\n");
     }
@@ -2867,38 +2832,38 @@ void func_0018E5A0(void) {
         printf("error! figsel_data_2p[3]\n");
     }
     STORE_POINTER(D_00251AC4 + 1, input_get_p2_pressed);
-    if (D_00251AE0[2] != 0x2) {
+    if (join_select_p1_table[2] != 0x2) {
         printf("error! sel_game_tbl_1p[2]\n");
     }
-    STORE_POINTER(D_00251AE0 + 2, input_get_p1_held);
-    if (D_00251AE0[4] != 0x4) {
+    STORE_POINTER(join_select_p1_table + 2, input_get_p1_held);
+    if (join_select_p1_table[4] != 0x4) {
         printf("error! sel_game_tbl_1p[4]\n");
     }
-    STORE_POINTER(D_00251AE0 + 4, input_get_p1_pressed);
-    if (D_00251AE0[6] != 0x6) {
+    STORE_POINTER(join_select_p1_table + 4, input_get_p1_pressed);
+    if (join_select_p1_table[6] != 0x6) {
         printf("error! sel_game_tbl_1p[6]\n");
     }
-    STORE_POINTER(D_00251AE0 + 6, func_00130270);
-    if (D_00251AE0[8] != 0x8) {
+    STORE_POINTER(join_select_p1_table + 6, func_00130270);
+    if (join_select_p1_table[8] != 0x8) {
         printf("error! sel_game_tbl_1p[8]\n");
     }
-    STORE_POINTER(D_00251AE0 + 8, D_0029BF40_as_u16_a);
-    if (D_00251B00[2] != 0x2) {
+    STORE_POINTER(join_select_p1_table + 8, D_0029BF40_as_u16_a);
+    if (join_select_p2_table[2] != 0x2) {
         printf("error! sel_game_tbl_2p[2]\n");
     }
-    STORE_POINTER(D_00251B00 + 2, input_get_p2_held);
-    if (D_00251B00[4] != 0x4) {
+    STORE_POINTER(join_select_p2_table + 2, input_get_p2_held);
+    if (join_select_p2_table[4] != 0x4) {
         printf("error! sel_game_tbl_2p[4]\n");
     }
-    STORE_POINTER(D_00251B00 + 4, input_get_p2_pressed);
-    if (D_00251B00[6] != 0x6) {
+    STORE_POINTER(join_select_p2_table + 4, input_get_p2_pressed);
+    if (join_select_p2_table[6] != 0x6) {
         printf("error! sel_game_tbl_2p[6]\n");
     }
-    STORE_POINTER(D_00251B00 + 6, func_001303A0);
-    if (D_00251B00[8] != 0x8) {
+    STORE_POINTER(join_select_p2_table + 6, func_001303A0);
+    if (join_select_p2_table[8] != 0x8) {
         printf("error! sel_game_tbl_2p[8]\n");
     }
-    STORE_POINTER(D_00251B00 + 8, D_0029BF30_as_u16_a);
+    STORE_POINTER(join_select_p2_table + 8, D_0029BF30_as_u16_a);
     if (D_00251CC0[0] != 0x0) {
         printf("error! sel_win_kyok_tbl[0]\n");
     }
@@ -3109,168 +3074,168 @@ void func_0018E5A0(void) {
         printf("error! subsel_att_chr_2p_c[8]\n");
     }
     STORE_POINTER(D_00252290 + 8, D_00252310);
-    if (D_002643E0_as_u16_a[0] != 0x0) {
+    if (stage5_boss_horn_shot_offsets[0] != 0x0) {
         printf("error! st5b_2_tsuno_sht_ofs_tbl[0]\n");
     }
     reg_tmp.w = (u32)D_002644E0;
-    D_002643E0_as_u16_a[0] = reg_tmp.h[1];
+    stage5_boss_horn_shot_offsets_as_u16_a[0] = reg_tmp.h[1];
     D_002643E2[0] = reg_tmp.h[0];
-    if (D_002643E2[1] != 0x2) {
+    if (stage5_boss_horn_shot_offsets[2] != 0x2) {
         printf("error! st5b_2_tsuno_sht_ofs_tbl[2]\n");
     }
-    STORE_POINTER(D_002643E2 + 1, D_00264490);
-    if (D_002643E2[3] != 0x4) {
+    STORE_POINTER(stage5_boss_horn_shot_offsets + 2, D_00264490);
+    if (stage5_boss_horn_shot_offsets[4] != 0x4) {
         printf("error! st5b_2_tsuno_sht_ofs_tbl[4]\n");
     }
-    STORE_POINTER(D_002643E2 + 3, D_00264440);
-    if (D_002643E2[5] != 0x6) {
+    STORE_POINTER(stage5_boss_horn_shot_offsets + 4, D_00264440);
+    if (stage5_boss_horn_shot_offsets[6] != 0x6) {
         printf("error! st5b_2_tsuno_sht_ofs_tbl[6]\n");
     }
-    STORE_POINTER(D_002643E2 + 5, D_002643F0);
-    if (D_00264C30[4] != 0x4) {
+    STORE_POINTER(stage5_boss_horn_shot_offsets + 6, D_002643F0);
+    if (stage5_boss_flash_palettes_a[4] != 0x4) {
         printf("error! st5b_mo1_flush_tbl[4]\n");
     }
-    STORE_POINTER(D_00264C30 + 4, D_002610F0);
-    if (D_00264C30[11] != 0xb) {
+    STORE_POINTER(stage5_boss_flash_palettes_a + 4, D_002610F0);
+    if (stage5_boss_flash_palettes_a[11] != 0xb) {
         printf("error! st5b_mo1_flush_tbl[11]\n");
     }
-    STORE_POINTER(D_00264C30 + 11, D_0025FF70_as_u16_a);
-    if (D_00264C30[18] != 0x12) {
+    STORE_POINTER(stage5_boss_flash_palettes_a + 11, D_0025FF70_as_u16_a);
+    if (stage5_boss_flash_palettes_a[18] != 0x12) {
         printf("error! st5b_mo1_flush_tbl[18]\n");
     }
-    STORE_POINTER(D_00264C30 + 18, D_0025FFB0_as_u16_a);
-    if (D_00264C30[25] != 0x19) {
+    STORE_POINTER(stage5_boss_flash_palettes_a + 18, D_0025FFB0_as_u16_a);
+    if (stage5_boss_flash_palettes_a[25] != 0x19) {
         printf("error! st5b_mo1_flush_tbl[25]\n");
     }
-    STORE_POINTER(D_00264C30 + 25, D_0025FFF0_as_u16_a);
-    if (D_00264C30[32] != 0x20) {
+    STORE_POINTER(stage5_boss_flash_palettes_a + 25, D_0025FFF0_as_u16_a);
+    if (stage5_boss_flash_palettes_a[32] != 0x20) {
         printf("error! st5b_mo1_flush_tbl[32]\n");
     }
-    STORE_POINTER(D_00264C30 + 32, D_00260030_as_u16_a);
-    if (D_00264C30[39] != 0x27) {
+    STORE_POINTER(stage5_boss_flash_palettes_a + 32, D_00260030_as_u16_a);
+    if (stage5_boss_flash_palettes_a[39] != 0x27) {
         printf("error! st5b_mo1_flush_tbl[39]\n");
     }
-    STORE_POINTER(D_00264C30 + 39, D_00260070_as_u16_a);
-    if (D_00264C30[46] != 0x2e) {
+    STORE_POINTER(stage5_boss_flash_palettes_a + 39, D_00260070_as_u16_a);
+    if (stage5_boss_flash_palettes_a[46] != 0x2e) {
         printf("error! st5b_mo1_flush_tbl[46]\n");
     }
-    STORE_POINTER(D_00264C30 + 46, D_002600B0_as_u16_a);
-    if (D_00264C30[53] != 0x35) {
+    STORE_POINTER(stage5_boss_flash_palettes_a + 46, D_002600B0_as_u16_a);
+    if (stage5_boss_flash_palettes_a[53] != 0x35) {
         printf("error! st5b_mo1_flush_tbl[53]\n");
     }
-    STORE_POINTER(D_00264C30 + 53, D_002600F0_as_u16_a);
-    if (D_00264C30[60] != 0x3c) {
+    STORE_POINTER(stage5_boss_flash_palettes_a + 53, D_002600F0_as_u16_a);
+    if (stage5_boss_flash_palettes_a[60] != 0x3c) {
         printf("error! st5b_mo1_flush_tbl[60]\n");
     }
-    STORE_POINTER(D_00264C30 + 60, D_0024CA40);
-    if (D_00264C30[67] != 0x43) {
+    STORE_POINTER(stage5_boss_flash_palettes_a + 60, D_0024CA40);
+    if (stage5_boss_flash_palettes_a[67] != 0x43) {
         printf("error! st5b_mo1_flush_tbl[67]\n");
     }
-    STORE_POINTER(D_00264C30 + 67, D_0024CA80);
-    if (D_00264C30[74] != 0x4a) {
+    STORE_POINTER(stage5_boss_flash_palettes_a + 67, D_0024CA80);
+    if (stage5_boss_flash_palettes_a[74] != 0x4a) {
         printf("error! st5b_mo1_flush_tbl[74]\n");
     }
-    STORE_POINTER(D_00264C30 + 74, D_0024CAC0);
-    if (D_00264C30[81] != 0x51) {
+    STORE_POINTER(stage5_boss_flash_palettes_a + 74, D_0024CAC0);
+    if (stage5_boss_flash_palettes_a[81] != 0x51) {
         printf("error! st5b_mo1_flush_tbl[81]\n");
     }
-    STORE_POINTER(D_00264C30 + 81, D_0024CB00);
-    if (D_00264C30[88] != 0x58) {
+    STORE_POINTER(stage5_boss_flash_palettes_a + 81, D_0024CB00);
+    if (stage5_boss_flash_palettes_a[88] != 0x58) {
         printf("error! st5b_mo1_flush_tbl[88]\n");
     }
-    STORE_POINTER(D_00264C30 + 88, D_0024CB40);
-    if (D_00264C30[95] != 0x5f) {
+    STORE_POINTER(stage5_boss_flash_palettes_a + 88, D_0024CB40);
+    if (stage5_boss_flash_palettes_a[95] != 0x5f) {
         printf("error! st5b_mo1_flush_tbl[95]\n");
     }
-    STORE_POINTER(D_00264C30 + 95, D_0024CB80);
-    if (D_00264D00[4] != 0x4) {
+    STORE_POINTER(stage5_boss_flash_palettes_a + 95, D_0024CB80);
+    if (stage5_boss_flash_palettes_b[4] != 0x4) {
         printf("error! st5b_mo3_flush_tbl[4]\n");
     }
-    STORE_POINTER(D_00264D00 + 4, D_002610F0);
-    if (D_00264D00[11] != 0xb) {
+    STORE_POINTER(stage5_boss_flash_palettes_b + 4, D_002610F0);
+    if (stage5_boss_flash_palettes_b[11] != 0xb) {
         printf("error! st5b_mo3_flush_tbl[11]\n");
     }
-    STORE_POINTER(D_00264D00 + 11, D_00260130_as_u16_a);
-    if (D_00264D00[18] != 0x12) {
+    STORE_POINTER(stage5_boss_flash_palettes_b + 11, D_00260130_as_u16_a);
+    if (stage5_boss_flash_palettes_b[18] != 0x12) {
         printf("error! st5b_mo3_flush_tbl[18]\n");
     }
-    STORE_POINTER(D_00264D00 + 18, D_00260170_as_u16_a);
-    if (D_00264D00[25] != 0x19) {
+    STORE_POINTER(stage5_boss_flash_palettes_b + 18, D_00260170_as_u16_a);
+    if (stage5_boss_flash_palettes_b[25] != 0x19) {
         printf("error! st5b_mo3_flush_tbl[25]\n");
     }
-    STORE_POINTER(D_00264D00 + 25, D_0024CA40);
-    if (D_00264D00[32] != 0x20) {
+    STORE_POINTER(stage5_boss_flash_palettes_b + 25, D_0024CA40);
+    if (stage5_boss_flash_palettes_b[32] != 0x20) {
         printf("error! st5b_mo3_flush_tbl[32]\n");
     }
-    STORE_POINTER(D_00264D00 + 32, D_0024CA80);
-    if (D_00264D00[39] != 0x27) {
+    STORE_POINTER(stage5_boss_flash_palettes_b + 32, D_0024CA80);
+    if (stage5_boss_flash_palettes_b[39] != 0x27) {
         printf("error! st5b_mo3_flush_tbl[39]\n");
     }
-    STORE_POINTER(D_00264D00 + 39, D_0024CAC0);
-    if (D_00264D00[46] != 0x2e) {
+    STORE_POINTER(stage5_boss_flash_palettes_b + 39, D_0024CAC0);
+    if (stage5_boss_flash_palettes_b[46] != 0x2e) {
         printf("error! st5b_mo3_flush_tbl[46]\n");
     }
-    STORE_POINTER(D_00264D00 + 46, D_0024CB00);
-    if (D_00264D00[53] != 0x35) {
+    STORE_POINTER(stage5_boss_flash_palettes_b + 46, D_0024CB00);
+    if (stage5_boss_flash_palettes_b[53] != 0x35) {
         printf("error! st5b_mo3_flush_tbl[53]\n");
     }
-    STORE_POINTER(D_00264D00 + 53, D_0024CB40);
-    if (D_00264D00[60] != 0x3c) {
+    STORE_POINTER(stage5_boss_flash_palettes_b + 53, D_0024CB40);
+    if (stage5_boss_flash_palettes_b[60] != 0x3c) {
         printf("error! st5b_mo3_flush_tbl[60]\n");
     }
-    STORE_POINTER(D_00264D00 + 60, D_0024CB80);
-    if (D_00264E10[4] != 0x4) {
+    STORE_POINTER(stage5_boss_flash_palettes_b + 60, D_0024CB80);
+    if (stage5_boss_flash_palettes_c[4] != 0x4) {
         printf("error! st5bflush0_tbl[4]\n");
     }
-    STORE_POINTER(D_00264E10 + 4, D_002610F0);
-    if (D_00264E10[11] != 0xb) {
+    STORE_POINTER(stage5_boss_flash_palettes_c + 4, D_002610F0);
+    if (stage5_boss_flash_palettes_c[11] != 0xb) {
         printf("error! st5bflush0_tbl[11]\n");
     }
-    STORE_POINTER(D_00264E10 + 11, D_0024CA40);
-    if (D_00264E10[18] != 0x12) {
+    STORE_POINTER(stage5_boss_flash_palettes_c + 11, D_0024CA40);
+    if (stage5_boss_flash_palettes_c[18] != 0x12) {
         printf("error! st5bflush0_tbl[18]\n");
     }
-    STORE_POINTER(D_00264E10 + 18, D_0024CA80);
-    if (D_00264E10[25] != 0x19) {
+    STORE_POINTER(stage5_boss_flash_palettes_c + 18, D_0024CA80);
+    if (stage5_boss_flash_palettes_c[25] != 0x19) {
         printf("error! st5bflush0_tbl[25]\n");
     }
-    STORE_POINTER(D_00264E10 + 25, D_0024CAC0);
-    if (D_00264E10[32] != 0x20) {
+    STORE_POINTER(stage5_boss_flash_palettes_c + 25, D_0024CAC0);
+    if (stage5_boss_flash_palettes_c[32] != 0x20) {
         printf("error! st5bflush0_tbl[32]\n");
     }
-    STORE_POINTER(D_00264E10 + 32, D_0024CB00);
-    if (D_00264E10[39] != 0x27) {
+    STORE_POINTER(stage5_boss_flash_palettes_c + 32, D_0024CB00);
+    if (stage5_boss_flash_palettes_c[39] != 0x27) {
         printf("error! st5bflush0_tbl[39]\n");
     }
-    STORE_POINTER(D_00264E10 + 39, D_0024CB40);
-    if (D_00264E10[46] != 0x2e) {
+    STORE_POINTER(stage5_boss_flash_palettes_c + 39, D_0024CB40);
+    if (stage5_boss_flash_palettes_c[46] != 0x2e) {
         printf("error! st5bflush0_tbl[46]\n");
     }
-    STORE_POINTER(D_00264E10 + 46, D_0024CB80);
-    if (D_00264E80[3] != 0x3) {
+    STORE_POINTER(stage5_boss_flash_palettes_c + 46, D_0024CB80);
+    if (stage5_boss_fade_palettes_a[3] != 0x3) {
         printf("error! st5bmd2_fade_tbl0[3]\n");
     }
-    STORE_POINTER(D_00264E80 + 3, D_00261D30);
-    if (D_00264E80[9] != 0x9) {
+    STORE_POINTER(stage5_boss_fade_palettes_a + 3, D_00261D30);
+    if (stage5_boss_fade_palettes_a[9] != 0x9) {
         printf("error! st5bmd2_fade_tbl0[9]\n");
     }
-    STORE_POINTER(D_00264E80 + 9, D_00261D30);
-    if (D_00264EA0[4] != 0x4) {
+    STORE_POINTER(stage5_boss_fade_palettes_a + 9, D_00261D30);
+    if (stage5_boss_fade_palettes_b[4] != 0x4) {
         printf("error! st5b_siro_fade_tbl0[4]\n");
     }
-    STORE_POINTER(D_00264EA0 + 4, D_0025FF70_as_u16_a);
-    if (D_00264EA0[11] != 0xb) {
+    STORE_POINTER(stage5_boss_fade_palettes_b + 4, D_0025FF70_as_u16_a);
+    if (stage5_boss_fade_palettes_b[11] != 0xb) {
         printf("error! st5b_siro_fade_tbl0[11]\n");
     }
-    STORE_POINTER(D_00264EA0 + 11, D_0025FFB0_as_u16_a);
-    if (D_00264EA0[18] != 0x12) {
+    STORE_POINTER(stage5_boss_fade_palettes_b + 11, D_0025FFB0_as_u16_a);
+    if (stage5_boss_fade_palettes_b[18] != 0x12) {
         printf("error! st5b_siro_fade_tbl0[18]\n");
     }
-    STORE_POINTER(D_00264EA0 + 18, D_0025FFF0_as_u16_a);
-    if (D_00264EA0[25] != 0x19) {
+    STORE_POINTER(stage5_boss_fade_palettes_b + 18, D_0025FFF0_as_u16_a);
+    if (stage5_boss_fade_palettes_b[25] != 0x19) {
         printf("error! st5b_siro_fade_tbl0[25]\n");
     }
-    STORE_POINTER(D_00264EA0 + 25, D_002600F0_as_u16_a);
+    STORE_POINTER(stage5_boss_fade_palettes_b + 25, D_002600F0_as_u16_a);
 }
 
 

@@ -1366,7 +1366,7 @@ void func_001EBE90(void) {
     *(u8 *)(reg_a4 + 8) -= reg_d0.b[0];
 }
 
-extern u8 D_002643E0[];
+extern u8 stage5_boss_horn_shot_offsets[];
 
 void func_001EBF40(void) {
     s16 *temp_a0;
@@ -1414,7 +1414,7 @@ block_8:
             temp_a0_2 = ENTITY(reg_a6)->x.h;
             reg_d2.h[0] = temp_a0_2;
             reg_d7.h[0] = reg_d1.h[0];
-            reg_a3 = (u8 *)D_002643E0;
+            reg_a3 = (u8 *)stage5_boss_horn_shot_offsets;
             reg_d4.w = 0;
             reg_d4.b[0] = *(u8 *)(reg_a4 + 7);
             reg_d4.h[0] += reg_d4.h[0];

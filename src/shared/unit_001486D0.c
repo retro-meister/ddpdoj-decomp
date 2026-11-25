@@ -1603,7 +1603,7 @@ void func_0014CAD0(void) {
     func_0014CAE0();
 }
 
-extern u8 D_002526D0[];
+extern u8 ground_event_routines[];
 extern u16 D_0029C0BA[];
 extern u16 D_0029C0BC[];
 extern u16 D_0029C0BE[];
@@ -1624,7 +1624,7 @@ loop_1:
             temp_a0 = *(u16 *)reg_a1;
             reg_d2.h[0] = temp_a0;
             reg_a1 += 2;
-            reg_a2 = (u8 *)D_002526D0;
+            reg_a2 = (u8 *)ground_event_routines;
             reg_a2 += reg_d2.h[0];
             reg_tmp.h[1] = *(u16 *)reg_a2;
             reg_tmp.h[0] = *(u16 *)(reg_a2 + 2);
@@ -1683,7 +1683,7 @@ loop_1:
     }
 }
 
-void func_0014CD70(void) {
+void ground_event_01(void) {
     reg_a2 = reg_a5 + 0x10;
     if (reg_d6.h[0] != 0) {
         reg_a2 = reg_a5 + 0xA;
@@ -1719,7 +1719,7 @@ extern u16 *reg_a1_as_u16_p;
 extern u16 *reg_a2_as_u16_p;
 extern s32 reg_a5_as_s32;
 
-void func_0014CEA0(void) {
+void ground_event_02(void) {
     reg_a2_as_u16_p = (u16 *)(reg_a5_as_s32 + 0x22);
     if (reg_d6.h[0] != 0) {
         reg_a2_as_u16_p = (u16 *)(reg_a5_as_s32 + 0x1C);
@@ -1729,7 +1729,7 @@ void func_0014CEA0(void) {
 }
 
 
-void func_0014CEE0(void) {
+void ground_event_03(void) {
     *(u16 *)(reg_a5 + 8) = 1;
     reg_d0.h[0] = g_scroll_line;
     reg_d0.h[0] += 4;
@@ -1739,7 +1739,7 @@ void func_0014CEE0(void) {
 extern u16 g_side_scroll_x_prev[];
 extern u16 D_0029C080[];
 
-void func_0014CF10(void) {
+void ground_event_04(void) {
     u16 *temp_a0;
     u16 temp_a1;
 
@@ -1758,9 +1758,9 @@ void func_0014CF10(void) {
     }
 }
 
-extern u8 D_002526F0[];
+extern u8 ground_event_sound_routines[];
 
-void func_0014CF90(void) {
+void ground_event_05(void) {
     u32 temp_a1;
     reg_d2.h[0] = *(u16 *)reg_a1;
     reg_a1 += 2;
@@ -1772,7 +1772,7 @@ loop_1:
     temp_a1 = reg_d0.h[0];
     reg_a2 += 2;
     if ((s16)(temp_a1) != -1) {
-        reg_a3 = (u8 *)D_002526F0;
+        reg_a3 = (u8 *)ground_event_sound_routines;
         reg_d0.h[0] = temp_a1 + temp_a1;
         reg_d0.h[0] += reg_d0.h[0];
         reg_tmp.h[1] = (reg_d0.h[0] != 0) ? *(u16 *)((u8 *)reg_a3 + ((s16)reg_d0.h[0] & ~1)) : *(u16 *)reg_a3;
@@ -1802,13 +1802,13 @@ void func_0014D0F0(void) {
 
 void music_stop(void);
 
-void func_0014D140(void) {
+void ground_event_sound_01(void) {
     music_stop();
 }
 
 extern void music_fade_out(void);
 
-void func_0014D150(void) {
+void ground_event_sound_02(void) {
     reg_d1.h[0] = *(u16 *)reg_a2;
     reg_a2 += 2;
     music_fade_out();
@@ -1819,7 +1819,7 @@ extern s16 D_0029976A[];
 extern s16 D_0029976C_as_s16_a[];
 extern s16 D_0029976E_as_s16_a[];
 
-void func_0014D170(void) {
+void ground_event_06(void) {
     reg_d0.h[0] = *(u16 *)reg_a1;
     reg_a1 += 2;
     if (reg_d0.h[0] == 1) {
