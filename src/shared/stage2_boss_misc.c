@@ -1,7 +1,7 @@
 #include "common.h"
 #include "entity.h"
 
-void func_001C45A0(void) {
+void stage2_boss_shoulder_bullet_first(void) {
     void enemy_set_entity_count(s32);
     enemy_set_entity_count(0);
 }
@@ -9,7 +9,7 @@ void func_001C45A0(void) {
 s32 enemy_init_entities();                            /* extern */
 extern s32 D_0026C570[];
 
-void func_001C45B0(void) {
+void stage2_boss_shoulder_bullet_start(void) {
     reg_a0 = (u8 *)D_0026C570;
     enemy_init_entities();
     ENTITY(reg_a6)->y.h = (u16) *(u16 *)(reg_a5 + 0x16);
@@ -32,7 +32,7 @@ s32 entity_velocity();
 s32 entity_check_bounds();
 extern u16 D_0028E574[];
 
-void func_001C4650(void) {
+void stage2_boss_shoulder_bullet(void) {
     u16 temp_a2;
 
     reg_d1.w = 0x5C;
@@ -74,7 +74,7 @@ block_7:
     sprite_draw_layer5();
 }
 
-void func_001C4820(void) {
+void stage2_boss_spread_bullet_first(void) {
     void enemy_set_entity_count(s32);
     enemy_set_entity_count(0);
 }
@@ -85,7 +85,7 @@ extern u16 D_0024EC80[];
 extern u16 D_0024EEF0[];
 extern u16 D_0026C590[];
 
-void func_001C4830(void) {
+void stage2_boss_spread_bullet_start(void) {
     reg_a0 = (u8 *)(D_0026C590);
     enemy_init_entities();
     ENTITY(reg_a6)->y.h = (u16) *(u16 *)(reg_a5 + 0x16);
@@ -114,7 +114,7 @@ void func_001C4830(void) {
 s32 entity_draw_with_bullets();
 s32 func_00201F20();
 
-void func_001C4A10(void) {
+void stage2_boss_spread_bullet(void) {
     reg_d1.w = 0x5C;
     if ((reg_d1.b[0] &= ENTITY(reg_a6)->flags.b[1]) != 0) {
         reg_d0.b[0] = 0xA3;
@@ -146,14 +146,14 @@ block_l1:
     entity_draw_with_bullets();
 }
 
-void func_001C4BB0(void) {
+void stage2_boss_cannon_shell_first(void) {
     void enemy_set_entity_count(s32 mode);
     enemy_set_entity_count(0);
 }
 
 extern u8 D_0026C5B0[];
 
-void func_001C4BC0(void) {
+void stage2_boss_cannon_shell_start(void) {
     reg_a0 = D_0026C5B0;
     enemy_init_entities();
     ENTITY(reg_a6)->y.h = (u16) *(u16 *)(reg_a5 + 0x16);
@@ -175,7 +175,7 @@ s32 explosion_spawn();
 s32 entity_draw_layer5();
 extern u8 D_0028DB10[];
 
-void func_001C4C90(void) {
+void stage2_boss_cannon_shell(void) {
     entity_check_bounds();
     if (cond_flag != 0) {
         if (*(u8 *)(reg_a5 + 0x17) != 0) {
@@ -226,7 +226,7 @@ block_4:
     entity_draw_layer5();
 }
 
-void func_001C4EE0(void) {
+void stage2_boss_dropped_bomb_first(void) {
     void enemy_set_entity_count(s32);
     enemy_set_entity_count(0);
 }
@@ -234,7 +234,7 @@ void func_001C4EE0(void) {
 s32 func_00202180();
 extern u8 D_0026C5D0[];
 
-void func_001C4EF0(void) {
+void stage2_boss_dropped_bomb_start(void) {
     reg_a0 = D_0026C5D0;
     enemy_init_entities();
     ENTITY(reg_a6)->y.h = *(u16 *)(reg_a5 + 0x16);
@@ -249,7 +249,7 @@ void func_001C4EF0(void) {
 
 s32 explosion_spawn();                            /* extern */
 
-void func_001C4F70(void) {
+void stage2_boss_dropped_bomb(void) {
     extern s32 enemy_remove(u16);
     u16 temp_a0;
 
@@ -262,7 +262,7 @@ void func_001C4F70(void) {
     enemy_remove(temp_a0);
 }
 
-void func_001C4FC0(void) {
+void stage2_boss_ripple_first(void) {
     void enemy_set_entity_count(s32 mode);
     enemy_set_entity_count(0);
 }
@@ -270,7 +270,7 @@ void func_001C4FC0(void) {
 s32 enemy_init_entities();                            /* extern */
 extern s32 D_0026C5F0[];
 
-void func_001C4FD0(void) {
+void stage2_boss_ripple_start(void) {
     reg_a0 = (u8 *)D_0026C5F0;
     enemy_init_entities();
     ENTITY(reg_a6)->y.h = (u16) *(u16 *)(reg_a5 + 0x16);
@@ -284,7 +284,7 @@ s32 sprite_draw_layer1();
 s32 entity_follow_scroll();
 extern u32 D_0026C610[];
 
-void func_001C5030(void) {
+void stage2_boss_ripple(void) {
     u16 temp_a1;
     u16 temp_a2;
 

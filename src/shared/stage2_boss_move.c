@@ -1,13 +1,13 @@
 #include "common.h"
 #include "entity.h"
 
-void func_001C9950(void);
-void func_001C9C50(void);
-void func_001C9DB0(void);
-void func_001C9EE0(void);
-void func_001CA090(void);
-void func_001CA1F0(void);
-void func_001CA370(void);
+void stage2_boss_move_enter(void);
+void stage2_boss_move_hover_high(void);
+void stage2_boss_move_dive(void);
+void stage2_boss_move_rise(void);
+void stage2_boss_move_wander(void);
+void stage2_boss_move_rise_sway(void);
+void stage2_boss_move_dash_sideways(void);
 
 
 void func_001C9750(void) {
@@ -47,12 +47,12 @@ void func_001C9750(void) {
 }
 
 
-void func_001C9920(void) {
+void stage2_boss_move_enter_start(void) {
     reg_a4[3] = 0;
     *(u16 *)(reg_a4 + 4) = 0x1C0;
     *(u16 *)(reg_a4 + 6) = 0;
     *(u16 *)(reg_a4 + 8) = 0;
-    func_001C9950();
+    stage2_boss_move_enter();
 }
 
 s32 boss_phase_start();
@@ -66,7 +66,7 @@ extern u8 D_0026C8C0[];
 extern u8 g_boss_present;
 extern u8 g_boss_present_b1;
 
-void func_001C9950(void) {
+void stage2_boss_move_enter(void) {
     entity_follow_scroll();
     if (*(u8 *)(reg_a4 + 3) == 0) {
         if (*(u16 *)(reg_a4 + 4) == 0x10) {
@@ -113,7 +113,7 @@ void func_001C9950(void) {
 }
 
 
-void func_001C9AF0(void) {
+void stage2_boss_move_retreat(void) {
     ENTITY(reg_a6)->y.h -= 0x10;
     func_001C9750();
 }
@@ -147,7 +147,7 @@ void func_001C9B60(void)
 
 extern u8 D_0026C860[];
 
-void func_001C9BC0(void) {
+void stage2_boss_move_hover_high_start(void) {
     s32 direction_between(void *);
     *reg_a4_as_u16_p = 0;
     ENTITY(reg_a6)->move.sb.speed = 4;
@@ -159,7 +159,7 @@ void func_001C9BC0(void) {
     reg_d1.h[0] = ENTITY(reg_a6)->x.h;
     direction_between(reg_a6);
     ENTITY(reg_a6)->move.b.dir = (u8) reg_d1.b[0];
-    func_001C9C50();
+    stage2_boss_move_hover_high();
 }
 
 s32 rng_next_bit();
@@ -167,7 +167,7 @@ s32 entity_velocity();
 s32 direction_turn_toward();
 s32 func_00202B50();
 
-void func_001C9C50() {
+void stage2_boss_move_hover_high() {
     s32 direction_between();
     reg_a0 = D_0026C860;
     reg_a0 += *reg_a4_as_u16_p;
@@ -196,19 +196,19 @@ void func_001C9C50() {
 }
 
 
-void func_001C9D70(void) {
+void stage2_boss_move_dive_start(void) {
     *(s8 *)(reg_a4 + 3) = 2;
     *(s16 *)(reg_a4 + 4) = 0x404;
     reg_tmp.w = 0x5C001C00;
     *(u16 *)(reg_a4 + 8) = (u16) reg_tmp.h[1];
     *(u16 *)(reg_a4 + 0xA) = (u16) reg_tmp.h[0];
-    func_001C9DB0();
+    stage2_boss_move_dive();
 }
 
 s32 boss_movement_start();
 s32 func_001CBBE0();
 
-void func_001C9DB0(void) {
+void stage2_boss_move_dive(void) {
     s32 direction_between();
     reg_d2.h[0] = *(u16 *)(reg_a4 + 8);
     reg_d3.h[0] = *(u16 *)(reg_a4 + 0xA);
@@ -238,16 +238,16 @@ void func_001C9DB0(void) {
 }
 
 
-void func_001C9EA0(void) {
+void stage2_boss_move_rise_start(void) {
     *(s8 *)(reg_a4 + 3) = 0;
     *(s16 *)(reg_a4 + 4) = 0x101;
     reg_tmp.w = 0x5C001C00;
     *(u16 *)(reg_a4 + 8) = (u16) reg_tmp.h[1];
     *(u16 *)(reg_a4 + 0xA) = (u16) reg_tmp.h[0];
-    func_001C9EE0();
+    stage2_boss_move_rise();
 }
 
-void func_001C9EE0(void) {
+void stage2_boss_move_rise(void) {
     s32 direction_between();
     reg_d2.h[0] = *(u16 *)(reg_a4 + 8);
     reg_d3.h[0] = *(u16 *)(reg_a4 + 0xA);
@@ -278,7 +278,7 @@ void func_001C9EE0(void) {
 s32 boss_attack_stop();
 s32 rng_next_word();
 
-void func_001C9FC0(void) {
+void stage2_boss_move_wander_start(void) {
     u16 temp_a0;
 
     reg_d0.w = 2;
@@ -298,10 +298,10 @@ void func_001C9FC0(void) {
     rng_next_word();
     reg_d0.h[0] = (u16) ((s16) reg_d0.h[0] >> 2);
     *(u16 *)(reg_a4 + 0xA) += reg_d0.h[0];
-    func_001CA090();
+    stage2_boss_move_wander();
 }
 
-void func_001CA090() {
+void stage2_boss_move_wander() {
     s32 direction_between();
     reg_d2.h[0] = *(u16 *)(reg_a4 + 8);
     reg_d3.h[0] = *(u16 *)(reg_a4 + 0xA);
@@ -337,14 +337,14 @@ void func_001CA090() {
 }
 
 
-void func_001CA1D0(void) {
+void stage2_boss_move_rise_sway_start(void) {
     reg_a4[3] = 0;
     reg_a4[2] = 0;
     *(s16 *)(reg_a4 + 4) = 0x404;
-    func_001CA1F0();
+    stage2_boss_move_rise_sway();
 }
 
-void func_001CA1F0(void) {
+void stage2_boss_move_rise_sway(void) {
     s32 direction_between();
     if (*(u8 *)(reg_a4 + 2) == 0) {
         reg_d2.h[0] = *(u16 *)(reg_a4 + 8);
@@ -386,15 +386,15 @@ void func_001CA1F0(void) {
 extern s16 *reg_a4_as_s16_p;
 
 
-void func_001CA350(void) {
+void stage2_boss_move_dash_sideways_start(void) {
     *reg_a4_as_s16_p = 0;
     ENTITY(reg_a6)->move.b.speed = 8;
-    func_001CA370();
+    stage2_boss_move_dash_sideways();
 }
 
 extern u8 D_0026C8A0[];
 
-void func_001CA370(void) {
+void stage2_boss_move_dash_sideways(void) {
     s32 direction_between(void *);
     reg_a0 = D_0026C8A0;
     reg_a0 += *(u16 *)reg_a4;

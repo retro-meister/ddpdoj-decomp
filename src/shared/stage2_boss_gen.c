@@ -1,7 +1,7 @@
 #include "common.h"
 #include "entity.h"
 
-void func_001C5160(void) {
+void stage2_blooming_base_first(void) {
     void enemy_set_entity_count(s32);
     enemy_set_entity_count(0);
 }
@@ -14,7 +14,7 @@ extern u16 g_stage_x2;
 extern s8 enemy_move_end_requested;
 extern s8 *reg_a0_as_s8_p;
 
-void func_001C5170(void) {
+void stage2_blooming_base_start(void) {
     s32 enemy_set_task_work();
     s32 enemy_init_entities();
     s32 enemy_path_start();
@@ -53,7 +53,7 @@ s32 func_00201270();
 extern u8 D_0028D998;
 extern u16 g_damage_blink_counter;
 
-void func_001C5240(void) {
+void stage2_blooming_base(void) {
     u32 t;
 
     if (ENTITY(reg_a6)->flags.sb[0] < 0) goto block_explos;
@@ -182,7 +182,7 @@ block_explos:
     enemy_remove();
 }
 
-void func_001C5730(void) {
+void stage2_long_warehouse_first(void) {
     void enemy_set_entity_count(s32);
     enemy_set_entity_count(0);
 }
@@ -194,7 +194,7 @@ extern s8 D_00262C80[];
 extern s8 D_00262C90[];
 extern s8 D_0028D9A0;
 
-void func_001C5740(void) {
+void stage2_long_warehouse_start(void) {
     reg_a0_as_s8_p = D_00262C90;
     enemy_init_entities();
     reg_a0_as_s8_p = &D_0028D9A0;
@@ -216,7 +216,7 @@ void func_001C5740(void) {
 s32 func_00170A60();
 extern u16 D_00262CB0[];
 
-void func_001C5800(void) {
+void stage2_long_warehouse(void) {
     u8 t1;
 
     enemy_path_step();
@@ -328,7 +328,7 @@ block_explos:
     enemy_remove();
 }
 
-void func_001C5BE0(void) {
+void stage2_square_warehouse_first(void) {
     void enemy_set_entity_count(s32);
     enemy_set_entity_count(0);
 }
@@ -337,7 +337,7 @@ extern s8 D_00262CD0[];
 extern s8 D_00262CE0[];
 extern s8 D_0028D9A4;
 
-void func_001C5BF0(void) {
+void stage2_square_warehouse_start(void) {
     s32 enemy_set_task_work();
     s32 enemy_init_entities();
     s32 enemy_path_start();
@@ -365,7 +365,7 @@ void func_001C5BF0(void) {
 
 s32 func_00125EC0();
 
-void func_001C5CD0(void) {
+void stage2_square_warehouse(void) {
     enemy_path_step();
     if (enemy_move_end_requested != 0) return;
     {
@@ -457,7 +457,7 @@ next_2:
     enemy_remove();
 }
 
-void func_001C5FF0(void) {
+void stage2_gymnasium_first(void) {
     void enemy_set_entity_count(s32 mode);
     enemy_set_entity_count(0);
 }
@@ -469,7 +469,7 @@ extern s8 D_00262D00[];
 extern s8 D_00262D10[];
 extern s8 D_0028D9A8;
 
-void func_001C6000(void) {
+void stage2_gymnasium_start(void) {
     reg_a0_as_s8_p = D_00262D10;
     enemy_init_entities();
     reg_a0_as_s8_p = &D_0028D9A8;
@@ -488,7 +488,7 @@ void func_001C6000(void) {
     }
 }
 
-void func_001C60C0(void) {
+void stage2_gymnasium(void) {
     u8 *t1;
 
     enemy_path_step();
@@ -592,7 +592,7 @@ next_2:
     enemy_remove();
 }
 
-void func_001C6430(void) {
+void stage2_sliding_gun_first(void) {
     void enemy_set_entity_count(s32 mode);
     enemy_set_entity_count(0);
 }
@@ -604,7 +604,7 @@ extern u16 D_00262D80[];
 extern u16 g_rank_6_16;
 extern u16 g_stage;
 
-void func_001C6440(void) {
+void stage2_sliding_gun_start(void) {
     s32 enemy_set_task_work();
     s32 enemy_init_entities();
     s32 enemy_path_start();
@@ -666,7 +666,7 @@ extern u16 g_rank_4_16;
 extern u16 g_player2_as_u16_a[];
 extern u16 g_player1_as_u16_a[];
 
-void func_001C6640(void) {
+void stage2_sliding_gun(void) {
     s16 *temp_v1;
     u16 temp_a0_3;
     u8 temp_v0;
@@ -841,7 +841,7 @@ block_38:
     }
 }
 
-void func_001C6C00(void) {
+void stage2_wrecker_gun_first(void) {
     void enemy_set_entity_count(s32 mode);
     enemy_set_entity_count(0);
 }
@@ -851,7 +851,7 @@ extern s8 D_00262E10[];
 extern s8 D_00262E30[];
 extern u16 g_rank_1_16;
 
-void func_001C6C10(void) {
+void stage2_wrecker_gun_start(void) {
     s32 enemy_set_task_work();
     s32 enemy_init_entities();
     s32 enemy_path_start();
@@ -888,7 +888,7 @@ extern u16 D_00262E50[];
 extern u16 g_rank_2_16;
 extern s16 g_bomb_entities_as_s16_a[];
 
-void func_001C6D10(s32 arg0, s32 arg1, s32 arg2, s32 arg3) {
+void stage2_wrecker_gun(s32 arg0, s32 arg1, s32 arg2, s32 arg3) {
     s16 *temp_v1;
     s32 var_a0;
     s32 var_a1;
@@ -1248,7 +1248,7 @@ block_63:
     }
 }
 
-void func_001C7A90(void) {
+void stage2_boss_hangar_first(void) {
     void enemy_set_entity_count(s32);
     enemy_set_entity_count(0);
 }
@@ -1257,7 +1257,7 @@ extern u32 D_00262ED0[];
 extern u32 D_00262EE0[];
 
 
-void func_001C7AA0(void)
+void stage2_boss_hangar_start(void)
 {
     extern void enemy_set_task_work(void);
     extern void enemy_init_entities(void);
@@ -1280,7 +1280,7 @@ s32 sprite_draw_layer4();
 extern u16 D_00262F00[];
 extern u16 g_scroll_line;
 
-void func_001C7AF0(void) {
+void stage2_boss_hangar(void) {
     u32 temp_a1;
 
     enemy_path_step();

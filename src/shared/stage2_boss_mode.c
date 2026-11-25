@@ -1,20 +1,20 @@
 #include "common.h"
 #include "entity.h"
 
-void func_001C7D10(void);
-void func_001C7DA0();
-void func_001C7F70();
-void func_001C87E0();
+void stage2_boss_mode_enter(void);
+void stage2_boss_mode_second_phase();
+void stage2_boss_mode_final_explosion();
+void stage2_boss_mode_high_slow();
 void func_001C8CB0();
-void func_001C91D0();
-void func_001C9570(void);
+void stage2_boss_mode_recoil();
+void stage2_boss_mode_rise_sway(void);
 void func_001C9640(void);
-void func_001C9740(void);
+void stage2_boss_mode_rage(void);
 
 s32 boss_movement_start();                            /* extern */
 s32 boss_animation_start();                            /* extern */
 
-void func_001C7CB0(void) {
+void stage2_boss_mode_enter_start(void) {
     reg_d0.w = 0;
     boss_movement_start();
     reg_d0.w = 0;
@@ -27,12 +27,12 @@ void func_001C7CB0(void) {
     boss_animation_start();
     reg_d0.w = 0xD;
     boss_animation_start();
-    func_001C7D10();
+    stage2_boss_mode_enter();
 }
 
 extern u16 *reg_a4_as_u16_p;
 
-void func_001C7D10(void) {
+void stage2_boss_mode_enter(void) {
     *reg_a4_as_u16_p = 0;
 }
 
@@ -41,7 +41,7 @@ s32 func_001CBBD0();                            /* extern */
 s32 func_001CBC70();                            /* extern */
 s32 func_001CBCA0();                            /* extern */
 
-void func_001C7D20(void) {
+void stage2_boss_mode_second_phase_start(void) {
     reg_d0.w = 3;
     boss_movement_start();
     reg_d0.h[0] = 0x100;
@@ -55,7 +55,7 @@ void func_001C7D20(void) {
     *(s16 *)(reg_a4 + 4) = 0x10;
     *(s16 *)(reg_a4 + 6) = 4;
     *(s16 *)(reg_a4 + 8) = 0;
-    func_001C7DA0(0x10);
+    stage2_boss_mode_second_phase(0x10);
 }
 
 typedef void (*Fn)();
@@ -66,7 +66,7 @@ s32 boss_part_hide();
 s32 func_001CBA00();
 extern u8 D_0026C680[];
 
-void func_001C7DA0() {
+void stage2_boss_mode_second_phase() {
     if (*(u8 *)(reg_a4 + 3) == 0) {
         reg_a1 = D_0026C680;
         reg_d2.h[1] = ENTITY(reg_a6)->y.h;
@@ -102,7 +102,7 @@ s32 boss_movement_start();                            /* extern */
 s32 func_0013B8B0();                            /* extern */
 extern s32 D_0026C7B0[];
 
-void func_001C7EE0(void) {
+void stage2_boss_mode_final_explosion_start(void) {
     reg_d0.w = 1;
     boss_movement_start();
     reg_a0 = (u8 *)D_0026C7B0;
@@ -115,7 +115,7 @@ void func_001C7EE0(void) {
     *(s16 *)(reg_a4 + 0x10) = 0x2020;
     *(s16 *)(reg_a4 + 0x12) = 4;
     *(s16 *)(reg_a4 + 0x14) = 0;
-    func_001C7F70(0x2020, 1, 0x101);
+    stage2_boss_mode_final_explosion(0x2020, 1, 0x101);
 }
 
 extern u8 D_0026C790[];
@@ -134,7 +134,7 @@ s32 rng_next_unsigned();
 s32 rng_next_word();
 extern u16 D_0026C6E0[];
 
-void func_001C7F70() {
+void stage2_boss_mode_final_explosion() {
     u16 *t1;
     u16 *t2;
     u32 t3;
@@ -365,7 +365,7 @@ loop_6:
 s32 boss_movement_start();                            /* extern */
 s32 boss_animation_start();                            /* extern */
 
-void func_001C8780(void) {
+void stage2_boss_mode_high_slow_start(void) {
     *(s8 *)(reg_a4 + 3) = 0;
     reg_d0.w = 2;
     boss_movement_start();
@@ -375,7 +375,7 @@ void func_001C8780(void) {
     *(s16 *)(reg_a4 + 8) = 0;
     *(s16 *)(reg_a4 + 6) = 0;
     *(s16 *)(reg_a4 + 0xA) = 2;
-    func_001C87E0(0x40);
+    stage2_boss_mode_high_slow(0x40);
 }
 
 s32 boss_animation_stop();
@@ -386,7 +386,7 @@ s32 rng_next_masked();
 extern u16 D_0026C800[];
 extern u16 g_loop;
 
-void func_001C87E0() {
+void stage2_boss_mode_high_slow() {
     u16 temp_v1;
     u16 temp_v1_2;
     u8 temp_a0;
@@ -539,7 +539,7 @@ block_31:
 }
 
 
-void func_001C8C10(void) {
+void stage2_boss_mode_high_fast_start(void) {
     *(s8 *)(reg_a4 + 3) = 0;
     *(s8 *)(reg_a4 + 2) = 0;
     *(s16 *)(reg_a4 + 4) = 0x60;
@@ -727,12 +727,12 @@ void func_001C8CB0(arg1)
 }
 
 
-void func_001C91A0(void) {
+void stage2_boss_mode_recoil_start(void) {
     reg_a4[3] = 0;
     *(s16 *)(reg_a4 + 4) = 0x60;
     *(s16 *)(reg_a4 + 6) = 0;
     *(s16 *)(reg_a4 + 8) = 8;
-    func_001C91D0(0x60);
+    stage2_boss_mode_recoil(0x60);
 }
 
 s32 aim_at_player();
@@ -742,7 +742,7 @@ extern u16 D_0026C252[];
 extern u16 D_0026C260[];
 extern u16 D_0026C262[];
 
-void func_001C91D0() {
+void stage2_boss_mode_recoil() {
     u16 temp_a1;
     u16 temp_a1_2;
     u16 temp_a1_3;
@@ -817,7 +817,7 @@ void func_001C91D0() {
 
 s32 boss_movement_start();                            /* extern */
 
-void func_001C9440(void) {
+void stage2_boss_mode_rise_start(void) {
     reg_d0.w = 4;
     boss_movement_start();
     *(s8 *)(reg_a4 + 3) = 0;
@@ -826,7 +826,7 @@ void func_001C9440(void) {
 
 s32 boss_movement_current();
 
-void func_001C9480() {
+void stage2_boss_mode_rise() {
     if (*(u8 *)(reg_a4 + 3) == 0) {
         boss_movement_current();
         if (reg_d0.h[0] == 5) {
@@ -845,7 +845,7 @@ void func_001C9480() {
 
 extern u8 D_0026C810[];
 
-void func_001C9510(void) {
+void stage2_boss_mode_rise_sway_start(void) {
     *(s8 *)(reg_a4 + 3) = 0;
     *(s8 *)(reg_a4 + 2) = 0;
     *(s16 *)(reg_a4 + 6) = 0;
@@ -854,11 +854,11 @@ void func_001C9510(void) {
     *(u16 *)(reg_a5 + 8) = (u16) reg_tmp.h[1];
     *(u16 *)(reg_a5 + 0xA) = (u16) reg_tmp.h[0];
     *(s16 *)(reg_a4 + 0xC) = 1;
-    func_001C9570();
+    stage2_boss_mode_rise_sway();
 }
 
 
-void func_001C9570(void) {
+void stage2_boss_mode_rise_sway(void) {
     u16 temp_a0_2;
     u8 temp_a0;
 
@@ -907,7 +907,7 @@ void func_001C9640(void) {
 s32 boss_animation_start(s32, s32, s32);   /* extern */
 s32 boss_attack_start();                            /* extern */
 
-void func_001C96E0(void) {
+void stage2_boss_mode_rage_start(void) {
     *(s8 *)(reg_a4 + 3) = 0;
     *(s16 *)(reg_a4 + 4) = 0x10;
     *(s16 *)(reg_a4 + 6) = 0x200A;
@@ -916,8 +916,8 @@ void func_001C96E0(void) {
     boss_animation_start(0x101, 0x200A, 0x10);
     reg_d0.w = 0xF;
     boss_attack_start();
-    func_001C9740();
+    stage2_boss_mode_rage();
 }
 
-void func_001C9740(void) {
+void stage2_boss_mode_rage(void) {
 }

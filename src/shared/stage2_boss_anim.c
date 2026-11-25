@@ -1,28 +1,28 @@
 #include "common.h"
 #include "entity.h"
 
-void func_001E6C00(void);
-void func_001E6D00(void);
-void func_001E6DF0(void);
-void func_001E6EF0(void);
-void func_001E70A0(void);
-void func_001E7130(void);
-void func_001E71D0(void);
-void func_001E7320(void);
-void func_001E73A0(void);
-void func_001E7420(void);
-void func_001E7520(void);
-void func_001E75C0(void);
+void stage2_boss_lower_splash(void);
+void stage2_boss_radome_idle(void);
+void stage2_boss_torso_idle(void);
+void stage2_boss_radome_spin(void);
+void stage2_boss_torso_open(void);
+void stage2_boss_torso_close(void);
+void stage2_boss_recoil(void);
+void stage2_boss_shoulder_cannon_open(void);
+void stage2_boss_shoulder_cannon_close(void);
+void stage2_boss_shoulder_turret_anim(void);
+void stage2_boss_side_gun_anim(void);
+void stage2_boss_ripple_request(void);
 
 
-void func_001E6BE0(void) {
+void stage2_boss_lower_splash_start(void) {
     *(s16 *)((u8 *)((void *)reg_a6) + 0x26) = 2;
     *(s16 *)((u8 *)((void *)reg_a6) + 0x28) = 0;
-    func_001E6C00();
+    stage2_boss_lower_splash();
 }
 
 
-void func_001E6C00(void) {
+void stage2_boss_lower_splash(void) {
     reg_tmp.b[0] = ENTITY(reg_a6)[1].offset_y.b[1];
     ENTITY(reg_a6)[1].offset_y.b[1] -= 1;
     if ((s32) reg_tmp.b[0] <= 0) {
@@ -50,14 +50,14 @@ void func_001E6C70(void)
 }
 
 
-void func_001E6CD0(void) {
+void stage2_boss_radome_idle_start(void) {
     func_001E6C70();
-    func_001E6D00();
+    stage2_boss_radome_idle();
 }
 
 s32 direction_turn_toward();
 
-void func_001E6D00() {
+void stage2_boss_radome_idle() {
     u8 temp_a0;
     u8 temp_a0_2;
 
@@ -89,16 +89,16 @@ void func_001E6D00() {
 
 
 
-void func_001E6DD0(void) {
+void stage2_boss_torso_idle_start(void) {
     *(s16 *)(reg_a4 + 2) = 3;
     *(s16 *)(reg_a4 + 4) = 0;
-    func_001E6DF0();
+    stage2_boss_torso_idle();
 }
 
 
 extern u8 D_0026C0A0[];
 
-void func_001E6DF0(void) {
+void stage2_boss_torso_idle(void) {
     reg_tmp.b[0] = (*(u8 *)(reg_a4 + 3));
     (*(u8 *)(reg_a4 + 3)) -= 1;
     if ((s32)reg_tmp.b[0] <= 0) {
@@ -114,20 +114,20 @@ void func_001E6DF0(void) {
 }
 
 
-void func_001E6E90(void) {
+void stage2_boss_radome_spin_start(void) {
     s32 rng_next_bit();
     *(s16 *)(reg_a4 + 4) = 0;
     *(u8 *)(reg_a4 + 7) = 1U;
     rng_next_bit();
     if (reg_d0.h[0] != 0) {
-        func_001E6EF0();
+        stage2_boss_radome_spin();
         return;
     }
     *(u8 *)(reg_a4 + 7) *= -1;
-    func_001E6EF0();
+    stage2_boss_radome_spin();
 }
 
-void func_001E6EF0(void) {
+void stage2_boss_radome_spin(void) {
     reg_d0.b[0] = *(u8 *)(reg_a4 + 7);
     ENTITY(reg_a6)[8].move.b.dir += reg_d0.b[0];
     ENTITY(reg_a6)[8].move.b.dir &= 0x3F;
@@ -136,7 +136,7 @@ void func_001E6EF0(void) {
 s32 aim_at_player();                            /* extern */
 s32 direction_turn_toward();                            /* extern */
 
-void func_001E6F30(void) {
+void stage2_boss_shoulder_turrets_aim(void) {
     reg_d0.h[0] = ENTITY(reg_a6)[4].y.h;
     reg_d1.h[0] = ENTITY(reg_a6)[4].x.h;
     aim_at_player();
@@ -156,7 +156,7 @@ void func_001E6F30(void) {
 s32 aim_at_player();                            /* extern */
 s32 direction_turn_toward();                            /* extern */
 
-void func_001E6FC0(void) {
+void stage2_boss_shoulder_turrets_aim_wide(void) {
     reg_d0.h[0] = ENTITY(reg_a6)[4].y.h;
     reg_d1.h[0] = ENTITY(reg_a6)[4].x.h;
     aim_at_player();
@@ -178,13 +178,13 @@ void func_001E6FC0(void) {
 }
 
 
-void func_001E7080(void) {
+void stage2_boss_torso_open_start(void) {
     *(u16 *)((u8 *)((void *)reg_a4) + 2) = 2;
     *(u16 *)((u8 *)((void *)reg_a4) + 4) = 0;
-    func_001E70A0();
+    stage2_boss_torso_open();
 }
 
-void func_001E70A0(void) {
+void stage2_boss_torso_open(void) {
     reg_tmp.b[0] = *(u8 *)(reg_a4 + 3);
     *(u8 *)(reg_a4 + 3) -= 1;
     if ((s32) reg_tmp.b[0] <= 0) {
@@ -198,15 +198,15 @@ void func_001E70A0(void) {
 
 
 
-void func_001E7110(void) {
+void stage2_boss_torso_close_start(void) {
     *(u16 *)(reg_a4 + 2) = 0x2002;
     *(u16 *)(reg_a4 + 4) = 0;
-    func_001E7130();
+    stage2_boss_torso_close();
 }
 
 s32 boss_animation_start();
 
-void func_001E7130() {
+void stage2_boss_torso_close() {
     reg_tmp.b[0] = *(u8 *)(reg_a4 + 3);
     *(u8 *)(reg_a4 + 3) -= 1;
     if ((s32) reg_tmp.b[0] <= 0) {
@@ -221,14 +221,14 @@ void func_001E7130() {
 }
 
 
-void func_001E71B0(void) {
+void stage2_boss_recoil_start(void) {
     *(u16 *)(reg_a4 + 2) = 0;
     *(u16 *)(reg_a4 + 4) = 4;
     *(u8 *)(reg_a4 + 7) = 0;
-    func_001E71D0();
+    stage2_boss_recoil();
 }
 
-void func_001E71D0(void) {
+void stage2_boss_recoil(void) {
     if (*(u8 *)(reg_a4 + 7) == 1) {
         ENTITY(reg_a6)[11].offset_x.h -= 0x20;
         if (0 > (s16) ENTITY(reg_a6)[11].offset_x.h) {
@@ -262,12 +262,12 @@ void func_001E71D0(void) {
 }
 
 
-void func_001E7310(void) {
+void stage2_boss_shoulder_cannon_open_start(void) {
     *(s16 *)(reg_a4 + 2) = 1;
-    func_001E7320();
+    stage2_boss_shoulder_cannon_open();
 }
 
-void func_001E7320(void) {
+void stage2_boss_shoulder_cannon_open(void) {
     reg_tmp.b[0] = *(u8 *)(reg_a4 + 3);
     *(u8 *)(reg_a4 + 3) -= 1;
     if ((s32) reg_tmp.b[0] <= 0) {
@@ -281,12 +281,12 @@ void func_001E7320(void) {
 }
 
 
-void func_001E7390(void) {
+void stage2_boss_shoulder_cannon_close_start(void) {
     *(u16 *)(reg_a4 + 2) = 1;
-    func_001E73A0();
+    stage2_boss_shoulder_cannon_close();
 }
 
-void func_001E73A0(void)
+void stage2_boss_shoulder_cannon_close(void)
 {
     s16 *remaining;
 
@@ -305,12 +305,12 @@ void func_001E73A0(void)
 }
 
 
-void func_001E7410(void) {
+void stage2_boss_shoulder_turret_anim_start(void) {
     ((u16 *)reg_a4)[1] = 0x202;
-    func_001E7420();
+    stage2_boss_shoulder_turret_anim();
 }
 
-void func_001E7420(void) {
+void stage2_boss_shoulder_turret_anim(void) {
     reg_tmp.b[0] = *(u8 *)(reg_a4 + 3);
     *(u8 *)(reg_a4 + 3) -= 1;
     if ((s32) reg_tmp.b[0] <= 0) {
@@ -324,7 +324,7 @@ void func_001E7420(void) {
 
 s32 rng_next_unsigned();
 
-void func_001E7490(void) {
+void stage2_boss_side_gun_anim_start(void) {
     *(s16 *)(reg_a4 + 2) = 0x101;
     rng_next_unsigned();
     reg_d0.h[0] &= 0xF;
@@ -336,10 +336,10 @@ void func_001E7490(void) {
     reg_d0.h[0] += reg_d0.h[0];
     reg_d0.h[0] += reg_d0.h[0];
     ENTITY(reg_a6)[7].offset_y.h = (u16) reg_d0.h[0];
-    func_001E7520();
+    stage2_boss_side_gun_anim();
 }
 
-void func_001E7520(void) {
+void stage2_boss_side_gun_anim(void) {
     reg_tmp.b[0] = *(u8 *)(reg_a4 + 3);
     *(u8 *)(reg_a4 + 3) -= 1;
     if ((s32) reg_tmp.b[0] <= 0) {
@@ -352,16 +352,16 @@ void func_001E7520(void) {
 }
 
 
-void func_001E75A0(void) {
+void stage2_boss_ripple_request_start(void) {
     *(u16 *)(reg_a4 + 2) = 0;
     *(u16 *)(reg_a4 + 4) = 0;
-    func_001E75C0();
+    stage2_boss_ripple_request();
 }
 
 s32 func_0014E030();
 extern u8 D_0026C0B0[];
 
-void func_001E75C0(void) {
+void stage2_boss_ripple_request(void) {
     reg_tmp.b[0] = *(u8 *)(reg_a4 + 3);
     *(u8 *)(reg_a4 + 3) -= 1;
     if ((s32) reg_tmp.b[0] <= 0) {

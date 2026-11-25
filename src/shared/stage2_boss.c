@@ -3,7 +3,7 @@
 
 void enemy_set_entity_count(s32 id);
 
-void func_001CA450(void) {
+void stage2_boss_first(void) {
     enemy_set_entity_count(0xB);
 }
 
@@ -40,7 +40,7 @@ extern s16 D_0029976A[];
 extern s16 D_0029976C_as_s16_a[];
 extern u16 g_side_scroll_x[];
 
-void func_001CA460(void) {
+void stage2_boss_start(void) {
     reg_a0 = (u8 *)D_0026C920;
     enemy_init_entities();
     reg_a0 = (u8 *)D_0028DB18;
@@ -101,7 +101,7 @@ s32 enemy_hitbox_debug_draw();                            /* extern */
 s32 func_001CA730();                            /* extern */
 s32 func_002035A0();                            /* extern */
 
-void func_001CA640(void) {
+void stage2_boss_main(void) {
     func_001CA730();
     boss_slots_run();
     if (cond_flag != 0) {
