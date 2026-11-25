@@ -50,7 +50,7 @@ extern u8 g_rank_15_16_as_u8;
 extern u16 g_rank;
 extern u16 g_loop;
 extern u16 g_stage;
-extern u8 D_0028ED80;
+extern u8 g_simulation_active;
 extern u16 D_006E5C02[];
 
 void func_00138170(void) {
@@ -60,7 +60,7 @@ void func_00138170(void) {
     reg_d1.b[0] = *(s8 *) (reg_a0 + reg_d2.h[0]);
     reg_d2.w = D_0028E8BC_as_u32;
     reg_d3.w = 8;
-    if (D_0028ED80 != 0 && D_006E5C02[0] != 0) {
+    if (g_simulation_active != 0 && D_006E5C02[0] != 0) {
         reg_d1.b[0] = D_0028E2D4;
     }
     reg_d2.w >>= reg_d3.w;
@@ -82,7 +82,7 @@ next_2:
     if (g_loop == 0) {
         goto next_3;
     }
-    if (D_0028ED80 != 0 && D_006E5C02[0] != 0) {
+    if (g_simulation_active != 0 && D_006E5C02[0] != 0) {
         goto next_3;
     }
     g_rank = 0xFF;

@@ -75,6 +75,12 @@ extern u8 *reg_atmp; /* scratch address register (exchanges) */
     reg_tmp.w = (u32)(target); \
     (words)[0] = reg_tmp.h[1]; \
     (words)[1] = reg_tmp.h[0]
+
+/* The same for any other 32-bit value kept as two words. */
+#define STORE_LONG(words, value) \
+    reg_tmp.w = (u32)(value); \
+    (words)[0] = reg_tmp.h[1]; \
+    (words)[1] = reg_tmp.h[0]
 extern s8 cond_flag; /* result of the last routine that reports through the condition codes */
 extern s8 rng_values[256];
 

@@ -208,7 +208,7 @@ extern u32 D_0028DFF4_as_u32;
 extern u16 D_0028DFF8;
 extern u16 D_0028E094;
 extern u16 D_0028E0A0_as_u16_a[];
-extern u8 D_0028E290;
+extern u8 g_game_mode;
 extern u16 D_0028E7B0;
 extern u16 D_0028E7E4;
 extern u16 D_0028E7E8;
@@ -778,7 +778,7 @@ loop_130:
                 reg_d3.h[0] -= *(u16 *)reg_a1; reg_a1 += 2;
                 reg_d3.h[0] += 0x2800;
                 if (!((s32) reg_d3.h[0] < 0x6001)) goto next_130;
-                if (D_0028E290 == 2) {
+                if (g_game_mode == 2) {
 #ifdef DEATH_LABEL
                     base = reg_d5.h[0];
                     gain = base;
@@ -929,7 +929,7 @@ done_140:
                 reg_d4.h[0] = D_0028E0A8;
                 reg_d4.h[0] |= 0x400;
                 *(u16 *)reg_a5 |= reg_d4.h[0];
-                if (D_0028E290 == 2) {
+                if (g_game_mode == 2) {
 #ifdef DEATH_LABEL
                     gain = 0x208;
                     if (death_D_00290DC0 == 0) {

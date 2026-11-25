@@ -12,7 +12,7 @@ s32 score_add_no_chain();
 s32 func_001D4630();
 s32 func_002016D0();
 s32 func_00203400();
-extern u8 D_0028E290;
+extern u8 g_game_mode;
 extern s32 g_boss_score;
 extern u16 D_0028E8B8;
 extern u16 D_00299768_as_u16_a[];
@@ -72,7 +72,7 @@ next_20:
     B(0x66) = reg_d2.b[0];
     reg_d3.b[0] ^= 0xD;
     B(0x69) = reg_d3.b[0];
-    if (D_0028E290 == 2) {
+    if (g_game_mode == 2) {
         m0 = W(0x18);
         m1 = W(0x38);
         m2 = W(0x58);
@@ -98,7 +98,7 @@ next_20:
     if (W(0x88) != 0) goto block_check;
     reg_tmp5.h[1] = *(u16 *)(reg_a5 + 0x16);
     reg_tmp5.h[0] = *(u16 *)(reg_a5 + 0x18);
-    if (D_0028E290 == 2) {
+    if (g_game_mode == 2) {
         if (m0 > 0x7FFF) {
             reg_tmp5.w += m0 - 0x7FFF;
             if (reg_tmp5.w >= 0x40C00) reg_tmp5.w = 0x40C00;

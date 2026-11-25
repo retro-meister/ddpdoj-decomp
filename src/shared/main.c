@@ -71,7 +71,7 @@ extern u8 D_00286E78[];
 extern u8 D_00286E88[];
 extern u8 D_0028DF08;
 #ifdef DEATH_LABEL
-extern u8 D_0028E290;
+extern u8 g_game_mode;
 #endif
 extern u16 g_input_p2_previous;
 extern u16 g_input_p2_pressed;
@@ -103,7 +103,7 @@ void func_002120D0(void) {
     u32 t3;
 
 #ifdef DEATH_LABEL
-    D_0028E290 = 2;
+    g_game_mode = 2;
 #endif
     g_cd_async_state = 0;
     printf(D_00286E20, 0x9A8);

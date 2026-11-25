@@ -19,7 +19,7 @@ s32 score_add();
 s32 func_001CBCE0();
 s32 func_002016D0();
 s32 func_00203400();
-extern u8 D_0028E290;
+extern u8 g_game_mode;
 extern s32 g_boss_score;
 extern u16 D_0028E8B8;
 
@@ -77,7 +77,7 @@ next_101:
     reg_d0.b[0] = ENTITY(reg_a6)[9].look.b.size;
     reg_d0.b[0] ^= 0x12;
     ENTITY(reg_a6)[9].look.b.size = reg_d0.b[0];
-    if (D_0028E290 == 2) {
+    if (g_game_mode == 2) {
         m = ENTITY(reg_a6)->hp.h;
         h1 = ENTITY(reg_a6)[1].hp.h;
         h2 = ENTITY(reg_a6)[6].hp.h;
@@ -112,7 +112,7 @@ skip_d182:
     if (ENTITY(reg_a6)[10].offset_x.h != 0) goto next_108;
     reg_tmp2.h[1] = *(u16 *)(reg_a5 + 0x16);
     reg_tmp2.h[0] = *(u16 *)(reg_a5 + 0x18);
-    if (D_0028E290 != 2) goto next_106;
+    if (g_game_mode != 2) goto next_106;
     if (m <= 0x7FFF) goto next_105;
     m -= 0x7FFF;
     reg_tmp2.w += m;
@@ -361,7 +361,7 @@ next_601:
     reg_d0.b[0] = ENTITY(reg_a6)[9].sprite.b[1];
     reg_d0.b[0] ^= 0xD;
     ENTITY(reg_a6)[9].sprite.b[1] = reg_d0.b[0];
-    if (D_0028E290 == 2) {
+    if (g_game_mode == 2) {
         m = ENTITY(reg_a6)[8].hp.h;
         h1 = ENTITY(reg_a6)[6].hp.h;
         h2 = ENTITY(reg_a6)[7].hp.h;
@@ -387,7 +387,7 @@ skip_d1181:
     if (ENTITY(reg_a6)[10].offset_x.h != 0) goto next_608;
     reg_tmp2.h[1] = *(u16 *)(reg_a5 + 0x16);
     reg_tmp2.h[0] = *(u16 *)(reg_a5 + 0x18);
-    if (D_0028E290 != 2) goto next_606;
+    if (g_game_mode != 2) goto next_606;
     if (m <= 0x7FFF) goto next_605;
     m -= 0x7FFF;
     reg_tmp2.w += m;

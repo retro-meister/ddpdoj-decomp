@@ -373,7 +373,7 @@ extern s8 D_0028EC18_as_s8;
 extern s8 D_0028EC1A;
 extern s8 D_0028EC24;
 #ifdef DEATH_LABEL
-extern s8 D_0028E290_as_s8;
+extern s8 g_game_mode_as_s8;
 extern s8 D_0028E2E4_as_s8;
 extern s8 D_0028E304_as_s8;
 extern s32 D_0028EAFC;
@@ -417,7 +417,7 @@ void func_0021DAA0(void) {
             break;
         case 1:
             D_0028E2E4_as_s8 = 0;
-            D_0028E290_as_s8 = 2;
+            g_game_mode_as_s8 = 2;
             D_0028E304_as_s8 = 1;
             D_0028EAFC = 0xFF;
             func_00169BC0();
@@ -1235,7 +1235,7 @@ void func_0021EB30(void)
 }
 #pragma pop
 
-extern u8 D_0028E290;
+extern u8 g_game_mode;
 extern s32 D_0028EAFC;
 
 void func_0021EB80(void) {
@@ -1274,7 +1274,7 @@ void func_0021EB80(void) {
             D_0028EAFC = 0xFF;
 #endif
             D_0028EB54 = 2;
-            D_0028E290 = 0;
+            g_game_mode = 0;
             D_0028E2E4 = 0;
             sound_request();
             func_00169BC0();
@@ -1283,7 +1283,7 @@ void func_0021EB80(void) {
             D_0028EB00 = 2;
             break;
         case 2:
-            D_0028E290 = 1;
+            g_game_mode = 1;
             D_0028E2E4 = 1;
 #ifndef DEATH_LABEL
             D_0028EAFC = 0xFF;
@@ -4036,7 +4036,7 @@ extern s8 g_pause_lock_timer_as_s8;
 s32 func_00237670();
 s32 func_002376F0();
 extern u8 D_0028ED7C;
-extern u8 D_0028ED80;
+extern u8 g_simulation_active;
 extern s16 D_00271C8C[];
 extern s16 D_00271C90[];
 extern s8 D_0028EBCC_as_s8;
@@ -4206,7 +4206,7 @@ void func_00223AA0(void) {
     buttons = g_pad_trigger[g_pause_player];
     if (buttons & 0x20) {
         if (D_0028EBC4 == 0) {
-            if (D_0028ED80 == 0 && D_0028ED7C != 2) {
+            if (g_simulation_active == 0 && D_0028ED7C != 2) {
                 func_00224A30();
             } else {
                 sound_request();
@@ -4247,8 +4247,8 @@ s32 func_00223BE0(void) {
     s32 temp_v1;
     s32 temp_v1_2;
 
-    if (D_0028ED80 == 0) { temp_s0 = 8; } else { temp_s0 = 8; }
-    if (D_0028ED80 == 0) {
+    if (g_simulation_active == 0) { temp_s0 = 8; } else { temp_s0 = 8; }
+    if (g_simulation_active == 0) {
         temp_v1 = g_pad_repeat[g_pause_player];
         if (temp_v1 & 0x1000) {
             func_0018D4D0();
@@ -4317,7 +4317,7 @@ void func_00223D70(void) {
         }
         break;
     }
-    if (D_0028ED80 == 0 && D_0028EBD0 > 6) {
+    if (g_simulation_active == 0 && D_0028EBD0 > 6) {
         x = D_00271C8C[D_0028EBD0 * 2];
     } else {
         x = D_00271C90[D_0028EBD0 * 2];
@@ -4363,7 +4363,7 @@ void func_00223E80(void) {
             if (D_0028ED7C == 2) {
                 reg_a0 = D_00271B90[D_0028EBD0];
 #ifndef DEATH_LABEL
-            } else if (D_0028ED80 != 0) {
+            } else if (g_simulation_active != 0) {
                 reg_a0 = D_00271B60[D_0028EBD0];
 #endif
             } else {
@@ -4400,7 +4400,7 @@ void func_00224020(s32 x, s32 y) {
     } else if (D_0028ED7C == 2) {
         reg_a0 = D_00271BCC[0];
 #ifndef DEATH_LABEL
-    } else if (D_0028ED80 != 0) {
+    } else if (g_simulation_active != 0) {
         reg_a0 = D_00271BD4[0];
 #endif
     } else {
@@ -4563,7 +4563,7 @@ void func_002244E0(void) {
         reg_a0 = D_00271710[5];
         glyph_queue_add(D_00271C90_as_Point_a[5].x, D_00271C90_as_Point_a[5].y, 300, 0, 0x80, 0x80, 1);
         n = 6;
-        if (D_0028ED80 != 0) {
+        if (g_simulation_active != 0) {
             n++;
             reg_a0 = D_00271710[6];
             glyph_queue_add(D_00271C90_as_Point_a[6].x, D_00271C90_as_Point_a[6].y, 300, 0, 0x80, 0x80, 1);
@@ -4642,7 +4642,7 @@ void func_00224A90(void) {
     D_0028E2A0 = 0;
     D_0028E368 = 0;
     func_00224B50();
-    D_0028ED80 = 0;
+    g_simulation_active = 0;
     replay_header_clear();
     D_0028ED7C = 0;
     D_0028ED74 = 0;

@@ -418,7 +418,7 @@ extern u16 D_0026B8B8[];
 extern u16 g_p1_hyper_items;
 extern u16 g_p1_hyper_gauge;
 extern u16 g_stage_x2;
-extern u8 D_0028ED80;
+extern u8 g_simulation_active;
 
 void func_001A9820(void) {
     u32 bits;
@@ -468,7 +468,7 @@ void func_001A9820(void) {
     if ((g_p1_hyper_items != 5) && (bits == 0)) {
         reg_d0.h[0] += reg_d0.h[0];
     }
-    if (D_0028ED80 != 0) {
+    if (g_simulation_active != 0) {
         add = reg_d0.h[0];
         g_p1_hyper_gauge += add;
     } else {
@@ -528,7 +528,7 @@ void func_001A99C0(void) {
     if ((g_p2_hyper_items != 5) && (bits == 0)) {
         reg_d0.h[0] += reg_d0.h[0];
     }
-    if (D_0028ED80 != 0) {
+    if (g_simulation_active != 0) {
         add = reg_d0.h[0];
         g_p2_hyper_gauge += add;
     } else {
@@ -544,7 +544,7 @@ void func_001A9B60(void) {
     if ((s16)g_p1_laser_hyper_timer < 0) {
         reg_d2.w = 0;
         reg_d2.h[0] += 0x10;
-        if (D_0028ED80 != 0) {
+        if (g_simulation_active != 0) {
             g_p1_hyper_gauge += reg_d2.h[0];
         } else {
             g_p1_hyper_gauge += reg_d2.h[0];
@@ -562,7 +562,7 @@ void func_001A9BE0(void) {
         if (g_p1_hyper_active != 0) {
             reg_d2.w = 0x30;
         }
-        if (D_0028ED80 != 0) {
+        if (g_simulation_active != 0) {
             g_p1_hyper_gauge += reg_d2.h[0];
         } else {
             g_p1_hyper_gauge += reg_d2.h[0];
@@ -580,7 +580,7 @@ void func_001A9C70(void) {
     if ((s16)g_p2_laser_hyper_timer < 0) {
         reg_d2.w = 0;
         reg_d2.h[0] += 0x10;
-        if (D_0028ED80 != 0) {
+        if (g_simulation_active != 0) {
             g_p2_hyper_gauge += reg_d2.h[0];
         } else {
             g_p2_hyper_gauge += reg_d2.h[0];
@@ -598,7 +598,7 @@ void func_001A9CF0(void) {
         if (g_p2_hyper_active != 0) {
             reg_d2.w = 0x30;
         }
-        if (D_0028ED80 != 0) {
+        if (g_simulation_active != 0) {
             g_p2_hyper_gauge += reg_d2.h[0];
         } else {
             g_p2_hyper_gauge += reg_d2.h[0];
@@ -1131,7 +1131,7 @@ void func_001AAB90(void)
 {
     reg_d0.w = 0;
     reg_d0.b[0] = D_0028E388;
-    if (D_0028ED80 != 0) {
+    if (g_simulation_active != 0) {
         reg_d0.b[0] = D_006E5C08[0];
     }
 
@@ -2252,7 +2252,7 @@ void func_001AC840(void) {
                 g_boss_hp_bar_move_count += 0x6B;
             }
         }
-        if (D_0028ED80 != 0) {
+        if (g_simulation_active != 0) {
             g_boss_hp_bar_move_count = 1;
         }
     }
@@ -2366,7 +2366,7 @@ block_4:
 
 void func_001ACB00(void)
 {
-    if (D_0028ED80 != 0) {
+    if (g_simulation_active != 0) {
         g_p1_hyper_gauge += 0x258;
     } else {
         g_p1_hyper_gauge += 0x258;
@@ -2379,7 +2379,7 @@ void func_001ACB00(void)
 
 void func_001ACB50(void)
 {
-    if (D_0028ED80 != 0) {
+    if (g_simulation_active != 0) {
         g_p2_hyper_gauge += 0x258;
     } else {
         g_p2_hyper_gauge += 0x258;

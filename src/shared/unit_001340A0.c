@@ -614,7 +614,7 @@ s32 func_0012FE10();
 s32 func_00135100();
 s32 func_001351F0();
 extern u8 D_0028E398;
-extern u8 D_0028ED80;
+extern u8 g_simulation_active;
 extern u8 D_002BF3EA[];
 extern u8 *jtbl_0028E3F4_as_u8_p;
 
@@ -645,7 +645,7 @@ void func_00134C40(void) {
     if (D_0028E398 == 0) {
         goto next_8;
     }
-    if (D_0028ED80 != 0) {
+    if (g_simulation_active != 0) {
         goto next_8;
     }
     func_001351F0();
@@ -718,7 +718,7 @@ next_8:
     reg_a0 = (u8 *) reg_tmp.w;
     jtbl_0028E3F4_as_u8_p = reg_a0;
     ((Fn) jtbl_0028E3F4_as_u8_p)();
-    if (D_0028ED80 != 0) {
+    if (g_simulation_active != 0) {
         goto next_9;
     }
     if (g_loop != 0) {

@@ -5443,7 +5443,7 @@ s32 func_002075F0();                            /* extern */
 extern s32 D_00269160_as_s32_a[];
 extern u8 D_0028E258;
 extern u8 D_0028E25C;
-extern u8 D_0028E290;
+extern u8 g_game_mode;
 extern s32 D_0028EAFC;
 
 void func_001980A0() {
@@ -5459,7 +5459,7 @@ void func_001980A0() {
     if ((s32) D_0028E258 < (s32) D_0028E25C) {
         D_0028E258 = D_0028E25C;
     }
-    if (D_0028E290 == 2) {
+    if (g_game_mode == 2) {
         func_001984C0();
     } else if (func_001981F0() != 0) {
         func_001984C0();
@@ -5493,7 +5493,7 @@ extern u16 g_p2_score_digits;
 extern u16 g_p1_score_digits;
 
 s32 func_001981F0(void) {
-    if ((D_0028E38C == 1) && (D_0028E388 == 0) && (D_0028E384 == 0) && (D_0028E290 == 0) && (g_p1_score_digits == 0) && (g_p2_score_digits == 0) && (MAIN_OR_DEATH_LABEL(D_0028E4B0, g_two_player_seen) != 3)) {
+    if ((D_0028E38C == 1) && (D_0028E388 == 0) && (D_0028E384 == 0) && (g_game_mode == 0) && (g_p1_score_digits == 0) && (g_p2_score_digits == 0) && (MAIN_OR_DEATH_LABEL(D_0028E4B0, g_two_player_seen) != 3)) {
 #ifdef DEATH_LABEL
         printf((const char *)D_0027D7C0);
 #else
@@ -5657,7 +5657,7 @@ void func_001984C0(void) {
     packed = (s8)(v1 & 3) << 6;
     packed |= (s8)(v2 & 3) << 4;
     packed |= v0 & 7;
-    if (D_0028E290 == 2) {
+    if (g_game_mode == 2) {
         flags |= 0x80;
     } else {
         flags = 0;
@@ -5729,7 +5729,7 @@ void func_001984C0(void) {
     memset(D_002BADF0, 0, 12);
     memcpy(D_002BADF0, code, 12);
     func_00198280();
-    if (D_0028E290 == 2) {
+    if (g_game_mode == 2) {
         memcpy(D_002BB060_as_u8_a + D_0028EAFC * 0x1E, D_002BADD0, 0x1E);
     } else {
         memcpy(D_002BB100_as_u8_a + D_0028EAFC * 0x1E, D_002BADD0, 0x1E);

@@ -501,7 +501,7 @@ extern u8 D_0028ED7C;
 #ifdef DEATH_LABEL
 s32 stage_load_step();
 extern u8 D_0028E2A4;
-extern u8 D_0028E290;
+extern u8 g_game_mode;
 extern s16 g_loaded_stage;
 extern u8 D_0028ED60;
 extern u8 death_D_00290568;
@@ -540,7 +540,7 @@ void func_00210D00() {
                 if (g_loaded_stage != g_stage) {
                     return;
                 }
-                if ((D_0028E290 == 2) && (D_0028ED60 == 0)) {
+                if ((g_game_mode == 2) && (D_0028ED60 == 0)) {
                     death_D_00290568 = 1;
                     *(s16 *)reg_a5 = 0;
                     return;

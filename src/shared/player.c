@@ -30,7 +30,7 @@ s32 func_0018D9B0();
 s32 func_001AC3A0();
 extern u16 D_0028E014;
 extern u16 D_0028E024;
-extern u8 D_0028E290;
+extern u8 g_game_mode;
 extern s8 D_0028E3F8;
 extern u16 g_p1_lives;
 extern u16 g_loop;
@@ -74,7 +74,7 @@ void func_0013F9A0(void) {
     save_a4 = reg_a4;
     save_a5 = reg_a5;
     save_a6 = reg_a6;
-    if ((D_0028E290 == 2) || ((g_loop != 0) && ((D_0028E024 == 0) || (D_0028E014 == 0)))) {
+    if ((g_game_mode == 2) || ((g_loop != 0) && ((D_0028E024 == 0) || (D_0028E014 == 0)))) {
 #ifdef DEATH_LABEL
         if (death_D_00290DC0 == 0)
 #endif
@@ -158,7 +158,7 @@ void func_0013FB20(void) {
     save_a4 = reg_a4;
     save_a5 = reg_a5;
     save_a6 = reg_a6;
-    if ((D_0028E290 == 2) || ((g_loop != 0) && ((D_0028E020 == 0) || (D_0028E010 == 0)))) {
+    if ((g_game_mode == 2) || ((g_loop != 0) && ((D_0028E020 == 0) || (D_0028E010 == 0)))) {
 #ifdef DEATH_LABEL
         if (death_D_00290DC0 == 0)
 #endif
@@ -769,7 +769,7 @@ extern u8 D_0028E2A8;
 extern u16 D_0028E2AC;
 extern u8 D_0028E2B0;
 extern u8 D_0028E2C4;
-extern u8 D_0028ED80;
+extern u8 g_simulation_active;
 extern u16 D_006E5BF0[];
 extern u16 D_006E5BF2[];
 extern u16 D_006E5BFC[];
@@ -856,7 +856,7 @@ next_25:
 next_30:
     reg_d0.w = 0;
     reg_d0.b[0] = reg_a5[6];
-    if (D_0028ED80 != 0) {
+    if (g_simulation_active != 0) {
         func_00141300();
     }
     func_001340B0();
@@ -888,7 +888,7 @@ next_30:
         *(u16 *)(reg_a4 + 6) = reg_tmp.h[0];
     }
 #endif
-    if (D_0028E290 != 2) goto next_40;
+    if (g_game_mode != 2) goto next_40;
     if (reg_d6.h[0] != 0) goto next_35;
     func_001417D0();
     goto next_36;
@@ -897,7 +897,7 @@ next_35:
 next_36:
     func_00145E70(reg_a6);
 next_40:
-    if (D_0028ED80 == 0) goto next_76;
+    if (g_simulation_active == 0) goto next_76;
     if (reg_d6.h[0] == 0) goto next_41;
     if (D_0028E2C4 == 0) goto next_76;
 next_41:
@@ -1077,10 +1077,10 @@ next_60:
     }
 next_76:
     reg_a6[0x3F] = 0xF0;
-    if (D_0028E290 == 2) goto next_85;
+    if (g_game_mode == 2) goto next_85;
     if (reg_d6.h[0] != 0) goto next_85;
     if (g_stage == 0) goto next_85;
-    if (D_0028ED80 == 0) goto next_85;
+    if (g_simulation_active == 0) goto next_85;
     reg_a6[0x3F] = 0;
 next_85:
     reg_a0 = (u8 *)D_0028C5F8;
@@ -1741,7 +1741,7 @@ void func_001420E0(void) {
         reg_tmp.b[0] = temp_a0;
         PLAYER(reg_a6)->flags.b[1] &= 0xDF;
         if (reg_tmp.b[0] & 0x20) {
-            if (D_0028E290 == 2) {
+            if (g_game_mode == 2) {
                 func_001417D0();
             }
             PLAYER(reg_a6)->flags.b[0] &= 0xFB;
@@ -2570,7 +2570,7 @@ void func_001440D0(void) {
         reg_a1 = (u8 *) &D_0028E030;
         reg_a3 = (u8 *) &D_0028E028;
     }
-    if (D_0028ED80 != 0) goto next_1;
+    if (g_simulation_active != 0) goto next_1;
     reg_d0.w = 4;
     reg_d7.w = 0;
     if (reg_d1.h[0] == 0) goto loop_1;

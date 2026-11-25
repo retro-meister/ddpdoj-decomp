@@ -32,7 +32,7 @@ extern u8 D_00264EE0[];
 extern u8 D_00264F40[];
 extern u8 D_00264F50[];
 extern u32 D_0028D9C8;
-extern u8 D_0028E290;
+extern u8 g_game_mode;
 extern u16 D_0028E2E8;
 extern u16 g_loop;
 extern s16 D_00299768[];
@@ -54,7 +54,7 @@ void func_001F4B60(void) {
     reg_a3 = D_00264090;
     reg_a4 = D_00264B00;
     D_0028E2E8 = g_loop;
-    if (D_0028E290 == 2) {
+    if (g_game_mode == 2) {
         D_0028E2E8 = 1;
     }
     if (D_0028E2E8 == 0) {

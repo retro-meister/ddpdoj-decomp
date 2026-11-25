@@ -880,7 +880,7 @@ void func_001BE040(void) {
 extern u32 D_00251720[];
 extern u16 D_0028E3C0;
 extern u8 D_0028ED7C;
-extern u8 D_0028ED80;
+extern u8 g_simulation_active;
 extern u32 g_bg_layer_as_u32_a[];
 extern u32 D_002B6DF4[];
 extern u32 D_002B6E0C[];
@@ -899,7 +899,7 @@ void func_001BE0A0(void) {
     src = D_00251720;
     reg_a0 = (u8 *)(D_002B6E0C);
     reg_tmp.w = 0xBC;
-    flag = D_0028ED80 == 1;
+    flag = g_simulation_active == 1;
     if (flag == 0) {
         flag = D_0028ED7C == 2;
     }

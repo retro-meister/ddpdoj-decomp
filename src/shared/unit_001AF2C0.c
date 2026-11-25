@@ -116,7 +116,7 @@ extern u16 D_0028E3C0;
 extern u16 g_loop;
 extern u8 D_0028ED58;
 extern u8 D_0028ED7C;
-extern u8 D_0028ED80;
+extern u8 g_simulation_active;
 extern u8 *jtbl_0028E3F4_as_u8_p;
 
 void func_001AF560(void) {
@@ -148,7 +148,7 @@ void func_001AF560(void) {
     if (D_0028E304 != 0) {
         goto block_50;
     }
-    if (D_0028ED80 == 1) {
+    if (g_simulation_active == 1) {
         goto block_50;
     }
 #ifdef DEATH_LABEL
@@ -198,7 +198,7 @@ block_51:
     if (D_0028E3C0 != 0) {
         goto block_52;
     }
-    if (D_0028ED80 == 1) {
+    if (g_simulation_active == 1) {
         goto block_52;
     }
 #ifdef DEATH_LABEL

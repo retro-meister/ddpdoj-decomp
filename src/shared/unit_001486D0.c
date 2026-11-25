@@ -1269,7 +1269,7 @@ extern u16 D_0026A380[];
 extern u16 D_0026A3A0[];
 extern u16 D_0026A3C0[];
 extern u8 D_0028ED64;
-extern u8 D_0028ED80;
+extern u8 g_simulation_active;
 
 void func_0014BFF0(void) {
     u16 t;
@@ -1287,7 +1287,7 @@ void func_0014BFF0(void) {
             }
             goto block_1;
         }
-        if ((D_0028ED7C == 2) || (D_0028ED80 != 0)) {
+        if ((D_0028ED7C == 2) || (g_simulation_active != 0)) {
             func_002376F0();
             return;
         }
@@ -1381,13 +1381,13 @@ void func_0014C450(void) {
     D_0029C050_as_s32_a[0] = *(s32 *)reg_a0;
 }
 
-extern u8 D_0028E2C0;
+extern u8 g_ground_no_draw;
 extern u8 *jtbl_0028E3F4_as_u8_p;
 
 void func_0014C4B0(void) {
     u32 temp_s0;
 
-    if ((D_0028ED80 == 0) || (D_0028E2C0 == 0) || (g_stage != 2)) {
+    if ((g_simulation_active == 0) || (g_ground_no_draw == 0) || (g_stage != 2)) {
         reg_a6 = D_0029BF50;
         reg_d7.w = 7;
         do {

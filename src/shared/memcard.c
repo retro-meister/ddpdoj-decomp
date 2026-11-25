@@ -4449,7 +4449,7 @@ typedef struct {
     u8 b5A0;
 } SaveBlock;
 
-extern u8 D_0028E290;
+extern u8 g_game_mode;
 extern u16 D_002BB198[5];
 extern u16 D_002BB1A8[5];
 extern u16 D_002BB1B8[5];
@@ -4540,7 +4540,7 @@ void func_002345B0(void) {
             g_mc_save_buf_as_SaveBlock.a1C6[i][j] = D_002BB060[i][j];
         }
     }
-    if (D_0028E290 == 2) {
+    if (g_game_mode == 2) {
         for (i = 0; i < 5; i++) {
             g_mc_save_buf_as_SaveBlock.a00[i] = D_002BB1D8[i];
             g_mc_save_buf_as_SaveBlock.a0A[i] = D_002BB1C8[i];
@@ -4701,7 +4701,7 @@ void func_00234EF0(void) {
             D_002BB060[i][j] = g_mc_save_buf_as_SaveBlock.a1C6[i][j];
         }
     }
-    if (D_0028E290 == 2) {
+    if (g_game_mode == 2) {
         for (i = 0; i < 5; i++) {
             D_002BB378[i] = g_mc_save_buf_as_SaveBlock.a98[i];
             D_002BB368[i] = g_mc_save_buf_as_SaveBlock.aA2[i];

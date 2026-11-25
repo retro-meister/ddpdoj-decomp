@@ -12,11 +12,11 @@ void enemy_init_entities_n(void);
 extern u8 D_0028E30C;
 extern u16 D_0028E3C0;
 extern u8 D_0028ED7C;
-extern u8 D_0028ED80;
+extern u8 g_simulation_active;
 
 void enemy_hitbox_debug_draw(void) {
 #ifndef DEATH_LABEL
-    if (D_0028E3C0 == 0 && D_0028E30C != 0 && D_0028ED80 != 0) {
+    if (D_0028E3C0 == 0 && D_0028E30C != 0 && g_simulation_active != 0) {
         if (D_0028ED7C == 2) {
             return;
         }
@@ -80,8 +80,8 @@ void func_0014D260(void) {
 
 extern u16 D_0026A2B0[];
 extern u16 D_0026A300[];
-extern u8 D_0028E290;
-extern u8 D_0028E2C8;
+extern u8 g_game_mode;
+extern u8 g_simulation_boss_start;
 extern u16 g_stage_x4;
 extern u8 D_002BF330[];
 
@@ -91,7 +91,7 @@ void func_0014D4A0(void) {
     reg_d0.h[0] = g_stage_x4;
     reg_d0.h[0] += reg_d0.h[0];
     reg_d0.h[0] += reg_d0.h[0];
-    if (((D_0028ED80 != 0) && (D_0028E2C8 != 0)) || (D_0028E290 == 2)) {
+    if (((g_simulation_active != 0) && (g_simulation_boss_start != 0)) || (g_game_mode == 2)) {
         reg_a0 = (u8 *)(D_0026A300);
     }
     reg_a0 += reg_d0.h[0];

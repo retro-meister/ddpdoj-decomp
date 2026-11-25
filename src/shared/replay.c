@@ -18,7 +18,7 @@ extern u32 D_0028ED70_as_u32;
 extern u8 D_0028ED74;
 extern u8 D_0028ED78;
 extern u8 D_0028ED7C;
-extern u8 D_0028ED80;
+extern u8 g_simulation_active;
 extern u16 D_006C58A4[];
 extern u16 D_006C58A8[];
 extern u8 death_D_002B1ED8[];
@@ -33,7 +33,7 @@ void replay_filter_input(void) {
 
     save_d6 = reg_d6.w;
     save_d7 = reg_d7.w;
-    if (D_0028ED80 != 0) {
+    if (g_simulation_active != 0) {
         return;
     }
     switch (D_0028E3C0) {
@@ -145,7 +145,7 @@ extern u32 D_0028ED70_as_u32;
 extern u8 D_0028ED74;
 extern u8 D_0028ED78;
 extern u8 D_0028ED7C;
-extern u8 D_0028ED80;
+extern u8 g_simulation_active;
 extern u16 D_006C58A4[];
 extern u16 D_006C58A8[];
 extern u8 D_006CB588[];
@@ -160,7 +160,7 @@ void replay_filter_input(void) {
 
     save_d6 = reg_d6.w;
     save_d7 = reg_d7.w;
-    if (D_0028ED80 != 0) {
+    if (g_simulation_active != 0) {
         return;
     }
     reg_d6.h[0] = reg_d0.h[0];
@@ -452,7 +452,7 @@ void func_00237670(void) {
 }
 
 extern u8 D_0028ED7C;
-extern u8 D_0028ED80;
+extern u8 g_simulation_active;
 
 void func_002376F0() {
     s32 task_start();
@@ -464,7 +464,7 @@ void func_002376F0() {
     temp_s0 = reg_d0.w;
     temp_s1 = (u8 *)(reg_a0);
     var_s2 = 0;
-    if (D_0028ED80 != 0) {
+    if (g_simulation_active != 0) {
         var_s2 = 1;
     }
     if (D_0028ED7C == 2) {
@@ -669,7 +669,7 @@ void func_00237AC0() {
     u16 *data;
     u16 *save;
 
-    if (D_0028ED80 == 0 && D_0028ED74 == 2) {
+    if (g_simulation_active == 0 && D_0028ED74 == 2) {
         data = D_006C5CA0_as_u16_a;
         save = D_006C58A0_as_u16_a;
     D_0028ED78 = 1;
@@ -718,17 +718,17 @@ void func_00237AC0() {
     }
 }
 
-extern u8 D_0028E290;
+extern u8 g_game_mode;
 extern u8 D_0028ED6C;
 extern s8 D_0028ED74_as_s8;
 
 void func_00237CC0(void) {
-    if (D_0028E290 == 2) {
+    if (g_game_mode == 2) {
         D_0028ED74_as_s8 = 2;
         D_0028ED6C = 0;
         D_0028ED7C = 0;
     }
-    if (D_0028ED80 != 0) {
+    if (g_simulation_active != 0) {
         D_0028ED6C = 0;
         return;
     }
@@ -1113,7 +1113,7 @@ extern s8 D_0028E368_as_s8;
 extern s8 D_0028E370_as_s8;
 extern s8 D_0028E3F8;
 extern s8 D_0028ED5C_as_s8;
-extern s8 D_0028ED80_as_s8;
+extern s8 g_simulation_active_as_s8;
 
 void func_00238520(void) {
     s32 text_layer_clear();
@@ -1152,7 +1152,7 @@ void func_00238520(void) {
     D_0028E3F8 = 0;
     D_0028E368_as_s8 = 0;
     D_0028ED5C_as_s8 = 1;
-    D_0028ED80_as_s8 = 1;
+    g_simulation_active_as_s8 = 1;
     save_d2 = reg_d2.w;
     save_d3 = reg_d3.w;
     save_d4 = reg_d4.w;
@@ -1191,7 +1191,7 @@ extern u8 D_0028E2A8;
 extern u16 D_0028E2AC;
 extern u8 D_0028E2B0;
 extern u8 D_0028E2C4;
-extern u8 D_0028E2C8;
+extern u8 g_simulation_boss_start;
 extern u8 D_0028E2D4;
 
 void func_00238690(void) {
@@ -1248,7 +1248,7 @@ void func_00238690(void) {
     case 16:
         D_0028E38C = *(u8 *)&g_replay_header.difficulty;
         D_0028E2E4 = *(u8 *)&g_replay_header.bullet;
-        D_0028E2C8 = *(u8 *)&g_replay_header.start;
+        g_simulation_boss_start = *(u8 *)&g_replay_header.start;
         D_0028E2C4 = *(u8 *)&g_replay_header.death;
         D_0028E2D4 = *(u8 *)&g_replay_header.rank;
         D_0028E2B0 = *(u8 *)&g_replay_header.unk2A;

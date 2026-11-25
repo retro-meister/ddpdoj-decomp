@@ -193,7 +193,7 @@ extern s8 D_0025F6B0[];
 extern u8 D_0027D910[];
 extern u8 D_0027D930[];
 extern u8 D_0027D948[];
-extern u8 D_0028E290;
+extern u8 g_game_mode;
 extern s32 D_0028EAFC;
 extern u8 D_0028ED7C;
 extern u8 D_002BB060[5][30];
@@ -227,7 +227,7 @@ void func_001ACF80(void) {
         goto block_rts;
     }
     cond_flag = 0;
-    if (D_0028E290 == 2) {
+    if (g_game_mode == 2) {
         D_0028EAFC = 4 - reg_d1.w;
         printf((const char *)D_0027D930, D_0028EAFC);
         if (D_0028EAFC != 4) {
@@ -664,7 +664,7 @@ void func_001AD770(void) {
         reg_a1 += 2;
         reg_a0 += 2;
     } while ((s16) (--reg_d0.h[0]) >= 0);
-    if (D_0028E290 == 2) {
+    if (g_game_mode == 2) {
         for (i = 0; i < 5; i++) {
             D_002BB348_as_u16_a[i] = 0;
             D_002BB398_as_u16_a[i] = 0;
@@ -980,7 +980,7 @@ s32 func_001AC5F0();
 extern u8 D_0028E304;
 extern u16 g_high_score_digits;
 extern u16 g_high_score_billions;
-extern u8 D_0028ED80;
+extern u8 g_simulation_active;
 extern u16 D_006E5C06[];
 #ifdef DEATH_LABEL
 extern u8 death_D_00290DBC;
@@ -1056,7 +1056,7 @@ void func_001AEB10(void) {
 no_extend:
 #endif
             reg_d0.w = *(u32 *)reg_a2;
-            if (((D_0028ED80 == 0) || (D_006E5C06[0] != 0x14)) && (D_0028E304 == 0) && (reg_d0.w != -1U) && ((u32) *(u32 *)reg_a0 >= (u32) reg_d0.w)) {
+            if (((g_simulation_active == 0) || (D_006E5C06[0] != 0x14)) && (D_0028E304 == 0) && (reg_d0.w != -1U) && ((u32) *(u32 *)reg_a0 >= (u32) reg_d0.w)) {
                 t2 = (u16) *(s16 *)reg_a3;
                 if (t2 != 0x14) {
                     *(s16 *)reg_a3 = t2 + 1;

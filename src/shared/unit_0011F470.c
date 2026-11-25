@@ -1,38 +1,27 @@
 #include "common.h"
 #include "entity.h"
-
-s32 func_00171330(s32 *);
 s32 entity_release();
 s32 entity_follow_scroll();
-extern u8 D_0028E290;
-extern u8 D_0028E2C8;
-extern u8 D_0028ED80;
-extern void sprite_draw_layer2();
-
-void func_0011F3E0(void) {
-    if (((D_0028ED80 != 0) && (D_0028E2C8 != 0)) || (D_0028E290 == 2)) {
-        entity_release();
-        return;
-    }
-    reg_d0.h[0] = ENTITY(reg_a6)->y.h;
-    if ((s16) reg_d0.h[0] < -0x3400) {
-        entity_release();
-        return;
-    }
-    entity_follow_scroll();
-    func_00171330((void *)sprite_draw_layer2);
-}
-
+extern u8 g_game_mode;
+extern u8 g_simulation_boss_start;
+extern u8 g_simulation_active;
 void enemy_set_entity_count(s32 arg0);
-
-void func_0011F470(void) {
-    enemy_set_entity_count(0);
-}
-
 s32 enemy_set_task_work();                            /* extern */
 s32 enemy_init_entities();                            /* extern */
 extern s32 D_0024CBC0[];
 extern s32 D_0028C088;
+s32 bg_layer_cell_address();
+s32 debug_print_hex_stub_a();
+s32 debug_print_hex_stub_c();
+s32 func_0019D620();
+s32 entity_move_by_p2_stick();
+extern u16 g_side_scroll_x[];
+extern u16 D_0029C07C[];
+extern u16 D_0029C07E[];
+
+void func_0011F470(void) {
+    enemy_set_entity_count(0);
+}
 
 void func_0011F480(void) {
     reg_a0 = (u8 *)D_0024CBC0;
@@ -44,15 +33,6 @@ void func_0011F480(void) {
     ENTITY(reg_a6)->y.h = (u16) reg_tmp.h[1];
     ENTITY(reg_a6)->x.h = (u16) reg_tmp.h[0];
 }
-
-s32 bg_layer_cell_address();
-s32 debug_print_hex_stub_a();
-s32 debug_print_hex_stub_c();
-s32 func_0019D620();
-s32 entity_move_by_p2_stick();
-extern u16 g_side_scroll_x[];
-extern u16 D_0029C07C[];
-extern u16 D_0029C07E[];
 
 void func_0011F4E0(void) {
     u32 b1_d0;

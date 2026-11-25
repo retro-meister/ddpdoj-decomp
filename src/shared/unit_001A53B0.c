@@ -1127,7 +1127,7 @@ extern s8 D_0028E2A4_as_s8;
 extern u32 g_boss_score_as_u32;
 extern u32 g_boss_hit_bonus_as_u32;
 extern u16 g_boss_hit_bonus_timer;
-extern u8 D_0028ED80;
+extern u8 g_simulation_active;
 extern s16 g_player2[];
 extern s16 g_player1[];
 
@@ -1196,7 +1196,7 @@ next_7:
     D_0028E2A0_as_s8 = 0;
     D_0028E2A4_as_s8 = 0;
     D_0028E854 |= 2;
-    if (D_0028ED80 == 0) goto next_11;
+    if (g_simulation_active == 0) goto next_11;
     D_0028E2A4_as_s8 = 0x78;
     func_0018DED0();
     goto next_12;

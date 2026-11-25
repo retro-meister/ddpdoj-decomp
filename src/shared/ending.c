@@ -17,7 +17,7 @@ extern u16 D_0028E018;
 extern u16 D_0028E01C;
 extern u16 D_0028E028;
 extern u16 D_0028E02C;
-extern u8 D_0028E290;
+extern u8 g_game_mode;
 extern u8 D_0028E2EC;
 extern s16 g_boss_hyper_wait_as_s16;
 extern u16 g_p2_hyper_active;
@@ -33,9 +33,9 @@ extern u8 g_player1_as_u8_a[];
 
 void func_00122CE0(void) {
     if (D_0028E2EC != 0) goto block_1;
-    if (D_0028E290 == 1) goto block_1;
+    if (g_game_mode == 1) goto block_1;
 #ifdef DEATH_LABEL
-    if (D_0028E290 == 2) goto block_1;
+    if (g_game_mode == 2) goto block_1;
 #endif
     if (g_loop != 0) goto block_1;
     if (g_p1_hyper_active != 0) {

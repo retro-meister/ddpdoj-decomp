@@ -18,7 +18,7 @@ s32 func_0016A9B0();
 s32 score_add_no_chain();
 s32 score_add();
 s32 func_002016D0();
-extern u8 D_0028E290;
+extern u8 g_game_mode;
 extern s32 g_boss_score;
 extern u16 D_0028E8B8;
 
@@ -57,7 +57,7 @@ void func_001BB8E0(void) {
             if (ENTITY(reg_a6)[7].offset_x.h == 0) {
                 reg_tmp.h[1] = *(u16 *)(reg_a5 + 0x16);
                 reg_tmp.h[0] = *(u16 *)(reg_a5 + 0x18);
-                if (D_0028E290 == 2) {
+                if (g_game_mode == 2) {
                     if ((s32) hp > 0x7FFF) {
                         reg_tmp.w += hp - 0x7FFF;
                         if (reg_tmp.w >= 0x16C00) {
@@ -123,7 +123,7 @@ next_1:
                 if (ENTITY(reg_a6)[7].offset_x.h == 0) {
                     reg_tmp.h[1] = *(u16 *)(reg_a5 + 0x1A);
                     reg_tmp.h[0] = *(u16 *)(reg_a5 + 0x1C);
-                    if (D_0028E290 == 2) {
+                    if (g_game_mode == 2) {
                         if ((s32) hp > 0x7FFF) {
                             reg_tmp.w += hp - 0x7FFF;
                             if (reg_tmp.w >= 0x9000) {
@@ -205,7 +205,7 @@ next_3:
                 if (ENTITY(reg_a6)[7].offset_x.h == 0) {
                     reg_tmp.h[1] = *(u16 *)(reg_a5 + 0x1E);
                     reg_tmp.h[0] = *(u16 *)(reg_a5 + 0x20);
-                    if (D_0028E290 == 2) {
+                    if (g_game_mode == 2) {
                         if ((s32) hp > 0x7FFF) {
                             reg_tmp.w += hp - 0x7FFF;
                             if (reg_tmp.w >= 0x9000) {

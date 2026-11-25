@@ -270,7 +270,7 @@ extern s16 D_0028E030_as_s16;
 extern s16 D_0028E034_as_s16;
 extern s16 D_0028E038_as_s16;
 extern s16 D_0028E03C_as_s16;
-extern u8 D_0028ED80;
+extern u8 g_simulation_active;
 extern u16 D_006E5C06[];
 
 void func_001354C0(void) {
@@ -285,7 +285,7 @@ void func_001354C0(void) {
     reg_tmp.h[0] = *(u16 *)(reg_a6 + 0xA);
     reg_a0 = (u8 *)reg_tmp.w;
     *(u16 *)reg_a0 -= 1;
-    var_a0 = D_0028ED80;
+    var_a0 = g_simulation_active;
     if ((var_a0 == 1) && ((s16) *(u16 *)reg_a0 < 0)) {
         var_a0 = D_006E5C06[0];
         if (var_a0 == 0x14) {
@@ -538,7 +538,7 @@ void func_00135AD0(void) {
     if (g_loop != 0) {
         *(u16 *)reg_a0 = 0U;
     }
-    if (D_0028ED80 == 1) {
+    if (g_simulation_active == 1) {
         if (D_006E5C06[0] == 0x14) {
             *(u16 *)reg_a0 = 0U;
         } else {
@@ -1079,7 +1079,7 @@ void func_00136600(void) {
         reg_d2.h[0] = D_0028E930;
         reg_d3.h[0] = D_0028E92C;
         func_001AEF50();
-        var_v0 = D_0028ED80 == 1;
+        var_v0 = g_simulation_active == 1;
         reg_d7.w = 0;
         if (var_v0 == 0) {
             var_v0 = D_0028ED7C == 2;

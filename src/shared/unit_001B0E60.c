@@ -122,14 +122,14 @@ extern s16 D_0028DF18;
 extern s16 D_0028E3C0_as_s16;
 extern u8 D_0028ED74;
 extern u8 D_0028ED7C;
-extern u8 D_0028ED80;
+extern u8 g_simulation_active;
 
 void func_001B1080(void) {
     *(s8 *)(reg_a5 + 3) = 1;
     func_001B04B0();
     func_00137C50();
     D_0028E3C0_as_s16 = 0;
-    D_0028ED80 = 0;
+    g_simulation_active = 0;
     replay_header_clear();
     D_0028ED7C = 1;
     D_0028ED74 = 2;
@@ -366,7 +366,7 @@ s32 task_start();
 s32 func_002075F0();
 s32 fade_reset();
 extern u8 D_00269140[];
-extern u8 D_0028E290;
+extern u8 g_game_mode;
 extern u8 D_0028E7B4;
 extern u16 D_00684C80[];
 #endif
@@ -399,7 +399,7 @@ void func_001B1960(void) {
                 func_00138650();
                 fade_reset();
                 death_func_001B1220();
-                D_0028E290 = 2;
+                g_game_mode = 2;
                 text_layer_clear();
                 reg_d0.w = 0;
                 reg_a0 = (u8 *)D_00269140;

@@ -337,7 +337,7 @@ extern u8 D_0028E2A8;
 extern s16 D_0028E2AC_as_s16;
 extern u8 D_0028E2B0;
 extern u8 D_0028E2C4;
-extern u8 D_0028E2C8;
+extern u8 g_simulation_boss_start;
 extern u8 D_0028E2CC;
 extern u8 D_0028E2D0;
 extern u8 D_0028E2D4;
@@ -428,7 +428,7 @@ void func_00209410(void) {
     g_pad_vib_enabled = 0;
     D_0028E2D8 = 0;
     D_0028E2E0 = 0;
-    D_0028E2C8 = 0;
+    g_simulation_boss_start = 0;
     D_0028E2C4 = 0;
     D_0028E2CC = 0;
     D_0028E2B0 = 0;

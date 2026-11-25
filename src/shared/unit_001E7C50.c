@@ -25,7 +25,7 @@ s32 boss_attack_stop_all();
 s32 score_add_no_chain();
 s32 score_add();
 s32 func_002016D0();
-extern u8 D_0028E290;
+extern u8 g_game_mode;
 extern s32 g_boss_score;
 extern u16 g_enemy_signal_c;
 extern u16 g_enemy_signal_9;
@@ -91,7 +91,7 @@ next_dm_skip:
     reg_d0.b[0] = ENTITY(reg_a6)[10].draw.b.flip;
     reg_d0.b[0] ^= 0xB;
     ENTITY(reg_a6)[10].draw.b.flip = reg_d0.b[0];
-    if (D_0028E290 != 2) goto next_max_end;
+    if (g_game_mode != 2) goto next_max_end;
     hp = ENTITY(reg_a6)[1].hp.h;
     mid = ENTITY(reg_a6)[2].hp.h;
     low = ENTITY(reg_a6)[3].hp.h;
@@ -161,7 +161,7 @@ next_dec_cut:
     if (ENTITY(reg_a6)[11].offset_x.h != 0) goto next_nodec;
     reg_tmp.h[1] = *(u16 *)(reg_a5 + 0x16);
     reg_tmp.h[0] = *(u16 *)(reg_a5 + 0x18);
-    if (D_0028E290 != 2) goto next_sub2;
+    if (g_game_mode != 2) goto next_sub2;
     if (hp <= 0x7FFF) goto next_sub1;
     reg_tmp.w += hp - 0x7FFF;
     if (reg_tmp.w < 0x46000) goto next_store;

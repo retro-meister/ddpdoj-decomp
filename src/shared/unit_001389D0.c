@@ -184,9 +184,9 @@ extern u16 g_sprite_layer4_used;
 extern u16 g_sprite_layer3_used;
 extern u16 g_sprite_layer2_used;
 extern u16 g_sprite_layer1_used;
-extern u8 D_0028E290;
-extern u8 D_0028E2C0;
-extern u8 D_0028E2C8;
+extern u8 g_game_mode;
+extern u8 g_ground_no_draw;
+extern u8 g_simulation_boss_start;
 extern u8 g_stage_load_state;
 extern u8 D_0028E370;
 extern u16 D_0028E3C0;
@@ -196,7 +196,7 @@ extern u8 g_cd_async_state_as_u8;
 extern u8 g_cd_async_busy_as_u8;
 extern u8 D_0028EC58_as_u8;
 extern u8 D_0028ED7C;
-extern u8 D_0028ED80;
+extern u8 g_simulation_active;
 
 void func_00138DA0(void) {
     u16 save_22;
@@ -234,7 +234,7 @@ void func_00138DA0(void) {
     u8 t;
     u8 *p;
 
-    D_0028E2C0 = 0;
+    g_ground_no_draw = 0;
     t = *(u8 *) (reg_a5 + 2);
     p = reg_a5 + 2;
     if (t & 8) {
@@ -247,7 +247,7 @@ void func_00138DA0(void) {
     }
     *p = t | 1;
     func_00138A50();
-    if (D_0028ED80 != 0) {
+    if (g_simulation_active != 0) {
         goto next_1;
     }
 #ifndef DEATH_LABEL
@@ -277,14 +277,14 @@ next_3:
         return;
     }
     *p = t | 8;
-    if (D_0028ED80 == 0) {
+    if (g_simulation_active == 0) {
         goto next_4;
     }
-    if (D_0028E2C8 != 0) {
+    if (g_simulation_boss_start != 0) {
         goto next_5;
     }
 next_4:
-    if (D_0028E290 != 2) {
+    if (g_game_mode != 2) {
         return;
     }
 next_5:
@@ -298,7 +298,7 @@ next_5:
     save_22 = g_sprite_layer1_used;
     save_25 = D_0028E12C;
     save_26 = D_0028E128;
-    D_0028E2C0 = 1;
+    g_ground_no_draw = 1;
     save_21 = g_sprite_layer2_used;
     save_20 = g_sprite_layer3_used;
     save_19 = g_sprite_layer4_used;
@@ -535,7 +535,7 @@ void func_001394A0(void) {
             D_0028E284_as_s8 = 0;
         }
 #else
-        if (D_0028ED80 == 0) {
+        if (g_simulation_active == 0) {
             if (g_loop == 0) {
                 D_0028E288_as_s8 = 0;
                 D_0028E284_as_s8 = 0;
@@ -545,7 +545,7 @@ void func_001394A0(void) {
             D_0028E284_as_s8 = 0;
         }
 #endif
-        if ((D_0028ED80 == 0) && (g_loop == 1) && (g_stage == 0)) {
+        if ((g_simulation_active == 0) && (g_loop == 1) && (g_stage == 0)) {
             if (g_player1[0] < 0) {
                 if (g_p1_hyper_items != 0) {
                     g_p1_hyper_time_as_s16 = 0;
@@ -556,7 +556,7 @@ void func_001394A0(void) {
                 D_0028E284_as_s8 = 0x78;
             }
         }
-        if ((D_0028ED80 == 0) && (D_0028ED7C != 2)) {
+        if ((g_simulation_active == 0) && (D_0028ED7C != 2)) {
             if ((g_p1_score_digits == 0) && (g_player1[0] < 0)) {
                 D_0028E25C = g_stage + (g_loop * 5);
                 if (D_0028E304 != 0) {

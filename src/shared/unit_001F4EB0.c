@@ -14,7 +14,7 @@ s32 boss_attack_stop_all();
 s32 score_add_no_chain();
 s32 score_add();
 s32 func_002016D0();
-extern u8 D_0028E290;
+extern u8 g_game_mode;
 extern u16 D_0028E2E8;
 extern s32 g_boss_score;
 extern u16 D_0028E8B8;
@@ -96,7 +96,7 @@ next_2:
     ENTITY(reg_a6)[7].offset_x.b[1] = reg_d3.b[0];
     reg_d4.b[0] ^= 9;
     ENTITY(reg_a6)[7].offset_x.b[0] = reg_d4.b[0];
-    if (D_0028E290 == 2) {
+    if (g_game_mode == 2) {
 #ifdef DEATH_LABEL
         top = W(0x18);
         p1 = W(0x38);
@@ -179,7 +179,7 @@ skip_5:;
     if (W(0x108) != 0) goto block_chk;
     reg_tmp.h[1] = TW(0x16);
     reg_tmp.h[0] = TW(0x18);
-    if (D_0028E290 == 2) {
+    if (g_game_mode == 2) {
         if (top > 0x7FFF) {
             reg_tmp.w += top - 0x7FFF;
             if (reg_tmp.w >= 0x3F000) reg_tmp.w = 0x3F000;
@@ -410,7 +410,7 @@ next_2:
     ENTITY(reg_a6)[7].offset_y.b[0] = reg_d2.b[0];
     reg_d3.b[0] ^= 0xD;
     ENTITY(reg_a6)[7].offset_x.b[1] = reg_d3.b[0];
-    if (D_0028E290 != 2) {
+    if (g_game_mode != 2) {
         goto next_3;
     }
     big = *(u16 *) (reg_a6 + 0x158);
@@ -435,7 +435,7 @@ next_4:
     }
     reg_tmp.h[1] = *(u16 *) (reg_a5 + 0x16);
     reg_tmp.h[0] = *(u16 *) (reg_a5 + 0x18);
-    if (D_0028E290 != 2) {
+    if (g_game_mode != 2) {
         goto next_6;
     }
     if ((s32) big <= 0x7FFF) {

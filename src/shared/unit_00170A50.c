@@ -272,12 +272,12 @@ next_5:
 
 #pragma push
 #pragma opt_propagation off
-extern u8 D_0028E2C0;
+extern u8 g_ground_no_draw;
 extern void (*jtbl_0028E3F4_as_fn)(void);
 
-void func_00171330(void (*callback)(void))
+void scenery_draw(void (*callback)(void))
 {
-    if (D_0028E2C0 == 0) {
+    if (g_ground_no_draw == 0) {
         const u16 *state = (const u16 *)((void *)reg_a6);
 
         reg_d1.h[1] = state[1];

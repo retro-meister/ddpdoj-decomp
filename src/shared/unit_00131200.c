@@ -152,7 +152,7 @@ extern s16 D_0028E3CC;
 extern s16 D_0028E3D0;
 extern s16 D_0028E3D4;
 extern s8 D_0028ED7C_as_s8;
-extern s8 D_0028ED80_as_s8;
+extern s8 g_simulation_active_as_s8;
 
 void func_00131490(void) {
     D_0028E3C4 = 0;
@@ -168,7 +168,7 @@ void func_00131490(void) {
     func_0020ECE0();
     D_0028E3D0 = 0;
     D_0028E3CC = 0;
-    D_0028ED80_as_s8 = 0;
+    g_simulation_active_as_s8 = 0;
     D_0028ED7C_as_s8 = 0;
     replay_header_clear();
     D_0028E3C0_as_s16 = 0;
@@ -454,7 +454,7 @@ extern s32 g_p1_score_as_s32;
 extern s8 D_0028EC58;
 extern s8 D_0028ED6C_as_s8;
 extern u8 D_0028ED7C;
-extern u8 D_0028ED80;
+extern u8 g_simulation_active;
 extern u16 g_sprite_palette_as_u16_a[];
 extern u16 D_002BF410_as_u16_a[];
 extern u16 D_002BF450_as_u16_a[];
@@ -463,7 +463,7 @@ s32 func_0013B920();
 s32 func_0018DED0();
 extern u8 D_00269920[];
 extern u8 D_002698B0[];
-extern u8 D_0028E290;
+extern u8 g_game_mode;
 extern u16 g_p2_lives;
 extern u16 g_p1_lives;
 extern u16 death_D_00290434;
@@ -557,11 +557,11 @@ block_25:
     if (temp_v1_2 == 0x16) {
         reg_a6 = D_002BF490;
         func_00132420();
-        if ((D_0028E290 == 2) && (death_D_00290568_as_s8 == 1)) {
+        if ((g_game_mode == 2) && (death_D_00290568_as_s8 == 1)) {
             death_D_00290568_as_s8 = 0;
             g_p1_lives = death_D_00290434;
             g_p2_lives = death_D_00290438;
-            if ((D_0028ED80 != 0) || (D_0028ED7C == 2)) {
+            if ((g_simulation_active != 0) || (D_0028ED7C == 2)) {
                 reg_a0 = (u8 *)D_00269920;
             } else {
                 reg_a0 = (u8 *)D_002698B0;
@@ -590,7 +590,7 @@ block_25:
         if (cond_flag == 0) {
             reg_d0.h[1] = *(u16 *)(reg_a5 + 8);
             reg_d0.h[0] = *(u16 *)(reg_a5 + 0xA);
-            if (D_0028ED80 != 0) {
+            if (g_simulation_active != 0) {
                 func_00131840();
                 *(u8 *)(reg_a5 + 3) = 2U;
                 return;
@@ -833,7 +833,7 @@ s32 func_0013EAF0();
 s32 func_0013EB60();
 extern s16 g_player2[];
 extern s16 g_player1[];
-extern u8 D_0028E290;
+extern u8 g_game_mode;
 extern u8 death_D_00290568;
 #endif
 
@@ -1177,7 +1177,7 @@ next_499:
                     reg_d0.h[0] = 0;
                     func_00134FE0();
                 }
-                if ((*(u16 *)(reg_a5 + 4) == 0) && (D_0028ED80 != 1)) {
+                if ((*(u16 *)(reg_a5 + 4) == 0) && (g_simulation_active != 1)) {
                     reg_a0 = (u8 *)(D_00269920_as_u16_a);
                     *(u8 *)(reg_a5 + 7) = 0x15U;
                     D_0028ED60_as_s8 = 1;
@@ -1194,7 +1194,7 @@ next_499:
                     }
                     reg_d0.h[0] = 0x13;
                     task_start();
-                } else if (D_0028E290 == 2) {
+                } else if (g_game_mode == 2) {
                     death_D_00290568 = 0;
                     reg_a0 = (u8 *)(D_00269920_as_u16_a);
                     *(u8 *)(reg_a5 + 7) = 0x16U;
@@ -1212,7 +1212,7 @@ next_499:
                     reg_d0.h[0] = 0x13;
                     task_start();
                 } else {
-                    if ((D_0028ED80 != 0) || (D_0028ED7C == 2)) {
+                    if ((g_simulation_active != 0) || (D_0028ED7C == 2)) {
                         reg_a0 = (u8 *)D_00269920_as_u16_a;
                     } else {
                         reg_a0 = (u8 *)D_002698B0_as_u16_a;
@@ -1227,7 +1227,7 @@ next_499:
             }
 #else
             if ((D_0028E854 & 2) && (v2 = *(u8 *)(reg_a5 + 7), (v2 != 0xB)) && (v2 != 0x15)) {
-                if ((D_0028ED80 != 0) || (v2 = D_0028ED7C, (v2 == 2))) {
+                if ((g_simulation_active != 0) || (v2 = D_0028ED7C, (v2 == 2))) {
                     if (D_0028E2A4 != 0) {
                         D_0028E2A4 -= 1;
                         return;
@@ -1239,7 +1239,7 @@ next_499:
 block_77:
                 t4 = *(u16 *)(reg_a5 + 4);
                 if (t4 != 0) {
-                    if ((D_0028ED80 != 0) || (D_0028ED7C == 2)) {
+                    if ((g_simulation_active != 0) || (D_0028ED7C == 2)) {
                         D_0028E2A4 = 0;
                         D_0028E2A0 = 0;
                     } else {
@@ -1265,14 +1265,14 @@ block_90:
                     }
                 } else {
 block_91:
-                    if ((*(u16 *)(reg_a5 + 4) == 0) && (v2 = 1, (D_0028ED80 != 1))) {
+                    if ((*(u16 *)(reg_a5 + 4) == 0) && (v2 = 1, (g_simulation_active != 1))) {
                         reg_a0 = (u8 *)(D_00269920_as_u16_a);
                         *(u8 *)(reg_a5 + 7) = 0x15U;
                         D_0028ED60_as_s8 = 1;
                         reg_d0.h[0] = 0x13;
                         task_start();
                     } else {
-                        if ((D_0028ED80 != 0) || (D_0028ED7C == 2)) {
+                        if ((g_simulation_active != 0) || (D_0028ED7C == 2)) {
                             reg_a0 = (u8 *)D_00269920_as_u16_a;
                         } else {
                             reg_a0 = (u8 *)D_002698B0_as_u16_a;

@@ -55,7 +55,7 @@ extern u16 D_0028E7B8;
 extern s8 g_cd_async_state;
 extern s8 D_0028ED74_as_s8;
 extern s8 D_0028ED7C_as_s8;
-extern s8 D_0028ED80_as_s8;
+extern s8 g_simulation_active_as_s8;
 
 void func_00168BC0(void) {
     s32 text_layer_clear();
@@ -106,7 +106,7 @@ block_1:
     if (D_0028E3C0 == 0) goto next_4;
     D_0028E3C0 = 0;
     replay_header_clear();
-    D_0028ED80_as_s8 = 0;
+    g_simulation_active_as_s8 = 0;
     D_0028ED7C_as_s8 = 0;
     D_0028ED74_as_s8 = 0;
     func_0018DE90();
@@ -248,7 +248,7 @@ s32 boot_scratch_clear();
 s32 stage_map_reset();
 extern u8 D_0028E284;
 extern u8 D_0028E288;
-extern u8 D_0028E290;
+extern u8 g_game_mode;
 extern u8 D_0028E2E4;
 extern u8 g_splash_visible;
 
@@ -305,7 +305,7 @@ void func_00168FD0(void) {
         D_0028E288 = 0;
         D_0028E284 = 0;
         D_0028E378 = 0;
-        D_0028E290 = 0;
+        g_game_mode = 0;
         D_0028E2E4 = 0;
         D_0028DF84 = 0;
         func_00168BA0();
@@ -649,7 +649,7 @@ void func_00169640(void) {
 extern u8 D_0028DE40[];
 extern u8 D_0028DE44[];
 extern u8 D_0028DE48[];
-extern s8 D_0028E290_as_s8;
+extern s8 g_game_mode_as_s8;
 extern s8 D_0028EC24;
 extern u8 D_0028ED7C;
 extern s16 D_0068DEC8_as_s16_a[];
@@ -710,7 +710,7 @@ void func_00169680(void) {
     s32 a;
     s32 b;
 
-    D_0028E290_as_s8 = 0;
+    g_game_mode_as_s8 = 0;
     func_00206D70();
     text_layer_clear();
     reg_d0.w = 0;
@@ -767,7 +767,7 @@ void func_00169900(void) {
     s32 text_palette_load();
     s32 func_00206D70();
     s32 task_start();
-    D_0028E290_as_s8 = 2;
+    g_game_mode_as_s8 = 2;
 #ifdef DEATH_LABEL
     death_D_00290DC0 = 0;
 #endif

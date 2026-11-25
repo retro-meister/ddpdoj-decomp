@@ -2906,7 +2906,7 @@ extern void task_start(void);
 extern u8 D_00269140[];
 extern u8 D_0028DE40[];
 extern u8 D_0028DE44[];
-extern u8 D_0028E290;
+extern u8 g_game_mode;
 extern u8 D_0028E370;
 extern u8 D_0028E3F8_as_u8;
 extern u8 D_0028E7B4;
@@ -2956,7 +2956,7 @@ void func_0022BFD0() {
     save_a5 = reg_a5;
     save_a6 = reg_a6;
 #ifdef DEATH_LABEL
-    D_0028E290 = 2;
+    g_game_mode = 2;
     g_loop = 0;
     D_00684C80[6] = 0;
     D_00684C80[4] = 3;
@@ -2994,7 +2994,7 @@ void func_0022BFD0() {
     func_00171910();
     printf("death round[%d]\n", death_D_00290DC0);
 #else
-    D_0028E290 = 2;
+    g_game_mode = 2;
     D_00684C80[0] = 0xFF;
     D_00684C80[1] = 0xFF;
     D_00684C80[2] = 0xFF;
@@ -3057,7 +3057,7 @@ s32 func_001719D0();
 s32 func_0018D190();
 extern u8 g_pad_input_locked;
 extern u8 D_0028E2C4;
-extern u8 D_0028E2C8;
+extern u8 g_simulation_boss_start;
 extern u8 D_0028E2D4;
 extern u8 D_0028E2E4;
 extern u8 D_0028E384;
@@ -3127,7 +3127,7 @@ void func_0022C1F0() {
         break;
 #endif
     case 16:
-        D_0028E2C8 = 1;
+        g_simulation_boss_start = 1;
         D_0028E2E4 = 0;
         D_0028E2D4 = 0xFF;
         D_0028E2C4 = 0;
