@@ -241,6 +241,48 @@ def align_rodata_subsegments(folder):
         path.write_text("\n".join(lines), encoding="utf-8")
 
 
+def numbers_path(name):
+    return config_dir(name) / "numbers.txt"
+
+
+def numbers_text(name):
+    path = numbers_path(name)
+    return path.read_text(encoding="utf-8") if path.is_file() else ""
+
+
+def write_number_words(name, folder):
+    """Write the data words listed in config/<target>/numbers.txt as numbers.
+
+    Splat writes a word as a symbol when its value is the address of something it knows. Where the value is
+    also the address of a function or of a label the code uses, an `ignore:true` line cannot stop that, and a
+    shifted link would then change a word that is a number (a page address in the SDK's memory-map table, a
+    pair of 16-bit values). The file lists the addresses of such words, one per line, `#` for comments."""
+    wanted = set()
+    for line in numbers_text(name).splitlines():
+        line = line.split("#")[0].strip()
+        if line:
+            wanted.add(int(line, 16))
+    if not wanted:
+        return
+    pattern = re.compile(r"^(\s*/\* [0-9A-F]+ ([0-9A-F]{8}) ([0-9A-F]{8}) \*/\s+\.word\s+)[A-Za-z_][\w.]*(?:\s*\+\s*\w+)?\s*$")
+    done = set()
+    for path in sorted((folder / "asm" / "data").glob("*.s")):
+        lines = path.read_text(encoding="utf-8").split("\n")
+        changed = False
+        for i, line in enumerate(lines):
+            m = pattern.match(line)
+            if m and int(m.group(2), 16) in wanted:
+                value = int.from_bytes(bytes.fromhex(m.group(3)), "little")
+                lines[i] = f"{m.group(1)}0x{value:08X}"
+                done.add(int(m.group(2), 16))
+                changed = True
+        if changed:
+            path.write_text("\n".join(lines), encoding="utf-8")
+    missing = sorted(wanted - done)
+    if missing:
+        raise SystemExit(f"{numbers_path(name)}: no symbol word at " + ", ".join(f"{a:#x}" for a in missing))
+
+
 def split(name, force=False):
     # Diffs run in parallel under a shared matching lock; only one of them may refresh a stale split at a time.
     with matching_lock(name="split.lock"):
@@ -253,7 +295,7 @@ def _split(name, force=False):
     yaml_text = splat_yaml_path(name).read_text(encoding="utf-8")
     sym_text = symbols_path(name).read_text(encoding="utf-8")
     fingerprint = hashlib.sha256(
-        (splat_versions() + "\n" + yaml_text + "\n" + sym_text + aliases_text(name)
+        (splat_versions() + "\n" + yaml_text + "\n" + sym_text + aliases_text(name) + numbers_text(name)
          + Path(__file__).read_text(encoding="utf-8")).encode("utf-8")  # post-processing lives in this file
     ).hexdigest()
     folder = split_dir(name)
@@ -294,6 +336,7 @@ def _split(name, force=False):
             patched_lines.append(line)
         ld_path.write_text("\n".join(patched_lines) + "\n", encoding="utf-8")
     align_rodata_subsegments(folder)
+    write_number_words(name, folder)
     write_symbols_ld(name, folder)
     state_file.write_text(json.dumps({"fingerprint": fingerprint}, indent=2) + "\n", encoding="utf-8")
     return folder

@@ -8,6 +8,7 @@
     options: --main-only START:END   objects inside a stretch that Death Label does not have (repeatable)
              --at MAIN=DEATH         the Death Label address of the object at MAIN (repeatable)
              --redo                  write the file again (its splat.yaml entries stay as they are)
+             --number ADDRESS        the word at ADDRESS (Main) is a number although it looks like an address
 
 Addresses that the split assembly shows as plain numbers in both executables are taken from the last
 `tools/shiftcheck.py` run of each executable (build/shiftcheck/addresses_<target>.txt).
@@ -494,6 +495,9 @@ for sec, a, size, nxt, da, dsize, dn, n in objects:
     assert not any(rom[a - OFF + size:nxt - OFF]), 'padding not zero at %x' % a
     if dn - da == nxt - a or dsize == size:
         assert not any(rom[a - OFF + size:nxt - OFF]) and not any(drom[da - OFF + size:dn - OFF]), 'padding not zero at %x' % a
+    for x in range(a, a + size - 3, 4):
+        if ('%x' % x) in numbers:   # --number: a word given as a number (Main address) is one in both
+            main_rel.pop(x, None); death_rel.pop(x - a + da, None)
     ms = [x for x in range(a, a + size - 3) if x in main_rel]; ds = [x for x in range(da, da + dsize - 3) if x in death_rel]
     if size == dsize:
         # a word that is a number in one executable and holds the same value in the other is a number in both

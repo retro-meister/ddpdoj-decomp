@@ -1,0 +1,4 @@
+# Data words that are numbers although their value is the address of something (see write_number_words in
+# tools/split.py). One address per line.
+0x12567c  # page addresses in the SDK memory-map table
+0x12568c
