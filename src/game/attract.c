@@ -45,7 +45,7 @@ s32 func_00131200();
 s32 func_00137C50();
 s32 sfx_coin();
 s32 sound_stop_effects();
-s32 func_00224B50();
+s32 menu_settings_restore();
 extern u8 test_palette_0[];
 extern u8 D_0026A830[];
 extern s8 D_0028DF84;
@@ -112,7 +112,7 @@ block_1:
     g_replay_buffer_state_as_s8 = 0;
     sound_stop_effects();
     sfx_coin();
-    func_00224B50();
+    menu_settings_restore();
 next_4:
     if (D_0028E7BC != 0xC) goto next_5;
     sound_stop_effects();
@@ -852,7 +852,7 @@ void func_00169A50(void) {
         *(u8 *)(reg_a5 + 2) = 1U;
         D_0028EC7C = 0;
         D_0028EAF8 = 0;
-        func_00224B50();
+        menu_settings_restore();
         break;
     case 1:
         if (func_00221C20(temp_a0) != 0) {

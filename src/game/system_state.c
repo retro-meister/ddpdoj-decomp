@@ -106,7 +106,7 @@ u16 g_pad_vib_saved_power_p2 __attribute__((aligned(4)));
 u16 D_0028E32C __attribute__((aligned(4)));
 u16 D_0028E328 __attribute__((aligned(4)));
 u16 D_0028E324 __attribute__((aligned(4)));
-s16 D_0028E320 __attribute__((aligned(4)));
+s16 g_menu_idle_timer __attribute__((aligned(4)));
 u16 g_pause_player __attribute__((aligned(4)));
 u16 D_0028E318 __attribute__((aligned(4)));
 u16 D_0028E314 __attribute__((aligned(4)));

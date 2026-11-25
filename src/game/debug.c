@@ -245,7 +245,7 @@ void func_00137CC0(void) {
 
 s32 text_palette_load();
 s32 delta_encode();
-s32 func_00224B50();
+s32 menu_settings_restore();
 s32 replay_disc_headers_load();
 s32 replay_disc_file_load();
 s32 replay_file_pointers_decode();
@@ -363,7 +363,7 @@ void func_00137E00(void) {
             func_0012FA50();
             func_0012FB00();
             layers_reset();
-            func_00224B50();
+            menu_settings_restore();
             D_0028DF04 += 1;
             if ((s32) D_0028DF04 >= 3) {
                 D_0028DF04 = 0;
