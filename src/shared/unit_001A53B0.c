@@ -31,7 +31,7 @@ void func_001A8510(void);
 void func_001A8520(void);
 void func_001A8970(void);
 void func_001A89E0(void);
-void func_001A8A40(void);
+void sprite_draw_with_score_entry_2_d3_430_d4_9(void);
 void func_001A8A60(void);
 void func_001A8E00(void);
 
@@ -327,7 +327,7 @@ void func_001A5B50(void) {
             }
             reg_d1.w = 0x64C00400;
             reg_d2.w = g_hyper_text_anim_sprite_as_u32;
-            func_001A8A40();
+            sprite_draw_with_score_entry_2_d3_430_d4_9();
         } else {
             g_p1_score_panel_flags &= 0xFE;
             if (g_game_frame & 0x40) {
@@ -338,7 +338,7 @@ void func_001A5B50(void) {
                         func_001A5400();
                         reg_d1.w = 0x64C00400;
                         reg_d2.w = g_maximum_text_anim_sprite_as_u32;
-                        func_001A8A40();
+                        sprite_draw_with_score_entry_2_d3_430_d4_9();
                     } else {
                         reg_d0.h[0] = 0xD4;
                         reg_d1.h[0] = 0x200;
@@ -432,7 +432,7 @@ void func_001A5DD0(void) {
             }
             reg_d1.w = 0x64C02800;
             reg_d2.w = g_hyper_text_anim_sprite_as_u32;
-            func_001A8A40();
+            sprite_draw_with_score_entry_2_d3_430_d4_9();
         } else {
             g_p2_score_panel_flags &= 0xFE;
             if (g_game_frame & 0x40) {
@@ -443,7 +443,7 @@ void func_001A5DD0(void) {
                         func_001A5430();
                         reg_d1.w = 0x64C02800;
                         reg_d2.w = g_maximum_text_anim_sprite_as_u32;
-                        func_001A8A40();
+                        sprite_draw_with_score_entry_2_d3_430_d4_9();
                     } else {
                         reg_d0.h[0] = 0xD4;
                         reg_d1.h[0] = 0x1400;
@@ -2006,7 +2006,7 @@ void func_001A89E0(void) {
 }
 
 
-void func_001A8A40(void) {
+void sprite_draw_with_score_entry_2_d3_430_d4_9(void) {
     reg_d3.sh[0] = 0x430;
     reg_d4.sh[0] = 0x9;
     sprite_draw_with_score_entry_2();

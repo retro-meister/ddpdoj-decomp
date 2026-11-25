@@ -477,7 +477,7 @@ void func_001260B0() {
 }
 
 
-void func_00126120(void) {
+void score_pickup_kind0(void) {
     void func_00125590(void);
     void bullet_release(void);
     void func_00125930(void);
@@ -504,7 +504,7 @@ s32 sfx_bee_pickup();
 extern u8 D_00269490[];
 extern u8 *reg_call_target_as_u8_p;
 
-void func_001261A0(void) {
+void score_pickup_bee(void) {
     s32 entity_draw_with_special_items();
     s32 bullet_release();
     u32 t;
@@ -578,7 +578,7 @@ next_6:
 
 extern u8 g_boss_present_b1;
 
-void func_00126410(void) {
+void score_pickup_ground_star_small(void) {
     s32 bullet_release();
     u32 t;
 
@@ -630,7 +630,7 @@ next_1:
 
 s32 sfx_score_item_pickup_2();
 
-void func_001265B0(void) {
+void score_pickup_ground_star_large(void) {
     s32 bullet_release();
     u32 t;
 
@@ -681,7 +681,7 @@ next_1:
 }
 
 
-void func_00126760(void) {
+void score_pickup_air_star_medium(void) {
     s32 func_00125590();
     s32 bullet_release();
     s32 func_00125930();
@@ -713,7 +713,7 @@ void func_00126760(void) {
 }
 
 
-void func_00126830(void) {
+void score_pickup_air_star_large(void) {
     s32 func_00125590();
     s32 bullet_release();
     s32 func_00125930();
@@ -745,7 +745,7 @@ void func_00126830(void) {
 }
 
 
-void func_00126900(void) {
+void score_pickup_air_star_huge(void) {
     s32 func_00125590();
     s32 bullet_release();
     s32 func_00125930();
@@ -777,7 +777,7 @@ void func_00126900(void) {
 }
 
 
-void func_001269D0() {
+void score_pickup_p1_homing_star_small() {
     s32 bullet_release();
     s32 func_00125A00();
     if (reg_d1.w & 0x1000) {
@@ -798,7 +798,7 @@ void func_001269D0() {
     func_001255F0();
 }
 
-void func_00126A70() {
+void score_pickup_p1_homing_star_medium() {
     s32 bullet_release();
     if (reg_d1.w & 0x1000) {
         reg_d0.w = 2;
@@ -818,7 +818,7 @@ void func_00126A70() {
     func_001255F0();
 }
 
-void func_00126B10() {
+void score_pickup_p1_homing_star_large() {
     s32 bullet_release();
     if (reg_d1.w & 0x1000) {
         reg_d0.w = 4;
@@ -838,7 +838,7 @@ void func_00126B10() {
     func_001255F0();
 }
 
-void func_00126BB0() {
+void score_pickup_p1_homing_star_huge() {
     s32 bullet_release();
     if (reg_d1.w & 0x1000) {
         reg_d0.w = 8;
@@ -859,7 +859,7 @@ void func_00126BB0() {
 }
 
 
-void func_00126C50() {
+void score_pickup_p2_homing_star_small() {
     s32 bullet_release();
     s32 func_00125A00();
     if (reg_d1.w & 0x800) {
@@ -880,7 +880,7 @@ void func_00126C50() {
     func_001255F0();
 }
 
-void func_00126CF0() {
+void score_pickup_p2_homing_star_medium() {
     s32 bullet_release();
     if (reg_d1.w & 0x800) {
         reg_d0.w = 2;
@@ -900,7 +900,7 @@ void func_00126CF0() {
     func_001255F0();
 }
 
-void func_00126D90() {
+void score_pickup_p2_homing_star_large() {
     s32 bullet_release();
     if (reg_d1.w & 0x800) {
         reg_d0.w = 4;
@@ -920,7 +920,7 @@ void func_00126D90() {
     func_001255F0();
 }
 
-void func_00126E30() {
+void score_pickup_p2_homing_star_huge() {
     s32 bullet_release();
     if (reg_d1.w & 0x800) {
         reg_d0.w = 8;

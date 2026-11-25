@@ -536,7 +536,7 @@ void func_0015C440(void) {
 }
 
 
-void func_0015C450(void) {
+void enemy_remove_entry_entry(void) {
     enemy_remove_entry();
 }
 
