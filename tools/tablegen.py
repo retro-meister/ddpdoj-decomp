@@ -2,6 +2,8 @@
 
     uv run tools/tablegen.py FILE [--desc TEXT] [--dry] SECTION:START:END[:DEATH_START[:DEATH_END]] ...
     uv run tools/tablegen.py FILE ... SECTION:START:END:-          (a stretch Death Label does not have)
+    uv run tools/tablegen.py FILE --death-only SECTION:START:END ...
+                                     (Death Label addresses; data only Death Label has, written to src/death/)
     uv run tools/tablegen.py FILE --separate SECTION:START:END:DEATH_START:DEATH_END ...
                                      (the stretch is laid out differently: each executable gets its own
                                       definitions, from its own labels, under `#ifdef DEATH_LABEL`)
@@ -41,8 +43,10 @@ if dry: args.remove('--dry')
 refresh = '--refresh' in args
 redo = '--redo' in args
 if redo: args.remove('--redo')
-separate = '--separate' in args
-if separate: args.remove('--separate')
+death_only = '--death-only' in args
+if death_only: args.remove('--death-only')
+separate = '--separate' in args or death_only
+if '--separate' in args: args.remove('--separate')
 desc = None
 if '--desc' in args:
     i = args.index('--desc'); desc = args[i + 1]; del args[i:i + 2]
@@ -63,7 +67,7 @@ name = args[0]
 stretches = []
 dstart_given = {}
 main_only = set()
-for a in args[1:]:
+for a in [] if death_only else args[1:]:
     parts = a.split(':'); sec, s, e = parts[:3]; stretches.append((sec, int(s, 16), int(e, 16)))
     if len(parts) > 3 and parts[3] == '-': main_only.add((sec, int(s, 16)))
     elif len(parts) > 3: dstart_given[(sec, int(s, 16))] = int(parts[3], 16)
@@ -358,7 +362,7 @@ def fmt(raw, size):
 death_add = {}; death_alias = {}; main_numbers = set(); death_numbers = set(); sec_of = {}; in_rodata = False
 defs = []; defined = {}; plan = []; decls = []; kinds = {}; externs = {}; dexterns = {}
 dend_given = {}
-for arg in args[1:]:
+for arg in [] if death_only else args[1:]:
     parts = arg.split(':')
     if len(parts) > 4: dend_given[(parts[0], int(parts[1], 16))] = int(parts[4], 16)
 def sym_addr(sym, named):
@@ -370,7 +374,10 @@ PLACE = r'(?:death_)?(?:D|func)_[0-9A-F]{8}'
 sep_stretches = []
 if separate:
     for arg in args[1:]:
-        q = arg.split(':'); assert len(q) == 5, 'a separate stretch is SECTION:START:END:DEATH_START:DEATH_END'
+        q = arg.split(':')
+        if death_only:
+            assert len(q) == 3; sep_stretches.append((q[0], None, None, int(q[1], 16), int(q[2], 16))); continue
+        assert len(q) == 5, 'a separate stretch is SECTION:START:END:DEATH_START:DEATH_END'
         sep_stretches.append((q[0], int(q[1], 16), int(q[2], 16), int(q[3], 16), int(q[4], 16)))
     stretches = []
 objects = []   # (sec, a, size, nxt, da, dsize, dn, name)
@@ -736,25 +743,27 @@ if separate:
                         if n_ in used: inside.append((n_, a_))
         return dict(externs), ds_, fs_, dict(defined), inside, any(sites[n][0] for n in sites), len(objs_all)
     keep = (labels, rom, main_named, main_rel)
-    m_ext, m_decl, m_def, m_names, m_inside, m_ptr, m_count = side('SLPS_252.33', labels, rom, main_named, main_rel, [(q[0], q[1], q[2]) for q in sep_stretches])
+    if death_only: m_ext, m_decl, m_def, m_names, m_inside, m_ptr, m_count = {}, [], [], {}, [], False, 0
+    else: m_ext, m_decl, m_def, m_names, m_inside, m_ptr, m_count = side('SLPS_252.33', labels, rom, main_named, main_rel, [(q[0], q[1], q[2]) for q in sep_stretches])
     d_ext, d_decl, d_def, d_names, d_inside, d_ptr, d_count = side('DEATH.ELF', death_labels, drom, death_named, death_rel, [(q[0], q[3], q[4]) for q in sep_stretches])
     labels, rom, main_named, main_rel = keep
     def block(ext, decl, defs_, ptr):
         head_ = ('\n'.join(sorted(ext.values())) + '\n\n' + '\n'.join(decl) + '\n\n') if ptr else ''
         return head_ + '\n'.join(defs_)
     sep_text = '#ifdef DEATH_LABEL\n%s#else\n%s#endif\n' % (block(d_ext, d_decl, d_def, d_ptr), block(m_ext, m_decl, m_def, m_ptr))
+    if death_only: sep_text = block(d_ext, d_decl, d_def, d_ptr)
     defined = dict(m_names); sep_defined = d_names
     obj_by_main = []
     main_inside = m_inside; sep_death_lines = d_inside
     plan = [(q[0], q[1], q[2], q[3], q[4], []) for q in sep_stretches]
-    defs = [None] * (m_count + d_count); stretches = [(q[0], q[1], q[2]) for q in sep_stretches]
+    defs = [None] * (m_count + d_count); stretches = [(q[0], q[3], q[4]) if death_only else (q[0], q[1], q[2]) for q in sep_stretches]
 pointer_objs = [n for n in info if info[n][2] or info[n][3]]
 # targets inside this file whose kind was decided late
 total = sum(e - s for _, s, e in stretches)
 print('%s: %d objects, %d bytes' % (name, len(defs), total))
 if dry:
     for sec, start, end, ds_, de_, objs in plan:
-        print(sec, '%x..%x' % (start, end), 'not in Death Label' if ds_ is None else 'death %x..%x' % (ds_, de_), len(objs), 'objects')
+        print(sec, 'Death Label only' if start is None else '%x..%x' % (start, end), 'not in Death Label' if ds_ is None else 'death %x..%x' % (ds_, de_), len(objs), 'objects')
     sys.exit()
 
 yaml_out = {}
@@ -762,6 +771,7 @@ for t in () if redo else ('SLPS_252.33', 'DEATH.ELF'):
     p = R / f'config/{t}/splat.yaml'; lines = p.read_text().split('\n')
     for sec, start, end, ds_, de_, objs in plan:
         if t == 'DEATH.ELF' and ds_ is None: continue
+        if t == 'SLPS_252.33' and start is None: continue
         s, e = (start, end) if t == 'SLPS_252.33' else (ds_, de_)
         plain = sec[1:]
         ents = [(i, int(m.group(1), 16), m.group(2), m.group(3)) for i, l in enumerate(lines)
@@ -775,12 +785,12 @@ for t in () if redo else ('SLPS_252.33', 'DEATH.ELF'):
         indent = re.match(r'\s*', lines[i]).group(0)
         new = []
         if a < rs: new.append(lines[i])
-        new.append('%s- [0x%x, %s, shared/%s]' % (indent, rs, sec, name))
+        new.append('%s- [0x%x, %s, %s/%s]' % (indent, rs, sec, 'death' if death_only else 'shared', name))
         if re_ < nxt: new.append('%s- [0x%x, %s, %s_%x]' % (indent, re_, plain, plain, re_))
         lines[i:i + 1] = new
     yaml_out[t] = '\n'.join(lines)
 
-path = R / 'src/shared' / (name + '.c')
+path = R / ('src/death' if death_only else 'src/shared') / (name + '.c')
 assert redo or not path.exists(), path
 head = '#include "common.h"\n\n'
 if desc: head = '/* %s */\n' % desc + head
