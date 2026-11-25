@@ -1,5 +1,20 @@
 #include "common.h"
 #include "entity.h"
+#include "stage1_boss.h"
+
+u16 stage1_boss_work_init[] = {
+    0x0001, 0x6C00, 0x0000, 0x9000, 0x0000, 0x9000, 0x2A30,
+};
+
+u16 stage1_boss_entities[] = {
+    0xA001, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0E00, 0x1780,
+    0x0800, 0x0800, 0x7FFF, 0x1000, 0x0013, 0x0000, 0xA001, 0x0000,
+    0x0000, 0x0000, 0x0000, 0x0000, 0x0B00, 0x0D00, 0x0780, 0x0500,
+    0x7FFF, 0x1000, 0x0015, 0x0000, 0x8000, 0x8000, 0x8000, 0x8240,
+    0x0000, 0x0000, 0x0B00, 0x0D00, 0x0780, 0x0500, 0x7FFF, 0x1000,
+    0x0015, 0x0000, 0xA001, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000,
+    0x0B00, 0x0D00, 0x0500, 0x0780, 0x7FFF, 0x1000, 0x0015,
+};
 
 void enemy_set_entity_count(s32 id);
 
@@ -26,8 +41,6 @@ extern void (*stage1_boss_fire_routines[])(void);
 extern void (*stage1_boss_draw_routines[])(void);
 extern void (*stage1_boss_mode_routines[])(void);
 extern void (*stage1_boss_move_routines[])(void);
-extern u8 D_0026E9E0[];
-extern u8 D_0026E9F0[];
 extern s32 D_0028DC90;
 extern s16 g_boss_hyper_wait_as_s16;
 extern u8 *g_boss_hp;
@@ -43,9 +56,9 @@ extern u16 g_side_scroll_x[];
 void stage1_boss_start(void) {
     s32 t;
 
-    reg_a0 = (u8 *)D_0026E9F0;
+    reg_a0 = (u8 *)stage1_boss_entities;
     enemy_init_entities();
-    reg_a0 = (u8 *)D_0026E9E0;
+    reg_a0 = (u8 *)stage1_boss_work_init;
     t = (s32) D_0028DC90 >> 1;
     if (D_0028DC90 < 0) {
         t = (s32) (D_0028DC90 + 1) >> 1;
@@ -111,9 +124,9 @@ void stage1_boss_main(void) {
     u16 temp_v0;
 
     func_001BB8E0();
-    temp_v0 = *(u16 *)(reg_a5 + 0x24);
+    temp_v0 = STAGE1_BOSS(reg_a5)->shake;
     if (temp_v0 != 0) {
-        *(u16 *)(reg_a5 + 0x24) = (u16) (temp_v0 - 1);
+        STAGE1_BOSS(reg_a5)->shake = (u16) (temp_v0 - 1);
         func_002016D0();
     }
     boss_slots_run();
