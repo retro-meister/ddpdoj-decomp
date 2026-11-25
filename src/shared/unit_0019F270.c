@@ -286,11 +286,11 @@ extern u8 option_strong_params[];
 extern u8 option_hyper_params[];
 extern u8 g_p2_options[];
 
-s32 func_0013C9A0();
-s32 func_0013CAB0();
-s32 func_0013F800();
-s32 func_0013F850();
-s32 func_0013F960();
+s32 p1_laser_clear();
+s32 p2_laser_clear();
+s32 p1_afterimage_reset();
+s32 p2_afterimage_reset();
+s32 player_zoom_in_step();
 s32 func_0013F990();
 extern u8 g_game_frame_ran;
 extern s32 g_replay_position;
@@ -481,7 +481,7 @@ next_210:
     if (*(u8 *)(reg_a6 + 0x3E) != 0) goto next_470;
     *(u8 *)(reg_a6 + 1) |= 0x40;
 next_310:
-    func_0013F960();
+    player_zoom_in_step();
     if (!(*(u8 *)reg_a6 & 4)) goto next_320;
     func_001A17C0();
     goto block_b;
@@ -554,9 +554,9 @@ next_350:
     *(u16 *)(reg_a6 + 6) = reg_tmp.h[1];
     *(u16 *)(reg_a6 + 8) = reg_tmp.h[0];
     *(u8 *)(reg_a4 + 0x3E) = 1;
-    reg_a0 = (u8 *) func_0013F800;
+    reg_a0 = (u8 *) p1_afterimage_reset;
     if (reg_d7.h[0] != 0) goto next_360;
-    reg_a0 = (u8 *) func_0013F850;
+    reg_a0 = (u8 *) p2_afterimage_reset;
 next_360:
     reg_call_target = (Fn) reg_a0;
     reg_call_target();
@@ -577,10 +577,10 @@ next_410:
     *(u8 *)(reg_a4 + 0x34) = reg_d0.b[0];
     *(u8 *)(reg_a4 + 0x3E) = reg_d0.b[0];
     if (reg_d7.h[0] == 0) goto next_430;
-    func_0013C9A0();
+    p1_laser_clear();
     goto next_440;
 next_430:
-    func_0013CAB0();
+    p2_laser_clear();
 next_440:
     *(u8 *)(reg_a6 + 0x4B) = 8;
     *(u8 *)(reg_a6 + 0x4A) = 4;
@@ -1049,8 +1049,8 @@ extern u16 g_p1_laser_stop_y;
 extern u8 D_0029D730[];
 extern u8 D_0029D750[];
 extern u8 D_0029D770[];
-extern u8 D_0029D790[];
-extern u8 D_0029DD90[];
+extern u8 g_p2_laser_entities[];
+extern u8 g_p1_laser_entities[];
 
 
 void func_001A1B60(void) {
@@ -1061,13 +1061,13 @@ void func_001A1B60(void) {
         goto next_100;
     }
     reg_a0 = (u8 *)&g_p1_laser_stop_y;
-    reg_a1 = (u8 *)D_0029DD90;
+    reg_a1 = (u8 *)g_p1_laser_entities;
     reg_a2 = (u8 *)D_0029D730;
     reg_a3 = (u8 *)D_0029D770;
     reg_d4.h[0] = PLAYER(g_player1_as_s32_a)->moved_y.h;
     if (reg_d7.h[0] != 0) goto next_10;
     reg_a0 = (u8 *)&g_p2_laser_stop_y;
-    reg_a1 = (u8 *)D_0029D790;
+    reg_a1 = (u8 *)g_p2_laser_entities;
     reg_a2 = (u8 *)D_0029D710;
     reg_a3 = (u8 *)D_0029D750;
     reg_d4.h[0] = PLAYER(g_player2_as_u8_a)->moved_y.h;

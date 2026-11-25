@@ -240,8 +240,8 @@ void func_0016AD50(void)
 }
 
 
-s32 func_0013D7A0();
-s32 func_0013DA90();
+s32 p1_power_up();
+s32 p2_power_up();
 s32 sfx_item_pickup();
 s32 voice_power_up();
 s32 sprite_draw_with_items();
@@ -263,7 +263,7 @@ void func_0016AD60(void) {
     reg_d1.h[0] = t2;
     if (t2 & 0xFFFF) {
         if (!(reg_d1.w & 0x1000)) goto next_2;
-        func_0013D7A0();
+        p1_power_up();
         if (cond_flag == 0) goto next_1;
         func_0016C350();
         return;
@@ -274,7 +274,7 @@ next_1:
         func_0016C2A0();
         return;
 next_2:
-        func_0013DA90();
+        p2_power_up();
         if (cond_flag == 0) goto next_1;
         func_0016C350();
         return;
@@ -404,8 +404,8 @@ block_7:
     }
 }
 
-s32 func_0013DD70();
-s32 func_0013DFF0();
+s32 p1_power_max();
+s32 p2_power_max();
 extern u32 D_0026ADD0[];
 
 void func_0016B190(void) {
@@ -423,7 +423,7 @@ void func_0016B190(void) {
     reg_d1.h[0] = t2;
     if (t2 & 0xFFFF) {
         if (!(reg_d1.w & 0x1000)) goto next_2;
-        func_0013DD70();
+        p1_power_max();
         if (cond_flag == 0) goto next_1;
         func_0016C350();
         return;
@@ -434,7 +434,7 @@ next_1:
         func_0016C2A0();
         return;
 next_2:
-        func_0013DFF0();
+        p2_power_max();
         if (cond_flag == 0) goto next_1;
         func_0016C350();
         return;
@@ -555,8 +555,8 @@ block_7:
     }
 }
 
-s32 func_0013E360();
-s32 func_0013E510();
+s32 p1_bomb_item_take();
+s32 p2_bomb_item_take();
 s32 voice_bomb();
 extern u32 D_0026ADE0[];
 extern u32 D_0026AEC0[];
@@ -576,7 +576,7 @@ void func_0016B5B0(void) {
     reg_d1.h[0] = t2;
     if (t2 & 0xFFFF) {
         if (!(reg_d1.w & 0x1000)) goto next_2;
-        func_0013E360();
+        p1_bomb_item_take();
         if (cond_flag == 0) goto next_1;
         func_0016C350();
         return;
@@ -587,7 +587,7 @@ next_1:
         func_0016C2A0();
         return;
 next_2:
-        func_0013E510();
+        p2_bomb_item_take();
         if (cond_flag == 0) goto next_1;
         func_0016C350();
         return;
@@ -690,7 +690,7 @@ void func_0016B7F0(void) {
 }
 
 s32 func_00125EB0();
-s32 func_0013E6C0();
+s32 p1_hyper_item_take();
 s32 sfx_hyper_pickup();
 extern u8 D_0026AF40[];
 extern u16 g_frame_mod2;
@@ -743,7 +743,7 @@ next_1:
         func_0016BAF0();
         return;
     }
-    func_0013E6C0();
+    p1_hyper_item_take();
     sfx_hyper_pickup();
     reg_a0 = (u8 *)D_0026AF40;
     func_0016C2A0();
@@ -875,8 +875,8 @@ block_10:
     cond_flag = 0;
 }
 
-s32 func_0013E760();
-s32 func_0013E790();
+s32 p1_life_add();
+s32 p2_life_add();
 s32 sfx_extend();
 extern u8 D_0026AE40[];
 
@@ -894,9 +894,9 @@ void func_0016BF00(void) {
     if (temp_v0 & 0xFFFF) {
         sfx_extend();
         if (reg_d1.w & 0x1000) {
-            func_0013E760();
+            p1_life_add();
         } else {
-            func_0013E790();
+            p2_life_add();
         }
         reg_a0 = D_0026AE40;
         func_0016C2A0();
@@ -953,7 +953,7 @@ void func_0016C0C0() {
     }
 }
 
-s32 func_0013E710();
+s32 p2_hyper_item_take();
 extern u16 g_p2_hyper_items;
 extern u16 g_p2_hyper_active;
 
@@ -1002,7 +1002,7 @@ next_1:
         func_0016BAF0();
         return;
     }
-    func_0013E710();
+    p2_hyper_item_take();
     sfx_hyper_pickup();
     reg_a0 = (u8 *)D_0026AF40;
     func_0016C2A0();

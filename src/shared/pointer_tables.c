@@ -4,8 +4,8 @@
 
 extern u16 laser_bomb_b_beam_frames[];
 extern u16 D_002420A8[];
-extern u16 D_00255580[];
-extern u16 D_002555A0[];
+extern u16 p1_maximum_level_texts[];
+extern u16 p2_maximum_level_texts[];
 extern u16 player_weapon_tables[];
 extern u16 ship0_shot_lists_1[];
 extern u16 ship0_shot_lists_2[];
@@ -286,7 +286,7 @@ void player_shot_3_tables_init(void);
 void player_shot_4_tables_init(void);
 void player_shot_8_tables_init(void);
 void player_tables_init(void);
-void func_001828A0(void);
+void maximum_level_texts_init(void);
 void func_001829B0(void);
 void option_tables_init(void);
 void option_shot_lists_init(void);
@@ -316,7 +316,7 @@ void pointer_tables_init(void) {
     player_shot_4_tables_init();
     player_shot_8_tables_init();
     player_tables_init();
-    func_001828A0();
+    maximum_level_texts_init();
     func_001829B0();
     option_tables_init();
     option_shot_lists_init();
@@ -3369,17 +3369,17 @@ extern u16 D_00261E30[];
 extern u16 D_00261E70[];
 extern u16 D_00261EB0[];
 
-extern u16 D_00255580_as_u16_a[];
-extern u16 D_002555A0_as_u16_a[];
+extern u16 p1_maximum_level_texts_as_u16_a[];
+extern u16 p2_maximum_level_texts_as_u16_a[];
 
-void func_001828A0(void) {
-    STORE_POINTER(D_00255580_as_u16_a, D_00261CB0);
-    STORE_POINTER(D_00255580 + 4, D_00261E30);
-    STORE_POINTER(D_00255580 + 8, D_00261E70);
+void maximum_level_texts_init(void) {
+    STORE_POINTER(p1_maximum_level_texts_as_u16_a, D_00261CB0);
+    STORE_POINTER(p1_maximum_level_texts + 4, D_00261E30);
+    STORE_POINTER(p1_maximum_level_texts + 8, D_00261E70);
     STORE_POINTER(D_0028C5E0 + 4, D_00261EB0);
-    STORE_POINTER(D_002555A0_as_u16_a, D_00261CB0);
-    STORE_POINTER(D_002555A0 + 4, D_00261E30);
-    STORE_POINTER(D_002555A0 + 8, D_00261E70);
+    STORE_POINTER(p2_maximum_level_texts_as_u16_a, D_00261CB0);
+    STORE_POINTER(p2_maximum_level_texts + 4, D_00261E30);
+    STORE_POINTER(p2_maximum_level_texts + 8, D_00261E70);
     STORE_POINTER(D_0028C5E0 + 8, D_00261EB0);
 }
 

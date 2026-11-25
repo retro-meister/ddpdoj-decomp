@@ -29,10 +29,10 @@ s32 bombs_update();
 s32 func_00125FA0();
 s32 func_00129DB0();
 s32 func_00136F30();
-s32 func_0013CC60();
-s32 func_0013D090();
-s32 func_0013D560();
-s32 func_0013D660();
+s32 hyper_stock_draw();
+s32 maximum_marks_draw();
+s32 hyper_ready_marks_draw();
+s32 hyper_bullet_speed_update();
 s32 func_0013F380();
 s32 func_00144D00();
 s32 func_00144DA0();
@@ -91,7 +91,7 @@ void func_00139B80(void) {
     func_00146760();
     func_001482C0();
     func_0020A540();
-    func_0013CC60();
+    hyper_stock_draw();
     func_00144E40();
     func_00144EA0();
     func_00144D00();
@@ -99,11 +99,11 @@ void func_00139B80(void) {
     func_00170A50(0x1F, 0, 0x1F);
     func_0016AC30();
     func_00170A50(0x1F, 0x1F, 0);
-    func_0013D660();
+    hyper_bullet_speed_update();
     func_00129DB0();
     func_0013F380();
-    func_0013D090();
-    func_0013D560();
+    maximum_marks_draw();
+    hyper_ready_marks_draw();
     func_00170A50(0, 0x1F, 0);
     if (g_two_player_game != 0) {
         reg_d4.h[0] = g_player1_as_u16_a[0];

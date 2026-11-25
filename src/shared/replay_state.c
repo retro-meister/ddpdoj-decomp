@@ -1382,29 +1382,29 @@ extern u16 g_bee_value_step;
 extern u16 g_stage_bees_collected;
 extern u16 g_bullet_count;
 extern s16 D_0029C060_as_s16_a[];
-extern f32 D_0029CD80_as_f32_a[];
-extern u16 D_0029CD8C[];
-extern f32 D_0029CD90_as_f32_a[];
-extern u16 D_0029CD9C[];
-extern s32 D_0029CDA0_as_s32_a[];
-extern s32 D_0029CDE0[];
-extern s32 D_0029CE20_as_s32_a[];
-extern s32 D_0029CE60[];
+extern f32 g_p2_maximum_value_as_f32_a[];
+extern u16 g_p2_maximum_count[];
+extern f32 g_p1_maximum_value_as_f32_a[];
+extern u16 g_p1_maximum_count[];
+extern s32 g_p2_afterimage_sprites_as_s32_a[];
+extern s32 g_p1_afterimage_sprites[];
+extern s32 g_p2_afterimage_positions_as_s32_a[];
+extern s32 g_p1_afterimage_positions[];
 extern u8 g_bomb_entities_as_u8_a[];
 extern u8 D_0029D710[];
 extern u8 D_0029D730[];
 extern u8 D_0029D750[];
 extern u8 D_0029D770[];
-extern u8 D_0029D790[];
-extern u8 D_0029DD90[];
+extern u8 g_p2_laser_entities[];
+extern u8 g_p1_laser_entities[];
 extern u8 D_0029E390[];
 extern u8 g_p2_options[];
 extern u8 g_p1_options[];
 extern u8 g_player2_as_u8_a[];
 extern u8 g_player1_as_u8_a[];
 extern s8 g_text_layer_as_s8_a[];
-extern s32 D_002BAEB0[];
-extern s32 D_002BAEF0[];
+extern s32 g_p2_position_trail[];
+extern s32 g_p1_position_trail[];
 extern Bank10 D_002BAF30_as_Bank10;
 extern Bank90 D_002BAF50_as_Bank90;
 extern u8 D_002BF390[];
@@ -1457,8 +1457,8 @@ void replay_snapshot_save(Buf *buf) {
         buf->fDA2[i] = D_0029E390[i];
     }
     for (i = 0; i < 0x600; i++) {
-        buf->f1B22[i] = D_0029DD90[i];
-        buf->f2122[i] = D_0029D790[i];
+        buf->f1B22[i] = g_p1_laser_entities[i];
+        buf->f2122[i] = g_p2_laser_entities[i];
     }
     for (i = 0; i < 0x20; i++) {
         buf->f2722[i] = D_0029D770[i];
@@ -1477,13 +1477,13 @@ void replay_snapshot_save(Buf *buf) {
     *(s32 *)(p + 0x3020) = g_p1_option_level_data_as_s32_a[0];
     *(s32 *)(p + 0x3028) = g_p2_option_level_data_as_s32_a[0];
     for (i = 0; i < 16; i++) {
-        buf->f302C[i] = D_0029CE60[i];
-        buf->f306C[i] = D_0029CE20_as_s32_a[i];
-        buf->f30AC[i] = D_0029CDE0[i];
-        buf->f30EC[i] = D_0029CDA0_as_s32_a[i];
+        buf->f302C[i] = g_p1_afterimage_positions[i];
+        buf->f306C[i] = g_p2_afterimage_positions_as_s32_a[i];
+        buf->f30AC[i] = g_p1_afterimage_sprites[i];
+        buf->f30EC[i] = g_p2_afterimage_sprites_as_s32_a[i];
     }
-    *(Vec4 *)(p + 0x312C) = *(Vec4 *)D_0029CD90_as_f32_a;
-    *(Vec4 *)(p + 0x313C) = *(Vec4 *)D_0029CD80_as_f32_a;
+    *(Vec4 *)(p + 0x312C) = *(Vec4 *)g_p1_maximum_value_as_f32_a;
+    *(Vec4 *)(p + 0x313C) = *(Vec4 *)g_p2_maximum_value_as_f32_a;
     *(u16 *)(p + 0x314C) = g_p1_maximum_level;
     *(u16 *)(p + 0x314E) = g_p2_maximum_level;
     *(u16 *)(p + 0x3150) = g_p1_maximum_anim_delay;
@@ -1705,10 +1705,10 @@ void replay_snapshot_save(Buf *buf) {
     *(u16 *)(p + 0x3452) = g_p1_hyper_items;
     *(u16 *)(p + 0x3454) = g_p2_hyper_items;
     for (i = 0; i < 16; i++) {
-        buf->f3458[i] = D_002BAEF0[i];
+        buf->f3458[i] = g_p1_position_trail[i];
     }
     for (i = 0; i < 16; i++) {
-        buf->f3498[i] = D_002BAEB0[i];
+        buf->f3498[i] = g_p2_position_trail[i];
     }
     *(u16 *)(p + 0x34D8) = g_p1_hyper_items_pending;
     *(u16 *)(p + 0x34DA) = g_p2_hyper_items_pending;
@@ -1808,7 +1808,7 @@ void replay_snapshot_save(Buf *buf) {
             D_006C58B6_as_s16_a[0] = 7;
         }
 #else
-        if ((g_player1_as_u8_a[0] & 2) && !(PLAYER(g_player1_as_u8_a)->flags.b[1] & 0x40) && *(u16 *)D_0029CD90_as_f32_a != 0) {
+        if ((g_player1_as_u8_a[0] & 2) && !(PLAYER(g_player1_as_u8_a)->flags.b[1] & 0x40) && *(u16 *)g_p1_maximum_value_as_f32_a != 0) {
             D_006C58B6_as_s16_a[0] = 7;
         }
         if (*(u8 *)g_player1_as_u8_a & 2) {
@@ -1821,10 +1821,10 @@ void replay_snapshot_save(Buf *buf) {
         } else {
             printf("------6  off-\n");
         }
-        printf("------[%d]\n", *(u16 *)D_0029CD90_as_f32_a);
+        printf("------[%d]\n", *(u16 *)g_p1_maximum_value_as_f32_a);
 #endif
-        if (D_0029CD9C[0] != 0) {
-            v = (u16)D_0029CD9C[0] - 1;
+        if (g_p1_maximum_count[0] != 0) {
+            v = (u16)g_p1_maximum_count[0] - 1;
         } else {
             v = 0;
         }
@@ -1884,7 +1884,7 @@ void replay_snapshot_save(Buf *buf) {
             D_006C58B6_as_s16_a[0] = 7;
         }
 #else
-        if ((g_player2_as_u8_a[0] & 2) && !(PLAYER(g_player2_as_u8_a)->flags.b[1] & 0x40) && *(u16 *)D_0029CD80_as_f32_a != 0) {
+        if ((g_player2_as_u8_a[0] & 2) && !(PLAYER(g_player2_as_u8_a)->flags.b[1] & 0x40) && *(u16 *)g_p2_maximum_value_as_f32_a != 0) {
             D_006C58B6_as_s16_a[0] = 7;
         }
         if (*(u8 *)g_player2_as_u8_a & 2) {
@@ -1897,10 +1897,10 @@ void replay_snapshot_save(Buf *buf) {
         } else {
             printf("------6  off-\n");
         }
-        printf("------[%d]\n", *(u16 *)D_0029CD80_as_f32_a);
+        printf("------[%d]\n", *(u16 *)g_p2_maximum_value_as_f32_a);
 #endif
-        if (D_0029CD8C[0] != 0) {
-            v = (u16)D_0029CD8C[0] - 1;
+        if (g_p2_maximum_count[0] != 0) {
+            v = (u16)g_p2_maximum_count[0] - 1;
         } else {
             v = 0;
         }
@@ -1933,8 +1933,8 @@ typedef struct {
     Row16 row;
 } RowSrc;
 
-extern u8 D_0029CD80_as_u8_a[];
-extern u8 D_0029CD90_as_u8_a[];
+extern u8 g_p2_maximum_value_as_u8_a[];
+extern u8 g_p1_maximum_value_as_u8_a[];
 void replay_snapshot_load(u8 *p) {
     s32 i;
 
@@ -1960,8 +1960,8 @@ void replay_snapshot_load(u8 *p) {
         D_0029E390[i] = p[0xDA2 + i];
     }
     for (i = 0; i < 0x600; i++) {
-        D_0029DD90[i] = p[0x1B22 + i];
-        D_0029D790[i] = p[0x2122 + i];
+        g_p1_laser_entities[i] = p[0x1B22 + i];
+        g_p2_laser_entities[i] = p[0x2122 + i];
     }
     for (i = 0; i < 0x20; i++) {
         D_0029D770[i] = p[0x2722 + i];
@@ -1976,17 +1976,17 @@ void replay_snapshot_load(u8 *p) {
     }
     g_laser_bomb_impact_frame = *(u16 *)(p + 0x301A);
     for (i = 0; i < 16; i++) {
-        D_0029CE60[i] = ((QuadSrc *)p)->a[i];
-        D_0029CE20_as_s32_a[i] = ((QuadSrc *)p)->b[i];
-        D_0029CDE0[i] = ((QuadSrc *)p)->c[i];
-        D_0029CDA0_as_s32_a[i] = ((QuadSrc *)p)->d[i];
+        g_p1_afterimage_positions[i] = ((QuadSrc *)p)->a[i];
+        g_p2_afterimage_positions_as_s32_a[i] = ((QuadSrc *)p)->b[i];
+        g_p1_afterimage_sprites[i] = ((QuadSrc *)p)->c[i];
+        g_p2_afterimage_sprites_as_s32_a[i] = ((QuadSrc *)p)->d[i];
     }
     g_p1_weapon_level_data_as_s32_a[0] = *(s32 *)(p + 0x301C);
     g_p2_weapon_level_data_as_s32_a[0] = *(s32 *)(p + 0x3024);
     g_p1_option_level_data_as_s32_a[0] = *(s32 *)(p + 0x3020);
     g_p2_option_level_data_as_s32_a[0] = *(s32 *)(p + 0x3028);
-    *(Vec4 *)D_0029CD90_as_u8_a = *(Vec4 *)(p + 0x312C);
-    *(Vec4 *)D_0029CD80_as_u8_a = *(Vec4 *)(p + 0x313C);
+    *(Vec4 *)g_p1_maximum_value_as_u8_a = *(Vec4 *)(p + 0x312C);
+    *(Vec4 *)g_p2_maximum_value_as_u8_a = *(Vec4 *)(p + 0x313C);
     g_p1_maximum_level = *(u16 *)(p + 0x314C);
     g_p2_maximum_level = *(u16 *)(p + 0x314E);
     g_p1_maximum_anim_delay = *(u16 *)(p + 0x3150);
@@ -2210,10 +2210,10 @@ void replay_snapshot_load(u8 *p) {
     g_p1_hyper_items = *(u16 *)(p + 0x3452);
     g_p2_hyper_items = *(u16 *)(p + 0x3454);
     for (i = 0; i < 16; i++) {
-        D_002BAEF0[i] = ((PairSrc *)p)->a[i];
+        g_p1_position_trail[i] = ((PairSrc *)p)->a[i];
     }
     for (i = 0; i < 16; i++) {
-        D_002BAEB0[i] = ((PairSrc *)p)->b[i];
+        g_p2_position_trail[i] = ((PairSrc *)p)->b[i];
     }
     g_p1_hyper_items_pending = *(u16 *)(p + 0x34D8);
     g_p2_hyper_items_pending = *(u16 *)(p + 0x34DA);
@@ -2297,8 +2297,8 @@ void replay_start_state_load(u8 *p) {
         g_player1_as_u8_a[i] = p[12 + i];
         g_player2_as_u8_a[i] = p[110 + i];
     }
-    *(Vec4 *)D_0029CD90_as_u8_a = *(Vec4 *)(p + 0xD0);
-    *(Vec4 *)D_0029CD80_as_u8_a = *(Vec4 *)(p + 0xE0);
+    *(Vec4 *)g_p1_maximum_value_as_u8_a = *(Vec4 *)(p + 0xD0);
+    *(Vec4 *)g_p2_maximum_value_as_u8_a = *(Vec4 *)(p + 0xE0);
     g_p1_maximum_level = *(u16 *)(p + 0xF0);
     g_p2_maximum_level = *(u16 *)(p + 0xF2);
     g_p1_maximum_anim_delay = *(u16 *)(p + 0xF4);
@@ -2545,8 +2545,8 @@ void replay_start_state_save(Buf2 *buf) {
         p[12 + i] = g_player1_as_u8_a[i];
         p[110 + i] = g_player2_as_u8_a[i];
     }
-    *(Vec4 *)(p + 0xD0) = *(Vec4 *)D_0029CD90_as_u8_a;
-    *(Vec4 *)(p + 0xE0) = *(Vec4 *)D_0029CD80_as_u8_a;
+    *(Vec4 *)(p + 0xD0) = *(Vec4 *)g_p1_maximum_value_as_u8_a;
+    *(Vec4 *)(p + 0xE0) = *(Vec4 *)g_p2_maximum_value_as_u8_a;
     *(u16 *)(p + 0xF0) = g_p1_maximum_level;
     *(u16 *)(p + 0xF2) = g_p2_maximum_level;
     *(u16 *)(p + 0xF4) = g_p1_maximum_anim_delay;

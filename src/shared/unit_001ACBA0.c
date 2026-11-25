@@ -756,8 +756,8 @@ extern u32 g_p1_extend_score_as_u32;
 extern s16 g_high_score_digits_as_s16;
 extern s16 g_high_score_billions_as_s16;
 extern u32 g_high_score_as_u32;
-extern u8 D_002BAEB0_as_u8_a[];
-extern u8 D_002BAEF0_as_u8_a[];
+extern u8 g_p2_position_trail_as_u8_a[];
+extern u8 g_p1_position_trail_as_u8_a[];
 extern Pair10 D_002BAF30_as_Pair10;
 extern Pair90 D_002BAF50_as_Pair90;
 extern u8 D_002BB010[];
@@ -866,10 +866,10 @@ void func_001AE490(void) {
     g_p2_hyper_level_as_s16 = 0;
     g_p1_hyper_level_as_s16 = 0;
     for (i = 0; i < 0x10; i++) {
-        ((s32 *)D_002BAEF0_as_u8_a)[i] = 0;
+        ((s32 *)g_p1_position_trail_as_u8_a)[i] = 0;
     }
     for (i = 0; i < 0x10; i++) {
-        ((s32 *)D_002BAEB0_as_u8_a)[i] = 0;
+        ((s32 *)g_p2_position_trail_as_u8_a)[i] = 0;
     }
     g_hyper_text_anim_delay_as_s16 = 1;
     g_hyper_text_anim_frame_as_s16 = 0x38;

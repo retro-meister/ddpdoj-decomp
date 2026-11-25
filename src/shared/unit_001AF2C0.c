@@ -46,8 +46,8 @@ next_3:
     cond_flag = 0;
 }
 
-s32 func_0013EEE0();
-s32 func_0013F000();
+s32 p1_bomb_stock_draw_empty();
+s32 p2_bomb_stock_draw_empty();
 extern u8 join_select_p1_table[];
 extern u8 join_select_p2_table[];
 
@@ -62,9 +62,9 @@ void func_001AF3A0() {
     *(u16 *)(reg_a5 + 8) = (u16) reg_tmp.h[1];
     *(u16 *)(reg_a5 + 0xA) = (u16) reg_tmp.h[0];
     if (*(u8 *)(reg_a5 + 6) == 0) {
-        func_0013EEE0();
+        p1_bomb_stock_draw_empty();
     } else {
-        func_0013F000();
+        p2_bomb_stock_draw_empty();
     }
     reg_d0.b[0] = *(u8 *)(reg_a5 + 6);
     func_001A3560();

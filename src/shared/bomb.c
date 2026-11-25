@@ -1450,8 +1450,8 @@ next_160:
     *(u16 *) (reg_a6 + 0x80A) = 0x1C;
 }
 
-s32 func_0013C980();                            /* extern */
-s32 func_0013CA90();                            /* extern */
+s32 p1_laser_stop();                            /* extern */
+s32 p2_laser_stop();                            /* extern */
 extern s16 g_p2_laser_bomb_active_as_s16;
 extern s16 g_p1_laser_bomb_active_as_s16;
 extern s8 g_bomb_entities_as_s8_a[];
@@ -1460,12 +1460,12 @@ void laser_bomb_end(void) {
     reg_a6 = (u8 *)g_bomb_entities_as_s8_a;
     if (*(s8 *)reg_a6 >= 0) {
         reg_a0 = g_player1_as_u8_a;
-        func_0013C980();
+        p1_laser_stop();
         g_p1_laser_bomb_active_as_s16 = 0;
         g_player1_as_u8_a[0] &= 0xBF;
     } else {
         reg_a0 = g_player2_as_u8_a;
-        func_0013CA90();
+        p2_laser_stop();
         g_p2_laser_bomb_active_as_s16 = 0;
         g_player2_as_u8_a[0] &= 0xBF;
     }

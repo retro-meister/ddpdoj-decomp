@@ -100,8 +100,8 @@ extern u16 D_0029D710_as_u16_a[];
 extern u16 D_0029D730_as_u16_a[];
 extern u16 D_0029D750_as_u16_a[];
 extern u16 D_0029D770_as_u16_a[];
-extern u16 D_0029D790_as_u16_a[];
-extern u16 D_0029DD90_as_u16_a[];
+extern u16 g_p2_laser_entities_as_u16_a[];
+extern u16 g_p1_laser_entities_as_u16_a[];
 extern u16 D_0029E390_as_u16_a[];
 extern u16 D_0029EA50_as_u16_a[];
 extern u16 g_p2_options_as_u16_a[];
@@ -224,8 +224,8 @@ void func_0020F550(void) {
     STORE_POINTER(D_00269EA6, g_p2_options_as_u16_a);
     STORE_POINTER(D_00269EC6, D_0029E390_as_u16_a);
     STORE_POINTER(D_00269EE6, D_0029EA50_as_u16_a);
-    STORE_POINTER(D_00269F06, D_0029DD90_as_u16_a);
-    STORE_POINTER(D_00269F26, D_0029D790_as_u16_a);
+    STORE_POINTER(D_00269F06, g_p1_laser_entities_as_u16_a);
+    STORE_POINTER(D_00269F26, g_p2_laser_entities_as_u16_a);
     STORE_POINTER(D_00269F46, D_0029D770_as_u16_a);
     STORE_POINTER(D_00269F66, D_0029D750_as_u16_a);
     STORE_POINTER(D_00269F86, D_0029D730_as_u16_a);
@@ -480,7 +480,7 @@ void func_00210D00() {
     }
 }
 
-s32 func_0013EAF0();
+s32 p1_bomb_stock_draw();
 s32 sfx_score_item_pickup_2();
 s32 sfx_hyper_pickup();
 s32 sfx_extend();
@@ -489,7 +489,7 @@ s32 func_001AC3A0();
 extern s32 g_p1_extend_score;
 extern u16 g_p1_score_digits;
 extern u16 g_p1_lives;
-extern u16 D_0029CD90[];
+extern u16 g_p1_maximum_value[];
 extern s16 g_player1[];
 #ifdef DEATH_LABEL
 extern u16 D_00684C80[];
@@ -555,11 +555,11 @@ block_3:
             *(u16 *)(reg_a6 + 6) = 3;
         }
     } else if (*(u16 *)(reg_a6 + 6) == 3) {
-        if (!(PLAYER(g_player1)->flags.b[1] & 0x40) && D_0029CD90[0] != 0) {
+        if (!(PLAYER(g_player1)->flags.b[1] & 0x40) && g_p1_maximum_value[0] != 0) {
             reg_d0.w = 0x10000000;
             func_001A9180();
-            D_0029CD90[0] = 0;
-            func_0013EAF0();
+            g_p1_maximum_value[0] = 0;
+            p1_bomb_stock_draw();
             *(s16 *)(reg_a6 + 0xA) = 0x30;
             *(u8 *)(reg_a6 + 0x11) |= 1;
             sfx_extend();
@@ -585,7 +585,7 @@ block_3:
 #endif
         func_001A9180();
         *p -= 1;
-        func_0013EAF0();
+        p1_bomb_stock_draw();
         *(s16 *)(reg_a6 + 0xA) = 0x30;
         *(u8 *)(reg_a6 + 0x11) |= 1;
         sfx_extend();
@@ -594,13 +594,13 @@ block_3:
     }
 }
 
-s32 func_0013EB60();
+s32 p2_bomb_stock_draw();
 s32 func_001A9190();
 s32 func_001AC5F0();
 extern s32 g_p2_extend_score;
 extern u16 g_p2_score_digits;
 extern u16 g_p2_lives;
-extern u16 D_0029CD80[];
+extern u16 g_p2_maximum_value[];
 extern s16 g_player2[];
 #ifdef DEATH_LABEL
 extern u16 D_00684C80[];
@@ -676,11 +676,11 @@ block_3:
         return;
     }
     if (*(u16 *)(reg_a6 + 8) == 3) {
-        if (!(PLAYER(g_player2)->flags.b[1] & 0x40) && D_0029CD80[0] != 0) {
+        if (!(PLAYER(g_player2)->flags.b[1] & 0x40) && g_p2_maximum_value[0] != 0) {
             reg_d0.w = 0x10000000;
             func_001A9190();
-            D_0029CD80[0] = 0;
-            func_0013EB60();
+            g_p2_maximum_value[0] = 0;
+            p2_bomb_stock_draw();
             if (*(u16 *)(reg_a6 + 0x10) & 1) {
                 *(u8 *)(reg_a6 + 0x11) &= 0xFE;
             } else {
@@ -710,7 +710,7 @@ block_3:
 #endif
     func_001A9190();
     *p -= 1;
-    func_0013EB60();
+    p2_bomb_stock_draw();
     if (*(u16 *)(reg_a6 + 0x10) & 1) {
         *(u8 *)(reg_a6 + 0x11) &= 0xFE;
     } else {

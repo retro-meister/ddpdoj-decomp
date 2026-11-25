@@ -653,14 +653,14 @@ void func_00135DF0(void) {
     ENTITY(reg_a6)->y.sh = 0;
 }
 
-s32 func_0013F2A0();                            /* extern */
-s32 func_0013F310();                            /* extern */
+s32 p1_bomb_panel_draw();                            /* extern */
+s32 p2_bomb_panel_draw();                            /* extern */
 
 void func_00135E70(void) {
     if (*(u8 *)(reg_a6 + 0x16) == 0) {
-        func_0013F2A0();
+        p1_bomb_panel_draw();
     } else {
-        func_0013F310();
+        p2_bomb_panel_draw();
     }
     *(s16 *)reg_a6 = 0;
     *(s16 *)(reg_a6 + 2) = 0;

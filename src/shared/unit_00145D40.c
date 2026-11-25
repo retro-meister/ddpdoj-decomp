@@ -402,8 +402,8 @@ extern u16 g_player_laser_count;
 extern u16 g_hyper_hit_scratch;
 extern u16 g_p2_hyper_active;
 extern u16 g_p1_hyper_active;
-extern u16 D_0029D790_as_u16_a[];
-extern u16 D_0029DD90_as_u16_a[];
+extern u16 g_p2_laser_entities_as_u16_a[];
+extern u16 g_p1_laser_entities_as_u16_a[];
 extern s16 g_player2[];
 extern s16 g_player1[];
 
@@ -413,7 +413,7 @@ void func_00146760(void) {
     g_hyper_hit_scratch = 0;
     g_player_laser_count = 0;
     if (g_player1[0] < 0) {
-        reg_a6 = (u8 *)(D_0029DD90_as_u16_a);
+        reg_a6 = (u8 *)(g_p1_laser_entities_as_u16_a);
         reg_d7.w = 0x1F;
         g_hyper_hit_scratch = g_p1_hyper_active;
         do {
@@ -428,7 +428,7 @@ void func_00146760(void) {
         } while ((s16)(--reg_d7.h[0]) >= 0);
     }
     if (g_player2[0] < 0) {
-        reg_a6 = (u8 *)(D_0029D790_as_u16_a);
+        reg_a6 = (u8 *)(g_p2_laser_entities_as_u16_a);
         reg_d7.w = 0x1F;
         g_hyper_hit_scratch = g_p2_hyper_active;
         do {

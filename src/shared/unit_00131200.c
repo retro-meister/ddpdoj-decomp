@@ -366,8 +366,8 @@ void func_001317D0(void) {
 
 s32 stage_counts_reset();                            /* extern */
 s32 func_0013B190();                            /* extern */
-s32 func_0013E7C0();                            /* extern */
-s32 func_0013E850();                            /* extern */
+s32 p1_next_stage_setup();                            /* extern */
+s32 p2_next_stage_setup();                            /* extern */
 s32 func_001AD720();                            /* extern */
 #ifdef DEATH_LABEL
 extern u8 death_D_00290DC0;
@@ -383,8 +383,8 @@ void func_001317E0(void) {
     stage_counts_reset();
     func_001AD720();
     g_boss_present_as_s16 = 0;
-    func_0013E7C0();
-    func_0013E850();
+    p1_next_stage_setup();
+    p2_next_stage_setup();
     g_score_panel_intro_as_s16 = 0;
 #ifdef DEATH_LABEL
     if (death_D_00290DC0 == 0) {
@@ -415,8 +415,8 @@ s32 func_0013AFF0();
 s32 func_0013B2E0();
 s32 func_0013C300();
 s32 func_0013C350();
-s32 func_0013E7C0();
-s32 func_0013E850();
+s32 p1_next_stage_setup();
+s32 p2_next_stage_setup();
 s32 func_00171990();
 s32 func_001719A0();
 s32 func_001719B0();
@@ -582,8 +582,8 @@ block_25:
                 return;
             }
             func_0013C300();
-            func_0013E7C0();
-            func_0013E850();
+            p1_next_stage_setup();
+            p2_next_stage_setup();
             g_boss_present_as_s16 = 0;
             g_player_shots_disabled_as_s16 = 0;
             D_0028E961 &= 0xF7;
@@ -814,8 +814,8 @@ s32 func_001A7E90();
 s32 func_001A8070();
 s32 func_0013FCA0();
 s32 func_0013FCE0();
-s32 func_0013EAF0();
-s32 func_0013EB60();
+s32 p1_bomb_stock_draw();
+s32 p2_bomb_stock_draw();
 extern s16 g_player2[];
 extern s16 g_player1[];
 extern u8 g_game_mode;
@@ -1170,12 +1170,12 @@ next_499:
                     if (g_player1[0] < 0) {
                         func_001A7E90();
                         func_0013FCA0();
-                        func_0013EAF0();
+                        p1_bomb_stock_draw();
                     }
                     if (g_player2[0] < 0) {
                         func_001A8070();
                         func_0013FCE0();
-                        func_0013EB60();
+                        p2_bomb_stock_draw();
                     }
                     reg_d0.h[0] = 0x13;
                     task_start();
@@ -1187,12 +1187,12 @@ next_499:
                     if (g_player1[0] < 0) {
                         func_001A7E90();
                         func_0013FCA0();
-                        func_0013EAF0();
+                        p1_bomb_stock_draw();
                     }
                     if (g_player2[0] < 0) {
                         func_001A8070();
                         func_0013FCE0();
-                        func_0013EB60();
+                        p2_bomb_stock_draw();
                     }
                     reg_d0.h[0] = 0x13;
                     task_start();
