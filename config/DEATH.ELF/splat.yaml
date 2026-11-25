@@ -170,7 +170,7 @@ segments:
       - [0x131fa0, c, shared/credits_roll]
       - [0x132000, c, shared/game_util]
       - [0x1329b0, c, shared/motion_util]
-      - [0x134af0, c, shared/stage1_boss_entry]
+      - [0x134af0, c, shared/stage1_boss_damage]
       - [0x1356c0, c, shared/zoom]
       - [0x135730, c, shared/task]
       - [0x136070, c, shared/test_color]

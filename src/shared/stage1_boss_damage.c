@@ -2,13 +2,13 @@
 #include "entity.h"
 #include "stage1_boss.h"
 
-void func_001BC160(void);
-void func_001BC230(void);
-void func_001BC2E0(void);
+void stage1_boss_body_destroyed(void);
+void stage1_boss_right_side_destroyed(void);
+void stage1_boss_left_side_destroyed(void);
 void func_001BC430(void);
-void func_001BC440(void);
+void stage1_boss_leave_check(void);
 
-void func_001BB8D0(void) {
+void stage1_boss_damage_init(void) {
 
 }
 
@@ -23,7 +23,7 @@ extern u8 g_game_mode;
 extern s32 g_boss_score;
 extern u16 g_damage_blink_counter;
 
-void func_001BB8E0(void) {
+void stage1_boss_damage(void) {
     s32 active_players_mask();
     u32 hp;
     u8 *v1;
@@ -98,7 +98,7 @@ void func_001BB8E0(void) {
                 goto next_1;
             }
             g_boss_score = 0x30000;
-            func_001BC160();
+            stage1_boss_body_destroyed();
             return;
         }
 next_1:
@@ -180,7 +180,7 @@ next_1:
                 goto next_3;
             }
 next_2:
-            func_001BC230();
+            stage1_boss_right_side_destroyed();
             return;
         }
 next_3:
@@ -262,7 +262,7 @@ next_3:
                 goto next_5;
             }
 next_4:
-            func_001BC2E0();
+            stage1_boss_left_side_destroyed();
             return;
         }
 next_5:
@@ -292,7 +292,7 @@ next_5:
                 boss_phase_start();
             }
         }
-        func_001BC440();
+        stage1_boss_leave_check();
     }
 }
 
@@ -305,15 +305,15 @@ s32 func_00203460();
 s32 slowdown_turn_off();
 extern u8 g_boss_present_b1;
 
-void func_001BC160() {
+void stage1_boss_body_destroyed() {
     g_boss_present_b1 |= 0x40;
     g_boss_present_b1 |= 0x80;
     slowdown_turn_off();
     func_0013F3C0();
     func_00203460();
     func_001BC430();
-    func_001BC230();
-    func_001BC2E0();
+    stage1_boss_right_side_destroyed();
+    stage1_boss_left_side_destroyed();
     boss_attack_stop_all();
     boss_phase_stop_all();
     reg_tmp.w = -1U;
@@ -331,7 +331,7 @@ void func_001BC160() {
 
 s32 boss_animation_stop();
 
-void func_001BC230(void) {
+void stage1_boss_right_side_destroyed(void) {
     if (ENTITY(reg_a6)[1].misc.b.draw_layer == 0) {
         reg_tmp.w = -1U;
         STAGE1_BOSS(reg_a5)->right_hp[0] = (u16) reg_tmp.h[1];
@@ -355,7 +355,7 @@ void func_001BC230(void) {
     }
 }
 
-void func_001BC2E0(void) {
+void stage1_boss_left_side_destroyed(void) {
     if (ENTITY(reg_a6)[3].misc.b.draw_layer == 0) {
         reg_tmp.w = -1U;
         STAGE1_BOSS(reg_a5)->left_hp[0] = (u16) reg_tmp.h[1];
@@ -379,11 +379,11 @@ void func_001BC2E0(void) {
     }
 }
 
-void func_001BC390(void) {
+void stage1_boss_shield_on(void) {
     ENTITY(reg_a6)[7].offset_x.sh = 1;
 }
 
-void func_001BC3A0(void) {
+void stage1_boss_shield_off(void) {
     ENTITY(reg_a6)[7].offset_x.sh = 0;
 }
 
@@ -395,7 +395,7 @@ void stage1_boss_parts_enable(void) {
 }
 
 
-void func_001BC400(void) {
+void stage1_boss_parts_disable(void) {
     reg_d0.h[0] = 0x8000;
     ((u16 *)reg_a6)[0x0 / 2] = (u16) reg_d0.h[0];
     ((u16 *)reg_a6)[0x20 / 2] = (u16) reg_d0.h[0];
@@ -408,7 +408,7 @@ void func_001BC430(void) {
 
 extern u16 g_enemies_stopped;
 
-void func_001BC440(void) {
+void stage1_boss_leave_check(void) {
     void active_players_mask(void);
 #ifdef DEATH_LABEL
     if ((g_enemies_stopped == 0) && (STAGE1_BOSS(reg_a5)->leave_delay == 0)) {
@@ -421,6 +421,6 @@ void func_001BC440(void) {
             return;
         }
         ENTITY(reg_a6)[7].draw.sh = 0;
-        func_001BC160();
+        stage1_boss_body_destroyed();
     }
 }

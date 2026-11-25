@@ -104,7 +104,7 @@ segments:
       - [0xb9470, c, shared/stage1_boss_mode]
       - [0xba8a0, c, shared/stage1_boss_move]
       - [0xbb6b0, c, shared/stage1_boss]
-      - [0xbb950, c, shared/stage1_boss_entry]
+      - [0xbb950, c, shared/stage1_boss_damage]
       - [0xbc530, c, shared/stage1_midboss]
       - [0xbe260, c, shared/stage4_boss_move]
       - [0xbf290, c, shared/stage2_boss_attack]

@@ -182,7 +182,7 @@ s32 boss_movement_start();
 s32 boss_part_show();
 s32 boss_animation_start();
 s32 func_0013B2E0();
-s32 func_001BC3A0();
+s32 stage1_boss_shield_off();
 s32 stage1_boss_parts_enable();
 s32 entity_velocity();
 s32 direction_turn_toward();
@@ -246,7 +246,7 @@ void stage1_boss_move_enter(void) {
                 boss_movement_start();
                 reg_d0.w = 1;
                 boss_phase_start();
-                func_001BC3A0();
+                stage1_boss_shield_off();
                 stage1_boss_parts_enable();
                 reg_d0.w = 0;
                 boss_animation_start();
