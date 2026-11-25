@@ -71,9 +71,20 @@ typedef struct {
     /* 0x07 */ u8 moving;
 } SideDoor;
 
+/* A destroyed side part shrinks, falls and blows up. */
+typedef struct {
+    /* 0x00 */ s16 running;
+    /* 0x02 */ u8 blasts;         /* one bit per series of small explosions that is running */
+    /* 0x03 */ u8 step;
+    /* 0x04 */ SlotTimer blast[3];
+    /* 0x0A */ SlotTimer shrink;  /* frames between two steps of shrinking; gets shorter */
+    /* 0x0C */ u16 fall_speed;
+} SideWreck;
+
 #define HOVER(pointer) ((SideHover *)(pointer))
 #define ROTOR(pointer) ((FrameStep *)(pointer))
 #define DOOR(pointer) ((SideDoor *)(pointer))
+#define WRECK(pointer) ((SideWreck *)(pointer))
 
 /* The set-up routine and the per-frame routine of every animation, by animation number. */
 void (*stage1_boss_anim_routines[])(void) = {
@@ -126,7 +137,7 @@ void stage1_boss_gatling_spin(void);
 extern u16 *reg_a4_as_u16_p;
 
 void stage1_boss_anim_clear(void) {
-    *reg_a4_as_u16_p = 0;
+    ROTOR(reg_a4)->running = 0;
 }
 
 s32 rng_next_unsigned();                            /* extern */
@@ -310,13 +321,13 @@ void func_001B2830(void) {
 }
 
 void stage1_boss_right_wreck_start(void) {
-    *(s8 *)(reg_a4 + 3) = 0;
-    *(s8 *)(reg_a4 + 2) = 0;
-    *(s16 *)(reg_a4 + 4) = 8;
-    *(s16 *)(reg_a4 + 6) = 5;
-    *(s16 *)(reg_a4 + 8) = 7;
-    *(s16 *)(reg_a4 + 0xA) = 0x1008;
-    *(s16 *)(reg_a4 + 0xC) = 0;
+    WRECK(reg_a4)->step = 0;
+    WRECK(reg_a4)->blasts = 0;
+    WRECK(reg_a4)->blast[0].sh = 8;
+    WRECK(reg_a4)->blast[1].sh = 5;
+    WRECK(reg_a4)->blast[2].sh = 7;
+    WRECK(reg_a4)->shrink.sh = 0x1008;
+    WRECK(reg_a4)->fall_speed = 0;
 }
 
 s32 boss_part_hide();
@@ -334,58 +345,58 @@ void stage1_boss_right_wreck(void) {
     reg_d0.h[0] = g_side_scroll_step[0];
     temp_a1 = ENTITY(reg_a6)[1].x.h;
     ENTITY(reg_a6)[1].x.h = (u16) (temp_a1 - reg_d0.h[0]);
-    temp_a0 = *(u8 *)(reg_a4 + 3);
+    temp_a0 = WRECK(reg_a4)->step;
     if (temp_a0 == 2) {
         sfx_explosion_ground_small();
         reg_d2.h[1] = ENTITY(reg_a6)[1].y.h;
         reg_d2.h[0] = ENTITY(reg_a6)[1].x.h;
         reg_a1 = (u8 *)D_0026DC40;
         func_001B2830();
-        *(s16 *)reg_a4 = 0;
+        WRECK(reg_a4)->running = 0;
     }
-    if (*(u8 *)(reg_a4 + 3) == 1) {
-        reg_tmp.b[0] = *(u8 *)(reg_a4 + 0xB);
-        *(u8 *)(reg_a4 + 0xB) -= 1;
+    if (WRECK(reg_a4)->step == 1) {
+        reg_tmp.b[0] = WRECK(reg_a4)->shrink.t.count;
+        WRECK(reg_a4)->shrink.t.count -= 1;
         if ((s32) reg_tmp.b[0] <= 0) {
-            *(u8 *)(reg_a4 + 0xB) = (u8) *(u8 *)(reg_a4 + 0xA);
-            temp_v1 = *(u8 *)(reg_a4 + 0xA);
+            WRECK(reg_a4)->shrink.t.count = (u8) WRECK(reg_a4)->shrink.t.reload;
+            temp_v1 = WRECK(reg_a4)->shrink.t.reload;
             if (temp_v1 != 0) {
-                *(u8 *)(reg_a4 + 0xA) = (u8) (temp_v1 - 1);
+                WRECK(reg_a4)->shrink.t.reload = (u8) (temp_v1 - 1);
             }
-            *(u16 *)(reg_a4 + 0xC) += 0x10;
+            WRECK(reg_a4)->fall_speed += 0x10;
             ENTITY(reg_a6)[2].offset_y.h -= 0x800;
             ENTITY(reg_a6)[2].offset_x.h -= 0x800;
             if (0 > (s16) ENTITY(reg_a6)[2].offset_x.h) {
                 reg_tmp.w = 0;
                 ENTITY(reg_a6)[2].offset_y.h = (u16) reg_tmp.h[1];
                 ENTITY(reg_a6)[2].offset_x.h = (u16) reg_tmp.h[0];
-                *(u16 *)(reg_a4 + 0xC) = 0U;
-                *(u8 *)(reg_a4 + 3) = 2U;
+                WRECK(reg_a4)->fall_speed = 0U;
+                WRECK(reg_a4)->step = 2U;
                 reg_d0.w = 0;
                 boss_part_hide();
             }
         }
     }
-    if (*(u8 *)(reg_a4 + 3) == 0) {
-        *(u8 *)(reg_a4 + 3) = 1U;
+    if (WRECK(reg_a4)->step == 0) {
+        WRECK(reg_a4)->step = 1U;
         sfx_explosion_ground_medium();
         reg_d2.h[1] = ENTITY(reg_a6)[1].y.h;
         reg_d2.h[0] = ENTITY(reg_a6)[1].x.h;
         reg_a1 = (u8 *)D_0026DBD0;
         func_001B26F0();
     }
-    reg_d0.h[0] = *(u16 *)(reg_a4 + 0xC);
+    reg_d0.h[0] = WRECK(reg_a4)->fall_speed;
     ENTITY(reg_a6)[1].y.h -= reg_d0.h[0];
 }
 
 void stage1_boss_left_wreck_start(void) {
-    *(s8 *)(reg_a4 + 3) = 0;
-    *(s8 *)(reg_a4 + 2) = 0;
-    *(s16 *)(reg_a4 + 4) = 8;
-    *(s16 *)(reg_a4 + 6) = 5;
-    *(s16 *)(reg_a4 + 8) = 7;
-    *(s16 *)(reg_a4 + 0xA) = 0x1008;
-    *(s16 *)(reg_a4 + 0xC) = 0;
+    WRECK(reg_a4)->step = 0;
+    WRECK(reg_a4)->blasts = 0;
+    WRECK(reg_a4)->blast[0].sh = 8;
+    WRECK(reg_a4)->blast[1].sh = 5;
+    WRECK(reg_a4)->blast[2].sh = 7;
+    WRECK(reg_a4)->shrink.sh = 0x1008;
+    WRECK(reg_a4)->fall_speed = 0;
 }
 
 extern u8 D_0026DC80[];
@@ -399,11 +410,11 @@ void stage1_boss_left_wreck(void) {
     var_a1 = (u8 *)(reg_a6);
     reg_d0.h[0] = g_side_scroll_step[0];
     (*(u16 *)((u8 *)(var_a1) + (0x64))) -= reg_d0.h[0];
-    if (*(u8 *)(reg_a4 + 2) & 4) {
-        reg_tmp.b[0] = *(u8 *)(reg_a4 + 9);
-        *(u8 *)(reg_a4 + 9) -= 1;
+    if (WRECK(reg_a4)->blasts & 4) {
+        reg_tmp.b[0] = WRECK(reg_a4)->blast[2].t.count;
+        WRECK(reg_a4)->blast[2].t.count -= 1;
         if ((s32) reg_tmp.b[0] <= 0) {
-            *(u8 *)(reg_a4 + 9) = (u8) *(u8 *)(reg_a4 + 8);
+            WRECK(reg_a4)->blast[2].t.count = (u8) WRECK(reg_a4)->blast[2].t.reload;
             reg_d0.w = 0x10;
             explosion_spawn();
             *(s16 *)(reg_a0 + 0x1E) = 4;
@@ -418,11 +429,11 @@ void stage1_boss_left_wreck(void) {
             *(u16 *)(reg_a0 + 0x28) = (u16) reg_tmp.h[0];
         }
     }
-    if (*(u8 *)(reg_a4 + 2) & 1) {
-        reg_tmp.b[0] = *(u8 *)(reg_a4 + 5);
-        *(u8 *)(reg_a4 + 5) -= 1;
+    if (WRECK(reg_a4)->blasts & 1) {
+        reg_tmp.b[0] = WRECK(reg_a4)->blast[0].t.count;
+        WRECK(reg_a4)->blast[0].t.count -= 1;
         if ((s32) reg_tmp.b[0] <= 0) {
-            *(u8 *)(reg_a4 + 5) = (u8) *(u8 *)(reg_a4 + 4);
+            WRECK(reg_a4)->blast[0].t.count = (u8) WRECK(reg_a4)->blast[0].t.reload;
             reg_d0.w = 0x10;
             explosion_spawn();
             *(s16 *)(reg_a0 + 0x1E) = 4;
@@ -438,11 +449,11 @@ void stage1_boss_left_wreck(void) {
             *(u16 *)(reg_a0 + 0x28) = (u16) reg_tmp.h[0];
         }
     }
-    if (*(u8 *)(reg_a4 + 2) & 2) {
-        reg_tmp.b[0] = *(u8 *)(reg_a4 + 7);
-        *(u8 *)(reg_a4 + 7) -= 1;
+    if (WRECK(reg_a4)->blasts & 2) {
+        reg_tmp.b[0] = WRECK(reg_a4)->blast[1].t.count;
+        WRECK(reg_a4)->blast[1].t.count -= 1;
         if ((s32) reg_tmp.b[0] <= 0) {
-            *(u8 *)(reg_a4 + 7) = (u8) *(u8 *)(reg_a4 + 6);
+            WRECK(reg_a4)->blast[1].t.count = (u8) WRECK(reg_a4)->blast[1].t.reload;
             reg_d0.w = 6;
             explosion_spawn();
             *(s16 *)(reg_a0 + 0x1E) = 8;
@@ -458,47 +469,47 @@ void stage1_boss_left_wreck(void) {
             *(u16 *)(reg_a0 + 0x28) = (u16) reg_tmp.h[0];
         }
     }
-    temp_a0 = *(u8 *)(reg_a4 + 3);
+    temp_a0 = WRECK(reg_a4)->step;
     if (temp_a0 == 2) {
         sfx_explosion_ground_small();
         reg_d2.h[1] = ENTITY(reg_a6)[3].y.h;
         reg_d2.h[0] = ENTITY(reg_a6)[3].x.h;
         reg_a1 = D_0026DCF0;
         func_001B2830();
-        *(s16 *)reg_a4 = 0;
+        WRECK(reg_a4)->running = 0;
     }
-    if (*(u8 *)(reg_a4 + 3) == 1) {
-        reg_tmp.b[0] = *(u8 *)(reg_a4 + 0xB);
-        *(u8 *)(reg_a4 + 0xB) -= 1;
+    if (WRECK(reg_a4)->step == 1) {
+        reg_tmp.b[0] = WRECK(reg_a4)->shrink.t.count;
+        WRECK(reg_a4)->shrink.t.count -= 1;
         if ((s32) reg_tmp.b[0] <= 0) {
-            *(u8 *)(reg_a4 + 0xB) = (u8) *(u8 *)(reg_a4 + 0xA);
-            temp_v1 = *(u8 *)(reg_a4 + 0xA);
+            WRECK(reg_a4)->shrink.t.count = (u8) WRECK(reg_a4)->shrink.t.reload;
+            temp_v1 = WRECK(reg_a4)->shrink.t.reload;
             if (temp_v1 != 0) {
-                *(u8 *)(reg_a4 + 0xA) = (u8) (temp_v1 - 1);
+                WRECK(reg_a4)->shrink.t.reload = (u8) (temp_v1 - 1);
             }
-            *(u16 *)(reg_a4 + 0xC) += 0x10;
+            WRECK(reg_a4)->fall_speed += 0x10;
             ENTITY(reg_a6)[4].offset_y.h -= 0x800;
             ENTITY(reg_a6)[4].offset_x.h -= 0x800;
             if (0 > (s16) ENTITY(reg_a6)[4].offset_x.h) {
                 reg_tmp.w = 0;
                 ENTITY(reg_a6)[4].offset_y.h = (u16) reg_tmp.h[1];
                 ENTITY(reg_a6)[4].offset_x.h = (u16) reg_tmp.h[0];
-                *(u16 *)(reg_a4 + 0xC) = 0U;
-                *(u8 *)(reg_a4 + 3) = 2U;
+                WRECK(reg_a4)->fall_speed = 0U;
+                WRECK(reg_a4)->step = 2U;
                 reg_d0.w = 1;
                 boss_part_hide();
             }
         }
     }
-    if (*(u8 *)(reg_a4 + 3) == 0) {
-        *(u8 *)(reg_a4 + 3) = 1U;
+    if (WRECK(reg_a4)->step == 0) {
+        WRECK(reg_a4)->step = 1U;
         sfx_explosion_ground_medium();
         reg_d2.h[1] = ENTITY(reg_a6)[3].y.h;
         reg_d2.h[0] = ENTITY(reg_a6)[3].x.h;
         reg_a1 = D_0026DC80;
         func_001B26F0();
     }
-    reg_d0.h[0] = *(u16 *)(reg_a4 + 0xC);
+    reg_d0.h[0] = WRECK(reg_a4)->fall_speed;
     ENTITY(reg_a6)[3].y.h -= reg_d0.h[0];
 }
 
