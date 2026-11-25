@@ -297,7 +297,7 @@ def prepare_integration(target_name, func_name, source_path, out_name=None, subd
 
     if subdir is None:
         if len(verified_targets) > 1:
-            subdir = "shared"
+            subdir = "game"
         elif target_name == "GALLERY.ELF":
             subdir = "gallery"
         elif target_name == DEATH:
@@ -401,7 +401,7 @@ def main():
     parser.add_argument("function")
     parser.add_argument("--source", type=Path, required=True)
     parser.add_argument("--name", help="C function name (defaults to original label)")
-    parser.add_argument("--subdir", help="subdirectory under src/ (defaults to shared/gallery/main/death)")
+    parser.add_argument("--subdir", help="subdirectory under src/ (defaults to game/gallery/main/death)")
     parser.add_argument("--pair-death", action="store_true", help="also integrate the exact Death Label twin (off by default; Main-first)")
     args = parser.parse_args()
     integrate(args.target, args.function, args.source, args.name, args.subdir, pair_death=args.pair_death)

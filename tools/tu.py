@@ -1,11 +1,11 @@
 """Merge a run of consecutive units into one named translation unit, for SLPS_252.33 and DEATH.ELF together.
 
     uv run tools/tu.py font --from func_00212720 --to func_00212F90     # merge, then compile and compare
-    uv run tools/tu.py --check src/shared/font.c                        # compare an existing unit again
-    uv run tools/tu.py --rodata src/shared/font.c --main 286ec0:286ed8 --death 281fe0:281ff8
+    uv run tools/tu.py --check src/game/font.c                        # compare an existing unit again
+    uv run tools/tu.py --rodata src/game/font.c --main 286ec0:286ed8 --death 281fe0:281ff8
                                                                         # the unit now owns these .rodata bytes
-    uv run tools/tu.py --strings src/shared/system.c                    # its string references become literals
-    uv run tools/tu.py --move src/shared/a.c src/shared/b.c             # rename a unit (file and splat.yaml)
+    uv run tools/tu.py --strings src/game/system.c                    # its string references become literals
+    uv run tools/tu.py --move src/game/a.c src/game/b.c             # rename a unit (file and splat.yaml)
 
 `--from`/`--to` name the first and last unit of the run in SLPS_252.33 (a unit is named after its file). The
 same code in DEATH.ELF is found through the shared units of the run; Death Label units lying between them are
@@ -18,7 +18,7 @@ forward declaration is written where a call comes first). An object the pieces d
 gets no file-scope declaration: each function declares it in its own body with the type it was matched with,
 which the compiler accepts and which marks the type as still to be settled. Names left with two different declarations are listed, to be settled by hand.
 
-The merged file goes to `src/shared/<name>.c` (`src/main/<name>.c` when Death Label has none of it). Both
+The merged file goes to `src/game/<name>.c` (`src/main/<name>.c` when Death Label has none of it). Both
 splat.yaml files get one `c` entry (and one `.rodata` entry) for the run. Afterwards every function of the
 new unit is compiled and compared with the retail code, relocated fields masked, so that a declaration clash
 or a changed function shows up by name. Run `uv run tools/build.py` for the SHA-256 check.
@@ -79,7 +79,7 @@ def find_runs(first, last):
     wanted = []
     for entry in main_run:
         stub = entry["stub"]
-        if stub.startswith("shared/"):
+        if stub.startswith("game/"):
             if stub not in by_stub:
                 raise ValueError(f"{stub}: shared unit missing from {DEATH}")
             wanted.append(by_stub[stub])
@@ -92,7 +92,7 @@ def find_runs(first, last):
     death_run = death_code[wanted[0]:wanted[-1] + 1]
     main_stubs = {e["stub"] for e in main_run}
     for entry in death_run:
-        if entry["stub"].startswith("shared/") and entry["stub"] not in main_stubs:
+        if entry["stub"].startswith("game/") and entry["stub"] not in main_stubs:
             raise ValueError(f"{entry['stub']} lies inside the run in {DEATH} but outside it in {MAIN}")
     return main_run, death_run
 
@@ -720,7 +720,7 @@ def main():
     parser.add_argument("--main", metavar="START:END", help="address range in SLPS_252.33")
     parser.add_argument("--death", metavar="START:END", help="address range in DEATH.ELF")
     parser.add_argument("--strings", metavar="SOURCE", help="turn the unit's string references into literals")
-    parser.add_argument("--move", nargs=2, metavar=("SOURCE", "NEW"), help="rename or move a unit, e.g. src/shared/a.c src/engine/b.c")
+    parser.add_argument("--move", nargs=2, metavar=("SOURCE", "NEW"), help="rename or move a unit, e.g. src/game/a.c src/engine/b.c")
     args = parser.parse_args()
     # sources are named relative to the repository root; accept absolute paths too
     for option in ("check", "strings", "rodata", "data"):
@@ -756,7 +756,7 @@ def main():
     main_run, death_run = find_runs(args.first, args.last)
     if main_run:
         pieces = sequence(main_run, death_run)
-        folder = "shared" if death_run else "main"
+        folder = "game" if death_run else "main"
     else:
         pieces = [(entry["stub"], entry["stub"]) for entry in death_run]
         folder = "death"

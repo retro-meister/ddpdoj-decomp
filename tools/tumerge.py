@@ -2,9 +2,9 @@
 
     uv run tools/tumerge.py func_0021EFB0 func_0021F180 ... [--death-end 0x1b7280]
 
-The units must be consecutive in SLPS_252.33. Their sources are concatenated into `src/shared/<first>.c`
+The units must be consecutive in SLPS_252.33. Their sources are concatenated into `src/game/<first>.c`
 (includes once, identical declaration lines once). Both splat.yaml files get one `c` entry for the run; in
-DEATH.ELF the run is turned back into asm so that `tools/unitcheck.py src/shared/<first>.c --at ADDR --apply`
+DEATH.ELF the run is turned back into asm so that `tools/unitcheck.py src/game/<first>.c --at ADDR --apply`
 can integrate the merged unit there. Nothing is built; run the build (or unitcheck --apply) afterwards.
 """
 import argparse
@@ -20,11 +20,11 @@ SUBSEG_RE = re.compile(r"^(\s*-\s*\[)(0x[0-9a-fA-F]+|\d+),\s*(\.?[a-zA-Z0-9_]+),
 
 
 def find_source(stem):
-    for folder in ("shared", "main"):
+    for folder in ("game", "main"):
         path = ROOT / "src" / folder / f"{stem}.c"
         if path.is_file():
             return path
-    raise ValueError(f"{stem}: no source in src/shared or src/main")
+    raise ValueError(f"{stem}: no source in src/game or src/main")
 
 
 def merge_sources(paths):
@@ -50,7 +50,7 @@ def merge_sources(paths):
 def patch_yaml(target, stems, first_stub, end_offset, make_asm):
     path = ROOT / "config" / target / "splat.yaml"
     lines = path.read_text(encoding="utf-8").splitlines()
-    members = {f"{folder}/{stem}" for stem in stems for folder in ("shared", "main")}
+    members = {f"{folder}/{stem}" for stem in stems for folder in ("game", "main")}
     out, start, rodata_done = [], None, False
     rows = [(i, SUBSEG_RE.match(line)) for i, line in enumerate(lines)]
     code = [(i, m) for i, m in rows if m and m.group(3) in ("c", "asm")]
@@ -93,10 +93,10 @@ def main():
     file_address = 0x100000 - 0x80
     main_end = ((last_address + last_size + 15) & ~15) - file_address
     merged = merge_sources(paths)
-    first_stub = f"shared/{stems[0]}"
+    first_stub = f"game/{stems[0]}"
     patch_yaml(MAIN, stems, first_stub, main_end, make_asm=False)
     patch_yaml(DEATH, stems, first_stub, args.death_end - file_address, make_asm=True)
-    dest = ROOT / "src" / "shared" / f"{stems[0]}.c"
+    dest = ROOT / "src" / "game" / f"{stems[0]}.c"
     if paths[0] != dest:
         subprocess.run(["git", "mv", str(paths[0].relative_to(ROOT)), str(dest.relative_to(ROOT))], cwd=ROOT, check=True)
     for path in paths[1:]:

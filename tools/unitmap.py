@@ -3,7 +3,7 @@
     uv run tools/build.py --map          (once, writes build/<target>.map)
     uv run tools/unitmap.py [--target SLPS_252.33] [--json build/unitmap/<target>.json]
     uv run tools/unitmap.py --runs .data  (address runs of one section with the units that reference them)
-    uv run tools/unitmap.py --unit shared/bomb
+    uv run tools/unitmap.py --unit game/bomb
 
 Reads the link map (symbol addresses, where each object's sections went) and the relocations of every compiled
 unit and of the assembly data. For every symbol of a data section it records which units' code refers to it and

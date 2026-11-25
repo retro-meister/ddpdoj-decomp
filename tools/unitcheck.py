@@ -5,7 +5,7 @@
 
 The unit is compiled as Death Label sees it (-DDEATH_LABEL). Its functions are laid out the way the linker
 will and compared with retail DEATH.ELF with only relocated fields masked. --apply moves a `src/main` unit to
-`src/shared` (or integrates a draft as `src/death/<name>.c`), patches the Splat configs and names the symbols.
+`src/game` (or integrates a draft as `src/death/<name>.c`), patches the Splat configs and names the symbols.
 """
 import argparse
 from collections import Counter, defaultdict
@@ -150,8 +150,8 @@ def integrate_unit(local, source, base, sections, symbols, text, functions, do_b
 
     rel = source.relative_to(ROOT)
     in_main = rel.parts[:2] == ("src", "main")
-    in_shared = rel.parts[:2] == ("src", "shared")
-    stub = ("shared/" if in_main or in_shared else "death/") + source.stem
+    in_shared = rel.parts[:2] == ("src", "game")
+    stub = ("game/" if in_main or in_shared else "death/") + source.stem
     dest = ROOT / "src" / f"{stub}.c"
     if dest.exists() and dest != source:
         raise ValueError(f"{dest.relative_to(ROOT)} already exists")
@@ -181,7 +181,7 @@ def integrate_unit(local, source, base, sections, symbols, text, functions, do_b
         patch_death_text(lines, [{"death_address": base, "size": len(section["data"]), "stub": "x/" + source.stem}], image,
                          file_address, code_end)
         text_yaml = "\n".join(lines) + "\n"
-        yaml_file.write_text(text_yaml.replace(f", c, shared/{source.stem}]", f", c, {stub}]"), encoding="utf-8")
+        yaml_file.write_text(text_yaml.replace(f", c, game/{source.stem}]", f", c, {stub}]"), encoding="utf-8")
         for address, size in rodata:
             patch_splat_rodata(DEATH, address - file_address, size, stub)
         if in_main:

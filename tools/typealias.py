@@ -28,7 +28,7 @@ ALIAS = re.compile(r"_as_\w+$")
 
 
 def sources():
-    return [path for folder in ("shared", "main", "death") for path in sorted((ROOT / "src" / folder).glob("*.c"))]
+    return [path for folder in ("game", "main", "death") for path in sorted((ROOT / "src" / folder).rglob("*.c"))]
 
 
 def code(base, dims):

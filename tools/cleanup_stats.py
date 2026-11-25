@@ -15,7 +15,7 @@ PATTERNS = {
 
 
 def main():
-    files = [p for d in ("main", "shared", "death") for p in sorted((ROOT / "src" / d).glob("*.c"))]
+    files = [p for d in ("main", "game", "death") for p in sorted((ROOT / "src" / d).rglob("*.c"))]
     text = "\n".join(p.read_text(encoding="utf-8") for p in files)
     print(f"{'source files':<16}{len(files):>8,}")
     print(f"{'lines':<16}{text.count(chr(10)):>8,}")

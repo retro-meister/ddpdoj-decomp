@@ -412,7 +412,7 @@ def death_auto_labels():
 
 
 def shared_stub(stub):
-    return "shared/" + stub.split("/", 1)[1]
+    return "game/" + stub.split("/", 1)[1]
 
 
 def patch_death_text(lines, units, image, file_address, code_end):
@@ -520,7 +520,7 @@ def apply(local, only=None):
 
     main_yaml = ROOT / "config" / MAIN / "splat.yaml"
     text = main_yaml.read_text(encoding="utf-8")
-    (ROOT / "src" / "shared").mkdir(parents=True, exist_ok=True)
+    (ROOT / "src" / "game").mkdir(parents=True, exist_ok=True)
     for unit in units:
         stub = unit["stub"]
         text, count = re.subn(rf"(, (?:c|\.rodata), ){re.escape(stub)}\]", rf"\g<1>{shared_stub(stub)}]", text)
@@ -528,13 +528,13 @@ def apply(local, only=None):
             raise ValueError(f"{stub}: not in the Main splat.yaml")
         subprocess.run(["git", "mv", f"src/{stub}.c", f"src/{shared_stub(stub)}.c"], cwd=ROOT, check=True)
     main_yaml.write_text(text, encoding="utf-8")
-    print(f"moved {len(units)} units to src/shared, {len(additions)} symbols added, {len(renames)} Death Label placeholders renamed")
+    print(f"moved {len(units)} units to src/game, {len(additions)} symbols added, {len(renames)} Death Label placeholders renamed")
 
 
 def main():
     parser = argparse.ArgumentParser(description=__doc__.splitlines()[0])
     parser.add_argument("--output", default=str(PLAN))
-    parser.add_argument("--apply", action="store_true", help="move the paired units to src/shared and patch both configs")
+    parser.add_argument("--apply", action="store_true", help="move the paired units to src/game and patch both configs")
     parser.add_argument("--only", help="with --apply, comma-separated Main stubs (e.g. main/func_00119B10)")
     args = parser.parse_args()
     if args.apply:

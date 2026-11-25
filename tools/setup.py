@@ -226,7 +226,7 @@ def main():
         build(local)
     else:
         with TemporaryDirectory(prefix="setup-", dir=TOOLS) as directory:
-            compile_source(local, "src/shared/func_002010A0.c", Path(directory) / "func_002010A0.o", compilers[0])
+            compile_source(local, "src/game/func_002010A0.c", Path(directory) / "func_002010A0.o", compilers[0])
     pending = LOCAL.with_suffix(".tmp")
     pending.write_text(json.dumps(local, indent=2) + "\n", encoding="utf-8")
     pending.replace(LOCAL)
