@@ -2496,3 +2496,20 @@ loop_4:
         goto loop_4;
     }
 }
+
+/* .sbss (the compiler lays these out in reverse) */
+void *D_0028DEB4;
+s32 D_0028DEB0;
+u8 *D_0028DEAC;
+u32 D_0028DEA8;
+u32 D_0028DEA4;
+u32 D_0028DEA0;
+u32 D_0028DE9C;
+s32 D_0028DE98;
+#ifdef DEATH_LABEL
+s32 death_D_00290410;
+s32 death_D_0029040C;
+#endif
+u32 D_0028DE94;
+u32 D_0028DE90;
+u8 *D_0028DE8C;

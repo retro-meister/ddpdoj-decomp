@@ -730,3 +730,6 @@ next_4:
     g_side_scroll_step[0] = reg_d2.h[0];
     D_0029C06E[0] -= reg_d2.h[0];
 }
+
+/* .sbss (the compiler lays these out in reverse) */
+s32 D_0028DF1C;

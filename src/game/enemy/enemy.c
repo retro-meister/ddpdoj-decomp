@@ -960,3 +960,8 @@ void enemy_script_end(void) {
 void enemy_script_unused(void) {
 
 }
+
+/* .sbss (the compiler lays these out in reverse) */
+u32 D_0028DF44;
+u32 D_0028DF40;
+u32 D_0028DF3C;

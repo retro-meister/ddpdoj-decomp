@@ -863,3 +863,12 @@ block_next:
     reg_d0.h[0] = *(u16 *)(reg_a4 + 0x2E);
     if (reg_d0.w != 0) goto loop_1;
 }
+
+/* .sbss (the compiler lays these out in reverse) */
+s32 D_0028DF38;
+s32 D_0028DF34;
+s32 D_0028DF30;
+s32 D_0028DF2C;
+s32 D_0028DF28;
+s32 D_0028DF24;
+s32 D_0028DF20;

@@ -1408,3 +1408,11 @@ next_60:
 next_70:
     *(u16 *) (reg_a1 + 0x10) -= reg_d6.h[0];
 }
+
+/* .sbss (the compiler lays these out in reverse) */
+u16 D_0028E0A8;
+u8 D_0028E0A0[8];
+u16 D_0028E098 __attribute__((aligned(4)));
+u16 D_0028E094 __attribute__((aligned(4)));
+u16 D_0028E090 __attribute__((aligned(4)));
+u16 D_0028E08C __attribute__((aligned(4)));

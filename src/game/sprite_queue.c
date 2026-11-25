@@ -1858,3 +1858,41 @@ void sprite_draw_with_hyper_display_keep(void) {
     reg_d0.w = temp_s1;
     reg_a0 = (u8 *)temp_s0;
 }
+
+/* .sbss (the compiler lays these out in reverse) */
+u16 g_sprite_layer1_used __attribute__((aligned(4)));
+u16 g_sprite_layer2_used __attribute__((aligned(4)));
+u16 g_sprite_layer3_used __attribute__((aligned(4)));
+u16 g_sprite_layer4_used __attribute__((aligned(4)));
+u16 g_sprite_layer5_used __attribute__((aligned(4)));
+u16 g_sprite_extra_used __attribute__((aligned(4)));
+u16 g_sprite_special_items_used __attribute__((aligned(4)));
+u16 g_sprite_items_first_used __attribute__((aligned(4)));
+u16 g_sprite_items_used __attribute__((aligned(4)));
+u16 g_sprite_player_shadows_used __attribute__((aligned(4)));
+u16 g_sprite_debris1_used __attribute__((aligned(4)));
+u16 g_sprite_debris2_used __attribute__((aligned(4)));
+u16 g_sprite_player_shots_used __attribute__((aligned(4)));
+u16 g_sprite_player_lasers_used __attribute__((aligned(4)));
+u16 g_sprite_options_used __attribute__((aligned(4)));
+u16 g_sprite_players_used __attribute__((aligned(4)));
+u16 g_sprite_sparks_used __attribute__((aligned(4)));
+u16 g_sprite_bullets_used __attribute__((aligned(4)));
+u16 g_sprite_bullets2_used __attribute__((aligned(4)));
+u16 g_sprite_warning_used __attribute__((aligned(4)));
+u16 g_sprite_score_used __attribute__((aligned(4)));
+u16 g_sprite_sight_used __attribute__((aligned(4)));
+u16 g_sprite_laser_trail_used __attribute__((aligned(4)));
+u16 g_sprite_bombs_used __attribute__((aligned(4)));
+u16 g_sprite_ship_select_used __attribute__((aligned(4)));
+u16 g_sprite_stage_clear1_used __attribute__((aligned(4)));
+u16 g_sprite_stage_clear2_used __attribute__((aligned(4)));
+u16 g_sprite_maximum_used __attribute__((aligned(4)));
+u16 g_sprite_hyper_ready_used __attribute__((aligned(4)));
+u16 g_sprite_hyper_display_used __attribute__((aligned(4)));
+u16 g_sprite_last_boss_used __attribute__((aligned(4)));
+u16 g_sprite_unused_count __attribute__((aligned(4)));
+u16 g_sprite_overflow_count __attribute__((aligned(4)));
+u16 g_sprite_overflow_bytes __attribute__((aligned(4)));
+s16 g_sprite_sparks_dropped __attribute__((aligned(4)));
+s16 g_sprite_debris_dropped __attribute__((aligned(4)));

@@ -716,3 +716,9 @@ void func_001B2200(void) {
         *(u8 *)(reg_a5 + 3) = 2U;
     }
 }
+
+/* .sbss (the compiler lays these out in reverse) */
+s16 D_0028DF18 __attribute__((aligned(4)));
+s16 D_0028DF14 __attribute__((aligned(4)));
+u8 D_0028DF10 __attribute__((aligned(4)));
+u8 D_0028DF0C __attribute__((aligned(4)));

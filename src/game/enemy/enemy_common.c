@@ -545,3 +545,20 @@ extern void enemy_remove(void);
 void enemy_remove_entry(void) {
     enemy_remove();
 }
+
+/* .sbss (the compiler lays these out in reverse) */
+u32 D_0028DF80;
+u32 D_0028DF7C;
+u32 D_0028DF78;
+u32 D_0028DF74;
+u32 D_0028DF70;
+u32 D_0028DF6C;
+u32 D_0028DF68;
+u32 D_0028DF64;
+u8 *D_0028DF60;
+u8 *D_0028DF5C;
+u8 *D_0028DF58;
+u8 *D_0028DF54;
+u8 *D_0028DF50;
+u8 *D_0028DF4C;
+u8 *D_0028DF48;

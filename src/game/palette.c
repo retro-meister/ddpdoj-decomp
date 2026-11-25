@@ -262,3 +262,12 @@ void sprite_palette_load(void) {
     reg_a0 = (u8 *)temp_s1;
     reg_a1 = temp_s2;
 }
+
+/* .sbss (the compiler lays these out in reverse) */
+s16 D_0028E0C0 __attribute__((aligned(4)));
+s16 D_0028E0BC __attribute__((aligned(4)));
+s16 D_0028E0B8 __attribute__((aligned(4)));
+u16 D_0028E0B4 __attribute__((aligned(4)));
+u16 D_0028E0B0 __attribute__((aligned(4)));
+u8 D_0028E0AD;
+u8 D_0028E0AC __attribute__((aligned(4)));

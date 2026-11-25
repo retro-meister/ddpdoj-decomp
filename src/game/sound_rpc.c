@@ -1210,3 +1210,10 @@ void replay_files_locate(void) {
     }
     free(buf);
 }
+
+/* .sbss (the compiler lays these out in reverse) */
+s8 g_music_started __attribute__((aligned(4)));
+s8 g_bgm_fade_active;
+s32 g_se_last_result;
+s32 g_se_volume;
+s32 g_se_priority;

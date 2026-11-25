@@ -1352,3 +1352,6 @@ void func_0016A690(void) {
     text_layer_print();
 }
 #endif
+
+/* .sbss (the compiler lays these out in reverse) */
+s8 D_0028DF84 __attribute__((aligned(4)));

@@ -98,3 +98,11 @@ void test_mode_task(void) {
     func_00137C50();
     g_test_mode_entered = 1;
 }
+
+/* .sbss (the compiler lays these out in reverse) */
+s8 g_test_mode_timer __attribute__((aligned(4)));
+s8 g_test_screen_state __attribute__((aligned(4)));
+s8 g_test_screen __attribute__((aligned(4)));
+s8 g_test_mode_flag __attribute__((aligned(4)));
+s8 g_test_cursor __attribute__((aligned(4)));
+s8 g_test_redraw __attribute__((aligned(4)));
