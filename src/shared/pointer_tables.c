@@ -258,13 +258,13 @@ extern u16 D_0028C9B0[];
 void task_table_init(void);
 void func_00172760(void);
 void func_001727F0(void);
-void func_00172FF0(void);
-void func_00174350(void);
-void func_001756B0(void);
-void func_00176870(void);
-void func_00177A30(void);
-void func_0017A7B0(void);
-void func_0017D530(void);
+void player_shot_1_tables_init(void);
+void player_shot_2_tables_init(void);
+void player_shot_5_tables_init(void);
+void player_shot_6_tables_init(void);
+void player_shot_3_tables_init(void);
+void player_shot_4_tables_init(void);
+void player_shot_8_tables_init(void);
 void func_0017FCB0(void);
 void func_001828A0(void);
 void func_001829B0(void);
@@ -281,20 +281,20 @@ void func_00187AE0(void);
 void func_00187E00(void);
 void func_001881E0(void);
 void func_001882D0(void);
-void func_001882E0(void);
+void player_shot_7_tables_init(void);
 
 
 void pointer_tables_init(void) {
     task_table_init();
     func_00172760();
     func_001727F0();
-    func_00172FF0();
-    func_00174350();
-    func_001756B0();
-    func_00176870();
-    func_00177A30();
-    func_0017A7B0();
-    func_0017D530();
+    player_shot_1_tables_init();
+    player_shot_2_tables_init();
+    player_shot_5_tables_init();
+    player_shot_6_tables_init();
+    player_shot_3_tables_init();
+    player_shot_4_tables_init();
+    player_shot_8_tables_init();
     func_0017FCB0();
     func_001828A0();
     func_001829B0();
@@ -311,7 +311,7 @@ void pointer_tables_init(void) {
     func_00187E00();
     func_001881E0();
     func_001882D0();
-    func_001882E0();
+    player_shot_7_tables_init();
 }
 
 extern u16 g_task_table[];
@@ -496,46 +496,46 @@ extern u16 D_00253358[];
 extern u16 D_00253368[];
 extern u16 D_00253378[];
 extern u16 D_00253388[];
-extern u16 D_002533A0[];
-extern u16 D_002533B0[];
-extern u16 D_002533C0[];
-extern u16 D_002533D0[];
-extern u16 D_002533E0[];
-extern u16 D_002533F0[];
-extern u16 D_00253400[];
-extern u16 D_00253410[];
-extern u16 D_00253420[];
-extern u16 D_00253430[];
-extern u16 D_00253440[];
-extern u16 D_00253450[];
-extern u16 D_00253460[];
-extern u16 D_00253470[];
-extern u16 D_00253480[];
-extern u16 D_00253A18[];
-extern u16 D_00253A28[];
-extern u16 D_00253A38[];
-extern u16 D_00253A48[];
-extern u16 D_00253A58[];
-extern u16 D_00253A68[];
-extern u16 D_00253A78[];
-extern u16 D_00253A88[];
-extern u16 D_00253A98[];
-extern u16 D_00253AA8[];
-extern u16 D_00253AB8[];
-extern u16 D_00253AC8[];
-extern u16 D_00253AD8[];
-extern u16 D_00253AE8[];
-extern u16 D_00253AF8[];
-extern u16 D_00253B08[];
-extern u16 D_00253B18[];
-extern u16 D_00253B28[];
-extern u16 D_00253B38[];
-extern u16 D_00253B48[];
-extern u16 D_00253B58[];
-extern u16 D_00253B68[];
-extern u16 D_00253B78[];
-extern u16 D_00253B88[];
-extern u16 D_00253B98[];
+extern u16 player_shot_1_impact_frames_00[];
+extern u16 player_shot_1_impact_frames_02[];
+extern u16 player_shot_1_impact_frames_04[];
+extern u16 player_shot_1_impact_frames_06[];
+extern u16 player_shot_1_impact_frames_08[];
+extern u16 player_shot_1_impact_frames_10[];
+extern u16 player_shot_1_impact_frames_11[];
+extern u16 player_shot_1_impact_frames_12[];
+extern u16 player_shot_1_impact_frames_13[];
+extern u16 player_shot_1_impact_frames_14[];
+extern u16 player_shot_1_impact_frames_15[];
+extern u16 player_shot_1_impact_frames_17[];
+extern u16 player_shot_1_impact_frames_19[];
+extern u16 player_shot_1_impact_frames_21[];
+extern u16 player_shot_1_impact_frames_23[];
+extern u16 player_shot_1_impact_00[];
+extern u16 player_shot_1_impact_01[];
+extern u16 player_shot_1_impact_02[];
+extern u16 player_shot_1_impact_03[];
+extern u16 player_shot_1_impact_04[];
+extern u16 player_shot_1_impact_05[];
+extern u16 player_shot_1_impact_06[];
+extern u16 player_shot_1_impact_07[];
+extern u16 player_shot_1_impact_08[];
+extern u16 player_shot_1_impact_09[];
+extern u16 player_shot_1_impact_10[];
+extern u16 player_shot_1_impact_11[];
+extern u16 player_shot_1_impact_12[];
+extern u16 player_shot_1_impact_13[];
+extern u16 player_shot_1_impact_14[];
+extern u16 player_shot_1_impact_15[];
+extern u16 player_shot_1_impact_16[];
+extern u16 player_shot_1_impact_17[];
+extern u16 player_shot_1_impact_18[];
+extern u16 player_shot_1_impact_19[];
+extern u16 player_shot_1_impact_20[];
+extern u16 player_shot_1_impact_21[];
+extern u16 player_shot_1_impact_22[];
+extern u16 player_shot_1_impact_23[];
+extern u16 player_shot_1_impact_24[];
 extern u16 D_0028C198[];
 extern u16 D_0028C1A0[];
 extern u16 D_0028C1A8[];
@@ -551,36 +551,36 @@ extern u16 D_0028C1F0[];
 extern u16 D_0028C1F8[];
 extern u16 D_0028C200[];
 extern u16 D_0028C208[];
-extern u16 D_0028C210[];
-extern u16 D_0028C218[];
-extern u16 D_0028C220[];
-extern u16 D_0028C228[];
-extern u16 D_0028C230[];
-extern u16 D_0028C238[];
-extern u16 D_0028C240[];
-extern u16 D_0028C248[];
-extern u16 D_0028C250[];
-extern u16 D_0028C258[];
-extern u16 D_0028C260[];
-extern u16 D_0028C268[];
-extern u16 D_0028C270[];
-extern u16 D_0028C278[];
-extern u16 D_0028C280[];
-extern u16 D_0028C288[];
-extern u16 D_0028C290[];
-extern u16 D_0028C298[];
-extern u16 D_0028C2A0[];
-extern u16 D_0028C2A8[];
-extern u16 D_0028C2B0[];
-extern u16 D_0028C2B8[];
-extern u16 D_0028C2C0[];
-extern u16 D_0028C2C8[];
-extern u16 D_0028C2D0[];
+extern u16 player_shot_1_flight_00[];
+extern u16 player_shot_1_flight_01[];
+extern u16 player_shot_1_flight_02[];
+extern u16 player_shot_1_flight_03[];
+extern u16 player_shot_1_flight_04[];
+extern u16 player_shot_1_flight_05[];
+extern u16 player_shot_1_flight_06[];
+extern u16 player_shot_1_flight_07[];
+extern u16 player_shot_1_flight_08[];
+extern u16 player_shot_1_flight_09[];
+extern u16 player_shot_1_flight_10[];
+extern u16 player_shot_1_flight_11[];
+extern u16 player_shot_1_flight_12[];
+extern u16 player_shot_1_flight_13[];
+extern u16 player_shot_1_flight_14[];
+extern u16 player_shot_1_flight_15[];
+extern u16 player_shot_1_flight_16[];
+extern u16 player_shot_1_flight_17[];
+extern u16 player_shot_1_flight_18[];
+extern u16 player_shot_1_flight_19[];
+extern u16 player_shot_1_flight_20[];
+extern u16 player_shot_1_flight_21[];
+extern u16 player_shot_1_flight_22[];
+extern u16 player_shot_1_flight_23[];
+extern u16 player_shot_1_flight_24[];
 
-extern u16 D_00253940[];
-extern u16 D_002539B0[];
+extern u16 player_shot_1_flight_table[];
+extern u16 player_shot_1_impact_table[];
 
-void func_00172FF0(void) {
+void player_shot_1_tables_init(void) {
     STORE_POINTER(D_00253490 + 5, D_002532A8);
     STORE_POINTER(D_00253490 + 15, D_0028C198);
     STORE_POINTER(D_002534C0 + 5, D_002532A8);
@@ -631,81 +631,81 @@ void func_00172FF0(void) {
     STORE_POINTER(D_002538E0 + 15, D_0028C208);
     STORE_POINTER(D_00253910 + 5, D_00253388);
     STORE_POINTER(D_00253910 + 15, D_0028C208);
-    STORE_POINTER(D_00253940, D_0028C210);
-    STORE_POINTER(D_00253940 + 2, D_0028C218);
-    STORE_POINTER(D_00253940 + 4, D_0028C220);
-    STORE_POINTER(D_00253940 + 6, D_0028C228);
-    STORE_POINTER(D_00253940 + 8, D_0028C230);
-    STORE_POINTER(D_00253940 + 10, D_0028C238);
-    STORE_POINTER(D_00253940 + 12, D_0028C240);
-    STORE_POINTER(D_00253940 + 14, D_0028C248);
-    STORE_POINTER(D_00253940 + 16, D_0028C250);
-    STORE_POINTER(D_00253940 + 18, D_0028C258);
-    STORE_POINTER(D_00253940 + 20, D_0028C260);
-    STORE_POINTER(D_00253940 + 22, D_0028C268);
-    STORE_POINTER(D_00253940 + 24, D_0028C270);
-    STORE_POINTER(D_00253940 + 26, D_0028C278);
-    STORE_POINTER(D_00253940 + 28, D_0028C280);
-    STORE_POINTER(D_00253940 + 30, D_0028C288);
-    STORE_POINTER(D_00253940 + 32, D_0028C290);
-    STORE_POINTER(D_00253940 + 34, D_0028C298);
-    STORE_POINTER(D_00253940 + 36, D_0028C2A0);
-    STORE_POINTER(D_00253940 + 38, D_0028C2A8);
-    STORE_POINTER(D_00253940 + 40, D_0028C2B0);
-    STORE_POINTER(D_00253940 + 42, D_0028C2B8);
-    STORE_POINTER(D_00253940 + 44, D_0028C2C0);
-    STORE_POINTER(D_00253940 + 46, D_0028C2C8);
-    STORE_POINTER(D_00253940 + 48, D_0028C2D0);
-    STORE_POINTER(D_002539B0, D_00253A18);
-    STORE_POINTER(D_002539B0 + 2, D_00253A28);
-    STORE_POINTER(D_002539B0 + 4, D_00253A38);
-    STORE_POINTER(D_002539B0 + 6, D_00253A48);
-    STORE_POINTER(D_002539B0 + 8, D_00253A58);
-    STORE_POINTER(D_002539B0 + 10, D_00253A68);
-    STORE_POINTER(D_002539B0 + 12, D_00253A78);
-    STORE_POINTER(D_002539B0 + 14, D_00253A88);
-    STORE_POINTER(D_002539B0 + 16, D_00253A98);
-    STORE_POINTER(D_002539B0 + 18, D_00253AA8);
-    STORE_POINTER(D_002539B0 + 20, D_00253AB8);
-    STORE_POINTER(D_002539B0 + 22, D_00253AC8);
-    STORE_POINTER(D_002539B0 + 24, D_00253AD8);
-    STORE_POINTER(D_002539B0 + 26, D_00253AE8);
-    STORE_POINTER(D_002539B0 + 28, D_00253AF8);
-    STORE_POINTER(D_002539B0 + 30, D_00253B08);
-    STORE_POINTER(D_002539B0 + 32, D_00253B18);
-    STORE_POINTER(D_002539B0 + 34, D_00253B28);
-    STORE_POINTER(D_002539B0 + 36, D_00253B38);
-    STORE_POINTER(D_002539B0 + 38, D_00253B48);
-    STORE_POINTER(D_002539B0 + 40, D_00253B58);
-    STORE_POINTER(D_002539B0 + 42, D_00253B68);
-    STORE_POINTER(D_002539B0 + 44, D_00253B78);
-    STORE_POINTER(D_002539B0 + 46, D_00253B88);
-    STORE_POINTER(D_002539B0 + 48, D_00253B98);
-    STORE_POINTER(D_00253A18 + 3, D_002533A0);
-    STORE_POINTER(D_00253A28 + 3, D_002533A0);
-    STORE_POINTER(D_00253A38 + 3, D_002533B0);
-    STORE_POINTER(D_00253A48 + 3, D_002533B0);
-    STORE_POINTER(D_00253A58 + 3, D_002533C0);
-    STORE_POINTER(D_00253A68 + 3, D_002533C0);
-    STORE_POINTER(D_00253A78 + 3, D_002533D0);
-    STORE_POINTER(D_00253A88 + 3, D_002533D0);
-    STORE_POINTER(D_00253A98 + 3, D_002533E0);
-    STORE_POINTER(D_00253AA8 + 3, D_002533E0);
-    STORE_POINTER(D_00253AB8 + 3, D_002533F0);
-    STORE_POINTER(D_00253AC8 + 3, D_00253400);
-    STORE_POINTER(D_00253AD8 + 3, D_00253410);
-    STORE_POINTER(D_00253AE8 + 3, D_00253420);
-    STORE_POINTER(D_00253AF8 + 3, D_00253430);
-    STORE_POINTER(D_00253B08 + 3, D_00253440);
-    STORE_POINTER(D_00253B18 + 3, D_00253440);
-    STORE_POINTER(D_00253B28 + 3, D_00253450);
-    STORE_POINTER(D_00253B38 + 3, D_00253450);
-    STORE_POINTER(D_00253B48 + 3, D_00253460);
-    STORE_POINTER(D_00253B58 + 3, D_00253460);
-    STORE_POINTER(D_00253B68 + 3, D_00253470);
-    STORE_POINTER(D_00253B78 + 3, D_00253470);
-    STORE_POINTER(D_00253B88 + 3, D_00253480);
-    STORE_POINTER(D_00253B98 + 3, D_00253480);
+    STORE_POINTER(player_shot_1_flight_table, player_shot_1_flight_00);
+    STORE_POINTER(player_shot_1_flight_table + 2, player_shot_1_flight_01);
+    STORE_POINTER(player_shot_1_flight_table + 4, player_shot_1_flight_02);
+    STORE_POINTER(player_shot_1_flight_table + 6, player_shot_1_flight_03);
+    STORE_POINTER(player_shot_1_flight_table + 8, player_shot_1_flight_04);
+    STORE_POINTER(player_shot_1_flight_table + 10, player_shot_1_flight_05);
+    STORE_POINTER(player_shot_1_flight_table + 12, player_shot_1_flight_06);
+    STORE_POINTER(player_shot_1_flight_table + 14, player_shot_1_flight_07);
+    STORE_POINTER(player_shot_1_flight_table + 16, player_shot_1_flight_08);
+    STORE_POINTER(player_shot_1_flight_table + 18, player_shot_1_flight_09);
+    STORE_POINTER(player_shot_1_flight_table + 20, player_shot_1_flight_10);
+    STORE_POINTER(player_shot_1_flight_table + 22, player_shot_1_flight_11);
+    STORE_POINTER(player_shot_1_flight_table + 24, player_shot_1_flight_12);
+    STORE_POINTER(player_shot_1_flight_table + 26, player_shot_1_flight_13);
+    STORE_POINTER(player_shot_1_flight_table + 28, player_shot_1_flight_14);
+    STORE_POINTER(player_shot_1_flight_table + 30, player_shot_1_flight_15);
+    STORE_POINTER(player_shot_1_flight_table + 32, player_shot_1_flight_16);
+    STORE_POINTER(player_shot_1_flight_table + 34, player_shot_1_flight_17);
+    STORE_POINTER(player_shot_1_flight_table + 36, player_shot_1_flight_18);
+    STORE_POINTER(player_shot_1_flight_table + 38, player_shot_1_flight_19);
+    STORE_POINTER(player_shot_1_flight_table + 40, player_shot_1_flight_20);
+    STORE_POINTER(player_shot_1_flight_table + 42, player_shot_1_flight_21);
+    STORE_POINTER(player_shot_1_flight_table + 44, player_shot_1_flight_22);
+    STORE_POINTER(player_shot_1_flight_table + 46, player_shot_1_flight_23);
+    STORE_POINTER(player_shot_1_flight_table + 48, player_shot_1_flight_24);
+    STORE_POINTER(player_shot_1_impact_table, player_shot_1_impact_00);
+    STORE_POINTER(player_shot_1_impact_table + 2, player_shot_1_impact_01);
+    STORE_POINTER(player_shot_1_impact_table + 4, player_shot_1_impact_02);
+    STORE_POINTER(player_shot_1_impact_table + 6, player_shot_1_impact_03);
+    STORE_POINTER(player_shot_1_impact_table + 8, player_shot_1_impact_04);
+    STORE_POINTER(player_shot_1_impact_table + 10, player_shot_1_impact_05);
+    STORE_POINTER(player_shot_1_impact_table + 12, player_shot_1_impact_06);
+    STORE_POINTER(player_shot_1_impact_table + 14, player_shot_1_impact_07);
+    STORE_POINTER(player_shot_1_impact_table + 16, player_shot_1_impact_08);
+    STORE_POINTER(player_shot_1_impact_table + 18, player_shot_1_impact_09);
+    STORE_POINTER(player_shot_1_impact_table + 20, player_shot_1_impact_10);
+    STORE_POINTER(player_shot_1_impact_table + 22, player_shot_1_impact_11);
+    STORE_POINTER(player_shot_1_impact_table + 24, player_shot_1_impact_12);
+    STORE_POINTER(player_shot_1_impact_table + 26, player_shot_1_impact_13);
+    STORE_POINTER(player_shot_1_impact_table + 28, player_shot_1_impact_14);
+    STORE_POINTER(player_shot_1_impact_table + 30, player_shot_1_impact_15);
+    STORE_POINTER(player_shot_1_impact_table + 32, player_shot_1_impact_16);
+    STORE_POINTER(player_shot_1_impact_table + 34, player_shot_1_impact_17);
+    STORE_POINTER(player_shot_1_impact_table + 36, player_shot_1_impact_18);
+    STORE_POINTER(player_shot_1_impact_table + 38, player_shot_1_impact_19);
+    STORE_POINTER(player_shot_1_impact_table + 40, player_shot_1_impact_20);
+    STORE_POINTER(player_shot_1_impact_table + 42, player_shot_1_impact_21);
+    STORE_POINTER(player_shot_1_impact_table + 44, player_shot_1_impact_22);
+    STORE_POINTER(player_shot_1_impact_table + 46, player_shot_1_impact_23);
+    STORE_POINTER(player_shot_1_impact_table + 48, player_shot_1_impact_24);
+    STORE_POINTER(player_shot_1_impact_00 + 3, player_shot_1_impact_frames_00);
+    STORE_POINTER(player_shot_1_impact_01 + 3, player_shot_1_impact_frames_00);
+    STORE_POINTER(player_shot_1_impact_02 + 3, player_shot_1_impact_frames_02);
+    STORE_POINTER(player_shot_1_impact_03 + 3, player_shot_1_impact_frames_02);
+    STORE_POINTER(player_shot_1_impact_04 + 3, player_shot_1_impact_frames_04);
+    STORE_POINTER(player_shot_1_impact_05 + 3, player_shot_1_impact_frames_04);
+    STORE_POINTER(player_shot_1_impact_06 + 3, player_shot_1_impact_frames_06);
+    STORE_POINTER(player_shot_1_impact_07 + 3, player_shot_1_impact_frames_06);
+    STORE_POINTER(player_shot_1_impact_08 + 3, player_shot_1_impact_frames_08);
+    STORE_POINTER(player_shot_1_impact_09 + 3, player_shot_1_impact_frames_08);
+    STORE_POINTER(player_shot_1_impact_10 + 3, player_shot_1_impact_frames_10);
+    STORE_POINTER(player_shot_1_impact_11 + 3, player_shot_1_impact_frames_11);
+    STORE_POINTER(player_shot_1_impact_12 + 3, player_shot_1_impact_frames_12);
+    STORE_POINTER(player_shot_1_impact_13 + 3, player_shot_1_impact_frames_13);
+    STORE_POINTER(player_shot_1_impact_14 + 3, player_shot_1_impact_frames_14);
+    STORE_POINTER(player_shot_1_impact_15 + 3, player_shot_1_impact_frames_15);
+    STORE_POINTER(player_shot_1_impact_16 + 3, player_shot_1_impact_frames_15);
+    STORE_POINTER(player_shot_1_impact_17 + 3, player_shot_1_impact_frames_17);
+    STORE_POINTER(player_shot_1_impact_18 + 3, player_shot_1_impact_frames_17);
+    STORE_POINTER(player_shot_1_impact_19 + 3, player_shot_1_impact_frames_19);
+    STORE_POINTER(player_shot_1_impact_20 + 3, player_shot_1_impact_frames_19);
+    STORE_POINTER(player_shot_1_impact_21 + 3, player_shot_1_impact_frames_21);
+    STORE_POINTER(player_shot_1_impact_22 + 3, player_shot_1_impact_frames_21);
+    STORE_POINTER(player_shot_1_impact_23 + 3, player_shot_1_impact_frames_23);
+    STORE_POINTER(player_shot_1_impact_24 + 3, player_shot_1_impact_frames_23);
 }
 
 extern u16 D_00253BA8[];
@@ -723,46 +723,46 @@ extern u16 D_00253C58[];
 extern u16 D_00253C68[];
 extern u16 D_00253C78[];
 extern u16 D_00253C88[];
-extern u16 D_00253CA0[];
-extern u16 D_00253CB0[];
-extern u16 D_00253CC0[];
-extern u16 D_00253CD0[];
-extern u16 D_00253CE0[];
-extern u16 D_00253CF0[];
-extern u16 D_00253D00[];
-extern u16 D_00253D10[];
-extern u16 D_00253D20[];
-extern u16 D_00253D30[];
-extern u16 D_00253D40[];
-extern u16 D_00253D50[];
-extern u16 D_00253D60[];
-extern u16 D_00253D70[];
-extern u16 D_00253D80[];
-extern u16 D_00254278[];
-extern u16 D_00254288[];
-extern u16 D_00254298[];
-extern u16 D_002542A8[];
-extern u16 D_002542B8[];
-extern u16 D_002542C8[];
-extern u16 D_002542D8[];
-extern u16 D_002542E8[];
-extern u16 D_002542F8[];
-extern u16 D_00254308[];
-extern u16 D_00254318[];
-extern u16 D_00254328[];
-extern u16 D_00254338[];
-extern u16 D_00254348[];
-extern u16 D_00254358[];
-extern u16 D_00254368[];
-extern u16 D_00254378[];
-extern u16 D_00254388[];
-extern u16 D_00254398[];
-extern u16 D_002543A8[];
-extern u16 D_002543B8[];
-extern u16 D_002543C8[];
-extern u16 D_002543D8[];
-extern u16 D_002543E8[];
-extern u16 D_002543F8[];
+extern u16 player_shot_2_impact_frames_00[];
+extern u16 player_shot_2_impact_frames_02[];
+extern u16 player_shot_2_impact_frames_04[];
+extern u16 player_shot_2_impact_frames_06[];
+extern u16 player_shot_2_impact_frames_08[];
+extern u16 player_shot_2_impact_frames_10[];
+extern u16 player_shot_2_impact_frames_11[];
+extern u16 player_shot_2_impact_frames_12[];
+extern u16 player_shot_2_impact_frames_13[];
+extern u16 player_shot_2_impact_frames_14[];
+extern u16 player_shot_2_impact_frames_15[];
+extern u16 player_shot_2_impact_frames_17[];
+extern u16 player_shot_2_impact_frames_19[];
+extern u16 player_shot_2_impact_frames_21[];
+extern u16 player_shot_2_impact_frames_23[];
+extern u16 player_shot_2_impact_00[];
+extern u16 player_shot_2_impact_01[];
+extern u16 player_shot_2_impact_02[];
+extern u16 player_shot_2_impact_03[];
+extern u16 player_shot_2_impact_04[];
+extern u16 player_shot_2_impact_05[];
+extern u16 player_shot_2_impact_06[];
+extern u16 player_shot_2_impact_07[];
+extern u16 player_shot_2_impact_08[];
+extern u16 player_shot_2_impact_09[];
+extern u16 player_shot_2_impact_10[];
+extern u16 player_shot_2_impact_11[];
+extern u16 player_shot_2_impact_12[];
+extern u16 player_shot_2_impact_13[];
+extern u16 player_shot_2_impact_14[];
+extern u16 player_shot_2_impact_15[];
+extern u16 player_shot_2_impact_16[];
+extern u16 player_shot_2_impact_17[];
+extern u16 player_shot_2_impact_18[];
+extern u16 player_shot_2_impact_19[];
+extern u16 player_shot_2_impact_20[];
+extern u16 player_shot_2_impact_21[];
+extern u16 player_shot_2_impact_22[];
+extern u16 player_shot_2_impact_23[];
+extern u16 player_shot_2_impact_24[];
 extern u16 D_0028C2D8[];
 extern u16 D_0028C2E0[];
 extern u16 D_0028C2E8[];
@@ -778,36 +778,36 @@ extern u16 D_0028C330[];
 extern u16 D_0028C338[];
 extern u16 D_0028C340[];
 extern u16 D_0028C348[];
-extern u16 D_0028C350[];
-extern u16 D_0028C358[];
-extern u16 D_0028C360[];
-extern u16 D_0028C368[];
-extern u16 D_0028C370[];
-extern u16 D_0028C378[];
-extern u16 D_0028C380[];
-extern u16 D_0028C388[];
-extern u16 D_0028C390[];
-extern u16 D_0028C398[];
-extern u16 D_0028C3A0[];
-extern u16 D_0028C3A8[];
-extern u16 D_0028C3B0[];
-extern u16 D_0028C3B8[];
-extern u16 D_0028C3C0[];
-extern u16 D_0028C3C8[];
-extern u16 D_0028C3D0[];
-extern u16 D_0028C3D8[];
-extern u16 D_0028C3E0[];
-extern u16 D_0028C3E8[];
-extern u16 D_0028C3F0[];
-extern u16 D_0028C3F8[];
-extern u16 D_0028C400[];
-extern u16 D_0028C408[];
-extern u16 D_0028C410[];
+extern u16 player_shot_2_flight_00[];
+extern u16 player_shot_2_flight_01[];
+extern u16 player_shot_2_flight_02[];
+extern u16 player_shot_2_flight_03[];
+extern u16 player_shot_2_flight_04[];
+extern u16 player_shot_2_flight_05[];
+extern u16 player_shot_2_flight_06[];
+extern u16 player_shot_2_flight_07[];
+extern u16 player_shot_2_flight_08[];
+extern u16 player_shot_2_flight_09[];
+extern u16 player_shot_2_flight_10[];
+extern u16 player_shot_2_flight_11[];
+extern u16 player_shot_2_flight_12[];
+extern u16 player_shot_2_flight_13[];
+extern u16 player_shot_2_flight_14[];
+extern u16 player_shot_2_flight_15[];
+extern u16 player_shot_2_flight_16[];
+extern u16 player_shot_2_flight_17[];
+extern u16 player_shot_2_flight_18[];
+extern u16 player_shot_2_flight_19[];
+extern u16 player_shot_2_flight_20[];
+extern u16 player_shot_2_flight_21[];
+extern u16 player_shot_2_flight_22[];
+extern u16 player_shot_2_flight_23[];
+extern u16 player_shot_2_flight_24[];
 
-extern u16 D_002541A0[];
-extern u16 D_00254210[];
+extern u16 player_shot_2_flight_table[];
+extern u16 player_shot_2_impact_table[];
 
-void func_00174350(void) {
+void player_shot_2_tables_init(void) {
     STORE_POINTER(D_00253D90 + 5, D_00253BA8);
     STORE_POINTER(D_00253D90 + 15, D_0028C2D8);
     STORE_POINTER(D_00253D90 + 24, D_00253BA8);
@@ -858,159 +858,159 @@ void func_00174350(void) {
     STORE_POINTER(D_00254150 + 15, D_0028C348);
     STORE_POINTER(D_00254150 + 24, D_00253C88);
     STORE_POINTER(D_00254150 + 34, D_0028C348);
-    STORE_POINTER(D_002541A0, D_0028C350);
-    STORE_POINTER(D_002541A0 + 2, D_0028C358);
-    STORE_POINTER(D_002541A0 + 4, D_0028C360);
-    STORE_POINTER(D_002541A0 + 6, D_0028C368);
-    STORE_POINTER(D_002541A0 + 8, D_0028C370);
-    STORE_POINTER(D_002541A0 + 10, D_0028C378);
-    STORE_POINTER(D_002541A0 + 12, D_0028C380);
-    STORE_POINTER(D_002541A0 + 14, D_0028C388);
-    STORE_POINTER(D_002541A0 + 16, D_0028C390);
-    STORE_POINTER(D_002541A0 + 18, D_0028C398);
-    STORE_POINTER(D_002541A0 + 20, D_0028C3A0);
-    STORE_POINTER(D_002541A0 + 22, D_0028C3A8);
-    STORE_POINTER(D_002541A0 + 24, D_0028C3B0);
-    STORE_POINTER(D_002541A0 + 26, D_0028C3B8);
-    STORE_POINTER(D_002541A0 + 28, D_0028C3C0);
-    STORE_POINTER(D_002541A0 + 30, D_0028C3C8);
-    STORE_POINTER(D_002541A0 + 32, D_0028C3D0);
-    STORE_POINTER(D_002541A0 + 34, D_0028C3D8);
-    STORE_POINTER(D_002541A0 + 36, D_0028C3E0);
-    STORE_POINTER(D_002541A0 + 38, D_0028C3E8);
-    STORE_POINTER(D_002541A0 + 40, D_0028C3F0);
-    STORE_POINTER(D_002541A0 + 42, D_0028C3F8);
-    STORE_POINTER(D_002541A0 + 44, D_0028C400);
-    STORE_POINTER(D_002541A0 + 46, D_0028C408);
-    STORE_POINTER(D_002541A0 + 48, D_0028C410);
-    STORE_POINTER(D_00254210, D_00254278);
-    STORE_POINTER(D_00254210 + 2, D_00254288);
-    STORE_POINTER(D_00254210 + 4, D_00254298);
-    STORE_POINTER(D_00254210 + 6, D_002542A8);
-    STORE_POINTER(D_00254210 + 8, D_002542B8);
-    STORE_POINTER(D_00254210 + 10, D_002542C8);
-    STORE_POINTER(D_00254210 + 12, D_002542D8);
-    STORE_POINTER(D_00254210 + 14, D_002542E8);
-    STORE_POINTER(D_00254210 + 16, D_002542F8);
-    STORE_POINTER(D_00254210 + 18, D_00254308);
-    STORE_POINTER(D_00254210 + 20, D_00254318);
-    STORE_POINTER(D_00254210 + 22, D_00254328);
-    STORE_POINTER(D_00254210 + 24, D_00254338);
-    STORE_POINTER(D_00254210 + 26, D_00254348);
-    STORE_POINTER(D_00254210 + 28, D_00254358);
-    STORE_POINTER(D_00254210 + 30, D_00254368);
-    STORE_POINTER(D_00254210 + 32, D_00254378);
-    STORE_POINTER(D_00254210 + 34, D_00254388);
-    STORE_POINTER(D_00254210 + 36, D_00254398);
-    STORE_POINTER(D_00254210 + 38, D_002543A8);
-    STORE_POINTER(D_00254210 + 40, D_002543B8);
-    STORE_POINTER(D_00254210 + 42, D_002543C8);
-    STORE_POINTER(D_00254210 + 44, D_002543D8);
-    STORE_POINTER(D_00254210 + 46, D_002543E8);
-    STORE_POINTER(D_00254210 + 48, D_002543F8);
-    STORE_POINTER(D_00254278 + 3, D_00253CA0);
-    STORE_POINTER(D_00254288 + 3, D_00253CA0);
-    STORE_POINTER(D_00254298 + 3, D_00253CB0);
-    STORE_POINTER(D_002542A8 + 3, D_00253CB0);
-    STORE_POINTER(D_002542B8 + 3, D_00253CC0);
-    STORE_POINTER(D_002542C8 + 3, D_00253CC0);
-    STORE_POINTER(D_002542D8 + 3, D_00253CD0);
-    STORE_POINTER(D_002542E8 + 3, D_00253CD0);
-    STORE_POINTER(D_002542F8 + 3, D_00253CE0);
-    STORE_POINTER(D_00254308 + 3, D_00253CE0);
-    STORE_POINTER(D_00254318 + 3, D_00253CF0);
-    STORE_POINTER(D_00254328 + 3, D_00253D00);
-    STORE_POINTER(D_00254338 + 3, D_00253D10);
-    STORE_POINTER(D_00254348 + 3, D_00253D20);
-    STORE_POINTER(D_00254358 + 3, D_00253D30);
-    STORE_POINTER(D_00254368 + 3, D_00253D40);
-    STORE_POINTER(D_00254378 + 3, D_00253D40);
-    STORE_POINTER(D_00254388 + 3, D_00253D50);
-    STORE_POINTER(D_00254398 + 3, D_00253D50);
-    STORE_POINTER(D_002543A8 + 3, D_00253D60);
-    STORE_POINTER(D_002543B8 + 3, D_00253D60);
-    STORE_POINTER(D_002543C8 + 3, D_00253D70);
-    STORE_POINTER(D_002543D8 + 3, D_00253D70);
-    STORE_POINTER(D_002543E8 + 3, D_00253D80);
-    STORE_POINTER(D_002543F8 + 3, D_00253D80);
+    STORE_POINTER(player_shot_2_flight_table, player_shot_2_flight_00);
+    STORE_POINTER(player_shot_2_flight_table + 2, player_shot_2_flight_01);
+    STORE_POINTER(player_shot_2_flight_table + 4, player_shot_2_flight_02);
+    STORE_POINTER(player_shot_2_flight_table + 6, player_shot_2_flight_03);
+    STORE_POINTER(player_shot_2_flight_table + 8, player_shot_2_flight_04);
+    STORE_POINTER(player_shot_2_flight_table + 10, player_shot_2_flight_05);
+    STORE_POINTER(player_shot_2_flight_table + 12, player_shot_2_flight_06);
+    STORE_POINTER(player_shot_2_flight_table + 14, player_shot_2_flight_07);
+    STORE_POINTER(player_shot_2_flight_table + 16, player_shot_2_flight_08);
+    STORE_POINTER(player_shot_2_flight_table + 18, player_shot_2_flight_09);
+    STORE_POINTER(player_shot_2_flight_table + 20, player_shot_2_flight_10);
+    STORE_POINTER(player_shot_2_flight_table + 22, player_shot_2_flight_11);
+    STORE_POINTER(player_shot_2_flight_table + 24, player_shot_2_flight_12);
+    STORE_POINTER(player_shot_2_flight_table + 26, player_shot_2_flight_13);
+    STORE_POINTER(player_shot_2_flight_table + 28, player_shot_2_flight_14);
+    STORE_POINTER(player_shot_2_flight_table + 30, player_shot_2_flight_15);
+    STORE_POINTER(player_shot_2_flight_table + 32, player_shot_2_flight_16);
+    STORE_POINTER(player_shot_2_flight_table + 34, player_shot_2_flight_17);
+    STORE_POINTER(player_shot_2_flight_table + 36, player_shot_2_flight_18);
+    STORE_POINTER(player_shot_2_flight_table + 38, player_shot_2_flight_19);
+    STORE_POINTER(player_shot_2_flight_table + 40, player_shot_2_flight_20);
+    STORE_POINTER(player_shot_2_flight_table + 42, player_shot_2_flight_21);
+    STORE_POINTER(player_shot_2_flight_table + 44, player_shot_2_flight_22);
+    STORE_POINTER(player_shot_2_flight_table + 46, player_shot_2_flight_23);
+    STORE_POINTER(player_shot_2_flight_table + 48, player_shot_2_flight_24);
+    STORE_POINTER(player_shot_2_impact_table, player_shot_2_impact_00);
+    STORE_POINTER(player_shot_2_impact_table + 2, player_shot_2_impact_01);
+    STORE_POINTER(player_shot_2_impact_table + 4, player_shot_2_impact_02);
+    STORE_POINTER(player_shot_2_impact_table + 6, player_shot_2_impact_03);
+    STORE_POINTER(player_shot_2_impact_table + 8, player_shot_2_impact_04);
+    STORE_POINTER(player_shot_2_impact_table + 10, player_shot_2_impact_05);
+    STORE_POINTER(player_shot_2_impact_table + 12, player_shot_2_impact_06);
+    STORE_POINTER(player_shot_2_impact_table + 14, player_shot_2_impact_07);
+    STORE_POINTER(player_shot_2_impact_table + 16, player_shot_2_impact_08);
+    STORE_POINTER(player_shot_2_impact_table + 18, player_shot_2_impact_09);
+    STORE_POINTER(player_shot_2_impact_table + 20, player_shot_2_impact_10);
+    STORE_POINTER(player_shot_2_impact_table + 22, player_shot_2_impact_11);
+    STORE_POINTER(player_shot_2_impact_table + 24, player_shot_2_impact_12);
+    STORE_POINTER(player_shot_2_impact_table + 26, player_shot_2_impact_13);
+    STORE_POINTER(player_shot_2_impact_table + 28, player_shot_2_impact_14);
+    STORE_POINTER(player_shot_2_impact_table + 30, player_shot_2_impact_15);
+    STORE_POINTER(player_shot_2_impact_table + 32, player_shot_2_impact_16);
+    STORE_POINTER(player_shot_2_impact_table + 34, player_shot_2_impact_17);
+    STORE_POINTER(player_shot_2_impact_table + 36, player_shot_2_impact_18);
+    STORE_POINTER(player_shot_2_impact_table + 38, player_shot_2_impact_19);
+    STORE_POINTER(player_shot_2_impact_table + 40, player_shot_2_impact_20);
+    STORE_POINTER(player_shot_2_impact_table + 42, player_shot_2_impact_21);
+    STORE_POINTER(player_shot_2_impact_table + 44, player_shot_2_impact_22);
+    STORE_POINTER(player_shot_2_impact_table + 46, player_shot_2_impact_23);
+    STORE_POINTER(player_shot_2_impact_table + 48, player_shot_2_impact_24);
+    STORE_POINTER(player_shot_2_impact_00 + 3, player_shot_2_impact_frames_00);
+    STORE_POINTER(player_shot_2_impact_01 + 3, player_shot_2_impact_frames_00);
+    STORE_POINTER(player_shot_2_impact_02 + 3, player_shot_2_impact_frames_02);
+    STORE_POINTER(player_shot_2_impact_03 + 3, player_shot_2_impact_frames_02);
+    STORE_POINTER(player_shot_2_impact_04 + 3, player_shot_2_impact_frames_04);
+    STORE_POINTER(player_shot_2_impact_05 + 3, player_shot_2_impact_frames_04);
+    STORE_POINTER(player_shot_2_impact_06 + 3, player_shot_2_impact_frames_06);
+    STORE_POINTER(player_shot_2_impact_07 + 3, player_shot_2_impact_frames_06);
+    STORE_POINTER(player_shot_2_impact_08 + 3, player_shot_2_impact_frames_08);
+    STORE_POINTER(player_shot_2_impact_09 + 3, player_shot_2_impact_frames_08);
+    STORE_POINTER(player_shot_2_impact_10 + 3, player_shot_2_impact_frames_10);
+    STORE_POINTER(player_shot_2_impact_11 + 3, player_shot_2_impact_frames_11);
+    STORE_POINTER(player_shot_2_impact_12 + 3, player_shot_2_impact_frames_12);
+    STORE_POINTER(player_shot_2_impact_13 + 3, player_shot_2_impact_frames_13);
+    STORE_POINTER(player_shot_2_impact_14 + 3, player_shot_2_impact_frames_14);
+    STORE_POINTER(player_shot_2_impact_15 + 3, player_shot_2_impact_frames_15);
+    STORE_POINTER(player_shot_2_impact_16 + 3, player_shot_2_impact_frames_15);
+    STORE_POINTER(player_shot_2_impact_17 + 3, player_shot_2_impact_frames_17);
+    STORE_POINTER(player_shot_2_impact_18 + 3, player_shot_2_impact_frames_17);
+    STORE_POINTER(player_shot_2_impact_19 + 3, player_shot_2_impact_frames_19);
+    STORE_POINTER(player_shot_2_impact_20 + 3, player_shot_2_impact_frames_19);
+    STORE_POINTER(player_shot_2_impact_21 + 3, player_shot_2_impact_frames_21);
+    STORE_POINTER(player_shot_2_impact_22 + 3, player_shot_2_impact_frames_21);
+    STORE_POINTER(player_shot_2_impact_23 + 3, player_shot_2_impact_frames_23);
+    STORE_POINTER(player_shot_2_impact_24 + 3, player_shot_2_impact_frames_23);
 }
 
 extern u16 D_00254410[];
 extern u16 D_00254420[];
 extern u16 D_00254430[];
-extern u16 D_00254440[];
-extern u16 D_00254450[];
-extern u16 D_00254460[];
-extern u16 D_00254470[];
-extern u16 D_00254480[];
-extern u16 D_00254490[];
-extern u16 D_002544A0[];
-extern u16 D_002544B0[];
-extern u16 D_002544C0[];
-extern u16 D_002544D0[];
-extern u16 D_002544E0[];
-extern u16 D_002544F0[];
-extern u16 D_00254500[];
-extern u16 D_00254510[];
-extern u16 D_00254520[];
-extern u16 D_00254AB8[];
-extern u16 D_00254AC8[];
-extern u16 D_00254AD8[];
-extern u16 D_00254AE8[];
-extern u16 D_00254AF8[];
-extern u16 D_00254B08[];
-extern u16 D_00254B18[];
-extern u16 D_00254B28[];
-extern u16 D_00254B38[];
-extern u16 D_00254B48[];
-extern u16 D_00254B58[];
-extern u16 D_00254B68[];
-extern u16 D_00254B78[];
-extern u16 D_00254B88[];
-extern u16 D_00254B98[];
-extern u16 D_00254BA8[];
-extern u16 D_00254BB8[];
-extern u16 D_00254BC8[];
-extern u16 D_00254BD8[];
-extern u16 D_00254BE8[];
-extern u16 D_00254BF8[];
-extern u16 D_00254C08[];
-extern u16 D_00254C18[];
-extern u16 D_00254C28[];
-extern u16 D_00254C38[];
+extern u16 player_shot_5_impact_frames_00[];
+extern u16 player_shot_5_impact_frames_02[];
+extern u16 player_shot_5_impact_frames_04[];
+extern u16 player_shot_5_impact_frames_06[];
+extern u16 player_shot_5_impact_frames_08[];
+extern u16 player_shot_5_impact_frames_10[];
+extern u16 player_shot_5_impact_frames_11[];
+extern u16 player_shot_5_impact_frames_12[];
+extern u16 player_shot_5_impact_frames_13[];
+extern u16 player_shot_5_impact_frames_14[];
+extern u16 player_shot_5_impact_frames_15[];
+extern u16 player_shot_5_impact_frames_17[];
+extern u16 player_shot_5_impact_frames_19[];
+extern u16 player_shot_5_impact_frames_21[];
+extern u16 player_shot_5_impact_frames_23[];
+extern u16 player_shot_5_impact_00[];
+extern u16 player_shot_5_impact_01[];
+extern u16 player_shot_5_impact_02[];
+extern u16 player_shot_5_impact_03[];
+extern u16 player_shot_5_impact_04[];
+extern u16 player_shot_5_impact_05[];
+extern u16 player_shot_5_impact_06[];
+extern u16 player_shot_5_impact_07[];
+extern u16 player_shot_5_impact_08[];
+extern u16 player_shot_5_impact_09[];
+extern u16 player_shot_5_impact_10[];
+extern u16 player_shot_5_impact_11[];
+extern u16 player_shot_5_impact_12[];
+extern u16 player_shot_5_impact_13[];
+extern u16 player_shot_5_impact_14[];
+extern u16 player_shot_5_impact_15[];
+extern u16 player_shot_5_impact_16[];
+extern u16 player_shot_5_impact_17[];
+extern u16 player_shot_5_impact_18[];
+extern u16 player_shot_5_impact_19[];
+extern u16 player_shot_5_impact_20[];
+extern u16 player_shot_5_impact_21[];
+extern u16 player_shot_5_impact_22[];
+extern u16 player_shot_5_impact_23[];
+extern u16 player_shot_5_impact_24[];
 extern u16 D_0028C418[];
 extern u16 D_0028C420[];
 extern u16 D_0028C428[];
-extern u16 D_0028C430[];
-extern u16 D_0028C438[];
-extern u16 D_0028C440[];
-extern u16 D_0028C448[];
-extern u16 D_0028C450[];
-extern u16 D_0028C458[];
-extern u16 D_0028C460[];
-extern u16 D_0028C468[];
-extern u16 D_0028C470[];
-extern u16 D_0028C478[];
-extern u16 D_0028C480[];
-extern u16 D_0028C488[];
-extern u16 D_0028C490[];
-extern u16 D_0028C498[];
-extern u16 D_0028C4A0[];
-extern u16 D_0028C4A8[];
-extern u16 D_0028C4B0[];
-extern u16 D_0028C4B8[];
-extern u16 D_0028C4C0[];
-extern u16 D_0028C4C8[];
-extern u16 D_0028C4D0[];
-extern u16 D_0028C4D8[];
-extern u16 D_0028C4E0[];
-extern u16 D_0028C4E8[];
-extern u16 D_0028C4F0[];
+extern u16 player_shot_5_flight_00[];
+extern u16 player_shot_5_flight_01[];
+extern u16 player_shot_5_flight_02[];
+extern u16 player_shot_5_flight_03[];
+extern u16 player_shot_5_flight_04[];
+extern u16 player_shot_5_flight_05[];
+extern u16 player_shot_5_flight_06[];
+extern u16 player_shot_5_flight_07[];
+extern u16 player_shot_5_flight_08[];
+extern u16 player_shot_5_flight_09[];
+extern u16 player_shot_5_flight_10[];
+extern u16 player_shot_5_flight_11[];
+extern u16 player_shot_5_flight_12[];
+extern u16 player_shot_5_flight_13[];
+extern u16 player_shot_5_flight_14[];
+extern u16 player_shot_5_flight_15[];
+extern u16 player_shot_5_flight_16[];
+extern u16 player_shot_5_flight_17[];
+extern u16 player_shot_5_flight_18[];
+extern u16 player_shot_5_flight_19[];
+extern u16 player_shot_5_flight_20[];
+extern u16 player_shot_5_flight_21[];
+extern u16 player_shot_5_flight_22[];
+extern u16 player_shot_5_flight_23[];
+extern u16 player_shot_5_flight_24[];
 
-extern u16 D_002549E0[];
-extern u16 D_00254A50[];
+extern u16 player_shot_5_flight_table[];
+extern u16 player_shot_5_impact_table[];
 
-void func_001756B0(void) {
+void player_shot_5_tables_init(void) {
     STORE_POINTER(D_00254530 + 5, D_00254410);
     STORE_POINTER(D_00254530 + 15, D_0028C418);
     STORE_POINTER(D_00254560 + 5, D_00254410);
@@ -1061,159 +1061,159 @@ void func_001756B0(void) {
     STORE_POINTER(D_00254980 + 15, D_0028C428);
     STORE_POINTER(D_002549B0 + 5, D_00254430);
     STORE_POINTER(D_002549B0 + 15, D_0028C428);
-    STORE_POINTER(D_002549E0, D_0028C430);
-    STORE_POINTER(D_002549E0 + 2, D_0028C438);
-    STORE_POINTER(D_002549E0 + 4, D_0028C440);
-    STORE_POINTER(D_002549E0 + 6, D_0028C448);
-    STORE_POINTER(D_002549E0 + 8, D_0028C450);
-    STORE_POINTER(D_002549E0 + 10, D_0028C458);
-    STORE_POINTER(D_002549E0 + 12, D_0028C460);
-    STORE_POINTER(D_002549E0 + 14, D_0028C468);
-    STORE_POINTER(D_002549E0 + 16, D_0028C470);
-    STORE_POINTER(D_002549E0 + 18, D_0028C478);
-    STORE_POINTER(D_002549E0 + 20, D_0028C480);
-    STORE_POINTER(D_002549E0 + 22, D_0028C488);
-    STORE_POINTER(D_002549E0 + 24, D_0028C490);
-    STORE_POINTER(D_002549E0 + 26, D_0028C498);
-    STORE_POINTER(D_002549E0 + 28, D_0028C4A0);
-    STORE_POINTER(D_002549E0 + 30, D_0028C4A8);
-    STORE_POINTER(D_002549E0 + 32, D_0028C4B0);
-    STORE_POINTER(D_002549E0 + 34, D_0028C4B8);
-    STORE_POINTER(D_002549E0 + 36, D_0028C4C0);
-    STORE_POINTER(D_002549E0 + 38, D_0028C4C8);
-    STORE_POINTER(D_002549E0 + 40, D_0028C4D0);
-    STORE_POINTER(D_002549E0 + 42, D_0028C4D8);
-    STORE_POINTER(D_002549E0 + 44, D_0028C4E0);
-    STORE_POINTER(D_002549E0 + 46, D_0028C4E8);
-    STORE_POINTER(D_002549E0 + 48, D_0028C4F0);
-    STORE_POINTER(D_00254A50, D_00254AB8);
-    STORE_POINTER(D_00254A50 + 2, D_00254AC8);
-    STORE_POINTER(D_00254A50 + 4, D_00254AD8);
-    STORE_POINTER(D_00254A50 + 6, D_00254AE8);
-    STORE_POINTER(D_00254A50 + 8, D_00254AF8);
-    STORE_POINTER(D_00254A50 + 10, D_00254B08);
-    STORE_POINTER(D_00254A50 + 12, D_00254B18);
-    STORE_POINTER(D_00254A50 + 14, D_00254B28);
-    STORE_POINTER(D_00254A50 + 16, D_00254B38);
-    STORE_POINTER(D_00254A50 + 18, D_00254B48);
-    STORE_POINTER(D_00254A50 + 20, D_00254B58);
-    STORE_POINTER(D_00254A50 + 22, D_00254B68);
-    STORE_POINTER(D_00254A50 + 24, D_00254B78);
-    STORE_POINTER(D_00254A50 + 26, D_00254B88);
-    STORE_POINTER(D_00254A50 + 28, D_00254B98);
-    STORE_POINTER(D_00254A50 + 30, D_00254BA8);
-    STORE_POINTER(D_00254A50 + 32, D_00254BB8);
-    STORE_POINTER(D_00254A50 + 34, D_00254BC8);
-    STORE_POINTER(D_00254A50 + 36, D_00254BD8);
-    STORE_POINTER(D_00254A50 + 38, D_00254BE8);
-    STORE_POINTER(D_00254A50 + 40, D_00254BF8);
-    STORE_POINTER(D_00254A50 + 42, D_00254C08);
-    STORE_POINTER(D_00254A50 + 44, D_00254C18);
-    STORE_POINTER(D_00254A50 + 46, D_00254C28);
-    STORE_POINTER(D_00254A50 + 48, D_00254C38);
-    STORE_POINTER(D_00254AB8 + 3, D_00254440);
-    STORE_POINTER(D_00254AC8 + 3, D_00254440);
-    STORE_POINTER(D_00254AD8 + 3, D_00254450);
-    STORE_POINTER(D_00254AE8 + 3, D_00254450);
-    STORE_POINTER(D_00254AF8 + 3, D_00254460);
-    STORE_POINTER(D_00254B08 + 3, D_00254460);
-    STORE_POINTER(D_00254B18 + 3, D_00254470);
-    STORE_POINTER(D_00254B28 + 3, D_00254470);
-    STORE_POINTER(D_00254B38 + 3, D_00254480);
-    STORE_POINTER(D_00254B48 + 3, D_00254480);
-    STORE_POINTER(D_00254B58 + 3, D_00254490);
-    STORE_POINTER(D_00254B68 + 3, D_002544A0);
-    STORE_POINTER(D_00254B78 + 3, D_002544B0);
-    STORE_POINTER(D_00254B88 + 3, D_002544C0);
-    STORE_POINTER(D_00254B98 + 3, D_002544D0);
-    STORE_POINTER(D_00254BA8 + 3, D_002544E0);
-    STORE_POINTER(D_00254BB8 + 3, D_002544E0);
-    STORE_POINTER(D_00254BC8 + 3, D_002544F0);
-    STORE_POINTER(D_00254BD8 + 3, D_002544F0);
-    STORE_POINTER(D_00254BE8 + 3, D_00254500);
-    STORE_POINTER(D_00254BF8 + 3, D_00254500);
-    STORE_POINTER(D_00254C08 + 3, D_00254510);
-    STORE_POINTER(D_00254C18 + 3, D_00254510);
-    STORE_POINTER(D_00254C28 + 3, D_00254520);
-    STORE_POINTER(D_00254C38 + 3, D_00254520);
+    STORE_POINTER(player_shot_5_flight_table, player_shot_5_flight_00);
+    STORE_POINTER(player_shot_5_flight_table + 2, player_shot_5_flight_01);
+    STORE_POINTER(player_shot_5_flight_table + 4, player_shot_5_flight_02);
+    STORE_POINTER(player_shot_5_flight_table + 6, player_shot_5_flight_03);
+    STORE_POINTER(player_shot_5_flight_table + 8, player_shot_5_flight_04);
+    STORE_POINTER(player_shot_5_flight_table + 10, player_shot_5_flight_05);
+    STORE_POINTER(player_shot_5_flight_table + 12, player_shot_5_flight_06);
+    STORE_POINTER(player_shot_5_flight_table + 14, player_shot_5_flight_07);
+    STORE_POINTER(player_shot_5_flight_table + 16, player_shot_5_flight_08);
+    STORE_POINTER(player_shot_5_flight_table + 18, player_shot_5_flight_09);
+    STORE_POINTER(player_shot_5_flight_table + 20, player_shot_5_flight_10);
+    STORE_POINTER(player_shot_5_flight_table + 22, player_shot_5_flight_11);
+    STORE_POINTER(player_shot_5_flight_table + 24, player_shot_5_flight_12);
+    STORE_POINTER(player_shot_5_flight_table + 26, player_shot_5_flight_13);
+    STORE_POINTER(player_shot_5_flight_table + 28, player_shot_5_flight_14);
+    STORE_POINTER(player_shot_5_flight_table + 30, player_shot_5_flight_15);
+    STORE_POINTER(player_shot_5_flight_table + 32, player_shot_5_flight_16);
+    STORE_POINTER(player_shot_5_flight_table + 34, player_shot_5_flight_17);
+    STORE_POINTER(player_shot_5_flight_table + 36, player_shot_5_flight_18);
+    STORE_POINTER(player_shot_5_flight_table + 38, player_shot_5_flight_19);
+    STORE_POINTER(player_shot_5_flight_table + 40, player_shot_5_flight_20);
+    STORE_POINTER(player_shot_5_flight_table + 42, player_shot_5_flight_21);
+    STORE_POINTER(player_shot_5_flight_table + 44, player_shot_5_flight_22);
+    STORE_POINTER(player_shot_5_flight_table + 46, player_shot_5_flight_23);
+    STORE_POINTER(player_shot_5_flight_table + 48, player_shot_5_flight_24);
+    STORE_POINTER(player_shot_5_impact_table, player_shot_5_impact_00);
+    STORE_POINTER(player_shot_5_impact_table + 2, player_shot_5_impact_01);
+    STORE_POINTER(player_shot_5_impact_table + 4, player_shot_5_impact_02);
+    STORE_POINTER(player_shot_5_impact_table + 6, player_shot_5_impact_03);
+    STORE_POINTER(player_shot_5_impact_table + 8, player_shot_5_impact_04);
+    STORE_POINTER(player_shot_5_impact_table + 10, player_shot_5_impact_05);
+    STORE_POINTER(player_shot_5_impact_table + 12, player_shot_5_impact_06);
+    STORE_POINTER(player_shot_5_impact_table + 14, player_shot_5_impact_07);
+    STORE_POINTER(player_shot_5_impact_table + 16, player_shot_5_impact_08);
+    STORE_POINTER(player_shot_5_impact_table + 18, player_shot_5_impact_09);
+    STORE_POINTER(player_shot_5_impact_table + 20, player_shot_5_impact_10);
+    STORE_POINTER(player_shot_5_impact_table + 22, player_shot_5_impact_11);
+    STORE_POINTER(player_shot_5_impact_table + 24, player_shot_5_impact_12);
+    STORE_POINTER(player_shot_5_impact_table + 26, player_shot_5_impact_13);
+    STORE_POINTER(player_shot_5_impact_table + 28, player_shot_5_impact_14);
+    STORE_POINTER(player_shot_5_impact_table + 30, player_shot_5_impact_15);
+    STORE_POINTER(player_shot_5_impact_table + 32, player_shot_5_impact_16);
+    STORE_POINTER(player_shot_5_impact_table + 34, player_shot_5_impact_17);
+    STORE_POINTER(player_shot_5_impact_table + 36, player_shot_5_impact_18);
+    STORE_POINTER(player_shot_5_impact_table + 38, player_shot_5_impact_19);
+    STORE_POINTER(player_shot_5_impact_table + 40, player_shot_5_impact_20);
+    STORE_POINTER(player_shot_5_impact_table + 42, player_shot_5_impact_21);
+    STORE_POINTER(player_shot_5_impact_table + 44, player_shot_5_impact_22);
+    STORE_POINTER(player_shot_5_impact_table + 46, player_shot_5_impact_23);
+    STORE_POINTER(player_shot_5_impact_table + 48, player_shot_5_impact_24);
+    STORE_POINTER(player_shot_5_impact_00 + 3, player_shot_5_impact_frames_00);
+    STORE_POINTER(player_shot_5_impact_01 + 3, player_shot_5_impact_frames_00);
+    STORE_POINTER(player_shot_5_impact_02 + 3, player_shot_5_impact_frames_02);
+    STORE_POINTER(player_shot_5_impact_03 + 3, player_shot_5_impact_frames_02);
+    STORE_POINTER(player_shot_5_impact_04 + 3, player_shot_5_impact_frames_04);
+    STORE_POINTER(player_shot_5_impact_05 + 3, player_shot_5_impact_frames_04);
+    STORE_POINTER(player_shot_5_impact_06 + 3, player_shot_5_impact_frames_06);
+    STORE_POINTER(player_shot_5_impact_07 + 3, player_shot_5_impact_frames_06);
+    STORE_POINTER(player_shot_5_impact_08 + 3, player_shot_5_impact_frames_08);
+    STORE_POINTER(player_shot_5_impact_09 + 3, player_shot_5_impact_frames_08);
+    STORE_POINTER(player_shot_5_impact_10 + 3, player_shot_5_impact_frames_10);
+    STORE_POINTER(player_shot_5_impact_11 + 3, player_shot_5_impact_frames_11);
+    STORE_POINTER(player_shot_5_impact_12 + 3, player_shot_5_impact_frames_12);
+    STORE_POINTER(player_shot_5_impact_13 + 3, player_shot_5_impact_frames_13);
+    STORE_POINTER(player_shot_5_impact_14 + 3, player_shot_5_impact_frames_14);
+    STORE_POINTER(player_shot_5_impact_15 + 3, player_shot_5_impact_frames_15);
+    STORE_POINTER(player_shot_5_impact_16 + 3, player_shot_5_impact_frames_15);
+    STORE_POINTER(player_shot_5_impact_17 + 3, player_shot_5_impact_frames_17);
+    STORE_POINTER(player_shot_5_impact_18 + 3, player_shot_5_impact_frames_17);
+    STORE_POINTER(player_shot_5_impact_19 + 3, player_shot_5_impact_frames_19);
+    STORE_POINTER(player_shot_5_impact_20 + 3, player_shot_5_impact_frames_19);
+    STORE_POINTER(player_shot_5_impact_21 + 3, player_shot_5_impact_frames_21);
+    STORE_POINTER(player_shot_5_impact_22 + 3, player_shot_5_impact_frames_21);
+    STORE_POINTER(player_shot_5_impact_23 + 3, player_shot_5_impact_frames_23);
+    STORE_POINTER(player_shot_5_impact_24 + 3, player_shot_5_impact_frames_23);
 }
 
 extern u16 D_00254C50[];
 extern u16 D_00254C60[];
 extern u16 D_00254C70[];
-extern u16 D_00254C80[];
-extern u16 D_00254C90[];
-extern u16 D_00254CA0[];
-extern u16 D_00254CB0[];
-extern u16 D_00254CC0[];
-extern u16 D_00254CD0[];
-extern u16 D_00254CE0[];
-extern u16 D_00254CF0[];
-extern u16 D_00254D00[];
-extern u16 D_00254D10[];
-extern u16 D_00254D20[];
-extern u16 D_00254D30[];
-extern u16 D_00254D40[];
-extern u16 D_00254D50[];
-extern u16 D_00254D60[];
-extern u16 D_00255258[];
-extern u16 D_00255268[];
-extern u16 D_00255278[];
-extern u16 D_00255288[];
-extern u16 D_00255298[];
-extern u16 D_002552A8[];
-extern u16 D_002552B8[];
-extern u16 D_002552C8[];
-extern u16 D_002552D8[];
-extern u16 D_002552E8[];
-extern u16 D_002552F8[];
-extern u16 D_00255308[];
-extern u16 D_00255318[];
-extern u16 D_00255328[];
-extern u16 D_00255338[];
-extern u16 D_00255348[];
-extern u16 D_00255358[];
-extern u16 D_00255368[];
-extern u16 D_00255378[];
-extern u16 D_00255388[];
-extern u16 D_00255398[];
-extern u16 D_002553A8[];
-extern u16 D_002553B8[];
-extern u16 D_002553C8[];
-extern u16 D_002553D8[];
+extern u16 player_shot_6_impact_frames_00[];
+extern u16 player_shot_6_impact_frames_02[];
+extern u16 player_shot_6_impact_frames_04[];
+extern u16 player_shot_6_impact_frames_06[];
+extern u16 player_shot_6_impact_frames_08[];
+extern u16 player_shot_6_impact_frames_10[];
+extern u16 player_shot_6_impact_frames_11[];
+extern u16 player_shot_6_impact_frames_12[];
+extern u16 player_shot_6_impact_frames_13[];
+extern u16 player_shot_6_impact_frames_14[];
+extern u16 player_shot_6_impact_frames_15[];
+extern u16 player_shot_6_impact_frames_17[];
+extern u16 player_shot_6_impact_frames_19[];
+extern u16 player_shot_6_impact_frames_21[];
+extern u16 player_shot_6_impact_frames_23[];
+extern u16 player_shot_6_impact_00[];
+extern u16 player_shot_6_impact_01[];
+extern u16 player_shot_6_impact_02[];
+extern u16 player_shot_6_impact_03[];
+extern u16 player_shot_6_impact_04[];
+extern u16 player_shot_6_impact_05[];
+extern u16 player_shot_6_impact_06[];
+extern u16 player_shot_6_impact_07[];
+extern u16 player_shot_6_impact_08[];
+extern u16 player_shot_6_impact_09[];
+extern u16 player_shot_6_impact_10[];
+extern u16 player_shot_6_impact_11[];
+extern u16 player_shot_6_impact_12[];
+extern u16 player_shot_6_impact_13[];
+extern u16 player_shot_6_impact_14[];
+extern u16 player_shot_6_impact_15[];
+extern u16 player_shot_6_impact_16[];
+extern u16 player_shot_6_impact_17[];
+extern u16 player_shot_6_impact_18[];
+extern u16 player_shot_6_impact_19[];
+extern u16 player_shot_6_impact_20[];
+extern u16 player_shot_6_impact_21[];
+extern u16 player_shot_6_impact_22[];
+extern u16 player_shot_6_impact_23[];
+extern u16 player_shot_6_impact_24[];
 extern u16 D_0028C4F8[];
 extern u16 D_0028C500[];
 extern u16 D_0028C508[];
-extern u16 D_0028C510[];
-extern u16 D_0028C518[];
-extern u16 D_0028C520[];
-extern u16 D_0028C528[];
-extern u16 D_0028C530[];
-extern u16 D_0028C538[];
-extern u16 D_0028C540[];
-extern u16 D_0028C548[];
-extern u16 D_0028C550[];
-extern u16 D_0028C558[];
-extern u16 D_0028C560[];
-extern u16 D_0028C568[];
-extern u16 D_0028C570[];
-extern u16 D_0028C578[];
-extern u16 D_0028C580[];
-extern u16 D_0028C588[];
-extern u16 D_0028C590[];
-extern u16 D_0028C598[];
-extern u16 D_0028C5A0[];
-extern u16 D_0028C5A8[];
-extern u16 D_0028C5B0[];
-extern u16 D_0028C5B8[];
-extern u16 D_0028C5C0[];
-extern u16 D_0028C5C8[];
-extern u16 D_0028C5D0[];
+extern u16 player_shot_6_flight_00[];
+extern u16 player_shot_6_flight_01[];
+extern u16 player_shot_6_flight_02[];
+extern u16 player_shot_6_flight_03[];
+extern u16 player_shot_6_flight_04[];
+extern u16 player_shot_6_flight_05[];
+extern u16 player_shot_6_flight_06[];
+extern u16 player_shot_6_flight_07[];
+extern u16 player_shot_6_flight_08[];
+extern u16 player_shot_6_flight_09[];
+extern u16 player_shot_6_flight_10[];
+extern u16 player_shot_6_flight_11[];
+extern u16 player_shot_6_flight_12[];
+extern u16 player_shot_6_flight_13[];
+extern u16 player_shot_6_flight_14[];
+extern u16 player_shot_6_flight_15[];
+extern u16 player_shot_6_flight_16[];
+extern u16 player_shot_6_flight_17[];
+extern u16 player_shot_6_flight_18[];
+extern u16 player_shot_6_flight_19[];
+extern u16 player_shot_6_flight_20[];
+extern u16 player_shot_6_flight_21[];
+extern u16 player_shot_6_flight_22[];
+extern u16 player_shot_6_flight_23[];
+extern u16 player_shot_6_flight_24[];
 
-extern u16 D_00255180[];
-extern u16 D_002551F0[];
+extern u16 player_shot_6_flight_table[];
+extern u16 player_shot_6_impact_table[];
 
-void func_00176870(void) {
+void player_shot_6_tables_init(void) {
     STORE_POINTER(D_00254D70 + 5, D_00254C50);
     STORE_POINTER(D_00254D70 + 15, D_0028C4F8);
     STORE_POINTER(D_00254D70 + 24, D_00254C50);
@@ -1264,81 +1264,81 @@ void func_00176870(void) {
     STORE_POINTER(D_00255130 + 15, D_0028C508);
     STORE_POINTER(D_00255130 + 24, D_00254C70);
     STORE_POINTER(D_00255130 + 34, D_0028C508);
-    STORE_POINTER(D_00255180, D_0028C510);
-    STORE_POINTER(D_00255180 + 2, D_0028C518);
-    STORE_POINTER(D_00255180 + 4, D_0028C520);
-    STORE_POINTER(D_00255180 + 6, D_0028C528);
-    STORE_POINTER(D_00255180 + 8, D_0028C530);
-    STORE_POINTER(D_00255180 + 10, D_0028C538);
-    STORE_POINTER(D_00255180 + 12, D_0028C540);
-    STORE_POINTER(D_00255180 + 14, D_0028C548);
-    STORE_POINTER(D_00255180 + 16, D_0028C550);
-    STORE_POINTER(D_00255180 + 18, D_0028C558);
-    STORE_POINTER(D_00255180 + 20, D_0028C560);
-    STORE_POINTER(D_00255180 + 22, D_0028C568);
-    STORE_POINTER(D_00255180 + 24, D_0028C570);
-    STORE_POINTER(D_00255180 + 26, D_0028C578);
-    STORE_POINTER(D_00255180 + 28, D_0028C580);
-    STORE_POINTER(D_00255180 + 30, D_0028C588);
-    STORE_POINTER(D_00255180 + 32, D_0028C590);
-    STORE_POINTER(D_00255180 + 34, D_0028C598);
-    STORE_POINTER(D_00255180 + 36, D_0028C5A0);
-    STORE_POINTER(D_00255180 + 38, D_0028C5A8);
-    STORE_POINTER(D_00255180 + 40, D_0028C5B0);
-    STORE_POINTER(D_00255180 + 42, D_0028C5B8);
-    STORE_POINTER(D_00255180 + 44, D_0028C5C0);
-    STORE_POINTER(D_00255180 + 46, D_0028C5C8);
-    STORE_POINTER(D_00255180 + 48, D_0028C5D0);
-    STORE_POINTER(D_002551F0, D_00255258);
-    STORE_POINTER(D_002551F0 + 2, D_00255268);
-    STORE_POINTER(D_002551F0 + 4, D_00255278);
-    STORE_POINTER(D_002551F0 + 6, D_00255288);
-    STORE_POINTER(D_002551F0 + 8, D_00255298);
-    STORE_POINTER(D_002551F0 + 10, D_002552A8);
-    STORE_POINTER(D_002551F0 + 12, D_002552B8);
-    STORE_POINTER(D_002551F0 + 14, D_002552C8);
-    STORE_POINTER(D_002551F0 + 16, D_002552D8);
-    STORE_POINTER(D_002551F0 + 18, D_002552E8);
-    STORE_POINTER(D_002551F0 + 20, D_002552F8);
-    STORE_POINTER(D_002551F0 + 22, D_00255308);
-    STORE_POINTER(D_002551F0 + 24, D_00255318);
-    STORE_POINTER(D_002551F0 + 26, D_00255328);
-    STORE_POINTER(D_002551F0 + 28, D_00255338);
-    STORE_POINTER(D_002551F0 + 30, D_00255348);
-    STORE_POINTER(D_002551F0 + 32, D_00255358);
-    STORE_POINTER(D_002551F0 + 34, D_00255368);
-    STORE_POINTER(D_002551F0 + 36, D_00255378);
-    STORE_POINTER(D_002551F0 + 38, D_00255388);
-    STORE_POINTER(D_002551F0 + 40, D_00255398);
-    STORE_POINTER(D_002551F0 + 42, D_002553A8);
-    STORE_POINTER(D_002551F0 + 44, D_002553B8);
-    STORE_POINTER(D_002551F0 + 46, D_002553C8);
-    STORE_POINTER(D_002551F0 + 48, D_002553D8);
-    STORE_POINTER(D_00255258 + 3, D_00254C80);
-    STORE_POINTER(D_00255268 + 3, D_00254C80);
-    STORE_POINTER(D_00255278 + 3, D_00254C90);
-    STORE_POINTER(D_00255288 + 3, D_00254C90);
-    STORE_POINTER(D_00255298 + 3, D_00254CA0);
-    STORE_POINTER(D_002552A8 + 3, D_00254CA0);
-    STORE_POINTER(D_002552B8 + 3, D_00254CB0);
-    STORE_POINTER(D_002552C8 + 3, D_00254CB0);
-    STORE_POINTER(D_002552D8 + 3, D_00254CC0);
-    STORE_POINTER(D_002552E8 + 3, D_00254CC0);
-    STORE_POINTER(D_002552F8 + 3, D_00254CD0);
-    STORE_POINTER(D_00255308 + 3, D_00254CE0);
-    STORE_POINTER(D_00255318 + 3, D_00254CF0);
-    STORE_POINTER(D_00255328 + 3, D_00254D00);
-    STORE_POINTER(D_00255338 + 3, D_00254D10);
-    STORE_POINTER(D_00255348 + 3, D_00254D20);
-    STORE_POINTER(D_00255358 + 3, D_00254D20);
-    STORE_POINTER(D_00255368 + 3, D_00254D30);
-    STORE_POINTER(D_00255378 + 3, D_00254D30);
-    STORE_POINTER(D_00255388 + 3, D_00254D40);
-    STORE_POINTER(D_00255398 + 3, D_00254D40);
-    STORE_POINTER(D_002553A8 + 3, D_00254D50);
-    STORE_POINTER(D_002553B8 + 3, D_00254D50);
-    STORE_POINTER(D_002553C8 + 3, D_00254D60);
-    STORE_POINTER(D_002553D8 + 3, D_00254D60);
+    STORE_POINTER(player_shot_6_flight_table, player_shot_6_flight_00);
+    STORE_POINTER(player_shot_6_flight_table + 2, player_shot_6_flight_01);
+    STORE_POINTER(player_shot_6_flight_table + 4, player_shot_6_flight_02);
+    STORE_POINTER(player_shot_6_flight_table + 6, player_shot_6_flight_03);
+    STORE_POINTER(player_shot_6_flight_table + 8, player_shot_6_flight_04);
+    STORE_POINTER(player_shot_6_flight_table + 10, player_shot_6_flight_05);
+    STORE_POINTER(player_shot_6_flight_table + 12, player_shot_6_flight_06);
+    STORE_POINTER(player_shot_6_flight_table + 14, player_shot_6_flight_07);
+    STORE_POINTER(player_shot_6_flight_table + 16, player_shot_6_flight_08);
+    STORE_POINTER(player_shot_6_flight_table + 18, player_shot_6_flight_09);
+    STORE_POINTER(player_shot_6_flight_table + 20, player_shot_6_flight_10);
+    STORE_POINTER(player_shot_6_flight_table + 22, player_shot_6_flight_11);
+    STORE_POINTER(player_shot_6_flight_table + 24, player_shot_6_flight_12);
+    STORE_POINTER(player_shot_6_flight_table + 26, player_shot_6_flight_13);
+    STORE_POINTER(player_shot_6_flight_table + 28, player_shot_6_flight_14);
+    STORE_POINTER(player_shot_6_flight_table + 30, player_shot_6_flight_15);
+    STORE_POINTER(player_shot_6_flight_table + 32, player_shot_6_flight_16);
+    STORE_POINTER(player_shot_6_flight_table + 34, player_shot_6_flight_17);
+    STORE_POINTER(player_shot_6_flight_table + 36, player_shot_6_flight_18);
+    STORE_POINTER(player_shot_6_flight_table + 38, player_shot_6_flight_19);
+    STORE_POINTER(player_shot_6_flight_table + 40, player_shot_6_flight_20);
+    STORE_POINTER(player_shot_6_flight_table + 42, player_shot_6_flight_21);
+    STORE_POINTER(player_shot_6_flight_table + 44, player_shot_6_flight_22);
+    STORE_POINTER(player_shot_6_flight_table + 46, player_shot_6_flight_23);
+    STORE_POINTER(player_shot_6_flight_table + 48, player_shot_6_flight_24);
+    STORE_POINTER(player_shot_6_impact_table, player_shot_6_impact_00);
+    STORE_POINTER(player_shot_6_impact_table + 2, player_shot_6_impact_01);
+    STORE_POINTER(player_shot_6_impact_table + 4, player_shot_6_impact_02);
+    STORE_POINTER(player_shot_6_impact_table + 6, player_shot_6_impact_03);
+    STORE_POINTER(player_shot_6_impact_table + 8, player_shot_6_impact_04);
+    STORE_POINTER(player_shot_6_impact_table + 10, player_shot_6_impact_05);
+    STORE_POINTER(player_shot_6_impact_table + 12, player_shot_6_impact_06);
+    STORE_POINTER(player_shot_6_impact_table + 14, player_shot_6_impact_07);
+    STORE_POINTER(player_shot_6_impact_table + 16, player_shot_6_impact_08);
+    STORE_POINTER(player_shot_6_impact_table + 18, player_shot_6_impact_09);
+    STORE_POINTER(player_shot_6_impact_table + 20, player_shot_6_impact_10);
+    STORE_POINTER(player_shot_6_impact_table + 22, player_shot_6_impact_11);
+    STORE_POINTER(player_shot_6_impact_table + 24, player_shot_6_impact_12);
+    STORE_POINTER(player_shot_6_impact_table + 26, player_shot_6_impact_13);
+    STORE_POINTER(player_shot_6_impact_table + 28, player_shot_6_impact_14);
+    STORE_POINTER(player_shot_6_impact_table + 30, player_shot_6_impact_15);
+    STORE_POINTER(player_shot_6_impact_table + 32, player_shot_6_impact_16);
+    STORE_POINTER(player_shot_6_impact_table + 34, player_shot_6_impact_17);
+    STORE_POINTER(player_shot_6_impact_table + 36, player_shot_6_impact_18);
+    STORE_POINTER(player_shot_6_impact_table + 38, player_shot_6_impact_19);
+    STORE_POINTER(player_shot_6_impact_table + 40, player_shot_6_impact_20);
+    STORE_POINTER(player_shot_6_impact_table + 42, player_shot_6_impact_21);
+    STORE_POINTER(player_shot_6_impact_table + 44, player_shot_6_impact_22);
+    STORE_POINTER(player_shot_6_impact_table + 46, player_shot_6_impact_23);
+    STORE_POINTER(player_shot_6_impact_table + 48, player_shot_6_impact_24);
+    STORE_POINTER(player_shot_6_impact_00 + 3, player_shot_6_impact_frames_00);
+    STORE_POINTER(player_shot_6_impact_01 + 3, player_shot_6_impact_frames_00);
+    STORE_POINTER(player_shot_6_impact_02 + 3, player_shot_6_impact_frames_02);
+    STORE_POINTER(player_shot_6_impact_03 + 3, player_shot_6_impact_frames_02);
+    STORE_POINTER(player_shot_6_impact_04 + 3, player_shot_6_impact_frames_04);
+    STORE_POINTER(player_shot_6_impact_05 + 3, player_shot_6_impact_frames_04);
+    STORE_POINTER(player_shot_6_impact_06 + 3, player_shot_6_impact_frames_06);
+    STORE_POINTER(player_shot_6_impact_07 + 3, player_shot_6_impact_frames_06);
+    STORE_POINTER(player_shot_6_impact_08 + 3, player_shot_6_impact_frames_08);
+    STORE_POINTER(player_shot_6_impact_09 + 3, player_shot_6_impact_frames_08);
+    STORE_POINTER(player_shot_6_impact_10 + 3, player_shot_6_impact_frames_10);
+    STORE_POINTER(player_shot_6_impact_11 + 3, player_shot_6_impact_frames_11);
+    STORE_POINTER(player_shot_6_impact_12 + 3, player_shot_6_impact_frames_12);
+    STORE_POINTER(player_shot_6_impact_13 + 3, player_shot_6_impact_frames_13);
+    STORE_POINTER(player_shot_6_impact_14 + 3, player_shot_6_impact_frames_14);
+    STORE_POINTER(player_shot_6_impact_15 + 3, player_shot_6_impact_frames_15);
+    STORE_POINTER(player_shot_6_impact_16 + 3, player_shot_6_impact_frames_15);
+    STORE_POINTER(player_shot_6_impact_17 + 3, player_shot_6_impact_frames_17);
+    STORE_POINTER(player_shot_6_impact_18 + 3, player_shot_6_impact_frames_17);
+    STORE_POINTER(player_shot_6_impact_19 + 3, player_shot_6_impact_frames_19);
+    STORE_POINTER(player_shot_6_impact_20 + 3, player_shot_6_impact_frames_19);
+    STORE_POINTER(player_shot_6_impact_21 + 3, player_shot_6_impact_frames_21);
+    STORE_POINTER(player_shot_6_impact_22 + 3, player_shot_6_impact_frames_21);
+    STORE_POINTER(player_shot_6_impact_23 + 3, player_shot_6_impact_frames_23);
+    STORE_POINTER(player_shot_6_impact_24 + 3, player_shot_6_impact_frames_23);
 }
 
 extern u16 D_0025C4C8[];
@@ -1350,15 +1350,15 @@ extern u16 D_0025C518[];
 extern u16 D_0025C528[];
 extern u16 D_0025C538[];
 extern u16 D_0025C548[];
-extern u16 D_0025C560[];
-extern u16 D_0025C580[];
-extern u16 D_0025C5A0[];
-extern u16 D_0025C5C0[];
-extern u16 D_0025C5E0[];
-extern u16 D_0025C600[];
-extern u16 D_0025C620[];
-extern u16 D_0025C640[];
-extern u16 D_0025C660[];
+extern u16 player_shot_3_impact_frames_00[];
+extern u16 player_shot_3_impact_frames_04[];
+extern u16 player_shot_3_impact_frames_08[];
+extern u16 player_shot_3_impact_frames_10[];
+extern u16 player_shot_3_impact_frames_12[];
+extern u16 player_shot_3_impact_frames_14[];
+extern u16 player_shot_3_impact_frames_15[];
+extern u16 player_shot_3_impact_frames_19[];
+extern u16 player_shot_3_impact_frames_23[];
 extern u16 D_0025CB50[];
 extern u16 D_0025CB98[];
 extern u16 D_0025CBA8[];
@@ -1366,21 +1366,21 @@ extern u16 D_0025CBC0[];
 extern u16 D_0025CC10[];
 extern u16 D_0025CC60[];
 extern u16 D_0025CCB0[];
-extern u16 D_0025CD68[];
-extern u16 D_0025CD78[];
-extern u16 D_0025CD88[];
-extern u16 D_0025CD98[];
-extern u16 D_0025CDA8[];
-extern u16 D_0025CDB8[];
-extern u16 D_0025CDC8[];
-extern u16 D_0025CDD8[];
-extern u16 D_0025CDE8[];
-extern u16 D_0025CDF8[];
-extern u16 D_0025CE08[];
-extern u16 D_0025CE18[];
-extern u16 D_0025CE28[];
-extern u16 D_0025CE38[];
-extern u16 D_0025CE48[];
+extern u16 player_shot_3_impact_00[];
+extern u16 player_shot_3_impact_02[];
+extern u16 player_shot_3_impact_04[];
+extern u16 player_shot_3_impact_06[];
+extern u16 player_shot_3_impact_08[];
+extern u16 player_shot_3_impact_10[];
+extern u16 player_shot_3_impact_11[];
+extern u16 player_shot_3_impact_12[];
+extern u16 player_shot_3_impact_13[];
+extern u16 player_shot_3_impact_14[];
+extern u16 player_shot_3_impact_15[];
+extern u16 player_shot_3_impact_17[];
+extern u16 player_shot_3_impact_19[];
+extern u16 player_shot_3_impact_21[];
+extern u16 player_shot_3_impact_23[];
 extern u16 D_0028CA04[];
 extern u16 D_0028CA08[];
 extern u16 D_0028CA0C[];
@@ -1476,21 +1476,21 @@ extern u16 D_0028CB70[];
 extern u16 D_0028CB74[];
 extern u16 D_0028CB78[];
 extern u16 D_0028CB7C[];
-extern u16 D_0028CB80[];
-extern u16 D_0028CB88[];
-extern u16 D_0028CB90[];
-extern u16 D_0028CB98[];
-extern u16 D_0028CBA0[];
-extern u16 D_0028CBA8[];
-extern u16 D_0028CBB0[];
-extern u16 D_0028CBB8[];
-extern u16 D_0028CBC0[];
-extern u16 D_0028CBC8[];
-extern u16 D_0028CBD0[];
-extern u16 D_0028CBD8[];
-extern u16 D_0028CBE0[];
-extern u16 D_0028CBE8[];
-extern u16 D_0028CBF0[];
+extern u16 player_shot_3_flight_00[];
+extern u16 player_shot_3_flight_02[];
+extern u16 player_shot_3_flight_04[];
+extern u16 player_shot_3_flight_06[];
+extern u16 player_shot_3_flight_08[];
+extern u16 player_shot_3_flight_10[];
+extern u16 player_shot_3_flight_11[];
+extern u16 player_shot_3_flight_12[];
+extern u16 player_shot_3_flight_13[];
+extern u16 player_shot_3_flight_14[];
+extern u16 player_shot_3_flight_15[];
+extern u16 player_shot_3_flight_17[];
+extern u16 player_shot_3_flight_19[];
+extern u16 player_shot_3_flight_21[];
+extern u16 player_shot_3_flight_23[];
 extern u16 D_0028CBF8[];
 extern u16 D_0028CC00[];
 extern u16 D_0028CC08[];
@@ -1575,10 +1575,10 @@ extern u16 D_0028CE78[];
 extern u16 D_0028CE80[];
 extern u16 D_0028CE88[];
 
-extern u16 D_0025CAE0[];
-extern u16 D_0025CD00[];
+extern u16 player_shot_3_flight_table[];
+extern u16 player_shot_3_impact_table[];
 
-void func_00177A30(void) {
+void player_shot_3_tables_init(void) {
     STORE_POINTER(D_0025C680 + 5, D_0025C4C8);
     STORE_POINTER(D_0025C680 + 15, D_0028CA04);
     STORE_POINTER(D_0025C6B0 + 5, D_0025C4C8);
@@ -1629,31 +1629,31 @@ void func_00177A30(void) {
     STORE_POINTER(D_0025CA90 + 15, D_0028CB7C);
     STORE_POINTER(D_0025CA90 + 24, D_0025C548);
     STORE_POINTER(D_0025CA90 + 34, D_0028CB7C);
-    STORE_POINTER(D_0025CAE0, D_0028CB80);
-    STORE_POINTER(D_0025CAE0 + 2, D_0028CB80);
-    STORE_POINTER(D_0025CAE0 + 4, D_0028CB88);
-    STORE_POINTER(D_0025CAE0 + 6, D_0028CB88);
-    STORE_POINTER(D_0025CAE0 + 8, D_0028CB90);
-    STORE_POINTER(D_0025CAE0 + 10, D_0028CB90);
-    STORE_POINTER(D_0025CAE0 + 12, D_0028CB98);
-    STORE_POINTER(D_0025CAE0 + 14, D_0028CB98);
-    STORE_POINTER(D_0025CAE0 + 16, D_0028CBA0);
-    STORE_POINTER(D_0025CAE0 + 18, D_0028CBA0);
-    STORE_POINTER(D_0025CAE0 + 20, D_0028CBA8);
-    STORE_POINTER(D_0025CAE0 + 22, D_0028CBB0);
-    STORE_POINTER(D_0025CAE0 + 24, D_0028CBB8);
-    STORE_POINTER(D_0025CAE0 + 26, D_0028CBC0);
-    STORE_POINTER(D_0025CAE0 + 28, D_0028CBC8);
-    STORE_POINTER(D_0025CAE0 + 30, D_0028CBD0);
-    STORE_POINTER(D_0025CAE0 + 32, D_0028CBD0);
-    STORE_POINTER(D_0025CAE0 + 34, D_0028CBD8);
-    STORE_POINTER(D_0025CAE0 + 36, D_0028CBD8);
-    STORE_POINTER(D_0025CAE0 + 38, D_0028CBE0);
-    STORE_POINTER(D_0025CAE0 + 40, D_0028CBE0);
-    STORE_POINTER(D_0025CAE0 + 42, D_0028CBE8);
-    STORE_POINTER(D_0025CAE0 + 44, D_0028CBE8);
-    STORE_POINTER(D_0025CAE0 + 46, D_0028CBF0);
-    STORE_POINTER(D_0025CAE0 + 48, D_0028CBF0);
+    STORE_POINTER(player_shot_3_flight_table, player_shot_3_flight_00);
+    STORE_POINTER(player_shot_3_flight_table + 2, player_shot_3_flight_00);
+    STORE_POINTER(player_shot_3_flight_table + 4, player_shot_3_flight_02);
+    STORE_POINTER(player_shot_3_flight_table + 6, player_shot_3_flight_02);
+    STORE_POINTER(player_shot_3_flight_table + 8, player_shot_3_flight_04);
+    STORE_POINTER(player_shot_3_flight_table + 10, player_shot_3_flight_04);
+    STORE_POINTER(player_shot_3_flight_table + 12, player_shot_3_flight_06);
+    STORE_POINTER(player_shot_3_flight_table + 14, player_shot_3_flight_06);
+    STORE_POINTER(player_shot_3_flight_table + 16, player_shot_3_flight_08);
+    STORE_POINTER(player_shot_3_flight_table + 18, player_shot_3_flight_08);
+    STORE_POINTER(player_shot_3_flight_table + 20, player_shot_3_flight_10);
+    STORE_POINTER(player_shot_3_flight_table + 22, player_shot_3_flight_11);
+    STORE_POINTER(player_shot_3_flight_table + 24, player_shot_3_flight_12);
+    STORE_POINTER(player_shot_3_flight_table + 26, player_shot_3_flight_13);
+    STORE_POINTER(player_shot_3_flight_table + 28, player_shot_3_flight_14);
+    STORE_POINTER(player_shot_3_flight_table + 30, player_shot_3_flight_15);
+    STORE_POINTER(player_shot_3_flight_table + 32, player_shot_3_flight_15);
+    STORE_POINTER(player_shot_3_flight_table + 34, player_shot_3_flight_17);
+    STORE_POINTER(player_shot_3_flight_table + 36, player_shot_3_flight_17);
+    STORE_POINTER(player_shot_3_flight_table + 38, player_shot_3_flight_19);
+    STORE_POINTER(player_shot_3_flight_table + 40, player_shot_3_flight_19);
+    STORE_POINTER(player_shot_3_flight_table + 42, player_shot_3_flight_21);
+    STORE_POINTER(player_shot_3_flight_table + 44, player_shot_3_flight_21);
+    STORE_POINTER(player_shot_3_flight_table + 46, player_shot_3_flight_23);
+    STORE_POINTER(player_shot_3_flight_table + 48, player_shot_3_flight_23);
     STORE_POINTER(D_0025CB50, D_0025CB98);
     STORE_POINTER(D_0025CB50 + 2, D_0028CBF8);
     STORE_POINTER(D_0025CB50 + 4, D_0028CC00);
@@ -1824,46 +1824,46 @@ void func_00177A30(void) {
     STORE_POINTER(D_0028CE78 + 2, D_0028CB60);
     STORE_POINTER(D_0028CE80 + 2, D_0028CB64);
     STORE_POINTER(D_0028CE88 + 2, D_0028CB68);
-    STORE_POINTER(D_0025CD00, D_0025CD68);
-    STORE_POINTER(D_0025CD00 + 2, D_0025CD68);
-    STORE_POINTER(D_0025CD00 + 4, D_0025CD78);
-    STORE_POINTER(D_0025CD00 + 6, D_0025CD78);
-    STORE_POINTER(D_0025CD00 + 8, D_0025CD88);
-    STORE_POINTER(D_0025CD00 + 10, D_0025CD88);
-    STORE_POINTER(D_0025CD00 + 12, D_0025CD98);
-    STORE_POINTER(D_0025CD00 + 14, D_0025CD98);
-    STORE_POINTER(D_0025CD00 + 16, D_0025CDA8);
-    STORE_POINTER(D_0025CD00 + 18, D_0025CDA8);
-    STORE_POINTER(D_0025CD00 + 20, D_0025CDB8);
-    STORE_POINTER(D_0025CD00 + 22, D_0025CDC8);
-    STORE_POINTER(D_0025CD00 + 24, D_0025CDD8);
-    STORE_POINTER(D_0025CD00 + 26, D_0025CDE8);
-    STORE_POINTER(D_0025CD00 + 28, D_0025CDF8);
-    STORE_POINTER(D_0025CD00 + 30, D_0025CE08);
-    STORE_POINTER(D_0025CD00 + 32, D_0025CE08);
-    STORE_POINTER(D_0025CD00 + 34, D_0025CE18);
-    STORE_POINTER(D_0025CD00 + 36, D_0025CE18);
-    STORE_POINTER(D_0025CD00 + 38, D_0025CE28);
-    STORE_POINTER(D_0025CD00 + 40, D_0025CE28);
-    STORE_POINTER(D_0025CD00 + 42, D_0025CE38);
-    STORE_POINTER(D_0025CD00 + 44, D_0025CE38);
-    STORE_POINTER(D_0025CD00 + 46, D_0025CE48);
-    STORE_POINTER(D_0025CD00 + 48, D_0025CE48);
-    STORE_POINTER(D_0025CD68 + 3, D_0025C560);
-    STORE_POINTER(D_0025CD78 + 3, D_0025C560);
-    STORE_POINTER(D_0025CD88 + 3, D_0025C580);
-    STORE_POINTER(D_0025CD98 + 3, D_0025C580);
-    STORE_POINTER(D_0025CDA8 + 3, D_0025C5A0);
-    STORE_POINTER(D_0025CDB8 + 3, D_0025C5C0);
-    STORE_POINTER(D_0025CDC8 + 3, D_0025C5C0);
-    STORE_POINTER(D_0025CDD8 + 3, D_0025C5E0);
-    STORE_POINTER(D_0025CDE8 + 3, D_0025C5E0);
-    STORE_POINTER(D_0025CDF8 + 3, D_0025C600);
-    STORE_POINTER(D_0025CE08 + 3, D_0025C620);
-    STORE_POINTER(D_0025CE18 + 3, D_0025C620);
-    STORE_POINTER(D_0025CE28 + 3, D_0025C640);
-    STORE_POINTER(D_0025CE38 + 3, D_0025C640);
-    STORE_POINTER(D_0025CE48 + 3, D_0025C660);
+    STORE_POINTER(player_shot_3_impact_table, player_shot_3_impact_00);
+    STORE_POINTER(player_shot_3_impact_table + 2, player_shot_3_impact_00);
+    STORE_POINTER(player_shot_3_impact_table + 4, player_shot_3_impact_02);
+    STORE_POINTER(player_shot_3_impact_table + 6, player_shot_3_impact_02);
+    STORE_POINTER(player_shot_3_impact_table + 8, player_shot_3_impact_04);
+    STORE_POINTER(player_shot_3_impact_table + 10, player_shot_3_impact_04);
+    STORE_POINTER(player_shot_3_impact_table + 12, player_shot_3_impact_06);
+    STORE_POINTER(player_shot_3_impact_table + 14, player_shot_3_impact_06);
+    STORE_POINTER(player_shot_3_impact_table + 16, player_shot_3_impact_08);
+    STORE_POINTER(player_shot_3_impact_table + 18, player_shot_3_impact_08);
+    STORE_POINTER(player_shot_3_impact_table + 20, player_shot_3_impact_10);
+    STORE_POINTER(player_shot_3_impact_table + 22, player_shot_3_impact_11);
+    STORE_POINTER(player_shot_3_impact_table + 24, player_shot_3_impact_12);
+    STORE_POINTER(player_shot_3_impact_table + 26, player_shot_3_impact_13);
+    STORE_POINTER(player_shot_3_impact_table + 28, player_shot_3_impact_14);
+    STORE_POINTER(player_shot_3_impact_table + 30, player_shot_3_impact_15);
+    STORE_POINTER(player_shot_3_impact_table + 32, player_shot_3_impact_15);
+    STORE_POINTER(player_shot_3_impact_table + 34, player_shot_3_impact_17);
+    STORE_POINTER(player_shot_3_impact_table + 36, player_shot_3_impact_17);
+    STORE_POINTER(player_shot_3_impact_table + 38, player_shot_3_impact_19);
+    STORE_POINTER(player_shot_3_impact_table + 40, player_shot_3_impact_19);
+    STORE_POINTER(player_shot_3_impact_table + 42, player_shot_3_impact_21);
+    STORE_POINTER(player_shot_3_impact_table + 44, player_shot_3_impact_21);
+    STORE_POINTER(player_shot_3_impact_table + 46, player_shot_3_impact_23);
+    STORE_POINTER(player_shot_3_impact_table + 48, player_shot_3_impact_23);
+    STORE_POINTER(player_shot_3_impact_00 + 3, player_shot_3_impact_frames_00);
+    STORE_POINTER(player_shot_3_impact_02 + 3, player_shot_3_impact_frames_00);
+    STORE_POINTER(player_shot_3_impact_04 + 3, player_shot_3_impact_frames_04);
+    STORE_POINTER(player_shot_3_impact_06 + 3, player_shot_3_impact_frames_04);
+    STORE_POINTER(player_shot_3_impact_08 + 3, player_shot_3_impact_frames_08);
+    STORE_POINTER(player_shot_3_impact_10 + 3, player_shot_3_impact_frames_10);
+    STORE_POINTER(player_shot_3_impact_11 + 3, player_shot_3_impact_frames_10);
+    STORE_POINTER(player_shot_3_impact_12 + 3, player_shot_3_impact_frames_12);
+    STORE_POINTER(player_shot_3_impact_13 + 3, player_shot_3_impact_frames_12);
+    STORE_POINTER(player_shot_3_impact_14 + 3, player_shot_3_impact_frames_14);
+    STORE_POINTER(player_shot_3_impact_15 + 3, player_shot_3_impact_frames_15);
+    STORE_POINTER(player_shot_3_impact_17 + 3, player_shot_3_impact_frames_15);
+    STORE_POINTER(player_shot_3_impact_19 + 3, player_shot_3_impact_frames_19);
+    STORE_POINTER(player_shot_3_impact_21 + 3, player_shot_3_impact_frames_19);
+    STORE_POINTER(player_shot_3_impact_23 + 3, player_shot_3_impact_frames_23);
 }
 
 extern u16 D_0025CE58[];
@@ -1875,15 +1875,15 @@ extern u16 D_0025CEA8[];
 extern u16 D_0025CEB8[];
 extern u16 D_0025CEC8[];
 extern u16 D_0025CED8[];
-extern u16 D_0025CEF0[];
-extern u16 D_0025CF10[];
-extern u16 D_0025CF30[];
-extern u16 D_0025CF50[];
-extern u16 D_0025CF70[];
-extern u16 D_0025CF90[];
-extern u16 D_0025CFB0[];
-extern u16 D_0025CFD0[];
-extern u16 D_0025CFF0[];
+extern u16 player_shot_4_impact_frames_00[];
+extern u16 player_shot_4_impact_frames_04[];
+extern u16 player_shot_4_impact_frames_08[];
+extern u16 player_shot_4_impact_frames_10[];
+extern u16 player_shot_4_impact_frames_12[];
+extern u16 player_shot_4_impact_frames_14[];
+extern u16 player_shot_4_impact_frames_15[];
+extern u16 player_shot_4_impact_frames_19[];
+extern u16 player_shot_4_impact_frames_23[];
 extern u16 D_0025D4E0[];
 extern u16 D_0025D528[];
 extern u16 D_0025D538[];
@@ -1891,21 +1891,21 @@ extern u16 D_0025D550[];
 extern u16 D_0025D5A0[];
 extern u16 D_0025D5F0[];
 extern u16 D_0025D640[];
-extern u16 D_0025D6F8[];
-extern u16 D_0025D708[];
-extern u16 D_0025D718[];
-extern u16 D_0025D728[];
-extern u16 D_0025D738[];
-extern u16 D_0025D748[];
-extern u16 D_0025D758[];
-extern u16 D_0025D768[];
-extern u16 D_0025D778[];
-extern u16 D_0025D788[];
-extern u16 D_0025D798[];
-extern u16 D_0025D7A8[];
-extern u16 D_0025D7B8[];
-extern u16 D_0025D7C8[];
-extern u16 D_0025D7D8[];
+extern u16 player_shot_4_impact_00[];
+extern u16 player_shot_4_impact_02[];
+extern u16 player_shot_4_impact_04[];
+extern u16 player_shot_4_impact_06[];
+extern u16 player_shot_4_impact_08[];
+extern u16 player_shot_4_impact_10[];
+extern u16 player_shot_4_impact_11[];
+extern u16 player_shot_4_impact_12[];
+extern u16 player_shot_4_impact_13[];
+extern u16 player_shot_4_impact_14[];
+extern u16 player_shot_4_impact_15[];
+extern u16 player_shot_4_impact_17[];
+extern u16 player_shot_4_impact_19[];
+extern u16 player_shot_4_impact_21[];
+extern u16 player_shot_4_impact_23[];
 extern u16 D_0028CE90[];
 extern u16 D_0028CE94[];
 extern u16 D_0028CE98[];
@@ -2001,21 +2001,21 @@ extern u16 D_0028CFFC[];
 extern u16 D_0028D000[];
 extern u16 D_0028D004[];
 extern u16 D_0028D008[];
-extern u16 D_0028D010[];
-extern u16 D_0028D018[];
-extern u16 D_0028D020[];
-extern u16 D_0028D028[];
-extern u16 D_0028D030[];
-extern u16 D_0028D038[];
-extern u16 D_0028D040[];
-extern u16 D_0028D048[];
-extern u16 D_0028D050[];
-extern u16 D_0028D058[];
-extern u16 D_0028D060[];
-extern u16 D_0028D068[];
-extern u16 D_0028D070[];
-extern u16 D_0028D078[];
-extern u16 D_0028D080[];
+extern u16 player_shot_4_flight_00[];
+extern u16 player_shot_4_flight_02[];
+extern u16 player_shot_4_flight_04[];
+extern u16 player_shot_4_flight_06[];
+extern u16 player_shot_4_flight_08[];
+extern u16 player_shot_4_flight_10[];
+extern u16 player_shot_4_flight_11[];
+extern u16 player_shot_4_flight_12[];
+extern u16 player_shot_4_flight_13[];
+extern u16 player_shot_4_flight_14[];
+extern u16 player_shot_4_flight_15[];
+extern u16 player_shot_4_flight_17[];
+extern u16 player_shot_4_flight_19[];
+extern u16 player_shot_4_flight_21[];
+extern u16 player_shot_4_flight_23[];
 extern u16 D_0028D088[];
 extern u16 D_0028D090[];
 extern u16 D_0028D098[];
@@ -2100,10 +2100,10 @@ extern u16 D_0028D308[];
 extern u16 D_0028D310[];
 extern u16 D_0028D318[];
 
-extern u16 D_0025D470[];
-extern u16 D_0025D690[];
+extern u16 player_shot_4_flight_table[];
+extern u16 player_shot_4_impact_table[];
 
-void func_0017A7B0(void) {
+void player_shot_4_tables_init(void) {
     STORE_POINTER(D_0025D010 + 5, D_0025CE58);
     STORE_POINTER(D_0025D010 + 15, D_0028CE90);
     STORE_POINTER(D_0025D040 + 5, D_0025CE58);
@@ -2154,31 +2154,31 @@ void func_0017A7B0(void) {
     STORE_POINTER(D_0025D420 + 15, D_0028D008);
     STORE_POINTER(D_0025D420 + 24, D_0025CED8);
     STORE_POINTER(D_0025D420 + 34, D_0028D008);
-    STORE_POINTER(D_0025D470, D_0028D010);
-    STORE_POINTER(D_0025D470 + 2, D_0028D010);
-    STORE_POINTER(D_0025D470 + 4, D_0028D018);
-    STORE_POINTER(D_0025D470 + 6, D_0028D018);
-    STORE_POINTER(D_0025D470 + 8, D_0028D020);
-    STORE_POINTER(D_0025D470 + 10, D_0028D020);
-    STORE_POINTER(D_0025D470 + 12, D_0028D028);
-    STORE_POINTER(D_0025D470 + 14, D_0028D028);
-    STORE_POINTER(D_0025D470 + 16, D_0028D030);
-    STORE_POINTER(D_0025D470 + 18, D_0028D030);
-    STORE_POINTER(D_0025D470 + 20, D_0028D038);
-    STORE_POINTER(D_0025D470 + 22, D_0028D040);
-    STORE_POINTER(D_0025D470 + 24, D_0028D048);
-    STORE_POINTER(D_0025D470 + 26, D_0028D050);
-    STORE_POINTER(D_0025D470 + 28, D_0028D058);
-    STORE_POINTER(D_0025D470 + 30, D_0028D060);
-    STORE_POINTER(D_0025D470 + 32, D_0028D060);
-    STORE_POINTER(D_0025D470 + 34, D_0028D068);
-    STORE_POINTER(D_0025D470 + 36, D_0028D068);
-    STORE_POINTER(D_0025D470 + 38, D_0028D070);
-    STORE_POINTER(D_0025D470 + 40, D_0028D070);
-    STORE_POINTER(D_0025D470 + 42, D_0028D078);
-    STORE_POINTER(D_0025D470 + 44, D_0028D078);
-    STORE_POINTER(D_0025D470 + 46, D_0028D080);
-    STORE_POINTER(D_0025D470 + 48, D_0028D080);
+    STORE_POINTER(player_shot_4_flight_table, player_shot_4_flight_00);
+    STORE_POINTER(player_shot_4_flight_table + 2, player_shot_4_flight_00);
+    STORE_POINTER(player_shot_4_flight_table + 4, player_shot_4_flight_02);
+    STORE_POINTER(player_shot_4_flight_table + 6, player_shot_4_flight_02);
+    STORE_POINTER(player_shot_4_flight_table + 8, player_shot_4_flight_04);
+    STORE_POINTER(player_shot_4_flight_table + 10, player_shot_4_flight_04);
+    STORE_POINTER(player_shot_4_flight_table + 12, player_shot_4_flight_06);
+    STORE_POINTER(player_shot_4_flight_table + 14, player_shot_4_flight_06);
+    STORE_POINTER(player_shot_4_flight_table + 16, player_shot_4_flight_08);
+    STORE_POINTER(player_shot_4_flight_table + 18, player_shot_4_flight_08);
+    STORE_POINTER(player_shot_4_flight_table + 20, player_shot_4_flight_10);
+    STORE_POINTER(player_shot_4_flight_table + 22, player_shot_4_flight_11);
+    STORE_POINTER(player_shot_4_flight_table + 24, player_shot_4_flight_12);
+    STORE_POINTER(player_shot_4_flight_table + 26, player_shot_4_flight_13);
+    STORE_POINTER(player_shot_4_flight_table + 28, player_shot_4_flight_14);
+    STORE_POINTER(player_shot_4_flight_table + 30, player_shot_4_flight_15);
+    STORE_POINTER(player_shot_4_flight_table + 32, player_shot_4_flight_15);
+    STORE_POINTER(player_shot_4_flight_table + 34, player_shot_4_flight_17);
+    STORE_POINTER(player_shot_4_flight_table + 36, player_shot_4_flight_17);
+    STORE_POINTER(player_shot_4_flight_table + 38, player_shot_4_flight_19);
+    STORE_POINTER(player_shot_4_flight_table + 40, player_shot_4_flight_19);
+    STORE_POINTER(player_shot_4_flight_table + 42, player_shot_4_flight_21);
+    STORE_POINTER(player_shot_4_flight_table + 44, player_shot_4_flight_21);
+    STORE_POINTER(player_shot_4_flight_table + 46, player_shot_4_flight_23);
+    STORE_POINTER(player_shot_4_flight_table + 48, player_shot_4_flight_23);
     STORE_POINTER(D_0025D4E0, D_0025D528);
     STORE_POINTER(D_0025D4E0 + 2, D_0028D088);
     STORE_POINTER(D_0025D4E0 + 4, D_0028D090);
@@ -2349,46 +2349,46 @@ void func_0017A7B0(void) {
     STORE_POINTER(D_0028D308 + 2, D_0028CFEC);
     STORE_POINTER(D_0028D310 + 2, D_0028CFF0);
     STORE_POINTER(D_0028D318 + 2, D_0028CFF4);
-    STORE_POINTER(D_0025D690, D_0025D6F8);
-    STORE_POINTER(D_0025D690 + 2, D_0025D6F8);
-    STORE_POINTER(D_0025D690 + 4, D_0025D708);
-    STORE_POINTER(D_0025D690 + 6, D_0025D708);
-    STORE_POINTER(D_0025D690 + 8, D_0025D718);
-    STORE_POINTER(D_0025D690 + 10, D_0025D718);
-    STORE_POINTER(D_0025D690 + 12, D_0025D728);
-    STORE_POINTER(D_0025D690 + 14, D_0025D728);
-    STORE_POINTER(D_0025D690 + 16, D_0025D738);
-    STORE_POINTER(D_0025D690 + 18, D_0025D738);
-    STORE_POINTER(D_0025D690 + 20, D_0025D748);
-    STORE_POINTER(D_0025D690 + 22, D_0025D758);
-    STORE_POINTER(D_0025D690 + 24, D_0025D768);
-    STORE_POINTER(D_0025D690 + 26, D_0025D778);
-    STORE_POINTER(D_0025D690 + 28, D_0025D788);
-    STORE_POINTER(D_0025D690 + 30, D_0025D798);
-    STORE_POINTER(D_0025D690 + 32, D_0025D798);
-    STORE_POINTER(D_0025D690 + 34, D_0025D7A8);
-    STORE_POINTER(D_0025D690 + 36, D_0025D7A8);
-    STORE_POINTER(D_0025D690 + 38, D_0025D7B8);
-    STORE_POINTER(D_0025D690 + 40, D_0025D7B8);
-    STORE_POINTER(D_0025D690 + 42, D_0025D7C8);
-    STORE_POINTER(D_0025D690 + 44, D_0025D7C8);
-    STORE_POINTER(D_0025D690 + 46, D_0025D7D8);
-    STORE_POINTER(D_0025D690 + 48, D_0025D7D8);
-    STORE_POINTER(D_0025D6F8 + 3, D_0025CEF0);
-    STORE_POINTER(D_0025D708 + 3, D_0025CEF0);
-    STORE_POINTER(D_0025D718 + 3, D_0025CF10);
-    STORE_POINTER(D_0025D728 + 3, D_0025CF10);
-    STORE_POINTER(D_0025D738 + 3, D_0025CF30);
-    STORE_POINTER(D_0025D748 + 3, D_0025CF50);
-    STORE_POINTER(D_0025D758 + 3, D_0025CF50);
-    STORE_POINTER(D_0025D768 + 3, D_0025CF70);
-    STORE_POINTER(D_0025D778 + 3, D_0025CF70);
-    STORE_POINTER(D_0025D788 + 3, D_0025CF90);
-    STORE_POINTER(D_0025D798 + 3, D_0025CFB0);
-    STORE_POINTER(D_0025D7A8 + 3, D_0025CFB0);
-    STORE_POINTER(D_0025D7B8 + 3, D_0025CFD0);
-    STORE_POINTER(D_0025D7C8 + 3, D_0025CFD0);
-    STORE_POINTER(D_0025D7D8 + 3, D_0025CFF0);
+    STORE_POINTER(player_shot_4_impact_table, player_shot_4_impact_00);
+    STORE_POINTER(player_shot_4_impact_table + 2, player_shot_4_impact_00);
+    STORE_POINTER(player_shot_4_impact_table + 4, player_shot_4_impact_02);
+    STORE_POINTER(player_shot_4_impact_table + 6, player_shot_4_impact_02);
+    STORE_POINTER(player_shot_4_impact_table + 8, player_shot_4_impact_04);
+    STORE_POINTER(player_shot_4_impact_table + 10, player_shot_4_impact_04);
+    STORE_POINTER(player_shot_4_impact_table + 12, player_shot_4_impact_06);
+    STORE_POINTER(player_shot_4_impact_table + 14, player_shot_4_impact_06);
+    STORE_POINTER(player_shot_4_impact_table + 16, player_shot_4_impact_08);
+    STORE_POINTER(player_shot_4_impact_table + 18, player_shot_4_impact_08);
+    STORE_POINTER(player_shot_4_impact_table + 20, player_shot_4_impact_10);
+    STORE_POINTER(player_shot_4_impact_table + 22, player_shot_4_impact_11);
+    STORE_POINTER(player_shot_4_impact_table + 24, player_shot_4_impact_12);
+    STORE_POINTER(player_shot_4_impact_table + 26, player_shot_4_impact_13);
+    STORE_POINTER(player_shot_4_impact_table + 28, player_shot_4_impact_14);
+    STORE_POINTER(player_shot_4_impact_table + 30, player_shot_4_impact_15);
+    STORE_POINTER(player_shot_4_impact_table + 32, player_shot_4_impact_15);
+    STORE_POINTER(player_shot_4_impact_table + 34, player_shot_4_impact_17);
+    STORE_POINTER(player_shot_4_impact_table + 36, player_shot_4_impact_17);
+    STORE_POINTER(player_shot_4_impact_table + 38, player_shot_4_impact_19);
+    STORE_POINTER(player_shot_4_impact_table + 40, player_shot_4_impact_19);
+    STORE_POINTER(player_shot_4_impact_table + 42, player_shot_4_impact_21);
+    STORE_POINTER(player_shot_4_impact_table + 44, player_shot_4_impact_21);
+    STORE_POINTER(player_shot_4_impact_table + 46, player_shot_4_impact_23);
+    STORE_POINTER(player_shot_4_impact_table + 48, player_shot_4_impact_23);
+    STORE_POINTER(player_shot_4_impact_00 + 3, player_shot_4_impact_frames_00);
+    STORE_POINTER(player_shot_4_impact_02 + 3, player_shot_4_impact_frames_00);
+    STORE_POINTER(player_shot_4_impact_04 + 3, player_shot_4_impact_frames_04);
+    STORE_POINTER(player_shot_4_impact_06 + 3, player_shot_4_impact_frames_04);
+    STORE_POINTER(player_shot_4_impact_08 + 3, player_shot_4_impact_frames_08);
+    STORE_POINTER(player_shot_4_impact_10 + 3, player_shot_4_impact_frames_10);
+    STORE_POINTER(player_shot_4_impact_11 + 3, player_shot_4_impact_frames_10);
+    STORE_POINTER(player_shot_4_impact_12 + 3, player_shot_4_impact_frames_12);
+    STORE_POINTER(player_shot_4_impact_13 + 3, player_shot_4_impact_frames_12);
+    STORE_POINTER(player_shot_4_impact_14 + 3, player_shot_4_impact_frames_14);
+    STORE_POINTER(player_shot_4_impact_15 + 3, player_shot_4_impact_frames_15);
+    STORE_POINTER(player_shot_4_impact_17 + 3, player_shot_4_impact_frames_15);
+    STORE_POINTER(player_shot_4_impact_19 + 3, player_shot_4_impact_frames_19);
+    STORE_POINTER(player_shot_4_impact_21 + 3, player_shot_4_impact_frames_19);
+    STORE_POINTER(player_shot_4_impact_23 + 3, player_shot_4_impact_frames_23);
 }
 
 extern u16 D_0025E170[];
@@ -2401,114 +2401,114 @@ extern u16 D_0025E1D0[];
 extern u16 D_0025E1E0[];
 extern u16 D_0025E1F0[];
 extern u16 D_0025E200[];
-extern u16 D_0025E210[];
-extern u16 D_0025E230[];
-extern u16 D_0025E250[];
-extern u16 D_0025E270[];
-extern u16 D_0025E290[];
-extern u16 D_0025E2B0[];
-extern u16 D_0025E2D0[];
-extern u16 D_0025E2F0[];
-extern u16 D_0025E310[];
+extern u16 player_shot_8_impact_frames_00[];
+extern u16 player_shot_8_impact_frames_02[];
+extern u16 player_shot_8_impact_frames_06[];
+extern u16 player_shot_8_impact_frames_10[];
+extern u16 player_shot_8_impact_frames_11[];
+extern u16 player_shot_8_impact_frames_13[];
+extern u16 player_shot_8_impact_frames_15[];
+extern u16 player_shot_8_impact_frames_17[];
+extern u16 player_shot_8_impact_frames_21[];
 extern u16 D_0025E940[];
-extern u16 D_0025E9F8[];
-extern u16 D_0025EA08[];
-extern u16 D_0025EA18[];
-extern u16 D_0025EA28[];
-extern u16 D_0025EA38[];
-extern u16 D_0025EA48[];
-extern u16 D_0025EA58[];
-extern u16 D_0025EA68[];
-extern u16 D_0025EA78[];
-extern u16 D_0025EA88[];
-extern u16 D_0025EA98[];
-extern u16 D_0025EAA8[];
-extern u16 D_0025EAB8[];
-extern u16 D_0025EAC8[];
-extern u16 D_0025EAD8[];
-extern u16 D_0028D640[];
-extern u16 D_0028D648[];
-extern u16 D_0028D650[];
-extern u16 D_0028D658[];
-extern u16 D_0028D660[];
-extern u16 D_0028D668[];
-extern u16 D_0028D670[];
-extern u16 D_0028D678[];
-extern u16 D_0028D680[];
-extern u16 D_0028D688[];
-extern u16 D_0028D690[];
-extern u16 D_0028D698[];
-extern u16 D_0028D6A0[];
-extern u16 D_0028D6A8[];
-extern u16 D_0028D6B0[];
-extern u16 D_0028D6B8[];
-extern u16 D_0028D6C0[];
-extern u16 D_0028D6C8[];
-extern u16 D_0028D6D0[];
-extern u16 D_0028D6D8[];
-extern u16 D_0028D6E0[];
-extern u16 D_0028D6E8[];
-extern u16 D_0028D6F0[];
-extern u16 D_0028D6F8[];
-extern u16 D_0028D700[];
-extern u16 D_0028D708[];
-extern u16 D_0028D710[];
-extern u16 D_0028D718[];
-extern u16 D_0028D720[];
-extern u16 D_0028D728[];
-extern u16 D_0028D730[];
-extern u16 D_0028D738[];
-extern u16 D_0028D740[];
-extern u16 D_0028D748[];
-extern u16 D_0028D750[];
-extern u16 D_0028D758[];
-extern u16 D_0028D760[];
-extern u16 D_0028D768[];
-extern u16 D_0028D770[];
-extern u16 D_0028D778[];
-extern u16 D_0028D780[];
-extern u16 D_0028D788[];
-extern u16 D_0028D790[];
-extern u16 D_0028D798[];
-extern u16 D_0028D7A0[];
-extern u16 D_0028D7A8[];
-extern u16 D_0028D7B0[];
-extern u16 D_0028D7B8[];
-extern u16 D_0028D7C0[];
-extern u16 D_0028D7C8[];
-extern u16 D_0028D7D0[];
-extern u16 D_0028D7D8[];
-extern u16 D_0028D7E0[];
-extern u16 D_0028D7E8[];
-extern u16 D_0028D7F0[];
-extern u16 D_0028D7F8[];
-extern u16 D_0028D800[];
-extern u16 D_0028D808[];
-extern u16 D_0028D810[];
-extern u16 D_0028D818[];
-extern u16 D_0028D820[];
-extern u16 D_0028D828[];
-extern u16 D_0028D830[];
-extern u16 D_0028D838[];
-extern u16 D_0028D840[];
-extern u16 D_0028D848[];
-extern u16 D_0028D850[];
-extern u16 D_0028D858[];
-extern u16 D_0028D860[];
-extern u16 D_0028D868[];
-extern u16 D_0028D870[];
-extern u16 D_0028D878[];
-extern u16 D_0028D880[];
-extern u16 D_0028D888[];
-extern u16 D_0028D890[];
-extern u16 D_0028D898[];
-extern u16 D_0028D8A0[];
-extern u16 D_0028D8A8[];
-extern u16 D_0028D8B0[];
-extern u16 D_0028D8B8[];
-extern u16 D_0028D8C0[];
-extern u16 D_0028D8C8[];
-extern u16 D_0028D8D0[];
+extern u16 player_shot_8_impact_00[];
+extern u16 player_shot_8_impact_02[];
+extern u16 player_shot_8_impact_04[];
+extern u16 player_shot_8_impact_06[];
+extern u16 player_shot_8_impact_08[];
+extern u16 player_shot_8_impact_10[];
+extern u16 player_shot_8_impact_11[];
+extern u16 player_shot_8_impact_12[];
+extern u16 player_shot_8_impact_13[];
+extern u16 player_shot_8_impact_14[];
+extern u16 player_shot_8_impact_15[];
+extern u16 player_shot_8_impact_17[];
+extern u16 player_shot_8_impact_19[];
+extern u16 player_shot_8_impact_21[];
+extern u16 player_shot_8_impact_23[];
+extern u16 player_shot_8_flight_000[];
+extern u16 player_shot_8_flight_002[];
+extern u16 player_shot_8_flight_004[];
+extern u16 player_shot_8_flight_006[];
+extern u16 player_shot_8_flight_008[];
+extern u16 player_shot_8_flight_010[];
+extern u16 player_shot_8_flight_011[];
+extern u16 player_shot_8_flight_012[];
+extern u16 player_shot_8_flight_013[];
+extern u16 player_shot_8_flight_014[];
+extern u16 player_shot_8_flight_015[];
+extern u16 player_shot_8_flight_017[];
+extern u16 player_shot_8_flight_019[];
+extern u16 player_shot_8_flight_021[];
+extern u16 player_shot_8_flight_023[];
+extern u16 player_shot_8_flight_028[];
+extern u16 player_shot_8_flight_029[];
+extern u16 player_shot_8_flight_030[];
+extern u16 player_shot_8_flight_031[];
+extern u16 player_shot_8_flight_032[];
+extern u16 player_shot_8_flight_033[];
+extern u16 player_shot_8_flight_034[];
+extern u16 player_shot_8_flight_035[];
+extern u16 player_shot_8_flight_036[];
+extern u16 player_shot_8_flight_037[];
+extern u16 player_shot_8_flight_038[];
+extern u16 player_shot_8_flight_039[];
+extern u16 player_shot_8_flight_040[];
+extern u16 player_shot_8_flight_041[];
+extern u16 player_shot_8_flight_042[];
+extern u16 player_shot_8_flight_043[];
+extern u16 player_shot_8_flight_044[];
+extern u16 player_shot_8_flight_048[];
+extern u16 player_shot_8_flight_049[];
+extern u16 player_shot_8_flight_050[];
+extern u16 player_shot_8_flight_051[];
+extern u16 player_shot_8_flight_052[];
+extern u16 player_shot_8_flight_053[];
+extern u16 player_shot_8_flight_054[];
+extern u16 player_shot_8_flight_055[];
+extern u16 player_shot_8_flight_056[];
+extern u16 player_shot_8_flight_057[];
+extern u16 player_shot_8_flight_058[];
+extern u16 player_shot_8_flight_059[];
+extern u16 player_shot_8_flight_060[];
+extern u16 player_shot_8_flight_061[];
+extern u16 player_shot_8_flight_062[];
+extern u16 player_shot_8_flight_063[];
+extern u16 player_shot_8_flight_064[];
+extern u16 player_shot_8_flight_068[];
+extern u16 player_shot_8_flight_069[];
+extern u16 player_shot_8_flight_070[];
+extern u16 player_shot_8_flight_071[];
+extern u16 player_shot_8_flight_072[];
+extern u16 player_shot_8_flight_073[];
+extern u16 player_shot_8_flight_074[];
+extern u16 player_shot_8_flight_075[];
+extern u16 player_shot_8_flight_076[];
+extern u16 player_shot_8_flight_077[];
+extern u16 player_shot_8_flight_078[];
+extern u16 player_shot_8_flight_079[];
+extern u16 player_shot_8_flight_080[];
+extern u16 player_shot_8_flight_081[];
+extern u16 player_shot_8_flight_082[];
+extern u16 player_shot_8_flight_083[];
+extern u16 player_shot_8_flight_084[];
+extern u16 player_shot_8_flight_088[];
+extern u16 player_shot_8_flight_089[];
+extern u16 player_shot_8_flight_090[];
+extern u16 player_shot_8_flight_091[];
+extern u16 player_shot_8_flight_092[];
+extern u16 player_shot_8_flight_093[];
+extern u16 player_shot_8_flight_094[];
+extern u16 player_shot_8_flight_095[];
+extern u16 player_shot_8_flight_096[];
+extern u16 player_shot_8_flight_097[];
+extern u16 player_shot_8_flight_098[];
+extern u16 player_shot_8_flight_099[];
+extern u16 player_shot_8_flight_100[];
+extern u16 player_shot_8_flight_101[];
+extern u16 player_shot_8_flight_102[];
+extern u16 player_shot_8_flight_103[];
+extern u16 player_shot_8_flight_104[];
 extern u16 D_0028D8D8[];
 extern u16 D_0028D8E0[];
 extern u16 D_0028D8E8[];
@@ -2527,10 +2527,10 @@ extern u16 D_0028D948[];
 extern u16 D_0028D950[];
 extern u16 D_0028D958[];
 
-extern u16 D_0025E790[];
-extern u16 D_0025E990[];
+extern u16 player_shot_8_flight_table[];
+extern u16 player_shot_8_impact_table[];
 
-void func_0017D530(void) {
+void player_shot_8_tables_init(void) {
     STORE_POINTER(D_0025E330 + 5, D_0025E170);
     STORE_POINTER(D_0025E330 + 15, D_0025E1A0);
     STORE_POINTER(D_0025E360 + 5, D_0025E170);
@@ -2581,167 +2581,167 @@ void func_0017D530(void) {
     STORE_POINTER(D_0025E740 + 15, D_0025E200);
     STORE_POINTER(D_0025E740 + 24, D_0025E190);
     STORE_POINTER(D_0025E740 + 34, D_0025E200);
-    STORE_POINTER(D_0025E790, D_0028D640);
-    STORE_POINTER(D_0025E790 + 2, D_0028D640);
-    STORE_POINTER(D_0025E790 + 4, D_0028D648);
-    STORE_POINTER(D_0025E790 + 6, D_0028D648);
-    STORE_POINTER(D_0025E790 + 8, D_0028D650);
-    STORE_POINTER(D_0025E790 + 10, D_0028D650);
-    STORE_POINTER(D_0025E790 + 12, D_0028D658);
-    STORE_POINTER(D_0025E790 + 14, D_0028D658);
-    STORE_POINTER(D_0025E790 + 16, D_0028D660);
-    STORE_POINTER(D_0025E790 + 18, D_0028D660);
-    STORE_POINTER(D_0025E790 + 20, D_0028D668);
-    STORE_POINTER(D_0025E790 + 22, D_0028D670);
-    STORE_POINTER(D_0025E790 + 24, D_0028D678);
-    STORE_POINTER(D_0025E790 + 26, D_0028D680);
-    STORE_POINTER(D_0025E790 + 28, D_0028D688);
-    STORE_POINTER(D_0025E790 + 30, D_0028D690);
-    STORE_POINTER(D_0025E790 + 32, D_0028D690);
-    STORE_POINTER(D_0025E790 + 34, D_0028D698);
-    STORE_POINTER(D_0025E790 + 36, D_0028D698);
-    STORE_POINTER(D_0025E790 + 38, D_0028D6A0);
-    STORE_POINTER(D_0025E790 + 40, D_0028D6A0);
-    STORE_POINTER(D_0025E790 + 42, D_0028D6A8);
-    STORE_POINTER(D_0025E790 + 44, D_0028D6A8);
-    STORE_POINTER(D_0025E790 + 46, D_0028D6B0);
-    STORE_POINTER(D_0025E790 + 48, D_0028D6B0);
-    STORE_POINTER(D_0025E790 + 56, D_0028D6B8);
-    STORE_POINTER(D_0025E790 + 58, D_0028D6C0);
-    STORE_POINTER(D_0025E790 + 60, D_0028D6C8);
-    STORE_POINTER(D_0025E790 + 62, D_0028D6D0);
-    STORE_POINTER(D_0025E790 + 64, D_0028D6D8);
-    STORE_POINTER(D_0025E790 + 66, D_0028D6E0);
-    STORE_POINTER(D_0025E790 + 68, D_0028D6E8);
-    STORE_POINTER(D_0025E790 + 70, D_0028D6F0);
-    STORE_POINTER(D_0025E790 + 72, D_0028D6F8);
-    STORE_POINTER(D_0025E790 + 74, D_0028D700);
-    STORE_POINTER(D_0025E790 + 76, D_0028D708);
-    STORE_POINTER(D_0025E790 + 78, D_0028D710);
-    STORE_POINTER(D_0025E790 + 80, D_0028D718);
-    STORE_POINTER(D_0025E790 + 82, D_0028D720);
-    STORE_POINTER(D_0025E790 + 84, D_0028D728);
-    STORE_POINTER(D_0025E790 + 86, D_0028D730);
-    STORE_POINTER(D_0025E790 + 88, D_0028D738);
-    STORE_POINTER(D_0028D6B8 + 2, D_0025E1B0);
-    STORE_POINTER(D_0028D6C0 + 2, D_0025E1B0);
-    STORE_POINTER(D_0028D6C8 + 2, D_0025E1B0);
-    STORE_POINTER(D_0028D6D0 + 2, D_0025E1B0);
-    STORE_POINTER(D_0028D6D8 + 2, D_0025E1B0);
-    STORE_POINTER(D_0028D6E0 + 2, D_0025E1B0);
-    STORE_POINTER(D_0028D6E8 + 2, D_0025E1B0);
-    STORE_POINTER(D_0028D6F0 + 2, D_0025E1B0);
-    STORE_POINTER(D_0028D6F8 + 2, D_0025E1B0);
-    STORE_POINTER(D_0028D700 + 2, D_0025E1B0);
-    STORE_POINTER(D_0028D708 + 2, D_0025E1B0);
-    STORE_POINTER(D_0028D710 + 2, D_0025E1B0);
-    STORE_POINTER(D_0028D718 + 2, D_0025E1B0);
-    STORE_POINTER(D_0028D720 + 2, D_0025E1B0);
-    STORE_POINTER(D_0028D728 + 2, D_0025E1B0);
-    STORE_POINTER(D_0028D730 + 2, D_0025E1B0);
-    STORE_POINTER(D_0028D738 + 2, D_0025E1B0);
-    STORE_POINTER(D_0025E790 + 96, D_0028D740);
-    STORE_POINTER(D_0025E790 + 98, D_0028D748);
-    STORE_POINTER(D_0025E790 + 100, D_0028D750);
-    STORE_POINTER(D_0025E790 + 102, D_0028D758);
-    STORE_POINTER(D_0025E790 + 104, D_0028D760);
-    STORE_POINTER(D_0025E790 + 106, D_0028D768);
-    STORE_POINTER(D_0025E790 + 108, D_0028D770);
-    STORE_POINTER(D_0025E790 + 110, D_0028D778);
-    STORE_POINTER(D_0025E790 + 112, D_0028D780);
-    STORE_POINTER(D_0025E790 + 114, D_0028D788);
-    STORE_POINTER(D_0025E790 + 116, D_0028D790);
-    STORE_POINTER(D_0025E790 + 118, D_0028D798);
-    STORE_POINTER(D_0025E790 + 120, D_0028D7A0);
-    STORE_POINTER(D_0025E790 + 122, D_0028D7A8);
-    STORE_POINTER(D_0025E790 + 124, D_0028D7B0);
-    STORE_POINTER(D_0025E790 + 126, D_0028D7B8);
-    STORE_POINTER(D_0025E790 + 128, D_0028D7C0);
-    STORE_POINTER(D_0028D740 + 2, D_0025E1C0);
-    STORE_POINTER(D_0028D748 + 2, D_0025E1C0);
-    STORE_POINTER(D_0028D750 + 2, D_0025E1C0);
-    STORE_POINTER(D_0028D758 + 2, D_0025E1C0);
-    STORE_POINTER(D_0028D760 + 2, D_0025E1C0);
-    STORE_POINTER(D_0028D768 + 2, D_0025E1C0);
-    STORE_POINTER(D_0028D770 + 2, D_0025E1C0);
-    STORE_POINTER(D_0028D778 + 2, D_0025E1C0);
-    STORE_POINTER(D_0028D780 + 2, D_0025E1C0);
-    STORE_POINTER(D_0028D788 + 2, D_0025E1C0);
-    STORE_POINTER(D_0028D790 + 2, D_0025E1C0);
-    STORE_POINTER(D_0028D798 + 2, D_0025E1C0);
-    STORE_POINTER(D_0028D7A0 + 2, D_0025E1C0);
-    STORE_POINTER(D_0028D7A8 + 2, D_0025E1C0);
-    STORE_POINTER(D_0028D7B0 + 2, D_0025E1C0);
-    STORE_POINTER(D_0028D7B8 + 2, D_0025E1C0);
-    STORE_POINTER(D_0028D7C0 + 2, D_0025E1C0);
-    STORE_POINTER(D_0025E790 + 136, D_0028D7C8);
-    STORE_POINTER(D_0025E790 + 138, D_0028D7D0);
-    STORE_POINTER(D_0025E790 + 140, D_0028D7D8);
-    STORE_POINTER(D_0025E790 + 142, D_0028D7E0);
-    STORE_POINTER(D_0025E790 + 144, D_0028D7E8);
-    STORE_POINTER(D_0025E790 + 146, D_0028D7F0);
-    STORE_POINTER(D_0025E790 + 148, D_0028D7F8);
-    STORE_POINTER(D_0025E790 + 150, D_0028D800);
-    STORE_POINTER(D_0025E790 + 152, D_0028D808);
-    STORE_POINTER(D_0025E790 + 154, D_0028D810);
-    STORE_POINTER(D_0025E790 + 156, D_0028D818);
-    STORE_POINTER(D_0025E790 + 158, D_0028D820);
-    STORE_POINTER(D_0025E790 + 160, D_0028D828);
-    STORE_POINTER(D_0025E790 + 162, D_0028D830);
-    STORE_POINTER(D_0025E790 + 164, D_0028D838);
-    STORE_POINTER(D_0025E790 + 166, D_0028D840);
-    STORE_POINTER(D_0025E790 + 168, D_0028D848);
-    STORE_POINTER(D_0028D7C8 + 2, D_0025E1D0);
-    STORE_POINTER(D_0028D7D0 + 2, D_0025E1D0);
-    STORE_POINTER(D_0028D7D8 + 2, D_0025E1D0);
-    STORE_POINTER(D_0028D7E0 + 2, D_0025E1D0);
-    STORE_POINTER(D_0028D7E8 + 2, D_0025E1D0);
-    STORE_POINTER(D_0028D7F0 + 2, D_0025E1D0);
-    STORE_POINTER(D_0028D7F8 + 2, D_0025E1D0);
-    STORE_POINTER(D_0028D800 + 2, D_0025E1D0);
-    STORE_POINTER(D_0028D808 + 2, D_0025E1D0);
-    STORE_POINTER(D_0028D810 + 2, D_0025E1D0);
-    STORE_POINTER(D_0028D818 + 2, D_0025E1D0);
-    STORE_POINTER(D_0028D820 + 2, D_0025E1D0);
-    STORE_POINTER(D_0028D828 + 2, D_0025E1D0);
-    STORE_POINTER(D_0028D830 + 2, D_0025E1D0);
-    STORE_POINTER(D_0028D838 + 2, D_0025E1D0);
-    STORE_POINTER(D_0028D840 + 2, D_0025E1D0);
-    STORE_POINTER(D_0028D848 + 2, D_0025E1D0);
-    STORE_POINTER(D_0025E790 + 176, D_0028D850);
-    STORE_POINTER(D_0025E790 + 178, D_0028D858);
-    STORE_POINTER(D_0025E790 + 180, D_0028D860);
-    STORE_POINTER(D_0025E790 + 182, D_0028D868);
-    STORE_POINTER(D_0025E790 + 184, D_0028D870);
-    STORE_POINTER(D_0025E790 + 186, D_0028D878);
-    STORE_POINTER(D_0025E790 + 188, D_0028D880);
-    STORE_POINTER(D_0025E790 + 190, D_0028D888);
-    STORE_POINTER(D_0025E790 + 192, D_0028D890);
-    STORE_POINTER(D_0025E790 + 194, D_0028D898);
-    STORE_POINTER(D_0025E790 + 196, D_0028D8A0);
-    STORE_POINTER(D_0025E790 + 198, D_0028D8A8);
-    STORE_POINTER(D_0025E790 + 200, D_0028D8B0);
-    STORE_POINTER(D_0025E790 + 202, D_0028D8B8);
-    STORE_POINTER(D_0025E790 + 204, D_0028D8C0);
-    STORE_POINTER(D_0025E790 + 206, D_0028D8C8);
-    STORE_POINTER(D_0025E790 + 208, D_0028D8D0);
-    STORE_POINTER(D_0028D850 + 2, D_0025E1E0);
-    STORE_POINTER(D_0028D858 + 2, D_0025E1E0);
-    STORE_POINTER(D_0028D860 + 2, D_0025E1E0);
-    STORE_POINTER(D_0028D868 + 2, D_0025E1E0);
-    STORE_POINTER(D_0028D870 + 2, D_0025E1E0);
-    STORE_POINTER(D_0028D878 + 2, D_0025E1E0);
-    STORE_POINTER(D_0028D880 + 2, D_0025E1E0);
-    STORE_POINTER(D_0028D888 + 2, D_0025E1E0);
-    STORE_POINTER(D_0028D890 + 2, D_0025E1E0);
-    STORE_POINTER(D_0028D898 + 2, D_0025E1E0);
-    STORE_POINTER(D_0028D8A0 + 2, D_0025E1E0);
-    STORE_POINTER(D_0028D8A8 + 2, D_0025E1E0);
-    STORE_POINTER(D_0028D8B0 + 2, D_0025E1E0);
-    STORE_POINTER(D_0028D8B8 + 2, D_0025E1E0);
-    STORE_POINTER(D_0028D8C0 + 2, D_0025E1E0);
-    STORE_POINTER(D_0028D8C8 + 2, D_0025E1E0);
-    STORE_POINTER(D_0028D8D0 + 2, D_0025E1E0);
+    STORE_POINTER(player_shot_8_flight_table, player_shot_8_flight_000);
+    STORE_POINTER(player_shot_8_flight_table + 2, player_shot_8_flight_000);
+    STORE_POINTER(player_shot_8_flight_table + 4, player_shot_8_flight_002);
+    STORE_POINTER(player_shot_8_flight_table + 6, player_shot_8_flight_002);
+    STORE_POINTER(player_shot_8_flight_table + 8, player_shot_8_flight_004);
+    STORE_POINTER(player_shot_8_flight_table + 10, player_shot_8_flight_004);
+    STORE_POINTER(player_shot_8_flight_table + 12, player_shot_8_flight_006);
+    STORE_POINTER(player_shot_8_flight_table + 14, player_shot_8_flight_006);
+    STORE_POINTER(player_shot_8_flight_table + 16, player_shot_8_flight_008);
+    STORE_POINTER(player_shot_8_flight_table + 18, player_shot_8_flight_008);
+    STORE_POINTER(player_shot_8_flight_table + 20, player_shot_8_flight_010);
+    STORE_POINTER(player_shot_8_flight_table + 22, player_shot_8_flight_011);
+    STORE_POINTER(player_shot_8_flight_table + 24, player_shot_8_flight_012);
+    STORE_POINTER(player_shot_8_flight_table + 26, player_shot_8_flight_013);
+    STORE_POINTER(player_shot_8_flight_table + 28, player_shot_8_flight_014);
+    STORE_POINTER(player_shot_8_flight_table + 30, player_shot_8_flight_015);
+    STORE_POINTER(player_shot_8_flight_table + 32, player_shot_8_flight_015);
+    STORE_POINTER(player_shot_8_flight_table + 34, player_shot_8_flight_017);
+    STORE_POINTER(player_shot_8_flight_table + 36, player_shot_8_flight_017);
+    STORE_POINTER(player_shot_8_flight_table + 38, player_shot_8_flight_019);
+    STORE_POINTER(player_shot_8_flight_table + 40, player_shot_8_flight_019);
+    STORE_POINTER(player_shot_8_flight_table + 42, player_shot_8_flight_021);
+    STORE_POINTER(player_shot_8_flight_table + 44, player_shot_8_flight_021);
+    STORE_POINTER(player_shot_8_flight_table + 46, player_shot_8_flight_023);
+    STORE_POINTER(player_shot_8_flight_table + 48, player_shot_8_flight_023);
+    STORE_POINTER(player_shot_8_flight_table + 56, player_shot_8_flight_028);
+    STORE_POINTER(player_shot_8_flight_table + 58, player_shot_8_flight_029);
+    STORE_POINTER(player_shot_8_flight_table + 60, player_shot_8_flight_030);
+    STORE_POINTER(player_shot_8_flight_table + 62, player_shot_8_flight_031);
+    STORE_POINTER(player_shot_8_flight_table + 64, player_shot_8_flight_032);
+    STORE_POINTER(player_shot_8_flight_table + 66, player_shot_8_flight_033);
+    STORE_POINTER(player_shot_8_flight_table + 68, player_shot_8_flight_034);
+    STORE_POINTER(player_shot_8_flight_table + 70, player_shot_8_flight_035);
+    STORE_POINTER(player_shot_8_flight_table + 72, player_shot_8_flight_036);
+    STORE_POINTER(player_shot_8_flight_table + 74, player_shot_8_flight_037);
+    STORE_POINTER(player_shot_8_flight_table + 76, player_shot_8_flight_038);
+    STORE_POINTER(player_shot_8_flight_table + 78, player_shot_8_flight_039);
+    STORE_POINTER(player_shot_8_flight_table + 80, player_shot_8_flight_040);
+    STORE_POINTER(player_shot_8_flight_table + 82, player_shot_8_flight_041);
+    STORE_POINTER(player_shot_8_flight_table + 84, player_shot_8_flight_042);
+    STORE_POINTER(player_shot_8_flight_table + 86, player_shot_8_flight_043);
+    STORE_POINTER(player_shot_8_flight_table + 88, player_shot_8_flight_044);
+    STORE_POINTER(player_shot_8_flight_028 + 2, D_0025E1B0);
+    STORE_POINTER(player_shot_8_flight_029 + 2, D_0025E1B0);
+    STORE_POINTER(player_shot_8_flight_030 + 2, D_0025E1B0);
+    STORE_POINTER(player_shot_8_flight_031 + 2, D_0025E1B0);
+    STORE_POINTER(player_shot_8_flight_032 + 2, D_0025E1B0);
+    STORE_POINTER(player_shot_8_flight_033 + 2, D_0025E1B0);
+    STORE_POINTER(player_shot_8_flight_034 + 2, D_0025E1B0);
+    STORE_POINTER(player_shot_8_flight_035 + 2, D_0025E1B0);
+    STORE_POINTER(player_shot_8_flight_036 + 2, D_0025E1B0);
+    STORE_POINTER(player_shot_8_flight_037 + 2, D_0025E1B0);
+    STORE_POINTER(player_shot_8_flight_038 + 2, D_0025E1B0);
+    STORE_POINTER(player_shot_8_flight_039 + 2, D_0025E1B0);
+    STORE_POINTER(player_shot_8_flight_040 + 2, D_0025E1B0);
+    STORE_POINTER(player_shot_8_flight_041 + 2, D_0025E1B0);
+    STORE_POINTER(player_shot_8_flight_042 + 2, D_0025E1B0);
+    STORE_POINTER(player_shot_8_flight_043 + 2, D_0025E1B0);
+    STORE_POINTER(player_shot_8_flight_044 + 2, D_0025E1B0);
+    STORE_POINTER(player_shot_8_flight_table + 96, player_shot_8_flight_048);
+    STORE_POINTER(player_shot_8_flight_table + 98, player_shot_8_flight_049);
+    STORE_POINTER(player_shot_8_flight_table + 100, player_shot_8_flight_050);
+    STORE_POINTER(player_shot_8_flight_table + 102, player_shot_8_flight_051);
+    STORE_POINTER(player_shot_8_flight_table + 104, player_shot_8_flight_052);
+    STORE_POINTER(player_shot_8_flight_table + 106, player_shot_8_flight_053);
+    STORE_POINTER(player_shot_8_flight_table + 108, player_shot_8_flight_054);
+    STORE_POINTER(player_shot_8_flight_table + 110, player_shot_8_flight_055);
+    STORE_POINTER(player_shot_8_flight_table + 112, player_shot_8_flight_056);
+    STORE_POINTER(player_shot_8_flight_table + 114, player_shot_8_flight_057);
+    STORE_POINTER(player_shot_8_flight_table + 116, player_shot_8_flight_058);
+    STORE_POINTER(player_shot_8_flight_table + 118, player_shot_8_flight_059);
+    STORE_POINTER(player_shot_8_flight_table + 120, player_shot_8_flight_060);
+    STORE_POINTER(player_shot_8_flight_table + 122, player_shot_8_flight_061);
+    STORE_POINTER(player_shot_8_flight_table + 124, player_shot_8_flight_062);
+    STORE_POINTER(player_shot_8_flight_table + 126, player_shot_8_flight_063);
+    STORE_POINTER(player_shot_8_flight_table + 128, player_shot_8_flight_064);
+    STORE_POINTER(player_shot_8_flight_048 + 2, D_0025E1C0);
+    STORE_POINTER(player_shot_8_flight_049 + 2, D_0025E1C0);
+    STORE_POINTER(player_shot_8_flight_050 + 2, D_0025E1C0);
+    STORE_POINTER(player_shot_8_flight_051 + 2, D_0025E1C0);
+    STORE_POINTER(player_shot_8_flight_052 + 2, D_0025E1C0);
+    STORE_POINTER(player_shot_8_flight_053 + 2, D_0025E1C0);
+    STORE_POINTER(player_shot_8_flight_054 + 2, D_0025E1C0);
+    STORE_POINTER(player_shot_8_flight_055 + 2, D_0025E1C0);
+    STORE_POINTER(player_shot_8_flight_056 + 2, D_0025E1C0);
+    STORE_POINTER(player_shot_8_flight_057 + 2, D_0025E1C0);
+    STORE_POINTER(player_shot_8_flight_058 + 2, D_0025E1C0);
+    STORE_POINTER(player_shot_8_flight_059 + 2, D_0025E1C0);
+    STORE_POINTER(player_shot_8_flight_060 + 2, D_0025E1C0);
+    STORE_POINTER(player_shot_8_flight_061 + 2, D_0025E1C0);
+    STORE_POINTER(player_shot_8_flight_062 + 2, D_0025E1C0);
+    STORE_POINTER(player_shot_8_flight_063 + 2, D_0025E1C0);
+    STORE_POINTER(player_shot_8_flight_064 + 2, D_0025E1C0);
+    STORE_POINTER(player_shot_8_flight_table + 136, player_shot_8_flight_068);
+    STORE_POINTER(player_shot_8_flight_table + 138, player_shot_8_flight_069);
+    STORE_POINTER(player_shot_8_flight_table + 140, player_shot_8_flight_070);
+    STORE_POINTER(player_shot_8_flight_table + 142, player_shot_8_flight_071);
+    STORE_POINTER(player_shot_8_flight_table + 144, player_shot_8_flight_072);
+    STORE_POINTER(player_shot_8_flight_table + 146, player_shot_8_flight_073);
+    STORE_POINTER(player_shot_8_flight_table + 148, player_shot_8_flight_074);
+    STORE_POINTER(player_shot_8_flight_table + 150, player_shot_8_flight_075);
+    STORE_POINTER(player_shot_8_flight_table + 152, player_shot_8_flight_076);
+    STORE_POINTER(player_shot_8_flight_table + 154, player_shot_8_flight_077);
+    STORE_POINTER(player_shot_8_flight_table + 156, player_shot_8_flight_078);
+    STORE_POINTER(player_shot_8_flight_table + 158, player_shot_8_flight_079);
+    STORE_POINTER(player_shot_8_flight_table + 160, player_shot_8_flight_080);
+    STORE_POINTER(player_shot_8_flight_table + 162, player_shot_8_flight_081);
+    STORE_POINTER(player_shot_8_flight_table + 164, player_shot_8_flight_082);
+    STORE_POINTER(player_shot_8_flight_table + 166, player_shot_8_flight_083);
+    STORE_POINTER(player_shot_8_flight_table + 168, player_shot_8_flight_084);
+    STORE_POINTER(player_shot_8_flight_068 + 2, D_0025E1D0);
+    STORE_POINTER(player_shot_8_flight_069 + 2, D_0025E1D0);
+    STORE_POINTER(player_shot_8_flight_070 + 2, D_0025E1D0);
+    STORE_POINTER(player_shot_8_flight_071 + 2, D_0025E1D0);
+    STORE_POINTER(player_shot_8_flight_072 + 2, D_0025E1D0);
+    STORE_POINTER(player_shot_8_flight_073 + 2, D_0025E1D0);
+    STORE_POINTER(player_shot_8_flight_074 + 2, D_0025E1D0);
+    STORE_POINTER(player_shot_8_flight_075 + 2, D_0025E1D0);
+    STORE_POINTER(player_shot_8_flight_076 + 2, D_0025E1D0);
+    STORE_POINTER(player_shot_8_flight_077 + 2, D_0025E1D0);
+    STORE_POINTER(player_shot_8_flight_078 + 2, D_0025E1D0);
+    STORE_POINTER(player_shot_8_flight_079 + 2, D_0025E1D0);
+    STORE_POINTER(player_shot_8_flight_080 + 2, D_0025E1D0);
+    STORE_POINTER(player_shot_8_flight_081 + 2, D_0025E1D0);
+    STORE_POINTER(player_shot_8_flight_082 + 2, D_0025E1D0);
+    STORE_POINTER(player_shot_8_flight_083 + 2, D_0025E1D0);
+    STORE_POINTER(player_shot_8_flight_084 + 2, D_0025E1D0);
+    STORE_POINTER(player_shot_8_flight_table + 176, player_shot_8_flight_088);
+    STORE_POINTER(player_shot_8_flight_table + 178, player_shot_8_flight_089);
+    STORE_POINTER(player_shot_8_flight_table + 180, player_shot_8_flight_090);
+    STORE_POINTER(player_shot_8_flight_table + 182, player_shot_8_flight_091);
+    STORE_POINTER(player_shot_8_flight_table + 184, player_shot_8_flight_092);
+    STORE_POINTER(player_shot_8_flight_table + 186, player_shot_8_flight_093);
+    STORE_POINTER(player_shot_8_flight_table + 188, player_shot_8_flight_094);
+    STORE_POINTER(player_shot_8_flight_table + 190, player_shot_8_flight_095);
+    STORE_POINTER(player_shot_8_flight_table + 192, player_shot_8_flight_096);
+    STORE_POINTER(player_shot_8_flight_table + 194, player_shot_8_flight_097);
+    STORE_POINTER(player_shot_8_flight_table + 196, player_shot_8_flight_098);
+    STORE_POINTER(player_shot_8_flight_table + 198, player_shot_8_flight_099);
+    STORE_POINTER(player_shot_8_flight_table + 200, player_shot_8_flight_100);
+    STORE_POINTER(player_shot_8_flight_table + 202, player_shot_8_flight_101);
+    STORE_POINTER(player_shot_8_flight_table + 204, player_shot_8_flight_102);
+    STORE_POINTER(player_shot_8_flight_table + 206, player_shot_8_flight_103);
+    STORE_POINTER(player_shot_8_flight_table + 208, player_shot_8_flight_104);
+    STORE_POINTER(player_shot_8_flight_088 + 2, D_0025E1E0);
+    STORE_POINTER(player_shot_8_flight_089 + 2, D_0025E1E0);
+    STORE_POINTER(player_shot_8_flight_090 + 2, D_0025E1E0);
+    STORE_POINTER(player_shot_8_flight_091 + 2, D_0025E1E0);
+    STORE_POINTER(player_shot_8_flight_092 + 2, D_0025E1E0);
+    STORE_POINTER(player_shot_8_flight_093 + 2, D_0025E1E0);
+    STORE_POINTER(player_shot_8_flight_094 + 2, D_0025E1E0);
+    STORE_POINTER(player_shot_8_flight_095 + 2, D_0025E1E0);
+    STORE_POINTER(player_shot_8_flight_096 + 2, D_0025E1E0);
+    STORE_POINTER(player_shot_8_flight_097 + 2, D_0025E1E0);
+    STORE_POINTER(player_shot_8_flight_098 + 2, D_0025E1E0);
+    STORE_POINTER(player_shot_8_flight_099 + 2, D_0025E1E0);
+    STORE_POINTER(player_shot_8_flight_100 + 2, D_0025E1E0);
+    STORE_POINTER(player_shot_8_flight_101 + 2, D_0025E1E0);
+    STORE_POINTER(player_shot_8_flight_102 + 2, D_0025E1E0);
+    STORE_POINTER(player_shot_8_flight_103 + 2, D_0025E1E0);
+    STORE_POINTER(player_shot_8_flight_104 + 2, D_0025E1E0);
     STORE_POINTER(D_0025E940, D_0028D8D8);
     STORE_POINTER(D_0025E940 + 2, D_0028D8E0);
     STORE_POINTER(D_0025E940 + 4, D_0028D8E8);
@@ -2776,46 +2776,46 @@ void func_0017D530(void) {
     STORE_POINTER(D_0028D948 + 2, D_0025E1F0);
     STORE_POINTER(D_0028D950 + 2, D_0025E1F0);
     STORE_POINTER(D_0028D958 + 2, D_0025E1F0);
-    STORE_POINTER(D_0025E990, D_0025E9F8);
-    STORE_POINTER(D_0025E990 + 2, D_0025E9F8);
-    STORE_POINTER(D_0025E990 + 4, D_0025EA08);
-    STORE_POINTER(D_0025E990 + 6, D_0025EA08);
-    STORE_POINTER(D_0025E990 + 8, D_0025EA18);
-    STORE_POINTER(D_0025E990 + 10, D_0025EA18);
-    STORE_POINTER(D_0025E990 + 12, D_0025EA28);
-    STORE_POINTER(D_0025E990 + 14, D_0025EA28);
-    STORE_POINTER(D_0025E990 + 16, D_0025EA38);
-    STORE_POINTER(D_0025E990 + 18, D_0025EA38);
-    STORE_POINTER(D_0025E990 + 20, D_0025EA48);
-    STORE_POINTER(D_0025E990 + 22, D_0025EA58);
-    STORE_POINTER(D_0025E990 + 24, D_0025EA68);
-    STORE_POINTER(D_0025E990 + 26, D_0025EA78);
-    STORE_POINTER(D_0025E990 + 28, D_0025EA88);
-    STORE_POINTER(D_0025E990 + 30, D_0025EA98);
-    STORE_POINTER(D_0025E990 + 32, D_0025EA98);
-    STORE_POINTER(D_0025E990 + 34, D_0025EAA8);
-    STORE_POINTER(D_0025E990 + 36, D_0025EAA8);
-    STORE_POINTER(D_0025E990 + 38, D_0025EAB8);
-    STORE_POINTER(D_0025E990 + 40, D_0025EAB8);
-    STORE_POINTER(D_0025E990 + 42, D_0025EAC8);
-    STORE_POINTER(D_0025E990 + 44, D_0025EAC8);
-    STORE_POINTER(D_0025E990 + 46, D_0025EAD8);
-    STORE_POINTER(D_0025E990 + 48, D_0025EAD8);
-    STORE_POINTER(D_0025E9F8 + 3, D_0025E210);
-    STORE_POINTER(D_0025EA08 + 3, D_0025E230);
-    STORE_POINTER(D_0025EA18 + 3, D_0025E230);
-    STORE_POINTER(D_0025EA28 + 3, D_0025E250);
-    STORE_POINTER(D_0025EA38 + 3, D_0025E250);
-    STORE_POINTER(D_0025EA48 + 3, D_0025E270);
-    STORE_POINTER(D_0025EA58 + 3, D_0025E290);
-    STORE_POINTER(D_0025EA68 + 3, D_0025E290);
-    STORE_POINTER(D_0025EA78 + 3, D_0025E2B0);
-    STORE_POINTER(D_0025EA88 + 3, D_0025E2B0);
-    STORE_POINTER(D_0025EA98 + 3, D_0025E2D0);
-    STORE_POINTER(D_0025EAA8 + 3, D_0025E2F0);
-    STORE_POINTER(D_0025EAB8 + 3, D_0025E2F0);
-    STORE_POINTER(D_0025EAC8 + 3, D_0025E310);
-    STORE_POINTER(D_0025EAD8 + 3, D_0025E310);
+    STORE_POINTER(player_shot_8_impact_table, player_shot_8_impact_00);
+    STORE_POINTER(player_shot_8_impact_table + 2, player_shot_8_impact_00);
+    STORE_POINTER(player_shot_8_impact_table + 4, player_shot_8_impact_02);
+    STORE_POINTER(player_shot_8_impact_table + 6, player_shot_8_impact_02);
+    STORE_POINTER(player_shot_8_impact_table + 8, player_shot_8_impact_04);
+    STORE_POINTER(player_shot_8_impact_table + 10, player_shot_8_impact_04);
+    STORE_POINTER(player_shot_8_impact_table + 12, player_shot_8_impact_06);
+    STORE_POINTER(player_shot_8_impact_table + 14, player_shot_8_impact_06);
+    STORE_POINTER(player_shot_8_impact_table + 16, player_shot_8_impact_08);
+    STORE_POINTER(player_shot_8_impact_table + 18, player_shot_8_impact_08);
+    STORE_POINTER(player_shot_8_impact_table + 20, player_shot_8_impact_10);
+    STORE_POINTER(player_shot_8_impact_table + 22, player_shot_8_impact_11);
+    STORE_POINTER(player_shot_8_impact_table + 24, player_shot_8_impact_12);
+    STORE_POINTER(player_shot_8_impact_table + 26, player_shot_8_impact_13);
+    STORE_POINTER(player_shot_8_impact_table + 28, player_shot_8_impact_14);
+    STORE_POINTER(player_shot_8_impact_table + 30, player_shot_8_impact_15);
+    STORE_POINTER(player_shot_8_impact_table + 32, player_shot_8_impact_15);
+    STORE_POINTER(player_shot_8_impact_table + 34, player_shot_8_impact_17);
+    STORE_POINTER(player_shot_8_impact_table + 36, player_shot_8_impact_17);
+    STORE_POINTER(player_shot_8_impact_table + 38, player_shot_8_impact_19);
+    STORE_POINTER(player_shot_8_impact_table + 40, player_shot_8_impact_19);
+    STORE_POINTER(player_shot_8_impact_table + 42, player_shot_8_impact_21);
+    STORE_POINTER(player_shot_8_impact_table + 44, player_shot_8_impact_21);
+    STORE_POINTER(player_shot_8_impact_table + 46, player_shot_8_impact_23);
+    STORE_POINTER(player_shot_8_impact_table + 48, player_shot_8_impact_23);
+    STORE_POINTER(player_shot_8_impact_00 + 3, player_shot_8_impact_frames_00);
+    STORE_POINTER(player_shot_8_impact_02 + 3, player_shot_8_impact_frames_02);
+    STORE_POINTER(player_shot_8_impact_04 + 3, player_shot_8_impact_frames_02);
+    STORE_POINTER(player_shot_8_impact_06 + 3, player_shot_8_impact_frames_06);
+    STORE_POINTER(player_shot_8_impact_08 + 3, player_shot_8_impact_frames_06);
+    STORE_POINTER(player_shot_8_impact_10 + 3, player_shot_8_impact_frames_10);
+    STORE_POINTER(player_shot_8_impact_11 + 3, player_shot_8_impact_frames_11);
+    STORE_POINTER(player_shot_8_impact_12 + 3, player_shot_8_impact_frames_11);
+    STORE_POINTER(player_shot_8_impact_13 + 3, player_shot_8_impact_frames_13);
+    STORE_POINTER(player_shot_8_impact_14 + 3, player_shot_8_impact_frames_13);
+    STORE_POINTER(player_shot_8_impact_15 + 3, player_shot_8_impact_frames_15);
+    STORE_POINTER(player_shot_8_impact_17 + 3, player_shot_8_impact_frames_17);
+    STORE_POINTER(player_shot_8_impact_19 + 3, player_shot_8_impact_frames_17);
+    STORE_POINTER(player_shot_8_impact_21 + 3, player_shot_8_impact_frames_21);
+    STORE_POINTER(player_shot_8_impact_23 + 3, player_shot_8_impact_frames_21);
 }
 
 extern u16 D_00253490[];
@@ -4919,114 +4919,114 @@ extern u16 D_0025D850[];
 extern u16 D_0025D860[];
 extern u16 D_0025D870[];
 extern u16 D_0025D880[];
-extern u16 D_0025D890[];
-extern u16 D_0025D8B0[];
-extern u16 D_0025D8D0[];
-extern u16 D_0025D8F0[];
-extern u16 D_0025D910[];
-extern u16 D_0025D930[];
-extern u16 D_0025D950[];
-extern u16 D_0025D970[];
-extern u16 D_0025D990[];
+extern u16 player_shot_7_impact_frames_00[];
+extern u16 player_shot_7_impact_frames_02[];
+extern u16 player_shot_7_impact_frames_06[];
+extern u16 player_shot_7_impact_frames_10[];
+extern u16 player_shot_7_impact_frames_11[];
+extern u16 player_shot_7_impact_frames_13[];
+extern u16 player_shot_7_impact_frames_15[];
+extern u16 player_shot_7_impact_frames_17[];
+extern u16 player_shot_7_impact_frames_21[];
 extern u16 D_0025DFC0[];
-extern u16 D_0025E078[];
-extern u16 D_0025E088[];
-extern u16 D_0025E098[];
-extern u16 D_0025E0A8[];
-extern u16 D_0025E0B8[];
-extern u16 D_0025E0C8[];
-extern u16 D_0025E0D8[];
-extern u16 D_0025E0E8[];
-extern u16 D_0025E0F8[];
-extern u16 D_0025E108[];
-extern u16 D_0025E118[];
-extern u16 D_0025E128[];
-extern u16 D_0025E138[];
-extern u16 D_0025E148[];
-extern u16 D_0025E158[];
-extern u16 D_0028D320[];
-extern u16 D_0028D328[];
-extern u16 D_0028D330[];
-extern u16 D_0028D338[];
-extern u16 D_0028D340[];
-extern u16 D_0028D348[];
-extern u16 D_0028D350[];
-extern u16 D_0028D358[];
-extern u16 D_0028D360[];
-extern u16 D_0028D368[];
-extern u16 D_0028D370[];
-extern u16 D_0028D378[];
-extern u16 D_0028D380[];
-extern u16 D_0028D388[];
-extern u16 D_0028D390[];
-extern u16 D_0028D398[];
-extern u16 D_0028D3A0[];
-extern u16 D_0028D3A8[];
-extern u16 D_0028D3B0[];
-extern u16 D_0028D3B8[];
-extern u16 D_0028D3C0[];
-extern u16 D_0028D3C8[];
-extern u16 D_0028D3D0[];
-extern u16 D_0028D3D8[];
-extern u16 D_0028D3E0[];
-extern u16 D_0028D3E8[];
-extern u16 D_0028D3F0[];
-extern u16 D_0028D3F8[];
-extern u16 D_0028D400[];
-extern u16 D_0028D408[];
-extern u16 D_0028D410[];
-extern u16 D_0028D418[];
-extern u16 D_0028D420[];
-extern u16 D_0028D428[];
-extern u16 D_0028D430[];
-extern u16 D_0028D438[];
-extern u16 D_0028D440[];
-extern u16 D_0028D448[];
-extern u16 D_0028D450[];
-extern u16 D_0028D458[];
-extern u16 D_0028D460[];
-extern u16 D_0028D468[];
-extern u16 D_0028D470[];
-extern u16 D_0028D478[];
-extern u16 D_0028D480[];
-extern u16 D_0028D488[];
-extern u16 D_0028D490[];
-extern u16 D_0028D498[];
-extern u16 D_0028D4A0[];
-extern u16 D_0028D4A8[];
-extern u16 D_0028D4B0[];
-extern u16 D_0028D4B8[];
-extern u16 D_0028D4C0[];
-extern u16 D_0028D4C8[];
-extern u16 D_0028D4D0[];
-extern u16 D_0028D4D8[];
-extern u16 D_0028D4E0[];
-extern u16 D_0028D4E8[];
-extern u16 D_0028D4F0[];
-extern u16 D_0028D4F8[];
-extern u16 D_0028D500[];
-extern u16 D_0028D508[];
-extern u16 D_0028D510[];
-extern u16 D_0028D518[];
-extern u16 D_0028D520[];
-extern u16 D_0028D528[];
-extern u16 D_0028D530[];
-extern u16 D_0028D538[];
-extern u16 D_0028D540[];
-extern u16 D_0028D548[];
-extern u16 D_0028D550[];
-extern u16 D_0028D558[];
-extern u16 D_0028D560[];
-extern u16 D_0028D568[];
-extern u16 D_0028D570[];
-extern u16 D_0028D578[];
-extern u16 D_0028D580[];
-extern u16 D_0028D588[];
-extern u16 D_0028D590[];
-extern u16 D_0028D598[];
-extern u16 D_0028D5A0[];
-extern u16 D_0028D5A8[];
-extern u16 D_0028D5B0[];
+extern u16 player_shot_7_impact_00[];
+extern u16 player_shot_7_impact_02[];
+extern u16 player_shot_7_impact_04[];
+extern u16 player_shot_7_impact_06[];
+extern u16 player_shot_7_impact_08[];
+extern u16 player_shot_7_impact_10[];
+extern u16 player_shot_7_impact_11[];
+extern u16 player_shot_7_impact_12[];
+extern u16 player_shot_7_impact_13[];
+extern u16 player_shot_7_impact_14[];
+extern u16 player_shot_7_impact_15[];
+extern u16 player_shot_7_impact_17[];
+extern u16 player_shot_7_impact_19[];
+extern u16 player_shot_7_impact_21[];
+extern u16 player_shot_7_impact_23[];
+extern u16 player_shot_7_flight_000[];
+extern u16 player_shot_7_flight_002[];
+extern u16 player_shot_7_flight_004[];
+extern u16 player_shot_7_flight_006[];
+extern u16 player_shot_7_flight_008[];
+extern u16 player_shot_7_flight_010[];
+extern u16 player_shot_7_flight_011[];
+extern u16 player_shot_7_flight_012[];
+extern u16 player_shot_7_flight_013[];
+extern u16 player_shot_7_flight_014[];
+extern u16 player_shot_7_flight_015[];
+extern u16 player_shot_7_flight_017[];
+extern u16 player_shot_7_flight_019[];
+extern u16 player_shot_7_flight_021[];
+extern u16 player_shot_7_flight_023[];
+extern u16 player_shot_7_flight_028[];
+extern u16 player_shot_7_flight_029[];
+extern u16 player_shot_7_flight_030[];
+extern u16 player_shot_7_flight_031[];
+extern u16 player_shot_7_flight_032[];
+extern u16 player_shot_7_flight_033[];
+extern u16 player_shot_7_flight_034[];
+extern u16 player_shot_7_flight_035[];
+extern u16 player_shot_7_flight_036[];
+extern u16 player_shot_7_flight_037[];
+extern u16 player_shot_7_flight_038[];
+extern u16 player_shot_7_flight_039[];
+extern u16 player_shot_7_flight_040[];
+extern u16 player_shot_7_flight_041[];
+extern u16 player_shot_7_flight_042[];
+extern u16 player_shot_7_flight_043[];
+extern u16 player_shot_7_flight_044[];
+extern u16 player_shot_7_flight_048[];
+extern u16 player_shot_7_flight_049[];
+extern u16 player_shot_7_flight_050[];
+extern u16 player_shot_7_flight_051[];
+extern u16 player_shot_7_flight_052[];
+extern u16 player_shot_7_flight_053[];
+extern u16 player_shot_7_flight_054[];
+extern u16 player_shot_7_flight_055[];
+extern u16 player_shot_7_flight_056[];
+extern u16 player_shot_7_flight_057[];
+extern u16 player_shot_7_flight_058[];
+extern u16 player_shot_7_flight_059[];
+extern u16 player_shot_7_flight_060[];
+extern u16 player_shot_7_flight_061[];
+extern u16 player_shot_7_flight_062[];
+extern u16 player_shot_7_flight_063[];
+extern u16 player_shot_7_flight_064[];
+extern u16 player_shot_7_flight_068[];
+extern u16 player_shot_7_flight_069[];
+extern u16 player_shot_7_flight_070[];
+extern u16 player_shot_7_flight_071[];
+extern u16 player_shot_7_flight_072[];
+extern u16 player_shot_7_flight_073[];
+extern u16 player_shot_7_flight_074[];
+extern u16 player_shot_7_flight_075[];
+extern u16 player_shot_7_flight_076[];
+extern u16 player_shot_7_flight_077[];
+extern u16 player_shot_7_flight_078[];
+extern u16 player_shot_7_flight_079[];
+extern u16 player_shot_7_flight_080[];
+extern u16 player_shot_7_flight_081[];
+extern u16 player_shot_7_flight_082[];
+extern u16 player_shot_7_flight_083[];
+extern u16 player_shot_7_flight_084[];
+extern u16 player_shot_7_flight_088[];
+extern u16 player_shot_7_flight_089[];
+extern u16 player_shot_7_flight_090[];
+extern u16 player_shot_7_flight_091[];
+extern u16 player_shot_7_flight_092[];
+extern u16 player_shot_7_flight_093[];
+extern u16 player_shot_7_flight_094[];
+extern u16 player_shot_7_flight_095[];
+extern u16 player_shot_7_flight_096[];
+extern u16 player_shot_7_flight_097[];
+extern u16 player_shot_7_flight_098[];
+extern u16 player_shot_7_flight_099[];
+extern u16 player_shot_7_flight_100[];
+extern u16 player_shot_7_flight_101[];
+extern u16 player_shot_7_flight_102[];
+extern u16 player_shot_7_flight_103[];
+extern u16 player_shot_7_flight_104[];
 extern u16 D_0028D5B8[];
 extern u16 D_0028D5C0[];
 extern u16 D_0028D5C8[];
@@ -5050,10 +5050,10 @@ extern u16 D_0025DBC4[];
 extern u16 D_0025DBF4[];
 extern u16 D_0025DC24[];
 extern u16 D_0025DC54[];
-extern u16 D_0025DE10[];
-extern u16 D_0025E010[];
+extern u16 player_shot_7_flight_table[];
+extern u16 player_shot_7_impact_table[];
 
-void func_001882E0(void) {
+void player_shot_7_tables_init(void) {
     if (D_0025D9B0[5] != 0x5) {
         printf((const char *)D_00275BE0);
     }
@@ -5264,650 +5264,650 @@ void func_001882E0(void) {
         printf((const char *)D_00276200);
     }
     STORE_POINTER(D_0025DDC0 + 34, D_0025D880);
-    if (D_0025DE10[0] != 0x0) {
+    if (player_shot_7_flight_table[0] != 0x0) {
         printf((const char *)D_00276220);
     }
-    STORE_POINTER(D_0025DE10, D_0028D320);
-    if (D_0025DE10[2] != 0x2) {
+    STORE_POINTER(player_shot_7_flight_table, player_shot_7_flight_000);
+    if (player_shot_7_flight_table[2] != 0x2) {
         printf((const char *)D_00276240);
     }
-    STORE_POINTER(D_0025DE10 + 2, D_0028D320);
-    if (D_0025DE10[4] != 0x4) {
+    STORE_POINTER(player_shot_7_flight_table + 2, player_shot_7_flight_000);
+    if (player_shot_7_flight_table[4] != 0x4) {
         printf((const char *)D_00276260);
     }
-    STORE_POINTER(D_0025DE10 + 4, D_0028D328);
-    if (D_0025DE10[6] != 0x6) {
+    STORE_POINTER(player_shot_7_flight_table + 4, player_shot_7_flight_002);
+    if (player_shot_7_flight_table[6] != 0x6) {
         printf((const char *)D_00276280);
     }
-    STORE_POINTER(D_0025DE10 + 6, D_0028D328);
-    if (D_0025DE10[8] != 0x8) {
+    STORE_POINTER(player_shot_7_flight_table + 6, player_shot_7_flight_002);
+    if (player_shot_7_flight_table[8] != 0x8) {
         printf((const char *)D_002762A0);
     }
-    STORE_POINTER(D_0025DE10 + 8, D_0028D330);
-    if (D_0025DE10[10] != 0xa) {
+    STORE_POINTER(player_shot_7_flight_table + 8, player_shot_7_flight_004);
+    if (player_shot_7_flight_table[10] != 0xa) {
         printf((const char *)D_002762C0);
     }
-    STORE_POINTER(D_0025DE10 + 10, D_0028D330);
-    if (D_0025DE10[12] != 0xc) {
+    STORE_POINTER(player_shot_7_flight_table + 10, player_shot_7_flight_004);
+    if (player_shot_7_flight_table[12] != 0xc) {
         printf((const char *)D_002762E0);
     }
-    STORE_POINTER(D_0025DE10 + 12, D_0028D338);
-    if (D_0025DE10[14] != 0xe) {
+    STORE_POINTER(player_shot_7_flight_table + 12, player_shot_7_flight_006);
+    if (player_shot_7_flight_table[14] != 0xe) {
         printf((const char *)D_00276300);
     }
-    STORE_POINTER(D_0025DE10 + 14, D_0028D338);
-    if (D_0025DE10[16] != 0x10) {
+    STORE_POINTER(player_shot_7_flight_table + 14, player_shot_7_flight_006);
+    if (player_shot_7_flight_table[16] != 0x10) {
         printf((const char *)D_00276320);
     }
-    STORE_POINTER(D_0025DE10 + 16, D_0028D340);
-    if (D_0025DE10[18] != 0x12) {
+    STORE_POINTER(player_shot_7_flight_table + 16, player_shot_7_flight_008);
+    if (player_shot_7_flight_table[18] != 0x12) {
         printf((const char *)D_00276340);
     }
-    STORE_POINTER(D_0025DE10 + 18, D_0028D340);
-    if (D_0025DE10[20] != 0x14) {
+    STORE_POINTER(player_shot_7_flight_table + 18, player_shot_7_flight_008);
+    if (player_shot_7_flight_table[20] != 0x14) {
         printf((const char *)D_00276360);
     }
-    STORE_POINTER(D_0025DE10 + 20, D_0028D348);
-    if (D_0025DE10[22] != 0x16) {
+    STORE_POINTER(player_shot_7_flight_table + 20, player_shot_7_flight_010);
+    if (player_shot_7_flight_table[22] != 0x16) {
         printf((const char *)D_00276380);
     }
-    STORE_POINTER(D_0025DE10 + 22, D_0028D350);
-    if (D_0025DE10[24] != 0x18) {
+    STORE_POINTER(player_shot_7_flight_table + 22, player_shot_7_flight_011);
+    if (player_shot_7_flight_table[24] != 0x18) {
         printf((const char *)D_002763A0);
     }
-    STORE_POINTER(D_0025DE10 + 24, D_0028D358);
-    if (D_0025DE10[26] != 0x1a) {
+    STORE_POINTER(player_shot_7_flight_table + 24, player_shot_7_flight_012);
+    if (player_shot_7_flight_table[26] != 0x1a) {
         printf((const char *)D_002763C0);
     }
-    STORE_POINTER(D_0025DE10 + 26, D_0028D360);
-    if (D_0025DE10[28] != 0x1c) {
+    STORE_POINTER(player_shot_7_flight_table + 26, player_shot_7_flight_013);
+    if (player_shot_7_flight_table[28] != 0x1c) {
         printf((const char *)D_002763E0);
     }
-    STORE_POINTER(D_0025DE10 + 28, D_0028D368);
-    if (D_0025DE10[30] != 0x1e) {
+    STORE_POINTER(player_shot_7_flight_table + 28, player_shot_7_flight_014);
+    if (player_shot_7_flight_table[30] != 0x1e) {
         printf((const char *)D_00276400);
     }
-    STORE_POINTER(D_0025DE10 + 30, D_0028D370);
-    if (D_0025DE10[32] != 0x20) {
+    STORE_POINTER(player_shot_7_flight_table + 30, player_shot_7_flight_015);
+    if (player_shot_7_flight_table[32] != 0x20) {
         printf((const char *)D_00276420);
     }
-    STORE_POINTER(D_0025DE10 + 32, D_0028D370);
-    if (D_0025DE10[34] != 0x22) {
+    STORE_POINTER(player_shot_7_flight_table + 32, player_shot_7_flight_015);
+    if (player_shot_7_flight_table[34] != 0x22) {
         printf((const char *)D_00276440);
     }
-    STORE_POINTER(D_0025DE10 + 34, D_0028D378);
-    if (D_0025DE10[36] != 0x24) {
+    STORE_POINTER(player_shot_7_flight_table + 34, player_shot_7_flight_017);
+    if (player_shot_7_flight_table[36] != 0x24) {
         printf((const char *)D_00276460);
     }
-    STORE_POINTER(D_0025DE10 + 36, D_0028D378);
-    if (D_0025DE10[38] != 0x26) {
+    STORE_POINTER(player_shot_7_flight_table + 36, player_shot_7_flight_017);
+    if (player_shot_7_flight_table[38] != 0x26) {
         printf((const char *)D_00276480);
     }
-    STORE_POINTER(D_0025DE10 + 38, D_0028D380);
-    if (D_0025DE10[40] != 0x28) {
+    STORE_POINTER(player_shot_7_flight_table + 38, player_shot_7_flight_019);
+    if (player_shot_7_flight_table[40] != 0x28) {
         printf((const char *)D_002764A0);
     }
-    STORE_POINTER(D_0025DE10 + 40, D_0028D380);
-    if (D_0025DE10[42] != 0x2a) {
+    STORE_POINTER(player_shot_7_flight_table + 40, player_shot_7_flight_019);
+    if (player_shot_7_flight_table[42] != 0x2a) {
         printf((const char *)D_002764C0);
     }
-    STORE_POINTER(D_0025DE10 + 42, D_0028D388);
-    if (D_0025DE10[44] != 0x2c) {
+    STORE_POINTER(player_shot_7_flight_table + 42, player_shot_7_flight_021);
+    if (player_shot_7_flight_table[44] != 0x2c) {
         printf((const char *)D_002764E0);
     }
-    STORE_POINTER(D_0025DE10 + 44, D_0028D388);
-    if (D_0025DE10[46] != 0x2e) {
+    STORE_POINTER(player_shot_7_flight_table + 44, player_shot_7_flight_021);
+    if (player_shot_7_flight_table[46] != 0x2e) {
         printf((const char *)D_00276500);
     }
-    STORE_POINTER(D_0025DE10 + 46, D_0028D390);
-    if (D_0025DE10[48] != 0x30) {
+    STORE_POINTER(player_shot_7_flight_table + 46, player_shot_7_flight_023);
+    if (player_shot_7_flight_table[48] != 0x30) {
         printf((const char *)D_00276520);
     }
-    STORE_POINTER(D_0025DE10 + 48, D_0028D390);
-    if (D_0025DE10[56] != 0x0) {
+    STORE_POINTER(player_shot_7_flight_table + 48, player_shot_7_flight_023);
+    if (player_shot_7_flight_table[56] != 0x0) {
         printf((const char *)D_00276540);
     }
-    STORE_POINTER(D_0025DE10 + 56, D_0028D398);
-    if (D_0025DE10[58] != 0x2) {
+    STORE_POINTER(player_shot_7_flight_table + 56, player_shot_7_flight_028);
+    if (player_shot_7_flight_table[58] != 0x2) {
         printf((const char *)D_00276560);
     }
-    STORE_POINTER(D_0025DE10 + 58, D_0028D3A0);
-    if (D_0025DE10[60] != 0x4) {
+    STORE_POINTER(player_shot_7_flight_table + 58, player_shot_7_flight_029);
+    if (player_shot_7_flight_table[60] != 0x4) {
         printf((const char *)D_00276580);
     }
-    STORE_POINTER(D_0025DE10 + 60, D_0028D3A8);
-    if (D_0025DE10[62] != 0x6) {
+    STORE_POINTER(player_shot_7_flight_table + 60, player_shot_7_flight_030);
+    if (player_shot_7_flight_table[62] != 0x6) {
         printf((const char *)D_002765A0);
     }
-    STORE_POINTER(D_0025DE10 + 62, D_0028D3B0);
-    if (D_0025DE10[64] != 0x8) {
+    STORE_POINTER(player_shot_7_flight_table + 62, player_shot_7_flight_031);
+    if (player_shot_7_flight_table[64] != 0x8) {
         printf((const char *)D_002765C0);
     }
-    STORE_POINTER(D_0025DE10 + 64, D_0028D3B8);
-    if (D_0025DE10[66] != 0xa) {
+    STORE_POINTER(player_shot_7_flight_table + 64, player_shot_7_flight_032);
+    if (player_shot_7_flight_table[66] != 0xa) {
         printf((const char *)D_002765E0);
     }
-    STORE_POINTER(D_0025DE10 + 66, D_0028D3C0);
-    if (D_0025DE10[68] != 0xc) {
+    STORE_POINTER(player_shot_7_flight_table + 66, player_shot_7_flight_033);
+    if (player_shot_7_flight_table[68] != 0xc) {
         printf((const char *)D_00276600);
     }
-    STORE_POINTER(D_0025DE10 + 68, D_0028D3C8);
-    if (D_0025DE10[70] != 0xe) {
+    STORE_POINTER(player_shot_7_flight_table + 68, player_shot_7_flight_034);
+    if (player_shot_7_flight_table[70] != 0xe) {
         printf((const char *)D_00276620);
     }
-    STORE_POINTER(D_0025DE10 + 70, D_0028D3D0);
-    if (D_0025DE10[72] != 0x10) {
+    STORE_POINTER(player_shot_7_flight_table + 70, player_shot_7_flight_035);
+    if (player_shot_7_flight_table[72] != 0x10) {
         printf((const char *)D_00276640);
     }
-    STORE_POINTER(D_0025DE10 + 72, D_0028D3D8);
-    if (D_0025DE10[74] != 0x12) {
+    STORE_POINTER(player_shot_7_flight_table + 72, player_shot_7_flight_036);
+    if (player_shot_7_flight_table[74] != 0x12) {
         printf((const char *)D_00276660);
     }
-    STORE_POINTER(D_0025DE10 + 74, D_0028D3E0);
-    if (D_0025DE10[76] != 0x14) {
+    STORE_POINTER(player_shot_7_flight_table + 74, player_shot_7_flight_037);
+    if (player_shot_7_flight_table[76] != 0x14) {
         printf((const char *)D_00276680);
     }
-    STORE_POINTER(D_0025DE10 + 76, D_0028D3E8);
-    if (D_0025DE10[78] != 0x16) {
+    STORE_POINTER(player_shot_7_flight_table + 76, player_shot_7_flight_038);
+    if (player_shot_7_flight_table[78] != 0x16) {
         printf((const char *)D_002766A0);
     }
-    STORE_POINTER(D_0025DE10 + 78, D_0028D3F0);
-    if (D_0025DE10[80] != 0x18) {
+    STORE_POINTER(player_shot_7_flight_table + 78, player_shot_7_flight_039);
+    if (player_shot_7_flight_table[80] != 0x18) {
         printf((const char *)D_002766C0);
     }
-    STORE_POINTER(D_0025DE10 + 80, D_0028D3F8);
-    if (D_0025DE10[82] != 0x1a) {
+    STORE_POINTER(player_shot_7_flight_table + 80, player_shot_7_flight_040);
+    if (player_shot_7_flight_table[82] != 0x1a) {
         printf((const char *)D_002766E0);
     }
-    STORE_POINTER(D_0025DE10 + 82, D_0028D400);
-    if (D_0025DE10[84] != 0x1c) {
+    STORE_POINTER(player_shot_7_flight_table + 82, player_shot_7_flight_041);
+    if (player_shot_7_flight_table[84] != 0x1c) {
         printf((const char *)D_00276700);
     }
-    STORE_POINTER(D_0025DE10 + 84, D_0028D408);
-    if (D_0025DE10[86] != 0x1e) {
+    STORE_POINTER(player_shot_7_flight_table + 84, player_shot_7_flight_042);
+    if (player_shot_7_flight_table[86] != 0x1e) {
         printf((const char *)D_00276720);
     }
-    STORE_POINTER(D_0025DE10 + 86, D_0028D410);
-    if (D_0025DE10[88] != 0x20) {
+    STORE_POINTER(player_shot_7_flight_table + 86, player_shot_7_flight_043);
+    if (player_shot_7_flight_table[88] != 0x20) {
         printf((const char *)D_00276740);
     }
-    STORE_POINTER(D_0025DE10 + 88, D_0028D418);
-    if (D_0028D398[2] != 0x2) {
+    STORE_POINTER(player_shot_7_flight_table + 88, player_shot_7_flight_044);
+    if (player_shot_7_flight_028[2] != 0x2) {
         printf((const char *)D_00276760);
     }
-    STORE_POINTER(D_0028D398 + 2, D_0025D830);
-    if (D_0028D3A0[2] != 0x2) {
+    STORE_POINTER(player_shot_7_flight_028 + 2, D_0025D830);
+    if (player_shot_7_flight_029[2] != 0x2) {
         printf((const char *)D_00276780);
     }
-    STORE_POINTER(D_0028D3A0 + 2, D_0025D830);
-    if (D_0028D3A8[2] != 0x2) {
+    STORE_POINTER(player_shot_7_flight_029 + 2, D_0025D830);
+    if (player_shot_7_flight_030[2] != 0x2) {
         printf((const char *)D_002767A0);
     }
-    STORE_POINTER(D_0028D3A8 + 2, D_0025D830);
-    if (D_0028D3B0[2] != 0x2) {
+    STORE_POINTER(player_shot_7_flight_030 + 2, D_0025D830);
+    if (player_shot_7_flight_031[2] != 0x2) {
         printf((const char *)D_002767C0);
     }
-    STORE_POINTER(D_0028D3B0 + 2, D_0025D830);
-    if (D_0028D3B8[2] != 0x2) {
+    STORE_POINTER(player_shot_7_flight_031 + 2, D_0025D830);
+    if (player_shot_7_flight_032[2] != 0x2) {
         printf((const char *)D_002767E0);
     }
-    STORE_POINTER(D_0028D3B8 + 2, D_0025D830);
-    if (D_0028D3C0[2] != 0x2) {
+    STORE_POINTER(player_shot_7_flight_032 + 2, D_0025D830);
+    if (player_shot_7_flight_033[2] != 0x2) {
         printf((const char *)D_00276800);
     }
-    STORE_POINTER(D_0028D3C0 + 2, D_0025D830);
-    if (D_0028D3C8[2] != 0x2) {
+    STORE_POINTER(player_shot_7_flight_033 + 2, D_0025D830);
+    if (player_shot_7_flight_034[2] != 0x2) {
         printf((const char *)D_00276820);
     }
-    STORE_POINTER(D_0028D3C8 + 2, D_0025D830);
-    if (D_0028D3D0[2] != 0x2) {
+    STORE_POINTER(player_shot_7_flight_034 + 2, D_0025D830);
+    if (player_shot_7_flight_035[2] != 0x2) {
         printf((const char *)D_00276840);
     }
-    STORE_POINTER(D_0028D3D0 + 2, D_0025D830);
-    if (D_0028D3D8[2] != 0x2) {
+    STORE_POINTER(player_shot_7_flight_035 + 2, D_0025D830);
+    if (player_shot_7_flight_036[2] != 0x2) {
         printf((const char *)D_00276860);
     }
-    STORE_POINTER(D_0028D3D8 + 2, D_0025D830);
-    if (D_0028D3E0[2] != 0x2) {
+    STORE_POINTER(player_shot_7_flight_036 + 2, D_0025D830);
+    if (player_shot_7_flight_037[2] != 0x2) {
         printf((const char *)D_00276880);
     }
-    STORE_POINTER(D_0028D3E0 + 2, D_0025D830);
-    if (D_0028D3E8[2] != 0x2) {
+    STORE_POINTER(player_shot_7_flight_037 + 2, D_0025D830);
+    if (player_shot_7_flight_038[2] != 0x2) {
         printf((const char *)D_002768A0);
     }
-    STORE_POINTER(D_0028D3E8 + 2, D_0025D830);
-    if (D_0028D3F0[2] != 0x2) {
+    STORE_POINTER(player_shot_7_flight_038 + 2, D_0025D830);
+    if (player_shot_7_flight_039[2] != 0x2) {
         printf((const char *)D_002768C0);
     }
-    STORE_POINTER(D_0028D3F0 + 2, D_0025D830);
-    if (D_0028D3F8[2] != 0x2) {
+    STORE_POINTER(player_shot_7_flight_039 + 2, D_0025D830);
+    if (player_shot_7_flight_040[2] != 0x2) {
         printf((const char *)D_002768E0);
     }
-    STORE_POINTER(D_0028D3F8 + 2, D_0025D830);
-    if (D_0028D400[2] != 0x2) {
+    STORE_POINTER(player_shot_7_flight_040 + 2, D_0025D830);
+    if (player_shot_7_flight_041[2] != 0x2) {
         printf((const char *)D_00276900);
     }
-    STORE_POINTER(D_0028D400 + 2, D_0025D830);
-    if (D_0028D408[2] != 0x2) {
+    STORE_POINTER(player_shot_7_flight_041 + 2, D_0025D830);
+    if (player_shot_7_flight_042[2] != 0x2) {
         printf((const char *)D_00276920);
     }
-    STORE_POINTER(D_0028D408 + 2, D_0025D830);
-    if (D_0028D410[2] != 0x2) {
+    STORE_POINTER(player_shot_7_flight_042 + 2, D_0025D830);
+    if (player_shot_7_flight_043[2] != 0x2) {
         printf((const char *)D_00276940);
     }
-    STORE_POINTER(D_0028D410 + 2, D_0025D830);
-    if (D_0028D418[2] != 0x2) {
+    STORE_POINTER(player_shot_7_flight_043 + 2, D_0025D830);
+    if (player_shot_7_flight_044[2] != 0x2) {
         printf((const char *)D_00276960);
     }
-    STORE_POINTER(D_0028D418 + 2, D_0025D830);
-    if (D_0025DE10[96] != 0x0) {
+    STORE_POINTER(player_shot_7_flight_044 + 2, D_0025D830);
+    if (player_shot_7_flight_table[96] != 0x0) {
         printf((const char *)D_00276980);
     }
-    STORE_POINTER(D_0025DE10 + 96, D_0028D420);
-    if (D_0025DE10[98] != 0x2) {
+    STORE_POINTER(player_shot_7_flight_table + 96, player_shot_7_flight_048);
+    if (player_shot_7_flight_table[98] != 0x2) {
         printf((const char *)D_002769A0);
     }
-    STORE_POINTER(D_0025DE10 + 98, D_0028D428);
-    if (D_0025DE10[100] != 0x4) {
+    STORE_POINTER(player_shot_7_flight_table + 98, player_shot_7_flight_049);
+    if (player_shot_7_flight_table[100] != 0x4) {
         printf((const char *)D_002769C0);
     }
-    STORE_POINTER(D_0025DE10 + 100, D_0028D430);
-    if (D_0025DE10[102] != 0x6) {
+    STORE_POINTER(player_shot_7_flight_table + 100, player_shot_7_flight_050);
+    if (player_shot_7_flight_table[102] != 0x6) {
         printf((const char *)D_002769E0);
     }
-    STORE_POINTER(D_0025DE10 + 102, D_0028D438);
-    if (D_0025DE10[104] != 0x8) {
+    STORE_POINTER(player_shot_7_flight_table + 102, player_shot_7_flight_051);
+    if (player_shot_7_flight_table[104] != 0x8) {
         printf((const char *)D_00276A00);
     }
-    STORE_POINTER(D_0025DE10 + 104, D_0028D440);
-    if (D_0025DE10[106] != 0xa) {
+    STORE_POINTER(player_shot_7_flight_table + 104, player_shot_7_flight_052);
+    if (player_shot_7_flight_table[106] != 0xa) {
         printf((const char *)D_00276A20);
     }
-    STORE_POINTER(D_0025DE10 + 106, D_0028D448);
-    if (D_0025DE10[108] != 0xc) {
+    STORE_POINTER(player_shot_7_flight_table + 106, player_shot_7_flight_053);
+    if (player_shot_7_flight_table[108] != 0xc) {
         printf((const char *)D_00276A40);
     }
-    STORE_POINTER(D_0025DE10 + 108, D_0028D450);
-    if (D_0025DE10[110] != 0xe) {
+    STORE_POINTER(player_shot_7_flight_table + 108, player_shot_7_flight_054);
+    if (player_shot_7_flight_table[110] != 0xe) {
         printf((const char *)D_00276A60);
     }
-    STORE_POINTER(D_0025DE10 + 110, D_0028D458);
-    if (D_0025DE10[112] != 0x10) {
+    STORE_POINTER(player_shot_7_flight_table + 110, player_shot_7_flight_055);
+    if (player_shot_7_flight_table[112] != 0x10) {
         printf((const char *)D_00276A80);
     }
-    STORE_POINTER(D_0025DE10 + 112, D_0028D460);
-    if (D_0025DE10[114] != 0x12) {
+    STORE_POINTER(player_shot_7_flight_table + 112, player_shot_7_flight_056);
+    if (player_shot_7_flight_table[114] != 0x12) {
         printf((const char *)D_00276AA0);
     }
-    STORE_POINTER(D_0025DE10 + 114, D_0028D468);
-    if (D_0025DE10[116] != 0x14) {
+    STORE_POINTER(player_shot_7_flight_table + 114, player_shot_7_flight_057);
+    if (player_shot_7_flight_table[116] != 0x14) {
         printf((const char *)D_00276AC0);
     }
-    STORE_POINTER(D_0025DE10 + 116, D_0028D470);
-    if (D_0025DE10[118] != 0x16) {
+    STORE_POINTER(player_shot_7_flight_table + 116, player_shot_7_flight_058);
+    if (player_shot_7_flight_table[118] != 0x16) {
         printf((const char *)D_00276AE0);
     }
-    STORE_POINTER(D_0025DE10 + 118, D_0028D478);
-    if (D_0025DE10[120] != 0x18) {
+    STORE_POINTER(player_shot_7_flight_table + 118, player_shot_7_flight_059);
+    if (player_shot_7_flight_table[120] != 0x18) {
         printf((const char *)D_00276B00);
     }
-    STORE_POINTER(D_0025DE10 + 120, D_0028D480);
-    if (D_0025DE10[122] != 0x1a) {
+    STORE_POINTER(player_shot_7_flight_table + 120, player_shot_7_flight_060);
+    if (player_shot_7_flight_table[122] != 0x1a) {
         printf((const char *)D_00276B20);
     }
-    STORE_POINTER(D_0025DE10 + 122, D_0028D488);
-    if (D_0025DE10[124] != 0x1c) {
+    STORE_POINTER(player_shot_7_flight_table + 122, player_shot_7_flight_061);
+    if (player_shot_7_flight_table[124] != 0x1c) {
         printf((const char *)D_00276B40);
     }
-    STORE_POINTER(D_0025DE10 + 124, D_0028D490);
-    if (D_0025DE10[126] != 0x1e) {
+    STORE_POINTER(player_shot_7_flight_table + 124, player_shot_7_flight_062);
+    if (player_shot_7_flight_table[126] != 0x1e) {
         printf((const char *)D_00276B60);
     }
-    STORE_POINTER(D_0025DE10 + 126, D_0028D498);
-    if (D_0025DE10[128] != 0x20) {
+    STORE_POINTER(player_shot_7_flight_table + 126, player_shot_7_flight_063);
+    if (player_shot_7_flight_table[128] != 0x20) {
         printf((const char *)D_00276B80);
     }
-    STORE_POINTER(D_0025DE10 + 128, D_0028D4A0);
-    if (D_0028D420[2] != 0x2) {
+    STORE_POINTER(player_shot_7_flight_table + 128, player_shot_7_flight_064);
+    if (player_shot_7_flight_048[2] != 0x2) {
         printf((const char *)D_00276BA0);
     }
-    STORE_POINTER(D_0028D420 + 2, D_0025D840);
-    if (D_0028D428[2] != 0x2) {
+    STORE_POINTER(player_shot_7_flight_048 + 2, D_0025D840);
+    if (player_shot_7_flight_049[2] != 0x2) {
         printf((const char *)D_00276BC0);
     }
-    STORE_POINTER(D_0028D428 + 2, D_0025D840);
-    if (D_0028D430[2] != 0x2) {
+    STORE_POINTER(player_shot_7_flight_049 + 2, D_0025D840);
+    if (player_shot_7_flight_050[2] != 0x2) {
         printf((const char *)D_00276BE0);
     }
-    STORE_POINTER(D_0028D430 + 2, D_0025D840);
-    if (D_0028D438[2] != 0x2) {
+    STORE_POINTER(player_shot_7_flight_050 + 2, D_0025D840);
+    if (player_shot_7_flight_051[2] != 0x2) {
         printf((const char *)D_00276C00);
     }
-    STORE_POINTER(D_0028D438 + 2, D_0025D840);
-    if (D_0028D440[2] != 0x2) {
+    STORE_POINTER(player_shot_7_flight_051 + 2, D_0025D840);
+    if (player_shot_7_flight_052[2] != 0x2) {
         printf((const char *)D_00276C20);
     }
-    STORE_POINTER(D_0028D440 + 2, D_0025D840);
-    if (D_0028D448[2] != 0x2) {
+    STORE_POINTER(player_shot_7_flight_052 + 2, D_0025D840);
+    if (player_shot_7_flight_053[2] != 0x2) {
         printf((const char *)D_00276C40);
     }
-    STORE_POINTER(D_0028D448 + 2, D_0025D840);
-    if (D_0028D450[2] != 0x2) {
+    STORE_POINTER(player_shot_7_flight_053 + 2, D_0025D840);
+    if (player_shot_7_flight_054[2] != 0x2) {
         printf((const char *)D_00276C60);
     }
-    STORE_POINTER(D_0028D450 + 2, D_0025D840);
-    if (D_0028D458[2] != 0x2) {
+    STORE_POINTER(player_shot_7_flight_054 + 2, D_0025D840);
+    if (player_shot_7_flight_055[2] != 0x2) {
         printf((const char *)D_00276C80);
     }
-    STORE_POINTER(D_0028D458 + 2, D_0025D840);
-    if (D_0028D460[2] != 0x2) {
+    STORE_POINTER(player_shot_7_flight_055 + 2, D_0025D840);
+    if (player_shot_7_flight_056[2] != 0x2) {
         printf((const char *)D_00276CA0);
     }
-    STORE_POINTER(D_0028D460 + 2, D_0025D840);
-    if (D_0028D468[2] != 0x2) {
+    STORE_POINTER(player_shot_7_flight_056 + 2, D_0025D840);
+    if (player_shot_7_flight_057[2] != 0x2) {
         printf((const char *)D_00276CC0);
     }
-    STORE_POINTER(D_0028D468 + 2, D_0025D840);
-    if (D_0028D470[2] != 0x2) {
+    STORE_POINTER(player_shot_7_flight_057 + 2, D_0025D840);
+    if (player_shot_7_flight_058[2] != 0x2) {
         printf((const char *)D_00276CE0);
     }
-    STORE_POINTER(D_0028D470 + 2, D_0025D840);
-    if (D_0028D478[2] != 0x2) {
+    STORE_POINTER(player_shot_7_flight_058 + 2, D_0025D840);
+    if (player_shot_7_flight_059[2] != 0x2) {
         printf((const char *)D_00276D00);
     }
-    STORE_POINTER(D_0028D478 + 2, D_0025D840);
-    if (D_0028D480[2] != 0x2) {
+    STORE_POINTER(player_shot_7_flight_059 + 2, D_0025D840);
+    if (player_shot_7_flight_060[2] != 0x2) {
         printf((const char *)D_00276D20);
     }
-    STORE_POINTER(D_0028D480 + 2, D_0025D840);
-    if (D_0028D488[2] != 0x2) {
+    STORE_POINTER(player_shot_7_flight_060 + 2, D_0025D840);
+    if (player_shot_7_flight_061[2] != 0x2) {
         printf((const char *)D_00276D40);
     }
-    STORE_POINTER(D_0028D488 + 2, D_0025D840);
-    if (D_0028D490[2] != 0x2) {
+    STORE_POINTER(player_shot_7_flight_061 + 2, D_0025D840);
+    if (player_shot_7_flight_062[2] != 0x2) {
         printf((const char *)D_00276D60);
     }
-    STORE_POINTER(D_0028D490 + 2, D_0025D840);
-    if (D_0028D498[2] != 0x2) {
+    STORE_POINTER(player_shot_7_flight_062 + 2, D_0025D840);
+    if (player_shot_7_flight_063[2] != 0x2) {
         printf((const char *)D_00276D80);
     }
-    STORE_POINTER(D_0028D498 + 2, D_0025D840);
-    if (D_0028D4A0[2] != 0x2) {
+    STORE_POINTER(player_shot_7_flight_063 + 2, D_0025D840);
+    if (player_shot_7_flight_064[2] != 0x2) {
         printf((const char *)D_00276DA0);
     }
-    STORE_POINTER(D_0028D4A0 + 2, D_0025D840);
-    if (D_0025DE10[136] != 0x0) {
+    STORE_POINTER(player_shot_7_flight_064 + 2, D_0025D840);
+    if (player_shot_7_flight_table[136] != 0x0) {
         printf((const char *)D_00276DC0);
     }
-    STORE_POINTER(D_0025DE10 + 136, D_0028D4A8);
-    if (D_0025DE10[138] != 0x2) {
+    STORE_POINTER(player_shot_7_flight_table + 136, player_shot_7_flight_068);
+    if (player_shot_7_flight_table[138] != 0x2) {
         printf((const char *)D_00276DE0);
     }
-    STORE_POINTER(D_0025DE10 + 138, D_0028D4B0);
-    if (D_0025DE10[140] != 0x4) {
+    STORE_POINTER(player_shot_7_flight_table + 138, player_shot_7_flight_069);
+    if (player_shot_7_flight_table[140] != 0x4) {
         printf((const char *)D_00276E00);
     }
-    STORE_POINTER(D_0025DE10 + 140, D_0028D4B8);
-    if (D_0025DE10[142] != 0x6) {
+    STORE_POINTER(player_shot_7_flight_table + 140, player_shot_7_flight_070);
+    if (player_shot_7_flight_table[142] != 0x6) {
         printf((const char *)D_00276E20);
     }
-    STORE_POINTER(D_0025DE10 + 142, D_0028D4C0);
-    if (D_0025DE10[144] != 0x8) {
+    STORE_POINTER(player_shot_7_flight_table + 142, player_shot_7_flight_071);
+    if (player_shot_7_flight_table[144] != 0x8) {
         printf((const char *)D_00276E40);
     }
-    STORE_POINTER(D_0025DE10 + 144, D_0028D4C8);
-    if (D_0025DE10[146] != 0xa) {
+    STORE_POINTER(player_shot_7_flight_table + 144, player_shot_7_flight_072);
+    if (player_shot_7_flight_table[146] != 0xa) {
         printf((const char *)D_00276E60);
     }
-    STORE_POINTER(D_0025DE10 + 146, D_0028D4D0);
-    if (D_0025DE10[148] != 0xc) {
+    STORE_POINTER(player_shot_7_flight_table + 146, player_shot_7_flight_073);
+    if (player_shot_7_flight_table[148] != 0xc) {
         printf((const char *)D_00276E80);
     }
-    STORE_POINTER(D_0025DE10 + 148, D_0028D4D8);
-    if (D_0025DE10[150] != 0xe) {
+    STORE_POINTER(player_shot_7_flight_table + 148, player_shot_7_flight_074);
+    if (player_shot_7_flight_table[150] != 0xe) {
         printf((const char *)D_00276EA0);
     }
-    STORE_POINTER(D_0025DE10 + 150, D_0028D4E0);
-    if (D_0025DE10[152] != 0x10) {
+    STORE_POINTER(player_shot_7_flight_table + 150, player_shot_7_flight_075);
+    if (player_shot_7_flight_table[152] != 0x10) {
         printf((const char *)D_00276EC0);
     }
-    STORE_POINTER(D_0025DE10 + 152, D_0028D4E8);
-    if (D_0025DE10[154] != 0x12) {
+    STORE_POINTER(player_shot_7_flight_table + 152, player_shot_7_flight_076);
+    if (player_shot_7_flight_table[154] != 0x12) {
         printf((const char *)D_00276EE0);
     }
-    STORE_POINTER(D_0025DE10 + 154, D_0028D4F0);
-    if (D_0025DE10[156] != 0x14) {
+    STORE_POINTER(player_shot_7_flight_table + 154, player_shot_7_flight_077);
+    if (player_shot_7_flight_table[156] != 0x14) {
         printf((const char *)D_00276F00);
     }
-    STORE_POINTER(D_0025DE10 + 156, D_0028D4F8);
-    if (D_0025DE10[158] != 0x16) {
+    STORE_POINTER(player_shot_7_flight_table + 156, player_shot_7_flight_078);
+    if (player_shot_7_flight_table[158] != 0x16) {
         printf((const char *)D_00276F20);
     }
-    STORE_POINTER(D_0025DE10 + 158, D_0028D500);
-    if (D_0025DE10[160] != 0x18) {
+    STORE_POINTER(player_shot_7_flight_table + 158, player_shot_7_flight_079);
+    if (player_shot_7_flight_table[160] != 0x18) {
         printf((const char *)D_00276F40);
     }
-    STORE_POINTER(D_0025DE10 + 160, D_0028D508);
-    if (D_0025DE10[162] != 0x1a) {
+    STORE_POINTER(player_shot_7_flight_table + 160, player_shot_7_flight_080);
+    if (player_shot_7_flight_table[162] != 0x1a) {
         printf((const char *)D_00276F60);
     }
-    STORE_POINTER(D_0025DE10 + 162, D_0028D510);
-    if (D_0025DE10[164] != 0x1c) {
+    STORE_POINTER(player_shot_7_flight_table + 162, player_shot_7_flight_081);
+    if (player_shot_7_flight_table[164] != 0x1c) {
         printf((const char *)D_00276F80);
     }
-    STORE_POINTER(D_0025DE10 + 164, D_0028D518);
-    if (D_0025DE10[166] != 0x1e) {
+    STORE_POINTER(player_shot_7_flight_table + 164, player_shot_7_flight_082);
+    if (player_shot_7_flight_table[166] != 0x1e) {
         printf((const char *)D_00276FA0);
     }
-    STORE_POINTER(D_0025DE10 + 166, D_0028D520);
-    if (D_0025DE10[168] != 0x20) {
+    STORE_POINTER(player_shot_7_flight_table + 166, player_shot_7_flight_083);
+    if (player_shot_7_flight_table[168] != 0x20) {
         printf((const char *)D_00276FC0);
     }
-    STORE_POINTER(D_0025DE10 + 168, D_0028D528);
-    if (D_0028D4A8[2] != 0x2) {
+    STORE_POINTER(player_shot_7_flight_table + 168, player_shot_7_flight_084);
+    if (player_shot_7_flight_068[2] != 0x2) {
         printf((const char *)D_00276FE0);
     }
-    STORE_POINTER(D_0028D4A8 + 2, D_0025D850);
-    if (D_0028D4B0[2] != 0x2) {
+    STORE_POINTER(player_shot_7_flight_068 + 2, D_0025D850);
+    if (player_shot_7_flight_069[2] != 0x2) {
         printf((const char *)D_00277000);
     }
-    STORE_POINTER(D_0028D4B0 + 2, D_0025D850);
-    if (D_0028D4B8[2] != 0x2) {
+    STORE_POINTER(player_shot_7_flight_069 + 2, D_0025D850);
+    if (player_shot_7_flight_070[2] != 0x2) {
         printf((const char *)D_00277020);
     }
-    STORE_POINTER(D_0028D4B8 + 2, D_0025D850);
-    if (D_0028D4C0[2] != 0x2) {
+    STORE_POINTER(player_shot_7_flight_070 + 2, D_0025D850);
+    if (player_shot_7_flight_071[2] != 0x2) {
         printf((const char *)D_00277040);
     }
-    STORE_POINTER(D_0028D4C0 + 2, D_0025D850);
-    if (D_0028D4C8[2] != 0x2) {
+    STORE_POINTER(player_shot_7_flight_071 + 2, D_0025D850);
+    if (player_shot_7_flight_072[2] != 0x2) {
         printf((const char *)D_00277060);
     }
-    STORE_POINTER(D_0028D4C8 + 2, D_0025D850);
-    if (D_0028D4D0[2] != 0x2) {
+    STORE_POINTER(player_shot_7_flight_072 + 2, D_0025D850);
+    if (player_shot_7_flight_073[2] != 0x2) {
         printf((const char *)D_00277080);
     }
-    STORE_POINTER(D_0028D4D0 + 2, D_0025D850);
-    if (D_0028D4D8[2] != 0x2) {
+    STORE_POINTER(player_shot_7_flight_073 + 2, D_0025D850);
+    if (player_shot_7_flight_074[2] != 0x2) {
         printf((const char *)D_002770A0);
     }
-    STORE_POINTER(D_0028D4D8 + 2, D_0025D850);
-    if (D_0028D4E0[2] != 0x2) {
+    STORE_POINTER(player_shot_7_flight_074 + 2, D_0025D850);
+    if (player_shot_7_flight_075[2] != 0x2) {
         printf((const char *)D_002770C0);
     }
-    STORE_POINTER(D_0028D4E0 + 2, D_0025D850);
-    if (D_0028D4E8[2] != 0x2) {
+    STORE_POINTER(player_shot_7_flight_075 + 2, D_0025D850);
+    if (player_shot_7_flight_076[2] != 0x2) {
         printf((const char *)D_002770E0);
     }
-    STORE_POINTER(D_0028D4E8 + 2, D_0025D850);
-    if (D_0028D4F0[2] != 0x2) {
+    STORE_POINTER(player_shot_7_flight_076 + 2, D_0025D850);
+    if (player_shot_7_flight_077[2] != 0x2) {
         printf((const char *)D_00277100);
     }
-    STORE_POINTER(D_0028D4F0 + 2, D_0025D850);
-    if (D_0028D4F8[2] != 0x2) {
+    STORE_POINTER(player_shot_7_flight_077 + 2, D_0025D850);
+    if (player_shot_7_flight_078[2] != 0x2) {
         printf((const char *)D_00277120);
     }
-    STORE_POINTER(D_0028D4F8 + 2, D_0025D850);
-    if (D_0028D500[2] != 0x2) {
+    STORE_POINTER(player_shot_7_flight_078 + 2, D_0025D850);
+    if (player_shot_7_flight_079[2] != 0x2) {
         printf((const char *)D_00277140);
     }
-    STORE_POINTER(D_0028D500 + 2, D_0025D850);
-    if (D_0028D508[2] != 0x2) {
+    STORE_POINTER(player_shot_7_flight_079 + 2, D_0025D850);
+    if (player_shot_7_flight_080[2] != 0x2) {
         printf((const char *)D_00277160);
     }
-    STORE_POINTER(D_0028D508 + 2, D_0025D850);
-    if (D_0028D510[2] != 0x2) {
+    STORE_POINTER(player_shot_7_flight_080 + 2, D_0025D850);
+    if (player_shot_7_flight_081[2] != 0x2) {
         printf((const char *)D_00277180);
     }
-    STORE_POINTER(D_0028D510 + 2, D_0025D850);
-    if (D_0028D518[2] != 0x2) {
+    STORE_POINTER(player_shot_7_flight_081 + 2, D_0025D850);
+    if (player_shot_7_flight_082[2] != 0x2) {
         printf((const char *)D_002771A0);
     }
-    STORE_POINTER(D_0028D518 + 2, D_0025D850);
-    if (D_0028D520[2] != 0x2) {
+    STORE_POINTER(player_shot_7_flight_082 + 2, D_0025D850);
+    if (player_shot_7_flight_083[2] != 0x2) {
         printf((const char *)D_002771C0);
     }
-    STORE_POINTER(D_0028D520 + 2, D_0025D850);
-    if (D_0028D528[2] != 0x2) {
+    STORE_POINTER(player_shot_7_flight_083 + 2, D_0025D850);
+    if (player_shot_7_flight_084[2] != 0x2) {
         printf((const char *)D_002771E0);
     }
-    STORE_POINTER(D_0028D528 + 2, D_0025D850);
-    if (D_0025DE10[176] != 0x0) {
+    STORE_POINTER(player_shot_7_flight_084 + 2, D_0025D850);
+    if (player_shot_7_flight_table[176] != 0x0) {
         printf((const char *)D_00277200);
     }
-    STORE_POINTER(D_0025DE10 + 176, D_0028D530);
-    if (D_0025DE10[178] != 0x2) {
+    STORE_POINTER(player_shot_7_flight_table + 176, player_shot_7_flight_088);
+    if (player_shot_7_flight_table[178] != 0x2) {
         printf((const char *)D_00277220);
     }
-    STORE_POINTER(D_0025DE10 + 178, D_0028D538);
-    if (D_0025DE10[180] != 0x4) {
+    STORE_POINTER(player_shot_7_flight_table + 178, player_shot_7_flight_089);
+    if (player_shot_7_flight_table[180] != 0x4) {
         printf((const char *)D_00277240);
     }
-    STORE_POINTER(D_0025DE10 + 180, D_0028D540);
-    if (D_0025DE10[182] != 0x6) {
+    STORE_POINTER(player_shot_7_flight_table + 180, player_shot_7_flight_090);
+    if (player_shot_7_flight_table[182] != 0x6) {
         printf((const char *)D_00277260);
     }
-    STORE_POINTER(D_0025DE10 + 182, D_0028D548);
-    if (D_0025DE10[184] != 0x8) {
+    STORE_POINTER(player_shot_7_flight_table + 182, player_shot_7_flight_091);
+    if (player_shot_7_flight_table[184] != 0x8) {
         printf((const char *)D_00277280);
     }
-    STORE_POINTER(D_0025DE10 + 184, D_0028D550);
-    if (D_0025DE10[186] != 0xa) {
+    STORE_POINTER(player_shot_7_flight_table + 184, player_shot_7_flight_092);
+    if (player_shot_7_flight_table[186] != 0xa) {
         printf((const char *)D_002772A0);
     }
-    STORE_POINTER(D_0025DE10 + 186, D_0028D558);
-    if (D_0025DE10[188] != 0xc) {
+    STORE_POINTER(player_shot_7_flight_table + 186, player_shot_7_flight_093);
+    if (player_shot_7_flight_table[188] != 0xc) {
         printf((const char *)D_002772C0);
     }
-    STORE_POINTER(D_0025DE10 + 188, D_0028D560);
-    if (D_0025DE10[190] != 0xe) {
+    STORE_POINTER(player_shot_7_flight_table + 188, player_shot_7_flight_094);
+    if (player_shot_7_flight_table[190] != 0xe) {
         printf((const char *)D_002772E0);
     }
-    STORE_POINTER(D_0025DE10 + 190, D_0028D568);
-    if (D_0025DE10[192] != 0x10) {
+    STORE_POINTER(player_shot_7_flight_table + 190, player_shot_7_flight_095);
+    if (player_shot_7_flight_table[192] != 0x10) {
         printf((const char *)D_00277300);
     }
-    STORE_POINTER(D_0025DE10 + 192, D_0028D570);
-    if (D_0025DE10[194] != 0x12) {
+    STORE_POINTER(player_shot_7_flight_table + 192, player_shot_7_flight_096);
+    if (player_shot_7_flight_table[194] != 0x12) {
         printf((const char *)D_00277320);
     }
-    STORE_POINTER(D_0025DE10 + 194, D_0028D578);
-    if (D_0025DE10[196] != 0x14) {
+    STORE_POINTER(player_shot_7_flight_table + 194, player_shot_7_flight_097);
+    if (player_shot_7_flight_table[196] != 0x14) {
         printf((const char *)D_00277340);
     }
-    STORE_POINTER(D_0025DE10 + 196, D_0028D580);
-    if (D_0025DE10[198] != 0x16) {
+    STORE_POINTER(player_shot_7_flight_table + 196, player_shot_7_flight_098);
+    if (player_shot_7_flight_table[198] != 0x16) {
         printf((const char *)D_00277360);
     }
-    STORE_POINTER(D_0025DE10 + 198, D_0028D588);
-    if (D_0025DE10[200] != 0x18) {
+    STORE_POINTER(player_shot_7_flight_table + 198, player_shot_7_flight_099);
+    if (player_shot_7_flight_table[200] != 0x18) {
         printf((const char *)D_00277380);
     }
-    STORE_POINTER(D_0025DE10 + 200, D_0028D590);
-    if (D_0025DE10[202] != 0x1a) {
+    STORE_POINTER(player_shot_7_flight_table + 200, player_shot_7_flight_100);
+    if (player_shot_7_flight_table[202] != 0x1a) {
         printf((const char *)D_002773A0);
     }
-    STORE_POINTER(D_0025DE10 + 202, D_0028D598);
-    if (D_0025DE10[204] != 0x1c) {
+    STORE_POINTER(player_shot_7_flight_table + 202, player_shot_7_flight_101);
+    if (player_shot_7_flight_table[204] != 0x1c) {
         printf((const char *)D_002773C0);
     }
-    STORE_POINTER(D_0025DE10 + 204, D_0028D5A0);
-    if (D_0025DE10[206] != 0x1e) {
+    STORE_POINTER(player_shot_7_flight_table + 204, player_shot_7_flight_102);
+    if (player_shot_7_flight_table[206] != 0x1e) {
         printf((const char *)D_002773E0);
     }
-    STORE_POINTER(D_0025DE10 + 206, D_0028D5A8);
-    if (D_0025DE10[208] != 0x20) {
+    STORE_POINTER(player_shot_7_flight_table + 206, player_shot_7_flight_103);
+    if (player_shot_7_flight_table[208] != 0x20) {
         printf((const char *)D_00277400);
     }
-    STORE_POINTER(D_0025DE10 + 208, D_0028D5B0);
-    if (D_0028D530[2] != 0x2) {
+    STORE_POINTER(player_shot_7_flight_table + 208, player_shot_7_flight_104);
+    if (player_shot_7_flight_088[2] != 0x2) {
         printf((const char *)D_00277420);
     }
-    STORE_POINTER(D_0028D530 + 2, D_0025D860);
-    if (D_0028D538[2] != 0x2) {
+    STORE_POINTER(player_shot_7_flight_088 + 2, D_0025D860);
+    if (player_shot_7_flight_089[2] != 0x2) {
         printf((const char *)D_00277440);
     }
-    STORE_POINTER(D_0028D538 + 2, D_0025D860);
-    if (D_0028D540[2] != 0x2) {
+    STORE_POINTER(player_shot_7_flight_089 + 2, D_0025D860);
+    if (player_shot_7_flight_090[2] != 0x2) {
         printf((const char *)D_00277460);
     }
-    STORE_POINTER(D_0028D540 + 2, D_0025D860);
-    if (D_0028D548[2] != 0x2) {
+    STORE_POINTER(player_shot_7_flight_090 + 2, D_0025D860);
+    if (player_shot_7_flight_091[2] != 0x2) {
         printf((const char *)D_00277480);
     }
-    STORE_POINTER(D_0028D548 + 2, D_0025D860);
-    if (D_0028D550[2] != 0x2) {
+    STORE_POINTER(player_shot_7_flight_091 + 2, D_0025D860);
+    if (player_shot_7_flight_092[2] != 0x2) {
         printf((const char *)D_002774A0);
     }
-    STORE_POINTER(D_0028D550 + 2, D_0025D860);
-    if (D_0028D558[2] != 0x2) {
+    STORE_POINTER(player_shot_7_flight_092 + 2, D_0025D860);
+    if (player_shot_7_flight_093[2] != 0x2) {
         printf((const char *)D_002774C0);
     }
-    STORE_POINTER(D_0028D558 + 2, D_0025D860);
-    if (D_0028D560[2] != 0x2) {
+    STORE_POINTER(player_shot_7_flight_093 + 2, D_0025D860);
+    if (player_shot_7_flight_094[2] != 0x2) {
         printf((const char *)D_002774E0);
     }
-    STORE_POINTER(D_0028D560 + 2, D_0025D860);
-    if (D_0028D568[2] != 0x2) {
+    STORE_POINTER(player_shot_7_flight_094 + 2, D_0025D860);
+    if (player_shot_7_flight_095[2] != 0x2) {
         printf((const char *)D_00277500);
     }
-    STORE_POINTER(D_0028D568 + 2, D_0025D860);
-    if (D_0028D570[2] != 0x2) {
+    STORE_POINTER(player_shot_7_flight_095 + 2, D_0025D860);
+    if (player_shot_7_flight_096[2] != 0x2) {
         printf((const char *)D_00277520);
     }
-    STORE_POINTER(D_0028D570 + 2, D_0025D860);
-    if (D_0028D578[2] != 0x2) {
+    STORE_POINTER(player_shot_7_flight_096 + 2, D_0025D860);
+    if (player_shot_7_flight_097[2] != 0x2) {
         printf((const char *)D_00277540);
     }
-    STORE_POINTER(D_0028D578 + 2, D_0025D860);
-    if (D_0028D580[2] != 0x2) {
+    STORE_POINTER(player_shot_7_flight_097 + 2, D_0025D860);
+    if (player_shot_7_flight_098[2] != 0x2) {
         printf((const char *)D_00277560);
     }
-    STORE_POINTER(D_0028D580 + 2, D_0025D860);
-    if (D_0028D588[2] != 0x2) {
+    STORE_POINTER(player_shot_7_flight_098 + 2, D_0025D860);
+    if (player_shot_7_flight_099[2] != 0x2) {
         printf((const char *)D_00277580);
     }
-    STORE_POINTER(D_0028D588 + 2, D_0025D860);
-    if (D_0028D590[2] != 0x2) {
+    STORE_POINTER(player_shot_7_flight_099 + 2, D_0025D860);
+    if (player_shot_7_flight_100[2] != 0x2) {
         printf((const char *)D_002775A0);
     }
-    STORE_POINTER(D_0028D590 + 2, D_0025D860);
-    if (D_0028D598[2] != 0x2) {
+    STORE_POINTER(player_shot_7_flight_100 + 2, D_0025D860);
+    if (player_shot_7_flight_101[2] != 0x2) {
         printf((const char *)D_002775C0);
     }
-    STORE_POINTER(D_0028D598 + 2, D_0025D860);
-    if (D_0028D5A0[2] != 0x2) {
+    STORE_POINTER(player_shot_7_flight_101 + 2, D_0025D860);
+    if (player_shot_7_flight_102[2] != 0x2) {
         printf((const char *)D_002775E0);
     }
-    STORE_POINTER(D_0028D5A0 + 2, D_0025D860);
-    if (D_0028D5A8[2] != 0x2) {
+    STORE_POINTER(player_shot_7_flight_102 + 2, D_0025D860);
+    if (player_shot_7_flight_103[2] != 0x2) {
         printf((const char *)D_00277600);
     }
-    STORE_POINTER(D_0028D5A8 + 2, D_0025D860);
-    if (D_0028D5B0[2] != 0x2) {
+    STORE_POINTER(player_shot_7_flight_103 + 2, D_0025D860);
+    if (player_shot_7_flight_104[2] != 0x2) {
         printf((const char *)D_00277620);
     }
-    STORE_POINTER(D_0028D5B0 + 2, D_0025D860);
+    STORE_POINTER(player_shot_7_flight_104 + 2, D_0025D860);
     if (D_0025DFC0[0] != 0x0) {
         printf((const char *)D_00277640);
     }
@@ -6044,164 +6044,164 @@ void func_001882E0(void) {
         printf((const char *)D_00277A60);
     }
     STORE_POINTER(D_0028D638 + 2, D_0025D870);
-    if (D_0025E010[0] != 0x0) {
+    if (player_shot_7_impact_table[0] != 0x0) {
         printf((const char *)D_00277A80);
     }
-    STORE_POINTER(D_0025E010, D_0025E078);
-    if (D_0025E010[2] != 0x2) {
+    STORE_POINTER(player_shot_7_impact_table, player_shot_7_impact_00);
+    if (player_shot_7_impact_table[2] != 0x2) {
         printf((const char *)D_00277AA0);
     }
-    STORE_POINTER(D_0025E010 + 2, D_0025E078);
-    if (D_0025E010[4] != 0x4) {
+    STORE_POINTER(player_shot_7_impact_table + 2, player_shot_7_impact_00);
+    if (player_shot_7_impact_table[4] != 0x4) {
         printf((const char *)D_00277AC0);
     }
-    STORE_POINTER(D_0025E010 + 4, D_0025E088);
-    if (D_0025E010[6] != 0x6) {
+    STORE_POINTER(player_shot_7_impact_table + 4, player_shot_7_impact_02);
+    if (player_shot_7_impact_table[6] != 0x6) {
         printf((const char *)D_00277AE0);
     }
-    STORE_POINTER(D_0025E010 + 6, D_0025E088);
-    if (D_0025E010[8] != 0x8) {
+    STORE_POINTER(player_shot_7_impact_table + 6, player_shot_7_impact_02);
+    if (player_shot_7_impact_table[8] != 0x8) {
         printf((const char *)D_00277B00);
     }
-    STORE_POINTER(D_0025E010 + 8, D_0025E098);
-    if (D_0025E010[10] != 0xa) {
+    STORE_POINTER(player_shot_7_impact_table + 8, player_shot_7_impact_04);
+    if (player_shot_7_impact_table[10] != 0xa) {
         printf((const char *)D_00277B20);
     }
-    STORE_POINTER(D_0025E010 + 10, D_0025E098);
-    if (D_0025E010[12] != 0xc) {
+    STORE_POINTER(player_shot_7_impact_table + 10, player_shot_7_impact_04);
+    if (player_shot_7_impact_table[12] != 0xc) {
         printf((const char *)D_00277B40);
     }
-    STORE_POINTER(D_0025E010 + 12, D_0025E0A8);
-    if (D_0025E010[14] != 0xe) {
+    STORE_POINTER(player_shot_7_impact_table + 12, player_shot_7_impact_06);
+    if (player_shot_7_impact_table[14] != 0xe) {
         printf((const char *)D_00277B60);
     }
-    STORE_POINTER(D_0025E010 + 14, D_0025E0A8);
-    if (D_0025E010[16] != 0x10) {
+    STORE_POINTER(player_shot_7_impact_table + 14, player_shot_7_impact_06);
+    if (player_shot_7_impact_table[16] != 0x10) {
         printf((const char *)D_00277B80);
     }
-    STORE_POINTER(D_0025E010 + 16, D_0025E0B8);
-    if (D_0025E010[18] != 0x12) {
+    STORE_POINTER(player_shot_7_impact_table + 16, player_shot_7_impact_08);
+    if (player_shot_7_impact_table[18] != 0x12) {
         printf((const char *)D_00277BA0);
     }
-    STORE_POINTER(D_0025E010 + 18, D_0025E0B8);
-    if (D_0025E010[20] != 0x14) {
+    STORE_POINTER(player_shot_7_impact_table + 18, player_shot_7_impact_08);
+    if (player_shot_7_impact_table[20] != 0x14) {
         printf((const char *)D_00277BC0);
     }
-    STORE_POINTER(D_0025E010 + 20, D_0025E0C8);
-    if (D_0025E010[22] != 0x16) {
+    STORE_POINTER(player_shot_7_impact_table + 20, player_shot_7_impact_10);
+    if (player_shot_7_impact_table[22] != 0x16) {
         printf((const char *)D_00277BE0);
     }
-    STORE_POINTER(D_0025E010 + 22, D_0025E0D8);
-    if (D_0025E010[24] != 0x18) {
+    STORE_POINTER(player_shot_7_impact_table + 22, player_shot_7_impact_11);
+    if (player_shot_7_impact_table[24] != 0x18) {
         printf((const char *)D_00277C00);
     }
-    STORE_POINTER(D_0025E010 + 24, D_0025E0E8);
-    if (D_0025E010[26] != 0x1a) {
+    STORE_POINTER(player_shot_7_impact_table + 24, player_shot_7_impact_12);
+    if (player_shot_7_impact_table[26] != 0x1a) {
         printf((const char *)D_00277C20);
     }
-    STORE_POINTER(D_0025E010 + 26, D_0025E0F8);
-    if (D_0025E010[28] != 0x1c) {
+    STORE_POINTER(player_shot_7_impact_table + 26, player_shot_7_impact_13);
+    if (player_shot_7_impact_table[28] != 0x1c) {
         printf((const char *)D_00277C40);
     }
-    STORE_POINTER(D_0025E010 + 28, D_0025E108);
-    if (D_0025E010[30] != 0x1e) {
+    STORE_POINTER(player_shot_7_impact_table + 28, player_shot_7_impact_14);
+    if (player_shot_7_impact_table[30] != 0x1e) {
         printf((const char *)D_00277C60);
     }
-    STORE_POINTER(D_0025E010 + 30, D_0025E118);
-    if (D_0025E010[32] != 0x20) {
+    STORE_POINTER(player_shot_7_impact_table + 30, player_shot_7_impact_15);
+    if (player_shot_7_impact_table[32] != 0x20) {
         printf((const char *)D_00277C80);
     }
-    STORE_POINTER(D_0025E010 + 32, D_0025E118);
-    if (D_0025E010[34] != 0x22) {
+    STORE_POINTER(player_shot_7_impact_table + 32, player_shot_7_impact_15);
+    if (player_shot_7_impact_table[34] != 0x22) {
         printf((const char *)D_00277CA0);
     }
-    STORE_POINTER(D_0025E010 + 34, D_0025E128);
-    if (D_0025E010[36] != 0x24) {
+    STORE_POINTER(player_shot_7_impact_table + 34, player_shot_7_impact_17);
+    if (player_shot_7_impact_table[36] != 0x24) {
         printf((const char *)D_00277CC0);
     }
-    STORE_POINTER(D_0025E010 + 36, D_0025E128);
-    if (D_0025E010[38] != 0x26) {
+    STORE_POINTER(player_shot_7_impact_table + 36, player_shot_7_impact_17);
+    if (player_shot_7_impact_table[38] != 0x26) {
         printf((const char *)D_00277CE0);
     }
-    STORE_POINTER(D_0025E010 + 38, D_0025E138);
-    if (D_0025E010[40] != 0x28) {
+    STORE_POINTER(player_shot_7_impact_table + 38, player_shot_7_impact_19);
+    if (player_shot_7_impact_table[40] != 0x28) {
         printf((const char *)D_00277D00);
     }
-    STORE_POINTER(D_0025E010 + 40, D_0025E138);
-    if (D_0025E010[42] != 0x2a) {
+    STORE_POINTER(player_shot_7_impact_table + 40, player_shot_7_impact_19);
+    if (player_shot_7_impact_table[42] != 0x2a) {
         printf((const char *)D_00277D20);
     }
-    STORE_POINTER(D_0025E010 + 42, D_0025E148);
-    if (D_0025E010[44] != 0x2c) {
+    STORE_POINTER(player_shot_7_impact_table + 42, player_shot_7_impact_21);
+    if (player_shot_7_impact_table[44] != 0x2c) {
         printf((const char *)D_00277D40);
     }
-    STORE_POINTER(D_0025E010 + 44, D_0025E148);
-    if (D_0025E010[46] != 0x2e) {
+    STORE_POINTER(player_shot_7_impact_table + 44, player_shot_7_impact_21);
+    if (player_shot_7_impact_table[46] != 0x2e) {
         printf((const char *)D_00277D60);
     }
-    STORE_POINTER(D_0025E010 + 46, D_0025E158);
-    if (D_0025E010[48] != 0x30) {
+    STORE_POINTER(player_shot_7_impact_table + 46, player_shot_7_impact_23);
+    if (player_shot_7_impact_table[48] != 0x30) {
         printf((const char *)D_00277D80);
     }
-    STORE_POINTER(D_0025E010 + 48, D_0025E158);
-    if (D_0025E078[3] != 0x3) {
+    STORE_POINTER(player_shot_7_impact_table + 48, player_shot_7_impact_23);
+    if (player_shot_7_impact_00[3] != 0x3) {
         printf((const char *)D_00277DA0);
     }
-    STORE_POINTER(D_0025E078 + 3, D_0025D890);
-    if (D_0025E088[3] != 0x3) {
+    STORE_POINTER(player_shot_7_impact_00 + 3, player_shot_7_impact_frames_00);
+    if (player_shot_7_impact_02[3] != 0x3) {
         printf((const char *)D_00277DC0);
     }
-    STORE_POINTER(D_0025E088 + 3, D_0025D8B0);
-    if (D_0025E098[3] != 0x3) {
+    STORE_POINTER(player_shot_7_impact_02 + 3, player_shot_7_impact_frames_02);
+    if (player_shot_7_impact_04[3] != 0x3) {
         printf((const char *)D_00277DE0);
     }
-    STORE_POINTER(D_0025E098 + 3, D_0025D8B0);
-    if (D_0025E0A8[3] != 0x3) {
+    STORE_POINTER(player_shot_7_impact_04 + 3, player_shot_7_impact_frames_02);
+    if (player_shot_7_impact_06[3] != 0x3) {
         printf((const char *)D_00277E00);
     }
-    STORE_POINTER(D_0025E0A8 + 3, D_0025D8D0);
-    if (D_0025E0B8[3] != 0x3) {
+    STORE_POINTER(player_shot_7_impact_06 + 3, player_shot_7_impact_frames_06);
+    if (player_shot_7_impact_08[3] != 0x3) {
         printf((const char *)D_00277E20);
     }
-    STORE_POINTER(D_0025E0B8 + 3, D_0025D8D0);
-    if (D_0025E0C8[3] != 0x3) {
+    STORE_POINTER(player_shot_7_impact_08 + 3, player_shot_7_impact_frames_06);
+    if (player_shot_7_impact_10[3] != 0x3) {
         printf((const char *)D_00277E40);
     }
-    STORE_POINTER(D_0025E0C8 + 3, D_0025D8F0);
-    if (D_0025E0D8[3] != 0x3) {
+    STORE_POINTER(player_shot_7_impact_10 + 3, player_shot_7_impact_frames_10);
+    if (player_shot_7_impact_11[3] != 0x3) {
         printf((const char *)D_00277E60);
     }
-    STORE_POINTER(D_0025E0D8 + 3, D_0025D910);
-    if (D_0025E0E8[3] != 0x3) {
+    STORE_POINTER(player_shot_7_impact_11 + 3, player_shot_7_impact_frames_11);
+    if (player_shot_7_impact_12[3] != 0x3) {
         printf((const char *)D_00277E80);
     }
-    STORE_POINTER(D_0025E0E8 + 3, D_0025D910);
-    if (D_0025E0F8[3] != 0x3) {
+    STORE_POINTER(player_shot_7_impact_12 + 3, player_shot_7_impact_frames_11);
+    if (player_shot_7_impact_13[3] != 0x3) {
         printf((const char *)D_00277EA0);
     }
-    STORE_POINTER(D_0025E0F8 + 3, D_0025D930);
-    if (D_0025E108[3] != 0x3) {
+    STORE_POINTER(player_shot_7_impact_13 + 3, player_shot_7_impact_frames_13);
+    if (player_shot_7_impact_14[3] != 0x3) {
         printf((const char *)D_00277EC0);
     }
-    STORE_POINTER(D_0025E108 + 3, D_0025D930);
-    if (D_0025E118[3] != 0x3) {
+    STORE_POINTER(player_shot_7_impact_14 + 3, player_shot_7_impact_frames_13);
+    if (player_shot_7_impact_15[3] != 0x3) {
         printf((const char *)D_00277EE0);
     }
-    STORE_POINTER(D_0025E118 + 3, D_0025D950);
-    if (D_0025E128[3] != 0x3) {
+    STORE_POINTER(player_shot_7_impact_15 + 3, player_shot_7_impact_frames_15);
+    if (player_shot_7_impact_17[3] != 0x3) {
         printf((const char *)D_00277F00);
     }
-    STORE_POINTER(D_0025E128 + 3, D_0025D970);
-    if (D_0025E138[3] != 0x3) {
+    STORE_POINTER(player_shot_7_impact_17 + 3, player_shot_7_impact_frames_17);
+    if (player_shot_7_impact_19[3] != 0x3) {
         printf((const char *)D_00277F20);
     }
-    STORE_POINTER(D_0025E138 + 3, D_0025D970);
-    if (D_0025E148[3] != 0x3) {
+    STORE_POINTER(player_shot_7_impact_19 + 3, player_shot_7_impact_frames_17);
+    if (player_shot_7_impact_21[3] != 0x3) {
         printf((const char *)D_00277F40);
     }
-    STORE_POINTER(D_0025E148 + 3, D_0025D990);
-    if (D_0025E158[3] != 0x3) {
+    STORE_POINTER(player_shot_7_impact_21 + 3, player_shot_7_impact_frames_21);
+    if (player_shot_7_impact_23[3] != 0x3) {
         printf((const char *)D_00277F60);
     }
-    STORE_POINTER(D_0025E158 + 3, D_0025D990);
+    STORE_POINTER(player_shot_7_impact_23 + 3, player_shot_7_impact_frames_21);
 }

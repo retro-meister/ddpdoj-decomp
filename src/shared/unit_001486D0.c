@@ -118,11 +118,11 @@ next_1:
 s32 sfx_enemy_fire_0();
 s32 velocity_from_dir256();
 s32 func_00209F20();
-extern u16 D_00253940[];
-extern u16 D_002539B0[];
+extern u16 player_shot_1_flight_table[];
+extern u16 player_shot_1_impact_table[];
 extern u16 g_two_player_game;
 
-void func_00148A40(void) {
+void player_shot_1_update(void) {
     if (reg_d0.h[0] != 0) goto block_main;
     reg_tmp.b[0] = ENTITY(reg_a6)->flags.b[0];
     ENTITY(reg_a6)->flags.b[0] |= 0x40;
@@ -149,7 +149,7 @@ block_first:
     *(u16 *)(reg_a6 + 0x2E) = reg_d3.h[0];
     if (ENTITY(reg_a6)->flags.sb[0] < 0) goto block_touch;
     reg_d0.h[0] = *(u16 *)(reg_a6 + 0x26);
-    reg_a0 = (u8 *)D_00253940;
+    reg_a0 = (u8 *)player_shot_1_flight_table;
     reg_tmp.h[1] = (reg_d0.h[0] != 0) ? *(u16 *)(reg_a0 + ((s16)reg_d0.h[0] & ~1)) : *(u16 *)reg_a0;
     reg_tmp.h[0] = (((u16)reg_d0.h[0] + 2) != 0) ? *(u16 *)(reg_a0 + ((s16)((u16)reg_d0.h[0] + 2) & ~1)) : *(u16 *)reg_a0;
     reg_a0 = (u8 *)reg_tmp.w;
@@ -239,7 +239,7 @@ skip_4:
     *(u16 *)(reg_a6 + 0x2E) = reg_d2.h[0];
     sfx_enemy_fire_0();
     reg_d0.h[0] = *(u16 *)(reg_a6 + 0x26);
-    reg_a0 = (u8 *)D_002539B0;
+    reg_a0 = (u8 *)player_shot_1_impact_table;
     reg_tmp.h[1] = (reg_d0.h[0] != 0) ? *(u16 *)(reg_a0 + ((s16)reg_d0.h[0] & ~1)) : *(u16 *)reg_a0;
     reg_tmp.h[0] = (((u16)reg_d0.h[0] + 2) != 0) ? *(u16 *)(reg_a0 + ((s16)((u16)reg_d0.h[0] + 2) & ~1)) : *(u16 *)reg_a0;
     reg_a0 = (u8 *)reg_tmp.w;
@@ -260,12 +260,12 @@ skip_4:
     goto loop_1;
 }
 
-extern u16 D_002541A0[];
-extern u16 D_00254210[];
+extern u16 player_shot_2_flight_table[];
+extern u16 player_shot_2_impact_table[];
 
 #define W(o) (*(u16 *)(reg_a6 + (o)))
 
-void func_00149160(void) {
+void player_shot_2_update(void) {
     if (reg_d0.h[0] != 1) goto next_100;
     reg_tmp.b[0] = ENTITY(reg_a6)->flags.b[0];
     ENTITY(reg_a6)->flags.b[0] |= 0x40;
@@ -285,7 +285,7 @@ next_10:
     W(0) |= 8;
     if (reg_d1.sb[0] < 0) goto block_touch;
     reg_d0.h[0] = W(0x26);
-    reg_a0 = (u8 *) D_002541A0;
+    reg_a0 = (u8 *) player_shot_2_flight_table;
     reg_tmp.h[1] = (reg_d0.h[0] != 0) ? *(u16 *)((u8 *)reg_a0 + ((s16)reg_d0.h[0] & ~1)) : *(u16 *)reg_a0;
     reg_tmp.h[0] = (((u16) reg_d0.h[0] + 2) != 0) ? *(u16 *)((u8 *)reg_a0 + ((s16)((u16) reg_d0.h[0] + 2) & ~1)) : *(u16 *)reg_a0;
     reg_a0 = (u8 *) reg_tmp.w;
@@ -382,7 +382,7 @@ next_240:
     W(0x2E) = reg_d2.h[0];
     sfx_enemy_fire_0();
     reg_d0.h[0] = W(0x26);
-    reg_a0 = (u8 *) D_00254210;
+    reg_a0 = (u8 *) player_shot_2_impact_table;
     reg_tmp.h[1] = (reg_d0.h[0] != 0) ? *(u16 *)((u8 *)reg_a0 + ((s16)reg_d0.h[0] & ~1)) : *(u16 *)reg_a0;
     reg_tmp.h[0] = (((u16) reg_d0.h[0] + 2) != 0) ? *(u16 *)((u8 *)reg_a0 + ((s16)((u16) reg_d0.h[0] + 2) & ~1)) : *(u16 *)reg_a0;
     reg_a0 = (u8 *) reg_tmp.w;
@@ -405,12 +405,12 @@ block_rts:
     return;
 }
 
-extern u16 D_0025CAE0[];
-extern u16 D_0025CD00[];
+extern u16 player_shot_3_flight_table[];
+extern u16 player_shot_3_impact_table[];
 
 #define W(o) (*(u16 *)(reg_a6 + (o)))
 
-void func_00149880(void) {
+void player_shot_3_update(void) {
     if (reg_d0.h[0] != 2) goto next_100;
     reg_tmp.b[0] = ENTITY(reg_a6)->flags.b[0];
     ENTITY(reg_a6)->flags.b[0] |= 0x40;
@@ -424,7 +424,7 @@ next_10:
     W(0) |= 8;
     if (reg_d1.sb[0] < 0) goto block_touch;
     reg_d0.h[0] = W(0x26);
-    reg_a0 = (u8 *) D_0025CAE0;
+    reg_a0 = (u8 *) player_shot_3_flight_table;
     reg_tmp.h[1] = (reg_d0.h[0] != 0) ? *(u16 *)((u8 *)reg_a0 + ((s16)reg_d0.h[0] & ~1)) : *(u16 *)reg_a0;
     reg_tmp.h[0] = (((u16) reg_d0.h[0] + 2) != 0) ? *(u16 *)((u8 *)reg_a0 + ((s16)((u16) reg_d0.h[0] + 2) & ~1)) : *(u16 *)reg_a0;
     reg_a0 = (u8 *) reg_tmp.w;
@@ -502,7 +502,7 @@ next_220:
     W(0x2E) = reg_d2.h[0];
     sfx_enemy_fire_0();
     reg_d0.h[0] = W(0x26);
-    reg_a0 = (u8 *) D_0025CD00;
+    reg_a0 = (u8 *) player_shot_3_impact_table;
     reg_tmp.h[1] = (reg_d0.h[0] != 0) ? *(u16 *)((u8 *)reg_a0 + ((s16)reg_d0.h[0] & ~1)) : *(u16 *)reg_a0;
     reg_tmp.h[0] = (((u16) reg_d0.h[0] + 2) != 0) ? *(u16 *)((u8 *)reg_a0 + ((s16)((u16) reg_d0.h[0] + 2) & ~1)) : *(u16 *)reg_a0;
     reg_a0 = (u8 *) reg_tmp.w;
@@ -525,12 +525,12 @@ block_rts:
     return;
 }
 
-extern u16 D_0025D470[];
-extern u16 D_0025D690[];
+extern u16 player_shot_4_flight_table[];
+extern u16 player_shot_4_impact_table[];
 
 #define W(o) (*(u16 *)(reg_a6 + (o)))
 
-void func_00149E20(void) {
+void player_shot_4_update(void) {
     if (reg_d0.h[0] != 3) goto next_100;
     reg_tmp.b[0] = ENTITY(reg_a6)->flags.b[0];
     ENTITY(reg_a6)->flags.b[0] |= 0x40;
@@ -544,7 +544,7 @@ next_10:
     W(0) |= 8;
     if (reg_d1.sb[0] < 0) goto block_touch;
     reg_d0.h[0] = W(0x26);
-    reg_a0 = (u8 *) D_0025D470;
+    reg_a0 = (u8 *) player_shot_4_flight_table;
     reg_tmp.h[1] = (reg_d0.h[0] != 0) ? *(u16 *)((u8 *)reg_a0 + ((s16)reg_d0.h[0] & ~1)) : *(u16 *)reg_a0;
     reg_tmp.h[0] = (((u16) reg_d0.h[0] + 2) != 0) ? *(u16 *)((u8 *)reg_a0 + ((s16)((u16) reg_d0.h[0] + 2) & ~1)) : *(u16 *)reg_a0;
     reg_a0 = (u8 *) reg_tmp.w;
@@ -622,7 +622,7 @@ next_220:
     W(0x2E) = reg_d2.h[0];
     sfx_enemy_fire_0();
     reg_d0.h[0] = W(0x26);
-    reg_a0 = (u8 *) D_0025D690;
+    reg_a0 = (u8 *) player_shot_4_impact_table;
     reg_tmp.h[1] = (reg_d0.h[0] != 0) ? *(u16 *)((u8 *)reg_a0 + ((s16)reg_d0.h[0] & ~1)) : *(u16 *)reg_a0;
     reg_tmp.h[0] = (((u16) reg_d0.h[0] + 2) != 0) ? *(u16 *)((u8 *)reg_a0 + ((s16)((u16) reg_d0.h[0] + 2) & ~1)) : *(u16 *)reg_a0;
     reg_a0 = (u8 *) reg_tmp.w;
@@ -645,12 +645,12 @@ block_rts:
     return;
 }
 
-extern u16 D_002549E0[];
-extern u16 D_00254A50[];
+extern u16 player_shot_5_flight_table[];
+extern u16 player_shot_5_impact_table[];
 
 #define W(o) (*(u16 *)(reg_a6 + (o)))
 
-void func_0014A3C0(void) {
+void player_shot_5_update(void) {
     if (reg_d0.h[0] != 4) goto next_100;
     reg_tmp.b[0] = ENTITY(reg_a6)->flags.b[0];
     ENTITY(reg_a6)->flags.b[0] |= 0x40;
@@ -670,7 +670,7 @@ next_10:
     W(0) |= 8;
     if (reg_d1.sb[0] < 0) goto block_touch;
     reg_d0.h[0] = W(0x26);
-    reg_a0 = (u8 *) D_002549E0;
+    reg_a0 = (u8 *) player_shot_5_flight_table;
     reg_tmp.h[1] = (reg_d0.h[0] != 0) ? *(u16 *)((u8 *)reg_a0 + ((s16)reg_d0.h[0] & ~1)) : *(u16 *)reg_a0;
     reg_tmp.h[0] = (((u16) reg_d0.h[0] + 2) != 0) ? *(u16 *)((u8 *)reg_a0 + ((s16)((u16) reg_d0.h[0] + 2) & ~1)) : *(u16 *)reg_a0;
     reg_a0 = (u8 *) reg_tmp.w;
@@ -759,7 +759,7 @@ next_220:
     W(0x2E) = reg_d2.h[0];
     sfx_enemy_fire_0();
     reg_d0.h[0] = W(0x26);
-    reg_a0 = (u8 *) D_00254A50;
+    reg_a0 = (u8 *) player_shot_5_impact_table;
     reg_tmp.h[1] = (reg_d0.h[0] != 0) ? *(u16 *)((u8 *)reg_a0 + ((s16)reg_d0.h[0] & ~1)) : *(u16 *)reg_a0;
     reg_tmp.h[0] = (((u16) reg_d0.h[0] + 2) != 0) ? *(u16 *)((u8 *)reg_a0 + ((s16)((u16) reg_d0.h[0] + 2) & ~1)) : *(u16 *)reg_a0;
     reg_a0 = (u8 *) reg_tmp.w;
@@ -782,12 +782,12 @@ block_rts:
     return;
 }
 
-extern u16 D_00255180[];
-extern u16 D_002551F0[];
+extern u16 player_shot_6_flight_table[];
+extern u16 player_shot_6_impact_table[];
 
 #define W(o) (*(u16 *)(reg_a6 + (o)))
 
-void func_0014AAA0(void) {
+void player_shot_6_update(void) {
     if (reg_d0.h[0] != 5) goto next_100;
     reg_tmp.b[0] = ENTITY(reg_a6)->flags.b[0];
     ENTITY(reg_a6)->flags.b[0] |= 0x40;
@@ -807,7 +807,7 @@ next_10:
     W(0) |= 8;
     if (reg_d1.sb[0] < 0) goto block_touch;
     reg_d0.h[0] = W(0x26);
-    reg_a0 = (u8 *) D_00255180;
+    reg_a0 = (u8 *) player_shot_6_flight_table;
     reg_tmp.h[1] = (reg_d0.h[0] != 0) ? *(u16 *)((u8 *)reg_a0 + ((s16)reg_d0.h[0] & ~1)) : *(u16 *)reg_a0;
     reg_tmp.h[0] = (((u16) reg_d0.h[0] + 2) != 0) ? *(u16 *)((u8 *)reg_a0 + ((s16)((u16) reg_d0.h[0] + 2) & ~1)) : *(u16 *)reg_a0;
     reg_a0 = (u8 *) reg_tmp.w;
@@ -896,7 +896,7 @@ next_220:
     W(0x2E) = reg_d2.h[0];
     sfx_enemy_fire_0();
     reg_d0.h[0] = W(0x26);
-    reg_a0 = (u8 *) D_002551F0;
+    reg_a0 = (u8 *) player_shot_6_impact_table;
     reg_tmp.h[1] = (reg_d0.h[0] != 0) ? *(u16 *)((u8 *)reg_a0 + ((s16)reg_d0.h[0] & ~1)) : *(u16 *)reg_a0;
     reg_tmp.h[0] = (((u16) reg_d0.h[0] + 2) != 0) ? *(u16 *)((u8 *)reg_a0 + ((s16)((u16) reg_d0.h[0] + 2) & ~1)) : *(u16 *)reg_a0;
     reg_a0 = (u8 *) reg_tmp.w;
@@ -919,12 +919,12 @@ block_rts:
     return;
 }
 
-extern u16 D_0025DE10[];
-extern u16 D_0025E010[];
+extern u16 player_shot_7_flight_table[];
+extern u16 player_shot_7_impact_table[];
 
 #define W(o) (*(u16 *)(reg_a6 + (o)))
 
-void func_0014B180(void) {
+void player_shot_7_update(void) {
     if (reg_d0.h[0] != 6) goto next_100;
     reg_tmp.b[0] = ENTITY(reg_a6)->flags.b[0];
     ENTITY(reg_a6)->flags.b[0] |= 0x40;
@@ -938,7 +938,7 @@ next_10:
     W(0) |= 8;
     if (reg_d1.sb[0] < 0) goto block_touch;
     reg_d0.h[0] = W(0x26);
-    reg_a0 = (u8 *) D_0025DE10;
+    reg_a0 = (u8 *) player_shot_7_flight_table;
     reg_tmp.h[1] = (reg_d0.h[0] != 0) ? *(u16 *)((u8 *)reg_a0 + ((s16)reg_d0.h[0] & ~1)) : *(u16 *)reg_a0;
     reg_tmp.h[0] = (((u16) reg_d0.h[0] + 2) != 0) ? *(u16 *)((u8 *)reg_a0 + ((s16)((u16) reg_d0.h[0] + 2) & ~1)) : *(u16 *)reg_a0;
     reg_a0 = (u8 *) reg_tmp.w;
@@ -1024,7 +1024,7 @@ next_220:
     W(0x2E) = reg_d2.h[0];
     sfx_enemy_fire_0();
     reg_d0.h[0] = W(0x26);
-    reg_a0 = (u8 *) D_0025E010;
+    reg_a0 = (u8 *) player_shot_7_impact_table;
     reg_tmp.h[1] = (reg_d0.h[0] != 0) ? *(u16 *)((u8 *)reg_a0 + ((s16)reg_d0.h[0] & ~1)) : *(u16 *)reg_a0;
     reg_tmp.h[0] = (((u16) reg_d0.h[0] + 2) != 0) ? *(u16 *)((u8 *)reg_a0 + ((s16)((u16) reg_d0.h[0] + 2) & ~1)) : *(u16 *)reg_a0;
     reg_a0 = (u8 *) reg_tmp.w;
@@ -1047,12 +1047,12 @@ block_rts:
     return;
 }
 
-extern u16 D_0025E790[];
-extern u16 D_0025E990[];
+extern u16 player_shot_8_flight_table[];
+extern u16 player_shot_8_impact_table[];
 
 #define W(o) (*(u16 *)(reg_a6 + (o)))
 
-void func_0014B7D0(void) {
+void player_shot_8_update(void) {
     if (reg_d0.h[0] != 7) goto next_100;
     reg_tmp.b[0] = ENTITY(reg_a6)->flags.b[0];
     ENTITY(reg_a6)->flags.b[0] |= 0x40;
@@ -1066,7 +1066,7 @@ next_10:
     W(0) |= 8;
     if (reg_d1.sb[0] < 0) goto block_touch;
     reg_d0.h[0] = W(0x26);
-    reg_a0 = (u8 *) D_0025E790;
+    reg_a0 = (u8 *) player_shot_8_flight_table;
     reg_tmp.h[1] = (reg_d0.h[0] != 0) ? *(u16 *)((u8 *)reg_a0 + ((s16)reg_d0.h[0] & ~1)) : *(u16 *)reg_a0;
     reg_tmp.h[0] = (((u16) reg_d0.h[0] + 2) != 0) ? *(u16 *)((u8 *)reg_a0 + ((s16)((u16) reg_d0.h[0] + 2) & ~1)) : *(u16 *)reg_a0;
     reg_a0 = (u8 *) reg_tmp.w;
@@ -1152,7 +1152,7 @@ next_220:
     W(0x2E) = reg_d2.h[0];
     sfx_enemy_fire_0();
     reg_d0.h[0] = W(0x26);
-    reg_a0 = (u8 *) D_0025E990;
+    reg_a0 = (u8 *) player_shot_8_impact_table;
     reg_tmp.h[1] = (reg_d0.h[0] != 0) ? *(u16 *)((u8 *)reg_a0 + ((s16)reg_d0.h[0] & ~1)) : *(u16 *)reg_a0;
     reg_tmp.h[0] = (((u16) reg_d0.h[0] + 2) != 0) ? *(u16 *)((u8 *)reg_a0 + ((s16)((u16) reg_d0.h[0] + 2) & ~1)) : *(u16 *)reg_a0;
     reg_a0 = (u8 *) reg_tmp.w;
