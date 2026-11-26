@@ -787,7 +787,11 @@ next_1:
     reg_d3.h[0] -= 1;
 }
 
+#ifdef DDPDOJ_PC
+extern void (*wreck_draw_routines[8])(void);
+#else
 extern u8 wreck_draw_routines[];
+#endif
 extern u16 g_frame_mod8;
 extern u16 g_frame_mod2;
 extern u16 g_wreck_count[];
@@ -802,7 +806,7 @@ void wrecks_update(void) {
         reg_d4.h[0] = 0xFFC0;
         reg_d2.h[0] = 0x3FF;
         reg_d6.h[0] = g_frame_mod2;
-        reg_a4 = wreck_draw_routines;
+        reg_a4 = (u8 *)wreck_draw_routines;
         reg_tmp.h[0] = reg_d6.h[0];
         reg_d6.h[0] <<= 0xF;
         temp_a0 = reg_d6.h[0];
@@ -835,7 +839,7 @@ loop_1:
     }
     reg_tmp.h[1] = ENTITY(reg_a6)->hit_x_plus.h;
     reg_tmp.h[0] = ENTITY(reg_a6)->hit_x_minus.h;
-    reg_a0 = (u8 *)reg_tmp.w;
+    reg_a0 = ARCADE_ADDRESS_DECODE(u8 *, reg_tmp.w);
     reg_d0.h[0] = ENTITY(reg_a6)->hit_y_plus.h;
     ENTITY(reg_a6)->draw.h = (reg_d0.h[0] != 0) ? *(u16 *)(reg_a0 + ((s16)reg_d0.h[0] & ~1)) : *(u16 *)reg_a0;
     ENTITY(reg_a6)->sprite.h = (((u16)reg_d0.h[0] + 2) != 0) ? *(u16 *)(reg_a0 + ((s16)((u16)reg_d0.h[0] + 2) & ~1)) : *(u16 *)reg_a0;
@@ -855,7 +859,11 @@ block_1:
 block_2:
     reg_d0.w = 0;
     reg_d0.b[0] = ENTITY(reg_a6)->misc.b.user;
+#ifdef DDPDOJ_PC
+    reg_a0 = (u8 *)wreck_draw_routines[reg_d0.h[0] / 4];
+#else
     reg_a0 = *(u8 **)(reg_a4 + reg_d0.h[0]);
+#endif
     reg_call_target_as_u8_p = reg_a0;
     ((Fn)reg_call_target_as_u8_p)();
     reg_a6 += 0x30;
@@ -876,14 +884,22 @@ block_3:
     }
 }
 
+#ifdef DDPDOJ_PC
+extern void *wreck_setups[8];
+#else
 extern u8 wreck_setups[];
+#endif
 extern u32 D_0028E9A0;
 
 void wreck_spawn_setup(void) {
     D_0028E9A0 = reg_d0.w;
     reg_d3.h[0] = reg_d0.h[0];
     reg_d3.h[0] &= 0x3C;
+#ifdef DDPDOJ_PC
+    reg_a2 = wreck_setups[reg_d3.h[0] / 4];
+#else
     reg_a2 = (u8 *)(*(u16 **)(wreck_setups + (reg_d3.h[0] & ~3)));
+#endif
     *(u16 *)(reg_a0 + 0) = *(u16 *)reg_a2;
     reg_a2 += 2;
     *(u16 *)(reg_a0 + 2) = ENTITY(reg_a6)->y.h;
@@ -1025,7 +1041,7 @@ next_7:
     W0(0x16) = *(u16 *)(reg_a2 + 2);
     reg_tmp.h[1] = W0(0x14);
     reg_tmp.h[0] = W0(0x16);
-    reg_a2 = (u8 *) reg_tmp.w;
+    reg_a2 = ARCADE_ADDRESS_DECODE(u8 *, reg_tmp.w);
     reg_d0.h[0] = W0(0x10);
     W0(0xA) = (reg_d0.h[0] != 0) ? *(u16 *)(reg_a2 + ((s16) reg_d0.h[0] & ~1)) : *(u16 *)reg_a2;
     W0(0xC) = ((reg_d0.h[0] + 2) != 0) ? *(u16 *)(reg_a2 + ((s16)(reg_d0.h[0] + 2) & ~1)) : *(u16 *)reg_a2;
@@ -1041,7 +1057,11 @@ void wreck_spawn_a_init(void) {
     *(s8 *)(reg_a0 + 0x1E) = 0x1F;
     reg_d3.h[0] = reg_d0.h[0];
     reg_d3.h[0] &= 0x3C;
+#ifdef DDPDOJ_PC
+    reg_a2 = wreck_setups[reg_d3.h[0] / 4];
+#else
     reg_a2 = *(u8 **)(wreck_setups + (reg_d3.h[0] & ~3));
+#endif
     *(u16 *)reg_a0 = (u16) *(u16 *)reg_a2;
     reg_a2 += 2;
     reg_d3.h[1] = ENTITY(reg_a6)->y.h;
@@ -1057,7 +1077,11 @@ void wreck_spawn_b_init(void) {
     *(s8 *)(reg_a0 + 0x1E) = 0x1F;
     reg_d3.h[0] = reg_d0.h[0];
     reg_d3.h[0] &= 0x3C;
+#ifdef DDPDOJ_PC
+    reg_a2 = wreck_setups[reg_d3.h[0] / 4];
+#else
     reg_a2 = (u8 *)(*(u16 **)(wreck_setups + (reg_d3.h[0] & ~3)));
+#endif
     *(u16 *)(reg_a0 + 0) = *(u16 *)reg_a2;
     reg_a2 += 2;
     *(u16 *)(reg_a0 + 2) = reg_d2.h[1];

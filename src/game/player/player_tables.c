@@ -464,6 +464,11 @@ u16 D_0028C634[2] = {
     0x0002, 0x0003,
 };
 
+#ifdef DDPDOJ_PC
+u16 player_exhaust_sprite_tables[4] = {
+    0x0000, 0x0001, 0x0002, 0x0003,
+};
+#else
 u16 player_exhaust_sprite_tables[2] = {
     0x0000, 0x0001,
 };
@@ -471,6 +476,7 @@ u16 player_exhaust_sprite_tables[2] = {
 u16 D_0028C63C[2] = {
     0x0002, 0x0003,
 };
+#endif
 
 u16 player_shield_sprites_01_04[4] = {
     0x0000, 0x02F1, 0x0000, 0x0302,
@@ -608,6 +614,11 @@ u16 player_exhaust_sprites_01_08[4] = {
     0x0000, 0x0323, 0x0000, 0x0334,
 };
 
+#ifdef DDPDOJ_PC
+u16 player_exhaust_slow_sprite_tables[4] = {
+    0x0000, 0x0001, 0x0002, 0x0003,
+};
+#else
 u16 player_exhaust_slow_sprite_tables[2] = {
     0x0000, 0x0001,
 };
@@ -615,6 +626,7 @@ u16 player_exhaust_slow_sprite_tables[2] = {
 u16 D_0028C754[2] = {
     0x0002, 0x0003,
 };
+#endif
 
 u16 player_exhaust_sprites_01_12[4] = {
     0x0000, 0x0335, 0x0000, 0x0346,
@@ -752,6 +764,11 @@ u16 player_exhaust_slow_sprites_01_08[4] = {
     0x0000, 0x0367, 0x0000, 0x0378,
 };
 
+#ifdef DDPDOJ_PC
+u16 D_0028C868[4] = {
+    0x0000, 0x0001, 0x0002, 0x0003,
+};
+#else
 u16 D_0028C868[2] = {
     0x0000, 0x0001,
 };
@@ -759,6 +776,7 @@ u16 D_0028C868[2] = {
 u16 D_0028C86C[2] = {
     0x0002, 0x0003,
 };
+#endif
 
 u16 D_0028C870[4] = {
     0xF880, 0xFC00, 0x0220, 0x0000,
@@ -768,6 +786,11 @@ u16 D_0028C878[4] = {
     0xF8C0, 0xFE00, 0x0210, 0x0000,
 };
 
+#ifdef DDPDOJ_PC
+u16 D_0028C880[4] = {
+    0x0000, 0x0001, 0x0002, 0x0003,
+};
+#else
 u16 D_0028C880[2] = {
     0x0000, 0x0001,
 };
@@ -775,6 +798,7 @@ u16 D_0028C880[2] = {
 u16 D_0028C884[2] = {
     0x0002, 0x0003,
 };
+#endif
 
 u16 D_0028C888[4] = {
     0xFC00, 0xFC00, 0x0420, 0x0000,

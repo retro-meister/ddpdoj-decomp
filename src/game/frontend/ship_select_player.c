@@ -64,7 +64,7 @@ void join_select_task_begin() {
     if (*(u8 *)(reg_a5 + 6) != 0) {
         reg_a4 = join_select_p2_table;
     }
-    reg_tmp.w = (u32) reg_a4;
+    reg_tmp.w = ARCADE_ADDRESS_ENCODE(reg_a4);
     *(u16 *)(reg_a5 + 8) = (u16) reg_tmp.h[1];
     *(u16 *)(reg_a5 + 0xA) = (u16) reg_tmp.h[0];
     if (*(u8 *)(reg_a5 + 6) == 0) {
@@ -88,7 +88,7 @@ void join_select_task_finish(void) {
     reg_tmp.h[1] = *(u16 *)(reg_a5 + 8);
     reg_tmp.h[0] = *(u16 *)(reg_a5 + 0xA);
     reg_d0.w = 0;
-    reg_a4 = (u8 *)reg_tmp.w;
+    reg_a4 = ARCADE_ADDRESS_DECODE(u8 *, reg_tmp.w);
     reg_d0.b[0] = *(u8 *)(reg_a5 + 0xF);
     reg_a0 = (u8 *)(D_0028C11C);
     reg_d0.h[0] += reg_d0.h[0];
@@ -196,7 +196,7 @@ block_50:
 block_51:
     reg_tmp.h[1] = *(u16 *)(reg_a5 + 8);
     reg_tmp.h[0] = *(u16 *)(reg_a5 + 0xA);
-    reg_a4 = (u8 *)reg_tmp.w;
+    reg_a4 = ARCADE_ADDRESS_DECODE(u8 *, reg_tmp.w);
     if (*(u8 *)(reg_a5 + 0xD) != 0) {
         goto block_52;
     }
@@ -230,7 +230,7 @@ block_51:
     }
     reg_tmp.h[1] = *(u16 *)(reg_a4 + 4);
     reg_tmp.h[0] = *(u16 *)(reg_a4 + 6);
-    reg_a0 = (u8 *)reg_tmp.w;
+    reg_a0 = ARCADE_ADDRESS_DECODE(u8 *, reg_tmp.w);
     reg_call_target_as_u8_p = reg_a0;
     ((Fn)reg_call_target_as_u8_p)();
     if (!(reg_d0.w & 0x8000)) {
@@ -242,7 +242,7 @@ block_51:
     }
     reg_tmp.h[1] = *(u16 *)(reg_a4 + 0xC);
     reg_tmp.h[0] = *(u16 *)(reg_a4 + 0xE);
-    reg_a0 = (u8 *)reg_tmp.w;
+    reg_a0 = ARCADE_ADDRESS_DECODE(u8 *, reg_tmp.w);
     reg_call_target_as_u8_p = reg_a0;
     ((Fn)reg_call_target_as_u8_p)();
     if (cond_flag != 0) {
@@ -318,7 +318,7 @@ void join_select_ship_step(void) {
 
     reg_tmp.h[1] = *(u16 *)(reg_a4 + 8);
     reg_tmp.h[0] = *(u16 *)(reg_a4 + 0xA);
-    reg_a0 = (u8 *)reg_tmp.w;
+    reg_a0 = ARCADE_ADDRESS_DECODE(u8 *, reg_tmp.w);
     reg_call_target_as_u8_p = reg_a0;
     ((Fn)reg_call_target_as_u8_p)();
     if (reg_d0.w & 4) {
@@ -334,7 +334,7 @@ void join_select_ship_step(void) {
     *(u8 *)(reg_a5 + 0xF) &= 1;
     reg_tmp.h[1] = *(u16 *)(reg_a4 + 0x10);
     reg_tmp.h[0] = *(u16 *)(reg_a4 + 0x12);
-    reg_a0 = (u8 *)reg_tmp.w;
+    reg_a0 = ARCADE_ADDRESS_DECODE(u8 *, reg_tmp.w);
     *(u8 *)(reg_a0 + 1) = (u8) *(u8 *)(reg_a5 + 0xF);
     *(u16 *)(reg_a5 + 0x12) -= 1;
     if ((*(u8 *)(reg_a5 + 0x13) == 0) || (reg_d0.h[0] &= 0x70, (reg_d0.h[0] != 0))) {
@@ -431,7 +431,7 @@ void join_select_doll_step(void) {
     }
     reg_tmp.h[1] = *(u16 *)(reg_a4 + 8);
     reg_tmp.h[0] = *(u16 *)(reg_a4 + 0xA);
-    reg_a0 = (u8 *)(reg_tmp.w);
+    reg_a0 = ARCADE_ADDRESS_DECODE(u8 *, reg_tmp.w);
     reg_call_target_as_u8_p = reg_a0;
     ((Fn)reg_call_target_as_u8_p)();
     reg_d7.w = 0;
@@ -463,7 +463,7 @@ void join_select_doll_step(void) {
     *(u8 *)(reg_a5 + 0xE) = (u8) reg_d7.b[0];
     reg_tmp.h[1] = *(u16 *)(reg_a4 + 0x10);
     reg_tmp.h[0] = *(u16 *)(reg_a4 + 0x12);
-    reg_a0 = (u8 *)(reg_tmp.w);
+    reg_a0 = ARCADE_ADDRESS_DECODE(u8 *, reg_tmp.w);
     *(u8 *)reg_a0 = *(u8 *)(reg_a5 + 0xE);
     *(u16 *)(reg_a5 + 0x12) -= 1;
     if ((*(u16 *)(reg_a5 + 0x12) == 0) || (reg_d0.h[0] &= 0x70, (reg_d0.h[0] != 0))) {

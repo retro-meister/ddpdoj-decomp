@@ -253,7 +253,7 @@ void select_panel_piece_2_draw(void) {
     i = reg_d5.h[0];
     reg_tmp.h[1] = (i != 0) ? *(u16 *)(reg_a0 + ((s16) i & ~1)) : *(u16 *)reg_a0;
     reg_tmp.h[0] = (((u16) i + 2) != 0) ? *(u16 *)(reg_a0 + ((s16) ((u16) i + 2) & ~1)) : *(u16 *)reg_a0;
-    reg_a0 = (u8 *) reg_tmp.w;
+    reg_a0 = ARCADE_ADDRESS_DECODE(u8 *, reg_tmp.w);
     reg_d0.h[0] = g_frame_mod4;
     reg_d0.h[0] *= 2;
     reg_d0.h[0] &= 4;
@@ -261,7 +261,7 @@ void select_panel_piece_2_draw(void) {
     reg_d2.h[0] = (((u16) reg_d0.h[0] + 2) != 0) ? *(u16 *)(reg_a0 + ((s16) ((u16) reg_d0.h[0] + 2) & ~1)) : *(u16 *)reg_a0;
     reg_tmp.h[1] = (i != 0) ? *(u16 *)(reg_a1 + ((s16) i & ~1)) : *(u16 *)reg_a1;
     reg_tmp.h[0] = (((u16) i + 2) != 0) ? *(u16 *)(reg_a1 + ((s16) ((u16) i + 2) & ~1)) : *(u16 *)reg_a1;
-    reg_a1 = (u8 *) reg_tmp.w;
+    reg_a1 = ARCADE_ADDRESS_DECODE(u8 *, reg_tmp.w);
     reg_tmp.w = reg_d1.w;
     reg_d1.h[1] = reg_tmp.h[0];
     reg_d1.h[0] = reg_tmp.h[1];
@@ -1581,6 +1581,11 @@ u8 select_panel_piece_3_draw_table_2[8] = {
     0x00, 0x00, 0xD7, 0x02, 0x00, 0x00, 0xE8, 0x02,
 };
 
+#ifdef DDPDOJ_PC
+_Alignas(2) u8 select_panel_piece_2_draw_table[8] = {
+    0x00, 0x00, 0x01, 0x00, 0x02, 0x00, 0x03, 0x00,
+};
+#else
 u8 select_panel_piece_2_draw_table[4] = {
     0x00, 0x00, 0x01, 0x00,
 };
@@ -1588,6 +1593,7 @@ u8 select_panel_piece_2_draw_table[4] = {
 u16 D_0028C14C[2] = {
     0x0002, 0x0003,
 };
+#endif
 
 u16 select_panel_piece_6_draw_table_3[2] = {
     0x5200, 0x1A00,

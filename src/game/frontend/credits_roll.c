@@ -105,7 +105,7 @@ still_on_screen:
     g_credits_roll.scroll_speed = 0;
     goto next_line;
 draw_text:
-    reg_a3 = (u8 *)reg_d0.w;
+    reg_a3 = ARCADE_ADDRESS_DECODE(u8 *, reg_d0.w);
     reg_d1.h[1] = LINE(reg_a6)->y;
     reg_d1.h[0] = LINE(reg_a6)->x;
     reg_d3.h[0] = 0x208;

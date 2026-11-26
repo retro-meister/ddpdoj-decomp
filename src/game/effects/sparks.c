@@ -433,7 +433,7 @@ loop_2:
         if (reg_tmp.h[0] < 4) goto block_clr4;
         reg_tmp.h[1] = W(0x12);
         reg_tmp.h[0] = W(0x14);
-        reg_a0 = (u8 *) reg_tmp.w;
+        reg_a0 = ARCADE_ADDRESS_DECODE(u8 *, reg_tmp.w);
         W(4) = LOOKUP(reg_d0.h[0]);
         W(6) = LOOKUP(reg_d0.h[0] + 2);
     block_move:
@@ -490,7 +490,11 @@ block_clr8:
 typedef void (*Fn)();
 
 s32 rng_next_bit_d5();
+#ifdef DDPDOJ_PC
+static u8 *spark_setup_start;
+#else
 extern s32 D_0028E530;
+#endif
 
 void spark_init(void) {
     u16 *temp_a2;
@@ -499,7 +503,11 @@ void spark_init(void) {
     u32 temp_a0_2;
     u32 temp_a1;
 
+#ifdef DDPDOJ_PC
+    spark_setup_start = reg_a2;
+#else
     (*(u16 **)&D_0028E530) = (u16 *)(reg_a2);
+#endif
     reg_d3.h[0] = reg_d0.h[0];
     reg_d3.h[0] |= 0x8000;
     *(u16 *)reg_a0 = reg_d3.h[0];
@@ -620,7 +628,11 @@ void spark_velocity_spread(void) {
     reg_d1.w = temp_s2;
     reg_d2.w = temp_s3;
     reg_a0 += 2;
+#ifdef DDPDOJ_PC
+    reg_a2 = spark_setup_start;
+#else
     reg_a2 = (u8 *)((*(u16 **)&D_0028E530));
+#endif
 }
 
 
@@ -628,7 +640,9 @@ void spark_velocity_none(void) {
     reg_a0 += 6;
 }
 
+#ifndef DDPDOJ_PC
 extern s32 D_0028E530;
+#endif
 
 void spark_velocity_random64(void) {
     u32 save_d0;
@@ -659,7 +673,11 @@ void spark_velocity_random64(void) {
     reg_d0.w = save_d0;
     reg_d1.w = save_d1;
     reg_d2.w = save_d2;
+#ifdef DDPDOJ_PC
+    reg_a2 = spark_setup_start;
+#else
     reg_a2 = (u8 *)D_0028E530;
+#endif
 }
 
 s32 velocity_from_dir256();
@@ -692,7 +710,11 @@ void spark_velocity_random256(void) {
     reg_d0.w = save_d0;
     reg_d1.w = save_d1;
     reg_d2.w = save_d2;
+#ifdef DDPDOJ_PC
+    reg_a2 = spark_setup_start;
+#else
     reg_a2 = (u8 *)D_0028E530;
+#endif
 }
 
 void spark_velocity_forward64(void) {
@@ -725,7 +747,11 @@ void spark_velocity_forward64(void) {
     reg_d0.w = save_d0;
     reg_d1.w = save_d1;
     reg_d2.w = save_d2;
+#ifdef DDPDOJ_PC
+    reg_a2 = spark_setup_start;
+#else
     reg_a2 = (u8 *)D_0028E530;
+#endif
 }
 
 void spark_velocity_forward256(void) {
@@ -757,7 +783,11 @@ void spark_velocity_forward256(void) {
     reg_d0.w = save_d0;
     reg_d1.w = save_d1;
     reg_d2.w = save_d2;
+#ifdef DDPDOJ_PC
+    reg_a2 = spark_setup_start;
+#else
     reg_a2 = (u8 *)D_0028E530;
+#endif
 }
 
 void spark_velocity_sideways64(void) {
@@ -791,7 +821,11 @@ void spark_velocity_sideways64(void) {
     reg_d0.w = save_d0;
     reg_d1.w = save_d1;
     reg_d2.w = save_d2;
+#ifdef DDPDOJ_PC
+    reg_a2 = spark_setup_start;
+#else
     reg_a2 = (u8 *)D_0028E530;
+#endif
 }
 
 void spark_velocity_backward256(void) {
@@ -824,7 +858,11 @@ void spark_velocity_backward256(void) {
     reg_d0.w = save_d0;
     reg_d1.w = save_d1;
     reg_d2.w = save_d2;
+#ifdef DDPDOJ_PC
+    reg_a2 = spark_setup_start;
+#else
     reg_a2 = (u8 *)D_0028E530;
+#endif
 }
 
 extern s8 spark_random_dirs64[];
@@ -1423,7 +1461,9 @@ u32 reg_save4_d4;
 u32 reg_save4_d5;
 u32 reg_save4_d6;
 u32 reg_save4_d7;
+#ifndef DDPDOJ_PC
 s32 D_0028E530;
+#endif
 
 #ifdef DDPDOJ_PC
 #include "pc_data_alias.h"
@@ -1431,4 +1471,34 @@ s32 D_0028E530;
 PC_DATA_ALIAS(g_sparks_second_half, g_sparks, 0x3fc);
 PC_DATA_ALIAS(g_spark_count, g_sparks, 0x7f8);
 PC_DATA_ALIAS(D_0029A52A, g_sparks, 0x7fa);
+#endif
+
+#ifdef DDPDOJ_PC
+void spark_and_wreck_frame_addresses_init(void) {
+    u16 *const shot_setups[] = {
+        spark_setup_shot_00, spark_setup_shot_01, spark_setup_shot_02, spark_setup_shot_03, spark_setup_shot_04,
+        spark_setup_shot_05, spark_setup_shot_06, spark_setup_shot_07, spark_setup_shot_08, spark_setup_shot_09,
+        spark_setup_shot_10, spark_setup_shot_11, spark_setup_shot_12, spark_setup_shot_13, spark_setup_shot_14,
+    };
+    for (unsigned i = 0; i < sizeof(shot_setups) / sizeof(shot_setups[0]); ++i) {
+        STORE_ARCADE_ADDRESS_DIRECT(shot_setups[i] + 8, spark_frames_long_1);
+    }
+    STORE_ARCADE_ADDRESS_DIRECT(spark_setup_bomb_0 + 8, spark_frames_small_0);
+    STORE_ARCADE_ADDRESS_DIRECT(spark_setup_bomb_1 + 8, spark_frames_small_1);
+    STORE_ARCADE_ADDRESS_DIRECT(spark_setup_bomb_2.parameters + 8, spark_frames_small_2);
+    STORE_ARCADE_ADDRESS_DIRECT((u16 *)spark_setup_laser + 8, spark_frames_long_0);
+
+    u16 *const frames[][3] = {
+        { wreck_frames_00, wreck_frames_01, wreck_frames_02 },
+        { wreck_frames_03, wreck_frames_04, wreck_frames_05 },
+        { wreck_frames_06, wreck_frames_07, wreck_frames_08 },
+        { wreck_frames_09, wreck_frames_10, wreck_frames_11 },
+    };
+    for (unsigned setup = 0; setup < sizeof(frames) / sizeof(frames[0]); ++setup) {
+        u16 *parameters = wreck_setups[setup];
+        for (unsigned variant = 0; variant < 3; ++variant) {
+            STORE_ARCADE_ADDRESS_DIRECT(parameters + 8 + variant * 2, frames[setup][variant]);
+        }
+    }
+}
 #endif

@@ -51,11 +51,11 @@ struct OptionOffsetsRecord {
     u16 w2[44];
 };
 extern struct OptionOffsetsRecord option_offsets;
-extern u16 option_sprites_a_tables[2];
+extern u16 option_sprites_a_tables[];
 extern u16 D_0028D96C[2];
-extern u16 option_sprites_b_tables[2];
+extern u16 option_sprites_b_tables[];
 extern u16 D_0028D974[2];
-extern u16 option_strong_sprites_b_tables[2];
+extern u16 option_strong_sprites_b_tables[];
 extern u16 D_0028D97C[2];
 extern u16 D_0028D980[2];
 extern u16 D_0028D984[2];
@@ -265,6 +265,9 @@ struct OptionOffsetsRecord option_offsets = {
     { 0x0020, 0x0030, 0x0040, 0x0058, 0x0070, 0x0088, 0x00A0, 0x00C0, 0x00E0, 0x0100, 0x0120, 0x0140, 0x0180, 0x01C0, 0x0200, 0x0100, 0x0000, 0x0000, 0x0000, 0x0000, 0x0005, 0x0000, 0x0000, 0x0000, 0x0007, 0x0000, 0x0000, 0x0000, 0x0008, 0x0000, 0x0000, 0x0000, 0x0009, 0x0000, 0x0000, 0x0000, 0xFFFF, 0xFFFF, 0xFFFF, 0xFFFF, 0x0000, 0x0000, 0x0000, 0x0000 },
 };
 
+#ifdef DDPDOJ_PC
+u16 option_sprites_a_tables[4] = { 0, 1, 2, 3 };
+#else
 u16 option_sprites_a_tables[2] = {
     0x0000, 0x0001,
 };
@@ -272,7 +275,11 @@ u16 option_sprites_a_tables[2] = {
 u16 D_0028D96C[2] = {
     0x0002, 0x0003,
 };
+#endif
 
+#ifdef DDPDOJ_PC
+u16 option_sprites_b_tables[4] = { 0, 1, 2, 3 };
+#else
 u16 option_sprites_b_tables[2] = {
     0x0000, 0x0001,
 };
@@ -280,7 +287,11 @@ u16 option_sprites_b_tables[2] = {
 u16 D_0028D974[2] = {
     0x0002, 0x0003,
 };
+#endif
 
+#ifdef DDPDOJ_PC
+u16 option_strong_sprites_b_tables[8] = { 0, 1, 2, 3, 4, 5, 6, 7 };
+#else
 u16 option_strong_sprites_b_tables[2] = {
     0x0000, 0x0001,
 };
@@ -296,6 +307,7 @@ u16 D_0028D980[2] = {
 u16 D_0028D984[2] = {
     0x0002, 0x0003,
 };
+#endif
 
 struct D0028d988Record D_0028D988 = {
     D_0025F5F0,
