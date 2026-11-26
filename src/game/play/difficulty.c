@@ -1,8 +1,8 @@
 #include "common.h"
 #include "entity.h"
 
-extern s32 D_0026A2A0[];
-extern u8 D_0028DAB8[];
+extern void *D_0026A2A0[];
+extern u16 D_0028DAB8[];
 extern u8 g_setting_difficulty;
 extern u16 D_0028E7F0;
 extern s32 D_0028E7F4;
@@ -19,11 +19,11 @@ void func_00138110(void) {
         reg_d0.b[0] = 1;
     }
 #endif
-    reg_a0 = D_0028DAB8;
+    reg_a0 = (u8 *)D_0028DAB8;
     reg_d0.h[0] += reg_d0.h[0];
     reg_a0 += reg_d0.h[0];
     D_0028E7F0 = *(u16 *)reg_a0;
-    D_0028E7F4 = D_0026A2A0[reg_d0.h[0] >> 1];
+    D_0028E7F4 = (s32)D_0026A2A0[reg_d0.h[0] >> 1];
 }
 
 extern u8 D_0028E2D4;
@@ -347,3 +347,19 @@ void func_00138750(void) {
 /* .sbss (the compiler lays these out in reverse) */
 s32 D_0028E7F4;
 u16 D_0028E7F0 __attribute__((aligned(4)));
+
+extern u8 D_0028DA98[];
+extern u8 D_0028DAA0[];
+extern u8 D_0028DAA8[];
+extern u8 D_0028DAB0[];
+
+void *D_0026A2A0[4] = {
+    D_0028DA98,
+    D_0028DAA0,
+    D_0028DAA8,
+    D_0028DAB0,
+};
+
+u16 D_0028DAB8[4] = {
+    0xFFFF, 0x0000, 0x0001, 0x0002,
+};
