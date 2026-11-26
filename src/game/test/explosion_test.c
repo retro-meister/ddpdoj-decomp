@@ -1,5 +1,6 @@
 #include "common.h"
 #include "entity.h"
+#include "explosion.h"
 
 /*
  * Debug enemy: sets off nine explosions in a 3 by 3 grid again and again, with each one's number drawn next to it.

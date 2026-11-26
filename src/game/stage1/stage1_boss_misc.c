@@ -1,5 +1,6 @@
 #include "common.h"
 #include "entity.h"
+#include "explosion.h"
 #include "stage1_boss.h"
 
 void stage1_boss_breakable_bullet_first(void) {
@@ -64,14 +65,14 @@ void stage1_boss_breakable_bullet(void) {
 block_5:
     reg_d0.w = 1;
     explosion_spawn();
-    *(u16 *)(reg_a0 + 2) = W(2);
-    *(u16 *)(reg_a0 + 4) = W(4);
-    *(u8 *)(reg_a0 + 0x1B) = B(0x1B);
+    EXPLOSION(reg_a0)->y = W(2);
+    EXPLOSION(reg_a0)->x = W(4);
+    EXPLOSION(reg_a0)->move.b.speed = B(0x1B);
     reg_d0.b[0] = B(0x1A);
     reg_d0.b[0] += reg_d0.b[0];
     reg_d0.b[0] += reg_d0.b[0];
-    *(u8 *)(reg_a0 + 0x1A) = reg_d0.b[0];
-    *(u16 *)(reg_a0 + 0x1E) = 0xC;
+    EXPLOSION(reg_a0)->move.b.dir = reg_d0.b[0];
+    EXPLOSION(reg_a0)->draw_layer = 0xC;
 block_6:
     enemy_remove();
     return;
@@ -86,11 +87,11 @@ next_3:
     BREAKABLE_BULLET(reg_a5)->frame_timer.b.countdown -= 1;
     if ((s32) reg_tmp.b[0] > 0) goto next_2;
     BREAKABLE_BULLET(reg_a5)->frame_timer.b.countdown = BREAKABLE_BULLET(reg_a5)->frame_timer.b.interval;
-    *(u16 *)(reg_a0 + 0) = BREAKABLE_BULLET(reg_a5)->now.frame_list[0];
-    *(u16 *)(reg_a0 + 2) = BREAKABLE_BULLET(reg_a5)->now.frame_list[1];
+    EXPLOSION(reg_a0)->kind.h = BREAKABLE_BULLET(reg_a5)->now.frame_list[0];
+    EXPLOSION(reg_a0)->y = BREAKABLE_BULLET(reg_a5)->now.frame_list[1];
     reg_d0.h[0] = BREAKABLE_BULLET(reg_a5)->frame;
-    W(0xA) = (reg_d0.h[0] != 0) ? *(u16 *)(reg_a0 + ((s16) reg_d0.h[0] & ~1)) : *(u16 *)reg_a0;
-    W(0xC) = ((reg_d0.h[0] + 2) != 0) ? *(u16 *)(reg_a0 + ((s16) (reg_d0.h[0] + 2) & ~1)) : *(u16 *)reg_a0;
+    W(0xA) = (reg_d0.h[0] != 0) ? *(u16 *)(reg_a0 + ((s16) reg_d0.h[0] & ~1)) : EXPLOSION(reg_a0)->kind.h;
+    W(0xC) = ((reg_d0.h[0] + 2) != 0) ? *(u16 *)(reg_a0 + ((s16) (reg_d0.h[0] + 2) & ~1)) : EXPLOSION(reg_a0)->kind.h;
     BREAKABLE_BULLET(reg_a5)->frame += 4;
     BREAKABLE_BULLET(reg_a5)->frame &= 0xF;
 next_2:
@@ -228,14 +229,14 @@ loop_30:
     if (((s64) ((s64) (count & 0xFFFF) << 0x30) >> 0x30) >= 0) goto loop_20;
     reg_d0.w = 2;
     explosion_spawn();
-    *(u16 *)(reg_a0 + 2) = W(2);
-    *(u16 *)(reg_a0 + 4) = W(4);
-    *(u8 *)(reg_a0 + 0x1B) = B(0x1B);
+    EXPLOSION(reg_a0)->y = W(2);
+    EXPLOSION(reg_a0)->x = W(4);
+    EXPLOSION(reg_a0)->move.b.speed = B(0x1B);
     reg_d0.b[0] = B(0x1A);
     reg_d0.b[0] += reg_d0.b[0];
     reg_d0.b[0] += reg_d0.b[0];
-    *(u8 *)(reg_a0 + 0x1A) = reg_d0.b[0];
-    *(u16 *)(reg_a0 + 0x1E) = 0xC;
+    EXPLOSION(reg_a0)->move.b.dir = reg_d0.b[0];
+    EXPLOSION(reg_a0)->draw_layer = 0xC;
 block_end:
     enemy_remove();
     return;
@@ -328,11 +329,11 @@ next_1:
     explosion_spawn();
     AW(2) = W(2);
     AW(4) = W(4);
-    reg_a0[0x1B] = ENTITY(reg_a6)->move.b.speed;
+    EXPLOSION(reg_a0)->move.b.speed = ENTITY(reg_a6)->move.b.speed;
     reg_d0.b[0] = ENTITY(reg_a6)->move.b.dir;
     reg_d0.b[0] += reg_d0.b[0];
     reg_d0.b[0] += reg_d0.b[0];
-    reg_a0[0x1A] = reg_d0.b[0];
+    EXPLOSION(reg_a0)->move.b.dir = reg_d0.b[0];
     AW(0x1E) = 0x10;
     enemy_remove();
     return;
@@ -349,11 +350,11 @@ next_3:
     explosion_spawn();
     AW(2) = W(2);
     AW(4) = W(4);
-    reg_a0[0x1B] = ENTITY(reg_a6)->move.b.speed;
+    EXPLOSION(reg_a0)->move.b.speed = ENTITY(reg_a6)->move.b.speed;
     reg_d0.b[0] = ENTITY(reg_a6)->move.b.dir;
     reg_d0.b[0] += reg_d0.b[0];
     reg_d0.b[0] += reg_d0.b[0];
-    reg_a0[0x1A] = reg_d0.b[0];
+    EXPLOSION(reg_a0)->move.b.dir = reg_d0.b[0];
     AW(0x1E) = 0x10;
     rng_next_unsigned();
     reg_d0.h[0] &= 0x3F;

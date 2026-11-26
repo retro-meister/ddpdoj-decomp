@@ -2263,7 +2263,7 @@ extern void func_00125DE0(void);
 extern void func_00128660(void);
 extern void func_00135ED0(void);
 extern void func_001368C0(void);
-extern void func_00139EB0(void);
+extern void explosions_clear(void);
 extern void func_0013FD80(void);
 extern void enemies_reset(void);
 extern void func_0016AAB0(void);
@@ -2276,7 +2276,7 @@ void replay_start_state_load(u8 *p) {
     s32 i;
 
     enemies_reset();
-    func_00139EB0();
+    explosions_clear();
     func_001B82D0();
     func_002114A0();
     func_001368C0();

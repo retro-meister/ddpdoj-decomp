@@ -1,4 +1,5 @@
 #include "common.h"
+#include "explosion.h"
 
 s32 explosion_spawn();
 s32 rng_next();
@@ -12,18 +13,18 @@ void explosion_piece_spawn(u32 kind, u32 speed, s16 delay) {
 
     reg_d0.w = kind;
     explosion_spawn();
-    *(u16 *)(reg_a0 + 0x1E) = (u16) reg_d3.h[0];
-    *(u16 *)(reg_a0 + 2) = (u16) reg_d2.h[1];
-    *(u16 *)(reg_a0 + 4) = (u16) reg_d2.h[0];
+    EXPLOSION(reg_a0)->draw_layer = (u16) reg_d3.h[0];
+    EXPLOSION(reg_a0)->y = (u16) reg_d2.h[1];
+    EXPLOSION(reg_a0)->x = (u16) reg_d2.h[0];
     reg_d0.w = speed;
     scaled = reg_d0.h[0];
     reg_d0.h[0] = (u16) (scaled >> reg_d6.h[0]);
-    *(u8 *)(reg_a0 + 0x1B) = (u8) reg_d0.b[0];
-    *(u8 *)(reg_a0 + 0x1A) = (u8) reg_d1.b[0];
+    EXPLOSION(reg_a0)->move.b.speed = (u8) reg_d0.b[0];
+    EXPLOSION(reg_a0)->move.b.dir = (u8) reg_d1.b[0];
     rng_next();
     reg_d0.b[0] = (u8) ((s8) reg_d0.b[0] >> 2);
-    *(u8 *)(reg_a0 + 0x1A) += reg_d0.b[0];
-    *(s16 *)(reg_a0 + 0x18) = delay;
+    EXPLOSION(reg_a0)->move.b.dir += reg_d0.b[0];
+    EXPLOSION(reg_a0)->delay = delay;
 }
 
 

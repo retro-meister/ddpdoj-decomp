@@ -1,5 +1,6 @@
 #include "common.h"
 #include "entity.h"
+#include "explosion.h"
 #include "enemy.h"
 
 /*
@@ -56,15 +57,15 @@ void heli_take_hits(u32 arg0) {
             score_add();
             reg_d0.w = 2;
             explosion_spawn();
-            *(u16 *)(reg_a0 + 2) = (u16) ENTITY(reg_a6)->y.h;
-            *(u16 *)(reg_a0 + 4) = (u16) ENTITY(reg_a6)->x.h;
+            EXPLOSION(reg_a0)->y = (u16) ENTITY(reg_a6)->y.h;
+            EXPLOSION(reg_a0)->x = (u16) ENTITY(reg_a6)->x.h;
             reg_d0.b[0] = ENTITY(reg_a6)->move.b.speed;
             reg_d0.b[0] += 8;
-            *(u8 *)(reg_a0 + 0x1B) = (u8) reg_d0.b[0];
+            EXPLOSION(reg_a0)->move.b.speed = (u8) reg_d0.b[0];
             reg_d1.b[0] = ENTITY(reg_a6)->move.b.dir;
             reg_d1.b[0] *= 4;
-            *(u8 *)(reg_a0 + 0x1A) = (u8) reg_d1.b[0];
-            *(s16 *)(reg_a0 + 0x1E) = 0x10;
+            EXPLOSION(reg_a0)->move.b.dir = (u8) reg_d1.b[0];
+            EXPLOSION(reg_a0)->draw_layer = 0x10;
             sfx_explosion_ground_small();
             enemy_remove();
             cond_flag = 1;

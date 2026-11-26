@@ -1,6 +1,7 @@
 #include "common.h"
 #include "enemy.h"
 #include "entity.h"
+#include "explosion.h"
 #include "enemy.h"
 
 void stage3_midboss_side1_blow_off(void);
@@ -354,19 +355,19 @@ loop_1:
         explosion_spawn();
         reg_d0.h[0] = *(u16 *)reg_a1;
         reg_a1 += 2;
-        *(u8 *)(reg_a0 + 0x1D) = (u8) reg_d0.b[0];
-        *(u16 *)(reg_a0 + 0x18) = (u16) reg_d1.h[0];
-        *(u16 *)(reg_a0 + 0x26) = (u16) *(u16 *)reg_a1;
+        EXPLOSION(reg_a0)->attr.b.flip = (u8) reg_d0.b[0];
+        EXPLOSION(reg_a0)->delay = (u16) reg_d1.h[0];
+        EXPLOSION(reg_a0)->start_y = (u16) *(u16 *)reg_a1;
         reg_a1 += 2;
-        *(u16 *)(reg_a0 + 0x28) = (u16) *(u16 *)reg_a1;
+        EXPLOSION(reg_a0)->start_x = (u16) *(u16 *)reg_a1;
         var_a2 = (u16 *)(reg_a1 + 2);
         reg_a1 = (u8 *)(var_a2);
-        *(u16 *)(reg_a0 + 2) = (u16) reg_d2.h[1];
-        *(u16 *)(reg_a0 + 4) = (u16) reg_d2.h[0];
-        *(s16 *)(reg_a0 + 0x1E) = 0x10;
-        *(s16 *)(reg_a0 + 0x12) = 0;
-        *(s16 *)(reg_a0 + 0x14) = 0;
-        *(u16 *)(reg_a0 + 0x1A) = (u16) *(u16 *)reg_a1;
+        EXPLOSION(reg_a0)->y = (u16) reg_d2.h[1];
+        EXPLOSION(reg_a0)->x = (u16) reg_d2.h[0];
+        EXPLOSION(reg_a0)->draw_layer = 0x10;
+        EXPLOSION(reg_a0)->debris = 0;
+        EXPLOSION(reg_a0)->debris_arg = 0;
+        EXPLOSION(reg_a0)->move.h = (u16) *(u16 *)reg_a1;
         reg_a1 += 2;
         goto loop_1;
     }
@@ -481,21 +482,21 @@ void stage3_midboss_dying(void) {
                 explosion_spawn();
                 reg_d0.h[0] = *(u16 *)reg_a1;
                 reg_a1 += 2;
-                *(u8 *)(reg_a0 + 0x1D) = (u8) reg_d0.b[0];
-                *(u16 *)(reg_a0 + 0x18) = (u16) reg_d1.h[0];
-                *(u16 *)(reg_a0 + 0x26) = (u16) *(u16 *)reg_a1;
+                EXPLOSION(reg_a0)->attr.b.flip = (u8) reg_d0.b[0];
+                EXPLOSION(reg_a0)->delay = (u16) reg_d1.h[0];
+                EXPLOSION(reg_a0)->start_y = (u16) *(u16 *)reg_a1;
                 reg_a1 += 2;
-                *(u16 *)(reg_a0 + 0x28) = (u16) *(u16 *)reg_a1;
+                EXPLOSION(reg_a0)->start_x = (u16) *(u16 *)reg_a1;
                 reg_a1 += 2;
-                *(u16 *)(reg_a0 + 2) = (u16) ENTITY(reg_a6)->y.h;
-                *(u16 *)(reg_a0 + 4) = (u16) ENTITY(reg_a6)->x.h;
-                *(s16 *)(reg_a0 + 0x1E) = 0x10;
-                *(s16 *)(reg_a0 + 0x12) = 0;
-                *(s16 *)(reg_a0 + 0x14) = 0;
-                *(u8 *)(reg_a0 + 0x1B) = (u8) ENTITY(reg_a6)->move.b.speed;
+                EXPLOSION(reg_a0)->y = (u16) ENTITY(reg_a6)->y.h;
+                EXPLOSION(reg_a0)->x = (u16) ENTITY(reg_a6)->x.h;
+                EXPLOSION(reg_a0)->draw_layer = 0x10;
+                EXPLOSION(reg_a0)->debris = 0;
+                EXPLOSION(reg_a0)->debris_arg = 0;
+                EXPLOSION(reg_a0)->move.b.speed = (u8) ENTITY(reg_a6)->move.b.speed;
                 reg_d0.b[0] = ENTITY(reg_a6)->move.b.dir;
                 reg_d0.b[0] *= 4;
-                *(u8 *)(reg_a0 + 0x1A) = (u8) reg_d0.b[0];
+                EXPLOSION(reg_a0)->move.b.dir = (u8) reg_d0.b[0];
                 STAGE3_MIDBOSS(reg_a5)->blast += 0xC;
                 if (STAGE3_MIDBOSS(reg_a5)->blast == 0x48) {
                     STAGE3_MIDBOSS(reg_a5)->blast = 0U;
@@ -1289,10 +1290,10 @@ void stage3_midboss_pod(void) {
 next_2:
     reg_d0.w = 2;
     explosion_spawn();
-    *(u16 *) (reg_a0 + 2) = ENTITY(reg_a6)->y.h;
-    *(u16 *) (reg_a0 + 4) = ENTITY(reg_a6)->x.h;
-    *(u16 *) (reg_a0 + 0x1A) = *(u16 *) (reg_a6 + 0x1A);
-    *(u16 *) (reg_a0 + 0x1E) = 0x10;
+    EXPLOSION(reg_a0)->y = ENTITY(reg_a6)->y.h;
+    EXPLOSION(reg_a0)->x = ENTITY(reg_a6)->x.h;
+    EXPLOSION(reg_a0)->move.h = *(u16 *) (reg_a6 + 0x1A);
+    EXPLOSION(reg_a0)->draw_layer = 0x10;
     sfx_explosion_air_small();
 next_1:
     enemy_remove();

@@ -1,5 +1,6 @@
 #include "common.h"
 #include "entity.h"
+#include "explosion.h"
 #include "enemy.h"
 #include "stage4_boss.h"
 
@@ -227,10 +228,10 @@ void stage4_boss_cutter(void) {
     if (ENTITY(reg_a6)->misc.b.draw_layer == 0) goto next_5;
     reg_d0.w = 2;
     explosion_spawn();
-    *(u16 *)(reg_a0 + 2) = ENTITY(reg_a6)->y.h;
-    *(u16 *)(reg_a0 + 4) = ENTITY(reg_a6)->x.h;
-    *(u16 *)(reg_a0 + 0x1A) = ENTITY(reg_a6)->move.h;
-    *(u16 *)(reg_a0 + 0x1E) = 0x10;
+    EXPLOSION(reg_a0)->y = ENTITY(reg_a6)->y.h;
+    EXPLOSION(reg_a0)->x = ENTITY(reg_a6)->x.h;
+    EXPLOSION(reg_a0)->move.h = ENTITY(reg_a6)->move.h;
+    EXPLOSION(reg_a0)->draw_layer = 0x10;
 next_5:
     enemy_remove();
     return;
@@ -257,10 +258,10 @@ next_20:
     score_add();
     reg_d0.w = 2;
     explosion_spawn();
-    *(u16 *)(reg_a0 + 2) = ENTITY(reg_a6)->y.h;
-    *(u16 *)(reg_a0 + 4) = ENTITY(reg_a6)->x.h;
-    *(u16 *)(reg_a0 + 0x1A) = ENTITY(reg_a6)->move.h;
-    *(u16 *)(reg_a0 + 0x1E) = 0x10;
+    EXPLOSION(reg_a0)->y = ENTITY(reg_a6)->y.h;
+    EXPLOSION(reg_a0)->x = ENTITY(reg_a6)->x.h;
+    EXPLOSION(reg_a0)->move.h = ENTITY(reg_a6)->move.h;
+    EXPLOSION(reg_a0)->draw_layer = 0x10;
     sfx_explosion_air_small();
     if (g_enemy_signal_e == 2) goto next_30;
     enemy_remove();

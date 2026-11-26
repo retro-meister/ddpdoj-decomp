@@ -1,5 +1,6 @@
 #include "common.h"
 #include "entity.h"
+#include "explosion.h"
 
 /*
  * A small tank's turret and body mounted on a larger enemy, which starts and runs it as one of its own
@@ -417,17 +418,17 @@ block_e:
     ENTITY(reg_a6)->flags.b[0] |= 0x40;
     reg_d0.w = 3;
     explosion_spawn();
-    *(u16 *)(reg_a0 + 2) = (u16) ENTITY(reg_a6)->y.h;
-    *(u16 *)(reg_a0 + 4) = (u16) ENTITY(reg_a6)->x.h;
+    EXPLOSION(reg_a0)->y = (u16) ENTITY(reg_a6)->y.h;
+    EXPLOSION(reg_a0)->x = (u16) ENTITY(reg_a6)->x.h;
     reg_d0.w = 0;
     reg_d0.b[0] = ENTITY(reg_a6)->misc.b.user;
     reg_a1 = (u8 *)(small_tank_damaged_explosions);
-    *(u16 *)(reg_a0 + 0x1E) = (reg_d0.h[0] != 0) ? *(u16 *)((u8 *)reg_a1 + ((s16)reg_d0.h[0] & ~1)) : *(u16 *)reg_a1;
-    *(u16 *)(reg_a0 + 0x20) = ((reg_d0.h[0] + 2) != 0) ? *(u16 *)((u8 *)reg_a1 + ((s16)(reg_d0.h[0] + 2) & ~1)) : *(u16 *)reg_a1;
-    *(s16 *)(reg_a0 + 0x10) = 1;
-    *(u16 *)(reg_a0 + 0x26) = 0xFE00;
-    *(s16 *)(reg_a0 + 0x12) = 0;
-    *(s16 *)(reg_a0 + 0x14) = 0;
+    EXPLOSION(reg_a0)->draw_layer = (reg_d0.h[0] != 0) ? *(u16 *)((u8 *)reg_a1 + ((s16)reg_d0.h[0] & ~1)) : *(u16 *)reg_a1;
+    EXPLOSION(reg_a0)->drag_timer.h = ((reg_d0.h[0] + 2) != 0) ? *(u16 *)((u8 *)reg_a1 + ((s16)(reg_d0.h[0] + 2) & ~1)) : *(u16 *)reg_a1;
+    EXPLOSION(reg_a0)->follows_scroll = 1;
+    EXPLOSION(reg_a0)->start_y = 0xFE00;
+    EXPLOSION(reg_a0)->debris = 0;
+    EXPLOSION(reg_a0)->debris_arg = 0;
     goto block_a;
 block_f:
     reg_d0.w = 0x10;
@@ -435,17 +436,17 @@ block_f:
 block_g:
     reg_d0.w = 4;
     explosion_spawn();
-    *(u16 *)(reg_a0 + 2) = (u16) ENTITY(reg_a6)->y.h;
-    *(u16 *)(reg_a0 + 4) = (u16) ENTITY(reg_a6)->x.h;
+    EXPLOSION(reg_a0)->y = (u16) ENTITY(reg_a6)->y.h;
+    EXPLOSION(reg_a0)->x = (u16) ENTITY(reg_a6)->x.h;
     reg_d0.w = 0;
     reg_d0.b[0] = ENTITY(reg_a6)->misc.b.user;
     reg_a1 = (u8 *)(small_tank_destroyed_explosions);
-    *(u16 *)(reg_a0 + 0x1E) = (reg_d0.h[0] != 0) ? *(u16 *)((u8 *)reg_a1 + ((s16)reg_d0.h[0] & ~1)) : *(u16 *)reg_a1;
-    *(u16 *)(reg_a0 + 0x20) = ((reg_d0.h[0] + 2) != 0) ? *(u16 *)((u8 *)reg_a1 + ((s16)(reg_d0.h[0] + 2) & ~1)) : *(u16 *)reg_a1;
-    *(s16 *)(reg_a0 + 0x10) = 1;
-    *(u16 *)(reg_a0 + 0x26) = 0xFE00;
-    *(s16 *)(reg_a0 + 0x12) = 0;
-    *(s16 *)(reg_a0 + 0x14) = 0;
+    EXPLOSION(reg_a0)->draw_layer = (reg_d0.h[0] != 0) ? *(u16 *)((u8 *)reg_a1 + ((s16)reg_d0.h[0] & ~1)) : *(u16 *)reg_a1;
+    EXPLOSION(reg_a0)->drag_timer.h = ((reg_d0.h[0] + 2) != 0) ? *(u16 *)((u8 *)reg_a1 + ((s16)(reg_d0.h[0] + 2) & ~1)) : *(u16 *)reg_a1;
+    EXPLOSION(reg_a0)->follows_scroll = 1;
+    EXPLOSION(reg_a0)->start_y = 0xFE00;
+    EXPLOSION(reg_a0)->debris = 0;
+    EXPLOSION(reg_a0)->debris_arg = 0;
     *(u16 *)reg_a6 = 0x8080;
     reg_a0 = (u8 *)D_0028C080;
     ENTITY(reg_a6)->offset_y.h = (u16) *(u16 *)reg_a0;
@@ -848,34 +849,34 @@ block_e:
     ENTITY(reg_a6)->flags.b[0] |= 0x40;
     reg_d0.w = 3;
     explosion_spawn();
-    *(u16 *)(reg_a0 + 2) = (u16) ENTITY(reg_a6)->y.h;
-    *(u16 *)(reg_a0 + 4) = (u16) ENTITY(reg_a6)->x.h;
+    EXPLOSION(reg_a0)->y = (u16) ENTITY(reg_a6)->y.h;
+    EXPLOSION(reg_a0)->x = (u16) ENTITY(reg_a6)->x.h;
     reg_d0.w = 0;
     reg_d0.b[0] = ENTITY(reg_a6)->misc.b.user;
     reg_a1 = (u8 *)(small_tank_damaged_explosions);
-    *(u16 *)(reg_a0 + 0x1E) = (reg_d0.h[0] != 0) ? *(u16 *)((u8 *)reg_a1 + ((s16)reg_d0.h[0] & ~1)) : *(u16 *)reg_a1;
-    *(u16 *)(reg_a0 + 0x20) = ((reg_d0.h[0] + 2) != 0) ? *(u16 *)((u8 *)reg_a1 + ((s16)(reg_d0.h[0] + 2) & ~1)) : *(u16 *)reg_a1;
-    *(s16 *)(reg_a0 + 0x10) = 1;
-    *(u16 *)(reg_a0 + 0x26) = 0xFE00;
-    *(s16 *)(reg_a0 + 0x12) = 0;
-    *(s16 *)(reg_a0 + 0x14) = 0;
+    EXPLOSION(reg_a0)->draw_layer = (reg_d0.h[0] != 0) ? *(u16 *)((u8 *)reg_a1 + ((s16)reg_d0.h[0] & ~1)) : *(u16 *)reg_a1;
+    EXPLOSION(reg_a0)->drag_timer.h = ((reg_d0.h[0] + 2) != 0) ? *(u16 *)((u8 *)reg_a1 + ((s16)(reg_d0.h[0] + 2) & ~1)) : *(u16 *)reg_a1;
+    EXPLOSION(reg_a0)->follows_scroll = 1;
+    EXPLOSION(reg_a0)->start_y = 0xFE00;
+    EXPLOSION(reg_a0)->debris = 0;
+    EXPLOSION(reg_a0)->debris_arg = 0;
     goto block_a;
 block_f:
     reg_d0.w = 0x10;
     score_add();
     reg_d0.w = 7;
     explosion_spawn();
-    *(u16 *)(reg_a0 + 2) = (u16) ENTITY(reg_a6)->y.h;
-    *(u16 *)(reg_a0 + 4) = (u16) ENTITY(reg_a6)->x.h;
+    EXPLOSION(reg_a0)->y = (u16) ENTITY(reg_a6)->y.h;
+    EXPLOSION(reg_a0)->x = (u16) ENTITY(reg_a6)->x.h;
     reg_d0.w = 0;
     reg_d0.b[0] = ENTITY(reg_a6)->misc.b.user;
     reg_a1 = (u8 *)(small_tank_destroyed_explosions);
-    *(u16 *)(reg_a0 + 0x1E) = (reg_d0.h[0] != 0) ? *(u16 *)((u8 *)reg_a1 + ((s16)reg_d0.h[0] & ~1)) : *(u16 *)reg_a1;
-    *(u16 *)(reg_a0 + 0x20) = ((reg_d0.h[0] + 2) != 0) ? *(u16 *)((u8 *)reg_a1 + ((s16)(reg_d0.h[0] + 2) & ~1)) : *(u16 *)reg_a1;
-    *(s16 *)(reg_a0 + 0x10) = 1;
-    *(u16 *)(reg_a0 + 0x26) = 0xFE00;
-    *(s16 *)(reg_a0 + 0x12) = 0;
-    *(s16 *)(reg_a0 + 0x14) = 0;
+    EXPLOSION(reg_a0)->draw_layer = (reg_d0.h[0] != 0) ? *(u16 *)((u8 *)reg_a1 + ((s16)reg_d0.h[0] & ~1)) : *(u16 *)reg_a1;
+    EXPLOSION(reg_a0)->drag_timer.h = ((reg_d0.h[0] + 2) != 0) ? *(u16 *)((u8 *)reg_a1 + ((s16)(reg_d0.h[0] + 2) & ~1)) : *(u16 *)reg_a1;
+    EXPLOSION(reg_a0)->follows_scroll = 1;
+    EXPLOSION(reg_a0)->start_y = 0xFE00;
+    EXPLOSION(reg_a0)->debris = 0;
+    EXPLOSION(reg_a0)->debris_arg = 0;
     *(u16 *)reg_a6 = 0x8080;
     reg_a0 = (u8 *)D_0028C080;
     ENTITY(reg_a6)->offset_y.h = (u16) *(u16 *)reg_a0;

@@ -1,5 +1,6 @@
 #include "common.h"
 #include "entity.h"
+#include "explosion.h"
 #include "enemy.h"
 
 /*
@@ -195,19 +196,19 @@ loop_1:
         explosion_spawn();
         reg_d0.h[0] = *(u16 *)reg_a1;
         reg_a1 += 2;
-        *(u8 *)(reg_a0 + 0x1D) = (u8) reg_d0.b[0];
-        *(u16 *)(reg_a0 + 0x18) = (u16) reg_d1.h[0];
-        *(u16 *)(reg_a0 + 0x26) = (u16) *(u16 *)reg_a1;
+        EXPLOSION(reg_a0)->attr.b.flip = (u8) reg_d0.b[0];
+        EXPLOSION(reg_a0)->delay = (u16) reg_d1.h[0];
+        EXPLOSION(reg_a0)->start_y = (u16) *(u16 *)reg_a1;
         reg_a1 += 2;
-        *(u16 *)(reg_a0 + 0x28) = (u16) *(u16 *)reg_a1;
+        EXPLOSION(reg_a0)->start_x = (u16) *(u16 *)reg_a1;
         var_a2 = (u16 *)(reg_a1 + 2);
         reg_a1 = (u8 *)(var_a2);
-        *(u16 *)(reg_a0 + 2) = (u16) reg_d2.h[1];
-        *(u16 *)(reg_a0 + 4) = (u16) reg_d2.h[0];
-        *(s16 *)(reg_a0 + 0x1E) = 4;
-        *(s16 *)(reg_a0 + 0x12) = 0;
-        *(s16 *)(reg_a0 + 0x14) = 0;
-        *(u16 *)(reg_a0 + 0x1A) = (u16) *(u16 *)reg_a1;
+        EXPLOSION(reg_a0)->y = (u16) reg_d2.h[1];
+        EXPLOSION(reg_a0)->x = (u16) reg_d2.h[0];
+        EXPLOSION(reg_a0)->draw_layer = 4;
+        EXPLOSION(reg_a0)->debris = 0;
+        EXPLOSION(reg_a0)->debris_arg = 0;
+        EXPLOSION(reg_a0)->move.h = (u16) *(u16 *)reg_a1;
         reg_a1 += 2;
         goto loop_1;
     }
@@ -280,13 +281,13 @@ void stage5_small_turret(void) {
             score_add();
             reg_d0.h[0] = 0x88;
             explosion_spawn();
-            *(u16 *)(reg_a0 + 2) = ENTITY(reg_a6)->y.h;
+            EXPLOSION(reg_a0)->y = ENTITY(reg_a6)->y.h;
             temp_a1 = ENTITY(reg_a6)->x.h;
-            *(u16 *)(reg_a0 + 4) = temp_a1;
-            *(s16 *)(reg_a0 + 0x1E) = 4;
-            *(s16 *)(reg_a0 + 0x12) = 0;
-            *(s16 *)(reg_a0 + 0x14) = 0;
-            *(s16 *)(reg_a0 + 0x10) = 2;
+            EXPLOSION(reg_a0)->x = temp_a1;
+            EXPLOSION(reg_a0)->draw_layer = 4;
+            EXPLOSION(reg_a0)->debris = 0;
+            EXPLOSION(reg_a0)->debris_arg = 0;
+            EXPLOSION(reg_a0)->follows_scroll = 2;
             sfx_explosion_air_small();
             reg_d1.w = 0;
             reg_d0.w = 8;
@@ -1297,14 +1298,14 @@ void stage5_spiderling(void) {
             }
             reg_d0.h[0] = 1;
             explosion_spawn();
-            *(u16 *)(reg_a0 + 2) = (u16) ENTITY(reg_a6)->y.h;
+            EXPLOSION(reg_a0)->y = (u16) ENTITY(reg_a6)->y.h;
             temp_a0_2 = ENTITY(reg_a6)->x.h;
-            *(u16 *)(reg_a0 + 4) = temp_a0_2;
-            *(s16 *)(reg_a0 + 0x1E) = 0xC;
-            *(u8 *)(reg_a0 + 0x1B) = (u8) ENTITY(reg_a6)->move.b.speed;
+            EXPLOSION(reg_a0)->x = temp_a0_2;
+            EXPLOSION(reg_a0)->draw_layer = 0xC;
+            EXPLOSION(reg_a0)->move.b.speed = (u8) ENTITY(reg_a6)->move.b.speed;
             reg_d0.b[0] = ENTITY(reg_a6)->move.b.dir;
             reg_d0.b[0] *= 4;
-            *(u8 *)(reg_a0 + 0x1A) = (u8) reg_d0.b[0];
+            EXPLOSION(reg_a0)->move.b.dir = (u8) reg_d0.b[0];
             sfx_explosion_air_small();
             enemy_remove();
             return;

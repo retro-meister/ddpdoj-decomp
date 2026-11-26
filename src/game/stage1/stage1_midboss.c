@@ -1,5 +1,6 @@
 #include "common.h"
 #include "entity.h"
+#include "explosion.h"
 #include "enemy.h"
 #include "enemy_kinds.h"
 
@@ -154,13 +155,13 @@ void stage1_midboss_blow_up(arg1)
             reg_d0.w = 0xC;
             explosion_spawn();
             var_a0 = 2;
-            *(u16 *)(reg_a0 + 2) = (u16) MIDBOSS_ARM(reg_a4)->y.h;
+            EXPLOSION(reg_a0)->y = (u16) MIDBOSS_ARM(reg_a4)->y.h;
             var_a1 = MIDBOSS_ARM(reg_a4)->x.h;
-            *(u16 *)(reg_a0 + 4) = var_a1;
-            *(s16 *)(reg_a0 + 0x10) = 2;
-            *(s16 *)(reg_a0 + 0x1E) = 0xC;
-            *(s16 *)(reg_a0 + 0x12) = 0;
-            *(s16 *)(reg_a0 + 0x14) = 0;
+            EXPLOSION(reg_a0)->x = var_a1;
+            EXPLOSION(reg_a0)->follows_scroll = 2;
+            EXPLOSION(reg_a0)->draw_layer = 0xC;
+            EXPLOSION(reg_a0)->debris = 0;
+            EXPLOSION(reg_a0)->debris_arg = 0;
         }
         MIDBOSS_ARM(reg_a4)->blow_up = 1;
         reg_a4 += 0x40;
@@ -175,17 +176,17 @@ loop_5:
         reg_d0.h[0] = *(u16 *)reg_a4;
         reg_a4 += 2;
         explosion_spawn();
-        *(u16 *)(reg_a0 + 0x18) = (u16) reg_d1.h[0];
-        *(u16 *)(reg_a0 + 0x26) = (u16) *(u16 *)reg_a4;
+        EXPLOSION(reg_a0)->delay = (u16) reg_d1.h[0];
+        EXPLOSION(reg_a0)->start_y = (u16) *(u16 *)reg_a4;
         reg_a4 += 2;
-        *(u16 *)(reg_a0 + 0x28) = (u16) *(u16 *)reg_a4;
+        EXPLOSION(reg_a0)->start_x = (u16) *(u16 *)reg_a4;
         reg_a4 += 2;
-        *(u16 *)(reg_a0 + 2) = (u16) ENTITY(reg_a6)->y.h;
-        *(u16 *)(reg_a0 + 4) = (u16) ENTITY(reg_a6)->x.h;
-        *(s16 *)(reg_a0 + 0x10) = 2;
-        *(s16 *)(reg_a0 + 0x1E) = 0xC;
-        *(s16 *)(reg_a0 + 0x12) = 0;
-        *(s16 *)(reg_a0 + 0x14) = 0x800;
+        EXPLOSION(reg_a0)->y = (u16) ENTITY(reg_a6)->y.h;
+        EXPLOSION(reg_a0)->x = (u16) ENTITY(reg_a6)->x.h;
+        EXPLOSION(reg_a0)->follows_scroll = 2;
+        EXPLOSION(reg_a0)->draw_layer = 0xC;
+        EXPLOSION(reg_a0)->debris = 0;
+        EXPLOSION(reg_a0)->debris_arg = 0x800;
         goto loop_5;
     }
 }
@@ -554,12 +555,12 @@ block_27:
                             reg_d0.h[0] = 0x85;
                             explosion_spawn();
                             var_a0 = (u8 *)((void *)1);
-                            *(u16 *)(reg_a0 + 2) = (u16) MIDBOSS_ARM(reg_a4)->y.h;
-                            *(u16 *)(reg_a0 + 4) = (u16) MIDBOSS_ARM(reg_a4)->x.h;
-                            *(s16 *)(reg_a0 + 0x10) = 2;
-                            *(s16 *)(reg_a0 + 0x1E) = 0xC;
-                            *(s16 *)(reg_a0 + 0x12) = 1;
-                            *(s16 *)(reg_a0 + 0x14) = 0;
+                            EXPLOSION(reg_a0)->y = (u16) MIDBOSS_ARM(reg_a4)->y.h;
+                            EXPLOSION(reg_a0)->x = (u16) MIDBOSS_ARM(reg_a4)->x.h;
+                            EXPLOSION(reg_a0)->follows_scroll = 2;
+                            EXPLOSION(reg_a0)->draw_layer = 0xC;
+                            EXPLOSION(reg_a0)->debris = 1;
+                            EXPLOSION(reg_a0)->debris_arg = 0;
                             MIDBOSS_ARM(reg_a4)->flags.h = 0x8000U;
                         }
                     } else {

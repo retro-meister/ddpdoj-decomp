@@ -1,5 +1,6 @@
 #include "common.h"
 #include "entity.h"
+#include "explosion.h"
 #include "stage1_boss.h"
 
 void stage1_boss_right_hover_start(void);
@@ -408,18 +409,18 @@ loop_1:
         explosion_spawn();
         reg_d0.h[0] = *(u16 *)reg_a1;
         reg_a1 += 2;
-        *(u8 *)(reg_a0 + 0x1D) = (u8) reg_d0.b[0];
-        *(u16 *)(reg_a0 + 0x18) = (u16) reg_d1.h[0];
-        *(u16 *)(reg_a0 + 0x26) = (u16) *(u16 *)reg_a1;
+        EXPLOSION(reg_a0)->attr.b.flip = (u8) reg_d0.b[0];
+        EXPLOSION(reg_a0)->delay = (u16) reg_d1.h[0];
+        EXPLOSION(reg_a0)->start_y = (u16) *(u16 *)reg_a1;
         reg_a1 += 2;
-        *(u16 *)(reg_a0 + 0x28) = (u16) *(u16 *)reg_a1;
+        EXPLOSION(reg_a0)->start_x = (u16) *(u16 *)reg_a1;
         var_a2 = (u16 *)(reg_a1 + 2);
         reg_a1 = (u8 *)(var_a2);
-        *(u16 *)(reg_a0 + 2) = (u16) reg_d2.h[1];
-        *(u16 *)(reg_a0 + 4) = (u16) reg_d2.h[0];
-        *(s16 *)(reg_a0 + 0x1E) = 0xC;
-        *(s16 *)(reg_a0 + 0x12) = 0;
-        *(s16 *)(reg_a0 + 0x14) = 0;
+        EXPLOSION(reg_a0)->y = (u16) reg_d2.h[1];
+        EXPLOSION(reg_a0)->x = (u16) reg_d2.h[0];
+        EXPLOSION(reg_a0)->draw_layer = 0xC;
+        EXPLOSION(reg_a0)->debris = 0;
+        EXPLOSION(reg_a0)->debris_arg = 0;
         reg_d0.h[0] = *(u16 *)reg_a1;
         reg_a1 += 2;
         if (reg_d0.h[0] != 0) {
@@ -445,22 +446,22 @@ void stage1_boss_explosions_spawn(void) {
         explosion_spawn();
         reg_d0.h[0] = *(u16 *)reg_a1;
         reg_a1 += 2;
-        *(u8 *)(reg_a0 + 0x1D) = (u8) reg_d0.b[0];
-        *(u16 *)(reg_a0 + 0x18) = (u16) reg_d1.h[0];
-        *(u16 *)(reg_a0 + 0x26) = (u16) *(u16 *)reg_a1;
+        EXPLOSION(reg_a0)->attr.b.flip = (u8) reg_d0.b[0];
+        EXPLOSION(reg_a0)->delay = (u16) reg_d1.h[0];
+        EXPLOSION(reg_a0)->start_y = (u16) *(u16 *)reg_a1;
         reg_a1 += 2;
-        *(u16 *)(reg_a0 + 0x28) = (u16) *(u16 *)reg_a1;
+        EXPLOSION(reg_a0)->start_x = (u16) *(u16 *)reg_a1;
         temp_a2 = (u16 *)(reg_a1 + 2);
         reg_a1 = (u8 *)(temp_a2);
-        *(u16 *)(reg_a0 + 2) = (u16) reg_d2.h[1];
-        *(u16 *)(reg_a0 + 4) = (u16) reg_d2.h[0];
-        *(s16 *)(reg_a0 + 0x1E) = 4;
-        *(s16 *)(reg_a0 + 0x12) = 0;
-        *(s16 *)(reg_a0 + 0x14) = 0x400;
-        *(u16 *)(reg_a0 + 0x1A) = (u16) *(u16 *)reg_a1;
+        EXPLOSION(reg_a0)->y = (u16) reg_d2.h[1];
+        EXPLOSION(reg_a0)->x = (u16) reg_d2.h[0];
+        EXPLOSION(reg_a0)->draw_layer = 4;
+        EXPLOSION(reg_a0)->debris = 0;
+        EXPLOSION(reg_a0)->debris_arg = 0x400;
+        EXPLOSION(reg_a0)->move.h = (u16) *(u16 *)reg_a1;
         reg_a1 += 2;
         rng_next();
-        *(u8 *)(reg_a0 + 0x1A) += reg_d0.b[0];
+        EXPLOSION(reg_a0)->move.b.dir += reg_d0.b[0];
         stage1_boss_explosions_spawn();
     }
 }
@@ -557,16 +558,16 @@ void stage1_boss_left_wreck(void) {
             WRECK(reg_a4)->blast[2].t.count = (u8) WRECK(reg_a4)->blast[2].t.reload;
             reg_d0.w = 0x10;
             explosion_spawn();
-            *(s16 *)(reg_a0 + 0x1E) = 4;
-            *(s8 *)(reg_a0 + 0x1B) = 0x10;
+            EXPLOSION(reg_a0)->draw_layer = 4;
+            EXPLOSION(reg_a0)->move.b.speed = 0x10;
             rng_next();
-            *(u8 *)(reg_a0 + 0x1A) = (u8) reg_d0.b[0];
-            *(u16 *)(reg_a0 + 2) = (u16) ENTITY(reg_a6)[3].y.h;
+            EXPLOSION(reg_a0)->move.b.dir = (u8) reg_d0.b[0];
+            EXPLOSION(reg_a0)->y = (u16) ENTITY(reg_a6)[3].y.h;
             var_a1 = (u8 *)((void *) ENTITY(reg_a6)[3].x.h);
-            *(s16 *)(reg_a0 + 4) = (s16) var_a1;
+            EXPLOSION(reg_a0)->x = (s16) var_a1;
             reg_tmp.w = 0xFDFFFC00;
-            *(u16 *)(reg_a0 + 0x26) = (u16) reg_tmp.h[1];
-            *(u16 *)(reg_a0 + 0x28) = (u16) reg_tmp.h[0];
+            EXPLOSION(reg_a0)->start_y = (u16) reg_tmp.h[1];
+            EXPLOSION(reg_a0)->start_x = (u16) reg_tmp.h[0];
         }
     }
     if (WRECK(reg_a4)->blasts & 1) {
@@ -576,17 +577,17 @@ void stage1_boss_left_wreck(void) {
             WRECK(reg_a4)->blast[0].t.count = (u8) WRECK(reg_a4)->blast[0].t.reload;
             reg_d0.w = 0x10;
             explosion_spawn();
-            *(s16 *)(reg_a0 + 0x1E) = 4;
-            *(s8 *)(reg_a0 + 0x1B) = 0x10;
+            EXPLOSION(reg_a0)->draw_layer = 4;
+            EXPLOSION(reg_a0)->move.b.speed = 0x10;
             rng_next();
             reg_d0.b[0] += reg_d0.b[0];
-            *(u8 *)(reg_a0 + 0x1A) = (u8) reg_d0.b[0];
-            *(u16 *)(reg_a0 + 2) = (u16) ENTITY(reg_a6)[3].y.h;
+            EXPLOSION(reg_a0)->move.b.dir = (u8) reg_d0.b[0];
+            EXPLOSION(reg_a0)->y = (u16) ENTITY(reg_a6)[3].y.h;
             var_a1 = (u8 *)((void *) ENTITY(reg_a6)[3].x.h);
-            *(s16 *)(reg_a0 + 4) = (s16) var_a1;
+            EXPLOSION(reg_a0)->x = (s16) var_a1;
             reg_tmp.w = 0xF2000200;
-            *(u16 *)(reg_a0 + 0x26) = (u16) reg_tmp.h[1];
-            *(u16 *)(reg_a0 + 0x28) = (u16) reg_tmp.h[0];
+            EXPLOSION(reg_a0)->start_y = (u16) reg_tmp.h[1];
+            EXPLOSION(reg_a0)->start_x = (u16) reg_tmp.h[0];
         }
     }
     if (WRECK(reg_a4)->blasts & 2) {
@@ -596,17 +597,17 @@ void stage1_boss_left_wreck(void) {
             WRECK(reg_a4)->blast[1].t.count = (u8) WRECK(reg_a4)->blast[1].t.reload;
             reg_d0.w = 6;
             explosion_spawn();
-            *(s16 *)(reg_a0 + 0x1E) = 8;
-            *(s8 *)(reg_a0 + 0x1B) = 0xC;
+            EXPLOSION(reg_a0)->draw_layer = 8;
+            EXPLOSION(reg_a0)->move.b.speed = 0xC;
             rng_next();
             reg_d0.b[0] += reg_d0.b[0];
-            *(u8 *)(reg_a0 + 0x1A) = (u8) reg_d0.b[0];
-            *(u16 *)(reg_a0 + 2) = (u16) ENTITY(reg_a6)[3].y.h;
+            EXPLOSION(reg_a0)->move.b.dir = (u8) reg_d0.b[0];
+            EXPLOSION(reg_a0)->y = (u16) ENTITY(reg_a6)[3].y.h;
             var_a1 = (u8 *)((void *) ENTITY(reg_a6)[3].x.h);
-            *(s16 *)(reg_a0 + 4) = (s16) var_a1;
+            EXPLOSION(reg_a0)->x = (s16) var_a1;
             reg_tmp.w = 0xF5FFFC00;
-            *(u16 *)(reg_a0 + 0x26) = (u16) reg_tmp.h[1];
-            *(u16 *)(reg_a0 + 0x28) = (u16) reg_tmp.h[0];
+            EXPLOSION(reg_a0)->start_y = (u16) reg_tmp.h[1];
+            EXPLOSION(reg_a0)->start_x = (u16) reg_tmp.h[0];
         }
     }
     temp_a0 = WRECK(reg_a4)->step;
@@ -710,16 +711,16 @@ void stage1_boss_body_explode(void) {
             EXPLODE(reg_a4)->blast_b.t.count = (u8) EXPLODE(reg_a4)->blast_b.t.reload;
             reg_d0.w = 5;
             explosion_spawn();
-            *(s16 *)(reg_a0 + 0x1E) = 0xC;
-            *(s8 *)(reg_a0 + 0x1B) = 0x14;
+            EXPLOSION(reg_a0)->draw_layer = 0xC;
+            EXPLOSION(reg_a0)->move.b.speed = 0x14;
             rng_next();
-            *(u8 *)(reg_a0 + 0x1A) = (u8) reg_d0.b[0];
-            *(u16 *)(reg_a0 + 2) = (u16) ENTITY(reg_a6)->y.h;
+            EXPLOSION(reg_a0)->move.b.dir = (u8) reg_d0.b[0];
+            EXPLOSION(reg_a0)->y = (u16) ENTITY(reg_a6)->y.h;
             var_a1 = (u8 *)((void *) ENTITY(reg_a6)->x.h);
-            *(u16 *)(reg_a0 + 4) = (u16) var_a1;
+            EXPLOSION(reg_a0)->x = (u16) var_a1;
             reg_tmp.w = 0xF8000000;
-            *(u16 *)(reg_a0 + 0x26) = (u16) reg_tmp.h[1];
-            *(u16 *)(reg_a0 + 0x28) = (u16) reg_tmp.h[0];
+            EXPLOSION(reg_a0)->start_y = (u16) reg_tmp.h[1];
+            EXPLOSION(reg_a0)->start_x = (u16) reg_tmp.h[0];
         }
     }
     if (EXPLODE(reg_a4)->blasts & 1) {
@@ -729,28 +730,28 @@ void stage1_boss_body_explode(void) {
             EXPLODE(reg_a4)->blast.t.count = (u8) EXPLODE(reg_a4)->blast.t.reload;
             reg_d0.w = 0x10;
             explosion_spawn();
-            *(s16 *)(reg_a0 + 0x1E) = 0xC;
-            *(s8 *)(reg_a0 + 0x1B) = 0x18;
+            EXPLOSION(reg_a0)->draw_layer = 0xC;
+            EXPLOSION(reg_a0)->move.b.speed = 0x18;
             rng_next();
-            *(u8 *)(reg_a0 + 0x1A) = (u8) reg_d0.b[0];
-            *(u16 *)(reg_a0 + 2) = (u16) ENTITY(reg_a6)->y.h;
+            EXPLOSION(reg_a0)->move.b.dir = (u8) reg_d0.b[0];
+            EXPLOSION(reg_a0)->y = (u16) ENTITY(reg_a6)->y.h;
             temp_a1 = ENTITY(reg_a6)->x.h;
-            *(u16 *)(reg_a0 + 4) = temp_a1;
+            EXPLOSION(reg_a0)->x = temp_a1;
             reg_tmp.w = 0xE8000400;
-            *(u16 *)(reg_a0 + 0x26) = (u16) reg_tmp.h[1];
-            *(u16 *)(reg_a0 + 0x28) = (u16) reg_tmp.h[0];
+            EXPLOSION(reg_a0)->start_y = (u16) reg_tmp.h[1];
+            EXPLOSION(reg_a0)->start_x = (u16) reg_tmp.h[0];
             reg_d0.w = 0x10;
             explosion_spawn();
-            *(s16 *)(reg_a0 + 0x1E) = 0xC;
-            *(s8 *)(reg_a0 + 0x1B) = 0x14;
+            EXPLOSION(reg_a0)->draw_layer = 0xC;
+            EXPLOSION(reg_a0)->move.b.speed = 0x14;
             rng_next();
-            *(u8 *)(reg_a0 + 0x1A) = (u8) reg_d0.b[0];
-            *(u16 *)(reg_a0 + 2) = (u16) ENTITY(reg_a6)->y.h;
+            EXPLOSION(reg_a0)->move.b.dir = (u8) reg_d0.b[0];
+            EXPLOSION(reg_a0)->y = (u16) ENTITY(reg_a6)->y.h;
             var_a1 = (u8 *)((void *) ENTITY(reg_a6)->x.h);
-            *(u16 *)(reg_a0 + 4) = (u16) var_a1;
+            EXPLOSION(reg_a0)->x = (u16) var_a1;
             reg_tmp.w = 0xF3FFF800;
-            *(u16 *)(reg_a0 + 0x26) = (u16) reg_tmp.h[1];
-            *(u16 *)(reg_a0 + 0x28) = (u16) reg_tmp.h[0];
+            EXPLOSION(reg_a0)->start_y = (u16) reg_tmp.h[1];
+            EXPLOSION(reg_a0)->start_x = (u16) reg_tmp.h[0];
         }
     }
     temp_a0_2 = EXPLODE(reg_a4)->step;
@@ -834,18 +835,18 @@ void stage1_boss_body_explode(void) {
             explosion_spawn();
             reg_d0.h[0] = *(u16 *)reg_a1;
             reg_a1 += 2;
-            *(u8 *)(reg_a0 + 0x1D) = (u8) reg_d0.b[0];
-            *(u16 *)(reg_a0 + 0x26) = (u16) *(u16 *)reg_a1;
+            EXPLOSION(reg_a0)->attr.b.flip = (u8) reg_d0.b[0];
+            EXPLOSION(reg_a0)->start_y = (u16) *(u16 *)reg_a1;
             reg_a1 += 2;
-            *(u16 *)(reg_a0 + 0x28) = (u16) *(u16 *)reg_a1;
+            EXPLOSION(reg_a0)->start_x = (u16) *(u16 *)reg_a1;
             reg_a1 += 2;
-            *(u16 *)(reg_a0 + 2) = (u16) ENTITY(reg_a6)->y.h;
+            EXPLOSION(reg_a0)->y = (u16) ENTITY(reg_a6)->y.h;
             temp_a3 = ENTITY(reg_a6)->x.h;
-            *(u16 *)(reg_a0 + 4) = temp_a3;
-            *(s16 *)(reg_a0 + 0x1E) = 0xC;
-            *(s16 *)(reg_a0 + 0x12) = 0;
-            *(s16 *)(reg_a0 + 0x14) = 0x800;
-            *(u16 *)(reg_a0 + 0x1A) = *(u16 *)reg_a1;
+            EXPLOSION(reg_a0)->x = temp_a3;
+            EXPLOSION(reg_a0)->draw_layer = 0xC;
+            EXPLOSION(reg_a0)->debris = 0;
+            EXPLOSION(reg_a0)->debris_arg = 0x800;
+            EXPLOSION(reg_a0)->move.h = *(u16 *)reg_a1;
             reg_a1 += 2;
             EXPLODE(reg_a4)->chain_position += 0x10;
             if (EXPLODE(reg_a4)->chain_position == 0x100) {
@@ -885,19 +886,19 @@ void stage1_boss_body_explode(void) {
                 explosion_spawn();
                 reg_d0.h[0] = *(u16 *)reg_a1;
                 reg_a1 += 2;
-                *(u8 *)(reg_a0 + 0x1D) = (u8) reg_d0.b[0];
-                *(u16 *)(reg_a0 + 0x26) = (u16) *(u16 *)reg_a1;
+                EXPLOSION(reg_a0)->attr.b.flip = (u8) reg_d0.b[0];
+                EXPLOSION(reg_a0)->start_y = (u16) *(u16 *)reg_a1;
                 reg_a1 += 2;
-                *(u16 *)(reg_a0 + 0x28) = (u16) *(u16 *)reg_a1;
+                EXPLOSION(reg_a0)->start_x = (u16) *(u16 *)reg_a1;
                 temp_a3_2 = (u16 *)(reg_a1 + 2);
                 reg_a1 = (u8 *)(temp_a3_2);
-                *(u16 *)(reg_a0 + 2) = (u16) ENTITY(reg_a6)->y.h;
+                EXPLOSION(reg_a0)->y = (u16) ENTITY(reg_a6)->y.h;
                 temp_a2 = ENTITY(reg_a6)->x.h;
-                *(u16 *)(reg_a0 + 4) = temp_a2;
-                *(s16 *)(reg_a0 + 0x1E) = 0xC;
-                *(s16 *)(reg_a0 + 0x12) = 0;
-                *(s16 *)(reg_a0 + 0x14) = 0x800;
-                *(u16 *)(reg_a0 + 0x1A) = *(u16 *)reg_a1;
+                EXPLOSION(reg_a0)->x = temp_a2;
+                EXPLOSION(reg_a0)->draw_layer = 0xC;
+                EXPLOSION(reg_a0)->debris = 0;
+                EXPLOSION(reg_a0)->debris_arg = 0x800;
+                EXPLOSION(reg_a0)->move.h = *(u16 *)reg_a1;
                 reg_a1 += 2;
                 EXPLODE(reg_a4)->toggle += 1;
                 EXPLODE(reg_a4)->toggle &= 1;

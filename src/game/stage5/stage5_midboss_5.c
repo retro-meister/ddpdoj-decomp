@@ -1,6 +1,7 @@
 #include "common.h"
 #include "player.h"
 #include "entity.h"
+#include "explosion.h"
 #include "enemy.h"
 #include "enemy_kinds.h"
 #include "stage5_midboss.h"
@@ -1347,21 +1348,21 @@ void stage5_midboss5_dying(void) {
                 explosion_spawn();
                 reg_d0.h[0] = *(u16 *)reg_a1;
                 reg_a1 += 2;
-                *(u8 *)(reg_a0 + 0x1D) = (u8) reg_d0.b[0];
-                *(u16 *)(reg_a0 + 0x18) = (u16) reg_d1.h[0];
-                *(u16 *)(reg_a0 + 0x26) = (u16) *(u16 *)reg_a1;
+                EXPLOSION(reg_a0)->attr.b.flip = (u8) reg_d0.b[0];
+                EXPLOSION(reg_a0)->delay = (u16) reg_d1.h[0];
+                EXPLOSION(reg_a0)->start_y = (u16) *(u16 *)reg_a1;
                 reg_a1 += 2;
-                *(u16 *)(reg_a0 + 0x28) = (u16) *(u16 *)reg_a1;
+                EXPLOSION(reg_a0)->start_x = (u16) *(u16 *)reg_a1;
                 reg_a1 += 2;
-                *(u16 *)(reg_a0 + 2) = (u16) ENTITY(reg_a6)->y.h;
-                *(u16 *)(reg_a0 + 4) = (u16) ENTITY(reg_a6)->x.h;
-                *(s16 *)(reg_a0 + 0x1E) = 0x10;
-                *(s16 *)(reg_a0 + 0x12) = 0;
-                *(s16 *)(reg_a0 + 0x14) = 0;
-                *(u8 *)(reg_a0 + 0x1B) = (u8) ENTITY(reg_a6)->move.b.speed;
+                EXPLOSION(reg_a0)->y = (u16) ENTITY(reg_a6)->y.h;
+                EXPLOSION(reg_a0)->x = (u16) ENTITY(reg_a6)->x.h;
+                EXPLOSION(reg_a0)->draw_layer = 0x10;
+                EXPLOSION(reg_a0)->debris = 0;
+                EXPLOSION(reg_a0)->debris_arg = 0;
+                EXPLOSION(reg_a0)->move.b.speed = (u8) ENTITY(reg_a6)->move.b.speed;
                 reg_d0.b[0] = ENTITY(reg_a6)->move.b.dir;
                 reg_d0.b[0] *= 4;
-                *(u8 *)(reg_a0 + 0x1A) = (u8) reg_d0.b[0];
+                EXPLOSION(reg_a0)->move.b.dir = (u8) reg_d0.b[0];
                 STAGE5_MIDBOSS5_DAMAGE(reg_a6)->blast += 0xC;
                 if (STAGE5_MIDBOSS5_DAMAGE(reg_a6)->blast == 0x48) {
                     STAGE5_MIDBOSS5_DAMAGE(reg_a6)->blast = 0U;
@@ -1612,10 +1613,10 @@ void stage5_midboss5_missile_explode(void) {
 
     reg_d0.h[0] = 4;
     explosion_spawn();
-    *(u16 *)(reg_a0 + 2) = (u16) ENTITY(reg_a6)->y.h;
+    EXPLOSION(reg_a0)->y = (u16) ENTITY(reg_a6)->y.h;
     temp_a0 = ENTITY(reg_a6)->x.h;
-    *(u16 *)(reg_a0 + 4) = temp_a0;
-    *(s16 *)(reg_a0 + 0x1E) = 0x10;
+    EXPLOSION(reg_a0)->x = temp_a0;
+    EXPLOSION(reg_a0)->draw_layer = 0x10;
     enemy_remove(temp_a0);
 }
 
@@ -1769,9 +1770,9 @@ void stage5_midboss5_drone(void) {
 explode:
     reg_d0.h[0] = 0x14;
     explosion_spawn();
-    *(u16 *)(reg_a0 + 2) = ENTITY(reg_a6)->y.h;
-    *(u16 *)(reg_a0 + 4) = ENTITY(reg_a6)->x.h;
-    *(s16 *)(reg_a0 + 0x1E) = 0x10;
+    EXPLOSION(reg_a0)->y = ENTITY(reg_a6)->y.h;
+    EXPLOSION(reg_a0)->x = ENTITY(reg_a6)->x.h;
+    EXPLOSION(reg_a0)->draw_layer = 0x10;
     sfx_explosion_ground_medium();
     enemy_remove();
     return;
@@ -2035,9 +2036,9 @@ move:
 explode:
     reg_d0.h[0] = 0x14;
     explosion_spawn();
-    *(u16 *)(reg_a0 + 2) = ENTITY(reg_a6)->y.h;
-    *(u16 *)(reg_a0 + 4) = ENTITY(reg_a6)->x.h;
-    *(s16 *)(reg_a0 + 0x1E) = 0x10;
+    EXPLOSION(reg_a0)->y = ENTITY(reg_a6)->y.h;
+    EXPLOSION(reg_a0)->x = ENTITY(reg_a6)->x.h;
+    EXPLOSION(reg_a0)->draw_layer = 0x10;
     sfx_explosion_ground_medium();
     enemy_remove();
     return;

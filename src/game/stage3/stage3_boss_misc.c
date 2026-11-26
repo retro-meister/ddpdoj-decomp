@@ -1,5 +1,6 @@
 #include "common.h"
 #include "entity.h"
+#include "explosion.h"
 #include "enemy.h"
 #include "stage3_boss.h"
 
@@ -261,37 +262,37 @@ next_690:
 block_dead:
     reg_d0.h[0] = 0xA;
     explosion_spawn();
-    *(u16 *)(reg_a0 + 2) = (u16) ENTITY(reg_a6)->y.h;
-    *(u16 *)(reg_a0 + 4) = (u16) ENTITY(reg_a6)->x.h;
-    *(s16 *)(reg_a0 + 0x1E) = 0xC;
-    *(s16 *)(reg_a0 + 0x12) = 0;
-    *(s16 *)(reg_a0 + 0x14) = 0x400;
-    *(u16 *)(reg_a0 + 0x1A) = ENTITY(reg_a6)->move.h;
-    *(s16 *)(reg_a0 + 0x26) = 0x600;
-    *(s16 *)(reg_a0 + 0x28) = 0;
-    *(s16 *)(reg_a0 + 0x18) = 4;
+    EXPLOSION(reg_a0)->y = (u16) ENTITY(reg_a6)->y.h;
+    EXPLOSION(reg_a0)->x = (u16) ENTITY(reg_a6)->x.h;
+    EXPLOSION(reg_a0)->draw_layer = 0xC;
+    EXPLOSION(reg_a0)->debris = 0;
+    EXPLOSION(reg_a0)->debris_arg = 0x400;
+    EXPLOSION(reg_a0)->move.h = ENTITY(reg_a6)->move.h;
+    EXPLOSION(reg_a0)->start_y = 0x600;
+    EXPLOSION(reg_a0)->start_x = 0;
+    EXPLOSION(reg_a0)->delay = 4;
     reg_d0.h[0] = 0xA;
     explosion_spawn();
-    *(u16 *)(reg_a0 + 2) = (u16) ENTITY(reg_a6)->y.h;
-    *(u16 *)(reg_a0 + 4) = ENTITY(reg_a6)->x.h;
-    *(s16 *)(reg_a0 + 0x1E) = 0xC;
-    *(s16 *)(reg_a0 + 0x12) = 0;
-    *(s16 *)(reg_a0 + 0x14) = 0x400;
-    *(u16 *)(reg_a0 + 0x1A) = ENTITY(reg_a6)->move.h;
-    *(s16 *)(reg_a0 + 0x26) = 0;
-    *(s16 *)(reg_a0 + 0x28) = 0;
-    *(s16 *)(reg_a0 + 0x18) = 2;
+    EXPLOSION(reg_a0)->y = (u16) ENTITY(reg_a6)->y.h;
+    EXPLOSION(reg_a0)->x = ENTITY(reg_a6)->x.h;
+    EXPLOSION(reg_a0)->draw_layer = 0xC;
+    EXPLOSION(reg_a0)->debris = 0;
+    EXPLOSION(reg_a0)->debris_arg = 0x400;
+    EXPLOSION(reg_a0)->move.h = ENTITY(reg_a6)->move.h;
+    EXPLOSION(reg_a0)->start_y = 0;
+    EXPLOSION(reg_a0)->start_x = 0;
+    EXPLOSION(reg_a0)->delay = 2;
     reg_d0.h[0] = 0xA;
     explosion_spawn();
-    *(u16 *)(reg_a0 + 2) = (u16) ENTITY(reg_a6)->y.h;
-    *(u16 *)(reg_a0 + 4) = ENTITY(reg_a6)->x.h;
-    *(s16 *)(reg_a0 + 0x1E) = 0xC;
-    *(s16 *)(reg_a0 + 0x12) = 0;
-    *(s16 *)(reg_a0 + 0x14) = 0x400;
-    *(u16 *)(reg_a0 + 0x1A) = ENTITY(reg_a6)->move.h;
-    *(u16 *)(reg_a0 + 0x26) = 0xFA00;
-    *(s16 *)(reg_a0 + 0x28) = 0;
-    *(s16 *)(reg_a0 + 0x18) = 0;
+    EXPLOSION(reg_a0)->y = (u16) ENTITY(reg_a6)->y.h;
+    EXPLOSION(reg_a0)->x = ENTITY(reg_a6)->x.h;
+    EXPLOSION(reg_a0)->draw_layer = 0xC;
+    EXPLOSION(reg_a0)->debris = 0;
+    EXPLOSION(reg_a0)->debris_arg = 0x400;
+    EXPLOSION(reg_a0)->move.h = ENTITY(reg_a6)->move.h;
+    EXPLOSION(reg_a0)->start_y = 0xFA00;
+    EXPLOSION(reg_a0)->start_x = 0;
+    EXPLOSION(reg_a0)->delay = 0;
     sfx_explosion_air_large();
     enemy_remove();
 }

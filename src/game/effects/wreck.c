@@ -95,7 +95,7 @@ extern u16 D_00299780[];
 extern u16 D_00299D30_as_u16_a[];
 extern u16 D_0029A12C_as_u16_a[];
 extern u16 D_0029A530[];
-extern u16 D_0029AA40_as_u16_a[];
+extern u16 g_explosions_as_u16_a[];
 extern u16 g_bomb_entities[];
 extern u16 D_0029D710_as_u16_a[];
 extern u16 D_0029D730_as_u16_a[];
@@ -248,7 +248,7 @@ void func_0020F550(void) {
     STORE_POINTER(D_0026A1C6, D_002BB470_as_u16_a);
     STORE_POINTER(D_0026A1E6, D_0029A530);
     STORE_POINTER(D_0026A206, D_00299764);
-    STORE_POINTER(D_0026A226, D_0029AA40_as_u16_a);
+    STORE_POINTER(D_0026A226, g_explosions_as_u16_a);
     STORE_POINTER(D_0026A246, D_00299780);
     STORE_POINTER(D_0026A268, D_00274040);
     STORE_POINTER(D_0026A278, D_00274840);

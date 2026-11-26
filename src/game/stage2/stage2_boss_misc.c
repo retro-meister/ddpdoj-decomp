@@ -1,5 +1,6 @@
 #include "common.h"
 #include "entity.h"
+#include "explosion.h"
 #include "stage2_boss.h"
 
 void stage2_boss_shoulder_bullet_first(void) {
@@ -194,9 +195,9 @@ block_4:
         STAGE2_SHOT(reg_a5)->smoke_timer.b.countdown = (u8) STAGE2_SHOT(reg_a5)->smoke_timer.b.interval;
         reg_d0.h[0] = 6;
         explosion_spawn();
-        *(u16 *)(reg_a0 + 2) = (u16) ENTITY(reg_a6)->y.h;
-        *(u16 *)(reg_a0 + 4) = (u16) ENTITY(reg_a6)->x.h;
-        *(s16 *)(reg_a0 + 0x1E) = 0x10;
+        EXPLOSION(reg_a0)->y = (u16) ENTITY(reg_a6)->y.h;
+        EXPLOSION(reg_a0)->x = (u16) ENTITY(reg_a6)->x.h;
+        EXPLOSION(reg_a0)->draw_layer = 0x10;
     }
     reg_tmp.b[0] = STAGE2_SHOT(reg_a5)->shot_timer.b.countdown;
     STAGE2_SHOT(reg_a5)->shot_timer.b.countdown -= 1;
@@ -256,10 +257,10 @@ void stage2_boss_dropped_bomb(void) {
 
     reg_d0.h[0] = 3;
     explosion_spawn();
-    *(u16 *)(reg_a0 + 2) = (u16) ENTITY(reg_a6)->y.h;
+    EXPLOSION(reg_a0)->y = (u16) ENTITY(reg_a6)->y.h;
     temp_a0 = ENTITY(reg_a6)->x.h;
-    *(u16 *)(reg_a0 + 4) = temp_a0;
-    *(s16 *)(reg_a0 + 0x1E) = 0x10;
+    EXPLOSION(reg_a0)->x = temp_a0;
+    EXPLOSION(reg_a0)->draw_layer = 0x10;
     enemy_remove(temp_a0);
 }
 
