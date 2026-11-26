@@ -403,8 +403,15 @@ void p2_laser_draw_alternating(void) {
     }
 }
 
+#ifdef DDPDOJ_PC
+typedef uintptr_t LaserRegisterAddress;
+extern Fn p1_laser_part_routines[20];
+extern Fn p2_laser_part_routines[20];
+#else
+typedef u32 LaserRegisterAddress;
 extern u8 p1_laser_part_routines[];
 extern u8 p2_laser_part_routines[];
+#endif
 extern u16 g_player_laser_count;
 extern u16 g_hyper_hit_scratch;
 extern u16 g_p2_hyper_active;
@@ -415,8 +422,11 @@ extern s16 g_player2[];
 extern s16 g_player1[];
 
 void player_lasers_update(void) {
-    s32 temp_s0;
-    temp_s0 = (s32)reg_a5;
+#ifdef DDPDOJ_PC
+    u8 *temp_s0 = reg_a5;
+#else
+    s32 temp_s0 = (s32)reg_a5;
+#endif
     g_hyper_hit_scratch = 0;
     g_player_laser_count = 0;
     if (g_player1[0] < 0) {
@@ -429,7 +439,11 @@ void player_lasers_update(void) {
                 reg_d1.w = 0x1F;
                 g_player_laser_count += 1;
                 reg_d1.h[0] &= reg_d0.h[0];
+#ifdef DDPDOJ_PC
+                p1_laser_part_routines[reg_d1.h[0]]();
+#else
                 ((Fn)*(u32 *)((u8 *)p1_laser_part_routines + (reg_d1.h[0] * 4)))();
+#endif
             }
             reg_a6 += 0x30;
         } while ((s16)(--reg_d7.h[0]) >= 0);
@@ -444,7 +458,11 @@ void player_lasers_update(void) {
                 reg_d1.w = 0x1F;
                 g_player_laser_count += 1;
                 reg_d1.h[0] &= reg_d0.h[0];
+#ifdef DDPDOJ_PC
+                p2_laser_part_routines[reg_d1.h[0]]();
+#else
                 ((Fn)*(u32 *)((u8 *)p2_laser_part_routines + (reg_d1.h[0] * 4)))();
+#endif
             }
             reg_a6 += 0x30;
         } while ((s16)(--reg_d7.h[0]) >= 0);
@@ -574,7 +592,7 @@ void laser_front_update() {
     reg_d0.h[0] = *(u16 *)(reg_a6 + 0x24);
     reg_tmp.h[1] = ENTITY(reg_a6)->misc.h;
     reg_tmp.h[0] = *(u16 *)(reg_a6 + 0x20);
-    reg_a2 = (u8 *)reg_tmp.w;
+    reg_a2 = ARCADE_ADDRESS_DECODE(u8 *, reg_tmp.w);
     ENTITY(reg_a6)->draw.h = (reg_d0.h[0] != 0) ? *(u16 *)(reg_a2 + ((s16)reg_d0.h[0] & ~1)) : *(u16 *)reg_a2;
     ENTITY(reg_a6)->sprite.h = ((reg_d0.h[0] + 2) != 0) ? *(u16 *)(reg_a2 + ((s16)(reg_d0.h[0] + 2) & ~1)) : *(u16 *)reg_a2;
     reg_tmp.h[0] = *(u16 *)(reg_a6 + 0x24);
@@ -626,9 +644,9 @@ void p1_laser_muzzle_a(void)
 {
     extern void sfx_p1_laser_a_start(void);
   unsigned int highWord = D_0029F182[0];
-  reg_a4 = (u8 *)((u32) ((u16 *)g_p1_options));
+  reg_a4 = (u8 *)((LaserRegisterAddress) ((u16 *)g_p1_options));
   reg_d0.h[0] = D_0029F184[0];
-  reg_a3 = (u8 *)((u32) (&sfx_p1_laser_a_start));
+  reg_a3 = (u8 *)((LaserRegisterAddress) (&sfx_p1_laser_a_start));
   reg_d0.h[1] = highWord;
   laser_muzzle_update(highWord);
 }
@@ -636,9 +654,9 @@ void p1_laser_muzzle_a(void)
 void p1_laser_muzzle_b(void) {
     extern void sfx_p1_laser_b_start(void);
     unsigned int highWord = D_0029F182[0];
-    reg_a4 = (u8 *)((u32)((u16 *)g_p1_options));
+    reg_a4 = (u8 *)((LaserRegisterAddress)((u16 *)g_p1_options));
     reg_d0.h[0] = D_0029F184[0];
-    reg_a3 = (u8 *)((u32)(&sfx_p1_laser_b_start));
+    reg_a3 = (u8 *)((LaserRegisterAddress)(&sfx_p1_laser_b_start));
     reg_d0.h[1] = highWord;
     laser_muzzle_update(highWord);
 }
@@ -651,9 +669,9 @@ void p2_laser_muzzle_a(void)
     extern void sfx_p2_laser_a_start(void);
   u16 highWord = D_0029F112[0];
   reg_d0.h[1] = highWord;
-  reg_a4 = (u8 *)((u32) ((u16 *)g_p2_options));
+  reg_a4 = (u8 *)((LaserRegisterAddress) ((u16 *)g_p2_options));
   reg_d0.h[0] = D_0029F114[0];
-  reg_a3 = (u8 *)((u32) sfx_p2_laser_a_start);
+  reg_a3 = (u8 *)((LaserRegisterAddress) sfx_p2_laser_a_start);
   reg_d0.h[0] = D_0029F114[0];
   laser_muzzle_update(highWord);
 }
@@ -661,9 +679,9 @@ void p2_laser_muzzle_a(void)
 void p2_laser_muzzle_b(void) {
     extern void sfx_p2_laser_b_start(void);
     unsigned int highWord = D_0029F112[0];
-    reg_a4 = (u8 *)((u32)((u16 *)g_p2_options));
+    reg_a4 = (u8 *)((LaserRegisterAddress)((u16 *)g_p2_options));
     reg_d0.h[0] = D_0029F114[0];
-    reg_a3 = (u8 *)((u32)(&sfx_p2_laser_b_start));
+    reg_a3 = (u8 *)((LaserRegisterAddress)(&sfx_p2_laser_b_start));
     reg_d0.h[1] = highWord;
     laser_muzzle_update(highWord);
 }
@@ -677,7 +695,7 @@ void laser_muzzle_update() {
     ENTITY(reg_a6)->x.h = (u16) reg_d0.h[0];
     reg_tmp.h[1] = ENTITY(reg_a6)->misc.h;
     reg_tmp.h[0] = *(u16 *)(reg_a6 + 0x20);
-    reg_a0 = (u8 *)(reg_tmp.w);
+    reg_a0 = ARCADE_ADDRESS_DECODE(u8 *, reg_tmp.w);
     *(u16 *)(reg_a6 + 0x22) = (u16) *(u16 *)reg_a0;
     reg_a0 += 2;
     temp_v1 = (s64) ((s64) *(u16 *)(reg_a6 + 0x22) << 0x30) >> 0x30;
@@ -707,7 +725,7 @@ block_9:
     reg_a0 += 2;
     ENTITY(reg_a6)->sprite.h = (u16) *(u16 *)reg_a0;
     reg_a0 += 2;
-    reg_tmp.w = (u32)reg_a0;
+    reg_tmp.w = ARCADE_ADDRESS_ENCODE(reg_a0);
     ENTITY(reg_a6)->misc.h = (u16) reg_tmp.h[1];
     *(u16 *)(reg_a6 + 0x20) = (u16) reg_tmp.h[0];
     reg_d0.h[0] = *(u16 *)(reg_a6 + 0x26);
@@ -739,9 +757,9 @@ extern void sfx_p1_laser_hyper_start(void);
 
 void p1_laser_muzzle_hyper(void) {
     unsigned int highWord = D_0029F182[0];
-    reg_a4 = (u8 *)((u32)((u16 *)g_p1_options));
+    reg_a4 = (u8 *)((LaserRegisterAddress)((u16 *)g_p1_options));
     reg_d0.h[0] = D_0029F184[0];
-    reg_a3 = (u8 *)((u32)(&sfx_p1_laser_hyper_start));
+    reg_a3 = (u8 *)((LaserRegisterAddress)(&sfx_p1_laser_hyper_start));
     reg_d0.h[1] = highWord;
     ARCADE_REGISTER_CALL(laser_muzzle_update_strong, highWord);
 }
@@ -768,9 +786,9 @@ extern void sfx_p2_laser_hyper_start(void);
 
 void p2_laser_muzzle_hyper(void) {
     unsigned int highWord = D_0029F112[0];
-    reg_a4 = (u8 *)((u32)((u16 *)g_p2_options));
+    reg_a4 = (u8 *)((LaserRegisterAddress)((u16 *)g_p2_options));
     reg_d0.h[0] = D_0029F114[0];
-    reg_a3 = (u8 *)((u32)(&sfx_p2_laser_hyper_start));
+    reg_a3 = (u8 *)((LaserRegisterAddress)(&sfx_p2_laser_hyper_start));
     reg_d0.h[1] = highWord;
     ARCADE_REGISTER_CALL(laser_muzzle_update_strong, highWord);
 }
@@ -783,7 +801,7 @@ void laser_muzzle_update_strong() {
     ENTITY(reg_a6)->x.h = (u16) reg_d0.h[0];
     reg_tmp.h[1] = ENTITY(reg_a6)->misc.h;
     reg_tmp.h[0] = *(u16 *)(reg_a6 + 0x20);
-    reg_a0 = (u8 *)(reg_tmp.w);
+    reg_a0 = ARCADE_ADDRESS_DECODE(u8 *, reg_tmp.w);
     *(u16 *)(reg_a6 + 0x22) = (u16) *(u16 *)reg_a0;
     reg_a0 += 2;
     temp_v1 = (s64) ((s64) *(u16 *)(reg_a6 + 0x22) << 0x30) >> 0x30;
@@ -813,7 +831,7 @@ block_9:
     reg_a0 += 2;
     ENTITY(reg_a6)->sprite.h = (u16) *(u16 *)reg_a0;
     reg_a0 += 2;
-    reg_tmp.w = (u32)reg_a0;
+    reg_tmp.w = ARCADE_ADDRESS_ENCODE(reg_a0);
     ENTITY(reg_a6)->misc.h = (u16) reg_tmp.h[1];
     *(u16 *)(reg_a6 + 0x20) = (u16) reg_tmp.h[0];
     reg_d0.h[0] = *(u16 *)(reg_a6 + 0x26);
@@ -874,7 +892,7 @@ void laser_ship_glow_update(void) {
         reg_d0.h[0] = *(u16 *)(reg_a6 + 0x24);
         reg_tmp.h[1] = ENTITY(reg_a6)->misc.h;
         reg_tmp.h[0] = *(u16 *)(reg_a6 + 0x20);
-        reg_a0 = (u8 *)(reg_tmp.w);
+        reg_a0 = ARCADE_ADDRESS_DECODE(u8 *, reg_tmp.w);
         ENTITY(reg_a6)->draw.h = (reg_d0.h[0] != 0) ? *(u16 *)((u8 *)reg_a0 + ((s16)reg_d0.h[0] & ~1)) : *(u16 *)reg_a0;
         ENTITY(reg_a6)->sprite.h = ((reg_d0.h[0] + 2) != 0) ? *(u16 *)((u8 *)reg_a0 + ((s16)(reg_d0.h[0] + 2) & ~1)) : *(u16 *)reg_a0;
         reg_tmp.h[0] = *(u16 *)(reg_a6 + 0x24);
@@ -945,10 +963,10 @@ void laser_option_glow_update() {
     reg_d1.h[0] *= 2;
     reg_tmp.h[1] = *(u16 *) (reg_a6 + 0x1E);
     reg_tmp.h[0] = *(u16 *) (reg_a6 + 0x20);
-    reg_a0 = (u8 *) reg_tmp.w;
+    reg_a0 = ARCADE_ADDRESS_DECODE(u8 *, reg_tmp.w);
     reg_tmp.h[1] = (reg_d1.h[0]) ? *(u16 *) (reg_a0 + ((s16) reg_d1.h[0] & ~1)) : *(u16 *) reg_a0;
     reg_tmp.h[0] = ((u16) reg_d1.h[0] + 2) ? *(u16 *) (reg_a0 + ((s16) ((u16) reg_d1.h[0] + 2) & ~1)) : *(u16 *) reg_a0;
-    reg_a0 = (u8 *) reg_tmp.w;
+    reg_a0 = ARCADE_ADDRESS_DECODE(u8 *, reg_tmp.w);
     *(u16 *) (reg_a6 + 0x2A) = *(u16 *) reg_a0;
     reg_a0 += 2;
     *(u16 *) (reg_a6 + 0x2C) = *(u16 *) reg_a0;
@@ -969,7 +987,7 @@ next_1:
     reg_d0.h[0] = *(u16 *) (reg_a6 + 0x24);
     reg_tmp.h[1] = *(u16 *) (reg_a6 + 0x2A);
     reg_tmp.h[0] = *(u16 *) (reg_a6 + 0x2C);
-    reg_a0 = (u8 *) reg_tmp.w;
+    reg_a0 = ARCADE_ADDRESS_DECODE(u8 *, reg_tmp.w);
     *(u16 *) (reg_a6 + 0xA) = (reg_d0.h[0]) ? *(u16 *) (reg_a0 + ((s16) reg_d0.h[0] & ~1)) : *(u16 *) reg_a0;
     *(u16 *) (reg_a6 + 0xC) = (reg_d0.h[0] + 2) ? *(u16 *) (reg_a0 + ((s16) (reg_d0.h[0] + 2) & ~1)) : *(u16 *) reg_a0;
     reg_tmp.h[0] = *(u16 *) (reg_a6 + 0x24);
@@ -1041,7 +1059,7 @@ void laser_segment_move_hyper() {
 void laser_parts_spawn(void) {
     reg_tmp.h[1] = *(u16 *)(reg_a6 + 0x28);
     reg_tmp.h[0] = *(u16 *)(reg_a6 + 0x2A);
-    reg_a1 = (u8 *)(reg_tmp.w);
+    reg_a1 = ARCADE_ADDRESS_DECODE(u8 *, reg_tmp.w);
     *(u16 *)reg_a3 = (u16) *(u16 *)reg_a1;
     reg_a1 += 2;
     reg_a3 += 2;
@@ -1143,7 +1161,7 @@ void laser_segment_spawn(void) {
     }
     reg_tmp.h[1] = *(u16 *)(reg_a6 + 0x2C);
     reg_tmp.h[0] = *(u16 *)(reg_a6 + 0x2E);
-    reg_a1 = (u8 *)(reg_tmp.w);
+    reg_a1 = ARCADE_ADDRESS_DECODE(u8 *, reg_tmp.w);
     *(u16 *)reg_a2 = (u16) *(u16 *)reg_a1;
     reg_a1 += 2;
     reg_d1.h[1] = *(u16 *)(reg_a5 + 2);
@@ -1165,7 +1183,7 @@ void laser_segment_spawn(void) {
     reg_a1 += 2;
     var_a0 = *(u16 *)reg_a1;
     *(u16 *)(reg_a2 + 0xC) = var_a0;
-    reg_a1 = (u8 *)((u32) laser_segment_spawn_table);
+    reg_a1 = (u8 *)((LaserRegisterAddress) laser_segment_spawn_table);
     reg_d0.h[0] = *(u16 *)(reg_a5 + 0x22);
     if (*(u8 *)reg_a5 & 1) {
         reg_d0.h[0] += 0x3C;
@@ -1302,8 +1320,8 @@ s32 sparks_spawn_for_laser_second_half();
 void laser_impacts_update(void) {
     u16 temp_a2;
     u16 temp_a2_2;
-    u32 temp_a1;
-    u32 temp_a1_2;
+    LaserRegisterAddress temp_a1;
+    LaserRegisterAddress temp_a1_2;
 
     reg_a6 = (u8 *)D_0029D730;
     if (ENTITY(reg_a6)->flags.sh < 0) {
@@ -1320,7 +1338,7 @@ void laser_impacts_update(void) {
         reg_a1 = (u8 *)(reg_a6 + 2);
         reg_tmp.h[1] = ENTITY(reg_a6)->hit_y_minus.h;
         reg_tmp.h[0] = ENTITY(reg_a6)->hit_x_plus.h;
-        reg_a0 = (u8 *)(reg_tmp.w);
+        reg_a0 = ARCADE_ADDRESS_DECODE(u8 *, reg_tmp.w);
         temp_a2 = ENTITY(reg_a6)->hit_y_plus.h;
         reg_a0 += temp_a2;
         *(u16 *)reg_a1 = reg_d0.h[0];
@@ -1340,7 +1358,7 @@ void laser_impacts_update(void) {
         reg_a0 += 2;
         reg_a1 += 2;
         *(u16 *)reg_a1 = *(u16 *)reg_a0;
-        temp_a1 = (unsigned int)(reg_a0 + 2);
+        temp_a1 = (LaserRegisterAddress)(reg_a0 + 2);
         reg_a0 = (u8 *)(temp_a1);
         reg_a1 += 2;
         reg_tmp.h[0] = ENTITY(reg_a6)->hit_y_plus.h;
@@ -1366,7 +1384,7 @@ void laser_impacts_update(void) {
         reg_a1 = (u8 *)(reg_a6 + 2);
         reg_tmp.h[1] = ENTITY(reg_a6)->hit_y_minus.h;
         reg_tmp.h[0] = ENTITY(reg_a6)->hit_x_plus.h;
-        reg_a0 = (u8 *)(reg_tmp.w);
+        reg_a0 = ARCADE_ADDRESS_DECODE(u8 *, reg_tmp.w);
         temp_a2_2 = ENTITY(reg_a6)->hit_y_plus.h;
         reg_a0 += temp_a2_2;
         *(u16 *)reg_a1 = reg_d0.h[0];
@@ -1386,7 +1404,7 @@ void laser_impacts_update(void) {
         reg_a0 += 2;
         reg_a1 += 2;
         *(u16 *)reg_a1 = *(u16 *)reg_a0;
-        temp_a1_2 = (unsigned int)(reg_a0 + 2);
+        temp_a1_2 = (LaserRegisterAddress)(reg_a0 + 2);
         reg_a0 = (u8 *)(temp_a1_2);
         reg_a1 += 2;
         reg_tmp.h[0] = ENTITY(reg_a6)->hit_y_plus.h;

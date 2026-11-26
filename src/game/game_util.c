@@ -337,11 +337,11 @@ extern u32 reg_save_d1;
 extern u32 reg_save_d0;
 extern u8 *reg_save_a6;
 extern u8 *reg_save_a5;
-extern s32 reg_save_a4;
-extern s32 reg_save_a3;
+extern ArcadeSavedAddress reg_save_a4;
+extern ArcadeSavedAddress reg_save_a3;
 extern u8 *reg_save_a2;
 extern u8 *reg_save_a1;
-extern s32 reg_save_a0;
+extern ArcadeSavedAddress reg_save_a0;
 extern u8 g_boss_present_b1;
 
 void bullet_cancel_by_player1(void) {

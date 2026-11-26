@@ -345,7 +345,7 @@ extern u8 g_p2_afterimage_sprites[];
 extern s32 g_p1_afterimage_sprites[16];
 extern u8 g_p2_afterimage_positions[];
 extern s32 g_p1_afterimage_positions[16];
-extern u16 g_bomb_entities[24];
+extern u16 g_bomb_entities[];
 extern u8 D_0029D710[];
 extern u8 D_0029D730[];
 extern u8 g_p2_laser_segments[];
@@ -3246,12 +3246,21 @@ u16 g_p2_died_in_hyper __attribute__((aligned(4)));
 /* .bss (the compiler lays these out in reverse) */
 s16 g_player1[56];
 s16 g_player2[56];
+#ifdef DDPDOJ_PC
+_Alignas(4) u8 g_p1_options[112];
+_Alignas(4) u8 g_p2_options[112];
+#else
 s16 D_0029F1D0[16];
 u8 g_p1_options[80];
 s16 D_0029F160[16];
 u8 g_p2_options[80];
+#endif
 u8 D_0029EA50[1728];
 u8 D_0029E390[1728];
+#ifdef DDPDOJ_PC
+_Alignas(16) u8 g_p1_laser_entities[0x600];
+_Alignas(16) u8 g_p2_laser_entities[0x600];
+#else
 u8 D_0029E330[96];
 u8 D_0029E2D0[96];
 u8 objects_task_buffer_2[48];
@@ -3260,12 +3269,17 @@ u8 D_0029DD30[96];
 u8 D_0029DCD0[96];
 u8 objects_task_buffer[48];
 u8 g_p2_laser_entities[1296];
+#endif
 u8 g_p1_laser_segments[32];
 u8 g_p2_laser_segments[32];
 u8 D_0029D730[32];
 u8 D_0029D710[32];
+#ifdef DDPDOJ_PC
+_Alignas(16) u16 g_bomb_entities[1080];
+#else
 u16 g_bomb_entities_1[1056];
 u16 g_bomb_entities[24];
+#endif
 s32 g_p1_afterimage_positions[16];
 u8 g_p2_afterimage_positions[64];
 s32 g_p1_afterimage_sprites[16];
@@ -3300,6 +3314,16 @@ PC_DATA_ALIAS(g_p1_maximum_half_digits, g_p2_maximum_value, 0x18);
 PC_DATA_ALIAS(g_p1_maximum_count, g_p2_maximum_value, 0x1c);
 PC_DATA_ALIAS(g_p1_maximum_count_as_s16_a, g_p2_maximum_value, 0x1c);
 PC_DATA_ALIAS(g_p1_maximum_count_digits, g_p2_maximum_value, 0x1e);
+
+PC_DATA_ALIAS(D_0029F1D0, g_p1_options, 0x50);
+PC_DATA_ALIAS(D_0029F160, g_p2_options, 0x50);
+PC_DATA_ALIAS(objects_task_buffer_2, g_p1_laser_entities, 0x510);
+PC_DATA_ALIAS(D_0029E2D0, g_p1_laser_entities, 0x540);
+PC_DATA_ALIAS(D_0029E330, g_p1_laser_entities, 0x5a0);
+PC_DATA_ALIAS(objects_task_buffer, g_p2_laser_entities, 0x510);
+PC_DATA_ALIAS(D_0029DCD0, g_p2_laser_entities, 0x540);
+PC_DATA_ALIAS(D_0029DD30, g_p2_laser_entities, 0x5a0);
+PC_DATA_ALIAS(g_bomb_entities_1, g_bomb_entities, 0x30);
 
 PC_DATA_ALIAS(g_p1_option_level_data, g_p1_weapon_level_data, 0x4);
 PC_DATA_ALIAS(g_p1_option_level_data_as_s32_a, g_p1_weapon_level_data, 0x4);

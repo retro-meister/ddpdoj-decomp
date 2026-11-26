@@ -245,37 +245,50 @@ u16 player_shield_sprites_00[8] = {
     0x0000, 0x0914, 0x0000, 0x0913, 0x0000, 0x0912, 0x0000, 0x0911,
 };
 
+#ifdef DDPDOJ_PC
+/* Negative roll offsets select the last entries of the preceding table. */
+u16 player_shield_sprites_01[368] = {
+#else
 u16 player_shield_sprites_01[24] = {
+#endif
     0x0000, 0x09C0, 0x0000, 0x09BF, 0x0000, 0x09BE, 0x0000, 0x09BD,
     0x0000, 0x0001, 0x0002, 0x0003, 0x0004, 0x0005, 0x0006, 0x0007,
     0x0008, 0x0009, 0x000A, 0x000B, 0x000C, 0x000D, 0x000E, 0x000F,
+#ifndef DDPDOJ_PC
 };
 
 u16 player_exhaust_sprites_00[40] = {
+#endif
     0x0010, 0x0011, 0x0012, 0x0013, 0x0014, 0x0015, 0x0016, 0x0017,
     0x0018, 0x0019, 0x001A, 0x001B, 0x001C, 0x001D, 0x001E, 0x001F,
     0x0020, 0x0021, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000,
     0x0000, 0x0001, 0x0002, 0x0003, 0x0004, 0x0005, 0x0006, 0x0007,
     0x0008, 0x0009, 0x000A, 0x000B, 0x000C, 0x000D, 0x000E, 0x000F,
+#ifndef DDPDOJ_PC
 };
 
 u16 player_exhaust_sprites_01[40] = {
+#endif
     0x0010, 0x0011, 0x0012, 0x0013, 0x0014, 0x0015, 0x0016, 0x0017,
     0x0018, 0x0019, 0x001A, 0x001B, 0x001C, 0x001D, 0x001E, 0x001F,
     0x0020, 0x0021, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000,
     0x0000, 0x0001, 0x0002, 0x0003, 0x0004, 0x0005, 0x0006, 0x0007,
     0x0008, 0x0009, 0x000A, 0x000B, 0x000C, 0x000D, 0x000E, 0x000F,
+#ifndef DDPDOJ_PC
 };
 
 u16 player_exhaust_slow_sprites_00[40] = {
+#endif
     0x0010, 0x0011, 0x0012, 0x0013, 0x0014, 0x0015, 0x0016, 0x0017,
     0x0018, 0x0019, 0x001A, 0x001B, 0x001C, 0x001D, 0x001E, 0x001F,
     0x0020, 0x0021, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000,
     0x0000, 0x0001, 0x0002, 0x0003, 0x0004, 0x0005, 0x0006, 0x0007,
     0x0008, 0x0009, 0x000A, 0x000B, 0x000C, 0x000D, 0x000E, 0x000F,
+#ifndef DDPDOJ_PC
 };
 
 u16 player_exhaust_slow_sprites_01[224] = {
+#endif
     0x0010, 0x0011, 0x0012, 0x0013, 0x0014, 0x0015, 0x0016, 0x0017,
     0x0018, 0x0019, 0x001A, 0x001B, 0x001C, 0x001D, 0x001E, 0x001F,
     0x0020, 0x0021, 0x0000, 0x0000, 0xFE00, 0xFC00, 0x0420, 0x103E,
@@ -907,19 +920,24 @@ u16 player_update_table_6[2] = {
 #ifdef DDPDOJ_PC
 #include "pc_data_alias.h"
 
-PC_DATA_ALIAS(D_00255D48, player_exhaust_slow_sprites_01, 0x28);
-PC_DATA_ALIAS(D_00255DB8, player_exhaust_slow_sprites_01, 0x98);
-PC_DATA_ALIAS(D_00255DC8, player_exhaust_slow_sprites_01, 0xa8);
-PC_DATA_ALIAS(D_00255DD8, player_exhaust_slow_sprites_01, 0xb8);
-PC_DATA_ALIAS(D_00255DE8, player_exhaust_slow_sprites_01, 0xc8);
-PC_DATA_ALIAS(D_00255DF8, player_exhaust_slow_sprites_01, 0xd8);
-PC_DATA_ALIAS(D_00255E08, player_exhaust_slow_sprites_01, 0xe8);
-PC_DATA_ALIAS(D_00255E78, player_exhaust_slow_sprites_01, 0x158);
-PC_DATA_ALIAS(D_00255E88, player_exhaust_slow_sprites_01, 0x168);
-PC_DATA_ALIAS(D_00255E98, player_exhaust_slow_sprites_01, 0x178);
-PC_DATA_ALIAS(D_00255EA8, player_exhaust_slow_sprites_01, 0x188);
-PC_DATA_ALIAS(D_00255EB8, player_exhaust_slow_sprites_01, 0x198);
-PC_DATA_ALIAS(D_00255EC8, player_exhaust_slow_sprites_01, 0x1a8);
+PC_DATA_ALIAS(player_exhaust_sprites_00, player_shield_sprites_01, 0x30);
+PC_DATA_ALIAS(player_exhaust_sprites_01, player_shield_sprites_01, 0x80);
+PC_DATA_ALIAS(player_exhaust_slow_sprites_00, player_shield_sprites_01, 0xd0);
+PC_DATA_ALIAS(player_exhaust_slow_sprites_01, player_shield_sprites_01, 0x120);
+
+PC_DATA_ALIAS(D_00255D48, player_shield_sprites_01, 0x148);
+PC_DATA_ALIAS(D_00255DB8, player_shield_sprites_01, 0x1b8);
+PC_DATA_ALIAS(D_00255DC8, player_shield_sprites_01, 0x1c8);
+PC_DATA_ALIAS(D_00255DD8, player_shield_sprites_01, 0x1d8);
+PC_DATA_ALIAS(D_00255DE8, player_shield_sprites_01, 0x1e8);
+PC_DATA_ALIAS(D_00255DF8, player_shield_sprites_01, 0x1f8);
+PC_DATA_ALIAS(D_00255E08, player_shield_sprites_01, 0x208);
+PC_DATA_ALIAS(D_00255E78, player_shield_sprites_01, 0x278);
+PC_DATA_ALIAS(D_00255E88, player_shield_sprites_01, 0x288);
+PC_DATA_ALIAS(D_00255E98, player_shield_sprites_01, 0x298);
+PC_DATA_ALIAS(D_00255EA8, player_shield_sprites_01, 0x2a8);
+PC_DATA_ALIAS(D_00255EB8, player_shield_sprites_01, 0x2b8);
+PC_DATA_ALIAS(D_00255EC8, player_shield_sprites_01, 0x2c8);
 
 PC_DATA_ALIAS(D_0028C868_as_u8_a, D_0028C868, 0x0);
 #endif

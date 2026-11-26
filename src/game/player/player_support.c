@@ -75,7 +75,7 @@ extern u32 reg_save_d0;
 extern u8 *reg_save_a6;
 extern u8 *reg_save_a2;
 extern u8 *reg_save_a1;
-extern s32 reg_save_a0;
+extern ArcadeSavedAddress reg_save_a0;
 extern u16 g_p1_hyper_active;
 extern u8 D_0029D730[];
 extern u8 g_p1_laser_segments[];
@@ -96,7 +96,11 @@ void p1_laser_clear(void) {
     reg_save_a6 = reg_a6;
     reg_d0.h[0] = D_0029F2B8[0];
     reg_d0.h[0] <<= 1;
+#ifdef DDPDOJ_PC
+    reg_a0 = (u8 *)p1_laser_clear_table[reg_d0.h[0] / 4];
+#else
     reg_a0 = *(u8 **)(((u8 *)p1_laser_clear_table) + (reg_d0.h[0] & ~3));
+#endif
     if (g_p1_hyper_active != 0) {
         reg_a0 = (u8 *)sfx_p1_laser_hyper_stop;
     }
@@ -137,7 +141,11 @@ void p2_laser_clear(void) {
     reg_save_a6 = reg_a6;
     reg_d0.h[0] = D_0029F248[0];
     reg_d0.h[0] <<= 1;
+#ifdef DDPDOJ_PC
+    reg_a0 = (u8 *)D_0028C5E0[reg_d0.h[0] / 4];
+#else
     reg_a0 = *(u8 **)(((u8 *)D_0028C5E0) + (reg_d0.h[0] & ~3));
+#endif
     if (g_p2_hyper_active != 0) {
         reg_a0 = (u8 *)sfx_p2_laser_hyper_stop;
     }
@@ -150,7 +158,7 @@ void p2_laser_clear(void) {
     laser_entities_clear();
 }
 
-extern s32 reg_save_a0;
+extern ArcadeSavedAddress reg_save_a0;
 
 void laser_entities_clear(void) {
     *reg_a2 &= 0x7F;
@@ -1053,7 +1061,11 @@ void bomb_stock_draw_for_task(void) {
     reg_save_d2 = reg_d2.w;
     reg_save_d6 = reg_d6.w;
     reg_save_d7 = reg_d7.w;
+#ifdef DDPDOJ_PC
+    reg_save_a6 = reg_a6;
+#else
     (*(s32 *)&reg_save_a6) = (s32)reg_a6;
+#endif
     bomb_stock_origin_p1(reg_d6.w, reg_d2.w, reg_d1.w, reg_d0.w);
     if (*(u8 *)(reg_a5 + 6) != 0) {
         bomb_stock_origin_p2();
@@ -1248,7 +1260,7 @@ void p2_bomb_stock_draw_empty(void) {
     reg_d7.w = save_d7;
 }
 
-extern s32 reg_save_a0;
+extern ArcadeSavedAddress reg_save_a0;
 
 void p1_bomb_capacity_draw(void)
 {
@@ -1260,7 +1272,7 @@ void p1_bomb_capacity_draw(void)
     reg_save_d5 = reg_d5.w;
     reg_save_d6 = reg_d6.w;
     reg_save_d7 = reg_d7.w;
-    reg_save_a0 = (s32)reg_a0;
+    reg_save_a0 = (ArcadeSavedAddress)reg_a0;
 
     reg_d1.h[0] = 0x100;
     reg_d4.w = 0;
@@ -1278,7 +1290,7 @@ void p2_bomb_capacity_draw(void)
     reg_save_d5 = reg_d5.w;
     reg_save_d6 = reg_d6.w;
     reg_save_d7 = reg_d7.w;
-    reg_save_a0 = (s32)reg_a0;
+    reg_save_a0 = (ArcadeSavedAddress)reg_a0;
 
     reg_d1.h[0] = 0xF00;
     reg_d4.w = 0;
@@ -1438,8 +1450,8 @@ extern s32 g_p1_afterimage_positions[];
 
 
 void p1_afterimage_draw(void) {
-    reg_a0 = (u8 *)((s32)&g_p1_afterimage_positions[0]);
-    reg_a1 = (u8 *)((s32)&g_p1_afterimage_sprites[0]);
+    reg_a0 = (u8 *)((ArcadeSavedAddress)&g_p1_afterimage_positions[0]);
+    reg_a1 = (u8 *)((ArcadeSavedAddress)&g_p1_afterimage_sprites[0]);
     ship_afterimage_draw();
 }
 
@@ -1518,7 +1530,7 @@ void p1_afterimage_reset(void) {
     temp_a2 = reg_a1;
     temp_a1 = reg_a2;
     reg_save_d0 = reg_d0.w;
-    reg_save_a0 = (s32)temp_a3;
+    reg_save_a0 = (ArcadeSavedAddress)temp_a3;
     reg_save_a1 = temp_a2;
     reg_save_a2 = temp_a1;
     reg_a0 = ((u8 *)g_p1_afterimage_positions);
@@ -1536,7 +1548,7 @@ void p2_afterimage_reset(void) {
     temp_a2 = reg_a1;
     temp_a1 = reg_a2;
     reg_save_d0 = reg_d0.w;
-    reg_save_a0 = (s32)temp_a3;
+    reg_save_a0 = (ArcadeSavedAddress)temp_a3;
     reg_save_a1 = temp_a2;
     reg_save_a2 = temp_a1;
     reg_a0 = g_p2_afterimage_positions;

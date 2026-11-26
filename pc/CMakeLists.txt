@@ -81,8 +81,8 @@ function(add_game_library target executable group)
     target_compile_definitions(${target} PUBLIC DDPDOJ_PC)
     target_include_directories(${target} PRIVATE ../include)
     target_link_libraries(${target} PRIVATE ddpdoj_arcade_address)
-    # Legacy arcade calls still pass packed integers across the register ABI.
-    target_compile_options(${target} PRIVATE -Wno-int-conversion -fno-common)
+    # The arcade register bank accesses the same storage through several types.
+    target_compile_options(${target} PRIVATE -Wno-int-conversion -fno-common -fno-strict-aliasing)
     if(executable STREQUAL "DEATH.ELF")
         target_compile_definitions(${target} PUBLIC DEATH_LABEL)
     endif()

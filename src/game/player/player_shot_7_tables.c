@@ -385,577 +385,99 @@ u16 player_shot_7_flight_023[4] = {
 };
 
 #ifdef DDPDOJ_PC
-#define SHOT_FLIGHT_RECORD(name, next) u16 name[4] = { 0x0380, 0x0000, 0x0002, 0x0003 };
+#define SHOT_FLIGHT_RECORD(name, next, speed) u16 name[4] = { speed, 0x0000, 0x0002, 0x0003 };
 #else
-#define SHOT_FLIGHT_RECORD(name, next) \
-    u16 name[2] = { 0x0380, 0x0000 }; \
+#define SHOT_FLIGHT_RECORD(name, next, speed) \
+    u16 name[2] = { speed, 0x0000 }; \
     u16 next[2] = { 0x0002, 0x0003 };
 #endif
-
-SHOT_FLIGHT_RECORD(player_shot_7_flight_028, D_0028D39C)
-SHOT_FLIGHT_RECORD(player_shot_7_flight_029, D_0028D3A4)
-SHOT_FLIGHT_RECORD(player_shot_7_flight_030, D_0028D3AC)
-SHOT_FLIGHT_RECORD(player_shot_7_flight_031, D_0028D3B4)
-SHOT_FLIGHT_RECORD(player_shot_7_flight_032, D_0028D3BC)
-SHOT_FLIGHT_RECORD(player_shot_7_flight_033, D_0028D3C4)
-SHOT_FLIGHT_RECORD(player_shot_7_flight_034, D_0028D3CC)
-SHOT_FLIGHT_RECORD(player_shot_7_flight_035, D_0028D3D4)
-SHOT_FLIGHT_RECORD(player_shot_7_flight_036, D_0028D3DC)
-SHOT_FLIGHT_RECORD(player_shot_7_flight_037, D_0028D3E4)
-SHOT_FLIGHT_RECORD(player_shot_7_flight_038, D_0028D3EC)
-SHOT_FLIGHT_RECORD(player_shot_7_flight_039, D_0028D3F4)
-SHOT_FLIGHT_RECORD(player_shot_7_flight_040, D_0028D3FC)
-SHOT_FLIGHT_RECORD(player_shot_7_flight_041, D_0028D404)
-SHOT_FLIGHT_RECORD(player_shot_7_flight_042, D_0028D40C)
-SHOT_FLIGHT_RECORD(player_shot_7_flight_043, D_0028D414)
-SHOT_FLIGHT_RECORD(player_shot_7_flight_044, D_0028D41C)
+SHOT_FLIGHT_RECORD(player_shot_7_flight_028, D_0028D39C, 0x0380)
+SHOT_FLIGHT_RECORD(player_shot_7_flight_029, D_0028D3A4, 0x0380)
+SHOT_FLIGHT_RECORD(player_shot_7_flight_030, D_0028D3AC, 0x0380)
+SHOT_FLIGHT_RECORD(player_shot_7_flight_031, D_0028D3B4, 0x0380)
+SHOT_FLIGHT_RECORD(player_shot_7_flight_032, D_0028D3BC, 0x0380)
+SHOT_FLIGHT_RECORD(player_shot_7_flight_033, D_0028D3C4, 0x0380)
+SHOT_FLIGHT_RECORD(player_shot_7_flight_034, D_0028D3CC, 0x0380)
+SHOT_FLIGHT_RECORD(player_shot_7_flight_035, D_0028D3D4, 0x0380)
+SHOT_FLIGHT_RECORD(player_shot_7_flight_036, D_0028D3DC, 0x0380)
+SHOT_FLIGHT_RECORD(player_shot_7_flight_037, D_0028D3E4, 0x0380)
+SHOT_FLIGHT_RECORD(player_shot_7_flight_038, D_0028D3EC, 0x0380)
+SHOT_FLIGHT_RECORD(player_shot_7_flight_039, D_0028D3F4, 0x0380)
+SHOT_FLIGHT_RECORD(player_shot_7_flight_040, D_0028D3FC, 0x0380)
+SHOT_FLIGHT_RECORD(player_shot_7_flight_041, D_0028D404, 0x0380)
+SHOT_FLIGHT_RECORD(player_shot_7_flight_042, D_0028D40C, 0x0380)
+SHOT_FLIGHT_RECORD(player_shot_7_flight_043, D_0028D414, 0x0380)
+SHOT_FLIGHT_RECORD(player_shot_7_flight_044, D_0028D41C, 0x0380)
+SHOT_FLIGHT_RECORD(player_shot_7_flight_048, D_0028D424, 0x0380)
+SHOT_FLIGHT_RECORD(player_shot_7_flight_049, D_0028D42C, 0x0380)
+SHOT_FLIGHT_RECORD(player_shot_7_flight_050, D_0028D434, 0x0380)
+SHOT_FLIGHT_RECORD(player_shot_7_flight_051, D_0028D43C, 0x0380)
+SHOT_FLIGHT_RECORD(player_shot_7_flight_052, D_0028D444, 0x0380)
+SHOT_FLIGHT_RECORD(player_shot_7_flight_053, D_0028D44C, 0x0380)
+SHOT_FLIGHT_RECORD(player_shot_7_flight_054, D_0028D454, 0x0380)
+SHOT_FLIGHT_RECORD(player_shot_7_flight_055, D_0028D45C, 0x0380)
+SHOT_FLIGHT_RECORD(player_shot_7_flight_056, D_0028D464, 0x0380)
+SHOT_FLIGHT_RECORD(player_shot_7_flight_057, D_0028D46C, 0x0380)
+SHOT_FLIGHT_RECORD(player_shot_7_flight_058, D_0028D474, 0x0380)
+SHOT_FLIGHT_RECORD(player_shot_7_flight_059, D_0028D47C, 0x0380)
+SHOT_FLIGHT_RECORD(player_shot_7_flight_060, D_0028D484, 0x0380)
+SHOT_FLIGHT_RECORD(player_shot_7_flight_061, D_0028D48C, 0x0380)
+SHOT_FLIGHT_RECORD(player_shot_7_flight_062, D_0028D494, 0x0380)
+SHOT_FLIGHT_RECORD(player_shot_7_flight_063, D_0028D49C, 0x0380)
+SHOT_FLIGHT_RECORD(player_shot_7_flight_064, D_0028D4A4, 0x0380)
+SHOT_FLIGHT_RECORD(player_shot_7_flight_068, D_0028D4AC, 0x0400)
+SHOT_FLIGHT_RECORD(player_shot_7_flight_069, D_0028D4B4, 0x0400)
+SHOT_FLIGHT_RECORD(player_shot_7_flight_070, D_0028D4BC, 0x0400)
+SHOT_FLIGHT_RECORD(player_shot_7_flight_071, D_0028D4C4, 0x0400)
+SHOT_FLIGHT_RECORD(player_shot_7_flight_072, D_0028D4CC, 0x0400)
+SHOT_FLIGHT_RECORD(player_shot_7_flight_073, D_0028D4D4, 0x0400)
+SHOT_FLIGHT_RECORD(player_shot_7_flight_074, D_0028D4DC, 0x0400)
+SHOT_FLIGHT_RECORD(player_shot_7_flight_075, D_0028D4E4, 0x0400)
+SHOT_FLIGHT_RECORD(player_shot_7_flight_076, D_0028D4EC, 0x0400)
+SHOT_FLIGHT_RECORD(player_shot_7_flight_077, D_0028D4F4, 0x0400)
+SHOT_FLIGHT_RECORD(player_shot_7_flight_078, D_0028D4FC, 0x0400)
+SHOT_FLIGHT_RECORD(player_shot_7_flight_079, D_0028D504, 0x0400)
+SHOT_FLIGHT_RECORD(player_shot_7_flight_080, D_0028D50C, 0x0400)
+SHOT_FLIGHT_RECORD(player_shot_7_flight_081, D_0028D514, 0x0400)
+SHOT_FLIGHT_RECORD(player_shot_7_flight_082, D_0028D51C, 0x0400)
+SHOT_FLIGHT_RECORD(player_shot_7_flight_083, D_0028D524, 0x0400)
+SHOT_FLIGHT_RECORD(player_shot_7_flight_084, D_0028D52C, 0x0400)
+SHOT_FLIGHT_RECORD(player_shot_7_flight_088, D_0028D534, 0x0400)
+SHOT_FLIGHT_RECORD(player_shot_7_flight_089, D_0028D53C, 0x0400)
+SHOT_FLIGHT_RECORD(player_shot_7_flight_090, D_0028D544, 0x0400)
+SHOT_FLIGHT_RECORD(player_shot_7_flight_091, D_0028D54C, 0x0400)
+SHOT_FLIGHT_RECORD(player_shot_7_flight_092, D_0028D554, 0x0400)
+SHOT_FLIGHT_RECORD(player_shot_7_flight_093, D_0028D55C, 0x0400)
+SHOT_FLIGHT_RECORD(player_shot_7_flight_094, D_0028D564, 0x0400)
+SHOT_FLIGHT_RECORD(player_shot_7_flight_095, D_0028D56C, 0x0400)
+SHOT_FLIGHT_RECORD(player_shot_7_flight_096, D_0028D574, 0x0400)
+SHOT_FLIGHT_RECORD(player_shot_7_flight_097, D_0028D57C, 0x0400)
+SHOT_FLIGHT_RECORD(player_shot_7_flight_098, D_0028D584, 0x0400)
+SHOT_FLIGHT_RECORD(player_shot_7_flight_099, D_0028D58C, 0x0400)
+SHOT_FLIGHT_RECORD(player_shot_7_flight_100, D_0028D594, 0x0400)
+SHOT_FLIGHT_RECORD(player_shot_7_flight_101, D_0028D59C, 0x0400)
+SHOT_FLIGHT_RECORD(player_shot_7_flight_102, D_0028D5A4, 0x0400)
+SHOT_FLIGHT_RECORD(player_shot_7_flight_103, D_0028D5AC, 0x0400)
+SHOT_FLIGHT_RECORD(player_shot_7_flight_104, D_0028D5B4, 0x0400)
+SHOT_FLIGHT_RECORD(player_shot_7_direction_5_00, D_0028D5BC, 0x0480)
+SHOT_FLIGHT_RECORD(player_shot_7_direction_5_01, D_0028D5C4, 0x0480)
+SHOT_FLIGHT_RECORD(player_shot_7_direction_5_02, D_0028D5CC, 0x0480)
+SHOT_FLIGHT_RECORD(player_shot_7_direction_5_03, D_0028D5D4, 0x0480)
+SHOT_FLIGHT_RECORD(player_shot_7_direction_5_04, D_0028D5DC, 0x0480)
+SHOT_FLIGHT_RECORD(player_shot_7_direction_5_05, D_0028D5E4, 0x0480)
+SHOT_FLIGHT_RECORD(player_shot_7_direction_5_06, D_0028D5EC, 0x0480)
+SHOT_FLIGHT_RECORD(player_shot_7_direction_5_07, D_0028D5F4, 0x0480)
+SHOT_FLIGHT_RECORD(player_shot_7_direction_5_08, D_0028D5FC, 0x0480)
+SHOT_FLIGHT_RECORD(player_shot_7_direction_5_09, D_0028D604, 0x0480)
+SHOT_FLIGHT_RECORD(player_shot_7_direction_5_10, D_0028D60C, 0x0480)
+SHOT_FLIGHT_RECORD(player_shot_7_direction_5_11, D_0028D614, 0x0480)
+SHOT_FLIGHT_RECORD(player_shot_7_direction_5_12, D_0028D61C, 0x0480)
+SHOT_FLIGHT_RECORD(player_shot_7_direction_5_13, D_0028D624, 0x0480)
+SHOT_FLIGHT_RECORD(player_shot_7_direction_5_14, D_0028D62C, 0x0480)
+SHOT_FLIGHT_RECORD(player_shot_7_direction_5_15, D_0028D634, 0x0480)
+SHOT_FLIGHT_RECORD(player_shot_7_direction_5_16, D_0028D63C, 0x0480)
 
 #undef SHOT_FLIGHT_RECORD
-
-u16 player_shot_7_flight_048[2] = {
-    0x0380, 0x0000,
-};
-
-u16 D_0028D424[2] = {
-    0x0002, 0x0003,
-};
-
-u16 player_shot_7_flight_049[2] = {
-    0x0380, 0x0000,
-};
-
-u16 D_0028D42C[2] = {
-    0x0002, 0x0003,
-};
-
-u16 player_shot_7_flight_050[2] = {
-    0x0380, 0x0000,
-};
-
-u16 D_0028D434[2] = {
-    0x0002, 0x0003,
-};
-
-u16 player_shot_7_flight_051[2] = {
-    0x0380, 0x0000,
-};
-
-u16 D_0028D43C[2] = {
-    0x0002, 0x0003,
-};
-
-u16 player_shot_7_flight_052[2] = {
-    0x0380, 0x0000,
-};
-
-u16 D_0028D444[2] = {
-    0x0002, 0x0003,
-};
-
-u16 player_shot_7_flight_053[2] = {
-    0x0380, 0x0000,
-};
-
-u16 D_0028D44C[2] = {
-    0x0002, 0x0003,
-};
-
-u16 player_shot_7_flight_054[2] = {
-    0x0380, 0x0000,
-};
-
-u16 D_0028D454[2] = {
-    0x0002, 0x0003,
-};
-
-u16 player_shot_7_flight_055[2] = {
-    0x0380, 0x0000,
-};
-
-u16 D_0028D45C[2] = {
-    0x0002, 0x0003,
-};
-
-u16 player_shot_7_flight_056[2] = {
-    0x0380, 0x0000,
-};
-
-u16 D_0028D464[2] = {
-    0x0002, 0x0003,
-};
-
-u16 player_shot_7_flight_057[2] = {
-    0x0380, 0x0000,
-};
-
-u16 D_0028D46C[2] = {
-    0x0002, 0x0003,
-};
-
-u16 player_shot_7_flight_058[2] = {
-    0x0380, 0x0000,
-};
-
-u16 D_0028D474[2] = {
-    0x0002, 0x0003,
-};
-
-u16 player_shot_7_flight_059[2] = {
-    0x0380, 0x0000,
-};
-
-u16 D_0028D47C[2] = {
-    0x0002, 0x0003,
-};
-
-u16 player_shot_7_flight_060[2] = {
-    0x0380, 0x0000,
-};
-
-u16 D_0028D484[2] = {
-    0x0002, 0x0003,
-};
-
-u16 player_shot_7_flight_061[2] = {
-    0x0380, 0x0000,
-};
-
-u16 D_0028D48C[2] = {
-    0x0002, 0x0003,
-};
-
-u16 player_shot_7_flight_062[2] = {
-    0x0380, 0x0000,
-};
-
-u16 D_0028D494[2] = {
-    0x0002, 0x0003,
-};
-
-u16 player_shot_7_flight_063[2] = {
-    0x0380, 0x0000,
-};
-
-u16 D_0028D49C[2] = {
-    0x0002, 0x0003,
-};
-
-u16 player_shot_7_flight_064[2] = {
-    0x0380, 0x0000,
-};
-
-u16 D_0028D4A4[2] = {
-    0x0002, 0x0003,
-};
-
-u16 player_shot_7_flight_068[2] = {
-    0x0400, 0x0000,
-};
-
-u16 D_0028D4AC[2] = {
-    0x0002, 0x0003,
-};
-
-u16 player_shot_7_flight_069[2] = {
-    0x0400, 0x0000,
-};
-
-u16 D_0028D4B4[2] = {
-    0x0002, 0x0003,
-};
-
-u16 player_shot_7_flight_070[2] = {
-    0x0400, 0x0000,
-};
-
-u16 D_0028D4BC[2] = {
-    0x0002, 0x0003,
-};
-
-u16 player_shot_7_flight_071[2] = {
-    0x0400, 0x0000,
-};
-
-u16 D_0028D4C4[2] = {
-    0x0002, 0x0003,
-};
-
-u16 player_shot_7_flight_072[2] = {
-    0x0400, 0x0000,
-};
-
-u16 D_0028D4CC[2] = {
-    0x0002, 0x0003,
-};
-
-u16 player_shot_7_flight_073[2] = {
-    0x0400, 0x0000,
-};
-
-u16 D_0028D4D4[2] = {
-    0x0002, 0x0003,
-};
-
-u16 player_shot_7_flight_074[2] = {
-    0x0400, 0x0000,
-};
-
-u16 D_0028D4DC[2] = {
-    0x0002, 0x0003,
-};
-
-u16 player_shot_7_flight_075[2] = {
-    0x0400, 0x0000,
-};
-
-u16 D_0028D4E4[2] = {
-    0x0002, 0x0003,
-};
-
-u16 player_shot_7_flight_076[2] = {
-    0x0400, 0x0000,
-};
-
-u16 D_0028D4EC[2] = {
-    0x0002, 0x0003,
-};
-
-u16 player_shot_7_flight_077[2] = {
-    0x0400, 0x0000,
-};
-
-u16 D_0028D4F4[2] = {
-    0x0002, 0x0003,
-};
-
-u16 player_shot_7_flight_078[2] = {
-    0x0400, 0x0000,
-};
-
-u16 D_0028D4FC[2] = {
-    0x0002, 0x0003,
-};
-
-u16 player_shot_7_flight_079[2] = {
-    0x0400, 0x0000,
-};
-
-u16 D_0028D504[2] = {
-    0x0002, 0x0003,
-};
-
-u16 player_shot_7_flight_080[2] = {
-    0x0400, 0x0000,
-};
-
-u16 D_0028D50C[2] = {
-    0x0002, 0x0003,
-};
-
-u16 player_shot_7_flight_081[2] = {
-    0x0400, 0x0000,
-};
-
-u16 D_0028D514[2] = {
-    0x0002, 0x0003,
-};
-
-u16 player_shot_7_flight_082[2] = {
-    0x0400, 0x0000,
-};
-
-u16 D_0028D51C[2] = {
-    0x0002, 0x0003,
-};
-
-u16 player_shot_7_flight_083[2] = {
-    0x0400, 0x0000,
-};
-
-u16 D_0028D524[2] = {
-    0x0002, 0x0003,
-};
-
-u16 player_shot_7_flight_084[2] = {
-    0x0400, 0x0000,
-};
-
-u16 D_0028D52C[2] = {
-    0x0002, 0x0003,
-};
-
-u16 player_shot_7_flight_088[2] = {
-    0x0400, 0x0000,
-};
-
-u16 D_0028D534[2] = {
-    0x0002, 0x0003,
-};
-
-u16 player_shot_7_flight_089[2] = {
-    0x0400, 0x0000,
-};
-
-u16 D_0028D53C[2] = {
-    0x0002, 0x0003,
-};
-
-u16 player_shot_7_flight_090[2] = {
-    0x0400, 0x0000,
-};
-
-u16 D_0028D544[2] = {
-    0x0002, 0x0003,
-};
-
-u16 player_shot_7_flight_091[2] = {
-    0x0400, 0x0000,
-};
-
-u16 D_0028D54C[2] = {
-    0x0002, 0x0003,
-};
-
-u16 player_shot_7_flight_092[2] = {
-    0x0400, 0x0000,
-};
-
-u16 D_0028D554[2] = {
-    0x0002, 0x0003,
-};
-
-u16 player_shot_7_flight_093[2] = {
-    0x0400, 0x0000,
-};
-
-u16 D_0028D55C[2] = {
-    0x0002, 0x0003,
-};
-
-u16 player_shot_7_flight_094[2] = {
-    0x0400, 0x0000,
-};
-
-u16 D_0028D564[2] = {
-    0x0002, 0x0003,
-};
-
-u16 player_shot_7_flight_095[2] = {
-    0x0400, 0x0000,
-};
-
-u16 D_0028D56C[2] = {
-    0x0002, 0x0003,
-};
-
-u16 player_shot_7_flight_096[2] = {
-    0x0400, 0x0000,
-};
-
-u16 D_0028D574[2] = {
-    0x0002, 0x0003,
-};
-
-u16 player_shot_7_flight_097[2] = {
-    0x0400, 0x0000,
-};
-
-u16 D_0028D57C[2] = {
-    0x0002, 0x0003,
-};
-
-u16 player_shot_7_flight_098[2] = {
-    0x0400, 0x0000,
-};
-
-u16 D_0028D584[2] = {
-    0x0002, 0x0003,
-};
-
-u16 player_shot_7_flight_099[2] = {
-    0x0400, 0x0000,
-};
-
-u16 D_0028D58C[2] = {
-    0x0002, 0x0003,
-};
-
-u16 player_shot_7_flight_100[2] = {
-    0x0400, 0x0000,
-};
-
-u16 D_0028D594[2] = {
-    0x0002, 0x0003,
-};
-
-u16 player_shot_7_flight_101[2] = {
-    0x0400, 0x0000,
-};
-
-u16 D_0028D59C[2] = {
-    0x0002, 0x0003,
-};
-
-u16 player_shot_7_flight_102[2] = {
-    0x0400, 0x0000,
-};
-
-u16 D_0028D5A4[2] = {
-    0x0002, 0x0003,
-};
-
-u16 player_shot_7_flight_103[2] = {
-    0x0400, 0x0000,
-};
-
-u16 D_0028D5AC[2] = {
-    0x0002, 0x0003,
-};
-
-u16 player_shot_7_flight_104[2] = {
-    0x0400, 0x0000,
-};
-
-u16 D_0028D5B4[2] = {
-    0x0002, 0x0003,
-};
-
-u16 player_shot_7_direction_5_00[2] = {
-    0x0480, 0x0000,
-};
-
-u16 D_0028D5BC[2] = {
-    0x0002, 0x0003,
-};
-
-u16 player_shot_7_direction_5_01[2] = {
-    0x0480, 0x0000,
-};
-
-u16 D_0028D5C4[2] = {
-    0x0002, 0x0003,
-};
-
-u16 player_shot_7_direction_5_02[2] = {
-    0x0480, 0x0000,
-};
-
-u16 D_0028D5CC[2] = {
-    0x0002, 0x0003,
-};
-
-u16 player_shot_7_direction_5_03[2] = {
-    0x0480, 0x0000,
-};
-
-u16 D_0028D5D4[2] = {
-    0x0002, 0x0003,
-};
-
-u16 player_shot_7_direction_5_04[2] = {
-    0x0480, 0x0000,
-};
-
-u16 D_0028D5DC[2] = {
-    0x0002, 0x0003,
-};
-
-u16 player_shot_7_direction_5_05[2] = {
-    0x0480, 0x0000,
-};
-
-u16 D_0028D5E4[2] = {
-    0x0002, 0x0003,
-};
-
-u16 player_shot_7_direction_5_06[2] = {
-    0x0480, 0x0000,
-};
-
-u16 D_0028D5EC[2] = {
-    0x0002, 0x0003,
-};
-
-u16 player_shot_7_direction_5_07[2] = {
-    0x0480, 0x0000,
-};
-
-u16 D_0028D5F4[2] = {
-    0x0002, 0x0003,
-};
-
-u16 player_shot_7_direction_5_08[2] = {
-    0x0480, 0x0000,
-};
-
-u16 D_0028D5FC[2] = {
-    0x0002, 0x0003,
-};
-
-u16 player_shot_7_direction_5_09[2] = {
-    0x0480, 0x0000,
-};
-
-u16 D_0028D604[2] = {
-    0x0002, 0x0003,
-};
-
-u16 player_shot_7_direction_5_10[2] = {
-    0x0480, 0x0000,
-};
-
-u16 D_0028D60C[2] = {
-    0x0002, 0x0003,
-};
-
-u16 player_shot_7_direction_5_11[2] = {
-    0x0480, 0x0000,
-};
-
-u16 D_0028D614[2] = {
-    0x0002, 0x0003,
-};
-
-u16 player_shot_7_direction_5_12[2] = {
-    0x0480, 0x0000,
-};
-
-u16 D_0028D61C[2] = {
-    0x0002, 0x0003,
-};
-
-u16 player_shot_7_direction_5_13[2] = {
-    0x0480, 0x0000,
-};
-
-u16 D_0028D624[2] = {
-    0x0002, 0x0003,
-};
-
-u16 player_shot_7_direction_5_14[2] = {
-    0x0480, 0x0000,
-};
-
-u16 D_0028D62C[2] = {
-    0x0002, 0x0003,
-};
-
-u16 player_shot_7_direction_5_15[2] = {
-    0x0480, 0x0000,
-};
-
-u16 D_0028D634[2] = {
-    0x0002, 0x0003,
-};
-
-u16 player_shot_7_direction_5_16[2] = {
-    0x0480, 0x0000,
-};
-
-u16 D_0028D63C[2] = {
-    0x0002, 0x0003,
-};
-
 #ifdef DDPDOJ_PC
 #include "pc_data_alias.h"
 

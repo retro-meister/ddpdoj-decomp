@@ -145,8 +145,8 @@ extern u16 option_sprites_b_01_02_05[4];
 extern u16 option_sprites_b_01_03_05[4];
 extern u16 option_sprites_b_01_04_05[4];
 extern u16 option_hyper_sprite_b_00_05[4];
-extern void *p1_laser_part_routines[20];
-extern void *p2_laser_part_routines[20];
+extern void (*p1_laser_part_routines[20])(void);
+extern void (*p2_laser_part_routines[20])(void);
 
 u16 laser_segment_spawn_table[40] = {
     0x0094, 0x0096, 0x0098, 0x009A, 0x009C, 0x009C, 0x00A0, 0x00A4,
@@ -854,7 +854,7 @@ u16 D_002576C0[80] = {
     0x0000, 0x001E, 0x004A, 0x004B, 0x0000, 0x001E, 0x004E, 0x004F,
 };
 
-void *p1_laser_part_routines[20] = {
+void (*p1_laser_part_routines[20])(void) = {
     p1_laser_segment_a,
     p1_laser_front_a,
     p1_laser_muzzle_a,
@@ -877,7 +877,7 @@ void *p1_laser_part_routines[20] = {
     p1_laser_option_glow_hyper,
 };
 
-void *p2_laser_part_routines[20] = {
+void (*p2_laser_part_routines[20])(void) = {
     p2_laser_segment_a,
     p2_laser_front_a,
     p2_laser_muzzle_a,

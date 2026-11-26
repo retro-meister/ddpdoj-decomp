@@ -92,6 +92,13 @@ extern u8 *reg_atmp; /* scratch address register (exchanges) */
     (words)[0] = reg_tmp.h[1]; \
     (words)[1] = reg_tmp.h[0]
 
+/* Full-width storage for saved address registers on the host. */
+#ifdef DDPDOJ_PC
+typedef uintptr_t ArcadeSavedAddress;
+#else
+typedef s32 ArcadeSavedAddress;
+#endif
+
 /* Convert the producers and consumers of a packed address together. */
 #ifdef DDPDOJ_PC
 #define ARCADE_ADDRESS_ENCODE(address) pc_arcade_address_encode((uintptr_t)(address))
