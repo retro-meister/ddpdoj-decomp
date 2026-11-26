@@ -2,20 +2,55 @@
 #include "enemy.h"
 #include "entity.h"
 
-void func_0020E020(void);
-void func_0020E230(void);
-void func_0020E290(void);
-void func_0020E6F0(void);
+/* The lists are walked with a pointer that moves past a record's first word or two before the rest is read. */
+typedef struct {
+    /* 0x02 */ Field16 y;
+    /* 0x04 */ Field16 x;
+    /* 0x06 */ Field16 offset_y;
+    /* 0x08 */ Field16 offset_x;
+    /* 0x0A */ Field16 draw;
+    /* 0x0C */ Field16 sprite;
+    /* 0x0E */ Field16 look;
+    /* 0x10 */ Field16 hit_y_plus;
+    /* 0x12 */ Field16 hit_y_minus;
+    /* 0x14 */ Field16 hit_x_plus;
+    /* 0x16 */ Field16 hit_x_minus;
+    /* 0x18 */ Field16 hp;
+} EntityFromY;
+
+typedef struct {
+    /* 0x04 */ Field16 x;
+    /* 0x06 */ Field16 offset_y;
+    /* 0x08 */ Field16 offset_x;
+    /* 0x0A */ Field16 draw;
+    /* 0x0C */ Field16 sprite;
+    /* 0x0E */ Field16 look;
+    /* 0x10 */ Field16 hit_y_plus;
+    /* 0x12 */ Field16 hit_y_minus;
+    /* 0x14 */ Field16 hit_x_plus;
+    /* 0x16 */ Field16 hit_x_minus;
+    /* 0x18 */ Field16 hp;
+} EntityFromX;
+
+#define FROM_Y(pointer) ((EntityFromY *)(pointer))
+#define FROM_X(pointer) ((EntityFromX *)(pointer))
+#define FLAGS_BEHIND(pointer, moved) (*(u16 *)((u8 *)(pointer) + (-(moved))))
+#define FLAGS_BYTE_BEHIND(pointer, moved, byte) (*(u8 *)((u8 *)(pointer) + ((byte) - (moved))))
+
+void player_vs_bullets(void);
+void laser_collisions(void);
+void laser_vs_enemies(void);
+void laser_vs_enemies_second(void);
 
 extern u16 D_0028E08C;
 extern u16 D_0028E090;
 
-void func_0020B690(void) {
+void collision_reset(void) {
     D_0028E08C = 0;
     D_0028E090 = 0;
 }
 
-extern s16 D_0028E094_as_s16;
+extern s16 g_player_was_hit_as_s16;
 
 
 #ifdef DEATH_LABEL
@@ -23,7 +58,7 @@ extern u16 g_attract_demo;
 s32 death_func_001271E0(void);
 #endif
 
-void func_0020B6A0(void) {
+void bullet_hits_player_check(void) {
     u8 *temp_a2;
 
     cond_flag = 0;
@@ -32,7 +67,7 @@ void func_0020B6A0(void) {
         return;
     }
 #endif
-    reg_d4.h[0] = ENTITY(reg_a6)->flags.h;
+    reg_d4.h[0] = FROM_Y(reg_a6)->y.h;
     reg_a6 += 2;
 #ifdef DEATH_LABEL
     if (g_attract_demo != 0) {
@@ -40,30 +75,30 @@ void func_0020B6A0(void) {
     }
 #endif
     if (((s32) reg_d4.h[0] <= (s32) reg_d0.h[0]) && ((s32) reg_d1.h[0] <= (s32) reg_d4.h[0])) {
-        reg_d4.h[0] = ENTITY(reg_a6)->flags.h;
+        reg_d4.h[0] = FROM_X(reg_a6)->x.h;
         if (((s32) reg_d3.h[0] <= (s32) reg_d4.h[0]) && ((s32) reg_d4.h[0] <= (s32) reg_d2.h[0])) {
             reg_d4.w = 0x51;
-            reg_d4.b[0] &= (*(u8 *)((u8 *)(reg_a6) + (-3)));
+            reg_d4.b[0] &= FLAGS_BYTE_BEHIND(reg_a6, 4, 1);
             temp_a2 = (u8 *)(reg_a6 - 3);
             if (reg_d4.b[0] == 0) {
                 reg_d4.w = 0x10;
                 *temp_a2 |= reg_d4.b[0];
                 *(u8 *)(reg_a4 + 1) |= reg_d4.b[0];
-                D_0028E094_as_s16 = 1;
+                g_player_was_hit_as_s16 = 1;
                 cond_flag = 1;
             }
         }
     }
 }
 
-extern u8 D_0028E0A0[];
+extern u8 g_collision_bounds[];
 
-void func_0020B770(void) {
+void shots_bounds_get(void) {
     u8 *save_a1;
 
     save_a1 = reg_a1;
     reg_d0.w = 0;
-    reg_a1 = (u8 *)D_0028E0A0;
+    reg_a1 = (u8 *)g_collision_bounds;
     *(u16 *) reg_a1 = reg_d0.h[0];
     reg_a1 += 2;
     *(u16 *) reg_a1 = 0x7000;
@@ -75,11 +110,11 @@ void func_0020B770(void) {
     reg_d5.h[0] = 0x23;
     reg_a6 = reg_a0;
 loop_1:
-    reg_tmp.h[0] = *(u16 *) reg_a6;
+    reg_tmp.h[0] = ENTITY(reg_a6)->flags.h;
     reg_a6 += 2;
     if ((s16) reg_tmp.h[0] >= 0) goto next_9;
-    reg_d0.h[0] = *(u16 *) (reg_a6 + 0);
-    reg_d2.h[0] = *(u16 *) (reg_a6 + 2);
+    reg_d0.h[0] = FROM_Y(reg_a6)->y.h;
+    reg_d2.h[0] = FROM_Y(reg_a6)->x.h;
     reg_d3.h[0] = reg_d2.h[0];
     reg_a1 = reg_a6 + 0xE;
     reg_d0.h[0] += *(u16 *) reg_a1;
@@ -90,7 +125,7 @@ loop_1:
     reg_d2.h[0] += *(u16 *) reg_a1;
     reg_a1 += 2;
     reg_d3.h[0] -= *(u16 *) reg_a1;
-    reg_a1 = (u8 *)D_0028E0A0;
+    reg_a1 = (u8 *)g_collision_bounds;
     reg_tmp.h[0] = *(u16 *) reg_a1;
     reg_a1 += 2;
     if ((s16) reg_tmp.h[0] >= (s16) reg_d0.h[0]) goto next_5;
@@ -113,7 +148,7 @@ next_7:
 next_9:
     reg_a6 += 0x2E;
     if ((s16) --reg_d5.h[0] >= 0) goto loop_1;
-    reg_a1 = (u8 *)D_0028E0A0;
+    reg_a1 = (u8 *)g_collision_bounds;
     *(u16 *) reg_a1 += reg_d7.h[0];
     reg_a1 += 2;
     *(u16 *) reg_a1 += reg_d7.h[0];
@@ -126,9 +161,9 @@ next_9:
 
 extern u8 g_bomb_entities_as_u8_a[];
 
-void func_0020BA40(void) {
+void bomb_bounds_get(void) {
     reg_d0.h[0] = 0xF800;
-    reg_a5 = (u8 *)D_0028E0A0;
+    reg_a5 = (u8 *)g_collision_bounds;
     *(u16 *) reg_a5 = reg_d0.h[0];
     reg_a5 += 2;
     *(u16 *) reg_a5 = 0x4000;
@@ -140,11 +175,11 @@ void func_0020BA40(void) {
     reg_d5.h[0] = 0x2C;
     reg_a6 = (u8 *)g_bomb_entities_as_u8_a;
 loop_1:
-    reg_tmp.h[0] = *(u16 *) reg_a6;
+    reg_tmp.h[0] = ENTITY(reg_a6)->flags.h;
     reg_a6 += 2;
     if ((s16) reg_tmp.h[0] >= 0) goto next_9;
-    reg_d0.h[0] = *(u16 *) (reg_a6 + 0);
-    reg_d2.h[0] = *(u16 *) (reg_a6 + 2);
+    reg_d0.h[0] = FROM_Y(reg_a6)->y.h;
+    reg_d2.h[0] = FROM_Y(reg_a6)->x.h;
     reg_d1.h[0] = reg_d0.h[0];
     reg_d3.h[0] = reg_d2.h[0];
     reg_a5 = reg_a6 + 0xE;
@@ -155,7 +190,7 @@ loop_1:
     reg_d2.h[0] += *(u16 *) reg_a5;
     reg_a5 += 2;
     reg_d3.h[0] -= *(u16 *) reg_a5;
-    reg_a5 = (u8 *)D_0028E0A0;
+    reg_a5 = (u8 *)g_collision_bounds;
     reg_tmp.h[0] = *(u16 *) reg_a5;
     reg_a5 += 2;
     if ((s16) reg_tmp.h[0] >= (s16) reg_d2.h[0]) goto next_5;
@@ -178,7 +213,7 @@ next_7:
 next_9:
     reg_a6 += 0x2E;
     if ((s16) --reg_d5.h[0] >= 0) goto loop_1;
-    reg_a5 = (u8 *)D_0028E0A0;
+    reg_a5 = (u8 *)g_collision_bounds;
     *(u16 *) reg_a5 += reg_d6.h[0];
     reg_a5 += 2;
     *(u16 *) reg_a5 += reg_d6.h[0];
@@ -189,39 +224,39 @@ next_9:
     reg_a5 += 2;
 }
 
-extern u16 D_0028E0A8;
+extern u16 g_collision_hit_bits;
 extern u16 g_hyper_level_hit_scratch;
 extern u16 g_hyper_hit_scratch;
 
-void func_0020BD10(void)
+void player_bullet_collisions(void)
 {
-    D_0028E0A8 = reg_d0.h[0];
+    g_collision_hit_bits = reg_d0.h[0];
     g_hyper_hit_scratch = reg_d1.h[0];
     reg_d7.h[0] = 0x2800;
     g_hyper_level_hit_scratch = reg_d2.h[0];
 
     if (*(s16 *)reg_a4 < 0) {
-        func_0020E020();
+        player_vs_bullets();
     }
 }
 
 extern u32 g_laser_bomb_hit_entity_as_u32;
 extern u16 g_laser_bomb_hit_position;
-extern u16 D_0028E094;
-extern u16 D_0028E0A0_as_u16_a[];
+extern u16 g_player_was_hit;
+extern u16 g_collision_bounds_as_u16_a[];
 extern u8 g_game_mode;
-extern u16 D_0028E7B0;
-extern u16 D_0028E7E4;
-extern u16 D_0028E7E8;
+extern u16 g_item_count;
+extern u16 g_enemy_count_second;
+extern u16 g_enemy_count;
 extern u16 g_two_player_game;
 extern u16 g_bullet_count;
-extern u8 D_002962E0[];
+extern u8 g_bullets[];
 extern u16 D_00299768_as_u16_a[];
 extern u16 D_0029976A_as_u16_a[];
 extern u16 D_0029976C[];
 extern u16 D_0029976E[];
 extern u16 g_bomb_entities[];
-extern u16 D_002BB4B2[];
+extern u16 g_items_from_y[];
 extern u16 D_002BF4F0_as_u16_a[];
 #ifdef DEATH_LABEL
 extern u16 g_attract_demo;
@@ -231,7 +266,7 @@ extern u8 death_D_00290DC0;
 extern u16 D_00684C80[];
 #endif
 
-void func_0020BD60(void) {
+void player_collisions(void) {
     u8 *saved_a1;
     u32 tmp_dec;
     s32 tmp_dec2;
@@ -240,47 +275,47 @@ void func_0020BD60(void) {
     s32 base;
 #endif
 
-    D_0028E0A8 = reg_d0.h[0];
+    g_collision_hit_bits = reg_d0.h[0];
     g_hyper_hit_scratch = reg_d1.h[0];
     g_hyper_level_hit_scratch = reg_d2.h[0];
     reg_d7.h[0] = 0x2800;
     if ((s16) *(u16 *)reg_a4 < 0) {
-        D_0028E094 = 0;
-        func_0020E020();
-        if (D_0028E094 == 0) {
-            reg_d6.h[0] = D_0028E7B0;
+        g_player_was_hit = 0;
+        player_vs_bullets();
+        if (g_player_was_hit == 0) {
+            reg_d6.h[0] = g_item_count;
             reg_d0.h[0] += reg_d7.h[0];
             reg_d1.h[0] += reg_d7.h[0];
             reg_d2.h[0] += reg_d7.h[0];
             reg_d3.h[0] += reg_d7.h[0];
             if (reg_d6.h[0] != 0) {
                 reg_d6.h[0] -= 1;
-                reg_a6 = (u8 *)D_002BB4B2;
+                reg_a6 = (u8 *)g_items_from_y;
                 goto loop_5;
 skip_5:
                 reg_a6 += 0x3E;
 loop_5:
-                reg_d4.h[0] = ENTITY(reg_a6)->flags.h;
+                reg_d4.h[0] = FROM_Y(reg_a6)->y.h;
                 reg_a6 += 2;
                 if (reg_d4.h[0] == 0) goto skip_5;
                 reg_d4.h[0] += reg_d7.h[0];
                 reg_d5.h[0] = reg_d4.h[0];
-                reg_d5.h[0] -= ENTITY(reg_a6)->sprite.h;
+                reg_d5.h[0] -= FROM_X(reg_a6)->hit_y_plus.h;
                 if ((s32) reg_d5.h[0] <= (s32) reg_d0.h[0]) {
-                    reg_d4.h[0] += ENTITY(reg_a6)->sprite.h;
+                    reg_d4.h[0] += FROM_X(reg_a6)->hit_y_plus.h;
                     if ((s32) reg_d1.h[0] <= (s32) reg_d4.h[0]) {
-                        reg_d4.h[0] = ENTITY(reg_a6)->flags.h;
+                        reg_d4.h[0] = FROM_X(reg_a6)->x.h;
                         reg_d4.h[0] += reg_d7.h[0];
                         reg_d5.h[0] = reg_d4.h[0];
-                        reg_d4.h[0] += ENTITY(reg_a6)->look.h;
+                        reg_d4.h[0] += FROM_X(reg_a6)->hit_y_minus.h;
                         if ((s32) reg_d3.h[0] <= (s32) reg_d4.h[0]) {
-                            reg_d5.h[0] -= ENTITY(reg_a6)->look.h;
+                            reg_d5.h[0] -= FROM_X(reg_a6)->hit_y_minus.h;
                             if ((s32) reg_d5.h[0] <= (s32) reg_d2.h[0]) {
-                                reg_d4.h[0] = (*(u16 *)((u8 *)(reg_a6) + (-4)));
+                                reg_d4.h[0] = FLAGS_BEHIND(reg_a6, 4);
                                 reg_d4.h[0] &= 0xC0;
                                 if (reg_d4.h[0] == 0) {
-                                    reg_d4.h[0] = D_0028E0A8;
-                                    (*(u16 *)((u8 *)(reg_a6) + (-4))) |= reg_d4.h[0];
+                                    reg_d4.h[0] = g_collision_hit_bits;
+                                    FLAGS_BEHIND(reg_a6, 4) |= reg_d4.h[0];
                                 }
                             }
                         }
@@ -300,33 +335,33 @@ loop_17:
                     reg_tmp.h[0] = ENTITY(reg_a6)->flags.h;
                     reg_a6 += 2;
                     if ((s16) reg_tmp.h[0] >= 0) goto skip_17;
-                    reg_d4.h[0] = ENTITY(reg_a6)->flags.h;
+                    reg_d4.h[0] = FROM_Y(reg_a6)->y.h;
                     reg_a6 += 2;
                     if (reg_d4.h[0] == 0) goto next_17;
                     reg_d4.h[0] += reg_d7.h[0];
                     reg_d5.h[0] = reg_d4.h[0];
-                    reg_d5.h[0] -= ENTITY(reg_a6)->look.h;
+                    reg_d5.h[0] -= FROM_X(reg_a6)->hit_y_minus.h;
                     if ((s32) reg_d5.h[0] > (s32) reg_d0.h[0]) goto next_17;
-                    reg_d4.h[0] += ENTITY(reg_a6)->sprite.h;
+                    reg_d4.h[0] += FROM_X(reg_a6)->hit_y_plus.h;
                     if ((s32) reg_d1.h[0] > (s32) reg_d4.h[0]) goto next_17;
-                    reg_d4.h[0] = ENTITY(reg_a6)->flags.h;
+                    reg_d4.h[0] = FROM_X(reg_a6)->x.h;
                     reg_d4.h[0] += reg_d7.h[0];
                     reg_d5.h[0] = reg_d4.h[0];
-                    reg_d4.h[0] += ENTITY(reg_a6)->hit_y_plus.h;
+                    reg_d4.h[0] += FROM_X(reg_a6)->hit_x_plus.h;
                     if ((s32) reg_d3.h[0] > (s32) reg_d4.h[0]) goto next_17;
-                    reg_d5.h[0] -= ENTITY(reg_a6)->hit_y_minus.h;
+                    reg_d5.h[0] -= FROM_X(reg_a6)->hit_x_minus.h;
                     if ((s32) reg_d5.h[0] > (s32) reg_d2.h[0]) goto next_17;
-                    if ((s8) *(u8 *)(reg_a6 - 4) < 0) goto next_17;
-                    reg_d4.h[0] = D_0028E0A8;
-                    *(u16 *)(reg_a6 - 4) |= reg_d4.h[0];
+                    if ((s8) FLAGS_BYTE_BEHIND(reg_a6, 4, 0) < 0) goto next_17;
+                    reg_d4.h[0] = g_collision_hit_bits;
+                    FLAGS_BEHIND(reg_a6, 4) |= reg_d4.h[0];
 next_17:
                     reg_a6 += 0x28;
                     tmp_dec = reg_d6.h[0] - 1; reg_d6.h[0] = tmp_dec;
                     if (((s64) ((s64) (tmp_dec & 0xFFFF) << 0x30) >> 0x30) >= 0) goto loop_17;
             }
             reg_a6 = (u8 *)g_enemy_entities;
-            reg_d6.h[0] = D_0028E7E8;
-            reg_d6.h[0] += D_0028E7E4;
+            reg_d6.h[0] = g_enemy_count;
+            reg_d6.h[0] += g_enemy_count_second;
             if (reg_d6.h[0] != 0) {
                 reg_d6.h[0] -= 1;
                 goto loop_30;
@@ -336,34 +371,34 @@ loop_30:
                 reg_d4.h[0] = ENTITY(reg_a6)->flags.h;
                 reg_a6 += 2;
                 if ((s16) reg_d4.h[0] >= 0) goto skip_30;
-                reg_d4.h[0] = ENTITY(reg_a6)->flags.h;
+                reg_d4.h[0] = FROM_Y(reg_a6)->y.h;
                 reg_d4.h[0] += reg_d7.h[0];
                 reg_d5.h[0] = reg_d4.h[0];
-                reg_d5.h[0] -= ENTITY(reg_a6)->hit_y_plus.h;
+                reg_d5.h[0] -= FROM_Y(reg_a6)->hit_y_minus.h;
                 if ((s32) reg_d5.h[0] > (s32) reg_d0.h[0]) goto next_30;
-                reg_d4.h[0] += ENTITY(reg_a6)->look.h;
+                reg_d4.h[0] += FROM_Y(reg_a6)->hit_y_plus.h;
                 if ((s32) reg_d1.h[0] > (s32) reg_d4.h[0]) goto next_30;
-                reg_d4.h[0] = ENTITY(reg_a6)->y.h;
+                reg_d4.h[0] = FROM_Y(reg_a6)->x.h;
                 reg_d4.h[0] += reg_d7.h[0];
                 reg_d5.h[0] = reg_d4.h[0];
-                reg_d4.h[0] += ENTITY(reg_a6)->hit_y_minus.h;
+                reg_d4.h[0] += FROM_Y(reg_a6)->hit_x_plus.h;
                 if ((s32) reg_d3.h[0] > (s32) reg_d4.h[0]) goto next_30;
-                reg_d5.h[0] -= ENTITY(reg_a6)->hit_x_plus.h;
+                reg_d5.h[0] -= FROM_Y(reg_a6)->hit_x_minus.h;
                 if ((s32) reg_d5.h[0] > (s32) reg_d2.h[0]) goto next_30;
-                reg_d4.h[0] = (*(u16 *)((u8 *)(reg_a6) + (-2)));
+                reg_d4.h[0] = FLAGS_BEHIND(reg_a6, 2);
                 reg_d4.h[0] &= 1;
                 if (reg_d4.h[0] == 0) goto next_30;
-                reg_d4.h[0] = ENTITY(reg_a6)->flags.h;
+                reg_d4.h[0] = FROM_Y(reg_a6)->y.h;
                 reg_d4.h[0] += reg_d7.h[0];
-                reg_d4.h[0] -= ENTITY(reg_a6)->hit_y_plus.h;
+                reg_d4.h[0] -= FROM_Y(reg_a6)->hit_y_minus.h;
                 if (!((s32) reg_d4.h[0] < 0xF800)) goto next_30;
 #ifdef DEATH_LABEL
                 if (g_attract_demo != 0) goto block_23;
 #endif
                 *(u8 *)(reg_a4 + 1) |= 0x10;
-                reg_d4.h[0] = D_0028E0A8;
-                (*(u16 *)((u8 *)(reg_a6) + (-2))) |= reg_d4.h[0];
-                ENTITY(reg_a6)->hit_x_minus.h -= 1;
+                reg_d4.h[0] = g_collision_hit_bits;
+                FLAGS_BEHIND(reg_a6, 2) |= reg_d4.h[0];
+                FROM_Y(reg_a6)->hp.h -= 1;
                 goto block_23;
 next_30:
                 reg_a6 += 0x1E;
@@ -383,10 +418,10 @@ loop_40:
     goto exit_40;
 found_40:
     {
-        func_0020B770();
+        shots_bounds_get();
         saved_a1 = reg_a1;
         reg_a5 = (u8 *)g_enemy_entities;
-        reg_d6.h[0] = D_0028E7E8;
+        reg_d6.h[0] = g_enemy_count;
         if (reg_d6.h[0] == 0) goto done_48;
         reg_d6.h[0] -= 1;
         goto loop_48;
@@ -398,13 +433,13 @@ next_48:
 skip_48:
         reg_a5 += 0x1E;
 loop_48:
-        reg_d0.h[0] = *(u16 *)reg_a5;
+        reg_d0.h[0] = ENTITY(reg_a5)->flags.h;
         reg_a5 += 2;
         if ((s16)(reg_d0.h[0]) >= 0) goto skip_48;
         reg_d0.h[0] &= 0x2000;
         if (reg_d0.h[0] == 0) goto next_48;
-        reg_d0.h[0] = *(u16 *)reg_a5;
-        reg_d2.h[0] = *(u16 *)(reg_a5 + 2);
+        reg_d0.h[0] = FROM_Y(reg_a5)->y.h;
+        reg_d2.h[0] = FROM_Y(reg_a5)->x.h;
         reg_d0.h[0] += reg_d7.h[0];
         reg_d1.h[0] = reg_d0.h[0];
         reg_a1 = (u8 *)(reg_a5 + 0xE);
@@ -412,11 +447,11 @@ loop_48:
         reg_a1 += 2;
         reg_d1.h[0] -= *(u16 *)reg_a1;
         reg_a1 += 2;
-        reg_a6 = (u8 *)D_0028E0A0_as_u16_a;
-        reg_tmp.h[0] = ENTITY(reg_a6)->flags.h;
+        reg_a6 = (u8 *)g_collision_bounds_as_u16_a;
+        reg_tmp.h[0] = *(u16 *)reg_a6;
         reg_a6 += 2;
         if ((s32) reg_tmp.h[0] < (s32) reg_d1.h[0]) goto next_48;
-        reg_tmp.h[0] = ENTITY(reg_a6)->flags.h;
+        reg_tmp.h[0] = *(u16 *)reg_a6;
         reg_a6 += 2;
         if ((s32) reg_tmp.h[0] > (s32) reg_d0.h[0]) goto next_48;
         reg_d2.h[0] += reg_d7.h[0];
@@ -425,10 +460,10 @@ loop_48:
         reg_a1 += 2;
         reg_d3.h[0] -= *(u16 *)reg_a1;
         reg_a1 += 2;
-        reg_tmp.h[0] = ENTITY(reg_a6)->flags.h;
+        reg_tmp.h[0] = *(u16 *)reg_a6;
         reg_a6 += 2;
         if ((s32) reg_tmp.h[0] < (s32) reg_d3.h[0]) goto next_48;
-        reg_tmp.h[0] = ENTITY(reg_a6)->flags.h;
+        reg_tmp.h[0] = *(u16 *)reg_a6;
         reg_a6 += 2;
         if ((s32) reg_tmp.h[0] > (s32) reg_d2.h[0]) goto next_48;
         if (!((s32) reg_d1.h[0] < 0x9700)) goto next_48;
@@ -451,42 +486,42 @@ loop_59:
         reg_d5.h[0] = ENTITY(reg_a6)->flags.h;
         reg_a6 += 2;
         if ((s16) reg_d5.h[0] >= 0) goto skip_59;
-        reg_d4.h[0] = ENTITY(reg_a6)->flags.h;
+        reg_d4.h[0] = FROM_Y(reg_a6)->y.h;
         reg_a6 += 2;
         reg_d4.h[0] += reg_d7.h[0];
-        reg_d4.h[0] += ENTITY(reg_a6)->sprite.h;
+        reg_d4.h[0] += FROM_X(reg_a6)->hit_y_plus.h;
         if ((s32) reg_d1.h[0] > (s32) reg_d4.h[0]) goto next_59;
-        reg_d4.h[0] -= ENTITY(reg_a6)->look.h;
+        reg_d4.h[0] -= FROM_X(reg_a6)->hit_y_minus.h;
         if ((s32) reg_d4.h[0] > (s32) reg_d0.h[0]) goto next_59;
-        reg_d4.h[0] = ENTITY(reg_a6)->flags.h;
+        reg_d4.h[0] = FROM_X(reg_a6)->x.h;
         reg_d4.h[0] += reg_d7.h[0];
-        reg_d4.h[0] += ENTITY(reg_a6)->hit_y_plus.h;
+        reg_d4.h[0] += FROM_X(reg_a6)->hit_x_plus.h;
         if ((s32) reg_d3.h[0] > (s32) reg_d4.h[0]) goto next_59;
-        reg_d4.h[0] -= ENTITY(reg_a6)->hit_y_minus.h;
-        reg_d4.h[0] -= ENTITY(reg_a6)->hit_y_minus.h;
+        reg_d4.h[0] -= FROM_X(reg_a6)->hit_x_minus.h;
+        reg_d4.h[0] -= FROM_X(reg_a6)->hit_x_minus.h;
         if ((s32) reg_d4.h[0] > (s32) reg_d2.h[0]) goto next_59;
-        if (ENTITY(reg_a6)->hit_x_plus.sh < 0) goto cont_59;
-        reg_d4.h[0] = *(u16 *)(reg_a5 + 0x16);
+        if (FROM_X(reg_a6)->hp.sh < 0) goto cont_59;
+        reg_d4.h[0] = FROM_Y(reg_a5)->hp.h;
         reg_tmp4.h[0] = reg_d4.h[0];
-        reg_d4.h[0] = D_0028E0A8;
+        reg_d4.h[0] = g_collision_hit_bits;
         reg_d4.h[1] = reg_tmp4.h[0];
-        (*(u16 *)((u8 *)(reg_a5) + (-2))) |= reg_d4.h[0];
-        reg_d5.h[0] = ENTITY(reg_a6)->hit_x_plus.h;
+        FLAGS_BEHIND(reg_a5, 2) |= reg_d4.h[0];
+        reg_d5.h[0] = FROM_X(reg_a6)->hp.h;
         if (g_two_player_game == 0) {
             reg_d4.h[0] = reg_d5.h[0];
             reg_d4.h[0] >>= 2;
             reg_d5.h[0] -= reg_d4.h[0];
         }
-        (*(u8 *)((u8 *)(reg_a6) + (-4))) |= 0x80;
-        reg_d4.h[0] = *(u16 *)(reg_a5 + 0x16);
-        ENTITY(reg_a6)->hit_x_plus.h -= reg_d4.h[0];
+        FLAGS_BYTE_BEHIND(reg_a6, 4, 0) |= 0x80;
+        reg_d4.h[0] = FROM_Y(reg_a5)->hp.h;
+        FROM_X(reg_a6)->hp.h -= reg_d4.h[0];
         reg_tmp4.h[0] = reg_d4.h[0];
         reg_d4.h[0] = reg_d4.h[1];
         reg_d4.h[1] = reg_tmp4.h[0];
-        *(u16 *)(reg_a5 + 0x16) = (u16) reg_d4.h[0];
-        if ((s32) *(u16 *)reg_a5 > 0x6EFF) goto cont_59;
-        *(u16 *)(reg_a5 + 0x16) -= reg_d5.h[0];
-        if (*(s16 *)(reg_a5 + 0x16) < 0) goto end_59;
+        FROM_Y(reg_a5)->hp.h = (u16) reg_d4.h[0];
+        if ((s32) FROM_Y(reg_a5)->y.h > 0x6EFF) goto cont_59;
+        FROM_Y(reg_a5)->hp.h -= reg_d5.h[0];
+        if (FROM_Y(reg_a5)->hp.sh < 0) goto end_59;
 cont_59:
         reg_a6 += 0x2C;
         tmp_dec = reg_d6.h[0] - 1; reg_d6.h[0] = tmp_dec;
@@ -500,11 +535,11 @@ end_59:
         if (((s64) ((s64) (tmp_dec & 0xFFFF) << 0x30) >> 0x30) >= 0) goto loop_48;
 done_48:
         reg_a5 = (u8 *)g_enemy_entities_second;
-        reg_d6.h[0] = D_0028E7E4;
+        reg_d6.h[0] = g_enemy_count_second;
         if (reg_d6.h[0] == 0) goto done_76;
         reg_d6.h[0] -= 1;
         reg_d7.h[0] = 0xF000;
-        reg_a1 = (u8 *)(D_0028E0A0_as_u16_a);
+        reg_a1 = (u8 *)(g_collision_bounds_as_u16_a);
         *(u16 *)reg_a1 += reg_d7.h[0];
         reg_a1 += 2;
         *(u16 *)reg_a1 += reg_d7.h[0];
@@ -523,13 +558,13 @@ next_76:
 skip_76:
         reg_a5 += 0x1E;
 loop_76:
-        reg_d0.h[0] = *(u16 *)reg_a5;
+        reg_d0.h[0] = ENTITY(reg_a5)->flags.h;
         reg_a5 += 2;
         if ((s16)(reg_d0.h[0]) >= 0) goto skip_76;
         reg_d0.h[0] &= 0x2000;
         if (reg_d0.h[0] == 0) goto next_76;
-        reg_d0.h[0] = *(u16 *)reg_a5;
-        reg_d2.h[0] = *(u16 *)(reg_a5 + 2);
+        reg_d0.h[0] = FROM_Y(reg_a5)->y.h;
+        reg_d2.h[0] = FROM_Y(reg_a5)->x.h;
         reg_d0.h[0] += reg_d7.h[0];
         reg_d1.h[0] = reg_d0.h[0];
         reg_a1 = (u8 *)(reg_a5 + 0xE);
@@ -537,11 +572,11 @@ loop_76:
         reg_a1 += 2;
         reg_d1.h[0] -= *(u16 *)reg_a1;
         reg_a1 += 2;
-        reg_a6 = (u8 *)D_0028E0A0_as_u16_a;
-        reg_tmp.h[0] = ENTITY(reg_a6)->flags.h;
+        reg_a6 = (u8 *)g_collision_bounds_as_u16_a;
+        reg_tmp.h[0] = *(u16 *)reg_a6;
         reg_a6 += 2;
         if ((s32) reg_tmp.h[0] < (s32) reg_d1.h[0]) goto next_76;
-        reg_tmp.h[0] = ENTITY(reg_a6)->flags.h;
+        reg_tmp.h[0] = *(u16 *)reg_a6;
         reg_a6 += 2;
         if ((s32) reg_tmp.h[0] > (s32) reg_d0.h[0]) goto next_76;
         reg_d2.h[0] += reg_d7.h[0];
@@ -550,10 +585,10 @@ loop_76:
         reg_a1 += 2;
         reg_d3.h[0] -= *(u16 *)reg_a1;
         reg_a1 += 2;
-        reg_tmp.h[0] = ENTITY(reg_a6)->flags.h;
+        reg_tmp.h[0] = *(u16 *)reg_a6;
         reg_a6 += 2;
         if ((s32) reg_tmp.h[0] < (s32) reg_d3.h[0]) goto next_76;
-        reg_tmp.h[0] = ENTITY(reg_a6)->flags.h;
+        reg_tmp.h[0] = *(u16 *)reg_a6;
         reg_a6 += 2;
         if ((s32) reg_tmp.h[0] > (s32) reg_d2.h[0]) goto next_76;
         if (!((s32) reg_d1.h[0] < 0x8800)) goto next_76;
@@ -571,37 +606,37 @@ loop_85:
         reg_d5.h[0] = ENTITY(reg_a6)->flags.h;
         reg_a6 += 2;
         if ((s16) reg_d5.h[0] >= 0) goto skip_85;
-        reg_d4.h[0] = ENTITY(reg_a6)->flags.h;
+        reg_d4.h[0] = FROM_Y(reg_a6)->y.h;
         reg_a6 += 2;
         reg_d4.h[0] += reg_d7.h[0];
-        reg_d4.h[0] += ENTITY(reg_a6)->sprite.h;
+        reg_d4.h[0] += FROM_X(reg_a6)->hit_y_plus.h;
         if ((s32) reg_d1.h[0] > (s32) reg_d4.h[0]) goto next_85;
-        reg_d4.h[0] -= ENTITY(reg_a6)->look.h;
+        reg_d4.h[0] -= FROM_X(reg_a6)->hit_y_minus.h;
         if ((s32) reg_d4.h[0] > (s32) reg_d0.h[0]) goto next_85;
-        reg_d4.h[0] = ENTITY(reg_a6)->flags.h;
+        reg_d4.h[0] = FROM_X(reg_a6)->x.h;
         reg_d4.h[0] += reg_d7.h[0];
-        reg_d4.h[0] += ENTITY(reg_a6)->hit_y_plus.h;
+        reg_d4.h[0] += FROM_X(reg_a6)->hit_x_plus.h;
         if ((s32) reg_d3.h[0] > (s32) reg_d4.h[0]) goto next_85;
-        reg_d4.h[0] -= ENTITY(reg_a6)->hit_y_minus.h;
-        reg_d4.h[0] -= ENTITY(reg_a6)->hit_y_minus.h;
+        reg_d4.h[0] -= FROM_X(reg_a6)->hit_x_minus.h;
+        reg_d4.h[0] -= FROM_X(reg_a6)->hit_x_minus.h;
         if ((s32) reg_d4.h[0] > (s32) reg_d2.h[0]) goto next_85;
         reg_d4.w = 0x30;
-        reg_d4.b[0] &= (*(u8 *)((u8 *)(reg_a6) + (-3)));
+        reg_d4.b[0] &= FLAGS_BYTE_BEHIND(reg_a6, 4, 1);
         if (reg_d4.b[0] != 0) goto next_85;
-        if (ENTITY(reg_a6)->hit_x_plus.sh < 0) goto next_85;
-        reg_d4.h[0] = D_0028E0A8;
-        (*(u16 *)((u8 *)(reg_a5) + (-2))) |= reg_d4.h[0];
-        (*(u8 *)((u8 *)(reg_a6) + (-4))) |= 0x80;
-        reg_d5.h[0] = ENTITY(reg_a6)->hit_x_plus.h;
-        reg_d4.h[0] = *(u16 *)(reg_a5 + 0x16);
-        ENTITY(reg_a6)->hit_x_plus.h -= reg_d4.h[0];
+        if (FROM_X(reg_a6)->hp.sh < 0) goto next_85;
+        reg_d4.h[0] = g_collision_hit_bits;
+        FLAGS_BEHIND(reg_a5, 2) |= reg_d4.h[0];
+        FLAGS_BYTE_BEHIND(reg_a6, 4, 0) |= 0x80;
+        reg_d5.h[0] = FROM_X(reg_a6)->hp.h;
+        reg_d4.h[0] = FROM_Y(reg_a5)->hp.h;
+        FROM_X(reg_a6)->hp.h -= reg_d4.h[0];
         if (g_two_player_game == 0) {
             reg_d4.h[0] = reg_d5.h[0];
             reg_d4.h[0] >>= 2;
             reg_d5.h[0] -= reg_d4.h[0];
         }
-        *(u16 *)(reg_a5 + 0x16) -= reg_d5.h[0];
-        if (*(s16 *)(reg_a5 + 0x16) < 0) goto end_85;
+        FROM_Y(reg_a5)->hp.h -= reg_d5.h[0];
+        if (FROM_Y(reg_a5)->hp.sh < 0) goto end_85;
 next_85:
         reg_a6 += 0x2C;
         tmp_dec = reg_d6.h[0] - 1; reg_d6.h[0] = tmp_dec;
@@ -640,39 +675,39 @@ exit_40:
         reg_a5 = (u8 *)g_enemy_entities;
         reg_d7.h[0] = 0x95;
 loop_100:
-        reg_d4.h[0] = *(u16 *)reg_a5;
+        reg_d4.h[0] = ENTITY(reg_a5)->flags.h;
         if ((s16) reg_d4.h[0] >= 0) goto next_100;
-        reg_d4.h[0] = *(u16 *)(reg_a5 + 2);
+        reg_d4.h[0] = ENTITY(reg_a5)->y.h;
         reg_d4.h[0] += reg_d6.h[0];
         reg_d5.h[0] = reg_d4.h[0];
-        reg_d4.h[0] += *(u16 *)(reg_a5 + 0x10);
+        reg_d4.h[0] += ENTITY(reg_a5)->hit_y_plus.h;
         if ((s32) reg_d1.h[0] > (s32) reg_d4.h[0]) goto next_100;
-        reg_d5.h[0] -= *(u16 *)(reg_a5 + 0x12);
+        reg_d5.h[0] -= ENTITY(reg_a5)->hit_y_minus.h;
         if ((s32) reg_d5.h[0] > (s32) reg_d0.h[0]) goto next_100;
         if (!((s32) reg_d5.h[0] < 0x9800)) goto next_100;
-        reg_d4.h[0] = *(u16 *)(reg_a5 + 4);
+        reg_d4.h[0] = ENTITY(reg_a5)->x.h;
         reg_d4.h[0] += reg_d6.h[0];
         reg_d5.h[0] = reg_d4.h[0];
-        reg_d4.h[0] += *(u16 *)(reg_a5 + 0x14);
+        reg_d4.h[0] += ENTITY(reg_a5)->hit_x_plus.h;
         if ((s32) reg_d3.h[0] > (s32) reg_d4.h[0]) goto next_100;
-        reg_d5.h[0] -= *(u16 *)(reg_a5 + 0x16);
+        reg_d5.h[0] -= ENTITY(reg_a5)->hit_x_minus.h;
         if ((s32) reg_d5.h[0] > (s32) reg_d2.h[0]) goto next_100;
-        reg_d4.b[0] = *(u8 *)(reg_a5 + 1);
+        reg_d4.b[0] = ENTITY(reg_a5)->flags.b[1];
         if (reg_d4.h[0] & 0x20) goto hit_100;
         if (!(reg_d4.h[0] & 1)) goto next_100;
 hit_100:
-        if (*(s16 *)(reg_a5 + 0x18) < 0) goto next_100;
+        if (ENTITY(reg_a5)->hp.sh < 0) goto next_100;
         reg_d5.h[0] = *(u16 *)(reg_a2 + 0x18);
         if (g_two_player_game == 0) {
             reg_d4.h[0] = reg_d5.h[0];
             reg_d4.h[0] >>= 1;
             reg_d5.h[0] -= reg_d4.h[0];
         }
-        reg_d4.h[0] = D_0028E0A8;
+        reg_d4.h[0] = g_collision_hit_bits;
         reg_d4.h[0] |= 0x400;
-        *(u16 *)reg_a5 |= reg_d4.h[0];
-        if ((s32) *(u16 *)(reg_a5 + 2) < 0x6F00) {
-            *(u16 *)(reg_a5 + 0x18) -= reg_d5.h[0];
+        ENTITY(reg_a5)->flags.h |= reg_d4.h[0];
+        if ((s32) ENTITY(reg_a5)->y.h < 0x6F00) {
+            ENTITY(reg_a5)->hp.h -= reg_d5.h[0];
         }
 next_100:
         reg_a5 += 0x20;
@@ -680,7 +715,7 @@ next_100:
         if (((s64) ((s64) (tmp_dec & 0xFFFF) << 0x30) >> 0x30) >= 0) goto loop_100;
 check_110:
         if (*(s16 *)reg_a3 >= 0) {
-            func_0020E230();
+            laser_collisions();
             return;
         }
         reg_a0 = reg_a3 + 0x10;
@@ -697,25 +732,25 @@ check_110:
         reg_a5 = (u8 *)g_enemy_entities;
         reg_d7.h[0] = 0x95;
 loop_110:
-        reg_d4.b[0] = *(u8 *)(reg_a5 + 1);
+        reg_d4.b[0] = ENTITY(reg_a5)->flags.b[1];
         if ((s8) reg_d4.b[0] >= 0) goto next_110;
-        reg_d4.h[0] = *(u16 *)(reg_a5 + 2);
+        reg_d4.h[0] = ENTITY(reg_a5)->y.h;
         reg_d4.h[0] += reg_d6.h[0];
         reg_d5.h[0] = reg_d4.h[0];
-        reg_d5.h[0] -= *(u16 *)(reg_a5 + 0x12);
+        reg_d5.h[0] -= ENTITY(reg_a5)->hit_y_minus.h;
         if ((s32) reg_d5.h[0] > (s32) reg_d0.h[0]) goto next_110;
-        reg_d4.h[0] += *(u16 *)(reg_a5 + 0x10);
+        reg_d4.h[0] += ENTITY(reg_a5)->hit_y_plus.h;
         if ((s32) reg_d1.h[0] > (s32) reg_d4.h[0]) goto next_110;
         if (!((s32) reg_d5.h[0] < 0x9700)) goto next_110;
-        reg_d4.h[0] = *(u16 *)(reg_a5 + 4);
+        reg_d4.h[0] = ENTITY(reg_a5)->x.h;
         reg_d4.h[0] += reg_d6.h[0];
         reg_d5.h[0] = reg_d4.h[0];
-        reg_d4.h[0] += *(u16 *)(reg_a5 + 0x14);
+        reg_d4.h[0] += ENTITY(reg_a5)->hit_x_plus.h;
         if ((s32) reg_d3.h[0] > (s32) reg_d4.h[0]) goto next_110;
-        reg_d5.h[0] -= *(u16 *)(reg_a5 + 0x16);
+        reg_d5.h[0] -= ENTITY(reg_a5)->hit_x_minus.h;
         if ((s32) reg_d5.h[0] > (s32) reg_d2.h[0]) goto next_110;
-        if (!(*(u8 *)(reg_a5 + 1) & 0x20)) goto next_110;
-        if (*(s16 *)(reg_a5 + 0x18) < 0) goto next_110;
+        if (!(ENTITY(reg_a5)->flags.b[1] & 0x20)) goto next_110;
+        if (ENTITY(reg_a5)->hp.sh < 0) goto next_110;
         reg_d5.h[0] = *(u16 *)(reg_a3 + 0x18);
         if (g_hyper_hit_scratch != 0) {
             reg_d5.h[0] += reg_d5.h[0];
@@ -725,17 +760,17 @@ loop_110:
             reg_d4.h[0] >>= 1;
             reg_d5.h[0] -= reg_d4.h[0];
         }
-        reg_d4.h[0] = D_0028E0A8;
+        reg_d4.h[0] = g_collision_hit_bits;
         reg_d4.h[0] |= 0x4400;
-        *(u16 *)reg_a5 |= reg_d4.h[0];
-        if ((s32) *(u16 *)(reg_a5 + 2) < 0x6F00) {
-            *(u16 *)(reg_a5 + 0x18) -= reg_d5.h[0];
+        ENTITY(reg_a5)->flags.h |= reg_d4.h[0];
+        if ((s32) ENTITY(reg_a5)->y.h < 0x6F00) {
+            ENTITY(reg_a5)->hp.h -= reg_d5.h[0];
         }
 next_110:
         reg_a5 += 0x20;
         tmp_dec = reg_d7.h[0] - 1; reg_d7.h[0] = tmp_dec;
         if (((s64) ((s64) (tmp_dec & 0xFFFF) << 0x30) >> 0x30) >= 0) goto loop_110;
-        func_0020E230();
+        laser_collisions();
 block_120:
         reg_a6 = (u8 *)(g_bomb_entities);
         reg_a0 = (u8 *)(reg_a6);
@@ -746,19 +781,19 @@ block_120:
             g_laser_bomb_hit_entity_as_u32 = reg_d0.w;
             if (!(reg_d5.h[0] & 0xFFFF & 1)) {
                 reg_a5 = (u8 *)g_enemy_entities;
-                reg_d6.h[0] = D_0028E0A8;
+                reg_d6.h[0] = g_collision_hit_bits;
                 reg_d7.h[0] = 0x95;
                 reg_d5.w = 0x50;
                 if (ENTITY(reg_a6)->misc.h == 0) {
                     reg_d5.w = 1;
                 }
 loop_130:
-                reg_d0.h[0] = *(u16 *)reg_a5;
+                reg_d0.h[0] = ENTITY(reg_a5)->flags.h;
                 if ((s16) reg_d0.h[0] >= 0) goto next_130;
-                if (*(s16 *)(reg_a5 + 0x18) < 0) goto next_130;
+                if (ENTITY(reg_a5)->hp.sh < 0) goto next_130;
                 if (!(reg_d0.h[0] & 0xFFFF & 0x2000)) goto next_130;
                 reg_a1 = reg_a5 + 0x10;
-                reg_d0.h[0] = *(u16 *)(reg_a5 + 2);
+                reg_d0.h[0] = ENTITY(reg_a5)->y.h;
                 reg_d1.h[0] = reg_d0.h[0];
                 reg_d0.h[0] += *(u16 *)reg_a1; reg_a1 += 2;
                 reg_tmp1.w = 0x2800;
@@ -770,7 +805,7 @@ loop_130:
                 reg_d1.h[0] -= *(u16 *)reg_a1; reg_a1 += 2;
                 reg_d1.h[0] += 0x2800;
                 if (!((s32) reg_d1.h[0] < 0x9801)) goto next_130;
-                reg_d2.h[0] = *(u16 *)(reg_a5 + 4);
+                reg_d2.h[0] = ENTITY(reg_a5)->x.h;
                 reg_d3.h[0] = reg_d2.h[0];
                 reg_d2.h[0] += *(u16 *)reg_a1; reg_a1 += 2;
                 if ((s16) reg_d2.h[0] < 0) goto next_130;
@@ -825,24 +860,24 @@ loop_130:
                         }
                     }
                     if (gain != 0) {
-                        *(u16 *)(reg_a5 + 0x18) += gain;
+                        ENTITY(reg_a5)->hp.h += gain;
                     } else {
-                        *(u16 *)(reg_a5 + 0x18) -= reg_d5.h[0];
+                        ENTITY(reg_a5)->hp.h -= reg_d5.h[0];
                     }
 #else
-                    *(u16 *)(reg_a5 + 0x18) += (u16) ((s32) reg_d5.h[0] >> 2);
+                    ENTITY(reg_a5)->hp.h += (u16) ((s32) reg_d5.h[0] >> 2);
 #endif
                 } else {
-                    *(u16 *)(reg_a5 + 0x18) -= reg_d5.h[0];
+                    ENTITY(reg_a5)->hp.h -= reg_d5.h[0];
                 }
-                *(u16 *)reg_a5 |= reg_d6.h[0];
+                ENTITY(reg_a5)->flags.h |= reg_d6.h[0];
 next_130:
                 reg_a5 += 0x20;
                 tmp_dec = reg_d7.h[0] - 1; reg_d7.h[0] = tmp_dec;
                 if (((s64) ((s64) (tmp_dec & 0xFFFF) << 0x30) >> 0x30) >= 0) goto loop_130;
                 return;
             }
-            func_0020BA40();
+            bomb_bounds_get();
             reg_a5 = (u8 *)g_enemy_entities_second;
             reg_d7.w = 0x31;
             goto loop_140;
@@ -851,14 +886,14 @@ skip_140:
             tmp_dec = reg_d7.h[0] - 1; reg_d7.h[0] = tmp_dec;
             if (((s64) ((s64) (tmp_dec & 0xFFFF) << 0x30) >> 0x30) < 0) goto done_140;
 loop_140:
-            reg_d0.h[0] = *(u16 *)reg_a5;
+            reg_d0.h[0] = ENTITY(reg_a5)->flags.h;
             if ((s16) reg_d0.h[0] >= 0) goto skip_140;
-            if (*(s16 *)(reg_a5 + 0x18) < 0) goto skip_140;
+            if (ENTITY(reg_a5)->hp.sh < 0) goto skip_140;
             if (reg_d0.h[0] & 0xFFFF & 0x2000) goto hit_140;
             if (!(reg_d0.h[0] & 0xFFFF & 1)) goto skip_140;
 hit_140:
-            reg_d0.h[0] = *(u16 *)(reg_a5 + 2);
-            reg_d2.h[0] = *(u16 *)(reg_a5 + 4);
+            reg_d0.h[0] = ENTITY(reg_a5)->y.h;
+            reg_d2.h[0] = ENTITY(reg_a5)->x.h;
             reg_d0.h[0] += reg_d6.h[0];
             reg_d1.h[0] = reg_d0.h[0];
             reg_d2.h[0] += reg_d6.h[0];
@@ -868,14 +903,14 @@ hit_140:
             reg_d1.h[0] -= *(u16 *)reg_a2; reg_a2 += 2;
             reg_d2.h[0] += *(u16 *)reg_a2; reg_a2 += 2;
             reg_d3.h[0] -= *(u16 *)reg_a2; reg_a2 += 2;
-            reg_a6 = (u8 *) D_0028E0A0_as_u16_a;
-            reg_tmp.h[0] = ENTITY(reg_a6)->flags.h; reg_a6 += 2;
+            reg_a6 = (u8 *) g_collision_bounds_as_u16_a;
+            reg_tmp.h[0] = *(u16 *)reg_a6; reg_a6 += 2;
             if ((s32) reg_tmp.h[0] < (s32) reg_d3.h[0]) goto skip_140;
-            reg_tmp.h[0] = ENTITY(reg_a6)->flags.h; reg_a6 += 2;
+            reg_tmp.h[0] = *(u16 *)reg_a6; reg_a6 += 2;
             if ((s32) reg_tmp.h[0] > (s32) reg_d2.h[0]) goto skip_140;
-            reg_tmp.h[0] = ENTITY(reg_a6)->flags.h; reg_a6 += 2;
+            reg_tmp.h[0] = *(u16 *)reg_a6; reg_a6 += 2;
             if ((s32) reg_tmp.h[0] < (s32) reg_d1.h[0]) goto skip_140;
-            reg_tmp.h[0] = ENTITY(reg_a6)->flags.h; reg_a6 += 2;
+            reg_tmp.h[0] = *(u16 *)reg_a6; reg_a6 += 2;
             if ((s32) reg_tmp.h[0] > (s32) reg_d0.h[0]) goto skip_140;
             if (!((s32) reg_d1.h[0] < 0x9800)) goto skip_140;
             reg_tmp7.h[0] = reg_d7.h[0];
@@ -925,9 +960,9 @@ next_145:
 done_140:
             if (g_laser_bomb_hit_entity_as_u32 != 0) {
                 reg_a5 = (u8 *) g_laser_bomb_hit_entity_as_u32;
-                reg_d4.h[0] = D_0028E0A8;
+                reg_d4.h[0] = g_collision_hit_bits;
                 reg_d4.h[0] |= 0x400;
-                *(u16 *)reg_a5 |= reg_d4.h[0];
+                ENTITY(reg_a5)->flags.h |= reg_d4.h[0];
                 if (g_game_mode == 2) {
 #ifdef DEATH_LABEL
                     gain = 0x208;
@@ -975,15 +1010,15 @@ done_140:
                         }
                     }
                     if (gain != 0) {
-                        *(u16 *)(reg_a5 + 0x18) += gain;
+                        ENTITY(reg_a5)->hp.h += gain;
                     } else {
-                        *(u16 *)(reg_a5 + 0x18) -= 0x208;
+                        ENTITY(reg_a5)->hp.h -= 0x208;
                     }
 #else
-                    *(u16 *)(reg_a5 + 0x18) += 0x82;
+                    ENTITY(reg_a5)->hp.h += 0x82;
 #endif
                 } else {
-                    *(u16 *)(reg_a5 + 0x18) -= 0x208;
+                    ENTITY(reg_a5)->hp.h -= 0x208;
                 }
             }
             reg_a1 = reg_a0;
@@ -995,16 +1030,16 @@ skip_150:
             tmp_dec = reg_d7.h[0] - 1; reg_d7.h[0] = tmp_dec;
             if (((s64) ((s64) (tmp_dec & 0xFFFF) << 0x30) >> 0x30) < 0) goto start_160;
 loop_150:
-            reg_d1.h[0] = *(u16 *)reg_a5;
+            reg_d1.h[0] = ENTITY(reg_a5)->flags.h;
             if ((s16) reg_d1.h[0] >= 0) goto skip_150;
             if (reg_d1.h[0] & 0xFFFF & 0x2000) goto alive_150;
             if (reg_d1.h[0] & 0xFFFF & 1) goto hit_150;
             goto skip_150;
 alive_150:
-            if (*(s16 *)(reg_a5 + 0x18) < 0) goto skip_150;
+            if (ENTITY(reg_a5)->hp.sh < 0) goto skip_150;
 hit_150:
-            reg_d0.h[0] = *(u16 *)(reg_a5 + 2);
-            reg_d2.h[0] = *(u16 *)(reg_a5 + 4);
+            reg_d0.h[0] = ENTITY(reg_a5)->y.h;
+            reg_d2.h[0] = ENTITY(reg_a5)->x.h;
             reg_d0.h[0] += reg_d6.h[0];
             reg_d1.h[0] = reg_d0.h[0];
             reg_d2.h[0] += reg_d6.h[0];
@@ -1014,16 +1049,16 @@ hit_150:
             reg_d1.h[0] -= *(u16 *)reg_a2; reg_a2 += 2;
             reg_d2.h[0] += *(u16 *)reg_a2; reg_a2 += 2;
             reg_d3.h[0] -= *(u16 *)reg_a2; reg_a2 += 2;
-            reg_a6 = (u8 *) D_0028E0A0_as_u16_a;
-            reg_tmp.h[0] = ENTITY(reg_a6)->flags.h; reg_a6 += 2;
+            reg_a6 = (u8 *) g_collision_bounds_as_u16_a;
+            reg_tmp.h[0] = *(u16 *)reg_a6; reg_a6 += 2;
             if ((s32) reg_tmp.h[0] < (s32) reg_d3.h[0]) goto skip_150;
-            reg_tmp.h[0] = ENTITY(reg_a6)->flags.h; reg_a6 += 2;
+            reg_tmp.h[0] = *(u16 *)reg_a6; reg_a6 += 2;
             if ((s32) reg_tmp.h[0] > (s32) reg_d2.h[0]) goto skip_150;
-            reg_tmp.h[0] = ENTITY(reg_a6)->flags.h; reg_a6 += 2;
+            reg_tmp.h[0] = *(u16 *)reg_a6; reg_a6 += 2;
             if ((s32) reg_tmp.h[0] < (s32) reg_d1.h[0]) goto skip_150;
-            reg_tmp.h[0] = ENTITY(reg_a6)->flags.h; reg_a6 += 2;
+            reg_tmp.h[0] = *(u16 *)reg_a6; reg_a6 += 2;
             if ((s32) reg_tmp.h[0] > (s32) reg_d0.h[0]) goto skip_150;
-            reg_d4.h[0] = *(u16 *)(reg_a5 + 2);
+            reg_d4.h[0] = ENTITY(reg_a5)->y.h;
             if (!((s32) reg_d4.h[0] < 0x7000)) goto skip_150;
             if (g_laser_bomb_hit_entity_as_u32 == 0) goto scan_150;
             if (!((s32) reg_d4.h[0] < (s32) g_laser_bomb_hit_position)) goto skip_150;
@@ -1052,11 +1087,11 @@ loop_155:
             reg_d5.h[0] -= ENTITY(reg_a6)->hit_x_minus.h;
             if ((s32) reg_d5.h[0] > (s32) reg_d2.h[0]) goto next_155;
             ENTITY(reg_a6)->flags.b[1] |= 0x10;
-            reg_d4.h[0] = D_0028E0A8;
+            reg_d4.h[0] = g_collision_hit_bits;
             reg_d4.h[0] |= 0x400;
-            *(u16 *)reg_a5 |= reg_d4.h[0];
-            *(u16 *)(reg_a5 + 0x18) -= 0x1E0;
-            if (*(s16 *)(reg_a5 + 0x18) < 0) goto end_155;
+            ENTITY(reg_a5)->flags.h |= reg_d4.h[0];
+            ENTITY(reg_a5)->hp.h -= 0x1E0;
+            if (ENTITY(reg_a5)->hp.sh < 0) goto end_155;
 next_155:
             reg_a6 += 0x30;
             tmp_dec2 = reg_d7.h[0] - 1; reg_d7.h[0] = tmp_dec2;
@@ -1069,7 +1104,7 @@ end_155:
             tmp_dec = reg_d7.h[0] - 1; reg_d7.h[0] = tmp_dec;
             if (((s64) ((s64) (tmp_dec & 0xFFFF) << 0x30) >> 0x30) >= 0) goto loop_150;
 start_160:
-            reg_a5 = (u8 *)(D_002962E0 + 2);
+            reg_a5 = (u8 *)(g_bullets + 2);
             reg_d7.h[0] = MAIN_OR_DEATH_LABEL(0x45, 0x15D);
             if (D_00299768_as_u16_a[0] == 0) goto loop_160;
             reg_d7.h[0] = MAIN_OR_DEATH_LABEL(0x6D, 0x225);
@@ -1088,14 +1123,14 @@ hit_160:
             reg_d0.h[0] += reg_d6.h[0];
             reg_d2.h[0] = *(u16 *)(reg_a5 + 2);
             reg_d2.h[0] += reg_d6.h[0];
-            reg_a6 = (u8 *) D_0028E0A0_as_u16_a;
-            reg_tmp.h[0] = ENTITY(reg_a6)->flags.h; reg_a6 += 2;
+            reg_a6 = (u8 *) g_collision_bounds_as_u16_a;
+            reg_tmp.h[0] = *(u16 *)reg_a6; reg_a6 += 2;
             if ((s32) reg_tmp.h[0] < (s32) reg_d2.h[0]) goto next_160;
-            reg_tmp.h[0] = ENTITY(reg_a6)->flags.h; reg_a6 += 2;
+            reg_tmp.h[0] = *(u16 *)reg_a6; reg_a6 += 2;
             if ((s32) reg_tmp.h[0] > (s32) reg_d2.h[0]) goto next_160;
-            reg_tmp.h[0] = ENTITY(reg_a6)->flags.h; reg_a6 += 2;
+            reg_tmp.h[0] = *(u16 *)reg_a6; reg_a6 += 2;
             if ((s32) reg_tmp.h[0] < (s32) reg_d0.h[0]) goto next_160;
-            reg_tmp.h[0] = ENTITY(reg_a6)->flags.h; reg_a6 += 2;
+            reg_tmp.h[0] = *(u16 *)reg_a6; reg_a6 += 2;
             if ((s32) reg_tmp.h[0] > (s32) reg_d0.h[0]) goto next_160;
             reg_tmp7.h[0] = reg_d7.h[0];
             reg_d7.h[0] = reg_d7.h[1];
@@ -1140,16 +1175,16 @@ next_160:
 }
 
 
-void func_0020E020(void) {
-    reg_d0.h[0] = *(u16 *) (reg_a4 + 2);
+void player_vs_bullets(void) {
+    reg_d0.h[0] = ENTITY(reg_a4)->y.h;
     reg_d1.h[0] = reg_d0.h[0];
-    reg_d0.h[0] += *(u16 *) (reg_a4 + 0x10);
-    reg_d1.h[0] -= *(u16 *) (reg_a4 + 0x12);
-    reg_d2.h[0] = *(u16 *) (reg_a4 + 4);
+    reg_d0.h[0] += ENTITY(reg_a4)->hit_y_plus.h;
+    reg_d1.h[0] -= ENTITY(reg_a4)->hit_y_minus.h;
+    reg_d2.h[0] = ENTITY(reg_a4)->x.h;
     reg_d3.h[0] = reg_d2.h[0];
-    reg_d2.h[0] += *(u16 *) (reg_a4 + 0x14);
-    reg_d3.h[0] -= *(u16 *) (reg_a4 + 0x16);
-    reg_a6 = (u8 *)D_002962E0 + 2;
+    reg_d2.h[0] += ENTITY(reg_a4)->hit_x_plus.h;
+    reg_d3.h[0] -= ENTITY(reg_a4)->hit_x_minus.h;
+    reg_a6 = (u8 *)g_bullets + 2;
     reg_d6.h[0] = MAIN_OR_DEATH_LABEL(6, 34);
     if (D_00299768_as_u16_a[0] == 0) goto loop_5;
     reg_d6.h[0] = MAIN_OR_DEATH_LABEL(0xA, 54);
@@ -1160,34 +1195,34 @@ void func_0020E020(void) {
     if (D_0029976E[0] == 0) goto loop_5;
     reg_d6.h[0] = MAIN_OR_DEATH_LABEL(0x14, 104);
 loop_5:
-    func_0020B6A0();
+    bullet_hits_player_check();
     if (cond_flag != 0) return;
     reg_a6 += 0x3E;
-    func_0020B6A0();
+    bullet_hits_player_check();
     if (cond_flag != 0) return;
     reg_a6 += 0x3E;
-    func_0020B6A0();
+    bullet_hits_player_check();
     if (cond_flag != 0) return;
     reg_a6 += 0x3E;
-    func_0020B6A0();
+    bullet_hits_player_check();
     if (cond_flag != 0) return;
     reg_a6 += 0x3E;
-    func_0020B6A0();
+    bullet_hits_player_check();
     if (cond_flag != 0) return;
     reg_a6 += 0x3E;
-    func_0020B6A0();
+    bullet_hits_player_check();
     if (cond_flag != 0) return;
     reg_a6 += 0x3E;
-    func_0020B6A0();
+    bullet_hits_player_check();
     if (cond_flag != 0) return;
     reg_a6 += 0x3E;
-    func_0020B6A0();
+    bullet_hits_player_check();
     if (cond_flag != 0) return;
     reg_a6 += 0x3E;
-    func_0020B6A0();
+    bullet_hits_player_check();
     if (cond_flag != 0) return;
     reg_a6 += 0x3E;
-    func_0020B6A0();
+    bullet_hits_player_check();
     if (cond_flag != 0) return;
     reg_a6 += 0x3E;
     if ((s16) --reg_d6.h[0] >= 0) goto loop_5;
@@ -1195,14 +1230,14 @@ loop_5:
 
 extern s16 D_0028E098_as_s16;
 
-void func_0020E230() {
+void laser_collisions() {
     D_0028E098_as_s16 = 0;
     reg_a2 = reg_a1;
     if (*(s16 *)reg_a1 < 0) {
         reg_tmp.b[0] = *(u8 *)(reg_a1 + 1);
         *(u8 *)(reg_a1 + 1) |= 2;
         if (reg_tmp.b[0] & 2) {
-            func_0020E290();
+            laser_vs_enemies();
         }
     }
 }
@@ -1210,7 +1245,7 @@ void func_0020E230() {
 extern u16 D_0028E098;
 extern u16 D_00299764[];
 
-void func_0020E290(void) {
+void laser_vs_enemies(void) {
     *(u8 *) (reg_a1 + 1) &= 0xEF;
     *(u16 *) (reg_a1 + 0x10) = 0x7400;
     *(u16 *) (reg_a1 + 0x10) += reg_d6.h[0];
@@ -1249,37 +1284,37 @@ skip_2:
     reg_a5 += 0x20;
     if ((s16) --reg_d7.h[0] < 0) goto next_70;
 loop_10:
-    reg_d4.b[0] = *(u8 *) (reg_a5 + 1);
+    reg_d4.b[0] = ENTITY(reg_a5)->flags.b[1];
     if ((s8) reg_d4.b[0] >= 0) goto skip_2;
-    reg_d4.h[1] = *(u16 *) (reg_a5 + 2);
-    reg_d4.h[0] = *(u16 *) (reg_a5 + 4);
+    reg_d4.h[1] = ENTITY(reg_a5)->y.h;
+    reg_d4.h[0] = ENTITY(reg_a5)->x.h;
     reg_d4.h[0] += reg_d6.h[0];
     reg_d5.h[0] = reg_d4.h[0];
-    reg_d4.h[0] += *(u16 *) (reg_a5 + 0x14);
+    reg_d4.h[0] += ENTITY(reg_a5)->hit_x_plus.h;
     if ((s32) reg_d3.h[0] > (s32) reg_d4.h[0]) goto skip_2;
-    reg_d5.h[0] -= *(u16 *) (reg_a5 + 0x16);
+    reg_d5.h[0] -= ENTITY(reg_a5)->hit_x_minus.h;
     if ((s32) reg_d5.h[0] > (s32) reg_d2.h[0]) goto skip_2;
     reg_tmp4.h[0] = reg_d4.h[0];
     reg_d4.h[0] = reg_d4.h[1];
     reg_d4.h[1] = reg_tmp4.h[0];
     reg_d4.h[0] += reg_d6.h[0];
     reg_d5.h[0] = reg_d4.h[0];
-    reg_d4.h[0] -= *(u16 *) (reg_a5 + 0x12);
+    reg_d4.h[0] -= ENTITY(reg_a5)->hit_y_minus.h;
     if ((s32) reg_d4.h[0] > (s32) reg_d0.h[0]) goto skip_2;
-    reg_d5.h[0] += *(u16 *) (reg_a5 + 0x10);
+    reg_d5.h[0] += ENTITY(reg_a5)->hit_y_plus.h;
     if ((s32) reg_d1.h[0] > (s32) reg_d5.h[0]) goto skip_2;
     if (reg_d4.h[0] >= 0x9800) goto skip_2;
     reg_tmp4.h[0] = reg_d4.h[0];
     reg_d4.h[0] = reg_d4.h[1];
     reg_d4.h[1] = reg_tmp4.h[0];
-    if (!(*(u8 *) (reg_a5 + 1) & 0x20)) goto skip_2;
-    if (*(s16 *) (reg_a5 + 0x18) < 0) goto next_60;
+    if (!(ENTITY(reg_a5)->flags.b[1] & 0x20)) goto skip_2;
+    if (ENTITY(reg_a5)->hp.sh < 0) goto next_60;
     reg_d5.h[0] = *(u16 *) (reg_a1 + 0xE);
     if (g_hyper_hit_scratch == 0) goto next_13;
     if (D_00299764[0] != 0) goto next_20;
 next_13:
     if (*(u16 *) (reg_a1 + 0x1A) == 0) goto next_20;
-    if (!(*(u8 *) (reg_a5 + 1) & 2)) goto next_20;
+    if (!(ENTITY(reg_a5)->flags.b[1] & 2)) goto next_20;
     reg_d5.h[0] += reg_d5.h[0];
     goto next_40;
 next_20:
@@ -1302,21 +1337,21 @@ next_40:
     reg_d4.h[0] >>= 2;
     reg_d5.h[0] -= reg_d4.h[0];
 next_50:
-    reg_d4.h[0] = D_0028E0A8;
+    reg_d4.h[0] = g_collision_hit_bits;
     reg_d4.h[0] |= 0x400;
-    *(u16 *) (reg_a5 + 0) |= reg_d4.h[0];
-    if (*(u16 *) (reg_a5 + 2) >= 0x6F00) goto next_60;
-    *(u16 *) (reg_a5 + 0x18) -= reg_d5.h[0];
+    ENTITY(reg_a5)->flags.h |= reg_d4.h[0];
+    if (ENTITY(reg_a5)->y.h >= 0x6F00) goto next_60;
+    ENTITY(reg_a5)->hp.h -= reg_d5.h[0];
 next_60:
     reg_a5 += 0x20;
     if ((s16) --reg_d7.h[0] >= 0) goto loop_10;
 next_70:
-    func_0020E6F0();
+    laser_vs_enemies_second();
 }
 
 extern u8 g_boss_present_b1;
 
-void func_0020E6F0(void) {
+void laser_vs_enemies_second(void) {
     reg_a1 = reg_a2;
     if (g_hyper_hit_scratch == 0) goto next_10;
     if (D_00299764[0] == 0) goto next_5;
@@ -1342,31 +1377,31 @@ skip_2:
     reg_a5 += 0x20;
     if ((s16) --reg_d7.h[0] < 0) goto next_70;
 loop_20:
-    reg_d4.b[0] = *(u8 *) (reg_a5 + 1);
+    reg_d4.b[0] = ENTITY(reg_a5)->flags.b[1];
     if ((s8) reg_d4.b[0] >= 0) goto skip_2;
-    reg_d4.h[1] = *(u16 *) (reg_a5 + 2);
-    reg_d4.h[0] = *(u16 *) (reg_a5 + 4);
+    reg_d4.h[1] = ENTITY(reg_a5)->y.h;
+    reg_d4.h[0] = ENTITY(reg_a5)->x.h;
     reg_d4.h[0] += reg_d6.h[0];
     reg_d5.h[0] = reg_d4.h[0];
-    reg_d4.h[0] += *(u16 *) (reg_a5 + 0x14);
+    reg_d4.h[0] += ENTITY(reg_a5)->hit_x_plus.h;
     if ((s32) reg_d3.h[0] > (s32) reg_d4.h[0]) goto skip_2;
-    reg_d5.h[0] -= *(u16 *) (reg_a5 + 0x16);
+    reg_d5.h[0] -= ENTITY(reg_a5)->hit_x_minus.h;
     if ((s32) reg_d5.h[0] > (s32) reg_d2.h[0]) goto skip_2;
     reg_tmp4.h[0] = reg_d4.h[0];
     reg_d4.h[0] = reg_d4.h[1];
     reg_d4.h[1] = reg_tmp4.h[0];
     reg_d4.h[0] += reg_d6.h[0];
     reg_d5.h[0] = reg_d4.h[0];
-    reg_d4.h[0] -= *(u16 *) (reg_a5 + 0x12);
+    reg_d4.h[0] -= ENTITY(reg_a5)->hit_y_minus.h;
     if ((s32) reg_d4.h[0] > (s32) reg_d0.h[0]) goto skip_2;
-    reg_d5.h[0] += *(u16 *) (reg_a5 + 0x10);
+    reg_d5.h[0] += ENTITY(reg_a5)->hit_y_plus.h;
     if ((s32) reg_d1.h[0] > (s32) reg_d5.h[0]) goto skip_2;
     if (reg_d4.h[0] >= 0x9800) goto skip_2;
     reg_tmp4.h[0] = reg_d4.h[0];
     reg_d4.h[0] = reg_d4.h[1];
     reg_d4.h[1] = reg_tmp4.h[0];
-    if (!(*(u8 *) (reg_a5 + 1) & 0x20)) goto skip_2;
-    if (*(s16 *) (reg_a5 + 0x18) < 0) goto next_60;
+    if (!(ENTITY(reg_a5)->flags.b[1] & 0x20)) goto skip_2;
+    if (ENTITY(reg_a5)->hp.sh < 0) goto next_60;
     reg_d5.h[0] = *(u16 *) (reg_a1 + 0xE);
     reg_tmp4.h[0] = reg_d4.h[0];
     reg_d4.h[0] = reg_d4.h[1];
@@ -1395,10 +1430,10 @@ next_44:
     reg_d4.h[0] >>= 2;
     reg_d5.h[0] -= reg_d4.h[0];
 next_50:
-    reg_d4.h[0] = D_0028E0A8;
+    reg_d4.h[0] = g_collision_hit_bits;
     reg_d4.h[0] |= 0x400;
-    *(u16 *) (reg_a5 + 0) |= reg_d4.h[0];
-    *(u16 *) (reg_a5 + 0x18) -= reg_d5.h[0];
+    ENTITY(reg_a5)->flags.h |= reg_d4.h[0];
+    ENTITY(reg_a5)->hp.h -= reg_d5.h[0];
 next_60:
     reg_a5 += 0x20;
     if ((s16) --reg_d7.h[0] >= 0) goto loop_20;
@@ -1407,9 +1442,9 @@ next_70:
 }
 
 /* .sbss (the compiler lays these out in reverse) */
-u16 D_0028E0A8;
-u8 D_0028E0A0[8];
+u16 g_collision_hit_bits;
+u8 g_collision_bounds[8];
 u16 D_0028E098 __attribute__((aligned(4)));
-u16 D_0028E094 __attribute__((aligned(4)));
+u16 g_player_was_hit __attribute__((aligned(4)));
 u16 D_0028E090 __attribute__((aligned(4)));
 u16 D_0028E08C __attribute__((aligned(4)));

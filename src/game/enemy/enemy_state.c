@@ -5,8 +5,8 @@
 
 /* .sbss (the compiler lays these out in reverse) */
 u16 D_0028E7EC __attribute__((aligned(4)));
-u16 D_0028E7E8 __attribute__((aligned(4)));
-u16 D_0028E7E4 __attribute__((aligned(4)));
+u16 g_enemy_count __attribute__((aligned(4)));
+u16 g_enemy_count_second __attribute__((aligned(4)));
 s16 D_0028E7E0 __attribute__((aligned(4)));
 s16 D_0028E7DC __attribute__((aligned(4)));
 s16 D_0028E7D8 __attribute__((aligned(4)));

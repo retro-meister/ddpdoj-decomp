@@ -1639,11 +1639,11 @@ void func_00128640(void) {
     *(u16 *)(reg_a6 + 2) = 0xFFFF;
 }
 
-extern u8 D_002962E0[];
+extern u8 g_bullets[];
 
 void func_00128660(void) {
-    memset(D_002962E0, 0, MAIN_OR_DEATH_LABEL(0x3494, 0x10694));
-    reg_a0 = D_002962E0 + 2;
+    memset(g_bullets, 0, MAIN_OR_DEATH_LABEL(0x3494, 0x10694));
+    reg_a0 = g_bullets + 2;
     reg_d0.h[0] = MAIN_OR_DEATH_LABEL(0xD1, 0x419);
     do {
         *(u16 *)reg_a0 = 0xFFFF;
@@ -1840,7 +1840,7 @@ void bullet_spawn(void) {
         goto next_3;
     }
 next_1:
-    reg_a0 = (u8 *)D_002962E0;
+    reg_a0 = (u8 *)g_bullets;
     reg_d7.w = MAIN_OR_DEATH_LABEL(0xD, 0x45);
     if (D_00299768_as_u16_a[0] == 0) {
         goto loop_2;
@@ -2180,7 +2180,7 @@ void bullet_spawn256(void) {
         goto next_3;
     }
 next_1:
-    reg_a0 = (u8 *)D_002962E0;
+    reg_a0 = (u8 *)g_bullets;
     reg_d7.w = MAIN_OR_DEATH_LABEL(0xD, 0x45);
     if (D_00299768_as_u16_a[0] == 0) {
         goto loop_2;
@@ -2430,11 +2430,11 @@ void func_00129BE0(void) {
     if (D_00299764[0] == 0) {
         return;
     }
-    reg_d0.h[0] = *(u16 *)(D_002962E0 + MAIN_OR_DEATH_LABEL(0x3486, 0x10686));
+    reg_d0.h[0] = *(u16 *)(g_bullets + MAIN_OR_DEATH_LABEL(0x3486, 0x10686));
     if ((s16) reg_d0.h[0] < 0) {
         goto next_3;
     }
-    reg_a6 = (u8 *)D_002962E0;
+    reg_a6 = (u8 *)g_bullets;
     reg_d7.h[0] = MAIN_OR_DEATH_LABEL(0x45, 0x15D);
     if (D_00299768_as_u16_a[0] == 0) {
         goto loop_1;
@@ -2455,7 +2455,7 @@ void func_00129BE0(void) {
 loop_1:
     if (0 > (s64) *(s8 *) (reg_a6 + 1)) {
         D_0028DEA4 = reg_d7.w;
-        reg_d0.h[0] = *(u16 *)(D_002962E0 + MAIN_OR_DEATH_LABEL(0x3486, 0x10686));
+        reg_d0.h[0] = *(u16 *)(g_bullets + MAIN_OR_DEATH_LABEL(0x3486, 0x10686));
         MAIN_OR_DEATH_LABEL(func_00125EE0, death_func_00128A90)();
         reg_d7.w = D_0028DEA4;
         func_00128640();
@@ -2466,7 +2466,7 @@ loop_1:
     }
     return;
 next_3:
-    reg_a6 = (u8 *)D_002962E0;
+    reg_a6 = (u8 *)g_bullets;
     reg_d2.w = 0x40;
     reg_d7.h[0] = MAIN_OR_DEATH_LABEL(0x45, 0x15D);
     if (D_00299768_as_u16_a[0] == 0) {

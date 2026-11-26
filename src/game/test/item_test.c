@@ -96,7 +96,7 @@ void func_0016C620(void) {
 }
 
 extern u8 D_0026B090[];
-extern u16 D_0028E7B0;
+extern u16 g_item_count;
 
 
 void func_0016C770(void) {
@@ -156,7 +156,7 @@ void func_0016C770(void) {
     cond_flag = 0;
     reg_a2 += 2;
     reg_a0 += 2;
-    D_0028E7B0 += 1;
+    g_item_count += 1;
 }
 
 extern u16 D_0028E7AC;
@@ -209,7 +209,7 @@ void func_0016CA20(void) {
     reg_a0 += 2;
     *(u16 *)reg_a0 = (u16) D_0028E7AC;
     reg_a0 += 2;
-    D_0028E7B0 += 1;
+    g_item_count += 1;
     D_0028E7AC += 0xC;
     if (D_0028E7AC == 0x9C) {
         D_0028E7AC = 0;

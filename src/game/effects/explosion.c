@@ -48,8 +48,8 @@ void func_00170A50(s32, s32, s32);
 s32 p1_options_update();
 s32 func_001B8410();
 s32 func_0020A540();
-s32 func_0020BD10();
-s32 func_0020BD60();
+s32 player_bullet_collisions();
+s32 player_collisions();
 s32 func_00211670();
 extern u16 g_frame_mod2;
 extern u16 g_p2_hyper_level;
@@ -120,7 +120,7 @@ void func_00139B80(void) {
             reg_d1.h[0] = t2;
             reg_d2.h[0] = t1;
             if (g_frame_mod2 == 0) {
-                func_0020BD60();
+                player_collisions();
                 return;
             }
             goto next_1;
@@ -138,7 +138,7 @@ void func_00139B80(void) {
             reg_d1.h[0] = t2;
             reg_d2.h[0] = t1;
             if (g_frame_mod2 != 0) {
-                func_0020BD60();
+                player_collisions();
                 return;
             }
 next_1:
@@ -146,7 +146,7 @@ next_1:
             case 0:
                 break;
             default:
-                func_0020BD10();
+                player_bullet_collisions();
             }
         }
     } else {
@@ -159,7 +159,7 @@ next_1:
             reg_d0.h[0] = 0x1000;
             reg_d1.h[0] = g_p1_hyper_active;
             reg_d2.h[0] = g_p1_hyper_level;
-            func_0020BD60();
+            player_collisions();
             return;
         }
         reg_a0 = (u8 *)D_0029EA50;
@@ -170,7 +170,7 @@ next_1:
         reg_d0.h[0] = 0x800;
         reg_d1.h[0] = g_p2_hyper_active;
         reg_d2.h[0] = g_p2_hyper_level;
-        func_0020BD60();
+        player_collisions();
     }
 }
 

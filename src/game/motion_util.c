@@ -162,13 +162,13 @@ extern s32 reg_save_a3;
 extern u16 *reg_save_a2_as_u16_p;
 extern s32 reg_save_a1_as_s32;
 extern s32 reg_save_a0;
-extern u16 D_002962E0_as_u16_a[];
+extern u16 g_bullets_as_u16_a[];
 
 void func_00201A00(void) {
     u16 *var_a0;
-    var_a0 = (u16 *)(D_002962E0_as_u16_a);
+    var_a0 = (u16 *)(g_bullets_as_u16_a);
     reg_d2.w = 0;
-    reg_a2 = (u8 *)(D_002962E0_as_u16_a);
+    reg_a2 = (u8 *)(g_bullets_as_u16_a);
     reg_d7.h[0] = MAIN_OR_DEATH_LABEL(0xD1, 0x419);
     do {
         reg_d0.h[0] = *(u16 *)reg_a2;

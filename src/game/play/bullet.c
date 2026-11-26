@@ -26,7 +26,7 @@ extern u8 g_boss_present_b1;
 extern u16 g_loop;
 extern u16 g_stage;
 extern s16 D_00299760_as_s16_a[];
-extern u8 D_002962E0[];
+extern u8 g_bullets[];
 #ifdef DEATH_LABEL
 extern s16 death_D_002512A0[];
 extern s16 death_D_002512B0[];
@@ -41,10 +41,10 @@ void func_00129DB0(void) {
     reg_a0 = (u8 *)g_sprite_bullets_buf;
     D_0028DEAC = (u8 *)(reg_a4);
     reg_a0 += g_sprite_bullets_used;
-    *(u8 **)(D_002962E0 + MAIN_OR_DEATH_LABEL(0x3490, 0x10690)) = reg_a0;
+    *(u8 **)(g_bullets + MAIN_OR_DEATH_LABEL(0x3490, 0x10690)) = reg_a0;
     func_00129EF0();
     reg_d1.w = (u32) g_sprite_bullets_buf;
-    reg_d0.w = (u32) *(u8 **)(D_002962E0 + MAIN_OR_DEATH_LABEL(0x3490, 0x10690));
+    reg_d0.w = (u32) *(u8 **)(g_bullets + MAIN_OR_DEATH_LABEL(0x3490, 0x10690));
     reg_d0.w -= reg_d1.w;
     reg_a4 = (u8 *)((u32)reg_a4 - (u32)D_0028DEAC);
     reg_tmp.w = (u32) reg_a4;
@@ -111,8 +111,8 @@ extern u16 g_side_scroll_step[];
 extern u8 g_bomb_entities_as_u8_a[];
 extern u16 *reg_a4_as_u16_p;
 
-#define SLOT_PHASE MAIN_OR_DEATH_LABEL(D_00299762[0], *(u16 *)(D_002962E0 + 0x10682))
-#define SLOT_CURSOR MAIN_OR_DEATH_LABEL(D_00299770[0], *(u8 **)(D_002962E0 + 0x10690))
+#define SLOT_PHASE MAIN_OR_DEATH_LABEL(D_00299762[0], *(u16 *)(g_bullets + 0x10682))
+#define SLOT_CURSOR MAIN_OR_DEATH_LABEL(D_00299770[0], *(u8 **)(g_bullets + 0x10690))
 
 void func_00129EF0(void) {
     u8 *var_a0;
@@ -224,7 +224,7 @@ void func_00129EF0(void) {
     u8 *var_a1_2;
 
 
-    reg_a6 = D_002962E0;
+    reg_a6 = g_bullets;
     reg_d7.h[0] = MAIN_OR_DEATH_LABEL(0x45, 0x15D);
     reg_d6.h[0] = g_side_scroll_step[0];
     if (D_00299768_as_u16_a[0] != 0) {
@@ -2877,9 +2877,9 @@ u8 D_00269800[64] = {
 /* .bss (the compiler lays these out in reverse) */
 u8 *D_00299770[4];
 #ifdef DEATH_LABEL
-u8 D_002962E0[67216];
+u8 g_bullets[67216];
 #else
-u8 D_002962E0[13456];
+u8 g_bullets[13456];
 #endif
 
 /* .sbss (the compiler lays these out in reverse) */

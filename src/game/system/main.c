@@ -34,7 +34,7 @@ s32 func_00206D60();
 s32 zoom_init();
 s32 test_mode_init();
 s32 settings_reset();
-s32 func_0020B690();
+s32 collision_reset();
 s32 slowdown_init();
 s32 slowdown_update();
 s32 func_0020F550();
@@ -119,7 +119,7 @@ void func_002120D0(void) {
     hud_setup();
     func_00131490();
     sound_unused();
-    func_0020B690();
+    collision_reset();
     slowdown_init();
     zoom_init();
     layers_clear_all();

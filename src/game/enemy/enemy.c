@@ -30,8 +30,8 @@ extern s16 g_spawn_request_end_as_s16;
 extern s16 D_0028E7D8;
 extern s16 D_0028E7DC;
 extern s16 D_0028E7E0;
-extern s16 D_0028E7E4_as_s16;
-extern s16 D_0028E7E8_as_s16;
+extern s16 g_enemy_count_second_as_s16;
+extern s16 g_enemy_count_as_s16;
 extern s16 D_0028E7EC_as_s16;
 
 /* The reset clears the entity pools as bytes through the first one's address: the
@@ -67,8 +67,8 @@ void enemies_reset(void) {
     D_0028E7D8 = 0;
     D_0028E7DC = 0;
     D_0028E7E0 = 0;
-    D_0028E7E4_as_s16 = 0;
-    D_0028E7E8_as_s16 = 0;
+    g_enemy_count_second_as_s16 = 0;
+    g_enemy_count_as_s16 = 0;
     D_0028E7EC_as_s16 = 0;
     for (i = 0; i < 0xC80; i++) {
         ((s8 *)g_spawn_requests)[i] = 0;
@@ -230,8 +230,8 @@ void enemies_frame(void) {
 
 typedef void (*Fn)();
 
-extern u16 D_0028E7E4;
-extern u16 D_0028E7E8;
+extern u16 g_enemy_count_second;
+extern u16 g_enemy_count;
 extern u16 D_0028E7EC;
 extern u16 g_side_scroll_step[];
 extern u8 *reg_call_target_as_u8_p;
@@ -241,9 +241,9 @@ void enemies_run(void) {
 
     reg_a5 = (u8 *)&g_enemy_slots;
     D_0028E7EC = 0;
-    D_0028E7E8 = 0;
+    g_enemy_count = 0;
     reg_d6.h[0] = 0x39;
-    D_0028E7E4 = 0;
+    g_enemy_count_second = 0;
     do {
         if (*(u16 *)reg_a5 != 0) {
             reg_tmp.h[1] = *(u16 *)(reg_a5 + 6);
@@ -264,9 +264,9 @@ void enemies_run(void) {
                 D_0028E7EC += 1;
                 reg_d2.b[0] = *(u8 *)(reg_a5 + 0xC);
                 if (((s8) reg_d2.b[0] >= 0) && !(reg_d2.w & 0x20)) {
-                    D_0028E7E8 += reg_d0.h[0];
+                    g_enemy_count += reg_d0.h[0];
                 } else {
-                    D_0028E7E4 += reg_d0.h[0];
+                    g_enemy_count_second += reg_d0.h[0];
                 }
             }
         }

@@ -18,7 +18,7 @@ void func_0016C2A0(void);
 void func_0016C350(void);
 void func_0016C410(void);
 
-extern u8 D_002BB4B0[];
+extern u8 g_items[];
 extern u8 D_002BB6B0[];
 extern u8 D_002BB730[];
 extern u8 D_002BB7B0[];
@@ -27,7 +27,7 @@ extern u8 D_002BBAB0[];
 
 void func_0016A8F0(void) {
     if (reg_d0.h[0] == 0) {
-        reg_a0 = (u8 *)D_002BB4B0;
+        reg_a0 = (u8 *)g_items;
         reg_d2.h[0] = 7;
         return;
     }
@@ -92,7 +92,7 @@ void func_0016AA30(void) {
 }
 
 extern s16 D_0028E7AC_as_s16;
-extern s16 D_0028E7B0_as_s16;
+extern s16 g_item_count_as_s16;
 
 void func_0016AAB0(void) {
     u8 *p0;
@@ -110,7 +110,7 @@ void func_0016AAB0(void) {
 
     n0 = 0;
     do {
-        p1 = (D_002BB4B0 + n0);
+        p1 = (g_items + n0);
         p1[0] = 0;
         n0 += 8;
         p1[1] = 0;
@@ -123,7 +123,7 @@ void func_0016AAB0(void) {
     } while (n0 < 0x200);
     n1 = 0;
     do {
-        p0 = (D_002BB4B0 + 0x200 + n1);
+        p0 = (g_items + 0x200 + n1);
         p0[0] = 0;
         n1 += 8;
         p0[1] = 0;
@@ -136,7 +136,7 @@ void func_0016AAB0(void) {
     } while (n1 < 0x80);
     n2 = 0;
     do {
-        p2 = (D_002BB4B0 + 0x280 + n2);
+        p2 = (g_items + 0x280 + n2);
         p2[0] = 0;
         n2 += 8;
         p2[1] = 0;
@@ -149,7 +149,7 @@ void func_0016AAB0(void) {
     } while (n2 < 0x80);
     n3 = 0;
     do {
-        p3 = (D_002BB4B0 + 0x300 + n3);
+        p3 = (g_items + 0x300 + n3);
         p3[0] = 0;
         n3 += 8;
         p3[1] = 0;
@@ -162,7 +162,7 @@ void func_0016AAB0(void) {
     } while (n3 < 0x180);
     n4 = 0;
     do {
-        p4 = (D_002BB4B0 + 0x480 + n4);
+        p4 = (g_items + 0x480 + n4);
         p4[0] = 0;
         n4 += 8;
         p4[1] = 0;
@@ -175,7 +175,7 @@ void func_0016AAB0(void) {
     } while (n4 < 0x180);
     n5 = 0;
     do {
-        p5 = (D_002BB4B0 + 0x600 + n5);
+        p5 = (g_items + 0x600 + n5);
         p5[0] = 0;
         n5 += 8;
         p5[1] = 0;
@@ -186,7 +186,7 @@ void func_0016AAB0(void) {
         p5[6] = 0;
         p5[7] = 0;
     } while (n5 < 0x40);
-    D_0028E7B0_as_s16 = 0;
+    g_item_count_as_s16 = 0;
     D_0028E7AC_as_s16 = 0;
 }
 
@@ -194,19 +194,19 @@ typedef void (*Fn)();
 
 s32 func_0016C4B0();
 extern u8 D_0026ADA0[];
-extern u16 D_0028E7B0;
+extern u16 g_item_count;
 extern u16 g_side_scroll_step[];
 
 void func_0016AC30(void) {
     u32 cnt;
     u8 flags;
 
-    reg_d7.h[0] = D_0028E7B0;
-    if (D_0028E7B0 == 0) {
+    reg_d7.h[0] = g_item_count;
+    if (g_item_count == 0) {
         return;
     }
     reg_d7.h[0] -= 1;
-    reg_a6 = (u8 *)D_002BB4B0;
+    reg_a6 = (u8 *)g_items;
     goto loop_1;
 next_1:
     reg_a6 += 0x40;
@@ -1019,7 +1019,7 @@ void func_0016C260(void) {
     ENTITY(reg_a6)->flags.h = (u16) reg_d0.h[1];
     ENTITY(reg_a6)->y.h = (u16) reg_d0.h[0];
     cond_flag = 1;
-    D_0028E7B0 -= 1;
+    g_item_count -= 1;
 }
 
 s32 score_add_masked();
@@ -1092,7 +1092,7 @@ void func_0016C410() {
 }
 
 /* .sbss (the compiler lays these out in reverse) */
-u16 D_0028E7B0 __attribute__((aligned(4)));
+u16 g_item_count __attribute__((aligned(4)));
 u16 D_0028E7AC;
 u8 D_0028E7A8[4];
 u8 D_0028E7A4[4];
@@ -1103,4 +1103,4 @@ u8 D_002BB930[384];
 u8 D_002BB7B0[384];
 u8 D_002BB730[128];
 u8 D_002BB6B0[128];
-u8 D_002BB4B0[512];
+u8 g_items[512];

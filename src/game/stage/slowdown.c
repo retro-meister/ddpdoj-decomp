@@ -38,7 +38,7 @@ extern u16 g_slowdown_forced_frames_as_u16;
 extern u16 g_frame_mod3;
 extern u16 g_p2_hyper_active;
 extern u16 g_p1_hyper_active;
-extern u16 D_0028E7E4;
+extern u16 g_enemy_count_second;
 extern u16 g_loop;
 extern u16 g_stage_x4;
 extern u16 g_stage_x2;
@@ -57,7 +57,7 @@ void slowdown_update(void) {
     }
     if (g_slowdown_off_as_u16 != 0) return;
     reg_d0.h[0] = D_00299760[0];
-    if (D_0028E7E4 == 0) goto next_5;
+    if (g_enemy_count_second == 0) goto next_5;
     if (g_slowdown_boss_allowed_as_u16 == 0) return;
 next_5:
     reg_d0.h[0] += g_player_shot_count;
