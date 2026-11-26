@@ -1,5 +1,6 @@
 #include "common.h"
 #include "entity.h"
+#include "stage3_boss.h"
 
 void stage3_boss_mode_enter_start(void);
 void stage3_boss_mode_enter(void);
@@ -21,13 +22,6 @@ void stage3_boss_mode_low_all_guns_start(void);
 void stage3_boss_mode_low_all_guns(void);
 void stage3_boss_mode_phase_explosion_start(void);
 void stage3_boss_mode_phase_explosion(void);
-
-/* Two bytes of a boss slot that are set together as one word: a reload value and its countdown. */
-typedef union {
-    u16 h;
-    s16 sh;
-    struct { u8 reload; u8 count; } t;
-} SlotTimer;
 
 /*
  * The mode part of the boss slot (reg_a4). `running` is cleared when the mode hands over. Most modes only wait.

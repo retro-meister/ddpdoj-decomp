@@ -1,5 +1,6 @@
 #include "common.h"
 #include "entity.h"
+#include "stage3_boss.h"
 
 void stage3_boss_legs_walk_start(void);
 void stage3_boss_legs_walk(void);
@@ -17,13 +18,6 @@ void stage3_boss_lid_idle_start(void);
 void stage3_boss_lid_idle(void);
 void stage3_boss_entrance_anim_start(void);
 void stage3_boss_entrance_anim(void);
-
-/* Two bytes of a boss slot that are set together as one word: a reload value and its countdown. */
-typedef union {
-    u16 h;
-    s16 sh;
-    struct { u8 reload; u8 count; } t;
-} SlotTimer;
 
 /*
  * The animation part of the boss slot (reg_a4). `running` is cleared when the animation is over. Every animation

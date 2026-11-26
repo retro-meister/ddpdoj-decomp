@@ -1,5 +1,6 @@
 #include "common.h"
 #include "entity.h"
+#include "stage3_boss.h"
 
 void stage3_boss_move_enter_start(void);
 void stage3_boss_move_enter(void);
@@ -9,13 +10,6 @@ void stage3_boss_move_wander_high_start(void);
 void stage3_boss_move_wander_high(void);
 void stage3_boss_move_wander_mid_start(void);
 void stage3_boss_move_wander_mid(void);
-
-/* Two bytes of a boss slot that are set together as one word: a reload value and its countdown. */
-typedef union {
-    u16 h;
-    s16 sh;
-    struct { u8 reload; u8 count; } t;
-} SlotTimer;
 
 /* The movement part of the boss slot (reg_a4). */
 typedef struct {

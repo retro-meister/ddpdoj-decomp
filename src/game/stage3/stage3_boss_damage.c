@@ -1,5 +1,6 @@
 #include "common.h"
 #include "entity.h"
+#include "stage3_boss.h"
 
 void stage3_boss_defeated(void);
 void func_001D4510(void);
@@ -40,8 +41,8 @@ void stage3_boss_take_damage(void) {
     B(0x67) = 0x10;
     B(0x66) = 0x11;
     B(0x69) = 0x12;
-    reg_tmp.h[1] = *(u16 *)(reg_a5 + 0x16);
-    reg_tmp.h[0] = *(u16 *)(reg_a5 + 0x18);
+    reg_tmp.h[1] = STAGE3_BOSS(reg_a5)->hp[0];
+    reg_tmp.h[0] = STAGE3_BOSS(reg_a5)->hp[1];
     if (reg_tmp.w >= 0x8C00) goto block_check;
     if (g_damage_blink_counter != 0) goto block_check;
     reg_d0.w = 0x19;
@@ -96,8 +97,8 @@ next_20:
     W(0xF8) = reg_d5.h[0];
     reg_d5.h[0] -= reg_d4.h[0];
     if (W(0x88) != 0) goto block_check;
-    reg_tmp5.h[1] = *(u16 *)(reg_a5 + 0x16);
-    reg_tmp5.h[0] = *(u16 *)(reg_a5 + 0x18);
+    reg_tmp5.h[1] = STAGE3_BOSS(reg_a5)->hp[0];
+    reg_tmp5.h[0] = STAGE3_BOSS(reg_a5)->hp[1];
     if (g_game_mode == 2) {
         if (m0 > 0x7FFF) {
             reg_tmp5.w += m0 - 0x7FFF;
@@ -108,14 +109,14 @@ next_20:
     } else {
         reg_tmp5.w -= reg_d5.w;
     }
-    *(u16 *)(reg_a5 + 0x16) = reg_tmp5.h[1];
-    *(u16 *)(reg_a5 + 0x18) = reg_tmp5.h[0];
+    STAGE3_BOSS(reg_a5)->hp[0] = reg_tmp5.h[1];
+    STAGE3_BOSS(reg_a5)->hp[1] = reg_tmp5.h[0];
     if ((s32) reg_tmp5.w >= 0) goto block_check;
     active_players_mask();
     if (reg_d0.h[0] != 0) goto next_30;
     reg_tmp.w = 0x200;
-    *(u16 *)(reg_a5 + 0x16) = reg_tmp.h[1];
-    *(u16 *)(reg_a5 + 0x18) = reg_tmp.h[0];
+    STAGE3_BOSS(reg_a5)->hp[0] = reg_tmp.h[1];
+    STAGE3_BOSS(reg_a5)->hp[1] = reg_tmp.h[0];
     goto block_check;
 next_30:
     reg_d1.h[0] = W(0x8A);
@@ -124,8 +125,8 @@ next_30:
     return;
 block_check:
     if (B(0x8D) != 0) goto block_tail;
-    reg_d0.h[1] = *(u16 *)(reg_a5 + 0x16);
-    reg_d0.h[0] = *(u16 *)(reg_a5 + 0x18);
+    reg_d0.h[1] = STAGE3_BOSS(reg_a5)->hp[0];
+    reg_d0.h[0] = STAGE3_BOSS(reg_a5)->hp[1];
     reg_d0.w += 0xFFFEE800;
     if ((s32) reg_d0.w >= 0) goto block_tail;
     boss_attack_stop_all();
@@ -166,8 +167,8 @@ void stage3_boss_defeated() {
     ENTITY(reg_a6)[5].hit_x_minus.h = 1;
     ENTITY(reg_a6)[5].hp.h = 1;
     reg_tmp.w = -1U;
-    *(u16 *)(reg_a5 + 0x16) = (u16) reg_tmp.h[1];
-    *(u16 *)(reg_a5 + 0x18) = (u16) reg_tmp.h[0];
+    STAGE3_BOSS(reg_a5)->hp[0] = (u16) reg_tmp.h[1];
+    STAGE3_BOSS(reg_a5)->hp[1] = (u16) reg_tmp.h[0];
     ENTITY(reg_a6)->misc.sb.draw_layer = 1;
     ENTITY(reg_a6)->flags.h = 0x8000;
     ENTITY(reg_a6)[1].flags.h = 0x8000;
@@ -226,13 +227,13 @@ extern u16 g_enemies_stopped;
 
 void stage3_boss_leave_timer(void) {
 #ifdef DEATH_LABEL
-    if ((g_enemies_stopped == 0) && (*(u16 *)(reg_a5 + 0x1A) == 0)) {
+    if ((g_enemies_stopped == 0) && (STAGE3_BOSS(reg_a5)->leave_delay == 0)) {
 #else
-    if ((g_enemies_stopped == 0) && (*(u16 *)(reg_a5 + 0x1A) -= 1, *(u16 *)(reg_a5 + 0x1A) == 0)) {
+    if ((g_enemies_stopped == 0) && (STAGE3_BOSS(reg_a5)->leave_delay -= 1, STAGE3_BOSS(reg_a5)->leave_delay == 0)) {
 #endif
         active_players_mask();
         if (reg_d0.h[0] == 0) {
-            *(u16 *)(reg_a5 + 0x1A) = 0x78U;
+            STAGE3_BOSS(reg_a5)->leave_delay = 0x78U;
             return;
         }
         ENTITY(reg_a6)[4].draw.sh = 0;
