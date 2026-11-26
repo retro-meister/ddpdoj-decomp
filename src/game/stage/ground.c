@@ -34,7 +34,7 @@ void scroll_line_release(void) {
 s32 layers_reset();
 s32 layer_a_scroll();
 s32 layer_b_scroll();
-s32 ground_objects_reset();
+s32 scenery_reset();
 s32 scroll_events_start();
 s32 func_001A3250();
 extern u8 stage_map_palettes[];
@@ -53,7 +53,7 @@ void ground_start(void) {
     g_pause_lock_timer_as_s8 = 0x3C;
     g_slowdown_timer_as_s8 = 0;
     D_0028DF1C = 0;
-    g_scroll_line = *(u16 *)(reg_a5 + 6);
+    g_scroll_line = GROUND_TASK(reg_a5)->start_line;
     memset(&g_ground_state, 0, 0x20);
     reg_d0.w = 0;
     reg_d1.w = 0xE;
@@ -65,22 +65,22 @@ void ground_start(void) {
         reg_a0 += 2;
     } while ((s16)(--reg_d1.h[0]) >= 0);
     layers_reset();
-    *(s16 *)(reg_a5 + 0x1C) = 0x20;
-    *(s16 *)(reg_a5 + 0x22) = 0x20;
+    GROUND_TASK(reg_a5)->speed = 0x20;
+    GROUND_TASK(reg_a5)->second_speed = 0x20;
     reg_d0.w = 0;
     reg_d0.h[0] = g_scroll_line;
     reg_d0.h[0] &= 3;
     reg_d0.h[0] *= 8;
     reg_d0.h[0] <<= 6;
-    *(u16 *)(reg_a5 + 0x20) = (u16) reg_d0.h[0];
+    GROUND_TASK(reg_a5)->row_offset = (u16) reg_d0.h[0];
     reg_d1.w = 0;
     reg_d1.h[0] = 0x800;
     layer_b_scroll();
     reg_d1.w = 0;
     reg_d1.h[0] = 0x800;
     layer_a_scroll();
-    *(u16 *)(reg_a5 + 0x1E) = 0U;
-    temp_a1 = *(u16 *)(reg_a5 + 0x1E);
+    GROUND_TASK(reg_a5)->line_offset = 0U;
+    temp_a1 = GROUND_TASK(reg_a5)->line_offset;
     reg_a0 = (u8 *)stage_map_palettes;
     g_scroll_line_offset = temp_a1;
     reg_a0 += g_stage_x4;
@@ -91,7 +91,7 @@ void ground_start(void) {
     reg_d0.w = 0;
     reg_a0 = (u8 *) reg_tmp.w;
     func_001A3250();
-    *(u8 *)(reg_a5 + 3) &= 0xFE;
+    GROUND_TASK(reg_a5)->flags_03 &= 0xFE;
     reg_a1 = (u8 *)stage_maps;
     reg_d0.h[0] = g_stage_x4;
     reg_a1 += reg_d0.h[0];
@@ -107,21 +107,21 @@ void ground_start(void) {
     reg_d1.h[0] += reg_d1.h[0];
     reg_d0.h[0] = temp_a1_2 + reg_d1.h[0];
     reg_a1 += reg_d0.h[0];
-    *(s16 *)(reg_a5 + 0xE) = 0;
+    GROUND_TASK(reg_a5)->plane_row = 0;
     reg_tmp.w = (u32) reg_a1;
-    *(u16 *)(reg_a5 + 0xA) = (u16) reg_tmp.h[1];
-    *(u16 *)(reg_a5 + 0xC) = (u16) reg_tmp.h[0];
+    GROUND_TASK(reg_a5)->map_at[0] = (u16) reg_tmp.h[1];
+    GROUND_TASK(reg_a5)->map_at[1] = (u16) reg_tmp.h[0];
     scroll_events_start();
-    ground_objects_reset();
+    scenery_reset();
     side_scroll_reset();
-    *(u8 *)(reg_a5 + 2) |= 4;
+    GROUND_TASK(reg_a5)->flags |= 4;
 }
 
 s32 bg_layer_put();
 
 void ground_rows_fill(void) {
-    reg_tmp.h[1] = *(u16 *) (reg_a5 + 0xA);
-    reg_tmp.h[0] = *(u16 *) (reg_a5 + 0xC);
+    reg_tmp.h[1] = GROUND_TASK(reg_a5)->map_at[0];
+    reg_tmp.h[0] = GROUND_TASK(reg_a5)->map_at[1];
     reg_a0 = (u8 *) reg_tmp.w;
     reg_d1.w = 0;
     reg_d7.w = 0xE;
@@ -141,9 +141,9 @@ loop_2:
         goto loop_1;
     }
     reg_tmp.w = (u32) reg_a0;
-    *(u16 *) (reg_a5 + 0xA) = reg_tmp.h[1];
-    *(u16 *) (reg_a5 + 0xC) = reg_tmp.h[0];
-    *(u16 *) (reg_a5 + 0xE) = 0xF;
+    GROUND_TASK(reg_a5)->map_at[0] = reg_tmp.h[1];
+    GROUND_TASK(reg_a5)->map_at[1] = reg_tmp.h[0];
+    GROUND_TASK(reg_a5)->plane_row = 0xF;
 }
 
 s32 func_00225670();
@@ -228,8 +228,8 @@ void ground_task(void) {
     u8 *p;
 
     g_ground_no_draw = 0;
-    t = *(u8 *) (reg_a5 + 2);
-    p = reg_a5 + 2;
+    t = GROUND_TASK(reg_a5)->flags;
+    p = &GROUND_TASK(reg_a5)->flags;
     if (t & 8) {
         ground_step();
         return;
@@ -263,8 +263,8 @@ load_begin:
     D_0028EC58_as_u8 = 0;
     return;
 already_started:
-    t = *(u8 *) (reg_a5 + 2);
-    p = reg_a5 + 2;
+    t = GROUND_TASK(reg_a5)->flags;
+    p = &GROUND_TASK(reg_a5)->flags;
     if (!(t & 2)) {
         ground_wait_stage_load();
         return;
@@ -316,7 +316,7 @@ run_to_boss:
     save_00 = g_sprite_bombs_used;
 run_line:
     ground_step();
-    if (done == 0 && g_stage == 2 && g_scroll_line == STAGE3_HELD_LINE && *(u16 *) (reg_a5 + 8) == 1) {
+    if (done == 0 && g_stage == 2 && g_scroll_line == STAGE3_HELD_LINE && GROUND_TASK(reg_a5)->line_held == 1) {
         scroll_line_release();
         done = 1;
     }
@@ -370,7 +370,7 @@ run_line:
     g_sprite_bombs_used = save_00;
 }
 
-s32 ground_objects_run();
+s32 scenery_run();
 s32 scroll_map_loop_step();
 s32 scroll_events_run();
 void func_00170A50(s32, s32, s32);
@@ -404,8 +404,8 @@ void ground_step(void) {
         }
         if (g_ground_state.speeds_requested != 0) {
             g_ground_state.speeds_requested = 0;
-            *(u16 *)(reg_a5 + 0x1C) = (u16) g_ground_state.speed_request[0];
-            *(u16 *)(reg_a5 + 0x22) = (u16) g_ground_state.speed_request[1];
+            GROUND_TASK(reg_a5)->speed = (u16) g_ground_state.speed_request[0];
+            GROUND_TASK(reg_a5)->second_speed = (u16) g_ground_state.speed_request[1];
         }
         side_scroll_step();
         scroll_events_run();
@@ -413,13 +413,13 @@ void ground_step(void) {
         if (reg_d0.h[0] != 0) {
             g_ground_state.line_hold_request = 0;
             if (reg_d0.h[0] != 1) {
-                *(u16 *)(reg_a5 + 8) = 0U;
+                GROUND_TASK(reg_a5)->line_held = 0U;
             } else {
-                *(u16 *)(reg_a5 + 8) = 1U;
+                GROUND_TASK(reg_a5)->line_held = 1U;
             }
         }
-        reg_d6.h[0] = *(u16 *)(reg_a5 + 0x1C);
-        temp_a0 = *(u16 *)(reg_a5 + 0x1E);
+        reg_d6.h[0] = GROUND_TASK(reg_a5)->speed;
+        temp_a0 = GROUND_TASK(reg_a5)->line_offset;
         reg_d1.w = 0;
         reg_d5.h[0] = temp_a0;
         reg_d1.h[0] = g_ground_state.side_step;
@@ -429,22 +429,22 @@ void ground_step(void) {
         layer_a_scroll();
         if ((s16)(reg_d5.h[0]) >= 0x200) {
             reg_d5.h[0] -= 0x200;
-            if (*(u16 *)(reg_a5 + 8) == 0) {
+            if (GROUND_TASK(reg_a5)->line_held == 0) {
                 g_scroll_line += 1;
             }
         }
-        *(u16 *)(reg_a5 + 0x1E) = (u16) reg_d5.h[0];
+        GROUND_TASK(reg_a5)->line_offset = (u16) reg_d5.h[0];
         temp_a0_2 = reg_d5.h[0];
         g_scroll_line_offset = temp_a0_2;
-        reg_d5.h[0] = *(u16 *)(reg_a5 + 0x20);
+        reg_d5.h[0] = GROUND_TASK(reg_a5)->row_offset;
         reg_d5.h[0] += reg_d6.h[0];
         if ((s16)(reg_d5.h[0]) >= 0x800) {
             reg_d5.h[0] -= 0x800;
             scroll_map_loop_step();
-            reg_tmp.h[1] = *(u16 *)(reg_a5 + 0xA);
-            reg_tmp.h[0] = *(u16 *)(reg_a5 + 0xC);
+            reg_tmp.h[1] = GROUND_TASK(reg_a5)->map_at[0];
+            reg_tmp.h[0] = GROUND_TASK(reg_a5)->map_at[1];
             reg_a0 = (u8 *)(reg_tmp.w);
-            reg_d1.h[0] = *(u16 *)(reg_a5 + 0xE);
+            reg_d1.h[0] = GROUND_TASK(reg_a5)->plane_row;
             reg_d6.w = 8;
             reg_d0.w = 0;
             do {
@@ -454,23 +454,23 @@ void ground_step(void) {
                 reg_d0.h[0] += 1;
             } while ((s16)(--reg_d6.h[0]) >= 0);
             reg_tmp.w = (u32)reg_a0;
-            *(u16 *)(reg_a5 + 0xA) = (u16) reg_tmp.h[1];
-            *(u16 *)(reg_a5 + 0xC) = (u16) reg_tmp.h[0];
+            GROUND_TASK(reg_a5)->map_at[0] = (u16) reg_tmp.h[1];
+            GROUND_TASK(reg_a5)->map_at[1] = (u16) reg_tmp.h[0];
             reg_d1.h[0] += 1;
             reg_d1.h[0] &= 0x3F;
-            *(u16 *)(reg_a5 + 0xE) = (u16) reg_d1.h[0];
+            GROUND_TASK(reg_a5)->plane_row = (u16) reg_d1.h[0];
         }
-        *(u16 *)(reg_a5 + 0x20) = (u16) reg_d5.h[0];
-        g_ground_map_row[0] = *(u16 *)(reg_a5 + 0xE);
-        g_ground_map_row_offset[0] = *(u16 *)(reg_a5 + 0x20);
-        reg_d6.h[0] = *(u16 *)(reg_a5 + 0x22);
+        GROUND_TASK(reg_a5)->row_offset = (u16) reg_d5.h[0];
+        g_ground_map_row[0] = GROUND_TASK(reg_a5)->plane_row;
+        g_ground_map_row_offset[0] = GROUND_TASK(reg_a5)->row_offset;
+        reg_d6.h[0] = GROUND_TASK(reg_a5)->second_speed;
         reg_d1.w = 0;
         reg_d1.h[0] = g_ground_state.side_step;
         reg_d0.w = 0;
         reg_d0.h[0] = reg_d6.h[0];
         layer_b_scroll();
     }
-    ground_objects_run();
+    scenery_run();
     func_00170A50(0, 0, 0);
 }
 
@@ -510,7 +510,7 @@ void ground_wait_stage_load(void) {
         if (g_attract_demo == 0) {
             D_0028E378_as_s8 = 0;
         }
-        *(u8 *)(reg_a5 + 2) |= 2;
+        GROUND_TASK(reg_a5)->flags |= 2;
         D_0028EC58 = 0;
         if (g_attract_demo == 0) {
             D_0028E368_as_s8 = 1;
@@ -569,7 +569,7 @@ void side_scroll_apply(void) {
     reg_d2.h[0] = 0x800;
     reg_d0.h[0] = g_ground_state.side_move;
     g_ground_state.side_move = 0;
-    reg_d0.h[0] += *(u16 *)(reg_a5 + 0x2A);
+    reg_d0.h[0] += GROUND_TASK(reg_a5)->side_x;
     reg_d1.h[0] = reg_d0.h[0];
     if ((s16)(reg_d1.h[0]) < 0) {
         reg_d1.h[0] *= 0xFFFF & 0xFFFF;
@@ -579,10 +579,10 @@ void side_scroll_apply(void) {
         reg_d0.h[0] = reg_d2.h[0];
         g_ground_state.side_at_limit = 1;
     }
-    *(u16 *)(reg_a5 + 0x2A) = (u16) reg_d0.h[0];
+    GROUND_TASK(reg_a5)->side_x = (u16) reg_d0.h[0];
     reg_d0.h[0] &= 0xFFC0;
-    reg_d1.h[0] = *(u16 *)(reg_a5 + 0x28);
-    *(u16 *)(reg_a5 + 0x28) = (u16) reg_d0.h[0];
+    reg_d1.h[0] = GROUND_TASK(reg_a5)->side_x_shown;
+    GROUND_TASK(reg_a5)->side_x_shown = (u16) reg_d0.h[0];
     reg_d2.h[0] = reg_d0.h[0];
     reg_d0.h[0] -= reg_d1.h[0];
 }
@@ -605,7 +605,7 @@ void side_scroll_edge_check(void) {
         }
     }
 
-    ((u8 *)((void *)reg_a5))[0x31] |= (u8)(1 << (s8)reg_d3.b[0]);
+    GROUND_TASK(reg_a5)->side_edges |= (u8)(1 << (s8)reg_d3.b[0]);
 }
 
 void side_scroll_player_push(void) {
@@ -627,7 +627,7 @@ void side_scroll_player_push(void) {
     }
     reg_d4.w = 7;
 next_1:
-    if ((1U << reg_d4.b[0]) & ((u8 *) ((void *)reg_a5))[0x31]) {
+    if ((1U << reg_d4.b[0]) & GROUND_TASK(reg_a5)->side_edges) {
         goto block_rts;
     }
     reg_d1.h[0] = g_ground_state.side_move;
@@ -677,7 +677,7 @@ void side_scroll_step(void) {
         goto next_2;
     }
 next_1:
-    reg_a5[0x31] &= 0x3F;
+    GROUND_TASK(reg_a5)->side_edges &= 0x3F;
     reg_a1 = (u8 *) g_player1_as_u16_a;
     side_scroll_edge_check();
     reg_a1 = (u8 *) g_player2_as_u16_a;
@@ -699,12 +699,12 @@ next_3:
     reg_d0.w -= 0x1C00;
     reg_d0.w = (s32) reg_d0.w / 200;
     reg_d0.h[0] <<= 6;
-    reg_d0.h[0] -= *(u16 *) (reg_a5 + 0x28);
+    reg_d0.h[0] -= GROUND_TASK(reg_a5)->side_x_shown;
     g_ground_state.side_move = reg_d0.h[0];
 next_4:
     side_scroll_apply();
     g_ground_state.side_step = reg_d0.h[0];
-    reg_d1.h[0] = *(u16 *) (reg_a5 + 0x28);
+    reg_d1.h[0] = GROUND_TASK(reg_a5)->side_x_shown;
     reg_d1.h[0] >>= 6;
     reg_d2.h[0] = reg_d1.h[0];
     reg_d1.h[0] <<= 6;

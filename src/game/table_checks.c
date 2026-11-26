@@ -460,7 +460,7 @@ extern void scroll_event_palettes(void);
 extern void scroll_event_map_loop(void);
 extern void scroll_event_speed(void);
 extern void scroll_event_line_hold(void);
-extern void scroll_event_object(void);
+extern void scroll_event_scenery(void);
 extern void scroll_event_sounds(void);
 extern void scroll_sound_call(void);
 extern void scroll_sound_music_stop(void);
@@ -2005,7 +2005,7 @@ void func_0018E5A0(void) {
     if (scroll_event_routines[8] != 0x8) {
         printf("error! groevent_tbl[8]\n");
     }
-    STORE_POINTER(scroll_event_routines + 8, scroll_event_object);
+    STORE_POINTER(scroll_event_routines + 8, scroll_event_scenery);
     if (scroll_event_routines[10] != 0xa) {
         printf("error! groevent_tbl[10]\n");
     }

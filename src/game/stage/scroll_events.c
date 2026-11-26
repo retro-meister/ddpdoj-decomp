@@ -1,6 +1,8 @@
 #include "common.h"
 #include "entity.h"
 #include "ground.h"
+#include "scenery.h"
+#include "scroll_events.h"
 #include "sdk/ps2sdk.h"
 
 typedef void (*Fn)();
@@ -20,49 +22,46 @@ void scroll_event_lists_get(void) {
     reg_a0 = (u8 *) reg_tmp.w;
 }
 
-extern u8 stage_ground_object_routines[];
-extern u8 D_0029BF50[];
-extern s32 D_0029C050_as_s32_a[];
+extern ScenerySetup *stage_scenery_setups[5];
 
-void ground_objects_reset(void) {
-    memset(D_0029BF50, 0, 0x104);
-    reg_a0 = stage_ground_object_routines;
+void scenery_reset(void) {
+    memset(&g_scenery, 0, sizeof(SceneryState));
+    reg_a0 = (u8 *)stage_scenery_setups;
     reg_a0 += g_stage_x4;
-    D_0029C050_as_s32_a[0] = *(s32 *)reg_a0;
+    g_scenery.setups = *(ScenerySetup **)reg_a0;
 }
 
 extern u8 g_ground_no_draw;
 extern u8 *reg_call_target_as_u8_p;
 
-void ground_objects_run(void) {
+void scenery_run(void) {
     u32 temp_s0;
 
     if ((g_simulation_active == 0) || (g_ground_no_draw == 0) || (g_stage != 2)) {
-        reg_a6 = D_0029BF50;
+        reg_a6 = (u8 *)g_scenery.pieces;
         reg_d7.w = 7;
         do {
-            if (ENTITY(reg_a6)->flags.b[1] != 0) {
+            if (SCENERY(reg_a6)->flags.b[1] != 0) {
                 reg_d0.h[0] = g_side_scroll_step[0];
-                ENTITY(reg_a6)->x.h -= reg_d0.h[0];
-                reg_tmp.h[1] = ENTITY(reg_a6)->offset_x.h;
-                reg_tmp.h[0] = ENTITY(reg_a6)->draw.h;
+                SCENERY(reg_a6)->x.h -= reg_d0.h[0];
+                reg_tmp.h[1] = SCENERY(reg_a6)->routine[0];
+                reg_tmp.h[0] = SCENERY(reg_a6)->routine[1];
                 reg_a1 = (u8 *)reg_tmp.w;
                 reg_call_target_as_u8_p = reg_a1;
                 temp_s0 = reg_d7.w;
                 ((Fn)reg_call_target_as_u8_p)();
                 reg_d7.w = temp_s0;
             }
-            reg_a6 += 0x20;
+            reg_a6 += sizeof(Scenery);
         } while ((s16)(--reg_d7.h[0]) >= 0);
     }
 }
 
 typedef void (*Fn)(void);
 
-extern u8 *D_0029C050[];
 extern Fn reg_call_target_as_Fn;
 
-void ground_object_start(void) {
+void scenery_start(void) {
     u8 *save_a0;
     u8 *save_a1;
     u8 *save_a2;
@@ -95,14 +94,14 @@ void ground_object_start(void) {
     save_a4 = reg_a4;
     save_a5 = reg_a5;
     save_a6 = reg_a6;
-    reg_a6 = (u8 *)D_0029BF50;
+    reg_a6 = (u8 *)g_scenery.pieces;
     reg_d7.w = 7;
 loop_1:
-    if (ENTITY(reg_a6)->flags.b[1] != 0) goto next_1;
-    ENTITY(reg_a6)->flags.b[1] = 0x80;
-    ENTITY(reg_a6)->y.h = reg_d1.h[1];
-    ENTITY(reg_a6)->x.h = reg_d1.h[0];
-    reg_a1 = D_0029C050[0];
+    if (SCENERY(reg_a6)->flags.b[1] != 0) goto next_1;
+    SCENERY(reg_a6)->flags.b[1] = 0x80;
+    SCENERY(reg_a6)->y.h = reg_d1.h[1];
+    SCENERY(reg_a6)->x.h = reg_d1.h[0];
+    reg_a1 = (u8 *)g_scenery.setups;
     reg_d0.h[0] += reg_d0.h[0];
     reg_d0.h[0] += reg_d0.h[0];
     reg_a1 += reg_d0.h[0];
@@ -126,7 +125,7 @@ loop_1:
     reg_a6 = save_a6;
     return;
 next_1:
-    reg_a6 += 0x20;
+    reg_a6 += sizeof(Scenery);
     t1 = reg_d7.h[0] - 1;
     reg_d7.h[0] = t1;
     if (((s64)((s64)(u16)t1 << 0x30) >> 0x30) >= 0) goto loop_1;
@@ -148,41 +147,34 @@ next_1:
 }
 
 extern u16 g_scroll_line;
-extern u8 D_0029C082[];
 
 void scroll_map_loop_step(void) {
-    reg_a0 = (u8 *)D_0029C082;
-    reg_a1 = reg_a5 + 0xA;
-    reg_tmp.h[1] = *(u16 *)(reg_a0 + 0xC);
-    reg_tmp.h[0] = *(u16 *)(reg_a0 + 0xE);
+    reg_a0 = (u8 *)&g_scroll_events.reader[0];
+    reg_a1 = (u8 *)GROUND_TASK(reg_a5)->map_at;
+    reg_tmp.h[1] = SCROLL_EVENT_READER(reg_a0)->loop_map[0];
+    reg_tmp.h[0] = SCROLL_EVENT_READER(reg_a0)->loop_map[1];
     reg_a2 = (u8 *)reg_tmp.w;
     if (reg_a2 == 0) return;
-    *(u16 *)(reg_a0 + 0x16) -= 1;
-    if (0 >= (s16) *(u16 *)(reg_a0 + 0x16)) {
-        reg_d0.h[0] = *(u16 *)(reg_a0 + 0x10);
+    SCROLL_EVENT_READER(reg_a0)->loop_rows_left -= 1;
+    if (0 >= (s16) SCROLL_EVENT_READER(reg_a0)->loop_rows_left) {
+        reg_d0.h[0] = SCROLL_EVENT_READER(reg_a0)->loop_times;
         if ((s16) reg_d0.h[0] != -1) {
-            *(u16 *)(reg_a0 + 0x10) -= 1;
-            if (0 >= (s16) *(u16 *)(reg_a0 + 0x10)) {
-                *(u16 *)(reg_a0 + 0xC) = 0U;
-                *(u16 *)(reg_a0 + 0xE) = 0U;
-                *(s16 *)(reg_a5 + 8) = 0;
-                g_scroll_line = *(u16 *)(reg_a0 + 0x18);
+            SCROLL_EVENT_READER(reg_a0)->loop_times -= 1;
+            if (0 >= (s16) SCROLL_EVENT_READER(reg_a0)->loop_times) {
+                SCROLL_EVENT_READER(reg_a0)->loop_map[0] = 0U;
+                SCROLL_EVENT_READER(reg_a0)->loop_map[1] = 0U;
+                GROUND_TASK(reg_a5)->line_held = 0;
+                g_scroll_line = SCROLL_EVENT_READER(reg_a0)->line_after_loop;
                 return;
             }
         }
-        *(u16 *)(reg_a0 + 0x16) = (u16) *(u16 *)(reg_a0 + 0x14);
+        SCROLL_EVENT_READER(reg_a0)->loop_rows_left = (u16) SCROLL_EVENT_READER(reg_a0)->loop_length;
         reg_tmp.w = (u32)reg_a2;
         *(u16 *)reg_a1 = (u16) reg_tmp.h[1];
         *(u16 *)(reg_a1 + 2) = (u16) reg_tmp.h[0];
     }
 }
 
-extern s16 D_0029C080_as_s16_a[];
-extern s16 D_0029C08E[];
-extern s16 D_0029C090[];
-extern u8 D_0029C09E[];
-extern s16 D_0029C0AA[];
-extern s16 D_0029C0AC[];
 
 void scroll_events_start(void) {
     u8 *var_a0;
@@ -190,37 +182,37 @@ void scroll_events_start(void) {
     u32 temp_s1;
 
     scroll_event_lists_get();
-    memset(D_0029C080_as_s16_a, 0, 0x40);
-    reg_a1 = (u8 *)D_0029C082;
+    memset(&g_scroll_events, 0, sizeof(ScrollEventsState));
+    reg_a1 = (u8 *)&g_scroll_events.reader[0];
     reg_d1.w = 1;
-    var_a0 = (u8 *)(D_0029C09E);
+    var_a0 = (u8 *)&g_scroll_events.reader[1];
     do {
         reg_tmp.h[1] = *(u16 *)reg_a0;
         reg_a0 += 2;
         reg_tmp.h[0] = *(u16 *)reg_a0;
         reg_a0 += 2;
         reg_a2 = (u8 *)(reg_tmp.w);
-        *(u16 *)(reg_a1 + 4) = *(u16 *)reg_a2;
+        SCROLL_EVENT_READER(reg_a1)->palettes[0] = *(u16 *)reg_a2;
         reg_a2 += 2;
-        *(u16 *)(reg_a1 + 6) = *(u16 *)reg_a2;
+        SCROLL_EVENT_READER(reg_a1)->palettes[1] = *(u16 *)reg_a2;
         reg_a2 += 2;
-        *(u16 *)(reg_a1 + 8) = *(u16 *)reg_a2;
+        SCROLL_EVENT_READER(reg_a1)->sounds[0] = *(u16 *)reg_a2;
         reg_a2 += 2;
-        *(u16 *)(reg_a1 + 0xA) = *(u16 *)reg_a2;
+        SCROLL_EVENT_READER(reg_a1)->sounds[1] = *(u16 *)reg_a2;
         reg_a2 += 2;
         reg_tmp.w = (u32)reg_a2;
-        *(u16 *)reg_a1 = (u16) reg_tmp.h[1];
-        *(u16 *)(reg_a1 + 2) = (u16) reg_tmp.h[0];
-        reg_a1 = (u8 *)D_0029C09E;
+        SCROLL_EVENT_READER(reg_a1)->events[0] = (u16) reg_tmp.h[1];
+        SCROLL_EVENT_READER(reg_a1)->events[1] = (u16) reg_tmp.h[0];
+        reg_a1 = (u8 *)&g_scroll_events.reader[1];
     } while ((s16)(--reg_d1.h[0]) >= 0);
     if (g_scroll_line != 0) {
-        D_0029C080_as_s16_a[0] = 1;
-        reg_tmp.h[1] = *(u16 *)(reg_a5 + 0x10);
-        reg_tmp.h[0] = *(u16 *)(reg_a5 + 0x12);
+        g_scroll_events.replaying = 1;
+        reg_tmp.h[1] = GROUND_TASK(reg_a5)->second_map_at[0];
+        reg_tmp.h[0] = GROUND_TASK(reg_a5)->second_map_at[1];
         reg_a3 = (u8 *)reg_tmp.w;
         temp_s0 = (u32)reg_a3;
-        reg_tmp.h[1] = *(u16 *)(reg_a5 + 0xA);
-        reg_tmp.h[0] = *(u16 *)(reg_a5 + 0xC);
+        reg_tmp.h[1] = GROUND_TASK(reg_a5)->map_at[0];
+        reg_tmp.h[0] = GROUND_TASK(reg_a5)->map_at[1];
         reg_d7.w = 0;
         reg_a4 = (u8 *)reg_tmp.w;
         temp_s1 = (u32)reg_a4;
@@ -232,19 +224,19 @@ void scroll_events_start(void) {
         reg_tmp.w = temp_s0;
         reg_a4 = (u8 *)temp_s1;
         reg_a3 = (u8 *)temp_s0;
-        *(u16 *)(reg_a5 + 0x10) = (u16) reg_tmp.h[1];
-        *(u16 *)(reg_a5 + 0x12) = (u16) reg_tmp.h[0];
+        GROUND_TASK(reg_a5)->second_map_at[0] = (u16) reg_tmp.h[1];
+        GROUND_TASK(reg_a5)->second_map_at[1] = (u16) reg_tmp.h[0];
         reg_tmp.w = (u32)reg_a4;
-        *(u16 *)(reg_a5 + 0xA) = (u16) reg_tmp.h[1];
-        *(u16 *)(reg_a5 + 0xC) = (u16) reg_tmp.h[0];
+        GROUND_TASK(reg_a5)->map_at[0] = (u16) reg_tmp.h[1];
+        GROUND_TASK(reg_a5)->map_at[1] = (u16) reg_tmp.h[0];
         reg_d0.w = 0;
-        *(s16 *)(reg_a5 + 8) = 0;
-        D_0029C08E[0] = 0;
-        D_0029C090[0] = 0;
-        D_0029C0AA[0] = 0;
-        D_0029C0AC[0] = 0;
+        GROUND_TASK(reg_a5)->line_held = 0;
+        g_scroll_events.reader[0].loop_map[0] = 0;
+        g_scroll_events.reader[0].loop_map[1] = 0;
+        g_scroll_events.reader[1].loop_map[0] = 0;
+        g_scroll_events.reader[1].loop_map[1] = 0;
     }
-    D_0029C080_as_s16_a[0] = 0;
+    g_scroll_events.replaying = 0;
 }
 
 
@@ -254,18 +246,15 @@ void scroll_events_run(void) {
 }
 
 extern u8 scroll_event_routines[];
-extern u16 D_0029C0BA[];
-extern u16 D_0029C0BC[];
-extern u16 D_0029C0BE[];
 
 void scroll_events_run_line(void) {
     u16 temp_a0;
-    reg_a6 = (u8 *)D_0029C082;
+    reg_a6 = (u8 *)&g_scroll_events.reader[0];
     reg_d6.w = 1;
     do {
 loop_1:
-        reg_tmp.h[1] = ENTITY(reg_a6)->flags.h;
-        reg_tmp.h[0] = ENTITY(reg_a6)->y.h;
+        reg_tmp.h[1] = SCROLL_EVENT_READER(reg_a6)->events[0];
+        reg_tmp.h[0] = SCROLL_EVENT_READER(reg_a6)->events[1];
         reg_a1 = (u8 *)(reg_tmp.w);
         reg_d1.h[0] = *(u16 *)reg_a1;
         reg_a1 += 2;
@@ -282,21 +271,21 @@ loop_1:
             reg_call_target = (Fn)(reg_a2);
             reg_call_target();
             reg_tmp.w = (u32)reg_a1;
-            ENTITY(reg_a6)->flags.h = (u16) reg_tmp.h[1];
-            ENTITY(reg_a6)->y.h = (u16) reg_tmp.h[0];
+            SCROLL_EVENT_READER(reg_a6)->events[0] = (u16) reg_tmp.h[1];
+            SCROLL_EVENT_READER(reg_a6)->events[1] = (u16) reg_tmp.h[0];
             goto loop_1;
         }
-        reg_a6 = (u8 *)D_0029C09E;
+        reg_a6 = (u8 *)&g_scroll_events.reader[1];
     } while ((s16)(--reg_d6.h[0]) >= 0);
-    reg_d0.h[1] = D_0029C0BC[0];
-    reg_d0.h[0] = D_0029C0BE[0];
+    reg_d0.h[1] = g_scroll_events.sound_call[0];
+    reg_d0.h[0] = g_scroll_events.sound_call[1];
     if (reg_d0.w != 0) {
-        D_0029C0BA[0] -= 1;
-        if (0 > (s16) D_0029C0BA[0]) {
+        g_scroll_events.sound_call_frames -= 1;
+        if (0 > (s16) g_scroll_events.sound_call_frames) {
             reg_a0 = (u8 *)reg_d0.w;
             reg_call_target = (Fn)((u8 *) reg_a0);
             reg_call_target();
-            *(u32 *)D_0029C0BC = 0;
+            *(u32 *)g_scroll_events.sound_call = 0;
         }
     }
 }
@@ -308,8 +297,8 @@ void scroll_event_palettes(void) {
 
     reg_d2.h[0] = *(u16 *)reg_a1;
     reg_a1 += 2;
-    reg_tmp.h[1] = ENTITY(reg_a6)->x.h;
-    reg_tmp.h[0] = ENTITY(reg_a6)->offset_y.h;
+    reg_tmp.h[1] = SCROLL_EVENT_READER(reg_a6)->palettes[0];
+    reg_tmp.h[0] = SCROLL_EVENT_READER(reg_a6)->palettes[1];
     reg_a2 = (u8 *)(reg_tmp.w);
 loop_1:
     reg_tmp.h[1] = *(u16 *)reg_a2;
@@ -325,8 +314,8 @@ loop_1:
         reg_d2.h[0] -= 1;
         if (reg_d2.h[0] == 0) {
             reg_tmp.w = (u32)reg_a2;
-            ENTITY(reg_a6)->x.h = (u16) reg_tmp.h[1];
-            ENTITY(reg_a6)->offset_y.h = (u16) reg_tmp.h[0];
+            SCROLL_EVENT_READER(reg_a6)->palettes[0] = (u16) reg_tmp.h[1];
+            SCROLL_EVENT_READER(reg_a6)->palettes[1] = (u16) reg_tmp.h[0];
         } else {
             goto loop_1;
         }
@@ -334,9 +323,9 @@ loop_1:
 }
 
 void scroll_event_map_loop(void) {
-    reg_a2 = reg_a5 + 0x10;
+    reg_a2 = (u8 *)GROUND_TASK(reg_a5)->second_map_at;
     if (reg_d6.h[0] != 0) {
-        reg_a2 = reg_a5 + 0xA;
+        reg_a2 = (u8 *)GROUND_TASK(reg_a5)->map_at;
     }
     reg_tmp.h[1] = *(u16 *)reg_a2;
     reg_tmp.h[0] = *(u16 *)(reg_a2 + 2);
@@ -351,17 +340,17 @@ void scroll_event_map_loop(void) {
     reg_d1.h[0] += reg_d0.h[0];
     reg_a3 += (s16) reg_d1.h[0];
     reg_tmp.w = (u32)reg_a3;
-    ENTITY(reg_a6)->sprite.h = (u16) reg_tmp.h[1];
-    ENTITY(reg_a6)->look.h = (u16) reg_tmp.h[0];
+    SCROLL_EVENT_READER(reg_a6)->loop_map[0] = (u16) reg_tmp.h[1];
+    SCROLL_EVENT_READER(reg_a6)->loop_map[1] = (u16) reg_tmp.h[0];
     reg_tmp.w = (u32)reg_a3;
     *(u16 *)reg_a2 = (u16) reg_tmp.h[1];
     *(u16 *)(reg_a2 + 2) = (u16) reg_tmp.h[0];
     reg_d0.h[0] = *(u16 *)reg_a1;
     reg_a1 += 2;
-    ENTITY(reg_a6)->hit_x_plus.h = (u16) reg_d0.h[0];
+    SCROLL_EVENT_READER(reg_a6)->loop_length = (u16) reg_d0.h[0];
     reg_d0.h[0] += 1;
-    ENTITY(reg_a6)->hit_x_minus.h = (u16) reg_d0.h[0];
-    ENTITY(reg_a6)->hit_y_plus.h = (u16) *(u16 *)reg_a1;
+    SCROLL_EVENT_READER(reg_a6)->loop_rows_left = (u16) reg_d0.h[0];
+    SCROLL_EVENT_READER(reg_a6)->loop_times = (u16) *(u16 *)reg_a1;
     reg_a1 += 2;
 }
 
@@ -370,9 +359,9 @@ extern u16 *reg_a2_as_u16_p;
 extern s32 reg_a5_as_s32;
 
 void scroll_event_speed(void) {
-    reg_a2_as_u16_p = (u16 *)(reg_a5_as_s32 + 0x22);
+    reg_a2_as_u16_p = &GROUND_TASK(reg_a5_as_s32)->second_speed;
     if (reg_d6.h[0] != 0) {
-        reg_a2_as_u16_p = (u16 *)(reg_a5_as_s32 + 0x1C);
+        reg_a2_as_u16_p = &GROUND_TASK(reg_a5_as_s32)->speed;
     }
     *reg_a2_as_u16_p = *reg_a1_as_u16_p;
     reg_a1_as_u16_p += 1;
@@ -380,16 +369,15 @@ void scroll_event_speed(void) {
 
 
 void scroll_event_line_hold(void) {
-    *(u16 *)(reg_a5 + 8) = 1;
+    GROUND_TASK(reg_a5)->line_held = 1;
     reg_d0.h[0] = g_scroll_line;
     reg_d0.h[0] += 4;
-    *(u16 *)(reg_a6 + 0x18) = (u16) reg_d0.h[0];
+    SCROLL_EVENT_READER(reg_a6)->line_after_loop = (u16) reg_d0.h[0];
 }
 
 extern u16 g_side_scroll_x_prev[];
-extern u16 D_0029C080[];
 
-void scroll_event_object(void) {
+void scroll_event_scenery(void) {
     u16 *temp_a0;
     u16 temp_a1;
 
@@ -401,10 +389,10 @@ void scroll_event_object(void) {
     temp_a0 = ((u16 *)reg_a1) + 1;
     reg_d1.h[0] = temp_a1;
     reg_a1 = (u8 *)temp_a0;
-    if (D_0029C080[0] == 0) {
+    if (g_scroll_events.replaying == 0) {
         reg_d1.h[0] -= 0x800;
         reg_d1.h[0] -= g_side_scroll_x_prev[0];
-        ground_object_start();
+        scenery_start();
     }
 }
 
@@ -414,8 +402,8 @@ void scroll_event_sounds(void) {
     u32 temp_a1;
     reg_d2.h[0] = *(u16 *)reg_a1;
     reg_a1 += 2;
-    reg_tmp.h[1] = ENTITY(reg_a6)->offset_x.h;
-    reg_tmp.h[0] = ENTITY(reg_a6)->draw.h;
+    reg_tmp.h[1] = SCROLL_EVENT_READER(reg_a6)->sounds[0];
+    reg_tmp.h[0] = SCROLL_EVENT_READER(reg_a6)->sounds[1];
     reg_a2 = (u8 *)(reg_tmp.w);
 loop_1:
     reg_d0.h[0] = *(u16 *)reg_a2;
@@ -433,8 +421,8 @@ loop_1:
         reg_d2.h[0] -= 1;
         if (reg_d2.h[0] == 0) {
             reg_tmp.w = (u32)reg_a2;
-            ENTITY(reg_a6)->offset_x.h = (u16) reg_tmp.h[1];
-            ENTITY(reg_a6)->draw.h = (u16) reg_tmp.h[0];
+            SCROLL_EVENT_READER(reg_a6)->sounds[0] = (u16) reg_tmp.h[1];
+            SCROLL_EVENT_READER(reg_a6)->sounds[1] = (u16) reg_tmp.h[0];
         } else {
             goto loop_1;
         }
@@ -442,11 +430,11 @@ loop_1:
 }
 
 void scroll_sound_call(void) {
-    D_0029C0BA[0] = *(u16 *)reg_a2;
+    g_scroll_events.sound_call_frames = *(u16 *)reg_a2;
     reg_a2 += 2;
-    D_0029C0BC[0] = *(u16 *)reg_a2;
+    g_scroll_events.sound_call[0] = *(u16 *)reg_a2;
     reg_a2 += 2;
-    D_0029C0BE[0] = *(u16 *)reg_a2;
+    g_scroll_events.sound_call[1] = *(u16 *)reg_a2;
     reg_a2 += 2;
 }
 
@@ -493,8 +481,6 @@ void scroll_event_flags(void) {
 }
 
 /* .bss (the compiler lays these out in reverse) */
-s16 D_0029C090[24];
-u16 D_0029C080[8];
+ScrollEventsState g_scroll_events;
 GroundState g_ground_state;  /* the ground unit's; it lies inside this unit's block */
-u8 *D_0029C050[4];
-u8 D_0029BF50[256];
+SceneryState g_scenery;

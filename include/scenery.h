@@ -29,6 +29,17 @@ typedef struct {
 
 #define SCENERY(pointer) ((Scenery *)(pointer))
 
+/* A piece's set-up routine; the scroll events unit has each stage's table of them. */
+typedef void (*ScenerySetup)(void);
+
+/* The eight pieces a stage can show at once, and the table of the stage being played. */
+typedef struct {
+    /* 0x000 */ Scenery pieces[8];
+    /* 0x100 */ ScenerySetup *setups;
+} SceneryState;
+
+extern SceneryState g_scenery;
+
 /* Draws the piece in reg_a6 with one of the sprite queue's draw routines. */
 s32 scenery_draw(s32 *draw_routine);
 

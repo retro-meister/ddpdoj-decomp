@@ -20,8 +20,8 @@
 #define SCROLL_SPEED(line, speed) SCROLL_EVENT(line, 0x08), (speed)
 /* Hold the scroll line while the map loop runs; when the loop ends the line goes on from four lines later. */
 #define SCROLL_LINE_HOLD(line) SCROLL_EVENT(line, 0x0C)
-/* Start one of the stage's ground objects at a position (1/64 pixel). */
-#define SCROLL_OBJECT(line, object, y, x) SCROLL_EVENT(line, 0x10), (object), (y), (x)
+/* Start one of the stage's scenery pieces (its number in the stage's set-up table) at a position (1/64 pixel). */
+#define SCROLL_SCENERY(line, object, y, x) SCROLL_EVENT(line, 0x10), (object), (y), (x)
 /* Run the next `count` commands of the stage's sound list. */
 #define SCROLL_SOUNDS(line, count) SCROLL_EVENT(line, 0x14), (count)
 /* Set the first `count` of the four flags at D_00299768. */
@@ -39,5 +39,32 @@
 #define SCROLL_SOUND_MUSIC_STOP 1
 #define SCROLL_SOUND_MUSIC_FADE(time) 2, (time)
 #define SCROLL_SOUNDS_END 0xFFFF
+
+/*
+ * What reads one plane's event list: 0x1C bytes. Addresses are kept as two words, high word first.
+ */
+typedef struct {
+    /* 0x00 */ u16 events[2];        /* the next event of the list */
+    /* 0x04 */ u16 palettes[2];      /* the next entry of the stage's palette list */
+    /* 0x08 */ u16 sounds[2];        /* the next command of the stage's sound list */
+    /* 0x0C */ u16 loop_map[2];      /* a map loop is running: where in the map it starts */
+    /* 0x10 */ u16 loop_times;       /* times still to show it; -1 is without end */
+    /* 0x12 */ u16 unused_12;
+    /* 0x14 */ u16 loop_length;      /* its rows */
+    /* 0x16 */ u16 loop_rows_left;   /* rows until it starts again */
+    /* 0x18 */ u16 line_after_loop;  /* the scroll line goes on from here when a held loop ends */
+    /* 0x1A */ u16 unused_1A;
+} ScrollEventReader;
+
+#define SCROLL_EVENT_READER(pointer) ((ScrollEventReader *)(pointer))
+
+typedef struct {
+    /* 0x00 */ u16 replaying;        /* the events up to the starting line are being run at once */
+    /* 0x02 */ ScrollEventReader reader[2];  /* first and second plane */
+    /* 0x3A */ u16 sound_call_frames;        /* frames until the routine below is called */
+    /* 0x3C */ u16 sound_call[2];            /* a routine a sound command asked for, or 0 */
+} ScrollEventsState;
+
+extern ScrollEventsState g_scroll_events;
 
 #endif

@@ -2,19 +2,125 @@
 #include "common.h"
 #include "scroll_events.h"
 
-extern u8 D_002525E0[];
-extern u8 D_00252620[];
-extern u8 D_00252640[];
-extern u8 D_00252680[];
-extern u8 D_002526A0[];
+#include "scenery.h"
 
-/* By stage: the routines of the stage's ground objects. */
-u8 *stage_ground_object_routines[5] = {
-    D_002525E0,
-    D_00252620,
-    D_00252640,
-    D_00252680,
-    D_002526A0,
+void stage1_scenery_00_setup(void);
+void stage1_scenery_01_setup(void);
+void stage1_scenery_02_setup(void);
+void stage1_scenery_03_setup(void);
+void stage1_scenery_04_setup(void);
+void stage1_scenery_05_setup(void);
+void stage1_scenery_06_setup(void);
+void stage1_scenery_07_setup(void);
+void stage1_scenery_08_setup(void);
+void stage1_scenery_09_setup(void);
+void stage1_scenery_10_setup(void);
+void stage1_scenery_11_setup(void);
+void stage1_scenery_12_setup(void);
+void stage2_scenery_00_setup(void);
+void stage2_scenery_01_setup(void);
+void stage2_scenery_02_setup(void);
+void stage2_scenery_02_setup_alt(void);
+void stage2_scenery_03_setup(void);
+void stage2_scenery_03_setup_alt(void);
+void stage2_scenery_04_setup(void);
+void stage2_scenery_05_setup(void);
+void stage3_scenery_00_setup(void);
+void stage3_scenery_01_setup(void);
+void stage3_scenery_02_setup(void);
+void stage3_scenery_03_setup(void);
+void stage3_scenery_04_setup(void);
+void stage3_scenery_05_setup(void);
+void stage3_scenery_06_setup(void);
+void stage3_scenery_07_setup(void);
+void stage3_scenery_08_setup(void);
+void stage3_scenery_09_setup(void);
+void stage3_scenery_10_setup(void);
+void stage3_scenery_11_setup(void);
+void stage3_scenery_12_setup(void);
+void stage3_scenery_13_setup(void);
+void stage4_scenery_00_setup(void);
+void stage4_scenery_00_setup_alt(void);
+void stage4_scenery_01_setup(void);
+void stage4_scenery_02_setup(void);
+void stage4_scenery_03_setup(void);
+void stage4_scenery_04_setup(void);
+void stage4_scenery_05_setup(void);
+void stage5_scenery_00_setup(void);
+void stage5_scenery_01_setup(void);
+void stage5_scenery_02_setup(void);
+void stage5_scenery_03_setup(void);
+
+/*
+ * By stage: the set-up routines of the stage's scenery pieces. The number in SCROLL_SCENERY picks one.
+ */
+ScenerySetup stage1_scenery_setups[13] = {
+    stage1_scenery_00_setup,
+    stage1_scenery_01_setup,
+    stage1_scenery_02_setup,
+    stage1_scenery_03_setup,
+    stage1_scenery_04_setup,
+    stage1_scenery_05_setup,
+    stage1_scenery_06_setup,
+    stage1_scenery_07_setup,
+    stage1_scenery_08_setup,
+    stage1_scenery_09_setup,
+    stage1_scenery_10_setup,
+    stage1_scenery_11_setup,
+    stage1_scenery_12_setup,
+};
+
+ScenerySetup stage2_scenery_setups[8] = {
+    stage2_scenery_00_setup,
+    stage2_scenery_01_setup,
+    stage2_scenery_02_setup,
+    stage2_scenery_03_setup,
+    stage2_scenery_02_setup_alt,
+    stage2_scenery_03_setup_alt,
+    stage2_scenery_04_setup,
+    stage2_scenery_05_setup,
+};
+
+ScenerySetup stage3_scenery_setups[14] = {
+    stage3_scenery_00_setup,
+    stage3_scenery_01_setup,
+    stage3_scenery_02_setup,
+    stage3_scenery_03_setup,
+    stage3_scenery_04_setup,
+    stage3_scenery_05_setup,
+    stage3_scenery_06_setup,
+    stage3_scenery_07_setup,
+    stage3_scenery_08_setup,
+    stage3_scenery_09_setup,
+    stage3_scenery_10_setup,
+    stage3_scenery_11_setup,
+    stage3_scenery_12_setup,
+    stage3_scenery_13_setup,
+};
+
+ScenerySetup stage4_scenery_setups[7] = {
+    stage4_scenery_00_setup,
+    stage4_scenery_01_setup,
+    stage4_scenery_02_setup,
+    stage4_scenery_03_setup,
+    stage4_scenery_04_setup,
+    stage4_scenery_05_setup,
+    stage4_scenery_00_setup_alt,
+};
+
+ScenerySetup stage5_scenery_setups[4] = {
+    stage5_scenery_00_setup,
+    stage5_scenery_01_setup,
+    stage5_scenery_02_setup,
+    stage5_scenery_03_setup,
+};
+
+ScenerySetup *stage_scenery_setups[5] = {
+    stage1_scenery_setups,
+    stage2_scenery_setups,
+    stage3_scenery_setups,
+    stage4_scenery_setups,
+    stage5_scenery_setups,
 };
 
 /* The tables up to the stages' own hold pointer slots: the start-up routine checks the numbers and puts the addresses in. */
@@ -81,26 +187,26 @@ u16 stage1_scroll_events[197] = {
     SCROLL_SPEED(92, 0x0C0),
     SCROLL_SPEED(96, 0x080),
     SCROLL_SPEED(104, 0x040),
-    SCROLL_OBJECT(144, 12, 0x7000, 0x0C00),
-    SCROLL_OBJECT(146, 1, 0x7000, 0x0000),
+    SCROLL_SCENERY(144, 12, 0x7000, 0x0C00),
+    SCROLL_SCENERY(146, 1, 0x7000, 0x0000),
     SCROLL_SPEED(152, 0x020),
-    SCROLL_OBJECT(158, 2, 0x7000, 0x2400),
-    SCROLL_OBJECT(192, 0, 0x7000, 0x0A00),
+    SCROLL_SCENERY(158, 2, 0x7000, 0x2400),
+    SCROLL_SCENERY(192, 0, 0x7000, 0x0A00),
     SCROLL_PALETTES(224, 1),
     SCROLL_SPEED(229, 0x010),
     SCROLL_SPEED(231, 0x008),
-    SCROLL_OBJECT(238, 3, 0x7000, 0x0000),
+    SCROLL_SCENERY(238, 3, 0x7000, 0x0000),
     SCROLL_SPEED(240, 0x020),
-    SCROLL_OBJECT(254, 5, 0x7000, 0x3000),
+    SCROLL_SCENERY(254, 5, 0x7000, 0x3000),
     SCROLL_PALETTES(275, 1),
-    SCROLL_OBJECT(276, 4, 0x7000, 0x0000),
-    SCROLL_OBJECT(294, 6, 0x7000, 0x1800),
+    SCROLL_SCENERY(276, 4, 0x7000, 0x0000),
+    SCROLL_SCENERY(294, 6, 0x7000, 0x1800),
     SCROLL_PALETTES(320, 2),
-    SCROLL_OBJECT(326, 8, 0x7000, 0x0000),
-    SCROLL_OBJECT(334, 7, 0x7000, 0x3000),
-    SCROLL_OBJECT(368, 9, 0x7000, 0x0000),
-    SCROLL_OBJECT(396, 10, 0x7000, 0x2800),
-    SCROLL_OBJECT(429, 11, 0x7000, 0x0000),
+    SCROLL_SCENERY(326, 8, 0x7000, 0x0000),
+    SCROLL_SCENERY(334, 7, 0x7000, 0x3000),
+    SCROLL_SCENERY(368, 9, 0x7000, 0x0000),
+    SCROLL_SCENERY(396, 10, 0x7000, 0x2800),
+    SCROLL_SCENERY(429, 11, 0x7000, 0x0000),
     SCROLL_SOUNDS(474, 1),
     SCROLL_SPEED(484, 0x040),
     SCROLL_SPEED(488, 0x080),
@@ -177,17 +283,17 @@ u16 stage2_scroll_events[98] = {
     POINTER_SLOT(2), /* stage2_scroll_sounds */
     SCROLL_PALETTES(0, 20),
     SCROLL_SOUNDS(0, 1),
-    SCROLL_OBJECT(36, 0, 0x7000, 0x0000),
-    SCROLL_OBJECT(145, 6, 0x7000, 0x4000),
+    SCROLL_SCENERY(36, 0, 0x7000, 0x0000),
+    SCROLL_SCENERY(145, 6, 0x7000, 0x4000),
     SCROLL_PALETTES(202, 1),
-    SCROLL_OBJECT(224, 1, 0x7000, 0x0000),
+    SCROLL_SCENERY(224, 1, 0x7000, 0x0000),
     SCROLL_PALETTES(310, 4),
-    SCROLL_OBJECT(326, 2, 0x7000, 0x0000),
-    SCROLL_OBJECT(358, 3, 0x7000, 0x0000),
-    SCROLL_OBJECT(360, 4, 0x7040, 0x3400),
+    SCROLL_SCENERY(326, 2, 0x7000, 0x0000),
+    SCROLL_SCENERY(358, 3, 0x7000, 0x0000),
+    SCROLL_SCENERY(360, 4, 0x7040, 0x3400),
     SCROLL_PALETTES(378, 1),
-    SCROLL_OBJECT(392, 5, 0x7040, 0x3400),
-    SCROLL_OBJECT(444, 7, 0x7200, 0x2400),
+    SCROLL_SCENERY(392, 5, 0x7040, 0x3400),
+    SCROLL_SCENERY(444, 7, 0x7200, 0x2400),
     SCROLL_SOUNDS(475, 1),
     SCROLL_SOUNDS(493, 1),
     SCROLL_SPEED(497, 0x040),
@@ -247,15 +353,15 @@ u16 stage3_scroll_events[106] = {
     SCROLL_SOUNDS(0, 1),
     SCROLL_PALETTES(0, 20),
     SCROLL_SPEED(0, 0x020),
-    SCROLL_OBJECT(32, 0, 0x7000, 0x0000),
+    SCROLL_SCENERY(32, 0, 0x7000, 0x0000),
     SCROLL_MAP_LOOP(52, -28, 28, -1),
-    SCROLL_OBJECT(60, 1, 0x7000, 0x0000),
-    SCROLL_OBJECT(88, 2, 0x7000, 0x0000),
-    SCROLL_OBJECT(112, 4, 0x7000, 0x0000),
-    SCROLL_OBJECT(116, 3, 0x7000, 0x3800),
-    SCROLL_OBJECT(140, 5, 0x7000, 0x0000),
-    SCROLL_OBJECT(168, 6, 0x7000, 0x0000),
-    SCROLL_OBJECT(196, 7, 0x7000, 0x0000),
+    SCROLL_SCENERY(60, 1, 0x7000, 0x0000),
+    SCROLL_SCENERY(88, 2, 0x7000, 0x0000),
+    SCROLL_SCENERY(112, 4, 0x7000, 0x0000),
+    SCROLL_SCENERY(116, 3, 0x7000, 0x3800),
+    SCROLL_SCENERY(140, 5, 0x7000, 0x0000),
+    SCROLL_SCENERY(168, 6, 0x7000, 0x0000),
+    SCROLL_SCENERY(196, 7, 0x7000, 0x0000),
     SCROLL_SPEED(216, 0x040),
     SCROLL_SPEED(224, 0x080),
     SCROLL_PALETTES(227, 4),
@@ -321,17 +427,17 @@ u16 stage4_scroll_events[108] = {
     SCROLL_SPEED(0, 0x020),
     SCROLL_PALETTES(0, 14),
     SCROLL_PALETTES(0, 1),
-    SCROLL_OBJECT(0, 5, 0x6200, 0x0000),
+    SCROLL_SCENERY(0, 5, 0x6200, 0x0000),
     SCROLL_PALETTES(164, 1),
-    SCROLL_OBJECT(164, 1, 0x7000, 0x0000),
+    SCROLL_SCENERY(164, 1, 0x7000, 0x0000),
     SCROLL_PALETTES(205, 1),
     SCROLL_PALETTES(360, 1),
-    SCROLL_OBJECT(360, 2, 0x7000, 0x0000),
+    SCROLL_SCENERY(360, 2, 0x7000, 0x0000),
     SCROLL_PALETTES(528, 1),
-    SCROLL_OBJECT(528, 3, 0x7000, 0x0000),
+    SCROLL_SCENERY(528, 3, 0x7000, 0x0000),
     SCROLL_PALETTES(560, 2),
     SCROLL_PALETTES(696, 1),
-    SCROLL_OBJECT(696, 4, 0x7000, 0x0000),
+    SCROLL_SCENERY(696, 4, 0x7000, 0x0000),
     SCROLL_SOUNDS(718, 1),
     SCROLL_SOUNDS(735, 1),
     SCROLL_SPEED(736, 0x040),
@@ -393,17 +499,17 @@ u16 stage5_scroll_events[154] = {
     SCROLL_PALETTES(0, 15),
     SCROLL_FLAGS(0, 1),
     SCROLL_PALETTES(16, 1),
-    SCROLL_OBJECT(74, 0, 0x7000, 0x0000),
+    SCROLL_SCENERY(74, 0, 0x7000, 0x0000),
     SCROLL_FLAGS(76, 2),
-    SCROLL_OBJECT(104, 1, 0x7000, 0x0000),
-    SCROLL_OBJECT(144, 2, 0x7000, 0x0000),
+    SCROLL_SCENERY(104, 1, 0x7000, 0x0000),
+    SCROLL_SCENERY(144, 2, 0x7000, 0x0000),
     SCROLL_SPEED(176, 0x010),
     SCROLL_PALETTES(199, 2),
     SCROLL_FLAGS(208, 2),
     SCROLL_SPEED(224, 0x020),
     SCROLL_SPEED(368, 0x020),
     SCROLL_PALETTES(375, 1),
-    SCROLL_OBJECT(375, 3, 0x7000, 0x0000),
+    SCROLL_SCENERY(375, 3, 0x7000, 0x0000),
     SCROLL_SPEED(376, 0x010),
     SCROLL_SPEED(380, 0x008),
     SCROLL_SPEED(428, 0x020),
