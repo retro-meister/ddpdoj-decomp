@@ -46,6 +46,19 @@ typedef struct {
 #define ASCEND(pointer) ((MoveAscend *)(pointer))
 
 /* The set-up routine and the per-frame routine of every movement, by movement number. */
+#ifdef DEATH_LABEL
+void twin_boss_move_wander_a_start(void);
+void twin_boss_move_wander_a(void);
+void twin_boss_move_wander_b_start(void);
+void twin_boss_move_wander_b(void);
+void twin_boss_move_wander_c_start(void);
+void twin_boss_move_wander_c(void);
+void twin_boss_move_wander_d_start(void);
+void twin_boss_move_wander_d(void);
+void twin_boss_move_wander_e_start(void);
+void twin_boss_move_wander_e(void);
+#endif
+
 void (*stage5_boss_move_routines[])(void) = {
     stage5_boss_move_enter_start,
     stage5_boss_move_enter,
@@ -71,6 +84,19 @@ void (*stage5_boss_move_routines[])(void) = {
     (void (*)(void))stage5_boss_move_form3_wander_d,
     stage5_boss_move_form3_rage_wander_start,
     stage5_boss_move_form3_rage_wander,
+#ifdef DEATH_LABEL
+    /* the movements only Death Label has */
+    twin_boss_move_wander_a_start,
+    twin_boss_move_wander_a,
+    twin_boss_move_wander_b_start,
+    twin_boss_move_wander_b,
+    twin_boss_move_wander_c_start,
+    twin_boss_move_wander_c,
+    twin_boss_move_wander_d_start,
+    twin_boss_move_wander_d,
+    twin_boss_move_wander_e_start,
+    twin_boss_move_wander_e,
+#endif
 };
 
 void stage5_boss_move_enter(void);

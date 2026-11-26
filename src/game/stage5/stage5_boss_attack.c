@@ -32,6 +32,37 @@ void stage5_boss_fire_form3_rage_start(void);
 void stage5_boss_fire_form3_rage(void);
 
 /* The set-up routine and the per-frame routine of every attack, by attack number. */
+#ifdef DEATH_LABEL
+void twin_boss_first_fire_stinger_start(void);
+void twin_boss_first_fire_stinger(void);
+void twin_boss_second_fire_stinger_start(void);
+void twin_boss_second_fire_stinger(void);
+void twin_boss_first_fire_attack_b_start(void);
+void twin_boss_first_fire_attack_b(void);
+void twin_boss_second_fire_attack_b_start(void);
+void twin_boss_second_fire_attack_b(void);
+void twin_boss_first_fire_attack_c_start(void);
+void twin_boss_first_fire_attack_c(void);
+void twin_boss_second_fire_attack_c_start(void);
+void twin_boss_second_fire_attack_c(void);
+void twin_boss_first_fire_spiral_start(void);
+void twin_boss_first_fire_spiral(void);
+void twin_boss_second_fire_spiral_start(void);
+void twin_boss_second_fire_spiral(void);
+void twin_boss_first_fire_rage_start(void);
+void twin_boss_first_fire_rage(void);
+void twin_boss_second_fire_rage_start(void);
+void twin_boss_second_fire_rage(void);
+void twin_boss_first_fire_form1_rage_start(void);
+void twin_boss_first_fire_form1_rage(void);
+void twin_boss_second_fire_form1_rage_start(void);
+void twin_boss_second_fire_form1_rage(void);
+void twin_boss_first_fire_jet_start(void);
+void twin_boss_first_fire_jet(void);
+void twin_boss_second_fire_jet_start(void);
+void twin_boss_second_fire_jet(void);
+#endif
+
 void (*stage5_boss_fire_routines[])(void) = {
     stage5_boss_fire_form1_arm_guns_aimed_start,
     stage5_boss_fire_form1_arm_guns_aimed,
@@ -61,6 +92,41 @@ void (*stage5_boss_fire_routines[])(void) = {
     stage5_boss_fire_form3_spiral,
     stage5_boss_fire_form3_rage_start,
     stage5_boss_fire_form3_rage,
+#ifdef DEATH_LABEL
+    /* the attacks only Death Label has: one pair for each of the two bosses */
+    twin_boss_first_fire_stinger_start,
+    twin_boss_first_fire_stinger,
+    twin_boss_second_fire_stinger_start,
+    twin_boss_second_fire_stinger,
+    twin_boss_first_fire_attack_b_start,
+    twin_boss_first_fire_attack_b,
+    twin_boss_second_fire_attack_b_start,
+    twin_boss_second_fire_attack_b,
+    twin_boss_first_fire_attack_c_start,
+    twin_boss_first_fire_attack_c,
+    twin_boss_second_fire_attack_c_start,
+    twin_boss_second_fire_attack_c,
+    twin_boss_first_fire_spiral_start,
+    twin_boss_first_fire_spiral,
+    twin_boss_second_fire_spiral_start,
+    twin_boss_second_fire_spiral,
+    twin_boss_first_fire_rage_start,
+    twin_boss_first_fire_rage,
+    twin_boss_second_fire_rage_start,
+    twin_boss_second_fire_rage,
+    twin_boss_first_fire_stinger_start,
+    twin_boss_first_fire_stinger,
+    twin_boss_second_fire_stinger_start,
+    twin_boss_second_fire_stinger,
+    twin_boss_first_fire_form1_rage_start,
+    twin_boss_first_fire_form1_rage,
+    twin_boss_second_fire_form1_rage_start,
+    twin_boss_second_fire_form1_rage,
+    twin_boss_first_fire_jet_start,
+    twin_boss_first_fire_jet,
+    twin_boss_second_fire_jet_start,
+    twin_boss_second_fire_jet,
+#endif
 };
 
 s32 bullet_fire256_fixed();
