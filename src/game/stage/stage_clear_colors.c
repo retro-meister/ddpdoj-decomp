@@ -1,5 +1,9 @@
 #include "common.h"
 
+extern void *D_0026B230[8];
+struct D0026b250Record { u16 w0[2]; void *p1; u16 w2[2]; void *p3; u16 w4[2]; void *p5; u16 w6[2]; void *p7; u16 w8[2]; void *p9; u16 w10[4]; };
+extern struct D0026b250Record D_0026B250;
+
 s32 rng_next_unsigned();
 extern s8 D_0026B210[];
 extern u16 g_game_frame;
@@ -62,13 +66,12 @@ void func_00172060(void) {
     D_0028E29C = g_stage_x4;
 }
 
-extern s8 *D_0026B230[];
 extern u16 D_0028E788;
 
 void func_00172090(void)
 {
     reg_d0.w = 0;
-    reg_a0 = (u8 *)(*(s8 **)((u8 *)D_0026B230 + (D_0028E29C & ~3)));
+    reg_a0 = (u8 *)(*(s8 **)((u8 *)((u8 *)D_0026B230) + (D_0028E29C & ~3)));
     reg_a0 += 7;
     reg_a0 -= D_0028E788;
     reg_d0.b[0] = (u8)*(s8 *)reg_a0;
@@ -76,7 +79,6 @@ void func_00172090(void)
 
 
 s32 sprite_palette_load();
-extern u8 D_0026B250[];
 extern u16 D_0028E78C;
 extern u8 D_0028E790;
 extern u8 D_0028E791;
@@ -92,7 +94,7 @@ void func_001720E0(void) {
         reg_d0.h[0] *= 2;
         reg_d0.h[0] += 1;
         temp_a0 = reg_d0.h[0] * 4;
-        reg_a0 = *(u8 **)((u8 *)D_0026B250 + temp_a0);
+        reg_a0 = *(u8 **)((u8 *)((u8 *)&D_0026B250) + temp_a0);
         reg_d0.h[0] = 0x17;
         sprite_palette_load();
     }
@@ -107,7 +109,7 @@ void func_001720E0(void) {
             reg_d0.h[0] *= 2;
             reg_d0.h[0] += 1;
             temp_a0_3 = reg_d0.h[0] * 4;
-            reg_a0 = *(u8 **)((u8 *)D_0026B250 + temp_a0_3);
+            reg_a0 = *(u8 **)((u8 *)((u8 *)&D_0026B250) + temp_a0_3);
             reg_d0.h[0] = 0x17;
             sprite_palette_load();
             if (D_0028E788 == 0) {
@@ -148,7 +150,7 @@ void func_00172260(void) {
     if (D_0028E784 != -1) {
         func_00172090();
         reg_d0.h[0] *= 2;
-        temp_a3 = *(u32 *)(D_0026B250 + (reg_d0.h[0] * 4));
+        temp_a3 = *(u32 *)(((u8 *)&D_0026B250) + (reg_d0.h[0] * 4));
         reg_d1.w = 0x38001C00;
         reg_d1.w += 0xC800E400;
         reg_d2.w = temp_a3;
@@ -162,6 +164,51 @@ void func_00172260(void) {
         sprite_draw_layer1();
     }
 }
+
+extern u8 D_002BB438[];
+extern u8 D_002BB440[];
+extern u8 D_002BB448[];
+extern u8 D_002BB450[];
+extern u8 D_002620F0[];
+extern u8 D_00262130[];
+extern u8 D_00262170[];
+extern u8 D_002621B0[];
+extern u8 D_002621F0[];
+
+s8 D_0026B210[32] = {
+    0x00, 0x01, 0x02, 0x03, 0x04, 0x00, 0x01, 0x02, 0x03, 0x04, 0x00, 0x01, 0x02, 0x03, 0x04, 0x00,
+    0x01, 0x02, 0x03, 0x04, 0x00, 0x01, 0x02, 0x03, 0x04, 0x00, 0x01, 0x02, 0x03, 0x04, 0x00, 0x01,
+};
+
+void *D_0026B230[8] = {
+    D_002BB430,
+    D_002BB438,
+    D_002BB440,
+    D_002BB448,
+    D_002BB450,
+    0,
+    0,
+    0,
+};
+
+struct D0026b250Record D_0026B250 = {
+    { 0x14B5, 0x0000 },
+    D_002620F0,
+    { 0x14B6, 0x0000 },
+    D_00262130,
+    { 0x14B7, 0x0000 },
+    D_00262170,
+    { 0x14B8, 0x0000 },
+    D_002621B0,
+    { 0x14B9, 0x0000 },
+    D_002621F0,
+    { 0x0000, 0x0000, 0x0000, 0x0000 },
+};
+
+u8 D_0026B280[32] = {
+    0x00, 0x80, 0x00, 0x80, 0x00, 0x90, 0x00, 0x90, 0x00, 0xA0, 0x00, 0xA0, 0x00, 0xB0, 0x00, 0xB0,
+    0x00, 0xC0, 0x00, 0xC0, 0x00, 0xD0, 0x00, 0xD0, 0x00, 0xE0, 0x00, 0xE0, 0x00, 0xF0, 0x00, 0xF0,
+};
 
 /* .sbss (the compiler lays these out in reverse) */
 u16 D_0028E794 __attribute__((aligned(4)));

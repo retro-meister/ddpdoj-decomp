@@ -3,6 +3,12 @@
 #include "enemy_kinds.h"
 #include "stage4_boss.h"
 
+extern void (*stage4_boss_right_spinner_routines[16])();
+extern void (*D_0026ECC0[4])();
+extern void (*stage4_boss_left_spinner_routines[16])();
+extern void (*D_0026EDA0[8])();
+extern void (*D_0028DC78[])();
+
 void stage4_boss_fire_basic_start(void);
 void stage4_boss_fire_basic(void);
 void stage4_boss_fire_right_spinner_start(void);
@@ -169,7 +175,6 @@ void stage4_boss_fire_basic(void) {
     }
 }
 
-extern void (*stage4_boss_right_spinner_routines[])(void);
 
 void stage4_boss_fire_right_spinner_start(void)
 {
@@ -180,13 +185,12 @@ void stage4_boss_fire_right_spinner_start(void)
 }
 
 typedef void (*Fn)(void);
-extern Fn stage4_boss_right_spinner_routines[];
 
 void stage4_boss_fire_right_spinner(void) {
     reg_d0.h[0] = SPINNER(reg_a4)->pattern;
     reg_d0.h[0] <<= 1;
     reg_d0.h[0] += 1;
-    (*(Fn *)((u8 *)stage4_boss_right_spinner_routines + (reg_d0.h[0] << 2)))();
+    (*(Fn *)((u8 *)((u8 *)stage4_boss_right_spinner_routines) + (reg_d0.h[0] << 2)))();
 }
 
 void stage4_boss_spinner_volleys_start(s32 id) {
@@ -457,7 +461,6 @@ void stage4_boss_right_spinner_arms_start(void) {
 
 s32 rng_next();
 s32 rng_next_unsigned();
-extern u8 D_0026ECC0[];
 
 void stage4_boss_spinner_arms(s32 arg0, s32 arg1, void *arg2) {
     s32 aim256_at_player();
@@ -498,7 +501,7 @@ void stage4_boss_spinner_arms(s32 arg0, s32 arg1, void *arg2) {
     reg_d2.h[1] = ((arg1) != 0) ? *(u16 *)((u8 *)reg_a6 + ((s16)(arg1) & ~1)) : ENTITY(reg_a6)->flags.h;
     reg_d2.h[0] = ((arg1 + 2) != 0) ? *(u16 *)((u8 *)reg_a6 + ((s16)(arg1 + 2) & ~1)) : ENTITY(reg_a6)->flags.h;
     reg_d4.w = 0;
-    ((Fn)*(u32 *)((u8 *)D_0026ECC0 + (idx * 4)))();
+    ((Fn)*(u32 *)((u8 *)((u8 *)D_0026ECC0) + (idx * 4)))();
 next_0:
     if (SPINNER_ARMS(reg_a4)->arm != 1) goto next_1;
     reg_d0.h[0] = ((arg0) != 0) ? *(u16 *)((u8 *)reg_a6 + ((s16)(arg0) & ~1)) : ENTITY(reg_a6)->flags.h;
@@ -529,7 +532,7 @@ next_0:
     reg_d2.h[1] = ((arg1) != 0) ? *(u16 *)((u8 *)reg_a6 + ((s16)(arg1) & ~1)) : ENTITY(reg_a6)->flags.h;
     reg_d2.h[0] = ((arg1 + 2) != 0) ? *(u16 *)((u8 *)reg_a6 + ((s16)(arg1 + 2) & ~1)) : ENTITY(reg_a6)->flags.h;
     reg_d4.w = 0;
-    ((Fn)*(u32 *)((u8 *)D_0026ECC0 + (idx * 4)))();
+    ((Fn)*(u32 *)((u8 *)((u8 *)D_0026ECC0) + (idx * 4)))();
 next_1:
     if (SPINNER_ARMS(reg_a4)->arm != 2) goto next_2;
     reg_d0.h[0] = ((arg0) != 0) ? *(u16 *)((u8 *)reg_a6 + ((s16)(arg0) & ~1)) : ENTITY(reg_a6)->flags.h;
@@ -560,7 +563,7 @@ next_1:
     reg_d2.h[1] = ((arg1) != 0) ? *(u16 *)((u8 *)reg_a6 + ((s16)(arg1) & ~1)) : ENTITY(reg_a6)->flags.h;
     reg_d2.h[0] = ((arg1 + 2) != 0) ? *(u16 *)((u8 *)reg_a6 + ((s16)(arg1 + 2) & ~1)) : ENTITY(reg_a6)->flags.h;
     reg_d4.w = 0;
-    ((Fn)*(u32 *)((u8 *)D_0026ECC0 + (idx * 4)))();
+    ((Fn)*(u32 *)((u8 *)((u8 *)D_0026ECC0) + (idx * 4)))();
 next_2:
     SPINNER_ARMS(reg_a4)->arm += 1;
     if (SPINNER_ARMS(reg_a4)->arm != 3) goto next_3;
@@ -867,7 +870,6 @@ void stage4_boss_right_spinner_sweep(void) {
     stage4_boss_spinner_sweep(0xC6, 0xC2, (void *)stage4_boss_right_spinner_turn_back, 0x188);
 }
 
-extern void (*stage4_boss_left_spinner_routines[])(void);
 
 void stage4_boss_fire_left_spinner_start(void)
 {
@@ -877,13 +879,12 @@ void stage4_boss_fire_left_spinner_start(void)
     stage4_boss_fire_left_spinner();
 }
 
-extern Fn stage4_boss_left_spinner_routines[];
 
 void stage4_boss_fire_left_spinner(void) {
     reg_d0.h[0] = SPINNER(reg_a4)->pattern;
     reg_d0.h[0] <<= 1;
     reg_d0.h[0] += 1;
-    (*(Fn *)((u8 *)stage4_boss_left_spinner_routines + (reg_d0.h[0] << 2)))();
+    (*(Fn *)((u8 *)((u8 *)stage4_boss_left_spinner_routines) + (reg_d0.h[0] << 2)))();
 }
 
 void stage4_boss_left_spinner_volleys_start(void) {
@@ -1584,7 +1585,6 @@ void stage4_boss_fire_cutter_bay_b_start(void) {
 extern u8 D_0026ED90[];
 s32 enemy_switch_target_player();
 extern u16 D_0026ED98[];
-extern u8 D_0026EDA0[];
 extern u8 D_0026EDA8[];
 
 void stage4_boss_fire_cutter_bay_b(void) {
@@ -1643,7 +1643,7 @@ next_1:
                 reg_d4.w = 0;
                 reg_tmp.h[0] = CUTTER_BAY_B(reg_a4)->muzzle;
                 reg_tmp.h[0] += STAGE4_EXTRA(reg_a6)->bay_b_round;
-                ((Fn)*(u32 *)((u8 *)D_0026EDA0 + (reg_tmp.h[0] & ~3)))();
+                ((Fn)*(u32 *)((u8 *)((u8 *)D_0026EDA0) + (reg_tmp.h[0] & ~3)))();
                 CUTTER_BAY_B(reg_a4)->burst.t.count -= 1;
                 if ((s8) CUTTER_BAY_B(reg_a4)->burst.t.count == 0) {
                     CUTTER_BAY_B(reg_a4)->muzzle += 4;
@@ -1812,7 +1812,6 @@ void stage4_boss_fire_both_sides_start(void)
     stage4_boss_fire_both_sides();
 }
 
-extern u8 D_0028DC78[];
 
 void stage4_boss_fire_both_sides(void) {
     u16 temp_a3;
@@ -1843,7 +1842,7 @@ block_3:
             reg_d7.h[0] = reg_d1.h[0];
             reg_d4.w = 0;
             reg_tmp.h[0] = BOTH_SIDES(reg_a4)->pattern;
-            ((Fn)*(u32 *)((u8 *)D_0028DC78 + (reg_tmp.h[0] & ~3)))();
+            ((Fn)*(u32 *)((u8 *)((u8 *)D_0028DC78) + (reg_tmp.h[0] & ~3)))();
             BOTH_SIDES(reg_a4)->pattern += 4;
             BOTH_SIDES(reg_a4)->pattern &= 7;
             BOTH_SIDES(reg_a4)->burst.t.count -= 1;
@@ -1984,3 +1983,141 @@ block_4:
         }
     }
 }
+
+u8 D_0026EBD0[16] = {
+    0x80, 0x07, 0x40, 0xFE, 0x80, 0x03, 0x40, 0xFE, 0xC0, 0xFF, 0x40, 0xFE, 0xC0, 0xFB, 0x40, 0xFE,
+};
+
+u8 D_0026EBE0[16] = {
+    0x80, 0x07, 0xC0, 0x01, 0x80, 0x03, 0xC0, 0x01, 0xC0, 0xFF, 0xC0, 0x01, 0xC0, 0xFB, 0xC0, 0x01,
+};
+
+u16 D_0026EBF0[56] = {
+    0x0740, 0x0000, 0x0740, 0x0140, 0x0700, 0x0280, 0x0600, 0x0380,
+    0x0500, 0x0440, 0x03C0, 0x04C0, 0x0200, 0x0500, 0x0080, 0x04C0,
+    0xFF40, 0x04C0, 0xFE00, 0x0400, 0xFCC0, 0x02C0, 0xFC40, 0x0140,
+    0xFC00, 0x0000, 0xFC00, 0xFE40, 0xFCC0, 0xFCC0, 0xFE00, 0xFC00,
+    0xFF40, 0xFB40, 0x0080, 0xFB40, 0x0200, 0xFB00, 0x0200, 0xFAC0,
+    0x0380, 0xFB40, 0x0500, 0xFB80, 0x0640, 0xFC40, 0x0700, 0xFD80,
+    0x0740, 0xFE80, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000,
+};
+
+u8 D_0026EC60[32] = {
+    0x00, 0x08, 0x14, 0x20, 0x28, 0x30, 0x34, 0x40, 0x48, 0x50, 0x62, 0x72, 0x80, 0x8E, 0x9E, 0xB0,
+    0xB8, 0xC0, 0xCC, 0xD0, 0xD8, 0xE0, 0xEC, 0xF8, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00,
+};
+
+void (*stage4_boss_right_spinner_routines[16])() = {
+    stage4_boss_right_spinner_volleys_start,
+    stage4_boss_right_spinner_volleys,
+    stage4_boss_right_spinner_volleys_b_start,
+    stage4_boss_right_spinner_volleys_b,
+    stage4_boss_right_spinner_arms_start,
+    stage4_boss_right_spinner_arms,
+    stage4_boss_right_spinner_sweep_start,
+    stage4_boss_right_spinner_sweep,
+    stage4_boss_right_spinner_volleys_start,
+    stage4_boss_right_spinner_volleys,
+    stage4_boss_right_spinner_arms_start,
+    stage4_boss_right_spinner_arms,
+    stage4_boss_right_spinner_rounds_start,
+    stage4_boss_right_spinner_rounds,
+    stage4_boss_right_spinner_sweep_start,
+    stage4_boss_right_spinner_sweep,
+};
+
+void (*D_0026ECC0[4])() = {
+    stage4_boss_fire_doubles,
+    stage4_boss_fire_doubles_3way,
+    stage4_boss_fire_2ways_3way,
+    stage4_boss_fire_doubles,
+};
+
+void (*stage4_boss_left_spinner_routines[16])() = {
+    stage4_boss_left_spinner_volleys_start,
+    stage4_boss_left_spinner_volleys,
+    stage4_boss_left_spinner_volleys_b_start,
+    stage4_boss_left_spinner_volleys_b,
+    stage4_boss_left_spinner_arms_start,
+    stage4_boss_left_spinner_arms,
+    stage4_boss_left_spinner_sweep_start,
+    stage4_boss_left_spinner_sweep,
+    stage4_boss_left_spinner_volleys_start,
+    stage4_boss_left_spinner_volleys,
+    stage4_boss_left_spinner_arms_start,
+    stage4_boss_left_spinner_arms,
+    stage4_boss_left_spinner_rounds_start,
+    stage4_boss_left_spinner_rounds,
+    stage4_boss_left_spinner_sweep_start,
+    stage4_boss_left_spinner_sweep,
+};
+
+u8 D_0026ED10[32] = {
+    0x00, 0x00, 0x01, 0x00, 0x02, 0x00, 0x03, 0x00, 0x04, 0x00, 0x05, 0x00, 0x06, 0x00, 0x07, 0x00,
+    0x08, 0x00, 0x09, 0x00, 0x0A, 0x00, 0x0B, 0x00, 0x0C, 0x00, 0x0D, 0x00, 0x0E, 0x00, 0x0F, 0x00,
+};
+
+u16 D_0026ED30[8] = {
+    0x090E, 0xF000, 0x55E0, 0x3545, 0x9BAB, 0x008B, 0x0000, 0x0000,
+};
+
+u16 D_0026ED40[8] = {
+    0x09F2, 0x1000, 0x5520, 0x7565, 0xBBAB, 0x00CB, 0x0000, 0x0000,
+};
+
+u16 D_0026ED50[8] = {
+    0x080E, 0x2000, 0x6040, 0xA080, 0xE0C0, 0x0000, 0x0000, 0x0000,
+};
+
+u16 D_0026ED60[8] = {
+    0x08F2, 0x2000, 0x6040, 0xA080, 0xE0C0, 0x0000, 0x0000, 0x0000,
+};
+
+u16 D_0026ED70[16] = {
+    0x0A0E, 0x0000, 0x01F0, 0x02E0, 0x03D0, 0x0480, 0x0570, 0x0660,
+    0x0750, 0x70E8, 0x7168, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000,
+};
+
+u8 D_0026ED90[16] = {
+    0x40, 0xF6, 0x80, 0xF9, 0x40, 0xF6, 0x80, 0x06, 0x00, 0xFE, 0x80, 0xF9, 0x00, 0xFE, 0x80, 0x06,
+};
+
+void (*D_0026EDA0[8])() = {
+    stage4_boss_fire_fixed_1,
+    stage4_boss_fire_fixed_1,
+    stage4_boss_fire_fixed_2way,
+    stage4_boss_fire_fixed_2way,
+    stage4_boss_fire_fixed_3way,
+    stage4_boss_fire_fixed_3way,
+    stage4_boss_fire_fixed_4way,
+    stage4_boss_fire_fixed_4way,
+};
+
+u8 D_0026EDC0[16] = {
+    0x00, 0x08, 0x00, 0x0E, 0x00, 0x08, 0x00, 0x14, 0x00, 0x08, 0x00, 0xF2, 0x00, 0x08, 0x00, 0xEC,
+};
+
+s32 D_0028DC60[1] = {
+    0x00986880,
+};
+
+s32 D_0028DC64[1] = {
+    0x00689880,
+};
+
+u8 D_0028DC68[4] = {
+    0x00, 0x00, 0x01, 0x00,
+};
+
+u16 D_0028DC6C[2] = {
+    0x0000, 0x0001,
+};
+
+u16 D_0028DC70[4] = {
+    0x03F6, 0x0400, 0x0455, 0x04AB,
+};
+
+void (*D_0028DC78[2])() = {
+    stage4_boss_fire_fixed_fan_a,
+    stage4_boss_fire_fixed_fan_b,
+};

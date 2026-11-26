@@ -4227,9 +4227,9 @@ extern void func_001D6160(void);
 extern void stage3_midboss_mode_05(void);
 extern void stage3_midboss_mode_leave(void);
 
-extern u16 stage3_midboss_mode_routines_as_u16_a[];
+extern u16 stage3_midboss_mode_routines[];
 extern u16 D_002635C2[];
-extern u16 stage3_midboss2_state_routines_1_as_u16_a[];
+extern u16 stage3_midboss2_state_routines_1[];
 extern u16 D_00263612[];
 
 void func_00186CA0(void) {
@@ -4249,10 +4249,10 @@ void func_00186CA0(void) {
         printf("error! st3mbflush0_tbl[18]\n");
     }
     STORE_POINTER(stage3_midboss_flash_palettes + 18, g_stage3_map_palettes);
-    if (stage3_midboss_mode_routines_as_u16_a[0] != 0x0) {
+    if (stage3_midboss_mode_routines[0] != 0x0) {
         printf("error! st3mb_md_tbl[0]\n");
     }
-    STORE_POINTER(stage3_midboss_mode_routines_as_u16_a, stage3_midboss_mode_00);
+    STORE_POINTER(stage3_midboss_mode_routines, stage3_midboss_mode_00);
     if (D_002635C2[1] != 0x2) {
         printf("error! st3mb_md_tbl[2]\n");
     }
@@ -4309,10 +4309,10 @@ void func_00186CA0(void) {
         printf("error! s3mm2_st_tbl0[14]\n");
     }
     STORE_POINTER(stage3_midboss2_state_routines_0 + 22, stage3_midboss2_state_0_04);
-    if (stage3_midboss2_state_routines_1_as_u16_a[0] != 0x0) {
+    if (stage3_midboss2_state_routines_1[0] != 0x0) {
         printf("error! s3mm2_st_tbl1[0]\n");
     }
-    STORE_POINTER(stage3_midboss2_state_routines_1_as_u16_a, func_001D6160);
+    STORE_POINTER(stage3_midboss2_state_routines_1, func_001D6160);
     if (D_00263612[1] != 0x2) {
         printf("error! s3mm2_st_tbl1[2]\n");
     }

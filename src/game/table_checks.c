@@ -504,8 +504,6 @@ extern u16 D_0025BFA6[];
 extern u16 D_0025BFB4[];
 extern u16 D_0025BFC2[];
 extern u16 name_entry_letter_table[];
-extern u16 stage5_boss_horn_shot_offsets_as_u16_a[];
-extern u16 D_002643E2[];
 extern u16 D_0028C148_as_u16_a[];
 extern u16 D_0028C14A[];
 
@@ -3065,8 +3063,8 @@ void func_0018E5A0(void) {
         printf("error! st5b_2_tsuno_sht_ofs_tbl[0]\n");
     }
     reg_tmp.w = (u32)D_002644E0;
-    stage5_boss_horn_shot_offsets_as_u16_a[0] = reg_tmp.h[1];
-    D_002643E2[0] = reg_tmp.h[0];
+    stage5_boss_horn_shot_offsets[0] = reg_tmp.h[1];
+    stage5_boss_horn_shot_offsets[1] = reg_tmp.h[0];
     if (stage5_boss_horn_shot_offsets[2] != 0x2) {
         printf("error! st5b_2_tsuno_sht_ofs_tbl[2]\n");
     }
