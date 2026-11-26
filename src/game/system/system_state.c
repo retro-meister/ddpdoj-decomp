@@ -120,7 +120,7 @@ u8 g_pad_tate_rotate __attribute__((aligned(4)));
 u8 g_splash_visible __attribute__((aligned(4)));
 u8 g_stage_map_active __attribute__((aligned(4)));
 u8 D_0028E2EC __attribute__((aligned(4)));
-u16 D_0028E2E8 __attribute__((aligned(4)));
+u16 g_stage5_boss_all_forms __attribute__((aligned(4)));
 u8 D_0028E2E4 __attribute__((aligned(4)));
 u8 g_bgm_alternate_set __attribute__((aligned(4)));
 u8 g_screen_wide __attribute__((aligned(4)));

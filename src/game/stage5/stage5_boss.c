@@ -33,7 +33,7 @@ extern u8 D_00264F40[];
 extern u8 D_00264F50[];
 extern u32 D_0028D9C8;
 extern u8 g_game_mode;
-extern u16 D_0028E2E8;
+extern u16 g_stage5_boss_all_forms;
 extern u16 g_loop;
 extern s16 D_00299768[];
 extern s16 D_0029976A[];
@@ -53,11 +53,11 @@ void stage5_boss_start(void) {
     reg_a2 = (u8 *)stage5_boss_draw_routines;
     reg_a3 = (u8 *)stage5_boss_anim_routines;
     reg_a4 = (u8 *)stage5_boss_mode_routines;
-    D_0028E2E8 = g_loop;
+    g_stage5_boss_all_forms = g_loop;
     if (g_game_mode == 2) {
-        D_0028E2E8 = 1;
+        g_stage5_boss_all_forms = 1;
     }
-    if (D_0028E2E8 == 0) {
+    if (g_stage5_boss_all_forms == 0) {
         reg_a1 = (u8 *)stage5_boss_fire_loop1_routines;
     }
     boss_slots_init();

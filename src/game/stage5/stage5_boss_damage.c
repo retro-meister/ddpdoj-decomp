@@ -16,7 +16,7 @@ s32 score_add_no_chain();
 s32 score_add();
 s32 func_002016D0();
 extern u8 g_game_mode;
-extern u16 D_0028E2E8;
+extern u16 g_stage5_boss_all_forms;
 extern s32 g_boss_score;
 extern u16 g_damage_blink_counter;
 
@@ -202,7 +202,7 @@ next_9:
     TW(0x18) = reg_tmp.h[0];
     goto block_chk;
 next_6:
-    if (D_0028E2E8 != 0) goto next_7;
+    if (g_stage5_boss_all_forms != 0) goto next_7;
     g_boss_score = 0x70000;
     stage5_boss_form1_defeated();
     return;
@@ -214,7 +214,7 @@ next_7:
     return;
 block_chk:
     if (STAGE5_DAMAGE(reg_a6)->form1_second_phase != 0) goto next_8;
-    if (D_0028E2E8 != 0) goto next_8;
+    if (g_stage5_boss_all_forms != 0) goto next_8;
     reg_d0.h[1] = TW(0x16);
     reg_d0.h[0] = TW(0x18);
     reg_d0.w += 0xFFFD6000;
@@ -246,7 +246,7 @@ void stage5_boss_form1_defeated(void) {
     s32 boss_phase_start(s32, s32, s32, s32);
     music_stop();
     slowdown_turn_off();
-    if (D_0028E2E8 == 0) {
+    if (g_stage5_boss_all_forms == 0) {
         g_boss_present_b1 |= 0x40;
         g_boss_present_b1 |= 0x80;
         func_00203460();

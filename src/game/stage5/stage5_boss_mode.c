@@ -161,7 +161,7 @@ void stage5_boss_mode_form1_explosion_afterglow(void);
 
 s32 boss_animation_start();                            /* extern */
 s32 slowdown_turn_off();                            /* extern */
-extern u16 D_0028E2E8;
+extern u16 g_stage5_boss_all_forms;
 
 #ifdef DEATH_LABEL
 extern s8 g_death_boss_form_as_s8;
@@ -181,7 +181,7 @@ void stage5_boss_mode_form1_idle_start(void) {
     slowdown_turn_off();
     MODE(reg_a4)->wait = 0x260;
     MODE(reg_a4)->second_wait = 0x160;
-    if (D_0028E2E8 == 0) {
+    if (g_stage5_boss_all_forms == 0) {
         stage5_boss_mode_form1_idle(0x260);
         return;
     }
@@ -223,7 +223,7 @@ void stage5_boss_mode_form1_idle() {
     MODE(reg_a4)->wait -= 1;
     if (MODE(reg_a4)->wait == 0) {
         g_boss_hyper_wait_as_s16 = 1;
-        if (D_0028E2E8 == 0) {
+        if (g_stage5_boss_all_forms == 0) {
             g_boss_present_b1 |= 2;
             g_boss_present_b1 |= 0x10;
         } else {
@@ -385,7 +385,7 @@ void stage5_boss_mode_form1_explosion() {
         ENTITY(reg_a6)->x.h = t2;
         reg_a0 = (u8 *)stage5_boss_flash_palettes_a;
         func_0013B2E0();
-        if (D_0028E2E8 == 0) {
+        if (g_stage5_boss_all_forms == 0) {
             sfx_explosion_boss();
             boss_part_hide_all();
             reg_d7.w = 0x14;
