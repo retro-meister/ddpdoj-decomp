@@ -7,8 +7,8 @@ extern s16 D_0028E0B8;
 extern s16 D_0028E0BC;
 extern s16 D_0028E0C0;
 extern u8 D_0029F2D0[];
-extern u8 D_0029F4B0[];
-extern u8 D_0029FCB0[];
+extern u8 g_palette_bank_a[];
+extern u8 g_palette_bank_b[];
 void func_001A2900(void) {
     s32 var_a1;
     u8 *temp_a2;
@@ -21,8 +21,8 @@ void func_001A2900(void) {
     var_a2 = 0;
     var_a3 = 0;
     do {
-        temp_t0 = (u8 *)(D_0029FCB0 + var_a3);
-        temp_t1 = (u8 *)(D_0029F4B0 + var_a3);
+        temp_t0 = (u8 *)(g_palette_bank_b + var_a3);
+        temp_t1 = (u8 *)(g_palette_bank_a + var_a3);
         (*(s16 *)((u8 *)(temp_t0) + (0))) = 0;
         var_a2 += 8;
         (*(s16 *)((u8 *)(temp_t1) + (0))) = 0;
@@ -136,7 +136,7 @@ extern u8 g_sprite_palette[];
 
 void func_001A2C80(void) {
     if ((u16)D_0028E0C0 != 0) {
-        reg_a0 = (u8 *)D_0029FCB0;
+        reg_a0 = (u8 *)g_palette_bank_b;
         reg_a1 = (u8 *)g_sprite_palette;
         reg_d0.w = 0x1F;
         do {
@@ -148,7 +148,7 @@ void func_001A2C80(void) {
         sprite_palette_upload();
     }
     if ((u16)D_0028E0BC != 0) {
-        reg_a0 = (u8 *)D_0029F4B0;
+        reg_a0 = (u8 *)g_palette_bank_a;
         reg_a1 = (u8 *)g_bg_palette;
         reg_d0.w = 0x1F;
         do {
@@ -172,7 +172,7 @@ void func_001A2C80(void) {
     }
     if ((g_stage == 0) && ((s16)g_scroll_line < 0x130)) {
         reg_a1 = (u8 *)g_bg_palette;
-        reg_a0 = (u8 *)D_0029F4B0;
+        reg_a0 = (u8 *)g_palette_bank_a;
         reg_a1 += 0x540;
         reg_a0 += 0x540;
         reg_d1.h[0] = D_0028E0B4;
@@ -245,7 +245,7 @@ void sprite_palette_load(void) {
     s32 temp_s1 = (s32)reg_a0;
     u8 *temp_s2 = reg_a1;
 
-    reg_a1 = D_0029FCB0;
+    reg_a1 = g_palette_bank_b;
     reg_d0.h[0] <<= 6;
     reg_a1 += reg_d0.h[0];
     reg_d0.w = 0xF;
@@ -266,6 +266,6 @@ u8 D_0028E0AD;
 u8 D_0028E0AC __attribute__((aligned(4)));
 
 /* .bss (the compiler lays these out in reverse) */
-u8 D_0029FCB0[2048];
-u8 D_0029F4B0[2048];
+u8 g_palette_bank_b[2048];
+u8 g_palette_bank_a[2048];
 u8 D_0029F2D0[480];

@@ -52,7 +52,7 @@ extern u8 join_select_p1_table[];
 extern u8 join_select_p2_table[];
 
 void func_001AF3A0() {
-    s32 func_001A3560();
+    s32 player_panel_show();
     *(s8 *)(reg_a5 + 3) = 1;
     reg_a4 = join_select_p1_table;
     if (*(u8 *)(reg_a5 + 6) != 0) {
@@ -67,7 +67,7 @@ void func_001AF3A0() {
         p2_bomb_stock_draw_empty();
     }
     reg_d0.b[0] = *(u8 *)(reg_a5 + 6);
-    func_001A3560();
+    player_panel_show();
     *(s8 *)(reg_a5 + 0xD) = 0;
     *(s16 *)(reg_a5 + 0x12) = 0x4B0;
     *(s16 *)(reg_a5 + 0x14) = 4;
@@ -104,10 +104,10 @@ typedef void (*Fn)(void);
 void func_0012FBD0(void);
 void p1_credits_get(void);
 void player_slot_request(void);
-void func_001A35A0(void);
-void func_001A3630(void);
-void func_001AF1A0(void);
-void func_001AF210(void);
+void player_panel_show_unless_step_4(void);
+void player_panel_show_by_coin_mode(void);
+void ship_choice_mark_for_task(void);
+void ship_choice_next_free(void);
 extern u8 D_002623B0[];
 extern u8 D_0028E304;
 extern u16 D_0028E314;
@@ -122,7 +122,7 @@ extern u8 *reg_call_target_as_u8_p;
 void func_001AF560(void) {
     void func_00131610(void);
     void sprite_palette_load(void);
-    void func_001A3560(void);
+    void player_panel_show(void);
     u8 state;
     u8 seq;
 
@@ -175,15 +175,15 @@ void func_001AF560(void) {
         goto next_1;
     }
     reg_d0.b[0] = *(u8 *)(reg_a5 + 6);
-    func_001A3630();
+    player_panel_show_by_coin_mode();
     goto block_51;
 next_1:
     reg_d0.b[0] = *(u8 *)(reg_a5 + 6);
-    func_001A3560();
+    player_panel_show();
     goto block_51;
 block_50:
     reg_d0.b[0] = *(u8 *)(reg_a5 + 6);
-    func_001A35A0();
+    player_panel_show_unless_step_4();
     return;
 block_51:
     reg_tmp.h[1] = *(u16 *)(reg_a5 + 8);
@@ -240,11 +240,11 @@ block_51:
     if (cond_flag != 0) {
         goto block_52;
     }
-    func_001AF1A0();
-    func_001AF210();
+    ship_choice_mark_for_task();
+    ship_choice_next_free();
     *(u8 *)(reg_a5 + 0xD) = 1;
     reg_d0.b[0] = *(u8 *)(reg_a5 + 6);
-    func_001A3560();
+    player_panel_show();
     reg_d0.b[0] = *(u8 *)(reg_a5 + 6);
 #ifdef DEATH_LABEL
     if (reg_d0.b[0] == 0) {
@@ -270,7 +270,7 @@ block_52:
     seq = *(u8 *)(reg_a5 + 0xD);
     if (seq == 1) {
         reg_d0.b[0] = *(u8 *)(reg_a5 + 6);
-        func_001A3560();
+        player_panel_show();
         func_001AF8F0();
         if (cond_flag != 0) {
             *(u8 *)(reg_a5 + 0xD) = 2;
@@ -280,7 +280,7 @@ block_52:
     }
     if (seq == 2) {
         reg_d0.b[0] = *(u8 *)(reg_a5 + 6);
-        func_001A3560();
+        player_panel_show();
         func_001AFCC0();
         return;
     }
@@ -538,7 +538,7 @@ void func_001B0100(void) {
 void credits_get(void);
 void coins_get(void);
 void text_layer_put_hex_digit(void);
-void func_001A3520(void);
+void player_panel_step_get(void);
 extern u8 D_00251B60[];
 extern u8 D_00251B80[];
 extern u8 D_00251BA0[];
@@ -582,7 +582,7 @@ block_51:
 block_53:
     reg_d0.w = 0;
     reg_d0.b[0] = *(u8 *)(reg_a5 + 6);
-    func_001A3520();
+    player_panel_step_get();
     if (reg_d0.h[0] == 0xC) {
         return;
     }

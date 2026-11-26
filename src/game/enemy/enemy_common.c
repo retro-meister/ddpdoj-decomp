@@ -340,7 +340,7 @@ void settings_notice_update_with_fade_in(void) {
     settings_notice_update_until_fade_out();
 }
 
-s32 func_001A31D0();
+s32 palette_bank_a_load();
 extern u8 D_002687B0[];
 extern u16 g_settings_notice_loaded;
 
@@ -367,7 +367,7 @@ void settings_notice_draw_static(void) {
     reg_d0.h[0] = 0;
     g_settings_notice_loaded = 1;
     reg_a0 = (u8 *)D_002687B0;
-    func_001A31D0();
+    palette_bank_a_load();
     settings_notice_palettes_load();
     settings_notice_draw();
 }
@@ -390,7 +390,7 @@ void settings_notice_graphics_load(void) {
     D_0028DF48 = reg_a6;
     reg_a0 = (u8 *)D_002687B0;
     reg_d0.h[0] = 0;
-    func_001A31D0();
+    palette_bank_a_load();
     settings_notice_palettes_load();
     reg_d0.w = D_0028DF80;
     reg_d1.w = D_0028DF7C;
@@ -434,7 +434,7 @@ void settings_notice_update_timed(void) {
     g_settings_notice_loaded = 1;
     g_settings_notice_time = 0x258;
     reg_a0 = (u8 *)D_002687B0;
-    func_001A31D0();
+    palette_bank_a_load();
     settings_notice_palettes_load();
     settings_notice_draw();
 }

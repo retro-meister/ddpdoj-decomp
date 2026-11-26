@@ -4,34 +4,34 @@
 #include "sdk/ps2sdk.h"
 #include "cd.h"
 #include "replay.h"
-s32 func_001981F0(void);
-void func_001984C0(void);
-void func_00198C40();
-void func_00198D90();
-void func_00198EF0(void);
-void func_00198F30(void);
-void func_001994F0(void);
-void func_00199540(void);
-void func_00199550(void);
-void func_00199560(void);
-void func_00199710(void);
-void func_00199970(void);
-void func_00199A50(void);
-void func_00199D50(void);
-void func_0019A050(void);
-void func_0019A2B0(void);
-void func_0019A410(void);
-void func_0019A520(void);
-void func_0019A5B0(void);
-void func_0019A640(void);
-void func_0019A870(void);
+s32 password_conditions_check(void);
+void password_make(void);
+void name_entry_p1_update();
+void name_entry_p2_update();
+void name_entry_side_begin(void);
+void name_entry_side_update(void);
+void name_entry_side_done(void);
+void name_entry_rank_find_p1(void);
+void name_entry_rank_find_p2(void);
+void name_entry_rank_find(void);
+void name_entry_side_setup(void);
+void name_entry_name_copy_to_own_ranks(void);
+void name_entry_name_draw(void);
+void name_entry_cursor_draw(void);
+void name_entry_score_draw(void);
+void name_entry_player_and_rank_draw(void);
+void name_entry_letter_board_draw(void);
+void name_entry_cover_draw_p1(void);
+void name_entry_cover_draw_p2(void);
+void name_entry_lever_input(void);
+void name_entry_cursor_move(void);
 extern u16 name_entry_letter_table[];
 
 s32 text_layer_clear();
 s32 music_play_bgm13();
 s32 sprite_palette_load();
-s32 func_001ACBA0();
-s32 func_001ACC60();
+s32 p1_rank_entry_insert();
+s32 p2_rank_entry_insert();
 s32 stage_map_reset();
 extern u8 D_00261EF0[];
 extern u16 D_00261F30[];
@@ -44,7 +44,7 @@ extern s16 g_player2[];
 extern s16 g_player1[];
 extern u8 D_002BAE00[];
 
-void func_00197F60() {
+void name_entry_task_begin() {
     stage_map_reset();
 #ifndef DEATH_LABEL
     D_0028E4B0 = g_two_player_seen;
@@ -65,13 +65,13 @@ void func_00197F60() {
     reg_d0.h[0] = 5;
     sprite_palette_load();
     if (0 > g_player1[0]) {
-        func_001ACBA0();
+        p1_rank_entry_insert();
         if (cond_flag == 0) {
             g_name_entry_player |= 1;
         }
     }
     if (0 > g_player2[0]) {
-        func_001ACC60();
+        p2_rank_entry_insert();
         if (cond_flag == 0) {
             g_name_entry_player |= 2;
         }
@@ -94,7 +94,7 @@ extern u8 D_0028E25C;
 extern u8 g_game_mode;
 extern s32 D_0028EAFC;
 
-void func_001980A0() {
+void name_entry_task_finish() {
     players_clear();
     func_00137C20();
     game_state_clear();
@@ -108,9 +108,9 @@ void func_001980A0() {
         D_0028E258 = D_0028E25C;
     }
     if (g_game_mode == 2) {
-        func_001984C0();
-    } else if (func_001981F0() != 0) {
-        func_001984C0();
+        password_make();
+    } else if (password_conditions_check() != 0) {
+        password_make();
     } else {
         D_0028EAFC = 0xFF;
     }
@@ -119,7 +119,7 @@ void func_001980A0() {
     (*(s16 *)((u8 *)((s32 *)reg_a0) + (4))) = 0x12;
 }
 
-u8 func_00198170(s32 a, s32 b) {
+u8 password_value_bits_put(s32 a, s32 b) {
     s8 i;
     s8 val = (s8)a;
     for (i = 0; i < (s8)b; i++) {
@@ -139,7 +139,7 @@ extern u8 g_setting_difficulty;
 extern u16 g_p2_score_digits;
 extern u16 g_p1_score_digits;
 
-s32 func_001981F0(void) {
+s32 password_conditions_check(void) {
     if ((g_setting_difficulty == 1) && (g_setting_extend == 0) && (g_setting_ship_stock == 0) && (g_game_mode == 0) && (g_p1_score_digits == 0) && (g_p2_score_digits == 0) && (MAIN_OR_DEATH_LABEL(D_0028E4B0, g_two_player_seen) != 3)) {
 #ifdef DEATH_LABEL
         printf("-----pass word ok!!------\n");
@@ -160,7 +160,7 @@ extern u8 D_002BAD70[];
 extern u8 D_002BADD0[];
 extern u8 D_002BADF0[];
 
-s32 func_00198280(void) {
+s32 password_bits_unpack(void) {
     s32 i;
     s32 j;
     s32 k;
@@ -225,7 +225,7 @@ extern u16 D_002BB388[5];
 extern u16 D_002BB398[5];
 extern s32 D_002BB3B0[16];
 extern s32 D_002BB3F0[8];
-void func_001984C0(void) {
+void password_make(void) {
     u32 save_d0;
     char str[0x28];
     u8 rec[14];
@@ -350,7 +350,7 @@ void func_001984C0(void) {
     code[5] = code[10];
     code[10] = sw;
     for (i = 0; i < 12; i++) {
-        code[i] = func_00198170(code[i], (s8)shift);
+        code[i] = password_value_bits_put(code[i], (s8)shift);
     }
     flags |= shift;
     code[11] = flags;
@@ -361,7 +361,7 @@ void func_001984C0(void) {
     code[7] = x;
     memset(D_002BADF0, 0, 12);
     memcpy(D_002BADF0, code, 12);
-    func_00198280();
+    password_bits_unpack();
     if (g_game_mode == 2) {
         memcpy(((u8 *)D_002BB060) + D_0028EAFC * 0x1E, D_002BADD0, 0x1E);
     } else {
@@ -371,41 +371,41 @@ void func_001984C0(void) {
 }
 
 
-void func_00198B70(void) {
+void name_entry_task(void) {
     u8 temp_a0;
 
     temp_a0 = *(u8 *)(reg_a5 + 3);
     if (temp_a0 == 0) {
-        func_00197F60(temp_a0, reg_a5);
+        name_entry_task_begin(temp_a0, reg_a5);
         return;
     }
     if (temp_a0 == 2) {
-        func_001980A0(temp_a0, reg_a5);
+        name_entry_task_finish(temp_a0, reg_a5);
         return;
     }
     reg_d0.b[0] = *(u8 *)(reg_a5 + 4);
     if (reg_d0.b[0] == 0) {
-        func_001980A0(reg_d0.b[0], reg_a5);
+        name_entry_task_finish(reg_d0.b[0], reg_a5);
         return;
     }
     if (reg_d0.b[0] == 3) {
-        func_00198C40(reg_d0.b[0], reg_a5);
+        name_entry_p1_update(reg_d0.b[0], reg_a5);
         reg_d0.w = 3;
-        func_00198D90();
+        name_entry_p2_update();
         return;
     }
     if (reg_d0.w & 1) {
-        func_00198C40(reg_d0.w, reg_a5);
+        name_entry_p1_update(reg_d0.w, reg_a5);
         return;
     }
     if (reg_d0.w & 2) {
-        func_00198D90(reg_d0.w, reg_a5);
+        name_entry_p2_update(reg_d0.w, reg_a5);
     }
 }
 
 extern u16 D_002BAE80[];
 
-void func_00198C40() {
+void name_entry_p1_update() {
     s32 input_get_p1_held();
     s32 input_get_p1_pressed();
     s32 temp_s6;
@@ -423,7 +423,7 @@ void func_00198C40() {
     *(u16 *)(reg_a4 + 0x36) = (u16) reg_d0.h[0];
     reg_d7.h[0] = *(u16 *)(reg_a4 + 2);
     if (reg_d7.h[0] != 0) {
-        func_00198F30();
+        name_entry_side_update();
         return;
     }
     *(s16 *)(reg_a4 + 0x12) = 1;
@@ -436,7 +436,7 @@ void func_00198C40() {
     temp_s3 = (s32)reg_a4;
     temp_s4 = (s32)reg_a5;
     temp_s5 = (s32)reg_a6;
-    func_00199540();
+    name_entry_rank_find_p1();
     if (cond_flag != 0) {
         reg_a0 = (u8 *)temp_s6;
         reg_a1 = (u8 *)temp_s0;
@@ -445,10 +445,10 @@ void func_00198C40() {
         reg_a4 = (u8 *)temp_s3;
         reg_a5 = (u8 *)temp_s4;
         reg_a6 = (u8 *)temp_s5;
-        func_001994F0();
+        name_entry_side_done();
         return;
     }
-    func_00199710();
+    name_entry_side_setup();
     reg_a0 = (u8 *)temp_s6;
     reg_a1 = (u8 *)temp_s0;
     reg_a2 = (u8 *)temp_s1;
@@ -457,15 +457,15 @@ void func_00198C40() {
     reg_a5 = (u8 *)temp_s4;
     reg_a6 = (u8 *)temp_s5;
     if (D_002BAE80[0] != 0) {
-        func_00198F30();
+        name_entry_side_update();
         return;
     }
-    func_00198EF0();
+    name_entry_side_begin();
 }
 
 extern u8 D_002BAE40[];
 
-void func_00198D90() {
+void name_entry_p2_update() {
     s32 input_get_p2_held();
     s32 input_get_p2_pressed();
     s32 temp_s6;
@@ -483,7 +483,7 @@ void func_00198D90() {
     *(u16 *)(reg_a4 + 0x36) = (u16) reg_d0.h[0];
     reg_d7.h[0] = *(u16 *)(reg_a4 + 2);
     if (reg_d7.h[0] != 0) {
-        func_00198F30();
+        name_entry_side_update();
         return;
     }
     *(s16 *)(reg_a4 + 0x12) = 2;
@@ -496,7 +496,7 @@ void func_00198D90() {
     temp_s3 = (s32)reg_a4;
     temp_s4 = (s32)reg_a5;
     temp_s5 = (s32)reg_a6;
-    func_00199550();
+    name_entry_rank_find_p2();
     if (cond_flag != 0) {
         reg_a0 = (u8 *)temp_s6;
         reg_a1 = (u8 *)temp_s0;
@@ -505,10 +505,10 @@ void func_00198D90() {
         reg_a4 = (u8 *)temp_s3;
         reg_a5 = (u8 *)temp_s4;
         reg_a6 = (u8 *)temp_s5;
-        func_001994F0();
+        name_entry_side_done();
         return;
     }
-    func_00199710();
+    name_entry_side_setup();
     reg_a0 = (u8 *)temp_s6;
     reg_a1 = (u8 *)temp_s0;
     reg_a2 = (u8 *)temp_s1;
@@ -517,21 +517,21 @@ void func_00198D90() {
     reg_a5 = (u8 *)temp_s4;
     reg_a6 = (u8 *)temp_s5;
     if (D_002BAE80[0] != 0) {
-        func_00198F30();
+        name_entry_side_update();
         return;
     }
-    func_00198EF0();
+    name_entry_side_begin();
 }
 
 s32 fade_in_and_release();
 extern u8 D_0025BF90[];
 
-void func_00198EF0() {
+void name_entry_side_begin() {
     *(s16 *)(reg_a4 + 0x2E) = 1;
     ((s16 *)D_002BAE80)[0] = 1;
     reg_a0 = D_0025BF90;
     fade_in_and_release();
-    func_00198F30();
+    name_entry_side_update();
 }
 
 s32 fade_to_black_and_release();
@@ -543,24 +543,24 @@ extern u8 D_002BAE82[];
 #define W(o) (*(u16 *)(reg_a4 + (o)))
 #define L(p, o) (*(u32 *)((p) + (o)))
 
-void func_00198F30(void) {
+void name_entry_side_update(void) {
     u8 *ptr;
 
     if (W(0x2E) == 0) goto next_1;
-    func_0019A410();
+    name_entry_letter_board_draw();
 next_1:
     reg_d0.b[0] = reg_a5[4];
     if (reg_d0.b[0] != 3) {
         if (reg_d0.w & 1) {
-            func_0019A5B0();
+            name_entry_cover_draw_p2();
         } else if (reg_d0.w & 2) {
-            func_0019A520();
+            name_entry_cover_draw_p1();
         }
     }
-    func_0019A050();
-    func_0019A2B0();
+    name_entry_score_draw();
+    name_entry_player_and_rank_draw();
     if (W(0x1E) == 0) goto block_count;
-    func_00199A50();
+    name_entry_name_draw();
     if (((u16 *)D_002BAE82)[0] != 0) return;
     if (W(0x2E) == 0) return;
     if (W(0x1E) != 0x30) goto next_4;
@@ -582,7 +582,7 @@ block_count:
     W(2) += 1;
     reg_d7.h[0] = W(2);
     if (reg_d7.h[0] >= 0x30) goto next_6;
-    func_00199A50();
+    name_entry_name_draw();
     return;
 next_6:
     if (reg_d7.h[0] >= 0x738) goto block_fill;
@@ -592,14 +592,14 @@ next_6:
     if (reg_a4[0x21] == 0) goto next_8;
     reg_a4[0x20] -= 1;
     if (reg_a4[0x20] != 0) goto next_8;
-    func_0019A870();
+    name_entry_cursor_move();
     goto next_8;
 next_7:
     W(0x14) = 0;
-    func_0019A640();
+    name_entry_lever_input();
 next_8:
-    func_00199D50();
-    func_00199A50();
+    name_entry_cursor_draw();
+    name_entry_name_draw();
     reg_d0.h[0] = W(0x36);
     if (!(reg_d0.w & 0x8000)) goto next_9;
     sfx_confirm();
@@ -695,17 +695,17 @@ next_16:
     reg_a1 += 0xC;
     goto loop_15;
 block_copy:
-    func_00199970();
+    name_entry_name_copy_to_own_ranks();
     reg_d1.h[0] = W(0x12);
     *(u8 *)((u16 *)D_002BAE82) &= ~(1 << reg_d1.sb[0]);
     W(0x1E) = 0x70;
     reg_d0.w = 0;
     W(0x1A) = reg_d0.h[1];
     W(0x1C) = reg_d0.h[0];
-    func_00199A50();
+    name_entry_name_draw();
 }
 
-void func_001994F0(void) {
+void name_entry_side_done(void) {
     reg_d0.h[0] = *(u16 *)(reg_a4 + 0x2C);
     *(u8 *)(reg_a5 + 4) &= (~(1 << (s8) reg_d0.b[0]) & 0xFF);
     if (*(u8 *)(reg_a5 + 4) == 0) {
@@ -714,19 +714,19 @@ void func_001994F0(void) {
 }
 
 
-void func_00199540(void) {
+void name_entry_rank_find_p1(void) {
     reg_d0.w = 0xFF;
-    func_00199560();
+    name_entry_rank_find();
 }
 
-void func_00199550(void) {
+void name_entry_rank_find_p2(void) {
     reg_d0.w = 0xFE;
-    func_00199560();
+    name_entry_rank_find();
 }
 
 
 
-void func_00199560(void) {
+void name_entry_rank_find(void) {
     u32 tmp;
 
     cond_flag = 0;
@@ -782,7 +782,7 @@ extern u8 D_0025BE50[];
 extern u8 D_0025BE70[];
 extern u8 D_002BAE82[];
 
-void func_00199710(void) {
+void name_entry_side_setup(void) {
     reg_tmp.w = (u32)reg_a0;
     *(u16 *)(reg_a4 + 0x30) = (u16) reg_tmp.h[1];
     *(u16 *)(reg_a4 + 0x32) = (u16) reg_tmp.h[0];
@@ -834,7 +834,7 @@ void func_00199710(void) {
 #pragma pop
 
 
-void func_00199970(void) {
+void name_entry_name_copy_to_own_ranks(void) {
     u32 t;
     u8 *p;
     u8 *q;
@@ -871,7 +871,7 @@ s32 sprite_draw_layer4_keep();
 s32 sprite_draw_layer4_zoom_keep();
 extern u8 D_0025BF10[];
 
-void func_00199A50(void) {
+void name_entry_name_draw(void) {
     u32 temp_a1;
 
     reg_d1.h[0] = 0x4840;
@@ -943,7 +943,7 @@ extern u16 D_0025BED0[];
 extern u16 D_0025BEF0[];
 extern u16 D_0025BF00[];
 
-void func_00199D50(void) {
+void name_entry_cursor_draw(void) {
     u16 temp_a0;
     u16 temp_a0_2;
     u16 temp_a0_3;
@@ -1033,7 +1033,7 @@ void func_00199D50(void) {
 
 extern u16 D_0025C020[];
 
-void func_0019A050(void) {
+void name_entry_score_draw(void) {
     u32 t;
 
     reg_d1.h[0] = 0x4040;
@@ -1086,7 +1086,7 @@ next_2:
 
 extern u16 D_0025C000[];
 
-void func_0019A2B0(void) {
+void name_entry_player_and_rank_draw(void) {
     reg_d1.h[0] = 0x5200;
     reg_tmp.w = reg_d1.w;
     reg_d1.h[0] = 0xC00;
@@ -1119,7 +1119,7 @@ next_1:
 s32 sprite_draw_layer1();
 s32 sprite_draw_layer3();
 s32 sprite_draw_layer4();
-void func_0019A410(void) {
+void name_entry_letter_board_draw(void) {
     reg_d1.w = 0x2A001C00;
     reg_d1.w += 0xEE00EA00;
     reg_d2.w = 0x145A;
@@ -1146,7 +1146,7 @@ void func_0019A410(void) {
     sprite_draw_layer4();
 }
 
-void func_0019A520(void) {
+void name_entry_cover_draw_p1(void) {
     reg_d1.w = 0x4E800C80;
     reg_d1.w += 0xF600F500;
     reg_d2.w = 0x1455;
@@ -1161,7 +1161,7 @@ void func_0019A520(void) {
     sprite_draw_layer4();
 }
 
-void func_0019A5B0(void) {
+void name_entry_cover_draw_p2(void) {
     reg_d1.w = 0x4E802B80;
     reg_d1.w += 0xF600F500;
     reg_d2.w = 0x1455;
@@ -1177,7 +1177,7 @@ void func_0019A5B0(void) {
 }
 
 
-void func_0019A640(void) {
+void name_entry_lever_input(void) {
     if (*(u8 *)(reg_a4 + 0x21) == 1) {
         goto block_2;
     }
@@ -1208,7 +1208,7 @@ next_3:
     *(u16 *)(reg_a4 + 0x2A) |= 8;
 next_4:
     if (*(u8 *)(reg_a4 + 0x21) == 2) {
-        func_0019A870();
+        name_entry_cursor_move();
         return;
     }
     *(u8 *)(reg_a4 + 0x20) = 4;
@@ -1216,7 +1216,7 @@ next_4:
 block_2:
     *(u8 *)(reg_a4 + 0x20) -= 1;
     if (*(u8 *)(reg_a4 + 0x20) == 0) {
-        func_0019A870();
+        name_entry_cursor_move();
         return;
     }
     reg_d1.h[0] = *(u16 *)(reg_a4 + 0x2A);
@@ -1232,7 +1232,7 @@ next_5:
     }
     *(u8 *)(reg_a4 + 0x21) += 1;
     *(u16 *)(reg_a4 + 0x2A) |= 4;
-    func_0019A870();
+    name_entry_cursor_move();
     return;
 next_6:
     if (!(reg_d0.w & 8)) {
@@ -1240,7 +1240,7 @@ next_6:
     }
     *(u8 *)(reg_a4 + 0x21) += 1;
     *(u16 *)(reg_a4 + 0x2A) |= 8;
-    func_0019A870();
+    name_entry_cursor_move();
     return;
 next_7:
     if (reg_d1.h[0] == 4) {
@@ -1257,7 +1257,7 @@ next_8:
     }
     *(u8 *)(reg_a4 + 0x21) += 1;
     *(u16 *)(reg_a4 + 0x2A) |= 1;
-    func_0019A870();
+    name_entry_cursor_move();
     return;
 next_9:
     if (!(reg_d0.w & 2)) {
@@ -1265,13 +1265,13 @@ next_9:
     }
     *(u8 *)(reg_a4 + 0x21) += 1;
     *(u16 *)(reg_a4 + 0x2A) |= 2;
-    func_0019A870();
+    name_entry_cursor_move();
 }
 
 s32 sfx_cursor_move();
 extern u16 D_0025C430[];
 
-void func_0019A870(void) {
+void name_entry_cursor_move(void) {
     u32 t;
     u32 t1;
     *(s8 *)(reg_a4 + 0x21) = 0;

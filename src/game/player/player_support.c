@@ -919,7 +919,7 @@ void p2_next_stage_setup(void) {
     }
 }
 
-s32 func_001A3130();
+s32 palette_bank_load_for_maximum();
 
 void p1_maximum_level_show() {
     reg_a1 = ((u8 *)p1_maximum_level_texts);
@@ -935,7 +935,7 @@ void p1_maximum_level_show() {
     reg_a1 += 2;
     reg_d1.h[0] = *(u16 *)reg_a1;
     reg_a1 += 2;
-    func_001A3130();
+    palette_bank_load_for_maximum();
 }
 
 void p2_maximum_level_show() {
@@ -952,7 +952,7 @@ void p2_maximum_level_show() {
     reg_a1 += 2;
     reg_d1.h[0] = *(u16 *)reg_a1;
     reg_a1 += 2;
-    func_001A3130();
+    palette_bank_load_for_maximum();
 }
 
 void p1_invincible_start(void) {

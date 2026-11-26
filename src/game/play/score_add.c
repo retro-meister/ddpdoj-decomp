@@ -31,10 +31,10 @@ void hud_p2_caption_put(void);
 
 
 void bcd_word_increment(void) {
-    s32 func_001AE9A0(Reg32 *, Reg32 *);
+    s32 bcd_add_registers(Reg32 *, Reg32 *);
     reg_d0.w = 1;
     reg_d2.w = (u32) *((u16 *)reg_a0);
-    func_001AE9A0(&reg_d0, &reg_d2);
+    bcd_add_registers(&reg_d0, &reg_d2);
     *(*(u16 **)&reg_a0) = reg_d2.h[0];
 }
 
@@ -397,12 +397,12 @@ extern s32 g_score_scratch;
 
 
 void score_value_add(void) {
-    extern void func_001AE9A0(s32 *, s32);
+    extern void bcd_add_registers(s32 *, s32);
     (*(s32 *)&reg_a0) -= 4;
     (*(s32 **)&reg_a1) = &g_score_scratch;
     *(*(s32 **)&reg_a1) = reg_d0.w;
     reg_d2.sh[0] = 0;
-    func_001AE9A0(((s32 *)reg_a1), (*(s32 *)&reg_a0));
+    bcd_add_registers(((s32 *)reg_a1), (*(s32 *)&reg_a0));
 }
 
 extern u16 D_0026B898[];
@@ -1126,7 +1126,7 @@ void extend_score_set(void)
 
 
 void extend_score_advance(void) {
-    s32 func_001AE9A0(Reg32 *, Reg32 *);
+    s32 bcd_add_registers(Reg32 *, Reg32 *);
     u8 *a5 = reg_a5;
 
     reg_d0.h[0] = *(u16 *) reg_a4;
@@ -1144,7 +1144,7 @@ next_2:
 next_3:
     reg_d2.w = *(u32 *) reg_a2;
     reg_d0.h[0] = 0;
-    func_001AE9A0(&reg_d1, &reg_d2);
+    bcd_add_registers(&reg_d1, &reg_d2);
     *(u32 *) reg_a2 = reg_d2.w;
 block_end:
     reg_a5 = a5;

@@ -733,7 +733,7 @@ void player2_task() {
     player_spawn();
 }
 
-s32 func_001340B0();
+s32 player_slot_request_bomb_display();
 s32 p1_hyper_item_take();
 s32 p2_hyper_item_take();
 s32 weapon_level_data_set(u8 *);
@@ -851,7 +851,7 @@ next_30:
     if (g_simulation_active != 0) {
         func_00141300();
     }
-    func_001340B0();
+    player_slot_request_bomb_display();
 #ifdef DEATH_LABEL
     if (g_attract_demo != 0) {
         reg_d1.w = 0;
@@ -1502,7 +1502,7 @@ void func_001417D0(void) {
     }
     reg_d0.w = 0;
     reg_d0.b[0] = *(u8 *)(reg_a5 + 6);
-    func_001340B0();
+    player_slot_request_bomb_display();
     reg_a0 = save_a0;
     reg_a1 = save_a1;
     reg_a2 = save_a2;
@@ -1622,8 +1622,8 @@ extern u8 ship0_shot_lists_3[];
 extern u8 D_0028C948[4];
 extern u8 D_0028C94C[4];
 extern u8 D_0029EA50[];
-s32 func_001340C0();
-s32 func_001340D0();
+s32 bomb_palette_load_first();
+s32 bomb_palette_load_second();
 s32 side_scroll_follow_at_limit();
 s32 p1_laser_stop();
 s32 p1_laser_clear();
@@ -2013,13 +2013,13 @@ block_13:
                     *(u16 *)(reg_a1 + 4) = temp_a0_9;
                     PLAYER(reg_a6)->state.b.invincible = 0xFFU;
                     if (PLAYER(reg_a6)->state.b.laser_mode == 0) {
-                        func_001340C0();
+                        bomb_palette_load_first();
                         PLAYER(reg_a6)->shield_anim_delay.h = 0U;
                         PLAYER(reg_a6)->shield_anim_frame.h = 0x3CU;
                         PLAYER(reg_a6)->move.b.speed += 6;
                         reg_a0 = (u8 *)D_0028C948;
                     } else {
-                        func_001340D0();
+                        bomb_palette_load_second();
                         PLAYER(reg_a6)->shield_anim_delay.h = 0x101U;
                         PLAYER(reg_a6)->shield_anim_frame.h = 0xCU;
                         PLAYER(reg_a6)->flags.b[0] |= 0x80;
@@ -2586,7 +2586,7 @@ next_4:
     PLAYER(reg_a6)->input.sh = 6;
 }
 
-s32 func_001340A0();
+s32 player_slot_request_destroyed();
 s32 task_stop_self();
 
 void player_destroyed_update(void) {
@@ -2660,7 +2660,7 @@ block_4:
         PLAYER(reg_a6)->flags.h &= 0x7FFF;
         reg_d0.w = 0;
         reg_d0.b[0] = *(u8 *)(reg_a5 + 6);
-        func_001340A0();
+        player_slot_request_destroyed();
         task_stop_self();
     }
 }

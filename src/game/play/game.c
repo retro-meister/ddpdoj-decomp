@@ -346,8 +346,8 @@ void player_slot_next_ship(void) {
     PLAYER_SLOT(reg_a6)->other_02 = 0;
 }
 
-s32 func_001ACBA0();
-s32 func_001ACC60();
+s32 p1_rank_entry_insert();
+s32 p2_rank_entry_insert();
 extern u16 g_attract_demo;
 extern u8 g_name_entry_player;
 
@@ -358,12 +358,12 @@ void player_slot_out_of_ships(void) {
     game_players_count();
     if (g_attract_demo == 0) {
         if (PLAYER_SLOT(reg_a6)->player == 0) {
-            func_001ACBA0();
+            p1_rank_entry_insert();
             if (cond_flag == 0) {
                 g_name_entry_player |= 1;
             }
         } else {
-            func_001ACC60();
+            p2_rank_entry_insert();
             if (cond_flag == 0) {
                 g_name_entry_player |= 2;
             }
@@ -454,8 +454,8 @@ void player_slot_join_step(void) {
     player_slot_join();
 }
 
-s32 func_001A33C0();
-s32 func_001A35F0();
+s32 ship_palettes_load();
+s32 player_panel_show_step_8();
 s32 hud_p1_hyper_count_put();
 s32 hud_p2_hyper_count_put();
 s32 p1_extend_score_set();
@@ -497,7 +497,7 @@ void player_slot_join(void) {
     reg_d0.b[0] = PLAYER_SLOT(reg_a6)->player;
     if (reg_d0.h[0] == 0) {
         reg_d1.h[0] = g_p1_ship_type;
-        func_001A33C0();
+        ship_palettes_load();
         p1_score_digits_grow();
         p1_score_cells_reset_short();
         p1_extend_score_set();
@@ -507,7 +507,7 @@ void player_slot_join(void) {
         hud_p1_lives_put();
     } else {
         reg_d1.h[0] = g_p2_ship_type;
-        func_001A33C0();
+        ship_palettes_load();
         p2_score_digits_grow();
         p2_score_cells_reset_short();
         p2_extend_score_set();
@@ -519,7 +519,7 @@ void player_slot_join(void) {
     PLAYER_SLOT(reg_a6)->step = 0;
     PLAYER_SLOT(reg_a6)->other_02 = 0;
     reg_d0.b[0] = PLAYER_SLOT(reg_a6)->player;
-    func_001A35F0();
+    player_panel_show_step_8();
     game_players_count();
     func_0012FBD0();
     reg_d0.w = D_0028DEF0;
@@ -573,19 +573,19 @@ void player_slot_start(void) {
     reg_d0.b[0] = PLAYER_SLOT(reg_a6)->player;
     if (reg_d0.h[0] == 0) {
         reg_d1.h[0] = g_p1_ship_type;
-        func_001A33C0();
+        ship_palettes_load();
         if (g_loop == 0) {
             p1_extend_score_set();
         }
     } else {
         reg_d1.h[0] = g_p2_ship_type;
-        func_001A33C0();
+        ship_palettes_load();
         if (g_loop == 0) {
             p2_extend_score_set();
         }
     }
     reg_d0.b[0] = PLAYER_SLOT(reg_a6)->player;
-    func_001A35F0();
+    player_panel_show_step_8();
     PLAYER_SLOT(reg_a6)->step = 0;
     PLAYER_SLOT(reg_a6)->other_02 = 0;
     game_players_count();
@@ -900,7 +900,7 @@ void game_tasks_stop(void) {
 
 s32 difficulty_apply();
 s32 text_palette_load();
-s32 func_001A3300();
+s32 stage_palettes_load();
 extern u8 g_default_text_palette[];
 extern u16 g_game_flow_scroll_line;
 
@@ -934,7 +934,7 @@ void game_tasks_start() {
     reg_d0.w = 0;
     reg_a0 = g_default_text_palette;
     text_palette_load();
-    func_001A3300();
+    stage_palettes_load();
     difficulty_apply();
 }
 
@@ -952,11 +952,11 @@ void game_restart(void) {
 
 s32 pickups_clear();
 s32 func_00131630();
-s32 func_001340F0();
+s32 continue_panels_clear();
 s32 players_clear();
 s32 func_00171ED0();
 s32 score_cells_init();
-s32 func_001AE490();
+s32 scores_reset();
 extern u8 text_palette_0[];
 extern u8 text_palette_1[];
 extern u8 text_palette_2[];
@@ -1021,15 +1021,15 @@ void game_task_begin(void) {
     func_00171ED0();
     if (g_loop == 0) {
         pickups_clear();
-        func_001AE490();
+        scores_reset();
         score_cells_init();
         players_clear();
     }
     player_slots_init();
-    func_001340F0();
+    continue_panels_clear();
 }
 
-s32 func_001AEF50();
+s32 selected_ships_mark();
 extern s32 D_0028E998;
 extern s32 D_0028E99C;
 extern u8 g_replay_mode;
@@ -1082,7 +1082,7 @@ void ship_select_apply(void) {
         reg_d1.h[0] = g_p2_ship_type;
         reg_d2.h[0] = g_p1_power_style;
         reg_d3.h[0] = g_p2_power_style;
-        func_001AEF50();
+        selected_ships_mark();
         var_v0 = g_simulation_active == 1;
         reg_d7.w = 0;
         if (var_v0 == 0) {
@@ -1111,7 +1111,7 @@ void ship_select_apply(void) {
     reg_a6 = save_a6;
 }
 
-s32 func_00134380();
+s32 continue_panels_update();
 s32 rank_update();
 extern u8 g_stage_load_state;
 extern u16 g_game_frame;
@@ -1141,7 +1141,7 @@ void game_task(void) {
             g_play_time += 1;
         }
         rank_update();
-        func_00134380();
+        continue_panels_update();
         if (g_loop != 0) {
             g_bullet_limit_raised_1[0] = 1;
         }

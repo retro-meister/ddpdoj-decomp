@@ -861,9 +861,9 @@ block_next:
     if (reg_d0.w != 0) goto loop_1;
 }
 
-extern u8 D_0029FCB0[];
+extern u8 g_palette_bank_b[];
 extern u8 D_0028E0C0[];
-extern u8 D_0029F4B0[];
+extern u8 g_palette_bank_a[];
 extern u8 D_0028E0BC[];
 extern u8 D_0029F2D0[];
 extern u8 D_0028E0B8[];
@@ -920,8 +920,8 @@ u16 palette_white[32] = {
 
 /* The colours a fade can work on, and the flag that says they changed. */
 FadeArea fade_areas[3] = {
-    { D_0029FCB0, D_0028E0C0 },
-    { D_0029F4B0, D_0028E0BC },
+    { g_palette_bank_b, D_0028E0C0 },
+    { g_palette_bank_a, D_0028E0BC },
     { D_0029F2D0, D_0028E0B8 },
 };
 

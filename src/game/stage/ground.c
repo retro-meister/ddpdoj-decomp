@@ -36,7 +36,7 @@ s32 layer_a_scroll();
 s32 layer_b_scroll();
 s32 scenery_reset();
 s32 scroll_events_start();
-s32 func_001A3250();
+s32 palette_bank_a_load_run();
 extern u8 stage_map_palettes[];
 extern u8 stage_maps[];
 extern s32 D_0028DF1C;
@@ -90,7 +90,7 @@ void ground_start(void) {
     reg_d1.w = 0x1F;
     reg_d0.w = 0;
     reg_a0 = (u8 *) reg_tmp.w;
-    func_001A3250();
+    palette_bank_a_load_run();
     GROUND_TASK(reg_a5)->flags_03 &= 0xFE;
     reg_a1 = (u8 *)stage_maps;
     reg_d0.h[0] = g_stage_x4;

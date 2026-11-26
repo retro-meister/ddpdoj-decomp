@@ -2,14 +2,14 @@
 
 s32 func_001A2F20();
 extern s16 D_0028E0C0;
-extern u8 D_0029FCB0[];
+extern u8 g_palette_bank_b[];
 
-void func_001A30A0(void) {
+void palette_bank_b_load_half(void) {
     s32 d0 = reg_d0.w;
     u8 *a0 = reg_a0;
     u8 *a1 = reg_a1;
 
-    reg_a1 = (u8 *)D_0029FCB0;
+    reg_a1 = (u8 *)g_palette_bank_b;
     reg_d0.h[0] <<= 6;
     reg_d0.h[0] += 0x20;
     reg_a1 += reg_d0.h[0];
@@ -22,7 +22,7 @@ void func_001A30A0(void) {
 }
 
 
-void func_001A3130(void) {
+void palette_bank_load_for_maximum(void) {
     s32 d0;
     s32 d1;
     u8 *a0;
@@ -33,7 +33,7 @@ void func_001A3130(void) {
     d1 = reg_d1.w;
     a0 = reg_a0;
     a1 = reg_a1;
-    reg_a1 = (u8 *) ((u16 *)D_0029FCB0);
+    reg_a1 = (u8 *) ((u16 *)g_palette_bank_b);
     reg_d0.h[0] <<= 6;
     reg_a1 += reg_d0.h[0];
 loop_1:
@@ -51,14 +51,14 @@ loop_1:
 }
 
 extern s16 D_0028E0BC;
-extern u8 D_0029F4B0[];
+extern u8 g_palette_bank_a[];
 
-void func_001A31D0(void) {
+void palette_bank_a_load(void) {
     u32 temp_s0 = reg_d0.w;
     s32 temp_s1 = (s32)reg_a0;
     u8 *temp_s2 = reg_a1;
 
-    reg_a1 = D_0029F4B0;
+    reg_a1 = g_palette_bank_a;
     reg_d0.h[0] <<= 6;
     reg_a1 += reg_d0.h[0];
     reg_d0.w = 0xF;
@@ -69,7 +69,7 @@ void func_001A31D0(void) {
     reg_a1 = temp_s2;
 }
 
-void func_001A3250(void) {
+void palette_bank_a_load_run(void) {
     u32 save_d0;
     u32 save_d1;
     u8 *save_a0;
@@ -79,7 +79,7 @@ void func_001A3250(void) {
     save_d1 = reg_d1.w;
     save_a0 = reg_a0;
     save_a1 = reg_a1;
-    reg_a1 = (u8 *)D_0029F4B0;
+    reg_a1 = (u8 *)g_palette_bank_a;
     reg_d0.h[0] <<= 6;
     reg_a1 += reg_d0.h[0];
     do {
@@ -97,7 +97,7 @@ s32 sprite_palette_load();
 extern u32 D_0025F620[];
 extern u16 g_stage_x4;
 
-void func_001A3300(void) {
+void stage_palettes_load(void) {
     s64 temp_a0;
     u16 temp_a1;
 
@@ -132,7 +132,7 @@ extern u8 D_0025F650[];
 extern s32 D_0028E998;
 extern s32 D_0028E99C;
 
-void func_001A33C0(void) {
+void ship_palettes_load(void) {
     u8 *temp_s0;
     u8 *var_s1;
     s32 var_s2;
@@ -169,18 +169,18 @@ void func_001A33C0(void) {
     text_palette_load();
 }
 
-extern s32 D_0028E77C;
-extern s32 D_0028E780;
+extern s32 g_player_panel_p2;
+extern s32 g_player_panel_p1;
 
-void func_001A34C0(void) {
-    reg_a4 = (u8 *)(&D_0028E780);
+void player_panel_state_get(void) {
+    reg_a4 = (u8 *)(&g_player_panel_p1);
     if (reg_d0.b[0] != 0) {
-        reg_a4 = (u8 *)(&D_0028E77C);
+        reg_a4 = (u8 *)(&g_player_panel_p2);
     }
 }
 
 s32 deferred_text_clear();
-void func_001A34E0(void) {
+void player_panel_text_clear(void) {
     reg_d1.h[0] = 0;
     reg_d0.h[0] = 0xDC;
     if (reg_d2.b[0] != 0) {
@@ -194,30 +194,30 @@ void func_001A34E0(void) {
 }
 
 
-void func_001A3520(void) {
+void player_panel_step_get(void) {
     u8 *temp_s0;
 
     temp_s0 = reg_a4;
-    func_001A34C0();
+    player_panel_state_get();
     reg_d0.h[0] = *(u16 *)(reg_a4 + 2);
     reg_a4 = temp_s0;
 }
 
-void func_001A3560(void) {
+void player_panel_show(void) {
     u8 *temp_s0;
 
     temp_s0 = reg_a4;
-    func_001A34C0();
+    player_panel_state_get();
     *(s16 *)reg_a4 = 1;
     *(s16 *)(reg_a4 + 2) = 0;
     reg_a4 = temp_s0;
 }
 
-void func_001A35A0(void) {
+void player_panel_show_unless_step_4(void) {
     u8 *temp_s0;
 
     temp_s0 = reg_a4;
-    func_001A34C0();
+    player_panel_state_get();
     if (*(u16 *)(reg_a4 + 2) != 4) {
         *(s16 *)reg_a4 = 1;
         *(u16 *)(reg_a4 + 2) = 4U;
@@ -225,11 +225,11 @@ void func_001A35A0(void) {
     reg_a4 = temp_s0;
 }
 
-void func_001A35F0(void) {
+void player_panel_show_step_8(void) {
     u8 *temp_s0;
 
     temp_s0 = reg_a4;
-    func_001A34C0();
+    player_panel_state_get();
     *(s16 *)reg_a4 = 1;
     *(s16 *)(reg_a4 + 2) = 8;
     reg_a4 = temp_s0;
@@ -239,23 +239,23 @@ extern u8 g_setting_chute_type;
 extern u8 g_setting_coin_mode;
 extern u16 g_loop;
 
-void func_001A3630(void) {
+void player_panel_show_by_coin_mode(void) {
     u8 *temp_s0;
 
     if ((s8)g_setting_coin_mode >= 9) {
-        func_001A3560();
+        player_panel_show();
         return;
     }
     if (g_setting_chute_type == 1) {
-        func_001A3560();
+        player_panel_show();
         return;
     }
     if (g_loop != 0) {
-        func_001A35A0();
+        player_panel_show_unless_step_4();
         return;
     }
     temp_s0 = reg_a4;
-    func_001A34C0();
+    player_panel_state_get();
     if (*(u16 *)(reg_a4 + 2) != 0xC) {
         *(s16 *)reg_a4 = 1;
         *(u16 *)(reg_a4 + 2) = 0xCU;
@@ -264,28 +264,28 @@ void func_001A3630(void) {
 }
 
 
-void func_001A36E0(void) {
+void player_panel_task_begin(void) {
     *(s8 *)(reg_a5 + 3) = 1;
     *(s8 *)(reg_a5 + 2) = 0;
     *(s16 *)(reg_a5 + 4) = 0;
     reg_d0.b[0] = *(u8 *)(reg_a5 + 6);
-    func_001A34C0();
+    player_panel_state_get();
     *(s16 *)reg_a4 = 0;
     *(s16 *)(reg_a4 + 2) = 0;
 }
 
 typedef void (*Fn)();
 
-void func_001A37F0();
-void func_001A3830();
-void func_001A39B0();
-void func_001A3BA0();
+void player_panel_step_0();
+void player_panel_step_1();
+void player_panel_step_2();
+void player_panel_step_3();
 
 void (*player_panel_steps[4])() = {
-    func_001A37F0,
-    func_001A3830,
-    func_001A39B0,
-    func_001A3BA0,
+    player_panel_step_0,
+    player_panel_step_1,
+    player_panel_step_2,
+    player_panel_step_3,
 };
 
 /* Cells of the panel texts, one per frame: tile in the high word, palette in the low word. */
@@ -314,13 +314,13 @@ u32 player_panel_step3_frames[16] = {
 };
 
 
-void func_001A3730(void) {
+void player_panel_task(void) {
     if (*(u8 *)(reg_a5 + 3) == 0) {
-        func_001A36E0();
+        player_panel_task_begin();
         return;
     }
     reg_d0.b[0] = *(u8 *)(reg_a5 + 6);
-    func_001A34C0();
+    player_panel_state_get();
     if (*(u16 *)reg_a4 != 0) {
         *(u16 *)reg_a4 = 0U;
         reg_d0.h[0] = *(u16 *)(reg_a4 + 2);
@@ -336,17 +336,17 @@ void func_001A3730(void) {
 }
 
 
-void func_001A37F0() {
+void player_panel_step_0() {
     if (*(u8 *)(reg_a5 + 2) == 0) {
         *(u8 *)(reg_a5 + 2) = 1U;
         reg_d2.b[0] = *(u8 *)(reg_a5 + 6);
-        func_001A34E0();
+        player_panel_text_clear();
     }
 }
 
 s32 deferred_text_put();
 
-void func_001A3830(s32 arg3) {
+void player_panel_step_1(s32 arg3) {
     s32 var_a3;
     u16 temp_a0;
     u16 temp_a1;
@@ -355,7 +355,7 @@ void func_001A3830(s32 arg3) {
     if (*(u8 *)(reg_a5 + 2) == 0) {
         *(u8 *)(reg_a5 + 2) = 1U;
         reg_d2.b[0] = *(u8 *)(reg_a5 + 6);
-        func_001A34E0();
+        player_panel_text_clear();
         var_a3 = 1;
         *(u8 *)(reg_a5 + 7) = 1U;
         *(u16 *)(reg_a5 + 0xC) = 0U;
@@ -396,7 +396,7 @@ void func_001A3830(s32 arg3) {
 s32 p1_score_cells_mark();
 s32 p2_score_cells_mark();
 
-void func_001A39B0(s32 arg2, s32 arg3) {
+void player_panel_step_2(s32 arg2, s32 arg3) {
     s32 var_a2;
     s32 var_a3;
     u16 temp_a0_2;
@@ -413,7 +413,7 @@ void func_001A39B0(s32 arg2, s32 arg3) {
             p2_score_cells_mark();
         }
         reg_d2.b[0] = *(u8 *)(reg_a5 + 6);
-        func_001A34E0();
+        player_panel_text_clear();
         var_a2 = 0xDC0000;
         var_a3 = 0x101;
         *(u8 *)(reg_a5 + 7) = 1U;
@@ -460,7 +460,7 @@ void func_001A39B0(s32 arg2, s32 arg3) {
 }
 
 
-void func_001A3BA0(s32 arg3) {
+void player_panel_step_3(s32 arg3) {
     s32 var_a3;
     u16 temp_a0;
     u16 temp_a1;
@@ -469,7 +469,7 @@ void func_001A3BA0(s32 arg3) {
     if (*(u8 *)(reg_a5 + 2) == 0) {
         *(u8 *)(reg_a5 + 2) = 1U;
         reg_d2.b[0] = *(u8 *)(reg_a5 + 6);
-        func_001A34E0();
+        player_panel_text_clear();
         var_a3 = 1;
         *(u8 *)(reg_a5 + 7) = 1U;
         *(u16 *)(reg_a5 + 0xC) = 0U;
@@ -508,5 +508,5 @@ void func_001A3BA0(s32 arg3) {
 }
 
 /* .sbss (the compiler lays these out in reverse) */
-s32 D_0028E780;
-s32 D_0028E77C;
+s32 g_player_panel_p1;
+s32 g_player_panel_p2;

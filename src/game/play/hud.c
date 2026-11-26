@@ -1311,7 +1311,7 @@ void boss_hits_take_on_button(void) {
     reg_d7.w -= 1;
 }
 
-s32 func_001A30A0();
+s32 palette_bank_b_load_half();
 extern u8 D_00261C50[];
 extern u8 D_00261C90[];
 extern u8 D_00261CD0[];
@@ -1331,20 +1331,20 @@ next_0:
     save_d0 = reg_d0.h[0];
     reg_a0 = (u8 *)D_00261C50;
     reg_d0.h[0] = reg_d4.h[0];
-    func_001A30A0();
+    palette_bank_b_load_half();
     reg_d0.h[0] = save_d0;
     goto next_2;
 next_1:
     save_d0 = reg_d0.h[0];
     reg_a0 = (u8 *)D_00261C90;
     reg_d0.h[0] = reg_d4.h[0];
-    func_001A30A0();
+    palette_bank_b_load_half();
     reg_d0.h[0] = save_d0;
     if (reg_d0.h[0] < 0x100) goto next_2;
     save_d0 = reg_d0.h[0];
     reg_a0 = (u8 *)D_00261CD0;
     reg_d0.h[0] = reg_d4.h[0];
-    func_001A30A0();
+    palette_bank_b_load_half();
     reg_d0.h[0] = save_d0;
 next_2:
     reg_d7.w = 3;

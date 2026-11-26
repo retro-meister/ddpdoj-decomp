@@ -2265,7 +2265,7 @@ extern void players_clear(void);
 extern void enemies_reset(void);
 extern void items_clear(void);
 extern void score_cells_init(void);
-extern void func_001AE490(void);
+extern void scores_reset(void);
 extern void func_001B82D0(void);
 extern void sparks_clear(void);
 extern void func_002114A0(void);
@@ -2282,7 +2282,7 @@ void replay_start_state_load(u8 *p) {
     bullets_clear();
     game_state_clear();
     pickups_clear();
-    func_001AE490();
+    scores_reset();
     score_cells_init();
     players_clear();
     g_stage_bees_collected = *(u16 *)(p + 0x0);

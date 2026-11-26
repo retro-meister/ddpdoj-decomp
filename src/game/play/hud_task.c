@@ -5,7 +5,7 @@ void scroll_events_run_line(void);
 extern u16 g_side_scroll_step[];
 
 s32 hud_update();
-s32 func_001AEA80();
+s32 score_pending_apply();
 s32 task_stop_self();
 extern u8 g_game_frame_ran;
 extern u16 g_score_task_active;
@@ -18,7 +18,7 @@ void score_task(void) {
         goto block_1;
     }
     if (reg_a5[3] == 2) goto block_2;
-    func_001AEA80();
+    score_pending_apply();
     if (g_replay_mode != 2) goto next_1;
     if (g_stage != 0) goto next_1;
     if (g_game_frame_ran == 0) return;

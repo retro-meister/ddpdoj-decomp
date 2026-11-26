@@ -2,18 +2,18 @@
 #include "continue_screen.h"
 #include "task.h"
 
-void func_00134410();
-void func_00134620();
-void func_00134750();
-void func_001349A0();
+void continue_panel_step_countdown();
+void continue_panel_step_erase_small();
+void continue_panel_step_countdown_wide();
+void continue_panel_step_erase_wide();
 
 
 void (*continue_step_routines[8])(void) = {
     0,
-    func_00134410,
-    func_00134620,
-    func_00134750,
-    func_001349A0,
+    continue_panel_step_countdown,
+    continue_panel_step_erase_small,
+    continue_panel_step_countdown_wide,
+    continue_panel_step_erase_wide,
     0,
     0,
     0,
@@ -65,18 +65,18 @@ ContinueDigitFrames continue_digit_frames = {
 ContinuePlayer continue_player1 = { 0x36, 1, { 2, 3 }, { 4, 5 }, { 6, 7 }, { 8, 9 } };
 ContinuePlayer continue_player2 = { 0x36, 0xF, { 2, 3 }, { 4, 5 }, { 6, 7 }, { 8, 9 } };
 
-void func_001340E0(void);
-void func_00134660(void);
-void func_00134740(void);
-void func_00134BA0(void);
+void bomb_palette_load(void);
+void continue_panel_small_text_erase(void);
+void continue_panel_step_done(void);
+void continue_task_close_panel(void);
 
-void func_001340A0(void) {
+void player_slot_request_destroyed(void) {
     void player_slot_request(void);
     *(u16 *)&reg_d1 = 1;
     player_slot_request();
 }
 
-void func_001340B0(void) {
+void player_slot_request_bomb_display(void) {
     void player_slot_request(void);
     *(u16 *)&reg_d1 = 9;
     player_slot_request();
@@ -85,37 +85,37 @@ void func_001340B0(void) {
 extern u16 D_0025F9B0[];
 
 
-void func_001340C0(void) {
+void bomb_palette_load_first(void) {
     reg_a0 = (u8 *)D_0025F9B0;
-    func_001340E0();
+    bomb_palette_load();
 }
 
 extern u16 D_0025F9F0[];
 
 
-void func_001340D0(void) {
+void bomb_palette_load_second(void) {
     reg_a0 = (u8 *)D_0025F9F0;
-    func_001340E0();
+    bomb_palette_load();
 }
 
 void sprite_palette_load(void);
 
-void func_001340E0(void) {
+void bomb_palette_load(void) {
     *(u16 *)&reg_d0 = 6;
     sprite_palette_load();
 }
 
 s32 text_palette_load();
 extern u16 continue_palette[];
-extern u8 D_002BF3E0[];
+extern u8 g_continue_panels[];
 
-void func_001340F0(void) {
+void continue_panels_clear(void) {
     s32 var_a0;
     u8 *temp_a1;
 
     var_a0 = 0;
     do {
-        temp_a1 = D_002BF3E0 + var_a0;
+        temp_a1 = g_continue_panels + var_a0;
         (*(s8 *)((u8 *)(temp_a1) + (0))) = 0;
         var_a0 += 8;
         (*(s8 *)((u8 *)(temp_a1) + (1))) = 0;
@@ -128,7 +128,7 @@ void func_001340F0(void) {
     } while (var_a0 < 0x24);
     if (var_a0 < 0x2C) {
         do {
-            *(D_002BF3E0 + var_a0) = 0;
+            *(g_continue_panels + var_a0) = 0;
             var_a0 += 1;
         } while (var_a0 < 0x2C);
     }
@@ -137,9 +137,9 @@ void func_001340F0(void) {
     text_palette_load();
 }
 
-extern u8 D_002BF3F6[];
+extern u8 g_continue_panel_p2[];
 
-void func_00134170(void) {
+void continue_panel_step_set(void) {
     u32 s_d0;
     u32 s_d1;
     u32 s_d2;
@@ -171,11 +171,11 @@ void func_00134170(void) {
     s_a4 = reg_a4;
     s_a5 = reg_a5;
     s_a6 = reg_a6;
-    reg_a4 = (u8 *)D_002BF3E0;
+    reg_a4 = (u8 *)g_continue_panels;
     if (reg_d1.h[0] == 0) {
         goto next_1;
     }
-    reg_a4 = (u8 *)D_002BF3F6;
+    reg_a4 = (u8 *)g_continue_panel_p2;
 next_1:
     if (*(u16 *) reg_a4 == reg_d0.h[0]) {
         goto next_2;
@@ -201,7 +201,7 @@ next_2:
     reg_a6 = s_a6;
 }
 
-void func_00134260(void) {
+void continue_panel_close(void) {
     u32 s_d0;
     u32 s_d1;
     u32 s_d2;
@@ -233,14 +233,14 @@ void func_00134260(void) {
     s_a4 = reg_a4;
     s_a5 = reg_a5;
     s_a6 = reg_a6;
-    reg_a4 = (u8 *)D_002BF3E0;
+    reg_a4 = (u8 *)g_continue_panels;
     if (reg_d1.h[0] == 0) {
         goto next_1;
     }
-    if (*(u16 *) D_002BF3E0 == 3) {
+    if (*(u16 *) g_continue_panels == 3) {
         goto next_2;
     }
-    reg_a4 = (u8 *)D_002BF3F6;
+    reg_a4 = (u8 *)g_continue_panel_p2;
 next_1:
     if ((reg_d0.h[0] = *(u16 *) reg_a4) == 0) {
         goto next_4;
@@ -276,12 +276,12 @@ next_4:
 typedef void (*Fn)();
 
 
-void func_00134380(u16 *arg0) {
+void continue_panels_update(u16 *arg0) {
     u16 *var_a0;
     u16 temp_v1_2;
 
     var_a0 = (u16 *)(arg0);
-    reg_a4 = (u8 *)(((u16 *)D_002BF3E0));
+    reg_a4 = (u8 *)(((u16 *)g_continue_panels));
     reg_d7.w = 1;
     do {
         temp_v1_2 = *(u16 *)reg_a4;
@@ -307,12 +307,12 @@ extern u16 D_0028E314;
 extern u16 D_0028E318;
 #endif
 
-void func_00134410(void) {
+void continue_panel_step_countdown(void) {
     u16 temp_a0;
 
     func_00131610();
     if (cond_flag != 0) {
-        func_00134660();
+        continue_panel_small_text_erase();
         return;
     }
     if (*(u16 *)(reg_a4 + 2) == 0) {
@@ -408,17 +408,17 @@ void func_00134410(void) {
 }
 
 
-void func_00134620(void) {
+void continue_panel_step_erase_small(void) {
     if (*(u16 *)(reg_a4 + 2) != 0) {
-        func_00134740();
+        continue_panel_step_done();
         return;
     }
     *(u16 *)(reg_a4 + 2) = 1U;
-    func_00134660();
+    continue_panel_small_text_erase();
 }
 
 
-void func_00134660() {
+void continue_panel_small_text_erase() {
     reg_d0.h[0] = 1;
     reg_d1.h[0] = 0x33;
     if (*(u16 *)(reg_a4 + 4) != 0) {
@@ -430,7 +430,7 @@ void func_00134660() {
     reg_a0 = (u8 *)continue_text_blank;
     reg_d2.h[0] = 2;
     text_layer_print();
-    func_00134740();
+    continue_panel_step_done();
     if (*(u16 *)(reg_a4 + 4) == 0) {
         reg_d0.h[0] = 1;
         reg_d1.h[0] = 0x32;
@@ -447,7 +447,7 @@ void func_00134660() {
 }
 
 
-void func_00134740(void) {
+void continue_panel_step_done(void) {
     *(*(s16 **)&reg_a4) = 0;
 }
 
@@ -461,7 +461,7 @@ extern u16 D_0028E314;
 extern u16 D_0028E318;
 #endif
 
-void func_00134750(void) {
+void continue_panel_step_countdown_wide(void) {
     s32 temp_a3;
     u32 temp_a2;
     u32 temp_a3_2;
@@ -484,7 +484,7 @@ void func_00134750(void) {
         reg_a0 = (u8 *)continue_text_blank;
         reg_d2.h[0] = 2;
         text_layer_print();
-        ((s16 *)D_002BF3F6)[0] = 0;
+        ((s16 *)g_continue_panel_p2)[0] = 0;
     }
 #ifdef DEATH_LABEL
     reg_d0.h[0] = 1;
@@ -558,7 +558,7 @@ void func_00134750(void) {
     }
 }
 
-void func_001349A0() {
+void continue_panel_step_erase_wide() {
     if (*(u16 *)(reg_a4 + 2) == 0) {
         *(u16 *)(reg_a4 + 2) = 1U;
         reg_d0.h[0] = 0x8C;
@@ -586,7 +586,7 @@ void func_001349A0() {
 }
 
 
-void func_00134A70(void)
+void continue_count_store(void)
 {
     *(u16 *)(reg_a5 + 4) = 0x93C;
     reg_tmp.h[1] = *(u16 *)(reg_a4 + 0x10);
@@ -596,11 +596,11 @@ void func_00134A70(void)
     *(u8 *)(*(u32 *)&reg_a0) = reg_d0.b[0];
 }
 
-s32 func_001A3560();
+s32 player_panel_show();
 s32 hud_p1_caption_clear_shifted();
 s32 hud_p2_caption_clear_shifted();
 
-void func_00134AC0() {
+void continue_task_begin() {
     *(s8 *)(reg_a5 + 3) = 1;
     reg_a4 = (u8 *)&continue_player1;
     if (*(u8 *)(reg_a5 + 6) != 0) {
@@ -611,27 +611,27 @@ void func_00134AC0() {
     *(u16 *)(reg_a5 + 0xA) = (u16) reg_tmp.h[0];
     *(s16 *)(reg_a5 + 0x14) = 1;
     reg_d0.b[0] = *(u8 *)(reg_a5 + 6);
-    func_001A3560();
+    player_panel_show();
     if (*(u8 *)(reg_a5 + 6) == 0) {
         hud_p1_caption_clear_shifted();
     } else {
         hud_p2_caption_clear_shifted();
     }
-    func_00134A70();
+    continue_count_store();
 }
 
 
-void func_00134B70(void) {
+void continue_task_finish(void) {
     *(s8 *)(reg_a5 + 3) = 2;
-    func_00134A70();
-    func_00134BA0();
+    continue_count_store();
+    continue_task_close_panel();
 }
 
 
-void func_00134BA0(void) {
+void continue_task_close_panel(void) {
     reg_d1.w = 0;
     reg_d1.b[0] = *(u8 *)(reg_a5 + 6);
-    func_00134260();
+    continue_panel_close();
     task_stop_self();
 }
 
@@ -642,7 +642,7 @@ extern u16 g_loop;
 extern u16 g_stage;
 extern u8 D_0028ED64;
 
-void func_00134BD0(void) {
+void continue_to_game_over(void) {
     music_stop();
     sound_stop_effects();
     fades_reset();
@@ -668,25 +668,25 @@ extern u8 g_simulation_active;
 extern u8 D_002BF3EA[];
 extern u8 *reg_call_target_as_u8_p;
 
-void func_00134C40(void) {
+void continue_task(void) {
     s32 player_slot_request();
     reg_tmp.h[1] = *(u16 *) (reg_a5 + 8);
     reg_tmp.h[0] = *(u16 *) (reg_a5 + 0xA);
     reg_a4 = (u8 *) reg_tmp.w;
     if (reg_a5[3] == 0) {
-        func_00134AC0();
+        continue_task_begin();
         return;
     }
     if (reg_a5[3] == 2) {
-        func_00134BA0();
+        continue_task_close_panel();
         return;
     }
     if (reg_a5[3] == 3) {
-        func_00134B70();
+        continue_task_finish();
         return;
     }
     if (reg_a5[3] == 4) {
-        func_00134BD0();
+        continue_to_game_over();
         return;
     }
     if (g_loop != 0) {
@@ -707,11 +707,11 @@ void func_00134C40(void) {
     }
     reg_a5[2] = 1;
     bee_counts_reset();
-    func_00134A70();
+    continue_count_store();
 next_1:
     reg_d0.w = 3;
     reg_d1.w = 0;
-    func_00134170();
+    continue_panel_step_set();
     enemies_stop();
     goto next_4;
 next_2:
@@ -721,13 +721,13 @@ next_2:
     reg_a5[2] = 0;
     reg_d1.w = 0;
     reg_d1.b[0] = reg_a5[6];
-    func_00134260();
-    func_00134A70();
+    continue_panel_close();
+    continue_count_store();
 next_3:
     reg_d0.w = 1;
     reg_d1.w = 0;
     reg_d1.b[0] = reg_a5[6];
-    func_00134170();
+    continue_panel_step_set();
 next_4:
     func_00131610();
     if (cond_flag != 0) {
@@ -780,11 +780,11 @@ next_8:
     }
 next_9:
     reg_a5[3] = 4;
-    func_00134BD0();
+    continue_to_game_over();
     return;
 next_11:
     reg_a5[3] = 3;
-    func_00134B70();
+    continue_task_finish();
     return;
 next_10:
     reg_d0.w = 0;
@@ -793,7 +793,7 @@ next_10:
     if (cond_flag == 0) {
         goto next_12;
     }
-    func_00134A70();
+    continue_count_store();
 next_12:
     game_both_players_out_check();
     if (cond_flag == 0) {
@@ -811,4 +811,4 @@ next_13:
 }
 
 /* .bss (the compiler lays these out in reverse) */
-u8 D_002BF3E0[32];
+u8 g_continue_panels[32];

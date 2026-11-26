@@ -507,8 +507,8 @@ void ship_select_task(void) {
     func_001B0E60();
 }
 
-s32 func_001A33C0();
-s32 func_001A35A0();
+s32 ship_palettes_load();
+s32 player_panel_show_unless_step_4();
 s32 replay_start_state_save();
 extern u16 g_select_screen_active;
 extern u16 g_p2_ship_type;
@@ -576,9 +576,9 @@ void func_001B1D70(void) {
         }
         *(u16 *)(reg_a6 + 0x72) = (u16) reg_d1.h[0];
         reg_d0.w = 1;
-        func_001A33C0();
+        ship_palettes_load();
         reg_d0.w = 1;
-        func_001A35A0();
+        player_panel_show_unless_step_4();
     } else if (reg_d0.b[0] == 1) {
         *(s8 *)(reg_a0 + 1) = 1;
         reg_d1.h[0] = PLAYER(g_player1)->ship_type.h;
@@ -593,9 +593,9 @@ void func_001B1D70(void) {
         }
         ENTITY(reg_a6)->y.h = (u16) reg_d1.h[0];
         reg_d0.w = 0;
-        func_001A33C0();
+        ship_palettes_load();
         reg_d0.w = 0;
-        func_001A35A0();
+        player_panel_show_unless_step_4();
     }
     text_layer_clear();
     reg_a0 = (u8 *)g_default_text_palette;

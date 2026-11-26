@@ -10,7 +10,7 @@ void func_0020ED20(void) {
 }
 
 s32 voice_ok();
-s32 func_001A35A0();
+s32 player_panel_show_unless_step_4();
 s32 func_00206520();
 
 void func_0020ED40(void) {
@@ -27,7 +27,7 @@ void func_0020ED40(void) {
     *(s16 *)(reg_a6 + 0x60) = 0;
     ENTITY(reg_a6)->flags.sb[0] = 7;
     func_0020ED20();
-    func_001A35A0();
+    player_panel_show_unless_step_4();
     if (reg_d7.h[0] != 0) {
         reg_a0 = (u8 *)(reg_a6 + 0x70);
     } else {
@@ -37,7 +37,7 @@ void func_0020ED40(void) {
         func_0020ED20();
         reg_d0.h[0] += 1;
         reg_d0.h[0] &= 1;
-        func_001A35A0();
+        player_panel_show_unless_step_4();
     }
 }
 
@@ -92,7 +92,7 @@ next_5:
     func_0020ED20();
     reg_d0.h[0] += 1;
     reg_d0.h[0] &= 1;
-    func_001A35A0();
+    player_panel_show_unless_step_4();
 next_6:
     if ((u16)D_0028DF14 != 0) goto next_7;
     D_0028DF14 = 1;

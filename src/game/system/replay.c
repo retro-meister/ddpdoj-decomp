@@ -864,7 +864,7 @@ void replay_playback_begin(void) {
 
 s32 deferred_text_reset();
 s32 attract_picture_draw();
-s32 func_001A33C0();
+s32 ship_palettes_load();
 extern void gfx_draw_color_box(s32 x, s32 y, s32 w, s32 h, s32 depth, s32 alpha, s32 r, s32 g, s32 b);
 extern void replay_header_apply(void);
 s32 replay_text_layer_load();
@@ -950,10 +950,10 @@ void replay_playback_start(void) {
         D_0028E99C = -1;
         reg_d0.h[0] = 0;
         reg_d1.h[0] = D_006C58A2[0];
-        func_001A33C0();
+        ship_palettes_load();
         reg_d0.h[0] = 1;
         reg_d1.h[0] = D_006C58A6[0];
-        func_001A33C0();
+        ship_palettes_load();
         replay_text_layer_load(g_replay_snapshot);
         g_score_task_active = 0;
         return;

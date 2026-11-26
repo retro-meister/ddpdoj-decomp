@@ -242,7 +242,7 @@ void func_001460A0(void) {
 }
 
 s32 text_layer_print();
-s32 func_001A33C0();
+s32 ship_palettes_load();
 extern u16 D_00251AD0[];
 extern u16 D_0028C118[];
 
@@ -263,7 +263,7 @@ void func_00146350(void) {
         reg_d0.w = 1;
     }
     reg_d1.h[0] = *(u16 *)(reg_a6 + 2);
-    func_001A33C0();
+    ship_palettes_load();
     temp_a0 = *(u16 *)(reg_a4 + 0xA);
     reg_d1.h[0] = temp_a0;
     reg_d0.h[0] = 8;

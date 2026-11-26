@@ -102,7 +102,7 @@ s32 game_ground_task_stop();
 s32 fades_reset();
 s32 func_00171910();
 s32 func_00172060();
-s32 func_001AD690();
+s32 chain_states_clear();
 s32 vibration_stop_all(s32, s32);
 s32 stage_map_hide();
 extern u16 g_players_hidden;
@@ -131,7 +131,7 @@ void func_00131700(void) {
     stage_map_hide();
     fades_reset();
     func_00131630();
-    func_001AD690();
+    chain_states_clear();
     D_0028E961 |= 1;
     D_0028E961 |= 8;
     func_00171910();
@@ -165,7 +165,7 @@ s32 stage_counts_reset();                            /* extern */
 s32 fades_reset();                            /* extern */
 s32 p1_next_stage_setup();                            /* extern */
 s32 p2_next_stage_setup();                            /* extern */
-s32 func_001AD720();                            /* extern */
+s32 boss_hit_state_clear();                            /* extern */
 #ifdef DEATH_LABEL
 extern u8 death_D_00290DC0;
 extern u16 g_game_completed;
@@ -178,7 +178,7 @@ void func_001317E0(void) {
     task_reset_all();
     func_00131630();
     stage_counts_reset();
-    func_001AD720();
+    boss_hit_state_clear();
     (*(s16 *)&g_boss_present) = 0;
     p1_next_stage_setup();
     p2_next_stage_setup();
@@ -222,7 +222,7 @@ s32 func_001720E0();
 s32 func_00172250();
 s32 func_00172260();
 s32 sprite_palette_load();
-s32 func_001AD720();
+s32 boss_hit_state_clear();
 s32 replay_start_run_end();
 extern u16 D_00269840[];
 extern u16 g_players_stage_clear;
@@ -327,7 +327,7 @@ block_after:
         func_00172250();
         g_game_frame_ran = 0;
         func_001719A0();
-        func_001AD720();
+        boss_hit_state_clear();
         g_players_hidden = 0;
         *(u8 *)(reg_a5 + 7) = 3U;
         goto block_25;

@@ -420,7 +420,7 @@ void func_002046F0(void) {
 
 
 s32 sprite_draw_layer5_keep();
-s32 func_001A3520();
+s32 player_panel_step_get();
 extern u8 D_00251F70[];
 extern u8 D_00251F80[];
 extern u8 D_0028DF0C;
@@ -442,7 +442,7 @@ void func_00204800(void) {
     if (reg_d7.h[0] != 0) {
         reg_a0 = (u8 *)D_00251F80;
     }
-    if ((D_0028E304 != 0) || (D_0028DF0C != 0) || (reg_d0.h[0] = reg_d7.h[0], reg_d0.h[0] += 1, reg_d0.h[0] &= 1, func_001A3520(), (reg_d0.h[0] == 4)) || (temp_s5 = reg_a6, ((*(u8 *)((u8 *)(temp_s5) + (1))) != 0))) {
+    if ((D_0028E304 != 0) || (D_0028DF0C != 0) || (reg_d0.h[0] = reg_d7.h[0], reg_d0.h[0] += 1, reg_d0.h[0] &= 1, player_panel_step_get(), (reg_d0.h[0] == 4)) || (temp_s5 = reg_a6, ((*(u8 *)((u8 *)(temp_s5) + (1))) != 0))) {
         reg_d0.h[0] = reg_d7.h[0];
         reg_d0.h[0] += 1;
         reg_d0.h[0] &= 1;
