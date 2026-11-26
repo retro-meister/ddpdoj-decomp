@@ -58,8 +58,8 @@ extern u16 g_p2_hyper_active;
 extern u16 g_p1_hyper_active;
 extern u16 g_loop;
 extern u16 g_two_player_game;
-extern u8 D_0029D750[];
-extern u8 D_0029D770[];
+extern u8 g_p2_laser_segments[];
+extern u8 g_p1_laser_segments[];
 extern u8 objects_task_buffer[];
 extern u8 D_0029DD30[];
 extern u8 objects_task_buffer_2[];
@@ -110,7 +110,7 @@ void objects_task(void) {
         reg_d4.h[0] = ((u16 *)g_player1)[0];
         if (((u16 *)g_player1)[0] != 0) {
             reg_a0 = (u8 *)D_0029E390;
-            reg_a1 = (u8 *)D_0029D770;
+            reg_a1 = (u8 *)g_p1_laser_segments;
             reg_a2 = (u8 *)objects_task_buffer_2;
             reg_a3 = (u8 *)D_0029E330;
             reg_a4 = (u8 *)(((u16 *)g_player1));
@@ -128,7 +128,7 @@ void objects_task(void) {
         reg_d4.h[0] = ((u16 *)g_player2)[0];
         if (((u16 *)g_player2)[0] != 0) {
             reg_a0 = (u8 *)D_0029EA50;
-            reg_a1 = (u8 *)D_0029D750;
+            reg_a1 = (u8 *)g_p2_laser_segments;
             reg_a2 = (u8 *)objects_task_buffer;
             reg_a3 = (u8 *)D_0029DD30;
             reg_a4 = (u8 *)(((u16 *)g_player2));
@@ -152,7 +152,7 @@ next_1:
     } else {
         if (g_frame_mod2 == 0) {
             reg_a0 = (u8 *)D_0029E390;
-            reg_a1 = (u8 *)D_0029D770;
+            reg_a1 = (u8 *)g_p1_laser_segments;
             reg_a2 = (u8 *)objects_task_buffer_2;
             reg_a3 = (u8 *)D_0029E330;
             reg_a4 = (u8 *)(((u16 *)g_player1));
@@ -163,7 +163,7 @@ next_1:
             return;
         }
         reg_a0 = (u8 *)D_0029EA50;
-        reg_a1 = (u8 *)D_0029D750;
+        reg_a1 = (u8 *)g_p2_laser_segments;
         reg_a2 = (u8 *)objects_task_buffer;
         reg_a3 = (u8 *)D_0029DD30;
         reg_a4 = (u8 *)(((u16 *)g_player2));

@@ -532,7 +532,7 @@ extern s32 g_boss_hp_unit;
 extern u16 g_lives_display_move_x;
 extern u16 g_lives_display_move_y;
 extern u16 g_boss_hp_bar_move_count;
-extern u8 D_0028E635;
+extern u8 g_boss_bar_flags;
 extern u8 g_boss_present_b1;
 extern u16 g_loop;
 extern u16 g_stage;
@@ -547,22 +547,22 @@ void hud_boss_bar_enter(void) {
         hud_boss_bar_leave();
         return;
     }
-    flag = D_0028E635;
+    flag = g_boss_bar_flags;
     if ((s8) flag < 0) goto next_160;
     bits = flag & 0xFF;
     if (bits & 0x10) goto next_120;
     if (bits & 8) goto next_80;
     if (bits & 1) goto next_40;
-    D_0028E635 = flag | 1;
+    g_boss_bar_flags = flag | 1;
     g_boss_hp_bar_move_count = 0x32;
     g_lives_display_move_x = 8;
     g_lives_display_move_y = 8;
-    if (!(D_0028E635 & 2)) {
-        D_0028E635 |= 2;
+    if (!(g_boss_bar_flags & 2)) {
+        g_boss_bar_flags |= 2;
         goto next_20;
     }
-    if (!(D_0028E635 & 4)) {
-        D_0028E635 |= 4;
+    if (!(g_boss_bar_flags & 4)) {
+        g_boss_bar_flags |= 4;
         goto next_20;
     }
     hud_p1_caption_clear();
@@ -575,7 +575,7 @@ void hud_boss_bar_enter(void) {
     sprite_palette_load();
     goto next_40;
 next_20:
-    D_0028E635 &= 0xFE;
+    g_boss_bar_flags &= 0xFE;
 next_40:
     reg_d1.h[0] = 0x5BC0;
     reg_tmp1.w = reg_d1.w;
@@ -594,7 +594,7 @@ next_40:
         hud_boss_hits_update();
         return;
     }
-    D_0028E635 |= 8;
+    g_boss_bar_flags |= 8;
     g_boss_hp_bar_move_count = 0x38;
     hud_boss_hits_update();
     return;
@@ -621,7 +621,7 @@ next_80:
     hud_boss_hits_update();
     return;
 next_100:
-    D_0028E635 = flag | 0x10;
+    g_boss_bar_flags = flag | 0x10;
     hud_lives_draw_boss_entering();
     g_boss_hp_bar_move_count = 0xFFE2;
     reg_d0.h[0] = 0xD4;
@@ -653,7 +653,7 @@ loop_140:
     reg_d3.h[0] += 2;
     if ((s16) --reg_d6.h[0] >= 0) goto loop_140;
     if (g_boss_hp_bar_move_count != 0x6F) goto next_280;
-    D_0028E635 |= 0x80;
+    g_boss_bar_flags |= 0x80;
     goto next_180;
 next_160:
     reg_d7.h[0] = 0xE00;
@@ -998,7 +998,7 @@ void hud_lives_draw_boss_entering(void) {
     reg_d1.h[0] = 0x5F80;
     reg_d6.h[0] = g_lives_display_move_x;
     reg_d6.h[0] <<= 7;
-    if ((D_0028E635 & 8) && ((s32) g_boss_hp_bar_move_count < 0xD)) {
+    if ((g_boss_bar_flags & 8) && ((s32) g_boss_hp_bar_move_count < 0xD)) {
         g_lives_display_move_y -= 1;
         if ((s16) g_lives_display_move_y < 0) {
             g_lives_display_move_y = 0;
@@ -1025,7 +1025,7 @@ void hud_lives_draw_boss_entering(void) {
         reg_d3.h[0] = 0x208;
         reg_d1.h[0] += reg_d6.h[0];
         hud_p1_ship_and_hyper_count_draw();
-        if (D_0028E635 & 0x10) {
+        if (g_boss_bar_flags & 0x10) {
             reg_d1.h[0] = 0;
             reg_d0.h[0] = 0xC0;
             hud_p1_lives_row_draw();
@@ -1047,7 +1047,7 @@ void hud_lives_draw_boss_entering(void) {
         reg_d3.h[0] = 0x208;
         reg_d1.h[0] -= reg_d6.h[0];
         hud_p2_ship_and_hyper_count_draw();
-        if (D_0028E635 & 0x10) {
+        if (g_boss_bar_flags & 0x10) {
             reg_d0.h[0] = 0xC0;
             reg_d1.h[0] = 0x1B00;
             hud_p2_lives_row_draw();
@@ -1743,7 +1743,7 @@ void hud_p1_hyper_gauge_draw_at(void) {
     reg_d1.h[0] = 0x400;
     if (!(g_boss_present & 1)) goto next_1;
     if (g_boss_hp_bar_flags < 0) goto next_1;
-    if (D_0028E635 & 0x10) goto next_2;
+    if (g_boss_bar_flags & 0x10) goto next_2;
     reg_d1.h[0] = 0x60C0;
     reg_d0.h[0] = g_lives_display_move_y;
     reg_d0.h[0] <<= 6;
@@ -1868,7 +1868,7 @@ void hud_p2_hyper_gauge_draw_at(void) {
     reg_d1.h[0] = 0x2800;
     if (!(g_boss_present & 1)) goto next_1;
     if (g_boss_hp_bar_flags < 0) goto next_1;
-    if (D_0028E635 & 0x10) goto next_2;
+    if (g_boss_bar_flags & 0x10) goto next_2;
     reg_d1.h[0] = 0x60C0;
     reg_d0.h[0] = g_lives_display_move_y;
     reg_d0.h[0] <<= 6;

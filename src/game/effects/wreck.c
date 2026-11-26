@@ -97,8 +97,8 @@ extern u8 g_explosions[4480];
 extern u16 g_bomb_entities[];
 extern u8 D_0029D710[32];
 extern u8 D_0029D730[32];
-extern u8 D_0029D750[32];
-extern u8 D_0029D770[32];
+extern u8 g_p2_laser_segments[32];
+extern u8 g_p1_laser_segments[32];
 extern u8 g_p2_laser_entities[1296];
 extern u8 g_p1_laser_entities[1296];
 extern u8 D_0029E390[1728];
@@ -186,8 +186,8 @@ void startup_pointers_store_a(void) {
     STORE_POINTER(debug_list_views[6].entries, ((u16 *)D_0029EA50));
     STORE_POINTER(debug_list_views[7].entries, ((u16 *)g_p1_laser_entities));
     STORE_POINTER(debug_list_views[8].entries, ((u16 *)g_p2_laser_entities));
-    STORE_POINTER(debug_list_views[9].entries, ((u16 *)D_0029D770));
-    STORE_POINTER(debug_list_views[10].entries, ((u16 *)D_0029D750));
+    STORE_POINTER(debug_list_views[9].entries, ((u16 *)g_p1_laser_segments));
+    STORE_POINTER(debug_list_views[10].entries, ((u16 *)g_p2_laser_segments));
     STORE_POINTER(debug_list_views[11].entries, ((u16 *)D_0029D730));
     STORE_POINTER(debug_list_views[12].entries, ((u16 *)D_0029D710));
     STORE_POINTER(debug_list_views[13].entries, g_p1_weapon_level_data_as_u16_a);
@@ -450,7 +450,7 @@ extern u16 g_p1_lives;
 extern u16 g_p1_maximum_value[];
 extern s16 g_player1[];
 #ifdef DEATH_LABEL
-extern u16 D_00684C80[];
+extern u16 g_sim_rules[];
 #endif
 
 void clear_bonus_p1_step(void) {
@@ -533,9 +533,9 @@ block_3:
         }
         reg_d0.w = 0x01000000;
 #ifdef DEATH_LABEL
-        if (D_00684C80[1] == 2) {
+        if (g_sim_rules[1] == 2) {
             *(s32 *)&reg_d0 = 0x01000000;
-        } else if (D_00684C80[1] == 4) {
+        } else if (g_sim_rules[1] == 4) {
             reg_d0.w = 0x01500000;
         } else {
             reg_d0.w = 0x03000000;
@@ -561,7 +561,7 @@ extern u16 g_p2_lives;
 extern u16 g_p2_maximum_value[];
 extern s16 g_player2[];
 #ifdef DEATH_LABEL
-extern u16 D_00684C80[];
+extern u16 g_sim_rules[];
 #endif
 
 void clear_bonus_p2_step(void) {
@@ -658,9 +658,9 @@ block_3:
     }
     reg_d0.w = 0x01000000;
 #ifdef DEATH_LABEL
-    if (D_00684C80[3] == 2) {
+    if (g_sim_rules[3] == 2) {
         *(s32 *)&reg_d0 = 0x01000000;
-    } else if (D_00684C80[3] == 4) {
+    } else if (g_sim_rules[3] == 4) {
         reg_d0.w = 0x01500000;
     } else {
         reg_d0.w = 0x03000000;

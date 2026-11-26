@@ -113,7 +113,7 @@ extern u8 g_replay_buffer_state;
 extern s16 g_bullet_limit_raised_1[];
 extern s16 g_bullet_limit_raised_2[];
 extern u16 g_bullet_limit_raised_3[];
-extern u16 D_0029976E[];
+extern u16 g_bullets_clear_request[];
 
 #ifdef DEATH_LABEL
 extern u16 g_p2_lives;
@@ -140,7 +140,7 @@ void stage_clear_task_begin(void) {
     g_bullet_limit_raised_2[0] = 0;
     D_0028E958 = 1;
     ((s16 *)g_bullet_limit_raised_3)[0] = 0;
-    ((s16 *)D_0029976E)[0] = 0;
+    ((s16 *)g_bullets_clear_request)[0] = 0;
     stage_clear_colors_reset();
     game_ground_task_stop();
     g_stage_clear_screen_shown = 0;

@@ -646,15 +646,15 @@ extern u8 attract_step_game_start_table[];
 extern u8 g_game_mode;
 extern s8 g_menu_pad;
 extern u8 g_replay_mode;
-extern u8 D_0068DEC8[];
+extern u8 g_sim_rules_page_a[];
 extern s16 D_0068DECA[];
 extern s16 D_0068DECC[];
 extern s16 D_0068DECE[];
 extern s16 D_0068DED0[];
 extern s16 D_0068DED2[];
-extern u8 D_0068DED8[];
+extern u8 g_sim_rules_page_b[];
 extern s16 D_0068DEDA[];
-extern s16 D_0068DEDC[];
+extern s16 g_sim_rules_loaded_kind[];
 extern s16 D_0068DEDE[];
 extern s16 D_0068DEE0[];
 extern u8 D_0068DEF0[];
@@ -712,7 +712,7 @@ void attract_step_game_start(void) {
     text_palette_load();
     replay_header_clear();
     a = D_0068DEDA[0];
-    b = D_0068DEDC[0];
+    b = g_sim_rules_loaded_kind[0];
     if (g_menu_pad == 0) {
         D_006E5BE2[0] = D_0028DE40[a];
         D_006E5BE4[0] = D_0028DE44[b];
@@ -721,7 +721,7 @@ void attract_step_game_start(void) {
         D_006E5BE8[0] = D_0028DE44[b];
     }
     D_006E5C04_as_s16_a[0] = 0;
-    D_006E5BEA_as_s16_a[0] = ((s16 *)D_0068DED8)[0];
+    D_006E5BEA_as_s16_a[0] = ((s16 *)g_sim_rules_page_b)[0];
     D_006E5BEC_as_s16_a[0] = D_0068DF02[0] / 5;
     D_006E5BFE_as_s16_a[0] = D_0068DF00[0];
     ((s16 *)D_006E5BFC)[0] = D_0068DEFE[0];
@@ -735,7 +735,7 @@ void attract_step_game_start(void) {
     ((s16 *)D_006E5C08)[0] = D_0068DEE0[0];
     D_006E5C0A_as_s16_a[0] = D_0068DEFA[0];
     D_006E5C0C_as_s16_a[0] = D_0068DEFC[0];
-    ((s16 *)D_006E5C0E)[0] = ((s16 *)D_0068DEC8)[0];
+    ((s16 *)D_006E5C0E)[0] = ((s16 *)g_sim_rules_page_a)[0];
     ((s16 *)D_006E5C10)[0] = D_0068DECA[0];
     ((s16 *)D_006E5C12)[0] = D_0068DECC[0];
     D_006E5BEE_as_s16_a[0] = D_0068DF02[0] % 5;
@@ -873,7 +873,7 @@ void attract_step_autosave(void) {
 
 #ifndef DEATH_LABEL
 s32 sfx_confirm();                            /* extern */
-extern u8 D_0028E1E6[];
+extern u8 g_credit_display_last_coins[];
 extern s8 g_menu_task_phase;
 
 void attract_start_button_check(void) {
@@ -885,7 +885,7 @@ void attract_start_button_check(void) {
             sfx_confirm();
             return;
         }
-        if (D_0028E1E6[0] != 0) {
+        if (g_credit_display_last_coins[0] != 0) {
             g_menu_task_phase = 0;
             reg_d0.h[0] = 0xF;
             attract_step_set(g_setting_coin_mode);

@@ -4211,9 +4211,9 @@ extern void stage3_midboss_mode_05(void);
 extern void stage3_midboss_mode_leave(void);
 
 extern u16 stage3_midboss_mode_routines[];
-extern u16 D_002635C2[];
+extern u16 stage3_midboss_attack_mode_routines[];
 extern u16 stage3_midboss2_state_routines_1[];
-extern u16 D_00263612[];
+extern u16 stage3_midboss_shot_routines[];
 
 void stage3_midboss_pointers_store(void) {
     if (stage3_midboss_table[103] != 0x67) {
@@ -4236,30 +4236,30 @@ void stage3_midboss_pointers_store(void) {
         printf("error! st3mb_md_tbl[0]\n");
     }
     STORE_POINTER(stage3_midboss_mode_routines, stage3_midboss_mode_00);
-    if (D_002635C2[1] != 0x2) {
+    if (stage3_midboss_attack_mode_routines[1] != 0x2) {
         printf("error! st3mb_md_tbl[2]\n");
     }
-    STORE_POINTER(D_002635C2 + 1, stage3_midboss_mode_attack_a);
-    if (D_002635C2[3] != 0x4) {
+    STORE_POINTER(stage3_midboss_attack_mode_routines + 1, stage3_midboss_mode_attack_a);
+    if (stage3_midboss_attack_mode_routines[3] != 0x4) {
         printf("error! st3mb_md_tbl[4]\n");
     }
-    STORE_POINTER(D_002635C2 + 3, stage3_midboss_mode_attack_b);
-    if (D_002635C2[5] != 0x6) {
+    STORE_POINTER(stage3_midboss_attack_mode_routines + 3, stage3_midboss_mode_attack_b);
+    if (stage3_midboss_attack_mode_routines[5] != 0x6) {
         printf("error! st3mb_md_tbl[6]\n");
     }
-    STORE_POINTER(D_002635C2 + 5, stage3_midboss_mode_attack_a);
-    if (D_002635C2[7] != 0x8) {
+    STORE_POINTER(stage3_midboss_attack_mode_routines + 5, stage3_midboss_mode_attack_a);
+    if (stage3_midboss_attack_mode_routines[7] != 0x8) {
         printf("error! st3mb_md_tbl[8]\n");
     }
-    STORE_POINTER(D_002635C2 + 7, stage3_midboss_mode_attack_b);
-    if (D_002635C2[9] != 0xa) {
+    STORE_POINTER(stage3_midboss_attack_mode_routines + 7, stage3_midboss_mode_attack_b);
+    if (stage3_midboss_attack_mode_routines[9] != 0xa) {
         printf("error! st3mb_md_tbl[10]\n");
     }
-    STORE_POINTER(D_002635C2 + 9, stage3_midboss_mode_05);
-    if (D_002635C2[11] != 0xc) {
+    STORE_POINTER(stage3_midboss_attack_mode_routines + 9, stage3_midboss_mode_05);
+    if (stage3_midboss_attack_mode_routines[11] != 0xc) {
         printf("error! st3mb_md_tbl[12]\n");
     }
-    STORE_POINTER(D_002635C2 + 11, stage3_midboss_mode_leave);
+    STORE_POINTER(stage3_midboss_attack_mode_routines + 11, stage3_midboss_mode_leave);
     if (stage3_midboss2_state_routines_0[8] != 0x0) {
         printf("error! s3mm2_st_tbl0[0]\n");
     }
@@ -4296,34 +4296,34 @@ void stage3_midboss_pointers_store(void) {
         printf("error! s3mm2_st_tbl1[0]\n");
     }
     STORE_POINTER(stage3_midboss2_state_routines_1, stage3_midboss_shot);
-    if (D_00263612[1] != 0x2) {
+    if (stage3_midboss_shot_routines[1] != 0x2) {
         printf("error! s3mm2_st_tbl1[2]\n");
     }
-    STORE_POINTER(D_00263612 + 1, stage3_midboss_shot);
-    if (D_00263612[3] != 0x4) {
+    STORE_POINTER(stage3_midboss_shot_routines + 1, stage3_midboss_shot);
+    if (stage3_midboss_shot_routines[3] != 0x4) {
         printf("error! s3mm2_st_tbl1[4]\n");
     }
-    STORE_POINTER(D_00263612 + 3, stage3_midboss_shot);
-    if (D_00263612[5] != 0x6) {
+    STORE_POINTER(stage3_midboss_shot_routines + 3, stage3_midboss_shot);
+    if (stage3_midboss_shot_routines[5] != 0x6) {
         printf("error! s3mm2_st_tbl1[6]\n");
     }
-    STORE_POINTER(D_00263612 + 5, stage3_midboss_shot);
-    if (D_00263612[7] != 0x8) {
+    STORE_POINTER(stage3_midboss_shot_routines + 5, stage3_midboss_shot);
+    if (stage3_midboss_shot_routines[7] != 0x8) {
         printf("error! s3mm2_st_tbl1[8]\n");
     }
-    STORE_POINTER(D_00263612 + 7, stage3_midboss_shot);
-    if (D_00263612[9] != 0xa) {
+    STORE_POINTER(stage3_midboss_shot_routines + 7, stage3_midboss_shot);
+    if (stage3_midboss_shot_routines[9] != 0xa) {
         printf("error! s3mm2_st_tbl1[10]\n");
     }
-    STORE_POINTER(D_00263612 + 9, stage3_midboss_shot);
-    if (D_00263612[11] != 0xc) {
+    STORE_POINTER(stage3_midboss_shot_routines + 9, stage3_midboss_shot);
+    if (stage3_midboss_shot_routines[11] != 0xc) {
         printf("error! s3mm2_st_tbl1[12]\n");
     }
-    STORE_POINTER(D_00263612 + 11, stage3_midboss_shot);
-    if (D_00263612[13] != 0xe) {
+    STORE_POINTER(stage3_midboss_shot_routines + 11, stage3_midboss_shot);
+    if (stage3_midboss_shot_routines[13] != 0xe) {
         printf("error! s3mm2_st_tbl1[14]\n");
     }
-    STORE_POINTER(D_00263612 + 13, stage3_midboss_shot);
+    STORE_POINTER(stage3_midboss_shot_routines + 13, stage3_midboss_shot);
 }
 
 extern u16 D_00261D30[];
@@ -4351,9 +4351,9 @@ extern void sprite_draw_layer3_keep(void);
 extern void sprite_draw_layer4_keep(void);
 extern void sprite_draw_layer5_keep(void);
 
-extern u16 D_0025AE10[];
+extern u16 entity_draw_by_layer_routines[];
 extern u16 D_0025AE50[];
-extern u16 D_0025AE70[];
+extern u16 sprite_draw_by_layer_routines[];
 
 void pointers_store_part_7(void) {
     STORE_POINTER(D_0025A0B0 + 33, D_0028C0C8);
@@ -4382,36 +4382,36 @@ void pointers_store_part_7(void) {
     STORE_POINTER(D_0025AD90 + 19, D_0028C0C8);
     STORE_POINTER(D_0025AD90 + 26, D_0028C0C8);
     STORE_POINTER(D_0025AD90 + 33, large_tank_entities_at_47);
-    STORE_POINTER(D_0025AE10, entity_draw_layer1);
-    STORE_POINTER(D_0025AE10 + 2, entity_draw_layer1);
-    STORE_POINTER(D_0025AE10 + 4, entity_draw_layer2);
-    STORE_POINTER(D_0025AE10 + 6, entity_draw_layer3);
-    STORE_POINTER(D_0025AE10 + 8, entity_draw_layer4);
-    STORE_POINTER(D_0025AE10 + 10, entity_draw_layer5);
-    STORE_POINTER(D_0025AE10 + 16, entity_draw_layer1_keep);
-    STORE_POINTER(D_0025AE10 + 18, entity_draw_layer1_keep);
-    STORE_POINTER(D_0025AE10 + 20, entity_draw_layer2_keep);
-    STORE_POINTER(D_0025AE10 + 22, entity_draw_layer3_keep);
-    STORE_POINTER(D_0025AE10 + 24, entity_draw_layer4_keep);
-    STORE_POINTER(D_0025AE10 + 26, entity_draw_layer5_keep);
+    STORE_POINTER(entity_draw_by_layer_routines, entity_draw_layer1);
+    STORE_POINTER(entity_draw_by_layer_routines + 2, entity_draw_layer1);
+    STORE_POINTER(entity_draw_by_layer_routines + 4, entity_draw_layer2);
+    STORE_POINTER(entity_draw_by_layer_routines + 6, entity_draw_layer3);
+    STORE_POINTER(entity_draw_by_layer_routines + 8, entity_draw_layer4);
+    STORE_POINTER(entity_draw_by_layer_routines + 10, entity_draw_layer5);
+    STORE_POINTER(entity_draw_by_layer_routines + 16, entity_draw_layer1_keep);
+    STORE_POINTER(entity_draw_by_layer_routines + 18, entity_draw_layer1_keep);
+    STORE_POINTER(entity_draw_by_layer_routines + 20, entity_draw_layer2_keep);
+    STORE_POINTER(entity_draw_by_layer_routines + 22, entity_draw_layer3_keep);
+    STORE_POINTER(entity_draw_by_layer_routines + 24, entity_draw_layer4_keep);
+    STORE_POINTER(entity_draw_by_layer_routines + 26, entity_draw_layer5_keep);
     STORE_POINTER(D_0025AE50, entity_draw_layer1_zoom);
     STORE_POINTER(D_0025AE50 + 2, entity_draw_layer1_zoom);
     STORE_POINTER(D_0025AE50 + 4, entity_draw_layer2_zoom);
     STORE_POINTER(D_0025AE50 + 6, entity_draw_layer3_zoom);
     STORE_POINTER(D_0025AE50 + 8, entity_draw_layer4_zoom);
     STORE_POINTER(D_0025AE50 + 10, entity_draw_layer5_zoom);
-    STORE_POINTER(D_0025AE70, sprite_draw_layer1);
-    STORE_POINTER(D_0025AE70 + 2, sprite_draw_layer1);
-    STORE_POINTER(D_0025AE70 + 4, sprite_draw_layer2);
-    STORE_POINTER(D_0025AE70 + 6, sprite_draw_layer3);
-    STORE_POINTER(D_0025AE70 + 8, sprite_draw_layer4);
-    STORE_POINTER(D_0025AE70 + 10, sprite_draw_layer5);
-    STORE_POINTER(D_0025AE70 + 16, sprite_draw_layer1_keep);
-    STORE_POINTER(D_0025AE70 + 18, sprite_draw_layer1_keep);
-    STORE_POINTER(D_0025AE70 + 20, sprite_draw_layer2_keep);
-    STORE_POINTER(D_0025AE70 + 22, sprite_draw_layer3_keep);
-    STORE_POINTER(D_0025AE70 + 24, sprite_draw_layer4_keep);
-    STORE_POINTER(D_0025AE70 + 26, sprite_draw_layer5_keep);
+    STORE_POINTER(sprite_draw_by_layer_routines, sprite_draw_layer1);
+    STORE_POINTER(sprite_draw_by_layer_routines + 2, sprite_draw_layer1);
+    STORE_POINTER(sprite_draw_by_layer_routines + 4, sprite_draw_layer2);
+    STORE_POINTER(sprite_draw_by_layer_routines + 6, sprite_draw_layer3);
+    STORE_POINTER(sprite_draw_by_layer_routines + 8, sprite_draw_layer4);
+    STORE_POINTER(sprite_draw_by_layer_routines + 10, sprite_draw_layer5);
+    STORE_POINTER(sprite_draw_by_layer_routines + 16, sprite_draw_layer1_keep);
+    STORE_POINTER(sprite_draw_by_layer_routines + 18, sprite_draw_layer1_keep);
+    STORE_POINTER(sprite_draw_by_layer_routines + 20, sprite_draw_layer2_keep);
+    STORE_POINTER(sprite_draw_by_layer_routines + 22, sprite_draw_layer3_keep);
+    STORE_POINTER(sprite_draw_by_layer_routines + 24, sprite_draw_layer4_keep);
+    STORE_POINTER(sprite_draw_by_layer_routines + 26, sprite_draw_layer5_keep);
 }
 
 extern u16 g_stage2_map_palettes[];

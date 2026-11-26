@@ -1394,8 +1394,8 @@ extern s32 g_p1_afterimage_positions[];
 extern u16 g_bomb_entities[24];
 extern u8 D_0029D710[];
 extern u8 D_0029D730[];
-extern u8 D_0029D750[];
-extern u8 D_0029D770[];
+extern u8 g_p2_laser_segments[];
+extern u8 g_p1_laser_segments[];
 extern u8 g_p2_laser_entities[];
 extern u8 g_p1_laser_entities[];
 extern u8 D_0029E390[];
@@ -1462,8 +1462,8 @@ void replay_snapshot_save(Buf *buf) {
         buf->f2122[i] = g_p2_laser_entities[i];
     }
     for (i = 0; i < 0x20; i++) {
-        buf->f2722[i] = D_0029D770[i];
-        buf->f2742[i] = D_0029D750[i];
+        buf->f2722[i] = g_p1_laser_segments[i];
+        buf->f2742[i] = g_p2_laser_segments[i];
     }
     for (i = 0; i < 0x20; i++) {
         buf->f2762[i] = D_0029D730[i];
@@ -1963,8 +1963,8 @@ void replay_snapshot_load(u8 *p) {
         g_p2_laser_entities[i] = p[0x2122 + i];
     }
     for (i = 0; i < 0x20; i++) {
-        D_0029D770[i] = p[0x2722 + i];
-        D_0029D750[i] = p[0x2742 + i];
+        g_p1_laser_segments[i] = p[0x2722 + i];
+        g_p2_laser_segments[i] = p[0x2742 + i];
     }
     for (i = 0; i < 0x20; i++) {
         D_0029D730[i] = p[0x2762 + i];

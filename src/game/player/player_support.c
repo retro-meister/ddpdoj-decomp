@@ -73,7 +73,7 @@ extern u8 *reg_save_a1;
 extern s32 reg_save_a0;
 extern u16 g_p1_hyper_active;
 extern u8 D_0029D730[];
-extern u8 D_0029D770[];
+extern u8 g_p1_laser_segments[];
 extern u8 g_p1_laser_entities[];
 extern u8 g_p1_options[];
 extern u16 D_0029F2B8[];
@@ -98,7 +98,7 @@ void p1_laser_clear(void) {
     reg_call_target = (Fn)reg_a0;
     reg_call_target();
     reg_a6 = (u8 *)g_p1_laser_entities;
-    reg_a0 = (u8 *)D_0029D770;
+    reg_a0 = (u8 *)g_p1_laser_segments;
     reg_a1 = (u8 *)D_0029D730;
     reg_a2 = (u8 *)g_p1_options;
     laser_entities_clear();
@@ -114,7 +114,7 @@ void p2_laser_stop(void) {
 
 extern u16 g_p2_hyper_active;
 extern u8 D_0029D710[];
-extern u8 D_0029D750[];
+extern u8 g_p2_laser_segments[];
 extern u8 g_p2_laser_entities[];
 extern u8 g_p2_options[];
 extern u16 D_0029F248[];
@@ -139,7 +139,7 @@ void p2_laser_clear(void) {
     reg_call_target = (Fn)reg_a0;
     reg_call_target();
     reg_a6 = (u8 *)g_p2_laser_entities;
-    reg_a0 = (u8 *)D_0029D750;
+    reg_a0 = (u8 *)g_p2_laser_segments;
     reg_a1 = (u8 *)D_0029D710;
     reg_a2 = (u8 *)g_p2_options;
     laser_entities_clear();

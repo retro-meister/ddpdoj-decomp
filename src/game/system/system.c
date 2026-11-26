@@ -228,7 +228,7 @@ extern s8 g_bomb_panel_seen;
 extern u8 g_replay_taken_over;
 extern u8 g_replay_buffer_state;
 extern u8 g_replay_mode;
-extern u16 D_006C58A4[];
+extern u16 g_replay_file_kind[];
 
 void sys_draw_replay_label(void) {
     s32 var_a2;
@@ -241,14 +241,14 @@ void sys_draw_replay_label(void) {
 #endif
         if (g_replay_taken_over != 0) {
             var_a2 = 0x88;
-            if (D_006C58A4[0] == 0xFF) {
+            if (g_replay_file_kind[0] == 0xFF) {
                 var_a2 = 0x18;
             }
             label_draw(&g_render_target, 2, var_a2, "OVERRIDE");
             return;
         }
         var_a2_2 = 0x90;
-        if (D_006C58A4[0] == 0xFF) {
+        if (g_replay_file_kind[0] == 0xFF) {
             var_a2_2 = 0x20;
         }
         label_draw(&g_render_target, 2, var_a2_2, "REPLAY");

@@ -139,26 +139,26 @@ block_6:
     }
 }
 
-extern u16 D_00295E2E[];
+extern u16 g_picture_change_state[];
 extern u16 D_00295E30[];
 extern u16 D_00295E32[];
 extern u32 D_00295E34[];
 
 void picture_change_reset(void) {
-    ((s16 *)D_00295E2E)[0] = 0;
+    ((s16 *)g_picture_change_state)[0] = 0;
     ((s16 *)D_00295E30)[0] = 0;
     ((s16 *)D_00295E32)[0] = 0;
     ((s32 *)D_00295E34)[0] = 0;
 }
 
 #ifndef DEATH_LABEL
-extern u16 D_00295E2E[];
+extern u16 g_picture_change_state[];
 extern u16 D_00295E30[];
 extern u16 D_00295E32[];
 
 void picture_change_request(void) {
-    if (D_00295E2E[0] == 0) {
-        D_00295E2E[0] = 1;
+    if (g_picture_change_state[0] == 0) {
+        g_picture_change_state[0] = 1;
         D_00295E30[0] = reg_d0.h[0];
         D_00295E32[0] = reg_d1.h[0];
     }
@@ -176,8 +176,8 @@ void picture_change_update(void) {
     s32 fade_to_black();
     s32 fade_release();
     s32 fade_is_running();
-    if (D_00295E2E[0] == 0) goto block_rts;
-    if (D_00295E2E[0] != 1) goto next_1;
+    if (g_picture_change_state[0] == 0) goto block_rts;
+    if (g_picture_change_state[0] != 1) goto next_1;
     if (D_00295E2C[0] == 0) goto next_2;
     reg_a0 = (u8 *)picture_change_update_table;
     reg_d0.h[0] = D_00295E32[0];
@@ -187,20 +187,20 @@ void picture_change_update(void) {
     reg_a0 = *(u8 **)reg_a0;
     fade_to_black();
     D_00295E34[0] = reg_d0.w;
-    D_00295E2E[0] = 2;
+    g_picture_change_state[0] = 2;
 next_1:
-    if (D_00295E2E[0] != 2) goto next_3;
+    if (g_picture_change_state[0] != 2) goto next_3;
     reg_d0.w = D_00295E34[0];
     fade_is_running();
     if (cond_flag != 0) goto next_3;
     fade_release();
 next_2:
     D_00295E2C[0] = D_00295E30[0];
-    D_00295E2E[0] = 3;
+    g_picture_change_state[0] = 3;
     if (D_00295E2C[0] != 0) goto next_3;
-    D_00295E2E[0] = 0;
+    g_picture_change_state[0] = 0;
 next_3:
-    if (D_00295E2E[0] != 3) goto next_4;
+    if (g_picture_change_state[0] != 3) goto next_4;
     reg_a0 = (u8 *)picture_change_update_table_2;
     reg_d0.h[0] = D_00295E32[0];
     reg_d0.h[0] += reg_d0.h[0];
@@ -209,14 +209,14 @@ next_3:
     reg_a0 = *(u8 **)reg_a0;
     fade_in();
     D_00295E34[0] = reg_d0.w;
-    D_00295E2E[0] = 4;
+    g_picture_change_state[0] = 4;
 next_4:
-    if (D_00295E2E[0] != 4) goto block_rts;
+    if (g_picture_change_state[0] != 4) goto block_rts;
     reg_d0.w = D_00295E34[0];
     fade_is_running();
     if (cond_flag != 0) goto block_rts;
     fade_release();
-    D_00295E2E[0] = 0;
+    g_picture_change_state[0] = 0;
 block_rts:
     return;
 }

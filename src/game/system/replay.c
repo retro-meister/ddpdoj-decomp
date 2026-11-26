@@ -18,7 +18,7 @@ extern u8 g_replay_buffer_state;
 extern u8 g_replay_mode_begun;
 extern u8 g_replay_mode;
 extern u8 g_simulation_active;
-extern u16 D_006C58A4[];
+extern u16 g_replay_file_kind[];
 extern u16 D_006C58A8[];
 extern u8 death_D_002B1ED8[];
 extern u8 g_replay_inputs[];
@@ -78,7 +78,7 @@ void replay_filter_input(void) {
             if (g_replay_taken_over != 0) {
                 swap = 0;
                 if (g_menu_pad == 0) {
-                    if (D_006C58A4[0] == 0xFF) {
+                    if (g_replay_file_kind[0] == 0xFF) {
                         swap = 1;
                     }
                 } else if (D_006C58A8[0] == 0xFF) {
@@ -96,7 +96,7 @@ void replay_filter_input(void) {
                 if (g_replay_mode_begun != g_replay_mode) {
                     g_replay_mode = 0;
                 }
-                if (D_006C58A4[0] != 0xFF) {
+                if (g_replay_file_kind[0] != 0xFF) {
                     reg_d0.b[0] = g_replay_inputs[(u32)g_replay_position] ^ death_D_002B1ED8[(u32)g_replay_position & 0x1F];
                 } else {
                     reg_d1.b[0] = g_replay_inputs[(u32)g_replay_position] ^ death_D_002B1ED8[(u32)g_replay_position & 0x1F];
@@ -108,7 +108,7 @@ void replay_filter_input(void) {
             if (g_replay_mode_begun != g_replay_mode) {
                 g_replay_mode = 0;
             }
-            if (D_006C58A4[0] != 0xFF) {
+            if (g_replay_file_kind[0] != 0xFF) {
                 g_replay_inputs[(u32)g_replay_position] = reg_d0.b[0];
             } else {
                 g_replay_inputs[(u32)g_replay_position] = reg_d1.b[0];
@@ -143,7 +143,7 @@ extern u8 g_replay_buffer_state;
 extern u8 g_replay_mode_begun;
 extern u8 g_replay_mode;
 extern u8 g_simulation_active;
-extern u16 D_006C58A4[];
+extern u16 g_replay_file_kind[];
 extern u16 D_006C58A8[];
 extern u8 D_006CB588[];
 extern u8 g_replay_inputs[];
@@ -197,7 +197,7 @@ void replay_filter_input(void) {
             if (g_replay_taken_over != 0) {
                 swap = 0;
                 if (g_menu_pad == 0) {
-                    if (D_006C58A4[0] == 0xFF) {
+                    if (g_replay_file_kind[0] == 0xFF) {
                         swap = 1;
                     }
                 } else if (D_006C58A8[0] == 0xFF) {
@@ -215,7 +215,7 @@ void replay_filter_input(void) {
                 if (g_replay_mode_begun != g_replay_mode) {
                     g_replay_mode = 0;
                 }
-                if (D_006C58A4[0] != 0xFF) {
+                if (g_replay_file_kind[0] != 0xFF) {
                     reg_d0.b[0] = g_replay_inputs[(u32)g_replay_position] ^ D_006CB588[(u32)g_replay_position & 0x1F];
                 } else {
                     reg_d1.b[0] = g_replay_inputs[(u32)g_replay_position] ^ D_006CB588[(u32)g_replay_position & 0x1F];
@@ -227,7 +227,7 @@ void replay_filter_input(void) {
             if (g_replay_mode_begun != g_replay_mode) {
                 g_replay_mode = 0;
             }
-            if (D_006C58A4[0] != 0xFF) {
+            if (g_replay_file_kind[0] != 0xFF) {
                 g_replay_inputs[(u32)g_replay_position] = reg_d0.b[0];
             } else {
                 g_replay_inputs[(u32)g_replay_position] = reg_d1.b[0];
@@ -645,7 +645,7 @@ extern u8 g_replay_buffer_state;
 extern u8 g_replay_mode_begun;
 extern u8 g_replay_file[48];
 extern u16 D_006C58A2[];
-extern u16 D_006C58A4[];
+extern u16 g_replay_file_kind[];
 extern u16 D_006C58A6[];
 extern u16 D_006C58A8[];
 extern u8 g_replay_snapshot[];
@@ -688,7 +688,7 @@ void replay_record_begin() {
     D_006CB580[0] = g_input_p2_pressed;
     D_006CB57E[0] = g_input_p2_held;
     D_006C58A2[0] = 0xFF;
-    D_006C58A4[0] = 0xFF;
+    g_replay_file_kind[0] = 0xFF;
     D_006C58A6[0] = 0xFF;
     D_006C58A8[0] = 0xFF;
     D_006CB582[0] = g_input_p2_previous;
@@ -827,7 +827,7 @@ void replay_playback_begin(void) {
     if (g_attract_demo == 0)
 #endif
     {
-        if (D_006C58A4[0] != 0xFF) {
+        if (g_replay_file_kind[0] != 0xFF) {
             g_p2_continue_count = 0;
             g_p1_continue_count = 9;
         } else {

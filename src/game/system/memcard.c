@@ -5434,7 +5434,7 @@ extern u16 D_006A0E86[];
 extern u16 replay_slot_info_fill_buffer[];
 extern u8 g_replay_file[48];
 extern u16 D_006C58A2[];
-extern u16 D_006C58A4[];
+extern u16 g_replay_file_kind[];
 extern u16 D_006C58A6[];
 extern u16 D_006C58A8[];
 extern u16 D_006C58AA[];
@@ -5464,7 +5464,7 @@ void replay_slot_info_fill(s32 slot) {
 
     off = slot * 512;
     D_006A0E52[off] = D_006C58A2[0];
-    D_006A0E54[off] = D_006C58A4[0];
+    D_006A0E54[off] = g_replay_file_kind[0];
     D_006A0E56[off] = D_006C58A6[0];
     D_006A0E58[off] = D_006C58A8[0];
     D_006A0E5A[off] = D_006C58AA[0];

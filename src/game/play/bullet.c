@@ -92,7 +92,7 @@ void bullet_target_player_get();
 extern u16 bullet_type_records[456];
 extern u8 D_0024F0F0[];
 extern u8 D_00262570[];
-extern u32 D_0028DEA4;
+extern u32 g_bullet_spawn_saved_d7;
 extern u16 g_frame_mod2;
 extern u16 g_boss_present_as_u16;
 extern u16 g_enemy_signal_2;
@@ -105,7 +105,7 @@ extern u16 D_00299762[];
 extern s16 g_bullet_limit_raised_1[];
 extern s16 g_bullet_limit_raised_2[];
 extern u16 g_bullet_limit_raised_3[];
-extern u16 D_0029976E[];
+extern u16 g_bullets_clear_request[];
 extern u8 *D_00299770[];
 extern u16 g_side_scroll_step[];
 extern u16 g_bomb_entities[24];
@@ -232,7 +232,7 @@ void bullets_update_loop(void) {
             reg_d7.h[0] = MAIN_OR_DEATH_LABEL(0x9F, 0x31F);
             if (g_bullet_limit_raised_3[0] != 0) {
                 reg_d7.h[0] = MAIN_OR_DEATH_LABEL(0xBD, 0x3B5);
-                if (D_0029976E[0] != 0) {
+                if (g_bullets_clear_request[0] != 0) {
                     reg_d7.h[0] = MAIN_OR_DEATH_LABEL(0xD1, 0x419);
                 }
             }
@@ -246,9 +246,9 @@ L_bom_bui:
         goto block_12;
     }
     reg_d0.w = 0;
-    D_0028DEA4 = reg_d7.w;
+    g_bullet_spawn_saved_d7 = reg_d7.w;
     MAIN_OR_DEATH_LABEL(pickup_spawn_here, bullet_cancel_to_pickup)();
-    reg_d7.w = D_0028DEA4;
+    reg_d7.w = g_bullet_spawn_saved_d7;
     bullet_slot_reset();
 
 block_9:
@@ -504,9 +504,9 @@ block_33:
     if (ENTITY(reg_a6)->hit_x_minus.h == 0) {
         reg_d0.h[0] = *(u16 *)(reg_a6 + 0x3C);
         if ((s16)reg_d0.h[0] >= 0) {
-            D_0028DEA4 = reg_d7.w;
+            g_bullet_spawn_saved_d7 = reg_d7.w;
             MAIN_OR_DEATH_LABEL(pickup_spawn_here, bullet_cancel_to_pickup)();
-            reg_d7.w = D_0028DEA4;
+            reg_d7.w = g_bullet_spawn_saved_d7;
         }
         bullet_slot_reset();
     }

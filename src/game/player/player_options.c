@@ -1046,8 +1046,8 @@ extern u16 option_strong_sprites_b_tables[2];
 extern u16 g_p2_laser_stop_y;
 extern u16 g_p1_laser_stop_y;
 extern u8 D_0029D730[];
-extern u8 D_0029D750[];
-extern u8 D_0029D770[];
+extern u8 g_p2_laser_segments[];
+extern u8 g_p1_laser_segments[];
 extern u8 g_p2_laser_entities[];
 extern u8 g_p1_laser_entities[];
 
@@ -1062,13 +1062,13 @@ void options_laser_fire(void) {
     reg_a0 = (u8 *)&g_p1_laser_stop_y;
     reg_a1 = (u8 *)g_p1_laser_entities;
     reg_a2 = (u8 *)D_0029D730;
-    reg_a3 = (u8 *)D_0029D770;
+    reg_a3 = (u8 *)g_p1_laser_segments;
     reg_d4.h[0] = PLAYER(((s32 *)g_player1))->moved_y.h;
     if (reg_d7.h[0] != 0) goto next_10;
     reg_a0 = (u8 *)&g_p2_laser_stop_y;
     reg_a1 = (u8 *)g_p2_laser_entities;
     reg_a2 = (u8 *)D_0029D710;
-    reg_a3 = (u8 *)D_0029D750;
+    reg_a3 = (u8 *)g_p2_laser_segments;
     reg_d4.h[0] = PLAYER(((u8 *)g_player2))->moved_y.h;
 next_10:
     reg_d4.h[0] += 0x300;
