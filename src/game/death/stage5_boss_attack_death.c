@@ -949,7 +949,15 @@ void twin_boss_fire_jet_start(void) {
 }
 
 s32 stage5_boss_fire_form2_jet_start();
-extern u8 death_D_00269860[];
+/* Where each of a jet's six shots leaves it, as y and x from the boss. */
+s16 twin_boss_jet_muzzles[6][2] = {
+    { 0x80, -0x4E0 },
+    { -0x4C0, -0x4E0 },
+    { -0x9C0, -0x4E0 },
+    { -0x100, 0x4A0 },
+    { -0x580, 0x4A0 },
+    { -0xA40, 0x4A0 },
+};
 
 void twin_boss_fire_jet(void) {
     s16 *temp_v1;
@@ -992,7 +1000,7 @@ block_8:
             reg_d0.h[0] = JET(reg_a4)->speed;
             reg_d2.h[1] = ENTITY(reg_a6)->y.h;
             reg_d2.h[0] = ENTITY(reg_a6)->x.h;
-            reg_a3 = (u8 *)death_D_00269860;
+            reg_a3 = (u8 *)twin_boss_jet_muzzles;
             reg_d4.h[0] = JET(reg_a4)->muzzle;
             reg_a3 += reg_d4.h[0];
             reg_d3.h[1] = *(u16 *)reg_a3;

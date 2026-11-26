@@ -299,7 +299,7 @@ segments:
       - [0x16b110, .data, game/test/item_test_data]
       - [0x16b1f0, .data, game/stage/stage_clear_objects]
       - [0x16b290, .data, game/stage/stage_clear_colors_data]
-      - [0x16b320, .data, game/player/player_panel_data]
+      - [0x16b320, .data, game/player/player_panel]
       - [0x16b3f0, .data, game/frontend/ranking]
       - [0x16b6c0, .data, game/play/hud]
       - [0x16b918, .data, game/play/score_add]

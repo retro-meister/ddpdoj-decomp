@@ -277,7 +277,43 @@ void func_001A36E0(void) {
 
 typedef void (*Fn)();
 
-extern u8 D_0026B2A0[];
+void func_001A37F0();
+void func_001A3830();
+void func_001A39B0();
+void func_001A3BA0();
+
+void (*player_panel_steps[4])() = {
+    func_001A37F0,
+    func_001A3830,
+    func_001A39B0,
+    func_001A3BA0,
+};
+
+/* Cells of the panel texts, one per frame: tile in the high word, palette in the low word. */
+u32 player_panel_step1_frames[16] = {
+    (0x06EF << 16) | 0x16, (0x0707 << 16) | 0x16, (0x071F << 16) | 0x16, (0x0737 << 16) | 0x16,
+    (0x074F << 16) | 0x16, (0x0767 << 16) | 0x16, (0x077F << 16) | 0x16, (0x0797 << 16) | 0x16,
+    (0x07AF << 16) | 0x16, (0x0797 << 16) | 0x16, (0x077F << 16) | 0x16, (0x0767 << 16) | 0x16,
+    (0x074F << 16) | 0x16, (0x0737 << 16) | 0x16, (0x071F << 16) | 0x16, (0x0707 << 16) | 0x16,
+};
+
+u32 player_panel_step2_frames_p1[8] = {
+    (0x067F << 16) | 0x0E, (0x0686 << 16) | 0x0E, (0x068D << 16) | 0x0E, (0x0694 << 16) | 0x0E,
+    (0x069B << 16) | 0x0E, (0x06A2 << 16) | 0x0E, (0x06A9 << 16) | 0x0E, (0x06B0 << 16) | 0x0E,
+};
+
+u32 player_panel_step2_frames_p2[8] = {
+    (0x06B7 << 16) | 0x10, (0x06BE << 16) | 0x10, (0x06C5 << 16) | 0x10, (0x06CC << 16) | 0x10,
+    (0x06D3 << 16) | 0x10, (0x06DA << 16) | 0x10, (0x06E1 << 16) | 0x10, (0x06E8 << 16) | 0x10,
+};
+
+u32 player_panel_step3_frames[16] = {
+    (0x066B << 16) | 0x0C, (0x066B << 16) | 0x0C, (0x066B << 16) | 0x0C, (0x066B << 16) | 0x0C,
+    (0x066B << 16) | 0x0C, (0x066B << 16) | 0x0C, (0x066B << 16) | 0x0C, (0x066B << 16) | 0x0C,
+    (0x066B << 16) | 0x0C, (0x066B << 16) | 0x0C, (0x0657 << 16) | 0x0C, (0x0657 << 16) | 0x0C,
+    (0x0643 << 16) | 0x0C, (0x0643 << 16) | 0x0C, (0x062F << 16) | 0x0C, (0x062F << 16) | 0x0C,
+};
+
 
 void func_001A3730(void) {
     if (*(u8 *)(reg_a5 + 3) == 0) {
@@ -294,7 +330,7 @@ void func_001A3730(void) {
             *(u16 *)(reg_a5 + 4) = (u16) reg_d0.h[0];
         }
     }
-    reg_a0 = (u8 *)D_0026B2A0;
+    reg_a0 = (u8 *)player_panel_steps;
     reg_a0 += *(u16 *)(reg_a5 + 4);
     reg_call_target = *(Fn *)reg_a0;
     reg_call_target();
@@ -310,7 +346,6 @@ void func_001A37F0() {
 }
 
 s32 deferred_text_put();
-extern u32 D_0026B2B0[];
 
 void func_001A3830(s32 arg3) {
     s32 var_a3;
@@ -346,7 +381,7 @@ void func_001A3830(s32 arg3) {
     }
     if (*(u8 *)(reg_a5 + 7) != 0) {
         *(u8 *)(reg_a5 + 7) = 0U;
-        reg_a0 = (u8 *)(D_0026B2B0);
+        reg_a0 = (u8 *)(player_panel_step1_frames);
         temp_a1 = *(u16 *)(reg_a5 + 0xC);
         reg_a0 += temp_a1;
         reg_d4.w = *(u32 *)reg_a0;
@@ -361,8 +396,6 @@ void func_001A3830(s32 arg3) {
 
 s32 func_001AB7F0();
 s32 func_001AB860();
-extern u8 D_0026B2F0[];
-extern u8 D_0026B310[];
 
 void func_001A39B0(s32 arg2, s32 arg3) {
     s32 var_a2;
@@ -390,14 +423,14 @@ void func_001A39B0(s32 arg2, s32 arg3) {
         reg_tmp.w = 0xDC0100;
         *(u16 *)(reg_a5 + 8) = (u16) reg_tmp.h[1];
         *(u16 *)(reg_a5 + 0xA) = (u16) reg_tmp.h[0];
-        reg_tmp.w = (u32) D_0026B2F0;
+        reg_tmp.w = (u32) player_panel_step2_frames_p1;
         *(u16 *)(reg_a5 + 0x10) = (u16) reg_tmp.h[1];
         *(u16 *)(reg_a5 + 0x12) = (u16) reg_tmp.h[0];
         switch (*(u8 *)(reg_a5 + 6)) { case 0: break; default:
             reg_tmp.w = 0xDC1200;
             *(u16 *)(reg_a5 + 8) = (u16) reg_tmp.h[1];
             *(u16 *)(reg_a5 + 0xA) = (u16) reg_tmp.h[0];
-            reg_tmp.w = (u32) D_0026B310;
+            reg_tmp.w = (u32) player_panel_step2_frames_p2;
             *(u16 *)(reg_a5 + 0x10) = (u16) reg_tmp.h[1];
             *(u16 *)(reg_a5 + 0x12) = (u16) reg_tmp.h[0];
         }
@@ -427,7 +460,6 @@ void func_001A39B0(s32 arg2, s32 arg3) {
     }
 }
 
-extern u32 D_0026B330[];
 
 void func_001A3BA0(s32 arg3) {
     s32 var_a3;
@@ -463,7 +495,7 @@ void func_001A3BA0(s32 arg3) {
     }
     if (*(u8 *)(reg_a5 + 7) != 0) {
         *(u8 *)(reg_a5 + 7) = 0U;
-        reg_a0 = (u8 *)(D_0026B330);
+        reg_a0 = (u8 *)(player_panel_step3_frames);
         temp_a1 = *(u16 *)(reg_a5 + 0xC);
         reg_a0 += temp_a1;
         reg_d4.w = *(u32 *)reg_a0;
