@@ -218,7 +218,7 @@ void startup_pointers_store_a(void) {
     STORE_ARCADE_ADDRESS(debug_table_views[0].table, D_00274040);
     STORE_ARCADE_ADDRESS(debug_table_views[1].table, D_00274840);
     STORE_ARCADE_ADDRESS(debug_table_views[2].table, D_00275040);
-    STORE_POINTER(D_0026A3F0 + 4, D_00261DF0);
+    STORE_ARCADE_ADDRESS(D_0026A3F0 + 4, D_00261DF0);
     STORE_ARCADE_ADDRESS(settings_notice_fade_palettes + 4, ((u16 *)settings_notice_fade_palettes_at_4));
     STORE_ARCADE_ADDRESS(settings_notice_fade_palettes + 11, ((u16 *)settings_notice_fade_palettes_at_11));
     STORE_ARCADE_ADDRESS(settings_notice_fade_palettes + 18, ((u16 *)settings_notice_fade_palettes_at_18));
