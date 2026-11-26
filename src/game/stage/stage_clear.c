@@ -610,8 +610,8 @@ extern s16 g_player1[];
 
 #ifdef DEATH_LABEL
 s32 func_00141640();
-s32 func_001A7E90();
-s32 func_001A8070();
+s32 p1_hyper_end();
+s32 p2_hyper_end();
 s32 func_0013FCA0();
 s32 func_0013FCE0();
 s32 p1_bomb_stock_draw();
@@ -968,12 +968,12 @@ next_499:
                     D_0028ED60_as_s8 = 1;
                     func_00141640();
                     if (g_player1[0] < 0) {
-                        func_001A7E90();
+                        p1_hyper_end();
                         func_0013FCA0();
                         p1_bomb_stock_draw();
                     }
                     if (g_player2[0] < 0) {
-                        func_001A8070();
+                        p2_hyper_end();
                         func_0013FCE0();
                         p2_bomb_stock_draw();
                     }
@@ -985,12 +985,12 @@ next_499:
                     *(u8 *)(reg_a5 + 7) = 0x16U;
                     func_00141640();
                     if (g_player1[0] < 0) {
-                        func_001A7E90();
+                        p1_hyper_end();
                         func_0013FCA0();
                         p1_bomb_stock_draw();
                     }
                     if (g_player2[0] < 0) {
-                        func_001A8070();
+                        p2_hyper_end();
                         func_0013FCE0();
                         p2_bomb_stock_draw();
                     }

@@ -25,7 +25,7 @@ s32 sprite_lists_reset();
 s32 sprite_lists_build();
 s32 func_001A2900();
 s32 text_palette_load();
-s32 func_001A53C0();
+s32 hud_setup();
 s32 func_001AD770();
 s32 func_001AE490();
 s32 func_00206C20();
@@ -116,7 +116,7 @@ void func_002120D0(void) {
     test_mode_init();
     settings_reset();
     func_00206C20();
-    func_001A53C0();
+    hud_setup();
     func_00131490();
     sound_unused();
     func_0020B690();

@@ -4,7 +4,7 @@
 void scroll_events_run_line(void);
 extern u16 g_side_scroll_step[];
 
-s32 func_001A5A80();
+s32 hud_update();
 s32 func_001AEA80();
 s32 task_stop_self();
 extern u8 g_game_frame_ran;
@@ -23,7 +23,7 @@ void score_task(void) {
     if (g_stage != 0) goto next_1;
     if (g_game_frame_ran == 0) return;
 next_1:
-    func_001A5A80();
+    hud_update();
     return;
 block_1:
     reg_a5[3] = 1;

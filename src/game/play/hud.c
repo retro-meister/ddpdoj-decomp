@@ -20,44 +20,44 @@ extern u8 g_player1_as_u8_a[];
 #include "player.h"
 extern u8 g_player2_as_u8_a[];
 
-void func_001A5AD0(void);
-void func_001A5B50(void);
-void func_001A5DD0(void);
-void func_001A6050(void);
-void func_001A6510(void);
-void func_001A6650(void);
-void func_001A68B0(void);
-void func_001A6B70(void);
-void func_001A6BE0(void);
-void func_001A6C60(void);
-void func_001A6E70(void);
-void func_001A7080(void);
-void func_001A7410(void);
-void func_001A7520(void);
-void func_001A77A0(void);
-void func_001A7840(void);
-void func_001A7B30(void);
-void func_001A7C60(void);
-void func_001A7D00(void);
-void func_001A7E90(void);
-void func_001A7EE0(void);
-void func_001A8070(void);
-void func_001A80C0(void);
-void func_001A80D0(void);
-void func_001A8510(void);
-void func_001A8520(void);
-void func_001A8970(void);
-void func_001A89E0(void);
-void sprite_draw_with_score_entry_2_d3_430_d4_9(void);
-void func_001A8A60(void);
-void func_001A8E00(void);
+void hud_update_playing(void);
+void hud_p1_panel(void);
+void hud_p2_panel(void);
+void hud_boss_bar_enter(void);
+void hud_boss_hits_update(void);
+void hud_boss_bar_leave(void);
+void hud_intro(void);
+void hud_p1_gauge_plate_draw(void);
+void hud_p2_gauge_plate_draw(void);
+void hud_lives_draw_boss_entering(void);
+void hud_lives_draw_boss_leaving(void);
+void hud_boss_hit_bonus(void);
+void boss_hits_take_on_button(void);
+void hud_hits_draw(void);
+void hud_hits_label_draw(void);
+void hud_boss_hits_draw(void);
+void hud_boss_hit_bonus_draw(void);
+void hud_combo_gauge_draw(void);
+void hud_p1_hyper_update(void);
+void p1_hyper_end(void);
+void hud_p2_hyper_update(void);
+void p2_hyper_end(void);
+void hud_p1_hyper_gauge_draw(void);
+void hud_p1_hyper_gauge_draw_at(void);
+void hud_p2_hyper_gauge_draw(void);
+void hud_p2_hyper_gauge_draw_at(void);
+void hyper_text_animate(void);
+void maximum_text_animate(void);
+void hud_text_sprite_draw(void);
+void hud_multiplier_text_put(void);
+void hud_max_hits_text_put(void);
 
-void func_001A53B0(void) {
+void hud_setup_nothing(void) {
 }
 
 
-void func_001A53C0(void) {
-    func_001A53B0();
+void hud_setup(void) {
+    hud_setup_nothing();
 }
 
 void sprite_draw_with_score(void);
@@ -76,7 +76,7 @@ void sprite_draw_with_score_keep_entry(void) {
     sprite_draw_with_score_keep();
 }
 
-void func_001A5400(void) {
+void hud_p1_counter_plate(void) {
     extern void deferred_text_put(void);
     reg_d0.h[0] = 0xD4;
     reg_d1.h[0] = 0x200;
@@ -86,7 +86,7 @@ void func_001A5400(void) {
     deferred_text_put();
 }
 
-void func_001A5430(void) {
+void hud_p2_counter_plate(void) {
     extern void deferred_text_put(void);
     reg_d0.h[0] = 0xD4;
     reg_d1.h[0] = 0x1400;
@@ -96,7 +96,7 @@ void func_001A5430(void) {
     deferred_text_put();
 }
 
-void func_001A5460(void) {
+void hud_p1_upper_plate(void) {
     extern void deferred_text_put(void);
     reg_d0.h[0] = 0xC8;
     reg_d1.h[0] = 0x200;
@@ -106,7 +106,7 @@ void func_001A5460(void) {
     deferred_text_put();
 }
 
-void func_001A5490(void) {
+void hud_p2_upper_plate(void) {
     void deferred_text_put(void);
     reg_d0.h[0] = 0xC8;
     reg_d1.h[0] = 0x1400;
@@ -119,7 +119,7 @@ void func_001A5490(void) {
 extern u16 g_p1_hyper_items;
 extern u16 g_p1_hyper_active;
 
-void func_001A54C0(void) {
+void hud_p1_ship_and_hyper_count_draw(void) {
     u32 save_d1;
 
     save_d1 = reg_d1.w;
@@ -156,7 +156,7 @@ next_1:
 extern u16 g_p2_hyper_items;
 extern u16 g_p2_hyper_active;
 
-void func_001A5600(void) {
+void hud_p2_ship_and_hyper_count_draw(void) {
     if ((s16)reg_d0.h[0] < 0) goto next_0;
     reg_d5.w = reg_d1.w;
     reg_d1.h[0] += 0xFF00;
@@ -188,7 +188,7 @@ next_1:
 }
 
 
-void func_001A5740(arg0)
+void hud_p1_lives_row_draw(arg0)
     u16 arg0;
 {
     s32 deferred_text_put();
@@ -213,7 +213,7 @@ void func_001A5740(arg0)
 }
 
 
-void func_001A5850(void) {
+void hud_p2_lives_row_draw(void) {
     extern void deferred_text_put(void);
     if ((s16)reg_d7.h[0] >= 0) {
         reg_d2.h[0] = 1;
@@ -234,30 +234,30 @@ void func_001A5850(void) {
 
 extern s16 g_p1_lives_as_s16;
 
-void func_001A5960(void) {
+void hud_p1_hyper_gauge_draw_boss(void) {
     if (g_p1_lives_as_s16 >= 0) {
         reg_d6.w = 0x12;
         reg_d6.h[0] -= 0x32;
         reg_d6.h[0] <<= 7;
-        func_001A80D0();
+        hud_p1_hyper_gauge_draw_at();
     }
 }
 
 extern s16 g_p2_lives_as_s16;
 
-void func_001A59B0(void) {
+void hud_p2_hyper_gauge_draw_boss(void) {
     if (g_p2_lives_as_s16 >= 0) {
         reg_d6.w = 0x12;
         reg_d6.h[0] -= 0x32;
         reg_d6.h[0] <<= 7;
-        func_001A8520();
+        hud_p2_hyper_gauge_draw_at();
     }
 }
 
 extern u16 g_boss_hits;
 extern u16 g_boss_hit_carry;
 
-void func_001A5A00(void) {
+void boss_hits_take_carry(void) {
     if (g_boss_hit_carry != 0) {
         g_boss_hit_carry -= 1;
         g_boss_hits += 1;
@@ -278,32 +278,32 @@ void func_001A5A00(void) {
 
 extern u16 g_score_panel_intro;
 
-void func_001A5A80(void) {
-    func_001A89E0();
-    func_001A8970();
+void hud_update(void) {
+    maximum_text_animate();
+    hyper_text_animate();
     if (g_score_panel_intro != 0) {
-        func_001A68B0();
+        hud_intro();
         return;
     }
-    func_001A5AD0();
+    hud_update_playing();
 }
 
 extern u8 g_boss_present;
 extern u8 D_0028E961;
 
-void func_001A5AD0(void) {
-    func_001A7D00();
-    func_001A7EE0();
-    func_001A5A00();
+void hud_update_playing(void) {
+    hud_p1_hyper_update();
+    hud_p2_hyper_update();
+    boss_hits_take_carry();
     if (g_boss_present & 1) {
-        func_001A6050();
+        hud_boss_bar_enter();
         return;
     }
     if (D_0028E961 & 8) {
-        func_001A6050();
+        hud_boss_bar_enter();
         return;
     }
-    func_001A5B50();
+    hud_p1_panel();
 }
 
 extern u16 g_p1_maximum_level;
@@ -324,22 +324,22 @@ extern u32 g_hyper_text_anim_sprite_as_u32;
 extern u8 g_p1_score_panel_flags;
 extern u16 g_p1_maximum_count_digits[];
 extern u8 D_0029F261[];
-void func_001A5B50(void) {
+void hud_p1_panel(void) {
     if (g_p1_lives_as_s16 < 0) {
-        func_001A5DD0();
+        hud_p2_panel();
         return;
     }
-    func_001A80C0();
+    hud_p1_hyper_gauge_draw();
     if (!(g_boss_present & 1) || (g_boss_hp_bar_flags < 0)) {
         if (g_p1_hyper_active != 0) {
             if (!(g_p1_score_panel_flags & 1)) {
                 g_p1_score_panel_flags |= 1;
-                func_001A5400();
-                func_001A5460();
+                hud_p1_counter_plate();
+                hud_p1_upper_plate();
             }
             reg_d1.w = 0x64C00400;
             reg_d2.w = g_hyper_text_anim_sprite_as_u32;
-            sprite_draw_with_score_entry_2_d3_430_d4_9();
+            hud_text_sprite_draw();
         } else {
             g_p1_score_panel_flags &= 0xFE;
             if (g_game_frame & 0x40) {
@@ -347,15 +347,15 @@ void func_001A5B50(void) {
                     reg_d0.w = 0x3F;
                     reg_d0.h[0] &= g_game_frame;
                     if ((s32) reg_d0.h[0] < 0x14) {
-                        func_001A5400();
+                        hud_p1_counter_plate();
                         reg_d1.w = 0x64C00400;
                         reg_d2.w = g_maximum_text_anim_sprite_as_u32;
-                        sprite_draw_with_score_entry_2_d3_430_d4_9();
+                        hud_text_sprite_draw();
                     } else {
                         reg_d0.h[0] = 0xD4;
                         reg_d1.h[0] = 0x200;
                         reg_d5.h[0] = g_p1_maximum_level;
-                        func_001A8A60();
+                        hud_multiplier_text_put();
                     }
                 } else {
                     goto block_15;
@@ -365,7 +365,7 @@ block_15:
                 reg_d0.h[0] = 0xD4;
                 reg_d1.h[0] = 0x200;
                 reg_d6.h[0] = g_p1_max_hits;
-                func_001A8E00();
+                hud_max_hits_text_put();
             }
         }
     }
@@ -387,7 +387,7 @@ block_15:
             g_p1_hit10_color_timer -= 1;
         }
         reg_d4.h[0] = 7;
-        func_001A7520();
+        hud_hits_draw();
     }
     reg_d6.h[0] = g_p1_combo_timer;
     if (g_p1_combo_timer != 0) {
@@ -409,10 +409,10 @@ block_26:
 block_29:
             reg_d1.w = 0x5BC00000;
             reg_d4.h[0] = 9;
-            func_001A7C60();
+            hud_combo_gauge_draw();
         }
     }
-    func_001A5DD0();
+    hud_p2_panel();
 }
 
 extern u16 g_p2_maximum_level;
@@ -429,22 +429,22 @@ extern u32 g_p2_chain_first_score_as_u32;
 extern u8 g_p2_score_panel_flags;
 extern u16 g_p2_maximum_count_digits[];
 extern u8 D_0029F1F1[];
-void func_001A5DD0(void) {
+void hud_p2_panel(void) {
     if (g_p2_lives_as_s16 < 0) {
-        func_001A6510();
+        hud_boss_hits_update();
         return;
     }
-    func_001A8510();
+    hud_p2_hyper_gauge_draw();
     if (!(g_boss_present & 1) || (g_boss_hp_bar_flags < 0)) {
         if (g_p2_hyper_active != 0) {
             if (!(g_p2_score_panel_flags & 1)) {
                 g_p2_score_panel_flags |= 1;
-                func_001A5430();
-                func_001A5490();
+                hud_p2_counter_plate();
+                hud_p2_upper_plate();
             }
             reg_d1.w = 0x64C02800;
             reg_d2.w = g_hyper_text_anim_sprite_as_u32;
-            sprite_draw_with_score_entry_2_d3_430_d4_9();
+            hud_text_sprite_draw();
         } else {
             g_p2_score_panel_flags &= 0xFE;
             if (g_game_frame & 0x40) {
@@ -452,15 +452,15 @@ void func_001A5DD0(void) {
                     reg_d0.w = 0x3F;
                     reg_d0.h[0] &= g_game_frame;
                     if ((s32) reg_d0.h[0] < 0x2C) {
-                        func_001A5430();
+                        hud_p2_counter_plate();
                         reg_d1.w = 0x64C02800;
                         reg_d2.w = g_maximum_text_anim_sprite_as_u32;
-                        sprite_draw_with_score_entry_2_d3_430_d4_9();
+                        hud_text_sprite_draw();
                     } else {
                         reg_d0.h[0] = 0xD4;
                         reg_d1.h[0] = 0x1400;
                         reg_d5.h[0] = g_p2_maximum_level;
-                        func_001A8A60();
+                        hud_multiplier_text_put();
                     }
                 } else {
                     goto block_15;
@@ -470,7 +470,7 @@ block_15:
                 reg_d0.h[0] = 0xD4;
                 reg_d1.h[0] = 0x1400;
                 reg_d6.h[0] = g_p2_max_hits;
-                func_001A8E00();
+                hud_max_hits_text_put();
             }
         }
     }
@@ -492,7 +492,7 @@ block_15:
             g_p2_hit10_color_timer -= 1;
         }
         reg_d4.h[0] = 8;
-        func_001A7520();
+        hud_hits_draw();
     }
     reg_d6.h[0] = g_p2_combo_timer;
     if (g_p2_combo_timer != 0) {
@@ -514,10 +514,10 @@ block_26:
 block_29:
             reg_d1.w = 0x5BC03400;
             reg_d4.h[0] = 0x4009;
-            func_001A7C60();
+            hud_combo_gauge_draw();
         }
     }
-    func_001A6510();
+    hud_boss_hits_update();
 }
 
 s32 voice_hyper();
@@ -538,13 +538,13 @@ extern u16 g_loop;
 extern u16 g_stage;
 extern u16 g_bomb_entities[];
 
-void func_001A6050(void) {
+void hud_boss_bar_enter(void) {
     s32 deferred_text_put();
     s32 flag;
     s32 bits;
 
     if (g_boss_present_b1 & 8) {
-        func_001A6650();
+        hud_boss_bar_leave();
         return;
     }
     flag = D_0028E635;
@@ -586,17 +586,17 @@ next_40:
     reg_d6.h[0] = g_boss_hp_bar_move_count;
     reg_d6.h[0] -= 0x32;
     reg_d6.h[0] <<= 7;
-    func_001A6B70();
-    func_001A6BE0();
-    func_001A6C60();
+    hud_p1_gauge_plate_draw();
+    hud_p2_gauge_plate_draw();
+    hud_lives_draw_boss_entering();
     g_boss_hp_bar_move_count -= 1;
     if (g_boss_hp_bar_move_count != 0x11) {
-        func_001A6510();
+        hud_boss_hits_update();
         return;
     }
     D_0028E635 |= 8;
     g_boss_hp_bar_move_count = 0x38;
-    func_001A6510();
+    hud_boss_hits_update();
     return;
 next_80:
     reg_d1.h[0] = 0x67C0;
@@ -615,14 +615,14 @@ next_80:
     sprite_draw_with_score_entry();
     reg_d7.h[0] = 0xE00;
     reg_d7.h[0] -= reg_d6.h[0];
-    func_001A5960();
-    func_001A59B0();
-    func_001A6C60();
-    func_001A6510();
+    hud_p1_hyper_gauge_draw_boss();
+    hud_p2_hyper_gauge_draw_boss();
+    hud_lives_draw_boss_entering();
+    hud_boss_hits_update();
     return;
 next_100:
     D_0028E635 = flag | 0x10;
-    func_001A6C60();
+    hud_lives_draw_boss_entering();
     g_boss_hp_bar_move_count = 0xFFE2;
     reg_d0.h[0] = 0xD4;
     reg_d1.h[0] = 0;
@@ -631,17 +631,17 @@ next_100:
     reg_d4.w = 0x03B6000A;
     deferred_text_put();
     reg_d7.h[0] = 0xE00;
-    func_001A5960();
-    func_001A59B0();
-    func_001A6510();
+    hud_p1_hyper_gauge_draw_boss();
+    hud_p2_hyper_gauge_draw_boss();
+    hud_boss_hits_update();
     return;
 next_120:
     reg_d7.h[0] = 0xE00;
-    func_001A5960();
-    func_001A59B0();
+    hud_p1_hyper_gauge_draw_boss();
+    hud_p2_hyper_gauge_draw_boss();
     g_boss_hp_bar_move_count += 1;
     if ((s16) g_boss_hp_bar_move_count < 0) {
-        func_001A6510();
+        hud_boss_hits_update();
         return;
     }
     reg_d1.w = 0x67C00000;
@@ -657,14 +657,14 @@ loop_140:
     goto next_180;
 next_160:
     reg_d7.h[0] = 0xE00;
-    func_001A5960();
-    func_001A59B0();
+    hud_p1_hyper_gauge_draw_boss();
+    hud_p2_hyper_gauge_draw_boss();
 next_180:
     reg_a0 = (u8 *)g_boss_hp;
     reg_d7.h[1] = *(u16 *) (reg_a0 + 0);
     reg_d7.h[0] = *(u16 *) (reg_a0 + 2);
     if ((s32) reg_d7.w < 0) {
-        func_001A6510();
+        hud_boss_hits_update();
         return;
     }
     reg_d4.h[0] = 9;
@@ -694,11 +694,11 @@ loop_260:
     }
 next_280:
     if (reg_d3.h[0] == 0x200) {
-        func_001A6510();
+        hud_boss_hits_update();
         return;
     }
     sprite_draw_with_score_entry();
-    func_001A6510();
+    hud_boss_hits_update();
 }
 
 s32 func_001AC320();
@@ -708,7 +708,7 @@ extern u16 g_boss_hit_decay_timer;
 extern s16 g_two_player_state_as_s16;
 extern u16 g_two_player_game;
 
-void func_001A6510(void) {
+void hud_boss_hits_update(void) {
     u32 flags;
     u32 hit;
 
@@ -745,14 +745,14 @@ next_4:
     g_boss_hit_palette = 7;
     g_boss_hit_decay_timer = 0;
 next_5:
-    func_001A7840();
+    hud_boss_hits_draw();
     goto next_7;
 next_6:
     g_boss_hits = 0;
     g_boss_hit_decay_timer = 0;
 next_7:
     if (g_boss_present_b1 & 8) {
-        func_001A7080();
+        hud_boss_hit_bonus();
     }
 }
 
@@ -766,12 +766,12 @@ extern s16 g_p2_chain_points_display_timer;
 extern s16 g_p1_hit10_display_timer;
 extern s16 g_p1_chain_points_display_timer;
 
-void func_001A6650(void) {
+void hud_boss_bar_leave(void) {
     u8 flags;
 
     flags = g_boss_hp_bar_flags_as_u8;
     if ((s8)flags >= 0) goto next_0;
-    func_001A5B50();
+    hud_p1_panel();
     return;
 next_0:
     if (flags & 8) goto next_5;
@@ -797,7 +797,7 @@ next_0:
 next_1:
     g_boss_hp_bar_flags_as_u8 &= 0xFE;
 next_2:
-    func_001A6E70();
+    hud_lives_draw_boss_leaving();
     reg_d1.h[0] = 0x75C0;
     reg_d2.w = 0xCA2;
     reg_d3.h[0] = 0x2E0;
@@ -810,16 +810,16 @@ next_2:
     reg_d1.h[0] = 0;
     sprite_draw_with_score_entry();
     reg_d7.h[0] = reg_d6.h[0];
-    func_001A5960();
-    func_001A59B0();
+    hud_p1_hyper_gauge_draw_boss();
+    hud_p2_hyper_gauge_draw_boss();
     g_boss_hp_bar_move_count -= 1;
     if (g_boss_hp_bar_move_count != 0) {
-        func_001A6510();
+        hud_boss_hits_update();
         return;
     }
     g_boss_hp_bar_flags_as_u8 |= 8;
     g_boss_hp_bar_move_count = 0x41;
-    func_001A6510();
+    hud_boss_hits_update();
     return;
 next_5:
     if (g_boss_hits == 0) goto next_7;
@@ -830,28 +830,28 @@ next_5:
     reg_d6.h[0] <<= 6;
     reg_d6.h[0] *= 0xFFFF;
 next_6:
-    func_001A6B70();
-    func_001A6BE0();
-    func_001A6E70();
-    func_001A6510();
+    hud_p1_gauge_plate_draw();
+    hud_p2_gauge_plate_draw();
+    hud_lives_draw_boss_leaving();
+    hud_boss_hits_update();
     return;
 next_7:
     g_boss_hp_bar_flags_as_u8 |= 0x80;
     g_p1_chain_points_display_timer = 0;
     g_p2_chain_points_display_timer = 0;
     g_p1_hit10_display_timer = 0;
-    func_001A6E70();
+    hud_lives_draw_boss_leaving();
     if (g_p1_lives_as_s16 < 0) goto next_8;
     func_001AC950();
-    func_001A5400();
+    hud_p1_counter_plate();
 next_8:
     if (g_p2_lives_as_s16 < 0) {
-        func_001A6510();
+        hud_boss_hits_update();
         return;
     }
     func_001AC9D0();
-    func_001A5430();
-    func_001A6510();
+    hud_p2_counter_plate();
+    hud_boss_hits_update();
 }
 
 s32 func_001AA8F0();
@@ -862,7 +862,7 @@ extern s16 g_score_panel_intro_as_s16;
 extern u16 g_p2_lives;
 extern u16 g_p1_lives;
 
-void func_001A68B0(void) {
+void hud_intro(void) {
     if (!(g_boss_present & 1)) goto next_2;
     if ((s16)g_p1_lives < 0) goto next_0;
     func_001AA8F0();
@@ -873,7 +873,7 @@ next_0:
     func_001AC5F0();
 next_1:
     g_score_panel_intro_as_s16 = 0;
-    func_001A5AD0();
+    hud_update_playing();
     return;
 next_2:
     if (g_boss_hp_bar_move_count == 0) goto next_7;
@@ -893,8 +893,8 @@ next_3:
     reg_d1.w = 0x5DC00500;
     reg_d1.h[0] += reg_d6.h[0];
     reg_d3.h[0] = 0x208;
-    func_001A54C0();
-    func_001A6B70();
+    hud_p1_ship_and_hyper_count_draw();
+    hud_p1_gauge_plate_draw();
 next_4:
     reg_d0.h[0] = g_p2_lives;
     if ((s16)g_p2_lives < 0) goto next_6;
@@ -908,8 +908,8 @@ next_5:
     reg_d1.w = 0x5DC03300;
     reg_d1.h[0] -= reg_d6.h[0];
     reg_d3.h[0] = 0x208;
-    func_001A5600();
-    func_001A6BE0();
+    hud_p2_ship_and_hyper_count_draw();
+    hud_p2_gauge_plate_draw();
 next_6:
     return;
 next_7:
@@ -924,11 +924,11 @@ next_7:
 next_8:
     reg_d0.h[0] = 0xBC;
     reg_d1.h[0] = 0x200;
-    func_001A5740();
+    hud_p1_lives_row_draw();
 next_9:
     func_001AA8F0();
     func_001AC950();
-    func_001A5400();
+    hud_p1_counter_plate();
 next_10:
     reg_d7.h[0] = g_p2_lives;
     if ((s16)g_p2_lives < 0) goto next_13;
@@ -941,11 +941,11 @@ next_10:
 next_11:
     reg_d0.h[0] = 0xBC;
     reg_d1.h[0] = 0x1900;
-    func_001A5850();
+    hud_p2_lives_row_draw();
 next_12:
     func_001AAA20();
     func_001AC9D0();
-    func_001A5430();
+    hud_p2_counter_plate();
 next_13:
     g_score_panel_intro_as_s16 = 0;
 }
@@ -954,7 +954,7 @@ next_13:
 #pragma opt_propagation off
 
 
-void func_001A6B70(void)
+void hud_p1_gauge_plate_draw(void)
 {
     if (g_p1_lives_as_s16 >= 0) {
         u16 offset = reg_d6.h[0];
@@ -971,13 +971,13 @@ void func_001A6B70(void)
         reg_d1.h[0] += offset;
         sprite_draw_with_score_entry(savedRegister);
         reg_d7.w = 0;
-        func_001A80D0();
+        hud_p1_hyper_gauge_draw_at();
     }
 }
 #pragma pop
 
 
-void func_001A6BE0(void) {
+void hud_p2_gauge_plate_draw(void) {
     if (g_p2_lives_as_s16 >= 0) {
         u32 savedRegister;
         u16 savedLow;
@@ -994,11 +994,11 @@ void func_001A6BE0(void) {
         reg_d1.h[0] -= reg_d6.h[0];
         sprite_draw_with_score_entry();
         reg_d7.w = 0;
-        func_001A8520();
+        hud_p2_hyper_gauge_draw_at();
     }
 }
 
-void func_001A6C60(void) {
+void hud_lives_draw_boss_entering(void) {
     reg_d1.h[0] = 0x5F80;
     reg_d6.h[0] = g_lives_display_move_x;
     reg_d6.h[0] <<= 7;
@@ -1028,11 +1028,11 @@ void func_001A6C60(void) {
         reg_d7.h[0] = reg_d0.h[0];
         reg_d3.h[0] = 0x208;
         reg_d1.h[0] += reg_d6.h[0];
-        func_001A54C0();
+        hud_p1_ship_and_hyper_count_draw();
         if (D_0028E635 & 0x10) {
             reg_d1.h[0] = 0;
             reg_d0.h[0] = 0xC0;
-            func_001A5740();
+            hud_p1_lives_row_draw();
             func_001AA8F0();
         }
     }
@@ -1050,11 +1050,11 @@ void func_001A6C60(void) {
         reg_d7.h[0] = reg_d0.h[0];
         reg_d3.h[0] = 0x208;
         reg_d1.h[0] -= reg_d6.h[0];
-        func_001A5600();
+        hud_p2_ship_and_hyper_count_draw();
         if (D_0028E635 & 0x10) {
             reg_d0.h[0] = 0xC0;
             reg_d1.h[0] = 0x1B00;
-            func_001A5850();
+            hud_p2_lives_row_draw();
             func_001AAA20();
         }
     }
@@ -1064,7 +1064,7 @@ void func_001A6C60(void) {
     }
 }
 
-void func_001A6E70(void) {
+void hud_lives_draw_boss_leaving(void) {
     reg_d1.h[0] = 0x5DC0;
     reg_d0.h[0] = g_lives_display_move_y;
     reg_d0.h[0] <<= 6;
@@ -1094,11 +1094,11 @@ void func_001A6E70(void) {
         reg_d7.h[0] = reg_d0.h[0];
         reg_d3.h[0] = 0x208;
         reg_d1.h[0] -= reg_d6.h[0];
-        func_001A54C0();
+        hud_p1_ship_and_hyper_count_draw();
         if ((s8) g_boss_hp_bar_flags_as_u8 < 0) {
             reg_d0.h[0] = 0xBC;
             reg_d1.h[0] = 0x200;
-            func_001A5740();
+            hud_p1_lives_row_draw();
             func_001AA8F0();
         }
     }
@@ -1116,11 +1116,11 @@ void func_001A6E70(void) {
         reg_d7.h[0] = reg_d0.h[0];
         reg_d3.h[0] = 0x208;
         reg_d1.h[0] += reg_d6.h[0];
-        func_001A5600();
+        hud_p2_ship_and_hyper_count_draw();
         if ((s8) g_boss_hp_bar_flags_as_u8 < 0) {
             reg_d0.h[0] = 0xBC;
             reg_d1.h[0] = 0x1900;
-            func_001A5850();
+            hud_p2_lives_row_draw();
             func_001AAA20();
         }
     }
@@ -1144,7 +1144,7 @@ extern u8 g_simulation_active;
 extern s16 g_player2[];
 extern s16 g_player1[];
 
-void func_001A7080(void) {
+void hud_boss_hit_bonus(void) {
     u8 flags;
     u8 *p;
 
@@ -1162,14 +1162,14 @@ void func_001A7080(void) {
     score_value_add();
 next_0:
     if (!(g_boss_present & 4)) {
-        func_001A7B30();
+        hud_boss_hit_bonus_draw();
         return;
     }
     if (g_boss_present & 2) {
-        func_001A7B30();
+        hud_boss_hit_bonus_draw();
         return;
     }
-    func_001A7410();
+    boss_hits_take_on_button();
     if (cond_flag != 0) goto next_6;
     g_boss_hit_bonus_timer -= 1;
     if ((s16)g_boss_hit_bonus_timer >= 0) goto next_9;
@@ -1222,7 +1222,7 @@ next_12:
     g_boss_hits = reg_d0.h[0];
     g_boss_hit_bonus_timer = reg_d0.h[0];
     g_boss_hit_bonus_as_u32 = reg_d0.w;
-    func_001A7B30();
+    hud_boss_hit_bonus_draw();
     return;
 next_10:
     g_boss_hit_bonus_timer = 8;
@@ -1251,11 +1251,11 @@ loop_0:
 next_9:
     if (g_boss_hits == 0) goto next_13;
     if ((s16)g_boss_hits < 0) goto next_13;
-    func_001A7B30();
+    hud_boss_hit_bonus_draw();
     return;
 next_13:
     if (g_boss_hit_bonus_timer == 8) goto next_14;
-    func_001A7B30();
+    hud_boss_hit_bonus_draw();
 next_14:
     reg_d1.w = g_boss_hit_bonus_as_u32;
     if (reg_d1.w == 0) goto next_15;
@@ -1271,14 +1271,14 @@ next_17:
     reg_d0.w = 0;
     g_boss_hit_bonus_as_u32 = reg_d0.w;
 next_15:
-    func_001A7B30();
+    hud_boss_hit_bonus_draw();
 }
 
 s32 input_get_p1_held();
 s32 input_get_p2_held();
 extern s8 g_menu_pad;
 extern u8 g_replay_mode;
-void func_001A7410(void) {
+void boss_hits_take_on_button(void) {
     u32 temp_s0;
     u32 temp_v1;
 
@@ -1321,7 +1321,7 @@ extern u8 D_00261C90[];
 extern u8 D_00261CD0[];
 extern u16 g_frame_mod2;
 
-void func_001A7520(void) {
+void hud_hits_draw(void) {
     u32 save_d0;
     u32 save_d6;
 
@@ -1392,11 +1392,11 @@ next_7:
     reg_d1.h[0] += 0x480;
 next_8:
     if ((s16)(reg_d7.h[0] -= 1) >= 0) goto loop_0;
-    func_001A77A0();
+    hud_hits_label_draw();
 }
 
 
-void func_001A77A0(void) {
+void hud_hits_label_draw(void) {
     reg_d1.h[0] += 0xFE00;
     reg_d1.h[1] = 0x4EC0;
     reg_d6.h[0] -= 0x17;
@@ -1419,7 +1419,7 @@ next_2:
 s32 func_00200EE0();
 extern u16 g_boss_hit_palette_as_u16;
 
-void func_001A7840(void) {
+void hud_boss_hits_draw(void) {
     u32 save_d6;
 
     reg_d0.h[0] = g_boss_hits;
@@ -1494,7 +1494,7 @@ next_6:
 
 s32 sprite_draw_layer2_keep();
 
-void func_001A7B30(void) {
+void hud_boss_hit_bonus_draw(void) {
     reg_d0.w = g_boss_hit_bonus_as_u32;
     reg_d1.w = 0x0E000C00;
     reg_d3.h[0] = 0x410;
@@ -1525,7 +1525,7 @@ next_1:
 }
 
 
-void func_001A7C60(void) {
+void hud_combo_gauge_draw(void) {
     reg_d2.h[0] = g_loop;
     reg_a0 = (u8 *) combo_gauge_levels_by_loop;
     reg_d2.h[0] += reg_d2.h[0];
@@ -1555,7 +1555,7 @@ extern u16 g_p1_hyper_time;
 extern u16 g_p1_hits;
 extern u16 g_max_combo_time;
 extern u8 D_0028EC4C;
-void func_001A7D00(void) {
+void hud_p1_hyper_update(void) {
     u32 temp_a0;
     u32 temp_v1;
 
@@ -1591,7 +1591,7 @@ void func_001A7D00(void) {
 block_9:
         func_001AB940();
         if (D_0029F261[0] & 1) {
-            func_001A7E90();
+            p1_hyper_end();
             return;
         }
         if (((s32) g_p1_hits >= 0x10) && (g_p1_combo_timer != 0)) {
@@ -1602,7 +1602,7 @@ block_9:
         if (!(g_boss_present_b1 & 0x40) && (g_select_screen_active == 0) && (D_0028EC4C == 0) && (g_game_frame_ran != 0)) {
             g_p1_hyper_time -= 2;
             if ((s16) g_p1_hyper_time < 0) {
-                func_001A7E90();
+                p1_hyper_end();
                 if (D_0028E288 == 0x78) {
                     D_0028E288 = 0xA;
                 }
@@ -1616,7 +1616,7 @@ s32 func_001AA8F0();                            /* extern */
 s32 func_001ABB80();                            /* extern */
 extern s16 g_p1_hyper_effect_frame_as_s16;
 
-void func_001A7E90(void) {
+void p1_hyper_end(void) {
     if (g_p1_hyper_active != 0) {
         g_p1_hyper_effect_frame_as_s16 = 0x48;
     }
@@ -1643,7 +1643,7 @@ extern u16 g_p2_hyper_total;
 extern u16 g_p2_hyper_time;
 extern u16 g_p2_hits;
 extern s16 g_p2_hit10_display_timer;
-void func_001A7EE0(void) {
+void hud_p2_hyper_update(void) {
     u32 temp_a0;
     u32 temp_v1;
 
@@ -1679,7 +1679,7 @@ void func_001A7EE0(void) {
 block_9:
         func_001ABA70();
         if (D_0029F1F1[0] & 1) {
-            func_001A8070();
+            p2_hyper_end();
             return;
         }
         if (((s32) g_p2_hits >= 0x10) && (g_p2_combo_timer != 0)) {
@@ -1690,7 +1690,7 @@ block_9:
         if (!(g_boss_present_b1 & 0x40) && (g_select_screen_active == 0) && (D_0028EC4C == 0) && (g_game_frame_ran != 0)) {
             g_p2_hyper_time -= 2;
             if ((s16) g_p2_hyper_time < 0) {
-                func_001A8070();
+                p2_hyper_end();
                 if (D_0028E284 == 0x78) {
                     D_0028E284 = 0xA;
                 }
@@ -1704,7 +1704,7 @@ s32 func_001AAA20();                            /* extern */
 s32 func_001ABD80();                            /* extern */
 extern s16 g_p2_hyper_effect_frame_as_s16;
 
-void func_001A8070(void) {
+void p2_hyper_end(void) {
     if (g_p2_hyper_active != 0) {
         g_p2_hyper_effect_frame_as_s16 = 0x48;
     }
@@ -1719,17 +1719,17 @@ void func_001A8070(void) {
 }
 
 
-void func_001A80C0(void) {
+void hud_p1_hyper_gauge_draw(void) {
     reg_d6.sw = 0;
     reg_d7.sw = 0;
-    func_001A80D0();
+    hud_p1_hyper_gauge_draw_at();
 }
 
 extern u16 g_boss_hyper_wait;
 extern u16 g_p1_hyper_items_pending;
 extern u16 g_p1_hyper_gauge;
 
-void func_001A80D0(void) {
+void hud_p1_hyper_gauge_draw_at(void) {
     u32 t1;
 
     switch (g_p1_hyper_active) {
@@ -1845,16 +1845,16 @@ next_5:
 }
 
 
-void func_001A8510(void) {
+void hud_p2_hyper_gauge_draw(void) {
     reg_d6.sw = 0;
     reg_d7.sw = 0;
-    func_001A8520();
+    hud_p2_hyper_gauge_draw_at();
 }
 
 extern u16 g_p2_hyper_items_pending;
 extern u16 g_p2_hyper_gauge;
 
-void func_001A8520(void) {
+void hud_p2_hyper_gauge_draw_at(void) {
     u32 t1;
 
     switch (g_p2_hyper_active) {
@@ -1974,7 +1974,7 @@ extern u16 g_hyper_text_anim_frame;
 extern u8 g_hyper_text_anim_delay_as_u8;
 extern u8 D_0028E705;
 
-void func_001A8970(void)
+void hyper_text_animate(void)
 {
     s32 tableEntry;
 
@@ -1994,7 +1994,7 @@ void func_001A8970(void)
 
 extern s32 g_maximum_text_anim_sprite;
 
-void func_001A89E0(void) {
+void maximum_text_animate(void) {
     reg_d0.w = 0x3F;
     reg_a0 = (u8 *)maximum_text_frames;
     reg_d0.h[0] &= g_game_frame;
@@ -2004,7 +2004,7 @@ void func_001A89E0(void) {
 }
 
 
-void sprite_draw_with_score_entry_2_d3_430_d4_9(void) {
+void hud_text_sprite_draw(void) {
     reg_d3.sh[0] = 0x430;
     reg_d4.sh[0] = 0x9;
     sprite_draw_with_score_entry_2();
@@ -2012,7 +2012,7 @@ void sprite_draw_with_score_entry_2_d3_430_d4_9(void) {
 
 s32 deferred_text_put_sheet();
 
-void func_001A8A60(void) {
+void hud_multiplier_text_put(void) {
     s32 deferred_text_put();
     u32 save_d5;
 
@@ -2074,7 +2074,7 @@ next_1:
 }
 
 
-void func_001A8E00(void) {
+void hud_max_hits_text_put(void) {
     s32 deferred_text_put();
     u32 temp_a1;
     u32 temp_v1_2;

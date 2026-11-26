@@ -1371,8 +1371,8 @@ void func_00141710(void) {
     reg_d7.w = sd7;
 }
 
-s32 func_001A7E90();
-s32 func_001A8070();
+s32 p1_hyper_end();
+s32 p2_hyper_end();
 extern s16 g_p2_hyper_items_as_s16;
 extern s16 g_p1_hyper_items_as_s16;
 #ifdef DEATH_LABEL
@@ -1424,7 +1424,7 @@ void func_001417D0(void) {
         g_p1_maximum_level_as_s16 = 0;
         g_p1_hyper_ready_sprite_as_u16 = reg_d0.h[1];
         g_p1_hyper_ready_sprite_lo = reg_d0.h[0];
-        func_001A7E90();
+        p1_hyper_end();
         func_0013FCA0();
     } else {
         g_p2_maximum_anim_delay_as_s16 = 2;
@@ -1434,7 +1434,7 @@ void func_001417D0(void) {
         g_p2_maximum_level_as_s16 = 0;
         g_p2_hyper_ready_sprite_as_u16 = reg_d0.h[1];
         g_p2_hyper_ready_sprite_lo = reg_d0.h[0];
-        func_001A8070();
+        p2_hyper_end();
         func_0013FCE0();
     }
     reg_d1.w = 0;
@@ -1971,7 +1971,7 @@ block_13:
                         reg_a4 = (u8 *)g_p1_maximum_value_as_u8_a;
                         reg_d0.h[0] = g_p1_combo_timer;
                         if (g_p1_hyper_active != 0) {
-                            func_001A7E90();
+                            p1_hyper_end();
                             reg_tmp.h[0] = g_p1_hyper_total;
                             g_p1_hyper_total -= 3;
                             if ((s32) reg_tmp.h[0] < 3) {
@@ -1988,7 +1988,7 @@ block_13:
                         reg_a4 = (u8 *)g_p2_maximum_value_as_u8_a;
                         reg_d0.h[0] = g_p2_combo_timer;
                         if (g_p2_hyper_active != 0) {
-                            func_001A8070();
+                            p2_hyper_end();
                             reg_tmp.h[0] = g_p2_hyper_total;
                             g_p2_hyper_total -= 3;
                             if ((s32) reg_tmp.h[0] < 3) {
@@ -2513,7 +2513,7 @@ void func_001440D0(void) {
         g_p1_maximum_anim_delay_as_s16 = 8;
         g_p1_maximum_anim_delay_reset_as_s16 = 8;
         g_p1_died_in_hyper = g_p1_hyper_active;
-        func_001A7E90();
+        p1_hyper_end();
         reg_d0.h[0] = g_p1_hyper_total;
         reg_d0.h[0] >>= 2;
         t1 = reg_d0.h[0];
@@ -2546,7 +2546,7 @@ void func_001440D0(void) {
         g_p2_maximum_anim_delay_as_s16 = 8;
         g_p2_maximum_anim_delay_reset_as_s16 = 8;
         g_p2_died_in_hyper = g_p2_hyper_active;
-        func_001A8070();
+        p2_hyper_end();
         reg_d0.h[0] = g_p2_hyper_total;
         reg_d0.h[0] >>= 2;
         t2 = reg_d0.h[0];

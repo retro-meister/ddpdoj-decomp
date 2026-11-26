@@ -11,8 +11,8 @@ void func_00123870(void);
 void func_0013FD20(void);
 void func_0013FD50(void);
 void func_00141640(void);
-void func_001A7E90(void);
-void func_001A8070(void);
+void p1_hyper_end(void);
+void p2_hyper_end(void);
 extern u8 D_0028C608[];
 extern u8 g_p2_loop2_extend_ok_as_u8;
 extern u8 g_p1_loop2_extend_ok_as_u8;
@@ -42,11 +42,11 @@ void func_00122CE0(void) {
 #endif
     if (g_loop != 0) goto block_1;
     if (g_p1_hyper_active != 0) {
-        func_001A7E90();
+        p1_hyper_end();
         func_0013FD20();
     }
     if (g_p2_hyper_active != 0) {
-        func_001A8070();
+        p2_hyper_end();
         func_0013FD50();
     }
     func_00141640();
