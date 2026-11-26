@@ -1250,9 +1250,9 @@ void func_00206520(void) {
     reg_a6 = save_a6;
 }
 
-s32 func_0012FFE0();
-s32 func_00130050();
-s32 func_001301B0();
+s32 credits_get();
+s32 coins_get();
+s32 p1_credits_get();
 s32 text_layer_put_hex_digit();
 extern u8 D_00251BC0[];
 extern u8 D_00251BE0[];
@@ -1266,7 +1266,7 @@ void func_00206690(void) {
     if (reg_d7.h[0] != 0) goto next_1;
     reg_a4 = (u8 *)D_0028C15C;
 next_1:
-    func_001301B0();
+    p1_credits_get();
     if (reg_d7.h[0] != 0) goto next_2;
     if (g_setting_chute_type != 1) goto next_2;
     reg_d0.h[0] = reg_d1.h[0];
@@ -1288,10 +1288,10 @@ block_6:
     return;
 block_7:
     if (reg_d7.h[0] != 0) goto next_8;
-    func_00130050();
+    coins_get();
     goto next_9;
 next_8:
-    func_0012FFE0();
+    credits_get();
 next_9:
     if (reg_d0.h[0] != 1) goto next_10;
     if (reg_d1.h[0] != 0) goto block_4;

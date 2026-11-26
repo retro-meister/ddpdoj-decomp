@@ -4075,7 +4075,7 @@ void menu_ranking_step1() {
     }
 }
 
-s32 func_0015BDD0();
+s32 settings_notice_graphics_load();
 s32 func_001A3E70();
 extern u8 D_0028E294;
 void menu_ranking_step2() {
@@ -4138,7 +4138,7 @@ void menu_ranking_step2() {
             D_0028EAEC = 0;
             D_0028EAF4 = 0;
             g_menu_ranking_step += 1;
-            func_0015BDD0();
+            settings_notice_graphics_load();
             sfx_menu_confirm();
             break;
         }
@@ -10717,7 +10717,7 @@ void task_stop_self_entry() {
 
 
 s32 frame_counters_reset();
-s32 func_00135110();
+s32 enemies_resume();
 s32 func_001719A0();
 s32 func_001719B0();
 s32 func_001719D0();
@@ -10829,7 +10829,7 @@ void func_0022C1F0() {
             g_pad_input_locked = 0;
             D_00684C94[0] += 1;
             g_loop = D_00684C8A[0];
-            func_00135110();
+            enemies_resume();
 #ifdef DEATH_LABEL
             fade_reset();
 #endif

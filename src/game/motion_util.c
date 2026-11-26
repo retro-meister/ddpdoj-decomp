@@ -153,8 +153,8 @@ void bullet_cancel_credit_alive(void) {
     bullets_cancel_sweep();
 }
 
-s32 func_001A9180();
-s32 func_001A9190();
+s32 score_add_p1();
+s32 score_add_p2();
 extern s32 reg_save_a4;
 extern s32 reg_save_a3;
 extern s32 reg_save_a0;
@@ -171,11 +171,11 @@ void bullets_cancel_sweep(void) {
         if ((s16) reg_d0.h[0] < 0) {
             if (reg_d1.h[0] & 0x10) {
                 reg_d0.w = 0x23;
-                func_001A9180();
+                score_add_p1();
             }
             if (reg_d1.h[0] & 8) {
                 reg_d0.w = 0x23;
-                func_001A9190();
+                score_add_p2();
             }
         }
         var_a0 = (u16 *)(reg_a2 + 0x40);

@@ -246,8 +246,8 @@ void func_00171A30(void) {
     func_00171820();
 }
 
-s32 func_001ABB80();
-s32 func_001ABD80();
+s32 p1_hyper_items_update();
+s32 p2_hyper_items_update();
 extern u8 D_0026B1C0[];
 extern u8 D_0026B1D0[];
 extern u8 D_0028DAC8[];
@@ -292,10 +292,10 @@ void func_00171B90(void) {
         g_boss_hyper_wait = 0;
         if ((g_replay_mode != 2) || (g_stage != 0)) {
             if ((g_player1[0] < 0) && (g_p1_hyper_active == 0)) {
-                func_001ABB80();
+                p1_hyper_items_update();
             }
             if ((g_player2[0] < 0) && (g_p2_hyper_active == 0)) {
-                func_001ABD80();
+                p2_hyper_items_update();
             }
         }
         D_0028E7A0 = 0;

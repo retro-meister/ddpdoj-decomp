@@ -455,8 +455,8 @@ extern void bullet_move_type_32(void);
 extern void bullet_move_type_33(void);
 extern void bullet_move_type_34(void);
 extern void bullet_move_type_35(void);
-extern void func_00130270(void);
-extern void func_001303A0(void);
+extern void p1_credit_spend_one(void);
+extern void p2_credit_spend_one(void);
 extern void scroll_event_palettes(void);
 extern void scroll_event_map_loop(void);
 extern void scroll_event_speed(void);
@@ -2821,7 +2821,7 @@ void func_0018E5A0(void) {
     if (join_select_p1_table[6] != 0x6) {
         printf("error! sel_game_tbl_1p[6]\n");
     }
-    STORE_POINTER(join_select_p1_table + 6, func_00130270);
+    STORE_POINTER(join_select_p1_table + 6, p1_credit_spend_one);
     if (join_select_p1_table[8] != 0x8) {
         printf("error! sel_game_tbl_1p[8]\n");
     }
@@ -2837,7 +2837,7 @@ void func_0018E5A0(void) {
     if (join_select_p2_table[6] != 0x6) {
         printf("error! sel_game_tbl_2p[6]\n");
     }
-    STORE_POINTER(join_select_p2_table + 6, func_001303A0);
+    STORE_POINTER(join_select_p2_table + 6, p2_credit_spend_one);
     if (join_select_p2_table[8] != 0x8) {
         printf("error! sel_game_tbl_2p[8]\n");
     }

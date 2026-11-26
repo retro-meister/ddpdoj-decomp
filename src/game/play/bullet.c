@@ -2713,7 +2713,7 @@ void death_func_0012E5B0(void) {
 #endif
 
 s32 fade_in();
-s32 func_0015B930();
+s32 settings_notice_layers_setup();
 extern u8 D_00269800[];
 extern u32 D_0028E964;
 extern u16 D_0028E968;
@@ -2757,7 +2757,7 @@ void func_0012F6A0(void) {
     save_d5 = reg_d5.w;
     fade_in();
     D_0028E964 = reg_d0.w;
-    func_0015B930();
+    settings_notice_layers_setup();
     reg_d0.w = save_d0;
     reg_d1.w = save_d1;
     reg_d2.w = save_d2;

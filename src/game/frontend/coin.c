@@ -1,17 +1,17 @@
 #include "common.h"
-void func_0012FE80(void);
-void func_0012FEE0(void);
-void func_0012FF50(u8 arg0);
-void func_0012FFC0();
-void func_0012FFD0();
-void func_00130250(void);
-void func_00130260(void);
-void func_00130280(void);
-void func_001303B0(void);
-void func_001305C0(void);
-void func_001305D0(void);
-void func_00130720(void);
-void func_00130DE0(void);
+void credit_display_changed_check_coins(void);
+void credit_display_changed_check_side(void);
+void credit_display_changed_check_side_coins(u8 arg0);
+void credit_display_changed();
+void credit_display_unchanged();
+void p1_continue_discount_reset(void);
+void p2_continue_discount_reset(void);
+void p1_credit_spend(void);
+void p2_credit_spend(void);
+void credit_spend_accept(void);
+void credit_spend_refuse(void);
+void coin_slots_clear(void);
+void free_play_text_print_at(void);
 
 extern u8 D_0024F340[];
 extern u8 D_0024F360[];
@@ -37,7 +37,7 @@ extern u8 D_0028E210;
 extern s16 D_0028E214;
 extern u8 g_setting_coin_mode;
 
-void func_0012FD40(void) {
+void coin_init(void) {
     s8 temp_v1;
 
     reg_a0 = D_0024F340;
@@ -65,93 +65,93 @@ void func_0012FD40(void) {
     reg_a0 = D_0024F360;
     D_0028E1EC = temp_v1;
     D_0028E1E8 = *(s8 *)(reg_a0 + reg_d0.h[0]);
-    func_00130250();
-    func_00130260();
-    func_00130720();
+    p1_continue_discount_reset();
+    p2_continue_discount_reset();
+    coin_slots_clear();
 }
 
 extern u8 D_0028E1E0;
 extern u8 D_0028E1E4[];
 
-void func_0012FE10(void) {
+void credit_display_changed_check(void) {
     if (reg_d0.h[0] != 0) {
-        func_0012FEE0();
+        credit_display_changed_check_side();
         return;
     }
     reg_d0.b[0] = D_0028E1E4[0];
     reg_d1.b[0] = D_0028E1E0;
     if (reg_d0.h[0] == reg_d1.h[0]) {
-        func_0012FE80();
+        credit_display_changed_check_coins();
         return;
     }
     D_0028E1E0 = reg_d0.b[0];
-    func_0012FFC0();
+    credit_display_changed();
 }
 
 extern u8 D_0028E1DC;
 extern u8 D_0028E1E6[];
 
-void func_0012FE80(void) {
+void credit_display_changed_check_coins(void) {
     reg_d0.b[0] = D_0028E1E6[0];
     reg_d1.b[0] = D_0028E1DC;
     if (reg_d0.h[0] == reg_d1.h[0]) {
-        func_0012FFD0();
+        credit_display_unchanged();
         return;
     }
     D_0028E1DC = reg_d0.b[0];
-    func_0012FFC0();
+    credit_display_changed();
 }
 
 extern u8 D_0028E1D4;
 extern u8 D_0028E1D8[];
 extern u8 g_setting_chute_type;
 
-void func_0012FEE0(void) {
-    extern void func_0012FFC0(u8);
+void credit_display_changed_check_side(void) {
+    extern void credit_display_changed(u8);
     reg_d0.b[0] = D_0028E1E4[0];
     if (g_setting_chute_type == 1) {
         reg_d0.b[0] = D_0028E1D8[0];
     }
     reg_d1.b[0] = D_0028E1D4;
     if (reg_d0.h[0] == reg_d1.h[0]) {
-        func_0012FF50(D_0028E1E4[0]);
+        credit_display_changed_check_side_coins(D_0028E1E4[0]);
         return;
     }
     D_0028E1D4 = reg_d0.b[0];
-    func_0012FFC0(D_0028E1E4[0]);
+    credit_display_changed(D_0028E1E4[0]);
 }
 
 extern u8 D_0028E1D0;
 extern u8 D_0028E1DA[];
 
-void func_0012FF50(u8 arg0) {
-    extern void func_0012FFD0(u8);
-    extern void func_0012FFC0(u8);
+void credit_display_changed_check_side_coins(u8 arg0) {
+    extern void credit_display_unchanged(u8);
+    extern void credit_display_changed(u8);
     reg_d0.b[0] = D_0028E1E6[0];
     if (g_setting_chute_type == 1) {
         reg_d0.b[0] = D_0028E1DA[0];
     }
     reg_d1.b[0] = D_0028E1D0;
     if (reg_d0.h[0] == reg_d1.h[0]) {
-        func_0012FFD0(D_0028E1E6[0]);
+        credit_display_unchanged(D_0028E1E6[0]);
         return;
     }
     D_0028E1D0 = reg_d0.b[0];
-    func_0012FFC0(D_0028E1E6[0]);
+    credit_display_changed(D_0028E1E6[0]);
 }
 
 
-void func_0012FFC0() {
+void credit_display_changed() {
     (*(u8 *)&cond_flag) = 1;
 }
 
-void func_0012FFD0() {
+void credit_display_unchanged() {
     (*(u8 *)&cond_flag) = 0;
 }
 
 extern u8 D_0028E1EC;
 
-void func_0012FFE0(void) {
+void credits_get(void) {
     reg_d0.b[0] = g_setting_coin_mode;
     if (reg_d0.b[0] == 0x12) {
         reg_d0.w = 0;
@@ -171,7 +171,7 @@ void func_0012FFE0(void) {
 
 extern u8 D_0028E1D9[];
 
-void func_00130050(void) {
+void coins_get(void) {
     reg_d0.b[0] = g_setting_coin_mode;
     if (reg_d0.b[0] == 0x12) {
         reg_d0.w = 0;
@@ -204,7 +204,7 @@ void func_00130050(void) {
 extern u8 D_0028E204;
 extern u8 D_0028E208;
 
-void func_00130110(void) {
+void coin_counter_pulses_take(void) {
     reg_d0.w = 0;
     if (D_0028E208 != 0) {
         D_0028E208 -= 1;
@@ -229,7 +229,7 @@ void func_00130110(void) {
     cond_flag = 0;
 }
 
-void func_001301B0(void) {
+void p1_credits_get(void) {
     reg_d0.b[0] = g_setting_coin_mode;
     if (reg_d0.b[0] == 0x12) {
         reg_d0.w = 0;
@@ -242,7 +242,7 @@ void func_001301B0(void) {
     reg_d1.b[0] = D_0028E1DA[0];
 }
 
-void func_00130200(void) {
+void p2_credits_get(void) {
     reg_d0.b[0] = g_setting_coin_mode;
     if (reg_d0.b[0] == 0x12) {
         reg_d0.w = 0;
@@ -257,150 +257,150 @@ void func_00130200(void) {
 
 extern u8 D_0028E1E5[];
 
-void func_00130250(void) {
+void p1_continue_discount_reset(void) {
     D_0028E1E5[0] = 2;
 }
 
-void func_00130260(void) {
+void p2_continue_discount_reset(void) {
     D_0028E1D9[0] = 2;
 }
 
 
-void func_00130270(void) {
+void p1_credit_spend_one(void) {
     reg_d3.sw = 1;
-    func_00130280();
+    p1_credit_spend();
 }
 
 s32 func_00131340();
 s32 func_001313A0();
 
-void func_00130280(void) {
+void p1_credit_spend(void) {
     reg_d0.b[0] = g_setting_coin_mode;
     if (reg_d0.b[0] == 0x12) {
-        func_001305C0();
+        credit_spend_accept();
         return;
     }
     if (reg_d0.b[0] == 0x11) {
-        func_00130200();
+        p2_credits_get();
         reg_d2.w = 0;
         reg_d2.b[0] = D_0028E1E5[0];
         if ((s16)(reg_d2.h[0]) > (s16) reg_d0.h[0]) {
-            func_001305D0();
+            credit_spend_refuse();
             return;
         }
         if (reg_d3.h[0] == 0) {
-            func_001305C0();
+            credit_spend_accept();
             return;
         }
         reg_d0.h[0] = reg_d2.h[0];
         D_0028E1E5[0] = 1;
         func_001313A0();
-        func_001305C0();
+        credit_spend_accept();
         return;
     }
-    func_001301B0();
+    p1_credits_get();
     if (reg_d0.h[0] == 0) {
-        func_001305D0();
+        credit_spend_refuse();
         return;
     }
     if (reg_d3.h[0] == 0) {
-        func_001305C0();
+        credit_spend_accept();
         return;
     }
     func_00131340();
-    func_001305C0();
+    credit_spend_accept();
 }
 
 
-void func_001303A0(void) {
+void p2_credit_spend_one(void) {
     reg_d3.sw = 1;
-    func_001303B0();
+    p2_credit_spend();
 }
 
 s32 func_00131370();
 s32 func_001313E0();
 
-void func_001303B0(void) {
+void p2_credit_spend(void) {
     reg_d0.b[0] = g_setting_coin_mode;
     if (reg_d0.b[0] == 0x12) {
-        func_001305C0();
+        credit_spend_accept();
         return;
     }
     reg_d1.b[0] = g_setting_chute_type;
     if (reg_d1.b[0] != 1) {
         if (reg_d0.b[0] == 0x11) {
-            func_00130200();
+            p2_credits_get();
             reg_d2.w = 0;
             reg_d2.b[0] = D_0028E1D9[0];
             if ((s16)(reg_d2.h[0]) > (s16) reg_d0.h[0]) {
-                func_001305D0();
+                credit_spend_refuse();
                 return;
             }
             if (reg_d3.h[0] == 0) {
-                func_001305C0();
+                credit_spend_accept();
                 return;
             }
             reg_d0.h[0] = reg_d2.h[0];
             D_0028E1D9[0] = 1;
             func_001313A0();
-            func_001305C0();
+            credit_spend_accept();
             return;
         }
-        func_001301B0();
+        p1_credits_get();
         if (reg_d0.h[0] == 0) {
-            func_001305D0();
+            credit_spend_refuse();
             return;
         }
         if (reg_d3.h[0] == 0) {
-            func_001305C0();
+            credit_spend_accept();
             return;
         }
         func_00131340();
-        func_001305C0();
+        credit_spend_accept();
         return;
     }
     if (reg_d0.b[0] == 0x11) {
-        func_00130200();
+        p2_credits_get();
         reg_d2.w = 0;
         reg_d2.b[0] = D_0028E1D9[0];
         if ((s16)(reg_d2.h[0]) > (s16) reg_d1.h[0]) {
-            func_001305D0();
+            credit_spend_refuse();
             return;
         }
         if (reg_d3.h[0] == 0) {
-            func_001305C0();
+            credit_spend_accept();
             return;
         }
         reg_d0.h[0] = reg_d2.h[0];
         D_0028E1D9[0] = 1;
         func_001313E0();
-        func_001305C0();
+        credit_spend_accept();
         return;
     }
-    func_001301B0();
+    p1_credits_get();
     if (reg_d1.h[0] == 0) {
-        func_001305D0();
+        credit_spend_refuse();
         return;
     }
     if (reg_d3.h[0] == 0) {
-        func_001305C0();
+        credit_spend_accept();
         return;
     }
     func_00131370();
-    func_001305C0();
+    credit_spend_accept();
 }
 
-void func_001305C0(void) {
+void credit_spend_accept(void) {
     (*(u8 *)&cond_flag) = 0;
 }
 
-void func_001305D0(void) {
+void credit_spend_refuse(void) {
     (*(u8 *)&cond_flag) = 1;
 }
 
 extern u8 D_0028E1E8;
 
-void func_001305E0(void) {
+void coin_to_credit(void) {
     u32 s0;
     u32 s1;
 
@@ -442,7 +442,7 @@ block_end:
 extern u8 D_0028E1C0[];
 extern u8 D_0028E1C8[];
 
-void func_00130720(void) {
+void coin_slots_clear(void) {
     reg_a0 = D_0028E1C8;
     reg_d0.w = 1;
     do {
@@ -457,7 +457,7 @@ void func_00130720(void) {
 extern u8 g_arcade_coin_port;
 extern u8 g_stage_load_state;
 
-void func_00130790(void) {
+void coin_update(void) {
     u8 *sa0, *sa1, *sa2, *sa3, *sa4, *sa5, *sa6;
     u32 sd0, sd1, sd2, sd3, sd4, sd5, sd6, sd7;
     u8 v;
@@ -550,7 +550,7 @@ next_5:
 extern u16 D_0028E1C4[];
 extern u16 D_0028E1CC[];
 
-void func_00130A00(void) {
+void coin_slots_take(void) {
     reg_d1.w = 0;
     if (D_0028E1CC[0] == 0x80) {
         D_0028E1CC[0] = 0;
@@ -570,7 +570,7 @@ extern u8 D_0028E20C;
 extern u8 D_0028E210;
 extern u16 D_0028E224;
 
-void func_00130A60(void) {
+void coin_inputs_update(void) {
     if (g_stage_load_state != 0) return;
     if (g_setting_coin_mode == 0x12) return;
     reg_a0 = (u8 *)&(*(u16 *)&g_arcade_coin_port);
@@ -582,18 +582,18 @@ void func_00130A60(void) {
     reg_d1.h[0] &= reg_d0.h[0];
     reg_d1.h[0] &= 0xE0;
     D_0028E1F0 = reg_d1.h[0];
-    func_00130A00();
+    coin_slots_take();
     reg_d1.h[0] |= D_0028E1F0;
     if (reg_d1.h[0] & 0x20) {
         sfx_coin();
         reg_a0 = (u8 *)((u16 *)D_0028E1E4);
-        func_001305E0();
+        coin_to_credit();
         return;
     }
     if (reg_d1.w & 1) {
         sfx_coin();
         reg_a0 = (u8 *)((u16 *)D_0028E1E4);
-        func_001305E0();
+        coin_to_credit();
         reg_d0.b[0] = g_setting_coin_mode;
         if (reg_d0.b[0] != 0x12) {
             D_0028E208 += 1;
@@ -606,7 +606,7 @@ void func_00130A60(void) {
         if (reg_d0.b[0] != 1) {
             reg_a0 = (u8 *)((u16 *)D_0028E1E4);
         }
-        func_001305E0();
+        coin_to_credit();
         reg_d0.b[0] = g_setting_coin_mode;
         if (reg_d0.b[0] != 0x12) {
             D_0028E204 += 1;
@@ -614,7 +614,7 @@ void func_00130A60(void) {
     }
     reg_a0 = (u8 *)&D_0028E224;
     if (D_0028E210 == 0) {
-        func_00130110();
+        coin_counter_pulses_take();
         if (cond_flag != 0) {
             reg_d1.b[0] = g_setting_chute_type;
             if (reg_d1.b[0] != 0) {
@@ -674,13 +674,13 @@ void text_layer_put_hex_digit(void) {
 }
 
 #ifndef DEATH_LABEL
-extern char D_0024F378[];
+extern char coin_text_free_play[];
 
-void func_00130D80(void) {
+void free_play_text_print(void) {
     extern void text_layer_print(void);
     reg_d0.h[0] = 10;
     reg_d1.h[0] = 3;
-    reg_a0 = (u8 *)D_0024F378;
+    reg_a0 = (u8 *)coin_text_free_play;
     reg_d2.sh[0] = 0;
     text_layer_print();
 }
@@ -688,38 +688,38 @@ void func_00130D80(void) {
 
 #ifndef DEATH_LABEL
 
-void func_00130DB0(void) {
+void free_play_text_print_p1(void) {
     reg_d0.h[0] = 3;
     reg_d1.h[0] = 3;
-    func_00130DE0();
+    free_play_text_print_at();
 }
 #endif
 
 #ifndef DEATH_LABEL
-void func_00130DC0(void) {
+void free_play_text_print_p2(void) {
     reg_d0.h[0] = 0x11;
     reg_d1.h[0] = 0x3;
-    func_00130DE0();
+    free_play_text_print_at();
 }
 #endif
 
 #ifndef DEATH_LABEL
-void func_00130DE0(void) {
+void free_play_text_print_at(void) {
     extern void text_layer_print(void);
     reg_d2.sh[0] = 0;
-    reg_a0 = (u8 *)D_0024F378;
+    reg_a0 = (u8 *)coin_text_free_play;
     text_layer_print();
 }
 #endif
 
 #ifndef DEATH_LABEL
-extern s32 D_0028C0A8;
+extern s32 coin_text_coins;
 
-void func_00130E00(void) {
+void coins_text_print(void) {
     s32 text_layer_print();
     reg_d0.h[0] = 0xB;
     reg_d1.h[0] = 3;
-    reg_a0 = &(*(u8 *)&D_0028C0A8);
+    reg_a0 = &(*(u8 *)&coin_text_coins);
     reg_d2.h[0] = 0;
     text_layer_print();
     reg_d0.h[0] += 6;
@@ -730,13 +730,13 @@ void func_00130E00(void) {
 #endif
 
 #ifndef DEATH_LABEL
-extern s32 D_0028C0A8;
+extern s32 coin_text_coins;
 
-void func_00130E70(void) {
+void coins_text_print_p1(void) {
     s32 text_layer_print();
     reg_d0.h[0] = 4;
     reg_d1.h[0] = 3;
-    reg_a0 = (u8 *)(&D_0028C0A8);
+    reg_a0 = (u8 *)(&coin_text_coins);
     reg_d2.h[0] = 0;
     text_layer_print();
     reg_d0.h[0] += 6;
@@ -746,11 +746,11 @@ void func_00130E70(void) {
 #endif
 
 #ifndef DEATH_LABEL
-void func_00130EC0(void) {
+void coins_text_print_p2(void) {
     s32 text_layer_print();
     reg_d0.h[0] = 0x12;
     reg_d1.h[0] = 3;
-    reg_a0 = (u8 *)(&D_0028C0A8);
+    reg_a0 = (u8 *)(&coin_text_coins);
     reg_d2.h[0] = 0;
     text_layer_print();
     reg_d0.h[0] += 6;
@@ -760,14 +760,14 @@ void func_00130EC0(void) {
 #endif
 
 #ifndef DEATH_LABEL
-extern u8 D_0024F388[];
+extern u8 coin_text_credits_with_coins[];
 
-void func_00130F10(void) {
+void credits_with_coins_text_print(void) {
     s32 text_layer_print();
     reg_d0.h[0] = 7;
     reg_d1.h[0] = 3;
     reg_d2.h[0] = 0;
-    reg_a0 = (u8 *)D_0024F388;
+    reg_a0 = (u8 *)coin_text_credits_with_coins;
     text_layer_print();
     reg_d0.h[0] += 0xC;
     reg_d4.b[0] = D_0028E1EC;
@@ -783,17 +783,17 @@ void func_00130F10(void) {
 #endif
 
 #ifndef DEATH_LABEL
-extern s32 D_0028C0B0;
-extern s32 D_0028C0B8;
+extern s32 coin_text_credits_short;
+extern s32 coin_text_coins_frame;
 
-void func_00130FB0(void) {
+void credits_with_coins_text_print_p1(void) {
     s32 text_layer_print();
     reg_d0.h[0] = 3;
     reg_d1.h[0] = 4;
-    reg_a0 = (u8 *)(&D_0028C0B0);
+    reg_a0 = (u8 *)(&coin_text_credits_short);
     reg_d2.h[0] = 0;
     text_layer_print();
-    reg_a0 = (u8 *)(&D_0028C0B8);
+    reg_a0 = (u8 *)(&coin_text_coins_frame);
     reg_d1.h[0] = 3;
     text_layer_print();
     reg_d0.h[0] += 5;
@@ -809,14 +809,14 @@ void func_00130FB0(void) {
 #endif
 
 #ifndef DEATH_LABEL
-void func_00131050(void) {
+void credits_with_coins_text_print_p2(void) {
     s32 text_layer_print();
     reg_d0.h[0] = 0x11;
     reg_d1.h[0] = 4;
-    reg_a0 = (u8 *)(&D_0028C0B0);
+    reg_a0 = (u8 *)(&coin_text_credits_short);
     reg_d2.h[0] = 0;
     text_layer_print();
-    reg_a0 = (u8 *)(&D_0028C0B8);
+    reg_a0 = (u8 *)(&coin_text_coins_frame);
     reg_d1.h[0] = 3;
     text_layer_print();
     reg_d0.h[0] += 5;
@@ -832,14 +832,14 @@ void func_00131050(void) {
 #endif
 
 #ifndef DEATH_LABEL
-extern s32 D_0024F398[];
+extern s32 coin_text_credits[];
 
-void func_001310F0(void) {
+void credits_text_print(void) {
     s32 text_layer_print();
     reg_d0.h[0] = 0xA;
     reg_d1.h[0] = 3;
     reg_d2.h[0] = 0;
-    reg_a0 = (u8 *)D_0024F398;
+    reg_a0 = (u8 *)coin_text_credits;
     text_layer_print();
     reg_d0.h[0] += 8;
     reg_d4.b[0] = D_0028E1E6[0];
@@ -848,10 +848,10 @@ void func_001310F0(void) {
 #endif
 
 #ifndef DEATH_LABEL
-void func_00131150(void) {
+void credits_text_print_p1(void) {
     s32 text_layer_print();
     reg_d0.h[0] = 3;
-    reg_a0 = (u8 *)D_0024F398;
+    reg_a0 = (u8 *)coin_text_credits;
     reg_d1.h[0] = 3;
     reg_d2.h[0] = 0;
     text_layer_print();
@@ -862,12 +862,12 @@ void func_00131150(void) {
 #endif
 
 #ifndef DEATH_LABEL
-void func_001311A0(void) {
+void credits_text_print_p2(void) {
     s32 text_layer_print();
     reg_d0.h[0] = 0x11;
     reg_d1.h[0] = 3;
     reg_d2.h[0] = 0;
-    reg_a0 = (u8 *)D_0024F398;
+    reg_a0 = (u8 *)coin_text_credits;
     text_layer_print();
     reg_d0.h[0] += 8;
     reg_d4.b[0] = D_0028E1DA[0];

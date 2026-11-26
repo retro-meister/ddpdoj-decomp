@@ -102,7 +102,7 @@ typedef void (*Fn)(void);
 
 
 void func_0012FBD0(void);
-void func_001301B0(void);
+void p1_credits_get(void);
 void player_slot_request(void);
 void func_001A35A0(void);
 void func_001A3630(void);
@@ -170,7 +170,7 @@ void func_001AF560(void) {
             goto block_50;
         }
     }
-    func_001301B0();
+    p1_credits_get();
     if (reg_d0.h[0] != 0) {
         goto next_1;
     }
@@ -535,8 +535,8 @@ void func_001B0100(void) {
     text_layer_print();
 }
 
-void func_0012FFE0(void);
-void func_00130050(void);
+void credits_get(void);
+void coins_get(void);
 void text_layer_put_hex_digit(void);
 void func_001A3520(void);
 extern u8 D_00251B60[];
@@ -550,7 +550,7 @@ extern u8 g_setting_coin_mode;
 
 void func_001B0160(void) {
     void text_layer_print(void);
-    func_001301B0();
+    p1_credits_get();
     if (*(u8 *)(reg_a5 + 6) == 0) {
         goto next_1;
     }
@@ -592,10 +592,10 @@ block_52:
     if (*(u8 *)(reg_a5 + 6) == 0) {
         goto next_2;
     }
-    func_00130050();
+    coins_get();
     goto next_3;
 next_2:
-    func_0012FFE0();
+    credits_get();
 next_3:
     if (reg_d0.h[0] != 1) {
         goto next_4;

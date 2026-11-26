@@ -770,8 +770,8 @@ extern u16 g_high_score_digits;
 extern u16 g_high_score_billions;
 extern s32 g_p2_position_trail[16];
 extern s32 g_p1_position_trail[16];
-extern Pair10 D_002BAF30_as_Pair10;
-extern Pair90 D_002BAF50_as_Pair90;
+extern Pair10 g_p1_score_extra_cell_as_Pair10;
+extern Pair90 g_p1_score_cells_as_Pair90;
 extern u8 D_002BB010[];
 
 void func_001AE490(void) {
@@ -795,16 +795,16 @@ void func_001AE490(void) {
     g_high_score_digits = 0;
     g_p1_score_digits = 0;
     for (i = 0; i < 0x5A; i++) {
-        D_002BAF50_as_Pair90.a[i] = 0;
+        g_p1_score_cells_as_Pair90.a[i] = 0;
     }
     for (i = 0; i < 0x5A; i++) {
-        D_002BAF50_as_Pair90.b[i] = 0;
+        g_p1_score_cells_as_Pair90.b[i] = 0;
     }
     for (i = 0; i < 0xA; i++) {
-        D_002BAF30_as_Pair10.a[i] = 0;
+        g_p1_score_extra_cell_as_Pair10.a[i] = 0;
     }
     for (i = 0; i < 0xA; i++) {
-        D_002BAF30_as_Pair10.b[i] = 0;
+        g_p1_score_extra_cell_as_Pair10.b[i] = 0;
     }
     g_p2_score_panel_flags = 0;
     g_score_check_scratch = g_score_check_billions = (g_p1_score_panel_flags = 0);
@@ -978,9 +978,9 @@ void func_001AEA80(void) {
 }
 
 s32 sfx_extend();
-s32 func_001AAC00();
-s32 func_001AC3A0();
-s32 func_001AC5F0();
+s32 extend_score_advance();
+s32 hud_p1_lives_put();
+s32 hud_p2_lives_put();
 extern u8 D_0028E304;
 extern u16 g_high_score_digits;
 extern u16 g_high_score_billions;
@@ -994,8 +994,8 @@ extern u16 death_D_0068DAA6[];
 extern u16 death_D_0068DAA8[];
 extern u16 death_D_0068DAB0[];
 extern u16 death_D_0068DAB2[];
-extern u16 D_002BAF30[];
-extern u16 D_002BAF3A[];
+extern u16 g_p1_score_extra_cell[];
+extern u16 g_p2_score_extra_cell[];
 extern s32 D_0028ED50;
 extern u16 D_0028ED4C;
 extern s32 D_0028ED44;
@@ -1015,14 +1015,14 @@ void func_001AEB10(void) {
     if (death_D_00290DBC != 0) {
         if (g_player1[0] < 0) {
             death_D_0068DAA8[0] = 0;
-            D_002BAF30[0] = 1;
+            g_p1_score_extra_cell[0] = 1;
             death_D_0068DAA6[0] = 0xC030;
             g_p1_score = (u32)D_0028ED50;
             g_p1_score_billions = D_0028ED4C;
         }
         if (g_player2[0] < 0) {
             death_D_0068DAB2[0] = 0;
-            D_002BAF3A[0] = 1;
+            g_p2_score_extra_cell[0] = 1;
             death_D_0068DAB0[0] = 0xC030;
             g_p2_score = (u32)D_0028ED44;
             g_p2_score_billions = D_0028ED40;
@@ -1064,12 +1064,12 @@ no_extend:
                 t2 = (u16) *(s16 *)reg_a3;
                 if (t2 != 0x14) {
                     *(s16 *)reg_a3 = t2 + 1;
-                    func_001AAC00();
+                    extend_score_advance();
                     sfx_extend();
                     if (reg_d7.h[0] == 0) {
-                        func_001AC3A0();
+                        hud_p1_lives_put();
                     } else {
-                        func_001AC5F0();
+                        hud_p2_lives_put();
                     }
                 }
             }
@@ -1100,21 +1100,21 @@ next_1:
 }
 
 extern Reg32 reg_d0;
-extern u16 D_002BAF50[96];
+extern u16 g_p1_score_cells[96];
 
 
 void func_001AED30(void) {
-    reg_a0 = (u8 *)((u32 *)((u8 *)D_002BAF50));
+    reg_a0 = (u8 *)((u32 *)((u8 *)g_p1_score_cells));
     reg_d0.w = g_p1_score;
     reg_d6.h[0] = g_p1_score_digits;
     reg_d4.w = reg_d0.w;
     func_001AED90();
 }
 
-extern u16 D_002BAFAA[];
+extern u16 g_p2_score_cells[];
 
 void func_001AED60(void) {
-    reg_a0 = ((u8 *)D_002BAFAA);
+    reg_a0 = ((u8 *)g_p2_score_cells);
     reg_d0.w = g_p2_score;
     reg_d6.h[0] = g_p2_score_digits;
     reg_d4.w = reg_d0.w;

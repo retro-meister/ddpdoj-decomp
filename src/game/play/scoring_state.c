@@ -142,14 +142,14 @@ s32 D_002BB210[16];
 u8 D_002BB100[272];
 u8 D_002BB060[160];
 u8 D_002BB010[80];
-u16 D_002BAF50[96];
+u16 g_p1_score_cells[96];
 #ifdef DEATH_LABEL
 u16 death_D_0068DAB0[8];
 #endif
 #ifdef DEATH_LABEL
-u16 D_002BAF30[8];
+u16 g_p1_score_extra_cell[8];
 #else
-u16 D_002BAF30[16];
+u16 g_p1_score_extra_cell[16];
 #endif
 s32 g_p1_position_trail[16];
 s32 g_p2_position_trail[16];

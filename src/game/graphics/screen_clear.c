@@ -1,18 +1,18 @@
 #include "common.h"
 
-void func_0012FE80(void);
-void func_0012FEE0(void);
-void func_0012FF50(u8 arg0);
-void func_0012FFC0();
-void func_0012FFD0();
-void func_00130250(void);
-void func_00130260(void);
-void func_00130280(void);
-void func_001303B0(void);
-void func_001305C0(void);
-void func_001305D0(void);
-void func_00130720(void);
-void func_00130DE0(void);
+void credit_display_changed_check_coins(void);
+void credit_display_changed_check_side(void);
+void credit_display_changed_check_side_coins(u8 arg0);
+void credit_display_changed();
+void credit_display_unchanged();
+void p1_continue_discount_reset(void);
+void p2_continue_discount_reset(void);
+void p1_credit_spend(void);
+void p2_credit_spend(void);
+void credit_spend_accept(void);
+void credit_spend_refuse(void);
+void coin_slots_clear(void);
+void free_play_text_print_at(void);
 
 extern void sprite_draw(void);
 void func_0012F9F0(void) {

@@ -98,7 +98,7 @@ void func_00131630(void) {
     } while (var_t1 < 0x20);
 }
 
-s32 func_00134FB0();
+s32 game_ground_task_stop();
 s32 fades_reset();
 s32 func_00171910();
 s32 func_00172060();
@@ -142,7 +142,7 @@ void func_00131700(void) {
     ((s16 *)g_bullet_limit_raised_3)[0] = 0;
     ((s16 *)D_0029976E)[0] = 0;
     func_00172060();
-    func_00134FB0();
+    game_ground_task_stop();
     D_0028ED60 = 0;
     g_players_hidden = 1;
     g_replay_buffer_state = 2;
@@ -206,8 +206,8 @@ void func_00131840(void) {
 }
 
 s32 stage_counts_reset();
-s32 func_00134FE0();
-s32 func_00135070();
+s32 game_stage_set();
+s32 game_stage_objects_clear();
 s32 color_at_brightness();
 s32 fade_in_and_release();
 s32 fade_release();
@@ -292,7 +292,7 @@ void func_00131880(void) {
         printf((const char *)"end sco2cnt [%x]\n", (s32) g_p2_score_digits);
         printf((const char *)"end sco2oku [%x]\n", (s32) g_p2_score_billions);
         g_game_frame_ran = 0;
-        func_00135070();
+        game_stage_objects_clear();
         *(s8 *)(reg_a5 + 7) = 0x1E;
         goto block_after;
     }
@@ -321,7 +321,7 @@ block_after:
             return;
         }
         reg_d0.h[0] = *(u16 *)(reg_a5 + 4);
-        func_00134FE0();
+        game_stage_set();
         stage_counts_reset();
         D_0028E958 = 0;
         func_00172250();
@@ -605,8 +605,8 @@ extern s16 g_player1[];
 s32 func_00141640();
 s32 p1_hyper_end();
 s32 p2_hyper_end();
-s32 func_0013FCA0();
-s32 func_0013FCE0();
+s32 p1_hyper_state_clear();
+s32 p2_hyper_state_clear();
 s32 p1_bomb_stock_draw();
 s32 p2_bomb_stock_draw();
 extern s16 g_player2[];
@@ -950,10 +950,10 @@ next_499:
             if ((g_boss_present & 2) && (v2 = *(u8 *)(reg_a5 + 7), (v2 != 0xB)) && (v2 != 0x15) && (v2 != 0x16)) {
                 if (*(u16 *)(reg_a5 + 4) != 0) {
                     reg_d0.h[0] = *(u16 *)(reg_a5 + 4);
-                    func_00134FE0();
+                    game_stage_set();
                 } else {
                     reg_d0.h[0] = 0;
-                    func_00134FE0();
+                    game_stage_set();
                 }
                 if ((*(u16 *)(reg_a5 + 4) == 0) && (g_simulation_active != 1)) {
                     reg_a0 = (u8 *)(((u16 *)D_00269920));
@@ -962,12 +962,12 @@ next_499:
                     func_00141640();
                     if (g_player1[0] < 0) {
                         p1_hyper_end();
-                        func_0013FCA0();
+                        p1_hyper_state_clear();
                         p1_bomb_stock_draw();
                     }
                     if (g_player2[0] < 0) {
                         p2_hyper_end();
-                        func_0013FCE0();
+                        p2_hyper_state_clear();
                         p2_bomb_stock_draw();
                     }
                     reg_d0.h[0] = 0x13;
@@ -979,12 +979,12 @@ next_499:
                     func_00141640();
                     if (g_player1[0] < 0) {
                         p1_hyper_end();
-                        func_0013FCA0();
+                        p1_hyper_state_clear();
                         p1_bomb_stock_draw();
                     }
                     if (g_player2[0] < 0) {
                         p2_hyper_end();
-                        func_0013FCE0();
+                        p2_hyper_state_clear();
                         p2_bomb_stock_draw();
                     }
                     reg_d0.h[0] = 0x13;
@@ -1022,7 +1022,7 @@ block_77:
                         D_0028E2A0 = 0;
                     } else {
                         reg_d0.h[0] = t4;
-                        func_00134FE0();
+                        game_stage_set();
                         if (D_0028E2A4 != 0) {
                             D_0028E2A4 -= 1;
                         }

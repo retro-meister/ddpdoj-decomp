@@ -7,20 +7,20 @@ void explosions_clear(void);
 void explosions_update(void);
 
 s32 bullets_clear();                            /* extern */
-s32 func_001368C0();                            /* extern */
+s32 enemy_anims_clear();                            /* extern */
 s32 enemies_reset();                            /* extern */
-s32 func_0016AAB0();                            /* extern */
+s32 items_clear();                            /* extern */
 s32 func_001B82D0();                            /* extern */
 s32 sparks_clear();                            /* extern */
 s32 func_002114A0();                            /* extern */
 
 void func_00139B20(void) {
-    func_0016AAB0();
+    items_clear();
     bullets_clear();
     explosions_clear();
     func_001B82D0();
     func_002114A0();
-    func_001368C0();
+    enemy_anims_clear();
     sparks_clear();
     enemies_reset();
     *(s8 *)(reg_a5 + 3) = 1;
@@ -29,21 +29,21 @@ void func_00139B20(void) {
 s32 bombs_update();
 s32 pickups_update();
 s32 bullets_update();
-s32 func_00136F30();
+s32 enemy_anims_update();
 s32 hyper_stock_draw();
 s32 maximum_marks_draw();
 s32 hyper_ready_marks_draw();
 s32 hyper_bullet_speed_update();
 s32 func_0013F380();
-s32 func_00144D00();
-s32 func_00144DA0();
-s32 func_00144E40();
-s32 func_00144EA0();
+s32 p1_draw();
+s32 p2_draw();
+s32 p1_draw_while_entering();
+s32 p2_draw_while_entering();
 s32 player_lasers_update();
 s32 laser_impacts_update();
 s32 func_001488C0();
 s32 enemies_frame();
-s32 func_0016AC30();
+s32 items_update();
 void func_00170A50(s32, s32, s32);
 s32 p1_options_update();
 s32 func_001B8410();
@@ -81,7 +81,7 @@ void func_00139B80(void) {
     func_00170A50(0x1F, 0x1F, 0x1F);
     enemies_frame();
     func_00170A50(0, 0, 0);
-    func_00136F30();
+    enemy_anims_update();
     pickups_update();
     explosions_update();
     func_001B8410();
@@ -93,12 +93,12 @@ void func_00139B80(void) {
     laser_impacts_update();
     sparks_update();
     hyper_stock_draw();
-    func_00144E40();
-    func_00144EA0();
-    func_00144D00();
-    func_00144DA0();
+    p1_draw_while_entering();
+    p2_draw_while_entering();
+    p1_draw();
+    p2_draw();
     func_00170A50(0x1F, 0, 0x1F);
-    func_0016AC30();
+    items_update();
     func_00170A50(0x1F, 0x1F, 0);
     hyper_bullet_speed_update();
     bullets_update();

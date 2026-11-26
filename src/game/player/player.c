@@ -2,24 +2,24 @@
 #include "entity.h"
 #include "player.h"
 
-void func_001406F0(void);
+void player_spawn(void);
 void func_00141300(void);
 void func_00141710(void);
 void func_001417D0(void);
-void func_00141B50(void);
-void func_001420E0(void);
-void func_001440D0(void);
-void func_00144400(void);
-void func_00144AD0(void);
-void func_00144B20(void);
-void func_00144B70(void);
-void func_00144B80(void);
-void func_00144C10(void);
-void func_00144C20(void);
-void func_00144CB0(void);
-void func_00144F00(void);
-void func_00145640(void);
-void func_00145A80();
+void player_sprite_update(void);
+void player_update(void);
+void player_destroyed_begin(void);
+void player_destroyed_update(void);
+void player_shot_fire_gun_a(void);
+void player_shot_fire_gun_b(void);
+void player_shot_fire_volley_a_entry(void);
+void player_shot_fire_volley_a(void);
+void player_shot_fire_volley_b_entry(void);
+void player_shot_fire_volley_b(void);
+void player_roll_recenter(void);
+void player_draw(void);
+void player_draw_plain(void);
+void player_draw_entering();
 
 
 void func_0013F990(void) {
@@ -27,7 +27,7 @@ void func_0013F990(void) {
 }
 
 s32 sfx_extend();
-s32 func_001AC3A0();
+s32 hud_p1_lives_put();
 extern u16 g_p1_stage_bomb_used;
 extern u16 g_p1_stage_misses;
 extern u8 g_game_mode;
@@ -41,7 +41,7 @@ extern u8 death_D_00290850;
 extern u8 death_D_00290DC0;
 #endif
 
-void func_0013F9A0(void) {
+void p1_stage_clear_reward(void) {
     u8 *save_a0;
     u8 *save_a1;
     u8 *save_a2;
@@ -82,7 +82,7 @@ void func_0013F9A0(void) {
         temp_a0 = g_p1_lives;
         if (temp_a0 != 0x14) {
             g_p1_lives = temp_a0 + 1;
-            func_001AC3A0();
+            hud_p1_lives_put();
 #ifdef DEATH_LABEL
             if (death_D_00290850 == 0) {
                 if (g_stage == 4) {
@@ -115,7 +115,7 @@ void func_0013F9A0(void) {
     reg_a6 = save_a6;
 }
 
-s32 func_001AC5F0();
+s32 hud_p2_lives_put();
 extern u16 g_p2_stage_bomb_used;
 extern u16 g_p2_stage_misses;
 extern u16 g_p2_lives;
@@ -125,7 +125,7 @@ extern u8 death_D_00290850;
 extern u8 death_D_00290DC0;
 #endif
 
-void func_0013FB20(void) {
+void p2_stage_clear_reward(void) {
     u8 *save_a0;
     u8 *save_a1;
     u8 *save_a2;
@@ -166,7 +166,7 @@ void func_0013FB20(void) {
         temp_a0 = g_p2_lives;
         if (temp_a0 != 0x14) {
             g_p2_lives = temp_a0 + 1;
-            func_001AC5F0();
+            hud_p2_lives_put();
 #ifdef DEATH_LABEL
             if (death_D_00290850 == 0) {
                 if (g_stage == 4) {
@@ -209,7 +209,7 @@ extern u16 g_p1_hyper_time;
 extern u16 g_p1_hyper_active;
 extern s32 g_p1_position_trail[];
 
-void func_0013FCA0(void) {
+void p1_hyper_state_clear(void) {
     reg_d0.w = 0;
     g_p1_position_trail[0] = 0;
     g_p1_hyper_active = reg_d0.h[0];
@@ -232,7 +232,7 @@ extern u16 g_p2_hyper_time;
 extern u16 g_p2_hyper_active;
 extern s32 g_p2_position_trail[];
 
-void func_0013FCE0(void) {
+void p2_hyper_state_clear(void) {
     reg_d0.w = 0;
     g_p2_position_trail[0] = 0;
     g_p2_hyper_active = reg_d0.h[0];
@@ -247,7 +247,7 @@ void func_0013FCE0(void) {
 
 extern u16 g_p1_hyper_total;
 
-void func_0013FD20(void) {
+void p1_hyper_state_clear_for_ending(void) {
     reg_d0.w = 0;
     g_p1_position_trail[0] = 0;
     g_p1_hyper_active = reg_d0.h[0];
@@ -261,7 +261,7 @@ void func_0013FD20(void) {
 
 extern u16 g_p2_hyper_total;
 
-void func_0013FD50(void) {
+void p2_hyper_state_clear_for_ending(void) {
     reg_d0.w = 0;
     g_p2_position_trail[0] = 0;
     g_p2_hyper_active = reg_d0.h[0];
@@ -349,7 +349,7 @@ extern u8 g_p2_options[];
 extern u8 g_p1_options[];
 extern s16 g_player2[56];
 extern s16 g_player1[56];
-void func_0013FD80(void) {
+void players_clear(void) {
     s8 *temp_v1;
     u8 *temp_a1;
     u8 *temp_a1_2;
@@ -612,7 +612,7 @@ void func_0013FD80(void) {
 }
 
 
-void func_00140280(s32 *arg0, u32 *arg1) {
+void bcd_add(s32 *arg0, u32 *arg1) {
     s32 carry;
     s32 n;
     s32 digit;
@@ -662,7 +662,7 @@ void player1_task() {
     reg_tmp.b[0] = *(u8 *)(reg_a5 + 2);
     *(u8 *)(reg_a5 + 2) |= 1;
     if (reg_tmp.b[0] & 1) {
-        func_001420E0();
+        player_update();
         return;
     }
     g_p1_hyper_effect_flag = 0;
@@ -677,7 +677,7 @@ void player1_task() {
     PLAYER(reg_a6)->ship_type.h = (u16) g_p1_ship_type;
     PLAYER(reg_a6)->power_style.h = (u16) g_p1_power_style;
     if (*(u8 *)(reg_a5 + 7) != 0) {
-        func_001406F0();
+        player_spawn();
         return;
     }
     g_p1_maximum_anim_delay = 2;
@@ -687,7 +687,7 @@ void player1_task() {
     g_p1_maximum_level = 0;
     (*(u16 *)&g_p1_hyper_ready_sprite) = reg_tmp.h[1];
     g_p1_hyper_ready_sprite_lo = reg_tmp.h[0];
-    func_001406F0();
+    player_spawn();
 }
 
 extern u16 g_p2_past_first_ship;
@@ -705,7 +705,7 @@ void player2_task() {
     reg_tmp.b[0] = *(u8 *)(reg_a5 + 2);
     *(u8 *)(reg_a5 + 2) |= 1;
     if (reg_tmp.b[0] & 1) {
-        func_001420E0();
+        player_update();
         return;
     }
     g_p2_hyper_effect_flag = 0;
@@ -720,7 +720,7 @@ void player2_task() {
     PLAYER(reg_a6)->ship_type.h = (u16) g_p2_ship_type;
     PLAYER(reg_a6)->power_style.h = (u16) g_p2_power_style;
     if (*(u8 *)(reg_a5 + 7) != 0) {
-        func_001406F0();
+        player_spawn();
         return;
     }
     g_p2_maximum_anim_delay = 2;
@@ -730,15 +730,15 @@ void player2_task() {
     g_p2_maximum_level = 0;
     (*(u16 *)&g_p2_hyper_ready_sprite) = reg_tmp.h[1];
     g_p2_hyper_ready_sprite_lo = reg_tmp.h[0];
-    func_001406F0();
+    player_spawn();
 }
 
 s32 func_001340B0();
 s32 p1_hyper_item_take();
 s32 p2_hyper_item_take();
 s32 weapon_level_data_set(u8 *);
-s32 func_001ABCA0();
-s32 func_001ABEA0();
+s32 p1_hyper_items_pending_take();
+s32 p2_hyper_items_pending_take();
 extern u16 D_002555C0[];
 extern u16 D_002555D0[];
 extern u16 player_weapon_tables[24];
@@ -773,7 +773,7 @@ extern u16 g_attract_demo;
 extern u16 D_0028E810;
 #endif
 
-void func_001406F0(void) {
+void player_spawn(void) {
     s32 i;
     s32 val;
     s32 rem;
@@ -987,7 +987,7 @@ next_45:
             g_p1_hyper_items_pending = val / 100;
         }
         if (reg_d6.h[0] == 0) goto next_50;
-        func_001ABCA0();
+        p1_hyper_items_pending_take();
     } else {
         if (D_0028E2AC == 0) goto next_50;
         val = D_0028E2AC & 0xFFFF;
@@ -1000,7 +1000,7 @@ next_45:
             g_p2_hyper_items_pending = val / 100;
         }
         if (reg_d6.h[0] == 0) goto next_50;
-        func_001ABEA0();
+        p2_hyper_items_pending_take();
     }
 #endif
 next_50:
@@ -1123,7 +1123,7 @@ next_85:
     PLAYER(reg_a6)->burst_reset.h = *(u16 *)reg_a0;
     PLAYER(reg_a6)->option_burst_reset.h = *(u16 *)(reg_a0 + 2);
     reg_a0 += 4;
-    func_00141B50();
+    player_sprite_update();
 }
 
 void p1_maximum_digits_update(void);
@@ -1409,7 +1409,7 @@ void func_001417D0(void) {
         (*(u16 *)&g_p1_hyper_ready_sprite) = reg_d0.h[1];
         g_p1_hyper_ready_sprite_lo = reg_d0.h[0];
         p1_hyper_end();
-        func_0013FCA0();
+        p1_hyper_state_clear();
     } else {
         g_p2_maximum_anim_delay = 2;
         g_p2_maximum_anim_delay_reset = 2;
@@ -1419,7 +1419,7 @@ void func_001417D0(void) {
         (*(u16 *)&g_p2_hyper_ready_sprite) = reg_d0.h[1];
         g_p2_hyper_ready_sprite_lo = reg_d0.h[0];
         p2_hyper_end();
-        func_0013FCE0();
+        p2_hyper_state_clear();
     }
     reg_d1.w = 0;
     reg_d1.h[0] = 8;
@@ -1533,7 +1533,7 @@ extern u8 g_boss_present_b1;
 extern u16 g_true_last_boss;
 extern u8 D_0028EC4C;
 
-void func_00141B50(void) {
+void player_sprite_update(void) {
     u8 *p0;
     s32 *p1;
     u16 idx;
@@ -1593,9 +1593,9 @@ void func_00141B50(void) {
                 p0 = &g_p1_score_pending_as_u8;
                 p1 = (s32 *)(p0 - 0x34);
                 *p1 = g_p1_maximum_value_digits[0];
-                func_00140280((void *)p0, (void *)p1);
+                bcd_add((void *)p0, (void *)p1);
                 if (g_loop != 0) {
-                    func_00140280((void *)p0, (void *)p1);
+                    bcd_add((void *)p0, (void *)p1);
                 }
                 return;
             }
@@ -1603,9 +1603,9 @@ void func_00141B50(void) {
             p0 = &g_p2_score_pending_as_u8;
             p1 = (s32 *)(p0 - 0x30);
             *p1 = g_p2_maximum_value_digits[0];
-            func_00140280((void *)p0, (void *)p1);
+            bcd_add((void *)p0, (void *)p1);
             if (g_loop != 0) {
-                func_00140280((void *)p0, (void *)p1);
+                bcd_add((void *)p0, (void *)p1);
             }
         }
     }
@@ -1638,8 +1638,8 @@ s32 sfx_shot_a();
 s32 sfx_shot_b();
 s32 sfx_shot_hyper();
 s32 sfx_misc_2();
-s32 func_001ABB80();
-s32 func_001ABD80();
+s32 p1_hyper_items_update();
+s32 p2_hyper_items_update();
 s32 binary_to_bcd();
 s32 bullet_cancel_by_player1();
 s32 bullet_cancel_by_player2();
@@ -1665,7 +1665,7 @@ extern u16 g_bullet_cancel[];
 extern u16 g_bullet_cancel_kind[];
 extern u16 g_side_scroll_step[];
 
-void func_001420E0(void) {
+void player_update(void) {
     u32 tmp_dec;
     u8 *p0;
     s32 *p1;
@@ -1702,7 +1702,7 @@ void func_001420E0(void) {
     temp_a0 = PLAYER(reg_a6)->flags.b[1];
     temp_a1 = (u8 *)(reg_a6 + 1);
     if (temp_a0 & 1) {
-        func_00144400();
+        player_destroyed_update();
         return;
     }
     if (g_players_stage_clear != 0) goto L_else;
@@ -1730,7 +1730,7 @@ void func_001420E0(void) {
         reg_tmp.b[0] = PLAYER(reg_a6)->flags.b[1];
         PLAYER(reg_a6)->flags.b[1] &= 0xEF;
         if (reg_tmp.b[0] & 0x10) {
-            func_001440D0();
+            player_destroyed_begin();
             return;
         }
 block_13:
@@ -1763,7 +1763,7 @@ block_13:
         reg_a2 = (u8 *)D_00255700;
         PLAYER(reg_a6)->move.b.dir = (u8) *(reg_a2 + reg_d0.h[0] + ((reg_d0.h[0] & 1) ? -1 : 1));
         if ((s8) PLAYER(reg_a6)->move.b.dir < 0) {
-            func_00144CB0();
+            player_roll_recenter();
             reg_d2.h[0] = PLAYER(reg_a6)->y.h;
             reg_d3.h[0] = PLAYER(reg_a6)->x.h;
         } else {
@@ -1809,7 +1809,7 @@ block_13:
                     side_scroll_follow_at_limit();
                 }
             } else {
-                func_00144CB0();
+                player_roll_recenter();
             }
             temp_a0_6 = PLAYER(reg_a6)->input.b.raw;
             if (temp_a0_6 & 1) {
@@ -1928,9 +1928,9 @@ block_13:
                     PLAYER(reg_a6)->bombs.b.count -= 1;
                     if (PLAYER(reg_a6)->bombs.b.count == 0) {
                         if (*(u8 *)(reg_a5 + 6) == 0) {
-                            func_001ABB80();
+                            p1_hyper_items_update();
                         } else {
-                            func_001ABD80();
+                            p2_hyper_items_update();
                         }
                     }
                     if (*(u8 *)(reg_a5 + 6) == 0) {
@@ -2158,7 +2158,7 @@ loop_164:
                                             goto loop_164;
                                         }
                                     } else {
-                                        func_00144AD0();
+                                        player_shot_fire_gun_a();
                                     }
                                     reg_a1 = (u8 *)ship0_shot_lists_2;
                                     reg_tmp.h[1] = (reg_d5.h[0] != 0) ? *(u16 *)((u8 *)reg_a1 + ((s16)reg_d5.h[0] & ~1)) : *(u16 *)reg_a1;
@@ -2185,7 +2185,7 @@ loop_181:
                                         }
                                     } else {
                                         reg_a0 = reg_a4;
-                                        func_00144B70();
+                                        player_shot_fire_volley_a_entry();
                                         goto block_196;
                                     }
                                 } else {
@@ -2208,7 +2208,7 @@ loop_191:
                                                 PLAYER(reg_a6)->flags.b[1] &= 0xF7;
                                             }
                                     } else {
-                                        func_00144B80();
+                                        player_shot_fire_volley_a();
 block_196:
                                         if (PLAYER(reg_a6)->aux.b.shot_sound_wait == 0) {
                                             PLAYER(reg_a6)->aux.b.shot_sound_wait = 2U;
@@ -2286,9 +2286,9 @@ loop_227:
                                                 PLAYER(reg_a6)->flags.b[1] &= 0xF7;
                                             }
                                         } else {
-                                            func_00144B20();
+                                            player_shot_fire_gun_b();
                                             reg_a0 = reg_a4;
-                                            func_00144C10();
+                                            player_shot_fire_volley_b_entry();
                                             goto block_240;
                                         }
                                     }
@@ -2312,7 +2312,7 @@ loop_235:
                                                 PLAYER(reg_a6)->flags.b[1] &= 0xF7;
                                             }
                                     } else {
-                                        func_00144C20();
+                                        player_shot_fire_volley_b();
 block_240:
                                         if (PLAYER(reg_a6)->aux.b.shot_sound_wait == 0) {
                                             PLAYER(reg_a6)->aux.b.shot_sound_wait = 2U;
@@ -2388,9 +2388,9 @@ block_244:
                 p0 = &g_p1_score_pending_as_u8;
                 p1 = (s32 *)(p0 - 0x34);
                 *p1 = g_p1_maximum_value_digits[0];
-                func_00140280((void *)p0, (void *)p1);
+                bcd_add((void *)p0, (void *)p1);
                 if (g_loop != 0) {
-                    func_00140280((void *)p0, (void *)p1);
+                    bcd_add((void *)p0, (void *)p1);
                 }
                 return;
             }
@@ -2398,9 +2398,9 @@ block_244:
             p0 = &g_p2_score_pending_as_u8;
             p1 = (s32 *)(p0 - 0x30);
             *p1 = g_p2_maximum_value_digits[0];
-            func_00140280((void *)p0, (void *)p1);
+            bcd_add((void *)p0, (void *)p1);
             if (g_loop != 0) {
-                func_00140280((void *)p0, (void *)p1);
+                bcd_add((void *)p0, (void *)p1);
             }
         }
     }
@@ -2438,14 +2438,14 @@ L_else:
 s32 p1_stage_counts_reset();
 s32 p2_stage_counts_reset();
 s32 side_scroll_reset();
-s32 func_0016A9B0();
+s32 item_spawn();
 s32 sfx_player_explosion();
-s32 func_001AA8F0();
-s32 func_001AAA20();
-s32 func_001ABF90();
-s32 func_001AC160();
-s32 func_001ACB00();
-s32 func_001ACB50();
+s32 hud_p1_hyper_count_put();
+s32 hud_p2_hyper_count_put();
+s32 p1_hyper_gauge_check_full();
+s32 p2_hyper_gauge_check_full();
+s32 p1_hyper_gauge_bonus_add();
+s32 p2_hyper_gauge_bonus_add();
 s32 vibration_start_pad1();
 s32 vibration_start_pad2();
 extern u8 D_00255EE0[];
@@ -2457,7 +2457,7 @@ extern u16 D_006E5C14[];
 extern s16 D_0068DEDE[];
 #endif
 
-void func_001440D0(void) {
+void player_destroyed_begin(void) {
     s32 p1_maximum_level_show();
     s32 p2_maximum_level_show();
     u32 tmp;
@@ -2479,8 +2479,8 @@ void func_001440D0(void) {
         g_p1_past_first_ship = 1;
         g_p1_stage_misses += 2;
         p1_stage_counts_reset();
-        func_001ACB00();
-        func_001ABF90();
+        p1_hyper_gauge_bonus_add();
+        p1_hyper_gauge_check_full();
         g_p1_maximum_level = 0;
         g_p1_maximum_anim_delay = 8;
         g_p1_maximum_anim_delay_reset = 8;
@@ -2493,11 +2493,11 @@ void func_001440D0(void) {
         g_p1_hyper_total = t1;
         if (reg_d0.h[0] != 0) {
             g_p1_hyper_items = 0;
-            func_001AA8F0();
+            hud_p1_hyper_count_put();
         }
         reg_d1.h[0] = g_p1_lives;
         if (reg_d1.h[0] == 0) {
-            func_0013FCA0();
+            p1_hyper_state_clear();
         }
         PLAYER(reg_a6)->shield_anim_frame.sh = 2;
         saved1 = reg_d1.w;
@@ -2512,8 +2512,8 @@ void func_001440D0(void) {
         g_p2_past_first_ship = 1;
         g_p2_stage_misses += 2;
         p2_stage_counts_reset();
-        func_001ACB50();
-        func_001AC160();
+        p2_hyper_gauge_bonus_add();
+        p2_hyper_gauge_check_full();
         g_p2_maximum_level = 0;
         g_p2_maximum_anim_delay = 8;
         g_p2_maximum_anim_delay_reset = 8;
@@ -2526,11 +2526,11 @@ void func_001440D0(void) {
         g_p2_hyper_total = t2;
         if (reg_d0.h[0] != 0) {
             g_p2_hyper_items = 0;
-            func_001AAA20();
+            hud_p2_hyper_count_put();
         }
         reg_d1.h[0] = g_p2_lives;
         if (reg_d1.h[0] == 0) {
-            func_0013FCE0();
+            p2_hyper_state_clear();
         }
         PLAYER(reg_a6)->shield_anim_frame.sh = 3;
         saved2 = reg_d1.w;
@@ -2573,7 +2573,7 @@ next_3:
     reg_d7.h[0] -= 1;
     if (reg_tmp7.h[0] == 0) goto next_4;
 loop_1:
-    func_0016A9B0();
+    item_spawn();
     tmp = reg_d7.h[0] - 1;
     reg_d7.h[0] = tmp;
     if (((s64) ((s64) (tmp & 0xFFFF) << 0x30) >> 0x30) >= 0) goto loop_1;
@@ -2589,7 +2589,7 @@ next_4:
 s32 func_001340A0();
 s32 task_stop_self();
 
-void func_00144400(void) {
+void player_destroyed_update(void) {
     u8 *var_a1;
     u8 *var_a2;
     if (!(PLAYER(reg_a6)->flags.b[1] & 4)) {
@@ -2665,7 +2665,7 @@ block_4:
     }
 }
 
-void func_00144690(void) {
+void player_shot_fire(void) {
     *(u16 *) reg_a0 = *(u16 *) reg_a1;
     reg_a1 += 2;
     reg_a0 += 2;
@@ -2745,8 +2745,8 @@ void func_00144690(void) {
 }
 
 
-void func_00144AD0(void) {
-    func_00144690();
+void player_shot_fire_gun_a(void) {
+    player_shot_fire();
     reg_tmp.h[0] = PLAYER(reg_a6)->gun_index.h;
     PLAYER(reg_a6)->gun_index.h -= 4;
     if ((s32) reg_tmp.h[0] < 4) {
@@ -2754,8 +2754,8 @@ void func_00144AD0(void) {
     }
 }
 
-void func_00144B20(void) {
-    func_00144690();
+void player_shot_fire_gun_b(void) {
+    player_shot_fire();
     reg_tmp.h[0] = PLAYER(reg_a6)->gun_index.h;
     PLAYER(reg_a6)->gun_index.h -= 4;
     if ((s32) reg_tmp.h[0] < 4) {
@@ -2764,31 +2764,12 @@ void func_00144B20(void) {
 }
 
 
-void func_00144B70(void) {
-    func_00144B80();
+void player_shot_fire_volley_a_entry(void) {
+    player_shot_fire_volley_a();
 }
 
-void func_00144B80(void) {
-    func_00144690();
-    reg_tmp.h[0] = PLAYER(reg_a6)->gun_index.h;
-    PLAYER(reg_a6)->gun_index.h -= 4;
-    if ((s32) reg_tmp.h[0] < 4) {
-        PLAYER(reg_a6)->gun_index.h = 8U;
-    }
-    reg_tmp.h[0] = PLAYER(reg_a6)->shot_counter.h;
-    PLAYER(reg_a6)->shot_counter.h -= 4;
-    if ((s32) reg_tmp.h[0] < 4) {
-        PLAYER(reg_a6)->shot_counter.h = 4U;
-    }
-}
-
-
-void func_00144C10(void) {
-    func_00144C20();
-}
-
-void func_00144C20(void) {
-    func_00144690();
+void player_shot_fire_volley_a(void) {
+    player_shot_fire();
     reg_tmp.h[0] = PLAYER(reg_a6)->gun_index.h;
     PLAYER(reg_a6)->gun_index.h -= 4;
     if ((s32) reg_tmp.h[0] < 4) {
@@ -2801,7 +2782,26 @@ void func_00144C20(void) {
     }
 }
 
-void func_00144CB0(void) {
+
+void player_shot_fire_volley_b_entry(void) {
+    player_shot_fire_volley_b();
+}
+
+void player_shot_fire_volley_b(void) {
+    player_shot_fire();
+    reg_tmp.h[0] = PLAYER(reg_a6)->gun_index.h;
+    PLAYER(reg_a6)->gun_index.h -= 4;
+    if ((s32) reg_tmp.h[0] < 4) {
+        PLAYER(reg_a6)->gun_index.h = 8U;
+    }
+    reg_tmp.h[0] = PLAYER(reg_a6)->shot_counter.h;
+    PLAYER(reg_a6)->shot_counter.h -= 4;
+    if ((s32) reg_tmp.h[0] < 4) {
+        PLAYER(reg_a6)->shot_counter.h = 4U;
+    }
+}
+
+void player_roll_recenter(void) {
     u16 temp_v1;
 
     reg_d0.h[0] = 4;
@@ -2818,7 +2818,7 @@ extern s32 g_replay_position;
 extern s16 g_player1[56];
 extern u8 D_006C68B6[];
 
-void func_00144D00(u8 arg0) {
+void p1_draw(u8 arg0) {
     u8 var_a0;
 
     var_a0 = arg0;
@@ -2826,13 +2826,13 @@ void func_00144D00(u8 arg0) {
         reg_a6 = (u8 *)((u16 *)D_006C68B6);
         reg_d0.h[0] = PLAYER(reg_a6)->flags.h;
         if ((s16) reg_d0.h[0] < 0) {
-            func_00145640();
+            player_draw_plain();
         }
     } else {
         reg_a6 = (u8 *)((u16 *)g_player1);
         reg_d0.h[0] = PLAYER(reg_a6)->flags.h;
         if ((s16) reg_d0.h[0] < 0) {
-            func_00144F00();
+            player_draw();
         }
     }
 }
@@ -2840,7 +2840,7 @@ void func_00144D00(u8 arg0) {
 extern s16 g_player2[56];
 extern u8 D_006C6918[];
 
-void func_00144DA0(u8 arg0) {
+void p2_draw(u8 arg0) {
     u8 var_a0;
 
     var_a0 = arg0;
@@ -2848,33 +2848,33 @@ void func_00144DA0(u8 arg0) {
         reg_a6 = (u8 *)((u16 *)D_006C6918);
         reg_d0.h[0] = PLAYER(reg_a6)->flags.h;
         if ((s16) reg_d0.h[0] < 0) {
-            func_00145640();
+            player_draw_plain();
         }
     } else {
         reg_a6 = (u8 *)((u16 *)g_player2);
         reg_d0.h[0] = PLAYER(reg_a6)->flags.h;
         if ((s16) reg_d0.h[0] < 0) {
-            func_00144F00();
+            player_draw();
         }
     }
 }
 
 
-void func_00144E40(void) {
-    extern void func_00145A80(u16);
+void p1_draw_while_entering(void) {
+    extern void player_draw_entering(u16);
     reg_a6 = (u8 *)((u16 *)g_player1);
     reg_d0.h[0] = PLAYER(reg_a6)->flags.h;
     if ((((s64) ((s64) reg_d0.h[0] << 0x30) >> 0x30) >= 0) && (reg_d0.h[0] & 0xFFFF & 0x100)) {
-        func_00145A80(reg_d0.h[0]);
+        player_draw_entering(reg_d0.h[0]);
     }
 }
 
-void func_00144EA0(void) {
-    extern void func_00145A80(u16);
+void p2_draw_while_entering(void) {
+    extern void player_draw_entering(u16);
     reg_a6 = (u8 *)((u16 *)g_player2);
     reg_d0.h[0] = PLAYER(reg_a6)->flags.h;
     if ((((s64) ((s64) reg_d0.h[0] << 0x30) >> 0x30) >= 0) && (reg_d0.h[0] & 0xFFFF & 0x100)) {
-        func_00145A80(reg_d0.h[0]);
+        player_draw_entering(reg_d0.h[0]);
     }
 }
 
@@ -2891,7 +2891,7 @@ extern u16 D_0028C868[];
 extern u16 D_0028C880[];
 extern u8 D_0028E30C;
 
-void func_00144F00(void) {
+void player_draw(void) {
     s32 entity_draw_with_players();
     if (g_players_hidden != 0) return;
     if ((s8)reg_d0.b[0] < 0) goto next_30;
@@ -3007,7 +3007,7 @@ next_210:
 
 extern u16 g_frame_mod4;
 
-void func_00145640(void) {
+void player_draw_plain(void) {
     s32 entity_draw_with_players();
     u16 save_a;
     u16 save_c;
@@ -3066,7 +3066,7 @@ void func_00145640(void) {
 
 void sprite_draw_with_players_keep(void);
 
-void func_00145A80() {
+void player_draw_entering() {
     void entity_draw_with_players(void);
     if (PLAYER(reg_a6)->flags.b[1] & 4) return;
     if (PLAYER(reg_a6)->input.h != 0) {

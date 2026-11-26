@@ -103,19 +103,19 @@ next_20:
 
 s32 layer_a_apply_scroll();                            /* extern */
 s32 deferred_text_flush();                            /* extern */
-s32 func_00130790();                            /* extern */
-s32 func_00130A60();                            /* extern */
+s32 coin_update();                            /* extern */
+s32 coin_inputs_update();                            /* extern */
 s32 func_001A2C80();                            /* extern */
-s32 func_001AB5C0();                            /* extern */
+s32 score_cells_flush();                            /* extern */
 s32 func_00206CB0();                            /* extern */
 
 void frame_layers_flush(void) {
-    func_00130790();
-    func_00130A60();
+    coin_update();
+    coin_inputs_update();
     func_001A2C80();
     layer_a_apply_scroll();
     deferred_text_flush();
-    func_001AB5C0();
+    score_cells_flush();
     func_00206CB0();
 }
 

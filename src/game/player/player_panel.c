@@ -393,8 +393,8 @@ void func_001A3830(s32 arg3) {
     }
 }
 
-s32 func_001AB7F0();
-s32 func_001AB860();
+s32 p1_score_cells_mark();
+s32 p2_score_cells_mark();
 
 void func_001A39B0(s32 arg2, s32 arg3) {
     s32 var_a2;
@@ -408,9 +408,9 @@ void func_001A39B0(s32 arg2, s32 arg3) {
     if (*(u8 *)(reg_a5 + 2) == 0) {
         *(u8 *)(reg_a5 + 2) = 1U;
         if (*(u8 *)(reg_a5 + 6) == 0) {
-            func_001AB7F0();
+            p1_score_cells_mark();
         } else {
-            func_001AB860();
+            p2_score_cells_mark();
         }
         reg_d2.b[0] = *(u8 *)(reg_a5 + 6);
         func_001A34E0();

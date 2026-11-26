@@ -83,9 +83,9 @@ void func_00197F60() {
 }
 
 s32 text_layer_clear();                            /* extern */
-s32 func_00135ED0();                            /* extern */
+s32 game_state_clear();                            /* extern */
 s32 func_00137C20();                            /* extern */
-s32 func_0013FD80();                            /* extern */
+s32 players_clear();                            /* extern */
 s32 sound_stop_effects();                            /* extern */
 s32 text_palette_load();                            /* extern */
 extern u16 text_palette_0[16];
@@ -95,9 +95,9 @@ extern u8 g_game_mode;
 extern s32 D_0028EAFC;
 
 void func_001980A0() {
-    func_0013FD80();
+    players_clear();
     func_00137C20();
-    func_00135ED0();
+    game_state_clear();
     task_stop_self();
     sound_stop_effects();
     text_layer_clear();

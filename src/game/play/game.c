@@ -8,19 +8,19 @@ extern u8 g_player_slot2[];
 #include "entity.h"
 #include "sdk/ps2sdk.h"
 
-void func_00135100();
+void enemies_stop();
 void player_slot_join(void);
-void func_00135ED0(void);
-void func_001368C0(void);
-void func_00136A30(void);
-void func_00136A40(void);
-void func_00136BB0(void);
-void func_00137820(void);
+void game_state_clear(void);
+void enemy_anims_clear(void);
+void enemy_anims_spawn_done(void);
+void enemy_anim_spawn(void);
+void enemy_anim_init(void);
+void enemy_anim_restart(void);
 
 extern s32 g_ground_task_handle;
 
-void func_00134FB0(void) {
-    func_00135100();
+void game_ground_task_stop(void) {
+    enemies_stop();
     reg_a0 = (u8 *)(&g_ground_task_handle);
     task_request_stop();
 }
@@ -29,7 +29,7 @@ extern u16 g_stage_x4;
 extern u16 g_stage_x2;
 extern u16 g_stage;
 
-void func_00134FE0(void) {
+void game_stage_set(void) {
     u32 value;
 
     value = reg_d0.h[0];
@@ -67,7 +67,7 @@ extern u16 g_enemies_stopped;
 extern u16 g_scroll_line_step;
 extern u16 g_scroll_line;
 
-void func_00135010(void) {
+void game_stage_signals_clear(void) {
     (*(s16 *)&g_boss_present) = 0;
     g_enemy_signal_f = 0;
     g_enemy_signal_e = 0;
@@ -95,20 +95,20 @@ void func_00135010(void) {
 s32 bullets_clear();                            /* extern */
 s32 explosions_clear();                            /* extern */
 s32 enemies_reset();                            /* extern */
-s32 func_0016AAB0();                            /* extern */
+s32 items_clear();                            /* extern */
 s32 func_001B82D0();                            /* extern */
 s32 sparks_clear();                            /* extern */
 s32 func_002114A0();                            /* extern */
 
-void func_00135070(void) {
-    func_00135010();
+void game_stage_objects_clear(void) {
+    game_stage_signals_clear();
     enemies_reset();
     explosions_clear();
     func_001B82D0();
     func_002114A0();
-    func_001368C0();
+    enemy_anims_clear();
     sparks_clear();
-    func_0016AAB0();
+    items_clear();
     bullets_clear();
     reg_d0.h[0] = 1;
     task_start();
@@ -119,18 +119,18 @@ void func_00135070(void) {
     *(s16 *)(reg_a0 + 6) = 0;
 }
 
-void func_00135100() {
+void enemies_stop() {
     g_enemies_stopped = 1;
 }
 
-void func_00135110(void) {
+void enemies_resume(void) {
     g_enemies_stopped = 0;
 }
 
 extern u16 g_two_player_state;
 extern u16 g_two_player_game;
 
-void func_00135120(void) {
+void game_players_count(void) {
     reg_a2 = (u8 *)g_player_slots;
     g_two_player_game = 0;
     reg_a3 = (u8 *)g_player_slot2;
@@ -146,9 +146,9 @@ void func_00135120(void) {
     }
     g_two_player_game -= 1;
     g_two_player_state = g_two_player_game;
-    func_00135110();
+    enemies_resume();
     if ((s16) g_two_player_state == -1) {
-        func_00135100((s16) g_two_player_state);
+        enemies_stop((s16) g_two_player_state);
     }
     if (g_two_player_game == 0) {
         g_two_player_game = 1;
@@ -159,7 +159,7 @@ void func_00135120(void) {
 
 extern u16 g_continue_pending_count;
 
-void func_001351F0(void) {
+void game_both_players_out_check(void) {
     if ((g_continue_pending_count == 0) && ((s16)g_two_player_state == -1)) {
         cond_flag = 1;
         return;
@@ -286,8 +286,8 @@ void player_slots_update(arg0)
 
 s32 func_0012FBD0();
 s32 side_scroll_reset();
-s32 func_001AC3A0();
-s32 func_001AC5F0();
+s32 hud_p1_lives_put();
+s32 hud_p2_lives_put();
 extern u16 g_p2_death_count;
 extern u16 g_p1_death_count;
 extern u16 g_p2_continued;
@@ -329,9 +329,9 @@ void player_slot_next_ship(void) {
         PLAYER_SLOT(reg_a6)->step = 2;
     } else {
         if (PLAYER_SLOT(reg_a6)->player == 0) {
-            func_001AC3A0();
+            hud_p1_lives_put();
         } else {
-            func_001AC5F0();
+            hud_p2_lives_put();
         }
         reg_d0.h[0] = PLAYER_SLOT(reg_a6)->task;
         task_start();
@@ -355,7 +355,7 @@ void player_slot_out_of_ships(void) {
     u8 temp_a0;
 
     func_0012FBD0();
-    func_00135120();
+    game_players_count();
     if (g_attract_demo == 0) {
         if (PLAYER_SLOT(reg_a6)->player == 0) {
             func_001ACBA0();
@@ -456,18 +456,18 @@ void player_slot_join_step(void) {
 
 s32 func_001A33C0();
 s32 func_001A35F0();
-s32 func_001AA8F0();
-s32 func_001AAA20();
-s32 func_001AAB50();
-s32 func_001AAB70();
-s32 func_001AB200();
-s32 func_001AB320();
-s32 func_001AB440();
-s32 func_001AB4A0();
-s32 func_001AB520();
-s32 func_001AB570();
-s32 func_001AC900();
-s32 func_001AC980();
+s32 hud_p1_hyper_count_put();
+s32 hud_p2_hyper_count_put();
+s32 p1_extend_score_set();
+s32 p2_extend_score_set();
+s32 p1_score_cells_reset_short();
+s32 p2_score_cells_reset_short();
+s32 p1_chain_state_clear();
+s32 p2_chain_state_clear();
+s32 p1_score_digits_grow();
+s32 p2_score_digits_grow();
+s32 hud_p1_caption_refresh();
+s32 hud_p2_caption_refresh();
 extern u16 D_0024F3A8[];
 extern void *D_0028DEB8;
 extern u8 g_setting_ship_stock;
@@ -498,29 +498,29 @@ void player_slot_join(void) {
     if (reg_d0.h[0] == 0) {
         reg_d1.h[0] = g_p1_ship_type;
         func_001A33C0();
-        func_001AB520();
-        func_001AB200();
-        func_001AAB50();
-        func_001AC900();
-        func_001AB440();
-        func_001AA8F0();
-        func_001AC3A0();
+        p1_score_digits_grow();
+        p1_score_cells_reset_short();
+        p1_extend_score_set();
+        hud_p1_caption_refresh();
+        p1_chain_state_clear();
+        hud_p1_hyper_count_put();
+        hud_p1_lives_put();
     } else {
         reg_d1.h[0] = g_p2_ship_type;
         func_001A33C0();
-        func_001AB570();
-        func_001AB320();
-        func_001AAB70();
-        func_001AC980();
-        func_001AB4A0();
-        func_001AAA20();
-        func_001AC5F0();
+        p2_score_digits_grow();
+        p2_score_cells_reset_short();
+        p2_extend_score_set();
+        hud_p2_caption_refresh();
+        p2_chain_state_clear();
+        hud_p2_hyper_count_put();
+        hud_p2_lives_put();
     }
     PLAYER_SLOT(reg_a6)->step = 0;
     PLAYER_SLOT(reg_a6)->other_02 = 0;
     reg_d0.b[0] = PLAYER_SLOT(reg_a6)->player;
     func_001A35F0();
-    func_00135120();
+    game_players_count();
     func_0012FBD0();
     reg_d0.w = D_0028DEF0;
     reg_d1.w = D_0028DEEC;
@@ -575,20 +575,20 @@ void player_slot_start(void) {
         reg_d1.h[0] = g_p1_ship_type;
         func_001A33C0();
         if (g_loop == 0) {
-            func_001AAB50();
+            p1_extend_score_set();
         }
     } else {
         reg_d1.h[0] = g_p2_ship_type;
         func_001A33C0();
         if (g_loop == 0) {
-            func_001AAB70();
+            p2_extend_score_set();
         }
     }
     reg_d0.b[0] = PLAYER_SLOT(reg_a6)->player;
     func_001A35F0();
     PLAYER_SLOT(reg_a6)->step = 0;
     PLAYER_SLOT(reg_a6)->other_02 = 0;
-    func_00135120();
+    game_players_count();
 }
 
 s32 sound_stop_effects();
@@ -677,8 +677,8 @@ void player_slot_draw_bombs(void) {
 }
 
 
-void func_00135EC0(void) {
-    func_00135ED0();
+void game_init(void) {
+    game_state_clear();
 }
 
 extern s32 g_player_panel2_task_handle;
@@ -730,7 +730,7 @@ extern u16 g_rank;
 extern u16 g_true_last_boss;
 extern u16 g_game_completed;
 extern u16 g_two_player_seen;
-void func_00135ED0(void) {
+void game_state_clear(void) {
     s32 var_a1;
     u8 *temp_a2;
 
@@ -775,11 +775,11 @@ void func_00135ED0(void) {
     g_p2_lives = 0xFFFF;
 }
 
-s32 func_001AAEE0();
-s32 func_001AB070();
-s32 func_001AC840();
+s32 p1_score_cells_reset();
+s32 p2_score_cells_reset();
+s32 score_panel_intro_begin();
 
-void func_00136010(void) {
+void game_ships_start(void) {
     u32 save_d0;
     u32 save_d1;
     u32 save_d2;
@@ -827,7 +827,7 @@ void func_00136010(void) {
         reg_d1.h[0] = 4;
         player_slot_request();
         if (g_loop == 0) {
-            func_001AAEE0();
+            p1_score_cells_reset();
         }
     } else {
         reg_d0.h[0] = 0xB;
@@ -842,7 +842,7 @@ void func_00136010(void) {
         reg_d1.h[0] = 4;
         player_slot_request();
         if (g_loop == 0) {
-            func_001AB070();
+            p2_score_cells_reset();
         }
     } else {
         reg_d0.h[0] = 0xB;
@@ -851,7 +851,7 @@ void func_00136010(void) {
         PLAYER_SLOT(reg_a3)->other_task_1C[1] = (u16) reg_d0.h[0];
         *(s8 *)(reg_a0 + 6) = 1;
     }
-    func_001AC840();
+    score_panel_intro_begin();
     reg_d0.w = save_d0;
     reg_d1.w = save_d1;
     reg_d2.w = save_d2;
@@ -869,7 +869,7 @@ void func_00136010(void) {
     reg_a6 = save_a6;
 }
 
-void func_00136260(void) {
+void game_ships_stop(void) {
     reg_a2 = g_player_slots;
     reg_a3 = g_player_slot2;
     reg_a0 = (u8 *)PLAYER_SLOT(reg_a2)->ship_task;
@@ -888,13 +888,13 @@ void func_00136260(void) {
 
 extern u16 g_player_start_request;
 
-void func_001362F0(void) {
+void game_tasks_stop(void) {
     reg_a0 = (u8 *)(&g_misc_task_handle);
     task_request_stop();
     reg_a0 = (u8 *)(&g_ground_task_handle);
     task_request_stop();
     if (g_player_start_request != 0) {
-        func_00136260();
+        game_ships_stop();
     }
 }
 
@@ -904,7 +904,7 @@ s32 func_001A3300();
 extern u8 g_default_text_palette[];
 extern u16 g_game_flow_scroll_line;
 
-void func_00136330() {
+void game_tasks_start() {
     u16 temp_a0;
     u16 temp_a1;
     u32 temp_a0_2;
@@ -928,7 +928,7 @@ void func_00136330() {
     if (g_player_start_request != 0) {
         reg_d0.w = 0x10000E00;
         reg_d1.w = 0x10002A00;
-        func_00136010();
+        game_ships_start();
         g_player_start_request = 0;
     }
     reg_d0.w = 0;
@@ -940,22 +940,22 @@ void func_00136330() {
 
 extern u16 g_player_shots_disabled;
 
-void func_00136400(void) {
+void game_restart(void) {
     g_player_shots_disabled = 0;
     g_game_flow_scroll_line = reg_d7.h[0];
     g_player_start_request = reg_d6.h[0];
-    func_001362F0();
-    func_00135010();
-    func_00136330();
+    game_tasks_stop();
+    game_stage_signals_clear();
+    game_tasks_start();
     player_slots_update();
 }
 
 s32 pickups_clear();
 s32 func_00131630();
 s32 func_001340F0();
-s32 func_0013FD80();
+s32 players_clear();
 s32 func_00171ED0();
-s32 func_001AACC0();
+s32 score_cells_init();
 s32 func_001AE490();
 extern u8 text_palette_0[];
 extern u8 text_palette_1[];
@@ -969,7 +969,7 @@ extern u16 text_palette_8[];
 extern u16 text_palette_11[];
 extern u16 g_game_flow_paused;
 
-void func_00136450(void) {
+void game_task_begin(void) {
     *(s8 *)(reg_a5 + 3) = 1;
     reg_a0 = (u8 *)text_palette_0;
     reg_d0.w = 0;
@@ -1004,7 +1004,7 @@ void func_00136450(void) {
     g_game_flow_paused = 1;
     g_player_start_request = 0;
     if (g_loop == 0) {
-        func_00135ED0();
+        game_state_clear();
     } else {
         g_continue_pending_count = 0;
         g_p1_lives = 0xFFFF;
@@ -1016,14 +1016,14 @@ void func_00136450(void) {
         g_player_panel2_task_handle = 0;
     }
     reg_d0.h[0] = *(u16 *)(reg_a5 + 4);
-    func_00134FE0();
+    game_stage_set();
     func_00131630();
     func_00171ED0();
     if (g_loop == 0) {
         pickups_clear();
         func_001AE490();
-        func_001AACC0();
-        func_0013FD80();
+        score_cells_init();
+        players_clear();
     }
     player_slots_init();
     func_001340F0();
@@ -1092,7 +1092,7 @@ void ship_select_apply(void) {
             reg_d7.h[0] = 0x38;
         }
         reg_d6.h[0] = g_player_start_request;
-        func_00136400();
+        game_restart();
     }
     reg_d0.w = save_d0;
     reg_d1.w = save_d1;
@@ -1123,7 +1123,7 @@ void game_task(void) {
 
     t = *(u8 *)(reg_a5 + 3);
     if (t == 0) {
-        func_00136450();
+        game_task_begin();
         return;
     }
     if (t == 2) goto block_end1;
@@ -1148,19 +1148,19 @@ void game_task(void) {
     }
     return;
 block_end1:
-    func_00135ED0();
+    game_state_clear();
     task_stop_self();
 }
 
-extern u8 D_0029BC00[];
+extern u8 g_enemy_anims[];
 
 
-void func_001368C0(void) {
-    memset(&((s32 *)D_0029BC00)[0], 0, 0x180);
+void enemy_anims_clear(void) {
+    memset(&((s32 *)g_enemy_anims)[0], 0, 0x180);
 }
 
 
-void func_001368E0(void) {
+void enemy_anims_spawn_listed(void) {
 loop_1:
     reg_tmp.h[1] = *(u16 *)(reg_a5 + 0x44);
     reg_tmp.h[0] = *(u16 *)(reg_a5 + 0x46);
@@ -1168,18 +1168,18 @@ loop_1:
     reg_d0.h[0] = *(u16 *)reg_a1;
     reg_a1 += 2;
     if (0 > (s16) reg_d0.h[0]) {
-        func_00136A30();
+        enemy_anims_spawn_done();
         return;
     }
     if ((s16) reg_d0.h[0] < (s32) ENTITY(reg_a6)->hp.h) {
-        func_00136A30();
+        enemy_anims_spawn_done();
         return;
     }
-    func_00136A40();
+    enemy_anim_spawn();
     goto loop_1;
 }
 
-void func_00136980(void) {
+void enemy_anims_spawn_listed_long(void) {
     u32 temp_s0;
 
 loop_1:
@@ -1191,28 +1191,28 @@ loop_1:
     reg_d1.h[0] = *(u16 *)reg_a1;
     reg_a1 += 2;
     if (0 > (s32) reg_d1.w) {
-        func_00136A30();
+        enemy_anims_spawn_done();
         return;
     }
     temp_s0 = reg_d0.w;
     if ((s32) reg_d1.w < (s32) temp_s0) {
-        func_00136A30();
+        enemy_anims_spawn_done();
         return;
     }
-    func_00136A40();
+    enemy_anim_spawn();
     reg_d0.w = temp_s0;
     goto loop_1;
 }
 
 
-void func_00136A30(void) {
+void enemy_anims_spawn_done(void) {
     (*(u8 *)&cond_flag) = 0;
 }
 
-extern u16 D_0029BD7C[];
+extern u16 g_enemy_anim_count[];
 
-void func_00136A40(void) {
-    reg_a0 = (u8 *)((u16 *)D_0029BC00);
+void enemy_anim_spawn(void) {
+    reg_a0 = (u8 *)((u16 *)g_enemy_anims);
     reg_d0.w = 9;
 loop_0:
     if (*(u16 *)reg_a0 == 0) goto next_0;
@@ -1245,21 +1245,21 @@ next_0:
     reg_tmp.w = (u32)reg_a1;
     *(u16 *)(reg_a5 + 0x44) = reg_tmp.h[1];
     *(u16 *)(reg_a5 + 0x46) = reg_tmp.h[0];
-    D_0029BD7C[0] += 1;
-    func_00136BB0();
+    g_enemy_anim_count[0] += 1;
+    enemy_anim_init();
 }
 
 s32 rng_next_bit();
-extern u16 D_0024F520[];
-extern u8 D_0029BD7C_as_u8_a[];
+extern u16 enemy_anim_definitions[];
+extern u8 g_enemy_anim_count_as_u8_a[];
 
-void func_00136BB0(void) {
+void enemy_anim_init(void) {
     u8 *save;
 
     save = reg_a0;
     reg_d0.h[0] = *(u16 *)reg_a2;
     reg_a2 += 2;
-    reg_a3 = (u8 *)D_0024F520;
+    reg_a3 = (u8 *)enemy_anim_definitions;
     reg_a3 = *(u8 **)(reg_a3 + reg_d0.h[0]);
     reg_d0.h[0] = *(u16 *)reg_a3;
     reg_a3 += 2;
@@ -1320,14 +1320,14 @@ next_2:
     reg_a3 += 2;
     reg_d3.h[0] = *(u16 *)reg_a3;
     reg_a3 += 2;
-    reg_d3.h[0] -= *(u16 *)(D_0029BD7C_as_u8_a + 2);
+    reg_d3.h[0] -= *(u16 *)(g_enemy_anim_count_as_u8_a + 2);
     *(u16 *)reg_a0 = reg_d3.h[1];
     reg_a0 += 2;
     *(u16 *)reg_a0 = reg_d3.h[0];
     reg_a0 += 2;
-    *(u16 *)(D_0029BD7C_as_u8_a + 2) -= 4;
-    if (0 <= (s64)*(s16 *)(D_0029BD7C_as_u8_a + 2)) goto next_3;
-    *(u16 *)(D_0029BD7C_as_u8_a + 2) = 0xC;
+    *(u16 *)(g_enemy_anim_count_as_u8_a + 2) -= 4;
+    if (0 <= (s64)*(s16 *)(g_enemy_anim_count_as_u8_a + 2)) goto next_3;
+    *(u16 *)(g_enemy_anim_count_as_u8_a + 2) = 0xC;
 next_3:
     reg_a0 = save;
     cond_flag = 0;
@@ -1342,9 +1342,9 @@ extern u8 D_0024F480[];
 extern u8 D_0024F4A0[];
 extern u16 g_frame_mod2;
 extern u8 g_boss_present_b1;
-extern u8 D_0029BC00[];
+extern u8 g_enemy_anims[];
 
-void func_00136F30(void) {
+void enemy_anims_update(void) {
     u32 count;
     u8 bits;
 
@@ -1361,10 +1361,10 @@ next_20:
     count = reg_d0.h[0] - 1;
     reg_d0.h[0] = count;
     if (((s64)((s64)(u16)count << 0x30) >> 0x30) >= 0) goto loop_10;
-    reg_d7.h[0] = D_0029BD7C[0];
+    reg_d7.h[0] = g_enemy_anim_count[0];
     if (reg_d7.h[0] == 0) return;
     reg_d7.h[0] -= 1;
-    reg_a6 = (u8 *)D_0029BC00;
+    reg_a6 = (u8 *)g_enemy_anims;
     goto loop_40;
 loop_30:
     reg_a6 += 0x26;
@@ -1384,7 +1384,7 @@ next_50:
     if (0 > (s8)reg_d2.b[0]) goto next_60;
     *(u16 *)(reg_a6 + 0x22) -= 1;
     if (*(u16 *)(reg_a6 + 0x22) != 0) goto next_60;
-    func_00137820();
+    enemy_anim_restart();
     reg_d2.h[0] = ENTITY(reg_a6)->flags.h;
 next_60:
     reg_d0.w = 0x7C;
@@ -1419,7 +1419,7 @@ next_90:
     return;
 block_clr:
     ENTITY(reg_a6)->flags.h = 0;
-    D_0029BD7C[0] -= 1;
+    g_enemy_anim_count[0] -= 1;
     reg_a6 += 0x26;
     count = reg_d7.h[0] - 1;
     reg_d7.h[0] = count;
@@ -1506,7 +1506,7 @@ next_obj10:
 }
 
 
-void func_00137820(void) {
+void enemy_anim_restart(void) {
     u32 temp_s0;
 
     reg_d1.h[1] = ENTITY(reg_a6)->hit_y_plus.h;
@@ -1521,7 +1521,7 @@ void func_00137820(void) {
     if (ENTITY(reg_a6)->flags.b[1] & 2) {
         temp_s0 = reg_d1.w;
         reg_a0 = reg_a6;
-        func_00136BB0();
+        enemy_anim_init();
         reg_a1 = (u8 *)temp_s0;
         *(u8 *)(reg_a0 + 1) |= 2;
         *(u16 *)(reg_a0 + 2) = (u16) (*(u16 *)((u8 *)((u32)reg_a1) + (2)));
@@ -1532,7 +1532,7 @@ void func_00137820(void) {
         return;
     }
     reg_a0 = reg_a6;
-    func_00136BB0();
+    enemy_anim_init();
 }
 
 /* .sbss (the compiler lays these out in reverse) */
@@ -1553,4 +1553,4 @@ u8 *D_0028DEBC;
 void *D_0028DEB8;
 
 /* .bss (the compiler lays these out in reverse) */
-u8 D_0029BC00[384];
+u8 g_enemy_anims[384];

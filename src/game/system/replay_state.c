@@ -1406,8 +1406,8 @@ extern u8 g_player1[];
 extern u8 g_text_layer[];
 extern s32 g_p2_position_trail[];
 extern s32 g_p1_position_trail[];
-extern Bank10 D_002BAF30_as_Bank10;
-extern Bank90 D_002BAF50_as_Bank90;
+extern Bank10 g_p1_score_extra_cell_as_Bank10;
+extern Bank90 g_p1_score_cells_as_Bank90;
 extern u8 g_player_slots[];
 extern u8 g_pickups[];
 extern u16 D_006C58AA[];
@@ -1607,16 +1607,16 @@ void replay_snapshot_save(Buf *buf) {
     *(s32 *)(p + 0x32AC) = g_p1_score_pending;
     *(s32 *)(p + 0x32B0) = g_p2_score_pending;
     for (i = 0; i < 90; i++) {
-        buf->f32B4[i] = D_002BAF50_as_Bank90.a[i];
+        buf->f32B4[i] = g_p1_score_cells_as_Bank90.a[i];
     }
     for (i = 0; i < 90; i++) {
-        buf->f330E[i] = D_002BAF50_as_Bank90.b[i];
+        buf->f330E[i] = g_p1_score_cells_as_Bank90.b[i];
     }
     for (i = 0; i < 10; i++) {
-        buf->f3368[i] = D_002BAF30_as_Bank10.a[i];
+        buf->f3368[i] = g_p1_score_extra_cell_as_Bank10.a[i];
     }
     for (i = 0; i < 10; i++) {
-        buf->f3372[i] = D_002BAF30_as_Bank10.b[i];
+        buf->f3372[i] = g_p1_score_extra_cell_as_Bank10.b[i];
     }
     *(s32 *)(p + 0x337C) = g_score_check_scratch;
     *(u16 *)(p + 0x3380) = g_score_check_billions;
@@ -2108,16 +2108,16 @@ void replay_snapshot_load(u8 *p) {
     g_p1_score_pending = *(s32 *)(p + 0x32AC);
     g_p2_score_pending = *(s32 *)(p + 0x32B0);
     for (i = 0; i < 90; i++) {
-        D_002BAF50_as_Bank90.a[i] = p[0x32B4 + i];
+        g_p1_score_cells_as_Bank90.a[i] = p[0x32B4 + i];
     }
     for (i = 0; i < 90; i++) {
-        D_002BAF50_as_Bank90.b[i] = p[0x330E + i];
+        g_p1_score_cells_as_Bank90.b[i] = p[0x330E + i];
     }
     for (i = 0; i < 10; i++) {
-        D_002BAF30_as_Bank10.a[i] = p[0x3368 + i];
+        g_p1_score_extra_cell_as_Bank10.a[i] = p[0x3368 + i];
     }
     for (i = 0; i < 10; i++) {
-        D_002BAF30_as_Bank10.b[i] = p[0x3372 + i];
+        g_p1_score_extra_cell_as_Bank10.b[i] = p[0x3372 + i];
     }
     g_score_check_scratch = *(s32 *)(p + 0x337C);
     g_score_check_billions = *(u16 *)(p + 0x3380);
@@ -2258,13 +2258,13 @@ void replay_text_layer_load(const Src *src) {
 
 extern void pickups_clear(void);
 extern void bullets_clear(void);
-extern void func_00135ED0(void);
-extern void func_001368C0(void);
+extern void game_state_clear(void);
+extern void enemy_anims_clear(void);
 extern void explosions_clear(void);
-extern void func_0013FD80(void);
+extern void players_clear(void);
 extern void enemies_reset(void);
-extern void func_0016AAB0(void);
-extern void func_001AACC0(void);
+extern void items_clear(void);
+extern void score_cells_init(void);
 extern void func_001AE490(void);
 extern void func_001B82D0(void);
 extern void sparks_clear(void);
@@ -2276,15 +2276,15 @@ void replay_start_state_load(u8 *p) {
     explosions_clear();
     func_001B82D0();
     func_002114A0();
-    func_001368C0();
+    enemy_anims_clear();
     sparks_clear();
-    func_0016AAB0();
+    items_clear();
     bullets_clear();
-    func_00135ED0();
+    game_state_clear();
     pickups_clear();
     func_001AE490();
-    func_001AACC0();
-    func_0013FD80();
+    score_cells_init();
+    players_clear();
     g_stage_bees_collected = *(u16 *)(p + 0x0);
     g_bee_value_step = *(u16 *)(p + 0x2);
     g_p1_stage_stars_large = *(u16 *)(p + 0x4);
@@ -2411,16 +2411,16 @@ void replay_start_state_load(u8 *p) {
     g_p1_score_pending = *(s32 *)(p + 0x1E4);
     g_p2_score_pending = *(s32 *)(p + 0x1E8);
     for (i = 0; i < 90; i++) {
-        D_002BAF50_as_Bank90.a[i] = p[0x1EC + i];
+        g_p1_score_cells_as_Bank90.a[i] = p[0x1EC + i];
     }
     for (i = 0; i < 90; i++) {
-        D_002BAF50_as_Bank90.b[i] = p[0x246 + i];
+        g_p1_score_cells_as_Bank90.b[i] = p[0x246 + i];
     }
     for (i = 0; i < 10; i++) {
-        D_002BAF30_as_Bank10.a[i] = p[0x2A0 + i];
+        g_p1_score_extra_cell_as_Bank10.a[i] = p[0x2A0 + i];
     }
     for (i = 0; i < 10; i++) {
-        D_002BAF30_as_Bank10.b[i] = p[0x2AA + i];
+        g_p1_score_extra_cell_as_Bank10.b[i] = p[0x2AA + i];
     }
     g_score_check_scratch = *(s32 *)(p + 0x2B4);
     g_score_check_billions = *(u16 *)(p + 0x2B8);
@@ -2659,16 +2659,16 @@ void replay_start_state_save(Buf2 *buf) {
     *(s32 *)(p + 0x1E4) = g_p1_score_pending;
     *(s32 *)(p + 0x1E8) = g_p2_score_pending;
     for (i = 0; i < 90; i++) {
-        buf->a[i] = D_002BAF50_as_Bank90.a[i];
+        buf->a[i] = g_p1_score_cells_as_Bank90.a[i];
     }
     for (i = 0; i < 90; i++) {
-        buf->b[i] = D_002BAF50_as_Bank90.b[i];
+        buf->b[i] = g_p1_score_cells_as_Bank90.b[i];
     }
     for (i = 0; i < 10; i++) {
-        buf->c[i] = D_002BAF30_as_Bank10.a[i];
+        buf->c[i] = g_p1_score_extra_cell_as_Bank10.a[i];
     }
     for (i = 0; i < 10; i++) {
-        buf->d[i] = D_002BAF30_as_Bank10.b[i];
+        buf->d[i] = g_p1_score_extra_cell_as_Bank10.b[i];
     }
     *(s32 *)(p + 0x2B4) = g_score_check_scratch;
     *(u16 *)(p + 0x2B8) = g_score_check_billions;

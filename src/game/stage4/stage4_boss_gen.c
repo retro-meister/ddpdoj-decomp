@@ -663,10 +663,10 @@ extern s16 g_player1[];
 s32 bullet_fire256_fixed();
 s32 bullet_fire256_double();
 s32 bullet_fire256_3way();
-s32 func_001368E0();
+s32 enemy_anims_spawn_listed();
 s32 fade_in_and_release();
 s32 spawn_request_add();
-s32 func_0016A9B0();
+s32 item_spawn();
 s32 enemy_switch_target_player();
 s32 sfx_explosion_air_medium();
 s32 sfx_explosion_air_large();
@@ -840,7 +840,7 @@ next_260:
 next_290:
     ENTITY(reg_a6)[2].attr.b.palette = reg_d0.b[0];
 next_300:
-    func_001368E0();
+    enemy_anims_spawn_listed();
     if (g_enemies_stopped != 0) goto block_e;
     if ((s32) g_scroll_line < 0x228) goto next_350;
     g_enemy_signal_2 = 0;
@@ -1080,7 +1080,7 @@ next_650:
     ENTITY(reg_a6)->y.h = 0x1000;
 next_660:
     reg_d0.h[0] = 0x10;
-    func_0016A9B0();
+    item_spawn();
     reg_tmp.w = saved_d0;
     ENTITY(reg_a6)->y.h = reg_tmp.h[0];
     func_001E4410();
@@ -1525,7 +1525,7 @@ next_6:
     if ((s16) ENTITY(reg_a6)->hp.h < 0) goto block_b;
 next_7:
     ENTITY(reg_a6)->attr.b.palette = (u8) reg_d0.b[0];
-    func_001368E0();
+    enemy_anims_spawn_listed();
     if (g_enemies_stopped != 0) goto next_15;
     if (*(u16 *)(reg_a5 + 0x18) != 0) goto next_8;
     if (!((s32) ENTITY(reg_a6)->y.h < 0x7001)) goto next_15;

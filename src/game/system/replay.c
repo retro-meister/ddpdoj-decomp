@@ -336,8 +336,8 @@ void replay_exit_begin(void) {
     reg_a6 = save_a6;
 }
 
-extern void func_0015BA20(void);
-extern void func_0015BD00(void);
+extern void settings_notice_begin(void);
+extern void settings_notice_draw_static(void);
 extern void stage_load_step(void);
 extern void func_00225630(void);
 extern void func_002256B0(void);
@@ -407,8 +407,8 @@ void replay_exit(void) {
         break;
     case 2:
         step++;
-        func_0015BA20();
-        func_0015BD00();
+        settings_notice_begin();
+        settings_notice_draw_static();
         if (D_0028EC20 != 0) {
             func_002271D0();
         } else {
@@ -905,8 +905,8 @@ extern u8 D_006C91AF[];
 extern u8 D_006C91B0[];
 
 void replay_playback_start(void) {
-    s32 func_00135100();
-    s32 func_00135110();
+    s32 enemies_stop();
+    s32 enemies_resume();
     s32 func_001719A0();
     s32 func_001719B0();
     s32 func_001719D0();
@@ -992,7 +992,7 @@ void replay_playback_start(void) {
         D_0028E304 = D_006C91B0[0];
         D_0028E2E4 = D_006C58C4[0];
         replay_header_apply();
-        func_00135100();
+        enemies_stop();
         step = 0x64;
         break;
     case 0xC8:
@@ -1017,7 +1017,7 @@ void replay_playback_start(void) {
 #endif
                     music_play_bgm2();
                 }
-                func_00135110();
+                enemies_resume();
                 D_0028ED5C = 0;
                 if (g_loop == 0) {
                     memcpy(((u16 *)g_player1), D_006C68B6, 0x62);
@@ -1069,7 +1069,7 @@ void replay_playback_start(void) {
 #ifndef DEATH_LABEL
                     D_0028DEF8 = 1;
 #endif
-                    func_00135110();
+                    enemies_resume();
                     step += 1;
                     printf((const char *)"replay play start!!\n");
                 }
@@ -1179,8 +1179,8 @@ extern u8 g_simulation_boss_start;
 extern u8 D_0028E2D4;
 
 void replay_run_start(void) {
-    extern void func_00135100(void);
-    extern void func_00135110(void);
+    extern void enemies_stop(void);
+    extern void enemies_resume(void);
     extern void func_001719A0(void);
     extern void func_001719B0(void);
     extern void func_001719D0(void);
@@ -1239,7 +1239,7 @@ void replay_run_start(void) {
         D_0028E2AC = g_replay_header.hyper_gauge;
         D_0028E2A8 = *(u8 *)&g_replay_header.unk2C;
         replay_header_apply();
-        func_00135100();
+        enemies_stop();
         step++;
         g_pad_input_locked = 1;
         break;
@@ -1255,7 +1255,7 @@ void replay_run_start(void) {
             g_pad_input_locked = 0;
             step++;
             g_loop = g_replay_header.round;
-            func_00135110();
+            enemies_resume();
             if (g_replay_header.stage == 0) {
                 music_play_bgm2();
             }

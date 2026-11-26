@@ -597,8 +597,8 @@ void func_00134A70(void)
 }
 
 s32 func_001A3560();
-s32 func_001ACA00();
-s32 func_001ACA80();
+s32 hud_p1_caption_clear_shifted();
+s32 hud_p2_caption_clear_shifted();
 
 void func_00134AC0() {
     *(s8 *)(reg_a5 + 3) = 1;
@@ -613,9 +613,9 @@ void func_00134AC0() {
     reg_d0.b[0] = *(u8 *)(reg_a5 + 6);
     func_001A3560();
     if (*(u8 *)(reg_a5 + 6) == 0) {
-        func_001ACA00();
+        hud_p1_caption_clear_shifted();
     } else {
-        func_001ACA80();
+        hud_p2_caption_clear_shifted();
     }
     func_00134A70();
 }
@@ -660,9 +660,9 @@ block_3:
 }
 
 s32 bee_counts_reset();
-s32 func_0012FE10();
-s32 func_00135100();
-s32 func_001351F0();
+s32 credit_display_changed_check();
+s32 enemies_stop();
+s32 game_both_players_out_check();
 extern u8 g_setting_continue;
 extern u8 g_simulation_active;
 extern u8 D_002BF3EA[];
@@ -698,7 +698,7 @@ void func_00134C40(void) {
     if (g_simulation_active != 0) {
         goto next_8;
     }
-    func_001351F0();
+    game_both_players_out_check();
     if (cond_flag == 0) {
         goto next_2;
     }
@@ -712,7 +712,7 @@ next_1:
     reg_d0.w = 3;
     reg_d1.w = 0;
     func_00134170();
-    func_00135100();
+    enemies_stop();
     goto next_4;
 next_2:
     if (reg_a5[2] == 0) {
@@ -741,7 +741,7 @@ next_4:
     if (((reg_d0.h[0] &= 0x70) & 0xFFFF) == 0) {
         goto next_6;
     }
-    func_001351F0();
+    game_both_players_out_check();
     if (cond_flag == 0) {
         goto next_5;
     }
@@ -774,7 +774,7 @@ next_8:
     if (g_loop != 0) {
         goto next_9;
     }
-    func_001351F0();
+    game_both_players_out_check();
     if (cond_flag == 0) {
         goto next_11;
     }
@@ -789,13 +789,13 @@ next_11:
 next_10:
     reg_d0.w = 0;
     reg_d0.b[0] = reg_a5[6];
-    func_0012FE10();
+    credit_display_changed_check();
     if (cond_flag == 0) {
         goto next_12;
     }
     func_00134A70();
 next_12:
-    func_001351F0();
+    game_both_players_out_check();
     if (cond_flag == 0) {
         goto next_13;
     }

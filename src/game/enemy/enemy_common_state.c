@@ -4,7 +4,7 @@
 
 /* .sbss (the compiler lays these out in reverse) */
 s16 D_0028E7D0 __attribute__((aligned(4)));
-u16 D_0028E7CC __attribute__((aligned(4)));
-u16 D_0028E7C8 __attribute__((aligned(4)));
-s16 D_0028E7C4;
-u32 D_0028E7C0;
+u16 g_settings_notice_shown __attribute__((aligned(4)));
+u16 g_settings_notice_loaded __attribute__((aligned(4)));
+s16 g_settings_notice_time;
+u32 g_settings_notice_fade;

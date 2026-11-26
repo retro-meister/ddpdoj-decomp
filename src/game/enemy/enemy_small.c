@@ -892,7 +892,7 @@ void large_tank_start(void) {
 
 s32 bullet_fire256_fast();
 s32 bullet_fire256_double();
-s32 func_001368E0();
+s32 enemy_anims_spawn_listed();
 s32 sfx_explosion_ground_large();
 s32 entity_draw_layer1();
 s32 sprite_draw_layer1();
@@ -952,7 +952,7 @@ next_1:
         if ((s16) ENTITY(reg_a6)->hp.h >= 0) {
 next_2:
             ENTITY(reg_a6)->attr.b.palette = (u8) reg_d0.b[0];
-            func_001368E0();
+            enemy_anims_spawn_listed();
             if (g_enemies_stopped == 0) {
                 ENTITY(reg_a6)->offset_y.h = 0xF000U;
                 if ((s32) ENTITY(reg_a6)->move.b.dir < 0x40) {
@@ -1311,7 +1311,7 @@ next_1:
         if ((s16) ENTITY(reg_a6)->hp.h >= 0) {
 next_2:
             ENTITY(reg_a6)->attr.b.palette = (u8) reg_d0.b[0];
-            func_001368E0();
+            enemy_anims_spawn_listed();
             if (g_enemies_stopped == 0) {
                 ENTITY(reg_a6)->offset_y.h = 0xF400U;
                 if ((s32) ENTITY(reg_a6)->move.b.dir < 0x40) {

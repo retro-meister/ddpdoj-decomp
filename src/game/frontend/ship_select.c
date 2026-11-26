@@ -343,8 +343,8 @@ void func_001B1920(void) {
 }
 
 
-s32 func_00130270();
-s32 func_001303A0();
+s32 p1_credit_spend_one();
+s32 p2_credit_spend_one();
 s32 doll_select_start();
 s32 doll_select_confirm();
 s32 doll_select_input();
@@ -470,7 +470,7 @@ void ship_select_task(void) {
         } else if ((reg_d7.h[0] != 0) && (D_0028E304 == 0)) {
             input_get_p1_held();
             if ((reg_d0.w & 0x8000) && ((reg_a0 = (u8 *)D_0029BE00, (*(u8 *)(reg_a0 + 0x71) == 0)) || ((s32) *(u8 *)(reg_a0 + 0x70) < 6))) {
-                func_00130270();
+                p1_credit_spend_one();
                 if (cond_flag == 0) {
                     ENTITY(reg_a6)->flags.sb[1] = 1;
                 }
@@ -478,7 +478,7 @@ void ship_select_task(void) {
         } else if (D_0028E304 == 0) {
             input_get_p2_held();
             if ((reg_d0.w & 0x8000) && ((reg_a0 = (u8 *)D_0029BE00, (*(u8 *)(reg_a0 + 1) == 0)) || ((s32) *(u8 *)reg_a0 < 6))) {
-                func_001303A0();
+                p2_credit_spend_one();
                 if (cond_flag == 0) {
                     ENTITY(reg_a6)->flags.sb[1] = 1;
                 }

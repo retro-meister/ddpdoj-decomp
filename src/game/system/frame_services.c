@@ -6,18 +6,18 @@
 void func_00132420(void);
 
 #ifndef DEATH_LABEL
-s32 func_00130D80();
-s32 func_00130DB0();
-s32 func_00130DC0();
-s32 func_00130E00();
-s32 func_00130E70();
-s32 func_00130EC0();
-s32 func_00130F10();
-s32 func_00130FB0();
-s32 func_00131050();
-s32 func_001310F0();
-s32 func_00131150();
-s32 func_001311A0();
+s32 free_play_text_print();
+s32 free_play_text_print_p1();
+s32 free_play_text_print_p2();
+s32 coins_text_print();
+s32 coins_text_print_p1();
+s32 coins_text_print_p2();
+s32 credits_with_coins_text_print();
+s32 credits_with_coins_text_print_p1();
+s32 credits_with_coins_text_print_p2();
+s32 credits_text_print();
+s32 credits_text_print_p1();
+s32 credits_text_print_p2();
 extern u8 g_setting_chute_type;
 extern u8 g_setting_coin_mode;
 
@@ -28,37 +28,37 @@ void func_00131200(void) {
     reg_d1.b[0] = g_setting_chute_type;
     if (reg_d0.h[0] == 0x12) {
         if (reg_d1.b[0] != 1) {
-            func_00130D80();
+            free_play_text_print();
             return;
         }
-        func_00130DB0();
-        func_00130DC0();
+        free_play_text_print_p1();
+        free_play_text_print_p2();
         return;
     }
     if (reg_d0.h[0] == 0x11) {
         if (reg_d1.b[0] != 1) {
-            func_00130E00();
+            coins_text_print();
             return;
         }
-        func_00130E70();
-        func_00130EC0();
+        coins_text_print_p1();
+        coins_text_print_p2();
         return;
     }
     if (((s16) reg_d0.h[0] < 0x11) && ((s16) reg_d0.h[0] >= 9)) {
         if (reg_d1.b[0] != 1) {
-            func_00130F10();
+            credits_with_coins_text_print();
             return;
         }
-        func_00130FB0();
-        func_00131050();
+        credits_with_coins_text_print_p1();
+        credits_with_coins_text_print_p2();
         return;
     }
     if (reg_d1.b[0] != 1) {
-        func_001310F0();
+        credits_text_print();
         return;
     }
-    func_00131150();
-    func_001311A0();
+    credits_text_print_p1();
+    credits_text_print_p2();
 }
 #endif
 

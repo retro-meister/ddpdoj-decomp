@@ -399,7 +399,7 @@ void mid_flyer_a_start(void) {
 s32 bullet_fire_3way();
 s32 bullet_fire256_3way();
 s32 bullet_fire256();
-s32 func_001368E0();
+s32 enemy_anims_spawn_listed();
 s32 explosion_spawn();
 s32 enemy_hitbox_debug_draw();
 s32 enemy_remove();
@@ -508,7 +508,7 @@ next_80:
     if ((s16) ENTITY(reg_a6)->hp.h < 0) goto next_700;
 next_90:
     ENTITY(reg_a6)->attr.b.palette = reg_d0.b[0];
-    func_001368E0();
+    enemy_anims_spawn_listed();
     if (g_enemies_stopped != 0) goto next_500;
     if (g_bullets_blocked != 0) goto next_500;
     if (MID_FLYER_A(reg_a5)->second_guns != 0) goto next_300;
@@ -950,7 +950,7 @@ block_5:
         if ((s16) ENTITY(reg_a6)->hp.h >= 0) {
 block_17:
             ENTITY(reg_a6)->attr.b.palette = (u8) reg_d0.b[0];
-            func_001368E0();
+            enemy_anims_spawn_listed();
             if ((g_enemies_stopped == 0) && (g_bullets_blocked == 0)) {
                 if ((s16) ENTITY(reg_a6)->y.h >= 0x1000) {
                     reg_d0.h[0] = ENTITY(reg_a6)[1].hp.h;
@@ -1502,7 +1502,7 @@ block_5:
         if ((s16) ENTITY(reg_a6)->hp.h >= 0) {
 block_14:
             ENTITY(reg_a6)->attr.b.palette = (u8) reg_d0.b[0];
-            func_001368E0();
+            enemy_anims_spawn_listed();
             if (g_enemies_stopped == 0) {
                 if (g_bullets_blocked == 0) {
                     if ((s16) ENTITY(reg_a6)->y.h >= 0x1000) {
@@ -1837,7 +1837,7 @@ next_80:
     if ((s16) ENTITY(reg_a6)->hp.h < 0) goto next_700;
 next_90:
     ENTITY(reg_a6)->attr.b.palette = reg_d0.b[0];
-    func_001368E0();
+    enemy_anims_spawn_listed();
     if (g_enemies_stopped != 0) goto next_500;
     if (g_bullets_blocked != 0) goto next_500;
     if (g_enemies_stopped != 0) goto next_500;
@@ -2251,7 +2251,7 @@ block_12:
         if ((s16) ENTITY(reg_a6)->hp.h >= 0) {
 block_19:
             ENTITY(reg_a6)->attr.b.palette = (u8) reg_d0.b[0];
-            func_001368E0();
+            enemy_anims_spawn_listed();
             if (g_enemies_stopped == 0) {
                 ENTITY(reg_a6)->offset_y.h = 0xF000;
                 if ((s32) ENTITY(reg_a6)->move.b.dir < 0x40) {
@@ -2581,7 +2581,7 @@ void item_carrier_start(void) {
 }
 
 s32 bullet_fire_fixed();
-s32 func_0016A9B0();
+s32 item_spawn();
 s32 entity_bounds_check_wide();
 extern u16 g_two_player_game;
 
@@ -2642,7 +2642,7 @@ block_5:
         if ((s16) ENTITY(reg_a6)->hp.h >= 0) {
 block_14:
             ENTITY(reg_a6)->attr.b.palette = (u8) reg_d0.b[0];
-            func_001368E0();
+            enemy_anims_spawn_listed();
             if ((g_enemies_stopped == 0) && (g_bullets_blocked == 0)) {
                 reg_tmp.b[0] = CARRIER(reg_a5)->turn_countdown;
                 CARRIER(reg_a5)->turn_countdown -= 1;
@@ -2748,10 +2748,10 @@ block_23:
             if (ENEMY_STATE(reg_a5)->kind == 0x86) {
                 reg_d0.w = 8;
             }
-            func_0016A9B0();
+            item_spawn();
             if (g_two_player_game == 0) {
                 if (reg_d0.h[0] != 8) {
-                    func_0016A9B0();
+                    item_spawn();
                 }
             }
             reg_d0.w = 5;
@@ -3131,7 +3131,7 @@ next_160:
     if (ENTITY(reg_a6)->hp.sh < 0) goto block_d;
 next_190:
     ENTITY(reg_a6)->attr.b.palette = reg_d0.b[0];
-    func_001368E0();
+    enemy_anims_spawn_listed();
     if (g_enemies_stopped != 0) goto next_280;
     ENTITY(reg_a6)->offset_y.h = 0xF400;
     if (!((s32) ENTITY(reg_a6)->move.b.dir < 0x40)) goto next_280;
@@ -5047,7 +5047,7 @@ next_1:
         if ((s16) ENTITY(reg_a6)->hp.h >= 0) {
 next_2:
             ENTITY(reg_a6)->attr.b.palette = (u8) reg_d0.b[0];
-            func_001368E0();
+            enemy_anims_spawn_listed();
             if ((g_enemies_stopped == 0) && ((s32) ENTITY(reg_a6)->move.b.dir < 0x40)) {
                 reg_tmp.b[0] = MID_TANK_HB(reg_a5)->track_countdown;
                 MID_TANK_HB(reg_a5)->track_countdown -= 1;

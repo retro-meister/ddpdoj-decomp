@@ -15,7 +15,7 @@ void stage1_boss_damage_init(void) {
 
 s32 boss_phase_start();
 s32 boss_phase_running();
-s32 func_0016A9B0();
+s32 item_spawn();
 s32 score_add_no_chain();
 s32 score_add();
 s32 bullet_cancel_on_boss_hit();
@@ -162,7 +162,7 @@ next_1:
                         reg_d0.w = 0x14;
                     }
                     reg_a6 += 0x20;
-                    func_0016A9B0();
+                    item_spawn();
                     reg_tmp.h[1] = ENEMY_STATE(reg_a5)->entities[0];
                     reg_tmp.h[0] = ENEMY_STATE(reg_a5)->entities[1];
                     reg_a6 = (void *) reg_tmp.w;
@@ -170,7 +170,7 @@ next_1:
                     STAGE1_BOSS(reg_a5)->bullet_clear_time = 0x6E;
                     if (STAGE1_EXTRA(reg_a6)->spinning != 0) {
                         reg_a6 += 0x60;
-                        func_0016A9B0();
+                        item_spawn();
                         reg_tmp.h[1] = ENEMY_STATE(reg_a5)->entities[0];
                         reg_tmp.h[0] = ENEMY_STATE(reg_a5)->entities[1];
                         reg_a6 = (void *) reg_tmp.w;
@@ -244,7 +244,7 @@ next_3:
                         reg_d0.w = 0x14;
                     }
                     reg_a6 += 0x60;
-                    func_0016A9B0();
+                    item_spawn();
                     reg_tmp.h[1] = ENEMY_STATE(reg_a5)->entities[0];
                     reg_tmp.h[0] = ENEMY_STATE(reg_a5)->entities[1];
                     reg_a6 = (void *) reg_tmp.w;
@@ -252,7 +252,7 @@ next_3:
                     STAGE1_BOSS(reg_a5)->bullet_clear_time = 0x6E;
                     if (STAGE1_EXTRA(reg_a6)->spinning != 0) {
                         reg_a6 += 0x20;
-                        func_0016A9B0();
+                        item_spawn();
                         reg_tmp.h[1] = ENEMY_STATE(reg_a5)->entities[0];
                         reg_tmp.h[0] = ENEMY_STATE(reg_a5)->entities[1];
                         reg_a6 = (void *) reg_tmp.w;

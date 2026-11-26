@@ -41,7 +41,7 @@ void func_0020ED40(void) {
     }
 }
 
-s32 func_00136010();
+s32 game_ships_start();
 s32 ship_select_apply();
 s32 music_play_bgm2();
 s32 sprite_palette_load();
@@ -211,7 +211,7 @@ next_53:
 next_54:
     if ((u16)D_0028DF18 != 0) goto next_60;
     D_0028DF18 = 1;
-    func_00136010();
+    game_ships_start();
     goto next_60;
 block_end:
     ENTITY(reg_a6)->flags.b[0] = 8;

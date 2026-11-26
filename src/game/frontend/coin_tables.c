@@ -16,11 +16,11 @@ u8 D_0024F360[24] = {
 char credit_label_p1[16] = "1P_CREDIT     ";
 char credit_label_p2[16] = "2P_CREDIT     ";
 #else
-char D_0024F378[] = "FREE PLAY";
-char D_0024F388[] = "CREDITS: ( / )";
-char D_0024F398[] = "CREDITS:";
+char coin_text_free_play[] = "FREE PLAY";
+char coin_text_credits_with_coins[] = "CREDITS: ( / )";
+char coin_text_credits[] = "CREDITS:";
 
-char D_0028C0A8[] = "COINS:";
-char D_0028C0B0[] = "CREDITS";
-char D_0028C0B8[] = "  ( / )";
+char coin_text_coins[] = "COINS:";
+char coin_text_credits_short[] = "CREDITS";
+char coin_text_coins_frame[] = "  ( / )";
 #endif

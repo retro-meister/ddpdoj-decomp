@@ -5,7 +5,7 @@ extern void *D_0026B090[8];
 
 void func_0016C620(void);
 
-s32 func_0016C260();
+s32 item_release();
 s32 sprite_draw_with_items();
 s32 entity_velocity();
 
@@ -50,7 +50,7 @@ void func_0016C4B0(void) {
         *(u8 *)(reg_a6 + 0xF) = 0U;
         *(u16 *)(reg_a6 + 0xA) += 4;
         if ((s16) *(u16 *)(reg_a6 + 0xA) >= 0x78) {
-            func_0016C260();
+            item_release();
         }
     }
 }
@@ -92,7 +92,7 @@ void func_0016C620(void) {
         *(u8 *)(reg_a6 + 0xF) = 0U;
         *(u16 *)(reg_a6 + 0xA) += 4;
         if ((s16) *(u16 *)(reg_a6 + 0xA) >= 0x44) {
-            func_0016C260();
+            item_release();
         }
     }
 }
@@ -100,7 +100,7 @@ void func_0016C620(void) {
 extern u16 g_item_count;
 
 
-void func_0016C770(void) {
+void item_init(void) {
     u32 save_d0;
     u32 save_d1;
 
@@ -160,9 +160,9 @@ void func_0016C770(void) {
     g_item_count += 1;
 }
 
-extern u16 D_0028E7AC;
+extern u16 g_item_test_cursor;
 
-void func_0016CA20(void) {
+void item_init_at_y(void) {
     reg_a2 = (u8 *)((u8 *)D_0026B090);
     reg_d1.h[0] = reg_d0.h[0];
     reg_a2 = *(u8 **)(((u8 *)D_0026B090) + (reg_d0.h[0] & ~3));
@@ -208,14 +208,14 @@ void func_0016CA20(void) {
     *(u16 *)reg_a0 = *(u16 *)reg_a2;
     reg_a2 += 2;
     reg_a0 += 2;
-    *(u16 *)reg_a0 = (u16) D_0028E7AC;
+    *(u16 *)reg_a0 = (u16) g_item_test_cursor;
     reg_a0 += 2;
     g_item_count += 1;
-    D_0028E7AC += 0xC;
-    if (D_0028E7AC == 0x9C) {
-        D_0028E7AC = 0;
-    } else if (D_0028E7AC == 0xA2) {
-        D_0028E7AC = 6;
+    g_item_test_cursor += 0xC;
+    if (g_item_test_cursor == 0x9C) {
+        g_item_test_cursor = 0;
+    } else if (g_item_test_cursor == 0xA2) {
+        g_item_test_cursor = 6;
     }
 }
 
@@ -243,7 +243,7 @@ void func_0016CCE0(void) {
 
 s32 debug_number_get();                            /* extern */
 s32 input_get_p2_pressed();                            /* extern */
-s32 func_0016A9B0();                            /* extern */
+s32 item_spawn();                            /* extern */
 s32 entity_draw();                            /* extern */
 s32 entity_move_by_p2_stick();                            /* extern */
 
@@ -262,7 +262,7 @@ void func_0016CD40(void) {
             temp_v0_2 = (s64) ((s64) reg_d0.h[0] << 0x30) >> 0x30;
             if ((temp_v0_2 < 5) && (temp_v0_2 >= 0)) {
                 reg_d0.h[0] *= 4;
-                func_0016A9B0();
+                item_spawn();
             }
         }
     }

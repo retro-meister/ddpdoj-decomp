@@ -412,7 +412,7 @@ block_f3:
 
 s32 bullet_fire_fast();
 s32 bullet_fire_2way();
-s32 func_00136980();
+s32 enemy_anims_spawn_listed_long();
 s32 enemy_hitbox_debug_draw();
 s32 sfx_explosion_air_small();
 s32 sfx_explosion_ground_large();
@@ -672,7 +672,7 @@ block_24:
         }
         reg_d0.h[1] = BATTLESHIP(reg_a5)->hp[0];
         reg_d0.h[0] = BATTLESHIP(reg_a5)->hp[1];
-        func_00136980();
+        enemy_anims_spawn_listed_long();
         if (g_enemies_stopped == 0) {
             reg_d0.h[0] = ENTITY(reg_a6)[2].y.h;
             reg_d1.h[0] = ENTITY(reg_a6)[2].x.h;

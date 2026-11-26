@@ -76,7 +76,7 @@ void func_00170DE0(void) {
     reg_d2.h[0] = ENTITY(reg_a6)->misc.h;
 }
 
-s32 func_001ABF90();
+s32 p1_hyper_gauge_check_full();
 s32 binary_to_bcd();
 s32 bcd_to_binary();
 extern u16 g_p1_stage_misses;
@@ -137,7 +137,7 @@ loop_11:
                 goto loop_11;
             }
             g_p1_hyper_gauge += reg_d0.h[0];
-            func_001ABF90();
+            p1_hyper_gauge_check_full();
             reg_d0.w = save_d0;
             reg_d1.w = save_d1;
             reg_d2.w = save_d2;
@@ -148,7 +148,7 @@ loop_11:
     }
 }
 
-s32 func_001AC160();
+s32 p2_hyper_gauge_check_full();
 extern u16 g_p2_stage_misses;
 extern u16 g_p2_hyper_gauge;
 extern u16 g_p2_hyper_active;
@@ -202,7 +202,7 @@ loop_11:
                 goto loop_11;
             }
             g_p2_hyper_gauge += reg_d0.h[0];
-            func_001AC160();
+            p2_hyper_gauge_check_full();
             reg_d0.w = save_d0;
             reg_d1.w = save_d1;
             reg_d2.w = save_d2;

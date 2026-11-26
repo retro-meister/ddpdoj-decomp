@@ -1,71 +1,71 @@
 #include "common.h"
 #include "entity.h"
 
-extern void (*D_0026ADA0[8])();
+extern void (*item_kind_routines[8])();
 
-void func_0016AF30(void);
-void func_0016AF90(void);
-void func_0016B360(void);
-void func_0016B3B0(void);
-void func_0016B780(void);
-void func_0016B7F0(void);
-void func_0016BAF0(void);
-void func_0016BCC0(void);
-void func_0016BD50(void);
-void func_0016BFD0(void);
-void func_0016C0B0(void);
-void func_0016C0C0(void);
-void func_0016C260(void);
-void func_0016C2A0(void);
-void func_0016C350(void);
-void func_0016C410(void);
+void item_powerup_init(void);
+void item_powerup_move(void);
+void item_max_powerup_init(void);
+void item_max_powerup_move(void);
+void item_bomb_init(void);
+void item_bomb_move(void);
+void item_hyper_draw(void);
+void item_hyper_init(void);
+void item_hyper_move(void);
+void item_extend_draw(void);
+void item_extend_init(void);
+void item_extend_move(void);
+void item_release(void);
+void item_taken_begin(void);
+void item_taken_begin_with_sound(void);
+void item_taken_drift_set(void);
 
 extern u8 g_items[];
-extern u8 D_002BB6B0[];
-extern u8 D_002BB730[];
-extern u8 D_002BB7B0[];
-extern u8 D_002BB930[];
-extern u8 D_002BBAB0[];
+extern u8 g_items_max_powerup[];
+extern u8 g_items_bomb[];
+extern u8 g_items_hyper_p1[];
+extern u8 g_items_hyper_p2[];
+extern u8 g_item_extend[];
 
-void func_0016A8F0(void) {
+void item_pool_for_kind(void) {
     if (reg_d0.h[0] == 0) {
         reg_a0 = (u8 *)g_items;
         reg_d2.h[0] = 7;
         return;
     }
     if (reg_d0.h[0] == 4) {
-        reg_a0 = (u8 *)D_002BB6B0;
+        reg_a0 = (u8 *)g_items_max_powerup;
         reg_d2.h[0] = 1;
         return;
     }
     if (reg_d0.h[0] == 8) {
-        reg_a0 = (u8 *)D_002BB730;
+        reg_a0 = (u8 *)g_items_bomb;
         reg_d2.h[0] = 1;
         return;
     }
     if (reg_d0.h[0] == 12) {
-        reg_a0 = (u8 *)D_002BB7B0;
+        reg_a0 = (u8 *)g_items_hyper_p1;
         reg_d2.h[0] = 5;
         return;
     }
     if (reg_d0.h[0] == 20) {
-        reg_a0 = (u8 *)D_002BB930;
+        reg_a0 = (u8 *)g_items_hyper_p2;
         reg_d2.h[0] = 5;
         return;
     }
     reg_d2.h[0] = 0;
-    reg_a0 = (u8 *)D_002BBAB0;
+    reg_a0 = (u8 *)g_item_extend;
 }
 
 
-extern void func_0016C770(void);
+extern void item_init(void);
 
-void func_0016A9B0(void)
+void item_spawn(void)
 {
-    func_0016A8F0();
+    item_pool_for_kind();
     do {
         if (*(u16 *)reg_a0 == 0) {
-            func_0016C770();
+            item_init();
             return;
         }
         reg_a0 += 0x40;
@@ -76,13 +76,13 @@ void func_0016A9B0(void)
     reg_d2.h[0] -= 1;
 }
 
-extern void func_0016CA20(void);
+extern void item_init_at_y(void);
 
-void func_0016AA30(void) {
-    func_0016A8F0();
+void item_spawn_at_y(void) {
+    item_pool_for_kind();
     do {
         if (*(u16 *)reg_a0 == 0) {
-            func_0016CA20();
+            item_init_at_y();
             cond_flag = 0;
             return;
         }
@@ -93,10 +93,10 @@ void func_0016AA30(void) {
     reg_d2.h[0] -= 1;
 }
 
-extern u16 D_0028E7AC;
+extern u16 g_item_test_cursor;
 extern u16 g_item_count;
 
-void func_0016AAB0(void) {
+void items_clear(void) {
     u8 *p0;
     u8 *p2;
     u8 *p3;
@@ -189,7 +189,7 @@ void func_0016AAB0(void) {
         p5[7] = 0;
     } while (n5 < 0x40);
     g_item_count = 0;
-    D_0028E7AC = 0;
+    g_item_test_cursor = 0;
 }
 
 typedef void (*Fn)();
@@ -198,7 +198,7 @@ s32 func_0016C4B0();
 extern u16 g_item_count;
 extern u16 g_side_scroll_step[];
 
-void func_0016AC30(void) {
+void items_update(void) {
     u32 cnt;
     u8 flags;
 
@@ -225,7 +225,7 @@ loop_1:
     }
     reg_d0.w = 0x3C;
     reg_d0.h[0] &= reg_d1.h[0];
-    ((Fn) *(u32 *)(((u8 *)D_0026ADA0) + (reg_d0.h[0] & ~3)))();
+    ((Fn) *(u32 *)(((u8 *)item_kind_routines) + (reg_d0.h[0] & ~3)))();
 next_2:
     reg_a6 += 0x40;
     cnt = reg_d7.h[0] - 1;
@@ -246,7 +246,7 @@ s32 p2_power_up();
 s32 sfx_item_pickup();
 s32 voice_power_up();
 s32 sprite_draw_with_items();
-extern u32 D_0026ADC0[];
+extern u32 item_powerup_frames[];
 extern u32 D_0026AFC0[];
 
 void item_powerup(void) {
@@ -256,7 +256,7 @@ void item_powerup(void) {
 
     if (!(reg_d1.w & 0x2000)) {
         *(u8 *)(reg_a6 + 1) |= 0x20;
-        func_0016AF30();
+        item_powerup_init();
         *(s16 *)(reg_a6 + 0xC) = 0x202;
         *(u16 *)(reg_a6 + 0xE) = 0U;
     }
@@ -266,21 +266,21 @@ void item_powerup(void) {
         if (!(reg_d1.w & 0x1000)) goto next_2;
         p1_power_up();
         if (cond_flag == 0) goto next_1;
-        func_0016C350();
+        item_taken_begin_with_sound();
         return;
 next_1:
         sfx_item_pickup();
         voice_power_up();
         reg_a0 = (u8 *)(D_0026AFC0);
-        func_0016C2A0();
+        item_taken_begin();
         return;
 next_2:
         p2_power_up();
         if (cond_flag == 0) goto next_1;
-        func_0016C350();
+        item_taken_begin_with_sound();
         return;
     }
-    func_0016AF90();
+    item_powerup_move();
     if (cond_flag == 0) {
         *(u8 *)(reg_a6 + 0xD) -= 1;
         if ((s8) *(u8 *)(reg_a6 + 0xD) < 0) {
@@ -294,7 +294,7 @@ next_2:
         reg_d1.h[1] = reg_d1.h[0];
         reg_d1.h[0] = reg_tmp1.h[1];
         reg_d1.h[0] = *(u16 *)(reg_a6 + 4);
-        reg_a0 = (u8 *)(D_0026ADC0);
+        reg_a0 = (u8 *)(item_powerup_frames);
         reg_d1.h[0] += 0x7FFF + 0x7D01;
         t1 = *(u16 *)(reg_a6 + 0xE);
         reg_a0 += t1;
@@ -308,7 +308,7 @@ next_2:
 
 extern void rng_next_masked(void);
 
-void func_0016AF30(void)
+void item_powerup_init(void)
 {
     ((u16 *)((void *)reg_a6))[0xC] = 0x700;
     ((u16 *)((void *)reg_a6))[0xD] = 0xB00;
@@ -324,8 +324,8 @@ s32 entity_check_bounds();
 extern u8 g_boss_present_b1;
 extern u16 g_enemies_stopped;
 
-void func_0016AF90(void) {
-    s32 func_0016C260();
+void item_powerup_move(void) {
+    s32 item_release();
     if (g_boss_present_b1 & 0x40) {
         goto block_7;
     }
@@ -401,13 +401,13 @@ block_7:
     cond_flag = 0;
     entity_check_bounds();
     if (cond_flag != 0) {
-        func_0016C260();
+        item_release();
     }
 }
 
 s32 p1_power_max();
 s32 p2_power_max();
-extern u32 D_0026ADD0[];
+extern u32 item_max_powerup_frames[];
 
 void item_max_powerup(void) {
     u32 t1;
@@ -416,7 +416,7 @@ void item_max_powerup(void) {
 
     if (!(reg_d1.w & 0x2000)) {
         *(u8 *)(reg_a6 + 1) |= 0x20;
-        func_0016B360();
+        item_max_powerup_init();
         *(s16 *)(reg_a6 + 0xC) = 0x202;
         *(u16 *)(reg_a6 + 0xE) = 0U;
     }
@@ -426,21 +426,21 @@ void item_max_powerup(void) {
         if (!(reg_d1.w & 0x1000)) goto next_2;
         p1_power_max();
         if (cond_flag == 0) goto next_1;
-        func_0016C350();
+        item_taken_begin_with_sound();
         return;
 next_1:
         sfx_item_pickup();
         voice_power_up();
         reg_a0 = (u8 *)(D_0026AFC0);
-        func_0016C2A0();
+        item_taken_begin();
         return;
 next_2:
         p2_power_max();
         if (cond_flag == 0) goto next_1;
-        func_0016C350();
+        item_taken_begin_with_sound();
         return;
     }
-    func_0016B3B0();
+    item_max_powerup_move();
     if (cond_flag == 0) {
         *(u8 *)(reg_a6 + 0xD) -= 1;
         if ((s8) *(u8 *)(reg_a6 + 0xD) < 0) {
@@ -454,7 +454,7 @@ next_2:
         reg_d1.h[1] = reg_d1.h[0];
         reg_d1.h[0] = reg_tmp1.h[1];
         reg_d1.h[0] = *(u16 *)(reg_a6 + 4);
-        reg_a0 = (u8 *)(D_0026ADD0);
+        reg_a0 = (u8 *)(item_max_powerup_frames);
         reg_d1.h[0] += 0x7FFF + 0x7C01;
         t1 = *(u16 *)(reg_a6 + 0xE);
         reg_a0 += t1;
@@ -466,7 +466,7 @@ next_2:
     }
 }
 
-void func_0016B360(void)
+void item_max_powerup_init(void)
 {
     *(u16 *)((u8 *)((void *)reg_a6) + 0x18) = 0x700;
     *(u16 *)((u8 *)((void *)reg_a6) + 0x1A) = 0xB00;
@@ -475,8 +475,8 @@ void func_0016B360(void)
     *((u8 *)((void *)reg_a6) + 0x1A) |= 8;
 }
 
-void func_0016B3B0(void) {
-    s32 func_0016C260();
+void item_max_powerup_move(void) {
+    s32 item_release();
     if (g_boss_present_b1 & 0x40) {
         goto block_7;
     }
@@ -552,14 +552,14 @@ block_7:
     cond_flag = 0;
     entity_check_bounds();
     if (cond_flag != 0) {
-        func_0016C260();
+        item_release();
     }
 }
 
 s32 p1_bomb_item_take();
 s32 p2_bomb_item_take();
 s32 voice_bomb();
-extern u32 D_0026ADE0[];
+extern u32 item_bomb_frames[];
 extern u32 D_0026AEC0[];
 
 void item_bomb(void) {
@@ -569,7 +569,7 @@ void item_bomb(void) {
 
     if (!(reg_d1.w & 0x2000)) {
         *(u8 *)(reg_a6 + 1) |= 0x20;
-        func_0016B780();
+        item_bomb_init();
         *(s16 *)(reg_a6 + 0xC) = 0x202;
         *(u16 *)(reg_a6 + 0xE) = 0U;
     }
@@ -579,21 +579,21 @@ void item_bomb(void) {
         if (!(reg_d1.w & 0x1000)) goto next_2;
         p1_bomb_item_take();
         if (cond_flag == 0) goto next_1;
-        func_0016C350();
+        item_taken_begin_with_sound();
         return;
 next_1:
         sfx_item_pickup();
         voice_bomb();
         reg_a0 = (u8 *)(D_0026AEC0);
-        func_0016C2A0();
+        item_taken_begin();
         return;
 next_2:
         p2_bomb_item_take();
         if (cond_flag == 0) goto next_1;
-        func_0016C350();
+        item_taken_begin_with_sound();
         return;
     }
-    func_0016B7F0();
+    item_bomb_move();
     if (cond_flag == 0) {
         *(u8 *)(reg_a6 + 0xD) -= 1;
         if ((s8) *(u8 *)(reg_a6 + 0xD) < 0) {
@@ -607,7 +607,7 @@ next_2:
         reg_d1.h[1] = reg_d1.h[0];
         reg_d1.h[0] = reg_tmp1.h[1];
         reg_d1.h[0] = *(u16 *)(reg_a6 + 4);
-        reg_a0 = (u8 *)(D_0026ADE0);
+        reg_a0 = (u8 *)(item_bomb_frames);
         reg_d1.h[0] += 0x7FFF + 0x7D01;
         t1 = *(u16 *)(reg_a6 + 0xE);
         reg_a0 += t1;
@@ -619,7 +619,7 @@ next_2:
     }
 }
 
-void func_0016B780(void)
+void item_bomb_init(void)
 {
     extern void direction_to_point(void);
     u16 savedD1;
@@ -638,8 +638,8 @@ void func_0016B780(void)
 s32 entity_distance_to();
 extern u16 g_frame_mod8;
 
-void func_0016B7F0(void) {
-    s32 func_0016C260();
+void item_bomb_move(void) {
+    s32 item_release();
     s32 direction_to_point();
     if (!(g_boss_present_b1 & 0x40)) {
         if (!(ENTITY(reg_a6)->flags.b[1] & 1)) {
@@ -686,7 +686,7 @@ void func_0016B7F0(void) {
     cond_flag = 0;
     entity_check_bounds();
     if (cond_flag != 0) {
-        func_0016C260();
+        item_release();
     }
 }
 
@@ -700,12 +700,12 @@ extern u16 g_p1_hyper_active;
 extern s16 D_0028E958;
 
 void item_hyper_p1(void) {
-    s32 func_0016C260();
+    s32 item_release();
     u32 saved_d7;
 
     if (!(reg_d1.w & 0x2000)) {
         ENTITY(reg_a6)->flags.b[1] |= 0x20;
-        func_0016BCC0();
+        item_hyper_init();
         if (ENTITY(reg_a6)->look.sh < 0) {
             ENTITY(reg_a6)->x.sh = 0x1400;
         }
@@ -713,7 +713,7 @@ void item_hyper_p1(void) {
         ENTITY(reg_a6)->look.sh = 0;
     }
     if ((u16)D_0028E958 != 0) {
-        func_0016C260();
+        item_release();
         return;
     }
     if (g_p1_hyper_active == 0) {
@@ -725,7 +725,7 @@ block_10:
     reg_d2.w = 5;
     pickup_spawn_variant_here();
     reg_d7.w = saved_d7;
-    func_0016C260();
+    item_release();
     return;
 next_1:
     reg_d0.h[0] = g_p1_hyper_items;
@@ -741,23 +741,23 @@ next_1:
     reg_d2.w = 0xB5A;
     reg_d5.w = 0xF900FA00;
     if (!(reg_d1.w & 0x1000)) {
-        func_0016BAF0();
+        item_hyper_draw();
         return;
     }
     p1_hyper_item_take();
     sfx_hyper_pickup();
     reg_a0 = (u8 *)D_0026AF40;
-    func_0016C2A0();
+    item_taken_begin();
     return;
 }
 
-extern u32 D_0026ADF0[];
+extern u32 item_hyper_frames[];
 
-void func_0016BAF0(void) {
+void item_hyper_draw(void) {
     u32 t1;
     u32 t2;
 
-    func_0016BD50();
+    item_hyper_move();
     if (cond_flag == 0) {
         *(u8 *)(reg_a6 + 0xD) -= 1;
         if ((s8) *(u8 *)(reg_a6 + 0xD) < 0) {
@@ -795,7 +795,7 @@ void func_0016BAF0(void) {
         reg_d1.h[1] = reg_d1.h[0];
         reg_d1.h[0] = reg_tmp1.h[1];
         reg_d1.h[0] = *(u16 *)(reg_a6 + 4);
-        reg_a0 = (u8 *)(D_0026ADF0);
+        reg_a0 = (u8 *)(item_hyper_frames);
         reg_d1.h[0] += 0xFD00;
         t1 = *(u16 *)(reg_a6 + 0xE);
         reg_a0 += t1;
@@ -808,7 +808,7 @@ void func_0016BAF0(void) {
 
 extern u8 D_00269490[];
 
-void func_0016BCC0(void) {
+void item_hyper_init(void) {
     (ENTITY(reg_a6)->hp.sb[0]) = 1;
     reg_d0.h[0] = (ENTITY(reg_a6)->misc.h);
     reg_a0 = D_00269490;
@@ -822,8 +822,8 @@ void func_0016BCC0(void) {
 }
 
 
-void func_0016BD50(void) {
-    s32 func_0016C260();
+void item_hyper_move(void) {
+    s32 item_release();
     u32 temp_a1;
     u8 temp_v1;
 
@@ -847,7 +847,7 @@ void func_0016BD50(void) {
         reg_tmp.w = temp_a1 + reg_tmp1.w;
         reg_d0.h[0] += 0x7FFF + 0x801;
         if (reg_tmp.h[1] != 0) {
-            func_0016C260();
+            item_release();
             return;
         }
 block_7:
@@ -885,7 +885,7 @@ void item_extend(void) {
 
     if (!(reg_d1.w & 0x2000)) {
         ENTITY(reg_a6)->flags.b[1] |= 0x20;
-        func_0016C0B0();
+        item_extend_init();
         ENTITY(reg_a6)->sprite.sh = 0x202;
         ENTITY(reg_a6)->look.sh = 0;
     }
@@ -899,18 +899,18 @@ void item_extend(void) {
             p2_life_add();
         }
         reg_a0 = D_0026AE40;
-        func_0016C2A0();
+        item_taken_begin();
         return;
     }
-    func_0016C0C0();
+    item_extend_move();
     if (cond_flag == 0) {
-        func_0016BFD0();
+        item_extend_draw();
     }
 }
 
-extern u32 D_0026AE30[];
+extern u32 item_extend_frames[];
 
-void func_0016BFD0(void) {
+void item_extend_draw(void) {
     u16 temp_a1;
     u32 temp_a0;
 
@@ -926,7 +926,7 @@ void func_0016BFD0(void) {
     reg_d1.h[1] = reg_d1.h[0];
     reg_d1.h[0] = reg_tmp1.h[1];
     reg_d1.h[0] = *(u16 *)(reg_a6 + 4);
-    reg_a0 = (u8 *)(D_0026AE30);
+    reg_a0 = (u8 *)(item_extend_frames);
     reg_d1.h[0] += 0x7FFF + 0x7C01;
     temp_a1 = *(u16 *)(reg_a6 + 0xE);
     reg_a0 += temp_a1;
@@ -937,19 +937,19 @@ void func_0016BFD0(void) {
     sprite_draw_with_items();
 }
 
-void func_0016C0B0(void) {
+void item_extend_init(void) {
 }
 
 s32 layer_b_shift_get();
 
-void func_0016C0C0() {
-    s32 func_0016C260();
+void item_extend_move() {
+    s32 item_release();
     layer_b_shift_get();
     ENTITY(reg_a6)->y.h += reg_d2.h[0];
     cond_flag = 0;
     entity_check_bounds();
     if (cond_flag != 0) {
-        func_0016C260();
+        item_release();
     }
 }
 
@@ -958,12 +958,12 @@ extern u16 g_p2_hyper_items;
 extern u16 g_p2_hyper_active;
 
 void item_hyper_p2(void) {
-    s32 func_0016C260();
+    s32 item_release();
     u32 saved_d7;
 
     if (!(reg_d1.w & 0x2000)) {
         ENTITY(reg_a6)->flags.b[1] |= 0x20;
-        func_0016BCC0();
+        item_hyper_init();
         if (ENTITY(reg_a6)->look.sh < 0) {
             ENTITY(reg_a6)->x.sh = 0x2400;
         }
@@ -971,7 +971,7 @@ void item_hyper_p2(void) {
         ENTITY(reg_a6)->look.sh = 0;
     }
     if ((u16)D_0028E958 != 0) {
-        func_0016C260();
+        item_release();
         return;
     }
     if (g_p2_hyper_active == 0) {
@@ -983,7 +983,7 @@ block_10:
     reg_d2.w = 5;
     pickup_spawn_variant_here();
     reg_d7.w = saved_d7;
-    func_0016C260();
+    item_release();
     return;
 next_1:
     reg_d0.h[0] = g_p2_hyper_items;
@@ -999,22 +999,22 @@ next_1:
     reg_d2.w = 0xB5B;
     reg_d5.w = 0xF900FA00;
     if (!(reg_d1.w & 0x800)) {
-        func_0016BAF0();
+        item_hyper_draw();
         return;
     }
     p2_hyper_item_take();
     sfx_hyper_pickup();
     reg_a0 = (u8 *)D_0026AF40;
-    func_0016C2A0();
+    item_taken_begin();
     return;
 }
 
 void item_kind6(void) {
-    void func_0016C260(void);
-    func_0016C260();
+    void item_release(void);
+    item_release();
 }
 
-void func_0016C260(void) {
+void item_release(void) {
     reg_d0.w = 0;
     ENTITY(reg_a6)->flags.h = (u16) reg_d0.h[1];
     ENTITY(reg_a6)->y.h = (u16) reg_d0.h[0];
@@ -1024,7 +1024,7 @@ void func_0016C260(void) {
 
 s32 score_add_masked();
 
-void func_0016C2A0() {
+void item_taken_begin() {
     u32 temp_s0;
     u32 temp_s1;
 
@@ -1043,12 +1043,12 @@ void func_0016C2A0() {
     ENTITY(reg_a6)->offset_x.h = (u16) reg_tmp.h[0];
     ENTITY(reg_a6)->draw.sh = 0;
     ENTITY(reg_a6)->look.sb.size = 0;
-    func_0016C410();
+    item_taken_drift_set();
 }
 
 extern u8 D_0026B040[];
 
-void func_0016C350(void) {
+void item_taken_begin_with_sound(void) {
     u32 temp_s0;
     u8 *temp_s1;
 
@@ -1069,10 +1069,10 @@ void func_0016C350(void) {
     ENTITY(reg_a6)->draw.sh = 0;
     ENTITY(reg_a6)->sprite.sh = 0x202;
     ENTITY(reg_a6)->look.sb.size = 0;
-    func_0016C410();
+    item_taken_drift_set();
 }
 
-void func_0016C410() {
+void item_taken_drift_set() {
     s16 temp_a0;
 
     reg_d1.h[0] = g_side_scroll_step[0];
@@ -1091,7 +1091,7 @@ void func_0016C410() {
     ENTITY(reg_a6)->move.b.speed = (u8) reg_d0.b[0];
 }
 
-void (*D_0026ADA0[8])() = {
+void (*item_kind_routines[8])() = {
     item_powerup,
     item_max_powerup,
     item_bomb,
@@ -1102,24 +1102,24 @@ void (*D_0026ADA0[8])() = {
     item_kind7,
 };
 
-u32 D_0026ADC0[4] = {
+u32 item_powerup_frames[4] = {
     0x00000B3A, 0x00000B3B, 0x00000B3C, 0x00000B3D,
 };
 
-u32 D_0026ADD0[4] = {
+u32 item_max_powerup_frames[4] = {
     0x00000B52, 0x00000B53, 0x00000B54, 0x00000B55,
 };
 
-u32 D_0026ADE0[4] = {
+u32 item_bomb_frames[4] = {
     0x00000B3E, 0x00000B3F, 0x00000B40, 0x00000B41,
 };
 
-u32 D_0026ADF0[16] = {
+u32 item_hyper_frames[16] = {
     0x00000B42, 0x00000B43, 0x00000B44, 0x00000B45, 0x00000B46, 0x00000B47, 0x00000B48, 0x00000B49,
     0x00000B4A, 0x00000B4B, 0x00000B4C, 0x00000B4D, 0x00000B4E, 0x00000B4F, 0x00000B50, 0x00000B51,
 };
 
-u32 D_0026AE30[4] = {
+u32 item_extend_frames[4] = {
     0x00000B56, 0x00000B57, 0x00000B58, 0x00000B59,
 };
 
@@ -1169,14 +1169,14 @@ u8 D_0026B040[80] = {
 
 /* .sbss (the compiler lays these out in reverse) */
 u16 g_item_count __attribute__((aligned(4)));
-u16 D_0028E7AC;
+u16 g_item_test_cursor;
 u8 D_0028E7A8[4];
 u8 D_0028E7A4[4];
 
 /* .bss (the compiler lays these out in reverse) */
-u8 D_002BBAB0[64];
-u8 D_002BB930[384];
-u8 D_002BB7B0[384];
-u8 D_002BB730[128];
-u8 D_002BB6B0[128];
+u8 g_item_extend[64];
+u8 g_items_hyper_p2[384];
+u8 g_items_hyper_p1[384];
+u8 g_items_bomb[128];
+u8 g_items_max_powerup[128];
 u8 g_items[512];

@@ -142,19 +142,19 @@ char settings_notice_rapid_fire[2][32] = {
 };
 #endif
 
-void func_0015BFD0(void);
-void func_0015C090(void);
-void func_0015C0E0(void);
-void func_0015C170(void);
-void func_0015C1F0(void);
-void func_0015C250(void);
-void func_0015C280(void);
-void func_0015C2B0(void);
-void func_0015C2E0(void);
-void func_0015C310(void);
-void func_0015C340(void);
-void func_0015C3A0(void);
-void func_0015C430(void);
+void settings_notice_update_until_fade_out(void);
+void settings_notice_draw(void);
+void settings_notice_return_running(void);
+void settings_notice_return_finished(void);
+void settings_notice_palettes_load(void);
+void settings_notice_draw_piece_0(void);
+void settings_notice_draw_piece_1(void);
+void settings_notice_draw_piece_2(void);
+void settings_notice_draw_piece_3(void);
+void settings_notice_draw_piece_4(void);
+void settings_notice_print_rank(void);
+void settings_notice_print_extend(void);
+void settings_notice_print_rapid_fire(void);
 void enemy_remove_entry(void);
 
 void layers_reset(void);
@@ -163,7 +163,7 @@ void func_0012FB00(void);
 extern u32 D_00268FB0[];
 extern u8 g_bg_layer[16384];
 
-void func_0015B930(void) {
+void settings_notice_layers_setup(void) {
     u32 t1;
 
     func_0012FA50();
@@ -190,13 +190,13 @@ void func_0015B930(void) {
     } while ((s16)(--reg_d6.h[0]) >= 0);
 }
 
-extern u32 D_0028E7C0;
-extern s16 D_0028E7C4;
-extern u16 D_0028E7C8;
-extern u16 D_0028E7CC;
+extern u32 g_settings_notice_fade;
+extern s16 g_settings_notice_time;
+extern u16 g_settings_notice_loaded;
+extern u16 g_settings_notice_shown;
 extern s16 D_0028E7D0;
 
-void func_0015BA20(void) {
+void settings_notice_begin(void) {
     u32 save_d0;
     u32 save_d1;
     u32 save_d2;
@@ -213,7 +213,7 @@ void func_0015BA20(void) {
     u8 *save_a5;
     u8 *save_a6;
 
-    D_0028E7C4 = 0xF0;
+    g_settings_notice_time = 0xF0;
     save_d0 = reg_d0.w;
     save_d6 = reg_d6.w;
     save_d7 = reg_d7.w;
@@ -224,19 +224,19 @@ void func_0015BA20(void) {
     save_a4 = reg_a4;
     save_a5 = reg_a5;
     save_a6 = reg_a6;
-    D_0028E7C0 = 0;
+    g_settings_notice_fade = 0;
     save_d1 = reg_d1.w;
-    D_0028E7C8 = 0;
-    D_0028E7CC = 0;
+    g_settings_notice_loaded = 0;
+    g_settings_notice_shown = 0;
     D_0028E7D0 = 0;
     save_d2 = reg_d2.w;
     save_d3 = reg_d3.w;
     save_d4 = reg_d4.w;
     save_d5 = reg_d5.w;
-    func_0015B930();
-    func_0015C340();
-    func_0015C3A0();
-    func_0015C430();
+    settings_notice_layers_setup();
+    settings_notice_print_rank();
+    settings_notice_print_extend();
+    settings_notice_print_rapid_fire();
     reg_d0.w = save_d0;
     reg_d1.w = save_d1;
     reg_d2.w = save_d2;
@@ -256,7 +256,7 @@ void func_0015BA20(void) {
 
 s32 sprite_draw_keep();
 
-void func_0015BB60() {
+void settings_notice_objects_draw() {
     u8 *var_s0;
     u32 temp_a0;
     u32 temp_a0_2;
@@ -296,11 +296,11 @@ extern u32 D_0028DF74;
 extern u32 D_0028DF78;
 extern u32 D_0028DF7C;
 extern u32 D_0028DF80;
-extern u32 D_0028E7C0;
-extern u16 D_0028E7CC;
-extern u8 D_0028E7D1;
+extern u32 g_settings_notice_fade;
+extern u16 g_settings_notice_shown;
+extern u8 g_settings_notice_fade_flags;
 
-void func_0015BBD0(void) {
+void settings_notice_update_with_fade_in(void) {
     D_0028DF80 = reg_d0.w;
     D_0028DF7C = reg_d1.w;
     D_0028DF78 = reg_d2.w;
@@ -316,35 +316,35 @@ void func_0015BBD0(void) {
     D_0028DF50 = reg_a4;
     D_0028DF4C = reg_a5;
     D_0028DF48 = reg_a6;
-    if (!(D_0028E7D1 & 1)) {
-        D_0028E7D1 |= 1;
+    if (!(g_settings_notice_fade_flags & 1)) {
+        g_settings_notice_fade_flags |= 1;
         reg_a0 = (u8 *)settings_notice_fade_palettes;
         fade_in();
-        D_0028E7C0 = reg_d0.w;
+        g_settings_notice_fade = reg_d0.w;
     }
-    if (!(D_0028E7D1 & 2)) {
-        reg_d0.w = D_0028E7C0;
+    if (!(g_settings_notice_fade_flags & 2)) {
+        reg_d0.w = g_settings_notice_fade;
         fade_is_running();
         if (cond_flag == 0) {
             fade_release();
             reg_d0.w = 0;
-            D_0028E7CC = 1;
-            D_0028E7C0 = reg_d0.w;
-            D_0028E7D1 |= 2;
+            g_settings_notice_shown = 1;
+            g_settings_notice_fade = reg_d0.w;
+            g_settings_notice_fade_flags |= 2;
         }
     }
-    if (D_0028E7CC == 0) {
-        func_0015C090();
+    if (g_settings_notice_shown == 0) {
+        settings_notice_draw();
         return;
     }
-    func_0015BFD0();
+    settings_notice_update_until_fade_out();
 }
 
 s32 func_001A31D0();
 extern u8 D_002687B0[];
-extern u16 D_0028E7C8;
+extern u16 g_settings_notice_loaded;
 
-void func_0015BD00(void) {
+void settings_notice_draw_static(void) {
     D_0028DF80 = reg_d0.w;
     D_0028DF7C = reg_d1.w;
     D_0028DF78 = reg_d2.w;
@@ -360,19 +360,19 @@ void func_0015BD00(void) {
     D_0028DF50 = reg_a4;
     D_0028DF4C = reg_a5;
     D_0028DF48 = reg_a6;
-    if (D_0028E7C8 != 0) {
-        func_0015C090();
+    if (g_settings_notice_loaded != 0) {
+        settings_notice_draw();
         return;
     }
     reg_d0.h[0] = 0;
-    D_0028E7C8 = 1;
+    g_settings_notice_loaded = 1;
     reg_a0 = (u8 *)D_002687B0;
     func_001A31D0();
-    func_0015C1F0();
-    func_0015C090();
+    settings_notice_palettes_load();
+    settings_notice_draw();
 }
 
-void func_0015BDD0(void) {
+void settings_notice_graphics_load(void) {
     D_0028DF80 = reg_d0.w;
     D_0028DF7C = reg_d1.w;
     D_0028DF78 = reg_d2.w;
@@ -391,7 +391,7 @@ void func_0015BDD0(void) {
     reg_a0 = (u8 *)D_002687B0;
     reg_d0.h[0] = 0;
     func_001A31D0();
-    func_0015C1F0();
+    settings_notice_palettes_load();
     reg_d0.w = D_0028DF80;
     reg_d1.w = D_0028DF7C;
     reg_d2.w = D_0028DF78;
@@ -410,7 +410,7 @@ void func_0015BDD0(void) {
 }
 
 #ifndef DEATH_LABEL
-void func_0015BEF0(void) {
+void settings_notice_update_timed(void) {
     D_0028DF80 = reg_d0.w;
     D_0028DF7C = reg_d1.w;
     D_0028DF78 = reg_d2.w;
@@ -426,17 +426,17 @@ void func_0015BEF0(void) {
     D_0028DF50 = reg_a4;
     D_0028DF4C = reg_a5;
     D_0028DF48 = reg_a6;
-    if (D_0028E7C8 != 0) {
-        func_0015BFD0();
+    if (g_settings_notice_loaded != 0) {
+        settings_notice_update_until_fade_out();
         return;
     }
     reg_d0.h[0] = 0;
-    D_0028E7C8 = 1;
-    D_0028E7C4 = 0x258;
+    g_settings_notice_loaded = 1;
+    g_settings_notice_time = 0x258;
     reg_a0 = (u8 *)D_002687B0;
     func_001A31D0();
-    func_0015C1F0();
-    func_0015C090();
+    settings_notice_palettes_load();
+    settings_notice_draw();
 }
 #endif
 
@@ -445,46 +445,46 @@ s32 fade_release();                            /* extern */
 s32 fade_is_running();                            /* extern */
 extern u8 g_stage_load_state;
 
-void func_0015BFD0(void) {
-    if ((u16)D_0028E7C4 != 0) {
+void settings_notice_update_until_fade_out(void) {
+    if ((u16)g_settings_notice_time != 0) {
         if (g_stage_load_state == 0) {
-            (*(u16 *)&D_0028E7C4) -= 1;
+            (*(u16 *)&g_settings_notice_time) -= 1;
         }
         if (g_pad_held[2] != 0) {
-            D_0028E7C4 = 0x258;
+            g_settings_notice_time = 0x258;
         }
-        if ((u16)D_0028E7C4 != 0) {
-            func_0015C090();
+        if ((u16)g_settings_notice_time != 0) {
+            settings_notice_draw();
             return;
         }
         reg_a0 = (u8 *)settings_notice_fade_palettes_b;
         fade_to_black();
-        D_0028E7C0 = reg_d0.w;
-        func_0015C090();
+        g_settings_notice_fade = reg_d0.w;
+        settings_notice_draw();
         return;
     }
-    reg_d0.w = D_0028E7C0;
+    reg_d0.w = g_settings_notice_fade;
     fade_is_running();
     if (cond_flag != 0) {
-        func_0015C090();
+        settings_notice_draw();
         return;
     }
     fade_release();
-    func_0015C170();
+    settings_notice_return_finished();
 }
 
 
-void func_0015C090(void) {
-    func_0015C280();
-    func_0015C250();
-    func_0015C2B0();
-    func_0015C2E0();
-    func_0015C310();
-    func_0015BB60();
-    func_0015C0E0();
+void settings_notice_draw(void) {
+    settings_notice_draw_piece_1();
+    settings_notice_draw_piece_0();
+    settings_notice_draw_piece_2();
+    settings_notice_draw_piece_3();
+    settings_notice_draw_piece_4();
+    settings_notice_objects_draw();
+    settings_notice_return_running();
 }
 
-void func_0015C0E0(void) {
+void settings_notice_return_running(void) {
     reg_d0.w = D_0028DF80;
     reg_d1.w = D_0028DF7C;
     reg_d2.w = D_0028DF78;
@@ -510,7 +510,7 @@ void func_0015C0E0(void) {
 
 
 
-void func_0015C170(void) {
+void settings_notice_return_finished(void) {
     reg_d0.w = D_0028DF80;
     reg_d1.w = D_0028DF7C;
     reg_d2.w = D_0028DF78;
@@ -535,7 +535,7 @@ extern u8 D_00262430[];
 
 extern void sprite_palette_load(void);
 
-void func_0015C1F0(void)
+void settings_notice_palettes_load(void)
 {
     reg_a0 = D_00262430;
     reg_d0.h[0] = 0;
@@ -551,7 +551,7 @@ void func_0015C1F0(void)
 }
 
 extern void sprite_draw(void);
-void func_0015C250(void) {
+void settings_notice_draw_piece_0(void) {
     reg_d1.w = 0x0E000200;
     reg_d2.sw = 0x155C;
     reg_d4.sh[0] = 0;
@@ -562,7 +562,7 @@ void func_0015C250(void) {
 extern Reg32 reg_d1;
 void sprite_draw(void);
 
-void func_0015C280(void) {
+void settings_notice_draw_piece_1(void) {
     reg_d1.w = 0x1A000800;
     reg_d2.sw = 0x155A;
     reg_d3.sh[0] = 0x20A0;
@@ -570,7 +570,7 @@ void func_0015C280(void) {
     sprite_draw();
 }
 
-void func_0015C2B0(void) {
+void settings_notice_draw_piece_2(void) {
     reg_d1.w = 0x4A001C00;
     reg_d2.sw = 0x1559;
     reg_d4.sh[0] = 0;
@@ -578,7 +578,7 @@ void func_0015C2B0(void) {
     sprite_draw();
 }
 
-void func_0015C2E0(void) {
+void settings_notice_draw_piece_3(void) {
     reg_d1.w = 0x64003000;
     reg_d2.sw = 0x1558;
     reg_d4.sh[0] = 0;
@@ -586,7 +586,7 @@ void func_0015C2E0(void) {
     sprite_draw();
 }
 
-void func_0015C310(void) {
+void settings_notice_draw_piece_4(void) {
     reg_d1.w = 0x04000400;
     reg_d2.sw = 0x155B;
     reg_d4.sh[0] = 0;
@@ -597,7 +597,7 @@ void func_0015C310(void) {
 extern u8 g_setting_difficulty;
 
 
-void func_0015C340(void)
+void settings_notice_print_rank(void)
 {
     extern void text_layer_print(void);
     reg_d0.w = 0;
@@ -614,7 +614,7 @@ void func_0015C340(void)
 
 extern u8 g_setting_extend;
 
-void func_0015C3A0(void) {
+void settings_notice_print_extend(void) {
     s32 text_layer_print();
     u16 temp_a0;
 
@@ -640,7 +640,7 @@ extern u8 g_setting_rapid_fire;
 extern char *settings_notice_rapid_fire_texts[];
 #endif
 
-void func_0015C430(void) {
+void settings_notice_print_rapid_fire(void) {
 #ifdef DEATH_LABEL
     reg_d0.w = 0;
     reg_a0 = (u8 *)settings_notice_rapid_fire_texts;
@@ -658,7 +658,7 @@ void func_0015C430(void) {
 
 extern void enemy_set_entity_count(s32);
 
-void func_0015C440(void) {
+void enemy_pattern_count_0(void) {
     enemy_set_entity_count(0);
 }
 

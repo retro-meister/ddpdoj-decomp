@@ -427,7 +427,7 @@ void stage1_midboss_start() {
 }
 
 s32 bullet_fire256_3way();
-s32 func_001368E0();
+s32 enemy_anims_spawn_listed();
 s32 ground_speeds_request();
 s32 fade_in_and_release();
 s32 enemy_hitbox_debug_draw();
@@ -584,7 +584,7 @@ block_27:
             return;
         }
 block_35:
-        func_001368E0();
+        enemy_anims_spawn_listed();
         if (g_enemies_stopped == 0) {
             entity_follow_scroll();
             stage1_midboss_move_arms();

@@ -108,17 +108,17 @@ extern u8 g_p1_options[80];
 extern s16 g_player2[];
 extern s16 g_player1[];
 extern u32 g_deferred_text[1568];
-extern u16 D_002BAF30[];
-extern u16 D_002BAF3A[];
-extern u16 D_002BAF50[];
-extern u16 D_002BAFAA[];
+extern u16 g_p1_score_extra_cell[];
+extern u16 g_p2_score_extra_cell[];
+extern u16 g_p1_score_cells[];
+extern u16 g_p2_score_cells[];
 extern u8 D_002BB470[64];
 extern u8 g_items[512];
 extern u8 D_002BF3EA[];
 extern u16 D_002BF400[];
 extern u8 g_pickups[3080];
-extern void func_00130250(void);
-extern void func_00130260(void);
+extern void p1_continue_discount_reset(void);
+extern void p2_continue_discount_reset(void);
 extern void input_get_p1_held(void);
 extern void input_get_p2_held(void);
 extern void input_get_p1_pressed(void);
@@ -167,11 +167,11 @@ void func_0020F550(void) {
     STORE_POINTER((u16 *)D_00269920 + 99, palette_black);
     STORE_POINTER((u16 *)D_00269920 + 105, palette_black);
     STORE_POINTER((u16 *)D_00269920 + 111, palette_black);
-    STORE_POINTER(continue_player1.other_routine, func_00130250);
+    STORE_POINTER(continue_player1.other_routine, p1_continue_discount_reset);
     STORE_POINTER(continue_player1.held, input_get_p1_held);
     STORE_POINTER(continue_player1.pressed, input_get_p1_pressed);
     STORE_POINTER(continue_player1.other_state, ((u16 *)D_002BF3EA));
-    STORE_POINTER(continue_player2.other_routine, func_00130260);
+    STORE_POINTER(continue_player2.other_routine, p2_continue_discount_reset);
     STORE_POINTER(continue_player2.held, input_get_p2_held);
     STORE_POINTER(continue_player2.pressed, input_get_p2_pressed);
     STORE_POINTER(continue_player2.other_state, D_002BF400);
@@ -201,10 +201,10 @@ void func_0020F550(void) {
     STORE_POINTER(debug_list_views[21].entries, ((u16 *)g_sparks));
     STORE_POINTER(debug_list_views[22].entries, ((u16 *)g_sparks_second_half));
     STORE_POINTER(debug_list_views[23].entries, ((u16 *)g_deferred_text));
-    STORE_POINTER(debug_list_views[24].entries, D_002BAF50);
-    STORE_POINTER(debug_list_views[25].entries, D_002BAFAA);
-    STORE_POINTER(debug_list_views[26].entries, D_002BAF30);
-    STORE_POINTER(debug_list_views[27].entries, D_002BAF3A);
+    STORE_POINTER(debug_list_views[24].entries, g_p1_score_cells);
+    STORE_POINTER(debug_list_views[25].entries, g_p2_score_cells);
+    STORE_POINTER(debug_list_views[26].entries, g_p1_score_extra_cell);
+    STORE_POINTER(debug_list_views[27].entries, g_p2_score_extra_cell);
     STORE_POINTER(debug_list_views[28].entries, ((u16 *)g_bullets));
     STORE_POINTER(debug_list_views[29].entries, ((u16 *)D_002BB470));
     STORE_POINTER(debug_list_views[30].entries, D_0029A530);
@@ -442,8 +442,8 @@ s32 p1_bomb_stock_draw();
 s32 sfx_score_item_pickup_2();
 s32 sfx_hyper_pickup();
 s32 sfx_extend();
-s32 func_001A9180();
-s32 func_001AC3A0();
+s32 score_add_p1();
+s32 hud_p1_lives_put();
 extern s32 g_p1_extend_score;
 extern u16 g_p1_score_digits;
 extern u16 g_p1_lives;
@@ -490,9 +490,9 @@ block_3:
             goto block_1;
         }
         reg_d0.w = 0x01000000;
-        func_001A9180();
+        score_add_p1();
         g_p1_lives -= 1;
-        func_001AC3A0();
+        hud_p1_lives_put();
         *(s16 *)(reg_a6 + 0xA) = 0x30;
         *(u8 *)(reg_a6 + 0x11) |= 1;
         sfx_extend();
@@ -501,9 +501,9 @@ block_3:
     } else if (*(u16 *)(reg_a6 + 6) == 2) {
         if (g_p1_lives != 0) {
             reg_d0.w = MAIN_OR_DEATH_LABEL(0x05000000, 0x07000000);
-            func_001A9180();
+            score_add_p1();
             g_p1_lives -= 1;
-            func_001AC3A0();
+            hud_p1_lives_put();
             *(s16 *)(reg_a6 + 0xA) = 0x30;
             *(u8 *)(reg_a6 + 0x11) |= 1;
             sfx_extend();
@@ -515,7 +515,7 @@ block_3:
     } else if (*(u16 *)(reg_a6 + 6) == 3) {
         if (!(PLAYER(g_player1)->flags.b[1] & 0x40) && g_p1_maximum_value[0] != 0) {
             reg_d0.w = 0x10000000;
-            func_001A9180();
+            score_add_p1();
             g_p1_maximum_value[0] = 0;
             p1_bomb_stock_draw();
             *(s16 *)(reg_a6 + 0xA) = 0x30;
@@ -541,7 +541,7 @@ block_3:
             reg_d0.w = 0x03000000;
         }
 #endif
-        func_001A9180();
+        score_add_p1();
         *p -= 1;
         p1_bomb_stock_draw();
         *(s16 *)(reg_a6 + 0xA) = 0x30;
@@ -553,8 +553,8 @@ block_3:
 }
 
 s32 p2_bomb_stock_draw();
-s32 func_001A9190();
-s32 func_001AC5F0();
+s32 score_add_p2();
+s32 hud_p2_lives_put();
 extern s32 g_p2_extend_score;
 extern u16 g_p2_score_digits;
 extern u16 g_p2_lives;
@@ -601,9 +601,9 @@ block_3:
             goto block_1;
         }
         reg_d0.w = 0x01000000;
-        func_001A9190();
+        score_add_p2();
         g_p2_lives -= 1;
-        func_001AC5F0();
+        hud_p2_lives_put();
         *(s16 *)(reg_a6 + 0xA) = 0x30;
         if (*(u16 *)(reg_a6 + 0x10) & 1) {
             *(u8 *)(reg_a6 + 0x11) &= 0xFE;
@@ -617,9 +617,9 @@ block_3:
     if (*(u16 *)(reg_a6 + 8) == 2) {
         if (g_p2_lives != 0) {
             reg_d0.w = MAIN_OR_DEATH_LABEL(0x05000000, 0x07000000);
-            func_001A9190();
+            score_add_p2();
             g_p2_lives -= 1;
-            func_001AC5F0();
+            hud_p2_lives_put();
             if (*(u16 *)(reg_a6 + 0x10) & 1) {
                 *(u8 *)(reg_a6 + 0x11) &= 0xFE;
             } else {
@@ -636,7 +636,7 @@ block_3:
     if (*(u16 *)(reg_a6 + 8) == 3) {
         if (!(PLAYER(g_player2)->flags.b[1] & 0x40) && g_p2_maximum_value[0] != 0) {
             reg_d0.w = 0x10000000;
-            func_001A9190();
+            score_add_p2();
             g_p2_maximum_value[0] = 0;
             p2_bomb_stock_draw();
             if (*(u16 *)(reg_a6 + 0x10) & 1) {
@@ -666,7 +666,7 @@ block_3:
         reg_d0.w = 0x03000000;
     }
 #endif
-    func_001A9190();
+    score_add_p2();
     *p -= 1;
     p2_bomb_stock_draw();
     if (*(u16 *)(reg_a6 + 0x10) & 1) {

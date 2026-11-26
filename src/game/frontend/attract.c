@@ -39,8 +39,8 @@ void func_00168BA0() {
 typedef void (*Fn)();
 
 s32 func_0012FB00();
-s32 func_001301B0();
-s32 func_00130200();
+s32 p1_credits_get();
+s32 p2_credits_get();
 s32 func_00131200();
 s32 func_00137C50();
 s32 sfx_coin();
@@ -93,10 +93,10 @@ next_2:
     if (g_stage_load_state != 0) goto next_3;
     if (g_pad_trigger[2] & 0x800) goto block_1;
 next_3:
-    func_00130200();
+    p2_credits_get();
     reg_d0.h[0] += reg_d1.h[0];
     if (reg_d0.h[0] != 0) goto block_1;
-    func_001301B0();
+    p1_credits_get();
     reg_d0.h[0] += reg_d1.h[0];
     if (reg_d0.h[0] == 0) goto block_2;
 block_1:
@@ -161,19 +161,19 @@ void func_00168E30(void) {
     slowdown_reset();
 }
 
-s32 func_0015BBD0();                            /* extern */
+s32 settings_notice_update_with_fade_in();                            /* extern */
 extern u16 D_0028E314;
 extern u16 D_0028E318;
 
 void func_00168E80(void) {
     s32 text_layer_clear();
-    s32 func_0015BA20();
+    s32 settings_notice_begin();
     if (*(u8 *)(reg_a5 + 2) == 0) {
         *(u8 *)(reg_a5 + 2) = 1U;
         text_layer_clear();
-        func_0015BA20();
+        settings_notice_begin();
     }
-    func_0015BBD0();
+    settings_notice_update_with_fade_in();
     if (cond_flag == 0) {
         D_0028E318 = 1;
         D_0028E314 = 1;
@@ -238,8 +238,8 @@ void func_00168EF0(void) {
 }
 
 #ifndef DEATH_LABEL
-s32 func_0015BBD0();
-s32 func_0015BEF0();
+s32 settings_notice_update_with_fade_in();
+s32 settings_notice_update_timed();
 s32 music_stop();
 s32 fade_reset();
 s32 boot_scratch_clear();
@@ -253,13 +253,13 @@ extern u8 g_splash_visible;
 void func_00168FD0(void) {
     s32 text_layer_clear();
     s32 fades_reset();
-    s32 func_0015BA20();
-    s32 func_0015BD00();
+    s32 settings_notice_begin();
+    s32 settings_notice_draw_static();
     if (reg_a5[2] == 0) {
         reg_a5[2] = 1U;
         text_layer_clear();
         fades_reset();
-        func_0015BA20();
+        settings_notice_begin();
         music_stop();
         D_0028E368 = 0;
         D_0028E378 = 0xFF;
@@ -281,15 +281,15 @@ void func_00168FD0(void) {
         }
     }
     if (g_setting_coin_mode != 0x12) {
-        func_0015BD00();
+        settings_notice_draw_static();
         if (g_stage_load_state == 0) {
             func_00169B40();
         }
     } else {
         if (D_0028DF84 != 0) {
-            func_0015BEF0();
+            settings_notice_update_timed();
         } else {
-            func_0015BBD0();
+            settings_notice_update_with_fade_in();
         }
         switch (cond_flag) { case 0: goto block_set; }
         if (g_stage_load_state == 0) {
@@ -386,13 +386,13 @@ extern s32 D_0028EB94;
 void func_00169140(void) {
     void text_layer_clear(void);
     void fades_reset(void);
-    void func_0015BA20(void);
-    void func_0015BD00(void);
+    void settings_notice_begin(void);
+    void settings_notice_draw_static(void);
     void slowdown_init(void);
     if (*(u8 *)(reg_a5 + 2) == 0) {
         *(u8 *)(reg_a5 + 2) = 1;
         fades_reset();
-        func_0015BA20();
+        settings_notice_begin();
         slowdown_init();
         g_slowdown_timer = 0;
         D_0028E288 = 0;
@@ -411,7 +411,7 @@ void func_00169140(void) {
 #endif
     }
     if (D_0028EB94 == 0) {
-        func_0015BD00();
+        settings_notice_draw_static();
     }
     func_0021D570();
     if (D_0028EB00 >= 10) {
@@ -894,18 +894,18 @@ void func_00169B40(void) {
 }
 #endif
 
-s32 func_00130270();
-s32 func_001303A0();
+s32 p1_credit_spend_one();
+s32 p2_credit_spend_one();
 void func_00169BC0(void) {
     D_0028E7B4 = 0;
     if (g_pad_trigger[0] & 0x20) {
-        func_00130270();
+        p1_credit_spend_one();
         if (cond_flag == 0) {
             D_0028E7B4 |= 1;
         }
     }
     if (g_pad_trigger[1] & 0x20) {
-        func_001303A0();
+        p2_credit_spend_one();
         if ((cond_flag == 0) && ((D_0028E304 == 0) || (D_0028E7B4 == 0))) {
             D_0028E7B4 |= 2;
         }
@@ -921,7 +921,7 @@ void func_00169C60(void) {
         func_0016A140();
         return;
     }
-    func_001301B0();
+    p1_credits_get();
     if (reg_d0.h[0] != 0) {
         func_00169DA0();
         return;
@@ -1003,12 +1003,12 @@ void func_00169E20(void) {
 #endif
 
 #ifndef DEATH_LABEL
-s32 func_0012FFE0();
+s32 credits_get();
 s32 text_layer_put_hex_digit();
 extern u8 D_0026ABC0[];
 
 void func_00169EA0(void) {
-    func_0012FFE0();
+    credits_get();
     if (reg_d1.h[0] != 0) {
         func_00169F50();
         return;
@@ -1064,7 +1064,7 @@ void func_00169F50(void) {
 extern u8 D_0026AB00[];
 
 void func_0016A010(void) {
-    func_00130200();
+    p2_credits_get();
     if (reg_d0.h[0] == 1) {
         func_0016A0D0();
         return;
@@ -1118,7 +1118,7 @@ void func_0016A140(void) {
 
 void func_0016A170(void) {
     reg_d7.w = 0;
-    func_001301B0();
+    p1_credits_get();
     if (reg_d0.h[0] != 0) {
         func_0016A2D0();
         return;
@@ -1144,7 +1144,7 @@ void func_0016A170(void) {
 
 void func_0016A220(void) {
     reg_d7.w = 0xE;
-    func_001301B0();
+    p1_credits_get();
     if (reg_d1.h[0] != 0) {
         func_0016A2E0();
         return;
@@ -1215,10 +1215,10 @@ void func_0016A340(void) {
 #endif
 
 #ifndef DEATH_LABEL
-s32 func_0012FFE0();                            /* extern */
+s32 credits_get();                            /* extern */
 
 void func_0016A3A0(void) {
-    func_0012FFE0();
+    credits_get();
     if (reg_d1.h[0] != 0) {
         func_0016A4A0();
         return;
@@ -1228,10 +1228,10 @@ void func_0016A3A0(void) {
 #endif
 
 #ifndef DEATH_LABEL
-s32 func_00130050();                            /* extern */
+s32 coins_get();                            /* extern */
 
 void func_0016A3E0(void) {
-    func_00130050();
+    coins_get();
     if (reg_d1.h[0] != 0) {
         func_0016A4A0();
         return;
@@ -1291,7 +1291,7 @@ void func_0016A4A0(void) {
 #ifndef DEATH_LABEL
 
 void func_0016A550(void) {
-    func_00130200();
+    p2_credits_get();
     if (reg_d0.h[0] == 1) {
         func_0016A690();
         return;
@@ -1306,7 +1306,7 @@ void func_0016A550(void) {
 
 #ifndef DEATH_LABEL
 void func_0016A5C0(void) {
-    func_00130200();
+    p2_credits_get();
     reg_d0.h[0] = reg_d1.h[0];
     if (reg_d0.h[0] == 1) {
         func_0016A690();

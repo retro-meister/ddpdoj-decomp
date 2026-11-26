@@ -817,7 +817,7 @@ block_52:
     goto block_end;
 }
 
-s32 func_001AA8F0();                            /* extern */
+s32 hud_p1_hyper_count_put();                            /* extern */
 extern u8 D_0028E288;
 extern u16 g_p1_hyper_time;
 
@@ -828,11 +828,11 @@ void p1_hyper_item_take(void) {
     g_p1_hyper_items += 1;
     g_p1_hyper_time = 0x95F;
     p1_bomb_capacity_draw();
-    func_001AA8F0();
+    hud_p1_hyper_count_put();
     D_0028E288 = 0;
 }
 
-s32 func_001AAA20();                            /* extern */
+s32 hud_p2_hyper_count_put();                            /* extern */
 extern u8 D_0028E284;
 extern u16 g_p2_hyper_time;
 
@@ -843,11 +843,11 @@ void p2_hyper_item_take(void) {
     g_p2_hyper_items += 1;
     g_p2_hyper_time = 0x95F;
     p2_bomb_capacity_draw();
-    func_001AAA20();
+    hud_p2_hyper_count_put();
     D_0028E284 = 0;
 }
 
-s32 func_001AC3A0(u16);
+s32 hud_p1_lives_put(u16);
 extern u16 g_p1_lives;
 
 void p1_life_add(void) {
@@ -856,11 +856,11 @@ void p1_life_add(void) {
     temp_a0 = (s16)g_p1_lives;
     if (temp_a0 != 0x14) {
         g_p1_lives = temp_a0 + 1;
-        func_001AC3A0(temp_a0);
+        hud_p1_lives_put(temp_a0);
     }
 }
 
-s32 func_001AC5F0(u16);
+s32 hud_p2_lives_put(u16);
 extern u16 g_p2_lives;
 
 void p2_life_add(void) {
@@ -869,11 +869,11 @@ void p2_life_add(void) {
     temp_a0 = (s16)g_p2_lives;
     if (temp_a0 != 0x14) {
         g_p2_lives = temp_a0 + 1;
-        func_001AC5F0(temp_a0);
+        hud_p2_lives_put(temp_a0);
     }
 }
 
-s32 func_0013F9A0();
+s32 p1_stage_clear_reward();
 extern u16 g_p1_stage_bomb_used;
 extern u16 g_p1_stage_misses;
 extern s32 g_p1_maximum_value_digits[];
@@ -881,7 +881,7 @@ void p1_next_stage_setup(void) {
     u16 temp_a0;
 
     if (g_player1[0] < 0) {
-        func_0013F9A0();
+        p1_stage_clear_reward();
         g_p1_stage_misses = 0;
         g_p1_stage_bomb_used = 0;
         if (!(PLAYER(((u8 *)g_player1))->flags.b[1] & 0x40) && (g_p1_maximum_value_digits[0] != 0)) {
@@ -896,7 +896,7 @@ void p1_next_stage_setup(void) {
     }
 }
 
-s32 func_0013FB20();
+s32 p2_stage_clear_reward();
 extern u16 g_p2_stage_bomb_used;
 extern u16 g_p2_stage_misses;
 extern s32 g_p2_maximum_value_digits[];
@@ -904,7 +904,7 @@ void p2_next_stage_setup(void) {
     u16 temp_a0;
 
     if (g_player2[0] < 0) {
-        func_0013FB20();
+        p2_stage_clear_reward();
         g_p2_stage_misses = 0;
         g_p2_stage_bomb_used = 0;
         if (!(PLAYER(((u8 *)g_player2))->flags.b[1] & 0x40) && (g_p2_maximum_value_digits[0] != 0)) {

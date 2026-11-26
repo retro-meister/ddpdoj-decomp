@@ -143,7 +143,7 @@ s32 bullet_fire256_fast();
 s32 bullet_fire256_2way();
 s32 bullet_fire256_3way();
 s32 bullet_fire256();
-s32 func_00136980();
+s32 enemy_anims_spawn_listed_long();
 s32 explosion_spawn();
 s32 enemy_hitbox_debug_draw();
 s32 enemy_remove();
@@ -290,7 +290,7 @@ next_90:
     ENTITY(reg_a6)[2].offset_y.b[0] = reg_d5.b[0];
     reg_d0.h[1] = ENTITY(reg_a6)[1].attr.h;
     reg_d0.h[0] = ENTITY(reg_a6)[1].misc.h;
-    func_00136980();
+    enemy_anims_spawn_listed_long();
     reg_tmp.b[0] = ENTITY(reg_a6)[1].offset_y.b[1];
     ENTITY(reg_a6)[1].offset_y.b[1] -= 1;
     if ((s32) reg_tmp.b[0] > 0) goto next_120;

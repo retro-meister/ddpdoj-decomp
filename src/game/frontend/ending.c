@@ -8,8 +8,8 @@
 void func_00123540(void);
 void func_00123870(void);
 
-void func_0013FD20(void);
-void func_0013FD50(void);
+void p1_hyper_state_clear_for_ending(void);
+void p2_hyper_state_clear_for_ending(void);
 void func_00141640(void);
 void p1_hyper_end(void);
 void p2_hyper_end(void);
@@ -43,11 +43,11 @@ void func_00122CE0(void) {
     if (g_loop != 0) goto block_1;
     if (g_p1_hyper_active != 0) {
         p1_hyper_end();
-        func_0013FD20();
+        p1_hyper_state_clear_for_ending();
     }
     if (g_p2_hyper_active != 0) {
         p2_hyper_end();
-        func_0013FD50();
+        p2_hyper_state_clear_for_ending();
     }
     func_00141640();
     g_boss_hyper_wait = 0;
