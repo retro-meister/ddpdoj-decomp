@@ -221,9 +221,9 @@ s32 viewer_update_and_draw(GalleryView *view, s32 mode)
         sceGifPkAddGsData(&pkt, SCE_GS_SET_PRIM(SCE_GS_PRIM_SPRITE, 0, 1, 0, 1, 0, 1, 0, 0));
         sceGifPkAddGsData(&pkt, SCE_GS_SET_RGBAQ(0x80, 0x80, 0x80, alpha, 0x3F800000));
         sceGifPkAddGsData(&pkt, SCE_GS_SET_UV(u << 4, v << 4));
-        sceGifPkAddGsData(&pkt, SCE_GS_SET_XYZ2((drawX << 4) + 0x6C00, (drawY << 3) + 0x7900, 0));
+        sceGifPkAddGsData(&pkt, SCE_GS_SET_XYZ2(GALLERY_COORD_SHIFT(drawX, 4) + 0x6C00, GALLERY_COORD_SHIFT(drawY, 3) + 0x7900, 0));
         sceGifPkAddGsData(&pkt, SCE_GS_SET_UV((u + texW) << 4, (v + texH) << 4));
-        sceGifPkAddGsData(&pkt, SCE_GS_SET_XYZ2(((drawX + drawW) << 4) + 0x6C00, ((drawY + drawH) << 3) + 0x7900, 0));
+        sceGifPkAddGsData(&pkt, SCE_GS_SET_XYZ2(GALLERY_COORD_SHIFT(drawX + drawW, 4) + 0x6C00, GALLERY_COORD_SHIFT(drawY + drawH, 3) + 0x7900, 0));
         sceGifPkTerminate(&pkt);
         FlushCache(0);
         sceDmaSendN(g_dma_gif, g_gif_buf, sceGifPkSize(&pkt));

@@ -542,7 +542,7 @@ void stage2_boss_part3_blow_off(void) {
 
 s32 explosion_burst_small(void *);
 s32 rng_next_unsigned();
-extern u8 D_0026CA80[];
+extern u8 stage2_boss_part4_blow_off_table[];
 
 void stage2_boss_part4_blow_off(void) {
     if (ENTITY(reg_a6)[4].misc.b.draw_layer == 0) {
@@ -552,7 +552,7 @@ void stage2_boss_part4_blow_off(void) {
         STAGE2_PALETTES(reg_a6)->right_shoulder_gun = 0x12;
         reg_d0.w = 8;
         boss_part_hide(0x12, 0x8000, 1);
-        reg_a1 = D_0026CA80;
+        reg_a1 = stage2_boss_part4_blow_off_table;
         reg_d2.h[1] = ENTITY(reg_a6)[4].y.h;
         reg_d2.h[0] = ENTITY(reg_a6)[4].x.h;
         stage2_boss_explosions_from_table();
@@ -601,7 +601,7 @@ loop_1:
     }
 }
 
-extern u8 D_0026CAB0[];
+extern u8 stage2_boss_part5_blow_off_table[];
 
 void stage2_boss_part5_blow_off(void) {
     if (ENTITY(reg_a6)[5].misc.b.draw_layer == 0) {
@@ -611,7 +611,7 @@ void stage2_boss_part5_blow_off(void) {
         STAGE2_PALETTES(reg_a6)->left_shoulder_gun = 0x12;
         reg_d0.w = 9;
         boss_part_hide(0x12, 0x8000, 1);
-        reg_a1 = D_0026CAB0;
+        reg_a1 = stage2_boss_part5_blow_off_table;
         reg_d2.h[1] = ENTITY(reg_a6)[5].y.h;
         reg_d2.h[0] = ENTITY(reg_a6)[5].x.h;
         stage2_boss_explosions_from_table();
@@ -684,13 +684,13 @@ void stage2_boss_time_limit(void) {
     }
 }
 
-u8 D_0026CA80[48] = {
+u8 stage2_boss_part4_blow_off_table[48] = {
     0x00, 0x00, 0x84, 0x00, 0x00, 0x00, 0x00, 0xFA, 0x00, 0xFE, 0xA0, 0x04, 0x02, 0x00, 0x87, 0x00,
     0x00, 0x00, 0x00, 0xF8, 0x00, 0x04, 0x50, 0x04, 0x04, 0x00, 0x0D, 0x00, 0x00, 0x00, 0x00, 0xFE,
     0x00, 0x00, 0x00, 0x02, 0xFF, 0xFF, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00,
 };
 
-u8 D_0026CAB0[48] = {
+u8 stage2_boss_part5_blow_off_table[48] = {
     0x00, 0x00, 0x84, 0x00, 0x00, 0x00, 0x00, 0xFA, 0x00, 0x02, 0x50, 0x04, 0x02, 0x00, 0x87, 0x00,
     0x00, 0x00, 0x00, 0xF8, 0x00, 0xFC, 0xA0, 0x04, 0x04, 0x00, 0x0D, 0x00, 0x00, 0x00, 0x00, 0xFE,
     0x00, 0x00, 0x00, 0x02, 0xFF, 0xFF, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00,

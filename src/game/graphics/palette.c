@@ -3,10 +3,10 @@
 extern u8 D_0028E0AC;
 extern u16 D_0028E0B0;
 extern u16 D_0028E0B4;
-extern s16 D_0028E0B8;
-extern s16 D_0028E0BC;
-extern s16 D_0028E0C0;
-extern u8 D_0029F2D0[];
+extern s16 fade_areas_5;
+extern s16 fade_areas_3;
+extern s16 fade_areas_1;
+extern u8 fade_areas_4[];
 extern u8 g_palette_bank_a[];
 extern u8 g_palette_bank_b[];
 void palettes_init(void) {
@@ -45,7 +45,7 @@ void palettes_init(void) {
     var_a3_2 = 0;
     var_a1 = 0;
     do {
-        temp_a2 = (u8 *)(D_0029F2D0 + var_a1);
+        temp_a2 = (u8 *)(fade_areas_4 + var_a1);
         var_a3_2 += 8;
         (*(s16 *)((u8 *)(temp_a2) + (0))) = 0;
         (*(s16 *)((u8 *)(temp_a2) + (2))) = 0;
@@ -57,11 +57,11 @@ void palettes_init(void) {
         (*(s16 *)((u8 *)(temp_a2) + (0xC))) = 0;
         (*(s16 *)((u8 *)(temp_a2) + (0xE))) = 0;
     } while (var_a3_2 < 0xF0);
-    D_0028E0C0 = 0;
+    fade_areas_1 = 0;
     (*(s16 *)&D_0028E0AC) = 0x101;
-    D_0028E0BC = 0;
+    fade_areas_3 = 0;
     D_0028E0B0 = 1;
-    D_0028E0B8 = 0;
+    fade_areas_5 = 0;
     D_0028E0B4 = 0x20;
 }
 
@@ -125,7 +125,7 @@ s32 text_palette_upload();
 s32 sprite_palette_upload();
 s32 bg_palette_upload();
 extern u8 D_0028E0AC;
-extern u8 D_0028E0AD;
+extern u8 palette_banks_flush_state;
 extern u16 D_0028E0B0;
 extern u16 D_0028E0B4;
 extern u16 g_scroll_line;
@@ -135,7 +135,7 @@ extern u8 g_bg_palette[];
 extern u8 g_sprite_palette[];
 
 void palette_banks_flush(void) {
-    if ((u16)D_0028E0C0 != 0) {
+    if ((u16)fade_areas_1 != 0) {
         reg_a0 = (u8 *)g_palette_bank_b;
         reg_a1 = (u8 *)g_sprite_palette;
         reg_d0.w = 0x1F;
@@ -143,11 +143,11 @@ void palette_banks_flush(void) {
             palette_words_copy();
             palette_words_copy();
         } while ((s16)(--reg_d0.h[0]) >= 0);
-        D_0028E0C0 = 0;
+        fade_areas_1 = 0;
         palette_flush_unused();
         sprite_palette_upload();
     }
-    if ((u16)D_0028E0BC != 0) {
+    if ((u16)fade_areas_3 != 0) {
         reg_a0 = (u8 *)g_palette_bank_a;
         reg_a1 = (u8 *)g_bg_palette;
         reg_d0.w = 0x1F;
@@ -155,18 +155,18 @@ void palette_banks_flush(void) {
             palette_words_copy();
             palette_words_copy();
         } while ((s16)(--reg_d0.h[0]) >= 0);
-        D_0028E0BC = 0;
+        fade_areas_3 = 0;
         palette_flush_unused();
         bg_palette_upload();
     }
-    if ((u16)D_0028E0B8 != 0) {
-        reg_a0 = (u8 *)D_0029F2D0;
+    if ((u16)fade_areas_5 != 0) {
+        reg_a0 = (u8 *)fade_areas_4;
         reg_a1 = (u8 *)((u8 *)g_text_palette);
         reg_d0.w = 0xE;
         do {
             palette_words_copy();
         } while ((s16)(--reg_d0.h[0]) >= 0);
-        D_0028E0B8 = 0;
+        fade_areas_5 = 0;
         palette_flush_unused();
         text_palette_upload();
     }
@@ -189,11 +189,11 @@ void palette_banks_flush(void) {
         color_at_brightness();
         *(u16 *)reg_a1 = (u16) reg_d0.h[0];
         bg_palette_upload();
-        reg_tmp.b[0] = D_0028E0AD;
-        D_0028E0AD -= 1;
+        reg_tmp.b[0] = palette_banks_flush_state;
+        palette_banks_flush_state -= 1;
         if ((s32) reg_tmp.b[0] <= 0) {
             reg_d0.h[0] = D_0028E0B0;
-            D_0028E0AD = D_0028E0AC;
+            palette_banks_flush_state = D_0028E0AC;
             if ((s16)(reg_d0.h[0]) < 0) {
                 D_0028E0B4 += reg_d0.h[0];
                 if ((s16) D_0028E0B4 < 0x18) {
@@ -229,13 +229,13 @@ void text_palette_load(void) {
     s32 temp_s1 = (s32)reg_a0;
     u8 *temp_s2 = reg_a1;
 
-    reg_a1 = D_0029F2D0;
+    reg_a1 = fade_areas_4;
     reg_d0.h[0] <<= 5;
     reg_a1 += reg_d0.h[0];
     reg_d0.w = 7;
     palette_run_copy();
     reg_d0.w = temp_s0;
-    D_0028E0B8 = 1;
+    fade_areas_5 = 1;
     reg_a0 = (u8 *)temp_s1;
     reg_a1 = temp_s2;
 }
@@ -251,21 +251,21 @@ void sprite_palette_load(void) {
     reg_d0.w = 0xF;
     palette_run_copy();
     reg_d0.w = temp_s0;
-    D_0028E0C0 = 1;
+    fade_areas_1 = 1;
     reg_a0 = (u8 *)temp_s1;
     reg_a1 = temp_s2;
 }
 
 /* .sbss (the compiler lays these out in reverse) */
-s16 D_0028E0C0 __attribute__((aligned(4)));
-s16 D_0028E0BC __attribute__((aligned(4)));
-s16 D_0028E0B8 __attribute__((aligned(4)));
+s16 fade_areas_1 __attribute__((aligned(4)));
+s16 fade_areas_3 __attribute__((aligned(4)));
+s16 fade_areas_5 __attribute__((aligned(4)));
 u16 D_0028E0B4 __attribute__((aligned(4)));
 u16 D_0028E0B0 __attribute__((aligned(4)));
-u8 D_0028E0AD;
+u8 palette_banks_flush_state;
 u8 D_0028E0AC __attribute__((aligned(4)));
 
 /* .bss (the compiler lays these out in reverse) */
 u8 g_palette_bank_b[2048];
 u8 g_palette_bank_a[2048];
-u8 D_0029F2D0[480];
+u8 fade_areas_4[480];

@@ -12,10 +12,10 @@ s32 enemy_init_entities();
 extern u16 D_0024EBC0[];
 extern u16 D_0024EC80[];
 extern u16 D_0024EEF0[];
-extern u16 D_0026E740[];
+extern u16 stage1_boss_breakable_bullet_start_table[];
 
 void stage1_boss_breakable_bullet_start(void) {
-    reg_a0 = (u8 *)(D_0026E740);
+    reg_a0 = (u8 *)(stage1_boss_breakable_bullet_start_table);
     enemy_init_entities();
     ENTITY(reg_a6)->y.h = (u16) BREAKABLE_BULLET(reg_a5)->at_start.y;
     ENTITY(reg_a6)->x.h = (u16) BREAKABLE_BULLET(reg_a5)->at_start.x;
@@ -105,10 +105,10 @@ void stage1_boss_breakable_bullet_b_first(void) {
 
 extern u8 D_0024ED80[];
 extern u16 D_0024EEB0[];
-extern u8 D_0026E760[];
+extern u8 stage1_boss_breakable_bullet_b_start_table[];
 
 void stage1_boss_breakable_bullet_b_start(void) {
-    reg_a0 = D_0026E760;
+    reg_a0 = stage1_boss_breakable_bullet_b_start_table;
     enemy_init_entities();
     ENTITY(reg_a6)->y.h = (u16) BREAKABLE_BULLET_B(reg_a5)->at_start.y;
     ENTITY(reg_a6)->x.h = (u16) BREAKABLE_BULLET_B(reg_a5)->at_start.x;
@@ -288,10 +288,10 @@ void stage1_boss_shell_first(void) {
 }
 
 s32 enemy_init_entities();                            /* extern */
-extern s32 D_0026E7A0[];
+extern s32 stage1_boss_shell_start_table[];
 
 void stage1_boss_shell_start(void) {
-    reg_a0 = (u8 *)D_0026E7A0;
+    reg_a0 = (u8 *)stage1_boss_shell_start_table;
     enemy_init_entities();
     ENTITY(reg_a6)->y.h = (u16) STAGE1_SHELL(reg_a5)->at_start.y;
     ENTITY(reg_a6)->x.h = (u16) STAGE1_SHELL(reg_a5)->at_start.x;
@@ -308,7 +308,7 @@ s32 rng_next_unsigned();
 extern u16 g_direction64_offsets_166[];
 extern u16 g_direction64_offsets_2CC[];
 extern u16 g_direction64_offsets_432[];
-extern u32 D_0026E7C0[];
+extern u32 stage1_boss_shell_table[];
 extern u16 g_bullets_blocked;
 
 #define W(o) (*(u16 *)(reg_a6 + (o)))
@@ -424,7 +424,7 @@ block_saku:
     STAGE1_SHELL(reg_a5)->frame += 4;
     STAGE1_SHELL(reg_a5)->frame &= 0x3F;
 next_4:
-    reg_a0 = (u8 *) D_0026E7C0;
+    reg_a0 = (u8 *) stage1_boss_shell_table;
     reg_a0 += STAGE1_SHELL(reg_a5)->frame;
     reg_d2.h[1] = AW(0);
     reg_d2.h[0] = AW(2);
@@ -443,15 +443,15 @@ void stage1_boss_entrance_first(void) {
 
 s32 enemy_path_start();
 s32 sprite_palette_load();
-extern u8 D_0025FB30[];
-extern u8 D_0026E800[];
+extern u8 stage1_boss_entrance_start_table[];
+extern u8 stage1_boss_entrance_start_table_2[];
 extern s8 enemy_move_end_requested;
 
 void stage1_boss_entrance_start(void) {
-    reg_a0 = D_0026E800;
+    reg_a0 = stage1_boss_entrance_start_table_2;
     enemy_init_entities();
     reg_d0.h[0] = 0x13;
-    reg_a0 = D_0025FB30;
+    reg_a0 = stage1_boss_entrance_start_table;
     sprite_palette_load();
     STAGE1_ENTRANCE(reg_a5)->frame = 0;
     STAGE1_ENTRANCE(reg_a5)->frame_timer.both = 0;
@@ -465,7 +465,7 @@ void stage1_boss_entrance_start(void) {
 
 s32 sprite_draw_layer1();
 s32 entity_follow_scroll();
-extern u8 D_0026E820[];
+extern u8 stage1_boss_entrance_table[];
 
 void stage1_boss_entrance(void) {
     u16 temp_a0;
@@ -515,7 +515,7 @@ block_13:
     reg_d3.h[0] = 0x1488;
     reg_d4.w = 0x13;
     sprite_draw_layer1();
-    reg_a0 = (u8 *)D_0026E820;
+    reg_a0 = (u8 *)stage1_boss_entrance_table;
     reg_a0 += STAGE1_ENTRANCE(reg_a5)->frame;
     reg_d2.h[1] = *(u16 *)reg_a0;
     reg_d2.h[0] = *(u16 *)(reg_a0 + 2);
@@ -528,33 +528,33 @@ block_13:
     sprite_draw_layer1();
 }
 
-u16 D_0026E740[16] = {
+u16 stage1_boss_breakable_bullet_start_table[16] = {
     0xA201, 0xFE00, 0xFE00, 0x0000, 0x0000, 0x0210, 0x0080, 0x0080,
     0x0080, 0x0080, 0x0008, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000,
 };
 
-u8 D_0026E760[64] = {
+u8 stage1_boss_breakable_bullet_b_start_table[64] = {
     0x01, 0x80, 0x00, 0xFC, 0x00, 0xFE, 0x00, 0x00, 0x00, 0x00, 0x10, 0x04, 0x80, 0x00, 0x80, 0x00,
     0x80, 0x00, 0x80, 0x00, 0xFF, 0x7F, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x80, 0x00, 0x00,
     0x00, 0x01, 0x00, 0x00, 0x00, 0x00, 0x10, 0x02, 0x00, 0x05, 0x00, 0x05, 0x00, 0x05, 0x00, 0x05,
     0xFF, 0x7F, 0x00, 0x00, 0x05, 0x1A, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00,
 };
 
-s32 D_0026E7A0[8] = {
+s32 stage1_boss_shell_start_table[8] = {
     0xFC008001, 0x0000FE00, 0x041001B8, 0x02000200, 0x02000200, 0x00007FFF, 0x0000001A, 0x00000000,
 };
 
-u32 D_0026E7C0[16] = {
+u32 stage1_boss_shell_table[16] = {
     0x1A4B0000, 0x1A4C0000, 0x1A4D0000, 0x1A4E0000, 0x1A4F0000, 0x1A500000, 0x1A510000, 0x1A520000,
     0x1A530000, 0x1A540000, 0x1A550000, 0x1A560000, 0x1A570000, 0x1A580000, 0x1A590000, 0x1A5A0000,
 };
 
-u8 D_0026E800[32] = {
+u8 stage1_boss_entrance_start_table_2[32] = {
     0x00, 0x80, 0x00, 0xFE, 0x00, 0xFE, 0x00, 0x00, 0x00, 0x00, 0x10, 0x02, 0x80, 0x00, 0x80, 0x00,
     0x80, 0x00, 0x80, 0x00, 0x08, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00,
 };
 
-u8 D_0026E820[64] = {
+u8 stage1_boss_entrance_table[64] = {
     0x00, 0x00, 0x3B, 0x1A, 0x00, 0x00, 0x3C, 0x1A, 0x00, 0x00, 0x3D, 0x1A, 0x00, 0x00, 0x3E, 0x1A,
     0x00, 0x00, 0x3F, 0x1A, 0x00, 0x00, 0x40, 0x1A, 0x00, 0x00, 0x41, 0x1A, 0x00, 0x00, 0x42, 0x1A,
     0x00, 0x00, 0x43, 0x1A, 0x00, 0x00, 0x44, 0x1A, 0x00, 0x00, 0x45, 0x1A, 0x00, 0x00, 0x46, 0x1A,

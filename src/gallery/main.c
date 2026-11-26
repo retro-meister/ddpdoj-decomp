@@ -1,5 +1,10 @@
 #include "gallery/gallery.h"
 
+#ifdef DDPDOJ_PC
+#include "gs.h"
+#include "sfx.h"
+#endif
+
 typedef struct {
     u32 archivePosition;
     u32 entryLocation;
@@ -7,7 +12,11 @@ typedef struct {
 
 const char g_gallery_archive_path[32] = "\\GALLERY\\GALLERY.DA;1";
 
-static const char *g_grid_help_lines[2] __attribute__((section(".data"))) = {
+static const char *g_grid_help_lines[2]
+#ifndef DDPDOJ_PC
+    __attribute__((section(".data")))
+#endif
+    = {
     SJIS("方向キー、Ｌ１、Ｒ１ボタンで選択してください。"),
     SJIS("○ボタンで決定、×ボタンで終了できます。"),
 };
@@ -90,6 +99,7 @@ static inline u64 getTex0Cbp(u64 tex0)
     return (u64)((s32)((tex0 >> 37) & 0x3FFF));
 }
 
+#ifndef DDPDOJ_PC
 void gallery_main(void)
 {
     u32 archiveIndex;
@@ -138,13 +148,89 @@ void gallery_main(void)
     free(g_gallery);
     gallery_exit_to_elf(0);
 }
+#else
+static s32 gallery_begin_frames(void);
 
+static s32 gallery_read_boot_sectors(void *destination, u32 lba, u32 count)
+{
+    sceCdRMode mode = { 0, SCECdSpinNom, SCECdSecS2048, 0 };
+    return sceCdRead(lba, count, destination, &mode) && sceCdSync(0) == 0 && sceCdGetError() == 0;
+}
+
+s32 gallery_boot(void)
+{
+    enum { SECTOR_SIZE = 2048, ARCHIVE_END_SLOT = 38 };
+    sceCdlFILE archive, font, atlas;
+    if (g_gallery != NULL || !pc_gs_ok() ||
+        !sceCdSearchFile(&archive, g_gallery_archive_path) ||
+        !sceCdSearchFile(&font, "\\DATA\\FONT.GF;1") ||
+        !sceCdSearchFile(&atlas, "\\DATA\\DDON3_02.DAT;1") ||
+        archive.size < SECTOR_SIZE || font.size != 0x2D9CD8 || atlas.size != 0x40000 ||
+        !gallery_read_boot_sectors(g_archive_toc, archive.lsn, 1)) {
+        return 0;
+    }
+    if (g_archive_toc[0] != ARCHIVE_END_SLOT || g_archive_toc[1] < SECTOR_SIZE ||
+        (u32)g_archive_toc[ARCHIVE_END_SLOT] > archive.size) {
+        return 0;
+    }
+    for (s32 slot = 1; slot < ARCHIVE_END_SLOT; slot++) {
+        s32 offset = g_archive_toc[slot];
+        s32 end = g_archive_toc[slot + 1];
+        if ((offset % SECTOR_SIZE) != 0 || end <= offset ||
+            (u32)(end - offset) > sizeof(g_gallery->readBuf) - (SECTOR_SIZE - 1)) {
+            return 0;
+        }
+    }
+    if (!gallery_begin_frames()) {
+        return 0;
+    }
+    g_vram_load_buf = malloc(0x300000);
+    if (g_vram_load_buf == NULL) {
+        gallery_end_frames();
+        return 0;
+    }
+    g_gallery_archive[0] = (GalleryArchiveEntry){ archive.size, archive.lsn };
+    g_data_files[0].size = font.size;
+    g_data_files[0].lba = font.lsn;
+    g_data_files[10].size = atlas.size;
+    g_data_files[10].lba = atlas.lsn;
+    g_dma_gif = sceDmaGetChan(SCE_DMA_GIF);
+    pad_init_system();
+    g_pad_dma_buf = g_pad_dma_area;
+    g_cd_total_bytes_read = 0;
+    g_cd_io_error = 0;
+    g_sprite_queue_count = 0;
+    tex_upload_init_vram();
+    font_upload_default_cluts();
+    if (g_cd_io_error || !pc_gs_ok()) {
+        gallery_end_frames();
+        return 0;
+    }
+    return 1;
+}
+#endif
+
+#ifdef DDPDOJ_PC
+static s32 gallery_begin_frames(void)
+#else
 void gallery_run_loop(void)
+#endif
 {
     s32 entryIndex;
+#ifndef DDPDOJ_PC
     s32 ready;
+#endif
     s8 entryState;
 
+#ifdef DDPDOJ_PC
+    if (g_gallery != NULL) {
+        return 0;
+    }
+    g_gallery = calloc(1, sizeof(*g_gallery));
+    if (g_gallery == NULL) {
+        return 0;
+    }
+#endif
     g_frame_count = 0;
 
     for (entryIndex = 0x20; entryIndex >= 0; entryIndex--) {
@@ -152,6 +238,12 @@ void gallery_run_loop(void)
     }
 
     for (entryIndex = 0; entryIndex < 0x100; entryIndex++) {
+#ifdef DDPDOJ_PC
+        if ((u32)entryIndex >= sizeof(g_gallery_image_order)) {
+            g_image_unlock_flags[entryIndex] = 0;
+            continue;
+        }
+#endif
         entryState = g_image_unlock_flags[entryIndex];
         if (entryState != 0) {
             g_gallery->itemStatus[entryIndex] = entryState;
@@ -162,9 +254,26 @@ void gallery_run_loop(void)
     g_gallery->itemStatus[0x11] = 0;
     g_gallery->showHelp = 1;
 
+#ifdef DDPDOJ_PC
+    return 1;
+}
+
+s32 gallery_run_frame(void)
+{
+    if (g_gallery == NULL || g_gallery->exitRequested) {
+        return 0;
+    }
+    if (g_gallery->assetError || g_cd_io_error || !pc_gs_begin_frame()) {
+        return -1;
+    }
+#endif
     do {
+#ifndef DDPDOJ_PC
         *T0_COUNT = 0;
+#endif
+#ifndef DDPDOJ_PC
         sceGsSwapDBuffDc(&g_gs_dbuff, g_frame_count);
+#endif
         gallery_init_frame_gs();
         pad_update();
 
@@ -182,10 +291,23 @@ void gallery_run_loop(void)
         }
 
         gallery_tick_and_render();
+#ifndef DDPDOJ_PC
         sound_update();
+#endif
         pad_update_vibration();
 
         g_frame_count++;
+#ifdef DDPDOJ_PC
+    } while (0);
+    if (g_gallery->assetError || g_cd_io_error || !pc_gs_ok()) {
+        return -1;
+    }
+    if (g_gallery->exitRequested) {
+        gallery_exit_to_elf(0);
+        return 0;
+    }
+    return 1;
+#else
         ready = !sceGsSyncV(0);
 
         if (g_frame_count & 1) {
@@ -201,7 +323,26 @@ void gallery_run_loop(void)
     } while (!g_gallery->exitRequested);
 
     g_gallery = 0;
+#endif
 }
+
+#ifdef DDPDOJ_PC
+void gallery_end_frames(void)
+{
+    if (g_gallery != NULL) {
+        pc_sfx_stop_all();
+        /* An async Gallery read can still be writing into the context. */
+        sceCdBreak();
+        g_cd_async_state = 0;
+        g_cd_async_busy = 0;
+        free(g_gallery);
+        g_gallery = NULL;
+        free(g_vram_load_buf);
+        g_vram_load_buf = NULL;
+        g_font_glyph_buf = NULL;
+    }
+}
+#endif
 
 void gallery_init_frame_gs(void)
 {
@@ -433,6 +574,11 @@ s32 gallery_state_grid(void)
     case 3:
         g_gallery->stepState = 0;
         while (!bmp_upload_texture(&atlasSprite, 0x1788, 0x2788, g_gallery->textureBuffer, 0, 0)) {
+#ifdef DDPDOJ_PC
+            if (g_gallery->assetError) {
+                return 0;
+            }
+#endif
         }
 
         for (thumbnailIndex = 0; thumbnailIndex < 37; thumbnailIndex++) {
@@ -593,7 +739,7 @@ s32 gallery_state_grid(void)
 
     case 41:
         if (g_pads[2].trigger & SCE_PADLleft) {
-            if (menuResult = g_gallery->dialogChoice != 0) {
+            if ((menuResult = g_gallery->dialogChoice != 0)) {
                 sound_play_cursor_se();
             }
             g_gallery->dialogChoice = 0;
@@ -1040,9 +1186,9 @@ void gallery_draw_grid_and_ui(void)
         }
 
         sceGifPkAddGsData(&pkt, SCE_GS_SET_UV(tex->u << 4, tex->v << 4));
-        sceGifPkAddGsData(&pkt, SCE_GS_SET_XYZ2((g_gallery->uiX0[i] << 4) + 0x6C00, (g_gallery->uiY0[i] << 3) + 0x7900, 0));
+        sceGifPkAddGsData(&pkt, SCE_GS_SET_XYZ2(GALLERY_COORD_SHIFT(g_gallery->uiX0[i], 4) + 0x6C00, GALLERY_COORD_SHIFT(g_gallery->uiY0[i], 3) + 0x7900, 0));
         sceGifPkAddGsData(&pkt, SCE_GS_SET_UV((tex->u + tex->w) << 4, (tex->v + tex->h) << 4));
-        sceGifPkAddGsData(&pkt, SCE_GS_SET_XYZ2((g_gallery->uiX1[i] << 4) + 0x6C00, (g_gallery->uiY1[i] << 3) + 0x7900, 0));
+        sceGifPkAddGsData(&pkt, SCE_GS_SET_XYZ2(GALLERY_COORD_SHIFT(g_gallery->uiX1[i], 4) + 0x6C00, GALLERY_COORD_SHIFT(g_gallery->uiY1[i], 3) + 0x7900, 0));
     }
 
     sceGifPkAddGsData(&pkt, SCE_GIF_SET_TAG(1, 1, 0, 0, SCE_GIF_PACKED, 1));
@@ -1101,7 +1247,7 @@ void gallery_draw_grid_and_ui(void)
             sceGifPkAddGsData(
                 &pkt,
                 SCE_GS_SET_XYZ2(
-                    ((g_gallery->scrollX + 0x38 + col * 0x90) << 4) + 0x6C00,
+                    GALLERY_COORD_SHIFT(g_gallery->scrollX + 0x38 + col * 0x90, 4) + 0x6C00,
                     ((row * 0x6A + 0x5E) << 3) + 0x7900,
                     0
                 )
@@ -1110,7 +1256,7 @@ void gallery_draw_grid_and_ui(void)
             sceGifPkAddGsData(
                 &pkt,
                 SCE_GS_SET_XYZ2(
-                    ((tex->w + (g_gallery->scrollX + 0x38 + col * 0x90)) << 4) + 0x6C00,
+                    GALLERY_COORD_SHIFT(tex->w + (g_gallery->scrollX + 0x38 + col * 0x90), 4) + 0x6C00,
                     ((tex->h + (row * 0x6A + 0x5E)) << 3) + 0x7900,
                     0
                 )

@@ -36,7 +36,9 @@ void attract_step_set() {
     g_attract_step = reg_d0.h[0];
 }
 
+#ifndef DDPDOJ_PC
 typedef void (*Fn)();
+#endif
 
 s32 bg_layer_clear();
 s32 p1_credits_get();
@@ -59,12 +61,10 @@ extern u8 g_replay_mode;
 extern u8 g_simulation_active;
 
 void attract_task(void) {
-    s32 text_layer_clear();
-    s32 fades_reset();
-    s32 text_palette_load();
-    s32 task_reset_all();
-    s32 task_start();
-    s32 replay_header_clear();
+    void text_layer_clear(void);
+    void fades_reset(void);
+    void text_palette_load(void);
+    void replay_header_clear(void);
 #ifndef DEATH_LABEL
     u32 t;
 #endif
@@ -144,7 +144,11 @@ next_7:
 block_3:
 #endif
     reg_d0.h[0] = g_attract_step;
+#ifdef DDPDOJ_PC
+    attract_step_routines[reg_d0.h[0]]();
+#else
     ((Fn)*(u32 *)((u8 *)attract_step_routines + (reg_d0.h[0] * 4)))();
+#endif
 }
 
 s32 screen_clear_unused();                            /* extern */
@@ -166,8 +170,8 @@ extern u16 D_0028E314;
 extern u16 D_0028E318;
 
 void attract_step_settings_notice(void) {
-    s32 text_layer_clear();
-    s32 settings_notice_begin();
+    void text_layer_clear(void);
+    void settings_notice_begin(void);
     if (*(u8 *)(reg_a5 + 2) == 0) {
         *(u8 *)(reg_a5 + 2) = 1U;
         text_layer_clear();
@@ -199,9 +203,9 @@ extern u16 g_stage;
 extern s8 g_cd_async_busy;
 
 void attract_step_stage_preload(void) {
-    s32 text_layer_clear();
-    s32 text_palette_load();
-    s32 slowdown_init();
+    void text_layer_clear(void);
+    void text_palette_load(void);
+    void slowdown_init(void);
     if (*(u8 *)(reg_a5 + 2) == 0) {
         *(u8 *)(reg_a5 + 2) = 1U;
         text_layer_clear();
@@ -251,10 +255,10 @@ extern u8 D_0028E2E4;
 extern u8 g_splash_visible;
 
 void attract_step_settings_notice_timed(void) {
-    s32 text_layer_clear();
-    s32 fades_reset();
-    s32 settings_notice_begin();
-    s32 settings_notice_draw_static();
+    void text_layer_clear(void);
+    void fades_reset(void);
+    void settings_notice_begin(void);
+    void settings_notice_draw_static(void);
     if (reg_a5[2] == 0) {
         reg_a5[2] = 1U;
         text_layer_clear();
@@ -320,9 +324,9 @@ extern s8 g_cd_async_busy;
 extern s8 D_0028EB88;
 
 void attract_step_death_label_notice(void) {
-    s32 text_layer_clear();
-    s32 fades_reset();
-    s32 text_palette_load();
+    void text_layer_clear(void);
+    void fades_reset(void);
+    void text_palette_load(void);
     if (reg_a5[2] == 0) {
         reg_a5[2] = 1U;
         bg_layer_clear();
@@ -498,11 +502,9 @@ s32 stage_map_reset();                            /* extern */
 extern u8 g_default_text_palette[];
 
 void attract_step_demo_start(void) {
-    s32 text_layer_clear();
-    s32 fades_reset();
-    s32 text_palette_load();
-    s32 task_reset_all();
-    s32 task_start();
+    void text_layer_clear(void);
+    void fades_reset(void);
+    void text_palette_load(void);
     if (*(u8 *)(reg_a5 + 2) == 0) {
         *(u8 *)(reg_a5 + 2) = 1U;
         attract_demo_begin();
@@ -585,11 +587,11 @@ void attract_step_logo(void) {
 s32 layers_reset();
 s32 text_layer_print_wide();
 extern u8 g_default_text_palette[];
-extern u8 D_0026A880[];
+extern u8 attract_step_caution_text_table[];
 
 void attract_step_caution_text() {
-    s32 text_layer_clear();
-    s32 text_palette_load();
+    void text_layer_clear(void);
+    void text_palette_load(void);
     u16 temp_v1;
     u16 temp_v1_2;
 
@@ -608,7 +610,7 @@ void attract_step_caution_text() {
         return;
     }
     if ((*(u16 *)(reg_a5 + 6) != 0x1C0) && ((temp_v1 = *(u16 *)(reg_a5 + 0xA), (temp_v1 == 0)) || (*(u16 *)(reg_a5 + 0xA) = (u16) (temp_v1 - 1), (*(u16 *)(reg_a5 + 0xA) == 0)))) {
-        reg_a0 = D_0026A880;
+        reg_a0 = attract_step_caution_text_table;
         reg_a0 += *(u16 *)(reg_a5 + 6);
         reg_d0.h[0] = *(u16 *)(reg_a5 + 8);
         reg_d1.h[0] = 0;
@@ -632,8 +634,6 @@ void attract_step_caution_text() {
 extern u8 D_0028E7B4;
 
 void attract_step_ship_select(void) {
-    s32 task_reset_all();
-    s32 task_start();
     task_reset_all();
     reg_d0.h[0] = TASK_SHIP_SELECT;
     task_start();
@@ -642,7 +642,7 @@ void attract_step_ship_select(void) {
 
 extern u8 D_0028DE40[];
 extern u8 D_0028DE44[];
-extern u8 D_0028DE48[];
+extern u8 attract_step_game_start_table[];
 extern u8 g_game_mode;
 extern s8 g_menu_pad;
 extern u8 g_replay_mode;
@@ -698,8 +698,6 @@ extern u16 D_006E5C14[];
 void attract_step_game_start(void) {
     void text_layer_clear(void);
     void text_palette_load(void);
-    void task_reset_all(void);
-    void task_start(void);
     void replay_header_clear(void);
     s32 a;
     s32 b;
@@ -739,8 +737,8 @@ void attract_step_game_start(void) {
     ((s16 *)D_006E5C10)[0] = D_0068DECA[0];
     ((s16 *)D_006E5C12)[0] = D_0068DECC[0];
     D_006E5BEE_as_s16_a[0] = D_0068DF02[0] % 5;
-    ((s16 *)D_006E5BF0)[0] = D_0028DE48[D_0068DECE[0]];
-    ((s16 *)D_006E5BF2)[0] = D_0028DE48[D_0068DED0[0]];
+    ((s16 *)D_006E5BF0)[0] = attract_step_game_start_table[D_0068DECE[0]];
+    ((s16 *)D_006E5BF2)[0] = attract_step_game_start_table[D_0068DED0[0]];
     ((s16 *)D_006E5C14)[0] = D_0068DED2[0];
     reg_d0.h[0] = TASK_REPLAY;
     task_start();
@@ -757,10 +755,8 @@ extern u8 death_D_00290DC0;
 #endif
 
 void attract_step_mode2_start(void) {
-    s32 text_layer_clear();
-    s32 text_palette_load();
-    s32 task_reset_all();
-    s32 task_start();
+    void text_layer_clear(void);
+    void text_palette_load(void);
     g_game_mode = 2;
 #ifdef DEATH_LABEL
     death_D_00290DC0 = 0;
@@ -835,7 +831,7 @@ extern s32 D_0028EC78;
 extern s32 D_0028EC7C;
 
 void attract_step_autosave(void) {
-    s32 text_layer_clear();
+    void text_layer_clear(void);
     u8 temp_a0;
 
     temp_a0 = *(u8 *)(reg_a5 + 2);
@@ -881,14 +877,22 @@ void attract_start_button_check(void) {
         if (g_setting_coin_mode == 0x12) {
             D_0028EB88 = 0;
             reg_d0.h[0] = 0xF;
+#ifdef DDPDOJ_PC
+            attract_step_set();
+#else
             attract_step_set(g_setting_coin_mode);
+#endif
             sfx_confirm();
             return;
         }
         if (D_0028E1E6[0] != 0) {
             D_0028EB88 = 0;
             reg_d0.h[0] = 0xF;
+#ifdef DDPDOJ_PC
+            attract_step_set();
+#else
             attract_step_set(g_setting_coin_mode);
+#endif
         }
     }
 }
@@ -1394,7 +1398,7 @@ void (*attract_step_routines[20])() = {
     attract_step_mode2_start,
 };
 
-u8 D_0026A880[448] = {
+u8 attract_step_caution_text_table[448] = {
     0x20, 0x20, 0x54, 0x48, 0x49, 0x53, 0x20, 0x47, 0x41, 0x4D, 0x45, 0x20, 0x49, 0x53, 0x20, 0x46,
     0x4F, 0x52, 0x20, 0x55, 0x53, 0x45, 0x20, 0x49, 0x4E, 0x20, 0x20, 0x20, 0x00, 0x00, 0x00, 0x00,
     0x20, 0x20, 0x20, 0x20, 0x20, 0x20, 0x20, 0x20, 0x20, 0x20, 0x20, 0x4A, 0x41, 0x50, 0x41, 0x4E,
@@ -1470,7 +1474,7 @@ void (*attract_step_routines[20])() = {
     attract_step_mode2_start,
 };
 
-u8 D_0026A880[448] = {
+u8 attract_step_caution_text_table[448] = {
     0x20, 0x20, 0x54, 0x48, 0x49, 0x53, 0x20, 0x47, 0x41, 0x4D, 0x45, 0x20, 0x49, 0x53, 0x20, 0x46,
     0x4F, 0x52, 0x20, 0x55, 0x53, 0x45, 0x20, 0x49, 0x4E, 0x20, 0x20, 0x20, 0x00, 0x00, 0x00, 0x00,
     0x20, 0x20, 0x20, 0x20, 0x20, 0x20, 0x20, 0x20, 0x20, 0x20, 0x20, 0x4A, 0x41, 0x50, 0x41, 0x4E,

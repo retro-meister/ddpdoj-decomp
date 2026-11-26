@@ -93,7 +93,7 @@ extern s32 D_0028DF28;
 extern s32 D_0028DF2C;
 extern s32 D_0028DF30;
 extern s32 D_0028DF34;
-extern s32 D_0028DF38;
+extern s32 fades_reset_state;
 extern u8 D_0029C0C0[];
 extern u8 D_0029C150[];
 
@@ -108,7 +108,7 @@ void fades_reset(void) {
     }
     reg_a0 = (u8 *)D_0029C0C0;
     reg_d7.w = 2;
-    D_0028DF38 = 0;
+    fades_reset_state = 0;
     D_0028DF34 = 0;
     D_0028DF30 = 0;
     D_0028DF2C = 0;
@@ -862,11 +862,11 @@ block_next:
 }
 
 extern u8 g_palette_bank_b[];
-extern u8 D_0028E0C0[];
+extern u8 fade_areas_1[];
 extern u8 g_palette_bank_a[];
-extern u8 D_0028E0BC[];
-extern u8 D_0029F2D0[];
-extern u8 D_0028E0B8[];
+extern u8 fade_areas_3[];
+extern u8 fade_areas_4[];
+extern u8 fade_areas_5[];
 
 /* How fast a fade runs: the frames between two steps and the brightness added at a step. */
 u16 fade_speeds[32][2] = {
@@ -920,13 +920,13 @@ u16 palette_white[32] = {
 
 /* The colours a fade can work on, and the flag that says they changed. */
 FadeArea fade_areas[3] = {
-    { g_palette_bank_b, D_0028E0C0 },
-    { g_palette_bank_a, D_0028E0BC },
-    { D_0029F2D0, D_0028E0B8 },
+    { g_palette_bank_b, fade_areas_1 },
+    { g_palette_bank_a, fade_areas_3 },
+    { fade_areas_4, fade_areas_5 },
 };
 
 /* .sbss (the compiler lays these out in reverse) */
-s32 D_0028DF38;
+s32 fades_reset_state;
 s32 D_0028DF34;
 s32 D_0028DF30;
 s32 D_0028DF2C;

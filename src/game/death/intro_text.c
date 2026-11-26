@@ -63,14 +63,14 @@ void gfx_draw_color_box(s32 x, s32 y, s32 w, s32 h, s32 depth, s32 alpha, s32 r,
 void quad_flush(void);
 s32 arcade_sprite_draw();
 void intro_picture_draw(TextScript *script);
-extern s8 death_D_002549A0[];
-extern u32 death_D_00254B40[];
+extern s8 intro_text_update_table[];
+extern u32 intro_picture_update_table[];
 extern u16 ending_fade_in_05[];
 extern u16 ending_fade_in_09[];
 extern s32 g_tex_upload_tbp;
 extern s32 g_quad_count;
 extern u16 D_00295E40[];
-extern TextScript death_D_002AB800;
+extern TextScript intro_text_update_state;
 extern u8 g_arcade_sprites[12000];
 extern u8 g_splash_file_buf[];
 extern u8 g_noise_file_buf[];
@@ -174,7 +174,7 @@ void intro_picture_update(TextScript *script) {
     if (script->picture != 0) {
         if (script->picture < 7) {
             reg_d1.w = 0x38000000;
-            reg_d2.w = death_D_00254B40[script->picture];
+            reg_d2.w = intro_picture_update_table[script->picture];
             reg_d3.h[0] = 0x1CE0;
             reg_d4.h[0] = 1;
             reg_d4.h[0] += D_00295E40[0];
@@ -313,19 +313,19 @@ void intro_text_update(void) {
         ENTITY(reg_a6)->offset_y.h = 1;
         text_layer_clear();
         ENTITY(reg_a6)->sprite.h = 0;
-        memset(&death_D_002AB800, 0, sizeof(TextScript));
-        death_D_002AB800.cursor = death_D_002549A0;
-        death_D_002AB800.alpha = 0x80;
-        death_D_002AB800.page = death_D_002AB800.cursor;
+        memset(&intro_text_update_state, 0, sizeof(TextScript));
+        intro_text_update_state.cursor = intro_text_update_table;
+        intro_text_update_state.alpha = 0x80;
+        intro_text_update_state.page = intro_text_update_state.cursor;
     case 1:
-        intro_picture_update(&death_D_002AB800);
-        if (intro_text_step(&death_D_002AB800) != 0) {
+        intro_picture_update(&intro_text_update_state);
+        if (intro_text_step(&intro_text_update_state) != 0) {
             reg_a5[3] = 2;
         }
-        death_D_002AB800.frame++;
+        intro_text_update_state.frame++;
         break;
     }
 }
 
 /* .bss */
-TextScript death_D_002AB800;
+TextScript intro_text_update_state;

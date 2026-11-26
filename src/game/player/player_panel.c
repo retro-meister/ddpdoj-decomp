@@ -1,7 +1,7 @@
 #include "common.h"
 
 s32 palette_run_copy();
-extern s16 D_0028E0C0;
+extern s16 fade_areas_1;
 extern u8 g_palette_bank_b[];
 
 void palette_bank_b_load_half(void) {
@@ -16,7 +16,7 @@ void palette_bank_b_load_half(void) {
     reg_d0.w = 7;
     palette_run_copy();
     reg_d0.w = d0;
-    D_0028E0C0 = 1;
+    fade_areas_1 = 1;
     reg_a0 = a0;
     reg_a1 = a1;
 }
@@ -44,13 +44,13 @@ loop_1:
     reg_d1.h[0] = tmp;
     if (((s64) ((s64) (u16) tmp << 0x30) >> 0x30) >= 0) goto loop_1;
     reg_d0.w = d0;
-    D_0028E0C0 = 1;
+    fade_areas_1 = 1;
     reg_d1.w = d1;
     reg_a0 = a0;
     reg_a1 = a1;
 }
 
-extern s16 D_0028E0BC;
+extern s16 fade_areas_3;
 extern u8 g_palette_bank_a[];
 
 void palette_bank_a_load(void) {
@@ -64,7 +64,7 @@ void palette_bank_a_load(void) {
     reg_d0.w = 0xF;
     palette_run_copy();
     reg_d0.w = temp_s0;
-    D_0028E0BC = 1;
+    fade_areas_3 = 1;
     reg_a0 = (u8 *)temp_s1;
     reg_a1 = temp_s2;
 }
@@ -87,21 +87,21 @@ void palette_bank_a_load_run(void) {
         palette_run_copy();
     } while ((s16)(--reg_d1.h[0]) >= 0);
     reg_d0.w = save_d0;
-    D_0028E0BC = 1;
+    fade_areas_3 = 1;
     reg_d1.w = save_d1;
     reg_a0 = save_a0;
     reg_a1 = save_a1;
 }
 
 s32 sprite_palette_load();
-extern u32 D_0025F620[];
+extern u32 stage_palettes_load_value[];
 extern u16 g_stage_x4;
 
 void stage_palettes_load(void) {
     s64 temp_a0;
     u16 temp_a1;
 
-    reg_a2 = (u8 *)(D_0025F620);
+    reg_a2 = (u8 *)(stage_palettes_load_value);
     reg_d0.h[0] = g_stage_x4;
     reg_tmp.w = *(u32 *)(reg_a2 + reg_d0.h[0]);
     reg_a2 = (u8 *) reg_tmp.w;

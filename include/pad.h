@@ -38,6 +38,12 @@ extern u32 g_pad_repeat_timer[4];
 extern u32 g_pad_fast_repeat_timer[4];
 extern u32 g_pad_unused[4];
 
+#ifdef DDPDOJ_PC
+extern u16 g_pad_vib_power_p1, g_pad_vib_power_p2;
+extern u16 g_pad_vib_timer_p1, g_pad_vib_timer_p2;
+extern u8 g_pad_vib_state_p1, g_pad_vib_state_p2;
+#endif
+
 void pad_init_system(void);
 void pad_poll_hardware(void);
 void pad_update(void);

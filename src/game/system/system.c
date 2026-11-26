@@ -86,7 +86,7 @@ s32 disc_files_locate();
 s32 font_init();
 s32 mc_init();
 extern s16 g_loaded_stage;
-extern u8 D_0028E400;
+extern u8 sys_init_state;
 extern s8 D_0028EB00;
 extern u8 g_pad_dma_area[];
 void sys_init(void) {
@@ -99,10 +99,12 @@ void sys_init(void) {
     render_target_init(&g_render_target, g_gif_buf, 0x12C0, 0x200, 0x100);
     pad_init_system();
     (*(u8 **)&g_pad_dma_buf) = (u8 *)(g_pad_dma_area);
+#ifndef DDPDOJ_PC
     *(s32 *)0x10000010 = 0x83;
+#endif
     g_loaded_stage = 0xFF;
     g_frame_counter = 0;
-    D_0028E400 = 0;
+    sys_init_state = 0;
     g_display_reset_pending = 0;
     D_0028EB00 = 0;
     fade_reset();
@@ -118,7 +120,9 @@ s32 text_queue_clear();                            /* extern */
 s32 screen_setting_apply();                            /* extern */
 
 void sys_begin_frame(void) {
+#ifndef DDPDOJ_PC
     *(s32 *)0x10000000 = 0;
+#endif
     sceGsSwapDBuffDc(&g_gs_dbuff, g_frame_counter);
     text_queue_clear();
     pad_update();
@@ -446,7 +450,7 @@ s32 input_clear();                            /* extern */
 extern s8 D_0028E249[];
 extern s8 D_0028E24A[];
 extern s8 D_0028E24B[];
-extern s8 D_0028E24C[];
+extern s8 pad_mask_game_inputs_buffer[];
 extern s8 D_0028E24D[];
 extern s8 D_0028E24E[];
 extern s8 D_0028E24F[];
@@ -458,7 +462,7 @@ void pad_mask_game_inputs(void) {
         D_0028E249[0] = -1;
         D_0028E24A[0] = -1;
         D_0028E24B[0] = -1;
-        D_0028E24C[0] = -1;
+        pad_mask_game_inputs_buffer[0] = -1;
         D_0028E24D[0] = -1;
         D_0028E24E[0] = -1;
         D_0028E24F[0] = -1;
@@ -743,94 +747,17 @@ void vram_clear_all(void)
 }
 
 
-#ifdef DEATH_LABEL
+#ifndef DDPDOJ_PC
+#include "screen_fade.inc.h"
 #endif
-
-void fade_reset(void) {
-    g_fade_state = 0;
-    g_fade_alpha = 0;
-#ifdef DEATH_LABEL
-    g_fade_white = 0;
-#endif
-}
-
-#ifdef DEATH_LABEL
-#endif
-
-void fade_start_in(void) {
-#ifdef DEATH_LABEL
-    g_fade_white = 0;
-#endif
-    g_fade_state = 1;
-}
-
-#ifdef DEATH_LABEL
-#endif
-
-void fade_start_out(void) {
-#ifdef DEATH_LABEL
-    g_fade_white = 0;
-#endif
-    g_fade_state = 2;
-}
-
-#ifdef DEATH_LABEL
-void fade_white_start(void) {
-    g_fade_state = 2;
-    g_fade_white = 1;
-}
-#endif
-
-
-#ifdef DEATH_LABEL
-#endif
-
-void fade_update_and_draw(void) {
-    switch (g_fade_state) {                           /* irregular */
-    case 0:
-        break;
-    case 1:
-        g_fade_state = 3;
-        g_fade_alpha = 0x80;
-        g_fade_step = -8;
-        break;
-    case 2:
-        g_fade_state = 3;
-        g_fade_step = 8;
-        g_fade_alpha = 0;
-        break;
-    case 3:
-        g_fade_alpha += g_fade_step;
-        if (g_fade_alpha < 0) {
-            g_fade_alpha = 0;
-            g_fade_state = 0;
-        }
-        if (g_fade_alpha > 0x80) {
-            g_fade_state = 0;
-            g_fade_alpha = 0x80;
-        }
-        break;
-    }
-#ifdef DEATH_LABEL
-    if (g_fade_alpha != 0) {
-        if (g_fade_white == 0) {
-            gfx_draw_color_box(0, 0, 0x1C2, 0xE0, 0x1F4, g_fade_alpha, 1, 1, 1);
-        } else {
-            gfx_draw_color_box(0, 0, 0x1C2, 0xE0, 0x1F4, g_fade_alpha, 0xFF, 0xFF, 0xFF);
-        }
-    }
-#else
-    if (g_fade_alpha != 0) {
-        gfx_draw_color_box(0, 0, 0x1C2, 0xE0, 0x1F4, g_fade_alpha, 1, 1, 1);
-    }
-#endif
-}
 
 
 void vibration_stop_all(void)
 {
+#ifndef DDPDOJ_PC
     extern s8 g_pad_vib_state_p2;
     extern s8 g_pad_vib_state_p1;
+#endif
     s32 zero;
 
     g_pad_vib_state_p1 = 0;
@@ -842,7 +769,9 @@ void vibration_stop_all(void)
 
 
 void vibration_stop_pad1(void) {
+#ifndef DDPDOJ_PC
     extern s8 g_pad_vib_state_p1;
+#endif
     s32 zero;
 
     g_pad_vib_state_p1 = 0;
@@ -852,7 +781,9 @@ void vibration_stop_pad1(void) {
 
 
 void vibration_stop_pad2(void) {
+#ifndef DDPDOJ_PC
     extern s8 g_pad_vib_state_p2;
+#endif
     g_pad_vib_state_p2 = 0;
     g_pad_act_direct[1] = 0;
     scePadSetActDirect(1, 0, g_pad_act_direct);
@@ -860,9 +791,11 @@ void vibration_stop_pad2(void) {
 
 extern u8 g_pad_vib_enabled;
 void vibration_start_pad1(s16 arg0, s16 arg1) {
+#ifndef DDPDOJ_PC
     extern s16 g_pad_vib_power_p1;
     extern s16 g_pad_vib_timer_p1;
     extern s8 g_pad_vib_state_p1;
+#endif
     if ((g_attract_demo == 0) && (g_pad_vib_enabled != 0)) {
         if (g_replay_mode == 2) {
             if (g_replay_taken_over != 0) {
@@ -877,9 +810,11 @@ void vibration_start_pad1(s16 arg0, s16 arg1) {
 }
 
 void vibration_start_pad2(s16 arg0, s16 arg1) {
+#ifndef DDPDOJ_PC
     extern s16 g_pad_vib_power_p2;
     extern s16 g_pad_vib_timer_p2;
     extern s8 g_pad_vib_state_p2;
+#endif
     if ((g_attract_demo == 0) && (g_pad_vib_enabled != 0)) {
         if (g_replay_mode == 2) {
             if (g_replay_taken_over != 0) {
@@ -894,12 +829,14 @@ void vibration_start_pad2(s16 arg0, s16 arg1) {
 }
 
 void vibration_start_active_pad(s16 arg0, s16 arg1) {
+#ifndef DDPDOJ_PC
     extern s16 g_pad_vib_power_p2;
     extern s16 g_pad_vib_power_p1;
     extern s16 g_pad_vib_timer_p2;
     extern s16 g_pad_vib_timer_p1;
     extern s8 g_pad_vib_state_p2;
     extern s8 g_pad_vib_state_p1;
+#endif
     if (g_menu_pad == 0) {
         g_pad_vib_power_p1 = arg0;
         g_pad_vib_state_p1 = 1;
@@ -917,12 +854,14 @@ extern u16 g_pad_vib_saved_timer_p2;
 extern u16 g_pad_vib_saved_timer_p1;
 
 void vibration_suspend(void) {
+#ifndef DDPDOJ_PC
     extern u16 g_pad_vib_power_p2;
     extern u16 g_pad_vib_power_p1;
     extern u16 g_pad_vib_timer_p2;
     extern u16 g_pad_vib_timer_p1;
     extern u8 g_pad_vib_state_p2;
     extern u8 g_pad_vib_state_p1;
+#endif
     g_pad_vib_saved_power_p1 = 0;
     g_pad_vib_saved_timer_p1 = 0;
     g_pad_vib_saved_power_p2 = 0;
@@ -939,12 +878,14 @@ void vibration_suspend(void) {
 
 void vibration_resume(void)
 {
+#ifndef DDPDOJ_PC
     extern u16 g_pad_vib_power_p2;
     extern u16 g_pad_vib_power_p1;
     extern u16 g_pad_vib_timer_p2;
     extern u16 g_pad_vib_timer_p1;
     extern s8 g_pad_vib_state_p2;
     extern s8 g_pad_vib_state_p1;
+#endif
     if (g_pad_vib_enabled != 0) {
         if (g_pad_vib_saved_timer_p1 > 0x3C) {
             g_pad_vib_timer_p1 = g_pad_vib_saved_timer_p1;
@@ -964,12 +905,14 @@ void vibration_resume(void)
 #pragma opt_propagation off
 
 void vibration_update(void) {
+#ifndef DDPDOJ_PC
     extern u8 g_pad_vib_power_p2;
     extern u8 g_pad_vib_power_p1;
     extern u16 g_pad_vib_timer_p2;
     extern u16 g_pad_vib_timer_p1;
     extern u8 g_pad_vib_state_p2;
     extern u8 g_pad_vib_state_p1;
+#endif
     s32 slot;
 
     if (g_attract_demo != 0) {
@@ -1050,12 +993,14 @@ void *g_pad_dma_buf;
 void *g_dma_gif;
 s32 g_frame_counter;
 s8 g_display_reset_pending __attribute__((aligned(4)));
+#ifndef DDPDOJ_PC
 s8 g_fade_state __attribute__((aligned(4)));
 #ifdef DEATH_LABEL
 s8 g_fade_white __attribute__((aligned(4)));
 #endif
 s16 g_fade_step __attribute__((aligned(4)));
 s16 g_fade_alpha __attribute__((aligned(4)));
+#endif
 s32 g_stage_map_progress;
 
 u8 g_pad_dma_buf_1[0x100] __attribute__((aligned(64)));

@@ -1,7 +1,7 @@
 /* Tables several enemy units share, and the small pointer tables to each enemy unit's tables. */
 #include "common.h"
 
-u16 D_00251720[432] = {
+u16 stage1_midboss_wreck_table[432] = {
     0x002A, 0x0025, 0x002A, 0x0026, 0x002A, 0x0027, 0x002A, 0x0028,
     0x0006, 0x0029, 0x0006, 0x002A, 0x002A, 0x002B, 0x002A, 0x002C,
     0x002A, 0x002D, 0x002A, 0x001C, 0x002A, 0x001D, 0x002A, 0x001E,
@@ -58,7 +58,7 @@ u16 D_00251720[432] = {
     0x002C, 0x008D, 0x002E, 0x008E, 0x002E, 0x008F, 0x0000, 0x0000,
 };
 
-u16 D_0028C0C0[4] = {
+u16 large_tank_entities_at_47[4] = {
     0x0000, 0x0004, 0xFFFF, 0x0000,
 };
 
@@ -86,18 +86,18 @@ u16 D_0028C0E4[2] = {
     0x0000, 0x0000,
 };
 
-u16 D_0028C0E8[2] = {
+u16 wreck_setups_4[2] = {
     0x0000, 0x0000,
 };
 
-u16 D_0028C0EC[2] = {
+u16 wreck_setups_5[2] = {
     0x0000, 0x0000,
 };
 
-u16 D_0028C0F0[2] = {
+u16 wreck_setups_6[2] = {
     0x0000, 0x0000,
 };
 
-u16 D_0028C0F4[2] = {
+u16 wreck_setups_7[2] = {
     0x0000, 0x0000,
 };

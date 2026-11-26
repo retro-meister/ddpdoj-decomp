@@ -304,8 +304,8 @@ void mid_flyer_a_first(void) {
 
 s32 aim_at_player();
 extern u16 g_direction_sprites_g[];
-extern s8 D_0025A070[];
-extern s8 D_0025A080[];
+extern s8 mid_flyer_a_start_table[];
+extern s8 mid_flyer_a_start_table_2[];
 extern s8 D_0025A0B0[];
 extern u16 g_rank_2_16;
 extern u16 g_loop;
@@ -322,7 +322,7 @@ void mid_flyer_a_start(void) {
     reg_tmp.w = (u32) ((s8 *)reg_a0);
     MID_FLYER_A(reg_a5)->after_entities[0] = (u16) reg_tmp.h[1];
     MID_FLYER_A(reg_a5)->after_entities[1] = (u16) reg_tmp.h[0];
-    (*(s8 **)&reg_a0) = D_0025A080;
+    (*(s8 **)&reg_a0) = mid_flyer_a_start_table_2;
     reg_d0.w = 0x10;
     enemy_set_task_state();
     enemy_path_start();
@@ -385,7 +385,7 @@ void mid_flyer_a_start(void) {
         reg_d0.h[0] = g_rank_2_16;
         reg_d0.b[0] -= 8;
         MID_FLYER_A(reg_a5)->second_countdown -= reg_d0.b[0];
-        (*(s8 **)&reg_a0) = D_0025A070;
+        (*(s8 **)&reg_a0) = mid_flyer_a_start_table;
         reg_d0.h[0] = g_stage_x2;
         (*(s8 **)&reg_a0) = &(*(s8 **)&reg_a0)[reg_d0.h[0]];
         ENTITY(reg_a6)->attr.sb.palette = (s8) *((s8 *)reg_a0);
@@ -807,7 +807,7 @@ void mid_flyer_b_first(void) {
 
 extern u16 g_direction_sprites_d[];
 extern s8 D_0025A128[];
-extern s8 D_0025A140[];
+extern s8 mid_flyer_b_start_table[];
 extern s8 D_0025A160[];
 extern u16 g_rank_7_16;
 extern s16 g_bullet_limit_raised_1[];
@@ -822,7 +822,7 @@ void mid_flyer_b_start(void) {
     reg_tmp.w = (u32) ((s8 *)reg_a0);
     MID_FLYER_B(reg_a5)->after_entities[0] = (u16) reg_tmp.h[1];
     MID_FLYER_B(reg_a5)->after_entities[1] = (u16) reg_tmp.h[0];
-    (*(s8 **)&reg_a0) = D_0025A140;
+    (*(s8 **)&reg_a0) = mid_flyer_b_start_table;
     reg_d0.w = 0xA;
     enemy_set_task_state();
     enemy_path_start();
@@ -881,7 +881,7 @@ s32 bullet_fire256_fixed();
 s32 bullet_fire256_2way();
 extern u16 g_direction_offsets_500[];
 extern u16 g_direction64_offsets_166[];
-extern u16 D_0025A1E0[];
+extern u16 mid_flyer_b_table[];
 extern u16 g_rank_4_16;
 extern u16 g_rank_6_16;
 
@@ -968,7 +968,7 @@ block_17:
                             ENTITY(reg_a6)[1].move.b.speed = (u8) ENTITY(reg_a6)[1].move.b.dir;
                             ENTITY(reg_a6)[1].hit_x_minus.h += 4;
                             reg_d0.h[0] = ENTITY(reg_a6)[1].hit_x_minus.h;
-                            reg_a0 = (u8 *)(D_0025A1E0);
+                            reg_a0 = (u8 *)(mid_flyer_b_table);
                             ENTITY(reg_a6)[1].hit_y_minus.h = (reg_d0.h[0] != 0) ? *(u16 *)((u8 *)reg_a0 + ((s16)reg_d0.h[0] & ~1)) : *(u16 *)reg_a0;
                             ENTITY(reg_a6)[1].hit_x_plus.h = ((reg_d0.h[0] + 2) != 0) ? *(u16 *)((u8 *)reg_a0 + ((s16)(reg_d0.h[0] + 2) & ~1)) : *(u16 *)reg_a0;
                             if (reg_d0.h[0] == 0x14) {
@@ -985,7 +985,7 @@ block_17:
                                 ENTITY(reg_a6)[1].hit_x_minus.h = 0x10U;
                             }
                             reg_d0.h[0] = ENTITY(reg_a6)[1].hit_x_minus.h;
-                            reg_a0 = (u8 *)(D_0025A1E0);
+                            reg_a0 = (u8 *)(mid_flyer_b_table);
                             ENTITY(reg_a6)[1].hit_y_minus.h = (reg_d0.h[0] != 0) ? *(u16 *)((u8 *)reg_a0 + ((s16)reg_d0.h[0] & ~1)) : *(u16 *)reg_a0;
                             ENTITY(reg_a6)[1].hit_x_plus.h = ((reg_d0.h[0] + 2) != 0) ? *(u16 *)((u8 *)reg_a0 + ((s16)(reg_d0.h[0] + 2) & ~1)) : *(u16 *)reg_a0;
                         }
@@ -1055,7 +1055,7 @@ block_51:
                                 ENTITY(reg_a6)[1].hp.h = 0U;
                             } else {
                                 reg_d0.h[0] = ENTITY(reg_a6)[1].hit_x_minus.h;
-                                reg_a0 = (u8 *)(D_0025A1E0);
+                                reg_a0 = (u8 *)(mid_flyer_b_table);
                                 ENTITY(reg_a6)[1].hit_y_minus.h = (reg_d0.h[0] != 0) ? *(u16 *)((u8 *)reg_a0 + ((s16)reg_d0.h[0] & ~1)) : *(u16 *)reg_a0;
                                 ENTITY(reg_a6)[1].hit_x_plus.h = ((reg_d0.h[0] + 2) != 0) ? *(u16 *)((u8 *)reg_a0 + ((s16)(reg_d0.h[0] + 2) & ~1)) : *(u16 *)reg_a0;
                             }
@@ -1353,7 +1353,7 @@ void mid_flyer_c_first(void) {
 }
 
 extern s8 D_0025A1F8[];
-extern s8 D_0025A210[];
+extern s8 mid_flyer_c_start_table[];
 extern s8 D_0025A230[];
 extern u16 g_enemy_signal_3;
 extern u16 g_enemy_signal_2;
@@ -1376,7 +1376,7 @@ void mid_flyer_c_start(void) {
     reg_tmp.w = (u32) ((s8 *)reg_a0);
     MID_FLYER_C(reg_a5)->after_entities[0] = (u16) reg_tmp.h[1];
     MID_FLYER_C(reg_a5)->after_entities[1] = (u16) reg_tmp.h[0];
-    (*(s8 **)&reg_a0) = D_0025A210;
+    (*(s8 **)&reg_a0) = mid_flyer_c_start_table;
     reg_d0.w = 0xD;
     enemy_set_task_state();
     enemy_path_start();
@@ -1719,7 +1719,7 @@ void mid_flyer_d_first(void) {
 }
 
 extern s8 D_0025A288[];
-extern s8 D_0025A2A0[];
+extern s8 mid_flyer_d_start_table[];
 extern s8 D_0025A2C0[];
 extern u16 g_scroll_line;
 
@@ -1732,7 +1732,7 @@ void mid_flyer_d_start(void) {
     reg_tmp.w = (u32) ((s8 *)reg_a0);
     MID_FLYER_D(reg_a5)->after_entities[0] = (u16) reg_tmp.h[1];
     MID_FLYER_D(reg_a5)->after_entities[1] = (u16) reg_tmp.h[0];
-    (*(s8 **)&reg_a0) = D_0025A2A0;
+    (*(s8 **)&reg_a0) = mid_flyer_d_start_table;
     reg_d0.w = 0xE;
     enemy_set_task_state();
     enemy_path_start();
@@ -1769,7 +1769,7 @@ block_4:
 
 s32 rng_next_0_to_3_d1();
 s32 nearest_player_by_x();
-extern u16 D_0025A330[];
+extern u16 mid_flyer_d_table[];
 
 void mid_flyer_d(void) {
     u32 cnt;
@@ -1955,7 +1955,7 @@ block_rts:
     return;
 next_600:
     reg_d0.h[0] = MID_FLYER_D(reg_a5)->cannon_step;
-    reg_a0 = (u8 *) D_0025A330;
+    reg_a0 = (u8 *) mid_flyer_d_table;
     reg_d7.h[0] = (reg_d0.h[0] != 0) ? *(u16 *)(reg_a0 + ((s16) reg_d0.h[0] & ~1)) : *(u16 *)reg_a0;
     if ((s16) reg_d7.h[0] != -1) goto next_660;
     reg_tmp.b[0] = MID_FLYER_D(reg_a5)->second_countdown;
@@ -2100,8 +2100,8 @@ void mid_tank_vertical_first(void) {
     enemy_set_entity_count(1);
 }
 
-extern u16 D_0025A380[];
-extern u16 D_0025A390[];
+extern u16 mid_tank_vertical_start_table[];
+extern u16 mid_tank_vertical_start_table_2[];
 extern u16 D_0025A3B0[];
 extern u16 D_0025A430[];
 extern u16 g_rank_8_16;
@@ -2116,7 +2116,7 @@ void mid_tank_vertical_start(void) {
     reg_tmp.w = (u32) reg_a0;
     MID_TANK_V(reg_a5)->after_entities[0] = (u16) reg_tmp.h[1];
     MID_TANK_V(reg_a5)->after_entities[1] = (u16) reg_tmp.h[0];
-    reg_a0 = (u8 *)(D_0025A390);
+    reg_a0 = (u8 *)(mid_tank_vertical_start_table_2);
     reg_d0.w = 0xD;
     enemy_set_task_state();
     enemy_path_start();
@@ -2137,7 +2137,7 @@ void mid_tank_vertical_start(void) {
         MID_TANK_V(reg_a5)->unread_2F -= reg_d0.b[0];
         reg_d0.h[0] = g_rank_8_16;
         MID_TANK_V(reg_a5)->shot_countdown -= reg_d0.b[0];
-        reg_a0 = (u8 *)(D_0025A380);
+        reg_a0 = (u8 *)(mid_tank_vertical_start_table);
         reg_d0.h[0] = g_stage_x2;
         reg_a0 += reg_d0.h[0];
         ENTITY(reg_a6)->attr.sb.palette = *(s8 *)reg_a0;
@@ -2171,9 +2171,9 @@ s32 sprite_draw_layer1();
 s32 rng_next();
 s32 rng_next_bit_d5();
 s32 wreck_spawn_a();
-extern u16 D_0025A440[];
-extern u16 D_0025A460[];
-extern u16 D_0028C9E0;
+extern u16 mid_tank_vertical_table[];
+extern u16 mid_tank_vertical_table_2[];
+extern u16 mid_tank_vertical_table_3;
 extern u16 g_rank_1_16;
 
 void mid_tank_vertical(void) {
@@ -2292,7 +2292,7 @@ block_19:
                 } else if (temp_v1_2 == 1) {
                     MID_TANK_V(reg_a5)->hatch_frame += 2;
                     reg_d0.h[0] = MID_TANK_V(reg_a5)->hatch_frame;
-                    reg_a0 = (u8 *)(D_0025A440);
+                    reg_a0 = (u8 *)(mid_tank_vertical_table);
                     MID_TANK_V(reg_a5)->hatch_offset = (reg_d0.h[0] != 0) ? *(u16 *)((u8 *)reg_a0 + ((s16)reg_d0.h[0] & ~1)) : *(u16 *)reg_a0;
                     if (reg_d0.h[0] == 0x14) {
                         MID_TANK_V(reg_a5)->hatch_state = 2U;
@@ -2341,7 +2341,7 @@ block_55:
                                 reg_d2.h[1] = ENTITY(reg_a6)->y.h;
                                 reg_d2.h[0] = ENTITY(reg_a6)->x.h;
                                 reg_d0.h[0] = MID_TANK_V(reg_a5)->recoil;
-                                reg_a0 = (u8 *)(&D_0028C9E0);
+                                reg_a0 = (u8 *)(&mid_tank_vertical_table_3);
                                 reg_d3.h[0] = (reg_d0.h[0] != 0) ? *(u16 *)((u8 *)reg_a0 + ((s16)reg_d0.h[0] & ~1)) : *(u16 *)reg_a0;
                                 reg_tmp3.h[0] = reg_d3.h[0];
                                 reg_d3.h[0] = 0x400;
@@ -2364,7 +2364,7 @@ block_55:
                                 reg_d2.h[1] = ENTITY(reg_a6)->y.h;
                                 reg_d2.h[0] = ENTITY(reg_a6)->x.h;
                                 reg_d0.h[0] = MID_TANK_V(reg_a5)->recoil;
-                                reg_a0 = (u8 *)(&D_0028C9E0);
+                                reg_a0 = (u8 *)(&mid_tank_vertical_table_3);
                                 reg_d3.h[0] = (reg_d0.h[0] != 0) ? *(u16 *)((u8 *)reg_a0 + ((s16)reg_d0.h[0] & ~1)) : *(u16 *)reg_a0;
                                 reg_tmp3.h[0] = reg_d3.h[0];
                                 reg_d3.h[0] = 0xFC00;
@@ -2410,7 +2410,7 @@ block_55:
                         MID_TANK_V(reg_a5)->hatch_state = 0U;
                     }
                     reg_d0.h[0] = MID_TANK_V(reg_a5)->hatch_frame;
-                    reg_a0 = (u8 *)(D_0025A440);
+                    reg_a0 = (u8 *)(mid_tank_vertical_table);
                     MID_TANK_V(reg_a5)->hatch_offset = (reg_d0.h[0] != 0) ? *(u16 *)((u8 *)reg_a0 + ((s16)reg_d0.h[0] & ~1)) : *(u16 *)reg_a0;
                 }
             }
@@ -2460,7 +2460,7 @@ block_55:
         reg_d2.w = 0x08000000;
         wreck_spawn_a();
         reg_d0.w = 8;
-        reg_a4 = (u8 *)(D_0025A460);
+        reg_a4 = (u8 *)(mid_tank_vertical_table_2);
         reg_d6.w = 6;
         do {
             reg_d1.h[1] = *(u16 *)reg_a4;
@@ -2527,7 +2527,7 @@ block_55:
     }
 }
 
-extern u8 D_0025A490[];
+extern u8 carrier_start_common_table[];
 extern u8 D_0025A4B0[];
 
 void carrier_start_common(void) {
@@ -2539,7 +2539,7 @@ void carrier_start_common(void) {
     reg_tmp.w = (u32) reg_a0;
     CARRIER(reg_a5)->after_entities[0] = (u16) reg_tmp.h[1];
     CARRIER(reg_a5)->after_entities[1] = (u16) reg_tmp.h[0];
-    reg_a0 = D_0025A490;
+    reg_a0 = carrier_start_common_table;
     reg_d0.w = 0xA;
     enemy_set_task_state();
     enemy_path_start();
@@ -2566,11 +2566,11 @@ void item_carrier_first(void) {
     enemy_set_entity_count(1);
 }
 
-extern s8 D_0025A480[];
+extern s8 item_carrier_start_table[];
 
 void item_carrier_start(void) {
     carrier_start_common();
-    (*(s8 **)&reg_a0) = D_0025A480;
+    (*(s8 **)&reg_a0) = item_carrier_start_table;
     reg_d0.h[0] = g_stage_x2;
     (*(s8 **)&reg_a0) = &(*(s8 **)&reg_a0)[reg_d0.h[0]];
     ENTITY(reg_a6)->attr.sb.palette = (s8) *((s8 *)reg_a0);
@@ -2811,8 +2811,8 @@ void shooter_drone_first(void) {
     enemy_set_entity_count(0);
 }
 
-extern u8 D_0025A530[];
-extern u8 D_0025A550[];
+extern u8 shooter_drone_start_table[];
+extern u8 shooter_drone_start_table_2[];
 extern u8 D_002623B0[];
 
 extern void sprite_palette_load(void);
@@ -2821,10 +2821,10 @@ void shooter_drone_start(void)
 {
     extern void enemy_set_task_state(void);
     extern void enemy_init_entities(void);
-    reg_a0 = D_0025A550;
+    reg_a0 = shooter_drone_start_table_2;
     enemy_init_entities();
 
-    reg_a0 = D_0025A530;
+    reg_a0 = shooter_drone_start_table;
     reg_d0.w = 8;
     enemy_set_task_state();
 
@@ -2971,8 +2971,8 @@ void mid_tank_horizontal_first(void) {
 }
 
 extern u16 g_direction_sprites_c[];
-extern u16 D_0025A570[];
-extern u16 D_0025A580[];
+extern u16 mid_tank_horizontal_start_table[];
+extern u16 mid_tank_horizontal_start_table_2[];
 extern u16 D_0025A5A0[];
 extern u16 D_0025A610[];
 
@@ -2985,7 +2985,7 @@ void mid_tank_horizontal_start(void) {
     reg_tmp.w = (u32) reg_a0;
     MID_TANK_H(reg_a5)->after_entities[0] = (u16) reg_tmp.h[1];
     MID_TANK_H(reg_a5)->after_entities[1] = (u16) reg_tmp.h[0];
-    reg_a0 = (u8 *)(D_0025A580);
+    reg_a0 = (u8 *)(mid_tank_horizontal_start_table_2);
     reg_d0.w = 0xF;
     enemy_set_task_state();
     enemy_path_start();
@@ -3032,7 +3032,7 @@ void mid_tank_horizontal_start(void) {
         ENTITY(reg_a6)[1].sprite.h = ((reg_d0.h[0] + 2) != 0) ? *(u16 *)((u8 *)reg_a0 + ((s16)(reg_d0.h[0] + 2) & ~1)) : *(u16 *)reg_a0;
         reg_d0.h[0] = g_rank_8_16;
         MID_TANK_H(reg_a5)->shot_countdown -= reg_d0.b[0];
-        reg_a0 = (u8 *)(D_0025A570);
+        reg_a0 = (u8 *)(mid_tank_horizontal_start_table);
         reg_d0.h[0] = g_stage_x2;
         reg_a0 += reg_d0.h[0];
         ENTITY(reg_a6)->attr.sb.palette = *(s8 *)reg_a0;
@@ -3058,7 +3058,7 @@ s32 bullet_fire_2way();
 s32 enemy_variant_offset_a_get();
 s32 enemy_variant_timer_a_set();
 extern u16 g_direction_offsets_400[];
-extern u16 D_0025A620[];
+extern u16 mid_tank_horizontal_table[];
 
 void mid_tank_horizontal(void) {
     s32 enemy_variant_offset_c_get();
@@ -3329,7 +3329,7 @@ block_d:
     reg_d2.w = 0x600;
     wreck_spawn_a();
     reg_d0.w = 8;
-    reg_a4 = (u8 *)(D_0025A620);
+    reg_a4 = (u8 *)(mid_tank_horizontal_table);
     reg_d6.w = 6;
     do {
         reg_d1.h[1] = *(u16 *)reg_a4;
@@ -3388,17 +3388,17 @@ void ground_turret_a_first(void) {
     enemy_set_entity_count(0);
 }
 
-extern u16 D_0025A640[];
-extern u16 D_0025A650[];
-extern u16 D_0025A660[];
+extern u16 ground_turret_a_start_table[];
+extern u16 ground_turret_a_start_table_2[];
+extern u16 ground_turret_a_start_table_3[];
 
 void ground_turret_a_start(void) {
     s32 enemy_set_task_state();
     s32 enemy_init_entities();
     s32 enemy_path_start();
-    reg_a0 = (u8 *)(D_0025A660);
+    reg_a0 = (u8 *)(ground_turret_a_start_table_3);
     enemy_init_entities();
-    reg_a0 = (u8 *)(D_0025A650);
+    reg_a0 = (u8 *)(ground_turret_a_start_table_2);
     reg_d0.w = 5;
     enemy_set_task_state();
     enemy_path_start();
@@ -3421,7 +3421,7 @@ void ground_turret_a_start(void) {
         GROUND_TURRET(reg_a5)->shot_interval = (u8) reg_d0.b[0];
         reg_d0.h[0] = g_rank_5_16;
         GROUND_TURRET(reg_a5)->shot_countdown -= reg_d0.b[0];
-        reg_a0 = (u8 *)(D_0025A640);
+        reg_a0 = (u8 *)(ground_turret_a_start_table);
         reg_d0.h[0] = g_stage_x2;
         reg_a0 += reg_d0.h[0];
         ENTITY(reg_a6)->attr.sb.palette = *(s8 *)reg_a0;
@@ -3594,13 +3594,13 @@ void bee_container_first(void) {
 s32 enemy_set_task_state();                            /* extern */
 s32 enemy_init_entities();                            /* extern */
 s32 enemy_path_start();                            /* extern */
-extern s32 D_0025A680[];
-extern s32 D_0028C9E8;
+extern s32 bee_container_start_table[];
+extern s32 bee_container_start_table_2;
 
 void bee_container_start(void) {
-    reg_a0 = (u8 *)D_0025A680;
+    reg_a0 = (u8 *)bee_container_start_table;
     enemy_init_entities();
-    reg_a0 = (u8 *)(&D_0028C9E8);
+    reg_a0 = (u8 *)(&bee_container_start_table_2);
     reg_d0.w = 2;
     enemy_set_task_state();
     enemy_path_start();
@@ -3724,18 +3724,18 @@ void star_container_first(void) {
     enemy_set_entity_count(0);
 }
 
-extern u32 D_0025A6A0[];
-extern u32 D_0028C9F0;
+extern u32 star_container_start_table[];
+extern u32 star_container_start_table_2;
 
 void star_container_start(void)
 {
     extern void enemy_set_task_state(void);
     extern void enemy_init_entities(void);
     extern void enemy_path_start(void);
-    reg_a0 = (u8 *)D_0025A6A0;
+    reg_a0 = (u8 *)star_container_start_table;
     enemy_init_entities();
 
-    reg_a0 = (u8 *)&D_0028C9F0;
+    reg_a0 = (u8 *)&star_container_start_table_2;
     reg_d0.w = 1;
     enemy_set_task_state();
     enemy_path_start();
@@ -3831,18 +3831,18 @@ void water_flower_turret_first(void) {
 
 s32 rng_next_masked();
 s32 rng_next_unsigned();
-extern u16 D_0025A6C0[];
-extern u16 D_0025A6D0[];
-extern u16 D_0025A6F0[];
+extern u16 water_flower_turret_start_table[];
+extern u16 water_flower_turret_start_table_2[];
+extern u16 water_flower_turret_start_table_3[];
 extern u16 D_0025A710[];
 
 void water_flower_turret_start(void) {
     s32 enemy_set_task_state();
     s32 enemy_init_entities();
     s32 enemy_path_start();
-    reg_a0 = (u8 *)(D_0025A6F0);
+    reg_a0 = (u8 *)(water_flower_turret_start_table_3);
     enemy_init_entities();
-    reg_a0 = (u8 *)(D_0025A6D0);
+    reg_a0 = (u8 *)(water_flower_turret_start_table_2);
     reg_d0.w = 0xB;
     enemy_set_task_state();
     enemy_path_start();
@@ -3863,7 +3863,7 @@ void water_flower_turret_start(void) {
         rng_next_masked();
         reg_d0.b[0] = (u8) ((s8) reg_d0.b[0] >> 1);
         WATER_FLOWER(reg_a5)->shot_countdown += reg_d0.b[0];
-        reg_a0 = (u8 *)(D_0025A6C0);
+        reg_a0 = (u8 *)(water_flower_turret_start_table);
         reg_d0.h[0] = g_stage_x2;
         reg_a0 += reg_d0.h[0];
         ENTITY(reg_a6)->attr.sb.palette = *(s8 *)reg_a0;
@@ -3875,10 +3875,10 @@ void water_flower_turret_start(void) {
 }
 
 s32 bullet_fire_double();
-extern u16 D_0025A790[];
-extern u16 D_0025A7B0[];
-extern u16 D_0025A830[];
-extern u16 D_0025AEE0[];
+extern u16 water_flower_turret_table[];
+extern u16 water_flower_turret_table_2[];
+extern u16 water_flower_turret_table_3[];
+extern u16 water_flower_turret_table_4[];
 
 void water_flower_turret(void) {
     s32 enemy_variant_offset_c_get();
@@ -3921,7 +3921,7 @@ next_90:
     if ((s32) reg_tmp.b[0] > 0) goto next_120;
     WATER_FLOWER(reg_a5)->frame_countdown = WATER_FLOWER(reg_a5)->frame_interval;
     reg_d0.h[0] = WATER_FLOWER(reg_a5)->petal_frame;
-    reg_a0 = (u8 *) D_0025A790;
+    reg_a0 = (u8 *) water_flower_turret_table;
     WATER_FLOWER(reg_a5)->petal_sprite[0] = (reg_d0.h[0] != 0) ? *(u16 *)((u8 *)reg_a0 + ((s16)reg_d0.h[0] & ~1)) : *(u16 *)reg_a0;
     WATER_FLOWER(reg_a5)->petal_sprite[1] = ((reg_d0.h[0] + 2) != 0) ? *(u16 *)((u8 *)reg_a0 + ((s16)(reg_d0.h[0] + 2) & ~1)) : *(u16 *)reg_a0;
     reg_tmp.h[0] = WATER_FLOWER(reg_a5)->petal_frame;
@@ -3930,7 +3930,7 @@ next_90:
     WATER_FLOWER(reg_a5)->petal_frame = 0x14;
 next_120:
     reg_d0.h[0] = WATER_FLOWER(reg_a5)->bob_angle.h;
-    reg_a0 = (u8 *) D_0025A830;
+    reg_a0 = (u8 *) water_flower_turret_table_3;
     reg_d0.h[0] += reg_d0.h[0];
     reg_d0.h[0] = (reg_d0.h[0] != 0) ? *(u16 *)((u8 *)reg_a0 + ((s16)reg_d0.h[0] & ~1)) : *(u16 *)reg_a0;
     WATER_FLOWER(reg_a5)->bob = reg_d0.h[0];
@@ -3947,7 +3947,7 @@ block_base:
     reg_d1.h[1] += 0x100;
     reg_d1.h[0] += 0xFE00;
     reg_d1.h[1] += WATER_FLOWER(reg_a5)->bob;
-    reg_a0 = (u8 *) D_0025AEE0;
+    reg_a0 = (u8 *) water_flower_turret_table_4;
     reg_d2.w = 6;
     reg_d2.h[0] &= g_game_frame;
     reg_d2.h[0] += reg_d2.h[0];
@@ -4020,7 +4020,7 @@ block_fire:
     WATER_FLOWER(reg_a5)->shot_countdown = reg_d0.b[0];
     enemy_fire_distance_check();
     if (cond_flag != 0) goto block_rts;
-    reg_a4 = (u8 *) D_0025A7B0;
+    reg_a4 = (u8 *) water_flower_turret_table_2;
     reg_d1.h[0] = WATER_FLOWER(reg_a5)->dir.h;
     reg_d0.h[0] = reg_d1.h[0];
     reg_d0.h[0] &= 0x3E;
@@ -4093,13 +4093,13 @@ void ground_turret_b_first(void) {
 extern u16 g_direction_sprites_e[];
 extern u16 D_0025AC38[];
 extern u16 D_0025AC48[];
-extern u16 D_0025AC60[];
+extern u16 ground_turret_b_start_table[];
 
 void ground_turret_b_start(void) {
     s32 enemy_set_task_state();
     s32 enemy_init_entities();
     s32 enemy_path_start();
-    reg_a0 = (u8 *)(D_0025AC60);
+    reg_a0 = (u8 *)(ground_turret_b_start_table);
     enemy_init_entities();
     reg_a0 = (u8 *)(D_0025AC48);
     reg_d0.w = 5;
@@ -4291,17 +4291,17 @@ void ground_turret_c_first(void) {
 }
 
 extern u16 g_direction_sprites_f[];
-extern u16 D_0025AC80[];
-extern u16 D_0025AC90[];
-extern u16 D_0025ACA0[];
+extern u16 ground_turret_c_start_table[];
+extern u16 ground_turret_c_start_table_2[];
+extern u16 ground_turret_c_start_table_3[];
 
 void ground_turret_c_start(void) {
     s32 enemy_set_task_state();
     s32 enemy_init_entities();
     s32 enemy_path_start();
-    reg_a0 = (u8 *)(D_0025ACA0);
+    reg_a0 = (u8 *)(ground_turret_c_start_table_3);
     enemy_init_entities();
-    reg_a0 = (u8 *)(D_0025AC90);
+    reg_a0 = (u8 *)(ground_turret_c_start_table_2);
     reg_d0.w = 5;
     enemy_set_task_state();
     enemy_path_start();
@@ -4322,7 +4322,7 @@ void ground_turret_c_start(void) {
         reg_d0.h[0] = g_rank_4_16;
         reg_d0.h[0] -= 4;
         GROUND_TURRET(reg_a5)->shot_countdown -= reg_d0.b[0];
-        reg_a0 = (u8 *)(D_0025AC80);
+        reg_a0 = (u8 *)(ground_turret_c_start_table);
         reg_d0.h[0] = g_stage_x2;
         reg_a0 += reg_d0.h[0];
         ENTITY(reg_a6)->attr.sb.palette = *(s8 *)reg_a0;
@@ -4525,9 +4525,9 @@ void mid_flyer_e_first(void) {
     enemy_set_entity_count(1);
 }
 
-extern s8 D_0025ACC0[];
-extern s8 D_0025ACD0[];
-extern s8 D_0025ACF0[];
+extern s8 mid_flyer_e_start_table[];
+extern s8 mid_flyer_e_start_table_2[];
+extern s8 mid_flyer_e_start_table_3[];
 extern u16 g_enemy_signal_7;
 extern u16 g_enemy_signal_6;
 extern u16 g_enemy_signal_5;
@@ -4539,9 +4539,9 @@ void mid_flyer_e_start(void) {
     s32 enemy_path_start();
     s8 *temp_a1_2;
 
-    (*(s8 **)&reg_a0) = (s8 *)D_0025ACF0;
+    (*(s8 **)&reg_a0) = (s8 *)mid_flyer_e_start_table_3;
     enemy_init_entities();
-    (*(s8 **)&reg_a0) = (s8 *)D_0025ACD0;
+    (*(s8 **)&reg_a0) = (s8 *)mid_flyer_e_start_table_2;
     reg_d0.w = 0xC;
     enemy_set_task_state();
     enemy_path_start();
@@ -4567,7 +4567,7 @@ void mid_flyer_e_start(void) {
             goto block_10;
         }
 block_10:
-        (*(s8 **)&reg_a0) = (s8 *)D_0025ACC0;
+        (*(s8 **)&reg_a0) = (s8 *)mid_flyer_e_start_table;
         reg_d0.h[0] = g_stage_x2;
         (*(s8 **)&reg_a0) = &(*(s8 **)&reg_a0)[reg_d0.h[0]];
         ENTITY(reg_a6)->attr.sb.palette = (s8) *((s8 *)reg_a0);
@@ -4597,8 +4597,8 @@ block_10:
     }
 }
 
-extern u16 D_0025AD30[];
-extern u16 D_0028C9F8;
+extern u16 mid_flyer_e_table[];
+extern u16 mid_flyer_e_table_2;
 
 void mid_flyer_e(void) {
     s16 *temp_v1_2;
@@ -4765,7 +4765,7 @@ block_45:
                                 reg_d1.h[0] = ENTITY(reg_a6)->x.h;
                                 reg_d4.w = 0;
                                 reg_d4.b[0] = MID_FLYER_E(reg_a5)->hatch_shots_left;
-                                reg_a0 = (u8 *)(&D_0028C9F8);
+                                reg_a0 = (u8 *)(&mid_flyer_e_table_2);
                                 reg_d4.h[0] += reg_d4.h[0];
                                 reg_d7.h[0] = (reg_d4.h[0] != 0) ? *(u16 *)((u8 *)reg_a0 + ((s16)reg_d4.h[0] & ~1)) : *(u16 *)reg_a0;
                                 temp_a1 = reg_d7.h[0];
@@ -4820,7 +4820,7 @@ block_45:
                                 }
 block_58:
                                 reg_d0.h[0] = MID_FLYER_E(reg_a5)->hatch_frame;
-                                reg_a0 = (u8 *)(D_0025AD30);
+                                reg_a0 = (u8 *)(mid_flyer_e_table);
                                 MID_FLYER_E(reg_a5)->hatch_sprite[0] = (reg_d0.h[0] != 0) ? *(u16 *)((u8 *)reg_a0 + ((s16)reg_d0.h[0] & ~1)) : *(u16 *)reg_a0;
                                 MID_FLYER_E(reg_a5)->hatch_sprite[1] = ((reg_d0.h[0] + 2) != 0) ? *(u16 *)((u8 *)reg_a0 + ((s16)(reg_d0.h[0] + 2) & ~1)) : *(u16 *)reg_a0;
                             }
@@ -4897,8 +4897,8 @@ void mid_tank_horizontal_b_first(void) {
 }
 
 extern u16 g_direction_sprites_a[];
-extern s8 D_0025AD50[];
-extern s8 D_0025AD60[];
+extern s8 mid_tank_horizontal_b_start_table[];
+extern s8 mid_tank_horizontal_b_start_table_2[];
 extern s8 D_0025AD90[];
 
 void mid_tank_horizontal_b_start(void) {
@@ -4911,7 +4911,7 @@ void mid_tank_horizontal_b_start(void) {
     reg_tmp.w = (u32) ((s8 *)reg_a0);
     MID_TANK_HB(reg_a5)->after_entities[0] = (u16) reg_tmp.h[1];
     MID_TANK_HB(reg_a5)->after_entities[1] = (u16) reg_tmp.h[0];
-    (*(s8 **)&reg_a0) = (s8 *)D_0025AD60;
+    (*(s8 **)&reg_a0) = (s8 *)mid_tank_horizontal_b_start_table_2;
     reg_d0.w = 0x10;
     enemy_set_task_state();
     enemy_path_start();
@@ -4942,7 +4942,7 @@ void mid_tank_horizontal_b_start(void) {
         MID_TANK_HB(reg_a5)->shot_interval = (u8) reg_d1.b[0];
         reg_d0.h[0] = g_rank_8_16;
         MID_TANK_HB(reg_a5)->shot_countdown -= reg_d0.b[0];
-        (*(s8 **)&reg_a0) = (s8 *)D_0025AD50;
+        (*(s8 **)&reg_a0) = (s8 *)mid_tank_horizontal_b_start_table;
         reg_d0.h[0] = g_stage_x2;
         (*(s8 **)&reg_a0) = &(*(s8 **)&reg_a0)[reg_d0.h[0]];
         ENTITY(reg_a6)->attr.sb.palette = (s8) *((s8 *)reg_a0);
@@ -4967,8 +4967,8 @@ void mid_tank_horizontal_b_start(void) {
 
 s32 sfx_explosion_air_large();
 extern u16 g_direction_offsets_540[];
-extern u16 D_0025ADE0[];
-extern u16 D_0025ADF0[];
+extern u16 mid_tank_horizontal_b_table[];
+extern u16 mid_tank_horizontal_b_table_2[];
 
 void mid_tank_horizontal_b(void) {
     s32 enemy_variant_offset_c_get();
@@ -5066,7 +5066,7 @@ next_2:
                         }
                     }
                     reg_d0.h[0] = MID_TANK_HB(reg_a5)->track_frame;
-                    reg_a0 = (u8 *)(D_0025ADE0);
+                    reg_a0 = (u8 *)(mid_tank_horizontal_b_table);
                     ENTITY(reg_a6)->draw.h = (reg_d0.h[0] != 0) ? *(u16 *)((u8 *)reg_a0 + ((s16)reg_d0.h[0] & ~1)) : *(u16 *)reg_a0;
                     ENTITY(reg_a6)->sprite.h = ((reg_d0.h[0] + 2) != 0) ? *(u16 *)((u8 *)reg_a0 + ((s16)(reg_d0.h[0] + 2) & ~1)) : *(u16 *)reg_a0;
                 }
@@ -5200,7 +5200,7 @@ block_rts:
             reg_d0.w = 0xC;
             wreck_spawn_a();
             reg_d0.w = 8;
-            reg_a4 = (u8 *)(D_0025ADF0);
+            reg_a4 = (u8 *)(mid_tank_horizontal_b_table_2);
             reg_d6.w = 4;
             do {
                 reg_d1.h[1] = *(u16 *)reg_a4;

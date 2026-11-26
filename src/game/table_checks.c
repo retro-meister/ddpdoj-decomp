@@ -77,7 +77,7 @@ extern u16 stage5_boss_flash_palettes_a_37[];
 extern u16 stage5_boss_flash_palettes_a_40[];
 extern u16 stage5_boss_flash_palettes_a_44[];
 extern u16 stage5_boss_flash_palettes_a_47[];
-extern u8 D_0024D030[64];
+extern u8 ending_fade_in_table_at_4[64];
 extern u16 credits_text_01[];
 extern u16 credits_text_02[];
 extern u16 credits_text_03[];
@@ -287,57 +287,57 @@ extern u16 stage5_scroll_palettes[];
 extern u16 stage5_scroll_sounds[];
 extern u16 stage5_scroll_events[];
 extern u16 stage5_plane2_scroll_events[];
-extern u16 D_0025C040[];
-extern u16 D_0025C060[];
-extern u16 D_0025C080[];
-extern u16 D_0025C0A0[];
-extern u16 D_0025C0C0[];
-extern u16 D_0025C0E0[];
-extern u16 D_0025C100[];
-extern u16 D_0025C120[];
-extern u16 D_0025C140[];
-extern u16 D_0025C160[];
-extern u16 D_0025C180[];
-extern u16 D_0025C1A0[];
-extern u16 D_0025C1C0[];
-extern u16 D_0025C1E0[];
-extern u16 D_0025C200[];
-extern u16 D_0025C220[];
-extern u16 D_0025C240[];
-extern u16 D_0025C260[];
-extern u16 D_0025C280[];
-extern u16 D_0025C2A0[];
-extern u16 D_0025C2C0[];
-extern u16 D_0025C2E0[];
-extern u16 D_0025C300[];
-extern u16 D_0025C320[];
-extern u16 D_0025C340[];
-extern u16 D_0025C360[];
-extern u16 D_0025C380[];
-extern u16 D_0025C3A0[];
+extern u16 name_entry_letter_table_at_0[];
+extern u16 name_entry_letter_table_at_2[];
+extern u16 name_entry_letter_table_at_4[];
+extern u16 name_entry_letter_table_at_6[];
+extern u16 name_entry_letter_table_at_8[];
+extern u16 name_entry_letter_table_at_10[];
+extern u16 name_entry_letter_table_at_12[];
+extern u16 name_entry_letter_table_at_14[];
+extern u16 name_entry_letter_table_at_16[];
+extern u16 name_entry_letter_table_at_18[];
+extern u16 name_entry_letter_table_at_20[];
+extern u16 name_entry_letter_table_at_22[];
+extern u16 name_entry_letter_table_at_24[];
+extern u16 name_entry_letter_table_at_26[];
+extern u16 name_entry_letter_table_at_28[];
+extern u16 name_entry_letter_table_at_30[];
+extern u16 name_entry_letter_table_at_32[];
+extern u16 name_entry_letter_table_at_34[];
+extern u16 name_entry_letter_table_at_36[];
+extern u16 name_entry_letter_table_at_38[];
+extern u16 name_entry_letter_table_at_40[];
+extern u16 name_entry_letter_table_at_42[];
+extern u16 name_entry_letter_table_at_44[];
+extern u16 name_entry_letter_table_at_46[];
+extern u16 name_entry_letter_table_at_48[];
+extern u16 name_entry_letter_table_at_50[];
+extern u16 name_entry_letter_table_at_52[];
+extern u16 name_entry_letter_table_at_54[];
 extern u8 D_0025FF70[];
 extern u8 D_0025FFB0[];
 extern u8 D_0025FFF0[];
-extern u8 D_00260030[];
-extern u8 D_00260070[];
-extern u8 D_002600B0[];
+extern u8 stage5_boss_flash_palettes_a_at_32[];
+extern u8 stage5_boss_flash_palettes_a_at_39[];
+extern u8 stage5_boss_flash_palettes_a_at_46[];
 extern u8 D_002600F0[];
-extern u8 D_00260130[];
-extern u8 D_00260170[];
-extern u16 D_00260570[];
-extern u16 D_002605B0[];
+extern u8 stage5_boss_flash_palettes_b_at_11[];
+extern u8 stage5_boss_flash_palettes_b_at_18[];
+extern u16 stage2_scroll_palettes_at_33[];
+extern u16 stage2_scroll_palettes_at_54[];
 extern u16 stage2_palette_18[];
 extern u16 stage1_palette_03[];
 extern u16 stage1_palette_04[];
 extern u16 stage1_palette_01[];
 extern u16 stage1_palette_00[];
 extern u16 stage1_palette_07[];
-extern u16 D_00260770[];
-extern u16 D_002607B0[];
-extern u16 D_002607F0[];
-extern u16 D_00260830[];
+extern u16 stage5_scroll_palettes_at_51[];
+extern u16 stage1_scroll_palettes_at_12[];
+extern u16 stage4_scroll_palettes_at_39[];
+extern u16 stage4_scroll_palettes_at_57[];
 extern u16 stage3_palette_16[];
-extern u16 D_002608F0[];
+extern u16 stage3_scroll_palettes_at_48[];
 extern u16 D_00260EB0[];
 extern u16 D_00260EF0[];
 extern u16 D_00260F30[];
@@ -350,47 +350,47 @@ extern u16 D_00261130[];
 extern u16 D_00261170[];
 extern u16 D_002611B0[];
 extern u16 D_002611F0[];
-extern u16 D_00261230[];
-extern u16 D_00261270[];
-extern u16 D_002612B0[];
-extern u16 D_002612F0[];
-extern u16 D_00261330[];
-extern u16 D_00261370[];
-extern u16 D_002613B0[];
-extern u16 D_002613F0[];
-extern u16 D_00261430[];
-extern u16 D_00261470[];
-extern u16 D_002614B0[];
-extern u16 D_002614F0[];
-extern u16 D_00261530[];
-extern u16 D_00261570[];
-extern u16 D_002615B0[];
-extern u16 D_002615F0[];
+extern u16 stage1_scroll_palettes_at_60[];
+extern u16 stage1_scroll_palettes_at_63[];
+extern u16 stage1_scroll_palettes_at_48[];
+extern u16 stage2_scroll_palettes_at_51[];
+extern u16 stage2_scroll_palettes_at_60[];
+extern u16 stage2_scroll_palettes_at_45[];
+extern u16 stage2_scroll_palettes_at_63[];
+extern u16 stage2_scroll_palettes_at_66[];
+extern u16 stage2_scroll_palettes_at_69[];
+extern u16 stage2_scroll_palettes_at_72[];
+extern u16 stage2_scroll_palettes_at_75[];
+extern u16 stage2_scroll_palettes_at_48[];
+extern u16 stage2_scroll_palettes_at_57[];
+extern u16 stage3_scroll_palettes_at_66[];
+extern u16 stage3_scroll_palettes_at_69[];
+extern u16 stage3_scroll_palettes_at_63[];
 extern u16 stage3_midboss_flash_palettes_05[];
-extern u16 D_00261670[];
-extern u16 D_002616B0[];
-extern u8 D_00261730[];
-extern u16 D_00261930[];
-extern u16 D_00261970[];
-extern u16 D_002619B0[];
-extern u16 D_002619F0[];
-extern u16 D_00261A30[];
-extern u16 D_00261A70[];
-extern u16 D_00261AB0[];
-extern u16 D_00261B30[];
-extern u16 D_00261B70[];
+extern u16 stage3_scroll_palettes_at_57[];
+extern u16 stage3_scroll_palettes_at_54[];
+extern u8 stage4_scroll_palettes_at_48[];
+extern u16 stage4_scroll_palettes_at_45[];
+extern u16 stage4_scroll_palettes_at_51[];
+extern u16 stage4_scroll_palettes_at_54[];
+extern u16 stage4_scroll_palettes_at_63[];
+extern u16 stage4_scroll_palettes_at_42[];
+extern u16 stage5_scroll_palettes_at_45[];
+extern u16 stage5_scroll_palettes_at_42[];
+extern u16 stage5_scroll_palettes_at_54[];
+extern u16 stage5_scroll_palettes_at_57[];
 extern u16 D_00261D30[];
 extern u16 D_00261D70[];
 extern u16 stage1_palette_10[];
-extern u8 D_00261EF0[];
+extern u8 name_entry_task_begin_table[];
 extern u16 D_00261F30[];
-extern u8 D_00261F70[];
-extern u8 D_00261FB0[];
+extern u8 name_entry_task_begin_table_2[];
+extern u8 name_entry_task_begin_table_3[];
 extern u16 ending_fade_in_05[];
 extern u16 ending_fade_in_09[];
-extern u16 D_002643F0[];
-extern u16 D_00264440[];
-extern u16 D_00264490[];
+extern u16 stage5_boss_horn_shot_offsets_at_6[];
+extern u16 stage5_boss_horn_shot_offsets_at_4[];
+extern u16 stage5_boss_horn_shot_offsets_at_2[];
 extern u16 D_002644E0[];
 extern u16 credits_text_00[];
 extern u16 stage1_scroll_event_lists[];
@@ -399,9 +399,9 @@ extern u16 stage3_scroll_event_lists[];
 extern u16 stage4_scroll_event_lists[];
 extern u16 stage5_scroll_event_lists[];
 extern u16 D_0028C680[];
-extern u16 D_0028C708[];
-extern u8 D_0029BF30[16];
-extern u8 D_0029BF40[16];
+extern u16 player_exhaust_sprites_01_at_0[];
+extern u8 join_select_p2_table_at_8[16];
+extern u8 join_select_p1_table_at_8[16];
 extern void bullet_type_setup_00(void);
 extern void bullet_type_setup_03(void);
 extern void bullet_type_setup_17(void);
@@ -495,7 +495,7 @@ extern u16 D_0025BFA6[];
 extern u16 D_0025BFB4[];
 extern u16 D_0025BFC2[];
 extern u16 name_entry_letter_table[];
-extern u16 D_0028C148_as_u16_a[];
+extern u16 select_panel_piece_2_draw_table_as_u16_a[];
 extern u16 D_0028C14A[];
 
 #ifdef DEATH_LABEL
@@ -503,9 +503,9 @@ extern u16 death_D_002506F0[];
 extern u16 death_D_00250790[];
 extern u16 death_D_00250A72[];
 extern u16 death_D_00250B20[];
-extern u16 death_D_00254748[];
-extern u16 death_D_00254758[];
-extern u16 death_D_00254768[];
+extern u16 g_credits_script_at_158[];
+extern u16 g_credits_script_at_163[];
+extern u16 g_credits_script_at_168[];
 extern u16 death_D_00254778[];
 extern u16 death_D_00254790[];
 extern u16 death_D_002547A0[];
@@ -1782,7 +1782,7 @@ void checked_pointers_store(void) {
     if (ending_fade_in_table[4] != 0x4) {
         printf("error! end_fadein_tbl[4]\n");
     }
-    STORE_POINTER_DIRECT(ending_fade_in_table + 4, ((u16 *)D_0024D030));
+    STORE_POINTER_DIRECT(ending_fade_in_table + 4, ((u16 *)ending_fade_in_table_at_4));
     if (ending_fade_in_table[11] != 0xb) {
         printf("error! end_fadein_tbl[11]\n");
     }
@@ -1956,9 +1956,9 @@ void checked_pointers_store(void) {
     }
 #ifdef DEATH_LABEL
     STORE_POINTER_DIRECT(g_credits_script + 153, credits_text_30);
-    STORE_POINTER_DIRECT(g_credits_script + 158, death_D_00254748);
-    STORE_POINTER_DIRECT(g_credits_script + 163, death_D_00254758);
-    STORE_POINTER_DIRECT(g_credits_script + 168, death_D_00254768);
+    STORE_POINTER_DIRECT(g_credits_script + 158, g_credits_script_at_158);
+    STORE_POINTER_DIRECT(g_credits_script + 163, g_credits_script_at_163);
+    STORE_POINTER_DIRECT(g_credits_script + 168, g_credits_script_at_168);
     STORE_POINTER_DIRECT(death_D_0025495A, death_D_00254778);
     STORE_POINTER_DIRECT(death_D_00254964, death_D_00254790);
     STORE_POINTER_DIRECT(death_D_0025496E, death_D_002547A0);
@@ -2137,7 +2137,7 @@ void checked_pointers_store(void) {
     if (stage1_scroll_palettes[12] != 0xc) {
         printf("error! avram_pal_tbl1[12]\n");
     }
-    STORE_POINTER(stage1_scroll_palettes + 12, D_002607B0);
+    STORE_POINTER(stage1_scroll_palettes + 12, stage1_scroll_palettes_at_12);
     if (stage1_scroll_palettes[15] != 0xf) {
         printf("error! avram_pal_tbl1[15]\n");
     }
@@ -2185,7 +2185,7 @@ void checked_pointers_store(void) {
     if (stage1_scroll_palettes[48] != 0x30) {
         printf("error! avram_pal_tbl1[48]\n");
     }
-    STORE_POINTER(stage1_scroll_palettes + 48, D_002612B0);
+    STORE_POINTER(stage1_scroll_palettes + 48, stage1_scroll_palettes_at_48);
     if (stage1_scroll_palettes[51] != 0x33) {
         printf("error! avram_pal_tbl1[51]\n");
     }
@@ -2201,11 +2201,11 @@ void checked_pointers_store(void) {
     if (stage1_scroll_palettes[60] != 0x3c) {
         printf("error! avram_pal_tbl1[60]\n");
     }
-    STORE_POINTER(stage1_scroll_palettes + 60, D_00261230);
+    STORE_POINTER(stage1_scroll_palettes + 60, stage1_scroll_palettes_at_60);
     if (stage1_scroll_palettes[63] != 0x3f) {
         printf("error! avram_pal_tbl1[63]\n");
     }
-    STORE_POINTER(stage1_scroll_palettes + 63, D_00261270);
+    STORE_POINTER(stage1_scroll_palettes + 63, stage1_scroll_palettes_at_63);
     if (stage1_scroll_sounds[4] != 0x4) {
         printf("error! avram_snd_tbl1[4]\n");
     }
@@ -2265,7 +2265,7 @@ void checked_pointers_store(void) {
     if (stage2_scroll_palettes[33] != 0x21) {
         printf("error! avram_pal_tbl2[33]\n");
     }
-    STORE_POINTER(stage2_scroll_palettes + 33, D_00260570);
+    STORE_POINTER(stage2_scroll_palettes + 33, stage2_scroll_palettes_at_33);
     if (stage2_scroll_palettes[36] != 0x24) {
         printf("error! avram_pal_tbl2[36]\n");
     }
@@ -2281,47 +2281,47 @@ void checked_pointers_store(void) {
     if (stage2_scroll_palettes[45] != 0x2d) {
         printf("error! avram_pal_tbl2[45]\n");
     }
-    STORE_POINTER(stage2_scroll_palettes + 45, D_00261370);
+    STORE_POINTER(stage2_scroll_palettes + 45, stage2_scroll_palettes_at_45);
     if (stage2_scroll_palettes[48] != 0x30) {
         printf("error! avram_pal_tbl2[48]\n");
     }
-    STORE_POINTER(stage2_scroll_palettes + 48, D_002614F0);
+    STORE_POINTER(stage2_scroll_palettes + 48, stage2_scroll_palettes_at_48);
     if (stage2_scroll_palettes[51] != 0x33) {
         printf("error! avram_pal_tbl2[51]\n");
     }
-    STORE_POINTER(stage2_scroll_palettes + 51, D_002612F0);
+    STORE_POINTER(stage2_scroll_palettes + 51, stage2_scroll_palettes_at_51);
     if (stage2_scroll_palettes[54] != 0x36) {
         printf("error! avram_pal_tbl2[54]\n");
     }
-    STORE_POINTER(stage2_scroll_palettes + 54, D_002605B0);
+    STORE_POINTER(stage2_scroll_palettes + 54, stage2_scroll_palettes_at_54);
     if (stage2_scroll_palettes[57] != 0x39) {
         printf("error! avram_pal_tbl2[57]\n");
     }
-    STORE_POINTER(stage2_scroll_palettes + 57, D_00261530);
+    STORE_POINTER(stage2_scroll_palettes + 57, stage2_scroll_palettes_at_57);
     if (stage2_scroll_palettes[60] != 0x3c) {
         printf("error! avram_pal_tbl2[60]\n");
     }
-    STORE_POINTER(stage2_scroll_palettes + 60, D_00261330);
+    STORE_POINTER(stage2_scroll_palettes + 60, stage2_scroll_palettes_at_60);
     if (stage2_scroll_palettes[63] != 0x3f) {
         printf("error! avram_pal_tbl2[63]\n");
     }
-    STORE_POINTER(stage2_scroll_palettes + 63, D_002613B0);
+    STORE_POINTER(stage2_scroll_palettes + 63, stage2_scroll_palettes_at_63);
     if (stage2_scroll_palettes[66] != 0x42) {
         printf("error! avram_pal_tbl2[66]\n");
     }
-    STORE_POINTER(stage2_scroll_palettes + 66, D_002613F0);
+    STORE_POINTER(stage2_scroll_palettes + 66, stage2_scroll_palettes_at_66);
     if (stage2_scroll_palettes[69] != 0x45) {
         printf("error! avram_pal_tbl2[69]\n");
     }
-    STORE_POINTER(stage2_scroll_palettes + 69, D_00261430);
+    STORE_POINTER(stage2_scroll_palettes + 69, stage2_scroll_palettes_at_69);
     if (stage2_scroll_palettes[72] != 0x48) {
         printf("error! avram_pal_tbl2[72]\n");
     }
-    STORE_POINTER(stage2_scroll_palettes + 72, D_00261470);
+    STORE_POINTER(stage2_scroll_palettes + 72, stage2_scroll_palettes_at_72);
     if (stage2_scroll_palettes[75] != 0x4b) {
         printf("error! avram_pal_tbl2[75]\n");
     }
-    STORE_POINTER(stage2_scroll_palettes + 75, D_002614B0);
+    STORE_POINTER(stage2_scroll_palettes + 75, stage2_scroll_palettes_at_75);
     if (stage2_scroll_sounds[2] != 0x2) {
         printf("error! avram_snd_tbl2[2]\n");
     }
@@ -2405,7 +2405,7 @@ void checked_pointers_store(void) {
     if (stage3_scroll_palettes[48] != 0x30) {
         printf("error! avram_pal_tbl3[48]\n");
     }
-    STORE_POINTER(stage3_scroll_palettes + 48, D_002608F0);
+    STORE_POINTER(stage3_scroll_palettes + 48, stage3_scroll_palettes_at_48);
     if (stage3_scroll_palettes[51] != 0x33) {
         printf("error! avram_pal_tbl3[51]\n");
     }
@@ -2413,11 +2413,11 @@ void checked_pointers_store(void) {
     if (stage3_scroll_palettes[54] != 0x36) {
         printf("error! avram_pal_tbl3[54]\n");
     }
-    STORE_POINTER(stage3_scroll_palettes + 54, D_002616B0);
+    STORE_POINTER(stage3_scroll_palettes + 54, stage3_scroll_palettes_at_54);
     if (stage3_scroll_palettes[57] != 0x39) {
         printf("error! avram_pal_tbl3[57]\n");
     }
-    STORE_POINTER(stage3_scroll_palettes + 57, D_00261670);
+    STORE_POINTER(stage3_scroll_palettes + 57, stage3_scroll_palettes_at_57);
     if (stage3_scroll_palettes[60] != 0x3c) {
         printf("error! avram_pal_tbl3[60]\n");
     }
@@ -2425,15 +2425,15 @@ void checked_pointers_store(void) {
     if (stage3_scroll_palettes[63] != 0x3f) {
         printf("error! avram_pal_tbl3[63]\n");
     }
-    STORE_POINTER(stage3_scroll_palettes + 63, D_002615F0);
+    STORE_POINTER(stage3_scroll_palettes + 63, stage3_scroll_palettes_at_63);
     if (stage3_scroll_palettes[66] != 0x42) {
         printf("error! avram_pal_tbl3[66]\n");
     }
-    STORE_POINTER(stage3_scroll_palettes + 66, D_00261570);
+    STORE_POINTER(stage3_scroll_palettes + 66, stage3_scroll_palettes_at_66);
     if (stage3_scroll_palettes[69] != 0x45) {
         printf("error! avram_pal_tbl3[69]\n");
     }
-    STORE_POINTER(stage3_scroll_palettes + 69, D_002615B0);
+    STORE_POINTER(stage3_scroll_palettes + 69, stage3_scroll_palettes_at_69);
     if (stage3_scroll_sounds[2] != 0x2) {
         printf("error! avram_snd_tbl3[2]\n");
     }
@@ -2505,39 +2505,39 @@ void checked_pointers_store(void) {
     if (stage4_scroll_palettes[39] != 0x27) {
         printf("error! avram_pal_tbl4[39]\n");
     }
-    STORE_POINTER(stage4_scroll_palettes + 39, D_002607F0);
+    STORE_POINTER(stage4_scroll_palettes + 39, stage4_scroll_palettes_at_39);
     if (stage4_scroll_palettes[42] != 0x2a) {
         printf("error! avram_pal_tbl4[42]\n");
     }
-    STORE_POINTER(stage4_scroll_palettes + 42, D_00261A30);
+    STORE_POINTER(stage4_scroll_palettes + 42, stage4_scroll_palettes_at_42);
     if (stage4_scroll_palettes[45] != 0x2d) {
         printf("error! avram_pal_tbl4[45]\n");
     }
-    STORE_POINTER(stage4_scroll_palettes + 45, D_00261930);
+    STORE_POINTER(stage4_scroll_palettes + 45, stage4_scroll_palettes_at_45);
     if (stage4_scroll_palettes[48] != 0x30) {
         printf("error! avram_pal_tbl4[48]\n");
     }
-    STORE_POINTER(stage4_scroll_palettes + 48, ((u16 *)D_00261730));
+    STORE_POINTER(stage4_scroll_palettes + 48, ((u16 *)stage4_scroll_palettes_at_48));
     if (stage4_scroll_palettes[51] != 0x33) {
         printf("error! avram_pal_tbl4[51]\n");
     }
-    STORE_POINTER(stage4_scroll_palettes + 51, D_00261970);
+    STORE_POINTER(stage4_scroll_palettes + 51, stage4_scroll_palettes_at_51);
     if (stage4_scroll_palettes[54] != 0x36) {
         printf("error! avram_pal_tbl4[54]\n");
     }
-    STORE_POINTER(stage4_scroll_palettes + 54, D_002619B0);
+    STORE_POINTER(stage4_scroll_palettes + 54, stage4_scroll_palettes_at_54);
     if (stage4_scroll_palettes[57] != 0x39) {
         printf("error! avram_pal_tbl4[57]\n");
     }
-    STORE_POINTER(stage4_scroll_palettes + 57, D_00260830);
+    STORE_POINTER(stage4_scroll_palettes + 57, stage4_scroll_palettes_at_57);
     if (stage4_scroll_palettes[60] != 0x3c) {
         printf("error! avram_pal_tbl4[60]\n");
     }
-    STORE_POINTER(stage4_scroll_palettes + 60, D_002607F0);
+    STORE_POINTER(stage4_scroll_palettes + 60, stage4_scroll_palettes_at_39);
     if (stage4_scroll_palettes[63] != 0x3f) {
         printf("error! avram_pal_tbl4[63]\n");
     }
-    STORE_POINTER(stage4_scroll_palettes + 63, D_002619F0);
+    STORE_POINTER(stage4_scroll_palettes + 63, stage4_scroll_palettes_at_63);
     if (stage4_scroll_sounds[2] != 0x2) {
         printf("error! avram_snd_tbl4[2]\n");
     }
@@ -2613,11 +2613,11 @@ void checked_pointers_store(void) {
     if (stage5_scroll_palettes[42] != 0x2a) {
         printf("error! avram_pal_tbl5[42]\n");
     }
-    STORE_POINTER(stage5_scroll_palettes + 42, D_00261AB0);
+    STORE_POINTER(stage5_scroll_palettes + 42, stage5_scroll_palettes_at_42);
     if (stage5_scroll_palettes[45] != 0x2d) {
         printf("error! avram_pal_tbl5[45]\n");
     }
-    STORE_POINTER(stage5_scroll_palettes + 45, D_00261A70);
+    STORE_POINTER(stage5_scroll_palettes + 45, stage5_scroll_palettes_at_45);
     if (stage5_scroll_palettes[48] != 0x30) {
         printf("error! avram_pal_tbl5[48]\n");
     }
@@ -2625,15 +2625,15 @@ void checked_pointers_store(void) {
     if (stage5_scroll_palettes[51] != 0x33) {
         printf("error! avram_pal_tbl5[51]\n");
     }
-    STORE_POINTER(stage5_scroll_palettes + 51, D_00260770);
+    STORE_POINTER(stage5_scroll_palettes + 51, stage5_scroll_palettes_at_51);
     if (stage5_scroll_palettes[54] != 0x36) {
         printf("error! avram_pal_tbl5[54]\n");
     }
-    STORE_POINTER(stage5_scroll_palettes + 54, D_00261B30);
+    STORE_POINTER(stage5_scroll_palettes + 54, stage5_scroll_palettes_at_54);
     if (stage5_scroll_palettes[57] != 0x39) {
         printf("error! avram_pal_tbl5[57]\n");
     }
-    STORE_POINTER(stage5_scroll_palettes + 57, D_00261B70);
+    STORE_POINTER(stage5_scroll_palettes + 57, stage5_scroll_palettes_at_57);
     if (stage5_scroll_sounds[2] != 0x2) {
         printf("error! avram_snd_tbl5[2]\n");
     }
@@ -2657,127 +2657,127 @@ void checked_pointers_store(void) {
     if (D_0025BFA6[0] != 0xb) {
         printf("error! name_fin_tbl[11]\n");
     }
-    STORE_POINTER(D_0025BFA6, ((u16 *)D_00261F70));
+    STORE_POINTER(D_0025BFA6, ((u16 *)name_entry_task_begin_table_2));
     if (D_0025BFB4[0] != 0x12) {
         printf("error! name_fin_tbl[18]\n");
     }
-    STORE_POINTER(D_0025BFB4, ((u16 *)D_00261FB0));
+    STORE_POINTER(D_0025BFB4, ((u16 *)name_entry_task_begin_table_3));
     if (D_0025BFC2[0] != 0x19) {
         printf("error! name_fin_tbl[25]\n");
     }
-    STORE_POINTER(D_0025BFC2, ((u16 *)D_00261EF0));
+    STORE_POINTER(D_0025BFC2, ((u16 *)name_entry_task_begin_table));
     if (name_entry_letter_table[0] != 0x0) {
         printf("error! nam_mozi_dir[0]\n");
     }
-    STORE_POINTER(name_entry_letter_table, D_0025C040);
+    STORE_POINTER(name_entry_letter_table, name_entry_letter_table_at_0);
     if (name_entry_letter_table[2] != 0x2) {
         printf("error! nam_mozi_dir[2]\n");
     }
-    STORE_POINTER(name_entry_letter_table + 2, D_0025C060);
+    STORE_POINTER(name_entry_letter_table + 2, name_entry_letter_table_at_2);
     if (name_entry_letter_table[4] != 0x4) {
         printf("error! nam_mozi_dir[4]\n");
     }
-    STORE_POINTER(name_entry_letter_table + 4, D_0025C080);
+    STORE_POINTER(name_entry_letter_table + 4, name_entry_letter_table_at_4);
     if (name_entry_letter_table[6] != 0x6) {
         printf("error! nam_mozi_dir[6]\n");
     }
-    STORE_POINTER(name_entry_letter_table + 6, D_0025C0A0);
+    STORE_POINTER(name_entry_letter_table + 6, name_entry_letter_table_at_6);
     if (name_entry_letter_table[8] != 0x8) {
         printf("error! nam_mozi_dir[8]\n");
     }
-    STORE_POINTER(name_entry_letter_table + 8, D_0025C0C0);
+    STORE_POINTER(name_entry_letter_table + 8, name_entry_letter_table_at_8);
     if (name_entry_letter_table[10] != 0xa) {
         printf("error! nam_mozi_dir[10]\n");
     }
-    STORE_POINTER(name_entry_letter_table + 10, D_0025C0E0);
+    STORE_POINTER(name_entry_letter_table + 10, name_entry_letter_table_at_10);
     if (name_entry_letter_table[12] != 0xc) {
         printf("error! nam_mozi_dir[12]\n");
     }
-    STORE_POINTER(name_entry_letter_table + 12, D_0025C100);
+    STORE_POINTER(name_entry_letter_table + 12, name_entry_letter_table_at_12);
     if (name_entry_letter_table[14] != 0xe) {
         printf("error! nam_mozi_dir[14]\n");
     }
-    STORE_POINTER(name_entry_letter_table + 14, D_0025C120);
+    STORE_POINTER(name_entry_letter_table + 14, name_entry_letter_table_at_14);
     if (name_entry_letter_table[16] != 0x10) {
         printf("error! nam_mozi_dir[16]\n");
     }
-    STORE_POINTER(name_entry_letter_table + 16, D_0025C140);
+    STORE_POINTER(name_entry_letter_table + 16, name_entry_letter_table_at_16);
     if (name_entry_letter_table[18] != 0x12) {
         printf("error! nam_mozi_dir[18]\n");
     }
-    STORE_POINTER(name_entry_letter_table + 18, D_0025C160);
+    STORE_POINTER(name_entry_letter_table + 18, name_entry_letter_table_at_18);
     if (name_entry_letter_table[20] != 0x14) {
         printf("error! nam_mozi_dir[20]\n");
     }
-    STORE_POINTER(name_entry_letter_table + 20, D_0025C180);
+    STORE_POINTER(name_entry_letter_table + 20, name_entry_letter_table_at_20);
     if (name_entry_letter_table[22] != 0x16) {
         printf("error! nam_mozi_dir[22]\n");
     }
-    STORE_POINTER(name_entry_letter_table + 22, D_0025C1A0);
+    STORE_POINTER(name_entry_letter_table + 22, name_entry_letter_table_at_22);
     if (name_entry_letter_table[24] != 0x18) {
         printf("error! nam_mozi_dir[24]\n");
     }
-    STORE_POINTER(name_entry_letter_table + 24, D_0025C1C0);
+    STORE_POINTER(name_entry_letter_table + 24, name_entry_letter_table_at_24);
     if (name_entry_letter_table[26] != 0x1a) {
         printf("error! nam_mozi_dir[26]\n");
     }
-    STORE_POINTER(name_entry_letter_table + 26, D_0025C1E0);
+    STORE_POINTER(name_entry_letter_table + 26, name_entry_letter_table_at_26);
     if (name_entry_letter_table[28] != 0x1c) {
         printf("error! nam_mozi_dir[28]\n");
     }
-    STORE_POINTER(name_entry_letter_table + 28, D_0025C200);
+    STORE_POINTER(name_entry_letter_table + 28, name_entry_letter_table_at_28);
     if (name_entry_letter_table[30] != 0x1e) {
         printf("error! nam_mozi_dir[30]\n");
     }
-    STORE_POINTER(name_entry_letter_table + 30, D_0025C220);
+    STORE_POINTER(name_entry_letter_table + 30, name_entry_letter_table_at_30);
     if (name_entry_letter_table[32] != 0x20) {
         printf("error! nam_mozi_dir[32]\n");
     }
-    STORE_POINTER(name_entry_letter_table + 32, D_0025C240);
+    STORE_POINTER(name_entry_letter_table + 32, name_entry_letter_table_at_32);
     if (name_entry_letter_table[34] != 0x22) {
         printf("error! nam_mozi_dir[34]\n");
     }
-    STORE_POINTER(name_entry_letter_table + 34, D_0025C260);
+    STORE_POINTER(name_entry_letter_table + 34, name_entry_letter_table_at_34);
     if (name_entry_letter_table[36] != 0x24) {
         printf("error! nam_mozi_dir[36]\n");
     }
-    STORE_POINTER(name_entry_letter_table + 36, D_0025C280);
+    STORE_POINTER(name_entry_letter_table + 36, name_entry_letter_table_at_36);
     if (name_entry_letter_table[38] != 0x26) {
         printf("error! nam_mozi_dir[38]\n");
     }
-    STORE_POINTER(name_entry_letter_table + 38, D_0025C2A0);
+    STORE_POINTER(name_entry_letter_table + 38, name_entry_letter_table_at_38);
     if (name_entry_letter_table[40] != 0x28) {
         printf("error! nam_mozi_dir[40]\n");
     }
-    STORE_POINTER(name_entry_letter_table + 40, D_0025C2C0);
+    STORE_POINTER(name_entry_letter_table + 40, name_entry_letter_table_at_40);
     if (name_entry_letter_table[42] != 0x2a) {
         printf("error! nam_mozi_dir[42]\n");
     }
-    STORE_POINTER(name_entry_letter_table + 42, D_0025C2E0);
+    STORE_POINTER(name_entry_letter_table + 42, name_entry_letter_table_at_42);
     if (name_entry_letter_table[44] != 0x2c) {
         printf("error! nam_mozi_dir[44]\n");
     }
-    STORE_POINTER(name_entry_letter_table + 44, D_0025C300);
+    STORE_POINTER(name_entry_letter_table + 44, name_entry_letter_table_at_44);
     if (name_entry_letter_table[46] != 0x2e) {
         printf("error! nam_mozi_dir[46]\n");
     }
-    STORE_POINTER(name_entry_letter_table + 46, D_0025C320);
+    STORE_POINTER(name_entry_letter_table + 46, name_entry_letter_table_at_46);
     if (name_entry_letter_table[48] != 0x30) {
         printf("error! nam_mozi_dir[48]\n");
     }
-    STORE_POINTER(name_entry_letter_table + 48, D_0025C340);
+    STORE_POINTER(name_entry_letter_table + 48, name_entry_letter_table_at_48);
     if (name_entry_letter_table[50] != 0x32) {
         printf("error! nam_mozi_dir[50]\n");
     }
-    STORE_POINTER(name_entry_letter_table + 50, D_0025C360);
+    STORE_POINTER(name_entry_letter_table + 50, name_entry_letter_table_at_50);
     if (name_entry_letter_table[52] != 0x34) {
         printf("error! nam_mozi_dir[52]\n");
     }
-    STORE_POINTER(name_entry_letter_table + 52, D_0025C380);
+    STORE_POINTER(name_entry_letter_table + 52, name_entry_letter_table_at_52);
     if (name_entry_letter_table[54] != 0x36) {
         printf("error! nam_mozi_dir[54]\n");
     }
-    STORE_POINTER(name_entry_letter_table + 54, D_0025C3A0);
+    STORE_POINTER(name_entry_letter_table + 54, name_entry_letter_table_at_54);
     if (doll_select_p1.held[0] != 0x1) {
         printf("error! dollsel_data_1p[1]\n");
     }
@@ -2825,7 +2825,7 @@ void checked_pointers_store(void) {
     if (join_select_p1_table[8] != 0x8) {
         printf("error! sel_game_tbl_1p[8]\n");
     }
-    STORE_POINTER(join_select_p1_table + 8, ((u16 *)D_0029BF40));
+    STORE_POINTER(join_select_p1_table + 8, ((u16 *)join_select_p1_table_at_8));
     if (join_select_p2_table[2] != 0x2) {
         printf("error! sel_game_tbl_2p[2]\n");
     }
@@ -2841,7 +2841,7 @@ void checked_pointers_store(void) {
     if (join_select_p2_table[8] != 0x8) {
         printf("error! sel_game_tbl_2p[8]\n");
     }
-    STORE_POINTER(join_select_p2_table + 8, ((u16 *)D_0029BF30));
+    STORE_POINTER(join_select_p2_table + 8, ((u16 *)join_select_p2_table_at_8));
     if (D_00251CC0[0] != 0x0) {
         printf("error! sel_win_kyok_tbl[0]\n");
     }
@@ -2866,14 +2866,14 @@ void checked_pointers_store(void) {
         printf("error! sel_win_kyok_tbl[10]\n");
     }
     STORE_POINTER(D_00251CC0 + 10, D_00260EB0);
-    if (D_0028C148_as_u16_a[0] != 0x0) {
+    if (select_panel_piece_2_draw_table_as_u16_a[0] != 0x0) {
         printf("error! subsel_fig_barner[0]\n");
     }
-    STORE_POINTER(D_0028C148_as_u16_a, D_0028C680);
+    STORE_POINTER(select_panel_piece_2_draw_table_as_u16_a, D_0028C680);
     if (D_0028C14A[1] != 0x2) {
         printf("error! subsel_fig_barner[2]\n");
     }
-    STORE_POINTER(D_0028C14A + 1, D_0028C708);
+    STORE_POINTER(D_0028C14A + 1, player_exhaust_sprites_01_at_0);
     if (D_00252010[0] != 0x0) {
         printf("error! subsel_txt_chr_1p[0]\n");
     }
@@ -3059,15 +3059,15 @@ void checked_pointers_store(void) {
     if (stage5_boss_horn_shot_offsets[2] != 0x2) {
         printf("error! st5b_2_tsuno_sht_ofs_tbl[2]\n");
     }
-    STORE_POINTER(stage5_boss_horn_shot_offsets + 2, D_00264490);
+    STORE_POINTER(stage5_boss_horn_shot_offsets + 2, stage5_boss_horn_shot_offsets_at_2);
     if (stage5_boss_horn_shot_offsets[4] != 0x4) {
         printf("error! st5b_2_tsuno_sht_ofs_tbl[4]\n");
     }
-    STORE_POINTER(stage5_boss_horn_shot_offsets + 4, D_00264440);
+    STORE_POINTER(stage5_boss_horn_shot_offsets + 4, stage5_boss_horn_shot_offsets_at_4);
     if (stage5_boss_horn_shot_offsets[6] != 0x6) {
         printf("error! st5b_2_tsuno_sht_ofs_tbl[6]\n");
     }
-    STORE_POINTER(stage5_boss_horn_shot_offsets + 6, D_002643F0);
+    STORE_POINTER(stage5_boss_horn_shot_offsets + 6, stage5_boss_horn_shot_offsets_at_6);
     if (stage5_boss_flash_palettes_a[4] != 0x4) {
         printf("error! st5b_mo1_flush_tbl[4]\n");
     }
@@ -3087,15 +3087,15 @@ void checked_pointers_store(void) {
     if (stage5_boss_flash_palettes_a[32] != 0x20) {
         printf("error! st5b_mo1_flush_tbl[32]\n");
     }
-    STORE_POINTER(stage5_boss_flash_palettes_a + 32, ((u16 *)D_00260030));
+    STORE_POINTER(stage5_boss_flash_palettes_a + 32, ((u16 *)stage5_boss_flash_palettes_a_at_32));
     if (stage5_boss_flash_palettes_a[39] != 0x27) {
         printf("error! st5b_mo1_flush_tbl[39]\n");
     }
-    STORE_POINTER(stage5_boss_flash_palettes_a + 39, ((u16 *)D_00260070));
+    STORE_POINTER(stage5_boss_flash_palettes_a + 39, ((u16 *)stage5_boss_flash_palettes_a_at_39));
     if (stage5_boss_flash_palettes_a[46] != 0x2e) {
         printf("error! st5b_mo1_flush_tbl[46]\n");
     }
-    STORE_POINTER(stage5_boss_flash_palettes_a + 46, ((u16 *)D_002600B0));
+    STORE_POINTER(stage5_boss_flash_palettes_a + 46, ((u16 *)stage5_boss_flash_palettes_a_at_46));
     if (stage5_boss_flash_palettes_a[53] != 0x35) {
         printf("error! st5b_mo1_flush_tbl[53]\n");
     }
@@ -3131,11 +3131,11 @@ void checked_pointers_store(void) {
     if (stage5_boss_flash_palettes_b[11] != 0xb) {
         printf("error! st5b_mo3_flush_tbl[11]\n");
     }
-    STORE_POINTER(stage5_boss_flash_palettes_b + 11, ((u16 *)D_00260130));
+    STORE_POINTER(stage5_boss_flash_palettes_b + 11, ((u16 *)stage5_boss_flash_palettes_b_at_11));
     if (stage5_boss_flash_palettes_b[18] != 0x12) {
         printf("error! st5b_mo3_flush_tbl[18]\n");
     }
-    STORE_POINTER(stage5_boss_flash_palettes_b + 18, ((u16 *)D_00260170));
+    STORE_POINTER(stage5_boss_flash_palettes_b + 18, ((u16 *)stage5_boss_flash_palettes_b_at_18));
     if (stage5_boss_flash_palettes_b[25] != 0x19) {
         printf("error! st5b_mo3_flush_tbl[25]\n");
     }

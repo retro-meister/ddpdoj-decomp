@@ -227,13 +227,13 @@ void item_test_count_0(void) {
 
 s32 enemy_set_task_state();                            /* extern */
 s32 enemy_init_entities();                            /* extern */
-extern s32 D_0025B0E0[];
-extern s32 D_0028CA00;
+extern s32 item_test_begin_table[];
+extern s32 item_test_begin_table_2;
 
 void item_test_begin(void) {
-    reg_a0 = (u8 *)D_0025B0E0;
+    reg_a0 = (u8 *)item_test_begin_table;
     enemy_init_entities();
-    reg_a0 = (u8 *)(&D_0028CA00);
+    reg_a0 = (u8 *)(&item_test_begin_table_2);
     reg_d0.w = 1;
     enemy_set_task_state();
     reg_tmp.w = 0x38001C00;

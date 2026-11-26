@@ -23,13 +23,13 @@ void logo_sprite_draw(void) {
     sprite_draw();
 }
 
-extern s16 D_0028E23C;
-extern s16 D_0028E240;
+extern s16 scroll_shadow_reset_state;
+extern s16 scroll_shadow_reset_state_2;
 
 void scroll_shadow_reset(void) {
-    (*(s16 **)&reg_a0) = &D_0028E23C;
+    (*(s16 **)&reg_a0) = &scroll_shadow_reset_state;
     *(*(s16 **)&reg_a0) = 0;
-    (*(s16 **)&reg_a0) = &D_0028E240;
+    (*(s16 **)&reg_a0) = &scroll_shadow_reset_state_2;
     *(*(s16 **)&reg_a0) = 1;
 }
 

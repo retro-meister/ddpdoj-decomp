@@ -214,8 +214,8 @@ loop_11:
 }
 
 s32 score_add_masked();
-extern u16 D_00269430[];
-extern u16 D_00269460[];
+extern u16 bee_collected_table[];
+extern u16 bee_collected_table_2[];
 extern u16 g_bee_value_step;
 extern u16 g_stage_bees_collected;
 
@@ -230,12 +230,12 @@ void bee_collected(void) {
     ENTITY(reg_a6)->flags.b[1] |= 0x20;
     g_bee_value_step += 4;
 next_1:
-    reg_a0 = (u8 *)D_00269430;
-    reg_d0.w = *(u32 *)((u8 *)D_00269430 + (reg_d1.h[0] & ~3));
+    reg_a0 = (u8 *)bee_collected_table;
+    reg_d0.w = *(u32 *)((u8 *)bee_collected_table + (reg_d1.h[0] & ~3));
     if (!(ENTITY(reg_a6)->flags.b[1] & 0x20)) goto next_2;
     reg_d0.w += reg_d0.w;
 next_2:
-    reg_a0 = (u8 *)D_00269460;
+    reg_a0 = (u8 *)bee_collected_table_2;
     ENTITY(reg_a6)->hit_y_plus.h = (reg_d1.h[0]) ? *(u16 *)(reg_a0 + ((s16) reg_d1.h[0] & ~1)) : *(u16 *)reg_a0;
     ENTITY(reg_a6)->hit_y_minus.h = ((reg_d1.h[0] + 2) != 0) ? *(u16 *)(reg_a0 + ((s16) (reg_d1.h[0] + 2) & ~1)) : *(u16 *)reg_a0;
     if ((s16) reg_d4.h[0] == 0) goto next_5;

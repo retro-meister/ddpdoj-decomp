@@ -12,4 +12,9 @@ void sceDmaReset(s32 mode);
 void sceDmaSend(void *chan, void *tag);
 void sceDmaSendN(void *chan, void *addr, s32 size);
 
+#ifdef DDPDOJ_PC
+#include <stddef.h>
+void pc_dma_send_chain(void *chan, const void *tag, size_t capacity);
+#endif
+
 #endif

@@ -5,6 +5,13 @@
 #include "sdk/ps2sdk.h"
 #include "gfx_types.h"
 
+#ifdef DDPDOJ_PC
+/* Gallery can draw UI elements at negative screen coordinates. */
+#define GALLERY_COORD_SHIFT(value, bits) ((value) * (1 << (bits)))
+#else
+#define GALLERY_COORD_SHIFT(value, bits) ((value) << (bits))
+#endif
+
 typedef enum {
     GALLERY_MODE_LOADING = 0,
     GALLERY_MODE_FADE_IN = 1,
@@ -132,6 +139,9 @@ typedef struct {
     u8 itemStatus[0x100];
     u8 itemThumbIds[0x100];
     s8 slotFlags[6];
+#ifdef DDPDOJ_PC
+    s32 assetError;
+#endif
 } GalleryContext;
 
 typedef struct {
@@ -176,6 +186,9 @@ extern u8 *g_pad_port_dst;
 extern u32 g_pad_port_bits;
 extern s8 g_cd_async_state;
 extern s8 g_cd_async_busy;
+#ifdef DDPDOJ_PC
+extern s32 g_cd_io_error;
+#endif
 extern u32 g_cd_total_bytes_read;
 extern s8 g_cd_retry_timer;
 extern void *g_vram_load_buf;
@@ -224,7 +237,11 @@ void cd_load_file(void *destination, const char *path);
 /* sprite.c */
 void sprite_build_quad_packet(Qword *pkt, s32 startIndex, s32 count);
 void sprite_flush_quads(void);
+#ifdef DDPDOJ_PC
+void sprite_queue_glyph(s16 x, s16 y, u16 textureId, u16 attributes, u16 scale);
+#else
 void sprite_queue_glyph(); /* (s16 x, s16 y, u16 textureId, u16 attributes, u16 scale) */
+#endif
 void sprite_build_rect_packet(Qword *packet, s32 firstEntry, s32 entryCount);
 void sprite_flush_rects(void);
 void sprite_queue_sjis_text(s32 x, s16 y, const char *text, u16 texturePage, u16 glyphWidth, u16 glyphHeight, u16 alpha, u16 depth);
@@ -265,8 +282,16 @@ s32 glyph_cache_lookup(u16 key);
 void mc_load_icons(void);
 
 /* main.c */
+#ifdef DDPDOJ_PC
+/* The host mounts the disc and binds video and audio before starting Gallery. */
+s32 gallery_boot(void);
+/* Returns 1 while running, 0 on exit, or -1 after an asset error. */
+s32 gallery_run_frame(void);
+void gallery_end_frames(void);
+#else
 void gallery_main(void);
 void gallery_run_loop(void);
+#endif
 void gallery_init_frame_gs(void);
 void gallery_tick_and_render(void);
 s32 gallery_state_exit(void);

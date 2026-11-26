@@ -1,62 +1,76 @@
 #include "common.h"
 #include "task.h"
+
+#ifdef DDPDOJ_PC
+#include "game_loop.h"
+#include <stdio.h>
+#include <string.h>
+#define FRAME_ROUTINE(name) void name(void)
+void wallpaper_load(s32 index, u16 *source);
+extern u16 g_menu_wallpapers_1[];
+static u32 boot_phase;
+#else
 s32 memalign();
 s32 memset();
 s32 printf();
-
-s32 layers_reset();
-s32 layers_clear_all();
-s32 coin_init();
-s32 frame_counters_init();
-s32 frame_counters_advance();
-s32 game_init();
-s32 ending_state_clear();
-s32 attract_demo_state_clear();
-s32 fades_reset();
-s32 fades_update();
-s32 players_clear();
-s32 input_clear();
-s32 input_update_pressed();
-s32 pointer_tables_init();
-s32 sound_init();
-s32 sound_unused();
-s32 checked_pointers_store();
-s32 sprite_lists_reset();
-s32 sprite_lists_build();
-s32 palettes_init();
-s32 text_palette_load();
-s32 hud_setup();
-s32 rankings_set_defaults();
-s32 scores_reset();
-s32 display_control_init();
-s32 display_control_bit_0_on();
-s32 display_control_unused();
-s32 zoom_init();
-s32 test_mode_init();
-s32 settings_reset();
-s32 collision_reset();
-s32 slowdown_init();
-s32 slowdown_update();
-s32 startup_pointers_store_a();
-s32 startup_pointers_store_b();
-s32 font_load_async();
-s32 sys_start();
-s32 sys_begin_frame();
-s32 sys_end_frame();
-s32 stage_load_step();
-s32 text_layer_clear_edge_top();
-s32 text_layer_clear_edge_bottom();
+#define FRAME_ROUTINE(name) s32 name()
 s32 wallpaper_load();
-s32 arcade_sprite_init();
-s32 sprite_header_load_async();
-s32 sprite_pixels_load_async();
-s32 sim_rules_set_defaults();
-s32 pause_update();
-s32 disc_notice_begin();
-s32 disc_notice_end();
-s32 replay_slot_infos_clear();
-s32 replay_begin_pending();
-extern u8 D_002620F0[];
+extern u8 g_menu_wallpapers_1[];
+#endif
+
+FRAME_ROUTINE(layers_reset);
+FRAME_ROUTINE(layers_clear_all);
+FRAME_ROUTINE(coin_init);
+FRAME_ROUTINE(frame_counters_init);
+FRAME_ROUTINE(frame_counters_advance);
+FRAME_ROUTINE(game_init);
+FRAME_ROUTINE(ending_state_clear);
+FRAME_ROUTINE(attract_demo_state_clear);
+FRAME_ROUTINE(fades_reset);
+FRAME_ROUTINE(fades_update);
+FRAME_ROUTINE(players_clear);
+FRAME_ROUTINE(input_clear);
+FRAME_ROUTINE(input_update_pressed);
+FRAME_ROUTINE(pointer_tables_init);
+FRAME_ROUTINE(sound_init);
+FRAME_ROUTINE(sound_unused);
+FRAME_ROUTINE(checked_pointers_store);
+FRAME_ROUTINE(sprite_lists_reset);
+FRAME_ROUTINE(sprite_lists_build);
+FRAME_ROUTINE(palettes_init);
+FRAME_ROUTINE(text_palette_load);
+FRAME_ROUTINE(hud_setup);
+FRAME_ROUTINE(rankings_set_defaults);
+FRAME_ROUTINE(scores_reset);
+FRAME_ROUTINE(display_control_init);
+FRAME_ROUTINE(display_control_bit_0_on);
+FRAME_ROUTINE(display_control_unused);
+FRAME_ROUTINE(zoom_init);
+FRAME_ROUTINE(test_mode_init);
+FRAME_ROUTINE(settings_reset);
+FRAME_ROUTINE(collision_reset);
+FRAME_ROUTINE(slowdown_init);
+FRAME_ROUTINE(slowdown_update);
+FRAME_ROUTINE(startup_pointers_store_a);
+FRAME_ROUTINE(startup_pointers_store_b);
+FRAME_ROUTINE(font_load_async);
+FRAME_ROUTINE(sys_start);
+FRAME_ROUTINE(sys_begin_frame);
+FRAME_ROUTINE(sys_end_frame);
+FRAME_ROUTINE(stage_load_step);
+FRAME_ROUTINE(text_layer_clear_edge_top);
+FRAME_ROUTINE(text_layer_clear_edge_bottom);
+FRAME_ROUTINE(arcade_sprite_init);
+FRAME_ROUTINE(sprite_header_load_async);
+FRAME_ROUTINE(sprite_pixels_load_async);
+FRAME_ROUTINE(sim_rules_set_defaults);
+FRAME_ROUTINE(pause_update);
+FRAME_ROUTINE(disc_notice_begin);
+FRAME_ROUTINE(disc_notice_end);
+FRAME_ROUTINE(replay_slot_infos_clear);
+FRAME_ROUTINE(replay_begin_pending);
+#undef FRAME_ROUTINE
+
 extern u8 text_palette_0[];
 extern u8 text_palette_1[];
 extern u8 text_palette_2[];
@@ -90,10 +104,14 @@ extern s8 D_0028EC58;
 extern u8 g_replay_file_loaded[];
 extern u8 g_replay_file[];
 
+#ifdef DDPDOJ_PC
+void game_boot_begin(void) {
+#else
 void game_main(void) {
     s32 t1;
     s32 t2;
     u32 t3;
+#endif
 
 #ifdef DEATH_LABEL
     g_game_mode = 2;
@@ -156,12 +174,26 @@ void game_main(void) {
     reg_d0.h[0] = TASK_ATTRACT;
     task_start();
     *(s16 *)(reg_a0 + 4) = 0x11;
+#ifndef DDPDOJ_PC
     printf("memory[%x]\n", memalign(0x40, 0x10));
+#endif
     g_cd_async_state = 0;
+#ifdef DDPDOJ_PC
+    boot_phase = 0;
+    disc_notice_begin();
+}
+
+bool game_boot_frame(void) {
+    u32 t3 = boot_phase;
+    if (t3 == 5) {
+        return true;
+    }
+#else
     t3 = 0;
     disc_notice_begin();
     printf("cd_read start\n");
     do {
+#endif
         sys_begin_frame();
         switch (t3) {
         case 0:
@@ -208,9 +240,23 @@ void game_main(void) {
             break;
         }
         sys_end_frame();
+#ifdef DDPDOJ_PC
+    boot_phase = t3;
+    if (boot_phase != 5) {
+        return false;
+    }
+    wallpaper_load(0x14B5, g_menu_wallpapers_1);
+    return true;
+}
+
+void game_run_frame(void) {
+    s32 t1;
+    s32 t2;
+#else
     } while (t3 != 5);
-    wallpaper_load(0x14B5, D_002620F0);
+    wallpaper_load(0x14B5, g_menu_wallpapers_1);
 loop_15:
+#endif
     sys_begin_frame();
     input_update_pressed();
     t1 = 0;
@@ -252,14 +298,32 @@ loop_15:
     }
 #endif
     sys_end_frame();
+#ifdef DDPDOJ_PC
+    if (t2 != 0) {
+        replay_begin_pending();
+    }
+#else
     if (t2 == 0) {
         goto loop_15;
     }
     replay_begin_pending();
     goto loop_15;
+#endif
 }
 
-extern u8 D_0026F6C0[];
+#ifdef DDPDOJ_PC
+s32 executable_launch(s32 mode) {
+    if (mode == 0) {
+        game_request_mode(GAME_MODE_GALLERY);
+    } else if (mode == 1) {
+        game_request_mode(GAME_MODE_DEATH_LABEL);
+    } else {
+        game_request_mode(GAME_MODE_MAIN);
+    }
+    return 0;
+}
+#else
+extern u8 executable_launch_table[];
 extern u8 D_0026F700[];
 extern u8 D_0026F740[];
 
@@ -270,7 +334,7 @@ void executable_launch(s32 mode) {
     sceCdInit(0);
     sceSifExitCmd();
     if (mode == 0) {
-        LoadExecPS2((const char *)D_0026F6C0, 0, 0);
+        LoadExecPS2((const char *)executable_launch_table, 0, 0);
     } else if (mode == 1) {
         LoadExecPS2((const char *)D_0026F700, 0, 0);
     } else {
@@ -279,7 +343,7 @@ void executable_launch(s32 mode) {
 }
 
 #ifdef DEATH_LABEL
-u8 D_0026F6C0[160] = {
+u8 executable_launch_table[160] = {
     0x63, 0x64, 0x72, 0x6F, 0x6D, 0x30, 0x3A, 0x5C, 0x47, 0x41, 0x4C, 0x4C, 0x45, 0x52, 0x59, 0x2E,
     0x45, 0x4C, 0x46, 0x3B, 0x31, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00,
     0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00,
@@ -292,7 +356,7 @@ u8 D_0026F6C0[160] = {
     0x2E, 0x33, 0x33, 0x3B, 0x31, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00,
 };
 #else
-u8 D_0026F6C0[160] = {
+u8 executable_launch_table[160] = {
     0x63, 0x64, 0x72, 0x6F, 0x6D, 0x30, 0x3A, 0x5C, 0x47, 0x41, 0x4C, 0x4C, 0x45, 0x52, 0x59, 0x2E,
     0x45, 0x4C, 0x46, 0x3B, 0x31, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00,
     0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00,
@@ -304,6 +368,7 @@ u8 D_0026F6C0[160] = {
     0x63, 0x64, 0x72, 0x6F, 0x6D, 0x30, 0x3A, 0x5C, 0x53, 0x4C, 0x50, 0x53, 0x5F, 0x39, 0x39, 0x39,
     0x2E, 0x39, 0x39, 0x3B, 0x31, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00,
 };
+#endif
 #endif
 
 /* .sbss (the compiler lays these out in reverse) */

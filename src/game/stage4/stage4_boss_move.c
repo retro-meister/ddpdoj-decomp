@@ -215,7 +215,7 @@ s32 boss_part_hide();
 s32 fade_in_and_release();
 s32 sprite_palette_load();
 s32 velocity_from_dir256();
-extern u8 D_0025FEF0[];
+extern u8 stage4_boss_enter_flash_at_18[];
 extern u8 g_boss_present_b1;
 extern u16 g_side_scroll_x[];
 
@@ -270,7 +270,7 @@ void stage4_boss_move_enter(void) {
                 reg_d0.w = 0xB;
                 boss_part_hide();
                 reg_d0.h[0] = 0x15;
-                reg_a0 = (u8 *)D_0025FEF0;
+                reg_a0 = (u8 *)stage4_boss_enter_flash_at_18;
                 sprite_palette_load();
                 g_boss_present_b1 |= 0x10;
                 reg_d0.w = 1;
@@ -371,12 +371,12 @@ void stage4_boss_move_to_form2_b_start(void) {
 }
 
 s32 boss_movement_stop();
-extern u8 D_0028DC84[];
+extern u8 stage4_boss_move_to_form2_b_table[];
 
 void stage4_boss_move_to_form2_b(void) {
     s32 direction_between();
     s32 distance_between();
-    reg_a0 = D_0028DC84;
+    reg_a0 = stage4_boss_move_to_form2_b_table;
     reg_d2.h[0] = *(u16 *)reg_a0;
     reg_d3.h[0] = *(u16 *)(reg_a0 + 2);
     reg_d3.h[0] -= g_side_scroll_x[0];
@@ -384,7 +384,7 @@ void stage4_boss_move_to_form2_b(void) {
     reg_d1.h[0] = ENTITY(reg_a6)->x.h;
     direction_between();
     ENTITY(reg_a6)->move.b.dir = (u8) reg_d1.b[0];
-    reg_a0 = D_0028DC84;
+    reg_a0 = stage4_boss_move_to_form2_b_table;
     reg_d0.h[0] = ENTITY(reg_a6)->y.h;
     reg_d1.h[0] = ENTITY(reg_a6)->x.h;
     reg_d2.h[0] = *(u16 *)reg_a0;
@@ -602,6 +602,6 @@ void stage4_boss_move_rage(void) {
     stage4_boss_parts_follow();
 }
 
-u8 D_0028DC84[4] = {
+u8 stage4_boss_move_to_form2_b_table[4] = {
     0x00, 0x60, 0x00, 0x1C,
 };

@@ -17,7 +17,7 @@ void bullet_look_set_small_by_dir(void);
 
 s32 bullets_cancel_update();
 extern s16 D_0024F330[];
-extern u8 *D_0028DEAC;
+extern u8 *bullets_update_state;
 extern u16 g_sprite_bullets2_used;
 extern u16 g_sprite_bullets_used;
 extern u8 g_slowdown_timer;
@@ -28,8 +28,8 @@ extern u16 g_stage;
 extern u16 g_bullets_alive[];
 extern u8 g_bullets[];
 #ifdef DEATH_LABEL
-extern s16 death_D_002512A0[];
-extern s16 death_D_002512B0[];
+extern s16 bullets_update_table[];
+extern s16 bullets_update_table_2[];
 #endif
 extern u8 g_sprite_bullets2_buf[];
 extern u8 g_sprite_bullets_buf[];
@@ -39,14 +39,14 @@ void bullets_update(void) {
     ((s16 *)g_bullets_alive)[0] = 0;
     reg_a4 = (u8 *)g_sprite_bullets2_buf;
     reg_a0 = (u8 *)g_sprite_bullets_buf;
-    D_0028DEAC = (u8 *)(reg_a4);
+    bullets_update_state = (u8 *)(reg_a4);
     reg_a0 += g_sprite_bullets_used;
     *(u8 **)(g_bullets + MAIN_OR_DEATH_LABEL(0x3490, 0x10690)) = reg_a0;
     bullets_update_loop();
     reg_d1.w = (u32) g_sprite_bullets_buf;
     reg_d0.w = (u32) *(u8 **)(g_bullets + MAIN_OR_DEATH_LABEL(0x3490, 0x10690));
     reg_d0.w -= reg_d1.w;
-    reg_a4 = (u8 *)((u32)reg_a4 - (u32)D_0028DEAC);
+    reg_a4 = (u8 *)((u32)reg_a4 - (u32)bullets_update_state);
     reg_tmp.w = (u32) reg_a4;
     g_sprite_bullets_used = reg_d0.h[0];
     g_sprite_bullets2_used = reg_tmp.h[0];
@@ -55,9 +55,9 @@ void bullets_update(void) {
         s16 *limit;
 
         if (g_loop == 0) {
-            limit = &death_D_002512A0[g_stage];
+            limit = &bullets_update_table[g_stage];
         } else {
-            limit = &death_D_002512B0[g_stage];
+            limit = &bullets_update_table_2[g_stage];
         }
         reg_tmp.h[0] = (s16) g_sprite_bullets2_used + (s16) g_sprite_bullets_used;
         reg_tmp.h[0] /= 0xC;
@@ -2780,7 +2780,7 @@ void fade_to_black(void);
 void fade_release(void);
 void fade_is_running(void);
 void voice_logo(void);
-extern u8 D_00269820[];
+extern u8 logo_screen_update_table[];
 extern u16 D_0028E968;
 extern u16 D_0028E96C;
 
@@ -2815,7 +2815,7 @@ void logo_screen_update(void) {
     if (D_0028E96C == 1) {
         D_0028E968 -= 1;
         if (D_0028E968 == 0) {
-            reg_a0 = (u8 *)D_00269820;
+            reg_a0 = (u8 *)logo_screen_update_table;
             fade_to_black();
             D_0028E964 = reg_d0.w;
             D_0028E96C = 2;
@@ -2871,7 +2871,7 @@ u8 D_00269800[32] = {
     0x00, 0x00, 0x08, 0x00, 0x00, 0x00, 0x0B, 0x00, 0x0C, 0x00, 0x1F, 0x00, 0x03, 0x00, 0x00, 0x00,
 };
 
-u8 D_00269820[32] = {
+u8 logo_screen_update_table[32] = {
     0x02, 0x00, 0x00, 0x00, 0x00, 0x00, 0x1F, 0x00, 0x03, 0x00, 0x08, 0x00, 0x00, 0x00, 0x1F, 0x00,
     0x03, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00,
 };

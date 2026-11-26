@@ -331,7 +331,7 @@ void stage5_boss_draw_head(void) {
     stage5_boss_draw_form2_head();
 }
 
-extern u8 D_00264990[];
+extern u8 stage5_boss_draw_form2_head_table[];
 
 void stage5_boss_draw_form2_head(void) {
     s32 sprite_draw_layer2_keep();
@@ -350,7 +350,7 @@ void stage5_boss_draw_form2_head(void) {
     reg_d1.h[0] = ENTITY(reg_a6)->x.h;
     temp_a1 = reg_d1.w;
     reg_d1.w = temp_a1 + 0xEE00EC00;
-    reg_a0 = D_00264990;
+    reg_a0 = stage5_boss_draw_form2_head_table;
     reg_a0 += STAGE5_EXTRA(reg_a6)->head_anim;
     reg_d2.h[1] = *(u16 *)reg_a0;
     reg_d2.h[0] = *(u16 *)(reg_a0 + 2);
@@ -450,14 +450,14 @@ void stage5_boss_draw_form2_exhaust(void) {
     sprite_draw_layer2_keep();
 }
 
-extern u16 D_002649C0[];
+extern u16 stage5_boss_draw_form2_wings_table[];
 
 void stage5_boss_draw_form2_wings(void) {
     s32 sprite_draw_layer2_keep();
     u16 temp_a3;
     u32 temp_a0;
 
-    reg_a0 = (u8 *)(D_002649C0);
+    reg_a0 = (u8 *)(stage5_boss_draw_form2_wings_table);
     reg_a0 += STAGE5_EXTRA(reg_a6)->wings_anim;
     reg_d2.h[1] = *(u16 *)reg_a0;
     reg_a0 += 2;
@@ -476,7 +476,7 @@ void stage5_boss_draw_form2_wings(void) {
 }
 
 s32 sprite_draw_with_last_boss_keep();
-extern u8 D_00264A50[];
+extern u8 stage5_boss_draw_form3_body_table[];
 extern u16 g_frame_mod3;
 
 void stage5_boss_draw_form3_body(void) {
@@ -489,7 +489,7 @@ void stage5_boss_draw_form3_body(void) {
     x = ENTITY(reg_a6)->y.h;
     y = ENTITY(reg_a6)->x.h;
     for (i = 0; i < 2; i++) {
-        reg_a0 = D_00264A50;
+        reg_a0 = stage5_boss_draw_form3_body_table;
         reg_a0 += STAGE5_EXTRA(reg_a6)->form3_body_anim;
         reg_d2.h[1] = *(u16 *)reg_a0;
         reg_d2.h[0] = *(u16 *)(reg_a0 + 2);
@@ -510,7 +510,7 @@ void stage5_boss_draw_form3_body(void) {
 #else
     u16 temp_a0;
 
-    reg_a0 = D_00264A50;
+    reg_a0 = stage5_boss_draw_form3_body_table;
     reg_a0 += STAGE5_EXTRA(reg_a6)->form3_body_anim;
     reg_d2.h[1] = *(u16 *)reg_a0;
     reg_d2.h[0] = *(u16 *)(reg_a0 + 2);
@@ -529,7 +529,7 @@ void stage5_boss_draw_form3_body(void) {
 #endif
 }
 
-extern u16 MAIN_OR_DEATH_LABEL(D_00264A70, death_D_0026A2E0)[];
+extern u16 MAIN_OR_DEATH_LABEL(stage5_boss_draw_form3_tail_table, death_D_0026A2E0)[];
 
 #ifdef DEATH_LABEL
 #define BOSS_X x
@@ -550,7 +550,7 @@ void stage5_boss_draw_form3_tail(void) {
     y = ENTITY(reg_a6)->x.h;
     for (i = 0; i < 2; i++) {
 #endif
-    reg_a0 = (u8 *) MAIN_OR_DEATH_LABEL(D_00264A70, death_D_0026A2E0);
+    reg_a0 = (u8 *) MAIN_OR_DEATH_LABEL(stage5_boss_draw_form3_tail_table, death_D_0026A2E0);
     reg_d2.h[0] = STAGE5_EXTRA(reg_a6)->tail_direction;
     reg_d2.h[0] -= 0x18;
     reg_d2.h[0] += reg_d2.h[0];
@@ -572,7 +572,7 @@ void stage5_boss_draw_form3_tail(void) {
 #endif
 }
 
-extern u8 D_00264AC0[];
+extern u8 stage5_boss_draw_form3_bomb_barrier_table[];
 extern u16 g_frame_mod2;
 
 void stage5_boss_draw_form3_bomb_barrier(void) {
@@ -588,7 +588,7 @@ void stage5_boss_draw_form3_bomb_barrier(void) {
     x = ENTITY(reg_a6)->y.h;
     y = ENTITY(reg_a6)->x.h;
     for (i = 0; i < 2; i++) {
-        reg_a0 = (u8 *)D_00264AC0;
+        reg_a0 = (u8 *)stage5_boss_draw_form3_bomb_barrier_table;
         reg_a0 += STAGE5_EXTRA(reg_a6)->barrier_anim;
         reg_d2.h[1] = *(u16 *)reg_a0;
         reg_d2.h[0] = *(u16 *)(reg_a0 + 2);
@@ -607,7 +607,7 @@ void stage5_boss_draw_form3_bomb_barrier(void) {
     u16 temp_a1;
 
     if (g_frame_mod2 != 0) {
-        reg_a0 = (u8 *)D_00264AC0;
+        reg_a0 = (u8 *)stage5_boss_draw_form3_bomb_barrier_table;
         reg_a0 += STAGE5_EXTRA(reg_a6)->barrier_anim;
         reg_d2.h[1] = *(u16 *)reg_a0;
         reg_d2.h[0] = *(u16 *)(reg_a0 + 2);
@@ -648,13 +648,13 @@ u16 D_00264890[128] = {
     0x0000, 0x1E4C, 0x0000, 0x1E4D, 0x0000, 0x1E4E, 0x0000, 0x1E4F,
 };
 
-u8 D_00264990[48] = {
+u8 stage5_boss_draw_form2_head_table[48] = {
     0x00, 0x00, 0xE8, 0x1D, 0x00, 0x00, 0xE9, 0x1D, 0x00, 0x00, 0xEA, 0x1D, 0x00, 0x00, 0xEB, 0x1D,
     0x00, 0x00, 0xEC, 0x1D, 0x00, 0x00, 0xED, 0x1D, 0x00, 0x00, 0xF5, 0x1D, 0x00, 0x00, 0xF6, 0x1D,
     0x00, 0x00, 0xF7, 0x1D, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00,
 };
 
-u16 D_002649C0[72] = {
+u16 stage5_boss_draw_form2_wings_table[72] = {
     0x0000, 0x1DF8, 0x0014, 0x0000, 0x1DF9, 0x0014, 0x0000, 0x1DFA,
     0x0014, 0x0000, 0x1DFB, 0x0014, 0x0000, 0x1DFC, 0x0014, 0x0000,
     0x1DFD, 0x0014, 0x0000, 0x1DFE, 0x0014, 0x0000, 0x1DFF, 0x0014,
@@ -666,12 +666,12 @@ u16 D_002649C0[72] = {
     0x1E0D, 0x0015, 0x0000, 0x1E0E, 0x0015, 0x0000, 0x1E0F, 0x0015,
 };
 
-u8 D_00264A50[32] = {
+u8 stage5_boss_draw_form3_body_table[32] = {
     0x00, 0x00, 0x52, 0x1E, 0x00, 0x00, 0x53, 0x1E, 0x00, 0x00, 0x54, 0x1E, 0x00, 0x00, 0x55, 0x1E,
     0x00, 0x00, 0x56, 0x1E, 0x00, 0x00, 0x57, 0x1E, 0x00, 0x00, 0x58, 0x1E, 0x00, 0x00, 0x59, 0x1E,
 };
 
-u16 D_00264A70[40] = {
+u16 stage5_boss_draw_form3_tail_table[40] = {
     0x0000, 0x1E5A, 0x0000, 0x1E5B, 0x0000, 0x1E5C, 0x0000, 0x1E5D,
     0x0000, 0x1E5E, 0x0000, 0x1E5F, 0x0000, 0x1E60, 0x0000, 0x1E61,
     0x0000, 0x1E62, 0x0000, 0x1E63, 0x0000, 0x1E64, 0x0000, 0x1E65,
@@ -679,7 +679,7 @@ u16 D_00264A70[40] = {
     0x0000, 0x1E6A, 0x0000, 0x1E6B, 0x0000, 0x0000, 0x0000, 0x0000,
 };
 
-u8 D_00264AC0[64] = {
+u8 stage5_boss_draw_form3_bomb_barrier_table[64] = {
     0x00, 0x00, 0x6C, 0x1E, 0x00, 0x00, 0x6D, 0x1E, 0x00, 0x00, 0x6E, 0x1E, 0x00, 0x00, 0x6F, 0x1E,
     0x00, 0x00, 0x70, 0x1E, 0x00, 0x00, 0x71, 0x1E, 0x00, 0x00, 0x72, 0x1E, 0x00, 0x00, 0x73, 0x1E,
     0x00, 0x00, 0x74, 0x1E, 0x00, 0x00, 0x75, 0x1E, 0x00, 0x00, 0x76, 0x1E, 0x00, 0x00, 0x77, 0x1E,

@@ -42,13 +42,13 @@ void sprite_draw_layer4_keep_entry_2(void) {
     sprite_draw_layer4_keep();
 }
 
-extern u32 D_0026EE10[];
+extern u32 stage4_boss_piece_0_draw_table[];
 
 void stage4_boss_piece_0_draw(void) {
     u8 *object = reg_a6;
     u16 *entry;
 
-    reg_a0 = (u8 *)D_0026EE10;
+    reg_a0 = (u8 *)stage4_boss_piece_0_draw_table;
     reg_a0 += *(u16 *)(object + 0x26);
     entry = (u16 *)reg_a0;
     reg_d2.h[1] = entry[0];
@@ -62,10 +62,10 @@ void stage4_boss_piece_0_draw(void) {
     sprite_draw_layer4_keep_entry();
 }
 
-extern u8 D_0026EE30[];
+extern u8 stage4_boss_piece_6_draw_table[];
 
 void stage4_boss_piece_6_draw(void) {
-    reg_a0 = D_0026EE30;
+    reg_a0 = stage4_boss_piece_6_draw_table;
     reg_a0 += ENTITY(reg_a6)[8].offset_y.h;
     reg_d2.h[1] = *(u16 *)reg_a0;
     reg_d2.h[0] = *(u16 *)(reg_a0 + 2);
@@ -79,13 +79,13 @@ void stage4_boss_piece_6_draw(void) {
     sprite_draw_layer4_keep_entry();
 }
 
-extern u8 D_0026EE70[];
+extern u8 stage4_boss_piece_9_draw_table[];
 
 void stage4_boss_piece_9_draw(void) {
     u16 temp_a1;
     u16 temp_a1_2;
 
-    reg_a0 = (u8 *)D_0026EE70;
+    reg_a0 = (u8 *)stage4_boss_piece_9_draw_table;
     reg_a0 += ENTITY(reg_a6)[8].offset_y.h;
     reg_d2.h[1] = *(u16 *)reg_a0;
     reg_d2.h[0] = *(u16 *)(reg_a0 + 2);
@@ -110,13 +110,13 @@ void stage4_boss_piece_9_draw(void) {
     sprite_draw_layer4_keep_entry();
 }
 
-extern u8 D_0026EEB0[];
+extern u8 stage4_boss_piece_1_draw_table[];
 
 void stage4_boss_piece_1_draw(void) {
     u8 *object = reg_a6;
     u16 *table_entry;
 
-    reg_a0 = D_0026EEB0;
+    reg_a0 = stage4_boss_piece_1_draw_table;
     reg_a0 += *(u16 *)(object + 0x46);
     table_entry = (u16 *)reg_a0;
     reg_d2.h[1] = table_entry[0];
@@ -130,13 +130,13 @@ void stage4_boss_piece_1_draw(void) {
     sprite_draw_layer4_keep_entry();
 }
 
-extern u16 D_0026EED0[];
+extern u16 stage4_boss_piece_2_draw_table[];
 
 void stage4_boss_piece_2_draw(void) {
     u8 *object = reg_a6;
     u16 *entry;
 
-    reg_a0 = (u8 *)D_0026EED0;
+    reg_a0 = (u8 *)stage4_boss_piece_2_draw_table;
     reg_a0 += *(u16 *)(object + 0x66);
     entry = (u16 *)reg_a0;
     reg_d2.h[1] = entry[0];
@@ -186,12 +186,12 @@ void stage4_boss_piece_4_draw(void) {
     sprite_draw_layer4_keep_entry();
 }
 
-extern u16 D_0026EF50[];
+extern u16 stage4_boss_piece_5_draw_table[];
 
 void stage4_boss_piece_5_draw(void) {
     u16 temp_a1;
     reg_d0.w = 0;
-    reg_a0 = (u8 *)(D_0026EF50);
+    reg_a0 = (u8 *)(stage4_boss_piece_5_draw_table);
     reg_d0.b[0] = ENTITY(reg_a6)[8].move.b.dir;
     reg_d0.b[0] += 1;
     reg_d0.h[0] &= 0x3E;
@@ -209,14 +209,14 @@ void stage4_boss_piece_5_draw(void) {
 }
 
 s32 sprite_draw_layer2();
-extern u8 D_0026EFD0[];
+extern u8 stage4_boss_piece_7_draw_table[];
 extern u8 D_0026EFF0[];
 
 void stage4_boss_piece_7_draw(void) {
     u16 temp_a0;
     u16 temp_a1;
 
-    reg_a0 = (u8 *)D_0026EFD0;
+    reg_a0 = (u8 *)stage4_boss_piece_7_draw_table;
     reg_a0 += ENTITY(reg_a6)[4].offset_y.h;
     reg_d2.h[1] = *(u16 *)reg_a0;
     reg_d2.h[0] = *(u16 *)(reg_a0 + 2);
@@ -243,13 +243,13 @@ void stage4_boss_piece_7_draw(void) {
     sprite_draw_layer2();
 }
 
-extern u8 D_0026F020[];
+extern u8 stage4_boss_piece_8_draw_table[];
 
 void stage4_boss_piece_8_draw(void) {
     u16 temp_a0;
     u16 temp_a1;
 
-    reg_a0 = (u8 *)D_0026F020;
+    reg_a0 = (u8 *)stage4_boss_piece_8_draw_table;
     reg_a0 += ENTITY(reg_a6)[5].offset_y.h;
     reg_d2.h[1] = *(u16 *)reg_a0;
     reg_d2.h[0] = *(u16 *)(reg_a0 + 2);
@@ -277,13 +277,13 @@ void stage4_boss_piece_8_draw(void) {
 }
 
 extern void sprite_draw_layer5(void);
-extern u32 D_0026F040[];
+extern u32 stage4_boss_piece_10_draw_table[];
 
 void stage4_boss_piece_10_draw(void) {
     u8 *entity = reg_a6;
     u16 *tableEntry;
 
-    reg_a0 = (u8 *)D_0026F040;
+    reg_a0 = (u8 *)stage4_boss_piece_10_draw_table;
     reg_a0 += *(u16 *)(entity + 0x126);
     tableEntry = (u16 *)reg_a0;
     reg_d2.h[1] = tableEntry[0];
@@ -296,13 +296,13 @@ void stage4_boss_piece_10_draw(void) {
     sprite_draw_layer5();
 }
 
-extern u8 D_0026F080[];
+extern u8 stage4_boss_piece_11_draw_table[];
 
 void stage4_boss_piece_11_draw(void) {
     u8 *entity = reg_a6;
     u16 *tableEntry;
 
-    reg_a0 = D_0026F080;
+    reg_a0 = stage4_boss_piece_11_draw_table;
     reg_a0 += *(u16 *)(entity + 0x128);
     tableEntry = (u16 *)reg_a0;
     reg_d2.h[1] = tableEntry[0];
@@ -315,30 +315,30 @@ void stage4_boss_piece_11_draw(void) {
     sprite_draw_layer5();
 }
 
-u32 D_0026EE10[8] = {
+u32 stage4_boss_piece_0_draw_table[8] = {
     0x1CD50000, 0x1CD60000, 0x1CD70000, 0x1CD80000, 0x1CD90000, 0x1CDA0000, 0x1CDB0000, 0x1CDC0000,
 };
 
-u8 D_0026EE30[64] = {
+u8 stage4_boss_piece_6_draw_table[64] = {
     0x00, 0x00, 0xF6, 0x1C, 0x00, 0x00, 0xF7, 0x1C, 0x00, 0x00, 0xF8, 0x1C, 0x00, 0x00, 0xF9, 0x1C,
     0x00, 0x00, 0xFA, 0x1C, 0x00, 0x00, 0xFB, 0x1C, 0x00, 0x00, 0xFC, 0x1C, 0x00, 0x00, 0xFD, 0x1C,
     0x00, 0x00, 0xFE, 0x1C, 0x00, 0x00, 0xFF, 0x1C, 0x00, 0x00, 0x00, 0x1D, 0x00, 0x00, 0x01, 0x1D,
     0x00, 0x00, 0x02, 0x1D, 0x00, 0x00, 0x03, 0x1D, 0x00, 0x00, 0x04, 0x1D, 0x00, 0x00, 0x00, 0x00,
 };
 
-u8 D_0026EE70[64] = {
+u8 stage4_boss_piece_9_draw_table[64] = {
     0x00, 0x00, 0x19, 0x1D, 0x00, 0x00, 0x1A, 0x1D, 0x00, 0x00, 0x1B, 0x1D, 0x00, 0x00, 0x1C, 0x1D,
     0x00, 0x00, 0x1D, 0x1D, 0x00, 0x00, 0x1E, 0x1D, 0x00, 0x00, 0x1F, 0x1D, 0x00, 0x00, 0x20, 0x1D,
     0x00, 0x00, 0x21, 0x1D, 0x00, 0x00, 0x22, 0x1D, 0x00, 0x00, 0x23, 0x1D, 0x00, 0x00, 0x24, 0x1D,
     0x00, 0x00, 0x25, 0x1D, 0x00, 0x00, 0x26, 0x1D, 0x00, 0x00, 0x27, 0x1D, 0x00, 0x00, 0x28, 0x1D,
 };
 
-u8 D_0026EEB0[32] = {
+u8 stage4_boss_piece_1_draw_table[32] = {
     0x00, 0x00, 0xDD, 0x1C, 0x00, 0x00, 0xDE, 0x1C, 0x00, 0x00, 0xDF, 0x1C, 0x00, 0x00, 0xE0, 0x1C,
     0x00, 0x00, 0xE1, 0x1C, 0x00, 0x00, 0xE2, 0x1C, 0x00, 0x00, 0xE3, 0x1C, 0x00, 0x00, 0xE4, 0x1C,
 };
 
-u16 D_0026EED0[16] = {
+u16 stage4_boss_piece_2_draw_table[16] = {
     0x0000, 0x1CE5, 0x0000, 0x1CE6, 0x0000, 0x1CE7, 0x0000, 0x1CE8,
     0x0000, 0x1CE9, 0x0000, 0x1CEA, 0x0000, 0x1CEB, 0x0000, 0x1CEC,
 };
@@ -352,7 +352,7 @@ u8 D_0026EEF0[96] = {
     0x00, 0x00, 0xF2, 0x1C, 0x00, 0x00, 0xF3, 0x1C, 0x00, 0x00, 0xF4, 0x1C, 0x00, 0x00, 0xF5, 0x1C,
 };
 
-u16 D_0026EF50[64] = {
+u16 stage4_boss_piece_5_draw_table[64] = {
     0x0000, 0x1D4A, 0x0000, 0x1D4B, 0x0000, 0x1D4C, 0x0000, 0x1D4D,
     0x0000, 0x1D4E, 0x0000, 0x1D4F, 0x0000, 0x1D50, 0x0000, 0x1D51,
     0x0000, 0x1D52, 0x0000, 0x1D53, 0x0000, 0x1D54, 0x0000, 0x1D55,
@@ -363,7 +363,7 @@ u16 D_0026EF50[64] = {
     0x0000, 0x1D66, 0x0000, 0x1D67, 0x0000, 0x1D68, 0x0000, 0x1D69,
 };
 
-u8 D_0026EFD0[32] = {
+u8 stage4_boss_piece_7_draw_table[32] = {
     0x00, 0x00, 0x29, 0x1D, 0x00, 0x00, 0x2A, 0x1D, 0x00, 0x00, 0x2B, 0x1D, 0x00, 0x00, 0x2C, 0x1D,
     0x00, 0x00, 0x2D, 0x1D, 0x00, 0x00, 0x2E, 0x1D, 0x00, 0x00, 0x2F, 0x1D, 0x00, 0x00, 0x30, 0x1D,
 };
@@ -374,17 +374,17 @@ u8 D_0026EFF0[48] = {
     0x00, 0x00, 0x41, 0x1D, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00,
 };
 
-u8 D_0026F020[32] = {
+u8 stage4_boss_piece_8_draw_table[32] = {
     0x00, 0x00, 0x31, 0x1D, 0x00, 0x00, 0x32, 0x1D, 0x00, 0x00, 0x33, 0x1D, 0x00, 0x00, 0x34, 0x1D,
     0x00, 0x00, 0x35, 0x1D, 0x00, 0x00, 0x36, 0x1D, 0x00, 0x00, 0x37, 0x1D, 0x00, 0x00, 0x38, 0x1D,
 };
 
-u32 D_0026F040[16] = {
+u32 stage4_boss_piece_10_draw_table[16] = {
     0x1D6A0000, 0x1D6B0000, 0x1D6C0000, 0x1D6D0000, 0x1D6E0000, 0x1D6F0000, 0x1D700000, 0x1D710000,
     0x1D720000, 0x1D730000, 0x1D740000, 0x1D750000, 0x1D760000, 0x1D770000, 0x1D780000, 0x1D790000,
 };
 
-u8 D_0026F080[32] = {
+u8 stage4_boss_piece_11_draw_table[32] = {
     0x00, 0x00, 0x7A, 0x1D, 0x00, 0x00, 0x7B, 0x1D, 0x00, 0x00, 0x7C, 0x1D, 0x00, 0x00, 0x7D, 0x1D,
     0x00, 0x00, 0x7E, 0x1D, 0x00, 0x00, 0x7F, 0x1D, 0x00, 0x00, 0x80, 0x1D, 0x00, 0x00, 0x81, 0x1D,
 };

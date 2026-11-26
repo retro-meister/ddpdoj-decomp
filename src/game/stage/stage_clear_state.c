@@ -8,7 +8,7 @@ u16 D_0028E95C __attribute__((aligned(4)));
 s16 D_0028E958 __attribute__((aligned(4)));
 u16 D_0028E954 __attribute__((aligned(4)));
 u16 D_0028E950 __attribute__((aligned(4)));
-s16 D_0028E94C __attribute__((aligned(4)));
+s16 stage_clear_state_clear_state __attribute__((aligned(4)));
 s16 g_game_task_handle __attribute__((aligned(4)));
 
 /* .bss (the compiler lays these out in reverse) */

@@ -3,6 +3,20 @@
 #include "sdk/ps2sdk.h"
 #include "replay.h"
 
+#ifdef DDPDOJ_PC
+void enemies_resume(void);
+void enemies_stop(void);
+void game_screen_teardown(void);
+void music_play_bgm2(void);
+void replay_header_save(void);
+void stage_doors_clear(void);
+void stage_doors_open_request(void);
+void stage_doors_open_requested_check(void);
+void stage_doors_update(void);
+void text_layer_clear(void);
+void text_palette_load(void);
+#endif
+
 void replay_input_playback_begin();
 
 #ifdef DEATH_LABEL
@@ -279,8 +293,10 @@ extern u8 text_palette_0[];
 extern s8 D_0028DF84;
 
 void replay_exit_begin(void) {
+#ifndef DDPDOJ_PC
     s32 text_layer_clear();
     s32 text_palette_load();
+#endif
     u32 save_d0;
     u32 save_d1;
     u32 save_d2;
@@ -456,7 +472,9 @@ extern u8 g_replay_mode;
 extern u8 g_simulation_active;
 
 void replay_start_result() {
+#ifndef DDPDOJ_PC
     s32 game_screen_teardown();
+#endif
     u32 temp_s0;
     u8 *temp_s1;
     s32 var_s2;
@@ -482,7 +500,9 @@ void replay_start_result() {
     reg_a0 = temp_s1;
 }
 
+#ifndef DDPDOJ_PC
 s32 game_screen_teardown();                            /* extern */
+#endif
 s32 replay_scores_snapshot();                            /* extern */
 
 void replay_start_run_end(void) {
@@ -500,9 +520,13 @@ void replay_start_run_end(void) {
     reg_a0 = temp_s1;
 }
 
+#ifndef DDPDOJ_PC
 s32 text_layer_clear();                            /* extern */
+#endif
 s32 fade_in();                            /* extern */
+#ifndef DDPDOJ_PC
 s32 text_palette_load();                            /* extern */
+#endif
 s32 result_menu_reset();                            /* extern */
 extern u8 D_0026B580[];
 extern u32 g_replay_fade_id;
@@ -536,7 +560,9 @@ extern u8 D_0026B5F0[];
 extern s8 D_0028EACC;
 
 void replay_result_menu(void) {
+#ifndef DDPDOJ_PC
     extern void game_screen_teardown(void);
+#endif
     s32 step;
     s32 done;
     u8 *save_a0;
@@ -775,10 +801,12 @@ extern u16 D_006C8E56[];
 extern u16 D_006C8E5C[];
 
 void replay_playback_begin(void) {
+#ifndef DDPDOJ_PC
     extern void text_layer_clear(void);
     extern void stage_doors_clear(void);
     extern void text_palette_load(void);
     extern void replay_header_save(void);
+#endif
     u32 save_d0;
     u32 save_d1;
     u32 save_d2;
@@ -895,22 +923,24 @@ extern u8 g_replay_snapshot[];
 extern u8 D_006C68B6[];
 extern u8 D_006C6918[];
 extern s32 D_006C8E88[];
-extern u16 D_006C8E90[];
+extern u16 replay_playback_start_buffer[];
 extern u16 D_006C8E94[];
-extern u16 D_006C91A0[];
+extern u16 replay_playback_start_buffer_2[];
 extern u8 D_006C91AC[];
 extern u8 D_006C91AD[];
 extern u8 D_006C91AE[];
 extern u8 D_006C91AF[];
-extern u8 D_006C91B0[];
+extern u8 replay_playback_start_buffer_3[];
 
 void replay_playback_start(void) {
+#ifndef DDPDOJ_PC
     s32 enemies_stop();
     s32 enemies_resume();
     s32 stage_doors_open_request();
     s32 stage_doors_open_requested_check();
     s32 stage_doors_update();
     s32 music_play_bgm2();
+#endif
     s32 base;
     u32 save_d0;
     u32 save_d1;
@@ -989,7 +1019,7 @@ void replay_playback_start(void) {
         g_setting_ship_stock = D_006C91AE[0];
         g_setting_extend = D_006C91AD[0];
         D_0028E2EC = D_006C91AF[0];
-        D_0028E304 = D_006C91B0[0];
+        D_0028E304 = replay_playback_start_buffer_3[0];
         D_0028E2E4 = D_006C58C4[0];
         replay_header_apply();
         enemies_stop();
@@ -1043,10 +1073,10 @@ void replay_playback_start(void) {
                 g_frame_mod2 = 0;
                 g_frame_mod16 = 0xA;
                 g_frame_mod3 = 0;
-                base = D_006C91A0[0] - 0x11A;
+                base = replay_playback_start_buffer_2[0] - 0x11A;
                 g_play_time = D_006C8E88[0] - base + 1;
             }
-            if ((g_scroll_line == D_006C8E90[0]) && (g_scroll_line_offset == D_006C8E94[0])) {
+            if ((g_scroll_line == replay_playback_start_buffer[0]) && (g_scroll_line_offset == D_006C8E94[0])) {
                 g_score_task_active = 1;
                 g_replay_begin_pending = 1;
                 step = 0xC8;
@@ -1101,10 +1131,12 @@ void replay_playback_start(void) {
 extern s8 D_0028E3F8;
 
 void replay_run_begin(void) {
+#ifndef DDPDOJ_PC
     s32 text_layer_clear();
     s32 stage_doors_clear();
     s32 text_palette_load();
     s32 replay_header_save();
+#endif
     u32 save_d0;
     u32 save_d1;
     u32 save_d2;
@@ -1179,12 +1211,14 @@ extern u8 g_simulation_boss_start;
 extern u8 D_0028E2D4;
 
 void replay_run_start(void) {
+#ifndef DDPDOJ_PC
     extern void enemies_stop(void);
     extern void enemies_resume(void);
     extern void stage_doors_open_request(void);
     extern void stage_doors_open_requested_check(void);
     extern void stage_doors_update(void);
     extern void music_play_bgm2(void);
+#endif
     u32 save_d0;
     u32 save_d1;
     u32 save_d2;
@@ -1424,7 +1458,7 @@ u8 D_0028DE44[4] = {
     0x02, 0x04, 0x06, 0x00,
 };
 
-u8 D_0028DE48[8] = {
+u8 attract_step_game_start_table[8] = {
     0x00, 0x02, 0x04, 0x06, 0x08, 0x00, 0x00, 0x00,
 };
 
@@ -1453,9 +1487,9 @@ s32 g_replay_checksum;
 ReplayHeader g_replay_header;
 ReplayHeader g_replay_header_saved;
 u16 D_006CB580[54024];
-u8 D_006C91B0[9168];
-u16 D_006C91A0[8];
-u16 D_006C8E90[392];
+u8 replay_playback_start_buffer_3[9168];
+u16 replay_playback_start_buffer_2[8];
+u16 replay_playback_start_buffer[392];
 u8 g_replay_snapshot[12784];
 u16 D_006C58D0[488];
 u8 g_replay_file[48];

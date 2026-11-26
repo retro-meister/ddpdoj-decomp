@@ -1,9 +1,18 @@
 #include "common.h"
+
+#ifdef DDPDOJ_PC
+#include "pc_frontend_abi.h"
+#endif
 void credit_display_changed_check_coins(void);
 void credit_display_changed_check_side(void);
 void credit_display_changed_check_side_coins(u8 arg0);
+#ifdef DDPDOJ_PC
+void credit_display_changed(void);
+void credit_display_unchanged(void);
+#else
 void credit_display_changed();
 void credit_display_unchanged();
+#endif
 void p1_continue_discount_reset(void);
 void p2_continue_discount_reset(void);
 void p1_credit_spend(void);
@@ -13,8 +22,8 @@ void credit_spend_refuse(void);
 void coin_slots_clear(void);
 void free_play_text_print_at(void);
 
-extern u8 D_0024F340[];
-extern u8 D_0024F360[];
+extern u8 coin_init_table[];
+extern u8 coin_init_table_2[];
 extern u8 D_0028E1D0;
 extern u8 D_0028E1D4;
 extern u8 D_0028E1D8[];
@@ -34,19 +43,19 @@ extern u8 D_0028E204;
 extern u8 D_0028E208;
 extern u8 D_0028E20C;
 extern u8 D_0028E210;
-extern s16 D_0028E214;
+extern s16 coin_init_state;
 extern u8 g_setting_coin_mode;
 
 void coin_init(void) {
     s8 temp_v1;
 
-    reg_a0 = D_0024F340;
+    reg_a0 = coin_init_table;
     reg_d0.w = 0;
     ((s8 *)D_0028E1E4)[0] = 0;
     ((s8 *)D_0028E1E6)[0] = 0;
     reg_d0.b[0] = g_setting_coin_mode;
     ((s8 *)D_0028E1D8)[0] = 0;
-    D_0028E214 = 0;
+    coin_init_state = 0;
     D_0028E210 = 0;
     D_0028E20C = 0;
     D_0028E208 = 0;
@@ -62,7 +71,7 @@ void coin_init(void) {
     D_0028E1D4 = 0;
     D_0028E1D0 = 0;
     temp_v1 = *(s8 *)(reg_a0 + reg_d0.h[0]);
-    reg_a0 = D_0024F360;
+    reg_a0 = coin_init_table_2;
     D_0028E1EC = temp_v1;
     D_0028E1E8 = *(s8 *)(reg_a0 + reg_d0.h[0]);
     p1_continue_discount_reset();
@@ -107,7 +116,9 @@ extern u8 D_0028E1D8[];
 extern u8 g_setting_chute_type;
 
 void credit_display_changed_check_side(void) {
+#ifndef DDPDOJ_PC
     extern void credit_display_changed(u8);
+#endif
     reg_d0.b[0] = D_0028E1E4[0];
     if (g_setting_chute_type == 1) {
         reg_d0.b[0] = D_0028E1D8[0];
@@ -118,26 +129,40 @@ void credit_display_changed_check_side(void) {
         return;
     }
     D_0028E1D4 = reg_d0.b[0];
+#ifdef DDPDOJ_PC
+    credit_display_changed();
+#else
     credit_display_changed(D_0028E1E4[0]);
+#endif
 }
 
 extern u8 D_0028E1D0;
 extern u8 D_0028E1DA[];
 
 void credit_display_changed_check_side_coins(u8 arg0) {
+#ifndef DDPDOJ_PC
     extern void credit_display_unchanged(u8);
     extern void credit_display_changed(u8);
+#endif
     reg_d0.b[0] = D_0028E1E6[0];
     if (g_setting_chute_type == 1) {
         reg_d0.b[0] = D_0028E1DA[0];
     }
     reg_d1.b[0] = D_0028E1D0;
     if (reg_d0.h[0] == reg_d1.h[0]) {
+#ifdef DDPDOJ_PC
+        credit_display_unchanged();
+#else
         credit_display_unchanged(D_0028E1E6[0]);
+#endif
         return;
     }
     D_0028E1D0 = reg_d0.b[0];
+#ifdef DDPDOJ_PC
+    credit_display_changed();
+#else
     credit_display_changed(D_0028E1E6[0]);
+#endif
 }
 
 
@@ -547,17 +572,17 @@ next_5:
     reg_a6 = sa6;
 }
 
-extern u16 D_0028E1C4[];
-extern u16 D_0028E1CC[];
+extern u16 coin_slots_take_buffer[];
+extern u16 coin_slots_take_buffer_2[];
 
 void coin_slots_take(void) {
     reg_d1.w = 0;
-    if (D_0028E1CC[0] == 0x80) {
-        D_0028E1CC[0] = 0;
+    if (coin_slots_take_buffer_2[0] == 0x80) {
+        coin_slots_take_buffer_2[0] = 0;
         reg_d1.h[0] |= 1;
     }
-    if (D_0028E1C4[0] == 0x80) {
-        D_0028E1C4[0] = 0;
+    if (coin_slots_take_buffer[0] == 0x80) {
+        coin_slots_take_buffer[0] = 0;
         reg_d1.h[0] |= 2;
     }
 }
@@ -568,7 +593,7 @@ extern u16 D_0028E1F4;
 extern u16 D_0028E1F8;
 extern u8 D_0028E20C;
 extern u8 D_0028E210;
-extern u16 D_0028E224;
+extern u16 coin_inputs_update_state;
 
 void coin_inputs_update(void) {
     if (g_stage_load_state != 0) return;
@@ -612,7 +637,7 @@ void coin_inputs_update(void) {
             D_0028E204 += 1;
         }
     }
-    reg_a0 = (u8 *)&D_0028E224;
+    reg_a0 = (u8 *)&coin_inputs_update_state;
     if (D_0028E210 == 0) {
         coin_counter_pulses_take();
         if (cond_flag != 0) {
@@ -677,7 +702,9 @@ void text_layer_put_hex_digit(void) {
 extern char coin_text_free_play[];
 
 void free_play_text_print(void) {
+#ifndef DDPDOJ_PC
     extern void text_layer_print(void);
+#endif
     reg_d0.h[0] = 10;
     reg_d1.h[0] = 3;
     reg_a0 = (u8 *)coin_text_free_play;
@@ -705,7 +732,9 @@ void free_play_text_print_p2(void) {
 
 #ifndef DEATH_LABEL
 void free_play_text_print_at(void) {
+#ifndef DDPDOJ_PC
     extern void text_layer_print(void);
+#endif
     reg_d2.sh[0] = 0;
     reg_a0 = (u8 *)coin_text_free_play;
     text_layer_print();
@@ -716,7 +745,9 @@ void free_play_text_print_at(void) {
 extern s32 coin_text_coins;
 
 void coins_text_print(void) {
+#ifndef DDPDOJ_PC
     s32 text_layer_print();
+#endif
     reg_d0.h[0] = 0xB;
     reg_d1.h[0] = 3;
     reg_a0 = &(*(u8 *)&coin_text_coins);
@@ -733,7 +764,9 @@ void coins_text_print(void) {
 extern s32 coin_text_coins;
 
 void coins_text_print_p1(void) {
+#ifndef DDPDOJ_PC
     s32 text_layer_print();
+#endif
     reg_d0.h[0] = 4;
     reg_d1.h[0] = 3;
     reg_a0 = (u8 *)(&coin_text_coins);
@@ -747,7 +780,9 @@ void coins_text_print_p1(void) {
 
 #ifndef DEATH_LABEL
 void coins_text_print_p2(void) {
+#ifndef DDPDOJ_PC
     s32 text_layer_print();
+#endif
     reg_d0.h[0] = 0x12;
     reg_d1.h[0] = 3;
     reg_a0 = (u8 *)(&coin_text_coins);
@@ -763,7 +798,9 @@ void coins_text_print_p2(void) {
 extern u8 coin_text_credits_with_coins[];
 
 void credits_with_coins_text_print(void) {
+#ifndef DDPDOJ_PC
     s32 text_layer_print();
+#endif
     reg_d0.h[0] = 7;
     reg_d1.h[0] = 3;
     reg_d2.h[0] = 0;
@@ -787,7 +824,9 @@ extern s32 coin_text_credits_short;
 extern s32 coin_text_coins_frame;
 
 void credits_with_coins_text_print_p1(void) {
+#ifndef DDPDOJ_PC
     s32 text_layer_print();
+#endif
     reg_d0.h[0] = 3;
     reg_d1.h[0] = 4;
     reg_a0 = (u8 *)(&coin_text_credits_short);
@@ -810,7 +849,9 @@ void credits_with_coins_text_print_p1(void) {
 
 #ifndef DEATH_LABEL
 void credits_with_coins_text_print_p2(void) {
+#ifndef DDPDOJ_PC
     s32 text_layer_print();
+#endif
     reg_d0.h[0] = 0x11;
     reg_d1.h[0] = 4;
     reg_a0 = (u8 *)(&coin_text_credits_short);
@@ -835,7 +876,9 @@ void credits_with_coins_text_print_p2(void) {
 extern s32 coin_text_credits[];
 
 void credits_text_print(void) {
+#ifndef DDPDOJ_PC
     s32 text_layer_print();
+#endif
     reg_d0.h[0] = 0xA;
     reg_d1.h[0] = 3;
     reg_d2.h[0] = 0;
@@ -849,7 +892,9 @@ void credits_text_print(void) {
 
 #ifndef DEATH_LABEL
 void credits_text_print_p1(void) {
+#ifndef DDPDOJ_PC
     s32 text_layer_print();
+#endif
     reg_d0.h[0] = 3;
     reg_a0 = (u8 *)coin_text_credits;
     reg_d1.h[0] = 3;
@@ -863,7 +908,9 @@ void credits_text_print_p1(void) {
 
 #ifndef DEATH_LABEL
 void credits_text_print_p2(void) {
+#ifndef DDPDOJ_PC
     s32 text_layer_print();
+#endif
     reg_d0.h[0] = 0x11;
     reg_d1.h[0] = 3;
     reg_d2.h[0] = 0;

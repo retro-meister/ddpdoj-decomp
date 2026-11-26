@@ -451,20 +451,20 @@ void stage5_midboss5_first(void) {
 s32 enemy_set_task_state();
 s32 enemy_init_entities();
 s32 sprite_palette_load();
-extern u8 D_00260470[];
-extern u8 D_002604B0[];
-extern u8 D_002604F0[];
-extern u8 D_002661C8[];
-extern u8 D_002661E0[];
+extern u8 stage5_midboss5_start_table[];
+extern u8 stage5_midboss5_start_table_2[];
+extern u8 stage5_midboss5_start_table_3[];
+extern u8 stage5_midboss5_start_table_4[];
+extern u8 stage5_midboss5_start_table_5[];
 extern u16 g_enemy_signal_4;
 extern u16 g_enemy_signal_3;
 extern s16 g_bullet_limit_raised_1[];
 extern u16 g_side_scroll_x[];
 
 void stage5_midboss5_start(void) {
-    reg_a0 = (u8 *)D_002661E0;
+    reg_a0 = (u8 *)stage5_midboss5_start_table_5;
     enemy_init_entities();
-    reg_a0 = (u8 *)D_002661C8;
+    reg_a0 = (u8 *)stage5_midboss5_start_table_4;
     reg_d0.h[0] = 5;
     enemy_set_task_state();
     reg_tmp.w = 0xF4001C00;
@@ -476,13 +476,13 @@ void stage5_midboss5_start(void) {
     g_enemy_signal_3 = 1;
     g_enemy_signal_4 = 1;
     reg_d0.h[0] = 0x12;
-    reg_a0 = (u8 *)D_00260470;
+    reg_a0 = (u8 *)stage5_midboss5_start_table;
     sprite_palette_load();
     reg_d0.h[0] = 0x13;
-    reg_a0 = (u8 *)D_002604B0;
+    reg_a0 = (u8 *)stage5_midboss5_start_table_2;
     sprite_palette_load();
     reg_d0.h[0] = 0x14;
-    reg_a0 = (u8 *)D_002604F0;
+    reg_a0 = (u8 *)stage5_midboss5_start_table_3;
     sprite_palette_load();
 }
 
@@ -747,7 +747,7 @@ void stage5_midboss5_move_arrive(void) {
     }
 }
 
-extern u8 D_0028DA58[8];
+extern u8 stage5_midboss5_move_between_points_table[8];
 
 void stage5_midboss5_move_between_points() {
     if (STAGE5_MIDBOSS5_MOVE(reg_a6)->step == 0) {
@@ -758,7 +758,7 @@ void stage5_midboss5_move_between_points() {
         stage5_midboss5_small_launchers_start();
         stage5_midboss5_large_launchers_start();
     }
-    reg_a0 = D_0028DA58;
+    reg_a0 = stage5_midboss5_move_between_points_table;
     reg_a0 += STAGE5_MIDBOSS5_MOVE(reg_a6)->point;
     reg_d2.h[0] = *(u16 *)reg_a0;
     reg_d3.h[0] = *(u16 *)(reg_a0 + 2);
@@ -1280,8 +1280,8 @@ s32 rng_next();
 s32 bullet_cancel_with_flags();
 s32 vibration_start_pad1();
 s32 vibration_start_pad2();
-extern u16 D_00266290[];
-extern u16 D_002662E0[];
+extern u16 stage5_midboss5_dying_table[];
+extern u16 stage5_midboss5_dying_table_2[];
 
 void stage5_midboss5_dying(void) {
     u16 temp_a0_2;
@@ -1302,7 +1302,7 @@ void stage5_midboss5_dying(void) {
             if (STAGE5_MIDBOSS5_DAMAGE(reg_a6)->blast_timer.b.countdown == 0) {
                 reg_d2.h[1] = ENTITY(reg_a6)->y.h;
                 reg_d2.h[0] = ENTITY(reg_a6)->x.h;
-                reg_a1 = (u8 *)(D_002662E0);
+                reg_a1 = (u8 *)(stage5_midboss5_dying_table_2);
                 midboss_explode_by_table();
                 rng_next();
                 reg_d0.b[0] = (s8) reg_d0.b[0] * 2;
@@ -1339,7 +1339,7 @@ void stage5_midboss5_dying(void) {
             if ((s32) reg_tmp.b[0] <= 0) {
                 STAGE5_MIDBOSS5_DAMAGE(reg_a6)->blast_timer.b.countdown = (u8) STAGE5_MIDBOSS5_DAMAGE(reg_a6)->blast_timer.b.interval;
                 sfx_explosion_air_medium();
-                reg_a1 = (u8 *)(D_00266290);
+                reg_a1 = (u8 *)(stage5_midboss5_dying_table);
                 reg_a1 += STAGE5_MIDBOSS5_DAMAGE(reg_a6)->blast;
                 reg_d1.h[0] = *(u16 *)reg_a1;
                 reg_a1 += 2;
@@ -1388,18 +1388,18 @@ void stage5_midboss5_small_missile_first(void) {
     enemy_set_entity_count(0);
 }
 
-extern u8 D_00266340[];
-extern u8 D_0028DA38[8];
+extern u8 stage5_midboss5_small_missile_start_table[];
+extern u8 stage5_midboss5_small_missile_start_table_2[8];
 
 void stage5_midboss5_small_missile_start() {
     u16 temp_a1;
 
-    reg_a0 = D_00266340;
+    reg_a0 = stage5_midboss5_small_missile_start_table;
     enemy_init_entities();
     ENTITY(reg_a6)->y.h = (u16) STAGE5_MIDBOSS5_MISSILE(reg_a5)->at_start.y;
     temp_a1 = STAGE5_MIDBOSS5_MISSILE(reg_a5)->at_start.x;
     ENTITY(reg_a6)->x.h = temp_a1;
-    reg_a0 = D_0028DA38;
+    reg_a0 = stage5_midboss5_small_missile_start_table_2;
     reg_d0.h[0] = 1;
     enemy_set_task_state();
 }
@@ -1452,18 +1452,18 @@ void stage5_midboss5_small_blast_first(void) {
     enemy_set_entity_count(0);
 }
 
-extern u8 D_00266360[];
-extern u8 D_0028DA40[8];
+extern u8 stage5_midboss5_small_blast_start_table[];
+extern u8 stage5_midboss5_small_blast_start_table_2[8];
 
 void stage5_midboss5_small_blast_start() {
     u16 temp_a1;
 
-    reg_a0 = D_00266360;
+    reg_a0 = stage5_midboss5_small_blast_start_table;
     enemy_init_entities();
     ENTITY(reg_a6)->y.h = (u16) STAGE5_MIDBOSS5_BLAST(reg_a5)->at_start.y;
     temp_a1 = STAGE5_MIDBOSS5_BLAST(reg_a5)->at_start.x;
     ENTITY(reg_a6)->x.h = temp_a1;
-    reg_a0 = D_0028DA40;
+    reg_a0 = stage5_midboss5_small_blast_start_table_2;
     reg_d0.h[0] = 2;
     enemy_set_task_state();
 }
@@ -1471,7 +1471,7 @@ void stage5_midboss5_small_blast_start() {
 s32 sprite_draw_layer5_zoom();
 s32 sprite_draw_with_bullets_zoom();
 s32 entity_check_bounds();
-extern u8 D_00266380[];
+extern u8 stage5_midboss5_small_blast_table[];
 extern u16 g_frame_mod4;
 
 void stage5_midboss5_small_blast(void) {
@@ -1527,7 +1527,7 @@ move:
         }
         reg_a0 = reg_a6;
         enemy_hitbox_debug_draw();
-        reg_a0 = (u8 *)D_00266380;
+        reg_a0 = (u8 *)stage5_midboss5_small_blast_table;
         reg_a0 += STAGE5_MIDBOSS5_BLAST(reg_a5)->now.frame;
         reg_d2.h[1] = *(u16 *)reg_a0;
         reg_d2.h[0] = *(u16 *)(reg_a0 + 2);
@@ -1553,18 +1553,18 @@ void stage5_midboss5_large_missile_first(void) {
     enemy_set_entity_count(0);
 }
 
-extern u8 D_002663C0[];
-extern u8 D_0028DA48[8];
+extern u8 stage5_midboss5_large_missile_start_table[];
+extern u8 stage5_midboss5_large_missile_start_table_2[8];
 
 void stage5_midboss5_large_missile_start() {
     u16 temp_a1;
 
-    reg_a0 = D_002663C0;
+    reg_a0 = stage5_midboss5_large_missile_start_table;
     enemy_init_entities();
     ENTITY(reg_a6)->y.h = (u16) STAGE5_MIDBOSS5_MISSILE(reg_a5)->at_start.y;
     temp_a1 = STAGE5_MIDBOSS5_MISSILE(reg_a5)->at_start.x;
     ENTITY(reg_a6)->x.h = temp_a1;
-    reg_a0 = D_0028DA48;
+    reg_a0 = stage5_midboss5_large_missile_start_table_2;
     reg_d0.h[0] = 1;
     enemy_set_task_state();
 }
@@ -1625,23 +1625,23 @@ void stage5_midboss5_large_blast_first(void) {
     enemy_set_entity_count(0);
 }
 
-extern u8 D_002663E0[];
-extern u8 D_0028DA50[8];
+extern u8 stage5_midboss5_large_blast_start_table[];
+extern u8 stage5_midboss5_large_blast_start_table_2[8];
 
 void stage5_midboss5_large_blast_start() {
     u16 temp_a1;
 
-    reg_a0 = D_002663E0;
+    reg_a0 = stage5_midboss5_large_blast_start_table;
     enemy_init_entities();
     ENTITY(reg_a6)->y.h = (u16) STAGE5_MIDBOSS5_BLAST(reg_a5)->at_start.y;
     temp_a1 = STAGE5_MIDBOSS5_BLAST(reg_a5)->at_start.x;
     ENTITY(reg_a6)->x.h = temp_a1;
-    reg_a0 = D_0028DA50;
+    reg_a0 = stage5_midboss5_large_blast_start_table_2;
     reg_d0.h[0] = 2;
     enemy_set_task_state();
 }
 
-extern u8 D_00266400[];
+extern u8 stage5_midboss5_large_blast_table[];
 
 void stage5_midboss5_large_blast(void) {
     s32 enemy_remove();
@@ -1701,7 +1701,7 @@ move:
         }
         reg_a0 = reg_a6;
         enemy_hitbox_debug_draw();
-        reg_a0 = (u8 *)D_00266400;
+        reg_a0 = (u8 *)stage5_midboss5_large_blast_table;
         reg_a0 += STAGE5_MIDBOSS5_BLAST(reg_a5)->now.frame;
         reg_d2.h[1] = *(u16 *)reg_a0;
         reg_d2.h[0] = *(u16 *)(reg_a0 + 2);
@@ -1727,19 +1727,19 @@ void stage5_midboss5_drone_first(void) {
     enemy_set_entity_count(0);
 }
 
-extern u8 D_00266440[];
-extern u8 D_00266460[];
+extern u8 stage5_midboss5_drone_start_table[];
+extern u8 stage5_midboss5_drone_start_table_2[];
 
 void stage5_midboss5_drone_start() {
     u8 temp_a1;
 
-    reg_a0 = D_00266460;
+    reg_a0 = stage5_midboss5_drone_start_table_2;
     enemy_init_entities();
     ENTITY(reg_a6)->y.h = (u16) STAGE5_MIDBOSS5_DRONE(reg_a5)->at_start.y;
     ENTITY(reg_a6)->x.h = (u16) STAGE5_MIDBOSS5_DRONE(reg_a5)->at_start.x;
     temp_a1 = STAGE5_MIDBOSS5_DRONE(reg_a5)->at_start.direction;
     ENTITY(reg_a6)->move.b.dir = temp_a1;
-    reg_a0 = D_00266440;
+    reg_a0 = stage5_midboss5_drone_start_table;
     reg_d0.h[0] = 8;
     enemy_set_task_state();
 }
@@ -1941,14 +1941,14 @@ void stage5_midboss5_drone_draw_flying(void) {
     }
 }
 
-extern u8 D_002664A0[];
+extern u8 stage5_midboss5_drone_draw_animated_table[];
 
 void stage5_midboss5_drone_draw_animated(void) {
     u16 temp_a0;
 
     if (STAGE5_MIDBOSS5_DRONE(reg_a5)->now.animated != 0) {
         reg_d1.w = 0;
-        reg_a0 = (u8 *)D_002664A0;
+        reg_a0 = (u8 *)stage5_midboss5_drone_draw_animated_table;
         reg_d1.b[0] = ENTITY(reg_a6)->move.b.dir;
         reg_d1.h[0] &= 0x3E;
         reg_d1.h[0] *= 8;
@@ -1977,19 +1977,19 @@ void stage5_midboss5_spin_drone_first(void) {
 }
 
 s32 direction_to_target_player();
-extern u8 D_002666A0[];
-extern u8 D_002666B0[];
+extern u8 stage5_midboss5_spin_drone_start_table[];
+extern u8 stage5_midboss5_spin_drone_start_table_2[];
 
 void stage5_midboss5_spin_drone_start() {
     u8 temp_a1;
 
-    reg_a0 = D_002666B0;
+    reg_a0 = stage5_midboss5_spin_drone_start_table_2;
     enemy_init_entities();
     ENTITY(reg_a6)->y.h = (u16) STAGE5_MIDBOSS5_SPIN_DRONE(reg_a5)->at_start.y;
     ENTITY(reg_a6)->x.h = (u16) STAGE5_MIDBOSS5_SPIN_DRONE(reg_a5)->at_start.x;
     temp_a1 = STAGE5_MIDBOSS5_SPIN_DRONE(reg_a5)->at_start.direction;
     ENTITY(reg_a6)->move.b.dir = temp_a1;
-    reg_a0 = D_002666A0;
+    reg_a0 = stage5_midboss5_spin_drone_start_table;
     reg_d0.h[0] = 7;
     enemy_set_task_state();
     reg_d1.w = 0;
@@ -2102,11 +2102,11 @@ void bullet_fire_fast_in_arc(void)
     reg_d0.w = savedD0;
 }
 
-u8 D_002661C8[14] = {
+u8 stage5_midboss5_start_table_4[14] = {
     0x00, 0x00, 0x00, 0x00, 0x01, 0x00, 0x00, 0x20, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00,
 };
 
-u8 D_002661E0[144] = {
+u8 stage5_midboss5_start_table_5[144] = {
     0x00, 0x80, 0x01, 0x10, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x10, 0x00, 0x0B,
     0x00, 0x0E, 0x00, 0x0E, 0xFF, 0x7F, 0x00, 0x08, 0x12, 0x00, 0x00, 0x00, 0x00, 0x80, 0x00, 0x00,
     0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00,
@@ -2123,7 +2123,7 @@ u8 D_00266270[32] = {
     0xA0, 0x02, 0xE0, 0x00, 0x60, 0x03, 0xA0, 0xFF, 0x00, 0x04, 0x80, 0xFE, 0x60, 0x04, 0x60, 0xFD,
 };
 
-u16 D_00266290[40] = {
+u16 stage5_midboss5_dying_table[40] = {
     0x0000, 0x0008, 0x0000, 0x0800, 0x0400, 0x0000, 0x0000, 0x0085,
     0x0000, 0x0000, 0x0200, 0x0000, 0x0000, 0x008D, 0x0000, 0xF800,
     0x0000, 0x0000, 0x0000, 0x0008, 0x0040, 0xF000, 0xFC00, 0x0000,
@@ -2131,7 +2131,7 @@ u16 D_00266290[40] = {
     0x0000, 0xE800, 0x0800, 0x0000, 0xFFFF, 0x0000, 0x0000, 0x0000,
 };
 
-u16 D_002662E0[40] = {
+u16 stage5_midboss5_dying_table_2[40] = {
     0x0002, 0x0008, 0x0000, 0x0800, 0x0400, 0x0000, 0x0004, 0x0085,
     0x0000, 0x0000, 0x0200, 0x0000, 0x0000, 0x008D, 0x0000, 0xF800,
     0x0000, 0x0000, 0x0006, 0x0008, 0x0040, 0xF000, 0xFC00, 0x0000,
@@ -2143,46 +2143,46 @@ u8 D_00266330[16] = {
     0x01, 0x00, 0x00, 0x00, 0x80, 0x04, 0x03, 0x00, 0x04, 0x00, 0x1F, 0x00, 0x09, 0x00, 0x00, 0x00,
 };
 
-u8 D_00266340[32] = {
+u8 stage5_midboss5_small_missile_start_table[32] = {
     0x01, 0x80, 0x01, 0x10, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x06, 0x00, 0x06,
     0x80, 0x01, 0x80, 0x01, 0xFF, 0x7F, 0x20, 0x0A, 0x12, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00,
 };
 
-u8 D_00266360[32] = {
+u8 stage5_midboss5_small_blast_start_table[32] = {
     0x01, 0x80, 0x01, 0x10, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x04, 0x00, 0x04,
     0x80, 0x02, 0x80, 0x02, 0xFF, 0x7F, 0x00, 0x10, 0x14, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00,
 };
 
-u8 D_00266380[64] = {
+u8 stage5_midboss5_small_blast_table[64] = {
     0x00, 0x00, 0xDF, 0x1E, 0x00, 0x00, 0xE0, 0x1E, 0x00, 0x00, 0xE1, 0x1E, 0x00, 0x00, 0xE2, 0x1E,
     0x00, 0x00, 0xE3, 0x1E, 0x00, 0x00, 0xE4, 0x1E, 0x00, 0x00, 0xE5, 0x1E, 0x00, 0x00, 0xE6, 0x1E,
     0x00, 0x00, 0xE7, 0x1E, 0x00, 0x00, 0xE8, 0x1E, 0x00, 0x00, 0xE9, 0x1E, 0x00, 0x00, 0xEA, 0x1E,
     0x00, 0x00, 0xEB, 0x1E, 0x00, 0x00, 0xEC, 0x1E, 0x00, 0x00, 0xED, 0x1E, 0x00, 0x00, 0xEE, 0x1E,
 };
 
-u8 D_002663C0[32] = {
+u8 stage5_midboss5_large_missile_start_table[32] = {
     0x01, 0x80, 0x01, 0x10, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x08, 0x00, 0x08,
     0x00, 0x02, 0x00, 0x02, 0xFF, 0x7F, 0x20, 0x08, 0x12, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00,
 };
 
-u8 D_002663E0[32] = {
+u8 stage5_midboss5_large_blast_start_table[32] = {
     0x00, 0x80, 0x01, 0x10, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x04, 0x00, 0x04,
     0x00, 0x04, 0x00, 0x04, 0xFF, 0x7F, 0x00, 0x18, 0x14, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00,
 };
 
-u8 D_00266400[64] = {
+u8 stage5_midboss5_large_blast_table[64] = {
     0x00, 0x00, 0xD1, 0x1E, 0x00, 0x00, 0xD2, 0x1E, 0x00, 0x00, 0xD3, 0x1E, 0x00, 0x00, 0xD4, 0x1E,
     0x00, 0x00, 0xD5, 0x1E, 0x00, 0x00, 0xD6, 0x1E, 0x00, 0x00, 0xD7, 0x1E, 0x00, 0x00, 0xD8, 0x1E,
     0x00, 0x00, 0xD9, 0x1E, 0x00, 0x00, 0xDA, 0x1E, 0x00, 0x00, 0xDB, 0x1E, 0x00, 0x00, 0xDC, 0x1E,
     0x00, 0x00, 0xDD, 0x1E, 0x00, 0x00, 0xDE, 0x1E, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00,
 };
 
-u8 D_00266440[32] = {
+u8 stage5_midboss5_drone_start_table[32] = {
     0x00, 0x00, 0x09, 0x00, 0x00, 0x00, 0xE0, 0x01, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00,
     0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00,
 };
 
-u8 D_00266460[32] = {
+u8 stage5_midboss5_drone_start_table_2[32] = {
     0x01, 0xA0, 0x01, 0x10, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x02, 0x00, 0x02,
     0x00, 0x02, 0x00, 0x02, 0x00, 0x02, 0x20, 0x20, 0x13, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00,
 };
@@ -2192,7 +2192,7 @@ u8 D_00266480[32] = {
     0x00, 0x00, 0x99, 0x1E, 0x00, 0x00, 0x9A, 0x1E, 0x00, 0x00, 0x9B, 0x1E, 0x00, 0x00, 0x9C, 0x1E,
 };
 
-u8 D_002664A0[512] = {
+u8 stage5_midboss5_drone_draw_animated_table[512] = {
     0x00, 0x00, 0x9D, 0x1E, 0x00, 0x00, 0xAE, 0x1E, 0x00, 0x00, 0xBF, 0x1E, 0x00, 0x00, 0x00, 0x00,
     0x00, 0x00, 0x9E, 0x1E, 0x00, 0x00, 0xAF, 0x1E, 0x00, 0x00, 0xC0, 0x1E, 0x00, 0x00, 0x00, 0x00,
     0x00, 0x00, 0x9F, 0x1E, 0x00, 0x00, 0xB0, 0x1E, 0x00, 0x00, 0xC1, 0x1E, 0x00, 0x00, 0x00, 0x00,
@@ -2227,21 +2227,21 @@ u8 D_002664A0[512] = {
     0x00, 0x00, 0x9E, 0x1E, 0x00, 0x00, 0xAF, 0x1E, 0x00, 0x00, 0xC0, 0x1E, 0x00, 0x00, 0x40, 0x00,
 };
 
-u8 D_002666A0[16] = {
+u8 stage5_midboss5_spin_drone_start_table[16] = {
     0x00, 0x00, 0x02, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x03, 0x10, 0x08, 0x00,
 };
 
-u8 D_002666B0[32] = {
+u8 stage5_midboss5_spin_drone_start_table_2[32] = {
     0x01, 0xA0, 0x01, 0x10, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x02, 0x00, 0x02,
     0x00, 0x02, 0x00, 0x02, 0x00, 0x02, 0x00, 0x0C, 0x13, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00,
 };
 
-u8 D_0028DA38[8] = { 0x00, 0x00, 0x28, 0x00, 0x00, 0x00, 0x00, 0x00 };
+u8 stage5_midboss5_small_missile_start_table_2[8] = { 0x00, 0x00, 0x28, 0x00, 0x00, 0x00, 0x00, 0x00 };
 
-u8 D_0028DA40[8] = { 0x00, 0x00, 0x00, 0x00, 0x01, 0x01, 0x00, 0x00 };
+u8 stage5_midboss5_small_blast_start_table_2[8] = { 0x00, 0x00, 0x00, 0x00, 0x01, 0x01, 0x00, 0x00 };
 
-u8 D_0028DA48[8] = { 0x00, 0x00, 0x30, 0x00, 0x00, 0x00, 0x00, 0x00 };
+u8 stage5_midboss5_large_missile_start_table_2[8] = { 0x00, 0x00, 0x30, 0x00, 0x00, 0x00, 0x00, 0x00 };
 
-u8 D_0028DA50[8] = { 0x00, 0x00, 0x00, 0x00, 0x01, 0x01, 0x00, 0x00 };
+u8 stage5_midboss5_large_blast_start_table_2[8] = { 0x00, 0x00, 0x00, 0x00, 0x01, 0x01, 0x00, 0x00 };
 
-u8 D_0028DA58[8] = { 0x00, 0x50, 0x00, 0x2A, 0x00, 0x50, 0x00, 0x0E };
+u8 stage5_midboss5_move_between_points_table[8] = { 0x00, 0x50, 0x00, 0x2A, 0x00, 0x50, 0x00, 0x0E };

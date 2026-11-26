@@ -1,6 +1,9 @@
 #include "common.h"
 #include "sdk/ps2sdk.h"
 #include "pad.h"
+#ifdef DDPDOJ_PC
+#include <stddef.h>
+#endif
 
 /*
  * The unit's tables, in the order of the source: the order in which the text they mention lies in
@@ -360,10 +363,17 @@ void mc_frame_draw(void) {
 
 extern void menu_text_queue_plain(s32 x, s32 y, s32 value);
 
+#ifdef DDPDOJ_PC
+void mc_message_draw(s32 x, char *text, s32 unusedA2, s32 unusedA3,
+                     s32 unusedT0, s32 value, s32 unusedT2)
+{
+    u8 *saved_state_address = reg_a0;
+#else
 void mc_message_draw(s64 x, char *text, s32 unusedA2, s32 unusedA3,
                    s32 unusedT0, s32 value)
 {
     s32 saved_state_address = (s32)reg_a0;
+#endif
 
     reg_a0 = (u8 *)text;
     menu_text_queue_plain(0x1C0 - (s16)x, 0x18, value & 0xFFFF);
@@ -689,14 +699,20 @@ extern s32 D_0028ECB8;
 
 s32 mc_card_info_wait(s32 arg0) {
     s32 sceMcSync(s32, s32, s32 *);
+#ifndef DDPDOJ_PC
     s32 sceMcGetInfo(s32, s32, s32 *, u8 *, s32 *);
+#endif
     s32 result;
     s32 ret;
     s32 tries;
 
     tries = 0;
 retry:
+#ifdef DDPDOJ_PC
+    D_0028ECAC = sceMcGetInfo(g_mc_port, g_mc_slot, &D_0028ECB8, &D_0028ECB4, &D_0028ECB0);
+#else
     D_0028ECAC = sceMcGetInfo(g_mc_port, g_mc_slot, &D_0028ECB8, &(*(u8 *)&D_0028ECB4), &D_0028ECB0);
+#endif
     if (D_0028ECAC != 0) {
         sceGsSyncV(0);
         sceMcSync(0, 0, &result);
@@ -737,7 +753,9 @@ extern s32 D_0028ECD0;
 
 void mc_card_present_poll(s32 arg0) {
     s32 sceMcSync(s32 arg0, s32 arg1, s32 *arg2);
+#ifndef DDPDOJ_PC
     s32 sceMcGetInfo(s32 arg0, s32 arg1, s32 *arg2, s32 *arg3, s32 *arg4);
+#endif
     s32 result;
     s32 error;
 
@@ -795,7 +813,9 @@ void mc_card_present_poll(s32 arg0) {
 extern u8 D_0028ECE8;
 
 void mc_title_draw(void) {
+#ifndef DDPDOJ_PC
     void mc_message_draw(s32 x, char *text, s32 a, s32 b, s32 c, s32 d, s32 e);
+#endif
     if (g_mc_auto != 0) {
         mc_message_draw(0x64, g_mc_msg_title_auto[g_mc_operation], 0, 0x14, 0xE, (*(u16 *)&D_0028ED10), 0x64);
     } else {
@@ -903,10 +923,10 @@ extern u8 g_memcard_watch_delay;
 extern u8 D_0028ECE4;
 extern u8 g_mc_choice;
 extern u8 g_mc_wait;
-extern s8 D_0028ED38;
+extern s8 mc_state_reset_state;
 
 void mc_state_reset(void) {
-    D_0028ED38 = 0;
+    mc_state_reset_state = 0;
     D_0028ECE8 = 0;
     g_mc_choice = 1;
     g_mc_step = 0;
@@ -1586,7 +1606,9 @@ typedef struct {
 } NameSet;
 
 s32 sceMcWrite(s32 arg0, void *arg1, s32 arg2);
+#ifndef DDPDOJ_PC
 char *strcpy(u8 *dst, const char *src);
+#endif
 extern s32 g_mc_fd;
 extern u8 D_0068E1B0[];
 extern s16 D_0068E1B6[];
@@ -1605,7 +1627,9 @@ void mc_task_write_game(void) {
     s32 sceMcOpen(s32 arg0, s32 arg1, char *arg2, s32 arg3);
     s32 sceMcClose(s32 arg0);
     s32 sceMcSync(s32 arg0, s32 arg1, s32 *arg2);
+#ifndef DDPDOJ_PC
     extern void mc_message_draw(s32, char *, s32, s32, s32, u16, s32);
+#endif
     s32 result;
     NameSet names = { "icon1.ico", "icon1.ico", "icon1.ico" };
 
@@ -1894,7 +1918,9 @@ void mc_task_write_replay(void) {
     s32 sceMcOpen(s32 arg0, s32 arg1, char *arg2, s32 arg3);
     s32 sceMcClose(s32 arg0);
     s32 sceMcSync(s32 arg0, s32 arg1, s32 *arg2);
+#ifndef DDPDOJ_PC
     extern void mc_message_draw(s32, char *, s32, s32, s32, u16, s32);
+#endif
     s32 ret;
     s32 result;
     NameSet names = { "icon1.ico", "icon1.ico", "icon1.ico" };
@@ -2270,7 +2296,9 @@ void mc_task_write_replay(void) {
 
 
 void mc_task_save_continue_ask(void) {
+#ifndef DDPDOJ_PC
     extern void mc_message_draw(s32, char *, s32, s32, s32, u16, s32);
+#endif
     s32 diff;
     s32 step;
 
@@ -2418,7 +2446,7 @@ void mc_task_load_ask(void) {
     mc_choice_draw();
 }
 
-extern s32 D_0028EC90;
+extern s32 mc_task_load_check_card_state;
 extern s32 D_0069F590[];
 
 void mc_task_load_check_card(void) {
@@ -2533,7 +2561,7 @@ void mc_task_load_check_card(void) {
         }
         break;
     case 60:
-        D_0028EC90 = 0;
+        mc_task_load_check_card_state = 0;
         if (sceMcGetDir(g_mc_port, g_mc_slot, g_mc_file_paths[0], 0, 99, g_mc_dir) == 0) {
             g_mc_step += 1;
             break;
@@ -2546,7 +2574,7 @@ void mc_task_load_check_card(void) {
     case 61:
         if (sceMcSync(1, 0, &result) != 0) {
             if (result <= 0) {
-                D_0028EC90 += 1;
+                mc_task_load_check_card_state += 1;
             }
             g_mc_wait = 10;
             g_mc_step += 1;
@@ -2555,7 +2583,7 @@ void mc_task_load_check_card(void) {
     case 62:
         g_mc_wait = 180;
         g_mc_step = 0;
-        if (D_0028EC90 == 1) {
+        if (mc_task_load_check_card_state == 1) {
             g_mc_step = 66;
         } else {
             g_mc_task = 23;
@@ -2631,8 +2659,8 @@ void mc_task_load_check_card(void) {
     }
 }
 
-extern s32 D_0028EC94;
-extern s32 D_0028EC98;
+extern s32 mc_task_read_state;
+extern s32 mc_task_read_state_2;
 
 void mc_task_read(void) {
     s32 sceMcOpen(s32 arg0, s32 arg1, char * arg2, s32 arg3);
@@ -2647,8 +2675,8 @@ void mc_task_read(void) {
     case 0:
         D_0028ECC4 = 0;
         g_mc_step += 1;
-        D_0028EC98 = 0;
-        D_0028EC94 = 0x414;
+        mc_task_read_state_2 = 0;
+        mc_task_read_state = 0x414;
         D_0028ECE4 = 60;
         break;
     case 1:
@@ -3509,7 +3537,9 @@ void mc_replay_headers_read(void) {
 
 
 void mc_task_load_continue_ask(void) {
+#ifndef DDPDOJ_PC
     extern void mc_message_draw(s32, char *, s32, s32, s32, u16, s32);
+#endif
     s32 diff;
     s32 step;
 
@@ -3573,7 +3603,9 @@ void mc_task_load_continue_ask(void) {
 
 
 void mc_task_format_ask(void) {
+#ifndef DDPDOJ_PC
     extern void mc_message_draw(s32, char *, s32, s32, s32, u16, s32);
+#endif
     s32 diff;
     s32 step;
 
@@ -3676,8 +3708,10 @@ s32 sceMcFormat(s32 arg0, s32 arg1);
 
 void mc_task_format(void) {
     s32 sceMcSync(s32 arg0, s32 arg1, s32 *arg2);
+#ifndef DDPDOJ_PC
     s32 sceMcGetInfo(s32 arg0, s32 arg1, s32 *arg2, s32 *arg3, s32 *arg4);
     extern void mc_message_draw(s32, char *, s32, s32, s32, u16, s32);
+#endif
     s32 result;
 
     mc_title_draw();
@@ -3771,7 +3805,9 @@ void mc_task_format(void) {
 
 
 void mc_task_unformat_ask(void) {
+#ifndef DDPDOJ_PC
     extern void mc_message_draw(s32, char *, s32, s32, s32, u16, s32);
+#endif
     s32 diff;
     s32 step;
 
@@ -3847,7 +3883,9 @@ s32 sceMcUnformat(s32 arg0, s32 arg1);
 
 void mc_task_unformat(void) {
     s32 sceMcSync(s32 arg0, s32 arg1, s32 *arg2);
+#ifndef DDPDOJ_PC
     extern void mc_message_draw(s32, char *, s32, s32, s32, u16, s32);
+#endif
     s32 result;
     s32 status;
 
@@ -3909,17 +3947,19 @@ void mc_task_unformat(void) {
         break;
     }
 }
-extern s32 D_0028EC80;
-extern s32 D_0028EC84;
-extern s32 D_0028EC88;
-extern u8 D_0028EC8C;
-extern u8 D_0028EC8D;
-extern u8 D_0028EC8E;
-extern u8 D_0028EC8F;
+extern s32 mc_task_startup_check_state;
+extern s32 mc_task_startup_check_state_2;
+extern s32 mc_task_startup_check_state_3;
+extern u8 mc_task_startup_check_state_4;
+extern u8 mc_task_startup_check_state_5;
+extern u8 mc_task_startup_check_state_6;
+extern u8 mc_task_startup_check_state_7;
 extern u8 D_0028ECF4;
 
 void mc_task_startup_check(void) {
+#ifndef DDPDOJ_PC
     extern void mc_message_draw(s32, char *, s32, s32, s32, u16, s32);
+#endif
     s32 sceMcSync(s32, s32, s32 *);
     s32 sceMcGetDir(s32, s32, char *, s32, s32, void *);
     s32 result;
@@ -3939,7 +3979,7 @@ void mc_task_startup_check(void) {
     case 0:
         D_0028ECE4 = 60;
         g_mc_step += 1;
-        D_0028EC80 = 0;
+        mc_task_startup_check_state = 0;
         break;
     case 1:
         mc_checking_message_draw();
@@ -4036,13 +4076,13 @@ void mc_task_startup_check(void) {
         break;
     case 0x32:
         mc_checking_message_draw();
-        D_0028EC88 = 0;
-        D_0028EC8C = 0;
-        D_0028EC8D = 0;
-        D_0028EC8E = 0;
-        D_0028EC8F = 0;
-        D_0028EC80 = 0;
-        D_0028EC84 = 0;
+        mc_task_startup_check_state_3 = 0;
+        mc_task_startup_check_state_4 = 0;
+        mc_task_startup_check_state_5 = 0;
+        mc_task_startup_check_state_6 = 0;
+        mc_task_startup_check_state_7 = 0;
+        mc_task_startup_check_state = 0;
+        mc_task_startup_check_state_2 = 0;
         sceMcGetDir(g_mc_port, g_mc_slot, g_mc_dir_names[0], 0, 99, g_mc_dir);
         g_mc_step += 1;
         break;
@@ -4050,10 +4090,10 @@ void mc_task_startup_check(void) {
         mc_checking_message_draw();
         if (sceMcSync(1, 0, &result) != 0) {
             if (result <= 0) {
-                D_0028EC8D = 1;
-                D_0028EC88 += g_mc_needed_kilobytes[0];
+                mc_task_startup_check_state_5 = 1;
+                mc_task_startup_check_state_3 += g_mc_needed_kilobytes[0];
             } else {
-                D_0028EC80 = 1;
+                mc_task_startup_check_state = 1;
             }
             g_mc_step += 1;
         }
@@ -4067,7 +4107,7 @@ void mc_task_startup_check(void) {
         mc_checking_message_draw();
         if (sceMcSync(1, 0, &result) != 0) {
             if (result <= 0) {
-                D_0028EC84 += 1;
+                mc_task_startup_check_state_2 += 1;
             }
             g_mc_step += 1;
         }
@@ -4081,7 +4121,7 @@ void mc_task_startup_check(void) {
         mc_checking_message_draw();
         if (sceMcSync(1, 0, &result) != 0) {
             if (result <= 0) {
-                D_0028EC84 += 1;
+                mc_task_startup_check_state_2 += 1;
             }
             g_mc_step += 1;
         }
@@ -4095,7 +4135,7 @@ void mc_task_startup_check(void) {
         mc_checking_message_draw();
         if (sceMcSync(1, 0, &result) != 0) {
             if (result <= 0) {
-                D_0028EC84 += 1;
+                mc_task_startup_check_state_2 += 1;
             }
             g_mc_step += 1;
         }
@@ -4109,7 +4149,7 @@ void mc_task_startup_check(void) {
         mc_checking_message_draw();
         if (sceMcSync(1, 0, &result) != 0) {
             if (result <= 0) {
-                D_0028EC84 += 1;
+                mc_task_startup_check_state_2 += 1;
             }
             g_mc_step += 1;
         }
@@ -4123,7 +4163,7 @@ void mc_task_startup_check(void) {
         mc_checking_message_draw();
         if (sceMcSync(1, 0, &result) != 0) {
             if (result <= 0) {
-                D_0028EC84 += 1;
+                mc_task_startup_check_state_2 += 1;
             }
             g_mc_step += 1;
         }
@@ -4137,7 +4177,7 @@ void mc_task_startup_check(void) {
         mc_checking_message_draw();
         if (sceMcSync(1, 0, &result) != 0) {
             if (result <= 0) {
-                D_0028EC84 += 1;
+                mc_task_startup_check_state_2 += 1;
             }
             g_mc_step += 1;
         }
@@ -4151,7 +4191,7 @@ void mc_task_startup_check(void) {
         mc_checking_message_draw();
         if (sceMcSync(1, 0, &result) != 0) {
             if (result <= 0) {
-                D_0028EC84 += 1;
+                mc_task_startup_check_state_2 += 1;
             }
             g_mc_step += 1;
         }
@@ -4165,7 +4205,7 @@ void mc_task_startup_check(void) {
         mc_checking_message_draw();
         if (sceMcSync(1, 0, &result) != 0) {
             if (result <= 0) {
-                D_0028EC84 += 1;
+                mc_task_startup_check_state_2 += 1;
             }
             g_mc_step += 1;
         }
@@ -4179,7 +4219,7 @@ void mc_task_startup_check(void) {
         mc_checking_message_draw();
         if (sceMcSync(1, 0, &result) != 0) {
             if (result <= 0) {
-                D_0028EC84 += 1;
+                mc_task_startup_check_state_2 += 1;
             }
             g_mc_step += 1;
         }
@@ -4193,10 +4233,10 @@ void mc_task_startup_check(void) {
         mc_checking_message_draw();
         if (sceMcSync(1, 0, &result) != 0) {
             if (result <= 0) {
-                D_0028EC84 += 1;
+                mc_task_startup_check_state_2 += 1;
             }
-            printf("free[%d] size[%d] nasi[%d]\n", D_0028ECB4, D_0028EC88, D_0028EC84);
-            if ((D_0028EC88 != 0) && (D_0028ECB4 < D_0028EC88)) {
+            printf("free[%d] size[%d] nasi[%d]\n", D_0028ECB4, mc_task_startup_check_state_3, mc_task_startup_check_state_2);
+            if ((mc_task_startup_check_state_3 != 0) && (D_0028ECB4 < mc_task_startup_check_state_3)) {
                 D_0028ECF4 = 0;
                 g_mc_step = 0x50;
             } else {
@@ -4293,7 +4333,7 @@ void mc_task_startup_check(void) {
         if (D_0028ED10 == 0) {
             D_0028ED18 = 2;
             g_mc_step = 0;
-            if (D_0028EC80 != 0) {
+            if (mc_task_startup_check_state != 0) {
                 D_0028ECF4 |= 4;
             }
         }
@@ -4338,7 +4378,9 @@ void mc_task_startup_check(void) {
 
 
 void mc_task_no_system_data(void) {
+#ifndef DDPDOJ_PC
     extern void mc_message_draw(s32, char *, s32, s32, s32, u16, s32);
+#endif
     mc_title_draw();
     switch (g_mc_step) {
     case 0:
@@ -4457,7 +4499,9 @@ void memcard_watch_recheck(void) {
 
 void mc_confirm_button_draw(void)
 {
+#ifndef DDPDOJ_PC
     extern void mc_message_draw(s32, char *, s32, s32, s32, u16, s32);
+#endif
     s32 displayValue = (*(u16 *)&D_0028ED10);
     char *displayData = g_mc_msg_confirm_button;
 
@@ -4473,7 +4517,9 @@ void mc_text_draw_vertical(s16 x, s16 y, char *text, u16 page, u16 w, u16 h, u16
     overlay_queue_sjis_vertical(0x1C0 - y, x, text, page, w, h, alpha, depth);
 }
 
+#ifndef DDPDOJ_PC
 extern s32 sprintf(char *buf, const char *format, ...);
+#endif
 extern char *g_pad_dma_buf;
 
 void mc_choice_draw(void) {
@@ -4511,7 +4557,9 @@ void mc_choice_draw(void) {
 
 
 void mc_busy_message_draw(s32 arg0) {
+#ifndef DDPDOJ_PC
     extern void mc_message_draw(s32, char *, s32, s32, s32, u16, s32);
+#endif
     if (g_mc_file == 0) {
         mc_message_draw(200, g_mc_msg_busy_game[arg0], 0, 20, 14, D_0028ED10, 100);
     } else {
@@ -4523,18 +4571,24 @@ void mc_busy_message_draw(s32 arg0) {
 
 
 void mc_no_card_message_draw(void) {
+#ifndef DDPDOJ_PC
     void mc_message_draw(s32, char *, s32, s32, s32, u16, s32);
+#endif
     mc_message_draw(0xC8, g_mc_msg_no_card[D_0028ECE8], 0, 0x14, 0xE, (*(u16 *)&D_0028ED10), 0x64);
 }
 
 void mc_checking_message_draw(void) {
+#ifndef DDPDOJ_PC
     void mc_message_draw(s32, char *, s32, s32, s32, u16, s32);
+#endif
     s32 t = (*(u16 *)&D_0028ED10);
     mc_message_draw(0xC8, g_mc_msg_checking, 0, 0x14, 0xE, t, 0x64);
 }
 
 void mc_damaged_message_draw(s32 arg0, s32 arg1) {
+#ifndef DDPDOJ_PC
     extern void mc_message_draw(s32, char *, s32, s32, s32, u16, s32);
+#endif
     mc_message_draw(0xB4, g_mc_msg_damaged[arg1], 0, 0x14, 14, (*(u16 *)&D_0028ED10), 100);
     if (arg0 == 1) {
         s32 t = (*(u16 *)&D_0028ED10);
@@ -4543,40 +4597,52 @@ void mc_damaged_message_draw(s32 arg0, s32 arg1) {
 }
 
 void mc_save_failed_message_draw(void) {
+#ifndef DDPDOJ_PC
     void mc_message_draw(s32, char *, s32, s32, s32, u16, s32);
+#endif
     s32 t = (*(u16 *)&D_0028ED10);
     mc_message_draw(0xC8, g_mc_msg_save_failed, 0, 0x14, 0xE, t, 0x64);
 }
 
 
 void mc_no_data_message_draw(s32 arg0) {
+#ifndef DDPDOJ_PC
     extern void mc_message_draw(s32, char *, s32, s32, s32, u16, s32);
+#endif
     mc_message_draw(0xC8, g_mc_msg_on_card[D_0028ECE8], 0, 0x14, 14, (*(u16 *)&D_0028ED10), 100);
     mc_message_draw(0xF0, g_mc_msg_no_data[arg0], 0, 0x14, 14, (*(u16 *)&D_0028ED10), 100);
 }
 
 
 void mc_load_ask_message_draw(s32 index) {
+#ifndef DDPDOJ_PC
     extern void mc_message_draw(s32, char *, s32, s32, s32, u16, s32);
+#endif
     mc_message_draw(0xC8, g_mc_msg_load_ask[index], 0, 0x14, 0xE, (*(u16 *)&D_0028ED10), 0x64);
 }
 
 
 
 void mc_load_done_message_draw(void) {
+#ifndef DDPDOJ_PC
     void mc_message_draw(s32, char *, s32, s32, s32, s32, s32);
+#endif
     mc_message_draw(0xC8, g_mc_msg_load_done, 0, 0x14, 0xE, (*(u16 *)&D_0028ED10), 0x64);
 }
 
 
 
 void mc_load_failed_message_draw(void) {
+#ifndef DDPDOJ_PC
     void mc_message_draw(s32, char *, s32, s32, s32, s32, s32);
+#endif
     mc_message_draw(0xC8, g_mc_msg_load_failed, 0, 0x14, 0xE, (*(u16 *)&D_0028ED10), 0x64);
 }
 
 void mc_not_formatted_message_draw(void) {
+#ifndef DDPDOJ_PC
     void mc_message_draw(s32, char *, s32, s32, s32, u16, s32);
+#endif
     s32 t = (*(u16 *)&D_0028ED10);
     mc_message_draw(0xC8, g_mc_msg_not_formatted, 0, 0x14, 0xE, t, 0x64);
 }
@@ -4584,20 +4650,28 @@ void mc_not_formatted_message_draw(void) {
 
 
 void mc_overwrite_ask_message_draw(s32 index) {
+#ifndef DDPDOJ_PC
     void mc_message_draw(s32, char *, s32, s32, s32, u16, s32);
+#endif
     mc_message_draw(0xC8, g_mc_msg_overwrite_ask[index], 0, 0x14, 0xE, (*(u16 *)&D_0028ED10), 0x64);
 }
 
 
 void mc_save_to_card_ask_message_draw(s32 index) {
+#ifndef DDPDOJ_PC
     extern void mc_message_draw(s32, char *, s32, s32, s32, u16, s32);
+#endif
     mc_message_draw(0xC8, g_mc_msg_save_to_card_ask[index], 0, 0x14, 0xE, (*(u16 *)&D_0028ED10), 0x64);
 }
 
+#ifndef DDPDOJ_PC
 s32 sprintf(char *buf, const char *format, ...);
+#endif
 
 void mc_no_space_message_draw(s32 arg0) {
+#ifndef DDPDOJ_PC
     extern void mc_message_draw(s32, char *, s32, s32, s32, u16, s32);
+#endif
     mc_message_draw(160, g_mc_msg_no_space, 0, 20, 14, D_0028ED10, 100);
     mc_message_draw(220, g_mc_msg_to_save[arg0], 0, 20, 14, D_0028ED10, 100);
     mc_message_draw(260, g_mc_msg_needed_space[D_0028ECE8], 0, 20, 14, D_0028ED10, 100);
@@ -4611,7 +4685,9 @@ void mc_no_space_message_draw(s32 arg0) {
 
 
 s32 mc_save_ask_message_draw(s32 index) {
+#ifndef DDPDOJ_PC
     s32 mc_message_draw(s32, char *, s32, s32, s32, s32, s32);
+#endif
     return mc_message_draw(0xC8, g_mc_msg_save_ask[index], 0, 0x14, 0xE, (*(u16 *)&D_0028ED10), 0x64);
 }
 
@@ -4667,6 +4743,15 @@ typedef struct {
     u8 b59F;
     u8 b5A0;
 } SaveBlock;
+
+#ifdef DDPDOJ_PC
+_Static_assert(offsetof(SaveBlock, a34) == 0x34, "PS2 ranking layout");
+_Static_assert(offsetof(SaveBlock, a26C) == 0x26C, "PS2 button mapping layout");
+_Static_assert(offsetof(SaveBlock, a27C) == 0x27C, "PS2 simulation settings layout");
+_Static_assert(offsetof(SaveBlock, b5A0) == 0x5A0, "PS2 options layout");
+_Static_assert(sizeof(SaveBlock) <= 0x9A8, "Settings fit in the PS2 save payload");
+static u8 settings_snapshot[0x9A8];
+#endif
 
 extern u8 g_game_mode;
 extern u16 g_stored_ranking_score_tops[5];
@@ -4726,7 +4811,12 @@ extern s32 g_ranking_scores[5];
 extern s32 D_00684CF0[10][4][5];
 
 void save_block_from_settings(void) {
+#ifdef DDPDOJ_PC
+    SaveBlock g_mc_save_buf_as_SaveBlock;
+    memcpy(&g_mc_save_buf_as_SaveBlock, g_mc_save_buf, sizeof(g_mc_save_buf_as_SaveBlock));
+#else
     extern SaveBlock g_mc_save_buf_as_SaveBlock;
+#endif
     s32 i;
     s32 j;
     s32 k;
@@ -4819,6 +4909,9 @@ void save_block_from_settings(void) {
             g_mc_save_buf_as_SaveBlock.a26C[i][j] = g_p1_btn_map_a[i][j];
         }
     }
+#ifdef DDPDOJ_PC
+    memcpy(g_mc_save_buf, &g_mc_save_buf_as_SaveBlock, sizeof(g_mc_save_buf_as_SaveBlock));
+#endif
 }
 
 typedef struct {
@@ -4874,11 +4967,19 @@ typedef struct {
     s8 b5A0;
 } SaveBlock2;
 
+#ifdef DDPDOJ_PC
+_Static_assert(sizeof(SaveBlock2) == sizeof(SaveBlock), "PS2 save read and write layouts agree");
+#endif
 
 extern void menu_values_from_settings(void);
 
 void save_block_to_settings(void) {
+#ifdef DDPDOJ_PC
+    SaveBlock2 g_mc_save_buf_as_SaveBlock;
+    memcpy(&g_mc_save_buf_as_SaveBlock, g_mc_save_buf, sizeof(g_mc_save_buf_as_SaveBlock));
+#else
     extern SaveBlock2 g_mc_save_buf_as_SaveBlock;
+#endif
     s32 i;
     s32 j;
     s32 k;
@@ -4999,7 +5100,11 @@ void display_settings_apply(void)
 extern s32 D_0028EC7C;
 
 void save_snapshot_take(void) {
+#ifdef DDPDOJ_PC
+    SaveBlock D_006A3E50 = {0};
+#else
     extern SaveBlock D_006A3E50;
+#endif
     s32 i;
     s32 j;
     s32 k;
@@ -5069,11 +5174,19 @@ void save_snapshot_take(void) {
             D_006A3E50.a26C[i][j] = g_p1_btn_map_a[i][j];
         }
     }
+#ifdef DDPDOJ_PC
+    memcpy(settings_snapshot, &D_006A3E50, sizeof(D_006A3E50));
+#endif
 }
 
 
 s32 save_snapshot_changed_check(void) {
+#ifdef DDPDOJ_PC
+    SaveBlock2 D_006A3E50;
+    memcpy(&D_006A3E50, settings_snapshot, sizeof(D_006A3E50));
+#else
     extern SaveBlock2 D_006A3E50;
+#endif
     s32 i;
     s32 j;
     s32 k;
@@ -5292,7 +5405,9 @@ extern void sfx_extend(void);
 extern u16 D_0028E2FC;
 
 void mc_task_option_unlocked(void) {
+#ifndef DDPDOJ_PC
     extern void mc_message_draw(s32, char *, s32, s32, s32, u16, s32);
+#endif
     s16 pressed;
 
     switch (g_mc_step) {
@@ -5431,7 +5546,7 @@ extern u16 D_006A0E7E[];
 extern u16 D_006A0E80[];
 extern u16 D_006A0E82[];
 extern u16 D_006A0E86[];
-extern u16 D_006A0E90[];
+extern u16 replay_slot_info_fill_buffer[];
 extern u8 g_replay_file[48];
 extern u16 D_006C58A2[];
 extern u16 D_006C58A4[];
@@ -5490,11 +5605,11 @@ void replay_slot_info_fill(s32 slot) {
     D_006A0E82[off] = D_006C58D2[0];
     D_006A0E86[off] = D_006C58D6[0];
     ((u16 *)g_replay_slot_infos)[off] = 1;
-    D_006A0E90[off] = 0;
+    replay_slot_info_fill_buffer[off] = 0;
 }
 
 /* .sbss (the compiler lays these out in reverse) */
-s8 D_0028ED38;
+s8 mc_state_reset_state;
 u8 D_0028ED37;
 u8 D_0028ED36;
 u8 D_0028ED35;
@@ -5539,16 +5654,16 @@ s32 g_mc_fd;
 u16 g_mc_cursor_x __attribute__((aligned(4)));
 u16 D_0028ECA0 __attribute__((aligned(4)));
 u16 g_mc_cursor_target_x;
-s32 D_0028EC98;
-s32 D_0028EC94;
-s32 D_0028EC90;
-u8 D_0028EC8F;
-u8 D_0028EC8E;
-u8 D_0028EC8D;
-u8 D_0028EC8C;
-s32 D_0028EC88;
-s32 D_0028EC84;
-s32 D_0028EC80;
+s32 mc_task_read_state_2;
+s32 mc_task_read_state;
+s32 mc_task_load_check_card_state;
+u8 mc_task_startup_check_state_7;
+u8 mc_task_startup_check_state_6;
+u8 mc_task_startup_check_state_5;
+u8 mc_task_startup_check_state_4;
+s32 mc_task_startup_check_state_3;
+s32 mc_task_startup_check_state_2;
+s32 mc_task_startup_check_state;
 s32 D_0028EC7C;
 s32 D_0028EC78;
 s32 g_mc_slot;
@@ -5558,8 +5673,10 @@ s32 g_mc_port;
 u8 g_mc_save_buf[2480];
 u8 D_006A4C00[131824];
 u8 g_replay_file_loaded[1024];
+#ifndef DDPDOJ_PC
 u8 D_006A3E50[2480];
-u16 D_006A0E90[6112];
+#endif
+u16 replay_slot_info_fill_buffer[6112];
 s32 D_0069F590[1600];
 u8 g_mc_dir[16];
 #ifdef DEATH_LABEL

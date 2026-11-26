@@ -75,6 +75,11 @@ void tex_upload_init_vram(void)
 {
     g_tex_vram_tbp = 0x1E40;
     cd_read_sync(g_tex_bitmap_work_buf, g_data_files[10].size, g_data_files[10].lba);
+#ifdef DDPDOJ_PC
+    if (g_cd_io_error) {
+        return;
+    }
+#endif
     tex_upload_bitmap(2);
     printf("tex load end\n");
 }

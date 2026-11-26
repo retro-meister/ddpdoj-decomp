@@ -193,14 +193,14 @@ void stage2_boss_torso_idle_start(void) {
 }
 
 
-extern u8 D_0026C0A0[];
+extern u8 stage2_boss_torso_idle_table[];
 
 void stage2_boss_torso_idle(void) {
     reg_tmp.b[0] = STEP(reg_a4)->frame.t.count;
     STEP(reg_a4)->frame.t.count -= 1;
     if ((s32)reg_tmp.b[0] <= 0) {
         STEP(reg_a4)->frame.t.count = STEP(reg_a4)->frame.t.reload;
-        reg_a0 = D_0026C0A0;
+        reg_a0 = stage2_boss_torso_idle_table;
         reg_a0 += STEP(reg_a4)->step;
         (ENTITY(reg_a6)->offset_y.h) = *(u16 *)reg_a0;
         STEP(reg_a4)->step += 2;
@@ -456,7 +456,7 @@ void stage2_boss_ripple_request_start(void) {
 }
 
 s32 spawn_request_add();
-extern u8 D_0026C0B0[];
+extern u8 stage2_boss_ripple_request_table[];
 
 void stage2_boss_ripple_request(void) {
     reg_tmp.b[0] = STEP(reg_a4)->frame.t.count;
@@ -467,7 +467,7 @@ void stage2_boss_ripple_request(void) {
         spawn_request_add();
         reg_d0.h[1] = ENTITY(reg_a6)[1].y.h;
         reg_d0.h[0] = ENTITY(reg_a6)[1].x.h;
-        reg_a1 = D_0026C0B0;
+        reg_a1 = stage2_boss_ripple_request_table;
         reg_a1 += STEP(reg_a4)->step;
         reg_tmp.h[1] = *(u16 *)reg_a1;
         reg_tmp.h[0] = *(u16 *)(reg_a1 + 2);
@@ -479,10 +479,10 @@ void stage2_boss_ripple_request(void) {
     }
 }
 
-u8 D_0026C0A0[16] = {
+u8 stage2_boss_torso_idle_table[16] = {
     0x00, 0x00, 0x04, 0x00, 0x08, 0x00, 0x0C, 0x00, 0x08, 0x00, 0x04, 0x00, 0x00, 0x00, 0x00, 0x00,
 };
 
-u8 D_0026C0B0[16] = {
+u8 stage2_boss_ripple_request_table[16] = {
     0x00, 0xF0, 0x00, 0xF5, 0x00, 0xF0, 0x00, 0x05, 0x80, 0xF4, 0x00, 0xF1, 0x80, 0xF4, 0x00, 0x09,
 };

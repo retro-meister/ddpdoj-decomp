@@ -1,11 +1,11 @@
 /* Debris patterns. */
 #include "common.h"
 
-extern u8 D_00250A80[];
-extern u8 D_00250B10[];
-extern u8 D_00250BA0[];
-extern u8 D_00250C30[];
-extern u8 D_00250CC0[];
+extern u8 debris_random_patterns_8[];
+extern u8 debris_random_patterns_9[];
+extern u8 debris_random_patterns_10[];
+extern u8 debris_random_patterns_11[];
+extern u8 debris_random_patterns_12[];
 void entity_draw_layer1();
 void entity_draw_layer2();
 void entity_draw_layer3();
@@ -20,11 +20,11 @@ extern u16 debris_pattern_2[64];
 extern u16 debris_pattern_3[64];
 extern u16 debris_pattern_4[64];
 struct D00250780Record { void *p0; void *p1; void *p2; void *p3; void *p4; u16 w5[294]; void *p6; void *p7; void *p8; void *p9; void *p10; u16 w11[6]; };
-extern struct D00250780Record D_00250780;
+extern struct D00250780Record debris_update_loop_value;
 struct DebrisRandomPatternsRecord { u16 w0[8]; void *p1; void *p2; void *p3; void *p4; void *p5; u16 w6[6]; };
 extern struct DebrisRandomPatternsRecord debris_random_patterns;
 
-struct D00250780Record D_00250780 = {
+struct D00250780Record debris_update_loop_value = {
     entity_draw_layer1,
     entity_draw_layer2,
     entity_draw_layer3,
@@ -50,7 +50,7 @@ u16 debris_pattern_0[64] = {
     0x0000, 0x13A3, 0x0000, 0x13A2, 0x0000, 0x13A1, 0x0000, 0x13A0,
 };
 
-u8 D_00250A80[16] = {
+u8 debris_random_patterns_8[16] = {
     0x00, 0xFE, 0x00, 0xFE, 0x10, 0x02, 0x03, 0x00, 0x04, 0x00, 0x70, 0x00, 0x1E, 0x00, 0x7C, 0x00,
 };
 
@@ -65,7 +65,7 @@ u16 debris_pattern_1[64] = {
     0x0000, 0x1323, 0x0000, 0x1322, 0x0000, 0x1321, 0x0000, 0x1320,
 };
 
-u8 D_00250B10[16] = {
+u8 debris_random_patterns_9[16] = {
     0x00, 0xFC, 0x00, 0xFD, 0x18, 0x04, 0x03, 0x00, 0x04, 0x00, 0x70, 0x00, 0x1E, 0x00, 0x7C, 0x00,
 };
 
@@ -80,7 +80,7 @@ u16 debris_pattern_2[64] = {
     0x0000, 0x1343, 0x0000, 0x1342, 0x0000, 0x1341, 0x0000, 0x1340,
 };
 
-u8 D_00250BA0[16] = {
+u8 debris_random_patterns_10[16] = {
     0x00, 0xFE, 0x00, 0xFE, 0x10, 0x02, 0x03, 0x00, 0x04, 0x00, 0x70, 0x00, 0x1E, 0x00, 0x7C, 0x00,
 };
 
@@ -95,7 +95,7 @@ u16 debris_pattern_3[64] = {
     0x0000, 0x1383, 0x0000, 0x1382, 0x0000, 0x1381, 0x0000, 0x1380,
 };
 
-u8 D_00250C30[16] = {
+u8 debris_random_patterns_11[16] = {
     0x00, 0xFE, 0x00, 0xFE, 0x10, 0x02, 0x03, 0x00, 0x04, 0x00, 0x70, 0x00, 0x1E, 0x00, 0x7C, 0x00,
 };
 
@@ -110,16 +110,16 @@ u16 debris_pattern_4[64] = {
     0x0000, 0x1363, 0x0000, 0x1362, 0x0000, 0x1361, 0x0000, 0x1360,
 };
 
-u8 D_00250CC0[16] = {
+u8 debris_random_patterns_12[16] = {
     0x00, 0xFE, 0x00, 0xFE, 0x10, 0x02, 0x03, 0x00, 0x04, 0x00, 0x70, 0x00, 0x1E, 0x00, 0x7C, 0x00,
 };
 
 struct DebrisRandomPatternsRecord debris_random_patterns = {
     { 0x0000, 0x0001, 0x0002, 0x0003, 0x0004, 0x0005, 0x0006, 0x0007 },
-    D_00250A80,
-    D_00250B10,
-    D_00250BA0,
-    D_00250C30,
-    D_00250CC0,
+    debris_random_patterns_8,
+    debris_random_patterns_9,
+    debris_random_patterns_10,
+    debris_random_patterns_11,
+    debris_random_patterns_12,
     { 0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000 },
 };

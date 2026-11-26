@@ -16,13 +16,13 @@ s16 slowdown_budget_limits_loop2[5] = { 20, 20, 20, 20, 20 };
 void frame_layers_flush(void);
 void slowdown_reset(void);
 
-extern u8 D_0028E218;
+extern u8 slowdown_init_state;
 extern u8 g_slowdown_frame_state;
 
 
 void slowdown_init(void) {
     g_slowdown_frame_state = 0;
-    D_0028E218 = 0;
+    slowdown_init_state = 0;
     slowdown_reset();
 }
 

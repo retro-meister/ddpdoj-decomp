@@ -838,10 +838,10 @@ extern u16 wreck_setup_0[16];
 extern u16 wreck_setup_1[16];
 extern u16 wreck_setup_2[16];
 extern u16 wreck_setup_3[16];
-extern u8 D_0028C0E8[];
-extern u8 D_0028C0EC[];
-extern u8 D_0028C0F0[];
-extern u8 D_0028C0F4[];
+extern u8 wreck_setups_4[];
+extern u8 wreck_setups_5[];
+extern u8 wreck_setups_6[];
+extern u8 wreck_setups_7[];
 
 void (*spark_velocity_routines[8])() = {
     spark_velocity_spread,
@@ -1352,10 +1352,10 @@ void *wreck_setups[8] = {
     wreck_setup_1,
     wreck_setup_2,
     wreck_setup_3,
-    D_0028C0E8,
-    D_0028C0EC,
-    D_0028C0F0,
-    D_0028C0F4,
+    wreck_setups_4,
+    wreck_setups_5,
+    wreck_setups_6,
+    wreck_setups_7,
 };
 
 /* .bss (the compiler lays these out in reverse) */

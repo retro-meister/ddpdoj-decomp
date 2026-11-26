@@ -20,7 +20,7 @@ void debris_clear(void) {
 }
 
 
-extern u32 D_0028E52C;
+extern u32 debris_spawn_state;
 extern u16 g_loop;
 extern u16 g_two_player_game;
 extern u16 g_debris[];
@@ -56,10 +56,10 @@ loop_2:
         reg_d1.h[0] -= 1;
         return;
     }
-    D_0028E52C = reg_d0.w;
+    debris_spawn_state = reg_d0.w;
     debris_init();
     g_debris_count[0] += 1;
-    reg_d0.w = D_0028E52C;
+    reg_d0.w = debris_spawn_state;
     tmp = reg_d3.h[0] - 1;
     reg_d3.h[0] = tmp;
     if (((s64) ((s64) (tmp & 0xFFFF) << 0x30) >> 0x30) >= 0) {
@@ -80,7 +80,7 @@ void debris_update(void) {
 typedef void (*Fn)();
 
 s32 entity_advance256();
-extern u8 D_00250780[];
+extern u8 debris_update_loop_value[];
 extern u8 D_002507A0[];
 extern u8 D_00262570[];
 extern u16 g_frame_mod8;
@@ -189,7 +189,7 @@ next_7:
 next_set:
     if (*(u16 *)(reg_a6 + 0x22) == 0) goto next_8;
     *(u16 *)(reg_a6 + 0x22) -= 1;
-    reg_a0 = (u8 *)D_00250780;
+    reg_a0 = (u8 *)debris_update_loop_value;
     reg_d0.h[0] = *(u16 *)(reg_a6 + 0x24);
     reg_a0 += reg_d0.h[0];
     reg_a0 = *(u8 **)reg_a0;
@@ -204,7 +204,7 @@ next_8:
     ENTITY(reg_a6)->hp.b[0] -= 1;
     if (ENTITY(reg_a6)->hp.b[0] == 0) goto next_clr;
     if (reg_d6.h[0] == 0) goto next_9;
-    reg_a0 = (u8 *)D_00250780;
+    reg_a0 = (u8 *)debris_update_loop_value;
     reg_d0.h[0] = *(u16 *)(reg_a6 + 0x24);
     reg_a0 += reg_d0.h[0];
     reg_a0 = *(u8 **)reg_a0;
@@ -495,7 +495,7 @@ void debris_delay_random(void) {
 }
 
 /* .sbss (the compiler lays these out in reverse) */
-u32 D_0028E52C;
+u32 debris_spawn_state;
 
 /* .bss (the compiler lays these out in reverse) */
 u16 g_debris_count[8];

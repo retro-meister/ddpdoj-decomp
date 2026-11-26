@@ -1,5 +1,11 @@
 #include "gallery/gallery.h"
 
+#ifdef DDPDOJ_PC
+#define SEND_GALLERY_GIF_CHAIN(buffer) pc_dma_send_chain(g_dma_gif, buffer, sizeof(g_gif_buf[0]))
+#else
+#define SEND_GALLERY_GIF_CHAIN(buffer) sceDmaSend(g_dma_gif, buffer)
+#endif
+
 typedef struct {
     s16 x;
     s16 y;
@@ -113,7 +119,7 @@ void sprite_build_quad_packet(Qword *pkt, s32 startIndex, s32 count)
             qwc++;
 
             pkt[qwc].w[0] = (x[j] + 0x700) << 4;
-            pkt[qwc].w[1] = (y[j] << 4) + 0x7900;
+            pkt[qwc].w[1] = GALLERY_COORD_SHIFT(y[j], 4) + 0x7900;
             pkt[qwc].w[2] = z << 4;
             pkt[qwc].w[3] = 0;
             qwc++;
@@ -135,7 +141,7 @@ void sprite_flush_quads(void)
     if (g_sprite_queue_count != 0) {
         font_build_gs_setup_packet(g_gif_buf[0]);
         FlushCache(0);
-        sceDmaSend(g_dma_gif, g_gif_buf[0]);
+        SEND_GALLERY_GIF_CHAIN(g_gif_buf[0]);
         sceGsSyncPath(0, 0);
 
         bufferIndex = 0;
@@ -151,7 +157,7 @@ void sprite_flush_quads(void)
             sprite_build_quad_packet((Qword *)packet, firstEntry, batchCount);
             sceGsSyncPath(0, 0);
             FlushCache(0);
-            sceDmaSend(g_dma_gif, packet);
+            SEND_GALLERY_GIF_CHAIN(packet);
 
             g_sprite_queue_count -= batchCount;
             firstEntry += batchCount;
@@ -160,12 +166,16 @@ void sprite_flush_quads(void)
     }
 }
 
+#ifdef DDPDOJ_PC
+void sprite_queue_glyph(s16 x, s16 y, u16 textureId, u16 attributes, u16 scale)
+#else
 void sprite_queue_glyph(x, y, textureId, attributes, scale)
     s16 x;
     s16 y;
     u16 textureId;
     u16 attributes;
     u16 scale;
+#endif
 {
     s32 id = textureId;
     s32 textureIndex;
@@ -322,7 +332,7 @@ void sprite_flush_rects(void)
     if (g_sprite_queue_count != 0) {
         font_build_gs_setup_packet(g_gif_buf[0]);
         FlushCache(0);
-        sceDmaSend(g_dma_gif, g_gif_buf[0]);
+        SEND_GALLERY_GIF_CHAIN(g_gif_buf[0]);
         sceGsSyncPath(0, 0);
 
         bufferIndex = 0;
@@ -338,7 +348,7 @@ void sprite_flush_rects(void)
             sprite_build_rect_packet((Qword *)buffer, entryOffset, batchSize);
             sceGsSyncPath(0, 0);
             FlushCache(0);
-            sceDmaSend(g_dma_gif, buffer);
+            SEND_GALLERY_GIF_CHAIN(buffer);
 
             entryOffset += batchSize;
             g_sprite_queue_count -= batchSize;

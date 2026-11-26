@@ -56,3 +56,27 @@ uv run tools/build.py --target SLPS_252.33
 uv run tools/build.py --mod --iso
 ```
 
+## Native PC development
+
+The native build requires CMake, Python 3, and the SDL3 development package. It currently
+provides headless checks for the shared task scheduler, startup and frame
+stepping, menu mode requests, asynchronous ISO reads, controller input, and
+the original startup splash. It also builds the Gallery sources as a desktop
+library with a host-stepped frame loop and tests for solid rectangles, fades,
+indexed textures, and the loading-screen font. With a retail ISO, the Gallery
+integration test drives loading, grid navigation, image viewing, and the
+return to the Main menu request. It also compares the original cursor,
+confirm, and page cues against decoded sound bank samples. The Main and Death
+Label frontend libraries build from the original source manifests. Gameplay
+and the desktop application are still in development.
+
+```sh
+cmake -S pc -B build/pc
+cmake --build build/pc --config Release
+ctest --test-dir build/pc -C Release --output-on-failure
+```
+
+Configure with `-DDDPDOJ_TEST_ISO=/path/to/ddpdoj.iso` to also compare the
+three executables read through the native ISO reader with the files extracted
+to `baserom/` by the PS2 setup and test the startup splash from the disc.
+

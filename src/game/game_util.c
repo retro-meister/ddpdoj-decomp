@@ -24,14 +24,14 @@ void credits_task_finish(void) {
 }
 
 s32 sprite_palette_load();
-extern u8 D_0025F770[];
+extern u8 settings_notice_fade_palettes_at_18[];
 extern u16 g_game_completed;
 extern u16 g_loop;
 
 void credits_task_begin(void) {
     *(s8 *)(reg_a5 + 3) = 1;
     credits_roll_begin();
-    reg_a0 = D_0025F770;
+    reg_a0 = settings_notice_fade_palettes_at_18;
     reg_d0.h[0] = 2;
     sprite_palette_load();
     *(s16 *)(reg_a5 + 4) = 0;
@@ -51,7 +51,7 @@ s32 fade_to_black();
 s32 fade_release();
 s32 fade_is_running();
 s32 music_fade_out();
-extern u8 D_0024E090[];
+extern u8 credits_task_table[];
 
 void credits_task() {
     u16 temp_a0;
@@ -76,7 +76,7 @@ void credits_task() {
         if (*(u16 *)(reg_a5 + 6) == 0) {
 #endif
             *(u16 *)(reg_a5 + 4) = 1U;
-            reg_a0 = D_0024E090;
+            reg_a0 = credits_task_table;
             fade_to_black();
             *(u16 *)(reg_a5 + 8) = (u16) reg_d0.h[1];
             *(u16 *)(reg_a5 + 0xA) = (u16) reg_d0.h[0];

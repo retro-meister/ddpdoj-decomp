@@ -144,15 +144,15 @@ extern u8 D_00251AB0[];
 extern u8 D_00251AC0[];
 extern u8 D_002609F0[];
 extern u8 D_00260A30[];
-extern u8 D_00260A70[];
-extern u8 D_00260AB0[];
-extern u8 D_00260AF0[];
-extern u8 D_00260B30[];
-extern u8 D_00260B70[];
-extern u8 D_00260BB0[];
-extern u8 D_00260BF0[];
-extern u8 D_00260C30[];
-extern u8 D_00260C70[];
+extern u8 ship_select_ship_begin_table[];
+extern u8 ship_select_ship_begin_table_2[];
+extern u8 ship_select_ship_begin_table_3[];
+extern u8 ship_select_ship_begin_table_4[];
+extern u8 ship_select_ship_begin_table_5[];
+extern u8 ship_select_ship_begin_table_6[];
+extern u8 ship_select_ship_begin_table_7[];
+extern u8 ship_select_ship_begin_table_8[];
+extern u8 ship_select_ship_begin_table_9[];
 extern u16 g_input_p2_previous;
 extern u16 g_input_p2_pressed;
 extern u16 g_input_p1_previous;
@@ -201,13 +201,13 @@ void ship_select_ship_begin(void) {
     *(s16 *)(reg_a6 + 0x50) = 0;
     *(s16 *)(reg_a6 + 0x52) = 0;
     *(s16 *)(reg_a6 + 0x54) = 0;
-    reg_a0 = (u8 *)D_00260C70;
+    reg_a0 = (u8 *)ship_select_ship_begin_table_9;
     reg_d0.w = 0x18;
     sprite_palette_load();
-    reg_a0 = (u8 *)D_00260C30;
+    reg_a0 = (u8 *)ship_select_ship_begin_table_8;
     reg_d0.w = 0x19;
     sprite_palette_load();
-    reg_a0 = (u8 *)D_00260BF0;
+    reg_a0 = (u8 *)ship_select_ship_begin_table_7;
     reg_d0.w = 0x1B;
     sprite_palette_load();
     reg_a0 = (u8 *)D_002609F0;
@@ -216,22 +216,22 @@ void ship_select_ship_begin(void) {
     reg_a0 = (u8 *)D_00260A30;
     reg_d0.w = 0x1C;
     sprite_palette_load();
-    reg_a0 = (u8 *)D_00260A70;
+    reg_a0 = (u8 *)ship_select_ship_begin_table;
     reg_d0.w = 0x1D;
     sprite_palette_load();
-    reg_a0 = (u8 *)D_00260AB0;
+    reg_a0 = (u8 *)ship_select_ship_begin_table_2;
     reg_d0.w = 0x1E;
     sprite_palette_load();
-    reg_a0 = (u8 *)D_00260AF0;
+    reg_a0 = (u8 *)ship_select_ship_begin_table_3;
     reg_d0.w = 0xC;
     sprite_palette_load();
-    reg_a0 = (u8 *)D_00260B30;
+    reg_a0 = (u8 *)ship_select_ship_begin_table_4;
     reg_d0.w = 0xD;
     sprite_palette_load();
-    reg_a0 = (u8 *)D_00260B70;
+    reg_a0 = (u8 *)ship_select_ship_begin_table_5;
     reg_d0.w = 0xE;
     sprite_palette_load();
-    reg_a0 = (u8 *)D_00260BB0;
+    reg_a0 = (u8 *)ship_select_ship_begin_table_6;
     reg_d0.w = 0xF;
     sprite_palette_load();
     ENTITY(reg_a6)->flags.sb[0] = 1;
@@ -243,14 +243,14 @@ void ship_select_ship_begin(void) {
 
 s32 text_layer_print();
 s32 ship_palettes_load();
-extern u16 D_00251AD0[];
-extern u16 D_0028C118[];
+extern u16 ship_select_ship_confirm_table[];
+extern u16 ship_select_ship_confirm_table_2[];
 
 void ship_select_ship_confirm(void) {
     u16 temp_a0;
     reg_d0.w = 0;
     reg_d0.b[0] = *(u8 *)(reg_a6 + 2);
-    reg_a0 = (u8 *)(D_0028C118);
+    reg_a0 = (u8 *)(ship_select_ship_confirm_table_2);
     reg_d0.h[0] += reg_d0.h[0];
     reg_d0.h[0] = (reg_d0.h[0] != 0) ? *(u16 *)((u8 *)reg_a0 + ((s16)reg_d0.h[0] & ~1)) : *(u16 *)reg_a0;
     if (reg_d7.h[0] != 0) {
@@ -267,7 +267,7 @@ void ship_select_ship_confirm(void) {
     temp_a0 = *(u16 *)(reg_a4 + 0xA);
     reg_d1.h[0] = temp_a0;
     reg_d0.h[0] = 8;
-    reg_a0 = (u8 *)(D_00251AD0);
+    reg_a0 = (u8 *)(ship_select_ship_confirm_table);
     reg_d2.h[0] = 0;
     reg_d1.h[0] >>= 6;
     reg_d1.h[0] >>= 3;
@@ -1107,7 +1107,7 @@ void laser_parts_spawn(void) {
     reg_a3 += 2;
 }
 
-extern u8 D_00256130[];
+extern u8 laser_segment_spawn_table[];
 extern u16 g_p2_laser_stop_y;
 extern u16 g_p1_laser_stop_y;
 extern u8 D_0029DD30[];
@@ -1154,7 +1154,7 @@ void laser_segment_spawn(void) {
     reg_a1 += 2;
     var_a0 = *(u16 *)reg_a1;
     *(u16 *)(reg_a2 + 0xC) = var_a0;
-    reg_a1 = (u8 *)((u32) D_00256130);
+    reg_a1 = (u8 *)((u32) laser_segment_spawn_table);
     reg_d0.h[0] = *(u16 *)(reg_a5 + 0x22);
     if (*(u8 *)reg_a5 & 1) {
         reg_d0.h[0] += 0x3C;
@@ -1397,11 +1397,11 @@ u8 D_00251AC0[16] = {
     0x00, 0x01, 0x01, 0x00, 0x02, 0x00, 0x03, 0x00, 0x04, 0x00, 0x00, 0x1C, 0x00, 0x12, 0x00, 0x00,
 };
 
-u16 D_00251AD0[8] = {
+u16 ship_select_ship_confirm_table[8] = {
     0x2020, 0x2020, 0x2020, 0x2020, 0x2020, 0x2020, 0x2020, 0x0000,
 };
 
-u16 D_0028C118[2] = {
+u16 ship_select_ship_confirm_table_2[2] = {
     0x0000, 0x0002,
 };
 

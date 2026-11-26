@@ -2,6 +2,10 @@
 #include "entity.h"
 #include "sdk/ps2sdk.h"
 
+#ifdef DDPDOJ_PC
+#include "pc_frontend_abi.h"
+#endif
+
 void join_select_ship_step(void);
 void join_select_doll_step(void);
 void join_select_prompt_update(void);
@@ -10,13 +14,13 @@ void join_select_prompt_draw(void);
 void join_select_object_update(void);
 
 extern u16 g_two_player_game;
-extern u8 D_0029BF30[];
-extern u8 D_0029BF40[];
+extern u8 join_select_p2_table_at_8[];
+extern u8 join_select_p1_table_at_8[];
 
 void join_select_doll_store(void) {
-    reg_a0 = D_0029BF40;
+    reg_a0 = join_select_p1_table_at_8;
     if (*(u8 *)(reg_a5 + 6) == 0) {
-        reg_a0 = D_0029BF30;
+        reg_a0 = join_select_p2_table_at_8;
     }
     reg_d0.b[0] = *reg_a0;
     if (g_two_player_game == 0) {
@@ -28,9 +32,9 @@ void join_select_doll_store(void) {
 void join_select_doll_taken_check(void) {
     s32 d1 = reg_d1.w;
 
-    reg_a0 = (u8 *)D_0029BF40;
+    reg_a0 = (u8 *)join_select_p1_table_at_8;
     if (reg_a5[6] != 0) goto next_1;
-    reg_a0 = (u8 *)D_0029BF30;
+    reg_a0 = (u8 *)join_select_p2_table_at_8;
 next_1:
     reg_d1.b[0] = *reg_a0;
     if (g_two_player_game != 0) goto next_2;
@@ -52,7 +56,9 @@ extern u8 join_select_p1_table[];
 extern u8 join_select_p2_table[];
 
 void join_select_task_begin() {
+#ifndef DDPDOJ_PC
     s32 player_panel_show();
+#endif
     *(s8 *)(reg_a5 + 3) = 1;
     reg_a4 = join_select_p1_table;
     if (*(u8 *)(reg_a5 + 6) != 0) {
@@ -120,9 +126,11 @@ extern u8 g_simulation_active;
 extern u8 *reg_call_target_as_u8_p;
 
 void join_select_task(void) {
+#ifndef DDPDOJ_PC
     void stage_clear_running_check(void);
     void sprite_palette_load(void);
     void player_panel_show(void);
+#endif
     u8 state;
     u8 seq;
 
@@ -287,7 +295,9 @@ block_52:
     join_select_prompt_update();
 }
 
+#ifndef DDPDOJ_PC
 typedef void (*Fn)();
+#endif
 
 
 s32 sfx_confirm();
@@ -295,7 +305,7 @@ s32 sfx_cursor_move();
 s32 sprite_draw_with_ship_select_keep();
 extern u16 D_00251B20[];
 extern u16 D_00251B30[];
-extern u16 D_0028C128[];
+extern u16 join_select_ship_step_table[];
 extern u16 g_game_frame;
 extern s32 D_0028E998;
 extern s32 D_0028E99C;
@@ -330,7 +340,7 @@ void join_select_ship_step(void) {
     if ((*(u8 *)(reg_a5 + 0x13) == 0) || (reg_d0.h[0] &= 0x70, (reg_d0.h[0] != 0))) {
         sfx_confirm();
         *(u16 *)(reg_a5 + 0x12) = 0x4B0U;
-        if (reg_a0 == D_0029BF40) {
+        if (reg_a0 == join_select_p1_table_at_8) {
             D_0028E99C = (s32) *(u8 *)(reg_a0 + 1);
         } else {
             D_0028E998 = *(u8 *)(reg_a0 + 1) + 2;
@@ -380,7 +390,7 @@ void join_select_ship_step(void) {
     reg_d0.w = 0;
     reg_d1.w = reg_d7.w;
     reg_d0.b[0] = *(u8 *)(reg_a5 + 0xF);
-    reg_a2 = (u8 *)(D_0028C128);
+    reg_a2 = (u8 *)(join_select_ship_step_table);
     reg_d0.h[0] += reg_d0.h[0];
     temp_a1_3 = reg_d0.h[0];
     reg_a2 += temp_a1_3;
@@ -405,7 +415,7 @@ void join_select_ship_step(void) {
     cond_flag = 0;
 }
 
-extern u16 D_0028C130[];
+extern u16 join_select_doll_step_table[];
 
 void join_select_doll_step(void) {
     u16 var_a0;
@@ -474,7 +484,7 @@ void join_select_doll_step(void) {
     reg_d0.w = 0;
     reg_d1.w = reg_d7.w;
     reg_d0.b[0] = *(u8 *)(reg_a5 + 0xE);
-    reg_a0 = (u8 *)((u32) D_0028C130);
+    reg_a0 = (u8 *)((u32) join_select_doll_step_table);
     reg_d0.h[0] += reg_d0.h[0];
     if (reg_d0.h[0] != 0) {
         var_a0 = *(u16 *)((u8 *)reg_a0 + ((s16)reg_d0.h[0] & ~1));
@@ -501,7 +511,7 @@ void join_select_doll_step(void) {
     if (0 <= (s16)(reg_d0.h[0])) {
         reg_d0.h[0] += reg_d0.h[0];
         reg_d1.w = reg_d7.w;
-        reg_a2 = (u8 *)(D_0028C130);
+        reg_a2 = (u8 *)(join_select_doll_step_table);
         reg_a2 += reg_d0.h[0];
         reg_d1.h[0] += *(u16 *)reg_a2;
         reg_d2.w = 0x1557;
@@ -514,7 +524,9 @@ void join_select_doll_step(void) {
 
 
 void join_select_prompt_update(void) {
+#ifndef DDPDOJ_PC
     s32 stage_clear_running_check();
+#endif
     stage_clear_running_check();
     if (cond_flag == 0) {
         join_select_prompt_draw();
@@ -524,7 +536,9 @@ void join_select_prompt_update(void) {
 extern u8 D_00251B40[];
 
 void join_select_prompt_clear(void) {
+#ifndef DDPDOJ_PC
     s32 text_layer_print();
+#endif
     reg_a0 = D_00251B40;
     reg_d0.h[0] = *(u16 *)(reg_a4 + 2);
     reg_d1.h[0] = *(u16 *)reg_a4;
@@ -539,9 +553,9 @@ void credits_get(void);
 void coins_get(void);
 void text_layer_put_hex_digit(void);
 void player_panel_step_get(void);
-extern u8 D_00251B60[];
-extern u8 D_00251B80[];
-extern u8 D_00251BA0[];
+extern u8 join_select_prompt_draw_table[];
+extern u8 join_select_prompt_draw_table_2[];
+extern u8 join_select_prompt_draw_table_3[];
 extern u8 D_00251BC0[];
 extern u8 D_00251BE0[];
 extern u8 D_00251C00[];
@@ -549,7 +563,9 @@ extern u8 g_setting_chute_type;
 extern u8 g_setting_coin_mode;
 
 void join_select_prompt_draw(void) {
+#ifndef DDPDOJ_PC
     void text_layer_print(void);
+#endif
     p1_credits_get();
     if (*(u8 *)(reg_a5 + 6) == 0) {
         goto next_1;
@@ -574,10 +590,10 @@ next_1:
     }
     goto block_53;
 block_50:
-    reg_a0 = (u8 *)D_00251B60;
+    reg_a0 = (u8 *)join_select_prompt_draw_table;
     goto block_54;
 block_51:
-    reg_a0 = (u8 *)D_00251B80;
+    reg_a0 = (u8 *)join_select_prompt_draw_table_2;
     goto block_54;
 block_53:
     reg_d0.w = 0;
@@ -586,7 +602,7 @@ block_53:
     if (reg_d0.h[0] == 0xC) {
         return;
     }
-    reg_a0 = (u8 *)D_00251BA0;
+    reg_a0 = (u8 *)join_select_prompt_draw_table_3;
     goto block_54;
 block_52:
     if (*(u8 *)(reg_a5 + 6) == 0) {
@@ -654,10 +670,10 @@ block_54:
     text_layer_print();
 }
 
-extern u16 D_0028C138[];
+extern u16 join_select_object_defaults_set_table[];
 
 void join_select_object_defaults_set(void) {
-    reg_a0 = (u8 *)D_0028C138;
+    reg_a0 = (u8 *)join_select_object_defaults_set_table;
     *(u16 *)(reg_a1 + 2) = (u16) *(u16 *)reg_a0;
     reg_a0 += 2;
     *(u16 *)(reg_a1 + 0x10) = (u16) *(u16 *)reg_a0;
@@ -696,14 +712,14 @@ extern s16 D_0029BEE6[];
 extern s16 D_0029BEEE[];
 extern u16 D_0029BEFC[];
 extern u16 D_0029BEFE[];
-extern u16 D_0029BF00[];
+extern u16 join_select_object_spawn_buffer[];
 extern u16 D_0029BF02[];
 extern u8 D_0029BF04[];
 extern u8 D_0029BF05[];
 extern s16 D_0029BF08[];
 extern s16 D_0029BF0A[];
 extern s16 D_0029BF12[];
-extern u16 D_0029BF20[];
+extern u16 join_select_object_spawn_buffer_2[];
 extern u16 D_0029BF22[];
 extern u16 D_0029BF24[];
 extern u16 D_0029BF26[];
@@ -748,7 +764,7 @@ void join_select_object_spawn(void) {
         reg_d0.h[0] += reg_d0.h[0];
         reg_d0.h[0] += reg_d0.h[0];
         reg_a0 += reg_d0.h[0];
-        D_0029BF00[0] = *(u16 *)reg_a0;
+        join_select_object_spawn_buffer[0] = *(u16 *)reg_a0;
         reg_a0 += 2;
         D_0029BF02[0] = *(u16 *)reg_a0;
         reg_a0 += 2;
@@ -775,7 +791,7 @@ void join_select_object_spawn(void) {
         reg_a0 += 2;
         D_0029BF26[0] = *(u16 *)reg_a0;
         reg_a0 += 2;
-        D_0029BF20[0] = *(u16 *)reg_a0;
+        join_select_object_spawn_buffer_2[0] = *(u16 *)reg_a0;
         reg_a0 += 2;
         D_0029BF22[0] = *(u16 *)reg_a0;
         reg_a0 += 2;
@@ -862,15 +878,17 @@ void join_select_objects_update(void) {
 
 s32 sprite_draw_layer5();
 s32 sprite_draw_layer5_zoom_keep();
-extern u8 D_00251C20[];
-extern u8 D_00251D70[];
-extern u8 D_00251DF0[];
-extern u8 D_00260F70[];
+extern u8 join_select_object_update_table[];
+extern u8 join_select_object_update_table_2[];
+extern u8 join_select_object_update_table_3[];
+extern u8 join_select_object_update_table_4[];
 extern u16 g_frame_mod8;
 extern u16 g_frame_mod2;
 
 void join_select_object_update(void) {
+#ifndef DDPDOJ_PC
     s32 sprite_palette_load();
+#endif
     u8 flag;
 
     if (ENTITY(reg_a6)->y.h != 0) {
@@ -880,7 +898,7 @@ void join_select_object_update(void) {
     flag = ENTITY(reg_a6)->flags.b[1];
     if (!(flag & 2)) {
         ENTITY(reg_a6)->flags.b[1] = flag | 2;
-        reg_a0 = (u8 *)D_00260F70;
+        reg_a0 = (u8 *)join_select_object_update_table_4;
         reg_d0.w = 0x16;
         sprite_palette_load();
         reg_tmp.h[1] = (*(u16 *)(reg_a6 + (0x1C)));
@@ -893,7 +911,7 @@ void join_select_object_update(void) {
     reg_d1.h[0] = (*(u16 *)(reg_a6 + (6)));
     reg_d1.w += 0xF400E400;
     reg_d0.h[0] = (*(u16 *)(reg_a6 + (0xA)));
-    reg_a0 = (u8 *)D_00251C20;
+    reg_a0 = (u8 *)join_select_object_update_table;
     reg_a0 += reg_d0.h[0];
     reg_d2.h[1] = (*(u16 *)(reg_a0 + (0)));
     reg_d2.h[0] = *(u16 *)(reg_a0 + 2);
@@ -920,7 +938,7 @@ void join_select_object_update(void) {
         reg_d6.w = 0x80008000;
         sprite_draw_layer5_zoom_keep();
         if (g_frame_mod8 != 0) {
-            reg_a1 = (u8 *)D_00251DF0;
+            reg_a1 = (u8 *)join_select_object_update_table_3;
             reg_d0.h[0] = 0x1E;
             reg_d6.w = 0x80005000;
             reg_d0.h[0] &= g_game_frame;
@@ -948,7 +966,7 @@ skip_3:
         ENTITY(reg_a6)->move.h += 8;
 skip_4:
         if (g_frame_mod2 != 0) {
-            reg_a0 = (u8 *)D_00251D70;
+            reg_a0 = (u8 *)join_select_object_update_table_2;
             reg_d0.h[0] = 0x1E;
             reg_d0.h[0] &= g_game_frame;
             reg_d0.h[0] += reg_d0.h[0];
@@ -1036,17 +1054,17 @@ u8 D_00251B40[32] = {
     0x20, 0x20, 0x20, 0x20, 0x20, 0x20, 0x20, 0x20, 0x20, 0x20, 0x20, 0x20, 0x20, 0x20, 0x00, 0x00,
 };
 
-u8 D_00251B60[32] = {
+u8 join_select_prompt_draw_table[32] = {
     0x20, 0x50, 0x52, 0x45, 0x53, 0x53, 0x20, 0x53, 0x54, 0x41, 0x52, 0x54, 0x20, 0x20, 0x00, 0x00,
     0x20, 0x20, 0x20, 0x20, 0x20, 0x20, 0x20, 0x20, 0x20, 0x20, 0x20, 0x20, 0x20, 0x20, 0x00, 0x00,
 };
 
-u8 D_00251B80[32] = {
+u8 join_select_prompt_draw_table_2[32] = {
     0x20, 0x20, 0x46, 0x52, 0x45, 0x45, 0x20, 0x50, 0x4C, 0x41, 0x59, 0x20, 0x20, 0x20, 0x00, 0x00,
     0x20, 0x20, 0x20, 0x20, 0x20, 0x20, 0x20, 0x20, 0x20, 0x20, 0x20, 0x20, 0x20, 0x20, 0x00, 0x00,
 };
 
-u8 D_00251BA0[32] = {
+u8 join_select_prompt_draw_table_3[32] = {
     0x20, 0x49, 0x4E, 0x53, 0x45, 0x52, 0x54, 0x20, 0x43, 0x4F, 0x49, 0x4E, 0x20, 0x20, 0x00, 0x00,
     0x20, 0x20, 0x20, 0x20, 0x20, 0x20, 0x20, 0x20, 0x20, 0x20, 0x20, 0x20, 0x20, 0x20, 0x00, 0x00,
 };
@@ -1066,7 +1084,7 @@ u8 D_00251C00[32] = {
     0x20, 0x31, 0x20, 0x4D, 0x4F, 0x52, 0x45, 0x20, 0x43, 0x4F, 0x49, 0x4E, 0x20, 0x20, 0x00, 0x00,
 };
 
-u8 D_00251C20[160] = {
+u8 join_select_object_update_table[160] = {
     0x00, 0x00, 0xF7, 0x0A, 0x00, 0x00, 0xF8, 0x0A, 0x00, 0x00, 0xF9, 0x0A, 0x00, 0x00, 0xFA, 0x0A,
     0x00, 0x00, 0xFB, 0x0A, 0x00, 0x00, 0xFC, 0x0A, 0x00, 0x00, 0xFD, 0x0A, 0x00, 0x00, 0xFE, 0x0A,
     0x00, 0x00, 0xFF, 0x0A, 0x00, 0x00, 0x00, 0x0B, 0x00, 0x00, 0x01, 0x0B, 0x00, 0x00, 0x02, 0x0B,
@@ -1102,7 +1120,7 @@ u8 D_00251D40[48] = {
     0x00, 0x00, 0x23, 0x0B, 0x00, 0x00, 0x24, 0x0B, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00,
 };
 
-u8 D_00251D70[128] = {
+u8 join_select_object_update_table_2[128] = {
     0x00, 0x08, 0x00, 0x80, 0x00, 0x10, 0x00, 0x80, 0x00, 0x18, 0x00, 0x80, 0x00, 0x20, 0x00, 0x80,
     0x00, 0x28, 0x00, 0x80, 0x00, 0x30, 0x00, 0x80, 0x00, 0x38, 0x00, 0x80, 0x00, 0x40, 0x00, 0x80,
     0x00, 0x48, 0x00, 0x80, 0x00, 0x50, 0x00, 0x80, 0x00, 0x58, 0x00, 0x80, 0x00, 0x60, 0x00, 0x80,
@@ -1113,7 +1131,7 @@ u8 D_00251D70[128] = {
     0x00, 0x68, 0x00, 0x80, 0x00, 0x70, 0x00, 0x80, 0x00, 0x78, 0x00, 0x80, 0x00, 0x80, 0x00, 0x80,
 };
 
-u8 D_00251DF0[256] = {
+u8 join_select_object_update_table_3[256] = {
     0x00, 0x80, 0x00, 0x08, 0x00, 0x80, 0x00, 0x10, 0x00, 0x80, 0x00, 0x18, 0x00, 0x80, 0x00, 0x20,
     0x00, 0x80, 0x00, 0x28, 0x00, 0x80, 0x00, 0x30, 0x00, 0x80, 0x00, 0x38, 0x00, 0x80, 0x00, 0x40,
     0x00, 0x80, 0x00, 0x48, 0x00, 0x80, 0x00, 0x50, 0x00, 0x80, 0x00, 0x58, 0x00, 0x80, 0x00, 0x60,
@@ -1132,21 +1150,21 @@ u8 D_00251DF0[256] = {
     0x00, 0x80, 0x00, 0x68, 0x00, 0x80, 0x00, 0x70, 0x00, 0x80, 0x00, 0x78, 0x00, 0x80, 0x00, 0x80,
 };
 
-u16 D_0028C128[4] = {
+u16 join_select_ship_step_table[4] = {
     0x0000, 0x0600, 0x0000, 0x0000,
 };
 
-u16 D_0028C130[4] = {
+u16 join_select_doll_step_table[4] = {
     0x0000, 0x0600, 0x0C00, 0x0000,
 };
 
-u16 D_0028C138[4] = {
+u16 join_select_object_defaults_set_table[4] = {
     0x0000, 0x0101, 0x0200, 0x0000,
 };
 
 /* .bss (the compiler lays these out in reverse) */
-u8 D_0029BF40[16];
-u8 D_0029BF30[16];
-u16 D_0029BF20[8];
-u16 D_0029BF00[16];
+u8 join_select_p1_table_at_8[16];
+u8 join_select_p2_table_at_8[16];
+u16 join_select_object_spawn_buffer_2[8];
+u16 join_select_object_spawn_buffer[16];
 u8 D_0029BEE0[32];

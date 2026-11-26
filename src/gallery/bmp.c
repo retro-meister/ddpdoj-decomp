@@ -49,6 +49,12 @@ s32 bmp_upload_texture(SpriteInfo *tex, s16 tbp, s16 cbp, u8 *bmp, s32 x, s32 y)
     u64 chunkHeight;
     switch (g_gallery->stepState) {
         case 0:
+#ifdef DDPDOJ_PC
+            if (g_gallery->dstSize < 54 || bmp[0] != 'B' || bmp[1] != 'M') {
+                g_gallery->assetError = 1;
+                return 0;
+            }
+#endif
             g_bmp_file_ptr = bmp;
             g_bmp_info_ptr = bmp + 0xE;
             memcpy(&g_bmp_ctx, g_bmp_info_ptr, 0x28);
@@ -56,6 +62,19 @@ s32 bmp_upload_texture(SpriteInfo *tex, s16 tbp, s16 cbp, u8 *bmp, s32 x, s32 y)
             g_bmp_palette_ptr = g_bmp_info_ptr + 0x28;
             g_bmp_dst_stride = g_bmp_src_stride;
             memcpy(&offBits, bmp + 0xA, 4);
+#ifdef DDPDOJ_PC
+            if (g_bmp_ctx.biSize != 40 || g_bmp_ctx.biPlanes != 1 || g_bmp_ctx.biCompression != 0 ||
+                g_bmp_ctx.biWidth == 0 || g_bmp_ctx.biWidth > 1024 ||
+                g_bmp_ctx.biHeight == 0 || g_bmp_ctx.biHeight > 1024 ||
+                g_bmp_ctx.biHeight % 8 != 0 ||
+                (g_bmp_ctx.biBitCount != 4 && g_bmp_ctx.biBitCount != 8) ||
+                offBits < 54u + (4u << g_bmp_ctx.biBitCount) ||
+                offBits > (u32)g_gallery->dstSize ||
+                g_bmp_src_stride * g_bmp_ctx.biHeight > (u32)g_gallery->dstSize - offBits) {
+                g_gallery->assetError = 1;
+                return 0;
+            }
+#endif
             g_bmp_src_row = bmp + offBits;
             g_bmp_src_row += (g_bmp_ctx.biHeight - 1) * g_bmp_src_stride;
             g_bmp_pixel_buf = g_gallery->bmpScratchBuf;

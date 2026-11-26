@@ -3,7 +3,7 @@
 #include "explosion.h"
 
 struct D002637f0Record { u16 w0[10]; void *p1; u16 w2[4]; };
-extern struct D002637f0Record D_002637F0;
+extern struct D002637f0Record stage4_lift_start_value;
 
 void heavy_cannon_target_pick_a(void);
 void heavy_cannon_target_pick_b(void);
@@ -25,18 +25,18 @@ s32 enemy_set_task_state();
 s32 enemy_init_entities();
 s32 enemy_path_start();
 s32 sprite_palette_load();
-extern u8 D_00261870[];
-extern u8 D_002637B0[];
-extern u8 D_0028D9AC[4];
+extern u8 stage4_gate_start_table[];
+extern u8 stage4_gate_start_table_2[];
+extern u8 stage4_gate_start_table_3[4];
 extern u16 g_scroll_line;
 extern u16 g_side_scroll_x[];
 extern s8 enemy_move_end_requested;
 
 void stage4_gate_start(void) {
 
-    reg_a0 = D_002637B0;
+    reg_a0 = stage4_gate_start_table_2;
     enemy_init_entities();
-    reg_a0 = D_0028D9AC;
+    reg_a0 = stage4_gate_start_table_3;
     reg_d0.w = 1;
     enemy_set_task_state();
     enemy_path_start();
@@ -47,7 +47,7 @@ void stage4_gate_start(void) {
         ENTITY(reg_a6)[1].x.h += 0x7FFF + 0x7801;
         reg_d0.h[0] = g_side_scroll_x[0];
         ENTITY(reg_a6)[1].x.h -= reg_d0.h[0];
-        reg_a0 = D_00261870;
+        reg_a0 = stage4_gate_start_table;
         reg_d0.h[0] = 0x16;
         if (g_scroll_line == 0x19) {
             reg_d0.h[0] = 0x14;
@@ -130,20 +130,20 @@ void stage4_lift_first(void) {
 
 typedef void (*Fn)();
 
-extern u8 D_00261730[];
-extern u8 D_00263840[];
-extern u8 D_00263860[];
+extern u8 stage4_scroll_palettes_at_48[];
+extern u8 stage4_lift_start_table_2[];
+extern u8 stage4_lift_start_table_3[];
 s32 mounted_tank_a_start();
 s32 mounted_tank_b_start();
 s32 enemy_init_entities_n();
 s32 rng_next_unsigned();
-extern u8 D_00263810[];
+extern u8 stage4_lift_start_table[];
 
 void stage4_lift_start(void) {
-    reg_a0 = (u8 *)D_00263860;
+    reg_a0 = (u8 *)stage4_lift_start_table_3;
     reg_d7.w = 0;
     enemy_init_entities_n();
-    reg_a0 = (u8 *)D_00263840;
+    reg_a0 = (u8 *)stage4_lift_start_table_2;
     reg_d0.w = 0xB;
     enemy_set_task_state();
     enemy_path_start();
@@ -152,7 +152,7 @@ void stage4_lift_start(void) {
     }
     ENTITY(reg_a6)->y.h -= 0x1440;
     ENTITY(reg_a6)->x.h -= 0x1D40;
-    reg_a0 = (u8 *)D_00261730;
+    reg_a0 = (u8 *)stage4_scroll_palettes_at_48;
     reg_d0.h[0] = 0x17;
     sprite_palette_load();
     rng_next_unsigned();
@@ -161,7 +161,7 @@ void stage4_lift_start(void) {
     }
     reg_d7.w = 4;
     reg_a0 = (u8 *)mounted_tank_b_start;
-    reg_a3 = (u8 *)((u8 *)&D_002637F0);
+    reg_a3 = (u8 *)((u8 *)&stage4_lift_start_value);
     reg_d0.b[0] = ENTITY(reg_a6)->misc.b.draw_layer;
     if ((s8) reg_d0.b[0] < 0) {
         ENTITY(reg_a6)->misc.b.draw_layer = (u8) ~(s8) ENTITY(reg_a6)->misc.b.draw_layer;
@@ -179,7 +179,7 @@ void stage4_lift_start(void) {
         ENTITY(reg_a6)[10].flags.sh = 0;
         reg_d7.w = 1;
         reg_a0 = (u8 *)mounted_tank_a_start;
-        reg_a3 = (u8 *)D_00263810;
+        reg_a3 = (u8 *)stage4_lift_start_table;
     }
     reg_a6 += 0x20;
     do {
@@ -191,7 +191,7 @@ void stage4_lift_start(void) {
 }
 
 extern u8 g_direction64_offsets_2CC[];
-extern u8 D_00263880[];
+extern u8 stage4_lift_table[];
 s32 mounted_tank_a();
 s32 mounted_tank_b();
 s32 bullet_fire256_2way();
@@ -309,7 +309,7 @@ next_200:
     if ((s32)reg_tmp.b[0] > 0) goto next_240;
     *(u8 *)(reg_a5 + 0x1F) = *(u8 *)(reg_a5 + 0x1E);
     reg_d0.h[0] = *(u16 *)(reg_a5 + 0x20);
-    reg_a0 = (u8 *)D_00263880;
+    reg_a0 = (u8 *)stage4_lift_table;
     ENTITY(reg_a6)->draw.h = (reg_d0.h[0] != 0) ? *(u16 *)((u8 *)reg_a0 + ((s16)reg_d0.h[0] & ~1)) : *(u16 *)reg_a0;
     ENTITY(reg_a6)->sprite.h = ((reg_d0.h[0] + 2) != 0) ? *(u16 *)((u8 *)reg_a0 + ((s16)(reg_d0.h[0] + 2) & ~1)) : *(u16 *)reg_a0;
     *(u16 *)(reg_a5 + 0x20) -= 4;
@@ -614,10 +614,10 @@ s32 stage4_heavy_cannon_first(void) {
     return enemy_set_entity_count(2);
 }
 
-extern u8 D_002616F0[];
-extern u8 D_002617B0[];
-extern u8 D_002617F0[];
-extern u8 D_00263890[];
+extern u8 stage4_heavy_cannon_start_table[];
+extern u8 stage4_heavy_cannon_start_table_2[];
+extern u8 stage4_heavy_cannon_start_table_3[];
+extern u8 stage4_heavy_cannon_start_table_4[];
 extern u8 D_002638B0[];
 extern u16 g_enemy_signal_2;
 extern u16 g_enemy_signal_0;
@@ -631,7 +631,7 @@ void stage4_heavy_cannon_start(void) {
     reg_tmp.w = (u32) reg_a0;
     *(u16 *)(reg_a5 + 0x44) = (u16) reg_tmp.h[1];
     *(u16 *)(reg_a5 + 0x46) = (u16) reg_tmp.h[0];
-    reg_a0 = D_00263890;
+    reg_a0 = stage4_heavy_cannon_start_table_4;
     reg_d0.w = 0xF;
     enemy_set_task_state();
     enemy_path_start();
@@ -639,24 +639,24 @@ void stage4_heavy_cannon_start(void) {
         reg_d0.h[0] = g_rank_6_16;
         *(u8 *)(reg_a5 + 0x1C) -= reg_d0.b[0];
         g_enemy_signal_0 = 1;
-        reg_a0 = D_002616F0;
+        reg_a0 = stage4_heavy_cannon_start_table;
         reg_d0.h[0] = 0xF;
         g_enemy_signal_2 = 1;
         g_bullet_limit_raised_1[0] = 1;
         sprite_palette_load();
-        reg_a0 = D_002617B0;
+        reg_a0 = stage4_heavy_cannon_start_table_2;
         reg_d0.h[0] = 0x10;
         sprite_palette_load();
-        reg_a0 = D_002617F0;
+        reg_a0 = stage4_heavy_cannon_start_table_3;
         reg_d0.h[0] = 0x11;
         sprite_palette_load();
     }
 }
 
 extern u8 g_direction64_offsets_432[];
-extern u8 D_00263940[];
-extern u8 D_00263960[];
-extern u8 D_002639A0[];
+extern u8 stage4_heavy_cannon_table[];
+extern u8 stage4_heavy_cannon_table_2[];
+extern u8 stage4_heavy_cannon_table_3[];
 extern u8 D_002639B0[];
 extern s16 g_player2[];
 extern s16 g_player1[];
@@ -999,7 +999,7 @@ next_520:
     *(u16 *)(reg_a5 + 0x18) = 0;
 block_d:
     reg_d0.h[0] = *(u16 *)(reg_a5 + 0x20);
-    reg_a0 = (u8 *)D_00263960;
+    reg_a0 = (u8 *)stage4_heavy_cannon_table_2;
     ENTITY(reg_a6)->draw.h = (reg_d0.h[0] != 0) ? *(u16 *)((u8 *)reg_a0 + ((s16)reg_d0.h[0] & ~1)) : *(u16 *)reg_a0;
     ENTITY(reg_a6)->sprite.h = ((reg_d0.h[0] + 2) != 0) ? *(u16 *)((u8 *)reg_a0 + ((s16)(reg_d0.h[0] + 2) & ~1)) : *(u16 *)reg_a0;
 block_e:
@@ -1018,7 +1018,7 @@ block_e:
     if (*(u16 *)(reg_a5 + 0x18) != 2) goto block_rts;
     reg_d2.h[0] = *(u16 *)(reg_a5 + 0x22);
     if ((s16) reg_d2.h[0] < 0) goto block_rts;
-    reg_a0 = (u8 *)D_002639A0;
+    reg_a0 = (u8 *)stage4_heavy_cannon_table_3;
     reg_d2.h[1] = (reg_d2.h[0]) ? *(u16 *)((u8 *)reg_a0 + ((s16)reg_d2.h[0] & ~1)) : *(u16 *)reg_a0;
     reg_d2.h[0] = ((reg_d2.h[0] + 2) != 0) ? *(u16 *)((u8 *)reg_a0 + ((s16)(reg_d2.h[0] + 2) & ~1)) : *(u16 *)reg_a0;
     reg_d1.h[1] = ENTITY(reg_a6)->y.h;
@@ -1116,7 +1116,7 @@ next_6260:
     reg_call_target();
     rng_next_unsigned();
     reg_d0.h[0] &= 7;
-    reg_a1 = (u8 *)D_00263940;
+    reg_a1 = (u8 *)stage4_heavy_cannon_table;
     reg_d0.h[0] += reg_d0.h[0];
     reg_d0.h[0] = (reg_d0.h[0] != 0) ? *(u16 *)((u8 *)reg_a1 + ((s16)reg_d0.h[0] & ~1)) : (u16) *(u16 *)reg_a1;
     explosion_spawn();
@@ -1217,18 +1217,18 @@ void stage4_heavy_cannon_casing_first(void) {
 }
 
 s32 rng_next();
-extern u8 D_00263A30[];
-extern u8 D_00263EF0[];
+extern u8 stage4_heavy_cannon_casing_start_table[];
+extern u8 stage4_heavy_cannon_casing_start_table_2[];
 
 void stage4_heavy_cannon_casing_start(void) {
     u16 temp_a1;
 
-    reg_a0 = D_00263A30;
+    reg_a0 = stage4_heavy_cannon_casing_start_table;
     enemy_init_entities();
     ENTITY(reg_a6)->y.h = (u16) *(u16 *)(reg_a5 + 0x16);
     temp_a1 = *(u16 *)(reg_a5 + 0x18);
     ENTITY(reg_a6)->x.h = temp_a1;
-    reg_a0 = D_00263EF0;
+    reg_a0 = stage4_heavy_cannon_casing_start_table_2;
     reg_d0.w = 7;
     enemy_set_task_state();
     rng_next();
@@ -1413,10 +1413,10 @@ void stage4_wave_cannon_first(void) {
     enemy_set_entity_count(2);
 }
 
-extern u8 D_00261830[];
+extern u8 stage4_wave_cannon_start_table[];
 extern u8 D_002618B0[];
-extern u8 D_002618F0[];
-extern u8 D_00263B50[];
+extern u8 stage4_wave_cannon_start_table_2[];
+extern u8 stage4_wave_cannon_start_table_3[];
 extern u8 D_00263B80[];
 
 void stage4_wave_cannon_start(void) {
@@ -1425,7 +1425,7 @@ void stage4_wave_cannon_start(void) {
     reg_tmp.w = (u32) reg_a0;
     *(u16 *)(reg_a5 + 0x44) = (u16) reg_tmp.h[1];
     *(u16 *)(reg_a5 + 0x46) = (u16) reg_tmp.h[0];
-    reg_a0 = D_00263B50;
+    reg_a0 = stage4_wave_cannon_start_table_3;
     reg_d0.w = 0x12;
     enemy_set_task_state();
     enemy_path_start();
@@ -1433,18 +1433,18 @@ void stage4_wave_cannon_start(void) {
         reg_a0 = D_002618B0;
         reg_d0.h[0] = 0x13;
         sprite_palette_load();
-        reg_a0 = D_002618F0;
+        reg_a0 = stage4_wave_cannon_start_table_2;
         reg_d0.h[0] = 0x14;
         sprite_palette_load();
-        reg_a0 = D_00261830;
+        reg_a0 = stage4_wave_cannon_start_table;
         reg_d0.h[0] = 0x15;
         sprite_palette_load();
     }
 }
 
-extern u8 D_00261770[];
-extern u8 D_00263C10[];
-extern u8 D_00263C30[];
+extern u8 stage4_wave_cannon_table[];
+extern u8 stage4_wave_cannon_table_2[];
+extern u8 stage4_wave_cannon_table_3[];
 extern u8 D_00263C70[];
 extern u8 D_00263C80[];
 extern u8 D_00263C90[];
@@ -1605,7 +1605,7 @@ next_16:
     if ((s32) reg_tmp.b[0] > 0) goto next_17;
     *(u8 *)(reg_a5 + 0x23) = (u8) *(u8 *)(reg_a5 + 0x22);
     reg_d0.h[0] = *(u16 *)(reg_a5 + 0x24);
-    reg_a0 = (u8 *)D_00263C30;
+    reg_a0 = (u8 *)stage4_wave_cannon_table_3;
     ENTITY(reg_a6)[1].draw.h = (reg_d0.h[0] != 0) ? *(u16 *)((u8 *)reg_a0 + ((s16)reg_d0.h[0] & ~1)) : *(u16 *)reg_a0;
     ENTITY(reg_a6)[1].sprite.h = ((reg_d0.h[0] + 2) != 0) ? *(u16 *)((u8 *)reg_a0 + ((s16)(reg_d0.h[0] + 2) & ~1)) : *(u16 *)reg_a0;
     *(u16 *)(reg_a5 + 0x24) += 4;
@@ -1672,7 +1672,7 @@ block_c:
     reg_tmp.w = 0x1DD3;
     ENTITY(reg_a6)->draw.h = (u16) reg_tmp.h[1];
     ENTITY(reg_a6)->sprite.h = (u16) reg_tmp.h[0];
-    reg_a0 = (u8 *)D_00261770;
+    reg_a0 = (u8 *)stage4_wave_cannon_table;
     reg_d0.h[0] = 0x13;
     sprite_palette_load();
     goto next_26;
@@ -1714,7 +1714,7 @@ next_25:
     reg_call_target();
     rng_next_unsigned();
     reg_d0.h[0] &= 7;
-    reg_a0 = (u8 *)D_00263C10;
+    reg_a0 = (u8 *)stage4_wave_cannon_table_2;
     reg_d0.h[0] += reg_d0.h[0];
     reg_d0.h[0] = (reg_d0.h[0] != 0) ? *(u16 *)((u8 *)reg_a0 + ((s16)reg_d0.h[0] & ~1)) : *(u16 *)reg_a0;
     explosion_spawn();
@@ -1878,16 +1878,16 @@ void stage4_reactor_first(void) {
     enemy_set_entity_count(0);
 }
 
-extern u8 D_00263D00[];
-extern u8 D_0028D9B0[8];
+extern u8 stage4_reactor_start_table[];
+extern u8 stage4_reactor_start_table_2[8];
 
 void stage4_reactor_start(void) {
-    reg_a0 = D_00263D00;
+    reg_a0 = stage4_reactor_start_table;
     enemy_init_entities();
     reg_tmp.w = (u32)reg_a0;
     *(u16 *)(reg_a5 + 0x44) = reg_tmp.h[1];
     *(u16 *)(reg_a5 + 0x46) = reg_tmp.h[0];
-    reg_a0 = D_0028D9B0;
+    reg_a0 = stage4_reactor_start_table_2;
     reg_d0.w = 2;
     enemy_set_task_state();
     enemy_path_start();
@@ -1898,7 +1898,7 @@ void stage4_reactor_start(void) {
     }
 }
 
-extern u16 D_00263D20[];
+extern u16 stage4_reactor_table[];
 
 void stage4_reactor(void) {
     enemy_path_step();
@@ -1925,7 +1925,7 @@ block_5:
         if ((s32) reg_tmp.b[0] <= 0) {
             *(u8 *)(reg_a5 + 0x19) = (u8) *(u8 *)(reg_a5 + 0x18);
             reg_d0.h[0] = *(u16 *)(reg_a5 + 0x1A);
-            reg_a0 = (u8 *)(D_00263D20);
+            reg_a0 = (u8 *)(stage4_reactor_table);
             ENTITY(reg_a6)->draw.h = (reg_d0.h[0] != 0) ? *(u16 *)((u8 *)reg_a0 + ((s16)reg_d0.h[0] & ~1)) : *(u16 *)reg_a0;
             ENTITY(reg_a6)->sprite.h = ((reg_d0.h[0] + 2) != 0) ? *(u16 *)((u8 *)reg_a0 + ((s16)(reg_d0.h[0] + 2) & ~1)) : *(u16 *)reg_a0;
             *(u16 *)(reg_a5 + 0x1A) -= 4;
@@ -1942,17 +1942,17 @@ void crane_turret_first(void) {
     enemy_set_entity_count(0);
 }
 
-extern s8 D_00263D60[];
-extern s8 D_00263D70[];
-extern s8 D_00263D90[];
+extern s8 crane_turret_start_table[];
+extern s8 crane_turret_start_table_2[];
+extern s8 crane_turret_start_table_3[];
 extern u16 g_rank_3_16;
 extern u16 g_rank_4_16;
 extern u16 g_stage_x2;
 
 void crane_turret_start(void) {
-    (*(s8 **)&reg_a0) = D_00263D90;
+    (*(s8 **)&reg_a0) = crane_turret_start_table_3;
     enemy_init_entities();
-    (*(s8 **)&reg_a0) = D_00263D70;
+    (*(s8 **)&reg_a0) = crane_turret_start_table_2;
     reg_d0.w = 0xE;
     enemy_set_task_state();
     enemy_path_start();
@@ -1974,7 +1974,7 @@ void crane_turret_start(void) {
         reg_tmp.w += reg_d0.w;
         *(u16 *)(reg_a5 + 0x24) = (u16) reg_tmp.h[1];
         *(u16 *)(reg_a5 + 0x26) = (u16) reg_tmp.h[0];
-        (*(s8 **)&reg_a0) = D_00263D60;
+        (*(s8 **)&reg_a0) = crane_turret_start_table;
         reg_d0.h[0] = g_stage_x2;
         (*(s8 **)&reg_a0) = &(*(s8 **)&reg_a0)[reg_d0.h[0]];
         ENTITY(reg_a6)->attr.sb.palette = (s8) *((s8 *)reg_a0);
@@ -1985,7 +1985,7 @@ void crane_turret_start(void) {
     }
 }
 
-extern u8 D_00263DB0[];
+extern u8 crane_turret_table[];
 
 void crane_turret(void) {
     u8 *var_a0;
@@ -2156,7 +2156,7 @@ block_13:
                                 }
 block_45:
                                 reg_d0.h[0] = *(u16 *)(reg_a5 + 0x20);
-                                reg_a0 = (u8 *)D_00263DB0;
+                                reg_a0 = (u8 *)crane_turret_table;
                                 reg_a0 += reg_d0.h[0];
                                 ENTITY(reg_a6)->draw.h = (u16) *(u16 *)reg_a0;
                                 reg_a0 += 2;
@@ -2240,15 +2240,15 @@ void rail_turret_first(void) {
     enemy_set_entity_count(1);
 }
 
-extern u8 D_00263E10[];
-extern u8 D_00263E40[];
+extern u8 rail_turret_start_table[];
+extern u8 rail_turret_start_table_2[];
 
 void rail_turret_start(void) {
     u16 temp_a0;
 
-    reg_a0 = D_00263E40;
+    reg_a0 = rail_turret_start_table_2;
     enemy_init_entities();
-    reg_a0 = D_00263E10;
+    reg_a0 = rail_turret_start_table;
     reg_d0.w = 0x13;
     enemy_set_task_state();
     enemy_path_start();
@@ -2279,9 +2279,9 @@ void rail_turret_start(void) {
 s32 pickup_spawn_variant();
 s32 bullet_fire256_fast();
 s32 entity_follow_scroll();
-extern u16 D_00263E80[];
-extern u16 D_0028D9B8[4];
-extern u16 D_0028D9C0[4];
+extern u16 rail_turret_table[];
+extern u16 rail_turret_table_2[4];
+extern u16 rail_turret_table_3[4];
 extern u16 g_rank_2_16;
 extern u16 g_loop;
 void rail_turret(void) {
@@ -2374,7 +2374,7 @@ next_240:
     reg_tmp.h[1] = *(u16 *)(reg_a5 + 0x34);
     reg_tmp.h[0] = *(u16 *)(reg_a5 + 0x36);
     if (reg_tmp.w != 0) goto next_250;
-    reg_a1 = (u8 *)(D_0028D9B8);
+    reg_a1 = (u8 *)(rail_turret_table_2);
     reg_tmp.w = (u32) reg_a1;
     *(u16 *)(reg_a5 + 0x34) = (u16) reg_tmp.h[1];
     *(u16 *)(reg_a5 + 0x36) = (u16) reg_tmp.h[0];
@@ -2391,9 +2391,9 @@ next_260:
     reg_d0.h[0] = ENTITY(reg_a6)->y.h;
     reg_d1.h[0] = ENTITY(reg_a6)->x.h;
     reg_d0.h[0] += 0x800;
-    reg_a1 = (u8 *)(D_0028D9B8);
+    reg_a1 = (u8 *)(rail_turret_table_2);
     if ((s32) reg_d0.h[0] > (s32) reg_d2.h[0]) goto next_270;
-    reg_a1 = (u8 *)(D_0028D9C0);
+    reg_a1 = (u8 *)(rail_turret_table_3);
 next_270:
     reg_tmp.w = (u32) reg_a1;
     *(u16 *)(reg_a5 + 0x34) = (u16) reg_tmp.h[1];
@@ -2458,7 +2458,7 @@ next_380:
     *(u8 *)(reg_a5 + 0x3B) = (u8) *(u8 *)(reg_a5 + 0x3A);
 block_data_set:
     reg_d0.h[0] = *(u16 *)(reg_a5 + 0x20);
-    reg_a0 = (u8 *)(D_00263E80);
+    reg_a0 = (u8 *)(rail_turret_table);
     reg_a0 += reg_d0.h[0];
     ENTITY(reg_a6)[1].draw.h = *(u16 *)reg_a0;
     reg_a0 += 2;
@@ -2683,12 +2683,12 @@ void stage4_tachyon_particle_first(void) {
 
 s32 rng_next_0_to_2();
 s32 rng_next_pair_large_d1();
-extern u16 D_00263EA0[];
+extern u16 stage4_tachyon_particle_start_table[];
 extern u16 D_00263EB8[];
-extern u16 D_00263ED0[];
+extern u16 stage4_tachyon_particle_start_table_2[];
 
 void stage4_tachyon_particle_start(void) {
-    reg_a0 = (u8 *)(D_00263ED0);
+    reg_a0 = (u8 *)(stage4_tachyon_particle_start_table_2);
     enemy_init_entities();
     reg_a0 = (u8 *)(D_00263EB8);
     reg_d0.w = 6;
@@ -2707,7 +2707,7 @@ void stage4_tachyon_particle_start(void) {
     reg_d0.b[0] += 0x40;
     ENTITY(reg_a6)->move.b.dir = (u8) reg_d0.b[0];
     rng_next_0_to_2();
-    reg_a0 = (u8 *)(D_00263EA0);
+    reg_a0 = (u8 *)(stage4_tachyon_particle_start_table);
     reg_d0.h[0] *= 8;
     reg_a0 += reg_d0.h[0];
     ENTITY(reg_a6)->draw.h = (u16) *(u16 *)reg_a0;
@@ -2860,40 +2860,40 @@ void heavy_cannon_part2_remove(void) {
 
 extern u8 text_start[];
 
-u8 D_002637B0[64] = {
+u8 stage4_gate_start_table_2[64] = {
     0x00, 0xA0, 0x00, 0xE0, 0x00, 0xEA, 0x00, 0x00, 0x83, 0x1D, 0xB0, 0x20, 0x00, 0x20, 0x00, 0x1C,
     0x00, 0x16, 0x00, 0x10, 0xFF, 0x7F, 0x00, 0x10, 0x16, 0x00, 0x00, 0x00, 0x00, 0xA0, 0x00, 0xE0,
     0x00, 0xEC, 0x00, 0x00, 0x82, 0x1D, 0xA0, 0x20, 0x00, 0x20, 0x00, 0x1C, 0x00, 0x0E, 0x00, 0x14,
     0xFF, 0x7F, 0x00, 0x10, 0x16, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00,
 };
 
-struct D002637f0Record D_002637F0 = {
+struct D002637f0Record stage4_lift_start_value = {
     { 0x1000, 0xF980, 0x0010, 0x0600, 0xFA00, 0x0010, 0xFC00, 0xF900, 0x0010, 0x0B00 },
     text_start,
     { 0xFF40, 0x0080, 0x0010, 0x0000 },
 };
 
-u8 D_00263810[48] = {
+u8 stage4_lift_start_table[48] = {
     0x00, 0x0E, 0x00, 0x02, 0x30, 0x00, 0x80, 0xFF, 0x00, 0x03, 0x30, 0x00, 0x00, 0x10, 0x80, 0x02,
     0x30, 0x00, 0x00, 0x06, 0x00, 0x02, 0x30, 0x00, 0x00, 0xFC, 0x00, 0x03, 0x30, 0x00, 0x00, 0x0B,
     0x00, 0xFC, 0x30, 0x00, 0x40, 0xFF, 0x80, 0xFB, 0x30, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00,
 };
 
-u8 D_00263840[32] = {
+u8 stage4_lift_start_table_2[32] = {
     0x00, 0x00, 0x24, 0x00, 0x34, 0x00, 0xC0, 0x23, 0x01, 0x00, 0x0C, 0x00, 0x08, 0x17, 0x18, 0x00,
     0x0F, 0x20, 0x05, 0x00, 0x7C, 0x03, 0x00, 0x0C, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00,
 };
 
-u8 D_00263860[32] = {
+u8 stage4_lift_start_table_3[32] = {
     0x00, 0x80, 0x00, 0xE6, 0x00, 0xEC, 0x00, 0x00, 0x85, 0x1D, 0xA0, 0x1A, 0x00, 0x14, 0x00, 0x10,
     0x00, 0x10, 0x00, 0x10, 0x00, 0x12, 0x00, 0x10, 0x17, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00,
 };
 
-u8 D_00263880[16] = {
+u8 stage4_lift_table[16] = {
     0x00, 0x00, 0x88, 0x1D, 0x00, 0x00, 0x87, 0x1D, 0x00, 0x00, 0x86, 0x1D, 0x00, 0x00, 0x85, 0x1D,
 };
 
-u8 D_00263890[32] = {
+u8 stage4_heavy_cannon_start_table_4[32] = {
     0x00, 0x00, 0x00, 0x00, 0x10, 0x0F, 0xA0, 0x90, 0x01, 0x01, 0x00, 0x00, 0x0C, 0x00, 0xC0, 0x00,
     0x03, 0x03, 0x01, 0x00, 0x78, 0x00, 0x1C, 0x1C, 0x40, 0x00, 0x80, 0x00, 0x00, 0x00, 0x02, 0x02,
 };
@@ -2910,19 +2910,19 @@ u8 D_002638B0[144] = {
     0x00, 0x08, 0x00, 0x08, 0x14, 0x00, 0x00, 0x00, 0x44, 0x00, 0x45, 0x00, 0xFF, 0xFF, 0x00, 0x00,
 };
 
-u8 D_00263940[32] = {
+u8 stage4_heavy_cannon_table[32] = {
     0x0D, 0x00, 0x85, 0x00, 0x09, 0x00, 0x05, 0x00, 0x84, 0x00, 0x0C, 0x00, 0x0A, 0x00, 0x04, 0x00,
     0x08, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00,
 };
 
-u8 D_00263960[64] = {
+u8 stage4_heavy_cannon_table_2[64] = {
     0x00, 0x00, 0x89, 0x1D, 0x00, 0x00, 0x8A, 0x1D, 0x00, 0x00, 0x8B, 0x1D, 0x00, 0x00, 0x8C, 0x1D,
     0x00, 0x00, 0x8D, 0x1D, 0x00, 0x00, 0x8E, 0x1D, 0x00, 0x00, 0x8F, 0x1D, 0x00, 0x00, 0x90, 0x1D,
     0x00, 0x00, 0x91, 0x1D, 0x00, 0x00, 0x92, 0x1D, 0x00, 0x00, 0x93, 0x1D, 0x00, 0x00, 0x94, 0x1D,
     0x00, 0x00, 0x95, 0x1D, 0x00, 0x00, 0x96, 0x1D, 0x00, 0x00, 0x97, 0x1D, 0x00, 0x00, 0x98, 0x1D,
 };
 
-u8 D_002639A0[16] = {
+u8 stage4_heavy_cannon_table_3[16] = {
     0x00, 0x00, 0xD8, 0x1D, 0x00, 0x00, 0xD7, 0x1D, 0x00, 0x00, 0xD6, 0x1D, 0x00, 0x00, 0xD5, 0x1D,
 };
 
@@ -2937,7 +2937,7 @@ u8 D_002639B0[128] = {
     0x05, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00,
 };
 
-u8 D_00263A30[32] = {
+u8 stage4_heavy_cannon_casing_start_table[32] = {
     0x01, 0xA0, 0x00, 0xF2, 0x00, 0xF6, 0x00, 0x00, 0x9D, 0x1D, 0x50, 0x0E, 0x00, 0x0E, 0x00, 0x0E,
     0x00, 0x06, 0x00, 0x06, 0x00, 0x04, 0x00, 0x00, 0x10, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00,
 };
@@ -2970,7 +2970,7 @@ u16 D_00263B30[16] = {
     0x0036, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000,
 };
 
-u8 D_00263B50[48] = {
+u8 stage4_wave_cannon_start_table_3[48] = {
     0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0xD0, 0x00, 0x00, 0x00, 0x00,
     0x08, 0x00, 0x00, 0x00, 0x00, 0x00, 0xE0, 0x00, 0x03, 0x03, 0x2A, 0x00, 0x2C, 0x01, 0x00, 0x00,
     0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00,
@@ -2988,12 +2988,12 @@ u8 D_00263B80[144] = {
     0x00, 0x08, 0x00, 0x08, 0x14, 0x00, 0x00, 0x00, 0x44, 0x00, 0x45, 0x00, 0xFF, 0xFF, 0x00, 0x00,
 };
 
-u8 D_00263C10[32] = {
+u8 stage4_wave_cannon_table_2[32] = {
     0x0D, 0x00, 0x85, 0x00, 0x09, 0x00, 0x05, 0x00, 0x84, 0x00, 0x0C, 0x00, 0x0A, 0x00, 0x04, 0x00,
     0x08, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00,
 };
 
-u8 D_00263C30[64] = {
+u8 stage4_wave_cannon_table_3[64] = {
     0x00, 0x00, 0xD9, 0x1D, 0x00, 0x00, 0xDA, 0x1D, 0x00, 0x00, 0xDB, 0x1D, 0x00, 0x00, 0xDC, 0x1D,
     0x00, 0x00, 0xDD, 0x1D, 0x00, 0x00, 0xDE, 0x1D, 0x00, 0x00, 0xDF, 0x1D, 0x00, 0x00, 0xE0, 0x1D,
     0x00, 0x00, 0xE1, 0x1D, 0x00, 0x00, 0xE2, 0x1D, 0x00, 0x00, 0xE3, 0x1D, 0x00, 0x00, 0xE4, 0x1D,
@@ -3021,33 +3021,33 @@ u8 D_00263CF0[16] = {
     0x01, 0x00, 0xFF, 0x7F, 0x00, 0x00, 0x40, 0x05, 0x04, 0x00, 0x05, 0x00, 0x1F, 0x00, 0x05, 0x00,
 };
 
-u8 D_00263D00[32] = {
+u8 stage4_reactor_start_table[32] = {
     0x00, 0x80, 0x00, 0xC6, 0x00, 0xDE, 0x00, 0x00, 0x00, 0x00, 0x10, 0x3B, 0x00, 0x00, 0x00, 0x00,
     0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x10, 0x12, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00,
 };
 
-u16 D_00263D20[32] = {
+u16 stage4_reactor_table[32] = {
     0x0000, 0x1DD1, 0x0000, 0x1DD0, 0x0000, 0x1DCF, 0x0000, 0x1DCE,
     0x0000, 0x1DCD, 0x0000, 0x1DCC, 0x0000, 0x1DCB, 0x0000, 0x1DCA,
     0x0000, 0x1DC9, 0x0000, 0x1DC8, 0x0000, 0x1DC7, 0x0000, 0x1DC6,
     0x0000, 0x1DC5, 0x0000, 0x1DC4, 0x0000, 0x1DC3, 0x0000, 0x1DC2,
 };
 
-s8 D_00263D60[16] = {
+s8 crane_turret_start_table[16] = {
     0x12, 0x0D, 0x11, 0x0E, 0x12, 0x0D, 0x0F, 0x10, 0x12, 0x0D, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00,
 };
 
-s8 D_00263D70[32] = {
+s8 crane_turret_start_table_2[32] = {
     0x01, 0x00, 0x00, 0x00, 0x00, 0x00, 0x40, 0x60, 0x05, 0x05, 0x00, 0x00, 0x01, 0x00, 0x00, 0x00,
     0x16, 0x00, 0x00, 0x03, 0xC0, 0x04, 0xC0, 0x03, 0x10, 0x00, 0x0B, 0x00, 0x1F, 0x1F, 0x00, 0x00,
 };
 
-s8 D_00263D90[32] = {
+s8 crane_turret_start_table_3[32] = {
     0x00, 0xA0, 0x00, 0xE4, 0x00, 0xF5, 0x00, 0x00, 0xFC, 0x18, 0x58, 0x1C, 0x00, 0x14, 0x00, 0x1A,
     0x00, 0x08, 0x00, 0x08, 0x00, 0x16, 0x00, 0x10, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00,
 };
 
-u8 D_00263DB0[96] = {
+u8 crane_turret_table[96] = {
     0x00, 0x00, 0xFC, 0x18, 0x00, 0x00, 0xFD, 0x18, 0x00, 0x00, 0xFE, 0x18, 0x00, 0x00, 0xFF, 0x18,
     0x00, 0x00, 0x00, 0x19, 0x00, 0x00, 0x01, 0x19, 0x00, 0x00, 0x02, 0x19, 0x00, 0x00, 0x03, 0x19,
     0x00, 0x00, 0x04, 0x19, 0x00, 0x00, 0x05, 0x19, 0x00, 0x00, 0x06, 0x19, 0x00, 0x00, 0x07, 0x19,
@@ -3056,43 +3056,43 @@ u8 D_00263DB0[96] = {
     0x00, 0x00, 0x10, 0x19, 0x00, 0x00, 0x11, 0x19, 0x00, 0x00, 0x12, 0x19, 0x00, 0x00, 0x13, 0x19,
 };
 
-u8 D_00263E10[48] = {
+u8 rail_turret_start_table[48] = {
     0x02, 0x00, 0x00, 0x00, 0x15, 0x0A, 0x80, 0x20, 0x07, 0x07, 0x00, 0x00, 0x01, 0x00, 0x15, 0x00,
     0x13, 0x0C, 0x00, 0x00, 0x80, 0x00, 0x00, 0x00, 0x02, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00,
     0x00, 0x00, 0x10, 0x10, 0x06, 0x06, 0x06, 0x06, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00,
 };
 
-u8 D_00263E40[64] = {
+u8 rail_turret_start_table_2[64] = {
     0x00, 0x80, 0x00, 0xF8, 0x00, 0xDC, 0x00, 0x00, 0x1C, 0x19, 0x20, 0x09, 0x00, 0x00, 0x00, 0x00,
     0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x10, 0x0A, 0x00, 0x00, 0x00, 0x00, 0xA0, 0x00, 0xF2,
     0x00, 0xF7, 0x00, 0x00, 0x14, 0x19, 0x48, 0x0E, 0x00, 0x0C, 0x00, 0x08, 0x00, 0x06, 0x00, 0x08,
     0x00, 0x1E, 0x00, 0x10, 0x0C, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00,
 };
 
-u16 D_00263E80[16] = {
+u16 rail_turret_table[16] = {
     0x0000, 0x1914, 0x0000, 0x1915, 0x0000, 0x1916, 0x0000, 0x1917,
     0x0000, 0x1918, 0x0000, 0x1919, 0x0000, 0x191A, 0x0000, 0x191B,
 };
 
-u16 D_00263EA0[24] = {
+u16 stage4_tachyon_particle_start_table[24] = {
     0x0000, 0x09D0, 0x0000, 0x09D8, 0x0000, 0x09D8, 0x0000, 0x09E0,
     0x0000, 0x09E0, 0x0000, 0x09E8, 0x0000, 0x0000, 0x0101, 0x0000,
     0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000,
 };
 
-u16 D_00263ED0[16] = {
+u16 stage4_tachyon_particle_start_table_2[16] = {
     0x8000, 0xFC00, 0xFD00, 0x0000, 0x0000, 0x0418, 0x0000, 0x0000,
     0x0000, 0x0000, 0x0000, 0x0000, 0x0015, 0x0000, 0x0000, 0x0000,
 };
 
-u8 D_00263EF0[16] = {
+u8 stage4_heavy_cannon_casing_start_table_2[16] = {
     0x00, 0x00, 0x0F, 0x10, 0x00, 0x06, 0x20, 0x00, 0x00, 0x00, 0x00, 0x00, 0x7C, 0x00, 0x00, 0x00,
 };
 
-u8 D_0028D9AC[4] = { 0, 0, 0, 0 };
+u8 stage4_gate_start_table_3[4] = { 0, 0, 0, 0 };
 
-u8 D_0028D9B0[8] = { 0x00, 0x00, 0x00, 0x00, 0x3C, 0x00, 0x00, 0x00 };
+u8 stage4_reactor_start_table_2[8] = { 0x00, 0x00, 0x00, 0x00, 0x3C, 0x00, 0x00, 0x00 };
 
-u16 D_0028D9B8[4] = { 0xFFF4, 0x18, 0x0F, 0xFFCA };
+u16 rail_turret_table_2[4] = { 0xFFF4, 0x18, 0x0F, 0xFFCA };
 
-u16 D_0028D9C0[4] = { 0x0C, 0xFFE8, 0xFFF1, 0x36 };
+u16 rail_turret_table_3[4] = { 0x0C, 0xFFE8, 0xFFF1, 0x36 };

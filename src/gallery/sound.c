@@ -1,5 +1,13 @@
 #include "gallery/gallery.h"
 
+#ifdef DDPDOJ_PC
+#include "sfx.h"
+extern s32 g_se_priority;
+extern s32 g_se_volume;
+extern s32 g_se_last_result;
+#else
+typedef s32 GalleryRpcParam;
+
 #define EZBGM_DEV               0x12345
 #define EZBGM_CMD_STOP          0x0060
 #define EZBGM_CMD_SET_VOL       0x0080
@@ -101,7 +109,7 @@ extern CdFileEntry g_bgm_files[30];
 extern sceSifClientData g_sound_rpc_client;
 extern s32 g_sound_rpc_buf[16];
 
-static inline s32 send_bgm_rpc(u32 cmd, s32 param1, s32 param2)
+static inline s32 send_bgm_rpc(u32 cmd, GalleryRpcParam param1, s32 param2)
 {
     if ((cmd & 0xFFF0) == EZBGM_CMD_OPEN || (cmd & 0xFFF0) == EZBGM_CMD_LOAD_SE_INIT || (cmd & 0xFFF0) == EZBGM_CMD_LOAD_SE) {
         sceSifCallRpc(&g_sound_rpc_client, cmd, 0, (void *)param1, 0x40, g_sound_rpc_buf, 0x40, 0, 0);
@@ -115,7 +123,7 @@ static inline s32 send_bgm_rpc(u32 cmd, s32 param1, s32 param2)
 
 static inline void load_vag(u32 cmd, void *path)
 {
-    s32 p = (s32)path;
+    GalleryRpcParam p = (GalleryRpcParam)path;
     sceSifCallRpc(&g_sound_rpc_client, cmd, 0, (void *)p, 0x40, g_sound_rpc_buf, 0x40, 0, 0);
 }
 
@@ -213,6 +221,7 @@ void sound_init(void)
 {
     sound_init_iop_rpc();
 }
+#endif
 
 void sound_play_cursor_se(void)
 {
@@ -257,14 +266,19 @@ void sound_play_se(s32 selection)
             requestIndex |= 0x80;
         }
 
+#ifdef DDPDOJ_PC
+        g_se_last_result = pc_sfx_play(requestIndex, adjustedValue);
+#else
         g_sound_rpc_buf[0] = requestIndex;
         g_sound_rpc_buf[1] = adjustedValue;
         sceSifCallRpc(&g_sound_rpc_client, EZBGM_CMD_PLAY_SE, 0, g_sound_rpc_buf, 0x10,
                       g_sound_rpc_buf, 0x40, 0, 0);
         g_se_last_result = g_sound_rpc_buf[0];
+#endif
     }
 }
 
+#ifndef DDPDOJ_PC
 void sound_init_file_tables(void)
 {
     s32 index;
@@ -344,13 +358,18 @@ void sound_init_iop_rpc(void)
 
 s8 g_bgm_stop_pending __attribute__((aligned(4)));
 u8 g_bgm_fade_active __attribute__((aligned(4)));
+#endif
 s32 g_se_last_result;
 s32 g_se_volume;
 s32 g_se_priority;
 
+#ifndef DDPDOJ_PC
 s32 g_sound_rpc_buf[16] __attribute__((aligned(16)));
 sceSifClientData g_sound_rpc_client;
 CdFileEntry g_bgm_files[30];
 CdFileEntry g_stage_bg_files[20];
+#endif
 CdFileEntry g_data_files[20];
+#ifndef DDPDOJ_PC
 BgmFadeState g_bgm_fade_state[2];
+#endif

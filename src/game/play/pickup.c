@@ -3,8 +3,8 @@
 #include "entity.h"
 #include "sdk/ps2sdk.h"
 
-extern void (*D_002693E0[20])();
-extern void (*D_00269550[20])();
+extern void (*pickups_update_loop_table[20])();
+extern void (*pickup_spawn_init_table[20])();
 extern void *pickup_init_routines[20];
 
 void pickup_spawn_variant(void);
@@ -445,7 +445,7 @@ loop_1:
         pickup_collected_update();
         return;
     }
-    ((Fn)*(u32 *)((u8 *)((u8 *)D_002693E0) + (reg_d0.h[0] & ~3)))();
+    ((Fn)*(u32 *)((u8 *)((u8 *)pickups_update_loop_table) + (reg_d0.h[0] & ~3)))();
     reg_a6 += 0x2C;
     t1 = reg_d7.h[0] - 1;
     reg_d7.h[0] = t1;
@@ -1032,7 +1032,7 @@ void pickup_spawn_init(void) {
     reg_a1 += reg_d2.h[0];
     *(u16 *) (reg_a0 + 0x28) = *(u16 *) (reg_a1 + 2);
     *(u16 *) (reg_a0 + 0x2A) = *(u16 *) (reg_a1 + 0);
-    ((Fn) *(u32 *) (((u8 *)D_00269550) + (reg_d0.h[0] & ~3)))();
+    ((Fn) *(u32 *) (((u8 *)pickup_spawn_init_table) + (reg_d0.h[0] & ~3)))();
     reg_a1 = save_a1;
     reg_d7.w = D_0028DE90;
     reg_a0 = D_0028DE8C;
@@ -1593,7 +1593,7 @@ void pickup_draw_value_large(void) {
     reg_d1.w += 0xFF400000;
 }
 
-extern u32 D_002697E0[];
+extern u32 pickup_draw_value_table[];
 
 void pickup_draw_value(void) {
     s32 sprite_draw_with_special_items();
@@ -1606,7 +1606,7 @@ void pickup_draw_value(void) {
     temp_a2 = (u32)reg_d1.h[1] + 0x40;
     reg_d1.h[1] = temp_a2;
     reg_d0.h[0] = ENTITY(reg_a6)->hit_y_minus.h;
-    reg_a0 = (u8 *)(D_002697E0);
+    reg_a0 = (u8 *)(pickup_draw_value_table);
     reg_a0 += reg_d0.h[0];
     temp_a0 = *(u32 *)reg_a0;
     reg_d2.w = temp_a0;
@@ -2491,16 +2491,16 @@ void entity_draw_layer2();
 void entity_draw_layer3();
 void entity_draw_layer4();
 void entity_draw_layer5();
-extern u16 D_00269630[16];
-extern u16 D_00269650[16];
-extern u16 D_00269670[16];
-extern u16 D_00269690[16];
-extern u16 D_002696B0[16];
-extern u16 D_002696D0[16];
+extern u16 pickup_init_routines_0[16];
+extern u16 pickup_init_routines_1[16];
+extern u16 pickup_init_routines_2[16];
+extern u16 pickup_init_routines_3[16];
+extern u16 pickup_init_routines_5[16];
+extern u16 pickup_init_routines_6[16];
 struct D002696f0Record { u16 w0[12]; void *p1; void *p2; void *p3; u16 w4[30]; };
-extern struct D002696f0Record D_002696F0;
+extern struct D002696f0Record pickup_init_routines_7;
 
-void (*D_002693E0[20])() = {
+void (*pickups_update_loop_table[20])() = {
     score_pickup_kind0,
     score_pickup_bee,
     score_pickup_ground_star_small,
@@ -2523,13 +2523,13 @@ void (*D_002693E0[20])() = {
     score_pickup_air_star_huge,
 };
 
-u16 D_00269430[24] = {
+u16 bee_collected_table[24] = {
     0x0100, 0x0000, 0x0200, 0x0000, 0x0300, 0x0000, 0x0400, 0x0000,
     0x0500, 0x0000, 0x0600, 0x0000, 0x0700, 0x0000, 0x0800, 0x0000,
     0x0900, 0x0000, 0x1000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000,
 };
 
-u16 D_00269460[24] = {
+u16 bee_collected_table_2[24] = {
     0x0001, 0x0004, 0x0002, 0x0004, 0x0003, 0x0004, 0x0004, 0x0004,
     0x0005, 0x0004, 0x0006, 0x0004, 0x0007, 0x0004, 0x0008, 0x0004,
     0x0009, 0x0004, 0x0001, 0x0008, 0x0000, 0x0000, 0x0000, 0x0000,
@@ -2559,7 +2559,7 @@ void (*entity_draw_layer_routines[8])() = {
     0,
 };
 
-void (*D_00269550[20])() = {
+void (*pickup_spawn_init_table[20])() = {
     pickup_init_scatter_3,
     pickup_init_timer,
     pickup_init_random_delay_a,
@@ -2599,63 +2599,63 @@ u16 pickup_start_offsets_3[8] = {
 };
 
 void *pickup_init_routines[20] = {
-    D_00269630,
-    D_00269650,
-    D_00269670,
-    D_00269690,
-    D_00269630,
-    D_002696B0,
-    D_002696D0,
-    &D_002696F0,
-    D_00269630,
-    D_002696B0,
-    D_002696D0,
-    &D_002696F0,
-    D_00269630,
-    D_002696B0,
-    D_002696D0,
-    &D_002696F0,
-    D_00269650,
-    D_002696B0,
-    D_002696D0,
-    &D_002696F0,
+    pickup_init_routines_0,
+    pickup_init_routines_1,
+    pickup_init_routines_2,
+    pickup_init_routines_3,
+    pickup_init_routines_0,
+    pickup_init_routines_5,
+    pickup_init_routines_6,
+    &pickup_init_routines_7,
+    pickup_init_routines_0,
+    pickup_init_routines_5,
+    pickup_init_routines_6,
+    &pickup_init_routines_7,
+    pickup_init_routines_0,
+    pickup_init_routines_5,
+    pickup_init_routines_6,
+    &pickup_init_routines_7,
+    pickup_init_routines_1,
+    pickup_init_routines_5,
+    pickup_init_routines_6,
+    &pickup_init_routines_7,
 };
 
-u16 D_00269630[16] = {
+u16 pickup_init_routines_0[16] = {
     0xFC00, 0xFE00, 0x0000, 0x0BBF, 0x0410, 0x0580, 0x0580, 0x0480,
     0x0480, 0x0101, 0x001C, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000,
 };
 
-u16 D_00269650[16] = {
+u16 pickup_init_routines_1[16] = {
     0xFA00, 0xFD00, 0x0000, 0x0BBD, 0x0618, 0x0980, 0x0980, 0x0780,
     0x0780, 0x0000, 0x001C, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000,
 };
 
-u16 D_00269670[16] = {
+u16 pickup_init_routines_2[16] = {
     0xFC00, 0xFD00, 0x0000, 0x0BFF, 0x0418, 0x0680, 0x0680, 0x0500,
     0x0500, 0x0101, 0x001C, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000,
 };
 
-u16 D_00269690[16] = {
+u16 pickup_init_routines_3[16] = {
     0xF800, 0xFA00, 0x0000, 0x0C1F, 0x0830, 0x0A80, 0x0A80, 0x0880,
     0x0880, 0x0202, 0x001C, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000,
 };
 
-u16 D_002696B0[16] = {
+u16 pickup_init_routines_5[16] = {
     0xFC00, 0xFD00, 0x0000, 0x0BCF, 0x0418, 0x0600, 0x0600, 0x0500,
     0x0500, 0x0101, 0x001C, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000,
 };
 
-u16 D_002696D0[16] = {
+u16 pickup_init_routines_6[16] = {
     0xFA00, 0xFC00, 0x0000, 0x0BDF, 0x0620, 0x0800, 0x0800, 0x0680,
     0x0680, 0x0101, 0x001C, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000,
 };
 
-struct D002696f0Record D_002696F0 = {
+struct D002696f0Record pickup_init_routines_7 = {
     { 0xF800, 0xFA00, 0x0000, 0x0BEF, 0x0830, 0x0980, 0x0980, 0x0780, 0x0780, 0x0101, 0x001C, 0x0000 },
-    (u8 *)&D_002696F0 + 40,
-    (u8 *)&D_002696F0 + 56,
-    (u8 *)&D_002696F0 + 72,
+    (u8 *)&pickup_init_routines_7 + 40,
+    (u8 *)&pickup_init_routines_7 + 56,
+    (u8 *)&pickup_init_routines_7 + 72,
     { 0x0000, 0x0000, 0x0000, 0x0001, 0xFC00, 0xFC00, 0x0420, 0x0001, 0x0000, 0x0000, 0x0000, 0x0001, 0xFC00, 0xFB00, 0x0428, 0x0001, 0x0000, 0x0000, 0x0000, 0x0001, 0xFC00, 0xFA00, 0x0430, 0x0001, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000 },
 };
 
@@ -2677,14 +2677,14 @@ u16 D_002697B0[24] = {
     0x0FDC, 0x0000, 0x0FE4, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000,
 };
 
-u32 D_002697E0[8] = {
+u32 pickup_draw_value_table[8] = {
     0x000011DF, 0x000011DE, 0x000011DD, 0x000011DC, 0x000011DB, 0x00000000, 0x00000000, 0x00000000,
 };
 
 /* .sbss (the compiler lays these out in reverse) */
 void *D_0028DEB4;
 s32 D_0028DEB0;
-u8 *D_0028DEAC;
+u8 *bullets_update_state;
 u32 D_0028DEA8;
 u32 D_0028DEA4;
 u32 D_0028DEA0;

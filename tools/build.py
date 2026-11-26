@@ -16,6 +16,7 @@ from iso import sync_files
 from assets.stage_tiles import build_tile_files
 from objects import validate_object
 from qemu_runner import compile_batch
+from sjis import expand_sjis
 from split import data_units, split, target_units
 
 BUILD = ROOT / "build"
@@ -24,30 +25,12 @@ OBJ_CACHE = BUILD / "obj"
 QEMU_RUNNER = (Path(__file__).resolve().parent / "qemu_runner.py").resolve()
 
 
-SJIS_CALL_RE = re.compile(r'\bSJIS\s*\(((?:\s*"(?:[^"\\]|\\.)*")+\s*)\)')
-C_STRING_RE = re.compile(r'"((?:[^"\\]|\\.)*)"')
-
-
-def _expand_sjis_match(match):
-    inner = match.group(1)
-    parts = []
-    for s_match in C_STRING_RE.finditer(inner):
-        raw = s_match.group(1)
-        # Decode standard C escapes like \n, \t, \\, \" while keeping UTF-8 chars intact
-        decoded = bytes(raw, "utf-8").decode("unicode_escape").encode("latin1").decode("utf-8")
-        parts.append(decoded)
-    encoded = "".join(parts).encode("cp932")
-    escaped = "".join(f"\\x{b:02X}" for b in encoded)
-    newlines = "\n" * inner.count("\n")
-    return f'"{escaped}"{newlines}'
-
-
 def prepare_compile_source(source, output):
     src_path = ROOT / source
     text = src_path.read_text(encoding="utf-8")
     if "SJIS(" not in text:
         return source
-    expanded = SJIS_CALL_RE.sub(_expand_sjis_match, text)
+    expanded = expand_sjis(text)
     output.parent.mkdir(parents=True, exist_ok=True)
     staged = output.with_suffix(".sjis.c")
     staged.write_text(expanded, encoding="utf-8")

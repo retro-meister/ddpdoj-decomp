@@ -93,7 +93,7 @@ s32 boss_attack_start();
 s32 boss_attack_running();
 s32 stage4_boss_right_spinner_turn();
 s32 stage4_boss_left_spinner_turn_back();
-extern u8 D_0028DC80[];
+extern u8 stage4_boss_mode_attack_a_table[];
 
 void stage4_boss_mode_attack_a() {
     u16 temp_a0;
@@ -139,7 +139,7 @@ void stage4_boss_mode_attack_a() {
                     ATTACK_A(reg_a4)->wait = 0x60U;
                 }
             }
-            reg_a0 = D_0028DC80;
+            reg_a0 = stage4_boss_mode_attack_a_table;
             reg_a0 += ATTACK_A(reg_a4)->side;
             reg_d7.h[0] = *(u16 *)(reg_a0 + 2);
             reg_d0.h[0] = *(u16 *)reg_a0;
@@ -266,7 +266,7 @@ void stage4_boss_mode_attack_b_start(void) {
 
 s32 boss_animation_start();
 s32 boss_attack_stop();
-extern u8 D_0026F1E0[];
+extern u8 stage4_boss_mode_attack_b_table[];
 
 void stage4_boss_mode_attack_b(void) {
     u16 temp_v1;
@@ -296,7 +296,7 @@ void stage4_boss_mode_attack_b(void) {
         if (cond_flag == 0) {
             reg_d0.w = 5;
             boss_attack_start();
-            reg_a1 = D_0026F1E0;
+            reg_a1 = stage4_boss_mode_attack_b_table;
             reg_a1 += ATTACK_B(reg_a4)->entry;
             CENTER_HATCH(reg_a0)->sides.h = (u16) *(u16 *)reg_a1;
             CENTER_HATCH(reg_a0)->volleys_left = (u16) *(u16 *)(reg_a1 + 2);
@@ -762,11 +762,11 @@ void stage4_boss_mode_rage() {
     }
 }
 
-u8 D_0026F1E0[32] = {
+u8 stage4_boss_mode_attack_b_table[32] = {
     0x00, 0x01, 0x04, 0x00, 0x02, 0x10, 0x00, 0x02, 0x08, 0x00, 0x02, 0x0C, 0x00, 0x01, 0x0C, 0x00,
     0x02, 0x08, 0x00, 0x02, 0x10, 0x00, 0x02, 0x04, 0x00, 0x03, 0x20, 0x00, 0x02, 0x40, 0x00, 0x00,
 };
 
-u8 D_0028DC80[4] = {
+u8 stage4_boss_mode_attack_a_table[4] = {
     0x01, 0x00, 0x02, 0x00,
 };

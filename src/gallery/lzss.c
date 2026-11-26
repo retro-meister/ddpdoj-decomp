@@ -37,6 +37,15 @@ s32 lzss_decompress_step(u8 *dst, u8 *src)
                 g_gallery->srcSize = s;
             }
             g_gallery->chunkLimit = g_gallery->dstSize / 16;
+#ifdef DDPDOJ_PC
+            if (g_gallery->dstSize < 16 || (u32)g_gallery->dstSize > sizeof(g_gallery->decodeBuf) ||
+                g_gallery->flagSize <= 0 || g_gallery->srcSize < 12 ||
+                (u32)g_gallery->srcSize > g_cd_last_read_size ||
+                g_gallery->flagSize > g_gallery->srcSize - 12) {
+                g_gallery->assetError = 1;
+                return 0;
+            }
+#endif
             memcpy(g_gallery->flagBuf, src + 0xC, g_gallery->flagSize);
             g_gallery->srcPos = g_gallery->flagSize + 0xC;
             g_gallery->stepState++;
@@ -44,10 +53,36 @@ s32 lzss_decompress_step(u8 *dst, u8 *src)
 
         case 1:
             while (g_gallery->srcPos < g_gallery->srcSize) {
+#ifdef DDPDOJ_PC
+                if (g_gallery->flagBytePos >= g_gallery->flagSize ||
+                    g_gallery->dstPos >= g_gallery->dstSize) {
+                    g_gallery->assetError = 1;
+                    return 0;
+                }
+#endif
                 if (getBits(1) != 0) {
+#ifdef DDPDOJ_PC
+                    if (g_gallery->srcPos + 1 >= g_gallery->srcSize) {
+                        g_gallery->assetError = 1;
+                        return 0;
+                    }
+#endif
                     copyLen = (src[g_gallery->srcPos + 1] & 0x1F) + 3;
                     backOffset = (src[g_gallery->srcPos] << 3) + ((src[g_gallery->srcPos + 1] >> 5) & 7);
+#ifdef DDPDOJ_PC
+                    if (backOffset == 0 || backOffset > g_gallery->dstPos ||
+                        copyLen > g_gallery->dstSize - g_gallery->dstPos) {
+                        g_gallery->assetError = 1;
+                        return 0;
+                    }
+                    /* Overlapping LZSS references repeat the bytes produced by this token. */
+                    u8 *out = dst + g_gallery->dstPos;
+                    for (s32 i = 0; i < copyLen; i++) {
+                        out[i] = out[i - backOffset];
+                    }
+#else
                     memcpy(&dst[g_gallery->dstPos], (&dst[g_gallery->dstPos]) - backOffset, copyLen);
+#endif
                     g_gallery->dstPos += copyLen;
                     g_gallery->srcPos += 2;
                 } else {
@@ -63,6 +98,12 @@ s32 lzss_decompress_step(u8 *dst, u8 *src)
                 }
             }
 
+#ifdef DDPDOJ_PC
+            if (g_gallery->dstPos != g_gallery->dstSize) {
+                g_gallery->assetError = 1;
+                return 0;
+            }
+#endif
             return 1;
     }
 
@@ -115,33 +156,6 @@ void lzss_draw_frame_overlay(GalleryBox *frame)
     sprite_queue_glyph(x - 64, y, 0x2286, frame->alpha, 300);
 }
 
-void gallery_draw_solid_rect(s32 xStart, s32 yStart, s32 xEnd, s32 yEnd,
-                   s32 red, s32 green, s32 blue, s32 alpha, s32 blendMode)
-{
-    sceGifPacket packet;
-
-    sceGifPkInit(&packet, g_gif_buf);
-    sceGifPkReset(&packet);
-    sceGifPkAddGsData(&packet, SCE_GIF_SET_TAG(1, 1, 0, 0, SCE_GIF_PACKED, 1));
-    sceGifPkAddGsData(&packet, SCE_GIF_PACKED_AD);
-
-    if (blendMode == 0) {
-        sceGifPkAddGsData(&packet, SCE_GS_SET_ALPHA(0, 1, 0, 1, 0));
-    } else if (blendMode == 1) {
-        sceGifPkAddGsData(&packet, SCE_GS_SET_ALPHA(0, 2, 0, 1, 0));
-    } else {
-        sceGifPkAddGsData(&packet, SCE_GS_SET_ALPHA(1, 0, 2, 2, 0x80));
-    }
-
-    sceGifPkAddGsData(&packet, SCE_GS_ALPHA_1);
-    sceGifPkAddGsData(&packet, SCE_GIF_SET_TAG(1, 1, 0, 0, SCE_GIF_REGLIST, 4));
-    sceGifPkAddGsData(&packet, 0x5510ULL);
-    sceGifPkAddGsData(&packet, SCE_GS_SET_PRIM(SCE_GS_PRIM_SPRITE, 0, 0, 0, 1, 0, 1, 0, 0));
-    sceGifPkAddGsData(&packet, SCE_GS_SET_RGBAQ(red, green, blue, alpha, 0x3F800000));
-    sceGifPkAddGsData(&packet, SCE_GS_SET_XYZ2((s32)(((u32)xStart << 4) + 0x6C00U), (s32)(((u32)yStart << 3) + 0x7900U), 0));
-    sceGifPkAddGsData(&packet, SCE_GS_SET_XYZ2((s32)(((u32)xEnd << 4) + 0x6C00U), (s32)(((u32)yEnd << 3) + 0x7900U), 0));
-    sceGifPkTerminate(&packet);
-    FlushCache(0);
-    sceDmaSendN(g_dma_gif, g_gif_buf, sceGifPkSize(&packet));
-    sceGsSyncPath(0, 0);
-}
+#ifndef DDPDOJ_PC
+#include "gallery/solid_rect.inc.h"
+#endif

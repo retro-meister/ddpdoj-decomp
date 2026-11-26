@@ -238,7 +238,7 @@ void select_panel_piece_1_draw(void) {
     reg_d2.w = 0xAD3;
 }
 
-extern u8 D_0028C148[];
+extern u8 select_panel_piece_2_draw_table[];
 extern u8 D_0028C868_as_u8_a[];
 extern u16 g_frame_mod4;
 extern u16 g_frame_mod2;
@@ -248,7 +248,7 @@ void select_panel_piece_2_draw(void) {
 
     if (*(u16 *)(reg_a6 + 0x54) == 0) goto block_rts;
     if (g_frame_mod2 == 0) goto block_rts;
-    reg_a0 = (u8 *)D_0028C148;
+    reg_a0 = (u8 *)select_panel_piece_2_draw_table;
     reg_a1 = (u8 *)D_0028C868_as_u8_a;
     i = reg_d5.h[0];
     reg_tmp.h[1] = (i != 0) ? *(u16 *)(reg_a0 + ((s16) i & ~1)) : *(u16 *)reg_a0;
@@ -282,8 +282,8 @@ block_rts:
     return;
 }
 
-extern u8 D_00251F30[];
-extern u8 D_0028C140[];
+extern u8 select_panel_piece_3_draw_table[];
+extern u8 select_panel_piece_3_draw_table_2[];
 
 void select_panel_piece_3_draw(void) {
     if (reg_d7.h[0] == 0) goto block_2p;
@@ -312,12 +312,12 @@ void select_panel_piece_3_draw(void) {
     reg_d5.h[0] = ENTITY(reg_a6)->y.h;
     reg_d5.h[0] += reg_d5.h[0];
     reg_d5.h[0] += reg_d5.h[0];
-    reg_a0 = (u8 *)D_0028C140;
+    reg_a0 = (u8 *)select_panel_piece_3_draw_table_2;
     reg_d2.h[1] = (reg_d5.h[0] != 0) ? *(u16 *)((u8 *)reg_a0 + ((s16)reg_d5.h[0] & ~1)) : *(u16 *)reg_a0;
     reg_d2.h[0] = (((u16) reg_d5.h[0] + 2) != 0) ? *(u16 *)((u8 *)reg_a0 + ((s16)((u16) reg_d5.h[0] + 2) & ~1)) : *(u16 *)reg_a0;
     reg_d3.h[0] = 0x620;
     reg_d4.h[0] = 0;
-    reg_a0 = (u8 *)D_00251F30;
+    reg_a0 = (u8 *)select_panel_piece_3_draw_table;
     reg_a0 += *(u16 *)(reg_a6 + 0x60);
     reg_d6.h[1] = *(u16 *)(reg_a0 + 0);
     reg_d6.h[0] = *(u16 *)(reg_a0 + 2);
@@ -363,12 +363,12 @@ block_2p:
     reg_d5.h[0] = ENTITY(reg_a6)->y.h;
     reg_d5.h[0] += reg_d5.h[0];
     reg_d5.h[0] += reg_d5.h[0];
-    reg_a0 = (u8 *)D_0028C140;
+    reg_a0 = (u8 *)select_panel_piece_3_draw_table_2;
     reg_d2.h[1] = (reg_d5.h[0] != 0) ? *(u16 *)((u8 *)reg_a0 + ((s16)reg_d5.h[0] & ~1)) : *(u16 *)reg_a0;
     reg_d2.h[0] = (((u16) reg_d5.h[0] + 2) != 0) ? *(u16 *)((u8 *)reg_a0 + ((s16)((u16) reg_d5.h[0] + 2) & ~1)) : *(u16 *)reg_a0;
     reg_d3.h[0] = 0x620;
     reg_d4.h[0] = 1;
-    reg_a0 = (u8 *)D_00251F30;
+    reg_a0 = (u8 *)select_panel_piece_3_draw_table;
     reg_a0 += *(u16 *)(reg_a6 + 0x60);
     reg_d6.h[1] = *(u16 *)(reg_a0 + 0);
     reg_d6.h[0] = *(u16 *)(reg_a0 + 2);
@@ -421,8 +421,8 @@ void select_panel_piece_4_draw(void) {
 
 s32 sprite_draw_layer5_keep();
 s32 player_panel_step_get();
-extern u8 D_00251F70[];
-extern u8 D_00251F80[];
+extern u8 select_side_begin_table[];
+extern u8 select_side_begin_table_2[];
 extern u8 D_0028DF0C;
 extern u8 D_0028E304;
 
@@ -438,9 +438,9 @@ void select_side_begin(void) {
     u16 temp_a0;
     u8 *temp_s5;
 
-    reg_a0 = (u8 *)D_00251F70;
+    reg_a0 = (u8 *)select_side_begin_table;
     if (reg_d7.h[0] != 0) {
-        reg_a0 = (u8 *)D_00251F80;
+        reg_a0 = (u8 *)select_side_begin_table_2;
     }
     if ((D_0028E304 != 0) || (D_0028DF0C != 0) || (reg_d0.h[0] = reg_d7.h[0], reg_d0.h[0] += 1, reg_d0.h[0] &= 1, player_panel_step_get(), (reg_d0.h[0] == 4)) || (temp_s5 = reg_a6, ((*(u8 *)((u8 *)(temp_s5) + (1))) != 0))) {
         reg_d0.h[0] = reg_d7.h[0];
@@ -495,10 +495,10 @@ void select_side_begin(void) {
     }
 }
 
-extern u8 D_00251F90[];
-extern u8 D_00251FB0[];
-extern u8 D_00251FD0[];
-extern u8 D_00251FF0[];
+extern u8 select_panel_piece_5_draw_table[];
+extern u8 select_panel_piece_5_draw_table_2[];
+extern u8 select_panel_piece_5_draw_table_3[];
+extern u8 select_panel_piece_5_draw_table_4[];
 extern u16 g_game_frame;
 extern u16 g_loop;
 
@@ -511,13 +511,13 @@ void select_panel_piece_5_draw(void) {
     u16 temp_a0_7;
     u8 temp_a0;
 
-    reg_a0 = D_00251FB0;
-    reg_a1 = D_00251FF0;
+    reg_a0 = select_panel_piece_5_draw_table_2;
+    reg_a1 = select_panel_piece_5_draw_table_4;
     reg_d6.h[0] = *(u16 *)(reg_a6 + 0x36);
     reg_d6.h[0] *= 0xFFFF;
     if (reg_d7.h[0] != 0) {
-        reg_a0 = D_00251F90;
-        reg_a1 = D_00251FD0;
+        reg_a0 = select_panel_piece_5_draw_table;
+        reg_a1 = select_panel_piece_5_draw_table_3;
         reg_d6.h[0] = *(u16 *)(reg_a6 + 0x36);
     }
     *(s16 *)(reg_a6 + 0x2C) = 0;
@@ -793,21 +793,21 @@ extern u16 D_00252010[];
 extern u16 D_00252050[];
 extern u16 D_00252210[];
 extern u16 D_00252220[];
-extern u16 D_00252330[];
-extern u16 D_00252340[];
-extern u16 D_0028C150[];
-extern u16 D_0028C154[];
+extern u16 select_panel_piece_6_draw_table[];
+extern u16 select_panel_piece_6_draw_table_2[];
+extern u16 select_panel_piece_6_draw_table_3[];
+extern u16 select_panel_piece_6_draw_table_4[];
 
 void select_panel_piece_6_draw(void) {
     u8 *save_a0;
 
-    reg_a0 = (u8 *)(D_0028C154);
-    reg_a1 = (u8 *)(D_00252340);
+    reg_a0 = (u8 *)(select_panel_piece_6_draw_table_4);
+    reg_a1 = (u8 *)(select_panel_piece_6_draw_table_2);
     reg_a2 = (u8 *)(D_00252220);
     reg_a3 = (u8 *)(D_00252050);
     if (reg_d7.h[0] == 0) goto next_1;
-    reg_a0 = (u8 *)(D_0028C150);
-    reg_a1 = (u8 *)(D_00252330);
+    reg_a0 = (u8 *)(select_panel_piece_6_draw_table_3);
+    reg_a1 = (u8 *)(select_panel_piece_6_draw_table);
     reg_a2 = (u8 *)(D_00252210);
     reg_a3 = (u8 *)(D_00252010);
 next_1:
@@ -1047,15 +1047,15 @@ block_rts:
     return;
 }
 
-extern u8 D_00252350[];
-extern u8 D_00252380[];
-extern u8 D_002523B0[];
+extern u8 select_panel_piece_9_draw_table[];
+extern u8 select_panel_piece_9_draw_table_2[];
+extern u8 select_panel_piece_9_draw_table_3[];
 
 void select_panel_piece_9_draw(void) {
-    reg_a0 = (u8 *)D_00252350;
+    reg_a0 = (u8 *)select_panel_piece_9_draw_table;
     reg_d5.h[0] = *(u16 *)(reg_a6 + 0x38);
     if (reg_d7.h[0] != 0) goto next_0;
-    reg_a0 = (u8 *)D_00252380;
+    reg_a0 = (u8 *)select_panel_piece_9_draw_table_2;
     reg_d5.h[0] *= 0xFFFF;
 next_0:
     if (ENTITY(reg_a6)->flags.b[0] < 7) goto next_1;
@@ -1080,7 +1080,7 @@ next_3:
     reg_d1.h[0] = *(u16 *)reg_a0;
     reg_a0 += 2;
     if (*(u16 *)(reg_a6 + 0x2C) == 0) goto next_5;
-    reg_a1 = (u8 *)D_002523B0;
+    reg_a1 = (u8 *)select_panel_piece_9_draw_table_3;
     reg_a1 += *(u16 *)(reg_a6 + 0x66);
     reg_d2.h[1] = *(u16 *)reg_a1;
     reg_d2.h[0] = *(u16 *)(reg_a1 + 2);
@@ -1349,37 +1349,37 @@ u8 D_00251EF0[64] = {
     0x00, 0xE0, 0x00, 0xE0, 0x00, 0xE8, 0x00, 0xE8, 0x00, 0xF0, 0x00, 0xF0, 0x00, 0xF8, 0x00, 0xF8,
 };
 
-u8 D_00251F30[64] = {
+u8 select_panel_piece_3_draw_table[64] = {
     0x00, 0xF8, 0x00, 0xF8, 0x00, 0xF0, 0x00, 0xF0, 0x00, 0xE8, 0x00, 0xE8, 0x00, 0xE0, 0x00, 0xE0,
     0x00, 0xD8, 0x00, 0xD8, 0x00, 0xD0, 0x00, 0xD0, 0x00, 0xC8, 0x00, 0xC8, 0x00, 0xC0, 0x00, 0xC0,
     0x00, 0xB8, 0x00, 0xB8, 0x00, 0xB0, 0x00, 0xB0, 0x00, 0xA8, 0x00, 0xA8, 0x00, 0xA0, 0x00, 0xA0,
     0x00, 0x98, 0x00, 0x98, 0x00, 0x90, 0x00, 0x90, 0x00, 0x88, 0x00, 0x88, 0x00, 0x80, 0x00, 0x80,
 };
 
-u8 D_00251F70[16] = {
+u8 select_side_begin_table[16] = {
     0x00, 0x1E, 0x80, 0x1F, 0x00, 0x00, 0x9C, 0x0A, 0x00, 0x00, 0x81, 0x0A, 0x00, 0x00, 0x00, 0x00,
 };
 
-u8 D_00251F80[16] = {
+u8 select_side_begin_table_2[16] = {
     0x40, 0x52, 0x40, 0x18, 0x00, 0x00, 0x9C, 0x0A, 0x00, 0x00, 0x7B, 0x0A, 0x00, 0x00, 0x00, 0x00,
 };
 
-u8 D_00251F90[32] = {
+u8 select_panel_piece_5_draw_table[32] = {
     0x00, 0x00, 0xDE, 0x0A, 0x00, 0x00, 0xDD, 0x0A, 0x00, 0x00, 0xF1, 0x0A, 0x00, 0x00, 0xF3, 0x0A,
     0x00, 0x00, 0xF5, 0x0A, 0x00, 0x00, 0xE5, 0x0A, 0x00, 0x00, 0xE1, 0x0A, 0x00, 0x00, 0x00, 0x00,
 };
 
-u8 D_00251FB0[32] = {
+u8 select_panel_piece_5_draw_table_2[32] = {
     0x00, 0x00, 0xE0, 0x0A, 0x00, 0x00, 0xDF, 0x0A, 0x00, 0x00, 0xF2, 0x0A, 0x00, 0x00, 0xF4, 0x0A,
     0x00, 0x00, 0xF6, 0x0A, 0x00, 0x00, 0xED, 0x0A, 0x00, 0x00, 0xE9, 0x0A, 0x00, 0x00, 0x00, 0x00,
 };
 
-u8 D_00251FD0[32] = {
+u8 select_panel_piece_5_draw_table_3[32] = {
     0x00, 0x1A, 0x10, 0x00, 0x00, 0xE6, 0x00, 0xFA, 0x40, 0x52, 0x1C, 0x00, 0x1A, 0x00, 0x0D, 0x00,
     0x0C, 0x00, 0x00, 0xEC, 0x00, 0xF8, 0x00, 0xEC, 0x00, 0xF8, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00,
 };
 
-u8 D_00251FF0[32] = {
+u8 select_panel_piece_5_draw_table_4[32] = {
     0x40, 0x1E, 0x30, 0x00, 0x00, 0x52, 0x00, 0x06, 0x00, 0x1E, 0x1E, 0x00, 0x1D, 0x00, 0x0F, 0x00,
     0x0E, 0x00, 0x00, 0x14, 0x00, 0x06, 0x00, 0x12, 0x00, 0x06, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00,
 };
@@ -1551,37 +1551,37 @@ u8 D_00252310[32] = {
     0x00, 0x00, 0x88, 0x0A, 0x00, 0x00, 0x89, 0x0A, 0x00, 0x00, 0x8A, 0x0A, 0x00, 0x00, 0x8B, 0x0A,
 };
 
-u16 D_00252330[8] = {
+u16 select_panel_piece_6_draw_table[8] = {
     0x0000, 0x0A7D, 0x0000, 0x0A7A, 0x0000, 0x0A78, 0x0000, 0x0000,
 };
 
-u16 D_00252340[8] = {
+u16 select_panel_piece_6_draw_table_2[8] = {
     0x0000, 0x0A83, 0x0000, 0x0A80, 0x0000, 0x0A7E, 0x0000, 0x0000,
 };
 
-u8 D_00252350[48] = {
+u8 select_panel_piece_9_draw_table[48] = {
     0x41, 0x65, 0x40, 0x0D, 0x01, 0x4F, 0x00, 0x30, 0x01, 0x60, 0x00, 0x01, 0x00, 0x00, 0x79, 0x0A,
     0x01, 0x60, 0x80, 0x23, 0x00, 0x00, 0x7C, 0x0A, 0x41, 0x39, 0x80, 0x31, 0x00, 0x00, 0x9F, 0x0A,
     0x01, 0x38, 0x80, 0x2D, 0x00, 0x00, 0xA8, 0x0A, 0x41, 0x3B, 0x40, 0x32, 0x00, 0x00, 0xB2, 0x0A,
 };
 
-u8 D_00252380[48] = {
+u8 select_panel_piece_9_draw_table_2[48] = {
     0x81, 0x02, 0xC0, 0x14, 0x41, 0x05, 0x00, 0x00, 0x01, 0x03, 0x80, 0x08, 0x00, 0x00, 0x7F, 0x0A,
     0x01, 0x03, 0x80, 0x2B, 0x00, 0x00, 0x82, 0x0A, 0x01, 0x29, 0x80, 0x07, 0x00, 0x00, 0x9F, 0x0A,
     0xC1, 0x27, 0x80, 0x03, 0x00, 0x00, 0xA8, 0x0A, 0x01, 0x2B, 0x40, 0x08, 0x00, 0x00, 0xB2, 0x0A,
 };
 
-u8 D_002523B0[48] = {
+u8 select_panel_piece_9_draw_table_3[48] = {
     0x00, 0x00, 0xD4, 0x0A, 0x00, 0x00, 0xD4, 0x0A, 0x00, 0x00, 0xD4, 0x0A, 0x00, 0x00, 0xD5, 0x0A,
     0x00, 0x00, 0xD5, 0x0A, 0x00, 0x00, 0xD5, 0x0A, 0x00, 0x00, 0xD6, 0x0A, 0x00, 0x00, 0xD6, 0x0A,
     0x00, 0x00, 0xD6, 0x0A, 0x00, 0x00, 0xD7, 0x0A, 0x00, 0x00, 0xD7, 0x0A, 0x00, 0x00, 0xD7, 0x0A,
 };
 
-u8 D_0028C140[8] = {
+u8 select_panel_piece_3_draw_table_2[8] = {
     0x00, 0x00, 0xD7, 0x02, 0x00, 0x00, 0xE8, 0x02,
 };
 
-u8 D_0028C148[4] = {
+u8 select_panel_piece_2_draw_table[4] = {
     0x00, 0x00, 0x01, 0x00,
 };
 
@@ -1589,11 +1589,11 @@ u16 D_0028C14C[2] = {
     0x0002, 0x0003,
 };
 
-u16 D_0028C150[2] = {
+u16 select_panel_piece_6_draw_table_3[2] = {
     0x5200, 0x1A00,
 };
 
-u16 D_0028C154[2] = {
+u16 select_panel_piece_6_draw_table_4[2] = {
     0x1E00, 0x1E00,
 };
 

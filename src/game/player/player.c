@@ -739,13 +739,13 @@ s32 p2_hyper_item_take();
 s32 weapon_level_data_set(u8 *);
 s32 p1_hyper_items_pending_take();
 s32 p2_hyper_items_pending_take();
-extern u16 D_002555C0[];
-extern u16 D_002555D0[];
+extern u16 player_spawn_table[];
+extern u16 player_spawn_table_2[];
 extern u16 player_weapon_tables[24];
-extern u16 D_002556E0[];
-extern u16 D_002560C0[];
-extern u16 D_0028C5F8[];
-extern u16 D_0028C600[];
+extern u16 player_spawn_table_3[];
+extern u16 player_spawn_table_4[];
+extern u16 player_spawn_table_5[];
+extern u16 player_spawn_table_6[];
 extern u8 D_0028C608[];
 extern u16 g_p2_died_in_hyper;
 extern u16 g_p1_died_in_hyper;
@@ -780,7 +780,7 @@ void player_spawn(void) {
     s32 n;
 
     *(u16 *)reg_a2 = 0x8000;
-    reg_a0 = (u8 *)D_002560C0;
+    reg_a0 = (u8 *)player_spawn_table_4;
     g_players_hidden = 0;
     g_player_shots_disabled = 0;
     g_players_stage_clear = 0;
@@ -1075,9 +1075,9 @@ next_76:
     if (g_simulation_active == 0) goto next_85;
     reg_a6[0x3F] = 0;
 next_85:
-    reg_a0 = (u8 *)D_0028C5F8;
+    reg_a0 = (u8 *)player_spawn_table_5;
     if (reg_a5[6] != 0) {
-        reg_a0 = (u8 *)D_0028C600;
+        reg_a0 = (u8 *)player_spawn_table_6;
     }
     PLAYER(reg_a6)->y.h = *(u16 *)reg_a0;
     reg_a0 += 2;
@@ -1093,7 +1093,7 @@ next_85:
     PLAYER(reg_a6)->y.h = *(u16 *)(reg_a5 + 8);
     PLAYER(reg_a6)->x.h = *(u16 *)(reg_a5 + 0xA);
     reg_d0.h[0] = PLAYER(reg_a6)->ship_type.h;
-    reg_a0 = (u8 *)D_002555C0;
+    reg_a0 = (u8 *)player_spawn_table;
     reg_d0.h[0] <<= 2;
     reg_a0 += reg_d0.h[0];
     PLAYER(reg_a6)->sprite_hi.h = *(u16 *)reg_a0;
@@ -1113,12 +1113,12 @@ next_85:
     reg_d0.h[0] += reg_d2.h[0];
     reg_d2.h[0] <<= 1;
     reg_d1.h[0] += reg_d2.h[0];
-    reg_a0 = (u8 *)D_002555D0;
+    reg_a0 = (u8 *)player_spawn_table_2;
     reg_a0 += reg_d0.h[0];
     PLAYER(reg_a6)->move.b.speed = reg_a0[1];
     reg_a6[0x38] = reg_a0[1];
     reg_a6[0x39] = reg_a0[0];
-    reg_a0 = (u8 *)D_002556E0;
+    reg_a0 = (u8 *)player_spawn_table_3;
     reg_a0 += reg_d1.h[0];
     PLAYER(reg_a6)->burst_reset.h = *(u16 *)reg_a0;
     PLAYER(reg_a6)->option_burst_reset.h = *(u16 *)(reg_a0 + 2);
@@ -1615,12 +1615,12 @@ void player_sprite_update(void) {
 typedef void (*Fn)();
 
 extern u8 hyper_bullet_speed_table[];
-extern u8 D_00255710[];
+extern u8 player_update_table_2[];
 extern u8 ship0_shot_lists_1[];
 extern u8 ship0_shot_lists_2[];
 extern u8 ship0_shot_lists_3[];
-extern u8 D_0028C948[2];
-extern u8 D_0028C94C[2];
+extern u8 player_update_table_5[2];
+extern u8 player_update_table_6[2];
 extern u8 D_0029EA50[];
 s32 bomb_palette_load_first();
 s32 bomb_palette_load_second();
@@ -1645,9 +1645,9 @@ s32 bullet_cancel_by_player1();
 s32 bullet_cancel_by_player2();
 s32 bullet_cancel_begin();
 s32 entity_velocity();
-extern u8 D_00255700[];
-extern u16 D_00255750[];
-extern u16 D_00255760[];
+extern u8 player_update_table[];
+extern u16 player_update_table_3[];
+extern u16 player_update_table_4[];
 extern u16 g_p2_bombs_used;
 extern u16 g_p1_bombs_used;
 extern u16 g_p2_weapon_level_data_lo[];
@@ -1760,7 +1760,7 @@ block_13:
         }
         reg_d0.w = 0xF;
         reg_d0.b[0] &= PLAYER(reg_a6)->input.b.raw;
-        reg_a2 = (u8 *)D_00255700;
+        reg_a2 = (u8 *)player_update_table;
         PLAYER(reg_a6)->move.b.dir = (u8) *(reg_a2 + reg_d0.h[0] + ((reg_d0.h[0] & 1) ? -1 : 1));
         if ((s8) PLAYER(reg_a6)->move.b.dir < 0) {
             player_roll_recenter();
@@ -1829,7 +1829,7 @@ block_13:
             temp_v1_2 = PLAYER(reg_a6)->laser_bomb_recoil.h;
             if (temp_v1_2 != 0) {
                 reg_d0.h[0] = temp_v1_2;
-                reg_a0 = (u8 *)D_00255710;
+                reg_a0 = (u8 *)player_update_table_2;
                 reg_d0.h[0] = (reg_d0.h[0] != 0) ? *(u16 *)((u8 *)reg_a0 + ((s16)reg_d0.h[0] & ~1)) : *(u16 *)reg_a0;
                 PLAYER(reg_a6)->offset_y.h -= reg_d0.h[0];
                 PLAYER(reg_a6)->laser_recoil.h = (u16) reg_d0.h[0];
@@ -1878,14 +1878,14 @@ block_13:
                 reg_a0 = (u8 *)p1_laser_stop;
                 reg_a1 = (u8 *)((u8 *)&g_p1_hyper_items);
                 reg_a2 = &(*(u8 *)&g_p1_hyper_in_effect);
-                reg_a3 = (u8 *)(D_00255750);
+                reg_a3 = (u8 *)(player_update_table_3);
                 reg_d6.h[0] = g_p1_hyper_total;
                 reg_d7.h[0] = *(u16 *)((u8 *)g_p1_maximum_value);
             } else {
                 reg_a0 = (u8 *)p2_laser_stop;
                 reg_a1 = (u8 *)((u8 *)&g_p2_hyper_items);
                 reg_a2 = &(*(u8 *)&g_p2_hyper_in_effect);
-                reg_a3 = (u8 *)(D_00255760);
+                reg_a3 = (u8 *)(player_update_table_4);
                 reg_d6.h[0] = g_p2_hyper_total;
                 reg_d7.h[0] = *(u16 *)((u8 *)g_p2_maximum_value);
             }
@@ -2017,7 +2017,7 @@ block_13:
                         PLAYER(reg_a6)->shield_anim_delay.h = 0U;
                         PLAYER(reg_a6)->shield_anim_frame.h = 0x3CU;
                         PLAYER(reg_a6)->move.b.speed += 6;
-                        reg_a0 = (u8 *)D_0028C948;
+                        reg_a0 = (u8 *)player_update_table_5;
                     } else {
                         bomb_palette_load_second();
                         PLAYER(reg_a6)->shield_anim_delay.h = 0x101U;
@@ -2042,7 +2042,7 @@ block_13:
                         *(s16 *)reg_a2 = 1;
                         reg_a2 = temp_s0;
                         bullet_cancel_begin();
-                        reg_a0 = (u8 *)D_0028C94C;
+                        reg_a0 = (u8 *)player_update_table_6;
                     }
                     reg_a0 += reg_d1.h[0];
                     reg_d0.h[0] = *(u16 *)reg_a0;
@@ -2882,7 +2882,7 @@ s32 player_draw_unused();
 s32 ship_afterimage_update();
 s32 sprite_draw_with_players();
 extern u16 player_shield_start_sprites[];
-extern u16 D_0028C628[];
+extern u16 player_draw_table[];
 extern u16 player_shield_palettes[];
 extern u16 player_shield_sprite_tables[];
 extern u16 player_exhaust_sprite_tables[];
@@ -2914,7 +2914,7 @@ void player_draw(void) {
     reg_d3.h[0] = 0xA28;
     reg_d4.w = 0;
     reg_d4.b[0] = PLAYER(reg_a6)->who.b.side;
-    reg_a0 = (u8 *)(D_0028C628);
+    reg_a0 = (u8 *)(player_draw_table);
     reg_d4.h[0] *= 2;
     reg_d4.h[0] = ((reg_d4.h[0]) != 0) ? *(u16 *)((u8 *)reg_a0 + ((s16)(reg_d4.h[0]) & ~1)) : *(u16 *)reg_a0;
     reg_tmp.h[0] = PLAYER(reg_a6)->shield_anim_frame.h;
@@ -3210,11 +3210,11 @@ u8 D_0029EA50[1728];
 u8 D_0029E390[1728];
 u8 D_0029E330[96];
 u8 D_0029E2D0[96];
-u8 D_0029E2A0[48];
+u8 objects_task_buffer_2[48];
 u8 g_p1_laser_entities[1296];
 u8 D_0029DD30[96];
 u8 D_0029DCD0[96];
-u8 D_0029DCA0[48];
+u8 objects_task_buffer[48];
 u8 g_p2_laser_entities[1296];
 u8 D_0029D770[32];
 u8 D_0029D750[32];

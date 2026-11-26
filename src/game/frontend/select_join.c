@@ -54,7 +54,7 @@ s32 select_panel_piece_4_draw();
 s32 select_panel_piece_5_draw();
 s32 select_other_side_piece_draw();
 s32 select_panel_piece_9_draw();
-extern u16 D_002523E0[];
+extern u16 select_side_draw_table[];
 extern u8 D_002610B0[];
 extern s16 D_0028DF14;
 extern s16 D_0028DF18;
@@ -238,7 +238,7 @@ next_75:
 next_80:
     if ((s32) W(0x32) < 0xF0) goto block_100;
     if (!((s32) W(0x4E) < 0x3800)) goto next_61;
-    reg_a1 = (u8 *) D_002523E0;
+    reg_a1 = (u8 *) select_side_draw_table;
     reg_d1.h[0] = W(0x52);
     W(0x52) += 2;
     reg_d0.h[0] = (reg_d1.h[0] != 0) ? *(u16 *)((u8 *)reg_a1 + ((s16)reg_d1.h[0] & ~1)) : *(u16 *)reg_a1;
@@ -275,7 +275,7 @@ next_120:
     select_panel_piece_9_draw();
 }
 
-u16 D_002523E0[128] = {
+u16 select_side_draw_table[128] = {
     0x0020, 0x0000, 0x0020, 0x0000, 0x0040, 0x0000, 0x0000, 0x0000,
     0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000,
     0x0000, 0x0040, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000,

@@ -62,12 +62,6 @@ extern s32 g_text_queue_count;
 extern s32 g_overlay_queue_count;
 extern SpriteEntry g_text_queue[512];
 extern SpriteEntry g_overlay_queue[512];
-extern s8 g_cd_async_state;
-extern s8 g_cd_async_busy;
-extern u32 g_cd_total_bytes_read;
-extern s8 g_cd_retry_timer;
-extern u32 g_cd_last_read_size;
-extern sceCdlFILE g_cd_file;
 u8 g_font_alpha_table[16] = { 0, 25, 51, 76, 102, 51, 76, 102, 128, 128, 128, 128, 128, 128, 128, 128 };
 u8 g_font_base_luma_table[16] = { 0, 0, 0, 0, 0, 51, 51, 51, 51, 102, 102, 102, 153, 153, 204, 255 };
 u8 g_font_tint_luma_table[16] = { 0, 0, 0, 0, 0, 32, 48, 48, 2, 3, 3, 3, 4, 4, 5, 6 };
@@ -1422,6 +1416,7 @@ void gfx_draw_shaded_box(s32 x, s32 y, s32 w, s32 h, s32 depth, s32 alpha) {
     sceGsSyncPath(0, 0);
 }
 
+#ifndef DDPDOJ_PC
 void gfx_draw_color_box(s32 x, s32 y, s32 w, s32 h, s32 depth, s32 alpha, s32 r, s32 g, s32 b) {
     Qword *packet = (Qword *)((u8 (*)[0x10000])g_gif_buf)[0];
 
@@ -1474,137 +1469,32 @@ void gfx_draw_color_box(s32 x, s32 y, s32 w, s32 h, s32 depth, s32 alpha, s32 r,
     sceGsSyncPath(0, 0);
 }
 
-void cd_load_file(void *destination, const char *path)
-{
-    sceCdRMode readMode;
-    s32 error;
+#endif
 
-    do {
-        sceCdDiskReady(0);
-    } while (!sceCdSearchFile(&g_cd_file, path));
-
-    for (;;) {
-        do {
-            sceCdDiskReady(0);
-            g_cd_last_read_size = g_cd_file.size;
-            readMode.trycount = 0;
-            readMode.spindlctrl = SCECdSpinNom;
-            readMode.datapattern = SCECdSecS2048;
-        } while (!sceCdRead(g_cd_file.lsn, (g_cd_file.size + 0x7FF) >> 11, destination, &readMode));
-
-        sceCdSync(0);
-        error = sceCdGetError();
-        if (error == 0) {
-            break;
-        }
-
-        printf("cd1 err[%x]\n", error);
-        sceCdBreak();
-    }
-}
-
-void cd_read_async(void *destination, s32 byteCount, u32 startSector)
-{
-    sceCdRMode readMode;
-    s32 readError;
-
-    switch (g_cd_async_state) {
-    case 0:
-        g_cd_async_busy = 1;
-        g_cd_last_read_size = 0;
-        g_cd_async_state++;
-        g_cd_retry_timer = 0;
-        break;
-
-    case 1:
-        if (sceCdDiskReady(1) == SCECdComplete) {
-            g_cd_async_state++;
-        } else {
-            g_cd_retry_timer++;
-            if (g_cd_retry_timer > 60) {
-                sceCdBreak();
-                g_cd_retry_timer = 0;
-                printf("err cd break\n");
-            }
-        }
-        break;
-
-    case 2:
-        g_cd_last_read_size = byteCount;
-        readMode.trycount = 0;
-        readMode.spindlctrl = SCECdSpinNom;
-        readMode.datapattern = SCECdSecS2048;
-        if (sceCdRead(startSector, (byteCount + 2047) / 2048, destination, &readMode) != 0) {
-            g_cd_async_state++;
-        }
-        break;
-
-    case 3:
-        if (sceCdSync(1) == 0) {
-            readError = sceCdGetError();
-            if (readError != 0) {
-                printf("cd3 err[%x]\n", (u32)readError);
-                g_cd_retry_timer = 0;
-                g_cd_async_state = 1;
-                sceCdBreak();
-            } else {
-                g_cd_async_busy = 0;
-                g_cd_async_state = 0;
-                g_cd_total_bytes_read += g_cd_last_read_size;
-            }
-        }
-        break;
-    }
-}
-
-void cd_read_sync(void *destination, u32 byteCount, u32 startSector)
-{
-    sceCdRMode readMode;
-    s32 error;
-
-    g_cd_file.size = byteCount;
-    g_cd_file.lsn = startSector;
-
-    for (;;) {
-        do {
-            sceCdDiskReady(0);
-            g_cd_last_read_size = g_cd_file.size;
-            readMode.trycount = 0;
-            readMode.spindlctrl = SCECdSpinNom;
-            readMode.datapattern = SCECdSecS2048;
-        } while (!sceCdRead(g_cd_file.lsn, (g_cd_file.size + 0x7FF) >> 11, destination, &readMode));
-
-        sceCdSync(0);
-        error = sceCdGetError();
-        if (error == 0) {
-            break;
-        }
-
-        printf("cd4 err[%x]\n", error);
-        sceCdBreak();
-    }
-}
-
-void cd_search_file(const char *path)
-{
-    do {
-        sceCdDiskReady(0);
-    } while (sceCdSearchFile(&g_cd_file, path) == 0);
-}
+/* Keep the CD routines in the original PS2 translation unit. */
+#ifndef DDPDOJ_PC
+#include "game_cd_io.inc.h"
+#endif
 
 s8 *g_font_glyph_data;
 s32 g_text_queue_count;
 s32 g_overlay_queue_count;
+#ifndef DDPDOJ_PC
 u32 g_cd_last_read_size;
+#endif
 void *g_font_file_buf;
+#ifndef DDPDOJ_PC
 s8 g_cd_retry_timer __attribute__((aligned(4)));
 u32 g_cd_total_bytes_read;
 s8 g_cd_async_busy __attribute__((aligned(4)));
 s8 g_cd_async_state __attribute__((aligned(4)));
+#endif
 
 SpriteEntry g_text_queue[512] __attribute__((aligned(64)));
 SpriteEntry g_overlay_queue[512] __attribute__((aligned(64)));
 PaletteColor g_font_palettes[20][16] __attribute__((aligned(64)));
 PaletteColor g_font_alt_palette[32] __attribute__((aligned(64)));
+#ifndef DDPDOJ_PC
 u8 g_cd_unused[64] __attribute__((aligned(64)));    /* nothing refers to these 64 bytes */
 sceCdlFILE g_cd_file __attribute__((aligned(64)));
+#endif

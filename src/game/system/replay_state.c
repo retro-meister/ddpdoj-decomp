@@ -308,7 +308,7 @@ extern u8 player_shot_8_flight_028_01[];
 extern u8 player_shot_8_flight_048_01[];
 extern u8 player_shot_8_flight_068_01[];
 extern u8 player_shot_8_flight_088_01[];
-extern u8 D_0025E1F0[];
+extern u8 replay_targets_shot_lists_292[];
 extern u8 option_shot_list_4_03_00_07[];
 extern u8 ship0_shot_list_3_01_00_07[];
 extern u8 ship0_shot_list_3_03_00_07[];
@@ -363,14 +363,14 @@ extern u8 option_sprites_b_01_02_05[];
 extern u8 option_sprites_b_01_03_05[];
 extern u8 option_sprites_b_01_04_05[];
 extern u8 option_hyper_sprite_b_00_05[];
-extern u8 D_00256E50[];
-extern u8 D_00256E70[];
-extern u8 D_00256E90[];
-extern u8 D_00256EB0[];
-extern u8 D_00256FC0[];
-extern u8 D_00257030[];
-extern u8 D_002570A0[];
-extern u8 D_00257110[];
+extern u8 replay_targets_option_sprites_11[];
+extern u8 replay_targets_option_sprites_12[];
+extern u8 replay_targets_option_sprites_13[];
+extern u8 replay_targets_option_sprites_14[];
+extern u8 replay_targets_option_sprites_15[];
+extern u8 replay_targets_option_sprites_16[];
+extern u8 replay_targets_option_sprites_17[];
+extern u8 replay_targets_option_sprites_18[];
 extern u8 option_power_value_00[];
 extern u8 option_power_value_01[];
 extern u8 option_power_value_02[];
@@ -420,31 +420,31 @@ extern u8 option_strong_param_01_08[];
 extern u8 option_strong_param_02_08[];
 extern u8 option_strong_param_03_08[];
 extern u8 option_strong_param_04_08[];
-extern u8 D_00257368[];
-extern u8 D_00257378[];
-extern u8 D_00257388[];
-extern u8 D_00257398[];
+extern u8 replay_blocks_option_params_19[];
+extern u8 replay_blocks_option_params_20[];
+extern u8 replay_blocks_option_params_21[];
+extern u8 replay_blocks_option_params_22[];
 extern u8 option_hyper_param_00_08[];
-extern u8 D_00257138[];
-extern u8 D_00257148[];
-extern u8 D_00257158[];
-extern u8 D_00257168[];
-extern u8 D_00257178[];
-extern u8 D_00257188[];
-extern u8 D_00257198[];
-extern u8 D_002571A8[];
-extern u8 D_002571B8[];
-extern u8 D_002571C8[];
-extern u8 D_002571D8[];
-extern u8 D_002571E8[];
-extern u8 D_002571F8[];
-extern u8 D_00257208[];
-extern u8 D_00257218[];
-extern u8 D_00257228[];
-extern u8 D_00257238[];
-extern u8 D_00257248[];
-extern u8 D_00257258[];
-extern u8 D_00257268[];
+extern u8 replay_targets_option_params_b_0[];
+extern u8 replay_targets_option_params_b_1[];
+extern u8 replay_targets_option_params_b_2[];
+extern u8 replay_targets_option_params_b_3[];
+extern u8 replay_targets_option_params_b_4[];
+extern u8 replay_targets_option_params_b_5[];
+extern u8 replay_targets_option_params_b_6[];
+extern u8 replay_targets_option_params_b_7[];
+extern u8 replay_targets_option_params_b_8[];
+extern u8 replay_targets_option_params_b_9[];
+extern u8 replay_targets_option_params_b_10[];
+extern u8 replay_targets_option_params_b_11[];
+extern u8 replay_targets_option_params_b_12[];
+extern u8 replay_targets_option_params_b_13[];
+extern u8 replay_targets_option_params_b_14[];
+extern u8 replay_targets_option_params_b_15[];
+extern u8 replay_targets_option_params_b_16[];
+extern u8 replay_targets_option_params_b_17[];
+extern u8 replay_targets_option_params_b_18[];
+extern u8 replay_targets_option_params_b_19[];
 extern u8 spread_bomb_a_phase1_frames[];
 extern u8 spread_bomb_b_phase1_frames[];
 extern u8 spread_bomb_a_phase2_frames[];
@@ -829,7 +829,7 @@ void *replay_targets_shot_lists[] = {
     player_shot_8_flight_048_01,
     player_shot_8_flight_068_01,
     player_shot_8_flight_088_01,
-    D_0025E1F0,
+    replay_targets_shot_lists_292,
     option_shot_list_4_03_00_07,
     ship0_shot_list_3_01_00_07,
     ship0_shot_list_3_03_00_07,
@@ -887,14 +887,14 @@ void *replay_targets_option_sprites[] = {
     option_sprites_b_01_03_05,
     option_sprites_b_01_04_05,
     option_hyper_sprite_b_00_05,
-    D_00256E50,
-    D_00256E70,
-    D_00256E90,
-    D_00256EB0,
-    D_00256FC0,
-    D_00257030,
-    D_002570A0,
-    D_00257110,
+    replay_targets_option_sprites_11,
+    replay_targets_option_sprites_12,
+    replay_targets_option_sprites_13,
+    replay_targets_option_sprites_14,
+    replay_targets_option_sprites_15,
+    replay_targets_option_sprites_16,
+    replay_targets_option_sprites_17,
+    replay_targets_option_sprites_18,
     option_power_value_00,
     option_power_value_01,
     option_power_value_02,
@@ -950,10 +950,10 @@ void *replay_blocks_option_params[] = {
     option_strong_param_02_08,
     option_strong_param_03_08,
     option_strong_param_04_08,
-    D_00257368,
-    D_00257378,
-    D_00257388,
-    D_00257398,
+    replay_blocks_option_params_19,
+    replay_blocks_option_params_20,
+    replay_blocks_option_params_21,
+    replay_blocks_option_params_22,
     option_hyper_param_00_08,
 };
 
@@ -964,26 +964,26 @@ s32 replay_block_sizes_option_params[] = {
 };
 
 void *replay_targets_option_params_b[] = {
-    D_00257138,
-    D_00257148,
-    D_00257158,
-    D_00257168,
-    D_00257178,
-    D_00257188,
-    D_00257198,
-    D_002571A8,
-    D_002571B8,
-    D_002571C8,
-    D_002571D8,
-    D_002571E8,
-    D_002571F8,
-    D_00257208,
-    D_00257218,
-    D_00257228,
-    D_00257238,
-    D_00257248,
-    D_00257258,
-    D_00257268,
+    replay_targets_option_params_b_0,
+    replay_targets_option_params_b_1,
+    replay_targets_option_params_b_2,
+    replay_targets_option_params_b_3,
+    replay_targets_option_params_b_4,
+    replay_targets_option_params_b_5,
+    replay_targets_option_params_b_6,
+    replay_targets_option_params_b_7,
+    replay_targets_option_params_b_8,
+    replay_targets_option_params_b_9,
+    replay_targets_option_params_b_10,
+    replay_targets_option_params_b_11,
+    replay_targets_option_params_b_12,
+    replay_targets_option_params_b_13,
+    replay_targets_option_params_b_14,
+    replay_targets_option_params_b_15,
+    replay_targets_option_params_b_16,
+    replay_targets_option_params_b_17,
+    replay_targets_option_params_b_18,
+    replay_targets_option_params_b_19,
 };
 
 void *replay_blocks_bomb[] = {
@@ -3158,20 +3158,38 @@ void replay_text_pointers_decode(u8 *base)
     s32 offset = 0;
 
     do {
+#ifdef DDPDOJ_PC
+        pointer_decode(base + offset + 0x1EE, (void *)g_text_layer, 0x82);
+        pointer_decode(base + offset + 0x248, (void *)g_text_layer, 0x82);
+#else
         pointer_decode((void *)((u8 *)offset + (s32)base + 0x1EE), (void *)g_text_layer, 0x82);
         pointer_decode((void *)((u8 *)(offset + (s32)base) + 0x248), (void *)g_text_layer, 0x82);
+#endif
         offset += 0xA;
     } while (offset < 0x5A);
 }
 
+#ifdef DDPDOJ_PC
+s32 replay_snapshot_checksum(const u8 *data);
+#else
 s32 replay_snapshot_checksum(s32);                             /* extern */
+#endif
 extern s32 g_replay_checksum;
 
+#ifdef DDPDOJ_PC
+void replay_file_pointers_decode(void *data) {
+    u8 *base = data;
+    g_replay_checksum = replay_snapshot_checksum(base + 0x400);
+    replay_snapshot_pointers_decode(base + 0x400);
+    replay_text_pointers_decode(base + 0x5934);
+}
+#else
 void replay_file_pointers_decode(s32 arg0) {
     g_replay_checksum = replay_snapshot_checksum(arg0 + 0x400);
     replay_snapshot_pointers_decode((void *)(arg0 + 0x400));
     replay_text_pointers_decode((void *)(arg0 + 0x5934));
 }
+#endif
 
 extern u8 g_player1[];
 extern u8 g_player2[];

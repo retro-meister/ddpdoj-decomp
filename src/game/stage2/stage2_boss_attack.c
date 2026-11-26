@@ -2,7 +2,7 @@
 #include "entity.h"
 #include "stage2_boss.h"
 
-extern void (*D_0028DB08[])();
+extern void (*stage2_boss_fire_shoulder_spread_table_2[])();
 
 void stage2_boss_fire_shoulder_spread_start(void);
 void stage2_boss_fire_shoulder_spread(void);
@@ -117,7 +117,7 @@ void stage2_boss_fire_shoulder_spread_start(void) {
 
 typedef void (*Fn)();
 
-extern u16 D_0026C140[];
+extern u16 stage2_boss_fire_shoulder_spread_table[];
 extern u16 D_0026C1C0[];
 
 void stage2_boss_fire_shoulder_spread() {
@@ -143,7 +143,7 @@ void stage2_boss_fire_shoulder_spread() {
     reg_d2.w = *(u32 *)&reg_tmp2.h[0];
     goto next_2;
 next_1:
-    reg_a0 = (u8 *)(D_0026C140);
+    reg_a0 = (u8 *)(stage2_boss_fire_shoulder_spread_table);
     reg_d1.w = 0;
     reg_d1.b[0] = ENTITY(reg_a6)[5].move.b.dir;
     reg_d1.b[0] += 1;
@@ -158,7 +158,7 @@ next_1:
     reg_d2.h[1] = ENTITY(reg_a6)[5].y.h;
     reg_d2.h[0] = ENTITY(reg_a6)[5].x.h;
 next_2:
-    reg_a0 = (u8 *)(((u16 *)D_0028DB08));
+    reg_a0 = (u8 *)(((u16 *)stage2_boss_fire_shoulder_spread_table_2));
     reg_d0.h[0] = SHOULDER_SPREAD(reg_a4)->speed;
     reg_d0.h[0] += reg_d0.h[0];
     reg_d0.h[0] += reg_d0.h[0];
@@ -360,7 +360,7 @@ void stage2_boss_fire_quad_gun_start() {
     stage2_boss_fire_quad_gun();
 }
 
-extern u8 D_0026C240[];
+extern u8 stage2_boss_fire_quad_gun_table[];
 
 void stage2_boss_fire_quad_gun(void) {
     s32 bullet_fire();
@@ -379,7 +379,7 @@ void stage2_boss_fire_quad_gun(void) {
             reg_d0.b[0] += 0x30;
             reg_d1.b[0] = reg_d0.b[0];
         }
-        reg_a0 = (u8 *)D_0026C240;
+        reg_a0 = (u8 *)stage2_boss_fire_quad_gun_table;
         reg_a0 += QUAD_GUN(reg_a4)->barrel;
         reg_d3.h[1] = *(u16 *)reg_a0;
         reg_d3.h[0] = *(u16 *)(reg_a0 + 2);
@@ -1850,7 +1850,7 @@ block_rts:
     return;
 }
 
-u16 D_0026C140[64] = {
+u16 stage2_boss_fire_shoulder_spread_table[64] = {
     0x0600, 0x0000, 0x0600, 0x0100, 0x0600, 0x0240, 0x05C0, 0x0340,
     0x0540, 0x0440, 0x0400, 0x0500, 0x0300, 0x0540, 0x0180, 0x05C0,
     0xFF80, 0x0580, 0xFE40, 0x0580, 0xFD40, 0x0540, 0xFB00, 0x03C0,
@@ -1872,7 +1872,7 @@ u16 D_0026C1C0[64] = {
     0x07C0, 0xFB80, 0x08C0, 0xFC40, 0x0980, 0xFD40, 0x0840, 0xFF00,
 };
 
-u8 D_0026C240[16] = {
+u8 stage2_boss_fire_quad_gun_table[16] = {
     0x80, 0xFD, 0x00, 0xF9, 0x80, 0xFD, 0x00, 0x01, 0x00, 0xFB, 0x00, 0xF9, 0x00, 0xFB, 0x00, 0x01,
 };
 
@@ -1884,7 +1884,7 @@ u16 D_0026C260[8] = {
     0xF9C0, 0x0BC0, 0xF9C0, 0x0F00, 0xF740, 0x0BC0, 0xF740, 0x0F00,
 };
 
-void (*D_0028DB08[2])() = {
+void (*stage2_boss_fire_shoulder_spread_table_2[2])() = {
     stage2_boss_rage_fan_a,
     stage2_boss_rage_fan_b,
 };

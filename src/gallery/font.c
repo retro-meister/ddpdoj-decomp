@@ -259,9 +259,11 @@ void font_upload_default_cluts(void)
     s32 resourceIndex;
     PaletteColor (*resourceBuffer)[16];
 
+#ifndef DDPDOJ_PC
     *T0_COUNT = 0;
     g_vram_load_buf = memalign(0x40, 0x300000);
     printf("mozi buf[%x] size[%d]\n", g_vram_load_buf, 0x2D9248);
+#endif
     g_font_glyph_buf = g_vram_load_buf;
     font_init_clut_table();
 

@@ -10,10 +10,10 @@ void stage4_boss_missile_first(void) {
 }
 
 s32 enemy_init_entities();
-extern u8 D_0026F0A0[];
+extern u8 stage4_boss_missile_start_table[];
 
 void stage4_boss_missile_start(void) {
-    reg_a0 = D_0026F0A0;
+    reg_a0 = stage4_boss_missile_start_table;
     enemy_init_entities();
     ENTITY(reg_a6)->y.h = (u16) STAGE4_MISSILE(reg_a5)->at_start.y;
     ENTITY(reg_a6)->x.h = (u16) STAGE4_MISSILE(reg_a5)->at_start.x;
@@ -133,12 +133,12 @@ void stage4_boss_cutter_first(void) {
 }
 
 s32 velocity_from_dir256();
-extern u8 D_0026F0C0[];
+extern u8 stage4_boss_cutter_start_table[];
 
 void stage4_boss_cutter_start(void) {
     u8 temp_a0;
 
-    reg_a0 = (u8 *)D_0026F0C0;
+    reg_a0 = (u8 *)stage4_boss_cutter_start_table;
     enemy_init_entities();
     ENTITY(reg_a6)->y.h = (u16) STAGE4_CUTTER(reg_a5)->at_start.y;
     ENTITY(reg_a6)->x.h = (u16) STAGE4_CUTTER(reg_a5)->at_start.x;
@@ -207,8 +207,8 @@ s32 score_add();
 s32 entity_advance256();
 s32 direction256_between();
 s32 distance_between();
-extern u8 D_0026F150[];
-extern u16 D_0026F170[];
+extern u8 stage4_boss_cutter_table[];
+extern u16 stage4_boss_cutter_table_2[];
 extern u16 g_game_frame;
 extern u16 g_enemy_signal_e;
 extern u16 g_enemy_signal_d;
@@ -328,7 +328,7 @@ next_150:
     reg_d3.h[0] = ENTITY(reg_a6)->offset_x.h;
     distance_between();
     ENTITY(reg_a6)->move.b.speed = 0x40;
-    reg_a4_as_u16_p = (u16 *)D_0026F170;
+    reg_a4_as_u16_p = (u16 *)stage4_boss_cutter_table_2;
 loop_160:
     reg_d1.h[0] = *reg_a4_as_u16_p++;
     if ((s16) reg_d1.h[0] == -1) goto next_170;
@@ -647,7 +647,7 @@ next_700:
     if (ENTITY(reg_a6)->misc.b.draw_layer == 0) goto block_rts;
     if (ENTITY(reg_a6)[1].attr.b.flip == 0x70) goto block_rts;
     if (ENTITY(reg_a6)[1].attr.b.flip == 0x71) goto block_rts;
-    reg_a0 = (u8 *)D_0026F150;
+    reg_a0 = (u8 *)stage4_boss_cutter_table;
     reg_a0 += STAGE4_CUTTER(reg_a5)->frame;
     reg_d2.h[1] = *(u16 *)reg_a0;
     reg_d2.h[0] = *(u16 *)(reg_a0 + 2);
@@ -666,12 +666,12 @@ block_rts:
     return;
 }
 
-u8 D_0026F0A0[32] = {
+u8 stage4_boss_missile_start_table[32] = {
     0x01, 0x80, 0x00, 0xFC, 0x00, 0xFE, 0x00, 0x00, 0xB8, 0x01, 0x10, 0x04, 0x80, 0x00, 0x80, 0x00,
     0x80, 0x00, 0x80, 0x00, 0xFF, 0x7F, 0x00, 0x00, 0x1A, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00,
 };
 
-u8 D_0026F0C0[144] = {
+u8 stage4_boss_cutter_start_table[144] = {
     0x00, 0x80, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0xB8, 0x01, 0x10, 0x04, 0x00, 0x02, 0x00, 0x01,
     0x00, 0x01, 0x00, 0x01, 0xFF, 0x7F, 0x00, 0x00, 0x1A, 0x00, 0x00, 0x00, 0x00, 0x80, 0x00, 0x00,
     0x00, 0x00, 0x01, 0x00, 0x04, 0x04, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0xC0, 0x01,
@@ -683,12 +683,12 @@ u8 D_0026F0C0[144] = {
     0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00,
 };
 
-u8 D_0026F150[32] = {
+u8 stage4_boss_cutter_table[32] = {
     0x00, 0x00, 0x42, 0x1D, 0x00, 0x00, 0x43, 0x1D, 0x00, 0x00, 0x44, 0x1D, 0x00, 0x00, 0x45, 0x1D,
     0x00, 0x00, 0x46, 0x1D, 0x00, 0x00, 0x47, 0x1D, 0x00, 0x00, 0x48, 0x1D, 0x00, 0x00, 0x49, 0x1D,
 };
 
-u16 D_0026F170[56] = {
+u16 stage4_boss_cutter_table_2[56] = {
     0x0040, 0x0001, 0x0080, 0x0002, 0x00C0, 0x0004, 0x0100, 0x0006,
     0x0140, 0x0008, 0x0180, 0x000A, 0x01C0, 0x000C, 0x0200, 0x000E,
     0x0240, 0x0010, 0x0280, 0x0012, 0x02C0, 0x0014, 0x0300, 0x0016,

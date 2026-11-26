@@ -57,7 +57,7 @@ s32 enemy_path_start();
 s32 sfx_heli_start();
 s32 aim256_at_player();
 extern u16 g_direction_sprites_c[];
-extern u8 D_00263000[];
+extern u8 stage2_midboss_start_table[];
 extern u8 D_00263030[];
 extern u8 D_002630D0[];
 extern u16 g_enemy_signal_0;
@@ -73,7 +73,7 @@ void stage2_midboss_start(void) {
     reg_tmp.w = (u32) reg_a0;
     STAGE2_MIDBOSS(reg_a5)->after_entities[0] = (u16) reg_tmp.h[1];
     STAGE2_MIDBOSS(reg_a5)->after_entities[1] = (u16) reg_tmp.h[0];
-    reg_a0 = D_00263000;
+    reg_a0 = stage2_midboss_start_table;
     reg_d0.w = 0x14;
     enemy_set_task_state();
     enemy_path_start();
@@ -167,12 +167,12 @@ s32 vibration_start_pad1(s32, s32);
 s32 vibration_start_pad2(s32, s32);
 extern u16 g_direction64_offsets_432[];
 extern u16 stage1_midboss_direction64_offsets_166[];
-extern u16 D_00263100[];
-extern u16 D_00263120[];
-extern u16 D_00263180[];
-extern u16 D_00263240[];
-extern u16 D_00263270[];
-extern u16 D_00263280[];
+extern u16 stage2_midboss_table[];
+extern u16 stage2_midboss_table_2[];
+extern u16 stage2_midboss_table_3[];
+extern u16 stage2_midboss_table_4[];
+extern u16 stage2_midboss_table_5[];
+extern u16 stage2_midboss_table_6[];
 extern u16 D_00263290[];
 extern u8 g_slowdown_timer;
 extern u16 g_frame_mod2;
@@ -296,7 +296,7 @@ next_90:
     if ((s32) reg_tmp.b[0] > 0) goto next_120;
     ENTITY(reg_a6)[1].offset_y.b[1] = ENTITY(reg_a6)[1].offset_y.b[0];
     reg_d0.h[0] = ENTITY(reg_a6)[1].offset_x.h;
-    reg_a0 = (u8 *) D_00263100;
+    reg_a0 = (u8 *) stage2_midboss_table;
     switch (reg_d0.h[0]) { case 0: goto block_zero; }
     val = *(u16 *)(reg_a0 + ((s16) reg_d0.h[0] & ~1));
     goto block_join;
@@ -366,7 +366,7 @@ next_260:
     reg_d2.h[1] = ENTITY(reg_a6)->y.h;
     reg_d2.h[0] = ENTITY(reg_a6)->x.h;
     reg_d4.w = 0;
-    reg_a0 = (u8 *) D_00263240;
+    reg_a0 = (u8 *) stage2_midboss_table_4;
     reg_a1 = (u8 *) stage1_midboss_direction64_offsets_166;
     reg_d6.h[0] = reg_d1.h[0];
     reg_d7.w = 0xB;
@@ -419,7 +419,7 @@ next_300:
     STAGE2_MIDBOSS(reg_a5)->attack = 1;
 next_400:
     reg_d0.h[0] = ENTITY(reg_a6)[1].look.h;
-    reg_a0 = (u8 *) D_00263180;
+    reg_a0 = (u8 *) stage2_midboss_table_3;
     reg_d0.h[0] += reg_d0.h[0];
     reg_a0 += reg_d0.h[0];
     ENTITY(reg_a6)[1].hit_y_plus.h = *(u16 *)reg_a0;
@@ -500,7 +500,7 @@ next_510:
     reg_d1.h[0] += 0xF200;
     reg_d1.h[1] += 0xE400;
     reg_d0.h[0] = ENTITY(reg_a6)[1].look.h;
-    reg_a0 = (u8 *) D_00263120;
+    reg_a0 = (u8 *) stage2_midboss_table_2;
     reg_d2.h[1] = (reg_d0.h[0] != 0) ? *(u16 *)(reg_a0 + ((s16) reg_d0.h[0] & ~1)) : *(u16 *)reg_a0;
     reg_d2.h[0] = (((u16) reg_d0.h[0] + 2) != 0) ? *(u16 *)(reg_a0 + ((s16) ((u16) reg_d0.h[0] + 2) & ~1)) : *(u16 *)reg_a0;
     reg_d3.h[0] = 0x1670;
@@ -665,10 +665,10 @@ next_870:
     if (!(STAGE2_MIDBOSS(reg_a5)->spread_step.b[0] & 4)) goto next_875;
     reg_d0.h[0] = 3;
 next_875:
-    reg_a0 = (u8 *) D_00263270;
+    reg_a0 = (u8 *) stage2_midboss_table_5;
     reg_d5.h[1] = (reg_d4.h[0] != 0) ? *(u16 *)(reg_a0 + ((s16) reg_d4.h[0] & ~1)) : *(u16 *)reg_a0;
     reg_d5.h[0] = (((u16) reg_d4.h[0] + 2) != 0) ? *(u16 *)(reg_a0 + ((s16) ((u16) reg_d4.h[0] + 2) & ~1)) : *(u16 *)reg_a0;
-    reg_a0 = (u8 *) D_00263280;
+    reg_a0 = (u8 *) stage2_midboss_table_6;
     reg_d6.h[0] = (reg_d4.h[0] != 0) ? *(u16 *)(reg_a0 + ((s16) reg_d4.h[0] & ~1)) : *(u16 *)reg_a0;
     reg_d7.h[0] = (((u16) reg_d4.h[0] + 2) != 0) ? *(u16 *)(reg_a0 + ((s16) ((u16) reg_d4.h[0] + 2) & ~1)) : *(u16 *)reg_a0;
     reg_d4.w = 0;
@@ -859,7 +859,7 @@ skip_1:
     }
 }
 
-u8 D_00263000[48] = {
+u8 stage2_midboss_start_table[48] = {
     0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x0A, 0x15, 0x50, 0x60, 0x09, 0x09, 0x30, 0x40, 0x11, 0x11,
     0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x80, 0x00, 0x00, 0x00, 0x00, 0x00, 0x80, 0x00, 0x00, 0x00,
     0x20, 0x20, 0x0C, 0x00, 0xFE, 0xFF, 0x08, 0x00, 0x10, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00,
@@ -884,12 +884,12 @@ u8 D_002630D0[48] = {
     0x00, 0x00, 0xC0, 0x05, 0x12, 0x00, 0x13, 0x00, 0x1F, 0x00, 0x05, 0x00, 0x00, 0x00, 0x00, 0x00,
 };
 
-u16 D_00263100[16] = {
+u16 stage2_midboss_table[16] = {
     0x0000, 0x1B86, 0x0000, 0x1B85, 0x0000, 0x1B84, 0x0000, 0x1B83,
     0x0000, 0x1B82, 0x0000, 0x1B81, 0x0000, 0x1B80, 0x0000, 0x1B7F,
 };
 
-u16 D_00263120[48] = {
+u16 stage2_midboss_table_2[48] = {
     0x0000, 0x1B87, 0x0000, 0x1B88, 0x0000, 0x1B89, 0x0000, 0x1B8A,
     0x0000, 0x1B8B, 0x0000, 0x1B8C, 0x0000, 0x1B8D, 0x0000, 0x1B8E,
     0x0000, 0x1B8F, 0x0000, 0x1B90, 0x0000, 0x1B91, 0x0000, 0x1B92,
@@ -898,7 +898,7 @@ u16 D_00263120[48] = {
     0x0000, 0x1B9B, 0x0000, 0x1B9C, 0x0000, 0x1B9D, 0x0000, 0x1B9E,
 };
 
-u16 D_00263180[96] = {
+u16 stage2_midboss_table_3[96] = {
     0xFA00, 0x0E00, 0x0900, 0x0900, 0xFA00, 0x0E40, 0x0940, 0x0940,
     0xFA00, 0x0E80, 0x0980, 0x0980, 0xFA00, 0x0EC0, 0x09C0, 0x09C0,
     0xFA00, 0x0F00, 0x0A00, 0x0A00, 0xFA00, 0x0F40, 0x0A40, 0x0A40,
@@ -913,17 +913,17 @@ u16 D_00263180[96] = {
     0xFA00, 0x1380, 0x0D80, 0x0D80, 0xFA00, 0x13C0, 0x0D80, 0x0D80,
 };
 
-u16 D_00263240[24] = {
+u16 stage2_midboss_table_4[24] = {
     0xF600, 0xFB00, 0xF200, 0x0880, 0xF3C0, 0xFB00, 0xF840, 0x0880,
     0xEF80, 0x0500, 0xF3C0, 0x0500, 0xF500, 0xF780, 0xEF80, 0xFB00,
     0xF500, 0x0880, 0xF840, 0xF780, 0xF200, 0xF780, 0xF600, 0x0500,
 };
 
-u16 D_00263270[8] = {
+u16 stage2_midboss_table_5[8] = {
     0xF080, 0xFD80, 0xF080, 0x0280, 0xF600, 0xFD80, 0xF600, 0x0280,
 };
 
-u16 D_00263280[8] = {
+u16 stage2_midboss_table_6[8] = {
     0x0008, 0x001F, 0x0010, 0x000F, 0x0008, 0x001F, 0x0010, 0x000F,
 };
 

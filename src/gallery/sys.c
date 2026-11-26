@@ -1,4 +1,7 @@
 #include "gallery/gallery.h"
+#ifdef DDPDOJ_PC
+#include "game_loop.h"
+#endif
 
 extern u16 gallery_slot_0_state;
 extern u16 gallery_slot_1_state;
@@ -35,9 +38,11 @@ s16 g_tex_clut_palette_32[48] = {
     RGB555(31, 31, 31), RGB555(31, 31, 31), RGB555(31, 31, 31), RGB555(31, 31, 31),
 };
 
+#ifndef DDPDOJ_PC
 static const char g_elf_path_main[0x40] __attribute__((section(".data"))) = "cdrom0:\\SLPS_252.33";
 static const char g_elf_path_don2[0x40] __attribute__((section(".data"))) = "cdrom0:\\DON2.ELF";
 static const char g_elf_path_gallery[0x20] __attribute__((section(".data"))) = "cdrom0:\\GALLERY.ELF";
+#endif
 
 /* 16-color orange-to-gold gradient RGB555 CLUT */
 s16 g_tex_clut_palette_16[16] = {
@@ -59,6 +64,15 @@ void gallery_reset_slot_states(void)
 
 void gallery_exit_to_elf(s32 destination)
 {
+#ifdef DDPDOJ_PC
+    if (destination == 0) {
+        game_request_mode(GAME_MODE_MAIN);
+    } else if (destination == 1) {
+        game_request_mode(GAME_MODE_DEATH_LABEL);
+    } else {
+        game_request_mode(GAME_MODE_GALLERY);
+    }
+#else
     sceSifInitRpc(0);
     sceCdInit(0);
     sceSifExitCmd();
@@ -70,6 +84,7 @@ void gallery_exit_to_elf(s32 destination)
     } else {
         LoadExecPS2(g_elf_path_gallery, 0, 0);
     }
+#endif
 }
 
 u32 g_pad_port_bits;

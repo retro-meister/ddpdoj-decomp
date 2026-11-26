@@ -14,9 +14,9 @@ s32 enemy_set_task_state();
 s32 enemy_init_entities();
 s32 enemy_path_start();
 s32 direction_to_target_player();
-extern u16 D_0025AEF0[];
-extern u16 D_0025AF00[];
-extern u16 D_0025AF20[];
+extern u16 mid_test_begin_table[];
+extern u16 mid_test_begin_table_2[];
+extern u16 mid_test_begin_table_3[];
 extern u16 D_0025AF40[];
 extern u16 D_0025AFC0[];
 extern u16 g_enemy_signal_2;
@@ -30,12 +30,12 @@ void mid_test_begin(void) {
         enemy_remove();
         return;
     }
-    reg_a0 = (u8 *)(D_0025AF20);
+    reg_a0 = (u8 *)(mid_test_begin_table_3);
     enemy_init_entities();
     reg_tmp.w = (u32) reg_a0;
     *(u16 *)(reg_a5 + 0x44) = (u16) reg_tmp.h[1];
     *(u16 *)(reg_a5 + 0x46) = (u16) reg_tmp.h[0];
-    reg_a0 = (u8 *)(D_0025AF00);
+    reg_a0 = (u8 *)(mid_test_begin_table_2);
     reg_d0.w = 8;
     enemy_set_task_state();
     enemy_path_start();
@@ -58,7 +58,7 @@ void mid_test_begin(void) {
         *(u8 *)(reg_a5 + 0x1B) -= reg_d0.b[0];
         reg_d0.h[0] = g_rank_1_16;
         *(u8 *)(reg_a5 + 0x1A) -= reg_d0.b[0];
-        reg_a0 = (u8 *)(D_0025AEF0);
+        reg_a0 = (u8 *)(mid_test_begin_table);
         reg_d0.h[0] = g_stage_x2;
         reg_a0 += reg_d0.h[0];
         *(s8 *)(reg_a5 + 0x19) = *(s8 *)reg_a0;
@@ -81,7 +81,7 @@ s32 score_add();
 s32 direction_between();
 s32 direction_turn_toward();
 s32 direction256_to_target_player();
-extern u16 D_0025B040[];
+extern u16 mid_test_update_table[];
 extern u16 g_frame_mod2;
 extern s16 *reg_save_atmp;
 extern u16 g_enemy_signal_1;
@@ -198,7 +198,7 @@ next_3:
                     t2 = (s16 *) g_enemy_signal_1;
                     if (t2 != 0) {
                         t5 = g_stage;
-                        reg_a4 = (u8 *)(D_0025B040);
+                        reg_a4 = (u8 *)(mid_test_update_table);
                         reg_d1.h[0] = *(u16 *)(reg_a5 + 0x26);
                         reg_d5.h[0] = reg_d1.h[0];
                         reg_d5.h[0] &= 0x3E;

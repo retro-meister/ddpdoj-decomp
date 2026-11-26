@@ -102,18 +102,18 @@ void stage5_midboss4_arrival_first(void) {
 s32 enemy_set_task_state();
 s32 enemy_init_entities();
 s32 sprite_palette_load();
-extern u8 D_002603F0[];
-extern u8 D_00260430[];
-extern u8 D_00260530[];
-extern u8 D_00265C20[];
-extern u8 D_00265C30[];
+extern u8 stage5_midboss4_arrival_start_table[];
+extern u8 stage5_midboss4_arrival_start_table_2[];
+extern u8 stage5_midboss4_arrival_start_table_3[];
+extern u8 stage5_midboss4_arrival_start_table_4[];
+extern u8 stage5_midboss4_arrival_start_table_5[];
 extern u16 g_side_scroll_x[];
 
 void stage5_midboss4_arrival_start(void) {
 
-    reg_a0 = D_00265C30;
+    reg_a0 = stage5_midboss4_arrival_start_table_5;
     enemy_init_entities();
-    reg_a0 = D_00265C20;
+    reg_a0 = stage5_midboss4_arrival_start_table_4;
     reg_d0.h[0] = 4;
     enemy_set_task_state();
     reg_tmp.w = 0x30001C00;
@@ -122,13 +122,13 @@ void stage5_midboss4_arrival_start(void) {
     reg_d0.h[0] = g_side_scroll_x[0];
     ENTITY(reg_a6)->x.h -= reg_d0.h[0];
     reg_d0.h[0] = 0x12;
-    reg_a0 = D_002603F0;
+    reg_a0 = stage5_midboss4_arrival_start_table;
     sprite_palette_load();
     reg_d0.h[0] = 0x13;
-    reg_a0 = D_00260430;
+    reg_a0 = stage5_midboss4_arrival_start_table_2;
     sprite_palette_load();
     reg_d0.h[0] = 0x14;
-    reg_a0 = D_00260530;
+    reg_a0 = stage5_midboss4_arrival_start_table_3;
     sprite_palette_load();
 }
 
@@ -137,7 +137,7 @@ s32 enemy_remove();
 s32 sprite_draw_layer1();
 s32 entity_follow_scroll();
 s32 entity_velocity();
-extern u8 D_00265C50[];
+extern u8 stage5_midboss4_arrival_table[];
 extern u16 g_enemies_stopped;
 
 void stage5_midboss4_arrival(void) {
@@ -187,7 +187,7 @@ void stage5_midboss4_arrival(void) {
         goto draw;
     }
 draw:
-    reg_a0 = (u8 *)D_00265C50;
+    reg_a0 = (u8 *)stage5_midboss4_arrival_table;
     reg_a0 += STAGE5_MIDBOSS4_ARRIVAL(reg_a5)->frame;
     reg_d2.h[1] = *(u16 *)reg_a0;
     reg_d2.h[0] = *(u16 *)(reg_a0 + 2);
@@ -207,20 +207,20 @@ void stage5_midboss4_first(void) {
     enemy_set_entity_count(5);
 }
 
-extern u8 D_00265C90[];
-extern u8 D_0028DA30[8];
+extern u8 stage5_midboss4_start_table[];
+extern u8 stage5_midboss4_start_table_2[8];
 extern u16 g_enemy_signal_1;
 extern s16 g_bullet_limit_raised_1[];
 
 void stage5_midboss4_start() {
     u16 temp_a1;
 
-    reg_a0 = D_00265C90;
+    reg_a0 = stage5_midboss4_start_table;
     enemy_init_entities();
     ENTITY(reg_a6)->y.h = (u16) STAGE5_MIDBOSS4(reg_a5)->at_start.y;
     temp_a1 = STAGE5_MIDBOSS4(reg_a5)->at_start.x;
     ENTITY(reg_a6)->x.h = temp_a1;
-    reg_a0 = D_0028DA30;
+    reg_a0 = stage5_midboss4_start_table_2;
     reg_d0.h[0] = 2;
     enemy_set_task_state();
     g_enemy_signal_1 = 1;
@@ -461,8 +461,8 @@ void stage5_midboss4_move(void) {
 s32 rng_next_unsigned();
 s32 direction256_between();
 s32 distance_between();
-extern u8 D_00265D40[];
-extern u16 D_00265D70[];
+extern u8 stage5_midboss4_move_between_points_table[];
+extern u16 stage5_midboss4_move_between_points_table_2[];
 
 void stage5_midboss4_move_between_points(void) {
     if (STAGE5_MIDBOSS4_MOVE(reg_a6)->step == 0) {
@@ -472,7 +472,7 @@ void stage5_midboss4_move_between_points(void) {
         STAGE5_MIDBOSS4_MOVE(reg_a6)->point = (u16) reg_d0.h[0];
         STAGE5_MIDBOSS4_MOVE(reg_a6)->step = 1U;
     }
-    reg_a0 = (u8 *)D_00265D40;
+    reg_a0 = (u8 *)stage5_midboss4_move_between_points_table;
     reg_a0 += STAGE5_MIDBOSS4_MOVE(reg_a6)->point;
     reg_d0.h[0] = ENTITY(reg_a6)->y.h;
     reg_d1.h[0] = ENTITY(reg_a6)->x.h;
@@ -481,7 +481,7 @@ void stage5_midboss4_move_between_points(void) {
     reg_d3.h[0] -= g_side_scroll_x[0];
     direction256_between();
     ENTITY(reg_a6)->move.b.dir = (u8) reg_d1.b[0];
-    reg_a0 = (u8 *)D_00265D40;
+    reg_a0 = (u8 *)stage5_midboss4_move_between_points_table;
     reg_a0 += STAGE5_MIDBOSS4_MOVE(reg_a6)->point;
     reg_d0.h[0] = ENTITY(reg_a6)->y.h;
     reg_d1.h[0] = ENTITY(reg_a6)->x.h;
@@ -496,7 +496,7 @@ void stage5_midboss4_move_between_points(void) {
         }
     }
     STAGE5_MIDBOSS4_MOVE(reg_a6)->wanted_speed = 5U;
-    reg_a4 = (u8 *)(D_00265D70);
+    reg_a4 = (u8 *)(stage5_midboss4_move_between_points_table_2);
 next_speed:
     reg_d1.h[0] = *(u16 *)reg_a4;
     reg_a4 += 2;
@@ -521,7 +521,7 @@ next_speed:
 }
 
 s32 target_player_get();
-extern u16 D_00265DE0[];
+extern u16 stage5_midboss4_move_to_player_table[];
 extern u16 *reg_a4_as_u16_p;
 
 void stage5_midboss4_move_to_player(arg0)
@@ -578,7 +578,7 @@ start_beams:
         }
     }
     ENTITY(reg_a6)->move.b.speed = 0x32U;
-    reg_a4_as_u16_p = D_00265DE0;
+    reg_a4_as_u16_p = stage5_midboss4_move_to_player_table;
 next_speed:
     reg_d1.h[0] = *reg_a4_as_u16_p;
     reg_a4_as_u16_p += 1;
@@ -594,7 +594,7 @@ next_speed:
 }
 
 s32 direction_step_toward();
-extern u16 D_00265E50[];
+extern u16 stage5_midboss4_move_zigzag_table[];
 extern u16 g_game_frame;
 
 void stage5_midboss4_move_zigzag(void) {
@@ -637,7 +637,7 @@ void stage5_midboss4_move_zigzag(void) {
             }
         }
         STAGE5_MIDBOSS4_MOVE(reg_a6)->wanted_speed = 0x12U;
-        reg_a4 = (u8 *)(D_00265E50);
+        reg_a4 = (u8 *)(stage5_midboss4_move_zigzag_table);
 next_speed:
         reg_d1.h[0] = *(u16 *)reg_a4;
         reg_a4 += 2;
@@ -939,8 +939,8 @@ s32 rng_next();
 s32 bullet_cancel_with_flags();
 s32 vibration_start_pad1();
 s32 vibration_start_pad2();
-extern u16 D_00265EC0[];
-extern u16 D_00265F10[];
+extern u16 stage5_midboss4_dying_table[];
+extern u16 stage5_midboss4_dying_table_2[];
 
 void stage5_midboss4_dying(void) {
     u16 temp_a0_2;
@@ -960,7 +960,7 @@ void stage5_midboss4_dying(void) {
             if (STAGE5_MIDBOSS4_DAMAGE(reg_a6)->blast_timer.b.countdown == 0) {
                 reg_d2.h[1] = ENTITY(reg_a6)->y.h;
                 reg_d2.h[0] = ENTITY(reg_a6)->x.h;
-                reg_a1 = (u8 *)(D_00265F10);
+                reg_a1 = (u8 *)(stage5_midboss4_dying_table_2);
                 midboss_explode_by_table();
                 rng_next();
                 reg_d0.b[0] = (s8) reg_d0.b[0] * 2;
@@ -997,7 +997,7 @@ void stage5_midboss4_dying(void) {
             if ((s32) reg_tmp.b[0] <= 0) {
                 STAGE5_MIDBOSS4_DAMAGE(reg_a6)->blast_timer.b.countdown = (u8) STAGE5_MIDBOSS4_DAMAGE(reg_a6)->blast_timer.b.interval;
                 sfx_explosion_air_medium();
-                reg_a1 = (u8 *)(D_00265EC0);
+                reg_a1 = (u8 *)(stage5_midboss4_dying_table);
                 reg_a1 += STAGE5_MIDBOSS4_DAMAGE(reg_a6)->blast;
                 reg_d1.h[0] = *(u16 *)reg_a1;
                 reg_a1 += 2;
@@ -1046,13 +1046,13 @@ void stage5_midboss4_wave_beam_first(void) {
     enemy_set_entity_count(0);
 }
 
-extern u16 D_00265F70[];
-extern u16 D_00265F80[];
+extern u16 stage5_midboss4_wave_beam_start_table[];
+extern u16 stage5_midboss4_wave_beam_start_table_2[];
 
 void stage5_midboss4_wave_beam_start(void) {
-    reg_a0 = (u8 *)(D_00265F80);
+    reg_a0 = (u8 *)(stage5_midboss4_wave_beam_start_table_2);
     enemy_init_entities();
-    reg_a0 = (u8 *)(D_00265F70);
+    reg_a0 = (u8 *)(stage5_midboss4_wave_beam_start_table);
     reg_d0.h[0] = 7;
     reg_a1 = (u8 *)(reg_a5 + 0x1C);
     do {
@@ -1067,7 +1067,7 @@ void stage5_midboss4_wave_beam_start(void) {
 
 s32 sfx_shockwave();
 s32 stage5_midboss4_wave_beam_fire();
-extern u8 D_00266160[];
+extern u8 stage5_midboss4_wave_beam_table[];
 extern u8 D_0028E2E4;
 
 void stage5_midboss4_wave_beam(void) {
@@ -1122,7 +1122,7 @@ remove:
     enemy_remove();
     return;
 wave_hitbox:
-    reg_a0 = (u8 *)D_00266160;
+    reg_a0 = (u8 *)stage5_midboss4_wave_beam_table;
     reg_d0.h[0] = STAGE5_MIDBOSS4_WAVE_BEAM(reg_a5)->wave_frame;
     reg_d0.h[0] >>= 1;
     reg_a0 += reg_d0.h[0];
@@ -1157,12 +1157,12 @@ draw:
     enemy_hitbox_debug_draw();
 }
 
-extern u8 D_00265FA0[];
+extern u8 stage5_midboss4_wave_beam_draw_charge_table[];
 
 void stage5_midboss4_wave_beam_draw_charge(void) {
     void sprite_draw_layer5(void);
     if ((STAGE5_MIDBOSS4_WAVE_BEAM(reg_a5)->parts) & 1) {
-        reg_a0 = D_00265FA0;
+        reg_a0 = stage5_midboss4_wave_beam_draw_charge_table;
         reg_a0 += STAGE5_MIDBOSS4_WAVE_BEAM(reg_a5)->charge_frame;
         reg_d2.h[1] = *(u16 *)(reg_a0 + 0);
         reg_d2.h[0] = *(u16 *)(reg_a0 + 2);
@@ -1175,14 +1175,14 @@ void stage5_midboss4_wave_beam_draw_charge(void) {
     }
 }
 
-extern u8 D_00266000[];
+extern u8 stage5_midboss4_wave_beam_draw_burst_table[];
 
 void stage5_midboss4_wave_beam_draw_burst(void) {
     s32 sprite_draw_layer5();
     u32 temp_a0;
 
     if (STAGE5_MIDBOSS4_WAVE_BEAM(reg_a5)->parts & 2) {
-        reg_a0 = (u8 *)D_00266000;
+        reg_a0 = (u8 *)stage5_midboss4_wave_beam_draw_burst_table;
         reg_a0 += STAGE5_MIDBOSS4_WAVE_BEAM(reg_a5)->burst_frame;
         reg_d2.h[1] = *(u16 *)reg_a0;
         reg_d2.h[0] = *(u16 *)(reg_a0 + 2);
@@ -1204,14 +1204,14 @@ void stage5_midboss4_wave_beam_draw_burst(void) {
     }
 }
 
-extern u8 D_00266090[];
+extern u8 stage5_midboss4_wave_beam_draw_wave_table[];
 
 void stage5_midboss4_wave_beam_draw_wave(void) {
     s32 sprite_draw_layer5();
     u32 temp_a0;
 
     if (STAGE5_MIDBOSS4_WAVE_BEAM(reg_a5)->parts & 4) {
-        reg_a0 = (u8 *)D_00266090;
+        reg_a0 = (u8 *)stage5_midboss4_wave_beam_draw_wave_table;
         reg_a0 += STAGE5_MIDBOSS4_WAVE_BEAM(reg_a5)->wave_frame;
         reg_d2.h[1] = *(u16 *)reg_a0;
         reg_d2.h[0] = *(u16 *)(reg_a0 + 2);
@@ -1235,23 +1235,23 @@ void stage5_midboss4_wave_beam_draw_wave(void) {
     }
 }
 
-u8 D_00265C20[16] = {
+u8 stage5_midboss4_arrival_start_table_4[16] = {
     0x00, 0x00, 0x02, 0x02, 0x00, 0x00, 0x01, 0x01, 0x01, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00,
 };
 
-u8 D_00265C30[32] = {
+u8 stage5_midboss4_arrival_start_table_5[32] = {
     0x00, 0x80, 0x01, 0x10, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x0C, 0x00, 0x0B,
     0x00, 0x0A, 0x00, 0x0A, 0xFF, 0x7F, 0x00, 0x24, 0x13, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00,
 };
 
-u8 D_00265C50[64] = {
+u8 stage5_midboss4_arrival_table[64] = {
     0x00, 0x00, 0x80, 0x1E, 0x00, 0x00, 0x81, 0x1E, 0x00, 0x00, 0x82, 0x1E, 0x00, 0x00, 0x83, 0x1E,
     0x00, 0x00, 0x84, 0x1E, 0x00, 0x00, 0x85, 0x1E, 0x00, 0x00, 0x86, 0x1E, 0x00, 0x00, 0x87, 0x1E,
     0x00, 0x00, 0x88, 0x1E, 0x00, 0x00, 0x89, 0x1E, 0x00, 0x00, 0x8A, 0x1E, 0x00, 0x00, 0x8B, 0x1E,
     0x00, 0x00, 0x8C, 0x1E, 0x00, 0x00, 0x8D, 0x1E, 0x00, 0x00, 0x8E, 0x1E, 0x00, 0x00, 0x8F, 0x1E,
 };
 
-u8 D_00265C90[176] = {
+u8 stage5_midboss4_start_table[176] = {
     0x01, 0xA0, 0x01, 0x10, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x0E, 0x00, 0x0B,
     0x80, 0x11, 0x80, 0x11, 0xFF, 0x7F, 0x00, 0x00, 0x12, 0x00, 0x00, 0x00, 0x01, 0xA0, 0x00, 0x00,
     0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x09, 0x00, 0x08, 0x00, 0x06, 0x00, 0x08,
@@ -1265,13 +1265,13 @@ u8 D_00265C90[176] = {
     0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00,
 };
 
-u8 D_00265D40[48] = {
+u8 stage5_midboss4_move_between_points_table[48] = {
     0x00, 0x5C, 0x00, 0x0C, 0x00, 0x48, 0x00, 0x2C, 0x00, 0x5C, 0x00, 0x2C, 0x00, 0x54, 0x00, 0x0E,
     0x00, 0x54, 0x00, 0x2E, 0x00, 0x60, 0x00, 0x1E, 0x00, 0x4C, 0x00, 0x1E, 0x00, 0x54, 0x00, 0x1E,
     0x00, 0x48, 0x00, 0x0C, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00,
 };
 
-u16 D_00265D70[56] = {
+u16 stage5_midboss4_move_between_points_table_2[56] = {
     0x0040, 0x0001, 0x0080, 0x0001, 0x00C0, 0x0001, 0x0100, 0x0001,
     0x0140, 0x0001, 0x0180, 0x0001, 0x01C0, 0x0001, 0x0200, 0x0002,
     0x0240, 0x0002, 0x0280, 0x0002, 0x02C0, 0x0002, 0x0300, 0x0002,
@@ -1281,7 +1281,7 @@ u16 D_00265D70[56] = {
     0xFFFF, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000,
 };
 
-u16 D_00265DE0[56] = {
+u16 stage5_midboss4_move_to_player_table[56] = {
     0x0040, 0x0002, 0x0080, 0x0004, 0x0100, 0x0006, 0x0180, 0x0008,
     0x0200, 0x000A, 0x0280, 0x000C, 0x0300, 0x000E, 0x0380, 0x0010,
     0x0400, 0x0012, 0x0480, 0x0014, 0x0500, 0x0016, 0x0580, 0x0018,
@@ -1291,7 +1291,7 @@ u16 D_00265DE0[56] = {
     0xFFFF, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000,
 };
 
-u16 D_00265E50[56] = {
+u16 stage5_midboss4_move_zigzag_table[56] = {
     0x0040, 0x0001, 0x0080, 0x0002, 0x00C0, 0x0003, 0x0100, 0x0004,
     0x0140, 0x0005, 0x0180, 0x0006, 0x01C0, 0x0007, 0x0200, 0x0008,
     0x0240, 0x0009, 0x0280, 0x000A, 0x02C0, 0x000B, 0x0300, 0x000B,
@@ -1301,7 +1301,7 @@ u16 D_00265E50[56] = {
     0xFFFF, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000,
 };
 
-u16 D_00265EC0[40] = {
+u16 stage5_midboss4_dying_table[40] = {
     0x0000, 0x0008, 0x0000, 0x0800, 0x0400, 0x0000, 0x0000, 0x0085,
     0x0000, 0x0000, 0x0200, 0x0000, 0x0000, 0x008D, 0x0000, 0xF800,
     0x0000, 0x0000, 0x0000, 0x0008, 0x0040, 0xF000, 0xFC00, 0x0000,
@@ -1309,7 +1309,7 @@ u16 D_00265EC0[40] = {
     0x0000, 0xE800, 0x0800, 0x0000, 0xFFFF, 0x0000, 0x0000, 0x0000,
 };
 
-u16 D_00265F10[40] = {
+u16 stage5_midboss4_dying_table_2[40] = {
     0x0002, 0x0008, 0x0000, 0x0800, 0x0400, 0x0000, 0x0004, 0x0085,
     0x0000, 0x0000, 0x0200, 0x0000, 0x0000, 0x008D, 0x0000, 0xF800,
     0x0000, 0x0000, 0x0006, 0x0008, 0x0040, 0xF000, 0xFC00, 0x0000,
@@ -1321,16 +1321,16 @@ u8 D_00265F60[16] = {
     0x01, 0x00, 0x00, 0x00, 0x80, 0x04, 0x03, 0x00, 0x04, 0x00, 0x1F, 0x00, 0x09, 0x00, 0x00, 0x00,
 };
 
-u16 D_00265F70[8] = {
+u16 stage5_midboss4_wave_beam_start_table[8] = {
     0x0100, 0x0000, 0x0000, 0x0000, 0x0202, 0x0000, 0x0202, 0x0000,
 };
 
-u16 D_00265F80[16] = {
+u16 stage5_midboss4_wave_beam_start_table_2[16] = {
     0x8000, 0x1001, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000,
     0x0000, 0x0000, 0x7FFF, 0x0800, 0x0014, 0x0000, 0x0000, 0x0000,
 };
 
-u8 D_00265FA0[96] = {
+u8 stage5_midboss4_wave_beam_draw_charge_table[96] = {
     0x00, 0x00, 0xEF, 0x1E, 0x00, 0x00, 0xF0, 0x1E, 0x00, 0x00, 0xF1, 0x1E, 0x00, 0x00, 0xF2, 0x1E,
     0x00, 0x00, 0xF3, 0x1E, 0x00, 0x00, 0xF4, 0x1E, 0x00, 0x00, 0xF5, 0x1E, 0x00, 0x00, 0xF6, 0x1E,
     0x00, 0x00, 0xF7, 0x1E, 0x00, 0x00, 0xF8, 0x1E, 0x00, 0x00, 0xF9, 0x1E, 0x00, 0x00, 0xFA, 0x1E,
@@ -1339,7 +1339,7 @@ u8 D_00265FA0[96] = {
     0x00, 0x00, 0x03, 0x1F, 0x00, 0x00, 0x04, 0x1F, 0x00, 0x00, 0x05, 0x1F, 0x00, 0x00, 0x06, 0x1F,
 };
 
-u8 D_00266000[144] = {
+u8 stage5_midboss4_wave_beam_draw_burst_table[144] = {
     0x00, 0x00, 0x07, 0x1F, 0x00, 0xFE, 0x00, 0xFE, 0x10, 0x02, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00,
     0x00, 0x00, 0x08, 0x1F, 0x00, 0xFE, 0x00, 0xFE, 0x10, 0x02, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00,
     0x00, 0x00, 0x09, 0x1F, 0x00, 0xFA, 0x00, 0xFA, 0x30, 0x06, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00,
@@ -1351,7 +1351,7 @@ u8 D_00266000[144] = {
     0x00, 0x00, 0x0F, 0x1F, 0x00, 0xF4, 0x00, 0xF4, 0x60, 0x0C, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00,
 };
 
-u8 D_00266090[208] = {
+u8 stage5_midboss4_wave_beam_draw_wave_table[208] = {
     0x00, 0x00, 0x10, 0x1F, 0x00, 0xF8, 0x00, 0xF4, 0x60, 0x08, 0x00, 0x00, 0x00, 0xFE, 0x80, 0xFF,
     0x00, 0x00, 0x11, 0x1F, 0x00, 0xF0, 0x00, 0xF4, 0x60, 0x10, 0x00, 0x00, 0x00, 0xF8, 0x00, 0x00,
     0x00, 0x00, 0x12, 0x1F, 0x00, 0xE0, 0x00, 0xF4, 0x60, 0x20, 0x00, 0x00, 0x00, 0xE2, 0x00, 0x00,
@@ -1367,7 +1367,7 @@ u8 D_00266090[208] = {
     0x00, 0x00, 0x1C, 0x1F, 0x00, 0xE0, 0x00, 0xFE, 0x10, 0x20, 0x00, 0x00, 0x00, 0xE2, 0x00, 0x00,
 };
 
-u8 D_00266160[104] = {
+u8 stage5_midboss4_wave_beam_table[104] = {
     0x00, 0x04, 0x00, 0x06, 0x00, 0x04, 0x00, 0x00, 0x00, 0x02, 0x00, 0x12, 0x00, 0x04, 0x00, 0x00,
     0x00, 0x00, 0x80, 0x34, 0x00, 0x04, 0x00, 0x00, 0x00, 0x00, 0x80, 0x34, 0xC0, 0x03, 0xC0, 0xFF,
     0x00, 0x00, 0x80, 0x34, 0x80, 0x03, 0x80, 0xFF, 0x00, 0x00, 0x80, 0x34, 0x40, 0x03, 0x40, 0xFF,
@@ -1377,4 +1377,4 @@ u8 D_00266160[104] = {
     0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00,
 };
 
-u8 D_0028DA30[8] = { 0x00, 0x00, 0x01, 0x00, 0x00, 0x50, 0x00, 0x00 };
+u8 stage5_midboss4_start_table_2[8] = { 0x00, 0x00, 0x01, 0x00, 0x00, 0x50, 0x00, 0x00 };

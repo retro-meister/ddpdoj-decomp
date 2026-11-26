@@ -131,11 +131,11 @@ void frame_counters_reset(void) {
     rng_cursor = 0;
 }
 
-extern s16 D_0028E22C;
+extern s16 test_switch_read_state;
 extern s16 g_test_switch_on;
 
 void test_switch_read(void) {
-    reg_d0.h[0] = (u16) D_0028E22C;
+    reg_d0.h[0] = (u16) test_switch_read_state;
     g_test_switch_on = 0;
     if (!(reg_d0.w & 0x80)) {
         g_test_switch_on = 1;
@@ -148,7 +148,7 @@ extern u16 g_select_screen_active;
 extern s16 g_test_mode_entered;
 extern u16 g_attract_demo_stage;
 extern u16 g_attract_demo;
-extern s16 D_0028E3C4;
+extern s16 frame_counters_init_state;
 extern s16 g_debug_build;
 extern s16 g_publicity_build;
 extern s16 g_location_test_build;
@@ -156,7 +156,7 @@ extern u8 g_replay_mode;
 extern u8 g_simulation_active;
 
 void frame_counters_init(void) {
-    D_0028E3C4 = 0;
+    frame_counters_init_state = 0;
     g_game_frame = 0;
     g_frame_mod2 = 0;
     g_frame_mod3 = 0;

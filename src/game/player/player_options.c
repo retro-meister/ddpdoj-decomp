@@ -281,7 +281,7 @@ void p2_options_update(void) {
 typedef void (*Fn)();
 
 extern u8 option_style_params[];
-extern u8 D_0025F3C0[];
+extern u8 options_update_table[];
 extern u8 option_strong_params[];
 extern u8 option_hyper_params[];
 extern u8 g_p2_options[];
@@ -654,7 +654,7 @@ next_620:
     reg_d0.h[0] = *(u16 *)(reg_a4 + 0x5A);
     reg_d0.h[0] -= 2;
     reg_d0.h[0] += reg_d1.h[0];
-    reg_a0 = (u8 *)D_0025F3C0;
+    reg_a0 = (u8 *)options_update_table;
     reg_d0.h[0] = (reg_d0.h[0] != 0) ? *(u16 *)((u8 *)reg_a0 + ((s16)reg_d0.h[0] & ~1)) : *(u16 *)reg_a0;
     if (*(u8 *)(reg_a6 + 0x1B) != reg_d0.b[0]) goto next_630;
     *(u8 *)reg_a6 = 3;
@@ -908,7 +908,7 @@ block_13:
 }
 
 s32 entity_draw_with_options();
-extern u16 D_0025F1D0[];
+extern u16 option_aim_table[];
 
 void option_aim(void) {
     u32 p0;
@@ -929,7 +929,7 @@ void option_aim(void) {
     ENTITY(reg_a6)->sprite.h = ((reg_d5.h[0] + 2) != 0) ? *(u16 *)((u8 *)reg_a2 + ((s16)(reg_d5.h[0] + 2) & ~1)) : *(u16 *)reg_a2;
     reg_d6.h[1] = (reg_d5.h[0] != 0) ? *(u16 *)((u8 *)reg_a3 + ((s16)reg_d5.h[0] & ~1)) : *(u16 *)reg_a3;
     reg_d6.h[0] = (((reg_d5.h[0] & 0xFFFF) + 2) != 0) ? *(u16 *)((u8 *)reg_a3 + ((s16)((reg_d5.h[0] & 0xFFFF) + 2) & ~1)) : *(u16 *)reg_a3;
-    reg_a3 = (u8 *)(D_0025F1D0);
+    reg_a3 = (u8 *)(option_aim_table);
     reg_d0.h[0] = (reg_d5.h[0] != 0) ? *(u16 *)((u8 *)reg_a3 + ((s16)reg_d5.h[0] & ~1)) : *(u16 *)reg_a3;
     reg_d5.h[0] = (((reg_d5.h[0] & 0xFFFF) + 2) != 0) ? *(u16 *)((u8 *)reg_a3 + ((s16)((reg_d5.h[0] & 0xFFFF) + 2) & ~1)) : *(u16 *)reg_a3;
     if (*(u8 *)reg_a4 & 1) {

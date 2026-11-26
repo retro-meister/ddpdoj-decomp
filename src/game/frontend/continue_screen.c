@@ -2,6 +2,10 @@
 #include "continue_screen.h"
 #include "task.h"
 
+#ifdef DDPDOJ_PC
+#include "pc_frontend_abi.h"
+#endif
+
 void continue_panel_step_countdown();
 void continue_panel_step_erase_small();
 void continue_panel_step_countdown_wide();
@@ -71,30 +75,34 @@ void continue_panel_step_done(void);
 void continue_task_close_panel(void);
 
 void player_slot_request_destroyed(void) {
+#ifndef DDPDOJ_PC
     void player_slot_request(void);
+#endif
     *(u16 *)&reg_d1 = 1;
     player_slot_request();
 }
 
 void player_slot_request_bomb_display(void) {
+#ifndef DDPDOJ_PC
     void player_slot_request(void);
+#endif
     *(u16 *)&reg_d1 = 9;
     player_slot_request();
 }
 
-extern u16 D_0025F9B0[];
+extern u16 bomb_palette_load_first_table[];
 
 
 void bomb_palette_load_first(void) {
-    reg_a0 = (u8 *)D_0025F9B0;
+    reg_a0 = (u8 *)bomb_palette_load_first_table;
     bomb_palette_load();
 }
 
-extern u16 D_0025F9F0[];
+extern u16 bomb_palette_load_second_table[];
 
 
 void bomb_palette_load_second(void) {
-    reg_a0 = (u8 *)D_0025F9F0;
+    reg_a0 = (u8 *)bomb_palette_load_second_table;
     bomb_palette_load();
 }
 
@@ -297,8 +305,12 @@ void continue_panels_update(u16 *arg0) {
 
 s32 deferred_text_clear();
 s32 text_layer_put_hex_digit();
+#ifndef DDPDOJ_PC
 s32 stage_clear_running_check();
+#endif
+#ifndef DDPDOJ_PC
 s32 text_layer_print();
+#endif
 s32 sfx_countdown();
 #ifdef DEATH_LABEL
 extern u8 credit_label_p1[];
@@ -596,7 +608,9 @@ void continue_count_store(void)
     *(u8 *)(*(u32 *)&reg_a0) = reg_d0.b[0];
 }
 
+#ifndef DDPDOJ_PC
 s32 player_panel_show();
+#endif
 s32 hud_p1_caption_clear_shifted();
 s32 hud_p2_caption_clear_shifted();
 
@@ -637,7 +651,9 @@ void continue_task_close_panel(void) {
 
 s32 fades_reset();                            /* extern */
 s32 sound_stop_effects();                            /* extern */
+#ifndef DDPDOJ_PC
 s32 music_stop();                            /* extern */
+#endif
 extern u16 g_loop;
 extern u16 g_stage;
 extern u8 D_0028ED64;
@@ -669,7 +685,9 @@ extern u8 D_002BF3EA[];
 extern u8 *reg_call_target_as_u8_p;
 
 void continue_task(void) {
+#ifndef DDPDOJ_PC
     s32 player_slot_request();
+#endif
     reg_tmp.h[1] = *(u16 *) (reg_a5 + 8);
     reg_tmp.h[0] = *(u16 *) (reg_a5 + 0xA);
     reg_a4 = (u8 *) reg_tmp.w;

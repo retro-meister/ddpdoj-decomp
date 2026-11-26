@@ -373,10 +373,12 @@ void pad_update(void)
 
 void pad_open_ports(void)
 {
+#ifndef DDPDOJ_PC
     sceDevVif0Reset();
     sceDevVu0Reset();
     sceGsResetPath();
     sceDmaReset(1);
+#endif
 }
 
 u8 g_pad_act_direct[6] __attribute__((aligned(64)));

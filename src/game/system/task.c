@@ -1,6 +1,25 @@
 #include "common.h"
 #include "task.h"
 
+#ifdef DDPDOJ_PC
+#include <stdlib.h>
+#include <string.h>
+
+#define TASK_CALLBACK(index, function) extern void function(void);
+#define TASK_RESERVED(index)
+#include "task_callbacks.h"
+#undef TASK_RESERVED
+#undef TASK_CALLBACK
+
+static void (*const task_callbacks[TASK_TABLE_COUNT])(void) = {
+#define TASK_CALLBACK(index, function) [index] = function,
+#define TASK_RESERVED(index)
+#include "task_callbacks.h"
+#undef TASK_RESERVED
+#undef TASK_CALLBACK
+};
+#endif
+
 void task_serve_start_requests(void);
 void task_serve_stop_requests(void);
 void task_remove(void);
@@ -13,10 +32,26 @@ u16 g_task_stop_requests_used __attribute__((aligned(4)));
 s16 g_task_unused __attribute__((aligned(4)));
 u32 g_task_last_id;
 
+#ifdef DDPDOJ_PC
+_Static_assert(sizeof(Task) == 0x50, "Task layout differs from the game");
+static Task active_tasks[TASK_COUNT];
+static Task stop_requests[TASK_COUNT];
+static Task start_requests[TASK_COUNT];
+static Task dummy_task;
+#define g_tasks ((u8 *)&active_tasks)
+#define g_task_start_requests ((u8 *)&start_requests)
+#define g_task_stop_requests ((u8 *)&stop_requests)
+#define g_task_dummy ((u8 *)&dummy_task)
+#define TASK_COUNTER_ACTIVE(counter) ((s16)(counter) >= 0)
+#define TASK_MASKED_COUNTER_ACTIVE(counter) TASK_COUNTER_ACTIVE(counter)
+#else
 extern u8 g_tasks[];
 extern u8 g_task_stop_requests[];
 extern u8 g_task_start_requests[];
 extern u8 g_task_dummy[];   /* what a failed start or search returns, so that the caller's stores land somewhere */
+#define TASK_COUNTER_ACTIVE(counter) (((s64)((s64)(u16)(counter) << 0x30) >> 0x30) >= 0)
+#define TASK_MASKED_COUNTER_ACTIVE(counter) (((s64)((s64)((counter) & 0xFFFF) << 0x30) >> 0x30) >= 0)
+#endif
 extern u16 g_task_table[];  /* per task: routine address (two words), priority, one unused word */
 
 
@@ -36,9 +71,10 @@ void task_reset_all(void) {
     } while ((s16)(--reg_d0.h[0]) >= 0);
 }
 
+#ifndef DDPDOJ_PC
 typedef void (*Fn)();
-
 extern u32 reg_call_target_as_u32;
+#endif
 
 void task_run_all(void) {
     u32 remaining;
@@ -56,10 +92,18 @@ void task_run_all(void) {
             reg_d1.h[0] *= 8;
             remaining = reg_d0.w;
             reg_a0 = (u8 *)(g_task_table);
+#ifdef DDPDOJ_PC
+            unsigned int index = reg_d1.h[0] / 8;
+            if (index >= TASK_TABLE_COUNT || !task_callbacks[index]) {
+                abort();
+            }
+            task_callbacks[index]();
+#else
             reg_tmp.h[1] = (reg_d1.h[0] != 0) ? *(u16 *)((u8 *)reg_a0 + ((s16)reg_d1.h[0] & ~1)) : *(u16 *)reg_a0;
             reg_tmp.h[0] = (((reg_d1.h[0] & 0xFFFF) + 2) != 0) ? *(u16 *)((u8 *)reg_a0 + ((s16)((reg_d1.h[0] & 0xFFFF) + 2) & ~1)) : *(u16 *)reg_a0;
             reg_call_target_as_u32 = reg_tmp.w;
             ((Fn)reg_call_target_as_u32)();
+#endif
             reg_d0.w = remaining;
             reg_a5 = (u8 *)(task);
         }
@@ -67,7 +111,7 @@ void task_run_all(void) {
     } while ((s16)(--reg_d0.h[0]) >= 0);
 }
 
-
+#ifndef DDPDOJ_PC
 void task_blocks_copy_backward(void) {
     u8 *a2;
     u8 *a3;
@@ -117,6 +161,7 @@ void task_blocks_copy_forward(void) {
     reg_a2 = destination;
     reg_a3 = source;
 }
+#endif
 
 
 void task_serve_start_requests(void) {
@@ -133,10 +178,15 @@ find_place:
     if ((s16) TASK(reg_a1)->priority > (s16) reg_d5.h[0]) goto try_next_task;
     reg_a2 = reg_a1 + sizeof(Task);
     reg_a3 = reg_a1;
+#ifdef DDPDOJ_PC
+    reg_d3.w = (u32)(g_tasks + TASK_BLOCKS_SIZE - reg_a2);
+    memmove(reg_a2, reg_a3, reg_d3.w);
+#else
     reg_d4.w = (u32) reg_a2;
     reg_d3.w = (u32) g_task_stop_requests;
     reg_d3.w -= reg_d4.w;
     task_blocks_copy_backward();
+#endif
     reg_a2 = reg_a0;
     reg_d2.h[0] = 0x27;
 copy_word:
@@ -145,13 +195,13 @@ copy_word:
     reg_a1 += 2;
     tmp = reg_d2.h[0] - 1;
     reg_d2.h[0] = tmp;
-    if (((s64) ((s64) (tmp & 0xFFFF) << 0x30) >> 0x30) >= 0) goto copy_word;
+    if (TASK_MASKED_COUNTER_ACTIVE(tmp)) goto copy_word;
     goto next_request;
 try_next_task:
     reg_a1 += sizeof(Task);
     tmp = reg_d6.h[0] - 1;
     reg_d6.h[0] = tmp;
-    if (((s64) ((s64) (tmp & 0xFFFF) << 0x30) >> 0x30) >= 0) goto find_place;
+    if (TASK_MASKED_COUNTER_ACTIVE(tmp)) goto find_place;
 next_request:
     reg_a0 += sizeof(Task);
     g_task_start_requests_used -= sizeof(Task);
@@ -171,6 +221,11 @@ void task_start(void) {
     save_d1 = reg_d1.w;
     if ((s16) reg_d2.h[0] < (s32) TASK_BLOCKS_SIZE) {
         reg_d1.h[0] = reg_d0.h[0];
+#ifdef DDPDOJ_PC
+        if (reg_d1.h[0] >= TASK_TABLE_COUNT || !task_callbacks[reg_d1.h[0]]) {
+            abort();
+        }
+#endif
         reg_a0 = (u8 *)g_task_table;
         reg_d1.h[0] *= 8;
         t1 = reg_d1.h[0] + 4;
@@ -232,10 +287,15 @@ compare_task:
     if (save_d0 != reg_d1.w) goto try_next_task;
     reg_a2 = reg_a0;
     reg_a3 = reg_a0 + sizeof(Task);
+#ifdef DDPDOJ_PC
+    reg_d3.w = (u32)(g_tasks + TASK_BLOCKS_SIZE - reg_a3);
+    memmove(reg_a2, reg_a3, reg_d3.w);
+#else
     reg_d4.w = (u32) reg_a3;
     reg_d3.w = (u32) g_task_stop_requests;
     reg_d3.w -= reg_d4.w;
     task_blocks_copy_forward();
+#endif
     reg_a2 += reg_d3.h[0];
     TASK(reg_a2)->state = 0;
     TASK(reg_a2)->priority = 0;
@@ -246,7 +306,7 @@ try_next_task:
     reg_a0 += sizeof(Task);
     tmp = reg_d2.h[0] - 1;
     reg_d2.h[0] = tmp;
-    if (((s64) ((s64) (tmp & 0xFFFF) << 0x30) >> 0x30) >= 0) goto compare_task;
+    if (TASK_MASKED_COUNTER_ACTIVE(tmp)) goto compare_task;
 done:
     reg_d0.w = save_d0;
     reg_d1.w = save_d1;
@@ -301,7 +361,11 @@ serve_request:
 
 
 void task_stop_self(void) {
+#ifdef DDPDOJ_PC
+    reg_a0 = (u8 *)TASK(reg_a5)->id;
+#else
     reg_a0 = (u8 *)(((s32)reg_a5) + 0x4C);
+#endif
     task_request_stop();
 }
 
@@ -331,7 +395,7 @@ try_next_task:
     reg_a0 += sizeof(Task);
     tmp = reg_d1.h[0] - 1;
     reg_d1.h[0] = tmp;
-    if (((s64) ((s64) (u16) tmp << 0x30) >> 0x30) >= 0) goto compare_task;
+    if (TASK_COUNTER_ACTIVE(tmp)) goto compare_task;
     reg_a0 = (u8 *)g_task_dummy;
     reg_d0.w = d0;
     reg_d1.w = d1;
@@ -354,8 +418,10 @@ u16 g_task_table[88] = {
 };
 
 /* .bss (the compiler lays these out in reverse) */
+#ifndef DDPDOJ_PC
 u8 g_task_dummy[80];
 u8 D_002A1500[624];
 u8 g_task_start_requests[976];
 u8 g_task_stop_requests[1600];
 u8 g_tasks[1600];
+#endif

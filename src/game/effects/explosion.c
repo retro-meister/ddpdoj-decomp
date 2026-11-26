@@ -60,9 +60,9 @@ extern u16 g_loop;
 extern u16 g_two_player_game;
 extern u8 D_0029D750[];
 extern u8 D_0029D770[];
-extern u8 D_0029DCA0[];
+extern u8 objects_task_buffer[];
 extern u8 D_0029DD30[];
-extern u8 D_0029E2A0[];
+extern u8 objects_task_buffer_2[];
 extern u8 D_0029E330[];
 extern u8 D_0029E390[];
 extern u8 D_0029EA50[];
@@ -111,7 +111,7 @@ void objects_task(void) {
         if (((u16 *)g_player1)[0] != 0) {
             reg_a0 = (u8 *)D_0029E390;
             reg_a1 = (u8 *)D_0029D770;
-            reg_a2 = (u8 *)D_0029E2A0;
+            reg_a2 = (u8 *)objects_task_buffer_2;
             reg_a3 = (u8 *)D_0029E330;
             reg_a4 = (u8 *)(((u16 *)g_player1));
             reg_d0.h[0] = 0x1000;
@@ -129,7 +129,7 @@ void objects_task(void) {
         if (((u16 *)g_player2)[0] != 0) {
             reg_a0 = (u8 *)D_0029EA50;
             reg_a1 = (u8 *)D_0029D750;
-            reg_a2 = (u8 *)D_0029DCA0;
+            reg_a2 = (u8 *)objects_task_buffer;
             reg_a3 = (u8 *)D_0029DD30;
             reg_a4 = (u8 *)(((u16 *)g_player2));
             reg_d0.h[0] = 0x800;
@@ -153,7 +153,7 @@ next_1:
         if (g_frame_mod2 == 0) {
             reg_a0 = (u8 *)D_0029E390;
             reg_a1 = (u8 *)D_0029D770;
-            reg_a2 = (u8 *)D_0029E2A0;
+            reg_a2 = (u8 *)objects_task_buffer_2;
             reg_a3 = (u8 *)D_0029E330;
             reg_a4 = (u8 *)(((u16 *)g_player1));
             reg_d0.h[0] = 0x1000;
@@ -164,7 +164,7 @@ next_1:
         }
         reg_a0 = (u8 *)D_0029EA50;
         reg_a1 = (u8 *)D_0029D750;
-        reg_a2 = (u8 *)D_0029DCA0;
+        reg_a2 = (u8 *)objects_task_buffer;
         reg_a3 = (u8 *)D_0029DD30;
         reg_a4 = (u8 *)(((u16 *)g_player2));
         reg_d0.h[0] = 0x800;
@@ -406,7 +406,7 @@ next_1:
     if ((s16)(--reg_d7.h[0]) >= 0) goto loop_1;
 }
 
-extern u8 D_0029BBC0[];
+extern u8 explosion_spawn_buffer[];
 
 void explosion_spawn(void) {
     u8 *sa1;
@@ -470,7 +470,7 @@ block_2:
     reg_d0.w = s0;
     reg_d1.w = s1;
     reg_a1 = sa1;
-    reg_a0 = (u8 *)D_0029BBC0;
+    reg_a0 = (u8 *)explosion_spawn_buffer;
     reg_a2 = sa2;
     reg_a3 = sa3;
     reg_a4 = sa4;
@@ -479,5 +479,5 @@ block_2:
 }
 
 /* .bss (the compiler lays these out in reverse) */
-u8 D_0029BBC0[64];
+u8 explosion_spawn_buffer[64];
 u8 g_explosions[4480];
