@@ -17,7 +17,7 @@ s32 boss_phase_stop_all();
 s32 boss_attack_stop_all();
 s32 score_add_no_chain();
 s32 score_add();
-void stage2_boss_leave_timer(void);
+void stage2_boss_time_limit(void);
 s32 func_002016D0();
 s32 active_players_mask();
 extern u8 g_game_mode;
@@ -31,8 +31,8 @@ void stage2_boss_take_damage(void) {
     s32 h2;
     s32 h3;
 
-    if (ENTITY(reg_a6)[10].offset_y.h != 0) return;
-    if (ENTITY(reg_a6)[10].sprite.b[1] == 0) goto next_110;
+    if (STAGE2_DAMAGE(reg_a6)->stopped != 0) return;
+    if (STAGE2_DAMAGE(reg_a6)->second_form == 0) goto next_110;
     reg_d1.b[0] = ENTITY(reg_a6)->flags.b[1];
     reg_d1.b[0] |= ENTITY(reg_a6)[1].flags.b[1];
     reg_d1.b[0] |= ENTITY(reg_a6)[6].flags.b[1];
@@ -45,39 +45,39 @@ void stage2_boss_take_damage(void) {
     ENTITY(reg_a6)[1].flags.b[1] &= reg_d0.b[0];
     ENTITY(reg_a6)[6].flags.b[1] &= reg_d0.b[0];
     ENTITY(reg_a6)[7].flags.b[1] &= reg_d0.b[0];
-    ENTITY(reg_a6)[10].draw.h = reg_d1.h[0];
+    STAGE2_DAMAGE(reg_a6)->hit_by = reg_d1.h[0];
     score_add_no_chain();
-    reg_d0.b[0] = ENTITY(reg_a6)[9].offset_y.b[0];
+    reg_d0.b[0] = STAGE2_PALETTES(reg_a6)->torso;
     if (reg_d0.b[0] != 0x19) goto next_101;
-    ENTITY(reg_a6)[9].offset_y.b[0] = 0x10;
-    ENTITY(reg_a6)[9].offset_y.b[1] = 0x12;
-    ENTITY(reg_a6)[9].offset_x.b[1] = 0x17;
-    ENTITY(reg_a6)[9].look.b.palette = 0x11;
-    ENTITY(reg_a6)[9].hit_y_plus.b[1] = 0x13;
-    ENTITY(reg_a6)[9].sprite.b[0] = 0x13;
-    ENTITY(reg_a6)[9].look.b.size = 0xD;
+    STAGE2_PALETTES(reg_a6)->torso = 0x10;
+    STAGE2_PALETTES(reg_a6)->lower = 0x12;
+    STAGE2_PALETTES(reg_a6)->shoulder_cannon = 0x17;
+    STAGE2_PALETTES(reg_a6)->radome = 0x11;
+    STAGE2_PALETTES(reg_a6)->base = 0x13;
+    STAGE2_PALETTES(reg_a6)->right_side_gun = 0x13;
+    STAGE2_PALETTES(reg_a6)->left_side_gun = 0xD;
 next_101:
-    reg_d0.b[0] = ENTITY(reg_a6)[9].offset_y.b[0];
+    reg_d0.b[0] = STAGE2_PALETTES(reg_a6)->torso;
     reg_d0.b[0] ^= 0xF;
-    ENTITY(reg_a6)[9].offset_y.b[0] = reg_d0.b[0];
-    reg_d0.b[0] = ENTITY(reg_a6)[9].offset_y.b[1];
+    STAGE2_PALETTES(reg_a6)->torso = reg_d0.b[0];
+    reg_d0.b[0] = STAGE2_PALETTES(reg_a6)->lower;
     reg_d0.b[0] ^= 0xD;
-    ENTITY(reg_a6)[9].offset_y.b[1] = reg_d0.b[0];
-    reg_d0.b[0] = ENTITY(reg_a6)[9].offset_x.b[1];
+    STAGE2_PALETTES(reg_a6)->lower = reg_d0.b[0];
+    reg_d0.b[0] = STAGE2_PALETTES(reg_a6)->shoulder_cannon;
     reg_d0.b[0] ^= 0x8;
-    ENTITY(reg_a6)[9].offset_x.b[1] = reg_d0.b[0];
-    reg_d0.b[0] = ENTITY(reg_a6)[9].look.b.palette;
+    STAGE2_PALETTES(reg_a6)->shoulder_cannon = reg_d0.b[0];
+    reg_d0.b[0] = STAGE2_PALETTES(reg_a6)->radome;
     reg_d0.b[0] ^= 0xE;
-    ENTITY(reg_a6)[9].look.b.palette = reg_d0.b[0];
-    reg_d0.b[0] = ENTITY(reg_a6)[9].hit_y_plus.b[1];
+    STAGE2_PALETTES(reg_a6)->radome = reg_d0.b[0];
+    reg_d0.b[0] = STAGE2_PALETTES(reg_a6)->base;
     reg_d0.b[0] ^= 0xC;
-    ENTITY(reg_a6)[9].hit_y_plus.b[1] = reg_d0.b[0];
-    reg_d0.b[0] = ENTITY(reg_a6)[9].sprite.b[0];
+    STAGE2_PALETTES(reg_a6)->base = reg_d0.b[0];
+    reg_d0.b[0] = STAGE2_PALETTES(reg_a6)->right_side_gun;
     reg_d0.b[0] ^= 0xC;
-    ENTITY(reg_a6)[9].sprite.b[0] = reg_d0.b[0];
-    reg_d0.b[0] = ENTITY(reg_a6)[9].look.b.size;
+    STAGE2_PALETTES(reg_a6)->right_side_gun = reg_d0.b[0];
+    reg_d0.b[0] = STAGE2_PALETTES(reg_a6)->left_side_gun;
     reg_d0.b[0] ^= 0x12;
-    ENTITY(reg_a6)[9].look.b.size = reg_d0.b[0];
+    STAGE2_PALETTES(reg_a6)->left_side_gun = reg_d0.b[0];
     if (g_game_mode == 2) {
         m = ENTITY(reg_a6)->hp.h;
         h1 = ENTITY(reg_a6)[1].hp.h;
@@ -110,7 +110,7 @@ skip_d181:
     if (!((s32) reg_d2.w < (s32) reg_d3.w)) goto skip_d182;
     reg_d2.w = reg_d3.w;
 skip_d182:
-    if (ENTITY(reg_a6)[10].offset_x.h != 0) goto next_108;
+    if (STAGE2_DAMAGE(reg_a6)->shielded != 0) goto next_108;
     reg_tmp2.h[1] = STAGE2_BOSS(reg_a5)->hp[0];
     reg_tmp2.h[0] = STAGE2_BOSS(reg_a5)->hp[1];
     if (g_game_mode != 2) goto next_106;
@@ -136,25 +136,25 @@ next_108:
     ENTITY(reg_a6)[7].hp.h = reg_d0.h[0];
     goto next_110;
 next_100:
-    ENTITY(reg_a6)[9].offset_y.b[0] = 0x10;
-    ENTITY(reg_a6)[9].offset_y.b[1] = 0x12;
-    ENTITY(reg_a6)[9].offset_x.b[1] = 0x17;
-    ENTITY(reg_a6)[9].look.b.palette = 0x11;
-    ENTITY(reg_a6)[9].hit_y_plus.b[1] = 0x13;
-    ENTITY(reg_a6)[9].sprite.b[0] = 0x13;
-    ENTITY(reg_a6)[9].look.b.size = 0xD;
+    STAGE2_PALETTES(reg_a6)->torso = 0x10;
+    STAGE2_PALETTES(reg_a6)->lower = 0x12;
+    STAGE2_PALETTES(reg_a6)->shoulder_cannon = 0x17;
+    STAGE2_PALETTES(reg_a6)->radome = 0x11;
+    STAGE2_PALETTES(reg_a6)->base = 0x13;
+    STAGE2_PALETTES(reg_a6)->right_side_gun = 0x13;
+    STAGE2_PALETTES(reg_a6)->left_side_gun = 0xD;
     reg_d2.w = 0x7700;
     reg_tmp.h[1] = STAGE2_BOSS(reg_a5)->hp[0];
     reg_tmp.h[0] = STAGE2_BOSS(reg_a5)->hp[1];
     if (reg_tmp.w > reg_d2.w) goto next_110;
     if (g_damage_blink_counter != 0) goto next_110;
-    ENTITY(reg_a6)[9].offset_y.b[0] = 0x19;
-    ENTITY(reg_a6)[9].offset_y.b[1] = 0x19;
-    ENTITY(reg_a6)[9].offset_x.b[1] = 0x19;
-    ENTITY(reg_a6)[9].look.b.palette = 0x19;
-    ENTITY(reg_a6)[9].hit_y_plus.b[1] = 0x19;
-    ENTITY(reg_a6)[9].sprite.b[0] = 0x19;
-    ENTITY(reg_a6)[9].look.b.size = 0x19;
+    STAGE2_PALETTES(reg_a6)->torso = 0x19;
+    STAGE2_PALETTES(reg_a6)->lower = 0x19;
+    STAGE2_PALETTES(reg_a6)->shoulder_cannon = 0x19;
+    STAGE2_PALETTES(reg_a6)->radome = 0x19;
+    STAGE2_PALETTES(reg_a6)->base = 0x19;
+    STAGE2_PALETTES(reg_a6)->right_side_gun = 0x19;
+    STAGE2_PALETTES(reg_a6)->left_side_gun = 0x19;
 next_110:
     reg_tmp.h[1] = STAGE2_BOSS(reg_a5)->hp[0];
     reg_tmp.h[0] = STAGE2_BOSS(reg_a5)->hp[1];
@@ -178,30 +178,30 @@ next_130:
     if (!(cnt & 0xFF)) goto next_25;
     reg_d0.b[0] = 0xA3;
     ENTITY(reg_a6)[2].flags.b[1] &= reg_d0.b[0];
-    ENTITY(reg_a6)[10].draw.h = reg_d1.h[0];
+    STAGE2_DAMAGE(reg_a6)->hit_by = reg_d1.h[0];
     score_add_no_chain();
-    reg_d0.b[0] = ENTITY(reg_a6)[9].offset_x.b[0];
+    reg_d0.b[0] = STAGE2_PALETTES(reg_a6)->right_knee_gun;
     if (reg_d0.b[0] != 0x19) goto next_21;
-    ENTITY(reg_a6)[9].offset_x.b[0] = 0x11;
+    STAGE2_PALETTES(reg_a6)->right_knee_gun = 0x11;
 next_21:
-    reg_d0.b[0] = ENTITY(reg_a6)[9].offset_x.b[0];
+    reg_d0.b[0] = STAGE2_PALETTES(reg_a6)->right_knee_gun;
     reg_d0.b[0] ^= 0xE;
-    ENTITY(reg_a6)[9].offset_x.b[0] = reg_d0.b[0];
-    if (ENTITY(reg_a6)[10].offset_x.h == 0) goto next_22;
+    STAGE2_PALETTES(reg_a6)->right_knee_gun = reg_d0.b[0];
+    if (STAGE2_DAMAGE(reg_a6)->shielded == 0) goto next_22;
     ENTITY(reg_a6)[2].hp.h = 0x5000;
 next_22:
     if (ENTITY(reg_a6)[2].hp.sh >= 0) goto next_29;
-    reg_d1.h[0] = ENTITY(reg_a6)[10].draw.h;
+    reg_d1.h[0] = STAGE2_DAMAGE(reg_a6)->hit_by;
     reg_d0.w = 0x800;
     score_add();
     stage2_boss_part2_blow_off();
     goto next_29;
 next_25:
-    ENTITY(reg_a6)[9].offset_x.b[0] = 0x11;
+    STAGE2_PALETTES(reg_a6)->right_knee_gun = 0x11;
     reg_d2.h[0] = 0x1800;
     if ((s32) ENTITY(reg_a6)[2].hp.h > (s32) reg_d2.h[0]) goto next_29;
     if (g_damage_blink_counter != 0) goto next_29;
-    ENTITY(reg_a6)[9].offset_x.b[0] = 0x19;
+    STAGE2_PALETTES(reg_a6)->right_knee_gun = 0x19;
 next_29:
     if (ENTITY(reg_a6)[3].flags.h == 0x8000) goto next_39;
     reg_d1.w = 0x5C;
@@ -211,30 +211,30 @@ next_29:
     if (!(cnt & 0xFF)) goto next_35;
     reg_d0.b[0] = 0xA3;
     ENTITY(reg_a6)[3].flags.b[1] &= reg_d0.b[0];
-    ENTITY(reg_a6)[10].draw.h = reg_d1.h[0];
+    STAGE2_DAMAGE(reg_a6)->hit_by = reg_d1.h[0];
     score_add_no_chain();
-    reg_d0.b[0] = ENTITY(reg_a6)[9].draw.b.priority;
+    reg_d0.b[0] = STAGE2_PALETTES(reg_a6)->left_knee_gun;
     if (reg_d0.b[0] != 0x19) goto next_31;
-    ENTITY(reg_a6)[9].draw.b.priority = 0x11;
+    STAGE2_PALETTES(reg_a6)->left_knee_gun = 0x11;
 next_31:
-    reg_d0.b[0] = ENTITY(reg_a6)[9].draw.b.priority;
+    reg_d0.b[0] = STAGE2_PALETTES(reg_a6)->left_knee_gun;
     reg_d0.b[0] ^= 0xE;
-    ENTITY(reg_a6)[9].draw.b.priority = reg_d0.b[0];
-    if (ENTITY(reg_a6)[10].offset_x.h == 0) goto next_32;
+    STAGE2_PALETTES(reg_a6)->left_knee_gun = reg_d0.b[0];
+    if (STAGE2_DAMAGE(reg_a6)->shielded == 0) goto next_32;
     ENTITY(reg_a6)[3].hp.h = 0x5000;
 next_32:
     if (ENTITY(reg_a6)[3].hp.sh >= 0) goto next_39;
-    reg_d1.h[0] = ENTITY(reg_a6)[10].draw.h;
+    reg_d1.h[0] = STAGE2_DAMAGE(reg_a6)->hit_by;
     reg_d0.w = 0x800;
     score_add();
     stage2_boss_part3_blow_off();
     goto next_39;
 next_35:
-    ENTITY(reg_a6)[9].draw.b.priority = 0x11;
+    STAGE2_PALETTES(reg_a6)->left_knee_gun = 0x11;
     reg_d2.h[0] = 0x1800;
     if ((s32) ENTITY(reg_a6)[3].hp.h > (s32) reg_d2.h[0]) goto next_39;
     if (g_damage_blink_counter != 0) goto next_39;
-    ENTITY(reg_a6)[9].draw.b.priority = 0x19;
+    STAGE2_PALETTES(reg_a6)->left_knee_gun = 0x19;
 next_39:
     if (ENTITY(reg_a6)[4].flags.h == 0x8000) goto next_49;
     reg_d1.w = 0x5C;
@@ -244,30 +244,30 @@ next_39:
     if (!(cnt & 0xFF)) goto next_45;
     reg_d0.b[0] = 0xA3;
     ENTITY(reg_a6)[4].flags.b[1] &= reg_d0.b[0];
-    ENTITY(reg_a6)[10].draw.h = reg_d1.h[0];
+    STAGE2_DAMAGE(reg_a6)->hit_by = reg_d1.h[0];
     score_add_no_chain();
-    reg_d0.b[0] = ENTITY(reg_a6)[9].draw.b.flip;
+    reg_d0.b[0] = STAGE2_PALETTES(reg_a6)->right_shoulder_gun;
     if (reg_d0.b[0] != 0x19) goto next_41;
-    ENTITY(reg_a6)[9].draw.b.flip = 0x12;
+    STAGE2_PALETTES(reg_a6)->right_shoulder_gun = 0x12;
 next_41:
-    reg_d0.b[0] = ENTITY(reg_a6)[9].draw.b.flip;
+    reg_d0.b[0] = STAGE2_PALETTES(reg_a6)->right_shoulder_gun;
     reg_d0.b[0] ^= 0xD;
-    ENTITY(reg_a6)[9].draw.b.flip = reg_d0.b[0];
-    if (ENTITY(reg_a6)[10].offset_x.h == 0) goto next_42;
+    STAGE2_PALETTES(reg_a6)->right_shoulder_gun = reg_d0.b[0];
+    if (STAGE2_DAMAGE(reg_a6)->shielded == 0) goto next_42;
     ENTITY(reg_a6)[4].hp.h = 0x5000;
 next_42:
     if (ENTITY(reg_a6)[4].hp.sh >= 0) goto next_49;
-    reg_d1.h[0] = ENTITY(reg_a6)[10].draw.h;
+    reg_d1.h[0] = STAGE2_DAMAGE(reg_a6)->hit_by;
     reg_d0.w = 0x800;
     score_add();
     stage2_boss_part4_blow_off();
     goto next_49;
 next_45:
-    ENTITY(reg_a6)[9].draw.b.flip = 0x12;
+    STAGE2_PALETTES(reg_a6)->right_shoulder_gun = 0x12;
     reg_d2.h[0] = 0x1800;
     if ((s32) ENTITY(reg_a6)[4].hp.h > (s32) reg_d2.h[0]) goto next_49;
     if (g_damage_blink_counter != 0) goto next_49;
-    ENTITY(reg_a6)[9].draw.b.flip = 0x19;
+    STAGE2_PALETTES(reg_a6)->right_shoulder_gun = 0x19;
 next_49:
     if (ENTITY(reg_a6)[5].flags.h == 0x8000) goto next_59;
     reg_d1.w = 0x5C;
@@ -277,30 +277,30 @@ next_49:
     if (!(cnt & 0xFF)) goto next_55;
     reg_d0.b[0] = 0xA3;
     ENTITY(reg_a6)[5].flags.b[1] &= reg_d0.b[0];
-    ENTITY(reg_a6)[10].draw.h = reg_d1.h[0];
+    STAGE2_DAMAGE(reg_a6)->hit_by = reg_d1.h[0];
     score_add_no_chain();
-    reg_d0.b[0] = ENTITY(reg_a6)[9].sprite.b[1];
+    reg_d0.b[0] = STAGE2_PALETTES(reg_a6)->left_shoulder_gun;
     if (reg_d0.b[0] != 0x19) goto next_51;
-    ENTITY(reg_a6)[9].sprite.b[1] = 0x12;
+    STAGE2_PALETTES(reg_a6)->left_shoulder_gun = 0x12;
 next_51:
-    reg_d0.b[0] = ENTITY(reg_a6)[9].sprite.b[1];
+    reg_d0.b[0] = STAGE2_PALETTES(reg_a6)->left_shoulder_gun;
     reg_d0.b[0] ^= 0xD;
-    ENTITY(reg_a6)[9].sprite.b[1] = reg_d0.b[0];
-    if (ENTITY(reg_a6)[10].offset_x.h == 0) goto next_52;
+    STAGE2_PALETTES(reg_a6)->left_shoulder_gun = reg_d0.b[0];
+    if (STAGE2_DAMAGE(reg_a6)->shielded == 0) goto next_52;
     ENTITY(reg_a6)[5].hp.h = 0x5000;
 next_52:
     if (ENTITY(reg_a6)[5].hp.sh >= 0) goto next_59;
-    reg_d1.h[0] = ENTITY(reg_a6)[10].draw.h;
+    reg_d1.h[0] = STAGE2_DAMAGE(reg_a6)->hit_by;
     reg_d0.w = 0x800;
     score_add();
     stage2_boss_part5_blow_off();
     goto next_59;
 next_55:
-    ENTITY(reg_a6)[9].sprite.b[1] = 0x12;
+    STAGE2_PALETTES(reg_a6)->left_shoulder_gun = 0x12;
     reg_d2.h[0] = 0x1800;
     if ((s32) ENTITY(reg_a6)[5].hp.h > (s32) reg_d2.h[0]) goto next_59;
     if (g_damage_blink_counter != 0) goto next_59;
-    ENTITY(reg_a6)[9].sprite.b[1] = 0x19;
+    STAGE2_PALETTES(reg_a6)->left_shoulder_gun = 0x19;
 next_59:
     if (ENTITY(reg_a6)[8].flags.h == 0x8000) goto next_610;
     reg_d1.b[0] = ENTITY(reg_a6)[8].flags.b[1];
@@ -313,55 +313,55 @@ next_59:
     ENTITY(reg_a6)[8].flags.b[1] &= reg_d0.b[0];
     ENTITY(reg_a6)[6].flags.b[1] &= reg_d0.b[0];
     ENTITY(reg_a6)[7].flags.b[1] &= reg_d0.b[0];
-    ENTITY(reg_a6)[10].draw.h = reg_d1.h[0];
+    STAGE2_DAMAGE(reg_a6)->hit_by = reg_d1.h[0];
     score_add_no_chain();
-    reg_d0.b[0] = ENTITY(reg_a6)[9].look.b.palette;
+    reg_d0.b[0] = STAGE2_PALETTES(reg_a6)->radome;
     if (reg_d0.b[0] != 0x19) goto next_601;
-    ENTITY(reg_a6)[9].offset_y.b[0] = 0x10;
-    ENTITY(reg_a6)[9].offset_y.b[1] = 0x12;
-    ENTITY(reg_a6)[9].offset_x.b[1] = 0x17;
-    ENTITY(reg_a6)[9].look.b.palette = 0x11;
-    ENTITY(reg_a6)[9].hit_y_plus.b[1] = 0x13;
-    ENTITY(reg_a6)[9].sprite.b[0] = 0x13;
-    ENTITY(reg_a6)[9].look.b.size = 0xD;
-    ENTITY(reg_a6)[9].offset_x.b[0] = 0x11;
-    ENTITY(reg_a6)[9].draw.b.priority = 0x11;
-    ENTITY(reg_a6)[9].draw.b.flip = 0x12;
-    ENTITY(reg_a6)[9].sprite.b[1] = 0x12;
+    STAGE2_PALETTES(reg_a6)->torso = 0x10;
+    STAGE2_PALETTES(reg_a6)->lower = 0x12;
+    STAGE2_PALETTES(reg_a6)->shoulder_cannon = 0x17;
+    STAGE2_PALETTES(reg_a6)->radome = 0x11;
+    STAGE2_PALETTES(reg_a6)->base = 0x13;
+    STAGE2_PALETTES(reg_a6)->right_side_gun = 0x13;
+    STAGE2_PALETTES(reg_a6)->left_side_gun = 0xD;
+    STAGE2_PALETTES(reg_a6)->right_knee_gun = 0x11;
+    STAGE2_PALETTES(reg_a6)->left_knee_gun = 0x11;
+    STAGE2_PALETTES(reg_a6)->right_shoulder_gun = 0x12;
+    STAGE2_PALETTES(reg_a6)->left_shoulder_gun = 0x12;
 next_601:
-    reg_d0.b[0] = ENTITY(reg_a6)[9].offset_y.b[0];
+    reg_d0.b[0] = STAGE2_PALETTES(reg_a6)->torso;
     reg_d0.b[0] ^= 0xF;
-    ENTITY(reg_a6)[9].offset_y.b[0] = reg_d0.b[0];
-    reg_d0.b[0] = ENTITY(reg_a6)[9].offset_y.b[1];
+    STAGE2_PALETTES(reg_a6)->torso = reg_d0.b[0];
+    reg_d0.b[0] = STAGE2_PALETTES(reg_a6)->lower;
     reg_d0.b[0] ^= 0xD;
-    ENTITY(reg_a6)[9].offset_y.b[1] = reg_d0.b[0];
-    reg_d0.b[0] = ENTITY(reg_a6)[9].offset_x.b[1];
+    STAGE2_PALETTES(reg_a6)->lower = reg_d0.b[0];
+    reg_d0.b[0] = STAGE2_PALETTES(reg_a6)->shoulder_cannon;
     reg_d0.b[0] ^= 0x8;
-    ENTITY(reg_a6)[9].offset_x.b[1] = reg_d0.b[0];
-    reg_d0.b[0] = ENTITY(reg_a6)[9].look.b.palette;
+    STAGE2_PALETTES(reg_a6)->shoulder_cannon = reg_d0.b[0];
+    reg_d0.b[0] = STAGE2_PALETTES(reg_a6)->radome;
     reg_d0.b[0] ^= 0xE;
-    ENTITY(reg_a6)[9].look.b.palette = reg_d0.b[0];
-    reg_d0.b[0] = ENTITY(reg_a6)[9].hit_y_plus.b[1];
+    STAGE2_PALETTES(reg_a6)->radome = reg_d0.b[0];
+    reg_d0.b[0] = STAGE2_PALETTES(reg_a6)->base;
     reg_d0.b[0] ^= 0xC;
-    ENTITY(reg_a6)[9].hit_y_plus.b[1] = reg_d0.b[0];
-    reg_d0.b[0] = ENTITY(reg_a6)[9].sprite.b[0];
+    STAGE2_PALETTES(reg_a6)->base = reg_d0.b[0];
+    reg_d0.b[0] = STAGE2_PALETTES(reg_a6)->right_side_gun;
     reg_d0.b[0] ^= 0xC;
-    ENTITY(reg_a6)[9].sprite.b[0] = reg_d0.b[0];
-    reg_d0.b[0] = ENTITY(reg_a6)[9].look.b.size;
+    STAGE2_PALETTES(reg_a6)->right_side_gun = reg_d0.b[0];
+    reg_d0.b[0] = STAGE2_PALETTES(reg_a6)->left_side_gun;
     reg_d0.b[0] ^= 0x12;
-    ENTITY(reg_a6)[9].look.b.size = reg_d0.b[0];
-    reg_d0.b[0] = ENTITY(reg_a6)[9].offset_x.b[0];
+    STAGE2_PALETTES(reg_a6)->left_side_gun = reg_d0.b[0];
+    reg_d0.b[0] = STAGE2_PALETTES(reg_a6)->right_knee_gun;
     reg_d0.b[0] ^= 0xE;
-    ENTITY(reg_a6)[9].offset_x.b[0] = reg_d0.b[0];
-    reg_d0.b[0] = ENTITY(reg_a6)[9].draw.b.priority;
+    STAGE2_PALETTES(reg_a6)->right_knee_gun = reg_d0.b[0];
+    reg_d0.b[0] = STAGE2_PALETTES(reg_a6)->left_knee_gun;
     reg_d0.b[0] ^= 0xE;
-    ENTITY(reg_a6)[9].draw.b.priority = reg_d0.b[0];
-    reg_d0.b[0] = ENTITY(reg_a6)[9].draw.b.flip;
+    STAGE2_PALETTES(reg_a6)->left_knee_gun = reg_d0.b[0];
+    reg_d0.b[0] = STAGE2_PALETTES(reg_a6)->right_shoulder_gun;
     reg_d0.b[0] ^= 0xD;
-    ENTITY(reg_a6)[9].draw.b.flip = reg_d0.b[0];
-    reg_d0.b[0] = ENTITY(reg_a6)[9].sprite.b[1];
+    STAGE2_PALETTES(reg_a6)->right_shoulder_gun = reg_d0.b[0];
+    reg_d0.b[0] = STAGE2_PALETTES(reg_a6)->left_shoulder_gun;
     reg_d0.b[0] ^= 0xD;
-    ENTITY(reg_a6)[9].sprite.b[1] = reg_d0.b[0];
+    STAGE2_PALETTES(reg_a6)->left_shoulder_gun = reg_d0.b[0];
     if (g_game_mode == 2) {
         m = ENTITY(reg_a6)[8].hp.h;
         h1 = ENTITY(reg_a6)[6].hp.h;
@@ -385,7 +385,7 @@ skip_d1180:
     if (!((s32) reg_d2.w < (s32) reg_d3.w)) goto skip_d1181;
     reg_d2.w = reg_d3.w;
 skip_d1181:
-    if (ENTITY(reg_a6)[10].offset_x.h != 0) goto next_608;
+    if (STAGE2_DAMAGE(reg_a6)->shielded != 0) goto next_608;
     reg_tmp2.h[1] = STAGE2_BOSS(reg_a5)->hp[0];
     reg_tmp2.h[0] = STAGE2_BOSS(reg_a5)->hp[1];
     if (g_game_mode != 2) goto next_606;
@@ -410,19 +410,19 @@ next_608:
     ENTITY(reg_a6)[7].hp.h = reg_d0.h[0];
     goto next_610;
 next_600:
-    ENTITY(reg_a6)[9].offset_y.b[0] = 0x10;
-    ENTITY(reg_a6)[9].offset_y.b[1] = 0x12;
-    ENTITY(reg_a6)[9].offset_x.b[1] = 0x17;
-    ENTITY(reg_a6)[9].look.b.palette = 0x11;
-    ENTITY(reg_a6)[9].hit_y_plus.b[1] = 0x13;
-    ENTITY(reg_a6)[9].sprite.b[0] = 0x13;
-    ENTITY(reg_a6)[9].look.b.size = 0xD;
-    ENTITY(reg_a6)[9].offset_x.b[0] = 0x11;
-    ENTITY(reg_a6)[9].draw.b.priority = 0x11;
-    ENTITY(reg_a6)[9].draw.b.flip = 0x12;
-    ENTITY(reg_a6)[9].sprite.b[1] = 0x12;
+    STAGE2_PALETTES(reg_a6)->torso = 0x10;
+    STAGE2_PALETTES(reg_a6)->lower = 0x12;
+    STAGE2_PALETTES(reg_a6)->shoulder_cannon = 0x17;
+    STAGE2_PALETTES(reg_a6)->radome = 0x11;
+    STAGE2_PALETTES(reg_a6)->base = 0x13;
+    STAGE2_PALETTES(reg_a6)->right_side_gun = 0x13;
+    STAGE2_PALETTES(reg_a6)->left_side_gun = 0xD;
+    STAGE2_PALETTES(reg_a6)->right_knee_gun = 0x11;
+    STAGE2_PALETTES(reg_a6)->left_knee_gun = 0x11;
+    STAGE2_PALETTES(reg_a6)->right_shoulder_gun = 0x12;
+    STAGE2_PALETTES(reg_a6)->left_shoulder_gun = 0x12;
 next_610:
-    if (ENTITY(reg_a6)[10].sprite.b[1] != 0) goto next_720;
+    if (STAGE2_DAMAGE(reg_a6)->second_form != 0) goto next_720;
     reg_d0.b[0] = ENTITY(reg_a6)[2].misc.b.draw_layer;
     reg_d0.b[0] += ENTITY(reg_a6)[3].misc.b.draw_layer;
     reg_d0.b[0] += ENTITY(reg_a6)[4].misc.b.draw_layer;
@@ -441,22 +441,22 @@ next_710:
     stage2_boss_part3_blow_off();
     stage2_boss_part4_blow_off();
     stage2_boss_part5_blow_off();
-    ENTITY(reg_a6)[9].sprite.b[0] = 0x13;
-    ENTITY(reg_a6)[9].look.b.size = 0xD;
-    ENTITY(reg_a6)[10].sprite.b[1] = 1;
+    STAGE2_PALETTES(reg_a6)->right_side_gun = 0x13;
+    STAGE2_PALETTES(reg_a6)->left_side_gun = 0xD;
+    STAGE2_DAMAGE(reg_a6)->second_form = 1;
     func_002016D0();
 next_720:
-    if (ENTITY(reg_a6)[10].sprite.b[0] != 0) goto next_730;
+    if (STAGE2_DAMAGE(reg_a6)->rage != 0) goto next_730;
     reg_tmp.h[1] = STAGE2_BOSS(reg_a5)->hp[0];
     reg_tmp.h[0] = STAGE2_BOSS(reg_a5)->hp[1];
     if (!((s32) reg_tmp.w < 0x7701)) goto next_730;
-    ENTITY(reg_a6)[10].sprite.b[0] = 1;
+    STAGE2_DAMAGE(reg_a6)->rage = 1;
     boss_attack_stop_all();
     boss_phase_stop_all();
     reg_d0.w = 8;
     boss_phase_start();
 next_730:
-    stage2_boss_leave_timer();
+    stage2_boss_time_limit();
 }
 
 s32 boss_animation_stop(s32, s32, s32, s32);
@@ -483,17 +483,17 @@ void stage2_boss_defeated(void) {
     ENTITY(reg_a6)[1].flags.h = 0x8000;
     ENTITY(reg_a6)[6].flags.h = 0x8000;
     ENTITY(reg_a6)[7].flags.h = 0x8000;
-    ENTITY(reg_a6)[9].offset_y.sb[0] = 0x10;
-    ENTITY(reg_a6)[9].offset_y.sb[1] = 0x12;
-    ENTITY(reg_a6)[9].offset_x.sb[1] = 0x17;
-    ENTITY(reg_a6)[9].look.sb.palette = 0x11;
-    ENTITY(reg_a6)[9].hit_y_plus.sb[1] = 0x13;
-    ENTITY(reg_a6)[9].sprite.sb[0] = 0x13;
-    ENTITY(reg_a6)[9].look.sb.size = 0xD;
-    ENTITY(reg_a6)[9].offset_x.sb[0] = 0x11;
-    ENTITY(reg_a6)[9].draw.sb.priority = 0x11;
-    ENTITY(reg_a6)[9].draw.sb.flip = 0x12;
-    ENTITY(reg_a6)[9].sprite.sb[1] = 0x12;
+    STAGE2_PALETTES(reg_a6)->torso = 0x10;
+    STAGE2_PALETTES(reg_a6)->lower = 0x12;
+    STAGE2_PALETTES(reg_a6)->shoulder_cannon = 0x17;
+    STAGE2_PALETTES(reg_a6)->radome = 0x11;
+    STAGE2_PALETTES(reg_a6)->base = 0x13;
+    STAGE2_PALETTES(reg_a6)->right_side_gun = 0x13;
+    STAGE2_PALETTES(reg_a6)->left_side_gun = 0xD;
+    STAGE2_PALETTES(reg_a6)->right_knee_gun = 0x11;
+    STAGE2_PALETTES(reg_a6)->left_knee_gun = 0x11;
+    STAGE2_PALETTES(reg_a6)->right_shoulder_gun = 0x12;
+    STAGE2_PALETTES(reg_a6)->left_shoulder_gun = 0x12;
     reg_d0.w = 0xD;
     boss_animation_stop(0x13, 0x11, 0x17, 0x12);
     reg_d0.w = 2;
@@ -508,7 +508,7 @@ void stage2_boss_part2_blow_off(void) {
         ENTITY(reg_a6)[2].hp.h = 0xFFFF;
         ENTITY(reg_a6)[2].misc.b.draw_layer = 1U;
         ENTITY(reg_a6)[2].flags.h = 0x8000;
-        ENTITY(reg_a6)[9].offset_x.sb[0] = 0x11;
+        STAGE2_PALETTES(reg_a6)->right_knee_gun = 0x11;
         reg_d0.w = 6;
         boss_part_hide(0x11, 0x8000, 1);
         reg_d0.h[0] = 0x87;
@@ -526,7 +526,7 @@ void stage2_boss_part3_blow_off(void) {
         ENTITY(reg_a6)[3].hp.h = 0xFFFF;
         ENTITY(reg_a6)[3].misc.b.draw_layer = 1U;
         ENTITY(reg_a6)[3].flags.h = 0x8000;
-        ENTITY(reg_a6)[9].draw.sb.priority = 0x11;
+        STAGE2_PALETTES(reg_a6)->left_knee_gun = 0x11;
         reg_d0.w = 7;
         boss_part_hide(0x11, 0x8000, 1);
         reg_d0.h[0] = 0x84;
@@ -548,7 +548,7 @@ void stage2_boss_part4_blow_off(void) {
         ENTITY(reg_a6)[4].hp.h = 0xFFFF;
         ENTITY(reg_a6)[4].misc.b.draw_layer = 1U;
         ENTITY(reg_a6)[4].flags.h = 0x8000;
-        ENTITY(reg_a6)[9].draw.sb.flip = 0x12;
+        STAGE2_PALETTES(reg_a6)->right_shoulder_gun = 0x12;
         reg_d0.w = 8;
         boss_part_hide(0x12, 0x8000, 1);
         reg_a1 = D_0026CA80;
@@ -607,7 +607,7 @@ void stage2_boss_part5_blow_off(void) {
         ENTITY(reg_a6)[5].hp.h = 0xFFFF;
         ENTITY(reg_a6)[5].misc.b.draw_layer = 1U;
         ENTITY(reg_a6)[5].flags.h = 0x8000;
-        ENTITY(reg_a6)[9].sprite.sb[1] = 0x12;
+        STAGE2_PALETTES(reg_a6)->left_shoulder_gun = 0x12;
         reg_d0.w = 9;
         boss_part_hide(0x12, 0x8000, 1);
         reg_a1 = D_0026CAB0;
@@ -625,11 +625,11 @@ void stage2_boss_part5_blow_off(void) {
 }
 
 void stage2_boss_shield_on(void) {
-    ENTITY(reg_a6)[10].offset_x.sh = 1;
+    STAGE2_DAMAGE(reg_a6)->shielded = 1;
 }
 
 void stage2_boss_shield_off(void) {
-    ENTITY(reg_a6)[10].offset_x.sh = 0;
+    STAGE2_DAMAGE(reg_a6)->shielded = 0;
 }
 
 void stage2_boss_radome_show(void) {
@@ -664,23 +664,23 @@ void stage2_boss_part_stop_hits(void) {
 }
 
 void stage2_boss_stop_damage(void) {
-    ENTITY(reg_a6)[10].offset_y.sh = 1;
+    STAGE2_DAMAGE(reg_a6)->stopped = 1;
 }
 
 extern u16 g_enemies_stopped;
 
-void stage2_boss_leave_timer(void) {
+void stage2_boss_time_limit(void) {
 #ifdef DEATH_LABEL
-    if ((g_enemies_stopped == 0) && (STAGE2_BOSS(reg_a5)->leave_delay == 0)) {
+    if ((g_enemies_stopped == 0) && (STAGE2_BOSS(reg_a5)->time_left == 0)) {
 #else
-    if ((g_enemies_stopped == 0) && (STAGE2_BOSS(reg_a5)->leave_delay -= 1, STAGE2_BOSS(reg_a5)->leave_delay == 0)) {
+    if ((g_enemies_stopped == 0) && (STAGE2_BOSS(reg_a5)->time_left -= 1, STAGE2_BOSS(reg_a5)->time_left == 0)) {
 #endif
         active_players_mask();
         if (reg_d0.h[0] == 0) {
-            STAGE2_BOSS(reg_a5)->leave_delay = 0x78U;
+            STAGE2_BOSS(reg_a5)->time_left = 0x78U;
             return;
         }
-        ENTITY(reg_a6)[10].draw.sh = 0;
+        STAGE2_DAMAGE(reg_a6)->hit_by = 0;
         stage2_boss_defeated();
     }
 }

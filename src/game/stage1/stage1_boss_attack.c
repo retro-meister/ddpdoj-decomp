@@ -259,29 +259,29 @@ void stage1_boss_fire_turrets_scatter(void) {
         return;
     }
     reg_d1.b[0] = TURRETS(reg_a4)->start_angle[1];
-    reg_d0.b[0] = ENTITY(reg_a6)[6].offset_y.b[1];
+    reg_d0.b[0] = STAGE1_GUNS(reg_a6)->gun0_direction;
     direction_turn_toward();
-    ENTITY(reg_a6)[6].offset_y.b[1] = (u8) reg_d1.b[0];
+    STAGE1_GUNS(reg_a6)->gun0_direction = (u8) reg_d1.b[0];
     reg_d1.b[0] = TURRETS(reg_a4)->start_angle[0];
-    reg_d0.b[0] = ENTITY(reg_a6)[6].offset_y.b[0];
+    reg_d0.b[0] = STAGE1_GUNS(reg_a6)->gun1_direction;
     direction_turn_toward();
-    ENTITY(reg_a6)[6].offset_y.b[0] = (u8) reg_d1.b[0];
+    STAGE1_GUNS(reg_a6)->gun1_direction = (u8) reg_d1.b[0];
     reg_d1.b[0] = TURRETS(reg_a4)->start_angle[3];
-    reg_d0.b[0] = ENTITY(reg_a6)[6].offset_x.b[1];
+    reg_d0.b[0] = STAGE1_GUNS(reg_a6)->gun2_direction;
     direction_turn_toward();
-    ENTITY(reg_a6)[6].offset_x.b[1] = (u8) reg_d1.b[0];
+    STAGE1_GUNS(reg_a6)->gun2_direction = (u8) reg_d1.b[0];
     reg_d1.b[0] = TURRETS(reg_a4)->start_angle[2];
-    reg_d0.b[0] = ENTITY(reg_a6)[6].offset_x.b[0];
+    reg_d0.b[0] = STAGE1_GUNS(reg_a6)->gun3_direction;
     direction_turn_toward();
-    ENTITY(reg_a6)[6].offset_x.b[0] = (u8) reg_d1.b[0];
+    STAGE1_GUNS(reg_a6)->gun3_direction = (u8) reg_d1.b[0];
     reg_d0.b[0] = TURRETS(reg_a4)->start_angle[1];
-    if (ENTITY(reg_a6)[6].offset_y.b[1] == reg_d0.b[0]) {
+    if (STAGE1_GUNS(reg_a6)->gun0_direction == reg_d0.b[0]) {
         reg_d0.b[0] = TURRETS(reg_a4)->start_angle[0];
-        if (ENTITY(reg_a6)[6].offset_y.b[0] == reg_d0.b[0]) {
+        if (STAGE1_GUNS(reg_a6)->gun1_direction == reg_d0.b[0]) {
             reg_d0.b[0] = TURRETS(reg_a4)->start_angle[3];
-            if (ENTITY(reg_a6)[6].offset_x.b[1] == reg_d0.b[0]) {
+            if (STAGE1_GUNS(reg_a6)->gun2_direction == reg_d0.b[0]) {
                 reg_d0.b[0] = TURRETS(reg_a4)->start_angle[2];
-                if (ENTITY(reg_a6)[6].offset_x.b[0] == reg_d0.b[0]) {
+                if (STAGE1_GUNS(reg_a6)->gun3_direction == reg_d0.b[0]) {
                     TURRETS(reg_a4)->aimed = 1U;
                 }
             }
@@ -296,46 +296,46 @@ void stage1_boss_fire_turrets_sweep(void) {
 
     if (g_bullets_blocked == 0) {
         if (!(TURRETS(reg_a4)->swing & 1)) {
-            ENTITY(reg_a6)[6].offset_y.b[1] += 1;
-            if ((s8) ENTITY(reg_a6)[6].offset_y.b[1] >= 0x30) {
+            STAGE1_GUNS(reg_a6)->gun0_direction += 1;
+            if ((s8) STAGE1_GUNS(reg_a6)->gun0_direction >= 0x30) {
                 TURRETS(reg_a4)->swing |= 1;
             }
         } else {
-            ENTITY(reg_a6)[6].offset_y.b[1] -= 1;
-            if ((s8) ENTITY(reg_a6)[6].offset_y.b[1] < 0x11) {
+            STAGE1_GUNS(reg_a6)->gun0_direction -= 1;
+            if ((s8) STAGE1_GUNS(reg_a6)->gun0_direction < 0x11) {
                 TURRETS(reg_a4)->swing &= 0xE;
             }
         }
         if (!(TURRETS(reg_a4)->swing & 2)) {
-            ENTITY(reg_a6)[6].offset_y.b[0] += 1;
-            if ((s8) ENTITY(reg_a6)[6].offset_y.b[0] >= 0x30) {
+            STAGE1_GUNS(reg_a6)->gun1_direction += 1;
+            if ((s8) STAGE1_GUNS(reg_a6)->gun1_direction >= 0x30) {
                 TURRETS(reg_a4)->swing |= 2;
             }
         } else {
-            ENTITY(reg_a6)[6].offset_y.b[0] -= 1;
-            if ((s8) ENTITY(reg_a6)[6].offset_y.b[0] < 0x11) {
+            STAGE1_GUNS(reg_a6)->gun1_direction -= 1;
+            if ((s8) STAGE1_GUNS(reg_a6)->gun1_direction < 0x11) {
                 TURRETS(reg_a4)->swing &= 0xD;
             }
         }
         if (!(TURRETS(reg_a4)->swing & 4)) {
-            ENTITY(reg_a6)[6].offset_x.b[1] += 1;
-            if ((s8) ENTITY(reg_a6)[6].offset_x.b[1] >= 0x30) {
+            STAGE1_GUNS(reg_a6)->gun2_direction += 1;
+            if ((s8) STAGE1_GUNS(reg_a6)->gun2_direction >= 0x30) {
                 TURRETS(reg_a4)->swing |= 4;
             }
         } else {
-            ENTITY(reg_a6)[6].offset_x.b[1] -= 1;
-            if ((s8) ENTITY(reg_a6)[6].offset_x.b[1] < 0x11) {
+            STAGE1_GUNS(reg_a6)->gun2_direction -= 1;
+            if ((s8) STAGE1_GUNS(reg_a6)->gun2_direction < 0x11) {
                 TURRETS(reg_a4)->swing &= 0xB;
             }
         }
         if (!(TURRETS(reg_a4)->swing & 8)) {
-            ENTITY(reg_a6)[6].offset_x.b[0] += 1;
-            if ((s8) ENTITY(reg_a6)[6].offset_x.b[0] >= 0x30) {
+            STAGE1_GUNS(reg_a6)->gun3_direction += 1;
+            if ((s8) STAGE1_GUNS(reg_a6)->gun3_direction >= 0x30) {
                 TURRETS(reg_a4)->swing |= 8;
             }
         } else {
-            ENTITY(reg_a6)[6].offset_x.b[0] -= 1;
-            if ((s8) ENTITY(reg_a6)[6].offset_x.b[0] < 0x11) {
+            STAGE1_GUNS(reg_a6)->gun3_direction -= 1;
+            if ((s8) STAGE1_GUNS(reg_a6)->gun3_direction < 0x11) {
                 TURRETS(reg_a4)->swing &= 7;
             }
         }
@@ -354,19 +354,19 @@ void stage1_boss_fire_turrets_sweep(void) {
             reg_d3.h[1] = stage1_boss_turret_offsets[0];
             reg_d3.h[0] = stage1_boss_turret_offsets[1];
             reg_d1.w = 0;
-            reg_d1.b[0] = ENTITY(reg_a6)[6].offset_y.b[1];
+            reg_d1.b[0] = STAGE1_GUNS(reg_a6)->gun0_direction;
             bullet_fire_3way_entry();
             reg_d3.h[1] = stage1_boss_turret_offsets[2];
             reg_d3.h[0] = stage1_boss_turret_offsets[3];
-            reg_d1.b[0] = ENTITY(reg_a6)[6].offset_y.b[0];
+            reg_d1.b[0] = STAGE1_GUNS(reg_a6)->gun1_direction;
             bullet_fire_3way_entry();
             reg_d3.h[1] = stage1_boss_turret_offsets[4];
             reg_d3.h[0] = stage1_boss_turret_offsets[5];
-            reg_d1.b[0] = ENTITY(reg_a6)[6].offset_x.b[1];
+            reg_d1.b[0] = STAGE1_GUNS(reg_a6)->gun2_direction;
             bullet_fire_3way_entry();
             reg_d3.h[1] = stage1_boss_turret_offsets[6];
             reg_d3.h[0] = stage1_boss_turret_offsets[7];
-            reg_d1.b[0] = ENTITY(reg_a6)[6].offset_x.b[0];
+            reg_d1.b[0] = STAGE1_GUNS(reg_a6)->gun3_direction;
             bullet_fire_3way_entry();
             TURRETS(reg_a4)->volleys_left -= 1;
             if ((s8) TURRETS(reg_a4)->volleys_left == 0) {

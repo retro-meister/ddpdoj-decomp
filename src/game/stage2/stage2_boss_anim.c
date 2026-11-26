@@ -327,30 +327,30 @@ void stage2_boss_recoil_start(void) {
 
 void stage2_boss_recoil(void) {
     if (RECOIL(reg_a4)->returning == 1) {
-        ENTITY(reg_a6)[11].offset_x.h -= 0x20;
-        if (0 > (s16) ENTITY(reg_a6)[11].offset_x.h) {
-            ENTITY(reg_a6)[11].offset_x.h = 0U;
+        STAGE2_EXTRA(reg_a6)->recoil_offset -= 0x20;
+        if (0 > (s16) STAGE2_EXTRA(reg_a6)->recoil_offset) {
+            STAGE2_EXTRA(reg_a6)->recoil_offset = 0U;
         }
         reg_tmp.b[0] = RECOIL(reg_a4)->forward.t.count;
         RECOIL(reg_a4)->forward.t.count -= 1;
         if ((s32) reg_tmp.b[0] <= 0) {
             RECOIL(reg_a4)->forward.t.count = (u8) RECOIL(reg_a4)->forward.t.reload;
-            ENTITY(reg_a6)[11].offset_y.h += 4;
-            if (ENTITY(reg_a6)[11].offset_y.h == 0x40) {
-                ENTITY(reg_a6)[11].offset_y.h = 0U;
-                ENTITY(reg_a6)[11].offset_x.h = 0U;
+            STAGE2_EXTRA(reg_a6)->shoulder_cannon_anim += 4;
+            if (STAGE2_EXTRA(reg_a6)->shoulder_cannon_anim == 0x40) {
+                STAGE2_EXTRA(reg_a6)->shoulder_cannon_anim = 0U;
+                STAGE2_EXTRA(reg_a6)->recoil_offset = 0U;
                 RECOIL(reg_a4)->running = 0;
             }
         }
     }
     if (RECOIL(reg_a4)->returning == 0) {
-        ENTITY(reg_a6)[11].offset_x.h += 0x100;
+        STAGE2_EXTRA(reg_a6)->recoil_offset += 0x100;
         reg_tmp.b[0] = RECOIL(reg_a4)->back.t.count;
         RECOIL(reg_a4)->back.t.count -= 1;
         if ((s32) reg_tmp.b[0] <= 0) {
             RECOIL(reg_a4)->back.t.count = (u8) RECOIL(reg_a4)->back.t.reload;
-            ENTITY(reg_a6)[11].offset_y.h += 0x10;
-            if (ENTITY(reg_a6)[11].offset_y.h == 0x20) {
+            STAGE2_EXTRA(reg_a6)->shoulder_cannon_anim += 0x10;
+            if (STAGE2_EXTRA(reg_a6)->shoulder_cannon_anim == 0x20) {
                 RECOIL(reg_a4)->returning = 1U;
                 RECOIL(reg_a4)->forward.h = 0;
             }
@@ -369,9 +369,9 @@ void stage2_boss_shoulder_cannon_open(void) {
     STEP(reg_a4)->frame.t.count -= 1;
     if ((s32) reg_tmp.b[0] <= 0) {
         STEP(reg_a4)->frame.t.count = (u8) STEP(reg_a4)->frame.t.reload;
-        ENTITY(reg_a6)[11].offset_y.h += 4;
-        if ((s16) ENTITY(reg_a6)[11].offset_y.h >= 0x20) {
-            ENTITY(reg_a6)[11].offset_y.h = 0x20U;
+        STAGE2_EXTRA(reg_a6)->shoulder_cannon_anim += 4;
+        if ((s16) STAGE2_EXTRA(reg_a6)->shoulder_cannon_anim >= 0x20) {
+            STAGE2_EXTRA(reg_a6)->shoulder_cannon_anim = 0x20U;
             STEP(reg_a4)->running = 0;
         }
     }
@@ -391,8 +391,8 @@ void stage2_boss_shoulder_cannon_close(void)
     STEP(reg_a4)->frame.t.count -= 1;
     if ((s32)(u8)reg_tmp.b[0] <= 0) {
         STEP(reg_a4)->frame.t.count = STEP(reg_a4)->frame.t.reload;
-        ENTITY(reg_a6)[11].offset_y.h -= 4;
-        remaining = &ENTITY(reg_a6)[11].offset_y.sh;
+        STAGE2_EXTRA(reg_a6)->shoulder_cannon_anim -= 4;
+        remaining = (s16 *)&STAGE2_EXTRA(reg_a6)->shoulder_cannon_anim;
         if (0 < *remaining) {
             return;
         }
@@ -412,9 +412,9 @@ void stage2_boss_shoulder_turret_anim(void) {
     STEP(reg_a4)->frame.t.count -= 1;
     if ((s32) reg_tmp.b[0] <= 0) {
         STEP(reg_a4)->frame.t.count = (u8) STEP(reg_a4)->frame.t.reload;
-        ENTITY(reg_a6)[11].draw.h += 4;
-        if ((s16) ENTITY(reg_a6)[11].draw.h >= 0x38) {
-            ENTITY(reg_a6)[11].draw.h = 0U;
+        STAGE2_EXTRA(reg_a6)->base_anim += 4;
+        if ((s16) STAGE2_EXTRA(reg_a6)->base_anim >= 0x38) {
+            STAGE2_EXTRA(reg_a6)->base_anim = 0U;
         }
     }
 }

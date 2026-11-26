@@ -1,6 +1,7 @@
 #include "common.h"
 #include "enemy.h"
 #include "entity.h"
+#include "stage1_boss.h"
 
 void stage1_boss_move_enter_start(void);
 void stage1_boss_move_enter(void);
@@ -230,16 +231,16 @@ void stage1_boss_move_enter(void) {
         }
     }
     if (MOVE(reg_a4)->arrived == 0) {
-        ENTITY(reg_a6)[8].move.h += 0x10;
-        ENTITY(reg_a6)[8].move.h &= 0x3F;
+        STAGE1_EXTRA(reg_a6)->enter_anim += 0x10;
+        STAGE1_EXTRA(reg_a6)->enter_anim &= 0x3F;
     }
     if (MOVE(reg_a4)->arrived == 1) {
         reg_tmp.b[0] = MOVE(reg_a4)->step.b.count;
         MOVE(reg_a4)->step.b.count -= 1;
         if ((s32) reg_tmp.b[0] <= 0) {
             MOVE(reg_a4)->step.b.count = (u8) MOVE(reg_a4)->step.b.reload;
-            ENTITY(reg_a6)[8].move.h += 0x10;
-            if (ENTITY(reg_a6)[8].move.h == 0x180) {
+            STAGE1_EXTRA(reg_a6)->enter_anim += 0x10;
+            if (STAGE1_EXTRA(reg_a6)->enter_anim == 0x180) {
                 g_boss_present_b1 |= 0x10;
                 g_boss_present_b1 |= 2;
                 reg_d0.w = 2;

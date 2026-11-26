@@ -124,9 +124,9 @@ void stage1_boss_main(void) {
     u16 temp_v0;
 
     stage1_boss_damage();
-    temp_v0 = STAGE1_BOSS(reg_a5)->shake;
+    temp_v0 = STAGE1_BOSS(reg_a5)->bullet_clear_time;
     if (temp_v0 != 0) {
-        STAGE1_BOSS(reg_a5)->shake = (u16) (temp_v0 - 1);
+        STAGE1_BOSS(reg_a5)->bullet_clear_time = (u16) (temp_v0 - 1);
         func_002016D0();
     }
     boss_slots_run();

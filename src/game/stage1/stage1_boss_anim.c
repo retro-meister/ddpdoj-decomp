@@ -1101,7 +1101,7 @@ extern u8 D_0028DC28[];
 extern u8 D_0028DC30[];
 
 void stage1_boss_spin_start(void) {
-    ENTITY(reg_a6)[8].hit_x_plus.sh = 0;
+    STAGE1_EXTRA(reg_a6)->spinning = 0;
     SPIN(reg_a4)->direction = 1U;
     rng_next_bit();
     if (reg_d0.h[0] == 0) {
@@ -1121,23 +1121,23 @@ void stage1_boss_spin_start(void) {
     func_001713B0();
     reg_d2.w = 0;
     reg_d2.b[0] = *(D_0028DC28 + reg_d0.h[0]);
-    reg_d2.b[0] -= ENTITY(reg_a6)[8].hit_y_minus.b[1];
+    reg_d2.b[0] -= STAGE1_EXTRA(reg_a6)->spin_interval_sub;
     if ((s8) reg_d2.b[0] < 5) {
         reg_d2.b[0] = 4;
     }
-    ENTITY(reg_a6)[8].hit_y_minus.b[1] += 1;
-    if ((s8) ENTITY(reg_a6)[8].hit_y_minus.b[1] > 4) {
-        ENTITY(reg_a6)[8].hit_y_minus.b[1] = 4U;
+    STAGE1_EXTRA(reg_a6)->spin_interval_sub += 1;
+    if ((s8) STAGE1_EXTRA(reg_a6)->spin_interval_sub > 4) {
+        STAGE1_EXTRA(reg_a6)->spin_interval_sub = 4U;
     }
     reg_d3.w = 0;
     reg_d3.b[0] = *(D_0028DC30 + reg_d0.h[0]);
-    reg_d3.b[0] -= ENTITY(reg_a6)[8].hit_y_minus.b[0];
+    reg_d3.b[0] -= STAGE1_EXTRA(reg_a6)->spin_width_sub;
     if ((s8) reg_d3.b[0] < 0x10) {
         reg_d3.b[0] = 0xF;
     }
-    ENTITY(reg_a6)[8].hit_y_minus.b[0] += 1;
-    if ((s8) ENTITY(reg_a6)[8].hit_y_minus.b[0] > 0x10) {
-        ENTITY(reg_a6)[8].hit_y_minus.b[0] = 0x10U;
+    STAGE1_EXTRA(reg_a6)->spin_width_sub += 1;
+    if ((s8) STAGE1_EXTRA(reg_a6)->spin_width_sub > 0x10) {
+        STAGE1_EXTRA(reg_a6)->spin_width_sub = 0x10U;
     }
     reg_d0.h[0] += reg_d0.h[0];
     reg_a0 = (u8 *)stage1_boss_spin_levels;
@@ -1171,7 +1171,7 @@ void stage1_boss_spin(void) {
         SPIN(reg_a4)->delay -= 1;
         if (SPIN(reg_a4)->delay == 0) {
             SPIN(reg_a4)->step = 1U;
-            ENTITY(reg_a6)[8].hit_x_plus.sh = 1;
+            STAGE1_EXTRA(reg_a6)->spinning = 1;
             goto block_3;
         }
     } else {
@@ -1238,7 +1238,7 @@ block_3:
         }
         if (SPIN(reg_a4)->step == 3) {
             SPIN(reg_a4)->running = 0;
-            ENTITY(reg_a6)[8].hit_x_plus.sh = 0;
+            STAGE1_EXTRA(reg_a6)->spinning = 0;
         }
     }
 }

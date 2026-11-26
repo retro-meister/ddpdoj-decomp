@@ -14,13 +14,14 @@ typedef struct {
 
 #define STAGE3_BOSS(pointer) ((Stage3BossState *)(pointer))
 
-/* Entities 3 to 5, 8 and 9 of the boss are not drawn: they hold its palettes, its damage flags and other values. */
+/* Entities 3 to 5, 8 and 9 of the boss are not drawn. They hold its palettes, its damage flags and other values. */
 typedef struct {
     /* 0x00 */ u8 unused_00[6];
     /* 0x06 */ u8 lid;
     /* 0x07 */ u8 body;
     /* 0x08 */ u8 drone;
     /* 0x09 */ u8 legs;
+    /* 0x0A */ u8 unused_0A[0x16];
 } Stage3BossPalettes;
 
 typedef struct {
@@ -30,6 +31,7 @@ typedef struct {
     /* 0x0A */ u16 hit_by;
     /* 0x0C */ u8 rage;
     /* 0x0D */ u8 second_form;
+    /* 0x0E */ u8 unused_0E[0x12];
 } Stage3BossDamage;
 
 typedef struct {
@@ -69,6 +71,7 @@ typedef struct {
     /* 0x18 */ u16 six_gun_b_speed_add;
     /* 0x1A */ u16 unused_1A;
     /* 0x1C */ u16 start_zoom;
+    /* 0x1E */ u8 unused_1E[0x2];
 } Stage3BossAdjust;
 
 typedef struct {
@@ -77,13 +80,14 @@ typedef struct {
     /* 0x08 */ u16 main_gun_b_burst_add;
     /* 0x0A */ u8 wait_sub;
     /* 0x0B */ u8 main_gun_b_rounds_add;
+    /* 0x0C */ u8 unused_0C[0x14];
 } Stage3BossAdjustB;
 
-#define STAGE3_PALETTES(pointer) ((Stage3BossPalettes *)&ENTITY(pointer)[3])
-#define STAGE3_DAMAGE(pointer) ((Stage3BossDamage *)&ENTITY(pointer)[4])
-#define STAGE3_EXTRA(pointer) ((Stage3BossExtra *)&ENTITY(pointer)[5])
-#define STAGE3_ADJUST(pointer) ((Stage3BossAdjust *)&ENTITY(pointer)[8])
-#define STAGE3_ADJUST_B(pointer) ((Stage3BossAdjustB *)&ENTITY(pointer)[9])
+#define STAGE3_PALETTES(pointer) (&((Stage3BossPalettes *)(pointer))[3])
+#define STAGE3_DAMAGE(pointer) (&((Stage3BossDamage *)(pointer))[4])
+#define STAGE3_EXTRA(pointer) (&((Stage3BossExtra *)(pointer))[5])
+#define STAGE3_ADJUST(pointer) (&((Stage3BossAdjust *)(pointer))[8])
+#define STAGE3_ADJUST_B(pointer) (&((Stage3BossAdjustB *)(pointer))[9])
 
 /* Two bytes of a boss slot that are set together as one word: a reload value and its countdown. */
 typedef union {

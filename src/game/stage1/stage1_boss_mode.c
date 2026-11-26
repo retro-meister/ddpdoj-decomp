@@ -179,25 +179,25 @@ void stage1_boss_mode_normal_start(void) {
     NORMAL_MODE(reg_a4)->turrets.sh = 0x1000;
     func_001713B0();
     reg_d1.b[0] = *(stage1_boss_turret_volleys + reg_d0.b[0]);
-    reg_d1.b[0] += ENTITY(reg_a6)[8].sprite.b[1];
+    reg_d1.b[0] += STAGE1_EXTRA(reg_a6)->turrets_burst;
     if ((s32) reg_d1.b[0] >= 0x80) {
         reg_d1.b[0] = 0x80;
     }
     NORMAL_MODE(reg_a4)->turret_volleys = (u8) reg_d1.b[0];
     reg_d1.b[0] = *(stage1_boss_turret_shot_waits + reg_d0.b[0]);
-    reg_d1.b[0] -= ENTITY(reg_a6)[8].draw.b.flip;
+    reg_d1.b[0] -= STAGE1_EXTRA(reg_a6)->turrets_interval;
     if ((s8) reg_d1.b[0] < 3) {
         reg_d1.b[0] = 3;
     }
     NORMAL_MODE(reg_a4)->turret_shot.b.zero = 0;
     NORMAL_MODE(reg_a4)->turret_shot.b.wait = (u8) reg_d1.b[0];
-    ENTITY(reg_a6)[8].sprite.b[1] += 2;
-    if ((s32) ENTITY(reg_a6)[8].sprite.b[1] >= 0x80) {
-        ENTITY(reg_a6)[8].sprite.b[1] = 0x80U;
+    STAGE1_EXTRA(reg_a6)->turrets_burst += 2;
+    if ((s32) STAGE1_EXTRA(reg_a6)->turrets_burst >= 0x80) {
+        STAGE1_EXTRA(reg_a6)->turrets_burst = 0x80U;
     }
-    ENTITY(reg_a6)[8].draw.b.flip -= 1;
-    if ((s8) ENTITY(reg_a6)[8].draw.b.flip < 3) {
-        ENTITY(reg_a6)[8].draw.b.flip = 3U;
+    STAGE1_EXTRA(reg_a6)->turrets_interval -= 1;
+    if ((s8) STAGE1_EXTRA(reg_a6)->turrets_interval < 3) {
+        STAGE1_EXTRA(reg_a6)->turrets_interval = 3U;
     }
     NORMAL_MODE(reg_a4)->beams.sh = 0x6000;
     NORMAL_MODE(reg_a4)->side.sb = 1;
@@ -208,25 +208,25 @@ void stage1_boss_mode_normal_start(void) {
     reg_a0 = (u8 *)(stage1_boss_beam_levels);
     reg_d0.h[0] += reg_d0.h[0];
     reg_d1.h[0] = (reg_d0.h[0] != 0) ? *(u16 *)((u8 *)reg_a0 + ((s16)reg_d0.h[0] & ~1)) : *(u16 *)reg_a0;
-    reg_d1.h[0] += ENTITY(reg_a6)[8].look.h;
+    reg_d1.h[0] += STAGE1_EXTRA(reg_a6)->beam_ways;
     if ((s16) reg_d1.h[0] > 4) {
         reg_d1.h[0] = 4;
     }
     NORMAL_MODE(reg_a4)->beam_level = (u16) reg_d1.h[0];
-    ENTITY(reg_a6)[8].look.h += 1;
-    if ((s16) ENTITY(reg_a6)[8].look.h > 4) {
-        ENTITY(reg_a6)[8].look.h = 4U;
+    STAGE1_EXTRA(reg_a6)->beam_ways += 1;
+    if ((s16) STAGE1_EXTRA(reg_a6)->beam_ways > 4) {
+        STAGE1_EXTRA(reg_a6)->beam_ways = 4U;
     }
     reg_a0 = (u8 *)(stage1_boss_beam_speeds);
     reg_d1.h[0] = (reg_d0.h[0] != 0) ? *(u16 *)((u8 *)reg_a0 + ((s16)reg_d0.h[0] & ~1)) : *(u16 *)reg_a0;
-    reg_d1.h[0] += ENTITY(reg_a6)[8].hit_y_plus.h;
+    reg_d1.h[0] += STAGE1_EXTRA(reg_a6)->beam_speed;
     if ((s16) reg_d1.h[0] > 0x20) {
         reg_d1.h[0] = 0x20;
     }
     NORMAL_MODE(reg_a4)->beam_speed = (u16) reg_d1.h[0];
-    ENTITY(reg_a6)[8].hit_y_plus.h += 2;
-    if ((s16) ENTITY(reg_a6)[8].hit_y_plus.h > 0x20) {
-        ENTITY(reg_a6)[8].hit_y_plus.h = 0x20U;
+    STAGE1_EXTRA(reg_a6)->beam_speed += 2;
+    if ((s16) STAGE1_EXTRA(reg_a6)->beam_speed > 0x20) {
+        STAGE1_EXTRA(reg_a6)->beam_speed = 0x20U;
     }
     NORMAL_MODE(reg_a4)->unused_12 = 0x2020;
 }
@@ -250,10 +250,10 @@ void stage1_boss_mode_normal(void) {
                 boss_attack_start();
                 TURRETS(reg_a0)->shot.h = (u16) NORMAL_MODE(reg_a4)->turret_shot.h;
                 TURRETS(reg_a0)->volleys_left = (u8) NORMAL_MODE(reg_a4)->turret_volleys;
-                TURRETS(reg_a0)->speed = (u16) ENTITY(reg_a6)[8].offset_x.h;
-                ENTITY(reg_a6)[8].offset_x.h += 2;
-                if ((s16) ENTITY(reg_a6)[8].offset_x.h > 0xC) {
-                    ENTITY(reg_a6)[8].offset_x.h = 0xCU;
+                TURRETS(reg_a0)->speed = (u16) STAGE1_EXTRA(reg_a6)->turrets_speed;
+                STAGE1_EXTRA(reg_a6)->turrets_speed += 2;
+                if ((s16) STAGE1_EXTRA(reg_a6)->turrets_speed > 0xC) {
+                    STAGE1_EXTRA(reg_a6)->turrets_speed = 0xCU;
                 }
             }
         }
@@ -338,7 +338,7 @@ void stage1_boss_mode_normal(void) {
                 boss_attack_running();
                 if (cond_flag == 0) {
                     reg_a0 = (u8 *)stage1_boss_normal_rounds;
-                    reg_a0 += ENTITY(reg_a6)[8].offset_y.h;
+                    reg_a0 += STAGE1_EXTRA(reg_a6)->next_mode;
                     reg_d0.h[0] = *(u16 *)reg_a0;
                     if ((s16) reg_d0.h[0] < 0) {
                         reg_d7.w = 3;
@@ -347,7 +347,7 @@ void stage1_boss_mode_normal(void) {
                             reg_d7.w = 2;
                         }
                     } else {
-                        ENTITY(reg_a6)[8].offset_y.h += 2;
+                        STAGE1_EXTRA(reg_a6)->next_mode += 2;
                     }
                     reg_d0.w = 3;
                     boss_phase_start();
@@ -663,14 +663,14 @@ void stage1_boss_mode_gatling_start(void) {
     GATLING_MODE(reg_a4)->volley_shots = (u16) *(u16 *)reg_a0;
     reg_a0 += 2;
     reg_d1.h[0] = *(u16 *)reg_a0;
-    reg_d1.h[0] += ENTITY(reg_a6)[8].hp.h;
+    reg_d1.h[0] += STAGE1_EXTRA(reg_a6)->gatling_count;
     if ((s16) reg_d1.h[0] > 0x5) {
         reg_d1.h[0] = 5;
     }
     GATLING_MODE(reg_a4)->volleys_left = (u16) reg_d1.h[0];
-    ENTITY(reg_a6)[8].hp.h += 1;
-    if ((s16) ENTITY(reg_a6)[8].hp.h > 0x5) {
-        ENTITY(reg_a6)[8].hp.h = 5U;
+    STAGE1_EXTRA(reg_a6)->gatling_count += 1;
+    if ((s16) STAGE1_EXTRA(reg_a6)->gatling_count > 0x5) {
+        STAGE1_EXTRA(reg_a6)->gatling_count = 5U;
     }
     reg_d0.w = 6;
     boss_movement_start();

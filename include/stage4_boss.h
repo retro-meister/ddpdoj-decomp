@@ -15,7 +15,7 @@ typedef struct {
 
 #define STAGE4_BOSS(pointer) ((Stage4BossState *)(pointer))
 
-/* Entities 10 to 12 of the boss are not drawn: they hold its palettes, its damage flags and other values. */
+/* Entities 10 to 12 of the boss are not drawn. They hold its palettes, its damage flags and other values. */
 typedef struct {
     /* 0x00 */ u8 unused_00[6];
     /* 0x06 */ u8 body_b;
@@ -26,6 +26,7 @@ typedef struct {
     /* 0x0B */ u8 left_spinner;
     /* 0x0C */ u8 left_pod;
     /* 0x0D */ u8 right_pod;
+    /* 0x0E */ u8 unused_0E[0x12];
 } Stage4BossPalettes;
 
 typedef struct {
@@ -35,6 +36,7 @@ typedef struct {
     /* 0x0A */ u16 hit_by;
     /* 0x0C */ u8 rage;
     /* 0x0D */ u8 second_form;
+    /* 0x0E */ u8 unused_0E[0x12];
 } Stage4BossDamage;
 
 typedef struct {
@@ -57,9 +59,9 @@ typedef struct {
     /* 0x1E */ u16 cutters_gone;
 } Stage4BossExtra;
 
-#define STAGE4_PALETTES(pointer) ((Stage4BossPalettes *)&ENTITY(pointer)[10])
-#define STAGE4_DAMAGE(pointer) ((Stage4BossDamage *)&ENTITY(pointer)[11])
-#define STAGE4_EXTRA(pointer) ((Stage4BossExtra *)&ENTITY(pointer)[12])
+#define STAGE4_PALETTES(pointer) (&((Stage4BossPalettes *)(pointer))[10])
+#define STAGE4_DAMAGE(pointer) (&((Stage4BossDamage *)(pointer))[11])
+#define STAGE4_EXTRA(pointer) (&((Stage4BossExtra *)(pointer))[12])
 
 /* Two bytes of a boss slot that are set together as one word: a reload value and its countdown. */
 typedef union {

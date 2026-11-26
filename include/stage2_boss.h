@@ -9,10 +9,50 @@
 typedef struct {
     /* 0x00 */ u8 common[0x16];
     /* 0x16 */ u16 hp[2];
-    /* 0x1A */ u16 leave_delay;
+    /* 0x1A */ u16 time_left;
 } Stage2BossState;
 
 #define STAGE2_BOSS(pointer) ((Stage2BossState *)(pointer))
+
+/* Entities 9 to 11 of the boss are not drawn. They hold its palettes, its damage flags and other values. */
+typedef struct {
+    /* 0x00 */ u8 unused_00[6];
+    /* 0x06 */ u8 torso;
+    /* 0x07 */ u8 lower;
+    /* 0x08 */ u8 right_knee_gun;
+    /* 0x09 */ u8 shoulder_cannon;
+    /* 0x0A */ u8 right_shoulder_gun;
+    /* 0x0B */ u8 left_knee_gun;
+    /* 0x0C */ u8 right_side_gun;
+    /* 0x0D */ u8 left_shoulder_gun;
+    /* 0x0E */ u8 radome;
+    /* 0x0F */ u8 left_side_gun;
+    /* 0x10 */ u8 unused_10;
+    /* 0x11 */ u8 base;
+    /* 0x12 */ u8 unused_12[0xE];
+} Stage2BossPalettes;
+
+typedef struct {
+    /* 0x00 */ u8 unused_00[6];
+    /* 0x06 */ u16 stopped;
+    /* 0x08 */ u16 shielded;
+    /* 0x0A */ u16 hit_by;
+    /* 0x0C */ u8 rage;
+    /* 0x0D */ u8 second_form;
+    /* 0x0E */ u8 unused_0E[0x12];
+} Stage2BossDamage;
+
+typedef struct {
+    /* 0x00 */ u8 unused_00[6];
+    /* 0x06 */ u16 shoulder_cannon_anim;
+    /* 0x08 */ u16 recoil_offset;
+    /* 0x0A */ u16 base_anim;
+    /* 0x0C */ u8 unused_0C[0x14];
+} Stage2BossExtra;
+
+#define STAGE2_PALETTES(pointer) (&((Stage2BossPalettes *)(pointer))[9])
+#define STAGE2_DAMAGE(pointer) (&((Stage2BossDamage *)(pointer))[10])
+#define STAGE2_EXTRA(pointer) (&((Stage2BossExtra *)(pointer))[11])
 
 /* Two bytes of a boss slot that are set together as one word: a reload value and its countdown. */
 typedef union {

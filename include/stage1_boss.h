@@ -14,11 +14,51 @@ typedef struct {
     /* 0x16 */ u16 body_hp[2];
     /* 0x1A */ u16 right_hp[2];
     /* 0x1E */ u16 left_hp[2];
-    /* 0x22 */ u16 leave_delay;   /* frames until the boss gives up and leaves */
-    /* 0x24 */ u16 shake;         /* frames of shaking left after a part was destroyed */
+    /* 0x22 */ u16 time_left;
+    /* 0x24 */ u16 bullet_clear_time;
 } Stage1BossState;
 
 #define STAGE1_BOSS(pointer) ((Stage1BossState *)(pointer))
+
+/* Entities 6 to 8 of the boss are not drawn. They hold its gun directions, its damage flags and other values. */
+typedef struct {
+    /* 0x00 */ u8 unused_00[6];
+    /* 0x06 */ u8 gun1_direction;
+    /* 0x07 */ u8 gun0_direction;
+    /* 0x08 */ u8 gun3_direction;
+    /* 0x09 */ u8 gun2_direction;
+    /* 0x0A */ u8 unused_0A[0x16];
+} Stage1BossGuns;
+
+typedef struct {
+    /* 0x00 */ u8 unused_00[6];
+    /* 0x06 */ u16 stopped;
+    /* 0x08 */ u16 shielded;
+    /* 0x0A */ u16 hit_by;
+    /* 0x0C */ u8 unused_0C[0x14];
+} Stage1BossDamage;
+
+typedef struct {
+    /* 0x00 */ u8 unused_00[6];
+    /* 0x06 */ u16 next_mode;
+    /* 0x08 */ u16 turrets_speed;
+    /* 0x0A */ u8 turrets_interval;
+    /* 0x0B */ u8 unused_0B[2];
+    /* 0x0D */ u8 turrets_burst;
+    /* 0x0E */ u16 beam_ways;
+    /* 0x10 */ u16 beam_speed;
+    /* 0x12 */ u8 spin_width_sub;
+    /* 0x13 */ u8 spin_interval_sub;
+    /* 0x14 */ u16 spinning;
+    /* 0x16 */ u16 unused_16;
+    /* 0x18 */ u16 gatling_count;
+    /* 0x1A */ u16 enter_anim;
+    /* 0x1C */ u8 unused_1C[0x4];
+} Stage1BossExtra;
+
+#define STAGE1_GUNS(pointer) (&((Stage1BossGuns *)(pointer))[6])
+#define STAGE1_DAMAGE(pointer) (&((Stage1BossDamage *)(pointer))[7])
+#define STAGE1_EXTRA(pointer) (&((Stage1BossExtra *)(pointer))[8])
 
 /* The enemies the boss starts take y, x and more from the first words of their request. Kind 0x0F: */
 typedef struct {

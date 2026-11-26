@@ -6,7 +6,7 @@ void stage1_boss_body_destroyed(void);
 void stage1_boss_right_side_destroyed(void);
 void stage1_boss_left_side_destroyed(void);
 void func_001BC430(void);
-void stage1_boss_leave_check(void);
+void stage1_boss_time_limit(void);
 
 void stage1_boss_damage_init(void) {
 
@@ -38,7 +38,7 @@ void stage1_boss_damage(void) {
         if (reg_d1.b[0] != 0) {
             reg_d0.b[0] = 0xA3;
             (*(u8 *)((u8 *)(v2) + (1))) &= reg_d0.b[0];
-            ENTITY(reg_a6)[7].draw.h = (u16) reg_d1.h[0];
+            STAGE1_DAMAGE(reg_a6)->hit_by = (u16) reg_d1.h[0];
             score_add_no_chain();
             reg_d0.b[0] = ENTITY(reg_a6)->attr.b.palette;
             if (reg_d0.b[0] == 0x19) {
@@ -55,7 +55,7 @@ void stage1_boss_damage(void) {
             reg_d2.w = 0x7FFF;
             reg_d2.h[0] -= ENTITY(reg_a6)->hp.h;
             hp = ENTITY(reg_a6)->hp.h;
-            if (ENTITY(reg_a6)[7].offset_x.h == 0) {
+            if (STAGE1_DAMAGE(reg_a6)->shielded == 0) {
                 reg_tmp.h[1] = STAGE1_BOSS(reg_a5)->body_hp[0];
                 reg_tmp.h[0] = STAGE1_BOSS(reg_a5)->body_hp[1];
                 if (g_game_mode == 2) {
@@ -109,7 +109,7 @@ next_1:
             if (reg_d1.b[0] != 0) {
                 reg_d0.b[0] = 0xA3;
                 ENTITY(reg_a6)[1].flags.b[1] &= reg_d0.b[0];
-                ENTITY(reg_a6)[7].draw.h = (u16) reg_d1.h[0];
+                STAGE1_DAMAGE(reg_a6)->hit_by = (u16) reg_d1.h[0];
                 score_add_no_chain();
                 reg_d0.b[0] = ENTITY(reg_a6)[1].attr.b.palette;
                 if (reg_d0.b[0] == 0x19) {
@@ -121,7 +121,7 @@ next_1:
                 reg_d2.w = 0x7FFF;
                 reg_d2.h[0] -= ENTITY(reg_a6)[1].hp.h;
                 hp = ENTITY(reg_a6)[1].hp.h;
-                if (ENTITY(reg_a6)[7].offset_x.h == 0) {
+                if (STAGE1_DAMAGE(reg_a6)->shielded == 0) {
                     reg_tmp.h[1] = STAGE1_BOSS(reg_a5)->right_hp[0];
                     reg_tmp.h[0] = STAGE1_BOSS(reg_a5)->right_hp[1];
                     if (g_game_mode == 2) {
@@ -154,7 +154,7 @@ next_1:
                 reg_tmp.h[1] = STAGE1_BOSS(reg_a5)->right_hp[0];
                 reg_tmp.h[0] = STAGE1_BOSS(reg_a5)->right_hp[1];
                 if ((s32) reg_tmp.w < 0) {
-                    reg_d1.h[0] = ENTITY(reg_a6)[7].draw.h;
+                    reg_d1.h[0] = STAGE1_DAMAGE(reg_a6)->hit_by;
                     reg_d0.w = 0x1000;
                     score_add();
                     reg_d0.w = 0xC;
@@ -167,8 +167,8 @@ next_1:
                     reg_tmp.h[0] = ENEMY_STATE(reg_a5)->entities[1];
                     reg_a6 = (void *) reg_tmp.w;
                     func_002016D0();
-                    STAGE1_BOSS(reg_a5)->shake = 0x6E;
-                    if (ENTITY(reg_a6)[8].hit_x_plus.h != 0) {
+                    STAGE1_BOSS(reg_a5)->bullet_clear_time = 0x6E;
+                    if (STAGE1_EXTRA(reg_a6)->spinning != 0) {
                         reg_a6 += 0x60;
                         func_0016A9B0();
                         reg_tmp.h[1] = ENEMY_STATE(reg_a5)->entities[0];
@@ -191,7 +191,7 @@ next_3:
             if (reg_d1.b[0] != 0) {
                 reg_d0.b[0] = 0xA3;
                 ENTITY(reg_a6)[3].flags.b[1] &= reg_d0.b[0];
-                ENTITY(reg_a6)[7].draw.h = (u16) reg_d1.h[0];
+                STAGE1_DAMAGE(reg_a6)->hit_by = (u16) reg_d1.h[0];
                 score_add_no_chain();
                 reg_d0.b[0] = ENTITY(reg_a6)[3].attr.b.palette;
                 if (reg_d0.b[0] == 0x19) {
@@ -203,7 +203,7 @@ next_3:
                 reg_d2.w = 0x7FFF;
                 reg_d2.h[0] -= ENTITY(reg_a6)[3].hp.h;
                 hp = ENTITY(reg_a6)[3].hp.h;
-                if (ENTITY(reg_a6)[7].offset_x.h == 0) {
+                if (STAGE1_DAMAGE(reg_a6)->shielded == 0) {
                     reg_tmp.h[1] = STAGE1_BOSS(reg_a5)->left_hp[0];
                     reg_tmp.h[0] = STAGE1_BOSS(reg_a5)->left_hp[1];
                     if (g_game_mode == 2) {
@@ -236,7 +236,7 @@ next_3:
                 reg_tmp.h[1] = STAGE1_BOSS(reg_a5)->left_hp[0];
                 reg_tmp.h[0] = STAGE1_BOSS(reg_a5)->left_hp[1];
                 if ((s32) reg_tmp.w < 0) {
-                    reg_d1.h[0] = ENTITY(reg_a6)[7].draw.h;
+                    reg_d1.h[0] = STAGE1_DAMAGE(reg_a6)->hit_by;
                     reg_d0.w = 0x1000;
                     score_add();
                     reg_d0.w = 0xC;
@@ -249,8 +249,8 @@ next_3:
                     reg_tmp.h[0] = ENEMY_STATE(reg_a5)->entities[1];
                     reg_a6 = (void *) reg_tmp.w;
                     func_002016D0();
-                    STAGE1_BOSS(reg_a5)->shake = 0x6E;
-                    if (ENTITY(reg_a6)[8].hit_x_plus.h != 0) {
+                    STAGE1_BOSS(reg_a5)->bullet_clear_time = 0x6E;
+                    if (STAGE1_EXTRA(reg_a6)->spinning != 0) {
                         reg_a6 += 0x20;
                         func_0016A9B0();
                         reg_tmp.h[1] = ENEMY_STATE(reg_a5)->entities[0];
@@ -292,7 +292,7 @@ next_5:
                 boss_phase_start();
             }
         }
-        stage1_boss_leave_check();
+        stage1_boss_time_limit();
     }
 }
 
@@ -380,11 +380,11 @@ void stage1_boss_left_side_destroyed(void) {
 }
 
 void stage1_boss_shield_on(void) {
-    ENTITY(reg_a6)[7].offset_x.sh = 1;
+    STAGE1_DAMAGE(reg_a6)->shielded = 1;
 }
 
 void stage1_boss_shield_off(void) {
-    ENTITY(reg_a6)[7].offset_x.sh = 0;
+    STAGE1_DAMAGE(reg_a6)->shielded = 0;
 }
 
 void stage1_boss_parts_enable(void) {
@@ -403,24 +403,24 @@ void stage1_boss_parts_disable(void) {
 }
 
 void func_001BC430(void) {
-    ENTITY(reg_a6)[7].offset_y.sh = 1;
+    STAGE1_DAMAGE(reg_a6)->stopped = 1;
 }
 
 extern u16 g_enemies_stopped;
 
-void stage1_boss_leave_check(void) {
+void stage1_boss_time_limit(void) {
     void active_players_mask(void);
 #ifdef DEATH_LABEL
-    if ((g_enemies_stopped == 0) && (STAGE1_BOSS(reg_a5)->leave_delay == 0)) {
+    if ((g_enemies_stopped == 0) && (STAGE1_BOSS(reg_a5)->time_left == 0)) {
 #else
-    if ((g_enemies_stopped == 0) && (STAGE1_BOSS(reg_a5)->leave_delay -= 1, STAGE1_BOSS(reg_a5)->leave_delay == 0)) {
+    if ((g_enemies_stopped == 0) && (STAGE1_BOSS(reg_a5)->time_left -= 1, STAGE1_BOSS(reg_a5)->time_left == 0)) {
 #endif
         active_players_mask();
         if (reg_d0.h[0] == 0) {
-            STAGE1_BOSS(reg_a5)->leave_delay = 0x78U;
+            STAGE1_BOSS(reg_a5)->time_left = 0x78U;
             return;
         }
-        ENTITY(reg_a6)[7].draw.sh = 0;
+        STAGE1_DAMAGE(reg_a6)->hit_by = 0;
         stage1_boss_body_destroyed();
     }
 }

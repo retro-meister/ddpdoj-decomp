@@ -1,5 +1,6 @@
 #include "common.h"
 #include "entity.h"
+#include "stage2_boss.h"
 
 void stage2_boss_draw_lower(void);
 void stage2_boss_draw_shoulder_cannon(void);
@@ -43,7 +44,7 @@ void stage2_boss_draw_lower(void) {
     reg_d1.w += 0xEC00F000;
     reg_d3.h[0] = 0x1480;
     reg_d4.h[0] = ENTITY(reg_a6)->attr.h;
-    reg_d4.b[0] = ENTITY(reg_a6)[9].offset_y.b[1];
+    reg_d4.b[0] = STAGE2_PALETTES(reg_a6)->lower;
     sprite_draw_layer2_keep();
 }
 
@@ -65,7 +66,7 @@ void stage2_boss_draw_torso(void) {
     reg_d1.w += 0xEE00FA00;
     reg_d3.h[0] = 0x1230;
     reg_d4.h[0] = ENTITY(reg_a6)->attr.h;
-    reg_d4.b[0] = ENTITY(reg_a6)[9].offset_y.b[0];
+    reg_d4.b[0] = STAGE2_PALETTES(reg_a6)->torso;
     sprite_draw_layer2_keep();
 }
 
@@ -77,11 +78,11 @@ void stage2_boss_draw_shoulder_cannon(void) {
     u32 temp_a3;
 
     reg_a0 = (u8 *)D_0026C2F0;
-    reg_a0 += ENTITY(reg_a6)[11].offset_y.h;
-    reg_tmp.h[0] = ENTITY(reg_a6)[11].offset_y.h;
+    reg_a0 += STAGE2_EXTRA(reg_a6)->shoulder_cannon_anim;
+    reg_tmp.h[0] = STAGE2_EXTRA(reg_a6)->shoulder_cannon_anim;
     reg_d2.w = *(u32 *)(D_0026C2F0 + (reg_tmp.h[0] & ~3));
     reg_d1.h[0] = ENTITY(reg_a6)->y.h;
-    reg_d1.h[0] += ENTITY(reg_a6)[11].offset_x.h;
+    reg_d1.h[0] += STAGE2_EXTRA(reg_a6)->recoil_offset;
     temp_a3 = reg_d1.w;
     reg_tmp1.w = temp_a3;
     reg_d1.h[1] = reg_d1.h[0];
@@ -92,7 +93,7 @@ void stage2_boss_draw_shoulder_cannon(void) {
     reg_d1.w += 0xEE00ED00;
     reg_d3.h[0] = 0x1298;
     reg_d4.h[0] = ENTITY(reg_a6)->attr.h;
-    reg_d4.b[0] = ENTITY(reg_a6)[9].offset_x.b[1];
+    reg_d4.b[0] = STAGE2_PALETTES(reg_a6)->shoulder_cannon;
     sprite_draw_layer2_keep();
 }
 
@@ -104,9 +105,9 @@ void stage2_boss_draw_shoulder_turret_mount(void) {
     u16 temp_a3;
 
     reg_a2 = (u8 *)D_0026C330;
-    temp_a3 = ENTITY(reg_a6)[11].draw.h;
+    temp_a3 = STAGE2_EXTRA(reg_a6)->base_anim;
     reg_a2 += temp_a3;
-    reg_tmp.h[0] = ENTITY(reg_a6)[11].draw.h;
+    reg_tmp.h[0] = STAGE2_EXTRA(reg_a6)->base_anim;
     reg_d2.w = *(u32 *)(D_0026C330 + (reg_tmp.h[0] & ~3));
     reg_d1.h[1] = ENTITY(reg_a6)->y.h;
     temp_a1 = ENTITY(reg_a6)->x.h;
@@ -115,7 +116,7 @@ void stage2_boss_draw_shoulder_turret_mount(void) {
     reg_d1.w += 0xF400ED00;
     reg_d3.h[0] = 0xC98;
     reg_d4.h[0] = ENTITY(reg_a6)->attr.h;
-    reg_d4.b[0] = ENTITY(reg_a6)[9].hit_y_plus.b[1];
+    reg_d4.b[0] = STAGE2_PALETTES(reg_a6)->base;
     sprite_draw_layer2_keep();
 }
 
@@ -133,7 +134,7 @@ void stage2_boss_draw_side_gun_a(void) {
     reg_tmp.h[0] = ENTITY(reg_a6)[6].offset_y.h;
     reg_d2.w = *(u32 *)(D_0026C3B0 + (reg_tmp.h[0] & ~3));
     reg_d1.h[0] = ENTITY(reg_a6)[6].y.h;
-    reg_d1.h[0] += ENTITY(reg_a6)[11].offset_x.h;
+    reg_d1.h[0] += STAGE2_EXTRA(reg_a6)->recoil_offset;
     temp_a2 = reg_d1.w;
     reg_tmp1.w = temp_a2;
     reg_d1.h[1] = reg_d1.h[0];
@@ -143,7 +144,7 @@ void stage2_boss_draw_side_gun_a(void) {
     reg_d1.w += 0xF600FC00;
     reg_d3.h[0] = 0xA20;
     reg_d4.h[0] = ENTITY(reg_a6)->attr.h;
-    reg_d4.b[0] = ENTITY(reg_a6)[9].sprite.b[0];
+    reg_d4.b[0] = STAGE2_PALETTES(reg_a6)->right_side_gun;
     sprite_draw_layer2_keep();
 }
 
@@ -161,7 +162,7 @@ void stage2_boss_draw_side_gun_b(void) {
     reg_tmp.h[0] = ENTITY(reg_a6)[7].offset_y.h;
     reg_d2.w = *(u32 *)(D_0026C370 + (reg_tmp.h[0] & ~3));
     reg_d1.h[0] = ENTITY(reg_a6)[7].y.h;
-    reg_d1.h[0] += ENTITY(reg_a6)[11].offset_x.h;
+    reg_d1.h[0] += STAGE2_EXTRA(reg_a6)->recoil_offset;
     temp_a2 = reg_d1.w;
     reg_tmp1.w = temp_a2;
     reg_d1.h[1] = reg_d1.h[0];
@@ -171,7 +172,7 @@ void stage2_boss_draw_side_gun_b(void) {
     reg_d1.w += 0xF600FC00;
     reg_d3.h[0] = 0xA20;
     reg_d4.h[0] = ENTITY(reg_a6)->attr.h;
-    reg_d4.b[0] = ENTITY(reg_a6)[9].look.b.size;
+    reg_d4.b[0] = STAGE2_PALETTES(reg_a6)->left_side_gun;
     sprite_draw_layer2_keep();
 }
 
@@ -194,7 +195,7 @@ void stage2_boss_draw_turret_2(void) {
     reg_d1.w += 0xFA00FC00;
     reg_d3.h[0] = 0x620;
     reg_d4.h[0] = ENTITY(reg_a6)->attr.h;
-    reg_d4.b[0] = ENTITY(reg_a6)[9].offset_x.b[0];
+    reg_d4.b[0] = STAGE2_PALETTES(reg_a6)->right_knee_gun;
     sprite_draw_layer2_keep();
 }
 
@@ -215,7 +216,7 @@ void stage2_boss_draw_turret_3(void) {
     reg_d1.w += 0xFA00FC00;
     reg_d3.h[0] = 0x620;
     reg_d4.h[0] = ENTITY(reg_a6)->attr.h;
-    reg_d4.b[0] = ENTITY(reg_a6)[9].draw.b.priority;
+    reg_d4.b[0] = STAGE2_PALETTES(reg_a6)->left_knee_gun;
     sprite_draw_layer2_keep();
 }
 
@@ -238,7 +239,7 @@ void stage2_boss_draw_shoulder_turret_a(void) {
     reg_d1.w += 0xF600FA00;
     reg_d3.h[0] = 0xA30;
     reg_d4.h[0] = ENTITY(reg_a6)->attr.h;
-    reg_d4.b[0] = ENTITY(reg_a6)[9].draw.b.flip;
+    reg_d4.b[0] = STAGE2_PALETTES(reg_a6)->right_shoulder_gun;
     sprite_draw_layer2_keep();
 }
 
@@ -259,7 +260,7 @@ void stage2_boss_draw_shoulder_turret_b(void) {
     reg_d1.w += 0xF600FA00;
     reg_d3.h[0] = 0xA30;
     reg_d4.h[0] = ENTITY(reg_a6)->attr.h;
-    reg_d4.b[0] = ENTITY(reg_a6)[9].sprite.b[1];
+    reg_d4.b[0] = STAGE2_PALETTES(reg_a6)->left_shoulder_gun;
     sprite_draw_layer2_keep();
 }
 
@@ -279,7 +280,7 @@ void stage2_boss_draw_radome(void) {
     reg_d1.w += 0xFC00FD00;
     reg_d3.h[0] = 0x418;
     reg_d4.h[0] = ENTITY(reg_a6)->attr.h;
-    reg_d4.b[0] = ENTITY(reg_a6)[9].look.b.palette;
+    reg_d4.b[0] = STAGE2_PALETTES(reg_a6)->radome;
     sprite_draw_layer2_keep();
 }
 

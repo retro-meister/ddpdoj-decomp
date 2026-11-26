@@ -1,5 +1,6 @@
 #include "common.h"
 #include "entity.h"
+#include "stage1_boss.h"
 
 void stage1_boss_draw_right_side(void);
 void stage1_boss_draw_left_side(void);
@@ -273,7 +274,7 @@ void stage1_boss_draw_core(void) {
 
 void stage1_boss_draw_turrets(void) {
     reg_d2.w = 0;
-    reg_d2.b[0] = ENTITY(reg_a6)[6].offset_y.b[1];
+    reg_d2.b[0] = STAGE1_GUNS(reg_a6)->gun0_direction;
     reg_d2.h[0] &= 0x3E;
     reg_d2.h[0] += reg_d2.h[0];
     reg_d2.h[1] = (reg_d2.h[0] != 0) ? *(u16 *)((u8 *)stage1_boss_turret_sprites + ((s16)reg_d2.h[0] & ~1)) : *(u16 *)stage1_boss_turret_sprites;
@@ -287,7 +288,7 @@ void stage1_boss_draw_turrets(void) {
     reg_d1.w += 0x09C00400;
     sprite_draw_layer3_keep();
     reg_d2.w = 0;
-    reg_d2.b[0] = ENTITY(reg_a6)[6].offset_y.b[0];
+    reg_d2.b[0] = STAGE1_GUNS(reg_a6)->gun1_direction;
     reg_d2.h[0] &= 0x3E;
     reg_d2.h[0] += reg_d2.h[0];
     reg_d2.h[1] = (reg_d2.h[0] != 0) ? *(u16 *)((u8 *)stage1_boss_turret_sprites + ((s16)reg_d2.h[0] & ~1)) : *(u16 *)stage1_boss_turret_sprites;
@@ -296,7 +297,7 @@ void stage1_boss_draw_turrets(void) {
     reg_d1.w += 0x09BFFC40;
     sprite_draw_layer3_keep();
     reg_d2.w = 0;
-    reg_d2.b[0] = ENTITY(reg_a6)[6].offset_x.b[1];
+    reg_d2.b[0] = STAGE1_GUNS(reg_a6)->gun2_direction;
     reg_d2.h[0] &= 0x3E;
     reg_d2.h[0] += reg_d2.h[0];
     reg_d2.h[1] = (reg_d2.h[0] != 0) ? *(u16 *)((u8 *)stage1_boss_turret_sprites + ((s16)reg_d2.h[0] & ~1)) : *(u16 *)stage1_boss_turret_sprites;
@@ -305,7 +306,7 @@ void stage1_boss_draw_turrets(void) {
     reg_d1.w += 0x0F400600;
     sprite_draw_layer3_keep();
     reg_d2.w = 0;
-    reg_d2.b[0] = ENTITY(reg_a6)[6].offset_x.b[0];
+    reg_d2.b[0] = STAGE1_GUNS(reg_a6)->gun3_direction;
     reg_d2.h[0] &= 0x3E;
     reg_d2.h[0] += reg_d2.h[0];
     reg_d2.h[1] = (reg_d2.h[0] != 0) ? *(u16 *)((u8 *)stage1_boss_turret_sprites + ((s16)reg_d2.h[0] & ~1)) : *(u16 *)stage1_boss_turret_sprites;
@@ -320,13 +321,13 @@ void stage1_boss_draw_entrance_part(void) {
     u32 temp_a0;
 
     reg_a2 = ((u8 *)stage1_boss_entrance_part_frames);
-    reg_a2 += ENTITY(reg_a6)[8].move.h;
+    reg_a2 += STAGE1_EXTRA(reg_a6)->enter_anim;
     reg_d2.h[1] = *(u16 *)reg_a2;
     reg_d2.h[0] = *(u16 *)(reg_a2 + 2);
     reg_d1.h[1] = ENTITY(reg_a6)->y.h;
     reg_d1.h[0] = ENTITY(reg_a6)->x.h;
     reg_d1.w += 0xF8000080;
-    if ((s16) ENTITY(reg_a6)[8].move.h < 0xB1) {
+    if ((s16) STAGE1_EXTRA(reg_a6)->enter_anim < 0xB1) {
         reg_d1.w += 0xFE000100;
     }
     temp_a0 = reg_d1.w;
