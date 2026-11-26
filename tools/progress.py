@@ -15,10 +15,10 @@ from split import SIZE_RE, SYMBOL_RE, target_units
 
 HISTORY = ROOT / "config/progress-history.json"
 GRAPH_DIR = ROOT / "docs"
-GRAPH_NAMES = {"SLPS_252.33": "progress-main.svg", "DEATH.ELF": "progress-death.svg", "GALLERY.ELF": "progress-gallery.svg"}
-MAP_NAMES = {"DEATH.ELF": "progress-map-death.svg", "SLPS_252.33": "progress-map-main.svg", "GALLERY.ELF": "progress-map-gallery.svg"}
-LABELS = {"SLPS_252.33": "Main game", "DEATH.ELF": "Death Label", "GALLERY.ELF": "Gallery"}
-GALLERY_ALL_FUNCTIONS_COMMIT = "80efe77"
+GRAPH_NAME = "progress.svg"
+MAP_NAMES = {"SLPS_252.33": "progress-map-main.svg", "DEATH.ELF": "progress-map-death.svg", "GALLERY.ELF": "progress-map-gallery.svg"}
+LABELS = {"GALLERY.ELF": "Gallery", "SLPS_252.33": "Main game", "DEATH.ELF": "Death Label"}
+GALLERY_ALL_FUNCTIONS_COMMIT = "9903eb43"
 
 
 def matched_function_count(name, local):
@@ -263,32 +263,16 @@ def squarify(items, x, y, w, h):
 
 
 def collect_map_functions():
+    """The functions each map shows. Death Label's map leaves out what it shares with the main game."""
     inventory, _ = build_inventory()
-    fn_map = known_functions(inventory)
     by_target = {}
     for name in TARGETS:
-        if name == "GALLERY.ELF":
-            # GALLERY.ELF is 100% matched; recover all 66 function names & sizes from 80efe77.
-            y = git_output("show", f"{GALLERY_ALL_FUNCTIONS_COMMIT}:config/GALLERY.ELF/splat.yaml")
-            s = git_output("show", f"{GALLERY_ALL_FUNCTIONS_COMMIT}:config/GALLERY.ELF/symbols.txt")
-            sym_by_addr = {}
-            if s:
-                for line in s.splitlines():
-                    m = SYMBOL_RE.match(line)
-                    if m:
-                        sym_by_addr[int(m.group(2), 0)] = m.group(1)
-            funcs = []
-            for start, _, size in parse_units_from_text(y, s):
-                funcs.append({
-                    "name": sym_by_addr.get(start, f"func_{start:08X}"),
-                    "size": size,
-                    "status": "matched",
-                })
-        else:
-            funcs = []
-            for fn in inventory[name]:
-                status = "matched" if fn["matched"] else "asm"
-                funcs.append({"name": fn["name"], "size": fn["size"], "status": status})
+        funcs = []
+        for fn in inventory[name]:
+            if name == "DEATH.ELF" and "paired_main" in fn:
+                continue
+            status = "matched" if fn["matched"] else "asm"
+            funcs.append({"name": fn["name"], "size": fn["size"], "status": status})
         funcs.sort(key=lambda f: f["size"], reverse=True)
         by_target[name] = funcs
     return by_target
@@ -304,7 +288,7 @@ def render_progress_map(target, funcs):
     header_h = 84
     bottom_pad = 14
     titles = {
-        "DEATH.ELF": "DoDonPachi DaiOuJou (PS2) — Death Label (DEATH.ELF)",
+        "DEATH.ELF": "DoDonPachi DaiOuJou (PS2) — Death Label (DEATH.ELF, unique functions)",
         "SLPS_252.33": "DoDonPachi DaiOuJou (PS2) — Main game (SLPS_252.33)",
         "GALLERY.ELF": "DoDonPachi DaiOuJou (PS2) — Gallery (GALLERY.ELF)",
     }
@@ -361,53 +345,63 @@ def plot_history(history):
     import matplotlib.pyplot as plt
     from matplotlib.ticker import PercentFormatter
 
-    colors = {"functions": "#1766af", "bytes": "#c8321e"}
-    names = {"functions": "Functions", "bytes": "Bytes"}
+    colors = {"SLPS_252.33": "#1766af", "DEATH.ELF": "#c8321e", "GALLERY.ELF": "#2e8540"}
+    by_target = collect_map_functions()
+    death_unique_matched = sum(1 for f in by_target["DEATH.ELF"] if f["status"] == "matched")
     GRAPH_DIR.mkdir(exist_ok=True)
-    written = []
+    fig, axis = plt.subplots(figsize=(10, 6), layout="constrained")
+    all_dates = []
     for target, label in LABELS.items():
         points = [snapshot for snapshot in history if target in snapshot["targets"]]
-        for i, snapshot in enumerate(points):
-            data = snapshot["targets"][target]
-            tot_f = data.get("total_functions")
-            tot_b = data.get("total_bytes")
-            if tot_f and tot_b and data["functions"] >= tot_f and data["bytes"] >= tot_b:
-                points = points[: i + 1]
-                break
         counts = [s["targets"][target]["functions"] for s in points]
-        if counts:
-            lowest = min(counts)
-            points = points[max(i for i, count in enumerate(counts) if count == lowest):]
+        if not counts:
+            continue
+        lowest = min(counts)
+        points = points[max(i for i, count in enumerate(counts) if count == lowest):]
         dates = [parse_timestamp(snapshot) for snapshot in points]
-        fig, axis = plt.subplots(figsize=(10, 6), layout="constrained")
-        summary = []
-        for key in ("functions", "bytes"):
+        all_dates.extend(dates)
+        last = points[-1]["targets"][target]
+        for key, style, width in (("functions", "-", 2.5), ("bytes", "--", 1.5)):
             total_key = f"total_{key}"
             total = next((s["targets"][target][total_key] for s in reversed(points) if total_key in s["targets"][target]), None)
             values = [min(snapshot["targets"][target][key] / total * 100, 100) if total else 0 for snapshot in points]
-            axis.step(dates, values, where="post", color=colors[key], linewidth=2.5, label=names[key], clip_on=False)
-            matched = points[-1]["targets"][target][key]
-            summary.append(f"{names[key]}: {values[-1]:.1f}% ({matched:,}/{total or 0:,})")
-        fig.suptitle(f"DaiOuJou PS2 {label} decompilation progress", fontsize=16, fontweight="bold")
-        axis.set_title(" | ".join(summary), fontsize=12)
-        axis.set_ylim(0, 100)
-        axis.set_ylabel("Decompilation progress")
-        axis.set_xlabel("Date")
-        axis.yaxis.set_major_formatter(PercentFormatter(decimals=0))
-        axis.grid(alpha=.3)
-        axis.legend(loc="upper left")
-        if len(dates) == 1:
-            center = mdates.date2num(dates[0])
-            axis.set_xlim(center - 1, center + 1)
-            axis.set_xticks([center], [dates[0].isoformat(timespec="minutes")])
+            if key == "functions":
+                if target == "DEATH.ELF":
+                    name = f"{label}: {values[-1]:.1f}% ({death_unique_matched:,} unique functions)"
+                else:
+                    name = f"{label}: {values[-1]:.1f}% ({last['functions']:,} functions)"
+            else:
+                name = f"{label}, bytes"
+            axis.step(dates, values, where="post", color=colors[target], linewidth=width, linestyle=style, label=name, clip_on=False)
+    fig.suptitle("DaiOuJou PS2 decompilation progress", fontsize=16, fontweight="bold")
+    axis.set_title("Share of each executable's functions (solid) and bytes (dashed) matched in C", fontsize=12)
+    axis.set_ylim(0, 100)
+    axis.set_ylabel("Decompilation progress")
+    axis.set_xlabel("Date")
+    axis.yaxis.set_major_formatter(PercentFormatter(decimals=0))
+    axis.grid(alpha=.3)
+    fig.legend(loc="outside lower center", ncol=3, frameon=True)
+    if len(set(all_dates)) == 1:
+        center = mdates.date2num(all_dates[0])
+        axis.set_xlim(center - 1, center + 1)
+        axis.set_xticks([center], [all_dates[0].isoformat(timespec="minutes")])
+    else:
+        start_day = min(all_dates).replace(hour=0, minute=0, second=0, microsecond=0)
+        end_date = max(all_dates)
+        span_days = (end_date - start_day).days
+        if span_days <= 14:
+            from matplotlib.ticker import FuncFormatter
+            axis.set_xlim(left=start_day)
+            axis.xaxis.set_major_locator(mdates.DayLocator())
+            axis.xaxis.set_major_formatter(FuncFormatter(lambda x, _: f"{mdates.num2date(x).day} {mdates.num2date(x).strftime('%b')}"))
         else:
             locator = mdates.AutoDateLocator(minticks=3, maxticks=6)
             axis.xaxis.set_major_locator(locator)
             axis.xaxis.set_major_formatter(mdates.ConciseDateFormatter(locator))
-        path = GRAPH_DIR / GRAPH_NAMES[target]
-        fig.savefig(path, facecolor="white", metadata={"Date": None, "Creator": "tools/progress.py"})
-        plt.close(fig)
-        written.append(path)
+    path = GRAPH_DIR / GRAPH_NAME
+    fig.savefig(path, facecolor="white", metadata={"Date": None, "Creator": "tools/progress.py"})
+    plt.close(fig)
+    written = [path]
     written.extend(plot_progress_maps())
     return written
 
