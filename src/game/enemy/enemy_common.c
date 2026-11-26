@@ -135,6 +135,13 @@ char settings_notice_extend_none[2][32] = {
     "                            ",
 };
 
+#ifdef DEATH_LABEL
+char settings_notice_rapid_fire[2][32] = {
+    "                            ",
+    "     C BUTTON FULL-AUTO     ",
+};
+#endif
+
 void func_0015BFD0(void);
 void func_0015C090(void);
 void func_0015C0E0(void);
@@ -638,13 +645,13 @@ void func_0015C3A0(void) {
 #ifdef DEATH_LABEL
 void text_layer_print(void);
 extern u8 g_setting_rapid_fire;
-extern u8 death_D_002901F0[];
+extern char *settings_notice_rapid_fire_texts[];
 #endif
 
 void func_0015C430(void) {
 #ifdef DEATH_LABEL
     reg_d0.w = 0;
-    reg_a0 = death_D_002901F0;
+    reg_a0 = (u8 *)settings_notice_rapid_fire_texts;
     reg_d0.b[0] = g_setting_rapid_fire;
     reg_d0.w += reg_d0.w;
     reg_d0.w += reg_d0.w;
@@ -690,3 +697,10 @@ u8 *D_0028DF54;
 u8 *D_0028DF50;
 u8 *D_0028DF4C;
 u8 *D_0028DF48;
+
+#ifdef DEATH_LABEL
+char *settings_notice_rapid_fire_texts[2] = {
+    settings_notice_rapid_fire[0],
+    settings_notice_rapid_fire[1],
+};
+#endif
