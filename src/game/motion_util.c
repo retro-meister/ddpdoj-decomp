@@ -1,4 +1,7 @@
 #include "common.h"
+#ifdef DDPDOJ_PC
+#include "pc_gameplay_abi.h"
+#endif
 #include "player.h"
 #include "layers.h"
 #include "entity.h"
@@ -9,12 +12,16 @@ void bullet_cancel_credit_alive(void);
 void bullets_cancel_sweep(void);
 void bullet_cancel_skip(void);
 void velocity_from_dir(void);
+#ifndef DDPDOJ_PC
 void velocity_from_direction(void);
+#endif
 void entity_advance256_apply();
 void entity_advance_scaled_apply(void);
 void velocity_from_dir_scaled(void);
 void direction_to_entity(void);
+#ifndef DDPDOJ_PC
 void direction_to_point(void);
+#endif
 void direction_between(void);
 void entity_turn_toward(void);
 void entity_dir_turned_toward(void);
@@ -25,7 +32,9 @@ void direction256_between(void);
 void player_distance_or_max(void);
 void entity_distance_to_entity(void);
 void entity_distance_to(void);
+#ifndef DDPDOJ_PC
 void distance_between(void);
+#endif
 void cond_flag_clear(void);
 void entity_x_distance(void);
 void target_player_get(void);
@@ -349,7 +358,9 @@ void velocity_from_dir256(void) {
 
 
 void entity_advance256(void) {
+#ifndef DDPDOJ_PC
     extern void entity_advance256_apply(u8, void *);
+#endif
     u8 temp_a0;
 
     reg_d0.w = 0;
@@ -362,7 +373,7 @@ void entity_advance256(void) {
         reg_d2.w = 0;
         return;
     }
-    entity_advance256_apply(temp_a0, reg_a6);
+    ARCADE_REGISTER_CALL(entity_advance256_apply, temp_a0, reg_a6);
 }
 
 

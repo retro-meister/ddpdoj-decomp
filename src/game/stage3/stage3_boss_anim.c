@@ -185,7 +185,7 @@ void stage3_boss_lid_open_start(void) {
     reg_d0.w = 4;
     ENTITY(reg_a6)[1].draw.h = (u16) reg_d0.h[0];
     ENTITY(reg_a6)[2].draw.h = (u16) reg_d0.h[0];
-    stage3_boss_lid_open(flag);
+    ARCADE_REGISTER_CALL(stage3_boss_lid_open, flag);
 }
 
 s32 boss_animation_start();
@@ -224,7 +224,7 @@ void stage3_boss_lid_close_start(void) {
     reg_d0.h[0] = 0x84;
     ENTITY(reg_a6)[1].draw.h = reg_d0.h[0];
     ENTITY(reg_a6)[2].draw.h = reg_d0.h[0];
-    stage3_boss_lid_close(0x6001);
+    ARCADE_REGISTER_CALL(stage3_boss_lid_close, 0x6001);
 }
 
 s32 boss_part_show();
@@ -329,7 +329,7 @@ void stage3_boss_entrance_anim_start(void) {
     ENTRANCE(reg_a4)->pace.sh = 0x202;
     ENTRANCE(reg_a4)->delay = 0xC0;
     ((PartRegBC *)reg_a6)->unkBC = 0;
-    stage3_boss_entrance_anim(0x202, 1);
+    ARCADE_REGISTER_CALL(stage3_boss_entrance_anim, 0x202, 1);
 }
 
 s32 boss_part_hide();

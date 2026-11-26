@@ -1,4 +1,7 @@
 #include "common.h"
+#ifdef DDPDOJ_PC
+#include "pc_gameplay_abi.h"
+#endif
 #include "layers.h"
 #include "entity.h"
 #include "sdk/ps2sdk.h"
@@ -28,7 +31,9 @@ void bullet_spawn(void);
 void bullet_position_offset_add(void);
 void bullet_fire256_loop2_double();
 void bullet_fire256_loop2_3way();
+#ifndef DDPDOJ_PC
 void bullet_fire256_direct(void);
+#endif
 void bullet_spawn256(void);
 void bullet_type_setup_32(void);
 void bullet_type_setup_31(void);
@@ -36,8 +41,13 @@ void bullet_type_setup_31(void);
 extern u16 g_frame_mod2;
 extern u16 g_bullet_count;
 
+#ifdef DDPDOJ_PC
+void pickup_draw_alternating(void) {
+    u16 arg0;
+#else
 void pickup_draw_alternating(u16 arg0) {
     extern void entity_draw_with_special_items(u16);
+#endif
     if (g_bullet_count >= 0x34) {
         reg_d0.w = 1;
         reg_d0.h[0] &= reg_d7.h[0];
@@ -46,12 +56,14 @@ void pickup_draw_alternating(u16 arg0) {
             return;
         }
     }
-    entity_draw_with_special_items(arg0);
+    ARCADE_REGISTER_CALL(entity_draw_with_special_items, arg0);
 }
 
 
 void pickup_draw_when_crowded(void) {
+#ifndef DDPDOJ_PC
     s32 entity_draw_with_special_items();
+#endif
     u16 t;
 
     if (g_bullet_count < 35) goto call;
@@ -171,7 +183,9 @@ void p2_stage_stars_small_add(void) {
 extern u16 g_frame_mod8;
 
 void pickup_accelerate(void) {
+#ifndef DDPDOJ_PC
     s32 velocity_from_direction();
+#endif
     if (g_frame_mod8 == 0) {
         if (g_enemies_stopped == 0) {
             ENTITY(reg_a6)->move.b.speed += 1;
@@ -473,10 +487,12 @@ void pickup_collect_score_item() {
 
 
 void score_pickup_kind0(void) {
+#ifndef DDPDOJ_PC
     void pickup_draw_alternating(void);
     void bullet_release(void);
     void pickup_accelerate(void);
     void pickup_spin_frames_0(void);
+#endif
     if ((u16)(reg_d1.h[0] &= 0x1800) != 0) {
         pickup_collect_score_item();
         return;
@@ -500,8 +516,10 @@ extern u8 D_00269490[];
 extern u8 *reg_call_target_as_u8_p;
 
 void score_pickup_bee(void) {
+#ifndef DDPDOJ_PC
     s32 entity_draw_with_special_items();
     s32 bullet_release();
+#endif
     u32 t;
 
     if (reg_d1.w & 1) {
@@ -574,7 +592,9 @@ next_6:
 extern u8 g_boss_present_b1;
 
 void score_pickup_ground_star_small(void) {
+#ifndef DDPDOJ_PC
     s32 bullet_release();
+#endif
     u32 t;
 
     if ((s16)(g_boss_present_b1) < 0) goto next_2;
@@ -626,7 +646,9 @@ next_1:
 s32 sfx_score_item_pickup_2();
 
 void score_pickup_ground_star_large(void) {
+#ifndef DDPDOJ_PC
     s32 bullet_release();
+#endif
     u32 t;
 
     if ((s16)(g_boss_present_b1) < 0) goto next_2;
@@ -677,9 +699,11 @@ next_1:
 
 
 void score_pickup_air_star_medium(void) {
+#ifndef DDPDOJ_PC
     s32 pickup_draw_alternating();
     s32 bullet_release();
     s32 pickup_accelerate();
+#endif
     u32 temp_v0;
 
     temp_v0 = reg_d1.h[0] & 0x1800;
@@ -709,9 +733,11 @@ void score_pickup_air_star_medium(void) {
 
 
 void score_pickup_air_star_large(void) {
+#ifndef DDPDOJ_PC
     s32 pickup_draw_alternating();
     s32 bullet_release();
     s32 pickup_accelerate();
+#endif
     u32 temp_v0;
 
     temp_v0 = reg_d1.h[0] & 0x1800;
@@ -741,9 +767,11 @@ void score_pickup_air_star_large(void) {
 
 
 void score_pickup_air_star_huge(void) {
+#ifndef DDPDOJ_PC
     s32 pickup_draw_alternating();
     s32 bullet_release();
     s32 pickup_accelerate();
+#endif
     u32 temp_v0;
 
     temp_v0 = reg_d1.h[0] & 0x1800;
@@ -773,8 +801,10 @@ void score_pickup_air_star_huge(void) {
 
 
 void score_pickup_p1_homing_star_small() {
+#ifndef DDPDOJ_PC
     s32 bullet_release();
     s32 pickup_spin_frames_0();
+#endif
     if (reg_d1.w & 0x1000) {
         reg_d0.w = 1;
         p1_stage_stars_small_add();
@@ -794,7 +824,9 @@ void score_pickup_p1_homing_star_small() {
 }
 
 void score_pickup_p1_homing_star_medium() {
+#ifndef DDPDOJ_PC
     s32 bullet_release();
+#endif
     if (reg_d1.w & 0x1000) {
         reg_d0.w = 2;
         p1_stage_stars_small_add();
@@ -814,7 +846,9 @@ void score_pickup_p1_homing_star_medium() {
 }
 
 void score_pickup_p1_homing_star_large() {
+#ifndef DDPDOJ_PC
     s32 bullet_release();
+#endif
     if (reg_d1.w & 0x1000) {
         reg_d0.w = 4;
         p1_stage_stars_small_add();
@@ -834,7 +868,9 @@ void score_pickup_p1_homing_star_large() {
 }
 
 void score_pickup_p1_homing_star_huge() {
+#ifndef DDPDOJ_PC
     s32 bullet_release();
+#endif
     if (reg_d1.w & 0x1000) {
         reg_d0.w = 8;
         p1_stage_stars_small_add();
@@ -855,8 +891,10 @@ void score_pickup_p1_homing_star_huge() {
 
 
 void score_pickup_p2_homing_star_small() {
+#ifndef DDPDOJ_PC
     s32 bullet_release();
     s32 pickup_spin_frames_0();
+#endif
     if (reg_d1.w & 0x800) {
         reg_d0.w = 1;
         p2_stage_stars_small_add();
@@ -876,7 +914,9 @@ void score_pickup_p2_homing_star_small() {
 }
 
 void score_pickup_p2_homing_star_medium() {
+#ifndef DDPDOJ_PC
     s32 bullet_release();
+#endif
     if (reg_d1.w & 0x800) {
         reg_d0.w = 2;
         p2_stage_stars_small_add();
@@ -896,7 +936,9 @@ void score_pickup_p2_homing_star_medium() {
 }
 
 void score_pickup_p2_homing_star_large() {
+#ifndef DDPDOJ_PC
     s32 bullet_release();
+#endif
     if (reg_d1.w & 0x800) {
         reg_d0.w = 4;
         p2_stage_stars_small_add();
@@ -916,7 +958,9 @@ void score_pickup_p2_homing_star_large() {
 }
 
 void score_pickup_p2_homing_star_huge() {
+#ifndef DDPDOJ_PC
     s32 bullet_release();
+#endif
     if (reg_d1.w & 0x800) {
         reg_d0.w = 8;
         p2_stage_stars_small_add();
@@ -1072,10 +1116,14 @@ void pickup_init_jitter_small(void) {
     pickup_init_jitter();
 }
 
+#ifndef DDPDOJ_PC
 s32 rng_next_bit();
+#endif
 
 void pickup_init_jitter(void) {
+#ifndef DDPDOJ_PC
     s32 velocity_from_direction();
+#endif
     u32 save_d0;
     u32 save_d2;
     u32 save_d3;
@@ -1354,7 +1402,9 @@ void rng_next(void);
 extern u8 D_00269708[];
 
 void pickup_collected_begin(void) {
+#ifndef DDPDOJ_PC
     void velocity_from_direction(void);
+#endif
     reg_d0.h[1] = ENTITY(reg_a6)->hit_y_plus.h;
     reg_d0.h[0] = ENTITY(reg_a6)->hit_y_minus.h;
     reg_a0 = (u8 *)D_00269708;
@@ -1528,7 +1578,9 @@ extern u16 g_loop;
 extern u16 g_stage;
 
 void pickup_draw_value_large(void) {
+#ifndef DDPDOJ_PC
     void sprite_draw_with_special_items(void);
+#endif
     u32 sd6;
     u32 sd7;
 
@@ -1596,7 +1648,9 @@ void pickup_draw_value_large(void) {
 extern u32 pickup_draw_value_table[];
 
 void pickup_draw_value(void) {
+#ifndef DDPDOJ_PC
     s32 sprite_draw_with_special_items();
+#endif
     u16 temp_a2;
     u16 temp_a3;
     u32 temp_a0;

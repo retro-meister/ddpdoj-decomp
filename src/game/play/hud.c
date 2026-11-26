@@ -1,4 +1,7 @@
 #include "common.h"
+#ifdef DDPDOJ_PC
+#include "pc_gameplay_abi.h"
+#endif
 #include "score_tables.h"
 
 extern u16 hud_digit_offsets[];
@@ -77,7 +80,9 @@ void sprite_draw_with_score_keep_entry(void) {
 }
 
 void hud_p1_multiplier_frame_restore(void) {
+#ifndef DDPDOJ_PC
     extern void deferred_text_put(void);
+#endif
     reg_d0.h[0] = 0xD4;
     reg_d1.h[0] = 0x200;
     reg_d2.sh[0] = 2;
@@ -87,7 +92,9 @@ void hud_p1_multiplier_frame_restore(void) {
 }
 
 void hud_p2_multiplier_frame_restore(void) {
+#ifndef DDPDOJ_PC
     extern void deferred_text_put(void);
+#endif
     reg_d0.h[0] = 0xD4;
     reg_d1.h[0] = 0x1400;
     reg_d2.sh[0] = 2;
@@ -97,7 +104,9 @@ void hud_p2_multiplier_frame_restore(void) {
 }
 
 void hud_p1_item_count_frame_restore(void) {
+#ifndef DDPDOJ_PC
     extern void deferred_text_put(void);
+#endif
     reg_d0.h[0] = 0xC8;
     reg_d1.h[0] = 0x200;
     reg_d2.sh[0] = 2;
@@ -107,7 +116,9 @@ void hud_p1_item_count_frame_restore(void) {
 }
 
 void hud_p2_item_count_frame_restore(void) {
+#ifndef DDPDOJ_PC
     void deferred_text_put(void);
+#endif
     reg_d0.h[0] = 0xC8;
     reg_d1.h[0] = 0x1400;
     reg_d2.sh[0] = 2;
@@ -191,7 +202,9 @@ next_1:
 void hud_p1_lives_row_draw(arg0)
     u16 arg0;
 {
+#ifndef DDPDOJ_PC
     s32 deferred_text_put();
+#endif
     u16 var_a0;
     var_a0 = arg0;
     if ((s16) reg_d7.h[0] >= 0) {
@@ -214,7 +227,9 @@ void hud_p1_lives_row_draw(arg0)
 
 
 void hud_p2_lives_row_draw(void) {
+#ifndef DDPDOJ_PC
     extern void deferred_text_put(void);
+#endif
     if ((s16)reg_d7.h[0] >= 0) {
         reg_d2.h[0] = 1;
         reg_a0 = (u8 *)lives_text_p2;
@@ -539,7 +554,9 @@ extern u16 g_stage;
 extern u16 g_bomb_entities[];
 
 void hud_boss_bar_enter(void) {
+#ifndef DDPDOJ_PC
     s32 deferred_text_put();
+#endif
     s32 flag;
     s32 bits;
 
@@ -756,7 +773,9 @@ next_7:
     }
 }
 
+#ifndef DDPDOJ_PC
 s32 deferred_text_clear();
+#endif
 s32 hud_p1_caption_put();
 s32 hud_p2_caption_put();
 extern s16 g_p2_chain_points_display_timer;
@@ -1487,7 +1506,9 @@ next_6:
     sprite_draw_with_score_entry_2();
 }
 
+#ifndef DDPDOJ_PC
 s32 sprite_draw_layer2_keep();
+#endif
 
 void hud_boss_hit_bonus_draw(void) {
     reg_d0.w = (*(u32 *)&g_boss_hit_bonus);
@@ -2004,7 +2025,9 @@ void hud_text_sprite_draw(void) {
 s32 deferred_text_put_sheet();
 
 void hud_multiplier_text_put(void) {
+#ifndef DDPDOJ_PC
     s32 deferred_text_put();
+#endif
     u32 save_d5;
 
     if (reg_d6.h[0] >= 0x10) goto next_1;
@@ -2066,7 +2089,9 @@ next_1:
 
 
 void hud_max_hits_text_put(void) {
+#ifndef DDPDOJ_PC
     s32 deferred_text_put();
+#endif
     u32 temp_a1;
     u32 temp_v1_2;
     u16 var_v0_2;

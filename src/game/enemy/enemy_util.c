@@ -1,4 +1,7 @@
 #include "common.h"
+#ifdef DDPDOJ_PC
+#include "pc_gameplay_abi.h"
+#endif
 #include "entity.h"
 
 void ground_step_unused(void) {
@@ -298,13 +301,17 @@ void entity_release(void) {
 }
 
 void boss_level_get_from_58(void) {
+#ifndef DDPDOJ_PC
     void boss_level_get(void);
+#endif
     *(u16 *)&reg_d0 = 0x58;
     boss_level_get();
 }
 
 void boss_level_get_from_78(void) {
+#ifndef DDPDOJ_PC
     s32 boss_level_get();
+#endif
     reg_d0.h[0] = 0x78;
     boss_level_get();
     reg_d0.w = 4;
@@ -329,7 +336,9 @@ void enemy_switch_target_player(void) {
     flags_ptr[0] = flags | 1;
 }
 
+#ifndef DDPDOJ_PC
 s32 enemy_remove();                           /* extern */
+#endif
 s32 entity_check_bounds();                            /* extern */
 
 void heli_bounds_check(void) {

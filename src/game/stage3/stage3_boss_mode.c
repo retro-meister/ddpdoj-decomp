@@ -1,4 +1,7 @@
 #include "common.h"
+#ifdef DDPDOJ_PC
+#include "pc_gameplay_abi.h"
+#endif
 #include "entity.h"
 #include "explosion.h"
 #include "stage3_boss.h"
@@ -138,7 +141,9 @@ void stage3_boss_mode_six_gun_b_close_wait(void);
 void stage3_boss_mode_low_all_guns(void);
 void stage3_boss_mode_phase_explosion();
 
+#ifndef DDPDOJ_PC
 s32 boss_movement_start();                            /* extern */
+#endif
 s32 boss_animation_start();                            /* extern */
 
 void stage3_boss_mode_enter_start(void) {
@@ -166,7 +171,7 @@ void stage3_boss_mode_final_explosion_start(void) {
     FINAL(reg_a4)->spread = 0;
     FINAL(reg_a4)->burst.sh = 0x2020;
     FINAL(reg_a4)->sound.sh = 0;
-    stage3_boss_mode_final_explosion(1, 0x101);
+    ARCADE_REGISTER_CALL(stage3_boss_mode_final_explosion, 1, 0x101);
 }
 
 typedef void (*Fn)();
@@ -370,7 +375,9 @@ block_rts:
     return;
 }
 
+#ifndef DDPDOJ_PC
 s32 boss_movement_start();                            /* extern */
+#endif
 s32 boss_attack_start();                            /* extern */
 
 void stage3_boss_mode_low_main_gun_b_start(void) {
@@ -383,7 +390,9 @@ void stage3_boss_mode_low_main_gun_b_start(void) {
     stage3_boss_mode_low_main_gun_b();
 }
 
+#ifndef DDPDOJ_PC
 s32 boss_phase_start();                            /* extern */
+#endif
 s32 boss_attack_running();                            /* extern */
 
 void stage3_boss_mode_low_main_gun_b(void) {
@@ -396,7 +405,9 @@ void stage3_boss_mode_low_main_gun_b(void) {
     }
 }
 
+#ifndef DDPDOJ_PC
 s32 boss_movement_start();                            /* extern */
+#endif
 s32 boss_animation_start();                            /* extern */
 
 void stage3_boss_mode_high_six_gun_start(void) {
@@ -419,7 +430,9 @@ void stage3_boss_mode_high_six_gun_start(void) {
     stage3_boss_mode_high_six_gun(temp_a0);
 }
 
+#ifndef DDPDOJ_PC
 s32 boss_phase_start();                            /* extern */
+#endif
 s32 boss_animation_running();                            /* extern */
 s32 boss_attack_start();                            /* extern */
 
@@ -440,7 +453,9 @@ void stage3_boss_mode_six_gun_close_wait_start(void) {
     stage3_boss_mode_six_gun_close_wait();
 }
 
+#ifndef DDPDOJ_PC
 s32 boss_phase_start();                            /* extern */
+#endif
 s32 boss_animation_running();                            /* extern */
 s32 boss_attack_running();                            /* extern */
 
@@ -458,7 +473,9 @@ void stage3_boss_mode_six_gun_close_wait(void) {
     }
 }
 
+#ifndef DDPDOJ_PC
 s32 boss_movement_start();                            /* extern */
+#endif
 s32 boss_attack_start();                            /* extern */
 
 void stage3_boss_mode_mid_lid_guns_start(void) {
@@ -471,7 +488,9 @@ void stage3_boss_mode_mid_lid_guns_start(void) {
     stage3_boss_mode_mid_lid_guns();
 }
 
+#ifndef DDPDOJ_PC
 s32 boss_phase_start();                            /* extern */
+#endif
 s32 boss_attack_running();                            /* extern */
 
 void stage3_boss_mode_mid_lid_guns(void) {
@@ -493,7 +512,9 @@ void stage3_boss_mode_high_six_gun_b_start(void) {
     stage3_boss_mode_high_six_gun_b();
 }
 
+#ifndef DDPDOJ_PC
 s32 boss_phase_start();                            /* extern */
+#endif
 s32 boss_animation_running();                            /* extern */
 s32 boss_attack_start();                            /* extern */
 
@@ -515,7 +536,9 @@ void stage3_boss_mode_six_gun_b_close_wait_start(void) {
     stage3_boss_mode_six_gun_b_close_wait();
 }
 
+#ifndef DDPDOJ_PC
 s32 boss_phase_start(void *);                      /* extern */
+#endif
 s32 boss_animation_running();                            /* extern */
 s32 boss_attack_running(void *);                      /* extern */
 
@@ -529,7 +552,7 @@ void stage3_boss_mode_six_gun_b_close_wait(void) {
         MODE(reg_a4)->delay = (u16) (temp_v1 - 1);
         if (MODE(reg_a4)->delay == 0) {
             reg_d0.w = 2;
-            boss_phase_start(temp_a0);
+            ARCADE_REGISTER_CALL(boss_phase_start, temp_a0);
             MODE(reg_a4)->running = 0;
         }
     } else {
@@ -545,12 +568,14 @@ void stage3_boss_mode_six_gun_b_close_wait(void) {
     }
 }
 
+#ifndef DDPDOJ_PC
 s32 boss_movement_start(s32);                     /* extern */
+#endif
 
 void stage3_boss_mode_low_all_guns_start(void) {
     MODE(reg_a4)->delay = 0x80;
     reg_d0.w = 1;
-    boss_movement_start(0x80);
+    ARCADE_REGISTER_CALL(boss_movement_start, 0x80);
     stage3_boss_mode_low_all_guns();
 }
 
@@ -578,10 +603,12 @@ void stage3_boss_mode_phase_explosion_start(void) {
     BLAST(reg_a4)->delay = 0x40;
     BLAST(reg_a4)->blast.h = 0x404;
     BLAST(reg_a4)->blasts_left = 0x17;
-    stage3_boss_mode_phase_explosion(0x404, 0x40);
+    ARCADE_REGISTER_CALL(stage3_boss_mode_phase_explosion, 0x404, 0x40);
 }
 
+#ifndef DDPDOJ_PC
 s32 boss_phase_start();
+#endif
 s32 boss_part_hide();
 s32 rng_next_masked();
 s32 rng_next_pair_large_d1();

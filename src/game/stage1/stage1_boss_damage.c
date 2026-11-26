@@ -1,4 +1,7 @@
 #include "common.h"
+#ifdef DDPDOJ_PC
+#include "pc_gameplay_abi.h"
+#endif
 #include "entity.h"
 #include "stage1_boss.h"
 
@@ -13,7 +16,9 @@ void stage1_boss_damage_init(void) {
 }
 
 
+#ifndef DDPDOJ_PC
 s32 boss_phase_start();
+#endif
 s32 boss_phase_running();
 s32 item_spawn();
 s32 score_add_no_chain();
@@ -24,7 +29,9 @@ extern s32 g_boss_score;
 extern u16 g_damage_blink_counter;
 
 void stage1_boss_damage(void) {
+#ifndef DDPDOJ_PC
     s32 active_players_mask();
+#endif
     u32 hp;
     u8 *v1;
     u8 *v2;
@@ -297,7 +304,9 @@ next_5:
 }
 
 s32 boss_phase_stop_all();
+#ifndef DDPDOJ_PC
 s32 boss_movement_start();
+#endif
 s32 boss_animation_start();
 s32 boss_attack_stop_all();
 s32 boss_kill_counter_clamp();
@@ -409,7 +418,9 @@ void stage1_boss_stop(void) {
 extern u16 g_enemies_stopped;
 
 void stage1_boss_time_limit(void) {
+#ifndef DDPDOJ_PC
     void active_players_mask(void);
+#endif
 #ifdef DEATH_LABEL
     if ((g_enemies_stopped == 0) && (STAGE1_BOSS(reg_a5)->time_left == 0)) {
 #else

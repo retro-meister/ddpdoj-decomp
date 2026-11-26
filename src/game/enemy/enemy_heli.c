@@ -1,4 +1,7 @@
 #include "common.h"
+#ifdef DDPDOJ_PC
+#include "pc_gameplay_abi.h"
+#endif
 #include "entity.h"
 #include "explosion.h"
 #include "enemy.h"
@@ -38,7 +41,9 @@ s32 score_add_no_chain();
 s32 score_add();
 
 void heli_take_hits(u32 arg0) {
+#ifndef DDPDOJ_PC
     s32 enemy_remove();
+#endif
     u8 temp_a0;
     u8 temp_a1;
 
@@ -98,9 +103,11 @@ extern u16 g_enemy_signal_0;
 extern u16 g_stage;
 
 void heli_remove_on_signal_0(void) {
+#ifndef DDPDOJ_PC
     s32 enemy_remove(u16);
+#endif
     if ((g_stage == 1) && (g_enemy_signal_0 != 0)) {
-        enemy_remove(g_stage);
+        ARCADE_REGISTER_CALL(enemy_remove, g_stage);
         cond_flag = 1;
         return;
     }
@@ -110,18 +117,22 @@ void heli_remove_on_signal_0(void) {
 extern u16 g_enemy_signal_f;
 
 void heli_remove_on_signal_f(void) {
+#ifndef DDPDOJ_PC
     s32 enemy_remove(u16);
+#endif
     if ((g_stage == 2) && (g_enemy_signal_f != 0)) {
-        enemy_remove(g_stage);
+        ARCADE_REGISTER_CALL(enemy_remove, g_stage);
         cond_flag = 1;
         return;
     }
     cond_flag = 0;
 }
 
+#ifndef DDPDOJ_PC
 s32 enemy_hitbox_debug_draw(void);
 s32 sprite_draw_layer4(void);
 s32 sprite_draw_layer5(void);
+#endif
 extern u8 heli_draw_rotor_and_shadow_table[];
 extern u16 g_frame_mod2;
 extern u16 g_loop;
@@ -181,9 +192,11 @@ void heli_a_first(void) {
 }
 
 
+#ifndef DDPDOJ_PC
 s32 enemy_set_task_state();
 s32 enemy_init_entities();
 s32 enemy_path_start();
+#endif
 s32 heli_x_limit_check();
 extern u16 heli_a_start_table[];
 extern u16 heli_a_start_table_2[];
@@ -198,7 +211,9 @@ extern u16 g_rank_2_16;
 extern s8 enemy_move_end_requested;
 
 void heli_a_start(void) {
+#ifndef DDPDOJ_PC
     s32 enemy_remove();
+#endif
     heli_remove_on_signal_0();
     if ((cond_flag == 0) && (reg_a0 = (u8 *)heli_a_start_table_2, enemy_init_entities(), reg_a0 = (u8 *)heli_a_start_table, reg_d0.h[0] = 0xC, enemy_set_task_state(), ENTITY(reg_a6)->attr.b.palette = (u8) HELI(reg_a5)->palette, enemy_path_start(), (enemy_move_end_requested == 0))) {
         reg_a0 = (u8 *)(D_002578D0);
@@ -240,9 +255,13 @@ void heli_a_start(void) {
     }
 }
 
+#ifndef DDPDOJ_PC
 s32 bullet_fire();
+#endif
 s32 heli_bounds_check();
+#ifndef DDPDOJ_PC
 s32 entity_velocity();
+#endif
 s32 direction_to_target_player();
 s32 entity_turn_to_target_player();
 s32 entity_in_shot_limits();
@@ -378,7 +397,9 @@ void heli_b_start(void) {
     }
 }
 
+#ifndef DDPDOJ_PC
 s32 enemy_path_step();
+#endif
 
 void heli_b(void) {
     u16 temp_a0_2;
@@ -618,7 +639,9 @@ extern u16 g_enemy_signal_7;
 extern u16 g_enemy_signal_6;
 
 void heli_d_start(void) {
+#ifndef DDPDOJ_PC
     s32 enemy_remove();
+#endif
     heli_remove_on_signal_0();
     if ((cond_flag == 0) && (heli_remove_on_signal_f(), (cond_flag == 0)) && (reg_a0 = (u8 *)heli_d_start_table_2, enemy_init_entities(), reg_a0 = (u8 *)heli_d_start_table, reg_d0.h[0] = 0xA, enemy_set_task_state(), ENTITY(reg_a6)->attr.b.palette = (u8) HELI(reg_a5)->palette, enemy_path_start(), (enemy_move_end_requested == 0))) {
         reg_a0 = (u8 *)(D_002578D0);
@@ -991,7 +1014,9 @@ extern u16 heli_g_start_table_2[];
 extern u16 g_scroll_line;
 
 void heli_g_start(void) {
+#ifndef DDPDOJ_PC
     s32 enemy_remove();
+#endif
     heli_remove_on_signal_0();
     if ((cond_flag == 0) && (heli_remove_on_signal_f(), (cond_flag == 0)) && (reg_a0 = (u8 *)heli_g_start_table_2, enemy_init_entities(), reg_a0 = (u8 *)heli_g_start_table, reg_d0.h[0] = 0xA, enemy_set_task_state(), ENTITY(reg_a6)->attr.b.palette = (u8) HELI(reg_a5)->palette, enemy_path_start(), (enemy_move_end_requested == 0))) {
         reg_a0 = (u8 *)(D_002578D0);
@@ -1178,7 +1203,9 @@ extern u16 heli_h_start_table_2[];
 extern u16 g_rank_4_16;
 
 void heli_h_start(void) {
+#ifndef DDPDOJ_PC
     s32 enemy_remove();
+#endif
     heli_remove_on_signal_0();
     if ((cond_flag == 0) && (heli_remove_on_signal_f(), (cond_flag == 0)) && (reg_a0 = (u8 *)heli_h_start_table_2, enemy_init_entities(), reg_a0 = (u8 *)heli_h_start_table, reg_d0.h[0] = 0xA, enemy_set_task_state(), ENTITY(reg_a6)->attr.b.palette = (u8) HELI(reg_a5)->palette, enemy_path_start(), (enemy_move_end_requested == 0))) {
         reg_a0 = (u8 *)(D_002578D0);

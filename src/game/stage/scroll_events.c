@@ -5,7 +5,11 @@
 #include "scroll_events.h"
 #include "sdk/ps2sdk.h"
 
+#ifndef DDPDOJ_PC
 typedef void (*Fn)();
+#else
+typedef void (*Fn)(void);
+#endif
 void scroll_events_run_line(void);
 extern u16 g_side_scroll_step[];
 extern u16 g_stage;
@@ -57,7 +61,9 @@ void scenery_run(void) {
     }
 }
 
+#ifndef DDPDOJ_PC
 typedef void (*Fn)(void);
+#endif
 
 
 void scenery_start(void) {

@@ -1,4 +1,7 @@
 #include "common.h"
+#ifdef DDPDOJ_PC
+#include "pc_gameplay_abi.h"
+#endif
 #include "player.h"
 #include "entity.h"
 
@@ -40,8 +43,10 @@ void hyper_stock_draw_trail(void);
 void position_trail_fill();
 void power_up_refused(void);
 void power_max_refused(void);
+#ifndef DDPDOJ_PC
 void p1_maximum_level_show();
 void p2_maximum_level_show();
+#endif
 void bomb_stock_draw(void);
 void p1_bomb_slot_fill(void);
 void p2_bomb_slot_fill(void);
@@ -428,21 +433,23 @@ extern s32 g_p1_hyper_ready_sprite;
 extern u16 g_frame_mod4;
 
 void hyper_ready_marks_draw(void) {
+#ifndef DDPDOJ_PC
     extern void hyper_ready_mark_draw(u16);
+#endif
     if (g_select_screen_active == 0) {
         reg_d0.h[0] = ((u16 *)g_player1)[0];
         if ((((s64) ((s64) reg_d0.h[0] << 0x30) >> 0x30) < 0) && (g_p1_hyper_items != 0) && ((reg_d0.h[0] & 0xFFFF & 0x4000) || (g_p1_maximum_value[0] == 0) || (g_frame_mod4 != 0))) {
             reg_a0 = (u8 *)(&(*(s32 *)&g_p1_hyper_ready_anim_delay));
             reg_a1 = (u8 *)(&g_p1_hyper_ready_sprite);
             reg_d1.w = 0x810000;
-            hyper_ready_mark_draw(reg_d0.h[0]);
+            ARCADE_REGISTER_CALL(hyper_ready_mark_draw, reg_d0.h[0]);
         }
         reg_d0.h[0] = ((u16 *)g_player2)[0];
         if ((((s64) ((s64) reg_d0.h[0] << 0x30) >> 0x30) < 0) && (g_p2_hyper_items != 0) && ((reg_d0.h[0] & 0xFFFF & 0x4000) || (g_p2_maximum_value[0] == 0) || (g_game_frame & 2))) {
             reg_a0 = (u8 *)(&(*(s32 *)&g_p2_hyper_ready_anim_delay));
             reg_a1 = (u8 *)(&g_p2_hyper_ready_sprite);
             reg_d1.w = 0x811C00;
-            hyper_ready_mark_draw(reg_d0.h[0]);
+            ARCADE_REGISTER_CALL(hyper_ready_mark_draw, reg_d0.h[0]);
         }
     }
 }
@@ -888,7 +895,7 @@ void p1_next_stage_setup(void) {
             temp_a0 = g_p1_maximum_level;
             if (temp_a0 != 8) {
                 g_p1_maximum_level = temp_a0 + 4;
-                p1_maximum_level_show(temp_a0);
+                ARCADE_REGISTER_CALL(p1_maximum_level_show, temp_a0);
                 g_p1_maximum_anim_delay_reset -= 1;
                 g_p1_maximum_anim_delay = g_p1_maximum_anim_delay_reset;
             }
@@ -911,7 +918,7 @@ void p2_next_stage_setup(void) {
             temp_a0 = g_p2_maximum_level;
             if (temp_a0 != 8) {
                 g_p2_maximum_level = temp_a0 + 4;
-                p2_maximum_level_show(temp_a0);
+                ARCADE_REGISTER_CALL(p2_maximum_level_show, temp_a0);
                 g_p2_maximum_anim_delay_reset -= 1;
                 g_p2_maximum_anim_delay = g_p2_maximum_anim_delay_reset;
             }
@@ -1054,7 +1061,9 @@ void bomb_stock_draw_for_task(void) {
     bomb_stock_draw();
 }
 
+#ifndef DDPDOJ_PC
 s32 deferred_text_put();
+#endif
 s32 deferred_text_put_sheet();
 
 void bomb_stock_draw(void) {
@@ -1148,7 +1157,7 @@ void bomb_slot_fill(void) {
     reg_d3.w = 1;
     reg_d6.h[0] = temp_a0 << 9;
     reg_d1.h[0] += reg_d6.h[0];
-    deferred_text_put(temp_a0);
+    ARCADE_REGISTER_CALL(deferred_text_put, temp_a0);
 }
 
 void p1_bomb_stock_draw_empty(void) {

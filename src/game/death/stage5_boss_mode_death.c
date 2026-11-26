@@ -1,4 +1,7 @@
 #include "common.h"
+#ifdef DDPDOJ_PC
+void boss_movement_start(void);
+#endif
 #include "entity.h"
 
 typedef struct {
@@ -17,7 +20,9 @@ void twin_boss_mode_spiral(void);
 void twin_boss_mode_rage(void);
 void twin_boss_mode_jet(void);
 
+#ifndef DDPDOJ_PC
 s32 boss_movement_start();
+#endif
 extern u8 g_death_boss_form;
 
 void twin_boss_mode_stinger_start(void) {

@@ -1,4 +1,7 @@
 #include "common.h"
+#ifdef DDPDOJ_PC
+#include "pc_gameplay_abi.h"
+#endif
 #include "entity.h"
 #include "explosion.h"
 #include "stage2_boss.h"
@@ -233,7 +236,9 @@ void stage2_boss_mode_rise_sway(void);
 void stage2_boss_rise_sway_next(void);
 void stage2_boss_mode_rage(void);
 
+#ifndef DDPDOJ_PC
 s32 boss_movement_start();                            /* extern */
+#endif
 s32 boss_animation_start();                            /* extern */
 
 void stage2_boss_mode_enter_start(void) {
@@ -257,7 +262,9 @@ void stage2_boss_mode_enter(void) {
     RISE(reg_a4)->running = 0;
 }
 
+#ifndef DDPDOJ_PC
 s32 boss_movement_start();                            /* extern */
+#endif
 s32 stage2_boss_shield_on();                            /* extern */
 s32 stage2_boss_part_take_hits();                            /* extern */
 s32 stage2_boss_part_stop_hits();                            /* extern */
@@ -276,12 +283,14 @@ void stage2_boss_mode_second_phase_start(void) {
     SECOND_PHASE(reg_a4)->delay = 0x10;
     SECOND_PHASE(reg_a4)->effect_timer.h = 4;
     SECOND_PHASE(reg_a4)->unread_08 = 0;
-    stage2_boss_mode_second_phase(0x10);
+    ARCADE_REGISTER_CALL(stage2_boss_mode_second_phase, 0x10);
 }
 
 typedef void (*Fn)();
 
+#ifndef DDPDOJ_PC
 s32 boss_phase_start();
+#endif
 s32 boss_part_hide();
 s32 stage2_boss_explosions_from_table();
 
@@ -317,7 +326,9 @@ void stage2_boss_mode_second_phase() {
     }
 }
 
+#ifndef DDPDOJ_PC
 s32 boss_movement_start();                            /* extern */
+#endif
 s32 fade_out_and_release();                            /* extern */
 
 void stage2_boss_mode_final_explosion_start(void) {
@@ -333,7 +344,7 @@ void stage2_boss_mode_final_explosion_start(void) {
     FINAL_EXPLOSION(reg_a4)->burst.h = 0x2020;
     FINAL_EXPLOSION(reg_a4)->effect_timer.h = 4;
     FINAL_EXPLOSION(reg_a4)->effect = 0;
-    stage2_boss_mode_final_explosion(0x2020, 1, 0x101);
+    ARCADE_REGISTER_CALL(stage2_boss_mode_final_explosion, 0x2020, 1, 0x101);
 }
 
 
@@ -578,7 +589,9 @@ loop_6:
     }
 }
 
+#ifndef DDPDOJ_PC
 s32 boss_movement_start();                            /* extern */
+#endif
 s32 boss_animation_start();                            /* extern */
 
 void stage2_boss_mode_high_slow_start(void) {
@@ -591,7 +604,7 @@ void stage2_boss_mode_high_slow_start(void) {
     HIGH_SLOW(reg_a4)->attacks_done = 0;
     HIGH_SLOW(reg_a4)->last_attack = 0;
     HIGH_SLOW(reg_a4)->knee_rounds = 2;
-    stage2_boss_mode_high_slow(0x40);
+    ARCADE_REGISTER_CALL(stage2_boss_mode_high_slow, 0x40);
 }
 
 s32 boss_animation_stop();
@@ -776,8 +789,12 @@ void stage2_boss_mode_high_fast_start(void) {
 s32 boss_animation_start();
 s32 boss_animation_running();
 
+#ifdef DDPDOJ_PC
+void stage2_boss_mode_high_fast(void)
+#else
 void stage2_boss_mode_high_fast(arg1)
     s32 arg1;
+#endif
 {
     s32 var_a1;
     u8 temp_a0;
@@ -789,7 +806,9 @@ void stage2_boss_mode_high_fast(arg1)
     u8 temp_a0_7;
     u8 temp_a0_8;
 
+#ifndef DDPDOJ_PC
     var_a1 = arg1;
+#endif
     if (HIGH_FAST(reg_a4)->step == 0) {
         HIGH_FAST(reg_a4)->delay -= 1;
         if (HIGH_FAST(reg_a4)->delay == 0) {
@@ -947,7 +966,7 @@ void stage2_boss_mode_recoil_start(void) {
     RECOIL_MODE(reg_a4)->delay = 0x60;
     RECOIL_MODE(reg_a4)->shot.h = 0;
     RECOIL_MODE(reg_a4)->shots_left = 8;
-    stage2_boss_mode_recoil(0x60);
+    ARCADE_REGISTER_CALL(stage2_boss_mode_recoil, 0x60);
 }
 
 s32 aim_at_player();
@@ -1030,7 +1049,9 @@ void stage2_boss_mode_recoil() {
     }
 }
 
+#ifndef DDPDOJ_PC
 s32 boss_movement_start();                            /* extern */
+#endif
 
 void stage2_boss_mode_rise_start(void) {
     reg_d0.w = 4;
@@ -1099,7 +1120,9 @@ void stage2_boss_mode_rise_sway(void) {
     }
 }
 
+#ifndef DDPDOJ_PC
 s32 boss_movement_start();
+#endif
 s32 enemy_switch_target_player();
 
 void stage2_boss_rise_sway_next(void) {

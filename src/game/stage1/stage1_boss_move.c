@@ -1,4 +1,7 @@
 #include "common.h"
+#ifdef DDPDOJ_PC
+void boss_movement_start(void);
+#endif
 #include "enemy.h"
 #include "entity.h"
 #include "stage1_boss.h"
@@ -179,7 +182,9 @@ void stage1_boss_move_enter_start(void) {
 }
 
 s32 boss_phase_start();
+#ifndef DDPDOJ_PC
 s32 boss_movement_start();
+#endif
 s32 boss_part_show();
 s32 boss_animation_start();
 s32 fade_in_and_release();

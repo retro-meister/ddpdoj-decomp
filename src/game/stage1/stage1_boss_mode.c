@@ -1,4 +1,7 @@
 #include "common.h"
+#ifdef DDPDOJ_PC
+void boss_movement_start(void);
+#endif
 #include "entity.h"
 #include "stage1_boss.h"
 
@@ -132,7 +135,9 @@ typedef struct {
 #define BOTH_SIDES_MODE(pointer) ((BothSidesMode *)(pointer))
 #define GATLING_MODE(pointer) ((GatlingMode *)(pointer))
 
+#ifndef DDPDOJ_PC
 s32 boss_movement_start();
+#endif
 s32 sprite_palette_load();
 s32 boss_level_get_from_58();
 s32 boss_phase_start();

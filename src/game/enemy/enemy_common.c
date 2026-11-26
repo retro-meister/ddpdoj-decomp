@@ -1,4 +1,7 @@
 #include "common.h"
+#ifdef DDPDOJ_PC
+#include "pc_gameplay_abi.h"
+#endif
 #include "pad.h"
 
 extern char settings_notice_rank_easy[];
@@ -599,7 +602,9 @@ extern u8 g_setting_difficulty;
 
 void settings_notice_print_rank(void)
 {
+#ifndef DDPDOJ_PC
     extern void text_layer_print(void);
+#endif
     reg_d0.w = 0;
     reg_a0 = (u8 *)settings_notice_rank_texts;
     reg_d0.b[0] = g_setting_difficulty;
@@ -615,7 +620,9 @@ void settings_notice_print_rank(void)
 extern u8 g_setting_extend;
 
 void settings_notice_print_extend(void) {
+#ifndef DDPDOJ_PC
     s32 text_layer_print();
+#endif
     u16 temp_a0;
 
     reg_a0 = (u8 *)settings_notice_extend_texts;
@@ -635,7 +642,9 @@ void settings_notice_print_extend(void) {
 }
 
 #ifdef DEATH_LABEL
+#ifndef DDPDOJ_PC
 void text_layer_print(void);
+#endif
 extern u8 g_setting_rapid_fire;
 extern char *settings_notice_rapid_fire_texts[];
 #endif
@@ -667,7 +676,9 @@ void enemy_remove_entry_entry(void) {
     enemy_remove_entry();
 }
 
+#ifndef DDPDOJ_PC
 extern void enemy_remove(void);
+#endif
 
 void enemy_remove_entry(void) {
     enemy_remove();

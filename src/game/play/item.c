@@ -1,4 +1,7 @@
 #include "common.h"
+#ifdef DDPDOJ_PC
+#include "pc_gameplay_abi.h"
+#endif
 #include "entity.h"
 
 extern void (*item_kind_routines[8])();
@@ -15,7 +18,9 @@ void item_hyper_move(void);
 void item_extend_draw(void);
 void item_extend_init(void);
 void item_extend_move(void);
+#ifndef DDPDOJ_PC
 void item_release(void);
+#endif
 void item_taken_begin(void);
 void item_taken_begin_with_sound(void);
 void item_taken_drift_set(void);
@@ -319,13 +324,17 @@ void item_powerup_init(void)
 }
 
 s32 rng_next();
+#ifndef DDPDOJ_PC
 s32 entity_velocity();
+#endif
 s32 entity_check_bounds();
 extern u8 g_boss_present_b1;
 extern u16 g_enemies_stopped;
 
 void item_powerup_move(void) {
+#ifndef DDPDOJ_PC
     s32 item_release();
+#endif
     if (g_boss_present_b1 & 0x40) {
         goto block_7;
     }
@@ -476,7 +485,9 @@ void item_max_powerup_init(void)
 }
 
 void item_max_powerup_move(void) {
+#ifndef DDPDOJ_PC
     s32 item_release();
+#endif
     if (g_boss_present_b1 & 0x40) {
         goto block_7;
     }
@@ -621,7 +632,9 @@ next_2:
 
 void item_bomb_init(void)
 {
+#ifndef DDPDOJ_PC
     extern void direction_to_point(void);
+#endif
     u16 savedD1;
 
     ENTITY(reg_a6)->hp.h = 0x700;
@@ -639,8 +652,10 @@ s32 entity_distance_to();
 extern u16 g_frame_mod8;
 
 void item_bomb_move(void) {
+#ifndef DDPDOJ_PC
     s32 item_release();
     s32 direction_to_point();
+#endif
     if (!(g_boss_present_b1 & 0x40)) {
         if (!(ENTITY(reg_a6)->flags.b[1] & 1)) {
             if (g_frame_mod8 == 0) {
@@ -700,7 +715,9 @@ extern u16 g_p1_hyper_active;
 extern s16 D_0028E958;
 
 void item_hyper_p1(void) {
+#ifndef DDPDOJ_PC
     s32 item_release();
+#endif
     u32 saved_d7;
 
     if (!(reg_d1.w & 0x2000)) {
@@ -823,7 +840,9 @@ void item_hyper_init(void) {
 
 
 void item_hyper_move(void) {
+#ifndef DDPDOJ_PC
     s32 item_release();
+#endif
     u32 temp_a1;
     u8 temp_v1;
 
@@ -943,7 +962,9 @@ void item_extend_init(void) {
 s32 layer_b_shift_get();
 
 void item_extend_move() {
+#ifndef DDPDOJ_PC
     s32 item_release();
+#endif
     layer_b_shift_get();
     ENTITY(reg_a6)->y.h += reg_d2.h[0];
     cond_flag = 0;
@@ -958,7 +979,9 @@ extern u16 g_p2_hyper_items;
 extern u16 g_p2_hyper_active;
 
 void item_hyper_p2(void) {
+#ifndef DDPDOJ_PC
     s32 item_release();
+#endif
     u32 saved_d7;
 
     if (!(reg_d1.w & 0x2000)) {
@@ -1010,7 +1033,9 @@ next_1:
 }
 
 void item_kind6(void) {
+#ifndef DDPDOJ_PC
     void item_release(void);
+#endif
     item_release();
 }
 

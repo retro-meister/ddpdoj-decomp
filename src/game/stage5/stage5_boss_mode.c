@@ -1,4 +1,7 @@
 #include "common.h"
+#ifdef DDPDOJ_PC
+#include "pc_gameplay_abi.h"
+#endif
 #include "fade.h"
 #include "entity.h"
 #include "explosion.h"
@@ -291,7 +294,9 @@ extern u8 g_death_boss_form;
 #endif
 
 void stage5_boss_mode_form1_idle_start(void) {
+#ifndef DDPDOJ_PC
     s32 boss_movement_start();
+#endif
 #ifdef DEATH_LABEL
     g_death_boss_form = 0;
 #endif
@@ -305,14 +310,16 @@ void stage5_boss_mode_form1_idle_start(void) {
     MODE(reg_a4)->wait = 0x260;
     MODE(reg_a4)->second_wait = 0x160;
     if (g_stage5_boss_all_forms == 0) {
-        stage5_boss_mode_form1_idle(0x260);
+        ARCADE_REGISTER_CALL(stage5_boss_mode_form1_idle, 0x260);
         return;
     }
     MODE(reg_a4)->second_wait = 0;
-    stage5_boss_mode_form1_idle(0x260);
+    ARCADE_REGISTER_CALL(stage5_boss_mode_form1_idle, 0x260);
 }
 
+#ifndef DDPDOJ_PC
 s32 boss_phase_start();
+#endif
 s32 fade_in_and_release();
 s32 stage5_boss_form1_take_hits();
 extern u16 g_boss_hyper_wait;
@@ -364,7 +371,7 @@ void stage5_boss_mode_form1_idle() {
 void stage5_boss_mode_form1_explosion_start(void) {
     EXPLODING(reg_a4)->wait = 0xC0;
     EXPLODING(reg_a4)->blast.h = 0x303;
-    stage5_boss_mode_form1_explosion(0xC0);
+    ARCADE_REGISTER_CALL(stage5_boss_mode_form1_explosion, 0xC0);
 }
 
 typedef void (*Fn)();
@@ -591,7 +598,7 @@ void stage5_boss_mode_form1_to_form2_start(void) {
     MODE(reg_a4)->wait = 1;
     MODE(reg_a4)->second_wait = 0x80;
     STAGE5_BOSS(reg_a5)->time_left = 0x6270;
-    stage5_boss_mode_form1_to_form2(0x80, 1);
+    ARCADE_REGISTER_CALL(stage5_boss_mode_form1_to_form2, 0x80, 1);
 }
 
 s32 boss_part_show();
@@ -602,7 +609,9 @@ s32 stage5_boss_start_damage();
 s32 slowdown_turn_off();
 
 void stage5_boss_mode_form1_to_form2() {
+#ifndef DDPDOJ_PC
     s32 boss_movement_start();
+#endif
     u16 temp_v1;
     u8 *temp_a0;
 
@@ -663,11 +672,13 @@ void stage5_boss_mode_form1_to_form2() {
 
 
 void stage5_boss_mode_form2_explosion_start(void) {
+#ifndef DDPDOJ_PC
     s32 boss_movement_start(s32, s32);
+#endif
     EXPLODING(reg_a4)->wait = 0xC0;
     EXPLODING(reg_a4)->blast.sh = 0x303;
     reg_d0.w = 3;
-    boss_movement_start(0x303, 0xC0);
+    ARCADE_REGISTER_CALL(boss_movement_start, 0x303, 0xC0);
     stage5_boss_mode_form2_explosion();
 }
 
@@ -849,7 +860,7 @@ void stage5_boss_mode_form2_to_form3_start(void) {
     MODE(reg_a4)->wait = 1;
     MODE(reg_a4)->second_wait = 0x80;
     g_enemy_signal_2 = 0;
-    stage5_boss_mode_form2_to_form3(1);
+    ARCADE_REGISTER_CALL(stage5_boss_mode_form2_to_form3, 1);
 }
 
 s32 boss_movement_stop();
@@ -867,7 +878,9 @@ extern u8 g_twin_boss_second[];
 #endif
 
 void stage5_boss_mode_form2_to_form3() {
+#ifndef DDPDOJ_PC
     s32 boss_movement_start();
+#endif
     u16 t1;
     u8 *t2;
 
@@ -949,7 +962,7 @@ void stage5_boss_mode_form3_explosion_start(void) {
     FINAL_EXPLOSION(reg_a4)->quickened = 0;
     FINAL_EXPLOSION(reg_a4)->burst_timer.sh = 0x2020;
     FINAL_EXPLOSION(reg_a4)->sound.both = 0;
-    stage5_boss_mode_form3_explosion(1, 0x101);
+    ARCADE_REGISTER_CALL(stage5_boss_mode_form3_explosion, 1, 0x101);
 }
 
 
@@ -1206,7 +1219,9 @@ void stage5_boss_mode_form1_arm_guns_aimed_start(void) {
     stage5_boss_mode_form1_arm_guns_aimed();
 }
 
+#ifndef DDPDOJ_PC
 s32 boss_phase_start();                            /* extern */
+#endif
 s32 boss_attack_running();                            /* extern */
 
 void stage5_boss_mode_form1_arm_guns_aimed(void) {
@@ -1290,7 +1305,7 @@ block_4:
 void stage5_boss_mode_form1_horn_start(void) {
     MODE(reg_a4)->wait = 0x60;
     MODE(reg_a4)->second_wait = 0x40;
-    stage5_boss_mode_form1_horn(0x60);
+    ARCADE_REGISTER_CALL(stage5_boss_mode_form1_horn, 0x60);
 }
 
 void stage5_boss_mode_form1_horn() {
@@ -1359,7 +1374,9 @@ void stage5_boss_mode_form2_jet_start(void) {
 }
 
 void stage5_boss_mode_form2_jet() {
+#ifndef DDPDOJ_PC
     s32 boss_movement_start();
+#endif
     u16 temp_a0;
 
     temp_a0 = MODE(reg_a4)->wait;
@@ -1394,10 +1411,12 @@ block_4:
 
 
 void stage5_boss_mode_form2_horn_start(void) {
+#ifndef DDPDOJ_PC
     s32 boss_movement_start(s32);
+#endif
     MODE(reg_a4)->wait = 0x50;
     reg_d0.w = 6;
-    boss_movement_start(0x50);
+    ARCADE_REGISTER_CALL(boss_movement_start, 0x50);
     stage5_boss_mode_form2_horn();
 }
 
@@ -1428,17 +1447,21 @@ block_4:
 
 
 void stage5_boss_mode_form2_stinger_start(void) {
+#ifndef DDPDOJ_PC
     s32 boss_movement_start(s32, s32);
+#endif
     MODE(reg_a4)->wait = 0x60;
     MODE(reg_a4)->second_wait = 0x40;
     reg_d0.w = 7;
-    boss_movement_start(0x40, 0x60);
+    ARCADE_REGISTER_CALL(boss_movement_start, 0x40, 0x60);
     ENTITY(reg_a6)->move.sb.speed = 0xC;
     stage5_boss_mode_form2_stinger();
 }
 
 void stage5_boss_mode_form2_stinger() {
+#ifndef DDPDOJ_PC
     s32 boss_movement_start();
+#endif
     u16 temp_a0;
 
     temp_a0 = MODE(reg_a4)->wait;
@@ -1515,7 +1538,9 @@ void stage5_boss_mode_form3_attack_a_start(void) {
 }
 
 void stage5_boss_mode_form3_attack_a() {
+#ifndef DDPDOJ_PC
     s32 boss_movement_start();
+#endif
     u16 temp_a0;
 
     temp_a0 = MODE(reg_a4)->wait;
@@ -1553,7 +1578,9 @@ void stage5_boss_mode_form3_attack_b_start(void) {
 }
 
 void stage5_boss_mode_form3_attack_b() {
+#ifndef DDPDOJ_PC
     s32 boss_movement_start();
+#endif
     u16 temp_a0;
 
     temp_a0 = MODE(reg_a4)->wait;
@@ -1587,7 +1614,9 @@ void stage5_boss_mode_form3_attack_c_start(void) {
 }
 
 void stage5_boss_mode_form3_attack_c() {
+#ifndef DDPDOJ_PC
     s32 boss_movement_start();
+#endif
     u16 temp_a0;
 
     temp_a0 = MODE(reg_a4)->wait;
@@ -1622,11 +1651,13 @@ block_4:
 void stage5_boss_mode_form3_attack_d_start(void) {
     MODE(reg_a4)->wait = 0x60;
     MODE(reg_a4)->second_wait = 0x40;
-    stage5_boss_mode_form3_attack_d(0x60);
+    ARCADE_REGISTER_CALL(stage5_boss_mode_form3_attack_d, 0x60);
 }
 
 void stage5_boss_mode_form3_attack_d() {
+#ifndef DDPDOJ_PC
     s32 boss_movement_start();
+#endif
     u16 temp_a0;
 
     temp_a0 = MODE(reg_a4)->wait;
@@ -1658,10 +1689,12 @@ block_4:
 
 
 void stage5_boss_mode_form3_rage_start(void) {
+#ifndef DDPDOJ_PC
     s32 boss_movement_start(s32);
+#endif
     MODE(reg_a4)->wait = 0x60;
     reg_d0.w = MAIN_OR_DEATH_LABEL(0xB, 0x10);
-    boss_movement_start(0x60);
+    ARCADE_REGISTER_CALL(boss_movement_start, 0x60);
     stage5_boss_mode_form3_rage();
 }
 

@@ -1,4 +1,7 @@
 #include "common.h"
+#ifdef DDPDOJ_PC
+void boss_movement_start(void);
+#endif
 #include "entity.h"
 #include "stage2_boss.h"
 
@@ -304,7 +307,9 @@ void stage2_boss_move_dive_start(void) {
     stage2_boss_move_dive();
 }
 
+#ifndef DDPDOJ_PC
 s32 boss_movement_start();
+#endif
 s32 stage2_boss_shield_off();
 
 void stage2_boss_move_dive(void) {

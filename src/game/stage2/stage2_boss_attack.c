@@ -1,4 +1,7 @@
 #include "common.h"
+#ifdef DDPDOJ_PC
+#include "pc_gameplay_abi.h"
+#endif
 #include "entity.h"
 #include "stage2_boss.h"
 
@@ -88,7 +91,9 @@ void stage2_boss_fire_body_spread(void);
 void stage2_boss_body_spread_fan();
 void stage2_boss_fire_body_rage(void);
 
+#ifndef DDPDOJ_PC
 s32 bullet_fire_fixed();                            /* extern */
+#endif
 extern u16 g_loop;
 
 void stage2_boss_fire_fixed_wider_on_loop(void) {
@@ -103,7 +108,9 @@ void stage2_boss_fire_fixed_wider_on_loop(void) {
 
 void stage2_boss_fire_fixed(void)
 {
+#ifndef DDPDOJ_PC
     void bullet_fire_fixed(void);
+#endif
     bullet_fire_fixed();
 }
 
@@ -112,7 +119,7 @@ void stage2_boss_fire_shoulder_spread_start(void) {
     SHOULDER_SPREAD(reg_a4)->shot.h = 0x808;
     SHOULDER_SPREAD(reg_a4)->side = 1;
     SHOULDER_SPREAD(reg_a4)->volleys_left = 2;
-    stage2_boss_fire_shoulder_spread(1, 0x808);
+    ARCADE_REGISTER_CALL(stage2_boss_fire_shoulder_spread, 1, 0x808);
 }
 
 typedef void (*Fn)();
@@ -173,7 +180,9 @@ block_rts:
     return;
 }
 
+#ifndef DDPDOJ_PC
 s32 bullet_fire256();
+#endif
 void stage2_boss_rage_fan_a(void) {
     reg_d0.w = 0xFFFE0001;
     reg_d7.b[0] = reg_d1.b[0];
@@ -210,7 +219,9 @@ void stage2_boss_rage_fan_b(void) {
     bullet_fire256();
 }
 
+#ifndef DDPDOJ_PC
 s32 rng_next_bit();
+#endif
 
 void stage2_boss_fire_torso_rapid_start(void) {
     TORSO_RAPID(reg_a4)->shot.h = 5;
@@ -226,7 +237,9 @@ void stage2_boss_fire_torso_rapid_start(void) {
 }
 
 
+#ifndef DDPDOJ_PC
 s32 bullet_fire256_fixed();
+#endif
 s32 rng_next();
 s32 aim_at_player();
 extern u16 g_direction64_offsets_166[];
@@ -363,7 +376,9 @@ void stage2_boss_fire_quad_gun_start() {
 extern u8 stage2_boss_fire_quad_gun_table[];
 
 void stage2_boss_fire_quad_gun(void) {
+#ifndef DDPDOJ_PC
     s32 bullet_fire();
+#endif
     reg_tmp.b[0] = QUAD_GUN(reg_a4)->shot.t.count;
     QUAD_GUN(reg_a4)->shot.t.count -= 1;
     if ((s32) reg_tmp.b[0] <= 0) {
@@ -421,7 +436,9 @@ void stage2_boss_fire_side_gun_start(void) {
 
 
 void stage2_boss_fire_side_gun() {
+#ifndef DDPDOJ_PC
     s32 bullet_fire();
+#endif
     u8 temp_a1;
 
     reg_tmp.b[0] = SIDE_GUN(reg_a4)->shot.t.count;
@@ -522,7 +539,9 @@ void stage2_boss_fire_shoulder_triple(void) {
 }
 
 void stage2_boss_shoulder_sweep_a_shot(void) {
+#ifndef DDPDOJ_PC
     s32 bullet_fire_fixed();
+#endif
     reg_d5.b[0] = 2;
     if (g_loop != 0) {
         reg_d5.b[0] = 3;
@@ -744,7 +763,7 @@ void stage2_boss_fire_shoulder_sweep_b_start(void) {
     SHOULDER_SWEEP(reg_a4)->shot.h = 0x1002;
     SHOULDER_SWEEP(reg_a4)->second.h = 0x2018;
     SHOULDER_SWEEP(reg_a4)->turn_a = 1;
-    rng_next_bit(0x2018, 0x1002);
+    ARCADE_REGISTER_CALL(rng_next_bit, 0x2018, 0x1002);
     if (reg_d0.h[0] == 0) {
         SHOULDER_SWEEP(reg_a4)->turn_a = 0xFF;
     }
@@ -1060,7 +1079,9 @@ void stage2_boss_fire_shoulder_sweep_c(void) {
 }
 
 void stage2_boss_shoulder_sweep_d_shot(void) {
+#ifndef DDPDOJ_PC
     s32 bullet_fire_fixed();
+#endif
     u32 var_a1;
     reg_a0 = (u8 *)(g_direction64_offsets_2CC);
     reg_d0.w = 7;
@@ -1536,7 +1557,9 @@ void stage2_boss_fire_rotating_spread(void) {
 
 void stage2_boss_fire_column(void)
 {
+#ifndef DDPDOJ_PC
     extern void bullet_fire(u32, u16);
+#endif
     u32 savedD6;
     u32 adjustedD0;
     u16 lowD6;
@@ -1552,7 +1575,7 @@ void stage2_boss_fire_column(void)
     reg_tmp.w = adjustedD0;
     reg_d0.h[1] = reg_d0.h[0];
     reg_d0.h[0] = 7;
-    bullet_fire(adjustedD0, lowD6);
+    ARCADE_REGISTER_CALL(bullet_fire, adjustedD0, lowD6);
     reg_d6.w = savedD6;
 }
 
@@ -1628,7 +1651,9 @@ void stage2_boss_fire_shoulder_cannon(void) {
 }
 
 s32 enemy_switch_target_player();                            /* extern */
+#ifndef DDPDOJ_PC
 s32 direction256_to_target_player(s32, s32);            /* extern */
+#endif
 
 void stage2_boss_fire_body_spread_start(void) {
     enemy_switch_target_player();
@@ -1636,7 +1661,7 @@ void stage2_boss_fire_body_spread_start(void) {
     BODY_SPREAD(reg_a4)->shot.h = 8;
     BODY_SPREAD(reg_a4)->shots_left = 2;
     BODY_SPREAD(reg_a4)->direction = 0x80U;
-    direction256_to_target_player(2, 8);
+    ARCADE_REGISTER_CALL(direction256_to_target_player, 2, 8);
     if (cond_flag != 0) {
         stage2_boss_fire_body_spread();
         return;
@@ -1667,7 +1692,9 @@ void stage2_boss_fire_body_spread(void) {
     }
 }
 
+#ifndef DDPDOJ_PC
 s32 bullet_fire256_fast();
+#endif
 
 void stage2_boss_body_spread_fan() {
     u32 save_d0;
@@ -1777,7 +1804,9 @@ void stage2_boss_fire_body_rage_start(void) {
 s32 bullet_fire256_double();
 s32 bullet_fire256_2way();
 s32 rng_next_word();
+#ifndef DDPDOJ_PC
 s32 direction256_to_target_player();
+#endif
 extern u16 g_frame_mod2;
 
 void stage2_boss_fire_body_rage(void) {

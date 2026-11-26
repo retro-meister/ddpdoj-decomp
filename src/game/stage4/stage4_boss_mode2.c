@@ -1,4 +1,7 @@
 #include "common.h"
+#ifdef DDPDOJ_PC
+void boss_movement_start(void);
+#endif
 #include "entity.h"
 #include "stage4_boss.h"
 
@@ -374,7 +377,9 @@ block_rts:
     return;
 }
 
+#ifndef DDPDOJ_PC
 s32 boss_movement_start();                            /* extern */
+#endif
 
 void stage4_boss_mode_attack_c_start(void) {
     reg_d0.w = 4;
@@ -386,7 +391,9 @@ void stage4_boss_mode_attack_c_start(void) {
     stage4_boss_mode_attack_c();
 }
 
+#ifndef DDPDOJ_PC
 s32 boss_movement_start();
+#endif
 s32 boss_animation_running();
 
 void stage4_boss_mode_attack_c(void) {

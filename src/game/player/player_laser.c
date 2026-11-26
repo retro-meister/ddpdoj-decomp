@@ -1,4 +1,7 @@
 #include "common.h"
+#ifdef DDPDOJ_PC
+#include "pc_gameplay_abi.h"
+#endif
 #include "player.h"
 #include "entity.h"
 
@@ -9,7 +12,9 @@ void p1_laser_front_hyper(void);
 void p2_laser_front_hyper(void);
 void laser_front_update();
 void laser_muzzle_update();
+#ifndef DDPDOJ_PC
 void laser_muzzle_update_strong();
+#endif
 void p1_laser_ship_glow_hyper(void);
 void p2_laser_ship_glow_hyper(void);
 void laser_ship_glow_update(void);
@@ -241,7 +246,9 @@ void ship_select_ship_begin(void) {
     g_input_p2_pressed = 0;
 }
 
+#ifndef DDPDOJ_PC
 s32 text_layer_print();
+#endif
 s32 ship_palettes_load();
 extern u16 ship_select_ship_confirm_table[];
 extern u16 ship_select_ship_confirm_table_2[];
@@ -711,7 +718,9 @@ block_9:
 extern u8 g_p1_options[];
 
 void p1_laser_muzzle_strong(void) {
+#ifndef DDPDOJ_PC
     extern void laser_muzzle_update_strong(u16);
+#endif
     extern void sfx_p1_laser_a_start();
     extern void sfx_p1_laser_b_start();
     reg_a4 = g_p1_options;
@@ -719,11 +728,11 @@ void p1_laser_muzzle_strong(void) {
     reg_d0.h[1] = D_0029F182[0];
     reg_d0.h[0] = D_0029F184[0];
     if (PLAYER(((u8 *)g_player1))->ship_type.h == 0) {
-        laser_muzzle_update_strong(D_0029F182[0]);
+        ARCADE_REGISTER_CALL(laser_muzzle_update_strong, D_0029F182[0]);
         return;
     }
     reg_a3 = (void *)sfx_p1_laser_b_start;
-    laser_muzzle_update_strong(D_0029F182[0]);
+    ARCADE_REGISTER_CALL(laser_muzzle_update_strong, D_0029F182[0]);
 }
 
 extern void sfx_p1_laser_hyper_start(void);
@@ -734,13 +743,15 @@ void p1_laser_muzzle_hyper(void) {
     reg_d0.h[0] = D_0029F184[0];
     reg_a3 = (u8 *)((u32)(&sfx_p1_laser_hyper_start));
     reg_d0.h[1] = highWord;
-    laser_muzzle_update_strong(highWord);
+    ARCADE_REGISTER_CALL(laser_muzzle_update_strong, highWord);
 }
 
 extern u8 g_p2_options[];
 
 void p2_laser_muzzle_strong(void) {
+#ifndef DDPDOJ_PC
     extern void laser_muzzle_update_strong(u16);
+#endif
     extern void sfx_p2_laser_a_start();
     extern void sfx_p2_laser_b_start();
     reg_a4 = g_p2_options;
@@ -750,7 +761,7 @@ void p2_laser_muzzle_strong(void) {
     if (PLAYER(g_player2)->ship_type.h != 0) {
         reg_a3 = (void *)sfx_p2_laser_b_start;
     }
-    laser_muzzle_update_strong(D_0029F112[0]);
+    ARCADE_REGISTER_CALL(laser_muzzle_update_strong, D_0029F112[0]);
 }
 
 extern void sfx_p2_laser_hyper_start(void);
@@ -761,7 +772,7 @@ void p2_laser_muzzle_hyper(void) {
     reg_d0.h[0] = D_0029F114[0];
     reg_a3 = (u8 *)((u32)(&sfx_p2_laser_hyper_start));
     reg_d0.h[1] = highWord;
-    laser_muzzle_update_strong(highWord);
+    ARCADE_REGISTER_CALL(laser_muzzle_update_strong, highWord);
 }
 
 void laser_muzzle_update_strong() {

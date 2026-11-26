@@ -67,8 +67,9 @@ indexed textures, and the loading-screen font. With a retail ISO, the Gallery
 integration test drives loading, grid navigation, image viewing, and the
 return to the Main menu request. It also compares the original cursor,
 confirm, and page cues against decoded sound bank samples. The Main and Death
-Label frontend and system libraries build from the original source manifests.
-Gameplay and the desktop application are still in development.
+Label frontend, system, and gameplay libraries build from the original source
+manifests. Linking and running Main and Death Label in the desktop application
+are still in development.
 
 ```sh
 cmake -S pc -B build/pc

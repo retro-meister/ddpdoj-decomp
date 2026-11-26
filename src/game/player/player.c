@@ -1,5 +1,8 @@
 #include "common.h"
 #ifdef DDPDOJ_PC
+#include "pc_gameplay_abi.h"
+#endif
+#ifdef DDPDOJ_PC
 #include "pc_replay_storage.h"
 #endif
 #include "entity.h"
@@ -22,7 +25,9 @@ void player_shot_fire_volley_b(void);
 void player_roll_recenter(void);
 void player_draw(void);
 void player_draw_plain(void);
+#ifndef DDPDOJ_PC
 void player_draw_entering();
+#endif
 
 
 void player_option_delay_clear(void) {
@@ -1142,8 +1147,10 @@ extern u16 D_006E5C0E[];
 extern u16 D_006E5C10[];
 
 void player_spawn_power_setup(void) {
+#ifndef DDPDOJ_PC
     void p1_maximum_level_show(void);
     void p2_maximum_level_show(void);
+#endif
     u8 *sa0;
     u8 *sa1;
     u8 *sa2;
@@ -1647,7 +1654,9 @@ s32 binary_to_bcd();
 s32 bullet_cancel_by_player1();
 s32 bullet_cancel_by_player2();
 s32 bullet_cancel_begin();
+#ifndef DDPDOJ_PC
 s32 entity_velocity();
+#endif
 extern u8 player_update_table[];
 extern u16 player_update_table_3[];
 extern u16 player_update_table_4[];
@@ -2461,8 +2470,10 @@ extern s16 D_0068DEDE[];
 #endif
 
 void player_destroyed_begin(void) {
+#ifndef DDPDOJ_PC
     s32 p1_maximum_level_show();
     s32 p2_maximum_level_show();
+#endif
     u32 tmp;
     u16 t1;
     u16 t2;
@@ -2868,20 +2879,24 @@ void p2_draw(u8 arg0) {
 
 
 void p1_draw_while_entering(void) {
+#ifndef DDPDOJ_PC
     extern void player_draw_entering(u16);
+#endif
     reg_a6 = (u8 *)((u16 *)g_player1);
     reg_d0.h[0] = PLAYER(reg_a6)->flags.h;
     if ((((s64) ((s64) reg_d0.h[0] << 0x30) >> 0x30) >= 0) && (reg_d0.h[0] & 0xFFFF & 0x100)) {
-        player_draw_entering(reg_d0.h[0]);
+        ARCADE_REGISTER_CALL(player_draw_entering, reg_d0.h[0]);
     }
 }
 
 void p2_draw_while_entering(void) {
+#ifndef DDPDOJ_PC
     extern void player_draw_entering(u16);
+#endif
     reg_a6 = (u8 *)((u16 *)g_player2);
     reg_d0.h[0] = PLAYER(reg_a6)->flags.h;
     if ((((s64) ((s64) reg_d0.h[0] << 0x30) >> 0x30) >= 0) && (reg_d0.h[0] & 0xFFFF & 0x100)) {
-        player_draw_entering(reg_d0.h[0]);
+        ARCADE_REGISTER_CALL(player_draw_entering, reg_d0.h[0]);
     }
 }
 
@@ -2899,7 +2914,9 @@ extern u16 D_0028C880[];
 extern u8 D_0028E30C;
 
 void player_draw(void) {
+#ifndef DDPDOJ_PC
     s32 entity_draw_with_players();
+#endif
     if (g_players_hidden != 0) return;
     if ((s8)reg_d0.b[0] < 0) goto next_30;
     if (PLAYER(reg_a6)->state.b.invincible == 0) goto next_100;
@@ -3015,7 +3032,9 @@ next_210:
 extern u16 g_frame_mod4;
 
 void player_draw_plain(void) {
+#ifndef DDPDOJ_PC
     s32 entity_draw_with_players();
+#endif
     u16 save_a;
     u16 save_c;
 
@@ -3074,7 +3093,9 @@ void player_draw_plain(void) {
 void sprite_draw_with_players_keep(void);
 
 void player_draw_entering() {
+#ifndef DDPDOJ_PC
     void entity_draw_with_players(void);
+#endif
     if (PLAYER(reg_a6)->flags.b[1] & 4) return;
     if (PLAYER(reg_a6)->input.h != 0) {
         PLAYER(reg_a6)->input.h -= 1;

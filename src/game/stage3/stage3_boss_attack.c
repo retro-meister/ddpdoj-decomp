@@ -1,4 +1,7 @@
 #include "common.h"
+#ifdef DDPDOJ_PC
+#include "pc_gameplay_abi.h"
+#endif
 #include "entity.h"
 #include "enemy_kinds.h"
 #include "stage3_boss.h"
@@ -260,7 +263,9 @@ void stage3_boss_launch_drone(void) {
 }
 
 void stage3_boss_main_gun_shot(void) {
+#ifndef DDPDOJ_PC
     void bullet_fire256_fast(void);
+#endif
     s32 status = reg_d1.b[0];
 
     if (status < 0x20 || status > 0xE0) {
@@ -349,10 +354,14 @@ void stage3_boss_fire_main_gun(void) {
     }
 }
 
+#ifndef DDPDOJ_PC
 s32 bullet_fire256_fixed();
+#endif
 
 void stage3_boss_side_turrets_shot(void) {
+#ifndef DDPDOJ_PC
     s32 bullet_fire256_fast();
+#endif
     u32 tmp;
 
     if (g_loop != 0) goto next_4;
@@ -404,7 +413,9 @@ block_rts:
     return;
 }
 
+#ifndef DDPDOJ_PC
 s32 rng_next_bit();
+#endif
 extern u32 stage3_boss_fire_side_turrets_start_value;
 
 void stage3_boss_fire_side_turrets_start(void) {
@@ -642,7 +653,9 @@ extern s16 g_player2[];
 extern s16 g_player1[];
 
 void stage3_boss_fire_body_six_gun(void) {
+#ifndef DDPDOJ_PC
     s32 bullet_fire256_fast();
+#endif
     s16 *t1;
     s16 *t2;
     s16 *v1;
@@ -959,7 +972,9 @@ block_6:
     }
 }
 
+#ifndef DDPDOJ_PC
 void bullet_fire256(void);
+#endif
 
 void bullet_fire256_entry(void) {
     bullet_fire256();

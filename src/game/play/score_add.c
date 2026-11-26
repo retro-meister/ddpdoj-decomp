@@ -1,5 +1,9 @@
 #include "common.h"
 #ifdef DDPDOJ_PC
+#include "pc_gameplay_abi.h"
+s32 bcd_add_registers(u32 *left, u32 *right);
+#endif
+#ifdef DDPDOJ_PC
 #include "pc_replay_storage.h"
 #endif
 #include "score_tables.h"
@@ -19,13 +23,17 @@ void p1_boss_hit_late_phase(void);
 void p1_boss_hits_restart(void);
 void p1_boss_hits_continue(void);
 void p1_boss_hits_add(void);
+#ifndef DDPDOJ_PC
 void p1_boss_hits_score();
+#endif
 void p2_boss_hit(void);
 void p2_boss_hit_late_phase(void);
 void p2_boss_hits_restart(void);
 void p2_boss_hits_continue(void);
 void p2_boss_hits_add(void);
+#ifndef DDPDOJ_PC
 void p2_boss_hits_score();
+#endif
 void extend_score_set(void);
 void p1_hyper_gauge_check_full(void);
 void p2_hyper_gauge_check_full(void);
@@ -34,10 +42,16 @@ void hud_p2_caption_put(void);
 
 
 void bcd_word_increment(void) {
+#ifndef DDPDOJ_PC
     s32 bcd_add_registers(Reg32 *, Reg32 *);
+#endif
     reg_d0.w = 1;
     reg_d2.w = (u32) *((u16 *)reg_a0);
+#ifdef DDPDOJ_PC
+    bcd_add_registers(&reg_d0.w, &reg_d2.w);
+#else
     bcd_add_registers(&reg_d0, &reg_d2);
+#endif
     *(*(u16 **)&reg_a0) = reg_d2.h[0];
 }
 
@@ -400,12 +414,23 @@ extern s32 g_score_scratch;
 
 
 void score_value_add(void) {
+#ifndef DDPDOJ_PC
     extern void bcd_add_registers(s32 *, s32);
+#endif
+#ifdef DDPDOJ_PC
+    reg_a0 -= 4;
+    reg_a1 = (u8 *)&g_score_scratch;
+#else
     (*(s32 *)&reg_a0) -= 4;
     (*(s32 **)&reg_a1) = &g_score_scratch;
+#endif
     *(*(s32 **)&reg_a1) = reg_d0.w;
     reg_d2.sh[0] = 0;
+#ifdef DDPDOJ_PC
+    bcd_add_registers((u32 *)reg_a1, (u32 *)reg_a0);
+#else
     bcd_add_registers(((s32 *)reg_a1), (*(s32 *)&reg_a0));
+#endif
 }
 
 extern u16 D_0026B898[];
@@ -806,14 +831,16 @@ void p1_boss_hits_continue(void) {
 extern u16 g_boss_hits;
 
 void p1_boss_hits_add(void) {
+#ifndef DDPDOJ_PC
     extern void p1_boss_hits_score(u16);
+#endif
     g_boss_hits += reg_d0.h[0];
     if (!(reg_d1.w & 0x40)) {
-        p1_boss_hits_score(reg_d0.h[0]);
+        ARCADE_REGISTER_CALL(p1_boss_hits_score, reg_d0.h[0]);
         return;
     }
     g_boss_hits += reg_d0.h[0];
-    p1_boss_hits_score(reg_d0.h[0]);
+    ARCADE_REGISTER_CALL(p1_boss_hits_score, reg_d0.h[0]);
 }
 
 
@@ -1007,14 +1034,16 @@ void p2_boss_hits_continue(void) {
 
 
 void p2_boss_hits_add(void) {
+#ifndef DDPDOJ_PC
     extern void p2_boss_hits_score(u16);
+#endif
     g_boss_hits += reg_d0.h[0];
     if (!(reg_d1.w & 0x40)) {
-        p2_boss_hits_score(reg_d0.h[0]);
+        ARCADE_REGISTER_CALL(p2_boss_hits_score, reg_d0.h[0]);
         return;
     }
     g_boss_hits += reg_d0.h[0];
-    p2_boss_hits_score(reg_d0.h[0]);
+    ARCADE_REGISTER_CALL(p2_boss_hits_score, reg_d0.h[0]);
 }
 
 void p2_boss_hits_score()
@@ -1034,7 +1063,9 @@ extern s8 g_boss_hp_bar_flags;
 extern u8 D_0028E635;
 
 void hud_p1_hyper_count_put(void) {
+#ifndef DDPDOJ_PC
     s32 deferred_text_put();
+#endif
     reg_d0.h[0] = 0xC8;
     reg_d1.h[0] = 0x200;
     if ((g_boss_present & 1) && (g_boss_hp_bar_flags >= 0)) {
@@ -1063,7 +1094,9 @@ block_4:
 }
 
 void hud_p2_hyper_count_put(void) {
+#ifndef DDPDOJ_PC
     s32 deferred_text_put();
+#endif
     reg_d0.h[0] = 0xC8;
     reg_d1.h[0] = 0x1400;
     if ((g_boss_present & 1) && (g_boss_hp_bar_flags >= 0)) {
@@ -1129,7 +1162,9 @@ void extend_score_set(void)
 
 
 void extend_score_advance(void) {
+#ifndef DDPDOJ_PC
     s32 bcd_add_registers(Reg32 *, Reg32 *);
+#endif
     u8 *a5 = reg_a5;
 
     reg_d0.h[0] = *(u16 *) reg_a4;
@@ -1147,7 +1182,11 @@ next_2:
 next_3:
     reg_d2.w = *(u32 *) reg_a2;
     reg_d0.h[0] = 0;
+#ifdef DDPDOJ_PC
+    bcd_add_registers(&reg_d1.w, &reg_d2.w);
+#else
     bcd_add_registers(&reg_d1, &reg_d2);
+#endif
     *(u32 *) reg_a2 = reg_d2.w;
 block_end:
     reg_a5 = a5;
@@ -2033,8 +2072,10 @@ extern u16 g_p1_lives;
 extern u16 g_p1_ship_type;
 
 void hud_p1_lives_put(void) {
+#ifndef DDPDOJ_PC
     s32 deferred_text_put();
     s32 deferred_text_clear();
+#endif
     u32 save_d0;
     u32 save_d1;
     u32 save_d2;
@@ -2110,8 +2151,10 @@ extern u16 g_p2_lives;
 extern u16 g_p2_ship_type;
 
 void hud_p2_lives_put(void) {
+#ifndef DDPDOJ_PC
     s32 deferred_text_put();
     s32 deferred_text_clear();
+#endif
     u32 save_d0;
     u32 save_d1;
     u32 save_d2;
@@ -2209,7 +2252,9 @@ void score_panel_intro_begin(void) {
 }
 
 void hud_p1_caption_clear(void) {
+#ifndef DDPDOJ_PC
     void deferred_text_clear(void);
+#endif
     reg_d0.h[0] = 0xD4;
     reg_d2.sh[0] = 7;
     reg_d3.sh[0] = 7;
@@ -2218,7 +2263,9 @@ void hud_p1_caption_clear(void) {
 }
 
 void hud_p2_caption_clear(void) {
+#ifndef DDPDOJ_PC
     void deferred_text_clear(void);
+#endif
     reg_d0.h[0] = 0xD4;
     reg_d1.h[0] = 0x1400;
     reg_d2.sh[0] = 7;
@@ -2241,7 +2288,9 @@ extern Reg32 reg_d0;
 extern Reg32 reg_d1;
 
 void hud_p1_caption_put(void) {
+#ifndef DDPDOJ_PC
     extern void deferred_text_put(void);
+#endif
     reg_d0.h[0] = 0xD4;
     reg_d2.sh[0] = 7;
     reg_d3.sh[0] = 1;
@@ -2262,7 +2311,9 @@ void hud_p2_caption_refresh(void) {
 }
 
 void hud_p2_caption_put(void) {
+#ifndef DDPDOJ_PC
     extern void deferred_text_put(void);
+#endif
     reg_d0.h[0] = 0xD4;
     reg_d1.h[0] = 0x1A00;
     reg_d2.sh[0] = 7;
@@ -2273,7 +2324,9 @@ void hud_p2_caption_put(void) {
 
 void hud_p1_caption_clear_shifted(void)
 {
+#ifndef DDPDOJ_PC
     extern void deferred_text_clear(void);
+#endif
     reg_d0.h[0] = 0xD4;
     reg_d1.h[0] = 0;
     reg_d2.h[0] = 7;
@@ -2294,7 +2347,9 @@ void hud_p1_caption_clear_shifted(void)
 }
 
 void hud_p2_caption_clear_shifted(void) {
+#ifndef DDPDOJ_PC
     s32 deferred_text_clear();
+#endif
     reg_d0.h[0] = 0xD4;
     reg_d1.h[0] = 0x1400;
     reg_d2.h[0] = 7;

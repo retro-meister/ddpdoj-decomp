@@ -1,4 +1,7 @@
 #include "common.h"
+#ifdef DDPDOJ_PC
+#include "pc_gameplay_abi.h"
+#endif
 #include "entity.h"
 #include "stage4_boss.h"
 
@@ -128,7 +131,9 @@ block_1:
 }
 
 
+#ifndef DDPDOJ_PC
 s32 entity_velocity();
+#endif
 
 void stage4_boss_parts_follow(void) {
     stage4_boss_speed_approach();
@@ -208,8 +213,12 @@ void stage4_boss_move_enter_start(void) {
     stage4_boss_move_enter();
 }
 
+#ifndef DDPDOJ_PC
 s32 boss_phase_start();
+#endif
+#ifndef DDPDOJ_PC
 s32 boss_movement_start();
+#endif
 s32 boss_part_show();
 s32 boss_part_hide();
 s32 fade_in_and_release();
@@ -317,7 +326,9 @@ s32 direction_turn_toward();
 
 void stage4_boss_move_wander_high(void) {
     s32 direction_between(void *);
+#ifndef DDPDOJ_PC
     s32 distance_between(u16, void *);
+#endif
     u16 temp_a0;
 
     reg_a0 = ((u8 *)stage4_boss_wander_waypoints);
@@ -337,7 +348,7 @@ void stage4_boss_move_wander_high(void) {
     reg_a0 += PATH(reg_a4)->waypoint;
     reg_d2.h[0] = *(u16 *)reg_a0;
     reg_d3.h[0] = *(u16 *)(reg_a0 + 2);
-    distance_between(temp_a0, reg_a6);
+    ARCADE_REGISTER_CALL(distance_between, temp_a0, reg_a6);
     if ((s16) reg_d0.h[0] < 0x201) {
         PATH(reg_a4)->waypoint += 4;
         PATH(reg_a4)->waypoint &= 0xF;
@@ -351,7 +362,7 @@ void stage4_boss_move_to_form2_start(void) {
     ENTITY(reg_a6)->move.b.dir = 0x20;
     PATH(reg_a4)->target_speed = 0x20;
     PATH(reg_a4)->pace.h = 0x303;
-    stage4_boss_move_to_form2(0x20);
+    ARCADE_REGISTER_CALL(stage4_boss_move_to_form2, 0x20);
 }
 
 
@@ -375,7 +386,9 @@ extern u8 stage4_boss_move_to_form2_b_table[];
 
 void stage4_boss_move_to_form2_b(void) {
     s32 direction_between();
+#ifndef DDPDOJ_PC
     s32 distance_between();
+#endif
     reg_a0 = stage4_boss_move_to_form2_b_table;
     reg_d2.h[0] = *(u16 *)reg_a0;
     reg_d3.h[0] = *(u16 *)(reg_a0 + 2);
@@ -423,11 +436,15 @@ void stage4_boss_move_wander_high_b_start(void) {
     stage4_boss_move_wander_high_b();
 }
 
+#ifndef DDPDOJ_PC
 s32 velocity_from_direction();
+#endif
 
 void stage4_boss_move_wander_high_b(void) {
     s32 direction_between();
+#ifndef DDPDOJ_PC
     s32 distance_between();
+#endif
     reg_a0 = (u8 *)stage4_boss_wander_b_waypoints;
     reg_a0 += PATH(reg_a4)->waypoint;
     reg_d2.h[0] = *(u16 *)reg_a0;
@@ -468,7 +485,7 @@ void stage4_boss_move_final_explosion_start(void) {
     ENTITY(reg_a6)->move.b.dir = 0x20;
     PATH(reg_a4)->target_speed = 1;
     PATH(reg_a4)->pace.h = 0;
-    stage4_boss_move_final_explosion(0x20);
+    ARCADE_REGISTER_CALL(stage4_boss_move_final_explosion, 0x20);
 }
 
 void stage4_boss_move_final_explosion() {
@@ -501,7 +518,9 @@ void stage4_boss_move_hover_high_start(void) {
 
 void stage4_boss_move_hover_high(void) {
     s32 direction_between();
+#ifndef DDPDOJ_PC
     s32 distance_between();
+#endif
     u8 temp_v0;
 
     reg_tmp.b[0] = PATH(reg_a4)->hover.t.count;
@@ -564,7 +583,9 @@ void stage4_boss_move_rage_start(void) {
 
 void stage4_boss_move_rage(void) {
     s32 direction_between();
+#ifndef DDPDOJ_PC
     s32 distance_between();
+#endif
     reg_a0 = (u8 *)stage4_boss_rage_waypoints;
     reg_a0 += PATH(reg_a4)->waypoint;
     reg_d2.h[0] = *(u16 *)reg_a0;

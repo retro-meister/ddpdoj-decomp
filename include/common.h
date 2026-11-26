@@ -5,6 +5,13 @@
 
 #define SJIS(s) s
 
+/* Some matched callers carry unused values in C argument registers. */
+#ifdef DDPDOJ_PC
+#define ARCADE_REGISTER_CALL(routine, ...) routine()
+#else
+#define ARCADE_REGISTER_CALL(routine, ...) routine(__VA_ARGS__)
+#endif
+
 #ifndef NULL
 #define NULL 0
 #endif

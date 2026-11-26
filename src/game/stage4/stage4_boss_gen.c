@@ -1,4 +1,8 @@
 #include "common.h"
+#ifdef DDPDOJ_PC
+#include "pc_gameplay_abi.h"
+void enemy_set_entity_count(u16 count);
+#endif
 #include "entity.h"
 #include "explosion.h"
 
@@ -17,13 +21,17 @@ void heavy_cannon_part2_remove(void);
 
 
 void stage4_gate_first(void) {
+#ifndef DDPDOJ_PC
     void enemy_set_entity_count(s32);
+#endif
     enemy_set_entity_count(1);
 }
 
+#ifndef DDPDOJ_PC
 s32 enemy_set_task_state();
 s32 enemy_init_entities();
 s32 enemy_path_start();
+#endif
 s32 sprite_palette_load();
 extern u8 stage4_gate_start_table[];
 extern u8 stage4_gate_start_table_2[];
@@ -56,9 +64,11 @@ void stage4_gate_start(void) {
     }
 }
 
+#ifndef DDPDOJ_PC
 s32 enemy_hitbox_debug_draw();
 s32 enemy_remove();
 s32 enemy_path_step();
+#endif
 s32 entity_draw_layer2();
 s32 score_add_no_chain();
 extern u16 g_enemies_stopped;
@@ -124,7 +134,9 @@ block_5:
 }
 
 void stage4_lift_first(void) {
+#ifndef DDPDOJ_PC
     void enemy_set_entity_count(s32 id);
+#endif
     enemy_set_entity_count(10);
 }
 
@@ -610,8 +622,15 @@ void heavy_cannon_part_explode() {
 }
 
 s32 stage4_heavy_cannon_first(void) {
+#ifndef DDPDOJ_PC
     s32 enemy_set_entity_count(s32 id);
+#endif
+#ifdef DDPDOJ_PC
+    enemy_set_entity_count(2);
+    return 0;
+#else
     return enemy_set_entity_count(2);
+#endif
 }
 
 extern u8 stage4_heavy_cannon_start_table[];
@@ -660,7 +679,9 @@ extern u8 stage4_heavy_cannon_table_3[];
 extern u8 D_002639B0[];
 extern s16 g_player2[];
 extern s16 g_player1[];
+#ifndef DDPDOJ_PC
 s32 bullet_fire256_fixed();
+#endif
 s32 bullet_fire256_double();
 s32 bullet_fire256_3way();
 s32 enemy_anims_spawn_listed();
@@ -672,7 +693,9 @@ s32 sfx_explosion_air_medium();
 s32 sfx_explosion_air_large();
 s32 sfx_explosion_extra_1();
 s32 entity_draw_layer4();
+#ifndef DDPDOJ_PC
 s32 sprite_draw_layer4();
+#endif
 s32 rng_next_0_to_3();
 s32 rng_next_word();
 s32 bullet_cancel_with_flags_plain();
@@ -1212,7 +1235,9 @@ block_st:
 }
 
 void stage4_heavy_cannon_casing_first(void) {
+#ifndef DDPDOJ_PC
     void enemy_set_entity_count(s32);
+#endif
     enemy_set_entity_count(0);
 }
 
@@ -1243,7 +1268,9 @@ void stage4_heavy_cannon_casing_start(void) {
     }
 }
 
+#ifndef DDPDOJ_PC
 s32 entity_draw_with_bullets();
+#endif
 extern u8 D_00263A50[];
 extern u8 D_0028E2E4;
 
@@ -1409,7 +1436,9 @@ block_11:
 }
 
 void stage4_wave_cannon_first(void) {
+#ifndef DDPDOJ_PC
     void enemy_set_entity_count(s32 mode);
+#endif
     enemy_set_entity_count(2);
 }
 
@@ -1459,7 +1488,9 @@ s32 sfx_beam_loop_start();
 s32 sfx_heli_stop();
 s32 sfx_charge_loop_stop();
 s32 entity_draw_layer1();
+#ifndef DDPDOJ_PC
 s32 sprite_draw_layer1();
+#endif
 s32 bullet_cancel_with_flags();
 
 void stage4_wave_cannon(void) {
@@ -1874,7 +1905,9 @@ void wave_cannon_explode() {
 }
 
 void stage4_reactor_first(void) {
+#ifndef DDPDOJ_PC
     void enemy_set_entity_count(s32 mode);
+#endif
     enemy_set_entity_count(0);
 }
 
@@ -1938,7 +1971,9 @@ block_5:
 }
 
 void crane_turret_first(void) {
+#ifndef DDPDOJ_PC
     void enemy_set_entity_count(s32 mode);
+#endif
     enemy_set_entity_count(0);
 }
 
@@ -2236,7 +2271,9 @@ void rail_turret_explode(void) {
 }
 
 void rail_turret_first(void) {
+#ifndef DDPDOJ_PC
     void enemy_set_entity_count(s32 mode);
+#endif
     enemy_set_entity_count(1);
 }
 
@@ -2277,7 +2314,9 @@ void rail_turret_start(void) {
 }
 
 s32 pickup_spawn_variant();
+#ifndef DDPDOJ_PC
 s32 bullet_fire256_fast();
+#endif
 s32 entity_follow_scroll();
 extern u16 rail_turret_table[];
 extern u16 rail_turret_table_2[4];
@@ -2677,7 +2716,9 @@ block_rts:
 }
 
 void stage4_tachyon_particle_first(void) {
+#ifndef DDPDOJ_PC
     void enemy_set_entity_count(s32);
+#endif
     enemy_set_entity_count(0);
 }
 

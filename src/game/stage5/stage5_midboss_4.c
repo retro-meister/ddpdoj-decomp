@@ -1,4 +1,7 @@
 #include "common.h"
+#ifdef DDPDOJ_PC
+#include "pc_gameplay_abi.h"
+#endif
 #include "entity.h"
 #include "explosion.h"
 #include "enemy.h"
@@ -99,8 +102,10 @@ void stage5_midboss4_arrival_first(void) {
     enemy_set_entity_count(0);
 }
 
+#ifndef DDPDOJ_PC
 s32 enemy_set_task_state();
 s32 enemy_init_entities();
+#endif
 s32 sprite_palette_load();
 extern u8 stage5_midboss4_arrival_start_table[];
 extern u8 stage5_midboss4_arrival_start_table_2[];
@@ -133,10 +138,14 @@ void stage5_midboss4_arrival_start(void) {
 }
 
 s32 enemy_request_start();
+#ifndef DDPDOJ_PC
 s32 enemy_remove();
 s32 sprite_draw_layer1();
+#endif
 s32 entity_follow_scroll();
+#ifndef DDPDOJ_PC
 s32 entity_velocity();
+#endif
 extern u8 stage5_midboss4_arrival_table[];
 extern u16 g_enemies_stopped;
 
@@ -229,7 +238,9 @@ void stage5_midboss4_start() {
 
 s32 ground_speeds_request();
 s32 fade_out_and_release();
+#ifndef DDPDOJ_PC
 s32 enemy_hitbox_debug_draw();
+#endif
 s32 score_add_no_chain();
 extern u8 D_00265F60[];
 extern u16 g_enemy_signal_1;
@@ -372,7 +383,9 @@ draw:
 }
 
 void stage5_midboss4_draw_body(void) {
+#ifndef DDPDOJ_PC
     s32 sprite_draw_layer4();
+#endif
     u16 temp_a0;
     u16 temp_a1;
 
@@ -399,7 +412,9 @@ void stage5_midboss4_draw_body(void) {
 
 void stage5_midboss4_draw_left_cannon(void)
 {
+#ifndef DDPDOJ_PC
     extern void sprite_draw_layer4(void);
+#endif
     u8 *object = reg_a6;
 
     reg_d2.w = 0x1E7D;
@@ -414,7 +429,9 @@ void stage5_midboss4_draw_left_cannon(void)
 
 void stage5_midboss4_draw_right_cannon(void)
 {
+#ifndef DDPDOJ_PC
     extern void sprite_draw_layer4(void);
+#endif
     u8 *object = reg_a6;
 
     reg_d2.w = 0x1E7E;
@@ -460,7 +477,9 @@ void stage5_midboss4_move(void) {
 
 s32 rng_next_unsigned();
 s32 direction256_between();
+#ifndef DDPDOJ_PC
 s32 distance_between();
+#endif
 extern u8 stage5_midboss4_move_between_points_table[];
 extern u16 stage5_midboss4_move_between_points_table_2[];
 
@@ -762,8 +781,10 @@ void stage5_midboss4_attack_set(void) {
 
 
 void stage5_midboss4_attack(void) {
+#ifndef DDPDOJ_PC
     extern void stage5_midboss4_attack_fan(s64, u16);
     extern void stage5_midboss4_attack_beams(s64, u16);
+#endif
     s64 temp_a0;
 
     reg_a4 = (u8 *)&STAGE5_MIDBOSS4_ATTACK(reg_a6)->values;
@@ -771,16 +792,18 @@ void stage5_midboss4_attack(void) {
     temp_a0 = (s64) ((s64) reg_d0.h[0] << 0x30) >> 0x30;
     if (temp_a0 != -1) {
         if (!(reg_d0.h[0] & 0xFFFF)) {
-            stage5_midboss4_attack_fan(temp_a0, reg_d0.h[0]);
+            ARCADE_REGISTER_CALL(stage5_midboss4_attack_fan, temp_a0, reg_d0.h[0]);
             return;
         }
-        stage5_midboss4_attack_beams(temp_a0, reg_d0.h[0]);
+        ARCADE_REGISTER_CALL(stage5_midboss4_attack_beams, temp_a0, reg_d0.h[0]);
     }
 }
 
 s32 bullet_fire256_2way();
+#ifndef DDPDOJ_PC
 s32 bullet_fire256();
 s32 direction256_to_target_player();
+#endif
 extern u16 g_direction64_offsets_2CC[];
 extern u16 g_direction64_offsets_432[];
 extern u16 g_bullets_blocked;
@@ -897,12 +920,18 @@ void stage5_midboss4_attack_fan() {
 
 s32 spawn_request_add();
 
+#ifdef DDPDOJ_PC
+void stage5_midboss4_attack_beams(void)
+#else
 void stage5_midboss4_attack_beams(arg1)
     u16 arg1;
+#endif
 {
     u16 var_a1;
 
+#ifndef DDPDOJ_PC
     var_a1 = arg1;
+#endif
     if (STAGE5_MIDBOSS4_ATTACK(reg_a6)->started == 0) {
         reg_d0.w = 2;
         stage5_midboss4_set_move();
@@ -1160,7 +1189,9 @@ draw:
 extern u8 stage5_midboss4_wave_beam_draw_charge_table[];
 
 void stage5_midboss4_wave_beam_draw_charge(void) {
+#ifndef DDPDOJ_PC
     void sprite_draw_layer5(void);
+#endif
     if ((STAGE5_MIDBOSS4_WAVE_BEAM(reg_a5)->parts) & 1) {
         reg_a0 = stage5_midboss4_wave_beam_draw_charge_table;
         reg_a0 += STAGE5_MIDBOSS4_WAVE_BEAM(reg_a5)->charge_frame;
@@ -1178,7 +1209,9 @@ void stage5_midboss4_wave_beam_draw_charge(void) {
 extern u8 stage5_midboss4_wave_beam_draw_burst_table[];
 
 void stage5_midboss4_wave_beam_draw_burst(void) {
+#ifndef DDPDOJ_PC
     s32 sprite_draw_layer5();
+#endif
     u32 temp_a0;
 
     if (STAGE5_MIDBOSS4_WAVE_BEAM(reg_a5)->parts & 2) {
@@ -1207,7 +1240,9 @@ void stage5_midboss4_wave_beam_draw_burst(void) {
 extern u8 stage5_midboss4_wave_beam_draw_wave_table[];
 
 void stage5_midboss4_wave_beam_draw_wave(void) {
+#ifndef DDPDOJ_PC
     s32 sprite_draw_layer5();
+#endif
     u32 temp_a0;
 
     if (STAGE5_MIDBOSS4_WAVE_BEAM(reg_a5)->parts & 4) {

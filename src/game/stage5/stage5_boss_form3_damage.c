@@ -1,4 +1,7 @@
 #include "common.h"
+#ifdef DDPDOJ_PC
+#include "pc_gameplay_abi.h"
+#endif
 #include "entity.h"
 #include "stage5_boss.h"
 
@@ -6,7 +9,9 @@ s32 stage5_boss_form2_defeated();
 extern u16 g_enemies_stopped;
 
 void stage5_boss_form2_time_limit(void) {
+#ifndef DDPDOJ_PC
     void active_players_mask(void);
+#endif
 #ifdef DEATH_LABEL
     if ((g_enemies_stopped == 0) && (STAGE5_BOSS(reg_a5)->time_left == 0)) {
 #else
@@ -22,9 +27,13 @@ void stage5_boss_form2_time_limit(void) {
     }
 }
 
+#ifndef DDPDOJ_PC
 s32 boss_phase_start();
+#endif
 s32 boss_phase_stop_all();
+#ifndef DDPDOJ_PC
 s32 boss_movement_start();
+#endif
 s32 boss_part_show();
 s32 boss_part_hide();
 s32 boss_attack_stop_all();
@@ -43,7 +52,9 @@ extern u16 D_0029976E[];
 extern u16 g_bomb_entities[];
 
 void stage5_boss_form3_take_damage(void) {
+#ifndef DDPDOJ_PC
     s32 active_players_mask();
+#endif
 #ifdef DEATH_LABEL
     u16 hp;
 
@@ -243,7 +254,9 @@ next_11:
     stage5_boss_form3_time_limit();
 }
 
+#ifndef DDPDOJ_PC
 s32 boss_phase_start();
+#endif
 s32 boss_phase_stop_all();
 s32 boss_part_hide();
 s32 boss_attack_stop_all();
@@ -279,7 +292,9 @@ void stage5_boss_form3_defeated() {
     boss_phase_start();
 }
 
+#ifndef DDPDOJ_PC
 void active_players_mask(void);
+#endif
 extern u16 g_enemies_stopped;
 
 void stage5_boss_form3_time_limit(void) {

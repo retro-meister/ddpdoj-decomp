@@ -1,4 +1,7 @@
 #include "common.h"
+#ifdef DDPDOJ_PC
+#include "pc_gameplay_abi.h"
+#endif
 #include "entity.h"
 #include "stage5_boss.h"
 
@@ -32,7 +35,9 @@ void (*stage5_boss_fire_loop1_routines[])(void) = {
 extern u8 D_00264660[];
 
 void stage5_boss_loop1_arm_gun_fire_a(void) {
+#ifndef DDPDOJ_PC
     s32 bullet_fire256();
+#endif
     u16 temp_a1;
     u16 temp_a1_2;
     u32 temp_a0;
@@ -63,7 +68,9 @@ void stage5_boss_loop1_arm_gun_fire_a(void) {
 }
 
 void stage5_boss_loop1_arm_gun_fire_b(void) {
+#ifndef DDPDOJ_PC
     s32 bullet_fire256();
+#endif
     u16 temp_a1;
     u16 temp_a1_2;
     u32 temp_a0;
@@ -94,7 +101,9 @@ void stage5_boss_loop1_arm_gun_fire_b(void) {
 }
 
 void stage5_boss_loop1_arm_gun_fire_c(void) {
+#ifndef DDPDOJ_PC
     s32 bullet_fire256();
+#endif
     u16 temp_a1;
     u16 temp_a1_2;
     u32 temp_a0;
@@ -179,7 +188,9 @@ extern u8 D_00264600[];
 extern u16 stage5_boss_fire_loop1_form1_arm_guns_aimed_table[];
 
 void stage5_boss_fire_loop1_form1_arm_guns_aimed(void) {
+#ifndef DDPDOJ_PC
     s32 bullet_fire256();
+#endif
     u32 t1;
     u32 t2;
     u32 t3;
@@ -348,7 +359,9 @@ extern s16 g_player2[];
 extern s16 g_player1[];
 
 void stage5_boss_fire_loop1_form1_mouth(s16 *arg1) {
+#ifndef DDPDOJ_PC
     s32 bullet_fire256();
+#endif
     s16 *temp_a0;
     s16 *var_a1;
     u32 temp_a1;
@@ -570,7 +583,9 @@ s32 rng_next_d5();
 extern u8 D_00264600[];
 
 void stage5_boss_fire_loop1_form1_arm_guns_fixed(void) {
+#ifndef DDPDOJ_PC
     s32 bullet_fire256();
+#endif
     s16 *temp_a0;
     s16 *var_a1;
     u16 temp_a0_2;
@@ -756,7 +771,9 @@ block_10:
 }
 
 void stage5_boss_loop1_horn_fire(void) {
+#ifndef DDPDOJ_PC
     void bullet_fire256(void);
+#endif
     bullet_fire256();
 }
 
@@ -930,7 +947,9 @@ block_8:
 }
 
 void stage5_boss_loop1_form1_rage_fire(void) {
+#ifndef DDPDOJ_PC
     s32 bullet_fire256();
+#endif
     u32 var_a1;
     u8 var_a0;
 

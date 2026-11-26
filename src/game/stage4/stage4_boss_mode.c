@@ -1,4 +1,7 @@
 #include "common.h"
+#ifdef DDPDOJ_PC
+#include "pc_gameplay_abi.h"
+#endif
 #include "entity.h"
 #include "explosion.h"
 #include "stage4_boss.h"
@@ -218,7 +221,9 @@ void stage4_boss_explosions_scattered(void) {
     }
 }
 
+#ifndef DDPDOJ_PC
 s32 boss_movement_start();                            /* extern */
+#endif
 s32 boss_part_show();                            /* extern */
 s32 sprite_palette_load();                            /* extern */
 extern u8 D_0025FF30[];
@@ -239,7 +244,9 @@ void stage4_boss_mode_enter(void) {
     *(*(u16 **)&reg_a4) = 0;
 }
 
+#ifndef DDPDOJ_PC
 s32 boss_movement_start();
+#endif
 s32 stage4_boss_shield_on();
 s32 stage4_boss_part_stop_hits();
 
@@ -255,7 +262,7 @@ void stage4_boss_mode_second_form_start(void) {
     EXPLODING(reg_a4)->wait = 1;
     EXPLODING(reg_a4)->burst_a.h = 0xFF02;
     EXPLODING(reg_a4)->burst_b.h = 0xFF04;
-    stage4_boss_mode_second_form(0xFF02, 1);
+    ARCADE_REGISTER_CALL(stage4_boss_mode_second_form, 0xFF02, 1);
 }
 
 s32 boss_part_hide();
@@ -450,7 +457,7 @@ void stage4_boss_mode_final_explosion_start(void) {
     EXPLODING(reg_a4)->blast_rounds = 3;
     EXPLODING(reg_a4)->cycle_timer.h = 4;
     EXPLODING(reg_a4)->cycle = 0;
-    stage4_boss_mode_final_explosion(3, 0xC0C, 0xFF04, 0xFF02);
+    ARCADE_REGISTER_CALL(stage4_boss_mode_final_explosion, 3, 0xC0C, 0xFF04, 0xFF02);
 }
 
 s32 boss_slots_end();
