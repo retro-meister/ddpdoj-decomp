@@ -4089,10 +4089,10 @@ void ground_enemy_pointers_store(void) {
     STORE_ARCADE_ADDRESS(D_0028C9D8 + 2, D_00258900);
     STORE_ARCADE_ADDRESS(D_002589B0 + 10, entity_draw_layer1);
     STORE_ARCADE_ADDRESS(D_002589B0 + 12, sprite_draw_layer1);
-    STORE_POINTER(D_00257C10 + 104, D_0028C0DC);
-    STORE_POINTER(D_00257C10 + 112, D_0028C0DC);
-    STORE_POINTER(D_00257C10 + 120, D_0028C0D8);
-    STORE_POINTER(D_00257C10 + 128, D_0028C0D8);
+    STORE_ARCADE_ADDRESS(D_00257C10 + 104, D_0028C0DC);
+    STORE_ARCADE_ADDRESS(D_00257C10 + 112, D_0028C0DC);
+    STORE_ARCADE_ADDRESS(D_00257C10 + 120, D_0028C0D8);
+    STORE_ARCADE_ADDRESS(D_00257C10 + 128, D_0028C0D8);
 }
 
 extern u16 g_explosion_test_labels_at_0[];
@@ -4134,12 +4134,12 @@ void small_tank_pointers_store(void) {
     STORE_ARCADE_ADDRESS(small_tank_a_state + 12, sprite_draw_layer1);
     STORE_ARCADE_ADDRESS(small_tank_b_state + 10, entity_draw_layer1);
     STORE_ARCADE_ADDRESS(small_tank_b_state + 12, sprite_draw_layer1);
-    STORE_POINTER(large_tank_entities + 33, D_0028C0C8);
-    STORE_POINTER(large_tank_entities + 40, D_0028C0C8);
-    STORE_POINTER(large_tank_entities + 47, large_tank_entities_at_47);
-    STORE_POINTER(large_tank_entities + 54, large_tank_entities_at_47);
-    STORE_POINTER(hatch_gunner_entities + 33, D_0028C0C8);
-    STORE_POINTER(hatch_gunner_entities + 40, D_0028C0C8);
+    STORE_ARCADE_ADDRESS(large_tank_entities + 33, D_0028C0C8);
+    STORE_ARCADE_ADDRESS(large_tank_entities + 40, D_0028C0C8);
+    STORE_ARCADE_ADDRESS(large_tank_entities + 47, large_tank_entities_at_47);
+    STORE_ARCADE_ADDRESS(large_tank_entities + 54, large_tank_entities_at_47);
+    STORE_ARCADE_ADDRESS(hatch_gunner_entities + 33, D_0028C0C8);
+    STORE_ARCADE_ADDRESS(hatch_gunner_entities + 40, D_0028C0C8);
 }
 
 extern u16 stage1_midboss_fade_script_at_60[];
@@ -4160,7 +4160,7 @@ extern u16 D_0028C0D0[];
 
 
 void stage1_midboss_pointers_store(void) {
-    STORE_POINTER(stage1_midboss_entities + 243, D_0028C0D0);
+    STORE_ARCADE_ADDRESS(stage1_midboss_entities + 243, D_0028C0D0);
     STORE_ARCADE_ADDRESS(stage1_midboss_fade_script + 4, D_002610F0);
     STORE_ARCADE_ADDRESS(stage1_midboss_fade_script + 11, ((u16 *)stage1_midboss_fade_script_at_11));
     STORE_ARCADE_ADDRESS(stage1_midboss_fade_script + 18, ((u16 *)stage1_midboss_fade_script_at_18));
@@ -4198,7 +4198,7 @@ void stage3_midboss_pointers_store(void) {
     if (stage3_midboss_table[103] != 0x67) {
         printf("error! st3mb_tbl[103]\n");
     }
-    STORE_POINTER(stage3_midboss_table + 103, D_0028C0D0);
+    STORE_ARCADE_ADDRESS(stage3_midboss_table + 103, D_0028C0D0);
     if (stage3_midboss_flash_palettes[4] != 0x4) {
         printf("error! st3mbflush0_tbl[4]\n");
     }
@@ -4335,32 +4335,32 @@ extern u16 D_0025AE50[];
 extern u16 sprite_draw_by_layer_routines[];
 
 void pointers_store_part_7(void) {
-    STORE_POINTER(D_0025A0B0 + 33, D_0028C0C8);
-    STORE_POINTER(D_0025A0B0 + 40, D_0028C0C8);
-    STORE_POINTER(D_0025A0B0 + 47, large_tank_entities_at_47);
-    STORE_POINTER(D_0025A0B0 + 54, large_tank_entities_at_47);
-    STORE_POINTER(D_0025A160 + 33, D_0028C0C8);
-    STORE_POINTER(D_0025A160 + 40, D_0028C0C8);
-    STORE_POINTER(D_0025A160 + 47, large_tank_entities_at_47);
-    STORE_POINTER(D_0025A160 + 54, large_tank_entities_at_47);
-    STORE_POINTER(D_0025A230 + 33, D_0028C0C8);
-    STORE_POINTER(D_0025A230 + 40, D_0028C0C8);
-    STORE_POINTER(D_0025A2C0 + 33, D_0028C0C8);
-    STORE_POINTER(D_0025A2C0 + 40, D_0028C0C8);
-    STORE_POINTER(D_0025A2C0 + 47, large_tank_entities_at_47);
-    STORE_POINTER(D_0025A3B0 + 33, D_0028C0C8);
-    STORE_POINTER(D_0025A3B0 + 40, D_0028C0C8);
-    STORE_POINTER(D_0025A3B0 + 47, large_tank_entities_at_47);
-    STORE_POINTER(D_0025A3B0 + 54, large_tank_entities_at_47);
-    STORE_POINTER(D_0025A4B0 + 33, D_0028C0C8);
-    STORE_POINTER(D_0025A4B0 + 40, D_0028C0C8);
-    STORE_POINTER(D_0025A4B0 + 47, large_tank_entities_at_47);
-    STORE_POINTER(D_0025A5A0 + 33, D_0028C0C8);
-    STORE_POINTER(D_0025A5A0 + 40, D_0028C0C8);
-    STORE_POINTER(D_0025A5A0 + 47, large_tank_entities_at_47);
-    STORE_POINTER(D_0025AD90 + 19, D_0028C0C8);
-    STORE_POINTER(D_0025AD90 + 26, D_0028C0C8);
-    STORE_POINTER(D_0025AD90 + 33, large_tank_entities_at_47);
+    STORE_ARCADE_ADDRESS(D_0025A0B0 + 33, D_0028C0C8);
+    STORE_ARCADE_ADDRESS(D_0025A0B0 + 40, D_0028C0C8);
+    STORE_ARCADE_ADDRESS(D_0025A0B0 + 47, large_tank_entities_at_47);
+    STORE_ARCADE_ADDRESS(D_0025A0B0 + 54, large_tank_entities_at_47);
+    STORE_ARCADE_ADDRESS(D_0025A160 + 33, D_0028C0C8);
+    STORE_ARCADE_ADDRESS(D_0025A160 + 40, D_0028C0C8);
+    STORE_ARCADE_ADDRESS(D_0025A160 + 47, large_tank_entities_at_47);
+    STORE_ARCADE_ADDRESS(D_0025A160 + 54, large_tank_entities_at_47);
+    STORE_ARCADE_ADDRESS(D_0025A230 + 33, D_0028C0C8);
+    STORE_ARCADE_ADDRESS(D_0025A230 + 40, D_0028C0C8);
+    STORE_ARCADE_ADDRESS(D_0025A2C0 + 33, D_0028C0C8);
+    STORE_ARCADE_ADDRESS(D_0025A2C0 + 40, D_0028C0C8);
+    STORE_ARCADE_ADDRESS(D_0025A2C0 + 47, large_tank_entities_at_47);
+    STORE_ARCADE_ADDRESS(D_0025A3B0 + 33, D_0028C0C8);
+    STORE_ARCADE_ADDRESS(D_0025A3B0 + 40, D_0028C0C8);
+    STORE_ARCADE_ADDRESS(D_0025A3B0 + 47, large_tank_entities_at_47);
+    STORE_ARCADE_ADDRESS(D_0025A3B0 + 54, large_tank_entities_at_47);
+    STORE_ARCADE_ADDRESS(D_0025A4B0 + 33, D_0028C0C8);
+    STORE_ARCADE_ADDRESS(D_0025A4B0 + 40, D_0028C0C8);
+    STORE_ARCADE_ADDRESS(D_0025A4B0 + 47, large_tank_entities_at_47);
+    STORE_ARCADE_ADDRESS(D_0025A5A0 + 33, D_0028C0C8);
+    STORE_ARCADE_ADDRESS(D_0025A5A0 + 40, D_0028C0C8);
+    STORE_ARCADE_ADDRESS(D_0025A5A0 + 47, large_tank_entities_at_47);
+    STORE_ARCADE_ADDRESS(D_0025AD90 + 19, D_0028C0C8);
+    STORE_ARCADE_ADDRESS(D_0025AD90 + 26, D_0028C0C8);
+    STORE_ARCADE_ADDRESS(D_0025AD90 + 33, large_tank_entities_at_47);
     STORE_ARCADE_ADDRESS(entity_draw_by_layer_routines, entity_draw_layer1);
     STORE_ARCADE_ADDRESS(entity_draw_by_layer_routines + 2, entity_draw_layer1);
     STORE_ARCADE_ADDRESS(entity_draw_by_layer_routines + 4, entity_draw_layer2);
@@ -4410,10 +4410,10 @@ extern u16 D_002602F0[];
 
 
 void pointers_store_part_8(void) {
-    STORE_POINTER(D_00263030 + 48, D_0028C0C8);
-    STORE_POINTER(D_00263030 + 56, D_0028C0C8);
-    STORE_POINTER(D_00263030 + 64, large_tank_entities_at_47);
-    STORE_POINTER(D_00263030 + 72, large_tank_entities_at_47);
+    STORE_ARCADE_ADDRESS(D_00263030 + 48, D_0028C0C8);
+    STORE_ARCADE_ADDRESS(D_00263030 + 56, D_0028C0C8);
+    STORE_ARCADE_ADDRESS(D_00263030 + 64, large_tank_entities_at_47);
+    STORE_ARCADE_ADDRESS(D_00263030 + 72, large_tank_entities_at_47);
     STORE_ARCADE_ADDRESS(D_002630D0 + 4, D_00260270);
     STORE_ARCADE_ADDRESS(D_002630D0 + 11, D_002602B0);
     STORE_ARCADE_ADDRESS(D_002630D0 + 18, D_002602F0);
@@ -4451,10 +4451,10 @@ extern u16 D_00263B30[];
 
 
 void pointers_store_part_9(void) {
-    STORE_POINTER(D_002638B0 + 47, D_0028C0C8);
-    STORE_POINTER(D_002638B0 + 54, D_0028C0C8);
-    STORE_POINTER(D_002638B0 + 61, large_tank_entities_at_47);
-    STORE_POINTER(D_002638B0 + 68, large_tank_entities_at_47);
+    STORE_ARCADE_ADDRESS(D_002638B0 + 47, D_0028C0C8);
+    STORE_ARCADE_ADDRESS(D_002638B0 + 54, D_0028C0C8);
+    STORE_ARCADE_ADDRESS(D_002638B0 + 61, large_tank_entities_at_47);
+    STORE_ARCADE_ADDRESS(D_002638B0 + 68, large_tank_entities_at_47);
     STORE_ARCADE_ADDRESS(D_002639B0 + 4, D_002610F0);
     STORE_ARCADE_ADDRESS(D_002639B0 + 11, ((u16 *)stage4_heavy_cannon_start_table));
     STORE_ARCADE_ADDRESS(D_002639B0 + 18, ((u16 *)stage4_heavy_cannon_start_table_2));
@@ -4466,10 +4466,10 @@ void pointers_store_part_9(void) {
     STORE_POINTER(D_00263A50 + 64, D_00263AE0);
     STORE_POINTER(D_00263A50 + 66, D_00263B10);
     STORE_POINTER(D_00263A50 + 68, D_00263B30);
-    STORE_POINTER(D_00263B80 + 47, D_0028C0C8);
-    STORE_POINTER(D_00263B80 + 54, D_0028C0C8);
-    STORE_POINTER(D_00263B80 + 61, large_tank_entities_at_47);
-    STORE_POINTER(D_00263B80 + 68, large_tank_entities_at_47);
+    STORE_ARCADE_ADDRESS(D_00263B80 + 47, D_0028C0C8);
+    STORE_ARCADE_ADDRESS(D_00263B80 + 54, D_0028C0C8);
+    STORE_ARCADE_ADDRESS(D_00263B80 + 61, large_tank_entities_at_47);
+    STORE_ARCADE_ADDRESS(D_00263B80 + 68, large_tank_entities_at_47);
     STORE_ARCADE_ADDRESS(D_00263C70 + 3, ((u16 *)stage4_wave_cannon_table));
     STORE_ARCADE_ADDRESS(D_00263C80 + 3, D_00261D30);
     STORE_ARCADE_ADDRESS(D_00263C90 + 4, D_002610F0);

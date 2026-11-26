@@ -324,7 +324,7 @@ void mid_flyer_a_start(void) {
 #endif
     (*(s8 **)&reg_a0) = D_0025A0B0;
     enemy_init_entities();
-    reg_tmp.w = (u32) ((s8 *)reg_a0);
+    reg_tmp.w = ARCADE_ADDRESS_ENCODE(reg_a0);
     MID_FLYER_A(reg_a5)->after_entities[0] = (u16) reg_tmp.h[1];
     MID_FLYER_A(reg_a5)->after_entities[1] = (u16) reg_tmp.h[0];
     (*(s8 **)&reg_a0) = mid_flyer_a_start_table_2;
@@ -832,7 +832,7 @@ void mid_flyer_b_start(void) {
 #endif
     (*(s8 **)&reg_a0) = D_0025A160;
     enemy_init_entities();
-    reg_tmp.w = (u32) ((s8 *)reg_a0);
+    reg_tmp.w = ARCADE_ADDRESS_ENCODE(reg_a0);
     MID_FLYER_B(reg_a5)->after_entities[0] = (u16) reg_tmp.h[1];
     MID_FLYER_B(reg_a5)->after_entities[1] = (u16) reg_tmp.h[0];
     (*(s8 **)&reg_a0) = mid_flyer_b_start_table;
@@ -1394,7 +1394,7 @@ void mid_flyer_c_start(void) {
     }
     (*(s8 **)&reg_a0) = D_0025A230;
     enemy_init_entities();
-    reg_tmp.w = (u32) ((s8 *)reg_a0);
+    reg_tmp.w = ARCADE_ADDRESS_ENCODE(reg_a0);
     MID_FLYER_C(reg_a5)->after_entities[0] = (u16) reg_tmp.h[1];
     MID_FLYER_C(reg_a5)->after_entities[1] = (u16) reg_tmp.h[0];
     (*(s8 **)&reg_a0) = mid_flyer_c_start_table;
@@ -1752,7 +1752,7 @@ void mid_flyer_d_start(void) {
 #endif
     (*(s8 **)&reg_a0) = D_0025A2C0;
     enemy_init_entities();
-    reg_tmp.w = (u32) ((s8 *)reg_a0);
+    reg_tmp.w = ARCADE_ADDRESS_ENCODE(reg_a0);
     MID_FLYER_D(reg_a5)->after_entities[0] = (u16) reg_tmp.h[1];
     MID_FLYER_D(reg_a5)->after_entities[1] = (u16) reg_tmp.h[0];
     (*(s8 **)&reg_a0) = mid_flyer_d_start_table;
@@ -2138,7 +2138,7 @@ void mid_tank_vertical_start(void) {
 #endif
     reg_a0 = (u8 *)(D_0025A3B0);
     enemy_init_entities();
-    reg_tmp.w = (u32) reg_a0;
+    reg_tmp.w = ARCADE_ADDRESS_ENCODE(reg_a0);
     MID_TANK_V(reg_a5)->after_entities[0] = (u16) reg_tmp.h[1];
     MID_TANK_V(reg_a5)->after_entities[1] = (u16) reg_tmp.h[0];
     reg_a0 = (u8 *)(mid_tank_vertical_start_table_2);
@@ -2565,7 +2565,7 @@ void carrier_start_common(void) {
 #endif
     reg_a0 = D_0025A4B0;
     enemy_init_entities();
-    reg_tmp.w = (u32) reg_a0;
+    reg_tmp.w = ARCADE_ADDRESS_ENCODE(reg_a0);
     CARRIER(reg_a5)->after_entities[0] = (u16) reg_tmp.h[1];
     CARRIER(reg_a5)->after_entities[1] = (u16) reg_tmp.h[0];
     reg_a0 = carrier_start_common_table;
@@ -3023,7 +3023,7 @@ void mid_tank_horizontal_start(void) {
 #endif
     reg_a0 = (u8 *)(D_0025A5A0);
     enemy_init_entities();
-    reg_tmp.w = (u32) reg_a0;
+    reg_tmp.w = ARCADE_ADDRESS_ENCODE(reg_a0);
     MID_TANK_H(reg_a5)->after_entities[0] = (u16) reg_tmp.h[1];
     MID_TANK_H(reg_a5)->after_entities[1] = (u16) reg_tmp.h[0];
     reg_a0 = (u8 *)(mid_tank_horizontal_start_table_2);
@@ -4973,7 +4973,7 @@ void mid_tank_horizontal_b_start(void) {
     u16 temp_a0;
     (*(s8 **)&reg_a0) = (s8 *)D_0025AD90;
     enemy_init_entities();
-    reg_tmp.w = (u32) ((s8 *)reg_a0);
+    reg_tmp.w = ARCADE_ADDRESS_ENCODE(reg_a0);
     MID_TANK_HB(reg_a5)->after_entities[0] = (u16) reg_tmp.h[1];
     MID_TANK_HB(reg_a5)->after_entities[1] = (u16) reg_tmp.h[0];
     (*(s8 **)&reg_a0) = (s8 *)mid_tank_horizontal_b_start_table_2;

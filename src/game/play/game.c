@@ -1187,7 +1187,7 @@ void enemy_anims_spawn_listed(void) {
 loop_1:
     reg_tmp.h[1] = *(u16 *)(reg_a5 + 0x44);
     reg_tmp.h[0] = *(u16 *)(reg_a5 + 0x46);
-    reg_a1 = (u8 *)(reg_tmp.w);
+    reg_a1 = ARCADE_ADDRESS_DECODE(u8 *, reg_tmp.w);
     reg_d0.h[0] = *(u16 *)reg_a1;
     reg_a1 += 2;
     if (0 > (s16) reg_d0.h[0]) {
@@ -1208,7 +1208,7 @@ void enemy_anims_spawn_listed_long(void) {
 loop_1:
     reg_tmp.h[1] = *(u16 *)(reg_a5 + 0x44);
     reg_tmp.h[0] = *(u16 *)(reg_a5 + 0x46);
-    reg_a1 = (u8 *)(reg_tmp.w);
+    reg_a1 = ARCADE_ADDRESS_DECODE(u8 *, reg_tmp.w);
     reg_d1.h[1] = *(u16 *)reg_a1;
     reg_a1 += 2;
     reg_d1.h[0] = *(u16 *)reg_a1;
@@ -1242,7 +1242,7 @@ loop_0:
     reg_a0 += 0x26;
     if ((s16)(reg_d0.h[0] -= 1) >= 0) goto loop_0;
     reg_a1 += 0xC;
-    reg_tmp.w = (u32)reg_a1;
+    reg_tmp.w = ARCADE_ADDRESS_ENCODE(reg_a1);
     *(u16 *)(reg_a5 + 0x44) = reg_tmp.h[1];
     *(u16 *)(reg_a5 + 0x46) = reg_tmp.h[0];
     cond_flag = 1;
@@ -1264,8 +1264,8 @@ next_0:
     reg_a1 += 2;
     reg_tmp.h[0] = *(u16 *)reg_a1;
     reg_a1 += 2;
-    reg_a2 = (u8 *)reg_tmp.w;
-    reg_tmp.w = (u32)reg_a1;
+    reg_a2 = ARCADE_ADDRESS_DECODE(u8 *, reg_tmp.w);
+    reg_tmp.w = ARCADE_ADDRESS_ENCODE(reg_a1);
     *(u16 *)(reg_a5 + 0x44) = reg_tmp.h[1];
     *(u16 *)(reg_a5 + 0x46) = reg_tmp.h[0];
     g_enemy_anim_count[0] += 1;
@@ -1295,7 +1295,7 @@ void enemy_anim_init(void) {
 next_0:
     *(u16 *)reg_a0 = reg_d0.h[0];
     reg_a0 += 2;
-    reg_a1 = (u8 *)reg_d1.w;
+    reg_a1 = ARCADE_ADDRESS_DECODE(u8 *, reg_d1.w);
     *(u16 *)reg_a0 = *(u16 *)(reg_a1 + 2);
     reg_a0 += 2;
     *(u16 *)reg_a0 = *(u16 *)(reg_a1 + 4);
@@ -1338,7 +1338,7 @@ next_2:
     reg_a3 += 2;
     reg_a0 += 2;
     reg_a0[-1] = reg_d3.b[0];
-    reg_tmp.w = (u32)reg_a2;
+    reg_tmp.w = ARCADE_ADDRESS_ENCODE(reg_a2);
     *(u16 *)reg_a0 = reg_tmp.h[1];
     reg_a0 += 2;
     *(u16 *)reg_a0 = reg_tmp.h[0];
@@ -1401,7 +1401,7 @@ loop_40:
     if (reg_d2.w & 0x200) goto next_50;
     reg_tmp.h[1] = ENTITY(reg_a6)->hit_y_plus.h;
     reg_tmp.h[0] = ENTITY(reg_a6)->hit_y_minus.h;
-    reg_a0 = (u8 *) reg_tmp.w;
+    reg_a0 = ARCADE_ADDRESS_DECODE(u8 *, reg_tmp.w);
     reg_d1.h[0] = *(u16 *)reg_a0;
     if (!(0 > (s16)reg_d1.h[0])) goto block_clr;
     if (0 > (s8)reg_d1.b[0]) goto block_clr;
@@ -1508,7 +1508,7 @@ block_a5:
 block_objset:
     reg_tmp.h[1] = ENTITY(reg_a6)->hit_y_plus.h;
     reg_tmp.h[0] = ENTITY(reg_a6)->hit_y_minus.h;
-    reg_a0 = (u8 *) reg_tmp.w;
+    reg_a0 = ARCADE_ADDRESS_DECODE(u8 *, reg_tmp.w);
     reg_d0.h[1] = *(u16 *)(reg_a0 + 2);
     reg_d0.h[0] = *(u16 *)(reg_a0 + 4);
     reg_tmp.h[1] = ENTITY(reg_a6)->hit_x_plus.h;
@@ -1549,16 +1549,16 @@ void enemy_anim_restart(void) {
     reg_d3.h[0] = ENTITY(reg_a6)->move.h;
     reg_tmp.h[1] = ENTITY(reg_a6)->misc.h;
     reg_tmp.h[0] = *(u16 *)(reg_a6 + 0x20);
-    reg_a2 = (u8 *)reg_tmp.w;
+    reg_a2 = ARCADE_ADDRESS_DECODE(u8 *, reg_tmp.w);
     if (ENTITY(reg_a6)->flags.b[1] & 2) {
         temp_s0 = reg_d1.w;
         reg_a0 = reg_a6;
         enemy_anim_init();
-        reg_a1 = (u8 *)temp_s0;
+        reg_a1 = ARCADE_ADDRESS_DECODE(u8 *, temp_s0);
         *(u8 *)(reg_a0 + 1) |= 2;
-        *(u16 *)(reg_a0 + 2) = (u16) (*(u16 *)((u8 *)((u32)reg_a1) + (2)));
-        *(u16 *)(reg_a0 + 4) = (u16) (*(u16 *)((u8 *)((u32)reg_a1) + (4)));
-        reg_tmp.w = (u32)reg_a1;
+        *(u16 *)(reg_a0 + 2) = (u16) (*(u16 *)(reg_a1 + 2));
+        *(u16 *)(reg_a0 + 4) = (u16) (*(u16 *)(reg_a1 + 4));
+        reg_tmp.w = ARCADE_ADDRESS_ENCODE(reg_a1);
         *(u16 *)(reg_a0 + 0x10) = (u16) reg_tmp.h[1];
         *(u16 *)(reg_a0 + 0x12) = (u16) reg_tmp.h[0];
         return;

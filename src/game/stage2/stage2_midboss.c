@@ -70,7 +70,7 @@ extern s8 enemy_move_end_requested;
 void stage2_midboss_start(void) {
     reg_a0 = D_00263030;
     enemy_init_entities();
-    reg_tmp.w = (u32) reg_a0;
+    reg_tmp.w = ARCADE_ADDRESS_ENCODE(reg_a0);
     STAGE2_MIDBOSS(reg_a5)->after_entities[0] = (u16) reg_tmp.h[1];
     STAGE2_MIDBOSS(reg_a5)->after_entities[1] = (u16) reg_tmp.h[0];
     reg_a0 = stage2_midboss_start_table;

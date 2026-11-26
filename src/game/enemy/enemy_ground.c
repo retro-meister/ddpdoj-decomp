@@ -378,7 +378,7 @@ void battleship_start(void) {
 #endif
     reg_a0 = (u8 *)D_00257C10;
     enemy_init_entities();
-    reg_tmp.w = (u32) reg_a0;
+    reg_tmp.w = ARCADE_ADDRESS_ENCODE(reg_a0);
     BATTLESHIP(reg_a5)->after_entities[0] = (u16) reg_tmp.h[1];
     BATTLESHIP(reg_a5)->after_entities[1] = (u16) reg_tmp.h[0];
     reg_a0 = &D_0028C9B0;

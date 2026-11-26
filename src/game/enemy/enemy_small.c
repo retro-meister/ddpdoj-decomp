@@ -853,7 +853,7 @@ extern u16 large_tank_part_sprites[];
 void large_tank_start(void) {
     reg_a0 = (u8 *)(large_tank_entities);
     enemy_init_entities();
-    reg_tmp.w = (u32) reg_a0;
+    reg_tmp.w = ARCADE_ADDRESS_ENCODE(reg_a0);
     LARGE_TANK(reg_a5)->after_entities[0] = (u16) reg_tmp.h[1];
     LARGE_TANK(reg_a5)->after_entities[1] = (u16) reg_tmp.h[0];
     reg_a0 = (u8 *)(large_tank_state);
@@ -1238,7 +1238,7 @@ extern u16 hatch_gunner_part_sprites[];
 void hatch_gunner_start(void) {
     reg_a0 = (u8 *)(hatch_gunner_entities);
     enemy_init_entities();
-    reg_tmp.w = (u32) reg_a0;
+    reg_tmp.w = ARCADE_ADDRESS_ENCODE(reg_a0);
     HATCH_GUNNER(reg_a5)->after_entities[0] = (u16) reg_tmp.h[1];
     HATCH_GUNNER(reg_a5)->after_entities[1] = (u16) reg_tmp.h[0];
     reg_a0 = (u8 *)(hatch_gunner_state);

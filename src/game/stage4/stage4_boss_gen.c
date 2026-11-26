@@ -655,7 +655,7 @@ void stage4_heavy_cannon_start(void) {
 
     reg_a0 = D_002638B0;
     enemy_init_entities();
-    reg_tmp.w = (u32) reg_a0;
+    reg_tmp.w = ARCADE_ADDRESS_ENCODE(reg_a0);
     *(u16 *)(reg_a5 + 0x44) = (u16) reg_tmp.h[1];
     *(u16 *)(reg_a5 + 0x46) = (u16) reg_tmp.h[0];
     reg_a0 = stage4_heavy_cannon_start_table_4;
@@ -1459,7 +1459,7 @@ extern u8 D_00263B80[];
 void stage4_wave_cannon_start(void) {
     reg_a0 = D_00263B80;
     enemy_init_entities();
-    reg_tmp.w = (u32) reg_a0;
+    reg_tmp.w = ARCADE_ADDRESS_ENCODE(reg_a0);
     *(u16 *)(reg_a5 + 0x44) = (u16) reg_tmp.h[1];
     *(u16 *)(reg_a5 + 0x46) = (u16) reg_tmp.h[0];
     reg_a0 = stage4_wave_cannon_start_table_3;
@@ -1925,7 +1925,7 @@ extern u8 stage4_reactor_start_table_2[8];
 void stage4_reactor_start(void) {
     reg_a0 = stage4_reactor_start_table;
     enemy_init_entities();
-    reg_tmp.w = (u32)reg_a0;
+    reg_tmp.w = ARCADE_ADDRESS_ENCODE(reg_a0);
     *(u16 *)(reg_a5 + 0x44) = reg_tmp.h[1];
     *(u16 *)(reg_a5 + 0x46) = reg_tmp.h[0];
     reg_a0 = stage4_reactor_start_table_2;

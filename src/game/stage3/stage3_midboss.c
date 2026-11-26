@@ -115,7 +115,7 @@ extern u16 g_enemy_signal_4;
 void stage3_midboss_start(void) {
     (*(u16 **)&reg_a0) = ((u16 *)&stage3_midboss_table);
     enemy_init_entities();
-    reg_tmp.w = (u32) ((u16 *)reg_a0);
+    reg_tmp.w = ARCADE_ADDRESS_ENCODE(reg_a0);
     STAGE3_MIDBOSS(reg_a5)->after_entities[0] = (u16) reg_tmp.h[1];
     STAGE3_MIDBOSS(reg_a5)->after_entities[1] = (u16) reg_tmp.h[0];
     (*(u16 **)&reg_a0) = stage3_midboss_start_table_4;

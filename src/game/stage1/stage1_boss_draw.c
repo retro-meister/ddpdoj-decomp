@@ -194,7 +194,11 @@ void stage1_boss_draw_right_side(void) {
         reg_d0.h[0] = (u16) reg_d0.b[0];
         reg_d0.h[0] += reg_d0.h[0];
         reg_d0.h[0] += reg_d0.h[0];
+#ifdef DDPDOJ_PC
+        stage1_boss_rotor_draw_routines[reg_d0.h[0] / 4]();
+#else
         ((Fn)*(u32 *)((u8 *)stage1_boss_rotor_draw_routines + (reg_d0.h[0] & ~3)))();
+#endif
         return;
     }
     sprite_draw_layer3_zoom_keep();
@@ -234,7 +238,11 @@ void stage1_boss_draw_left_side(void) {
         reg_d0.h[0] = (u16) reg_d0.b[0];
         reg_d0.h[0] += reg_d0.h[0];
         reg_d0.h[0] += reg_d0.h[0];
+#ifdef DDPDOJ_PC
+        stage1_boss_rotor_draw_routines[reg_d0.h[0] / 4]();
+#else
         ((Fn)*(u32 *)((u8 *)stage1_boss_rotor_draw_routines + (reg_d0.h[0] & ~3)))();
+#endif
     }
     sprite_draw_layer3_zoom_keep();
 }
