@@ -79,12 +79,12 @@ void func_001CC0A0();
 void func_001D6C80();
 void func_001D6C90();
 void func_001D6D60();
-void func_001F93C0();
-void func_001F93D0();
-void func_001F9450();
-void func_001F9540();
-void func_001F9550();
-void func_001F95D0();
+void stage5_anim_test_a_first();
+void stage5_anim_test_a_start();
+void stage5_anim_test_a();
+void stage5_anim_test_b_first();
+void stage5_anim_test_b_start();
+void stage5_anim_test_b();
 void ground_turret_a();
 void ground_turret_a_first();
 void ground_turret_a_start();
@@ -438,8 +438,8 @@ EnemyRoutines g_enemy_routines[128] = {
     /* 0x53 */ { stage5_midboss4_wave_beam_start, stage5_midboss4_wave_beam },
     /* 0x54 */ { stage5_spiderling_start, stage5_spiderling },
     /* 0x55 */ { stage5_bee_drone_start, stage5_bee_drone },
-    /* 0x56 */ { func_001F93D0, func_001F9450 },
-    /* 0x57 */ { func_001F9550, func_001F95D0 },
+    /* 0x56 */ { stage5_anim_test_a_start, stage5_anim_test_a },
+    /* 0x57 */ { stage5_anim_test_b_start, stage5_anim_test_b },
     /* 0x58 */ { stage5_midboss5_spin_drone_start, stage5_midboss5_spin_drone },
     /* 0x59 */ { flyer_spawner_start, flyer_spawner },
     /* 0x5A */ { dummy_enemy_main, dummy_enemy_main_b },
@@ -570,8 +570,8 @@ void (*g_enemy_first_routines[128])() = {
     /* 0x53 */ stage5_midboss4_wave_beam_first,
     /* 0x54 */ stage5_spiderling_first,
     /* 0x55 */ stage5_bee_drone_first,
-    /* 0x56 */ func_001F93C0,
-    /* 0x57 */ func_001F9540,
+    /* 0x56 */ stage5_anim_test_a_first,
+    /* 0x57 */ stage5_anim_test_b_first,
     /* 0x58 */ stage5_midboss5_spin_drone_first,
     /* 0x59 */ flyer_spawner_first,
     /* 0x5A */ dummy_enemy_first,
