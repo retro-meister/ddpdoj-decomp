@@ -46,7 +46,7 @@ s32 func_00137C50();
 s32 sfx_coin();
 s32 sound_stop_effects();
 s32 menu_settings_restore();
-extern u8 test_palette_0[];
+extern u8 text_palette_0[];
 extern u8 D_0026A830[];
 extern s8 D_0028DF84;
 extern u8 g_stage_load_state;
@@ -118,7 +118,7 @@ next_4:
     sound_stop_effects();
 next_5:
     reg_d0.w = 0;
-    reg_a0 = (u8 *)test_palette_0;
+    reg_a0 = (u8 *)text_palette_0;
     text_palette_load();
     text_layer_clear();
     func_0012FB00();
@@ -209,7 +209,7 @@ void func_00168EF0(void) {
         *(u8 *)(reg_a5 + 2) = 1U;
         text_layer_clear();
         reg_d0.w = 0;
-        reg_a0 = test_palette_0;
+        reg_a0 = text_palette_0;
         text_palette_load();
         D_0028E304 = 0;
         slowdown_init();
@@ -331,7 +331,7 @@ void death_func_00136FF0(void) {
         func_0012FB00();
         text_layer_clear();
         reg_d0.w = 0;
-        reg_a0 = test_palette_0;
+        reg_a0 = text_palette_0;
         text_palette_load();
         func_0013B190();
         music_stop();

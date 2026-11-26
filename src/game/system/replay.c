@@ -275,7 +275,7 @@ void replay_task(void) {
     }
 }
 
-extern u8 test_palette_0[];
+extern u8 text_palette_0[];
 extern s8 D_0028DF84;
 
 void replay_exit_begin(void) {
@@ -314,7 +314,7 @@ void replay_exit_begin(void) {
     save_a6 = reg_a6;
     text_layer_clear();
     reg_d0.w = 0;
-    reg_a0 = (u8 *)test_palette_0;
+    reg_a0 = (u8 *)text_palette_0;
     text_palette_load();
     D_0028DF84 = 0;
     *(s8 *)(reg_a5 + 3) = 1;
@@ -504,7 +504,7 @@ s32 text_layer_clear();                            /* extern */
 s32 func_0013B350();                            /* extern */
 s32 text_palette_load();                            /* extern */
 s32 func_00225B70();                            /* extern */
-extern s32 test_palette_0_as_s32_a[];
+extern s32 text_palette_0_as_s32_a[];
 extern s32 D_0026B580_as_s32_a[];
 extern u32 g_replay_fade_id;
 
@@ -516,7 +516,7 @@ void replay_result_menu_begin(void) {
     temp_s1 = reg_d0.w;
     text_layer_clear();
     reg_d0.w = 0;
-    reg_a0 = (u8 *)test_palette_0_as_s32_a;
+    reg_a0 = (u8 *)text_palette_0_as_s32_a;
     text_palette_load();
     *(s8 *)(reg_a5 + 3) = 1;
     *(s16 *)(reg_a5 + 6) = 0;

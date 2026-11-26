@@ -1408,7 +1408,7 @@ extern s32 g_p2_position_trail[];
 extern s32 g_p1_position_trail[];
 extern Bank10 D_002BAF30_as_Bank10;
 extern Bank90 D_002BAF50_as_Bank90;
-extern u8 D_002BF390[];
+extern u8 g_player_slots[];
 extern u8 D_002BF4F0[];
 extern s16 D_006C58AA_as_s16_a[];
 extern u16 D_006C58B0[];
@@ -1584,7 +1584,7 @@ void replay_snapshot_save(Buf *buf) {
     *(u16 *)(p + 0x321A) = g_enemy_signal_f;
     *(u16 *)(p + 0x321C) = g_boss_present_as_u16;
     for (i = 0; i < 0x48; i++) {
-        buf->f321E[i] = D_002BF390[i];
+        buf->f321E[i] = g_player_slots[i];
     }
     *(u16 *)(p + 0x3266) = g_continue_pending_count;
     *(s32 *)(p + 0x327C) = g_p1_score_as_s32;
@@ -2087,7 +2087,7 @@ void replay_snapshot_load(u8 *p) {
     g_enemy_signal_f = *(u16 *)(p + 0x321A);
     g_boss_present_as_u16 = *(u16 *)(p + 0x321C);
     for (i = 0; i < 0x48; i++) {
-        D_002BF390[i] = p[0x321E + i];
+        g_player_slots[i] = p[0x321E + i];
     }
     g_continue_pending_count = *(u16 *)(p + 0x3266);
     g_p1_score_as_s32 = *(s32 *)(p + 0x327C);

@@ -73,7 +73,7 @@ void func_001AF3A0() {
     *(s16 *)(reg_a5 + 0x14) = 4;
 }
 
-s32 func_00135740();
+s32 player_join();
 s32 task_stop_self();
 extern u16 D_0028C11C[];
 extern u16 D_0028C120[];
@@ -94,7 +94,7 @@ void func_001AF460(void) {
     reg_d1.h[0] = (reg_d1.h[0] != 0) ? *(u16 *)((u8 *)reg_a0 + ((s16)reg_d1.h[0] & ~1)) : *(u16 *)reg_a0;
     reg_d2.w = 0;
     reg_d2.b[0] = *(u8 *)(reg_a5 + 6);
-    func_00135740();
+    player_join();
     task_stop_self();
 }
 
@@ -103,7 +103,7 @@ typedef void (*Fn)(void);
 
 void func_0012FBD0(void);
 void func_001301B0(void);
-void func_001353E0(void);
+void player_slot_request(void);
 void func_001A35A0(void);
 void func_001A3630(void);
 void func_001AF1A0(void);
@@ -264,7 +264,7 @@ block_51:
     reg_d0.w = 0;
     reg_d0.b[0] = *(u8 *)(reg_a5 + 6);
     reg_d1.h[0] = 7;
-    func_001353E0();
+    player_slot_request();
     func_001B0100();
 block_52:
     seq = *(u8 *)(reg_a5 + 0xD);

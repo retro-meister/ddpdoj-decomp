@@ -1,12 +1,15 @@
 #include "common.h"
 #include "player_slot.h"
+
+extern u8 g_player_slots[];
+extern u8 g_player_slot2[];
 #include "enemy.h"
 #include "task.h"
 #include "entity.h"
 #include "sdk/ps2sdk.h"
 
 void func_00135100();
-void func_001358A0(void);
+void player_slot_join(void);
 void func_00135ED0(void);
 void func_001368C0(void);
 void func_00136A30(void);
@@ -127,20 +130,18 @@ void func_00135110(void) {
 
 extern u16 g_two_player_state;
 extern u16 g_two_player_game;
-extern s32 D_002BF390_as_s32_a[];
-extern s32 D_002BF3B4_as_s32_a[];
 
 void func_00135120(void) {
-    reg_a2 = (u8 *)D_002BF390_as_s32_a;
+    reg_a2 = (u8 *)g_player_slots;
     g_two_player_game = 0;
-    reg_a3 = (u8 *)D_002BF3B4_as_s32_a;
-    reg_d0.h[1] = (*(u16 *)((u8 *)((s32 *)reg_a2) + (0x18)));
-    reg_d0.h[0] = (*(u16 *)((u8 *)((s32 *)reg_a2) + (0x1A)));
+    reg_a3 = (u8 *)g_player_slot2;
+    reg_d0.h[1] = PLAYER_SLOT(reg_a2)->ship_task[0];
+    reg_d0.h[0] = PLAYER_SLOT(reg_a2)->ship_task[1];
     if (reg_d0.w != 0) {
         g_two_player_game += 1;
     }
-    reg_d0.h[1] = (*(u16 *)((u8 *)((s32 *)reg_a3) + (0x18)));
-    reg_d0.h[0] = (*(u16 *)((u8 *)((s32 *)reg_a3) + (0x1A)));
+    reg_d0.h[1] = PLAYER_SLOT(reg_a3)->ship_task[0];
+    reg_d0.h[0] = PLAYER_SLOT(reg_a3)->ship_task[1];
     if (reg_d0.w != 0) {
         g_two_player_game += 1;
     }
@@ -173,27 +174,27 @@ PlayerStart player_starts[2] = {
     { { 0x1000, 0x2A00 }, { 0x1000, 0x2A00 }, 3, 1, { 6, 7 } },
 };
 
-void func_001354C0();
-void func_00135640();
-void func_00135820();
-void func_00135AD0();
-void func_00135C90();
-void func_00135D70();
-void func_00135D90();
-void func_00135DF0();
-void func_00135E70();
+void player_slot_next_ship();
+void player_slot_out_of_ships();
+void player_slot_join_step();
+void player_slot_start();
+void player_slot_game_over();
+void player_slot_set_game_step();
+void player_slot_continue_wait();
+void player_slot_clear_task_flags();
+void player_slot_draw_bombs();
 
 void (*player_slot_steps[12])(void) = {
     0,
-    func_001354C0,
-    func_00135640,
-    func_00135820,
-    func_00135AD0,
-    func_00135C90,
-    func_00135D70,
-    func_00135D90,
-    func_00135DF0,
-    func_00135E70,
+    player_slot_next_ship,
+    player_slot_out_of_ships,
+    player_slot_join_step,
+    player_slot_start,
+    player_slot_game_over,
+    player_slot_set_game_step,
+    player_slot_continue_wait,
+    player_slot_clear_task_flags,
+    player_slot_draw_bombs,
     0,
     0,
 };
@@ -201,31 +202,30 @@ void (*player_slot_steps[12])(void) = {
 extern u32 g_player_panel2_task_handle_as_u32;
 extern u32 g_player_panel1_task_handle_as_u32;
 extern u32 g_gauge_task_handle_as_u32;
-extern u8 D_002BF390[];
 
-void func_00135220(void) {
+void player_slots_init(void) {
     u16 temp_a0;
     u16 temp_a1;
     reg_a0 = (u8 *)&player_starts[0];
-    reg_a6 = (u8 *)D_002BF390;
+    reg_a6 = (u8 *)g_player_slots;
     reg_d7.w = 1;
     do {
-        ENTITY(reg_a6)->sprite.h = (u16) *(u16 *)reg_a0;
-        ENTITY(reg_a6)->look.h = (u16) *(u16 *)(reg_a0 + 2);
-        ENTITY(reg_a6)->hit_y_plus.h = (u16) *(u16 *)(reg_a0 + 4);
-        ENTITY(reg_a6)->hit_y_minus.h = (u16) *(u16 *)(reg_a0 + 6);
-        ENTITY(reg_a6)->hit_x_plus.h = (u16) *(u16 *)(reg_a0 + 8);
-        ENTITY(reg_a6)->hit_x_minus.h = (u16) *(u16 *)(reg_a0 + 0xA);
-        ENTITY(reg_a6)->offset_x.h = (u16) *(u16 *)(reg_a0 + 0xC);
-        ENTITY(reg_a6)->draw.h = (u16) *(u16 *)(reg_a0 + 0xE);
-        ENTITY(reg_a6)->hp.sh = 0;
-        ENTITY(reg_a6)->move.sh = 0;
-        ENTITY(reg_a6)->attr.sh = 0;
-        ENTITY(reg_a6)->misc.sh = 0;
-        ENTITY(reg_a6)->x.sh = 0;
-        ENTITY(reg_a6)->offset_y.sh = 0;
-        *(s16 *)(reg_a6 + 0x20) = 0;
-        *(s16 *)(reg_a6 + 0x22) = 0;
+        PLAYER_SLOT(reg_a6)->other_0C[0] = ((PlayerStart *)reg_a0)->other_00[0];
+        PLAYER_SLOT(reg_a6)->other_0C[1] = ((PlayerStart *)reg_a0)->other_00[1];
+        PLAYER_SLOT(reg_a6)->other_10[0] = ((PlayerStart *)reg_a0)->other_04[0];
+        PLAYER_SLOT(reg_a6)->other_10[1] = ((PlayerStart *)reg_a0)->other_04[1];
+        PLAYER_SLOT(reg_a6)->task = ((PlayerStart *)reg_a0)->task;
+        *(u16 *)&PLAYER_SLOT(reg_a6)->player = ((PlayerStart *)reg_a0)->player;
+        PLAYER_SLOT(reg_a6)->lives[0] = ((PlayerStart *)reg_a0)->lives[0];
+        PLAYER_SLOT(reg_a6)->lives[1] = ((PlayerStart *)reg_a0)->lives[1];
+        PLAYER_SLOT(reg_a6)->ship_task[0] = 0;
+        PLAYER_SLOT(reg_a6)->ship_task[1] = 0;
+        PLAYER_SLOT(reg_a6)->other_task_1C[0] = 0;
+        PLAYER_SLOT(reg_a6)->other_task_1C[1] = 0;
+        PLAYER_SLOT(reg_a6)->other_04 = 0;
+        PLAYER_SLOT(reg_a6)->other_06 = 0;
+        PLAYER_SLOT(reg_a6)->other_task_20[0] = 0;
+        PLAYER_SLOT(reg_a6)->other_task_20[1] = 0;
         reg_a0 = (u8 *)&player_starts[1];
         reg_a6 += 0x24;
     } while ((s16)(--reg_d7.h[0]) >= 0);
@@ -253,33 +253,32 @@ void func_00135220(void) {
     *(u8 *)(reg_a0 + 6) = 1;
 }
 
-void func_001353E0(void) {
-    reg_a0 = (u8 *)D_002BF390_as_s32_a;
+void player_slot_request(void) {
+    reg_a0 = (u8 *)g_player_slots;
     if (reg_d0.h[0] != 0) {
-        reg_a0 = (u8 *)D_002BF3B4_as_s32_a;
+        reg_a0 = (u8 *)g_player_slot2;
     }
-    (*(u16 *)((u8 *)((s32 *)reg_a0) + (0))) = (u16) reg_d1.h[0];
-    (*(s16 *)((u8 *)((s32 *)reg_a0) + (2))) = 0;
+    PLAYER_SLOT(reg_a0)->step = reg_d1.h[0];
+    PLAYER_SLOT(reg_a0)->other_02 = 0;
 }
 
 typedef void (*Fn)();
 
-extern u16 D_002BF390_as_u16_a[];
 
-void func_00135420(arg0)
+void player_slots_update(arg0)
     u16 *arg0;
 {
     u16 *var_a0;
     u32 temp_s0;
 
     var_a0 = (u16 *)(arg0);
-    reg_a6 = (u8 *)(D_002BF390_as_u16_a);
+    reg_a6 = (u8 *)(g_player_slots);
     reg_d7.w = 1;
     do {
-        reg_d0.h[0] = ENTITY(reg_a6)->flags.h;
+        reg_d0.h[0] = PLAYER_SLOT(reg_a6)->step;
         if (reg_d0.h[0] != 0) {
             temp_s0 = reg_d7.w;
-            ((Fn)*(u32 *)((u8 *)player_slot_steps + ((reg_d0.h[0] & 0xFFFF) * 4)))();
+            player_slot_steps[reg_d0.h[0]]();
             reg_d7.w = temp_s0;
         }
         var_a0 = (u16 *)(reg_a6 + 0x24);
@@ -300,16 +299,16 @@ extern s16 g_p1_past_first_ship_as_s16;
 extern u8 g_simulation_active;
 extern u16 D_006E5C06[];
 
-void func_001354C0(void) {
+void player_slot_next_ship(void) {
     u16 var_a0;
 
     func_0012FBD0();
-    *(u16 *)(reg_a6 + 0x18) = 0U;
-    *(u16 *)(reg_a6 + 0x1A) = 0U;
+    PLAYER_SLOT(reg_a6)->ship_task[0] = 0U;
+    PLAYER_SLOT(reg_a6)->ship_task[1] = 0U;
     g_bullets_blocked_as_s16 = 0x78;
     side_scroll_reset();
-    reg_tmp.h[1] = *(u16 *)(reg_a6 + 8);
-    reg_tmp.h[0] = *(u16 *)(reg_a6 + 0xA);
+    reg_tmp.h[1] = PLAYER_SLOT(reg_a6)->lives[0];
+    reg_tmp.h[0] = PLAYER_SLOT(reg_a6)->lives[1];
     reg_a0 = (u8 *)reg_tmp.w;
     *(u16 *)reg_a0 -= 1;
     var_a0 = g_simulation_active;
@@ -320,7 +319,7 @@ void func_001354C0(void) {
         }
     }
     if ((s16) *(u16 *)reg_a0 < 0) {
-        if (*(u8 *)(reg_a6 + 0x16) == 0) {
+        if (PLAYER_SLOT(reg_a6)->player == 0) {
             g_p1_past_first_ship_as_s16 = 0;
             g_p1_continued_as_s16 = 1;
             g_p1_death_count_as_s16 = 0;
@@ -329,24 +328,24 @@ void func_001354C0(void) {
             g_p2_continued_as_s16 = 1;
             g_p2_death_count_as_s16 = 0;
         }
-        *(s16 *)reg_a6 = 2;
+        PLAYER_SLOT(reg_a6)->step = 2;
     } else {
-        if (*(u8 *)(reg_a6 + 0x16) == 0) {
+        if (PLAYER_SLOT(reg_a6)->player == 0) {
             func_001AC3A0();
         } else {
             func_001AC5F0();
         }
-        reg_d0.h[0] = *(u16 *)(reg_a6 + 0x14);
+        reg_d0.h[0] = PLAYER_SLOT(reg_a6)->task;
         task_start();
-        *(u16 *)(reg_a6 + 0x18) = (u16) reg_d0.h[1];
-        *(u16 *)(reg_a6 + 0x1A) = (u16) reg_d0.h[0];
+        PLAYER_SLOT(reg_a6)->ship_task[0] = (u16) reg_d0.h[1];
+        PLAYER_SLOT(reg_a6)->ship_task[1] = (u16) reg_d0.h[0];
         *(s8 *)(reg_a0 + 7) = 0;
-        *(u8 *)(reg_a0 + 6) = (u8) *(u8 *)(reg_a6 + 0x16);
-        *(u16 *)(reg_a0 + 8) = (u16) *(u16 *)(reg_a6 + 0xC);
-        *(u16 *)(reg_a0 + 0xA) = (u16) *(u16 *)(reg_a6 + 0xE);
-        *(s16 *)reg_a6 = 0;
+        *(u8 *)(reg_a0 + 6) = (u8) PLAYER_SLOT(reg_a6)->player;
+        *(u16 *)(reg_a0 + 8) = (u16) PLAYER_SLOT(reg_a6)->other_0C[0];
+        *(u16 *)(reg_a0 + 0xA) = (u16) PLAYER_SLOT(reg_a6)->other_0C[1];
+        PLAYER_SLOT(reg_a6)->step = 0;
     }
-    *(s16 *)(reg_a6 + 2) = 0;
+    PLAYER_SLOT(reg_a6)->other_02 = 0;
 }
 
 s32 func_001ACBA0();
@@ -354,13 +353,13 @@ s32 func_001ACC60();
 extern u16 g_attract_demo;
 extern u8 g_name_entry_player;
 
-void func_00135640(void) {
+void player_slot_out_of_ships(void) {
     u8 temp_a0;
 
     func_0012FBD0();
     func_00135120();
     if (g_attract_demo == 0) {
-        if (*(u8 *)(reg_a6 + 0x16) == 0) {
+        if (PLAYER_SLOT(reg_a6)->player == 0) {
             func_001ACBA0();
             if (cond_flag == 0) {
                 g_name_entry_player |= 1;
@@ -373,18 +372,18 @@ void func_00135640(void) {
         }
         reg_d0.h[0] = 0xD;
         task_start();
-        *(u16 *)(reg_a6 + 0x20) = (u16) reg_d0.h[1];
-        *(u16 *)(reg_a6 + 0x22) = (u16) reg_d0.h[0];
-        temp_a0 = *(u8 *)(reg_a6 + 0x16);
+        PLAYER_SLOT(reg_a6)->other_task_20[0] = (u16) reg_d0.h[1];
+        PLAYER_SLOT(reg_a6)->other_task_20[1] = (u16) reg_d0.h[0];
+        temp_a0 = PLAYER_SLOT(reg_a6)->player;
         *(u8 *)(reg_a0 + 6) = temp_a0;
         reg_d0.h[0] = 0xB;
         task_start();
-        *(u16 *)(reg_a6 + 0x1C) = (u16) reg_d0.h[1];
-        *(u16 *)(reg_a6 + 0x1E) = (u16) reg_d0.h[0];
-        *(u8 *)(reg_a0 + 6) = (u8) *(u8 *)(reg_a6 + 0x16);
+        PLAYER_SLOT(reg_a6)->other_task_1C[0] = (u16) reg_d0.h[1];
+        PLAYER_SLOT(reg_a6)->other_task_1C[1] = (u16) reg_d0.h[0];
+        *(u8 *)(reg_a0 + 6) = (u8) PLAYER_SLOT(reg_a6)->player;
     }
-    *(s16 *)reg_a6 = 0;
-    *(s16 *)(reg_a6 + 2) = 0;
+    PLAYER_SLOT(reg_a6)->step = 0;
+    PLAYER_SLOT(reg_a6)->other_02 = 0;
 }
 
 extern u8 *D_0028DEB8_as_u8_p;
@@ -406,9 +405,8 @@ extern u16 g_p2_power_style;
 extern u16 g_p1_power_style;
 extern u16 g_p2_ship_type;
 extern u16 g_p1_ship_type;
-extern u8 D_002BF3B4[];
 
-void func_00135740(void) {
+void player_join(void) {
     D_0028DEF0 = reg_d0.w;
     D_0028DEEC = reg_d1.w;
     D_0028DEE8 = reg_d2.w;
@@ -425,16 +423,16 @@ void func_00135740(void) {
     D_0028DEBC = reg_a5;
     D_0028DEB8_as_u8_p = (u8 *)(reg_a6);
     if (reg_d2.h[0] != 0) {
-        reg_a6 = (u8 *)D_002BF3B4;
+        reg_a6 = (u8 *)g_player_slot2;
         g_p2_ship_type = reg_d0.h[0];
         g_p2_power_style = reg_d1.h[0];
-        func_001358A0();
+        player_slot_join();
         return;
     }
-    reg_a6 = (u8 *)D_002BF390;
+    reg_a6 = (u8 *)g_player_slots;
     g_p1_ship_type = reg_d0.h[0];
     g_p1_power_style = reg_d1.h[0];
-    func_001358A0();
+    player_slot_join();
 }
 
 extern s32 D_0028DEB8_as_s32;
@@ -445,7 +443,7 @@ extern s32 D_0028DEC8_as_s32;
 extern s32 D_0028DECC_as_s32;
 extern s32 D_0028DED0_as_s32;
 
-void func_00135820(void) {
+void player_slot_join_step(void) {
     D_0028DEF0 = reg_d0.w;
     D_0028DEEC = reg_d1.w;
     D_0028DEE8 = reg_d2.w;
@@ -461,7 +459,7 @@ void func_00135820(void) {
     D_0028DEC0_as_s32 = (s32)reg_a4;
     D_0028DEBC_as_s32 = (s32)reg_a5;
     D_0028DEB8_as_s32 = (s32)reg_a6;
-    func_001358A0();
+    player_slot_join();
 }
 
 s32 func_001A33C0();
@@ -483,12 +481,12 @@ extern void *D_0028DEB8;
 extern u32 D_0028DED0_as_u32;
 extern u8 g_setting_ship_stock;
 
-void func_001358A0(void) {
+void player_slot_join(void) {
     u16 temp_a0;
 
     g_continue_pending_count -= 1;
-    reg_tmp.h[1] = *(u16 *)(reg_a6 + 8);
-    reg_tmp.h[0] = *(u16 *)(reg_a6 + 0xA);
+    reg_tmp.h[1] = PLAYER_SLOT(reg_a6)->lives[0];
+    reg_tmp.h[0] = PLAYER_SLOT(reg_a6)->lives[1];
     reg_d0.b[0] = g_setting_ship_stock;
     reg_a1 = (u8 *)(D_0024F3A8);
     reg_a0 = (u8 *)reg_tmp.w;
@@ -496,16 +494,16 @@ void func_001358A0(void) {
     temp_a0 = reg_d0.h[0];
     reg_a1 += temp_a0;
     *(u16 *)reg_a0 = (u16) *(u16 *)reg_a1;
-    reg_d0.h[0] = *(u16 *)(reg_a6 + 0x14);
+    reg_d0.h[0] = PLAYER_SLOT(reg_a6)->task;
     task_start();
-    *(u16 *)(reg_a6 + 0x18) = (u16) reg_d0.h[1];
-    *(u16 *)(reg_a6 + 0x1A) = (u16) reg_d0.h[0];
+    PLAYER_SLOT(reg_a6)->ship_task[0] = (u16) reg_d0.h[1];
+    PLAYER_SLOT(reg_a6)->ship_task[1] = (u16) reg_d0.h[0];
     *(s8 *)(reg_a0 + 7) = 0;
-    *(u8 *)(reg_a0 + 6) = (u8) *(u8 *)(reg_a6 + 0x16);
-    *(u16 *)(reg_a0 + 8) = (u16) *(u16 *)(reg_a6 + 0x10);
-    *(u16 *)(reg_a0 + 0xA) = (u16) *(u16 *)(reg_a6 + 0x12);
+    *(u8 *)(reg_a0 + 6) = (u8) PLAYER_SLOT(reg_a6)->player;
+    *(u16 *)(reg_a0 + 8) = (u16) PLAYER_SLOT(reg_a6)->other_10[0];
+    *(u16 *)(reg_a0 + 0xA) = (u16) PLAYER_SLOT(reg_a6)->other_10[1];
     reg_d0.w = 0;
-    reg_d0.b[0] = *(u8 *)(reg_a6 + 0x16);
+    reg_d0.b[0] = PLAYER_SLOT(reg_a6)->player;
     if (reg_d0.h[0] == 0) {
         reg_d1.h[0] = g_p1_ship_type;
         func_001A33C0();
@@ -527,9 +525,9 @@ void func_001358A0(void) {
         func_001AAA20();
         func_001AC5F0();
     }
-    *(s16 *)reg_a6 = 0;
-    *(s16 *)(reg_a6 + 2) = 0;
-    reg_d0.b[0] = *(u8 *)(reg_a6 + 0x16);
+    PLAYER_SLOT(reg_a6)->step = 0;
+    PLAYER_SLOT(reg_a6)->other_02 = 0;
+    reg_d0.b[0] = PLAYER_SLOT(reg_a6)->player;
     func_001A35F0();
     func_00135120();
     func_0012FBD0();
@@ -552,10 +550,10 @@ void func_001358A0(void) {
 
 extern u16 g_loop;
 
-void func_00135AD0(void) {
+void player_slot_start(void) {
     u16 temp_a0;
-    reg_tmp.h[1] = *(u16 *)(reg_a6 + 8);
-    temp_a0 = *(u16 *)(reg_a6 + 0xA);
+    reg_tmp.h[1] = PLAYER_SLOT(reg_a6)->lives[0];
+    temp_a0 = PLAYER_SLOT(reg_a6)->lives[1];
     reg_d0.b[0] = g_setting_ship_stock;
     reg_a1 = (u8 *)(D_0024F3A8);
     reg_tmp.h[0] = temp_a0;
@@ -572,16 +570,16 @@ void func_00135AD0(void) {
             *(u16 *)reg_a0 = (u16) D_006E5C06[0];
         }
     }
-    reg_d0.h[0] = *(u16 *)(reg_a6 + 0x14);
+    reg_d0.h[0] = PLAYER_SLOT(reg_a6)->task;
     task_start();
-    *(u16 *)(reg_a6 + 0x18) = (u16) reg_d0.h[1];
-    *(u16 *)(reg_a6 + 0x1A) = (u16) reg_d0.h[0];
+    PLAYER_SLOT(reg_a6)->ship_task[0] = (u16) reg_d0.h[1];
+    PLAYER_SLOT(reg_a6)->ship_task[1] = (u16) reg_d0.h[0];
     *(u8 *)(reg_a0 + 7) = (u8) g_loop;
-    *(u8 *)(reg_a0 + 6) = (u8) *(u8 *)(reg_a6 + 0x16);
-    *(u16 *)(reg_a0 + 8) = (u16) *(u16 *)(reg_a6 + 0x10);
-    *(u16 *)(reg_a0 + 0xA) = (u16) *(u16 *)(reg_a6 + 0x12);
+    *(u8 *)(reg_a0 + 6) = (u8) PLAYER_SLOT(reg_a6)->player;
+    *(u16 *)(reg_a0 + 8) = (u16) PLAYER_SLOT(reg_a6)->other_10[0];
+    *(u16 *)(reg_a0 + 0xA) = (u16) PLAYER_SLOT(reg_a6)->other_10[1];
     reg_d0.w = 0;
-    reg_d0.b[0] = *(u8 *)(reg_a6 + 0x16);
+    reg_d0.b[0] = PLAYER_SLOT(reg_a6)->player;
     if (reg_d0.h[0] == 0) {
         reg_d1.h[0] = g_p1_ship_type;
         func_001A33C0();
@@ -595,10 +593,10 @@ void func_00135AD0(void) {
             func_001AAB70();
         }
     }
-    reg_d0.b[0] = *(u8 *)(reg_a6 + 0x16);
+    reg_d0.b[0] = PLAYER_SLOT(reg_a6)->player;
     func_001A35F0();
-    *(s16 *)reg_a6 = 0;
-    *(s16 *)(reg_a6 + 2) = 0;
+    PLAYER_SLOT(reg_a6)->step = 0;
+    PLAYER_SLOT(reg_a6)->other_02 = 0;
     func_00135120();
 }
 
@@ -610,16 +608,16 @@ extern u8 g_gauge_task_handle_as_u8;
 extern u8 g_misc_task_handle_as_u8;
 extern u8 g_ground_task_handle_as_u8;
 
-void func_00135C90(void) {
-    reg_a2 = D_002BF390;
-    reg_a3 = D_002BF3B4;
-    reg_a0 = reg_a2 + 0x1C;
+void player_slot_game_over(void) {
+    reg_a2 = g_player_slots;
+    reg_a3 = g_player_slot2;
+    reg_a0 = (u8 *)PLAYER_SLOT(reg_a2)->other_task_1C;
     task_request_stop();
-    reg_a0 = reg_a3 + 0x1C;
+    reg_a0 = (u8 *)PLAYER_SLOT(reg_a3)->other_task_1C;
     task_request_stop();
-    reg_a0 = reg_a2 + 0x20;
+    reg_a0 = (u8 *)PLAYER_SLOT(reg_a2)->other_task_20;
     task_request_stop();
-    reg_a0 = reg_a3 + 0x20;
+    reg_a0 = (u8 *)PLAYER_SLOT(reg_a3)->other_task_20;
     task_request_stop();
     reg_a0 = &g_misc_task_handle_as_u8;
     task_request_stop();
@@ -635,8 +633,8 @@ void func_00135C90(void) {
     sound_stop_effects();
     reg_d0.h[0] = TASK_GAME_OVER;
     task_start();
-    ENTITY(reg_a6)->flags.sh = 0;
-    ENTITY(reg_a6)->y.sh = 0;
+    PLAYER_SLOT(reg_a6)->step = 0;
+    PLAYER_SLOT(reg_a6)->other_02 = 0;
 }
 
 typedef struct {
@@ -644,55 +642,51 @@ typedef struct {
     u8 unk3;
 } FlagByte3;
 
-typedef struct {
-    s16 unk0;
-    s16 unk2;
-} HalfPair;
 
 
-void func_00135D70(void) {
+void player_slot_set_game_step(void) {
     ((FlagByte3 *)reg_a5)->unk3 = 2;
-    ((HalfPair *)reg_a6)->unk0 = 0;
-    ((HalfPair *)reg_a6)->unk2 = 0;
+    PLAYER_SLOT(reg_a6)->step = 0;
+    PLAYER_SLOT(reg_a6)->other_02 = 0;
 }
 
 
-void func_00135D90(void) {
+void player_slot_continue_wait(void) {
     g_continue_pending_count += 1;
-    reg_d0.h[1] = *(u16 *)(reg_a6 + 0x20);
-    reg_d0.h[0] = *(u16 *)(reg_a6 + 0x22);
+    reg_d0.h[1] = PLAYER_SLOT(reg_a6)->other_task_20[0];
+    reg_d0.h[0] = PLAYER_SLOT(reg_a6)->other_task_20[1];
     task_find();
     *(s8 *)(reg_a0 + 3) = 3;
-    ENTITY(reg_a6)->flags.sh = 0;
-    ENTITY(reg_a6)->y.sh = 0;
+    PLAYER_SLOT(reg_a6)->step = 0;
+    PLAYER_SLOT(reg_a6)->other_02 = 0;
 }
 
-void func_00135DF0(void) {
-    reg_a2 = (u8 *)D_002BF390_as_s32_a;
-    reg_a3 = (u8 *)D_002BF3B4_as_s32_a;
-    reg_d0.h[1] = (*(u16 *)((u8 *)((s32 *)reg_a2) + (0x20)));
-    reg_d0.h[0] = (*(u16 *)((u8 *)((s32 *)reg_a2) + (0x22)));
+void player_slot_clear_task_flags(void) {
+    reg_a2 = (u8 *)g_player_slots;
+    reg_a3 = (u8 *)g_player_slot2;
+    reg_d0.h[1] = PLAYER_SLOT(reg_a2)->other_task_20[0];
+    reg_d0.h[0] = PLAYER_SLOT(reg_a2)->other_task_20[1];
     task_find();
     *(s8 *)(reg_a0 + 4) = 0;
-    reg_d0.h[1] = (*(u16 *)((u8 *)((s32 *)reg_a3) + (0x20)));
-    reg_d0.h[0] = (*(u16 *)((u8 *)((s32 *)reg_a3) + (0x22)));
+    reg_d0.h[1] = PLAYER_SLOT(reg_a3)->other_task_20[0];
+    reg_d0.h[0] = PLAYER_SLOT(reg_a3)->other_task_20[1];
     task_find();
     *(s8 *)(reg_a0 + 4) = 0;
-    ENTITY(reg_a6)->flags.sh = 0;
-    ENTITY(reg_a6)->y.sh = 0;
+    PLAYER_SLOT(reg_a6)->step = 0;
+    PLAYER_SLOT(reg_a6)->other_02 = 0;
 }
 
 s32 p1_bomb_panel_draw();                            /* extern */
 s32 p2_bomb_panel_draw();                            /* extern */
 
-void func_00135E70(void) {
-    if (*(u8 *)(reg_a6 + 0x16) == 0) {
+void player_slot_draw_bombs(void) {
+    if (PLAYER_SLOT(reg_a6)->player == 0) {
         p1_bomb_panel_draw();
     } else {
         p2_bomb_panel_draw();
     }
-    *(s16 *)reg_a6 = 0;
-    *(s16 *)(reg_a6 + 2) = 0;
+    PLAYER_SLOT(reg_a6)->step = 0;
+    PLAYER_SLOT(reg_a6)->other_02 = 0;
 }
 
 
@@ -774,7 +768,7 @@ void func_00135ED0(void) {
     g_enemy_signal_1 = 0;
     g_enemy_signal_0 = 0;
     do {
-        temp_a2 = (u8 *)(D_002BF390 + var_a1);
+        temp_a2 = (u8 *)(g_player_slots + var_a1);
         (*(s8 *)((u8 *)(temp_a2) + (0))) = 0;
         var_a1 += 8;
         (*(s8 *)((u8 *)(temp_a2) + (1))) = 0;
@@ -826,49 +820,49 @@ void func_00136010(void) {
     save_a4 = reg_a4;
     save_a5 = reg_a5;
     save_a6 = reg_a6;
-    reg_a2 = (u8 *)D_002BF390;
+    reg_a2 = (u8 *)g_player_slots;
     save_d2 = reg_d2.w;
     save_d3 = reg_d3.w;
-    reg_a3 = (u8 *)D_002BF3B4;
+    reg_a3 = (u8 *)g_player_slot2;
     save_d4 = reg_d4.w;
     save_d5 = reg_d5.w;
     save_d6 = reg_d6.w;
     if ((s32) save_d0 >= 0) {
-        *(u16 *)(reg_a2 + 0x10) = (u16) reg_d0.h[1];
-        *(u16 *)(reg_a2 + 0x12) = (u16) reg_d0.h[0];
+        PLAYER_SLOT(reg_a2)->other_10[0] = (u16) reg_d0.h[1];
+        PLAYER_SLOT(reg_a2)->other_10[1] = (u16) reg_d0.h[0];
     }
     if ((s32) reg_d1.w >= 0) {
-        *(u16 *)(reg_a3 + 0x10) = (u16) reg_d1.h[1];
-        *(u16 *)(reg_a3 + 0x12) = (u16) reg_d1.h[0];
+        PLAYER_SLOT(reg_a3)->other_10[0] = (u16) reg_d1.h[1];
+        PLAYER_SLOT(reg_a3)->other_10[1] = (u16) reg_d1.h[0];
     }
     reg_d0.h[0] = g_p1_ship_type;
     if (reg_d0.h[0] != 0xFF) {
         reg_d0.w = 0;
         reg_d1.h[0] = 4;
-        func_001353E0();
+        player_slot_request();
         if (g_loop == 0) {
             func_001AAEE0();
         }
     } else {
         reg_d0.h[0] = 0xB;
         task_start();
-        *(u16 *)(reg_a2 + 0x1C) = (u16) reg_d0.h[1];
-        *(u16 *)(reg_a2 + 0x1E) = (u16) reg_d0.h[0];
+        PLAYER_SLOT(reg_a2)->other_task_1C[0] = (u16) reg_d0.h[1];
+        PLAYER_SLOT(reg_a2)->other_task_1C[1] = (u16) reg_d0.h[0];
         *(s8 *)(reg_a0 + 6) = 0;
     }
     reg_d0.h[0] = g_p2_ship_type;
     if (reg_d0.h[0] != 0xFF) {
         reg_d0.w = 1;
         reg_d1.h[0] = 4;
-        func_001353E0();
+        player_slot_request();
         if (g_loop == 0) {
             func_001AB070();
         }
     } else {
         reg_d0.h[0] = 0xB;
         task_start();
-        *(u16 *)(reg_a3 + 0x1C) = (u16) reg_d0.h[1];
-        *(u16 *)(reg_a3 + 0x1E) = (u16) reg_d0.h[0];
+        PLAYER_SLOT(reg_a3)->other_task_1C[0] = (u16) reg_d0.h[1];
+        PLAYER_SLOT(reg_a3)->other_task_1C[1] = (u16) reg_d0.h[0];
         *(s8 *)(reg_a0 + 6) = 1;
     }
     func_001AC840();
@@ -890,19 +884,19 @@ void func_00136010(void) {
 }
 
 void func_00136260(void) {
-    reg_a2 = D_002BF390;
-    reg_a3 = D_002BF3B4;
-    reg_a0 = reg_a2 + 0x18;
+    reg_a2 = g_player_slots;
+    reg_a3 = g_player_slot2;
+    reg_a0 = (u8 *)PLAYER_SLOT(reg_a2)->ship_task;
     task_request_stop();
-    reg_a0 = reg_a3 + 0x18;
+    reg_a0 = (u8 *)PLAYER_SLOT(reg_a3)->ship_task;
     task_request_stop();
-    reg_a0 = reg_a2 + 0x1C;
+    reg_a0 = (u8 *)PLAYER_SLOT(reg_a2)->other_task_1C;
     task_request_stop();
-    reg_a0 = reg_a3 + 0x1C;
+    reg_a0 = (u8 *)PLAYER_SLOT(reg_a3)->other_task_1C;
     task_request_stop();
-    reg_a0 = reg_a2 + 0x20;
+    reg_a0 = (u8 *)PLAYER_SLOT(reg_a2)->other_task_20;
     task_request_stop();
-    reg_a0 = reg_a3 + 0x20;
+    reg_a0 = (u8 *)PLAYER_SLOT(reg_a3)->other_task_20;
     task_request_stop();
 }
 
@@ -968,7 +962,7 @@ void func_00136400(void) {
     func_001362F0();
     func_00135010();
     func_00136330();
-    func_00135420();
+    player_slots_update();
 }
 
 s32 func_00125DE0();
@@ -978,11 +972,11 @@ s32 func_0013FD80();
 s32 func_00171ED0();
 s32 func_001AACC0();
 s32 func_001AE490();
-extern u8 test_palette_0[];
-extern u8 test_palette_1[];
-extern u8 test_palette_2[];
-extern u8 test_palette_3[];
-extern u8 test_palette_4[];
+extern u8 text_palette_0[];
+extern u8 text_palette_1[];
+extern u8 text_palette_2[];
+extern u8 text_palette_3[];
+extern u8 text_palette_4[];
 extern u16 text_palette_5[];
 extern u16 text_palette_6[];
 extern u16 text_palette_7[];
@@ -992,19 +986,19 @@ extern u16 g_game_flow_paused;
 
 void func_00136450(void) {
     *(s8 *)(reg_a5 + 3) = 1;
-    reg_a0 = (u8 *)test_palette_0;
+    reg_a0 = (u8 *)text_palette_0;
     reg_d0.w = 0;
     text_palette_load();
-    reg_a0 = (u8 *)test_palette_1;
+    reg_a0 = (u8 *)text_palette_1;
     reg_d0.w = 1;
     text_palette_load();
-    reg_a0 = (u8 *)test_palette_2;
+    reg_a0 = (u8 *)text_palette_2;
     reg_d0.w = 2;
     text_palette_load();
-    reg_a0 = (u8 *)test_palette_3;
+    reg_a0 = (u8 *)text_palette_3;
     reg_d0.w = 3;
     text_palette_load();
-    reg_a0 = (u8 *)test_palette_4;
+    reg_a0 = (u8 *)text_palette_4;
     reg_d0.w = 4;
     text_palette_load();
     reg_a0 = (u8 *)text_palette_5;
@@ -1046,7 +1040,7 @@ void func_00136450(void) {
         func_001AACC0();
         func_0013FD80();
     }
-    func_00135220();
+    player_slots_init();
     func_001340F0();
 }
 
@@ -1148,7 +1142,7 @@ void game_task(void) {
         return;
     }
     if (t == 2) goto block_end1;
-    func_00135420();
+    player_slots_update();
     if (g_game_flow_paused == 0) {
         if (g_enemies_stopped == 0) {
             if (g_bullets_blocked != 0) {

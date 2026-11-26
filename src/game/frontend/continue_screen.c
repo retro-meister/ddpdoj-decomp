@@ -71,15 +71,15 @@ void func_00134740(void);
 void func_00134BA0(void);
 
 void func_001340A0(void) {
-    void func_001353E0(void);
+    void player_slot_request(void);
     *(u16 *)&reg_d1 = 1;
-    func_001353E0();
+    player_slot_request();
 }
 
 void func_001340B0(void) {
-    void func_001353E0(void);
+    void player_slot_request(void);
     *(u16 *)&reg_d1 = 9;
-    func_001353E0();
+    player_slot_request();
 }
 
 extern u16 D_0025F9B0[];
@@ -673,7 +673,7 @@ extern u8 D_002BF3EA[];
 extern u8 *reg_call_target_as_u8_p;
 
 void func_00134C40(void) {
-    s32 func_001353E0();
+    s32 player_slot_request();
     reg_tmp.h[1] = *(u16 *) (reg_a5 + 8);
     reg_tmp.h[0] = *(u16 *) (reg_a5 + 0xA);
     reg_a4 = (u8 *) reg_tmp.w;
@@ -752,7 +752,7 @@ next_4:
     reg_d0.w = 0;
     reg_d0.b[0] = reg_a5[6];
     reg_d1.h[0] = 8;
-    func_001353E0();
+    player_slot_request();
     goto next_6;
 next_5:
     reg_a5[4] = 0;

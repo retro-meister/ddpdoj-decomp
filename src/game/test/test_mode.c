@@ -11,11 +11,11 @@ s32 sound_stop_loops();
 s32 music_stop();
 
 extern s32 g_text_palette[];
-extern u8 test_palette_0[];
-extern u8 test_palette_1[];
-extern u8 test_palette_2[];
-extern u8 test_palette_3[];
-extern u8 test_palette_4[];
+extern u8 text_palette_0[];
+extern u8 text_palette_1[];
+extern u8 text_palette_2[];
+extern u8 text_palette_3[];
+extern u8 text_palette_4[];
 extern s8 g_test_mode_flag;
 extern s8 g_test_mode_timer;
 extern u8 test_screen_routines[];
@@ -38,19 +38,19 @@ void test_palette_load(void)
 }
 
 void test_palettes_load(void) {
-    reg_a0 = test_palette_0;
+    reg_a0 = text_palette_0;
     reg_d0.w = 0;
     test_palette_load();
-    reg_a0 = test_palette_1;
+    reg_a0 = text_palette_1;
     reg_d0.w = 1;
     test_palette_load();
-    reg_a0 = test_palette_2;
+    reg_a0 = text_palette_2;
     reg_d0.w = 2;
     test_palette_load();
-    reg_a0 = test_palette_3;
+    reg_a0 = text_palette_3;
     reg_d0.w = 3;
     test_palette_load();
-    reg_a0 = test_palette_4;
+    reg_a0 = text_palette_4;
     reg_d0.w = 4;
     test_palette_load();
 }

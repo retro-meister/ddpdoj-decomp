@@ -41,7 +41,7 @@ void func_0014BEC0(void) {
     *(s16 *)(reg_a5 + 0x1C) = 0x20;
 }
 
-s32 func_001353E0();
+s32 player_slot_request();
 s32 func_0013B190();
 s32 task_start();
 
@@ -50,7 +50,7 @@ void func_0014BF90() {
     if (*(u16 *)(reg_a5 + 0x1C) == 0) {
         reg_d0.w = 0;
         reg_d1.h[0] = 6;
-        func_001353E0();
+        player_slot_request();
         func_0013B190();
         reg_d0.h[0] = 0xC;
         task_start();

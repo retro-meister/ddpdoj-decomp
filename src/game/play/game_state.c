@@ -73,4 +73,4 @@ s32 g_player_panel1_task_handle;
 s32 g_player_panel2_task_handle;
 
 /* .bss (the compiler lays these out in reverse) */
-u8 D_002BF390[80];
+u8 g_player_slots[80];
