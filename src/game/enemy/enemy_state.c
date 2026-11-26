@@ -12,7 +12,7 @@ s16 D_0028E7D8 __attribute__((aligned(4)));
 u16 g_spawn_request_end __attribute__((aligned(4)));
 
 /* .bss (the compiler lays these out in reverse) */
-u8 D_002BF330[32];
+u8 g_stage_enemy_cursor[32];
 u8 D_002BF2E0[80];
 u8 D_002BE3E0[3840];
 u8 D_002BE160[640];

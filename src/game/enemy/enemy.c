@@ -3,11 +3,11 @@
 #include "enemy_tables.h"
 #include "enemy.h"
 
-void func_0014D4A0(void);
-void func_0014DA80(void);
-void func_0014DDB0(void);
+void stage_enemies_select(void);
+void enemies_run(void);
+void enemy_start(void);
 void spawn_request_alloc();
-void func_0014E130(void);
+void enemy_slot_claim(void);
 void enemy_remove_entities();
 void enemy_init_entities_n(void);
 
@@ -40,7 +40,7 @@ extern S1 D_002BC7C0_as_S1;
 typedef struct { s8 a[0xA0]; s8 b[0x280]; s8 c[0xF00]; s8 d[0x50]; } S0;
 extern S0 D_002BE0C0_as_S0;
 
-void func_0014D260(void) {
+void enemies_reset(void) {
     s32 i;
 
     for (i = 0; i < 0xA0; i++) {
@@ -77,16 +77,16 @@ void func_0014D260(void) {
     for (i = 0; i < 0x50; i++) {
         g_spawn_request_spare_as_s8_a[i] = 0;
     }
-    func_0014D4A0();
+    stage_enemies_select();
 }
 
 extern u8 g_game_mode;
 extern u8 g_simulation_boss_start;
 extern u16 g_stage_x4;
-extern u8 D_002BF330[];
+extern u8 g_stage_enemy_cursor[];
 
-void func_0014D4A0(void) {
-    reg_a4 = D_002BF330;
+void stage_enemies_select(void) {
+    reg_a4 = g_stage_enemy_cursor;
     reg_a0 = (u8 *)g_stage_enemies;
     reg_d0.h[0] = g_stage_x4;
     reg_d0.h[0] += reg_d0.h[0];
@@ -118,21 +118,21 @@ extern u16 g_scroll_line;
 extern u8 g_spawn_requests[];
 extern u8 D_002BF2E0[];
 
-void func_0014D5D0(void) {
+void enemies_start_due(void) {
     u8 *save_a2;
     u8 *save_a3;
 
-    reg_a3 = (u8 *)D_002BF330;
+    reg_a3 = (u8 *)g_stage_enemy_cursor;
     reg_tmp.h[1] = *(u16 *) (reg_a3 + 0);
     reg_tmp.h[0] = *(u16 *) (reg_a3 + 2);
     reg_a2 = (u8 *) reg_tmp.w;
-loop_1:
-    reg_d0.h[0] = *(u16 *) (reg_a2 + 0);
-    if (reg_d0.h[0] == 0xFFFF) goto next_3;
-    if ((s16) g_scroll_line > (s16) reg_d0.h[0]) goto next_2;
-    if (g_scroll_line != reg_d0.h[0]) goto next_3;
+next_placement:
+    reg_d0.h[0] = ((EnemyPlacement *)reg_a2)->line;
+    if (reg_d0.h[0] == 0xFFFF) goto placements_done;
+    if ((s16) g_scroll_line > (s16) reg_d0.h[0]) goto skip_placement;
+    if (g_scroll_line != reg_d0.h[0]) goto placements_done;
     reg_d0.w = 0;
-    reg_d0.b[0] = *(u8 *) (reg_a2 + 5);
+    reg_d0.b[0] = ((EnemyPlacement *)reg_a2)->kind;
     reg_d1.h[1] = *(u16 *) (reg_a2 + 4);
     reg_d1.h[0] = *(u16 *) (reg_a2 + 6);
     reg_d1.w &= 0xFFF000;
@@ -149,8 +149,8 @@ loop_1:
     reg_tmp.h[0] = *(u16 *) (reg_a3 + 0xA);
     reg_a1 = (u8 *) reg_tmp.w;
     reg_a1 += reg_d7.h[0];
-    func_0014E130();
-    if (cond_flag != 0) goto next_2;
+    enemy_slot_claim();
+    if (cond_flag != 0) goto skip_placement;
     *(u16 *) (reg_a0 + 0xA) = *(u16 *) (reg_a2 + 2);
     reg_tmp.w = (u32) reg_a1;
     *(u16 *) (reg_a0 + 0x12) = reg_tmp.h[1];
@@ -158,17 +158,17 @@ loop_1:
     save_a2 = reg_a2;
     save_a3 = reg_a3;
     reg_a5 = reg_a0;
-    func_0014DDB0();
+    enemy_start();
     reg_a3 = save_a3;
     reg_a2 = save_a2;
-next_2:
-    reg_a2 += 8;
-    goto loop_1;
-next_3:
+skip_placement:
+    reg_a2 += sizeof(EnemyPlacement);
+    goto next_placement;
+placements_done:
     reg_tmp.w = (u32) reg_a2;
     *(u16 *)reg_a3 = (u16) reg_tmp.h[1];
     *(u16 *)(reg_a3 + 2) = (u16) reg_tmp.h[0];
-loop_11:
+next_request:
     reg_d6.h[0] = g_spawn_request_end;
     if (g_spawn_request_end != 0) {
         reg_a4 = (u8 *)g_spawn_requests;
@@ -177,7 +177,7 @@ loop_11:
         reg_d0.h[0] = *(u16 *)(reg_a4 + 2);
         reg_d0.h[0] = (u16) reg_d0.b[0];
         reg_d1.h[0] = *(u16 *)(reg_a4 + 4);
-        func_0014E130();
+        enemy_slot_claim();
         if (cond_flag == 0) {
             *(u8 *)(reg_a0 + 3) = (u8) *(u8 *)(reg_a4 + 3);
             *(u16 *)(reg_a0 + 0x12) = (u16) *(u16 *)(reg_a4 + 0x12);
@@ -213,21 +213,21 @@ loop_11:
         g_spawn_request_end = reg_d6.h[0];
         if (D_002BF2E0 != reg_a0) {
             reg_a5 = reg_a0;
-            func_0014DDB0();
+            enemy_start();
         }
         if (g_spawn_request_end != 0) {
-            goto loop_11;
+            goto next_request;
         }
     }
 }
 
 
-void func_0014DA50(void) {
+void enemies_frame(void) {
     s32 temp_s0;
 
     temp_s0 = (s32)reg_a5;
-    func_0014D5D0();
-    func_0014DA80();
+    enemies_start_due();
+    enemies_run();
     reg_a5 = (u8 *)temp_s0;
 }
 
@@ -240,7 +240,7 @@ extern u16 g_side_scroll_step[];
 extern u8 D_002BE0C0[];
 extern u8 *reg_call_target_as_u8_p;
 
-void func_0014DA80(void) {
+void enemies_run(void) {
     u32 temp_s0;
 
     reg_a5 = D_002BE0C0;
@@ -309,7 +309,7 @@ block_4:
 
 extern u8 D_002BD440_as_u8_a[];
 
-s32 func_0014DCA0(void) {
+s32 enemy_entities_claim(void) {
     u32 count;
     s32 ret;
 
@@ -358,7 +358,7 @@ extern u16 g_side_scroll_x[];
 extern u8 g_player2_as_u8_a[];
 extern u8 g_player1_as_u8_a[];
 
-void func_0014DDB0(void) {
+void enemy_start(void) {
     s8 temp_s0;
     s64 var_a0;
 
@@ -376,7 +376,7 @@ void func_0014DDB0(void) {
         ((Fn)*(u32 *)((u8 *)g_enemy_first_routines_high + (reg_d7.h[0] * 4)))();
     }
     reg_d0.h[0] = *(u16 *)(reg_a5 + 4);
-    if (func_0014DCA0() == 0) {
+    if (enemy_entities_claim() == 0) {
         reg_tmp.w = (u32)reg_a6;
         *(u16 *)(reg_a5 + 6) = (u16) reg_tmp.h[1];
         *(u16 *)(reg_a5 + 8) = (u16) reg_tmp.h[0];
@@ -472,7 +472,7 @@ extern u8 D_002BE160[];
 extern u8 D_002BE3E0[];
 
 
-void func_0014E130(void) {
+void enemy_slot_claim(void) {
     u32 sd0;
     u32 sd1;
     u32 sd2;

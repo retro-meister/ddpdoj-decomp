@@ -7,7 +7,7 @@ void func_0013A020(void);
 
 s32 func_00128660();                            /* extern */
 s32 func_001368C0();                            /* extern */
-s32 func_0014D260();                            /* extern */
+s32 enemies_reset();                            /* extern */
 s32 func_0016AAB0();                            /* extern */
 s32 func_001B82D0();                            /* extern */
 s32 func_00209E60();                            /* extern */
@@ -21,7 +21,7 @@ void func_00139B20(void) {
     func_002114A0();
     func_001368C0();
     func_00209E60();
-    func_0014D260();
+    enemies_reset();
     *(s8 *)(reg_a5 + 3) = 1;
 }
 
@@ -41,7 +41,7 @@ s32 func_00144EA0();
 s32 player_lasers_update();
 s32 laser_impacts_update();
 s32 func_001488C0();
-s32 func_0014DA50();
+s32 enemies_frame();
 s32 func_0016AC30();
 void func_00170A50(s32, s32, s32);
 s32 p1_options_update();
@@ -78,7 +78,7 @@ void func_00139B80(void) {
     }
     func_00211670();
     func_00170A50(0x1F, 0x1F, 0x1F);
-    func_0014DA50();
+    enemies_frame();
     func_00170A50(0, 0, 0);
     func_00136F30();
     func_00125FA0();

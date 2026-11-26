@@ -89,7 +89,7 @@ void func_00135010(void) {
 
 s32 func_00128660();                            /* extern */
 s32 func_00139EB0();                            /* extern */
-s32 func_0014D260();                            /* extern */
+s32 enemies_reset();                            /* extern */
 s32 func_0016AAB0();                            /* extern */
 s32 func_001B82D0();                            /* extern */
 s32 func_00209E60();                            /* extern */
@@ -98,7 +98,7 @@ extern u32 g_ground_task_handle_as_u32;
 
 void func_00135070(void) {
     func_00135010();
-    func_0014D260();
+    enemies_reset();
     func_00139EB0();
     func_001B82D0();
     func_002114A0();
