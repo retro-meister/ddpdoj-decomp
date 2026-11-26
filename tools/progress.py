@@ -18,7 +18,7 @@ GRAPH_DIR = ROOT / "docs"
 GRAPH_NAME = "progress.svg"
 MAP_NAMES = {"SLPS_252.33": "progress-map-main.svg", "DEATH.ELF": "progress-map-death.svg", "GALLERY.ELF": "progress-map-gallery.svg"}
 LABELS = {"GALLERY.ELF": "Gallery", "SLPS_252.33": "Main game", "DEATH.ELF": "Death Label"}
-GALLERY_ALL_FUNCTIONS_COMMIT = "9903eb43"
+GALLERY_ALL_FUNCTIONS_COMMIT = "76951158"
 
 
 def matched_function_count(name, local):
@@ -288,9 +288,9 @@ def render_progress_map(target, funcs):
     header_h = 84
     bottom_pad = 14
     titles = {
-        "DEATH.ELF": "DoDonPachi DaiOuJou (PS2) — Death Label (DEATH.ELF, unique functions)",
-        "SLPS_252.33": "DoDonPachi DaiOuJou (PS2) — Main game (SLPS_252.33)",
-        "GALLERY.ELF": "DoDonPachi DaiOuJou (PS2) — Gallery (GALLERY.ELF)",
+        "DEATH.ELF": "Death Label (DEATH.ELF, unique functions)",
+        "SLPS_252.33": "Main game (SLPS_252.33)",
+        "GALLERY.ELF": "Gallery (GALLERY.ELF)",
     }
     colors = {"matched": "#3fb950", "asm": "#da3633"}
 

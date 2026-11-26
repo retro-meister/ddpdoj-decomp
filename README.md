@@ -1,6 +1,6 @@
 # DoDonPachi DaiOuJou Decompilation (PS2)
 
-Byte-matching PlayStation 2 decompilation of **DoDonPachi DaiOuJou**, covering all three disc executables: the main game (`SLPS_252.33`), Death Label (`DEATH.ELF`), and the Gallery (`GALLERY.ELF`). No game assets or binaries are included; supply your own retail ISO to build.
+Byte-matching decompilation of **DoDonPachi DaiOuJou** (PS2), covering all three disc executables: the main game (`SLPS_252.33`), Death Label (`DEATH.ELF`), and the Gallery (`GALLERY.ELF`). No game assets or binaries are included; supply your own retail ISO to build.
 
 [![Main game C-match map](docs/progress-map-main.svg)](docs/progress-map-main.svg)
 
