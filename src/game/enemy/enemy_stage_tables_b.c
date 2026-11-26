@@ -202,7 +202,7 @@ const EnemyPlacement g_stage2_enemy_placements[333] = {
     { 262, 6, 0x00, ENEMY_HELI_A_1, 0x0066 },
     { 262, 12, 0x00, ENEMY_HELI_A_1, 0x005A },
     { 274, 22, 0x00, ENEMY_ITEM_CARRIER, 0x0002 },
-    { 280, 0, 0x80, 0x8C, 0x003F },
+    { 280, 0, 0x80, ENEMY_STAGE2_MIDBOSS, 0x003F },
     { 281, 6, 0x01, ENEMY_STAR_CONTAINER, 0x100B },
     { 281, 25, 0x00, ENEMY_MID_FLYER_E, 0x0050 },
     { 282, 9, 0x01, ENEMY_STAR_CONTAINER, 0x100B },

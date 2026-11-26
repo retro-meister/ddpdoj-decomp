@@ -73,9 +73,9 @@ void large_tank();
 void hatch_gunner_first();
 void hatch_gunner_start();
 void hatch_gunner();
-void func_001CBD50();
-void func_001CBD60();
-void func_001CC0A0();
+void stage2_midboss_first();
+void stage2_midboss_start();
+void stage2_midboss();
 void func_001D6C80();
 void func_001D6C90();
 void func_001D6D60();
@@ -852,7 +852,7 @@ EnemyRoutines g_enemy_routines_high[128] = {
     /* 0x89 */ { ground_turret_b_start, ground_turret_b },
     /* 0x8A */ { bee_container_start, bee_container },
     /* 0x8B */ { star_container_start, star_container },
-    /* 0x8C */ { func_001CBD60, func_001CC0A0 },
+    /* ENEMY_STAGE2_MIDBOSS */ { stage2_midboss_start, stage2_midboss },
     /* 0x8D */ { water_flower_turret_start, water_flower_turret },
     /* 0x8E */ { ground_turret_a_start, ground_turret_a },
     /* 0x8F */ { ground_turret_c_start, ground_turret_c },
@@ -983,7 +983,7 @@ void (*g_enemy_first_routines_high[128])() = {
     /* 0x89 */ ground_turret_b_first,
     /* 0x8A */ bee_container_first,
     /* 0x8B */ star_container_first,
-    /* 0x8C */ func_001CBD50,
+    /* ENEMY_STAGE2_MIDBOSS */ stage2_midboss_first,
     /* 0x8D */ water_flower_turret_first,
     /* 0x8E */ ground_turret_a_first,
     /* 0x8F */ ground_turret_c_first,

@@ -1,5 +1,6 @@
 #include "common.h"
 #include "entity.h"
+#include "enemy.h"
 
 
 void func_001CBC10(void) {
@@ -52,9 +53,50 @@ void func_001CBCE0(void) {
     }
 }
 
+/*
+ * The stage 2 mid-boss, kind 0x8C. It has three attacks in turn: volleys from the hatch, which opens for them,
+ * bursts from the two side guns, and spreads. Its second entity keeps the frame of the hatch in `look`, the
+ * timer of the hatch in `move` and the hit points, 32 bits, in `attr` and `misc`; the third keeps the palettes.
+ */
+typedef struct {
+    /* 0x00 */ u8 common[0x16];
+    /* 0x16 */ u8 unused_16;
+    /* 0x17 */ u8 seen;               /* it has been inside the screen */
+    /* 0x18 */ u16 attack;            /* 0: hatch volleys, 1: side guns, 2: spreads */
+    /* 0x1A */ u16 hatch_phase;       /* 0: waiting, 1: opening, 2: firing, 3: closing */
+    /* 0x1C */ u8 hit_flash;          /* what a hit changes in the palette */
+    /* 0x1D */ u8 palette;
+    /* 0x1E */ u8 unused_1E;
+    /* 0x1F */ u8 hatch_wait;
+    /* 0x20 */ u8 hatch_volleys;
+    /* 0x21 */ u8 hatch_volleys_left;
+    /* 0x22 */ u8 side_pause;         /* frames before the next round of bursts */
+    /* 0x23 */ u8 side_wait;
+    /* 0x24 */ u8 side_shots;         /* shots in a burst; six more with every round */
+    /* 0x25 */ u8 side_shots_left;
+    /* 0x26 */ u16 unused_26;
+    /* 0x28 */ struct {
+        u16 sprite[2];                /* high word first */
+        Field16 dir;                  /* where it points, 1/256 of a turn */
+    } gun[2];
+    /* 0x34 */ u8 side_interval;      /* frames between two shots of a burst */
+    /* 0x35 */ u8 hatch_delay;
+    /* 0x36 */ u8 spread_pause;
+    /* 0x37 */ u8 spread_wait;
+    /* 0x38 */ Field16 spread_step;   /* 0xC down to 0 in steps of 4 */
+    /* 0x3A */ u16 hatch_speed;
+    /* 0x3C */ u8 side_angle;         /* gets narrower with every round, down to 5 */
+    /* 0x3D */ u8 spread_interval;
+    /* 0x3E */ u16 spread_speed;
+    /* 0x40 */ u16 unused_40[2];
+    /* 0x44 */ u16 after_entities[2];
+} Stage2MidbossState;
+
+#define STAGE2_MIDBOSS(pointer) ((Stage2MidbossState *)(pointer))
+
 void enemy_set_entity_count(s32);
 
-void func_001CBD50(void) {
+void stage2_midboss_first(void) {
     enemy_set_entity_count(2);
 }
 
@@ -76,12 +118,12 @@ extern s16 D_00299768[];
 extern s16 D_0029976A[];
 extern s8 enemy_move_end_requested;
 
-void func_001CBD60(void) {
+void stage2_midboss_start(void) {
     reg_a0 = D_00263030;
     enemy_init_entities();
     reg_tmp.w = (u32) reg_a0;
-    *(u16 *)(reg_a5 + 0x44) = (u16) reg_tmp.h[1];
-    *(u16 *)(reg_a5 + 0x46) = (u16) reg_tmp.h[0];
+    STAGE2_MIDBOSS(reg_a5)->after_entities[0] = (u16) reg_tmp.h[1];
+    STAGE2_MIDBOSS(reg_a5)->after_entities[1] = (u16) reg_tmp.h[0];
     reg_a0 = D_00263000;
     reg_d0.w = 0x14;
     enemy_set_task_state();
@@ -103,11 +145,11 @@ void func_001CBD60(void) {
             reg_d1.b[0] = ENTITY(reg_a6)->move.b.dir;
             reg_d1.b[0] *= 4;
         }
-        *(u8 *)(reg_a5 + 0x2C) = (u8) reg_d1.b[0];
+        STAGE2_MIDBOSS(reg_a5)->gun[0].dir.b[0] = (u8) reg_d1.b[0];
         reg_d1.h[0] &= 0xF8;
         reg_d1.h[0] >>= 1;
-        *(u16 *)(reg_a5 + 0x28) = (reg_d1.h[0] != 0) ? *(u16 *)((u8 *)reg_a3 + ((s16)reg_d1.h[0] & ~1)) : *(u16 *)reg_a3;
-        *(u16 *)(reg_a5 + 0x2A) = ((reg_d1.h[0] + 2) != 0) ? *(u16 *)((u8 *)reg_a3 + ((s16)(reg_d1.h[0] + 2) & ~1)) : *(u16 *)reg_a3;
+        STAGE2_MIDBOSS(reg_a5)->gun[0].sprite[0] = (reg_d1.h[0] != 0) ? *(u16 *)((u8 *)reg_a3 + ((s16)reg_d1.h[0] & ~1)) : *(u16 *)reg_a3;
+        STAGE2_MIDBOSS(reg_a5)->gun[0].sprite[1] = ((reg_d1.h[0] + 2) != 0) ? *(u16 *)((u8 *)reg_a3 + ((s16)(reg_d1.h[0] + 2) & ~1)) : *(u16 *)reg_a3;
         reg_d0.h[0] = ENTITY(reg_a6)->y.h;
         reg_d1.h[0] = ENTITY(reg_a6)->x.h;
         reg_d0.h[0] += 0xAC0;
@@ -117,11 +159,11 @@ void func_001CBD60(void) {
             reg_d1.b[0] = ENTITY(reg_a6)->move.b.dir;
             reg_d1.b[0] *= 4;
         }
-        *(u8 *)(reg_a5 + 0x32) = (u8) reg_d1.b[0];
+        STAGE2_MIDBOSS(reg_a5)->gun[1].dir.b[0] = (u8) reg_d1.b[0];
         reg_d1.h[0] &= 0xF8;
         reg_d1.h[0] >>= 1;
-        *(u16 *)(reg_a5 + 0x2E) = (reg_d1.h[0] != 0) ? *(u16 *)((u8 *)reg_a3 + ((s16)reg_d1.h[0] & ~1)) : *(u16 *)reg_a3;
-        *(u16 *)(reg_a5 + 0x30) = ((reg_d1.h[0] + 2) != 0) ? *(u16 *)((u8 *)reg_a3 + ((s16)(reg_d1.h[0] + 2) & ~1)) : *(u16 *)reg_a3;
+        STAGE2_MIDBOSS(reg_a5)->gun[1].sprite[0] = (reg_d1.h[0] != 0) ? *(u16 *)((u8 *)reg_a3 + ((s16)reg_d1.h[0] & ~1)) : *(u16 *)reg_a3;
+        STAGE2_MIDBOSS(reg_a5)->gun[1].sprite[1] = ((reg_d1.h[0] + 2) != 0) ? *(u16 *)((u8 *)reg_a3 + ((s16)(reg_d1.h[0] + 2) & ~1)) : *(u16 *)reg_a3;
         reg_d0.b[0] = 0x10;
         reg_d1.b[0] = 2;
         reg_d2.b[0] = 0x18;
@@ -130,9 +172,9 @@ void func_001CBD60(void) {
             reg_d1.b[0] = 2;
             reg_d2.b[0] = 0x18;
         }
-        *(u8 *)(reg_a5 + 0x35) = (u8) reg_d0.b[0];
-        *(u8 *)(reg_a5 + 0x34) = (u8) reg_d1.b[0];
-        *(u8 *)(reg_a5 + 0x3D) = (u8) reg_d2.b[0];
+        STAGE2_MIDBOSS(reg_a5)->hatch_delay = (u8) reg_d0.b[0];
+        STAGE2_MIDBOSS(reg_a5)->side_interval = (u8) reg_d1.b[0];
+        STAGE2_MIDBOSS(reg_a5)->spread_interval = (u8) reg_d2.b[0];
         reg_a0 = D_002630D0;
         func_0013B2E0();
         g_enemy_signal_0_as_s16 = 1;
@@ -196,7 +238,7 @@ extern u16 g_side_scroll_x[];
 extern u16 g_player2_as_u16_a[];
 extern u16 g_player1_as_u16_a[];
 
-void func_001CC0A0(void) {
+void stage2_midboss(void) {
     u32 cnt;
     u16 val;
     u8 bits;
@@ -234,13 +276,13 @@ void func_001CC0A0(void) {
     reg_d0.h[0] += 0x7A00;
     if (reg_tmp.h[1] == 0) goto next_30;
 next_20:
-    if (*(u8 *)(reg_a5 + 0x17) == 0) goto next_40;
+    if (STAGE2_MIDBOSS(reg_a5)->seen == 0) goto next_40;
     g_enemy_signal_0 = 0;
     sfx_beam_loop_stop();
     enemy_remove();
     return;
 next_30:
-    *(u8 *)(reg_a5 + 0x17) = 1;
+    STAGE2_MIDBOSS(reg_a5)->seen = 1;
 next_40:
     if (ENTITY(reg_a6)->misc.b.user != 0) goto next_45;
     reg_tmp.w = 0xB000;
@@ -253,7 +295,7 @@ next_45:
     reg_d1.b[0] |= ENTITY(reg_a6)[1].flags.b[1];
     reg_d1.h[0] &= 0x5C;
     if (reg_d1.h[0] != 0) goto next_50;
-    reg_d0.b[0] = *(u8 *)(reg_a5 + 0x1D);
+    reg_d0.b[0] = STAGE2_MIDBOSS(reg_a5)->palette;
     reg_d3.b[0] = ENTITY(reg_a6)[2].offset_x.b[1];
     reg_d5.b[0] = ENTITY(reg_a6)[2].draw.b.priority;
     if (!((s32) ENTITY(reg_a6)->hp.h < 0x2C00)) goto next_90;
@@ -269,11 +311,11 @@ next_50:
     reg_d3.b[0] = ENTITY(reg_a6)[2].offset_y.b[1];
     reg_d5.b[0] = ENTITY(reg_a6)[2].offset_y.b[0];
     if (reg_d0.b[0] != 0x19) goto next_60;
-    reg_d0.b[0] = *(u8 *)(reg_a5 + 0x1D);
+    reg_d0.b[0] = STAGE2_MIDBOSS(reg_a5)->palette;
     reg_d3.b[0] = ENTITY(reg_a6)[2].offset_x.b[1];
     reg_d5.b[0] = ENTITY(reg_a6)[2].draw.b.priority;
 next_60:
-    reg_d2.b[0] = *(u8 *)(reg_a5 + 0x1C);
+    reg_d2.b[0] = STAGE2_MIDBOSS(reg_a5)->hit_flash;
     reg_d0.b[0] ^= reg_d2.b[0];
     reg_d2.b[0] = ENTITY(reg_a6)[2].offset_x.b[0];
     reg_d3.b[0] ^= reg_d2.b[0];
@@ -322,15 +364,15 @@ next_120:
     if (g_bullets_blocked != 0) goto next_500;
     if (g_enemies_stopped != 0) goto next_500;
     if (g_bullets_blocked != 0) goto next_500;
-    if (*(u16 *)(reg_a5 + 0x18) != 0) goto next_400;
+    if (STAGE2_MIDBOSS(reg_a5)->attack != 0) goto next_400;
     if ((s16) ENTITY(reg_a6)->y.h < 0x1000) goto next_400;
-    reg_d0.h[0] = *(u16 *)(reg_a5 + 0x1A);
+    reg_d0.h[0] = STAGE2_MIDBOSS(reg_a5)->hatch_phase;
     if (reg_d0.h[0] != 0) goto next_200;
-    reg_tmp.b[0] = *(u8 *)(reg_a5 + 0x1F);
-    *(u8 *)(reg_a5 + 0x1F) -= 1;
+    reg_tmp.b[0] = STAGE2_MIDBOSS(reg_a5)->hatch_wait;
+    STAGE2_MIDBOSS(reg_a5)->hatch_wait -= 1;
     if ((s32) reg_tmp.b[0] > 0) goto next_400;
-    *(u8 *)(reg_a5 + 0x1F) = *(u8 *)(reg_a5 + 0x35);
-    *(u16 *)(reg_a5 + 0x1A) = 1;
+    STAGE2_MIDBOSS(reg_a5)->hatch_wait = STAGE2_MIDBOSS(reg_a5)->hatch_delay;
+    STAGE2_MIDBOSS(reg_a5)->hatch_phase = 1;
     goto next_400;
 next_200:
     if ((reg_d0.h[0] & 0xFFFF) != 1) goto next_220;
@@ -340,21 +382,21 @@ next_200:
     ENTITY(reg_a6)[1].move.b.speed = ENTITY(reg_a6)[1].move.b.dir;
     ENTITY(reg_a6)[1].look.h += 4;
     if (ENTITY(reg_a6)[1].look.h != 0x5C) goto next_400;
-    *(u16 *)(reg_a5 + 0x1A) = 2;
+    STAGE2_MIDBOSS(reg_a5)->hatch_phase = 2;
     goto next_400;
 next_220:
     if ((reg_d0.h[0] & 0xFFFF) != 2) goto next_300;
-    reg_tmp.b[0] = *(u8 *)(reg_a5 + 0x1F);
-    *(u8 *)(reg_a5 + 0x1F) -= 1;
+    reg_tmp.b[0] = STAGE2_MIDBOSS(reg_a5)->hatch_wait;
+    STAGE2_MIDBOSS(reg_a5)->hatch_wait -= 1;
     if ((s32) reg_tmp.b[0] > 0) goto next_400;
     reg_d0.h[0] = 0x10;
     reg_d1.h[0] = g_rank_1_16;
     reg_d1.h[0] >>= 2;
     reg_d0.b[0] -= reg_d1.b[0];
-    *(u8 *)(reg_a5 + 0x1F) = reg_d0.b[0];
+    STAGE2_MIDBOSS(reg_a5)->hatch_wait = reg_d0.b[0];
     reg_a0 = (u8 *) g_player1_as_u16_a;
     reg_a1 = (u8 *) g_player2_as_u16_a;
-    if (*(u8 *)(reg_a5 + 2) == 0) goto next_240;
+    if (ENEMY_STATE(reg_a5)->target_player == 0) goto next_240;
     reg_atmp = (u8 *) reg_a0;
     reg_a0 = reg_a1;
     reg_a1 = (u8 *) reg_atmp;
@@ -383,7 +425,7 @@ loop_280:
     func_002010D0();
     reg_d1.b[0] = (s8) reg_d1.b[0] * 8;
     reg_d1.b[0] += reg_d6.b[0];
-    reg_d0.h[0] = *(u16 *)(reg_a5 + 0x3A);
+    reg_d0.h[0] = STAGE2_MIDBOSS(reg_a5)->hatch_speed;
     reg_tmp.h[0] = reg_d0.h[0];
     reg_d0.h[0] = reg_d0.h[1];
     reg_d0.h[1] = reg_tmp.h[0];
@@ -408,14 +450,14 @@ next_290:
     reg_d7.h[0] = cnt;
     if (((s64) ((s64) (cnt & 0xFFFF) << 0x30) >> 0x30) >= 0) goto loop_280;
     enemy_switch_target_player();
-    reg_tmp.b[0] = *(u8 *)(reg_a5 + 0x21);
-    *(u8 *)(reg_a5 + 0x21) -= 1;
+    reg_tmp.b[0] = STAGE2_MIDBOSS(reg_a5)->hatch_volleys_left;
+    STAGE2_MIDBOSS(reg_a5)->hatch_volleys_left -= 1;
     if ((s32) reg_tmp.b[0] > 0) goto next_400;
-    *(u8 *)(reg_a5 + 0x21) = *(u8 *)(reg_a5 + 0x20);
+    STAGE2_MIDBOSS(reg_a5)->hatch_volleys_left = STAGE2_MIDBOSS(reg_a5)->hatch_volleys;
     reg_d0.h[0] = 0x50;
     reg_d0.h[0] -= g_rank_5_16;
-    *(u8 *)(reg_a5 + 0x1F) = reg_d0.b[0];
-    *(u16 *)(reg_a5 + 0x1A) = 3;
+    STAGE2_MIDBOSS(reg_a5)->hatch_wait = reg_d0.b[0];
+    STAGE2_MIDBOSS(reg_a5)->hatch_phase = 3;
     goto next_400;
 next_300:
     reg_tmp.b[0] = ENTITY(reg_a6)[1].move.b.speed;
@@ -424,8 +466,8 @@ next_300:
     ENTITY(reg_a6)[1].move.b.speed = ENTITY(reg_a6)[1].move.b.dir;
     ENTITY(reg_a6)[1].look.h -= 4;
     if (ENTITY(reg_a6)[1].look.h != 0) goto next_400;
-    *(u16 *)(reg_a5 + 0x1A) = 0;
-    *(u16 *)(reg_a5 + 0x18) = 1;
+    STAGE2_MIDBOSS(reg_a5)->hatch_phase = 0;
+    STAGE2_MIDBOSS(reg_a5)->attack = 1;
 next_400:
     reg_d0.h[0] = ENTITY(reg_a6)[1].look.h;
     reg_a0 = (u8 *) D_00263180;
@@ -441,7 +483,7 @@ next_400:
     reg_a0 += 2;
     reg_a0 = (u8 *) g_player1_as_u16_a;
     reg_a1 = (u8 *) g_player2_as_u16_a;
-    if (*(u8 *)(reg_a5 + 2) == 0) goto next_420;
+    if (ENEMY_STATE(reg_a5)->target_player == 0) goto next_420;
     reg_atmp = (u8 *) reg_a0;
     reg_a0 = reg_a1;
     reg_a1 = (u8 *) reg_atmp;
@@ -458,8 +500,8 @@ next_440:
     reg_d0.h[0] = ENTITY(reg_a6)->y.h;
     reg_d1.h[0] = ENTITY(reg_a6)->x.h;
     reg_d5.w = 4;
-    reg_d0.b[0] = *(u8 *)(reg_a5 + 0x25);
-    if (*(u8 *)(reg_a5 + 0x24) != reg_d0.b[0]) goto next_460;
+    reg_d0.b[0] = STAGE2_MIDBOSS(reg_a5)->side_shots_left;
+    if (STAGE2_MIDBOSS(reg_a5)->side_shots != reg_d0.b[0]) goto next_460;
     reg_d5.w = 1;
 next_460:
     reg_a3 = (u8 *)g_direction_sprites_c;
@@ -472,27 +514,27 @@ next_460:
     reg_d0.h[0] += 0xAC0;
     reg_d1.h[0] += 0x780;
     direction256_between();
-    reg_d0.h[0] = *(u16 *)(reg_a5 + 0x2C);
+    reg_d0.h[0] = STAGE2_MIDBOSS(reg_a5)->gun[0].dir.h;
     func_002025E0();
-    *(u16 *)(reg_a5 + 0x2C) = reg_d1.h[0];
+    STAGE2_MIDBOSS(reg_a5)->gun[0].dir.h = reg_d1.h[0];
     reg_d1.b[0] += 4;
     reg_d1.h[0] &= 0xF8;
     reg_d1.h[0] >>= 1;
-    *(u16 *)(reg_a5 + 0x28) = (reg_d1.h[0] != 0) ? *(u16 *)(reg_a3 + ((s16) reg_d1.h[0] & ~1)) : *(u16 *)reg_a3;
-    *(u16 *)(reg_a5 + 0x2A) = ((reg_d1.h[0] + 2) != 0) ? *(u16 *)(reg_a3 + ((s16) (reg_d1.h[0] + 2) & ~1)) : *(u16 *)reg_a3;
+    STAGE2_MIDBOSS(reg_a5)->gun[0].sprite[0] = (reg_d1.h[0] != 0) ? *(u16 *)(reg_a3 + ((s16) reg_d1.h[0] & ~1)) : *(u16 *)reg_a3;
+    STAGE2_MIDBOSS(reg_a5)->gun[0].sprite[1] = ((reg_d1.h[0] + 2) != 0) ? *(u16 *)(reg_a3 + ((s16) (reg_d1.h[0] + 2) & ~1)) : *(u16 *)reg_a3;
     goto next_500;
 next_480:
     reg_d0.h[0] += 0xAC0;
     reg_d1.h[0] += 0xF880;
     direction256_between();
-    reg_d0.h[0] = *(u16 *)(reg_a5 + 0x32);
+    reg_d0.h[0] = STAGE2_MIDBOSS(reg_a5)->gun[1].dir.h;
     func_002025E0();
-    *(u16 *)(reg_a5 + 0x32) = reg_d1.h[0];
+    STAGE2_MIDBOSS(reg_a5)->gun[1].dir.h = reg_d1.h[0];
     reg_d1.h[0] += 4;
     reg_d1.h[0] &= 0xF8;
     reg_d1.h[0] >>= 1;
-    *(u16 *)(reg_a5 + 0x2E) = (reg_d1.h[0] != 0) ? *(u16 *)(reg_a3 + ((s16) reg_d1.h[0] & ~1)) : *(u16 *)reg_a3;
-    *(u16 *)(reg_a5 + 0x30) = ((reg_d1.h[0] + 2) != 0) ? *(u16 *)(reg_a3 + ((s16) (reg_d1.h[0] + 2) & ~1)) : *(u16 *)reg_a3;
+    STAGE2_MIDBOSS(reg_a5)->gun[1].sprite[0] = (reg_d1.h[0] != 0) ? *(u16 *)(reg_a3 + ((s16) reg_d1.h[0] & ~1)) : *(u16 *)reg_a3;
+    STAGE2_MIDBOSS(reg_a5)->gun[1].sprite[1] = ((reg_d1.h[0] + 2) != 0) ? *(u16 *)(reg_a3 + ((s16) (reg_d1.h[0] + 2) & ~1)) : *(u16 *)reg_a3;
 next_500:
     reg_a2 = (u8 *) entity_draw_layer5;
     reg_a3 = (u8 *) sprite_draw_layer5;
@@ -521,16 +563,16 @@ next_510:
     reg_d1.h[0] = ENTITY(reg_a6)->x.h;
     reg_d1.h[0] += 0x480;
     reg_d1.h[1] += 0x6C0;
-    reg_d2.h[1] = *(u16 *)(reg_a5 + 0x28);
-    reg_d2.h[0] = *(u16 *)(reg_a5 + 0x2A);
+    reg_d2.h[1] = STAGE2_MIDBOSS(reg_a5)->gun[0].sprite[0];
+    reg_d2.h[0] = STAGE2_MIDBOSS(reg_a5)->gun[0].sprite[1];
     reg_d3.h[0] = 0x418;
     reg_d4.h[0] = ENTITY(reg_a6)->attr.h;
     reg_call_target = (Fn) reg_a3;
     reg_call_target();
     reg_d1.h[0] = ENTITY(reg_a6)->x.h;
     reg_d1.h[0] += 0xF580;
-    reg_d2.h[1] = *(u16 *)(reg_a5 + 0x2E);
-    reg_d2.h[0] = *(u16 *)(reg_a5 + 0x30);
+    reg_d2.h[1] = STAGE2_MIDBOSS(reg_a5)->gun[1].sprite[0];
+    reg_d2.h[0] = STAGE2_MIDBOSS(reg_a5)->gun[1].sprite[1];
     reg_call_target = (Fn) reg_a3;
     reg_call_target();
     reg_d1.h[1] = ENTITY(reg_a6)->y.h;
@@ -565,21 +607,21 @@ next_540:
     if (g_enemies_stopped != 0) goto block_rts;
     if (g_bullets_blocked != 0) goto block_rts;
     if ((s16) ENTITY(reg_a6)->y.h < 0x1000) goto block_rts;
-    reg_d0.h[0] = *(u16 *)(reg_a5 + 0x18);
+    reg_d0.h[0] = STAGE2_MIDBOSS(reg_a5)->attack;
     if (reg_d0.h[0] == 0) goto block_rts;
     if (reg_d0.h[0] != 1) goto next_800;
     reg_tmp1.w = 0;
     reg_tmp.w = 0;
-    reg_tmp.b[0] = *(u8 *)(reg_a5 + 0x23);
+    reg_tmp.b[0] = STAGE2_MIDBOSS(reg_a5)->side_wait;
     reg_tmp.h[0] -= 1;
-    *(u8 *)(reg_a5 + 0x23) -= 1;
+    STAGE2_MIDBOSS(reg_a5)->side_wait -= 1;
     if (reg_tmp.b[1] != 0) goto next_600;
 block_rts:
     return;
 next_600:
-    *(u8 *)(reg_a5 + 0x23) = *(u8 *)(reg_a5 + 0x34);
+    STAGE2_MIDBOSS(reg_a5)->side_wait = STAGE2_MIDBOSS(reg_a5)->side_interval;
     reg_a4 = (u8 *)g_direction_offsets_400;
-    reg_d1.h[0] = *(u16 *)(reg_a5 + 0x2C);
+    reg_d1.h[0] = STAGE2_MIDBOSS(reg_a5)->gun[0].dir.h;
     reg_d0.h[0] = reg_d1.h[0];
     reg_d0.h[0] += 4;
     reg_d0.h[0] &= 0xF8;
@@ -593,12 +635,12 @@ next_600:
     reg_d2.h[1] = ENTITY(reg_a6)->y.h;
     reg_d2.h[0] = ENTITY(reg_a6)->x.h;
     bullet_fire256_3way();
-    reg_d6.b[0] = *(u8 *)(reg_a5 + 0x25);
+    reg_d6.b[0] = STAGE2_MIDBOSS(reg_a5)->side_shots_left;
     reg_d6.b[0] += reg_d6.b[0];
-    reg_d6.b[0] += *(u8 *)(reg_a5 + 0x3C);
+    reg_d6.b[0] += STAGE2_MIDBOSS(reg_a5)->side_angle;
     reg_d1.b[0] -= reg_d6.b[0];
     bullet_fire256_fast();
-    reg_d1.h[0] = *(u16 *)(reg_a5 + 0x32);
+    reg_d1.h[0] = STAGE2_MIDBOSS(reg_a5)->gun[1].dir.h;
     reg_d4.h[0] = reg_d1.h[0];
     reg_d4.h[0] += 4;
     reg_d4.h[0] &= 0xF8;
@@ -608,41 +650,41 @@ next_600:
     reg_d3.h[0] += 0xF880;
     reg_d3.h[1] += 0xAC0;
     bullet_fire256_3way();
-    reg_d6.b[0] = *(u8 *)(reg_a5 + 0x25);
+    reg_d6.b[0] = STAGE2_MIDBOSS(reg_a5)->side_shots_left;
     reg_d6.b[0] += reg_d6.b[0];
-    reg_d6.b[0] += *(u8 *)(reg_a5 + 0x3C);
+    reg_d6.b[0] += STAGE2_MIDBOSS(reg_a5)->side_angle;
     reg_d1.b[0] += reg_d6.b[0];
     bullet_fire256_fast();
-    reg_tmp.b[0] = *(u8 *)(reg_a5 + 0x25);
-    *(u8 *)(reg_a5 + 0x25) -= 1;
+    reg_tmp.b[0] = STAGE2_MIDBOSS(reg_a5)->side_shots_left;
+    STAGE2_MIDBOSS(reg_a5)->side_shots_left -= 1;
     if ((s32) reg_tmp.b[0] > 0) goto next_650;
-    *(u8 *)(reg_a5 + 0x24) += 6;
-    *(u8 *)(reg_a5 + 0x25) = *(u8 *)(reg_a5 + 0x24);
-    *(u8 *)(reg_a5 + 0x23) = *(u8 *)(reg_a5 + 0x22);
+    STAGE2_MIDBOSS(reg_a5)->side_shots += 6;
+    STAGE2_MIDBOSS(reg_a5)->side_shots_left = STAGE2_MIDBOSS(reg_a5)->side_shots;
+    STAGE2_MIDBOSS(reg_a5)->side_wait = STAGE2_MIDBOSS(reg_a5)->side_pause;
     enemy_switch_target_player();
-    *(u16 *)(reg_a5 + 0x18) = 2;
-    *(u8 *)(reg_a5 + 0x3C) -= 2;
-    if ((s32) *(u8 *)(reg_a5 + 0x3C) >= 5) goto next_650;
-    *(u8 *)(reg_a5 + 0x3C) = 5;
+    STAGE2_MIDBOSS(reg_a5)->attack = 2;
+    STAGE2_MIDBOSS(reg_a5)->side_angle -= 2;
+    if ((s32) STAGE2_MIDBOSS(reg_a5)->side_angle >= 5) goto next_650;
+    STAGE2_MIDBOSS(reg_a5)->side_angle = 5;
 next_650:
     return;
 next_800:
     reg_tmp.w = 0;
-    reg_tmp.b[0] = *(u8 *)(reg_a5 + 0x37);
+    reg_tmp.b[0] = STAGE2_MIDBOSS(reg_a5)->spread_wait;
     reg_tmp.h[0] -= 1;
-    *(u8 *)(reg_a5 + 0x37) -= 1;
+    STAGE2_MIDBOSS(reg_a5)->spread_wait -= 1;
     if (reg_tmp.b[1] != 0) goto next_820;
     return;
 next_820:
-    *(u8 *)(reg_a5 + 0x37) = *(u8 *)(reg_a5 + 0x3D);
-    if (!(*(u8 *)(reg_a5 + 0x38) & 4)) goto next_830;
+    STAGE2_MIDBOSS(reg_a5)->spread_wait = STAGE2_MIDBOSS(reg_a5)->spread_interval;
+    if (!(STAGE2_MIDBOSS(reg_a5)->spread_step.b[0] & 4)) goto next_830;
     rng_next_unsigned();
     reg_d1.h[0] = reg_d0.h[0];
     goto next_870;
 next_830:
     reg_a0 = (u8 *) g_player1_as_u16_a;
     reg_a1 = (u8 *) g_player2_as_u16_a;
-    if (*(u8 *)(reg_a5 + 2) == 0) goto next_840;
+    if (ENEMY_STATE(reg_a5)->target_player == 0) goto next_840;
     reg_atmp = (u8 *) reg_a0;
     reg_a0 = reg_a1;
     reg_a1 = (u8 *) reg_atmp;
@@ -663,15 +705,15 @@ next_860:
 next_870:
     reg_d2.h[1] = ENTITY(reg_a6)->y.h;
     reg_d2.h[0] = ENTITY(reg_a6)->x.h;
-    reg_d4.h[0] = *(u16 *)(reg_a5 + 0x38);
-    reg_d0.h[0] = *(u16 *)(reg_a5 + 0x3E);
+    reg_d4.h[0] = STAGE2_MIDBOSS(reg_a5)->spread_step.h;
+    reg_d0.h[0] = STAGE2_MIDBOSS(reg_a5)->spread_speed;
     reg_d0.h[0] = reg_d0.h[0] - reg_d4.h[0];
     reg_d0.h[0] >>= 1;
     reg_tmp.h[0] = reg_d0.h[0];
     reg_d0.h[0] = reg_d0.h[1];
     reg_d0.h[1] = reg_tmp.h[0];
     reg_d0.h[0] = 3;
-    if (!(*(u8 *)(reg_a5 + 0x38) & 4)) goto next_875;
+    if (!(STAGE2_MIDBOSS(reg_a5)->spread_step.b[0] & 4)) goto next_875;
     reg_d0.h[0] = 3;
 next_875:
     reg_a0 = (u8 *) D_00263270;
@@ -701,13 +743,13 @@ next_890:
     cnt = reg_d7.h[0] - 1;
     reg_d7.h[0] = cnt;
     if (((s64) ((s64) (cnt & 0xFFFF) << 0x30) >> 0x30) >= 0) goto loop_880;
-    *(u16 *)(reg_a5 + 0x38) -= 4;
-    if ((s16) *(u16 *)(reg_a5 + 0x38) >= 0) goto next_900;
-    *(u16 *)(reg_a5 + 0x3E) += 8;
-    *(u16 *)(reg_a5 + 0x38) = 0xC;
-    *(u8 *)(reg_a5 + 0x37) = *(u8 *)(reg_a5 + 0x36);
+    STAGE2_MIDBOSS(reg_a5)->spread_step.h -= 4;
+    if ((s16) STAGE2_MIDBOSS(reg_a5)->spread_step.h >= 0) goto next_900;
+    STAGE2_MIDBOSS(reg_a5)->spread_speed += 8;
+    STAGE2_MIDBOSS(reg_a5)->spread_step.h = 0xC;
+    STAGE2_MIDBOSS(reg_a5)->spread_wait = STAGE2_MIDBOSS(reg_a5)->spread_pause;
     enemy_switch_target_player();
-    *(u16 *)(reg_a5 + 0x18) = 0;
+    STAGE2_MIDBOSS(reg_a5)->attack = 0;
 next_900:
     return;
 next_700:
