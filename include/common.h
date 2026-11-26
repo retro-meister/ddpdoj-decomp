@@ -97,10 +97,16 @@ extern u8 *reg_atmp; /* scratch address register (exchanges) */
 #define ARCADE_ADDRESS_ENCODE(address) pc_arcade_address_encode((uintptr_t)(address))
 #define ARCADE_ADDRESS_DECODE(type, slot) ((type)pc_arcade_address_decode((u32)(slot)))
 #define STORE_ARCADE_ADDRESS(words, target) STORE_LONG(words, ARCADE_ADDRESS_ENCODE(target))
+#define STORE_ARCADE_ADDRESS_DIRECT(words, target) do { \
+    u32 slot = ARCADE_ADDRESS_ENCODE(target); \
+    (words)[0] = (u16)(slot >> 16); \
+    (words)[1] = (u16)slot; \
+} while (0)
 #else
 #define ARCADE_ADDRESS_ENCODE(address) ((u32)(address))
 #define ARCADE_ADDRESS_DECODE(type, slot) ((type)(slot))
 #define STORE_ARCADE_ADDRESS(words, target) STORE_POINTER(words, target)
+#define STORE_ARCADE_ADDRESS_DIRECT(words, target) STORE_POINTER_DIRECT(words, target)
 #endif
 extern s8 cond_flag; /* result of the last routine that reports through the condition codes */
 extern void (*reg_call_target)(); /* 0x28E3F4: address of the routine an indirect call goes through */

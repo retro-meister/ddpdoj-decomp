@@ -70,9 +70,11 @@ loop_2:
 
 
 void debris_update(void) {
-    s32 temp_s0;
-
-    temp_s0 = (s32)reg_a5;
+#ifdef DDPDOJ_PC
+    u8 *temp_s0 = reg_a5;
+#else
+    s32 temp_s0 = (s32)reg_a5;
+#endif
     debris_update_loop();
     reg_a5 = (u8 *)temp_s0;
 }
@@ -80,8 +82,12 @@ void debris_update(void) {
 typedef void (*Fn)();
 
 s32 entity_advance256();
+#ifdef DDPDOJ_PC
+#include "effect_tables.h"
+#else
 extern u8 debris_update_loop_value[];
 extern u8 D_002507A0[];
+#endif
 extern u8 D_00262570[];
 extern u16 g_frame_mod8;
 extern u16 g_frame_mod2;
@@ -189,10 +195,15 @@ next_7:
 next_set:
     if (*(u16 *)(reg_a6 + 0x22) == 0) goto next_8;
     *(u16 *)(reg_a6 + 0x22) -= 1;
+#ifdef DDPDOJ_PC
+    reg_d0.h[0] = *(u16 *)(reg_a6 + 0x24);
+    reg_a0 = (u8 *)debris_update_loop_value.draw[reg_d0.h[0] / 4];
+#else
     reg_a0 = (u8 *)debris_update_loop_value;
     reg_d0.h[0] = *(u16 *)(reg_a6 + 0x24);
     reg_a0 += reg_d0.h[0];
     reg_a0 = *(u8 **)reg_a0;
+#endif
     reg_call_target_as_u8_p = reg_a0;
     ((Fn) reg_call_target_as_u8_p)();
     reg_a6 += 0x40;
@@ -204,10 +215,15 @@ next_8:
     ENTITY(reg_a6)->hp.b[0] -= 1;
     if (ENTITY(reg_a6)->hp.b[0] == 0) goto next_clr;
     if (reg_d6.h[0] == 0) goto next_9;
+#ifdef DDPDOJ_PC
+    reg_d0.h[0] = *(u16 *)(reg_a6 + 0x24);
+    reg_a0 = (u8 *)debris_update_loop_value.draw[reg_d0.h[0] / 4];
+#else
     reg_a0 = (u8 *)debris_update_loop_value;
     reg_d0.h[0] = *(u16 *)(reg_a6 + 0x24);
     reg_a0 += reg_d0.h[0];
     reg_a0 = *(u8 **)reg_a0;
+#endif
     reg_call_target_as_u8_p = reg_a0;
     ((Fn) reg_call_target_as_u8_p)();
 next_9:
@@ -283,7 +299,11 @@ next_13:
     goto block_rts;
 next_speed:
     idx = reg_d1.h[0] * 2;
+#ifdef DDPDOJ_PC
+    reg_d3.h[0] = debris_update_loop_value.directions[6 + idx / 2];
+#else
     reg_d3.h[0] = *(u16 *)(D_002507A0 + idx);
+#endif
     p = D_00262570 + reg_d3.h[0] * 2;
     reg_d2.w = reg_d0.h[0] * *(u16 *)(p + 0);
     reg_d3.w = reg_d0.h[0] * *(u16 *)(p + 2);
@@ -316,7 +336,7 @@ next_17:
     reg_d0.h[0] = ENTITY(reg_a6)->hit_y_plus.h;
     reg_tmp.h[1] = ENTITY(reg_a6)->hit_x_plus.h;
     reg_tmp.h[0] = ENTITY(reg_a6)->hit_x_minus.h;
-    reg_a0 = (u8 *) reg_tmp.w;
+    reg_a0 = ARCADE_ADDRESS_DECODE(u8 *, reg_tmp.w);
     ENTITY(reg_a6)->draw.h = (reg_d0.h[0]) ? *(u16 *)(reg_a0 + ((s16) reg_d0.h[0] & ~1)) : *(u16 *)reg_a0;
     idx = reg_d0.h[0] + 2;
     ENTITY(reg_a6)->sprite.h = (idx) ? *(u16 *)(reg_a0 + ((s16) idx & ~1)) : *(u16 *)reg_a0;
@@ -334,22 +354,26 @@ block_rts:
     return;
 }
 
+#ifndef DDPDOJ_PC
 extern u8 D_002509E0[];
+#endif
 s32 rng_next();
 s32 rng_next_wide();
 s32 rng_next_masked();
 s32 rng_next_unsigned();
 s32 rng_next_bit();
 s32 rng_next_pair_medium_d4();
-extern u16 D_00250CE0[];
 #ifndef DDPDOJ_PC
+extern u16 D_00250CE0[];
 extern u8 D_0028E52F;
 #endif
 
 void debris_init(void) {
     u8 flag;
 
+#ifndef DDPDOJ_PC
     reg_a2 = (u8 *)(D_00250CE0);
+#endif
     reg_d4.h[0] = 0x8000;
     reg_d0.h[0] >>= 8;
     reg_d1.b[0] = reg_d0.b[0];
@@ -365,7 +389,11 @@ void debris_init(void) {
     reg_d1.h[0] = (u16) (s8) reg_d1.b[0];
     reg_d0.h[0] &= 0x1C;
     reg_d2.h[0] = reg_d0.h[0];
+#ifdef DDPDOJ_PC
+    reg_a2 = debris_random_patterns.parameters[reg_d0.h[0] / 4];
+#else
     reg_a2 = *(u8 **)((u8 *)D_00250CE0 + (reg_d0.h[0] & ~3));
+#endif
     *(u16 *)reg_a0 = reg_d4.h[0];
     *(u16 *)(reg_a0 + 2) = (u16) ENTITY(reg_a6)->y.h;
     *(u16 *)(reg_a0 + 4) = (u16) ENTITY(reg_a6)->x.h;
@@ -414,9 +442,13 @@ void debris_init(void) {
     reg_d0.h[0] = (s16) reg_d0.h[0] * 4;
     reg_d0.h[0] += 0x30;
     *(u16 *)(reg_a0 + 0x22) = (u16) reg_d0.h[0];
+#ifdef DDPDOJ_PC
+    reg_a1 = (u8 *)debris_update_loop_value.initialize[reg_d2.h[0] / 4];
+#else
     reg_a1 = (u8 *)D_002509E0;
     reg_a1 += reg_d2.h[0];
     reg_a1 = *(u8 **)reg_a1;
+#endif
     reg_call_target = (Fn)(reg_a1);
     reg_call_target();
     if (0 > (s16) reg_d1.h[0]) {
@@ -465,11 +497,17 @@ void debris_init(void) {
 }
 
 s32 rng_next_0_to_3();
+#ifndef DDPDOJ_PC
 extern u8 debris_random_patterns[];
+#endif
 
 void debris_pattern_random(void) {
     rng_next_0_to_3();
+#ifdef DDPDOJ_PC
+    reg_a1 = (u8 *)debris_random_patterns.frame_addresses;
+#else
     reg_a1 = debris_random_patterns;
+#endif
     reg_d0.h[0] += reg_d0.h[0];
     reg_d0.h[0] += reg_d0.h[0];
     reg_a1 += reg_d0.h[0];
@@ -482,7 +520,7 @@ void debris_pattern_random(void) {
     *(u16 *)(reg_a0 + 0x10) -= reg_d0.h[0];
     reg_tmp.h[1] = *(u16 *)(reg_a0 + 0x14);
     reg_tmp.h[0] = *(u16 *)(reg_a0 + 0x16);
-    reg_a1 = (u8 *) reg_tmp.w;
+    reg_a1 = ARCADE_ADDRESS_DECODE(u8 *, reg_tmp.w);
     *(u16 *)(reg_a0 + 0xA) = (reg_d0.h[0] != 0) ? *(u16 *)((u8 *)reg_a1 + ((s16)reg_d0.h[0] & ~1)) : *(u16 *)reg_a1;
     *(u16 *)(reg_a0 + 0xC) = ((reg_d0.h[0] + 2) != 0) ? *(u16 *)((u8 *)reg_a1 + ((s16)(reg_d0.h[0] + 2) & ~1)) : *(u16 *)reg_a1;
 }
@@ -495,7 +533,7 @@ void debris_delay_random(void) {
     *(u16 *)(reg_a0 + 0x10) -= reg_d0.h[0];
     reg_tmp.h[1] = *(u16 *)(reg_a0 + 0x14);
     reg_tmp.h[0] = *(u16 *)(reg_a0 + 0x16);
-    reg_a1 = (u8 *)(reg_tmp.w);
+    reg_a1 = ARCADE_ADDRESS_DECODE(u8 *, reg_tmp.w);
     *(u16 *)(reg_a0 + 0xA) = (reg_d0.h[0] != 0) ? *(u16 *)((u8 *)reg_a1 + ((s16)reg_d0.h[0] & ~1)) : *(u16 *)reg_a1;
     *(u16 *)(reg_a0 + 0xC) = ((reg_d0.h[0] + 2) != 0) ? *(u16 *)((u8 *)reg_a1 + ((s16)(reg_d0.h[0] + 2) & ~1)) : *(u16 *)reg_a1;
 }

@@ -185,7 +185,7 @@ void explosions_clear(void) {
 void explosion_next_frame(void) {
     reg_tmp.h[1] = EXPLOSION(reg_a6)->frames[0];
     reg_tmp.h[0] = EXPLOSION(reg_a6)->frames[1];
-    reg_a1 = (u8 *)reg_tmp.w;
+    reg_a1 = ARCADE_ADDRESS_DECODE(u8 *, reg_tmp.w);
 loop_1:
     reg_d0.h[1] = *(u16 *)reg_a1;
     reg_d0.h[0] = *(u16 *)(reg_a1 + 2);
@@ -213,7 +213,7 @@ loop_1:
         }
         goto loop_1;
     }
-    reg_tmp.w = (u32)reg_a1;
+    reg_tmp.w = ARCADE_ADDRESS_ENCODE(reg_a1);
     EXPLOSION(reg_a6)->frames[0] = (u16) reg_tmp.h[1];
     EXPLOSION(reg_a6)->frames[1] = (u16) reg_tmp.h[0];
 }
@@ -225,7 +225,11 @@ s32 entity_follow_scroll();
 s32 velocity_from_dir256();
 extern u16 explosion_scripts[];
 extern u16 explosion_scripts_b[];
+#ifdef DDPDOJ_PC
+#include "effect_tables.h"
+#else
 extern u8 D_00250760[];
+#endif
 extern u16 g_game_frame;
 extern u8 g_explosions[];
 extern u16 g_explosion_count[];
@@ -262,11 +266,11 @@ skip_1:
     reg_d1.h[0] *= 8;
     reg_tmp.h[1] = ((reg_d1.h[0] + 4) != 0) ? *(u16 *)(reg_a1 + ((s16)(reg_d1.h[0] + 4) & ~1)) : *(u16 *)reg_a1;
     reg_tmp.h[0] = ((reg_d1.h[0] + 6) != 0) ? *(u16 *)(reg_a1 + ((s16)(reg_d1.h[0] + 6) & ~1)) : *(u16 *)reg_a1;
-    reg_a2 = (u8 *)reg_tmp.w;
+    reg_a2 = ARCADE_ADDRESS_DECODE(u8 *, reg_tmp.w);
     EXPLOSION(reg_a6)->frame_time = *(u16 *)reg_a2;
     reg_a2 += 2;
     EXPLOSION(reg_a6)->frame_time += 1;
-    reg_tmp.w = (u32)reg_a2;
+    reg_tmp.w = ARCADE_ADDRESS_ENCODE(reg_a2);
     EXPLOSION(reg_a6)->times[0] = reg_tmp.h[1];
     EXPLOSION(reg_a6)->times[1] = reg_tmp.h[0];
     EXPLOSION(reg_a6)->frames[0] = (reg_d1.h[0] != 0) ? *(u16 *)(reg_a1 + ((s16)reg_d1.h[0] & ~1)) : *(u16 *)reg_a1;
@@ -274,12 +278,12 @@ skip_1:
     explosion_next_frame();
     reg_tmp.h[1] = EXPLOSION(reg_a6)->frames[0];
     reg_tmp.h[0] = EXPLOSION(reg_a6)->frames[1];
-    reg_a2 = (u8 *)reg_tmp.w;
+    reg_a2 = ARCADE_ADDRESS_DECODE(u8 *, reg_tmp.w);
     EXPLOSION(reg_a6)->draw = *(u16 *)reg_a2;
     reg_a2 += 2;
     EXPLOSION(reg_a6)->sprite = *(u16 *)reg_a2;
     reg_a2 += 2;
-    reg_tmp.w = (u32)reg_a2;
+    reg_tmp.w = ARCADE_ADDRESS_ENCODE(reg_a2);
     EXPLOSION(reg_a6)->frames[0] = reg_tmp.h[1];
     EXPLOSION(reg_a6)->frames[1] = reg_tmp.h[0];
     reg_d1.h[1] = EXPLOSION(reg_a6)->y;
@@ -366,7 +370,7 @@ block_move:
     if (!(0 > (s16) EXPLOSION(reg_a6)->frame_time)) goto block_disp;
     reg_tmp.h[1] = EXPLOSION(reg_a6)->times[0];
     reg_tmp.h[0] = EXPLOSION(reg_a6)->times[1];
-    reg_a0 = (u8 *)reg_tmp.w;
+    reg_a0 = ARCADE_ADDRESS_DECODE(u8 *, reg_tmp.w);
     reg_d0.h[0] = *(u16 *)reg_a0;
     reg_a0 += 2;
     if ((s16)reg_d0.h[0] != -1) goto block_anim;
@@ -375,20 +379,20 @@ block_end:
     goto next_1;
 block_anim:
     EXPLOSION(reg_a6)->frame_time = reg_d0.h[0];
-    reg_tmp.w = (u32)reg_a0;
+    reg_tmp.w = ARCADE_ADDRESS_ENCODE(reg_a0);
     EXPLOSION(reg_a6)->times[0] = reg_tmp.h[1];
     EXPLOSION(reg_a6)->times[1] = reg_tmp.h[0];
     explosion_next_frame();
     reg_tmp.h[1] = EXPLOSION(reg_a6)->frames[0];
     reg_tmp.h[0] = EXPLOSION(reg_a6)->frames[1];
-    reg_a0 = (u8 *)reg_tmp.w;
+    reg_a0 = ARCADE_ADDRESS_DECODE(u8 *, reg_tmp.w);
     reg_d0.h[1] = *(u16 *)reg_a0;
     reg_a0 += 2;
     reg_d0.h[0] = *(u16 *)reg_a0;
     reg_a0 += 2;
     EXPLOSION(reg_a6)->draw = reg_d0.h[1];
     EXPLOSION(reg_a6)->sprite = reg_d0.h[0];
-    reg_tmp.w = (u32)reg_a0;
+    reg_tmp.w = ARCADE_ADDRESS_ENCODE(reg_a0);
     EXPLOSION(reg_a6)->frames[0] = reg_tmp.h[1];
     EXPLOSION(reg_a6)->frames[1] = reg_tmp.h[0];
 block_disp:
@@ -400,7 +404,11 @@ block_disp:
 block_draw:
     reg_d0.h[0] = EXPLOSION(reg_a6)->draw_layer;
     reg_d0.h[0] >>= 2;
+#ifdef DDPDOJ_PC
+    explosion_scripts_33.draw[reg_d0.h[0]]();
+#else
     ((Fn)*(u32 *)(D_00250760 + reg_d0.h[0] * 4))();
+#endif
 next_1:
     reg_a6 += 0x38;
     if ((s16)(--reg_d7.h[0]) >= 0) goto loop_1;

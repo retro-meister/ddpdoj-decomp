@@ -519,6 +519,10 @@ extern u16 death_D_00254982[];
 extern void bullet_type_24_setup(void);
 #endif
 
+#ifdef DDPDOJ_PC
+void debris_frame_addresses_init(void);
+#endif
+
 void checked_pointers_store(void) {
     extern void input_get_p1_held(void);
     extern void input_get_p2_held(void);
@@ -1081,547 +1085,550 @@ void checked_pointers_store(void) {
     if (explosion_scripts[0] != 0x0) {
         printf("error! exp_tbl[0]\n");
     }
-    STORE_POINTER_DIRECT(explosion_scripts, explosion_script_00);
+    STORE_ARCADE_ADDRESS_DIRECT(explosion_scripts, explosion_script_00);
     if (explosion_scripts[2] != 0x2) {
         printf("error! exp_tbl[2]\n");
     }
-    STORE_POINTER_DIRECT(explosion_scripts + 2, explosion_script_01);
+    STORE_ARCADE_ADDRESS_DIRECT(explosion_scripts + 2, explosion_script_01);
     if (explosion_scripts[4] != 0x4) {
         printf("error! exp_tbl[4]\n");
     }
-    STORE_POINTER_DIRECT(explosion_scripts + 4, explosion_script_02);
+    STORE_ARCADE_ADDRESS_DIRECT(explosion_scripts + 4, explosion_script_02);
     if (explosion_scripts[6] != 0x6) {
         printf("error! exp_tbl[6]\n");
     }
-    STORE_POINTER_DIRECT(explosion_scripts + 6, explosion_script_03);
+    STORE_ARCADE_ADDRESS_DIRECT(explosion_scripts + 6, explosion_script_03);
     if (explosion_scripts[8] != 0x8) {
         printf("error! exp_tbl[8]\n");
     }
-    STORE_POINTER_DIRECT(explosion_scripts + 8, explosion_script_04);
+    STORE_ARCADE_ADDRESS_DIRECT(explosion_scripts + 8, explosion_script_04);
     if (explosion_scripts[10] != 0xa) {
         printf("error! exp_tbl[10]\n");
     }
-    STORE_POINTER_DIRECT(explosion_scripts + 10, explosion_script_05);
+    STORE_ARCADE_ADDRESS_DIRECT(explosion_scripts + 10, explosion_script_05);
     if (explosion_scripts[12] != 0xc) {
         printf("error! exp_tbl[12]\n");
     }
-    STORE_POINTER_DIRECT(explosion_scripts + 12, explosion_script_06);
+    STORE_ARCADE_ADDRESS_DIRECT(explosion_scripts + 12, explosion_script_06);
     if (explosion_scripts[14] != 0xe) {
         printf("error! exp_tbl[14]\n");
     }
-    STORE_POINTER_DIRECT(explosion_scripts + 14, explosion_script_07);
+    STORE_ARCADE_ADDRESS_DIRECT(explosion_scripts + 14, explosion_script_07);
     if (explosion_scripts[16] != 0x10) {
         printf("error! exp_tbl[16]\n");
     }
-    STORE_POINTER_DIRECT(explosion_scripts + 16, explosion_script_08);
+    STORE_ARCADE_ADDRESS_DIRECT(explosion_scripts + 16, explosion_script_08);
     if (explosion_scripts[18] != 0x12) {
         printf("error! exp_tbl[18]\n");
     }
-    STORE_POINTER_DIRECT(explosion_scripts + 18, explosion_script_09);
+    STORE_ARCADE_ADDRESS_DIRECT(explosion_scripts + 18, explosion_script_09);
     if (explosion_scripts[20] != 0x14) {
         printf("error! exp_tbl[20]\n");
     }
-    STORE_POINTER_DIRECT(explosion_scripts + 20, explosion_script_10);
+    STORE_ARCADE_ADDRESS_DIRECT(explosion_scripts + 20, explosion_script_10);
     if (explosion_scripts[22] != 0x16) {
         printf("error! exp_tbl[22]\n");
     }
-    STORE_POINTER_DIRECT(explosion_scripts + 22, explosion_script_11);
+    STORE_ARCADE_ADDRESS_DIRECT(explosion_scripts + 22, explosion_script_11);
     if (explosion_scripts[24] != 0x18) {
         printf("error! exp_tbl[24]\n");
     }
-    STORE_POINTER_DIRECT(explosion_scripts + 24, explosion_script_12);
+    STORE_ARCADE_ADDRESS_DIRECT(explosion_scripts + 24, explosion_script_12);
     if (explosion_scripts[26] != 0x1a) {
         printf("error! exp_tbl[26]\n");
     }
-    STORE_POINTER_DIRECT(explosion_scripts + 26, explosion_script_13);
+    STORE_ARCADE_ADDRESS_DIRECT(explosion_scripts + 26, explosion_script_13);
     if (explosion_scripts[28] != 0x1c) {
         printf("error! exp_tbl[28]\n");
     }
-    STORE_POINTER_DIRECT(explosion_scripts + 28, explosion_script_14);
+    STORE_ARCADE_ADDRESS_DIRECT(explosion_scripts + 28, explosion_script_14);
     if (explosion_scripts[30] != 0x1e) {
         printf("error! exp_tbl[30]\n");
     }
-    STORE_POINTER_DIRECT(explosion_scripts + 30, explosion_script_15);
+    STORE_ARCADE_ADDRESS_DIRECT(explosion_scripts + 30, explosion_script_15);
     if (explosion_scripts[32] != 0x20) {
         printf("error! exp_tbl[32]\n");
     }
-    STORE_POINTER_DIRECT(explosion_scripts + 32, explosion_script_16);
+    STORE_ARCADE_ADDRESS_DIRECT(explosion_scripts + 32, explosion_script_16);
     if (explosion_scripts[34] != 0x22) {
         printf("error! exp_tbl[34]\n");
     }
-    STORE_POINTER_DIRECT(explosion_scripts + 34, explosion_script_17);
+    STORE_ARCADE_ADDRESS_DIRECT(explosion_scripts + 34, explosion_script_17);
     if (explosion_scripts[36] != 0x24) {
         printf("error! exp_tbl[36]\n");
     }
-    STORE_POINTER_DIRECT(explosion_scripts + 36, explosion_script_18);
+    STORE_ARCADE_ADDRESS_DIRECT(explosion_scripts + 36, explosion_script_18);
     if (explosion_scripts[38] != 0x26) {
         printf("error! exp_tbl[38]\n");
     }
-    STORE_POINTER_DIRECT(explosion_scripts + 38, explosion_script_19);
+    STORE_ARCADE_ADDRESS_DIRECT(explosion_scripts + 38, explosion_script_19);
     if (explosion_scripts[40] != 0x28) {
         printf("error! exp_tbl[40]\n");
     }
-    STORE_POINTER_DIRECT(explosion_scripts + 40, explosion_scripts_20);
+    STORE_ARCADE_ADDRESS_DIRECT(explosion_scripts + 40, explosion_scripts_20);
     if (explosion_scripts[42] != 0x2a) {
         printf("error! exp_tbl[42]\n");
     }
-    STORE_POINTER_DIRECT(explosion_scripts + 42, explosion_scripts_21);
+    STORE_ARCADE_ADDRESS_DIRECT(explosion_scripts + 42, explosion_scripts_21);
     if (explosion_scripts[44] != 0x2c) {
         printf("error! exp_tbl[44]\n");
     }
-    STORE_POINTER_DIRECT(explosion_scripts + 44, explosion_scripts_22);
+    STORE_ARCADE_ADDRESS_DIRECT(explosion_scripts + 44, explosion_scripts_22);
     if (explosion_scripts[46] != 0x2e) {
         printf("error! exp_tbl[46]\n");
     }
-    STORE_POINTER_DIRECT(explosion_scripts + 46, explosion_scripts_23);
+    STORE_ARCADE_ADDRESS_DIRECT(explosion_scripts + 46, explosion_scripts_23);
     if (explosion_scripts[48] != 0x30) {
         printf("error! exp_tbl[48]\n");
     }
-    STORE_POINTER_DIRECT(explosion_scripts + 48, explosion_scripts_24);
+    STORE_ARCADE_ADDRESS_DIRECT(explosion_scripts + 48, explosion_scripts_24);
     if (explosion_scripts[50] != 0x32) {
         printf("error! exp_tbl[50]\n");
     }
-    STORE_POINTER_DIRECT(explosion_scripts + 50, explosion_scripts_25);
+    STORE_ARCADE_ADDRESS_DIRECT(explosion_scripts + 50, explosion_scripts_25);
     if (explosion_scripts[52] != 0x34) {
         printf("error! exp_tbl[52]\n");
     }
-    STORE_POINTER_DIRECT(explosion_scripts + 52, explosion_scripts_26);
+    STORE_ARCADE_ADDRESS_DIRECT(explosion_scripts + 52, explosion_scripts_26);
     if (explosion_scripts[54] != 0x36) {
         printf("error! exp_tbl[54]\n");
     }
-    STORE_POINTER_DIRECT(explosion_scripts + 54, explosion_scripts_27);
+    STORE_ARCADE_ADDRESS_DIRECT(explosion_scripts + 54, explosion_scripts_27);
     if (explosion_scripts[56] != 0x38) {
         printf("error! exp_tbl[56]\n");
     }
-    STORE_POINTER_DIRECT(explosion_scripts + 56, explosion_scripts_28);
+    STORE_ARCADE_ADDRESS_DIRECT(explosion_scripts + 56, explosion_scripts_28);
     if (explosion_scripts[58] != 0x3a) {
         printf("error! exp_tbl[58]\n");
     }
-    STORE_POINTER_DIRECT(explosion_scripts + 58, explosion_scripts_29);
+    STORE_ARCADE_ADDRESS_DIRECT(explosion_scripts + 58, explosion_scripts_29);
     if (explosion_scripts[60] != 0x3c) {
         printf("error! exp_tbl[60]\n");
     }
-    STORE_POINTER_DIRECT(explosion_scripts + 60, explosion_scripts_30);
+    STORE_ARCADE_ADDRESS_DIRECT(explosion_scripts + 60, explosion_scripts_30);
     if (explosion_scripts[62] != 0x3e) {
         printf("error! exp_tbl[62]\n");
     }
-    STORE_POINTER_DIRECT(explosion_scripts + 62, explosion_scripts_31);
+    STORE_ARCADE_ADDRESS_DIRECT(explosion_scripts + 62, explosion_scripts_31);
     if (explosion_scripts[64] != 0x40) {
         printf("error! exp_tbl[64]\n");
     }
-    STORE_POINTER_DIRECT(explosion_scripts + 64, D_002506F0);
+    STORE_ARCADE_ADDRESS_DIRECT(explosion_scripts + 64, D_002506F0);
     if (explosion_scripts[66] != 0x42) {
         printf("error! exp_tbl[66]\n");
     }
-    STORE_POINTER_DIRECT(explosion_scripts + 66, explosion_scripts_33);
+    STORE_ARCADE_ADDRESS_DIRECT(explosion_scripts + 66, explosion_scripts_33);
     if (explosion_scripts[68] != 0x44) {
         printf("error! exp_tbl[68]\n");
     }
-    STORE_POINTER_DIRECT(explosion_scripts + 68, explosion_script_00);
+    STORE_ARCADE_ADDRESS_DIRECT(explosion_scripts + 68, explosion_script_00);
     if (explosion_scripts[70] != 0x46) {
         printf("error! exp_tbl[70]\n");
     }
-    STORE_POINTER_DIRECT(explosion_scripts + 70, explosion_script_01);
+    STORE_ARCADE_ADDRESS_DIRECT(explosion_scripts + 70, explosion_script_01);
     if (explosion_scripts[72] != 0x48) {
         printf("error! exp_tbl[72]\n");
     }
-    STORE_POINTER_DIRECT(explosion_scripts + 72, explosion_script_02);
+    STORE_ARCADE_ADDRESS_DIRECT(explosion_scripts + 72, explosion_script_02);
     if (explosion_scripts[74] != 0x4a) {
         printf("error! exp_tbl[74]\n");
     }
-    STORE_POINTER_DIRECT(explosion_scripts + 74, explosion_script_03);
+    STORE_ARCADE_ADDRESS_DIRECT(explosion_scripts + 74, explosion_script_03);
     if (explosion_scripts[76] != 0x4c) {
         printf("error! exp_tbl[76]\n");
     }
-    STORE_POINTER_DIRECT(explosion_scripts + 76, explosion_script_04);
+    STORE_ARCADE_ADDRESS_DIRECT(explosion_scripts + 76, explosion_script_04);
     if (explosion_scripts[78] != 0x4e) {
         printf("error! exp_tbl[78]\n");
     }
-    STORE_POINTER_DIRECT(explosion_scripts + 78, explosion_script_05);
+    STORE_ARCADE_ADDRESS_DIRECT(explosion_scripts + 78, explosion_script_05);
     if (explosion_scripts[80] != 0x50) {
         printf("error! exp_tbl[80]\n");
     }
-    STORE_POINTER_DIRECT(explosion_scripts + 80, explosion_script_06);
+    STORE_ARCADE_ADDRESS_DIRECT(explosion_scripts + 80, explosion_script_06);
     if (explosion_scripts[82] != 0x52) {
         printf("error! exp_tbl[82]\n");
     }
-    STORE_POINTER_DIRECT(explosion_scripts + 82, explosion_script_07);
+    STORE_ARCADE_ADDRESS_DIRECT(explosion_scripts + 82, explosion_script_07);
     if (explosion_scripts[84] != 0x54) {
         printf("error! exp_tbl[84]\n");
     }
-    STORE_POINTER_DIRECT(explosion_scripts + 84, explosion_script_08);
+    STORE_ARCADE_ADDRESS_DIRECT(explosion_scripts + 84, explosion_script_08);
     if (explosion_scripts[86] != 0x56) {
         printf("error! exp_tbl[86]\n");
     }
-    STORE_POINTER_DIRECT(explosion_scripts + 86, explosion_script_09);
+    STORE_ARCADE_ADDRESS_DIRECT(explosion_scripts + 86, explosion_script_09);
     if (explosion_scripts[88] != 0x58) {
         printf("error! exp_tbl[88]\n");
     }
-    STORE_POINTER_DIRECT(explosion_scripts + 88, explosion_script_10);
+    STORE_ARCADE_ADDRESS_DIRECT(explosion_scripts + 88, explosion_script_10);
     if (explosion_scripts[90] != 0x5a) {
         printf("error! exp_tbl[90]\n");
     }
-    STORE_POINTER_DIRECT(explosion_scripts + 90, explosion_script_11);
+    STORE_ARCADE_ADDRESS_DIRECT(explosion_scripts + 90, explosion_script_11);
     if (explosion_scripts[92] != 0x5c) {
         printf("error! exp_tbl[92]\n");
     }
-    STORE_POINTER_DIRECT(explosion_scripts + 92, explosion_script_12);
+    STORE_ARCADE_ADDRESS_DIRECT(explosion_scripts + 92, explosion_script_12);
     if (explosion_scripts[94] != 0x5e) {
         printf("error! exp_tbl[94]\n");
     }
-    STORE_POINTER_DIRECT(explosion_scripts + 94, explosion_script_13);
+    STORE_ARCADE_ADDRESS_DIRECT(explosion_scripts + 94, explosion_script_13);
     if (explosion_scripts[96] != 0x60) {
         printf("error! exp_tbl[96]\n");
     }
-    STORE_POINTER_DIRECT(explosion_scripts + 96, explosion_script_14);
+    STORE_ARCADE_ADDRESS_DIRECT(explosion_scripts + 96, explosion_script_14);
     if (explosion_scripts[98] != 0x62) {
         printf("error! exp_tbl[98]\n");
     }
-    STORE_POINTER_DIRECT(explosion_scripts + 98, explosion_script_15);
+    STORE_ARCADE_ADDRESS_DIRECT(explosion_scripts + 98, explosion_script_15);
     if (explosion_scripts[100] != 0x64) {
         printf("error! exp_tbl[100]\n");
     }
-    STORE_POINTER_DIRECT(explosion_scripts + 100, explosion_script_16);
+    STORE_ARCADE_ADDRESS_DIRECT(explosion_scripts + 100, explosion_script_16);
     if (explosion_scripts[102] != 0x66) {
         printf("error! exp_tbl[102]\n");
     }
-    STORE_POINTER_DIRECT(explosion_scripts + 102, explosion_script_17);
+    STORE_ARCADE_ADDRESS_DIRECT(explosion_scripts + 102, explosion_script_17);
     if (explosion_scripts[104] != 0x68) {
         printf("error! exp_tbl[104]\n");
     }
-    STORE_POINTER_DIRECT(explosion_scripts + 104, explosion_script_18);
+    STORE_ARCADE_ADDRESS_DIRECT(explosion_scripts + 104, explosion_script_18);
     if (explosion_scripts[106] != 0x6a) {
         printf("error! exp_tbl[106]\n");
     }
-    STORE_POINTER_DIRECT(explosion_scripts + 106, explosion_script_19);
+    STORE_ARCADE_ADDRESS_DIRECT(explosion_scripts + 106, explosion_script_19);
     if (explosion_scripts[108] != 0x6c) {
         printf("error! exp_tbl[108]\n");
     }
-    STORE_POINTER_DIRECT(explosion_scripts + 108, explosion_scripts_20);
+    STORE_ARCADE_ADDRESS_DIRECT(explosion_scripts + 108, explosion_scripts_20);
     if (explosion_scripts[110] != 0x6e) {
         printf("error! exp_tbl[110]\n");
     }
-    STORE_POINTER_DIRECT(explosion_scripts + 110, explosion_scripts_21);
+    STORE_ARCADE_ADDRESS_DIRECT(explosion_scripts + 110, explosion_scripts_21);
     if (explosion_scripts[112] != 0x70) {
         printf("error! exp_tbl[112]\n");
     }
-    STORE_POINTER_DIRECT(explosion_scripts + 112, explosion_scripts_22);
+    STORE_ARCADE_ADDRESS_DIRECT(explosion_scripts + 112, explosion_scripts_22);
     if (explosion_scripts[114] != 0x72) {
         printf("error! exp_tbl[114]\n");
     }
-    STORE_POINTER_DIRECT(explosion_scripts + 114, explosion_scripts_23);
+    STORE_ARCADE_ADDRESS_DIRECT(explosion_scripts + 114, explosion_scripts_23);
     if (explosion_scripts[116] != 0x74) {
         printf("error! exp_tbl[116]\n");
     }
-    STORE_POINTER_DIRECT(explosion_scripts + 116, explosion_scripts_24);
+    STORE_ARCADE_ADDRESS_DIRECT(explosion_scripts + 116, explosion_scripts_24);
     if (explosion_scripts[118] != 0x76) {
         printf("error! exp_tbl[118]\n");
     }
-    STORE_POINTER_DIRECT(explosion_scripts + 118, explosion_scripts_25);
+    STORE_ARCADE_ADDRESS_DIRECT(explosion_scripts + 118, explosion_scripts_25);
     if (explosion_scripts[120] != 0x78) {
         printf("error! exp_tbl[120]\n");
     }
-    STORE_POINTER_DIRECT(explosion_scripts + 120, explosion_scripts_26);
+    STORE_ARCADE_ADDRESS_DIRECT(explosion_scripts + 120, explosion_scripts_26);
     if (explosion_scripts[122] != 0x7a) {
         printf("error! exp_tbl[122]\n");
     }
-    STORE_POINTER_DIRECT(explosion_scripts + 122, explosion_scripts_27);
+    STORE_ARCADE_ADDRESS_DIRECT(explosion_scripts + 122, explosion_scripts_27);
     if (explosion_scripts[124] != 0x7c) {
         printf("error! exp_tbl[124]\n");
     }
-    STORE_POINTER_DIRECT(explosion_scripts + 124, explosion_scripts_28);
+    STORE_ARCADE_ADDRESS_DIRECT(explosion_scripts + 124, explosion_scripts_28);
     if (explosion_scripts[126] != 0x7e) {
         printf("error! exp_tbl[126]\n");
     }
-    STORE_POINTER_DIRECT(explosion_scripts + 126, explosion_scripts_29);
+    STORE_ARCADE_ADDRESS_DIRECT(explosion_scripts + 126, explosion_scripts_29);
     if (explosion_scripts[128] != 0x80) {
         printf("error! exp_tbl[128]\n");
     }
-    STORE_POINTER_DIRECT(explosion_scripts + 128, explosion_scripts_30);
+    STORE_ARCADE_ADDRESS_DIRECT(explosion_scripts + 128, explosion_scripts_30);
     if (explosion_scripts[130] != 0x82) {
         printf("error! exp_tbl[130]\n");
     }
-    STORE_POINTER_DIRECT(explosion_scripts + 130, explosion_scripts_31);
+    STORE_ARCADE_ADDRESS_DIRECT(explosion_scripts + 130, explosion_scripts_31);
     if (explosion_scripts[132] != 0x84) {
         printf("error! exp_tbl[132]\n");
     }
-    STORE_POINTER_DIRECT(explosion_scripts + 132, D_002506F0);
+    STORE_ARCADE_ADDRESS_DIRECT(explosion_scripts + 132, D_002506F0);
     if (explosion_scripts[134] != 0x86) {
         printf("error! exp_tbl[134]\n");
     }
-    STORE_POINTER_DIRECT(explosion_scripts + 134, explosion_scripts_33);
+    STORE_ARCADE_ADDRESS_DIRECT(explosion_scripts + 134, explosion_scripts_33);
     if (explosion_scripts_b[0] != 0x0) {
         printf("error! exp_tbl_80[0]\n");
     }
-    STORE_POINTER_DIRECT(explosion_scripts_b, explosion_script_b_00);
+    STORE_ARCADE_ADDRESS_DIRECT(explosion_scripts_b, explosion_script_b_00);
     if (explosion_scripts_b[2] != 0x2) {
         printf("error! exp_tbl_80[2]\n");
     }
-    STORE_POINTER_DIRECT(explosion_scripts_b + 2, explosion_script_b_01);
+    STORE_ARCADE_ADDRESS_DIRECT(explosion_scripts_b + 2, explosion_script_b_01);
     if (explosion_scripts_b[4] != 0x4) {
         printf("error! exp_tbl_80[4]\n");
     }
-    STORE_POINTER_DIRECT(explosion_scripts_b + 4, explosion_script_b_02);
+    STORE_ARCADE_ADDRESS_DIRECT(explosion_scripts_b + 4, explosion_script_b_02);
     if (explosion_scripts_b[6] != 0x6) {
         printf("error! exp_tbl_80[6]\n");
     }
-    STORE_POINTER_DIRECT(explosion_scripts_b + 6, explosion_script_b_03);
+    STORE_ARCADE_ADDRESS_DIRECT(explosion_scripts_b + 6, explosion_script_b_03);
     if (explosion_scripts_b[8] != 0x8) {
         printf("error! exp_tbl_80[8]\n");
     }
-    STORE_POINTER_DIRECT(explosion_scripts_b + 8, explosion_script_b_04);
+    STORE_ARCADE_ADDRESS_DIRECT(explosion_scripts_b + 8, explosion_script_b_04);
     if (explosion_scripts_b[10] != 0xa) {
         printf("error! exp_tbl_80[10]\n");
     }
-    STORE_POINTER_DIRECT(explosion_scripts_b + 10, explosion_script_b_05);
+    STORE_ARCADE_ADDRESS_DIRECT(explosion_scripts_b + 10, explosion_script_b_05);
     if (explosion_scripts_b[12] != 0xc) {
         printf("error! exp_tbl_80[12]\n");
     }
-    STORE_POINTER_DIRECT(explosion_scripts_b + 12, explosion_script_b_06);
+    STORE_ARCADE_ADDRESS_DIRECT(explosion_scripts_b + 12, explosion_script_b_06);
     if (explosion_scripts_b[14] != 0xe) {
         printf("error! exp_tbl_80[14]\n");
     }
-    STORE_POINTER_DIRECT(explosion_scripts_b + 14, explosion_script_b_07);
+    STORE_ARCADE_ADDRESS_DIRECT(explosion_scripts_b + 14, explosion_script_b_07);
     if (explosion_scripts_b[16] != 0x10) {
         printf("error! exp_tbl_80[16]\n");
     }
-    STORE_POINTER_DIRECT(explosion_scripts_b + 16, explosion_script_b_08);
+    STORE_ARCADE_ADDRESS_DIRECT(explosion_scripts_b + 16, explosion_script_b_08);
     if (explosion_scripts_b[18] != 0x12) {
         printf("error! exp_tbl_80[18]\n");
     }
-    STORE_POINTER_DIRECT(explosion_scripts_b + 18, explosion_script_b_09);
+    STORE_ARCADE_ADDRESS_DIRECT(explosion_scripts_b + 18, explosion_script_b_09);
     if (explosion_scripts_b[20] != 0x14) {
         printf("error! exp_tbl_80[20]\n");
     }
-    STORE_POINTER_DIRECT(explosion_scripts_b + 20, explosion_script_b_10);
+    STORE_ARCADE_ADDRESS_DIRECT(explosion_scripts_b + 20, explosion_script_b_10);
     if (explosion_scripts_b[22] != 0x16) {
         printf("error! exp_tbl_80[22]\n");
     }
-    STORE_POINTER_DIRECT(explosion_scripts_b + 22, explosion_script_b_11);
+    STORE_ARCADE_ADDRESS_DIRECT(explosion_scripts_b + 22, explosion_script_b_11);
     if (explosion_scripts_b[24] != 0x18) {
         printf("error! exp_tbl_80[24]\n");
     }
-    STORE_POINTER_DIRECT(explosion_scripts_b + 24, explosion_scripts_20);
+    STORE_ARCADE_ADDRESS_DIRECT(explosion_scripts_b + 24, explosion_scripts_20);
     if (explosion_scripts_b[26] != 0x1a) {
         printf("error! exp_tbl_80[26]\n");
     }
-    STORE_POINTER_DIRECT(explosion_scripts_b + 26, explosion_scripts_21);
+    STORE_ARCADE_ADDRESS_DIRECT(explosion_scripts_b + 26, explosion_scripts_21);
     if (explosion_scripts_b[28] != 0x1c) {
         printf("error! exp_tbl_80[28]\n");
     }
-    STORE_POINTER_DIRECT(explosion_scripts_b + 28, explosion_scripts_22);
+    STORE_ARCADE_ADDRESS_DIRECT(explosion_scripts_b + 28, explosion_scripts_22);
     if (explosion_scripts_b[30] != 0x1e) {
         printf("error! exp_tbl_80[30]\n");
     }
-    STORE_POINTER_DIRECT(explosion_scripts_b + 30, explosion_scripts_23);
+    STORE_ARCADE_ADDRESS_DIRECT(explosion_scripts_b + 30, explosion_scripts_23);
     if (explosion_scripts_b[32] != 0x20) {
         printf("error! exp_tbl_80[32]\n");
     }
-    STORE_POINTER_DIRECT(explosion_scripts_b + 32, explosion_scripts_24);
+    STORE_ARCADE_ADDRESS_DIRECT(explosion_scripts_b + 32, explosion_scripts_24);
     if (explosion_scripts_b[34] != 0x22) {
         printf("error! exp_tbl_80[34]\n");
     }
-    STORE_POINTER_DIRECT(explosion_scripts_b + 34, explosion_scripts_25);
+    STORE_ARCADE_ADDRESS_DIRECT(explosion_scripts_b + 34, explosion_scripts_25);
     if (explosion_scripts_b[36] != 0x24) {
         printf("error! exp_tbl_80[36]\n");
     }
-    STORE_POINTER_DIRECT(explosion_scripts_b + 36, explosion_scripts_26);
+    STORE_ARCADE_ADDRESS_DIRECT(explosion_scripts_b + 36, explosion_scripts_26);
     if (explosion_scripts_b[38] != 0x26) {
         printf("error! exp_tbl_80[38]\n");
     }
-    STORE_POINTER_DIRECT(explosion_scripts_b + 38, explosion_scripts_27);
+    STORE_ARCADE_ADDRESS_DIRECT(explosion_scripts_b + 38, explosion_scripts_27);
     if (explosion_scripts_b[40] != 0x28) {
         printf("error! exp_tbl_80[40]\n");
     }
-    STORE_POINTER_DIRECT(explosion_scripts_b + 40, explosion_scripts_20);
+    STORE_ARCADE_ADDRESS_DIRECT(explosion_scripts_b + 40, explosion_scripts_20);
     if (explosion_scripts_b[42] != 0x2a) {
         printf("error! exp_tbl_80[42]\n");
     }
-    STORE_POINTER_DIRECT(explosion_scripts_b + 42, explosion_scripts_21);
+    STORE_ARCADE_ADDRESS_DIRECT(explosion_scripts_b + 42, explosion_scripts_21);
     if (explosion_scripts_b[44] != 0x2c) {
         printf("error! exp_tbl_80[44]\n");
     }
-    STORE_POINTER_DIRECT(explosion_scripts_b + 44, explosion_scripts_22);
+    STORE_ARCADE_ADDRESS_DIRECT(explosion_scripts_b + 44, explosion_scripts_22);
     if (explosion_scripts_b[46] != 0x2e) {
         printf("error! exp_tbl_80[46]\n");
     }
-    STORE_POINTER_DIRECT(explosion_scripts_b + 46, explosion_scripts_23);
+    STORE_ARCADE_ADDRESS_DIRECT(explosion_scripts_b + 46, explosion_scripts_23);
     if (explosion_scripts_b[48] != 0x30) {
         printf("error! exp_tbl_80[48]\n");
     }
-    STORE_POINTER_DIRECT(explosion_scripts_b + 48, explosion_scripts_24);
+    STORE_ARCADE_ADDRESS_DIRECT(explosion_scripts_b + 48, explosion_scripts_24);
     if (explosion_scripts_b[50] != 0x32) {
         printf("error! exp_tbl_80[50]\n");
     }
-    STORE_POINTER_DIRECT(explosion_scripts_b + 50, explosion_scripts_25);
+    STORE_ARCADE_ADDRESS_DIRECT(explosion_scripts_b + 50, explosion_scripts_25);
     if (explosion_scripts_b[52] != 0x34) {
         printf("error! exp_tbl_80[52]\n");
     }
-    STORE_POINTER_DIRECT(explosion_scripts_b + 52, explosion_scripts_26);
+    STORE_ARCADE_ADDRESS_DIRECT(explosion_scripts_b + 52, explosion_scripts_26);
     if (explosion_scripts_b[54] != 0x36) {
         printf("error! exp_tbl_80[54]\n");
     }
-    STORE_POINTER_DIRECT(explosion_scripts_b + 54, explosion_scripts_27);
+    STORE_ARCADE_ADDRESS_DIRECT(explosion_scripts_b + 54, explosion_scripts_27);
     if (explosion_scripts_b[56] != 0x38) {
         printf("error! exp_tbl_80[56]\n");
     }
-    STORE_POINTER_DIRECT(explosion_scripts_b + 56, explosion_scripts_28);
+    STORE_ARCADE_ADDRESS_DIRECT(explosion_scripts_b + 56, explosion_scripts_28);
     if (explosion_scripts_b[58] != 0x3a) {
         printf("error! exp_tbl_80[58]\n");
     }
-    STORE_POINTER_DIRECT(explosion_scripts_b + 58, explosion_scripts_29);
+    STORE_ARCADE_ADDRESS_DIRECT(explosion_scripts_b + 58, explosion_scripts_29);
     if (explosion_scripts_b[60] != 0x3c) {
         printf("error! exp_tbl_80[60]\n");
     }
-    STORE_POINTER_DIRECT(explosion_scripts_b + 60, explosion_scripts_30);
+    STORE_ARCADE_ADDRESS_DIRECT(explosion_scripts_b + 60, explosion_scripts_30);
     if (explosion_scripts_b[62] != 0x3e) {
         printf("error! exp_tbl_80[62]\n");
     }
-    STORE_POINTER_DIRECT(explosion_scripts_b + 62, explosion_scripts_31);
+    STORE_ARCADE_ADDRESS_DIRECT(explosion_scripts_b + 62, explosion_scripts_31);
     if (explosion_scripts_b[64] != 0x40) {
         printf("error! exp_tbl_80[64]\n");
     }
-    STORE_POINTER_DIRECT(explosion_scripts_b + 64, D_002506F0);
+    STORE_ARCADE_ADDRESS_DIRECT(explosion_scripts_b + 64, D_002506F0);
     if (explosion_scripts_b[66] != 0x42) {
         printf("error! exp_tbl_80[66]\n");
     }
-    STORE_POINTER_DIRECT(explosion_scripts_b + 66, explosion_scripts_33);
+    STORE_ARCADE_ADDRESS_DIRECT(explosion_scripts_b + 66, explosion_scripts_33);
     if (explosion_scripts_b[68] != 0x44) {
         printf("error! exp_tbl_80[68]\n");
     }
-    STORE_POINTER_DIRECT(explosion_scripts_b + 68, explosion_script_b_00);
+    STORE_ARCADE_ADDRESS_DIRECT(explosion_scripts_b + 68, explosion_script_b_00);
     if (explosion_scripts_b[70] != 0x46) {
         printf("error! exp_tbl_80[70]\n");
     }
-    STORE_POINTER_DIRECT(explosion_scripts_b + 70, explosion_script_b_01);
+    STORE_ARCADE_ADDRESS_DIRECT(explosion_scripts_b + 70, explosion_script_b_01);
     if (explosion_scripts_b[72] != 0x48) {
         printf("error! exp_tbl_80[72]\n");
     }
-    STORE_POINTER_DIRECT(explosion_scripts_b + 72, explosion_script_b_02);
+    STORE_ARCADE_ADDRESS_DIRECT(explosion_scripts_b + 72, explosion_script_b_02);
     if (explosion_scripts_b[74] != 0x4a) {
         printf("error! exp_tbl_80[74]\n");
     }
-    STORE_POINTER_DIRECT(explosion_scripts_b + 74, explosion_script_b_03);
+    STORE_ARCADE_ADDRESS_DIRECT(explosion_scripts_b + 74, explosion_script_b_03);
     if (explosion_scripts_b[76] != 0x4c) {
         printf("error! exp_tbl_80[76]\n");
     }
-    STORE_POINTER_DIRECT(explosion_scripts_b + 76, explosion_script_b_04);
+    STORE_ARCADE_ADDRESS_DIRECT(explosion_scripts_b + 76, explosion_script_b_04);
     if (explosion_scripts_b[78] != 0x4e) {
         printf("error! exp_tbl_80[78]\n");
     }
-    STORE_POINTER_DIRECT(explosion_scripts_b + 78, explosion_script_b_05);
+    STORE_ARCADE_ADDRESS_DIRECT(explosion_scripts_b + 78, explosion_script_b_05);
     if (explosion_scripts_b[80] != 0x50) {
         printf("error! exp_tbl_80[80]\n");
     }
-    STORE_POINTER_DIRECT(explosion_scripts_b + 80, explosion_script_b_06);
+    STORE_ARCADE_ADDRESS_DIRECT(explosion_scripts_b + 80, explosion_script_b_06);
     if (explosion_scripts_b[82] != 0x52) {
         printf("error! exp_tbl_80[82]\n");
     }
-    STORE_POINTER_DIRECT(explosion_scripts_b + 82, explosion_script_b_07);
+    STORE_ARCADE_ADDRESS_DIRECT(explosion_scripts_b + 82, explosion_script_b_07);
     if (explosion_scripts_b[84] != 0x54) {
         printf("error! exp_tbl_80[84]\n");
     }
-    STORE_POINTER_DIRECT(explosion_scripts_b + 84, explosion_script_b_08);
+    STORE_ARCADE_ADDRESS_DIRECT(explosion_scripts_b + 84, explosion_script_b_08);
     if (explosion_scripts_b[86] != 0x56) {
         printf("error! exp_tbl_80[86]\n");
     }
-    STORE_POINTER_DIRECT(explosion_scripts_b + 86, explosion_script_b_09);
+    STORE_ARCADE_ADDRESS_DIRECT(explosion_scripts_b + 86, explosion_script_b_09);
     if (explosion_scripts_b[88] != 0x58) {
         printf("error! exp_tbl_80[88]\n");
     }
-    STORE_POINTER_DIRECT(explosion_scripts_b + 88, explosion_script_b_10);
+    STORE_ARCADE_ADDRESS_DIRECT(explosion_scripts_b + 88, explosion_script_b_10);
     if (explosion_scripts_b[90] != 0x5a) {
         printf("error! exp_tbl_80[90]\n");
     }
-    STORE_POINTER_DIRECT(explosion_scripts_b + 90, explosion_script_b_11);
+    STORE_ARCADE_ADDRESS_DIRECT(explosion_scripts_b + 90, explosion_script_b_11);
     if (explosion_scripts_b[92] != 0x5c) {
         printf("error! exp_tbl_80[92]\n");
     }
-    STORE_POINTER_DIRECT(explosion_scripts_b + 92, explosion_scripts_20);
+    STORE_ARCADE_ADDRESS_DIRECT(explosion_scripts_b + 92, explosion_scripts_20);
     if (explosion_scripts_b[94] != 0x5e) {
         printf("error! exp_tbl_80[94]\n");
     }
-    STORE_POINTER_DIRECT(explosion_scripts_b + 94, explosion_scripts_21);
+    STORE_ARCADE_ADDRESS_DIRECT(explosion_scripts_b + 94, explosion_scripts_21);
     if (explosion_scripts_b[96] != 0x60) {
         printf("error! exp_tbl_80[96]\n");
     }
-    STORE_POINTER_DIRECT(explosion_scripts_b + 96, explosion_scripts_22);
+    STORE_ARCADE_ADDRESS_DIRECT(explosion_scripts_b + 96, explosion_scripts_22);
     if (explosion_scripts_b[98] != 0x62) {
         printf("error! exp_tbl_80[98]\n");
     }
-    STORE_POINTER_DIRECT(explosion_scripts_b + 98, explosion_scripts_23);
+    STORE_ARCADE_ADDRESS_DIRECT(explosion_scripts_b + 98, explosion_scripts_23);
     if (explosion_scripts_b[100] != 0x64) {
         printf("error! exp_tbl_80[100]\n");
     }
-    STORE_POINTER_DIRECT(explosion_scripts_b + 100, explosion_scripts_24);
+    STORE_ARCADE_ADDRESS_DIRECT(explosion_scripts_b + 100, explosion_scripts_24);
     if (explosion_scripts_b[102] != 0x66) {
         printf("error! exp_tbl_80[102]\n");
     }
-    STORE_POINTER_DIRECT(explosion_scripts_b + 102, explosion_scripts_25);
+    STORE_ARCADE_ADDRESS_DIRECT(explosion_scripts_b + 102, explosion_scripts_25);
     if (explosion_scripts_b[104] != 0x68) {
         printf("error! exp_tbl_80[104]\n");
     }
-    STORE_POINTER_DIRECT(explosion_scripts_b + 104, explosion_scripts_26);
+    STORE_ARCADE_ADDRESS_DIRECT(explosion_scripts_b + 104, explosion_scripts_26);
     if (explosion_scripts_b[106] != 0x6a) {
         printf("error! exp_tbl_80[106]\n");
     }
-    STORE_POINTER_DIRECT(explosion_scripts_b + 106, explosion_scripts_27);
+    STORE_ARCADE_ADDRESS_DIRECT(explosion_scripts_b + 106, explosion_scripts_27);
     if (explosion_scripts_b[108] != 0x6c) {
         printf("error! exp_tbl_80[108]\n");
     }
-    STORE_POINTER_DIRECT(explosion_scripts_b + 108, explosion_scripts_20);
+    STORE_ARCADE_ADDRESS_DIRECT(explosion_scripts_b + 108, explosion_scripts_20);
     if (explosion_scripts_b[110] != 0x6e) {
         printf("error! exp_tbl_80[110]\n");
     }
-    STORE_POINTER_DIRECT(explosion_scripts_b + 110, explosion_scripts_21);
+    STORE_ARCADE_ADDRESS_DIRECT(explosion_scripts_b + 110, explosion_scripts_21);
     if (explosion_scripts_b[112] != 0x70) {
         printf("error! exp_tbl_80[112]\n");
     }
-    STORE_POINTER_DIRECT(explosion_scripts_b + 112, explosion_scripts_22);
+    STORE_ARCADE_ADDRESS_DIRECT(explosion_scripts_b + 112, explosion_scripts_22);
     if (explosion_scripts_b[114] != 0x72) {
         printf("error! exp_tbl_80[114]\n");
     }
-    STORE_POINTER_DIRECT(explosion_scripts_b + 114, explosion_scripts_23);
+    STORE_ARCADE_ADDRESS_DIRECT(explosion_scripts_b + 114, explosion_scripts_23);
     if (explosion_scripts_b[116] != 0x74) {
         printf("error! exp_tbl_80[116]\n");
     }
-    STORE_POINTER_DIRECT(explosion_scripts_b + 116, explosion_scripts_24);
+    STORE_ARCADE_ADDRESS_DIRECT(explosion_scripts_b + 116, explosion_scripts_24);
     if (explosion_scripts_b[118] != 0x76) {
         printf("error! exp_tbl_80[118]\n");
     }
-    STORE_POINTER_DIRECT(explosion_scripts_b + 118, explosion_scripts_25);
+    STORE_ARCADE_ADDRESS_DIRECT(explosion_scripts_b + 118, explosion_scripts_25);
     if (explosion_scripts_b[120] != 0x78) {
         printf("error! exp_tbl_80[120]\n");
     }
-    STORE_POINTER_DIRECT(explosion_scripts_b + 120, explosion_scripts_26);
+    STORE_ARCADE_ADDRESS_DIRECT(explosion_scripts_b + 120, explosion_scripts_26);
     if (explosion_scripts_b[122] != 0x7a) {
         printf("error! exp_tbl_80[122]\n");
     }
-    STORE_POINTER_DIRECT(explosion_scripts_b + 122, explosion_scripts_27);
+    STORE_ARCADE_ADDRESS_DIRECT(explosion_scripts_b + 122, explosion_scripts_27);
     if (explosion_scripts_b[124] != 0x7c) {
         printf("error! exp_tbl_80[124]\n");
     }
-    STORE_POINTER_DIRECT(explosion_scripts_b + 124, explosion_scripts_28);
+    STORE_ARCADE_ADDRESS_DIRECT(explosion_scripts_b + 124, explosion_scripts_28);
     if (explosion_scripts_b[126] != 0x7e) {
         printf("error! exp_tbl_80[126]\n");
     }
-    STORE_POINTER_DIRECT(explosion_scripts_b + 126, explosion_scripts_29);
+    STORE_ARCADE_ADDRESS_DIRECT(explosion_scripts_b + 126, explosion_scripts_29);
     if (explosion_scripts_b[128] != 0x80) {
         printf("error! exp_tbl_80[128]\n");
     }
-    STORE_POINTER_DIRECT(explosion_scripts_b + 128, explosion_scripts_30);
+    STORE_ARCADE_ADDRESS_DIRECT(explosion_scripts_b + 128, explosion_scripts_30);
     if (explosion_scripts_b[130] != 0x82) {
         printf("error! exp_tbl_80[130]\n");
     }
-    STORE_POINTER_DIRECT(explosion_scripts_b + 130, explosion_scripts_31);
+    STORE_ARCADE_ADDRESS_DIRECT(explosion_scripts_b + 130, explosion_scripts_31);
     if (explosion_scripts_b[132] != 0x84) {
         printf("error! exp_tbl_80[132]\n");
     }
-    STORE_POINTER_DIRECT(explosion_scripts_b + 132, D_002506F0);
+    STORE_ARCADE_ADDRESS_DIRECT(explosion_scripts_b + 132, D_002506F0);
     if (explosion_scripts_b[134] != 0x86) {
         printf("error! exp_tbl_80[134]\n");
     }
-    STORE_POINTER_DIRECT(explosion_scripts_b + 134, explosion_scripts_33);
+    STORE_ARCADE_ADDRESS_DIRECT(explosion_scripts_b + 134, explosion_scripts_33);
+#ifdef DDPDOJ_PC
+    debris_frame_addresses_init();
+#else
     if (debris_pattern_0[67] != 0x3) {
         printf("error! hah_n00[3]\n");
     }
@@ -1642,22 +1649,23 @@ void checked_pointers_store(void) {
         printf("error! hah_n04[3]\n");
     }
     STORE_POINTER_DIRECT(debris_pattern_4 + 67, debris_pattern_4);
+#endif
     if (((u16 *)debris_random_patterns)[0] != 0x0) {
         printf("error! hah_random_tbl[0]\n");
     }
-    STORE_POINTER_DIRECT(((u16 *)debris_random_patterns), debris_pattern_0);
+    STORE_ARCADE_ADDRESS_DIRECT(((u16 *)debris_random_patterns), debris_pattern_0);
     if (debris_random_patterns[2] != 0x2) {
         printf("error! hah_random_tbl[2]\n");
     }
-    STORE_POINTER_DIRECT(debris_random_patterns + 2, debris_pattern_2);
+    STORE_ARCADE_ADDRESS_DIRECT(debris_random_patterns + 2, debris_pattern_2);
     if (debris_random_patterns[4] != 0x4) {
         printf("error! hah_random_tbl[4]\n");
     }
-    STORE_POINTER_DIRECT(debris_random_patterns + 4, debris_pattern_3);
+    STORE_ARCADE_ADDRESS_DIRECT(debris_random_patterns + 4, debris_pattern_3);
     if (debris_random_patterns[6] != 0x6) {
         printf("error! hah_random_tbl[6]\n");
     }
-    STORE_POINTER_DIRECT(debris_random_patterns + 6, debris_pattern_4);
+    STORE_ARCADE_ADDRESS_DIRECT(debris_random_patterns + 6, debris_pattern_4);
     if (spark_spans_by_laser_power[16] != 0x8) {
         printf("error! tili_a[8]\n");
     }

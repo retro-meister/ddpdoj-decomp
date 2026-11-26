@@ -1,5 +1,6 @@
 /* Explosion scripts and frames. */
 #include "common.h"
+#include "effect_tables.h"
 
 void entity_draw_layer1();
 void entity_draw_layer2();
@@ -53,8 +54,6 @@ extern u16 explosion_scripts_28[32];
 extern u16 explosion_scripts_29[16];
 extern u16 explosion_scripts_30[72];
 extern u16 explosion_scripts_31[32];
-struct ExplosionScripts33Record { u16 w0[16]; void *p1; void *p2; void *p3; void *p4; void *p5; u16 w6[6]; };
-extern struct ExplosionScripts33Record explosion_scripts_33;
 
 u16 explosion_scripts[136] = {
     0x0000, 0x0001, 0x0002, 0x0003, 0x0004, 0x0005, 0x0006, 0x0007,
@@ -485,12 +484,8 @@ u16 D_002506F0[40] = {
     0x0000, 0x12ED, 0x0000, 0x12EE, 0x0000, 0x12EF, 0x0000, 0x0000,
 };
 
-struct ExplosionScripts33Record explosion_scripts_33 = {
+struct ExplosionLifetimeTable explosion_scripts_33 = {
     { 0x0001, 0x0001, 0x0001, 0x0001, 0x0001, 0x0001, 0x0001, 0x0001, 0x0001, 0x0001, 0x0001, 0x0001, 0x0001, 0x0001, 0xFFFF, 0x0000 },
-    entity_draw_layer1,
-    entity_draw_layer2,
-    entity_draw_layer3,
-    entity_draw_layer4,
-    entity_draw_layer5,
+    { entity_draw_layer1, entity_draw_layer2, entity_draw_layer3, entity_draw_layer4, entity_draw_layer5 },
     { 0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000 },
 };

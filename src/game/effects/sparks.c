@@ -58,8 +58,13 @@ extern u8 *D_0028E570;
 extern u16 g_sprite_sparks_used;
 
 void sparks_sprite_count_store(void) {
+#ifdef DDPDOJ_PC
+    reg_tmp.sw = (s32)(reg_a4 - D_0028E570);
+    reg_a4 = (u8 *)(intptr_t)reg_tmp.sw;
+#else
     reg_a4 -= (*(s32 *)&D_0028E570);
     reg_tmp.sw = (s32)reg_a4;
+#endif
     g_sprite_sparks_used = reg_tmp.h[0];
 }
 
@@ -110,7 +115,11 @@ void sparks_spawn_for_shot(void) {
     *(u8 *)&rng_cursor += 1;
     reg_d5.h[0] = rng_cursor;
     reg_d1.w = 0;
+#ifdef DDPDOJ_PC
+    reg_a2 = spark_setups_shot[reg_d5.h[0]];
+#else
     reg_a2 = *(u8 **)(((u8 *)spark_setups_shot) + reg_d5.h[0] * 4);
+#endif
     reg_a0 = (u8 *)g_sparks;
     if (((u8 *)g_player1) == reg_a4) {
         sparks_spawn_limited();
@@ -206,12 +215,22 @@ void sparks_spawn_for_laser_second_half(void) {
 }
 
 s32 rng_next_0_to_2();
+struct SparkBombSetup {
+    u16 parameters[12];
+    const void *variants[3];
+    u16 padding[6];
+};
+extern struct SparkBombSetup spark_setup_bomb_2;
+#ifndef DDPDOJ_PC
 extern u8 D_00250D88[];
+#endif
 extern u16 g_bomb_entities[24];
 
 void sparks_spawn_for_bomb(void) {
+#ifndef DDPDOJ_PC
     s32 temp_a1;
     s32 temp_a2;
+#endif
 
     reg_save4_d0 = reg_d0.w;
     reg_save4_d1 = reg_d1.w;
@@ -230,9 +249,13 @@ void sparks_spawn_for_bomb(void) {
     reg_save4_a6 = reg_a6;
     reg_d1.w = 0;
     rng_next_0_to_2();
+#ifdef DDPDOJ_PC
+    reg_a2 = (u8 *)spark_setup_bomb_2.variants[reg_d0.h[0]];
+#else
     temp_a2 = reg_d0.h[0] * 4;
     temp_a1 = *(u32 *)(D_00250D88 + temp_a2);
     reg_a2 = (u8 *)temp_a1;
+#endif
     reg_d7.h[0] = 0xFFFF;
     reg_a0 = (u8 *)g_sparks;
     reg_d0.w = 0;
@@ -533,7 +556,11 @@ void spark_init(void) {
     reg_a2 = (u8 *)(temp_a3);
     reg_a0 = (u8 *)(temp_a2);
     g_spark_count[0] += 1;
+#ifdef DDPDOJ_PC
+    spark_velocity_routines[reg_d0.h[0] / 4]();
+#else
     ((Fn)*(u32 *)((u8 *)((u8 *)spark_velocity_routines) + (reg_d0.h[0] & ~3)))();
+#endif
 }
 
 s32 rng_next_masked();
@@ -834,8 +861,6 @@ void spark_random_dir256(void)
 
 extern u16 spark_setup_bomb_0[16];
 extern u16 spark_setup_bomb_1[16];
-struct D00250d70Record { u16 w0[12]; void *p1; void *p2; void *p3; u16 w4[6]; };
-extern struct D00250d70Record spark_setup_bomb_2;
 extern u16 spark_setup_shot_14[16];
 extern u16 spark_setup_shot_11[16];
 extern u16 spark_setup_shot_07[16];
@@ -890,11 +915,9 @@ u16 spark_setup_bomb_1[16] = {
     0x0008, 0x0009, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000,
 };
 
-struct D00250d70Record spark_setup_bomb_2 = {
+struct SparkBombSetup spark_setup_bomb_2 = {
     { 0x0000, 0xFC00, 0xFD00, 0x0418, 0x0006, 0x0606, 0x0002, 0x001C, 0x0008, 0x0009, 0x0000, 0x0000 },
-    spark_setup_bomb_0,
-    spark_setup_bomb_1,
-    &spark_setup_bomb_2,
+    { spark_setup_bomb_0, spark_setup_bomb_1, &spark_setup_bomb_2 },
     { 0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000 },
 };
 
