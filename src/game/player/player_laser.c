@@ -309,7 +309,7 @@ void ship_select_ship_update(void) {
     }
     reg_tmp.h[1] = *(u16 *)(reg_a4 + 6);
     reg_tmp.h[0] = *(u16 *)(reg_a4 + 8);
-    reg_a0 = (u8 *)reg_tmp.w;
+    reg_a0 = ARCADE_ADDRESS_DECODE(u8 *, reg_tmp.w);
     reg_call_target_as_u8_p = reg_a0;
     ((Fn)reg_call_target_as_u8_p)();
     reg_d6.h[0] = ENTITY(reg_a6)->y.h;

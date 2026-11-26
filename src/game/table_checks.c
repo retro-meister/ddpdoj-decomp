@@ -2794,35 +2794,35 @@ void checked_pointers_store(void) {
     if (doll_select_p1.held[0] != 0x1) {
         printf("error! dollsel_data_1p[1]\n");
     }
-    STORE_POINTER(doll_select_p1.held, input_get_p1_held);
+    STORE_ARCADE_ADDRESS(doll_select_p1.held, input_get_p1_held);
     if (doll_select_p1.pressed[0] != 0x3) {
         printf("error! dollsel_data_1p[3]\n");
     }
-    STORE_POINTER(doll_select_p1.pressed, input_get_p1_pressed);
+    STORE_ARCADE_ADDRESS(doll_select_p1.pressed, input_get_p1_pressed);
     if (doll_select_p2.held[0] != 0x1) {
         printf("error! dollsel_data_2p[1]\n");
     }
-    STORE_POINTER(doll_select_p2.held, input_get_p2_held);
+    STORE_ARCADE_ADDRESS(doll_select_p2.held, input_get_p2_held);
     if (doll_select_p2.pressed[0] != 0x3) {
         printf("error! dollsel_data_2p[3]\n");
     }
-    STORE_POINTER(doll_select_p2.pressed, input_get_p2_pressed);
+    STORE_ARCADE_ADDRESS(doll_select_p2.pressed, input_get_p2_pressed);
     if (D_00251AB0_as_u16_a[1] != 0x1) {
         printf("error! figsel_data_1p[1]\n");
     }
-    STORE_POINTER(D_00251AB0_as_u16_a + 1, input_get_p1_held);
+    STORE_ARCADE_ADDRESS(D_00251AB0_as_u16_a + 1, input_get_p1_held);
     if (D_00251AB4[1] != 0x3) {
         printf("error! figsel_data_1p[3]\n");
     }
-    STORE_POINTER(D_00251AB4 + 1, input_get_p1_pressed);
+    STORE_ARCADE_ADDRESS(D_00251AB4 + 1, input_get_p1_pressed);
     if (D_00251AC0_as_u16_a[1] != 0x1) {
         printf("error! figsel_data_2p[1]\n");
     }
-    STORE_POINTER(D_00251AC0_as_u16_a + 1, input_get_p2_held);
+    STORE_ARCADE_ADDRESS(D_00251AC0_as_u16_a + 1, input_get_p2_held);
     if (D_00251AC4[1] != 0x3) {
         printf("error! figsel_data_2p[3]\n");
     }
-    STORE_POINTER(D_00251AC4 + 1, input_get_p2_pressed);
+    STORE_ARCADE_ADDRESS(D_00251AC4 + 1, input_get_p2_pressed);
     if (join_select_p1_table[2] != 0x2) {
         printf("error! sel_game_tbl_1p[2]\n");
     }

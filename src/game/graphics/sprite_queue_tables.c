@@ -65,10 +65,10 @@ void multiply_d7_by_7();
 void multiply_d7_by_8();
 void multiply_d7_by_9();
 
-extern void *multiply_d1_routines[64];
-extern void *multiply_d7_routines[64];
+extern void (*multiply_d1_routines[64])(void);
+extern void (*multiply_d7_routines[64])(void);
 
-void *multiply_d1_routines[64] = {
+void (*multiply_d1_routines[64])(void) = {
     multiply_d1_by_1,
     multiply_d1_by_1,
     multiply_d1_by_2,
@@ -135,7 +135,7 @@ void *multiply_d1_routines[64] = {
     multiply_d1_by_1,
 };
 
-void *multiply_d7_routines[64] = {
+void (*multiply_d7_routines[64])(void) = {
     multiply_d7_by_1,
     multiply_d7_by_1,
     multiply_d7_by_2,

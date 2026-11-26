@@ -122,7 +122,7 @@ void doll_select_input(void) {
     }
     reg_tmp.h[1] = *(u16 *)(reg_a4 + 6);
     reg_tmp.h[0] = *(u16 *)(reg_a4 + 8);
-    reg_a0 = (u8 *)reg_tmp.w;
+    reg_a0 = ARCADE_ADDRESS_DECODE(u8 *, reg_tmp.w);
     reg_call_target_as_u8_p = reg_a0;
     ((Fn)reg_call_target_as_u8_p)();
     if (reg_d0.w & 4) {
