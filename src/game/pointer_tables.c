@@ -4218,7 +4218,7 @@ void func_00186A80(void) {
 
 
 
-extern u16 D_00247080[];
+extern u16 g_stage3_map_palettes[];
 extern u16 stage3_midboss_flash_palettes_05[];
 extern void stage3_midboss_mode_00(void);
 extern void func_001D58F0(void);
@@ -4249,7 +4249,7 @@ void func_00186CA0(void) {
     if (stage3_midboss_flash_palettes[18] != 0x12) {
         printf("error! st3mbflush0_tbl[18]\n");
     }
-    STORE_POINTER(stage3_midboss_flash_palettes + 18, D_00247080);
+    STORE_POINTER(stage3_midboss_flash_palettes + 18, g_stage3_map_palettes);
     if (stage3_midboss_mode_routines_as_u16_a[0] != 0x0) {
         printf("error! st3mb_md_tbl[0]\n");
     }
@@ -4432,7 +4432,7 @@ void func_00187360(void) {
     STORE_POINTER(D_0025AE70 + 26, sprite_draw_layer5_keep);
 }
 
-extern u16 D_002461D0[];
+extern u16 g_stage2_map_palettes[];
 extern u16 D_002469D0[];
 extern u16 D_00246A10[];
 extern u16 D_00246A50[];
@@ -4460,7 +4460,7 @@ void func_00187AE0(void) {
     STORE_POINTER(D_00263290 + 11, D_00260270);
     STORE_POINTER(D_00263290 + 18, D_002602B0);
     STORE_POINTER(D_00263290 + 25, D_002602F0);
-    STORE_POINTER(D_00263290 + 32, D_002461D0);
+    STORE_POINTER(D_00263290 + 32, g_stage2_map_palettes);
     STORE_POINTER(D_00263290 + 39, D_002469D0);
     STORE_POINTER(D_00263290 + 46, D_00246A10);
     STORE_POINTER(D_00263290 + 53, D_00246A50);

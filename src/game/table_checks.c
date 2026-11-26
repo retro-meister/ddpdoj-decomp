@@ -14,8 +14,8 @@ extern u16 ending_fade_in_group_3[];
 extern u16 ending_fade_in_group_4[];
 extern u16 scroll_event_routines[];
 extern u16 scroll_sound_routines[];
-extern u16 stage_background_palettes[];
-extern u16 stage_data_tables[];
+extern u16 stage_map_palettes[];
+extern u16 stage_maps[];
 extern u16 stage5_boss_horn_shot_offsets[];
 
 extern u16 bullet_type_setup_routines[];
@@ -59,16 +59,16 @@ void func_0019A640(void);
 void func_0019A870(void);
 
 
-extern u16 D_002420F0[];
-extern u16 D_00244070[];
-extern u16 D_00244A30[];
-extern u16 D_002461D0[];
-extern u16 D_00246C90[];
-extern u16 D_00247080[];
-extern u16 D_00247880[];
-extern u16 D_00249610[];
-extern u16 D_00249ED0[];
-extern u16 D_0024C240[];
+extern u16 g_stage1_map[];
+extern u16 g_stage1_map_palettes[];
+extern u16 g_stage2_map[];
+extern u16 g_stage2_map_palettes[];
+extern u16 g_stage3_map[];
+extern u16 g_stage3_map_palettes[];
+extern u16 g_stage4_map[];
+extern u16 g_stage4_map_palettes[];
+extern u16 g_stage5_map[];
+extern u16 g_stage5_map_palettes[];
 extern u16 stage5_boss_flash_palettes_a_30[];
 extern u16 stage5_boss_flash_palettes_a_33[];
 extern u16 stage5_boss_flash_palettes_a_37[];
@@ -497,9 +497,9 @@ extern u16 scroll_event_routines_as_u16_a[];
 extern u16 D_002526D2[];
 extern u16 scroll_sound_routines_as_u16_a[];
 extern u16 D_002526F2[];
-extern u16 stage_background_palettes_as_u16_a[];
+extern u16 stage_map_palettes_as_u16_a[];
 extern u16 D_00252702[];
-extern u16 stage_data_tables_as_u16_a[];
+extern u16 stage_maps_as_u16_a[];
 extern u16 D_00252722[];
 extern u16 stage_scroll_event_lists[];
 extern u16 D_0025BF98[];
@@ -2028,50 +2028,50 @@ void func_0018E5A0(void) {
         printf("error! gev_snd_proc_tbl[4]\n");
     }
     STORE_POINTER(scroll_sound_routines + 4, scroll_sound_music_fade);
-    if (stage_background_palettes[0] != 0x0) {
+    if (stage_map_palettes[0] != 0x0) {
         printf("error! bg_pal_tbl[0]\n");
     }
-    reg_tmp.w = (u32)D_00244070;
-    stage_background_palettes_as_u16_a[0] = reg_tmp.h[1];
+    reg_tmp.w = (u32)g_stage1_map_palettes;
+    stage_map_palettes_as_u16_a[0] = reg_tmp.h[1];
     D_00252702[0] = reg_tmp.h[0];
-    if (stage_background_palettes[2] != 0x2) {
+    if (stage_map_palettes[2] != 0x2) {
         printf("error! bg_pal_tbl[2]\n");
     }
-    STORE_POINTER(stage_background_palettes + 2, D_002461D0);
-    if (stage_background_palettes[4] != 0x4) {
+    STORE_POINTER(stage_map_palettes + 2, g_stage2_map_palettes);
+    if (stage_map_palettes[4] != 0x4) {
         printf("error! bg_pal_tbl[4]\n");
     }
-    STORE_POINTER(stage_background_palettes + 4, D_00247080);
-    if (stage_background_palettes[6] != 0x6) {
+    STORE_POINTER(stage_map_palettes + 4, g_stage3_map_palettes);
+    if (stage_map_palettes[6] != 0x6) {
         printf("error! bg_pal_tbl[6]\n");
     }
-    STORE_POINTER(stage_background_palettes + 6, D_00249610);
-    if (stage_background_palettes[8] != 0x8) {
+    STORE_POINTER(stage_map_palettes + 6, g_stage4_map_palettes);
+    if (stage_map_palettes[8] != 0x8) {
         printf("error! bg_pal_tbl[8]\n");
     }
-    STORE_POINTER(stage_background_palettes + 8, D_0024C240);
-    if (stage_data_tables[0] != 0x0) {
+    STORE_POINTER(stage_map_palettes + 8, g_stage5_map_palettes);
+    if (stage_maps[0] != 0x0) {
         printf("error! stg_tbl[0]\n");
     }
-    reg_tmp.w = (u32)D_002420F0;
-    stage_data_tables_as_u16_a[0] = reg_tmp.h[1];
+    reg_tmp.w = (u32)g_stage1_map;
+    stage_maps_as_u16_a[0] = reg_tmp.h[1];
     D_00252722[0] = reg_tmp.h[0];
-    if (stage_data_tables[2] != 0x2) {
+    if (stage_maps[2] != 0x2) {
         printf("error! stg_tbl[2]\n");
     }
-    STORE_POINTER(stage_data_tables + 2, D_00244A30);
-    if (stage_data_tables[4] != 0x4) {
+    STORE_POINTER(stage_maps + 2, g_stage2_map);
+    if (stage_maps[4] != 0x4) {
         printf("error! stg_tbl[4]\n");
     }
-    STORE_POINTER(stage_data_tables + 4, D_00246C90);
-    if (stage_data_tables[6] != 0x6) {
+    STORE_POINTER(stage_maps + 4, g_stage3_map);
+    if (stage_maps[6] != 0x6) {
         printf("error! stg_tbl[6]\n");
     }
-    STORE_POINTER(stage_data_tables + 6, D_00247880);
-    if (stage_data_tables[8] != 0x8) {
+    STORE_POINTER(stage_maps + 6, g_stage4_map);
+    if (stage_maps[8] != 0x8) {
         printf("error! stg_tbl[8]\n");
     }
-    STORE_POINTER(stage_data_tables + 8, D_00249ED0);
+    STORE_POINTER(stage_maps + 8, g_stage5_map);
     if (stage1_scroll_event_lists[0] != 0x0) {
         printf("error! gro_stg1_tbl[0]\n");
     }

@@ -25,9 +25,9 @@ u16 scroll_event_routines[14] = { POINTER_SLOT(0), POINTER_SLOT(2), POINTER_SLOT
 u16 scroll_sound_routines[6] = { POINTER_SLOT(0), POINTER_SLOT(2), POINTER_SLOT(4) };
 
 /* By stage. */
-u16 stage_background_palettes[10] = { POINTER_SLOT(0), POINTER_SLOT(2), POINTER_SLOT(4), POINTER_SLOT(6), POINTER_SLOT(8) };
+u16 stage_map_palettes[10] = { POINTER_SLOT(0), POINTER_SLOT(2), POINTER_SLOT(4), POINTER_SLOT(6), POINTER_SLOT(8) };
 
-u16 stage_data_tables[10] = { POINTER_SLOT(0), POINTER_SLOT(2), POINTER_SLOT(4), POINTER_SLOT(6), POINTER_SLOT(8) };
+u16 stage_maps[10] = { POINTER_SLOT(0), POINTER_SLOT(2), POINTER_SLOT(4), POINTER_SLOT(6), POINTER_SLOT(8) };
 
 /* By stage: the stage's two lists of events. */
 u16 stage_scroll_event_lists[10] = { POINTER_SLOT(0), POINTER_SLOT(2), POINTER_SLOT(4), POINTER_SLOT(6), POINTER_SLOT(8) };

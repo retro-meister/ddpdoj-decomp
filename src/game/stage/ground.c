@@ -37,8 +37,8 @@ s32 layer_b_scroll();
 s32 ground_objects_reset();
 s32 scroll_events_start();
 s32 func_001A3250();
-extern u8 stage_background_palettes[];
-extern u8 stage_data_tables[];
+extern u8 stage_map_palettes[];
+extern u8 stage_maps[];
 extern s32 D_0028DF1C;
 extern s8 g_slowdown_timer_as_s8;
 extern s8 g_pause_lock_timer_as_s8;
@@ -81,7 +81,7 @@ void ground_start(void) {
     layer_a_scroll();
     *(u16 *)(reg_a5 + 0x1E) = 0U;
     temp_a1 = *(u16 *)(reg_a5 + 0x1E);
-    reg_a0 = (u8 *)stage_background_palettes;
+    reg_a0 = (u8 *)stage_map_palettes;
     g_scroll_line_offset = temp_a1;
     reg_a0 += g_stage_x4;
     temp_a0 = (u8 *)(reg_a0);
@@ -92,7 +92,7 @@ void ground_start(void) {
     reg_a0 = (u8 *) reg_tmp.w;
     func_001A3250();
     *(u8 *)(reg_a5 + 3) &= 0xFE;
-    reg_a1 = (u8 *)stage_data_tables;
+    reg_a1 = (u8 *)stage_maps;
     reg_d0.h[0] = g_stage_x4;
     reg_a1 += reg_d0.h[0];
     reg_tmp.h[1] = *(u16 *)reg_a1;
