@@ -1,5 +1,6 @@
 #include "common.h"
 #ifdef DDPDOJ_PC
+#include "pc_gs_game.h"
 #include "pc_replay_storage.h"
 #endif
 #include "sdk/ps2sdk.h"
@@ -58,6 +59,7 @@ void iop_reboot_and_load_modules(void) {
 #endif
 
 
+#ifndef DDPDOJ_PC
 void sys_reset_gs_path(void) {
     sceDevVif0Reset();
     sceDevVu0Reset();
@@ -79,6 +81,7 @@ void sys_init_display(void) {
     g_gs_dbuff.clear0.rgbaq = 0;
     g_gs_dbuff.clear1.rgbaq = 0;
 }
+#endif
 
 
 void sys_start(void) {
@@ -95,12 +98,14 @@ extern u8 sys_init_state;
 extern s8 g_menu_exit_code;
 extern u8 g_pad_dma_area[];
 void sys_init(void) {
-#ifndef DDPDOJ_PC
+#ifdef DDPDOJ_PC
+    pc_gs_game_reset();
+#else
     iop_reboot_and_load_modules();
-#endif
     sys_reset_gs_path();
     sys_init_display();
     vram_clear_all();
+#endif
     g_dma_gif = sceDmaGetChan(2);
     display_reset();
     render_target_init(&g_render_target, g_gif_buf, 0x12C0, 0x200, 0x100);
@@ -129,8 +134,8 @@ s32 screen_setting_apply();                            /* extern */
 void sys_begin_frame(void) {
 #ifndef DDPDOJ_PC
     *(s32 *)0x10000000 = 0;
-#endif
     sceGsSwapDBuffDc(&g_gs_dbuff, g_frame_counter);
+#endif
     text_queue_clear();
     pad_update();
     input_read();
@@ -139,6 +144,9 @@ void sys_begin_frame(void) {
         screen_setting_apply();
         display_reset();
     }
+#ifdef DDPDOJ_PC
+    pc_gs_begin_frame();
+#endif
     if (g_screen_mode < 2) {
         framebuffer_begin(g_gif_buf);
         return;
@@ -164,7 +172,9 @@ extern u8 g_slowdown_setting;
 extern u16 g_game_frame;
 extern u16 g_scroll_line;
 void sys_end_frame(void) {
+#ifndef DDPDOJ_PC
     s32 half;
+#endif
 
     bg_layer_draw();
 #ifndef DEATH_LABEL
@@ -200,7 +210,11 @@ void sys_end_frame(void) {
     sceGsSyncPath(0, 0);
     g_frame_counter += 1;
     g_slowdown_setting = 1;
+#ifdef DDPDOJ_PC
+    sceGsSyncV(0);
+#else
     half = (sceGsSyncV(0) != 0) ^ 1;
+#endif
     if (g_stage_jump_state == 1) {
         g_stage_jump_state = 0;
     } else if (g_slowdown_setting != 0) {
@@ -217,6 +231,7 @@ void sys_end_frame(void) {
         g_slowdown_setting &= 1;
     }
     g_slowdown_frame_state = 0;
+#ifndef DDPDOJ_PC
     if ((g_screen_mode != 2) && (g_screen_mode != 3)) {
         if (g_frame_counter & 1) {
             sceGsSetHalfOffset(&g_gs_dbuff.draw11, 0x800, 0x800, half);
@@ -226,6 +241,7 @@ void sys_end_frame(void) {
             sceGsSetHalfOffset2(&g_gs_dbuff.draw02, 0x800, 0x800, half);
         }
     }
+#endif
     if (g_scroll_line > g_stage_map_progress) {
         g_stage_map_progress = g_scroll_line;
     }

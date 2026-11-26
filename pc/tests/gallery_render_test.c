@@ -1,6 +1,7 @@
 #include "gallery/gallery.h"
 #include "disc_image.h"
 #include "gs.h"
+#include "pc_gs_game.h"
 
 #include <SDL3/SDL.h>
 
@@ -47,7 +48,44 @@ static void send_packet(sceGifPacket *packet)
 {
     sceGifPkTerminate(packet);
     sceDmaSendN(g_dma_gif, g_gif_buf, sceGifPkSize(packet));
-    require(pc_gs_ok(), "Submit Gallery texture packet");
+    require(pc_gs_ok(), "Submit graphics packet");
+}
+
+static void check_game_clip(SDL_Renderer *renderer)
+{
+    pc_gs_bind_game(renderer);
+    require(pc_gs_game_display(640, 224) && pc_gs_begin_frame(), "Start a game field");
+    sceGifPacket packet;
+    sceGifPkInit(&packet, g_gif_buf);
+    add_register(&packet, 0x18, 0x0000780000007000ULL);
+    add_register(&packet, 0x40, 20ULL | (29ULL << 16) | (10ULL << 32) | (19ULL << 48));
+    add_register(&packet, SCE_GS_PRIM, SCE_GS_PRIM_SPRITE);
+    add_register(&packet, SCE_GS_RGBAQ, SCE_GS_SET_RGBAQ(64, 192, 32, 0x80, 0));
+    add_register(&packet, SCE_GS_XYZ2, SCE_GS_SET_XYZ2(0x7000, 0x7800, 0));
+    add_register(&packet, SCE_GS_XYZ2, SCE_GS_SET_XYZ2(0x7280, 0x7980, 0));
+    add_register(&packet, 0x40, 40ULL | (63ULL << 16) | (23ULL << 48));
+    add_register(&packet, SCE_GS_PRIM, SCE_GS_PRIM_TRISTRIP);
+    add_register(&packet, SCE_GS_RGBAQ, SCE_GS_SET_RGBAQ(208, 48, 72, 0x80, 0));
+    add_register(&packet, SCE_GS_XYZ2, SCE_GS_SET_XYZ2(0x7280, 0x7800, 0));
+    add_register(&packet, SCE_GS_XYZ2, SCE_GS_SET_XYZ2(0x7400, 0x7800, 0));
+    add_register(&packet, SCE_GS_XYZ2, SCE_GS_SET_XYZ2(0x7280, 0x7980, 0));
+    add_register(&packet, SCE_GS_XYZ2, SCE_GS_SET_XYZ2(0x7400, 0x7980, 0));
+    send_packet(&packet);
+
+    /* Read the entire frame, including pixels outside the active scissor. */
+    require(SDL_SetRenderClipRect(renderer, NULL), "Reset the test scissor before readback");
+    SDL_Surface *surface = SDL_RenderReadPixels(renderer, NULL);
+    require(surface != NULL, "Read the game field");
+    expect_pixel(surface, 19, 20, 0, 0, 0);
+    expect_pixel(surface, 20, 19, 0, 0, 0);
+    expect_pixel(surface, 20, 20, 64, 192, 32);
+    expect_pixel(surface, 29, 39, 64, 192, 32);
+    expect_pixel(surface, 30, 39, 0, 0, 0);
+    expect_pixel(surface, 29, 40, 0, 0, 0);
+    expect_pixel(surface, 42, 6, 208, 48, 72);
+    expect_pixel(surface, 61, 40, 208, 48, 72);
+    expect_pixel(surface, 64, 40, 0, 0, 0);
+    SDL_DestroySurface(surface);
 }
 
 static void draw_texture(u64 tex0, unsigned x, unsigned y)
@@ -257,6 +295,7 @@ int main(int argc, char **argv)
     if (argc > next) {
         check_retail_loading_letter(renderer, argv[next + 1]);
     }
+    check_game_clip(renderer);
 
     pc_gs_bind_gallery(NULL);
     SDL_DestroyRenderer(renderer);

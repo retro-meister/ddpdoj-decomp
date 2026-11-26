@@ -7,6 +7,9 @@
 #include "cd.h"
 #include "gfx.h"
 #include "system.h"
+#ifdef DDPDOJ_PC
+#include "pc_gs_game.h"
+#endif
 
 typedef struct {
     s32 interlace;
@@ -1374,6 +1377,14 @@ void display_reset(void) {
     VideoMode *mode;
 
     mode = &g_video_modes[g_screen_mode + g_screen_wide * 6];
+#ifdef DDPDOJ_PC
+    g_screen_width = mode->width;
+    g_screen_margin = (g_screen_width - (mode->interlace ? 0xE0 : 0x1C0)) >> 1;
+    g_gs_dbuff.disp[0].dispfb.FBP = 0;
+    g_gs_dbuff.disp[1].dispfb.FBP =
+        ((mode->width + 63) / 64) * ((mode->height + 31) / 32);
+    pc_gs_game_display(mode->width, mode->height);
+#else
     sceGsResetGraph(0, (s16)mode->interlace, 2, (s16)mode->ffmode);
     g_screen_width = mode->width;
     if (mode->interlace == 0) {
@@ -1392,6 +1403,7 @@ void display_reset(void) {
     sceGsSyncPath(0, 0);
     sceGsPutDrawEnv(&g_gs_dbuff.giftag1);
     sceGsSyncPath(0, 0);
+#endif
 }
 
 

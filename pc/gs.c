@@ -1,4 +1,5 @@
 #include "gs.h"
+#include "pc_gs_game.h"
 #include "gs_texture.h"
 #include "gif_stream.h"
 #include "sdk/eekernel.h"
@@ -18,7 +19,11 @@ typedef struct {
     u64 tex0;
     u64 tex1;
     u64 texa;
+    unsigned origin_x;
+    unsigned origin_y;
+    unsigned vertical_scale;
     unsigned vertex_count;
+    bool game;
     bool failed;
 } GsDrawState;
 
@@ -27,7 +32,33 @@ static GsDrawState gs;
 void pc_gs_bind_gallery(SDL_Renderer *renderer)
 {
     pc_gs_textures_reset();
-    gs = (GsDrawState){ .renderer = renderer };
+    gs = (GsDrawState){
+        .renderer = renderer, .origin_x = 0x6c00, .origin_y = 0x7900, .vertical_scale = 2,
+    };
+}
+
+void pc_gs_game_reset(void)
+{
+    pc_gs_textures_reset();
+    gs = (GsDrawState){.renderer = gs.renderer, .game = true, .vertical_scale = 1};
+}
+
+void pc_gs_bind_game(SDL_Renderer *renderer)
+{
+    gs.renderer = renderer;
+    pc_gs_game_reset();
+}
+
+bool pc_gs_game_display(int width, int field_height)
+{
+    gs.vertical_scale = field_height == 224 ? 2 : 1;
+    if (!gs.renderer ||
+        !SDL_SetRenderLogicalPresentation(gs.renderer, width, field_height * gs.vertical_scale,
+                                          SDL_LOGICAL_PRESENTATION_LETTERBOX)) {
+        gs.failed = true;
+        return false;
+    }
+    return true;
 }
 
 bool pc_gs_ok(void)
@@ -38,7 +69,7 @@ bool pc_gs_ok(void)
 bool pc_gs_begin_frame(void)
 {
     return pc_gs_ok() && SDL_SetRenderDrawColor(gs.renderer, 0, 0, 0, 255) &&
-           SDL_RenderClear(gs.renderer);
+           (!gs.game || SDL_SetRenderClipRect(gs.renderer, NULL)) && SDL_RenderClear(gs.renderer);
 }
 
 static SDL_BlendMode draw_blend(const GsDrawState *state)
@@ -113,21 +144,30 @@ static bool draw_textured(GsDrawState *state, unsigned primitive)
                               count == 4 ? indices : NULL, count == 4 ? 6 : 0);
 }
 
+static bool draw_solid_triangle(GsDrawState *state)
+{
+    SDL_BlendMode blend = draw_blend(state);
+    return blend != SDL_BLENDMODE_INVALID &&
+           SDL_SetRenderDrawBlendMode(state->renderer, blend) &&
+           SDL_RenderGeometry(state->renderer, NULL, state->vertices, 3, NULL, 0);
+}
+
 static void vertex_kick(GsDrawState *state, u64 value)
 {
-    /* Gallery stores 640x224 field coordinates and draws at 640x448. */
-    SDL_FPoint point = { ((int)(value & 0xFFFF) - 0x6C00) / 16.0f,
-                         ((int)((value >> 16) & 0xFFFF) - 0x7900) / 8.0f };
+    SDL_FPoint point = { ((int)(value & 0xFFFF) - (int)state->origin_x) / 16.0f,
+                         ((int)((value >> 16) & 0xFFFF) - (int)state->origin_y) *
+                             (state->vertical_scale / 16.0f) };
     SDL_Color color = state->color;
+    bool textured = state->prim & (1 << 4);
+    float rgb_scale = textured ? 128.0f : 255.0f;
     SDL_Vertex vertex = {
         .position = point,
-        .color = { SDL_min(color.r, 128) / 128.0f, SDL_min(color.g, 128) / 128.0f,
-                   SDL_min(color.b, 128) / 128.0f, SDL_min(color.a, 128) / 128.0f },
+        .color = { SDL_min(color.r / rgb_scale, 1.0f), SDL_min(color.g / rgb_scale, 1.0f),
+                   SDL_min(color.b / rgb_scale, 1.0f), SDL_min(color.a, 128) / 128.0f },
         .tex_coord = state->uv,
     };
     state->vertices[state->vertex_count++] = vertex;
     unsigned primitive = state->prim & 7;
-    bool textured = state->prim & (1 << 4);
     switch (primitive) {
     case SCE_GS_PRIM_SPRITE:
         if (state->vertex_count == 2) {
@@ -138,7 +178,7 @@ static void vertex_kick(GsDrawState *state, u64 value)
     case SCE_GS_PRIM_TRISTRIP:
     case SCE_GS_PRIM_TRIFAN:
         if (state->vertex_count == 3) {
-            state->failed |= !textured || !draw_textured(state, primitive);
+            state->failed |= !(textured ? draw_textured(state, primitive) : draw_solid_triangle(state));
             if (primitive == SCE_GS_PRIM_TRISTRIP) {
                 state->vertices[0] = state->vertices[1];
             }
@@ -182,6 +222,26 @@ static void write_register(void *context, u8 address, u64 value)
         break;
     case SCE_GS_ALPHA_1:
         state->alpha = value;
+        break;
+    case 0x18: /* XYOFFSET_1 */
+        if (state->game) {
+            state->origin_x = value & 0xffff;
+            state->origin_y = (value >> 32) & 0xffff;
+        }
+        break;
+    case 0x40: /* SCISSOR_1, inclusive endpoints in target pixels */
+        if (state->game) {
+            int left = value & 0x7ff;
+            int right = (value >> 16) & 0x7ff;
+            int top = (value >> 32) & 0x7ff;
+            int bottom = (value >> 48) & 0x7ff;
+            SDL_Rect clip = {
+                left, top * (int)state->vertical_scale,
+                SDL_max(0, right - left + 1),
+                SDL_max(0, bottom - top + 1) * (int)state->vertical_scale,
+            };
+            state->failed |= !SDL_SetRenderClipRect(state->renderer, &clip);
+        }
         break;
     }
 }
