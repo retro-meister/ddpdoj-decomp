@@ -394,6 +394,8 @@ def plot_history(history):
             axis.set_xlim(left=start_day)
             axis.xaxis.set_major_locator(mdates.DayLocator())
             axis.xaxis.set_major_formatter(FuncFormatter(lambda x, _: f"{mdates.num2date(x).day} {mdates.num2date(x).strftime('%b')}"))
+            years = f"{start_day.year}" if start_day.year == end_date.year else f"{start_day.year}–{end_date.year}"
+            axis.set_xlabel(f"Date ({years})")
         else:
             locator = mdates.AutoDateLocator(minticks=3, maxticks=6)
             axis.xaxis.set_major_locator(locator)
