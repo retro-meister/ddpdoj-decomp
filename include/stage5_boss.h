@@ -76,8 +76,8 @@ typedef struct {
     /* 0x00 */ u8 unused_00[6];
     /* 0x06 */ u8 unused_06;
     /* 0x07 */ u8 arm_guns_rounds_add;
-    /* 0x08 */ u8 arm_guns_shot2_sub;
-    /* 0x09 */ u8 arm_guns_shot_sub;
+    /* 0x08 */ u8 arm_guns_round_interval_sub;
+    /* 0x09 */ u8 arm_guns_shot_interval_sub;
     /* 0x0A */ u16 arm_guns_speed_add;
     /* 0x0C */ u8 unused_0C;
     /* 0x0D */ u8 mouth_burst_add;
@@ -85,7 +85,7 @@ typedef struct {
     /* 0x10 */ u16 mouth_speed2_add;
     /* 0x12 */ Field16 arm_guns_b_rounds_add;
     /* 0x14 */ u16 arm_guns_b_speed2_add;
-    /* 0x16 */ u8 horn_shot2_sub;
+    /* 0x16 */ u8 horn_round_interval_sub;
     /* 0x17 */ u8 horn_rounds_add;
     /* 0x18 */ u16 arm_guns_speed2_add;
     /* 0x1A */ u8 unused_1A;
@@ -100,7 +100,7 @@ typedef struct {
     /* 0x07 */ u8 jet_burst_add;
     /* 0x08 */ u16 jet_speed_add;
     /* 0x0A */ u8 unused_0A;
-    /* 0x0B */ u8 form2_horn_shot2_sub;
+    /* 0x0B */ u8 form2_horn_round_interval_sub;
     /* 0x0C */ u16 form2_horn_speed_add;
     /* 0x0E */ u8 form3_d_rounds_add;
     /* 0x0F */ u8 stinger_burst_add;
@@ -122,5 +122,219 @@ typedef struct {
 #define STAGE5_EXTRA(pointer) (&((Stage5BossExtra *)(pointer))[9])
 #define STAGE5_ADJUST(pointer) (&((Stage5BossAdjust *)(pointer))[14])
 #define STAGE5_ADJUST_B(pointer) (&((Stage5BossAdjustB *)(pointer))[15])
+
+/* A bullet speed and the bullet kind fired with it. */
+typedef struct {
+    /* 0x00 */ u16 speed;
+    /* 0x02 */ u16 bullet;
+} Shot;
+
+/*
+ * The attack part of the boss slot (reg_a4), one record per attack. `shot` counts down to the next shot, `burst`
+ * the shots of a burst and `rounds` the bursts.
+ */
+typedef struct {
+    /* 0x00 */ s16 running;
+    /* 0x02 */ SlotTimer shot;
+    /* 0x04 */ SlotTimer burst;
+    /* 0x06 */ SlotTimer rounds;
+    /* 0x08 */ u8 round_interval;
+    /* 0x09 */ u8 shot_interval;
+    /* 0x0A */ Shot shots;
+    /* 0x0E */ u16 speed_reset;
+    /* 0x10 */ SlotTimer shot_interval_down;
+    /* 0x12 */ SlotTimer round_interval_down;
+    /* 0x14 */ SlotTimer speed_up;
+    /* 0x16 */ SlotTimer rounds_up;
+    /* 0x18 */ u16 unused_18;
+    /* 0x1A */ u8 scatter_left_middle;
+    /* 0x1B */ u8 scatter_left_top;
+    /* 0x1C */ u8 scatter_right_top;
+    /* 0x1D */ u8 scatter_left_bottom;
+    /* 0x1E */ u8 scatter_right_bottom;
+    /* 0x1F */ u8 scatter_right_middle;
+} ArmGuns;
+
+typedef struct {
+    /* 0x00 */ s16 running;
+    /* 0x02 */ SlotTimer shot;
+    /* 0x04 */ SlotTimer burst;
+    /* 0x06 */ u8 unused_06;
+    /* 0x07 */ u8 shot_interval;
+    /* 0x08 */ u8 fixed_direction_right;
+    /* 0x09 */ u8 fixed_direction_left;
+    /* 0x0A */ Shot aimed;
+    /* 0x0E */ Shot fixed[3];
+    /* 0x1A */ SlotTimer burst_up;
+    /* 0x1C */ SlotTimer speed_up;
+    /* 0x1E */ u8 fixed_turn_right;
+    /* 0x1F */ u8 fixed_turn_left;
+} Mouth;
+
+typedef struct {
+    /* 0x00 */ s16 running;
+    /* 0x02 */ SlotTimer shot;
+    /* 0x04 */ SlotTimer burst;
+    /* 0x06 */ SlotTimer rounds;
+    /* 0x08 */ u8 round_interval;
+    /* 0x09 */ u8 shot_interval;
+    /* 0x0A */ Shot shots;
+    /* 0x0E */ Shot aimed;
+    /* 0x12 */ u8 unused_12;
+    /* 0x13 */ u8 turn;
+    /* 0x14 */ u8 direction_left_middle;
+    /* 0x15 */ u8 direction_left_top;
+    /* 0x16 */ u8 direction_right_top;
+    /* 0x17 */ u8 direction_left_bottom;
+    /* 0x18 */ u8 direction_right_bottom;
+    /* 0x19 */ u8 direction_right_middle;
+} ArmGunsB;
+
+typedef struct {
+    /* 0x00 */ s16 running;
+    /* 0x02 */ SlotTimer shot;
+    /* 0x04 */ SlotTimer burst;
+    /* 0x06 */ SlotTimer rounds;
+    /* 0x08 */ u8 round_interval;
+    /* 0x09 */ u8 shot_interval;
+    /* 0x0A */ Shot shots;
+    /* 0x0E */ u16 muzzle;
+    /* 0x10 */ u8 unused_10;
+    /* 0x11 */ u8 burst_reset;
+    /* 0x12 */ u16 speed_reset;
+    /* 0x14 */ u8 unused_14;
+    /* 0x15 */ u8 direction_shift;
+} Horn;
+
+typedef struct {
+    /* 0x00 */ s16 running;
+    /* 0x02 */ SlotTimer shot;
+    /* 0x04 */ SlotTimer burst;
+    /* 0x06 */ SlotTimer rounds;
+    /* 0x08 */ u8 round_interval;
+    /* 0x09 */ u8 shot_interval;
+    /* 0x0A */ Shot shots;
+    /* 0x0E */ Shot aimed;
+    /* 0x12 */ u8 direction;
+    /* 0x13 */ u8 turn;
+} Form1Rage;
+
+typedef struct {
+    /* 0x00 */ s16 running;
+    /* 0x02 */ SlotTimer shot;
+    /* 0x04 */ SlotTimer burst;
+    /* 0x06 */ u8 unused_06;
+    /* 0x07 */ u8 shot_interval;
+    /* 0x08 */ Shot aimed;
+    /* 0x0C */ Shot fixed;
+    /* 0x10 */ u8 fixed_turn;
+    /* 0x11 */ u8 fixed_direction;
+} Form2Mouth;
+
+typedef Form2Mouth Stinger;
+
+typedef struct {
+    /* 0x00 */ s16 running;
+    /* 0x02 */ SlotTimer shot;
+    /* 0x04 */ SlotTimer burst;
+    /* 0x06 */ u8 round_interval;
+    /* 0x07 */ u8 shot_interval;
+    /* 0x08 */ u16 speed;
+    /* 0x0A */ u16 side_bullet;
+    /* 0x0C */ u16 middle_bullet;
+    /* 0x0E */ u16 muzzle;
+} Jet;
+
+typedef struct {
+    /* 0x00 */ s16 running;
+    /* 0x02 */ SlotTimer shot;
+    /* 0x04 */ SlotTimer burst;
+    /* 0x06 */ SlotTimer rounds;
+    /* 0x08 */ u8 round_interval;
+    /* 0x09 */ u8 shot_interval;
+    /* 0x0A */ Shot large;
+    /* 0x0E */ Shot small;
+    /* 0x12 */ u16 muzzle;
+} Form2Horn;
+
+typedef struct {
+    /* 0x00 */ s16 running;
+    /* 0x02 */ SlotTimer shot;
+    /* 0x04 */ SlotTimer burst;
+    /* 0x06 */ u8 round_interval;
+    /* 0x07 */ u8 shot_interval;
+    /* 0x08 */ u16 speed;
+    /* 0x0A */ u16 side_bullet;
+    /* 0x0C */ u16 middle_bullet;
+    /* 0x0E */ u8 turn;
+    /* 0x0F */ u8 direction;
+} Form3A;
+
+typedef struct {
+    /* 0x00 */ s16 running;
+    /* 0x02 */ SlotTimer shot;
+    /* 0x04 */ SlotTimer burst;
+    /* 0x06 */ u8 unused_06;
+    /* 0x07 */ u8 shot_interval;
+    /* 0x08 */ Shot shots;
+    /* 0x0C */ Shot child;
+    /* 0x10 */ u8 direction;
+    /* 0x11 */ u8 turn;
+} Form3B;
+
+typedef struct {
+    /* 0x00 */ s16 running;
+    /* 0x02 */ SlotTimer shot;
+    /* 0x04 */ SlotTimer burst;
+    /* 0x06 */ u8 track_direction;
+    /* 0x07 */ u8 shot_interval;
+    /* 0x08 */ Shot shots;
+    /* 0x0C */ Field16 other_0C;
+} Form3C;
+
+typedef struct {
+    /* 0x00 */ s16 running;
+    /* 0x02 */ SlotTimer shot;
+    /* 0x04 */ SlotTimer burst;
+    /* 0x06 */ SlotTimer rounds;
+    /* 0x08 */ u8 round_interval;
+    /* 0x09 */ u8 shot_interval;
+    /* 0x0A */ Shot shots;
+    /* 0x0E */ u8 turn;
+    /* 0x0F */ u8 direction;
+    /* 0x10 */ SlotTimer spin_timer;
+    /* 0x12 */ u16 spin_step;
+    /* 0x14 */ SlotTimer accel_timer;
+    /* 0x16 */ u16 accel_step;
+    /* 0x18 */ u16 vector_speed;
+    /* 0x1A */ u8 unused_1A;
+    /* 0x1B */ u8 track_direction;
+    /* 0x1C */ u16 spin_step_add;
+} Form3D;
+
+typedef struct {
+    /* 0x00 */ s16 running;
+    /* 0x02 */ SlotTimer shot[3];
+    /* 0x08 */ SlotTimer burst;
+    /* 0x0A */ Shot volley[3];
+    /* 0x16 */ struct { u8 turn; u8 direction; } aim[3];
+    /* 0x1C */ u16 until_second;
+    /* 0x1E */ u16 until_third;
+} Form3Rage;
+
+#define ARM_GUNS(pointer) ((ArmGuns *)(pointer))
+#define MOUTH(pointer) ((Mouth *)(pointer))
+#define ARM_GUNS_B(pointer) ((ArmGunsB *)(pointer))
+#define HORN(pointer) ((Horn *)(pointer))
+#define FORM1_RAGE(pointer) ((Form1Rage *)(pointer))
+#define FORM2_MOUTH(pointer) ((Form2Mouth *)(pointer))
+#define JET(pointer) ((Jet *)(pointer))
+#define FORM2_HORN(pointer) ((Form2Horn *)(pointer))
+#define STINGER(pointer) ((Stinger *)(pointer))
+#define FORM3_A(pointer) ((Form3A *)(pointer))
+#define FORM3_B(pointer) ((Form3B *)(pointer))
+#define FORM3_C(pointer) ((Form3C *)(pointer))
+#define FORM3_D(pointer) ((Form3D *)(pointer))
+#define FORM3_RAGE(pointer) ((Form3Rage *)(pointer))
 
 #endif
