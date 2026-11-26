@@ -112,6 +112,16 @@ extern u8 g_stage_enemy_cursor[];
 void stage_enemies_select(void) {
     reg_a4 = g_stage_enemy_cursor;
     reg_a0 = (u8 *)g_stage_enemies;
+#ifdef DDPDOJ_PC
+    StageEnemies *stages = g_stage_enemies;
+    if ((g_simulation_active && g_simulation_boss_start) || g_game_mode == 2) {
+        stages = g_stage_boss_start_enemies;
+    }
+    const StageEnemies *stage = &stages[g_stage_x4 / 4];
+    STORE_ARCADE_ADDRESS((u16 *)reg_a4, stage->placements);
+    STORE_ARCADE_ADDRESS((u16 *)reg_a4 + 2, stage->path_offsets);
+    STORE_ARCADE_ADDRESS((u16 *)reg_a4 + 4, stage->paths);
+#else
     reg_d0.h[0] = g_stage_x4;
     reg_d0.h[0] += reg_d0.h[0];
     reg_d0.h[0] += reg_d0.h[0];
@@ -133,6 +143,7 @@ void stage_enemies_select(void) {
     reg_a0 += 2;
     *(u16 *)(reg_a4 + 8) = (u16) reg_d0.h[1];
     *(u16 *)(reg_a4 + 0xA) = (u16) reg_d0.h[0];
+#endif
     g_spawn_request_end = 0;
 }
 
@@ -147,7 +158,7 @@ void enemies_start_due(void) {
     reg_a3 = (u8 *)g_stage_enemy_cursor;
     reg_tmp.h[1] = *(u16 *) (reg_a3 + 0);
     reg_tmp.h[0] = *(u16 *) (reg_a3 + 2);
-    reg_a2 = (u8 *) reg_tmp.w;
+    reg_a2 = ARCADE_ADDRESS_DECODE(u8 *, reg_tmp.w);
 next_placement:
     reg_d0.h[0] = ((EnemyPlacement *)reg_a2)->line;
     if (reg_d0.h[0] == 0xFFFF) goto placements_done;
@@ -164,17 +175,17 @@ next_placement:
     reg_d7.h[0] &= 0xFFF;
     reg_tmp.h[1] = *(u16 *) (reg_a3 + 4);
     reg_tmp.h[0] = *(u16 *) (reg_a3 + 6);
-    reg_a1 = (u8 *) reg_tmp.w;
+    reg_a1 = ARCADE_ADDRESS_DECODE(u8 *, reg_tmp.w);
     reg_d7.h[0] += reg_d7.h[0];
     reg_d7.h[0] = (reg_d7.h[0] != 0) ? *(u16 *) (reg_a1 + ((s16) reg_d7.h[0] & ~1)) : *(u16 *) reg_a1;
     reg_tmp.h[1] = *(u16 *) (reg_a3 + 8);
     reg_tmp.h[0] = *(u16 *) (reg_a3 + 0xA);
-    reg_a1 = (u8 *) reg_tmp.w;
+    reg_a1 = ARCADE_ADDRESS_DECODE(u8 *, reg_tmp.w);
     reg_a1 += reg_d7.h[0];
     enemy_slot_claim();
     if (cond_flag != 0) goto skip_placement;
     *(u16 *) (reg_a0 + 0xA) = *(u16 *) (reg_a2 + 2);
-    reg_tmp.w = (u32) reg_a1;
+    reg_tmp.w = ARCADE_ADDRESS_ENCODE(reg_a1);
     *(u16 *) (reg_a0 + 0x12) = reg_tmp.h[1];
     *(u16 *) (reg_a0 + 0x14) = reg_tmp.h[0];
     save_a2 = reg_a2;
@@ -187,7 +198,7 @@ skip_placement:
     reg_a2 += sizeof(EnemyPlacement);
     goto next_placement;
 placements_done:
-    reg_tmp.w = (u32) reg_a2;
+    reg_tmp.w = ARCADE_ADDRESS_ENCODE(reg_a2);
     *(u16 *)reg_a3 = (u16) reg_tmp.h[1];
     *(u16 *)(reg_a3 + 2) = (u16) reg_tmp.h[0];
 next_request:
@@ -245,9 +256,11 @@ next_request:
 
 
 void enemies_frame(void) {
-    s32 temp_s0;
-
-    temp_s0 = (s32)reg_a5;
+#ifdef DDPDOJ_PC
+    u8 *temp_s0 = reg_a5;
+#else
+    s32 temp_s0 = (s32)reg_a5;
+#endif
     enemies_start_due();
     enemies_run();
     reg_a5 = (u8 *)temp_s0;
@@ -274,11 +287,11 @@ void enemies_run(void) {
             reg_tmp.h[1] = *(u16 *)(reg_a5 + 6);
             reg_tmp.h[0] = *(u16 *)(reg_a5 + 8);
             reg_d0.h[0] = g_side_scroll_step[0];
-            reg_a6 = (u8 *)reg_tmp.w;
+            reg_a6 = ARCADE_ADDRESS_DECODE(u8 *, reg_tmp.w);
             ENTITY(reg_a6)->x.h -= reg_d0.h[0];
             reg_tmp.h[1] = *(u16 *)(reg_a5 + 0x4C);
             reg_tmp.h[0] = *(u16 *)(reg_a5 + 0x4E);
-            reg_a1 = (u8 *)reg_tmp.w;
+            reg_a1 = ARCADE_ADDRESS_DECODE(u8 *, reg_tmp.w);
             reg_call_target_as_u8_p = reg_a1;
             temp_s0 = reg_d6.w;
             ((Fn)reg_call_target_as_u8_p)();
@@ -389,22 +402,31 @@ void enemy_start(void) {
         reg_d7.h[0] -= 0x80;
     }
     temp_s0 = var_a0;
+#ifdef DDPDOJ_PC
+    (temp_s0 ? g_enemy_first_routines_high : g_enemy_first_routines)[reg_d7.h[0]]();
+#else
     if (temp_s0 == 0) {
         ((Fn)*(u32 *)((u8 *)g_enemy_first_routines + (reg_d7.h[0] * 4)))();
     } else {
         ((Fn)*(u32 *)((u8 *)g_enemy_first_routines_high + (reg_d7.h[0] * 4)))();
     }
+#endif
     reg_d0.h[0] = *(u16 *)(reg_a5 + 4);
     if (enemy_entities_claim() == 0) {
-        reg_tmp.w = (u32)reg_a6;
+        reg_tmp.w = ARCADE_ADDRESS_ENCODE(reg_a6);
         *(u16 *)(reg_a5 + 6) = (u16) reg_tmp.h[1];
         *(u16 *)(reg_a5 + 8) = (u16) reg_tmp.h[0];
         reg_d7.h[0] *= 2;
+#ifdef DDPDOJ_PC
+        EnemyRoutines *routines = temp_s0 ? g_enemy_routines_high : g_enemy_routines;
+        reg_tmp.w = ARCADE_ADDRESS_ENCODE(routines[reg_d7.h[0] / 2].run);
+#else
         if (temp_s0 == 0) {
             reg_tmp.w = *(u32 *)((u8 *)&g_enemy_routines[0].run + (reg_d7.h[0] * 4));
         } else {
             reg_tmp.w = *(u32 *)((u8 *)&g_enemy_routines_high[0].run + (reg_d7.h[0] * 4));
         }
+#endif
         *(u16 *)(reg_a5 + 0x4C) = (u16) reg_tmp.h[1];
         *(u16 *)(reg_a5 + 0x4E) = (u16) reg_tmp.h[0];
         reg_a0 = (u8 *)((u8 *)g_player1);
@@ -415,17 +437,21 @@ void enemy_start(void) {
         }
         *(u8 *)(reg_a5 + 2) = (u8) reg_d0.b[0];
         *(s16 *)(reg_a5 + 0x3E) = 0;
+#ifdef DDPDOJ_PC
+        routines[reg_d7.h[0] / 2].start();
+#else
         if (temp_s0 == 0) {
             ((Fn)*(u32 *)((u8 *)g_enemy_routines + (reg_d7.h[0] * 4)))();
         } else {
             ((Fn)*(u32 *)((u8 *)g_enemy_routines_high + (reg_d7.h[0] * 4)))();
         }
+#endif
         reg_d0.b[0] = *(u8 *)(reg_a5 + 0xC);
         if (reg_d0.b[0] & 1) {
             reg_tmp.h[1] = *(u16 *)(reg_a5 + 6);
             reg_tmp.h[0] = *(u16 *)(reg_a5 + 8);
             reg_d0.h[0] = g_side_scroll_x[0];
-            reg_a6 = (u8 *)reg_tmp.w;
+            reg_a6 = ARCADE_ADDRESS_DECODE(u8 *, reg_tmp.w);
             ENTITY(reg_a6)->x.h -= reg_d0.h[0];
         }
         reg_d0.h[0] = *(u16 *)(reg_a5 + 4);
@@ -544,7 +570,7 @@ void enemy_remove_now(void) {
     reg_tmp.h[1] = *(u16 *)(src + 6);
     reg_tmp.h[0] = *(u16 *)(src + 8);
     reg_d0.w = 0;
-    reg_a6 = (u8 *)reg_tmp.sw;
+    reg_a6 = ARCADE_ADDRESS_DECODE(u8 *, reg_tmp.sw);
     *(u16 *)&reg_d1 = *(u16 *)(src + 4);
     enemy_remove_entities();
 }
@@ -556,7 +582,7 @@ void enemy_remove(void) {
     reg_tmp.h[1] = *(u16 *)((u8 *)task + 0x6);
     reg_tmp.h[0] = *(u16 *)((u8 *)task + 0x8);
     reg_d0.w = 1;
-    reg_a6 = (u8 *)reg_tmp.sw;
+    reg_a6 = ARCADE_ADDRESS_DECODE(u8 *, reg_tmp.sw);
     *(u16 *)&reg_d1 = *(u16 *)((u8 *)task + 0x4);
     enemy_remove_entities(task);
 }
@@ -710,7 +736,7 @@ void enemy_path_start(void) {
         enemy_remove_now();
         return;
     }
-    reg_a0 = (u8 *)(reg_d0.w);
+    reg_a0 = ARCADE_ADDRESS_DECODE(u8 *, reg_d0.w);
     if (ENEMY_STATE(reg_a5)->flags & ENEMY_FLAG_FROM_SPAWNER) {
         ENTITY(reg_a6)->y.h = ENEMY_STATE(reg_a5)->start_y;
         ENTITY(reg_a6)->x.h = ENEMY_STATE(reg_a5)->start_x;
@@ -743,11 +769,15 @@ before_first_move:
     }
     enemy_move_end_requested = 0;
     reg_d1.h[0] &= 0xF;
+#ifdef DDPDOJ_PC
+    g_enemy_path_commands[reg_d1.h[0]]();
+#else
     ((Fn)*(u32 *)((u8 *)g_enemy_path_commands + (reg_d1.h[0] * 4)))();
+#endif
     if (enemy_move_end_requested == 0) goto before_first_move;
     return;
 first_move:
-    reg_tmp.w = (u32)reg_a0;
+    reg_tmp.w = ARCADE_ADDRESS_ENCODE(reg_a0);
     ENEMY_STATE(reg_a5)->path[0] = (u16) reg_tmp.h[1];
     ENEMY_STATE(reg_a5)->path[1] = (u16) reg_tmp.h[0];
     ENTITY(reg_a6)->move.b.dir = (u8) reg_d1.b[0];
@@ -780,7 +810,7 @@ void enemy_path_step(void) {
     }
     reg_tmp.h[1] = ENEMY_STATE(reg_a5)->path[0];
     reg_tmp.h[0] = ENEMY_STATE(reg_a5)->path[1];
-    reg_a0 = (u8 *)reg_tmp.w;
+    reg_a0 = ARCADE_ADDRESS_DECODE(u8 *, reg_tmp.w);
 next_step:
     p = reg_a0;
     reg_a0 = p + 1;
@@ -821,7 +851,7 @@ stay:
 step_done:
     ENEMY_STATE(reg_a5)->path_frames.b[1] = 0;
 path_advanced:
-    reg_tmp.w = (u32)reg_a0;
+    reg_tmp.w = ARCADE_ADDRESS_ENCODE(reg_a0);
     ENEMY_STATE(reg_a5)->path[0] = reg_tmp.h[1];
     ENEMY_STATE(reg_a5)->path[1] = reg_tmp.h[0];
     ENEMY_STATE(reg_a5)->flags |= ENEMY_FLAG_NEW_STEP;
@@ -834,7 +864,11 @@ not_a_move:
 command:
     enemy_move_end_requested = 0;
     reg_d1.h[0] &= 0xF;
+#ifdef DDPDOJ_PC
+    g_enemy_path_commands[reg_d1.h[0]]();
+#else
     ((Fn) *(u32 *)((u8 *)g_enemy_path_commands + reg_d1.h[0] * 4))();
+#endif
     if (enemy_move_end_requested == 0) goto path_advanced;
     cond_flag = 0;
     return;

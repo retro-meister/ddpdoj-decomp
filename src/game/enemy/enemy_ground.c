@@ -3899,7 +3899,7 @@ void small_tank_c_start(void) {
     if (enemy_move_end_requested == 0) {
         reg_tmp.h[1] = ENEMY_STATE(reg_a5)->entities[0];
         reg_tmp.h[0] = ENEMY_STATE(reg_a5)->entities[1];
-        reg_a6 = (u8 *)reg_tmp.w;
+        reg_a6 = ARCADE_ADDRESS_DECODE(u8 *, reg_tmp.w);
         reg_d1.b[0] = ENTITY(reg_a6)->move.b.dir;
         SMALL_TANK(reg_a5)->turret_dir = (u8) reg_d1.b[0];
         reg_a0 = (u8 *)(small_tank_b_turret_sprites);

@@ -172,7 +172,7 @@ next_1:
                     item_spawn();
                     reg_tmp.h[1] = ENEMY_STATE(reg_a5)->entities[0];
                     reg_tmp.h[0] = ENEMY_STATE(reg_a5)->entities[1];
-                    reg_a6 = (void *) reg_tmp.w;
+                    reg_a6 = ARCADE_ADDRESS_DECODE(u8 *, reg_tmp.w);
                     bullet_cancel_on_boss_hit();
                     STAGE1_BOSS(reg_a5)->bullet_clear_time = 0x6E;
                     if (STAGE1_EXTRA(reg_a6)->spinning != 0) {
@@ -180,7 +180,7 @@ next_1:
                         item_spawn();
                         reg_tmp.h[1] = ENEMY_STATE(reg_a5)->entities[0];
                         reg_tmp.h[0] = ENEMY_STATE(reg_a5)->entities[1];
-                        reg_a6 = (void *) reg_tmp.w;
+                        reg_a6 = ARCADE_ADDRESS_DECODE(u8 *, reg_tmp.w);
                     }
                     goto next_2;
                 }
@@ -254,7 +254,7 @@ next_3:
                     item_spawn();
                     reg_tmp.h[1] = ENEMY_STATE(reg_a5)->entities[0];
                     reg_tmp.h[0] = ENEMY_STATE(reg_a5)->entities[1];
-                    reg_a6 = (void *) reg_tmp.w;
+                    reg_a6 = ARCADE_ADDRESS_DECODE(u8 *, reg_tmp.w);
                     bullet_cancel_on_boss_hit();
                     STAGE1_BOSS(reg_a5)->bullet_clear_time = 0x6E;
                     if (STAGE1_EXTRA(reg_a6)->spinning != 0) {
@@ -262,7 +262,7 @@ next_3:
                         item_spawn();
                         reg_tmp.h[1] = ENEMY_STATE(reg_a5)->entities[0];
                         reg_tmp.h[0] = ENEMY_STATE(reg_a5)->entities[1];
-                        reg_a6 = (void *) reg_tmp.w;
+                        reg_a6 = ARCADE_ADDRESS_DECODE(u8 *, reg_tmp.w);
                     }
                     goto next_4;
                 }

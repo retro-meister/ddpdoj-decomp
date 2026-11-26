@@ -34,7 +34,7 @@ void enemy_spawner_setup(void) {
     enemy_init_entities();
     reg_tmp.h[1] = ENEMY_STATE(reg_a5)->path[0];
     reg_tmp.h[0] = ENEMY_STATE(reg_a5)->path[1];
-    reg_a0 = (u8 *)((s8 *) reg_tmp.w);
+    reg_a0 = ARCADE_ADDRESS_DECODE(u8 *, reg_tmp.w);
     reg_tmp.b[1] = *(s8 *)reg_a0;
     reg_a0 += 1;
     reg_tmp.b[0] = (u8) *(s8 *)reg_a0;
@@ -78,7 +78,7 @@ void enemy_spawner_setup(void) {
     SPAWNER(reg_a5)->kind = (u16) reg_d0.h[0];
     SPAWNER(reg_a5)->remaining.h = (u16) reg_d1.h[0];
     *(u16 *)&SPAWNER(reg_a5)->interval = (u16) reg_d2.h[0];
-    reg_tmp.w = (u32) ((s8 *)reg_a0);
+    reg_tmp.w = ARCADE_ADDRESS_ENCODE((s8 *)reg_a0);
     ENEMY_STATE(reg_a5)->path[0] = (u16) reg_tmp.h[1];
     ENEMY_STATE(reg_a5)->path[1] = (u16) reg_tmp.h[0];
 }
