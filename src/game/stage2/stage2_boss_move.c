@@ -164,7 +164,7 @@ s32 fade_in_and_release();
 s32 sprite_palette_load();
 s32 stage2_boss_radome_show();
 s32 entity_follow_scroll();
-extern u8 D_0025FCB0[];
+extern u8 stage2_boss_enter_flash_at_32[];
 extern u8 g_boss_present;
 extern u8 g_boss_present_b1;
 
@@ -173,7 +173,7 @@ void stage2_boss_move_enter(void) {
     if (ENTER(reg_a4)->step == 0) {
         if (ENTER(reg_a4)->delay == 0x10) {
             reg_d0.h[0] = 0xD;
-            reg_a0 = (u8 *)D_0025FCB0;
+            reg_a0 = (u8 *)stage2_boss_enter_flash_at_32;
             sprite_palette_load();
         }
         ENTER(reg_a4)->delay -= 1;

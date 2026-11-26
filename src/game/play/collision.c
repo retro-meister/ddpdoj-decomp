@@ -42,12 +42,12 @@ void laser_collisions(void);
 void laser_vs_enemies(void);
 void laser_vs_enemies_second(void);
 
-extern u16 D_0028E08C;
-extern u16 D_0028E090;
+extern u16 collision_reset_state;
+extern u16 collision_reset_state_2;
 
 void collision_reset(void) {
-    D_0028E08C = 0;
-    D_0028E090 = 0;
+    collision_reset_state = 0;
+    collision_reset_state_2 = 0;
 }
 
 extern u16 g_player_was_hit;
@@ -1445,5 +1445,5 @@ u16 g_collision_hit_bits;
 u8 g_collision_bounds[8];
 u16 D_0028E098 __attribute__((aligned(4)));
 u16 g_player_was_hit __attribute__((aligned(4)));
-u16 D_0028E090 __attribute__((aligned(4)));
-u16 D_0028E08C __attribute__((aligned(4)));
+u16 collision_reset_state_2 __attribute__((aligned(4)));
+u16 collision_reset_state __attribute__((aligned(4)));

@@ -1098,8 +1098,8 @@ void stage1_boss_left_rotor_opened(void) {
 s32 boss_attack_start();
 s32 boss_level_get_from_58();
 s32 rng_next_bit();
-extern u8 D_0028DC28[];
-extern u8 D_0028DC30[];
+extern u8 stage1_boss_spin_start_table[];
+extern u8 stage1_boss_spin_start_table_2[];
 
 void stage1_boss_spin_start(void) {
     STAGE1_EXTRA(reg_a6)->spinning = 0;
@@ -1121,7 +1121,7 @@ void stage1_boss_spin_start(void) {
     SPIN(reg_a4)->hold = 0;
     boss_level_get_from_58();
     reg_d2.w = 0;
-    reg_d2.b[0] = *(D_0028DC28 + reg_d0.h[0]);
+    reg_d2.b[0] = *(stage1_boss_spin_start_table + reg_d0.h[0]);
     reg_d2.b[0] -= STAGE1_EXTRA(reg_a6)->spin_interval_sub;
     if ((s8) reg_d2.b[0] < 5) {
         reg_d2.b[0] = 4;
@@ -1131,7 +1131,7 @@ void stage1_boss_spin_start(void) {
         STAGE1_EXTRA(reg_a6)->spin_interval_sub = 4U;
     }
     reg_d3.w = 0;
-    reg_d3.b[0] = *(D_0028DC30 + reg_d0.h[0]);
+    reg_d3.b[0] = *(stage1_boss_spin_start_table_2 + reg_d0.h[0]);
     reg_d3.b[0] -= STAGE1_EXTRA(reg_a6)->spin_width_sub;
     if ((s8) reg_d3.b[0] < 0x10) {
         reg_d3.b[0] = 0xF;
@@ -1544,10 +1544,10 @@ void stage1_boss_gatling_fast_spin(void) {
     }
 }
 
-u8 D_0028DC28[8] = {
+u8 stage1_boss_spin_start_table[8] = {
     0x07, 0x06, 0x05, 0x04, 0x04, 0x04, 0x04, 0x04,
 };
 
-u8 D_0028DC30[8] = {
+u8 stage1_boss_spin_start_table_2[8] = {
     0x16, 0x14, 0x12, 0x11, 0x10, 0x0F, 0x0E, 0x0D,
 };

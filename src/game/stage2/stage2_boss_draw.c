@@ -30,14 +30,14 @@ void (*stage2_boss_draw_routines[])(void) = {
     (void (*)(void))-1,
 };
 
-extern u8 D_0026C2A0[];
+extern u8 stage2_boss_draw_lower_table[];
 
 void stage2_boss_draw_lower(void) {
     s32 sprite_draw_layer2_keep();
-    reg_a0 = (u8 *)D_0026C2A0;
+    reg_a0 = (u8 *)stage2_boss_draw_lower_table;
     reg_a0 += ENTITY(reg_a6)[1].offset_x.h;
     reg_tmp.h[0] = ENTITY(reg_a6)[1].offset_x.h;
-    reg_d2.w = *(u32 *) (D_0026C2A0 + (reg_tmp.h[0] & ~3));
+    reg_d2.w = *(u32 *) (stage2_boss_draw_lower_table + (reg_tmp.h[0] & ~3));
     reg_d1.h[1] = ENTITY(reg_a6)[1].y.h;
     reg_d1.h[0] = ENTITY(reg_a6)[1].x.h;
     reg_d1.h[0] += 0xFD00;
@@ -48,18 +48,18 @@ void stage2_boss_draw_lower(void) {
     sprite_draw_layer2_keep();
 }
 
-extern u8 D_0026C2C0[];
+extern u8 stage2_boss_draw_torso_table[];
 
 void stage2_boss_draw_torso(void) {
     s32 sprite_draw_layer2_keep();
     u16 temp_a0;
     u16 temp_a2;
 
-    reg_a0 = D_0026C2C0;
+    reg_a0 = stage2_boss_draw_torso_table;
     temp_a2 = ENTITY(reg_a6)->offset_y.h;
     reg_a0 += temp_a2;
     reg_tmp.h[0] = ENTITY(reg_a6)->offset_y.h;
-    reg_d2.w = *(u32 *)(D_0026C2C0 + (reg_tmp.h[0] & ~3));
+    reg_d2.w = *(u32 *)(stage2_boss_draw_torso_table + (reg_tmp.h[0] & ~3));
     reg_d1.h[1] = ENTITY(reg_a6)->y.h;
     temp_a0 = ENTITY(reg_a6)->x.h;
     reg_d1.h[0] = temp_a0;
@@ -70,17 +70,17 @@ void stage2_boss_draw_torso(void) {
     sprite_draw_layer2_keep();
 }
 
-extern u8 D_0026C2F0[];
+extern u8 stage2_boss_draw_shoulder_cannon_table[];
 
 void stage2_boss_draw_shoulder_cannon(void) {
     s32 sprite_draw_layer2_keep();
     u16 temp_a2;
     u32 temp_a3;
 
-    reg_a0 = (u8 *)D_0026C2F0;
+    reg_a0 = (u8 *)stage2_boss_draw_shoulder_cannon_table;
     reg_a0 += STAGE2_EXTRA(reg_a6)->shoulder_cannon_anim;
     reg_tmp.h[0] = STAGE2_EXTRA(reg_a6)->shoulder_cannon_anim;
-    reg_d2.w = *(u32 *)(D_0026C2F0 + (reg_tmp.h[0] & ~3));
+    reg_d2.w = *(u32 *)(stage2_boss_draw_shoulder_cannon_table + (reg_tmp.h[0] & ~3));
     reg_d1.h[0] = ENTITY(reg_a6)->y.h;
     reg_d1.h[0] += STAGE2_EXTRA(reg_a6)->recoil_offset;
     temp_a3 = reg_d1.w;
@@ -97,18 +97,18 @@ void stage2_boss_draw_shoulder_cannon(void) {
     sprite_draw_layer2_keep();
 }
 
-extern u8 D_0026C330[];
+extern u8 stage2_boss_draw_shoulder_turret_mount_table[];
 
 void stage2_boss_draw_shoulder_turret_mount(void) {
     s32 sprite_draw_layer2_keep();
     u16 temp_a1;
     u16 temp_a3;
 
-    reg_a2 = (u8 *)D_0026C330;
+    reg_a2 = (u8 *)stage2_boss_draw_shoulder_turret_mount_table;
     temp_a3 = STAGE2_EXTRA(reg_a6)->base_anim;
     reg_a2 += temp_a3;
     reg_tmp.h[0] = STAGE2_EXTRA(reg_a6)->base_anim;
-    reg_d2.w = *(u32 *)(D_0026C330 + (reg_tmp.h[0] & ~3));
+    reg_d2.w = *(u32 *)(stage2_boss_draw_shoulder_turret_mount_table + (reg_tmp.h[0] & ~3));
     reg_d1.h[1] = ENTITY(reg_a6)->y.h;
     temp_a1 = ENTITY(reg_a6)->x.h;
     reg_d1.h[0] = temp_a1;
@@ -120,7 +120,7 @@ void stage2_boss_draw_shoulder_turret_mount(void) {
     sprite_draw_layer2_keep();
 }
 
-extern u8 D_0026C3B0[];
+extern u8 stage2_boss_draw_side_gun_a_table[];
 
 void stage2_boss_draw_side_gun_a(void) {
     s32 sprite_draw_layer2_keep();
@@ -128,11 +128,11 @@ void stage2_boss_draw_side_gun_a(void) {
     u16 temp_a3;
     u32 temp_a2;
 
-    reg_a2 = D_0026C3B0;
+    reg_a2 = stage2_boss_draw_side_gun_a_table;
     temp_a3 = ENTITY(reg_a6)[6].offset_y.h;
     reg_a2 += temp_a3;
     reg_tmp.h[0] = ENTITY(reg_a6)[6].offset_y.h;
-    reg_d2.w = *(u32 *)(D_0026C3B0 + (reg_tmp.h[0] & ~3));
+    reg_d2.w = *(u32 *)(stage2_boss_draw_side_gun_a_table + (reg_tmp.h[0] & ~3));
     reg_d1.h[0] = ENTITY(reg_a6)[6].y.h;
     reg_d1.h[0] += STAGE2_EXTRA(reg_a6)->recoil_offset;
     temp_a2 = reg_d1.w;
@@ -148,7 +148,7 @@ void stage2_boss_draw_side_gun_a(void) {
     sprite_draw_layer2_keep();
 }
 
-extern u8 D_0026C370[];
+extern u8 stage2_boss_draw_side_gun_b_table[];
 
 void stage2_boss_draw_side_gun_b(void) {
     s32 sprite_draw_layer2_keep();
@@ -156,11 +156,11 @@ void stage2_boss_draw_side_gun_b(void) {
     u16 temp_a3;
     u32 temp_a2;
 
-    reg_a2 = D_0026C370;
+    reg_a2 = stage2_boss_draw_side_gun_b_table;
     temp_a3 = ENTITY(reg_a6)[7].offset_y.h;
     reg_a2 += temp_a3;
     reg_tmp.h[0] = ENTITY(reg_a6)[7].offset_y.h;
-    reg_d2.w = *(u32 *)(D_0026C370 + (reg_tmp.h[0] & ~3));
+    reg_d2.w = *(u32 *)(stage2_boss_draw_side_gun_b_table + (reg_tmp.h[0] & ~3));
     reg_d1.h[0] = ENTITY(reg_a6)[7].y.h;
     reg_d1.h[0] += STAGE2_EXTRA(reg_a6)->recoil_offset;
     temp_a2 = reg_d1.w;
@@ -264,17 +264,17 @@ void stage2_boss_draw_shoulder_turret_b(void) {
     sprite_draw_layer2_keep();
 }
 
-extern u8 D_0026C4F0[];
+extern u8 stage2_boss_draw_radome_table[];
 
 void stage2_boss_draw_radome(void) {
     void sprite_draw_layer2_keep();
     reg_d0.w = 0;
-    reg_a0 = D_0026C4F0;
+    reg_a0 = stage2_boss_draw_radome_table;
     reg_d0.b[0] = ENTITY(reg_a6)[8].move.b.dir;
     reg_d0.b[0] += 1;
     reg_d0.h[0] &= 0x3E;
     reg_d0.h[0] += reg_d0.h[0];
-    reg_d2.w = *(u32 *)(D_0026C4F0 + (reg_d0.h[0] & ~3));
+    reg_d2.w = *(u32 *)(stage2_boss_draw_radome_table + (reg_d0.h[0] & ~3));
     reg_d1.h[1] = ENTITY(reg_a6)[8].y.h;
     reg_d1.h[0] = ENTITY(reg_a6)[8].x.h;
     reg_d1.w += 0xFC00FD00;
@@ -284,39 +284,39 @@ void stage2_boss_draw_radome(void) {
     sprite_draw_layer2_keep();
 }
 
-u8 D_0026C2A0[32] = {
+u8 stage2_boss_draw_lower_table[32] = {
     0xF6, 0x1A, 0x00, 0x00, 0xF7, 0x1A, 0x00, 0x00, 0xF8, 0x1A, 0x00, 0x00, 0xF9, 0x1A, 0x00, 0x00,
     0xFA, 0x1A, 0x00, 0x00, 0xFB, 0x1A, 0x00, 0x00, 0xFC, 0x1A, 0x00, 0x00, 0xFD, 0x1A, 0x00, 0x00,
 };
 
-u8 D_0026C2C0[48] = {
+u8 stage2_boss_draw_torso_table[48] = {
     0xCD, 0x1A, 0x00, 0x00, 0xCE, 0x1A, 0x00, 0x00, 0xCF, 0x1A, 0x00, 0x00, 0xD0, 0x1A, 0x00, 0x00,
     0xD1, 0x1A, 0x00, 0x00, 0xD2, 0x1A, 0x00, 0x00, 0xD3, 0x1A, 0x00, 0x00, 0xD4, 0x1A, 0x00, 0x00,
     0xD5, 0x1A, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00,
 };
 
-u8 D_0026C2F0[64] = {
+u8 stage2_boss_draw_shoulder_cannon_table[64] = {
     0x1E, 0x1B, 0x00, 0x00, 0x1F, 0x1B, 0x00, 0x00, 0x20, 0x1B, 0x00, 0x00, 0x21, 0x1B, 0x00, 0x00,
     0x22, 0x1B, 0x00, 0x00, 0x23, 0x1B, 0x00, 0x00, 0x24, 0x1B, 0x00, 0x00, 0x25, 0x1B, 0x00, 0x00,
     0x26, 0x1B, 0x00, 0x00, 0x27, 0x1B, 0x00, 0x00, 0x28, 0x1B, 0x00, 0x00, 0x29, 0x1B, 0x00, 0x00,
     0x2A, 0x1B, 0x00, 0x00, 0x2B, 0x1B, 0x00, 0x00, 0x2C, 0x1B, 0x00, 0x00, 0x2D, 0x1B, 0x00, 0x00,
 };
 
-u8 D_0026C330[64] = {
+u8 stage2_boss_draw_shoulder_turret_mount_table[64] = {
     0x4E, 0x1B, 0x00, 0x00, 0x4F, 0x1B, 0x00, 0x00, 0x50, 0x1B, 0x00, 0x00, 0x51, 0x1B, 0x00, 0x00,
     0x52, 0x1B, 0x00, 0x00, 0x53, 0x1B, 0x00, 0x00, 0x54, 0x1B, 0x00, 0x00, 0x55, 0x1B, 0x00, 0x00,
     0x54, 0x1B, 0x00, 0x00, 0x53, 0x1B, 0x00, 0x00, 0x52, 0x1B, 0x00, 0x00, 0x51, 0x1B, 0x00, 0x00,
     0x50, 0x1B, 0x00, 0x00, 0x4F, 0x1B, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00,
 };
 
-u8 D_0026C370[64] = {
+u8 stage2_boss_draw_side_gun_b_table[64] = {
     0x2E, 0x1B, 0x00, 0x00, 0x2F, 0x1B, 0x00, 0x00, 0x30, 0x1B, 0x00, 0x00, 0x31, 0x1B, 0x00, 0x00,
     0x32, 0x1B, 0x00, 0x00, 0x33, 0x1B, 0x00, 0x00, 0x34, 0x1B, 0x00, 0x00, 0x35, 0x1B, 0x00, 0x00,
     0x36, 0x1B, 0x00, 0x00, 0x37, 0x1B, 0x00, 0x00, 0x38, 0x1B, 0x00, 0x00, 0x39, 0x1B, 0x00, 0x00,
     0x3A, 0x1B, 0x00, 0x00, 0x3B, 0x1B, 0x00, 0x00, 0x3C, 0x1B, 0x00, 0x00, 0x3D, 0x1B, 0x00, 0x00,
 };
 
-u8 D_0026C3B0[64] = {
+u8 stage2_boss_draw_side_gun_a_table[64] = {
     0x3E, 0x1B, 0x00, 0x00, 0x3F, 0x1B, 0x00, 0x00, 0x40, 0x1B, 0x00, 0x00, 0x41, 0x1B, 0x00, 0x00,
     0x42, 0x1B, 0x00, 0x00, 0x43, 0x1B, 0x00, 0x00, 0x44, 0x1B, 0x00, 0x00, 0x45, 0x1B, 0x00, 0x00,
     0x46, 0x1B, 0x00, 0x00, 0x47, 0x1B, 0x00, 0x00, 0x48, 0x1B, 0x00, 0x00, 0x49, 0x1B, 0x00, 0x00,
@@ -345,7 +345,7 @@ u8 D_0026C470[128] = {
     0x72, 0x1B, 0x00, 0x00, 0x73, 0x1B, 0x00, 0x00, 0x74, 0x1B, 0x00, 0x00, 0x75, 0x1B, 0x00, 0x00,
 };
 
-u8 D_0026C4F0[128] = {
+u8 stage2_boss_draw_radome_table[128] = {
     0xD6, 0x1A, 0x00, 0x00, 0xD7, 0x1A, 0x00, 0x00, 0xD8, 0x1A, 0x00, 0x00, 0xD9, 0x1A, 0x00, 0x00,
     0xDA, 0x1A, 0x00, 0x00, 0xDB, 0x1A, 0x00, 0x00, 0xDC, 0x1A, 0x00, 0x00, 0xDD, 0x1A, 0x00, 0x00,
     0xDE, 0x1A, 0x00, 0x00, 0xDF, 0x1A, 0x00, 0x00, 0xE0, 0x1A, 0x00, 0x00, 0xE1, 0x1A, 0x00, 0x00,

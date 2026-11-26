@@ -17,18 +17,18 @@ s32 sprite_palette_load();
 s32 stage2_boss_damage_none();
 s32 stage2_boss_shield_on();
 s32 stage2_boss_parts_stop_hits();
-extern u8 D_0025FBB0[];
-extern u8 D_0025FBF0[];
-extern u8 D_0025FC30[];
-extern u8 D_0025FC70[];
-extern u8 D_0025FCF0[];
+extern u8 stage2_boss_enter_flash_at_4[];
+extern u8 stage2_boss_enter_flash_at_11[];
+extern u8 stage2_boss_enter_flash_at_18[];
+extern u8 stage2_boss_enter_flash_at_25[];
+extern u8 stage2_boss_enter_flash_at_39[];
 extern void (*stage2_boss_anim_routines[])(void);
 extern void (*stage2_boss_fire_routines[])(void);
 extern void (*stage2_boss_draw_routines[])(void);
 extern void (*stage2_boss_mode_routines[])(void);
 extern void (*stage2_boss_move_routines[])(void);
-extern u8 D_0026C920[];
-extern u8 D_0028DB18[];
+extern u8 stage2_boss_start_table[];
+extern u8 stage2_boss_start_table_2[];
 extern s16 g_slowdown_boss_allowed;
 extern u16 g_boss_hyper_wait;
 extern u8 *g_boss_hp;
@@ -41,9 +41,9 @@ extern u16 g_bullet_limit_raised_3[];
 extern u16 g_side_scroll_x[];
 
 void stage2_boss_start(void) {
-    reg_a0 = (u8 *)D_0026C920;
+    reg_a0 = (u8 *)stage2_boss_start_table;
     enemy_init_entities();
-    reg_a0 = (u8 *)D_0028DB18;
+    reg_a0 = (u8 *)stage2_boss_start_table_2;
     reg_d0.h[0] = 2;
     enemy_set_task_state();
     reg_tmp.w = 0x9C001C00;
@@ -62,19 +62,19 @@ void stage2_boss_start(void) {
     reg_d0.w = 0;
     boss_phase_start();
     reg_d0.h[0] = 0x10;
-    reg_a0 = (u8 *)D_0025FBB0;
+    reg_a0 = (u8 *)stage2_boss_enter_flash_at_4;
     sprite_palette_load();
     reg_d0.h[0] = 0x11;
-    reg_a0 = (u8 *)D_0025FBF0;
+    reg_a0 = (u8 *)stage2_boss_enter_flash_at_11;
     sprite_palette_load();
     reg_d0.h[0] = 0x12;
-    reg_a0 = (u8 *)D_0025FC30;
+    reg_a0 = (u8 *)stage2_boss_enter_flash_at_18;
     sprite_palette_load();
     reg_d0.h[0] = 0x17;
-    reg_a0 = (u8 *)D_0025FC70;
+    reg_a0 = (u8 *)stage2_boss_enter_flash_at_25;
     sprite_palette_load();
     reg_d0.h[0] = 0x13;
-    reg_a0 = (u8 *)D_0025FCF0;
+    reg_a0 = (u8 *)stage2_boss_enter_flash_at_39;
     sprite_palette_load();
     reg_d0.h[0] = 0x16;
     reg_a0 = (u8 *)palette_white;
@@ -129,7 +129,7 @@ void stage2_boss_main(void) {
     enemy_hitbox_debug_draw();
 }
 
-u8 D_0026C920[352] = {
+u8 stage2_boss_start_table[352] = {
     0x00, 0x80, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x11, 0x00, 0x0C,
     0x80, 0x11, 0x80, 0x11, 0xFF, 0x7F, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x80, 0x00, 0x00,
     0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x40, 0x0C, 0x00, 0x04, 0x00, 0x09, 0x00, 0x0F,
@@ -154,6 +154,6 @@ u8 D_0026C920[352] = {
     0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00,
 };
 
-u8 D_0028DB18[8] = {
+u8 stage2_boss_start_table_2[8] = {
     0x02, 0x00, 0xC0, 0xBD, 0x30, 0x2A, 0x00, 0x00,
 };

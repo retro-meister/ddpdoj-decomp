@@ -38,7 +38,7 @@ void stage_clear_running_check(void) {
 }
 
 extern s16 g_game_task_handle;
-extern s16 D_0028E94C;
+extern s16 stage_clear_state_clear_state;
 extern s16 D_0028E958;
 extern u16 D_0028E960;
 extern u8 D_002BF410[];
@@ -67,7 +67,7 @@ void stage_clear_state_clear(void) {
     } while (var_a1 < 0x60);
     g_game_task_handle = 0;
     var_t1 = 0;
-    D_0028E94C = 0;
+    stage_clear_state_clear_state = 0;
     var_a2 = 0;
     D_0028E950 = 0;
     D_0028E954 = 0;
@@ -532,26 +532,26 @@ void tally_digit_draw(void)
     sprite_draw_layer1();
 }
 
-extern u16 D_00269AB0[];
+extern u16 tally_bonus_sprite_draw_table[];
 extern u8 D_00269ADE[];
-extern u16 D_00269AE0[];
-extern u16 D_00269B10[];
-extern u16 D_00269B40[];
+extern u16 tally_bonus_sprite_draw_table_2[];
+extern u16 tally_bonus_sprite_draw_table_3[];
+extern u16 tally_bonus_sprite_draw_table_4[];
 
 void tally_bonus_sprite_draw(void) {
     if (*(s16 *)(reg_a6 + 0x3E) >= 0) {
         reg_d1.w = 0;
-        reg_a0 = (u8 *)(D_00269AB0);
+        reg_a0 = (u8 *)(tally_bonus_sprite_draw_table);
         reg_d1.h[0] = *(u16 *)(reg_a6 + 0x3E);
         reg_d0.h[0] = (reg_d1.h[0] != 0) ? *(u16 *)((u8 *)reg_a0 + ((s16)reg_d1.h[0] & ~1)) : *(u16 *)reg_a0;
         *(u16 *)(reg_a6 + 0x4C) += reg_d0.h[0];
-        reg_a1 = (u8 *)(D_00269AE0);
+        reg_a1 = (u8 *)(tally_bonus_sprite_draw_table_2);
         reg_d0.h[0] = (reg_d1.h[0] != 0) ? *(u16 *)((u8 *)reg_a1 + ((s16)reg_d1.h[0] & ~1)) : *(u16 *)reg_a1;
         *(u16 *)(reg_a6 + 0x4E) += reg_d0.h[0];
-        reg_a1 = (u8 *)(D_00269B10);
+        reg_a1 = (u8 *)(tally_bonus_sprite_draw_table_3);
         reg_d0.h[0] = (reg_d1.h[0] != 0) ? *(u16 *)((u8 *)reg_a1 + ((s16)reg_d1.h[0] & ~1)) : *(u16 *)reg_a1;
         *(u16 *)(reg_a6 + 0x50) += reg_d0.h[0];
-        reg_a1 = (u8 *)(D_00269B40);
+        reg_a1 = (u8 *)(tally_bonus_sprite_draw_table_4);
         reg_d0.h[0] = (reg_d1.h[0] != 0) ? *(u16 *)((u8 *)reg_a1 + ((s16)reg_d1.h[0] & ~1)) : *(u16 *)reg_a1;
         *(u16 *)(reg_a6 + 0x52) += reg_d0.h[0];
         *(u16 *)(reg_a6 + 0x3E) += 2;
@@ -575,15 +575,15 @@ s32 binary_to_bcd();
 s32 stage_load_step();
 s32 replay_file_finalize();
 extern u16 D_00261F30[];
-extern u16 D_00261FF0[];
-extern u16 D_00262030[];
-extern u16 D_00262070[];
-extern u16 D_002620B0[];
-extern u16 D_002622B0[];
+extern u16 stage_clear_screen_update_table[];
+extern u16 stage_clear_screen_update_table_2[];
+extern u16 stage_clear_screen_update_table_3[];
+extern u16 stage_clear_screen_update_table_4[];
+extern u16 stage_clear_screen_update_table_5[];
 extern u8 D_002698B0[];
 extern u8 D_00269920[];
-extern u16 D_00269A10[];
-extern u16 D_00269A60[];
+extern u16 stage_clear_screen_update_table_6[];
+extern u16 stage_clear_screen_update_table_7[];
 extern u8 D_00269AAE[];
 extern u8 D_0028E2A0;
 extern u8 D_0028E2A4;
@@ -649,22 +649,22 @@ void stage_clear_screen_update(void) {
         reg_a0 = (u8 *)(D_00261F30);
         reg_d0.h[0] = 0x11;
         sprite_palette_load();
-        reg_a0 = (u8 *)(D_00261FF0);
+        reg_a0 = (u8 *)(stage_clear_screen_update_table);
         reg_d0.h[0] = 0x12;
         sprite_palette_load();
-        reg_a0 = (u8 *)(D_00262030);
+        reg_a0 = (u8 *)(stage_clear_screen_update_table_2);
         reg_d0.h[0] = 0x13;
         sprite_palette_load();
-        reg_a0 = (u8 *)(D_00262070);
+        reg_a0 = (u8 *)(stage_clear_screen_update_table_3);
         reg_d0.h[0] = 0x14;
         sprite_palette_load();
-        reg_a0 = (u8 *)(D_002620B0);
+        reg_a0 = (u8 *)(stage_clear_screen_update_table_4);
         reg_d0.h[0] = 0x15;
         sprite_palette_load();
-        reg_a0 = (u8 *)(D_002622B0);
+        reg_a0 = (u8 *)(stage_clear_screen_update_table_5);
         reg_d0.h[0] = 0x16;
         sprite_palette_load();
-        reg_a0 = (u8 *)(D_00261FF0);
+        reg_a0 = (u8 *)(stage_clear_screen_update_table);
         reg_d0.h[0] = 0x10;
         sprite_palette_load();
         return;
@@ -681,7 +681,7 @@ void stage_clear_screen_update(void) {
         *(u16 *)(reg_a6 + 4) = (u16) (t8 - 1);
         if (*(u16 *)(reg_a6 + 4) != 0) goto next_290;
         {
-            reg_a0 = (u8 *)(D_00269A10);
+            reg_a0 = (u8 *)(stage_clear_screen_update_table_6);
             reg_a1 = (u8 *)(reg_a6 + 6);
             *(u16 *)reg_a1 = *(u16 *)reg_a0;
             reg_a0 += 2;
@@ -740,7 +740,7 @@ next_290:
         return;
     } else {
         if (*(s16 *)(reg_a6 + 6) >= 0) {
-            reg_a0 = (u8 *)(D_00269A60);
+            reg_a0 = (u8 *)(stage_clear_screen_update_table_7);
             reg_d1.w = 0;
             reg_d1.h[0] = *(u16 *)(reg_a6 + 6);
             reg_d0.h[0] = (reg_d1.h[0] != 0) ? *(u16 *)((u8 *)reg_a0 + ((s16)reg_d1.h[0] & ~1)) : *(u16 *)reg_a0;
@@ -1107,18 +1107,18 @@ u8 D_00269920[240] = {
     0x70, 0x00, 0x0F, 0x00, 0x03, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00,
 };
 
-u16 D_00269A10[16] = {
+u16 stage_clear_screen_update_table_6[16] = {
     0x0000, 0x0000, 0x0000, 0x0040, 0x0040, 0x0101, 0x0101, 0xC090,
     0x1180, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000,
 };
 
-u16 D_00269A30[24] = {
+u16 tally_players_draw_table[24] = {
     0x152B, 0x0000, 0x152C, 0x0000, 0x152D, 0x0000, 0x152E, 0x0000,
     0x152F, 0x0000, 0x1530, 0x0000, 0x1531, 0x0000, 0x1532, 0x0000,
     0x1533, 0x0000, 0x1534, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000,
 };
 
-u16 D_00269A60[40] = {
+u16 stage_clear_screen_update_table_7[40] = {
     0x0080, 0x0080, 0x0080, 0x0080, 0x0080, 0x0080, 0x0080, 0x0080,
     0x0080, 0x0080, 0x0080, 0x0080, 0x0100, 0x0100, 0x0100, 0x0100,
     0x0100, 0x0100, 0x0100, 0x0100, 0x0100, 0x0100, 0x0200, 0x0200,
@@ -1126,25 +1126,25 @@ u16 D_00269A60[40] = {
     0x0080, 0x0040, 0x0040, 0x0000, 0xFFC0, 0x0000, 0x0000, 0x0040,
 };
 
-u16 D_00269AB0[24] = {
+u16 tally_bonus_sprite_draw_table[24] = {
     0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000,
     0x0000, 0x0000, 0x0040, 0x0040, 0x0040, 0x0040, 0x0080, 0x0080,
     0x0080, 0x0100, 0x0100, 0x0000, 0xFFC0, 0x0000, 0x0000, 0x0040,
 };
 
-u16 D_00269AE0[24] = {
+u16 tally_bonus_sprite_draw_table_2[24] = {
     0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000,
     0x0000, 0x0000, 0x0040, 0x0040, 0x0040, 0x0080, 0x0080, 0x0080,
     0x00C0, 0x0100, 0x0100, 0x0000, 0xFFC0, 0x0000, 0x0000, 0x0080,
 };
 
-u16 D_00269B10[24] = {
+u16 tally_bonus_sprite_draw_table_3[24] = {
     0x0040, 0x0040, 0x0040, 0x0040, 0x0080, 0x0080, 0x0080, 0x0100,
     0x0100, 0x0000, 0xFFC0, 0x0000, 0x0000, 0x0040, 0x0000, 0x0000,
     0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000,
 };
 
-u16 D_00269B40[24] = {
+u16 tally_bonus_sprite_draw_table_4[24] = {
     0x0040, 0x0040, 0x0040, 0x0040, 0x0080, 0x0080, 0x0080, 0x0100,
     0x0100, 0x0000, 0xFFC0, 0x0000, 0x0000, 0x0040, 0x0000, 0x0000,
     0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000,

@@ -48,11 +48,11 @@ char credits_text_28[16] = "SPECIAL ASSIST";
 
 char credits_text_29[24] = "Toshiaki Tomizawa";
 
-char death_D_00254748[14] = " PUBLISHING";
+char g_credits_script_at_158[14] = " PUBLISHING";
 
-char death_D_00254758[14] = "     AND";
+char g_credits_script_at_163[14] = "     AND";
 
-char death_D_00254768[14] = "DISTRIBUTION";
+char g_credits_script_at_168[14] = "DISTRIBUTION";
 
 u16 death_D_00254778[7] = {
     0x2020, 0x2020, 0x4220, 0x0059, 0x0000, 0x0000, 0x0000,
@@ -122,7 +122,7 @@ u16 death_D_00254970[24] = {
     0xFFFF, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000,
 };
 
-s8 death_D_002549A0[416] = {
+s8 intro_text_update_table[416] = {
     103, 48, 55, 112, 49, 54, 48, 49, 99, 48, 48, 98, 50, 54, 49, 52,
     105, 48, 48, 48, 56, -126, -78, -117, -22, -104, 74, -126, -66, -126, -63, -126,
     -67, -127, 69, -127, 69, -127, 69, 119, 48, 49, 48, 48, -126, -58, 10, 105,
@@ -151,7 +151,7 @@ s8 death_D_002549A0[416] = {
     48, 48, 53, 12, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
 };
 
-u32 death_D_00254B40[8] = {
+u32 intro_picture_update_table[8] = {
     0x00000000, 0x00001564, 0x00001565, 0x00001562, 0x00001563, 0x00001560, 0x00001561, 0x00000000,
 };
 

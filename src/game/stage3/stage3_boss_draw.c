@@ -28,18 +28,18 @@ void (*stage3_boss_draw_routines[])(void) = {
     (void (*)(void))-1,
 };
 
-extern u8 D_0026D320[];
+extern u8 stage3_boss_legs_draw_table[];
 
 void stage3_boss_legs_draw(void) {
     s32 sprite_draw_layer2_keep();
     u16 temp_a1;
     u16 temp_a3;
 
-    reg_a0 = (u8 *)D_0026D320;
+    reg_a0 = (u8 *)stage3_boss_legs_draw_table;
     temp_a3 = STAGE3_EXTRA(reg_a6)->legs_anim;
     reg_a0 += temp_a3;
     reg_tmp.h[0] = STAGE3_EXTRA(reg_a6)->legs_anim;
-    reg_d2.w = *(u32 *)(D_0026D320 + (reg_tmp.h[0] & ~3));
+    reg_d2.w = *(u32 *)(stage3_boss_legs_draw_table + (reg_tmp.h[0] & ~3));
     reg_d1.h[1] = ENTITY(reg_a6)->y.h;
     temp_a1 = ENTITY(reg_a6)->x.h;
     reg_d1.h[0] = temp_a1;
@@ -103,18 +103,18 @@ void stage3_boss_bar_right_draw(void) {
     sprite_draw_layer2_keep();
 }
 
-extern u8 D_0026D380[];
+extern u8 stage3_boss_lid_left_draw_table[];
 
 void stage3_boss_lid_left_draw(void) {
     s32 sprite_draw_layer2_keep();
     u16 temp_a0;
     u16 temp_a2;
 
-    reg_a0 = D_0026D380;
+    reg_a0 = stage3_boss_lid_left_draw_table;
     temp_a2 = STAGE3_EXTRA(reg_a6)->lid_anim;
     reg_a0 += temp_a2;
     reg_tmp.h[0] = STAGE3_EXTRA(reg_a6)->lid_anim;
-    reg_d2.w = *(u32 *)(D_0026D380 + (reg_tmp.h[0] & ~3));
+    reg_d2.w = *(u32 *)(stage3_boss_lid_left_draw_table + (reg_tmp.h[0] & ~3));
     reg_d1.h[1] = ENTITY(reg_a6)[1].y.h;
     temp_a0 = ENTITY(reg_a6)[1].x.h;
     reg_d1.h[0] = temp_a0;
@@ -125,18 +125,18 @@ void stage3_boss_lid_left_draw(void) {
     sprite_draw_layer2_keep();
 }
 
-extern u8 D_0026D3A0[];
+extern u8 stage3_boss_lid_right_draw_table[];
 
 void stage3_boss_lid_right_draw(void) {
     s32 sprite_draw_layer2_keep();
     u16 temp_a0;
     u16 temp_a2;
 
-    reg_a0 = D_0026D3A0;
+    reg_a0 = stage3_boss_lid_right_draw_table;
     temp_a2 = STAGE3_EXTRA(reg_a6)->lid_anim;
     reg_a0 += temp_a2;
     reg_tmp.h[0] = STAGE3_EXTRA(reg_a6)->lid_anim;
-    reg_d2.w = *(u32 *)(D_0026D3A0 + (reg_tmp.h[0] & ~3));
+    reg_d2.w = *(u32 *)(stage3_boss_lid_right_draw_table + (reg_tmp.h[0] & ~3));
     reg_d1.h[1] = ENTITY(reg_a6)[2].y.h;
     temp_a0 = ENTITY(reg_a6)[2].x.h;
     reg_d1.h[0] = temp_a0;
@@ -147,14 +147,14 @@ void stage3_boss_lid_right_draw(void) {
     sprite_draw_layer2_keep();
 }
 
-extern u8 D_0026D3C0[];
+extern u8 stage3_boss_six_gun_draw_table[];
 
 void stage3_boss_six_gun_draw(void) {
     s32 sprite_draw_layer2_keep();
-    reg_a0 = (u8 *)D_0026D3C0;
+    reg_a0 = (u8 *)stage3_boss_six_gun_draw_table;
     reg_a0 += *(u16 *) (reg_a6 + 0xA8);
     reg_tmp.h[0] = *(u16 *) (reg_a6 + 0xA8);
-    reg_d2.w = *(u32 *) (D_0026D3C0 + (reg_tmp.h[0] & ~3));
+    reg_d2.w = *(u32 *) (stage3_boss_six_gun_draw_table + (reg_tmp.h[0] & ~3));
     reg_d1.h[1] = *(u16 *) (reg_a6 + 2);
     reg_d1.h[0] = *(u16 *) (reg_a6 + 4);
     reg_d1.w += 0xF6400000;
@@ -215,11 +215,11 @@ void stage3_boss_turret_right_draw(void) {
     sprite_draw_layer2_keep();
 }
 
-extern u16 D_0026D3E0[];
+extern u16 stage3_boss_entrance_draw_table[];
 
 void stage3_boss_entrance_draw(void) {
     s32 sprite_draw_layer2_keep();
-    reg_a0 = (u8 *)D_0026D3E0;
+    reg_a0 = (u8 *)stage3_boss_entrance_draw_table;
     reg_a0 += STAGE3_EXTRA(reg_a6)->start_anim;
     reg_d2.h[1] = *(u16 *)reg_a0;
     reg_a0 += 2;
@@ -240,7 +240,7 @@ void stage3_boss_entrance_draw(void) {
     sprite_draw_layer2_keep();
 }
 
-u8 D_0026D320[64] = {
+u8 stage3_boss_legs_draw_table[64] = {
     0x0B, 0x1C, 0x00, 0x00, 0x0C, 0x1C, 0x00, 0x00, 0x0D, 0x1C, 0x00, 0x00, 0x0E, 0x1C, 0x00, 0x00,
     0x0F, 0x1C, 0x00, 0x00, 0x10, 0x1C, 0x00, 0x00, 0x11, 0x1C, 0x00, 0x00, 0x12, 0x1C, 0x00, 0x00,
     0x13, 0x1C, 0x00, 0x00, 0x14, 0x1C, 0x00, 0x00, 0x15, 0x1C, 0x00, 0x00, 0x16, 0x1C, 0x00, 0x00,
@@ -252,22 +252,22 @@ u8 D_0026D360[32] = {
     0x27, 0x1C, 0x00, 0x00, 0x28, 0x1C, 0x00, 0x00, 0x29, 0x1C, 0x00, 0x00, 0x2A, 0x1C, 0x00, 0x00,
 };
 
-u8 D_0026D380[32] = {
+u8 stage3_boss_lid_left_draw_table[32] = {
     0xFB, 0x1B, 0x00, 0x00, 0xFC, 0x1B, 0x00, 0x00, 0xFD, 0x1B, 0x00, 0x00, 0xFE, 0x1B, 0x00, 0x00,
     0xFF, 0x1B, 0x00, 0x00, 0x00, 0x1C, 0x00, 0x00, 0x01, 0x1C, 0x00, 0x00, 0x02, 0x1C, 0x00, 0x00,
 };
 
-u8 D_0026D3A0[32] = {
+u8 stage3_boss_lid_right_draw_table[32] = {
     0x0A, 0x1C, 0x00, 0x00, 0x09, 0x1C, 0x00, 0x00, 0x08, 0x1C, 0x00, 0x00, 0x07, 0x1C, 0x00, 0x00,
     0x06, 0x1C, 0x00, 0x00, 0x05, 0x1C, 0x00, 0x00, 0x04, 0x1C, 0x00, 0x00, 0x03, 0x1C, 0x00, 0x00,
 };
 
-u8 D_0026D3C0[32] = {
+u8 stage3_boss_six_gun_draw_table[32] = {
     0x1B, 0x1C, 0x00, 0x00, 0x1C, 0x1C, 0x00, 0x00, 0x1D, 0x1C, 0x00, 0x00, 0x1E, 0x1C, 0x00, 0x00,
     0x1F, 0x1C, 0x00, 0x00, 0x20, 0x1C, 0x00, 0x00, 0x21, 0x1C, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00,
 };
 
-u16 D_0026D3E0[240] = {
+u16 stage3_boss_entrance_draw_table[240] = {
     0x0000, 0x1C3A, 0xE200, 0xEE00, 0x1E90, 0x0013, 0x0000, 0x1C3B,
     0xE200, 0xEE00, 0x1E90, 0x0013, 0x0000, 0x1C3C, 0xE200, 0xEE00,
     0x1E90, 0x0013, 0x0000, 0x1C3D, 0xE200, 0xEE00, 0x1E90, 0x0013,

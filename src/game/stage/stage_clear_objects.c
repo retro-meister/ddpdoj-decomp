@@ -129,7 +129,7 @@ extern s32 D_002BB458[];
 extern s16 D_002BB45A[];
 extern s16 D_002BB45C[];
 extern s16 D_002BB45E[];
-extern s16 D_002BB460[];
+extern s16 stage_doors_clear_buffer[];
 extern u8 D_002BB470[];
 void stage_doors_clear(void) {
     s32 var_a1;
@@ -155,7 +155,7 @@ void stage_doors_clear(void) {
     D_0028E7A0 = 0;
     D_002BB45C[0] = 0;
     D_002BB45E[0] = 0;
-    D_002BB460[0] = 0;
+    stage_doors_clear_buffer[0] = 0;
 }
 
 void stage_doors_close_request(void) {
@@ -190,10 +190,10 @@ void stage_doors_update(void) {
 }
 
 s32 sprite_palette_load();
-extern u8 D_0026B170[];
-extern u8 D_0026B180[];
-extern u8 D_0028DAC0[];
-extern s32 D_0028DC20;
+extern u8 stage_doors_close_update_table[];
+extern u8 stage_doors_close_update_table_2[];
+extern u8 stage_doors_close_update_table_3[];
+extern s32 stage_doors_close_update_table_4;
 extern u16 g_stage_x2;
 
 void stage_doors_close_update(void) {
@@ -202,19 +202,19 @@ void stage_doors_close_update(void) {
     u16 temp_a2;
 
     if (ENTITY(reg_a6)->flags.sh >= 0) {
-        reg_a0 = (u8 *)D_0026B180;
+        reg_a0 = (u8 *)stage_doors_close_update_table_2;
         stage_door_record_copy();
-        reg_a0 = (u8 *)D_0028DAC0;
-        var_v0 = (s32) D_0028DC20 >> 1;
-        if (D_0028DC20 < 0) {
-            var_v0 = (s32) (D_0028DC20 + 1) >> 1;
+        reg_a0 = (u8 *)stage_doors_close_update_table_3;
+        var_v0 = (s32) stage_doors_close_update_table_4 >> 1;
+        if (stage_doors_close_update_table_4 < 0) {
+            var_v0 = (s32) (stage_doors_close_update_table_4 + 1) >> 1;
         }
         reg_d0.w = var_v0 - 1;
         stage_door_words_copy();
         reg_d0.h[0] = g_stage_x2;
         temp_a2 = reg_d0.h[0];
         temp_a1 = temp_a2 & ~1;
-        reg_d0.h[0] = *(u16 *)(D_0026B170 + temp_a1);
+        reg_d0.h[0] = *(u16 *)(stage_doors_close_update_table + temp_a1);
         ENTITY(reg_a6)->attr.b.palette = (u8) reg_d0.b[0];
         *(u8 *)(reg_a6 + 0x3C) = (u8) reg_d0.b[0];
         reg_a0 = (u8 *)palette_white;
@@ -248,9 +248,9 @@ void stage_doors_close_update(void) {
 
 s32 p1_hyper_items_update();
 s32 p2_hyper_items_update();
-extern u8 D_0026B1C0[];
-extern u8 D_0026B1D0[];
-extern u8 D_0028DAC8[];
+extern u8 stage_doors_open_update_table[];
+extern u8 stage_doors_open_update_table_2[];
+extern u8 stage_doors_open_update_table_3[];
 extern u8 g_game_frame_ran;
 extern u16 g_boss_hyper_wait;
 extern u16 g_p2_hyper_active;
@@ -272,15 +272,15 @@ void stage_doors_open_update(void) {
     u8 *var_a0_2;
 
     if (ENTITY(reg_a6)->flags.sh >= 0) {
-        reg_a0 = (u8 *)D_0026B1D0;
+        reg_a0 = (u8 *)stage_doors_open_update_table_2;
         stage_door_record_copy();
-        reg_a0 = (u8 *)D_0028DAC8;
+        reg_a0 = (u8 *)stage_doors_open_update_table_3;
         reg_d0.w = 1;
         stage_door_words_copy();
         reg_d0.h[0] = g_stage_x2;
         temp_a2 = reg_d0.h[0];
         temp_a1 = temp_a2 & ~1;
-        reg_d0.h[0] = *(u16 *)(D_0026B1C0 + temp_a1);
+        reg_d0.h[0] = *(u16 *)(stage_doors_open_update_table + temp_a1);
         ENTITY(reg_a6)->attr.b.palette = (u8) reg_d0.b[0];
         *(u8 *)(reg_a6 + 0x3C) = (u8) reg_d0.b[0];
         reg_a0 = (u8 *)palette_white;
@@ -370,33 +370,33 @@ block_39:
     }
 }
 
-u8 D_0026B170[16] = {
+u8 stage_doors_close_update_table[16] = {
     0x17, 0x00, 0x17, 0x00, 0x17, 0x00, 0x17, 0x00, 0x17, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00,
 };
 
-u8 D_0026B180[64] = {
+u8 stage_doors_close_update_table_2[64] = {
     0x00, 0x80, 0x00, 0xA8, 0x00, 0x1C, 0x00, 0xC8, 0x00, 0xE4, 0x00, 0x00, 0xC5, 0x11, 0xE0, 0x38,
     0x00, 0x20, 0x00, 0x00, 0x00, 0x30, 0x40, 0x14, 0x40, 0x00, 0x30, 0x20, 0x00, 0x00, 0x00, 0x08,
     0x00, 0x80, 0x00, 0x00, 0x40, 0x54, 0x00, 0xC8, 0x00, 0xE4, 0x00, 0x00, 0xC3, 0x11, 0xE0, 0x38,
     0x00, 0x20, 0x00, 0x00, 0x00, 0x30, 0x40, 0x14, 0x40, 0x00, 0x30, 0x20, 0x00, 0x00, 0x00, 0x08,
 };
 
-u8 D_0026B1C0[16] = {
+u8 stage_doors_open_update_table[16] = {
     0x17, 0x00, 0x17, 0x00, 0x17, 0x00, 0x17, 0x00, 0x17, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00,
 };
 
-u8 D_0026B1D0[64] = {
+u8 stage_doors_open_update_table_2[64] = {
     0x00, 0x80, 0x00, 0x38, 0x00, 0x1C, 0x00, 0xC8, 0x00, 0xE4, 0x00, 0x00, 0xC5, 0x11, 0xE0, 0x38,
     0x00, 0x20, 0x10, 0x00, 0x00, 0xB0, 0x00, 0x5C, 0x40, 0x00, 0x10, 0x00, 0x01, 0x00, 0x00, 0x04,
     0x00, 0x80, 0x00, 0x38, 0x40, 0x1C, 0x00, 0xC8, 0x00, 0xE4, 0x00, 0x00, 0xC3, 0x11, 0xE0, 0x38,
     0x00, 0x20, 0x08, 0x00, 0x00, 0xB0, 0x00, 0x5C, 0x40, 0x00, 0x10, 0x00, 0x01, 0x00, 0x00, 0x04,
 };
 
-u8 D_0028DAC0[8] = {
+u8 stage_doors_close_update_table_3[8] = {
     0x02, 0x00, 0x00, 0x00, 0x04, 0x00, 0x00, 0x00,
 };
 
-u8 D_0028DAC8[8] = {
+u8 stage_doors_open_update_table_3[8] = {
     0x02, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00,
 };
 

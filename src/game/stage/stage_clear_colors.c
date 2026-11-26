@@ -1,11 +1,11 @@
 #include "common.h"
 
-extern void *D_0026B230[8];
+extern void *stage_clear_color_table_get_table[8];
 struct D0026b250Record { u16 w0[2]; void *p1; u16 w2[2]; void *p3; u16 w4[2]; void *p5; u16 w6[2]; void *p7; u16 w8[2]; void *p9; u16 w10[4]; };
 extern struct D0026b250Record D_0026B250;
 
 s32 rng_next_unsigned();
-extern s8 D_0026B210[];
+extern s8 stage_clear_color_orders_shuffle_table[];
 extern u16 g_game_frame;
 extern s8 D_002BB430[];
 
@@ -16,7 +16,7 @@ void stage_clear_color_orders_shuffle(void) {
     do {
 loop_1:
         rng_next_unsigned();
-        (*(s8 **)&reg_a0) = (s8 *)D_0026B210;
+        (*(s8 **)&reg_a0) = (s8 *)stage_clear_color_orders_shuffle_table;
         reg_d0.h[0] += g_game_frame;
         reg_d0.h[0] &= 0x1F;
         (*(s8 **)&reg_a0) = &(*(s8 **)&reg_a0)[reg_d0.h[0]];
@@ -68,7 +68,7 @@ extern u16 D_0028E788;
 void stage_clear_color_table_get(void)
 {
     reg_d0.w = 0;
-    reg_a0 = (u8 *)(*(s8 **)((u8 *)((u8 *)D_0026B230) + (D_0028E29C & ~3)));
+    reg_a0 = (u8 *)(*(s8 **)((u8 *)((u8 *)stage_clear_color_table_get_table) + (D_0028E29C & ~3)));
     reg_a0 += 7;
     reg_a0 -= D_0028E788;
     reg_d0.b[0] = (u8)*(s8 *)reg_a0;
@@ -78,7 +78,7 @@ void stage_clear_color_table_get(void)
 s32 sprite_palette_load();
 extern u16 D_0028E78C;
 extern u8 D_0028E790;
-extern u8 D_0028E791;
+extern u8 stage_clear_colors_update_state;
 extern u16 D_0028E794;
 
 void stage_clear_colors_update(void) {
@@ -97,10 +97,10 @@ void stage_clear_colors_update(void) {
     }
     if (D_0028E794 == 1) {
         D_0028E78C -= 1;
-        D_0028E791 -= 1;
-        if ((s8) D_0028E791 < 0) {
+        stage_clear_colors_update_state -= 1;
+        if ((s8) stage_clear_colors_update_state < 0) {
             D_0028E78C = 7;
-            D_0028E791 = D_0028E790;
+            stage_clear_colors_update_state = D_0028E790;
             D_0028E788 -= 1;
             stage_clear_color_table_get();
             reg_d0.h[0] *= 2;
@@ -110,7 +110,7 @@ void stage_clear_colors_update(void) {
             reg_d0.h[0] = 0x17;
             sprite_palette_load();
             if (D_0028E788 == 0) {
-                D_0028E791 = 0x20;
+                stage_clear_colors_update_state = 0x20;
                 D_0028E794 = 2;
             }
         }
@@ -119,8 +119,8 @@ void stage_clear_colors_update(void) {
         if (D_0028E78C != 0) {
             D_0028E78C -= 1;
         }
-        D_0028E791 -= 1;
-        if ((s8) D_0028E791 < 0) {
+        stage_clear_colors_update_state -= 1;
+        if ((s8) stage_clear_colors_update_state < 0) {
             D_0028E784 = 1;
             goto block_z;
         }
@@ -139,7 +139,7 @@ void stage_clear_colors_stop(void) {
 
 s32 sprite_draw_layer1();
 s32 sprite_draw_with_bullets_zoom();
-extern u8 D_0026B280[];
+extern u8 stage_clear_colors_apply_table[];
 
 void stage_clear_colors_apply(void) {
     u32 temp_a3;
@@ -154,7 +154,7 @@ void stage_clear_colors_apply(void) {
         reg_d3.h[0] = 0x38E0;
         reg_d4.h[0] = 0x17;
         if ((u16) D_0028E784 == 0) {
-            reg_d6.w = *(u32 *)(D_0026B280 + (D_0028E78C * 4));
+            reg_d6.w = *(u32 *)(stage_clear_colors_apply_table + (D_0028E78C * 4));
             sprite_draw_with_bullets_zoom();
             return;
         }
@@ -166,18 +166,18 @@ extern u8 D_002BB438[];
 extern u8 D_002BB440[];
 extern u8 D_002BB448[];
 extern u8 D_002BB450[];
-extern u8 D_002620F0[];
-extern u8 D_00262130[];
-extern u8 D_00262170[];
-extern u8 D_002621B0[];
-extern u8 D_002621F0[];
+extern u8 g_menu_wallpapers_1[];
+extern u8 g_menu_wallpapers_3[];
+extern u8 g_menu_wallpapers_5[];
+extern u8 g_menu_wallpapers_7[];
+extern u8 g_menu_wallpapers_9[];
 
-s8 D_0026B210[32] = {
+s8 stage_clear_color_orders_shuffle_table[32] = {
     0x00, 0x01, 0x02, 0x03, 0x04, 0x00, 0x01, 0x02, 0x03, 0x04, 0x00, 0x01, 0x02, 0x03, 0x04, 0x00,
     0x01, 0x02, 0x03, 0x04, 0x00, 0x01, 0x02, 0x03, 0x04, 0x00, 0x01, 0x02, 0x03, 0x04, 0x00, 0x01,
 };
 
-void *D_0026B230[8] = {
+void *stage_clear_color_table_get_table[8] = {
     D_002BB430,
     D_002BB438,
     D_002BB440,
@@ -190,26 +190,26 @@ void *D_0026B230[8] = {
 
 struct D0026b250Record D_0026B250 = {
     { 0x14B5, 0x0000 },
-    D_002620F0,
+    g_menu_wallpapers_1,
     { 0x14B6, 0x0000 },
-    D_00262130,
+    g_menu_wallpapers_3,
     { 0x14B7, 0x0000 },
-    D_00262170,
+    g_menu_wallpapers_5,
     { 0x14B8, 0x0000 },
-    D_002621B0,
+    g_menu_wallpapers_7,
     { 0x14B9, 0x0000 },
-    D_002621F0,
+    g_menu_wallpapers_9,
     { 0x0000, 0x0000, 0x0000, 0x0000 },
 };
 
-u8 D_0026B280[32] = {
+u8 stage_clear_colors_apply_table[32] = {
     0x00, 0x80, 0x00, 0x80, 0x00, 0x90, 0x00, 0x90, 0x00, 0xA0, 0x00, 0xA0, 0x00, 0xB0, 0x00, 0xB0,
     0x00, 0xC0, 0x00, 0xC0, 0x00, 0xD0, 0x00, 0xD0, 0x00, 0xE0, 0x00, 0xE0, 0x00, 0xF0, 0x00, 0xF0,
 };
 
 /* .sbss (the compiler lays these out in reverse) */
 u16 D_0028E794 __attribute__((aligned(4)));
-u8 D_0028E791;
+u8 stage_clear_colors_update_state;
 u8 D_0028E790 __attribute__((aligned(4)));
 u16 D_0028E78C __attribute__((aligned(4)));
 u16 D_0028E788 __attribute__((aligned(4)));
@@ -217,5 +217,5 @@ s16 D_0028E784 __attribute__((aligned(4)));
 
 /* .bss (the compiler lays these out in reverse) */
 u8 D_002BB470[64];
-s16 D_002BB460[8];
+s16 stage_doors_clear_buffer[8];
 s8 D_002BB430[48];

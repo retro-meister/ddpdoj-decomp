@@ -632,7 +632,7 @@ next_1:
     reg_a0 = a0;
 }
 
-extern s16 D_002961F0[];
+extern s16 boss_attack_start_buffer[];
 
 void boss_attack_start(void) {
     s32 d0 = reg_d0.w;
@@ -653,7 +653,7 @@ next_1:
     tmp = reg_d1.h[0] - 1;
     reg_d1.h[0] = tmp;
     if (((s64) ((s64) (u16) tmp << 0x30) >> 0x30) >= 0) goto loop_1;
-    reg_a0 = (u8 *) D_002961F0;
+    reg_a0 = (u8 *) boss_attack_start_buffer;
     reg_d1.w = d1;
     reg_d0.w = d0;
 }
@@ -795,7 +795,7 @@ next_2:
 
 /* .bss (the compiler lays these out in reverse) */
 u8 *D_00296210[52];
-s16 D_002961F0[16];
+s16 boss_attack_start_buffer[16];
 u16 D_002960B0[160];
 u8 *D_00295F40[92];
 u8 D_00295EA0[160];

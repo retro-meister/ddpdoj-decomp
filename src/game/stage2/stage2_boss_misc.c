@@ -9,10 +9,10 @@ void stage2_boss_shoulder_bullet_first(void) {
 }
 
 s32 enemy_init_entities();                            /* extern */
-extern s32 D_0026C570[];
+extern s32 stage2_boss_shoulder_bullet_start_table[];
 
 void stage2_boss_shoulder_bullet_start(void) {
-    reg_a0 = (u8 *)D_0026C570;
+    reg_a0 = (u8 *)stage2_boss_shoulder_bullet_start_table;
     enemy_init_entities();
     ENTITY(reg_a6)->y.h = (u16) STAGE2_SHOT(reg_a5)->at_start.y;
     ENTITY(reg_a6)->x.h = (u16) STAGE2_SHOT(reg_a5)->at_start.x;
@@ -32,7 +32,7 @@ s32 enemy_remove();
 s32 sprite_draw_layer5();
 s32 entity_velocity();
 s32 entity_check_bounds();
-extern u16 D_0028E574[];
+extern u16 stage2_boss_shoulder_bullet_buffer[];
 
 void stage2_boss_shoulder_bullet(void) {
     u16 temp_a2;
@@ -63,7 +63,7 @@ block_7:
     reg_d1.w += 0xF800FC00;
     reg_d3.h[0] = 0x820;
     reg_d4.h[0] = 0x1A;
-    reg_a0 = (u8 *)(D_0028E574);
+    reg_a0 = (u8 *)(stage2_boss_shoulder_bullet_buffer);
     reg_d2.w = 0;
     reg_d2.b[0] = ENTITY(reg_a6)->move.b.dir;
     if ((s16)(reg_d2.h[0]) > 0x20) {
@@ -85,10 +85,10 @@ s32 enemy_init_entities();
 extern u16 D_0024EBC0[];
 extern u16 D_0024EC80[];
 extern u16 D_0024EEF0[];
-extern u16 D_0026C590[];
+extern u16 stage2_boss_spread_bullet_start_table[];
 
 void stage2_boss_spread_bullet_start(void) {
-    reg_a0 = (u8 *)(D_0026C590);
+    reg_a0 = (u8 *)(stage2_boss_spread_bullet_start_table);
     enemy_init_entities();
     ENTITY(reg_a6)->y.h = (u16) STAGE2_SHOT(reg_a5)->at_start.y;
     ENTITY(reg_a6)->x.h = (u16) STAGE2_SHOT(reg_a5)->at_start.x;
@@ -153,10 +153,10 @@ void stage2_boss_cannon_shell_first(void) {
     enemy_set_entity_count(0);
 }
 
-extern u8 D_0026C5B0[];
+extern u8 stage2_boss_cannon_shell_start_table[];
 
 void stage2_boss_cannon_shell_start(void) {
-    reg_a0 = D_0026C5B0;
+    reg_a0 = stage2_boss_cannon_shell_start_table;
     enemy_init_entities();
     ENTITY(reg_a6)->y.h = (u16) STAGE2_SHOT(reg_a5)->at_start.y;
     ENTITY(reg_a6)->x.h = (u16) STAGE2_SHOT(reg_a5)->at_start.x;
@@ -175,7 +175,7 @@ void stage2_boss_cannon_shell_start(void) {
 
 s32 explosion_spawn();
 s32 entity_draw_layer5();
-extern u8 D_0028DB10[];
+extern u8 stage2_boss_cannon_shell_table[];
 
 void stage2_boss_cannon_shell(void) {
     entity_check_bounds();
@@ -218,7 +218,7 @@ block_4:
     STAGE2_SHOT(reg_a5)->now.frame_timer.b.countdown -= 1;
     if ((s32) reg_tmp.b[0] <= 0) {
         STAGE2_SHOT(reg_a5)->now.frame_timer.b.countdown = (u8) STAGE2_SHOT(reg_a5)->now.frame_timer.b.interval;
-        reg_a0 = D_0028DB10;
+        reg_a0 = stage2_boss_cannon_shell_table;
         reg_d0.h[0] = STAGE2_SHOT(reg_a5)->frame;
         ENTITY(reg_a6)->draw.h = ((reg_d0.h[0] + 2) != 0) ? *(u16 *)((u8 *)reg_a0 + ((s16)(reg_d0.h[0] + 2) & ~1)) : *(u16 *)reg_a0;
         ENTITY(reg_a6)->sprite.h = (reg_d0.h[0] != 0) ? *(u16 *)((u8 *)reg_a0 + ((s16)reg_d0.h[0] & ~1)) : *(u16 *)reg_a0;
@@ -234,10 +234,10 @@ void stage2_boss_dropped_bomb_first(void) {
 }
 
 s32 direction_to_target_player();
-extern u8 D_0026C5D0[];
+extern u8 stage2_boss_dropped_bomb_start_table[];
 
 void stage2_boss_dropped_bomb_start(void) {
-    reg_a0 = D_0026C5D0;
+    reg_a0 = stage2_boss_dropped_bomb_start_table;
     enemy_init_entities();
     ENTITY(reg_a6)->y.h = STAGE2_SHOT(reg_a5)->at_start.y;
     ENTITY(reg_a6)->x.h = STAGE2_SHOT(reg_a5)->at_start.x;
@@ -270,10 +270,10 @@ void stage2_boss_ripple_first(void) {
 }
 
 s32 enemy_init_entities();                            /* extern */
-extern s32 D_0026C5F0[];
+extern s32 stage2_boss_ripple_start_table[];
 
 void stage2_boss_ripple_start(void) {
-    reg_a0 = (u8 *)D_0026C5F0;
+    reg_a0 = (u8 *)stage2_boss_ripple_start_table;
     enemy_init_entities();
     ENTITY(reg_a6)->y.h = (u16) STAGE2_SHOT(reg_a5)->at_start.y;
     ENTITY(reg_a6)->x.h = (u16) STAGE2_SHOT(reg_a5)->at_start.x;
@@ -284,7 +284,7 @@ void stage2_boss_ripple_start(void) {
 
 s32 sprite_draw_layer1();
 s32 entity_follow_scroll();
-extern u32 D_0026C610[];
+extern u32 stage2_boss_ripple_table[];
 
 void stage2_boss_ripple(void) {
     u16 temp_a1;
@@ -312,7 +312,7 @@ block_4:
             return;
         }
     }
-    reg_a0 = (u8 *)(D_0026C610);
+    reg_a0 = (u8 *)(stage2_boss_ripple_table);
     temp_a2 = STAGE2_SHOT(reg_a5)->frame;
     reg_a0 += temp_a2;
     reg_d2.w = *(u32 *)reg_a0;
@@ -325,36 +325,36 @@ block_4:
     sprite_draw_layer1();
 }
 
-s32 D_0026C570[8] = {
+s32 stage2_boss_shoulder_bullet_start_table[8] = {
     0xFC008001, 0x0000FE00, 0x041001B8, 0x04000400, 0x02000200, 0x00007FFF, 0x0000001A, 0x00000000,
 };
 
-u16 D_0026C590[16] = {
+u16 stage2_boss_spread_bullet_start_table[16] = {
     0x8001, 0xFE00, 0xFE00, 0x0000, 0x0000, 0x0210, 0x0200, 0x0200,
     0x0100, 0x0100, 0x7FFF, 0x0000, 0x001A, 0x0000, 0x0000, 0x0000,
 };
 
-u8 D_0026C5B0[32] = {
+u8 stage2_boss_cannon_shell_start_table[32] = {
     0x00, 0x80, 0x00, 0xFC, 0x00, 0xFE, 0x00, 0x00, 0xB8, 0x01, 0x10, 0x04, 0x00, 0x04, 0x00, 0x04,
     0x00, 0x02, 0x00, 0x02, 0xFF, 0x7F, 0x00, 0x00, 0x1A, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00,
 };
 
-u8 D_0026C5D0[32] = {
+u8 stage2_boss_dropped_bomb_start_table[32] = {
     0x01, 0xA0, 0x00, 0xFC, 0x00, 0xFE, 0x00, 0x00, 0xB8, 0x01, 0x10, 0x04, 0x00, 0x04, 0x00, 0x04,
     0x00, 0x02, 0x00, 0x02, 0xFF, 0x7F, 0x00, 0x00, 0x1A, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00,
 };
 
-s32 D_0026C5F0[8] = {
+s32 stage2_boss_ripple_start_table[8] = {
     0xFC008000, 0x0000FE00, 0x041001B8, 0x04000400, 0x02000200, 0x00007FFF, 0x0000001A, 0x00000000,
 };
 
-u32 D_0026C610[8] = {
+u32 stage2_boss_ripple_table[8] = {
     0x00001B76, 0x00001B77, 0x00001B78, 0x00001B79, 0x00001B7A, 0x00001B7B, 0x00001B7C, 0x00001B7D,
 };
 
-u8 D_0028DB10[8] = {
+u8 stage2_boss_cannon_shell_table[8] = {
     0xB8, 0x01, 0x00, 0x00, 0xB7, 0x01, 0x00, 0x00,
 };
 
 /* .sbss (the compiler lays these out in reverse) */
-u16 D_0028E574[2];
+u16 stage2_boss_shoulder_bullet_buffer[2];

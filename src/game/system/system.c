@@ -86,7 +86,7 @@ s32 disc_files_locate();
 s32 font_init();
 s32 mc_init();
 extern s16 g_loaded_stage;
-extern u8 D_0028E400;
+extern u8 sys_init_state;
 extern s8 D_0028EB00;
 extern u8 g_pad_dma_area[];
 void sys_init(void) {
@@ -102,7 +102,7 @@ void sys_init(void) {
     *(s32 *)0x10000010 = 0x83;
     g_loaded_stage = 0xFF;
     g_frame_counter = 0;
-    D_0028E400 = 0;
+    sys_init_state = 0;
     g_display_reset_pending = 0;
     D_0028EB00 = 0;
     fade_reset();
@@ -446,7 +446,7 @@ s32 input_clear();                            /* extern */
 extern s8 D_0028E249[];
 extern s8 D_0028E24A[];
 extern s8 D_0028E24B[];
-extern s8 D_0028E24C[];
+extern s8 pad_mask_game_inputs_buffer[];
 extern s8 D_0028E24D[];
 extern s8 D_0028E24E[];
 extern s8 D_0028E24F[];
@@ -458,7 +458,7 @@ void pad_mask_game_inputs(void) {
         D_0028E249[0] = -1;
         D_0028E24A[0] = -1;
         D_0028E24B[0] = -1;
-        D_0028E24C[0] = -1;
+        pad_mask_game_inputs_buffer[0] = -1;
         D_0028E24D[0] = -1;
         D_0028E24E[0] = -1;
         D_0028E24F[0] = -1;

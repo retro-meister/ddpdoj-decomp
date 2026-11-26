@@ -33,15 +33,15 @@ s32 stage1_boss_damage_init();
 s32 stage1_boss_shield_on();
 s32 stage1_boss_parts_disable();
 extern u8 D_0025FA70[];
-extern u8 D_0025FAB0[];
-extern u8 D_0025FAF0[];
-extern u8 D_0025FB70[];
+extern u8 stage1_boss_start_table[];
+extern u8 stage1_boss_start_table_2[];
+extern u8 stage1_boss_start_table_3[];
 extern void (*stage1_boss_anim_routines[])(void);
 extern void (*stage1_boss_fire_routines[])(void);
 extern void (*stage1_boss_draw_routines[])(void);
 extern void (*stage1_boss_mode_routines[])(void);
 extern void (*stage1_boss_move_routines[])(void);
-extern s32 D_0028DC90;
+extern s32 stage1_boss_start_value;
 extern u16 g_boss_hyper_wait;
 extern u8 *g_boss_hp;
 extern s32 g_boss_hp_unit;
@@ -59,9 +59,9 @@ void stage1_boss_start(void) {
     reg_a0 = (u8 *)stage1_boss_entities;
     enemy_init_entities();
     reg_a0 = (u8 *)stage1_boss_state_init;
-    t = (s32) D_0028DC90 >> 1;
-    if (D_0028DC90 < 0) {
-        t = (s32) (D_0028DC90 + 1) >> 1;
+    t = (s32) stage1_boss_start_value >> 1;
+    if (stage1_boss_start_value < 0) {
+        t = (s32) (stage1_boss_start_value + 1) >> 1;
     }
     reg_d0.h[0] = t - 1;
     enemy_set_task_state();
@@ -84,16 +84,16 @@ void stage1_boss_start(void) {
     reg_a0 = (u8 *)D_0025FA70;
     sprite_palette_load();
     reg_d0.h[0] = 0x16;
-    reg_a0 = (u8 *)D_0025FAB0;
+    reg_a0 = (u8 *)stage1_boss_start_table;
     sprite_palette_load();
     reg_d0.h[0] = 0x17;
-    reg_a0 = (u8 *)D_0025FAF0;
+    reg_a0 = (u8 *)stage1_boss_start_table_2;
     sprite_palette_load();
     reg_d0.h[0] = 0x12;
     reg_a0 = (u8 *)palette_white;
     sprite_palette_load();
     reg_d0.h[0] = 0x11;
-    reg_a0 = (u8 *)D_0025FB70;
+    reg_a0 = (u8 *)stage1_boss_start_table_3;
     sprite_palette_load();
     g_boss_hyper_wait = 1;
     g_boss_present_b1 |= 1;
@@ -155,4 +155,4 @@ u16 D_0026EA60[72] = {
     0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000,
 };
 
-s32 D_0028DC90 = 16;
+s32 stage1_boss_start_value = 16;

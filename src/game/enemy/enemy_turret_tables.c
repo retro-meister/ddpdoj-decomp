@@ -2,11 +2,11 @@
 #include "common.h"
 
 #ifdef DEATH_LABEL
-u16 D_00242008[8] = {
+u16 mounted_tank_a_start_table[8] = {
     0x140B, 0x140B, 0x140B, 0x140B, 0x140B, 0x0000, 0x0000, 0x0000,
 };
 #else
-u16 D_00242008[7] = {
+u16 mounted_tank_a_start_table[7] = {
     0x140B, 0x140B, 0x140B, 0x140B, 0x140B, 0x0000, 0x0000,
 };
 #endif

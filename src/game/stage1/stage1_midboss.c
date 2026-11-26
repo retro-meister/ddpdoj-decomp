@@ -391,9 +391,9 @@ s32 enemy_set_task_state();
 s32 enemy_init_entities();
 s32 enemy_path_start();
 s32 sprite_palette_load();
-extern u8 D_002601B0[];
-extern u8 D_002601F0[];
-extern u8 D_00260230[];
+extern u8 stage1_midboss_fade_script_at_11[];
+extern u8 stage1_midboss_fade_script_at_18[];
+extern u8 stage1_midboss_fade_script_at_25[];
 extern u16 g_enemy_signal_1;
 extern u16 g_enemy_signal_0;
 extern s8 enemy_move_end_requested;
@@ -415,13 +415,13 @@ void stage1_midboss_start() {
         g_enemy_signal_1 = 0;
         g_enemy_signal_0 = 1;
         reg_d0.h[0] = 0x10;
-        reg_a0 = D_002601B0;
+        reg_a0 = stage1_midboss_fade_script_at_11;
         sprite_palette_load();
         reg_d0.h[0] = 0x11;
-        reg_a0 = D_002601F0;
+        reg_a0 = stage1_midboss_fade_script_at_18;
         sprite_palette_load();
         reg_d0.h[0] = 0xF;
-        reg_a0 = D_00260230;
+        reg_a0 = stage1_midboss_fade_script_at_25;
         sprite_palette_load();
     }
 }
@@ -952,7 +952,7 @@ void stage1_midboss_wreck_start(void) {
     ENTITY(reg_a6)->x.h = (u16) reg_tmp.h[0];
 }
 
-extern u32 D_00251720[];
+extern u32 stage1_midboss_wreck_table[];
 extern u16 g_attract_demo;
 extern u8 g_replay_mode;
 extern u8 g_simulation_active;
@@ -971,7 +971,7 @@ void stage1_midboss_wreck(void) {
         enemy_remove();
         return;
     }
-    src = D_00251720;
+    src = stage1_midboss_wreck_table;
     reg_a0 = (u8 *)(D_002B6E0C);
     reg_tmp.w = 0xBC;
     flag = g_simulation_active == 1;

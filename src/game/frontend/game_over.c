@@ -64,9 +64,9 @@ s32 sprite_draw_layer1();
 s32 rng_next_masked();
 s32 replay_file_finalize();
 s32 replay_start_result();
-extern u16 D_0026A380[];
-extern u16 D_0026A3A0[];
-extern u16 D_0026A3C0[];
+extern u16 game_over_task_table[];
+extern u16 game_over_task_table_2[];
+extern u16 game_over_task_table_3[];
 extern u8 D_0028ED64;
 extern u8 g_simulation_active;
 
@@ -124,9 +124,9 @@ next_2:
     if ((s32) *(u8 *)(reg_a5 + 0x16) < 3) goto next_3;
     *(u8 *)(reg_a5 + 0x17) = 1;
 next_3:
-    reg_a0 = (u8 *)(D_0026A380);
+    reg_a0 = (u8 *)(game_over_task_table);
     if (*(u8 *)(reg_a5 + 0x17) != 0) goto next_4;
-    reg_a0 = (u8 *)(D_0026A3A0);
+    reg_a0 = (u8 *)(game_over_task_table_2);
 next_4:
     *(u16 *)(reg_a5 + 0xC) = ((reg_d1.h[0] + 2) != 0) ? *(u16 *)((u8 *)reg_a0 + ((s16)(reg_d1.h[0] + 2) & ~1)) : *(u16 *)reg_a0;
     *(u16 *)(reg_a5 + 0xE) = (reg_d1.h[0] != 0) ? *(u16 *)((u8 *)reg_a0 + ((s16)reg_d1.h[0] & ~1)) : *(u16 *)reg_a0;
@@ -144,7 +144,7 @@ next_6:
     *(u16 *)(reg_a5 + 0x12) = 0;
     *(u8 *)(reg_a5 + 3) = 2;
 next_7:
-    reg_a0 = (u8 *)(D_0026A3C0);
+    reg_a0 = (u8 *)(game_over_task_table_3);
     *(u16 *)(reg_a5 + 0xC) = ((reg_d0.h[0] + 2) != 0) ? *(u16 *)((u8 *)reg_a0 + ((s16)(reg_d0.h[0] + 2) & ~1)) : *(u16 *)reg_a0;
     *(u16 *)(reg_a5 + 0xE) = (reg_d0.h[0] != 0) ? *(u16 *)((u8 *)reg_a0 + ((s16)reg_d0.h[0] & ~1)) : *(u16 *)reg_a0;
 next_8:
@@ -158,17 +158,17 @@ next_8:
     sprite_draw_layer1();
 }
 
-u16 D_0026A380[16] = {
+u16 game_over_task_table[16] = {
     0x11C7, 0x0000, 0x11C8, 0x0000, 0x11C9, 0x0000, 0x11CA, 0x0000,
     0x11CB, 0x0000, 0x11CC, 0x0000, 0x11CE, 0x0000, 0x11CF, 0x0000,
 };
 
-u16 D_0026A3A0[16] = {
+u16 game_over_task_table_2[16] = {
     0x11C7, 0x0000, 0x11C8, 0x0000, 0x11C9, 0x0000, 0x11CA, 0x0000,
     0x11CB, 0x0000, 0x11CD, 0x0000, 0x11CE, 0x0000, 0x11CF, 0x0000,
 };
 
-u16 D_0026A3C0[24] = {
+u16 game_over_task_table_3[24] = {
     0x11D0, 0x0000, 0x11D1, 0x0000, 0x11D2, 0x0000, 0x11D3, 0x0000,
     0x11D4, 0x0000, 0x11D5, 0x0000, 0x11D6, 0x0000, 0x11D7, 0x0000,
     0x11D8, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000,

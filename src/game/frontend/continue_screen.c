@@ -82,19 +82,19 @@ void player_slot_request_bomb_display(void) {
     player_slot_request();
 }
 
-extern u16 D_0025F9B0[];
+extern u16 bomb_palette_load_first_table[];
 
 
 void bomb_palette_load_first(void) {
-    reg_a0 = (u8 *)D_0025F9B0;
+    reg_a0 = (u8 *)bomb_palette_load_first_table;
     bomb_palette_load();
 }
 
-extern u16 D_0025F9F0[];
+extern u16 bomb_palette_load_second_table[];
 
 
 void bomb_palette_load_second(void) {
-    reg_a0 = (u8 *)D_0025F9F0;
+    reg_a0 = (u8 *)bomb_palette_load_second_table;
     bomb_palette_load();
 }
 

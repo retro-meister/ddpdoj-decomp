@@ -48,15 +48,15 @@ DebugTableView debug_table_views[3] = {
 };
 
 #ifdef DEATH_LABEL
-extern u8 D_0026FD60[];
-extern u8 D_0026FD70[];
-extern u8 D_0026FD80[];
+extern u8 attract_demos_0[];
+extern u8 attract_demos_1[];
+extern u8 attract_demos_2[];
 
 /* The demo of each stage. */
 u8 *attract_demos[3] = {
-    D_0026FD60,
-    D_0026FD70,
-    D_0026FD80,
+    attract_demos_0,
+    attract_demos_1,
+    attract_demos_2,
 };
 #endif
 
@@ -68,17 +68,17 @@ u32 attract_picture_frames[4] = {
     (0x09BF << 16) | 0x18,
 };
 
-extern u16 D_0028E82C;
-extern u16 D_0028E830;
-extern u16 D_0028E834;
+extern u16 game_flow_debug_clear_state;
+extern u16 game_flow_debug_clear_state_2;
+extern u16 game_flow_debug_clear_state_3;
 extern u16 g_game_flow_debug_value;
 
 void game_flow_debug_clear(void) {
     reg_d0.w = 0;
     g_game_flow_debug_value = reg_d0.h[0];
-    D_0028E834 = reg_d0.h[0];
-    D_0028E830 = reg_d0.h[0];
-    D_0028E82C = reg_d0.h[0];
+    game_flow_debug_clear_state_3 = reg_d0.h[0];
+    game_flow_debug_clear_state_2 = reg_d0.h[0];
+    game_flow_debug_clear_state = reg_d0.h[0];
 }
 
 extern u16 g_debug_number[];
@@ -88,14 +88,14 @@ void debug_number_get(void) {
 }
 
 extern s16 g_ending_started;
-extern s16 D_002BF350[];
-extern s16 D_002BF370[];
+extern s16 ending_state_clear_buffer[];
+extern s16 ending_state_clear_buffer_2[];
 
 void ending_state_clear(void) {
     g_ending_started = 0;
-    (*(s16 **)&reg_a0) = D_002BF370;
+    (*(s16 **)&reg_a0) = ending_state_clear_buffer_2;
     *(*(s16 **)&reg_a0) = 0;
-    (*(s16 **)&reg_a0) = D_002BF350;
+    (*(s16 **)&reg_a0) = ending_state_clear_buffer;
     *(*(s16 **)&reg_a0) = 0;
     game_flow_debug_clear();
 }
@@ -104,7 +104,7 @@ extern u32 D_0028E7F8;
 extern u8 *D_0028E7FC;
 extern u16 D_0028E800;
 extern u16 D_0028E804;
-extern s16 D_0028E808;
+extern s16 attract_demo_state_clear_state;
 extern u16 D_0028E80C;
 extern u16 D_0028E810;
 extern u16 D_0028E814;
@@ -119,7 +119,7 @@ void attract_demo_state_clear(void) {
     (*(s32 *)&D_0028E7FC) = 0;
     D_0028E800 = 0;
     D_0028E804 = 0;
-    D_0028E808 = 0;
+    attract_demo_state_clear_state = 0;
     D_0028E80C = 0;
     D_0028E810 = 0;
     D_0028E814 = 0;
@@ -313,11 +313,11 @@ s32 replay_disc_headers_load();
 s32 replay_disc_file_load();
 s32 replay_file_pointers_decode();
 extern u16 attract_picture_palette[];
-extern u8 D_0028DEF4;
+extern u8 attract_demo_start_state;
 extern u8 D_0028DEF8;
 extern u16 g_attract_picture_frame;
 extern u16 D_0028DF00;
-extern u8 D_0028DF04;
+extern u8 attract_demo_start_state_2;
 extern u8 D_0028DF08;
 extern u16 g_attract_demo;
 extern u8 D_0028ED30;
@@ -378,7 +378,7 @@ void attract_demo_start(void) {
     save_a5 = reg_a5;
     temp_a1 = D_0028DF08;
     cond_flag = 1;
-    D_0028DEF4 += 1;
+    attract_demo_start_state += 1;
     switch (temp_a1) {                              /* irregular */
     case 0:
         D_0028DF08 = temp_a1 + 1;
@@ -388,7 +388,7 @@ void attract_demo_start(void) {
         text_palette_load();
         /* fallthrough */
     case 1:
-        if (replay_disc_file_load(D_0028DF04) != 0) {
+        if (replay_disc_file_load(attract_demo_start_state_2) != 0) {
             D_0028DF08 += 1;
             memcpy(g_replay_file, g_replay_file_loaded, 0x202E8);
             delta_encode(g_replay_snapshot);
@@ -427,16 +427,16 @@ void attract_demo_start(void) {
             bg_layer_clear();
             layers_reset();
             menu_settings_restore();
-            D_0028DF04 += 1;
-            if ((s32) D_0028DF04 >= 3) {
-                D_0028DF04 = 0;
+            attract_demo_start_state_2 += 1;
+            if ((s32) attract_demo_start_state_2 >= 3) {
+                attract_demo_start_state_2 = 0;
             }
         }
         break;
     }
     if ((s32) D_0028DF08 > 0) {
         attract_picture_draw();
-        reg_d0.h[0] = (u16) D_0028DEF4;
+        reg_d0.h[0] = (u16) attract_demo_start_state;
         if ((reg_d0.h[0] &= 1) == 0) {
             g_attract_picture_frame += 4;
             g_attract_picture_frame &= 0xF;
@@ -665,9 +665,9 @@ finished:
 /* .sbss (the compiler lays these out in reverse) */
 #ifndef DEATH_LABEL
 u8 D_0028DF08 __attribute__((aligned(4)));
-u8 D_0028DF04 __attribute__((aligned(4)));
+u8 attract_demo_start_state_2 __attribute__((aligned(4)));
 u16 D_0028DF00 __attribute__((aligned(4)));
 u16 g_attract_picture_frame __attribute__((aligned(4)));
 u8 D_0028DEF8 __attribute__((aligned(4)));
-u8 D_0028DEF4 __attribute__((aligned(4)));
+u8 attract_demo_start_state __attribute__((aligned(4)));
 #endif

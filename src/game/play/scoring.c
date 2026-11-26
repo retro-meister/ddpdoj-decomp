@@ -32,7 +32,7 @@ extern u16 g_p1_score_billions;
 extern u32 g_p1_score;
 extern u16 g_p1_power_style;
 extern u16 g_p1_ship_type;
-extern u8 D_002BB420[];
+extern u8 p1_rank_entry_insert_buffer[];
 
 void p1_rank_entry_insert(void) {
     reg_save3_d0 = reg_d0.w;
@@ -50,7 +50,7 @@ void p1_rank_entry_insert(void) {
     reg_save3_a4 = reg_a4;
     reg_save3_a5 = reg_a5;
     reg_save3_a6 = reg_a6;
-    reg_a4 = (u8 *)D_002BB420;
+    reg_a4 = (u8 *)p1_rank_entry_insert_buffer;
     reg_d6.w = 0xFF;
     reg_d7.w = g_p1_score;
     reg_d5.h[0] = g_p1_score_billions;
@@ -67,7 +67,7 @@ extern u16 g_p2_score_billions;
 extern u32 g_p2_score;
 extern u16 g_p2_power_style;
 extern u16 g_p2_ship_type;
-extern u8 D_002BB410[];
+extern u8 p2_rank_entry_insert_buffer[];
 
 void p2_rank_entry_insert(void) {
     reg_save3_d0 = reg_d0.w;
@@ -85,7 +85,7 @@ void p2_rank_entry_insert(void) {
     reg_save3_a4 = reg_a4;
     reg_save3_a5 = reg_a5;
     reg_save3_a6 = reg_a6;
-    reg_a4 = (u8 *)D_002BB410;
+    reg_a4 = (u8 *)p2_rank_entry_insert_buffer;
     reg_d6.w = 0xFE;
     reg_d7.w = g_p2_score;
     reg_d5.h[0] = g_p2_score_billions;
@@ -772,7 +772,7 @@ extern s32 g_p2_position_trail[16];
 extern s32 g_p1_position_trail[16];
 extern Pair10 g_p1_score_extra_cell_as_Pair10;
 extern Pair90 g_p1_score_cells_as_Pair90;
-extern u8 D_002BB010[];
+extern u8 scores_reset_buffer[];
 
 void scores_reset(void) {
     s32 i;
@@ -781,7 +781,7 @@ void scores_reset(void) {
     g_p2_score_billions = 0;
     g_p1_score = g_p2_score = g_high_score = (g_p1_score_billions = 0);
     for (i = 0; i < 0x24; i++) {
-        ((u16 *)D_002BB010)[i] = 0;
+        ((u16 *)scores_reset_buffer)[i] = 0;
     }
     g_p2_score_pending = 0;
     g_p1_score_pending = 0;
@@ -992,7 +992,7 @@ extern s16 g_player2[];
 extern s16 g_player1[];
 extern u16 death_D_0068DAA6[];
 extern u16 death_D_0068DAA8[];
-extern u16 death_D_0068DAB0[];
+extern u16 score_pending_apply_side_buffer[];
 extern u16 death_D_0068DAB2[];
 extern u16 g_p1_score_extra_cell[];
 extern u16 g_p2_score_extra_cell[];
@@ -1023,7 +1023,7 @@ void score_pending_apply_side(void) {
         if (g_player2[0] < 0) {
             death_D_0068DAB2[0] = 0;
             g_p2_score_extra_cell[0] = 1;
-            death_D_0068DAB0[0] = 0xC030;
+            score_pending_apply_side_buffer[0] = 0xC030;
             g_p2_score = (u32)D_0028ED44;
             g_p2_score_billions = D_0028ED40;
         }
@@ -1183,33 +1183,33 @@ next_2:
     reg_d7.h[0] = reg_tmp7.h[1];
 }
 
-extern u8 D_0029BF30[];
+extern u8 join_select_p2_table_at_8[];
 extern u8 D_0029BF31[];
-extern u8 D_0029BF40[];
+extern u8 join_select_p1_table_at_8[];
 extern u8 D_0029BF41[];
 
 void join_select_choices_init(void) {
     u8 *p;
 
     *(p = D_0029BF41) = 0xFF;
-    D_0029BF40[0] = 0xFF;
+    join_select_p1_table_at_8[0] = 0xFF;
     reg_d5.w = 0;
     reg_d6.h[0] = reg_d0.h[0];
     reg_d7.h[0] = reg_d2.h[0];
     join_select_choice_from_game();
     if (cond_flag != 0) goto next_1;
     *p = reg_d6.b[0];
-    D_0029BF40[0] = reg_d7.b[0];
+    join_select_p1_table_at_8[0] = reg_d7.b[0];
 next_1:
     *(p = D_0029BF31) = 0xFF;
-    D_0029BF30[0] = 0xFF;
+    join_select_p2_table_at_8[0] = 0xFF;
     reg_d5.w = 1;
     reg_d6.h[0] = reg_d1.h[0];
     reg_d7.h[0] = reg_d3.h[0];
     join_select_choice_from_game();
     if (cond_flag != 0) goto next_2;
     *p = reg_d6.b[0];
-    D_0029BF30[0] = reg_d7.b[0];
+    join_select_p2_table_at_8[0] = reg_d7.b[0];
 next_2:
     return;
 }

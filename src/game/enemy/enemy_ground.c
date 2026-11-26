@@ -3081,7 +3081,7 @@ void battleship_c_volley_reset(void) {
 }
 
 extern u16 D_002586C0[];
-extern s8 D_0028C9C0;
+extern s8 battleship_c_volley_update_table;
 
 void battleship_c_volley_update(void) {
     u32 temp_a1;
@@ -3112,7 +3112,7 @@ void battleship_c_volley_update(void) {
                 *(u8 *)(reg_a4 + 3) = *(u8 *)(reg_a4 + 2);
                 reg_d6.h[0] = reg_d7.h[0];
                 temp_a1 = reg_d6.h[0];
-                reg_d1.b[0] = *(&D_0028C9C0 + temp_a1);
+                reg_d1.b[0] = *(&battleship_c_volley_update_table + temp_a1);
                 reg_a0 = (u8 *)(D_002586C0);
                 reg_d6.h[0] = temp_a1 * 4;
                 reg_d3.h[1] = (reg_d6.h[0] != 0) ? *(u16 *)((u8 *)reg_a0 + ((s16)reg_d6.h[0] & ~1)) : *(u16 *)reg_a0;
@@ -3436,14 +3436,14 @@ loop_1:
     }
 }
 
-extern s8 D_0028C9C8;
-extern u8 D_0028C9D0;
+extern s8 ground_pointer_rows_fill_table;
+extern u8 ground_pointer_rows_fill_table_2;
 
 void ground_pointer_rows_fill(void) {
     u16 temp_a0;
     reg_a4 = D_00258740;
-    reg_a3 = (u8 *)(&D_0028C9C8);
-    reg_a2 = &D_0028C9D0;
+    reg_a3 = (u8 *)(&ground_pointer_rows_fill_table);
+    reg_a2 = &ground_pointer_rows_fill_table_2;
     reg_d7.w = 5;
     do {
         reg_d1.w = 0;

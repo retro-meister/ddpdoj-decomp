@@ -74,9 +74,9 @@ void stage2_blooming_base_first(void) {
     enemy_set_entity_count(0);
 }
 
-extern s8 D_00262C40[];
-extern s8 D_00262C50[];
-extern s8 D_00262C60[];
+extern s8 stage2_blooming_base_start_table[];
+extern s8 stage2_blooming_base_start_table_2[];
+extern s8 stage2_blooming_base_start_table_3[];
 extern u16 g_loop;
 extern u16 g_stage_x2;
 extern s8 enemy_move_end_requested;
@@ -85,14 +85,14 @@ void stage2_blooming_base_start(void) {
     s32 enemy_set_task_state();
     s32 enemy_init_entities();
     s32 enemy_path_start();
-    (*(s8 **)&reg_a0) = D_00262C60;
+    (*(s8 **)&reg_a0) = stage2_blooming_base_start_table_3;
     enemy_init_entities();
-    (*(s8 **)&reg_a0) = D_00262C50;
+    (*(s8 **)&reg_a0) = stage2_blooming_base_start_table_2;
     reg_d0.w = 5;
     enemy_set_task_state();
     enemy_path_start();
     if (enemy_move_end_requested == 0) {
-        (*(s8 **)&reg_a0) = D_00262C40;
+        (*(s8 **)&reg_a0) = stage2_blooming_base_start_table;
         reg_d0.h[0] = g_stage_x2;
         (*(s8 **)&reg_a0) = &(*(s8 **)&reg_a0)[reg_d0.h[0]];
         ENTITY(reg_a6)->attr.sb.palette = (s8) *((s8 *)reg_a0);
@@ -117,7 +117,7 @@ s32 entity_draw_layer1();
 s32 score_add_no_chain();
 s32 score_add();
 s32 rng_next_0_to_3();
-extern u8 D_0028D998[8];
+extern u8 stage2_blooming_base_table[8];
 extern u16 g_damage_blink_counter;
 
 void stage2_blooming_base(void) {
@@ -189,7 +189,7 @@ next_50:
         reg_d1.h[1] = reg_tmp1.h[0];
         rng_next_0_to_3();
         reg_d0.h[0] += reg_d0.h[0];
-        reg_a0 = D_0028D998;
+        reg_a0 = stage2_blooming_base_table;
         reg_d1.h[0] = (reg_d0.h[0] != 0) ? *(u16 *)((u8 *)reg_a0 + ((s16)reg_d0.h[0] & ~1)) : *(u16 *)reg_a0;
         reg_d0.w = 0x10;
         pickup_spawn_plain();
@@ -257,19 +257,19 @@ void stage2_long_warehouse_first(void) {
 s32 enemy_set_task_state();                            /* extern */
 s32 enemy_init_entities();                            /* extern */
 s32 enemy_path_start();                            /* extern */
-extern s8 D_00262C80[];
-extern s8 D_00262C90[];
-extern s8 D_0028D9A0;
+extern s8 stage2_long_warehouse_start_table[];
+extern s8 stage2_long_warehouse_start_table_2[];
+extern s8 stage2_long_warehouse_start_value;
 
 void stage2_long_warehouse_start(void) {
-    (*(s8 **)&reg_a0) = D_00262C90;
+    (*(s8 **)&reg_a0) = stage2_long_warehouse_start_table_2;
     enemy_init_entities();
-    (*(s8 **)&reg_a0) = &D_0028D9A0;
+    (*(s8 **)&reg_a0) = &stage2_long_warehouse_start_value;
     reg_d0.w = 1;
     enemy_set_task_state();
     enemy_path_start();
     if (enemy_move_end_requested == 0) {
-        (*(s8 **)&reg_a0) = D_00262C80;
+        (*(s8 **)&reg_a0) = stage2_long_warehouse_start_table;
         reg_d0.h[0] = g_stage_x2;
         (*(s8 **)&reg_a0) = &(*(s8 **)&reg_a0)[reg_d0.h[0]];
         ENTITY(reg_a6)->attr.sb.palette = (s8) *((s8 *)reg_a0);
@@ -281,7 +281,7 @@ void stage2_long_warehouse_start(void) {
 }
 
 s32 enemy_variant_offset_a_get();
-extern u16 D_00262CB0[];
+extern u16 stage2_long_warehouse_table[];
 
 void stage2_long_warehouse(void) {
     u8 t1;
@@ -380,7 +380,7 @@ block_explos:
     reg_tmp.b[0] = BUILDING(reg_a5)->dying;
     BUILDING(reg_a5)->dying -= 1;
     if ((s32) reg_tmp.b[0] > 0) goto block_objset;
-    reg_a4 = (u8 *)(D_00262CB0);
+    reg_a4 = (u8 *)(stage2_long_warehouse_table);
     reg_d0.h[0] = *(u16 *)reg_a4;
     reg_a4 += 2;
     reg_d6.h[0] = *(u16 *)reg_a4;
@@ -400,22 +400,22 @@ void stage2_square_warehouse_first(void) {
     enemy_set_entity_count(0);
 }
 
-extern s8 D_00262CD0[];
-extern s8 D_00262CE0[];
-extern s8 D_0028D9A4;
+extern s8 stage2_square_warehouse_start_table[];
+extern s8 stage2_square_warehouse_start_table_2[];
+extern s8 stage2_square_warehouse_start_value;
 
 void stage2_square_warehouse_start(void) {
     s32 enemy_set_task_state();
     s32 enemy_init_entities();
     s32 enemy_path_start();
-    (*(s8 **)&reg_a0) = D_00262CE0;
+    (*(s8 **)&reg_a0) = stage2_square_warehouse_start_table_2;
     enemy_init_entities();
-    (*(s8 **)&reg_a0) = &D_0028D9A4;
+    (*(s8 **)&reg_a0) = &stage2_square_warehouse_start_value;
     reg_d0.w = 1;
     enemy_set_task_state();
     enemy_path_start();
     if (enemy_move_end_requested == 0) {
-        (*(s8 **)&reg_a0) = D_00262CD0;
+        (*(s8 **)&reg_a0) = stage2_square_warehouse_start_table;
         reg_d0.h[0] = g_stage_x2;
         (*(s8 **)&reg_a0) = &(*(s8 **)&reg_a0)[reg_d0.h[0]];
         ENTITY(reg_a6)->attr.sb.palette = (s8) *((s8 *)reg_a0);
@@ -532,19 +532,19 @@ void stage2_gymnasium_first(void) {
 s32 enemy_set_task_state();                            /* extern */
 s32 enemy_init_entities();                            /* extern */
 s32 enemy_path_start();                            /* extern */
-extern s8 D_00262D00[];
-extern s8 D_00262D10[];
-extern s8 D_0028D9A8;
+extern s8 stage2_gymnasium_start_table[];
+extern s8 stage2_gymnasium_start_table_2[];
+extern s8 stage2_gymnasium_start_value;
 
 void stage2_gymnasium_start(void) {
-    (*(s8 **)&reg_a0) = D_00262D10;
+    (*(s8 **)&reg_a0) = stage2_gymnasium_start_table_2;
     enemy_init_entities();
-    (*(s8 **)&reg_a0) = &D_0028D9A8;
+    (*(s8 **)&reg_a0) = &stage2_gymnasium_start_value;
     reg_d0.w = 1;
     enemy_set_task_state();
     enemy_path_start();
     if (enemy_move_end_requested == 0) {
-        (*(s8 **)&reg_a0) = D_00262D00;
+        (*(s8 **)&reg_a0) = stage2_gymnasium_start_table;
         reg_d0.h[0] = g_stage_x2;
         (*(s8 **)&reg_a0) = &(*(s8 **)&reg_a0)[reg_d0.h[0]];
         ENTITY(reg_a6)->attr.sb.palette = (s8) *((s8 *)reg_a0);
@@ -664,9 +664,9 @@ void stage2_sliding_gun_first(void) {
     enemy_set_entity_count(0);
 }
 
-extern u16 D_00262D30[];
-extern u16 D_00262D40[];
-extern u16 D_00262D60[];
+extern u16 stage2_sliding_gun_start_table[];
+extern u16 stage2_sliding_gun_start_table_2[];
+extern u16 stage2_sliding_gun_start_table_3[];
 extern u16 D_00262D80[];
 extern u16 g_rank_6_16;
 extern u16 g_stage;
@@ -675,9 +675,9 @@ void stage2_sliding_gun_start(void) {
     s32 enemy_set_task_state();
     s32 enemy_init_entities();
     s32 enemy_path_start();
-    reg_a0 = (u8 *)(D_00262D60);
+    reg_a0 = (u8 *)(stage2_sliding_gun_start_table_3);
     enemy_init_entities();
-    reg_a0 = (u8 *)(D_00262D40);
+    reg_a0 = (u8 *)(stage2_sliding_gun_start_table_2);
     reg_d0.w = 9;
     enemy_set_task_state();
     enemy_path_start();
@@ -709,7 +709,7 @@ void stage2_sliding_gun_start(void) {
         reg_tmp.h[0] = SLIDING_GUN(reg_a5)->hit_side[1];
         reg_a1 = (u8 *)(reg_tmp.w);
         *(u16 *)reg_a1 = (reg_d0.h[0] != 0) ? *(u16 *)((u8 *)reg_a0 + ((s16)reg_d0.h[0] & ~1)) : *(u16 *)reg_a0;
-        reg_a0 = (u8 *)(D_00262D30);
+        reg_a0 = (u8 *)(stage2_sliding_gun_start_table);
         reg_d0.h[0] = g_stage_x2;
         reg_a0 += reg_d0.h[0];
         ENTITY(reg_a6)->attr.sb.palette = *(s8 *)reg_a0;
@@ -913,18 +913,18 @@ void stage2_wrecker_gun_first(void) {
     enemy_set_entity_count(0);
 }
 
-extern s8 D_00262E00[];
-extern s8 D_00262E10[];
-extern s8 D_00262E30[];
+extern s8 stage2_wrecker_gun_start_table[];
+extern s8 stage2_wrecker_gun_start_table_2[];
+extern s8 stage2_wrecker_gun_start_table_3[];
 extern u16 g_rank_1_16;
 
 void stage2_wrecker_gun_start(void) {
     s32 enemy_set_task_state();
     s32 enemy_init_entities();
     s32 enemy_path_start();
-    (*(s8 **)&reg_a0) = D_00262E30;
+    (*(s8 **)&reg_a0) = stage2_wrecker_gun_start_table_3;
     enemy_init_entities();
-    (*(s8 **)&reg_a0) = D_00262E10;
+    (*(s8 **)&reg_a0) = stage2_wrecker_gun_start_table_2;
     reg_d0.w = 0xB;
     enemy_set_task_state();
     enemy_path_start();
@@ -936,7 +936,7 @@ void stage2_wrecker_gun_start(void) {
         WRECKER_GUN(reg_a5)->shot_interval = (u8) reg_d0.b[0];
         reg_d0.h[0] = g_rank_1_16;
         WRECKER_GUN(reg_a5)->first_wait -= reg_d0.b[0];
-        (*(s8 **)&reg_a0) = D_00262E00;
+        (*(s8 **)&reg_a0) = stage2_wrecker_gun_start_table;
         reg_d0.h[0] = g_stage_x2;
         (*(s8 **)&reg_a0) = &(*(s8 **)&reg_a0)[reg_d0.h[0]];
         ENTITY(reg_a6)->attr.sb.palette = (s8) *((s8 *)reg_a0);
@@ -951,7 +951,7 @@ s32 bullet_fire256();
 s32 enemy_switch_target_player();
 s32 bullet_cancel_with_flags();
 extern u16 g_direction64_offsets_432[];
-extern u16 D_00262E50[];
+extern u16 stage2_wrecker_gun_table[];
 extern u16 g_rank_2_16;
 extern u16 g_bomb_entities[24];
 
@@ -1140,7 +1140,7 @@ block_35:
                                 }
 block_60:
                                 reg_d0.h[0] = WRECKER_GUN(reg_a5)->frame;
-                                reg_a0 = (u8 *)(D_00262E50);
+                                reg_a0 = (u8 *)(stage2_wrecker_gun_table);
                                 reg_a0 += reg_d0.h[0];
                                 ENTITY(reg_a6)->draw.h = *(u16 *)reg_a0;
                                 reg_a0 += 2;
@@ -1320,8 +1320,8 @@ void stage2_boss_hangar_first(void) {
     enemy_set_entity_count(0);
 }
 
-extern u32 D_00262ED0[];
-extern u32 D_00262EE0[];
+extern u32 stage2_boss_hangar_start_table[];
+extern u32 stage2_boss_hangar_start_table_2[];
 
 
 void stage2_boss_hangar_start(void)
@@ -1329,10 +1329,10 @@ void stage2_boss_hangar_start(void)
     extern void enemy_set_task_state(void);
     extern void enemy_init_entities(void);
     extern void enemy_path_start(void);
-    reg_a0 = (u8 *)((u32)D_00262EE0);
+    reg_a0 = (u8 *)((u32)stage2_boss_hangar_start_table_2);
     enemy_init_entities();
 
-    reg_a0 = (u8 *)((u32)D_00262ED0);
+    reg_a0 = (u8 *)((u32)stage2_boss_hangar_start_table);
     reg_d0.w = 5;
     enemy_set_task_state();
     enemy_path_start();
@@ -1344,7 +1344,7 @@ void stage2_boss_hangar_start(void)
 
 s32 entity_draw_layer4();
 s32 sprite_draw_layer4();
-extern u16 D_00262F00[];
+extern u16 stage2_boss_hangar_table[];
 extern u16 g_scroll_line;
 
 void stage2_boss_hangar(void) {
@@ -1362,7 +1362,7 @@ void stage2_boss_hangar(void) {
             if ((s32) reg_tmp.b[0] <= 0) {
                 HANGAR(reg_a5)->frame_timer.b.countdown = (u8) HANGAR(reg_a5)->frame_timer.b.interval;
                 reg_d0.h[0] = HANGAR(reg_a5)->frame;
-                reg_a0 = (u8 *)(D_00262F00);
+                reg_a0 = (u8 *)(stage2_boss_hangar_table);
                 reg_a0 += reg_d0.h[0];
                 ENTITY(reg_a6)->draw.h = (u16) *(u16 *)reg_a0;
                 reg_a0 += 2;
@@ -1394,61 +1394,61 @@ void stage2_boss_hangar(void) {
     }
 }
 
-s8 D_00262C40[16] = {
+s8 stage2_blooming_base_start_table[16] = {
     0x10, 0x0F, 0x11, 0x0E, 0x10, 0x0F, 0x10, 0x0F, 0x10, 0x0F, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00,
 };
 
-s8 D_00262C50[16] = {
+s8 stage2_blooming_base_start_table_2[16] = {
     0x04, 0x00, 0xFF, 0x7E, 0x00, 0x00, 0x01, 0x00, 0x01, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00,
 };
 
-s8 D_00262C60[32] = {
+s8 stage2_blooming_base_start_table_3[32] = {
     0x00, 0xA0, 0x00, 0xF0, 0x00, 0xF5, 0x00, 0x00, 0xA1, 0x1B, 0x58, 0x10, 0x00, 0x0C, 0x00, 0x0C,
     0x00, 0x0C, 0x00, 0x0C, 0xFF, 0x7F, 0x00, 0x10, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00,
 };
 
-s8 D_00262C80[16] = {
+s8 stage2_long_warehouse_start_table[16] = {
     0x10, 0x0F, 0x11, 0x0E, 0x10, 0x0F, 0x10, 0x0F, 0x10, 0x0F, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00,
 };
 
-s8 D_00262C90[32] = {
+s8 stage2_long_warehouse_start_table_2[32] = {
     0x00, 0xA0, 0x00, 0xEE, 0x00, 0xF8, 0x00, 0x00, 0xA2, 0x1B, 0x40, 0x12, 0x00, 0x12, 0x00, 0x12,
     0x00, 0x06, 0x00, 0x06, 0x00, 0x0E, 0x00, 0x10, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00,
 };
 
-u16 D_00262CB0[16] = {
+u16 stage2_long_warehouse_table[16] = {
     0x0008, 0x0006, 0x0C00, 0x0100, 0x0800, 0xFF00, 0x0400, 0x0100,
     0x0000, 0xFF00, 0xFC00, 0x0100, 0xF800, 0xFF00, 0xF400, 0x0100,
 };
 
-s8 D_00262CD0[16] = {
+s8 stage2_square_warehouse_start_table[16] = {
     0x10, 0x0F, 0x12, 0x0D, 0x10, 0x0F, 0x10, 0x0F, 0x10, 0x0F, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00,
 };
 
-s8 D_00262CE0[32] = {
+s8 stage2_square_warehouse_start_table_2[32] = {
     0x00, 0xA0, 0x00, 0xEC, 0x00, 0xFA, 0x00, 0x00, 0xA5, 0x1B, 0x30, 0x14, 0x00, 0x14, 0x00, 0x14,
     0x00, 0x06, 0x00, 0x06, 0x00, 0x0E, 0x00, 0x10, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00,
 };
 
-s8 D_00262D00[16] = {
+s8 stage2_gymnasium_start_table[16] = {
     0x10, 0x0F, 0x14, 0x0B, 0x10, 0x0F, 0x10, 0x0F, 0x10, 0x0F, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00,
 };
 
-s8 D_00262D10[32] = {
+s8 stage2_gymnasium_start_table_2[32] = {
     0x00, 0xA0, 0x00, 0xEC, 0x00, 0xF8, 0x00, 0x00, 0xB6, 0x1B, 0x40, 0x14, 0x00, 0x14, 0x00, 0x10,
     0x00, 0x08, 0x00, 0x08, 0x00, 0x0E, 0x00, 0x10, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00,
 };
 
-u16 D_00262D30[8] = {
+u16 stage2_sliding_gun_start_table[8] = {
     0x0D12, 0x0C13, 0x0D12, 0x0D12, 0x0D12, 0x0000, 0x0000, 0x0000,
 };
 
-u16 D_00262D40[16] = {
+u16 stage2_sliding_gun_start_table_2[16] = {
     0x0000, 0x0000, 0x0000, 0x6040, 0x0404, 0x0000, 0x0001, 0x0000,
     0x0016, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000,
 };
 
-u16 D_00262D60[16] = {
+u16 stage2_sliding_gun_start_table_3[16] = {
     0xA000, 0xF800, 0xF800, 0x0000, 0x1BA6, 0x0840, 0x0800, 0x0A00,
     0x0600, 0x0600, 0x0600, 0x1000, 0x0000, 0x0000, 0x0000, 0x0000,
 };
@@ -1464,21 +1464,21 @@ u16 D_00262D80[64] = {
     0x0000, 0x1BB4, 0x0980, 0x0000, 0x0000, 0x1BB5, 0x09C0, 0x0000,
 };
 
-s8 D_00262E00[16] = {
+s8 stage2_wrecker_gun_start_table[16] = {
     0x12, 0x0D, 0x12, 0x0D, 0x12, 0x0D, 0x12, 0x0D, 0x12, 0x0D, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00,
 };
 
-s8 D_00262E10[32] = {
+s8 stage2_wrecker_gun_start_table_2[32] = {
     0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x20, 0x98, 0x06, 0x06, 0x00, 0x00, 0x01, 0x00, 0x12, 0x02,
     0x10, 0x10, 0x64, 0x00, 0x18, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00,
 };
 
-s8 D_00262E30[32] = {
+s8 stage2_wrecker_gun_start_table_3[32] = {
     0x00, 0xA0, 0x00, 0xE6, 0x00, 0xF0, 0x00, 0x00, 0xE7, 0x1B, 0x80, 0x1A, 0x00, 0x14, 0x00, 0x14,
     0x00, 0x06, 0x00, 0x06, 0x00, 0x06, 0x00, 0x10, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00,
 };
 
-u16 D_00262E50[64] = {
+u16 stage2_wrecker_gun_table[64] = {
     0x0000, 0x1BE7, 0x0600, 0x0600, 0x0000, 0x1BE8, 0x0640, 0x0640,
     0x0000, 0x1BE9, 0x0680, 0x0680, 0x0000, 0x1BEA, 0x06C0, 0x06C0,
     0x0000, 0x1BEB, 0x0700, 0x0700, 0x0000, 0x1BEC, 0x0740, 0x0740,
@@ -1489,15 +1489,15 @@ u16 D_00262E50[64] = {
     0x0000, 0x1BF5, 0x0980, 0x0980, 0x0000, 0x1BF6, 0x09C0, 0x09C0,
 };
 
-u32 D_00262ED0[4] = {
+u32 stage2_boss_hangar_start_table[4] = {
     0x01E00000, 0x00F80202, 0x1BC70000, 0x00000000,
 };
 
-u32 D_00262EE0[8] = {
+u32 stage2_boss_hangar_start_table_2[8] = {
     0xFE008000, 0x0000DC00, 0x27201BB7, 0x00000000, 0x00000000, 0x10000000, 0x00001500, 0x00000000,
 };
 
-u16 D_00262F00[128] = {
+u16 stage2_boss_hangar_table[128] = {
     0x0000, 0x1BC6, 0x0000, 0x1BE6, 0x0000, 0x1BC6, 0x0000, 0x1BE5,
     0x0000, 0x1BC6, 0x0000, 0x1BE4, 0x0000, 0x1BC6, 0x0000, 0x1BE3,
     0x0000, 0x1BC6, 0x0000, 0x1BE2, 0x0000, 0x1BC6, 0x0000, 0x1BE1,
@@ -1516,10 +1516,10 @@ u16 D_00262F00[128] = {
     0x0000, 0x1BB8, 0x0000, 0x1BC8, 0x0000, 0x1BB7, 0x0000, 0x1BC7,
 };
 
-u8 D_0028D998[8] = { 0x80, 0x04, 0x00, 0x06, 0x40, 0x07, 0xC0, 0x08 };
+u8 stage2_blooming_base_table[8] = { 0x80, 0x04, 0x00, 0x06, 0x40, 0x07, 0xC0, 0x08 };
 
-s8 D_0028D9A0 __attribute__((aligned(4))) = 0xC;
+s8 stage2_long_warehouse_start_value __attribute__((aligned(4))) = 0xC;
 
-s8 D_0028D9A4 __attribute__((aligned(4))) = 0x12;
+s8 stage2_square_warehouse_start_value __attribute__((aligned(4))) = 0x12;
 
-s8 D_0028D9A8 __attribute__((aligned(4))) = 0x12;
+s8 stage2_gymnasium_start_value __attribute__((aligned(4))) = 0x12;

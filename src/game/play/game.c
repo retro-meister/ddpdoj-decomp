@@ -1333,7 +1333,7 @@ next_3:
     cond_flag = 0;
 }
 
-extern u8 D_0024F3C0[];
+extern u8 enemy_anims_update_value[];
 extern u8 D_0024F3F0[];
 extern u8 D_0024F410[];
 extern u8 D_0024F430[];
@@ -1494,7 +1494,7 @@ block_objset:
     reg_d0.b[0] = *(u8 *)(reg_a0 + 0x1F);
     reg_d0.h[0] <<= 2;
 next_obj10:
-    reg_a0 = (u8 *)D_0024F3C0;
+    reg_a0 = (u8 *)enemy_anims_update_value;
     reg_a0 += reg_d0.h[0];
     reg_a0 = *(u8 **)reg_a0;
     reg_call_target = (Fn)(reg_a0);

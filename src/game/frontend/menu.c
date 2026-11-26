@@ -125,11 +125,11 @@ enum {
 
 
 /* Tables. */
-extern u8 D_002620F0[];
-extern u8 D_00262130[];
-extern u8 D_00262170[];
-extern u8 D_002621B0[];
-extern u8 D_002621F0[];
+extern u8 g_menu_wallpapers_1[];
+extern u8 g_menu_wallpapers_3[];
+extern u8 g_menu_wallpapers_5[];
+extern u8 g_menu_wallpapers_7[];
+extern u8 g_menu_wallpapers_9[];
 extern s32 D_00270810[6];
 extern s16 D_00270828[5];
 extern s16 D_00270838[6];
@@ -166,15 +166,15 @@ extern s8 g_menu_sim_rules_value_tables[14];
 extern char *g_menu_percent_text;
 extern char *g_menu_sim_param_items[9];
 extern char *g_menu_sim_param_help[9];
-extern char *D_00271348[3];
-extern char *D_00271360[10];
-extern char *D_00271390[16];
-extern char *D_002713D0[5];
-extern char *D_002713F0[5];
+extern char *g_menu_sim_param_values_0[3];
+extern char *g_menu_sim_param_values_1[10];
+extern char *g_menu_sim_param_values_2[16];
+extern char *g_menu_sim_param_values_3[5];
+extern char *g_menu_sim_param_values_4[5];
 #ifdef DEATH_LABEL
-extern char *D_00271410[10];
+extern char *g_menu_sim_param_values_5[10];
 #else
-extern char *D_00271410[9];
+extern char *g_menu_sim_param_values_5[9];
 #endif
 extern char **g_menu_sim_param_values[6];
 extern u16 g_menu_sim_param_value_counts[7];
@@ -191,13 +191,13 @@ extern char *g_menu_load_file_help;
 extern char *g_menu_practice_ranking_text[15];
 extern s8 g_menu_page_item_counts[32];
 extern char *g_menu_ranking_title;
-extern s8 D_0028DD10[8];
+extern s8 menu_game_option_adjust_table[8];
 extern char *D_0028DD18[2];
-extern s8 D_0028DD20[8];
-extern char *D_0028DD28[2];
-extern char *D_0028DD30[2];
-extern char *D_0028DD38[2];
-extern char *D_0028DD40[2];
+extern s8 menu_debug_option_adjust_table[8];
+extern char *menu_debug_option_draw_table[2];
+extern char *menu_debug_option_draw_table_2[2];
+extern char *menu_debug_option_draw_table_3[2];
+extern char *menu_debug_option_draw_table_4[2];
 #ifdef DEATH_LABEL
 extern char *g_menu_main_items[7];
 #else
@@ -215,38 +215,38 @@ extern char *g_menu_arcade_items[6];
 extern char *g_menu_system_option_items[14];
 extern char *g_menu_ranking_page_text[12];
 #ifdef DEATH_LABEL
-extern char *death_D_00262FF0[4];
+extern char *menu_death_option_draw_table[4];
 #endif
 extern char *g_menu_difficulty_names[4];
 extern char *g_menu_ship_stock_names[5];
 extern char *g_menu_extend_names[4][2];
-extern s8 D_00271690[16];
-extern s8 D_002716A0[16];
+extern s8 menu_system_option_adjust_table[16];
+extern s8 menu_system_option_adjust_table_2[16];
 extern char *g_menu_monitor_mode_names[4];
-extern char *D_002716C0[6];
+extern char *menu_system_option_draw_table[6];
 extern char *g_menu_monitor_mode_tate_names[2];
 extern char *g_menu_lever_set_names[2];
 extern char *g_menu_monitor_type_names[2];
 extern char *D_0028DD60[2];
 extern char *g_menu_original_arrange_names[2];
 #ifdef DEATH_LABEL
-extern s8 death_D_00290048[8];
+extern s8 menu_death_option_adjust_table[8];
 #endif
 #ifdef DEATH_LABEL
-extern char *death_D_00290050[2];
+extern char *menu_death_option_draw_table_3[2];
 #endif
 extern char *g_menu_round_names[10];
 #ifdef DEATH_LABEL
-extern char *death_D_002630C8[3];
+extern char *menu_death_option_draw_table_2[3];
 #endif
 extern char *g_menu_pause_items[10];
-extern char *D_00271740[6];
+extern char *pause_menu_draw_table[6];
 extern Point16 g_menu_item_positions_a[16];
 extern Point16 g_menu_item_positions_b[16];
 extern Point16 g_menu_item_positions_c[8];
 extern s16 D_00271800[136];
-extern s32 D_00271910[64];
-extern u16 D_00271A10[8];
+extern s32 menu_items_slide_in_table[64];
+extern u16 menu_system_option_draw_table_2[8];
 extern char *g_menu_now_loading_text;
 extern char *g_menu_dot_text;
 #ifdef DEATH_LABEL
@@ -267,7 +267,7 @@ extern char *g_menu_empty_help;
 extern char *g_menu_arcade_help[6];
 extern char *g_menu_system_option_help[14];
 #ifdef DEATH_LABEL
-extern char *death_D_002634D0[4];
+extern char *menu_help_draw_table[4];
 #endif
 extern char *g_menu_ranking_help;
 #ifndef DEATH_LABEL
@@ -277,10 +277,10 @@ extern char *g_menu_launch_ask[3];
 extern char *g_menu_launch_warning[3];
 #endif
 #ifdef DEATH_LABEL
-extern char *death_D_00290078[2];
+extern char *menu_help_draw_table_2[2];
 #endif
 #ifdef DEATH_LABEL
-extern char *death_D_00290080[2];
+extern char *menu_help_draw_table_3[2];
 #endif
 extern char *g_menu_password_title;
 extern char *g_menu_pause_help_a[10];
@@ -304,8 +304,8 @@ extern u16 death_D_00263620[16];
 #endif
 extern char *g_menu_confirm_cancel_text;
 extern char *g_menu_cancel_text;
-extern s8 D_0028DD9C[4];
-extern s8 D_0028DDA0[2];
+extern s8 screen_setting_apply_table[4];
+extern s8 screen_setting_apply_table_2[2];
 extern char g_menu_arrow_text[2][2];
 extern char *g_menu_result_items[3];
 extern char *g_menu_result_help[3];
@@ -1141,13 +1141,13 @@ char *g_menu_sim_param_help[9] = {
 };
 #endif
 
-char *D_00271348[3] = {
+char *g_menu_sim_param_values_0[3] = {
     "1",
     "2",
     "3",
 };
 
-char *D_00271360[10] = {
+char *g_menu_sim_param_values_1[10] = {
     "1",
     "2",
     "3",
@@ -1160,7 +1160,7 @@ char *D_00271360[10] = {
     "10",
 };
 
-char *D_00271390[16] = {
+char *g_menu_sim_param_values_2[16] = {
     "0",
     "1",
     "2",
@@ -1179,7 +1179,7 @@ char *D_00271390[16] = {
     "15",
 };
 
-char *D_002713D0[5] = {
+char *g_menu_sim_param_values_3[5] = {
     "0",
     "1",
     "2",
@@ -1187,7 +1187,7 @@ char *D_002713D0[5] = {
     "4",
 };
 
-char *D_002713F0[5] = {
+char *g_menu_sim_param_values_4[5] = {
     "0",
     "1",
     "2",
@@ -1196,7 +1196,7 @@ char *D_002713F0[5] = {
 };
 
 #ifdef DEATH_LABEL
-char *D_00271410[10] = {
+char *g_menu_sim_param_values_5[10] = {
     "DEFAULT",
     "0",
     "1",
@@ -1209,7 +1209,7 @@ char *D_00271410[10] = {
     "8",
 };
 #else
-char *D_00271410[9] = {
+char *g_menu_sim_param_values_5[9] = {
     "0",
     "1",
     "2",
@@ -1223,12 +1223,12 @@ char *D_00271410[9] = {
 #endif
 
 char **g_menu_sim_param_values[6] = {
-    D_00271348,
-    D_00271360,
-    D_00271390,
-    D_002713D0,
-    D_002713F0,
-    D_00271410,
+    g_menu_sim_param_values_0,
+    g_menu_sim_param_values_1,
+    g_menu_sim_param_values_2,
+    g_menu_sim_param_values_3,
+    g_menu_sim_param_values_4,
+    g_menu_sim_param_values_5,
 };
 
 #ifdef DEATH_LABEL
@@ -1316,7 +1316,7 @@ s8 g_menu_page_item_counts[32] = {
 
 char *g_menu_ranking_title = SJIS("ランキング￥");
 
-s8 D_0028DD10[8] = {
+s8 menu_game_option_adjust_table[8] = {
     0, 4, 5, 4, 2, 0, 0, 0,
 };
 
@@ -1326,31 +1326,31 @@ char *D_0028DD18[2] = {
 };
 
 #ifdef DEATH_LABEL
-s8 D_0028DD20[8] = {
+s8 menu_debug_option_adjust_table[8] = {
     0, 2, 2, 2, 2, 100, 2, 0,
 };
 #else
-s8 D_0028DD20[8] = {
+s8 menu_debug_option_adjust_table[8] = {
     0, 2, 2, 2, 2, 2, 0, 0,
 };
 #endif
 
-char *D_0028DD28[2] = {
+char *menu_debug_option_draw_table[2] = {
     "1",
     "2",
 };
 
-char *D_0028DD30[2] = {
+char *menu_debug_option_draw_table_2[2] = {
     "OFF",
     "ON",
 };
 
-char *D_0028DD38[2] = {
+char *menu_debug_option_draw_table_3[2] = {
     "ON",
     "OFF",
 };
 
-char *D_0028DD40[2] = {
+char *menu_debug_option_draw_table_4[2] = {
     "2",
     "1",
 };
@@ -1470,7 +1470,7 @@ char *g_menu_ranking_page_text[12] = {
 };
 
 #ifdef DEATH_LABEL
-char *death_D_00262FF0[4] = {
+char *menu_death_option_draw_table[4] = {
     "GAME OPTION",
     "PLAYER TYPE ",
     "DOLL TYPE  ",
@@ -1504,11 +1504,11 @@ char *g_menu_extend_names[4][2] = {
     "NO EXTEND",
 };
 
-s8 D_00271690[16] = {
+s8 menu_system_option_adjust_table[16] = {
     0, 2, 4, 2, 6, 2, 2, 0, 0, 0, 0, 0, 0, 0, 0, 0,
 };
 
-s8 D_002716A0[16] = {
+s8 menu_system_option_adjust_table_2[16] = {
     0, 2, 2, 2, 6, 2, 2, 0, 0, 0, 0, 0, 0, 0, 0, 0,
 };
 
@@ -1529,7 +1529,7 @@ char *g_menu_monitor_mode_names[4] = {
     "TATE",
 };
 
-char *D_002716C0[6] = {
+char *menu_system_option_draw_table[6] = {
     "1",
     "2",
     "3",
@@ -1564,11 +1564,11 @@ char *g_menu_original_arrange_names[2] = {
 };
 
 #ifdef DEATH_LABEL
-s8 death_D_00290048[8] = {
+s8 menu_death_option_adjust_table[8] = {
     0, 2, 3, 0, 0, 0, 0, 0,
 };
 
-char *death_D_00290050[2] = {
+char *menu_death_option_draw_table_3[2] = {
     "TYPE-A",
     "TYPE-B",
 };
@@ -1588,7 +1588,7 @@ char *g_menu_round_names[10] = {
 };
 
 #ifdef DEATH_LABEL
-char *death_D_002630C8[3] = {
+char *menu_death_option_draw_table_2[3] = {
     "SHOTIA",
     "LEINYAN",
     "EXY",
@@ -1608,7 +1608,7 @@ char *g_menu_pause_items[10] = {
     "STAGE SEL",
 };
 
-char *D_00271740[6] = {
+char *pause_menu_draw_table[6] = {
     "1",
     "2",
     "3",
@@ -1686,7 +1686,7 @@ s16 D_00271800[136] = {
     0x63c, 0, 0x675, 0, 0x6af, 0, 0x6ea, 0,
 };
 
-s32 D_00271910[64] = {
+s32 menu_items_slide_in_table[64] = {
     0x726, 0x763, 0x7a1, 0x7e0, 0x820, 0x861, 0x8a3, 0x8e6,
     0x92a, 0x96f, 0x9b5, 0x9fc, 0xa44, 0xa8d, 0xad7, 0xb22,
     0xb6e, 0xbbb, 0xc09, 0xc58, 0xca8, 0xcf9, 0xd4b, 0xd9e,
@@ -1697,7 +1697,7 @@ s32 D_00271910[64] = {
     0x1a82, 0x1af7, 0x1b6d, 0x1be4, 0x1c5c, 0, 0, 0,
 };
 
-u16 D_00271A10[8] = {
+u16 menu_system_option_draw_table_2[8] = {
     0x2281, 0x2283, 0x2280, 0x2282, 0x227e, 0x227c, 0x227d, 0x227f,
 };
 
@@ -1853,7 +1853,7 @@ char *g_menu_system_option_help[14] = {
 #endif
 
 #ifdef DEATH_LABEL
-char *death_D_002634D0[4] = {
+char *menu_help_draw_table[4] = {
     SJIS("￥"),
     SJIS("機体タイプを設定します。￥"),
     SJIS("強化タイプを設定します。￥"),
@@ -1878,12 +1878,12 @@ char *g_menu_launch_warning[3] = {
 #endif
 
 #ifdef DEATH_LABEL
-char *death_D_00290078[2] = {
+char *menu_help_draw_table_2[2] = {
     SJIS("￥"),
     SJIS("怒首領蜂大往生を／起動しますか？￥"),
 };
 
-char *death_D_00290080[2] = {
+char *menu_help_draw_table_3[2] = {
     SJIS("￥"),
     SJIS("　　　　　注意　　　　　／怒首領蜂大往生を起動すると／現在のゲームデータは／失われます。セーブを／行ってから起動して下さい。￥"),
 };
@@ -1965,11 +1965,11 @@ char *g_menu_pause_help_c[18] = {
 char g_menu_screen_adjust_help[128] = SJIS("方向キーの↑↓←→で／画面位置を調整します。／○ボタンで決定、×ボタンで／キャンセルできます。／SELECTで初期値に戻ります。￥");
 
 Wallpaper g_menu_wallpapers[5] = {
-    { 0x14b5, (void *)D_002620F0 },
-    { 0x14b6, (void *)D_00262130 },
-    { 0x14b7, (void *)D_00262170 },
-    { 0x14b8, (void *)D_002621B0 },
-    { 0x14b9, (void *)D_002621F0 },
+    { 0x14b5, (void *)g_menu_wallpapers_1 },
+    { 0x14b6, (void *)g_menu_wallpapers_3 },
+    { 0x14b7, (void *)g_menu_wallpapers_5 },
+    { 0x14b8, (void *)g_menu_wallpapers_7 },
+    { 0x14b9, (void *)g_menu_wallpapers_9 },
 };
 
 #ifdef DEATH_LABEL
@@ -2007,11 +2007,11 @@ char *g_menu_confirm_cancel_text = SJIS("○×￥");
 
 char *g_menu_cancel_text = SJIS("×￥");
 
-s8 D_0028DD9C[4] = {
+s8 screen_setting_apply_table[4] = {
     3, 2, 5, 0,
 };
 
-s8 D_0028DDA0[2] = {
+s8 screen_setting_apply_table_2[2] = {
     5, 0,
 };
 
@@ -2816,12 +2816,12 @@ void screen_setting_apply(void) {
         if (D_0028E354 > 3) {
             D_0028E354 = 0;
         }
-        value = D_0028DD9C[D_0028E354];
+        value = screen_setting_apply_table[D_0028E354];
     } else {
         if (D_0028E354 > 1) {
             D_0028E354 = 0;
         }
-        value = D_0028DDA0[D_0028E354];
+        value = screen_setting_apply_table_2[D_0028E354];
     }
     g_screen_mode = value;
     if (D_0028E358 == 0 && D_0028E354 >= 2) {
@@ -2837,7 +2837,7 @@ extern u16 g_pad_vib_timer_p2;
 extern u16 g_pad_vib_timer_p1;
 extern u8 g_pad_vib_state_p2;
 extern u8 g_pad_vib_state_p1;
-extern s8 D_0068DC20[];
+extern s8 menu_game_option_adjust_buffer[];
 
 void menu_game_option_adjust(void) {
     extern void sfx_menu_tick(void);
@@ -2848,8 +2848,8 @@ void menu_game_option_adjust(void) {
 
     sel = g_menu_cursor;
     if (sel < 5) {
-        max = D_0028DD10[sel];
-        cur = D_0068DC20[sel];
+        max = menu_game_option_adjust_table[sel];
+        cur = menu_game_option_adjust_buffer[sel];
         pad = g_pad_repeat[2];
         if (pad & 0x2000) {
             sfx_menu_tick();
@@ -2857,7 +2857,7 @@ void menu_game_option_adjust(void) {
             if (cur >= max) {
                 cur = 0;
             }
-            D_0068DC20[g_menu_cursor] = cur;
+            menu_game_option_adjust_buffer[g_menu_cursor] = cur;
             if (g_menu_cursor == 4 && cur == 1) {
                 if (g_pad_repeat[0] != 0) {
                     g_pad_vib_state_p1 = 1;
@@ -2875,7 +2875,7 @@ void menu_game_option_adjust(void) {
             if (cur < 0) {
                 cur = max - 1;
             }
-            D_0068DC20[g_menu_cursor] = cur;
+            menu_game_option_adjust_buffer[g_menu_cursor] = cur;
             if (g_menu_cursor == 4 && cur == 1) {
                 if (g_pad_repeat[0] != 0) {
                     g_pad_vib_state_p1 = 1;
@@ -3121,21 +3121,21 @@ void menu_save_load_step2() {
     }
 }
 
-extern s8 D_0068DC30[];
+extern s8 menu_save_load_adjust_buffer[];
 
 void menu_save_load_adjust(void) {
     void sfx_menu_tick(void);
     s32 value;
 
     if (g_menu_cursor == 3) {
-        value = D_0068DC30[g_menu_cursor];
+        value = menu_save_load_adjust_buffer[g_menu_cursor];
         if (g_pad_repeat[2] & 0x2000) {
             sfx_menu_tick();
             value++;
             if (value >= 2) {
                 value = 0;
             }
-            D_0068DC30[g_menu_cursor] = value;
+            menu_save_load_adjust_buffer[g_menu_cursor] = value;
             D_0028E278 = value;
         } else if (g_pad_repeat[2] & 0x8000) {
             sfx_menu_tick();
@@ -3143,7 +3143,7 @@ void menu_save_load_adjust(void) {
             if (value < 0) {
                 value = 1;
             }
-            D_0068DC30[g_menu_cursor] = value;
+            menu_save_load_adjust_buffer[g_menu_cursor] = value;
             D_0028E278 = value;
         }
     }
@@ -3252,7 +3252,7 @@ void menu_debug_option_step2() {
 }
 
 extern u16 D_0028E300;
-extern s8 D_0068DC40[];
+extern s8 menu_debug_option_adjust_buffer[];
 
 void menu_debug_option_adjust(void) {
     extern void sfx_menu_tick(void);
@@ -3274,22 +3274,22 @@ void menu_debug_option_adjust(void) {
     if (g_menu_cursor == 4 && !(D_0028E300 & 8)) {
         return;
     }
-    count = D_0028DD20[g_menu_cursor];
-    value = D_0068DC40[g_menu_cursor];
+    count = menu_debug_option_adjust_table[g_menu_cursor];
+    value = menu_debug_option_adjust_buffer[g_menu_cursor];
     if (g_pad_repeat[2] & 0x2000) {
         sfx_menu_tick();
         value++;
         if (value >= count) {
             value = 0;
         }
-        D_0068DC40[g_menu_cursor] = value;
+        menu_debug_option_adjust_buffer[g_menu_cursor] = value;
     } else if (g_pad_repeat[2] & 0x8000) {
         sfx_menu_tick();
         value--;
         if (value < 0) {
             value = count - 1;
         }
-        D_0068DC40[g_menu_cursor] = value;
+        menu_debug_option_adjust_buffer[g_menu_cursor] = value;
     }
 }
 
@@ -3472,21 +3472,21 @@ void menu_arcade_step4(void) {
 }
 #pragma pop
 
-extern s8 D_0068DCF0[];
+extern s8 menu_arcade_adjust_buffer[];
 
 void menu_arcade_adjust(void) {
     void sfx_menu_tick(void);
     s32 value;
 
     if (g_menu_cursor == 4) {
-        value = D_0068DCF0[g_menu_cursor];
+        value = menu_arcade_adjust_buffer[g_menu_cursor];
         if (g_pad_repeat[2] & 0x2000) {
             sfx_menu_tick();
             value++;
             if (value >= 2) {
                 value = 0;
             }
-            D_0068DCF0[g_menu_cursor] = value;
+            menu_arcade_adjust_buffer[g_menu_cursor] = value;
             D_0028E2D8 = value;
         } else if (g_pad_repeat[2] & 0x8000) {
             sfx_menu_tick();
@@ -3494,7 +3494,7 @@ void menu_arcade_adjust(void) {
             if (value < 0) {
                 value = 1;
             }
-            D_0068DCF0[g_menu_cursor] = value;
+            menu_arcade_adjust_buffer[g_menu_cursor] = value;
             D_0028E2D8 = value;
         }
     }
@@ -3662,9 +3662,9 @@ void menu_system_option_adjust(void) {
 
     sel = g_menu_cursor;
     if (sel != 7 && !(sel > 7)) {
-        max = D_00271690[sel];
+        max = menu_system_option_adjust_table[sel];
         if (sel == 2 && D_0028E358 != 0) {
-            max = D_002716A0[sel];
+            max = menu_system_option_adjust_table_2[sel];
         }
         cur = D_0068DD00[sel];
         pad = g_pad_repeat[2];
@@ -3909,7 +3909,7 @@ extern s8 death_D_00290C4C;
 extern s8 death_D_00290C74;
 extern s8 death_D_00290CA8;
 extern s32 death_D_00290CE4;
-extern s8 death_D_00628F00[];
+extern s8 menu_death_option_adjust_buffer[];
 
 void menu_death_option_page(void) {
     switch (death_D_00290CA8) {
@@ -4004,8 +4004,8 @@ void menu_death_option_adjust(void) {
 
     sel = g_menu_cursor;
     if (sel < 3) {
-        max = death_D_00290048[sel];
-        cur = death_D_00628F00[sel];
+        max = menu_death_option_adjust_table[sel];
+        cur = menu_death_option_adjust_buffer[sel];
         pad = g_pad_repeat[2];
         if (pad & 0x2000) {
             sfx_menu_tick();
@@ -4013,14 +4013,14 @@ void menu_death_option_adjust(void) {
             if (cur >= max) {
                 cur = 0;
             }
-            death_D_00628F00[g_menu_cursor] = cur;
+            menu_death_option_adjust_buffer[g_menu_cursor] = cur;
         } else if (pad & 0x8000) {
             sfx_menu_tick();
             cur--;
             if (cur < 0) {
                 cur = max - 1;
             }
-            death_D_00628F00[g_menu_cursor] = cur;
+            menu_death_option_adjust_buffer[g_menu_cursor] = cur;
         }
     }
 }
@@ -4499,28 +4499,28 @@ void menu_debug_option_draw(void) {
         y = D_00271800[i];
         index = D_0068DC10[0x30 + i];
         if (i == 1 && (D_0028E300 & 1)) {
-            reg_a0 = (u8 *)D_0028DD28[index];
+            reg_a0 = (u8 *)menu_debug_option_draw_table[index];
             glyph_queue_add(x, y + 16, z, 0, 0x80, alpha, 1);
             if (D_0028EB1C == 1) {
                 menu_arrows_draw(x, y + 16, z, 0, 0x80, alpha, 1, 3);
             }
         }
         if (i == 2 && (D_0028E300 & 2)) {
-            reg_a0 = (u8 *)D_0028DD30[index];
+            reg_a0 = (u8 *)menu_debug_option_draw_table_2[index];
             glyph_queue_add(x, y + 16, z, 0, 0x80, alpha, 1);
             if (D_0028EB1C == 2) {
                 menu_arrows_draw(x, y + 16, z, 0, 0x80, alpha, 1, 3);
             }
         }
         if (i == 3 && (D_0028E300 & 4)) {
-            reg_a0 = (u8 *)D_0028DD38[index];
+            reg_a0 = (u8 *)menu_debug_option_draw_table_3[index];
             glyph_queue_add(x, y + 16, z, 0, 0x80, alpha, 1);
             if (D_0028EB1C == 3) {
                 menu_arrows_draw(x, y + 16, z, 0, 0x80, alpha, 1, 3);
             }
         }
         if (i == 4 && (D_0028E300 & 8)) {
-            reg_a0 = (u8 *)D_0028DD40[index];
+            reg_a0 = (u8 *)menu_debug_option_draw_table_4[index];
             glyph_queue_add(x, y + 16, z, 0, 0x80, alpha, 1);
             if (D_0028EB1C == 4) {
                 menu_arrows_draw(x, y + 16, z, 0, 0x80, alpha, 1, 3);
@@ -4689,7 +4689,7 @@ void menu_system_option_draw(void) {
             }
         }
         if (i == 4) {
-            reg_a0 = (u8 *)D_002716C0[index];
+            reg_a0 = (u8 *)menu_system_option_draw_table[index];
             glyph_queue_add(x, y + 16, z, 0, 0x80, alpha, 1);
             if (g_menu_system_option_cursor == 4) {
                 menu_arrows_draw(x, y + 16, z, 0, 0x80, alpha, 1, 3);
@@ -4710,21 +4710,21 @@ void menu_system_option_draw(void) {
             }
         }
         if (i == 9) {
-            glyph = D_00271A10[D_0068DD09[0]];
+            glyph = menu_system_option_draw_table_2[D_0068DD09[0]];
             text_queue_glyph(x - 22, y - 4, glyph, 20, 32, 32, alpha, z);
-            glyph = D_00271A10[D_0068DD0D[0]];
+            glyph = menu_system_option_draw_table_2[D_0068DD0D[0]];
             text_queue_glyph(x - 22, y + 100, glyph, 20, 32, 32, alpha, z);
         }
         if (i == 10) {
-            glyph = D_00271A10[D_0068DD0A[0]];
+            glyph = menu_system_option_draw_table_2[D_0068DD0A[0]];
             text_queue_glyph(x - 22, y - 4, glyph, 20, 32, 32, alpha, z);
-            glyph = D_00271A10[D_0068DD0E[0]];
+            glyph = menu_system_option_draw_table_2[D_0068DD0E[0]];
             text_queue_glyph(x - 22, y + 100, glyph, 20, 32, 32, alpha, z);
         }
         if (i == 11) {
-            glyph = D_00271A10[D_0068DD0B[0]];
+            glyph = menu_system_option_draw_table_2[D_0068DD0B[0]];
             text_queue_glyph(x - 22, y - 4, glyph, 20, 32, 32, alpha, z);
-            glyph = D_00271A10[D_0068DD0F[0]];
+            glyph = menu_system_option_draw_table_2[D_0068DD0F[0]];
             text_queue_glyph(x - 22, y + 100, glyph, 20, 32, 32, alpha, z);
         }
     }
@@ -4794,7 +4794,7 @@ void menu_death_option_draw(void) {
             continue;
         }
         item[MENU_PAGE_23 * MENU_ITEMS_PER_PAGE].alpha = death_D_00290CE4;
-        reg_a0 = (u8 *)death_D_00262FF0[i];
+        reg_a0 = (u8 *)menu_death_option_draw_table[i];
         x = item[MENU_PAGE_23 * MENU_ITEMS_PER_PAGE].x;
         alpha = item[MENU_PAGE_23 * MENU_ITEMS_PER_PAGE].alpha;
         top = item[MENU_PAGE_23 * MENU_ITEMS_PER_PAGE].y;
@@ -4806,14 +4806,14 @@ void menu_death_option_draw(void) {
         y = D_00271800[i];
         index = D_0068DC10[0x170 + i];
         if (i == 1) {
-            reg_a0 = (u8 *)death_D_00290050[index];
+            reg_a0 = (u8 *)menu_death_option_draw_table_3[index];
             glyph_queue_add(x, y + 16, z, 0, 0x80, alpha, 1);
             if (death_D_00290C4C == 1) {
                 menu_arrows_draw(x, y + 16, z, 0, 0x80, alpha, 1, 3);
             }
         }
         if (i == 2) {
-            reg_a0 = (u8 *)death_D_002630C8[index];
+            reg_a0 = (u8 *)menu_death_option_draw_table_2[index];
             glyph_queue_add(x, y + 16, z, 0, 0x80, alpha, 1);
             if (death_D_00290C4C == 2) {
                 menu_arrows_draw(x, y + 16, z, 0, 0x80, alpha, 1, 3);
@@ -5092,15 +5092,15 @@ void menu_help_draw(void) {
             if (g_menu_box_alpha != 0) {
                 gfx_draw_color_box(0xE0, 0, 0x6E, 0xE0, 0x5A, g_menu_box_alpha, 0xB4, 1, 1);
             }
-            reg_a0 = (u8 *)MAIN_OR_DEATH_LABEL(g_menu_launch_ask, death_D_00290078)[D_0028EAE8];
+            reg_a0 = (u8 *)MAIN_OR_DEATH_LABEL(g_menu_launch_ask, menu_help_draw_table_2)[D_0028EAE8];
             menu_message_draw(0x36, 8);
-            reg_a0 = (u8 *)MAIN_OR_DEATH_LABEL(g_menu_launch_warning, death_D_00290080)[D_0028EAE8];
+            reg_a0 = (u8 *)MAIN_OR_DEATH_LABEL(g_menu_launch_warning, menu_help_draw_table_3)[D_0028EAE8];
             menu_message_draw(0x136, 8);
             menu_help_item_draw(0xC, 4);
         }
 #ifdef DEATH_LABEL
         if (g_menu_page == MENU_PAGE_23) {
-            reg_a0 = (u8 *)death_D_002634D0[death_D_00290C4C];
+            reg_a0 = (u8 *)menu_help_draw_table[death_D_00290C4C];
             menu_message_draw(0x36, 8);
         }
 #endif
@@ -5326,7 +5326,7 @@ extern s8 D_0028EB10;
 extern s8 D_0028EB34;
 extern s8 D_0028EB64;
 extern s32 D_0028EB9C;
-extern s32 D_0028EBB8;
+extern s32 menu_reset_state;
 extern s8 D_0028EC20;
 
 #ifdef DEATH_LABEL
@@ -5337,7 +5337,7 @@ extern s8 death_D_00290C4C;
 #endif
 
 void menu_reset() {
-    D_0028EBB8 = 0;
+    menu_reset_state = 0;
     D_0028EBB4 = 0;
     D_0028EBB0 = 0;
     D_0028EBAC = 0;
@@ -5500,10 +5500,10 @@ void menu_items_slide_in(s32 group) {
         g_menu_items[group][i].accel_x = 0;
         g_menu_items[group][i].accel_y = 0;
         if (dx != 0) {
-            g_menu_items[group][i].accel_x = dx * 10000 / D_00271910[0];
+            g_menu_items[group][i].accel_x = dx * 10000 / menu_items_slide_in_table[0];
         }
         if (dy != 0) {
-            g_menu_items[group][i].accel_y = dy * 10000 / D_00271910[0];
+            g_menu_items[group][i].accel_y = dy * 10000 / menu_items_slide_in_table[0];
         }
         g_menu_items[group][i].speed_x = g_menu_items[group][i].accel_x * 60;
         g_menu_items[group][i].speed_y = g_menu_items[group][i].accel_y * 60;
@@ -6495,7 +6495,7 @@ void pause_menu_draw(void) {
         y = g_pause_menu_positions[3].y;
         reg_a0 = (u8 *)g_menu_pause_items[3];
         glyph_queue_add(x, y, 300, 0, 0x80, 0x80, 1);
-        reg_a0 = (u8 *)D_00271740[D_0028E32C];
+        reg_a0 = (u8 *)pause_menu_draw_table[D_0028E32C];
         glyph_queue_add(x, y + 120, 300, 0, 0x80, 0x80, 1);
         if (g_pause_menu_cursor == 3) {
             menu_arrows_draw(x, y + 120, 300, 0, 0x80, 0x80, 1, 3);
@@ -6917,8 +6917,8 @@ void disc_notice_end(void) {
 }
 
 extern u8 D_0028E374;
-extern s16 D_0028EC5C;
-extern s8 D_0028EC60;
+extern s16 disc_notice_draw_state;
+extern s8 disc_notice_draw_state_2;
 
 void disc_notice_draw(void) {
     extern void gfx_draw_color_box(s32 x, s32 y, s32 w, s32 h, s32 depth, s32 alpha, s32 r, s32 g, s32 b);
@@ -6962,26 +6962,26 @@ void disc_notice_draw(void) {
         save_a6 = reg_a6;
         switch (D_0028EC64) {
         case 0:
-            D_0028EC5C = 0;
+            disc_notice_draw_state = 0;
             D_0028EC64++;
-            D_0028EC60 = 0;
+            disc_notice_draw_state_2 = 0;
         case 1:
-            D_0028EC5C += 8;
-            if (D_0028EC5C >= 0x80) {
-                D_0028EC5C = 0x80;
+            disc_notice_draw_state += 8;
+            if (disc_notice_draw_state >= 0x80) {
+                disc_notice_draw_state = 0x80;
                 D_0028EC64++;
             }
             break;
         case 2:
-            D_0028EC60++;
-            if (D_0028EC60 >= 120) {
-                D_0028EC60 = 0;
+            disc_notice_draw_state_2++;
+            if (disc_notice_draw_state_2 >= 120) {
+                disc_notice_draw_state_2 = 0;
             }
             break;
         case 3:
-            D_0028EC5C -= 8;
-            if (D_0028EC5C <= 0) {
-                D_0028EC5C = 0;
+            disc_notice_draw_state -= 8;
+            if (disc_notice_draw_state <= 0) {
+                disc_notice_draw_state = 0;
                 D_0028EC64++;
             }
             break;
@@ -6989,7 +6989,7 @@ void disc_notice_draw(void) {
             D_0028E374 = 0;
             break;
         }
-        alpha = D_0028EC5C;
+        alpha = disc_notice_draw_state;
         if (D_0028EC64 < 3 && D_0028E374 == 1) {
             gfx_draw_color_box(0, 0, 0x1C2, 0xE0, 0x18F, 0x60, 1, 1, 1);
         }
@@ -7003,17 +7003,17 @@ void disc_notice_draw(void) {
         }
         reg_a0 = (u8 *)g_menu_now_loading_text;
         glyph_queue_add(x, y, 400, 0, 0x80, alpha, 1);
-        if (D_0028EC60 >= 30) {
+        if (disc_notice_draw_state_2 >= 30) {
             reg_a0 = (u8 *)g_menu_dot_text;
             y += 88;
             glyph_queue_add(x, y, 400, 0, 0x80, alpha, 1);
         }
-        if (D_0028EC60 >= 60) {
+        if (disc_notice_draw_state_2 >= 60) {
             reg_a0 = (u8 *)g_menu_dot_text;
             y += 8;
             glyph_queue_add(x, y, 400, 0, 0x80, alpha, 1);
         }
-        if (D_0028EC60 >= 90) {
+        if (disc_notice_draw_state_2 >= 90) {
             reg_a0 = (u8 *)g_menu_dot_text;
             glyph_queue_add(x, y + 8, 400, 0, 0x80, alpha, 1);
         }
@@ -7038,23 +7038,23 @@ void disc_notice_draw(void) {
 
 s32 mc_save_update();
 s32 save_snapshot_take();
-extern s32 D_0028EAD4;
+extern s32 menu_card_save_page_state;
 extern s32 D_0028ED0C;
 
 void menu_card_save_page(void) {
     switch (g_menu_card_save_step) {                           /* switch 1; irregular */
     case 0:                                         /* switch 1 */
-        D_0028EAD4 = 0;
+        menu_card_save_page_state = 0;
         g_menu_card_save_step += 1;
         D_0028ED0C = 0;
         /* fallthrough */
     case 1:                                         /* switch 1 */
-        switch (D_0028EAD4) {                       /* switch 2; irregular */
+        switch (menu_card_save_page_state) {                       /* switch 2; irregular */
         case 0:                                     /* switch 2 */
             mc_save_update(0);
             if (D_0028ED0C != 0) {
                 save_snapshot_take();
-                D_0028EAD4 += 1;
+                menu_card_save_page_state += 1;
                 break;
             }
             break;
@@ -7072,29 +7072,29 @@ void menu_card_save_page(void) {
 
 s32 mc_load_update();
 s32 save_block_to_settings();
-extern s32 D_0028EAD0;
+extern s32 menu_card_load_page_state;
 extern s32 D_0028ECC4;
 
 void menu_card_load_page(void) {
     switch (g_menu_card_load_step) {                           /* switch 1; irregular */
     case 0:                                         /* switch 1 */
-        D_0028EAD0 = 0;
+        menu_card_load_page_state = 0;
         g_menu_card_load_step += 1;
         D_0028ED0C = 0;
         /* fallthrough */
     case 1:                                         /* switch 1 */
-        switch (D_0028EAD0) {                       /* switch 2; irregular */
+        switch (menu_card_load_page_state) {                       /* switch 2; irregular */
         case 0:                                     /* switch 2 */
             mc_load_update(0);
             if (D_0028ED0C != 0) {
-                D_0028EAD0 += 1;
+                menu_card_load_page_state += 1;
                 break;
             }
             break;
         case 1:                                     /* switch 2 */
             D_0028ED0C = 0;
             if (D_0028ECC4 != 0) {
-                save_block_to_settings(D_0028EAD0);
+                save_block_to_settings(menu_card_load_page_state);
                 save_snapshot_take();
             }
             g_menu_card_load_step += 1;
@@ -7382,11 +7382,11 @@ u32 death_D_00290DB8;
 u32 death_D_00290DB4;
 #endif
 s8 D_0028EC64 __attribute__((aligned(4)));
-s8 D_0028EC60 __attribute__((aligned(4)));
-s16 D_0028EC5C __attribute__((aligned(4)));
+s8 disc_notice_draw_state_2 __attribute__((aligned(4)));
+s16 disc_notice_draw_state __attribute__((aligned(4)));
 s8 D_0028EC58 __attribute__((aligned(4)));
 #ifndef DEATH_LABEL
-u8 D_0028EC54;
+u8 settings_reset_state_5;
 #endif
 s32 D_0028EC50;
 u8 D_0028EC4C;
@@ -7416,7 +7416,7 @@ s16 D_0028EBC8 __attribute__((aligned(4)));
 s8 D_0028EBC4 __attribute__((aligned(4)));
 s8 D_0028EBC0 __attribute__((aligned(4)));
 u8 D_0028EBBC;
-s32 D_0028EBB8;
+s32 menu_reset_state;
 s32 D_0028EBB4;
 s32 D_0028EBB0;
 s32 D_0028EBAC;
@@ -7483,16 +7483,16 @@ s32 D_0028EAEC;
 s8 D_0028EAE8 __attribute__((aligned(4)));
 s8 D_0028EAE4 __attribute__((aligned(4)));
 s8 D_0028EAE0 __attribute__((aligned(4)));
-s8 D_0028EADC;
-s32 D_0028EAD8;
-s32 D_0028EAD4;
-s32 D_0028EAD0;
+s8 result_notice_slide_state;
+s32 menu_ranking_scores_format_state;
+s32 menu_card_save_page_state;
+s32 menu_card_load_page_state;
 s8 D_0028EACC __attribute__((aligned(4)));
 s8 D_0028EAC8;
 s32 D_0028EAC4;
 s32 D_0028EAC0;
-s32 D_0028EABC;
-u8 D_0028EAB8 __attribute__((aligned(4)));
+s32 replay_slots_card_save_state;
+u8 replay_save_prompt_update_disc_state __attribute__((aligned(4)));
 u8 g_replay_disc_load_step __attribute__((aligned(4)));
 u8 g_replay_disc_load_slot;
 u8 *g_replay_disc_load_buf;
@@ -7711,7 +7711,7 @@ void replay_slots_card_select(void) {
 s32 mc_replay_save_begin();
 s32 memcard_watch_recheck();
 s32 replay_slot_info_fill();
-extern s32 D_0028EABC;
+extern s32 replay_slots_card_save_state;
 extern u8 g_replay_slots_step;
 extern s32 D_0028ECC0;
 extern s32 D_0028ED0C;
@@ -7728,7 +7728,7 @@ s32 replay_slots_card_save(void) {
             D_0028ED0C = 0;
             g_memcard_watch_step = 0;
             g_replay_slots_step += 1;
-            D_0028EABC = D_0028ECC0;
+            replay_slots_card_save_state = D_0028ECC0;
             if (D_0028ECC0 != 0) {
                 replay_slot_info_fill(g_replay_slots_cursor);
             }
@@ -7740,7 +7740,7 @@ s32 replay_slots_card_save(void) {
             g_menu_alpha = 0x40;
             g_replay_slots_state = 4;
             g_replay_slots_step = 0;
-            if (D_0028EABC != 0) {
+            if (replay_slots_card_save_state != 0) {
                 return 2;
             }
         }
@@ -9902,13 +9902,13 @@ void result_notice_begin() {
     D_0028EB34 = 1;
 }
 
-extern s8 D_0028EADC;
+extern s8 result_notice_slide_state;
 
 void result_notice_slide() {
     if (menu_items_slide_update(0xC) != 0) {
         D_0028EB64 += 1;
-        if ((0 <= D_0028EADC) && (D_0028EADC < 5)) {
-            g_menu_cursor = D_0028EADC + 3;
+        if ((0 <= result_notice_slide_state) && (result_notice_slide_state < 5)) {
+            g_menu_cursor = result_notice_slide_state + 3;
             D_0028EB54 = 1;
         } else {
             g_menu_cursor = -1;
@@ -10020,7 +10020,7 @@ void menu_ranking_draw(void) {
     reg_a0 = save;
 }
 
-extern s32 D_0028EAD8;
+extern s32 menu_ranking_scores_format_state;
 
 void menu_ranking_scores_format(s32 arg0, s32 arg1) {
     s32 i;
@@ -10036,7 +10036,7 @@ void menu_ranking_scores_format(s32 arg0, s32 arg1) {
     }
     for (i = 0; i < 6; i++) {
         if (i == 5) {
-            v = D_0028EAD8;
+            v = menu_ranking_scores_format_state;
         } else {
             v = ((s32 (*)[4][5])D_00684CF0)[arg0][arg1][i];
         }
@@ -10222,7 +10222,7 @@ s32 replay_save_prompt_update_card(void) {
 }
 
 u8 replay_slot_infos_next();
-extern u8 D_0028EAB8;
+extern u8 replay_save_prompt_update_disc_state;
 
 s32 replay_save_prompt_update_disc(void) {
     switch (D_0028EC50) {
@@ -10233,16 +10233,16 @@ s32 replay_save_prompt_update_disc(void) {
         D_0028E378 = 0xFF;
         /* fallthrough */
     case 1:
-        D_0028EAB8 = replay_slot_infos_next();
-        if (D_0028EAB8 == 0xFF) {
+        replay_save_prompt_update_disc_state = replay_slot_infos_next();
+        if (replay_save_prompt_update_disc_state == 0xFF) {
             D_0028EC50 = 3;
         } else {
-            D_0028EAB8 -= 1;
+            replay_save_prompt_update_disc_state -= 1;
             D_0028EC50 += 1;
         }
         break;
     case 2:
-        if (replay_disc_file_load(D_0028EAB8) != 0) {
+        if (replay_disc_file_load(replay_save_prompt_update_disc_state) != 0) {
             D_0028EC50 += 1;
             replay_loaded_file_adopt();
         }
@@ -10736,7 +10736,7 @@ extern u8 D_00684C88[];
 extern u16 D_00684C8A[];
 extern u16 D_00684C8C[];
 extern u8 D_00684C8E[];
-extern u8 D_00684C90[];
+extern u8 simulation_task_run_buffer[];
 extern u16 D_00684C94[];
 #ifdef DEATH_LABEL
 s32 fade_reset();
@@ -10799,7 +10799,7 @@ void simulation_task_run() {
         D_0028E2D4 = 0xFF;
         D_0028E2C4 = 0;
         g_setting_difficulty = D_00684C88[0];
-        g_setting_extend = D_00684C90[0];
+        g_setting_extend = simulation_task_run_buffer[0];
         g_setting_ship_stock = D_00684C8E[0];
         simulation_ships_start(D_00684C88[0]);
         g_pad_input_locked = 1;
@@ -10928,7 +10928,7 @@ s32 D_0068DEB0[12];
 s32 D_0068DEA0[4];
 s32 D_0068DE90[4];
 #ifdef DEATH_LABEL
-s8 death_D_00628F00[272];
+s8 menu_death_option_adjust_buffer[272];
 #endif
 #ifdef DEATH_LABEL
 u8 D_0068DD10[112];
@@ -10936,13 +10936,13 @@ u8 D_0068DD10[112];
 u8 D_0068DD10[384];
 #endif
 s8 D_0068DD00[16];
-s8 D_0068DCF0[16];
-s8 D_0068DC40[176];
-s8 D_0068DC30[16];
-s8 D_0068DC20[16];
+s8 menu_arcade_adjust_buffer[16];
+s8 menu_debug_option_adjust_buffer[176];
+s8 menu_save_load_adjust_buffer[16];
+s8 menu_game_option_adjust_buffer[16];
 s8 D_0068DC10[16];
 MenuItem g_menu_items[40][MENU_ITEMS_PER_PAGE];
 s32 D_00684CF0[10][4][5];
 u8 D_00684CA0[80];
-u8 D_00684C90[16];
+u8 simulation_task_run_buffer[16];
 u16 D_00684C80[8];

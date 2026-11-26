@@ -32,7 +32,7 @@ typedef struct {
 #define MOUNTED_TANK(pointer) ((MountedTank *)(pointer))
 
 s32 enemy_init_entities_n();
-extern u8 D_00242008[];
+extern u8 mounted_tank_a_start_table[];
 extern u8 D_00242020[];
 extern u8 small_tank_draw_routines[];
 extern u8 small_tank_a_body_sprites[];
@@ -134,7 +134,7 @@ void mounted_tank_a_start(void) {
     reg_a0 = (u8 *)small_tank_a_turret_sprites;
     MOUNTED_TANK(reg_a6)->turret_sprite[0] = (reg_d6.h[0] != 0) ? *(u16 *)((u8 *)reg_a0 + ((s16)reg_d6.h[0] & ~1)) : *(u16 *)reg_a0;
     MOUNTED_TANK(reg_a6)->turret_sprite[1] = ((reg_d6.h[0] + 2) != 0) ? *(u16 *)((u8 *)reg_a0 + ((s16)(reg_d6.h[0] + 2) & ~1)) : *(u16 *)reg_a0;
-    reg_a0 = (u8 *)D_00242008;
+    reg_a0 = (u8 *)mounted_tank_a_start_table;
     reg_d0.h[0] = g_stage_x2;
     reg_a0 += reg_d0.h[0];
     ENTITY(reg_a6)->attr.sb.palette = (s8) *(s8 *)reg_a0;

@@ -895,14 +895,14 @@ extern u8 g_replay_snapshot[];
 extern u8 D_006C68B6[];
 extern u8 D_006C6918[];
 extern s32 D_006C8E88[];
-extern u16 D_006C8E90[];
+extern u16 replay_playback_start_buffer[];
 extern u16 D_006C8E94[];
-extern u16 D_006C91A0[];
+extern u16 replay_playback_start_buffer_2[];
 extern u8 D_006C91AC[];
 extern u8 D_006C91AD[];
 extern u8 D_006C91AE[];
 extern u8 D_006C91AF[];
-extern u8 D_006C91B0[];
+extern u8 replay_playback_start_buffer_3[];
 
 void replay_playback_start(void) {
     s32 enemies_stop();
@@ -989,7 +989,7 @@ void replay_playback_start(void) {
         g_setting_ship_stock = D_006C91AE[0];
         g_setting_extend = D_006C91AD[0];
         D_0028E2EC = D_006C91AF[0];
-        D_0028E304 = D_006C91B0[0];
+        D_0028E304 = replay_playback_start_buffer_3[0];
         D_0028E2E4 = D_006C58C4[0];
         replay_header_apply();
         enemies_stop();
@@ -1043,10 +1043,10 @@ void replay_playback_start(void) {
                 g_frame_mod2 = 0;
                 g_frame_mod16 = 0xA;
                 g_frame_mod3 = 0;
-                base = D_006C91A0[0] - 0x11A;
+                base = replay_playback_start_buffer_2[0] - 0x11A;
                 g_play_time = D_006C8E88[0] - base + 1;
             }
-            if ((g_scroll_line == D_006C8E90[0]) && (g_scroll_line_offset == D_006C8E94[0])) {
+            if ((g_scroll_line == replay_playback_start_buffer[0]) && (g_scroll_line_offset == D_006C8E94[0])) {
                 g_score_task_active = 1;
                 g_replay_begin_pending = 1;
                 step = 0xC8;
@@ -1424,7 +1424,7 @@ u8 D_0028DE44[4] = {
     0x02, 0x04, 0x06, 0x00,
 };
 
-u8 D_0028DE48[8] = {
+u8 attract_step_game_start_table[8] = {
     0x00, 0x02, 0x04, 0x06, 0x08, 0x00, 0x00, 0x00,
 };
 
@@ -1453,9 +1453,9 @@ s32 g_replay_checksum;
 ReplayHeader g_replay_header;
 ReplayHeader g_replay_header_saved;
 u16 D_006CB580[54024];
-u8 D_006C91B0[9168];
-u16 D_006C91A0[8];
-u16 D_006C8E90[392];
+u8 replay_playback_start_buffer_3[9168];
+u16 replay_playback_start_buffer_2[8];
+u16 replay_playback_start_buffer[392];
 u8 g_replay_snapshot[12784];
 u16 D_006C58D0[488];
 u8 g_replay_file[48];

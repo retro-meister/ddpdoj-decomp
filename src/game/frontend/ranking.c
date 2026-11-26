@@ -308,7 +308,7 @@ void ranking_title_draw(void) {
 void ranking_draw_unused(void) {
 }
 
-extern u8 D_0026B370[];
+extern u8 ranking_header_draw_table[];
 
 void ranking_header_draw(void) {
     s32 sprite_draw_keep();
@@ -322,14 +322,14 @@ void ranking_header_draw(void) {
     reg_d4.h[0] = 5;
     reg_d7.w = 4;
     do {
-        reg_d2.w = *(u32 *)(D_0026B370 + (reg_d6.h[0] & ~3));
+        reg_d2.w = *(u32 *)(ranking_header_draw_table + (reg_d6.h[0] & ~3));
         sprite_draw_keep();
         reg_d6.h[0] += 4;
         reg_d1.h[1] -= 0x11C0;
     } while ((s16)(--reg_d7.h[0]) >= 0);
 }
 
-extern u16 D_0026B390[];
+extern u16 ranking_ship_types_draw_table[];
 extern u16 g_ranking_ship_types[5];
 
 void ranking_ship_types_draw(void) {
@@ -337,7 +337,7 @@ void ranking_ship_types_draw(void) {
     u16 idx;
 
     reg_a6 = (u8 *)((u16 *)g_ranking_ship_types);
-    reg_a0 = (u8 *)D_0026B390;
+    reg_a0 = (u8 *)ranking_ship_types_draw_table;
     if (D_0028E294 != 0) {
         reg_d1.w = 0x62000A80;
     } else {
@@ -359,7 +359,7 @@ void ranking_ship_types_draw(void) {
     } while ((s16)(--reg_d7.h[0]) >= 0);
 }
 
-extern u8 D_0026B3B0[];
+extern u8 ranking_power_styles_draw_table[];
 extern u16 g_ranking_power_styles[5];
 
 void ranking_power_styles_draw(void) {
@@ -367,7 +367,7 @@ void ranking_power_styles_draw(void) {
     u16 temp_a0;
 
     reg_a6 = (u8 *)(((u16 *)g_ranking_power_styles));
-    reg_a0 = (u8 *)D_0026B3B0;
+    reg_a0 = (u8 *)ranking_power_styles_draw_table;
     if (D_0028E294 != 0) {
         reg_d1.w = 0x5E0009C0;
     } else {
@@ -405,13 +405,13 @@ void ranking_column_label_a_draw(void) {
     } while ((s16)(--reg_d7.h[0]) >= 0);
 }
 
-extern u8 D_0026B3C0[];
+extern u8 ranking_loops_and_stages_draw_table[];
 extern u16 g_ranking_stages[5];
 extern u16 g_ranking_loops[5];
 
 void ranking_loops_and_stages_draw(void) {
     void sprite_draw_keep(void);
-    reg_a0 = (u8 *)D_0026B3C0;
+    reg_a0 = (u8 *)ranking_loops_and_stages_draw_table;
     reg_a1 = (u8 *)((u16 *)g_ranking_loops);
     reg_a2 = (u8 *)((s8 *)g_ranking_stages);
     if (D_0028E294 != 0) {
@@ -477,7 +477,7 @@ void ranking_column_label_b_draw(void) {
     } while ((s16)(--reg_d7.h[0]) >= 0);
 }
 
-extern u8 D_0026B3F0[];
+extern u8 ranking_hits_draw_table[];
 extern u16 g_ranking_hits[5];
 
 void ranking_hits_draw(void) {
@@ -485,7 +485,7 @@ void ranking_hits_draw(void) {
     u32 tmp;
 
     reg_a6 = (u8 *)((u16 *)g_ranking_hits);
-    reg_a0 = (u8 *)D_0026B3F0;
+    reg_a0 = (u8 *)ranking_hits_draw_table;
     if (D_0028E294 != 0) {
         reg_d1.h[0] = 0x6380;
     } else {
@@ -505,7 +505,7 @@ void ranking_hits_draw(void) {
 loop_1:
         reg_d2.h[0] = reg_d0.h[0];
         reg_d2.h[0] &= 0xF;
-        reg_d2.w = *(u32 *)(D_0026B3F0 + (reg_d2.h[0] * 4));
+        reg_d2.w = *(u32 *)(ranking_hits_draw_table + (reg_d2.h[0] * 4));
         sprite_draw_keep();
         reg_d1.h[0] -= 0x200;
         reg_d0.h[0] >>= 4;
@@ -520,8 +520,8 @@ loop_1:
     } while ((s16)(--reg_d7.h[0]) >= 0);
 }
 
-extern u8 D_0026B420[];
-extern u8 D_0026B4A0[];
+extern u8 ranking_names_draw_table[];
+extern u8 ranking_names_draw_table_2[];
 extern s32 g_ranking_names[16];
 
 void ranking_names_draw(void) {
@@ -541,7 +541,7 @@ void ranking_names_draw(void) {
     reg_d3.h[0] = 0x410;
     reg_d4.h[0] = 5;
     reg_d7.w = 4;
-    reg_a0 = (u8 *)D_0026B420;
+    reg_a0 = (u8 *)ranking_names_draw_table;
     do {
         reg_d1.h[0] = 0x1680;
         reg_d5.w = 2;
@@ -564,7 +564,7 @@ loop_1:
         if (((s64) ((s64) (tmp & 0xFFFF) << 0x30) >> 0x30) >= 0) {
             goto loop_1;
         }
-        reg_a0 = (u8 *)D_0026B4A0;
+        reg_a0 = (u8 *)ranking_names_draw_table_2;
         reg_d1.h[1] -= 0x11C0;
     } while ((s16)(--reg_d7.h[0]) >= 0);
 }
@@ -667,33 +667,33 @@ void ranking_continues_draw(void) {
     } while ((s16)(--reg_d7.h[0]) >= 0);
 }
 
-u8 D_0026B370[32] = {
+u8 ranking_header_draw_table[32] = {
     0x35, 0x15, 0x00, 0x00, 0x36, 0x15, 0x00, 0x00, 0x37, 0x15, 0x00, 0x00, 0x38, 0x15, 0x00, 0x00,
     0x39, 0x15, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00,
 };
 
-u16 D_0026B390[16] = {
+u16 ranking_ship_types_draw_table[16] = {
     0x0000, 0x14BA, 0x0418, 0x0000, 0x0000, 0x14BC, 0x0418, 0x0001,
     0x0000, 0x14BB, 0x0418, 0x0000, 0x0000, 0x14BD, 0x0418, 0x0001,
 };
 
-u8 D_0026B3B0[16] = {
+u8 ranking_power_styles_draw_table[16] = {
     0xCA, 0x14, 0x00, 0x00, 0xCB, 0x14, 0x00, 0x00, 0xCC, 0x14, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00,
 };
 
-u8 D_0026B3C0[48] = {
+u8 ranking_loops_and_stages_draw_table[48] = {
     0x3D, 0x15, 0x00, 0x00, 0x3E, 0x15, 0x00, 0x00, 0x3F, 0x15, 0x00, 0x00, 0x40, 0x15, 0x00, 0x00,
     0x41, 0x15, 0x00, 0x00, 0x42, 0x15, 0x00, 0x00, 0x43, 0x15, 0x00, 0x00, 0x44, 0x15, 0x00, 0x00,
     0x45, 0x15, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00,
 };
 
-u8 D_0026B3F0[48] = {
+u8 ranking_hits_draw_table[48] = {
     0xBF, 0x14, 0x00, 0x00, 0xC0, 0x14, 0x00, 0x00, 0xC1, 0x14, 0x00, 0x00, 0xC2, 0x14, 0x00, 0x00,
     0xC3, 0x14, 0x00, 0x00, 0xC4, 0x14, 0x00, 0x00, 0xC5, 0x14, 0x00, 0x00, 0xC6, 0x14, 0x00, 0x00,
     0xC7, 0x14, 0x00, 0x00, 0xC8, 0x14, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00,
 };
 
-u8 D_0026B420[128] = {
+u8 ranking_names_draw_table[128] = {
     0x05, 0x15, 0x00, 0x00, 0x06, 0x15, 0x00, 0x00, 0x07, 0x15, 0x00, 0x00, 0x08, 0x15, 0x00, 0x00,
     0x09, 0x15, 0x00, 0x00, 0x0A, 0x15, 0x00, 0x00, 0x0B, 0x15, 0x00, 0x00, 0x0C, 0x15, 0x00, 0x00,
     0x0D, 0x15, 0x00, 0x00, 0x0E, 0x15, 0x00, 0x00, 0x0F, 0x15, 0x00, 0x00, 0x10, 0x15, 0x00, 0x00,
@@ -704,7 +704,7 @@ u8 D_0026B420[128] = {
     0x20, 0x15, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00,
 };
 
-u8 D_0026B4A0[128] = {
+u8 ranking_names_draw_table_2[128] = {
     0xE9, 0x14, 0x00, 0x00, 0xEA, 0x14, 0x00, 0x00, 0xEB, 0x14, 0x00, 0x00, 0xEC, 0x14, 0x00, 0x00,
     0xED, 0x14, 0x00, 0x00, 0xEE, 0x14, 0x00, 0x00, 0xEF, 0x14, 0x00, 0x00, 0xF0, 0x14, 0x00, 0x00,
     0xF1, 0x14, 0x00, 0x00, 0xF2, 0x14, 0x00, 0x00, 0xF3, 0x14, 0x00, 0x00, 0xF4, 0x14, 0x00, 0x00,

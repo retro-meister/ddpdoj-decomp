@@ -7,8 +7,8 @@ s32 color_at_brightness();
 s32 sprite_palette_load();
 s32 velocity_from_dir256();
 extern u8 D_0028DF0C;
-extern u8 D_0028DF10;
-extern u16 D_0029BD80[];
+extern u8 ship_select_palette_pulse_state;
+extern u16 ship_select_palette_pulse_buffer[];
 extern u16 D_0029BDC0[];
 extern u8 D_0029BE00[];
 
@@ -55,10 +55,10 @@ block_set:
 next_1:
     reg_a0 = (u8 *)D_0029BDC0;
     reg_d1.w = 0;
-    reg_a1 = (u8 *)D_0029BD80;
+    reg_a1 = (u8 *)ship_select_palette_pulse_buffer;
     reg_d0.h[0] = 0x50;
-    D_0028DF10 += 6;
-    reg_d1.b[0] = D_0028DF10;
+    ship_select_palette_pulse_state += 6;
+    reg_d1.b[0] = ship_select_palette_pulse_state;
     velocity_from_dir256();
     reg_d6.h[0] = 0x800;
     reg_d6.h[0] -= reg_d2.h[0];
@@ -74,7 +74,7 @@ loop_2:
     t = reg_d7.h[0] - 1;
     reg_d7.h[0] = t;
     if (((s64) ((s64) (t & 0xFFFF) << 0x30) >> 0x30) >= 0) goto loop_2;
-    reg_a0 = (u8 *)D_0029BD80;
+    reg_a0 = (u8 *)ship_select_palette_pulse_buffer;
     reg_d0.h[0] = 0xB;
     sprite_palette_load();
 block_exit:
@@ -103,7 +103,7 @@ s32 text_palette_load();
 s32 join_select_objects_clear();
 s32 slowdown_reset();
 s32 replay_header_clear();
-extern u8 D_0025F770[];
+extern u8 settings_notice_fade_palettes_at_18[];
 extern u8 D_00260930[];
 extern u8 D_00260970[];
 extern u8 D_002609B0[];
@@ -185,7 +185,7 @@ void ship_select_task_begin(void) {
     reg_a0 = (u8 *)g_default_text_palette;
     reg_d0.w = 0;
     text_palette_load();
-    reg_a0 = (u8 *)D_0025F770;
+    reg_a0 = (u8 *)settings_notice_fade_palettes_at_18;
     reg_d0.w = 2;
     sprite_palette_load();
     reg_a0 = (u8 *)D_00260930;
@@ -601,7 +601,7 @@ void select_step2_task_begin(void) {
     reg_a0 = (u8 *)g_default_text_palette;
     reg_d0.w = 0;
     text_palette_load();
-    reg_a0 = (u8 *)D_0025F770;
+    reg_a0 = (u8 *)settings_notice_fade_palettes_at_18;
     reg_d0.w = 2;
     sprite_palette_load();
     reg_a0 = (u8 *)D_00260930;
@@ -723,10 +723,10 @@ s32 death_D_0029048C;
 #endif
 s16 D_0028DF18 __attribute__((aligned(4)));
 s16 D_0028DF14 __attribute__((aligned(4)));
-u8 D_0028DF10 __attribute__((aligned(4)));
+u8 ship_select_palette_pulse_state __attribute__((aligned(4)));
 u8 D_0028DF0C __attribute__((aligned(4)));
 
 /* .bss (the compiler lays these out in reverse) */
 u8 D_0029BE00[224];
 u16 D_0029BDC0[32];
-u16 D_0029BD80[32];
+u16 ship_select_palette_pulse_buffer[32];

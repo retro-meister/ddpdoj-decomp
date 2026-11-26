@@ -2,7 +2,7 @@
 #include "player.h"
 #include "entity.h"
 
-extern void (*D_0028C5D8[2])();
+extern void (*p1_laser_clear_table[2])();
 extern void (*D_0028C5E0[2])();
 
 u16 hyper_bullet_speed_table[] = {
@@ -91,7 +91,7 @@ void p1_laser_clear(void) {
     reg_save_a6 = reg_a6;
     reg_d0.h[0] = D_0029F2B8[0];
     reg_d0.h[0] <<= 1;
-    reg_a0 = *(u8 **)(((u8 *)D_0028C5D8) + (reg_d0.h[0] & ~3));
+    reg_a0 = *(u8 **)(((u8 *)p1_laser_clear_table) + (reg_d0.h[0] & ~3));
     if (g_p1_hyper_active != 0) {
         reg_a0 = (u8 *)sfx_p1_laser_hyper_stop;
     }
@@ -1569,7 +1569,7 @@ void sfx_p1_laser_b_stop();
 void sfx_p2_laser_a_stop();
 void sfx_p2_laser_b_stop();
 
-void (*D_0028C5D8[2])() = {
+void (*p1_laser_clear_table[2])() = {
     sfx_p1_laser_a_stop,
     sfx_p1_laser_b_stop,
 };

@@ -167,8 +167,8 @@ void picture_change_request(void) {
 
 #ifndef DEATH_LABEL
 s32 fade_in();
-extern u8 D_0024D200[];
-extern u8 D_0024D2D0[];
+extern u8 picture_change_update_table[];
+extern u8 picture_change_update_table_2[];
 extern u16 D_00295E2C[];
 extern u32 D_00295E34[];
 
@@ -179,7 +179,7 @@ void picture_change_update(void) {
     if (D_00295E2E[0] == 0) goto block_rts;
     if (D_00295E2E[0] != 1) goto next_1;
     if (D_00295E2C[0] == 0) goto next_2;
-    reg_a0 = (u8 *)D_0024D200;
+    reg_a0 = (u8 *)picture_change_update_table;
     reg_d0.h[0] = D_00295E32[0];
     reg_d0.h[0] += reg_d0.h[0];
     reg_d0.h[0] += reg_d0.h[0];
@@ -201,7 +201,7 @@ next_2:
     D_00295E2E[0] = 0;
 next_3:
     if (D_00295E2E[0] != 3) goto next_4;
-    reg_a0 = (u8 *)D_0024D2D0;
+    reg_a0 = (u8 *)picture_change_update_table_2;
     reg_d0.h[0] = D_00295E32[0];
     reg_d0.h[0] += reg_d0.h[0];
     reg_d0.h[0] += reg_d0.h[0];
@@ -232,7 +232,7 @@ void ending_mode_set(void) {
 }
 
 s32 sprite_palette_load();
-extern u8 D_0024D030[];
+extern u8 ending_fade_in_table_at_4[];
 extern u16 D_00295E1C[];
 extern u8 D_00295E1E[];
 extern u16 D_00295E20[];
@@ -250,7 +250,7 @@ void ending_text_lines_clear(void) {
         reg_a3 += 8;
     } while ((s16)(--reg_d7.h[0]) >= 0);
     ((s16 *)D_00295E1C)[0] = 0;
-    reg_a0 = D_0024D030;
+    reg_a0 = ending_fade_in_table_at_4;
     ((s16 *)D_00295E1E)[0] = 0;
     reg_d0.h[0] = 0;
     ((s16 *)D_00295E20)[0] = 0;
@@ -306,7 +306,7 @@ block_rts:
 #endif
 
 #ifndef DEATH_LABEL
-extern u32 D_0024CBE0[];
+extern u32 ending_text_script_step_table[];
 extern u16 D_00295E1C[];
 extern u8 D_00295E1E[];
 extern u8 D_00295E1F[];
@@ -327,7 +327,7 @@ void ending_text_script_step(void) {
     return;
 next_1:
     D_00295E1F[0] = D_00295E1E[0];
-    reg_a1 = (u8 *) D_0024CBE0;
+    reg_a1 = (u8 *) ending_text_script_step_table;
     reg_d0.h[0] += reg_d0.h[0];
     reg_d0.h[0] += reg_d0.h[0];
     reg_a1 += reg_d0.h[0];
@@ -341,7 +341,7 @@ next_1:
 #endif
 
 #ifndef DEATH_LABEL
-extern u8 D_0024D340[];
+extern u8 ending_text_script_event_table[];
 extern u16 D_00295E20[];
 extern u32 D_00295E24[];
 
@@ -376,7 +376,7 @@ void ending_text_script_event(void) {
         reg_d0.w = D_00295E24[0];
         if (reg_d0.w == 0) {
             reg_d0.h[0] = *(u16 *)reg_a2;
-            reg_a0 = (u8 *)D_0024D340;
+            reg_a0 = (u8 *)ending_text_script_event_table;
             reg_d0.h[0] += reg_d0.h[0];
             reg_d0.h[0] += reg_d0.h[0];
             reg_a0 += reg_d0.h[0];
@@ -490,8 +490,8 @@ s32 sprite_draw_keep();
 #ifdef DEATH_LABEL
 void intro_text_update(void);
 #endif
-extern u32 D_0024D070[];
-extern u8 D_0024D090[];
+extern u32 ending_task_table[];
+extern u8 ending_task_table_2[];
 extern u8 D_0028E368;
 extern u8 D_0028E378;
 extern u16 D_00295E2C[];
@@ -518,13 +518,13 @@ void ending_task(void) {
     intro_text_update();
 #else
     reg_d0.h[0] = ENTITY(reg_a6)->offset_x.h;
-    ((Fn)*(u32 *)((u8 *)D_0024D090 + (reg_d0.h[0] * 4)))();
+    ((Fn)*(u32 *)((u8 *)ending_task_table_2 + (reg_d0.h[0] * 4)))();
     ending_text_lines_draw();
     picture_change_update();
     reg_d0.h[0] = D_00295E2C[0];
     if (reg_d0.h[0] != 0) {
         reg_d0.h[0] += reg_d0.h[0];
-        reg_a0 = (u8 *)(D_0024D070);
+        reg_a0 = (u8 *)(ending_task_table);
         reg_d0.h[0] += reg_d0.h[0];
         reg_a0 += reg_d0.h[0];
         reg_d2.w = *(u32 *)reg_a0;
@@ -590,11 +590,11 @@ void ending_mode_common(void) {
 s32 sfx_confirm();
 s32 sfx_cursor_move();
 s32 sprite_draw_layer5_keep();
-extern u32 D_0024D640[];
-extern u32 D_0024D660[];
-extern u16 D_0025F770[32];
-extern u32 D_0028C090;
-extern u32 D_0028C098;
+extern u32 ending_mode_doll_a_table[];
+extern u32 ending_mode_doll_a_table_2[];
+extern u16 settings_notice_fade_palettes_at_18[32];
+extern u32 ending_mode_doll_a_table_3;
+extern u32 ending_mode_doll_a_table_4;
 extern u16 D_00295E3A[];
 void input_get_p1_pressed();
 void input_get_p2_pressed();
@@ -613,12 +613,12 @@ void ending_mode_doll_a(void) {
     ((s16 *)D_00295E3C)[0] = 1;
     D_00295E38[0] = 1;
     D_00295E3A[0] = 0x258;
-    reg_a0 = (u8 *) ((u32 *)D_0025F770);
+    reg_a0 = (u8 *) ((u32 *)settings_notice_fade_palettes_at_18);
     reg_d0.h[0] = 3;
     sprite_palette_load();
 next_10:
     if (W(6) != 1) goto next_20;
-    reg_a0 = (u8 *) &D_0028C098;
+    reg_a0 = (u8 *) &ending_mode_doll_a_table_4;
     reg_a0 += W(0xC);
     reg_d0.w = *(u32 *)reg_a0;
     if (reg_d0.w != -1U) goto next_15;
@@ -663,7 +663,7 @@ next_28:
     if (reg_d0.h[0] == 0) goto next_35;
 next_32:
     sfx_confirm();
-    reg_a0 = (u8 *) D_0024D640;
+    reg_a0 = (u8 *) ending_mode_doll_a_table;
     fade_to_black();
     W(0x14) = reg_d0.h[1];
     W(0x16) = reg_d0.h[0];
@@ -682,7 +682,7 @@ next_40:
     *(s8 *)(reg_a5 + 3) = 2;
 next_50:
     if ((s16) W(6) < 2) goto block_rts;
-    reg_a0 = (u8 *) &D_0028C090;
+    reg_a0 = (u8 *) &ending_mode_doll_a_table_3;
     reg_d0.h[0] = D_00295E38[0];
     reg_d0.h[0] += reg_d0.h[0];
     reg_d0.h[0] += reg_d0.h[0];
@@ -698,7 +698,7 @@ next_50:
     reg_d0.w = 0;
     reg_d0.h[0] = D_00295E3A[0];
     reg_d0.w /= 0x3C;
-    reg_a0 = (u8 *) D_0024D660;
+    reg_a0 = (u8 *) ending_mode_doll_a_table_2;
     reg_d0.h[0] += reg_d0.h[0];
     reg_d0.h[0] += reg_d0.h[0];
     reg_d2.h[1] = (reg_d0.h[0] != 0) ? *(u16 *)((u8 *)reg_a0 + ((s16)reg_d0.h[0] & ~1)) : *(u16 *)reg_a0;
@@ -713,7 +713,7 @@ block_rts:
 #endif
 
 #ifndef DEATH_LABEL
-extern u32 D_0024DA90[];
+extern u32 ending_mode_doll_b_table[];
 
 void ending_mode_doll_b(void) {
     u16 temp_a1;
@@ -724,7 +724,7 @@ void ending_mode_doll_b(void) {
         ENTITY(reg_a6)->sprite.h = 0U;
     }
     if (ENTITY(reg_a6)->offset_y.h == 1) {
-        reg_a0 = (u8 *)(D_0024DA90);
+        reg_a0 = (u8 *)(ending_mode_doll_b_table);
         temp_a1 = ENTITY(reg_a6)->sprite.h;
         reg_a0 += temp_a1;
         reg_d0.w = *(u32 *)reg_a0;
@@ -743,7 +743,7 @@ void ending_mode_doll_b(void) {
 #endif
 
 #ifndef DEATH_LABEL
-extern u32 D_0024DE00[];
+extern u32 ending_mode_doll_c_table[];
 
 void ending_mode_doll_c(void) {
     u16 temp_a1;
@@ -754,7 +754,7 @@ void ending_mode_doll_c(void) {
         ENTITY(reg_a6)->sprite.h = 0U;
     }
     if (ENTITY(reg_a6)->offset_y.h == 1) {
-        reg_a0 = (u8 *)(D_0024DE00);
+        reg_a0 = (u8 *)(ending_mode_doll_c_table);
         temp_a1 = ENTITY(reg_a6)->sprite.h;
         reg_a0 += temp_a1;
         reg_d0.w = *(u32 *)reg_a0;
@@ -773,7 +773,7 @@ void ending_mode_doll_c(void) {
 #endif
 
 #ifndef DEATH_LABEL
-extern u32 D_0024E070[];
+extern u32 ending_mode_second_loop_message_table[];
 
 void ending_mode_second_loop_message(void) {
     u16 temp_a1;
@@ -784,7 +784,7 @@ void ending_mode_second_loop_message(void) {
         ENTITY(reg_a6)->sprite.h = 0U;
     }
     if (ENTITY(reg_a6)->offset_y.h == 1) {
-        reg_a0 = (u8 *)(D_0024E070);
+        reg_a0 = (u8 *)(ending_mode_second_loop_message_table);
         temp_a1 = ENTITY(reg_a6)->sprite.h;
         reg_a0 += temp_a1;
         reg_d0.w = *(u32 *)reg_a0;

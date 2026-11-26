@@ -6,9 +6,9 @@ void text_start();
 extern u16 D_0028C9B0[4];
 extern u16 D_0028C9B8[2];
 extern u16 D_0028C9BC[2];
-extern u16 D_0028C9C0[4];
-extern u16 D_0028C9C8[4];
-extern u16 D_0028C9D0[4];
+extern u16 battleship_c_volley_update_table[4];
+extern u16 ground_pointer_rows_fill_table[4];
+extern u16 ground_pointer_rows_fill_table_2[4];
 extern u16 D_0028C9D8[2];
 extern u16 D_0028C9DC[2];
 struct D00257c10Record { u16 w0[94]; void *p1; u16 w2[1680]; };
@@ -32,15 +32,15 @@ u16 D_0028C9BC[2] = {
     0x0002, 0x0003,
 };
 
-u16 D_0028C9C0[4] = {
+u16 battleship_c_volley_update_table[4] = {
     0x40C0, 0x60A0, 0x8080, 0x0000,
 };
 
-u16 D_0028C9C8[4] = {
+u16 ground_pointer_rows_fill_table[4] = {
     0x58A8, 0x5CA4, 0x60A0, 0x0000,
 };
 
-u16 D_0028C9D0[4] = {
+u16 ground_pointer_rows_fill_table_2[4] = {
     0x28D8, 0x24DC, 0x20E0, 0x0000,
 };
 

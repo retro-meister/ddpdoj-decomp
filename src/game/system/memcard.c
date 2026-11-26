@@ -903,10 +903,10 @@ extern u8 g_memcard_watch_delay;
 extern u8 D_0028ECE4;
 extern u8 g_mc_choice;
 extern u8 g_mc_wait;
-extern s8 D_0028ED38;
+extern s8 mc_state_reset_state;
 
 void mc_state_reset(void) {
-    D_0028ED38 = 0;
+    mc_state_reset_state = 0;
     D_0028ECE8 = 0;
     g_mc_choice = 1;
     g_mc_step = 0;
@@ -2418,7 +2418,7 @@ void mc_task_load_ask(void) {
     mc_choice_draw();
 }
 
-extern s32 D_0028EC90;
+extern s32 mc_task_load_check_card_state;
 extern s32 D_0069F590[];
 
 void mc_task_load_check_card(void) {
@@ -2533,7 +2533,7 @@ void mc_task_load_check_card(void) {
         }
         break;
     case 60:
-        D_0028EC90 = 0;
+        mc_task_load_check_card_state = 0;
         if (sceMcGetDir(g_mc_port, g_mc_slot, g_mc_file_paths[0], 0, 99, g_mc_dir) == 0) {
             g_mc_step += 1;
             break;
@@ -2546,7 +2546,7 @@ void mc_task_load_check_card(void) {
     case 61:
         if (sceMcSync(1, 0, &result) != 0) {
             if (result <= 0) {
-                D_0028EC90 += 1;
+                mc_task_load_check_card_state += 1;
             }
             g_mc_wait = 10;
             g_mc_step += 1;
@@ -2555,7 +2555,7 @@ void mc_task_load_check_card(void) {
     case 62:
         g_mc_wait = 180;
         g_mc_step = 0;
-        if (D_0028EC90 == 1) {
+        if (mc_task_load_check_card_state == 1) {
             g_mc_step = 66;
         } else {
             g_mc_task = 23;
@@ -2631,8 +2631,8 @@ void mc_task_load_check_card(void) {
     }
 }
 
-extern s32 D_0028EC94;
-extern s32 D_0028EC98;
+extern s32 mc_task_read_state;
+extern s32 mc_task_read_state_2;
 
 void mc_task_read(void) {
     s32 sceMcOpen(s32 arg0, s32 arg1, char * arg2, s32 arg3);
@@ -2647,8 +2647,8 @@ void mc_task_read(void) {
     case 0:
         D_0028ECC4 = 0;
         g_mc_step += 1;
-        D_0028EC98 = 0;
-        D_0028EC94 = 0x414;
+        mc_task_read_state_2 = 0;
+        mc_task_read_state = 0x414;
         D_0028ECE4 = 60;
         break;
     case 1:
@@ -3909,13 +3909,13 @@ void mc_task_unformat(void) {
         break;
     }
 }
-extern s32 D_0028EC80;
-extern s32 D_0028EC84;
-extern s32 D_0028EC88;
-extern u8 D_0028EC8C;
-extern u8 D_0028EC8D;
-extern u8 D_0028EC8E;
-extern u8 D_0028EC8F;
+extern s32 mc_task_startup_check_state;
+extern s32 mc_task_startup_check_state_2;
+extern s32 mc_task_startup_check_state_3;
+extern u8 mc_task_startup_check_state_4;
+extern u8 mc_task_startup_check_state_5;
+extern u8 mc_task_startup_check_state_6;
+extern u8 mc_task_startup_check_state_7;
 extern u8 D_0028ECF4;
 
 void mc_task_startup_check(void) {
@@ -3939,7 +3939,7 @@ void mc_task_startup_check(void) {
     case 0:
         D_0028ECE4 = 60;
         g_mc_step += 1;
-        D_0028EC80 = 0;
+        mc_task_startup_check_state = 0;
         break;
     case 1:
         mc_checking_message_draw();
@@ -4036,13 +4036,13 @@ void mc_task_startup_check(void) {
         break;
     case 0x32:
         mc_checking_message_draw();
-        D_0028EC88 = 0;
-        D_0028EC8C = 0;
-        D_0028EC8D = 0;
-        D_0028EC8E = 0;
-        D_0028EC8F = 0;
-        D_0028EC80 = 0;
-        D_0028EC84 = 0;
+        mc_task_startup_check_state_3 = 0;
+        mc_task_startup_check_state_4 = 0;
+        mc_task_startup_check_state_5 = 0;
+        mc_task_startup_check_state_6 = 0;
+        mc_task_startup_check_state_7 = 0;
+        mc_task_startup_check_state = 0;
+        mc_task_startup_check_state_2 = 0;
         sceMcGetDir(g_mc_port, g_mc_slot, g_mc_dir_names[0], 0, 99, g_mc_dir);
         g_mc_step += 1;
         break;
@@ -4050,10 +4050,10 @@ void mc_task_startup_check(void) {
         mc_checking_message_draw();
         if (sceMcSync(1, 0, &result) != 0) {
             if (result <= 0) {
-                D_0028EC8D = 1;
-                D_0028EC88 += g_mc_needed_kilobytes[0];
+                mc_task_startup_check_state_5 = 1;
+                mc_task_startup_check_state_3 += g_mc_needed_kilobytes[0];
             } else {
-                D_0028EC80 = 1;
+                mc_task_startup_check_state = 1;
             }
             g_mc_step += 1;
         }
@@ -4067,7 +4067,7 @@ void mc_task_startup_check(void) {
         mc_checking_message_draw();
         if (sceMcSync(1, 0, &result) != 0) {
             if (result <= 0) {
-                D_0028EC84 += 1;
+                mc_task_startup_check_state_2 += 1;
             }
             g_mc_step += 1;
         }
@@ -4081,7 +4081,7 @@ void mc_task_startup_check(void) {
         mc_checking_message_draw();
         if (sceMcSync(1, 0, &result) != 0) {
             if (result <= 0) {
-                D_0028EC84 += 1;
+                mc_task_startup_check_state_2 += 1;
             }
             g_mc_step += 1;
         }
@@ -4095,7 +4095,7 @@ void mc_task_startup_check(void) {
         mc_checking_message_draw();
         if (sceMcSync(1, 0, &result) != 0) {
             if (result <= 0) {
-                D_0028EC84 += 1;
+                mc_task_startup_check_state_2 += 1;
             }
             g_mc_step += 1;
         }
@@ -4109,7 +4109,7 @@ void mc_task_startup_check(void) {
         mc_checking_message_draw();
         if (sceMcSync(1, 0, &result) != 0) {
             if (result <= 0) {
-                D_0028EC84 += 1;
+                mc_task_startup_check_state_2 += 1;
             }
             g_mc_step += 1;
         }
@@ -4123,7 +4123,7 @@ void mc_task_startup_check(void) {
         mc_checking_message_draw();
         if (sceMcSync(1, 0, &result) != 0) {
             if (result <= 0) {
-                D_0028EC84 += 1;
+                mc_task_startup_check_state_2 += 1;
             }
             g_mc_step += 1;
         }
@@ -4137,7 +4137,7 @@ void mc_task_startup_check(void) {
         mc_checking_message_draw();
         if (sceMcSync(1, 0, &result) != 0) {
             if (result <= 0) {
-                D_0028EC84 += 1;
+                mc_task_startup_check_state_2 += 1;
             }
             g_mc_step += 1;
         }
@@ -4151,7 +4151,7 @@ void mc_task_startup_check(void) {
         mc_checking_message_draw();
         if (sceMcSync(1, 0, &result) != 0) {
             if (result <= 0) {
-                D_0028EC84 += 1;
+                mc_task_startup_check_state_2 += 1;
             }
             g_mc_step += 1;
         }
@@ -4165,7 +4165,7 @@ void mc_task_startup_check(void) {
         mc_checking_message_draw();
         if (sceMcSync(1, 0, &result) != 0) {
             if (result <= 0) {
-                D_0028EC84 += 1;
+                mc_task_startup_check_state_2 += 1;
             }
             g_mc_step += 1;
         }
@@ -4179,7 +4179,7 @@ void mc_task_startup_check(void) {
         mc_checking_message_draw();
         if (sceMcSync(1, 0, &result) != 0) {
             if (result <= 0) {
-                D_0028EC84 += 1;
+                mc_task_startup_check_state_2 += 1;
             }
             g_mc_step += 1;
         }
@@ -4193,10 +4193,10 @@ void mc_task_startup_check(void) {
         mc_checking_message_draw();
         if (sceMcSync(1, 0, &result) != 0) {
             if (result <= 0) {
-                D_0028EC84 += 1;
+                mc_task_startup_check_state_2 += 1;
             }
-            printf("free[%d] size[%d] nasi[%d]\n", D_0028ECB4, D_0028EC88, D_0028EC84);
-            if ((D_0028EC88 != 0) && (D_0028ECB4 < D_0028EC88)) {
+            printf("free[%d] size[%d] nasi[%d]\n", D_0028ECB4, mc_task_startup_check_state_3, mc_task_startup_check_state_2);
+            if ((mc_task_startup_check_state_3 != 0) && (D_0028ECB4 < mc_task_startup_check_state_3)) {
                 D_0028ECF4 = 0;
                 g_mc_step = 0x50;
             } else {
@@ -4293,7 +4293,7 @@ void mc_task_startup_check(void) {
         if (D_0028ED10 == 0) {
             D_0028ED18 = 2;
             g_mc_step = 0;
-            if (D_0028EC80 != 0) {
+            if (mc_task_startup_check_state != 0) {
                 D_0028ECF4 |= 4;
             }
         }
@@ -5431,7 +5431,7 @@ extern u16 D_006A0E7E[];
 extern u16 D_006A0E80[];
 extern u16 D_006A0E82[];
 extern u16 D_006A0E86[];
-extern u16 D_006A0E90[];
+extern u16 replay_slot_info_fill_buffer[];
 extern u8 g_replay_file[48];
 extern u16 D_006C58A2[];
 extern u16 D_006C58A4[];
@@ -5490,11 +5490,11 @@ void replay_slot_info_fill(s32 slot) {
     D_006A0E82[off] = D_006C58D2[0];
     D_006A0E86[off] = D_006C58D6[0];
     ((u16 *)g_replay_slot_infos)[off] = 1;
-    D_006A0E90[off] = 0;
+    replay_slot_info_fill_buffer[off] = 0;
 }
 
 /* .sbss (the compiler lays these out in reverse) */
-s8 D_0028ED38;
+s8 mc_state_reset_state;
 u8 D_0028ED37;
 u8 D_0028ED36;
 u8 D_0028ED35;
@@ -5539,16 +5539,16 @@ s32 g_mc_fd;
 u16 g_mc_cursor_x __attribute__((aligned(4)));
 u16 D_0028ECA0 __attribute__((aligned(4)));
 u16 g_mc_cursor_target_x;
-s32 D_0028EC98;
-s32 D_0028EC94;
-s32 D_0028EC90;
-u8 D_0028EC8F;
-u8 D_0028EC8E;
-u8 D_0028EC8D;
-u8 D_0028EC8C;
-s32 D_0028EC88;
-s32 D_0028EC84;
-s32 D_0028EC80;
+s32 mc_task_read_state_2;
+s32 mc_task_read_state;
+s32 mc_task_load_check_card_state;
+u8 mc_task_startup_check_state_7;
+u8 mc_task_startup_check_state_6;
+u8 mc_task_startup_check_state_5;
+u8 mc_task_startup_check_state_4;
+s32 mc_task_startup_check_state_3;
+s32 mc_task_startup_check_state_2;
+s32 mc_task_startup_check_state;
 s32 D_0028EC7C;
 s32 D_0028EC78;
 s32 g_mc_slot;
@@ -5559,7 +5559,7 @@ u8 g_mc_save_buf[2480];
 u8 D_006A4C00[131824];
 u8 g_replay_file_loaded[1024];
 u8 D_006A3E50[2480];
-u16 D_006A0E90[6112];
+u16 replay_slot_info_fill_buffer[6112];
 s32 D_0069F590[1600];
 u8 g_mc_dir[16];
 #ifdef DEATH_LABEL

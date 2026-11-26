@@ -17,15 +17,15 @@ s32 stage4_boss_damage_none();
 s32 stage4_boss_shield_on();
 s32 stage4_boss_start_none();
 s32 slowdown_turn_off();
-extern u8 D_0025FE70[];
-extern u8 D_0025FEB0[];
+extern u8 stage4_boss_enter_flash_at_4[];
+extern u8 stage4_boss_enter_flash_at_11[];
 extern void (*stage4_boss_anim_routines[])(void);
 extern void (*stage4_boss_fire_routines[])(void);
 extern void (*stage4_boss_draw_routines[])(void);
 extern void (*stage4_boss_mode_routines[])(void);
 extern void (*stage4_boss_move_routines[])(void);
-extern u8 D_0026F4D0[];
-extern u8 D_0028DC88[];
+extern u8 stage4_boss_start_table[];
+extern u8 stage4_boss_start_table_2[];
 extern u16 g_boss_hyper_wait;
 extern u8 *g_boss_hp;
 extern s32 g_boss_hp_unit;
@@ -42,9 +42,9 @@ extern s16 g_bullet_limit_raised_2[];
 extern u16 g_bullet_limit_raised_3[];
 
 void stage4_boss_start(void) {
-    reg_a0 = (u8 *)D_0026F4D0;
+    reg_a0 = (u8 *)stage4_boss_start_table;
     enemy_init_entities();
-    reg_a0 = (u8 *)D_0028DC88;
+    reg_a0 = (u8 *)stage4_boss_start_table_2;
     reg_d0.h[0] = 3;
     enemy_set_task_state();
     reg_tmp.w = 0xC8001C00;
@@ -59,10 +59,10 @@ void stage4_boss_start(void) {
     reg_d0.w = 0;
     boss_phase_start();
     reg_d0.h[0] = 0x13;
-    reg_a0 = (u8 *)D_0025FE70;
+    reg_a0 = (u8 *)stage4_boss_enter_flash_at_4;
     sprite_palette_load();
     reg_d0.h[0] = 0x14;
-    reg_a0 = (u8 *)D_0025FEB0;
+    reg_a0 = (u8 *)stage4_boss_enter_flash_at_11;
     sprite_palette_load();
     reg_d0.h[0] = 0x12;
     reg_a0 = (u8 *)palette_white;
@@ -117,7 +117,7 @@ void stage4_boss_main(void) {
     enemy_hitbox_debug_draw();
 }
 
-u8 D_0026F4D0[368] = {
+u8 stage4_boss_start_table[368] = {
     0x00, 0x80, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x10, 0x00, 0x0F,
     0x00, 0x10, 0x00, 0x10, 0xFF, 0x7F, 0x00, 0x10, 0x00, 0x00, 0x00, 0x00, 0x00, 0x80, 0x00, 0x00,
     0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x10, 0x00, 0x0F, 0x00, 0x10, 0x00, 0x10,
@@ -143,6 +143,6 @@ u8 D_0026F4D0[368] = {
     0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00,
 };
 
-u8 D_0028DC88[8] = {
+u8 stage4_boss_start_table_2[8] = {
     0x04, 0x00, 0x00, 0x60, 0x20, 0x1C, 0x20, 0x1C,
 };

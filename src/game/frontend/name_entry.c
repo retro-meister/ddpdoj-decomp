@@ -33,10 +33,10 @@ s32 sprite_palette_load();
 s32 p1_rank_entry_insert();
 s32 p2_rank_entry_insert();
 s32 stage_map_reset();
-extern u8 D_00261EF0[];
+extern u8 name_entry_task_begin_table[];
 extern u16 D_00261F30[];
-extern u8 D_00261F70[];
-extern u8 D_00261FB0[];
+extern u8 name_entry_task_begin_table_2[];
+extern u8 name_entry_task_begin_table_3[];
 extern u16 D_0028E4B0;
 extern u8 g_name_entry_player;
 extern u16 g_two_player_seen;
@@ -55,13 +55,13 @@ void name_entry_task_begin() {
     reg_a0 = (u8 *)((u8 *)D_00261F30);
     reg_d0.h[0] = 2;
     sprite_palette_load();
-    reg_a0 = (u8 *)D_00261F70;
+    reg_a0 = (u8 *)name_entry_task_begin_table_2;
     reg_d0.h[0] = 3;
     sprite_palette_load();
-    reg_a0 = (u8 *)D_00261FB0;
+    reg_a0 = (u8 *)name_entry_task_begin_table_3;
     reg_d0.h[0] = 4;
     sprite_palette_load();
-    reg_a0 = (u8 *)D_00261EF0;
+    reg_a0 = (u8 *)name_entry_task_begin_table;
     reg_d0.h[0] = 5;
     sprite_palette_load();
     if (0 > g_player1[0]) {
@@ -152,11 +152,11 @@ s32 password_conditions_check(void) {
 }
 
 s32 rand(void);
-extern s8 D_0025C4A0[];
-extern s32 D_0028E4AC;
-extern u8 D_002BAD50[];
+extern s8 password_bits_unpack_table[];
+extern s32 password_bits_unpack_state;
+extern u8 password_bits_unpack_buffer[];
 extern u8 D_002BAD63[];
-extern u8 D_002BAD70[];
+extern u8 password_bits_unpack_buffer_2[];
 extern u8 D_002BADD0[];
 extern u8 D_002BADF0[];
 
@@ -167,45 +167,45 @@ s32 password_bits_unpack(void) {
     s32 val;
     u8 ch;
 
-    memset(D_002BAD70, 0, 0x60);
+    memset(password_bits_unpack_buffer_2, 0, 0x60);
     k = 0;
     for (i = 0; i < 12; i++) {
         for (j = 0; j < 8; j++) {
             if (D_002BADF0[i] & (1 << j)) {
-                D_002BAD70[k] = 1;
+                password_bits_unpack_buffer_2[k] = 1;
             }
             k++;
         }
     }
-    memset(D_002BAD50, 0, 20);
+    memset(password_bits_unpack_buffer, 0, 20);
     k = 0;
     for (i = 0; i < 20; i++) {
         val = 0;
         for (j = 0; j < 5; j++) {
-            if (D_002BAD70[k] != 0) {
+            if (password_bits_unpack_buffer_2[k] != 0) {
                 val |= 1 << j;
             }
             k++;
         }
-        D_002BAD50[i] = val;
+        password_bits_unpack_buffer[i] = val;
     }
     for (i = 0; i < 4; i++) {
         if ((rand() % 2) != 0) {
             D_002BAD63[0] |= 1 << (i + 1);
         }
     }
-    D_0028E4AC = 0;
-    for (i = 0; D_0025C4A0[i] != -1; i++) {
-        D_0028E4AC++;
+    password_bits_unpack_state = 0;
+    for (i = 0; password_bits_unpack_table[i] != -1; i++) {
+        password_bits_unpack_state++;
     }
     memset(((s8 *)D_002BADD0), 0, 30);
     for (i = 0; i < 20; i++) {
-        ch = D_002BAD50[i];
-        if ((((s32) ch < 0) || ((s32) ch >= D_0028E4AC)) ? 1 : 0) {
+        ch = password_bits_unpack_buffer[i];
+        if ((((s32) ch < 0) || ((s32) ch >= password_bits_unpack_state)) ? 1 : 0) {
             printf((const char *)SJIS("error:変換された文字テーブル参照値が不正です。"));
             return 0;
         }
-        ((s8 *)D_002BADD0)[i] = D_0025C4A0[ch];
+        ((s8 *)D_002BADD0)[i] = password_bits_unpack_table[ch];
     }
     return 1;
 }
@@ -463,7 +463,7 @@ void name_entry_p1_update() {
     name_entry_side_begin();
 }
 
-extern u8 D_002BAE40[];
+extern u8 name_entry_p2_update_buffer[];
 
 void name_entry_p2_update() {
     s32 input_get_p2_held();
@@ -476,7 +476,7 @@ void name_entry_p2_update() {
     s32 temp_s4;
     s32 temp_s5;
 
-    reg_a4 = (u8 *)D_002BAE40;
+    reg_a4 = (u8 *)name_entry_p2_update_buffer;
     input_get_p2_held();
     *(u16 *)(reg_a4 + 0x34) = (u16) reg_d0.h[0];
     input_get_p2_pressed();
@@ -524,20 +524,20 @@ void name_entry_p2_update() {
 }
 
 s32 fade_in_and_release();
-extern u8 D_0025BF90[];
+extern u8 name_entry_side_begin_table[];
 
 void name_entry_side_begin() {
     *(s16 *)(reg_a4 + 0x2E) = 1;
     ((s16 *)D_002BAE80)[0] = 1;
-    reg_a0 = D_0025BF90;
+    reg_a0 = name_entry_side_begin_table;
     fade_in_and_release();
     name_entry_side_update();
 }
 
 s32 fade_to_black_and_release();
 s32 sfx_confirm();
-extern u8 D_0025BD60[];
-extern u8 D_0025BFD0[];
+extern u8 name_entry_side_update_table[];
+extern u8 name_entry_side_update_table_2[];
 extern u8 D_002BAE82[];
 
 #define W(o) (*(u16 *)(reg_a4 + (o)))
@@ -565,7 +565,7 @@ next_1:
     if (W(0x2E) == 0) return;
     if (W(0x1E) != 0x30) goto next_4;
     W(0x1E) -= 1;
-    reg_a0 = (u8 *)D_0025BFD0;
+    reg_a0 = (u8 *)name_entry_side_update_table_2;
     fade_to_black_and_release();
     return;
 next_4:
@@ -673,7 +673,7 @@ block_store:
     L(reg_a0, reg_d1.h[0] * 4) = reg_d0.w;
     if (W(0x16) < 3) return;
 block_check:
-    reg_a1 = (u8 *)D_0025BD60;
+    reg_a1 = (u8 *)name_entry_side_update_table;
 loop_15:
     reg_tmp.h[1] = W(0x30);
     reg_tmp.h[0] = W(0x32);
@@ -778,8 +778,8 @@ loop_1:
 
 #pragma push
 #pragma opt_common_subs off
-extern u8 D_0025BE50[];
-extern u8 D_0025BE70[];
+extern u8 name_entry_side_setup_table[];
+extern u8 name_entry_side_setup_table_2[];
 extern u8 D_002BAE82[];
 
 void name_entry_side_setup(void) {
@@ -800,10 +800,10 @@ void name_entry_side_setup(void) {
     reg_d3.h[0] = reg_tmp.h[1];
     *(u16 *)(reg_a4 + 0x3C) = (u16) reg_d3.h[0];
     reg_d0.w = 1;
-    reg_a0 = (u8 *)((u32) D_0025BE50);
+    reg_a0 = (u8 *)((u32) name_entry_side_setup_table);
     if (*(u16 *)(reg_a4 + 0x2C) != 0) {
         reg_d0.w = 2;
-        reg_a0 = (u8 *)((u32) D_0025BE70);
+        reg_a0 = (u8 *)((u32) name_entry_side_setup_table_2);
     }
     D_002BAE82[0] |= (1 << (s8) reg_d0.b[0]) & 0xFF;
     *(u16 *)(reg_a4 + 6) = (u16) *(u16 *)reg_a0;
@@ -869,7 +869,7 @@ next_3:
 
 s32 sprite_draw_layer4_keep();
 s32 sprite_draw_layer4_zoom_keep();
-extern u8 D_0025BF10[];
+extern u8 name_entry_name_draw_table[];
 
 void name_entry_name_draw(void) {
     u32 temp_a1;
@@ -893,7 +893,7 @@ void name_entry_name_draw(void) {
             temp_a1 = *(u32 *)reg_a0;
             reg_d0.w = temp_a1;
             reg_a0 += 4;
-            reg_a1 = (u8 *)D_0025BF10;
+            reg_a1 = (u8 *)name_entry_name_draw_table;
             reg_a1 += reg_d0.h[0];
             reg_d2.h[1] = *(u16 *)reg_a1;
             reg_d2.h[0] = *(u16 *)(reg_a1 + 2);
@@ -903,7 +903,7 @@ void name_entry_name_draw(void) {
         } while ((s16)(--reg_d7.h[0]) >= 0);
     }
     if (*(u16 *)(reg_a4 + 0x16) != 3) {
-        reg_a1 = (u8 *)D_0025BF10;
+        reg_a1 = (u8 *)name_entry_name_draw_table;
         reg_d0.h[0] = *(u16 *)(reg_a4 + 0x18);
         reg_d0.h[0] += reg_d0.h[0];
         reg_d0.h[0] += reg_d0.h[0];
@@ -916,7 +916,7 @@ void name_entry_name_draw(void) {
             if (reg_d0.h[0] == 0x68) {
                 *(u16 *)(reg_a4 + 0x3E) = 0U;
             }
-            reg_a1 = (u8 *)D_0025BF10;
+            reg_a1 = (u8 *)name_entry_name_draw_table;
             reg_d7.h[0] = 1;
             reg_d7.h[0] -= *(u16 *)(reg_a4 + 0x16);
             do {
@@ -936,12 +936,12 @@ void name_entry_name_draw(void) {
 
 s32 sprite_draw_layer2_keep();
 s32 sprite_draw_layer3_keep();
-extern u16 D_0025BE90[];
-extern u16 D_0025BEA0[];
-extern u16 D_0025BEB0[];
-extern u16 D_0025BED0[];
-extern u16 D_0025BEF0[];
-extern u16 D_0025BF00[];
+extern u16 name_entry_cursor_draw_table[];
+extern u16 name_entry_cursor_draw_table_2[];
+extern u16 name_entry_cursor_draw_table_3[];
+extern u16 name_entry_cursor_draw_table_4[];
+extern u16 name_entry_cursor_draw_table_5[];
+extern u16 name_entry_cursor_draw_table_6[];
 
 void name_entry_cursor_draw(void) {
     u16 temp_a0;
@@ -973,13 +973,13 @@ void name_entry_cursor_draw(void) {
     }
     reg_d7.h[1] = *(u16 *)(reg_a4 + 6);
     reg_d7.h[0] = *(u16 *)(reg_a4 + 8);
-    reg_a0 = (u8 *)(D_0025BE90);
-    reg_a1 = (u8 *)(D_0025BEB0);
-    reg_a2 = (u8 *)(D_0025BEF0);
+    reg_a0 = (u8 *)(name_entry_cursor_draw_table);
+    reg_a1 = (u8 *)(name_entry_cursor_draw_table_3);
+    reg_a2 = (u8 *)(name_entry_cursor_draw_table_5);
     if (*(u16 *)(reg_a4 + 0x2C) != 0) {
-        reg_a0 = (u8 *)(D_0025BEA0);
-        reg_a1 = (u8 *)(D_0025BED0);
-        reg_a2 = (u8 *)(D_0025BF00);
+        reg_a0 = (u8 *)(name_entry_cursor_draw_table_2);
+        reg_a1 = (u8 *)(name_entry_cursor_draw_table_4);
+        reg_a2 = (u8 *)(name_entry_cursor_draw_table_6);
     }
     reg_d4.h[0] = 5;
     reg_d1.w = reg_d7.w;
@@ -1031,7 +1031,7 @@ void name_entry_cursor_draw(void) {
     sprite_draw_layer3_keep();
 }
 
-extern u16 D_0025C020[];
+extern u16 name_entry_score_draw_table[];
 
 void name_entry_score_draw(void) {
     u32 t;
@@ -1048,7 +1048,7 @@ void name_entry_score_draw(void) {
 next_1:
     reg_d3.h[0] = 0x208;
     reg_d4.h[0] = 4;
-    reg_a0 = (u8 *)(D_0025C020);
+    reg_a0 = (u8 *)(name_entry_score_draw_table);
     reg_d2.w = 0xF;
     reg_d2.h[0] &= *(u16 *)(reg_a4 + 0xA);
     reg_d2.h[0] += reg_d2.h[0];
@@ -1084,7 +1084,7 @@ next_2:
     sprite_draw_layer4_keep();
 }
 
-extern u16 D_0025C000[];
+extern u16 name_entry_player_and_rank_draw_table[];
 
 void name_entry_player_and_rank_draw(void) {
     reg_d1.h[0] = 0x5200;
@@ -1108,7 +1108,7 @@ next_1:
     reg_d2.h[0] = *(u16 *)(reg_a4 + 0x38);
     reg_d2.h[0] += reg_d2.h[0];
     reg_d2.h[0] += reg_d2.h[0];
-    reg_a0 = (u8 *)(D_0025C000);
+    reg_a0 = (u8 *)(name_entry_player_and_rank_draw_table);
     reg_d2.h[1] = (reg_d2.h[0] != 0) ? *(u16 *)((u8 *)reg_a0 + ((s16)reg_d2.h[0] & ~1)) : *(u16 *)reg_a0;
     reg_d2.h[0] = ((reg_d2.h[0] + 2) != 0) ? *(u16 *)((u8 *)reg_a0 + ((s16)(reg_d2.h[0] + 2) & ~1)) : *(u16 *)reg_a0;
     reg_d3.h[0] = 0x218;
@@ -1269,7 +1269,7 @@ next_9:
 }
 
 s32 sfx_cursor_move();
-extern u16 D_0025C430[];
+extern u16 name_entry_cursor_move_table[];
 
 void name_entry_cursor_move(void) {
     u32 t;
@@ -1293,7 +1293,7 @@ void name_entry_cursor_move(void) {
         t1 = reg_d0.h[0];
         if (!(0 > (s16)(t1))) {
             *(u16 *)(reg_a4 + 0x18) = t1;
-            reg_a0 = (u8 *)(D_0025C430);
+            reg_a0 = (u8 *)(name_entry_cursor_move_table);
             reg_d0.h[0] += reg_d0.h[0];
             reg_d0.h[0] += reg_d0.h[0];
             *(u16 *)(reg_a4 + 6) = (reg_d0.h[0] != 0) ? *(u16 *)((u8 *)reg_a0 + ((s16)reg_d0.h[0] & ~1)) : *(u16 *)reg_a0;
@@ -1305,9 +1305,9 @@ void name_entry_cursor_move(void) {
 
 /* .bss (the compiler lays these out in reverse) */
 u16 D_002BAE80[8];
-u8 D_002BAE40[64];
+u8 name_entry_p2_update_buffer[64];
 u8 D_002BAE00[64];
 u8 D_002BADF0[16];
 u8 D_002BADD0[32];
-u8 D_002BAD70[96];
-u8 D_002BAD50[32];
+u8 password_bits_unpack_buffer_2[96];
+u8 password_bits_unpack_buffer[32];

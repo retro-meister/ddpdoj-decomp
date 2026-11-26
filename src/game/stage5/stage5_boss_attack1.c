@@ -145,14 +145,14 @@ void stage5_boss_loop1_arm_guns_new_scatter(void) {
     ARM_GUNS(reg_a4)->scatter_right_bottom = (u8) reg_d0.b[0];
 }
 
-extern u16 D_002645E0[];
-extern u32 D_0028DA04;
+extern u16 stage5_boss_fire_loop1_form1_arm_guns_aimed_start_table[];
+extern u32 stage5_boss_fire_loop1_form1_arm_guns_aimed_start_value;
 
 void stage5_boss_fire_loop1_form1_arm_guns_aimed_start(void) {
     u16 *temp_a0;
-    reg_a0 = (u8 *)(D_002645E0);
+    reg_a0 = (u8 *)(stage5_boss_fire_loop1_form1_arm_guns_aimed_start_table);
     reg_a1 = (u8 *)(reg_a4 + 2);
-    reg_d0.w = ((u32) D_0028DA04 >> 1) - 1;
+    reg_d0.w = ((u32) stage5_boss_fire_loop1_form1_arm_guns_aimed_start_value >> 1) - 1;
     do {
         *(u16 *)reg_a1 = *(u16 *)reg_a0;
         temp_a0 = (u16 *)(reg_a0 + 2);
@@ -176,7 +176,7 @@ s32 boss_attack_stop();
 s32 enemy_switch_target_player();
 extern u16 stage1_midboss_direction64_offsets_166[];
 extern u8 D_00264600[];
-extern u16 D_00264620[];
+extern u16 stage5_boss_fire_loop1_form1_arm_guns_aimed_table[];
 
 void stage5_boss_fire_loop1_form1_arm_guns_aimed(void) {
     s32 bullet_fire256();
@@ -220,7 +220,7 @@ void stage5_boss_fire_loop1_form1_arm_guns_aimed(void) {
             reg_d2.h[1] = ENTITY(reg_a6)->y.h;
             reg_d2.h[0] = ENTITY(reg_a6)->x.h;
             reg_a1 = (u8 *)(stage1_midboss_direction64_offsets_166);
-            reg_a3 = (u8 *)(D_00264620);
+            reg_a3 = (u8 *)(stage5_boss_fire_loop1_form1_arm_guns_aimed_table);
             reg_d6.w = 5;
             do {
                 reg_d7.w = 6;
@@ -302,14 +302,14 @@ void stage5_boss_fire_loop1_form1_arm_guns_aimed(void) {
 
 s32 rng_next_unsigned();
 s32 rng_next_0_to_3();
-extern u16 D_00264760[];
-extern u32 D_0028DA08;
+extern u16 stage5_boss_fire_loop1_form1_mouth_start_table[];
+extern u32 stage5_boss_fire_loop1_form1_mouth_start_value;
 
 void stage5_boss_fire_loop1_form1_mouth_start(void) {
     u16 *temp_a0;
-    reg_a0 = (u8 *)(D_00264760);
+    reg_a0 = (u8 *)(stage5_boss_fire_loop1_form1_mouth_start_table);
     reg_a1 = (u8 *)(reg_a4 + 2);
-    reg_d0.w = ((u32) D_0028DA08 >> 1) - 1;
+    reg_d0.w = ((u32) stage5_boss_fire_loop1_form1_mouth_start_value >> 1) - 1;
     do {
         *(u16 *)reg_a1 = *(u16 *)reg_a0;
         temp_a0 = (u16 *)(reg_a0 + 2);
@@ -532,13 +532,13 @@ void stage5_boss_loop1_arm_gun_b_fire(void) {
     reg_d2.h[0] = ENTITY(reg_a6)->x.h;
 }
 
-extern u16 D_00264780[];
-extern u32 D_0028DA0C;
+extern u16 stage5_boss_fire_loop1_form1_arm_guns_fixed_start_table[];
+extern u32 stage5_boss_fire_loop1_form1_arm_guns_fixed_start_value;
 
 void stage5_boss_fire_loop1_form1_arm_guns_fixed_start(void) {
-    (*(u16 **)&reg_a0) = D_00264780;
+    (*(u16 **)&reg_a0) = stage5_boss_fire_loop1_form1_arm_guns_fixed_start_table;
     (*(u16 **)&reg_a1) = (u16 *)(reg_a4 + 2);
-    reg_d0.w = ((u32) D_0028DA0C >> 1) - 1;
+    reg_d0.w = ((u32) stage5_boss_fire_loop1_form1_arm_guns_fixed_start_value >> 1) - 1;
     do {
         *(*(u16 **)&reg_a1) = *((u16 *)reg_a0);
         (*(u16 **)&reg_a0) += 1;
@@ -760,13 +760,13 @@ void stage5_boss_loop1_horn_fire(void) {
     bullet_fire256();
 }
 
-extern u16 D_002647A0[];
-extern u32 D_0028DA10;
+extern u16 stage5_boss_fire_loop1_form1_horn_start_table[];
+extern u32 stage5_boss_fire_loop1_form1_horn_start_value;
 
 void stage5_boss_fire_loop1_form1_horn_start(void) {
-    (*(u16 **)&reg_a0) = D_002647A0;
+    (*(u16 **)&reg_a0) = stage5_boss_fire_loop1_form1_horn_start_table;
     (*(u16 **)&reg_a1) = (u16 *)(reg_a4 + 2);
-    reg_d0.w = ((u32) D_0028DA10 >> 1) - 1;
+    reg_d0.w = ((u32) stage5_boss_fire_loop1_form1_horn_start_value >> 1) - 1;
     do {
         *(*(u16 **)&reg_a1) = *((u16 *)reg_a0);
         (*(u16 **)&reg_a0) += 1;
@@ -785,7 +785,7 @@ void stage5_boss_fire_loop1_form1_horn_start(void) {
 #endif
 }
 
-extern u16 D_002647C0[];
+extern u16 stage5_boss_fire_loop1_form1_horn_table[];
 
 void stage5_boss_fire_loop1_form1_horn(void) {
     s16 *temp_a0_2;
@@ -834,7 +834,7 @@ block_8:
             reg_d7.h[0] = reg_d3.h[0];
             reg_d0.w = (u32) ENTITY(reg_a6)->y.h;
             reg_d1.w = (u32) ENTITY(reg_a6)->x.h;
-            reg_a3 = (u8 *)(D_002647C0);
+            reg_a3 = (u8 *)(stage5_boss_fire_loop1_form1_horn_table);
             temp_a1 = HORN(reg_a4)->muzzle;
             reg_d4.h[0] = temp_a1;
             reg_a3 += reg_d4.h[0];
@@ -1042,7 +1042,7 @@ void stage5_boss_fire_loop1_form1_rage(void) {
     }
 }
 
-u16 D_002645E0[16] = {
+u16 stage5_boss_fire_loop1_form1_arm_guns_aimed_start_table[16] = {
     0x2080, 0x0202, 0x0606, 0x0440, 0xFFFB, 0x0007, 0xFFFB, 0x0404,
     0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000,
 };
@@ -1052,7 +1052,7 @@ u8 D_00264600[32] = {
     0x80, 0xF7, 0xC0, 0x14, 0x40, 0xE5, 0x40, 0x10, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00,
 };
 
-u16 D_00264620[32] = {
+u16 stage5_boss_fire_loop1_form1_arm_guns_aimed_table[32] = {
     0xFFF7, 0x0005, 0x005C, 0x0DC0, 0xED40, 0xFFF6, 0x0004, 0x006E,
     0x0940, 0xF300, 0xFFF5, 0x0005, 0x0080, 0x06C0, 0xF940, 0xFFF7,
     0x0005, 0x00A4, 0x0DC0, 0x12C0, 0xFFF6, 0x0004, 0x0092, 0x0940,
@@ -1078,22 +1078,22 @@ u8 D_00264660[256] = {
     0x80, 0x0C, 0xC0, 0xFC, 0x00, 0x0D, 0x80, 0xFD, 0x40, 0x0D, 0x40, 0xFE, 0x80, 0x0D, 0x00, 0xFF,
 };
 
-u16 D_00264760[16] = {
+u16 stage5_boss_fire_loop1_form1_mouth_start_table[16] = {
     0x7080, 0x8B8B, 0x0300, 0x0000, 0xFFFA, 0x000B, 0xFFFF, 0x0004,
     0xFFFE, 0x0005, 0xFFF9, 0x0006, 0x0000, 0x0000, 0x06FA, 0x0000,
 };
 
-u16 D_00264780[16] = {
+u16 stage5_boss_fire_loop1_form1_arm_guns_fixed_start_table[16] = {
     0x2080, 0x0909, 0x0F0F, 0x0408, 0x0003, 0x0013, 0xFFF7, 0x0005,
     0xFF00, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000,
 };
 
-u16 D_002647A0[16] = {
+u16 stage5_boss_fire_loop1_form1_horn_start_table[16] = {
     0x2080, 0x1D1D, 0x0303, 0x0020, 0xFFFF, 0x000B, 0x0030, 0x1D00,
     0xFFFF, 0x0303, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000,
 };
 
-u16 D_002647C0[32] = {
+u16 stage5_boss_fire_loop1_form1_horn_table[32] = {
     0x0DC0, 0xED40, 0x0010, 0x0DC0, 0x12C0, 0xFFF0, 0x0B40, 0xF000,
     0x0008, 0x0B40, 0x1000, 0xFFF8, 0x0940, 0xF300, 0x0000, 0x0940,
     0x0D00, 0x0000, 0x0800, 0xF640, 0xFFF8, 0x0800, 0x09C0, 0x0008,
@@ -1105,12 +1105,12 @@ u16 D_00264800[16] = {
     0x0140, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000,
 };
 
-u32 D_0028DA04 = 22;
+u32 stage5_boss_fire_loop1_form1_arm_guns_aimed_start_value = 22;
 
-u32 D_0028DA08 = 30;
+u32 stage5_boss_fire_loop1_form1_mouth_start_value = 30;
 
-u32 D_0028DA0C = 24;
+u32 stage5_boss_fire_loop1_form1_arm_guns_fixed_start_value = 24;
 
-u32 D_0028DA10 = 20;
+u32 stage5_boss_fire_loop1_form1_horn_start_value = 20;
 
 u32 D_0028DA14 = 18;

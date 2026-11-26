@@ -194,7 +194,7 @@ extern u32 g_settings_notice_fade;
 extern s16 g_settings_notice_time;
 extern u16 g_settings_notice_loaded;
 extern u16 g_settings_notice_shown;
-extern s16 D_0028E7D0;
+extern s16 settings_notice_begin_state;
 
 void settings_notice_begin(void) {
     u32 save_d0;
@@ -228,7 +228,7 @@ void settings_notice_begin(void) {
     save_d1 = reg_d1.w;
     g_settings_notice_loaded = 0;
     g_settings_notice_shown = 0;
-    D_0028E7D0 = 0;
+    settings_notice_begin_state = 0;
     save_d2 = reg_d2.w;
     save_d3 = reg_d3.w;
     save_d4 = reg_d4.w;
@@ -529,23 +529,23 @@ void settings_notice_return_finished(void) {
     cond_flag = 0;
 }
 
-extern u8 D_0025F770[];
-extern u8 D_002623F0[];
-extern u8 D_00262430[];
+extern u8 settings_notice_fade_palettes_at_18[];
+extern u8 settings_notice_fade_palettes_at_11[];
+extern u8 settings_notice_fade_palettes_at_4[];
 
 extern void sprite_palette_load(void);
 
 void settings_notice_palettes_load(void)
 {
-    reg_a0 = D_00262430;
+    reg_a0 = settings_notice_fade_palettes_at_4;
     reg_d0.h[0] = 0;
     sprite_palette_load();
 
-    reg_a0 = D_002623F0;
+    reg_a0 = settings_notice_fade_palettes_at_11;
     reg_d0.h[0] = 1;
     sprite_palette_load();
 
-    reg_a0 = D_0025F770;
+    reg_a0 = settings_notice_fade_palettes_at_18;
     reg_d0.h[0] = 2;
     sprite_palette_load();
 }

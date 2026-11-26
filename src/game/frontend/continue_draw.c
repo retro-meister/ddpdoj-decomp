@@ -208,7 +208,7 @@ next_120:
 
 s32 tally_digit_draw();
 s32 binary_to_bcd();
-extern u8 D_00269A30[];
+extern u8 tally_players_draw_table[];
 
 void tally_players_draw(void) {
     u32 sh;
@@ -217,8 +217,8 @@ void tally_players_draw(void) {
     reg_d7.h[0] = ENTITY(reg_a6)->hp.h;
     reg_d2.w = 0xF;
     reg_d2.h[0] &= reg_d7.h[0];
-    reg_a1 = (u8 *)D_00269A30;
-    reg_d2.w = *(u32 *)(D_00269A30 + reg_d2.h[0] * 4);
+    reg_a1 = (u8 *)tally_players_draw_table;
+    reg_d2.w = *(u32 *)(tally_players_draw_table + reg_d2.h[0] * 4);
     reg_d1.h[1] = ENTITY(reg_a6)[2].flags.h;
     reg_d1.h[0] = ENTITY(reg_a6)[2].y.h;
     reg_d1.w += 0x080001C0;
@@ -250,8 +250,8 @@ next_1:
     reg_d7.w = reg_d2.w;
     reg_d2.w = 0xF;
     reg_d2.h[0] &= reg_d7.h[0];
-    reg_a1 = (u8 *)D_00269A30;
-    reg_d2.w = *(u32 *)(D_00269A30 + reg_d2.h[0] * 4);
+    reg_a1 = (u8 *)tally_players_draw_table;
+    reg_d2.w = *(u32 *)(tally_players_draw_table + reg_d2.h[0] * 4);
     reg_d1.h[0] -= 0x200;
     sprite_draw_layer1();
     reg_d7.w >>= 4;
@@ -267,8 +267,8 @@ next_2:
     reg_d7.h[0] = ENTITY(reg_a6)->attr.h;
     reg_d2.w = 0xF;
     reg_d2.h[0] &= reg_d7.h[0];
-    reg_a1 = (u8 *)D_00269A30;
-    reg_d2.w = *(u32 *)(D_00269A30 + reg_d2.h[0] * 4);
+    reg_a1 = (u8 *)tally_players_draw_table;
+    reg_d2.w = *(u32 *)(tally_players_draw_table + reg_d2.h[0] * 4);
     reg_d1.h[1] = ENTITY(reg_a6)[2].flags.h;
     reg_d1.h[0] = ENTITY(reg_a6)[2].y.h;
     reg_d1.w += 0xFD4001C0;
@@ -302,8 +302,8 @@ next_3:
     reg_d7.w = reg_d2.w;
     reg_d2.w = 0xF;
     reg_d2.h[0] &= reg_d7.h[0];
-    reg_a1 = (u8 *)D_00269A30;
-    reg_d2.w = *(u32 *)(D_00269A30 + reg_d2.h[0] * 4);
+    reg_a1 = (u8 *)tally_players_draw_table;
+    reg_d2.w = *(u32 *)(tally_players_draw_table + reg_d2.h[0] * 4);
     reg_d1.h[0] -= 0x200;
     sprite_draw_layer1();
     sh = reg_d7.w >> 4;
@@ -327,8 +327,8 @@ next_7:
     reg_d7.h[0] = ENTITY(reg_a6)[1].y.h;
     reg_d2.w = 0xF;
     reg_d2.h[0] &= reg_d7.h[0];
-    reg_a1 = (u8 *)D_00269A30;
-    reg_d2.w = *(u32 *)(D_00269A30 + reg_d2.h[0] * 4);
+    reg_a1 = (u8 *)tally_players_draw_table;
+    reg_d2.w = *(u32 *)(tally_players_draw_table + reg_d2.h[0] * 4);
     reg_d1.h[1] = ENTITY(reg_a6)[2].x.h;
     reg_d1.h[0] = ENTITY(reg_a6)[2].offset_y.h;
     reg_d1.w += 0x080001C0;
@@ -362,8 +362,8 @@ next_4:
     reg_d7.w = reg_d2.w;
     reg_d2.w = 0xF;
     reg_d2.h[0] &= reg_d7.h[0];
-    reg_a1 = (u8 *)D_00269A30;
-    reg_d2.w = *(u32 *)(D_00269A30 + reg_d2.h[0] * 4);
+    reg_a1 = (u8 *)tally_players_draw_table;
+    reg_d2.w = *(u32 *)(tally_players_draw_table + reg_d2.h[0] * 4);
     reg_d1.h[0] -= 0x200;
     sprite_draw_layer1();
     sh = reg_d7.w >> 4;
@@ -382,8 +382,8 @@ next_5:
     reg_d7.h[0] = ENTITY(reg_a6)[1].offset_y.h;
     reg_d2.w = 0xF;
     reg_d2.h[0] &= reg_d7.h[0];
-    reg_a1 = (u8 *)D_00269A30;
-    reg_d2.w = *(u32 *)(D_00269A30 + reg_d2.h[0] * 4);
+    reg_a1 = (u8 *)tally_players_draw_table;
+    reg_d2.w = *(u32 *)(tally_players_draw_table + reg_d2.h[0] * 4);
     reg_d1.h[1] = ENTITY(reg_a6)[2].x.h;
     reg_d1.h[0] = ENTITY(reg_a6)[2].offset_y.h;
     reg_d1.w += 0xFD4001C0;
@@ -417,8 +417,8 @@ next_6:
     reg_d7.w = reg_d2.w;
     reg_d2.w = 0xF;
     reg_d2.h[0] &= reg_d7.h[0];
-    reg_a1 = (u8 *)D_00269A30;
-    reg_d2.w = *(u32 *)(D_00269A30 + reg_d2.h[0] * 4);
+    reg_a1 = (u8 *)tally_players_draw_table;
+    reg_d2.w = *(u32 *)(tally_players_draw_table + reg_d2.h[0] * 4);
     reg_d1.h[0] -= 0x200;
     sprite_draw_layer1();
     sh = reg_d7.w >> 4;
