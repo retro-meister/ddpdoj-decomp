@@ -17,6 +17,7 @@ from qemu_runner import compile_batch
 from split import data_units, split, target_units
 
 BUILD = ROOT / "build"
+RETAIL_LAYOUT = BUILD / "retail-layout"
 OBJ_CACHE = BUILD / "obj"
 QEMU_RUNNER = (Path(__file__).resolve().parent / "qemu_runner.py").resolve()
 
@@ -290,6 +291,12 @@ def _relative_symbols(folder, main_ld, retail_elf, load_vaddr, bss_end, retail_g
             if m and m.group(1) not in defined:
                 wanted[m.group(1)] = int(m.group(2), 16)
     lines, absolute = [], []
+    if retail_gp is not None:
+        # A label an object defines at the retail value of _gp (the start-up code loads the register through
+        # one) lies in whatever section that address fell in, and would move with that section. It has to be
+        # _gp itself; the script's assignment takes the place of the object's definition.
+        lines += [f"{name} = _gp;" for name in sorted(defined)
+                  if retail.get(name) == retail_gp and not name.endswith(".NON_MATCHING")]
     for name, address in wanted.items():
         if retail_gp is not None and address == retail_gp:
             lines.append(f"{name} = _gp;")
@@ -658,9 +665,14 @@ def link_target(folder, work_target, filename, original, target, units, version,
         if len(executable) != len(original):
             raise ValueError(f"{filename}: size changed from {len(original)} to {len(executable)}")
         verify(executable, target["sha256"], filename)
+        # keep the matching link: its symbol table is every label's retail address, which the shiftable link
+        # needs and cannot get from sources that have been edited
+        RETAIL_LAYOUT.mkdir(parents=True, exist_ok=True)
+        shutil.copyfile(elf, RETAIL_LAYOUT / f"{filename}.elf")
     else:
-        # link the retail layout once: its symbol table gives every label's retail address, which is what the
-        # shiftable script needs to express the remaining script-level symbols as label + offset
+        # The shiftable script expresses the script-level symbols as label + offset, from every label's retail
+        # address. Those come from the last matching link. A link of the present sources in the retail layout
+        # gives them only while no object has changed size, so it is the fallback and says so.
         compact_ld = _prepare_compact_link(folder, work_target, binutils)
         run(
             binutils["ld"], "-EL",
@@ -671,7 +683,13 @@ def link_target(folder, work_target, filename, original, target, units, version,
             "-o", str(elf),
             cwd=ROOT,
         )
-        e_entry, mod_ld, mod_syms_ld = _prepare_shiftable_mod_link(folder, work_target, original, binutils, elf, shift)
+        retail_layout = RETAIL_LAYOUT / f"{filename}.elf"
+        if not retail_layout.is_file():
+            print(f"WARNING  {filename}: no matching link kept (run tools/build.py without --mod first); "
+                  "label addresses are taken from the present sources and are wrong if any object changed size")
+            retail_layout = elf
+        e_entry, mod_ld, mod_syms_ld = _prepare_shiftable_mod_link(folder, work_target, original, binutils,
+                                                                   retail_layout, shift)
         entry = next((name for name, value, _, binding in _elf_symbols(elf) if binding and value == e_entry
                       and not name.endswith(".NON_MATCHING")), f"{e_entry:#x}")
         run(
