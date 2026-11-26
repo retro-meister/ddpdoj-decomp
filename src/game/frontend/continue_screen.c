@@ -701,14 +701,22 @@ extern u8 *reg_call_target_as_u8_p;
 void continue_task(void) {
 #ifndef DDPDOJ_PC
     s32 player_slot_request();
-#endif
-    reg_tmp.h[1] = *(u16 *) (reg_a5 + 8);
-    reg_tmp.h[0] = *(u16 *) (reg_a5 + 0xA);
-    reg_a4 = ARCADE_ADDRESS_DECODE(u8 *, reg_tmp.w);
+#else
+    /* A new task can inherit parameters from a prior task in the same slot. */
     if (reg_a5[3] == 0) {
         continue_task_begin();
         return;
     }
+#endif
+    reg_tmp.h[1] = *(u16 *) (reg_a5 + 8);
+    reg_tmp.h[0] = *(u16 *) (reg_a5 + 0xA);
+    reg_a4 = ARCADE_ADDRESS_DECODE(u8 *, reg_tmp.w);
+#ifndef DDPDOJ_PC
+    if (reg_a5[3] == 0) {
+        continue_task_begin();
+        return;
+    }
+#endif
     if (reg_a5[3] == 2) {
         continue_task_close_panel();
         return;

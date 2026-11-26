@@ -8520,7 +8520,11 @@ void menu_simulation_items_draw(MenuPage *arg0, u8 **arg1, s32 arg2) {
             entry = (MenuItem *)(offset + ((u8 *)g_menu_items + arg2 * 0x380));
             if (entry->active != 0) {
                 entry->alpha = arg0->alpha;
+#ifdef DDPDOJ_PC
+                reg_a0 = arg1[i];
+#else
                 reg_a0 = *(u8 **)((u8 *)arg1 + index);
+#endif
                 glyph_queue_add(entry->x, entry->y, entry->z, 0, 128, arg0->alpha, 1);
             }
             i++;
@@ -8772,7 +8776,11 @@ void menu_stage_select_draw(void) {
                 x = entry[MENU_PAGE_STAGE_SELECT * MENU_ITEMS_PER_PAGE].x;
                 y = entry[MENU_PAGE_STAGE_SELECT * MENU_ITEMS_PER_PAGE].y;
                 sprite = entry[MENU_PAGE_STAGE_SELECT * MENU_ITEMS_PER_PAGE].z;
+#ifdef DDPDOJ_PC
+                reg_a0 = (u8 *)g_menu_stage_select_items[i];
+#else
                 reg_a0 = *(u8 **)((u8 *)g_menu_stage_select_items + index);
+#endif
                 if ((i > 0) && (i < last) && (g_stage_select_unlocked < i - 1)) {
                     alpha = 64;
                     reg_a0 = (u8 *)g_menu_dashes_text;
@@ -9175,7 +9183,11 @@ void menu_sim_setting_draw(void) {
                 s32 value = g_menu_sim_setting.alpha;
 
                 entry[MENU_PAGE_SIM_SETTING * MENU_ITEMS_PER_PAGE].alpha = value;
+#ifdef DDPDOJ_PC
+                reg_a0 = (u8 *)g_menu_sim_setting_items[i];
+#else
                 reg_a0 = *(u8 **)((u8 *)g_menu_sim_setting_items + tableOffset);
+#endif
                 glyph_queue_add(entry[MENU_PAGE_SIM_SETTING * MENU_ITEMS_PER_PAGE].x, entry[MENU_PAGE_SIM_SETTING * MENU_ITEMS_PER_PAGE].y, entry[MENU_PAGE_SIM_SETTING * MENU_ITEMS_PER_PAGE].z, 0, 0x80, value, 1);
             }
             i++;
