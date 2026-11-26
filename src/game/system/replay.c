@@ -867,7 +867,7 @@ void replay_playback_begin(void) {
 }
 
 s32 deferred_text_reset();
-s32 func_00137CC0();
+s32 attract_picture_draw();
 s32 func_001A33C0();
 extern void gfx_draw_color_box(s32 x, s32 y, s32 w, s32 h, s32 depth, s32 alpha, s32 r, s32 g, s32 b);
 extern void replay_header_apply(void);
@@ -969,7 +969,7 @@ void replay_playback_start(void) {
             deferred_text_reset();
 #ifndef DEATH_LABEL
             if (g_attract_demo != 0) {
-                func_00137CC0();
+                attract_picture_draw();
             }
 #endif
             g_p2_lives = 0xFFFF;

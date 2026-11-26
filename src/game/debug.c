@@ -2,6 +2,27 @@
 #include "task.h"
 #include "sdk/ps2sdk.h"
 
+#ifdef DEATH_LABEL
+extern u8 D_0026FD60[];
+extern u8 D_0026FD70[];
+extern u8 D_0026FD80[];
+
+/* The demo of each stage. */
+u8 *attract_demos[3] = {
+    D_0026FD60,
+    D_0026FD70,
+    D_0026FD80,
+};
+#endif
+
+/* The first cell of each frame of the demo's picture, 28 by 6 cells: tile in the high word, palette in the low word. */
+u32 attract_picture_frames[4] = {
+    (0x07C7 << 16) | 0x18,
+    (0x086F << 16) | 0x18,
+    (0x0917 << 16) | 0x18,
+    (0x09BF << 16) | 0x18,
+};
+
 extern u16 D_0028E82C;
 extern u16 D_0028E830;
 extern u16 D_0028E834;
@@ -69,7 +90,6 @@ void func_00137C50(void) {
 s32 func_00171910();
 s32 text_palette_load();
 extern u8 death_D_0026EE20[];
-extern u32 death_D_0026FD90[];
 extern u16 g_attract_demo_stage;
 extern u16 g_attract_demo;
 extern u32 D_0028E7F8;
@@ -116,9 +136,9 @@ void func_00137C90(void) {
     func_00137C50();
     D_0028E824 = 0x10;
     D_0028E820 = 0x960;
-    reg_a0 = (u8 *) death_D_0026FD90;
+    reg_a0 = (u8 *) attract_demos;
     reg_d2.h[0] = g_attract_demo_stage;
-    reg_tmp.w = death_D_0026FD90[reg_d2.h[0]];
+    reg_tmp.w = (u32)attract_demos[reg_d2.h[0]];
     reg_a0 = (u8 *) reg_tmp.w;
     reg_d7.h[0] = *(u16 *)reg_a0;
     reg_a0 += 2;
@@ -163,7 +183,7 @@ void func_00137C90(void) {
 }
 #else
 extern s8 D_0028DEF8_as_s8;
-extern s16 D_0028DEFC_as_s16;
+extern s16 g_attract_picture_frame_as_s16;
 extern s16 D_0028DF00_as_s16;
 extern s8 D_0028DF08_as_s8;
 extern s16 g_attract_demo_as_s16;
@@ -172,7 +192,7 @@ extern s8 g_menu_pad;
 void func_00137C90(void) {
     D_0028DF08_as_s8 = 0;
     D_0028DF00_as_s16 = 0x960;
-    D_0028DEFC_as_s16 = 0;
+    g_attract_picture_frame_as_s16 = 0;
     g_attract_demo_as_s16 = 1;
     D_0028DEF8_as_s8 = 1;
     g_menu_pad = 0;
@@ -181,10 +201,9 @@ void func_00137C90(void) {
 
 #ifndef DEATH_LABEL
 s32 deferred_text_put();
-extern u32 D_0026A290[];
-extern u16 D_0028DEFC;
+extern u16 g_attract_picture_frame;
 
-void func_00137CC0(void) {
+void attract_picture_draw(void) {
     u32 save_d0;
     u32 save_d1;
     u32 save_d2;
@@ -215,8 +234,8 @@ void func_00137CC0(void) {
     save_a3 = reg_a3;
     save_a4 = reg_a4;
     save_a5 = reg_a5;
-    reg_a0 = (u8 *)(D_0026A290);
-    reg_a0 += D_0028DEFC;
+    reg_a0 = (u8 *)(attract_picture_frames);
+    reg_a0 += g_attract_picture_frame;
     temp_a1 = *(u32 *)reg_a0;
     reg_d4.w = temp_a1;
     reg_d0.h[0] = 0x88;
@@ -249,10 +268,10 @@ s32 menu_settings_restore();
 s32 replay_disc_headers_load();
 s32 replay_disc_file_load();
 s32 replay_file_pointers_decode();
-extern u8 D_00269320[];
+extern u16 attract_picture_palette[];
 extern u8 D_0028DEF4;
 extern u8 D_0028DEF8;
-extern u16 D_0028DEFC;
+extern u16 g_attract_picture_frame;
 extern u16 D_0028DF00;
 extern u8 D_0028DF04;
 extern u8 D_0028DF08;
@@ -320,7 +339,7 @@ void func_00137E00(void) {
     case 0:
         D_0028DF08 = temp_a1 + 1;
         replay_disc_headers_load(4, temp_a1, 1);
-        reg_a0 = (u8 *)D_00269320;
+        reg_a0 = (u8 *)attract_picture_palette;
         reg_d0.h[0] = 0xC;
         text_palette_load();
         /* fallthrough */
@@ -372,11 +391,11 @@ void func_00137E00(void) {
         break;
     }
     if ((s32) D_0028DF08 > 0) {
-        func_00137CC0();
+        attract_picture_draw();
         reg_d0.h[0] = (u16) D_0028DEF4;
         if ((reg_d0.h[0] &= 1) == 0) {
-            D_0028DEFC += 4;
-            D_0028DEFC &= 0xF;
+            g_attract_picture_frame += 4;
+            g_attract_picture_frame &= 0xF;
         }
     }
     reg_d0.w = save_d0;
@@ -599,17 +618,12 @@ finished:
 }
 #endif
 
-u8 D_00269320[32] = {
-    0xAD, 0x00, 0xF1, 0x00, 0x36, 0x01, 0x3C, 0x01, 0x9D, 0x01, 0xDB, 0x09, 0xDE, 0x01, 0x1E, 0x06,
-    0x7E, 0x06, 0xBE, 0x0E, 0xDE, 0x0E, 0x1F, 0x0B, 0x3F, 0x13, 0x7F, 0x13, 0xBF, 0x1F, 0x00, 0x00,
-};
-
 /* .sbss (the compiler lays these out in reverse) */
 #ifndef DEATH_LABEL
 u8 D_0028DF08 __attribute__((aligned(4)));
 u8 D_0028DF04 __attribute__((aligned(4)));
 u16 D_0028DF00 __attribute__((aligned(4)));
-u16 D_0028DEFC __attribute__((aligned(4)));
+u16 g_attract_picture_frame __attribute__((aligned(4)));
 u8 D_0028DEF8 __attribute__((aligned(4)));
 u8 D_0028DEF4 __attribute__((aligned(4)));
 #endif
