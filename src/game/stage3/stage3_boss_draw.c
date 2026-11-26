@@ -1,5 +1,6 @@
 #include "common.h"
 #include "entity.h"
+#include "stage3_boss.h"
 
 void func_001D13B0(void);
 void func_001D1440(void);
@@ -35,9 +36,9 @@ void func_001D13B0(void) {
     u16 temp_a3;
 
     reg_a0 = (u8 *)D_0026D320;
-    temp_a3 = ENTITY(reg_a6)[5].offset_y.h;
+    temp_a3 = STAGE3_EXTRA(reg_a6)->legs_anim;
     reg_a0 += temp_a3;
-    reg_tmp.h[0] = ENTITY(reg_a6)[5].offset_y.h;
+    reg_tmp.h[0] = STAGE3_EXTRA(reg_a6)->legs_anim;
     reg_d2.w = *(u32 *)(D_0026D320 + (reg_tmp.h[0] & ~3));
     reg_d1.h[1] = ENTITY(reg_a6)->y.h;
     temp_a1 = ENTITY(reg_a6)->x.h;
@@ -46,7 +47,7 @@ void func_001D13B0(void) {
     reg_d1.w += 0xEC00E800;
     reg_d3.h[0] = 0x14C0;
     reg_d4.h[0] = ENTITY(reg_a6)->attr.h;
-    reg_d4.b[0] = ENTITY(reg_a6)[3].offset_x.b[1];
+    reg_d4.b[0] = STAGE3_PALETTES(reg_a6)->legs;
     sprite_draw_layer2_keep();
 }
 
@@ -81,7 +82,7 @@ void func_001D1490(void) {
     reg_d1.w += 0xF000FC00;
     reg_d3.h[0] = 0x1020;
     reg_d4.w = 0;
-    reg_d4.b[0] = ENTITY(reg_a6)[3].offset_x.b[0];
+    reg_d4.b[0] = STAGE3_PALETTES(reg_a6)->drone;
     sprite_draw_layer2_keep();
 }
 
@@ -98,7 +99,7 @@ void func_001D1530(void) {
     reg_d1.w += 0xF000FC00;
     reg_d3.h[0] = 0x1020;
     reg_d4.h[0] = 0x4000;
-    reg_d4.b[0] = ENTITY(reg_a6)[3].offset_x.b[0];
+    reg_d4.b[0] = STAGE3_PALETTES(reg_a6)->drone;
     sprite_draw_layer2_keep();
 }
 
@@ -110,9 +111,9 @@ void func_001D15D0(void) {
     u16 temp_a2;
 
     reg_a0 = D_0026D380;
-    temp_a2 = ENTITY(reg_a6)[5].misc.h;
+    temp_a2 = STAGE3_EXTRA(reg_a6)->lid_anim;
     reg_a0 += temp_a2;
-    reg_tmp.h[0] = ENTITY(reg_a6)[5].misc.h;
+    reg_tmp.h[0] = STAGE3_EXTRA(reg_a6)->lid_anim;
     reg_d2.w = *(u32 *)(D_0026D380 + (reg_tmp.h[0] & ~3));
     reg_d1.h[1] = ENTITY(reg_a6)[1].y.h;
     temp_a0 = ENTITY(reg_a6)[1].x.h;
@@ -120,7 +121,7 @@ void func_001D15D0(void) {
     reg_d1.w += 0xE400F700;
     reg_d3.h[0] = 0x1C48;
     reg_d4.w = 0;
-    reg_d4.b[0] = ENTITY(reg_a6)[3].offset_y.b[0];
+    reg_d4.b[0] = STAGE3_PALETTES(reg_a6)->lid;
     sprite_draw_layer2_keep();
 }
 
@@ -132,9 +133,9 @@ void func_001D1650(void) {
     u16 temp_a2;
 
     reg_a0 = D_0026D3A0;
-    temp_a2 = ENTITY(reg_a6)[5].misc.h;
+    temp_a2 = STAGE3_EXTRA(reg_a6)->lid_anim;
     reg_a0 += temp_a2;
-    reg_tmp.h[0] = ENTITY(reg_a6)[5].misc.h;
+    reg_tmp.h[0] = STAGE3_EXTRA(reg_a6)->lid_anim;
     reg_d2.w = *(u32 *)(D_0026D3A0 + (reg_tmp.h[0] & ~3));
     reg_d1.h[1] = ENTITY(reg_a6)[2].y.h;
     temp_a0 = ENTITY(reg_a6)[2].x.h;
@@ -142,7 +143,7 @@ void func_001D1650(void) {
     reg_d1.w += 0xE400F700;
     reg_d3.h[0] = 0x1C48;
     reg_d4.w = 0;
-    reg_d4.b[0] = ENTITY(reg_a6)[3].offset_y.b[0];
+    reg_d4.b[0] = STAGE3_PALETTES(reg_a6)->lid;
     sprite_draw_layer2_keep();
 }
 
@@ -160,7 +161,7 @@ void func_001D16D0(void) {
     reg_d1.w += 0xF600F400;
     reg_d3.h[0] = 0xA60;
     reg_d4.w = 0;
-    reg_d4.b[0] = ENTITY(reg_a6)[3].offset_y.b[0];
+    reg_d4.b[0] = STAGE3_PALETTES(reg_a6)->lid;
     sprite_draw_layer2_keep();
 }
 
@@ -169,7 +170,7 @@ extern u16 g_direction_sprites_c[];
 void func_001D1760(void) {
     s32 sprite_draw_layer2_keep();
     u16 temp_a0;
-    reg_d2.h[0] = ENTITY(reg_a6)[5].hit_y_plus.h;
+    reg_d2.h[0] = STAGE3_EXTRA(reg_a6)->left_turret_direction;
     reg_a0 = (u8 *)(g_direction_sprites_c);
     reg_d2.h[0] &= 0x3E;
     reg_d2.h[0] += reg_d2.h[0];
@@ -186,14 +187,14 @@ void func_001D1760(void) {
     reg_d3.h[0] = 0x418;
     reg_d4.w = 0;
     reg_d1.h[0] += 0x7FFF + 0x7D81;
-    reg_d4.b[0] = ENTITY(reg_a6)[3].offset_y.b[0];
+    reg_d4.b[0] = STAGE3_PALETTES(reg_a6)->lid;
     sprite_draw_layer2_keep();
 }
 
 void func_001D1870(void) {
     s32 sprite_draw_layer2_keep();
     u16 temp_a0;
-    reg_d2.h[0] = ENTITY(reg_a6)[5].hit_y_minus.h;
+    reg_d2.h[0] = STAGE3_EXTRA(reg_a6)->right_turret_direction;
     reg_a0 = (u8 *)(g_direction_sprites_c);
     reg_d2.h[0] &= 0x3E;
     reg_d2.h[0] += reg_d2.h[0];
@@ -210,7 +211,7 @@ void func_001D1870(void) {
     reg_d3.h[0] = 0x418;
     reg_d4.w = 0;
     reg_d1.h[0] += 0x7FFF + 0x7C81;
-    reg_d4.b[0] = ENTITY(reg_a6)[3].offset_y.b[0];
+    reg_d4.b[0] = STAGE3_PALETTES(reg_a6)->lid;
     sprite_draw_layer2_keep();
 }
 
@@ -219,7 +220,7 @@ extern u16 D_0026D3E0[];
 void func_001D1980(void) {
     s32 sprite_draw_layer2_keep();
     reg_a0 = (u8 *)D_0026D3E0;
-    reg_a0 += ENTITY(reg_a6)[5].attr.h;
+    reg_a0 += STAGE3_EXTRA(reg_a6)->start_anim;
     reg_d2.h[1] = *(u16 *)reg_a0;
     reg_a0 += 2;
     reg_d2.h[0] = *(u16 *)reg_a0;

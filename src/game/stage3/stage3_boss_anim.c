@@ -90,12 +90,12 @@ void stage3_boss_entrance_anim();
 
 void stage3_boss_legs_walk_start(void) {
     STEP(reg_a4)->frame.h = 1;
-    ENTITY(reg_a6)[5].offset_y.h = 0;
+    STAGE3_EXTRA(reg_a6)->legs_anim = 0;
     stage3_boss_legs_walk();
 }
 
 void stage3_boss_legs_walk(void) {
-    if (ENTITY(reg_a6)[4].sprite.b[1] == 0) {
+    if (STAGE3_DAMAGE(reg_a6)->second_form == 0) {
         reg_tmp.b[0] = STEP(reg_a4)->frame.t.count;
         STEP(reg_a4)->frame.t.count -= 1;
         if ((s32) reg_tmp.b[0] <= 0) {
@@ -104,9 +104,9 @@ void stage3_boss_legs_walk(void) {
         }
     } else {
 block_3:
-        ENTITY(reg_a6)[5].offset_y.h += 4;
-        if (ENTITY(reg_a6)[5].offset_y.h == 0x40) {
-            ENTITY(reg_a6)[5].offset_y.h = 0U;
+        STAGE3_EXTRA(reg_a6)->legs_anim += 4;
+        if (STAGE3_EXTRA(reg_a6)->legs_anim == 0x40) {
+            STAGE3_EXTRA(reg_a6)->legs_anim = 0U;
         }
     }
 }
@@ -152,27 +152,27 @@ block_6:
             reg_d3.h[0] = *(u16 *)(reg_a0 + 4);
             temp_s1 = reg_d3.w;
             temp_s0 = reg_d2.w;
-            if (ENTITY(reg_a6)[5].hit_x_minus.h == 0) {
+            if (STAGE3_EXTRA(reg_a6)->left_turret_track_stop == 0) {
                 reg_d0.h[0] = ENTITY(reg_a6)[1].y.h;
                 reg_d1.h[0] = ENTITY(reg_a6)[1].x.h;
                 reg_d0.h[0] += 0x1100;
                 reg_d1.h[0] += 0x80;
                 direction_between();
-                reg_d0.h[0] = ENTITY(reg_a6)[5].hit_y_plus.h;
+                reg_d0.h[0] = STAGE3_EXTRA(reg_a6)->left_turret_direction;
                 direction_turn_toward();
-                ENTITY(reg_a6)[5].hit_y_plus.h = (u16) reg_d1.h[0];
+                STAGE3_EXTRA(reg_a6)->left_turret_direction = (u16) reg_d1.h[0];
             }
             reg_d2.w = temp_s0;
             reg_d3.w = temp_s1;
-            if (ENTITY(reg_a6)[5].hp.h == 0) {
+            if (STAGE3_EXTRA(reg_a6)->right_turret_track_stop == 0) {
                 reg_d0.h[0] = ENTITY(reg_a6)[2].y.h;
                 reg_d1.h[0] = ENTITY(reg_a6)[2].x.h;
                 reg_d0.h[0] += 0x1100;
                 reg_d1.h[0] += 0x7FFF + 0x7F81;
                 direction_between();
-                reg_d0.h[0] = ENTITY(reg_a6)[5].hit_y_minus.h;
+                reg_d0.h[0] = STAGE3_EXTRA(reg_a6)->right_turret_direction;
                 direction_turn_toward();
-                ENTITY(reg_a6)[5].hit_y_minus.h = (u16) reg_d1.h[0];
+                STAGE3_EXTRA(reg_a6)->right_turret_direction = (u16) reg_d1.h[0];
             }
         }
     }
@@ -266,8 +266,8 @@ void stage3_boss_six_gun_open(void) {
     STEP(reg_a4)->frame.t.count -= 1;
     if ((s32) reg_tmp.b[0] <= 0) {
         STEP(reg_a4)->frame.t.count = (u8) STEP(reg_a4)->frame.t.reload;
-        ENTITY(reg_a6)[5].offset_x.h += 4;
-        if (ENTITY(reg_a6)[5].offset_x.h == 0x18) {
+        STAGE3_EXTRA(reg_a6)->six_gun_anim += 4;
+        if (STAGE3_EXTRA(reg_a6)->six_gun_anim == 0x18) {
             STEP(reg_a4)->running = 0;
         }
     }
@@ -284,8 +284,8 @@ void stage3_boss_six_gun_close(void) {
     STEP(reg_a4)->frame.t.count -= 1;
     if ((s32) reg_tmp.b[0] <= 0) {
         STEP(reg_a4)->frame.t.count = (u8) STEP(reg_a4)->frame.t.reload;
-        ENTITY(reg_a6)[5].offset_x.h -= 4;
-        if (ENTITY(reg_a6)[5].offset_x.h == 0) {
+        STAGE3_EXTRA(reg_a6)->six_gun_anim -= 4;
+        if (STAGE3_EXTRA(reg_a6)->six_gun_anim == 0) {
             STEP(reg_a4)->running = 0;
         }
     }
@@ -300,7 +300,7 @@ void stage3_boss_lid_idle_start(void) {
 }
 
 void stage3_boss_lid_idle(void) {
-    if (ENTITY(reg_a6)[4].sprite.b[1] == 0) {
+    if (STAGE3_DAMAGE(reg_a6)->second_form == 0) {
         reg_tmp.b[0] = STEP(reg_a4)->frame.t.count;
         STEP(reg_a4)->frame.t.count -= 1;
         if ((s32) reg_tmp.b[0] <= 0) {
@@ -309,9 +309,9 @@ void stage3_boss_lid_idle(void) {
         }
     } else {
 block_3:
-        ENTITY(reg_a6)[5].misc.h += 4;
-        if (ENTITY(reg_a6)[5].misc.h == 0x20) {
-            ENTITY(reg_a6)[5].misc.h = 0U;
+        STAGE3_EXTRA(reg_a6)->lid_anim += 4;
+        if (STAGE3_EXTRA(reg_a6)->lid_anim == 0x20) {
+            STAGE3_EXTRA(reg_a6)->lid_anim = 0U;
         }
     }
 }
@@ -344,26 +344,26 @@ void stage3_boss_entrance_anim() {
     if (ENTRANCE(reg_a4)->delay == 0) goto next_40;
     ENTRANCE(reg_a4)->delay -= 1;
     if (ENTRANCE(reg_a4)->delay == 0) {
-        ENTITY(reg_a6)[5].attr.h = 0xC0;
+        STAGE3_EXTRA(reg_a6)->start_anim = 0xC0;
         goto next_40;
     }
     reg_tmp.b[0] = ENTRANCE(reg_a4)->pace.t.count;
     ENTRANCE(reg_a4)->pace.t.count -= 1;
     if ((s32) reg_tmp.b[0] > 0) return;
     ENTRANCE(reg_a4)->pace.t.count = (u8) ENTRANCE(reg_a4)->pace.t.reload;
-    ENTITY(reg_a6)[5].attr.h += 0xC;
-    if (ENTITY(reg_a6)[5].attr.h != 0xC0) return;
-    ENTITY(reg_a6)[5].attr.h = 0U;
+    STAGE3_EXTRA(reg_a6)->start_anim += 0xC;
+    if (STAGE3_EXTRA(reg_a6)->start_anim != 0xC0) return;
+    STAGE3_EXTRA(reg_a6)->start_anim = 0U;
     ENTRANCE(reg_a4)->delay -= 1;
     if (ENTRANCE(reg_a4)->delay != 0) return;
-    ENTITY(reg_a6)[5].attr.h = 0x60;
+    STAGE3_EXTRA(reg_a6)->start_anim = 0x60;
 next_40:
     reg_tmp.b[0] = ENTRANCE(reg_a4)->frame.t.count;
     ENTRANCE(reg_a4)->frame.t.count -= 1;
     if ((s32) reg_tmp.b[0] <= 0) {
         ENTRANCE(reg_a4)->frame.t.count = (u8) ENTRANCE(reg_a4)->frame.t.reload;
-        ENTITY(reg_a6)[5].attr.h += 0xC;
-        t1 = ENTITY(reg_a6)[5].attr.h;
+        STAGE3_EXTRA(reg_a6)->start_anim += 0xC;
+        t1 = STAGE3_EXTRA(reg_a6)->start_anim;
         if (t1 == 0x1E0) {
             ENTRANCE(reg_a4)->running = 0;
             g_boss_present_b1 |= 2;

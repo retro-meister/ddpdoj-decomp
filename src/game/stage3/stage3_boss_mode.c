@@ -406,15 +406,15 @@ void stage3_boss_mode_high_six_gun_start(void) {
     boss_movement_start();
     reg_d0.w = 4;
     boss_animation_start();
-    temp_a0 = ENTITY(reg_a6)[8].hit_x_plus.b[1];
+    temp_a0 = STAGE3_ADJUST(reg_a6)->six_gun_first_frame;
     *(u8 *)(reg_a0 + 3) = temp_a0;
     *(s8 *)(reg_a0 + 2) = 1;
-    temp_v0 = ENTITY(reg_a6)[8].hit_x_plus.b[1];
+    temp_v0 = STAGE3_ADJUST(reg_a6)->six_gun_first_frame;
     if ((s32) temp_v0 < 0x11) {
         stage3_boss_mode_high_six_gun(temp_a0);
         return;
     }
-    ENTITY(reg_a6)[8].hit_x_plus.b[1] = (u8) (temp_v0 - 0x30);
+    STAGE3_ADJUST(reg_a6)->six_gun_first_frame = (u8) (temp_v0 - 0x30);
     stage3_boss_mode_high_six_gun(temp_a0);
 }
 

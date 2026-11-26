@@ -10,7 +10,7 @@ s32 boss_phase_start();
 s32 boss_phase_stop_all();
 s32 boss_attack_stop_all();
 s32 score_add_no_chain();
-void stage3_boss_leave_timer(void);
+void stage3_boss_time_limit(void);
 s32 func_002016D0();
 s32 active_players_mask();
 extern u8 g_game_mode;
@@ -141,7 +141,7 @@ block_check:
     D_0029976C[0] = 1;
     func_002016D0();
 block_tail:
-    stage3_boss_leave_timer();
+    stage3_boss_time_limit();
 }
 
 s32 boss_animation_stop();
@@ -164,8 +164,8 @@ void stage3_boss_defeated() {
     boss_animation_stop();
     reg_d0.w = 3;
     boss_animation_stop();
-    ENTITY(reg_a6)[5].hit_x_minus.h = 1;
-    ENTITY(reg_a6)[5].hp.h = 1;
+    STAGE3_EXTRA(reg_a6)->left_turret_track_stop = 1;
+    STAGE3_EXTRA(reg_a6)->right_turret_track_stop = 1;
     reg_tmp.w = -1U;
     STAGE3_BOSS(reg_a5)->hp[0] = (u16) reg_tmp.h[1];
     STAGE3_BOSS(reg_a5)->hp[1] = (u16) reg_tmp.h[0];
@@ -175,9 +175,9 @@ void stage3_boss_defeated() {
     ENTITY(reg_a6)[2].flags.h = 0x8000;
     ENTITY(reg_a6)[6].flags.h = 0x8000;
     ENTITY(reg_a6)[7].flags.h = 0x8000;
-    ENTITY(reg_a6)[3].offset_y.sb[1] = 0x10;
-    ENTITY(reg_a6)[3].offset_y.sb[0] = 0x11;
-    ENTITY(reg_a6)[3].offset_x.sb[1] = 0x12;
+    STAGE3_PALETTES(reg_a6)->body = 0x10;
+    STAGE3_PALETTES(reg_a6)->lid = 0x11;
+    STAGE3_PALETTES(reg_a6)->legs = 0x12;
     reg_d0.w = 1;
     boss_phase_start();
 }
@@ -198,7 +198,7 @@ void func_001D4540(void) {
 }
 
 void func_001D4550(void) {
-    ENTITY(reg_a6)[4].offset_x.sh = 0;
+    STAGE3_DAMAGE(reg_a6)->shielded = 0;
 }
 
 void func_001D4560(void) {
@@ -220,23 +220,23 @@ void func_001D45D0(void) {
 }
 
 void stage3_boss_stop_damage(void) {
-    ENTITY(reg_a6)[4].offset_y.sh = 1;
+    STAGE3_DAMAGE(reg_a6)->stopped = 1;
 }
 
 extern u16 g_enemies_stopped;
 
-void stage3_boss_leave_timer(void) {
+void stage3_boss_time_limit(void) {
 #ifdef DEATH_LABEL
-    if ((g_enemies_stopped == 0) && (STAGE3_BOSS(reg_a5)->leave_delay == 0)) {
+    if ((g_enemies_stopped == 0) && (STAGE3_BOSS(reg_a5)->time_left == 0)) {
 #else
-    if ((g_enemies_stopped == 0) && (STAGE3_BOSS(reg_a5)->leave_delay -= 1, STAGE3_BOSS(reg_a5)->leave_delay == 0)) {
+    if ((g_enemies_stopped == 0) && (STAGE3_BOSS(reg_a5)->time_left -= 1, STAGE3_BOSS(reg_a5)->time_left == 0)) {
 #endif
         active_players_mask();
         if (reg_d0.h[0] == 0) {
-            STAGE3_BOSS(reg_a5)->leave_delay = 0x78U;
+            STAGE3_BOSS(reg_a5)->time_left = 0x78U;
             return;
         }
-        ENTITY(reg_a6)[4].draw.sh = 0;
+        STAGE3_DAMAGE(reg_a6)->hit_by = 0;
         stage3_boss_defeated();
     }
 }
