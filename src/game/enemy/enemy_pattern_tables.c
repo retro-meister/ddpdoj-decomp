@@ -39,27 +39,27 @@ void small_flyer_a();
 void small_flyer_b_first();
 void small_flyer_b_start();
 void small_flyer_b();
-void func_00157D80();
-void func_00157D90();
-void func_00157DC0();
-void func_001581E0();
-void func_001581F0();
-void func_00158370();
-void func_00159030();
-void func_00159040();
-void func_001590B0();
-void func_00159C50();
-void func_00159C60();
-void func_00159CB0();
-void func_0015A500();
-void func_0015A510();
-void func_0015A5B0();
-void func_0015AE00();
-void func_0015AE10();
-void func_0015AE70();
-void func_0015AEF0();
-void func_0015AF00();
-void func_0015B210();
+void flyer_spawner_first();
+void flyer_spawner_start();
+void flyer_spawner();
+void stage3_carrier_first();
+void stage3_carrier_start();
+void stage3_carrier();
+void battleship_c_first();
+void battleship_c_start();
+void battleship_c();
+void wing_gunner_first();
+void wing_gunner_start();
+void wing_gunner();
+void hover_gunner_first();
+void hover_gunner_start();
+void hover_gunner();
+void signal_timer_first();
+void signal_timer_start();
+void signal_timer();
+void small_tank_c_first();
+void small_tank_c_start();
+void small_tank_c();
 void func_0015C440();
 void func_00168110();
 void func_00168120();
@@ -373,11 +373,11 @@ EnemyRoutines g_enemy_routines[128] = {
     /* 0x12 */ { stage3_midboss_start, stage3_midboss_main },
     /* 0x13 */ { func_001D6C90, func_001D6D60 },
     /* 0x14 */ { stage3_cloud_start, stage3_cloud },
-    /* 0x15 */ { func_001581F0, func_00158370 },
-    /* 0x16 */ { func_0015A510, func_0015A5B0 },
+    /* 0x15 */ { stage3_carrier_start, stage3_carrier },
+    /* 0x16 */ { hover_gunner_start, hover_gunner },
     /* 0x17 */ { battleship_b_start, battleship_b },
-    /* 0x18 */ { func_00159040, func_001590B0 },
-    /* 0x19 */ { func_0015AE10, func_0015AE70 },
+    /* 0x18 */ { battleship_c_start, battleship_c },
+    /* 0x19 */ { signal_timer_start, signal_timer },
     /* 0x1A */ { large_tank_start, large_tank },
     /* 0x1B */ { hatch_gunner_start, hatch_gunner },
     /* 0x1C */ { stage1_midboss_wreck_start, stage1_midboss_wreck },
@@ -412,8 +412,8 @@ EnemyRoutines g_enemy_routines[128] = {
     /* 0x39 */ { stage3_gun_c_start, stage3_gun_a },
     /* 0x3A */ { stage3_gun_d_start, stage3_gun_a },
     /* 0x3B */ { stage3_large_gun_start, stage3_large_gun },
-    /* 0x3C */ { func_00159C60, func_00159CB0 },
-    /* 0x3D */ { func_0015AF00, func_0015B210 },
+    /* 0x3C */ { wing_gunner_start, wing_gunner },
+    /* 0x3D */ { small_tank_c_start, small_tank_c },
     /* 0x3E */ { small_flyer_a_start, small_flyer_a },
     /* 0x3F */ { small_flyer_b_start, small_flyer_b },
     /* 0x40 */ { stage4_boss_start, stage4_boss_main },
@@ -441,7 +441,7 @@ EnemyRoutines g_enemy_routines[128] = {
     /* 0x56 */ { func_001F93D0, func_001F9450 },
     /* 0x57 */ { func_001F9550, func_001F95D0 },
     /* 0x58 */ { stage5_midboss5_spin_drone_start, stage5_midboss5_spin_drone },
-    /* 0x59 */ { func_00157D90, func_00157DC0 },
+    /* 0x59 */ { flyer_spawner_start, flyer_spawner },
     /* 0x5A */ { dummy_enemy_main, dummy_enemy_main_b },
     /* 0x5B */ { dummy_enemy_main, dummy_enemy_main_b },
     /* 0x5C */ { dummy_enemy_main, dummy_enemy_main_b },
@@ -505,11 +505,11 @@ void (*g_enemy_first_routines[128])() = {
     /* 0x12 */ stage3_midboss_first,
     /* 0x13 */ func_001D6C80,
     /* 0x14 */ stage3_cloud_first,
-    /* 0x15 */ func_001581E0,
-    /* 0x16 */ func_0015A500,
+    /* 0x15 */ stage3_carrier_first,
+    /* 0x16 */ hover_gunner_first,
     /* 0x17 */ battleship_b_first,
-    /* 0x18 */ func_00159030,
-    /* 0x19 */ func_0015AE00,
+    /* 0x18 */ battleship_c_first,
+    /* 0x19 */ signal_timer_first,
     /* 0x1A */ large_tank_first,
     /* 0x1B */ hatch_gunner_first,
     /* 0x1C */ stage1_midboss_wreck_first,
@@ -544,8 +544,8 @@ void (*g_enemy_first_routines[128])() = {
     /* 0x39 */ stage3_gun_c_first,
     /* 0x3A */ stage3_gun_d_first,
     /* 0x3B */ stage3_large_gun_first,
-    /* 0x3C */ func_00159C50,
-    /* 0x3D */ func_0015AEF0,
+    /* 0x3C */ wing_gunner_first,
+    /* 0x3D */ small_tank_c_first,
     /* 0x3E */ small_flyer_a_first,
     /* 0x3F */ small_flyer_b_first,
     /* 0x40 */ stage4_boss_first,
@@ -573,7 +573,7 @@ void (*g_enemy_first_routines[128])() = {
     /* 0x56 */ func_001F93C0,
     /* 0x57 */ func_001F9540,
     /* 0x58 */ stage5_midboss5_spin_drone_first,
-    /* 0x59 */ func_00157D80,
+    /* 0x59 */ flyer_spawner_first,
     /* 0x5A */ dummy_enemy_first,
     /* 0x5B */ dummy_enemy_first,
     /* 0x5C */ dummy_enemy_first,
