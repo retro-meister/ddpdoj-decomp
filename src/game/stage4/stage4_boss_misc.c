@@ -16,7 +16,7 @@ void stage4_boss_missile_start(void) {
     enemy_init_entities();
     ENTITY(reg_a6)->y.h = (u16) STAGE4_MISSILE(reg_a5)->at_start.y;
     ENTITY(reg_a6)->x.h = (u16) STAGE4_MISSILE(reg_a5)->at_start.x;
-    ENTITY(reg_a6)->move.h = (u16) STAGE4_MISSILE(reg_a5)->at_start.move;
+    ENTITY(reg_a6)->move.h = (u16) STAGE4_MISSILE(reg_a5)->at_start.move.h;
     STAGE4_MISSILE(reg_a5)->now.seen = 0;
     STAGE4_MISSILE(reg_a5)->now.step = 0;
     STAGE4_MISSILE(reg_a5)->now.speed_timer.both = 0U;

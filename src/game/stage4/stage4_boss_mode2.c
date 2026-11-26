@@ -32,8 +32,8 @@ void stage4_boss_mode_attack_a_start(void) {
 s32 boss_phase_start();
 s32 boss_attack_start();
 s32 boss_attack_running();
-s32 func_001D7880();
-s32 func_001D7900();
+s32 stage4_boss_right_spinner_turn();
+s32 stage4_boss_left_spinner_turn_back();
 extern u8 D_0028DC80[];
 
 void stage4_boss_mode_attack_a() {
@@ -50,13 +50,13 @@ void stage4_boss_mode_attack_a() {
         reg_d0.h[0] = ENTITY(reg_a6)[6].offset_y.h;
         temp_a0 = *(u16 *)(reg_a4 + 8);
         if (temp_a0 != reg_d0.h[0]) {
-            func_001D7880();
+            stage4_boss_right_spinner_turn();
             reg_d7.w = 1;
         }
         reg_d0.h[0] = ENTITY(reg_a6)[7].offset_y.h;
         temp_a0_2 = *(u16 *)(reg_a4 + 0xA);
         if (temp_a0_2 != reg_d0.h[0]) {
-            func_001D7900();
+            stage4_boss_left_spinner_turn_back();
             reg_d7.w = 1;
         }
         if (reg_d7.h[0] == 0) {
