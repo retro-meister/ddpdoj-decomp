@@ -179,8 +179,8 @@ void startup_pointers_store_a(void) {
     STORE_POINTER(continue_player2.held, input_get_p2_held);
     STORE_POINTER(continue_player2.pressed, input_get_p2_pressed);
     STORE_POINTER(continue_player2.other_state, D_002BF400);
-    STORE_POINTER(player_starts[0].lives, &(*(u32 *)&g_p1_lives));
-    STORE_POINTER(player_starts[1].lives, &(*(u32 *)&g_p2_lives));
+    STORE_ARCADE_ADDRESS(player_starts[0].lives, &(*(u32 *)&g_p1_lives));
+    STORE_ARCADE_ADDRESS(player_starts[1].lives, &(*(u32 *)&g_p2_lives));
     STORE_POINTER(debug_list_views[0].entries, g_bomb_entities);
     STORE_POINTER(debug_list_views[1].entries, ((u16 *)g_player1));
     STORE_POINTER(debug_list_views[2].entries, ((u16 *)g_player2));
@@ -711,8 +711,17 @@ block_3:
 
 
 
+#ifdef DDPDOJ_PC
+extern u16 g_wreck_count[8];
+#endif
+
 void wrecks_clear(void) {
+#ifdef DDPDOJ_PC
+    memset(g_wrecks, 0, 0x5A0);
+    memset(g_wreck_count, 0, 6);
+#else
     memset(((s32 *)g_wrecks), 0, 0x5A6);
+#endif
 }
 
 

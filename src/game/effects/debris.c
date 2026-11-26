@@ -16,7 +16,12 @@ extern u16 g_debris[];
 
 
 void debris_clear(void) {
+#ifdef DDPDOJ_PC
+    memset(g_debris, 0, 0x500);
+    g_debris_count[0] = 0;
+#else
     memset(((s32 *)g_debris), 0, 0x502);
+#endif
 }
 
 

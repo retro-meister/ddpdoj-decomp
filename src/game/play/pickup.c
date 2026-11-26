@@ -1730,8 +1730,17 @@ void bullet_slot_reset(void) {
 
 extern u8 g_bullets[];
 
+#ifdef DDPDOJ_PC
+extern u8 *D_00299770[];
+#endif
+
 void bullets_clear(void) {
+#ifdef DDPDOJ_PC
+    memset(g_bullets, 0, MAIN_OR_DEATH_LABEL(0x3490, 0x10690));
+    D_00299770[0] = NULL;
+#else
     memset(g_bullets, 0, MAIN_OR_DEATH_LABEL(0x3494, 0x10694));
+#endif
     reg_a0 = g_bullets + 2;
     reg_d0.h[0] = MAIN_OR_DEATH_LABEL(0xD1, 0x419);
     do {

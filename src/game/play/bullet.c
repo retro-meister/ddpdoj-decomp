@@ -34,6 +34,13 @@ extern s16 bullets_update_table_2[];
 extern u8 g_sprite_bullets2_buf[];
 extern u8 g_sprite_bullets_buf[];
 
+#ifdef DDPDOJ_PC
+extern u8 *D_00299770[];
+#define BULLET_SPRITE_CURSOR D_00299770[0]
+#else
+#define BULLET_SPRITE_CURSOR (*(u8 **)(g_bullets + MAIN_OR_DEATH_LABEL(0x3490, 0x10690)))
+#endif
+
 void bullets_update(void) {
     bullets_cancel_update();
     ((s16 *)g_bullets_alive)[0] = 0;
@@ -41,10 +48,10 @@ void bullets_update(void) {
     reg_a0 = (u8 *)g_sprite_bullets_buf;
     bullets_update_state = (u8 *)(reg_a4);
     reg_a0 += g_sprite_bullets_used;
-    *(u8 **)(g_bullets + MAIN_OR_DEATH_LABEL(0x3490, 0x10690)) = reg_a0;
+    BULLET_SPRITE_CURSOR = reg_a0;
     bullets_update_loop();
     reg_d1.w = (u32) g_sprite_bullets_buf;
-    reg_d0.w = (u32) *(u8 **)(g_bullets + MAIN_OR_DEATH_LABEL(0x3490, 0x10690));
+    reg_d0.w = (u32) BULLET_SPRITE_CURSOR;
     reg_d0.w -= reg_d1.w;
     reg_a4 = (u8 *)((u32)reg_a4 - (u32)bullets_update_state);
     reg_tmp.w = (u32) reg_a4;
@@ -111,7 +118,11 @@ extern u16 g_side_scroll_step[];
 extern u16 g_bomb_entities[24];
 
 #define SLOT_PHASE MAIN_OR_DEATH_LABEL(D_00299762[0], *(u16 *)(g_bullets + 0x10682))
+#ifdef DDPDOJ_PC
+#define SLOT_CURSOR BULLET_SPRITE_CURSOR
+#else
 #define SLOT_CURSOR MAIN_OR_DEATH_LABEL(D_00299770[0], *(u8 **)(g_bullets + 0x10690))
+#endif
 
 void bullets_update_loop(void) {
     u8 *var_a0;
