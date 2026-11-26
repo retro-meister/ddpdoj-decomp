@@ -23,4 +23,18 @@ typedef struct {
 
 extern GroundState g_ground_state;
 
+/*
+ * A game that starts at a boss runs its stage forward, without drawing, until the scroll line is the one
+ * here; the stage's boss start placements (enemy_tables.h) begin on the lines after it. The two executables
+ * differ in three of them. A stage whose events or length change needs its line moved with them.
+ */
+#define STAGE1_BOSS_START_LINE 463
+#define STAGE2_BOSS_START_LINE MAIN_OR_DEATH_LABEL(469, 470)
+#define STAGE3_BOSS_START_LINE MAIN_OR_DEATH_LABEL(410, 409)
+#define STAGE4_BOSS_START_LINE MAIN_OR_DEATH_LABEL(709, 710)
+#define STAGE5_BOSS_START_LINE 793
+
+/* Stage 3 holds the scroll line here (its SCROLL_LINE_HOLD event); the run to the boss lets it go on. */
+#define STAGE3_HELD_LINE 228
+
 #endif

@@ -236,33 +236,33 @@ void ground_task(void) {
     }
     if (t & 1) {
         *p = t | 1;
-        goto next_3;
+        goto already_started;
     }
     *p = t | 1;
     ground_start();
     if (g_simulation_active != 0) {
-        goto next_1;
+        goto reload_check;
     }
 #ifndef DEATH_LABEL
     if (g_attract_demo != 0) {
-        goto next_2;
+        goto load_begin;
     }
 #endif
     if (g_replay_mode != 2) {
-        goto next_2;
+        goto load_begin;
     }
-next_1:
+reload_check:
     if (g_loaded_stage != g_stage) {
         func_00225670();
     }
-next_2:
+load_begin:
     g_stage_load_state = 0;
     g_cd_async_busy_as_u8 = 1;
     g_cd_async_state_as_u8 = 0;
     g_game_frame_ran = 0;
     D_0028EC58_as_u8 = 0;
     return;
-next_3:
+already_started:
     t = *(u8 *) (reg_a5 + 2);
     p = reg_a5 + 2;
     if (!(t & 2)) {
@@ -271,16 +271,16 @@ next_3:
     }
     *p = t | 8;
     if (g_simulation_active == 0) {
-        goto next_4;
+        goto not_simulation;
     }
     if (g_simulation_boss_start != 0) {
-        goto next_5;
+        goto run_to_boss;
     }
-next_4:
+not_simulation:
     if (g_game_mode != 2) {
         return;
     }
-next_5:
+run_to_boss:
     more = 1;
     done = 0;
     save_23 = g_sprite_ship_select_used;
@@ -314,29 +314,29 @@ next_5:
     save_02 = g_sprite_sight_used;
     save_01 = g_sprite_laser_trail_used;
     save_00 = g_sprite_bombs_used;
-loop_6:
+run_line:
     ground_step();
-    if (done == 0 && g_stage == 2 && g_scroll_line == 0xE4 && *(u16 *) (reg_a5 + 8) == 1) {
+    if (done == 0 && g_stage == 2 && g_scroll_line == STAGE3_HELD_LINE && *(u16 *) (reg_a5 + 8) == 1) {
         scroll_line_release();
         done = 1;
     }
-    if (g_stage == 4 && g_scroll_line == 0x319) {
+    if (g_stage == 4 && g_scroll_line == STAGE5_BOSS_START_LINE) {
         more = 0;
     }
-    if (g_stage == 3 && g_scroll_line == MAIN_OR_DEATH_LABEL(0x2C5, 0x2C6)) {
+    if (g_stage == 3 && g_scroll_line == STAGE4_BOSS_START_LINE) {
         more = 0;
     }
-    if (g_stage == 2 && g_scroll_line == MAIN_OR_DEATH_LABEL(0x19A, 0x199)) {
+    if (g_stage == 2 && g_scroll_line == STAGE3_BOSS_START_LINE) {
         more = 0;
     }
-    if (g_stage == 1 && g_scroll_line == MAIN_OR_DEATH_LABEL(0x1D5, 0x1D6)) {
+    if (g_stage == 1 && g_scroll_line == STAGE2_BOSS_START_LINE) {
         more = 0;
     }
-    if (g_stage == 0 && g_scroll_line == 0x1CF) {
+    if (g_stage == 0 && g_scroll_line == STAGE1_BOSS_START_LINE) {
         more = 0;
     }
     if (more != 0) {
-        goto loop_6;
+        goto run_line;
     }
     g_sprite_ship_select_used = save_23;
     g_sprite_stage_clear1_used = save_29;
