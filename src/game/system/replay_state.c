@@ -1,4 +1,7 @@
 #include "common.h"
+#ifdef DDPDOJ_PC
+#include "pc_replay_storage.h"
+#endif
 #include "enemy.h"
 #include "ground.h"
 #include "player.h"
@@ -1410,6 +1413,7 @@ extern Bank10 g_p1_score_extra_cell_as_Bank10;
 extern Bank90 g_p1_score_cells_as_Bank90;
 extern u8 g_player_slots[];
 extern u8 g_pickups[];
+#ifndef DDPDOJ_PC
 extern u16 D_006C58AA[];
 extern u16 D_006C58B0[];
 extern u16 D_006C58B2[];
@@ -1430,6 +1434,7 @@ extern u16 D_006C58D0[488];
 extern u16 D_006C58D2[];
 extern u16 D_006C58D4[];
 extern u16 D_006C58D6[];
+#endif
 void replay_snapshot_save(Buf *buf) {
     s32 i;
     s32 v;
@@ -2841,7 +2846,15 @@ s32 pointer_to_block_offset(u16 *addr, u16 *starts, s32 *sizes, s32 count) {
     return 0;
 }
 
+#ifdef DDPDOJ_PC
+s32 pointer_to_array_offset(void *raw_entry, u8 *code, u32 count, u32 stride) {
+    /* Some file entries begin at a two-byte boundary. */
+    Reg32 aligned_entry;
+    memcpy(&aligned_entry, raw_entry, sizeof(aligned_entry));
+    Reg32 *entry = &aligned_entry;
+#else
 s32 pointer_to_array_offset(Reg32 *entry, u8 *code, u32 count, u32 stride) {
+#endif
     Reg32 key;
     u32 offset;
     u8 *mark = &entry->b[2];
@@ -2856,6 +2869,9 @@ s32 pointer_to_array_offset(Reg32 *entry, u8 *code, u32 count, u32 stride) {
             entry->h[0] = offset;
             entry->b[3] = 0x82;
             *mark = 0x99;
+#ifdef DDPDOJ_PC
+            memcpy(raw_entry, entry, sizeof(*entry));
+#endif
             return 1;
         }
         code += stride;
@@ -2982,13 +2998,22 @@ void replay_snapshot_pointers_encode(u8 *base) {
 extern u8 g_text_layer[];
 
 
+#ifdef DDPDOJ_PC
+void replay_text_pointers_encode(u8 *baseAddress)
+#else
 void replay_text_pointers_encode(s32 baseAddress)
+#endif
 {
     s32 entryOffset = 0;
 
     do {
+#ifdef DDPDOJ_PC
+        pointer_to_array_offset(baseAddress + entryOffset + 0x1EE, (u8 *)g_text_layer, 0x800, 4);
+        pointer_to_array_offset(baseAddress + entryOffset + 0x248, (u8 *)g_text_layer, 0x800, 4);
+#else
         pointer_to_array_offset((void *)(entryOffset + baseAddress + 0x1EE), (void *)g_text_layer, 0x800, 4);
         pointer_to_array_offset((void *)(entryOffset + baseAddress + 0x248), (void *)g_text_layer, 0x800, 4);
+#endif
         entryOffset += 0xA;
     } while (entryOffset < 0x5A);
 }
@@ -2999,7 +3024,11 @@ s32 replay_snapshot_checksum();
 void replay_file_pointers_encode(u8 *arg0) {
     g_replay_pointer_not_found = 0;
     replay_snapshot_pointers_encode(arg0 + 0x400);
+#ifdef DDPDOJ_PC
+    replay_text_pointers_encode(arg0 + 0x5934);
+#else
     replay_text_pointers_encode((s32)(arg0 + 0x5934));
+#endif
     (*(s32 *)((u8 *)(arg0) + (0x5CE4))) = replay_snapshot_checksum(arg0 + 0x400);
 }
 

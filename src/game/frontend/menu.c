@@ -1,4 +1,7 @@
 #include "common.h"
+#ifdef DDPDOJ_PC
+#include "pc_replay_storage.h"
+#endif
 #include "task.h"
 #include "sdk/ps2sdk.h"
 #include "pad.h"
@@ -2245,7 +2248,11 @@ s32 replay_save_prompt_update_card(void);
 s32 replay_save_prompt_update_disc(void);
 void replay_scores_snapshot(void);
 s32 replay_file_finalize(void);
+#ifdef DDPDOJ_PC
+void delta_decode(u8 *data);
+#else
 void delta_decode(s32 arg0);
+#endif
 void replay_save_prompt_draw(void);
 void replay_save_prompt_text_draw(void);
 s32 replay_snapshot_checksum(const u8 *data);
@@ -7886,6 +7893,7 @@ extern u8 D_0028ED34;
 extern u8 D_0028ED35;
 extern u8 D_0028ED36;
 extern u8 D_0028ED37;
+#ifndef DDPDOJ_PC
 extern u8 g_replay_file_loaded[];
 extern u8 g_replay_file[];
 extern u8 D_006C58D8[];
@@ -7897,6 +7905,7 @@ extern u8 D_006C58DD[];
 extern u8 D_006C58DE[];
 extern u8 D_006C58DF[];
 extern u8 g_replay_snapshot[];
+#endif
 
 s32 replay_slots_card_load(void) {
     switch (g_replay_slots_step) {                           /* irregular */
@@ -8051,6 +8060,7 @@ extern u8 D_0028ED34;
 extern u8 D_0028ED35;
 extern u8 D_0028ED36;
 extern u8 D_0028ED37;
+#ifndef DDPDOJ_PC
 extern u8 g_replay_file_loaded[];
 extern u8 g_replay_file[];
 extern u8 D_006C58D8[];
@@ -8062,6 +8072,7 @@ extern u8 D_006C58DD[];
 extern u8 D_006C58DE[];
 extern u8 D_006C58DF[];
 extern u8 g_replay_snapshot[];
+#endif
 s32 replay_slots_disc_load(void) {
 #ifndef DDPDOJ_PC
     s32 replay_file_pointers_decode();
@@ -8350,6 +8361,7 @@ extern s16 D_0068DEFC[];
 extern s16 D_0068DEFE[];
 extern s16 D_0068DF00[];
 extern s16 D_0068DF04[];
+#ifndef DDPDOJ_PC
 extern u16 D_006C58A2[];
 extern u16 D_006C58A4[];
 extern u16 D_006C58A6[];
@@ -8373,6 +8385,7 @@ extern u16 D_006C58CE[];
 extern u16 D_006C58D0[];
 extern u16 D_006C58D2[];
 extern u16 D_006C58D4[];
+#endif
 extern s8 D_002714F8[];
 extern s8 D_00271501[];
 extern s8 D_00271502[];
@@ -10096,8 +10109,10 @@ void result_notice_finish() {
 
 extern s8 D_002714FC[];
 extern u8 D_00684CD7[];
+#ifndef DDPDOJ_PC
 extern u16 D_006C58AC[];
 extern u16 D_006C58AE[];
+#endif
 
 void menu_ranking_draw(void) {
 #ifndef DDPDOJ_PC
@@ -10317,7 +10332,9 @@ extern u16 D_0028ED4C;
 extern s32 D_0028ED50;
 extern u16 D_0028ED54;
 extern u8 g_replay_watch_after_run;
+#ifndef DDPDOJ_PC
 extern u8 D_006A4C00[];
+#endif
 
 
 void replay_loaded_file_adopt(void) {
@@ -10462,7 +10479,11 @@ s32 replay_file_finalize(void) {
         D_0028E368 = 0;
         memcpy(g_replay_file_loaded, save, 0x202E8);
         replay_file_pointers_encode(g_replay_file_loaded);
+#ifdef DDPDOJ_PC
+        delta_decode(D_006A4C00);
+#else
         delta_decode((s32)D_006A4C00);
+#endif
         replay_slots_reset();
         replay_slots_open(1, 2, 0);
         g_menu_alpha = 0;
@@ -10485,7 +10506,11 @@ s32 replay_file_finalize(void) {
     return 0;
 }
 
+#ifdef DDPDOJ_PC
+void delta_decode(u8 *arg0) {
+#else
 void delta_decode(s32 arg0) {
+#endif
     s32 var_v1;
     s8 *temp_a1;
     s8 *temp_t0_2;

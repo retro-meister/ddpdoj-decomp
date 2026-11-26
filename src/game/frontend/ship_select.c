@@ -1,4 +1,7 @@
 #include "common.h"
+#ifdef DDPDOJ_PC
+#include "pc_replay_storage.h"
+#endif
 #include "player.h"
 #include "task.h"
 #include "entity.h"
@@ -515,7 +518,9 @@ extern u16 g_p2_ship_type;
 extern u16 g_p1_ship_type;
 extern s16 g_player2[];
 extern s16 g_player1[];
+#ifndef DDPDOJ_PC
 extern u8 g_replay_start_state[];
+#endif
 
 void select_step2_task_begin(void) {
     *(s8 *)(reg_a5 + 3) = 1;

@@ -1,4 +1,7 @@
 #include "common.h"
+#ifdef DDPDOJ_PC
+#include "pc_replay_storage.h"
+#endif
 #include "task.h"
 
 #ifdef DDPDOJ_PC
@@ -101,8 +104,10 @@ extern u16 D_0028E9B4;
 extern s8 g_cd_async_state;
 extern s8 g_cd_async_busy;
 extern s8 D_0028EC58;
+#ifndef DDPDOJ_PC
 extern u8 g_replay_file_loaded[];
 extern u8 g_replay_file[];
+#endif
 
 #ifdef DDPDOJ_PC
 void game_boot_begin(void) {

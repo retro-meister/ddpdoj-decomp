@@ -1,4 +1,7 @@
 #include "common.h"
+#ifdef DDPDOJ_PC
+#include "pc_replay_storage.h"
+#endif
 #include "sdk/ps2sdk.h"
 #include "pad.h"
 #include "gfx.h"
@@ -232,7 +235,9 @@ extern s8 D_0028E3F8;
 extern u8 g_replay_taken_over;
 extern u8 g_replay_buffer_state;
 extern u8 g_replay_mode;
+#ifndef DDPDOJ_PC
 extern u16 D_006C58A4[];
+#endif
 
 void sys_draw_replay_label(void) {
     s32 var_a2;

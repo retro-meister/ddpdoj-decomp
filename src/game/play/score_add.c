@@ -1,4 +1,7 @@
 #include "common.h"
+#ifdef DDPDOJ_PC
+#include "pc_replay_storage.h"
+#endif
 #include "score_tables.h"
 extern s16 g_player1[];
 extern s16 g_player2[];
@@ -2184,7 +2187,9 @@ extern u16 g_score_panel_intro;
 extern u16 g_boss_hp_bar_move_count;
 extern u16 g_stage;
 extern u8 g_replay_mode;
+#ifndef DDPDOJ_PC
 extern u16 D_006C8E5C[];
+#endif
 
 void score_panel_intro_begin(void) {
     if (!(g_boss_present & 1)) {

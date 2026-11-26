@@ -1,4 +1,7 @@
 #include "common.h"
+#ifdef DDPDOJ_PC
+#include "pc_replay_storage.h"
+#endif
 #include "task.h"
 #include "sdk/ps2sdk.h"
 #include "replay.h"
@@ -32,10 +35,12 @@ extern u8 g_replay_buffer_state;
 extern u8 g_replay_mode_begun;
 extern u8 g_replay_mode;
 extern u8 g_simulation_active;
+#ifndef DDPDOJ_PC
 extern u16 D_006C58A4[];
 extern u16 D_006C58A8[];
 extern u8 death_D_002B1ED8[];
 extern u8 g_replay_inputs[];
+#endif
 
 void replay_filter_input(void) {
     u32 save_d6;
@@ -157,10 +162,12 @@ extern u8 g_replay_buffer_state;
 extern u8 g_replay_mode_begun;
 extern u8 g_replay_mode;
 extern u8 g_simulation_active;
+#ifndef DDPDOJ_PC
 extern u16 D_006C58A4[];
 extern u16 D_006C58A8[];
 extern u8 D_006CB588[];
 extern u8 g_replay_inputs[];
+#endif
 
 void replay_filter_input(void) {
     u32 save_d6;
@@ -669,6 +676,7 @@ extern u8 D_0028ED64;
 extern s32 g_replay_position;
 extern u8 g_replay_buffer_state;
 extern u8 g_replay_mode_begun;
+#ifndef DDPDOJ_PC
 extern u8 g_replay_file[48];
 extern u16 D_006C58A2[];
 extern u16 D_006C58A4[];
@@ -683,6 +691,7 @@ extern u16 D_006CB57E[];
 extern u16 D_006CB580[];
 extern u16 D_006CB582[];
 extern u8 g_replay_inputs[];
+#endif
 
 void replay_record_begin() {
     s32 i;
@@ -766,7 +775,9 @@ void replay_begin_pending(void) {
 
 s32 replay_snapshot_load(s32 *);                   /* extern */
 extern s32 g_replay_checksum;
+#ifndef DDPDOJ_PC
 extern s32 g_replay_file_checksum[];
+#endif
 
 void replay_input_playback_begin() {
     g_replay_mode_begun = 2;
@@ -797,8 +808,10 @@ extern s8 D_0028E3F8;
 extern u8 g_replay_taken_over;
 extern u8 D_0028ED5C;
 extern ReplayHeader g_replay_file_as_SaveHeader; /* the header at the start of the save buffer */
+#ifndef DDPDOJ_PC
 extern u16 D_006C8E56[];
 extern u16 D_006C8E5C[];
+#endif
 
 void replay_playback_begin(void) {
 #ifndef DDPDOJ_PC
@@ -918,6 +931,7 @@ extern s32 D_0028E99C;
 extern s8 D_0028EC58;
 extern s16 g_player2[56];
 extern s16 g_player1[56];
+#ifndef DDPDOJ_PC
 extern u8 D_006C58C4[];
 extern u8 g_replay_snapshot[];
 extern u8 D_006C68B6[];
@@ -931,6 +945,7 @@ extern u8 D_006C91AD[];
 extern u8 D_006C91AE[];
 extern u8 D_006C91AF[];
 extern u8 replay_playback_start_buffer_3[];
+#endif
 
 void replay_playback_start(void) {
 #ifndef DDPDOJ_PC
@@ -1486,6 +1501,7 @@ s32 g_replay_checksum;
 /* .bss (the compiler lays these out in reverse) */
 ReplayHeader g_replay_header;
 ReplayHeader g_replay_header_saved;
+#ifndef DDPDOJ_PC
 u16 D_006CB580[54024];
 u8 replay_playback_start_buffer_3[9168];
 u16 replay_playback_start_buffer_2[8];
@@ -1493,3 +1509,4 @@ u16 replay_playback_start_buffer[392];
 u8 g_replay_snapshot[12784];
 u16 D_006C58D0[488];
 u8 g_replay_file[48];
+#endif

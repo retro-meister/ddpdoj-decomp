@@ -1,8 +1,23 @@
 #include "common.h"
+#ifdef DDPDOJ_PC
+#include "pc_replay_storage.h"
+#endif
 #include "sdk/ps2sdk.h"
 #include "pad.h"
 #ifdef DDPDOJ_PC
 #include <stddef.h>
+
+/* The native linker does not join the original 16-byte prefix and its
+ * following storage into a memory-card directory table. */
+static _Alignas(64) union {
+    u8 bytes[99 * 64];
+    struct {
+        u8 timestamps[16];
+        s32 size;
+    } first;
+} card_directory;
+#define g_mc_dir card_directory.bytes
+#define D_0069F590 (&card_directory.first.size)
 #endif
 
 /*
@@ -563,7 +578,9 @@ void mc_operation_begin() {
     }
 }
 
+#ifndef DDPDOJ_PC
 extern u8 g_replay_file_loaded[];
+#endif
 extern s32 D_006C4AE8[];
 extern u8 g_mc_save_buf[];
 extern s32 D_006C5494[];
@@ -1036,7 +1053,9 @@ void mc_task_save_ask(void) {
     mc_choice_draw();
 }
 extern u8 g_mc_wait;
+#ifndef DDPDOJ_PC
 extern u8 g_mc_dir[];
+#endif
 
 void mc_task_save_check_card(void) {
     s32 sceMcSync(s32 arg0, s32 arg1, s32 *arg2);
@@ -1913,7 +1932,9 @@ void mc_task_write_game(void) {
 }
 
 extern u8 D_0068E580[];
+#ifndef DDPDOJ_PC
 extern u8 g_replay_file_loaded[];
+#endif
 void mc_task_write_replay(void) {
     s32 sceMcOpen(s32 arg0, s32 arg1, char *arg2, s32 arg3);
     s32 sceMcClose(s32 arg0);
@@ -2447,7 +2468,9 @@ void mc_task_load_ask(void) {
 }
 
 extern s32 mc_task_load_check_card_state;
+#ifndef DDPDOJ_PC
 extern s32 D_0069F590[];
+#endif
 
 void mc_task_load_check_card(void) {
     s32 sceMcSync(s32 arg0, s32 arg1, s32 *arg2);
@@ -4671,24 +4694,31 @@ s32 sprintf(char *buf, const char *format, ...);
 void mc_no_space_message_draw(s32 arg0) {
 #ifndef DDPDOJ_PC
     extern void mc_message_draw(s32, char *, s32, s32, s32, u16, s32);
+#define MC_PROMPT_BUFFER ((char *)(*(s32 *)&g_pad_dma_buf))
+#else
+#define MC_PROMPT_BUFFER g_pad_dma_buf
 #endif
     mc_message_draw(160, g_mc_msg_no_space, 0, 20, 14, D_0028ED10, 100);
     mc_message_draw(220, g_mc_msg_to_save[arg0], 0, 20, 14, D_0028ED10, 100);
     mc_message_draw(260, g_mc_msg_needed_space[D_0028ECE8], 0, 20, 14, D_0028ED10, 100);
     if (arg0 == 0) {
-        sprintf((char *)(*(s32 *)&g_pad_dma_buf), SJIS("　　　　 %2d "), g_mc_needed_kilobytes[g_mc_file * 2]);
+        sprintf(MC_PROMPT_BUFFER, SJIS("　　　　 %2d "), g_mc_needed_kilobytes[g_mc_file * 2]);
     } else {
-        sprintf((char *)(*(s32 *)&g_pad_dma_buf), SJIS("　　　　%3d "), g_mc_needed_kilobytes[g_mc_file * 2]);
+        sprintf(MC_PROMPT_BUFFER, SJIS("　　　　%3d "), g_mc_needed_kilobytes[g_mc_file * 2]);
     }
-    mc_message_draw(300, (char *)(*(s32 *)&g_pad_dma_buf), 0, 20, 14, D_0028ED10, 100);
+    mc_message_draw(300, MC_PROMPT_BUFFER, 0, 20, 14, D_0028ED10, 100);
+#undef MC_PROMPT_BUFFER
 }
 
 
 s32 mc_save_ask_message_draw(s32 index) {
-#ifndef DDPDOJ_PC
+#ifdef DDPDOJ_PC
+    mc_message_draw(0xC8, g_mc_msg_save_ask[index], 0, 0x14, 0xE, (u16)D_0028ED10, 0x64);
+    return 0;
+#else
     s32 mc_message_draw(s32, char *, s32, s32, s32, s32, s32);
-#endif
     return mc_message_draw(0xC8, g_mc_msg_save_ask[index], 0, 0x14, 0xE, (*(u16 *)&D_0028ED10), 0x64);
+#endif
 }
 
 typedef struct {
@@ -5547,6 +5577,7 @@ extern u16 D_006A0E80[];
 extern u16 D_006A0E82[];
 extern u16 D_006A0E86[];
 extern u16 replay_slot_info_fill_buffer[];
+#ifndef DDPDOJ_PC
 extern u8 g_replay_file[48];
 extern u16 D_006C58A2[];
 extern u16 D_006C58A4[];
@@ -5573,6 +5604,7 @@ extern u16 D_006C58CE[];
 extern u16 D_006C58D0[];
 extern u16 D_006C58D2[];
 extern u16 D_006C58D6[];
+#endif
 
 void replay_slot_info_fill(s32 slot) {
     s32 off;
@@ -5671,14 +5703,16 @@ s32 g_mc_port;
 
 /* .bss (the compiler lays these out in reverse) */
 u8 g_mc_save_buf[2480];
+#ifndef DDPDOJ_PC
 u8 D_006A4C00[131824];
 u8 g_replay_file_loaded[1024];
-#ifndef DDPDOJ_PC
 u8 D_006A3E50[2480];
 #endif
 u16 replay_slot_info_fill_buffer[6112];
+#ifndef DDPDOJ_PC
 s32 D_0069F590[1600];
 u8 g_mc_dir[16];
+#endif
 #ifdef DEATH_LABEL
 u8 D_00696D80[34864];
 #else

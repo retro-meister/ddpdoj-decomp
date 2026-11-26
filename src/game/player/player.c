@@ -1,4 +1,7 @@
 #include "common.h"
+#ifdef DDPDOJ_PC
+#include "pc_replay_storage.h"
+#endif
 #include "entity.h"
 #include "player.h"
 
@@ -2816,7 +2819,9 @@ void player_roll_recenter(void) {
 
 extern s32 g_replay_position;
 extern s16 g_player1[56];
+#ifndef DDPDOJ_PC
 extern u8 D_006C68B6[];
+#endif
 
 void p1_draw(u8 arg0) {
     u8 var_a0;
@@ -2838,7 +2843,9 @@ void p1_draw(u8 arg0) {
 }
 
 extern s16 g_player2[56];
+#ifndef DDPDOJ_PC
 extern u8 D_006C6918[];
+#endif
 
 void p2_draw(u8 arg0) {
     u8 var_a0;

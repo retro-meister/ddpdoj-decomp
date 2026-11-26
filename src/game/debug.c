@@ -1,4 +1,7 @@
 #include "common.h"
+#ifdef DDPDOJ_PC
+#include "pc_replay_storage.h"
+#endif
 #include "task.h"
 #include "sdk/ps2sdk.h"
 #include "debug_views.h"
@@ -330,6 +333,7 @@ extern u8 D_0028ED36;
 extern u8 D_0028ED37;
 extern u8 g_replay_buffer_state;
 extern u8 g_replay_mode;
+#ifndef DDPDOJ_PC
 extern u8 g_replay_file_loaded[];
 extern u8 g_replay_file[];
 extern u8 D_006C58D8[];
@@ -341,6 +345,7 @@ extern u8 D_006C58DD[];
 extern u8 D_006C58DE[];
 extern u8 D_006C58DF[];
 extern u8 g_replay_snapshot[];
+#endif
 
 void attract_demo_start(void) {
     s32 layers_reset();
