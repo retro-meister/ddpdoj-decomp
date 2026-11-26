@@ -592,7 +592,7 @@ s32 sfx_cursor_move();
 s32 sprite_draw_layer5_keep();
 extern u32 D_0024D640[];
 extern u32 D_0024D660[];
-extern u16 D_0025F770[352];
+extern u16 D_0025F770[32];
 extern u32 D_0028C090;
 extern u32 D_0028C098;
 extern u16 D_00295E3A[];

@@ -1,8 +1,11 @@
 /* Tables of the seventh player shot family. */
 #include "common.h"
 
-u16 option_shot_list_1_01_00_02[16] = {
+u16 option_shot_list_1_01_00_02[8] = {
     0x0000, 0x068E, 0x0000, 0x068D, 0x0000, 0x068C, 0x0000, 0x068B,
+};
+
+u16 D_0025D800[8] = {
     0x0000, 0x068E, 0x0000, 0x068D, 0x0000, 0x068C, 0x0000, 0x068B,
 };
 

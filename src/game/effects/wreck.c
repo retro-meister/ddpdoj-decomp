@@ -45,7 +45,7 @@ void wreck_spawn_b_init(void);
 
 extern u16 D_00246C50[];
 extern u16 g_stage3_map_palettes[];
-extern u16 D_0025F770[352];
+extern u16 D_0025F770[32];
 extern u8 D_0025FBB0[];
 extern u8 D_0025FBF0[];
 extern u8 D_0025FC30[];
@@ -266,7 +266,7 @@ void startup_pointers_store_a(void) {
 
 extern u16 D_00244930[];
 extern u16 D_00249E90[];
-extern u16 stage1_boss_palette[1504];
+extern u16 stage1_boss_palette[32];
 extern u8 D_0025FA70[];
 extern u8 D_0025FE70[];
 extern u8 D_0025FEB0[];

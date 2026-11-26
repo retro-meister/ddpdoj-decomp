@@ -10,7 +10,7 @@ extern u16 option_style_param_01_15[72];
 extern u16 option_style_param_02_15[32];
 extern u16 option_style_param_00_19[64];
 extern u16 option_style_param_01_19[72];
-extern u16 option_style_param_02_19[100];
+extern u16 option_style_param_02_19[32];
 extern u16 option_style_param_00_04[7];
 extern u16 option_style_param_01_04[7];
 extern u16 option_style_param_02_04[7];
@@ -18,7 +18,7 @@ extern u16 option_style_param_00[48];
 struct OptionStyleParam01Record { u16 w0[6]; void *p1; u16 w2[40]; };
 extern struct OptionStyleParam01Record option_style_param_01;
 extern u16 option_style_param_02[48];
-extern u16 option_style_params[16];
+extern u16 option_style_params[8];
 extern u16 option_power_values[24];
 extern u16 option_strong_params[24];
 extern u16 option_hyper_params[16];
@@ -99,11 +99,14 @@ u16 option_style_param_01_19[72] = {
     0x0000, 0x0401, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000,
 };
 
-u16 option_style_param_02_19[100] = {
+u16 option_style_param_02_19[32] = {
     0x0000, 0x0428, 0x0000, 0x0427, 0x0000, 0x0426, 0x0000, 0x0425,
     0x0000, 0x0424, 0x0000, 0x0423, 0x0000, 0x0422, 0x0000, 0x0421,
     0x0000, 0x0420, 0x0000, 0x041F, 0x0000, 0x041E, 0x0000, 0x041D,
     0x0000, 0x041C, 0x0000, 0x041B, 0x0000, 0x041A, 0x0000, 0x0419,
+};
+
+u16 D_0025F1D0[68] = {
     0x0900, 0x0000, 0x0900, 0x0080, 0x0900, 0x0140, 0x0900, 0x01C0,
     0x08C0, 0x0280, 0x08C0, 0x0340, 0x0880, 0x0400, 0x0840, 0x04C0,
     0x0800, 0x0580, 0x07C0, 0x05C0, 0x0780, 0x0640, 0x0740, 0x0680,
@@ -151,8 +154,11 @@ u16 option_style_param_02[48] = {
     0x0028, 0x0000, 0x0419, 0x0000, 0x0419, 0x0000, 0x0000, 0x0000,
 };
 
-u16 option_style_params[16] = {
+u16 option_style_params[8] = {
     0x0000, 0x0001, 0x0002, 0x0003, 0x0004, 0x0005, 0x0000, 0x0000,
+};
+
+u16 D_0025F3C0[8] = {
     0x00E0, 0x00E0, 0x00F0, 0x00E8, 0x00E8, 0x00F8, 0x0000, 0x0000,
 };
 
