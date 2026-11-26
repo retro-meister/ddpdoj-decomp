@@ -147,6 +147,13 @@ target_include_directories(ddpdoj_disc PUBLIC .)
 add_library(ddpdoj_sfx STATIC sfx.c)
 target_link_libraries(ddpdoj_sfx PUBLIC SDL3::SDL3 PRIVATE ddpdoj_disc)
 
+add_library(ddpdoj_sound STATIC bgm.c)
+target_compile_features(ddpdoj_sound PRIVATE c_std_11)
+target_include_directories(ddpdoj_sound PUBLIC ../include)
+target_link_libraries(ddpdoj_sound PRIVATE ddpdoj_sfx ddpdoj_disc)
+target_link_libraries(ddpdoj_main_system PRIVATE ddpdoj_sound)
+target_link_libraries(ddpdoj_death_system PRIVATE ddpdoj_sound)
+
 add_library(ddpdoj_cdvd STATIC cdvd.c)
 target_compile_features(ddpdoj_cdvd PRIVATE c_std_11)
 target_include_directories(ddpdoj_cdvd PUBLIC . ../include)
@@ -251,7 +258,12 @@ if(BUILD_TESTING)
     set(DDPDOJ_TEST_ISO "" CACHE FILEPATH "Optional retail ISO for native disc checks")
     set(DDPDOJ_TEST_BASEROM "${CMAKE_CURRENT_SOURCE_DIR}/../baserom" CACHE PATH
         "Directory containing the extracted retail executables")
+    add_executable(ddpdoj_retail_sound_test tests/retail_sound_test.c)
+    target_link_libraries(ddpdoj_retail_sound_test PRIVATE ddpdoj_sound ddpdoj_sfx ddpdoj_disc)
+
     if(DDPDOJ_TEST_ISO)
+        add_test(NAME retail_sound COMMAND ddpdoj_retail_sound_test "${DDPDOJ_TEST_ISO}")
+        set_tests_properties(retail_sound PROPERTIES ENVIRONMENT "SDL_AUDIODRIVER=dummy")
         add_test(NAME retail_disc_image
                  COMMAND ddpdoj_disc_test "${DDPDOJ_TEST_ISO}" "${DDPDOJ_TEST_BASEROM}")
         add_test(NAME retail_splash_render COMMAND ddpdoj_splash_test "${DDPDOJ_TEST_ISO}")

@@ -2,6 +2,9 @@
 #include "sdk/ps2sdk.h"
 #include "cd.h"
 #include "replay.h"
+#ifdef DDPDOJ_PC
+#include "pc_sound.h"
+#endif
 
 /*
  * Sound: requests to the sound driver on the I/O processor. Music is streamed from the disc (two streams, the
@@ -53,6 +56,7 @@ void sfx_cursor_move(void);
 void music_play(s32 arg0, s32 arg1);
 
 
+#ifndef DDPDOJ_PC
 s32 sound_rpc_bind(void) {
     s32 last;
     s32 delay;
@@ -73,9 +77,13 @@ hang:
     }
     goto retry;
 }
+#endif
 
 
 s32 sound_rpc_call(s32 arg0, s32 arg1, s32 arg2) {
+#ifdef DDPDOJ_PC
+    return pc_sound_command(arg0, arg1, arg2, 0);
+#else
     s32 t = arg0 & 0xFFF0;
 
     if (t == 0x8020 || t == 0x550 || t == 0x560) {
@@ -86,12 +94,16 @@ s32 sound_rpc_call(s32 arg0, s32 arg1, s32 arg2) {
         sceSifCallRpc(&g_sound_rpc_client, arg0, 0, g_sound_rpc_buf, 0x10, g_sound_rpc_buf, 0x40, 0, 0);
     }
     return g_sound_rpc_buf[0];
+#endif
 }
 
 
 
 s32 sound_rpc_call3(s32 command, s32 firstWord, s32 secondWord, s32 thirdWord)
 {
+#ifdef DDPDOJ_PC
+    return pc_sound_command(command, firstWord, secondWord, thirdWord);
+#else
     g_sound_rpc_buf[0] = firstWord;
     g_sound_rpc_buf[1] = secondWord;
     g_sound_rpc_buf[2] = thirdWord;
@@ -100,6 +112,7 @@ s32 sound_rpc_call3(s32 command, s32 firstWord, s32 secondWord, s32 thirdWord)
                   g_sound_rpc_buf, 0x40, 0, 0);
 
     return g_sound_rpc_buf[0];
+#endif
 }
 
 extern u8 g_se_vag_path_1[];
@@ -112,7 +125,9 @@ extern u8 g_se_vag_path_7[];
 extern s32 g_se_last_result;
 
 void sound_start_up(void) {
+#ifndef DDPDOJ_PC
     sound_rpc_bind();
+#endif
     g_bgm_fade_state[0].fadeMode = 0;
     g_bgm_fade_state[0].isStopped = 1;
     g_se_last_result = 0;
@@ -122,12 +137,15 @@ void sound_start_up(void) {
     g_bgm_fade_state[1].fadeMode = 0;
     g_bgm_fade_state[0].activeTrack = 0;
     g_bgm_fade_state[1].activeTrack = 0;
+#ifndef DDPDOJ_PC
     sound_rpc_call(EZBGM_CMD_SDINIT, 0, 0);
+#endif
     sound_rpc_call(EZBGM_CMD_RESET_SE, 0, 0);
     sound_rpc_call(EZBGM_CMD_SET_MASTERVOL, 0x3FFF3FFF, 0);
     sound_rpc_call(EZBGM_CMD_SET_MASTERVOL | 1, 0x3FFF3FFF, 0);
     sound_rpc_call(EZBGM_CMD_SET_VOL, 0x3FFF3FFF, 0);
     sound_rpc_call(EZBGM_CMD_SET_VOL | 1, 0x3FFF3FFF, 0);
+#ifndef DDPDOJ_PC
     sound_rpc_call(EZBGM_CMD_LOAD_SE_INIT, (s32)((s32) g_se_vag_path_1), 0);
     sound_rpc_call(EZBGM_CMD_LOAD_SE, (s32)((s32) g_se_vag_path_2), 0);
     sound_rpc_call(EZBGM_CMD_LOAD_SE, (s32)((s32) g_se_vag_path_3), 0);
@@ -135,6 +153,7 @@ void sound_start_up(void) {
     sound_rpc_call(EZBGM_CMD_LOAD_SE, (s32)((s32) g_se_vag_path_5), 0);
     sound_rpc_call(EZBGM_CMD_LOAD_SE, (s32)((s32) g_se_vag_path_6), 0);
     sound_rpc_call(EZBGM_CMD_LOAD_SE, (s32)((s32) g_se_vag_path_7), 0);
+#endif
 }
 
 void music_start_when_ready(void);
@@ -1059,7 +1078,14 @@ void music_play(s32 arg0, s32 arg1) {
     } else {
         sound_rpc_call(0x80C0, 0, 0);
     }
+#ifdef DDPDOJ_PC
+    if (sound_rpc_call(0x160, g_bgm_files[arg0].size, g_bgm_files[arg0].lba) < 0) {
+        g_music_started = 0;
+        return;
+    }
+#else
     sound_rpc_call(0x160, g_bgm_files[arg0].size, g_bgm_files[arg0].lba);
+#endif
     g_bgm_fade_state[0].curVol = 0x64;
     g_bgm_fade_state[0].startVol = g_bgm_fade_state[0].curVol;
     sound_rpc_call(EZBGM_CMD_SET_VOL, 0x7FFF7FFF, 0);
@@ -1079,8 +1105,17 @@ void sound_update(void) {
 
 
 void music_start_when_ready(void) {
+#ifdef DDPDOJ_PC
+    s32 status = sound_rpc_call(EZBGM_CMD_GET_STATUS, 0, 0);
+    if (status < 0) {
+        g_music_started = 0;
+        return;
+    }
+    if (status == 0 && sound_rpc_call(EZBGM_CMD_START, 0, 0) == 0) {
+#else
     if (sound_rpc_call(EZBGM_CMD_GET_STATUS, 0, 0) == 0) {
         sound_rpc_call(EZBGM_CMD_START, 0, 0);
+#endif
         g_music_started = 0;
         g_bgm_fade_state[0].isStopped = 0;
         g_bgm_fade_state[0].isPaused = 0;

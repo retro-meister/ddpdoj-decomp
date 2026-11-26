@@ -25,6 +25,7 @@ typedef struct {
     unsigned frame;
     unsigned fraction;
     float gain;
+    int channel;
     bool loop;
 } Voice;
 
@@ -247,6 +248,11 @@ bool pc_sfx_open_device(void)
 
 bool pc_sfx_play(unsigned request, unsigned volume)
 {
+    return pc_sfx_play_on_channel(request, volume, -1);
+}
+
+bool pc_sfx_play_on_channel(unsigned request, unsigned volume, int channel)
+{
     unsigned index = request & 0x7F;
     if (request > 0xFF || index >= SOUND_COUNT || !sounds[index].pcm) {
         return false;
@@ -258,6 +264,11 @@ bool pc_sfx_play(unsigned request, unsigned volume)
         return false;
     }
     unsigned selected = next_voice;
+    if (channel >= 0) {
+        for (unsigned i = 0; i < VOICE_COUNT; i++) {
+            if (voices[i].sound && voices[i].channel == channel) voices[i].sound = NULL;
+        }
+    }
     for (unsigned i = 0; i < VOICE_COUNT; i++) {
         unsigned candidate = (next_voice + i) % VOICE_COUNT;
         if (!voices[candidate].sound) {
@@ -269,6 +280,7 @@ bool pc_sfx_play(unsigned request, unsigned volume)
     voices[selected] = (Voice){
         .sound = sound,
         .gain = (float)SDL_min(volume, 255) / (255.0f * 32768.0f),
+        .channel = channel,
         .loop = (request & 0x80) && sound->loop_end != 0,
     };
     next_voice = (selected + 1) % VOICE_COUNT;
@@ -276,6 +288,15 @@ bool pc_sfx_play(unsigned request, unsigned volume)
         SDL_UnlockAudioStream(playback);
     }
     return true;
+}
+
+void pc_sfx_stop_channel(int channel)
+{
+    if (channel < 0 || (playback && !SDL_LockAudioStream(playback))) return;
+    for (unsigned i = 0; i < VOICE_COUNT; i++) {
+        if (voices[i].channel == channel) voices[i].sound = NULL;
+    }
+    if (playback) SDL_UnlockAudioStream(playback);
 }
 
 void pc_sfx_stop_all(void)
