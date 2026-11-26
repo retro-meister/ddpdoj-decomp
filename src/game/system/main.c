@@ -111,6 +111,7 @@ extern u8 g_replay_file[];
 
 #ifdef DDPDOJ_PC
 void game_boot_begin(void) {
+    pc_arcade_address_init();
 #else
 void game_main(void) {
     s32 t1;

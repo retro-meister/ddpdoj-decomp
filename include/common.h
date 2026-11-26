@@ -2,6 +2,9 @@
 #define DDPDOJ_COMMON_H
 
 #include "types.h"
+#ifdef DDPDOJ_PC
+#include "pc_arcade_address.h"
+#endif
 
 #define SJIS(s) s
 
@@ -88,6 +91,17 @@ extern u8 *reg_atmp; /* scratch address register (exchanges) */
     reg_tmp.w = (u32)(value); \
     (words)[0] = reg_tmp.h[1]; \
     (words)[1] = reg_tmp.h[0]
+
+/* Convert the producers and consumers of a packed address together. */
+#ifdef DDPDOJ_PC
+#define ARCADE_ADDRESS_ENCODE(address) pc_arcade_address_encode((uintptr_t)(address))
+#define ARCADE_ADDRESS_DECODE(type, slot) ((type)pc_arcade_address_decode((u32)(slot)))
+#define STORE_ARCADE_ADDRESS(words, target) STORE_LONG(words, ARCADE_ADDRESS_ENCODE(target))
+#else
+#define ARCADE_ADDRESS_ENCODE(address) ((u32)(address))
+#define ARCADE_ADDRESS_DECODE(type, slot) ((type)(slot))
+#define STORE_ARCADE_ADDRESS(words, target) STORE_POINTER(words, target)
+#endif
 extern s8 cond_flag; /* result of the last routine that reports through the condition codes */
 extern void (*reg_call_target)(); /* 0x28E3F4: address of the routine an indirect call goes through */
 extern s8 rng_values[256];

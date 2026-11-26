@@ -2101,23 +2101,23 @@ void checked_pointers_store(void) {
     if (stage_scroll_event_lists[0] != 0x0) {
         printf("error! gro_stg_tbl[0]\n");
     }
-    STORE_POINTER(stage_scroll_event_lists, stage1_scroll_event_lists);
+    STORE_ARCADE_ADDRESS(stage_scroll_event_lists, stage1_scroll_event_lists);
     if (stage_scroll_event_lists[2] != 0x2) {
         printf("error! gro_stg_tbl[2]\n");
     }
-    STORE_POINTER(stage_scroll_event_lists + 2, stage2_scroll_event_lists);
+    STORE_ARCADE_ADDRESS(stage_scroll_event_lists + 2, stage2_scroll_event_lists);
     if (stage_scroll_event_lists[4] != 0x4) {
         printf("error! gro_stg_tbl[4]\n");
     }
-    STORE_POINTER(stage_scroll_event_lists + 4, stage3_scroll_event_lists);
+    STORE_ARCADE_ADDRESS(stage_scroll_event_lists + 4, stage3_scroll_event_lists);
     if (stage_scroll_event_lists[6] != 0x6) {
         printf("error! gro_stg_tbl[6]\n");
     }
-    STORE_POINTER(stage_scroll_event_lists + 6, stage4_scroll_event_lists);
+    STORE_ARCADE_ADDRESS(stage_scroll_event_lists + 6, stage4_scroll_event_lists);
     if (stage_scroll_event_lists[8] != 0x8) {
         printf("error! gro_stg_tbl[8]\n");
     }
-    STORE_POINTER(stage_scroll_event_lists + 8, stage5_scroll_event_lists);
+    STORE_ARCADE_ADDRESS(stage_scroll_event_lists + 8, stage5_scroll_event_lists);
     if (stage1_scroll_palettes[0] != 0x0) {
         printf("error! avram_pal_tbl1[0]\n");
     }
