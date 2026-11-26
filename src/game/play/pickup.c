@@ -1707,7 +1707,12 @@ void bullet_fire_loop2_double_from_task(void) {
     bullet_fire_loop2_double();
 }
 
-extern s32 g_bullet_fire_saved_a0;
+#ifdef DDPDOJ_PC
+typedef uintptr_t BulletSavedAddress;
+#else
+typedef s32 BulletSavedAddress;
+#endif
+extern BulletSavedAddress g_bullet_fire_saved_a0;
 extern u32 g_bullet_fire_saved_d1;
 extern u32 g_bullet_fire_saved_d0;
 
@@ -1725,7 +1730,11 @@ extern u8 *g_bullet_fire_saved_a0_as_u8_p;
 void bullet_fire_loop2(void) {
     g_bullet_fire_saved_d0 = reg_d0.w;
     g_bullet_fire_saved_d1 = reg_d1.w;
+#ifdef DDPDOJ_PC
+    g_bullet_fire_saved_a0 = (BulletSavedAddress)reg_a0;
+#else
     g_bullet_fire_saved_a0_as_u8_p = reg_a0;
+#endif
     reg_tmp1.w = reg_d1.w;
     reg_d1.h[0] = 0x81;
     reg_d1.h[1] = reg_tmp1.h[0];
@@ -1801,7 +1810,7 @@ void bullet_fire_double(void) {
     }
     g_bullet_fire_saved_d0 = reg_d0.w;
     g_bullet_fire_saved_d1 = reg_d1.w;
-    g_bullet_fire_saved_a0 = (s32)reg_a0;
+    g_bullet_fire_saved_a0 = (BulletSavedAddress)reg_a0;
     bullet_fire_loop2_double(reg_d0.w);
 }
 
@@ -1813,7 +1822,7 @@ void bullet_fire_2way(void) {
     }
     g_bullet_fire_saved_d0 = reg_d0.w;
     g_bullet_fire_saved_d1 = reg_d1.w;
-    g_bullet_fire_saved_a0 = (s32)reg_a0;
+    g_bullet_fire_saved_a0 = (BulletSavedAddress)reg_a0;
     bullet_fire_loop2_2way(reg_d0.w);
 }
 
@@ -1825,7 +1834,7 @@ void bullet_fire_3way(void) {
     }
     g_bullet_fire_saved_d0 = reg_d0.w;
     g_bullet_fire_saved_d1 = reg_d1.w;
-    g_bullet_fire_saved_a0 = (s32)reg_a0;
+    g_bullet_fire_saved_a0 = (BulletSavedAddress)reg_a0;
     bullet_fire_loop2_3way(reg_d0.w);
 }
 
@@ -2058,7 +2067,11 @@ void bullet_fire256_loop2_double() {
 void bullet_fire256_loop2(void) {
     g_bullet_fire_saved_d0 = reg_d0.w;
     g_bullet_fire_saved_d1 = reg_d1.w;
+#ifdef DDPDOJ_PC
+    g_bullet_fire_saved_a0 = (BulletSavedAddress)reg_a0;
+#else
     g_bullet_fire_saved_a0_as_u8_p = reg_a0;
+#endif
     reg_tmp1.w = reg_d1.w;
     reg_d1.h[0] = 0x81;
     reg_d1.h[1] = reg_tmp1.h[0];
@@ -2127,7 +2140,7 @@ void bullet_fire256_double(void) {
     }
     g_bullet_fire_saved_d0 = reg_d0.w;
     g_bullet_fire_saved_d1 = reg_d1.w;
-    g_bullet_fire_saved_a0 = (s32)reg_a0;
+    g_bullet_fire_saved_a0 = (BulletSavedAddress)reg_a0;
     bullet_fire256_loop2_double(reg_d0.w);
 }
 
@@ -2139,7 +2152,7 @@ void bullet_fire256_2way(void) {
     }
     g_bullet_fire_saved_d0 = reg_d0.w;
     g_bullet_fire_saved_d1 = reg_d1.w;
-    g_bullet_fire_saved_a0 = (s32)reg_a0;
+    g_bullet_fire_saved_a0 = (BulletSavedAddress)reg_a0;
     bullet_fire256_loop2_2way(reg_d0.w);
 }
 
@@ -2151,7 +2164,7 @@ void bullet_fire256_3way(void) {
     }
     g_bullet_fire_saved_d0 = reg_d0.w;
     g_bullet_fire_saved_d1 = reg_d1.w;
-    g_bullet_fire_saved_a0 = (s32)reg_a0;
+    g_bullet_fire_saved_a0 = (BulletSavedAddress)reg_a0;
     bullet_fire256_loop2_3way(reg_d0.w);
 }
 
@@ -2743,7 +2756,7 @@ u32 g_bullet_spawn_saved_d0;
 u32 g_bullet_spawn_saved_d7;
 u32 g_bullet_fire_saved_d0;
 u32 g_bullet_fire_saved_d1;
-s32 g_bullet_fire_saved_a0;
+BulletSavedAddress g_bullet_fire_saved_a0;
 #ifdef DEATH_LABEL
 s32 g_twin_boss_second_bullets;
 s32 g_twin_boss_first_bullets;

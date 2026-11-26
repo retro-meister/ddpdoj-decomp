@@ -16,3 +16,9 @@ u8 D_002BF490[96];
 u8 D_002BF450[64];
 u8 D_002BF410[64];
 u16 D_002BF400[8];
+
+#ifdef DDPDOJ_PC
+#include "pc_data_alias.h"
+
+PC_DATA_ALIAS(D_0028E961, D_0028E960, 1);
+#endif

@@ -686,7 +686,7 @@ void text_flush_rects(void)
     }
     font_build_gs_setup_packet(((u8 (*)[0x10000])g_gif_buf)[0]);
     FlushCache(0);
-    sceDmaSend(g_dma_gif, ((u8 (*)[0x10000])g_gif_buf)[0]);
+    SEND_DMA_CHAIN(g_dma_gif, ((u8 (*)[0x10000])g_gif_buf)[0], 0x10000);
     sceGsSyncPath(0, 0);
 
     bufferIndex = 0;
@@ -702,7 +702,7 @@ void text_flush_rects(void)
         text_build_rect_packet((Qword *)packet, firstEntry, batchCount);
         sceGsSyncPath(0, 0);
         FlushCache(0);
-        sceDmaSend(g_dma_gif, packet);
+        SEND_DMA_CHAIN(g_dma_gif, packet, 0x10000);
 
         bufferIndex ^= 1;
         firstEntry += batchCount;
@@ -1089,7 +1089,7 @@ void text_flush(void)
     }
     font_build_gs_setup_packet(((u8 (*)[0x10000])g_gif_buf)[0]);
     FlushCache(0);
-    sceDmaSend(g_dma_gif, ((u8 (*)[0x10000])g_gif_buf)[0]);
+    SEND_DMA_CHAIN(g_dma_gif, ((u8 (*)[0x10000])g_gif_buf)[0], 0x10000);
     sceGsSyncPath(0, 0);
 
     bufferIndex = 0;
@@ -1105,7 +1105,7 @@ void text_flush(void)
         text_build_quad_packet((Qword *)packet, firstEntry, batchCount);
         sceGsSyncPath(0, 0);
         FlushCache(0);
-        sceDmaSend(g_dma_gif, packet);
+        SEND_DMA_CHAIN(g_dma_gif, packet, 0x10000);
 
         bufferIndex ^= 1;
         firstEntry += batchCount;
@@ -1235,7 +1235,7 @@ void overlay_flush(void)
     }
     font_build_gs_setup_packet(((u8 (*)[0x10000])g_gif_buf)[0]);
     FlushCache(0);
-    sceDmaSend(g_dma_gif, ((u8 (*)[0x10000])g_gif_buf)[0]);
+    SEND_DMA_CHAIN(g_dma_gif, ((u8 (*)[0x10000])g_gif_buf)[0], 0x10000);
     sceGsSyncPath(0, 0);
 
     bufferIndex = 0;
@@ -1251,7 +1251,7 @@ void overlay_flush(void)
         overlay_build_quad_packet((Qword *)packet, firstEntry, batchCount);
         sceGsSyncPath(0, 0);
         FlushCache(0);
-        sceDmaSend(g_dma_gif, packet);
+        SEND_DMA_CHAIN(g_dma_gif, packet, 0x10000);
 
         bufferIndex ^= 1;
         firstEntry += batchCount;
@@ -1412,7 +1412,7 @@ void gfx_draw_shaded_box(s32 x, s32 y, s32 w, s32 h, s32 depth, s32 alpha) {
     packet[13].q = 0;
     packet[13].w[0] = 0x70000000;
     FlushCache(0);
-    sceDmaSend(g_dma_gif, ((u8 (*)[0x10000])g_gif_buf)[0]);
+    SEND_DMA_CHAIN(g_dma_gif, ((u8 (*)[0x10000])g_gif_buf)[0], 0x10000);
     sceGsSyncPath(0, 0);
 }
 
@@ -1465,7 +1465,7 @@ void gfx_draw_color_box(s32 x, s32 y, s32 w, s32 h, s32 depth, s32 alpha, s32 r,
     packet[13].q = 0;
     packet[13].w[0] = 0x70000000;
     FlushCache(0);
-    sceDmaSend(g_dma_gif, ((u8 (*)[0x10000])g_gif_buf)[0]);
+    SEND_DMA_CHAIN(g_dma_gif, ((u8 (*)[0x10000])g_gif_buf)[0], 0x10000);
     sceGsSyncPath(0, 0);
 }
 

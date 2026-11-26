@@ -240,4 +240,11 @@ PC_DATA_ALIAS(g_p2_score_pending_as_u8, g_p2_score_pending, 0x0);
 #ifdef DEATH_LABEL
 PC_DATA_ALIAS(death_D_0068DAB2, score_pending_apply_side_buffer, 0x2);
 #endif
+
+PC_DATA_ALIAS(D_0028E579, g_p2_hyper_effect_delay, 1);
+PC_DATA_ALIAS(D_0028E57D, g_p1_hyper_effect_delay, 1);
+PC_DATA_ALIAS(D_0028E5D9, g_p2_hyper_combo_decay, 1);
+PC_DATA_ALIAS(D_0028E5DD, g_p1_hyper_combo_decay, 1);
+PC_DATA_ALIAS(D_0028E61D, g_boss_near_death, 1);
+PC_DATA_ALIAS(D_0028E705, g_hyper_text_anim_delay, 1);
 #endif

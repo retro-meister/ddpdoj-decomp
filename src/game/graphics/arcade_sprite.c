@@ -493,7 +493,7 @@ void arcade_sprite_draw(void) {
         quad_build_packet((Qword *)pkt, count, 1);
         sceGsSyncPath(0, 0);
         FlushCache(0);
-        sceDmaSend(g_dma_gif, pkt);
+        SEND_DMA_CHAIN(g_dma_gif, pkt, sizeof(g_gif_buf[0]));
         buf ^= 1;
         count++;
         p++;

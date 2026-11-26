@@ -5107,9 +5107,13 @@ void save_block_to_settings(void) {
 }
 
 extern void display_set_offset(s8, s8);
+#ifdef DDPDOJ_PC
+extern void menu_wallpaper_load(u16 selection);
+#else
 extern void wallpaper_load(s32, s32);
 extern s32 g_menu_wallpapers_as_s32_a[];
 extern u8 D_00271C64[];
+#endif
 extern s8 g_display_reset_pending;
 
 void display_settings_apply(void)
@@ -5121,9 +5125,13 @@ void display_settings_apply(void)
 
     selection = g_setting_wallpaper;
     if (selection != 5) {
+#ifdef DDPDOJ_PC
+        menu_wallpaper_load(selection);
+#else
         s32 tableIndex = (selection & 0xFFFF) * 2;
 
         wallpaper_load(g_menu_wallpapers_as_s32_a[tableIndex], ((s32 *)D_00271C64)[tableIndex]);
+#endif
     }
 }
 
@@ -5642,6 +5650,9 @@ void replay_slot_info_fill(s32 slot) {
 
 /* .sbss (the compiler lays these out in reverse) */
 s8 mc_state_reset_state;
+#ifdef DDPDOJ_PC
+_Alignas(8) u8 pc_loaded_replay_id[8];
+#else
 u8 g_loaded_replay_id_7;
 u8 g_loaded_replay_id_6;
 u8 g_loaded_replay_id_5;
@@ -5650,6 +5661,7 @@ u8 g_loaded_replay_id_3;
 u8 g_loaded_replay_id_2;
 u8 g_loaded_replay_id_1;
 u8 g_loaded_replay_id_0 __attribute__((aligned(8)));
+#endif
 s32 g_mc_game_icon_size;
 s32 g_mc_replay_icon_size;
 s32 g_mc_operation;
@@ -5780,4 +5792,14 @@ PC_DATA_ALIAS(D_006A0E8D, pc_replay_slot_storage, 0x4d);
 PC_DATA_ALIAS(replay_slot_info_fill_buffer, pc_replay_slot_storage, 0x50);
 
 PC_DATA_ALIAS(D_006C5494, g_mc_save_buf, 0x5a4);
+
+PC_DATA_ALIAS(g_loaded_replay_id_0, pc_loaded_replay_id, 0);
+PC_DATA_ALIAS(g_loaded_replay_id_1, pc_loaded_replay_id, 1);
+PC_DATA_ALIAS(g_loaded_replay_id_2, pc_loaded_replay_id, 2);
+PC_DATA_ALIAS(g_loaded_replay_id_3, pc_loaded_replay_id, 3);
+PC_DATA_ALIAS(g_loaded_replay_id_4, pc_loaded_replay_id, 4);
+PC_DATA_ALIAS(g_loaded_replay_id_5, pc_loaded_replay_id, 5);
+PC_DATA_ALIAS(g_loaded_replay_id_6, pc_loaded_replay_id, 6);
+PC_DATA_ALIAS(g_loaded_replay_id_7, pc_loaded_replay_id, 7);
+PC_DATA_ALIAS(g_loaded_replay_id_0_as_u8_a8, pc_loaded_replay_id, 0);
 #endif

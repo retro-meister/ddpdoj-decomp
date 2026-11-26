@@ -4,6 +4,31 @@
 
 #include <SDL3/SDL_mutex.h>
 #include <SDL3/SDL_thread.h>
+#include <SDL3/SDL_time.h>
+
+static u8 clock_bcd(int value)
+{
+    return (u8)(((value / 10) << 4) | (value % 10));
+}
+
+s32 sceCdReadClock(sceCdCLOCK *clock)
+{
+    SDL_Time now;
+    SDL_DateTime date;
+    if (!SDL_GetCurrentTime(&now) || !SDL_TimeToDateTime(now, &date, true)) {
+        *clock = (sceCdCLOCK){.stat = 1};
+        return 0;
+    }
+    *clock = (sceCdCLOCK){
+        .second = clock_bcd(date.second),
+        .minute = clock_bcd(date.minute),
+        .hour = clock_bcd(date.hour),
+        .day = clock_bcd(date.day),
+        .month = clock_bcd(date.month),
+        .year = clock_bcd(date.year % 100),
+    };
+    return 1;
+}
 
 typedef struct {
     uint64_t offset;

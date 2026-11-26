@@ -138,7 +138,11 @@ void sparks_spawn_for_laser(void) {
     reg_save4_a3 = reg_a3;
     reg_save4_a4 = reg_a4;
     reg_save4_a5 = reg_a5;
+#ifdef DDPDOJ_PC
+    reg_save4_a6 = reg_a6;
+#else
     reg_save4_a6_as_void_p = reg_a6;
+#endif
     reg_d7.w = 0;
     reg_d1.w = 1;
     reg_a2 = (u8 *)spark_setup_laser;
@@ -272,12 +276,21 @@ loop_1:
     reg_d6.w = reg_save4_d6;
     reg_d7.w = reg_save4_d7;
     reg_a0 = (u8 *)((u16 *)reg_save4_a0);
+#ifdef DDPDOJ_PC
+    reg_a1 = reg_save4_a1;
+    reg_a2 = reg_save4_a2;
+    reg_a3 = reg_save4_a3;
+    reg_a4 = reg_save4_a4;
+    reg_a5 = reg_save4_a5;
+    reg_a6 = reg_save4_a6;
+#else
     reg_a1 = (u8 *)(*(s32 *)&reg_save4_a1);
     reg_a2 = (u8 *)(*(s32 *)&reg_save4_a2);
     reg_a3 = (u8 *)(*(s32 *)&reg_save4_a3);
     reg_a4 = (u8 *)(*(s32 *)&reg_save4_a4);
     reg_a5 = (u8 *)(*(s32 *)&reg_save4_a5);
     reg_a6 = (u8 *)(*(s32 *)&reg_save4_a6);
+#endif
     return;
 next_2:
     spark_init();
@@ -298,12 +311,21 @@ next_3:
     reg_d6.w = reg_save4_d6;
     reg_d7.w = reg_save4_d7;
     reg_a0 = (u8 *)((u16 *)reg_save4_a0);
+#ifdef DDPDOJ_PC
+    reg_a1 = reg_save4_a1;
+    reg_a2 = reg_save4_a2;
+    reg_a3 = reg_save4_a3;
+    reg_a4 = reg_save4_a4;
+    reg_a5 = reg_save4_a5;
+    reg_a6 = reg_save4_a6;
+#else
     reg_a1 = (u8 *)(*(s32 *)&reg_save4_a1);
     reg_a2 = (u8 *)(*(s32 *)&reg_save4_a2);
     reg_a3 = (u8 *)(*(s32 *)&reg_save4_a3);
     reg_a4 = (u8 *)(*(s32 *)&reg_save4_a4);
     reg_a5 = (u8 *)(*(s32 *)&reg_save4_a5);
     reg_a6 = (u8 *)(*(s32 *)&reg_save4_a6);
+#endif
 }
 
 extern u16 g_frame_mod8;

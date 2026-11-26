@@ -82,17 +82,6 @@ typedef struct {
 } SaveBody;
 
 typedef struct {
-    u8 stat;
-    u8 second;
-    u8 minute;
-    u8 hour;
-    u8 pad;
-    u8 day;
-    u8 month;
-    u8 year;
-} CdClock;
-
-typedef struct {
     s16 h[33];
 } Row;
 
@@ -1979,6 +1968,18 @@ Wallpaper g_menu_wallpapers[5] = {
     { 0x14b9, (void *)g_menu_wallpapers_9 },
 };
 
+#ifdef DDPDOJ_PC
+void wallpaper_load(s32 image, u16 *palette);
+
+void menu_wallpaper_load(u16 selection)
+{
+    if (selection < sizeof(g_menu_wallpapers) / sizeof(g_menu_wallpapers[0])) {
+        const Wallpaper *wallpaper = &g_menu_wallpapers[selection];
+        wallpaper_load(wallpaper->image, wallpaper->palette);
+    }
+}
+#endif
+
 #ifdef DEATH_LABEL
 Point16 g_pause_menu_positions[4] = {
     { 0x160, 0x5c },
@@ -3734,8 +3735,10 @@ extern s8 g_menu_value_p2_btn_a[];
 extern s8 g_menu_value_p2_btn_b[];
 extern s8 g_menu_value_p2_btn_c[];
 void menu_system_option_commit(void) {
+#ifndef DDPDOJ_PC
     extern void wallpaper_load(s32, s32);
     s32 temp_a0;
+#endif
 
     if (g_setting_screen_mode != g_menu_value_screen_mode[0]) {
         g_setting_screen_variant = 0;
@@ -3761,8 +3764,12 @@ void menu_system_option_commit(void) {
     if (g_setting_wallpaper != ((s8 *)g_menu_value_wallpaper)[0]) {
         g_setting_wallpaper = (u16) (s8)(((s8 *)g_menu_value_wallpaper)[0]);
         if (g_setting_wallpaper != 5) {
+#ifdef DDPDOJ_PC
+            menu_wallpaper_load(g_setting_wallpaper);
+#else
             temp_a0 = (g_setting_wallpaper & 0xFFFF) * 8;
             wallpaper_load(*(s32 *)((u8 *)g_menu_wallpapers + temp_a0), *(s32 *)(D_00271C64 + temp_a0));
+#endif
         }
     }
     g_p1_btn_map_a = g_menu_value_p1_btn_a[0];
@@ -6107,7 +6114,9 @@ void pause_menu_update(void) {
     extern void sfx_menu_confirm(void);
     extern void sfx_menu_tick(void);
 #endif
+#ifndef DDPDOJ_PC
     extern void wallpaper_load(s32 a, s32 b);
+#endif
     u32 pad;
 
     if ((s8)g_pause_input_delay != 0) {
@@ -6168,7 +6177,11 @@ void pause_menu_update(void) {
                 g_setting_wallpaper = 5;
             }
             if (g_setting_wallpaper != 5) {
+#ifdef DDPDOJ_PC
+                menu_wallpaper_load(g_setting_wallpaper);
+#else
                 wallpaper_load(g_menu_wallpapers_as_Pair_a[g_setting_wallpaper].a, g_menu_wallpapers_as_Pair_a[g_setting_wallpaper].b);
+#endif
             }
         } else if (pad & 0x2000) {
             sfx_menu_tick();
@@ -6177,7 +6190,11 @@ void pause_menu_update(void) {
                 g_setting_wallpaper = 0;
             }
             if (g_setting_wallpaper != 5) {
+#ifdef DDPDOJ_PC
+                menu_wallpaper_load(g_setting_wallpaper);
+#else
                 wallpaper_load(g_menu_wallpapers_as_Pair_a[g_setting_wallpaper].a, g_menu_wallpapers_as_Pair_a[g_setting_wallpaper].b);
+#endif
             }
         }
         break;
@@ -6377,7 +6394,11 @@ void pause_menu_box_draw(void) {
         break;
     }
     if (g_simulation_active == 0 && g_pause_menu_cursor > 6) {
+#ifdef DDPDOJ_PC
+        x = g_pause_menu_positions[g_pause_menu_cursor - 1].x;
+#else
         x = D_00271C8C[g_pause_menu_cursor * 2];
+#endif
     } else {
         x = g_pause_menu_positions[g_pause_menu_cursor].x;
     }
@@ -6457,15 +6478,31 @@ void pause_menu_item_draw(s32 x, s32 y) {
     w = (s32)(s8)g_pause_item_shrink + 20;
     h = (s32)(s8)g_pause_item_shrink + 16;
     if (g_pause_menu_cursor == 6) {
+#ifdef DDPDOJ_PC
+        reg_a0 = (u8 *)g_menu_pause_help_c[16];
+#else
         reg_a0 = D_00271BD0[0];
+#endif
     } else if (g_replay_mode == 2) {
+#ifdef DDPDOJ_PC
+        reg_a0 = (u8 *)g_menu_pause_help_c[15];
+#else
         reg_a0 = D_00271BCC[0];
+#endif
 #ifndef DEATH_LABEL
     } else if (g_simulation_active != 0) {
+#ifdef DDPDOJ_PC
+        reg_a0 = (u8 *)g_menu_pause_help_c[17];
+#else
         reg_a0 = D_00271BD4[0];
 #endif
+#endif
     } else {
+#ifdef DDPDOJ_PC
+        reg_a0 = (u8 *)g_menu_pause_help_c[14];
+#else
         reg_a0 = D_00271BC8[0];
+#endif
     }
     menu_message_draw(x + 42, y);
     if (g_pause_confirm_cursor == 0) {
@@ -10666,13 +10703,11 @@ s32 replay_snapshot_checksum(const u8 *data)
 }
 
 
-s32 sceCdReadClock(CdClock *clock);
-
 #define FROM_BCD(x) (((x) & 0xF) + ((x) >> 4) * 10)
 
 s32 clock_read(u8 *out)
 {
-    CdClock clock;
+    sceCdCLOCK clock;
 
     if (sceCdReadClock(&clock) != 0) {
         out[0] = FROM_BCD(clock.month);

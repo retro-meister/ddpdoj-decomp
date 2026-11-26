@@ -18,6 +18,7 @@ void vibration_start_active_pad(s16 arg0, s16 arg1);
 void vibration_update(void);
 
 
+#ifndef DDPDOJ_PC
 void iop_reboot_and_load_modules(void) {
     sceSifInitRpc(0);
     sceCdInit(0);
@@ -54,6 +55,7 @@ void iop_reboot_and_load_modules(void) {
     } while (sceSifLoadModule("cdrom0:\\MODULE\\EZBGM.IRX;1", 0, 0) < 0);
     printf("cd modules ok!\n");
 }
+#endif
 
 
 void sys_reset_gs_path(void) {
@@ -93,7 +95,9 @@ extern u8 sys_init_state;
 extern s8 g_menu_exit_code;
 extern u8 g_pad_dma_area[];
 void sys_init(void) {
+#ifndef DDPDOJ_PC
     iop_reboot_and_load_modules();
+#endif
     sys_reset_gs_path();
     sys_init_display();
     vram_clear_all();

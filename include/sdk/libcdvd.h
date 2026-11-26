@@ -23,6 +23,18 @@ typedef struct {
     u32 flag;
 } sceCdlFILE;
 
+typedef struct {
+    u8 stat;
+    u8 second;
+    u8 minute;
+    u8 hour;
+    u8 pad;
+    u8 day;
+    u8 month;
+    u8 year;
+} sceCdCLOCK;
+
+s32 sceCdReadClock(sceCdCLOCK *clock);
 s32 sceCdSearchFile(sceCdlFILE *fp, const char *name);
 s32 sceCdSync(s32 mode);
 s32 sceCdInit(s32 init_mode);
