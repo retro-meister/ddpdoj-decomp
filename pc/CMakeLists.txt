@@ -312,5 +312,21 @@ if(BUILD_TESTING)
         add_test(NAME retail_gallery_loading_font
                  COMMAND ddpdoj_gallery_render_test --retail "${DDPDOJ_TEST_ISO}")
         add_test(NAME retail_gallery_boot COMMAND ddpdoj_gallery_boot_test "${DDPDOJ_TEST_ISO}")
+
+        foreach(mode IN ITEMS main death)
+            set(target ddpdoj_${mode}_retail_gameplay_test)
+            add_executable(${target} tests/retail_gameplay_test.c)
+            target_link_libraries(${target} PRIVATE ddpdoj_${mode}_system
+                ddpdoj_sound ddpdoj_sfx ddpdoj_mode ddpdoj_cdvd ddpdoj_pad ddpdoj_memory_card ddpdoj_gs)
+            if(mode STREQUAL "death")
+                target_link_libraries(${target} PRIVATE ddpdoj_death_video)
+            else()
+                target_link_libraries(${target} PRIVATE ddpdoj_video)
+            endif()
+            add_test(NAME retail_${mode}_gameplay COMMAND ${target} "${DDPDOJ_TEST_ISO}"
+                "${CMAKE_CURRENT_BINARY_DIR}/test-cards-${mode}")
+            set_tests_properties(retail_${mode}_gameplay PROPERTIES
+                ENVIRONMENT "SDL_AUDIODRIVER=dummy" RUN_SERIAL TRUE TIMEOUT 180)
+        endforeach()
     endif()
 endif()
