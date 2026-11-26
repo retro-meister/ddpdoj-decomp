@@ -1,8 +1,8 @@
 #include "common.h"
 #include "entity.h"
 
-void stage3_boss_fire_timber_start(void);
-void stage3_boss_fire_timber(void);
+void stage3_boss_launch_drone_start(void);
+void stage3_boss_launch_drone(void);
 void stage3_boss_fire_main_gun_start(void);
 void stage3_boss_fire_main_gun(void);
 void stage3_boss_fire_side_turrets_start(void);
@@ -22,8 +22,8 @@ void stage3_boss_fire_six_gun_b(void);
 
 /* The set-up routine and the per-frame routine of every attack, by attack number. */
 void (*stage3_boss_fire_routines[])(void) = {
-    stage3_boss_fire_timber_start,
-    stage3_boss_fire_timber,
+    stage3_boss_launch_drone_start,
+    stage3_boss_launch_drone,
     stage3_boss_fire_main_gun_start,
     stage3_boss_fire_main_gun,
     stage3_boss_fire_side_turrets_start,
@@ -44,7 +44,7 @@ void (*stage3_boss_fire_routines[])(void) = {
     0,
 };
 
-void stage3_boss_fire_timber(void);
+void stage3_boss_launch_drone(void);
 void stage3_boss_fire_body_six_gun(void);
 void stage3_boss_fire_main_gun_b(void);
 void stage3_boss_fire_side_turrets_b(void);
@@ -52,16 +52,16 @@ void stage3_boss_fire_six_gun(void);
 void stage3_boss_fire_six_gun_b(void);
 
 
-void stage3_boss_fire_timber_start(void) {
+void stage3_boss_launch_drone_start(void) {
     *(s16 *)(reg_a4 + 2) = 0;
-    stage3_boss_fire_timber();
+    stage3_boss_launch_drone();
 }
 
 s32 boss_part_hide();
 s32 spawn_request_add();
 s32 rng_next();
 
-void stage3_boss_fire_timber(void) {
+void stage3_boss_launch_drone(void) {
     u32 temp_s0;
 
     if (*(u16 *)(reg_a4 + 2) != 0) {

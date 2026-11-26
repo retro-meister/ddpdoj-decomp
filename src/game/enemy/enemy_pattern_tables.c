@@ -76,9 +76,9 @@ void hatch_gunner();
 void stage2_midboss_first();
 void stage2_midboss_start();
 void stage2_midboss();
-void func_001D6C80();
-void func_001D6C90();
-void func_001D6D60();
+void stage3_midboss_pod_first();
+void stage3_midboss_pod_start();
+void stage3_midboss_pod();
 void stage5_anim_test_a_first();
 void stage5_anim_test_a_start();
 void stage5_anim_test_a();
@@ -226,9 +226,9 @@ void stage3_boss_lid_bullet_first();
 void stage3_boss_lid_bullet_start();
 void stage3_boss_main();
 void stage3_boss_start();
-void stage3_boss_timber();
-void stage3_boss_timber_first();
-void stage3_boss_timber_start();
+void stage3_boss_drone();
+void stage3_boss_drone_first();
+void stage3_boss_drone_start();
 void stage3_cloud();
 void stage3_cloud_first();
 void stage3_cloud_start();
@@ -371,7 +371,7 @@ EnemyRoutines g_enemy_routines[128] = {
     /* 0x10 */ { small_tank_a_start, small_tank_a },
     /* 0x11 */ { small_tank_b_start, small_tank_b },
     /* 0x12 */ { stage3_midboss_start, stage3_midboss_main },
-    /* 0x13 */ { func_001D6C90, func_001D6D60 },
+    /* ENEMY_STAGE3_MIDBOSS_POD */ { stage3_midboss_pod_start, stage3_midboss_pod },
     /* 0x14 */ { stage3_cloud_start, stage3_cloud },
     /* 0x15 */ { stage3_carrier_start, stage3_carrier },
     /* 0x16 */ { hover_gunner_start, hover_gunner },
@@ -503,7 +503,7 @@ void (*g_enemy_first_routines[128])() = {
     /* 0x10 */ small_tank_a_first,
     /* 0x11 */ small_tank_b_first,
     /* 0x12 */ stage3_midboss_first,
-    /* 0x13 */ func_001D6C80,
+    /* 0x13 */ stage3_midboss_pod_first,
     /* 0x14 */ stage3_cloud_first,
     /* 0x15 */ stage3_carrier_first,
     /* 0x16 */ hover_gunner_first,
@@ -865,7 +865,7 @@ EnemyRoutines g_enemy_routines_high[128] = {
     /* 0x96 */ { stage2_wrecker_gun_start, stage2_wrecker_gun },
     /* 0x97 */ { mid_tank_horizontal_b_start, mid_tank_horizontal_b },
     /* 0x98 */ { stage2_boss_hangar_start, stage2_boss_hangar },
-    /* 0x99 */ { stage3_boss_timber_start, stage3_boss_timber },
+    /* 0x99 */ { stage3_boss_drone_start, stage3_boss_drone },
     /* 0x9A */ { stage3_boss_lid_bullet_start, stage3_boss_lid_bullet },
     /* 0x9B */ { stage4_gate_start, stage4_gate },
     /* 0x9C */ { stage4_lift_start, stage4_lift },
@@ -996,7 +996,7 @@ void (*g_enemy_first_routines_high[128])() = {
     /* 0x96 */ stage2_wrecker_gun_first,
     /* 0x97 */ mid_tank_horizontal_b_first,
     /* 0x98 */ stage2_boss_hangar_first,
-    /* 0x99 */ stage3_boss_timber_first,
+    /* 0x99 */ stage3_boss_drone_first,
     /* 0x9A */ stage3_boss_lid_bullet_first,
     /* 0x9B */ stage4_gate_first,
     /* 0x9C */ stage4_lift_first,

@@ -4220,12 +4220,12 @@ void func_00186A80(void) {
 extern u16 g_stage3_map_palettes[];
 extern u16 stage3_midboss_flash_palettes_05[];
 extern void stage3_midboss_mode_00(void);
-extern void func_001D58F0(void);
-extern void func_001D5CA0(void);
+extern void stage3_midboss_mode_attack_a(void);
+extern void stage3_midboss_mode_attack_b(void);
 extern void stage3_midboss2_state_0_04(void);
 extern void func_001D6160(void);
-extern void func_001D6410(void);
-extern void func_001D6830(void);
+extern void stage3_midboss_mode_05(void);
+extern void stage3_midboss_mode_leave(void);
 
 extern u16 stage3_midboss_mode_routines_as_u16_a[];
 extern u16 D_002635C2[];
@@ -4256,27 +4256,27 @@ void func_00186CA0(void) {
     if (D_002635C2[1] != 0x2) {
         printf("error! st3mb_md_tbl[2]\n");
     }
-    STORE_POINTER(D_002635C2 + 1, func_001D58F0);
+    STORE_POINTER(D_002635C2 + 1, stage3_midboss_mode_attack_a);
     if (D_002635C2[3] != 0x4) {
         printf("error! st3mb_md_tbl[4]\n");
     }
-    STORE_POINTER(D_002635C2 + 3, func_001D5CA0);
+    STORE_POINTER(D_002635C2 + 3, stage3_midboss_mode_attack_b);
     if (D_002635C2[5] != 0x6) {
         printf("error! st3mb_md_tbl[6]\n");
     }
-    STORE_POINTER(D_002635C2 + 5, func_001D58F0);
+    STORE_POINTER(D_002635C2 + 5, stage3_midboss_mode_attack_a);
     if (D_002635C2[7] != 0x8) {
         printf("error! st3mb_md_tbl[8]\n");
     }
-    STORE_POINTER(D_002635C2 + 7, func_001D5CA0);
+    STORE_POINTER(D_002635C2 + 7, stage3_midboss_mode_attack_b);
     if (D_002635C2[9] != 0xa) {
         printf("error! st3mb_md_tbl[10]\n");
     }
-    STORE_POINTER(D_002635C2 + 9, func_001D6410);
+    STORE_POINTER(D_002635C2 + 9, stage3_midboss_mode_05);
     if (D_002635C2[11] != 0xc) {
         printf("error! st3mb_md_tbl[12]\n");
     }
-    STORE_POINTER(D_002635C2 + 11, func_001D6830);
+    STORE_POINTER(D_002635C2 + 11, stage3_midboss_mode_leave);
     if (stage3_midboss2_state_routines_0[8] != 0x0) {
         printf("error! s3mm2_st_tbl0[0]\n");
     }

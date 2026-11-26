@@ -142,7 +142,7 @@ segments:
       - [0x100560, c, game/stage3/stage3_boss_move]
       - [0x100b30, c, game/stage3/stage3_boss]
       - [0x100da0, c, game/stage3/stage3_boss_damage]
-      - [0x1014c0, c, game/stage3/stage3_midboss]
+      - [0x101530, c, game/stage3/stage3_midboss]
       - [0x104050, c, game/stage4/stage4_boss_anim]
       - [0x104710, c, game/stage4/stage4_boss_attack]
       - [0x108ff0, c, game/stage4/stage4_boss_draw]

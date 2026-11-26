@@ -27,7 +27,7 @@ void stage4_boss_missile_start(void) {
 
 s32 enemy_remove();
 s32 sprite_draw_with_bullets_zoom();
-s32 func_001D27A0();
+s32 breakable_bullet_check();
 s32 entity_velocity();
 s32 func_00202180();
 s32 entity_check_bounds();
@@ -48,7 +48,7 @@ void stage4_boss_missile(void) {
             ENTITY(reg_a6)->flags.b[1] &= reg_d0.b[0];
             ENTITY(reg_a6)->hp.sh = 0x7FFF;
         }
-        func_001D27A0();
+        breakable_bullet_check();
         if (cond_flag == 0) {
             entity_check_bounds();
             if (cond_flag != 0) {

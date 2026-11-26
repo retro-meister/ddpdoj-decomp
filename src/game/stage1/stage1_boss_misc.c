@@ -42,7 +42,7 @@ void stage1_boss_breakable_bullet_start(void) {
 s32 explosion_spawn();
 s32 enemy_remove();
 s32 entity_draw_layer4();
-s32 func_001D27A0();
+s32 breakable_bullet_check();
 s32 entity_velocity();
 extern u8 g_boss_present_b1;
 extern u16 g_enemies_stopped;
@@ -53,7 +53,7 @@ extern u16 g_enemies_stopped;
 void stage1_boss_breakable_bullet(void) {
     if (!(g_boss_present_b1 & 0x40)) goto block_5;
     reg_d1.b[0] = B(1);
-    func_001D27A0();
+    breakable_bullet_check();
     if (cond_flag != 0) goto block_6;
     reg_d1.w = 0x5C;
     reg_d1.b[0] &= B(1);
@@ -161,7 +161,7 @@ void stage1_boss_breakable_bullet_b(void) {
     W(0x24) = W(4);
     if (!(g_boss_present_b1 & 0x40)) goto block_20;
     reg_d1.b[0] = B(1);
-    func_001D27A0();
+    breakable_bullet_check();
     if (cond_flag != 0) goto block_end;
     B(0x1C) = B(0x3D);
     reg_d1.b[0] = B(1);

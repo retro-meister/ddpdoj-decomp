@@ -1,7 +1,7 @@
 #include "common.h"
 #include "entity.h"
 
-void func_001D4400(void);
+void stage3_boss_defeated(void);
 void func_001D4510(void);
 void func_001D4540(void);
 
@@ -9,7 +9,7 @@ s32 boss_phase_start();
 s32 boss_phase_stop_all();
 s32 boss_attack_stop_all();
 s32 score_add_no_chain();
-s32 func_001D4630();
+void stage3_boss_leave_timer(void);
 s32 func_002016D0();
 s32 active_players_mask();
 extern u8 g_game_mode;
@@ -22,7 +22,7 @@ extern u16 D_0029976C[];
 #define W(o) (*(u16 *)(reg_a6 + (o)))
 #define B(o) (*(u8 *)(reg_a6 + (o)))
 
-void func_001D3F00(void) {
+void stage3_boss_take_damage(void) {
     s32 m0;
     s32 m1;
     s32 m2;
@@ -120,7 +120,7 @@ next_20:
 next_30:
     reg_d1.h[0] = W(0x8A);
     g_boss_score = 0x50000;
-    func_001D4400();
+    stage3_boss_defeated();
     return;
 block_check:
     if (B(0x8D) != 0) goto block_tail;
@@ -140,23 +140,23 @@ block_check:
     D_0029976C[0] = 1;
     func_002016D0();
 block_tail:
-    func_001D4630();
+    stage3_boss_leave_timer();
 }
 
 s32 boss_animation_stop();
 s32 func_0013F3C0();
-s32 func_001D4620();
+void stage3_boss_stop_damage(void);
 s32 func_00203460();
 s32 slowdown_turn_off();
 extern u8 g_boss_present_b1;
 
-void func_001D4400() {
+void stage3_boss_defeated() {
     g_boss_present_b1 |= 0x40;
     g_boss_present_b1 |= 0x80;
     slowdown_turn_off();
     func_0013F3C0();
     func_00203460();
-    func_001D4620();
+    stage3_boss_stop_damage();
     boss_attack_stop_all();
     boss_phase_stop_all();
     reg_d0.w = 2;
@@ -216,4 +216,26 @@ void func_001D45D0(void) {
     ENTITY(reg_a6)[2].flags.h = (u16) reg_d0.h[0];
     ENTITY(reg_a6)[6].flags.h = (u16) reg_d0.h[0];
     ENTITY(reg_a6)[7].flags.h = (u16) reg_d0.h[0];
+}
+
+void stage3_boss_stop_damage(void) {
+    ENTITY(reg_a6)[4].offset_y.sh = 1;
+}
+
+extern u16 g_enemies_stopped;
+
+void stage3_boss_leave_timer(void) {
+#ifdef DEATH_LABEL
+    if ((g_enemies_stopped == 0) && (*(u16 *)(reg_a5 + 0x1A) == 0)) {
+#else
+    if ((g_enemies_stopped == 0) && (*(u16 *)(reg_a5 + 0x1A) -= 1, *(u16 *)(reg_a5 + 0x1A) == 0)) {
+#endif
+        active_players_mask();
+        if (reg_d0.h[0] == 0) {
+            *(u16 *)(reg_a5 + 0x1A) = 0x78U;
+            return;
+        }
+        ENTITY(reg_a6)[4].draw.sh = 0;
+        stage3_boss_defeated();
+    }
 }

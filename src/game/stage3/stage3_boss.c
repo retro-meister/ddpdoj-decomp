@@ -92,11 +92,11 @@ void stage3_boss_start(void) {
 s32 enemy_remove();                           /* extern */
 s32 boss_slots_run();                            /* extern */
 s32 enemy_hitbox_debug_draw();                            /* extern */
-s32 func_001D3F00();                            /* extern */
+s32 stage3_boss_take_damage();                            /* extern */
 s32 func_002035A0();                            /* extern */
 
 void stage3_boss_main(void) {
-    func_001D3F00();
+    stage3_boss_take_damage();
     boss_slots_run();
     if (cond_flag != 0) {
         func_002035A0();

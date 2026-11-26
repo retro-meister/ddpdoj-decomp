@@ -1,11 +1,55 @@
 #include "common.h"
 #include "entity.h"
+#include "enemy.h"
 
-void stage3_boss_timber(void);
-void func_001D2550(void);
-void func_001D27A0(void);
+/*
+ * The drone the stage 3 boss launches, and what flies off its lid. The boss leaves the drone's position and its
+ * drawing attributes in the first words of the request. The drone unfolds, then flies on and fires bursts toward
+ * the player from its two muzzles in turn, getting faster.
+ */
+typedef struct {
+    /* 0x00 */ u8 common[0x16];
+    /* 0x16 */ union {
+        struct { u16 y; u16 x; u16 attr; } at_start;
+        struct { u8 unused_16; u8 seen; u16 unfolded; u16 unused_1A; } now;
+    };
+    /* 0x1C */ u8 hit_flash;
+    /* 0x1D */ u8 palette;
+    /* 0x1E */ u8 pause;              /* frames between two bursts */
+    /* 0x1F */ u8 wait;
+    /* 0x20 */ u8 burst_shots;
+    /* 0x21 */ u8 burst_shots_left;
+    /* 0x22 */ u8 unused_22;
+    /* 0x23 */ u8 shot_interval;
+    /* 0x24 */ EnemyTimer accel;      /* frames between two steps of its speed */
+    /* 0x26 */ u16 muzzle;            /* offset of the next pair of muzzles in their table */
+    /* 0x28 */ EnemyTimer unfold_timer;
+    /* 0x2A */ u16 unfold_frame;
+    /* 0x2C */ EnemyTimer spin_timer;
+    /* 0x2E */ u16 spin_frame;
+    /* 0x30 */ u16 bullet_speed;
+    /* 0x32 */ u16 bullet;
+    /* 0x34 */ u16 move;              /* direction and speed it takes once unfolded */
+    /* 0x36 */ u8 unused_36;
+    /* 0x37 */ u8 start_wait;         /* added to the first wait */
+} Stage3BossDroneState;
 
-void stage3_boss_timber_first(void) {
+typedef struct {
+    /* 0x00 */ u8 common[0x16];
+    /* 0x16 */ u8 unused_16;
+    /* 0x17 */ u8 seen;
+    /* 0x18 */ EnemyTimer frame_timer;
+    /* 0x1A */ u16 frame;
+} LidBulletState;
+
+#define BOSS_DRONE(pointer) ((Stage3BossDroneState *)(pointer))
+#define LID_BULLET(pointer) ((LidBulletState *)(pointer))
+
+void stage3_boss_drone(void);
+void stage3_boss_lid_bullet_draw(void);
+void breakable_bullet_check(void);
+
+void stage3_boss_drone_first(void) {
     void enemy_set_entity_count(s32 mode);
     enemy_set_entity_count(1);
 }
@@ -19,43 +63,43 @@ extern u8 D_0026D600[];
 extern u32 D_0028DC10;
 extern u16 g_loop;
 
-void stage3_boss_timber_start(void) {
+void stage3_boss_drone_start(void) {
     s32 temp_a0_2;
     u16 temp_a0;
 
     reg_a0 = D_0026D600;
     enemy_init_entities();
-    ENTITY(reg_a6)->y.h = (u16) *(u16 *)(reg_a5 + 0x16);
-    ENTITY(reg_a6)->x.h = (u16) *(u16 *)(reg_a5 + 0x18);
-    temp_a0 = *(u16 *)(reg_a5 + 0x1A);
+    ENTITY(reg_a6)->y.h = (u16) BOSS_DRONE(reg_a5)->at_start.y;
+    ENTITY(reg_a6)->x.h = (u16) BOSS_DRONE(reg_a5)->at_start.x;
+    temp_a0 = BOSS_DRONE(reg_a5)->at_start.attr;
     ENTITY(reg_a6)->attr.h = temp_a0;
     reg_a0 = D_0026D5E0;
     reg_d0.w = ((u32) D_0028DC10 >> 1) - 1;
     enemy_set_task_state();
-    reg_d0.b[0] = *(u8 *)(reg_a5 + 0x37);
-    *(u8 *)(reg_a5 + 0x1F) += reg_d0.b[0];
+    reg_d0.b[0] = BOSS_DRONE(reg_a5)->start_wait;
+    BOSS_DRONE(reg_a5)->wait += reg_d0.b[0];
     func_001713C0();
     reg_d0.h[0] += reg_d0.h[0];
     reg_d0.h[0] += reg_d0.h[0];
     temp_a0_2 = reg_d0.h[0] & ~3;
     reg_a0 = *(u8 **)((u8 *)D_0026D5C0 + temp_a0_2);
-    *(u8 *)(reg_a5 + 0x1F) = (u8) *(u8 *)(reg_a0 + 1);
-    *(u8 *)(reg_a5 + 0x1E) = (u8) *(u8 *)reg_a0;
+    BOSS_DRONE(reg_a5)->wait = (u8) *(u8 *)(reg_a0 + 1);
+    BOSS_DRONE(reg_a5)->pause = (u8) *(u8 *)reg_a0;
     reg_a0 += 2;
-    *(u8 *)(reg_a5 + 0x23) = (u8) *(u8 *)(reg_a0 + 1);
-    *(u8 *)(reg_a5 + 0x24) = (u8) *(u8 *)reg_a0;
+    BOSS_DRONE(reg_a5)->shot_interval = (u8) *(u8 *)(reg_a0 + 1);
+    BOSS_DRONE(reg_a5)->accel.b.interval = (u8) *(u8 *)reg_a0;
     reg_a0 += 2;
-    *(u16 *)(reg_a5 + 0x30) = (u16) *(u16 *)reg_a0;
+    BOSS_DRONE(reg_a5)->bullet_speed = (u16) *(u16 *)reg_a0;
     reg_a0 += 2;
     ENTITY(reg_a6)->hp.h = (u16) *(u16 *)reg_a0;
     ENTITY(reg_a6)[1].hp.h = (u16) *(u16 *)reg_a0;
     if (g_loop == 0) {
-        stage3_boss_timber();
+        stage3_boss_drone();
         return;
     }
-    *(u8 *)(reg_a5 + 0x23) = 0xDU;
-    *(u16 *)(reg_a5 + 0x30) = 1U;
-    stage3_boss_timber();
+    BOSS_DRONE(reg_a5)->shot_interval = 0xDU;
+    BOSS_DRONE(reg_a5)->bullet_speed = 1U;
+    stage3_boss_drone();
 }
 
 
@@ -74,7 +118,7 @@ extern u16 g_bullets_blocked;
 extern u16 g_enemies_stopped;
 extern u16 g_damage_blink_counter;
 
-void stage3_boss_timber(void) {
+void stage3_boss_drone(void) {
     s32 enemy_remove();
     u8 bits;
     u16 hp;
@@ -94,11 +138,11 @@ next_20:
     reg_tmp.w += reg_tmp1.w;
     reg_d0.h[0] += 0x7000;
     if (reg_tmp.h[1] == 0) goto next_lim;
-    if (*(u8 *)(reg_a5 + 0x17) == 0) goto next_lim_end;
+    if (BOSS_DRONE(reg_a5)->now.seen == 0) goto next_lim_end;
     enemy_remove();
     return;
 next_lim:
-    *(u8 *)(reg_a5 + 0x17) = 1;
+    BOSS_DRONE(reg_a5)->now.seen = 1;
 next_lim_end:
     ENTITY(reg_a6)[1].y.h = ENTITY(reg_a6)->y.h;
     ENTITY(reg_a6)[1].x.h = ENTITY(reg_a6)->x.h;
@@ -106,7 +150,7 @@ next_lim_end:
     reg_d1.b[0] |= ENTITY(reg_a6)[1].flags.b[1];
     reg_d1.h[0] &= 0x5C;
     if (reg_d1.h[0] != 0) goto next_50;
-    reg_d0.b[0] = *(u8 *)(reg_a5 + 0x1D);
+    reg_d0.b[0] = BOSS_DRONE(reg_a5)->palette;
     if ((s32)ENTITY(reg_a6)->hp.h >= 0x180) goto next_90;
     if (g_damage_blink_counter != 0) goto next_90;
     reg_d0.w = 0x19;
@@ -126,9 +170,9 @@ next_53:
 next_55:
     reg_d0.b[0] = ENTITY(reg_a6)->attr.b.palette;
     if (reg_d0.b[0] != 0x19) goto next_60;
-    reg_d0.b[0] = *(u8 *)(reg_a5 + 0x1D);
+    reg_d0.b[0] = BOSS_DRONE(reg_a5)->palette;
 next_60:
-    reg_d2.b[0] = *(u8 *)(reg_a5 + 0x1C);
+    reg_d2.b[0] = BOSS_DRONE(reg_a5)->hit_flash;
     reg_d0.b[0] ^= reg_d2.b[0];
     reg_d4.h[0] = ENTITY(reg_a6)->hp.h;
     hp = ENTITY(reg_a6)[1].hp.h;
@@ -140,48 +184,48 @@ next_80:
     if (ENTITY(reg_a6)->hp.sh < 0) goto block_dead;
 next_90:
     ENTITY(reg_a6)->attr.b.palette = reg_d0.b[0];
-    if (*(u16 *)(reg_a5 + 0x18) == 0) goto next_200;
+    if (BOSS_DRONE(reg_a5)->now.unfolded == 0) goto next_200;
 next_100:
-    reg_tmp.b[0] = *(u8 *)(reg_a5 + 0x2D);
-    *(u8 *)(reg_a5 + 0x2D) -= 1;
+    reg_tmp.b[0] = BOSS_DRONE(reg_a5)->spin_timer.b.countdown;
+    BOSS_DRONE(reg_a5)->spin_timer.b.countdown -= 1;
     if ((s32)reg_tmp.b[0] > 0) goto next_120;
-    *(u8 *)(reg_a5 + 0x2D) = *(u8 *)(reg_a5 + 0x2C);
+    BOSS_DRONE(reg_a5)->spin_timer.b.countdown = BOSS_DRONE(reg_a5)->spin_timer.b.interval;
     reg_a0 = (u8 *)D_0026D640;
-    reg_d0.h[0] = *(u16 *)(reg_a5 + 0x2E);
+    reg_d0.h[0] = BOSS_DRONE(reg_a5)->spin_frame;
     reg_tmp.w = *(u32 *)(D_0026D640 + (reg_d0.h[0] & ~3));
     ENTITY(reg_a6)->draw.h = reg_tmp.h[1];
     ENTITY(reg_a6)->sprite.h = reg_tmp.h[0];
-    reg_tmp.h[0] = *(u16 *)(reg_a5 + 0x2E);
-    *(u16 *)(reg_a5 + 0x2E) -= 4;
+    reg_tmp.h[0] = BOSS_DRONE(reg_a5)->spin_frame;
+    BOSS_DRONE(reg_a5)->spin_frame -= 4;
     if ((s32)reg_tmp.h[0] >= 4) goto next_120;
-    *(u16 *)(reg_a5 + 0x2E) = 0x1C;
+    BOSS_DRONE(reg_a5)->spin_frame = 0x1C;
 next_120:
-    reg_tmp.b[0] = *(u8 *)(reg_a5 + 0x25);
-    *(u8 *)(reg_a5 + 0x25) -= 1;
+    reg_tmp.b[0] = BOSS_DRONE(reg_a5)->accel.b.countdown;
+    BOSS_DRONE(reg_a5)->accel.b.countdown -= 1;
     if ((s32)reg_tmp.b[0] > 0) goto block_objset;
-    *(u8 *)(reg_a5 + 0x25) = *(u8 *)(reg_a5 + 0x24);
+    BOSS_DRONE(reg_a5)->accel.b.countdown = BOSS_DRONE(reg_a5)->accel.b.interval;
     bits = ENTITY(reg_a6)->move.b.speed;
     if ((s8)bits >= 0x12) goto block_objset;
     ENTITY(reg_a6)->move.b.speed += 1;
     goto block_objset;
 next_200:
-    reg_tmp.b[0] = *(u8 *)(reg_a5 + 0x29);
-    *(u8 *)(reg_a5 + 0x29) -= 1;
+    reg_tmp.b[0] = BOSS_DRONE(reg_a5)->unfold_timer.b.countdown;
+    BOSS_DRONE(reg_a5)->unfold_timer.b.countdown -= 1;
     if ((s32)reg_tmp.b[0] > 0) goto block_objset;
-    *(u8 *)(reg_a5 + 0x29) = *(u8 *)(reg_a5 + 0x28);
+    BOSS_DRONE(reg_a5)->unfold_timer.b.countdown = BOSS_DRONE(reg_a5)->unfold_timer.b.interval;
     reg_a0 = (u8 *)D_0026D360;
-    reg_d0.h[0] = *(u16 *)(reg_a5 + 0x2A);
+    reg_d0.h[0] = BOSS_DRONE(reg_a5)->unfold_frame;
     reg_tmp.w = *(u32 *)(D_0026D360 + (reg_d0.h[0] & ~3));
     ENTITY(reg_a6)->draw.h = reg_tmp.h[1];
     ENTITY(reg_a6)->sprite.h = reg_tmp.h[0];
-    *(u16 *)(reg_a5 + 0x2A) += 4;
-    if (*(u16 *)(reg_a5 + 0x2A) != 0x20) goto block_objset;
+    BOSS_DRONE(reg_a5)->unfold_frame += 4;
+    if (BOSS_DRONE(reg_a5)->unfold_frame != 0x20) goto block_objset;
     reg_tmp.w = 0xEE00FC00;
     ENTITY(reg_a6)->offset_y.h = reg_tmp.h[1];
     ENTITY(reg_a6)->offset_x.h = reg_tmp.h[0];
     ENTITY(reg_a6)->look.h = 0x1220;
-    ENTITY(reg_a6)->move.h = *(u16 *)(reg_a5 + 0x34);
-    *(u16 *)(reg_a5 + 0x18) = 1;
+    ENTITY(reg_a6)->move.h = BOSS_DRONE(reg_a5)->move;
+    BOSS_DRONE(reg_a5)->now.unfolded = 1;
     goto next_100;
 block_objset:
     entity_draw_layer5();
@@ -189,26 +233,26 @@ block_objset:
     enemy_hitbox_debug_draw();
     reg_a0 = reg_a6 + 0x20;
     enemy_hitbox_debug_draw();
-    if (*(u16 *)(reg_a5 + 0x18) == 0) return;
+    if (BOSS_DRONE(reg_a5)->now.unfolded == 0) return;
     if (g_enemies_stopped != 0) return;
     if (g_bullets_blocked != 0) return;
     if (ENTITY(reg_a6)->y.sh < 0x1200) return;
-    reg_tmp.b[0] = *(u8 *)(reg_a5 + 0x1F);
-    *(u8 *)(reg_a5 + 0x1F) -= 1;
+    reg_tmp.b[0] = BOSS_DRONE(reg_a5)->wait;
+    BOSS_DRONE(reg_a5)->wait -= 1;
     switch (reg_tmp.b[0]) { case 0: goto next_600; }
     return;
 next_600:
-    *(u8 *)(reg_a5 + 0x1F) = *(u8 *)(reg_a5 + 0x23);
+    BOSS_DRONE(reg_a5)->wait = BOSS_DRONE(reg_a5)->shot_interval;
     reg_a4 = (u8 *)D_0026D660;
-    reg_a4 += *(u16 *)(reg_a5 + 0x26);
+    reg_a4 += BOSS_DRONE(reg_a5)->muzzle;
     reg_d0.h[0] = ENTITY(reg_a6)->y.h;
     reg_d1.h[0] = ENTITY(reg_a6)->x.h;
     reg_d0.h[0] += *(u16 *)(reg_a4 + 2);
     reg_d1.h[0] += *(u16 *)(reg_a4 + 4);
     aim256_at_player();
     if (cond_flag != 0) goto next_660;
-    reg_d0.h[1] = *(u16 *)(reg_a5 + 0x30);
-    reg_d0.h[0] = *(u16 *)(reg_a5 + 0x32);
+    reg_d0.h[1] = BOSS_DRONE(reg_a5)->bullet_speed;
+    reg_d0.h[0] = BOSS_DRONE(reg_a5)->bullet;
     reg_d2.h[1] = ENTITY(reg_a6)->y.h;
     reg_d2.h[0] = ENTITY(reg_a6)->x.h;
     reg_d4.w = 0;
@@ -224,8 +268,8 @@ next_600:
     reg_d0.h[0] += *(u16 *)(reg_a4 + 2);
     reg_d1.h[0] += *(u16 *)(reg_a4 + 4);
     aim256_at_player();
-    reg_d0.h[1] = *(u16 *)(reg_a5 + 0x30);
-    reg_d0.h[0] = *(u16 *)(reg_a5 + 0x32);
+    reg_d0.h[1] = BOSS_DRONE(reg_a5)->bullet_speed;
+    reg_d0.h[0] = BOSS_DRONE(reg_a5)->bullet;
     reg_d2.h[1] = ENTITY(reg_a6)->y.h;
     reg_d2.h[0] = ENTITY(reg_a6)->x.h;
     reg_d4.w = 0;
@@ -237,23 +281,23 @@ next_600:
     reg_a4 += 2;
     bullet_fire256_fixed();
 next_660:
-    reg_tmp.h[0] = *(u16 *)(reg_a5 + 0x26);
-    *(u16 *)(reg_a5 + 0x26) -= 0xC;
+    reg_tmp.h[0] = BOSS_DRONE(reg_a5)->muzzle;
+    BOSS_DRONE(reg_a5)->muzzle -= 0xC;
     if ((s32)reg_tmp.h[0] >= 0xC) goto next_670;
-    *(u16 *)(reg_a5 + 0x26) = 0x60;
+    BOSS_DRONE(reg_a5)->muzzle = 0x60;
 next_670:
-    reg_tmp.b[0] = *(u8 *)(reg_a5 + 0x21);
-    *(u8 *)(reg_a5 + 0x21) -= 1;
+    reg_tmp.b[0] = BOSS_DRONE(reg_a5)->burst_shots_left;
+    BOSS_DRONE(reg_a5)->burst_shots_left -= 1;
     if ((s32)reg_tmp.b[0] > 0) return;
-    *(u8 *)(reg_a5 + 0x21) = *(u8 *)(reg_a5 + 0x20);
-    *(u8 *)(reg_a5 + 0x1F) = *(u8 *)(reg_a5 + 0x1E);
+    BOSS_DRONE(reg_a5)->burst_shots_left = BOSS_DRONE(reg_a5)->burst_shots;
+    BOSS_DRONE(reg_a5)->wait = BOSS_DRONE(reg_a5)->pause;
     bits = ENTITY(reg_a6)->flags.b[0];
     if (bits & 0x40) goto next_680;
     ENTITY(reg_a6)->flags.b[0] = bits | 0x40;
     goto next_690;
 next_680:
     ENTITY(reg_a6)->flags.b[0] = bits & 0xBF;
-    *(u8 *)(reg_a5 + 0x1F) = *(u8 *)(reg_a5 + 0x23);
+    BOSS_DRONE(reg_a5)->wait = BOSS_DRONE(reg_a5)->shot_interval;
 next_690:
     return;
 block_dead:
@@ -305,7 +349,7 @@ void stage3_boss_lid_bullet_start(void) {
 }
 
 
-void func_001D24D0(void) {
+void stage3_boss_lid_bullet_fade(void) {
     s32 enemy_remove();
     reg_tmp.h[1] = ENTITY(reg_a6)->draw.h;
     reg_tmp.h[0] = ENTITY(reg_a6)->sprite.h;
@@ -314,13 +358,13 @@ void func_001D24D0(void) {
     ENTITY(reg_a6)->sprite.h = (u16) reg_tmp.h[0];
     ENTITY(reg_a6)->hit_y_plus.h -= 1;
     if (ENTITY(reg_a6)->hit_y_plus.h != 0) {
-        func_001D2550();
+        stage3_boss_lid_bullet_draw();
         return;
     }
     enemy_remove();
 }
 
-void func_001D2550(void) {
+void stage3_boss_lid_bullet_draw(void) {
     void entity_draw_with_bullets(void);
     entity_draw_with_bullets();
 }
@@ -333,12 +377,12 @@ void stage3_boss_lid_bullet(void) {
     u32 var_a0;
 
     if (ENTITY(reg_a6)->flags.sb[0] < 0) {
-        func_001D24D0();
+        stage3_boss_lid_bullet_fade();
         return;
     }
     reg_d1.w = 0x5C;
     reg_d1.b[0] &= ENTITY(reg_a6)->flags.b[1];
-    func_001D27A0();
+    breakable_bullet_check();
     if (cond_flag != 0) {
         if (ENTITY(reg_a6)->flags.sb[0] < 0) {
             ENTITY(reg_a6)->flags.b[1] = 0x80U;
@@ -350,7 +394,7 @@ void stage3_boss_lid_bullet(void) {
             ENTITY(reg_a6)->offset_y.h = (u16) reg_tmp.h[1];
             ENTITY(reg_a6)->offset_x.h = (u16) reg_tmp.h[0];
             ENTITY(reg_a6)->hit_y_plus.sh = 0x10;
-            func_001D2550();
+            stage3_boss_lid_bullet_draw();
             return;
         }
         enemy_remove();
@@ -366,28 +410,28 @@ void stage3_boss_lid_bullet(void) {
     reg_tmp.w = var_a0 + reg_tmp1.w;
     reg_d0.h[0] += 0x7FFF + 0x7FC7;
     if (reg_tmp.h[1] != 0) {
-        if (*(u8 *)(reg_a5 + 0x17) != 0) {
+        if (LID_BULLET(reg_a5)->seen != 0) {
             enemy_remove();
             return;
         }
         goto block_10;
     }
-    *(u8 *)(reg_a5 + 0x17) = 1U;
+    LID_BULLET(reg_a5)->seen = 1U;
 block_10:
-    reg_tmp.b[0] = *(u8 *)(reg_a5 + 0x19);
-    *(u8 *)(reg_a5 + 0x19) -= 1;
+    reg_tmp.b[0] = LID_BULLET(reg_a5)->frame_timer.b.countdown;
+    LID_BULLET(reg_a5)->frame_timer.b.countdown -= 1;
     if ((s32) reg_tmp.b[0] <= 0) {
-        *(u8 *)(reg_a5 + 0x19) = (u8) *(u8 *)(reg_a5 + 0x18);
+        LID_BULLET(reg_a5)->frame_timer.b.countdown = (u8) LID_BULLET(reg_a5)->frame_timer.b.interval;
         reg_a0 = (u8 *)D_0026D7B0;
-        reg_d0.h[0] = *(u16 *)(reg_a5 + 0x1A);
+        reg_d0.h[0] = LID_BULLET(reg_a5)->frame;
         var_a0 = (u32) reg_d0.h[0];
         reg_tmp.w = *(u32 *)(D_0026D7B0 + (var_a0 & ~3));
         ENTITY(reg_a6)->draw.h = (u16) reg_tmp.h[1];
         ENTITY(reg_a6)->sprite.h = (u16) reg_tmp.h[0];
-        reg_tmp.h[0] = *(u16 *)(reg_a5 + 0x1A);
-        *(u16 *)(reg_a5 + 0x1A) -= 4;
+        reg_tmp.h[0] = LID_BULLET(reg_a5)->frame;
+        LID_BULLET(reg_a5)->frame -= 4;
         if ((s32) reg_tmp.h[0] < 4) {
-            *(u16 *)(reg_a5 + 0x1A) = 0xCU;
+            LID_BULLET(reg_a5)->frame = 0xCU;
         }
     }
     entity_draw_with_bullets();
@@ -403,7 +447,7 @@ extern u16 D_00299764[];
 extern u16 D_00299766[];
 extern u16 g_bomb_entities[];
 
-void func_001D27A0(void) {
+void breakable_bullet_check(void) {
     u32 temp_v1;
 
     reg_d0.h[0] = g_bomb_entities[0];
