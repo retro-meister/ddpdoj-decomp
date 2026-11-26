@@ -1,6 +1,7 @@
 #include "common.h"
 #include "entity.h"
 #include "enemy_tables.h"
+#include "enemy.h"
 
 void func_0014D4A0(void);
 void func_0014DA80(void);
@@ -353,12 +354,6 @@ block_7:
     return ret;
 }
 
-extern u8 D_002589F0[];
-extern u8 D_002589F4[];
-extern u8 D_00258DF0[];
-extern u8 D_00259A70[];
-extern u8 D_00259A74[];
-extern u8 D_00259E70[];
 extern u16 g_side_scroll_x[];
 extern u8 g_player2_as_u8_a[];
 extern u8 g_player1_as_u8_a[];
@@ -376,9 +371,9 @@ void func_0014DDB0(void) {
     }
     temp_s0 = var_a0;
     if (temp_s0 == 0) {
-        ((Fn)*(u32 *)((u8 *)D_00258DF0 + (reg_d7.h[0] * 4)))();
+        ((Fn)*(u32 *)((u8 *)g_enemy_first_routines + (reg_d7.h[0] * 4)))();
     } else {
-        ((Fn)*(u32 *)((u8 *)D_00259E70 + (reg_d7.h[0] * 4)))();
+        ((Fn)*(u32 *)((u8 *)g_enemy_first_routines_high + (reg_d7.h[0] * 4)))();
     }
     reg_d0.h[0] = *(u16 *)(reg_a5 + 4);
     if (func_0014DCA0() == 0) {
@@ -387,9 +382,9 @@ void func_0014DDB0(void) {
         *(u16 *)(reg_a5 + 8) = (u16) reg_tmp.h[0];
         reg_d7.h[0] *= 2;
         if (temp_s0 == 0) {
-            reg_tmp.w = *(u32 *)(D_002589F4 + (reg_d7.h[0] * 4));
+            reg_tmp.w = *(u32 *)((u8 *)&g_enemy_routines[0].run + (reg_d7.h[0] * 4));
         } else {
-            reg_tmp.w = *(u32 *)(D_00259A74 + (reg_d7.h[0] * 4));
+            reg_tmp.w = *(u32 *)((u8 *)&g_enemy_routines_high[0].run + (reg_d7.h[0] * 4));
         }
         *(u16 *)(reg_a5 + 0x4C) = (u16) reg_tmp.h[1];
         *(u16 *)(reg_a5 + 0x4E) = (u16) reg_tmp.h[0];
@@ -402,9 +397,9 @@ void func_0014DDB0(void) {
         *(u8 *)(reg_a5 + 2) = (u8) reg_d0.b[0];
         *(s16 *)(reg_a5 + 0x3E) = 0;
         if (temp_s0 == 0) {
-            ((Fn)*(u32 *)((u8 *)D_002589F0 + (reg_d7.h[0] * 4)))();
+            ((Fn)*(u32 *)((u8 *)g_enemy_routines + (reg_d7.h[0] * 4)))();
         } else {
-            ((Fn)*(u32 *)((u8 *)D_00259A70 + (reg_d7.h[0] * 4)))();
+            ((Fn)*(u32 *)((u8 *)g_enemy_routines_high + (reg_d7.h[0] * 4)))();
         }
         reg_d0.b[0] = *(u8 *)(reg_a5 + 0xC);
         if (reg_d0.b[0] & 1) {

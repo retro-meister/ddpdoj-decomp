@@ -27,6 +27,17 @@ typedef struct {
     /* 0x4C */ u16 routine[2];       /* address of the routine run every frame, high word first */
 } EnemyState;
 
+/* An enemy kind's routines. */
+typedef struct {
+    void (*start)();
+    void (*run)();
+} EnemyRoutines;
+
+extern EnemyRoutines g_enemy_routines[128];
+extern void (*g_enemy_first_routines[128])();
+extern EnemyRoutines g_enemy_routines_high[128];
+extern void (*g_enemy_first_routines_high[128])();
+
 #define ENEMY_WORK(pointer) ((EnemyState *)(pointer))
 
 #define ENEMY_FLAG_FROM_SPAWNER 0x40 /* EnemyState.flags: started by a spawner, at start_y/start_x */
