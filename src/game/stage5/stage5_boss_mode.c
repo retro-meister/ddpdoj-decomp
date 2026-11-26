@@ -1,5 +1,6 @@
 #include "common.h"
 #include "entity.h"
+#include "stage5_boss.h"
 
 void stage5_boss_mode_form1_idle_start(void);
 void stage5_boss_mode_form1_idle(void);
@@ -177,9 +178,9 @@ void stage5_boss_mode_form1_idle() {
             g_boss_present_b1 |= 1;
             g_boss_present_b1 |= 4;
             g_boss_present |= 1;
-            *(u16 *)(reg_a5 + 0x16) = (u16) reg_tmp.h[1];
+            STAGE5_BOSS(reg_a5)->hp[0] = (u16) reg_tmp.h[1];
             var_a1 = reg_tmp.h[0];
-            *(u16 *)(reg_a5 + 0x18) = var_a1;
+            STAGE5_BOSS(reg_a5)->hp[1] = var_a1;
             g_boss_hp_unit = 0x780;
             reg_a0 = reg_a5 + 0x16;
             g_boss_hp = (u8 *)(reg_a0);
@@ -437,7 +438,7 @@ void stage5_boss_mode_form1_to_form2_start(void) {
 #endif
     *(s16 *)(reg_a4 + 2) = 1;
     *(s16 *)(reg_a4 + 4) = 0x80;
-    *(s16 *)(reg_a5 + 0x1A) = 0x6270;
+    STAGE5_BOSS(reg_a5)->time_left = 0x6270;
     stage5_boss_mode_form1_to_form2(0x80, 1);
 }
 
@@ -488,11 +489,11 @@ void stage5_boss_mode_form1_to_form2() {
             boss_part_show();
             reg_d0.w = 1;
             boss_movement_start();
-            ENTITY(reg_a6)[8].look.sb.size = 1;
+            STAGE5_DAMAGE(reg_a6)->form = 1;
             ENTITY(reg_a6)[11].hit_y_minus.sh = 0;
             reg_tmp.w = 0x23000;
-            *(u16 *)(reg_a5 + 0x16) = (u16) reg_tmp.h[1];
-            *(u16 *)(reg_a5 + 0x18) = (u16) reg_tmp.h[0];
+            STAGE5_BOSS(reg_a5)->hp[0] = (u16) reg_tmp.h[1];
+            STAGE5_BOSS(reg_a5)->hp[1] = (u16) reg_tmp.h[0];
             func_001F5630();
             func_001F56F0();
             func_001F57C0();
@@ -758,13 +759,13 @@ void stage5_boss_mode_form2_to_form3() {
             death_D_006901B2[0] = death_D_0068FFB2[0];
             death_D_006901B4[0] = death_D_0068FFB4[0];
 #endif
-            ENTITY(reg_a6)[8].look.sb.size = 2;
+            STAGE5_DAMAGE(reg_a6)->form = 2;
             g_true_last_boss = 0xFFFF;
             reg_d0.w = 0x4D000;
-            *(u16 *)(reg_a5 + 0x16) = (u16) reg_d0.h[1];
-            *(u16 *)(reg_a5 + 0x18) = (u16) reg_d0.h[0];
-            *(u16 *)(reg_a5 + 0x1C) = (u16) reg_d0.h[1];
-            *(u16 *)(reg_a5 + 0x1E) = (u16) reg_d0.h[0];
+            STAGE5_BOSS(reg_a5)->hp[0] = (u16) reg_d0.h[1];
+            STAGE5_BOSS(reg_a5)->hp[1] = (u16) reg_d0.h[0];
+            STAGE5_BOSS(reg_a5)->hp_scratch[0] = (u16) reg_d0.h[1];
+            STAGE5_BOSS(reg_a5)->hp_scratch[1] = (u16) reg_d0.h[0];
             g_boss_hp_unit = 0x580;
             reg_a0 = (u8 *)(reg_a5 + 0x16);
             g_boss_hp_as_void_p = (void *)reg_a0;

@@ -1,5 +1,6 @@
 #include "common.h"
 #include "entity.h"
+#include "stage5_boss.h"
 #include "sdk/ps2sdk.h"
 
 void death_func_0021D4F0(void);
@@ -20,8 +21,8 @@ extern u16 g_direction64_offsets_166[];
 void death_func_0021B1A0(void) {
     reg_d0.h[1] = *(u16 *)(reg_a4 + 0xA);
     reg_d0.h[0] = *(u16 *)(reg_a4 + 0xC);
-    reg_tmp.h[1] = *(u16 *)(reg_a5 + 0x16);
-    reg_tmp.h[0] = *(u16 *)(reg_a5 + 0x18);
+    reg_tmp.h[1] = STAGE5_BOSS(reg_a5)->hp[0];
+    reg_tmp.h[0] = STAGE5_BOSS(reg_a5)->hp[1];
     reg_d2.h[1] = ENTITY(reg_a6)->y.h;
     reg_d2.h[0] = ENTITY(reg_a6)->x.h;
     reg_d6.b[0] = 0x10;
@@ -297,7 +298,7 @@ void death_func_0021BC30(arg0, arg1)
             if (*(u8 *)(reg_a4 + 4) == reg_d2.b[0]) {
                 reg_a0 = (u8 *)(g_player1_as_u16_a);
                 reg_a1 = (u8 *)(g_player2_as_u16_a);
-                if (*(u8 *)(reg_a5 + 2) != 0) {
+                if (ENEMY_STATE(reg_a5)->target_player != 0) {
                     reg_atmp = (u8 *)(reg_a0);
                     reg_a0 = (u8 *)(reg_a1);
                     reg_a1 = (u8 *)(reg_atmp);
@@ -430,7 +431,7 @@ void death_func_0021BFC0(void) {
         if (*(u8 *)(reg_a4 + 4) == reg_d0.b[0]) {
             reg_a0 = (u8 *)(g_player1);
             reg_a1 = (u8 *)(g_player2);
-            if (*(u8 *)(reg_a5 + 2) != 0) {
+            if (ENEMY_STATE(reg_a5)->target_player != 0) {
                 reg_atmp = (u8 *)(reg_a0);
                 reg_a0 = (u8 *)(reg_a1);
                 reg_a1 = (u8 *)(reg_atmp);
@@ -567,16 +568,16 @@ void death_func_0021C500(void) {
     p = reg_a4 + 0x1C;
     switch (*(u16 *)p) { case 0: goto next_0; }
     *(u16 *)p -= 1;
-    reg_tmp.h[1] = *(u16 *)(reg_a5 + 0x16);
-    reg_tmp.h[0] = *(u16 *)(reg_a5 + 0x18);
+    reg_tmp.h[1] = STAGE5_BOSS(reg_a5)->hp[0];
+    reg_tmp.h[0] = STAGE5_BOSS(reg_a5)->hp[1];
     if ((u32)reg_tmp.w >= 0x1F800U) goto next_2;
 next_0:
     death_func_0021B770();
     p = reg_a4 + 0x1E;
     if (*(u16 *)p == 0) goto next_1;
     *(u16 *)p -= 1;
-    reg_tmp.h[1] = *(u16 *)(reg_a5 + 0x16);
-    reg_tmp.h[0] = *(u16 *)(reg_a5 + 0x18);
+    reg_tmp.h[1] = STAGE5_BOSS(reg_a5)->hp[0];
+    reg_tmp.h[0] = STAGE5_BOSS(reg_a5)->hp[1];
     if ((u32)reg_tmp.w >= 0x1C000U) goto next_9;
 next_1:
     reg_tmp.b[0] = reg_a4[5];
@@ -694,7 +695,7 @@ void death_func_0021C9A0(void) {
         *(u8 *)(reg_a4 + 3) = (u8) *(u8 *)(reg_a4 + 7);
         reg_a0 = (u8 *)(g_player1);
         reg_a1 = (u8 *)(g_player2);
-        if (*(u8 *)(reg_a5 + 2) != 0) {
+        if (ENEMY_STATE(reg_a5)->target_player != 0) {
             reg_atmp = (u8 *)(reg_a0);
             reg_a0 = (u8 *)(reg_a1);
             reg_a1 = (u8 *)(reg_atmp);
@@ -836,8 +837,8 @@ void death_func_0021CE90(void) {
     *(u8 *)(reg_a4 + 3) -= 1;
     if (reg_tmp.b[0] == 0) {
         reg_d0.b[0] = *(u8 *)(reg_a4 + 9);
-        reg_tmp.h[1] = *(u16 *)(reg_a5 + 0x16);
-        reg_tmp.h[0] = *(u16 *)(reg_a5 + 0x18);
+        reg_tmp.h[1] = STAGE5_BOSS(reg_a5)->hp[0];
+        reg_tmp.h[0] = STAGE5_BOSS(reg_a5)->hp[1];
         if ((u32) reg_tmp.w < 0xE000U) {
             reg_d0.b[0] -= 2;
             slowdown_allow_with_boss();
@@ -856,8 +857,8 @@ void death_func_0021CE90(void) {
         reg_d1.b[0] += 0xC0;
         death_func_0021B1A0();
         reg_d0.b[0] = *(u8 *)(reg_a4 + 0x13);
-        reg_tmp.h[1] = *(u16 *)(reg_a5 + 0x16);
-        reg_tmp.h[0] = *(u16 *)(reg_a5 + 0x18);
+        reg_tmp.h[1] = STAGE5_BOSS(reg_a5)->hp[0];
+        reg_tmp.h[0] = STAGE5_BOSS(reg_a5)->hp[1];
         if ((u32) reg_tmp.w < 0xE000U) {
             reg_d0.b[0] = (s8) reg_d0.b[0] * 2;
         }
@@ -963,7 +964,7 @@ void death_func_0021D2E0(void) {
         *(u8 *)(reg_a4 + 3) = (u8) *(u8 *)(reg_a4 + 7);
         reg_a0 = (u8 *)(g_player1);
         reg_a1 = (u8 *)(g_player2);
-        if (*(u8 *)(reg_a5 + 2) != 0) {
+        if (ENEMY_STATE(reg_a5)->target_player != 0) {
             reg_atmp = (u8 *)(reg_a0);
             reg_a0 = (u8 *)(reg_a1);
             reg_a1 = (u8 *)(reg_atmp);

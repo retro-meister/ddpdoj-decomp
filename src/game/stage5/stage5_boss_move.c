@@ -1,5 +1,6 @@
 #include "common.h"
 #include "entity.h"
+#include "stage5_boss.h"
 
 void stage5_boss_move_enter_start(void);
 void stage5_boss_move_enter(void);
@@ -154,9 +155,9 @@ void stage5_boss_move_enter_start() {
     rng_next_unsigned();
     ENTITY(reg_a6)->move.b.dir = (u8) reg_d0.b[0];
     reg_d0.b[0] += 0x10;
-    ENTITY(reg_a6)[9].hit_y_plus.b[0] = (u8) reg_d0.b[0];
+    STAGE5_EXTRA(reg_a6)->head_direction = (u8) reg_d0.b[0];
     reg_d0.b[0] += 0x30;
-    ENTITY(reg_a6)[9].attr.b.palette = (u8) reg_d0.b[0];
+    STAGE5_EXTRA(reg_a6)->belly_direction = (u8) reg_d0.b[0];
     stage5_boss_move_enter();
 }
 

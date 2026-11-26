@@ -1,5 +1,6 @@
 #include "common.h"
 #include "entity.h"
+#include "stage5_boss.h"
 
 void stage5_boss_draw_belly(void);
 void stage5_boss_draw_chest(void);
@@ -55,9 +56,9 @@ void stage5_boss_draw_belly(void) {
 
     reg_d1.w = 0;
     reg_d0.h[0] = 0x1A;
-    reg_d1.b[0] = ENTITY(reg_a6)[9].attr.b.palette;
+    reg_d1.b[0] = STAGE5_EXTRA(reg_a6)->belly_direction;
     velocity_from_dir256();
-    ENTITY(reg_a6)[9].attr.b.palette += 2;
+    STAGE5_EXTRA(reg_a6)->belly_direction += 2;
     ENTITY(reg_a6)->hit_y_plus.h = 0x1400U;
     ENTITY(reg_a6)->hit_y_plus.h += reg_d2.h[0];
     ENTITY(reg_a6)->hit_y_minus.h = 0x2200U;
@@ -77,12 +78,12 @@ void stage5_boss_draw_belly(void) {
     reg_d1.w = temp_a2 + 0xE6000000;
     temp_a1 = reg_d1.w;
     reg_d1.w = temp_a1 + 0xEA00F200;
-    reg_a0 += ENTITY(reg_a6)[9].offset_x.h;
+    reg_a0 += STAGE5_EXTRA(reg_a6)->belly_anim;
     reg_d2.h[1] = *(u16 *)reg_a0;
     reg_d2.h[0] = *(u16 *)(reg_a0 + 2);
     reg_d3.h[0] = 0x1670;
     reg_d4.w = 0;
-    reg_d4.b[0] = ENTITY(reg_a6)[7].offset_x.b[1];
+    reg_d4.b[0] = STAGE5_PALETTES(reg_a6)->belly;
     sprite_draw_layer2_keep(reg_a0, temp_a1, temp_a2, reg_tmp.h[0]);
 }
 
@@ -93,7 +94,7 @@ void stage5_boss_draw_chest(void) {
     reg_d0.b[0] = ENTITY(reg_a6)->move.b.speed;
     reg_d1.b[0] = ENTITY(reg_a6)->move.b.dir;
     velocity_from_dir256();
-    ENTITY(reg_a6)[15].move.h = reg_d2.h[0];
+    STAGE5_ADJUST_B(reg_a6)->arms_y_shift = reg_d2.h[0];
     ENTITY(reg_a6)->move.b.dir += 2;
     reg_d1.h[0] = ENTITY(reg_a6)->y.h;
     reg_d1.h[0] += reg_d2.h[0];
@@ -106,7 +107,7 @@ void stage5_boss_draw_chest(void) {
     reg_d2.w = 0x1E50;
     reg_d3.h[0] = 0x2120;
     reg_d4.w = 0;
-    reg_d4.b[0] = ENTITY(reg_a6)[7].offset_y.b[0];
+    reg_d4.b[0] = STAGE5_PALETTES(reg_a6)->chest;
     sprite_draw_layer2_keep();
 }
 
@@ -114,7 +115,7 @@ void stage5_boss_draw_stinger(void) {
     s32 sprite_draw_layer2_keep();
     reg_d0.h[0] = 0x1A;
     reg_d1.w = 0;
-    reg_d1.b[0] = ENTITY(reg_a6)[9].attr.b.palette;
+    reg_d1.b[0] = STAGE5_EXTRA(reg_a6)->belly_direction;
     velocity_from_dir256();
     reg_d1.h[0] = *(u16 *) (reg_a6 + 2);
     reg_d1.h[0] += reg_d2.h[0];
@@ -127,7 +128,7 @@ void stage5_boss_draw_stinger(void) {
     reg_d2.w = 0x1DF4;
     reg_d3.h[0] = 0xC38;
     reg_d4.w = 0;
-    reg_d4.b[0] = ENTITY(reg_a6)[7].offset_x.b[1];
+    reg_d4.b[0] = STAGE5_PALETTES(reg_a6)->belly;
     sprite_draw_layer2_keep();
 }
 
@@ -138,10 +139,10 @@ void stage5_boss_draw_left_arm_gun_low(void) {
     u32 temp_a0;
 
     reg_d0.h[0] = 0xA00;
-    reg_d0.h[0] += ENTITY(reg_a6)[15].move.h;
+    reg_d0.h[0] += STAGE5_ADJUST_B(reg_a6)->arms_y_shift;
     ENTITY(reg_a6)[3].hit_y_plus.h = (u16) reg_d0.h[0];
     reg_d0.h[0] = 0x600;
-    reg_d0.h[0] -= ENTITY(reg_a6)[15].move.h;
+    reg_d0.h[0] -= STAGE5_ADJUST_B(reg_a6)->arms_y_shift;
     ENTITY(reg_a6)[3].hit_y_minus.h = (u16) reg_d0.h[0];
     reg_a0 = (u8 *)(D_00264890);
     reg_d2.h[0] = ENTITY(reg_a6)[3].move.h;
@@ -150,7 +151,7 @@ void stage5_boss_draw_left_arm_gun_low(void) {
     reg_d2.h[1] = (reg_d2.h[0] != 0) ? *(u16 *)((u8 *)reg_a0 + ((s16)reg_d2.h[0] & ~1)) : *(u16 *)reg_a0;
     reg_d2.h[0] = ((reg_d2.h[0] + 2) != 0) ? *(u16 *)((u8 *)reg_a0 + ((s16)(reg_d2.h[0] + 2) & ~1)) : *(u16 *)reg_a0;
     reg_d1.h[0] = ENTITY(reg_a6)[3].y.h;
-    reg_d1.h[0] += ENTITY(reg_a6)[15].move.h;
+    reg_d1.h[0] += STAGE5_ADJUST_B(reg_a6)->arms_y_shift;
     reg_tmp.w = reg_d1.w;
     reg_d1.h[1] = reg_tmp.h[0];
     reg_d1.h[0] = reg_tmp.h[1];
@@ -161,7 +162,7 @@ void stage5_boss_draw_left_arm_gun_low(void) {
     reg_d1.w = temp_a0 + reg_tmp.w;
     reg_d3.h[0] = ENTITY(reg_a6)[3].look.h;
     reg_d4.h[0] = ENTITY(reg_a6)[3].attr.h;
-    reg_d4.b[0] = ENTITY(reg_a6)[7].offset_x.b[0];
+    reg_d4.b[0] = STAGE5_PALETTES(reg_a6)->arm_guns;
     sprite_draw_layer2_keep();
 }
 
@@ -170,10 +171,10 @@ void stage5_boss_draw_left_arm_gun_mid(void) {
     u32 temp_a0;
 
     reg_d0.h[0] = 0xA00;
-    reg_d0.h[0] += ENTITY(reg_a6)[15].move.h;
+    reg_d0.h[0] += STAGE5_ADJUST_B(reg_a6)->arms_y_shift;
     ENTITY(reg_a6)[2].hit_y_plus.h = (u16) reg_d0.h[0];
     reg_d0.h[0] = 0x600;
-    reg_d0.h[0] -= ENTITY(reg_a6)[15].move.h;
+    reg_d0.h[0] -= STAGE5_ADJUST_B(reg_a6)->arms_y_shift;
     ENTITY(reg_a6)[2].hit_y_minus.h = (u16) reg_d0.h[0];
     reg_a0 = (u8 *)(D_00264890);
     reg_d2.h[0] = ENTITY(reg_a6)[2].move.h;
@@ -182,7 +183,7 @@ void stage5_boss_draw_left_arm_gun_mid(void) {
     reg_d2.h[1] = (reg_d2.h[0] != 0) ? *(u16 *)((u8 *)reg_a0 + ((s16)reg_d2.h[0] & ~1)) : *(u16 *)reg_a0;
     reg_d2.h[0] = ((reg_d2.h[0] + 2) != 0) ? *(u16 *)((u8 *)reg_a0 + ((s16)(reg_d2.h[0] + 2) & ~1)) : *(u16 *)reg_a0;
     reg_d1.h[0] = ENTITY(reg_a6)[2].y.h;
-    reg_d1.h[0] += ENTITY(reg_a6)[15].move.h;
+    reg_d1.h[0] += STAGE5_ADJUST_B(reg_a6)->arms_y_shift;
     reg_tmp.w = reg_d1.w;
     reg_d1.h[1] = reg_tmp.h[0];
     reg_d1.h[0] = reg_tmp.h[1];
@@ -193,7 +194,7 @@ void stage5_boss_draw_left_arm_gun_mid(void) {
     reg_d1.w = temp_a0 + reg_tmp.w;
     reg_d3.h[0] = ENTITY(reg_a6)[2].look.h;
     reg_d4.h[0] = ENTITY(reg_a6)[2].attr.h;
-    reg_d4.b[0] = ENTITY(reg_a6)[7].offset_x.b[0];
+    reg_d4.b[0] = STAGE5_PALETTES(reg_a6)->arm_guns;
     sprite_draw_layer2_keep();
 }
 
@@ -202,10 +203,10 @@ void stage5_boss_draw_left_arm_gun_high(void) {
     u32 temp_a0;
 
     reg_d0.h[0] = 0xA00;
-    reg_d0.h[0] += ENTITY(reg_a6)[15].move.h;
+    reg_d0.h[0] += STAGE5_ADJUST_B(reg_a6)->arms_y_shift;
     ENTITY(reg_a6)[1].hit_y_plus.h = (u16) reg_d0.h[0];
     reg_d0.h[0] = 0x600;
-    reg_d0.h[0] -= ENTITY(reg_a6)[15].move.h;
+    reg_d0.h[0] -= STAGE5_ADJUST_B(reg_a6)->arms_y_shift;
     ENTITY(reg_a6)[1].hit_y_minus.h = (u16) reg_d0.h[0];
     reg_a0 = (u8 *)(D_00264890);
     reg_d2.h[0] = ENTITY(reg_a6)[1].move.h;
@@ -214,7 +215,7 @@ void stage5_boss_draw_left_arm_gun_high(void) {
     reg_d2.h[1] = (reg_d2.h[0] != 0) ? *(u16 *)((u8 *)reg_a0 + ((s16)reg_d2.h[0] & ~1)) : *(u16 *)reg_a0;
     reg_d2.h[0] = ((reg_d2.h[0] + 2) != 0) ? *(u16 *)((u8 *)reg_a0 + ((s16)(reg_d2.h[0] + 2) & ~1)) : *(u16 *)reg_a0;
     reg_d1.h[0] = ENTITY(reg_a6)[1].y.h;
-    reg_d1.h[0] += ENTITY(reg_a6)[15].move.h;
+    reg_d1.h[0] += STAGE5_ADJUST_B(reg_a6)->arms_y_shift;
     reg_tmp.w = reg_d1.w;
     reg_d1.h[1] = reg_tmp.h[0];
     reg_d1.h[0] = reg_tmp.h[1];
@@ -225,7 +226,7 @@ void stage5_boss_draw_left_arm_gun_high(void) {
     reg_d1.w = temp_a0 + reg_tmp.w;
     reg_d3.h[0] = ENTITY(reg_a6)[1].look.h;
     reg_d4.h[0] = ENTITY(reg_a6)[1].attr.h;
-    reg_d4.b[0] = ENTITY(reg_a6)[7].offset_x.b[0];
+    reg_d4.b[0] = STAGE5_PALETTES(reg_a6)->arm_guns;
     sprite_draw_layer2_keep();
 }
 
@@ -234,10 +235,10 @@ void stage5_boss_draw_right_arm_gun_low(void) {
     u32 temp_a0;
 
     reg_d0.h[0] = 0xA00;
-    reg_d0.h[0] += ENTITY(reg_a6)[15].move.h;
+    reg_d0.h[0] += STAGE5_ADJUST_B(reg_a6)->arms_y_shift;
     ENTITY(reg_a6)[6].hit_y_plus.h = (u16) reg_d0.h[0];
     reg_d0.h[0] = 0x600;
-    reg_d0.h[0] -= ENTITY(reg_a6)[15].move.h;
+    reg_d0.h[0] -= STAGE5_ADJUST_B(reg_a6)->arms_y_shift;
     ENTITY(reg_a6)[6].hit_y_minus.h = (u16) reg_d0.h[0];
     reg_a0 = (u8 *)(D_00264890);
     reg_d2.h[0] = ENTITY(reg_a6)[6].move.h;
@@ -246,7 +247,7 @@ void stage5_boss_draw_right_arm_gun_low(void) {
     reg_d2.h[1] = (reg_d2.h[0] != 0) ? *(u16 *)((u8 *)reg_a0 + ((s16)reg_d2.h[0] & ~1)) : *(u16 *)reg_a0;
     reg_d2.h[0] = ((reg_d2.h[0] + 2) != 0) ? *(u16 *)((u8 *)reg_a0 + ((s16)(reg_d2.h[0] + 2) & ~1)) : *(u16 *)reg_a0;
     reg_d1.h[0] = ENTITY(reg_a6)[6].y.h;
-    reg_d1.h[0] += ENTITY(reg_a6)[15].move.h;
+    reg_d1.h[0] += STAGE5_ADJUST_B(reg_a6)->arms_y_shift;
     reg_tmp.w = reg_d1.w;
     reg_d1.h[1] = reg_tmp.h[0];
     reg_d1.h[0] = reg_tmp.h[1];
@@ -257,7 +258,7 @@ void stage5_boss_draw_right_arm_gun_low(void) {
     reg_d1.w = temp_a0 + reg_tmp.w;
     reg_d3.h[0] = ENTITY(reg_a6)[6].look.h;
     reg_d4.h[0] = ENTITY(reg_a6)[6].attr.h;
-    reg_d4.b[0] = ENTITY(reg_a6)[7].offset_x.b[0];
+    reg_d4.b[0] = STAGE5_PALETTES(reg_a6)->arm_guns;
     sprite_draw_layer2_keep();
 }
 
@@ -266,10 +267,10 @@ void stage5_boss_draw_right_arm_gun_mid(void) {
     u32 temp_a0;
 
     reg_d0.h[0] = 0xA00;
-    reg_d0.h[0] += ENTITY(reg_a6)[15].move.h;
+    reg_d0.h[0] += STAGE5_ADJUST_B(reg_a6)->arms_y_shift;
     ENTITY(reg_a6)[5].hit_y_plus.h = (u16) reg_d0.h[0];
     reg_d0.h[0] = 0x600;
-    reg_d0.h[0] -= ENTITY(reg_a6)[15].move.h;
+    reg_d0.h[0] -= STAGE5_ADJUST_B(reg_a6)->arms_y_shift;
     ENTITY(reg_a6)[5].hit_y_minus.h = (u16) reg_d0.h[0];
     reg_a0 = (u8 *)(D_00264890);
     reg_d2.h[0] = ENTITY(reg_a6)[5].move.h;
@@ -278,7 +279,7 @@ void stage5_boss_draw_right_arm_gun_mid(void) {
     reg_d2.h[1] = (reg_d2.h[0] != 0) ? *(u16 *)((u8 *)reg_a0 + ((s16)reg_d2.h[0] & ~1)) : *(u16 *)reg_a0;
     reg_d2.h[0] = ((reg_d2.h[0] + 2) != 0) ? *(u16 *)((u8 *)reg_a0 + ((s16)(reg_d2.h[0] + 2) & ~1)) : *(u16 *)reg_a0;
     reg_d1.h[0] = ENTITY(reg_a6)[5].y.h;
-    reg_d1.h[0] += ENTITY(reg_a6)[15].move.h;
+    reg_d1.h[0] += STAGE5_ADJUST_B(reg_a6)->arms_y_shift;
     reg_tmp.w = reg_d1.w;
     reg_d1.h[1] = reg_tmp.h[0];
     reg_d1.h[0] = reg_tmp.h[1];
@@ -289,7 +290,7 @@ void stage5_boss_draw_right_arm_gun_mid(void) {
     reg_d1.w = temp_a0 + reg_tmp.w;
     reg_d3.h[0] = ENTITY(reg_a6)[5].look.h;
     reg_d4.h[0] = ENTITY(reg_a6)[5].attr.h;
-    reg_d4.b[0] = ENTITY(reg_a6)[7].offset_x.b[0];
+    reg_d4.b[0] = STAGE5_PALETTES(reg_a6)->arm_guns;
     sprite_draw_layer2_keep();
 }
 
@@ -298,10 +299,10 @@ void stage5_boss_draw_right_arm_gun_high(void) {
     u32 temp_a0;
 
     reg_d0.h[0] = 0xA00;
-    reg_d0.h[0] += ENTITY(reg_a6)[15].move.h;
+    reg_d0.h[0] += STAGE5_ADJUST_B(reg_a6)->arms_y_shift;
     ENTITY(reg_a6)[4].hit_y_plus.h = (u16) reg_d0.h[0];
     reg_d0.h[0] = 0x600;
-    reg_d0.h[0] -= ENTITY(reg_a6)[15].move.h;
+    reg_d0.h[0] -= STAGE5_ADJUST_B(reg_a6)->arms_y_shift;
     ENTITY(reg_a6)[4].hit_y_minus.h = (u16) reg_d0.h[0];
     reg_a0 = (u8 *)(D_00264890);
     reg_d2.h[0] = ENTITY(reg_a6)[4].move.h;
@@ -310,7 +311,7 @@ void stage5_boss_draw_right_arm_gun_high(void) {
     reg_d2.h[1] = (reg_d2.h[0] != 0) ? *(u16 *)((u8 *)reg_a0 + ((s16)reg_d2.h[0] & ~1)) : *(u16 *)reg_a0;
     reg_d2.h[0] = ((reg_d2.h[0] + 2) != 0) ? *(u16 *)((u8 *)reg_a0 + ((s16)(reg_d2.h[0] + 2) & ~1)) : *(u16 *)reg_a0;
     reg_d1.h[0] = ENTITY(reg_a6)[4].y.h;
-    reg_d1.h[0] += ENTITY(reg_a6)[15].move.h;
+    reg_d1.h[0] += STAGE5_ADJUST_B(reg_a6)->arms_y_shift;
     reg_tmp.w = reg_d1.w;
     reg_d1.h[1] = reg_tmp.h[0];
     reg_d1.h[0] = reg_tmp.h[1];
@@ -321,7 +322,7 @@ void stage5_boss_draw_right_arm_gun_high(void) {
     reg_d1.w = temp_a0 + reg_tmp.w;
     reg_d3.h[0] = ENTITY(reg_a6)[4].look.h;
     reg_d4.h[0] = ENTITY(reg_a6)[4].attr.h;
-    reg_d4.b[0] = ENTITY(reg_a6)[7].offset_x.b[0];
+    reg_d4.b[0] = STAGE5_PALETTES(reg_a6)->arm_guns;
     sprite_draw_layer2_keep();
 }
 
@@ -338,9 +339,9 @@ void stage5_boss_draw_form2_head(void) {
 
     reg_d1.w = 0;
     reg_d0.h[0] = 0x10;
-    reg_d1.b[0] = ENTITY(reg_a6)[9].hit_y_plus.b[0];
+    reg_d1.b[0] = STAGE5_EXTRA(reg_a6)->head_direction;
     velocity_from_dir256();
-    ENTITY(reg_a6)[9].hit_y_plus.b[0] += 2;
+    STAGE5_EXTRA(reg_a6)->head_direction += 2;
     reg_d1.h[0] = ENTITY(reg_a6)->y.h;
     reg_d1.h[0] += reg_d2.h[0];
     reg_tmp.w = reg_d1.w;
@@ -350,12 +351,12 @@ void stage5_boss_draw_form2_head(void) {
     temp_a1 = reg_d1.w;
     reg_d1.w = temp_a1 + 0xEE00EC00;
     reg_a0 = D_00264990;
-    reg_a0 += ENTITY(reg_a6)[9].offset_y.h;
+    reg_a0 += STAGE5_EXTRA(reg_a6)->head_anim;
     reg_d2.h[1] = *(u16 *)reg_a0;
     reg_d2.h[0] = *(u16 *)(reg_a0 + 2);
     reg_d3.h[0] = 0x12A0;
     reg_d4.w = 0;
-    reg_d4.b[0] = ENTITY(reg_a6)[7].offset_y.b[1];
+    reg_d4.b[0] = STAGE5_PALETTES(reg_a6)->head;
     sprite_draw_layer2_keep();
 }
 
@@ -366,9 +367,9 @@ void stage5_boss_draw_form2_belly(void) {
 
     reg_d1.w = 0;
     reg_d0.h[0] = 0x1C;
-    reg_d1.b[0] = ENTITY(reg_a6)[9].attr.b.palette;
+    reg_d1.b[0] = STAGE5_EXTRA(reg_a6)->belly_direction;
     velocity_from_dir256();
-    ENTITY(reg_a6)[9].attr.b.palette += 3;
+    STAGE5_EXTRA(reg_a6)->belly_direction += 3;
     reg_d1.h[0] = ENTITY(reg_a6)->y.h;
     reg_d1.h[0] += reg_d2.h[0];
     reg_tmp.w = reg_d1.w;
@@ -380,12 +381,12 @@ void stage5_boss_draw_form2_belly(void) {
     reg_d1.w = temp_a2 + 0xEE000000;
     temp_a1 = reg_d1.w;
     reg_d1.w = temp_a1 + 0xEA00F200;
-    reg_a0 += ENTITY(reg_a6)[9].offset_x.h;
+    reg_a0 += STAGE5_EXTRA(reg_a6)->belly_anim;
     reg_d2.h[1] = *(u16 *)reg_a0;
     reg_d2.h[0] = *(u16 *)(reg_a0 + 2);
     reg_d3.h[0] = 0x1670;
     reg_d4.w = 0;
-    reg_d4.b[0] = ENTITY(reg_a6)[7].offset_x.b[1];
+    reg_d4.b[0] = STAGE5_PALETTES(reg_a6)->belly;
     sprite_draw_layer2_keep(reg_a0, temp_a1, temp_a2, reg_tmp.h[0]);
 }
 
@@ -411,7 +412,7 @@ void stage5_boss_draw_form2_stinger(void) {
     s32 sprite_draw_layer2_keep();
     reg_d0.h[0] = 0x1A;
     reg_d1.w = 0;
-    reg_d1.b[0] = ENTITY(reg_a6)[9].attr.b.palette;
+    reg_d1.b[0] = STAGE5_EXTRA(reg_a6)->belly_direction;
     velocity_from_dir256();
     reg_d1.h[0] = *(u16 *) (reg_a6 + 2);
     reg_d1.h[0] += reg_d2.h[0];
@@ -424,7 +425,7 @@ void stage5_boss_draw_form2_stinger(void) {
     reg_d2.w = 0x1DF4;
     reg_d3.h[0] = 0xC38;
     reg_d4.w = 0;
-    reg_d4.b[0] = ENTITY(reg_a6)[7].offset_x.b[1];
+    reg_d4.b[0] = STAGE5_PALETTES(reg_a6)->belly;
     sprite_draw_layer2_keep();
 }
 
@@ -435,7 +436,7 @@ void stage5_boss_draw_form2_exhaust(void) {
     u16 temp_a1;
 
     reg_a0 = D_002649A8;
-    reg_a0 += ENTITY(reg_a6)[9].draw.h;
+    reg_a0 += STAGE5_EXTRA(reg_a6)->exhaust_anim;
     reg_d2.h[1] = *(u16 *)(reg_a0 + 0);
     reg_d2.h[0] = *(u16 *)(reg_a0 + 2);
     reg_d1.h[1] = ENTITY(reg_a6)->y.h;
@@ -445,7 +446,7 @@ void stage5_boss_draw_form2_exhaust(void) {
     reg_d1.w += 0xF000DE00;
     reg_d3.h[0] = 0x1110;
     reg_d4.w = 0;
-    reg_d4.b[0] = ENTITY(reg_a6)[7].draw.b.priority;
+    reg_d4.b[0] = STAGE5_PALETTES(reg_a6)->exhaust;
     sprite_draw_layer2_keep();
 }
 
@@ -457,7 +458,7 @@ void stage5_boss_draw_form2_wings(void) {
     u32 temp_a0;
 
     reg_a0 = (u8 *)(D_002649C0);
-    reg_a0 += ENTITY(reg_a6)[9].sprite.h;
+    reg_a0 += STAGE5_EXTRA(reg_a6)->wings_anim;
     reg_d2.h[1] = *(u16 *)reg_a0;
     reg_a0 += 2;
     reg_d2.h[0] = *(u16 *)reg_a0;
@@ -489,7 +490,7 @@ void stage5_boss_draw_form3_body(void) {
     y = ENTITY(reg_a6)->x.h;
     for (i = 0; i < 2; i++) {
         reg_a0 = D_00264A50;
-        reg_a0 += ENTITY(reg_a6)[9].hit_y_minus.h;
+        reg_a0 += STAGE5_EXTRA(reg_a6)->form3_body_anim;
         reg_d2.h[1] = *(u16 *)reg_a0;
         reg_d2.h[0] = *(u16 *)(reg_a0 + 2);
         reg_d1.h[1] = x;
@@ -499,7 +500,7 @@ void stage5_boss_draw_form3_body(void) {
         reg_d1.w += 0xF400F900;
         reg_d3.h[0] = 0xC38;
         reg_d4.w = 0;
-        reg_d4.b[0] = ENTITY(reg_a6)[7].sprite.b[0];
+        reg_d4.b[0] = STAGE5_PALETTES(reg_a6)->form3_body;
         if ((ENTITY(reg_a6)[10].misc.b.draw_layer == 0) && (g_frame_mod3 != 0)) {
             sprite_draw_with_last_boss_keep();
         } else {
@@ -510,7 +511,7 @@ void stage5_boss_draw_form3_body(void) {
     u16 temp_a0;
 
     reg_a0 = D_00264A50;
-    reg_a0 += ENTITY(reg_a6)[9].hit_y_minus.h;
+    reg_a0 += STAGE5_EXTRA(reg_a6)->form3_body_anim;
     reg_d2.h[1] = *(u16 *)reg_a0;
     reg_d2.h[0] = *(u16 *)(reg_a0 + 2);
     reg_d1.h[1] = ENTITY(reg_a6)->y.h;
@@ -519,7 +520,7 @@ void stage5_boss_draw_form3_body(void) {
     reg_d1.w += 0xF400F900;
     reg_d3.h[0] = 0xC38;
     reg_d4.w = 0;
-    reg_d4.b[0] = ENTITY(reg_a6)[7].sprite.b[0];
+    reg_d4.b[0] = STAGE5_PALETTES(reg_a6)->form3_body;
     if ((ENTITY(reg_a6)[10].misc.b.draw_layer == 0) && (g_frame_mod3 != 0)) {
         sprite_draw_with_last_boss_keep();
         return;
@@ -550,7 +551,7 @@ void stage5_boss_draw_form3_tail(void) {
     for (i = 0; i < 2; i++) {
 #endif
     reg_a0 = (u8 *) MAIN_OR_DEATH_LABEL(D_00264A70, death_D_0026A2E0);
-    reg_d2.h[0] = ENTITY(reg_a6)[9].look.h;
+    reg_d2.h[0] = STAGE5_EXTRA(reg_a6)->tail_direction;
     reg_d2.h[0] -= 0x18;
     reg_d2.h[0] += reg_d2.h[0];
     reg_d2.h[0] += reg_d2.h[0];
@@ -562,7 +563,7 @@ void stage5_boss_draw_form3_tail(void) {
     reg_d4.w = 0;
     reg_d1.w += 0xF7C00000;
     reg_d3.h[0] = 0x208;
-    reg_d4.b[0] = ENTITY(reg_a6)[7].sprite.b[0];
+    reg_d4.b[0] = STAGE5_PALETTES(reg_a6)->form3_body;
     sprite_draw_layer2_keep();
 #ifdef DEATH_LABEL
         x = ENTITY(reg_a6)[16].y.h;
@@ -588,7 +589,7 @@ void stage5_boss_draw_form3_bomb_barrier(void) {
     y = ENTITY(reg_a6)->x.h;
     for (i = 0; i < 2; i++) {
         reg_a0 = (u8 *)D_00264AC0;
-        reg_a0 += ENTITY(reg_a6)[9].hp.h;
+        reg_a0 += STAGE5_EXTRA(reg_a6)->barrier_anim;
         reg_d2.h[1] = *(u16 *)reg_a0;
         reg_d2.h[0] = *(u16 *)(reg_a0 + 2);
         reg_d1.h[1] = x;
@@ -597,7 +598,7 @@ void stage5_boss_draw_form3_bomb_barrier(void) {
         reg_d4.w = 0;
         reg_d1.w += 0xF000F800;
         reg_d3.h[0] = 0x1040;
-        reg_d4.b[0] = ENTITY(reg_a6)[7].look.b.size;
+        reg_d4.b[0] = STAGE5_PALETTES(reg_a6)->barrier;
         sprite_draw_layer2_keep();
         x = ENTITY(reg_a6)[16].y.h;
         y = ENTITY(reg_a6)[16].x.h;
@@ -607,7 +608,7 @@ void stage5_boss_draw_form3_bomb_barrier(void) {
 
     if (g_frame_mod2 != 0) {
         reg_a0 = (u8 *)D_00264AC0;
-        reg_a0 += ENTITY(reg_a6)[9].hp.h;
+        reg_a0 += STAGE5_EXTRA(reg_a6)->barrier_anim;
         reg_d2.h[1] = *(u16 *)reg_a0;
         reg_d2.h[0] = *(u16 *)(reg_a0 + 2);
         reg_d1.h[1] = ENTITY(reg_a6)->y.h;
@@ -617,7 +618,7 @@ void stage5_boss_draw_form3_bomb_barrier(void) {
         reg_d4.w = 0;
         reg_d1.w += 0xF000F800;
         reg_d3.h[0] = 0x1040;
-        reg_d4.b[0] = ENTITY(reg_a6)[7].look.b.size;
+        reg_d4.b[0] = STAGE5_PALETTES(reg_a6)->barrier;
         sprite_draw_layer2_keep();
     }
 #endif
