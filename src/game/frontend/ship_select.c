@@ -345,9 +345,9 @@ void func_001B1920(void) {
 
 s32 func_00130270();
 s32 func_001303A0();
-s32 func_001384E0();
-s32 func_00138650();
-s32 func_00138750();
+s32 doll_select_start();
+s32 doll_select_confirm();
+s32 doll_select_input();
 s32 func_001460A0();
 s32 func_00146350();
 s32 func_00146470();
@@ -387,14 +387,14 @@ void ship_select_task(void) {
     do {
         if (ENTITY(reg_a6)->flags.b[1] != 0) {
             if (ENTITY(reg_a6)->flags.b[0] == 3) {
-                func_001384E0();
+                doll_select_start();
             }
             if (ENTITY(reg_a6)->flags.b[0] == 4) {
-                func_00138750();
+                doll_select_input();
             }
 #ifdef DEATH_LABEL
             if (ENTITY(reg_a6)->flags.b[0] == 5) {
-                func_00138650();
+                doll_select_confirm();
                 fade_reset();
                 death_func_001B1220();
                 g_game_mode = 2;
@@ -425,7 +425,7 @@ void ship_select_task(void) {
             }
 #else
             if (ENTITY(reg_a6)->flags.b[0] == 5) {
-                func_00138650();
+                doll_select_confirm();
             }
             if (ENTITY(reg_a6)->flags.b[0] == 6) {
                 func_0020ED40();
@@ -680,12 +680,12 @@ void func_001B2200(void) {
         if (ENTITY(reg_a6)->flags.b[1] != 0) {
             temp_a0_2 = ENTITY(reg_a6)->flags.b[0];
             if (temp_a0_2 == 3) {
-                func_001384E0();
+                doll_select_start();
                 ENTITY(reg_a6)->flags.b[0] = 5U;
             }
             temp_a0_3 = ENTITY(reg_a6)->flags.b[0];
             if (temp_a0_3 == 5) {
-                func_00138650();
+                doll_select_confirm();
             }
             temp_a0_4 = ENTITY(reg_a6)->flags.b[0];
             if (temp_a0_4 == 6) {

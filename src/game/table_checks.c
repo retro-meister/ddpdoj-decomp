@@ -4,6 +4,7 @@
 #include "sdk/ps2sdk.h"
 #include "cd.h"
 #include "replay.h"
+#include "doll_select.h"
 
 extern u16 g_credits_script[];
 extern u16 ending_fade_in_table[];
@@ -480,10 +481,6 @@ extern u16 D_0024EDB0_as_u16_a[];
 extern u16 explosion_scripts[];
 extern u16 explosion_scripts_b[];
 extern u16 debris_random_patterns_as_u16_a[];
-extern u16 D_00251A80_as_u16_a[];
-extern u16 D_00251A84[];
-extern u16 D_00251A90_as_u16_a[];
-extern u16 D_00251A94[];
 extern u16 D_00251AB0_as_u16_a[];
 extern u16 D_00251AB4[];
 extern u16 D_00251AC0_as_u16_a[];
@@ -2792,22 +2789,22 @@ void func_0018E5A0(void) {
         printf("error! nam_mozi_dir[54]\n");
     }
     STORE_POINTER(name_entry_letter_table + 54, D_0025C3A0);
-    if (D_00251A80_as_u16_a[1] != 0x1) {
+    if (doll_select_p1.held[0] != 0x1) {
         printf("error! dollsel_data_1p[1]\n");
     }
-    STORE_POINTER(D_00251A80_as_u16_a + 1, input_get_p1_held);
-    if (D_00251A84[1] != 0x3) {
+    STORE_POINTER(doll_select_p1.held, input_get_p1_held);
+    if (doll_select_p1.pressed[0] != 0x3) {
         printf("error! dollsel_data_1p[3]\n");
     }
-    STORE_POINTER(D_00251A84 + 1, input_get_p1_pressed);
-    if (D_00251A90_as_u16_a[1] != 0x1) {
+    STORE_POINTER(doll_select_p1.pressed, input_get_p1_pressed);
+    if (doll_select_p2.held[0] != 0x1) {
         printf("error! dollsel_data_2p[1]\n");
     }
-    STORE_POINTER(D_00251A90_as_u16_a + 1, input_get_p2_held);
-    if (D_00251A94[1] != 0x3) {
+    STORE_POINTER(doll_select_p2.held, input_get_p2_held);
+    if (doll_select_p2.pressed[0] != 0x3) {
         printf("error! dollsel_data_2p[3]\n");
     }
-    STORE_POINTER(D_00251A94 + 1, input_get_p2_pressed);
+    STORE_POINTER(doll_select_p2.pressed, input_get_p2_pressed);
     if (D_00251AB0_as_u16_a[1] != 0x1) {
         printf("error! figsel_data_1p[1]\n");
     }

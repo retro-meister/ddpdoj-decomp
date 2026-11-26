@@ -1,5 +1,6 @@
 #include "common.h"
 #include "entity.h"
+#include "doll_select.h"
 
 extern u8 *g_stage_base_ranks_by_difficulty[];
 extern s16 g_bullet_speed_bonus_by_difficulty[];
@@ -158,14 +159,12 @@ next_5:
     g_rank_1_16_as_u8 = reg_d7.b[0];
 }
 
-extern u16 D_0028C108[4];
-extern u16 D_0028C110[4];
 
-void func_00138470(void)
+void doll_select_first_free(void)
 {
-    reg_a0 = (u8 *)D_0028C108;
+    reg_a0 = (u8 *)doll_select_order_p1;
     if (reg_d7.h[0] == 0) {
-        reg_a0 = (u8 *)D_0028C110;
+        reg_a0 = (u8 *)doll_select_order_p2;
     }
 
     reg_d1.w = 2;
@@ -179,35 +178,33 @@ void func_00138470(void)
     reg_d0.h[0] = *(u16 *)reg_a0;
 }
 
-extern u8 D_00251A80[];
-extern u8 D_00251A90[];
 
-void func_001384E0(void) {
+void doll_select_start(void) {
     if (reg_d7.h[0] == 0) {
         goto next_3;
     }
     reg_d0.w = 0;
-    reg_a4 = (u8 *)D_00251A80;
+    reg_a4 = (u8 *)&doll_select_p1;
     reg_d0.b[0] = *(u8 *) (reg_a5 + 6);
     if (0 > (s64) reg_d0.sb[0]) {
         *(u16 *) (reg_a6 + 4) = 0;
         *(u8 *) (reg_a5 + 7) = *(u8 *) (reg_a6 + 4);
         goto next_5;
     }
-    func_00138470();
+    doll_select_first_free();
     *(u16 *) (reg_a6 + 4) = reg_d0.h[0];
     *(u8 *) (reg_a5 + 7) = *(u8 *) (reg_a6 + 4);
     goto next_5;
 next_3:
     reg_d0.w = 0;
-    reg_a4 = (u8 *)D_00251A90;
+    reg_a4 = (u8 *)&doll_select_p2;
     reg_d0.b[0] = *(u8 *) (reg_a5 + 7);
     if (0 > (s64) reg_d0.sb[0]) {
         *(u16 *) (reg_a6 + 4) = 2;
         *(u8 *) (reg_a5 + 6) = *(u8 *) (reg_a6 + 4);
         goto next_5;
     }
-    func_00138470();
+    doll_select_first_free();
     *(u16 *) (reg_a6 + 4) = reg_d0.h[0];
     *(u8 *) (reg_a5 + 6) = *(u8 *) (reg_a6 + 4);
 next_5:
@@ -225,15 +222,13 @@ next_5:
 }
 
 s32 text_layer_print();
-extern u16 D_00251AA0[];
-extern u16 D_0028C100;
 
-void func_00138650(void) {
+void doll_select_confirm(void) {
     u16 temp_a0;
     if (g_loop == 0) {
         reg_d0.w = 0;
         reg_d0.b[0] = *(u8 *)(reg_a6 + 4);
-        reg_a0 = (u8 *)(&D_0028C100);
+        reg_a0 = (u8 *)doll_select_values;
         reg_d0.h[0] += reg_d0.h[0];
         reg_d0.h[0] = (reg_d0.h[0] != 0) ? *(u16 *)((u8 *)reg_a0 + ((s16)reg_d0.h[0] & ~1)) : *(u16 *)reg_a0;
         if (reg_d7.h[0] != 0) {
@@ -245,7 +240,7 @@ void func_00138650(void) {
     temp_a0 = *(u16 *)(reg_a4 + 0xA);
     reg_d1.h[0] = temp_a0;
     reg_d0.h[0] = 8;
-    reg_a0 = (u8 *)(D_00251AA0);
+    reg_a0 = (u8 *)doll_select_blank;
     reg_d2.h[0] = 0;
     reg_d1.h[0] >>= 6;
     reg_d1.h[0] >>= 3;
@@ -267,18 +262,18 @@ s32 func_00205D20();
 s32 func_00206080();
 extern u8 *reg_call_target_as_u8_p;
 
-void func_00138750(void) {
+void doll_select_input(void) {
     u8 *temp_s0;
     s8 var_s0;
     u8 temp_v1;
     u8 temp_v1_2;
 
     if (reg_d7.h[0] != 0) {
-        reg_a4 = (u8 *)D_00251A80;
+        reg_a4 = (u8 *)&doll_select_p1;
         reg_a3 = reg_a5 + 7;
         var_s0 = *(s8 *)(reg_a5 + 6);
     } else {
-        reg_a4 = (u8 *)D_00251A90;
+        reg_a4 = (u8 *)&doll_select_p2;
         reg_a3 = reg_a5 + 6;
         var_s0 = *(s8 *)(reg_a5 + 7);
     }
