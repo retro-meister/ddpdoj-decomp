@@ -2891,8 +2891,8 @@ s32 pointer_to_array_offset_swapped(Reg32 *entry, u8 *code, u32 count, u32 strid
 }
 
 extern u16 entity_draw_layer_routines[];
-extern u16 replay_targets_players[4];
-extern u16 replay_targets_lives[4];
+extern void *replay_targets_players[2];
+extern void *replay_targets_lives[2];
 extern u16 g_text_layer_as_u16_a[];
 
 void replay_snapshot_pointers_encode(u8 *base) {
@@ -3084,7 +3084,7 @@ void replay_snapshot_pointers_decode(u8 *base) {
 
     for (off = 0; off < 0xC08; off += 0x2C) {
         p = base + off;
-        pointer_decode(p + 0x24, replay_targets_players, 0x80);
+        pointer_decode(p + 0x24, (u16 *)replay_targets_players, 0x80);
         pointer_decode(p + 0x28, entity_draw_layer_routines, 0x80);
     }
     pointer_decode(base + 0xCF0, (u16 *)replay_targets_option_style_a, 0x80);
@@ -3148,8 +3148,8 @@ void replay_snapshot_pointers_decode(u8 *base) {
     pointer_decode(base + 0x3024, (u16 *)replay_blocks_weapon_levels, 0x81);
     pointer_decode(base + 0x3028, (u16 *)replay_blocks_weapon_levels, 0x81);
     pointer_decode(base + 0x318C, ((u16 *)g_enemy_entities_second), 0x83);
-    pointer_decode(base + 0x3226, replay_targets_lives, 0x80);
-    pointer_decode(base + 0x324A, replay_targets_lives, 0x80);
+    pointer_decode(base + 0x3226, (u16 *)replay_targets_lives, 0x80);
+    pointer_decode(base + 0x324A, (u16 *)replay_targets_lives, 0x80);
     for (n = 0; n < 0x5A; n += 10) {
         pointer_decode(&((u8 (*)[10])(base + 0x32B6))[0][n], g_text_layer_as_u16_a, 0x82);
         pointer_decode(&((u8 (*)[10])(base + 0x3310))[0][n], g_text_layer_as_u16_a, 0x82);
@@ -3176,6 +3176,28 @@ void replay_file_pointers_decode(s32 arg0) {
     replay_snapshot_pointers_decode((void *)(arg0 + 0x400));
     replay_text_pointers_decode((void *)(arg0 + 0x5934));
 }
+
+extern u8 g_player1[];
+extern u8 g_player2[];
+
+/* What the pointers of a saved state may aim at; they are stored as an index into these. */
+void *replay_targets_players[2] = {
+    g_player1,
+    g_player2,
+};
+
+void *replay_targets_lives[2] = {
+    &g_p1_lives,
+    &g_p2_lives,
+};
+
+#ifndef DEATH_LABEL
+/* Four empty tables that end the small data; nothing uses them. */
+u16 replay_state_unused_a[4] = { 0, 0, 0, 0 };
+u16 replay_state_unused_b[4] = { 0, 0, 0, 0 };
+u16 replay_state_unused_c[4] = { 0, 0, 0, 0 };
+u16 replay_state_unused_d[4] = { 0, 0, 0, 0 };
+#endif
 
 /* .sbss (the compiler lays these out in reverse) */
 s32 g_replay_pointer_not_found;

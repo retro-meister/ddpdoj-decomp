@@ -265,7 +265,7 @@ segments:
       - [0x165b30, .data, game/stage5/stage5_midboss_3]
       - [0x165ca0, .data, game/stage5/stage5_midboss_4]
       - [0x166248, .data, game/stage5/stage5_midboss_5]
-      - [0x166750, .data, game/game_util_data]
+      - [0x166750, .data, game/game_util]
       - [0x167130, .data, game/motion_util]
       - [0x167920, .data, game/system/task]
       - [0x1679d0, .data, game/effects/zoom]
@@ -293,7 +293,7 @@ segments:
       - [0x16a330, .data, game/enemy/enemy]
       - [0x16a400, .data, game/frontend/game_over]
       - [0x16a480, .data, game/enemy/enemy_common]
-      - [0x16a8b0, .data, game/frontend/attract_data]
+      - [0x16a8b0, .data, game/frontend/attract]
       - [0x16ae20, .data, game/play/item]
       - [0x16b110, .data, game/test/item_test]
       - [0x16b1f0, .data, game/stage/stage_clear_objects]
@@ -443,7 +443,7 @@ segments:
       - [0x18dd20, .sdata, game/frontend/menu]
       - [0x18de38, .sdata, game/system/memcard]
       - [0x18dec0, .sdata, game/system/replay]
-      - [0x18ded0, .sdata, game/system/replay_state_small_data]
+      - [0x18ded0, .sdata, game/system/replay_state]
       - [0x18df00, sdata, sdata_18df00]
       - {type: .sbss, vram: 0x28de80, name: game/frontend/credits_roll}
       - {type: .sbss, vram: 0x28de8c, name: game/play/pickup}
