@@ -76,7 +76,7 @@ void sprite_draw_with_score_keep_entry(void) {
     sprite_draw_with_score_keep();
 }
 
-void hud_p1_counter_plate(void) {
+void hud_p1_multiplier_frame_restore(void) {
     extern void deferred_text_put(void);
     reg_d0.h[0] = 0xD4;
     reg_d1.h[0] = 0x200;
@@ -86,7 +86,7 @@ void hud_p1_counter_plate(void) {
     deferred_text_put();
 }
 
-void hud_p2_counter_plate(void) {
+void hud_p2_multiplier_frame_restore(void) {
     extern void deferred_text_put(void);
     reg_d0.h[0] = 0xD4;
     reg_d1.h[0] = 0x1400;
@@ -96,7 +96,7 @@ void hud_p2_counter_plate(void) {
     deferred_text_put();
 }
 
-void hud_p1_upper_plate(void) {
+void hud_p1_item_count_frame_restore(void) {
     extern void deferred_text_put(void);
     reg_d0.h[0] = 0xC8;
     reg_d1.h[0] = 0x200;
@@ -106,7 +106,7 @@ void hud_p1_upper_plate(void) {
     deferred_text_put();
 }
 
-void hud_p2_upper_plate(void) {
+void hud_p2_item_count_frame_restore(void) {
     void deferred_text_put(void);
     reg_d0.h[0] = 0xC8;
     reg_d1.h[0] = 0x1400;
@@ -334,8 +334,8 @@ void hud_p1_panel(void) {
         if (g_p1_hyper_active != 0) {
             if (!(g_p1_score_panel_flags & 1)) {
                 g_p1_score_panel_flags |= 1;
-                hud_p1_counter_plate();
-                hud_p1_upper_plate();
+                hud_p1_multiplier_frame_restore();
+                hud_p1_item_count_frame_restore();
             }
             reg_d1.w = 0x64C00400;
             reg_d2.w = g_hyper_text_anim_sprite_as_u32;
@@ -347,7 +347,7 @@ void hud_p1_panel(void) {
                     reg_d0.w = 0x3F;
                     reg_d0.h[0] &= g_game_frame;
                     if ((s32) reg_d0.h[0] < 0x14) {
-                        hud_p1_counter_plate();
+                        hud_p1_multiplier_frame_restore();
                         reg_d1.w = 0x64C00400;
                         reg_d2.w = g_maximum_text_anim_sprite_as_u32;
                         hud_text_sprite_draw();
@@ -439,8 +439,8 @@ void hud_p2_panel(void) {
         if (g_p2_hyper_active != 0) {
             if (!(g_p2_score_panel_flags & 1)) {
                 g_p2_score_panel_flags |= 1;
-                hud_p2_counter_plate();
-                hud_p2_upper_plate();
+                hud_p2_multiplier_frame_restore();
+                hud_p2_item_count_frame_restore();
             }
             reg_d1.w = 0x64C02800;
             reg_d2.w = g_hyper_text_anim_sprite_as_u32;
@@ -452,7 +452,7 @@ void hud_p2_panel(void) {
                     reg_d0.w = 0x3F;
                     reg_d0.h[0] &= g_game_frame;
                     if ((s32) reg_d0.h[0] < 0x2C) {
-                        hud_p2_counter_plate();
+                        hud_p2_multiplier_frame_restore();
                         reg_d1.w = 0x64C02800;
                         reg_d2.w = g_maximum_text_anim_sprite_as_u32;
                         hud_text_sprite_draw();
@@ -843,14 +843,14 @@ next_7:
     hud_lives_draw_boss_leaving();
     if (g_p1_lives_as_s16 < 0) goto next_8;
     func_001AC950();
-    hud_p1_counter_plate();
+    hud_p1_multiplier_frame_restore();
 next_8:
     if (g_p2_lives_as_s16 < 0) {
         hud_boss_hits_update();
         return;
     }
     func_001AC9D0();
-    hud_p2_counter_plate();
+    hud_p2_multiplier_frame_restore();
     hud_boss_hits_update();
 }
 
@@ -928,7 +928,7 @@ next_8:
 next_9:
     func_001AA8F0();
     func_001AC950();
-    hud_p1_counter_plate();
+    hud_p1_multiplier_frame_restore();
 next_10:
     reg_d7.h[0] = g_p2_lives;
     if ((s16)g_p2_lives < 0) goto next_13;
@@ -945,7 +945,7 @@ next_11:
 next_12:
     func_001AAA20();
     func_001AC9D0();
-    hud_p2_counter_plate();
+    hud_p2_multiplier_frame_restore();
 next_13:
     g_score_panel_intro_as_s16 = 0;
 }

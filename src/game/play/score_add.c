@@ -201,7 +201,7 @@ extern u8 g_boss_present;
 void func_001A9370(void) {
     reg_d3.w = reg_d0.w;
     reg_d2.h[0] = PLAYER(g_player1_as_u8_a)->ship_type.h;
-    reg_a0 = (u8 *)D_0028DADC;
+    reg_a0 = (u8 *)laser_hit_step_by_ship;
     g_p1_laser_hit_step = (reg_d2.h[0] != 0) ? *(u16 *)((u8 *)reg_a0 + ((s16)reg_d2.h[0] & ~1)) : *(u16 *)reg_a0;
     reg_d2.h[0] = g_bomb_entities[0];
     if ((s16) reg_d2.h[0] >= 0) {
@@ -310,7 +310,7 @@ extern u16 g_p1_score_pending_as_u16;
 void func_001A95B0(void) {
     reg_d3.w = reg_d0.w;
     reg_d2.h[0] = PLAYER(g_player2_as_u8_a)->ship_type.h;
-    reg_a0 = (u8 *)D_0028DADC;
+    reg_a0 = (u8 *)laser_hit_step_by_ship;
     g_p1_laser_hit_step = (reg_d2.h[0] != 0) ? *(u16 *)((u8 *)reg_a0 + ((s16)reg_d2.h[0] & ~1)) : *(u16 *)reg_a0;
     reg_d2.h[0] = g_bomb_entities[0];
     if ((s16) reg_d2.h[0] >= 0) {
@@ -1129,7 +1129,7 @@ void func_001AAB90(void)
         reg_d0.b[0] = D_006E5C08[0];
     }
 
-    reg_a2 = (u8 *)D_0026C010;
+    reg_a2 = (u8 *)extend_scores_first;
     reg_d0.h[0] += reg_d0.h[0];
     reg_d0.h[0] += reg_d0.h[0];
     *reg_a0_as_s32_p = *(s32 *)(reg_a2 + reg_d0.h[0]);
@@ -1142,7 +1142,7 @@ void func_001AAC00(void) {
     u8 *a5 = reg_a5;
 
     reg_d0.h[0] = *(u16 *) reg_a4;
-    reg_a5 = (u8 *)D_0026C020;
+    reg_a5 = (u8 *)extend_scores_later;
     reg_d1.w = *(u32 *) (reg_a5 + reg_d0.h[0]);
     if (reg_d1.w != -1U) goto next_1;
     *(u32 *) reg_a2 = -1U;

@@ -182,19 +182,20 @@ u16 hyper_item_count_text[8][2] = {
     { 0, 0 },
 };
 
-u16 D_0026C010[8] = {
-    0x0000, 0x0100, 0x0000, 0x0500, 0x0000, 0x0050, 0xFFFF, 0xFFFF,
+/* Scores that give an extra ship, in BCD without the last digit; 0xFFFFFFFF: none. */
+u32 extend_scores_first[4] = {
+    0x01000000, 0x05000000, 0x00500000, 0xFFFFFFFF,
 };
 
-u16 D_0026C020[8] = {
-    0x0000, 0x0200, 0x0000, 0x0500, 0x0000, 0x0150, 0xFFFF, 0xFFFF,
+u32 extend_scores_later[4] = {
+    0x02000000, 0x05000000, 0x01500000, 0xFFFFFFFF,
 };
 
 u16 combo_time_by_loop[2] = {
     0x0038, 0x005A,
 };
 
-u16 D_0028DADC[2] = {
+u16 laser_hit_step_by_ship[2] = {
     0x0014, 0x0012,
 };
 

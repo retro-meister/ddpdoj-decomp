@@ -56,6 +56,7 @@ segments:
       - [0x37990, c, game/system/text_layer_print]
       - [0x37c70, c, game/debug]
       - [0x38190, c, game/play/difficulty]
+      - [0x384f0, c, game/frontend/doll_select]
       - [0x38a50, c, game/stage/ground]
       - [0x39ba0, c, game/effects/explosion]
       - [0x3a9b0, c, game/effects/explosion_burst]

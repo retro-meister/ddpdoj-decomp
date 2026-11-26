@@ -57,6 +57,7 @@ segments:
       - [0x36720, c, game/debug]
       - [0x36e50, c, game/frontend/attract]
       - [0x37c90, c, game/play/difficulty]
+      - [0x38000, c, game/frontend/doll_select]
       - [0x38560, c, game/frontend/ending]
       - [0x38bc0, c, death/intro_text]
       - [0x394d0, c, game/enemy/enemy]
