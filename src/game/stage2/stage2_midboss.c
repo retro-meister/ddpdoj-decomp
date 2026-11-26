@@ -175,7 +175,7 @@ s32 direction256_between();
 s32 vibration_start_pad1(s32, s32);
 s32 vibration_start_pad2(s32, s32);
 extern u16 g_direction64_offsets_432[];
-extern u16 D_00262A50_as_u16_a[];
+extern u16 stage1_midboss_direction64_offsets_166[];
 extern u16 D_00263100[];
 extern u16 D_00263120[];
 extern u16 D_00263180[];
@@ -376,7 +376,7 @@ next_260:
     reg_d2.h[0] = ENTITY(reg_a6)->x.h;
     reg_d4.w = 0;
     reg_a0 = (u8 *) D_00263240;
-    reg_a1 = (u8 *) D_00262A50_as_u16_a;
+    reg_a1 = (u8 *) stage1_midboss_direction64_offsets_166;
     reg_d6.h[0] = reg_d1.h[0];
     reg_d7.w = 0xB;
 loop_280:

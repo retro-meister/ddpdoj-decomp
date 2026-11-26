@@ -20,6 +20,85 @@ typedef struct {
 
 #define STAGE1_BOSS(pointer) ((Stage1BossState *)(pointer))
 
+/*
+ * The enemies the boss starts. It leaves their position and more in the first words of the request; their
+ * start routines take those and then use the words for their own state.
+ *
+ * A bullet that can be shot down, kind 0x0F.
+ */
+typedef struct {
+    /* 0x00 */ u8 common[0x16];
+    /* 0x16 */ union {
+        struct { u16 y; u16 x; u16 move; } at_start;
+        struct { u16 unused_16[2]; u16 frame_list[2]; } now;   /* address of its sprites, high word first */
+    };
+    /* 0x1E */ EnemyTimer frame_timer;
+    /* 0x20 */ u16 frame;             /* 0 to 12 in steps of 4 */
+    /* 0x22 */ u16 unread_22;
+} BreakableBulletState;
+
+#define BREAKABLE_BULLET(pointer) ((BreakableBulletState *)(pointer))
+
+/* The larger one, kind 0x1F: two entities, and four bullets when it is shot down. */
+typedef struct {
+    /* 0x00 */ u8 common[0x16];
+    /* 0x16 */ union {
+        struct {
+            u16 y; u16 x; u16 move;
+            u16 burst_speed;
+            u16 word_1E;
+            u8 unused_20;
+            u8 scatter;
+            u16 unused_22;
+            u16 word_24;
+            u16 word_26;
+        } at_start;
+        struct {
+            u16 unused_16[2];
+            u16 last_sprite[2];       /* the sprite after its last frame, high word first */
+            EnemyTimer frame_timer;
+            u16 frame;
+            u16 unread_22;
+            u16 burst_speed;          /* speed of the bullets it leaves */
+            u16 unread_26;
+        } now;
+    };
+    /* 0x28 */ u8 unread_28;
+    /* 0x29 */ u8 scatter;            /* how far the directions of those bullets are spread at random */
+    /* 0x2A */ u16 unused_2A;
+    /* 0x2C */ u16 unread_2C;
+    /* 0x2E */ u16 unread_2E;
+} BreakableBulletBState;
+
+#define BREAKABLE_BULLET_B(pointer) ((BreakableBulletBState *)(pointer))
+
+/* A shell of the main guns, kind 0x1E: slows down, then bursts into three rings of sixteen bullets. */
+typedef struct {
+    /* 0x00 */ u8 common[0x16];
+    /* 0x16 */ union {
+        struct { u16 y; u16 x; u16 move; u16 burst_speed; u16 spare; } at_start;
+        struct { u16 unused_16[3]; u16 burst_speed; EnemyTimer frame_timer; } now;
+    };
+    /* 0x20 */ u16 frame;
+    /* 0x22 */ u16 unused_22;
+    /* 0x24 */ u16 unread_24;         /* at_start.spare */
+    /* 0x26 */ EnemyTimer slow_timer; /* frames between two steps of slowing down */
+} Stage1ShellState;
+
+#define STAGE1_SHELL(pointer) ((Stage1ShellState *)(pointer))
+
+/* What flies past before the boss arrives, kind 0x24. */
+typedef struct {
+    /* 0x00 */ u8 common[0x16];
+    /* 0x16 */ u16 unused_16;
+    /* 0x18 */ u16 frame;
+    /* 0x1A */ EnemyTimer frame_timer;
+    /* 0x1C */ EnemyTimer timer;      /* frames to wait, then the frames between two steps of speeding up */
+    /* 0x1E */ u16 phase;             /* 0: waiting, 1: speeding up */
+} Stage1EntranceState;
+
+#define STAGE1_ENTRANCE(pointer) ((Stage1EntranceState *)(pointer))
+
 /* Two bytes of a boss slot that are set together as one word: a reload value and its countdown. */
 typedef union {
     u16 h;
@@ -101,8 +180,8 @@ typedef struct {
 /* Both main guns fire shells that can be shot down. */
 typedef struct {
     /* 0x00 */ s16 running;
-    /* 0x02 */ u16 shell_arg1E;   /* copied to offset 0x1E of the request that starts a shell */
-    /* 0x04 */ u16 shell_arg1C;
+    /* 0x02 */ u16 shell_spare;   /* handed to the shell, which does not use it */
+    /* 0x04 */ u16 shell_burst_speed;
     /* 0x06 */ SlotTimer shot;
     /* 0x08 */ u16 side;          /* 0 or 1, changes with every volley */
     /* 0x0A */ u16 volleys_left;

@@ -211,7 +211,7 @@ void death_func_0021B8F0(void) {
 
 s32 boss_attack_stop();
 s32 func_00202A80();
-extern u16 D_00262A50_as_u16_a[];
+extern u16 stage1_midboss_direction64_offsets_166[];
 extern u16 g_enemy_signal_2;
 
 void death_func_0021BA40(void) {
@@ -226,7 +226,7 @@ void death_func_0021BA40(void) {
         return;
     }
     *(u8 *)(reg_a4 + 3) = *(u8 *)(reg_a4 + 7);
-    reg_a1 = (u8 *) D_00262A50_as_u16_a;
+    reg_a1 = (u8 *) stage1_midboss_direction64_offsets_166;
     reg_d1.b[0] = *(u8 *)(reg_a4 + 0x10);
     death_func_0021B2E0();
     reg_d0.b[0] = *(u8 *)(reg_a4 + 0x11);
@@ -401,7 +401,7 @@ void death_func_0021BE80(void) {
 }
 
 s32 velocity_from_dir256();
-extern s16 D_00262A50[];
+
 extern u16 g_enemy_signal_1;
 extern u16 g_enemy_signal_0;
 extern s16 g_player2[];
@@ -481,7 +481,7 @@ next_2:
             reg_d5.h[0] = *(u16 *)(reg_a4 + 0x16);
             reg_d6.w = 0xFA000000;
             reg_d7.w = 7;
-            reg_a1 = (u8 *)(D_00262A50);
+            reg_a1 = (u8 *)(stage1_midboss_direction64_offsets_166);
             do {
                 reg_d3.h[0] = reg_d1.h[0];
                 reg_d3.h[0] += 2;
@@ -741,7 +741,7 @@ next_1:
             reg_d2.h[0] = ENTITY(reg_a6)->x.h;
             reg_d7.w = 6;
             reg_d1.h[0] -= 0x2D;
-            reg_a1 = (u8 *)(D_00262A50);
+            reg_a1 = (u8 *)(stage1_midboss_direction64_offsets_166);
             do {
                 reg_d3.h[0] = reg_d1.h[0];
                 reg_d3.h[0] += 2;
@@ -825,7 +825,7 @@ void death_func_0021CE10(void) {
 }
 
 s32 slowdown_allow_with_boss();
-extern u8 D_00262A50_as_u8_a[];
+
 
 void death_func_0021CE90(void) {
     u32 temp_a0;
@@ -843,7 +843,7 @@ void death_func_0021CE90(void) {
             slowdown_allow_with_boss();
         }
         *(u8 *)(reg_a4 + 3) = (u8) reg_d0.b[0];
-        reg_a1 = (u8 *)D_00262A50_as_u8_a;
+        reg_a1 = (u8 *)stage1_midboss_direction64_offsets_166;
         reg_d1.b[0] = *(u8 *)(reg_a4 + 0x12);
         death_func_0021B1A0();
         reg_d1.b[0] = *(u8 *)(reg_a4 + 0x12);

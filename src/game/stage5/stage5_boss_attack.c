@@ -209,7 +209,7 @@ void stage5_boss_fire_form1_arm_guns_aimed_start(void) {
 }
 
 s32 boss_attack_stop();
-extern u16 D_00262A50_as_u16_a[];
+extern u16 stage1_midboss_direction64_offsets_166[];
 extern u16 D_00264160_as_u16_a[];
 extern u16 D_00264180[];
 extern u16 g_bullets_blocked;
@@ -261,7 +261,7 @@ void stage5_boss_fire_form1_arm_guns_aimed(void) {
         if (*(u8 *)(reg_a4 + 5) == 0) {
             reg_d2.h[1] = ENTITY(reg_a6)->y.h;
             reg_d2.h[0] = ENTITY(reg_a6)->x.h;
-            reg_a1 = (u8 *)(D_00262A50_as_u16_a);
+            reg_a1 = (u8 *)(stage1_midboss_direction64_offsets_166);
             reg_a3 = (u8 *)(D_00264180);
             reg_d6.w = 5;
             do {
@@ -1015,7 +1015,6 @@ void stage5_boss_fire_form1_rage_start(void) {
     } while ((s16)(--reg_d0.h[0]) >= 0);
 }
 
-extern u8 D_00262A50_as_u8_a[];
 
 void stage5_boss_fire_form1_rage(void) {
     u32 temp_a0;
@@ -1036,7 +1035,7 @@ void stage5_boss_fire_form1_rage(void) {
             reg_d0.b[0] -= 4;
         }
         *(u8 *)(reg_a4 + 3) = (u8) reg_d0.b[0];
-        reg_a1 = (u8 *)D_00262A50_as_u8_a;
+        reg_a1 = (u8 *)stage1_midboss_direction64_offsets_166;
         reg_d1.b[0] = *(u8 *)(reg_a4 + 0x12);
         func_001EAF20();
         reg_d1.b[0] = *(u8 *)(reg_a4 + 0x12);
@@ -1108,7 +1107,6 @@ void stage5_boss_fire_form2_mouth_start(void) {
     *(u16 *)(reg_a4 + 0xC) += reg_d0.h[0];
 }
 
-extern s16 D_00262A50[];
 
 void stage5_boss_fire_form2_mouth(s16 *arg1) {
     s32 bullet_fire256_direct();
@@ -1160,7 +1158,7 @@ next_1:
                 reg_d5.w = 0xF0C00000;
                 reg_d7.w = 6;
                 reg_d1.h[0] -= 0x36;
-                reg_a1 = (u8 *)(D_00262A50);
+                reg_a1 = (u8 *)(stage1_midboss_direction64_offsets_166);
                 reg_d4.w = 0;
                 do {
                     reg_d3.h[0] = reg_d1.h[0];
@@ -1186,7 +1184,7 @@ next_2:
             reg_d5.w = 0xF0C00000;
             reg_d7.w = 0xC;
             reg_d1.h[0] -= 0x3C;
-            reg_a1 = (u8 *)(D_00262A50);
+            reg_a1 = (u8 *)(stage1_midboss_direction64_offsets_166);
             reg_d4.w = 0;
             do {
                 reg_d3.h[0] = reg_d1.h[0];
@@ -1622,7 +1620,7 @@ next_1:
             reg_d6.w = 0xD8000000;
             reg_d7.w = 6;
             reg_d1.h[0] -= 0x2D;
-            reg_a1 = (u8 *)(D_00262A50);
+            reg_a1 = (u8 *)(stage1_midboss_direction64_offsets_166);
             do {
                 reg_d3.h[0] = reg_d1.h[0];
                 reg_d3.h[0] += 2;
@@ -1890,7 +1888,7 @@ void stage5_boss_fire_form3_attack_b() {
     *(u8 *)(reg_a4 + 3) -= 1;
     if (reg_tmp.b[0] == 0) {
         *(u8 *)(reg_a4 + 3) = (u8) *(u8 *)(reg_a4 + 7);
-        reg_a1 = D_00262A50_as_u8_a;
+        reg_a1 = (u8 *) stage1_midboss_direction64_offsets_166;
         reg_d1.b[0] = *(u8 *)(reg_a4 + 0x10);
         func_001ECBD0();
         reg_d0.b[0] = *(u8 *)(reg_a4 + 0x11);
@@ -2170,7 +2168,7 @@ next_2:
             reg_d5.h[0] = *(u16 *)(reg_a4 + 0x16);
             reg_d6.w = 0xFA000000;
             reg_d7.w = 7;
-            reg_a1 = (u8 *)(D_00262A50);
+            reg_a1 = (u8 *)(stage1_midboss_direction64_offsets_166);
             do {
                 reg_d3.h[0] = reg_d1.h[0];
                 reg_d3.h[0] += 2;

@@ -1,6 +1,7 @@
 #include "common.h"
 #include "entity.h"
 #include "stage1_boss.h"
+#include "enemy_kinds.h"
 
 void stage1_boss_fire_body_ports_rage_start(void);
 void stage1_boss_fire_body_ports_rage(void);
@@ -96,11 +97,11 @@ u16 stage1_boss_gatling_muzzles[] = {
     0xFB80, 0xFC00, 0xFC00, 0xFB80, 0xFC40, 0xFAC0,
 };
 
-u16 stage1_boss_shell_arg1C_levels[] = {
+u16 stage1_boss_shell_burst_speed_levels[] = {
     0xFFFC, 0xFFFC, 0xFFFC, 0xFFFD, 0xFFFF, 0x0001, 0x0003, 0x0005,
 };
 
-u16 stage1_boss_shell_arg1E_levels[] = {
+u16 stage1_boss_shell_spare_levels[] = {
     0x0003, 0x0005, 0x0007, 0x000A, 0x000A, 0x000A, 0x000A, 0x000A,
 };
 
@@ -846,10 +847,10 @@ s32 rng_next_unsigned();
 void stage1_boss_fire_main_guns_burst_start(void) {
     func_001713B0();
     reg_d0.h[0] += reg_d0.h[0];
-    reg_a0 = (u8 *)(stage1_boss_shell_arg1E_levels);
-    BURST(reg_a4)->shell_arg1E = (reg_d0.h[0] != 0) ? *(u16 *)((u8 *)reg_a0 + ((s16)reg_d0.h[0] & ~1)) : *(u16 *)reg_a0;
-    reg_a0 = (u8 *)(stage1_boss_shell_arg1C_levels);
-    BURST(reg_a4)->shell_arg1C = (reg_d0.h[0] != 0) ? *(u16 *)((u8 *)reg_a0 + ((s16)reg_d0.h[0] & ~1)) : *(u16 *)reg_a0;
+    reg_a0 = (u8 *)(stage1_boss_shell_spare_levels);
+    BURST(reg_a4)->shell_spare = (reg_d0.h[0] != 0) ? *(u16 *)((u8 *)reg_a0 + ((s16)reg_d0.h[0] & ~1)) : *(u16 *)reg_a0;
+    reg_a0 = (u8 *)(stage1_boss_shell_burst_speed_levels);
+    BURST(reg_a4)->shell_burst_speed = (reg_d0.h[0] != 0) ? *(u16 *)((u8 *)reg_a0 + ((s16)reg_d0.h[0] & ~1)) : *(u16 *)reg_a0;
     BURST(reg_a4)->shot.sh = 0x18;
     BURST(reg_a4)->side = 0U;
     BURST(reg_a4)->volleys_left = 2;
@@ -874,29 +875,29 @@ void stage1_boss_fire_main_guns_burst(void) {
     if (BURST(reg_a4)->side != 0) {
         goto skip_1;
     }
-    reg_d0.w = 0x1E;
+    reg_d0.w = ENEMY_STAGE1_BOSS_SHELL;
     spawn_request_add();
     reg_d0.h[1] = ENTITY(reg_a6)[1].y.h;
     reg_d0.h[0] = ENTITY(reg_a6)[1].x.h;
     reg_d0.w += 0xF6C00140;
-    *(u16 *)(reg_a0 + 0x16) = reg_d0.h[1];
-    *(u16 *)(reg_a0 + 0x18) = reg_d0.h[0];
-    *(u16 *)(reg_a0 + 0x1A) = 0x2020;
-    *(u16 *)(reg_a0 + 0x1C) = BURST(reg_a4)->shell_arg1C;
-    *(u16 *)(reg_a0 + 0x1E) = BURST(reg_a4)->shell_arg1E;
+    STAGE1_SHELL(reg_a0)->at_start.y = reg_d0.h[1];
+    STAGE1_SHELL(reg_a0)->at_start.x = reg_d0.h[0];
+    STAGE1_SHELL(reg_a0)->at_start.move = 0x2020;
+    STAGE1_SHELL(reg_a0)->at_start.burst_speed = BURST(reg_a4)->shell_burst_speed;
+    STAGE1_SHELL(reg_a0)->at_start.spare = BURST(reg_a4)->shell_spare;
     if (g_loop == 0) {
         goto skip_1;
     }
-    reg_d0.w = 0x1E;
+    reg_d0.w = ENEMY_STAGE1_BOSS_SHELL;
     spawn_request_add();
     reg_d0.h[1] = ENTITY(reg_a6)[1].y.h;
     reg_d0.h[0] = ENTITY(reg_a6)[1].x.h;
     reg_d0.w += 0xF6C00140;
-    *(u16 *)(reg_a0 + 0x16) = reg_d0.h[1];
-    *(u16 *)(reg_a0 + 0x18) = reg_d0.h[0];
-    *(u16 *)(reg_a0 + 0x1A) = 0x1A28;
-    *(u16 *)(reg_a0 + 0x1C) = BURST(reg_a4)->shell_arg1C;
-    *(u16 *)(reg_a0 + 0x1E) = BURST(reg_a4)->shell_arg1E;
+    STAGE1_SHELL(reg_a0)->at_start.y = reg_d0.h[1];
+    STAGE1_SHELL(reg_a0)->at_start.x = reg_d0.h[0];
+    STAGE1_SHELL(reg_a0)->at_start.move = 0x1A28;
+    STAGE1_SHELL(reg_a0)->at_start.burst_speed = BURST(reg_a4)->shell_burst_speed;
+    STAGE1_SHELL(reg_a0)->at_start.spare = BURST(reg_a4)->shell_spare;
 skip_1:
     if (ENTITY(reg_a6)[3].misc.b.draw_layer != 0) {
         goto skip_2;
@@ -904,31 +905,31 @@ skip_1:
     if (BURST(reg_a4)->side == 0) {
         goto skip_2;
     }
-    reg_d0.w = 0x1E;
+    reg_d0.w = ENEMY_STAGE1_BOSS_SHELL;
     spawn_request_add();
     reg_d0.h[1] = ENTITY(reg_a6)[3].y.h;
     reg_d0.h[0] = ENTITY(reg_a6)[3].x.h;
     reg_d0.w += 0xF6BFFEC0;
-    *(u16 *)(reg_a0 + 0x16) = reg_d0.h[1];
-    *(u16 *)(reg_a0 + 0x18) = reg_d0.h[0];
-    *(u16 *)(reg_a0 + 0x1A) = 0x2020;
-    *(u16 *)(reg_a0 + 0x1C) = BURST(reg_a4)->shell_arg1C;
-    *(u16 *)(reg_a0 + 0x1E) = BURST(reg_a4)->shell_arg1E;
+    STAGE1_SHELL(reg_a0)->at_start.y = reg_d0.h[1];
+    STAGE1_SHELL(reg_a0)->at_start.x = reg_d0.h[0];
+    STAGE1_SHELL(reg_a0)->at_start.move = 0x2020;
+    STAGE1_SHELL(reg_a0)->at_start.burst_speed = BURST(reg_a4)->shell_burst_speed;
+    STAGE1_SHELL(reg_a0)->at_start.spare = BURST(reg_a4)->shell_spare;
     if (g_loop == 0) {
         goto skip_2;
     }
-    reg_d0.w = 0x1E;
+    reg_d0.w = ENEMY_STAGE1_BOSS_SHELL;
     spawn_request_add();
     reg_d0.h[1] = ENTITY(reg_a6)[3].y.h;
     reg_d0.h[0] = ENTITY(reg_a6)[3].x.h;
     reg_d0.w += 0xF6BFFEC0;
-    *(u16 *)(reg_a0 + 0x16) = reg_d0.h[1];
-    *(u16 *)(reg_a0 + 0x18) = reg_d0.h[0];
-    *(u16 *)(reg_a0 + 0x1A) = 0x1A18;
-    *(u16 *)(reg_a0 + 0x1C) = BURST(reg_a4)->shell_arg1C;
-    *(u16 *)(reg_a0 + 0x1E) = BURST(reg_a4)->shell_arg1E;
+    STAGE1_SHELL(reg_a0)->at_start.y = reg_d0.h[1];
+    STAGE1_SHELL(reg_a0)->at_start.x = reg_d0.h[0];
+    STAGE1_SHELL(reg_a0)->at_start.move = 0x1A18;
+    STAGE1_SHELL(reg_a0)->at_start.burst_speed = BURST(reg_a4)->shell_burst_speed;
+    STAGE1_SHELL(reg_a0)->at_start.spare = BURST(reg_a4)->shell_spare;
 skip_2:
-    BURST(reg_a4)->shell_arg1C += 1;
+    BURST(reg_a4)->shell_burst_speed += 1;
     BURST(reg_a4)->side += 1;
     BURST(reg_a4)->side &= 1;
     BURST(reg_a4)->volleys_left -= 1;

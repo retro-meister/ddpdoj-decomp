@@ -171,9 +171,9 @@ void stage1_boss_entrance_first();
 void stage1_boss_entrance_start();
 void stage1_boss_first();
 void stage1_boss_main();
-void stage1_boss_side_bullet();
-void stage1_boss_side_bullet_first();
-void stage1_boss_side_bullet_start();
+void stage1_boss_shell();
+void stage1_boss_shell_first();
+void stage1_boss_shell_start();
 void stage1_boss_start();
 void stage1_midboss_first();
 void stage1_midboss_main();
@@ -382,7 +382,7 @@ EnemyRoutines g_enemy_routines[128] = {
     /* 0x1B */ { hatch_gunner_start, hatch_gunner },
     /* 0x1C */ { stage1_midboss_wreck_start, stage1_midboss_wreck },
     /* 0x1D */ { dummy_enemy_main, dummy_enemy_main_b },
-    /* 0x1E */ { stage1_boss_side_bullet_start, stage1_boss_side_bullet },
+    /* 0x1E */ { stage1_boss_shell_start, stage1_boss_shell },
     /* 0x1F */ { stage1_boss_breakable_bullet_b_start, stage1_boss_breakable_bullet_b },
     /* 0x20 */ { enemy_spawner_setup, enemy_spawner_main },
     /* 0x21 */ { enemy_spawner_setup, enemy_spawner_main },
@@ -514,7 +514,7 @@ void (*g_enemy_first_routines[128])() = {
     /* 0x1B */ hatch_gunner_first,
     /* 0x1C */ stage1_midboss_wreck_first,
     /* 0x1D */ dummy_enemy_first,
-    /* 0x1E */ stage1_boss_side_bullet_first,
+    /* 0x1E */ stage1_boss_shell_first,
     /* 0x1F */ stage1_boss_breakable_bullet_b_first,
     /* 0x20 */ enemy_spawner_first,
     /* 0x21 */ enemy_spawner_first,

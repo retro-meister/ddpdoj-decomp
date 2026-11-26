@@ -256,8 +256,8 @@ extern u16 small_tank_b_state[];
 extern u16 large_tank_entities[];
 extern u16 hatch_gunner_entities[];
 extern u16 option_offsets[];
-extern u16 D_00262720[];
-extern u16 D_00262B50[];
+extern u16 stage1_midboss_entities[];
+extern u16 stage1_midboss_fade_script[];
 extern u16 D_00263030[];
 extern u16 D_002630D0[];
 extern u16 D_00263290[];
@@ -4198,21 +4198,21 @@ extern u16 D_0028C0D0[];
 
 
 void func_00186A80(void) {
-    STORE_POINTER(D_00262720 + 243, D_0028C0D0);
-    STORE_POINTER(D_00262B50 + 4, D_002610F0);
-    STORE_POINTER(D_00262B50 + 11, D_002601B0_as_u16_a);
-    STORE_POINTER(D_00262B50 + 18, D_002601F0_as_u16_a);
-    STORE_POINTER(D_00262B50 + 25, D_00260230_as_u16_a);
-    STORE_POINTER(D_00262B50 + 32, D_00261170);
-    STORE_POINTER(D_00262B50 + 39, D_00261130);
-    STORE_POINTER(D_00262B50 + 46, D_002611B0);
-    STORE_POINTER(D_00262B50 + 53, D_002611F0);
-    STORE_POINTER(D_00262B50 + 60, D_00244870);
-    STORE_POINTER(D_00262B50 + 67, D_002448B0);
-    STORE_POINTER(D_00262B50 + 74, D_002448F0);
-    STORE_POINTER(D_00262B50 + 81, D_00244970);
-    STORE_POINTER(D_00262B50 + 88, D_002449B0);
-    STORE_POINTER(D_00262B50 + 95, D_002449F0);
+    STORE_POINTER(stage1_midboss_entities + 243, D_0028C0D0);
+    STORE_POINTER(stage1_midboss_fade_script + 4, D_002610F0);
+    STORE_POINTER(stage1_midboss_fade_script + 11, D_002601B0_as_u16_a);
+    STORE_POINTER(stage1_midboss_fade_script + 18, D_002601F0_as_u16_a);
+    STORE_POINTER(stage1_midboss_fade_script + 25, D_00260230_as_u16_a);
+    STORE_POINTER(stage1_midboss_fade_script + 32, D_00261170);
+    STORE_POINTER(stage1_midboss_fade_script + 39, D_00261130);
+    STORE_POINTER(stage1_midboss_fade_script + 46, D_002611B0);
+    STORE_POINTER(stage1_midboss_fade_script + 53, D_002611F0);
+    STORE_POINTER(stage1_midboss_fade_script + 60, D_00244870);
+    STORE_POINTER(stage1_midboss_fade_script + 67, D_002448B0);
+    STORE_POINTER(stage1_midboss_fade_script + 74, D_002448F0);
+    STORE_POINTER(stage1_midboss_fade_script + 81, D_00244970);
+    STORE_POINTER(stage1_midboss_fade_script + 88, D_002449B0);
+    STORE_POINTER(stage1_midboss_fade_script + 95, D_002449F0);
 }
 
 

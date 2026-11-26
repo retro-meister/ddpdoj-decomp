@@ -4,6 +4,12 @@
 #include "types.h"
 #include "entity.h"
 
+/* Two bytes of a state block that are set together as one word: a number of frames and its countdown. */
+typedef union {
+    u16 both;
+    struct { u8 interval; u8 countdown; } b;
+} EnemyTimer;
+
 /*
  * State block of one running enemy, 0x50 bytes. The enemy's routines get it in reg_a5 and its first entity in
  * reg_a6. A request to start an enemy is a block of the same layout, copied into a free slot when it is served.
