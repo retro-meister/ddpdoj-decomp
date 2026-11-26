@@ -55,7 +55,11 @@ extern u8 g_palette_bank_a[];
 
 void palette_bank_a_load(void) {
     u32 temp_s0 = reg_d0.w;
+#ifdef DDPDOJ_PC
+    u8 *temp_s1 = reg_a0;
+#else
     s32 temp_s1 = (s32)reg_a0;
+#endif
     u8 *temp_s2 = reg_a1;
 
     reg_a1 = g_palette_bank_a;

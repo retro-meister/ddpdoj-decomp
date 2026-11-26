@@ -1981,131 +1981,131 @@ void checked_pointers_store(void) {
     if (scroll_event_routines[0] != 0x0) {
         printf("error! groevent_tbl[0]\n");
     }
-    reg_tmp.w = (u32)scroll_event_palettes;
+    reg_tmp.w = ARCADE_ADDRESS_ENCODE(scroll_event_palettes);
     ((u16 *)scroll_event_routines)[0] = reg_tmp.h[1];
     D_002526D2[0] = reg_tmp.h[0];
     if (scroll_event_routines[2] != 0x2) {
         printf("error! groevent_tbl[2]\n");
     }
-    STORE_POINTER(scroll_event_routines + 2, scroll_event_map_loop);
+    STORE_ARCADE_ADDRESS(scroll_event_routines + 2, scroll_event_map_loop);
     if (scroll_event_routines[4] != 0x4) {
         printf("error! groevent_tbl[4]\n");
     }
-    STORE_POINTER(scroll_event_routines + 4, scroll_event_speed);
+    STORE_ARCADE_ADDRESS(scroll_event_routines + 4, scroll_event_speed);
     if (scroll_event_routines[6] != 0x6) {
         printf("error! groevent_tbl[6]\n");
     }
-    STORE_POINTER(scroll_event_routines + 6, scroll_event_line_hold);
+    STORE_ARCADE_ADDRESS(scroll_event_routines + 6, scroll_event_line_hold);
     if (scroll_event_routines[8] != 0x8) {
         printf("error! groevent_tbl[8]\n");
     }
-    STORE_POINTER(scroll_event_routines + 8, scroll_event_scenery);
+    STORE_ARCADE_ADDRESS(scroll_event_routines + 8, scroll_event_scenery);
     if (scroll_event_routines[10] != 0xa) {
         printf("error! groevent_tbl[10]\n");
     }
-    STORE_POINTER(scroll_event_routines + 10, scroll_event_sounds);
+    STORE_ARCADE_ADDRESS(scroll_event_routines + 10, scroll_event_sounds);
     if (scroll_event_routines[12] != 0xc) {
         printf("error! groevent_tbl[12]\n");
     }
-    STORE_POINTER(scroll_event_routines + 12, scroll_event_flags);
+    STORE_ARCADE_ADDRESS(scroll_event_routines + 12, scroll_event_flags);
     if (scroll_sound_routines[0] != 0x0) {
         printf("error! gev_snd_proc_tbl[0]\n");
     }
-    reg_tmp.w = (u32)scroll_sound_call;
+    reg_tmp.w = ARCADE_ADDRESS_ENCODE(scroll_sound_call);
     ((u16 *)scroll_sound_routines)[0] = reg_tmp.h[1];
     D_002526F2[0] = reg_tmp.h[0];
     if (scroll_sound_routines[2] != 0x2) {
         printf("error! gev_snd_proc_tbl[2]\n");
     }
-    STORE_POINTER(scroll_sound_routines + 2, scroll_sound_music_stop);
+    STORE_ARCADE_ADDRESS(scroll_sound_routines + 2, scroll_sound_music_stop);
     if (scroll_sound_routines[4] != 0x4) {
         printf("error! gev_snd_proc_tbl[4]\n");
     }
-    STORE_POINTER(scroll_sound_routines + 4, scroll_sound_music_fade);
+    STORE_ARCADE_ADDRESS(scroll_sound_routines + 4, scroll_sound_music_fade);
     if (stage_map_palettes[0] != 0x0) {
         printf("error! bg_pal_tbl[0]\n");
     }
-    reg_tmp.w = (u32)g_stage1_map_palettes;
+    reg_tmp.w = ARCADE_ADDRESS_ENCODE(g_stage1_map_palettes);
     ((u16 *)stage_map_palettes)[0] = reg_tmp.h[1];
     D_00252702[0] = reg_tmp.h[0];
     if (stage_map_palettes[2] != 0x2) {
         printf("error! bg_pal_tbl[2]\n");
     }
-    STORE_POINTER(stage_map_palettes + 2, g_stage2_map_palettes);
+    STORE_ARCADE_ADDRESS(stage_map_palettes + 2, g_stage2_map_palettes);
     if (stage_map_palettes[4] != 0x4) {
         printf("error! bg_pal_tbl[4]\n");
     }
-    STORE_POINTER(stage_map_palettes + 4, g_stage3_map_palettes);
+    STORE_ARCADE_ADDRESS(stage_map_palettes + 4, g_stage3_map_palettes);
     if (stage_map_palettes[6] != 0x6) {
         printf("error! bg_pal_tbl[6]\n");
     }
-    STORE_POINTER(stage_map_palettes + 6, g_stage4_map_palettes);
+    STORE_ARCADE_ADDRESS(stage_map_palettes + 6, g_stage4_map_palettes);
     if (stage_map_palettes[8] != 0x8) {
         printf("error! bg_pal_tbl[8]\n");
     }
-    STORE_POINTER(stage_map_palettes + 8, g_stage5_map_palettes);
+    STORE_ARCADE_ADDRESS(stage_map_palettes + 8, g_stage5_map_palettes);
     if (stage_maps[0] != 0x0) {
         printf("error! stg_tbl[0]\n");
     }
-    reg_tmp.w = (u32)g_stage1_map;
+    reg_tmp.w = ARCADE_ADDRESS_ENCODE(g_stage1_map);
     ((u16 *)stage_maps)[0] = reg_tmp.h[1];
     D_00252722[0] = reg_tmp.h[0];
     if (stage_maps[2] != 0x2) {
         printf("error! stg_tbl[2]\n");
     }
-    STORE_POINTER(stage_maps + 2, g_stage2_map);
+    STORE_ARCADE_ADDRESS(stage_maps + 2, g_stage2_map);
     if (stage_maps[4] != 0x4) {
         printf("error! stg_tbl[4]\n");
     }
-    STORE_POINTER(stage_maps + 4, g_stage3_map);
+    STORE_ARCADE_ADDRESS(stage_maps + 4, g_stage3_map);
     if (stage_maps[6] != 0x6) {
         printf("error! stg_tbl[6]\n");
     }
-    STORE_POINTER(stage_maps + 6, g_stage4_map);
+    STORE_ARCADE_ADDRESS(stage_maps + 6, g_stage4_map);
     if (stage_maps[8] != 0x8) {
         printf("error! stg_tbl[8]\n");
     }
-    STORE_POINTER(stage_maps + 8, g_stage5_map);
+    STORE_ARCADE_ADDRESS(stage_maps + 8, g_stage5_map);
     if (stage1_scroll_event_lists[0] != 0x0) {
         printf("error! gro_stg1_tbl[0]\n");
     }
-    STORE_POINTER(stage1_scroll_event_lists, stage1_scroll_events);
+    STORE_ARCADE_ADDRESS(stage1_scroll_event_lists, stage1_scroll_events);
     if (stage1_scroll_event_lists[2] != 0x2) {
         printf("error! gro_stg1_tbl[2]\n");
     }
-    STORE_POINTER(stage1_scroll_event_lists + 2, stage1_plane2_scroll_events);
+    STORE_ARCADE_ADDRESS(stage1_scroll_event_lists + 2, stage1_plane2_scroll_events);
     if (stage2_scroll_event_lists[0] != 0x0) {
         printf("error! gro_stg2_tbl[0]\n");
     }
-    STORE_POINTER(stage2_scroll_event_lists, stage2_scroll_events);
+    STORE_ARCADE_ADDRESS(stage2_scroll_event_lists, stage2_scroll_events);
     if (stage2_scroll_event_lists[2] != 0x2) {
         printf("error! gro_stg2_tbl[2]\n");
     }
-    STORE_POINTER(stage2_scroll_event_lists + 2, stage2_plane2_scroll_events);
+    STORE_ARCADE_ADDRESS(stage2_scroll_event_lists + 2, stage2_plane2_scroll_events);
     if (stage3_scroll_event_lists[0] != 0x0) {
         printf("error! gro_stg3_tbl[0]\n");
     }
-    STORE_POINTER(stage3_scroll_event_lists, stage3_scroll_events);
+    STORE_ARCADE_ADDRESS(stage3_scroll_event_lists, stage3_scroll_events);
     if (stage3_scroll_event_lists[2] != 0x2) {
         printf("error! gro_stg3_tbl[2]\n");
     }
-    STORE_POINTER(stage3_scroll_event_lists + 2, stage3_plane2_scroll_events);
+    STORE_ARCADE_ADDRESS(stage3_scroll_event_lists + 2, stage3_plane2_scroll_events);
     if (stage4_scroll_event_lists[0] != 0x0) {
         printf("error! gro_stg4_tbl[0]\n");
     }
-    STORE_POINTER(stage4_scroll_event_lists, stage4_scroll_events);
+    STORE_ARCADE_ADDRESS(stage4_scroll_event_lists, stage4_scroll_events);
     if (stage4_scroll_event_lists[2] != 0x2) {
         printf("error! gro_stg4_tbl[2]\n");
     }
-    STORE_POINTER(stage4_scroll_event_lists + 2, stage4_plane2_scroll_events);
+    STORE_ARCADE_ADDRESS(stage4_scroll_event_lists + 2, stage4_plane2_scroll_events);
     if (stage5_scroll_event_lists[0] != 0x0) {
         printf("error! gro_stg5_tbl[0]\n");
     }
-    STORE_POINTER(stage5_scroll_event_lists, stage5_scroll_events);
+    STORE_ARCADE_ADDRESS(stage5_scroll_event_lists, stage5_scroll_events);
     if (stage5_scroll_event_lists[2] != 0x2) {
         printf("error! gro_stg5_tbl[2]\n");
     }
-    STORE_POINTER(stage5_scroll_event_lists + 2, stage5_plane2_scroll_events);
+    STORE_ARCADE_ADDRESS(stage5_scroll_event_lists + 2, stage5_plane2_scroll_events);
     if (stage_scroll_event_lists[0] != 0x0) {
         printf("error! gro_stg_tbl[0]\n");
     }
@@ -2129,535 +2129,535 @@ void checked_pointers_store(void) {
     if (stage1_scroll_palettes[0] != 0x0) {
         printf("error! avram_pal_tbl1[0]\n");
     }
-    STORE_POINTER(stage1_scroll_palettes, stage1_palette_00);
+    STORE_ARCADE_ADDRESS(stage1_scroll_palettes, stage1_palette_00);
     if (stage1_scroll_palettes[3] != 0x3) {
         printf("error! avram_pal_tbl1[3]\n");
     }
-    STORE_POINTER(stage1_scroll_palettes + 3, stage1_palette_01);
+    STORE_ARCADE_ADDRESS(stage1_scroll_palettes + 3, stage1_palette_01);
     if (stage1_scroll_palettes[6] != 0x6) {
         printf("error! avram_pal_tbl1[6]\n");
     }
-    STORE_POINTER(stage1_scroll_palettes + 6, stage1_palette_03);
+    STORE_ARCADE_ADDRESS(stage1_scroll_palettes + 6, stage1_palette_03);
     if (stage1_scroll_palettes[9] != 0x9) {
         printf("error! avram_pal_tbl1[9]\n");
     }
-    STORE_POINTER(stage1_scroll_palettes + 9, stage1_palette_04);
+    STORE_ARCADE_ADDRESS(stage1_scroll_palettes + 9, stage1_palette_04);
     if (stage1_scroll_palettes[12] != 0xc) {
         printf("error! avram_pal_tbl1[12]\n");
     }
-    STORE_POINTER(stage1_scroll_palettes + 12, stage1_scroll_palettes_at_12);
+    STORE_ARCADE_ADDRESS(stage1_scroll_palettes + 12, stage1_scroll_palettes_at_12);
     if (stage1_scroll_palettes[15] != 0xf) {
         printf("error! avram_pal_tbl1[15]\n");
     }
-    STORE_POINTER(stage1_scroll_palettes + 15, stage1_palette_07);
+    STORE_ARCADE_ADDRESS(stage1_scroll_palettes + 15, stage1_palette_07);
     if (stage1_scroll_palettes[18] != 0x12) {
         printf("error! avram_pal_tbl1[18]\n");
     }
-    STORE_POINTER(stage1_scroll_palettes + 18, palette_black);
+    STORE_ARCADE_ADDRESS(stage1_scroll_palettes + 18, palette_black);
     if (stage1_scroll_palettes[21] != 0x15) {
         printf("error! avram_pal_tbl1[21]\n");
     }
-    STORE_POINTER(stage1_scroll_palettes + 21, stage1_palette_10);
+    STORE_ARCADE_ADDRESS(stage1_scroll_palettes + 21, stage1_palette_10);
     if (stage1_scroll_palettes[24] != 0x18) {
         printf("error! avram_pal_tbl1[24]\n");
     }
-    STORE_POINTER(stage1_scroll_palettes + 24, ((u16 *)D_002610B0));
+    STORE_ARCADE_ADDRESS(stage1_scroll_palettes + 24, ((u16 *)D_002610B0));
     if (stage1_scroll_palettes[27] != 0x1b) {
         printf("error! avram_pal_tbl1[27]\n");
     }
-    STORE_POINTER(stage1_scroll_palettes + 27, stage1_palette_13);
+    STORE_ARCADE_ADDRESS(stage1_scroll_palettes + 27, stage1_palette_13);
     if (stage1_scroll_palettes[30] != 0x1e) {
         printf("error! avram_pal_tbl1[30]\n");
     }
-    STORE_POINTER(stage1_scroll_palettes + 30, D_00260FF0);
+    STORE_ARCADE_ADDRESS(stage1_scroll_palettes + 30, D_00260FF0);
     if (stage1_scroll_palettes[33] != 0x21) {
         printf("error! avram_pal_tbl1[33]\n");
     }
-    STORE_POINTER(stage1_scroll_palettes + 33, D_002610F0);
+    STORE_ARCADE_ADDRESS(stage1_scroll_palettes + 33, D_002610F0);
     if (stage1_scroll_palettes[36] != 0x24) {
         printf("error! avram_pal_tbl1[36]\n");
     }
-    STORE_POINTER(stage1_scroll_palettes + 36, stage1_palette_18);
+    STORE_ARCADE_ADDRESS(stage1_scroll_palettes + 36, stage1_palette_18);
     if (stage1_scroll_palettes[39] != 0x27) {
         printf("error! avram_pal_tbl1[39]\n");
     }
-    STORE_POINTER(stage1_scroll_palettes + 39, D_00261D70);
+    STORE_ARCADE_ADDRESS(stage1_scroll_palettes + 39, D_00261D70);
     if (stage1_scroll_palettes[42] != 0x2a) {
         printf("error! avram_pal_tbl1[42]\n");
     }
-    STORE_POINTER(stage1_scroll_palettes + 42, D_00261170);
+    STORE_ARCADE_ADDRESS(stage1_scroll_palettes + 42, D_00261170);
     if (stage1_scroll_palettes[45] != 0x2d) {
         printf("error! avram_pal_tbl1[45]\n");
     }
-    STORE_POINTER(stage1_scroll_palettes + 45, D_00261130);
+    STORE_ARCADE_ADDRESS(stage1_scroll_palettes + 45, D_00261130);
     if (stage1_scroll_palettes[48] != 0x30) {
         printf("error! avram_pal_tbl1[48]\n");
     }
-    STORE_POINTER(stage1_scroll_palettes + 48, stage1_scroll_palettes_at_48);
+    STORE_ARCADE_ADDRESS(stage1_scroll_palettes + 48, stage1_scroll_palettes_at_48);
     if (stage1_scroll_palettes[51] != 0x33) {
         printf("error! avram_pal_tbl1[51]\n");
     }
-    STORE_POINTER(stage1_scroll_palettes + 51, D_002611B0);
+    STORE_ARCADE_ADDRESS(stage1_scroll_palettes + 51, D_002611B0);
     if (stage1_scroll_palettes[54] != 0x36) {
         printf("error! avram_pal_tbl1[54]\n");
     }
-    STORE_POINTER(stage1_scroll_palettes + 54, D_002611F0);
+    STORE_ARCADE_ADDRESS(stage1_scroll_palettes + 54, D_002611F0);
     if (stage1_scroll_palettes[57] != 0x39) {
         printf("error! avram_pal_tbl1[57]\n");
     }
-    STORE_POINTER(stage1_scroll_palettes + 57, stage1_palette_07);
+    STORE_ARCADE_ADDRESS(stage1_scroll_palettes + 57, stage1_palette_07);
     if (stage1_scroll_palettes[60] != 0x3c) {
         printf("error! avram_pal_tbl1[60]\n");
     }
-    STORE_POINTER(stage1_scroll_palettes + 60, stage1_scroll_palettes_at_60);
+    STORE_ARCADE_ADDRESS(stage1_scroll_palettes + 60, stage1_scroll_palettes_at_60);
     if (stage1_scroll_palettes[63] != 0x3f) {
         printf("error! avram_pal_tbl1[63]\n");
     }
-    STORE_POINTER(stage1_scroll_palettes + 63, stage1_scroll_palettes_at_63);
+    STORE_ARCADE_ADDRESS(stage1_scroll_palettes + 63, stage1_scroll_palettes_at_63);
     if (stage1_scroll_sounds[4] != 0x4) {
         printf("error! avram_snd_tbl1[4]\n");
     }
-    STORE_POINTER(stage1_scroll_sounds + 4, music_play_bgm7);
+    STORE_ARCADE_ADDRESS(stage1_scroll_sounds + 4, music_play_bgm7);
     if (stage1_scroll_events[0] != 0x0) {
         printf("error! avram_tbl1[0]\n");
     }
-    STORE_POINTER(stage1_scroll_events, stage1_scroll_palettes);
+    STORE_ARCADE_ADDRESS(stage1_scroll_events, stage1_scroll_palettes);
     if (stage1_scroll_events[2] != 0x2) {
         printf("error! avram_tbl1[2]\n");
     }
-    STORE_POINTER(stage1_scroll_events + 2, stage1_scroll_sounds);
+    STORE_ARCADE_ADDRESS(stage1_scroll_events + 2, stage1_scroll_sounds);
     if (stage2_scroll_palettes[0] != 0x0) {
         printf("error! avram_pal_tbl2[0]\n");
     }
-    STORE_POINTER(stage2_scroll_palettes, palette_black);
+    STORE_ARCADE_ADDRESS(stage2_scroll_palettes, palette_black);
     if (stage2_scroll_palettes[3] != 0x3) {
         printf("error! avram_pal_tbl2[3]\n");
     }
-    STORE_POINTER(stage2_scroll_palettes + 3, stage1_palette_10);
+    STORE_ARCADE_ADDRESS(stage2_scroll_palettes + 3, stage1_palette_10);
     if (stage2_scroll_palettes[6] != 0x6) {
         printf("error! avram_pal_tbl2[6]\n");
     }
-    STORE_POINTER(stage2_scroll_palettes + 6, ((u16 *)D_002610B0));
+    STORE_ARCADE_ADDRESS(stage2_scroll_palettes + 6, ((u16 *)D_002610B0));
     if (stage2_scroll_palettes[9] != 0x9) {
         printf("error! avram_pal_tbl2[9]\n");
     }
-    STORE_POINTER(stage2_scroll_palettes + 9, stage1_palette_13);
+    STORE_ARCADE_ADDRESS(stage2_scroll_palettes + 9, stage1_palette_13);
     if (stage2_scroll_palettes[12] != 0xc) {
         printf("error! avram_pal_tbl2[12]\n");
     }
-    STORE_POINTER(stage2_scroll_palettes + 12, D_00260FF0);
+    STORE_ARCADE_ADDRESS(stage2_scroll_palettes + 12, D_00260FF0);
     if (stage2_scroll_palettes[15] != 0xf) {
         printf("error! avram_pal_tbl2[15]\n");
     }
-    STORE_POINTER(stage2_scroll_palettes + 15, D_002610F0);
+    STORE_ARCADE_ADDRESS(stage2_scroll_palettes + 15, D_002610F0);
     if (stage2_scroll_palettes[18] != 0x12) {
         printf("error! avram_pal_tbl2[18]\n");
     }
-    STORE_POINTER(stage2_scroll_palettes + 18, stage1_palette_18);
+    STORE_ARCADE_ADDRESS(stage2_scroll_palettes + 18, stage1_palette_18);
     if (stage2_scroll_palettes[21] != 0x15) {
         printf("error! avram_pal_tbl2[21]\n");
     }
-    STORE_POINTER(stage2_scroll_palettes + 21, D_00261D70);
+    STORE_ARCADE_ADDRESS(stage2_scroll_palettes + 21, D_00261D70);
     if (stage2_scroll_palettes[24] != 0x18) {
         printf("error! avram_pal_tbl2[24]\n");
     }
-    STORE_POINTER(stage2_scroll_palettes + 24, stage1_palette_00);
+    STORE_ARCADE_ADDRESS(stage2_scroll_palettes + 24, stage1_palette_00);
     if (stage2_scroll_palettes[27] != 0x1b) {
         printf("error! avram_pal_tbl2[27]\n");
     }
-    STORE_POINTER(stage2_scroll_palettes + 27, stage1_palette_01);
+    STORE_ARCADE_ADDRESS(stage2_scroll_palettes + 27, stage1_palette_01);
     if (stage2_scroll_palettes[30] != 0x1e) {
         printf("error! avram_pal_tbl2[30]\n");
     }
-    STORE_POINTER(stage2_scroll_palettes + 30, stage1_palette_03);
+    STORE_ARCADE_ADDRESS(stage2_scroll_palettes + 30, stage1_palette_03);
     if (stage2_scroll_palettes[33] != 0x21) {
         printf("error! avram_pal_tbl2[33]\n");
     }
-    STORE_POINTER(stage2_scroll_palettes + 33, stage2_scroll_palettes_at_33);
+    STORE_ARCADE_ADDRESS(stage2_scroll_palettes + 33, stage2_scroll_palettes_at_33);
     if (stage2_scroll_palettes[36] != 0x24) {
         printf("error! avram_pal_tbl2[36]\n");
     }
-    STORE_POINTER(stage2_scroll_palettes + 36, stage2_palette_18);
+    STORE_ARCADE_ADDRESS(stage2_scroll_palettes + 36, stage2_palette_18);
     if (stage2_scroll_palettes[39] != 0x27) {
         printf("error! avram_pal_tbl2[39]\n");
     }
-    STORE_POINTER(stage2_scroll_palettes + 39, stage1_palette_07);
+    STORE_ARCADE_ADDRESS(stage2_scroll_palettes + 39, stage1_palette_07);
     if (stage2_scroll_palettes[42] != 0x2a) {
         printf("error! avram_pal_tbl2[42]\n");
     }
-    STORE_POINTER(stage2_scroll_palettes + 42, stage1_palette_04);
+    STORE_ARCADE_ADDRESS(stage2_scroll_palettes + 42, stage1_palette_04);
     if (stage2_scroll_palettes[45] != 0x2d) {
         printf("error! avram_pal_tbl2[45]\n");
     }
-    STORE_POINTER(stage2_scroll_palettes + 45, stage2_scroll_palettes_at_45);
+    STORE_ARCADE_ADDRESS(stage2_scroll_palettes + 45, stage2_scroll_palettes_at_45);
     if (stage2_scroll_palettes[48] != 0x30) {
         printf("error! avram_pal_tbl2[48]\n");
     }
-    STORE_POINTER(stage2_scroll_palettes + 48, stage2_scroll_palettes_at_48);
+    STORE_ARCADE_ADDRESS(stage2_scroll_palettes + 48, stage2_scroll_palettes_at_48);
     if (stage2_scroll_palettes[51] != 0x33) {
         printf("error! avram_pal_tbl2[51]\n");
     }
-    STORE_POINTER(stage2_scroll_palettes + 51, stage2_scroll_palettes_at_51);
+    STORE_ARCADE_ADDRESS(stage2_scroll_palettes + 51, stage2_scroll_palettes_at_51);
     if (stage2_scroll_palettes[54] != 0x36) {
         printf("error! avram_pal_tbl2[54]\n");
     }
-    STORE_POINTER(stage2_scroll_palettes + 54, stage2_scroll_palettes_at_54);
+    STORE_ARCADE_ADDRESS(stage2_scroll_palettes + 54, stage2_scroll_palettes_at_54);
     if (stage2_scroll_palettes[57] != 0x39) {
         printf("error! avram_pal_tbl2[57]\n");
     }
-    STORE_POINTER(stage2_scroll_palettes + 57, stage2_scroll_palettes_at_57);
+    STORE_ARCADE_ADDRESS(stage2_scroll_palettes + 57, stage2_scroll_palettes_at_57);
     if (stage2_scroll_palettes[60] != 0x3c) {
         printf("error! avram_pal_tbl2[60]\n");
     }
-    STORE_POINTER(stage2_scroll_palettes + 60, stage2_scroll_palettes_at_60);
+    STORE_ARCADE_ADDRESS(stage2_scroll_palettes + 60, stage2_scroll_palettes_at_60);
     if (stage2_scroll_palettes[63] != 0x3f) {
         printf("error! avram_pal_tbl2[63]\n");
     }
-    STORE_POINTER(stage2_scroll_palettes + 63, stage2_scroll_palettes_at_63);
+    STORE_ARCADE_ADDRESS(stage2_scroll_palettes + 63, stage2_scroll_palettes_at_63);
     if (stage2_scroll_palettes[66] != 0x42) {
         printf("error! avram_pal_tbl2[66]\n");
     }
-    STORE_POINTER(stage2_scroll_palettes + 66, stage2_scroll_palettes_at_66);
+    STORE_ARCADE_ADDRESS(stage2_scroll_palettes + 66, stage2_scroll_palettes_at_66);
     if (stage2_scroll_palettes[69] != 0x45) {
         printf("error! avram_pal_tbl2[69]\n");
     }
-    STORE_POINTER(stage2_scroll_palettes + 69, stage2_scroll_palettes_at_69);
+    STORE_ARCADE_ADDRESS(stage2_scroll_palettes + 69, stage2_scroll_palettes_at_69);
     if (stage2_scroll_palettes[72] != 0x48) {
         printf("error! avram_pal_tbl2[72]\n");
     }
-    STORE_POINTER(stage2_scroll_palettes + 72, stage2_scroll_palettes_at_72);
+    STORE_ARCADE_ADDRESS(stage2_scroll_palettes + 72, stage2_scroll_palettes_at_72);
     if (stage2_scroll_palettes[75] != 0x4b) {
         printf("error! avram_pal_tbl2[75]\n");
     }
-    STORE_POINTER(stage2_scroll_palettes + 75, stage2_scroll_palettes_at_75);
+    STORE_ARCADE_ADDRESS(stage2_scroll_palettes + 75, stage2_scroll_palettes_at_75);
     if (stage2_scroll_sounds[2] != 0x2) {
         printf("error! avram_snd_tbl2[2]\n");
     }
-    STORE_POINTER(stage2_scroll_sounds + 2, music_play_bgm3);
+    STORE_ARCADE_ADDRESS(stage2_scroll_sounds + 2, music_play_bgm3);
     if (stage2_scroll_sounds[8] != 0x8) {
         printf("error! avram_snd_tbl2[8]\n");
     }
-    STORE_POINTER(stage2_scroll_sounds + 8, music_play_bgm7);
+    STORE_ARCADE_ADDRESS(stage2_scroll_sounds + 8, music_play_bgm7);
     if (stage2_scroll_events[0] != 0x0) {
         printf("error! avram_tbl2[0]\n");
     }
-    STORE_POINTER(stage2_scroll_events, stage2_scroll_palettes);
+    STORE_ARCADE_ADDRESS(stage2_scroll_events, stage2_scroll_palettes);
     if (stage2_scroll_events[2] != 0x2) {
         printf("error! avram_tbl2[2]\n");
     }
-    STORE_POINTER(stage2_scroll_events + 2, stage2_scroll_sounds);
+    STORE_ARCADE_ADDRESS(stage2_scroll_events + 2, stage2_scroll_sounds);
     if (stage3_scroll_palettes[0] != 0x0) {
         printf("error! avram_pal_tbl3[0]\n");
     }
-    STORE_POINTER(stage3_scroll_palettes, palette_black);
+    STORE_ARCADE_ADDRESS(stage3_scroll_palettes, palette_black);
     if (stage3_scroll_palettes[3] != 0x3) {
         printf("error! avram_pal_tbl3[3]\n");
     }
-    STORE_POINTER(stage3_scroll_palettes + 3, stage1_palette_10);
+    STORE_ARCADE_ADDRESS(stage3_scroll_palettes + 3, stage1_palette_10);
     if (stage3_scroll_palettes[6] != 0x6) {
         printf("error! avram_pal_tbl3[6]\n");
     }
-    STORE_POINTER(stage3_scroll_palettes + 6, ((u16 *)D_002610B0));
+    STORE_ARCADE_ADDRESS(stage3_scroll_palettes + 6, ((u16 *)D_002610B0));
     if (stage3_scroll_palettes[9] != 0x9) {
         printf("error! avram_pal_tbl3[9]\n");
     }
-    STORE_POINTER(stage3_scroll_palettes + 9, stage1_palette_13);
+    STORE_ARCADE_ADDRESS(stage3_scroll_palettes + 9, stage1_palette_13);
     if (stage3_scroll_palettes[12] != 0xc) {
         printf("error! avram_pal_tbl3[12]\n");
     }
-    STORE_POINTER(stage3_scroll_palettes + 12, D_00260FF0);
+    STORE_ARCADE_ADDRESS(stage3_scroll_palettes + 12, D_00260FF0);
     if (stage3_scroll_palettes[15] != 0xf) {
         printf("error! avram_pal_tbl3[15]\n");
     }
-    STORE_POINTER(stage3_scroll_palettes + 15, D_002610F0);
+    STORE_ARCADE_ADDRESS(stage3_scroll_palettes + 15, D_002610F0);
     if (stage3_scroll_palettes[18] != 0x12) {
         printf("error! avram_pal_tbl3[18]\n");
     }
-    STORE_POINTER(stage3_scroll_palettes + 18, stage1_palette_18);
+    STORE_ARCADE_ADDRESS(stage3_scroll_palettes + 18, stage1_palette_18);
     if (stage3_scroll_palettes[21] != 0x15) {
         printf("error! avram_pal_tbl3[21]\n");
     }
-    STORE_POINTER(stage3_scroll_palettes + 21, D_00261D70);
+    STORE_ARCADE_ADDRESS(stage3_scroll_palettes + 21, D_00261D70);
     if (stage3_scroll_palettes[24] != 0x18) {
         printf("error! avram_pal_tbl3[24]\n");
     }
-    STORE_POINTER(stage3_scroll_palettes + 24, stage1_palette_00);
+    STORE_ARCADE_ADDRESS(stage3_scroll_palettes + 24, stage1_palette_00);
     if (stage3_scroll_palettes[27] != 0x1b) {
         printf("error! avram_pal_tbl3[27]\n");
     }
-    STORE_POINTER(stage3_scroll_palettes + 27, stage1_palette_01);
+    STORE_ARCADE_ADDRESS(stage3_scroll_palettes + 27, stage1_palette_01);
     if (stage3_scroll_palettes[30] != 0x1e) {
         printf("error! avram_pal_tbl3[30]\n");
     }
-    STORE_POINTER(stage3_scroll_palettes + 30, stage1_palette_03);
+    STORE_ARCADE_ADDRESS(stage3_scroll_palettes + 30, stage1_palette_03);
     if (stage3_scroll_palettes[33] != 0x21) {
         printf("error! avram_pal_tbl3[33]\n");
     }
-    STORE_POINTER(stage3_scroll_palettes + 33, stage3_palette_16);
+    STORE_ARCADE_ADDRESS(stage3_scroll_palettes + 33, stage3_palette_16);
     if (stage3_scroll_palettes[36] != 0x24) {
         printf("error! avram_pal_tbl3[36]\n");
     }
-    STORE_POINTER(stage3_scroll_palettes + 36, stage2_palette_18);
+    STORE_ARCADE_ADDRESS(stage3_scroll_palettes + 36, stage2_palette_18);
     if (stage3_scroll_palettes[39] != 0x27) {
         printf("error! avram_pal_tbl3[39]\n");
     }
-    STORE_POINTER(stage3_scroll_palettes + 39, stage1_palette_07);
+    STORE_ARCADE_ADDRESS(stage3_scroll_palettes + 39, stage1_palette_07);
     if (stage3_scroll_palettes[42] != 0x2a) {
         printf("error! avram_pal_tbl3[42]\n");
     }
-    STORE_POINTER(stage3_scroll_palettes + 42, stage1_palette_04);
+    STORE_ARCADE_ADDRESS(stage3_scroll_palettes + 42, stage1_palette_04);
     if (stage3_scroll_palettes[45] != 0x2d) {
         printf("error! avram_pal_tbl3[45]\n");
     }
-    STORE_POINTER(stage3_scroll_palettes + 45, stage1_palette_03);
+    STORE_ARCADE_ADDRESS(stage3_scroll_palettes + 45, stage1_palette_03);
     if (stage3_scroll_palettes[48] != 0x30) {
         printf("error! avram_pal_tbl3[48]\n");
     }
-    STORE_POINTER(stage3_scroll_palettes + 48, stage3_scroll_palettes_at_48);
+    STORE_ARCADE_ADDRESS(stage3_scroll_palettes + 48, stage3_scroll_palettes_at_48);
     if (stage3_scroll_palettes[51] != 0x33) {
         printf("error! avram_pal_tbl3[51]\n");
     }
-    STORE_POINTER(stage3_scroll_palettes + 51, stage1_palette_01);
+    STORE_ARCADE_ADDRESS(stage3_scroll_palettes + 51, stage1_palette_01);
     if (stage3_scroll_palettes[54] != 0x36) {
         printf("error! avram_pal_tbl3[54]\n");
     }
-    STORE_POINTER(stage3_scroll_palettes + 54, stage3_scroll_palettes_at_54);
+    STORE_ARCADE_ADDRESS(stage3_scroll_palettes + 54, stage3_scroll_palettes_at_54);
     if (stage3_scroll_palettes[57] != 0x39) {
         printf("error! avram_pal_tbl3[57]\n");
     }
-    STORE_POINTER(stage3_scroll_palettes + 57, stage3_scroll_palettes_at_57);
+    STORE_ARCADE_ADDRESS(stage3_scroll_palettes + 57, stage3_scroll_palettes_at_57);
     if (stage3_scroll_palettes[60] != 0x3c) {
         printf("error! avram_pal_tbl3[60]\n");
     }
-    STORE_POINTER(stage3_scroll_palettes + 60, stage3_midboss_flash_palettes_05);
+    STORE_ARCADE_ADDRESS(stage3_scroll_palettes + 60, stage3_midboss_flash_palettes_05);
     if (stage3_scroll_palettes[63] != 0x3f) {
         printf("error! avram_pal_tbl3[63]\n");
     }
-    STORE_POINTER(stage3_scroll_palettes + 63, stage3_scroll_palettes_at_63);
+    STORE_ARCADE_ADDRESS(stage3_scroll_palettes + 63, stage3_scroll_palettes_at_63);
     if (stage3_scroll_palettes[66] != 0x42) {
         printf("error! avram_pal_tbl3[66]\n");
     }
-    STORE_POINTER(stage3_scroll_palettes + 66, stage3_scroll_palettes_at_66);
+    STORE_ARCADE_ADDRESS(stage3_scroll_palettes + 66, stage3_scroll_palettes_at_66);
     if (stage3_scroll_palettes[69] != 0x45) {
         printf("error! avram_pal_tbl3[69]\n");
     }
-    STORE_POINTER(stage3_scroll_palettes + 69, stage3_scroll_palettes_at_69);
+    STORE_ARCADE_ADDRESS(stage3_scroll_palettes + 69, stage3_scroll_palettes_at_69);
     if (stage3_scroll_sounds[2] != 0x2) {
         printf("error! avram_snd_tbl3[2]\n");
     }
-    STORE_POINTER(stage3_scroll_sounds + 2, music_play_bgm4);
+    STORE_ARCADE_ADDRESS(stage3_scroll_sounds + 2, music_play_bgm4);
     if (stage3_scroll_sounds[8] != 0x8) {
         printf("error! avram_snd_tbl3[8]\n");
     }
-    STORE_POINTER(stage3_scroll_sounds + 8, music_play_bgm7);
+    STORE_ARCADE_ADDRESS(stage3_scroll_sounds + 8, music_play_bgm7);
     if (stage3_scroll_events[0] != 0x0) {
         printf("error! avram_tbl3[0]\n");
     }
-    STORE_POINTER(stage3_scroll_events, stage3_scroll_palettes);
+    STORE_ARCADE_ADDRESS(stage3_scroll_events, stage3_scroll_palettes);
     if (stage3_scroll_events[2] != 0x2) {
         printf("error! avram_tbl3[2]\n");
     }
-    STORE_POINTER(stage3_scroll_events + 2, stage3_scroll_sounds);
+    STORE_ARCADE_ADDRESS(stage3_scroll_events + 2, stage3_scroll_sounds);
     if (stage4_scroll_palettes[0] != 0x0) {
         printf("error! avram_pal_tbl4[0]\n");
     }
-    STORE_POINTER(stage4_scroll_palettes, palette_black);
+    STORE_ARCADE_ADDRESS(stage4_scroll_palettes, palette_black);
     if (stage4_scroll_palettes[3] != 0x3) {
         printf("error! avram_pal_tbl4[3]\n");
     }
-    STORE_POINTER(stage4_scroll_palettes + 3, stage1_palette_10);
+    STORE_ARCADE_ADDRESS(stage4_scroll_palettes + 3, stage1_palette_10);
     if (stage4_scroll_palettes[6] != 0x6) {
         printf("error! avram_pal_tbl4[6]\n");
     }
-    STORE_POINTER(stage4_scroll_palettes + 6, ((u16 *)D_002610B0));
+    STORE_ARCADE_ADDRESS(stage4_scroll_palettes + 6, ((u16 *)D_002610B0));
     if (stage4_scroll_palettes[9] != 0x9) {
         printf("error! avram_pal_tbl4[9]\n");
     }
-    STORE_POINTER(stage4_scroll_palettes + 9, stage1_palette_13);
+    STORE_ARCADE_ADDRESS(stage4_scroll_palettes + 9, stage1_palette_13);
     if (stage4_scroll_palettes[12] != 0xc) {
         printf("error! avram_pal_tbl4[12]\n");
     }
-    STORE_POINTER(stage4_scroll_palettes + 12, D_00260FF0);
+    STORE_ARCADE_ADDRESS(stage4_scroll_palettes + 12, D_00260FF0);
     if (stage4_scroll_palettes[15] != 0xf) {
         printf("error! avram_pal_tbl4[15]\n");
     }
-    STORE_POINTER(stage4_scroll_palettes + 15, D_002610F0);
+    STORE_ARCADE_ADDRESS(stage4_scroll_palettes + 15, D_002610F0);
     if (stage4_scroll_palettes[18] != 0x12) {
         printf("error! avram_pal_tbl4[18]\n");
     }
-    STORE_POINTER(stage4_scroll_palettes + 18, stage1_palette_18);
+    STORE_ARCADE_ADDRESS(stage4_scroll_palettes + 18, stage1_palette_18);
     if (stage4_scroll_palettes[21] != 0x15) {
         printf("error! avram_pal_tbl4[21]\n");
     }
-    STORE_POINTER(stage4_scroll_palettes + 21, D_00261D70);
+    STORE_ARCADE_ADDRESS(stage4_scroll_palettes + 21, D_00261D70);
     if (stage4_scroll_palettes[24] != 0x18) {
         printf("error! avram_pal_tbl4[24]\n");
     }
-    STORE_POINTER(stage4_scroll_palettes + 24, stage1_palette_00);
+    STORE_ARCADE_ADDRESS(stage4_scroll_palettes + 24, stage1_palette_00);
     if (stage4_scroll_palettes[27] != 0x1b) {
         printf("error! avram_pal_tbl4[27]\n");
     }
-    STORE_POINTER(stage4_scroll_palettes + 27, stage1_palette_01);
+    STORE_ARCADE_ADDRESS(stage4_scroll_palettes + 27, stage1_palette_01);
     if (stage4_scroll_palettes[30] != 0x1e) {
         printf("error! avram_pal_tbl4[30]\n");
     }
-    STORE_POINTER(stage4_scroll_palettes + 30, stage1_palette_03);
+    STORE_ARCADE_ADDRESS(stage4_scroll_palettes + 30, stage1_palette_03);
     if (stage4_scroll_palettes[33] != 0x21) {
         printf("error! avram_pal_tbl4[33]\n");
     }
-    STORE_POINTER(stage4_scroll_palettes + 33, stage2_palette_18);
+    STORE_ARCADE_ADDRESS(stage4_scroll_palettes + 33, stage2_palette_18);
     if (stage4_scroll_palettes[36] != 0x24) {
         printf("error! avram_pal_tbl4[36]\n");
     }
-    STORE_POINTER(stage4_scroll_palettes + 36, stage1_palette_07);
+    STORE_ARCADE_ADDRESS(stage4_scroll_palettes + 36, stage1_palette_07);
     if (stage4_scroll_palettes[39] != 0x27) {
         printf("error! avram_pal_tbl4[39]\n");
     }
-    STORE_POINTER(stage4_scroll_palettes + 39, stage4_scroll_palettes_at_39);
+    STORE_ARCADE_ADDRESS(stage4_scroll_palettes + 39, stage4_scroll_palettes_at_39);
     if (stage4_scroll_palettes[42] != 0x2a) {
         printf("error! avram_pal_tbl4[42]\n");
     }
-    STORE_POINTER(stage4_scroll_palettes + 42, stage4_scroll_palettes_at_42);
+    STORE_ARCADE_ADDRESS(stage4_scroll_palettes + 42, stage4_scroll_palettes_at_42);
     if (stage4_scroll_palettes[45] != 0x2d) {
         printf("error! avram_pal_tbl4[45]\n");
     }
-    STORE_POINTER(stage4_scroll_palettes + 45, stage4_scroll_palettes_at_45);
+    STORE_ARCADE_ADDRESS(stage4_scroll_palettes + 45, stage4_scroll_palettes_at_45);
     if (stage4_scroll_palettes[48] != 0x30) {
         printf("error! avram_pal_tbl4[48]\n");
     }
-    STORE_POINTER(stage4_scroll_palettes + 48, ((u16 *)stage4_scroll_palettes_at_48));
+    STORE_ARCADE_ADDRESS(stage4_scroll_palettes + 48, ((u16 *)stage4_scroll_palettes_at_48));
     if (stage4_scroll_palettes[51] != 0x33) {
         printf("error! avram_pal_tbl4[51]\n");
     }
-    STORE_POINTER(stage4_scroll_palettes + 51, stage4_scroll_palettes_at_51);
+    STORE_ARCADE_ADDRESS(stage4_scroll_palettes + 51, stage4_scroll_palettes_at_51);
     if (stage4_scroll_palettes[54] != 0x36) {
         printf("error! avram_pal_tbl4[54]\n");
     }
-    STORE_POINTER(stage4_scroll_palettes + 54, stage4_scroll_palettes_at_54);
+    STORE_ARCADE_ADDRESS(stage4_scroll_palettes + 54, stage4_scroll_palettes_at_54);
     if (stage4_scroll_palettes[57] != 0x39) {
         printf("error! avram_pal_tbl4[57]\n");
     }
-    STORE_POINTER(stage4_scroll_palettes + 57, stage4_scroll_palettes_at_57);
+    STORE_ARCADE_ADDRESS(stage4_scroll_palettes + 57, stage4_scroll_palettes_at_57);
     if (stage4_scroll_palettes[60] != 0x3c) {
         printf("error! avram_pal_tbl4[60]\n");
     }
-    STORE_POINTER(stage4_scroll_palettes + 60, stage4_scroll_palettes_at_39);
+    STORE_ARCADE_ADDRESS(stage4_scroll_palettes + 60, stage4_scroll_palettes_at_39);
     if (stage4_scroll_palettes[63] != 0x3f) {
         printf("error! avram_pal_tbl4[63]\n");
     }
-    STORE_POINTER(stage4_scroll_palettes + 63, stage4_scroll_palettes_at_63);
+    STORE_ARCADE_ADDRESS(stage4_scroll_palettes + 63, stage4_scroll_palettes_at_63);
     if (stage4_scroll_sounds[2] != 0x2) {
         printf("error! avram_snd_tbl4[2]\n");
     }
-    STORE_POINTER(stage4_scroll_sounds + 2, music_play_bgm5);
+    STORE_ARCADE_ADDRESS(stage4_scroll_sounds + 2, music_play_bgm5);
     if (stage4_scroll_sounds[8] != 0x8) {
         printf("error! avram_snd_tbl4[8]\n");
     }
-    STORE_POINTER(stage4_scroll_sounds + 8, music_play_bgm7);
+    STORE_ARCADE_ADDRESS(stage4_scroll_sounds + 8, music_play_bgm7);
     if (stage4_scroll_events[0] != 0x0) {
         printf("error! avram_tbl4[0]\n");
     }
-    STORE_POINTER(stage4_scroll_events, stage4_scroll_palettes);
+    STORE_ARCADE_ADDRESS(stage4_scroll_events, stage4_scroll_palettes);
     if (stage4_scroll_events[2] != 0x2) {
         printf("error! avram_tbl4[2]\n");
     }
-    STORE_POINTER(stage4_scroll_events + 2, stage4_scroll_sounds);
+    STORE_ARCADE_ADDRESS(stage4_scroll_events + 2, stage4_scroll_sounds);
     if (stage5_scroll_palettes[0] != 0x0) {
         printf("error! avram_pal_tbl5[0]\n");
     }
-    STORE_POINTER(stage5_scroll_palettes, palette_black);
+    STORE_ARCADE_ADDRESS(stage5_scroll_palettes, palette_black);
     if (stage5_scroll_palettes[3] != 0x3) {
         printf("error! avram_pal_tbl5[3]\n");
     }
-    STORE_POINTER(stage5_scroll_palettes + 3, stage1_palette_10);
+    STORE_ARCADE_ADDRESS(stage5_scroll_palettes + 3, stage1_palette_10);
     if (stage5_scroll_palettes[6] != 0x6) {
         printf("error! avram_pal_tbl5[6]\n");
     }
-    STORE_POINTER(stage5_scroll_palettes + 6, ((u16 *)D_002610B0));
+    STORE_ARCADE_ADDRESS(stage5_scroll_palettes + 6, ((u16 *)D_002610B0));
     if (stage5_scroll_palettes[9] != 0x9) {
         printf("error! avram_pal_tbl5[9]\n");
     }
-    STORE_POINTER(stage5_scroll_palettes + 9, stage1_palette_13);
+    STORE_ARCADE_ADDRESS(stage5_scroll_palettes + 9, stage1_palette_13);
     if (stage5_scroll_palettes[12] != 0xc) {
         printf("error! avram_pal_tbl5[12]\n");
     }
-    STORE_POINTER(stage5_scroll_palettes + 12, D_00260FF0);
+    STORE_ARCADE_ADDRESS(stage5_scroll_palettes + 12, D_00260FF0);
     if (stage5_scroll_palettes[15] != 0xf) {
         printf("error! avram_pal_tbl5[15]\n");
     }
-    STORE_POINTER(stage5_scroll_palettes + 15, D_002610F0);
+    STORE_ARCADE_ADDRESS(stage5_scroll_palettes + 15, D_002610F0);
     if (stage5_scroll_palettes[18] != 0x12) {
         printf("error! avram_pal_tbl5[18]\n");
     }
-    STORE_POINTER(stage5_scroll_palettes + 18, stage1_palette_18);
+    STORE_ARCADE_ADDRESS(stage5_scroll_palettes + 18, stage1_palette_18);
     if (stage5_scroll_palettes[21] != 0x15) {
         printf("error! avram_pal_tbl5[21]\n");
     }
-    STORE_POINTER(stage5_scroll_palettes + 21, D_00261D70);
+    STORE_ARCADE_ADDRESS(stage5_scroll_palettes + 21, D_00261D70);
     if (stage5_scroll_palettes[24] != 0x18) {
         printf("error! avram_pal_tbl5[24]\n");
     }
-    STORE_POINTER(stage5_scroll_palettes + 24, stage1_palette_00);
+    STORE_ARCADE_ADDRESS(stage5_scroll_palettes + 24, stage1_palette_00);
     if (stage5_scroll_palettes[27] != 0x1b) {
         printf("error! avram_pal_tbl5[27]\n");
     }
-    STORE_POINTER(stage5_scroll_palettes + 27, stage1_palette_01);
+    STORE_ARCADE_ADDRESS(stage5_scroll_palettes + 27, stage1_palette_01);
     if (stage5_scroll_palettes[30] != 0x1e) {
         printf("error! avram_pal_tbl5[30]\n");
     }
-    STORE_POINTER(stage5_scroll_palettes + 30, stage1_palette_03);
+    STORE_ARCADE_ADDRESS(stage5_scroll_palettes + 30, stage1_palette_03);
     if (stage5_scroll_palettes[33] != 0x21) {
         printf("error! avram_pal_tbl5[33]\n");
     }
-    STORE_POINTER(stage5_scroll_palettes + 33, stage2_palette_18);
+    STORE_ARCADE_ADDRESS(stage5_scroll_palettes + 33, stage2_palette_18);
     if (stage5_scroll_palettes[36] != 0x24) {
         printf("error! avram_pal_tbl5[36]\n");
     }
-    STORE_POINTER(stage5_scroll_palettes + 36, stage1_palette_07);
+    STORE_ARCADE_ADDRESS(stage5_scroll_palettes + 36, stage1_palette_07);
     if (stage5_scroll_palettes[39] != 0x27) {
         printf("error! avram_pal_tbl5[39]\n");
     }
-    STORE_POINTER(stage5_scroll_palettes + 39, stage3_palette_16);
+    STORE_ARCADE_ADDRESS(stage5_scroll_palettes + 39, stage3_palette_16);
     if (stage5_scroll_palettes[42] != 0x2a) {
         printf("error! avram_pal_tbl5[42]\n");
     }
-    STORE_POINTER(stage5_scroll_palettes + 42, stage5_scroll_palettes_at_42);
+    STORE_ARCADE_ADDRESS(stage5_scroll_palettes + 42, stage5_scroll_palettes_at_42);
     if (stage5_scroll_palettes[45] != 0x2d) {
         printf("error! avram_pal_tbl5[45]\n");
     }
-    STORE_POINTER(stage5_scroll_palettes + 45, stage5_scroll_palettes_at_45);
+    STORE_ARCADE_ADDRESS(stage5_scroll_palettes + 45, stage5_scroll_palettes_at_45);
     if (stage5_scroll_palettes[48] != 0x30) {
         printf("error! avram_pal_tbl5[48]\n");
     }
-    STORE_POINTER(stage5_scroll_palettes + 48, stage1_palette_04);
+    STORE_ARCADE_ADDRESS(stage5_scroll_palettes + 48, stage1_palette_04);
     if (stage5_scroll_palettes[51] != 0x33) {
         printf("error! avram_pal_tbl5[51]\n");
     }
-    STORE_POINTER(stage5_scroll_palettes + 51, stage5_scroll_palettes_at_51);
+    STORE_ARCADE_ADDRESS(stage5_scroll_palettes + 51, stage5_scroll_palettes_at_51);
     if (stage5_scroll_palettes[54] != 0x36) {
         printf("error! avram_pal_tbl5[54]\n");
     }
-    STORE_POINTER(stage5_scroll_palettes + 54, stage5_scroll_palettes_at_54);
+    STORE_ARCADE_ADDRESS(stage5_scroll_palettes + 54, stage5_scroll_palettes_at_54);
     if (stage5_scroll_palettes[57] != 0x39) {
         printf("error! avram_pal_tbl5[57]\n");
     }
-    STORE_POINTER(stage5_scroll_palettes + 57, stage5_scroll_palettes_at_57);
+    STORE_ARCADE_ADDRESS(stage5_scroll_palettes + 57, stage5_scroll_palettes_at_57);
     if (stage5_scroll_sounds[2] != 0x2) {
         printf("error! avram_snd_tbl5[2]\n");
     }
-    STORE_POINTER(stage5_scroll_sounds + 2, music_play_bgm6);
+    STORE_ARCADE_ADDRESS(stage5_scroll_sounds + 2, music_play_bgm6);
     if (stage5_scroll_sounds[8] != 0x8) {
         printf("error! avram_snd_tbl5[8]\n");
     }
-    STORE_POINTER(stage5_scroll_sounds + 8, music_play_bgm8);
+    STORE_ARCADE_ADDRESS(stage5_scroll_sounds + 8, music_play_bgm8);
     if (stage5_scroll_events[0] != 0x0) {
         printf("error! avram_tbl5[0]\n");
     }
-    STORE_POINTER(stage5_scroll_events, stage5_scroll_palettes);
+    STORE_ARCADE_ADDRESS(stage5_scroll_events, stage5_scroll_palettes);
     if (stage5_scroll_events[2] != 0x2) {
         printf("error! avram_tbl5[2]\n");
     }
-    STORE_POINTER(stage5_scroll_events + 2, stage5_scroll_sounds);
+    STORE_ARCADE_ADDRESS(stage5_scroll_events + 2, stage5_scroll_sounds);
     if (D_0025BF98[0] != 0x4) {
         printf("error! name_fin_tbl[4]\n");
     }

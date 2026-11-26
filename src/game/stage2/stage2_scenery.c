@@ -23,7 +23,7 @@ extern u16 g_scroll_line;
 void stage2_scenery_00_setup(void) {
     STORE_LONG(SCENERY(reg_a6)->sprite, 0x1BF8);
     SCENERY(reg_a6)->part.size.h = 0x2EE0;
-    STORE_POINTER(SCENERY(reg_a6)->routine, stage2_scenery_00_update);
+    STORE_ARCADE_ADDRESS(SCENERY(reg_a6)->routine, stage2_scenery_00_update);
     SCENERY(reg_a6)->palette.sb[0] = 0x13;
 }
 
@@ -44,7 +44,7 @@ void stage2_scenery_00_update(void) {
 void stage2_scenery_01_setup(void) {
     STORE_LONG(SCENERY(reg_a6)->sprite, 0x1BA0);
     SCENERY(reg_a6)->part.size.h = 0x1F20;
-    STORE_POINTER(SCENERY(reg_a6)->routine, stage2_scenery_01_update);
+    STORE_ARCADE_ADDRESS(SCENERY(reg_a6)->routine, stage2_scenery_01_update);
     SCENERY(reg_a6)->palette.sb[0] = 0x11;
 }
 
@@ -65,7 +65,7 @@ void stage2_scenery_01_update(void) {
 void stage2_scenery_02_setup(void) {
     STORE_LONG(SCENERY(reg_a6)->sprite, 0x1BA3);
     SCENERY(reg_a6)->part.size.h = 0x2050;
-    STORE_POINTER(SCENERY(reg_a6)->routine, stage2_scenery_02_update);
+    STORE_ARCADE_ADDRESS(SCENERY(reg_a6)->routine, stage2_scenery_02_update);
     SCENERY(reg_a6)->palette.sb[0] = 0x12;
 }
 
@@ -82,14 +82,14 @@ void stage2_scenery_02_update(void) {
 void stage2_scenery_02_setup_alt(void) {
     STORE_LONG(SCENERY(reg_a6)->sprite, 0x1BA3);
     SCENERY(reg_a6)->part.size.h = 0x2050;
-    STORE_POINTER(SCENERY(reg_a6)->routine, stage2_scenery_02_update);
+    STORE_ARCADE_ADDRESS(SCENERY(reg_a6)->routine, stage2_scenery_02_update);
     SCENERY(reg_a6)->palette.sh = 0x52;
 }
 
 void stage2_scenery_03_setup(void) {
     STORE_LONG(SCENERY(reg_a6)->sprite, 0x1BA4);
     SCENERY(reg_a6)->part.size.h = 0x2A50;
-    STORE_POINTER(SCENERY(reg_a6)->routine, stage2_scenery_03_update);
+    STORE_ARCADE_ADDRESS(SCENERY(reg_a6)->routine, stage2_scenery_03_update);
     SCENERY(reg_a6)->palette.sb[0] = 0x12;
 }
 
@@ -106,14 +106,14 @@ void stage2_scenery_03_update(void) {
 void stage2_scenery_03_setup_alt(void) {
     STORE_LONG(SCENERY(reg_a6)->sprite, 0x1BA4);
     SCENERY(reg_a6)->part.size.h = 0x2A50;
-    STORE_POINTER(SCENERY(reg_a6)->routine, stage2_scenery_03_update);
+    STORE_ARCADE_ADDRESS(SCENERY(reg_a6)->routine, stage2_scenery_03_update);
     SCENERY(reg_a6)->palette.sh = 0x52;
 }
 
 void stage2_scenery_04_setup(void) {
     STORE_LONG(SCENERY(reg_a6)->sprite, 0x1BF9);
     SCENERY(reg_a6)->part.size.h = 0x1220;
-    STORE_POINTER(SCENERY(reg_a6)->routine, stage2_scenery_04_update);
+    STORE_ARCADE_ADDRESS(SCENERY(reg_a6)->routine, stage2_scenery_04_update);
     SCENERY(reg_a6)->palette.sb[0] = 0x15;
 }
 
@@ -132,7 +132,7 @@ void stage2_scenery_04_update(void) {
 }
 
 void stage2_scenery_05_setup(void) {
-    STORE_POINTER(SCENERY(reg_a6)->routine, stage2_scenery_05_update);
+    STORE_ARCADE_ADDRESS(SCENERY(reg_a6)->routine, stage2_scenery_05_update);
     SCENERY(reg_a6)->frame.sh = 0xF8;
     STORE_LONG(SCENERY(reg_a6)->sprite, 0x1BB7);
     STORE_LONG(SCENERY(reg_a6)->part.second_sprite, 0x1BC7);

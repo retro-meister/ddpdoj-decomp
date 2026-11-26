@@ -89,7 +89,7 @@ void ground_start(void) {
     reg_tmp.h[0] = (*(u16 *)((u8 *)(temp_a0) + (2)));
     reg_d1.w = 0x1F;
     reg_d0.w = 0;
-    reg_a0 = (u8 *) reg_tmp.w;
+    reg_a0 = ARCADE_ADDRESS_DECODE(u8 *, reg_tmp.w);
     palette_bank_a_load_run();
     GROUND_TASK(reg_a5)->flags_03 &= 0xFE;
     reg_a1 = (u8 *)stage_maps;
@@ -98,7 +98,7 @@ void ground_start(void) {
     reg_tmp.h[1] = *(u16 *)reg_a1;
     reg_tmp.h[0] = *(u16 *)(reg_a1 + 2);
     reg_d0.h[0] = g_scroll_line;
-    reg_a1 = (u8 *) reg_tmp.w;
+    reg_a1 = ARCADE_ADDRESS_DECODE(u8 *, reg_tmp.w);
     reg_d0.h[0] >>= 2;
     reg_d1.h[0] = reg_d0.h[0];
     reg_d0.h[0] <<= 5;
@@ -108,7 +108,7 @@ void ground_start(void) {
     reg_d0.h[0] = temp_a1_2 + reg_d1.h[0];
     reg_a1 += reg_d0.h[0];
     GROUND_TASK(reg_a5)->plane_row = 0;
-    reg_tmp.w = (u32) reg_a1;
+    reg_tmp.w = ARCADE_ADDRESS_ENCODE(reg_a1);
     GROUND_TASK(reg_a5)->map_at[0] = (u16) reg_tmp.h[1];
     GROUND_TASK(reg_a5)->map_at[1] = (u16) reg_tmp.h[0];
     scroll_events_start();
@@ -122,7 +122,7 @@ s32 bg_layer_put();
 void ground_rows_fill(void) {
     reg_tmp.h[1] = GROUND_TASK(reg_a5)->map_at[0];
     reg_tmp.h[0] = GROUND_TASK(reg_a5)->map_at[1];
-    reg_a0 = (u8 *) reg_tmp.w;
+    reg_a0 = ARCADE_ADDRESS_DECODE(u8 *, reg_tmp.w);
     reg_d1.w = 0;
     reg_d7.w = 0xE;
 loop_1:
@@ -140,7 +140,7 @@ loop_2:
     if ((s16)(--reg_d7.h[0]) >= 0) {
         goto loop_1;
     }
-    reg_tmp.w = (u32) reg_a0;
+    reg_tmp.w = ARCADE_ADDRESS_ENCODE(reg_a0);
     GROUND_TASK(reg_a5)->map_at[0] = reg_tmp.h[1];
     GROUND_TASK(reg_a5)->map_at[1] = reg_tmp.h[0];
     GROUND_TASK(reg_a5)->plane_row = 0xF;
@@ -443,7 +443,7 @@ void ground_step(void) {
             scroll_map_loop_step();
             reg_tmp.h[1] = GROUND_TASK(reg_a5)->map_at[0];
             reg_tmp.h[0] = GROUND_TASK(reg_a5)->map_at[1];
-            reg_a0 = (u8 *)(reg_tmp.w);
+            reg_a0 = ARCADE_ADDRESS_DECODE(u8 *, reg_tmp.w);
             reg_d1.h[0] = GROUND_TASK(reg_a5)->plane_row;
             reg_d6.w = 8;
             reg_d0.w = 0;
@@ -453,7 +453,7 @@ void ground_step(void) {
                 bg_layer_put();
                 reg_d0.h[0] += 1;
             } while ((s16)(--reg_d6.h[0]) >= 0);
-            reg_tmp.w = (u32)reg_a0;
+            reg_tmp.w = ARCADE_ADDRESS_ENCODE(reg_a0);
             GROUND_TASK(reg_a5)->map_at[0] = (u16) reg_tmp.h[1];
             GROUND_TASK(reg_a5)->map_at[1] = (u16) reg_tmp.h[0];
             reg_d1.h[0] += 1;

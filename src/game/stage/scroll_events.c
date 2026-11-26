@@ -31,8 +31,12 @@ extern ScenerySetup *stage_scenery_setups[5];
 void scenery_reset(void) {
     memset(&g_scenery, 0, sizeof(SceneryState));
     reg_a0 = (u8 *)stage_scenery_setups;
+#ifdef DDPDOJ_PC
+    g_scenery.setups = stage_scenery_setups[g_stage_x4 / 4];
+#else
     reg_a0 += g_stage_x4;
     g_scenery.setups = *(ScenerySetup **)reg_a0;
+#endif
 }
 
 extern u8 g_ground_no_draw;
@@ -50,7 +54,7 @@ void scenery_run(void) {
                 SCENERY(reg_a6)->x.h -= reg_d0.h[0];
                 reg_tmp.h[1] = SCENERY(reg_a6)->routine[0];
                 reg_tmp.h[0] = SCENERY(reg_a6)->routine[1];
-                reg_a1 = (u8 *)reg_tmp.w;
+                reg_a1 = ARCADE_ADDRESS_DECODE(u8 *, reg_tmp.w);
                 reg_call_target_as_u8_p = reg_a1;
                 temp_s0 = reg_d7.w;
                 ((Fn)reg_call_target_as_u8_p)();
@@ -109,8 +113,12 @@ loop_1:
     reg_a1 = (u8 *)g_scenery.setups;
     reg_d0.h[0] += reg_d0.h[0];
     reg_d0.h[0] += reg_d0.h[0];
+#ifdef DDPDOJ_PC
+    reg_a1 = (u8 *)g_scenery.setups[reg_d0.h[0] / 4];
+#else
     reg_a1 += reg_d0.h[0];
     reg_a1 = *(u8 **)reg_a1;
+#endif
     reg_call_target = (Fn)reg_a1;
     reg_call_target();
     reg_d0.w = save_d0;
@@ -158,7 +166,7 @@ void scroll_map_loop_step(void) {
     reg_a1 = (u8 *)GROUND_TASK(reg_a5)->map_at;
     reg_tmp.h[1] = SCROLL_EVENT_READER(reg_a0)->loop_map[0];
     reg_tmp.h[0] = SCROLL_EVENT_READER(reg_a0)->loop_map[1];
-    reg_a2 = (u8 *)reg_tmp.w;
+    reg_a2 = ARCADE_ADDRESS_DECODE(u8 *, reg_tmp.w);
     if (reg_a2 == 0) return;
     SCROLL_EVENT_READER(reg_a0)->loop_rows_left -= 1;
     if (0 >= (s16) SCROLL_EVENT_READER(reg_a0)->loop_rows_left) {
@@ -174,7 +182,7 @@ void scroll_map_loop_step(void) {
             }
         }
         SCROLL_EVENT_READER(reg_a0)->loop_rows_left = (u16) SCROLL_EVENT_READER(reg_a0)->loop_length;
-        reg_tmp.w = (u32)reg_a2;
+        reg_tmp.w = ARCADE_ADDRESS_ENCODE(reg_a2);
         *(u16 *)reg_a1 = (u16) reg_tmp.h[1];
         *(u16 *)(reg_a1 + 2) = (u16) reg_tmp.h[0];
     }
@@ -196,7 +204,7 @@ void scroll_events_start(void) {
         reg_a0 += 2;
         reg_tmp.h[0] = *(u16 *)reg_a0;
         reg_a0 += 2;
-        reg_a2 = (u8 *)(reg_tmp.w);
+        reg_a2 = ARCADE_ADDRESS_DECODE(u8 *, reg_tmp.w);
         SCROLL_EVENT_READER(reg_a1)->palettes[0] = *(u16 *)reg_a2;
         reg_a2 += 2;
         SCROLL_EVENT_READER(reg_a1)->palettes[1] = *(u16 *)reg_a2;
@@ -205,7 +213,7 @@ void scroll_events_start(void) {
         reg_a2 += 2;
         SCROLL_EVENT_READER(reg_a1)->sounds[1] = *(u16 *)reg_a2;
         reg_a2 += 2;
-        reg_tmp.w = (u32)reg_a2;
+        reg_tmp.w = ARCADE_ADDRESS_ENCODE(reg_a2);
         SCROLL_EVENT_READER(reg_a1)->events[0] = (u16) reg_tmp.h[1];
         SCROLL_EVENT_READER(reg_a1)->events[1] = (u16) reg_tmp.h[0];
         reg_a1 = (u8 *)&g_scroll_events.reader[1];
@@ -214,24 +222,24 @@ void scroll_events_start(void) {
         g_scroll_events.replaying = 1;
         reg_tmp.h[1] = GROUND_TASK(reg_a5)->second_map_at[0];
         reg_tmp.h[0] = GROUND_TASK(reg_a5)->second_map_at[1];
-        reg_a3 = (u8 *)reg_tmp.w;
-        temp_s0 = (u32)reg_a3;
+        reg_a3 = ARCADE_ADDRESS_DECODE(u8 *, reg_tmp.w);
+        temp_s0 = ARCADE_ADDRESS_ENCODE(reg_a3);
         reg_tmp.h[1] = GROUND_TASK(reg_a5)->map_at[0];
         reg_tmp.h[0] = GROUND_TASK(reg_a5)->map_at[1];
         reg_d7.w = 0;
-        reg_a4 = (u8 *)reg_tmp.w;
-        temp_s1 = (u32)reg_a4;
+        reg_a4 = ARCADE_ADDRESS_DECODE(u8 *, reg_tmp.w);
+        temp_s1 = ARCADE_ADDRESS_ENCODE(reg_a4);
         do {
             scroll_events_run_line();
             var_a0 = (u8 *) g_scroll_line;
             reg_d7.h[0] += 1;
         } while ((u32)var_a0 != reg_d7.h[0]);
         reg_tmp.w = temp_s0;
-        reg_a4 = (u8 *)temp_s1;
-        reg_a3 = (u8 *)temp_s0;
+        reg_a4 = ARCADE_ADDRESS_DECODE(u8 *, temp_s1);
+        reg_a3 = ARCADE_ADDRESS_DECODE(u8 *, temp_s0);
         GROUND_TASK(reg_a5)->second_map_at[0] = (u16) reg_tmp.h[1];
         GROUND_TASK(reg_a5)->second_map_at[1] = (u16) reg_tmp.h[0];
-        reg_tmp.w = (u32)reg_a4;
+        reg_tmp.w = ARCADE_ADDRESS_ENCODE(reg_a4);
         GROUND_TASK(reg_a5)->map_at[0] = (u16) reg_tmp.h[1];
         GROUND_TASK(reg_a5)->map_at[1] = (u16) reg_tmp.h[0];
         reg_d0.w = 0;
@@ -260,7 +268,7 @@ void scroll_events_run_line(void) {
 loop_1:
         reg_tmp.h[1] = SCROLL_EVENT_READER(reg_a6)->events[0];
         reg_tmp.h[0] = SCROLL_EVENT_READER(reg_a6)->events[1];
-        reg_a1 = (u8 *)(reg_tmp.w);
+        reg_a1 = ARCADE_ADDRESS_DECODE(u8 *, reg_tmp.w);
         reg_d1.h[0] = *(u16 *)reg_a1;
         reg_a1 += 2;
         if (((s16)(reg_d1.h[0]) != -1) && ((reg_d1.h[0] & 0xFFFF) == reg_d7.h[0])) {
@@ -272,10 +280,10 @@ loop_1:
             reg_a2 += reg_d2.h[0];
             reg_tmp.h[1] = *(u16 *)reg_a2;
             reg_tmp.h[0] = *(u16 *)(reg_a2 + 2);
-            reg_a2 = (u8 *) reg_tmp.w;
+            reg_a2 = ARCADE_ADDRESS_DECODE(u8 *, reg_tmp.w);
             reg_call_target = (Fn)(reg_a2);
             reg_call_target();
-            reg_tmp.w = (u32)reg_a1;
+            reg_tmp.w = ARCADE_ADDRESS_ENCODE(reg_a1);
             SCROLL_EVENT_READER(reg_a6)->events[0] = (u16) reg_tmp.h[1];
             SCROLL_EVENT_READER(reg_a6)->events[1] = (u16) reg_tmp.h[0];
             goto loop_1;
@@ -287,7 +295,7 @@ loop_1:
     if (reg_d0.w != 0) {
         g_scroll_events.sound_call_frames -= 1;
         if (0 > (s16) g_scroll_events.sound_call_frames) {
-            reg_a0 = (u8 *)reg_d0.w;
+            reg_a0 = ARCADE_ADDRESS_DECODE(u8 *, reg_d0.w);
             reg_call_target = (Fn)((u8 *) reg_a0);
             reg_call_target();
             *(u32 *)g_scroll_events.sound_call = 0;
@@ -304,21 +312,26 @@ void scroll_event_palettes(void) {
     reg_a1 += 2;
     reg_tmp.h[1] = SCROLL_EVENT_READER(reg_a6)->palettes[0];
     reg_tmp.h[0] = SCROLL_EVENT_READER(reg_a6)->palettes[1];
-    reg_a2 = (u8 *)(reg_tmp.w);
+    reg_a2 = ARCADE_ADDRESS_DECODE(u8 *, reg_tmp.w);
 loop_1:
     reg_tmp.h[1] = *(u16 *)reg_a2;
     reg_a2 += 2;
     temp_a1 = *(u16 *)reg_a2;
     reg_tmp.h[0] = temp_a1;
     reg_a2 += 2;
+#ifdef DDPDOJ_PC
+    if (reg_tmp.w != (u32)-1) {
+        reg_a0 = ARCADE_ADDRESS_DECODE(u8 *, reg_tmp.w);
+#else
     reg_a0 = (u8 *)reg_tmp.w;
     if ((u32)reg_a0 != -1U) {
+#endif
         reg_d0.h[0] = *(u16 *)reg_a2;
         reg_a2 += 2;
         sprite_palette_load();
         reg_d2.h[0] -= 1;
         if (reg_d2.h[0] == 0) {
-            reg_tmp.w = (u32)reg_a2;
+            reg_tmp.w = ARCADE_ADDRESS_ENCODE(reg_a2);
             SCROLL_EVENT_READER(reg_a6)->palettes[0] = (u16) reg_tmp.h[1];
             SCROLL_EVENT_READER(reg_a6)->palettes[1] = (u16) reg_tmp.h[0];
         } else {
@@ -334,7 +347,7 @@ void scroll_event_map_loop(void) {
     }
     reg_tmp.h[1] = *(u16 *)reg_a2;
     reg_tmp.h[0] = *(u16 *)(reg_a2 + 2);
-    reg_a3 = (u8 *)reg_tmp.w;
+    reg_a3 = ARCADE_ADDRESS_DECODE(u8 *, reg_tmp.w);
     reg_d0.h[0] = *(u16 *)reg_a1;
     reg_a1 += 2;
     reg_d1.h[0] = reg_d0.h[0];
@@ -344,10 +357,10 @@ void scroll_event_map_loop(void) {
     reg_d0.h[0] += reg_d0.h[0];
     reg_d1.h[0] += reg_d0.h[0];
     reg_a3 += (s16) reg_d1.h[0];
-    reg_tmp.w = (u32)reg_a3;
+    reg_tmp.w = ARCADE_ADDRESS_ENCODE(reg_a3);
     SCROLL_EVENT_READER(reg_a6)->loop_map[0] = (u16) reg_tmp.h[1];
     SCROLL_EVENT_READER(reg_a6)->loop_map[1] = (u16) reg_tmp.h[0];
-    reg_tmp.w = (u32)reg_a3;
+    reg_tmp.w = ARCADE_ADDRESS_ENCODE(reg_a3);
     *(u16 *)reg_a2 = (u16) reg_tmp.h[1];
     *(u16 *)(reg_a2 + 2) = (u16) reg_tmp.h[0];
     reg_d0.h[0] = *(u16 *)reg_a1;
@@ -361,12 +374,18 @@ void scroll_event_map_loop(void) {
 
 
 void scroll_event_speed(void) {
+#ifdef DDPDOJ_PC
+    reg_a2 = (u8 *)(reg_d6.h[0] != 0 ? &GROUND_TASK(reg_a5)->speed : &GROUND_TASK(reg_a5)->second_speed);
+    *(u16 *)reg_a2 = *(u16 *)reg_a1;
+    reg_a1 += 2;
+#else
     (*(u16 **)&reg_a2) = &GROUND_TASK((*(s32 *)&reg_a5))->second_speed;
     if (reg_d6.h[0] != 0) {
         (*(u16 **)&reg_a2) = &GROUND_TASK((*(s32 *)&reg_a5))->speed;
     }
     *(*(u16 **)&reg_a2) = *((u16 *)reg_a1);
     (*(u16 **)&reg_a1) += 1;
+#endif
 }
 
 
@@ -406,7 +425,7 @@ void scroll_event_sounds(void) {
     reg_a1 += 2;
     reg_tmp.h[1] = SCROLL_EVENT_READER(reg_a6)->sounds[0];
     reg_tmp.h[0] = SCROLL_EVENT_READER(reg_a6)->sounds[1];
-    reg_a2 = (u8 *)(reg_tmp.w);
+    reg_a2 = ARCADE_ADDRESS_DECODE(u8 *, reg_tmp.w);
 loop_1:
     reg_d0.h[0] = *(u16 *)reg_a2;
     temp_a1 = reg_d0.h[0];
@@ -417,12 +436,12 @@ loop_1:
         reg_d0.h[0] += reg_d0.h[0];
         reg_tmp.h[1] = (reg_d0.h[0] != 0) ? *(u16 *)((u8 *)reg_a3 + ((s16)reg_d0.h[0] & ~1)) : *(u16 *)reg_a3;
         reg_tmp.h[0] = (((reg_d0.h[0] & 0xFFFF) + 2) != 0) ? *(u16 *)((u8 *)reg_a3 + ((s16)((reg_d0.h[0] & 0xFFFF) + 2) & ~1)) : *(u16 *)reg_a3;
-        reg_a3 = (u8 *) reg_tmp.w;
+        reg_a3 = ARCADE_ADDRESS_DECODE(u8 *, reg_tmp.w);
         reg_call_target = (Fn)(reg_a3);
         reg_call_target();
         reg_d2.h[0] -= 1;
         if (reg_d2.h[0] == 0) {
-            reg_tmp.w = (u32)reg_a2;
+            reg_tmp.w = ARCADE_ADDRESS_ENCODE(reg_a2);
             SCROLL_EVENT_READER(reg_a6)->sounds[0] = (u16) reg_tmp.h[1];
             SCROLL_EVENT_READER(reg_a6)->sounds[1] = (u16) reg_tmp.h[0];
         } else {
