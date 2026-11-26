@@ -1,4 +1,5 @@
 #include "common.h"
+#include "score_tables.h"
 extern u8 g_player1_as_u8_a[];
 extern u8 g_player2_as_u8_a[];
 #include "player.h"
@@ -106,7 +107,6 @@ void func_001A9190(void) {
     score_value_add();
 }
 
-extern u16 D_0028DAD8[];
 extern u16 g_p2_hyper_level;
 extern u16 g_p1_hyper_level;
 extern u32 g_p2_chain_points_as_u32;
@@ -121,7 +121,7 @@ void score_add(void) {
     u32 temp_s1_2;
 
     reg_d2.h[0] = g_loop;
-    reg_a0 = (u8 *)(D_0028DAD8);
+    reg_a0 = (u8 *)(combo_time_by_loop);
     reg_d2.h[0] += reg_d2.h[0];
     g_max_combo_time = (reg_d2.h[0] != 0) ? *(u16 *)((u8 *)reg_a0 + ((s16)reg_d2.h[0] & ~1)) : *(u16 *)reg_a0;
     if (reg_d1.w & 0x10) {
@@ -178,7 +178,6 @@ void score_add(void) {
     }
 }
 
-extern u16 D_0028DADC[];
 extern u16 g_p1_max_hits;
 extern u16 g_p1_laser_hit_step;
 extern s16 g_p1_laser_hit_timer_as_s16;
@@ -1039,7 +1038,6 @@ void func_001AA8A0()
     g_boss_hit_palette = 7;
 }
 
-extern u16 D_0026BFF0[];
 extern s8 g_boss_hp_bar_flags;
 extern u8 D_0028E635;
 
@@ -1059,7 +1057,7 @@ block_4:
         reg_d3.h[0] = 5;
         if (g_p1_hyper_active == 0) {
             reg_d4.h[0] = g_p1_hyper_items;
-            reg_a0 = (u8 *)(D_0026BFF0);
+            reg_a0 = (u8 *)(hyper_item_count_text);
             reg_d4.h[0] += reg_d4.h[0];
             reg_d4.h[0] += reg_d4.h[0];
             reg_d4.h[1] = (reg_d4.h[0] != 0) ? *(u16 *)((u8 *)reg_a0 + ((s16)reg_d4.h[0] & ~1)) : *(u16 *)reg_a0;
@@ -1088,7 +1086,7 @@ block_4:
         reg_d3.h[0] = 5;
         if (g_p2_hyper_active == 0) {
             reg_d4.h[0] = g_p2_hyper_items;
-            reg_a0 = (u8 *)(D_0026BFF0);
+            reg_a0 = (u8 *)(hyper_item_count_text);
             reg_d4.h[0] += reg_d4.h[0];
             reg_d4.h[0] += reg_d4.h[0];
             reg_d4.h[1] = (reg_d4.h[0] != 0) ? *(u16 *)((u8 *)reg_a0 + ((s16)reg_d4.h[0] & ~1)) : *(u16 *)reg_a0;
@@ -1119,7 +1117,6 @@ void func_001AAB70(void) {
     func_001AAB90();
 }
 
-extern s32 D_0026C010[];
 extern u8 g_setting_extend;
 extern u8 D_006E5C08[];
 extern u16 *reg_a1_as_u16_p;
@@ -1139,7 +1136,6 @@ void func_001AAB90(void)
     *reg_a1_as_u16_p = reg_d0.h[0];
 }
 
-extern u8 D_0026C020[];
 
 void func_001AAC00(void) {
     s32 func_001AE9A0(Reg32 *, Reg32 *);
@@ -2071,7 +2067,6 @@ void p2_chain_reset(void) {
     g_p2_chain_points_shown_as_u32 = reg_d0.w;
 }
 
-extern u16 D_0028DAF8[];
 extern u16 g_p1_lives;
 extern u16 g_p1_ship_type;
 
@@ -2117,7 +2112,7 @@ block_4:
             if ((s32) reg_d6.h[0] > 5) {
                 reg_d6.w = 5;
             }
-            reg_a0 = (u8 *)(D_0028DAF8);
+            reg_a0 = (u8 *)(lives_text_p1);
             reg_d7.h[0] -= reg_d6.h[0];
             reg_d4.h[0] = g_p1_ship_type;
             reg_d4.h[0] += reg_d4.h[0];
@@ -2149,7 +2144,6 @@ block_end:
     reg_a0 = save_a0;
 }
 
-extern u16 D_0028DB00[];
 extern u16 g_p2_lives;
 extern u16 g_p2_ship_type;
 
@@ -2195,7 +2189,7 @@ block_4:
             if ((s32) reg_d6.h[0] > 5) {
                 reg_d6.w = 5;
             }
-            reg_a0 = (u8 *)(D_0028DB00);
+            reg_a0 = (u8 *)(lives_text_p2);
             reg_d7.h[0] -= reg_d6.h[0];
             reg_d4.h[0] = g_p2_ship_type;
             reg_d4.h[0] += reg_d4.h[0];
