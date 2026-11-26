@@ -137,9 +137,9 @@ void stage4_boss_parts_follow(void) {
     reg_d0.h[0] = ENTITY(reg_a6)->x.h;
     ENTITY(reg_a6)[1].y.h = (u16) reg_d0.h[1];
     ENTITY(reg_a6)[1].x.h = (u16) reg_d0.h[0];
-    reg_d1.h[0] = ENTITY(reg_a6)[12].hit_x_plus.h;
+    reg_d1.h[0] = STAGE4_EXTRA(reg_a6)->bay_y_offset;
     ENTITY(reg_a6)[1].y.h += reg_d1.h[0];
-    reg_d1.h[0] = ENTITY(reg_a6)[12].hit_x_minus.h;
+    reg_d1.h[0] = STAGE4_EXTRA(reg_a6)->bay_x_offset;
     ENTITY(reg_a6)[1].x.h += reg_d1.h[0];
     ENTITY(reg_a6)[4].y.h = (u16) reg_d0.h[1];
     ENTITY(reg_a6)[4].x.h = (u16) reg_d0.h[0];
@@ -148,9 +148,9 @@ void stage4_boss_parts_follow(void) {
     reg_tmp.w += 0xF2BFF500;
     ENTITY(reg_a6)[4].y.h = (u16) reg_tmp.h[1];
     ENTITY(reg_a6)[4].x.h = (u16) reg_tmp.h[0];
-    reg_d1.h[0] = ENTITY(reg_a6)[12].sprite.h;
+    reg_d1.h[0] = STAGE4_EXTRA(reg_a6)->right_pod_y_offset;
     ENTITY(reg_a6)[4].y.h += reg_d1.h[0];
-    reg_d1.h[0] = ENTITY(reg_a6)[12].look.h;
+    reg_d1.h[0] = STAGE4_EXTRA(reg_a6)->right_pod_x_offset;
     ENTITY(reg_a6)[4].x.h += reg_d1.h[0];
     ENTITY(reg_a6)[5].y.h = (u16) reg_d0.h[1];
     ENTITY(reg_a6)[5].x.h = (u16) reg_d0.h[0];
@@ -159,9 +159,9 @@ void stage4_boss_parts_follow(void) {
     reg_tmp.w += 0xF3000AC0;
     ENTITY(reg_a6)[5].y.h = (u16) reg_tmp.h[1];
     ENTITY(reg_a6)[5].x.h = (u16) reg_tmp.h[0];
-    reg_d1.h[0] = ENTITY(reg_a6)[12].hit_y_plus.h;
+    reg_d1.h[0] = STAGE4_EXTRA(reg_a6)->left_pod_y_offset;
     ENTITY(reg_a6)[5].y.h += reg_d1.h[0];
-    reg_d1.h[0] = ENTITY(reg_a6)[12].hit_y_minus.h;
+    reg_d1.h[0] = STAGE4_EXTRA(reg_a6)->left_pod_x_offset;
     ENTITY(reg_a6)[5].x.h += reg_d1.h[0];
     reg_d0.h[1] = ENTITY(reg_a6)[1].y.h;
     reg_d0.h[0] = ENTITY(reg_a6)[1].x.h;
@@ -434,8 +434,8 @@ void stage4_boss_move_wander_high_b(void) {
     reg_d3.h[0] = *(u16 *)(reg_a0 + 2);
     reg_d0.h[0] = ENTITY(reg_a6)->y.h;
     reg_d1.h[0] = ENTITY(reg_a6)->x.h;
-    reg_d0.h[0] += ENTITY(reg_a6)[12].hit_x_plus.h;
-    reg_d1.h[0] += ENTITY(reg_a6)[12].hit_x_minus.h;
+    reg_d0.h[0] += STAGE4_EXTRA(reg_a6)->bay_y_offset;
+    reg_d1.h[0] += STAGE4_EXTRA(reg_a6)->bay_x_offset;
     direction_between();
     reg_d0.b[0] = ENTITY(reg_a6)[1].move.b.dir;
     direction_turn_toward();
@@ -443,8 +443,8 @@ void stage4_boss_move_wander_high_b(void) {
     reg_a0 = (u8 *)stage4_boss_wander_b_waypoints;
     reg_d0.h[0] = ENTITY(reg_a6)->y.h;
     reg_d1.h[0] = ENTITY(reg_a6)->x.h;
-    reg_d0.h[0] += ENTITY(reg_a6)[12].hit_x_plus.h;
-    reg_d1.h[0] += ENTITY(reg_a6)[12].hit_x_minus.h;
+    reg_d0.h[0] += STAGE4_EXTRA(reg_a6)->bay_y_offset;
+    reg_d1.h[0] += STAGE4_EXTRA(reg_a6)->bay_x_offset;
     reg_a0 += PATH(reg_a4)->waypoint;
     reg_d2.h[0] = *(u16 *)reg_a0;
     reg_d3.h[0] = *(u16 *)(reg_a0 + 2);
@@ -458,8 +458,8 @@ void stage4_boss_move_wander_high_b(void) {
     reg_d0.b[0] = ENTITY(reg_a6)[1].move.b.speed;
     reg_d1.b[0] = ENTITY(reg_a6)[1].move.b.dir;
     velocity_from_direction();
-    ENTITY(reg_a6)[12].hit_x_plus.h += reg_d2.h[0];
-    ENTITY(reg_a6)[12].hit_x_minus.h += reg_d3.h[0];
+    STAGE4_EXTRA(reg_a6)->bay_y_offset += reg_d2.h[0];
+    STAGE4_EXTRA(reg_a6)->bay_x_offset += reg_d3.h[0];
     stage4_boss_parts_follow();
 }
 
@@ -522,8 +522,8 @@ void stage4_boss_move_hover_high(void) {
     reg_d3.h[0] = *(u16 *)(reg_a0 + 2);
     reg_d0.h[0] = ENTITY(reg_a6)->y.h;
     reg_d1.h[0] = ENTITY(reg_a6)->x.h;
-    reg_d0.h[0] += ENTITY(reg_a6)[12].hit_x_plus.h;
-    reg_d1.h[0] += ENTITY(reg_a6)[12].hit_x_minus.h;
+    reg_d0.h[0] += STAGE4_EXTRA(reg_a6)->bay_y_offset;
+    reg_d1.h[0] += STAGE4_EXTRA(reg_a6)->bay_x_offset;
     direction_between();
     reg_d0.b[0] = ENTITY(reg_a6)[1].move.b.dir;
     direction_turn_toward();
@@ -531,8 +531,8 @@ void stage4_boss_move_hover_high(void) {
     reg_a0 = (u8 *)stage4_boss_hover_waypoints;
     reg_d0.h[0] = ENTITY(reg_a6)->y.h;
     reg_d1.h[0] = ENTITY(reg_a6)->x.h;
-    reg_d0.h[0] += ENTITY(reg_a6)[12].hit_x_plus.h;
-    reg_d1.h[0] += ENTITY(reg_a6)[12].hit_x_minus.h;
+    reg_d0.h[0] += STAGE4_EXTRA(reg_a6)->bay_y_offset;
+    reg_d1.h[0] += STAGE4_EXTRA(reg_a6)->bay_x_offset;
     reg_a0 += PATH(reg_a4)->waypoint;
     reg_d2.h[0] = *(u16 *)reg_a0;
     reg_d3.h[0] = *(u16 *)(reg_a0 + 2);
@@ -546,8 +546,8 @@ void stage4_boss_move_hover_high(void) {
     reg_d0.b[0] = ENTITY(reg_a6)[1].move.b.speed;
     reg_d1.b[0] = ENTITY(reg_a6)[1].move.b.dir;
     velocity_from_direction();
-    ENTITY(reg_a6)[12].hit_x_plus.h += reg_d2.h[0];
-    ENTITY(reg_a6)[12].hit_x_minus.h += reg_d3.h[0];
+    STAGE4_EXTRA(reg_a6)->bay_y_offset += reg_d2.h[0];
+    STAGE4_EXTRA(reg_a6)->bay_x_offset += reg_d3.h[0];
     stage4_boss_parts_follow();
 }
 
@@ -571,8 +571,8 @@ void stage4_boss_move_rage(void) {
     reg_d3.h[0] = *(u16 *)(reg_a0 + 2);
     reg_d0.h[0] = ENTITY(reg_a6)->y.h;
     reg_d1.h[0] = ENTITY(reg_a6)->x.h;
-    reg_d0.h[0] += ENTITY(reg_a6)[12].hit_x_plus.h;
-    reg_d1.h[0] += ENTITY(reg_a6)[12].hit_x_minus.h;
+    reg_d0.h[0] += STAGE4_EXTRA(reg_a6)->bay_y_offset;
+    reg_d1.h[0] += STAGE4_EXTRA(reg_a6)->bay_x_offset;
     direction_between();
     reg_d0.b[0] = ENTITY(reg_a6)[1].move.b.dir;
     direction_turn_toward();
@@ -580,8 +580,8 @@ void stage4_boss_move_rage(void) {
     reg_a0 = (u8 *)stage4_boss_rage_waypoints;
     reg_d0.h[0] = ENTITY(reg_a6)->y.h;
     reg_d1.h[0] = ENTITY(reg_a6)->x.h;
-    reg_d0.h[0] += ENTITY(reg_a6)[12].hit_x_plus.h;
-    reg_d1.h[0] += ENTITY(reg_a6)[12].hit_x_minus.h;
+    reg_d0.h[0] += STAGE4_EXTRA(reg_a6)->bay_y_offset;
+    reg_d1.h[0] += STAGE4_EXTRA(reg_a6)->bay_x_offset;
     reg_a0 += PATH(reg_a4)->waypoint;
     reg_d2.h[0] = *(u16 *)reg_a0;
     reg_d3.h[0] = *(u16 *)(reg_a0 + 2);
@@ -597,8 +597,8 @@ void stage4_boss_move_rage(void) {
     reg_d0.b[0] = ENTITY(reg_a6)[1].move.b.speed;
     reg_d1.b[0] = ENTITY(reg_a6)[1].move.b.dir;
     velocity_from_direction();
-    ENTITY(reg_a6)[12].hit_x_plus.h += reg_d2.h[0];
-    ENTITY(reg_a6)[12].hit_x_minus.h += reg_d3.h[0];
+    STAGE4_EXTRA(reg_a6)->bay_y_offset += reg_d2.h[0];
+    STAGE4_EXTRA(reg_a6)->bay_x_offset += reg_d3.h[0];
     stage4_boss_parts_follow();
 }
 

@@ -395,26 +395,26 @@ void stage4_boss_mode_attack_c(void) {
     if (!(ATTACK_C(reg_a4)->steps & 1)) {
         goto next_1;
     }
-    if (ENTITY(reg_a6)[12].look.h == -0x1000) {
+    if (STAGE4_EXTRA(reg_a6)->right_pod_x_offset == -0x1000) {
         goto next_1;
     }
     ATTACK_C(reg_a4)->pod_accel += 4;
     reg_d0.h[0] = ATTACK_C(reg_a4)->pod_accel;
-    ENTITY(reg_a6)[12].look.h -= reg_d0.h[0];
-    ENTITY(reg_a6)[12].hit_y_minus.h += reg_d0.h[0];
-    if (ENTITY(reg_a6)[12].hit_y_minus.sh < 0xE00) {
+    STAGE4_EXTRA(reg_a6)->right_pod_x_offset -= reg_d0.h[0];
+    STAGE4_EXTRA(reg_a6)->left_pod_x_offset += reg_d0.h[0];
+    if ((s16) STAGE4_EXTRA(reg_a6)->left_pod_x_offset < 0xE00) {
         goto next_1;
     }
-    ENTITY(reg_a6)[12].hit_y_minus.h = 0xE00;
-    ENTITY(reg_a6)[12].look.h = 0xF200;
+    STAGE4_EXTRA(reg_a6)->left_pod_x_offset = 0xE00;
+    STAGE4_EXTRA(reg_a6)->right_pod_x_offset = 0xF200;
     t = ATTACK_C(reg_a4)->steps;
     if (t & 1) {
         ATTACK_C(reg_a4)->steps = t & 0xFE;
     }
     ATTACK_C(reg_a4)->steps |= 2;
     ATTACK_C(reg_a4)->steps |= 4;
-    ENTITY(reg_a6)[12].hp.h = 0;
-    ENTITY(reg_a6)[12].move.h = 0;
+    STAGE4_EXTRA(reg_a6)->right_pod_y_speed = 0;
+    STAGE4_EXTRA(reg_a6)->left_pod_y_speed = 0;
     ATTACK_C(reg_a4)->unread_0A = 0;
     stage4_boss_pod_drift(0x198, 0x82);
     stage4_boss_pod_drift(0x19A, 0xA2);
@@ -517,10 +517,10 @@ next_5:
     }
     stage4_boss_pod_drift(0x198, 0x82);
     stage4_boss_pod_drift(0x19A, 0xA2);
-    reg_d0.h[0] = ENTITY(reg_a6)[12].hp.h;
-    ENTITY(reg_a6)[12].sprite.h += reg_d0.h[0];
-    reg_d0.h[0] = ENTITY(reg_a6)[12].move.h;
-    ENTITY(reg_a6)[12].hit_y_plus.h += reg_d0.h[0];
+    reg_d0.h[0] = STAGE4_EXTRA(reg_a6)->right_pod_y_speed;
+    STAGE4_EXTRA(reg_a6)->right_pod_y_offset += reg_d0.h[0];
+    reg_d0.h[0] = STAGE4_EXTRA(reg_a6)->left_pod_y_speed;
+    STAGE4_EXTRA(reg_a6)->left_pod_y_offset += reg_d0.h[0];
 next_6:
     if (!(ATTACK_C(reg_a4)->steps & 4)) {
         goto next_8;

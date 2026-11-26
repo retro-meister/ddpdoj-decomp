@@ -9,11 +9,57 @@
 typedef struct {
     /* 0x00 */ u8 common[0x16];
     /* 0x16 */ u16 hp[2];         /* high word first */
-    /* 0x1A */ u16 form2_delay;
-    /* 0x1C */ u16 leave_delay;
+    /* 0x1A */ u16 form1_time_left;
+    /* 0x1C */ u16 time_left;
 } Stage4BossState;
 
 #define STAGE4_BOSS(pointer) ((Stage4BossState *)(pointer))
+
+/* Entities 10 to 12 of the boss are not drawn: they hold its palettes, its damage flags and other values. */
+typedef struct {
+    /* 0x00 */ u8 unused_00[6];
+    /* 0x06 */ u8 body_b;
+    /* 0x07 */ u8 body_a;
+    /* 0x08 */ u8 right_spinner;
+    /* 0x09 */ u8 body_c;
+    /* 0x0A */ u8 gun;
+    /* 0x0B */ u8 left_spinner;
+    /* 0x0C */ u8 left_pod;
+    /* 0x0D */ u8 right_pod;
+} Stage4BossPalettes;
+
+typedef struct {
+    /* 0x00 */ u8 unused_00[6];
+    /* 0x06 */ u16 stopped;
+    /* 0x08 */ u16 shielded;
+    /* 0x0A */ u16 hit_by;
+    /* 0x0C */ u8 rage;
+    /* 0x0D */ u8 second_form;
+} Stage4BossDamage;
+
+typedef struct {
+    /* 0x00 */ u8 unused_00[6];
+    /* 0x06 */ u8 left_3way_count;
+    /* 0x07 */ u8 right_3way_count;
+    /* 0x08 */ u8 left_burst;
+    /* 0x09 */ u8 right_burst;
+    /* 0x0A */ u8 left_random;
+    /* 0x0B */ u8 right_random;
+    /* 0x0C */ u16 right_pod_y_offset;
+    /* 0x0E */ u16 right_pod_x_offset;
+    /* 0x10 */ u16 left_pod_y_offset;
+    /* 0x12 */ u16 left_pod_x_offset;
+    /* 0x14 */ u16 bay_y_offset;
+    /* 0x16 */ u16 bay_x_offset;
+    /* 0x18 */ u16 right_pod_y_speed;
+    /* 0x1A */ u16 left_pod_y_speed;
+    /* 0x1C */ u16 bay_b_round;
+    /* 0x1E */ u16 cutters_gone;
+} Stage4BossExtra;
+
+#define STAGE4_PALETTES(pointer) ((Stage4BossPalettes *)&ENTITY(pointer)[10])
+#define STAGE4_DAMAGE(pointer) ((Stage4BossDamage *)&ENTITY(pointer)[11])
+#define STAGE4_EXTRA(pointer) ((Stage4BossExtra *)&ENTITY(pointer)[12])
 
 /* Two bytes of a boss slot that are set together as one word: a reload value and its countdown. */
 typedef union {

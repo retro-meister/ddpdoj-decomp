@@ -365,7 +365,7 @@ next_200:
     reg_tmp.h[1] = STAGE4_CUTTER(reg_a5)->now.owner[0];
     reg_tmp.h[0] = STAGE4_CUTTER(reg_a5)->now.owner[1];
     reg_a0 = (u8 *) reg_tmp.w;
-    ENTITY(reg_a0)[12].misc.h += 1;
+    STAGE4_EXTRA(reg_a0)->cutters_gone += 1;
 next_210:
     if (STAGE4_CUTTER(reg_a5)->released != 1) goto next_250;
     if (ENTITY(reg_a6)[2].hit_x_minus.h == 0) goto next_220;

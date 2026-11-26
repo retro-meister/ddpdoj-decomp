@@ -1450,7 +1450,7 @@ void stage4_boss_fire_cutters_start(void) {
     CUTTERS(reg_a4)->angle = 0x48;
     g_enemy_signal_e_as_s16 = 0;
     CUTTERS(reg_a4)->release_delay = 0x50;
-    ENTITY(reg_a6)[12].misc.sh = 0;
+    STAGE4_EXTRA(reg_a6)->cutters_gone = 0;
     stage4_boss_fire_cutters();
 }
 
@@ -1501,7 +1501,7 @@ void stage4_boss_fire_cutters(void) {
             } while ((s16)(--reg_d7.h[0]) >= 0);
         }
     }
-    reg_d0.h[0] = ENTITY(reg_a6)[12].misc.h;
+    reg_d0.h[0] = STAGE4_EXTRA(reg_a6)->cutters_gone;
     if ((CUTTERS(reg_a4)->launched == reg_d0.h[0]) && (g_enemy_signal_e == 0)) {
         CUTTERS(reg_a4)->release_delay -= 1;
         if ((s16) CUTTERS(reg_a4)->release_delay == 0) {
@@ -1642,7 +1642,7 @@ next_1:
                 reg_d3.h[0] = *(u16 *)(reg_a0 + 2);
                 reg_d4.w = 0;
                 reg_tmp.h[0] = CUTTER_BAY_B(reg_a4)->muzzle;
-                reg_tmp.h[0] += ENTITY(reg_a6)[12].attr.h;
+                reg_tmp.h[0] += STAGE4_EXTRA(reg_a6)->bay_b_round;
                 ((Fn)*(u32 *)((u8 *)D_0026EDA0 + (reg_tmp.h[0] & ~3)))();
                 CUTTER_BAY_B(reg_a4)->burst.t.count -= 1;
                 if ((s8) CUTTER_BAY_B(reg_a4)->burst.t.count == 0) {
@@ -1681,7 +1681,7 @@ next_1:
             }
             reg_a3 = (u8 *)(D_0026ED98);
             reg_a2 = (u8 *)D_0026EDA8;
-            reg_a2 += ENTITY(reg_a6)[12].attr.h;
+            reg_a2 += STAGE4_EXTRA(reg_a6)->bay_b_round;
             reg_d7.w = 1;
             do {
                 reg_d0.w = 0;
@@ -1712,9 +1712,9 @@ next_1:
             CUTTER_BAY_B(reg_a4)->burst.h -= 1;
             if (CUTTER_BAY_B(reg_a4)->burst.sh == 0) {
                 CUTTER_BAY_B(reg_a4)->running = 0;
-                t2 = ENTITY(reg_a6)[12].attr.h;
+                t2 = STAGE4_EXTRA(reg_a6)->bay_b_round;
                 if (t2 != 0x10) {
-                    ENTITY(reg_a6)[12].attr.h = (u16) (t2 + 8);
+                    STAGE4_EXTRA(reg_a6)->bay_b_round = (u16) (t2 + 8);
                 }
             }
         }

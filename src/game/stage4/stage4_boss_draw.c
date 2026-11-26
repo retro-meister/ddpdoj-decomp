@@ -1,5 +1,6 @@
 #include "common.h"
 #include "entity.h"
+#include "stage4_boss.h"
 
 void func_001DC180(void);
 void func_001DC390(void);
@@ -74,7 +75,7 @@ void func_001DC200(void) {
     reg_d1.w += 0xE600EA00;
     reg_d3.h[0] = 0x1AB0;
     reg_d4.h[0] = ENTITY(reg_a6)[1].attr.h;
-    reg_d4.b[0] = ENTITY(reg_a6)[10].offset_y.b[1];
+    reg_d4.b[0] = STAGE4_PALETTES(reg_a6)->body_a;
     sprite_draw_layer4_keep_entry();
 }
 
@@ -95,7 +96,7 @@ void func_001DC290(void) {
     reg_d1.w += 0xEC00E300;
     reg_d3.h[0] = 0x14E8;
     reg_d4.h[0] = ENTITY(reg_a6)[1].attr.h;
-    reg_d4.b[0] = ENTITY(reg_a6)[10].offset_y.b[1];
+    reg_d4.b[0] = STAGE4_PALETTES(reg_a6)->body_a;
     sprite_draw_layer4_keep_entry_2();
     reg_d2.w = 0x1D05;
     reg_d1.h[1] = ENTITY(reg_a6)[1].y.h;
@@ -105,7 +106,7 @@ void func_001DC290(void) {
     reg_d1.w += 0xF600F600;
     reg_d3.h[0] = 0xA50;
     reg_d4.h[0] = ENTITY(reg_a6)[1].attr.h;
-    reg_d4.b[0] = ENTITY(reg_a6)[10].offset_y.b[1];
+    reg_d4.b[0] = STAGE4_PALETTES(reg_a6)->body_a;
     sprite_draw_layer4_keep_entry();
 }
 
@@ -164,7 +165,7 @@ void func_001DC490(void) {
     reg_d1.w += 0xF800FA00;
     reg_d3.h[0] = 0x830;
     reg_d4.h[0] = ENTITY(reg_a6)[6].attr.h;
-    reg_d4.b[0] = ENTITY(reg_a6)[10].offset_x.b[0];
+    reg_d4.b[0] = STAGE4_PALETTES(reg_a6)->right_spinner;
     sprite_draw_layer4_keep_entry();
 }
 
@@ -181,7 +182,7 @@ void func_001DC530(void) {
     reg_d1.w += 0xF800FA00;
     reg_d3.h[0] = 0x830;
     reg_d4.h[0] = ENTITY(reg_a6)[7].attr.h;
-    reg_d4.b[0] = ENTITY(reg_a6)[10].draw.b.priority;
+    reg_d4.b[0] = STAGE4_PALETTES(reg_a6)->left_spinner;
     sprite_draw_layer4_keep_entry();
 }
 
@@ -203,7 +204,7 @@ void func_001DC5D0(void) {
     reg_d1.w += 0xFA00FB00;
     reg_d3.h[0] = 0x628;
     reg_d4.h[0] = ENTITY(reg_a6)[8].attr.h;
-    reg_d4.b[0] = ENTITY(reg_a6)[10].draw.b.flip;
+    reg_d4.b[0] = STAGE4_PALETTES(reg_a6)->gun;
     sprite_draw_layer4_keep_entry();
 }
 
@@ -225,7 +226,7 @@ void func_001DC6D0(void) {
     reg_d1.w += 0xF000F800;
     reg_d3.h[0] = 0x1040;
     reg_d4.h[0] = ENTITY(reg_a6)[4].attr.h;
-    reg_d4.b[0] = ENTITY(reg_a6)[10].sprite.b[1];
+    reg_d4.b[0] = STAGE4_PALETTES(reg_a6)->right_pod;
     sprite_draw_layer2();
     reg_a0 = (u8 *)D_0026EFF0;
     reg_a0 += ENTITY(reg_a6)[4].offset_x.h;
@@ -238,7 +239,7 @@ void func_001DC6D0(void) {
     reg_d1.w += 0xF9400200;
     reg_d3.h[0] = 0x620;
     reg_d4.h[0] = ENTITY(reg_a6)[4].attr.h;
-    reg_d4.b[0] = ENTITY(reg_a6)[10].sprite.b[1];
+    reg_d4.b[0] = STAGE4_PALETTES(reg_a6)->right_pod;
     sprite_draw_layer2();
 }
 
@@ -258,7 +259,7 @@ void func_001DC7E0(void) {
     reg_d1.w += 0xF000F800;
     reg_d3.h[0] = 0x1040;
     reg_d4.h[0] = ENTITY(reg_a6)[5].attr.h;
-    reg_d4.b[0] = ENTITY(reg_a6)[10].sprite.b[0];
+    reg_d4.b[0] = STAGE4_PALETTES(reg_a6)->left_pod;
     sprite_draw_layer2();
     reg_a0 = (u8 *)D_0026EFF0;
     reg_a0 += ENTITY(reg_a6)[5].offset_x.h;
@@ -271,7 +272,7 @@ void func_001DC7E0(void) {
     reg_d1.w += 0xF93FFE40;
     reg_d3.h[0] = 0x620;
     reg_d4.h[0] = ENTITY(reg_a6)[5].attr.h;
-    reg_d4.b[0] = ENTITY(reg_a6)[10].sprite.b[1];
+    reg_d4.b[0] = STAGE4_PALETTES(reg_a6)->right_pod;
     sprite_draw_layer2();
 }
 
