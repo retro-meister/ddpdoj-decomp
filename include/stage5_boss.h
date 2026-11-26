@@ -15,6 +15,13 @@ typedef struct {
 
 #define STAGE5_BOSS(pointer) ((Stage5BossState *)(pointer))
 
+/* Two bytes of a boss slot that are set together as one word: a reload value and its countdown. */
+typedef union {
+    u16 h;
+    s16 sh;
+    struct { u8 reload; u8 count; } t;
+} SlotTimer;
+
 /* Entities 7 to 9, 14 and 15 of the boss are not drawn. They hold its palettes, its damage flags and other values. */
 typedef struct {
     /* 0x00 */ u8 unused_00[6];

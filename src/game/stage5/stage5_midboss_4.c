@@ -1,25 +1,97 @@
 #include "common.h"
 #include "entity.h"
+#include "enemy.h"
+#include "enemy_kinds.h"
+#include "stage5_midboss.h"
 
-void func_001FABA0(void);
-void func_001FAC60(void);
-void func_001FACB0(void);
-void func_001FAD00(void);
-void func_001FAD30(void);
-void func_001FADE0(void);
-void func_001FB010();
-void func_001FB1F0(void);
-void func_001FB630(void);
-void func_001FB650(void);
-void func_001FB6C0(void);
-void func_001FB6E0(void);
-void func_001FB700(void);
-void func_001FB770();
-void func_001FBD90();
-void func_001FBE90(void);
-void func_001FC670(void);
-void func_001FC710(void);
-void func_001FC7F0(void);
+/* What mid-boss 4 is first seen as. It asks for the mid-boss when its last frame comes. */
+typedef struct {
+    /* 0x00 */ u8 common[0x16];
+    /* 0x16 */ u8 step;                /* 0: waiting, 1: slowing down, 2: the frames run */
+    /* 0x17 */ u8 unused_17;
+    /* 0x18 */ EnemyTimer frame_timer;
+    /* 0x1A */ u16 frame;
+    /* 0x1C */ EnemyTimer slow_timer;
+    /* 0x1E */ u16 wait;
+} Stage5Midboss4ArrivalState;
+
+typedef struct {
+    /* 0x00 */ u8 common[0x16];
+    /* 0x16 */ union {
+        struct { u16 y; u16 x; u16 unused_1A; } at_start;
+        struct { u8 leaving; u8 unused_17; u16 hp[2]; } now;   /* hp: high word first */
+    };
+} Stage5Midboss4State;
+
+/* Entities 3 and 4 of mid-boss 4 are not drawn. They hold the values of its movement and of its attacks. */
+typedef struct {
+    /* 0x00 */ u8 unused_00[6];
+    /* 0x06 */ u16 mode;               /* 0: between its points, 1: to the player, 2: zigzag, 3: dying, 4: away */
+    /* 0x08 */ u16 step;
+    /* 0x0A */ union {
+        u16 point;                     /* mode 0: offset of the point in the table */
+        u16 passes_left;               /* mode 2 */
+    };
+    /* 0x0C */ u16 target_y;
+    /* 0x0E */ u16 target_x;
+    /* 0x10 */ u16 wait;
+    /* 0x12 */ u8 unused_12;
+    /* 0x13 */ u8 wanted_speed;
+    /* 0x14 */ u8 unused_14[0xC];
+} Stage5Midboss4Move;
+
+typedef struct {
+    /* 0x00 */ EnemyTimer fan_timer;
+    /* 0x02 */ EnemyTimer aimed_timer;
+    /* 0x04 */ u16 direction;
+    /* 0x06 */ u16 frames_left;
+} Stage5Midboss4Fan;
+
+typedef struct {
+    /* 0x00 */ EnemyTimer timer;
+    /* 0x02 */ u16 left;               /* 0 and 1 in turn */
+    /* 0x04 */ u16 unused_04[2];
+} Stage5Midboss4Beams;
+
+typedef struct {
+    /* 0x00 */ u8 unused_00[6];
+    /* 0x06 */ u16 attack;             /* 0xFFFF: none, 0: the fan, 1: the wave beams */
+    /* 0x08 */ u16 started;
+    /* 0x0A */ union {                 /* the attack routines get these in reg_a4 */
+        Stage5Midboss4Fan fan;
+        Stage5Midboss4Beams beams;
+    } values;
+    /* 0x12 */ u8 unused_12[0xC];
+    /* 0x1E */ u8 fan_longer;
+    /* 0x1F */ u8 unused_1F;
+} Stage5Midboss4Attack;
+
+#define STAGE5_MIDBOSS4_ARRIVAL(pointer) ((Stage5Midboss4ArrivalState *)(pointer))
+#define STAGE5_MIDBOSS4(pointer) ((Stage5Midboss4State *)(pointer))
+#define STAGE5_MIDBOSS4_MOVE(pointer) (&((Stage5Midboss4Move *)(pointer))[3])
+#define STAGE5_MIDBOSS4_ATTACK(pointer) (&((Stage5Midboss4Attack *)(pointer))[4])
+#define STAGE5_MIDBOSS4_FAN(pointer) ((Stage5Midboss4Fan *)(pointer))
+#define STAGE5_MIDBOSS4_BEAMS(pointer) ((Stage5Midboss4Beams *)(pointer))
+
+void stage5_midboss4_draw_body(void);
+void stage5_midboss4_draw_left_cannon(void);
+void stage5_midboss4_draw_right_cannon(void);
+void stage5_midboss4_set_move(void);
+void stage5_midboss4_move(void);
+void stage5_midboss4_move_between_points(void);
+void stage5_midboss4_move_to_player();
+void stage5_midboss4_move_zigzag(void);
+void stage5_midboss4_move_dying(void);
+void stage5_midboss4_move_away(void);
+void stage5_midboss4_attack_stop(void);
+void stage5_midboss4_attack_set(void);
+void stage5_midboss4_attack(void);
+void stage5_midboss4_attack_fan();
+void stage5_midboss4_attack_beams();
+void stage5_midboss4_dying(void);
+void stage5_midboss4_wave_beam_draw_charge(void);
+void stage5_midboss4_wave_beam_draw_burst(void);
+void stage5_midboss4_wave_beam_draw_wave(void);
 
 void stage5_midboss4_arrival_first(void) {
     void enemy_set_entity_count(s32);
@@ -72,50 +144,50 @@ void stage5_midboss4_arrival(void) {
     u16 temp_v1;
 
     if (g_enemies_stopped == 0) {
-        if (*(u8 *)(reg_a5 + 0x16) == 0) {
+        if (STAGE5_MIDBOSS4_ARRIVAL(reg_a5)->step == 0) {
             entity_follow_scroll();
-            *(u16 *)(reg_a5 + 0x1E) -= 1;
-            if (*(u16 *)(reg_a5 + 0x1E) == 0) {
-                *(u8 *)(reg_a5 + 0x16) = 1U;
+            STAGE5_MIDBOSS4_ARRIVAL(reg_a5)->wait -= 1;
+            if (STAGE5_MIDBOSS4_ARRIVAL(reg_a5)->wait == 0) {
+                STAGE5_MIDBOSS4_ARRIVAL(reg_a5)->step = 1U;
             }
         }
-        if (*(u8 *)(reg_a5 + 0x16) == 1) {
+        if (STAGE5_MIDBOSS4_ARRIVAL(reg_a5)->step == 1) {
             entity_velocity();
-            reg_tmp.b[0] = *(u8 *)(reg_a5 + 0x1D);
-            *(u8 *)(reg_a5 + 0x1D) -= 1;
+            reg_tmp.b[0] = STAGE5_MIDBOSS4_ARRIVAL(reg_a5)->slow_timer.b.countdown;
+            STAGE5_MIDBOSS4_ARRIVAL(reg_a5)->slow_timer.b.countdown -= 1;
             if ((s32) reg_tmp.b[0] <= 0) {
-                *(u8 *)(reg_a5 + 0x1D) = (u8) *(u8 *)(reg_a5 + 0x1C);
+                STAGE5_MIDBOSS4_ARRIVAL(reg_a5)->slow_timer.b.countdown = (u8) STAGE5_MIDBOSS4_ARRIVAL(reg_a5)->slow_timer.b.interval;
                 ENTITY(reg_a6)->move.b.speed -= 1;
                 if (ENTITY(reg_a6)->move.b.speed == 2) {
-                    *(u8 *)(reg_a5 + 0x16) = 2U;
+                    STAGE5_MIDBOSS4_ARRIVAL(reg_a5)->step = 2U;
                 }
             }
         }
-        if (*(u8 *)(reg_a5 + 0x16) == 2) {
-            reg_tmp.b[0] = *(u8 *)(reg_a5 + 0x19);
-            *(u8 *)(reg_a5 + 0x19) -= 1;
+        if (STAGE5_MIDBOSS4_ARRIVAL(reg_a5)->step == 2) {
+            reg_tmp.b[0] = STAGE5_MIDBOSS4_ARRIVAL(reg_a5)->frame_timer.b.countdown;
+            STAGE5_MIDBOSS4_ARRIVAL(reg_a5)->frame_timer.b.countdown -= 1;
             if ((s32) reg_tmp.b[0] <= 0) {
-                *(u8 *)(reg_a5 + 0x19) = (u8) *(u8 *)(reg_a5 + 0x18);
-                *(u16 *)(reg_a5 + 0x1A) += 4;
-                temp_v1 = *(u16 *)(reg_a5 + 0x1A);
+                STAGE5_MIDBOSS4_ARRIVAL(reg_a5)->frame_timer.b.countdown = (u8) STAGE5_MIDBOSS4_ARRIVAL(reg_a5)->frame_timer.b.interval;
+                STAGE5_MIDBOSS4_ARRIVAL(reg_a5)->frame += 4;
+                temp_v1 = STAGE5_MIDBOSS4_ARRIVAL(reg_a5)->frame;
                 if (temp_v1 == 0x40) {
                     enemy_remove();
                     return;
                 }
                 if (temp_v1 == 0x3C) {
-                    reg_d0.w = 0x44;
+                    reg_d0.w = ENEMY_STAGE5_MIDBOSS4;
                     enemy_request_start();
-                    *(u16 *)(reg_a0 + 0x16) = (u16) ENTITY(reg_a6)->y.h;
-                    *(u16 *)(reg_a0 + 0x18) = (u16) ENTITY(reg_a6)->x.h;
+                    STAGE5_MIDBOSS4(reg_a0)->at_start.y = (u16) ENTITY(reg_a6)->y.h;
+                    STAGE5_MIDBOSS4(reg_a0)->at_start.x = (u16) ENTITY(reg_a6)->x.h;
                 }
-                goto block_14;
+                goto draw;
             }
         }
-        goto block_14;
+        goto draw;
     }
-block_14:
+draw:
     reg_a0 = (u8 *)D_00265C50;
-    reg_a0 += *(u16 *)(reg_a5 + 0x1A);
+    reg_a0 += STAGE5_MIDBOSS4_ARRIVAL(reg_a5)->frame;
     reg_d2.h[1] = *(u16 *)reg_a0;
     reg_d2.h[0] = *(u16 *)(reg_a0 + 2);
     reg_d1.h[1] = ENTITY(reg_a6)->y.h;
@@ -144,8 +216,8 @@ void stage5_midboss4_start() {
 
     reg_a0 = D_00265C90;
     enemy_init_entities();
-    ENTITY(reg_a6)->y.h = (u16) *(u16 *)(reg_a5 + 0x16);
-    temp_a1 = *(u16 *)(reg_a5 + 0x18);
+    ENTITY(reg_a6)->y.h = (u16) STAGE5_MIDBOSS4(reg_a5)->at_start.y;
+    temp_a1 = STAGE5_MIDBOSS4(reg_a5)->at_start.x;
     ENTITY(reg_a6)->x.h = temp_a1;
     reg_a0 = &D_0028DA30;
     reg_d0.h[0] = 2;
@@ -167,7 +239,7 @@ void stage5_midboss4_main(void) {
     u16 temp_v0_2;
 
     if (g_enemies_stopped == 0) {
-        if (ENTITY(reg_a6)[5].misc.b.user != 0) {
+        if (STAGE5_MIDBOSS4_DAMAGE(reg_a6)->gone != 0) {
             g_enemy_signal_1 = 0;
             reg_d0.h[0] = 0x20;
             reg_d1.h[0] = 0x20;
@@ -175,18 +247,18 @@ void stage5_midboss4_main(void) {
             enemy_remove();
             return;
         }
-        if ((*(u8 *)(reg_a5 + 0x16) == 0) && (ENTITY(reg_a6)[5].misc.b.draw_layer == 0) && (g_scroll_line == 0xE0)) {
-            *(u8 *)(reg_a5 + 0x16) = 1U;
-            func_001FB6C0();
+        if ((STAGE5_MIDBOSS4(reg_a5)->now.leaving == 0) && (STAGE5_MIDBOSS4_DAMAGE(reg_a6)->dying == 0) && (g_scroll_line == 0xE0)) {
+            STAGE5_MIDBOSS4(reg_a5)->now.leaving = 1U;
+            stage5_midboss4_attack_stop();
             reg_d0.w = 4;
-            func_001FAD00();
+            stage5_midboss4_set_move();
         }
         reg_d1.b[0] = ENTITY(reg_a6)->flags.b[1];
         reg_d1.b[0] |= ENTITY(reg_a6)[1].flags.b[1];
         reg_d1.b[0] |= ENTITY(reg_a6)[2].flags.b[1];
         reg_d1.h[0] &= 0x5C;
         if (reg_d1.h[0] != 0) {
-            ENTITY(reg_a6)[5].look.h = (u16) reg_d1.h[0];
+            STAGE5_MIDBOSS4_DAMAGE(reg_a6)->hit_by = (u16) reg_d1.h[0];
             reg_d0.b[0] = 0xA3;
             ENTITY(reg_a6)->flags.b[1] &= reg_d0.b[0];
             ENTITY(reg_a6)[1].flags.b[1] &= reg_d0.b[0];
@@ -217,38 +289,38 @@ void stage5_midboss4_main(void) {
             ENTITY(reg_a6)->hp.h = (u16) reg_d0.h[0];
             ENTITY(reg_a6)[1].hp.h = (u16) reg_d0.h[0];
             ENTITY(reg_a6)[2].hp.h = (u16) reg_d0.h[0];
-            if (*(u8 *)(reg_a5 + 0x16) == 0) {
-                reg_tmp.h[1] = *(u16 *)(reg_a5 + 0x18);
-                reg_tmp.h[0] = *(u16 *)(reg_a5 + 0x1A);
+            if (STAGE5_MIDBOSS4(reg_a5)->now.leaving == 0) {
+                reg_tmp.h[1] = STAGE5_MIDBOSS4(reg_a5)->now.hp[0];
+                reg_tmp.h[0] = STAGE5_MIDBOSS4(reg_a5)->now.hp[1];
                 reg_tmp.w -= reg_d2.w;
-                *(u16 *)(reg_a5 + 0x18) = (u16) reg_tmp.h[1];
-                *(u16 *)(reg_a5 + 0x1A) = (u16) reg_tmp.h[0];
+                STAGE5_MIDBOSS4(reg_a5)->now.hp[0] = (u16) reg_tmp.h[1];
+                STAGE5_MIDBOSS4(reg_a5)->now.hp[1] = (u16) reg_tmp.h[0];
                 if ((s32) reg_tmp.w < 0) {
                     ENTITY(reg_a6)->flags.h = 0x8000;
                     ENTITY(reg_a6)[1].flags.h = 0x8000;
                     ENTITY(reg_a6)[2].flags.h = 0x8000;
-                    func_001FB6C0();
+                    stage5_midboss4_attack_stop();
                     reg_d0.w = 3;
-                    func_001FAD00();
-                    ENTITY(reg_a6)[5].misc.b.draw_layer = 1U;
+                    stage5_midboss4_set_move();
+                    STAGE5_MIDBOSS4_DAMAGE(reg_a6)->dying = 1U;
                     reg_d0.h[0] = 0x20;
                     reg_d1.h[0] = 0x20;
                     g_enemy_signal_1 = 0;
                     ground_speeds_request();
                     reg_a0 = (u8 *)D_00265F60;
                     func_0013B8B0();
-                    goto block_15;
+                    goto normal_palette;
                 }
             }
         } else {
-block_15:
+normal_palette:
             reg_d0.w = 0x12;
             ENTITY(reg_a6)->attr.b.palette = (u8) reg_d0.b[0];
             ENTITY(reg_a6)[1].attr.b.palette = (u8) reg_d0.b[0];
             ENTITY(reg_a6)[2].attr.b.palette = (u8) reg_d0.b[0];
         }
-        func_001FBE90();
-        func_001FAD30();
+        stage5_midboss4_dying();
+        stage5_midboss4_move();
         reg_d0.h[1] = ENTITY(reg_a6)->y.h;
         reg_d0.h[0] = ENTITY(reg_a6)->x.h;
         ENTITY(reg_a6)[1].y.h = (u16) reg_d0.h[1];
@@ -269,7 +341,7 @@ block_15:
         ENTITY(reg_a6)[2].x.h = (u16) reg_tmp.h[0];
         reg_d1.h[0] = ENTITY(reg_a6)[2].offset_y.h;
         ENTITY(reg_a6)[2].y.h += reg_d1.h[0];
-        func_001FB700();
+        stage5_midboss4_attack();
         temp_v0 = ENTITY(reg_a6)[1].offset_y.h;
         if (temp_v0 != 0) {
             ENTITY(reg_a6)[1].offset_y.h = (u16) (temp_v0 - 0x40);
@@ -284,12 +356,12 @@ block_15:
                 ENTITY(reg_a6)[2].offset_y.h = 0U;
             }
         }
-        goto block_22;
+        goto draw;
     }
-block_22:
-    func_001FABA0();
-    func_001FAC60();
-    func_001FACB0();
+draw:
+    stage5_midboss4_draw_body();
+    stage5_midboss4_draw_left_cannon();
+    stage5_midboss4_draw_right_cannon();
     reg_a0 = reg_a6;
     enemy_hitbox_debug_draw();
     reg_a0 = reg_a6 + 0x20;
@@ -298,7 +370,7 @@ block_22:
     enemy_hitbox_debug_draw();
 }
 
-void func_001FABA0(void) {
+void stage5_midboss4_draw_body(void) {
     s32 sprite_draw_layer4();
     u16 temp_a0;
     u16 temp_a1;
@@ -324,70 +396,62 @@ void func_001FABA0(void) {
     sprite_draw_layer4();
 }
 
-void func_001FAC60(void)
+void stage5_midboss4_draw_left_cannon(void)
 {
     extern void sprite_draw_layer4(void);
     u8 *object = reg_a6;
 
     reg_d2.w = 0x1E7D;
-    reg_d1.h[1] = *(u16 *)(object + 0x22);
-    reg_d1.h[0] = *(u16 *)(object + 0x24);
+    reg_d1.h[1] = ENTITY(object)[1].y.h;
+    reg_d1.h[0] = ENTITY(object)[1].x.h;
     reg_d1.w += 0xF600F800U;
     reg_d3.h[0] = 0xA40;
     reg_d4.w = 0;
-    *(u8 *)&reg_d4 = object[0x3C];
+    *(u8 *)&reg_d4 = ENTITY(object)[1].attr.b.palette;
     sprite_draw_layer4();
 }
 
-void func_001FACB0(void)
+void stage5_midboss4_draw_right_cannon(void)
 {
     extern void sprite_draw_layer4(void);
     u8 *object = reg_a6;
 
     reg_d2.w = 0x1E7E;
-    reg_d1.h[1] = *(u16 *)(object + 0x42);
-    reg_d1.h[0] = *(u16 *)(object + 0x44);
+    reg_d1.h[1] = ENTITY(object)[2].y.h;
+    reg_d1.h[0] = ENTITY(object)[2].x.h;
     reg_d4.w = 0;
     reg_d1.w += 0xF600F800U;
     reg_d3.h[0] = 0xA40;
-    *(u8 *)&reg_d4 = object[0x5C];
+    *(u8 *)&reg_d4 = ENTITY(object)[2].attr.b.palette;
     sprite_draw_layer4();
 }
 
-struct Unk0028E450 {
-    u8 pad_00[0x66];
-    u16 unk66;
-    u16 unk68;
-};
-
-extern struct Unk0028E450 *reg_a6_as_Unk0028E450_p;
-
-void func_001FAD00(void) {
-    if (reg_a6_as_Unk0028E450_p->unk66 != reg_d0.h[0]) {
-        reg_a6_as_Unk0028E450_p->unk66 = (u16) reg_d0.h[0];
-        reg_a6_as_Unk0028E450_p->unk68 = 0;
+void stage5_midboss4_set_move(void) {
+    if (STAGE5_MIDBOSS4_MOVE(reg_a6)->mode != reg_d0.h[0]) {
+        STAGE5_MIDBOSS4_MOVE(reg_a6)->mode = (u16) reg_d0.h[0];
+        STAGE5_MIDBOSS4_MOVE(reg_a6)->step = 0;
     }
 }
 
 s32 func_00201F20();                            /* extern */
 
-void func_001FAD30(void) {
-    reg_d0.h[0] = ENTITY(reg_a6)[3].offset_y.h;
+void stage5_midboss4_move(void) {
+    reg_d0.h[0] = STAGE5_MIDBOSS4_MOVE(reg_a6)->mode;
     switch (reg_d0.h[0]) {                          /* irregular */
     case 0:
-        func_001FADE0();
+        stage5_midboss4_move_between_points();
         break;
     case 1:
-        func_001FB010();
+        stage5_midboss4_move_to_player();
         break;
     case 2:
-        func_001FB1F0();
+        stage5_midboss4_move_zigzag();
         break;
     case 3:
-        func_001FB630();
+        stage5_midboss4_move_dying();
         break;
     case 4:
-        func_001FB650();
+        stage5_midboss4_move_away();
         break;
     }
     func_00201F20();
@@ -399,16 +463,16 @@ s32 distance_between();
 extern u8 D_00265D40[];
 extern u16 D_00265D70[];
 
-void func_001FADE0(void) {
-    if (ENTITY(reg_a6)[3].offset_x.h == 0) {
+void stage5_midboss4_move_between_points(void) {
+    if (STAGE5_MIDBOSS4_MOVE(reg_a6)->step == 0) {
         rng_next_unsigned();
         reg_d0.h[0] &= 7;
         reg_d0.h[0] *= 4;
-        ENTITY(reg_a6)[3].draw.h = (u16) reg_d0.h[0];
-        ENTITY(reg_a6)[3].offset_x.h = 1U;
+        STAGE5_MIDBOSS4_MOVE(reg_a6)->point = (u16) reg_d0.h[0];
+        STAGE5_MIDBOSS4_MOVE(reg_a6)->step = 1U;
     }
     reg_a0 = (u8 *)D_00265D40;
-    reg_a0 += ENTITY(reg_a6)[3].draw.h;
+    reg_a0 += STAGE5_MIDBOSS4_MOVE(reg_a6)->point;
     reg_d0.h[0] = ENTITY(reg_a6)->y.h;
     reg_d1.h[0] = ENTITY(reg_a6)->x.h;
     reg_d2.h[0] = *(u16 *)reg_a0;
@@ -417,7 +481,7 @@ void func_001FADE0(void) {
     direction256_between();
     ENTITY(reg_a6)->move.b.dir = (u8) reg_d1.b[0];
     reg_a0 = (u8 *)D_00265D40;
-    reg_a0 += ENTITY(reg_a6)[3].draw.h;
+    reg_a0 += STAGE5_MIDBOSS4_MOVE(reg_a6)->point;
     reg_d0.h[0] = ENTITY(reg_a6)->y.h;
     reg_d1.h[0] = ENTITY(reg_a6)->x.h;
     reg_d2.h[0] = *(u16 *)reg_a0;
@@ -425,27 +489,27 @@ void func_001FADE0(void) {
     reg_d3.h[0] -= g_side_scroll_x[0];
     distance_between();
     if ((s16) reg_d0.h[0] < 0x81) {
-        ENTITY(reg_a6)[3].draw.h += 4;
-        if ((s16) ENTITY(reg_a6)[3].draw.h >= 0x24) {
-            ENTITY(reg_a6)[3].draw.h = 0U;
+        STAGE5_MIDBOSS4_MOVE(reg_a6)->point += 4;
+        if ((s16) STAGE5_MIDBOSS4_MOVE(reg_a6)->point >= 0x24) {
+            STAGE5_MIDBOSS4_MOVE(reg_a6)->point = 0U;
         }
     }
-    ENTITY(reg_a6)[3].hit_y_minus.b[1] = 5U;
+    STAGE5_MIDBOSS4_MOVE(reg_a6)->wanted_speed = 5U;
     reg_a4 = (u8 *)(D_00265D70);
-loop_6:
+next_speed:
     reg_d1.h[0] = *(u16 *)reg_a4;
     reg_a4 += 2;
     if ((s16) reg_d1.h[0] != -1) {
         reg_d2.h[0] = *(u16 *)reg_a4;
         reg_a4 += 2;
         if ((s16) reg_d1.h[0] >= (s16) reg_d0.h[0]) {
-            ENTITY(reg_a6)[3].hit_y_minus.b[1] = (u8) reg_d2.b[0];
+            STAGE5_MIDBOSS4_MOVE(reg_a6)->wanted_speed = (u8) reg_d2.b[0];
         } else {
-            goto loop_6;
+            goto next_speed;
         }
     }
     reg_d1.b[0] = ENTITY(reg_a6)->move.b.speed;
-    reg_d2.b[0] = ENTITY(reg_a6)[3].hit_y_minus.b[1];
+    reg_d2.b[0] = STAGE5_MIDBOSS4_MOVE(reg_a6)->wanted_speed;
     if (reg_d1.b[0] != reg_d2.b[0]) {
         if ((s8)(reg_d1.b[0]) >= (s8)(reg_d2.b[0])) {
             ENTITY(reg_a6)->move.b.speed -= 1;
@@ -459,7 +523,7 @@ s32 target_player_get();
 extern u16 D_00265DE0[];
 extern u16 *reg_a4_as_u16_p;
 
-void func_001FB010(arg0)
+void stage5_midboss4_move_to_player(arg0)
     u16 arg0;
 {
     u16 var_a0;
@@ -467,26 +531,26 @@ void func_001FB010(arg0)
     u32 temp_s1;
 
     var_a0 = arg0;
-    if (ENTITY(reg_a6)[3].offset_x.h == 0) {
-        ENTITY(reg_a6)[3].offset_x.h = 1U;
+    if (STAGE5_MIDBOSS4_MOVE(reg_a6)->step == 0) {
+        STAGE5_MIDBOSS4_MOVE(reg_a6)->step = 1U;
     }
-    if (ENTITY(reg_a6)[3].offset_x.h == 1) {
+    if (STAGE5_MIDBOSS4_MOVE(reg_a6)->step == 1) {
         target_player_get();
         if (cond_flag == 0) {
             reg_d2.h[0] = *(u16 *)(reg_a0 + 2);
             var_a0 = *(u16 *)(reg_a0 + 4);
             reg_d2.h[0] += 0x1E00;
             reg_d3.h[0] = var_a0;
-            ENTITY(reg_a6)[3].sprite.h = (u16) reg_d2.h[0];
-            ENTITY(reg_a6)[3].look.h = (u16) reg_d3.h[0];
-            goto block_5;
+            STAGE5_MIDBOSS4_MOVE(reg_a6)->target_y = (u16) reg_d2.h[0];
+            STAGE5_MIDBOSS4_MOVE(reg_a6)->target_x = (u16) reg_d3.h[0];
+            goto have_target;
         }
-        goto block_9;
+        goto start_beams;
     }
-block_5:
-    reg_d2.h[0] = ENTITY(reg_a6)[3].sprite.h;
+have_target:
+    reg_d2.h[0] = STAGE5_MIDBOSS4_MOVE(reg_a6)->target_y;
     temp_s0 = reg_d2.w;
-    reg_d3.h[0] = ENTITY(reg_a6)[3].look.h;
+    reg_d3.h[0] = STAGE5_MIDBOSS4_MOVE(reg_a6)->target_x;
     temp_s1 = reg_d3.w;
     reg_d0.h[0] = ENTITY(reg_a6)->y.h;
     reg_d1.h[0] = ENTITY(reg_a6)->x.h;
@@ -498,23 +562,23 @@ block_5:
     reg_d1.h[0] = ENTITY(reg_a6)->x.h;
     distance_between();
     if ((s16) reg_d0.h[0] < 0x601) {
-        ENTITY(reg_a6)[3].offset_x.h = 2U;
+        STAGE5_MIDBOSS4_MOVE(reg_a6)->step = 2U;
     }
     if ((s16) reg_d0.h[0] < 0x101) {
-block_9:
+start_beams:
         reg_d0.w = 1;
-        func_001FB6E0();
-        ENTITY(reg_a6)[3].sprite.h = (u16) ENTITY(reg_a6)->y.h;
-        ENTITY(reg_a6)[3].hit_y_plus.sh = 0x50;
+        stage5_midboss4_attack_set();
+        STAGE5_MIDBOSS4_MOVE(reg_a6)->target_y = (u16) ENTITY(reg_a6)->y.h;
+        STAGE5_MIDBOSS4_MOVE(reg_a6)->wait = 0x50;
         ENTITY(reg_a6)->move.b.speed = 0U;
-        ENTITY(reg_a6)[3].look.h = 0U;
+        STAGE5_MIDBOSS4_MOVE(reg_a6)->target_x = 0U;
         if ((s16) ENTITY(reg_a6)->x.h < 0x1C01) {
-            ENTITY(reg_a6)[3].look.h = 0x3800U;
+            STAGE5_MIDBOSS4_MOVE(reg_a6)->target_x = 0x3800U;
         }
     }
     ENTITY(reg_a6)->move.b.speed = 0x32U;
     reg_a4_as_u16_p = D_00265DE0;
-loop_12:
+next_speed:
     reg_d1.h[0] = *reg_a4_as_u16_p;
     reg_a4_as_u16_p += 1;
     if ((s16) reg_d1.h[0] != -1) {
@@ -523,7 +587,7 @@ loop_12:
         if ((s16) reg_d1.h[0] >= (s16) reg_d0.h[0]) {
             ENTITY(reg_a6)->move.b.speed = (u8) reg_d2.b[0];
         } else {
-            goto loop_12;
+            goto next_speed;
         }
     }
 }
@@ -532,7 +596,7 @@ s32 func_00202590();
 extern u16 D_00265E50[];
 extern u16 g_game_frame;
 
-void func_001FB1F0(void) {
+void stage5_midboss4_move_zigzag(void) {
     u16 temp_a0;
     u16 temp_a0_2;
     u16 temp_a0_3;
@@ -540,56 +604,56 @@ void func_001FB1F0(void) {
     u16 temp_a0_5;
     u16 temp_a0_6;
 
-    if (ENTITY(reg_a6)[3].offset_x.h == 0) {
+    if (STAGE5_MIDBOSS4_MOVE(reg_a6)->step == 0) {
         ENTITY(reg_a6)->move.b.speed = 0U;
-        ENTITY(reg_a6)[3].hit_y_plus.h -= 1;
-        if (ENTITY(reg_a6)[3].hit_y_plus.h == 0) {
-            ENTITY(reg_a6)[3].draw.h = 2U;
-            ENTITY(reg_a6)[3].offset_x.h = 1U;
+        STAGE5_MIDBOSS4_MOVE(reg_a6)->wait -= 1;
+        if (STAGE5_MIDBOSS4_MOVE(reg_a6)->wait == 0) {
+            STAGE5_MIDBOSS4_MOVE(reg_a6)->passes_left = 2U;
+            STAGE5_MIDBOSS4_MOVE(reg_a6)->step = 1U;
         }
     }
-    temp_a0 = ENTITY(reg_a6)[3].offset_x.h;
+    temp_a0 = STAGE5_MIDBOSS4_MOVE(reg_a6)->step;
     if (temp_a0 == 1) {
-        reg_d2.h[0] = ENTITY(reg_a6)[3].sprite.h;
-        reg_d3.h[0] = ENTITY(reg_a6)[3].look.h;
+        reg_d2.h[0] = STAGE5_MIDBOSS4_MOVE(reg_a6)->target_y;
+        reg_d3.h[0] = STAGE5_MIDBOSS4_MOVE(reg_a6)->target_x;
         reg_d3.h[0] -= g_side_scroll_x[0];
         reg_d0.h[0] = ENTITY(reg_a6)->y.h;
         reg_d1.h[0] = ENTITY(reg_a6)->x.h;
         direction256_between();
         ENTITY(reg_a6)->move.b.dir = (u8) reg_d1.b[0];
-        reg_d2.h[0] = ENTITY(reg_a6)[3].sprite.h;
-        reg_d3.h[0] = ENTITY(reg_a6)[3].look.h;
+        reg_d2.h[0] = STAGE5_MIDBOSS4_MOVE(reg_a6)->target_y;
+        reg_d3.h[0] = STAGE5_MIDBOSS4_MOVE(reg_a6)->target_x;
         temp_a0_2 = ENTITY(reg_a6)->y.h;
         reg_d0.h[0] = temp_a0_2;
         reg_d1.h[0] = ENTITY(reg_a6)->x.h;
         reg_d3.h[0] -= g_side_scroll_x[0];
         distance_between();
         if ((s16) reg_d0.h[0] < 0x81) {
-            ENTITY(reg_a6)[3].offset_x.h = 2U;
-            ENTITY(reg_a6)[3].sprite.h += 0x100;
-            if ((s16) ENTITY(reg_a6)[3].sprite.h >= 0x5A00) {
-                ENTITY(reg_a6)[3].sprite.h = 0x5A00U;
+            STAGE5_MIDBOSS4_MOVE(reg_a6)->step = 2U;
+            STAGE5_MIDBOSS4_MOVE(reg_a6)->target_y += 0x100;
+            if ((s16) STAGE5_MIDBOSS4_MOVE(reg_a6)->target_y >= 0x5A00) {
+                STAGE5_MIDBOSS4_MOVE(reg_a6)->target_y = 0x5A00U;
             }
         }
-        ENTITY(reg_a6)[3].hit_y_minus.b[1] = 0x12U;
+        STAGE5_MIDBOSS4_MOVE(reg_a6)->wanted_speed = 0x12U;
         reg_a4 = (u8 *)(D_00265E50);
-loop_8:
+next_speed:
         reg_d1.h[0] = *(u16 *)reg_a4;
         reg_a4 += 2;
         if ((s16) reg_d1.h[0] != -1) {
             reg_d2.h[0] = *(u16 *)reg_a4;
             reg_a4 += 2;
             if ((s16) reg_d1.h[0] >= (s16) reg_d0.h[0]) {
-                ENTITY(reg_a6)[3].hit_y_minus.b[1] = (u8) reg_d2.b[0];
+                STAGE5_MIDBOSS4_MOVE(reg_a6)->wanted_speed = (u8) reg_d2.b[0];
             } else {
-                goto loop_8;
+                goto next_speed;
             }
         }
     }
-    temp_a0_3 = ENTITY(reg_a6)[3].offset_x.h;
+    temp_a0_3 = STAGE5_MIDBOSS4_MOVE(reg_a6)->step;
     if (temp_a0_3 == 2) {
-        reg_d2.h[0] = ENTITY(reg_a6)[3].sprite.h;
-        reg_d3.h[0] = ENTITY(reg_a6)[3].look.h;
+        reg_d2.h[0] = STAGE5_MIDBOSS4_MOVE(reg_a6)->target_y;
+        reg_d3.h[0] = STAGE5_MIDBOSS4_MOVE(reg_a6)->target_x;
         reg_d3.h[0] -= g_side_scroll_x[0];
         reg_d0.h[0] = ENTITY(reg_a6)->y.h;
         reg_d1.h[0] = ENTITY(reg_a6)->x.h;
@@ -597,53 +661,53 @@ loop_8:
         reg_d0.b[0] = ENTITY(reg_a6)->move.b.dir;
         func_00202590();
         ENTITY(reg_a6)->move.b.dir = (u8) reg_d1.b[0];
-        reg_d2.h[0] = ENTITY(reg_a6)[3].sprite.h;
-        reg_d3.h[0] = ENTITY(reg_a6)[3].look.h;
+        reg_d2.h[0] = STAGE5_MIDBOSS4_MOVE(reg_a6)->target_y;
+        reg_d3.h[0] = STAGE5_MIDBOSS4_MOVE(reg_a6)->target_x;
         temp_a0_4 = ENTITY(reg_a6)->y.h;
         reg_d0.h[0] = temp_a0_4;
         reg_d1.h[0] = ENTITY(reg_a6)->x.h;
         reg_d3.h[0] -= g_side_scroll_x[0];
         distance_between();
-        ENTITY(reg_a6)[3].hit_y_minus.b[1] = 4U;
+        STAGE5_MIDBOSS4_MOVE(reg_a6)->wanted_speed = 4U;
         if ((ENTITY(reg_a6)->move.b.speed == 4) && ((s16) reg_d0.h[0] < 0x1001)) {
-            ENTITY(reg_a6)[3].sprite.h += 0x1C00;
-            ENTITY(reg_a6)[3].offset_x.h = 1U;
-            ENTITY(reg_a6)[3].draw.h -= 1;
-            if (ENTITY(reg_a6)[3].draw.h == 0) {
-                ENTITY(reg_a6)[3].look.h = 0x1C00U;
-                ENTITY(reg_a6)[3].offset_x.h = 3U;
+            STAGE5_MIDBOSS4_MOVE(reg_a6)->target_y += 0x1C00;
+            STAGE5_MIDBOSS4_MOVE(reg_a6)->step = 1U;
+            STAGE5_MIDBOSS4_MOVE(reg_a6)->passes_left -= 1;
+            if (STAGE5_MIDBOSS4_MOVE(reg_a6)->passes_left == 0) {
+                STAGE5_MIDBOSS4_MOVE(reg_a6)->target_x = 0x1C00U;
+                STAGE5_MIDBOSS4_MOVE(reg_a6)->step = 3U;
             } else {
-                ENTITY(reg_a6)[3].look.h = 0U;
+                STAGE5_MIDBOSS4_MOVE(reg_a6)->target_x = 0U;
                 if ((s16) ENTITY(reg_a6)->x.h < 0x1C01) {
-                    ENTITY(reg_a6)[3].look.h = 0x3800U;
+                    STAGE5_MIDBOSS4_MOVE(reg_a6)->target_x = 0x3800U;
                 }
             }
         }
     }
-    temp_a0_5 = ENTITY(reg_a6)[3].offset_x.h;
+    temp_a0_5 = STAGE5_MIDBOSS4_MOVE(reg_a6)->step;
     if (temp_a0_5 == 3) {
-        reg_d2.h[0] = ENTITY(reg_a6)[3].sprite.h;
-        reg_d3.h[0] = ENTITY(reg_a6)[3].look.h;
+        reg_d2.h[0] = STAGE5_MIDBOSS4_MOVE(reg_a6)->target_y;
+        reg_d3.h[0] = STAGE5_MIDBOSS4_MOVE(reg_a6)->target_x;
         reg_d3.h[0] -= g_side_scroll_x[0];
         reg_d0.h[0] = ENTITY(reg_a6)->y.h;
         reg_d1.h[0] = ENTITY(reg_a6)->x.h;
         direction256_between();
         ENTITY(reg_a6)->move.b.dir = (u8) reg_d1.b[0];
-        reg_d2.h[0] = ENTITY(reg_a6)[3].sprite.h;
-        reg_d3.h[0] = ENTITY(reg_a6)[3].look.h;
+        reg_d2.h[0] = STAGE5_MIDBOSS4_MOVE(reg_a6)->target_y;
+        reg_d3.h[0] = STAGE5_MIDBOSS4_MOVE(reg_a6)->target_x;
         temp_a0_6 = ENTITY(reg_a6)->y.h;
         reg_d0.h[0] = temp_a0_6;
         reg_d1.h[0] = ENTITY(reg_a6)->x.h;
         reg_d3.h[0] -= g_side_scroll_x[0];
         distance_between();
-        ENTITY(reg_a6)[3].hit_y_minus.b[1] = 0xAU;
+        STAGE5_MIDBOSS4_MOVE(reg_a6)->wanted_speed = 0xAU;
         if ((s16) reg_d0.h[0] < 0x1001) {
-            func_001FB6C0();
-            ENTITY(reg_a6)[3].hit_y_minus.b[1] = 2U;
+            stage5_midboss4_attack_stop();
+            STAGE5_MIDBOSS4_MOVE(reg_a6)->wanted_speed = 2U;
             if (ENTITY(reg_a6)->move.b.speed == 2) {
-                ENTITY(reg_a6)[4].misc.sb.draw_layer = 1;
+                STAGE5_MIDBOSS4_ATTACK(reg_a6)->fan_longer = 1;
                 reg_d0.w = 0;
-                func_001FB6E0();
+                stage5_midboss4_attack_set();
             }
         }
     }
@@ -651,7 +715,7 @@ loop_8:
     reg_d0.h[0] &= 3;
     if (reg_d0.h[0] == 0) {
         reg_d1.b[0] = ENTITY(reg_a6)->move.b.speed;
-        reg_d2.b[0] = ENTITY(reg_a6)[3].hit_y_minus.b[1];
+        reg_d2.b[0] = STAGE5_MIDBOSS4_MOVE(reg_a6)->wanted_speed;
         if (reg_d1.b[0] != reg_d2.b[0]) {
             if ((s8)(reg_d1.b[0]) >= (s8)(reg_d2.b[0])) {
                 ENTITY(reg_a6)->move.b.speed -= 1;
@@ -662,54 +726,54 @@ loop_8:
     }
 }
 
-void func_001FB630(void) {
+void stage5_midboss4_move_dying(void) {
     u8 *object = reg_a6;
 
-    if (*(u16 *)(object + 0x68) == 0) {
-        *(u16 *)(object + 0x1A) = 0x480;
+    if (STAGE5_MIDBOSS4_MOVE(object)->step == 0) {
+        ENTITY(object)->move.h = 0x480;
     }
 }
 
-void func_001FB650(void) {
-    if (ENTITY(reg_a6)[3].offset_x.h == 0) {
+void stage5_midboss4_move_away(void) {
+    if (STAGE5_MIDBOSS4_MOVE(reg_a6)->step == 0) {
         ENTITY(reg_a6)->move.sh = 0xC40;
         if (ENTITY(reg_a6)->x.sh < 0x1C01) {
             ENTITY(reg_a6)->move.sh = 0xCC0;
         }
     }
     if (ENTITY(reg_a6)->x.sh >= 0x5400) {
-        ENTITY(reg_a6)[5].misc.sb.user = 1;
+        STAGE5_MIDBOSS4_DAMAGE(reg_a6)->gone = 1;
     }
     if (ENTITY(reg_a6)->x.sh < -0x1BFF) {
-        ENTITY(reg_a6)[5].misc.sb.user = 1;
+        STAGE5_MIDBOSS4_DAMAGE(reg_a6)->gone = 1;
     }
 }
 
-void func_001FB6C0(void) {
-    ENTITY(reg_a6)[4].offset_y.h = 0xFFFF;
-    ENTITY(reg_a6)[4].offset_x.h = 0;
+void stage5_midboss4_attack_stop(void) {
+    STAGE5_MIDBOSS4_ATTACK(reg_a6)->attack = 0xFFFF;
+    STAGE5_MIDBOSS4_ATTACK(reg_a6)->started = 0;
 }
 
-void func_001FB6E0(void) {
-    ENTITY(reg_a6)[4].offset_y.h = (u16)reg_d0.h[0];
-    ENTITY(reg_a6)[4].offset_x.h = 0;
+void stage5_midboss4_attack_set(void) {
+    STAGE5_MIDBOSS4_ATTACK(reg_a6)->attack = (u16)reg_d0.h[0];
+    STAGE5_MIDBOSS4_ATTACK(reg_a6)->started = 0;
 }
 
 
-void func_001FB700(void) {
-    extern void func_001FB770(s64, u16);
-    extern void func_001FBD90(s64, u16);
+void stage5_midboss4_attack(void) {
+    extern void stage5_midboss4_attack_fan(s64, u16);
+    extern void stage5_midboss4_attack_beams(s64, u16);
     s64 temp_a0;
 
-    reg_a4 = reg_a6 + 0x8A;
-    reg_d0.h[0] = ENTITY(reg_a6)[4].offset_y.h;
+    reg_a4 = (u8 *)&STAGE5_MIDBOSS4_ATTACK(reg_a6)->values;
+    reg_d0.h[0] = STAGE5_MIDBOSS4_ATTACK(reg_a6)->attack;
     temp_a0 = (s64) ((s64) reg_d0.h[0] << 0x30) >> 0x30;
     if (temp_a0 != -1) {
         if (!(reg_d0.h[0] & 0xFFFF)) {
-            func_001FB770(temp_a0, reg_d0.h[0]);
+            stage5_midboss4_attack_fan(temp_a0, reg_d0.h[0]);
             return;
         }
-        func_001FBD90(temp_a0, reg_d0.h[0]);
+        stage5_midboss4_attack_beams(temp_a0, reg_d0.h[0]);
     }
 }
 
@@ -720,34 +784,34 @@ extern u16 g_direction64_offsets_2CC[];
 extern u16 g_direction64_offsets_432[];
 extern u16 g_bullets_blocked;
 
-void func_001FB770() {
+void stage5_midboss4_attack_fan() {
     u16 temp_a1;
 
-    if (ENTITY(reg_a6)[4].offset_x.h == 0) {
+    if (STAGE5_MIDBOSS4_ATTACK(reg_a6)->started == 0) {
         reg_d0.w = 0;
-        func_001FAD00();
-        ENTITY(reg_a6)[4].offset_x.h = 1U;
-        *(s16 *)reg_a4 = 0x124;
-        *(s16 *)(reg_a4 + 2) = 0x120;
-        *(u16 *)(reg_a4 + 4) = 0x80U;
-        *(u16 *)(reg_a4 + 6) = 0x100U;
-        if (ENTITY(reg_a6)[4].misc.b.draw_layer != 0) {
-            *(u16 *)(reg_a4 + 6) = 0x140U;
-            *(s16 *)reg_a4 = 0x112;
+        stage5_midboss4_set_move();
+        STAGE5_MIDBOSS4_ATTACK(reg_a6)->started = 1U;
+        STAGE5_MIDBOSS4_FAN(reg_a4)->fan_timer.both = 0x124;
+        STAGE5_MIDBOSS4_FAN(reg_a4)->aimed_timer.both = 0x120;
+        STAGE5_MIDBOSS4_FAN(reg_a4)->direction = 0x80U;
+        STAGE5_MIDBOSS4_FAN(reg_a4)->frames_left = 0x100U;
+        if (STAGE5_MIDBOSS4_ATTACK(reg_a6)->fan_longer != 0) {
+            STAGE5_MIDBOSS4_FAN(reg_a4)->frames_left = 0x140U;
+            STAGE5_MIDBOSS4_FAN(reg_a4)->fan_timer.both = 0x112;
         }
     }
-    reg_tmp.b[0] = *(u8 *)(reg_a4 + 1);
-    *(u8 *)(reg_a4 + 1) -= 1;
+    reg_tmp.b[0] = STAGE5_MIDBOSS4_FAN(reg_a4)->fan_timer.b.countdown;
+    STAGE5_MIDBOSS4_FAN(reg_a4)->fan_timer.b.countdown -= 1;
     if ((s32) reg_tmp.b[0] <= 0) {
-        *(u8 *)(reg_a4 + 1) = *(u8 *)reg_a4;
+        STAGE5_MIDBOSS4_FAN(reg_a4)->fan_timer.b.countdown = STAGE5_MIDBOSS4_FAN(reg_a4)->fan_timer.b.interval;
         if (g_bullets_blocked == 0) {
-            reg_d1.h[0] = *(u16 *)(reg_a4 + 4);
+            reg_d1.h[0] = STAGE5_MIDBOSS4_FAN(reg_a4)->direction;
             reg_tmp1.w = 0;
             reg_tmp.w = 0;
-            reg_tmp.h[0] = *(u16 *)(reg_a4 + 4);
+            reg_tmp.h[0] = STAGE5_MIDBOSS4_FAN(reg_a4)->direction;
             reg_tmp1.h[0] = 0xE;
             reg_tmp.w += reg_tmp1.w;
-            *(u16 *)(reg_a4 + 4) += 0xE;
+            STAGE5_MIDBOSS4_FAN(reg_a4)->direction += 0xE;
             if (reg_tmp.h[1] == 0) {
                 reg_d0.w = 0xFFFF000B;
                 reg_d2.h[1] = ENTITY(reg_a6)->y.h;
@@ -769,10 +833,10 @@ void func_001FB770() {
             }
         }
     }
-    reg_tmp.b[0] = *(u8 *)(reg_a4 + 3);
-    *(u8 *)(reg_a4 + 3) -= 1;
+    reg_tmp.b[0] = STAGE5_MIDBOSS4_FAN(reg_a4)->aimed_timer.b.countdown;
+    STAGE5_MIDBOSS4_FAN(reg_a4)->aimed_timer.b.countdown -= 1;
     if ((s32) reg_tmp.b[0] <= 0) {
-        *(u8 *)(reg_a4 + 3) = *(u8 *)(reg_a4 + 2);
+        STAGE5_MIDBOSS4_FAN(reg_a4)->aimed_timer.b.countdown = STAGE5_MIDBOSS4_FAN(reg_a4)->aimed_timer.b.interval;
         if (g_bullets_blocked == 0) {
             func_00202730();
             if (cond_flag == 0) {
@@ -822,45 +886,45 @@ void func_001FB770() {
             }
         }
     }
-    *(u16 *)(reg_a4 + 6) -= 1;
-    if (*(u16 *)(reg_a4 + 6) == 0) {
-        func_001FB6C0();
+    STAGE5_MIDBOSS4_FAN(reg_a4)->frames_left -= 1;
+    if (STAGE5_MIDBOSS4_FAN(reg_a4)->frames_left == 0) {
+        stage5_midboss4_attack_stop();
         reg_d0.w = 1;
-        func_001FAD00();
+        stage5_midboss4_set_move();
     }
 }
 
 s32 spawn_request_add();
 
-void func_001FBD90(arg1)
+void stage5_midboss4_attack_beams(arg1)
     u16 arg1;
 {
     u16 var_a1;
 
     var_a1 = arg1;
-    if (ENTITY(reg_a6)[4].offset_x.h == 0) {
+    if (STAGE5_MIDBOSS4_ATTACK(reg_a6)->started == 0) {
         reg_d0.w = 2;
-        func_001FAD00();
-        *(s16 *)reg_a4 = 0x2828;
+        stage5_midboss4_set_move();
+        STAGE5_MIDBOSS4_BEAMS(reg_a4)->timer.both = 0x2828;
         rng_next_unsigned();
         reg_d0.h[0] &= 1;
         var_a1 = reg_d0.h[0];
-        *(u16 *)(reg_a4 + 2) = var_a1;
-        ENTITY(reg_a6)[4].offset_x.h = 1U;
+        STAGE5_MIDBOSS4_BEAMS(reg_a4)->left = var_a1;
+        STAGE5_MIDBOSS4_ATTACK(reg_a6)->started = 1U;
     }
-    reg_tmp.b[0] = *(u8 *)(reg_a4 + 1);
-    *(u8 *)(reg_a4 + 1) -= 1;
+    reg_tmp.b[0] = STAGE5_MIDBOSS4_BEAMS(reg_a4)->timer.b.countdown;
+    STAGE5_MIDBOSS4_BEAMS(reg_a4)->timer.b.countdown -= 1;
     if ((s32) reg_tmp.b[0] <= 0) {
-        *(u8 *)(reg_a4 + 1) = *(u8 *)reg_a4;
+        STAGE5_MIDBOSS4_BEAMS(reg_a4)->timer.b.countdown = STAGE5_MIDBOSS4_BEAMS(reg_a4)->timer.b.interval;
         if (g_bullets_blocked == 0) {
-            reg_d0.w = 0x53;
+            reg_d0.w = ENEMY_STAGE5_MIDBOSS4_WAVE_BEAM;
             spawn_request_add();
             reg_tmp.w = (u32) reg_a6;
-            *(u16 *)(reg_a0 + 0x16) = (u16) reg_tmp.h[1];
-            *(u16 *)(reg_a0 + 0x18) = (u16) reg_tmp.h[0];
-            *(u16 *)(reg_a0 + 0x1A) = (u16) *(u16 *)(reg_a4 + 2);
-            *(u16 *)(reg_a4 + 2) += 1;
-            *(u16 *)(reg_a4 + 2) &= 1;
+            STAGE5_MIDBOSS4_WAVE_BEAM(reg_a0)->owner[0] = (u16) reg_tmp.h[1];
+            STAGE5_MIDBOSS4_WAVE_BEAM(reg_a0)->owner[1] = (u16) reg_tmp.h[0];
+            STAGE5_MIDBOSS4_WAVE_BEAM(reg_a0)->left = (u16) STAGE5_MIDBOSS4_BEAMS(reg_a4)->left;
+            STAGE5_MIDBOSS4_BEAMS(reg_a4)->left += 1;
+            STAGE5_MIDBOSS4_BEAMS(reg_a4)->left &= 1;
         }
     }
 }
@@ -877,22 +941,22 @@ s32 vibration_start_pad2();
 extern u16 D_00265EC0[];
 extern u16 D_00265F10[];
 
-void func_001FBE90(void) {
+void stage5_midboss4_dying(void) {
     u16 temp_a0_2;
     u16 temp_a0_3;
     u8 temp_a0;
 
-    if (ENTITY(reg_a6)[5].misc.b.draw_layer != 0) {
-        reg_d1.h[0] = ENTITY(reg_a6)[5].look.h;
+    if (STAGE5_MIDBOSS4_DAMAGE(reg_a6)->dying != 0) {
+        reg_d1.h[0] = STAGE5_MIDBOSS4_DAMAGE(reg_a6)->hit_by;
         func_00201710();
-        temp_a0 = ENTITY(reg_a6)[5].offset_y.b[1];
+        temp_a0 = STAGE5_MIDBOSS4_DAMAGE(reg_a6)->dying_step;
         if (temp_a0 == 2) {
-            ENTITY(reg_a6)[5].misc.sb.user = 1;
-            goto block_set;
+            STAGE5_MIDBOSS4_DAMAGE(reg_a6)->gone = 1;
+            goto over;
         }
         if (temp_a0 == 1) {
-            ENTITY(reg_a6)[5].offset_x.b[1] -= 1;
-            if (ENTITY(reg_a6)[5].offset_x.b[1] == 0) {
+            STAGE5_MIDBOSS4_DAMAGE(reg_a6)->blast_timer.b.countdown -= 1;
+            if (STAGE5_MIDBOSS4_DAMAGE(reg_a6)->blast_timer.b.countdown == 0) {
                 reg_d2.h[1] = ENTITY(reg_a6)->y.h;
                 reg_d2.h[0] = ENTITY(reg_a6)->x.h;
                 reg_a1 = (u8 *)(D_00265F10);
@@ -920,20 +984,20 @@ void func_001FBE90(void) {
                 reg_d0.h[0] = 0;
                 explosion_burst_small();
                 sfx_explosion_extra_1();
-                ENTITY(reg_a6)[5].offset_x.b[1] = 0x10U;
-                ENTITY(reg_a6)[5].offset_y.b[1] = 2U;
+                STAGE5_MIDBOSS4_DAMAGE(reg_a6)->blast_timer.b.countdown = 0x10U;
+                STAGE5_MIDBOSS4_DAMAGE(reg_a6)->dying_step = 2U;
                 vibration_start_pad1(0xB4, 0x3C, 0x10);
                 vibration_start_pad2(0xB4, 0x3C);
             }
         }
-        if (ENTITY(reg_a6)[5].offset_y.b[1] == 0) {
-            reg_tmp.b[0] = ENTITY(reg_a6)[5].offset_x.b[1];
-            ENTITY(reg_a6)[5].offset_x.b[1] -= 1;
+        if (STAGE5_MIDBOSS4_DAMAGE(reg_a6)->dying_step == 0) {
+            reg_tmp.b[0] = STAGE5_MIDBOSS4_DAMAGE(reg_a6)->blast_timer.b.countdown;
+            STAGE5_MIDBOSS4_DAMAGE(reg_a6)->blast_timer.b.countdown -= 1;
             if ((s32) reg_tmp.b[0] <= 0) {
-                ENTITY(reg_a6)[5].offset_x.b[1] = (u8) ENTITY(reg_a6)[5].offset_x.b[0];
+                STAGE5_MIDBOSS4_DAMAGE(reg_a6)->blast_timer.b.countdown = (u8) STAGE5_MIDBOSS4_DAMAGE(reg_a6)->blast_timer.b.interval;
                 sfx_explosion_air_medium();
                 reg_a1 = (u8 *)(D_00265EC0);
-                reg_a1 += ENTITY(reg_a6)[5].draw.h;
+                reg_a1 += STAGE5_MIDBOSS4_DAMAGE(reg_a6)->blast;
                 reg_d1.h[0] = *(u16 *)reg_a1;
                 reg_a1 += 2;
                 reg_d0.h[0] = *(u16 *)reg_a1;
@@ -956,23 +1020,23 @@ void func_001FBE90(void) {
                 reg_d0.b[0] = ENTITY(reg_a6)->move.b.dir;
                 reg_d0.b[0] *= 4;
                 *(u8 *)(reg_a0 + 0x1A) = (u8) reg_d0.b[0];
-                ENTITY(reg_a6)[5].draw.h += 0xC;
-                if (ENTITY(reg_a6)[5].draw.h == 0x48) {
-                    ENTITY(reg_a6)[5].draw.h = 0U;
-                    ENTITY(reg_a6)[5].sprite.h -= 1;
-                    if (ENTITY(reg_a6)[5].sprite.h == 0) {
-                        ENTITY(reg_a6)[5].offset_x.h = 0x1006;
-                        ENTITY(reg_a6)[5].offset_y.b[1] = 1U;
+                STAGE5_MIDBOSS4_DAMAGE(reg_a6)->blast += 0xC;
+                if (STAGE5_MIDBOSS4_DAMAGE(reg_a6)->blast == 0x48) {
+                    STAGE5_MIDBOSS4_DAMAGE(reg_a6)->blast = 0U;
+                    STAGE5_MIDBOSS4_DAMAGE(reg_a6)->blast_rounds -= 1;
+                    if (STAGE5_MIDBOSS4_DAMAGE(reg_a6)->blast_rounds == 0) {
+                        STAGE5_MIDBOSS4_DAMAGE(reg_a6)->blast_timer.both = 0x1006;
+                        STAGE5_MIDBOSS4_DAMAGE(reg_a6)->dying_step = 1U;
                     }
                 }
             }
         }
-        goto block_11;
+        goto not_over;
     }
-block_11:
+not_over:
     cond_flag = 0;
     return;
-block_set:
+over:
     cond_flag = 1;
 }
 
@@ -995,110 +1059,110 @@ void stage5_midboss4_wave_beam_start(void) {
         reg_a0 += 2;
         reg_a1 += 2;
     } while ((s16)(--reg_d0.h[0]) >= 0);
-    if (*(u16 *)(reg_a5 + 0x1A) != 0) {
+    if (STAGE5_MIDBOSS4_WAVE_BEAM(reg_a5)->left != 0) {
         ENTITY(reg_a6)->attr.h |= 0x40;
     }
 }
 
 s32 sfx_shockwave();
-s32 func_001FC8E0();
+s32 stage5_midboss4_wave_beam_fire();
 extern u8 D_00266160[];
 extern u8 D_0028E2E4;
 
 void stage5_midboss4_wave_beam(void) {
     if (D_0028E2E4 != 0) return;
     ENTITY(reg_a6)->hp.sh = 0x7FFF;
-    if (g_enemy_signal_1 == 0) goto block_end1;
-    reg_tmp.h[1] = *(u16 *)(reg_a5 + 0x16);
-    reg_tmp.h[0] = *(u16 *)(reg_a5 + 0x18);
+    if (g_enemy_signal_1 == 0) goto remove;
+    reg_tmp.h[1] = STAGE5_MIDBOSS4_WAVE_BEAM(reg_a5)->owner[0];
+    reg_tmp.h[0] = STAGE5_MIDBOSS4_WAVE_BEAM(reg_a5)->owner[1];
     reg_a0 = (u8 *)reg_tmp.w;
-    reg_d0.h[1] = *(u16 *)(reg_a0 + 2);
-    reg_d0.h[0] = *(u16 *)(reg_a0 + 4);
-    if (*(u16 *)(reg_a5 + 0x1A) != 0) {
+    reg_d0.h[1] = ENTITY(reg_a0)->y.h;
+    reg_d0.h[0] = ENTITY(reg_a0)->x.h;
+    if (STAGE5_MIDBOSS4_WAVE_BEAM(reg_a5)->left != 0) {
         reg_d0.w += 0xF1FFF880;
     } else {
         reg_d0.w += 0xF2000780;
     }
     ENTITY(reg_a6)->y.h = (u16) reg_d0.h[1];
     ENTITY(reg_a6)->x.h = (u16) reg_d0.h[0];
-    if (!(*(u8 *)(reg_a5 + 0x1D) & 1)) goto skip_1;
-    reg_tmp.b[0] = *(u8 *)(reg_a5 + 0x21);
-    *(u8 *)(reg_a5 + 0x21) -= 1;
-    if ((s32) reg_tmp.b[0] > 0) goto skip_1;
-    *(u8 *)(reg_a5 + 0x21) = *(u8 *)(reg_a5 + 0x20);
-    *(u16 *)(reg_a5 + 0x1E) += 4;
-    if ((s16) *(u16 *)(reg_a5 + 0x1E) < 0x60) goto skip_1;
-    *(u16 *)(reg_a5 + 0x1E) = 0;
-    *(u8 *)(reg_a5 + 0x1D) &= 0xFE;
-    *(u8 *)(reg_a5 + 0x1D) |= 0xE;
-    func_001FC8E0();
+    if (!(STAGE5_MIDBOSS4_WAVE_BEAM(reg_a5)->parts & 1)) goto charge_done;
+    reg_tmp.b[0] = STAGE5_MIDBOSS4_WAVE_BEAM(reg_a5)->charge_timer.b.countdown;
+    STAGE5_MIDBOSS4_WAVE_BEAM(reg_a5)->charge_timer.b.countdown -= 1;
+    if ((s32) reg_tmp.b[0] > 0) goto charge_done;
+    STAGE5_MIDBOSS4_WAVE_BEAM(reg_a5)->charge_timer.b.countdown = STAGE5_MIDBOSS4_WAVE_BEAM(reg_a5)->charge_timer.b.interval;
+    STAGE5_MIDBOSS4_WAVE_BEAM(reg_a5)->charge_frame += 4;
+    if ((s16) STAGE5_MIDBOSS4_WAVE_BEAM(reg_a5)->charge_frame < 0x60) goto charge_done;
+    STAGE5_MIDBOSS4_WAVE_BEAM(reg_a5)->charge_frame = 0;
+    STAGE5_MIDBOSS4_WAVE_BEAM(reg_a5)->parts &= 0xFE;
+    STAGE5_MIDBOSS4_WAVE_BEAM(reg_a5)->parts |= 0xE;
+    stage5_midboss4_wave_beam_fire();
     sfx_shockwave();
     ENTITY(reg_a6)->flags.h = 0x8001;
-skip_1:
-    if (!(*(u8 *)(reg_a5 + 0x1D) & 2)) goto skip_2;
-    reg_tmp.b[0] = *(u8 *)(reg_a5 + 0x25);
-    *(u8 *)(reg_a5 + 0x25) -= 1;
-    if ((s32) reg_tmp.b[0] > 0) goto skip_2;
-    *(u8 *)(reg_a5 + 0x25) = *(u8 *)(reg_a5 + 0x24);
-    *(u16 *)(reg_a5 + 0x22) += 0x10;
-    if ((s16) *(u16 *)(reg_a5 + 0x22) < 0x90) goto skip_2;
-    *(u16 *)(reg_a5 + 0x22) = 0;
-    *(u8 *)(reg_a5 + 0x1D) &= 0xFD;
-skip_2:
-    if (!(*(u8 *)(reg_a5 + 0x1D) & 4)) goto skip_4;
-    reg_tmp.b[0] = *(u8 *)(reg_a5 + 0x29);
-    *(u8 *)(reg_a5 + 0x29) -= 1;
-    if ((s32) reg_tmp.b[0] > 0) goto skip_3;
-    *(u8 *)(reg_a5 + 0x29) = *(u8 *)(reg_a5 + 0x28);
-    *(u16 *)(reg_a5 + 0x26) += 0x10;
-    if ((s16) *(u16 *)(reg_a5 + 0x26) < 0xD0) goto skip_3;
-    *(u16 *)(reg_a5 + 0x26) = 0;
-block_end1:
+charge_done:
+    if (!(STAGE5_MIDBOSS4_WAVE_BEAM(reg_a5)->parts & 2)) goto burst_done;
+    reg_tmp.b[0] = STAGE5_MIDBOSS4_WAVE_BEAM(reg_a5)->burst_timer.b.countdown;
+    STAGE5_MIDBOSS4_WAVE_BEAM(reg_a5)->burst_timer.b.countdown -= 1;
+    if ((s32) reg_tmp.b[0] > 0) goto burst_done;
+    STAGE5_MIDBOSS4_WAVE_BEAM(reg_a5)->burst_timer.b.countdown = STAGE5_MIDBOSS4_WAVE_BEAM(reg_a5)->burst_timer.b.interval;
+    STAGE5_MIDBOSS4_WAVE_BEAM(reg_a5)->burst_frame += 0x10;
+    if ((s16) STAGE5_MIDBOSS4_WAVE_BEAM(reg_a5)->burst_frame < 0x90) goto burst_done;
+    STAGE5_MIDBOSS4_WAVE_BEAM(reg_a5)->burst_frame = 0;
+    STAGE5_MIDBOSS4_WAVE_BEAM(reg_a5)->parts &= 0xFD;
+burst_done:
+    if (!(STAGE5_MIDBOSS4_WAVE_BEAM(reg_a5)->parts & 4)) goto wave_done;
+    reg_tmp.b[0] = STAGE5_MIDBOSS4_WAVE_BEAM(reg_a5)->wave_timer.b.countdown;
+    STAGE5_MIDBOSS4_WAVE_BEAM(reg_a5)->wave_timer.b.countdown -= 1;
+    if ((s32) reg_tmp.b[0] > 0) goto wave_hitbox;
+    STAGE5_MIDBOSS4_WAVE_BEAM(reg_a5)->wave_timer.b.countdown = STAGE5_MIDBOSS4_WAVE_BEAM(reg_a5)->wave_timer.b.interval;
+    STAGE5_MIDBOSS4_WAVE_BEAM(reg_a5)->wave_frame += 0x10;
+    if ((s16) STAGE5_MIDBOSS4_WAVE_BEAM(reg_a5)->wave_frame < 0xD0) goto wave_hitbox;
+    STAGE5_MIDBOSS4_WAVE_BEAM(reg_a5)->wave_frame = 0;
+remove:
     enemy_remove();
     return;
-skip_3:
+wave_hitbox:
     reg_a0 = (u8 *)D_00266160;
-    reg_d0.h[0] = *(u16 *)(reg_a5 + 0x26);
+    reg_d0.h[0] = STAGE5_MIDBOSS4_WAVE_BEAM(reg_a5)->wave_frame;
     reg_d0.h[0] >>= 1;
     reg_a0 += reg_d0.h[0];
     ENTITY(reg_a6)->hit_y_plus.h = *(u16 *)reg_a0;
     ENTITY(reg_a6)->hit_y_minus.h = *(u16 *)(reg_a0 + 2);
     ENTITY(reg_a6)->hit_x_plus.h = *(u16 *)(reg_a0 + 4);
     ENTITY(reg_a6)->hit_x_minus.h = *(u16 *)(reg_a0 + 6);
-    if (*(u16 *)(reg_a5 + 0x1A) != 0) {
+    if (STAGE5_MIDBOSS4_WAVE_BEAM(reg_a5)->left != 0) {
         ENTITY(reg_a6)->hit_x_plus.h = *(u16 *)(reg_a0 + 6);
         ENTITY(reg_a6)->hit_x_minus.h = *(u16 *)(reg_a0 + 4);
     }
-skip_4:
-    if (!(*(u8 *)(reg_a5 + 0x1D) & 8)) goto skip_5;
-    reg_tmp.h[1] = *(u16 *)(reg_a5 + 0x16);
-    reg_tmp.h[0] = *(u16 *)(reg_a5 + 0x18);
+wave_done:
+    if (!(STAGE5_MIDBOSS4_WAVE_BEAM(reg_a5)->parts & 8)) goto draw;
+    reg_tmp.h[1] = STAGE5_MIDBOSS4_WAVE_BEAM(reg_a5)->owner[0];
+    reg_tmp.h[0] = STAGE5_MIDBOSS4_WAVE_BEAM(reg_a5)->owner[1];
     reg_a0 = (u8 *)reg_tmp.w;
-    if (*(u16 *)(reg_a5 + 0x1A) != 0) {
+    if (STAGE5_MIDBOSS4_WAVE_BEAM(reg_a5)->left != 0) {
         reg_a0 = reg_a0 + 0x26;
     } else {
         reg_a0 = reg_a0 + 0x46;
     }
-    if (*(u16 *)reg_a0 == 0x280) goto skip_5;
+    if (*(u16 *)reg_a0 == 0x280) goto draw;
     *(u16 *)reg_a0 += 0x100;
-    if ((s16) *(u16 *)reg_a0 < 0x280) goto skip_5;
+    if ((s16) *(u16 *)reg_a0 < 0x280) goto draw;
     *(u16 *)reg_a0 = 0x280;
-    *(u8 *)(reg_a5 + 0x1D) &= 0xF7;
-skip_5:
-    func_001FC670();
-    func_001FC710();
-    func_001FC7F0();
+    STAGE5_MIDBOSS4_WAVE_BEAM(reg_a5)->parts &= 0xF7;
+draw:
+    stage5_midboss4_wave_beam_draw_charge();
+    stage5_midboss4_wave_beam_draw_burst();
+    stage5_midboss4_wave_beam_draw_wave();
     reg_a0 = (u8 *)reg_a6;
     enemy_hitbox_debug_draw();
 }
 
 extern u8 D_00265FA0[];
 
-void func_001FC670(void) {
+void stage5_midboss4_wave_beam_draw_charge(void) {
     void sprite_draw_layer5(void);
-    if ((*(u8 *)(reg_a5 + 0x1D)) & 1) {
+    if ((STAGE5_MIDBOSS4_WAVE_BEAM(reg_a5)->parts) & 1) {
         reg_a0 = D_00265FA0;
-        reg_a0 += *(u16 *)(reg_a5 + 0x1E);
+        reg_a0 += STAGE5_MIDBOSS4_WAVE_BEAM(reg_a5)->charge_frame;
         reg_d2.h[1] = *(u16 *)(reg_a0 + 0);
         reg_d2.h[0] = *(u16 *)(reg_a0 + 2);
         reg_d1.h[1] = ENTITY(reg_a6)->y.h;
@@ -1112,19 +1176,19 @@ void func_001FC670(void) {
 
 extern u8 D_00266000[];
 
-void func_001FC710(void) {
+void stage5_midboss4_wave_beam_draw_burst(void) {
     s32 sprite_draw_layer5();
     u32 temp_a0;
 
-    if (*(u8 *)(reg_a5 + 0x1D) & 2) {
+    if (STAGE5_MIDBOSS4_WAVE_BEAM(reg_a5)->parts & 2) {
         reg_a0 = (u8 *)D_00266000;
-        reg_a0 += *(u16 *)(reg_a5 + 0x22);
+        reg_a0 += STAGE5_MIDBOSS4_WAVE_BEAM(reg_a5)->burst_frame;
         reg_d2.h[1] = *(u16 *)reg_a0;
         reg_d2.h[0] = *(u16 *)(reg_a0 + 2);
         reg_d1.h[1] = ENTITY(reg_a6)->y.h;
         reg_d1.h[0] = ENTITY(reg_a6)->x.h;
         reg_d1.h[0] += 0x180;
-        if (*(u16 *)(reg_a5 + 0x1A) != 0) {
+        if (STAGE5_MIDBOSS4_WAVE_BEAM(reg_a5)->left != 0) {
             reg_d1.h[0] += 0x7FFF + 0x7E01;
         } else {
             reg_d1.h[0] += 0x100;
@@ -1141,13 +1205,13 @@ void func_001FC710(void) {
 
 extern u8 D_00266090[];
 
-void func_001FC7F0(void) {
+void stage5_midboss4_wave_beam_draw_wave(void) {
     s32 sprite_draw_layer5();
     u32 temp_a0;
 
-    if (*(u8 *)(reg_a5 + 0x1D) & 4) {
+    if (STAGE5_MIDBOSS4_WAVE_BEAM(reg_a5)->parts & 4) {
         reg_a0 = (u8 *)D_00266090;
-        reg_a0 += *(u16 *)(reg_a5 + 0x26);
+        reg_a0 += STAGE5_MIDBOSS4_WAVE_BEAM(reg_a5)->wave_frame;
         reg_d2.h[1] = *(u16 *)reg_a0;
         reg_d2.h[0] = *(u16 *)(reg_a0 + 2);
         reg_d1.h[1] = ENTITY(reg_a6)->y.h;
@@ -1155,7 +1219,7 @@ void func_001FC7F0(void) {
         reg_tmp.h[1] = *(u16 *)(reg_a0 + 4);
         reg_tmp.h[0] = *(u16 *)(reg_a0 + 6);
         reg_d1.w += reg_tmp.w;
-        if (*(u16 *)(reg_a5 + 0x1A) != 0) {
+        if (STAGE5_MIDBOSS4_WAVE_BEAM(reg_a5)->left != 0) {
             reg_d1.h[0] += 0x7FFF + 0x7D81;
         } else {
             reg_d1.h[0] += 0x280;

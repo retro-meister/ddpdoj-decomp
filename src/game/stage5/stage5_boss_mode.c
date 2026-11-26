@@ -157,7 +157,7 @@ void stage5_boss_mode_form1_idle_start(void) {
 
 s32 boss_phase_start();
 s32 func_0013B2E0();
-s32 func_001F5640();
+s32 stage5_boss_form1_take_hits();
 extern u8 stage5_boss_fade_palettes_b[];
 extern s16 g_boss_hyper_wait_as_s16;
 extern u8 *g_boss_hp;
@@ -195,7 +195,7 @@ void stage5_boss_mode_form1_idle() {
         } else {
             g_true_last_boss_as_s16 = 1;
         }
-        func_001F5640();
+        stage5_boss_form1_take_hits();
         reg_a0 = (u8 *)stage5_boss_fade_palettes_b;
         func_0013B2E0();
         reg_d0.w = 6;
@@ -444,9 +444,9 @@ void stage5_boss_mode_form1_to_form2_start(void) {
 
 s32 boss_part_show();
 s32 boss_part_hide();
-s32 func_001F5630();
-s32 func_001F56F0();
-s32 func_001F57C0();
+s32 stage5_boss_shield_off();
+s32 stage5_boss_form2_take_hits();
+s32 stage5_boss_start_damage();
 s32 slowdown_turn_off();
 
 void stage5_boss_mode_form1_to_form2() {
@@ -494,9 +494,9 @@ void stage5_boss_mode_form1_to_form2() {
             reg_tmp.w = 0x23000;
             STAGE5_BOSS(reg_a5)->hp[0] = (u16) reg_tmp.h[1];
             STAGE5_BOSS(reg_a5)->hp[1] = (u16) reg_tmp.h[0];
-            func_001F5630();
-            func_001F56F0();
-            func_001F57C0();
+            stage5_boss_shield_off();
+            stage5_boss_form2_take_hits();
+            stage5_boss_start_damage();
             slowdown_turn_off();
         }
     } else {
@@ -710,7 +710,7 @@ void stage5_boss_mode_form2_to_form3_start(void) {
 s32 boss_movement_stop();
 s32 boss_animation_start();
 s32 music_play_bgm9();
-s32 func_001F5730();
+s32 stage5_boss_form3_take_hits();
 extern void *g_boss_hp_as_void_p;
 extern u16 g_true_last_boss;
 extern u16 D_00299768_as_u16_a[];
@@ -772,9 +772,9 @@ void stage5_boss_mode_form2_to_form3() {
             g_boss_present_b1 |= 1;
             g_boss_present_b1 |= 4;
             g_boss_present |= 1;
-            func_001F5630();
-            func_001F5730();
-            func_001F57C0();
+            stage5_boss_shield_off();
+            stage5_boss_form3_take_hits();
+            stage5_boss_start_damage();
             D_00299768_as_u16_a[0] = 1;
             D_0029976A_as_u16_a[0] = 1;
             D_0029976C[0] = 1;
@@ -1365,7 +1365,7 @@ block_4:
         if (temp_v1 != 0) {
             *(u16 *)(reg_a4 + 4) = (u16) (temp_v1 - 1);
             if (*(u16 *)(reg_a4 + 4) == 0) {
-                func_001F5630();
+                stage5_boss_shield_off();
             }
         }
     }
@@ -1537,7 +1537,7 @@ void stage5_boss_mode_form3_rage() {
         if (*(u16 *)(reg_a4 + 2) == 0) {
             reg_d0.w = 0xD;
             boss_attack_start();
-            func_001F5630();
+            stage5_boss_shield_off();
         }
     }
 }

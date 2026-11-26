@@ -2,6 +2,14 @@
 #include "entity.h"
 #include "stage5_boss.h"
 
+typedef struct {
+    /* 0x00 */ s16 running;
+    /* 0x02 */ SlotTimer frame;
+} FrameStep;
+
+#define STEP(pointer) ((FrameStep *)(pointer))
+
+
 void stage5_boss_head_anim_start(void);
 void stage5_boss_head_anim(void);
 void stage5_boss_belly_anim_start(void);
@@ -47,21 +55,21 @@ void stage5_boss_form2_wings_anim(void);
 void stage5_boss_form3_tail_track(void);
 void stage5_boss_form3_body_anim(void);
 void stage5_boss_form3_bomb_barrier_anim(void);
-void func_001E8FF0(void);
+void stage5_boss_direction_turn_limited(void);
 
 
 
 void stage5_boss_head_anim_start(void) {
-    *(s16 *)(reg_a4 + 2) = 1;
+    STEP(reg_a4)->frame.sh = 1;
     STAGE5_EXTRA(reg_a6)->head_anim = 0;
     stage5_boss_head_anim();
 }
 
 void stage5_boss_head_anim(void) {
-    reg_tmp.b[0] = *(u8 *)(reg_a4 + 3);
-    *(u8 *)(reg_a4 + 3) -= 1;
+    reg_tmp.b[0] = STEP(reg_a4)->frame.t.count;
+    STEP(reg_a4)->frame.t.count -= 1;
     if ((s32) reg_tmp.b[0] <= 0) {
-        *(u8 *)(reg_a4 + 3) = (u8) *(u8 *)(reg_a4 + 2);
+        STEP(reg_a4)->frame.t.count = (u8) STEP(reg_a4)->frame.t.reload;
         STAGE5_EXTRA(reg_a6)->head_anim += 4;
         if (STAGE5_EXTRA(reg_a6)->head_anim == 0x18) {
             STAGE5_EXTRA(reg_a6)->head_anim = 0U;
@@ -71,16 +79,16 @@ void stage5_boss_head_anim(void) {
 
 
 void stage5_boss_belly_anim_start(void) {
-    *(s16 *)(reg_a4 + 2) = 2;
+    STEP(reg_a4)->frame.sh = 2;
     STAGE5_EXTRA(reg_a6)->belly_anim = 0;
     stage5_boss_belly_anim();
 }
 
 void stage5_boss_belly_anim(void) {
-    reg_tmp.b[0] = *(u8 *)(reg_a4 + 3);
-    *(u8 *)(reg_a4 + 3) -= 1;
+    reg_tmp.b[0] = STEP(reg_a4)->frame.t.count;
+    STEP(reg_a4)->frame.t.count -= 1;
     if ((s32) reg_tmp.b[0] <= 0) {
-        *(u8 *)(reg_a4 + 3) = (u8) *(u8 *)(reg_a4 + 2);
+        STEP(reg_a4)->frame.t.count = (u8) STEP(reg_a4)->frame.t.reload;
         STAGE5_EXTRA(reg_a6)->belly_anim += 4;
         if (STAGE5_EXTRA(reg_a6)->belly_anim == 0x18) {
             STAGE5_EXTRA(reg_a6)->belly_anim = 0U;
@@ -90,7 +98,7 @@ void stage5_boss_belly_anim(void) {
 
 
 void stage5_boss_arm_guns_track_start(void) {
-    *(s16 *)(reg_a4 + 2) = 1;
+    STEP(reg_a4)->frame.sh = 1;
     stage5_boss_arm_guns_track();
 }
 
@@ -104,10 +112,10 @@ void stage5_boss_arm_guns_track(void) {
     s16 *temp_a0;
     u16 temp_a1;
 
-    reg_tmp.b[0] = *(u8 *)(reg_a4 + 3);
-    *(u8 *)(reg_a4 + 3) -= 1;
+    reg_tmp.b[0] = STEP(reg_a4)->frame.t.count;
+    STEP(reg_a4)->frame.t.count -= 1;
     if ((s32) reg_tmp.b[0] <= 0) {
-        *(u8 *)(reg_a4 + 3) = (u8) *(u8 *)(reg_a4 + 2);
+        STEP(reg_a4)->frame.t.count = (u8) STEP(reg_a4)->frame.t.reload;
         reg_a0 = (u8 *)(g_player1);
         reg_a1 = (u8 *)(g_player2);
         if (ENEMY_STATE(reg_a5)->target_player != 0) {
@@ -200,16 +208,16 @@ block_6:
 
 
 void stage5_boss_form2_exhaust_anim_start(void) {
-    *(u16 *)(reg_a4 + 2) = 0;
+    STEP(reg_a4)->frame.h = 0;
     STAGE5_EXTRA(reg_a6)->exhaust_anim = 0;
     stage5_boss_form2_exhaust_anim();
 }
 
 void stage5_boss_form2_exhaust_anim(void) {
-    reg_tmp.b[0] = *(u8 *)(reg_a4 + 3);
-    *(u8 *)(reg_a4 + 3) -= 1;
+    reg_tmp.b[0] = STEP(reg_a4)->frame.t.count;
+    STEP(reg_a4)->frame.t.count -= 1;
     if ((s32) reg_tmp.b[0] <= 0) {
-        *(u8 *)(reg_a4 + 3) = (u8) *(u8 *)(reg_a4 + 2);
+        STEP(reg_a4)->frame.t.count = (u8) STEP(reg_a4)->frame.t.reload;
         STAGE5_EXTRA(reg_a6)->exhaust_anim += 4;
         if (STAGE5_EXTRA(reg_a6)->exhaust_anim == 0xC) {
             STAGE5_EXTRA(reg_a6)->exhaust_anim = 0U;
@@ -219,16 +227,16 @@ void stage5_boss_form2_exhaust_anim(void) {
 
 
 void stage5_boss_form2_wings_anim_start(void) {
-    ((u16 *)((void *)reg_a4))[1] = 1;
-    *(u16 *)((u8 *)((void *)reg_a6) + 0x12C) = 0;
+    STEP(reg_a4)->frame.h = 1;
+    STAGE5_EXTRA(reg_a6)->wings_anim = 0;
     stage5_boss_form2_wings_anim();
 }
 
 void stage5_boss_form2_wings_anim(void) {
-    reg_tmp.b[0] = *(u8 *)(reg_a4 + 3);
-    *(u8 *)(reg_a4 + 3) -= 1;
+    reg_tmp.b[0] = STEP(reg_a4)->frame.t.count;
+    STEP(reg_a4)->frame.t.count -= 1;
     if ((s32) reg_tmp.b[0] <= 0) {
-        *(u8 *)(reg_a4 + 3) = (u8) *(u8 *)(reg_a4 + 2);
+        STEP(reg_a4)->frame.t.count = (u8) STEP(reg_a4)->frame.t.reload;
         STAGE5_EXTRA(reg_a6)->wings_anim += 6;
         if (STAGE5_EXTRA(reg_a6)->wings_anim == 0x90) {
             STAGE5_EXTRA(reg_a6)->wings_anim = 0x5AU;
@@ -238,7 +246,7 @@ void stage5_boss_form2_wings_anim(void) {
 
 
 void stage5_boss_form3_tail_track_start(void) {
-    *(s16 *)((u8 *)((void *)reg_a4) + 2) = 1;
+    STEP(reg_a4)->frame.sh = 1;
     stage5_boss_form3_tail_track();
 }
 
@@ -247,10 +255,10 @@ void stage5_boss_form3_tail_track_start(void) {
 void stage5_boss_form3_tail_track(void) {
     s16 *temp_a0;
 
-    reg_tmp.b[0] = *(u8 *)(reg_a4 + 3);
-    *(u8 *)(reg_a4 + 3) -= 1;
+    reg_tmp.b[0] = STEP(reg_a4)->frame.t.count;
+    STEP(reg_a4)->frame.t.count -= 1;
     if ((s32) reg_tmp.b[0] <= 0) {
-        *(u8 *)(reg_a4 + 3) = (u8) *(u8 *)(reg_a4 + 2);
+        STEP(reg_a4)->frame.t.count = (u8) STEP(reg_a4)->frame.t.reload;
         reg_a0 = (u8 *)(g_player1);
         reg_a1 = (u8 *)(g_player2);
         if (ENEMY_STATE(reg_a5)->target_player != 0) {
@@ -276,7 +284,7 @@ block_6:
                 reg_d0.h[0] += 0x7FFF + 0x77C1;
                 direction_between();
                 reg_d3.h[0] = STAGE5_EXTRA(reg_a6)->tail_direction;
-                func_001E8FF0();
+                stage5_boss_direction_turn_limited();
                 if (cond_flag == 0) {
                     STAGE5_EXTRA(reg_a6)->tail_direction = (u16) reg_d1.h[0];
                 }
@@ -293,15 +301,15 @@ typedef struct PartReg {
 
 void stage5_boss_form3_body_anim_start(void) {
     ((PartReg *)reg_a4)->unk2 = 1;
-    *(s16 *)((u8 *)((void *)reg_a6) + 0x132) = 0;
+    STAGE5_EXTRA(reg_a6)->form3_body_anim = 0;
     stage5_boss_form3_body_anim();
 }
 
 void stage5_boss_form3_body_anim(void) {
-    reg_tmp.b[0] = *(u8 *)(reg_a4 + 3);
-    *(u8 *)(reg_a4 + 3) -= 1;
+    reg_tmp.b[0] = STEP(reg_a4)->frame.t.count;
+    STEP(reg_a4)->frame.t.count -= 1;
     if ((s32) reg_tmp.b[0] <= 0) {
-        *(u8 *)(reg_a4 + 3) = (u8) *(u8 *)(reg_a4 + 2);
+        STEP(reg_a4)->frame.t.count = (u8) STEP(reg_a4)->frame.t.reload;
         STAGE5_EXTRA(reg_a6)->form3_body_anim += 4;
         if (STAGE5_EXTRA(reg_a6)->form3_body_anim == 0x20) {
             STAGE5_EXTRA(reg_a6)->form3_body_anim = 0U;
@@ -311,16 +319,16 @@ void stage5_boss_form3_body_anim(void) {
 
 
 void stage5_boss_form3_bomb_barrier_anim_start(void) {
-    ((s16 *)((void *)reg_a4))[1] = 1;
-    *(s16 *)((u8 *)((void *)reg_a6) + 0x138) = 0;
+    STEP(reg_a4)->frame.sh = 1;
+    STAGE5_EXTRA(reg_a6)->barrier_anim = 0;
     stage5_boss_form3_bomb_barrier_anim();
 }
 
 void stage5_boss_form3_bomb_barrier_anim(void) {
-    reg_tmp.b[0] = *(u8 *)(reg_a4 + 3);
-    *(u8 *)(reg_a4 + 3) -= 1;
+    reg_tmp.b[0] = STEP(reg_a4)->frame.t.count;
+    STEP(reg_a4)->frame.t.count -= 1;
     if ((s32) reg_tmp.b[0] <= 0) {
-        *(u8 *)(reg_a4 + 3) = (u8) *(u8 *)(reg_a4 + 2);
+        STEP(reg_a4)->frame.t.count = (u8) STEP(reg_a4)->frame.t.reload;
         STAGE5_EXTRA(reg_a6)->barrier_anim += 4;
         if (STAGE5_EXTRA(reg_a6)->barrier_anim == 0x40) {
             STAGE5_EXTRA(reg_a6)->barrier_anim = 0U;
@@ -328,7 +336,7 @@ void stage5_boss_form3_bomb_barrier_anim(void) {
     }
 }
 
-void func_001E8FF0(void) {
+void stage5_boss_direction_turn_limited(void) {
     if (reg_d3.b[0] != reg_d1.b[0]) {
         reg_d6.w = 0x3F;
         if (((s32) reg_d1.b[0] < 0x18) || ((s32) reg_d1.b[0] > 0x28)) {

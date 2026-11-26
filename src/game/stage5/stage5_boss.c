@@ -13,7 +13,7 @@ s32 boss_part_show();
 s32 enemy_set_task_state();
 s32 enemy_init_entities();
 s32 sprite_palette_load();
-s32 func_001F5750();
+s32 stage5_boss_form1_stop_hits();
 extern u8 D_0025FF70[];
 extern u8 D_0025FFB0[];
 extern u8 D_0025FFF0[];
@@ -113,17 +113,17 @@ void stage5_boss_start(void) {
     D_00299768[0] = 1;
     D_0029976A[0] = 1;
     D_0029976C_as_s16_a[0] = 1;
-    func_001F5750();
+    stage5_boss_form1_stop_hits();
 }
 
 s32 enemy_remove();                           /* extern */
 s32 boss_slots_run();                            /* extern */
 s32 enemy_hitbox_debug_draw();                            /* extern */
-s32 func_001F4EB0();                            /* extern */
+s32 stage5_boss_form1_take_damage();                            /* extern */
 s32 func_002035A0();                            /* extern */
 
 void stage5_boss_main(void) {
-    func_001F4EB0();
+    stage5_boss_form1_take_damage();
     boss_slots_run();
     if (cond_flag != 0) {
         func_002035A0();

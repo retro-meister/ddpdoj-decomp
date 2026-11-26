@@ -219,7 +219,7 @@ void death_func_00223C50(void) {
     death_func_00223C90();
 }
 
-s32 func_001F5630();
+s32 stage5_boss_shield_off();
 
 void death_func_00223C90(void) {
     if ((*(u16 *)(reg_a4 + 2) != 0) && (g_bullets_blocked == 0)) {
@@ -229,7 +229,7 @@ void death_func_00223C90(void) {
             boss_attack_start();
             reg_d0.w = 0x17;
             boss_attack_start();
-            func_001F5630();
+            stage5_boss_shield_off();
         }
     }
 }
@@ -251,7 +251,7 @@ void death_func_00223D40(void) {
             boss_attack_start();
             reg_d0.w = 0x1d;
             boss_attack_start();
-            func_001F5630();
+            stage5_boss_shield_off();
         }
     }
 }

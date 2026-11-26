@@ -2,13 +2,13 @@
 #include "entity.h"
 #include "stage5_boss.h"
 
-void func_001F5520(void);
-void func_001F5620(void);
-void func_001F5750(void);
-void func_001F57D0(void);
-void func_001F57E0(void);
-void func_001F5850(void);
-void func_001F5BB0(void);
+void stage5_boss_form1_defeated(void);
+void stage5_boss_shield_on(void);
+void stage5_boss_form1_stop_hits(void);
+void stage5_boss_stop_damage(void);
+void stage5_boss_form1_time_limit(void);
+void stage5_boss_form2_take_damage(void);
+void stage5_boss_form2_defeated(void);
 
 s32 boss_phase_stop_all();
 s32 boss_attack_stop_all();
@@ -23,7 +23,7 @@ extern u16 g_damage_blink_counter;
 #define W(o) (*(u16 *)(reg_a6 + (o)))
 #define TW(o) (*(u16 *)(reg_a5 + (o)))
 
-void func_001F4EB0(void) {
+void stage5_boss_form1_take_damage(void) {
     s32 boss_phase_start();
     s32 active_players_mask();
     s32 top;
@@ -40,7 +40,7 @@ void func_001F4EB0(void) {
 
     if (W(0x106) != 0) return;
     if (STAGE5_DAMAGE(reg_a6)->form != 0) {
-        func_001F5850();
+        stage5_boss_form2_take_damage();
         return;
     }
     reg_d1.b[0] = ENTITY(reg_a6)->flags.b[1];
@@ -204,13 +204,13 @@ next_9:
 next_6:
     if (D_0028E2E8 != 0) goto next_7;
     g_boss_score = 0x70000;
-    func_001F5520();
+    stage5_boss_form1_defeated();
     return;
 next_7:
     reg_d1.h[0] = W(0x10A);
     reg_d0.w = 0x70000;
     score_add();
-    func_001F5520();
+    stage5_boss_form1_defeated();
     return;
 block_chk:
     if (STAGE5_DAMAGE(reg_a6)->form1_second_phase != 0) goto next_8;
@@ -225,11 +225,11 @@ next_10:
     boss_phase_stop_all();
     reg_d0.w = 0xE;
     boss_phase_start();
-    func_001F5620();
+    stage5_boss_shield_on();
     STAGE5_DAMAGE(reg_a6)->form1_second_phase = 1;
     func_002016D0();
 next_8:
-    func_001F57E0();
+    stage5_boss_form1_time_limit();
 }
 
 s32 boss_phase_stop_all();                            /* extern */
@@ -242,7 +242,7 @@ s32 func_00203460();                            /* extern */
 s32 slowdown_turn_off();                            /* extern */
 extern u8 g_boss_present_b1;
 
-void func_001F5520(void) {
+void stage5_boss_form1_defeated(void) {
     s32 boss_phase_start(s32, s32, s32, s32);
     music_stop();
     slowdown_turn_off();
@@ -258,8 +258,8 @@ void func_001F5520(void) {
     func_002016D0();
     boss_attack_stop_all();
     boss_phase_stop_all();
-    func_001F57D0();
-    func_001F5750();
+    stage5_boss_stop_damage();
+    stage5_boss_form1_stop_hits();
     reg_d0.w = 2;
     boss_animation_stop();
     reg_tmp.w = -1U;
@@ -273,15 +273,15 @@ void func_001F5520(void) {
     boss_phase_start(0x16, 0x12, 0x11, 0x10);
 }
 
-void func_001F5620(void) {
+void stage5_boss_shield_on(void) {
     STAGE5_DAMAGE(reg_a6)->shielded = 1;
 }
 
-void func_001F5630(void) {
+void stage5_boss_shield_off(void) {
     STAGE5_DAMAGE(reg_a6)->shielded = 0;
 }
 
-void func_001F5640(void) {
+void stage5_boss_form1_take_hits(void) {
     reg_d0.h[0] = 0xA001;
     ENTITY(reg_a6)->flags.h |= reg_d0.h[0];
     ENTITY(reg_a6)[1].flags.h |= reg_d0.h[0];
@@ -293,14 +293,14 @@ void func_001F5640(void) {
     ENTITY(reg_a6)[13].flags.h |= reg_d0.h[0];
 }
 
-void func_001F56F0(void) {
+void stage5_boss_form2_take_hits(void) {
     reg_d0.h[0] = 0xA001;
     ENTITY(reg_a6)[10].flags.h |= reg_d0.h[0];
     ENTITY(reg_a6)[11].flags.h |= reg_d0.h[0];
 }
 
 
-void func_001F5730(void) {
+void stage5_boss_form3_take_hits(void) {
     u16 *flags;
     u32 combined;
 
@@ -315,7 +315,7 @@ void func_001F5730(void) {
 #endif
 }
 
-void func_001F5750(void) {
+void stage5_boss_form1_stop_hits(void) {
     reg_d0.h[0] = 0x8000;
     ENTITY(reg_a6)->flags.h = (u16) reg_d0.h[0];
     ENTITY(reg_a6)[1].flags.h = (u16) reg_d0.h[0];
@@ -328,17 +328,17 @@ void func_001F5750(void) {
 }
 
 
-void func_001F57C0(void) {
-    *(s16*)(reg_a6 + 0x106) = 0;
+void stage5_boss_start_damage(void) {
+    STAGE5_DAMAGE(reg_a6)->stopped = 0;
 }
 
-void func_001F57D0(void) {
+void stage5_boss_stop_damage(void) {
     STAGE5_DAMAGE(reg_a6)->stopped = 1;
 }
 
 extern u16 g_enemies_stopped;
 
-void func_001F57E0(void) {
+void stage5_boss_form1_time_limit(void) {
     void active_players_mask(void);
 #ifdef DEATH_LABEL
     if ((g_enemies_stopped == 0) && (STAGE5_BOSS(reg_a5)->time_left == 0)) {
@@ -351,20 +351,20 @@ void func_001F57E0(void) {
             return;
         }
         STAGE5_DAMAGE(reg_a6)->hit_by = 0;
-        func_001F5520();
+        stage5_boss_form1_defeated();
     }
 }
 
-s32 func_001F5C90();
-s32 func_001F5D00();
+s32 stage5_boss_form2_time_limit();
+s32 stage5_boss_form3_take_damage();
 
-void func_001F5850(void) {
+void stage5_boss_form2_take_damage(void) {
     s32 active_players_mask();
     u32 big;
     u16 t;
 
     if (STAGE5_DAMAGE(reg_a6)->form != 1) {
-        func_001F5D00();
+        stage5_boss_form3_take_damage();
         return;
     }
     reg_d1.b[0] = ENTITY(reg_a6)[10].flags.b[1];
@@ -471,10 +471,10 @@ next_8:
     reg_d1.h[0] = *(u16 *) (reg_a6 + 0x10A);
     reg_d0.w = 0x80000;
     score_add();
-    func_001F5BB0();
+    stage5_boss_form2_defeated();
     return;
 next_9:
-    func_001F5C90();
+    stage5_boss_form2_time_limit();
 }
 
 s32 boss_part_hide();
@@ -482,14 +482,14 @@ s32 func_0013F3C0();
 s32 music_stop();
 s32 slowdown_turn_off();
 
-void func_001F5BB0(void) {
+void stage5_boss_form2_defeated(void) {
     s32 boss_phase_start();
     music_stop();
     slowdown_turn_off();
     STAGE5_BOSS(reg_a5)->time_left = 0x6270;
     func_0013F3C0();
     func_002016D0();
-    func_001F57D0();
+    stage5_boss_stop_damage();
     boss_attack_stop_all();
     boss_phase_stop_all();
     reg_tmp.w = -1U;

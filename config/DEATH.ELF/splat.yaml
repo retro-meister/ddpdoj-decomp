@@ -165,7 +165,7 @@ segments:
       - [0x125f80, c, game/stage5/stage5_boss]
       - [0x1262f0, c, game/stage5/stage5_boss_damage]
       - [0x127100, c, game/stage5/stage5_boss_form3_damage]
-      - [0x127610, c, game/stage5/stage5_enemy]
+      - [0x127740, c, game/stage5/stage5_enemy]
       - [0x12ac50, c, game/stage5/stage5_midboss_3]
       - [0x12b920, c, game/stage5/stage5_midboss_4]
       - [0x12de70, c, game/stage5/stage5_midboss_5]

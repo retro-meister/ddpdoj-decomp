@@ -175,64 +175,10 @@ typedef struct {
 void stage5_small_spider_turret_draw(void);
 void func_001F71A0(void);
 
-s32 boss_phase_start();
-s32 boss_phase_stop_all();
-s32 boss_part_hide();
-s32 boss_attack_stop_all();
-s32 func_0013F3C0();
-s32 func_001F57D0();
-s32 func_002016D0();
-s32 func_00203460();
-s32 slowdown_turn_off();
-extern u8 g_boss_present_b1;
-
-void func_001F6080() {
-    g_boss_present_b1 |= 0x40;
-    g_boss_present_b1 |= 0x80;
-    slowdown_turn_off();
-    func_0013F3C0();
-    func_00203460();
-    func_002016D0();
-    func_001F57D0();
-    boss_attack_stop_all();
-    boss_phase_stop_all();
-    reg_tmp.w = -1U;
-    *(u16 *)(reg_a5 + 0x16) = (u16) reg_tmp.h[1];
-    *(u16 *)(reg_a5 + 0x18) = (u16) reg_tmp.h[0];
-    ENTITY(reg_a6)[10].misc.sb.draw_layer = 1;
-    ENTITY(reg_a6)[12].flags.h = 0x8000;
-#ifdef DEATH_LABEL
-    ENTITY(reg_a6)[16].flags.h = 0x8000;
-#endif
-    ENTITY(reg_a6)[7].sprite.sb[0] = 0x17;
-    reg_d0.w = 0x12;
-    boss_part_hide();
-    reg_d0.w = 5;
-    boss_phase_start();
-}
-
-void active_players_mask(void);
 extern u16 g_enemies_stopped;
-
-void func_001F6140(void) {
-    #ifdef DEATH_LABEL
-    if ((g_enemies_stopped == 0) && (*(u16 *)(reg_a5 + 0x1A) == 0)) {
-#else
-    if ((g_enemies_stopped == 0) && (*(u16 *)(reg_a5 + 0x1A) -= 1, *(u16 *)(reg_a5 + 0x1A) == 0)) {
-#endif
-        active_players_mask();
-        if (reg_d0.h[0] == 0) {
-            *(u16 *)(reg_a5 + 0x1A) = 0x78U;
-            return;
-        }
-        ENTITY(reg_a6)[8].draw.sh = 0;
-        func_001F6080();
-    }
-}
-
 s32 explosion_spawn();
 
-void func_001F61B0(arg2)
+void stage5_explosions_from_table(arg2)
     u16 *arg2;
 {
     u16 *var_a2;
@@ -655,7 +601,7 @@ block_5:
             reg_d2.h[1] = ENTITY(reg_a6)->y.h;
             reg_d2.h[0] = ENTITY(reg_a6)->x.h;
             reg_a1 = (u8 *)D_00265240;
-            func_001F61B0();
+            stage5_explosions_from_table();
             sfx_explosion_ground_large();
             ENTITY(reg_a6)[1].misc.b.draw_layer = 1U;
             goto block_6;
@@ -841,7 +787,7 @@ void stage5_small_spider_head(void) {
             reg_d2.h[1] = ENTITY(reg_a6)->y.h;
             reg_d2.h[0] = ENTITY(reg_a6)->x.h;
             reg_a1 = (u8 *)D_002654B0;
-            func_001F61B0();
+            stage5_explosions_from_table();
             sfx_explosion_ground_large();
             reg_tmp.h[1] = SMALL_SPIDER_HEAD(reg_a5)->owner_flag[0];
             reg_tmp.h[0] = SMALL_SPIDER_HEAD(reg_a5)->owner_flag[1];
@@ -1000,7 +946,7 @@ block_7:
                 reg_d2.h[1] = ENTITY(reg_a6)->y.h;
                 reg_d2.h[0] = ENTITY(reg_a6)->x.h;
                 reg_a1 = (u8 *)D_00265570;
-                func_001F61B0();
+                stage5_explosions_from_table();
                 sfx_explosion_ground_large();
                 ENTITY(reg_a6)[1].misc.b.draw_layer = 1U;
                 goto block_8;
@@ -1180,7 +1126,7 @@ void stage5_large_spider_head(void) {
             reg_d2.h[1] = ENTITY(reg_a6)->y.h;
             reg_d2.h[0] = ENTITY(reg_a6)->x.h;
             reg_a1 = (u8 *)D_002656A0;
-            func_001F61B0();
+            stage5_explosions_from_table();
             sfx_explosion_ground_large();
             reg_tmp.h[1] = LARGE_SPIDER_HEAD(reg_a5)->owner_flag[0];
             reg_tmp.h[0] = LARGE_SPIDER_HEAD(reg_a5)->owner_flag[1];
@@ -1571,7 +1517,7 @@ void stage5_bee_drone(void) {
             reg_d2.h[1] = ENTITY(reg_a6)->y.h;
             reg_d2.h[0] = ENTITY(reg_a6)->x.h;
             reg_a1 = D_002659B0;
-            func_001F61B0();
+            stage5_explosions_from_table();
             enemy_remove();
             return;
         }

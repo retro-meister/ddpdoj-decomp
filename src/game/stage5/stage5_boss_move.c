@@ -27,12 +27,6 @@ u8 stage5_boss_move_form3_wander_d(u8 arg0);
 void stage5_boss_move_form3_rage_wander_start(void);
 void stage5_boss_move_form3_rage_wander(void);
 
-/* Two bytes of a boss slot that are set together as one word: a reload value and its countdown. */
-typedef union {
-    u16 h;
-    s16 sh;
-    struct { u8 reload; u8 count; } t;
-} SlotTimer;
 
 /* The movement part of the boss slot (reg_a4). */
 typedef struct {
@@ -182,8 +176,8 @@ s32 boss_movement_start();
 s32 boss_part_show();
 s32 boss_animation_start();
 s32 music_play_bgm7();
-s32 func_001F56F0();
-s32 func_001F57C0();
+s32 stage5_boss_form2_take_hits();
+s32 stage5_boss_start_damage();
 
 void stage5_boss_move_form2_ascend(void) {
     s32 entity_velocity();
@@ -203,8 +197,8 @@ void stage5_boss_move_form2_ascend(void) {
             reg_d0.w = 0xE;
             boss_part_show();
             ENTITY(reg_a6)[11].hit_y_minus.sh = 0x1000;
-            func_001F56F0();
-            func_001F57C0();
+            stage5_boss_form2_take_hits();
+            stage5_boss_start_damage();
             goto block_3;
         }
     } else {

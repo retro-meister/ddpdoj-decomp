@@ -150,7 +150,7 @@ segments:
       - [0xf4bd0, c, game/stage5/stage5_boss]
       - [0xf4f30, c, game/stage5/stage5_boss_damage]
       - [0xf5d10, c, game/stage5/stage5_boss_form3_damage]
-      - [0xf6100, c, game/stage5/stage5_enemy]
+      - [0xf6230, c, game/stage5/stage5_enemy]
       - [0xf9740, c, game/stage5/stage5_midboss_3]
       - [0xfa410, c, game/stage5/stage5_midboss_4]
       - [0xfc960, c, game/stage5/stage5_midboss_5]
