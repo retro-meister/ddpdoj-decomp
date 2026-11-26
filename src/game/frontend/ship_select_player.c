@@ -903,7 +903,7 @@ void join_select_object_update(void) {
         sprite_palette_load();
         reg_tmp.h[1] = (*(u16 *)(reg_a6 + (0x1C)));
         reg_tmp.h[0] = (*(u16 *)(reg_a6 + (0x1E)));
-        reg_a0 = (u8 *) reg_tmp.w;
+        reg_a0 = ARCADE_ADDRESS_DECODE(u8 *, reg_tmp.w);
         reg_d0.h[0] = (*(u16 *)(reg_a6 + (0xE)));
         sprite_palette_load();
     }
@@ -922,7 +922,7 @@ void join_select_object_update(void) {
         ENTITY(reg_a6)->sprite.h -= 1;
         reg_tmp.h[1] = (*(u16 *)(reg_a6 + (0x20)));
         reg_tmp.h[0] = (*(u16 *)(reg_a6 + (0x22)));
-        reg_a0 = (u8 *) reg_tmp.w;
+        reg_a0 = ARCADE_ADDRESS_DECODE(u8 *, reg_tmp.w);
         reg_d0.h[0] = (*(u16 *)(reg_a6 + (0x12)));
         reg_a0 += reg_d0.h[0];
         reg_d2.h[1] = (*(u16 *)(reg_a0 + (0)));

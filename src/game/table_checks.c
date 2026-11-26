@@ -532,452 +532,452 @@ void checked_pointers_store(void) {
     if (((u16 *)bullet_type_setup_routines)[0] != 0x0) {
         printf("error! shot_para_tbl[0]\n");
     }
-    STORE_POINTER_DIRECT(((u16 *)bullet_type_setup_routines), bullet_type_setup_00);
+    STORE_ARCADE_ADDRESS_DIRECT(((u16 *)bullet_type_setup_routines), bullet_type_setup_00);
     if (bullet_type_setup_routines[2] != 0x2) {
         printf("error! shot_para_tbl[2]\n");
     }
-    STORE_POINTER_DIRECT(bullet_type_setup_routines + 2, bullet_type_setup_00);
+    STORE_ARCADE_ADDRESS_DIRECT(bullet_type_setup_routines + 2, bullet_type_setup_00);
     if (bullet_type_setup_routines[4] != 0x4) {
         printf("error! shot_para_tbl[4]\n");
     }
-    STORE_POINTER_DIRECT(bullet_type_setup_routines + 4, bullet_type_setup_00);
+    STORE_ARCADE_ADDRESS_DIRECT(bullet_type_setup_routines + 4, bullet_type_setup_00);
     if (bullet_type_setup_routines[6] != 0x6) {
         printf("error! shot_para_tbl[6]\n");
     }
-    STORE_POINTER_DIRECT(bullet_type_setup_routines + 6, bullet_type_setup_03);
+    STORE_ARCADE_ADDRESS_DIRECT(bullet_type_setup_routines + 6, bullet_type_setup_03);
     if (bullet_type_setup_routines[8] != 0x8) {
         printf("error! shot_para_tbl[8]\n");
     }
-    STORE_POINTER_DIRECT(bullet_type_setup_routines + 8, bullet_type_setup_03);
+    STORE_ARCADE_ADDRESS_DIRECT(bullet_type_setup_routines + 8, bullet_type_setup_03);
     if (bullet_type_setup_routines[10] != 0xa) {
         printf("error! shot_para_tbl[10]\n");
     }
-    STORE_POINTER_DIRECT(bullet_type_setup_routines + 10, bullet_type_setup_03);
+    STORE_ARCADE_ADDRESS_DIRECT(bullet_type_setup_routines + 10, bullet_type_setup_03);
     if (bullet_type_setup_routines[12] != 0xc) {
         printf("error! shot_para_tbl[12]\n");
     }
-    STORE_POINTER_DIRECT(bullet_type_setup_routines + 12, bullet_type_setup_03);
+    STORE_ARCADE_ADDRESS_DIRECT(bullet_type_setup_routines + 12, bullet_type_setup_03);
     if (bullet_type_setup_routines[14] != 0xe) {
         printf("error! shot_para_tbl[14]\n");
     }
-    STORE_POINTER_DIRECT(bullet_type_setup_routines + 14, bullet_type_setup_00);
+    STORE_ARCADE_ADDRESS_DIRECT(bullet_type_setup_routines + 14, bullet_type_setup_00);
     if (bullet_type_setup_routines[16] != 0x10) {
         printf("error! shot_para_tbl[16]\n");
     }
-    STORE_POINTER_DIRECT(bullet_type_setup_routines + 16, bullet_type_setup_00);
+    STORE_ARCADE_ADDRESS_DIRECT(bullet_type_setup_routines + 16, bullet_type_setup_00);
     if (bullet_type_setup_routines[18] != 0x12) {
         printf("error! shot_para_tbl[18]\n");
     }
-    STORE_POINTER_DIRECT(bullet_type_setup_routines + 18, bullet_type_setup_00);
+    STORE_ARCADE_ADDRESS_DIRECT(bullet_type_setup_routines + 18, bullet_type_setup_00);
     if (bullet_type_setup_routines[20] != 0x14) {
         printf("error! shot_para_tbl[20]\n");
     }
-    STORE_POINTER_DIRECT(bullet_type_setup_routines + 20, bullet_type_setup_00);
+    STORE_ARCADE_ADDRESS_DIRECT(bullet_type_setup_routines + 20, bullet_type_setup_00);
     if (bullet_type_setup_routines[22] != 0x16) {
         printf("error! shot_para_tbl[22]\n");
     }
-    STORE_POINTER_DIRECT(bullet_type_setup_routines + 22, bullet_type_setup_00);
+    STORE_ARCADE_ADDRESS_DIRECT(bullet_type_setup_routines + 22, bullet_type_setup_00);
     if (bullet_type_setup_routines[24] != 0x18) {
         printf("error! shot_para_tbl[24]\n");
     }
-    STORE_POINTER_DIRECT(bullet_type_setup_routines + 24, bullet_type_setup_00);
+    STORE_ARCADE_ADDRESS_DIRECT(bullet_type_setup_routines + 24, bullet_type_setup_00);
     if (bullet_type_setup_routines[26] != 0x1a) {
         printf("error! shot_para_tbl[26]\n");
     }
-    STORE_POINTER_DIRECT(bullet_type_setup_routines + 26, bullet_type_setup_00);
+    STORE_ARCADE_ADDRESS_DIRECT(bullet_type_setup_routines + 26, bullet_type_setup_00);
     if (bullet_type_setup_routines[28] != 0x1c) {
         printf("error! shot_para_tbl[28]\n");
     }
-    STORE_POINTER_DIRECT(bullet_type_setup_routines + 28, bullet_type_setup_00);
+    STORE_ARCADE_ADDRESS_DIRECT(bullet_type_setup_routines + 28, bullet_type_setup_00);
     if (bullet_type_setup_routines[30] != 0x1e) {
         printf("error! shot_para_tbl[30]\n");
     }
-    STORE_POINTER_DIRECT(bullet_type_setup_routines + 30, bullet_type_setup_00);
+    STORE_ARCADE_ADDRESS_DIRECT(bullet_type_setup_routines + 30, bullet_type_setup_00);
     if (bullet_type_setup_routines[32] != 0x20) {
         printf("error! shot_para_tbl[32]\n");
     }
-    STORE_POINTER_DIRECT(bullet_type_setup_routines + 32, bullet_type_setup_00);
+    STORE_ARCADE_ADDRESS_DIRECT(bullet_type_setup_routines + 32, bullet_type_setup_00);
     if (bullet_type_setup_routines[34] != 0x22) {
         printf("error! shot_para_tbl[34]\n");
     }
-    STORE_POINTER_DIRECT(bullet_type_setup_routines + 34, bullet_type_setup_17);
+    STORE_ARCADE_ADDRESS_DIRECT(bullet_type_setup_routines + 34, bullet_type_setup_17);
     if (bullet_type_setup_routines[36] != 0x24) {
         printf("error! shot_para_tbl[36]\n");
     }
-    STORE_POINTER_DIRECT(bullet_type_setup_routines + 36, bullet_type_setup_18);
+    STORE_ARCADE_ADDRESS_DIRECT(bullet_type_setup_routines + 36, bullet_type_setup_18);
     if (bullet_type_setup_routines[38] != 0x26) {
         printf("error! shot_para_tbl[38]\n");
     }
-    STORE_POINTER_DIRECT(bullet_type_setup_routines + 38, bullet_type_setup_19);
+    STORE_ARCADE_ADDRESS_DIRECT(bullet_type_setup_routines + 38, bullet_type_setup_19);
     if (bullet_type_setup_routines[40] != 0x28) {
         printf("error! shot_para_tbl[40]\n");
     }
-    STORE_POINTER_DIRECT(bullet_type_setup_routines + 40, bullet_type_setup_00);
+    STORE_ARCADE_ADDRESS_DIRECT(bullet_type_setup_routines + 40, bullet_type_setup_00);
     if (bullet_type_setup_routines[42] != 0x2a) {
         printf("error! shot_para_tbl[42]\n");
     }
-    STORE_POINTER_DIRECT(bullet_type_setup_routines + 42, bullet_type_setup_00);
+    STORE_ARCADE_ADDRESS_DIRECT(bullet_type_setup_routines + 42, bullet_type_setup_00);
     if (bullet_type_setup_routines[44] != 0x2c) {
         printf("error! shot_para_tbl[44]\n");
     }
-    STORE_POINTER_DIRECT(bullet_type_setup_routines + 44, bullet_type_setup_19);
+    STORE_ARCADE_ADDRESS_DIRECT(bullet_type_setup_routines + 44, bullet_type_setup_19);
     if (bullet_type_setup_routines[46] != 0x2e) {
         printf("error! shot_para_tbl[46]\n");
     }
-    STORE_POINTER_DIRECT(bullet_type_setup_routines + 46, bullet_type_setup_23);
+    STORE_ARCADE_ADDRESS_DIRECT(bullet_type_setup_routines + 46, bullet_type_setup_23);
     if (bullet_type_setup_routines[48] != 0x30) {
         printf("error! shot_para_tbl[48]\n");
     }
-    STORE_POINTER_DIRECT(bullet_type_setup_routines + 48, bullet_type_setup_23);
+    STORE_ARCADE_ADDRESS_DIRECT(bullet_type_setup_routines + 48, bullet_type_setup_23);
     if (bullet_type_setup_routines[50] != 0x32) {
         printf("error! shot_para_tbl[50]\n");
     }
-    STORE_POINTER_DIRECT(bullet_type_setup_routines + 50, bullet_type_setup_00);
+    STORE_ARCADE_ADDRESS_DIRECT(bullet_type_setup_routines + 50, bullet_type_setup_00);
     if (bullet_type_setup_routines[52] != 0x34) {
         printf("error! shot_para_tbl[52]\n");
     }
-    STORE_POINTER_DIRECT(bullet_type_setup_routines + 52, bullet_type_setup_00);
+    STORE_ARCADE_ADDRESS_DIRECT(bullet_type_setup_routines + 52, bullet_type_setup_00);
     if (bullet_type_setup_routines[54] != 0x36) {
         printf("error! shot_para_tbl[54]\n");
     }
-    STORE_POINTER_DIRECT(bullet_type_setup_routines + 54, bullet_type_setup_27);
+    STORE_ARCADE_ADDRESS_DIRECT(bullet_type_setup_routines + 54, bullet_type_setup_27);
     if (bullet_type_setup_routines[56] != 0x38) {
         printf("error! shot_para_tbl[56]\n");
     }
-    STORE_POINTER_DIRECT(bullet_type_setup_routines + 56, bullet_init_from_task);
+    STORE_ARCADE_ADDRESS_DIRECT(bullet_type_setup_routines + 56, bullet_init_from_task);
     if (bullet_type_setup_routines[58] != 0x3a) {
         printf("error! shot_para_tbl[58]\n");
     }
-    STORE_POINTER_DIRECT(bullet_type_setup_routines + 58, bullet_type_setup_00);
+    STORE_ARCADE_ADDRESS_DIRECT(bullet_type_setup_routines + 58, bullet_type_setup_00);
     if (bullet_type_setup_routines[60] != 0x3c) {
         printf("error! shot_para_tbl[60]\n");
     }
-    STORE_POINTER_DIRECT(bullet_type_setup_routines + 60, bullet_type_setup_30);
+    STORE_ARCADE_ADDRESS_DIRECT(bullet_type_setup_routines + 60, bullet_type_setup_30);
     if (bullet_type_setup_routines[62] != 0x3e) {
         printf("error! shot_para_tbl[62]\n");
     }
-    STORE_POINTER_DIRECT(bullet_type_setup_routines + 62, bullet_type_setup_31);
+    STORE_ARCADE_ADDRESS_DIRECT(bullet_type_setup_routines + 62, bullet_type_setup_31);
     if (bullet_type_setup_routines[64] != 0x40) {
         printf("error! shot_para_tbl[64]\n");
     }
-    STORE_POINTER_DIRECT(bullet_type_setup_routines + 64, bullet_type_setup_32);
+    STORE_ARCADE_ADDRESS_DIRECT(bullet_type_setup_routines + 64, bullet_type_setup_32);
     if (bullet_type_setup_routines[66] != 0x42) {
         printf("error! shot_para_tbl[66]\n");
     }
-    STORE_POINTER_DIRECT(bullet_type_setup_routines + 66, bullet_type_setup_00);
+    STORE_ARCADE_ADDRESS_DIRECT(bullet_type_setup_routines + 66, bullet_type_setup_00);
     if (bullet_type_setup_routines[68] != 0x44) {
         printf("error! shot_para_tbl[68]\n");
     }
-    STORE_POINTER_DIRECT(bullet_type_setup_routines + 68, bullet_type_setup_00);
+    STORE_ARCADE_ADDRESS_DIRECT(bullet_type_setup_routines + 68, bullet_type_setup_00);
     if (bullet_type_setup_routines[70] != 0x46) {
         printf("error! shot_para_tbl[70]\n");
     }
-    STORE_POINTER_DIRECT(bullet_type_setup_routines + 70, bullet_type_setup_03);
+    STORE_ARCADE_ADDRESS_DIRECT(bullet_type_setup_routines + 70, bullet_type_setup_03);
 #ifdef DEATH_LABEL
     if (death_D_002506F0[0] != 0x48) {
         printf("error! shot_para_tbl[72]\n");
     }
-    STORE_POINTER_DIRECT(death_D_002506F0, bullet_init_from_task);
+    STORE_ARCADE_ADDRESS_DIRECT(death_D_002506F0, bullet_init_from_task);
 #endif
     if (bullet_type_records[0] != 0x0) {
         printf("error! shot_tbl[0]\n");
     }
-    STORE_POINTER_DIRECT(bullet_type_records, bullet_type_record_00);
+    STORE_ARCADE_ADDRESS_DIRECT(bullet_type_records, bullet_type_record_00);
     if (bullet_type_records[2] != 0x2) {
         printf("error! shot_tbl[2]\n");
     }
-    STORE_POINTER_DIRECT(bullet_type_records + 2, bullet_type_record_01);
+    STORE_ARCADE_ADDRESS_DIRECT(bullet_type_records + 2, bullet_type_record_01);
     if (bullet_type_records[4] != 0x4) {
         printf("error! shot_tbl[4]\n");
     }
-    STORE_POINTER_DIRECT(bullet_type_records + 4, bullet_type_record_02);
+    STORE_ARCADE_ADDRESS_DIRECT(bullet_type_records + 4, bullet_type_record_02);
     if (bullet_type_records[6] != 0x6) {
         printf("error! shot_tbl[6]\n");
     }
-    STORE_POINTER_DIRECT(bullet_type_records + 6, bullet_type_record_03);
+    STORE_ARCADE_ADDRESS_DIRECT(bullet_type_records + 6, bullet_type_record_03);
     if (bullet_type_records[8] != 0x8) {
         printf("error! shot_tbl[8]\n");
     }
-    STORE_POINTER_DIRECT(bullet_type_records + 8, bullet_type_record_04);
+    STORE_ARCADE_ADDRESS_DIRECT(bullet_type_records + 8, bullet_type_record_04);
     if (bullet_type_records[10] != 0xa) {
         printf("error! shot_tbl[10]\n");
     }
-    STORE_POINTER_DIRECT(bullet_type_records + 10, bullet_type_record_05);
+    STORE_ARCADE_ADDRESS_DIRECT(bullet_type_records + 10, bullet_type_record_05);
     if (bullet_type_records[12] != 0xc) {
         printf("error! shot_tbl[12]\n");
     }
-    STORE_POINTER_DIRECT(bullet_type_records + 12, bullet_type_record_06);
+    STORE_ARCADE_ADDRESS_DIRECT(bullet_type_records + 12, bullet_type_record_06);
     if (bullet_type_records[14] != 0xe) {
         printf("error! shot_tbl[14]\n");
     }
-    STORE_POINTER_DIRECT(bullet_type_records + 14, bullet_type_record_07);
+    STORE_ARCADE_ADDRESS_DIRECT(bullet_type_records + 14, bullet_type_record_07);
     if (bullet_type_records[16] != 0x10) {
         printf("error! shot_tbl[16]\n");
     }
-    STORE_POINTER_DIRECT(bullet_type_records + 16, bullet_type_record_08);
+    STORE_ARCADE_ADDRESS_DIRECT(bullet_type_records + 16, bullet_type_record_08);
     if (bullet_type_records[18] != 0x12) {
         printf("error! shot_tbl[18]\n");
     }
-    STORE_POINTER_DIRECT(bullet_type_records + 18, bullet_type_record_09);
+    STORE_ARCADE_ADDRESS_DIRECT(bullet_type_records + 18, bullet_type_record_09);
     if (bullet_type_records[20] != 0x14) {
         printf("error! shot_tbl[20]\n");
     }
-    STORE_POINTER_DIRECT(bullet_type_records + 20, bullet_type_record_10);
+    STORE_ARCADE_ADDRESS_DIRECT(bullet_type_records + 20, bullet_type_record_10);
     if (bullet_type_records[22] != 0x16) {
         printf("error! shot_tbl[22]\n");
     }
-    STORE_POINTER_DIRECT(bullet_type_records + 22, bullet_type_record_11);
+    STORE_ARCADE_ADDRESS_DIRECT(bullet_type_records + 22, bullet_type_record_11);
     if (bullet_type_records[24] != 0x18) {
         printf("error! shot_tbl[24]\n");
     }
-    STORE_POINTER_DIRECT(bullet_type_records + 24, bullet_type_record_12);
+    STORE_ARCADE_ADDRESS_DIRECT(bullet_type_records + 24, bullet_type_record_12);
     if (bullet_type_records[26] != 0x1a) {
         printf("error! shot_tbl[26]\n");
     }
-    STORE_POINTER_DIRECT(bullet_type_records + 26, bullet_type_record_13);
+    STORE_ARCADE_ADDRESS_DIRECT(bullet_type_records + 26, bullet_type_record_13);
     if (bullet_type_records[28] != 0x1c) {
         printf("error! shot_tbl[28]\n");
     }
-    STORE_POINTER_DIRECT(bullet_type_records + 28, bullet_type_record_14);
+    STORE_ARCADE_ADDRESS_DIRECT(bullet_type_records + 28, bullet_type_record_14);
     if (bullet_type_records[30] != 0x1e) {
         printf("error! shot_tbl[30]\n");
     }
-    STORE_POINTER_DIRECT(bullet_type_records + 30, bullet_type_record_15);
+    STORE_ARCADE_ADDRESS_DIRECT(bullet_type_records + 30, bullet_type_record_15);
     if (bullet_type_records[32] != 0x20) {
         printf("error! shot_tbl[32]\n");
     }
-    STORE_POINTER_DIRECT(bullet_type_records + 32, bullet_type_record_16);
+    STORE_ARCADE_ADDRESS_DIRECT(bullet_type_records + 32, bullet_type_record_16);
     if (bullet_type_records[34] != 0x22) {
         printf("error! shot_tbl[34]\n");
     }
-    STORE_POINTER_DIRECT(bullet_type_records + 34, bullet_type_record_17);
+    STORE_ARCADE_ADDRESS_DIRECT(bullet_type_records + 34, bullet_type_record_17);
     if (bullet_type_records[36] != 0x24) {
         printf("error! shot_tbl[36]\n");
     }
-    STORE_POINTER_DIRECT(bullet_type_records + 36, bullet_type_record_18);
+    STORE_ARCADE_ADDRESS_DIRECT(bullet_type_records + 36, bullet_type_record_18);
     if (bullet_type_records[38] != 0x26) {
         printf("error! shot_tbl[38]\n");
     }
-    STORE_POINTER_DIRECT(bullet_type_records + 38, bullet_type_record_19);
+    STORE_ARCADE_ADDRESS_DIRECT(bullet_type_records + 38, bullet_type_record_19);
     if (bullet_type_records[40] != 0x28) {
         printf("error! shot_tbl[40]\n");
     }
-    STORE_POINTER_DIRECT(bullet_type_records + 40, bullet_type_record_20);
+    STORE_ARCADE_ADDRESS_DIRECT(bullet_type_records + 40, bullet_type_record_20);
     if (bullet_type_records[42] != 0x2a) {
         printf("error! shot_tbl[42]\n");
     }
-    STORE_POINTER_DIRECT(bullet_type_records + 42, bullet_type_record_21);
+    STORE_ARCADE_ADDRESS_DIRECT(bullet_type_records + 42, bullet_type_record_21);
     if (bullet_type_records[44] != 0x2c) {
         printf("error! shot_tbl[44]\n");
     }
-    STORE_POINTER_DIRECT(bullet_type_records + 44, bullet_type_record_22);
+    STORE_ARCADE_ADDRESS_DIRECT(bullet_type_records + 44, bullet_type_record_22);
     if (bullet_type_records[46] != 0x2e) {
         printf("error! shot_tbl[46]\n");
     }
-    STORE_POINTER_DIRECT(bullet_type_records + 46, bullet_type_record_23);
+    STORE_ARCADE_ADDRESS_DIRECT(bullet_type_records + 46, bullet_type_record_23);
     if (bullet_type_records[48] != 0x30) {
         printf("error! shot_tbl[48]\n");
     }
-    STORE_POINTER_DIRECT(bullet_type_records + 48, bullet_type_record_24);
+    STORE_ARCADE_ADDRESS_DIRECT(bullet_type_records + 48, bullet_type_record_24);
     if (bullet_type_records[50] != 0x32) {
         printf("error! shot_tbl[50]\n");
     }
-    STORE_POINTER_DIRECT(bullet_type_records + 50, bullet_type_record_25);
+    STORE_ARCADE_ADDRESS_DIRECT(bullet_type_records + 50, bullet_type_record_25);
     if (bullet_type_records[52] != 0x34) {
         printf("error! shot_tbl[52]\n");
     }
-    STORE_POINTER_DIRECT(bullet_type_records + 52, bullet_type_record_26);
+    STORE_ARCADE_ADDRESS_DIRECT(bullet_type_records + 52, bullet_type_record_26);
     if (bullet_type_records[54] != 0x36) {
         printf("error! shot_tbl[54]\n");
     }
-    STORE_POINTER_DIRECT(bullet_type_records + 54, bullet_type_record_27);
+    STORE_ARCADE_ADDRESS_DIRECT(bullet_type_records + 54, bullet_type_record_27);
     if (bullet_type_records[56] != 0x38) {
         printf("error! shot_tbl[56]\n");
     }
-    STORE_POINTER_DIRECT(bullet_type_records + 56, bullet_type_record_28);
+    STORE_ARCADE_ADDRESS_DIRECT(bullet_type_records + 56, bullet_type_record_28);
     if (bullet_type_records[58] != 0x3a) {
         printf("error! shot_tbl[58]\n");
     }
-    STORE_POINTER_DIRECT(bullet_type_records + 58, bullet_type_record_29);
+    STORE_ARCADE_ADDRESS_DIRECT(bullet_type_records + 58, bullet_type_record_29);
     if (bullet_type_records[60] != 0x3c) {
         printf("error! shot_tbl[60]\n");
     }
-    STORE_POINTER_DIRECT(bullet_type_records + 60, bullet_type_record_30);
+    STORE_ARCADE_ADDRESS_DIRECT(bullet_type_records + 60, bullet_type_record_30);
     if (bullet_type_records[62] != 0x3e) {
         printf("error! shot_tbl[62]\n");
     }
-    STORE_POINTER_DIRECT(bullet_type_records + 62, bullet_type_record_31);
+    STORE_ARCADE_ADDRESS_DIRECT(bullet_type_records + 62, bullet_type_record_31);
     if (bullet_type_records[64] != 0x40) {
         printf("error! shot_tbl[64]\n");
     }
-    STORE_POINTER_DIRECT(bullet_type_records + 64, bullet_type_record_32);
+    STORE_ARCADE_ADDRESS_DIRECT(bullet_type_records + 64, bullet_type_record_32);
     if (bullet_type_records[66] != 0x42) {
         printf("error! shot_tbl[66]\n");
     }
-    STORE_POINTER_DIRECT(bullet_type_records + 66, bullet_type_record_33);
+    STORE_ARCADE_ADDRESS_DIRECT(bullet_type_records + 66, bullet_type_record_33);
     if (bullet_type_records[68] != 0x44) {
         printf("error! shot_tbl[68]\n");
     }
-    STORE_POINTER_DIRECT(bullet_type_records + 68, bullet_type_record_34);
+    STORE_ARCADE_ADDRESS_DIRECT(bullet_type_records + 68, bullet_type_record_34);
     if (bullet_type_records[70] != 0x46) {
         printf("error! shot_tbl[70]\n");
     }
-    STORE_POINTER_DIRECT(bullet_type_records + 70, bullet_type_record_35);
+    STORE_ARCADE_ADDRESS_DIRECT(bullet_type_records + 70, bullet_type_record_35);
 #ifdef DEATH_LABEL
     if (death_D_00250790[0] != 0x48) {
         printf("error! shot_tbl[72]\n");
     }
-    STORE_POINTER_DIRECT(death_D_00250790, death_D_00250A72);
+    STORE_ARCADE_ADDRESS_DIRECT(death_D_00250790, death_D_00250A72);
 #endif
     if (((u16 *)bullet_move_routines)[0] != 0x0) {
         printf("error! bulljmp[0]\n");
     }
-    STORE_POINTER_DIRECT(((u16 *)bullet_move_routines), bullet_move_type_00);
+    STORE_ARCADE_ADDRESS_DIRECT(((u16 *)bullet_move_routines), bullet_move_type_00);
     if (bullet_move_routines[2] != 0x2) {
         printf("error! bulljmp[2]\n");
     }
-    STORE_POINTER_DIRECT(bullet_move_routines + 2, bullet_move_type_01);
+    STORE_ARCADE_ADDRESS_DIRECT(bullet_move_routines + 2, bullet_move_type_01);
     if (bullet_move_routines[4] != 0x4) {
         printf("error! bulljmp[4]\n");
     }
-    STORE_POINTER_DIRECT(bullet_move_routines + 4, bullet_move_type_02);
+    STORE_ARCADE_ADDRESS_DIRECT(bullet_move_routines + 4, bullet_move_type_02);
     if (bullet_move_routines[6] != 0x6) {
         printf("error! bulljmp[6]\n");
     }
-    STORE_POINTER_DIRECT(bullet_move_routines + 6, bullet_move_type_03);
+    STORE_ARCADE_ADDRESS_DIRECT(bullet_move_routines + 6, bullet_move_type_03);
     if (bullet_move_routines[8] != 0x8) {
         printf("error! bulljmp[8]\n");
     }
-    STORE_POINTER_DIRECT(bullet_move_routines + 8, bullet_move_type_04);
+    STORE_ARCADE_ADDRESS_DIRECT(bullet_move_routines + 8, bullet_move_type_04);
     if (bullet_move_routines[10] != 0xa) {
         printf("error! bulljmp[10]\n");
     }
-    STORE_POINTER_DIRECT(bullet_move_routines + 10, bullet_move_type_05);
+    STORE_ARCADE_ADDRESS_DIRECT(bullet_move_routines + 10, bullet_move_type_05);
     if (bullet_move_routines[12] != 0xc) {
         printf("error! bulljmp[12]\n");
     }
-    STORE_POINTER_DIRECT(bullet_move_routines + 12, bullet_move_type_06);
+    STORE_ARCADE_ADDRESS_DIRECT(bullet_move_routines + 12, bullet_move_type_06);
     if (bullet_move_routines[14] != 0xe) {
         printf("error! bulljmp[14]\n");
     }
-    STORE_POINTER_DIRECT(bullet_move_routines + 14, bullet_move_type_07);
+    STORE_ARCADE_ADDRESS_DIRECT(bullet_move_routines + 14, bullet_move_type_07);
     if (bullet_move_routines[16] != 0x10) {
         printf("error! bulljmp[16]\n");
     }
-    STORE_POINTER_DIRECT(bullet_move_routines + 16, bullet_move_type_08);
+    STORE_ARCADE_ADDRESS_DIRECT(bullet_move_routines + 16, bullet_move_type_08);
     if (bullet_move_routines[18] != 0x12) {
         printf("error! bulljmp[18]\n");
     }
-    STORE_POINTER_DIRECT(bullet_move_routines + 18, bullet_move_type_09);
+    STORE_ARCADE_ADDRESS_DIRECT(bullet_move_routines + 18, bullet_move_type_09);
     if (bullet_move_routines[20] != 0x14) {
         printf("error! bulljmp[20]\n");
     }
-    STORE_POINTER_DIRECT(bullet_move_routines + 20, bullet_move_type_10);
+    STORE_ARCADE_ADDRESS_DIRECT(bullet_move_routines + 20, bullet_move_type_10);
     if (bullet_move_routines[22] != 0x16) {
         printf("error! bulljmp[22]\n");
     }
-    STORE_POINTER_DIRECT(bullet_move_routines + 22, bullet_move_type_11);
+    STORE_ARCADE_ADDRESS_DIRECT(bullet_move_routines + 22, bullet_move_type_11);
     if (bullet_move_routines[24] != 0x18) {
         printf("error! bulljmp[24]\n");
     }
-    STORE_POINTER_DIRECT(bullet_move_routines + 24, bullet_move_type_12);
+    STORE_ARCADE_ADDRESS_DIRECT(bullet_move_routines + 24, bullet_move_type_12);
     if (bullet_move_routines[26] != 0x1a) {
         printf("error! bulljmp[26]\n");
     }
-    STORE_POINTER_DIRECT(bullet_move_routines + 26, bullet_move_type_13);
+    STORE_ARCADE_ADDRESS_DIRECT(bullet_move_routines + 26, bullet_move_type_13);
     if (bullet_move_routines[28] != 0x1c) {
         printf("error! bulljmp[28]\n");
     }
-    STORE_POINTER_DIRECT(bullet_move_routines + 28, bullet_move_type_10);
+    STORE_ARCADE_ADDRESS_DIRECT(bullet_move_routines + 28, bullet_move_type_10);
     if (bullet_move_routines[30] != 0x1e) {
         printf("error! bulljmp[30]\n");
     }
-    STORE_POINTER_DIRECT(bullet_move_routines + 30, bullet_move_type_10);
+    STORE_ARCADE_ADDRESS_DIRECT(bullet_move_routines + 30, bullet_move_type_10);
     if (bullet_move_routines[32] != 0x20) {
         printf("error! bulljmp[32]\n");
     }
-    STORE_POINTER_DIRECT(bullet_move_routines + 32, bullet_move_type_16);
+    STORE_ARCADE_ADDRESS_DIRECT(bullet_move_routines + 32, bullet_move_type_16);
     if (bullet_move_routines[34] != 0x22) {
         printf("error! bulljmp[34]\n");
     }
-    STORE_POINTER_DIRECT(bullet_move_routines + 34, bullet_move_type_17);
+    STORE_ARCADE_ADDRESS_DIRECT(bullet_move_routines + 34, bullet_move_type_17);
     if (bullet_move_routines[36] != 0x24) {
         printf("error! bulljmp[36]\n");
     }
-    STORE_POINTER_DIRECT(bullet_move_routines + 36, bullet_move_type_18);
+    STORE_ARCADE_ADDRESS_DIRECT(bullet_move_routines + 36, bullet_move_type_18);
     if (bullet_move_routines[38] != 0x26) {
         printf("error! bulljmp[38]\n");
     }
-    STORE_POINTER_DIRECT(bullet_move_routines + 38, bullet_move_type_19);
+    STORE_ARCADE_ADDRESS_DIRECT(bullet_move_routines + 38, bullet_move_type_19);
     if (bullet_move_routines[40] != 0x28) {
         printf("error! bulljmp[40]\n");
     }
-    STORE_POINTER_DIRECT(bullet_move_routines + 40, bullet_move_type_20);
+    STORE_ARCADE_ADDRESS_DIRECT(bullet_move_routines + 40, bullet_move_type_20);
     if (bullet_move_routines[42] != 0x2a) {
         printf("error! bulljmp[42]\n");
     }
-    STORE_POINTER_DIRECT(bullet_move_routines + 42, bullet_move_type_21);
+    STORE_ARCADE_ADDRESS_DIRECT(bullet_move_routines + 42, bullet_move_type_21);
     if (bullet_move_routines[44] != 0x2c) {
         printf("error! bulljmp[44]\n");
     }
-    STORE_POINTER_DIRECT(bullet_move_routines + 44, bullet_move_type_22);
+    STORE_ARCADE_ADDRESS_DIRECT(bullet_move_routines + 44, bullet_move_type_22);
     if (bullet_move_routines[46] != 0x2e) {
         printf("error! bulljmp[46]\n");
     }
-    STORE_POINTER_DIRECT(bullet_move_routines + 46, bullet_move_type_23);
+    STORE_ARCADE_ADDRESS_DIRECT(bullet_move_routines + 46, bullet_move_type_23);
     if (bullet_move_routines[48] != 0x30) {
         printf("error! bulljmp[48]\n");
     }
-    STORE_POINTER_DIRECT(bullet_move_routines + 48, bullet_move_type_24);
+    STORE_ARCADE_ADDRESS_DIRECT(bullet_move_routines + 48, bullet_move_type_24);
     if (bullet_move_routines[50] != 0x32) {
         printf("error! bulljmp[50]\n");
     }
-    STORE_POINTER_DIRECT(bullet_move_routines + 50, bullet_move_type_25);
+    STORE_ARCADE_ADDRESS_DIRECT(bullet_move_routines + 50, bullet_move_type_25);
     if (bullet_move_routines[52] != 0x34) {
         printf("error! bulljmp[52]\n");
     }
-    STORE_POINTER_DIRECT(bullet_move_routines + 52, bullet_move_type_26);
+    STORE_ARCADE_ADDRESS_DIRECT(bullet_move_routines + 52, bullet_move_type_26);
     if (bullet_move_routines[54] != 0x36) {
         printf("error! bulljmp[54]\n");
     }
-    STORE_POINTER_DIRECT(bullet_move_routines + 54, bullet_move_type_27);
+    STORE_ARCADE_ADDRESS_DIRECT(bullet_move_routines + 54, bullet_move_type_27);
     if (bullet_move_routines[56] != 0x38) {
         printf("error! bulljmp[56]\n");
     }
-    STORE_POINTER_DIRECT(bullet_move_routines + 56, bullet_move_type_28);
+    STORE_ARCADE_ADDRESS_DIRECT(bullet_move_routines + 56, bullet_move_type_28);
     if (bullet_move_routines[58] != 0x3a) {
         printf("error! bulljmp[58]\n");
     }
-    STORE_POINTER_DIRECT(bullet_move_routines + 58, bullet_move_type_29);
+    STORE_ARCADE_ADDRESS_DIRECT(bullet_move_routines + 58, bullet_move_type_29);
     if (bullet_move_routines[60] != 0x3c) {
         printf("error! bulljmp[60]\n");
     }
-    STORE_POINTER_DIRECT(bullet_move_routines + 60, bullet_move_type_30);
+    STORE_ARCADE_ADDRESS_DIRECT(bullet_move_routines + 60, bullet_move_type_30);
     if (bullet_move_routines[62] != 0x3e) {
         printf("error! bulljmp[62]\n");
     }
-    STORE_POINTER_DIRECT(bullet_move_routines + 62, bullet_move_type_31);
+    STORE_ARCADE_ADDRESS_DIRECT(bullet_move_routines + 62, bullet_move_type_31);
     if (bullet_move_routines[64] != 0x40) {
         printf("error! bulljmp[64]\n");
     }
-    STORE_POINTER_DIRECT(bullet_move_routines + 64, bullet_move_type_32);
+    STORE_ARCADE_ADDRESS_DIRECT(bullet_move_routines + 64, bullet_move_type_32);
     if (bullet_move_routines[66] != 0x42) {
         printf("error! bulljmp[66]\n");
     }
-    STORE_POINTER_DIRECT(bullet_move_routines + 66, bullet_move_type_33);
+    STORE_ARCADE_ADDRESS_DIRECT(bullet_move_routines + 66, bullet_move_type_33);
     if (bullet_move_routines[68] != 0x44) {
         printf("error! bulljmp[68]\n");
     }
-    STORE_POINTER_DIRECT(bullet_move_routines + 68, bullet_move_type_34);
+    STORE_ARCADE_ADDRESS_DIRECT(bullet_move_routines + 68, bullet_move_type_34);
     if (bullet_move_routines[70] != 0x46) {
         printf("error! bulljmp[70]\n");
     }
-    STORE_POINTER_DIRECT(bullet_move_routines + 70, bullet_move_type_35);
+    STORE_ARCADE_ADDRESS_DIRECT(bullet_move_routines + 70, bullet_move_type_35);
 #ifdef DEATH_LABEL
     if (death_D_00250B20[0] != 0x48) {
         printf("error! bulljmp[72]\n");
     }
-    STORE_POINTER_DIRECT(death_D_00250B20, bullet_type_24_setup);
+    STORE_ARCADE_ADDRESS_DIRECT(death_D_00250B20, bullet_type_24_setup);
 #endif
     if (((u16 *)D_0024EBC0)[0] != 0x0) {
         printf("error! bull_n02tbl[0]\n");
@@ -2858,27 +2858,27 @@ void checked_pointers_store(void) {
     if (D_00251CC0[0] != 0x0) {
         printf("error! sel_win_kyok_tbl[0]\n");
     }
-    STORE_POINTER(D_00251CC0, D_00251CE0);
+    STORE_ARCADE_ADDRESS(D_00251CC0, D_00251CE0);
     if (D_00251CC0[2] != 0x2) {
         printf("error! sel_win_kyok_tbl[2]\n");
     }
-    STORE_POINTER(D_00251CC0 + 2, D_00260F30);
+    STORE_ARCADE_ADDRESS(D_00251CC0 + 2, D_00260F30);
     if (D_00251CC0[4] != 0x4) {
         printf("error! sel_win_kyok_tbl[4]\n");
     }
-    STORE_POINTER(D_00251CC0 + 4, D_00251D10);
+    STORE_ARCADE_ADDRESS(D_00251CC0 + 4, D_00251D10);
     if (D_00251CC0[6] != 0x6) {
         printf("error! sel_win_kyok_tbl[6]\n");
     }
-    STORE_POINTER(D_00251CC0 + 6, D_00260EF0);
+    STORE_ARCADE_ADDRESS(D_00251CC0 + 6, D_00260EF0);
     if (D_00251CC0[8] != 0x8) {
         printf("error! sel_win_kyok_tbl[8]\n");
     }
-    STORE_POINTER(D_00251CC0 + 8, D_00251D40);
+    STORE_ARCADE_ADDRESS(D_00251CC0 + 8, D_00251D40);
     if (D_00251CC0[10] != 0xa) {
         printf("error! sel_win_kyok_tbl[10]\n");
     }
-    STORE_POINTER(D_00251CC0 + 10, D_00260EB0);
+    STORE_ARCADE_ADDRESS(D_00251CC0 + 10, D_00260EB0);
     if (select_panel_piece_2_draw_table_as_u16_a[0] != 0x0) {
         printf("error! subsel_fig_barner[0]\n");
     }
@@ -2890,179 +2890,179 @@ void checked_pointers_store(void) {
     if (D_00252010[0] != 0x0) {
         printf("error! subsel_txt_chr_1p[0]\n");
     }
-    STORE_POINTER(D_00252010, D_00252020);
+    STORE_ARCADE_ADDRESS(D_00252010, D_00252020);
     if (D_00252010[2] != 0x2) {
         printf("error! subsel_txt_chr_1p[2]\n");
     }
-    STORE_POINTER(D_00252010 + 2, D_00252030);
+    STORE_ARCADE_ADDRESS(D_00252010 + 2, D_00252030);
     if (D_00252010[4] != 0x4) {
         printf("error! subsel_txt_chr_1p[4]\n");
     }
-    STORE_POINTER(D_00252010 + 4, D_00252040);
+    STORE_ARCADE_ADDRESS(D_00252010 + 4, D_00252040);
     if (D_00252020[0] != 0x0) {
         printf("error! subsel_kyok_txt_1p[0]\n");
     }
-    STORE_POINTER(D_00252020, D_00252090);
+    STORE_ARCADE_ADDRESS(D_00252020, D_00252090);
     if (D_00252020[2] != 0x2) {
         printf("error! subsel_kyok_txt_1p[2]\n");
     }
-    STORE_POINTER(D_00252020 + 2, D_002520A0);
+    STORE_ARCADE_ADDRESS(D_00252020 + 2, D_002520A0);
     if (D_00252020[4] != 0x4) {
         printf("error! subsel_kyok_txt_1p[4]\n");
     }
-    STORE_POINTER(D_00252020 + 4, D_002520B0);
+    STORE_ARCADE_ADDRESS(D_00252020 + 4, D_002520B0);
     if (D_00252030[0] != 0x0) {
         printf("error! subsel_setu_txt_1p[0]\n");
     }
-    STORE_POINTER(D_00252030, D_002520C0);
+    STORE_ARCADE_ADDRESS(D_00252030, D_002520C0);
     if (D_00252030[2] != 0x2) {
         printf("error! subsel_setu_txt_1p[2]\n");
     }
-    STORE_POINTER(D_00252030 + 2, D_002520D0);
+    STORE_ARCADE_ADDRESS(D_00252030 + 2, D_002520D0);
     if (D_00252030[4] != 0x4) {
         printf("error! subsel_setu_txt_1p[4]\n");
     }
-    STORE_POINTER(D_00252030 + 4, D_002520E0);
+    STORE_ARCADE_ADDRESS(D_00252030 + 4, D_002520E0);
     if (D_00252040[0] != 0x0) {
         printf("error! subsel_bom_txt_1p[0]\n");
     }
-    STORE_POINTER(D_00252040, D_002520F0);
+    STORE_ARCADE_ADDRESS(D_00252040, D_002520F0);
     if (D_00252040[2] != 0x2) {
         printf("error! subsel_bom_txt_1p[2]\n");
     }
-    STORE_POINTER(D_00252040 + 2, D_00252100);
+    STORE_ARCADE_ADDRESS(D_00252040 + 2, D_00252100);
     if (D_00252040[4] != 0x4) {
         printf("error! subsel_bom_txt_1p[4]\n");
     }
-    STORE_POINTER(D_00252040 + 4, D_00252110);
+    STORE_ARCADE_ADDRESS(D_00252040 + 4, D_00252110);
     if (D_00252050[0] != 0x0) {
         printf("error! subsel_txt_chr_2p[0]\n");
     }
-    STORE_POINTER(D_00252050, D_00252060);
+    STORE_ARCADE_ADDRESS(D_00252050, D_00252060);
     if (D_00252050[2] != 0x2) {
         printf("error! subsel_txt_chr_2p[2]\n");
     }
-    STORE_POINTER(D_00252050 + 2, D_00252070);
+    STORE_ARCADE_ADDRESS(D_00252050 + 2, D_00252070);
     if (D_00252050[4] != 0x4) {
         printf("error! subsel_txt_chr_2p[4]\n");
     }
-    STORE_POINTER(D_00252050 + 4, D_00252080);
+    STORE_ARCADE_ADDRESS(D_00252050 + 4, D_00252080);
     if (D_00252060[0] != 0x0) {
         printf("error! subsel_kyok_txt_2p[0]\n");
     }
-    STORE_POINTER(D_00252060, D_00252120);
+    STORE_ARCADE_ADDRESS(D_00252060, D_00252120);
     if (D_00252060[2] != 0x2) {
         printf("error! subsel_kyok_txt_2p[2]\n");
     }
-    STORE_POINTER(D_00252060 + 2, D_00252130);
+    STORE_ARCADE_ADDRESS(D_00252060 + 2, D_00252130);
     if (D_00252060[4] != 0x4) {
         printf("error! subsel_kyok_txt_2p[4]\n");
     }
-    STORE_POINTER(D_00252060 + 4, D_00252140);
+    STORE_ARCADE_ADDRESS(D_00252060 + 4, D_00252140);
     if (D_00252070[0] != 0x0) {
         printf("error! subsel_setu_txt_2p[0]\n");
     }
-    STORE_POINTER(D_00252070, D_00252150);
+    STORE_ARCADE_ADDRESS(D_00252070, D_00252150);
     if (D_00252070[2] != 0x2) {
         printf("error! subsel_setu_txt_2p[2]\n");
     }
-    STORE_POINTER(D_00252070 + 2, D_00252160);
+    STORE_ARCADE_ADDRESS(D_00252070 + 2, D_00252160);
     if (D_00252070[4] != 0x4) {
         printf("error! subsel_setu_txt_2p[4]\n");
     }
-    STORE_POINTER(D_00252070 + 4, D_00252170);
+    STORE_ARCADE_ADDRESS(D_00252070 + 4, D_00252170);
     if (D_00252080[0] != 0x0) {
         printf("error! subsel_bom_txt_2p[0]\n");
     }
-    STORE_POINTER(D_00252080, D_00252180);
+    STORE_ARCADE_ADDRESS(D_00252080, D_00252180);
     if (D_00252080[2] != 0x2) {
         printf("error! subsel_bom_txt_2p[2]\n");
     }
-    STORE_POINTER(D_00252080 + 2, D_00252190);
+    STORE_ARCADE_ADDRESS(D_00252080 + 2, D_00252190);
     if (D_00252080[4] != 0x4) {
         printf("error! subsel_bom_txt_2p[4]\n");
     }
-    STORE_POINTER(D_00252080 + 4, D_002521A0);
+    STORE_ARCADE_ADDRESS(D_00252080 + 4, D_002521A0);
     if (D_002520C0[3] != 0x3) {
         printf("error! subsel_setu_txt_1p_a[3]\n");
     }
-    STORE_POINTER(D_002520C0 + 3, D_002521B0);
+    STORE_ARCADE_ADDRESS(D_002520C0 + 3, D_002521B0);
     if (D_002520D0[3] != 0x3) {
         printf("error! subsel_setu_txt_1p_b[3]\n");
     }
-    STORE_POINTER(D_002520D0 + 3, D_002521D0);
+    STORE_ARCADE_ADDRESS(D_002520D0 + 3, D_002521D0);
     if (D_002520E0[3] != 0x3) {
         printf("error! subsel_setu_txt_1p_c[3]\n");
     }
-    STORE_POINTER(D_002520E0 + 3, D_002521F0);
+    STORE_ARCADE_ADDRESS(D_002520E0 + 3, D_002521F0);
     if (D_00252150[3] != 0x3) {
         printf("error! subsel_setu_txt_2p_a[3]\n");
     }
-    STORE_POINTER(D_00252150 + 3, D_002521B0);
+    STORE_ARCADE_ADDRESS(D_00252150 + 3, D_002521B0);
     if (D_00252160[3] != 0x3) {
         printf("error! subsel_setu_txt_2p_b[3]\n");
     }
-    STORE_POINTER(D_00252160 + 3, D_002521D0);
+    STORE_ARCADE_ADDRESS(D_00252160 + 3, D_002521D0);
     if (D_00252170[3] != 0x3) {
         printf("error! subsel_setu_txt_2p_c[3]\n");
     }
-    STORE_POINTER(D_00252170 + 3, D_002521F0);
+    STORE_ARCADE_ADDRESS(D_00252170 + 3, D_002521F0);
     if (D_00252210[0] != 0x0) {
         printf("error! subsel_att_chr_1p[0]\n");
     }
-    STORE_POINTER(D_00252210, D_00252230);
+    STORE_ARCADE_ADDRESS(D_00252210, D_00252230);
     if (D_00252210[2] != 0x2) {
         printf("error! subsel_att_chr_1p[2]\n");
     }
-    STORE_POINTER(D_00252210 + 2, D_00252240);
+    STORE_ARCADE_ADDRESS(D_00252210 + 2, D_00252240);
     if (D_00252210[4] != 0x4) {
         printf("error! subsel_att_chr_1p[4]\n");
     }
-    STORE_POINTER(D_00252210 + 4, D_00252250);
+    STORE_ARCADE_ADDRESS(D_00252210 + 4, D_00252250);
     if (D_00252220[0] != 0x0) {
         printf("error! subsel_att_chr_2p[0]\n");
     }
-    STORE_POINTER(D_00252220, D_00252268);
+    STORE_ARCADE_ADDRESS(D_00252220, D_00252268);
     if (D_00252220[2] != 0x2) {
         printf("error! subsel_att_chr_2p[2]\n");
     }
-    STORE_POINTER(D_00252220 + 2, D_00252278);
+    STORE_ARCADE_ADDRESS(D_00252220 + 2, D_00252278);
     if (D_00252220[4] != 0x4) {
         printf("error! subsel_att_chr_2p[4]\n");
     }
-    STORE_POINTER(D_00252220 + 4, D_00252290);
+    STORE_ARCADE_ADDRESS(D_00252220 + 4, D_00252290);
     if (D_00252230[3] != 0x3) {
         printf("error! subsel_att_chr_1p_a[3]\n");
     }
-    STORE_POINTER(D_00252230 + 3, D_002522B0);
+    STORE_ARCADE_ADDRESS(D_00252230 + 3, D_002522B0);
     if (D_00252240[3] != 0x3) {
         printf("error! subsel_att_chr_1p_b[3]\n");
     }
-    STORE_POINTER(D_00252240 + 3, D_002522D0);
+    STORE_ARCADE_ADDRESS(D_00252240 + 3, D_002522D0);
     if (D_00252250[3] != 0x3) {
         printf("error! subsel_att_chr_1p_c[3]\n");
     }
-    STORE_POINTER(D_00252250 + 3, D_002522F0);
+    STORE_ARCADE_ADDRESS(D_00252250 + 3, D_002522F0);
     if (D_00252250[8] != 0x8) {
         printf("error! subsel_att_chr_1p_c[8]\n");
     }
-    STORE_POINTER(D_00252250 + 8, D_00252310);
+    STORE_ARCADE_ADDRESS(D_00252250 + 8, D_00252310);
     if (D_00252268[3] != 0x3) {
         printf("error! subsel_att_chr_2p_a[3]\n");
     }
-    STORE_POINTER(D_00252268 + 3, D_002522B0);
+    STORE_ARCADE_ADDRESS(D_00252268 + 3, D_002522B0);
     if (D_00252278[3] != 0x3) {
         printf("error! subsel_att_chr_2p_b[3]\n");
     }
-    STORE_POINTER(D_00252278 + 3, D_002522D0);
+    STORE_ARCADE_ADDRESS(D_00252278 + 3, D_002522D0);
     if (D_00252290[3] != 0x3) {
         printf("error! subsel_att_chr_2p_c[3]\n");
     }
-    STORE_POINTER(D_00252290 + 3, D_002522F0);
+    STORE_ARCADE_ADDRESS(D_00252290 + 3, D_002522F0);
     if (D_00252290[8] != 0x8) {
         printf("error! subsel_att_chr_2p_c[8]\n");
     }
-    STORE_POINTER(D_00252290 + 8, D_00252310);
+    STORE_ARCADE_ADDRESS(D_00252290 + 8, D_00252310);
     if (stage5_boss_horn_shot_offsets[0] != 0x0) {
         printf("error! st5b_2_tsuno_sht_ofs_tbl[0]\n");
     }

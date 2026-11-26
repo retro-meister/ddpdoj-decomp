@@ -368,9 +368,15 @@ void player_panel_task(void) {
             *(u16 *)(reg_a5 + 4) = (u16) reg_d0.h[0];
         }
     }
+#ifdef DDPDOJ_PC
+    unsigned step = *(u16 *)(reg_a5 + 4) / 4;
+    reg_a0 = (u8 *)&player_panel_steps[step];
+    reg_call_target = player_panel_steps[step];
+#else
     reg_a0 = (u8 *)player_panel_steps;
     reg_a0 += *(u16 *)(reg_a5 + 4);
     reg_call_target = *(Fn *)reg_a0;
+#endif
     reg_call_target();
 }
 
@@ -461,14 +467,14 @@ void player_panel_step_2(s32 arg2, s32 arg3) {
         reg_tmp.w = 0xDC0100;
         *(u16 *)(reg_a5 + 8) = (u16) reg_tmp.h[1];
         *(u16 *)(reg_a5 + 0xA) = (u16) reg_tmp.h[0];
-        reg_tmp.w = (u32) player_panel_step2_frames_p1;
+        reg_tmp.w = ARCADE_ADDRESS_ENCODE(player_panel_step2_frames_p1);
         *(u16 *)(reg_a5 + 0x10) = (u16) reg_tmp.h[1];
         *(u16 *)(reg_a5 + 0x12) = (u16) reg_tmp.h[0];
         switch (*(u8 *)(reg_a5 + 6)) { case 0: break; default:
             reg_tmp.w = 0xDC1200;
             *(u16 *)(reg_a5 + 8) = (u16) reg_tmp.h[1];
             *(u16 *)(reg_a5 + 0xA) = (u16) reg_tmp.h[0];
-            reg_tmp.w = (u32) player_panel_step2_frames_p2;
+            reg_tmp.w = ARCADE_ADDRESS_ENCODE(player_panel_step2_frames_p2);
             *(u16 *)(reg_a5 + 0x10) = (u16) reg_tmp.h[1];
             *(u16 *)(reg_a5 + 0x12) = (u16) reg_tmp.h[0];
         }
@@ -486,7 +492,7 @@ void player_panel_step_2(s32 arg2, s32 arg3) {
         *(u8 *)(reg_a5 + 7) = 0U;
         reg_tmp.h[1] = *(u16 *)(reg_a5 + 0x10);
         reg_tmp.h[0] = *(u16 *)(reg_a5 + 0x12);
-        reg_a0 = (u8 *)(reg_tmp.w);
+        reg_a0 = ARCADE_ADDRESS_DECODE(u8 *, reg_tmp.w);
         temp_a0_2 = *(u16 *)(reg_a5 + 0xC);
         reg_a0 += temp_a0_2;
         reg_d4.w = *(u32 *)reg_a0;

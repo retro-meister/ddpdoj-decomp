@@ -1756,7 +1756,7 @@ void bullet_fire_loop2_double_from_task(void) {
     reg_d1.h[0] = reg_tmp1.h[1];
     reg_tmp.h[1] = *(u16 *)(reg_a5 + 6);
     reg_tmp.h[0] = *(u16 *)(reg_a5 + 8);
-    reg_a0 = (u8 *)reg_tmp.w;
+    reg_a0 = ARCADE_ADDRESS_DECODE(u8 *, reg_tmp.w);
     bullet_fire_loop2_double();
 }
 
@@ -1800,7 +1800,7 @@ void bullet_fire_loop2(void) {
     reg_d1.h[0] = reg_tmp1.h[1];
     reg_tmp.h[1] = *(u16 *)(reg_a5 + 6);
     reg_tmp.h[0] = *(u16 *)(reg_a5 + 8);
-    reg_a0 = (u8 *)reg_tmp.w;
+    reg_a0 = ARCADE_ADDRESS_DECODE(u8 *, reg_tmp.w);
     if (!(*(u8 *)(reg_a0 + 1) & 2)) {
         bullet_fire_loop2_double();
         return;
@@ -1908,7 +1908,7 @@ void bullet_fire_direct(void) {
 extern u16 bullet_type_records[];
 extern u32 g_bullet_spawn_saved_d7;
 extern u32 g_bullet_spawn_saved_d0;
-extern s32 g_bullet_spawn_saved_a1;
+extern BulletSavedAddress g_bullet_spawn_saved_a1;
 extern void *g_bullet_spawn_saved_a0;
 extern u16 g_hyper_bullet_speed;
 extern u8 g_no_enemy_bullets;
@@ -2016,7 +2016,7 @@ next_5:
     reg_a1 = (u8 *) bullet_type_records;
     reg_tmp.h[1] = (reg_d0.h[0] != 0) ? *(u16 *) (reg_a1 + ((s16) reg_d0.h[0] & ~1)) : *(u16 *) reg_a1;
     reg_tmp.h[0] = (((u16) reg_d0.h[0] + 2) != 0) ? *(u16 *) (reg_a1 + ((s16) ((u16) reg_d0.h[0] + 2) & ~1)) : *(u16 *) reg_a1;
-    reg_a1 = (u8 *) reg_tmp.w;
+    reg_a1 = ARCADE_ADDRESS_DECODE(u8 *, reg_tmp.w);
     *(u16 *) reg_a0 = *(u16 *) reg_a1;
     reg_a1 += 2;
     reg_a0 += 2;
@@ -2083,7 +2083,7 @@ next_1:
     reg_a1 += reg_d0.h[0];
     reg_tmp.h[1] = *(u16 *) reg_a1;
     reg_tmp.h[0] = *(u16 *) (reg_a1 + 2);
-    reg_a1 = (u8 *) reg_tmp.w;
+    reg_a1 = ARCADE_ADDRESS_DECODE(u8 *, reg_tmp.w);
     reg_call_target = (Fn) reg_a1;
     reg_call_target();
     return;
@@ -2102,7 +2102,7 @@ void bullet_fire256_loop2_double_from_task(void) {
     reg_d1.h[0] = reg_tmp1.h[1];
     reg_tmp.h[1] = *(u16 *)(reg_a5 + 6);
     reg_tmp.h[0] = *(u16 *)(reg_a5 + 8);
-    reg_a0 = (u8 *)reg_tmp.w;
+    reg_a0 = ARCADE_ADDRESS_DECODE(u8 *, reg_tmp.w);
     bullet_fire256_loop2_double();
 }
 
@@ -2137,7 +2137,7 @@ void bullet_fire256_loop2(void) {
     reg_d1.h[0] = reg_tmp1.h[1];
     reg_tmp.h[1] = *(u16 *)(reg_a5 + 6);
     reg_tmp.h[0] = *(u16 *)(reg_a5 + 8);
-    reg_a0 = (u8 *)reg_tmp.w;
+    reg_a0 = ARCADE_ADDRESS_DECODE(u8 *, reg_tmp.w);
     if (!(*(u8 *)(reg_a0 + 1) & 2)) {
         bullet_fire256_loop2_double();
         return;
@@ -2359,7 +2359,7 @@ next_5:
     reg_a1 = (u8 *) bullet_type_records;
     reg_tmp.h[1] = (reg_d0.h[0] != 0) ? *(u16 *) (reg_a1 + ((s16) reg_d0.h[0] & ~1)) : *(u16 *) reg_a1;
     reg_tmp.h[0] = (((u16) reg_d0.h[0] + 2) != 0) ? *(u16 *) (reg_a1 + ((s16) ((u16) reg_d0.h[0] + 2) & ~1)) : *(u16 *) reg_a1;
-    reg_a1 = (u8 *) reg_tmp.w;
+    reg_a1 = ARCADE_ADDRESS_DECODE(u8 *, reg_tmp.w);
     reg_d7.h[0] = *(u16 *) reg_a1;
     reg_a1 += 2;
     reg_d7.w |= 0x200;
@@ -2403,14 +2403,18 @@ next_5:
     bullet_position_offset_add();
 }
 
-extern s32 g_bullet_spawn_saved_a1;
+extern BulletSavedAddress g_bullet_spawn_saved_a1;
 extern void *g_bullet_spawn_saved_a0;
 
 void bullet_type_setup_00(void) {
     cond_flag = 0;
     reg_d0.w = g_bullet_spawn_saved_d0;
     reg_d7.sw = (s32)g_bullet_spawn_saved_d7;
+#ifdef DDPDOJ_PC
+    reg_a0 = g_bullet_spawn_saved_a0;
+#else
     reg_a0 = (u8 *)(*(s32 *)&g_bullet_spawn_saved_a0);
+#endif
     reg_a1 = (u8 *)g_bullet_spawn_saved_a1;
 }
 
@@ -2801,7 +2805,7 @@ u32 pickup_draw_value_table[8] = {
 
 /* .sbss (the compiler lays these out in reverse) */
 void *g_bullet_spawn_saved_a0;
-s32 g_bullet_spawn_saved_a1;
+BulletSavedAddress g_bullet_spawn_saved_a1;
 u8 *bullets_update_state;
 u32 g_bullet_spawn_saved_d0;
 u32 g_bullet_spawn_saved_d7;

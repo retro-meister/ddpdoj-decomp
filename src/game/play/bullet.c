@@ -315,7 +315,7 @@ block_12:
     if (reg_tmp.h[1] != 0) {
         goto block_16;
     }
-    reg_a1 = (u8 *)((u32)reg_a6 + 2);
+    reg_a1 = reg_a6 + 2;
     reg_d0.h[1] = *(u16 *)(reg_a1 + 0);
     reg_a1 += 2;
     reg_d0.h[0] = *(u16 *)(reg_a1 + 0);
@@ -389,7 +389,7 @@ L_not_plain:
     reg_a0 += reg_d0.h[0];
     reg_tmp.h[1] = *(u16 *)(reg_a0 + 0);
     reg_tmp.h[0] = *(u16 *)(reg_a0 + 2);
-    reg_a0 = (u8 *)reg_tmp.w;
+    reg_a0 = ARCADE_ADDRESS_DECODE(u8 *, reg_tmp.w);
     reg_call_target = (void (*)())reg_a0;
     reg_call_target();
     SLOT_PHASE += 1;
@@ -454,7 +454,7 @@ L_0012A5DC:
     reg_a0 += reg_d0.h[0];
     reg_tmp.h[1] = *(u16 *)(reg_a0 + 0);
     reg_tmp.h[0] = *(u16 *)(reg_a0 + 2);
-    reg_a0 = (u8 *)reg_tmp.w;
+    reg_a0 = ARCADE_ADDRESS_DECODE(u8 *, reg_tmp.w);
     reg_call_target = (void (*)())reg_a0;
     reg_call_target();
     reg_a6 += 0x40;
@@ -491,7 +491,7 @@ block_33:
         reg_a1 += reg_d0.h[0];
         reg_tmp.h[1] = *(u16 *)(reg_a1 + 0);
         reg_tmp.h[0] = *(u16 *)(reg_a1 + 2);
-        reg_a1 = (u8 *)reg_tmp.w;
+        reg_a1 = ARCADE_ADDRESS_DECODE(u8 *, reg_tmp.w);
         if (*(u16 *)(reg_a1 - 2) == 1) {
             reg_tmp.w = 0x23F;
             ENTITY(reg_a6)->draw.h = reg_tmp.h[1];
