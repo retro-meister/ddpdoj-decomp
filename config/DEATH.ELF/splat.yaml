@@ -313,7 +313,7 @@ segments:
       - [0x16fe30, .data, game/play/difficulty]
       - [0x16fe40, .data, game/enemy/enemy]
       - [0x16ff10, .data, game/frontend/game_over]
-      - [0x16ff90, .data, game/enemy/enemy_common_data_b]
+      - [0x16ff90, .data, game/enemy/enemy_common]
       - [0x1703c0, .data, game/frontend/attract_data]
       - [0x170610, .data, game/play/item_data]
       - [0x170900, .data, game/test/item_test_data]

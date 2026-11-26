@@ -1,6 +1,140 @@
 #include "common.h"
 #include "pad.h"
 
+extern char settings_notice_rank_easy[];
+extern char settings_notice_rank_normal[];
+extern char settings_notice_rank_hard[];
+extern char settings_notice_rank_very_hard[];
+extern char settings_notice_extend_a[][32];
+extern char settings_notice_extend_b[][32];
+extern char settings_notice_extend_c[][32];
+extern char settings_notice_extend_none[][32];
+
+u16 settings_notice_objects[4][8] = {
+    { 0xF00, 0x600, 0, 0, 0, 0xE8, 0x8000, 0x8000 },
+    { 0xF00, 0x800, 0, 0, 0, 0xE9, 0x8000, 0x8000 },
+    { 0xF80, 0x700, 0, 0, 0, 0x123, 0x4000, 0x4000 },
+    { 0xFFFF, 0xFFFF, 0, 0, 0, 0, 0, 0 },
+};
+
+u32 settings_notice_sprites[60][2] = {
+    { 0x0F000700, 0x0028 },
+    { 0x0F000900, 0x0043 },
+    { 0x0F000B00, 0x0029 },
+    { 0x0F000D00, 0x0032 },
+    { 0x0F000F00, 0x0030 },
+    { 0x0F001100, 0x0030 },
+    { 0x0F001300, 0x0032 },
+    { 0x0F001700, 0x0043 },
+    { 0x0F001900, 0x0041 },
+    { 0x0F001B00, 0x0056 },
+    { 0x0F001D00, 0x0045 },
+    { 0x0F002100, 0x0043 },
+    { 0x0F002300, 0x004F },
+    { 0x0F002500, 0x002E },
+    { 0x0F002700, 0x002C },
+    { 0x0F002900, 0x004C },
+    { 0x0F002B00, 0x0054 },
+    { 0x0F002D00, 0x0044 },
+    { 0x0F002F00, 0x002E },
+    { 0x0C000100, 0x0050 },
+    { 0x0C000300, 0x0055 },
+    { 0x0C000500, 0x0042 },
+    { 0x0C000700, 0x004C },
+    { 0x0C000900, 0x0049 },
+    { 0x0C000B00, 0x0053 },
+    { 0x0C000D00, 0x0048 },
+    { 0x0C000F00, 0x0049 },
+    { 0x0C001100, 0x004E },
+    { 0x0C001300, 0x0047 },
+    { 0x0C001700, 0x0041 },
+    { 0x0C001900, 0x004E },
+    { 0x0C001B00, 0x0044 },
+    { 0x0C001F00, 0x0044 },
+    { 0x0C002100, 0x0049 },
+    { 0x0C002300, 0x0053 },
+    { 0x0C002500, 0x0054 },
+    { 0x0C002700, 0x0052 },
+    { 0x0C002900, 0x0049 },
+    { 0x0C002B00, 0x0042 },
+    { 0x0C002D00, 0x0055 },
+    { 0x0C002F00, 0x0054 },
+    { 0x0C003100, 0x0049 },
+    { 0x0C003300, 0x004F },
+    { 0x0C003500, 0x004E },
+    { 0x09000D00, 0x0042 },
+    { 0x09000F00, 0x0059 },
+    { 0x09001300, 0x0041 },
+    { 0x09001500, 0x0052 },
+    { 0x09001700, 0x0049 },
+    { 0x09001900, 0x004B },
+    { 0x09001B00, 0x0041 },
+    { 0x09001F00, 0x0043 },
+    { 0x09002100, 0x004F },
+    { 0x09002300, 0x002E },
+    { 0x09002500, 0x002C },
+    { 0x09002700, 0x004C },
+    { 0x09002900, 0x0054 },
+    { 0x09002B00, 0x0044 },
+    { 0x09002D00, 0x002E },
+    { 0xFFFFFFFF, 0x0000 },
+};
+
+u16 settings_notice_fade_palettes[32] = {
+    0x0004, 0x0000, 0x0000, 0x0000, 0x0004, 0x0005, 0x001F, 0x0006,
+    0x0000, 0x0000, 0x0040, 0x000B, 0x000C, 0x001F, 0x0006, 0x0000,
+    0x0000, 0x0080, 0x0012, 0x0013, 0x001F, 0x0006, 0x0000, 0x0008,
+    0x0000, 0x0019, 0x001A, 0x001F, 0x0006, 0x0000, 0x0000, 0x0000,
+};
+
+u16 settings_notice_fade_palettes_b[24] = {
+    0x0004, 0x0000, 0x0000, 0x001F, 0x0006, 0x0000, 0x0040, 0x001F,
+    0x0006, 0x0000, 0x0080, 0x001F, 0x0006, 0x0008, 0x0000, 0x001F,
+    0x0006, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000,
+};
+
+char *settings_notice_rank_texts[4] = {
+    settings_notice_rank_easy,
+    settings_notice_rank_normal,
+    settings_notice_rank_hard,
+    settings_notice_rank_very_hard,
+};
+
+char settings_notice_rank_easy[32] = "         RANK: EASY         ";
+
+char settings_notice_rank_normal[32] = "        RANK: NORMAL        ";
+
+char settings_notice_rank_hard[32] = "         RANK: HARD         ";
+
+char settings_notice_rank_very_hard[32] = "      RANK: VERY HARD       ";
+
+char *settings_notice_extend_texts[4] = {
+    settings_notice_extend_a[0],
+    settings_notice_extend_b[0],
+    settings_notice_extend_c[0],
+    settings_notice_extend_none[0],
+};
+
+char settings_notice_extend_a[2][32] = {
+    "      1ST 10000000PTS       ",
+    "      2ND 30000000PTS       ",
+};
+
+char settings_notice_extend_b[2][32] = {
+    "      1ST  50000000PTS      ",
+    "      2ND 100000000PTS      ",
+};
+
+char settings_notice_extend_c[2][32] = {
+    "      1ST  5000000PTS       ",
+    "      2ND 20000000PTS       ",
+};
+
+char settings_notice_extend_none[2][32] = {
+    "          NO EXTEND         ",
+    "                            ",
+};
+
 void func_0015BFD0(void);
 void func_0015C090(void);
 void func_0015C0E0(void);
@@ -114,16 +248,14 @@ void func_0015BA20(void) {
 }
 
 s32 sprite_draw_keep();
-extern u8 D_0026A400[];
-extern u8 D_0026A440[];
 
 void func_0015BB60() {
     u8 *var_s0;
     u32 temp_a0;
     u32 temp_a0_2;
 
-    reg_a4 = D_0026A400;
-    var_s0 = D_0026A440;
+    reg_a4 = (u8 *)settings_notice_objects;
+    var_s0 = (u8 *)settings_notice_sprites;
 loop_1:
     temp_a0 = (*(u32 *)((u8 *)(var_s0) + (0)));
     if (temp_a0 != -1U) {
@@ -142,7 +274,6 @@ loop_1:
 s32 func_0013B350();
 s32 func_0013C300();
 s32 func_0013C350();
-extern u8 D_0026A620[];
 extern u8 *D_0028DF48;
 extern u8 *D_0028DF4C;
 extern u8 *D_0028DF50;
@@ -180,7 +311,7 @@ void func_0015BBD0(void) {
     D_0028DF48 = reg_a6;
     if (!(D_0028E7D1 & 1)) {
         D_0028E7D1 |= 1;
-        reg_a0 = (u8 *)D_0026A620;
+        reg_a0 = (u8 *)settings_notice_fade_palettes;
         func_0013B350();
         D_0028E7C0 = reg_d0.w;
     }
@@ -305,7 +436,6 @@ void func_0015BEF0(void) {
 s32 func_0013BE50();                            /* extern */
 s32 func_0013C300();                            /* extern */
 s32 func_0013C350();                            /* extern */
-extern s32 D_0026A660[];
 extern u8 g_stage_load_state;
 extern u16 D_0028E7C4_as_u16;
 
@@ -321,7 +451,7 @@ void func_0015BFD0(void) {
             func_0015C090();
             return;
         }
-        reg_a0 = (u8 *)D_0026A660;
+        reg_a0 = (u8 *)settings_notice_fade_palettes_b;
         func_0013BE50();
         D_0028E7C0 = reg_d0.w;
         func_0015C090();
@@ -466,14 +596,13 @@ void func_0015C310(void) {
 }
 
 extern u8 g_setting_difficulty;
-extern u8 *D_0026A690[];
 
 
 void func_0015C340(void)
 {
     extern void text_layer_print(void);
     reg_d0.w = 0;
-    reg_a0 = (u8 *)D_0026A690;
+    reg_a0 = (u8 *)settings_notice_rank_texts;
     reg_d0.b[0] = g_setting_difficulty;
     reg_d0.w += reg_d0.w;
     reg_d0.w += reg_d0.w;
@@ -484,14 +613,13 @@ void func_0015C340(void)
     text_layer_print();
 }
 
-extern u8 D_0026A720[];
 extern u8 g_setting_extend;
 
 void func_0015C3A0(void) {
     s32 text_layer_print();
     u16 temp_a0;
 
-    reg_a0 = D_0026A720;
+    reg_a0 = (u8 *)settings_notice_extend_texts;
     reg_d0.w = 0;
     reg_d0.b[0] = g_setting_extend;
     reg_d0.w += reg_d0.w;
