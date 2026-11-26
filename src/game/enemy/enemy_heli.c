@@ -1,7 +1,34 @@
 #include "common.h"
 #include "entity.h"
+#include "enemy.h"
 
-void func_00150F40(void);
+/*
+ * The helicopters' part of the enemy state block (reg_a5). All eight kinds share it. Kind G keeps other
+ * things in the four bytes from 0x26.
+ */
+typedef struct {
+    /* 0x00 */ u8 common[0x16];        /* EnemyState */
+    /* 0x16 */ u8 other_16[2];
+    /* 0x18 */ union { s16 h; struct { u8 other; u8 countdown; } b; } fire;  /* frames to the next shot */
+    /* 0x1A */ u8 turn_interval;       /* frames between two turns towards the player */
+    /* 0x1B */ u8 turn_countdown;
+    /* 0x1C */ u16 facing_reached;
+    /* 0x1E */ u8 facing_step;         /* +4 or -4 */
+    /* 0x1F */ u8 other_1F;
+    /* 0x20 */ u16 rotor_frame;        /* 0, 4, 8, 12 */
+    /* 0x22 */ u8 facing;              /* direction the body is drawn in */
+    /* 0x23 */ u8 facing_wanted;       /* set by the path */
+    /* 0x24 */ union { u16 h; struct { u8 interval; u8 countdown; } b; } facing_timer;
+    /* 0x26 */ Field16 facing_started;
+    /* 0x28 */ Field16 turns_left;
+    /* 0x2A */ u8 hit_palette;         /* mixed into the palette on the frame of a hit */
+    /* 0x2B */ u8 palette;
+    /* 0x2C */ u16 shadow_sprite[2];   /* the shadow drawn under it, high word first */
+} HeliState;
+
+#define HELI(pointer) ((HeliState *)(pointer))
+
+void heli_draw(void);
 
 
 s32 explosion_spawn();
@@ -9,7 +36,7 @@ s32 sfx_explosion_ground_small();
 s32 score_add_no_chain();
 s32 score_add();
 
-void func_00150510(u32 arg0) {
+void heli_take_hits(u32 arg0) {
     s32 enemy_remove();
     u8 temp_a0;
     u8 temp_a1;
@@ -20,8 +47,8 @@ void func_00150510(u32 arg0) {
         reg_d0.b[0] = 0xA3;
         ENTITY(reg_a6)->flags.b[1] &= reg_d0.b[0];
         score_add_no_chain();
-        reg_d0.b[0] = *(u8 *)(reg_a5 + 0x2B);
-        reg_d2.b[0] = *(u8 *)(reg_a5 + 0x2A);
+        reg_d0.b[0] = HELI(reg_a5)->palette;
+        reg_d2.b[0] = HELI(reg_a5)->hit_palette;
         reg_d0.b[0] ^= reg_d2.b[0];
         ENTITY(reg_a6)->attr.b.palette = (u8) reg_d0.b[0];
         if (ENTITY(reg_a6)->hp.sh < 0) {
@@ -45,14 +72,14 @@ void func_00150510(u32 arg0) {
         }
         goto block_4;
     }
-    ENTITY(reg_a6)->attr.b.palette = (u8) *(u8 *)(reg_a5 + 0x2B);
+    ENTITY(reg_a6)->attr.b.palette = (u8) HELI(reg_a5)->palette;
 block_4:
     cond_flag = 0;
 }
 
 extern u16 D_002579D0[];
 
-void func_00150670(u8 arg0) {
+void heli_muzzle_offset(u8 arg0) {
     reg_d2.w = 0;
     reg_d2.b[0] = arg0;
     reg_a0 = (u8 *)(D_002579D0);
@@ -69,7 +96,7 @@ void func_00150730(void) {
 extern u16 g_enemy_signal_0;
 extern u16 g_stage;
 
-void func_00150740(void) {
+void heli_remove_on_signal_0(void) {
     s32 enemy_remove(u16);
     if ((g_stage == 1) && (g_enemy_signal_0 != 0)) {
         enemy_remove(g_stage);
@@ -81,7 +108,7 @@ void func_00150740(void) {
 
 extern u16 g_enemy_signal_f;
 
-void func_00150790(void) {
+void heli_remove_on_signal_f(void) {
     s32 enemy_remove(u16);
     if ((g_stage == 2) && (g_enemy_signal_f != 0)) {
         enemy_remove(g_stage);
@@ -98,7 +125,7 @@ extern u8 D_00257880[];
 extern u16 g_frame_mod2;
 extern u16 g_loop;
 
-void func_001507E0(void) {
+void heli_draw_rotor_and_shadow(void) {
     u32 offset;
 
     reg_a0 = reg_a6;
@@ -113,13 +140,13 @@ void func_001507E0(void) {
         reg_d3.h[0] = 0x828;
         reg_d1.h[0] += 0x7FFF + 0x7B01;
         reg_d4.h[0] = ENTITY(reg_a6)->attr.h;
-        reg_d2.h[0] = *(u16 *)(reg_a5 + 0x20);
+        reg_d2.h[0] = HELI(reg_a5)->rotor_frame;
         reg_d2.h[1] = (reg_d2.h[0] != 0) ? *(u16 *)(D_00257880 + ((s16)reg_d2.h[0] & ~1)) : *(u16 *)D_00257880;
         offset = reg_d2.h[0] + 2;
         reg_d2.h[0] = (offset != 0) ? *(u16 *)(D_00257880 + ((s16)offset & ~1)) : *(u16 *)D_00257880;
         sprite_draw_layer5();
-        *(u16 *)(reg_a5 + 0x20) += 4;
-        *(u16 *)(reg_a5 + 0x20) &= 0xF;
+        HELI(reg_a5)->rotor_frame += 4;
+        HELI(reg_a5)->rotor_frame &= 0xF;
     block_rts:
         return;
     }
@@ -137,8 +164,8 @@ void func_001507E0(void) {
     reg_d1.h[1] = reg_tmp1.h[0];
     reg_d1.h[0] = ENTITY(reg_a6)->x.h;
     reg_d1.h[0] += 0x400;
-    reg_d2.h[1] = *(u16 *)(reg_a5 + 0x2C);
-    reg_d2.h[0] = *(u16 *)(reg_a5 + 0x2E);
+    reg_d2.h[1] = HELI(reg_a5)->shadow_sprite[0];
+    reg_d2.h[0] = HELI(reg_a5)->shadow_sprite[1];
     reg_d3.h[0] = 0x410;
     reg_d4.h[0] = ENTITY(reg_a6)->attr.h;
     reg_d4.b[0] = 0x18;
@@ -171,8 +198,8 @@ extern s8 enemy_move_end_requested;
 
 void heli_a_start(void) {
     s32 enemy_remove();
-    func_00150740();
-    if ((cond_flag == 0) && (reg_a0 = (u8 *)D_002578B0, enemy_init_entities(), reg_a0 = (u8 *)D_00257890, reg_d0.h[0] = 0xC, enemy_set_task_state(), ENTITY(reg_a6)->attr.b.palette = (u8) *(u8 *)(reg_a5 + 0x2B), enemy_path_start(), (enemy_move_end_requested == 0))) {
+    heli_remove_on_signal_0();
+    if ((cond_flag == 0) && (reg_a0 = (u8 *)D_002578B0, enemy_init_entities(), reg_a0 = (u8 *)D_00257890, reg_d0.h[0] = 0xC, enemy_set_task_state(), ENTITY(reg_a6)->attr.b.palette = (u8) HELI(reg_a5)->palette, enemy_path_start(), (enemy_move_end_requested == 0))) {
         reg_a0 = (u8 *)(D_002578D0);
         reg_d1.b[0] = ENTITY(reg_a6)->move.b.dir;
         reg_d1.h[0] &= 0x3E;
@@ -180,14 +207,14 @@ void heli_a_start(void) {
         ENTITY(reg_a6)->draw.h = (reg_d1.h[0] != 0) ? *(u16 *)((u8 *)reg_a0 + ((s16)reg_d1.h[0] & ~1)) : *(u16 *)reg_a0;
         ENTITY(reg_a6)->sprite.h = ((reg_d1.h[0] + 2) != 0) ? *(u16 *)((u8 *)reg_a0 + ((s16)(reg_d1.h[0] + 2) & ~1)) : *(u16 *)reg_a0;
         reg_a0 = (u8 *)(D_00257950);
-        *(u16 *)(reg_a5 + 0x2C) = (reg_d1.h[0] != 0) ? *(u16 *)((u8 *)reg_a0 + ((s16)reg_d1.h[0] & ~1)) : *(u16 *)reg_a0;
-        *(u16 *)(reg_a5 + 0x2E) = ((reg_d1.h[0] + 2) != 0) ? *(u16 *)((u8 *)reg_a0 + ((s16)(reg_d1.h[0] + 2) & ~1)) : *(u16 *)reg_a0;
-        if (*(u8 *)(reg_a5 + 0xD) & 0x20) {
+        HELI(reg_a5)->shadow_sprite[0] = (reg_d1.h[0] != 0) ? *(u16 *)((u8 *)reg_a0 + ((s16)reg_d1.h[0] & ~1)) : *(u16 *)reg_a0;
+        HELI(reg_a5)->shadow_sprite[1] = ((reg_d1.h[0] + 2) != 0) ? *(u16 *)((u8 *)reg_a0 + ((s16)(reg_d1.h[0] + 2) & ~1)) : *(u16 *)reg_a0;
+        if (ENEMY_WORK(reg_a5)->kind & 0x20) {
             func_002036F0();
         }
         reg_d0.h[0] = g_rank_2_16;
         reg_d0.b[0] -= 8;
-        *(u8 *)(reg_a5 + 0x19) -= reg_d0.b[0];
+        HELI(reg_a5)->fire.b.countdown -= reg_d0.b[0];
         if (g_stage == 4) {
             if (g_enemy_signal_1 != 0) {
                 enemy_remove();
@@ -223,24 +250,24 @@ extern u16 g_rank_5_16;
 
 void heli_a(void) {
     u16 temp_a0_2;
-    func_00150510(8);
+    heli_take_hits(8);
     if ((cond_flag == 0) && (func_00171430(), (cond_flag == 0))) {
         if (g_enemies_stopped != 0) {
 #ifndef DEATH_LABEL
-            func_00150F40();
+            heli_draw();
 #endif
             return;
         }
         entity_velocity();
-        if (*(u16 *)(reg_a5 + 0x28) != 0) {
-            reg_tmp.b[0] = *(u8 *)(reg_a5 + 0x1B);
-            *(u8 *)(reg_a5 + 0x1B) -= 1;
+        if (HELI(reg_a5)->turns_left.h != 0) {
+            reg_tmp.b[0] = HELI(reg_a5)->turn_countdown;
+            HELI(reg_a5)->turn_countdown -= 1;
             if ((s32) reg_tmp.b[0] <= 0) {
-                *(u8 *)(reg_a5 + 0x1B) = (u8) *(u8 *)(reg_a5 + 0x1A);
-                *(u16 *)(reg_a5 + 0x28) -= 1;
+                HELI(reg_a5)->turn_countdown = (u8) HELI(reg_a5)->turn_interval;
+                HELI(reg_a5)->turns_left.h -= 1;
                 func_00202490();
                 if (cond_flag != 0) {
-                    func_00150F40();
+                    heli_draw();
                     return;
                 }
                 reg_a0 = (u8 *)(D_002578D0);
@@ -249,33 +276,33 @@ void heli_a(void) {
                 ENTITY(reg_a6)->draw.h = (reg_d1.h[0] != 0) ? *(u16 *)((u8 *)reg_a0 + ((s16)reg_d1.h[0] & ~1)) : *(u16 *)reg_a0;
                 ENTITY(reg_a6)->sprite.h = ((reg_d1.h[0] + 2) != 0) ? *(u16 *)((u8 *)reg_a0 + ((s16)(reg_d1.h[0] + 2) & ~1)) : *(u16 *)reg_a0;
                 reg_a0 = (u8 *)(D_00257950);
-                *(u16 *)(reg_a5 + 0x2C) = (reg_d1.h[0] != 0) ? *(u16 *)((u8 *)reg_a0 + ((s16)reg_d1.h[0] & ~1)) : *(u16 *)reg_a0;
-                *(u16 *)(reg_a5 + 0x2E) = ((reg_d1.h[0] + 2) != 0) ? *(u16 *)((u8 *)reg_a0 + ((s16)(reg_d1.h[0] + 2) & ~1)) : *(u16 *)reg_a0;
+                HELI(reg_a5)->shadow_sprite[0] = (reg_d1.h[0] != 0) ? *(u16 *)((u8 *)reg_a0 + ((s16)reg_d1.h[0] & ~1)) : *(u16 *)reg_a0;
+                HELI(reg_a5)->shadow_sprite[1] = ((reg_d1.h[0] + 2) != 0) ? *(u16 *)((u8 *)reg_a0 + ((s16)(reg_d1.h[0] + 2) & ~1)) : *(u16 *)reg_a0;
                 goto block_21;
             }
         }
 block_21:
-        reg_tmp.b[0] = *(u8 *)(reg_a5 + 0x19);
-        *(u8 *)(reg_a5 + 0x19) -= 1;
+        reg_tmp.b[0] = HELI(reg_a5)->fire.b.countdown;
+        HELI(reg_a5)->fire.b.countdown -= 1;
         if ((s32) reg_tmp.b[0] > 0) {
-            func_00150F40();
+            heli_draw();
             return;
         }
         reg_d0.w = 0x58;
         reg_d0.h[0] -= g_rank_5_16;
         reg_d0.h[0] += 2;
-        *(u8 *)(reg_a5 + 0x19) = (u8) reg_d0.b[0];
+        HELI(reg_a5)->fire.b.countdown = (u8) reg_d0.b[0];
         func_00202D50();
         if (cond_flag != 0) {
-            func_00150F40();
+            heli_draw();
             return;
         }
         func_00202180();
         if (cond_flag != 0) {
-            func_00150F40();
+            heli_draw();
             return;
         }
-        func_00150670(ENTITY(reg_a6)->move.b.dir);
+        heli_muzzle_offset(ENTITY(reg_a6)->move.b.dir);
         reg_tmp.h[1] = ENTITY(reg_a6)->y.h;
         temp_a0_2 = ENTITY(reg_a6)->x.h;
         reg_tmp.h[0] = temp_a0_2;
@@ -284,15 +311,15 @@ block_21:
         func_00150730();
         reg_d3.w = 0;
         bullet_fire();
-        func_00150F40();
+        heli_draw();
     }
 }
 
 s32 entity_draw_layer5();                            /* extern */
 
-void func_00150F40(void) {
+void heli_draw(void) {
     entity_draw_layer5();
-    func_001507E0();
+    heli_draw_rotor_and_shadow();
 }
 
 s32 entity_draw_layer5();
@@ -304,10 +331,10 @@ void heli_set_direction_sprite(void) {
     ENTITY(reg_a6)->draw.h = (reg_d1.h[0] != 0) ? *(u16 *)((u8 *)reg_a0 + ((s16)reg_d1.h[0] & ~1)) : *(u16 *)reg_a0;
     ENTITY(reg_a6)->sprite.h = ((reg_d1.h[0] + 2) != 0) ? *(u16 *)((u8 *)reg_a0 + ((s16)(reg_d1.h[0] + 2) & ~1)) : *(u16 *)reg_a0;
     reg_a0 = (u8 *)(D_00257950);
-    *(u16 *)(reg_a5 + 0x2C) = (reg_d1.h[0] != 0) ? *(u16 *)((u8 *)reg_a0 + ((s16)reg_d1.h[0] & ~1)) : *(u16 *)reg_a0;
-    *(u16 *)(reg_a5 + 0x2E) = ((reg_d1.h[0] + 2) != 0) ? *(u16 *)((u8 *)reg_a0 + ((s16)(reg_d1.h[0] + 2) & ~1)) : *(u16 *)reg_a0;
+    HELI(reg_a5)->shadow_sprite[0] = (reg_d1.h[0] != 0) ? *(u16 *)((u8 *)reg_a0 + ((s16)reg_d1.h[0] & ~1)) : *(u16 *)reg_a0;
+    HELI(reg_a5)->shadow_sprite[1] = ((reg_d1.h[0] + 2) != 0) ? *(u16 *)((u8 *)reg_a0 + ((s16)(reg_d1.h[0] + 2) & ~1)) : *(u16 *)reg_a0;
     entity_draw_layer5();
-    func_001507E0();
+    heli_draw_rotor_and_shadow();
 }
 
 void heli_b_first(void) {
@@ -318,16 +345,16 @@ extern u16 D_00257A50[];
 extern u16 D_00257A70[];
 
 void heli_b_start(void) {
-    func_00150740();
+    heli_remove_on_signal_0();
     if (cond_flag == 0) {
-        func_00150790();
+        heli_remove_on_signal_f();
         if (cond_flag == 0) {
             reg_a0 = (u8 *)(D_00257A70);
             enemy_init_entities();
             reg_a0 = (u8 *)(D_00257A50);
             reg_d0.h[0] = 0xA;
             enemy_set_task_state();
-            ENTITY(reg_a6)->attr.b.palette = (u8) *(u8 *)(reg_a5 + 0x2B);
+            ENTITY(reg_a6)->attr.b.palette = (u8) HELI(reg_a5)->palette;
             enemy_path_start();
             if (enemy_move_end_requested == 0) {
                 reg_a0 = (u8 *)(D_002578D0);
@@ -337,14 +364,14 @@ void heli_b_start(void) {
                 ENTITY(reg_a6)->draw.h = (reg_d1.h[0] != 0) ? *(u16 *)((u8 *)reg_a0 + ((s16)reg_d1.h[0] & ~1)) : *(u16 *)reg_a0;
                 ENTITY(reg_a6)->sprite.h = ((reg_d1.h[0] + 2) != 0) ? *(u16 *)((u8 *)reg_a0 + ((s16)(reg_d1.h[0] + 2) & ~1)) : *(u16 *)reg_a0;
                 reg_a0 = (u8 *)(D_00257950);
-                *(u16 *)(reg_a5 + 0x2C) = (reg_d1.h[0] != 0) ? *(u16 *)((u8 *)reg_a0 + ((s16)reg_d1.h[0] & ~1)) : *(u16 *)reg_a0;
-                *(u16 *)(reg_a5 + 0x2E) = ((reg_d1.h[0] + 2) != 0) ? *(u16 *)((u8 *)reg_a0 + ((s16)(reg_d1.h[0] + 2) & ~1)) : *(u16 *)reg_a0;
-                if (*(u8 *)(reg_a5 + 0xD) & 0x20) {
+                HELI(reg_a5)->shadow_sprite[0] = (reg_d1.h[0] != 0) ? *(u16 *)((u8 *)reg_a0 + ((s16)reg_d1.h[0] & ~1)) : *(u16 *)reg_a0;
+                HELI(reg_a5)->shadow_sprite[1] = ((reg_d1.h[0] + 2) != 0) ? *(u16 *)((u8 *)reg_a0 + ((s16)(reg_d1.h[0] + 2) & ~1)) : *(u16 *)reg_a0;
+                if (ENEMY_WORK(reg_a5)->kind & 0x20) {
                     func_002036F0();
                 }
                 reg_d0.h[0] = g_rank_2_16;
                 reg_d0.b[0] -= 8;
-                *(u8 *)(reg_a5 + 0x19) -= reg_d0.b[0];
+                HELI(reg_a5)->fire.b.countdown -= reg_d0.b[0];
             }
         }
     }
@@ -354,13 +381,13 @@ s32 enemy_path_step();
 
 void heli_b(void) {
     u16 temp_a0_2;
-    func_00150510(8);
+    heli_take_hits(8);
     if ((cond_flag == 0) && (func_00171430(), (cond_flag == 0))) {
         if (g_enemies_stopped != 0) {
-            func_00150F40();
+            heli_draw();
             return;
         }
-        if (*(u16 *)(reg_a5 + 0x1C) != 0) {
+        if (HELI(reg_a5)->facing_reached != 0) {
             entity_velocity();
             goto block_7;
         }
@@ -368,14 +395,14 @@ void heli_b(void) {
         if (enemy_move_end_requested == 0) {
 block_7:
             if ((s32) ENTITY(reg_a6)->move.b.dir >= 0x40) {
-                *(u16 *)(reg_a5 + 0x1C) = 1U;
+                HELI(reg_a5)->facing_reached = 1U;
             }
-            if ((*(u16 *)(reg_a5 + 0x28) != 0) && (*(u16 *)(reg_a5 + 0x1C) != 0)) {
-                reg_tmp.b[0] = *(u8 *)(reg_a5 + 0x1B);
-                *(u8 *)(reg_a5 + 0x1B) -= 1;
+            if ((HELI(reg_a5)->turns_left.h != 0) && (HELI(reg_a5)->facing_reached != 0)) {
+                reg_tmp.b[0] = HELI(reg_a5)->turn_countdown;
+                HELI(reg_a5)->turn_countdown -= 1;
                 if ((s32) reg_tmp.b[0] <= 0) {
-                    *(u8 *)(reg_a5 + 0x1B) = (u8) *(u8 *)(reg_a5 + 0x1A);
-                    *(u8 *)(reg_a5 + 0x29) -= 1;
+                    HELI(reg_a5)->turn_countdown = (u8) HELI(reg_a5)->turn_interval;
+                    HELI(reg_a5)->turns_left.b[1] -= 1;
                     func_00202490();
                     goto block_13;
                 }
@@ -387,30 +414,30 @@ block_13:
                 ENTITY(reg_a6)->draw.h = (reg_d1.h[0] != 0) ? *(u16 *)((u8 *)reg_a0 + ((s16)reg_d1.h[0] & ~1)) : *(u16 *)reg_a0;
                 ENTITY(reg_a6)->sprite.h = ((reg_d1.h[0] + 2) != 0) ? *(u16 *)((u8 *)reg_a0 + ((s16)(reg_d1.h[0] + 2) & ~1)) : *(u16 *)reg_a0;
                 reg_a0 = (u8 *)(D_00257950);
-                *(u16 *)(reg_a5 + 0x2C) = (reg_d1.h[0] != 0) ? *(u16 *)((u8 *)reg_a0 + ((s16)reg_d1.h[0] & ~1)) : *(u16 *)reg_a0;
-                *(u16 *)(reg_a5 + 0x2E) = ((reg_d1.h[0] + 2) != 0) ? *(u16 *)((u8 *)reg_a0 + ((s16)(reg_d1.h[0] + 2) & ~1)) : *(u16 *)reg_a0;
+                HELI(reg_a5)->shadow_sprite[0] = (reg_d1.h[0] != 0) ? *(u16 *)((u8 *)reg_a0 + ((s16)reg_d1.h[0] & ~1)) : *(u16 *)reg_a0;
+                HELI(reg_a5)->shadow_sprite[1] = ((reg_d1.h[0] + 2) != 0) ? *(u16 *)((u8 *)reg_a0 + ((s16)(reg_d1.h[0] + 2) & ~1)) : *(u16 *)reg_a0;
             }
-            reg_tmp.b[0] = *(u8 *)(reg_a5 + 0x19);
-            *(u8 *)(reg_a5 + 0x19) -= 1;
+            reg_tmp.b[0] = HELI(reg_a5)->fire.b.countdown;
+            HELI(reg_a5)->fire.b.countdown -= 1;
             if ((s32) reg_tmp.b[0] > 0) {
-                func_00150F40();
+                heli_draw();
                 return;
             }
             reg_d0.w = 0x58;
             reg_d0.h[0] -= g_rank_5_16;
             reg_d0.h[0] += 2;
-            *(u8 *)(reg_a5 + 0x19) = (u8) reg_d0.b[0];
+            HELI(reg_a5)->fire.b.countdown = (u8) reg_d0.b[0];
             func_00202D50();
             if (cond_flag != 0) {
-                func_00150F40();
+                heli_draw();
                 return;
             }
             func_00202180();
             if (cond_flag != 0) {
-                func_00150F40();
+                heli_draw();
                 return;
             }
-            func_00150670(ENTITY(reg_a6)->move.b.dir);
+            heli_muzzle_offset(ENTITY(reg_a6)->move.b.dir);
             reg_tmp.h[1] = ENTITY(reg_a6)->y.h;
             temp_a0_2 = ENTITY(reg_a6)->x.h;
             reg_tmp.h[0] = temp_a0_2;
@@ -419,7 +446,7 @@ block_13:
             func_00150730();
             reg_d3.w = 0;
             bullet_fire();
-            func_00150F40();
+            heli_draw();
         }
     }
 }
@@ -432,16 +459,16 @@ extern u16 D_00257A90[];
 extern u16 D_00257AB0[];
 
 void heli_c_start(void) {
-    func_00150740();
+    heli_remove_on_signal_0();
     if (cond_flag == 0) {
-        func_00150790();
+        heli_remove_on_signal_f();
         if (cond_flag == 0) {
             reg_a0 = (u8 *)(D_00257AB0);
             enemy_init_entities();
             reg_a0 = (u8 *)(D_00257A90);
             reg_d0.h[0] = 0xA;
             enemy_set_task_state();
-            ENTITY(reg_a6)->attr.b.palette = (u8) *(u8 *)(reg_a5 + 0x2B);
+            ENTITY(reg_a6)->attr.b.palette = (u8) HELI(reg_a5)->palette;
             enemy_path_start();
             if (enemy_move_end_requested == 0) {
                 reg_a0 = (u8 *)(D_002578D0);
@@ -451,25 +478,25 @@ void heli_c_start(void) {
                 ENTITY(reg_a6)->draw.h = (reg_d1.h[0] != 0) ? *(u16 *)((u8 *)reg_a0 + ((s16)reg_d1.h[0] & ~1)) : *(u16 *)reg_a0;
                 ENTITY(reg_a6)->sprite.h = ((reg_d1.h[0] + 2) != 0) ? *(u16 *)((u8 *)reg_a0 + ((s16)(reg_d1.h[0] + 2) & ~1)) : *(u16 *)reg_a0;
                 reg_a0 = (u8 *)(D_00257950);
-                *(u16 *)(reg_a5 + 0x2C) = (reg_d1.h[0] != 0) ? *(u16 *)((u8 *)reg_a0 + ((s16)reg_d1.h[0] & ~1)) : *(u16 *)reg_a0;
-                *(u16 *)(reg_a5 + 0x2E) = ((reg_d1.h[0] + 2) != 0) ? *(u16 *)((u8 *)reg_a0 + ((s16)(reg_d1.h[0] + 2) & ~1)) : *(u16 *)reg_a0;
-                if (*(u8 *)(reg_a5 + 0xD) & 0x20) {
+                HELI(reg_a5)->shadow_sprite[0] = (reg_d1.h[0] != 0) ? *(u16 *)((u8 *)reg_a0 + ((s16)reg_d1.h[0] & ~1)) : *(u16 *)reg_a0;
+                HELI(reg_a5)->shadow_sprite[1] = ((reg_d1.h[0] + 2) != 0) ? *(u16 *)((u8 *)reg_a0 + ((s16)(reg_d1.h[0] + 2) & ~1)) : *(u16 *)reg_a0;
+                if (ENEMY_WORK(reg_a5)->kind & 0x20) {
                     func_002036F0();
                 }
                 reg_d0.b[0] = ENTITY(reg_a6)->move.b.dir;
                 reg_d0.b[0] += 0x20;
                 reg_d0.b[0] &= 0x3C;
-                *(u8 *)(reg_a5 + 0x23) = (u8) reg_d0.b[0];
+                HELI(reg_a5)->facing_wanted = (u8) reg_d0.b[0];
                 func_00202180();
                 if (cond_flag != 0) {
                     reg_d1.w = 0x20;
                 }
-                *(u8 *)(reg_a5 + 0x22) = (u8) reg_d1.b[0];
+                HELI(reg_a5)->facing = (u8) reg_d1.b[0];
                 reg_d0.h[0] = g_rank_2_16;
                 reg_d0.b[0] -= 8;
-                *(u8 *)(reg_a5 + 0x19) -= reg_d0.b[0];
+                HELI(reg_a5)->fire.b.countdown -= reg_d0.b[0];
                 if (g_stage == 2) {
-                    *(u8 *)(reg_a5 + 0x19) = 0xAU;
+                    HELI(reg_a5)->fire.b.countdown = 0xAU;
                 }
             }
         }
@@ -480,77 +507,77 @@ s32 direction_turn_toward();
 extern u16 g_frame_mod4;
 
 void heli_c(void) {
-    func_00150510(8);
+    heli_take_hits(8);
     if (cond_flag != 0) return;
     func_00171430();
     if (cond_flag != 0) return;
-    reg_d1.b[0] = *(u8 *)(reg_a5 + 0x22);
+    reg_d1.b[0] = HELI(reg_a5)->facing;
     if (g_enemies_stopped != 0) {
         heli_set_direction_sprite();
         return;
     }
     entity_velocity();
-    if (*(u16 *)(reg_a5 + 0x26) != 0) goto next_4;
+    if (HELI(reg_a5)->facing_started.h != 0) goto next_4;
     if (ENTITY(reg_a6)->move.b.speed == 0) goto next_1;
-    reg_tmp.b[0] = *(u8 *)(reg_a5 + 0x25);
-    *(u8 *)(reg_a5 + 0x25) -= 1;
+    reg_tmp.b[0] = HELI(reg_a5)->facing_timer.b.countdown;
+    HELI(reg_a5)->facing_timer.b.countdown -= 1;
     if ((s32)reg_tmp.b[0] > 0) goto next_1;
-    *(u8 *)(reg_a5 + 0x25) = *(u8 *)(reg_a5 + 0x24);
+    HELI(reg_a5)->facing_timer.b.countdown = HELI(reg_a5)->facing_timer.b.interval;
     ENTITY(reg_a6)->move.b.speed -= 1;
     if (ENTITY(reg_a6)->move.b.speed != 0) goto next_1;
-    *(u16 *)(reg_a5 + 0x24) = 3;
-    *(u8 *)(reg_a5 + 0x19) = 0x10;
+    HELI(reg_a5)->facing_timer.h = 3;
+    HELI(reg_a5)->fire.b.countdown = 0x10;
     reg_d1.h[0] = 0x3000;
-    reg_d1.b[0] = *(u8 *)(reg_a5 + 0x22);
+    reg_d1.b[0] = HELI(reg_a5)->facing;
     reg_d1.b[0] &= 0x3C;
     ENTITY(reg_a6)->move.b.dir = reg_d1.b[0];
-    *(u8 *)(reg_a5 + 0x1B) = 0x30;
-    if (*(u8 *)(reg_a5 + 0x23) == reg_d1.b[0]) goto next_1;
-    if ((s32)*(u8 *)(reg_a5 + 0x23) < (s32)reg_d1.b[0]) goto next_0;
-    *(u8 *)(reg_a5 + 0x1E) = 0xFC;
+    HELI(reg_a5)->turn_countdown = 0x30;
+    if (HELI(reg_a5)->facing_wanted == reg_d1.b[0]) goto next_1;
+    if ((s32)HELI(reg_a5)->facing_wanted < (s32)reg_d1.b[0]) goto next_0;
+    HELI(reg_a5)->facing_step = 0xFC;
     goto next_1;
 next_0:
-    *(u8 *)(reg_a5 + 0x1E) = 4;
+    HELI(reg_a5)->facing_step = 4;
 next_1:
-    reg_d1.b[0] = *(u8 *)(reg_a5 + 0x22);
+    reg_d1.b[0] = HELI(reg_a5)->facing;
     if (g_frame_mod4 != 0) goto next_2;
     func_00202180();
-    reg_d0.b[0] = *(u8 *)(reg_a5 + 0x22);
+    reg_d0.b[0] = HELI(reg_a5)->facing;
     direction_turn_toward();
-    *(u8 *)(reg_a5 + 0x22) = reg_d1.b[0];
+    HELI(reg_a5)->facing = reg_d1.b[0];
 next_2:
     if (ENTITY(reg_a6)->move.b.speed != 0) goto next_7;
-    *(u16 *)(reg_a5 + 0x26) = 1;
+    HELI(reg_a5)->facing_started.h = 1;
     goto next_7;
 next_4:
     if (ENTITY(reg_a6)->move.b.speed == 0x1C) goto next_5;
-    reg_tmp.b[0] = *(u8 *)(reg_a5 + 0x25);
-    *(u8 *)(reg_a5 + 0x25) -= 1;
+    reg_tmp.b[0] = HELI(reg_a5)->facing_timer.b.countdown;
+    HELI(reg_a5)->facing_timer.b.countdown -= 1;
     if ((s32)reg_tmp.b[0] > 0) goto next_5;
-    *(u8 *)(reg_a5 + 0x25) = *(u8 *)(reg_a5 + 0x24);
+    HELI(reg_a5)->facing_timer.b.countdown = HELI(reg_a5)->facing_timer.b.interval;
     ENTITY(reg_a6)->move.b.speed += 1;
 next_5:
-    if (*(u16 *)(reg_a5 + 0x1C) != 0) goto next_6;
-    reg_tmp.b[0] = *(u8 *)(reg_a5 + 0x1B);
-    *(u8 *)(reg_a5 + 0x1B) -= 1;
+    if (HELI(reg_a5)->facing_reached != 0) goto next_6;
+    reg_tmp.b[0] = HELI(reg_a5)->turn_countdown;
+    HELI(reg_a5)->turn_countdown -= 1;
     if ((s32)reg_tmp.b[0] > 0) goto next_6;
-    *(u8 *)(reg_a5 + 0x1B) = *(u8 *)(reg_a5 + 0x1A);
+    HELI(reg_a5)->turn_countdown = HELI(reg_a5)->turn_interval;
     reg_d1.b[0] = ENTITY(reg_a6)->move.b.dir;
-    reg_d1.b[0] += *(u8 *)(reg_a5 + 0x1E);
+    reg_d1.b[0] += HELI(reg_a5)->facing_step;
     reg_d1.b[0] &= 0x3C;
     ENTITY(reg_a6)->move.b.dir = reg_d1.b[0];
-    if (*(u8 *)(reg_a5 + 0x23) != reg_d1.b[0]) {
+    if (HELI(reg_a5)->facing_wanted != reg_d1.b[0]) {
         heli_set_direction_sprite();
         return;
     }
-    *(u16 *)(reg_a5 + 0x1C) = 1;
+    HELI(reg_a5)->facing_reached = 1;
 next_6:
     reg_d1.b[0] = ENTITY(reg_a6)->move.b.dir;
     heli_set_direction_sprite();
     return;
 next_7:
-    reg_tmp.b[0] = *(u8 *)(reg_a5 + 0x19);
-    *(u8 *)(reg_a5 + 0x19) -= 1;
+    reg_tmp.b[0] = HELI(reg_a5)->fire.b.countdown;
+    HELI(reg_a5)->fire.b.countdown -= 1;
     if ((s32)reg_tmp.b[0] > 0) {
         heli_set_direction_sprite();
         return;
@@ -558,7 +585,7 @@ next_7:
     reg_d0.w = 0x58;
     reg_d0.h[0] -= g_rank_5_16;
     reg_d0.h[0] += 2;
-    *(u8 *)(reg_a5 + 0x19) = reg_d0.b[0];
+    HELI(reg_a5)->fire.b.countdown = reg_d0.b[0];
     func_00202D50();
     if (cond_flag != 0) {
         heli_set_direction_sprite();
@@ -569,7 +596,7 @@ next_7:
         heli_set_direction_sprite();
         return;
     }
-    func_00150670(reg_d1.b[0]);
+    heli_muzzle_offset(reg_d1.b[0]);
     reg_tmp.h[1] = ENTITY(reg_a6)->y.h;
     reg_tmp.h[0] = ENTITY(reg_a6)->x.h;
     reg_d0.w = 0x3000D;
@@ -591,8 +618,8 @@ extern u16 g_enemy_signal_6;
 
 void heli_d_start(void) {
     s32 enemy_remove();
-    func_00150740();
-    if ((cond_flag == 0) && (func_00150790(), (cond_flag == 0)) && (reg_a0 = (u8 *)D_00257AF0, enemy_init_entities(), reg_a0 = (u8 *)D_00257AD0, reg_d0.h[0] = 0xA, enemy_set_task_state(), ENTITY(reg_a6)->attr.b.palette = (u8) *(u8 *)(reg_a5 + 0x2B), enemy_path_start(), (enemy_move_end_requested == 0))) {
+    heli_remove_on_signal_0();
+    if ((cond_flag == 0) && (heli_remove_on_signal_f(), (cond_flag == 0)) && (reg_a0 = (u8 *)D_00257AF0, enemy_init_entities(), reg_a0 = (u8 *)D_00257AD0, reg_d0.h[0] = 0xA, enemy_set_task_state(), ENTITY(reg_a6)->attr.b.palette = (u8) HELI(reg_a5)->palette, enemy_path_start(), (enemy_move_end_requested == 0))) {
         reg_a0 = (u8 *)(D_002578D0);
         reg_d1.b[0] = ENTITY(reg_a6)->move.b.dir;
         reg_d1.h[0] &= 0x3E;
@@ -600,17 +627,17 @@ void heli_d_start(void) {
         ENTITY(reg_a6)->draw.h = (reg_d1.h[0] != 0) ? *(u16 *)((u8 *)reg_a0 + ((s16)reg_d1.h[0] & ~1)) : *(u16 *)reg_a0;
         ENTITY(reg_a6)->sprite.h = ((reg_d1.h[0] + 2) != 0) ? *(u16 *)((u8 *)reg_a0 + ((s16)(reg_d1.h[0] + 2) & ~1)) : *(u16 *)reg_a0;
         reg_a0 = (u8 *)(D_00257950);
-        *(u16 *)(reg_a5 + 0x2C) = (reg_d1.h[0] != 0) ? *(u16 *)((u8 *)reg_a0 + ((s16)reg_d1.h[0] & ~1)) : *(u16 *)reg_a0;
-        *(u16 *)(reg_a5 + 0x2E) = ((reg_d1.h[0] + 2) != 0) ? *(u16 *)((u8 *)reg_a0 + ((s16)(reg_d1.h[0] + 2) & ~1)) : *(u16 *)reg_a0;
-        if (*(u8 *)(reg_a5 + 0xD) & 0x20) {
+        HELI(reg_a5)->shadow_sprite[0] = (reg_d1.h[0] != 0) ? *(u16 *)((u8 *)reg_a0 + ((s16)reg_d1.h[0] & ~1)) : *(u16 *)reg_a0;
+        HELI(reg_a5)->shadow_sprite[1] = ((reg_d1.h[0] + 2) != 0) ? *(u16 *)((u8 *)reg_a0 + ((s16)(reg_d1.h[0] + 2) & ~1)) : *(u16 *)reg_a0;
+        if (ENEMY_WORK(reg_a5)->kind & 0x20) {
             func_002036F0();
         }
         reg_d1.w = 0x20;
         func_00202180();
-        *(u8 *)(reg_a5 + 0x22) = (u8) reg_d1.b[0];
+        HELI(reg_a5)->facing = (u8) reg_d1.b[0];
         reg_d0.h[0] = g_rank_2_16;
         reg_d0.b[0] -= 8;
-        *(u8 *)(reg_a5 + 0x19) -= reg_d0.b[0];
+        HELI(reg_a5)->fire.b.countdown -= reg_d0.b[0];
         if (g_stage == 4) {
             if (g_enemy_signal_4 != 0) {
                 enemy_remove();
@@ -636,82 +663,82 @@ s32 func_00202490();
 #endif
 
 void heli_d(void) {
-    func_00150510(8);
+    heli_take_hits(8);
     if (cond_flag != 0) return;
     func_00171430();
     if (cond_flag != 0) return;
-    reg_d1.b[0] = *(u8 *)(reg_a5 + 0x22);
+    reg_d1.b[0] = HELI(reg_a5)->facing;
     if (g_enemies_stopped != 0) {
         heli_set_direction_sprite();
         return;
     }
     entity_velocity();
-    if (*(u16 *)(reg_a5 + 0x26) != 0) goto next_4;
+    if (HELI(reg_a5)->facing_started.h != 0) goto next_4;
     if (ENTITY(reg_a6)->move.b.speed == 0) goto next_1;
-    reg_tmp.b[0] = *(u8 *)(reg_a5 + 0x25);
-    *(u8 *)(reg_a5 + 0x25) -= 1;
+    reg_tmp.b[0] = HELI(reg_a5)->facing_timer.b.countdown;
+    HELI(reg_a5)->facing_timer.b.countdown -= 1;
     if ((s32)reg_tmp.b[0] > 0) goto next_1;
-    *(u8 *)(reg_a5 + 0x25) = *(u8 *)(reg_a5 + 0x24);
+    HELI(reg_a5)->facing_timer.b.countdown = HELI(reg_a5)->facing_timer.b.interval;
     ENTITY(reg_a6)->move.b.speed -= 1;
     if (ENTITY(reg_a6)->move.b.speed != 0) goto next_1;
-    *(u16 *)(reg_a5 + 0x24) = 2;
-    *(u8 *)(reg_a5 + 0x19) = 0x10;
-    reg_d1.b[0] = *(u8 *)(reg_a5 + 0x22);
+    HELI(reg_a5)->facing_timer.h = 2;
+    HELI(reg_a5)->fire.b.countdown = 0x10;
+    reg_d1.b[0] = HELI(reg_a5)->facing;
     reg_d1.b[0] &= 0x3C;
     ENTITY(reg_a6)->move.b.dir = reg_d1.b[0];
-    *(u8 *)(reg_a5 + 0x1B) = 0x30;
+    HELI(reg_a5)->turn_countdown = 0x30;
 next_1:
-    reg_d1.b[0] = *(u8 *)(reg_a5 + 0x22);
+    reg_d1.b[0] = HELI(reg_a5)->facing;
     if (g_frame_mod4 != 0) goto next_2;
     func_00202180();
-    reg_d0.b[0] = *(u8 *)(reg_a5 + 0x22);
+    reg_d0.b[0] = HELI(reg_a5)->facing;
     direction_turn_toward();
-    *(u8 *)(reg_a5 + 0x22) = reg_d1.b[0];
+    HELI(reg_a5)->facing = reg_d1.b[0];
 next_2:
     if (ENTITY(reg_a6)->move.b.speed != 0) goto next_7;
-    *(u16 *)(reg_a5 + 0x26) = 1;
+    HELI(reg_a5)->facing_started.h = 1;
     goto next_7;
 next_4:
     if (ENTITY(reg_a6)->move.b.speed == MAIN_OR_DEATH_LABEL(0x1C, 0x20)) goto next_5;
-    reg_tmp.b[0] = *(u8 *)(reg_a5 + 0x25);
-    *(u8 *)(reg_a5 + 0x25) -= 1;
+    reg_tmp.b[0] = HELI(reg_a5)->facing_timer.b.countdown;
+    HELI(reg_a5)->facing_timer.b.countdown -= 1;
     if ((s32)reg_tmp.b[0] > 0) goto next_5;
-    *(u8 *)(reg_a5 + 0x25) = *(u8 *)(reg_a5 + 0x24);
+    HELI(reg_a5)->facing_timer.b.countdown = HELI(reg_a5)->facing_timer.b.interval;
     ENTITY(reg_a6)->move.b.speed += MAIN_OR_DEATH_LABEL(1, 2);
 next_5:
 #ifdef DEATH_LABEL
-    if (*(u16 *)(reg_a5 + 0x1C) == 0) goto next_6;
-    reg_tmp.b[0] = *(u8 *)(reg_a5 + 0x1B);
-    *(u8 *)(reg_a5 + 0x1B) -= 1;
+    if (HELI(reg_a5)->facing_reached == 0) goto next_6;
+    reg_tmp.b[0] = HELI(reg_a5)->turn_countdown;
+    HELI(reg_a5)->turn_countdown -= 1;
     if ((s32)reg_tmp.b[0] > 0) goto next_6;
-    *(u8 *)(reg_a5 + 0x1B) = *(u8 *)(reg_a5 + 0x1A);
-    *(u16 *)(reg_a5 + 0x28) -= 1;
+    HELI(reg_a5)->turn_countdown = HELI(reg_a5)->turn_interval;
+    HELI(reg_a5)->turns_left.h -= 1;
     func_00202490();
     heli_set_direction_sprite();
     return;
 #else
-    if (*(u16 *)(reg_a5 + 0x1C) != 0) goto next_6;
-    reg_tmp.b[0] = *(u8 *)(reg_a5 + 0x1B);
-    *(u8 *)(reg_a5 + 0x1B) -= 1;
+    if (HELI(reg_a5)->facing_reached != 0) goto next_6;
+    reg_tmp.b[0] = HELI(reg_a5)->turn_countdown;
+    HELI(reg_a5)->turn_countdown -= 1;
     if ((s32)reg_tmp.b[0] > 0) goto next_6;
-    *(u8 *)(reg_a5 + 0x1B) = *(u8 *)(reg_a5 + 0x1A);
+    HELI(reg_a5)->turn_countdown = HELI(reg_a5)->turn_interval;
     reg_d1.b[0] = ENTITY(reg_a6)->move.b.dir;
-    reg_d1.b[0] += *(u8 *)(reg_a5 + 0x1E);
+    reg_d1.b[0] += HELI(reg_a5)->facing_step;
     reg_d1.b[0] &= 0x3C;
     ENTITY(reg_a6)->move.b.dir = reg_d1.b[0];
-    if (*(u8 *)(reg_a5 + 0x23) != reg_d1.b[0]) {
+    if (HELI(reg_a5)->facing_wanted != reg_d1.b[0]) {
         heli_set_direction_sprite();
         return;
     }
-    *(u16 *)(reg_a5 + 0x1C) = 1;
+    HELI(reg_a5)->facing_reached = 1;
 #endif
 next_6:
     reg_d1.b[0] = ENTITY(reg_a6)->move.b.dir;
     heli_set_direction_sprite();
     return;
 next_7:
-    reg_tmp.b[0] = *(u8 *)(reg_a5 + 0x19);
-    *(u8 *)(reg_a5 + 0x19) -= 1;
+    reg_tmp.b[0] = HELI(reg_a5)->fire.b.countdown;
+    HELI(reg_a5)->fire.b.countdown -= 1;
     if ((s32)reg_tmp.b[0] > 0) {
         heli_set_direction_sprite();
         return;
@@ -719,7 +746,7 @@ next_7:
     reg_d0.w = 0x58;
     reg_d0.h[0] -= g_rank_5_16;
     reg_d0.h[0] += 2;
-    *(u8 *)(reg_a5 + 0x19) = reg_d0.b[0];
+    HELI(reg_a5)->fire.b.countdown = reg_d0.b[0];
     func_00202D50();
     if (cond_flag != 0) {
         heli_set_direction_sprite();
@@ -730,7 +757,7 @@ next_7:
         heli_set_direction_sprite();
         return;
     }
-    func_00150670(reg_d1.b[0]);
+    heli_muzzle_offset(reg_d1.b[0]);
     reg_tmp.h[1] = ENTITY(reg_a6)->y.h;
     reg_tmp.h[0] = ENTITY(reg_a6)->x.h;
     reg_d0.w = 0x3000D;
@@ -749,14 +776,14 @@ extern u16 D_00257B10[];
 extern u16 D_00257B30[];
 
 void heli_e_start(void) {
-    func_00150740();
+    heli_remove_on_signal_0();
     if (cond_flag == 0) {
         reg_a0 = (u8 *)(D_00257B30);
         enemy_init_entities();
         reg_a0 = (u8 *)(D_00257B10);
         reg_d0.h[0] = 0xA;
         enemy_set_task_state();
-        ENTITY(reg_a6)->attr.b.palette = (u8) *(u8 *)(reg_a5 + 0x2B);
+        ENTITY(reg_a6)->attr.b.palette = (u8) HELI(reg_a5)->palette;
         enemy_path_start();
         if (enemy_move_end_requested == 0) {
             reg_a0 = (u8 *)(D_002578D0);
@@ -766,23 +793,23 @@ void heli_e_start(void) {
             ENTITY(reg_a6)->draw.h = (reg_d1.h[0] != 0) ? *(u16 *)((u8 *)reg_a0 + ((s16)reg_d1.h[0] & ~1)) : *(u16 *)reg_a0;
             ENTITY(reg_a6)->sprite.h = ((reg_d1.h[0] + 2) != 0) ? *(u16 *)((u8 *)reg_a0 + ((s16)(reg_d1.h[0] + 2) & ~1)) : *(u16 *)reg_a0;
             reg_a0 = (u8 *)(D_00257950);
-            *(u16 *)(reg_a5 + 0x2C) = (reg_d1.h[0] != 0) ? *(u16 *)((u8 *)reg_a0 + ((s16)reg_d1.h[0] & ~1)) : *(u16 *)reg_a0;
-            *(u16 *)(reg_a5 + 0x2E) = ((reg_d1.h[0] + 2) != 0) ? *(u16 *)((u8 *)reg_a0 + ((s16)(reg_d1.h[0] + 2) & ~1)) : *(u16 *)reg_a0;
-            if (*(u8 *)(reg_a5 + 0xD) & 0x20) {
+            HELI(reg_a5)->shadow_sprite[0] = (reg_d1.h[0] != 0) ? *(u16 *)((u8 *)reg_a0 + ((s16)reg_d1.h[0] & ~1)) : *(u16 *)reg_a0;
+            HELI(reg_a5)->shadow_sprite[1] = ((reg_d1.h[0] + 2) != 0) ? *(u16 *)((u8 *)reg_a0 + ((s16)(reg_d1.h[0] + 2) & ~1)) : *(u16 *)reg_a0;
+            if (ENEMY_WORK(reg_a5)->kind & 0x20) {
                 func_002036F0();
             }
             reg_d0.b[0] = ENTITY(reg_a6)->move.b.dir;
             reg_d0.b[0] += 0x20;
             reg_d0.b[0] &= 0x3C;
-            *(u8 *)(reg_a5 + 0x23) = (u8) reg_d0.b[0];
+            HELI(reg_a5)->facing_wanted = (u8) reg_d0.b[0];
             func_00202180();
             if (cond_flag != 0) {
                 reg_d1.w = 0x20;
             }
-            *(u8 *)(reg_a5 + 0x22) = (u8) reg_d1.b[0];
+            HELI(reg_a5)->facing = (u8) reg_d1.b[0];
             reg_d0.h[0] = g_rank_2_16;
             reg_d0.b[0] -= 8;
-            *(u8 *)(reg_a5 + 0x19) -= reg_d0.b[0];
+            HELI(reg_a5)->fire.b.countdown -= reg_d0.b[0];
         }
     }
 }
@@ -792,25 +819,25 @@ void heli_e(void) {
     u8 temp_v0;
     u8 *var_a0;
 
-    func_00150510(8);
+    heli_take_hits(8);
     if ((cond_flag == 0) && (func_00171430(), (cond_flag == 0))) {
-        reg_d1.b[0] = *(u8 *)(reg_a5 + 0x22);
+        reg_d1.b[0] = HELI(reg_a5)->facing;
         if (g_enemies_stopped != 0) {
             heli_set_direction_sprite();
             return;
         }
         entity_velocity();
-        *(u8 *)(reg_a5 + 0x19) -= 1;
-        if (*(u8 *)(reg_a5 + 0x19) == 0) {
+        HELI(reg_a5)->fire.b.countdown -= 1;
+        if (HELI(reg_a5)->fire.b.countdown == 0) {
             reg_d0.w = 0x58;
             reg_d0.h[0] -= g_rank_5_16;
             reg_d0.h[0] += 2;
-            *(u8 *)(reg_a5 + 0x19) = (u8) reg_d0.b[0];
+            HELI(reg_a5)->fire.b.countdown = (u8) reg_d0.b[0];
             func_00202D50();
             if (cond_flag == 0) {
                 func_00202180();
                 if (cond_flag == 0) {
-                    func_00150670(reg_d1.b[0]);
+                    heli_muzzle_offset(reg_d1.b[0]);
                     reg_tmp.h[1] = ENTITY(reg_a6)->y.h;
                     temp_a0 = ENTITY(reg_a6)->x.h;
                     reg_tmp.h[0] = temp_a0;
@@ -827,15 +854,15 @@ void heli_e(void) {
             reg_tmp.b[0] = (*(u8 *)((u8 *)(var_a0) + (0x25)));
             (*(u8 *)((u8 *)(var_a0) + (0x25))) -= 1;
             if ((s32) reg_tmp.b[0] <= 0) {
-                *(u8 *)(reg_a5 + 0x25) = (u8) *(u8 *)(reg_a5 + 0x24);
+                HELI(reg_a5)->facing_timer.b.countdown = (u8) HELI(reg_a5)->facing_timer.b.interval;
                 ENTITY(reg_a6)->move.b.speed -= 1;
                 if (ENTITY(reg_a6)->move.b.speed == 0) {
-                    *(u16 *)(reg_a5 + 0x26) = 1U;
-                    *(u16 *)(reg_a5 + 0x24) = 2;
-                    *(s16 *)(reg_a5 + 0x18) = 0x3008;
-                    var_a0 = (u8 *)((void *) *(u8 *)(reg_a5 + 0x23));
+                    HELI(reg_a5)->facing_started.h = 1U;
+                    HELI(reg_a5)->facing_timer.h = 2;
+                    HELI(reg_a5)->fire.h = 0x3008;
+                    var_a0 = (u8 *)((void *) HELI(reg_a5)->facing_wanted);
                     ENTITY(reg_a6)->move.sb.dir = (s8) var_a0;
-                    *(u8 *)(reg_a5 + 0x1B) = 0x30U;
+                    HELI(reg_a5)->turn_countdown = 0x30U;
                 }
             }
         } else {
@@ -846,20 +873,20 @@ void heli_e(void) {
                 reg_tmp.b[0] = (*(u8 *)((u8 *)(var_a0) + (0x25)));
                 (*(u8 *)((u8 *)(var_a0) + (0x25))) -= 1;
                 if ((s32) reg_tmp.b[0] <= 0) {
-                    *(u8 *)(reg_a5 + 0x25) = (u8) *(u8 *)(reg_a5 + 0x24);
+                    HELI(reg_a5)->facing_timer.b.countdown = (u8) HELI(reg_a5)->facing_timer.b.interval;
                     ENTITY(reg_a6)->move.b.speed += 2;
                 }
             }
         }
-        reg_d1.b[0] = *(u8 *)(reg_a5 + 0x22);
+        reg_d1.b[0] = HELI(reg_a5)->facing;
         if (g_frame_mod4 != 0) {
             heli_set_direction_sprite();
             return;
         }
         func_00202180();
-        reg_d0.b[0] = *(u8 *)(reg_a5 + 0x22);
+        reg_d0.b[0] = HELI(reg_a5)->facing;
         direction_turn_toward();
-        *(u8 *)(reg_a5 + 0x22) = (u8) reg_d1.b[0];
+        HELI(reg_a5)->facing = (u8) reg_d1.b[0];
         heli_set_direction_sprite();
     }
 }
@@ -872,14 +899,14 @@ extern u16 D_00257B50[];
 extern u16 D_00257B70[];
 
 void heli_f_start(void) {
-    func_00150740();
+    heli_remove_on_signal_0();
     if (cond_flag == 0) {
         reg_a0 = (u8 *)(D_00257B70);
         enemy_init_entities();
         reg_a0 = (u8 *)(D_00257B50);
         reg_d0.h[0] = 0xA;
         enemy_set_task_state();
-        ENTITY(reg_a6)->attr.b.palette = (u8) *(u8 *)(reg_a5 + 0x2B);
+        ENTITY(reg_a6)->attr.b.palette = (u8) HELI(reg_a5)->palette;
         enemy_path_start();
         if (enemy_move_end_requested == 0) {
             reg_a0 = (u8 *)(D_002578D0);
@@ -889,19 +916,19 @@ void heli_f_start(void) {
             ENTITY(reg_a6)->draw.h = (reg_d1.h[0] != 0) ? *(u16 *)((u8 *)reg_a0 + ((s16)reg_d1.h[0] & ~1)) : *(u16 *)reg_a0;
             ENTITY(reg_a6)->sprite.h = ((reg_d1.h[0] + 2) != 0) ? *(u16 *)((u8 *)reg_a0 + ((s16)(reg_d1.h[0] + 2) & ~1)) : *(u16 *)reg_a0;
             reg_a0 = (u8 *)(D_00257950);
-            *(u16 *)(reg_a5 + 0x2C) = (reg_d1.h[0] != 0) ? *(u16 *)((u8 *)reg_a0 + ((s16)reg_d1.h[0] & ~1)) : *(u16 *)reg_a0;
-            *(u16 *)(reg_a5 + 0x2E) = ((reg_d1.h[0] + 2) != 0) ? *(u16 *)((u8 *)reg_a0 + ((s16)(reg_d1.h[0] + 2) & ~1)) : *(u16 *)reg_a0;
+            HELI(reg_a5)->shadow_sprite[0] = (reg_d1.h[0] != 0) ? *(u16 *)((u8 *)reg_a0 + ((s16)reg_d1.h[0] & ~1)) : *(u16 *)reg_a0;
+            HELI(reg_a5)->shadow_sprite[1] = ((reg_d1.h[0] + 2) != 0) ? *(u16 *)((u8 *)reg_a0 + ((s16)(reg_d1.h[0] + 2) & ~1)) : *(u16 *)reg_a0;
             func_00202180();
             if (cond_flag != 0) {
                 reg_d1.w = 0x20;
             }
-            *(u8 *)(reg_a5 + 0x22) = (u8) reg_d1.b[0];
-            if (*(u8 *)(reg_a5 + 0xD) & 0x20) {
+            HELI(reg_a5)->facing = (u8) reg_d1.b[0];
+            if (ENEMY_WORK(reg_a5)->kind & 0x20) {
                 func_002036F0();
             }
             reg_d0.h[0] = g_rank_2_16;
             reg_d0.b[0] -= 8;
-            *(u8 *)(reg_a5 + 0x19) -= reg_d0.b[0];
+            HELI(reg_a5)->fire.b.countdown -= reg_d0.b[0];
         }
     }
 }
@@ -909,25 +936,25 @@ void heli_f_start(void) {
 void heli_f(void) {
     u16 temp_a0;
 
-    func_00150510(8);
+    heli_take_hits(8);
     if ((cond_flag == 0) && (func_00171430(), (cond_flag == 0))) {
-        reg_d1.b[0] = *(u8 *)(reg_a5 + 0x22);
+        reg_d1.b[0] = HELI(reg_a5)->facing;
         if (g_enemies_stopped != 0) {
             heli_set_direction_sprite();
             return;
         }
         entity_velocity();
-        *(u8 *)(reg_a5 + 0x19) -= 1;
-        if (*(u8 *)(reg_a5 + 0x19) == 0) {
+        HELI(reg_a5)->fire.b.countdown -= 1;
+        if (HELI(reg_a5)->fire.b.countdown == 0) {
             reg_d0.w = 0x58;
             reg_d0.h[0] -= g_rank_5_16;
             reg_d0.h[0] += 2;
-            *(u8 *)(reg_a5 + 0x19) = (u8) reg_d0.b[0];
+            HELI(reg_a5)->fire.b.countdown = (u8) reg_d0.b[0];
             func_00202D50();
             if (cond_flag == 0) {
                 func_00202180();
                 if (cond_flag == 0) {
-                    func_00150670(*(u8 *)(reg_a5 + 0x22));
+                    heli_muzzle_offset(HELI(reg_a5)->facing);
                     reg_tmp.h[1] = ENTITY(reg_a6)->y.h;
                     temp_a0 = ENTITY(reg_a6)->x.h;
                     reg_tmp.h[0] = temp_a0;
@@ -939,15 +966,15 @@ void heli_f(void) {
                 }
             }
         }
-        reg_d1.b[0] = *(u8 *)(reg_a5 + 0x22);
+        reg_d1.b[0] = HELI(reg_a5)->facing;
         if (g_frame_mod4 != 0) {
             heli_set_direction_sprite();
             return;
         }
         func_00202180();
-        reg_d0.b[0] = *(u8 *)(reg_a5 + 0x22);
+        reg_d0.b[0] = HELI(reg_a5)->facing;
         direction_turn_toward();
-        *(u8 *)(reg_a5 + 0x22) = (u8) reg_d1.b[0];
+        HELI(reg_a5)->facing = (u8) reg_d1.b[0];
         heli_set_direction_sprite();
     }
 }
@@ -964,8 +991,8 @@ extern s16 g_scroll_line_as_s16;
 
 void heli_g_start(void) {
     s32 enemy_remove();
-    func_00150740();
-    if ((cond_flag == 0) && (func_00150790(), (cond_flag == 0)) && (reg_a0 = (u8 *)D_00257BB0, enemy_init_entities(), reg_a0 = (u8 *)D_00257B90, reg_d0.h[0] = 0xA, enemy_set_task_state(), ENTITY(reg_a6)->attr.b.palette = (u8) *(u8 *)(reg_a5 + 0x2B), enemy_path_start(), (enemy_move_end_requested == 0))) {
+    heli_remove_on_signal_0();
+    if ((cond_flag == 0) && (heli_remove_on_signal_f(), (cond_flag == 0)) && (reg_a0 = (u8 *)D_00257BB0, enemy_init_entities(), reg_a0 = (u8 *)D_00257B90, reg_d0.h[0] = 0xA, enemy_set_task_state(), ENTITY(reg_a6)->attr.b.palette = (u8) HELI(reg_a5)->palette, enemy_path_start(), (enemy_move_end_requested == 0))) {
         reg_a0 = (u8 *)(D_002578D0);
         reg_d1.b[0] = ENTITY(reg_a6)->move.b.dir;
         reg_d1.h[0] &= 0x3E;
@@ -973,23 +1000,23 @@ void heli_g_start(void) {
         ENTITY(reg_a6)->draw.h = (reg_d1.h[0] != 0) ? *(u16 *)((u8 *)reg_a0 + ((s16)reg_d1.h[0] & ~1)) : *(u16 *)reg_a0;
         ENTITY(reg_a6)->sprite.h = ((reg_d1.h[0] + 2) != 0) ? *(u16 *)((u8 *)reg_a0 + ((s16)(reg_d1.h[0] + 2) & ~1)) : *(u16 *)reg_a0;
         reg_a0 = (u8 *)(D_00257950);
-        *(u16 *)(reg_a5 + 0x2C) = (reg_d1.h[0] != 0) ? *(u16 *)((u8 *)reg_a0 + ((s16)reg_d1.h[0] & ~1)) : *(u16 *)reg_a0;
-        *(u16 *)(reg_a5 + 0x2E) = ((reg_d1.h[0] + 2) != 0) ? *(u16 *)((u8 *)reg_a0 + ((s16)(reg_d1.h[0] + 2) & ~1)) : *(u16 *)reg_a0;
-        if (*(u8 *)(reg_a5 + 0xD) & 0x20) {
+        HELI(reg_a5)->shadow_sprite[0] = (reg_d1.h[0] != 0) ? *(u16 *)((u8 *)reg_a0 + ((s16)reg_d1.h[0] & ~1)) : *(u16 *)reg_a0;
+        HELI(reg_a5)->shadow_sprite[1] = ((reg_d1.h[0] + 2) != 0) ? *(u16 *)((u8 *)reg_a0 + ((s16)(reg_d1.h[0] + 2) & ~1)) : *(u16 *)reg_a0;
+        if (ENEMY_WORK(reg_a5)->kind & 0x20) {
             func_002036F0();
         }
         reg_d0.b[0] = ENTITY(reg_a6)->move.b.dir;
         reg_d0.b[0] += 0x20;
         reg_d0.b[0] &= 0x3C;
-        *(u8 *)(reg_a5 + 0x23) = (u8) reg_d0.b[0];
+        HELI(reg_a5)->facing_wanted = (u8) reg_d0.b[0];
         func_00202180();
         if (cond_flag != 0) {
             reg_d1.w = 0x20;
         }
-        *(u8 *)(reg_a5 + 0x22) = (u8) reg_d1.b[0];
+        HELI(reg_a5)->facing = (u8) reg_d1.b[0];
         reg_d0.h[0] = g_rank_2_16;
         reg_d0.b[0] -= 8;
-        *(u8 *)(reg_a5 + 0x19) -= reg_d0.b[0];
+        HELI(reg_a5)->fire.b.countdown -= reg_d0.b[0];
         if (g_stage == 4) {
             if (g_scroll_line_as_s16 >= 0x290) {
                 if (g_enemy_signal_7 != 0) {
@@ -1021,23 +1048,23 @@ void heli_g(void) {
     u16 temp_a0_2;
     u8 temp_v1;
 
-    func_00150510(8);
+    heli_take_hits(8);
     if ((cond_flag == 0) && (func_00171430(), (cond_flag == 0))) {
-        reg_d1.b[0] = *(u8 *)(reg_a5 + 0x22);
+        reg_d1.b[0] = HELI(reg_a5)->facing;
         if (g_enemies_stopped != 0) {
             heli_set_direction_sprite();
             return;
         }
         entity_velocity();
-        if (*(u8 *)(reg_a5 + 0x27) == 0) {
-            *(u8 *)(reg_a5 + 0x29) -= 1;
-            if (*(u8 *)(reg_a5 + 0x29) == 0) {
-                *(u8 *)(reg_a5 + 0x29) = (u8) *(u8 *)(reg_a5 + 0x28);
+        if (HELI(reg_a5)->facing_started.b[1] == 0) {
+            HELI(reg_a5)->turns_left.b[1] -= 1;
+            if (HELI(reg_a5)->turns_left.b[1] == 0) {
+                HELI(reg_a5)->turns_left.b[1] = (u8) HELI(reg_a5)->turns_left.b[0];
                 func_00202D50();
                 if (cond_flag == 0) {
                     func_00202180();
                     if (cond_flag == 0) {
-                        func_00150670(*(u8 *)(reg_a5 + 0x22));
+                        heli_muzzle_offset(HELI(reg_a5)->facing);
                         reg_tmp.h[1] = ENTITY(reg_a6)->y.h;
                         temp_a0 = ENTITY(reg_a6)->x.h;
                         reg_tmp.h[0] = temp_a0;
@@ -1049,30 +1076,30 @@ void heli_g(void) {
                     }
                 }
             }
-            reg_tmp.b[0] = *(u8 *)(reg_a5 + 0x25);
-            *(u8 *)(reg_a5 + 0x25) -= 1;
+            reg_tmp.b[0] = HELI(reg_a5)->facing_timer.b.countdown;
+            HELI(reg_a5)->facing_timer.b.countdown -= 1;
             if ((s32) reg_tmp.b[0] <= 0) {
-                *(u8 *)(reg_a5 + 0x25) = (u8) *(u8 *)(reg_a5 + 0x24);
+                HELI(reg_a5)->facing_timer.b.countdown = (u8) HELI(reg_a5)->facing_timer.b.interval;
                 ENTITY(reg_a6)->move.b.speed -= 1;
                 if (ENTITY(reg_a6)->move.b.speed == 0) {
-                    *(u8 *)(reg_a5 + 0x27) = 1U;
-                    *(u16 *)(reg_a5 + 0x24) = 2;
-                    *(u8 *)(reg_a5 + 0x19) = 1U;
-                    reg_d1.b[0] = *(u8 *)(reg_a5 + 0x22);
+                    HELI(reg_a5)->facing_started.b[1] = 1U;
+                    HELI(reg_a5)->facing_timer.h = 2;
+                    HELI(reg_a5)->fire.b.countdown = 1U;
+                    reg_d1.b[0] = HELI(reg_a5)->facing;
                     reg_d1.b[0] &= 0x3C;
                     ENTITY(reg_a6)->move.b.dir = (u8) reg_d1.b[0];
-                    *(u8 *)(reg_a5 + 0x1B) = 0x30U;
-                    temp_v1 = *(u8 *)(reg_a5 + 0x23);
+                    HELI(reg_a5)->turn_countdown = 0x30U;
+                    temp_v1 = HELI(reg_a5)->facing_wanted;
                     if (temp_v1 != reg_d1.b[0]) {
                         if ((s32) temp_v1 >= (s32) reg_d1.b[0]) {
-                            *(u8 *)(reg_a5 + 0x1E) = 0xFC;
+                            HELI(reg_a5)->facing_step = 0xFC;
                         } else {
-                            *(u8 *)(reg_a5 + 0x1E) = 4;
+                            HELI(reg_a5)->facing_step = 4;
                         }
                     }
                 }
             }
-            reg_d1.b[0] = *(u8 *)(reg_a5 + 0x22);
+            reg_d1.b[0] = HELI(reg_a5)->facing;
             if (g_frame_mod4 != 0) {
                 heli_set_direction_sprite();
                 return;
@@ -1082,22 +1109,22 @@ void heli_g(void) {
                 heli_set_direction_sprite();
                 return;
             }
-            reg_d0.b[0] = *(u8 *)(reg_a5 + 0x22);
+            reg_d0.b[0] = HELI(reg_a5)->facing;
             direction_turn_toward();
-            *(u8 *)(reg_a5 + 0x22) = (u8) reg_d1.b[0];
+            HELI(reg_a5)->facing = (u8) reg_d1.b[0];
             heli_set_direction_sprite();
             return;
         }
-        if (*(u8 *)(reg_a5 + 0x26) != 0) {
-            *(u8 *)(reg_a5 + 0x19) -= 1;
-            if (*(u8 *)(reg_a5 + 0x19) == 0) {
-                *(u8 *)(reg_a5 + 0x19) = (u8) *(u8 *)(reg_a5 + 0x18);
-                *(u8 *)(reg_a5 + 0x26) -= 1;
+        if (HELI(reg_a5)->facing_started.b[0] != 0) {
+            HELI(reg_a5)->fire.b.countdown -= 1;
+            if (HELI(reg_a5)->fire.b.countdown == 0) {
+                HELI(reg_a5)->fire.b.countdown = (u8) HELI(reg_a5)->fire.b.other;
+                HELI(reg_a5)->facing_started.b[0] -= 1;
                 func_00202D50();
                 if (cond_flag == 0) {
-                    reg_d2.b[0] = *(u8 *)(reg_a5 + 0x22);
+                    reg_d2.b[0] = HELI(reg_a5)->facing;
                     reg_d1.b[0] = reg_d2.b[0];
-                    func_00150670(reg_d1.b[0]);
+                    heli_muzzle_offset(reg_d1.b[0]);
                     reg_tmp.h[1] = ENTITY(reg_a6)->y.h;
                     temp_a0_2 = ENTITY(reg_a6)->x.h;
                     reg_tmp.h[0] = temp_a0_2;
@@ -1111,27 +1138,27 @@ void heli_g(void) {
             goto block_33;
         }
         if (ENTITY(reg_a6)->move.b.speed != 0x1C) {
-            reg_tmp.b[0] = *(u8 *)(reg_a5 + 0x25);
-            *(u8 *)(reg_a5 + 0x25) -= 1;
+            reg_tmp.b[0] = HELI(reg_a5)->facing_timer.b.countdown;
+            HELI(reg_a5)->facing_timer.b.countdown -= 1;
             if ((s32) reg_tmp.b[0] <= 0) {
-                *(u8 *)(reg_a5 + 0x25) = (u8) *(u8 *)(reg_a5 + 0x24);
+                HELI(reg_a5)->facing_timer.b.countdown = (u8) HELI(reg_a5)->facing_timer.b.interval;
                 ENTITY(reg_a6)->move.b.speed += 1;
             }
         }
-        if (*(u16 *)(reg_a5 + 0x1C) == 0) {
-            reg_tmp.b[0] = *(u8 *)(reg_a5 + 0x1B);
-            *(u8 *)(reg_a5 + 0x1B) -= 1;
+        if (HELI(reg_a5)->facing_reached == 0) {
+            reg_tmp.b[0] = HELI(reg_a5)->turn_countdown;
+            HELI(reg_a5)->turn_countdown -= 1;
             if ((s32) reg_tmp.b[0] <= 0) {
-                *(u8 *)(reg_a5 + 0x1B) = (u8) *(u8 *)(reg_a5 + 0x1A);
+                HELI(reg_a5)->turn_countdown = (u8) HELI(reg_a5)->turn_interval;
                 reg_d1.b[0] = ENTITY(reg_a6)->move.b.dir;
-                reg_d1.b[0] += *(u8 *)(reg_a5 + 0x1E);
+                reg_d1.b[0] += HELI(reg_a5)->facing_step;
                 reg_d1.b[0] &= 0x3C;
                 ENTITY(reg_a6)->move.b.dir = (u8) reg_d1.b[0];
-                if (*(u8 *)(reg_a5 + 0x23) != reg_d1.b[0]) {
+                if (HELI(reg_a5)->facing_wanted != reg_d1.b[0]) {
                     heli_set_direction_sprite();
                     return;
                 }
-                *(u16 *)(reg_a5 + 0x1C) = 1U;
+                HELI(reg_a5)->facing_reached = 1U;
                 goto block_33;
             }
         }
@@ -1151,8 +1178,8 @@ extern u16 g_rank_4_16;
 
 void heli_h_start(void) {
     s32 enemy_remove();
-    func_00150740();
-    if ((cond_flag == 0) && (func_00150790(), (cond_flag == 0)) && (reg_a0 = (u8 *)D_00257BF0, enemy_init_entities(), reg_a0 = (u8 *)D_00257BD0, reg_d0.h[0] = 0xA, enemy_set_task_state(), ENTITY(reg_a6)->attr.b.palette = (u8) *(u8 *)(reg_a5 + 0x2B), enemy_path_start(), (enemy_move_end_requested == 0))) {
+    heli_remove_on_signal_0();
+    if ((cond_flag == 0) && (heli_remove_on_signal_f(), (cond_flag == 0)) && (reg_a0 = (u8 *)D_00257BF0, enemy_init_entities(), reg_a0 = (u8 *)D_00257BD0, reg_d0.h[0] = 0xA, enemy_set_task_state(), ENTITY(reg_a6)->attr.b.palette = (u8) HELI(reg_a5)->palette, enemy_path_start(), (enemy_move_end_requested == 0))) {
         reg_a0 = (u8 *)(D_002578D0);
         reg_d1.b[0] = ENTITY(reg_a6)->move.b.dir;
         reg_d1.h[0] &= 0x3E;
@@ -1160,19 +1187,19 @@ void heli_h_start(void) {
         ENTITY(reg_a6)->draw.h = (reg_d1.h[0] != 0) ? *(u16 *)((u8 *)reg_a0 + ((s16)reg_d1.h[0] & ~1)) : *(u16 *)reg_a0;
         ENTITY(reg_a6)->sprite.h = ((reg_d1.h[0] + 2) != 0) ? *(u16 *)((u8 *)reg_a0 + ((s16)(reg_d1.h[0] + 2) & ~1)) : *(u16 *)reg_a0;
         reg_a0 = (u8 *)(D_00257950);
-        *(u16 *)(reg_a5 + 0x2C) = (reg_d1.h[0] != 0) ? *(u16 *)((u8 *)reg_a0 + ((s16)reg_d1.h[0] & ~1)) : *(u16 *)reg_a0;
-        *(u16 *)(reg_a5 + 0x2E) = ((reg_d1.h[0] + 2) != 0) ? *(u16 *)((u8 *)reg_a0 + ((s16)(reg_d1.h[0] + 2) & ~1)) : *(u16 *)reg_a0;
+        HELI(reg_a5)->shadow_sprite[0] = (reg_d1.h[0] != 0) ? *(u16 *)((u8 *)reg_a0 + ((s16)reg_d1.h[0] & ~1)) : *(u16 *)reg_a0;
+        HELI(reg_a5)->shadow_sprite[1] = ((reg_d1.h[0] + 2) != 0) ? *(u16 *)((u8 *)reg_a0 + ((s16)(reg_d1.h[0] + 2) & ~1)) : *(u16 *)reg_a0;
         func_00202180();
         if (cond_flag != 0) {
             reg_d1.w = 0x20;
         }
-        *(u8 *)(reg_a5 + 0x22) = (u8) reg_d1.b[0];
-        if (*(u8 *)(reg_a5 + 0xD) & 0x20) {
+        HELI(reg_a5)->facing = (u8) reg_d1.b[0];
+        if (ENEMY_WORK(reg_a5)->kind & 0x20) {
             func_002036F0();
         }
         reg_d0.h[0] = g_rank_4_16;
         reg_d0.b[0] -= 8;
-        *(u8 *)(reg_a5 + 0x19) -= reg_d0.b[0];
+        HELI(reg_a5)->fire.b.countdown -= reg_d0.b[0];
         if (g_stage == 4) {
             if (g_enemy_signal_4 != 0) {
                 enemy_remove();
@@ -1188,14 +1215,14 @@ void heli_h_start(void) {
 void heli_h(void) {
     u16 temp_a0_2;
 
-    func_00150510(8);
+    heli_take_hits(8);
     if ((cond_flag == 0) && (func_00171430(), (cond_flag == 0))) {
-        reg_d1.b[0] = *(u8 *)(reg_a5 + 0x22);
+        reg_d1.b[0] = HELI(reg_a5)->facing;
         if (g_enemies_stopped != 0) {
             heli_set_direction_sprite();
             return;
         }
-        if (*(u16 *)(reg_a5 + 0x1C) != 0) {
+        if (HELI(reg_a5)->facing_reached != 0) {
             entity_velocity();
             goto block_7;
         }
@@ -1203,15 +1230,15 @@ void heli_h(void) {
         if (enemy_move_end_requested == 0) {
 block_7:
             if ((s32) ENTITY(reg_a6)->move.b.dir >= 0x40) {
-                *(u16 *)(reg_a5 + 0x1C) = 1U;
+                HELI(reg_a5)->facing_reached = 1U;
                 ENTITY(reg_a6)->move.b.dir -= 0x40;
             }
-            if ((*(u16 *)(reg_a5 + 0x28) != 0) && (*(u16 *)(reg_a5 + 0x1C) != 0)) {
-                reg_tmp.b[0] = *(u8 *)(reg_a5 + 0x1B);
-                *(u8 *)(reg_a5 + 0x1B) -= 1;
+            if ((HELI(reg_a5)->turns_left.h != 0) && (HELI(reg_a5)->facing_reached != 0)) {
+                reg_tmp.b[0] = HELI(reg_a5)->turn_countdown;
+                HELI(reg_a5)->turn_countdown -= 1;
                 if ((s32) reg_tmp.b[0] <= 0) {
-                    *(u8 *)(reg_a5 + 0x1B) = (u8) *(u8 *)(reg_a5 + 0x1A);
-                    *(u16 *)(reg_a5 + 0x28) -= 1;
+                    HELI(reg_a5)->turn_countdown = (u8) HELI(reg_a5)->turn_interval;
+                    HELI(reg_a5)->turns_left.h -= 1;
                     func_00202490();
                     if (cond_flag != 0) {
                         reg_d1.b[0] = ENTITY(reg_a6)->move.b.dir;
@@ -1219,11 +1246,11 @@ block_7:
                 }
             }
             func_00202180();
-            reg_d0.b[0] = *(u8 *)(reg_a5 + 0x22);
+            reg_d0.b[0] = HELI(reg_a5)->facing;
             direction_turn_toward();
-            *(u8 *)(reg_a5 + 0x22) = (u8) reg_d1.b[0];
-            reg_tmp.b[0] = *(u8 *)(reg_a5 + 0x19);
-            *(u8 *)(reg_a5 + 0x19) -= 1;
+            HELI(reg_a5)->facing = (u8) reg_d1.b[0];
+            reg_tmp.b[0] = HELI(reg_a5)->fire.b.countdown;
+            HELI(reg_a5)->fire.b.countdown -= 1;
             if ((s32) reg_tmp.b[0] > 0) {
                 heli_set_direction_sprite();
                 return;
@@ -1231,7 +1258,7 @@ block_7:
             reg_d0.w = 0x58;
             reg_d0.h[0] -= g_rank_5_16;
             reg_d0.h[0] += 2;
-            *(u8 *)(reg_a5 + 0x19) = (u8) reg_d0.b[0];
+            HELI(reg_a5)->fire.b.countdown = (u8) reg_d0.b[0];
             func_00202D50();
             if (cond_flag != 0) {
                 heli_set_direction_sprite();
@@ -1242,7 +1269,7 @@ block_7:
                 heli_set_direction_sprite();
                 return;
             }
-            func_00150670(reg_d1.b[0]);
+            heli_muzzle_offset(reg_d1.b[0]);
             reg_tmp.h[1] = ENTITY(reg_a6)->y.h;
             temp_a0_2 = ENTITY(reg_a6)->x.h;
             reg_tmp.h[0] = temp_a0_2;
