@@ -2,6 +2,8 @@
 #include "test_mode.h"
 #include "task.h"
 
+extern void (*test_screen_routines[20])();
+
 /* own[1] of the task: the test mode has been set up */
 #define TEST_TASK_STARTED(task) (TASK(task)->own[1])
 
@@ -18,7 +20,6 @@ extern u8 text_palette_3[];
 extern u8 text_palette_4[];
 extern s8 g_test_mode_flag;
 extern s8 g_test_mode_timer;
-extern u8 test_screen_routines[];
 extern s16 g_test_mode_entered;
 
 void test_palette_load(void)
@@ -74,7 +75,7 @@ void test_mode_task(void) {
             g_test_screen_state = TEST_SCREEN_RUNNING;
             reg_d0.b[0] = (u8) g_test_screen;
             reg_d0.h[0] += reg_d0.h[0];
-            reg_a0 = *(u8 **)((u8 *)test_screen_routines + (reg_d0.h[0] * 4));
+            reg_a0 = *(u8 **)((u8 *)((u8 *)test_screen_routines) + (reg_d0.h[0] * 4));
             reg_call_target = (Fn)(reg_a0);
             reg_call_target();
         }
@@ -82,7 +83,7 @@ void test_mode_task(void) {
         reg_d0.b[0] = (u8) g_test_screen;
         reg_d0.h[0] += reg_d0.h[0];
         reg_d0.h[0] += 1;
-        reg_a0 = *(u8 **)((u8 *)test_screen_routines + (reg_d0.h[0] * 4));
+        reg_a0 = *(u8 **)((u8 *)((u8 *)test_screen_routines) + (reg_d0.h[0] * 4));
         reg_call_target = (Fn)(reg_a0);
         reg_call_target();
         return;
@@ -98,6 +99,50 @@ void test_mode_task(void) {
     func_00137C50();
     g_test_mode_entered = 1;
 }
+
+void test_menu_begin();
+void test_menu_update();
+void test_input_begin();
+void test_input_update();
+void test_output_begin();
+void test_output_update();
+void test_sound_begin();
+void test_sound_update();
+void test_color_begin();
+void test_color_update();
+void test_crosshatch_begin();
+void test_crosshatch_update();
+void test_system_begin();
+void test_system_update();
+void test_game_begin();
+void test_game_update();
+void test_memory_begin();
+void test_memory_update();
+void test_default_begin();
+void test_default_update();
+
+void (*test_screen_routines[20])() = {
+    test_menu_begin,
+    test_menu_update,
+    test_input_begin,
+    test_input_update,
+    test_output_begin,
+    test_output_update,
+    test_sound_begin,
+    test_sound_update,
+    test_color_begin,
+    test_color_update,
+    test_crosshatch_begin,
+    test_crosshatch_update,
+    test_system_begin,
+    test_system_update,
+    test_game_begin,
+    test_game_update,
+    test_memory_begin,
+    test_memory_update,
+    test_default_begin,
+    test_default_update,
+};
 
 /* .sbss (the compiler lays these out in reverse) */
 s8 g_test_mode_timer __attribute__((aligned(4)));

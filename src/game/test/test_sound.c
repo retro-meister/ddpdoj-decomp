@@ -1,6 +1,8 @@
 #include "common.h"
 #include "test_mode.h"
 
+extern void (*test_sound_requests[72])();
+
 void test_sound_print_labels(void);
 s32 input_get_p1_held();
 s32 input_get_p1_pressed();
@@ -18,7 +20,6 @@ extern s32 test_sound_text_help_right[];
 extern s32 test_sound_text_help_left[];
 extern s32 test_sound_text_help_request[];
 extern s32 test_sound_text_help_stop[];
-extern u8 test_sound_requests[];
 
 void test_sound_begin(void) {
     layers_clear_all();
@@ -147,7 +148,7 @@ check_request:
     if (!(reg_d0.w & 0x10)) goto check_stop;
     reg_d1.w = 0;
     reg_d1.b[0] = (u8) g_test_cursor;
-    reg_a0 = *(u8 **)((u8 *)test_sound_requests + (reg_d1.h[0] * 4));
+    reg_a0 = *(u8 **)((u8 *)((u8 *)test_sound_requests) + (reg_d1.h[0] * 4));
     reg_call_target = (Fn)(reg_a0);
     reg_call_target();
 check_stop:
@@ -173,3 +174,186 @@ print_code:
     }
     reg_d0.w = 0;
 }
+
+void music_play_bgm1();
+void music_play_bgm2();
+void music_play_bgm3();
+void music_play_bgm4();
+void music_play_bgm5();
+void music_play_bgm6();
+void music_play_bgm7();
+void music_play_bgm8();
+void music_play_bgm9();
+void music_play_bgm10();
+void music_play_bgm11();
+void music_play_bgm12();
+void music_play_bgm13();
+void sfx_explosion_air_small();
+void sfx_explosion_air_medium();
+void sfx_explosion_air_large();
+void sfx_explosion_ground_small();
+void sfx_explosion_ground_medium();
+void sfx_explosion_ground_large();
+void sfx_explosion_extra_0();
+void sfx_explosion_extra_1();
+void sfx_explosion_extra_2();
+void sfx_explosion_extra_3();
+void sfx_explosion_extra_4();
+void sfx_explosion_extra_5();
+void sfx_player_explosion();
+void sfx_shot_a();
+void sfx_shot_b();
+void sfx_shot_hyper();
+void sfx_p1_laser_a_start();
+void sfx_p1_laser_b_start();
+void sfx_p1_laser_hyper_start();
+void sfx_laser_bomb_a();
+void sfx_laser_bomb_b();
+void sfx_spread_bomb_a();
+void sfx_spread_bomb_b();
+void sfx_coin();
+void sfx_item_pickup();
+void sfx_score_item_pickup();
+void sfx_bee_pickup();
+void sfx_hyper_pickup();
+void sfx_extend();
+void sfx_warning();
+void sfx_countdown();
+void sfx_bonus_count();
+void sfx_confirm();
+void sfx_cursor_move();
+void sfx_enemy_fire_0();
+void sfx_enemy_fire_1();
+void sfx_enemy_fire_2();
+void sfx_enemy_fire_3();
+void sfx_heli_start();
+void sfx_shockwave();
+void sfx_charge_begin();
+void sfx_charge_loop_start();
+void sfx_beam_fire();
+void sfx_beam_loop_start();
+void sfx_misc_0();
+void sfx_misc_1();
+void sfx_misc_2();
+void sfx_misc_3();
+void voice_power_up();
+void voice_bomb();
+void voice_continue();
+void voice_game_over();
+void voice_warning();
+void voice_hyper();
+void voice_select();
+void voice_ok();
+void voice_bye();
+void voice_logo();
+
+s32 test_sound_text_title[4] = {
+    0x53003209, 0x444E554F, 0x53455420, 0x0000FF54,
+};
+
+s32 test_sound_text_code[8] = {
+    0x53002A04, 0x444E554F, 0x444F4320, 0x6F4E2045, 0x0000FF2E, 0x00000000, 0x00000000, 0x00000000,
+};
+
+s32 test_sound_text_help_up[8] = {
+    0x43002204, 0x2045444F, 0x6831302B, 0x31203D20, 0x50552050, 0x000000FF, 0x00000000, 0x00000000,
+};
+
+s32 test_sound_text_help_down[8] = {
+    0x43002004, 0x2045444F, 0x6831302D, 0x31203D20, 0x4F442050, 0x00FF4E57, 0x00000000, 0x00000000,
+};
+
+s32 test_sound_text_help_right[8] = {
+    0x43001E04, 0x2045444F, 0x6830312B, 0x31203D20, 0x49522050, 0xFF544847, 0x00000000, 0x00000000,
+};
+
+s32 test_sound_text_help_left[8] = {
+    0x43001C04, 0x2045444F, 0x6830312D, 0x31203D20, 0x454C2050, 0x00FF5446, 0x00000000, 0x00000000,
+};
+
+s32 test_sound_text_help_request[8] = {
+    0x52001A04, 0x45555145, 0x20205453, 0x31203D20, 0x48532050, 0xFF31544F, 0x00000000, 0x00000000,
+};
+
+s32 test_sound_text_help_stop[8] = {
+    0x53001804, 0x20504F54, 0x20202020, 0x31203D20, 0x48532050, 0xFF32544F, 0x00000000, 0x00000000,
+};
+
+s32 test_sound_text_exit[8] = {
+    0x45000803, 0x20544958, 0x5031203D, 0x41545320, 0x26205452, 0x4F485320, 0xFF203154, 0x00000000,
+};
+
+void (*test_sound_requests[72])() = {
+    music_play_bgm1,
+    music_play_bgm2,
+    music_play_bgm3,
+    music_play_bgm4,
+    music_play_bgm5,
+    music_play_bgm6,
+    music_play_bgm7,
+    music_play_bgm8,
+    music_play_bgm9,
+    music_play_bgm10,
+    music_play_bgm11,
+    music_play_bgm12,
+    music_play_bgm13,
+    sfx_explosion_air_small,
+    sfx_explosion_air_medium,
+    sfx_explosion_air_large,
+    sfx_explosion_ground_small,
+    sfx_explosion_ground_medium,
+    sfx_explosion_ground_large,
+    sfx_explosion_extra_0,
+    sfx_explosion_extra_1,
+    sfx_explosion_extra_2,
+    sfx_explosion_extra_3,
+    sfx_explosion_extra_4,
+    sfx_explosion_extra_5,
+    sfx_player_explosion,
+    sfx_shot_a,
+    sfx_shot_b,
+    sfx_shot_hyper,
+    sfx_p1_laser_a_start,
+    sfx_p1_laser_b_start,
+    sfx_p1_laser_hyper_start,
+    sfx_laser_bomb_a,
+    sfx_laser_bomb_b,
+    sfx_spread_bomb_a,
+    sfx_spread_bomb_b,
+    sfx_coin,
+    sfx_item_pickup,
+    sfx_score_item_pickup,
+    sfx_bee_pickup,
+    sfx_hyper_pickup,
+    sfx_extend,
+    sfx_warning,
+    sfx_countdown,
+    sfx_bonus_count,
+    sfx_confirm,
+    sfx_cursor_move,
+    sfx_enemy_fire_0,
+    sfx_enemy_fire_1,
+    sfx_enemy_fire_2,
+    sfx_enemy_fire_3,
+    sfx_heli_start,
+    sfx_shockwave,
+    sfx_charge_begin,
+    sfx_charge_loop_start,
+    sfx_beam_fire,
+    sfx_beam_loop_start,
+    sfx_misc_0,
+    sfx_misc_1,
+    sfx_misc_2,
+    sfx_misc_3,
+    voice_power_up,
+    voice_bomb,
+    voice_continue,
+    voice_game_over,
+    voice_warning,
+    voice_hyper,
+    voice_select,
+    voice_ok,
+    voice_bye,
+    voice_logo,
+    0,
+};
