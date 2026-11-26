@@ -162,8 +162,8 @@ void attract_step_begin(void) {
 }
 
 s32 settings_notice_update_with_fade_in();                            /* extern */
-extern u16 D_0028E314;
-extern u16 D_0028E318;
+extern u16 g_p2_continue_count;
+extern u16 g_p1_continue_count;
 
 void attract_step_settings_notice(void) {
     s32 text_layer_clear();
@@ -175,8 +175,8 @@ void attract_step_settings_notice(void) {
     }
     settings_notice_update_with_fade_in();
     if (cond_flag == 0) {
-        D_0028E318 = 1;
-        D_0028E314 = 1;
+        g_p1_continue_count = 1;
+        g_p2_continue_count = 1;
         reg_d0.h[0] = 5;
         D_0028DF84 = 0;
         attract_step_set();
@@ -189,11 +189,11 @@ s32 ranking_screen_update();
 s32 stage_load_step();
 s32 disc_notice_begin();
 s32 disc_notice_end();
-extern u8 D_0028E294;
-extern u8 D_0028E304;
+extern u8 g_ranking_opened_from_menu;
+extern u8 g_setting_start_round;
 extern u8 g_slowdown_timer;
-extern u8 D_0028E368;
-extern u8 D_0028E378;
+extern u8 g_replay_file_finalized;
+extern u8 g_stage_jump_state;
 extern s16 g_loaded_stage;
 extern u16 g_stage;
 extern s8 g_cd_async_busy;
@@ -208,13 +208,13 @@ void attract_step_stage_preload(void) {
         reg_d0.w = 0;
         reg_a0 = text_palette_0;
         text_palette_load();
-        D_0028E304 = 0;
+        g_setting_start_round = 0;
         slowdown_init();
         g_slowdown_timer = 0;
-        D_0028E294 = 0;
+        g_ranking_opened_from_menu = 0;
         ranking_screen_begin();
-        D_0028E368 = 0;
-        D_0028E378 = 0xFF;
+        g_replay_file_finalized = 0;
+        g_stage_jump_state = 0xFF;
         D_0028DF84 = 0;
         g_cd_async_busy = 1;
         g_stage_load_state = 0;
@@ -244,10 +244,10 @@ s32 music_stop();
 s32 fade_reset();
 s32 boot_scratch_clear();
 s32 stage_map_reset();
-extern u8 D_0028E284;
-extern u8 D_0028E288;
+extern u8 g_p2_stage_start_timer;
+extern u8 g_p1_stage_start_timer;
 extern u8 g_game_mode;
-extern u8 D_0028E2E4;
+extern u8 g_no_enemy_bullets;
 extern u8 g_splash_visible;
 
 void attract_step_settings_notice_timed(void) {
@@ -261,8 +261,8 @@ void attract_step_settings_notice_timed(void) {
         fades_reset();
         settings_notice_begin();
         music_stop();
-        D_0028E368 = 0;
-        D_0028E378 = 0xFF;
+        g_replay_file_finalized = 0;
+        g_stage_jump_state = 0xFF;
         g_splash_visible = 0;
         fade_reset();
         stage_map_reset();
@@ -297,14 +297,14 @@ void attract_step_settings_notice_timed(void) {
         }
         return;
     block_set:
-        D_0028E318 = 1;
-        D_0028E314 = 1;
+        g_p1_continue_count = 1;
+        g_p2_continue_count = 1;
         reg_d0.h[0] = 5;
-        D_0028E288 = 0;
-        D_0028E284 = 0;
-        D_0028E378 = 0;
+        g_p1_stage_start_timer = 0;
+        g_p2_stage_start_timer = 0;
+        g_stage_jump_state = 0;
         g_game_mode = 0;
-        D_0028E2E4 = 0;
+        g_no_enemy_bullets = 0;
         D_0028DF84 = 0;
         attract_step_set();
     }
@@ -332,8 +332,8 @@ void attract_step_death_label_notice(void) {
         text_palette_load();
         fades_reset();
         music_stop();
-        D_0028E368 = 0;
-        D_0028E378 = 0xFF;
+        g_replay_file_finalized = 0;
+        g_stage_jump_state = 0xFF;
         g_splash_visible = 0;
         fade_reset();
         stage_map_reset();
@@ -362,24 +362,24 @@ void fade_start_in(void);
 void menu_task_update(void);
 s32 clock_read(u8 *);
 void save_snapshot_take(void);
-extern u8 D_0028E25C;
-extern u8 D_0028E284;
-extern u8 D_0028E288;
+extern u8 g_session_stage_reached;
+extern u8 g_p2_stage_start_timer;
+extern u8 g_p1_stage_start_timer;
 extern u8 g_pad_input_locked;
-extern u8 D_0028E2A0;
-extern u8 D_0028E2A4;
-extern u8 D_0028E2B8[8];
-extern u8 D_0028E2B9;
-extern u8 D_0028E2BA;
-extern u8 D_0028E2BB;
-extern u8 D_0028E2BC;
-extern u8 D_0028E2BD;
-extern s8 D_0028E2BE;
-extern s8 D_0028E2BF;
-extern u16 D_0028E2FC;
-extern u16 D_0028E300;
+extern u8 g_replay_save_asked;
+extern u8 g_stage_clear_wait_timer;
+extern u8 g_session_date[8];
+extern u8 g_session_date_1;
+extern u8 g_session_date_2;
+extern u8 g_session_date_3;
+extern u8 g_session_date_4;
+extern u8 g_session_date_5;
+extern s8 g_session_date_6;
+extern s8 g_session_date_7;
+extern u16 g_unlocked_options_shown;
+extern u16 g_unlocked_options;
 extern u8 g_game_frame_ran;
-extern s8 D_0028E3F8;
+extern s8 g_bomb_panel_seen;
 extern s8 g_menu_exit_code;
 extern s32 g_menu_alpha_b;
 
@@ -395,12 +395,12 @@ void attract_step_menu(void) {
         settings_notice_begin();
         slowdown_init();
         g_slowdown_timer = 0;
-        D_0028E288 = 0;
-        D_0028E284 = 0;
+        g_p1_stage_start_timer = 0;
+        g_p2_stage_start_timer = 0;
         g_pad_input_locked = 0;
-        D_0028E2A4 = 0;
-        D_0028E2A0 = 0;
-        D_0028E368 = 0;
+        g_stage_clear_wait_timer = 0;
+        g_replay_save_asked = 0;
+        g_replay_file_finalized = 0;
         text_layer_clear();
 #ifdef DEATH_LABEL
         save_snapshot_take();
@@ -423,61 +423,61 @@ void attract_step_menu(void) {
             D_0028DF84 = 0;
             reg_d0.h[0] = 0x10;
             g_game_frame_ran = 0;
-            D_0028E3F8 = 0;
+            g_bomb_panel_seen = 0;
             attract_step_set();
         } else if (g_menu_exit_code == 40) {
 #ifdef DEATH_LABEL
-            (*(u8 *)D_0028E2B8) = 0;
-            D_0028E2B9 = 0;
-            D_0028E2BA = 0;
-            D_0028E2BB = 0;
-            D_0028E2BC = 0;
-            D_0028E2BD = 0;
-            D_0028E2BE = 0;
-            D_0028E2BF = 0;
-            reg_a0 = &(*(u8 *)D_0028E2B8);
+            (*(u8 *)g_session_date) = 0;
+            g_session_date_1 = 0;
+            g_session_date_2 = 0;
+            g_session_date_3 = 0;
+            g_session_date_4 = 0;
+            g_session_date_5 = 0;
+            g_session_date_6 = 0;
+            g_session_date_7 = 0;
+            reg_a0 = &(*(u8 *)g_session_date);
             if (clock_read(reg_a0) != 0) {
                 sceGsSyncV(0);
                 if (clock_read(reg_a0) != 0) {
-                    (*(u8 *)D_0028E2B8) = 0;
-                    D_0028E2B9 = 0;
-                    D_0028E2BA = 0;
-                    D_0028E2BB = 0;
-                    D_0028E2BC = 0;
+                    (*(u8 *)g_session_date) = 0;
+                    g_session_date_1 = 0;
+                    g_session_date_2 = 0;
+                    g_session_date_3 = 0;
+                    g_session_date_4 = 0;
                 }
             }
-            printf((const char *)"--date [%d][%d][%d][%d][%d]\n", (*(u8 *)D_0028E2B8), D_0028E2B9, D_0028E2BA, D_0028E2BB, D_0028E2BC);
+            printf((const char *)"--date [%d][%d][%d][%d][%d]\n", (*(u8 *)g_session_date), g_session_date_1, g_session_date_2, g_session_date_3, g_session_date_4);
 #endif
             D_0028DF84 = 0;
             reg_d0.h[0] = 0x13;
             g_game_frame_ran = 0;
-            D_0028E3F8 = 0;
+            g_bomb_panel_seen = 0;
             attract_step_set();
         } else {
-            D_0028E318 = 9;
-            D_0028E314 = 9;
-            D_0028E2FC = D_0028E300;
-            D_0028E25C = 0;
-            (*(u8 *)D_0028E2B8) = 0;
-            D_0028E2B9 = 0;
-            D_0028E2BA = 0;
-            D_0028E2BB = 0;
-            D_0028E2BC = 0;
-            D_0028E2BD = 0;
-            D_0028E2BE = 0;
-            D_0028E2BF = 0;
-            reg_a0 = &(*(u8 *)D_0028E2B8);
+            g_p1_continue_count = 9;
+            g_p2_continue_count = 9;
+            g_unlocked_options_shown = g_unlocked_options;
+            g_session_stage_reached = 0;
+            (*(u8 *)g_session_date) = 0;
+            g_session_date_1 = 0;
+            g_session_date_2 = 0;
+            g_session_date_3 = 0;
+            g_session_date_4 = 0;
+            g_session_date_5 = 0;
+            g_session_date_6 = 0;
+            g_session_date_7 = 0;
+            reg_a0 = &(*(u8 *)g_session_date);
             if (clock_read(reg_a0) != 0) {
                 sceGsSyncV(0);
                 if (clock_read(reg_a0) != 0) {
-                    (*(u8 *)D_0028E2B8) = 0;
-                    D_0028E2B9 = 0;
-                    D_0028E2BA = 0;
-                    D_0028E2BB = 0;
-                    D_0028E2BC = 0;
+                    (*(u8 *)g_session_date) = 0;
+                    g_session_date_1 = 0;
+                    g_session_date_2 = 0;
+                    g_session_date_3 = 0;
+                    g_session_date_4 = 0;
                 }
             }
-            printf((const char *)"--date [%d][%d][%d][%d][%d]\n", (*(u8 *)D_0028E2B8), D_0028E2B9, D_0028E2BA, D_0028E2BB, D_0028E2BC);
+            printf((const char *)"--date [%d][%d][%d][%d][%d]\n", (*(u8 *)g_session_date), g_session_date_1, g_session_date_2, g_session_date_3, g_session_date_4);
             reg_d0.h[0] = 0xE;
             attract_step_set();
         }
@@ -906,7 +906,7 @@ void start_buttons_take_credits(void) {
     }
     if (g_pad_trigger[1] & 0x20) {
         p2_credit_spend_one();
-        if ((cond_flag == 0) && ((D_0028E304 == 0) || (D_0028E7B4 == 0))) {
+        if ((cond_flag == 0) && ((g_setting_start_round == 0) || (D_0028E7B4 == 0))) {
             D_0028E7B4 |= 2;
         }
     }    if (D_0028E7B4 != 0) { return; }

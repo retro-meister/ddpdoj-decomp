@@ -13,14 +13,14 @@ s32 bg_layer_clear();
 s32 fade_in_and_release(s32, s32, s32, s32);
 s32 stage_map_reset();
 extern u8 D_0026A3F0[];
-extern u8 D_0028E368;
-extern u8 D_0028E378;
+extern u8 g_replay_file_finalized;
+extern u8 g_stage_jump_state;
 extern u8 g_replay_buffer_state;
 
 void game_over_task_begin(void) {
     g_replay_buffer_state = 2;
-    D_0028E378 = 0xFF;
-    D_0028E368 = 0;
+    g_stage_jump_state = 0xFF;
+    g_replay_file_finalized = 0;
     scroll_state_reset();
     text_layer_clear();
     bg_layer_clear();

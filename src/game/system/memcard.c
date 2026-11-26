@@ -348,11 +348,11 @@ void replay_slot_infos_clear(void);
 
 s32 overlay_flush();                            /* extern */
 s32 frame_image_draw(s32);                         /* extern */
-extern u8 D_0028E268;
+extern u8 g_mc_frame_visible;
 extern s32 g_mc_message_alpha;
 
 void mc_frame_draw(void) {
-    if ((D_0028E268 != 0) && (g_mc_message_alpha != 0)) {
+    if ((g_mc_frame_visible != 0) && (g_mc_message_alpha != 0)) {
         frame_image_draw(g_mc_message_alpha & 0xFFFF);
         overlay_flush();
     }
@@ -511,7 +511,7 @@ extern u8 g_mc_task;
 extern s32 D_006A0E40[];
 
 void mc_operation_begin() {
-    D_0028E268 = 1;
+    g_mc_frame_visible = 1;
     g_mc_message_alpha = 0;
     g_mc_message_fade_out = 0;
     ((s32 *)D_006A0E40)[0] = 0;
@@ -667,7 +667,7 @@ s32 mc_buffer_checksum_check(void) {
 
 void mc_operation_end() {
     mc_state_reset();
-    D_0028E268 = 0;
+    g_mc_frame_visible = 0;
     g_mc_operation_done = 1;
     g_mc_operation_phase = 0;
     g_mc_task_step = 0;
@@ -4680,21 +4680,21 @@ extern s32 g_stored_ranking_names[15];
 extern s32 g_stored_ranking_scores[5];
 extern s8 g_display_offset_y;
 extern s8 g_display_offset_x;
-extern u8 D_0028E258;
+extern u8 g_stage_select_unlocked;
 extern u8 g_p1_btn_map_a[2][4];
-extern u8 D_0028E278;
+extern u8 g_setting_autosave;
 extern u8 g_pad_vib_enabled;
 extern u8 g_stage_map_enabled;
-extern u8 D_0028E2D8;
+extern u8 g_setting_replay_save;
 extern u8 g_screen_wide;
 extern u8 g_bgm_alternate_set;
-extern u16 D_0028E300;
-extern u16 D_0028E32C;
-extern u8 D_0028E354;
-extern u8 D_0028E358;
+extern u16 g_unlocked_options;
+extern u16 g_setting_wallpaper;
+extern u8 g_setting_screen_variant;
+extern u8 g_setting_screen_mode;
 extern u8 g_pad_vib_state_p2;
 extern u8 g_pad_vib_state_p1;
-extern u8 D_0028E37C;
+extern u8 g_slowdown_setting;
 extern u8 g_setting_rapid_fire;
 extern u8 g_setting_ship_stock;
 extern u8 g_setting_extend;
@@ -4787,25 +4787,25 @@ void save_block_from_settings(void) {
     g_mc_save_buf_as_SaveBlock.b25D = g_setting_continue;
     g_mc_save_buf_as_SaveBlock.b25E = g_setting_demo_sound;
     g_mc_save_buf_as_SaveBlock.b25F = g_setting_chute_type;
-    g_mc_save_buf_as_SaveBlock.b260 = D_0028E358;
+    g_mc_save_buf_as_SaveBlock.b260 = g_setting_screen_mode;
     g_mc_save_buf_as_SaveBlock.b261 = g_setting_difficulty;
     g_mc_save_buf_as_SaveBlock.b262 = g_setting_extend;
     g_mc_save_buf_as_SaveBlock.b263 = g_setting_ship_stock;
     g_mc_save_buf_as_SaveBlock.b264 = g_setting_rapid_fire;
-    g_mc_save_buf_as_SaveBlock.b265 = D_0028E37C;
+    g_mc_save_buf_as_SaveBlock.b265 = g_slowdown_setting;
     g_mc_save_buf_as_SaveBlock.b266 = g_pad_vib_state_p1;
     g_mc_save_buf_as_SaveBlock.b267 = g_pad_vib_state_p2;
-    g_mc_save_buf_as_SaveBlock.h268 = D_0028E32C;
+    g_mc_save_buf_as_SaveBlock.h268 = g_setting_wallpaper;
     g_mc_save_buf_as_SaveBlock.b26A = g_pad_vib_enabled;
-    g_mc_save_buf_as_SaveBlock.b26B = D_0028E278;
+    g_mc_save_buf_as_SaveBlock.b26B = g_setting_autosave;
     g_mc_save_buf_as_SaveBlock.b274 = g_display_offset_x;
     g_mc_save_buf_as_SaveBlock.b275 = g_display_offset_y;
-    g_mc_save_buf_as_SaveBlock.b276 = D_0028E258;
-    g_mc_save_buf_as_SaveBlock.h278 = D_0028E300;
+    g_mc_save_buf_as_SaveBlock.b276 = g_stage_select_unlocked;
+    g_mc_save_buf_as_SaveBlock.h278 = g_unlocked_options;
     g_mc_save_buf_as_SaveBlock.b59C = g_bgm_alternate_set;
     g_mc_save_buf_as_SaveBlock.b59D = g_screen_wide;
-    g_mc_save_buf_as_SaveBlock.b59E = D_0028E2D8;
-    g_mc_save_buf_as_SaveBlock.b59F = D_0028E354;
+    g_mc_save_buf_as_SaveBlock.b59E = g_setting_replay_save;
+    g_mc_save_buf_as_SaveBlock.b59F = g_setting_screen_variant;
     g_mc_save_buf_as_SaveBlock.b5A0 = g_stage_map_enabled;
     for (i = 0; i < 10; i++) {
         for (j = 0; j < 4; j++) {
@@ -4939,25 +4939,25 @@ void save_block_to_settings(void) {
     g_setting_continue = g_mc_save_buf_as_SaveBlock.b25D;
     g_setting_demo_sound = g_mc_save_buf_as_SaveBlock.b25E;
     g_setting_chute_type = g_mc_save_buf_as_SaveBlock.b25F;
-    D_0028E358 = g_mc_save_buf_as_SaveBlock.b260;
+    g_setting_screen_mode = g_mc_save_buf_as_SaveBlock.b260;
     g_setting_difficulty = g_mc_save_buf_as_SaveBlock.b261;
     g_setting_extend = g_mc_save_buf_as_SaveBlock.b262;
     g_setting_ship_stock = g_mc_save_buf_as_SaveBlock.b263;
     g_setting_rapid_fire = g_mc_save_buf_as_SaveBlock.b264;
-    D_0028E37C = g_mc_save_buf_as_SaveBlock.b265;
+    g_slowdown_setting = g_mc_save_buf_as_SaveBlock.b265;
     g_pad_vib_state_p1 = g_mc_save_buf_as_SaveBlock.b266;
     g_pad_vib_state_p2 = g_mc_save_buf_as_SaveBlock.b267;
-    D_0028E32C = g_mc_save_buf_as_SaveBlock.h268;
+    g_setting_wallpaper = g_mc_save_buf_as_SaveBlock.h268;
     g_pad_vib_enabled = g_mc_save_buf_as_SaveBlock.b26A;
-    D_0028E278 = g_mc_save_buf_as_SaveBlock.b26B;
+    g_setting_autosave = g_mc_save_buf_as_SaveBlock.b26B;
     g_display_offset_x = g_mc_save_buf_as_SaveBlock.b274;
     g_display_offset_y = g_mc_save_buf_as_SaveBlock.b275;
-    D_0028E258 = g_mc_save_buf_as_SaveBlock.b276;
-    D_0028E300 = g_mc_save_buf_as_SaveBlock.h278;
+    g_stage_select_unlocked = g_mc_save_buf_as_SaveBlock.b276;
+    g_unlocked_options = g_mc_save_buf_as_SaveBlock.h278;
     g_bgm_alternate_set = g_mc_save_buf_as_SaveBlock.b59C;
     g_screen_wide = g_mc_save_buf_as_SaveBlock.b59D;
-    D_0028E2D8 = g_mc_save_buf_as_SaveBlock.b59E;
-    D_0028E354 = g_mc_save_buf_as_SaveBlock.b59F;
+    g_setting_replay_save = g_mc_save_buf_as_SaveBlock.b59E;
+    g_setting_screen_variant = g_mc_save_buf_as_SaveBlock.b59F;
     g_stage_map_enabled = g_mc_save_buf_as_SaveBlock.b5A0;
     for (i = 0; i < 10; i++) {
         for (j = 0; j < 4; j++) {
@@ -4988,7 +4988,7 @@ void display_settings_apply(void)
     g_display_reset_pending = 1;
     display_set_offset(g_display_offset_x, g_display_offset_y);
 
-    selection = D_0028E32C;
+    selection = g_setting_wallpaper;
     if (selection != 5) {
         s32 tableIndex = (selection & 0xFFFF) * 2;
 
@@ -5037,25 +5037,25 @@ void save_snapshot_take(void) {
     g_save_snapshot.b25D = g_setting_continue;
     g_save_snapshot.b25E = g_setting_demo_sound;
     g_save_snapshot.b25F = g_setting_chute_type;
-    g_save_snapshot.b260 = D_0028E358;
+    g_save_snapshot.b260 = g_setting_screen_mode;
     g_save_snapshot.b261 = g_setting_difficulty;
     g_save_snapshot.b262 = g_setting_extend;
     g_save_snapshot.b263 = g_setting_ship_stock;
     g_save_snapshot.b264 = g_setting_rapid_fire;
-    g_save_snapshot.b265 = D_0028E37C;
+    g_save_snapshot.b265 = g_slowdown_setting;
     g_save_snapshot.b266 = g_pad_vib_state_p1;
     g_save_snapshot.b267 = g_pad_vib_state_p2;
-    g_save_snapshot.h268 = D_0028E32C;
+    g_save_snapshot.h268 = g_setting_wallpaper;
     g_save_snapshot.b26A = g_pad_vib_enabled;
-    g_save_snapshot.b26B = D_0028E278;
+    g_save_snapshot.b26B = g_setting_autosave;
     g_save_snapshot.b274 = g_display_offset_x;
     g_save_snapshot.b275 = g_display_offset_y;
-    g_save_snapshot.b276 = D_0028E258;
-    g_save_snapshot.h278 = D_0028E300;
+    g_save_snapshot.b276 = g_stage_select_unlocked;
+    g_save_snapshot.h278 = g_unlocked_options;
     g_save_snapshot.b59C = g_bgm_alternate_set;
     g_save_snapshot.b59D = g_screen_wide;
-    g_save_snapshot.b59E = D_0028E2D8;
-    g_save_snapshot.b59F = D_0028E354;
+    g_save_snapshot.b59E = g_setting_replay_save;
+    g_save_snapshot.b59F = g_setting_screen_variant;
     g_save_snapshot.b5A0 = g_stage_map_enabled;
     for (i = 0; i < 10; i++) {
         for (j = 0; j < 4; j++) {
@@ -5150,7 +5150,7 @@ s32 save_snapshot_changed_check(void) {
         goto fail;
     }
     stage++;
-    if (g_save_snapshot.b260 != D_0028E358) {
+    if (g_save_snapshot.b260 != g_setting_screen_mode) {
         goto fail;
     }
     stage++;
@@ -5170,7 +5170,7 @@ s32 save_snapshot_changed_check(void) {
         goto fail;
     }
     stage++;
-    if (g_save_snapshot.b265 != D_0028E37C) {
+    if (g_save_snapshot.b265 != g_slowdown_setting) {
         goto fail;
     }
     stage++;
@@ -5182,7 +5182,7 @@ s32 save_snapshot_changed_check(void) {
         goto fail;
     }
     stage++;
-    if (g_save_snapshot.h268 != D_0028E32C) {
+    if (g_save_snapshot.h268 != g_setting_wallpaper) {
         goto fail;
     }
     stage++;
@@ -5190,7 +5190,7 @@ s32 save_snapshot_changed_check(void) {
         goto fail;
     }
     stage++;
-    if (g_save_snapshot.b26B != D_0028E278) {
+    if (g_save_snapshot.b26B != g_setting_autosave) {
         goto fail;
     }
     stage++;
@@ -5202,11 +5202,11 @@ s32 save_snapshot_changed_check(void) {
         goto fail;
     }
     stage++;
-    if (g_save_snapshot.b276 != D_0028E258) {
+    if (g_save_snapshot.b276 != g_stage_select_unlocked) {
         goto fail;
     }
     stage++;
-    if (g_save_snapshot.h278 != D_0028E300) {
+    if (g_save_snapshot.h278 != g_unlocked_options) {
         goto fail;
     }
     stage++;
@@ -5219,11 +5219,11 @@ s32 save_snapshot_changed_check(void) {
         goto fail;
     }
     stage++;
-    if (g_save_snapshot.b59E != D_0028E2D8) {
+    if (g_save_snapshot.b59E != g_setting_replay_save) {
         goto fail;
     }
     stage++;
-    if (g_save_snapshot.b59F != D_0028E354) {
+    if (g_save_snapshot.b59F != g_setting_screen_variant) {
         goto fail;
     }
     stage++;
@@ -5257,7 +5257,7 @@ fail:
 
 
 s32 autosave_update(void) {
-    if (D_0028E278 == 0) {
+    if (g_setting_autosave == 0) {
         g_autosave_step = 10;
     }
     switch (g_autosave_step) {
@@ -5289,7 +5289,7 @@ s32 autosave_update(void) {
 }
 
 extern void sfx_extend(void);
-extern u16 D_0028E2FC;
+extern u16 g_unlocked_options_shown;
 
 void mc_task_option_unlocked(void) {
     extern void mc_message_draw(s32, char *, s32, s32, s32, u16, s32);
@@ -5297,8 +5297,8 @@ void mc_task_option_unlocked(void) {
 
     switch (g_mc_step) {
     case 0:
-        pressed = (s16)(s32)D_0028E300 ^ (s16)D_0028E2FC;
-        pressed &= (s16)D_0028E300;
+        pressed = (s16)(s32)g_unlocked_options ^ (s16)g_unlocked_options_shown;
+        pressed &= (s16)g_unlocked_options;
         if (pressed == 0) {
             g_mc_step = 99;
         } else {
@@ -5363,12 +5363,12 @@ void mc_task_option_unlocked(void) {
     }
 }
 
-extern u16 D_0028E2FC;
+extern u16 g_unlocked_options_shown;
 extern s32 g_autosave_unread_flag;
 
 s32 unlock_notice_reset(void) {
     g_autosave_unread_flag = 0;
-    D_0028E2FC = D_0028E300;
+    g_unlocked_options_shown = g_unlocked_options;
     return 1;
 }
 

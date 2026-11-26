@@ -1257,11 +1257,11 @@ s32 entity_advance256();
 s32 entity_check_bounds();
 extern u8 stage3_midboss_pod_table[];
 extern u8 stage3_midboss_pod_table_2[];
-extern u8 D_0028E2E4;
+extern u8 g_no_enemy_bullets;
 extern u16 g_enemy_signal_e;
 
 void stage3_midboss_pod(void) {
-    if (D_0028E2E4 != 0) {
+    if (g_no_enemy_bullets != 0) {
         goto next_1;
     }
     if (g_enemy_signal_4 == 0) {

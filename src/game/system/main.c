@@ -75,7 +75,7 @@ extern s8 D_0028E249[];
 extern u8 g_stage_load_state;
 extern u8 g_paused;
 extern u8 g_game_frame_ran;
-extern u8 D_0028E374;
+extern u8 g_disc_notice_kind;
 extern u16 g_attract_demo;
 extern u16 g_stage;
 extern s8 D_0028E9A4;
@@ -200,7 +200,7 @@ void game_main(void) {
             }
             break;
         case 4:
-            if (D_0028E374 == 0) {
+            if (g_disc_notice_kind == 0) {
                 t3 += 1;
             }
             break;

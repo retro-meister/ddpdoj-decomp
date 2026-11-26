@@ -818,7 +818,7 @@ block_52:
 }
 
 s32 hud_p1_hyper_count_put();                            /* extern */
-extern u8 D_0028E288;
+extern u8 g_p1_stage_start_timer;
 extern u16 g_p1_hyper_time;
 
 void p1_hyper_item_take(void) {
@@ -829,11 +829,11 @@ void p1_hyper_item_take(void) {
     g_p1_hyper_time = 0x95F;
     p1_bomb_capacity_draw();
     hud_p1_hyper_count_put();
-    D_0028E288 = 0;
+    g_p1_stage_start_timer = 0;
 }
 
 s32 hud_p2_hyper_count_put();                            /* extern */
-extern u8 D_0028E284;
+extern u8 g_p2_stage_start_timer;
 extern u16 g_p2_hyper_time;
 
 void p2_hyper_item_take(void) {
@@ -844,7 +844,7 @@ void p2_hyper_item_take(void) {
     g_p2_hyper_time = 0x95F;
     p2_bomb_capacity_draw();
     hud_p2_hyper_count_put();
-    D_0028E284 = 0;
+    g_p2_stage_start_timer = 0;
 }
 
 s32 hud_p1_lives_put(u16);
@@ -1295,10 +1295,10 @@ void bomb_capacity_draw(void) {
     reg_a0 = (u8 *)reg_save_a0;
 }
 
-extern s8 D_0028E3F8;
+extern s8 g_bomb_panel_seen;
 
 void p1_bomb_panel_draw(void) {
-    D_0028E3F8 = 1;
+    g_bomb_panel_seen = 1;
     if ((g_p1_hyper_items != 0) || (!(PLAYER(((u8 *)g_player1))->flags.b[1] & 0x40) && (g_p1_maximum_value[0] != 0))) {
         p1_bomb_stock_draw();
         p1_bomb_capacity_draw();
@@ -1309,7 +1309,7 @@ void p1_bomb_panel_draw(void) {
 
 
 void p2_bomb_panel_draw(void) {
-    D_0028E3F8 = 1;
+    g_bomb_panel_seen = 1;
     if ((g_p2_hyper_items != 0) || (!(PLAYER(((u8 *)g_player2))->flags.b[1] & 0x40) && (g_p2_maximum_value[0] != 0))) {
         p2_bomb_stock_draw();
         p2_bomb_capacity_draw();

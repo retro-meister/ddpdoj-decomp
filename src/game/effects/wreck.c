@@ -315,7 +315,7 @@ void startup_pointers_store_b(void) {
 extern u8 D_002BAE90[];
 
 #ifdef DEATH_LABEL
-extern u8 D_0028E2A4;
+extern u8 g_stage_clear_wait_timer;
 #endif
 
 void clear_bonus_state_clear(void) {
@@ -339,7 +339,7 @@ void clear_bonus_state_clear(void) {
     ENTITY(reg_a6)->draw.sh = 0x60;
     ENTITY(reg_a6)->sprite.sh = 0x10;
 #ifdef DEATH_LABEL
-    D_0028E2A4 = 0x78;
+    g_stage_clear_wait_timer = 0x78;
 #endif
 }
 
@@ -357,7 +357,7 @@ extern u16 g_stage;
 extern u8 g_replay_mode;
 #ifdef DEATH_LABEL
 s32 stage_load_step();
-extern u8 D_0028E2A4;
+extern u8 g_stage_clear_wait_timer;
 extern u8 g_game_mode;
 extern s16 g_loaded_stage;
 extern u8 g_stage_clear_screen_shown;
@@ -375,10 +375,10 @@ void clear_bonus_task() {
         return;
     }
 #ifdef DEATH_LABEL
-    if (D_0028E2A4 != 0) {
-        D_0028E2A4 -= 1;
+    if (g_stage_clear_wait_timer != 0) {
+        g_stage_clear_wait_timer -= 1;
     }
-    if ((D_0028E2A4 == 0) && (g_loaded_stage != g_stage) && (D_0028E2A4 == 0)) {
+    if ((g_stage_clear_wait_timer == 0) && (g_loaded_stage != g_stage) && (g_stage_clear_wait_timer == 0)) {
         stage_load_step();
     }
 #endif

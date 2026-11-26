@@ -332,12 +332,12 @@ void ship_select_task_begin(void) {
     reg_a1 += 2;
 }
 
-extern u8 D_0028E304;
+extern u8 g_setting_start_round;
 extern u16 g_loop;
 
 void ship_select_task_finish(void) {
     task_stop_self();
-    if ((D_0028E304 != 0) && (g_loop == 0)) {
+    if ((g_setting_start_round != 0) && (g_loop == 0)) {
         g_loop = 1;
     }
 }
@@ -467,7 +467,7 @@ void ship_select_task(void) {
                     }
                 }
             }
-        } else if ((reg_d7.h[0] != 0) && (D_0028E304 == 0)) {
+        } else if ((reg_d7.h[0] != 0) && (g_setting_start_round == 0)) {
             input_get_p1_held();
             if ((reg_d0.w & 0x8000) && ((reg_a0 = (u8 *)D_0029BE00, (*(u8 *)(reg_a0 + 0x71) == 0)) || ((s32) *(u8 *)(reg_a0 + 0x70) < 6))) {
                 p1_credit_spend_one();
@@ -475,7 +475,7 @@ void ship_select_task(void) {
                     ENTITY(reg_a6)->flags.sb[1] = 1;
                 }
             }
-        } else if (D_0028E304 == 0) {
+        } else if (g_setting_start_round == 0) {
             input_get_p2_held();
             if ((reg_d0.w & 0x8000) && ((reg_a0 = (u8 *)D_0029BE00, (*(u8 *)(reg_a0 + 1) == 0)) || ((s32) *(u8 *)reg_a0 < 6))) {
                 p2_credit_spend_one();

@@ -89,8 +89,8 @@ s32 players_clear();                            /* extern */
 s32 sound_stop_effects();                            /* extern */
 s32 text_palette_load();                            /* extern */
 extern u16 text_palette_0[16];
-extern u8 D_0028E258;
-extern u8 D_0028E25C;
+extern u8 g_stage_select_unlocked;
+extern u8 g_session_stage_reached;
 extern u8 g_game_mode;
 extern s32 g_ranking_entry_index;
 
@@ -104,8 +104,8 @@ void name_entry_task_finish() {
     reg_d0.w = 0;
     reg_a0 = (u8 *)((s32 *)text_palette_0);
     text_palette_load();
-    if ((s32) D_0028E258 < (s32) D_0028E25C) {
-        D_0028E258 = D_0028E25C;
+    if ((s32) g_stage_select_unlocked < (s32) g_session_stage_reached) {
+        g_stage_select_unlocked = g_session_stage_reached;
     }
     if (g_game_mode == 2) {
         password_make();
@@ -212,7 +212,7 @@ s32 password_bits_unpack(void) {
 
 s64 atoi();
 s32 sprintf();
-extern u8 D_0028E2BC;
+extern u8 g_session_date_4;
 extern u8 D_002BADD0[];
 extern u8 g_stored_ranking_texts[160];
 extern u8 g_death_label_ranking_texts[272];
@@ -270,7 +270,7 @@ void password_make(void) {
     v3 = ((u16 *)((u8 *)g_ranking_loops))[g_ranking_entry_index];
     val_fe = ((u16 *)((u8 *)g_ranking_hits))[g_ranking_entry_index];
     v4 = ((u16 *)((u8 *)g_ranking_continues))[g_ranking_entry_index];
-    shift = (u32)D_0028E2BC & 3;
+    shift = (u32)g_session_date_4 & 3;
     if (shift == 0) {
         shift = (u8)(shift + 1);
     }

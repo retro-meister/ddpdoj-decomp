@@ -1795,7 +1795,7 @@ extern u32 D_0028DEA8;
 extern s32 D_0028DEB0;
 extern void *D_0028DEB4;
 extern u16 g_hyper_bullet_speed;
-extern u8 D_0028E2E4;
+extern u8 g_no_enemy_bullets;
 extern u16 g_bullet_speed_bonus;
 extern u16 g_bullets_blocked;
 extern s16 g_bullet_limit_raised_1[];
@@ -1813,11 +1813,11 @@ void bullet_spawn(void) {
     s16 hi;
 
 #ifdef DEATH_LABEL
-    if ((g_attract_demo == 0) && (D_0028E2E4 != 0)) {
+    if ((g_attract_demo == 0) && (g_no_enemy_bullets != 0)) {
         return;
     }
 #else
-    if (D_0028E2E4 != 0) {
+    if (g_no_enemy_bullets != 0) {
         return;
     }
 #endif
@@ -2152,11 +2152,11 @@ void bullet_spawn256(void) {
     s16 hi;
 
 #ifdef DEATH_LABEL
-    if ((g_attract_demo == 0) && (D_0028E2E4 != 0)) {
+    if ((g_attract_demo == 0) && (g_no_enemy_bullets != 0)) {
         return;
     }
 #else
-    if (D_0028E2E4 != 0) {
+    if (g_no_enemy_bullets != 0) {
         return;
     }
 #endif

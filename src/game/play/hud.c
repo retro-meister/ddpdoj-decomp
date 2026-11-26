@@ -1131,8 +1131,8 @@ s32 music_fade_out();
 s32 score_add_p1();
 s32 score_add_p2();
 s32 score_value_add();
-extern u8 D_0028E2A0;
-extern u8 D_0028E2A4;
+extern u8 g_replay_save_asked;
+extern u8 g_stage_clear_wait_timer;
 extern s32 g_boss_score;
 extern s32 g_boss_hit_bonus;
 extern u16 g_boss_hit_bonus_timer;
@@ -1202,16 +1202,16 @@ next_7:
     if (g_boss_hits == 0) goto next_6;
     if ((s16)g_boss_hits >= 0) goto next_8;
     if (reg_tmp.h[1] != 0) goto next_10;
-    D_0028E2A0 = 0;
-    D_0028E2A4 = 0;
+    g_replay_save_asked = 0;
+    g_stage_clear_wait_timer = 0;
     g_boss_present |= 2;
     if (g_simulation_active == 0) goto next_11;
-    D_0028E2A4 = 0x78;
+    g_stage_clear_wait_timer = 0x78;
     music_fade_out();
     goto next_12;
 next_11:
     if (g_stage == 4) goto next_12;
-    D_0028E2A4 = 0x78;
+    g_stage_clear_wait_timer = 0x78;
     music_fade_out();
 next_12:
     reg_d0.w = 0;
@@ -1538,7 +1538,7 @@ s32 p1_invincible_start();
 s32 p1_hyper_effect_start();
 s32 p1_hyper_effect_draw_first();
 s32 p1_hyper_effect_draw();
-extern u8 D_0028E288;
+extern u8 g_p1_stage_start_timer;
 extern u8 g_game_frame_ran;
 extern u16 g_select_screen_active;
 extern u16 g_p1_hyper_in_effect;
@@ -1596,8 +1596,8 @@ block_9:
             g_p1_hyper_time -= 2;
             if ((s16) g_p1_hyper_time < 0) {
                 p1_hyper_end();
-                if (D_0028E288 == 0x78) {
-                    D_0028E288 = 0xA;
+                if (g_p1_stage_start_timer == 0x78) {
+                    g_p1_stage_start_timer = 0xA;
                 }
             }
         }
@@ -1627,7 +1627,7 @@ s32 p2_invincible_start();
 s32 p2_hyper_effect_start();
 s32 p2_hyper_effect_draw_first();
 s32 p2_hyper_effect_draw();
-extern u8 D_0028E284;
+extern u8 g_p2_stage_start_timer;
 extern u16 g_p2_hyper_in_effect;
 extern u16 g_p2_hyper_level;
 extern u16 g_p2_hyper_total;
@@ -1682,8 +1682,8 @@ block_9:
             g_p2_hyper_time -= 2;
             if ((s16) g_p2_hyper_time < 0) {
                 p2_hyper_end();
-                if (D_0028E284 == 0x78) {
-                    D_0028E284 = 0xA;
+                if (g_p2_stage_start_timer == 0x78) {
+                    g_p2_stage_start_timer = 0xA;
                 }
             }
         }

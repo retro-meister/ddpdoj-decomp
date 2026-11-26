@@ -632,9 +632,9 @@ extern u16 g_input_p2_held;
 extern u16 g_input_p1_previous;
 extern u16 g_input_p1_pressed;
 extern u16 g_input_p1_held;
-extern u8 D_0028E2BB;
-extern u8 D_0028E2BC;
-extern u8 D_0028E2E4;
+extern u8 g_session_date_3;
+extern u8 g_session_date_4;
+extern u8 g_no_enemy_bullets;
 extern u8 g_setting_difficulty;
 extern u16 g_scroll_line;
 extern u16 g_scroll_line_offset;
@@ -678,7 +678,7 @@ void replay_record_begin() {
     if (g_stage != 0 || g_loop == 0) {
         memset(g_replay_start_state, 0, 0x3A4);
     }
-    srand(D_0028E2BC * D_0028E2BB);
+    srand(g_session_date_4 * g_session_date_3);
     for (i = 0; i < 0x20; i++) {
         ((u8 *)((u16 *)g_replay_file))[0x5CE8 + i] = rand();
     }
@@ -707,7 +707,7 @@ void replay_record_begin() {
         save[3] = 0xFF;
     }
     save[5] = g_setting_difficulty;
-    save[18] = D_0028E2E4;
+    save[18] = g_no_enemy_bullets;
     printf((const char *)"real_l[%d] real_l_scr[%d]\n", g_scroll_line, g_scroll_line_offset);
     }
 }
@@ -762,12 +762,12 @@ void replay_input_playback_begin() {
 extern void label_draw(s32 a, s32 b, s32 c, s32 d);
 extern void replay_start_state_load(u8 *arg);
 extern u8 g_default_text_palette[];
-extern u16 D_0028E314;
-extern u16 D_0028E318;
-extern u8 D_0028E368;
+extern u16 g_p2_continue_count;
+extern u16 g_p1_continue_count;
+extern u8 g_replay_file_finalized;
 extern u8 g_game_frame_ran;
 extern u16 g_attract_demo;
-extern s8 D_0028E3F8;
+extern s8 g_bomb_panel_seen;
 extern u8 g_replay_taken_over;
 extern u8 g_replay_start_pending;
 extern ReplayHeader g_replay_file_as_SaveHeader; /* the header at the start of the save buffer */
@@ -796,10 +796,10 @@ void replay_playback_begin(void) {
     u8 *save_a6;
 
     g_game_frame_ran = 0;
-    D_0028E3F8 = 0;
+    g_bomb_panel_seen = 0;
     g_replay_buffer_state = 0;
     g_replay_position = 0;
-    D_0028E368 = 0;
+    g_replay_file_finalized = 0;
     g_replay_start_pending = 1;
     g_replay_taken_over = 0;
     save_d0 = reg_d0.w;
@@ -828,11 +828,11 @@ void replay_playback_begin(void) {
 #endif
     {
         if (D_006C58A4[0] != 0xFF) {
-            D_0028E314 = 0;
-            D_0028E318 = 9;
+            g_p2_continue_count = 0;
+            g_p1_continue_count = 9;
         } else {
-            D_0028E318 = 0;
-            D_0028E314 = 9;
+            g_p1_continue_count = 0;
+            g_p2_continue_count = 9;
         }
     }
     reg_d0.h[0] = TASK_GAME;
@@ -870,8 +870,8 @@ extern void replay_header_apply(void);
 s32 replay_text_layer_load();
 extern u8 D_0028DEF8;
 extern u16 g_players_hidden;
-extern u8 D_0028E2EC;
-extern u8 D_0028E304;
+extern u8 g_setting_loop_count;
+extern u8 g_setting_start_round;
 extern u8 g_setting_ship_stock;
 extern u8 g_setting_extend;
 extern u16 g_frame_mod16;
@@ -959,7 +959,7 @@ void replay_playback_start(void) {
         return;
     }
     if (step < 0xC8) {
-        D_0028E368 = 0;
+        g_replay_file_finalized = 0;
         g_score_task_active = 0;
         if ((D_006C8E56[0] != 0) && (step < 0x65)) {
             deferred_text_reset();
@@ -988,16 +988,16 @@ void replay_playback_start(void) {
         g_setting_difficulty = D_006C91AC[0];
         g_setting_ship_stock = D_006C91AE[0];
         g_setting_extend = D_006C91AD[0];
-        D_0028E2EC = D_006C91AF[0];
-        D_0028E304 = replay_playback_start_buffer_3[0];
-        D_0028E2E4 = D_006C58C4[0];
+        g_setting_loop_count = D_006C91AF[0];
+        g_setting_start_round = replay_playback_start_buffer_3[0];
+        g_no_enemy_bullets = D_006C58C4[0];
         replay_header_apply();
         enemies_stop();
         step = 0x64;
         break;
     case 0xC8:
         step += 1;
-        D_0028E368 = 1;
+        g_replay_file_finalized = 1;
     case 0xC9:
         stage_doors_open_requested_check();
         if (cond_flag == 0) {
@@ -1098,7 +1098,7 @@ void replay_playback_start(void) {
     reg_a5 = save_a5;
 }
 
-extern s8 D_0028E3F8;
+extern s8 g_bomb_panel_seen;
 
 void replay_run_begin(void) {
     s32 text_layer_clear();
@@ -1133,8 +1133,8 @@ void replay_run_begin(void) {
     save_a6 = reg_a6;
     g_game_frame_ran = 0;
     save_d1 = reg_d1.w;
-    D_0028E3F8 = 0;
-    D_0028E368 = 0;
+    g_bomb_panel_seen = 0;
+    g_replay_file_finalized = 0;
     g_replay_start_pending = 1;
     g_simulation_active = 1;
     save_d2 = reg_d2.w;
@@ -1172,11 +1172,11 @@ void replay_run_begin(void) {
 extern void frame_counters_reset(void);
 extern u8 g_pad_input_locked;
 extern u8 D_0028E2A8;
-extern u16 D_0028E2AC;
+extern u16 g_start_hyper_gauge;
 extern u8 D_0028E2B0;
-extern u8 D_0028E2C4;
+extern u8 g_start_rule_death;
 extern u8 g_simulation_boss_start;
-extern u8 D_0028E2D4;
+extern u8 g_start_rule_rank;
 
 void replay_run_start(void) {
     extern void enemies_stop(void);
@@ -1231,12 +1231,12 @@ void replay_run_start(void) {
         break;
     case 16:
         g_setting_difficulty = *(u8 *)&g_replay_header.difficulty;
-        D_0028E2E4 = *(u8 *)&g_replay_header.bullet;
+        g_no_enemy_bullets = *(u8 *)&g_replay_header.bullet;
         g_simulation_boss_start = *(u8 *)&g_replay_header.start;
-        D_0028E2C4 = *(u8 *)&g_replay_header.death;
-        D_0028E2D4 = *(u8 *)&g_replay_header.rank;
+        g_start_rule_death = *(u8 *)&g_replay_header.death;
+        g_start_rule_rank = *(u8 *)&g_replay_header.rank;
         D_0028E2B0 = *(u8 *)&g_replay_header.unk2A;
-        D_0028E2AC = g_replay_header.hyper_gauge;
+        g_start_hyper_gauge = g_replay_header.hyper_gauge;
         D_0028E2A8 = *(u8 *)&g_replay_header.unk2C;
         replay_header_apply();
         enemies_stop();
@@ -1311,7 +1311,7 @@ static void replay_run_end_begin(void)
     saved_d7 = reg_d7.w;
 
     D_0028DF84 = 0;
-    D_0028E368 = 0;
+    g_replay_file_finalized = 0;
     reg_a5[3] = 1;
     *(u16 *)(reg_a5 + 0xC) = 0;
 
@@ -1383,7 +1383,7 @@ void replay_run_end(void) {
         break;
     case 16:
         gfx_draw_color_box(0, 0, 0x1C2, 0xE0, 0x50, 0x80, 0xFF, 0xFF, 0xFF);
-        D_0028E368 = 1;
+        g_replay_file_finalized = 1;
         g_replay_mode = 2;
         task_reset_all();
         reg_d0.h[0] = TASK_REPLAY;

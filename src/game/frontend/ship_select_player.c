@@ -109,9 +109,9 @@ void player_panel_show_by_coin_mode(void);
 void join_select_ship_get(void);
 void join_select_doll_next_free(void);
 extern u8 D_002623B0[];
-extern u8 D_0028E304;
-extern u16 D_0028E314;
-extern u16 D_0028E318;
+extern u8 g_setting_start_round;
+extern u16 g_p2_continue_count;
+extern u16 g_p1_continue_count;
 extern u16 g_attract_demo;
 extern u16 g_loop;
 extern u8 g_replay_taken_over;
@@ -145,7 +145,7 @@ void join_select_task(void) {
     if (g_loop != 0) {
         goto block_50;
     }
-    if (D_0028E304 != 0) {
+    if (g_setting_start_round != 0) {
         goto block_50;
     }
     if (g_simulation_active == 1) {
@@ -162,11 +162,11 @@ void join_select_task(void) {
 #endif
     reg_d0.b[0] = *(u8 *)(reg_a5 + 6);
     if (reg_d0.b[0] == 0) {
-        if (D_0028E318 == 0) {
+        if (g_p1_continue_count == 0) {
             goto block_50;
         }
     } else {
-        if (D_0028E314 == 0) {
+        if (g_p2_continue_count == 0) {
             goto block_50;
         }
     }
@@ -212,11 +212,11 @@ block_51:
 #endif
     reg_d0.b[0] = *(u8 *)(reg_a5 + 6);
     if (reg_d0.b[0] == 0) {
-        if (D_0028E318 == 0) {
+        if (g_p1_continue_count == 0) {
             goto block_52;
         }
     } else {
-        if (D_0028E314 == 0) {
+        if (g_p2_continue_count == 0) {
             goto block_52;
         }
     }
@@ -248,12 +248,12 @@ block_51:
     reg_d0.b[0] = *(u8 *)(reg_a5 + 6);
 #ifdef DEATH_LABEL
     if (reg_d0.b[0] == 0) {
-        if (D_0028E318 != 0) {
-            D_0028E318 -= 1;
+        if (g_p1_continue_count != 0) {
+            g_p1_continue_count -= 1;
         }
     } else {
-        if (D_0028E314 != 0) {
-            D_0028E314 -= 1;
+        if (g_p2_continue_count != 0) {
+            g_p2_continue_count -= 1;
         }
     }
 #endif

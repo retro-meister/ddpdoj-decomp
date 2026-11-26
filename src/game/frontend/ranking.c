@@ -89,7 +89,7 @@ s32 fade_to_black();
 s32 fade_release();
 s32 fade_is_running();
 extern u8 D_0026B5F0[];
-extern u8 D_0028E294;
+extern u8 g_ranking_opened_from_menu;
 extern u8 *reg_save2_a6;
 extern u8 *reg_save2_a5;
 extern u8 *reg_save2_a4;
@@ -131,7 +131,7 @@ void ranking_screen_update(void) {
             D_0028E778 = 1;
         }
     }
-    if (D_0028E294 == 0) {
+    if (g_ranking_opened_from_menu == 0) {
         if (D_0028E778 == 1) {
             (*(u16 *)&D_0028E774) -= 1;
             if ((u16)D_0028E774 == 0) {
@@ -279,7 +279,7 @@ void ranking_title_draw(void) {
     reg_d4.h[0] = 7;
     reg_d1.w = 0;
     sprite_draw();
-    if (D_0028E294 == 0) {
+    if (g_ranking_opened_from_menu == 0) {
         ranking_draw_unused();
         reg_d1.w = 0x5F000400;
         reg_d2.w = 0x153A;
@@ -294,7 +294,7 @@ void ranking_title_draw(void) {
             sprite_draw();
         }
     }
-    if (D_0028E294 != 0) {
+    if (g_ranking_opened_from_menu != 0) {
         reg_d1.w = 0x14C00000;
     } else {
         reg_d1.w = 0x05C00000;
@@ -312,7 +312,7 @@ extern u8 ranking_header_draw_table[];
 
 void ranking_header_draw(void) {
     s32 sprite_draw_keep();
-    if (D_0028E294 != 0) {
+    if (g_ranking_opened_from_menu != 0) {
         reg_d1.w = 0x628004C0;
     } else {
         reg_d1.w = 0x538004C0;
@@ -338,7 +338,7 @@ void ranking_ship_types_draw(void) {
 
     reg_a6 = (u8 *)((u16 *)g_ranking_ship_types);
     reg_a0 = (u8 *)ranking_ship_types_draw_table;
-    if (D_0028E294 != 0) {
+    if (g_ranking_opened_from_menu != 0) {
         reg_d1.w = 0x62000A80;
     } else {
         reg_d1.w = 0x53000A80;
@@ -368,7 +368,7 @@ void ranking_power_styles_draw(void) {
 
     reg_a6 = (u8 *)(((u16 *)g_ranking_power_styles));
     reg_a0 = (u8 *)ranking_power_styles_draw_table;
-    if (D_0028E294 != 0) {
+    if (g_ranking_opened_from_menu != 0) {
         reg_d1.w = 0x5E0009C0;
     } else {
         reg_d1.w = 0x4F0009C0;
@@ -390,7 +390,7 @@ void ranking_power_styles_draw(void) {
 
 void ranking_column_label_a_draw(void) {
     s32 sprite_draw_keep();
-    if (D_0028E294 != 0) {
+    if (g_ranking_opened_from_menu != 0) {
         reg_d1.w = 0x5EC01800;
     } else {
         reg_d1.w = 0x4FC01800;
@@ -414,7 +414,7 @@ void ranking_loops_and_stages_draw(void) {
     reg_a0 = (u8 *)ranking_loops_and_stages_draw_table;
     reg_a1 = (u8 *)((u16 *)g_ranking_loops);
     reg_a2 = (u8 *)((s8 *)g_ranking_stages);
-    if (D_0028E294 != 0) {
+    if (g_ranking_opened_from_menu != 0) {
         reg_d1.h[0] = 0x5EC0;
     } else {
         reg_d1.h[0] = 0x4FC0;
@@ -462,7 +462,7 @@ next_2:
 
 void ranking_column_label_b_draw(void) {
     s32 sprite_draw_keep();
-    if (D_0028E294 != 0) {
+    if (g_ranking_opened_from_menu != 0) {
         reg_d1.w = 0x66C02BC0;
     } else {
         reg_d1.w = 0x57C02BC0;
@@ -486,7 +486,7 @@ void ranking_hits_draw(void) {
 
     reg_a6 = (u8 *)((u16 *)g_ranking_hits);
     reg_a0 = (u8 *)ranking_hits_draw_table;
-    if (D_0028E294 != 0) {
+    if (g_ranking_opened_from_menu != 0) {
         reg_d1.h[0] = 0x6380;
     } else {
         reg_d1.h[0] = 0x5480;
@@ -530,7 +530,7 @@ void ranking_names_draw(void) {
     u32 tmp;
 
     reg_a6 = (u8 *)((u8 *)g_ranking_names);
-    if (D_0028E294 != 0) {
+    if (g_ranking_opened_from_menu != 0) {
         reg_d1.h[0] = 0x66C0;
     } else {
         reg_d1.h[0] = 0x57C0;
@@ -581,7 +581,7 @@ void ranking_scores_draw(void) {
     reg_a1 = (u8 *)((u32 *)g_ranking_scores);
     reg_a2 = (u8 *)((u16 *)g_ranking_score_tops);
     reg_a0 = (u8 *)D_0026B520;
-    if (D_0028E294 != 0) {
+    if (g_ranking_opened_from_menu != 0) {
         reg_d1.h[0] = 0x62C0;
     } else {
         reg_d1.h[0] = 0x53C0;
@@ -643,7 +643,7 @@ void ranking_continues_draw(void) {
     u16 temp_a0;
 
     reg_a6 = (u8 *)(((u16 *)g_ranking_continues));
-    if (D_0028E294 != 0) {
+    if (g_ranking_opened_from_menu != 0) {
         reg_d1.w = 0x62C02780;
     } else {
         reg_d1.w = 0x53C02780;

@@ -21,7 +21,7 @@ extern u8 *bullets_update_state;
 extern u16 g_sprite_bullets2_used;
 extern u16 g_sprite_bullets_used;
 extern u8 g_slowdown_timer;
-extern u8 D_0028E37C;
+extern u8 g_slowdown_setting;
 extern u8 g_boss_present_b1;
 extern u16 g_loop;
 extern u16 g_stage;
@@ -51,7 +51,7 @@ void bullets_update(void) {
     g_sprite_bullets_used = reg_d0.h[0];
     g_sprite_bullets2_used = reg_tmp.h[0];
 #ifdef DEATH_LABEL
-    if (D_0028E37C != 0) {
+    if (g_slowdown_setting != 0) {
         s16 *limit;
 
         if (g_loop == 0) {
@@ -62,12 +62,12 @@ void bullets_update(void) {
         reg_tmp.h[0] = (s16) g_sprite_bullets2_used + (s16) g_sprite_bullets_used;
         reg_tmp.h[0] /= 0xC;
         if ((g_boss_present_b1 & 2) && (reg_tmp.h[0] >= *limit)) {
-            D_0028E37C |= 0x80;
+            g_slowdown_setting |= 0x80;
             g_slowdown_timer = 1;
         }
     }
 #else
-    if (D_0028E37C != 0) {
+    if (g_slowdown_setting != 0) {
         reg_tmp.h[0] = (s16) g_sprite_bullets2_used + (s16) g_sprite_bullets_used;
         reg_tmp.h[0] /= 0xC;
         if ((g_boss_present_b1 & 2) && (g_loop != 0) && (reg_tmp.h[0] > D_0024F330[g_stage])) {

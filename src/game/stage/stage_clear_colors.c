@@ -46,7 +46,7 @@ loop_1:
     } while ((s16)(--reg_d7.h[0]) >= 0);
 }
 
-extern u16 D_0028E29C;
+extern u16 g_stage_clear_color_index;
 extern s16 D_0028E784;
 extern u16 D_0028E788;
 extern u16 D_0028E78C;
@@ -60,7 +60,7 @@ void stage_clear_colors_reset(void) {
     D_0028E794 = 0;
     D_0028E78C = 7;
     D_0028E788 = 4;
-    D_0028E29C = g_stage_x4;
+    g_stage_clear_color_index = g_stage_x4;
 }
 
 extern u16 D_0028E788;
@@ -68,7 +68,7 @@ extern u16 D_0028E788;
 void stage_clear_color_table_get(void)
 {
     reg_d0.w = 0;
-    reg_a0 = (u8 *)(*(s8 **)((u8 *)((u8 *)stage_clear_color_table_get_table) + (D_0028E29C & ~3)));
+    reg_a0 = (u8 *)(*(s8 **)((u8 *)((u8 *)stage_clear_color_table_get_table) + (g_stage_clear_color_index & ~3)));
     reg_a0 += 7;
     reg_a0 -= D_0028E788;
     reg_d0.b[0] = (u8)*(s8 *)reg_a0;

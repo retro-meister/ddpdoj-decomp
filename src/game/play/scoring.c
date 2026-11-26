@@ -981,7 +981,7 @@ s32 sfx_extend();
 s32 extend_score_advance();
 s32 hud_p1_lives_put();
 s32 hud_p2_lives_put();
-extern u8 D_0028E304;
+extern u8 g_setting_start_round;
 extern u16 g_high_score_digits;
 extern u16 g_high_score_billions;
 extern u8 g_simulation_active;
@@ -1060,7 +1060,7 @@ void score_pending_apply_side(void) {
 no_extend:
 #endif
             reg_d0.w = *(u32 *)reg_a2;
-            if (((g_simulation_active == 0) || (D_006E5C06[0] != 0x14)) && (D_0028E304 == 0) && (reg_d0.w != -1U) && ((u32) *(u32 *)reg_a0 >= (u32) reg_d0.w)) {
+            if (((g_simulation_active == 0) || (D_006E5C06[0] != 0x14)) && (g_setting_start_round == 0) && (reg_d0.w != -1U) && ((u32) *(u32 *)reg_a0 >= (u32) reg_d0.w)) {
                 t2 = (u16) *(s16 *)reg_a3;
                 if (t2 != 0x14) {
                     *(s16 *)reg_a3 = t2 + 1;

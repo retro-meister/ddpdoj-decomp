@@ -1245,10 +1245,10 @@ void stage4_heavy_cannon_casing_start(void) {
 
 s32 entity_draw_with_bullets();
 extern u8 D_00263A50[];
-extern u8 D_0028E2E4;
+extern u8 g_no_enemy_bullets;
 
 void stage4_heavy_cannon_casing(void) {
-    if (D_0028E2E4 != 0) {
+    if (g_no_enemy_bullets != 0) {
         goto block_7a;
     }
     if (g_enemy_signal_0 == 0) {
@@ -1593,7 +1593,7 @@ next_14:
     *(u16 *)(reg_a5 + 0x38) = 0x40;
     *(u16 *)(reg_a5 + 0x18) = 5;
 next_15:
-    if (D_0028E2E4 != 0) goto next_17;
+    if (g_no_enemy_bullets != 0) goto next_17;
     if (*(u16 *)(reg_a5 + 0x18) != 5) goto next_16;
     if ((s16) *(u16 *)(reg_a5 + 0x38) == -1) goto next_16;
     *(u16 *)(reg_a5 + 0x38) -= 1;

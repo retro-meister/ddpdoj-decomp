@@ -374,8 +374,8 @@ s32 scenery_run();
 s32 scroll_map_loop_step();
 s32 scroll_events_run();
 void ground_step_unused(s32, s32, s32);
-extern u8 D_0028E284;
-extern u8 D_0028E288;
+extern u8 g_p2_stage_start_timer;
+extern u8 g_p1_stage_start_timer;
 extern u16 g_p2_hyper_effect_flag;
 extern u16 g_p1_hyper_effect_flag;
 extern u16 g_enemies_stopped;
@@ -386,19 +386,19 @@ void ground_step(void) {
     u16 temp_a0;
     u16 temp_a0_2;
     if (g_enemies_stopped == 0) {
-        if (D_0028E288 != 0) {
-            if ((D_0028E288 & 0xFF) < 0x3D) {
-                D_0028E288 -= 1;
+        if (g_p1_stage_start_timer != 0) {
+            if ((g_p1_stage_start_timer & 0xFF) < 0x3D) {
+                g_p1_stage_start_timer -= 1;
             }
-            if (D_0028E288 == 0) {
+            if (g_p1_stage_start_timer == 0) {
                 g_p1_hyper_effect_flag = 0;
             }
         }
-        if (D_0028E284 != 0) {
-            if ((D_0028E284 & 0xFF) < 0x3D) {
-                D_0028E284 -= 1;
+        if (g_p2_stage_start_timer != 0) {
+            if ((g_p2_stage_start_timer & 0xFF) < 0x3D) {
+                g_p2_stage_start_timer -= 1;
             }
-            if (D_0028E284 == 0) {
+            if (g_p2_stage_start_timer == 0) {
                 g_p2_hyper_effect_flag = 0;
             }
         }
@@ -479,12 +479,12 @@ s32 difficulty_apply();
 s32 stage_load_step();
 s32 stage_map_show();
 s32 disc_notice_end();
-extern u8 D_0028E25C;
-extern u8 D_0028E280;
-extern u8 D_0028E2BD;
-extern u8 D_0028E304;
-extern u8 D_0028E368;
-extern u8 D_0028E378;
+extern u8 g_session_stage_reached;
+extern u8 g_stage_select_choice;
+extern u8 g_session_date_5;
+extern u8 g_setting_start_round;
+extern u8 g_replay_file_finalized;
+extern u8 g_stage_jump_state;
 extern u16 g_p2_hyper_items;
 extern u16 g_p1_hyper_items;
 extern u16 g_p2_hyper_time;
@@ -506,12 +506,12 @@ void ground_wait_stage_load(void) {
         }
     } else if (g_game_frame_ran != 0) {
         if (g_attract_demo == 0) {
-            D_0028E378 = 0;
+            g_stage_jump_state = 0;
         }
         GROUND_TASK(reg_a5)->flags |= 2;
         g_stage_load_finished = 0;
         if (g_attract_demo == 0) {
-            D_0028E368 = 1;
+            g_replay_file_finalized = 1;
         }
         ground_rows_fill();
         disc_notice_end();
@@ -519,44 +519,44 @@ void ground_wait_stage_load(void) {
         stage_map_show();
 #ifdef DEATH_LABEL
         if (g_loop == 0) {
-            D_0028E288 = 0;
-            D_0028E284 = 0;
+            g_p1_stage_start_timer = 0;
+            g_p2_stage_start_timer = 0;
         }
 #else
         if (g_simulation_active == 0) {
             if (g_loop == 0) {
-                D_0028E288 = 0;
-                D_0028E284 = 0;
+                g_p1_stage_start_timer = 0;
+                g_p2_stage_start_timer = 0;
             }
-        } else if (D_0028E280 != 5) {
-            D_0028E288 = 0;
-            D_0028E284 = 0;
+        } else if (g_stage_select_choice != 5) {
+            g_p1_stage_start_timer = 0;
+            g_p2_stage_start_timer = 0;
         }
 #endif
         if ((g_simulation_active == 0) && (g_loop == 1) && (g_stage == 0)) {
             if (g_player1[0] < 0) {
                 if (g_p1_hyper_items != 0) {
                     g_p1_hyper_time = 0;
-                    D_0028E288 = 0x78;
+                    g_p1_stage_start_timer = 0x78;
                 }
             } else if ((g_player2[0] < 0) && (g_p2_hyper_items != 0)) {
                 g_p2_hyper_time = 0;
-                D_0028E284 = 0x78;
+                g_p2_stage_start_timer = 0x78;
             }
         }
         if ((g_simulation_active == 0) && (g_replay_mode != 2)) {
             if ((g_p1_score_digits == 0) && (g_player1[0] < 0)) {
-                D_0028E25C = g_stage + (g_loop * 5);
-                if (D_0028E304 != 0) {
-                    D_0028E25C = g_stage + 5;
+                g_session_stage_reached = g_stage + (g_loop * 5);
+                if (g_setting_start_round != 0) {
+                    g_session_stage_reached = g_stage + 5;
                 }
             } else if ((g_p2_score_digits == 0) && (g_player2[0] < 0)) {
-                D_0028E25C = g_stage + (g_loop * 5);
-                if (D_0028E304 != 0) {
-                    D_0028E25C = g_stage + 5;
+                g_session_stage_reached = g_stage + (g_loop * 5);
+                if (g_setting_start_round != 0) {
+                    g_session_stage_reached = g_stage + 5;
                 }
             }
-            D_0028E2BD = D_0028E25C;
+            g_session_date_5 = g_session_stage_reached;
         }
     }
 }

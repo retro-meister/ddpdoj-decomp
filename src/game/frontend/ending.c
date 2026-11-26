@@ -21,7 +21,7 @@ extern u16 g_p1_bombs_used;
 extern u16 g_p2_death_count;
 extern u16 g_p1_death_count;
 extern u8 g_game_mode;
-extern u8 D_0028E2EC;
+extern u8 g_setting_loop_count;
 extern u16 g_boss_hyper_wait;
 extern u16 g_p2_hyper_active;
 extern u16 g_p1_hyper_active;
@@ -35,7 +35,7 @@ extern s16 g_player2[];
 extern s16 g_player1[];
 
 void ending_second_loop_check(void) {
-    if (D_0028E2EC != 0) goto block_1;
+    if (g_setting_loop_count != 0) goto block_1;
     if (g_game_mode == 1) goto block_1;
 #ifdef DEATH_LABEL
     if (g_game_mode == 2) goto block_1;
@@ -492,8 +492,8 @@ void intro_text_update(void);
 #endif
 extern u32 ending_task_table[];
 extern u8 ending_task_table_2[];
-extern u8 D_0028E368;
-extern u8 D_0028E378;
+extern u8 g_replay_file_finalized;
+extern u8 g_stage_jump_state;
 extern u16 D_00295E2C[];
 extern u8 D_00295E3E[];
 extern u8 D_00295E3F[];
@@ -504,8 +504,8 @@ void ending_task(void) {
 
     mode = *(u8 *)(reg_a5 + 3);
     if (mode == 0) {
-        D_0028E368 = 0;
-        D_0028E378 = 0xFF;
+        g_replay_file_finalized = 0;
+        g_stage_jump_state = 0xFF;
         ending_task_begin();
         return;
     }
