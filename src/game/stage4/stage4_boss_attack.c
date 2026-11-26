@@ -1622,7 +1622,9 @@ void stage4_boss_fire_cutter_bay_b_start(void) {
 extern u8 stage4_boss_fire_cutter_bay_b_table[];
 s32 enemy_switch_target_player();
 extern u16 D_0026ED98[];
+#ifndef DDPDOJ_PC
 extern u8 D_0026EDA8[];
+#endif
 
 void stage4_boss_fire_cutter_bay_b(void) {
 #ifndef DDPDOJ_PC
@@ -1682,7 +1684,11 @@ next_1:
                 reg_d4.w = 0;
                 reg_tmp.h[0] = CUTTER_BAY_B(reg_a4)->muzzle;
                 reg_tmp.h[0] += STAGE4_EXTRA(reg_a6)->bay_b_round;
+#ifdef DDPDOJ_PC
+                stage4_boss_fire_cutter_bay_b_table_2[reg_tmp.h[0] / 4]();
+#else
                 ((Fn)*(u32 *)((u8 *)((u8 *)stage4_boss_fire_cutter_bay_b_table_2) + (reg_tmp.h[0] & ~3)))();
+#endif
                 CUTTER_BAY_B(reg_a4)->burst.t.count -= 1;
                 if ((s8) CUTTER_BAY_B(reg_a4)->burst.t.count == 0) {
                     CUTTER_BAY_B(reg_a4)->muzzle += 4;
@@ -1719,8 +1725,12 @@ next_1:
                 CUTTER_BAY_B(reg_a4)->aim = (u8) reg_d1.b[0];
             }
             reg_a3 = (u8 *)(D_0026ED98);
+#ifdef DDPDOJ_PC
+            reg_a2 = (u8 *)&stage4_boss_fire_cutter_bay_b_table_2[2 + STAGE4_EXTRA(reg_a6)->bay_b_round / 4];
+#else
             reg_a2 = (u8 *)D_0026EDA8;
             reg_a2 += STAGE4_EXTRA(reg_a6)->bay_b_round;
+#endif
             reg_d7.w = 1;
             do {
                 reg_d0.w = 0;
@@ -1743,8 +1753,13 @@ next_1:
                 reg_d3.h[0] = t4;
                 reg_a3 = (u8 *)(t1);
                 reg_d4.w = 0;
+#ifdef DDPDOJ_PC
+                reg_a0 = (u8 *)*(Fn *)reg_a2;
+                reg_a2 += sizeof(Fn);
+#else
                 reg_a0 = *(u8 **)reg_a2;
                 reg_a2 += 4;
+#endif
                 reg_call_target = (Fn)(reg_a0);
                 reg_call_target();
             } while ((s16)(--reg_d7.h[0]) >= 0);

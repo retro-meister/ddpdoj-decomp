@@ -94,10 +94,25 @@ void palette_bank_a_load_run(void) {
 }
 
 s32 sprite_palette_load();
+#ifdef DDPDOJ_PC
+#include "pc_player_palette.h"
+#else
 extern u32 stage_palettes_load_value[];
+#endif
 extern u16 g_stage_x4;
 
 void stage_palettes_load(void) {
+#ifdef DDPDOJ_PC
+    reg_d0.h[0] = g_stage_x4;
+    u16 *entry = stage_palettes_load_value.stage_palettes[reg_d0.h[0] / 4];
+    for (; entry[0] != 0xffff; entry += 4) {
+        reg_d0.h[0] = entry[0];
+        reg_tmp.h[1] = entry[2];
+        reg_tmp.h[0] = entry[3];
+        reg_a0 = ARCADE_ADDRESS_DECODE(u8 *, reg_tmp.w);
+        sprite_palette_load();
+    }
+#else
     s64 temp_a0;
     u16 temp_a1;
 
@@ -124,15 +139,34 @@ loop_3:
         }
         goto loop_1;
     }
+#endif
 }
 
 s32 text_palette_load();
+#ifndef DDPDOJ_PC
 extern u8 D_0025F640[];
 extern u8 D_0025F650[];
+#endif
 extern s32 D_0028E998;
 extern s32 D_0028E99C;
 
 void ship_palettes_load(void) {
+#ifdef DDPDOJ_PC
+    unsigned player = reg_d0.h[0];
+    s32 override = player == 0 ? D_0028E99C : D_0028E998;
+    unsigned group = override >= 0 ? (unsigned)override : player * 2 + (reg_d1.h[0] != 0);
+    const u16 *slots = stage_palettes_load_value.ship_slots[player];
+    void **palettes = stage_palettes_load_value.ship_palettes[group];
+
+    for (unsigned i = 0; i < 3; ++i) {
+        reg_a0 = palettes[i];
+        reg_d0.h[0] = slots[i];
+        sprite_palette_load();
+    }
+    reg_a0 = palettes[3];
+    reg_d0.w = slots[3];
+    text_palette_load();
+#else
     u8 *temp_s0;
     u8 *var_s1;
     s32 var_s2;
@@ -167,6 +201,7 @@ void ship_palettes_load(void) {
     reg_a0 = *(u8 **)((u8 *)var_s1 + (var_s2 * 4));
     reg_d0.w = (u32) *(u16 *)(temp_s0 + (var_s2 * 2));
     text_palette_load();
+#endif
 }
 
 extern s32 g_player_panel_p2;

@@ -342,7 +342,9 @@ s32 rng_next_unsigned();
 s32 rng_next_bit();
 s32 rng_next_pair_medium_d4();
 extern u16 D_00250CE0[];
+#ifndef DDPDOJ_PC
 extern u8 D_0028E52F;
+#endif
 
 void debris_init(void) {
     u8 flag;
@@ -433,7 +435,11 @@ void debris_init(void) {
         *(u8 *)(reg_a0 + 0x27) = (u8) reg_d0.b[0];
         rng_next();
         reg_d0.b[0] = (u8) ((s8) reg_d0.b[0] >> 2);
+#ifdef DDPDOJ_PC
+        reg_d0.b[0] += (u8)(debris_spawn_state >> 24);
+#else
         reg_d0.b[0] += D_0028E52F;
+#endif
     } else {
         rng_next_masked();
         if (((s32) reg_d0.h[0] > 0x15) && ((s32) reg_d0.h[0] < 0x2B)) {

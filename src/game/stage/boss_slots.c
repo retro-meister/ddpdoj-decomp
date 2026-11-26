@@ -5,6 +5,21 @@
 void boss_slots_step(void);
 void boss_flash_update(void);
 
+#ifdef DDPDOJ_PC
+typedef void (*BossRoutine)(void);
+static BossRoutine *boss_move_table;
+static BossRoutine *boss_attack_table;
+static BossRoutine *boss_animation_table;
+static BossRoutine *boss_phase_table;
+static bool boss_has_parts;
+extern u8 D_00295E50[MAIN_OR_DEATH_LABEL(80, 144)];
+extern u8 D_00295EA0[160];
+extern u16 D_002960B0[160];
+extern s16 boss_attack_start_buffer[16];
+_Alignas(16) u8 boss_animation_storage[0x170];
+_Alignas(16) u8 boss_phase_storage[0xD0];
+extern u16 D_00295E5A[];
+#else
 extern u8 D_00295E50[];
 extern u8 *D_00295E54[];
 extern u16 D_00295E5A[];
@@ -13,6 +28,7 @@ extern u8 D_00295EA0[];
 extern u8 *D_00295F40[];
 extern s64 D_002960A8[];
 extern u8 *D_00296210[];
+#endif
 
 void boss_slots_init(void) {
     u8 *save_a0;
@@ -46,6 +62,32 @@ void boss_slots_init(void) {
     save_a4 = reg_a4;
     save_a5 = reg_a5;
     save_a6 = reg_a6;
+#ifdef DDPDOJ_PC
+    memset(D_00295E50, 0, sizeof(D_00295E50));
+    memset(D_00295EA0, 0, sizeof(D_00295EA0));
+    memset(D_002960B0, 0, sizeof(D_002960B0));
+    memset(boss_attack_start_buffer, 0, sizeof(boss_attack_start_buffer));
+    memset(boss_animation_storage, 0, sizeof(boss_animation_storage));
+    memset(boss_phase_storage, 0, sizeof(boss_phase_storage));
+    boss_move_table = (BossRoutine *)reg_a0;
+    boss_attack_table = (BossRoutine *)reg_a1;
+    boss_animation_table = (BossRoutine *)reg_a3;
+    boss_phase_table = (BossRoutine *)reg_a4;
+    boss_has_parts = reg_a2 != NULL;
+    if (boss_move_table) {
+        D_00295E5A[0] = 0xffff;
+    }
+    if (boss_has_parts) {
+        BossRoutine *draw = (BossRoutine *)reg_a2;
+        u16 *part = (u16 *)D_00295EA0;
+        for (unsigned i = 0; i < sizeof(D_00295EA0) / 8 && draw[i] != (BossRoutine)-1; ++i, part += 4) {
+            part[0] = 0x8000;
+            u32 address = ARCADE_ADDRESS_ENCODE(draw[i]);
+            part[1] = (u16)(address >> 16);
+            part[2] = (u16)address;
+        }
+    }
+#else
     memset(D_00295E50, 0, MAIN_OR_DEATH_LABEL(0x490, 0x4D0));
     if (reg_a0 != 0) {
         ((s32 *)D_00295E54)[0] = (int)reg_a0;
@@ -74,6 +116,7 @@ loop_8:
     if (reg_a4 != 0) {
         ((s32 *)D_00296210)[0] = (int)reg_a4;
     }
+#endif
     reg_d0.w = save_d0;
     reg_d1.w = save_d1;
     reg_d2.w = save_d2;
@@ -154,7 +197,11 @@ void boss_slots_run(void) {
             }
         }
     }
+#ifdef DDPDOJ_PC
+    if (boss_has_parts) {
+#else
     if (((s32 *)D_00295E9C)[0] != 0) {
+#endif
         reg_a4 = (u8 *)D_00295EA0;
         reg_d7.h[0] = 0x13;
         do {
@@ -162,7 +209,7 @@ void boss_slots_run(void) {
             if ((0 > (s64)*(s16 *)((u8 *)(temp_s1) + (0))) && ((*(u8 *)((u8 *)(temp_s1) + (0))) & 1)) {
                 reg_tmp.h[1] = (*(u16 *)((u8 *)(temp_s1) + (2)));
                 reg_tmp.h[0] = (*(u16 *)((u8 *)(temp_s1) + (4)));
-                reg_a3 = (u8 *)reg_tmp.w;
+                reg_a3 = ARCADE_ADDRESS_DECODE(u8 *, reg_tmp.w);
                 reg_call_target_as_u8_p = reg_a3;
                 temp_s0 = reg_d7.w;
                 ((Fn)reg_call_target_as_u8_p)();
@@ -178,13 +225,19 @@ void boss_slots_run(void) {
 
 extern u8 D_00295E7C[];
 extern u16 D_00295E52[];
+#ifndef DDPDOJ_PC
 extern u8 *D_00295E54[];
+#endif
 extern u16 D_00295E58[];
 extern u16 D_00295E5C[];
+#ifndef DDPDOJ_PC
 extern u8 *D_00295F40[];
+#endif
 extern u16 D_00295F44[];
 extern u16 D_002960B0[];
+#ifndef DDPDOJ_PC
 extern u8 *D_00296210[];
+#endif
 extern u16 D_00296214[];
 
 void boss_slots_step(void) {
@@ -192,7 +245,11 @@ void boss_slots_step(void) {
     u32 t2;
     u32 t3;
 
+#ifdef DDPDOJ_PC
+    if (boss_phase_table) {
+#else
     if (D_00296210[0] != 0) {
+#endif
         reg_a4 = (u8 *)(D_00296214);
         reg_d7.w = 4;
         do {
@@ -205,9 +262,13 @@ void boss_slots_step(void) {
                 if (reg_tmp.b[0] & 1) {
                     reg_d0.h[0] += 4;
                 }
+#ifdef DDPDOJ_PC
+                reg_a0 = (u8 *)boss_phase_table[reg_d0.h[0] / 4];
+#else
                 reg_a0 = D_00296210[0];
                 reg_a0 += reg_d0.h[0];
                 reg_a0 = *(u8 **)reg_a0;
+#endif
                 reg_call_target = (Fn)(reg_a0);
                 t1 = reg_d7.w;
                 reg_call_target();
@@ -216,7 +277,11 @@ void boss_slots_step(void) {
             reg_a4 += 0x20;
         } while ((s16)(--reg_d7.h[0]) >= 0);
     }
+#ifdef DDPDOJ_PC
+    if (boss_move_table) {
+#else
     if (D_00295E54[0] != 0) {
+#endif
         if (((u16 *)D_00295E50)[0] != 0) {
             ((u16 *)D_00295E50)[0] = 0;
             reg_a0 = (u8 *)D_00295E7C;
@@ -230,14 +295,23 @@ void boss_slots_step(void) {
                 reg_a1 += 2;
             } while ((s16)(--reg_d0.h[0]) >= 0);
         }
+#ifdef DDPDOJ_PC
+        reg_a0 = (u8 *)boss_move_table;
+#else
         reg_a0 = D_00295E54[0];
+#endif
         reg_d0.h[0] = D_00295E5A[0];
         if ((s16)(reg_d0.h[0]) != -1) {
             reg_d0.h[0] *= 8;
             reg_d0.h[0] += D_00295E58[0];
+#ifdef DDPDOJ_PC
+            reg_a0 = (u8 *)boss_move_table[reg_d0.h[0] / 4];
+            reg_a4 = (u8 *)(D_00295E5C);
+#else
             reg_a0 += reg_d0.h[0];
             reg_a0 = *(u8 **)reg_a0;
             reg_a4 = (u8 *)(D_00295E5C);
+#endif
             reg_call_target = (Fn)(reg_a0);
             reg_call_target();
             if (D_00295E58[0] == 0) {
@@ -245,7 +319,11 @@ void boss_slots_step(void) {
             }
         }
     }
+#ifdef DDPDOJ_PC
+    if (boss_attack_table) {
+#else
     if (D_002960A8[0] != 0) {
+#endif
         reg_a4 = (u8 *)(D_002960B0);
         reg_d7.w = 9;
         do {
@@ -259,9 +337,13 @@ void boss_slots_step(void) {
                     reg_d0.h[0] += 4;
                 }
                 if (!(*(u8 *)(reg_a4 + 1) & 2)) {
+#ifdef DDPDOJ_PC
+                    reg_a0 = (u8 *)boss_attack_table[reg_d0.h[0] / 4];
+#else
                     reg_a0 = (u8 *) D_002960A8[0];
                     reg_a0 += reg_d0.h[0];
                     reg_a0 = *(u8 **)reg_a0;
+#endif
                     reg_call_target = (Fn)(reg_a0);
                     t2 = reg_d7.w;
                     reg_call_target();
@@ -271,7 +353,11 @@ void boss_slots_step(void) {
             reg_a4 += 0x20;
         } while ((s16)(--reg_d7.h[0]) >= 0);
     }
+#ifdef DDPDOJ_PC
+    if (boss_animation_table) {
+#else
     if (D_00295F40[0] != 0) {
+#endif
         reg_a4 = (u8 *)(D_00295F44);
         reg_d7.w = 9;
         do {
@@ -284,9 +370,13 @@ void boss_slots_step(void) {
                 if (reg_tmp.b[0] & 1) {
                     reg_d0.h[0] += 4;
                 }
+#ifdef DDPDOJ_PC
+                reg_a0 = (u8 *)boss_animation_table[reg_d0.h[0] / 4];
+#else
                 reg_a0 = D_00295F40[0];
                 reg_a0 += reg_d0.h[0];
                 reg_a0 = *(u8 **)reg_a0;
+#endif
                 reg_call_target = (Fn)(reg_a0);
                 t3 = reg_d7.w;
                 reg_call_target();
@@ -794,28 +884,44 @@ next_2:
 }
 
 /* .bss (the compiler lays these out in reverse) */
+#ifndef DDPDOJ_PC
 u8 *D_00296210[52];
+#endif
 s16 boss_attack_start_buffer[16];
 u16 D_002960B0[160];
+#ifndef DDPDOJ_PC
 u8 *D_00295F40[92];
+#endif
+#ifdef DDPDOJ_PC
+_Alignas(16) u8 D_00295EA0[160];
+_Alignas(16) u8 D_00295E50[MAIN_OR_DEATH_LABEL(80, 144)];
+#else
 u8 D_00295EA0[160];
 #ifdef DEATH_LABEL
 u8 D_00295E50[144];
 #else
 u8 D_00295E50[80];
 #endif
+#endif
 
 #ifdef DDPDOJ_PC
 #include "pc_data_alias.h"
 
 PC_DATA_ALIAS(D_00295E52, D_00295E50, 0x2);
-PC_DATA_ALIAS(D_00295E54, D_00295E50, 0x4);
 PC_DATA_ALIAS(D_00295E58, D_00295E50, 0x8);
 PC_DATA_ALIAS(D_00295E5A, D_00295E50, 0xa);
 PC_DATA_ALIAS(D_00295E5C, D_00295E50, 0xc);
 PC_DATA_ALIAS(D_00295E7C, D_00295E50, MAIN_OR_DEATH_LABEL(0x2c, 0x4c));
 
-#ifndef DEATH_LABEL
-PC_DATA_ALIAS(D_00295E9C, D_00295E50, 0x4c);
-#endif
+PC_DATA_ALIAS(D_00295F44, boss_animation_storage, 0x4);
+PC_DATA_ALIAS(D_00296084, boss_animation_storage, 0x144);
+
+PC_DATA_ALIAS(D_00296214, boss_phase_storage, 0x4);
+PC_DATA_ALIAS(D_002962B4, boss_phase_storage, 0xA4);
+PC_DATA_ALIAS(D_002962D4, boss_phase_storage, 0xC4);
+PC_DATA_ALIAS(D_002962D6, boss_phase_storage, 0xC6);
+PC_DATA_ALIAS(D_002962D8, boss_phase_storage, 0xC8);
+PC_DATA_ALIAS(D_002962DA, boss_phase_storage, 0xCA);
+PC_DATA_ALIAS(D_002962DC, boss_phase_storage, 0xCC);
+PC_DATA_ALIAS(D_002962DE, boss_phase_storage, 0xCE);
 #endif

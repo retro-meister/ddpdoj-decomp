@@ -3324,7 +3324,9 @@ s32 sfx_explosion_air_medium();
 extern u16 D_00258760[];
 extern u16 D_00258770[];
 extern u8 D_00258790[];
+#ifndef DDPDOJ_PC
 extern u32 reg_call_target_as_u32;
+#endif
 
 void wing_gunner(void) {
 #ifndef DDPDOJ_PC
@@ -3398,8 +3400,12 @@ block_11:
                     reg_d0.h[0] *= 4;
                     reg_tmp.h[1] = (reg_d0.h[0] != 0) ? *(u16 *)((u8 *)reg_a0 + ((s16)reg_d0.h[0] & ~1)) : *(u16 *)reg_a0;
                     reg_tmp.h[0] = (((reg_d0.h[0] & 0xFFFF) + 2) != 0) ? *(u16 *)((u8 *)reg_a0 + ((s16)((reg_d0.h[0] & 0xFFFF) + 2) & ~1)) : *(u16 *)reg_a0;
+#ifdef DDPDOJ_PC
+                    ARCADE_ADDRESS_DECODE(Fn, reg_tmp.w)();
+#else
                     reg_call_target_as_u32 = reg_tmp.w;
                     ((Fn)reg_call_target_as_u32)();
+#endif
                     WING_GUNNER(reg_a5)->shots_fired += 1;
                     reg_d0.w = 4;
                     reg_d1.w = 3;

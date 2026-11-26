@@ -194,6 +194,11 @@ if(BUILD_TESTING)
         target_link_libraries(ddpdoj_${mode}_data_alias_test PRIVATE
             ddpdoj_${mode}_gameplay ddpdoj_replay_storage)
         add_test(NAME ${mode}_data_aliases COMMAND ddpdoj_${mode}_data_alias_test)
+
+        add_executable(ddpdoj_${mode}_boss_slots_test tests/boss_slots_test.c)
+        target_link_libraries(ddpdoj_${mode}_boss_slots_test PRIVATE
+            ddpdoj_${mode}_gameplay ddpdoj_${mode}_system)
+        add_test(NAME ${mode}_boss_slots COMMAND ddpdoj_${mode}_boss_slots_test)
     endforeach()
 
     add_executable(ddpdoj_gif_test tests/gif_packet_test.c)

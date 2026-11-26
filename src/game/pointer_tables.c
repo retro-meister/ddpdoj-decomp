@@ -360,10 +360,10 @@ extern u16 D_00261CB0[];
 
 
 void option_offsets_init(void) {
-    STORE_POINTER(option_offsets + 26, option_offset_13);
-    STORE_POINTER(option_offsets + 30, D_00261CB0);
-    STORE_POINTER(option_offsets + 34, D_00261CB0);
-    STORE_POINTER(option_offsets + 38, option_offset_19);
+    STORE_ARCADE_ADDRESS(option_offsets + 26, option_offset_13);
+    STORE_ARCADE_ADDRESS(option_offsets + 30, D_00261CB0);
+    STORE_ARCADE_ADDRESS(option_offsets + 34, D_00261CB0);
+    STORE_ARCADE_ADDRESS(option_offsets + 38, option_offset_19);
 }
 
 extern u16 spread_bomb_a_phase1_frames[];
@@ -4066,18 +4066,18 @@ void ground_enemy_pointers_store(void) {
     STORE_POINTER(D_002586E0 + 2, ground_gun_c_fire);
     STORE_POINTER(D_002586E0 + 4, ground_gun_c_aim);
     STORE_POINTER(D_002586E0 + 6, ground_gun_c_fire);
-    STORE_POINTER(D_00258760, ground_pointer_rows_fill);
-    STORE_POINTER(D_00258760 + 2, wing_gunner_fire);
-    STORE_POINTER(D_00258760 + 4, wing_gunner_fire);
-    STORE_POINTER(D_00258760 + 6, wing_gunner_fire);
-    STORE_POINTER(D_00258770, wing_gunner_fire);
-    STORE_POINTER(D_00258770 + 2, wing_gunner_fire);
-    STORE_POINTER(D_00258770 + 4, ground_pointer_rows_fill);
-    STORE_POINTER(D_00258770 + 6, ground_pointer_rows_fill);
-    STORE_POINTER(D_00258770 + 8, wing_gunner_fire);
-    STORE_POINTER(D_00258770 + 10, wing_gunner_fire);
-    STORE_POINTER(D_00258770 + 12, wing_gunner_fire);
-    STORE_POINTER(D_00258770 + 14, ground_pointer_rows_fill);
+    STORE_ARCADE_ADDRESS(D_00258760, ground_pointer_rows_fill);
+    STORE_ARCADE_ADDRESS(D_00258760 + 2, wing_gunner_fire);
+    STORE_ARCADE_ADDRESS(D_00258760 + 4, wing_gunner_fire);
+    STORE_ARCADE_ADDRESS(D_00258760 + 6, wing_gunner_fire);
+    STORE_ARCADE_ADDRESS(D_00258770, wing_gunner_fire);
+    STORE_ARCADE_ADDRESS(D_00258770 + 2, wing_gunner_fire);
+    STORE_ARCADE_ADDRESS(D_00258770 + 4, ground_pointer_rows_fill);
+    STORE_ARCADE_ADDRESS(D_00258770 + 6, ground_pointer_rows_fill);
+    STORE_ARCADE_ADDRESS(D_00258770 + 8, wing_gunner_fire);
+    STORE_ARCADE_ADDRESS(D_00258770 + 10, wing_gunner_fire);
+    STORE_ARCADE_ADDRESS(D_00258770 + 12, wing_gunner_fire);
+    STORE_ARCADE_ADDRESS(D_00258770 + 14, ground_pointer_rows_fill);
     STORE_POINTER(((u16 *)D_0028C9D8), D_00258880);
     STORE_POINTER(D_0028C9D8 + 2, D_00258900);
     STORE_POINTER(D_002589B0 + 10, entity_draw_layer1);

@@ -614,7 +614,9 @@ extern u32 ending_mode_doll_a_table_4;
 extern u16 D_00295E3A[];
 void input_get_p1_pressed();
 void input_get_p2_pressed();
+#ifndef DDPDOJ_PC
 extern u32 reg_call_target_as_u32;
+#endif
 
 #define W(o) (*(u16 *)(reg_a6 + (o)))
 
@@ -641,11 +643,11 @@ next_10:
     reg_d0.w = *(u32 *)reg_a0;
     if (reg_d0.w != -1U) goto next_15;
     W(6) = 2;
-    reg_tmp.w = (u32) (void *) input_get_p1_pressed;
+    reg_tmp.w = ARCADE_ADDRESS_ENCODE((void *) input_get_p1_pressed);
     W(0x18) = reg_tmp.h[1];
     W(0x1A) = reg_tmp.h[0];
     if (0 > g_player1[0]) goto next_20;
-    reg_tmp.w = (u32) (void *) input_get_p2_pressed;
+    reg_tmp.w = ARCADE_ADDRESS_ENCODE((void *) input_get_p2_pressed);
     W(0x18) = reg_tmp.h[1];
     W(0x1A) = reg_tmp.h[0];
     goto next_20;
@@ -658,16 +660,24 @@ next_20:
     if (W(6) != 2) goto next_40;
     reg_tmp.h[1] = W(0x18);
     reg_tmp.h[0] = W(0x1A);
+#ifdef DDPDOJ_PC
+    ARCADE_ADDRESS_DECODE(Fn, reg_tmp.w)();
+#else
     reg_call_target_as_u32 = reg_tmp.w;
     ((Fn) reg_call_target_as_u32)();
+#endif
     if (!(reg_d0.h[0] & 4)) goto next_25;
     D_00295E38[0] += 1;
     sfx_cursor_move();
 next_25:
     reg_tmp.h[1] = W(0x18);
     reg_tmp.h[0] = W(0x1A);
+#ifdef DDPDOJ_PC
+    ARCADE_ADDRESS_DECODE(Fn, reg_tmp.w)();
+#else
     reg_call_target_as_u32 = reg_tmp.w;
     ((Fn) reg_call_target_as_u32)();
+#endif
     if (!(reg_d0.h[0] & 8)) goto next_28;
     D_00295E38[0] += 1;
     sfx_cursor_move();
@@ -675,8 +685,12 @@ next_28:
     D_00295E38[0] &= 1;
     reg_tmp.h[1] = W(0x18);
     reg_tmp.h[0] = W(0x1A);
+#ifdef DDPDOJ_PC
+    ARCADE_ADDRESS_DECODE(Fn, reg_tmp.w)();
+#else
     reg_call_target_as_u32 = reg_tmp.w;
     ((Fn) reg_call_target_as_u32)();
+#endif
     reg_d0.h[0] &= 0x70;
     if (reg_d0.h[0] == 0) goto next_35;
 next_32:
