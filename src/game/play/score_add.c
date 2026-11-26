@@ -58,6 +58,9 @@ void bcd_word_increment(void) {
 extern u16 g_p2_hyper_active;
 extern u16 g_p1_hyper_active;
 extern s32 g_p1_score_pending;
+#ifdef DDPDOJ_PC
+extern s32 g_p2_score_pending;
+#endif
 extern u8 g_p2_extend_table;
 extern u8 g_boss_present_b1;
 extern u16 g_bomb_entities[];
@@ -78,7 +81,7 @@ block_7:
                 if (reg_d1.w & 4) {
                     p1_boss_hit();
                 } else {
-                    reg_a0 = &g_p2_extend_table;
+                    reg_a0 = SCORE_VALUE_TARGET(&g_p2_extend_table, g_p1_score_pending);
                     score_value_add();
                 }
             }
@@ -90,7 +93,7 @@ block_7:
                 p2_boss_hit();
                 return;
             }
-            reg_a0 = &(*(u8 *)&g_p1_score_pending);
+            reg_a0 = SCORE_VALUE_TARGET(&(*(u8 *)&g_p1_score_pending), g_p2_score_pending);
             score_value_add();
         }
     }
@@ -100,11 +103,11 @@ extern s32 g_p1_score_pending;
 
 void score_add_masked(void) {
     if (reg_d1.w & 0x10) {
-        reg_a0 = (u8 *)(&(*(s32 *)&g_p2_extend_table));
+        reg_a0 = SCORE_VALUE_TARGET((u8 *)(&(*(s32 *)&g_p2_extend_table)), g_p1_score_pending);
         score_value_add();
     }
     if (reg_d1.w & 8) {
-        reg_a0 = (u8 *)(&g_p1_score_pending);
+        reg_a0 = SCORE_VALUE_TARGET((u8 *)(&g_p1_score_pending), g_p2_score_pending);
         score_value_add();
     }
 }
@@ -112,12 +115,12 @@ void score_add_masked(void) {
 
 
 void score_add_p1(void) {
-    reg_a0 = (u8 *)(&g_p2_extend_table);
+    reg_a0 = SCORE_VALUE_TARGET((u8 *)(&g_p2_extend_table), g_p1_score_pending);
     score_value_add();
 }
 
 void score_add_p2(void) {
-    reg_a0 = (u8 *)(&g_p1_score_pending);
+    reg_a0 = SCORE_VALUE_TARGET((u8 *)(&g_p1_score_pending), g_p2_score_pending);
     score_value_add();
 }
 
@@ -242,7 +245,7 @@ block_11:
     g_p1_hits = 0;
 block_12:
     reg_d0.w = reg_d3.w;
-    reg_a0 = (u8 *)&(*(u16 *)&g_p2_extend_table);
+    reg_a0 = SCORE_VALUE_TARGET((u8 *)&(*(u16 *)&g_p2_extend_table), g_p1_score_pending);
     score_value_add();
     g_p1_chain_first_score = reg_d3.w;
     g_p1_chain_first_score_shown = reg_d3.w;
@@ -270,14 +273,14 @@ next_2:
         g_p1_max_hits = g_p1_hits;
     }
     reg_d0.w = reg_d3.w;
-    reg_a0 = (u8 *)&g_p1_hit10_anim_count;
+    reg_a0 = SCORE_VALUE_TARGET((u8 *)&g_p1_hit10_anim_count, g_p1_chain_points);
     score_value_add();
     reg_d0.w = (u32)g_p1_chain_points;
-    reg_a0 = (u8 *)&(*(u32 *)&g_p1_chain_points);
+    reg_a0 = SCORE_VALUE_TARGET((u8 *)&(*(u32 *)&g_p1_chain_points), g_p1_chain_points_shown);
     score_value_add();
     p1_combo_timer_add();
     reg_d0.w = (u32)g_p1_chain_points;
-    reg_a0 = (u8 *)&(*(u16 *)&g_p2_extend_table);
+    reg_a0 = SCORE_VALUE_TARGET((u8 *)&(*(u16 *)&g_p2_extend_table), g_p1_score_pending);
     score_value_add();
     if ((s32) g_p1_hits < 0x10) {
         if ((s32) g_p1_hits > 1) {
@@ -350,7 +353,7 @@ block_11:
     g_p2_hits = 0;
 block_12:
     reg_d0.w = reg_d3.w;
-    reg_a0 = (u8 *)&(*(u16 *)&g_p1_score_pending);
+    reg_a0 = SCORE_VALUE_TARGET((u8 *)&(*(u16 *)&g_p1_score_pending), g_p2_score_pending);
     score_value_add();
     g_p2_chain_first_score = reg_d3.w;
     g_p2_chain_first_score_shown = reg_d3.w;
@@ -378,14 +381,14 @@ next_2:
         g_p2_max_hits = g_p2_hits;
     }
     reg_d0.w = reg_d3.w;
-    reg_a0 = (u8 *)&g_p2_hit10_anim_count;
+    reg_a0 = SCORE_VALUE_TARGET((u8 *)&g_p2_hit10_anim_count, g_p2_chain_points);
     score_value_add();
     reg_d0.w = (u32)g_p2_chain_points;
-    reg_a0 = (u8 *)&(*(u32 *)&g_p2_chain_points);
+    reg_a0 = SCORE_VALUE_TARGET((u8 *)&(*(u32 *)&g_p2_chain_points), g_p2_chain_points_shown);
     score_value_add();
     p2_combo_timer_add();
     reg_d0.w = (u32)g_p2_chain_points;
-    reg_a0 = (u8 *)&(*(u16 *)&g_p1_score_pending);
+    reg_a0 = SCORE_VALUE_TARGET((u8 *)&(*(u16 *)&g_p1_score_pending), g_p2_score_pending);
     score_value_add();
     if ((s32) g_p2_hits < 0x10) {
         if ((s32) g_p2_hits > 1) {
@@ -418,7 +421,6 @@ void score_value_add(void) {
     extern void bcd_add_registers(s32 *, s32);
 #endif
 #ifdef DDPDOJ_PC
-    reg_a0 -= 4;
     reg_a1 = (u8 *)&g_score_scratch;
 #else
     (*(s32 *)&reg_a0) -= 4;
@@ -707,13 +709,13 @@ void p1_boss_hit(void) {
             g_p1_max_hits = g_p1_hits;
         }
         reg_d0.w = reg_d3.w;
-        reg_a0 = (u8 *)&g_p1_hit10_anim_count;
+        reg_a0 = SCORE_VALUE_TARGET((u8 *)&g_p1_hit10_anim_count, g_p1_chain_points);
         score_value_add();
         reg_d0.w = (u32)g_p1_chain_points;
-        reg_a0 = (u8 *)&(*(u32 *)&g_p1_chain_points);
+        reg_a0 = SCORE_VALUE_TARGET((u8 *)&(*(u32 *)&g_p1_chain_points), g_p1_chain_points_shown);
         score_value_add();
         reg_d0.w = (u32)g_p1_chain_points;
-        reg_a0 = (u8 *)&(*(u32 *)&g_p2_extend_table);
+        reg_a0 = SCORE_VALUE_TARGET((u8 *)&(*(u32 *)&g_p2_extend_table), g_p1_score_pending);
         score_value_add();
     }
     if (g_p1_hyper_active == 0) {
@@ -851,7 +853,7 @@ void p1_boss_hits_score()
     }
 
     reg_d0.w = reg_d3.w;
-    reg_a0 = &g_p2_extend_table;
+    reg_a0 = SCORE_VALUE_TARGET(&g_p2_extend_table, g_p1_score_pending);
     score_value_add();
     g_boss_hit_decay_timer = 10;
     g_boss_hit_palette = 7;
@@ -934,13 +936,13 @@ void p2_boss_hit(void) {
             g_p2_max_hits = g_p2_hits;
         }
         reg_d0.w = reg_d3.w;
-        reg_a0 = (u8 *)&g_p2_hit10_anim_count;
+        reg_a0 = SCORE_VALUE_TARGET((u8 *)&g_p2_hit10_anim_count, g_p2_chain_points);
         score_value_add();
         reg_d0.w = (u32)g_p2_chain_points;
-        reg_a0 = (u8 *)&(*(u32 *)&g_p2_chain_points);
+        reg_a0 = SCORE_VALUE_TARGET((u8 *)&(*(u32 *)&g_p2_chain_points), g_p2_chain_points_shown);
         score_value_add();
         reg_d0.w = (u32)g_p2_chain_points;
-        reg_a0 = (u8 *)&(*(u32 *)&g_p1_score_pending);
+        reg_a0 = SCORE_VALUE_TARGET((u8 *)&(*(u32 *)&g_p1_score_pending), g_p2_score_pending);
         score_value_add();
     }
     if (g_p2_hyper_active == 0) {
@@ -1053,7 +1055,7 @@ void p2_boss_hits_score()
     }
 
     reg_d0.w = reg_d3.w;
-    reg_a0 = (u8 *)(&(*(u8 *)&g_p1_score_pending));
+    reg_a0 = SCORE_VALUE_TARGET((u8 *)(&(*(u8 *)&g_p1_score_pending)), g_p2_score_pending);
     score_value_add();
     g_boss_hit_decay_timer = 10;
     g_boss_hit_palette = 7;

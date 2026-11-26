@@ -3,6 +3,13 @@
 
 #include "types.h"
 
+/* The PS2 score helpers receive the adjacent symbol and subtract four. */
+#ifdef DDPDOJ_PC
+#define SCORE_VALUE_TARGET(original, target) ((u8 *)&(target))
+#else
+#define SCORE_VALUE_TARGET(original, target) (original)
+#endif
+
 extern u32 hyper_text_frames[];
 extern u32 maximum_text_frames[];
 extern u16 max_level_text[][2];

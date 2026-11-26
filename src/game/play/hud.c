@@ -1171,7 +1171,7 @@ void hud_boss_hit_bonus(void) {
     if (flags & 0x10) goto next_0;
     g_boss_present = flags | 0x10;
     g_boss_hit_bonus_timer = 7;
-    reg_a0 = (u8 *)&g_boss_hit_bonus_timer;
+    reg_a0 = SCORE_VALUE_TARGET((u8 *)&g_boss_hit_bonus_timer, g_boss_hit_bonus);
     reg_d0.w = (*(u32 *)&g_boss_score);
     reg_d0.w <<= 4;
     score_value_add();
@@ -1251,7 +1251,7 @@ next_8:
     reg_d0.w = (*(u32 *)&g_boss_score);
     reg_d0.w >>= 8;
 loop_0:
-    p = (u8 *)&g_boss_hit_bonus_timer;
+    p = SCORE_VALUE_TARGET((u8 *)&g_boss_hit_bonus_timer, g_boss_hit_bonus);
     reg_a0 = p;
     score_value_add();
     reg_a0 = p;
@@ -1554,7 +1554,11 @@ void hud_combo_gauge_draw(void) {
     reg_a0 = (u8 *) combo_gauge_levels_by_loop;
     reg_d2.h[0] += reg_d2.h[0];
     reg_d2.h[0] += reg_d2.h[0];
+#ifdef DDPDOJ_PC
+    reg_a0 = (u8 *)combo_gauge_levels_by_loop[reg_d2.h[0] / 4];
+#else
     reg_a0 = *(u8 **) (reg_a0 + reg_d2.h[0]);
+#endif
     reg_d6.h[0] += reg_d6.h[0];
     reg_d2.w = 0;
     reg_d2.h[0] = (reg_d6.h[0]) ? *(u16 *) (reg_a0 + ((s16) reg_d6.h[0] & ~1)) : *(u16 *) reg_a0;

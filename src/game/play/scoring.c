@@ -1,4 +1,5 @@
 #include "common.h"
+#include "score_tables.h"
 #include "entity.h"
 #include "sdk/ps2sdk.h"
 
@@ -959,7 +960,7 @@ extern u16 g_p2_lives;
 extern u16 g_p1_lives;
 
 void score_pending_apply(void) {
-    reg_a0 = (u8 *)(&(*(s32 *)&D_0028E76C));
+    reg_a0 = SCORE_VALUE_TARGET((u8 *)(&(*(s32 *)&D_0028E76C)), g_p1_score);
     reg_a1 = (u8 *)(&g_p1_score_pending);
     reg_a2 = (u8 *)(&g_p1_extend_score);
     reg_a3 = (u8 *)(&(*(s32 *)&g_p1_lives));
@@ -967,7 +968,7 @@ void score_pending_apply(void) {
     reg_a6 = (u8 *)(&(*(s32 *)&g_p1_score_billions));
     reg_d7.w = 0;
     score_pending_apply_side();
-    reg_a0 = (u8 *)(&(*(s32 *)&g_p1_score));
+    reg_a0 = SCORE_VALUE_TARGET((u8 *)(&(*(s32 *)&g_p1_score)), g_p2_score);
     reg_a1 = (u8 *)(&g_p2_score_pending);
     reg_a2 = (u8 *)(&g_p2_extend_score);
     reg_a3 = (u8 *)(&(*(s32 *)&g_p2_lives));
@@ -1043,9 +1044,14 @@ void score_pending_apply_side(void) {
             *(u32 *)(reg_a1 - 4) = (u32) reg_d6.w;
             return;
         }
+#ifdef DDPDOJ_PC
+        g_score_check_scratch = *(s32 *)reg_a0;
+        g_score_check_billions = ENTITY(reg_a6)->flags.h;
+#else
         g_score_check_scratch = *(s32 *)(reg_a0 - 4);
         g_score_check_billions = ENTITY(reg_a6)->flags.h;
         reg_a0 -= 4;
+#endif
         reg_a1 -= 4;
         cond_flag = 0;
         reg_d6.h[0] = 0;
