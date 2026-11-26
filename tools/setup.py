@@ -13,7 +13,7 @@ from build import build, compile_source
 from common import BASEROM, LOCAL, TARGETS, TOOLCHAINS, TOOLS
 from common import compiler_path, download, host_machine, required_compilers, resolve_tool, run, verify, verify_compiler
 from iso import executable_extents, read_at
-from gallery_da import extract_gallery_assets
+from assets.gallery_da import extract_gallery_assets
 from qemu_runner import install_guest
 
 COMPILER_URL = "https://github.com/decompme/compilers/releases/download/compilers/"

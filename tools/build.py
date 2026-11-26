@@ -11,9 +11,9 @@ from tempfile import TemporaryDirectory
 
 from common import BASEROM, ROOT, TARGETS, TOOLCHAINS
 from common import compiler_path, require_local, run, target_compiler, verify, verify_compiler
-from gallery_da import sync_gallery_iso
+from assets.gallery_da import sync_gallery_iso
 from iso import sync_files
-from stage_tiles import build_tile_files
+from assets.stage_tiles import build_tile_files
 from objects import validate_object
 from qemu_runner import compile_batch
 from split import data_units, split, target_units
