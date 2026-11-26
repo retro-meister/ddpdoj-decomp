@@ -2,6 +2,8 @@
 
 Byte-matching decompilation of **DoDonPachi DaiOuJou** (PS2), covering all three disc executables: the main game (`SLPS_252.33`), Death Label (`DEATH.ELF`), and the Gallery (`GALLERY.ELF`). No game assets or binaries are included; supply your own retail ISO to build.
 
+All functions have been 100% matched and all data has been moved into C. The build is also shiftable allowing for mods. However many parts of the code still need cleaning up.
+
 [![Main game C-match map](docs/progress-map-main.svg)](docs/progress-map-main.svg)
 
 [![Death Label C-match map](docs/progress-map-death.svg)](docs/progress-map-death.svg)
