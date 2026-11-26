@@ -522,6 +522,16 @@ void settings_notice_return_finished(void) {
     reg_d5.w = D_0028DF6C;
     reg_d6.w = D_0028DF68;
     reg_d7.w = D_0028DF64;
+#ifdef DDPDOJ_PC
+    reg_a0 = D_0028DF60;
+    reg_a1 = D_0028DF5C;
+    reg_a2 = D_0028DF58;
+    reg_a3 = D_0028DF54;
+    reg_a4 = D_0028DF50;
+    reg_a5 = D_0028DF4C;
+    reg_a6 = D_0028DF48;
+    cond_flag = 0;
+#else
     reg_a0 = (u8 *)(*(s32 *)&D_0028DF60);
     reg_a1 = (u8 *)(*(s32 *)&D_0028DF5C);
     reg_a2 = (u8 *)(*(s32 *)&D_0028DF58);
@@ -530,6 +540,7 @@ void settings_notice_return_finished(void) {
     reg_a5 = (u8 *)(*(s32 *)&D_0028DF4C);
     reg_a6 = (u8 *)(*(s32 *)&D_0028DF48);
     cond_flag = 0;
+#endif
 }
 
 extern u8 settings_notice_fade_palettes_at_18[];
@@ -610,7 +621,11 @@ void settings_notice_print_rank(void)
     reg_d0.b[0] = g_setting_difficulty;
     reg_d0.w += reg_d0.w;
     reg_d0.w += reg_d0.w;
+#ifdef DDPDOJ_PC
+    reg_a0 = (u8 *)settings_notice_rank_texts[reg_d0.h[0] / 4];
+#else
     reg_a0 = *(u8 **)(reg_a0 + reg_d0.h[0]);
+#endif
     reg_d1.h[0] = 0xD;
     reg_d0.h[0] = 0;
     reg_d2.h[0] = 0;
@@ -631,7 +646,11 @@ void settings_notice_print_extend(void) {
     reg_d0.w += reg_d0.w;
     reg_d0.w += reg_d0.w;
     temp_a0 = reg_d0.h[0];
+#ifdef DDPDOJ_PC
+    reg_a0 = (u8 *)settings_notice_extend_texts[temp_a0 / 4];
+#else
     reg_a0 = *(u8 **)((u8 *)reg_a0 + temp_a0);
+#endif
     reg_d1.h[0] = 0xF;
     reg_d0.h[0] = 0;
     reg_d2.h[0] = 0;
@@ -656,7 +675,11 @@ void settings_notice_print_rapid_fire(void) {
     reg_d0.b[0] = g_setting_rapid_fire;
     reg_d0.w += reg_d0.w;
     reg_d0.w += reg_d0.w;
+#ifdef DDPDOJ_PC
+    reg_a0 = (u8 *)settings_notice_rapid_fire_texts[reg_d0.h[0] / 4];
+#else
     reg_a0 = *(u8 **)(reg_a0 + reg_d0.h[0]);
+#endif
     reg_d1.h[0] = 0xC;
     reg_d0.h[0] = 0;
     reg_d2.h[0] = 0;

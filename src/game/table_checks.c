@@ -3079,145 +3079,145 @@ void checked_pointers_store(void) {
     if (stage5_boss_flash_palettes_a[4] != 0x4) {
         printf("error! st5b_mo1_flush_tbl[4]\n");
     }
-    STORE_POINTER(stage5_boss_flash_palettes_a + 4, D_002610F0);
+    STORE_ARCADE_ADDRESS(stage5_boss_flash_palettes_a + 4, D_002610F0);
     if (stage5_boss_flash_palettes_a[11] != 0xb) {
         printf("error! st5b_mo1_flush_tbl[11]\n");
     }
-    STORE_POINTER(stage5_boss_flash_palettes_a + 11, ((u16 *)D_0025FF70));
+    STORE_ARCADE_ADDRESS(stage5_boss_flash_palettes_a + 11, ((u16 *)D_0025FF70));
     if (stage5_boss_flash_palettes_a[18] != 0x12) {
         printf("error! st5b_mo1_flush_tbl[18]\n");
     }
-    STORE_POINTER(stage5_boss_flash_palettes_a + 18, ((u16 *)D_0025FFB0));
+    STORE_ARCADE_ADDRESS(stage5_boss_flash_palettes_a + 18, ((u16 *)D_0025FFB0));
     if (stage5_boss_flash_palettes_a[25] != 0x19) {
         printf("error! st5b_mo1_flush_tbl[25]\n");
     }
-    STORE_POINTER(stage5_boss_flash_palettes_a + 25, ((u16 *)D_0025FFF0));
+    STORE_ARCADE_ADDRESS(stage5_boss_flash_palettes_a + 25, ((u16 *)D_0025FFF0));
     if (stage5_boss_flash_palettes_a[32] != 0x20) {
         printf("error! st5b_mo1_flush_tbl[32]\n");
     }
-    STORE_POINTER(stage5_boss_flash_palettes_a + 32, ((u16 *)stage5_boss_flash_palettes_a_at_32));
+    STORE_ARCADE_ADDRESS(stage5_boss_flash_palettes_a + 32, ((u16 *)stage5_boss_flash_palettes_a_at_32));
     if (stage5_boss_flash_palettes_a[39] != 0x27) {
         printf("error! st5b_mo1_flush_tbl[39]\n");
     }
-    STORE_POINTER(stage5_boss_flash_palettes_a + 39, ((u16 *)stage5_boss_flash_palettes_a_at_39));
+    STORE_ARCADE_ADDRESS(stage5_boss_flash_palettes_a + 39, ((u16 *)stage5_boss_flash_palettes_a_at_39));
     if (stage5_boss_flash_palettes_a[46] != 0x2e) {
         printf("error! st5b_mo1_flush_tbl[46]\n");
     }
-    STORE_POINTER(stage5_boss_flash_palettes_a + 46, ((u16 *)stage5_boss_flash_palettes_a_at_46));
+    STORE_ARCADE_ADDRESS(stage5_boss_flash_palettes_a + 46, ((u16 *)stage5_boss_flash_palettes_a_at_46));
     if (stage5_boss_flash_palettes_a[53] != 0x35) {
         printf("error! st5b_mo1_flush_tbl[53]\n");
     }
-    STORE_POINTER(stage5_boss_flash_palettes_a + 53, ((u16 *)D_002600F0));
+    STORE_ARCADE_ADDRESS(stage5_boss_flash_palettes_a + 53, ((u16 *)D_002600F0));
     if (stage5_boss_flash_palettes_a[60] != 0x3c) {
         printf("error! st5b_mo1_flush_tbl[60]\n");
     }
-    STORE_POINTER(stage5_boss_flash_palettes_a + 60, stage5_boss_flash_palettes_a_30);
+    STORE_ARCADE_ADDRESS(stage5_boss_flash_palettes_a + 60, stage5_boss_flash_palettes_a_30);
     if (stage5_boss_flash_palettes_a[67] != 0x43) {
         printf("error! st5b_mo1_flush_tbl[67]\n");
     }
-    STORE_POINTER(stage5_boss_flash_palettes_a + 67, stage5_boss_flash_palettes_a_33);
+    STORE_ARCADE_ADDRESS(stage5_boss_flash_palettes_a + 67, stage5_boss_flash_palettes_a_33);
     if (stage5_boss_flash_palettes_a[74] != 0x4a) {
         printf("error! st5b_mo1_flush_tbl[74]\n");
     }
-    STORE_POINTER(stage5_boss_flash_palettes_a + 74, stage5_boss_flash_palettes_a_37);
+    STORE_ARCADE_ADDRESS(stage5_boss_flash_palettes_a + 74, stage5_boss_flash_palettes_a_37);
     if (stage5_boss_flash_palettes_a[81] != 0x51) {
         printf("error! st5b_mo1_flush_tbl[81]\n");
     }
-    STORE_POINTER(stage5_boss_flash_palettes_a + 81, stage5_boss_flash_palettes_a_40);
+    STORE_ARCADE_ADDRESS(stage5_boss_flash_palettes_a + 81, stage5_boss_flash_palettes_a_40);
     if (stage5_boss_flash_palettes_a[88] != 0x58) {
         printf("error! st5b_mo1_flush_tbl[88]\n");
     }
-    STORE_POINTER(stage5_boss_flash_palettes_a + 88, stage5_boss_flash_palettes_a_44);
+    STORE_ARCADE_ADDRESS(stage5_boss_flash_palettes_a + 88, stage5_boss_flash_palettes_a_44);
     if (stage5_boss_flash_palettes_a[95] != 0x5f) {
         printf("error! st5b_mo1_flush_tbl[95]\n");
     }
-    STORE_POINTER(stage5_boss_flash_palettes_a + 95, stage5_boss_flash_palettes_a_47);
+    STORE_ARCADE_ADDRESS(stage5_boss_flash_palettes_a + 95, stage5_boss_flash_palettes_a_47);
     if (stage5_boss_flash_palettes_b[4] != 0x4) {
         printf("error! st5b_mo3_flush_tbl[4]\n");
     }
-    STORE_POINTER(stage5_boss_flash_palettes_b + 4, D_002610F0);
+    STORE_ARCADE_ADDRESS(stage5_boss_flash_palettes_b + 4, D_002610F0);
     if (stage5_boss_flash_palettes_b[11] != 0xb) {
         printf("error! st5b_mo3_flush_tbl[11]\n");
     }
-    STORE_POINTER(stage5_boss_flash_palettes_b + 11, ((u16 *)stage5_boss_flash_palettes_b_at_11));
+    STORE_ARCADE_ADDRESS(stage5_boss_flash_palettes_b + 11, ((u16 *)stage5_boss_flash_palettes_b_at_11));
     if (stage5_boss_flash_palettes_b[18] != 0x12) {
         printf("error! st5b_mo3_flush_tbl[18]\n");
     }
-    STORE_POINTER(stage5_boss_flash_palettes_b + 18, ((u16 *)stage5_boss_flash_palettes_b_at_18));
+    STORE_ARCADE_ADDRESS(stage5_boss_flash_palettes_b + 18, ((u16 *)stage5_boss_flash_palettes_b_at_18));
     if (stage5_boss_flash_palettes_b[25] != 0x19) {
         printf("error! st5b_mo3_flush_tbl[25]\n");
     }
-    STORE_POINTER(stage5_boss_flash_palettes_b + 25, stage5_boss_flash_palettes_a_30);
+    STORE_ARCADE_ADDRESS(stage5_boss_flash_palettes_b + 25, stage5_boss_flash_palettes_a_30);
     if (stage5_boss_flash_palettes_b[32] != 0x20) {
         printf("error! st5b_mo3_flush_tbl[32]\n");
     }
-    STORE_POINTER(stage5_boss_flash_palettes_b + 32, stage5_boss_flash_palettes_a_33);
+    STORE_ARCADE_ADDRESS(stage5_boss_flash_palettes_b + 32, stage5_boss_flash_palettes_a_33);
     if (stage5_boss_flash_palettes_b[39] != 0x27) {
         printf("error! st5b_mo3_flush_tbl[39]\n");
     }
-    STORE_POINTER(stage5_boss_flash_palettes_b + 39, stage5_boss_flash_palettes_a_37);
+    STORE_ARCADE_ADDRESS(stage5_boss_flash_palettes_b + 39, stage5_boss_flash_palettes_a_37);
     if (stage5_boss_flash_palettes_b[46] != 0x2e) {
         printf("error! st5b_mo3_flush_tbl[46]\n");
     }
-    STORE_POINTER(stage5_boss_flash_palettes_b + 46, stage5_boss_flash_palettes_a_40);
+    STORE_ARCADE_ADDRESS(stage5_boss_flash_palettes_b + 46, stage5_boss_flash_palettes_a_40);
     if (stage5_boss_flash_palettes_b[53] != 0x35) {
         printf("error! st5b_mo3_flush_tbl[53]\n");
     }
-    STORE_POINTER(stage5_boss_flash_palettes_b + 53, stage5_boss_flash_palettes_a_44);
+    STORE_ARCADE_ADDRESS(stage5_boss_flash_palettes_b + 53, stage5_boss_flash_palettes_a_44);
     if (stage5_boss_flash_palettes_b[60] != 0x3c) {
         printf("error! st5b_mo3_flush_tbl[60]\n");
     }
-    STORE_POINTER(stage5_boss_flash_palettes_b + 60, stage5_boss_flash_palettes_a_47);
+    STORE_ARCADE_ADDRESS(stage5_boss_flash_palettes_b + 60, stage5_boss_flash_palettes_a_47);
     if (stage5_boss_flash_palettes_c[4] != 0x4) {
         printf("error! st5bflush0_tbl[4]\n");
     }
-    STORE_POINTER(stage5_boss_flash_palettes_c + 4, D_002610F0);
+    STORE_ARCADE_ADDRESS(stage5_boss_flash_palettes_c + 4, D_002610F0);
     if (stage5_boss_flash_palettes_c[11] != 0xb) {
         printf("error! st5bflush0_tbl[11]\n");
     }
-    STORE_POINTER(stage5_boss_flash_palettes_c + 11, stage5_boss_flash_palettes_a_30);
+    STORE_ARCADE_ADDRESS(stage5_boss_flash_palettes_c + 11, stage5_boss_flash_palettes_a_30);
     if (stage5_boss_flash_palettes_c[18] != 0x12) {
         printf("error! st5bflush0_tbl[18]\n");
     }
-    STORE_POINTER(stage5_boss_flash_palettes_c + 18, stage5_boss_flash_palettes_a_33);
+    STORE_ARCADE_ADDRESS(stage5_boss_flash_palettes_c + 18, stage5_boss_flash_palettes_a_33);
     if (stage5_boss_flash_palettes_c[25] != 0x19) {
         printf("error! st5bflush0_tbl[25]\n");
     }
-    STORE_POINTER(stage5_boss_flash_palettes_c + 25, stage5_boss_flash_palettes_a_37);
+    STORE_ARCADE_ADDRESS(stage5_boss_flash_palettes_c + 25, stage5_boss_flash_palettes_a_37);
     if (stage5_boss_flash_palettes_c[32] != 0x20) {
         printf("error! st5bflush0_tbl[32]\n");
     }
-    STORE_POINTER(stage5_boss_flash_palettes_c + 32, stage5_boss_flash_palettes_a_40);
+    STORE_ARCADE_ADDRESS(stage5_boss_flash_palettes_c + 32, stage5_boss_flash_palettes_a_40);
     if (stage5_boss_flash_palettes_c[39] != 0x27) {
         printf("error! st5bflush0_tbl[39]\n");
     }
-    STORE_POINTER(stage5_boss_flash_palettes_c + 39, stage5_boss_flash_palettes_a_44);
+    STORE_ARCADE_ADDRESS(stage5_boss_flash_palettes_c + 39, stage5_boss_flash_palettes_a_44);
     if (stage5_boss_flash_palettes_c[46] != 0x2e) {
         printf("error! st5bflush0_tbl[46]\n");
     }
-    STORE_POINTER(stage5_boss_flash_palettes_c + 46, stage5_boss_flash_palettes_a_47);
+    STORE_ARCADE_ADDRESS(stage5_boss_flash_palettes_c + 46, stage5_boss_flash_palettes_a_47);
     if (stage5_boss_fade_palettes_a[3] != 0x3) {
         printf("error! st5bmd2_fade_tbl0[3]\n");
     }
-    STORE_POINTER(stage5_boss_fade_palettes_a + 3, D_00261D30);
+    STORE_ARCADE_ADDRESS(stage5_boss_fade_palettes_a + 3, D_00261D30);
     if (stage5_boss_fade_palettes_a[9] != 0x9) {
         printf("error! st5bmd2_fade_tbl0[9]\n");
     }
-    STORE_POINTER(stage5_boss_fade_palettes_a + 9, D_00261D30);
+    STORE_ARCADE_ADDRESS(stage5_boss_fade_palettes_a + 9, D_00261D30);
     if (stage5_boss_fade_palettes_b[4] != 0x4) {
         printf("error! st5b_siro_fade_tbl0[4]\n");
     }
-    STORE_POINTER(stage5_boss_fade_palettes_b + 4, ((u16 *)D_0025FF70));
+    STORE_ARCADE_ADDRESS(stage5_boss_fade_palettes_b + 4, ((u16 *)D_0025FF70));
     if (stage5_boss_fade_palettes_b[11] != 0xb) {
         printf("error! st5b_siro_fade_tbl0[11]\n");
     }
-    STORE_POINTER(stage5_boss_fade_palettes_b + 11, ((u16 *)D_0025FFB0));
+    STORE_ARCADE_ADDRESS(stage5_boss_fade_palettes_b + 11, ((u16 *)D_0025FFB0));
     if (stage5_boss_fade_palettes_b[18] != 0x12) {
         printf("error! st5b_siro_fade_tbl0[18]\n");
     }
-    STORE_POINTER(stage5_boss_fade_palettes_b + 18, ((u16 *)D_0025FFF0));
+    STORE_ARCADE_ADDRESS(stage5_boss_fade_palettes_b + 18, ((u16 *)D_0025FFF0));
     if (stage5_boss_fade_palettes_b[25] != 0x19) {
         printf("error! st5b_siro_fade_tbl0[25]\n");
     }
-    STORE_POINTER(stage5_boss_fade_palettes_b + 25, ((u16 *)D_002600F0));
+    STORE_ARCADE_ADDRESS(stage5_boss_fade_palettes_b + 25, ((u16 *)D_002600F0));
 }

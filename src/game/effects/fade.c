@@ -140,12 +140,48 @@ extern u32 reg_save_d4;
 extern u32 reg_save_d3;
 extern u32 reg_save_d2;
 extern u32 reg_save_d1;
+#ifdef DDPDOJ_PC
+static u8 *fade_saved_addresses[5];
+#else
 extern s32 reg_save_a4;
 extern s32 reg_save_a3;
 extern u8 *reg_save_a2;
 extern u8 *reg_save_a1;
 extern s32 reg_save_a0;
+#endif
 
+
+#ifdef DDPDOJ_PC
+#define FADE_SAVE_ADDRESSES() { \
+    fade_saved_addresses[0] = reg_a0; \
+    fade_saved_addresses[1] = reg_a1; \
+    fade_saved_addresses[2] = reg_a2; \
+    fade_saved_addresses[3] = reg_a3; \
+    fade_saved_addresses[4] = reg_a4; \
+}
+#define FADE_RESTORE_ADDRESSES() { \
+    reg_a0 = fade_saved_addresses[0]; \
+    reg_a1 = fade_saved_addresses[1]; \
+    reg_a2 = fade_saved_addresses[2]; \
+    reg_a3 = fade_saved_addresses[3]; \
+    reg_a4 = fade_saved_addresses[4]; \
+}
+#else
+#define FADE_SAVE_ADDRESSES() { \
+    reg_save_a0 = (s32)reg_a0; \
+    (*(s32 *)&reg_save_a1) = (s32)reg_a1; \
+    (*(s32 *)&reg_save_a2) = (s32)reg_a2; \
+    reg_save_a3 = (s32)reg_a3; \
+    reg_save_a4 = (s32)reg_a4; \
+}
+#define FADE_RESTORE_ADDRESSES() { \
+    reg_a0 = (u8 *) (*(u16 **)&reg_save_a0); \
+    reg_a1 = (u8 *)reg_save_a1; \
+    reg_a2 = (u8 *)reg_save_a2; \
+    reg_a3 = (u8 *) (u32)reg_save_a3; \
+    reg_a4 = (u8 *) (*(u16 **)&reg_save_a4); \
+}
+#endif
 
 void fade_in_and_release(void)
 {
@@ -156,11 +192,7 @@ void fade_in_and_release(void)
     reg_save_d5 = reg_d5.w;
     reg_save_d6 = reg_d6.w;
     reg_save_d7 = reg_d7.w;
-    reg_save_a0 = (s32)reg_a0;
-    (*(s32 *)&reg_save_a1) = (s32)reg_a1;
-    (*(s32 *)&reg_save_a2) = (s32)reg_a2;
-    reg_save_a3 = (s32)reg_a3;
-    reg_save_a4 = (s32)reg_a4;
+    FADE_SAVE_ADDRESSES();
 
     reg_d6.h[0] = 1;
     fade_in_start();
@@ -175,11 +207,7 @@ void fade_in(void)
     reg_save_d5 = reg_d5.w;
     reg_save_d6 = reg_d6.w;
     reg_save_d7 = reg_d7.w;
-    reg_save_a0 = (s32)reg_a0;
-    (*(s32 *)&reg_save_a1) = (s32)reg_a1;
-    (*(s32 *)&reg_save_a2) = (s32)reg_a2;
-    reg_save_a3 = (s32)reg_a3;
-    reg_save_a4 = (s32)reg_a4;
+    FADE_SAVE_ADDRESSES();
     reg_d6.h[0] = 0;
     fade_in_start();
 }
@@ -215,7 +243,7 @@ loop_2:
     *(s16 *)(reg_a2 + 0x20) = 0;
     *(s16 *)(reg_a2 + 0x2C) = 0;
     *(s16 *)(reg_a2 + 0x2E) = 0;
-    reg_tmp.w = (u32) reg_a2;
+    reg_tmp.w = ARCADE_ADDRESS_ENCODE(reg_a2);
     *(u16 *)(reg_a1 + 0x2C) = reg_tmp.h[1];
     *(u16 *)(reg_a1 + 0x2E) = reg_tmp.h[0];
     reg_a1 = reg_a2;
@@ -225,14 +253,23 @@ loop_2:
     reg_a0 += 2;
     reg_d2.h[0] = *(u16 *)reg_a0;
     reg_a0 += 2;
+#ifdef DDPDOJ_PC
+    const FadeArea *area = &fade_areas[reg_d2.h[0] / 8];
+    reg_tmp.w = ARCADE_ADDRESS_ENCODE(area->changed);
+#else
     reg_tmp.w = (*(u32 *)((u8 *)(((u8 *)fade_areas + (reg_d2.h[0] & ~3))) + (4)));
+#endif
     *(u16 *)(reg_a2 + 6) = reg_tmp.h[1];
     *(u16 *)(reg_a2 + 8) = reg_tmp.h[0];
+#ifdef DDPDOJ_PC
+    reg_a3 = area->colors;
+#else
     reg_a3 = *(u8 **)((u8 *)fade_areas + (reg_d2.h[0] & ~3));
+#endif
     t5 = *(u16 *)reg_a0;
     reg_a3 += t5;
     reg_a0 += 2;
-    reg_tmp.w = (u32)reg_a3;
+    reg_tmp.w = ARCADE_ADDRESS_ENCODE(reg_a3);
     *(u16 *)(reg_a2 + 0xE) = reg_tmp.h[1];
     *(u16 *)(reg_a2 + 0x10) = reg_tmp.h[0];
     *(u16 *)(reg_a2 + 0xA) = *(u16 *)reg_a0;
@@ -243,7 +280,11 @@ loop_2:
     reg_a0 += 2;
     reg_d3.h[0] = *(u16 *)reg_a0;
     reg_a0 += 2;
+#ifdef DDPDOJ_PC
+    reg_a3 = (u8 *)fade_speeds;
+#else
     reg_a3 = (u8 *)((u32) fade_speeds);
+#endif
     reg_d3.h[0] &= 0x1F;
     reg_d3.h[0] *= 4;
     reg_a3 += reg_d3.h[0];
@@ -256,11 +297,11 @@ loop_2:
     *(u16 *)(reg_a2 + 0x1A) = reg_tmp.h[0];
     reg_tmp.h[1] = *(u16 *)(reg_a2 + 6);
     reg_tmp.h[0] = *(u16 *)(reg_a2 + 8);
-    reg_a4 = (u8 *)(reg_tmp.w);
+    reg_a4 = ARCADE_ADDRESS_DECODE(u8 *, reg_tmp.w);
     *(u16 *)reg_a4 = 1;
     reg_tmp.h[1] = *(u16 *)(reg_a2 + 0xE);
     reg_tmp.h[0] = *(u16 *)(reg_a2 + 0x10);
-    reg_a4 = (u8 *)(reg_tmp.w);
+    reg_a4 = ARCADE_ADDRESS_DECODE(u8 *, reg_tmp.w);
     reg_d2.h[0] = *(u16 *)(reg_a2 + 4);
     reg_d3.h[0] = *(u16 *)(reg_a2 + 0x12);
     do {
@@ -269,7 +310,7 @@ loop_2:
     } while ((s16)(--reg_d2.h[0]) >= 0);
     reg_tmp.h[1] = *(u16 *)(reg_a2 + 0xE);
     reg_tmp.h[0] = *(u16 *)(reg_a2 + 0x10);
-    reg_a3 = (u8 *)(reg_tmp.w);
+    reg_a3 = ARCADE_ADDRESS_DECODE(u8 *, reg_tmp.w);
     reg_d4.h[0] = *(u16 *)(reg_a2 + 4);
     reg_a4 = (u8 *)(reg_a2 + 0x30);
     do {
@@ -289,11 +330,11 @@ next_2:
     reg_a0 = saved_a0;
     reg_a1 = saved_a1;
     if ((s16) reg_d0.h[0] >= 0) goto next_4;
-    reg_d0.w = (u32) reg_a1;
+    reg_d0.w = ARCADE_ADDRESS_ENCODE(reg_a1);
     fade_release();
     goto next_5;
 next_4:
-    reg_d0.w = (u32) reg_a1;
+    reg_d0.w = ARCADE_ADDRESS_ENCODE(reg_a1);
     reg_d1.w = reg_save_d1;
     reg_d2.w = reg_save_d2;
     reg_d3.w = reg_save_d3;
@@ -301,11 +342,7 @@ next_4:
     reg_d5.w = reg_save_d5;
     reg_d6.w = reg_save_d6;
     reg_d7.w = reg_save_d7;
-    reg_a0 = (u8 *) (*(u16 **)&reg_save_a0);
-    reg_a1 = (u8 *)reg_save_a1;
-    reg_a2 = (u8 *)reg_save_a2;
-    reg_a3 = (u8 *) (u32)reg_save_a3;
-    reg_a4 = (u8 *) (*(u16 **)&reg_save_a4);
+    FADE_RESTORE_ADDRESSES();
     return;
 next_3:
     reg_a1 += 0x30;
@@ -321,11 +358,7 @@ next_5:
     reg_d5.w = reg_save_d5;
     reg_d6.w = reg_save_d6;
     reg_d7.w = reg_save_d7;
-    reg_a0 = (u8 *) (*(u16 **)&reg_save_a0);
-    reg_a1 = (u8 *)reg_save_a1;
-    reg_a2 = (u8 *)reg_save_a2;
-    reg_a3 = (u8 *) (u32)reg_save_a3;
-    reg_a4 = (u8 *) (*(u16 **)&reg_save_a4);
+    FADE_RESTORE_ADDRESSES();
 }
 
 
@@ -341,11 +374,7 @@ void fade_out_and_release(void)
     reg_save_d6 = reg_d6.w;
     reg_d6.h[0] = 1;
     reg_save_d7 = reg_d7.w;
-    reg_save_a0 = (s32)reg_a0;
-    (*(s32 *)&reg_save_a1) = (s32)reg_a1;
-    (*(s32 *)&reg_save_a2) = (s32)reg_a2;
-    reg_save_a3 = (s32)reg_a3;
-    reg_save_a4 = (s32)reg_a4;
+    FADE_SAVE_ADDRESSES();
     fade_out_start();
 }
 
@@ -358,11 +387,7 @@ void fade_out(void)
     reg_save_d5 = reg_d5.w;
     reg_save_d6 = reg_d6.w;
     reg_save_d7 = reg_d7.w;
-    reg_save_a0 = (s32)reg_a0;
-    (*(s32 *)&reg_save_a1) = (s32)reg_a1;
-    (*(s32 *)&reg_save_a2) = (s32)reg_a2;
-    reg_save_a3 = (s32)reg_a3;
-    reg_save_a4 = (s32)reg_a4;
+    FADE_SAVE_ADDRESSES();
     reg_d6.h[0] = 0;
     fade_out_start();
 }
@@ -393,7 +418,7 @@ loop_2:
     *(s16 *)(reg_a2 + 0x20) = 0;
     *(s16 *)(reg_a2 + 0x2C) = 0;
     *(s16 *)(reg_a2 + 0x2E) = 0;
-    reg_tmp.w = (u32) reg_a2;
+    reg_tmp.w = ARCADE_ADDRESS_ENCODE(reg_a2);
     *(u16 *)(reg_a1 + 0x2C) = reg_tmp.h[1];
     *(u16 *)(reg_a1 + 0x2E) = reg_tmp.h[0];
     reg_a1 = reg_a2;
@@ -401,14 +426,23 @@ loop_2:
     *(s16 *)(reg_a2 + 2) = 0;
     reg_d2.h[0] = *(u16 *)reg_a0;
     reg_a0 += 2;
+#ifdef DDPDOJ_PC
+    const FadeArea *area = &fade_areas[reg_d2.h[0] / 8];
+    reg_tmp.w = ARCADE_ADDRESS_ENCODE(area->changed);
+#else
     reg_tmp.w = (*(u32 *)((u8 *)(((u8 *)fade_areas + (reg_d2.h[0] & ~3))) + (4)));
+#endif
     *(u16 *)(reg_a2 + 6) = reg_tmp.h[1];
     *(u16 *)(reg_a2 + 8) = reg_tmp.h[0];
+#ifdef DDPDOJ_PC
+    reg_a3 = area->colors;
+#else
     reg_a3 = *(u8 **)((u8 *)fade_areas + (reg_d2.h[0] & ~3));
+#endif
     t5 = *(u16 *)reg_a0;
     reg_a3 += t5;
     reg_a0 += 2;
-    reg_tmp.w = (u32)reg_a3;
+    reg_tmp.w = ARCADE_ADDRESS_ENCODE(reg_a3);
     *(u16 *)(reg_a2 + 0xE) = reg_tmp.h[1];
     *(u16 *)(reg_a2 + 0x10) = reg_tmp.h[0];
     *(u16 *)(reg_a2 + 0xA) = *(u16 *)reg_a0;
@@ -419,7 +453,11 @@ loop_2:
     reg_a0 += 2;
     reg_d3.h[0] = *(u16 *)reg_a0;
     reg_a0 += 2;
+#ifdef DDPDOJ_PC
+    reg_a3 = (u8 *)fade_speeds;
+#else
     reg_a3 = (u8 *)((u32) fade_speeds);
+#endif
     reg_d3.h[0] &= 0x1F;
     reg_d3.h[0] *= 4;
     reg_a3 += reg_d3.h[0];
@@ -432,7 +470,7 @@ loop_2:
     *(u16 *)(reg_a2 + 0x1A) = reg_tmp.h[0];
     reg_tmp.h[1] = *(u16 *)(reg_a2 + 0xE);
     reg_tmp.h[0] = *(u16 *)(reg_a2 + 0x10);
-    reg_a3 = (u8 *)(reg_tmp.w);
+    reg_a3 = ARCADE_ADDRESS_DECODE(u8 *, reg_tmp.w);
     reg_d4.h[0] = *(u16 *)(reg_a2 + 4);
     reg_a4 = (u8 *)(reg_a2 + 0x30);
     do {
@@ -452,11 +490,11 @@ next_2:
     reg_a0 = saved_a0;
     reg_a1 = saved_a1;
     if ((s16) reg_d0.h[0] >= 0) goto next_4;
-    reg_d0.w = (u32) reg_a1;
+    reg_d0.w = ARCADE_ADDRESS_ENCODE(reg_a1);
     fade_release();
     goto next_5;
 next_4:
-    reg_d0.w = (u32) reg_a1;
+    reg_d0.w = ARCADE_ADDRESS_ENCODE(reg_a1);
     reg_d1.w = reg_save_d1;
     reg_d2.w = reg_save_d2;
     reg_d3.w = reg_save_d3;
@@ -464,11 +502,7 @@ next_4:
     reg_d5.w = reg_save_d5;
     reg_d6.w = reg_save_d6;
     reg_d7.w = reg_save_d7;
-    reg_a0 = (u8 *) (*(u16 **)&reg_save_a0);
-    reg_a1 = (u8 *)reg_save_a1;
-    reg_a2 = (u8 *)reg_save_a2;
-    reg_a3 = (u8 *) (u32)reg_save_a3;
-    reg_a4 = (u8 *) (*(u16 **)&reg_save_a4);
+    FADE_RESTORE_ADDRESSES();
     return;
 next_3:
     reg_a1 += 0x30;
@@ -484,11 +518,7 @@ next_5:
     reg_d5.w = reg_save_d5;
     reg_d6.w = reg_save_d6;
     reg_d7.w = reg_save_d7;
-    reg_a0 = (u8 *) (*(u16 **)&reg_save_a0);
-    reg_a1 = (u8 *)reg_save_a1;
-    reg_a2 = (u8 *)reg_save_a2;
-    reg_a3 = (u8 *) (u32)reg_save_a3;
-    reg_a4 = (u8 *) (*(u16 **)&reg_save_a4);
+    FADE_RESTORE_ADDRESSES();
 }
 
 
@@ -503,11 +533,7 @@ void fade_to_black_and_release(void)
     reg_save_d5 = reg_d5.w;
     reg_save_d6 = reg_d6.w;
     reg_save_d7 = reg_d7.w;
-    reg_save_a0 = (s32)reg_a0;
-    (*(s32 *)&reg_save_a1) = (s32)reg_a1;
-    (*(s32 *)&reg_save_a2) = (s32)reg_a2;
-    reg_save_a3 = (s32)reg_a3;
-    reg_save_a4 = (s32)reg_a4;
+    FADE_SAVE_ADDRESSES();
     reg_d6.h[0] = 1;
     fade_to_black_start();
 }
@@ -521,11 +547,7 @@ void fade_to_black(void)
     reg_save_d5 = reg_d5.w;
     reg_save_d6 = reg_d6.w;
     reg_save_d7 = reg_d7.w;
-    reg_save_a0 = (s32)reg_a0;
-    (*(s32 *)&reg_save_a1) = (s32)reg_a1;
-    (*(s32 *)&reg_save_a2) = (s32)reg_a2;
-    reg_save_a3 = (s32)reg_a3;
-    reg_save_a4 = (s32)reg_a4;
+    FADE_SAVE_ADDRESSES();
     reg_d6.h[0] = 0;
     fade_to_black_start();
 }
@@ -557,7 +579,7 @@ loop_2:
     *(s16 *)(reg_a2 + 0x20) = 0;
     *(s16 *)(reg_a2 + 0x2C) = 0;
     *(s16 *)(reg_a2 + 0x2E) = 0;
-    reg_tmp.w = (u32) reg_a2;
+    reg_tmp.w = ARCADE_ADDRESS_ENCODE(reg_a2);
     *(u16 *)(reg_a1 + 0x2C) = reg_tmp.h[1];
     *(u16 *)(reg_a1 + 0x2E) = reg_tmp.h[0];
     reg_a1 = reg_a2;
@@ -565,24 +587,37 @@ loop_2:
     *(s16 *)(reg_a2 + 0x1E) = 1;
     reg_d2.h[0] = *(u16 *)reg_a0;
     reg_a0 += 2;
+#ifdef DDPDOJ_PC
+    const FadeArea *area = &fade_areas[reg_d2.h[0] / 8];
+    reg_tmp.w = ARCADE_ADDRESS_ENCODE(area->changed);
+#else
     reg_tmp.w = (*(u32 *)((u8 *)(((u8 *)fade_areas + (reg_d2.h[0] & ~3))) + (4)));
+#endif
     *(u16 *)(reg_a2 + 6) = reg_tmp.h[1];
     *(u16 *)(reg_a2 + 8) = reg_tmp.h[0];
+#ifdef DDPDOJ_PC
+    reg_a3 = area->colors;
+#else
     reg_a3 = *(u8 **)((u8 *)fade_areas + (reg_d2.h[0] & ~3));
+#endif
     t5 = *(u16 *)reg_a0;
     reg_a3 += t5;
     reg_a0 += 2;
-    reg_tmp.w = (u32)reg_a3;
+    reg_tmp.w = ARCADE_ADDRESS_ENCODE(reg_a3);
     *(u16 *)(reg_a2 + 0xE) = reg_tmp.h[1];
     *(u16 *)(reg_a2 + 0x10) = reg_tmp.h[0];
-    reg_tmp.w = (u32) palette_black;
+    reg_tmp.w = ARCADE_ADDRESS_ENCODE(palette_black);
     *(u16 *)(reg_a2 + 0xA) = reg_tmp.h[1];
     *(u16 *)(reg_a2 + 0xC) = reg_tmp.h[0];
     *(u16 *)(reg_a2 + 4) = *(u16 *)reg_a0;
     reg_a0 += 2;
     reg_d3.h[0] = *(u16 *)reg_a0;
     reg_a0 += 2;
+#ifdef DDPDOJ_PC
+    reg_a3 = (u8 *)fade_speeds;
+#else
     reg_a3 = (u8 *)((u32) fade_speeds);
+#endif
     reg_d3.h[0] &= 0x1F;
     reg_d3.h[0] *= 4;
     reg_a3 += reg_d3.h[0];
@@ -595,7 +630,7 @@ loop_2:
     *(u16 *)(reg_a2 + 0x1A) = reg_tmp.h[0];
     reg_tmp.h[1] = *(u16 *)(reg_a2 + 0xE);
     reg_tmp.h[0] = *(u16 *)(reg_a2 + 0x10);
-    reg_a3 = (u8 *)(reg_tmp.w);
+    reg_a3 = ARCADE_ADDRESS_DECODE(u8 *, reg_tmp.w);
     reg_d4.h[0] = *(u16 *)(reg_a2 + 4);
     reg_a4 = (u8 *)(reg_a2 + 0x30);
     do {
@@ -615,11 +650,11 @@ next_2:
     reg_a0 = saved_a0;
     reg_a1 = saved_a1;
     if ((s16) reg_d0.h[0] >= 0) goto next_4;
-    reg_d0.w = (u32) reg_a1;
+    reg_d0.w = ARCADE_ADDRESS_ENCODE(reg_a1);
     fade_release();
     goto next_5;
 next_4:
-    reg_d0.w = (u32) reg_a1;
+    reg_d0.w = ARCADE_ADDRESS_ENCODE(reg_a1);
     reg_d1.w = reg_save_d1;
     reg_d2.w = reg_save_d2;
     reg_d3.w = reg_save_d3;
@@ -627,11 +662,7 @@ next_4:
     reg_d5.w = reg_save_d5;
     reg_d6.w = reg_save_d6;
     reg_d7.w = reg_save_d7;
-    reg_a0 = (u8 *) (*(u16 **)&reg_save_a0);
-    reg_a1 = (u8 *)reg_save_a1;
-    reg_a2 = (u8 *)reg_save_a2;
-    reg_a3 = (u8 *) (u32)reg_save_a3;
-    reg_a4 = (u8 *) (*(u16 **)&reg_save_a4);
+    FADE_RESTORE_ADDRESSES();
     return;
 next_3:
     reg_a1 += 0x30;
@@ -647,25 +678,36 @@ next_5:
     reg_d5.w = reg_save_d5;
     reg_d6.w = reg_save_d6;
     reg_d7.w = reg_save_d7;
-    reg_a0 = (u8 *) (*(u16 **)&reg_save_a0);
-    reg_a1 = (u8 *)reg_save_a1;
-    reg_a2 = (u8 *)reg_save_a2;
-    reg_a3 = (u8 *) (u32)reg_save_a3;
-    reg_a4 = (u8 *) (*(u16 **)&reg_save_a4);
+    FADE_RESTORE_ADDRESSES();
 }
 
 
 void fade_release(void)
 {
+#ifdef DDPDOJ_PC
+    if (reg_d0.w == 0 || reg_d0.w == (u32)-1) {
+        return;
+    }
+#endif
     u32 saved_data_register = reg_d0.w;
+#ifdef DDPDOJ_PC
+    u8 *saved_address_register = reg_a0;
+#else
     u32 saved_address_register = (u32)reg_a0;
+#endif
     u16 *entry;
 
     do {
-        reg_a0 = (u8 *)reg_d0.w;
+        reg_a0 = ARCADE_ADDRESS_DECODE(u8 *, reg_d0.w);
+#ifdef DDPDOJ_PC
+        entry = (u16 *)reg_a0;
+        entry[0] = 0;
+        entry[2] = 0;
+#else
         ((u16 *)((u32)reg_a0))[0] = 0;
         ((u16 *)((u32)reg_a0))[2] = 0;
         entry = (u16 *)((u32)reg_a0);
+#endif
         reg_d0.h[1] = entry[0x16];
         reg_d0.h[0] = entry[0x17];
     } while (reg_d0.w != 0);
@@ -676,6 +718,12 @@ void fade_release(void)
 
 
 void fade_is_running(void) {
+#ifdef DDPDOJ_PC
+    if (reg_d0.w == 0 || reg_d0.w == (u32)-1) {
+        cond_flag = 0;
+        return;
+    }
+#endif
     u32 temp_d0;
     u32 temp_d1;
     u8 *temp_a0;
@@ -683,13 +731,13 @@ void fade_is_running(void) {
     temp_d0 = reg_d0.w;
     temp_d1 = reg_d1.w;
     temp_a0 = reg_a0;
-    reg_a0 = (u8 *)reg_d0.w;
+    reg_a0 = ARCADE_ADDRESS_DECODE(u8 *, reg_d0.w);
     reg_d1.w = 0;
     reg_d0.h[1] = (*(u16 *)(reg_a0 + 0x2C));
     reg_d0.h[0] = (*(u16 *)(reg_a0 + 0x2E));
     if (reg_d0.w != 0) {
         do {
-            reg_a0 = (u8 *)reg_d0.w;
+            reg_a0 = ARCADE_ADDRESS_DECODE(u8 *, reg_d0.w);
             reg_d1.h[0] += (*(u16 *)(reg_a0 + 0x18));
             reg_d0.h[1] = (*(u16 *)(reg_a0 + 0x2C));
             reg_d0.h[0] = (*(u16 *)(reg_a0 + 0x2E));
@@ -719,10 +767,10 @@ void fades_update(void) {
             fade_step();
             temp_a0 = *(u16 *)(reg_a0 + 4);
             if ((temp_a0 != 0) && (temp_a0 == 1)) {
-                reg_d0.w = (u32) reg_a0;
+                reg_d0.w = ARCADE_ADDRESS_ENCODE(reg_a0);
                 fade_is_running();
                 if (cond_flag == 0) {
-                    reg_d0.w = (u32) reg_a0;
+                    reg_d0.w = ARCADE_ADDRESS_ENCODE(reg_a0);
                     fade_release();
                 }
             }
@@ -734,18 +782,18 @@ void fades_update(void) {
 
 void fade_step(void) {
 loop_1:
-    reg_a4 = (u8 *)reg_d0.w;
+    reg_a4 = ARCADE_ADDRESS_DECODE(u8 *, reg_d0.w);
     reg_tmp.h[0] = *(u16 *)(reg_a4 + 0);
     if (reg_tmp.h[0] == 0) goto block_next;
     reg_tmp.h[1] = *(u16 *)(reg_a4 + 6);
     reg_tmp.h[0] = *(u16 *)(reg_a4 + 8);
-    reg_a1 = (u8 *)reg_tmp.w;
+    reg_a1 = ARCADE_ADDRESS_DECODE(u8 *, reg_tmp.w);
     reg_tmp.h[1] = *(u16 *)(reg_a4 + 0xA);
     reg_tmp.h[0] = *(u16 *)(reg_a4 + 0xC);
-    reg_a2 = (u8 *)reg_tmp.w;
+    reg_a2 = ARCADE_ADDRESS_DECODE(u8 *, reg_tmp.w);
     reg_tmp.h[1] = *(u16 *)(reg_a4 + 0xE);
     reg_tmp.h[0] = *(u16 *)(reg_a4 + 0x10);
-    reg_a3 = (u8 *)reg_tmp.w;
+    reg_a3 = ARCADE_ADDRESS_DECODE(u8 *, reg_tmp.w);
     reg_d5.h[0] = *(u16 *)(reg_a4 + 4);
     reg_d6.w = 0;
     if (*(u16 *)(reg_a4 + 0x1E) != 0) goto skip_1;

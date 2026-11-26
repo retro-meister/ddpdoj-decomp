@@ -208,6 +208,16 @@ void ranking_screen_finish(void) {
     reg_d5.w = reg_save2_d5;
     reg_d6.w = reg_save2_d6;
     reg_d7.w = reg_save2_d7;
+#ifdef DDPDOJ_PC
+    reg_a0 = reg_save2_a0;
+    reg_a1 = reg_save2_a1;
+    reg_a2 = reg_save2_a2;
+    reg_a3 = reg_save2_a3;
+    cond_flag = 0;
+    reg_a4 = reg_save2_a4;
+    reg_a5 = reg_save2_a5;
+    reg_a6 = reg_save2_a6;
+#else
     reg_a0 = (u8 *)(*(s32 *)&reg_save2_a0);
     reg_a1 = (u8 *)(*(s32 *)&reg_save2_a1);
     reg_a2 = (u8 *)(*(s32 *)&reg_save2_a2);
@@ -216,6 +226,7 @@ void ranking_screen_finish(void) {
     reg_a4 = (u8 *)(*(s32 *)&reg_save2_a4);
     reg_a5 = (u8 *)(*(s32 *)&reg_save2_a5);
     reg_a6 = (u8 *)(*(s32 *)&reg_save2_a6);
+#endif
 }
 
 void ranking_screen_draw(void) {

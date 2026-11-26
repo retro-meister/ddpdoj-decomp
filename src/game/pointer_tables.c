@@ -4154,20 +4154,20 @@ extern u16 D_0028C0D0[];
 
 void stage1_midboss_pointers_store(void) {
     STORE_POINTER(stage1_midboss_entities + 243, D_0028C0D0);
-    STORE_POINTER(stage1_midboss_fade_script + 4, D_002610F0);
-    STORE_POINTER(stage1_midboss_fade_script + 11, ((u16 *)stage1_midboss_fade_script_at_11));
-    STORE_POINTER(stage1_midboss_fade_script + 18, ((u16 *)stage1_midboss_fade_script_at_18));
-    STORE_POINTER(stage1_midboss_fade_script + 25, ((u16 *)stage1_midboss_fade_script_at_25));
-    STORE_POINTER(stage1_midboss_fade_script + 32, D_00261170);
-    STORE_POINTER(stage1_midboss_fade_script + 39, D_00261130);
-    STORE_POINTER(stage1_midboss_fade_script + 46, D_002611B0);
-    STORE_POINTER(stage1_midboss_fade_script + 53, D_002611F0);
-    STORE_POINTER(stage1_midboss_fade_script + 60, stage1_midboss_fade_script_at_60);
-    STORE_POINTER(stage1_midboss_fade_script + 67, stage1_midboss_fade_script_at_67);
-    STORE_POINTER(stage1_midboss_fade_script + 74, stage1_midboss_fade_script_at_74);
-    STORE_POINTER(stage1_midboss_fade_script + 81, stage1_midboss_fade_script_at_81);
-    STORE_POINTER(stage1_midboss_fade_script + 88, stage1_midboss_fade_script_at_88);
-    STORE_POINTER(stage1_midboss_fade_script + 95, stage1_midboss_fade_script_at_95);
+    STORE_ARCADE_ADDRESS(stage1_midboss_fade_script + 4, D_002610F0);
+    STORE_ARCADE_ADDRESS(stage1_midboss_fade_script + 11, ((u16 *)stage1_midboss_fade_script_at_11));
+    STORE_ARCADE_ADDRESS(stage1_midboss_fade_script + 18, ((u16 *)stage1_midboss_fade_script_at_18));
+    STORE_ARCADE_ADDRESS(stage1_midboss_fade_script + 25, ((u16 *)stage1_midboss_fade_script_at_25));
+    STORE_ARCADE_ADDRESS(stage1_midboss_fade_script + 32, D_00261170);
+    STORE_ARCADE_ADDRESS(stage1_midboss_fade_script + 39, D_00261130);
+    STORE_ARCADE_ADDRESS(stage1_midboss_fade_script + 46, D_002611B0);
+    STORE_ARCADE_ADDRESS(stage1_midboss_fade_script + 53, D_002611F0);
+    STORE_ARCADE_ADDRESS(stage1_midboss_fade_script + 60, stage1_midboss_fade_script_at_60);
+    STORE_ARCADE_ADDRESS(stage1_midboss_fade_script + 67, stage1_midboss_fade_script_at_67);
+    STORE_ARCADE_ADDRESS(stage1_midboss_fade_script + 74, stage1_midboss_fade_script_at_74);
+    STORE_ARCADE_ADDRESS(stage1_midboss_fade_script + 81, stage1_midboss_fade_script_at_81);
+    STORE_ARCADE_ADDRESS(stage1_midboss_fade_script + 88, stage1_midboss_fade_script_at_88);
+    STORE_ARCADE_ADDRESS(stage1_midboss_fade_script + 95, stage1_midboss_fade_script_at_95);
 }
 
 
@@ -4195,15 +4195,15 @@ void stage3_midboss_pointers_store(void) {
     if (stage3_midboss_flash_palettes[4] != 0x4) {
         printf("error! st3mbflush0_tbl[4]\n");
     }
-    STORE_POINTER(stage3_midboss_flash_palettes + 4, D_002610F0);
+    STORE_ARCADE_ADDRESS(stage3_midboss_flash_palettes + 4, D_002610F0);
     if (stage3_midboss_flash_palettes[11] != 0xb) {
         printf("error! st3mbflush0_tbl[11]\n");
     }
-    STORE_POINTER(stage3_midboss_flash_palettes + 11, stage3_midboss_flash_palettes_05);
+    STORE_ARCADE_ADDRESS(stage3_midboss_flash_palettes + 11, stage3_midboss_flash_palettes_05);
     if (stage3_midboss_flash_palettes[18] != 0x12) {
         printf("error! st3mbflush0_tbl[18]\n");
     }
-    STORE_POINTER(stage3_midboss_flash_palettes + 18, g_stage3_map_palettes);
+    STORE_ARCADE_ADDRESS(stage3_midboss_flash_palettes + 18, g_stage3_map_palettes);
     if (stage3_midboss_mode_routines[0] != 0x0) {
         printf("error! st3mb_md_tbl[0]\n");
     }
@@ -4303,8 +4303,8 @@ extern u16 D_00261D30[];
 
 void pointers_store_part_6(void) {
     STORE_POINTER(D_00265B60 + 91, D_00261D30);
-    STORE_POINTER(D_00265F60 + 3, D_00261D30);
-    STORE_POINTER(D_00266330 + 3, D_00261D30);
+    STORE_ARCADE_ADDRESS(D_00265F60 + 3, D_00261D30);
+    STORE_ARCADE_ADDRESS(D_00266330 + 3, D_00261D30);
 }
 
 extern void entity_draw_layer1_keep(void);
@@ -4407,24 +4407,24 @@ void pointers_store_part_8(void) {
     STORE_POINTER(D_00263030 + 56, D_0028C0C8);
     STORE_POINTER(D_00263030 + 64, large_tank_entities_at_47);
     STORE_POINTER(D_00263030 + 72, large_tank_entities_at_47);
-    STORE_POINTER(D_002630D0 + 4, D_00260270);
-    STORE_POINTER(D_002630D0 + 11, D_002602B0);
-    STORE_POINTER(D_002630D0 + 18, D_002602F0);
-    STORE_POINTER(D_00263290 + 4, D_002610F0);
-    STORE_POINTER(D_00263290 + 11, D_00260270);
-    STORE_POINTER(D_00263290 + 18, D_002602B0);
-    STORE_POINTER(D_00263290 + 25, D_002602F0);
-    STORE_POINTER(D_00263290 + 32, g_stage2_map_palettes);
-    STORE_POINTER(D_00263290 + 39, D_002469D0);
-    STORE_POINTER(D_00263290 + 46, D_00246A10);
-    STORE_POINTER(D_00263290 + 53, D_00246A50);
-    STORE_POINTER(D_00263290 + 60, D_00246A90);
-    STORE_POINTER(D_00263290 + 67, D_00246AD0);
-    STORE_POINTER(D_00263290 + 74, D_00246B10);
-    STORE_POINTER(D_00263290 + 81, D_00246B50);
-    STORE_POINTER(D_00263290 + 88, D_00246B90);
-    STORE_POINTER(D_00263290 + 95, D_00246BD0);
-    STORE_POINTER(D_00263290 + 102, D_00246C10);
+    STORE_ARCADE_ADDRESS(D_002630D0 + 4, D_00260270);
+    STORE_ARCADE_ADDRESS(D_002630D0 + 11, D_002602B0);
+    STORE_ARCADE_ADDRESS(D_002630D0 + 18, D_002602F0);
+    STORE_ARCADE_ADDRESS(D_00263290 + 4, D_002610F0);
+    STORE_ARCADE_ADDRESS(D_00263290 + 11, D_00260270);
+    STORE_ARCADE_ADDRESS(D_00263290 + 18, D_002602B0);
+    STORE_ARCADE_ADDRESS(D_00263290 + 25, D_002602F0);
+    STORE_ARCADE_ADDRESS(D_00263290 + 32, g_stage2_map_palettes);
+    STORE_ARCADE_ADDRESS(D_00263290 + 39, D_002469D0);
+    STORE_ARCADE_ADDRESS(D_00263290 + 46, D_00246A10);
+    STORE_ARCADE_ADDRESS(D_00263290 + 53, D_00246A50);
+    STORE_ARCADE_ADDRESS(D_00263290 + 60, D_00246A90);
+    STORE_ARCADE_ADDRESS(D_00263290 + 67, D_00246AD0);
+    STORE_ARCADE_ADDRESS(D_00263290 + 74, D_00246B10);
+    STORE_ARCADE_ADDRESS(D_00263290 + 81, D_00246B50);
+    STORE_ARCADE_ADDRESS(D_00263290 + 88, D_00246B90);
+    STORE_ARCADE_ADDRESS(D_00263290 + 95, D_00246BD0);
+    STORE_ARCADE_ADDRESS(D_00263290 + 102, D_00246C10);
 }
 
 extern u16 D_00249E10[];
@@ -4448,14 +4448,14 @@ void pointers_store_part_9(void) {
     STORE_POINTER(D_002638B0 + 54, D_0028C0C8);
     STORE_POINTER(D_002638B0 + 61, large_tank_entities_at_47);
     STORE_POINTER(D_002638B0 + 68, large_tank_entities_at_47);
-    STORE_POINTER(D_002639B0 + 4, D_002610F0);
-    STORE_POINTER(D_002639B0 + 11, ((u16 *)stage4_heavy_cannon_start_table));
-    STORE_POINTER(D_002639B0 + 18, ((u16 *)stage4_heavy_cannon_start_table_2));
-    STORE_POINTER(D_002639B0 + 25, ((u16 *)stage4_heavy_cannon_start_table_3));
-    STORE_POINTER(D_002639B0 + 32, ((u16 *)stage4_gate_start_table));
-    STORE_POINTER(D_002639B0 + 39, stage4_scroll_palettes_at_54);
-    STORE_POINTER(D_002639B0 + 46, D_00249E10);
-    STORE_POINTER(D_002639B0 + 53, D_00249E50);
+    STORE_ARCADE_ADDRESS(D_002639B0 + 4, D_002610F0);
+    STORE_ARCADE_ADDRESS(D_002639B0 + 11, ((u16 *)stage4_heavy_cannon_start_table));
+    STORE_ARCADE_ADDRESS(D_002639B0 + 18, ((u16 *)stage4_heavy_cannon_start_table_2));
+    STORE_ARCADE_ADDRESS(D_002639B0 + 25, ((u16 *)stage4_heavy_cannon_start_table_3));
+    STORE_ARCADE_ADDRESS(D_002639B0 + 32, ((u16 *)stage4_gate_start_table));
+    STORE_ARCADE_ADDRESS(D_002639B0 + 39, stage4_scroll_palettes_at_54);
+    STORE_ARCADE_ADDRESS(D_002639B0 + 46, D_00249E10);
+    STORE_ARCADE_ADDRESS(D_002639B0 + 53, D_00249E50);
     STORE_POINTER(D_00263A50 + 64, D_00263AE0);
     STORE_POINTER(D_00263A50 + 66, D_00263B10);
     STORE_POINTER(D_00263A50 + 68, D_00263B30);
@@ -4463,15 +4463,15 @@ void pointers_store_part_9(void) {
     STORE_POINTER(D_00263B80 + 54, D_0028C0C8);
     STORE_POINTER(D_00263B80 + 61, large_tank_entities_at_47);
     STORE_POINTER(D_00263B80 + 68, large_tank_entities_at_47);
-    STORE_POINTER(D_00263C70 + 3, ((u16 *)stage4_wave_cannon_table));
-    STORE_POINTER(D_00263C80 + 3, D_00261D30);
-    STORE_POINTER(D_00263C90 + 4, D_002610F0);
-    STORE_POINTER(D_00263C90 + 11, ((u16 *)stage4_wave_cannon_table));
-    STORE_POINTER(D_00263C90 + 18, D_00249E50);
-    STORE_POINTER(D_00263C90 + 25, stage4_boss_flash_palettes_at_11);
-    STORE_POINTER(D_00263C90 + 32, ((u16 *)stage4_gate_start_table));
-    STORE_POINTER(D_00263C90 + 39, stage4_scroll_palettes_at_63);
-    STORE_POINTER(D_00263CF0 + 4, ((u16 *)stage4_wave_cannon_start_table));
+    STORE_ARCADE_ADDRESS(D_00263C70 + 3, ((u16 *)stage4_wave_cannon_table));
+    STORE_ARCADE_ADDRESS(D_00263C80 + 3, D_00261D30);
+    STORE_ARCADE_ADDRESS(D_00263C90 + 4, D_002610F0);
+    STORE_ARCADE_ADDRESS(D_00263C90 + 11, ((u16 *)stage4_wave_cannon_table));
+    STORE_ARCADE_ADDRESS(D_00263C90 + 18, D_00249E50);
+    STORE_ARCADE_ADDRESS(D_00263C90 + 25, stage4_boss_flash_palettes_at_11);
+    STORE_ARCADE_ADDRESS(D_00263C90 + 32, ((u16 *)stage4_gate_start_table));
+    STORE_ARCADE_ADDRESS(D_00263C90 + 39, stage4_scroll_palettes_at_63);
+    STORE_ARCADE_ADDRESS(D_00263CF0 + 4, ((u16 *)stage4_wave_cannon_start_table));
 }
 
 extern u16 D_002420C0[];
