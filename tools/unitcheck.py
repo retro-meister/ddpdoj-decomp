@@ -152,7 +152,7 @@ def integrate_unit(local, source, base, sections, symbols, text, functions, do_b
     in_main = rel.parts[:2] == ("src", "main")
     in_shared = rel.parts[:2] == ("src", "game")
     inner = "/".join(rel.parts[2:-1] + (source.stem,))
-    stub = ("game/" if in_main or in_shared else "death/") + inner
+    stub = ("game/" if in_main or in_shared else "game/death/") + inner
     dest = ROOT / "src" / f"{stub}.c"
     if dest.exists() and dest != source:
         raise ValueError(f"{dest.relative_to(ROOT)} already exists")

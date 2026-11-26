@@ -785,12 +785,12 @@ for t in () if redo else ('SLPS_252.33', 'DEATH.ELF'):
         indent = re.match(r'\s*', lines[i]).group(0)
         new = []
         if a < rs: new.append(lines[i])
-        new.append('%s- [0x%x, %s, %s/%s]' % (indent, rs, sec, 'death' if death_only else 'game', name))
+        new.append('%s- [0x%x, %s, %s/%s]' % (indent, rs, sec, 'game/death' if death_only else 'game', name))
         if re_ < nxt: new.append('%s- [0x%x, %s, %s_%x]' % (indent, re_, plain, plain, re_))
         lines[i:i + 1] = new
     yaml_out[t] = '\n'.join(lines)
 
-path = R / ('src/death' if death_only else 'src/game') / (name + '.c')
+path = R / ('src/game/death' if death_only else 'src/game') / (name + '.c')
 assert redo or not path.exists(), path
 head = '#include "common.h"\n\n'
 if desc: head = '/* %s */\n' % desc + head

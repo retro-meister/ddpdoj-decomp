@@ -72,7 +72,7 @@ def read_labels(target):
 
 
 def unit_path(unit):
-    found = [p for p in list((R / 'src/game').rglob(unit + '.c')) + list((R / 'src/death').rglob(unit + '.c'))]
+    found = list((R / 'src/game').rglob(unit + '.c'))
     assert len(found) == 1, (unit, found)
     return found[0]
 
@@ -413,7 +413,7 @@ appended = {}
 failed = []
 for unit, start, end in jobs:
     try:
-        found_paths = list((R / 'src/game').rglob(unit + '.c')) + list((R / 'src/death').rglob(unit + '.c'))
+        found_paths = list((R / 'src/game').rglob(unit + '.c'))
         path = found_paths[0] if found_paths else R / 'src/game' / (unit + '.c')
         assert len(found_paths) <= 1, found_paths
         stub = str(path.relative_to(R / 'src'))[:-2]

@@ -60,14 +60,14 @@ def find_runs(first, last):
     code = [e for e in main_entries if e["kind"] == "c"]
     names = [stem(e["stub"]) for e in code]
     if first not in names or last not in names:
-        # A run that only Death Label has: its units become one unit in src/death.
+        # A run that only Death Label has: its units become one unit in src/game/death.
         _, _, death_entries = yaml_entries(DEATH)
         death_code = [e for e in death_entries if e["kind"] == "c"]
         death_names = [stem(e["stub"]) for e in death_code]
         if first not in death_names or last not in death_names:
             raise ValueError(f"{first}..{last}: not units of {MAIN} or {DEATH}")
         death_run = death_code[death_names.index(first):death_names.index(last) + 1]
-        if not death_run or any(not e["stub"].startswith("death/") or stem(e["stub"]) in names for e in death_run):
+        if not death_run or any(not e["stub"].startswith("game/death/") or stem(e["stub"]) in names for e in death_run):
             raise ValueError(f"{first}..{last}: not a run that only {DEATH} has")
         return [], death_run
     main_run = code[names.index(first):names.index(last) + 1]
@@ -83,8 +83,8 @@ def find_runs(first, last):
             if stub not in by_stub:
                 raise ValueError(f"{stub}: shared unit missing from {DEATH}")
             wanted.append(by_stub[stub])
-        elif f"death/{stem(stub)}" in by_stub:
-            wanted.append(by_stub[f"death/{stem(stub)}"])
+        elif f"game/death/{stem(stub)}" in by_stub:
+            wanted.append(by_stub[f"game/death/{stem(stub)}"])
     if not wanted:
         return main_run, []
     if wanted != sorted(wanted):
@@ -107,12 +107,12 @@ def sequence(main_run, death_run):
         if m and d and m == d:
             pieces.append((m, d)); i += 1; j += 1
         elif m and m.startswith("main/"):
-            if d and d == f"death/{stem(m)}":
+            if d and d == f"game/death/{stem(m)}":
                 pieces.append((m, d)); j += 1
             else:
                 pieces.append((m, None))
             i += 1
-        elif d and d.startswith("death/"):
+        elif d and d.startswith("game/death/"):
             if stem(d) in later_main(i):
                 raise ValueError(f"{d}: its Main counterpart comes later in the run")
             pieces.append((None, d)); j += 1
