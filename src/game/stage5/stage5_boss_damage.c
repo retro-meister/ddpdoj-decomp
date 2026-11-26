@@ -235,7 +235,7 @@ next_8:
 s32 boss_phase_stop_all();                            /* extern */
 s32 boss_animation_stop();                            /* extern */
 s32 boss_attack_stop_all();                            /* extern */
-s32 func_0013F3C0();                            /* extern */
+s32 boss_kill_counter_clamp();                            /* extern */
 s32 music_stop();                            /* extern */
 s32 bullet_cancel_on_boss_hit();                            /* extern */
 s32 boss_defeat_begin();                            /* extern */
@@ -254,7 +254,7 @@ void stage5_boss_form1_defeated(void) {
     } else {
         STAGE5_BOSS(reg_a5)->time_left = 0x6270;
     }
-    func_0013F3C0();
+    boss_kill_counter_clamp();
     bullet_cancel_on_boss_hit();
     boss_attack_stop_all();
     boss_phase_stop_all();
@@ -478,7 +478,7 @@ next_9:
 }
 
 s32 boss_part_hide();
-s32 func_0013F3C0();
+s32 boss_kill_counter_clamp();
 s32 music_stop();
 s32 slowdown_turn_off();
 
@@ -487,7 +487,7 @@ void stage5_boss_form2_defeated(void) {
     music_stop();
     slowdown_turn_off();
     STAGE5_BOSS(reg_a5)->time_left = 0x6270;
-    func_0013F3C0();
+    boss_kill_counter_clamp();
     bullet_cancel_on_boss_hit();
     stage5_boss_stop_damage();
     boss_attack_stop_all();

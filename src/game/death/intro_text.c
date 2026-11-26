@@ -62,7 +62,7 @@ s32 text_flush();
 void gfx_draw_color_box(s32 x, s32 y, s32 w, s32 h, s32 depth, s32 alpha, s32 r, s32 g, s32 b);
 void quad_flush(void);
 s32 arcade_sprite_draw();
-void death_func_00138C50(TextScript *script);
+void intro_picture_draw(TextScript *script);
 extern s8 death_D_002549A0[];
 extern u32 death_D_00254B40[];
 extern u16 ending_fade_in_05[];
@@ -77,15 +77,15 @@ extern u8 g_noise_file_buf[];
 extern u8 g_gs_load_image_as_u8_a[];
 extern GlyphQuad g_quad_queue_as_GlyphQuad_a[];
 
-s32 death_func_00138B40(u8 *digits) {
+s32 four_digits_parse(u8 *digits) {
     return (digits[0] - '0') * 1000 + (digits[1] - '0') * 100 + (digits[2] - '0') * 10 + (digits[3] - '0');
 }
 
-s32 death_func_00138BB0(u8 *digits) {
+s32 two_digits_parse(u8 *digits) {
     return (digits[0] - '0') * 10 + (digits[1] - '0');
 }
 
-void death_func_00138BE0(u8 *image) {
+void intro_picture_upload(u8 *image) {
     g_tex_upload_tbp = 0x2240;
     sceGsSetDefLoadImage(g_gs_load_image_as_u8_a, 0x2240, 8, 0x13, 0, 0, 0x200, 0x100);
     FlushCache(0);
@@ -93,7 +93,7 @@ void death_func_00138BE0(u8 *image) {
     sceGsSyncPath(0, 0);
 }
 
-void death_func_00138C50(TextScript *script) {
+void intro_picture_draw(TextScript *script) {
     s32 u;
     s32 shade;
     s32 v;
@@ -101,7 +101,7 @@ void death_func_00138C50(TextScript *script) {
     u8 color;
 
     if (script->picture > 6) {
-        death_func_00138BE0(g_splash_file_buf);
+        intro_picture_upload(g_splash_file_buf);
         g_quad_count = 0;
         shade = 0x60;
         if (script->frame & 1) {
@@ -123,7 +123,7 @@ void death_func_00138C50(TextScript *script) {
         g_quad_queue_as_GlyphQuad_a[0].v1 = 0xE0;
         g_quad_count = 1;
         quad_flush();
-        death_func_00138BE0(g_noise_file_buf);
+        intro_picture_upload(g_noise_file_buf);
         g_quad_count = 0;
         shade = (rand() & 0x1F) + 0x40;
         if (script->frame & 1) {
@@ -168,7 +168,7 @@ typedef struct {
     u16 e;
 } ListHead;
 
-void death_func_00138ED0(TextScript *script) {
+void intro_picture_update(TextScript *script) {
     ListHead *head;
 
     if (script->picture != 0) {
@@ -191,11 +191,11 @@ void death_func_00138ED0(TextScript *script) {
             head->b = 0;
             head->a = 0;
         }
-        death_func_00138C50(script);
+        intro_picture_draw(script);
     }
 }
 
-s32 death_func_00138FC0(TextScript *script) {
+s32 intro_text_step(TextScript *script) {
     s8 *text;
     s32 x;
     s32 y;
@@ -220,11 +220,11 @@ s32 death_func_00138FC0(TextScript *script) {
                 x -= 0x20;
                 y = script->row << 3;
             } else if (ch == 'c') {
-                script->texturePage = death_func_00138BB0((u8 *) text + 1);
+                script->texturePage = two_digits_parse((u8 *) text + 1);
                 text += 2;
             } else if (ch == 'b') {
-                script->glyphWidth = death_func_00138BB0((u8 *) text + 1);
-                script->glyphHeight = death_func_00138BB0((u8 *) text + 3);
+                script->glyphWidth = two_digits_parse((u8 *) text + 1);
+                script->glyphHeight = two_digits_parse((u8 *) text + 3);
                 text += 4;
             }
             text++;
@@ -247,18 +247,18 @@ s32 death_func_00138FC0(TextScript *script) {
     }
     switch (*script->cursor) {
     case 'g':
-        script->picture = death_func_00138BB0((u8 *) script->cursor + 1);
+        script->picture = two_digits_parse((u8 *) script->cursor + 1);
         script->flashMode = 0;
         script->flashTimer = 0x20;
         script->flashLength = script->flashTimer;
         script->cursor += 3;
         break;
     case 'i':
-        script->interval = death_func_00138B40((u8 *) script->cursor + 1);
+        script->interval = four_digits_parse((u8 *) script->cursor + 1);
         script->cursor += 5;
         break;
     case 'f':
-        flags = death_func_00138B40((u8 *) script->cursor + 1);
+        flags = four_digits_parse((u8 *) script->cursor + 1);
         if (flags & 1) {
             script->fadeTimer = 0x10;
             script->fadeLength = script->fadeTimer;
@@ -275,12 +275,12 @@ s32 death_func_00138FC0(TextScript *script) {
         script->cursor += 5;
         break;
     case 'w':
-        script->wait = death_func_00138B40((u8 *) script->cursor + 1);
+        script->wait = four_digits_parse((u8 *) script->cursor + 1);
         script->cursor += 5;
         break;
     case 'p':
-        script->column = death_func_00138BB0((u8 *) script->cursor + 1);
-        script->row = death_func_00138BB0((u8 *) script->cursor + 3);
+        script->column = two_digits_parse((u8 *) script->cursor + 1);
+        script->row = two_digits_parse((u8 *) script->cursor + 3);
         script->cursor += 5;
         break;
     case 'c':
@@ -307,7 +307,7 @@ s32 death_func_00138FC0(TextScript *script) {
     return 0;
 }
 
-void death_func_00139380(void) {
+void intro_text_update(void) {
     switch (ENTITY(reg_a6)->offset_y.h) {
     case 0:
         ENTITY(reg_a6)->offset_y.h = 1;
@@ -318,8 +318,8 @@ void death_func_00139380(void) {
         death_D_002AB800.alpha = 0x80;
         death_D_002AB800.page = death_D_002AB800.cursor;
     case 1:
-        death_func_00138ED0(&death_D_002AB800);
-        if (death_func_00138FC0(&death_D_002AB800) != 0) {
+        intro_picture_update(&death_D_002AB800);
+        if (intro_text_step(&death_D_002AB800) != 0) {
             reg_a5[3] = 2;
         }
         death_D_002AB800.frame++;

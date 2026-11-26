@@ -259,7 +259,7 @@ void stage3_boss_launch_drone(void) {
     LAUNCH_DRONE(reg_a4)->launched = 1U;
 }
 
-void func_001CE980(void) {
+void stage3_boss_main_gun_shot(void) {
     void bullet_fire256_fast(void);
     s32 status = reg_d1.b[0];
 
@@ -327,7 +327,7 @@ void stage3_boss_fire_main_gun(void) {
         do {
             reg_d0.h[1] = MAIN_GUN(reg_a4)->speed;
             reg_d0.h[0] = MAIN_GUN(reg_a4)->bullet;
-            func_001CE980();
+            stage3_boss_main_gun_shot();
             var_a0 = (u32)reg_d1.h[0] + 0x40;
             reg_d1.h[0] = var_a0;
         } while ((s16)(--reg_d7.h[0]) >= 0);
@@ -351,7 +351,7 @@ void stage3_boss_fire_main_gun(void) {
 
 s32 bullet_fire256_fixed();
 
-void func_001CEC30(void) {
+void stage3_boss_side_turrets_shot(void) {
     s32 bullet_fire256_fast();
     u32 tmp;
 
@@ -469,7 +469,7 @@ void stage3_boss_fire_side_turrets(void) {
         reg_d0.b[0] = SIDE_TURRETS(reg_a4)->turn_a;
         SIDE_TURRETS(reg_a4)->direction_a += reg_d0.b[0];
         reg_d1.b[0] = SIDE_TURRETS(reg_a4)->direction_a;
-        func_001CEC30();
+        stage3_boss_side_turrets_shot();
         reg_d1.h[0] = STAGE3_EXTRA(reg_a6)->right_turret_direction;
         reg_d5.h[0] = reg_d1.h[0];
         reg_d5.h[0] &= 0x3E;
@@ -483,7 +483,7 @@ void stage3_boss_fire_side_turrets(void) {
         reg_d0.b[0] = SIDE_TURRETS(reg_a4)->turn_b;
         SIDE_TURRETS(reg_a4)->direction_b += reg_d0.b[0];
         reg_d1.b[0] = SIDE_TURRETS(reg_a4)->direction_b;
-        func_001CEC30();
+        stage3_boss_side_turrets_shot();
         enemy_switch_target_player();
     }
 }

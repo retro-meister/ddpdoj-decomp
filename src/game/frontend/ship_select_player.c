@@ -656,7 +656,7 @@ block_54:
 
 extern u16 D_0028C138[];
 
-void func_001B03E0(void) {
+void join_select_object_defaults_set(void) {
     reg_a0 = (u8 *)D_0028C138;
     *(u16 *)(reg_a1 + 2) = (u16) *(u16 *)reg_a0;
     reg_a0 += 2;
@@ -708,7 +708,7 @@ extern u16 D_0029BF22[];
 extern u16 D_0029BF24[];
 extern u16 D_0029BF26[];
 
-void func_001B04D0(void) {
+void join_select_object_spawn(void) {
     u8 *save_a0;
     u8 *save_a1;
     u8 *save_a2;
@@ -761,7 +761,7 @@ void func_001B04D0(void) {
         D_0029BEE4[0] = 0x5E00;
         D_0029BEE6[0] = 0x1C00;
         reg_a1 = (u8 *)D_0029BEE0;
-        func_001B03E0();
+        join_select_object_defaults_set();
     }
     reg_d0.w = 0;
     reg_d0.b[0] = *(u8 *)(reg_a5 + 4);
@@ -784,7 +784,7 @@ void func_001B04D0(void) {
         D_0029BF08[0] = 0x1200;
         D_0029BF0A[0] = 0x1C00;
         reg_a1 = (u8 *)D_0029BF04;
-        func_001B03E0();
+        join_select_object_defaults_set();
     }
     reg_d0.w = save_d0;
     reg_d1.w = save_d1;

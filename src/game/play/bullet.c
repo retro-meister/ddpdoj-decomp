@@ -11,8 +11,8 @@ void velocity_octant_negate_x(void);
 void bullet_velocity_from_dir256(void);
 void bullet_sprite_emit(void);
 void bullet_sprite_emit_end(void);
-void func_0012E3D0(void);
-void func_0012F4C0(void);
+void bullet_turn_into_star(void);
+void bullet_look_set_small_by_dir(void);
 
 
 s32 bullets_cancel_update();
@@ -81,7 +81,7 @@ extern u8 bullet_move_routines[];
 extern u8 D_0024EE90[];
 void pickup_spawn_here();
 #ifdef DEATH_LABEL
-void death_func_00128A90();
+void bullet_cancel_to_pickup();
 #endif
 void bullet_slot_reset();
 void bullet_fire256_direct();
@@ -247,7 +247,7 @@ L_bom_bui:
     }
     reg_d0.w = 0;
     D_0028DEA4 = reg_d7.w;
-    MAIN_OR_DEATH_LABEL(pickup_spawn_here, death_func_00128A90)();
+    MAIN_OR_DEATH_LABEL(pickup_spawn_here, bullet_cancel_to_pickup)();
     reg_d7.w = D_0028DEA4;
     bullet_slot_reset();
 
@@ -505,7 +505,7 @@ block_33:
         reg_d0.h[0] = *(u16 *)(reg_a6 + 0x3C);
         if ((s16)reg_d0.h[0] >= 0) {
             D_0028DEA4 = reg_d7.w;
-            MAIN_OR_DEATH_LABEL(pickup_spawn_here, death_func_00128A90)();
+            MAIN_OR_DEATH_LABEL(pickup_spawn_here, bullet_cancel_to_pickup)();
             reg_d7.w = D_0028DEA4;
         }
         bullet_slot_reset();
@@ -2139,12 +2139,12 @@ void bullet_move_type_02(void) {
     reg_tmp.w = 2;
     *(u16 *)(reg_a6 + 0x22) = (u16) reg_tmp.h[1];
     *(u16 *)(reg_a6 + 0x24) = (u16) reg_tmp.h[0];
-    func_0012F4C0();
+    bullet_look_set_small_by_dir();
 }
 
 
 void bullet_move_type_03(void) {
-    func_0012E3D0();
+    bullet_turn_into_star();
     ENTITY(reg_a6)->misc.h = (u16) *(u16 *)(reg_a6 + 0x30);
     *(u16 *)(reg_a6 + 0x20) = (u16) *(u16 *)(reg_a6 + 0x32);
     reg_tmp.w = 0x19E;
@@ -2156,7 +2156,7 @@ void bullet_move_type_03(void) {
 }
 
 void bullet_move_type_04(void) {
-    func_0012E3D0();
+    bullet_turn_into_star();
     ENTITY(reg_a6)->misc.h = (u16) *(u16 *)(reg_a6 + 0x30);
     *(u16 *)(reg_a6 + 0x20) = (u16) *(u16 *)(reg_a6 + 0x32);
     reg_tmp.w = 0x1A2;
@@ -2168,7 +2168,7 @@ void bullet_move_type_04(void) {
 }
 
 void bullet_move_type_05(void) {
-    func_0012E3D0();
+    bullet_turn_into_star();
     ENTITY(reg_a6)->misc.h = (u16) *(u16 *)(reg_a6 + 0x30);
     *(u16 *)(reg_a6 + 0x20) = (u16) *(u16 *)(reg_a6 + 0x32);
     reg_tmp.w = 0x1A6;
@@ -2180,7 +2180,7 @@ void bullet_move_type_05(void) {
 }
 
 void bullet_move_type_06(void) {
-    func_0012E3D0();
+    bullet_turn_into_star();
     ENTITY(reg_a6)->misc.h = (u16) *(u16 *)(reg_a6 + 0x30);
     *(u16 *)(reg_a6 + 0x20) = (u16) *(u16 *)(reg_a6 + 0x32);
     reg_tmp.w = 0x1AA;
@@ -2210,7 +2210,7 @@ void bullet_move_type_07(void) {
     bullet_look_set_tall();
 }
 
-void func_0012E350(void) {
+void bullet_move_and_emit_small(void) {
     reg_d1.w = 0;
     reg_d1.h[0] = D_00299762[0];
     reg_a1 = D_0024EF30;
@@ -2223,7 +2223,7 @@ void func_0012E350(void) {
     ENTITY(reg_a6)->look.sh = 0x210;
 }
 
-void func_0012E3D0(void) {
+void bullet_turn_into_star(void) {
     ENTITY(reg_a6)->flags.b[1] &= 0xFE;
     reg_tmp.w = 0x1B4;
     ENTITY(reg_a6)->draw.h = (u16) reg_tmp.h[1];
@@ -2237,7 +2237,7 @@ void func_0012E3D0(void) {
 
 
 void bullet_move_type_08(void) {
-    func_0012E350();
+    bullet_move_and_emit_small();
     reg_tmp.w = 0x1E6;
     ENTITY(reg_a6)->draw.h = (u16) reg_tmp.h[1];
     ENTITY(reg_a6)->sprite.h = (u16) reg_tmp.h[0];
@@ -2251,7 +2251,7 @@ void bullet_move_type_08(void) {
 }
 
 void bullet_move_type_09(void) {
-    func_0012E350();
+    bullet_move_and_emit_small();
     reg_tmp.w = 0x1B9;
     ENTITY(reg_a6)->draw.h = (u16) reg_tmp.h[1];
     ENTITY(reg_a6)->sprite.h = (u16) reg_tmp.h[0];
@@ -2261,7 +2261,7 @@ void bullet_move_type_09(void) {
 }
 
 void bullet_move_type_10(void) {
-    func_0012E350();
+    bullet_move_and_emit_small();
     reg_tmp.w = 0x1BF;
     ENTITY(reg_a6)->draw.h = (u16) reg_tmp.h[1];
     ENTITY(reg_a6)->sprite.h = (u16) reg_tmp.h[0];
@@ -2271,7 +2271,7 @@ void bullet_move_type_10(void) {
 }
 
 void bullet_move_type_11(void) {
-    func_0012E350();
+    bullet_move_and_emit_small();
     reg_tmp.w = 0x220;
     ENTITY(reg_a6)->draw.h = (u16) reg_tmp.h[1];
     ENTITY(reg_a6)->sprite.h = (u16) reg_tmp.h[0];
@@ -2285,7 +2285,7 @@ void bullet_move_type_11(void) {
 }
 
 void bullet_move_type_12(void) {
-    func_0012E350();
+    bullet_move_and_emit_small();
     reg_tmp.w = 0x20E;
     ENTITY(reg_a6)->draw.h = (u16) reg_tmp.h[1];
     ENTITY(reg_a6)->sprite.h = (u16) reg_tmp.h[0];
@@ -2295,7 +2295,7 @@ void bullet_move_type_12(void) {
 }
 
 void bullet_move_type_13(void) {
-    func_0012E350();
+    bullet_move_and_emit_small();
     reg_tmp.w = 0x20E;
     ENTITY(reg_a6)->draw.h = (u16) reg_tmp.h[1];
     ENTITY(reg_a6)->sprite.h = (u16) reg_tmp.h[0];
@@ -2320,7 +2320,7 @@ void bullet_move_type_16(void) {
     *(u16 *)(reg_a6 + 0x24) = (u16) reg_tmp.h[0];
     *(s8 *)(reg_a6 + 0x29) = 0;
     *(s16 *)(reg_a6 + 0x2A) = 1;
-    func_0012F4C0();
+    bullet_look_set_small_by_dir();
 }
 
 void bullet_move_type_17(void) {
@@ -2340,7 +2340,7 @@ void bullet_move_type_17(void) {
     *(s8 *)(reg_a6 + 0x29) = 0;
     *(s16 *)(reg_a6 + 0x2A) = 1;
     *(s16 *)(reg_a6 + 0x2C) = 4;
-    func_0012F4C0();
+    bullet_look_set_small_by_dir();
 }
 
 void bullet_move_type_18(void) {
@@ -2360,7 +2360,7 @@ void bullet_move_type_18(void) {
     *(s8 *)(reg_a6 + 0x29) = 0;
     *(s16 *)(reg_a6 + 0x2A) = 1;
     *(s16 *)(reg_a6 + 0x2C) = 4;
-    func_0012F4C0();
+    bullet_look_set_small_by_dir();
 }
 
 void bullet_move_type_19(void) {
@@ -2417,7 +2417,7 @@ void bullet_move_type_21(void) {
     reg_tmp.w = 0x15;
     *(u16 *)(reg_a6 + 0x22) = (u16) reg_tmp.h[1];
     *(u16 *)(reg_a6 + 0x24) = (u16) reg_tmp.h[0];
-    func_0012F4C0();
+    bullet_look_set_small_by_dir();
 }
 
 void bullet_move_type_22(void) {
@@ -2440,7 +2440,7 @@ void bullet_move_type_22(void) {
 }
 
 void bullet_move_type_23(void) {
-    func_0012E350();
+    bullet_move_and_emit_small();
     reg_tmp.w = 0x220;
     ENTITY(reg_a6)->draw.h = (u16) reg_tmp.h[1];
     ENTITY(reg_a6)->sprite.h = (u16) reg_tmp.h[0];
@@ -2510,7 +2510,7 @@ void bullet_move_type_26(void) {
 extern u16 g_game_frame;
 
 void bullet_move_type_27(void) {
-    func_0012E3D0();
+    bullet_turn_into_star();
     reg_tmp.w = 0x19D;
     ENTITY(reg_a6)->draw.h = (u16) reg_tmp.h[1];
     ENTITY(reg_a6)->sprite.h = (u16) reg_tmp.h[0];
@@ -2565,7 +2565,7 @@ void bullet_move_type_29(void) {
 
 
 void bullet_move_type_30() {
-    func_0012E350();
+    bullet_move_and_emit_small();
     reg_tmp.w = 0x220;
     ENTITY(reg_a6)->draw.h = (u16) reg_tmp.h[1];
     ENTITY(reg_a6)->sprite.h = (u16) reg_tmp.h[0];
@@ -2589,7 +2589,7 @@ void bullet_move_type_30() {
 }
 
 void bullet_move_type_31() {
-    func_0012E350();
+    bullet_move_and_emit_small();
     reg_tmp.w = 0x220;
     ENTITY(reg_a6)->draw.h = (u16) reg_tmp.h[1];
     ENTITY(reg_a6)->sprite.h = (u16) reg_tmp.h[0];
@@ -2614,7 +2614,7 @@ void bullet_move_type_31() {
 
 
 void bullet_move_type_32(void) {
-    func_0012E350();
+    bullet_move_and_emit_small();
     reg_tmp.w = 0x1E6;
     ENTITY(reg_a6)->draw.h = (u16) reg_tmp.h[1];
     ENTITY(reg_a6)->sprite.h = (u16) reg_tmp.h[0];
@@ -2658,7 +2658,7 @@ void bullet_move_type_34(void) {
 
 
 void bullet_move_type_35(void) {
-    func_0012E3D0();
+    bullet_turn_into_star();
     reg_tmp.w = 0x23;
     *(u16 *)(reg_a6 + 0x22) = (u16) reg_tmp.h[1];
     *(u16 *)(reg_a6 + 0x24) = (u16) reg_tmp.h[0];
@@ -2671,7 +2671,7 @@ void bullet_move_type_35(void) {
 
 extern u16 D_0024EC80[];
 
-void func_0012F4C0(void) {
+void bullet_look_set_small_by_dir(void) {
     ENTITY(reg_a6)->flags.b[1] &= 0xFE;
     reg_tmp.w = 0xFE00FE00;
     ENTITY(reg_a6)->offset_y.h = (u16) reg_tmp.h[1];
@@ -2695,7 +2695,7 @@ void func_0012F4C0(void) {
 }
 
 #ifdef DEATH_LABEL
-void death_func_0012E5B0(void) {
+void bullet_type_24_setup(void) {
     *(u16 *)(reg_a6 + 0x28) = 0x1410;
     reg_tmp.w = 0x24;
     *(u16 *)(reg_a6 + 0x22) = reg_tmp.h[1];

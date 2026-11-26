@@ -55,7 +55,7 @@ extern u16 g_player_was_hit;
 
 #ifdef DEATH_LABEL
 extern u16 g_attract_demo;
-s32 death_func_001271E0(void);
+s32 bullet_is_type_24(void);
 #endif
 
 void bullet_hits_player_check(void) {
@@ -63,7 +63,7 @@ void bullet_hits_player_check(void) {
 
     cond_flag = 0;
 #ifdef DEATH_LABEL
-    if (death_func_001271E0() != 0) {
+    if (bullet_is_type_24() != 0) {
         return;
     }
 #endif

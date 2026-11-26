@@ -3439,7 +3439,7 @@ loop_1:
 extern s8 D_0028C9C8;
 extern u8 D_0028C9D0;
 
-void func_0015A390(void) {
+void ground_pointer_rows_fill(void) {
     u16 temp_a0;
     reg_a4 = D_00258740;
     reg_a3 = (u8 *)(&D_0028C9C8);

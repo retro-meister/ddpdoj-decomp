@@ -538,7 +538,7 @@ extern u16 D_00269AE0[];
 extern u16 D_00269B10[];
 extern u16 D_00269B40[];
 
-void func_00132250(void) {
+void tally_bonus_sprite_draw(void) {
     if (*(s16 *)(reg_a6 + 0x3E) >= 0) {
         reg_d1.w = 0;
         reg_a0 = (u8 *)(D_00269AB0);
@@ -563,9 +563,9 @@ void func_00132250(void) {
 }
 
 s32 bg_layer_clear();
-s32 func_00133070();
-s32 func_001330F0();
-s32 func_00133840();
+s32 replay_save_wanted_check();
+s32 tally_frame_animate();
+s32 tally_players_draw();
 s32 fade_out();
 s32 input_get_p1_pressed();
 s32 input_get_p2_pressed();
@@ -602,7 +602,7 @@ extern s16 g_player2[];
 extern s16 g_player1[];
 
 #ifdef DEATH_LABEL
-s32 func_00141640();
+s32 hyper_ready_displays_reset();
 s32 p1_hyper_end();
 s32 p2_hyper_end();
 s32 p1_hyper_state_clear();
@@ -780,7 +780,7 @@ block_15:
             if (*(s16 *)(reg_a6 + 6) < 0) {
                 g_boss_present |= 8;
             }
-            func_001330F0();
+            tally_frame_animate();
             return;
         }
         if (v1 & 2) {
@@ -835,8 +835,8 @@ block_15:
                 *(u16 *)(reg_a6 + 0x2C) = 4U;
             }
         }
-        func_001330F0();
-        func_00133840();
+        tally_frame_animate();
+        tally_players_draw();
         t11 = *(u16 *)(reg_a6 + 0x2C);
         if (t11 != 0) {
             *(u16 *)(reg_a6 + 0x2C) = (u16) (t11 - 1);
@@ -941,7 +941,7 @@ next_499:
             return;
         } else {
             if (*(s16 *)(reg_a6 + 0x3E) >= 0) {
-                func_00132250();
+                tally_bonus_sprite_draw();
                 if (*(s16 *)(reg_a6 + 0x3E) < 0) {
                     g_boss_present |= 4;
                 }
@@ -959,7 +959,7 @@ next_499:
                     reg_a0 = (u8 *)(((u16 *)D_00269920));
                     *(u8 *)(reg_a5 + 7) = 0x15U;
                     D_0028ED60 = 1;
-                    func_00141640();
+                    hyper_ready_displays_reset();
                     if (g_player1[0] < 0) {
                         p1_hyper_end();
                         p1_hyper_state_clear();
@@ -976,7 +976,7 @@ next_499:
                     death_D_00290568 = 0;
                     reg_a0 = (u8 *)(((u16 *)D_00269920));
                     *(u8 *)(reg_a5 + 7) = 0x16U;
-                    func_00141640();
+                    hyper_ready_displays_reset();
                     if (g_player1[0] < 0) {
                         p1_hyper_end();
                         p1_hyper_state_clear();
@@ -1030,7 +1030,7 @@ block_77:
                             stage_load_step(g_loaded_stage);
                         }
                     }
-                    if ((D_0028E2A0 == 0) && (func_00133070() != 0)) {
+                    if ((D_0028E2A0 == 0) && (replay_save_wanted_check() != 0)) {
                         if (replay_file_finalize() != 0) {
                             D_0028E2A0 = 1;
                             goto block_90;

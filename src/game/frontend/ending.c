@@ -10,7 +10,7 @@ void ending_task_reset(void);
 
 void p1_hyper_state_clear_for_ending(void);
 void p2_hyper_state_clear_for_ending(void);
-void func_00141640(void);
+void hyper_ready_displays_reset(void);
 void p1_hyper_end(void);
 void p2_hyper_end(void);
 extern u8 D_0028C608[];
@@ -49,7 +49,7 @@ void ending_second_loop_check(void) {
         p2_hyper_end();
         p2_hyper_state_clear_for_ending();
     }
-    func_00141640();
+    hyper_ready_displays_reset();
     g_boss_hyper_wait = 0;
     if (g_two_player_seen == 3) goto block_1;
     reg_a0 = &(*(u8 *)&g_p1_loop2_extend_ok);
@@ -488,7 +488,7 @@ typedef void (*Fn)();
 
 s32 sprite_draw_keep();
 #ifdef DEATH_LABEL
-void death_func_00139380(void);
+void intro_text_update(void);
 #endif
 extern u32 D_0024D070[];
 extern u8 D_0024D090[];
@@ -515,7 +515,7 @@ void ending_task(void) {
     }
     reg_a6 = (u8 *)D_00295E00;
 #ifdef DEATH_LABEL
-    death_func_00139380();
+    intro_text_update();
 #else
     reg_d0.h[0] = ENTITY(reg_a6)->offset_x.h;
     ((Fn)*(u32 *)((u8 *)D_0024D090 + (reg_d0.h[0] * 4)))();

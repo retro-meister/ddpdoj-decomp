@@ -10,7 +10,7 @@ extern u16 g_two_player_seen;
 extern u8 g_replay_mode;
 extern u8 g_simulation_active;
 
-s32 func_00133070(void) {
+s32 replay_save_wanted_check(void) {
     if ((g_game_mode != 2) && (g_simulation_active == 0) && (D_0028E2D8 != 0) && (g_replay_mode == 1) && (D_0028E304 == 0) && (g_two_player_seen != 3) && (g_p1_score_digits == 0) && (g_p2_score_digits == 0)) {
         return 1;
     }
@@ -22,7 +22,7 @@ s32 sprite_draw_layer3();
 extern s16 g_player2[];
 extern s16 g_player1[];
 
-void func_001330F0(void) {
+void tally_frame_animate(void) {
     ENTITY(reg_a6)->hit_y_plus.b[1] -= 1;
     if ((s8) ENTITY(reg_a6)->hit_y_plus.b[1] < 0) {
         ENTITY(reg_a6)->hit_y_plus.b[1] = (u8) ENTITY(reg_a6)->hit_y_plus.b[0];
@@ -210,7 +210,7 @@ s32 tally_digit_draw();
 s32 binary_to_bcd();
 extern u8 D_00269A30[];
 
-void func_00133840(void) {
+void tally_players_draw(void) {
     u32 sh;
 
     if (g_player1[0] >= 0) goto next_7;

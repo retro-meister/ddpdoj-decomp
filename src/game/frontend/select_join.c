@@ -2,7 +2,7 @@
 #include "entity.h"
 extern u16 g_loop;
 
-void func_0020ED20(void) {
+void select_other_side_get(void) {
     reg_d0.w = 0;
     if (reg_d7.sw == 0) {
         reg_d0.w = 1;
@@ -11,13 +11,13 @@ void func_0020ED20(void) {
 
 s32 voice_ok();
 s32 player_panel_show_unless_step_4();
-s32 func_00206520();
+s32 select_side_palette_load();
 
-void func_0020ED40(void) {
+void select_palettes_load_both(void) {
     reg_d0.w = 0;
-    func_00206520();
+    select_side_palette_load();
     reg_d0.w = 1;
-    func_00206520();
+    select_side_palette_load();
     if (g_loop == 0) {
         voice_ok();
     }
@@ -26,7 +26,7 @@ void func_0020ED40(void) {
     *(s16 *)(reg_a6 + 0x5E) = 0;
     *(s16 *)(reg_a6 + 0x60) = 0;
     ENTITY(reg_a6)->flags.sb[0] = 7;
-    func_0020ED20();
+    select_other_side_get();
     player_panel_show_unless_step_4();
     if (reg_d7.h[0] != 0) {
         reg_a0 = (u8 *)(reg_a6 + 0x70);
@@ -34,7 +34,7 @@ void func_0020ED40(void) {
         reg_a0 = (u8 *)(reg_a6 - 0x70);
     }
     if ((g_loop != 0) || (*(u8 *)(reg_a0 + 1) == 0)) {
-        func_0020ED20();
+        select_other_side_get();
         reg_d0.h[0] += 1;
         reg_d0.h[0] &= 1;
         player_panel_show_unless_step_4();
@@ -45,15 +45,15 @@ s32 game_ships_start();
 s32 ship_select_apply();
 s32 music_play_bgm2();
 s32 sprite_palette_load();
-s32 func_001B04D0();
+s32 join_select_object_spawn();
 s32 join_select_objects_update();
-s32 func_00203850();
-s32 func_002039B0();
-s32 func_002041C0();
-s32 func_002046F0();
-s32 func_00204A20();
-s32 func_00205D20();
-s32 func_00206080();
+s32 select_panel_piece_0_draw();
+s32 select_panel_piece_1_draw();
+s32 select_panel_piece_3_draw();
+s32 select_panel_piece_4_draw();
+s32 select_panel_piece_5_draw();
+s32 select_other_side_piece_draw();
+s32 select_panel_piece_9_draw();
 extern u16 D_002523E0[];
 extern u8 D_002610B0[];
 extern s16 D_0028DF14;
@@ -70,7 +70,7 @@ extern s32 D_0028E99C;
 
 #define W(o) (*(u16 *)(reg_a6 + (o)))
 
-void func_0020EE20(void) {
+void select_side_draw(void) {
     u8 bits;
     u8 *stack_a0;
     s32 keep_9c;
@@ -89,7 +89,7 @@ next_3:
     if (W(0x5E) != 0) goto next_6;
     W(0x5E) = 1;
 next_5:
-    func_0020ED20();
+    select_other_side_get();
     reg_d0.h[0] += 1;
     reg_d0.h[0] &= 1;
     player_panel_show_unless_step_4();
@@ -143,7 +143,7 @@ next_31:
     ship_select_apply();
     D_0028E99C = keep_9c;
     D_0028E998 = keep_98;
-    func_001B04D0();
+    join_select_object_spawn();
     reg_a0 = stack_a0;
 next_40:
     if (W(0x42) == 0) goto next_41;
@@ -258,21 +258,21 @@ block_100:
         goto next_110;
     }
     reg_a5[2] = bits | 1;
-    func_00203850();
-    func_002039B0();
+    select_panel_piece_0_draw();
+    select_panel_piece_1_draw();
 next_110:
-    func_002041C0();
+    select_panel_piece_3_draw();
     bits = reg_a5[2];
     if (bits & 2) {
         reg_a5[2] = bits | 2;
         goto next_120;
     }
     reg_a5[2] = bits | 2;
-    func_002046F0();
+    select_panel_piece_4_draw();
 next_120:
-    func_00204A20();
-    func_00205D20();
-    func_00206080();
+    select_panel_piece_5_draw();
+    select_other_side_piece_draw();
+    select_panel_piece_9_draw();
 }
 
 u16 D_002523E0[128] = {

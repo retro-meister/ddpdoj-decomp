@@ -353,15 +353,15 @@ s32 ship_select_ship_confirm();
 s32 ship_select_ship_update();
 s32 input_get_p1_held();
 s32 input_get_p2_held();
-s32 func_00204800();
-s32 func_0020ED40();
-s32 func_0020EE20();
+s32 select_side_begin();
+s32 select_palettes_load_both();
+s32 select_side_draw();
 #ifdef DEATH_LABEL
 s32 text_layer_clear();
 s32 voice_ok();
 s32 music_stop();
 s32 text_palette_load();
-s32 death_func_001B1220();
+s32 fade_white_start();
 s32 fade_reset();
 extern u8 g_default_text_palette[];
 extern u8 g_game_mode;
@@ -396,7 +396,7 @@ void ship_select_task(void) {
             if (ENTITY(reg_a6)->flags.b[0] == 5) {
                 doll_select_confirm();
                 fade_reset();
-                death_func_001B1220();
+                fade_white_start();
                 g_game_mode = 2;
                 text_layer_clear();
                 reg_d0.w = 0;
@@ -428,10 +428,10 @@ void ship_select_task(void) {
                 doll_select_confirm();
             }
             if (ENTITY(reg_a6)->flags.b[0] == 6) {
-                func_0020ED40();
+                select_palettes_load_both();
             }
             if (ENTITY(reg_a6)->flags.b[0] == 7) {
-                func_0020EE20();
+                select_side_draw();
             }
 #endif
             if (ENTITY(reg_a6)->flags.b[0] == 0) {
@@ -484,7 +484,7 @@ void ship_select_task(void) {
                 }
             }
         }
-        func_00204800();
+        select_side_begin();
         reg_a6 += 0x70;
     } while ((s16)(--reg_d7.h[0]) >= 0);
     reg_d0.w = 3;
@@ -689,11 +689,11 @@ void select_step2_task(void) {
             }
             temp_a0_4 = ENTITY(reg_a6)->flags.b[0];
             if (temp_a0_4 == 6) {
-                func_0020ED40();
+                select_palettes_load_both();
             }
             temp_a0_5 = ENTITY(reg_a6)->flags.b[0];
             if (temp_a0_5 == 7) {
-                func_0020EE20();
+                select_side_draw();
             }
         }
         reg_a6 += 0x70;

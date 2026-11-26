@@ -1,17 +1,17 @@
 #include "common.h"
 #include "entity.h"
 
-void func_00205320(void);
-void func_00205DA0(void);
-void func_00205EE0(void);
-void func_00205F30(void);
-void func_00206510(void);
-void func_00206520(void);
-void func_00206690(void);
+void select_piece_move(void);
+void select_panel_piece_7_draw(void);
+void select_other_side_piece_pick(void);
+void select_panel_piece_8_draw(void);
+void select_side_palette_step_entry(void);
+void select_side_palette_load(void);
+void select_side_palette_step(void);
 
 s32 sprite_draw_keep();
 
-void func_00203850(void) {
+void select_panel_piece_0_draw(void) {
     if (*(u16 *)(reg_a6 + 0x64) == 0) goto block_rts;
     if (*(u8 *)(reg_a6 + 0x34) != 0) goto block_rts;
     reg_d1.w = 0x34010D00;
@@ -53,7 +53,7 @@ block_rts:
 s32 sprite_draw_layer1_zoom_keep();
 extern u8 D_00251EF0[];
 
-void func_002039B0(void) {
+void select_panel_piece_1_draw(void) {
     reg_d1.w = 0x48010000;
     reg_tmp.w = reg_d1.w;
     reg_d1.h[1] = reg_tmp.h[0];
@@ -243,7 +243,7 @@ extern u8 D_0028C868_as_u8_a[];
 extern u16 g_frame_mod4;
 extern u16 g_frame_mod2;
 
-void func_00203F50(void) {
+void select_panel_piece_2_draw(void) {
     u32 i;
 
     if (*(u16 *)(reg_a6 + 0x54) == 0) goto block_rts;
@@ -285,7 +285,7 @@ block_rts:
 extern u8 D_00251F30[];
 extern u8 D_0028C140[];
 
-void func_002041C0(void) {
+void select_panel_piece_3_draw(void) {
     if (reg_d7.h[0] == 0) goto block_2p;
     reg_d1.w = 0x37800D40;
     reg_d1.h[0] -= *(u16 *)(reg_a6 + 0x40);
@@ -322,7 +322,7 @@ void func_002041C0(void) {
     reg_d6.h[1] = *(u16 *)(reg_a0 + 0);
     reg_d6.h[0] = *(u16 *)(reg_a0 + 2);
     sprite_draw_layer1_zoom_keep();
-    func_00203F50();
+    select_panel_piece_2_draw();
     reg_d1.w = 0x21810040;
     reg_d1.h[0] -= *(u16 *)(reg_a6 + 0x40);
     reg_d1.h[0] -= *(u16 *)(reg_a6 + 0x44);
@@ -373,7 +373,7 @@ block_2p:
     reg_d6.h[1] = *(u16 *)(reg_a0 + 0);
     reg_d6.h[0] = *(u16 *)(reg_a0 + 2);
     sprite_draw_layer1_zoom_keep();
-    func_00203F50();
+    select_panel_piece_2_draw();
     reg_d1.w = 0x21811D80;
     reg_d1.h[0] += *(u16 *)(reg_a6 + 0x40);
     reg_d1.h[0] += *(u16 *)(reg_a6 + 0x44);
@@ -390,7 +390,7 @@ block_2p:
     sprite_draw_layer1_zoom_keep();
 }
 
-void func_002046F0(void) {
+void select_panel_piece_4_draw(void) {
     reg_d1.w = 0x38001C00;
     reg_tmp.w = reg_d1.w;
     reg_d1.h[1] = reg_tmp.h[0];
@@ -426,7 +426,7 @@ extern u8 D_00251F80[];
 extern u8 D_0028DF0C;
 extern u8 D_0028E304;
 
-void func_00204800(void) {
+void select_side_begin(void) {
     u8 *save_a0;
     u8 *save_a1;
     u8 *save_a2;
@@ -446,7 +446,7 @@ void func_00204800(void) {
         reg_d0.h[0] = reg_d7.h[0];
         reg_d0.h[0] += 1;
         reg_d0.h[0] &= 1;
-        func_00206520();
+        select_side_palette_load();
         return;
     }
     save_d7 = reg_d7.w;
@@ -457,7 +457,7 @@ void func_00204800(void) {
     save_a4 = reg_a4;
     save_a5 = reg_a5;
     reg_d0.w = 0;
-    func_00206510();
+    select_side_palette_step_entry();
     reg_d7.w = save_d7;
     reg_a0 = save_a0;
     reg_a1 = save_a1;
@@ -471,7 +471,7 @@ void func_00204800(void) {
         reg_d0.h[0] = reg_d7.h[0];
         reg_d0.h[0] += 1;
         reg_d0.h[0] &= 1;
-        func_00206520();
+        select_side_palette_load();
         reg_d0.w = save_d0;
         reg_d1.h[1] = *(u16 *)reg_a0;
         reg_a0 += 2;
@@ -502,7 +502,7 @@ extern u8 D_00251FF0[];
 extern u16 g_game_frame;
 extern u16 g_loop;
 
-void func_00204A20(void) {
+void select_panel_piece_5_draw(void) {
     u16 temp_a0_2;
     u16 temp_a0_3;
     u16 temp_a0_4;
@@ -530,7 +530,7 @@ void func_00204A20(void) {
                 reg_a2 = reg_a6 + 0x10;
                 reg_d1.h[0] = *(u16 *)(reg_a1 + 2);
                 reg_d5.h[0] = *(u16 *)reg_a1;
-                func_00205320();
+                select_piece_move();
             }
             goto block_11;
         }
@@ -585,7 +585,7 @@ block_11:
                 reg_a2 = reg_a6 + 0xA;
                 reg_d1.h[0] = *(u16 *)(reg_a1 + 2);
                 reg_d5.h[0] = *(u16 *)reg_a1;
-                func_00205320();
+                select_piece_move();
             }
             goto block_20;
         }
@@ -644,7 +644,7 @@ block_20:
                 reg_a2 = reg_a6 + 0x22;
                 reg_d1.h[0] = *(u16 *)(reg_a1 + 2);
                 reg_d5.h[0] = *(u16 *)reg_a1;
-                func_00205320();
+                select_piece_move();
             }
             goto block_31;
         }
@@ -687,7 +687,7 @@ block_31:
                 reg_a2 = reg_a6 + 0x1C;
                 reg_d1.h[0] = *(u16 *)(reg_a1 + 2);
                 reg_d5.h[0] = *(u16 *)reg_a1;
-                func_00205320();
+                select_piece_move();
             }
             goto block_41;
         }
@@ -730,7 +730,7 @@ block_41:
                 reg_a2 = reg_a6 + 0x16;
                 reg_d1.h[0] = *(u16 *)(reg_a1 + 2);
                 reg_d5.h[0] = *(u16 *)reg_a1;
-                func_00205320();
+                select_piece_move();
             }
             goto block_51;
         }
@@ -769,7 +769,7 @@ block_51:
 
 s32 velocity_from_direction();
 
-void func_00205320(void) {
+void select_piece_move(void) {
     reg_d0.h[0] = *(u16 *)reg_a2;
     velocity_from_direction();
     *(u16 *)(reg_a2 + 4) += reg_d3.h[0];
@@ -798,7 +798,7 @@ extern u16 D_00252340[];
 extern u16 D_0028C150[];
 extern u16 D_0028C154[];
 
-void func_002053F0(void) {
+void select_panel_piece_6_draw(void) {
     u8 *save_a0;
 
     reg_a0 = (u8 *)(D_0028C154);
@@ -951,24 +951,24 @@ block_rts:
 }
 
 
-void func_00205D20(void) {
+void select_other_side_piece_draw(void) {
     reg_a1 = reg_a6 - 0x70;
     if (reg_d7.h[0] != 0) {
         reg_a1 = reg_a6 + 0x70;
     }
     if (reg_d7.h[0] == 0) {
-        func_00205EE0();
+        select_other_side_piece_pick();
         return;
     }
     if (reg_a1[1] != 0) {
-        func_00205DA0();
+        select_panel_piece_7_draw();
     } else {
-        func_00205F30();
-        func_00205DA0();
+        select_panel_piece_8_draw();
+        select_panel_piece_7_draw();
     }
 }
 
-void func_00205DA0(void) {
+void select_panel_piece_7_draw(void) {
     if (g_loop != 0) goto block_rts;
     reg_d1.w = 0x5B001C00;
     reg_tmp.w = reg_d1.w;
@@ -1003,16 +1003,16 @@ block_rts:
 }
 
 
-void func_00205EE0(void) {
+void select_other_side_piece_pick(void) {
     if (*(u8 *)(reg_a1 + 1) != 0) {
-        func_00205F30();
+        select_panel_piece_8_draw();
         return;
     }
-    func_00205DA0();
-    func_00205F30();
+    select_panel_piece_7_draw();
+    select_panel_piece_8_draw();
 }
 
-void func_00205F30(void) {
+void select_panel_piece_8_draw(void) {
     if (g_loop != 0) goto block_rts;
     reg_d1.w = 0x15401C00;
     reg_tmp.w = reg_d1.w;
@@ -1051,7 +1051,7 @@ extern u8 D_00252350[];
 extern u8 D_00252380[];
 extern u8 D_002523B0[];
 
-void func_00206080(void) {
+void select_panel_piece_9_draw(void) {
     reg_a0 = (u8 *)D_00252350;
     reg_d5.h[0] = *(u16 *)(reg_a6 + 0x38);
     if (reg_d7.h[0] != 0) goto next_0;
@@ -1177,8 +1177,8 @@ next_2:
 }
 
 
-void func_00206510(void) {
-    func_00206690();
+void select_side_palette_step_entry(void) {
+    select_side_palette_step();
 }
 
 s32 text_layer_print();
@@ -1186,7 +1186,7 @@ extern u8 D_00251B40[];
 extern u8 D_0028C158[];
 extern u8 D_0028C15C[];
 
-void func_00206520(void) {
+void select_side_palette_load(void) {
     u8 *save_a0;
     u8 *save_a1;
     u8 *save_a2;
@@ -1260,7 +1260,7 @@ extern u8 D_00251C00[];
 extern u8 g_setting_chute_type;
 extern u8 g_setting_coin_mode;
 
-void func_00206690(void) {
+void select_side_palette_step(void) {
     cond_flag = 0;
     reg_a4 = (u8 *)D_0028C158;
     if (reg_d7.h[0] != 0) goto next_1;

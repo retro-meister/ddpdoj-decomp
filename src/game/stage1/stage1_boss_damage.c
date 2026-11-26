@@ -5,7 +5,7 @@
 void stage1_boss_body_destroyed(void);
 void stage1_boss_right_side_destroyed(void);
 void stage1_boss_left_side_destroyed(void);
-void func_001BC430(void);
+void stage1_boss_stop(void);
 void stage1_boss_time_limit(void);
 
 void stage1_boss_damage_init(void) {
@@ -300,7 +300,7 @@ s32 boss_phase_stop_all();
 s32 boss_movement_start();
 s32 boss_animation_start();
 s32 boss_attack_stop_all();
-s32 func_0013F3C0();
+s32 boss_kill_counter_clamp();
 s32 boss_defeat_begin();
 s32 slowdown_turn_off();
 extern u8 g_boss_present_b1;
@@ -309,9 +309,9 @@ void stage1_boss_body_destroyed() {
     g_boss_present_b1 |= 0x40;
     g_boss_present_b1 |= 0x80;
     slowdown_turn_off();
-    func_0013F3C0();
+    boss_kill_counter_clamp();
     boss_defeat_begin();
-    func_001BC430();
+    stage1_boss_stop();
     stage1_boss_right_side_destroyed();
     stage1_boss_left_side_destroyed();
     boss_attack_stop_all();
@@ -402,7 +402,7 @@ void stage1_boss_parts_disable(void) {
     ((u16 *)reg_a6)[0x60 / 2] = (u16) reg_d0.h[0];
 }
 
-void func_001BC430(void) {
+void stage1_boss_stop(void) {
     STAGE1_DAMAGE(reg_a6)->stopped = 1;
 }
 

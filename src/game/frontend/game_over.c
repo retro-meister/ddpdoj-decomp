@@ -17,7 +17,7 @@ extern u8 D_0028E368;
 extern u8 D_0028E378;
 extern u8 g_replay_buffer_state;
 
-void func_0014BEC0(void) {
+void game_over_task_begin(void) {
     g_replay_buffer_state = 2;
     D_0028E378 = 0xFF;
     D_0028E368 = 0;
@@ -45,7 +45,7 @@ s32 player_slot_request();
 s32 fades_reset();
 s32 task_start();
 
-void func_0014BF90() {
+void game_over_task_wait() {
     *(u16 *)(reg_a5 + 0x1C) -= 1;
     if (*(u16 *)(reg_a5 + 0x1C) == 0) {
         reg_d0.w = 0;
@@ -58,7 +58,7 @@ void func_0014BF90() {
     }
 }
 
-s32 func_00133070();
+s32 replay_save_wanted_check();
 s32 music_play_bgm12();
 s32 sprite_draw_layer1();
 s32 rng_next_masked();
@@ -76,11 +76,11 @@ void game_over_task(void) {
 
     st = *(u8 *)(reg_a5 + 3);
     if (st == 0) {
-        func_0014BEC0();
+        game_over_task_begin();
         return;
     }
     if (st == 2) {
-        if ((D_0028ED64 != 0) && (func_00133070(reg_a5) != 0)) {
+        if ((D_0028ED64 != 0) && (replay_save_wanted_check(reg_a5) != 0)) {
             if (replay_file_finalize() == 0) {
                 return;
             }
@@ -92,7 +92,7 @@ void game_over_task(void) {
         }
 block_1:
         g_replay_mode = 0;
-        func_0014BF90();
+        game_over_task_wait();
         return;
     }
     t = *(u16 *)(reg_a5 + 0x1A);

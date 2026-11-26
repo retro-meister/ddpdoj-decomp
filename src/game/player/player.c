@@ -3,9 +3,9 @@
 #include "player.h"
 
 void player_spawn(void);
-void func_00141300(void);
-void func_00141710(void);
-void func_001417D0(void);
+void player_spawn_power_setup(void);
+void player_spawn_timers_set(void);
+void player_displays_reset(void);
 void player_sprite_update(void);
 void player_update(void);
 void player_destroyed_begin(void);
@@ -849,7 +849,7 @@ next_30:
     reg_d0.w = 0;
     reg_d0.b[0] = reg_a5[6];
     if (g_simulation_active != 0) {
-        func_00141300();
+        player_spawn_power_setup();
     }
     player_slot_request_bomb_display();
 #ifdef DEATH_LABEL
@@ -882,10 +882,10 @@ next_30:
 #endif
     if (g_game_mode != 2) goto next_40;
     if (reg_d6.h[0] != 0) goto next_35;
-    func_001417D0();
+    player_displays_reset();
     goto next_36;
 next_35:
-    func_00141710();
+    player_spawn_timers_set();
 next_36:
     weapon_level_data_set(reg_a6);
 next_40:
@@ -1138,7 +1138,7 @@ extern u16 D_006E5BF6[];
 extern u16 D_006E5C0E[];
 extern u16 D_006E5C10[];
 
-void func_00141300(void) {
+void player_spawn_power_setup(void) {
     void p1_maximum_level_show(void);
     void p2_maximum_level_show(void);
     u8 *sa0;
@@ -1240,7 +1240,7 @@ void func_00141300(void) {
 #pragma push
 #pragma opt_propagation off
 
-void func_00141640(void) {
+void hyper_ready_displays_reset(void) {
     u8 *a0;
     u8 *a1;
     u8 *a2;
@@ -1304,7 +1304,7 @@ void func_00141640(void) {
 }
 #pragma pop
 
-void func_00141710(void) {
+void player_spawn_timers_set(void) {
     u8 *sa0;
     u8 *sa1;
     u8 *sa2;
@@ -1365,7 +1365,7 @@ extern u16 g_hyper_bullet_speed;
 extern u16 g_bullet_speed_bonus;
 #endif
 
-void func_001417D0(void) {
+void player_displays_reset(void) {
     u8 *save_a0;
     u8 *save_a1;
     u8 *save_a2;
@@ -1711,7 +1711,7 @@ void player_update(void) {
         PLAYER(reg_a6)->flags.b[1] &= 0xDF;
         if (reg_tmp.b[0] & 0x20) {
             if (g_game_mode == 2) {
-                func_001417D0();
+                player_displays_reset();
             }
             PLAYER(reg_a6)->flags.b[0] &= 0xFB;
             PLAYER(reg_a6)->move.b.speed = (u8) PLAYER(reg_a6)->speed.b.normal;
@@ -2878,7 +2878,7 @@ void p2_draw_while_entering(void) {
     }
 }
 
-s32 func_0013F3F0();
+s32 player_draw_unused();
 s32 ship_afterimage_update();
 s32 sprite_draw_with_players();
 extern u16 player_shield_start_sprites[];
@@ -2958,7 +2958,7 @@ next_110:
     ship_afterimage_update();
     if (D_0028E30C == 0) goto next_120;
     reg_a0 = reg_a6;
-    func_0013F3F0();
+    player_draw_unused();
 next_120:
     if (g_frame_mod2 == 0) return;
     reg_d4.h[0] = 0x1A;

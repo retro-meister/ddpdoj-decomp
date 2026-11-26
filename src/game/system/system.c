@@ -775,7 +775,7 @@ void fade_start_out(void) {
 }
 
 #ifdef DEATH_LABEL
-void death_func_001B1220(void) {
+void fade_white_start(void) {
     g_fade_state = 2;
     g_fade_white = 1;
 }

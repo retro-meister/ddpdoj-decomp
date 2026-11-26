@@ -2082,11 +2082,11 @@ void menu_launch_step0();
 void menu_launch_step1();
 void menu_launch_step2();
 void menu_launch_when_faded();
-void death_func_001B7460(void);
-void death_func_001B74D0(void);
-void death_func_001B7520(void);
-void death_func_001B7570(void);
-void death_func_001B76A0(void);
+void menu_death_option_page(void);
+void menu_death_option_step0(void);
+void menu_death_option_step1(void);
+void menu_death_option_step2(void);
+void menu_death_option_adjust(void);
 void menu_ranking_page(void);
 void menu_ranking_step0();
 void menu_ranking_step1();
@@ -2099,7 +2099,7 @@ void menu_debug_option_draw(void);
 void menu_arcade_draw(void);
 void menu_system_option_draw(void);
 void menu_alpha_a_update(void);
-void death_func_001B9120(void);
+void menu_death_option_draw(void);
 void menu_alpha_b_update(void);
 s32 menu_cursor_input(s32 page);
 s32 menu_ranking_cursor_move();
@@ -2402,7 +2402,7 @@ void menu_page_dispatch(void) {
         break;
 #ifdef DEATH_LABEL
     case MENU_PAGE_23:
-        death_func_001B7460();
+        menu_death_option_page();
         break;
 #endif
     case MENU_PAGE_RANKING:
@@ -3770,7 +3770,7 @@ void menu_system_option_defaults(void) {
 #endif
 }
 
-s32 func_00212580();
+s32 executable_launch();
 
 void menu_launch_page(void) {
     switch (g_menu_launch_step) {                           /* irregular */
@@ -3793,7 +3793,7 @@ void menu_launch_page(void) {
     if (g_menu_launch_step >= 0x40) {
         g_menu_launch_step++;
         if (g_menu_launch_step >= 0x60) {
-            func_00212580(2);
+            executable_launch(2);
             printf("kidou\n");
         }
     }
@@ -3888,16 +3888,16 @@ void menu_launch_step2() {
 }
 
 #ifndef DEATH_LABEL
-s32 func_00212580(s32);                     /* extern */
+s32 executable_launch(s32);                     /* extern */
 
 void menu_launch_when_faded() {
     if (g_fade_state == 0) {
         switch (D_0028EAA8) {                       /* irregular */
         case 1:
-            func_00212580(0);
+            executable_launch(0);
             return;
         case 2:
-            func_00212580(1);
+            executable_launch(1);
             break;
         }
     }
@@ -3911,23 +3911,23 @@ extern s8 death_D_00290CA8;
 extern s32 death_D_00290CE4;
 extern s8 death_D_00628F00[];
 
-void death_func_001B7460(void) {
+void menu_death_option_page(void) {
     switch (death_D_00290CA8) {
     case 0:
-        death_func_001B74D0();
+        menu_death_option_step0();
         break;
     case 1:
-        death_func_001B7520();
+        menu_death_option_step1();
         break;
     case 2:
-        death_func_001B7570();
+        menu_death_option_step2();
         break;
     case 3:
         break;
     }
 }
 
-void death_func_001B74D0(void) {
+void menu_death_option_step0(void) {
     death_D_00290CE4 = 0;
     death_D_00290CA8++;
     menu_items_slide_in(0x17);
@@ -3938,7 +3938,7 @@ void death_func_001B74D0(void) {
     g_menu_idle_timer = 0xE10;
 }
 
-void death_func_001B7520(void) {
+void menu_death_option_step1(void) {
     if (menu_items_slide_update(0x17) != 0) {
         death_D_00290CA8++;
         g_menu_cursor = 1;
@@ -3948,12 +3948,12 @@ void death_func_001B7520(void) {
     }
 }
 
-void death_func_001B7570(void) {
+void menu_death_option_step2(void) {
     s32 sfx_menu_confirm();
     s32 var_a1;
 
     if (menu_cursor_input(0x17) == 0) {
-        death_func_001B76A0();
+        menu_death_option_adjust();
     }
     var_a1 = 0;
     g_menu_idle_timer = 0xE10;
@@ -3995,7 +3995,7 @@ void death_func_001B7570(void) {
     }
 }
 
-void death_func_001B76A0(void) {
+void menu_death_option_adjust(void) {
     void sfx_menu_tick(void);
     s32 sel;
     s32 cur;
@@ -4203,7 +4203,7 @@ void menu_draw(void) {
         menu_system_option_draw();
         menu_alpha_a_update();
 #ifdef DEATH_LABEL
-        death_func_001B9120();
+        menu_death_option_draw();
 #endif
         menu_alpha_b_update();
         menu_simulation_draw();
@@ -4756,7 +4756,7 @@ void menu_alpha_a_update(void) {
 #ifdef DEATH_LABEL
 extern s8 death_D_00262EC7[];
 
-void death_func_001B9120(void) {
+void menu_death_option_draw(void) {
     extern void glyph_queue_add(s32 x, s32 y, s32 z, s32 page, s32 bright, s32 alpha, s32 flag);
     s32 i;
     s32 x;

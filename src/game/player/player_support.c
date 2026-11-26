@@ -1320,7 +1320,7 @@ void p2_bomb_panel_draw(void) {
 
 extern u8 g_bullets[];
 
-void func_0013F380(void) {
+void bullets_hold_timer_tick(void) {
     if (*(u16 *)(g_bullets + MAIN_OR_DEATH_LABEL(0x3484, 0x10684)) != 0) {
         *(u16 *)(g_bullets + MAIN_OR_DEATH_LABEL(0x3484, 0x10684)) -= 1;
         if (*(u16 *)(g_bullets + MAIN_OR_DEATH_LABEL(0x3484, 0x10684)) == 0) {
@@ -1331,7 +1331,7 @@ void func_0013F380(void) {
 
 extern u16 D_0029CEBA[];
 
-void func_0013F3C0(void) {
+void boss_kill_counter_clamp(void) {
     u16 *counter = (u16 *) &D_0029CEBA[0];
 
     if (*counter >= 0x14) {
@@ -1339,7 +1339,7 @@ void func_0013F3C0(void) {
     }
 }
 
-void func_0013F3F0(void) {
+void player_draw_unused(void) {
 }
 
 

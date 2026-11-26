@@ -20,7 +20,7 @@ s32 input_update_pressed();
 s32 pointer_tables_init();
 s32 sound_init();
 s32 sound_unused();
-s32 func_0018E5A0();
+s32 checked_pointers_store();
 s32 sprite_lists_reset();
 s32 sprite_lists_build();
 s32 palettes_init();
@@ -90,7 +90,7 @@ extern s8 D_0028EC58;
 extern u8 g_replay_file_loaded[];
 extern u8 g_replay_file[];
 
-void func_002120D0(void) {
+void game_main(void) {
     s32 t1;
     s32 t2;
     u32 t3;
@@ -108,7 +108,7 @@ void func_002120D0(void) {
     sim_rules_set_defaults();
     sys_start();
     pointer_tables_init();
-    func_0018E5A0();
+    checked_pointers_store();
     startup_pointers_store_a();
     startup_pointers_store_b();
     sound_init();
@@ -265,7 +265,7 @@ extern u8 D_0026F740[];
 
 #include "sdk/eekernel.h"
 
-void func_00212580(s32 mode) {
+void executable_launch(s32 mode) {
     sceSifInitRpc(0);
     sceCdInit(0);
     sceSifExitCmd();

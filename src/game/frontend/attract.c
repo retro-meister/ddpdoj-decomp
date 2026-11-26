@@ -319,7 +319,7 @@ extern u8 g_splash_visible;
 extern s8 g_cd_async_busy;
 extern s8 D_0028EB88;
 
-void death_func_00136FF0(void) {
+void attract_step_death_label_notice(void) {
     s32 text_layer_clear();
     s32 fades_reset();
     s32 text_palette_load();
@@ -1349,7 +1349,7 @@ void attract_side_one_more_coin(void) {
 #endif
 
 #ifdef DEATH_LABEL
-void death_func_00136FF0();
+void attract_step_death_label_notice();
 void attract_step_begin();
 void attract_step_settings_notice();
 void attract_step_stage_preload();
@@ -1375,7 +1375,7 @@ void (*attract_step_routines[20])() = {
     attract_step_begin,
     attract_step_settings_notice,
     attract_step_stage_preload,
-    death_func_00136FF0,
+    attract_step_death_label_notice,
     attract_step_unused_4,
     attract_step_demo_start,
     attract_step_unused_6,

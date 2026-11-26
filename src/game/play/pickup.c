@@ -1620,7 +1620,7 @@ void pickup_draw_value(void) {
 }
 
 #ifdef DEATH_LABEL
-s32 death_func_001271E0(void) {
+s32 bullet_is_type_24(void) {
     return (*(u16 *)reg_a6 & 0x3F) == 0x24;
 }
 #endif
@@ -2410,7 +2410,7 @@ void bullet_type_setup_31(void) {
 extern u16 g_bullet_cancel[];
 
 #ifdef DEATH_LABEL
-s32 death_func_00128A90();
+s32 bullet_cancel_to_pickup();
 #endif
 
 void bullets_cancel_update(void) {
@@ -2445,7 +2445,7 @@ loop_1:
     if (0 > (s64) *(s8 *) (reg_a6 + 1)) {
         D_0028DEA4 = reg_d7.w;
         reg_d0.h[0] = *(u16 *)(g_bullets + MAIN_OR_DEATH_LABEL(0x3486, 0x10686));
-        MAIN_OR_DEATH_LABEL(pickup_spawn_here, death_func_00128A90)();
+        MAIN_OR_DEATH_LABEL(pickup_spawn_here, bullet_cancel_to_pickup)();
         reg_d7.w = D_0028DEA4;
         bullet_slot_reset();
     }

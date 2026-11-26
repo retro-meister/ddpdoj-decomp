@@ -61,9 +61,9 @@ void small_tank_c_first();
 void small_tank_c_start();
 void small_tank_c();
 void enemy_pattern_count_0();
-void func_00168110();
-void func_00168120();
-void func_001683C0();
+void mid_test_count_0();
+void mid_test_begin();
+void mid_test_update();
 void item_test_count_0();
 void item_test_begin();
 void item_test_update();
@@ -877,7 +877,7 @@ EnemyRoutines g_enemy_routines_high[128] = {
     /* 0xA2 */ { crane_turret_start, crane_turret },
     /* 0xA3 */ { rail_turret_start, rail_turret },
     /* 0xA4 */ { stage4_tachyon_particle_start, stage4_tachyon_particle },
-    /* 0xA5 */ { func_00168120, func_001683C0 },
+    /* 0xA5 */ { mid_test_begin, mid_test_update },
     /* 0xA6 */ { formation_fire_timer_setup, formation_fire_timer_main },
     /* 0xA7 */ { enemy_remove_entry_entry, enemy_remove_entry },
     /* 0xA8 */ { enemy_remove_entry_entry, enemy_remove_entry },
@@ -1008,7 +1008,7 @@ void (*g_enemy_first_routines_high[128])() = {
     /* 0xA2 */ crane_turret_first,
     /* 0xA3 */ rail_turret_first,
     /* 0xA4 */ stage4_tachyon_particle_first,
-    /* 0xA5 */ func_00168110,
+    /* 0xA5 */ mid_test_count_0,
     /* 0xA6 */ formation_fire_timer_first,
     /* 0xA7 */ enemy_pattern_count_0,
     /* 0xA8 */ enemy_pattern_count_0,

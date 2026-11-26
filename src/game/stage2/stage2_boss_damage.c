@@ -461,7 +461,7 @@ next_730:
 }
 
 s32 boss_animation_stop(s32, s32, s32, s32);
-s32 func_0013F3C0();
+s32 boss_kill_counter_clamp();
 void stage2_boss_stop_damage(void);
 s32 boss_defeat_begin();
 s32 slowdown_turn_off();
@@ -471,7 +471,7 @@ void stage2_boss_defeated(void) {
     g_boss_present_b1 |= 0x40;
     g_boss_present_b1 |= 0x80;
     slowdown_turn_off();
-    func_0013F3C0();
+    boss_kill_counter_clamp();
     boss_defeat_begin();
     stage2_boss_stop_damage();
     boss_attack_stop_all();

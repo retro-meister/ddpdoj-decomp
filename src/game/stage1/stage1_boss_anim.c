@@ -392,7 +392,7 @@ void stage1_boss_left_rotor(void) {
 
 s32 explosion_spawn();
 
-void func_001B26F0(arg2)
+void stage1_boss_explode_by_table(arg2)
     u16 *arg2;
 {
     u16 *var_a2;
@@ -527,7 +527,7 @@ void stage1_boss_right_wreck(void) {
         reg_d2.h[1] = ENTITY(reg_a6)[1].y.h;
         reg_d2.h[0] = ENTITY(reg_a6)[1].x.h;
         reg_a1 = (u8 *)stage1_boss_right_wreck_debris;
-        func_001B26F0();
+        stage1_boss_explode_by_table();
     }
     reg_d0.h[0] = WRECK(reg_a4)->fall_speed;
     ENTITY(reg_a6)[1].y.h -= reg_d0.h[0];
@@ -648,7 +648,7 @@ void stage1_boss_left_wreck(void) {
         reg_d2.h[1] = ENTITY(reg_a6)[3].y.h;
         reg_d2.h[0] = ENTITY(reg_a6)[3].x.h;
         reg_a1 = ((u8 *)stage1_boss_left_wreck_debris);
-        func_001B26F0();
+        stage1_boss_explode_by_table();
     }
     reg_d0.h[0] = WRECK(reg_a4)->fall_speed;
     ENTITY(reg_a6)[3].y.h -= reg_d0.h[0];
@@ -932,7 +932,7 @@ void stage1_boss_body_explode(void) {
             reg_d2.h[1] = ENTITY(reg_a6)->y.h;
             reg_d2.h[0] = ENTITY(reg_a6)->x.h;
             reg_a1 = (u8 *)(stage1_boss_body_debris_b);
-            func_001B26F0();
+            stage1_boss_explode_by_table();
             EXPLODE(reg_a4)->step = 2U;
             EXPLODE(reg_a4)->delay = 0x80U;
             EXPLODE(reg_a4)->blasts |= 2;
@@ -946,7 +946,7 @@ void stage1_boss_body_explode(void) {
         reg_d2.h[1] = ENTITY(reg_a6)->y.h;
         reg_d2.h[0] = ENTITY(reg_a6)->x.h;
         reg_a1 = (u8 *)(stage1_boss_body_debris);
-        func_001B26F0();
+        stage1_boss_explode_by_table();
     }
 }
 

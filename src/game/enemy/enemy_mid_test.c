@@ -4,7 +4,7 @@
 
 void enemy_set_entity_count(s32);
 
-void func_00168110(void) {
+void mid_test_count_0(void) {
     enemy_set_entity_count(0);
 }
 
@@ -25,7 +25,7 @@ extern u16 g_stage_x2;
 extern u16 g_stage;
 extern s8 enemy_move_end_requested;
 
-void func_00168120(void) {
+void mid_test_begin(void) {
     if ((g_stage == 3) && (g_enemy_signal_2 != 0)) {
         enemy_remove();
         return;
@@ -95,7 +95,7 @@ extern u16 g_side_scroll_x[];
 extern s16 g_player2[56];
 extern s16 g_player1[56];
 
-void func_001683C0(void) {
+void mid_test_update(void) {
     u16 swap;
     s16 *t1;
     s16 *t2;

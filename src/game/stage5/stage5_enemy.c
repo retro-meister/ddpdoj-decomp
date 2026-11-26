@@ -174,7 +174,7 @@ typedef struct {
 #define ANIM_TEST(pointer) ((AnimTestState *)(pointer))
 
 void stage5_small_spider_turret_draw(void);
-void func_001F71A0(void);
+void spider_turret_unused(void);
 
 extern u16 g_enemies_stopped;
 s32 explosion_spawn();
@@ -626,7 +626,7 @@ block_6:
     SPIDER_TURRET(reg_a5)->seen = 1U;
 block_11:
     entity_follow_scroll();
-    func_001F71A0();
+    spider_turret_unused();
     if (ENTITY(reg_a6)[1].misc.b.draw_layer == 0) {
         if (SPIDER_TURRET(reg_a5)->shots_left == 0) {
             reg_tmp.b[0] = SPIDER_TURRET(reg_a5)->pause_countdown;
@@ -712,7 +712,7 @@ void stage5_small_spider_turret_draw(void) {
     sprite_draw_layer1();
 }
 
-void func_001F71A0(void) {
+void spider_turret_unused(void) {
 }
 
 void stage5_small_spider_head_first(void) {
@@ -977,7 +977,7 @@ block_8:
 block_13:
     if (g_enemies_stopped == 0) {
         entity_follow_scroll();
-        func_001F71A0();
+        spider_turret_unused();
         if (ENTITY(reg_a6)[1].misc.b.draw_layer == 0) {
             if (SPIDER_TURRET(reg_a5)->shots_left == 0) {
                 reg_tmp.b[0] = SPIDER_TURRET(reg_a5)->pause_countdown;

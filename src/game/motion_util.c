@@ -31,7 +31,7 @@ void entity_x_distance(void);
 void target_player_get(void);
 void player_pair_pick_alive(void);
 void stage_clear_task_start(void);
-void func_00203660(void);
+void enemies_remove_all_entry(void);
 void heli_x_limit_apply(void);
 void heli_x_limit_far(void);
 
@@ -1119,7 +1119,7 @@ void stage_clear_to_next_stage(void) {
 s32 pickups_clear();                            /* extern */
 
 void stage_clear_from_menu(void) {
-    func_00203660();
+    enemies_remove_all_entry();
     pickups_clear();
     stage_clear_begin();
     stage_clear_task_start();
@@ -1133,10 +1133,10 @@ void stage_clear_task_start(void) {
     *(u16 *)(reg_a0 + 4) = (u16) reg_d7.h[0];
 }
 
-void func_0014DBF0(void);
+void enemies_remove_all(void);
 
-void func_00203660(void) {
-    func_0014DBF0();
+void enemies_remove_all_entry(void) {
+    enemies_remove_all();
 }
 
 s32 input_get_p2_held();

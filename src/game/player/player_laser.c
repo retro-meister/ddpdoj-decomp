@@ -280,13 +280,13 @@ typedef void (*Fn)();
 
 s32 sfx_confirm();
 s32 sfx_cursor_move();
-s32 func_00203850();
-s32 func_002039B0();
-s32 func_002046F0();
-s32 func_00204A20();
-s32 func_002053F0();
-s32 func_00205D20();
-s32 func_00206080();
+s32 select_panel_piece_0_draw();
+s32 select_panel_piece_1_draw();
+s32 select_panel_piece_4_draw();
+s32 select_panel_piece_5_draw();
+s32 select_panel_piece_6_draw();
+s32 select_other_side_piece_draw();
+s32 select_panel_piece_9_draw();
 extern s32 D_0028E998;
 extern s32 D_0028E99C;
 extern u8 *reg_call_target_as_u8_p;
@@ -340,20 +340,20 @@ void ship_select_ship_update(void) {
         *(u8 *)(reg_a5 + 2) = (u8) (temp_v1 | 1);
     } else {
         *(u8 *)(reg_a5 + 2) = (u8) (temp_v1 | 1);
-        func_00203850();
-        func_002039B0();
+        select_panel_piece_0_draw();
+        select_panel_piece_1_draw();
     }
     temp_v1_2 = *(u8 *)(reg_a5 + 2);
     if (temp_v1_2 & 2) {
         *(u8 *)(reg_a5 + 2) = (u8) (temp_v1_2 | 2);
     } else {
         *(u8 *)(reg_a5 + 2) = (u8) (temp_v1_2 | 2);
-        func_002046F0();
+        select_panel_piece_4_draw();
     }
-    func_00204A20();
-    func_002053F0();
-    func_00205D20();
-    func_00206080();
+    select_panel_piece_5_draw();
+    select_panel_piece_6_draw();
+    select_other_side_piece_draw();
+    select_panel_piece_9_draw();
     reg_a4 = temp_s0;
 }
 

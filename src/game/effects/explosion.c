@@ -14,7 +14,7 @@ s32 debris_clear();                            /* extern */
 s32 sparks_clear();                            /* extern */
 s32 wrecks_clear();                            /* extern */
 
-void func_00139B20(void) {
+void objects_task_begin(void) {
     items_clear();
     bullets_clear();
     explosions_clear();
@@ -34,7 +34,7 @@ s32 hyper_stock_draw();
 s32 maximum_marks_draw();
 s32 hyper_ready_marks_draw();
 s32 hyper_bullet_speed_update();
-s32 func_0013F380();
+s32 bullets_hold_timer_tick();
 s32 p1_draw();
 s32 p2_draw();
 s32 p1_draw_while_entering();
@@ -69,12 +69,12 @@ extern u8 D_0029EA50[];
 extern s16 g_player2[56];
 extern s16 g_player1[56];
 
-void func_00139B80(void) {
+void objects_task(void) {
     u16 t1;
     u16 t2;
 
     if (*(u8 *)(reg_a5 + 3) == 0) {
-        func_00139B20();
+        objects_task_begin();
         return;
     }
     wrecks_update();
@@ -102,7 +102,7 @@ void func_00139B80(void) {
     ground_step_unused(0x1F, 0x1F, 0);
     hyper_bullet_speed_update();
     bullets_update();
-    func_0013F380();
+    bullets_hold_timer_tick();
     maximum_marks_draw();
     hyper_ready_marks_draw();
     ground_step_unused(0, 0x1F, 0);

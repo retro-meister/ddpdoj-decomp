@@ -516,10 +516,10 @@ extern u16 death_D_00254964[];
 extern u16 death_D_0025496E[];
 extern u16 death_D_00254978[];
 extern u16 death_D_00254982[];
-extern void death_func_0012E5B0(void);
+extern void bullet_type_24_setup(void);
 #endif
 
-void func_0018E5A0(void) {
+void checked_pointers_store(void) {
     extern void input_get_p1_held(void);
     extern void input_get_p2_held(void);
     extern void input_get_p1_pressed(void);
@@ -972,7 +972,7 @@ void func_0018E5A0(void) {
     if (death_D_00250B20[0] != 0x48) {
         printf("error! bulljmp[72]\n");
     }
-    STORE_POINTER_DIRECT(death_D_00250B20, death_func_0012E5B0);
+    STORE_POINTER_DIRECT(death_D_00250B20, bullet_type_24_setup);
 #endif
     if (((u16 *)D_0024EBC0)[0] != 0x0) {
         printf("error! bull_n02tbl[0]\n");

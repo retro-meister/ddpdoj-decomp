@@ -174,7 +174,7 @@ block_rts:
 }
 
 s32 bullet_fire256();
-void func_001BF570(void) {
+void stage2_boss_rage_fan_a(void) {
     reg_d0.w = 0xFFFE0001;
     reg_d7.b[0] = reg_d1.b[0];
     reg_d6.h[0] = 0x10;
@@ -194,7 +194,7 @@ void func_001BF570(void) {
     bullet_fire256();
 }
 
-void func_001BF630(void) {
+void stage2_boss_rage_fan_b(void) {
     reg_d0.w = 0x40001;
     reg_d7.b[0] = reg_d1.b[0];
     reg_d6.h[0] = 2;
@@ -1885,6 +1885,6 @@ u16 D_0026C260[8] = {
 };
 
 void (*D_0028DB08[2])() = {
-    func_001BF570,
-    func_001BF630,
+    stage2_boss_rage_fan_a,
+    stage2_boss_rage_fan_b,
 };

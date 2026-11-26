@@ -279,7 +279,7 @@ void enemies_run(void) {
 
 s32 active_players_mask();
 
-void func_0014DBF0(u8 *arg1) {
+void enemies_remove_all(u8 *arg1) {
     u8 *var_a1;
     u8 temp_a0;
 

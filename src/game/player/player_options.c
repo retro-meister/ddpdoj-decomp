@@ -4,9 +4,9 @@
 
 void p2_options_update(void);
 void options_update(void);
-void func_001A0E90(void);
-void func_001A1040(void);
-void func_001A1360(void);
+void options_update_style_a(void);
+void options_update_style_b(void);
+void options_update_style_c(void);
 void option_aim(void);
 void options_narrow_step(void);
 void options_widen_step(void);
@@ -619,13 +619,13 @@ block_b:
 next_510:
     switch ((s32) reg_d0.h[0] >> 1) {
     case 0:
-        func_001A0E90();
+        options_update_style_a();
         break;
     case 1:
-        func_001A1040();
+        options_update_style_b();
         break;
     case 2:
-        func_001A1360();
+        options_update_style_c();
         break;
     }
 next_520:
@@ -703,7 +703,7 @@ block_rts:
 
 s32 option_shots_fire_style_a();
 
-void func_001A0E90(void) {
+void options_update_style_a(void) {
     option_animate();
     option_move();
     reg_a6 += 0x20;
@@ -757,7 +757,7 @@ block_13:
 
 s32 option_shots_fire_style_b();
 
-void func_001A1040(void) {
+void options_update_style_b(void) {
     u32 t;
     u8 *p0;
 
@@ -855,7 +855,7 @@ block_22:
 
 s32 option_shots_fire_style_c();
 
-void func_001A1360(void) {
+void options_update_style_c(void) {
     option_animate();
     option_move();
     reg_a6 += 0x20;

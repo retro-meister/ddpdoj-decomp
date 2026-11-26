@@ -247,7 +247,7 @@ s32 boss_phase_start();
 s32 boss_phase_stop_all();
 s32 boss_part_hide();
 s32 boss_attack_stop_all();
-s32 func_0013F3C0();
+s32 boss_kill_counter_clamp();
 s32 stage5_boss_stop_damage();
 s32 bullet_cancel_on_boss_hit();
 s32 boss_defeat_begin();
@@ -258,7 +258,7 @@ void stage5_boss_form3_defeated() {
     g_boss_present_b1 |= 0x40;
     g_boss_present_b1 |= 0x80;
     slowdown_turn_off();
-    func_0013F3C0();
+    boss_kill_counter_clamp();
     boss_defeat_begin();
     bullet_cancel_on_boss_hit();
     stage5_boss_stop_damage();

@@ -1310,7 +1310,7 @@ block_join:
     }
 }
 
-void func_0015EF00(void)
+void mid_flyer_c_fire_pair_a(void)
 {
     extern void bullet_fire256_fast(void);
   int new_var;
@@ -1331,7 +1331,7 @@ void func_0015EF00(void)
   reg_d1.h[0] = reg_d6.h[0];
 }
 
-void func_0015EF60(void)
+void mid_flyer_c_fire_pair_b(void)
 {
     extern void bullet_fire256_fast(void);
   u32 saved_d0;
@@ -1561,7 +1561,7 @@ block_25:
                                 reg_d3.w = 0xF7C0FAC0;
                                 reg_d0.w = 0x5000C;
                                 if (((s32) g_stage >= 3) && (reg_d0.w = 0x5000C, reg_d5.b[0] = MID_FLYER_C(reg_a5)->first_shots_left, (MID_FLYER_C(reg_a5)->first_shots == reg_d5.b[0]))) {
-                                    func_0015EF00();
+                                    mid_flyer_c_fire_pair_a();
                                 } else {
                                     bullet_fire256_2way();
                                 }
@@ -1570,7 +1570,7 @@ block_25:
                                 reg_d3.h[0] = 0x500;
                                 reg_d0.w = 0x5000C;
                                 if (((s32) g_stage >= 3) && (reg_d0.w = 0x5000C, reg_d5.b[0] = MID_FLYER_C(reg_a5)->first_shots_left, (MID_FLYER_C(reg_a5)->first_shots == reg_d5.b[0]))) {
-                                    func_0015EF60();
+                                    mid_flyer_c_fire_pair_b();
                                 } else {
                                     bullet_fire256_2way();
                                 }

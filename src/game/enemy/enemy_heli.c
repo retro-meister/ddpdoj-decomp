@@ -91,7 +91,7 @@ void heli_muzzle_offset(u8 arg0) {
     reg_d2.h[0] = ((reg_d2.h[0] + 2) != 0) ? *(u16 *)((u8 *)reg_a0 + ((s16)(reg_d2.h[0] + 2) & ~1)) : *(u16 *)reg_a0;
 }
 
-void func_00150730(void) {
+void heli_unused(void) {
 }
 
 extern u16 g_enemy_signal_0;
@@ -309,7 +309,7 @@ block_21:
         reg_tmp.h[0] = temp_a0_2;
         reg_d0.w = 0x3000D;
         reg_d2.w += reg_tmp.w;
-        func_00150730();
+        heli_unused();
         reg_d3.w = 0;
         bullet_fire();
         heli_draw();
@@ -444,7 +444,7 @@ block_13:
             reg_tmp.h[0] = temp_a0_2;
             reg_d0.w = 0x3000D;
             reg_d2.w += reg_tmp.w;
-            func_00150730();
+            heli_unused();
             reg_d3.w = 0;
             bullet_fire();
             heli_draw();
@@ -602,7 +602,7 @@ next_7:
     reg_tmp.h[0] = ENTITY(reg_a6)->x.h;
     reg_d0.w = 0x3000D;
     reg_d2.w += reg_tmp.w;
-    func_00150730();
+    heli_unused();
     reg_d3.w = 0;
     bullet_fire();
     heli_set_direction_sprite();
@@ -763,7 +763,7 @@ next_7:
     reg_tmp.h[0] = ENTITY(reg_a6)->x.h;
     reg_d0.w = 0x3000D;
     reg_d2.w += reg_tmp.w;
-    func_00150730();
+    heli_unused();
     reg_d3.w = 0;
     bullet_fire();
     heli_set_direction_sprite();
@@ -844,7 +844,7 @@ void heli_e(void) {
                     reg_tmp.h[0] = temp_a0;
                     reg_d0.w = 0xD;
                     reg_d2.w += reg_tmp.w;
-                    func_00150730();
+                    heli_unused();
                     reg_d3.w = 0;
                     bullet_fire();
                 }
@@ -961,7 +961,7 @@ void heli_f(void) {
                     reg_tmp.h[0] = temp_a0;
                     reg_d0.w = 0xD;
                     reg_d2.w += reg_tmp.w;
-                    func_00150730();
+                    heli_unused();
                     reg_d3.w = 0;
                     bullet_fire();
                 }
@@ -1071,7 +1071,7 @@ void heli_g(void) {
                         reg_tmp.h[0] = temp_a0;
                         reg_d0.w = 0xD;
                         reg_d2.w += reg_tmp.w;
-                        func_00150730();
+                        heli_unused();
                         reg_d3.w = 0;
                         bullet_fire();
                     }
@@ -1131,7 +1131,7 @@ void heli_g(void) {
                     reg_tmp.h[0] = temp_a0_2;
                     reg_d0.w = 0xD;
                     reg_d2.w += reg_tmp.w;
-                    func_00150730();
+                    heli_unused();
                     reg_d3.w = 0;
                     bullet_fire();
                 }
@@ -1276,7 +1276,7 @@ block_7:
             reg_tmp.h[0] = temp_a0_2;
             reg_d0.w = 0x3000D;
             reg_d2.w += reg_tmp.w;
-            func_00150730();
+            heli_unused();
             reg_d3.w = 0;
             bullet_fire();
             heli_set_direction_sprite();
