@@ -30,22 +30,18 @@ void stage2_boss_side_gun_anim(void);
 void stage2_boss_ripple_request_start(void);
 void stage2_boss_ripple_request(void);
 
-/*
- * The animation part of the boss slot (reg_a4). `running` is cleared when the animation is over. Most of the
- * animations are one step every few frames.
- */
+/* The animation part of the boss slot (reg_a4). */
 typedef struct {
     /* 0x00 */ s16 running;
     /* 0x02 */ SlotTimer frame;
     /* 0x04 */ u16 step;
 } FrameStep;
 
-/* The radome turns to a direction picked at random, waits, and picks the next. */
 typedef struct {
     /* 0x00 */ s16 running;
     /* 0x02 */ u8 target;
     /* 0x03 */ u8 turning;        /* 0: waiting, 1: turning */
-    /* 0x04 */ SlotTimer turn;    /* frames between two steps of the turn */
+    /* 0x04 */ SlotTimer turn;
     /* 0x06 */ u16 wait;
 } RadomeIdle;
 
@@ -57,7 +53,6 @@ typedef struct {
     /* 0x07 */ u8 step;           /* 1 or -1 */
 } RadomeSpin;
 
-/* The shoulder cannon is thrown back and comes forward again. */
 typedef struct {
     /* 0x00 */ s16 running;
     /* 0x02 */ SlotTimer back;

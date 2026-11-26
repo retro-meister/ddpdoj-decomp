@@ -4,39 +4,35 @@
 #include "enemy.h"
 
 
-/*
- * The stage 2 mid-boss, kind 0x8C. It has three attacks in turn: volleys from the hatch, which opens for them,
- * bursts from the two side guns, and spreads. Its second entity keeps the frame of the hatch in `look`, the
- * timer of the hatch in `move` and the hit points, 32 bits, in `attr` and `misc`; the third keeps the palettes.
- */
+/* The stage 2 mid-boss, kind 0x8C. */
 typedef struct {
     /* 0x00 */ u8 common[0x16];
     /* 0x16 */ u8 unused_16;
-    /* 0x17 */ u8 seen;               /* it has been inside the screen */
+    /* 0x17 */ u8 seen;
     /* 0x18 */ u16 attack;            /* 0: hatch volleys, 1: side guns, 2: spreads */
     /* 0x1A */ u16 hatch_phase;       /* 0: waiting, 1: opening, 2: firing, 3: closing */
-    /* 0x1C */ u8 hit_flash;          /* what a hit changes in the palette */
+    /* 0x1C */ u8 hit_flash;
     /* 0x1D */ u8 palette;
     /* 0x1E */ u8 unused_1E;
     /* 0x1F */ u8 hatch_wait;
     /* 0x20 */ u8 hatch_volleys;
     /* 0x21 */ u8 hatch_volleys_left;
-    /* 0x22 */ u8 side_pause;         /* frames before the next round of bursts */
+    /* 0x22 */ u8 side_pause;
     /* 0x23 */ u8 side_wait;
-    /* 0x24 */ u8 side_shots;         /* shots in a burst; six more with every round */
+    /* 0x24 */ u8 side_shots;
     /* 0x25 */ u8 side_shots_left;
     /* 0x26 */ u16 unused_26;
     /* 0x28 */ struct {
         u16 sprite[2];                /* high word first */
-        Field16 dir;                  /* where it points, 1/256 of a turn */
+        Field16 dir;
     } gun[2];
-    /* 0x34 */ u8 side_interval;      /* frames between two shots of a burst */
+    /* 0x34 */ u8 side_interval;
     /* 0x35 */ u8 hatch_delay;
     /* 0x36 */ u8 spread_pause;
     /* 0x37 */ u8 spread_wait;
-    /* 0x38 */ Field16 spread_step;   /* 0xC down to 0 in steps of 4 */
+    /* 0x38 */ Field16 spread_step;
     /* 0x3A */ u16 hatch_speed;
-    /* 0x3C */ u8 side_angle;         /* gets narrower with every round, down to 5 */
+    /* 0x3C */ u8 side_angle;
     /* 0x3D */ u8 spread_interval;
     /* 0x3E */ u16 spread_speed;
     /* 0x40 */ u16 unused_40[2];

@@ -18,34 +18,31 @@ void func_001D6A40(void);
 void func_001D6B60(void);
 
 
-/*
- * The stage 3 mid-boss. Its routine is picked by `mode`; `step` is where the mode is in its own sequence.
- * It loses its two sides when its hit points or its time run low, and leaves when the time is up.
- */
+/* The stage 3 mid-boss. */
 typedef struct {
     /* 0x00 */ u8 common[0x16];
     /* 0x16 */ u16 unused_16;
     /* 0x18 */ u16 mode;
     /* 0x1A */ u8 unused_1A;
     /* 0x1B */ u8 step;
-    /* 0x1C */ u16 next_attack;       /* 0 to 3 in turn */
+    /* 0x1C */ u16 next_attack;
     /* 0x1E */ u8 sides_lost;
-    /* 0x1F */ u8 weak;               /* hit points at 0x1000 or below */
+    /* 0x1F */ u8 weak;
     /* 0x20 */ u16 hp[2];             /* high word first */
     /* 0x24 */ u8 dying_step;
     /* 0x25 */ u8 dying;
     /* 0x26 */ EnemyTimer blast_timer;
     /* 0x28 */ u16 blast_rounds;
-    /* 0x2A */ u16 blast;             /* offset of the next explosion in the table */
+    /* 0x2A */ u16 blast;
     /* 0x2C */ u16 shown;
-    /* 0x2E */ u16 time_left;         /* frames until it gives up */
+    /* 0x2E */ u16 time_left;
     /* 0x30 */ u16 gone;
     /* 0x32 */ u16 frame;
     /* 0x34 */ u8 unused_34[0x10];
     /* 0x44 */ u16 after_entities[2];
 } Stage3MidbossState;
 
-/* What the mid-boss drops, kind 0x13: it grows and speeds up, and fires six shots once it is on the screen. */
+/* Kind 0x13, started by the mid-boss. */
 typedef struct {
     /* 0x00 */ u8 common[0x16];
     /* 0x16 */ union {
@@ -56,7 +53,7 @@ typedef struct {
     /* 0x1E */ EnemyTimer frame_timer;
     /* 0x20 */ u16 frame;
     /* 0x22 */ EnemyTimer grow_timer;
-    /* 0x24 */ u16 grow_frame;        /* up to 0x5C; the hit box grows with it */
+    /* 0x24 */ u16 grow_frame;
     /* 0x26 */ u8 unused_26;
     /* 0x27 */ u8 shots_left;
 } Stage3MidbossPodState;

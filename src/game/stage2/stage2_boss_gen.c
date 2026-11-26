@@ -2,19 +2,16 @@
 #include "entity.h"
 #include "enemy.h"
 
-/*
- * What stands on the ground of stage 2. Every one keeps its palette and what a hit changes in it, whether it
- * has been inside the screen, and, once destroyed, the frames its wreck still has.
- */
+/* State blocks of the stage 2 ground enemies. */
 typedef struct {
     /* 0x00 */ u8 common[0x16];
     /* 0x16 */ u8 dying;
     /* 0x17 */ u8 seen;
-    /* 0x18 */ u16 next_drop_hp;      /* it throws things out each time its hit points fall below this */
+    /* 0x18 */ u16 next_drop_hp;
     /* 0x1A */ u8 hit_flash;
     /* 0x1B */ u8 palette;
     /* 0x1C */ u16 armed;
-    /* 0x1E */ u16 drops;             /* how many at a time, minus one */
+    /* 0x1E */ u16 drops;
     /* 0x20 */ u16 rearmed;
 } BloomingBaseState;
 
@@ -27,7 +24,7 @@ typedef struct {
     /* 0x19 */ u8 palette;
 } BuildingState;
 
-/* The two guns open, fire a number of volleys and close again. */
+/* What the sliding gun and the wrecker gun share. */
 #define STAGE2_GUN_HEAD \
     /* 0x00 */ u8 common[0x16]; \
     /* 0x16 */ u8 shot_interval; \
@@ -50,19 +47,18 @@ typedef struct {
 
 typedef struct {
     STAGE2_GUN_HEAD
-    /* 0x24 */ u16 shield;            /* frames it cannot be hurt for; over when negative */
+    /* 0x24 */ u16 shield;
     /* 0x26 */ u16 unused_26;
-    /* 0x28 */ u16 shake;             /* frames of shaking left once it is destroyed */
-    /* 0x2A */ u16 wreck_delay;       /* frames until it shows its wreck */
+    /* 0x28 */ u16 shake;
+    /* 0x2A */ u16 wreck_delay;
     /* 0x2C */ u16 wreck_value;
 } WreckerGunState;
 
-/* The hangar the boss comes out of: its door opens once the scroll line is reached. */
 typedef struct {
     /* 0x00 */ u8 common[0x16];
     /* 0x16 */ u8 unused_16[4];
     /* 0x1A */ EnemyTimer frame_timer;
-    /* 0x1C */ u16 frame;             /* counts down in steps of 8; negative once the door is open */
+    /* 0x1C */ u16 frame;
     /* 0x1E */ u16 door_sprite[2];
 } HangarState;
 

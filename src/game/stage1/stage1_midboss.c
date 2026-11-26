@@ -15,31 +15,30 @@ extern u16 stage1_midboss_fade_script[];
 extern u16 stage1_midboss_wreck_entities[];
 extern u16 stage1_midboss_wreck_state_init[2];
 
-/* The stage 1 mid-boss: a body whose core opens to fire, and eight arms that turn around it. */
+/* The stage 1 mid-boss: its state block, its body (the first entity) and its eight arms (two entities each). */
 typedef struct {
     /* 0x00 */ u8 common[0x16];
-    /* 0x16 */ u8 dying;              /* frames left of blowing up; 0 while it lives */
+    /* 0x16 */ u8 dying;
     /* 0x17 */ u8 arrived;
     /* 0x18 */ u8 spin_backward;
-    /* 0x19 */ u8 spin_hold;          /* frames the arms keep their top speed */
+    /* 0x19 */ u8 spin_hold;
     /* 0x1A */ u8 spin_speed;
     /* 0x1B */ u8 spin_top_speed;
-    /* 0x1C */ EnemyTimer spin_step;  /* frames between two steps of the speed */
+    /* 0x1C */ EnemyTimer spin_step;
     /* 0x1E */ u8 unused_1E;
-    /* 0x1F */ u8 arms_busy;          /* the arms are opening, sweeping or closing */
+    /* 0x1F */ u8 arms_busy;
     /* 0x20 */ u8 fight;              /* 0: cannot be hurt yet, 1: fighting, 0xFF: leaving */
-    /* 0x21 */ u8 arm_turn;           /* which arms may fire this frame */
+    /* 0x21 */ u8 arm_turn;
     /* 0x22 */ EnemyTimer body_timer;
     /* 0x24 */ u16 body_frame;
-    /* 0x26 */ u16 hp;                /* the body's hit points while the core is shut */
-    /* 0x28 */ u16 wreck_value;       /* what the request for the wreck left in reg_d1 */
+    /* 0x26 */ u16 hp;
+    /* 0x28 */ u16 wreck_value;
     /* 0x2A */ u8 unused_2A[0x1A];
     /* 0x44 */ u16 after_entities[2];
 } Stage1MidbossState;
 
 #define STAGE1_MIDBOSS(pointer) ((Stage1MidbossState *)(pointer))
 
-/* The body is the first entity; the fields an entity uses for drawing hold the state of the core. */
 typedef struct {
     /* 0x00 */ Field16 flags;
     /* 0x02 */ Field16 y;
@@ -54,13 +53,12 @@ typedef struct {
     /* 0x18 */ Field16 hp;
     /* 0x1A */ u16 unused_1A;
     /* 0x1C */ Field16 attr;          /* b[0]: palette */
-    /* 0x1E */ u8 hit_flash;          /* what a hit changes in the palette */
+    /* 0x1E */ u8 hit_flash;
     /* 0x1F */ u8 normal_palette;
 } Stage1MidbossBody;
 
 #define MIDBOSS_BODY(pointer) ((Stage1MidbossBody *)(pointer))
 
-/* An arm is two entities, 0x40 bytes; there are eight after the body. */
 typedef struct {
     /* 0x00 */ Field16 flags;         /* 0x8000: destroyed */
     /* 0x02 */ Field16 y;
@@ -72,8 +70,8 @@ typedef struct {
     /* 0x0C */ EnemyTimer hatch_timer;
     /* 0x0E */ u8 other_0E[10];
     /* 0x18 */ Field16 hp;
-    /* 0x1A */ u8 angle;              /* where on the circle it is, 1/256 of a turn */
-    /* 0x1B */ u8 angle_part;         /* sixteenths of a step still to turn */
+    /* 0x1A */ u8 angle;
+    /* 0x1B */ u8 angle_part;
     /* 0x1C */ Field16 attr;
     /* 0x1E */ u8 hit_flash;
     /* 0x1F */ u8 normal_palette;

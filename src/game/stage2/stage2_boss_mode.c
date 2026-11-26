@@ -22,10 +22,7 @@ void stage2_boss_mode_rise_sway(void);
 void stage2_boss_mode_rage_start(void);
 void stage2_boss_mode_rage(void);
 
-/*
- * The mode part of the boss slot (reg_a4), one record per mode. `running` is cleared when the mode is over;
- * `step` is where the mode is in its own sequence and `delay` the frames left of a wait.
- */
+/* The mode part of the boss slot (reg_a4), one record per mode. */
 typedef struct {
     /* 0x00 */ s16 running;
     /* 0x02 */ u8 unused_02;
@@ -33,7 +30,6 @@ typedef struct {
     /* 0x04 */ u16 delay;
 } RiseMode;
 
-/* The first form breaks up: an effect routine every few frames, taken in turn from a table. */
 typedef struct {
     /* 0x00 */ s16 running;
     /* 0x02 */ u8 unused_02;
@@ -42,7 +38,7 @@ typedef struct {
     /* 0x06 */ SlotTimer effect_timer;
     /* 0x08 */ u16 unread_08;
     /* 0x0A */ u8 unused_0A[10];
-    /* 0x14 */ u16 effect;            /* offset of the next routine in the table */
+    /* 0x14 */ u16 effect;
 } SecondPhaseMode;
 
 typedef struct {
@@ -51,12 +47,12 @@ typedef struct {
     /* 0x03 */ u8 step;               /* 0, 1: rounds of explosions, 2: flash, 3: last blast, 4: wait */
     /* 0x04 */ u16 delay;
     /* 0x06 */ SlotTimer blast_timer;
-    /* 0x08 */ u16 blast;             /* offset of the next explosion in the table */
+    /* 0x08 */ u16 blast;
     /* 0x0A */ u16 rounds_left;
     /* 0x0C */ u8 unused_0C;
-    /* 0x0D */ u8 force;              /* added to the speed the explosions fly apart with */
-    /* 0x0E */ SlotTimer speedup;     /* frames between two steps of blast_timer */
-    /* 0x10 */ SlotTimer burst;       /* frames between two explosions at a random place */
+    /* 0x0D */ u8 force;
+    /* 0x0E */ SlotTimer speedup;
+    /* 0x10 */ SlotTimer burst;
     /* 0x12 */ SlotTimer effect_timer;
     /* 0x14 */ u16 effect;
 } FinalExplosionMode;
@@ -66,31 +62,30 @@ typedef struct {
     /* 0x02 */ u8 unused_02;
     /* 0x03 */ u8 step;
     /* 0x04 */ u16 delay;
-    /* 0x06 */ u16 last_attack;       /* the attack picked at random is never the last one again */
+    /* 0x06 */ u16 last_attack;
     /* 0x08 */ u16 attacks_done;
-    /* 0x0A */ u16 knee_rounds;       /* the least rounds of a knee gun attack */
-    /* 0x0C */ SlotTimer knee;         /* wait between two knee gun attacks */
-    /* 0x0E */ SlotTimer missile_pace; /* handed to the missile attack; its count gets shorter */
+    /* 0x0A */ u16 knee_rounds;
+    /* 0x0C */ SlotTimer knee;
+    /* 0x0E */ SlotTimer missile_pace;
     /* 0x10 */ u16 rounds_left;
 } HighSlowMode;
 
-/* Two sequences at once: `gun_step` for the turrets and the sides, `step` for the rest. */
 typedef struct {
     /* 0x00 */ s16 running;
     /* 0x02 */ u8 gun_step;
     /* 0x03 */ u8 step;
     /* 0x04 */ u16 delay;
-    /* 0x06 */ SlotTimer torso;        /* wait between two torso attacks */
-    /* 0x08 */ u16 torso_shots;       /* shots of the next torso attack; rises to 0x28 */
+    /* 0x06 */ SlotTimer torso;
+    /* 0x08 */ u16 torso_shots;
     /* 0x0A */ u8 unused_0A;
     /* 0x0B */ u8 torso_side;         /* 1 or -1, changes with every attack */
     /* 0x0C */ SlotTimer volleys;
     /* 0x0E */ u16 unused_0E;
     /* 0x10 */ SlotTimer pause_a;
-    /* 0x12 */ SlotTimer pause_b;     /* gets shorter, down to 0x10 */
-    /* 0x14 */ u8 level_b;            /* both levels rise to 4 */
+    /* 0x12 */ SlotTimer pause_b;
+    /* 0x14 */ u8 level_b;
     /* 0x15 */ u8 level_a;
-    /* 0x16 */ SlotTimer body;         /* wait between two body spreads */
+    /* 0x16 */ SlotTimer body;
     /* 0x18 */ Field16 body_arg;
     /* 0x1A */ SlotTimer body_volleys;
 } HighFastMode;
@@ -102,17 +97,15 @@ typedef struct {
     /* 0x04 */ u16 delay;
     /* 0x06 */ SlotTimer shot;
     /* 0x08 */ u16 shots_left;
-    /* 0x0A */ Field16 aim;           /* the directions of the two cannons; handed to the attack, whose start routine
-                                         overwrites them */
+    /* 0x0A */ Field16 aim;
 } RecoilMode;
 
-/* Rising along a table of positions, firing from one side and then the other. */
 typedef struct {
     /* 0x00 */ s16 running;
     /* 0x02 */ u8 started;
     /* 0x03 */ u8 step;
     /* 0x04 */ u16 delay;
-    /* 0x06 */ u16 waypoint;          /* offset of the next position */
+    /* 0x06 */ u16 waypoint;
     /* 0x08 */ u16 path[2];           /* address of the table, high word first */
     /* 0x0C */ u16 side;              /* 1 or -1 */
 } RiseSwayMode;
@@ -764,7 +757,7 @@ void stage2_boss_mode_high_fast(arg1)
                     }
                     reg_d0.w = 0xE;
                     boss_attack_start();
-                    *(u16 *)(reg_a0 + 6) = (u16) HIGH_FAST(reg_a4)->body_arg.h;   /* BodySpread: unused_06 and angle_step */
+                    *(u16 *)(reg_a0 + 6) = (u16) HIGH_FAST(reg_a4)->body_arg.h;
                     BODY_SPREAD(reg_a0)->speed = 0xFFFB;
                     BODY_SPREAD(reg_a0)->bullet = 4;
                     BODY_SPREAD(reg_a0)->next_bullet = 5;
@@ -1009,7 +1002,6 @@ void stage2_boss_mode_rise_sway_start(void) {
     RISE_SWAY(reg_a4)->waypoint = 0;
     RISE_SWAY(reg_a4)->delay = 0x20;
     reg_tmp.w = (u32) D_0026C810;
-    /* the path goes into the state block here, although the mode reads it from its slot */
     ENEMY_STATE(reg_a5)->entities[1] = (u16) reg_tmp.h[1];
     ENEMY_STATE(reg_a5)->line_step = (u16) reg_tmp.h[0];
     RISE_SWAY(reg_a4)->side = 1;

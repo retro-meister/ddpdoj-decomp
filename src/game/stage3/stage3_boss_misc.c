@@ -2,11 +2,7 @@
 #include "entity.h"
 #include "enemy.h"
 
-/*
- * The drone the stage 3 boss launches, and what flies off its lid. The boss leaves the drone's position and its
- * drawing attributes in the first words of the request. The drone unfolds, then flies on and fires bursts toward
- * the player from its two muzzles in turn, getting faster.
- */
+/* The drone the stage 3 boss launches (it takes y, x and attr from its request) and the lid bullet. */
 typedef struct {
     /* 0x00 */ u8 common[0x16];
     /* 0x16 */ union {
@@ -15,23 +11,23 @@ typedef struct {
     };
     /* 0x1C */ u8 hit_flash;
     /* 0x1D */ u8 palette;
-    /* 0x1E */ u8 pause;              /* frames between two bursts */
+    /* 0x1E */ u8 pause;
     /* 0x1F */ u8 wait;
     /* 0x20 */ u8 burst_shots;
     /* 0x21 */ u8 burst_shots_left;
     /* 0x22 */ u8 unused_22;
     /* 0x23 */ u8 shot_interval;
-    /* 0x24 */ EnemyTimer accel;      /* frames between two steps of its speed */
-    /* 0x26 */ u16 muzzle;            /* offset of the next pair of muzzles in their table */
+    /* 0x24 */ EnemyTimer accel;
+    /* 0x26 */ u16 muzzle;
     /* 0x28 */ EnemyTimer unfold_timer;
     /* 0x2A */ u16 unfold_frame;
     /* 0x2C */ EnemyTimer spin_timer;
     /* 0x2E */ u16 spin_frame;
     /* 0x30 */ u16 bullet_speed;
     /* 0x32 */ u16 bullet;
-    /* 0x34 */ u16 move;              /* direction and speed it takes once unfolded */
+    /* 0x34 */ u16 move;
     /* 0x36 */ u8 unused_36;
-    /* 0x37 */ u8 start_wait;         /* added to the first wait */
+    /* 0x37 */ u8 start_wait;
 } Stage3BossDroneState;
 
 typedef struct {
