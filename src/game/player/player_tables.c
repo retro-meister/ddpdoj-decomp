@@ -406,6 +406,11 @@ u16 D_0028C608[4] = {
     0x0303, 0x0202, 0x0101, 0x0000,
 };
 
+#ifdef DDPDOJ_PC
+u16 player_ship_sprite_tables[4] = {
+    0x0000, 0x0001, 0x0002, 0x0003,
+};
+#else
 u16 player_ship_sprite_tables[2] = {
     0x0000, 0x0001,
 };
@@ -413,7 +418,13 @@ u16 player_ship_sprite_tables[2] = {
 u16 D_0028C614[2] = {
     0x0002, 0x0003,
 };
+#endif
 
+#ifdef DDPDOJ_PC
+u16 player_ship_hitbox_tables[4] = {
+    0x0000, 0x0001, 0x0002, 0x0003,
+};
+#else
 u16 player_ship_hitbox_tables[2] = {
     0x0000, 0x0001,
 };
@@ -421,7 +432,13 @@ u16 player_ship_hitbox_tables[2] = {
 u16 D_0028C61C[2] = {
     0x0002, 0x0003,
 };
+#endif
 
+#ifdef DDPDOJ_PC
+u16 player_ship_shadow_tables[4] = {
+    0x0000, 0x0001, 0x0002, 0x0003,
+};
+#else
 u16 player_ship_shadow_tables[2] = {
     0x0000, 0x0001,
 };
@@ -429,6 +446,7 @@ u16 player_ship_shadow_tables[2] = {
 u16 D_0028C624[2] = {
     0x0002, 0x0003,
 };
+#endif
 
 u16 player_draw_table[2] = {
     0x0002, 0x0003,

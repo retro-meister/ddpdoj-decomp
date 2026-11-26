@@ -310,7 +310,7 @@ void player_slot_next_ship(void) {
     side_scroll_reset();
     reg_tmp.h[1] = PLAYER_SLOT(reg_a6)->lives[0];
     reg_tmp.h[0] = PLAYER_SLOT(reg_a6)->lives[1];
-    reg_a0 = (u8 *)reg_tmp.w;
+    reg_a0 = ARCADE_ADDRESS_DECODE(u8 *, reg_tmp.w);
     *(u16 *)reg_a0 -= 1;
     var_a0 = g_simulation_active;
     if ((var_a0 == 1) && ((s16) *(u16 *)reg_a0 < 0)) {
@@ -447,6 +447,15 @@ void player_slot_join_step(void) {
     D_0028DEDC = reg_d5.w;
     D_0028DED8 = reg_d6.w;
     D_0028DED4 = reg_d7.w;
+#ifdef DDPDOJ_PC
+    D_0028DED0 = reg_a0;
+    D_0028DECC = reg_a1;
+    D_0028DEC8 = reg_a2;
+    D_0028DEC4 = reg_a3;
+    D_0028DEC0 = reg_a4;
+    D_0028DEBC = reg_a5;
+    D_0028DEB8 = reg_a6;
+#else
     (*(s32 *)&D_0028DED0) = (s32)reg_a0;
     (*(s32 *)&D_0028DECC) = (s32)reg_a1;
     (*(s32 *)&D_0028DEC8) = (s32)reg_a2;
@@ -454,6 +463,7 @@ void player_slot_join_step(void) {
     (*(s32 *)&D_0028DEC0) = (s32)reg_a4;
     (*(s32 *)&D_0028DEBC) = (s32)reg_a5;
     (*(s32 *)&D_0028DEB8) = (s32)reg_a6;
+#endif
     player_slot_join();
 }
 
@@ -483,7 +493,7 @@ void player_slot_join(void) {
     reg_tmp.h[0] = PLAYER_SLOT(reg_a6)->lives[1];
     reg_d0.b[0] = g_setting_ship_stock;
     reg_a1 = (u8 *)(D_0024F3A8);
-    reg_a0 = (u8 *)reg_tmp.w;
+    reg_a0 = ARCADE_ADDRESS_DECODE(u8 *, reg_tmp.w);
     reg_d0.h[0] += reg_d0.h[0];
     temp_a0 = reg_d0.h[0];
     reg_a1 += temp_a0;
@@ -533,6 +543,15 @@ void player_slot_join(void) {
     reg_d5.w = D_0028DEDC;
     reg_d6.w = D_0028DED8;
     reg_d7.w = D_0028DED4;
+#ifdef DDPDOJ_PC
+    reg_a0 = D_0028DED0;
+    reg_a1 = D_0028DECC;
+    reg_a2 = D_0028DEC8;
+    reg_a3 = D_0028DEC4;
+    reg_a4 = D_0028DEC0;
+    reg_a5 = D_0028DEBC;
+    reg_a6 = D_0028DEB8;
+#else
     reg_a0 = (u8 *)(*(u32 *)&D_0028DED0);
     reg_a1 = (u8 *)(*(s32 *)&D_0028DECC);
     reg_a2 = (u8 *)(*(s32 *)&D_0028DEC8);
@@ -540,6 +559,7 @@ void player_slot_join(void) {
     reg_a4 = (u8 *)(*(s32 *)&D_0028DEC0);
     reg_a5 = (u8 *)(*(s32 *)&D_0028DEBC);
     reg_a6 = (u8 *)D_0028DEB8;
+#endif
 }
 
 extern u16 g_loop;
@@ -551,7 +571,7 @@ void player_slot_start(void) {
     reg_d0.b[0] = g_setting_ship_stock;
     reg_a1 = (u8 *)(D_0024F3A8);
     reg_tmp.h[0] = temp_a0;
-    reg_a0 = (u8 *)reg_tmp.w;
+    reg_a0 = ARCADE_ADDRESS_DECODE(u8 *, reg_tmp.w);
     reg_d0.h[0] += reg_d0.h[0];
     *(u16 *)reg_a0 = (reg_d0.h[0] != 0) ? *(u16 *)((u8 *)reg_a1 + ((s16)reg_d0.h[0] & ~1)) : *(u16 *)reg_a1;
     if (g_loop != 0) {

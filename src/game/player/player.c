@@ -1539,6 +1539,9 @@ extern u16 g_select_screen_active;
 extern u16 g_frame_mod2;
 extern u8 g_p2_score_pending_as_u8;
 extern u8 g_p1_score_pending_as_u8;
+#ifdef DDPDOJ_PC
+extern s32 g_score_scratch;
+#endif
 extern u8 g_boss_present_b1;
 extern u16 g_true_last_boss;
 extern u8 g_replay_save_prompt_active;
@@ -1553,7 +1556,7 @@ void player_sprite_update(void) {
     reg_d0.h[0] *= 2;
     reg_tmp.h[1] = (reg_d0.h[0] != 0) ? *(u16 *)((u8 *)reg_a0 + ((s16)reg_d0.h[0] & ~1)) : *(u16 *)reg_a0;
     reg_tmp.h[0] = (((u16)reg_d0.h[0] + 2) != 0) ? *(u16 *)((u8 *)reg_a0 + ((s16)((u16)reg_d0.h[0] + 2) & ~1)) : *(u16 *)reg_a0;
-    reg_a0 = (u8 *) reg_tmp.w;
+    reg_a0 = ARCADE_ADDRESS_DECODE(u8 *, reg_tmp.w);
     reg_d0.h[0] = PLAYER(reg_a6)->roll_frame.h;
     PLAYER(reg_a6)->sprite_hi.h = (reg_d0.h[0] != 0) ? *(u16 *)((u8 *)reg_a0 + ((s16)reg_d0.h[0] & ~1)) : *(u16 *)reg_a0;
     PLAYER(reg_a6)->sprite_lo.h = ((reg_d0.h[0] + 2) != 0) ? *(u16 *)((u8 *)reg_a0 + ((s16)(reg_d0.h[0] + 2) & ~1)) : *(u16 *)reg_a0;
@@ -1562,7 +1565,7 @@ void player_sprite_update(void) {
     reg_d1.h[0] *= 4;
     reg_tmp.h[1] = (reg_d1.h[0] != 0) ? *(u16 *)((u8 *)reg_a0 + ((s16)reg_d1.h[0] & ~1)) : *(u16 *)reg_a0;
     reg_tmp.h[0] = (((u16)reg_d1.h[0] + 2) != 0) ? *(u16 *)((u8 *)reg_a0 + ((s16)((u16)reg_d1.h[0] + 2) & ~1)) : *(u16 *)reg_a0;
-    reg_a0 = (u8 *) reg_tmp.w;
+    reg_a0 = ARCADE_ADDRESS_DECODE(u8 *, reg_tmp.w);
     PLAYER(reg_a6)->hit_x_plus.h = (reg_d0.h[0] != 0) ? *(u16 *)((u8 *)reg_a0 + ((s16)reg_d0.h[0] & ~1)) : *(u16 *)reg_a0;
     PLAYER(reg_a6)->hit_x_minus.h = ((reg_d0.h[0] + 2) != 0) ? *(u16 *)((u8 *)reg_a0 + ((s16)(reg_d0.h[0] + 2) & ~1)) : *(u16 *)reg_a0;
     if ((g_players_hidden == 0) && (g_frame_mod2 == 0) && (g_loop == 0) && (g_stage != 2)) {
@@ -1589,7 +1592,7 @@ void player_sprite_update(void) {
         idx = reg_d0.h[0];
         reg_tmp.h[1] = (idx != 0) ? *(u16 *)((u8 *)reg_a0 + ((s16)idx & ~1)) : *(u16 *)reg_a0;
         reg_tmp.h[0] = (((idx & 0xFFFF) + 2) != 0) ? *(u16 *)((u8 *)reg_a0 + ((s16)((idx & 0xFFFF) + 2) & ~1)) : *(u16 *)reg_a0;
-        reg_a0 = (u8 *) reg_tmp.w;
+        reg_a0 = ARCADE_ADDRESS_DECODE(u8 *, reg_tmp.w);
         reg_d0.h[0] = PLAYER(reg_a6)->roll_frame.h;
         reg_d2.h[1] = (reg_d0.h[0] != 0) ? *(u16 *)((u8 *)reg_a0 + ((s16)reg_d0.h[0] & ~1)) : *(u16 *)reg_a0;
         reg_d2.h[0] = (((u16)reg_d0.h[0] + 2) != 0) ? *(u16 *)((u8 *)reg_a0 + ((s16)((u16)reg_d0.h[0] + 2) & ~1)) : *(u16 *)reg_a0;
@@ -1601,7 +1604,11 @@ void player_sprite_update(void) {
         if (*(u8 *)(reg_a5 + 6) == 0) {
             if (g_p1_maximum_anim_delay == 0) {
                 p0 = &g_p1_score_pending_as_u8;
+#ifdef DDPDOJ_PC
+                p1 = &g_score_scratch;
+#else
                 p1 = (s32 *)(p0 - 0x34);
+#endif
                 *p1 = g_p1_maximum_value_digits[0];
                 bcd_add((void *)p0, (void *)p1);
                 if (g_loop != 0) {
@@ -1611,7 +1618,11 @@ void player_sprite_update(void) {
             }
         } else if (g_p2_maximum_anim_delay == 0) {
             p0 = &g_p2_score_pending_as_u8;
+#ifdef DDPDOJ_PC
+            p1 = &g_score_scratch;
+#else
             p1 = (s32 *)(p0 - 0x30);
+#endif
             *p1 = g_p2_maximum_value_digits[0];
             bcd_add((void *)p0, (void *)p1);
             if (g_loop != 0) {
@@ -2350,7 +2361,7 @@ block_244:
     reg_d0.h[0] *= 2;
     reg_tmp.h[1] = (reg_d0.h[0] != 0) ? *(u16 *)((u8 *)reg_a0 + ((s16)reg_d0.h[0] & ~1)) : *(u16 *)reg_a0;
     reg_tmp.h[0] = (((u16)reg_d0.h[0] + 2) != 0) ? *(u16 *)((u8 *)reg_a0 + ((s16)((u16)reg_d0.h[0] + 2) & ~1)) : *(u16 *)reg_a0;
-    reg_a0 = (u8 *) reg_tmp.w;
+    reg_a0 = ARCADE_ADDRESS_DECODE(u8 *, reg_tmp.w);
     reg_d0.h[0] = PLAYER(reg_a6)->roll_frame.h;
     PLAYER(reg_a6)->sprite_hi.h = (reg_d0.h[0] != 0) ? *(u16 *)((u8 *)reg_a0 + ((s16)reg_d0.h[0] & ~1)) : *(u16 *)reg_a0;
     PLAYER(reg_a6)->sprite_lo.h = ((reg_d0.h[0] + 2) != 0) ? *(u16 *)((u8 *)reg_a0 + ((s16)(reg_d0.h[0] + 2) & ~1)) : *(u16 *)reg_a0;
@@ -2359,7 +2370,7 @@ block_244:
     reg_d1.h[0] *= 4;
     reg_tmp.h[1] = (reg_d1.h[0] != 0) ? *(u16 *)((u8 *)reg_a0 + ((s16)reg_d1.h[0] & ~1)) : *(u16 *)reg_a0;
     reg_tmp.h[0] = (((u16)reg_d1.h[0] + 2) != 0) ? *(u16 *)((u8 *)reg_a0 + ((s16)((u16)reg_d1.h[0] + 2) & ~1)) : *(u16 *)reg_a0;
-    reg_a0 = (u8 *) reg_tmp.w;
+    reg_a0 = ARCADE_ADDRESS_DECODE(u8 *, reg_tmp.w);
     PLAYER(reg_a6)->hit_x_plus.h = (reg_d0.h[0] != 0) ? *(u16 *)((u8 *)reg_a0 + ((s16)reg_d0.h[0] & ~1)) : *(u16 *)reg_a0;
     PLAYER(reg_a6)->hit_x_minus.h = ((reg_d0.h[0] + 2) != 0) ? *(u16 *)((u8 *)reg_a0 + ((s16)(reg_d0.h[0] + 2) & ~1)) : *(u16 *)reg_a0;
     if ((g_players_hidden == 0) && (g_frame_mod2 == 0) && (g_loop == 0) && (g_stage != 2)) {
@@ -2386,7 +2397,7 @@ block_244:
         temp_a1_9 = reg_d0.h[0];
         reg_tmp.h[1] = (temp_a1_9 != 0) ? *(u16 *)((u8 *)reg_a0 + ((s16)temp_a1_9 & ~1)) : *(u16 *)reg_a0;
         reg_tmp.h[0] = (((temp_a1_9 & 0xFFFF) + 2) != 0) ? *(u16 *)((u8 *)reg_a0 + ((s16)((temp_a1_9 & 0xFFFF) + 2) & ~1)) : *(u16 *)reg_a0;
-        reg_a0 = (u8 *) reg_tmp.w;
+        reg_a0 = ARCADE_ADDRESS_DECODE(u8 *, reg_tmp.w);
         reg_d0.h[0] = PLAYER(reg_a6)->roll_frame.h;
         reg_d2.h[1] = (reg_d0.h[0] != 0) ? *(u16 *)((u8 *)reg_a0 + ((s16)reg_d0.h[0] & ~1)) : *(u16 *)reg_a0;
         reg_d2.h[0] = (((u16)reg_d0.h[0] + 2) != 0) ? *(u16 *)((u8 *)reg_a0 + ((s16)((u16)reg_d0.h[0] + 2) & ~1)) : *(u16 *)reg_a0;
@@ -2398,7 +2409,11 @@ block_244:
         if (*(u8 *)(reg_a5 + 6) == 0) {
             if (g_p1_maximum_anim_delay == 0) {
                 p0 = &g_p1_score_pending_as_u8;
+#ifdef DDPDOJ_PC
+                p1 = &g_score_scratch;
+#else
                 p1 = (s32 *)(p0 - 0x34);
+#endif
                 *p1 = g_p1_maximum_value_digits[0];
                 bcd_add((void *)p0, (void *)p1);
                 if (g_loop != 0) {
@@ -2408,7 +2423,11 @@ block_244:
             }
         } else if (g_p2_maximum_anim_delay == 0) {
             p0 = &g_p2_score_pending_as_u8;
+#ifdef DDPDOJ_PC
+            p1 = &g_score_scratch;
+#else
             p1 = (s32 *)(p0 - 0x30);
+#endif
             *p1 = g_p2_maximum_value_digits[0];
             bcd_add((void *)p0, (void *)p1);
             if (g_loop != 0) {
@@ -3045,7 +3064,7 @@ void player_draw_plain(void) {
     reg_d0.h[0] *= 2;
     reg_tmp.h[1] = (reg_d0.h[0] != 0) ? *(u16 *) (reg_a0 + ((s16) reg_d0.h[0] & ~1)) : *(u16 *) reg_a0;
     reg_tmp.h[0] = (((u16) reg_d0.h[0] + 2) != 0) ? *(u16 *) (reg_a0 + ((s16) ((u16) reg_d0.h[0] + 2) & ~1)) : *(u16 *) reg_a0;
-    reg_a0 = (u8 *) reg_tmp.w;
+    reg_a0 = ARCADE_ADDRESS_DECODE(u8 *, reg_tmp.w);
     reg_d0.h[0] = 0;
     *(u16 *) (reg_a6 + 0xA) = (reg_d0.h[0] != 0) ? *(u16 *) (reg_a0 + ((s16) reg_d0.h[0] & ~1)) : *(u16 *) reg_a0;
     *(u16 *) (reg_a6 + 0xC) = ((reg_d0.h[0] + 2) != 0) ? *(u16 *) (reg_a0 + ((s16) (reg_d0.h[0] + 2) & ~1)) : *(u16 *) reg_a0;
