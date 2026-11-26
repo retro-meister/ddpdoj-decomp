@@ -20,7 +20,7 @@ void item_update_one(void) {
     }
     reg_tmp.h[1] = *(u16 *)(reg_a6 + 6);
     reg_tmp.h[0] = *(u16 *)(reg_a6 + 8);
-    reg_a0 = (u8 *)reg_tmp.w;
+    reg_a0 = ARCADE_ADDRESS_DECODE(u8 *, reg_tmp.w);
     reg_d1.h[1] = *(u16 *)(reg_a6 + 2);
     reg_d1.h[0] = *(u16 *)(reg_a6 + 4);
     temp_a0 = *(u16 *)reg_a0;
@@ -62,7 +62,7 @@ void item_update_taken(void) {
 
     reg_tmp.h[1] = *(u16 *)(reg_a6 + 6);
     reg_tmp.h[0] = *(u16 *)(reg_a6 + 8);
-    reg_a0 = (u8 *)reg_tmp.w;
+    reg_a0 = ARCADE_ADDRESS_DECODE(u8 *, reg_tmp.w);
     reg_d1.h[1] = *(u16 *)(reg_a6 + 2);
     reg_d1.h[0] = *(u16 *)(reg_a6 + 4);
     temp_a0 = *(u16 *)reg_a0;
@@ -108,7 +108,11 @@ void item_init(void) {
     save_d1 = reg_d1.w;
     reg_d1.h[0] = reg_d0.h[0];
     reg_d1.h[0] |= 0x8000;
+#ifdef DDPDOJ_PC
+    reg_a2 = D_0026B090[reg_d0.h[0] / 4];
+#else
     reg_a2 = *(u8 **)(((u8 *)D_0026B090) + (reg_d0.h[0] & ~3));
+#endif
     *(u16 *)reg_a0 = reg_d1.h[0];
     reg_a0 += 2;
     *(u16 *)reg_a0 = ENTITY(reg_a6)->y.h;
@@ -165,7 +169,11 @@ extern u16 g_item_test_cursor;
 void item_init_at_y(void) {
     reg_a2 = (u8 *)((u8 *)D_0026B090);
     reg_d1.h[0] = reg_d0.h[0];
+#ifdef DDPDOJ_PC
+    reg_a2 = D_0026B090[reg_d0.h[0] / 4];
+#else
     reg_a2 = *(u8 **)(((u8 *)D_0026B090) + (reg_d0.h[0] & ~3));
+#endif
     reg_d1.h[0] |= 0x8000;
     *(u16 *)reg_a0 = reg_d1.h[0];
     reg_a0 += 2;

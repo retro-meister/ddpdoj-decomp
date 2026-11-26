@@ -230,7 +230,11 @@ loop_1:
     }
     reg_d0.w = 0x3C;
     reg_d0.h[0] &= reg_d1.h[0];
+#ifdef DDPDOJ_PC
+    item_kind_routines[reg_d0.h[0] / 4]();
+#else
     ((Fn) *(u32 *)(((u8 *)item_kind_routines) + (reg_d0.h[0] & ~3)))();
+#endif
 next_2:
     reg_a6 += 0x40;
     cnt = reg_d7.h[0] - 1;
@@ -1054,16 +1058,16 @@ void item_taken_begin() {
     u32 temp_s1;
 
     temp_s0 = reg_d1.w;
-    temp_s1 = (u32)reg_a0;
+    temp_s1 = ARCADE_ADDRESS_ENCODE(reg_a0);
     reg_d1.b[0] = ENTITY(reg_a6)->flags.b[1];
     reg_d0.w = 0x10;
     score_add_masked();
     reg_d1.w = temp_s0;
-    reg_a0 = (u8 *)temp_s1;
+    reg_a0 = ARCADE_ADDRESS_DECODE(u8 *, temp_s1);
     ENTITY(reg_a6)->flags.b[1] = 0x80U;
     ENTITY(reg_a6)->flags.b[0] |= 1;
     ENTITY(reg_a6)->sprite.sh = 0x202;
-    reg_tmp.w = (u32)reg_a0;
+    reg_tmp.w = ARCADE_ADDRESS_ENCODE(reg_a0);
     ENTITY(reg_a6)->offset_y.h = (u16) reg_tmp.h[1];
     ENTITY(reg_a6)->offset_x.h = (u16) reg_tmp.h[0];
     ENTITY(reg_a6)->draw.sh = 0;
@@ -1088,7 +1092,7 @@ void item_taken_begin_with_sound(void) {
     ENTITY(reg_a6)->flags.b[1] = 0x80U;
     ENTITY(reg_a6)->flags.b[0] |= 0x80;
     reg_a0 = (u8 *)item_taken_begin_with_sound_table;
-    reg_tmp.w = (u32) reg_a0;
+    reg_tmp.w = ARCADE_ADDRESS_ENCODE(reg_a0);
     ENTITY(reg_a6)->offset_y.h = (u16) reg_tmp.h[1];
     ENTITY(reg_a6)->offset_x.h = (u16) reg_tmp.h[0];
     ENTITY(reg_a6)->draw.sh = 0;
@@ -1199,15 +1203,21 @@ u8 D_0028E7A8[4];
 u8 D_0028E7A4[4];
 
 /* .bss (the compiler lays these out in reverse) */
+#ifdef DDPDOJ_PC
+#include "pc_data_alias.h"
+
+_Alignas(16) u8 g_items[0x640];
+PC_DATA_ALIAS(g_items_from_y, g_items, 0x2);
+PC_DATA_ALIAS(g_items_max_powerup, g_items, 0x200);
+PC_DATA_ALIAS(g_items_bomb, g_items, 0x280);
+PC_DATA_ALIAS(g_items_hyper_p1, g_items, 0x300);
+PC_DATA_ALIAS(g_items_hyper_p2, g_items, 0x480);
+PC_DATA_ALIAS(g_item_extend, g_items, 0x600);
+#else
 u8 g_item_extend[64];
 u8 g_items_hyper_p2[384];
 u8 g_items_hyper_p1[384];
 u8 g_items_bomb[128];
 u8 g_items_max_powerup[128];
 u8 g_items[512];
-
-#ifdef DDPDOJ_PC
-#include "pc_data_alias.h"
-
-PC_DATA_ALIAS(g_items_from_y, g_items, 0x2);
 #endif

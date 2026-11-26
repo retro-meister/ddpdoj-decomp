@@ -1541,6 +1541,9 @@ extern u8 g_p2_score_pending_as_u8;
 extern u8 g_p1_score_pending_as_u8;
 #ifdef DDPDOJ_PC
 extern s32 g_score_scratch;
+#define MAXIMUM_SCORE_SCRATCH(pending, offset) (&g_score_scratch)
+#else
+#define MAXIMUM_SCORE_SCRATCH(pending, offset) ((s32 *)((pending) - (offset)))
 #endif
 extern u8 g_boss_present_b1;
 extern u16 g_true_last_boss;
@@ -1604,11 +1607,7 @@ void player_sprite_update(void) {
         if (*(u8 *)(reg_a5 + 6) == 0) {
             if (g_p1_maximum_anim_delay == 0) {
                 p0 = &g_p1_score_pending_as_u8;
-#ifdef DDPDOJ_PC
-                p1 = &g_score_scratch;
-#else
-                p1 = (s32 *)(p0 - 0x34);
-#endif
+                p1 = MAXIMUM_SCORE_SCRATCH(p0, 0x34);
                 *p1 = g_p1_maximum_value_digits[0];
                 bcd_add((void *)p0, (void *)p1);
                 if (g_loop != 0) {
@@ -1618,11 +1617,7 @@ void player_sprite_update(void) {
             }
         } else if (g_p2_maximum_anim_delay == 0) {
             p0 = &g_p2_score_pending_as_u8;
-#ifdef DDPDOJ_PC
-            p1 = &g_score_scratch;
-#else
-            p1 = (s32 *)(p0 - 0x30);
-#endif
+            p1 = MAXIMUM_SCORE_SCRATCH(p0, 0x30);
             *p1 = g_p2_maximum_value_digits[0];
             bcd_add((void *)p0, (void *)p1);
             if (g_loop != 0) {
@@ -2409,11 +2404,7 @@ block_244:
         if (*(u8 *)(reg_a5 + 6) == 0) {
             if (g_p1_maximum_anim_delay == 0) {
                 p0 = &g_p1_score_pending_as_u8;
-#ifdef DDPDOJ_PC
-                p1 = &g_score_scratch;
-#else
-                p1 = (s32 *)(p0 - 0x34);
-#endif
+                p1 = MAXIMUM_SCORE_SCRATCH(p0, 0x34);
                 *p1 = g_p1_maximum_value_digits[0];
                 bcd_add((void *)p0, (void *)p1);
                 if (g_loop != 0) {
@@ -2423,11 +2414,7 @@ block_244:
             }
         } else if (g_p2_maximum_anim_delay == 0) {
             p0 = &g_p2_score_pending_as_u8;
-#ifdef DDPDOJ_PC
-            p1 = &g_score_scratch;
-#else
-            p1 = (s32 *)(p0 - 0x30);
-#endif
+            p1 = MAXIMUM_SCORE_SCRATCH(p0, 0x30);
             *p1 = g_p2_maximum_value_digits[0];
             bcd_add((void *)p0, (void *)p1);
             if (g_loop != 0) {
@@ -2613,7 +2600,7 @@ loop_1:
 next_4:
     PLAYER(reg_a6)->flags.h &= 0x2000;
     PLAYER(reg_a6)->flags.b[1] |= 1;
-    reg_tmp.w = (u32) D_00255EE0;
+    reg_tmp.w = ARCADE_ADDRESS_ENCODE(D_00255EE0);
     PLAYER(reg_a6)->hit_x_plus.h = (u16) reg_tmp.h[1];
     PLAYER(reg_a6)->hit_x_minus.h = (u16) reg_tmp.h[0];
     PLAYER(reg_a6)->input.sh = 6;
@@ -2628,11 +2615,11 @@ void player_destroyed_update(void) {
     if (!(PLAYER(reg_a6)->flags.b[1] & 4)) {
         reg_tmp.h[1] = PLAYER(reg_a6)->hit_x_plus.h;
         reg_tmp.h[0] = PLAYER(reg_a6)->hit_x_minus.h;
-        reg_a0 = (u8 *)(reg_tmp.w);
+        reg_a0 = ARCADE_ADDRESS_DECODE(u8 *, reg_tmp.w);
         reg_a0 += 4;
         var_a2 = (u8 *)(reg_a6 + 0x14);
         if (*(s16 *)reg_a0 >= 0) {
-            reg_tmp.w = (u32)reg_a0;
+            reg_tmp.w = ARCADE_ADDRESS_ENCODE(reg_a0);
             PLAYER(reg_a6)->hit_x_plus.h = (u16) reg_tmp.h[1];
             PLAYER(reg_a6)->hit_x_minus.h = (u16) reg_tmp.h[0];
             return;
@@ -2678,7 +2665,11 @@ block_4:
                 reg_d4.h[0] += 1;
             }
         }
+#ifdef DDPDOJ_PC
+        reg_a0 = reg_a6;
+#else
         reg_a0 = (u8 *)((u32) reg_a6);
+#endif
         reg_d5.w = 0x30;
         reg_d6.w = 0;
         do {
@@ -2974,7 +2965,7 @@ next_30:
     reg_d2.h[0] *= 2;
     reg_tmp.h[1] = ((reg_d2.h[0]) != 0) ? *(u16 *)((u8 *)reg_a0 + ((s16)(reg_d2.h[0]) & ~1)) : *(u16 *)reg_a0;
     reg_tmp.h[0] = (((reg_d2.h[0] & 0xFFFF) + 2) != 0) ? *(u16 *)((u8 *)reg_a0 + ((s16)((reg_d2.h[0] & 0xFFFF) + 2) & ~1)) : *(u16 *)reg_a0;
-    reg_a0 = (u8 *) reg_tmp.w;
+    reg_a0 = ARCADE_ADDRESS_DECODE(u8 *, reg_tmp.w);
     reg_d2.h[0] = PLAYER(reg_a6)->shield_anim_frame.h;
     reg_d2.h[1] = ((reg_d2.h[0]) != 0) ? *(u16 *)((u8 *)reg_a0 + ((s16)(reg_d2.h[0]) & ~1)) : *(u16 *)reg_a0;
     reg_d2.h[0] = ((reg_d2.h[0] + 2) != 0) ? *(u16 *)((u8 *)reg_a0 + ((s16)(reg_d2.h[0] + 2) & ~1)) : *(u16 *)reg_a0;
@@ -3122,10 +3113,10 @@ void player_draw_entering() {
     }
     reg_tmp.h[1] = PLAYER(reg_a6)->hit_x_plus.h;
     reg_tmp.h[0] = PLAYER(reg_a6)->hit_x_minus.h;
-    reg_a2 = (u8 *)reg_tmp.w;
+    reg_a2 = ARCADE_ADDRESS_DECODE(u8 *, reg_tmp.w);
     reg_tmp.h[1] = *(u16 *)(reg_a2 + 0);
     reg_tmp.h[0] = *(u16 *)(reg_a2 + 2);
-    reg_a2 = (u8 *)reg_tmp.w;
+    reg_a2 = ARCADE_ADDRESS_DECODE(u8 *, reg_tmp.w);
 loop_1:
     reg_d2.h[1] = *(u16 *)reg_a2;
     reg_a2 += 2;

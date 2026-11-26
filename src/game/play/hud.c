@@ -1474,7 +1474,11 @@ loop_1:
 next_2:
     reg_d6.w = save_d6;
     reg_a0 = (u8 *)hud_boss_hit_digit_sets;
+#ifdef DDPDOJ_PC
+    reg_a0 = (u8 *)hud_boss_hit_digit_sets[reg_d5.h[0] / 4];
+#else
     reg_a0 = *(u8 **)(((u8 *)hud_boss_hit_digit_sets) + (reg_d5.h[0] & ~3));
+#endif
     reg_d2.h[0] *= 4;
     reg_a0 += reg_d2.h[0];
     reg_d2.w = *(u32 *)reg_a0;
