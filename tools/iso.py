@@ -74,6 +74,86 @@ def find_extent(file, directory, path):
     return offset, size
 
 
+def find_record(file, path):
+    """Where a file's directory record lies in the image, and the extent it names (sector, size)."""
+    directory_offset = None
+    directory = root_directory(file)
+    for sector in range(16, 256):
+        descriptor = read_at(file, sector * SECTOR, SECTOR)
+        if descriptor[0] == 1:
+            directory_offset = dual_endian(descriptor[156:], 2, 4) * SECTOR
+            break
+    parts = path.split("/")
+    for depth, name in enumerate(parts):
+        cursor = 0
+        found = None
+        while cursor < len(directory):
+            length = directory[cursor]
+            if length == 0:
+                cursor = (cursor // SECTOR + 1) * SECTOR
+                continue
+            record = directory[cursor:cursor + length]
+            identifier = record[33:33 + record[32]]
+            if identifier not in (b"\x00", b"\x01") and \
+                    identifier.decode("ascii").split(";", 1)[0].rstrip(".") == name:
+                found = cursor, record
+                break
+            cursor += length
+        if found is None:
+            raise ValueError(f"{path}: not on the disc")
+        position, record = found
+        sector, size = dual_endian(record, 2, 4), dual_endian(record, 10, 4)
+        if depth == len(parts) - 1:
+            if record[25] & 0x82 or any(record[i] for i in (1, 26, 27)):
+                raise ValueError(f"{path}: expected a plain file in one extent")
+            return directory_offset + position, sector, size
+        directory_offset = sector * SECTOR
+        directory = read_at(file, directory_offset, size)
+
+
+def both_endian(value):
+    return value.to_bytes(4, "little") + value.to_bytes(4, "big")
+
+
+def sectors(size):
+    return (size + SECTOR - 1) // SECTOR
+
+
+def sync_files(retail_iso, image_path, files):
+    """Write files of any size into a copy of the retail disc image.
+
+    `files` is {path on the disc: contents}. A file that fits in the sectors the retail disc gives it is
+    written where it was; a larger one goes after the end of the retail volume, and its directory record
+    and the volume's size are changed to match. Every call lays the same files out again from the retail
+    places, so nothing piles up at the end; pass the retail contents to put a file back. Returns the paths
+    that were moved to the end.
+    """
+    retail_iso, image_path = Path(retail_iso), Path(image_path)
+    if retail_iso.resolve() == image_path.resolve():
+        raise ValueError("The image to write must not be the retail image")
+    with retail_iso.open("rb") as retail:
+        records = {path: find_record(retail, path) for path in sorted(files)}
+        descriptor = read_at(retail, 16 * SECTOR, SECTOR)
+        end = dual_endian(descriptor, 80, 4)
+    moved = []
+    with image_path.open("r+b") as image:
+        for path in sorted(files):
+            record_offset, sector, retail_size = records[path]
+            contents = files[path]
+            if sectors(len(contents)) > sectors(retail_size):
+                sector = end
+                end += sectors(len(contents))
+                moved.append(path)
+            image.seek(sector * SECTOR)
+            image.write(contents + bytes(-len(contents) % SECTOR))
+            image.seek(record_offset + 2)
+            image.write(both_endian(sector) + both_endian(len(contents)))
+        image.seek(16 * SECTOR + 80)
+        image.write(both_endian(end))
+        image.truncate(end * SECTOR)
+    return moved
+
+
 def executable_extents(file):
     directory = root_directory(file)
     return {name: find_extent(file, directory, name) for name in TARGETS}

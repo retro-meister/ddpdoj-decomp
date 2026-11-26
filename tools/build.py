@@ -12,6 +12,8 @@ from tempfile import TemporaryDirectory
 from common import BASEROM, ROOT, TARGETS, TOOLCHAINS
 from common import compiler_path, require_local, run, target_compiler, verify, verify_compiler
 from gallery_da import sync_gallery_iso
+from iso import sync_files
+from stage_tiles import build_tile_files
 from objects import validate_object
 from qemu_runner import compile_batch
 from split import data_units, split, target_units
@@ -752,7 +754,7 @@ def build(local, target=None, mod=False, compiler=None, iso=None, write_map=Fals
             receipt.replace(output / "build-set.json")
         elif mod:
             (output / "build-set.json").unlink(missing_ok=True)
-    if mod and iso is not None and "GALLERY.ELF" in names:
+    if mod and iso is not None:
         iso_path = Path(iso) if iso else (Path(local["iso"]) if local.get("iso") else None)
         if iso_path is None:
             raise ValueError("Pass --iso PATH or run tools/setup.py --iso PATH first.")
@@ -760,6 +762,13 @@ def build(local, target=None, mod=False, compiler=None, iso=None, write_map=Fals
         summary = f"modified entries {changed_ids}" if changed_ids else "retail assets"
         action = "UPDATED" if wrote else "UP-TO-DATE"
         print(f"ISO  {out_iso.relative_to(ROOT)}  ({action}, {summary})")
+        files, changed_stages = build_tile_files(iso_path)
+        built = [name for name in TARGETS if (output / name).is_file()]
+        files.update({name: (output / name).read_bytes() for name in built})
+        moved = sync_files(iso_path, out_iso, files)
+        tiles = f"tiles of stage {', '.join(map(str, changed_stages))}" if changed_stages else "retail tiles"
+        print(f"ISO  {out_iso.relative_to(ROOT)}  ({', '.join(built)}; {tiles}; "
+              f"{len(moved)} file(s) placed after the retail volume)")
 
 
 def main():
