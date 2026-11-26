@@ -185,6 +185,37 @@ target_link_libraries(ddpdoj_main_system PRIVATE ddpdoj_memory_card)
 target_link_libraries(ddpdoj_death_system PRIVATE ddpdoj_memory_card)
 target_link_libraries(ddpdoj_gallery PRIVATE ddpdoj_cdvd ddpdoj_gs ddpdoj_mode ddpdoj_pad ddpdoj_sfx)
 
+foreach(mode IN ITEMS main death)
+    # The original core groups call into one another. Let CMake rescan the
+    # archive group when the platform linker resolves static inputs in order.
+    target_link_libraries(ddpdoj_${mode}_system PRIVATE ddpdoj_${mode}_frontend)
+    target_link_libraries(ddpdoj_${mode}_frontend PRIVATE ddpdoj_${mode}_gameplay)
+    target_link_libraries(ddpdoj_${mode}_gameplay PRIVATE ddpdoj_${mode}_system)
+    add_executable(ddpdoj_${mode} desktop.c)
+    target_link_libraries(ddpdoj_${mode} PRIVATE
+        ddpdoj_${mode}_system
+        ddpdoj_sound ddpdoj_sfx ddpdoj_mode ddpdoj_cdvd ddpdoj_pad ddpdoj_memory_card ddpdoj_gs)
+endforeach()
+set_target_properties(ddpdoj_main PROPERTIES OUTPUT_NAME ddpdoj)
+set_target_properties(ddpdoj_death PROPERTIES OUTPUT_NAME ddpdoj-death)
+target_link_libraries(ddpdoj_main PRIVATE ddpdoj_video)
+target_link_libraries(ddpdoj_death PRIVATE ddpdoj_death_video)
+
+add_executable(ddpdoj_gallery_host desktop.c)
+set_target_properties(ddpdoj_gallery_host PROPERTIES OUTPUT_NAME ddpdoj-gallery)
+target_compile_definitions(ddpdoj_gallery_host PRIVATE DDPDOJ_GALLERY_HOST)
+target_link_libraries(ddpdoj_gallery_host PRIVATE
+    ddpdoj_gallery ddpdoj_gs ddpdoj_cdvd ddpdoj_mode ddpdoj_pad ddpdoj_sfx)
+
+if(WIN32 AND TARGET SDL3::SDL3-shared)
+    foreach(target IN ITEMS ddpdoj_main ddpdoj_death ddpdoj_gallery_host)
+        add_custom_command(TARGET ${target} POST_BUILD
+            COMMAND ${CMAKE_COMMAND} -E copy_if_different
+                $<TARGET_FILE:SDL3::SDL3-shared> $<TARGET_FILE_DIR:${target}>
+            VERBATIM)
+    endforeach()
+endif()
+
 if(BUILD_TESTING)
     add_executable(ddpdoj_memory_card_test tests/memory_card_test.c)
     target_link_libraries(ddpdoj_memory_card_test PRIVATE ddpdoj_memory_card SDL3::SDL3)
