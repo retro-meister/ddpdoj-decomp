@@ -46,7 +46,7 @@ s32 ship_select_apply();
 s32 music_play_bgm2();
 s32 sprite_palette_load();
 s32 func_001B04D0();
-s32 func_001B07E0();
+s32 join_select_objects_update();
 s32 func_00203850();
 s32 func_002039B0();
 s32 func_002041C0();
@@ -76,7 +76,7 @@ void func_0020EE20(void) {
     s32 keep_9c;
     s32 keep_98;
 
-    func_001B07E0();
+    join_select_objects_update();
     if (reg_d7.h[0] == 0) goto next_2;
     reg_a0 = reg_a6 + 0x70;
     goto next_3;

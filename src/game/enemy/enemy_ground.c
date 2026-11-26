@@ -227,24 +227,24 @@ typedef struct {
 
 #define SMALL_FLYER(pointer) ((SmallFlyerState *)(pointer))
 
-void func_001554E0(void);
-void func_001555F0(void);
-void func_00155700(void);
-void func_00155810(void);
-void func_00155920(void);
+void battleship_turret_2_draw(void);
+void battleship_turret_3_draw(void);
+void battleship_turret_4_draw(void);
+void battleship_turret_5_draw(void);
+void battleship_part_6_update(void);
 void stage3_gun_draw_barrel(void);
 void small_flyer_draw(void);
 void battleship_b_fire(void);
-void func_00158CF0(void);
-void func_00158ED0(void);
+void ground_gun_a_fire(void);
+void ground_gun_b_fire(void);
 void battleship_b_blow_up(void);
-void func_001597C0(void);
+void battleship_c_volley_update(void);
 void battleship_c_fire(void);
-void func_00159B20(void);
+void ground_gun_c_fire(void);
 
 s32 explosion_spawn();
 
-void func_00153650(arg2)
+void enemy_explode_by_table(arg2)
     u16 *arg2;
 {
     u16 *var_a2;
@@ -284,7 +284,7 @@ s32 bullet_fire();
 s32 rng_next();
 extern u16 g_direction64_offsets_2CC[];
 
-void func_00153770(void) {
+void battleship_shot_random(void) {
     u16 temp_a0;
     rng_next();
     temp_a0 = reg_d0.h[0];
@@ -644,7 +644,7 @@ loop_19:
                     goto loop_19;
                 }
                 sfx_explosion_ground_large();
-                func_00155920();
+                battleship_part_6_update();
                 if (ENTITY(reg_a6)[6].hp.b[0] != 0) {
                     g_enemy_signal_e = 0;
                 }
@@ -709,7 +709,7 @@ block_24:
                             reg_d2.h[1] = ENTITY(reg_a6)[2].y.h;
                             reg_d2.h[0] = ENTITY(reg_a6)[2].x.h;
                             reg_a0 = reg_a6 + 0x40;
-                            func_00153770();
+                            battleship_shot_random();
                         }
                         if ((ENTITY(reg_a6)[3].misc.b.draw_layer == 0) && (g_bullets_blocked == 0)) {
                             reg_d3.w = 0;
@@ -726,7 +726,7 @@ block_24:
                             reg_d2.h[1] = ENTITY(reg_a6)[3].y.h;
                             reg_d2.h[0] = ENTITY(reg_a6)[3].x.h;
                             reg_a0 = reg_a6 + 0x60;
-                            func_00153770();
+                            battleship_shot_random();
                         }
                     }
                 }
@@ -964,10 +964,10 @@ block_56:
         reg_d4.w = 0;
         reg_d4.b[0] = ENTITY(reg_a6)->attr.b.palette;
         sprite_draw_layer4_keep();
-        func_001554E0();
-        func_001555F0();
-        func_00155810();
-        func_00155700();
+        battleship_turret_2_draw();
+        battleship_turret_3_draw();
+        battleship_turret_5_draw();
+        battleship_turret_4_draw();
         reg_a0 = reg_a6;
         enemy_hitbox_debug_draw();
         reg_a0 = reg_a6 + 0x20;
@@ -977,7 +977,7 @@ block_56:
 
 extern u16 g_direction_sprites_d[];
 
-void func_001554E0(void) {
+void battleship_turret_2_draw(void) {
     u16 temp_a1;
     if (ENTITY(reg_a6)[2].misc.b.draw_layer == 0) {
         reg_d2.w = 0;
@@ -999,7 +999,7 @@ void func_001554E0(void) {
     }
 }
 
-void func_001555F0(void) {
+void battleship_turret_3_draw(void) {
     u16 temp_a1;
     if (ENTITY(reg_a6)[3].misc.b.draw_layer == 0) {
         reg_d2.w = 0;
@@ -1023,7 +1023,7 @@ void func_001555F0(void) {
 
 extern u16 g_direction_sprites_b[];
 
-void func_00155700(void) {
+void battleship_turret_4_draw(void) {
     u16 temp_a1;
     if (ENTITY(reg_a6)[4].misc.b.draw_layer == 0) {
         reg_d2.w = 0;
@@ -1045,7 +1045,7 @@ void func_00155700(void) {
     }
 }
 
-void func_00155810(void) {
+void battleship_turret_5_draw(void) {
     u16 temp_a1;
     if (ENTITY(reg_a6)[5].misc.b.draw_layer == 0) {
         reg_d2.w = 0;
@@ -1069,7 +1069,7 @@ void func_00155810(void) {
 
 extern u16 g_direction64_offsets_432[];
 
-void func_00155920(void) {
+void battleship_part_6_update(void) {
     u16 temp_a0;
     if (ENTITY(reg_a6)[6].hp.b[1] == 0) {
         temp_a0 = ENTITY(reg_a6)->y.h;
@@ -1178,7 +1178,7 @@ s32 bullet_fire256_2way();
 s32 sfx_explosion_ground_medium();
 s32 entity_follow_scroll();
 s32 entity_in_shot_limits_y();
-s32 func_002115E0();
+s32 wreck_spawn_b();
 extern u8 D_00257FB0[];
 extern u8 D_00258030[];
 
@@ -1225,7 +1225,7 @@ block_4:
             reg_tmp.h[0] = temp_a0;
             reg_d3.h[0] = 0xC;
             reg_d2.w += reg_tmp.w;
-            func_00153650();
+            enemy_explode_by_table();
             reg_d0.w = 4;
             reg_d1.h[0] = 0xC;
             reg_d2.h[1] = ENTITY(reg_a6)->y.h;
@@ -1235,7 +1235,7 @@ block_4:
             reg_tmp.h[0] = ENTITY(reg_a6)->offset_x.h;
             reg_d2.w = temp_a0_2 + reg_tmp.w;
             reg_d2.w += 0xFC000000;
-            func_002115E0();
+            wreck_spawn_b();
             sfx_explosion_ground_medium();
             goto block_7;
         }
@@ -1444,7 +1444,7 @@ void stage3_gun_d_start(void)
 
 extern u16 g_loop;
 
-void func_00156690(void) {
+void second_loop_speed_bonus_get(void) {
     reg_d6.sw = 0;
     if (g_loop != 0) {
         reg_d6.sw = 0x20000;
@@ -1575,7 +1575,7 @@ block_4:
             reg_d2.h[1] = ENTITY(reg_a6)->y.h;
             reg_d2.h[0] = ENTITY(reg_a6)->x.h;
             reg_d3.h[0] = 0xC;
-            func_00153650();
+            enemy_explode_by_table();
             sfx_explosion_ground_large();
             enemy_remove();
             return;
@@ -1663,45 +1663,45 @@ block_19:
                 }
                 reg_d3.h[1] = STAGE3_LARGE_GUN(reg_a5)->arm[0];
                 reg_d3.h[0] = STAGE3_LARGE_GUN(reg_a5)->arm[1];
-                func_00156690();
+                second_loop_speed_bonus_get();
                 reg_d0.w = 0x20004;
                 reg_d0.w += reg_d6.w;
                 bullet_fire256_fixed();
                 reg_d1.b[0] += reg_d5.b[0];
-                func_00156690();
+                second_loop_speed_bonus_get();
                 reg_d0.w = 4;
                 reg_d0.w += reg_d6.w;
                 bullet_fire256_2way();
                 reg_d3.h[1] = STAGE3_LARGE_GUN(reg_a5)->arm[2];
                 reg_d3.h[0] = STAGE3_LARGE_GUN(reg_a5)->arm[3];
-                func_00156690();
+                second_loop_speed_bonus_get();
                 reg_d0.w = 0x20004;
                 reg_d0.w += reg_d6.w;
                 bullet_fire256_fixed();
                 reg_d1.b[0] += reg_d5.b[0];
-                func_00156690();
+                second_loop_speed_bonus_get();
                 reg_d0.w = 4;
                 reg_d0.w += reg_d6.w;
                 bullet_fire256_2way();
                 reg_d3.h[1] = STAGE3_LARGE_GUN(reg_a5)->arm[4];
                 reg_d3.h[0] = STAGE3_LARGE_GUN(reg_a5)->arm[5];
-                func_00156690();
+                second_loop_speed_bonus_get();
                 reg_d0.w = 0x20004;
                 reg_d0.w += reg_d6.w;
                 bullet_fire256_fixed();
                 reg_d1.b[0] += reg_d5.b[0];
-                func_00156690();
+                second_loop_speed_bonus_get();
                 reg_d0.w = 4;
                 reg_d0.w += reg_d6.w;
                 bullet_fire256_2way();
                 reg_d3.h[1] = STAGE3_LARGE_GUN(reg_a5)->arm[6];
                 reg_d3.h[0] = STAGE3_LARGE_GUN(reg_a5)->arm[7];
-                func_00156690();
+                second_loop_speed_bonus_get();
                 reg_d0.w = 0x20004;
                 reg_d0.w += reg_d6.w;
                 bullet_fire256_fixed();
                 reg_d1.b[0] += reg_d5.b[0];
-                func_00156690();
+                second_loop_speed_bonus_get();
                 reg_d0.w = 4;
                 reg_d0.w += reg_d6.w;
                 bullet_fire256_2way();
@@ -1768,7 +1768,7 @@ block_19:
 s32 bullet_fire_fixed();
 s32 rng_next_masked();
 
-void func_001570B0(void) {
+void ground_shot_random_a(void) {
     u8 var_a0;
 
     rng_next_masked();
@@ -1786,7 +1786,7 @@ void func_001570B0(void) {
     } while ((s16)(--reg_d7.h[0]) >= 0);
 }
 
-void func_00157140(void) {
+void ground_shot_random_b(void) {
     rng_next_masked();
     reg_d1.b[0] = reg_d0.b[0];
     reg_d0.w = 0x80004;
@@ -2700,7 +2700,7 @@ void battleship_b_fire(void) {
 }
 
 
-void func_00158C30(void) {
+void ground_gun_a_aim(void) {
     void aim256_at_player();
     reg_d0.h[0] = ENTITY(reg_a6)->y.h;
     reg_d1.h[0] = ENTITY(reg_a6)->x.h;
@@ -2717,12 +2717,12 @@ void func_00158C30(void) {
         ENTITY(reg_a6)[1].hit_y_plus.b[1] = reg_d1.b[0];
         ENTITY(reg_a6)[1].offset_x.h = 4;
         ENTITY(reg_a6)[1].sprite.h = 8;
-        func_00158CF0();
+        ground_gun_a_fire();
     }
 }
 
 
-void func_00158CF0() {
+void ground_gun_a_fire() {
     reg_tmp.b[0] = ENTITY(reg_a6)[1].offset_x.b[1];
     ENTITY(reg_a6)[1].offset_x.b[1] -= 1;
     if ((s32) reg_tmp.b[0] <= 0) {
@@ -2756,7 +2756,7 @@ void func_00158CF0() {
 }
 
 
-void func_00158E10() {
+void ground_gun_b_aim() {
     s32 aim256_at_player();
     reg_d0.h[0] = ENTITY(reg_a6)->y.h;
     reg_d1.h[0] = ENTITY(reg_a6)->x.h;
@@ -2773,14 +2773,14 @@ void func_00158E10() {
         ENTITY(reg_a6)[1].hit_y_plus.b[1] = (u8) reg_d1.b[0];
         ENTITY(reg_a6)[1].offset_x.sh = 2;
         ENTITY(reg_a6)[1].sprite.sh = 0x16;
-        func_00158ED0();
+        ground_gun_b_fire();
     }
 }
 
 s32 bullet_fire256_fast();
 s32 direction_step_toward();
 
-void func_00158ED0(void) {
+void ground_gun_b_fire(void) {
     reg_tmp.b[0] = ENTITY(reg_a6)[1].offset_x.b[1];
     ENTITY(reg_a6)[1].offset_x.b[1] -= 1;
     if ((s32) reg_tmp.b[0] <= 0) {
@@ -2949,7 +2949,7 @@ block_24:
         }
         temp_a0_3 = BATTLESHIP_B(reg_a5)->now.phase;
         if (temp_a0_3 == 2) {
-            func_001597C0();
+            battleship_c_volley_update();
             if (BATTLESHIP_B(reg_a5)->fire_step == 0) {
                 reg_tmp.b[0] = BATTLESHIP_B(reg_a5)->fire_countdown;
                 BATTLESHIP_B(reg_a5)->fire_countdown -= 1;
@@ -3066,7 +3066,7 @@ block_11:
     cond_flag = 0;
 }
 
-void func_00159740(void) {
+void battleship_c_volley_reset(void) {
     ENTITY(reg_a6)[2].offset_y.sb[1] = 1;
     reg_d7.w = 5;
     reg_a0 = reg_a6 + 0x66;
@@ -3077,16 +3077,16 @@ void func_00159740(void) {
     } while ((s16)(--reg_d7.h[0]) >= 0);
     ENTITY(reg_a6)[2].offset_x.sh = 8;
     ENTITY(reg_a6)[2].draw.sh = 0;
-    func_001597C0();
+    battleship_c_volley_update();
 }
 
 extern u16 D_002586C0[];
 extern s8 D_0028C9C0;
 
-void func_001597C0(void) {
+void battleship_c_volley_update(void) {
     u32 temp_a1;
     if (ENTITY(reg_a6)[2].offset_y.b[1] == 0) {
-        func_00159740();
+        battleship_c_volley_reset();
         return;
     }
     reg_tmp.b[0] = ENTITY(reg_a6)[2].offset_x.b[1];
@@ -3158,7 +3158,7 @@ void battleship_c_fire(void) {
 }
 
 
-void func_00159AC0(void) {
+void ground_gun_c_aim(void) {
     void aim256_at_player();
     ENTITY(reg_a6)[1].offset_y.h = 2;
     ENTITY(reg_a6)[1].offset_x.h = 0xE;
@@ -3167,11 +3167,11 @@ void func_00159AC0(void) {
     reg_d1.h[0] = ENTITY(reg_a6)->x.h;
     aim256_at_player();
     ENTITY(reg_a6)[1].look.b.size = reg_d1.b[0];
-    func_00159B20();
+    ground_gun_c_fire();
 }
 
 
-void func_00159B20() {
+void ground_gun_c_fire() {
     s32 aim256_at_player();
     u16 temp_a0;
 
@@ -3283,7 +3283,7 @@ block_4:
                 reg_d2.h[1] = ENTITY(reg_a6)->y.h;
                 reg_d2.h[0] = ENTITY(reg_a6)->x.h;
                 reg_d3.h[0] = 0x10;
-                func_00153650();
+                enemy_explode_by_table();
                 enemy_remove();
                 return;
             }

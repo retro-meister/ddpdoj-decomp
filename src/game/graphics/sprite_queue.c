@@ -72,8 +72,8 @@ void sprite_lists_reset(void) {
 }
 
 
-s32 func_00206D10();
-s32 func_00206D30();
+s32 display_control_bit_0_on();
+s32 display_control_bit_0_off();
 extern s16 g_sprite_debris_dropped;
 extern s16 g_sprite_sparks_dropped;
 extern u16 g_sprite_overflow_bytes;
@@ -149,7 +149,7 @@ void sprite_lists_build(void) {
     u16 count;
     u8 bits;
 
-    func_00206D30();
+    display_control_bit_0_off();
     reg_d0.h[0] = g_sprite_layer1_used;
     reg_d0.h[0] += g_sprite_layer2_used;
     reg_d0.h[0] += g_sprite_layer3_used;
@@ -441,7 +441,7 @@ block_51:
     g_sprite_hyper_ready_used = 0;
     g_sprite_hyper_display_used = 0;
     g_sprite_last_boss_used = 0;
-    func_00206D10();
+    display_control_bit_0_on();
 }
 
 

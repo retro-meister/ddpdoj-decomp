@@ -180,7 +180,7 @@ u16 g_arcade_zoom_port __attribute__((aligned(4)));
 s16 D_0028E22C __attribute__((aligned(4)));
 u8 g_arcade_coin_port __attribute__((aligned(4)));
 u16 D_0028E224 __attribute__((aligned(4)));
-u16 D_0028E220 __attribute__((aligned(4)));
+u16 g_display_control __attribute__((aligned(4)));
 u8 g_slowdown_frame_state __attribute__((aligned(4)));
 u8 D_0028E218 __attribute__((aligned(4)));
 s16 D_0028E214 __attribute__((aligned(4)));

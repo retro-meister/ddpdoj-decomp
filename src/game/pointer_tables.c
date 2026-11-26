@@ -348,12 +348,12 @@ void game_over_task();
 void attract_task();
 void name_entry_task();
 void player_panel_task();
-void func_001AF560();
+void join_select_task();
 void ship_select_task();
 void func_001B2200();
 void credits_task();
 void test_mode_task();
-void func_00210D00();
+void clear_bonus_task();
 void simulation_task();
 void replay_task();
 
@@ -369,7 +369,7 @@ void task_table_init(void) {
     STORE_POINTER(g_task_table + 4 * TASK_ATTRACT, attract_task);
     STORE_POINTER(g_task_table + 4 * TASK_SHIP_SELECT, ship_select_task);
     STORE_POINTER(g_task_table + 4 * TASK_GAME, game_task);
-    STORE_POINTER(g_task_table + 4 * 11, func_001AF560);
+    STORE_POINTER(g_task_table + 4 * 11, join_select_task);
     STORE_POINTER(g_task_table + 4 * 12, name_entry_task);
     STORE_POINTER(g_task_table + 4 * 13, continue_task);
     STORE_POINTER(g_task_table + 4 * TASK_GAME_OVER, game_over_task);
@@ -377,7 +377,7 @@ void task_table_init(void) {
     STORE_POINTER(g_task_table + 4 * TASK_TEST_MODE, test_mode_task);
     STORE_POINTER(g_task_table + 4 * 17, func_001B2200);
     STORE_POINTER(g_task_table + 4 * 18, 0);
-    STORE_POINTER(g_task_table + 4 * 19, func_00210D00);
+    STORE_POINTER(g_task_table + 4 * 19, clear_bonus_task);
     STORE_POINTER(g_task_table + 4 * TASK_REPLAY, replay_task);
     STORE_POINTER(g_task_table + 4 * 21, simulation_task);
 }
@@ -4057,18 +4057,18 @@ void option_shot_lists_init(void) {
     STORE_POINTER(option_shot_list_4_03 + 8, option_shot_list_4_03_04);
 }
 
-extern u16 func_00158C30[];
-extern u16 func_00159AC0[];
+extern u16 ground_gun_a_aim[];
+extern u16 ground_gun_c_aim[];
 extern u16 D_00258880[];
 extern u16 D_00258900[];
 extern u16 D_0028C0D8[];
 extern u16 D_0028C0DC[];
-extern void func_001570B0(void);
-extern void func_00157140(void);
-extern void func_00158CF0(void);
-extern void func_00158E10(void);
-extern void func_00158ED0(void);
-extern void func_00159B20(void);
+extern void ground_shot_random_a(void);
+extern void ground_shot_random_b(void);
+extern void ground_gun_a_fire(void);
+extern void ground_gun_b_aim(void);
+extern void ground_gun_b_fire(void);
+extern void ground_gun_c_fire(void);
 extern void wing_gunner_fire(void);
 extern void func_0015A390(void);
 extern void entity_draw_layer1(void);
@@ -4080,20 +4080,20 @@ extern u16 D_00258760[];
 extern u16 D_00258770[];
 
 void func_00186310(void) {
-    STORE_POINTER(D_0028C9B0 + 4, func_00157140);
-    STORE_POINTER(D_0028C9B0 + 6, func_001570B0);
-    STORE_POINTER(D_00258560, func_00158C30);
-    STORE_POINTER(D_00258560 + 2, func_00158CF0);
-    STORE_POINTER(D_00258560 + 4, func_00158E10);
-    STORE_POINTER(D_00258560 + 6, func_00158ED0);
-    STORE_POINTER(D_00258560 + 8, func_00158C30);
-    STORE_POINTER(D_00258560 + 10, func_00158CF0);
-    STORE_POINTER(D_00258560 + 12, func_00158E10);
-    STORE_POINTER(D_00258560 + 14, func_00158ED0);
-    STORE_POINTER(D_002586E0, func_00159AC0);
-    STORE_POINTER(D_002586E0 + 2, func_00159B20);
-    STORE_POINTER(D_002586E0 + 4, func_00159AC0);
-    STORE_POINTER(D_002586E0 + 6, func_00159B20);
+    STORE_POINTER(D_0028C9B0 + 4, ground_shot_random_b);
+    STORE_POINTER(D_0028C9B0 + 6, ground_shot_random_a);
+    STORE_POINTER(D_00258560, ground_gun_a_aim);
+    STORE_POINTER(D_00258560 + 2, ground_gun_a_fire);
+    STORE_POINTER(D_00258560 + 4, ground_gun_b_aim);
+    STORE_POINTER(D_00258560 + 6, ground_gun_b_fire);
+    STORE_POINTER(D_00258560 + 8, ground_gun_a_aim);
+    STORE_POINTER(D_00258560 + 10, ground_gun_a_fire);
+    STORE_POINTER(D_00258560 + 12, ground_gun_b_aim);
+    STORE_POINTER(D_00258560 + 14, ground_gun_b_fire);
+    STORE_POINTER(D_002586E0, ground_gun_c_aim);
+    STORE_POINTER(D_002586E0 + 2, ground_gun_c_fire);
+    STORE_POINTER(D_002586E0 + 4, ground_gun_c_aim);
+    STORE_POINTER(D_002586E0 + 6, ground_gun_c_fire);
     STORE_POINTER(D_00258760, func_0015A390);
     STORE_POINTER(D_00258760 + 2, wing_gunner_fire);
     STORE_POINTER(D_00258760 + 4, wing_gunner_fire);
@@ -4206,7 +4206,7 @@ extern void stage3_midboss_mode_00(void);
 extern void stage3_midboss_mode_attack_a(void);
 extern void stage3_midboss_mode_attack_b(void);
 extern void stage3_midboss2_state_0_04(void);
-extern void func_001D6160(void);
+extern void stage3_midboss_shot(void);
 extern void stage3_midboss_mode_05(void);
 extern void stage3_midboss_mode_leave(void);
 
@@ -4295,35 +4295,35 @@ void func_00186CA0(void) {
     if (stage3_midboss2_state_routines_1[0] != 0x0) {
         printf("error! s3mm2_st_tbl1[0]\n");
     }
-    STORE_POINTER(stage3_midboss2_state_routines_1, func_001D6160);
+    STORE_POINTER(stage3_midboss2_state_routines_1, stage3_midboss_shot);
     if (D_00263612[1] != 0x2) {
         printf("error! s3mm2_st_tbl1[2]\n");
     }
-    STORE_POINTER(D_00263612 + 1, func_001D6160);
+    STORE_POINTER(D_00263612 + 1, stage3_midboss_shot);
     if (D_00263612[3] != 0x4) {
         printf("error! s3mm2_st_tbl1[4]\n");
     }
-    STORE_POINTER(D_00263612 + 3, func_001D6160);
+    STORE_POINTER(D_00263612 + 3, stage3_midboss_shot);
     if (D_00263612[5] != 0x6) {
         printf("error! s3mm2_st_tbl1[6]\n");
     }
-    STORE_POINTER(D_00263612 + 5, func_001D6160);
+    STORE_POINTER(D_00263612 + 5, stage3_midboss_shot);
     if (D_00263612[7] != 0x8) {
         printf("error! s3mm2_st_tbl1[8]\n");
     }
-    STORE_POINTER(D_00263612 + 7, func_001D6160);
+    STORE_POINTER(D_00263612 + 7, stage3_midboss_shot);
     if (D_00263612[9] != 0xa) {
         printf("error! s3mm2_st_tbl1[10]\n");
     }
-    STORE_POINTER(D_00263612 + 9, func_001D6160);
+    STORE_POINTER(D_00263612 + 9, stage3_midboss_shot);
     if (D_00263612[11] != 0xc) {
         printf("error! s3mm2_st_tbl1[12]\n");
     }
-    STORE_POINTER(D_00263612 + 11, func_001D6160);
+    STORE_POINTER(D_00263612 + 11, stage3_midboss_shot);
     if (D_00263612[13] != 0xe) {
         printf("error! s3mm2_st_tbl1[14]\n");
     }
-    STORE_POINTER(D_00263612 + 13, func_001D6160);
+    STORE_POINTER(D_00263612 + 13, stage3_midboss_shot);
 }
 
 extern u16 D_00261D30[];

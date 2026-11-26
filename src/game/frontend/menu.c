@@ -4043,7 +4043,7 @@ void menu_ranking_page(void) {
     }
 }
 
-s32 func_001A3D30();                            /* extern */
+s32 ranking_screen_begin();                            /* extern */
 extern s32 D_0028EAEC;
 extern s32 D_0028EAF0;
 extern s32 D_0028EAF4;
@@ -4062,7 +4062,7 @@ void menu_ranking_step0() {
     D_0028EAF0 = 0;
     D_0028EAEC = 0;
     D_0028EAF4 = 0;
-    func_001A3D30();
+    ranking_screen_begin();
 }
 
 void menu_ranking_step1() {
@@ -4076,7 +4076,7 @@ void menu_ranking_step1() {
 }
 
 s32 settings_notice_graphics_load();
-s32 func_001A3E70();
+s32 ranking_screen_update();
 extern u8 D_0028E294;
 void menu_ranking_step2() {
     s32 sfx_menu_confirm();
@@ -4087,7 +4087,7 @@ void menu_ranking_step2() {
     }
     var_s0 = 0;
     D_0028E294 = 1;
-    func_001A3E70();
+    ranking_screen_update();
     g_menu_idle_timer = 0xE10;
     if (g_pad_held[2] == 0) {
         (*(u16 *)&g_menu_idle_timer) -= 1;
@@ -4824,7 +4824,7 @@ void death_func_001B9120(void) {
 }
 #endif
 
-s32 func_001A4140();
+s32 ranking_screen_draw();
 extern u8 D_0028E294;
 
 void menu_alpha_b_update(void) {
@@ -4848,7 +4848,7 @@ void menu_alpha_b_update(void) {
     }
     if (D_0028EB94 != 0) {
         D_0028E294 = 1;
-        func_001A4140();
+        ranking_screen_draw();
     }
 }
 
@@ -5264,8 +5264,8 @@ void menu_overlay_draw(void) {
 }
 
 extern void frame_draw_right_panel(s32 level);
-extern u8 D_002BB060[160];
-extern u8 D_002BB100[272];
+extern u8 g_stored_ranking_texts[160];
+extern u8 g_death_label_ranking_texts[272];
 
 void menu_notice_draw(void) {
     extern void gfx_draw_color_box(s32 x, s32 y, s32 w, s32 h, s32 depth, s32 alpha, s32 r, s32 g, s32 b);
@@ -5310,7 +5310,7 @@ void menu_notice_draw(void) {
         buf[1] = 0;
         i = 0;
         y = 0;
-        p = MAIN_OR_DEATH_LABEL(((char *)D_002BB100), ((char *)D_002BB060)) + g_menu_cursor * 0x1E;
+        p = MAIN_OR_DEATH_LABEL(((char *)g_death_label_ranking_texts), ((char *)g_stored_ranking_texts)) + g_menu_cursor * 0x1E;
         do {
             (*(char **)&reg_a0) = buf;
             *(*(char **)&reg_a0) = *p++;

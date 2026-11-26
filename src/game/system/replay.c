@@ -530,7 +530,7 @@ void replay_result_menu_begin(void) {
 extern void fade_to_black(void);
 extern void fade_release(void);
 extern void fade_is_running(void);
-extern void func_001A42A0(void);
+extern void ranking_sprite_draw(void);
 extern s32 result_menu_update(void);
 extern u8 D_0026B5F0[];
 extern s8 D_0028EACC;
@@ -613,7 +613,7 @@ void replay_result_menu(void) {
         *(u8 *)(reg_a0 + 5) = 2;
         break;
     }
-    func_001A42A0();
+    ranking_sprite_draw();
     if (done == 0) {
         *(u16 *)(reg_a5 + 6) = step;
     } else {

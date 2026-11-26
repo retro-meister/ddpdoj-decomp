@@ -133,14 +133,14 @@ u16 g_p2_hyper_effect_delay __attribute__((aligned(4)));
 /* .bss (the compiler lays these out in reverse) */
 u8 D_002BB420[16];
 u8 D_002BB410[16];
-s32 D_002BB3F0[8];
-s32 D_002BB3B0[16];
-s32 D_002BB320[36];
-s32 D_002BB2E0[16];
-s32 D_002BB250[36];
-s32 D_002BB210[16];
-u8 D_002BB100[272];
-u8 D_002BB060[160];
+s32 g_ranking_scores[8];
+s32 g_ranking_names[16];
+s32 g_death_label_ranking_scores[36];
+s32 g_death_label_ranking_names[16];
+s32 g_stored_ranking_scores[36];
+s32 g_stored_ranking_names[16];
+u8 g_death_label_ranking_texts[272];
+u8 g_stored_ranking_texts[160];
 u8 D_002BB010[80];
 u16 g_p1_score_cells[96];
 #ifdef DEATH_LABEL

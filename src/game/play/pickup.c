@@ -492,9 +492,9 @@ void score_pickup_kind0(void) {
 
 
 
-s32 func_00170DF0();
-s32 func_00170F80();
-s32 func_00171100();
+s32 p1_bee_value_update();
+s32 p2_bee_value_update();
+s32 bee_collected();
 s32 sfx_bee_pickup();
 extern u8 D_00269490[];
 extern u8 *reg_call_target_as_u8_p;
@@ -511,12 +511,12 @@ void score_pickup_bee(void) {
     reg_d0.w = 0;
     if (reg_d1.w & 0x1000) goto next_1;
     if (!(reg_d1.w & 0x800)) goto next_3;
-    func_00170F80();
+    p2_bee_value_update();
     goto next_2;
 next_1:
-    func_00170DF0();
+    p1_bee_value_update();
 next_2:
-    func_00171100();
+    bee_collected();
     sfx_bee_pickup();
     ENTITY(reg_a6)->flags.b[0] |= 1;
     pickup_collected_begin();

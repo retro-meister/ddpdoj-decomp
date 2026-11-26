@@ -269,7 +269,7 @@ void func_001CE980(void) {
     bullet_fire256_fast();
 }
 
-s32 func_001713C0();
+s32 boss_level_get_from_78();
 s32 rng_next_unsigned();
 extern u32 D_0028DB20;
 extern u16 g_loop;
@@ -278,7 +278,7 @@ void stage3_boss_fire_main_gun_start(void) {
     s32 temp_a1;
     u16 *temp_a0;
     u16 temp_a2;
-    func_001713C0();
+    boss_level_get_from_78();
     reg_d0.h[0] += reg_d0.h[0];
     reg_d0.h[0] += reg_d0.h[0];
     temp_a2 = reg_d0.h[0];
@@ -411,7 +411,7 @@ void stage3_boss_fire_side_turrets_start(void) {
     s32 temp_a1;
     u16 *temp_a0;
     u16 temp_a2;
-    func_001713C0();
+    boss_level_get_from_78();
     reg_d0.h[0] += reg_d0.h[0];
     reg_d0.h[0] += reg_d0.h[0];
     temp_a2 = reg_d0.h[0];
@@ -493,7 +493,7 @@ extern u16 D_0028DB70[];
 extern u32 D_0028DB78;
 
 void stage3_boss_fire_lid_six_gun_start(void) {
-    func_001713C0();
+    boss_level_get_from_78();
     reg_d0.h[0] += reg_d0.h[0];
     reg_d0.h[0] += reg_d0.h[0];
     reg_a0 = *(u8 **)(((u8 *)D_0026CE00) + (reg_d0.h[0] & ~3));
@@ -600,7 +600,7 @@ void stage3_boss_fire_body_six_gun_start(void) {
         reg_a1 += 2;
     } while ((s16)(--reg_d0.h[0]) >= 0);
     temp_s0 = (u16 *)(reg_a1);
-    func_001713C0();
+    boss_level_get_from_78();
     reg_d0.h[0] += reg_d0.h[0];
     reg_d0.h[0] += reg_d0.h[0];
     temp_a1 = reg_d0.h[0];
@@ -846,7 +846,7 @@ void stage3_boss_fire_main_gun_b_start(void) {
         reg_a1 += 2;
     } while ((s16)(--reg_d0.h[0]) >= 0);
     temp_s0 = (u16 *)(reg_a1);
-    func_001713C0();
+    boss_level_get_from_78();
     reg_d0.h[0] += reg_d0.h[0];
     reg_d0.h[0] += reg_d0.h[0];
     temp_a1 = reg_d0.h[0];
@@ -983,7 +983,7 @@ void stage3_boss_fire_side_turrets_b_start(void) {
         reg_a1 += 2;
     } while ((s16)(--reg_d0.h[0]) >= 0);
     temp_s0 = (u16 *)(reg_a1);
-    func_001713C0();
+    boss_level_get_from_78();
     reg_d0.h[0] += reg_d0.h[0];
     reg_d0.h[0] += reg_d0.h[0];
     temp_a1 = reg_d0.h[0];
@@ -1108,7 +1108,7 @@ void stage3_boss_fire_six_gun_start(void) {
         reg_a1 += 2;
     } while ((s16)(--reg_d0.h[0]) >= 0);
     temp_s0 = (u16 *)(reg_a1);
-    func_001713C0();
+    boss_level_get_from_78();
     reg_d0.h[0] += reg_d0.h[0];
     reg_d0.h[0] += reg_d0.h[0];
     temp_a1 = reg_d0.h[0];
@@ -1263,7 +1263,7 @@ extern u32 D_0028DBC8;
 void stage3_boss_fire_six_gun_b_start(void) {
     s32 temp_a1;
     u16 temp_a2;
-    func_001713C0();
+    boss_level_get_from_78();
     reg_d0.h[0] += reg_d0.h[0];
     reg_d0.h[0] += reg_d0.h[0];
     temp_a2 = reg_d0.h[0];

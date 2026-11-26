@@ -1096,7 +1096,7 @@ void stage1_boss_left_rotor_opened(void) {
 }
 
 s32 boss_attack_start();
-s32 func_001713B0();
+s32 boss_level_get_from_58();
 s32 rng_next_bit();
 extern u8 D_0028DC28[];
 extern u8 D_0028DC30[];
@@ -1119,7 +1119,7 @@ void stage1_boss_spin_start(void) {
     SPIN(reg_a4)->saved_b[0] = (u16) reg_tmp.h[1];
     SPIN(reg_a4)->saved_b[1] = (u16) reg_tmp.h[0];
     SPIN(reg_a4)->hold = 0;
-    func_001713B0();
+    boss_level_get_from_58();
     reg_d2.w = 0;
     reg_d2.b[0] = *(D_0028DC28 + reg_d0.h[0]);
     reg_d2.b[0] -= STAGE1_EXTRA(reg_a6)->spin_interval_sub;

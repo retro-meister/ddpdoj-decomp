@@ -2170,7 +2170,7 @@ s32 entity_draw_layer1();
 s32 sprite_draw_layer1();
 s32 rng_next();
 s32 rng_next_bit_d5();
-s32 func_00211550();
+s32 wreck_spawn_a();
 extern u16 D_0025A440[];
 extern u16 D_0025A460[];
 extern u16 D_0028C9E0;
@@ -2456,9 +2456,9 @@ block_55:
         reg_d1.h[0] = 0;
         reg_d2.w = 0xF8000000;
         reg_d0.w = 0xC;
-        func_00211550();
+        wreck_spawn_a();
         reg_d2.w = 0x08000000;
-        func_00211550();
+        wreck_spawn_a();
         reg_d0.w = 8;
         reg_a4 = (u8 *)(D_0025A460);
         reg_d6.w = 6;
@@ -3055,13 +3055,13 @@ void mid_tank_horizontal_start(void) {
 }
 
 s32 bullet_fire_2way();
-s32 func_00170A60();
-s32 func_00170D00();
+s32 enemy_variant_offset_a_get();
+s32 enemy_variant_timer_a_set();
 extern u16 g_direction_offsets_400[];
 extern u16 D_0025A620[];
 
 void mid_tank_horizontal(void) {
-    s32 func_00170BE0();
+    s32 enemy_variant_offset_c_get();
     u8 bits;
     u8 *ptr;
     u32 saved;
@@ -3212,7 +3212,7 @@ next_380:
     MID_TANK_H(reg_a5)->turret_b_sprite[0] = (reg_d1.h[0] != 0) ? *(u16 *)((u8 *)reg_a3 + ((s16)reg_d1.h[0] & ~1)) : *(u16 *)reg_a3;
     MID_TANK_H(reg_a5)->turret_b_sprite[1] = ((reg_d1.h[0] + 2) != 0) ? *(u16 *)((u8 *)reg_a3 + ((s16)(reg_d1.h[0] + 2) & ~1)) : *(u16 *)reg_a3;
 block_b:
-    func_00170A60();
+    enemy_variant_offset_a_get();
     reg_d1.h[1] = ENTITY(reg_a6)->y.h;
     reg_d1.h[0] = ENTITY(reg_a6)->x.h;
     reg_d1.h[0] += 0xF500;
@@ -3221,7 +3221,7 @@ block_b:
     reg_d2.h[0] = ENTITY(reg_a6)[1].sprite.h;
     reg_d3.h[0] = 0x458;
     reg_d4.h[0] = ENTITY(reg_a6)->attr.h;
-    func_00170BE0();
+    enemy_variant_offset_c_get();
     reg_d1.h[1] = ENTITY(reg_a6)->y.h;
     reg_d1.h[0] = ENTITY(reg_a6)->x.h;
     reg_d1.h[0] += 0x2C0;
@@ -3230,12 +3230,12 @@ block_b:
     reg_d2.h[0] = MID_TANK_H(reg_a5)->turret_a_sprite[1];
     reg_d3.h[0] = 0x418;
     reg_d4.h[0] = ENTITY(reg_a6)->attr.h;
-    func_00170BE0();
+    enemy_variant_offset_c_get();
     reg_d1.h[0] = ENTITY(reg_a6)->x.h;
     reg_d1.h[0] += 0xF6C0;
     reg_d2.h[1] = MID_TANK_H(reg_a5)->turret_b_sprite[0];
     reg_d2.h[0] = MID_TANK_H(reg_a5)->turret_b_sprite[1];
-    func_00170BE0();
+    enemy_variant_offset_c_get();
     reg_a0 = reg_a6;
     enemy_hitbox_debug_draw();
     if (g_enemies_stopped != 0) goto block_rts;
@@ -3325,9 +3325,9 @@ block_d:
     reg_d1.h[0] = 0;
     reg_d2.w = -0x600U;
     reg_d0.w = 0xC;
-    func_00211550();
+    wreck_spawn_a();
     reg_d2.w = 0x600;
-    func_00211550();
+    wreck_spawn_a();
     reg_d0.w = 8;
     reg_a4 = (u8 *)(D_0025A620);
     reg_d6.w = 6;
@@ -3342,7 +3342,7 @@ block_d:
     explosion_spawn();
     EXPLOSION(reg_a0)->y = (u16) ENTITY(reg_a6)->y.h;
     EXPLOSION(reg_a0)->x = (u16) ENTITY(reg_a6)->x.h;
-    func_00170D00();
+    enemy_variant_timer_a_set();
     EXPLOSION(reg_a0)->debris = 1;
     EXPLOSION(reg_a0)->debris_arg = 0x400;
     EXPLOSION(reg_a0)->start_y = 0x200;
@@ -3352,7 +3352,7 @@ block_d:
     explosion_spawn();
     EXPLOSION(reg_a0)->y = (u16) ENTITY(reg_a6)->y.h;
     EXPLOSION(reg_a0)->x = (u16) ENTITY(reg_a6)->x.h;
-    func_00170D00();
+    enemy_variant_timer_a_set();
     EXPLOSION(reg_a0)->debris = 1;
     EXPLOSION(reg_a0)->debris_arg = 0;
     EXPLOSION(reg_a0)->start_y = 0xFE00;
@@ -3363,7 +3363,7 @@ block_d:
     explosion_spawn();
     EXPLOSION(reg_a0)->y = (u16) ENTITY(reg_a6)->y.h;
     EXPLOSION(reg_a0)->x = (u16) ENTITY(reg_a6)->x.h;
-    func_00170D00();
+    enemy_variant_timer_a_set();
     EXPLOSION(reg_a0)->debris = 1;
     EXPLOSION(reg_a0)->debris_arg = 0x400;
     EXPLOSION(reg_a0)->start_y = 0xFC00;
@@ -3374,7 +3374,7 @@ block_d:
     explosion_spawn();
     EXPLOSION(reg_a0)->y = (u16) ENTITY(reg_a6)->y.h;
     EXPLOSION(reg_a0)->x = (u16) ENTITY(reg_a6)->x.h;
-    func_00170D00();
+    enemy_variant_timer_a_set();
     EXPLOSION(reg_a0)->debris = 1;
     EXPLOSION(reg_a0)->debris_arg = 0;
     EXPLOSION(reg_a0)->start_y = 0xFE00;
@@ -3434,9 +3434,9 @@ void ground_turret_a_start(void) {
 
 s32 pickup_spawn_variant_here();
 s32 enemy_fire_distance_check();
-s32 func_00170B20();
-s32 func_00170CA0();
-s32 func_00170DE0();
+s32 enemy_variant_offset_b_get();
+s32 enemy_variant_word_get();
+s32 enemy_variant_get();
 s32 sfx_explosion_air_small();
 s32 wreck_spawn();
 extern s16 g_player2[];
@@ -3559,7 +3559,7 @@ block_21:
                 }
             }
             reg_d6.w = 0xF800F800;
-            func_00170B20();
+            enemy_variant_offset_b_get();
             reg_a0 = (u8 *)(reg_a6);
             enemy_hitbox_debug_draw();
             return;
@@ -3567,17 +3567,17 @@ block_21:
         reg_d0.w = 0x20;
         score_add();
         sfx_explosion_air_small();
-        func_00170CA0();
+        enemy_variant_word_get();
         reg_d0.w = 8;
         wreck_spawn();
         reg_d0.w = 8;
-        func_00170DE0();
+        enemy_variant_get();
         pickup_spawn_variant_here();
         reg_d0.w = 0xC;
         explosion_spawn();
         EXPLOSION(reg_a0)->y = (u16) ENTITY(reg_a6)->y.h;
         EXPLOSION(reg_a0)->x = (u16) ENTITY(reg_a6)->x.h;
-        func_00170D00();
+        enemy_variant_timer_a_set();
         EXPLOSION(reg_a0)->debris = 1;
         EXPLOSION(reg_a0)->debris_arg = 0;
         EXPLOSION(reg_a0)->start_y = 0;
@@ -3698,7 +3698,7 @@ next_10:
     reg_tmp.w ^= 3;
     ENTITY(reg_a6)->draw.h = reg_tmp.h[1];
     ENTITY(reg_a6)->sprite.h = reg_tmp.h[0];
-    func_00170A60();
+    enemy_variant_offset_a_get();
 block_2:
     return;
 block_3:
@@ -3712,7 +3712,7 @@ block_3:
     explosion_spawn();
     EXPLOSION(reg_a0)->y = ENTITY(reg_a6)->y.h;
     EXPLOSION(reg_a0)->x = ENTITY(reg_a6)->x.h;
-    func_00170D00();
+    enemy_variant_timer_a_set();
     reg_d0.h[0] = 1;
     EXPLOSION(reg_a0)->follows_scroll = reg_d0.h[0];
     enemy_remove();
@@ -3804,7 +3804,7 @@ block_2:
     explosion_spawn();
     EXPLOSION(reg_a0)->y = ENTITY(reg_a6)->y.h;
     EXPLOSION(reg_a0)->x = ENTITY(reg_a6)->x.h;
-    func_00170D00();
+    enemy_variant_timer_a_set();
     reg_d0.h[0] = 1;
     EXPLOSION(reg_a0)->follows_scroll = reg_d0.h[0];
     enemy_remove();
@@ -3812,7 +3812,7 @@ block_2:
 
 
 void water_flower_draw_petals(void) {
-    extern void func_00170BE0(void);
+    extern void enemy_variant_offset_c_get(void);
     reg_d1.h[1] = ENTITY(reg_a6)->y.h;
     reg_d1.h[0] = ENTITY(reg_a6)->x.h;
     reg_d1.h[0] += 0xFB00;
@@ -3822,7 +3822,7 @@ void water_flower_draw_petals(void) {
     reg_d2.h[0] = WATER_FLOWER(reg_a5)->petal_sprite[1];
     reg_d3.h[0] = 0x428;
     reg_d4.h[0] = 0xD;
-    func_00170BE0();
+    enemy_variant_offset_c_get();
 }
 
 void water_flower_turret_first(void) {
@@ -3881,7 +3881,7 @@ extern u16 D_0025A830[];
 extern u16 D_0025AEE0[];
 
 void water_flower_turret(void) {
-    s32 func_00170BE0();
+    s32 enemy_variant_offset_c_get();
     u8 *ptr;
 
     enemy_path_step();
@@ -3939,7 +3939,7 @@ next_120:
     WATER_FLOWER(reg_a5)->bob_angle.b[0] += 3;
     if ((s8) ENTITY(reg_a6)->flags.b[0] >= 0) goto next_200;
 block_base:
-    func_00170A60();
+    enemy_variant_offset_a_get();
     water_flower_draw_petals();
     if (g_frame_mod2 == 0) goto next_150;
     reg_d1.h[1] = ENTITY(reg_a6)->y.h;
@@ -3955,7 +3955,7 @@ block_base:
     reg_d2.h[0] = ((reg_d2.h[0] + 2) != 0) ? *(u16 *)((u8 *)reg_a0 + ((s16)(reg_d2.h[0] + 2) & ~1)) : *(u16 *)reg_a0;
     reg_d3.h[0] = 0x410;
     reg_d4.h[0] = 0x1E;
-    func_00170BE0();
+    enemy_variant_offset_c_get();
 next_150:
     reg_a0 = reg_a6;
     enemy_hitbox_debug_draw();
@@ -3997,7 +3997,7 @@ next_240:
     ENTITY(reg_a6)->draw.h = (reg_d1.h[0] != 0) ? *(u16 *)((u8 *)reg_a0 + ((s16)reg_d1.h[0] & ~1)) : *(u16 *)reg_a0;
     ENTITY(reg_a6)->sprite.h = ((reg_d1.h[0] + 2) != 0) ? *(u16 *)((u8 *)reg_a0 + ((s16)(reg_d1.h[0] + 2) & ~1)) : *(u16 *)reg_a0;
 block_objset:
-    func_00170A60();
+    enemy_variant_offset_a_get();
     water_flower_draw_petals();
     reg_a0 = reg_a6;
     enemy_hitbox_debug_draw();
@@ -4057,7 +4057,7 @@ block_dead:
     explosion_spawn();
     EXPLOSION(reg_a0)->y = ENTITY(reg_a6)->y.h;
     EXPLOSION(reg_a0)->x = ENTITY(reg_a6)->x.h;
-    func_00170D00();
+    enemy_variant_timer_a_set();
     EXPLOSION(reg_a0)->debris = 1;
     EXPLOSION(reg_a0)->debris_arg = 0;
     EXPLOSION(reg_a0)->start_y = 0;
@@ -4077,7 +4077,7 @@ block_dead2:
     explosion_spawn();
     EXPLOSION(reg_a0)->y = ENTITY(reg_a6)->y.h;
     EXPLOSION(reg_a0)->x = ENTITY(reg_a6)->x.h;
-    func_00170D00();
+    enemy_variant_timer_a_set();
     EXPLOSION(reg_a0)->debris = 1;
     EXPLOSION(reg_a0)->debris_arg = 0;
     EXPLOSION(reg_a0)->start_y = 0xFC00;
@@ -4258,7 +4258,7 @@ block_22:
                     }
                 }
             }
-            func_00170A60();
+            enemy_variant_offset_a_get();
             reg_a0 = (u8 *)(reg_a6);
             enemy_hitbox_debug_draw();
             return;
@@ -4266,17 +4266,17 @@ block_22:
         reg_d0.w = 0x34;
         score_add();
         sfx_explosion_air_small();
-        func_00170CA0();
+        enemy_variant_word_get();
         reg_d0.w = 8;
         wreck_spawn();
         reg_d0.w = 8;
-        func_00170DE0();
+        enemy_variant_get();
         pickup_spawn_variant_here();
         reg_d0.w = 0xC;
         explosion_spawn();
         EXPLOSION(reg_a0)->y = (u16) ENTITY(reg_a6)->y.h;
         EXPLOSION(reg_a0)->x = (u16) ENTITY(reg_a6)->x.h;
-        func_00170D00();
+        enemy_variant_timer_a_set();
         EXPLOSION(reg_a0)->debris = 1;
         EXPLOSION(reg_a0)->debris_arg = 0;
         EXPLOSION(reg_a0)->start_y = 0xFE00;
@@ -4333,7 +4333,7 @@ void ground_turret_c_start(void) {
     }
 }
 
-s32 func_00170D70();
+s32 enemy_variant_timer_b_set();
 
 void ground_turret_c(void) {
     u8 *swp;
@@ -4372,7 +4372,7 @@ next_4:
 next_5:
     ENTITY(reg_a6)->attr.b.palette = reg_d0.b[0];
     if (ENTITY(reg_a6)->flags.sb[0] >= 0) goto next_6;
-    func_00170A60();
+    enemy_variant_offset_a_get();
     reg_a0 = reg_a6;
     enemy_hitbox_debug_draw();
     return;
@@ -4411,7 +4411,7 @@ next_8:
     ENTITY(reg_a6)->draw.h = (reg_d1.h[0] != 0) ? *(u16 *)(reg_a3 + ((s16) reg_d1.h[0] & ~1)) : *(u16 *)reg_a3;
     ENTITY(reg_a6)->sprite.h = ((reg_d1.h[0] + 2) != 0) ? *(u16 *)(reg_a3 + ((s16) (reg_d1.h[0] + 2) & ~1)) : *(u16 *)reg_a3;
 next_21:
-    func_00170A60();
+    enemy_variant_offset_a_get();
     reg_a0 = reg_a6;
     enemy_hitbox_debug_draw();
     if (g_enemies_stopped != 0) goto block_rts;
@@ -4465,7 +4465,7 @@ next_20:
     explosion_spawn();
     EXPLOSION(reg_a0)->y = ENTITY(reg_a6)->y.h;
     EXPLOSION(reg_a0)->x = ENTITY(reg_a6)->x.h;
-    func_00170D70();
+    enemy_variant_timer_b_set();
     EXPLOSION(reg_a0)->debris = 1;
     EXPLOSION(reg_a0)->debris_arg = 0;
     EXPLOSION(reg_a0)->start_y = 0xFE00;
@@ -4481,17 +4481,17 @@ next_11:
     sfx_explosion_air_small();
     reg_d0.w = 8;
     score_add();
-    func_00170CA0();
+    enemy_variant_word_get();
     reg_d0.w = 8;
     wreck_spawn();
     reg_d0.w = 8;
-    func_00170DE0();
+    enemy_variant_get();
     pickup_spawn_variant_here();
     reg_d0.w = 0xC;
     explosion_spawn();
     EXPLOSION(reg_a0)->y = ENTITY(reg_a6)->y.h;
     EXPLOSION(reg_a0)->x = ENTITY(reg_a6)->x.h;
-    func_00170D00();
+    enemy_variant_timer_a_set();
     EXPLOSION(reg_a0)->debris = 1;
     EXPLOSION(reg_a0)->debris_arg = 0;
     EXPLOSION(reg_a0)->start_y = 0xFC00;
@@ -4971,7 +4971,7 @@ extern u16 D_0025ADE0[];
 extern u16 D_0025ADF0[];
 
 void mid_tank_horizontal_b(void) {
-    s32 func_00170BE0();
+    s32 enemy_variant_offset_c_get();
     s16 *t1;
     s16 *t2;
     u32 t3;
@@ -5112,7 +5112,7 @@ next_3:
                     }
                 }
             }
-            func_00170A60();
+            enemy_variant_offset_a_get();
             reg_d1.h[1] = ENTITY(reg_a6)->y.h;
             reg_d1.h[0] = ENTITY(reg_a6)->x.h;
             reg_d1.h[0] += MID_TANK_HB(reg_a5)->turret_x;
@@ -5123,7 +5123,7 @@ next_3:
             reg_d3.h[0] = 0x620;
             reg_d4.w = 0;
             reg_d4.b[0] = ENTITY(reg_a6)->attr.b.palette;
-            func_00170BE0();
+            enemy_variant_offset_c_get();
             reg_a0 = (u8 *)(reg_a6);
             enemy_hitbox_debug_draw();
             if (g_enemies_stopped != 0) {
@@ -5195,10 +5195,10 @@ block_rts:
             sfx_explosion_air_large();
             reg_d0.w = 0x88;
             score_add();
-            func_00170CA0();
+            enemy_variant_word_get();
             reg_d2.w = 0xFE000000;
             reg_d0.w = 0xC;
-            func_00211550();
+            wreck_spawn_a();
             reg_d0.w = 8;
             reg_a4 = (u8 *)(D_0025ADF0);
             reg_d6.w = 4;
@@ -5213,7 +5213,7 @@ block_rts:
             explosion_spawn();
             EXPLOSION(reg_a0)->y = (u16) ENTITY(reg_a6)->y.h;
             EXPLOSION(reg_a0)->x = (u16) ENTITY(reg_a6)->x.h;
-            func_00170D00();
+            enemy_variant_timer_a_set();
             if (g_stage == 1) {
                 EXPLOSION(reg_a0)->draw_layer = 8;
             }
@@ -5226,7 +5226,7 @@ block_rts:
             explosion_spawn();
             EXPLOSION(reg_a0)->y = (u16) ENTITY(reg_a6)->y.h;
             EXPLOSION(reg_a0)->x = (u16) ENTITY(reg_a6)->x.h;
-            func_00170D00();
+            enemy_variant_timer_a_set();
             if (g_stage == 1) {
                 EXPLOSION(reg_a0)->draw_layer = 8;
             }

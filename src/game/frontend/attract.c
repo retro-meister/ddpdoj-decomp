@@ -183,9 +183,9 @@ void attract_step_settings_notice(void) {
     }
 }
 
-s32 func_001A3D20();
-s32 func_001A3D30();
-s32 func_001A3E70();
+s32 ranking_screen_time_reset();
+s32 ranking_screen_begin();
+s32 ranking_screen_update();
 s32 stage_load_step();
 s32 disc_notice_begin();
 s32 disc_notice_end();
@@ -212,7 +212,7 @@ void attract_step_stage_preload(void) {
         slowdown_init();
         g_slowdown_timer = 0;
         D_0028E294 = 0;
-        func_001A3D30();
+        ranking_screen_begin();
         D_0028E368 = 0;
         D_0028E378 = 0xFF;
         D_0028DF84 = 0;
@@ -227,10 +227,10 @@ void attract_step_stage_preload(void) {
         if (g_loaded_stage == g_stage) {
             *(u8 *)(reg_a5 + 2) = 2U;
             disc_notice_end();
-            func_001A3D20();
+            ranking_screen_time_reset();
         }
     }
-    func_001A3E70();
+    ranking_screen_update();
     if (cond_flag == 0) {
         reg_d0.h[0] = 0xC;
         attract_step_set();

@@ -1,23 +1,23 @@
 #include "common.h"
 #include "entity.h"
 
-void func_001A40A0(void);
-void func_001A4320(void);
-void func_001A4400(void);
-void func_001A4410(void);
-void func_001A44C0(void);
-void func_001A4660(void);
-void func_001A4740(void);
-void func_001A47D0(void);
-void func_001A4990(void);
-void func_001A4A20(void);
-void func_001A4B60(void);
-void func_001A4CB0(void);
-void func_001A4EA0(void);
+void ranking_screen_finish(void);
+void ranking_title_draw(void);
+void ranking_draw_unused(void);
+void ranking_header_draw(void);
+void ranking_ship_types_draw(void);
+void ranking_power_styles_draw(void);
+void ranking_column_label_a_draw(void);
+void ranking_loops_and_stages_draw(void);
+void ranking_column_label_b_draw(void);
+void ranking_hits_draw(void);
+void ranking_names_draw(void);
+void ranking_scores_draw(void);
+void ranking_continues_draw(void);
 
 extern s16 D_0028E774;
 
-void func_001A3D20(void) {
+void ranking_screen_time_reset(void) {
     D_0028E774 = 0xF0;
 }
 
@@ -27,7 +27,7 @@ extern u16 D_0028E76C;
 extern u32 D_0028E770;
 extern u16 D_0028E778;
 
-void func_001A3D30(void) {
+void ranking_screen_begin(void) {
     s32 music_stop();
     u32 save_d0;
     u32 save_d1;
@@ -107,7 +107,7 @@ extern u32 reg_save2_d1;
 extern u32 reg_save2_d0;
 extern u16 D_0028E778;
 
-void func_001A3E70(void) {
+void ranking_screen_update(void) {
     reg_save2_d0 = reg_d0.w;
     reg_save2_d1 = reg_d1.w;
     reg_save2_d2 = reg_d2.w;
@@ -146,21 +146,21 @@ void func_001A3E70(void) {
             fade_is_running();
             if (cond_flag == 0) {
                 fade_release();
-                func_001A40A0();
+                ranking_screen_finish();
                 return;
             }
         }
-        func_001A4320();
-        func_001A4410();
-        func_001A44C0();
-        func_001A4660();
-        func_001A4740();
-        func_001A47D0();
-        func_001A4990();
-        func_001A4A20();
-        func_001A4B60();
-        func_001A4CB0();
-        func_001A4EA0();
+        ranking_title_draw();
+        ranking_header_draw();
+        ranking_ship_types_draw();
+        ranking_power_styles_draw();
+        ranking_column_label_a_draw();
+        ranking_loops_and_stages_draw();
+        ranking_column_label_b_draw();
+        ranking_hits_draw();
+        ranking_names_draw();
+        ranking_scores_draw();
+        ranking_continues_draw();
         goto block_11;
     }
 block_11:
@@ -183,7 +183,7 @@ block_11:
 }
 
 
-void func_001A40A0(void) {
+void ranking_screen_finish(void) {
     void music_stop(void);
     music_stop();
     reg_d0.w = reg_save2_d0;
@@ -204,7 +204,7 @@ void func_001A40A0(void) {
     reg_a6 = (u8 *)(*(s32 *)&reg_save2_a6);
 }
 
-void func_001A4140(void) {
+void ranking_screen_draw(void) {
     reg_save2_d0 = reg_d0.w;
     reg_save2_d1 = reg_d1.w;
     reg_save2_d2 = reg_d2.w;
@@ -220,17 +220,17 @@ void func_001A4140(void) {
     reg_save2_a4 = reg_a4;
     reg_save2_a5 = reg_a5;
     reg_save2_a6 = reg_a6;
-    func_001A4320();
-    func_001A4410();
-    func_001A44C0();
-    func_001A4660();
-    func_001A4740();
-    func_001A47D0();
-    func_001A4990();
-    func_001A4A20();
-    func_001A4B60();
-    func_001A4CB0();
-    func_001A4EA0();
+    ranking_title_draw();
+    ranking_header_draw();
+    ranking_ship_types_draw();
+    ranking_power_styles_draw();
+    ranking_column_label_a_draw();
+    ranking_loops_and_stages_draw();
+    ranking_column_label_b_draw();
+    ranking_hits_draw();
+    ranking_names_draw();
+    ranking_scores_draw();
+    ranking_continues_draw();
     reg_d0.w = reg_save2_d0;
     reg_d1.w = reg_save2_d1;
     reg_d2.w = reg_save2_d2;
@@ -248,7 +248,7 @@ void func_001A4140(void) {
     reg_a6 = (u8 *)reg_save2_a6;
 }
 
-void func_001A42A0(void) {
+void ranking_sprite_draw(void) {
     s32 sprite_draw(s32);
     u32 temp_s0;
     u32 temp_s1;
@@ -272,7 +272,7 @@ void func_001A42A0(void) {
 
 extern u16 g_frame_mod2;
 
-void func_001A4320(void) {
+void ranking_title_draw(void) {
     s32 sprite_draw();
     reg_d2.w = 0x1458;
     reg_d3.h[0] = 0x38E0;
@@ -280,7 +280,7 @@ void func_001A4320(void) {
     reg_d1.w = 0;
     sprite_draw();
     if (D_0028E294 == 0) {
-        func_001A4400();
+        ranking_draw_unused();
         reg_d1.w = 0x5F000400;
         reg_d2.w = 0x153A;
         reg_d3.h[0] = 0x8C0;
@@ -305,12 +305,12 @@ void func_001A4320(void) {
     sprite_draw();
 }
 
-void func_001A4400(void) {
+void ranking_draw_unused(void) {
 }
 
 extern u8 D_0026B370[];
 
-void func_001A4410(void) {
+void ranking_header_draw(void) {
     s32 sprite_draw_keep();
     if (D_0028E294 != 0) {
         reg_d1.w = 0x628004C0;
@@ -330,13 +330,13 @@ void func_001A4410(void) {
 }
 
 extern u16 D_0026B390[];
-extern u16 D_002BB378[5];
+extern u16 g_ranking_ship_types[5];
 
-void func_001A44C0(void) {
+void ranking_ship_types_draw(void) {
     void sprite_draw_keep(void);
     u16 idx;
 
-    reg_a6 = (u8 *)((u16 *)D_002BB378);
+    reg_a6 = (u8 *)((u16 *)g_ranking_ship_types);
     reg_a0 = (u8 *)D_0026B390;
     if (D_0028E294 != 0) {
         reg_d1.w = 0x62000A80;
@@ -360,13 +360,13 @@ void func_001A44C0(void) {
 }
 
 extern u8 D_0026B3B0[];
-extern u16 D_002BB368[5];
+extern u16 g_ranking_power_styles[5];
 
-void func_001A4660(void) {
+void ranking_power_styles_draw(void) {
     s32 sprite_draw_keep();
     u16 temp_a0;
 
-    reg_a6 = (u8 *)(((u16 *)D_002BB368));
+    reg_a6 = (u8 *)(((u16 *)g_ranking_power_styles));
     reg_a0 = (u8 *)D_0026B3B0;
     if (D_0028E294 != 0) {
         reg_d1.w = 0x5E0009C0;
@@ -388,7 +388,7 @@ void func_001A4660(void) {
     } while ((s16)(--reg_d7.h[0]) >= 0);
 }
 
-void func_001A4740(void) {
+void ranking_column_label_a_draw(void) {
     s32 sprite_draw_keep();
     if (D_0028E294 != 0) {
         reg_d1.w = 0x5EC01800;
@@ -406,14 +406,14 @@ void func_001A4740(void) {
 }
 
 extern u8 D_0026B3C0[];
-extern u16 D_002BB388[5];
-extern u16 D_002BB398[5];
+extern u16 g_ranking_stages[5];
+extern u16 g_ranking_loops[5];
 
-void func_001A47D0(void) {
+void ranking_loops_and_stages_draw(void) {
     void sprite_draw_keep(void);
     reg_a0 = (u8 *)D_0026B3C0;
-    reg_a1 = (u8 *)((u16 *)D_002BB398);
-    reg_a2 = (u8 *)((s8 *)D_002BB388);
+    reg_a1 = (u8 *)((u16 *)g_ranking_loops);
+    reg_a2 = (u8 *)((s8 *)g_ranking_stages);
     if (D_0028E294 != 0) {
         reg_d1.h[0] = 0x5EC0;
     } else {
@@ -460,7 +460,7 @@ next_2:
     } while ((s16)(--reg_d7.h[0]) >= 0);
 }
 
-void func_001A4990(void) {
+void ranking_column_label_b_draw(void) {
     s32 sprite_draw_keep();
     if (D_0028E294 != 0) {
         reg_d1.w = 0x66C02BC0;
@@ -478,13 +478,13 @@ void func_001A4990(void) {
 }
 
 extern u8 D_0026B3F0[];
-extern u16 D_002BB358[5];
+extern u16 g_ranking_hits[5];
 
-void func_001A4A20(void) {
+void ranking_hits_draw(void) {
     void sprite_draw_keep(void);
     u32 tmp;
 
-    reg_a6 = (u8 *)((u16 *)D_002BB358);
+    reg_a6 = (u8 *)((u16 *)g_ranking_hits);
     reg_a0 = (u8 *)D_0026B3F0;
     if (D_0028E294 != 0) {
         reg_d1.h[0] = 0x6380;
@@ -522,14 +522,14 @@ loop_1:
 
 extern u8 D_0026B420[];
 extern u8 D_0026B4A0[];
-extern s32 D_002BB3B0[16];
+extern s32 g_ranking_names[16];
 
-void func_001A4B60(void) {
+void ranking_names_draw(void) {
     void sprite_draw_keep(void);
     s32 flag;
     u32 tmp;
 
-    reg_a6 = (u8 *)((u8 *)D_002BB3B0);
+    reg_a6 = (u8 *)((u8 *)g_ranking_names);
     if (D_0028E294 != 0) {
         reg_d1.h[0] = 0x66C0;
     } else {
@@ -571,15 +571,15 @@ loop_1:
 
 extern u8 D_0026B520[];
 extern u8 D_0026B550[];
-extern u16 D_002BB338[5];
-extern s32 D_002BB3F0[8];
+extern u16 g_ranking_score_tops[5];
+extern s32 g_ranking_scores[8];
 
-void func_001A4CB0(void) {
+void ranking_scores_draw(void) {
     void sprite_draw_keep(void);
     u32 tmp;
 
-    reg_a1 = (u8 *)((u32 *)D_002BB3F0);
-    reg_a2 = (u8 *)((u16 *)D_002BB338);
+    reg_a1 = (u8 *)((u32 *)g_ranking_scores);
+    reg_a2 = (u8 *)((u16 *)g_ranking_score_tops);
     reg_a0 = (u8 *)D_0026B520;
     if (D_0028E294 != 0) {
         reg_d1.h[0] = 0x62C0;
@@ -636,13 +636,13 @@ next_2:
     } while ((s16)(--reg_d7.h[0]) >= 0);
 }
 
-extern u16 D_002BB348[5];
+extern u16 g_ranking_continues[5];
 
-void func_001A4EA0(void) {
+void ranking_continues_draw(void) {
     s32 sprite_draw_keep();
     u16 temp_a0;
 
-    reg_a6 = (u8 *)(((u16 *)D_002BB348));
+    reg_a6 = (u8 *)(((u16 *)g_ranking_continues));
     if (D_0028E294 != 0) {
         reg_d1.w = 0x62C02780;
     } else {

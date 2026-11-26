@@ -1,155 +1,155 @@
 #include "common.h"
 
-void func_00206910(void) {
+void display_control_write(void) {
 }
 
-extern u16 D_0028E220;
+extern u16 g_display_control;
 
-void func_00206920(void) {
+void display_control_set_bit_0(void) {
     reg_d1.w = 0;
-    D_0028E220 &= 1;
+    g_display_control &= 1;
     reg_d0.h[0] <<= reg_d1.h[0];
-    D_0028E220 |= reg_d0.h[0];
+    g_display_control |= reg_d0.h[0];
 }
 
-void func_00206960(void) {
-    D_0028E220 &= 2;
+void display_control_set_bit_1(void) {
+    g_display_control &= 2;
     reg_d1.w = 1;
     reg_d0.h[0] <<= reg_d1.h[0];
-    D_0028E220 |= reg_d0.h[0];
+    g_display_control |= reg_d0.h[0];
 }
 
-void func_002069A0(void) {
-    D_0028E220 &= 4;
+void display_control_set_bit_2(void) {
+    g_display_control &= 4;
     reg_d1.w = 2;
     reg_d0.h[0] <<= reg_d1.h[0];
-    D_0028E220 |= reg_d0.h[0];
+    g_display_control |= reg_d0.h[0];
 }
 
-void func_002069E0(void) {
-    D_0028E220 &= 8;
+void display_control_set_bit_3(void) {
+    g_display_control &= 8;
     reg_d1.w = 3;
     reg_d0.h[0] <<= reg_d1.h[0];
-    D_0028E220 |= reg_d0.h[0];
+    g_display_control |= reg_d0.h[0];
 }
 
-void func_00206A20(void) {
-    D_0028E220 &= 0x70;
+void display_control_set_bits_4_to_6(void) {
+    g_display_control &= 0x70;
     reg_d1.w = 4;
     reg_d0.h[0] <<= reg_d1.h[0];
-    D_0028E220 |= reg_d0.h[0];
+    g_display_control |= reg_d0.h[0];
 }
 
-void func_00206A60(void) {
-    D_0028E220 &= 0x80;
+void display_control_set_bit_7(void) {
+    g_display_control &= 0x80;
     reg_d1.w = 7;
     reg_d0.h[0] <<= reg_d1.h[0];
-    D_0028E220 |= reg_d0.h[0];
+    g_display_control |= reg_d0.h[0];
 }
 
-void func_00206AA0(void) {
-    D_0028E220 &= 0x100;
+void display_control_set_bit_8(void) {
+    g_display_control &= 0x100;
     reg_d1.w = 8;
     reg_d0.h[0] <<= reg_d1.h[0];
-    D_0028E220 |= reg_d0.h[0];
+    g_display_control |= reg_d0.h[0];
 }
 
-void func_00206AE0(void) {
-    D_0028E220 &= 0x200;
+void display_control_set_bit_9(void) {
+    g_display_control &= 0x200;
     reg_d1.w = 9;
     reg_d0.h[0] <<= reg_d1.h[0];
-    D_0028E220 |= reg_d0.h[0];
+    g_display_control |= reg_d0.h[0];
 }
 
-void func_00206B20(void) {
-    D_0028E220 &= 0x400;
+void display_control_set_bit_10(void) {
+    g_display_control &= 0x400;
     reg_d1.w = 0xA;
     reg_d0.h[0] <<= reg_d1.h[0];
-    D_0028E220 |= reg_d0.h[0];
+    g_display_control |= reg_d0.h[0];
 }
 
-void func_00206B60(void) {
-    D_0028E220 &= 0x800;
+void display_control_set_bit_11(void) {
+    g_display_control &= 0x800;
     reg_d1.w = 0xB;
     reg_d0.h[0] <<= reg_d1.h[0];
-    D_0028E220 |= reg_d0.h[0];
+    g_display_control |= reg_d0.h[0];
 }
 
-void func_00206BA0(void) {
-    D_0028E220 &= 0x1000;
+void display_control_set_bit_12(void) {
+    g_display_control &= 0x1000;
     reg_d1.w = 0xC;
     reg_d0.h[0] <<= reg_d1.h[0];
-    D_0028E220 |= reg_d0.h[0];
+    g_display_control |= reg_d0.h[0];
 }
 
-void func_00206BE0(void) {
-    D_0028E220 &= 0x2000;
+void display_control_set_bit_13(void) {
+    g_display_control &= 0x2000;
     reg_d1.w = 0xD;
     reg_d0.h[0] <<= reg_d1.h[0];
-    D_0028E220 |= reg_d0.h[0];
+    g_display_control |= reg_d0.h[0];
 }
 
 
-void func_00206C20(void) {
-    D_0028E220 = 0;
+void display_control_init(void) {
+    g_display_control = 0;
     reg_d0.w = 0;
-    func_00206920();
+    display_control_set_bit_0();
     reg_d0.w = 1;
-    func_00206960();
+    display_control_set_bit_1();
     reg_d0.w = 1;
-    func_002069A0();
+    display_control_set_bit_2();
     reg_d0.w = 1;
-    func_002069E0();
+    display_control_set_bit_3();
     reg_d0.w = 1;
-    func_00206A20();
+    display_control_set_bits_4_to_6();
     reg_d0.w = 0;
-    func_00206A60();
+    display_control_set_bit_7();
     reg_d0.w = 0;
-    func_00206AA0();
+    display_control_set_bit_8();
     reg_d0.w = 0;
-    func_00206AE0();
+    display_control_set_bit_9();
     reg_d0.w = 0;
-    func_00206B20();
+    display_control_set_bit_10();
     reg_d0.w = 0;
-    func_00206B60();
+    display_control_set_bit_11();
     reg_d0.w = 0;
-    func_00206BA0();
+    display_control_set_bit_12();
     reg_d0.w = 0;
-    func_00206BE0();
-    func_00206910();
+    display_control_set_bit_13();
+    display_control_write();
 }
 
-void func_00206CB0(void) {
+void display_control_pulse_bit_3(void) {
     reg_d0.h[0] = 8;
     reg_d0.h[0] = ~(s16) reg_d0.h[0];
-    D_0028E220 &= reg_d0.h[0];
-    func_00206910();
+    g_display_control &= reg_d0.h[0];
+    display_control_write();
     reg_d0.h[0] = 8;
-    D_0028E220 |= reg_d0.h[0];
-    func_00206910();
+    g_display_control |= reg_d0.h[0];
+    display_control_write();
 }
 
 extern Reg32 reg_d0;
 
-void func_00206D10(void) {
+void display_control_bit_0_on(void) {
     u32 flags;
 
     reg_d0.h[0] = 1;
-    flags = (u32)D_0028E220;
+    flags = (u32)g_display_control;
     flags |= (u32)(u16)reg_d0.h[0];
-    D_0028E220 = (u16)flags;
-    func_00206910();
+    g_display_control = (u16)flags;
+    display_control_write();
 }
 
 
-void func_00206D30(void) {
-    u32 previous_value = D_0028E220;
+void display_control_bit_0_off(void) {
+    u32 previous_value = g_display_control;
 
     reg_d0.h[0] = 1;
     reg_d0.h[0] = ~(s16) reg_d0.h[0];
-    D_0028E220 = (u16) (previous_value & (u16) reg_d0.h[0]);
-    func_00206910();
+    g_display_control = (u16) (previous_value & (u16) reg_d0.h[0]);
+    display_control_write();
 }
 
-void func_00206D60(void) {
+void display_control_unused(void) {
 }

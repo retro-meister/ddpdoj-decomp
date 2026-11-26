@@ -98,14 +98,14 @@ s32 enemies_reset();                            /* extern */
 s32 items_clear();                            /* extern */
 s32 func_001B82D0();                            /* extern */
 s32 sparks_clear();                            /* extern */
-s32 func_002114A0();                            /* extern */
+s32 wrecks_clear();                            /* extern */
 
 void game_stage_objects_clear(void) {
     game_stage_signals_clear();
     enemies_reset();
     explosions_clear();
     func_001B82D0();
-    func_002114A0();
+    wrecks_clear();
     enemy_anims_clear();
     sparks_clear();
     items_clear();
@@ -1029,7 +1029,7 @@ void game_task_begin(void) {
     continue_panels_clear();
 }
 
-s32 selected_ships_mark();
+s32 join_select_choices_init();
 extern s32 D_0028E998;
 extern s32 D_0028E99C;
 extern u8 g_replay_mode;
@@ -1082,7 +1082,7 @@ void ship_select_apply(void) {
         reg_d1.h[0] = g_p2_ship_type;
         reg_d2.h[0] = g_p1_power_style;
         reg_d3.h[0] = g_p2_power_style;
-        selected_ships_mark();
+        join_select_choices_init();
         var_v0 = g_simulation_active == 1;
         reg_d7.w = 0;
         if (var_v0 == 0) {

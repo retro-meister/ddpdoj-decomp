@@ -5,8 +5,8 @@
 #include "entity.h"
 #include "sdk/ps2sdk.h"
 
-void func_00123540(void);
-void func_00123870(void);
+void ending_text_script_event(void);
+void ending_task_reset(void);
 
 void p1_hyper_state_clear_for_ending(void);
 void p2_hyper_state_clear_for_ending(void);
@@ -34,7 +34,7 @@ extern u16 g_bee_value_step;
 extern s16 g_player2[];
 extern s16 g_player1[];
 
-void func_00122CE0(void) {
+void ending_second_loop_check(void) {
     if (D_0028E2EC != 0) goto block_1;
     if (g_game_mode == 1) goto block_1;
 #ifdef DEATH_LABEL
@@ -95,7 +95,7 @@ extern s8 g_cd_async_busy;
 extern u16 D_00295E38[];
 extern u16 D_00295E3C[];
 
-void func_00122EB0(void) {
+void ending_finish(void) {
     u16 temp_a0;
 
     temp_a0 = D_00295E3C[0];
@@ -103,7 +103,7 @@ void func_00122EB0(void) {
         if (temp_a0 == 1) {
             switch (D_00295E38[0]) { case 0: break; default:
                 D_00295E3C[0] = 0;
-                func_00123870();
+                ending_task_reset();
                 return;
             }
             g_cd_async_busy = 1;
@@ -130,7 +130,7 @@ block_6:
         ENTITY(reg_a6)->hit_y_minus.h += 1;
         reg_d0.h[0] = ENTITY(reg_a6)->hit_y_minus.h;
         if (ENTITY(reg_a6)->hit_y_plus.h != reg_d0.h[0]) {
-            func_00123870();
+            ending_task_reset();
             return;
         }
         reg_d0.h[0] = TASK_CREDITS;
@@ -144,7 +144,7 @@ extern u16 D_00295E30[];
 extern u16 D_00295E32[];
 extern u32 D_00295E34[];
 
-void func_00122FD0(void) {
+void picture_change_reset(void) {
     ((s16 *)D_00295E2E)[0] = 0;
     ((s16 *)D_00295E30)[0] = 0;
     ((s16 *)D_00295E32)[0] = 0;
@@ -156,7 +156,7 @@ extern u16 D_00295E2E[];
 extern u16 D_00295E30[];
 extern u16 D_00295E32[];
 
-void func_00123000(void) {
+void picture_change_request(void) {
     if (D_00295E2E[0] == 0) {
         D_00295E2E[0] = 1;
         D_00295E30[0] = reg_d0.h[0];
@@ -172,7 +172,7 @@ extern u8 D_0024D2D0[];
 extern u16 D_00295E2C[];
 extern u32 D_00295E34[];
 
-void func_00123040(void) {
+void picture_change_update(void) {
     s32 fade_to_black();
     s32 fade_release();
     s32 fade_is_running();
@@ -225,7 +225,7 @@ block_rts:
 extern Reg32 reg_d0;
 extern u8 D_00295E00[];
 
-void func_00123210(void) {
+void ending_mode_set(void) {
     reg_a6 = (u8 *)D_00295E00;
     *(u16 *)(reg_a6 + 8) = reg_d0.h[0];
     *(u16 *)(reg_a6 + 6) = 0;
@@ -239,7 +239,7 @@ extern u16 D_00295E20[];
 extern u32 D_00295E24[];
 extern u32 D_00295E28[];
 
-void func_00123240(void) {
+void ending_text_lines_clear(void) {
     reg_a3 = (u8 *)g_spare_entities;
     reg_d7.h[0] = 0xC7;
     do {
@@ -262,7 +262,7 @@ void func_00123240(void) {
 #ifndef DEATH_LABEL
 s32 sprite_draw_keep();
 
-void func_001232E0(void) {
+void ending_text_lines_draw(void) {
     reg_a3 = (u8 *)g_spare_entities;
     reg_d7.h[0] = 0xC7;
     do {
@@ -281,7 +281,7 @@ void func_001232E0(void) {
 #endif
 
 #ifndef DEATH_LABEL
-void func_00123380(void) {
+void ending_text_lines_place(void) {
     u32 tmp;
 
     reg_a3 = (u8 *)g_spare_entities;
@@ -312,13 +312,13 @@ extern u8 D_00295E1E[];
 extern u8 D_00295E1F[];
 extern u32 D_00295E28[];
 
-void func_00123410(void) {
+void ending_text_script_step(void) {
     reg_a2 = reg_a0;
     reg_a2 += D_00295E1C[0];
     reg_d0.h[0] = *(u16 *) reg_a2;
     reg_a2 += 2;
     if (0 > (s16) reg_d0.h[0]) {
-        func_00123540();
+        ending_text_script_event();
         return;
     }
     D_00295E1F[0] -= 1;
@@ -333,7 +333,7 @@ next_1:
     reg_a1 += reg_d0.h[0];
     reg_d0.w = *(u32 *) reg_a1;
     reg_d1.w = D_00295E28[0];
-    func_00123380();
+    ending_text_lines_place();
     cond_flag = 1;
     ((u16 *) D_00295E28)[0] += 0x400;
     D_00295E1C[0] += 2;
@@ -345,7 +345,7 @@ extern u8 D_0024D340[];
 extern u16 D_00295E20[];
 extern u32 D_00295E24[];
 
-void func_00123540(void) {
+void ending_text_script_event(void) {
     void fade_to_black(void);
     void fade_release(void);
     void fade_is_running(void);
@@ -353,7 +353,7 @@ void func_00123540(void) {
         ((u16 *)D_00295E1E)[0] = *(u16 *)reg_a2;
         reg_a2 += 2;
         D_00295E1C[0] += 4;
-        func_00123410();
+        ending_text_script_step();
     } else if (reg_d0.h[0] == 0x8001) {
         reg_tmp.h[1] = *(u16 *)reg_a2;
         reg_a2 += 2;
@@ -361,13 +361,13 @@ void func_00123540(void) {
         reg_a2 += 2;
         D_00295E1C[0] += 6;
         D_00295E28[0] = reg_tmp.w;
-        func_00123410();
+        ending_text_script_step();
     } else if (reg_d0.h[0] == 0x8002) {
         reg_d1.h[0] = D_00295E20[0];
         if (*(u16 *)reg_a2 == reg_d1.h[0]) {
             D_00295E20[0] = 0;
             D_00295E1C[0] += 4;
-            func_00123410();
+            ending_text_script_step();
             return;
         }
         D_00295E20[0] += 1;
@@ -394,13 +394,13 @@ void func_00123540(void) {
         fade_release();
         D_00295E24[0] = 0;
         D_00295E1C[0] += 4;
-        func_00123410();
+        ending_text_script_step();
     } else if (reg_d0.h[0] == 0x8005) {
         reg_d0.h[0] = *(u16 *)reg_a2;
         reg_d1.h[0] = *(u16 *)(reg_a2 + 2);
-        func_00123000();
+        picture_change_request();
         D_00295E1C[0] += 6;
-        func_00123410();
+        ending_text_script_step();
     } else {
         cond_flag = 0;
     }
@@ -417,7 +417,7 @@ extern u16 D_00295E40[];
 extern s16 g_player2[];
 extern s16 g_player1[];
 
-void func_00123780(void) {
+void ending_task_begin(void) {
     *(s8 *)(reg_a5 + 3) = 1;
     g_ending_started = 1;
     reg_a0 = (u8 *)D_00295E00;
@@ -437,11 +437,11 @@ void func_00123780(void) {
     music_stop();
     sound_stop_effects();
     sound_stop_loops();
-    func_00123870();
-    func_00122CE0();
+    ending_task_reset();
+    ending_second_loop_check();
     if (cond_flag != 0) {
         reg_d0.w = 4;
-        func_00123210();
+        ending_mode_set();
     }
 }
 
@@ -449,12 +449,12 @@ extern u16 g_p2_power_style;
 extern u16 g_p1_power_style;
 extern u16 D_00295E2C[];
 
-void func_00123870(void) {
+void ending_task_reset(void) {
     *(s8 *)(reg_a5 + 3) = 1;
-    func_00123240();
-    func_00122FD0();
+    ending_text_lines_clear();
+    picture_change_reset();
     reg_d0.w = 0;
-    func_00123210();
+    ending_mode_set();
     ((s16 *)D_00295E2C)[0] = 0;
     reg_a6 = (u8 *)D_00295E00;
     if (ENTITY(reg_a6)->hit_y_plus.h != 1) goto next_0;
@@ -480,7 +480,7 @@ next_1:
         reg_d0.w = 0;
         reg_d0.h[0] = ENTITY(reg_a6)->look.h;
         reg_d0.h[0] += 1;
-        func_00123210();
+        ending_mode_set();
     }
 }
 
@@ -506,11 +506,11 @@ void ending_task(void) {
     if (mode == 0) {
         D_0028E368 = 0;
         D_0028E378 = 0xFF;
-        func_00123780();
+        ending_task_begin();
         return;
     }
     if (mode == 2) {
-        func_00122EB0();
+        ending_finish();
         return;
     }
     reg_a6 = (u8 *)D_00295E00;
@@ -519,8 +519,8 @@ void ending_task(void) {
 #else
     reg_d0.h[0] = ENTITY(reg_a6)->offset_x.h;
     ((Fn)*(u32 *)((u8 *)D_0024D090 + (reg_d0.h[0] * 4)))();
-    func_001232E0();
-    func_00123040();
+    ending_text_lines_draw();
+    picture_change_update();
     reg_d0.h[0] = D_00295E2C[0];
     if (reg_d0.h[0] != 0) {
         reg_d0.h[0] += reg_d0.h[0];
@@ -548,14 +548,14 @@ s32 text_layer_clear();
 s32 music_play_bgm11();
 extern u8 D_0024D628[];
 
-void func_00123B00(void) {
+void ending_mode_common(void) {
     u16 temp_a0;
     u8 *temp_a2;
 
     text_layer_clear();
     if (ENTITY(reg_a6)->offset_y.h == 0) {
         ENTITY(reg_a6)->offset_y.h = 1U;
-        func_00123240();
+        ending_text_lines_clear();
         ENTITY(reg_a6)->sprite.h = 0U;
         music_play_bgm11();
     }
@@ -573,14 +573,14 @@ void func_00123B00(void) {
         if (reg_d0.w == -1U) {
             reg_d0.h[0] = ENTITY(reg_a6)->look.h;
             reg_d0.h[0] += 1;
-            func_00123210();
+            ending_mode_set();
             return;
         }
         reg_a0 = (u8 *) reg_d0.w;
-        func_00123410();
+        ending_text_script_step();
         if (cond_flag == 0) {
             ENTITY(reg_a6)->sprite.h += 4;
-            func_00123240();
+            ending_text_lines_clear();
         }
     }
 }
@@ -602,13 +602,13 @@ extern u32 reg_call_target_as_u32;
 
 #define W(o) (*(u16 *)(reg_a6 + (o)))
 
-void func_00123C20(void) {
+void ending_mode_doll_a(void) {
     s32 fade_to_black();
     s32 fade_release();
     s32 fade_is_running();
     if (W(6) != 0) goto next_10;
     W(6) = 1;
-    func_00123240();
+    ending_text_lines_clear();
     W(0xC) = 0;
     ((s16 *)D_00295E3C)[0] = 1;
     D_00295E38[0] = 1;
@@ -633,7 +633,7 @@ next_10:
     goto next_20;
 next_15:
     reg_a0 = (u8 *) reg_d0.w;
-    func_00123410();
+    ending_text_script_step();
     if (cond_flag != 0) goto next_20;
     W(0xC) += 4;
 next_20:
@@ -715,12 +715,12 @@ block_rts:
 #ifndef DEATH_LABEL
 extern u32 D_0024DA90[];
 
-void func_001240E0(void) {
+void ending_mode_doll_b(void) {
     u16 temp_a1;
 
     if (ENTITY(reg_a6)->offset_y.h == 0) {
         ENTITY(reg_a6)->offset_y.h = 1U;
-        func_00123240();
+        ending_text_lines_clear();
         ENTITY(reg_a6)->sprite.h = 0U;
     }
     if (ENTITY(reg_a6)->offset_y.h == 1) {
@@ -733,10 +733,10 @@ void func_001240E0(void) {
             return;
         }
         reg_a0 = (u8 *) reg_d0.w;
-        func_00123410();
+        ending_text_script_step();
         if (cond_flag == 0) {
             ENTITY(reg_a6)->sprite.h += 4;
-            func_00123240();
+            ending_text_lines_clear();
         }
     }
 }
@@ -745,12 +745,12 @@ void func_001240E0(void) {
 #ifndef DEATH_LABEL
 extern u32 D_0024DE00[];
 
-void func_001241A0(void) {
+void ending_mode_doll_c(void) {
     u16 temp_a1;
 
     if (ENTITY(reg_a6)->offset_y.h == 0) {
         ENTITY(reg_a6)->offset_y.h = 1U;
-        func_00123240();
+        ending_text_lines_clear();
         ENTITY(reg_a6)->sprite.h = 0U;
     }
     if (ENTITY(reg_a6)->offset_y.h == 1) {
@@ -763,10 +763,10 @@ void func_001241A0(void) {
             return;
         }
         reg_a0 = (u8 *) reg_d0.w;
-        func_00123410();
+        ending_text_script_step();
         if (cond_flag == 0) {
             ENTITY(reg_a6)->sprite.h += 4;
-            func_00123240();
+            ending_text_lines_clear();
         }
     }
 }
@@ -775,12 +775,12 @@ void func_001241A0(void) {
 #ifndef DEATH_LABEL
 extern u32 D_0024E070[];
 
-void func_00124260(void) {
+void ending_mode_second_loop_message(void) {
     u16 temp_a1;
 
     if (ENTITY(reg_a6)->offset_y.h == 0) {
         ENTITY(reg_a6)->offset_y.h = 1U;
-        func_00123240();
+        ending_text_lines_clear();
         ENTITY(reg_a6)->sprite.h = 0U;
     }
     if (ENTITY(reg_a6)->offset_y.h == 1) {
@@ -793,10 +793,10 @@ void func_00124260(void) {
             return;
         }
         reg_a0 = (u8 *) reg_d0.w;
-        func_00123410();
+        ending_text_script_step();
         if (cond_flag == 0) {
             ENTITY(reg_a6)->sprite.h += 4;
-            func_00123240();
+            ending_text_lines_clear();
         }
     }
 }

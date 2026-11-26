@@ -100,7 +100,7 @@ s32 func_00137C50();
 s32 music_play_bgm1();
 s32 voice_select();
 s32 text_palette_load();
-s32 func_001B04B0();
+s32 join_select_objects_clear();
 s32 slowdown_reset();
 s32 replay_header_clear();
 extern u8 D_0025F770[];
@@ -127,7 +127,7 @@ extern u8 g_simulation_active;
 
 void func_001B1080(void) {
     *(s8 *)(reg_a5 + 3) = 1;
-    func_001B04B0();
+    join_select_objects_clear();
     func_00137C50();
     g_attract_demo = 0;
     g_simulation_active = 0;
@@ -519,7 +519,7 @@ extern u8 g_replay_start_state[];
 
 void func_001B1D70(void) {
     *(s8 *)(reg_a5 + 3) = 1;
-    func_001B04B0();
+    join_select_objects_clear();
     D_0028DF14 = 0;
     g_select_screen_active = 1;
     reg_a0 = (u8 *)D_0029BE00;

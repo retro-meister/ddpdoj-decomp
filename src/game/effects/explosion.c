@@ -12,14 +12,14 @@ s32 enemies_reset();                            /* extern */
 s32 items_clear();                            /* extern */
 s32 func_001B82D0();                            /* extern */
 s32 sparks_clear();                            /* extern */
-s32 func_002114A0();                            /* extern */
+s32 wrecks_clear();                            /* extern */
 
 void func_00139B20(void) {
     items_clear();
     bullets_clear();
     explosions_clear();
     func_001B82D0();
-    func_002114A0();
+    wrecks_clear();
     enemy_anims_clear();
     sparks_clear();
     enemies_reset();
@@ -44,13 +44,13 @@ s32 laser_impacts_update();
 s32 func_001488C0();
 s32 enemies_frame();
 s32 items_update();
-void func_00170A50(s32, s32, s32);
+void ground_step_unused(s32, s32, s32);
 s32 p1_options_update();
 s32 func_001B8410();
 s32 sparks_update();
 s32 player_bullet_collisions();
 s32 player_collisions();
-s32 func_00211670();
+s32 wrecks_update();
 extern u16 g_frame_mod2;
 extern u16 g_p2_hyper_level;
 extern u16 g_p1_hyper_level;
@@ -77,15 +77,15 @@ void func_00139B80(void) {
         func_00139B20();
         return;
     }
-    func_00211670();
-    func_00170A50(0x1F, 0x1F, 0x1F);
+    wrecks_update();
+    ground_step_unused(0x1F, 0x1F, 0x1F);
     enemies_frame();
-    func_00170A50(0, 0, 0);
+    ground_step_unused(0, 0, 0);
     enemy_anims_update();
     pickups_update();
     explosions_update();
     func_001B8410();
-    func_00170A50(0x1F, 0, 0);
+    ground_step_unused(0x1F, 0, 0);
     bombs_update();
     func_001488C0();
     p1_options_update();
@@ -97,15 +97,15 @@ void func_00139B80(void) {
     p2_draw_while_entering();
     p1_draw();
     p2_draw();
-    func_00170A50(0x1F, 0, 0x1F);
+    ground_step_unused(0x1F, 0, 0x1F);
     items_update();
-    func_00170A50(0x1F, 0x1F, 0);
+    ground_step_unused(0x1F, 0x1F, 0);
     hyper_bullet_speed_update();
     bullets_update();
     func_0013F380();
     maximum_marks_draw();
     hyper_ready_marks_draw();
-    func_00170A50(0, 0x1F, 0);
+    ground_step_unused(0, 0x1F, 0);
     if (g_two_player_game != 0) {
         reg_d4.h[0] = ((u16 *)g_player1)[0];
         if (((u16 *)g_player1)[0] != 0) {

@@ -134,7 +134,7 @@ typedef struct {
 
 s32 boss_movement_start();
 s32 sprite_palette_load();
-s32 func_001713B0();
+s32 boss_level_get_from_58();
 s32 boss_phase_start();
 s32 boss_attack_start();
 s32 boss_attack_running();
@@ -177,7 +177,7 @@ void stage1_boss_mode_normal_start(void) {
     boss_movement_start();
     NORMAL_MODE(reg_a4)->step = 0;
     NORMAL_MODE(reg_a4)->turrets.sh = 0x1000;
-    func_001713B0();
+    boss_level_get_from_58();
     reg_d1.b[0] = *(stage1_boss_turret_volleys + reg_d0.b[0]);
     reg_d1.b[0] += STAGE1_EXTRA(reg_a6)->turrets_burst;
     if ((s32) reg_d1.b[0] >= 0x80) {
@@ -202,7 +202,7 @@ void stage1_boss_mode_normal_start(void) {
     NORMAL_MODE(reg_a4)->beams.sh = 0x6000;
     NORMAL_MODE(reg_a4)->side.sb = 1;
     NORMAL_MODE(reg_a4)->unused_0C = 4;
-    func_001713B0();
+    boss_level_get_from_58();
     reg_d1.b[0] = *(stage1_boss_beam_waits + reg_d0.b[0]);
     NORMAL_MODE(reg_a4)->beams.t.reload = reg_d1.b[0];
     reg_a0 = (u8 *)(stage1_boss_beam_levels);
@@ -655,7 +655,7 @@ void stage1_boss_mode_gatling_start(void) {
     GATLING_MODE(reg_a4)->unused_14 = 0x2040;
     GATLING_MODE(reg_a4)->aiming = 1;
     GATLING_MODE(reg_a4)->volley_number = 1;
-    func_001713B0();
+    boss_level_get_from_58();
     reg_a0 = (u8 *)(stage1_boss_gatling_levels);
     reg_d0.h[0] += reg_d0.h[0];
     reg_d0.h[0] += reg_d0.h[0];

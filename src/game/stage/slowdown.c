@@ -107,7 +107,7 @@ s32 coin_update();                            /* extern */
 s32 coin_inputs_update();                            /* extern */
 s32 func_001A2C80();                            /* extern */
 s32 score_cells_flush();                            /* extern */
-s32 func_00206CB0();                            /* extern */
+s32 display_control_pulse_bit_3();                            /* extern */
 
 void frame_layers_flush(void) {
     coin_update();
@@ -116,7 +116,7 @@ void frame_layers_flush(void) {
     layer_a_apply_scroll();
     deferred_text_flush();
     score_cells_flush();
-    func_00206CB0();
+    display_control_pulse_bit_3();
 }
 
 extern s16 g_slowdown_loop2_allowed;

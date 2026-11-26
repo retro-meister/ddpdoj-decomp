@@ -214,17 +214,17 @@ s64 atoi();
 s32 sprintf();
 extern u8 D_0028E2BC;
 extern u8 D_002BADD0[];
-extern u8 D_002BB060[160];
-extern u8 D_002BB100[272];
-extern u16 D_002BB338[5];
-extern u16 D_002BB348[5];
-extern u16 D_002BB358[5];
-extern u16 D_002BB368[5];
-extern u16 D_002BB378[5];
-extern u16 D_002BB388[5];
-extern u16 D_002BB398[5];
-extern s32 D_002BB3B0[16];
-extern s32 D_002BB3F0[8];
+extern u8 g_stored_ranking_texts[160];
+extern u8 g_death_label_ranking_texts[272];
+extern u16 g_ranking_score_tops[5];
+extern u16 g_ranking_continues[5];
+extern u16 g_ranking_hits[5];
+extern u16 g_ranking_power_styles[5];
+extern u16 g_ranking_ship_types[5];
+extern u16 g_ranking_stages[5];
+extern u16 g_ranking_loops[5];
+extern s32 g_ranking_names[16];
+extern s32 g_ranking_scores[8];
 void password_make(void) {
     u32 save_d0;
     char str[0x28];
@@ -259,17 +259,17 @@ void password_make(void) {
         rec[j] = 0;
     }
     flags = 0;
-    score = ((u32 *)((u8 *)D_002BB3F0))[D_0028EAFC];
+    score = ((u32 *)((u8 *)g_ranking_scores))[D_0028EAFC];
     for (i = 0; i < 3; i++) {
-        name[i] = ((u32 *)((u8 *)D_002BB3B0))[D_0028EAFC * 3 + i];
+        name[i] = ((u32 *)((u8 *)g_ranking_names))[D_0028EAFC * 3 + i];
     }
-    v0 = ((u16 *)((u8 *)D_002BB388))[D_0028EAFC];
-    v1 = ((u16 *)((u8 *)D_002BB378))[D_0028EAFC];
-    v2 = ((u16 *)((u8 *)D_002BB368))[D_0028EAFC];
-    val_fc = ((u16 *)((u8 *)D_002BB338))[D_0028EAFC];
-    v3 = ((u16 *)((u8 *)D_002BB398))[D_0028EAFC];
-    val_fe = ((u16 *)((u8 *)D_002BB358))[D_0028EAFC];
-    v4 = ((u16 *)((u8 *)D_002BB348))[D_0028EAFC];
+    v0 = ((u16 *)((u8 *)g_ranking_stages))[D_0028EAFC];
+    v1 = ((u16 *)((u8 *)g_ranking_ship_types))[D_0028EAFC];
+    v2 = ((u16 *)((u8 *)g_ranking_power_styles))[D_0028EAFC];
+    val_fc = ((u16 *)((u8 *)g_ranking_score_tops))[D_0028EAFC];
+    v3 = ((u16 *)((u8 *)g_ranking_loops))[D_0028EAFC];
+    val_fe = ((u16 *)((u8 *)g_ranking_hits))[D_0028EAFC];
+    v4 = ((u16 *)((u8 *)g_ranking_continues))[D_0028EAFC];
     shift = (u32)D_0028E2BC & 3;
     if (shift == 0) {
         shift = (u8)(shift + 1);
@@ -363,9 +363,9 @@ void password_make(void) {
     memcpy(D_002BADF0, code, 12);
     password_bits_unpack();
     if (g_game_mode == 2) {
-        memcpy(((u8 *)D_002BB060) + D_0028EAFC * 0x1E, D_002BADD0, 0x1E);
+        memcpy(((u8 *)g_stored_ranking_texts) + D_0028EAFC * 0x1E, D_002BADD0, 0x1E);
     } else {
-        memcpy(((u8 *)D_002BB100) + D_0028EAFC * 0x1E, D_002BADD0, 0x1E);
+        memcpy(((u8 *)g_death_label_ranking_texts) + D_0028EAFC * 0x1E, D_002BADD0, 0x1E);
     }
     reg_d0.w = save_d0;
 }
@@ -732,7 +732,7 @@ void name_entry_rank_find(void) {
     cond_flag = 0;
     reg_d4.w = 4;
     reg_d1.w = 0;
-    reg_a0 = (u8 *)((s32 *)D_002BB3B0);
+    reg_a0 = (u8 *)((s32 *)g_ranking_names);
 loop_1:
     if (*(u32 *)reg_a0 != reg_d0.w) {
         reg_a0 += 0xC;
@@ -747,11 +747,11 @@ loop_1:
         reg_d0.h[0] -= 1;
         return;
     }
-    reg_a2 = (u8 *)((u16 *)D_002BB348);
+    reg_a2 = (u8 *)((u16 *)g_ranking_continues);
     reg_d0.h[0] = reg_d1.h[0];
-    reg_a3 = (u8 *)((u16 *)D_002BB338);
-    reg_a5 = (u8 *)((u16 *)D_002BB378);
-    reg_a6 = (u8 *)((u16 *)D_002BB368);
+    reg_a3 = (u8 *)((u16 *)g_ranking_score_tops);
+    reg_a5 = (u8 *)((u16 *)g_ranking_ship_types);
+    reg_a6 = (u8 *)((u16 *)g_ranking_power_styles);
     reg_d0.h[0] += reg_d0.h[0];
     reg_a2 += reg_d0.h[0];
     reg_a3 += reg_d0.h[0];
@@ -767,12 +767,12 @@ loop_1:
     reg_d3.h[1] = reg_tmp.h[0];
     reg_d3.h[0] = reg_tmp.h[1];
     reg_d3.h[0] = *(u16 *)reg_a5;
-    reg_a2 = (u8 *)((u16 *)D_002BB398);
-    reg_a3 = (u8 *)((u16 *)D_002BB358);
+    reg_a2 = (u8 *)((u16 *)g_ranking_loops);
+    reg_a3 = (u8 *)((u16 *)g_ranking_hits);
     reg_a2 += reg_d0.h[0];
     reg_a3 += reg_d0.h[0];
     reg_d0.h[0] += reg_d0.h[0];
-    reg_a1 = (u8 *)((u8 *)D_002BB3F0);
+    reg_a1 = (u8 *)((u8 *)g_ranking_scores);
     reg_a1 += reg_d0.h[0];
 }
 
@@ -843,7 +843,7 @@ void name_entry_name_copy_to_own_ranks(void) {
     reg_d0.h[0] = *(u16 *)(reg_a4 + 0x2C);
     reg_d0.b[0] = ~(s8) reg_d0.b[0];
     reg_d5.w = 4;
-    reg_a1 = (u8 *)(((u32 *)D_002BB3B0));
+    reg_a1 = (u8 *)(((u32 *)g_ranking_names));
 loop_1:
     reg_tmp.w = *(u32 *)reg_a1;
     if (reg_tmp.w != reg_d0.w) goto next_2;

@@ -934,7 +934,7 @@ s32 explosion_spawn();
 s32 explosion_burst_small();
 s32 sfx_explosion_air_medium();
 s32 sfx_explosion_extra_1();
-s32 func_001D5040();
+s32 midboss_explode_by_table();
 s32 rng_next();
 s32 bullet_cancel_with_flags();
 s32 vibration_start_pad1();
@@ -961,7 +961,7 @@ void stage5_midboss4_dying(void) {
                 reg_d2.h[1] = ENTITY(reg_a6)->y.h;
                 reg_d2.h[0] = ENTITY(reg_a6)->x.h;
                 reg_a1 = (u8 *)(D_00265F10);
-                func_001D5040();
+                midboss_explode_by_table();
                 rng_next();
                 reg_d0.b[0] = (s8) reg_d0.b[0] * 2;
                 reg_d1.b[0] = reg_d0.b[0];

@@ -110,7 +110,7 @@ s32 sfx_explosion_extra_1();
 s32 sprite_draw_layer1();
 s32 score_add_no_chain();
 s32 score_add();
-s32 func_001D5040();
+s32 midboss_explode_by_table();
 s32 entity_follow_scroll();
 s32 aim_at_player();
 s32 vibration_start_pad1();
@@ -175,7 +175,7 @@ void stage5_midboss3_main(void) {
                 reg_d2.h[1] = ENTITY(reg_a6)->y.h;
                 reg_d2.h[0] = ENTITY(reg_a6)->x.h;
                 reg_a1 = D_00265B60;
-                func_001D5040();
+                midboss_explode_by_table();
                 sfx_explosion_extra_1();
                 goto normal_palette;
             }

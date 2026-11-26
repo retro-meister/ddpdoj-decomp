@@ -899,7 +899,7 @@ s32 sprite_draw_layer1();
 s32 rng_next();
 s32 rng_next_d5();
 s32 aim256_at_player();
-s32 func_00211550();
+s32 wreck_spawn_a();
 extern u16 g_direction_offsets_540[];
 extern u16 g_direction64_offsets_2CC[];
 extern u16 g_bullets_blocked;
@@ -1167,11 +1167,11 @@ block_rts:
             reg_d1.h[0] = 0;
             reg_d0.w = 0xC;
             reg_d2.w = 0xF8000000;
-            func_00211550();
+            wreck_spawn_a();
             if (g_stage == 4) {
                 if ((s32) g_scroll_line < 0x2B0) {
                     reg_d2.w = 0x08000000;
-                    func_00211550();
+                    wreck_spawn_a();
                 }
             }
             reg_d0.w = 0xD;
@@ -1514,7 +1514,7 @@ block_rts:
             sfx_explosion_air_large();
             reg_d0.w = 0xC;
             reg_d1.h[0] = 8;
-            func_00211550();
+            wreck_spawn_a();
             reg_d0.w = 0xD;
             explosion_spawn();
             EXPLOSION(reg_a0)->y = (u16) ENTITY(reg_a6)->y.h;

@@ -373,7 +373,7 @@ run_line:
 s32 scenery_run();
 s32 scroll_map_loop_step();
 s32 scroll_events_run();
-void func_00170A50(s32, s32, s32);
+void ground_step_unused(s32, s32, s32);
 extern u8 D_0028E284;
 extern u8 D_0028E288;
 extern u16 g_p2_hyper_effect_flag;
@@ -471,7 +471,7 @@ void ground_step(void) {
         layer_b_scroll();
     }
     scenery_run();
-    func_00170A50(0, 0, 0);
+    ground_step_unused(0, 0, 0);
 }
 
 s32 frame_counters_reset();

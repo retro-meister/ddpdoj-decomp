@@ -2268,14 +2268,14 @@ extern void score_cells_init(void);
 extern void scores_reset(void);
 extern void func_001B82D0(void);
 extern void sparks_clear(void);
-extern void func_002114A0(void);
+extern void wrecks_clear(void);
 void replay_start_state_load(u8 *p) {
     s32 i;
 
     enemies_reset();
     explosions_clear();
     func_001B82D0();
-    func_002114A0();
+    wrecks_clear();
     enemy_anims_clear();
     sparks_clear();
     items_clear();

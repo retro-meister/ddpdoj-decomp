@@ -1,14 +1,14 @@
 #include "common.h"
 #include "entity.h"
 
-void func_00170A50(void) {
+void ground_step_unused(void) {
 }
 
 typedef void (*Fn)(void);
 extern u8 *reg_call_target_as_u8_p;
 extern u16 D_0025AE10[];
 
-void func_00170A60(void) {
+void enemy_variant_offset_a_get(void) {
     reg_d0.h[0] = ENTITY(reg_a6)->misc.h;
     reg_a0 = (u8 *)D_0025AE10;
     reg_d0.h[0] <<= 2;
@@ -21,7 +21,7 @@ void func_00170A60(void) {
 
 extern u16 D_0025AE50[];
 
-void func_00170B20(void) {
+void enemy_variant_offset_b_get(void) {
     reg_d0.h[0] = ENTITY(reg_a6)->misc.h;
     reg_a0 = (u8 *)D_0025AE50;
     reg_d0.h[0] <<= 2;
@@ -34,7 +34,7 @@ void func_00170B20(void) {
 
 extern u16 D_0025AE70[];
 
-void func_00170BE0(void) {
+void enemy_variant_offset_c_get(void) {
     reg_d0.h[0] = ENTITY(reg_a6)->misc.h;
     reg_a0 = (u8 *)D_0025AE70;
     reg_d0.h[0] <<= 2;
@@ -47,7 +47,7 @@ void func_00170BE0(void) {
 
 extern u16 D_0025AEA8[];
 
-void func_00170CA0(void) {
+void enemy_variant_word_get(void) {
     reg_d0.h[0] = ENTITY(reg_a6)->misc.h;
     reg_a0 = (u8 *)D_0025AEA8;
     reg_d0.h[0] += reg_d0.h[0];
@@ -56,7 +56,7 @@ void func_00170CA0(void) {
 
 extern u16 D_0025AEB8[];
 
-void func_00170D00(void) {
+void enemy_variant_timer_a_set(void) {
     reg_d0.h[0] = ENTITY(reg_a6)->misc.h;
     reg_a1 = (u8 *)D_0025AEB8;
     reg_d0.h[0] += reg_d0.h[0];
@@ -65,14 +65,14 @@ void func_00170D00(void) {
 
 extern u16 D_0025AEC8[];
 
-void func_00170D70(void) {
+void enemy_variant_timer_b_set(void) {
     reg_d0.h[0] = ENTITY(reg_a6)->misc.h;
     reg_a1 = (u8 *)D_0025AEC8;
     reg_d0.h[0] += reg_d0.h[0];
     *(u16 *)(reg_a0 + 0x1E) = (reg_d0.h[0] != 0) ? *(u16 *)((u8 *)((u16 *)reg_a1) + ((s16)reg_d0.h[0] & ~1)) : *(u16 *)reg_a1;
 }
 
-void func_00170DE0(void) {
+void enemy_variant_get(void) {
     reg_d2.h[0] = ENTITY(reg_a6)->misc.h;
 }
 
@@ -88,7 +88,7 @@ extern u16 g_p1_hits;
 extern u16 g_p1_combo_timer;
 extern u8 g_boss_present_b1;
 
-void func_00170DF0(void) {
+void p1_bee_value_update(void) {
     u32 save_d0;
     u32 save_d1;
     u32 save_d2;
@@ -155,7 +155,7 @@ extern u16 g_p2_hyper_active;
 extern u16 g_p2_hits;
 extern u16 g_p2_combo_timer;
 
-void func_00170F80(void) {
+void p2_bee_value_update(void) {
     u32 save_d0;
     u32 save_d1;
     u32 save_d2;
@@ -219,7 +219,7 @@ extern u16 D_00269460[];
 extern u16 g_bee_value_step;
 extern u16 g_stage_bees_collected;
 
-void func_00171100(void) {
+void bee_collected(void) {
     u32 t;
     s32 t2;
 
@@ -297,13 +297,13 @@ void entity_release(void) {
     ENTITY(reg_a6)->flags.b[1] = 0;
 }
 
-void func_001713B0(void) {
+void boss_level_get_from_58(void) {
     void boss_level_get(void);
     *(u16 *)&reg_d0 = 0x58;
     boss_level_get();
 }
 
-void func_001713C0(void) {
+void boss_level_get_from_78(void) {
     s32 boss_level_get();
     reg_d0.h[0] = 0x78;
     boss_level_get();
@@ -332,7 +332,7 @@ void enemy_switch_target_player(void) {
 s32 enemy_remove();                           /* extern */
 s32 entity_check_bounds();                            /* extern */
 
-void func_00171430(void) {
+void heli_bounds_check(void) {
     entity_check_bounds();
     if (cond_flag != 0) {
         if (*(u8 *)(reg_a5 + 0x17) != 0) {

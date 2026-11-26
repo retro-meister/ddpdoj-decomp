@@ -9,7 +9,7 @@ void score_pending_apply_side(void);
 void p1_score_cells_refresh(void);
 void p2_score_cells_refresh(void);
 void score_cells_refresh(void);
-void ship_choice_index_find(void);
+void join_select_choice_from_game(void);
 
 extern u8 *reg_save3_a6;
 extern u8 *reg_save3_a5;
@@ -193,8 +193,8 @@ extern s8 rank_text_blank[30];
 extern u8 g_game_mode;
 extern s32 D_0028EAFC;
 extern u8 g_replay_mode;
-extern u8 D_002BB060[5][30];
-extern u8 D_002BB100[5][30];
+extern u8 g_stored_ranking_texts[5][30];
+extern u8 g_death_label_ranking_texts[5][30];
 extern u8 D_002BB352[];
 extern u8 D_002BB362[];
 extern u8 D_002BB372[];
@@ -230,7 +230,7 @@ void rank_entry_place(void) {
         if (D_0028EAFC != 4) {
             for (i = 4; D_0028EAFC < i; i--) {
                 for (j = 0; j < 30; j++) {
-                    D_002BB060[i][j] = D_002BB060[i - 1][j];
+                    g_stored_ranking_texts[i][j] = g_stored_ranking_texts[i - 1][j];
                 }
             }
         }
@@ -240,12 +240,12 @@ void rank_entry_place(void) {
         if (D_0028EAFC != 4) {
             for (i = 4; D_0028EAFC < i; i--) {
                 for (j = 0; j < 30; j++) {
-                    D_002BB100[i][j] = D_002BB100[i - 1][j];
+                    g_death_label_ranking_texts[i][j] = g_death_label_ranking_texts[i - 1][j];
                 }
             }
         }
         for (j = 0; j < 30; j++) {
-            D_002BB100[D_0028EAFC][j] = rank_text_blank[j];
+            g_death_label_ranking_texts[D_0028EAFC][j] = rank_text_blank[j];
         }
     }
     reg_d2.w = reg_d1.w;
@@ -491,35 +491,35 @@ s32 default_death_label_rank_names[5][3] = {
 u16 default_rank_stages[5] = { 3, 3, 2, 2, 1 };
 
 extern s32 g_high_score;
-extern s8 D_002BB060_as_s8_a5_a30[5][30];
-extern s8 D_002BB100_as_s8_a5_a30[5][30];
-extern u16 D_002BB198_as_u16_a[];
-extern u16 D_002BB1A8[5];
-extern u16 D_002BB1B8_as_u16_a[];
-extern u16 D_002BB1C8_as_u16_a[];
-extern u16 D_002BB1D8_as_u16_a[];
-extern u16 D_002BB1E8_as_u16_a[];
-extern u16 D_002BB1F8_as_u16_a[];
-extern s32 D_002BB210[16];
-extern s32 D_002BB250_as_s32_a[];
-extern u16 D_002BB268_as_u16_a[];
-extern u16 D_002BB278_as_u16_a[];
-extern u16 D_002BB288_as_u16_a[];
-extern u16 D_002BB298_as_u16_a[];
-extern u16 D_002BB2A8_as_u16_a[];
-extern u16 D_002BB2B8_as_u16_a[];
-extern u16 D_002BB2C8_as_u16_a[];
-extern s32 D_002BB2E0_as_s32_a[];
-extern s32 D_002BB320_as_s32_a[];
-extern u16 D_002BB338_as_u16_a[];
-extern u16 D_002BB348_as_u16_a[];
-extern u16 D_002BB358_as_u16_a[];
-extern u16 D_002BB368_as_u16_a[];
-extern u16 D_002BB378_as_u16_a[];
-extern u16 D_002BB388_as_u16_a[];
-extern u16 D_002BB398_as_u16_a[];
-extern s32 D_002BB3B0_as_s32_a[];
-extern s32 D_002BB3F0_as_s32_a[];
+extern s8 g_stored_ranking_texts_as_s8_a5_a30[5][30];
+extern s8 g_death_label_ranking_texts_as_s8_a5_a30[5][30];
+extern u16 g_stored_ranking_score_tops_as_u16_a[];
+extern u16 g_stored_ranking_continues[5];
+extern u16 g_stored_ranking_hits_as_u16_a[];
+extern u16 g_stored_ranking_power_styles_as_u16_a[];
+extern u16 g_stored_ranking_ship_types_as_u16_a[];
+extern u16 g_stored_ranking_stages_as_u16_a[];
+extern u16 g_stored_ranking_loops_as_u16_a[];
+extern s32 g_stored_ranking_names[16];
+extern s32 g_stored_ranking_scores_as_s32_a[];
+extern u16 g_death_label_ranking_score_tops_as_u16_a[];
+extern u16 g_death_label_ranking_continues_as_u16_a[];
+extern u16 g_death_label_ranking_hits_as_u16_a[];
+extern u16 g_death_label_ranking_power_styles_as_u16_a[];
+extern u16 g_death_label_ranking_ship_types_as_u16_a[];
+extern u16 g_death_label_ranking_stages_as_u16_a[];
+extern u16 g_death_label_ranking_loops_as_u16_a[];
+extern s32 g_death_label_ranking_names_as_s32_a[];
+extern s32 g_death_label_ranking_scores_as_s32_a[];
+extern u16 g_ranking_score_tops_as_u16_a[];
+extern u16 g_ranking_continues_as_u16_a[];
+extern u16 g_ranking_hits_as_u16_a[];
+extern u16 g_ranking_power_styles_as_u16_a[];
+extern u16 g_ranking_ship_types_as_u16_a[];
+extern u16 g_ranking_stages_as_u16_a[];
+extern u16 g_ranking_loops_as_u16_a[];
+extern s32 g_ranking_names_as_s32_a[];
+extern s32 g_ranking_scores_as_s32_a[];
 
 void rankings_set_defaults(void) {
     s32 *dst;
@@ -527,7 +527,7 @@ void rankings_set_defaults(void) {
     s32 i;
     s32 j;
 
-    dst = D_002BB3F0_as_s32_a;
+    dst = g_ranking_scores_as_s32_a;
     src = default_rank_scores;
     reg_d0.w = 4;
     do {
@@ -535,8 +535,8 @@ void rankings_set_defaults(void) {
         src++;
         dst++;
     } while ((s16) (--reg_d0.h[0]) >= 0);
-    g_high_score = D_002BB3F0_as_s32_a[0];
-    reg_a0 = (u8 *) D_002BB338_as_u16_a;
+    g_high_score = g_ranking_scores_as_s32_a[0];
+    reg_a0 = (u8 *) g_ranking_score_tops_as_u16_a;
     reg_a1 = (u8 *) default_rank_score_tops;
     reg_d0.w = 4;
     do {
@@ -544,7 +544,7 @@ void rankings_set_defaults(void) {
         reg_a1 += 2;
         reg_a0 += 2;
     } while ((s16) (--reg_d0.h[0]) >= 0);
-    reg_a0 = (u8 *) D_002BB3B0_as_s32_a;
+    reg_a0 = (u8 *) g_ranking_names_as_s32_a;
     reg_a1 = (u8 *)default_rank_names;
     reg_d0.w = 4;
     do {
@@ -558,7 +558,7 @@ void rankings_set_defaults(void) {
         reg_a1 += 4;
         reg_a0 += 4;
     } while ((s16) (--reg_d0.h[0]) >= 0);
-    reg_a0 = (u8 *) D_002BB358_as_u16_a;
+    reg_a0 = (u8 *) g_ranking_hits_as_u16_a;
     reg_a1 = (u8 *) default_rank_hits;
     reg_d0.w = 4;
     do {
@@ -566,7 +566,7 @@ void rankings_set_defaults(void) {
         reg_a1 += 2;
         reg_a0 += 2;
     } while ((s16) (--reg_d0.h[0]) >= 0);
-    reg_a0 = (u8 *) D_002BB378_as_u16_a;
+    reg_a0 = (u8 *) g_ranking_ship_types_as_u16_a;
     reg_a1 = (u8 *) default_rank_ship_types;
     reg_d0.w = 4;
     do {
@@ -574,7 +574,7 @@ void rankings_set_defaults(void) {
         reg_a1 += 2;
         reg_a0 += 2;
     } while ((s16) (--reg_d0.h[0]) >= 0);
-    reg_a0 = (u8 *) D_002BB368_as_u16_a;
+    reg_a0 = (u8 *) g_ranking_power_styles_as_u16_a;
     reg_a1 = (u8 *) default_rank_power_styles;
     reg_d0.w = 4;
     do {
@@ -582,7 +582,7 @@ void rankings_set_defaults(void) {
         reg_a1 += 2;
         reg_a0 += 2;
     } while ((s16) (--reg_d0.h[0]) >= 0);
-    reg_a0 = (u8 *) D_002BB348_as_u16_a;
+    reg_a0 = (u8 *) g_ranking_continues_as_u16_a;
     reg_a1 = (u8 *) default_rank_continues;
     reg_d0.w = 4;
     do {
@@ -590,7 +590,7 @@ void rankings_set_defaults(void) {
         reg_a1 += 2;
         reg_a0 += 2;
     } while ((s16) (--reg_d0.h[0]) >= 0);
-    reg_a0 = (u8 *) D_002BB398_as_u16_a;
+    reg_a0 = (u8 *) g_ranking_loops_as_u16_a;
     reg_a1 = (u8 *) default_rank_loops;
     reg_d0.w = 4;
     do {
@@ -598,7 +598,7 @@ void rankings_set_defaults(void) {
         reg_a1 += 2;
         reg_a0 += 2;
     } while ((s16) (--reg_d0.h[0]) >= 0);
-    reg_a0 = (u8 *) D_002BB388_as_u16_a;
+    reg_a0 = (u8 *) g_ranking_stages_as_u16_a;
     reg_a1 = (u8 *) default_rank_stages;
     reg_d0.w = 4;
     do {
@@ -607,46 +607,46 @@ void rankings_set_defaults(void) {
         reg_a0 += 2;
     } while ((s16) (--reg_d0.h[0]) >= 0);
     for (i = 0; i < 5; i++) {
-        D_002BB2A8_as_u16_a[i] = D_002BB378_as_u16_a[i];
-        D_002BB298_as_u16_a[i] = D_002BB368_as_u16_a[i];
-        D_002BB2C8_as_u16_a[i] = D_002BB398_as_u16_a[i];
-        D_002BB2B8_as_u16_a[i] = D_002BB388_as_u16_a[i];
-        D_002BB288_as_u16_a[i] = D_002BB358_as_u16_a[i];
-        D_002BB320_as_s32_a[i] = D_002BB3F0_as_s32_a[i];
-        D_002BB268_as_u16_a[i] = D_002BB338_as_u16_a[i];
-        D_002BB278_as_u16_a[i] = D_002BB348_as_u16_a[i];
-        D_002BB1D8_as_u16_a[i] = D_002BB378_as_u16_a[i];
-        D_002BB1C8_as_u16_a[i] = D_002BB368_as_u16_a[i];
-        D_002BB1F8_as_u16_a[i] = D_002BB398_as_u16_a[i];
-        D_002BB1E8_as_u16_a[i] = D_002BB388_as_u16_a[i];
-        D_002BB1B8_as_u16_a[i] = D_002BB358_as_u16_a[i];
-        D_002BB250_as_s32_a[i] = D_002BB3F0_as_s32_a[i];
-        D_002BB198_as_u16_a[i] = D_002BB338_as_u16_a[i];
-        ((u16 *)D_002BB1A8)[i] = D_002BB348_as_u16_a[i];
+        g_death_label_ranking_ship_types_as_u16_a[i] = g_ranking_ship_types_as_u16_a[i];
+        g_death_label_ranking_power_styles_as_u16_a[i] = g_ranking_power_styles_as_u16_a[i];
+        g_death_label_ranking_loops_as_u16_a[i] = g_ranking_loops_as_u16_a[i];
+        g_death_label_ranking_stages_as_u16_a[i] = g_ranking_stages_as_u16_a[i];
+        g_death_label_ranking_hits_as_u16_a[i] = g_ranking_hits_as_u16_a[i];
+        g_death_label_ranking_scores_as_s32_a[i] = g_ranking_scores_as_s32_a[i];
+        g_death_label_ranking_score_tops_as_u16_a[i] = g_ranking_score_tops_as_u16_a[i];
+        g_death_label_ranking_continues_as_u16_a[i] = g_ranking_continues_as_u16_a[i];
+        g_stored_ranking_ship_types_as_u16_a[i] = g_ranking_ship_types_as_u16_a[i];
+        g_stored_ranking_power_styles_as_u16_a[i] = g_ranking_power_styles_as_u16_a[i];
+        g_stored_ranking_loops_as_u16_a[i] = g_ranking_loops_as_u16_a[i];
+        g_stored_ranking_stages_as_u16_a[i] = g_ranking_stages_as_u16_a[i];
+        g_stored_ranking_hits_as_u16_a[i] = g_ranking_hits_as_u16_a[i];
+        g_stored_ranking_scores_as_s32_a[i] = g_ranking_scores_as_s32_a[i];
+        g_stored_ranking_score_tops_as_u16_a[i] = g_ranking_score_tops_as_u16_a[i];
+        ((u16 *)g_stored_ranking_continues)[i] = g_ranking_continues_as_u16_a[i];
     }
     for (i = 0; i < 15; i++) {
-        D_002BB2E0_as_s32_a[i] = D_002BB3B0_as_s32_a[i];
-        ((s32 *)D_002BB210)[i] = D_002BB3B0_as_s32_a[i];
+        g_death_label_ranking_names_as_s32_a[i] = g_ranking_names_as_s32_a[i];
+        ((s32 *)g_stored_ranking_names)[i] = g_ranking_names_as_s32_a[i];
     }
     for (i = 0; i < 5; i++) {
-        D_002BB320_as_s32_a[i] = default_death_label_rank_scores[i];
-        D_002BB278_as_u16_a[i] = 0;
-        D_002BB2C8_as_u16_a[i] = 0;
-        D_002BB288_as_u16_a[i] = 0x99;
+        g_death_label_ranking_scores_as_s32_a[i] = default_death_label_rank_scores[i];
+        g_death_label_ranking_continues_as_u16_a[i] = 0;
+        g_death_label_ranking_loops_as_u16_a[i] = 0;
+        g_death_label_ranking_hits_as_u16_a[i] = 0x99;
         for (j = 0; j < 30; j++) {
-            D_002BB100_as_s8_a5_a30[i][j] = default_rank_texts[i][j];
+            g_death_label_ranking_texts_as_s8_a5_a30[i][j] = default_rank_texts[i][j];
         }
         for (j = 23; j < 30; j++) {
-            D_002BB100_as_s8_a5_a30[i][j] = 0;
+            g_death_label_ranking_texts_as_s8_a5_a30[i][j] = 0;
         }
         for (j = 0; j < 30; j++) {
-            D_002BB060_as_s8_a5_a30[i][j] = default_rank_texts[i][j];
+            g_stored_ranking_texts_as_s8_a5_a30[i][j] = default_rank_texts[i][j];
         }
         for (j = 23; j < 30; j++) {
-            D_002BB060_as_s8_a5_a30[i][j] = 0;
+            g_stored_ranking_texts_as_s8_a5_a30[i][j] = 0;
         }
     }
-    reg_a0 = (u8 *) D_002BB2E0_as_s32_a;
+    reg_a0 = (u8 *) g_death_label_ranking_names_as_s32_a;
     reg_a1 = (u8 *)default_death_label_rank_names;
     reg_d0.w = 4;
     do {
@@ -660,7 +660,7 @@ void rankings_set_defaults(void) {
         reg_a1 += 4;
         reg_a0 += 4;
     } while ((s16) (--reg_d0.h[0]) >= 0);
-    reg_a0 = (u8 *) D_002BB2A8_as_u16_a;
+    reg_a0 = (u8 *) g_death_label_ranking_ship_types_as_u16_a;
     reg_a1 = (u8 *) default_death_label_rank_ship_types;
     reg_d0.w = 4;
     do {
@@ -668,7 +668,7 @@ void rankings_set_defaults(void) {
         reg_a1 += 2;
         reg_a0 += 2;
     } while ((s16) (--reg_d0.h[0]) >= 0);
-    reg_a0 = (u8 *) D_002BB298_as_u16_a;
+    reg_a0 = (u8 *) g_death_label_ranking_power_styles_as_u16_a;
     reg_a1 = (u8 *) default_death_label_rank_power_styles;
     reg_d0.w = 4;
     do {
@@ -678,17 +678,17 @@ void rankings_set_defaults(void) {
     } while ((s16) (--reg_d0.h[0]) >= 0);
     if (g_game_mode == 2) {
         for (i = 0; i < 5; i++) {
-            D_002BB348_as_u16_a[i] = 0;
-            D_002BB398_as_u16_a[i] = 0;
+            g_ranking_continues_as_u16_a[i] = 0;
+            g_ranking_loops_as_u16_a[i] = 0;
         }
         for (i = 0; i < 5; i++) {
-            D_002BB3F0_as_s32_a[i] = D_002BB320_as_s32_a[i];
-            D_002BB358_as_u16_a[i] = D_002BB288_as_u16_a[i];
-            D_002BB378_as_u16_a[i] = D_002BB2A8_as_u16_a[i];
-            D_002BB368_as_u16_a[i] = D_002BB298_as_u16_a[i];
+            g_ranking_scores_as_s32_a[i] = g_death_label_ranking_scores_as_s32_a[i];
+            g_ranking_hits_as_u16_a[i] = g_death_label_ranking_hits_as_u16_a[i];
+            g_ranking_ship_types_as_u16_a[i] = g_death_label_ranking_ship_types_as_u16_a[i];
+            g_ranking_power_styles_as_u16_a[i] = g_death_label_ranking_power_styles_as_u16_a[i];
         }
         for (i = 0; i < 15; i++) {
-            D_002BB3B0_as_s32_a[i] = D_002BB2E0_as_s32_a[i];
+            g_ranking_names_as_s32_a[i] = g_death_label_ranking_names_as_s32_a[i];
         }
     }
 }
@@ -1188,7 +1188,7 @@ extern u8 D_0029BF31[];
 extern u8 D_0029BF40[];
 extern u8 D_0029BF41[];
 
-void selected_ships_mark(void) {
+void join_select_choices_init(void) {
     u8 *p;
 
     *(p = D_0029BF41) = 0xFF;
@@ -1196,7 +1196,7 @@ void selected_ships_mark(void) {
     reg_d5.w = 0;
     reg_d6.h[0] = reg_d0.h[0];
     reg_d7.h[0] = reg_d2.h[0];
-    ship_choice_index_find();
+    join_select_choice_from_game();
     if (cond_flag != 0) goto next_1;
     *p = reg_d6.b[0];
     D_0029BF40[0] = reg_d7.b[0];
@@ -1206,7 +1206,7 @@ next_1:
     reg_d5.w = 1;
     reg_d6.h[0] = reg_d1.h[0];
     reg_d7.h[0] = reg_d3.h[0];
-    ship_choice_index_find();
+    join_select_choice_from_game();
     if (cond_flag != 0) goto next_2;
     *p = reg_d6.b[0];
     D_0029BF30[0] = reg_d7.b[0];
@@ -1218,7 +1218,7 @@ extern u16 D_0028C11C[];
 extern u16 D_0028C120[];
 
 
-void ship_choice_index_find(void) {
+void join_select_choice_from_game(void) {
     u32 save_d0;
     u32 save_d1;
     u32 t;
@@ -1271,7 +1271,7 @@ block_set:
     cond_flag = 1;
 }
 
-void ship_choice_mark_for_task() {
+void join_select_ship_get() {
     reg_d6.h[0] = g_p1_ship_type;
     reg_d7.h[0] = g_p1_power_style;
     if (*(u8 *)(reg_a5 + 6) != 0) {
@@ -1280,18 +1280,18 @@ void ship_choice_mark_for_task() {
     }
     reg_d5.w = 0;
     reg_d5.b[0] = *(u8 *)(reg_a5 + 6);
-    ship_choice_index_find();
+    join_select_choice_from_game();
     *(u8 *)(reg_a5 + 0xF) = (u8) reg_d6.b[0];
     *(u8 *)(reg_a5 + 0xE) = (u8) reg_d7.b[0];
 }
 
-s32 func_001AF310();
+s32 join_select_doll_taken_check();
 
-void ship_choice_next_free(void) {
+void join_select_doll_next_free(void) {
     reg_d7.w = 0;
     reg_d7.b[0] = *(u8 *)(reg_a5 + 0xE);
 loop_1:
-    func_001AF310();
+    join_select_doll_taken_check();
     if (cond_flag != 0) {
         reg_d7.b[0] += 1;
         if ((s8) reg_d7.b[0] > 2) {

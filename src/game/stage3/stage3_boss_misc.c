@@ -17,7 +17,7 @@ void stage3_boss_drone_first(void) {
 
 s32 enemy_set_task_state();
 s32 enemy_init_entities();
-s32 func_001713C0();
+s32 boss_level_get_from_78();
 extern u8 D_0026D5E0[];
 extern u8 D_0026D600[];
 extern u32 D_0028DC10;
@@ -38,7 +38,7 @@ void stage3_boss_drone_start(void) {
     enemy_set_task_state();
     reg_d0.b[0] = BOSS_DRONE(reg_a5)->start_wait;
     BOSS_DRONE(reg_a5)->wait += reg_d0.b[0];
-    func_001713C0();
+    boss_level_get_from_78();
     reg_d0.h[0] += reg_d0.h[0];
     reg_d0.h[0] += reg_d0.h[0];
     temp_a0_2 = reg_d0.h[0] & ~3;

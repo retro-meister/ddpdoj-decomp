@@ -111,7 +111,7 @@ s32 explosion_spawn();
 s32 enemy_hitbox_debug_draw();
 s32 enemy_remove();
 s32 enemy_path_step();
-s32 func_00170D00();
+s32 enemy_variant_timer_a_set();
 s32 sfx_explosion_ground_large();
 s32 entity_draw_layer1();
 s32 score_add_no_chain();
@@ -213,7 +213,7 @@ block_dead:
     explosion_spawn();
     EXPLOSION(reg_a0)->y = (u16) ENTITY(reg_a6)->y.h;
     EXPLOSION(reg_a0)->x = (u16) ENTITY(reg_a6)->x.h;
-    func_00170D00();
+    enemy_variant_timer_a_set();
     EXPLOSION(reg_a0)->debris = 2;
     EXPLOSION(reg_a0)->debris_arg = 0;
     EXPLOSION(reg_a0)->start_y = 0xFA00;
@@ -224,7 +224,7 @@ block_dead:
     explosion_spawn();
     EXPLOSION(reg_a0)->y = (u16) ENTITY(reg_a6)->y.h;
     EXPLOSION(reg_a0)->x = (u16) ENTITY(reg_a6)->x.h;
-    func_00170D00();
+    enemy_variant_timer_a_set();
     EXPLOSION(reg_a0)->debris = 2;
     EXPLOSION(reg_a0)->debris_arg = 0x400;
     EXPLOSION(reg_a0)->start_y = 0xFA00;
@@ -235,7 +235,7 @@ block_dead:
     explosion_spawn();
     EXPLOSION(reg_a0)->y = (u16) ENTITY(reg_a6)->y.h;
     EXPLOSION(reg_a0)->x = (u16) ENTITY(reg_a6)->x.h;
-    func_00170D00();
+    enemy_variant_timer_a_set();
     EXPLOSION(reg_a0)->debris = 2;
     EXPLOSION(reg_a0)->debris_arg = 0;
     EXPLOSION(reg_a0)->start_y = 0xFE00;
@@ -280,7 +280,7 @@ void stage2_long_warehouse_start(void) {
     }
 }
 
-s32 func_00170A60();
+s32 enemy_variant_offset_a_get();
 extern u16 D_00262CB0[];
 
 void stage2_long_warehouse(void) {
@@ -330,7 +330,7 @@ next_50:
 next_90:
     ENTITY(reg_a6)->attr.b.palette = (u8) reg_d0.b[0];
 block_objset:
-    func_00170A60();
+    enemy_variant_offset_a_get();
     reg_a0 = reg_a6;
     enemy_hitbox_debug_draw();
     return;
@@ -345,7 +345,7 @@ block_dead:
     explosion_spawn();
     EXPLOSION(reg_a0)->y = (u16) ENTITY(reg_a6)->y.h;
     EXPLOSION(reg_a0)->x = (u16) ENTITY(reg_a6)->x.h;
-    func_00170D00();
+    enemy_variant_timer_a_set();
     EXPLOSION(reg_a0)->debris = 1;
     EXPLOSION(reg_a0)->debris_arg = 0;
     EXPLOSION(reg_a0)->start_y = 0xA00;
@@ -356,7 +356,7 @@ block_dead:
     explosion_spawn();
     EXPLOSION(reg_a0)->y = (u16) ENTITY(reg_a6)->y.h;
     EXPLOSION(reg_a0)->x = (u16) ENTITY(reg_a6)->x.h;
-    func_00170D00();
+    enemy_variant_timer_a_set();
     EXPLOSION(reg_a0)->debris = 2;
     EXPLOSION(reg_a0)->debris_arg = 0x400;
     EXPLOSION(reg_a0)->start_y = 0xFC00;
@@ -368,7 +368,7 @@ block_dead:
     explosion_spawn();
     EXPLOSION(reg_a0)->y = (u16) ENTITY(reg_a6)->y.h;
     EXPLOSION(reg_a0)->x = (u16) ENTITY(reg_a6)->x.h;
-    func_00170D00();
+    enemy_variant_timer_a_set();
     EXPLOSION(reg_a0)->debris = 1;
     EXPLOSION(reg_a0)->debris_arg = 0;
     EXPLOSION(reg_a0)->start_y = 0xEE00;
@@ -477,7 +477,7 @@ next_50:
 next_90:
     ENTITY(reg_a6)->attr.b.palette = (u8) reg_d0.b[0];
 next_4:
-    func_00170A60();
+    enemy_variant_offset_a_get();
     reg_a0 = reg_a6;
     enemy_hitbox_debug_draw();
     return;
@@ -491,7 +491,7 @@ next_3:
     explosion_spawn();
     EXPLOSION(reg_a0)->y = (u16) ENTITY(reg_a6)->y.h;
     EXPLOSION(reg_a0)->x = (u16) ENTITY(reg_a6)->x.h;
-    func_00170D00();
+    enemy_variant_timer_a_set();
     EXPLOSION(reg_a0)->debris = 1;
     EXPLOSION(reg_a0)->debris_arg = 0x400;
     EXPLOSION(reg_a0)->start_y = 0;
@@ -502,7 +502,7 @@ next_3:
     explosion_spawn();
     EXPLOSION(reg_a0)->y = (u16) ENTITY(reg_a6)->y.h;
     EXPLOSION(reg_a0)->x = (u16) ENTITY(reg_a6)->x.h;
-    func_00170D00();
+    enemy_variant_timer_a_set();
     EXPLOSION(reg_a0)->debris = 1;
     EXPLOSION(reg_a0)->debris_arg = 0;
     EXPLOSION(reg_a0)->start_y = 0xF200;
@@ -602,7 +602,7 @@ next_50:
 next_90:
     ENTITY(reg_a6)->attr.b.palette = (u8) reg_d0.b[0];
 next_4:
-    func_00170A60();
+    enemy_variant_offset_a_get();
     reg_a0 = reg_a6;
     enemy_hitbox_debug_draw();
     return;
@@ -616,7 +616,7 @@ next_3:
     explosion_spawn();
     EXPLOSION(reg_a0)->y = (u16) ENTITY(reg_a6)->y.h;
     EXPLOSION(reg_a0)->x = (u16) ENTITY(reg_a6)->x.h;
-    func_00170D00();
+    enemy_variant_timer_a_set();
     EXPLOSION(reg_a0)->debris = 1;
     EXPLOSION(reg_a0)->debris_arg = 0;
     EXPLOSION(reg_a0)->start_y = 0xC00;
@@ -628,7 +628,7 @@ next_3:
     explosion_spawn();
     EXPLOSION(reg_a0)->y = (u16) ENTITY(reg_a6)->y.h;
     EXPLOSION(reg_a0)->x = (u16) ENTITY(reg_a6)->x.h;
-    func_00170D00();
+    enemy_variant_timer_a_set();
     EXPLOSION(reg_a0)->debris = 2;
     EXPLOSION(reg_a0)->debris_arg = 0x400;
     EXPLOSION(reg_a0)->start_y = 0xFA00;
@@ -639,7 +639,7 @@ next_3:
     explosion_spawn();
     EXPLOSION(reg_a0)->y = (u16) ENTITY(reg_a6)->y.h;
     EXPLOSION(reg_a0)->x = (u16) ENTITY(reg_a6)->x.h;
-    func_00170D00();
+    enemy_variant_timer_a_set();
     t1 = (u8 *)((void *)1);
     EXPLOSION(reg_a0)->debris = 1;
     EXPLOSION(reg_a0)->debris_arg = 0;
@@ -724,7 +724,7 @@ void stage2_sliding_gun_start(void) {
 s32 pickup_spawn_variant_here();
 s32 bullet_fire256_2way();
 s32 enemy_fire_distance_check();
-s32 func_00170DE0();
+s32 enemy_variant_get();
 s32 sfx_explosion_ground_medium();
 s32 direction256_between();
 extern u16 g_bullets_blocked;
@@ -883,7 +883,7 @@ block_38:
                     }
                 }
             }
-            func_00170A60();
+            enemy_variant_offset_a_get();
             reg_a0 = (u8 *)(reg_a6);
             enemy_hitbox_debug_draw();
             return;
@@ -892,13 +892,13 @@ block_38:
         reg_d0.w = 0x34;
         score_add();
         reg_d0.w = 8;
-        func_00170DE0();
+        enemy_variant_get();
         pickup_spawn_variant_here();
         reg_d0.w = 0xC;
         explosion_spawn();
         EXPLOSION(reg_a0)->y = (u16) ENTITY(reg_a6)->y.h;
         EXPLOSION(reg_a0)->x = (u16) ENTITY(reg_a6)->x.h;
-        func_00170D00();
+        enemy_variant_timer_a_set();
         EXPLOSION(reg_a0)->debris = 1;
         EXPLOSION(reg_a0)->debris_arg = 0;
         EXPLOSION(reg_a0)->start_y = 0xFD00;
@@ -1154,7 +1154,7 @@ block_60:
                         }
                     }
                 }
-                func_00170A60();
+                enemy_variant_offset_a_get();
                 reg_a0 = (u8 *)(reg_a6);
                 enemy_hitbox_debug_draw();
                 return;
@@ -1310,7 +1310,7 @@ block_63:
                 enemy_remove();
                 return;
             }
-            func_00170A60();
+            enemy_variant_offset_a_get();
         }
     }
 }

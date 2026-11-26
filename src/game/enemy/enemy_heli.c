@@ -241,7 +241,7 @@ void heli_a_start(void) {
 }
 
 s32 bullet_fire();
-s32 func_00171430();
+s32 heli_bounds_check();
 s32 entity_velocity();
 s32 direction_to_target_player();
 s32 entity_turn_to_target_player();
@@ -252,7 +252,7 @@ extern u16 g_rank_5_16;
 void heli_a(void) {
     u16 temp_a0_2;
     heli_take_hits(8);
-    if ((cond_flag == 0) && (func_00171430(), (cond_flag == 0))) {
+    if ((cond_flag == 0) && (heli_bounds_check(), (cond_flag == 0))) {
         if (g_enemies_stopped != 0) {
 #ifndef DEATH_LABEL
             heli_draw();
@@ -383,7 +383,7 @@ s32 enemy_path_step();
 void heli_b(void) {
     u16 temp_a0_2;
     heli_take_hits(8);
-    if ((cond_flag == 0) && (func_00171430(), (cond_flag == 0))) {
+    if ((cond_flag == 0) && (heli_bounds_check(), (cond_flag == 0))) {
         if (g_enemies_stopped != 0) {
             heli_draw();
             return;
@@ -510,7 +510,7 @@ extern u16 g_frame_mod4;
 void heli_c(void) {
     heli_take_hits(8);
     if (cond_flag != 0) return;
-    func_00171430();
+    heli_bounds_check();
     if (cond_flag != 0) return;
     reg_d1.b[0] = HELI(reg_a5)->facing;
     if (g_enemies_stopped != 0) {
@@ -666,7 +666,7 @@ s32 entity_turn_to_target_player();
 void heli_d(void) {
     heli_take_hits(8);
     if (cond_flag != 0) return;
-    func_00171430();
+    heli_bounds_check();
     if (cond_flag != 0) return;
     reg_d1.b[0] = HELI(reg_a5)->facing;
     if (g_enemies_stopped != 0) {
@@ -821,7 +821,7 @@ void heli_e(void) {
     u8 *var_a0;
 
     heli_take_hits(8);
-    if ((cond_flag == 0) && (func_00171430(), (cond_flag == 0))) {
+    if ((cond_flag == 0) && (heli_bounds_check(), (cond_flag == 0))) {
         reg_d1.b[0] = HELI(reg_a5)->facing;
         if (g_enemies_stopped != 0) {
             heli_set_direction_sprite();
@@ -938,7 +938,7 @@ void heli_f(void) {
     u16 temp_a0;
 
     heli_take_hits(8);
-    if ((cond_flag == 0) && (func_00171430(), (cond_flag == 0))) {
+    if ((cond_flag == 0) && (heli_bounds_check(), (cond_flag == 0))) {
         reg_d1.b[0] = HELI(reg_a5)->facing;
         if (g_enemies_stopped != 0) {
             heli_set_direction_sprite();
@@ -1050,7 +1050,7 @@ void heli_g(void) {
     u8 temp_v1;
 
     heli_take_hits(8);
-    if ((cond_flag == 0) && (func_00171430(), (cond_flag == 0))) {
+    if ((cond_flag == 0) && (heli_bounds_check(), (cond_flag == 0))) {
         reg_d1.b[0] = HELI(reg_a5)->facing;
         if (g_enemies_stopped != 0) {
             heli_set_direction_sprite();
@@ -1217,7 +1217,7 @@ void heli_h(void) {
     u16 temp_a0_2;
 
     heli_take_hits(8);
-    if ((cond_flag == 0) && (func_00171430(), (cond_flag == 0))) {
+    if ((cond_flag == 0) && (heli_bounds_check(), (cond_flag == 0))) {
         reg_d1.b[0] = HELI(reg_a5)->facing;
         if (g_enemies_stopped != 0) {
             heli_set_direction_sprite();

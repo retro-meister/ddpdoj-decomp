@@ -34,14 +34,14 @@ extern u16 stage4_boss_flash_palettes[];
 extern u16 stage4_boss_fade_palettes[];
 extern u16 stage4_boss_enter_flash[];
 
-void func_00210EA0(void);
-void func_00211140(void);
-void func_00211420(void);
-void func_00211720(void);
-void func_00211920(void);
-void func_002119A0(void);
-void func_00211E90(void);
-void func_00211F40(void);
+void clear_bonus_p1_step(void);
+void clear_bonus_p2_step(void);
+void clear_bonus_unused(void);
+void wrecks_update_loop(void);
+void wreck_spawn_setup(void);
+void wreck_init(void);
+void wreck_spawn_a_init(void);
+void wreck_spawn_b_init(void);
 
 extern u16 D_00246C50[];
 extern u16 g_stage3_map_palettes[];
@@ -89,7 +89,7 @@ extern u16 g_p2_lives;
 extern u16 g_p1_lives;
 extern u8 g_bullets[67216];
 extern u16 g_bullet_cancel[];
-extern u16 D_00299780[];
+extern u16 g_wrecks[];
 extern u8 g_sparks[2048];
 extern u8 g_sparks_second_half[];
 extern u16 D_0029A530[];
@@ -125,7 +125,7 @@ extern void input_get_p1_pressed(void);
 extern void input_get_p2_pressed(void);
 
 
-void func_0020F550(void) {
+void startup_pointers_store_a(void) {
     STORE_POINTER(slowdown_budget_limits_loop2 + 16, D_002624B0);
     STORE_POINTER(slowdown_budget_limits_loop2 + 23, palette_white);
     STORE_POINTER(D_00269708 + 8, D_00269750);
@@ -210,7 +210,7 @@ void func_0020F550(void) {
     STORE_POINTER(debug_list_views[30].entries, D_0029A530);
     STORE_POINTER(debug_list_views[31].entries, g_bullet_cancel);
     STORE_POINTER(debug_list_views[32].entries, ((u16 *)g_explosions));
-    STORE_POINTER(debug_list_views[33].entries, D_00299780);
+    STORE_POINTER(debug_list_views[33].entries, g_wrecks);
     STORE_POINTER(debug_table_views[0].table, D_00274040);
     STORE_POINTER(debug_table_views[1].table, D_00274840);
     STORE_POINTER(debug_table_views[2].table, D_00275040);
@@ -280,7 +280,7 @@ extern u16 D_0026ED70[];
 extern u16 D_0028DC70[];
 
 
-void func_002108C0(void) {
+void startup_pointers_store_b(void) {
     STORE_POINTER(stage1_boss_blast_flash + 4, ((u16 *)stage1_boss_palette));
     STORE_POINTER(stage1_boss_blast_flash + 11, ((u16 *)D_0025FA70));
     STORE_POINTER(stage1_boss_blast_flash + 18, ((u16 *)D_0025FA70));
@@ -318,7 +318,7 @@ extern u8 D_002BAE90[];
 extern u8 D_0028E2A4;
 #endif
 
-void func_00210C90(void) {
+void clear_bonus_state_clear(void) {
     s32 var_a1;
     u8 *temp_a2;
 
@@ -364,14 +364,14 @@ extern u8 D_0028ED60;
 extern u8 death_D_00290568;
 #endif
 
-void func_00210D00() {
+void clear_bonus_task() {
     u16 temp_a0;
     u16 temp_v1;
 
     reg_a6 = D_002BAE90;
-    func_00211420();
+    clear_bonus_unused();
     if (*(u8 *)(reg_a5 + 3) == 0) {
-        func_00210C90();
+        clear_bonus_state_clear();
         return;
     }
 #ifdef DEATH_LABEL
@@ -387,8 +387,8 @@ void func_00210D00() {
         ENTITY(reg_a6)->draw.h = (u16) (temp_v1 - 1);
         return;
     }
-    func_00210EA0();
-    func_00211140();
+    clear_bonus_p1_step();
+    clear_bonus_p2_step();
     if (ENTITY(reg_a6)->look.h == 0) {
         temp_a0 = ENTITY(reg_a6)->sprite.h;
         if (temp_a0 != 0) {
@@ -453,7 +453,7 @@ extern s16 g_player1[];
 extern u16 D_00684C80[];
 #endif
 
-void func_00210EA0(void) {
+void clear_bonus_p1_step(void) {
     u8 *p;
 
     if (*(u8 *)(reg_a6 + 5) & 1) {
@@ -564,7 +564,7 @@ extern s16 g_player2[];
 extern u16 D_00684C80[];
 #endif
 
-void func_00211140(void) {
+void clear_bonus_p2_step(void) {
     u8 *p;
 
     if (*(u8 *)(reg_a6 + 4) & 1) {
@@ -679,13 +679,13 @@ block_3:
     }
 }
 
-void func_00211420(void) {
+void clear_bonus_unused(void) {
 }
 
 s32 entity_follow_scroll();
 extern u16 g_side_scroll_step[];
 
-void func_00211430(void) {
+void wreck_follow_scroll(void) {
     entity_follow_scroll();
     reg_d1.h[0] = g_side_scroll_step[0];
     ENTITY(reg_a6)->x.h -= reg_d1.h[0];
@@ -693,7 +693,7 @@ void func_00211430(void) {
 
 extern u16 g_two_player_game;
 
-void func_00211470(void) {
+void wreck_limit_get(void) {
     reg_d3.sw = 0x1D;
     if (g_loop == 0) {
         if (g_two_player_game == 0) {
@@ -707,19 +707,19 @@ block_3:
 
 
 
-void func_002114A0(void) {
-    memset(((s32 *)D_00299780), 0, 0x5A6);
+void wrecks_clear(void) {
+    memset(((s32 *)g_wrecks), 0, 0x5A6);
 }
 
 
 void wreck_spawn(void) {
     u32 tmp;
 
-    func_00211470();
-    reg_a0 = (u8 *) D_00299780;
+    wreck_limit_get();
+    reg_a0 = (u8 *) g_wrecks;
 loop_1:
     if (*(u16 *) reg_a0 != 0) goto next_1;
-    func_00211920();
+    wreck_spawn_setup();
     cond_flag = 0;
     return;
 next_1:
@@ -733,14 +733,14 @@ next_1:
 }
 
 
-void func_00211550(void) {
+void wreck_spawn_a(void) {
     u32 tmp;
 
-    func_00211470();
-    reg_a0 = (u8 *) D_00299780;
+    wreck_limit_get();
+    reg_a0 = (u8 *) g_wrecks;
 loop_1:
     if (*(u16 *) reg_a0 != 0) goto next_1;
-    func_00211E90();
+    wreck_spawn_a_init();
     cond_flag = 0;
     return;
 next_1:
@@ -754,14 +754,14 @@ next_1:
 }
 
 
-void func_002115E0(void) {
+void wreck_spawn_b(void) {
     u32 tmp;
 
-    func_00211470();
-    reg_a0 = (u8 *) D_00299780;
+    wreck_limit_get();
+    reg_a0 = (u8 *) g_wrecks;
 loop_1:
     if (*(u16 *) reg_a0 != 0) goto next_1;
-    func_00211F40();
+    wreck_spawn_b_init();
     cond_flag = 0;
     return;
 next_1:
@@ -777,12 +777,12 @@ next_1:
 extern u8 wreck_draw_routines[];
 extern u16 g_frame_mod8;
 extern u16 g_frame_mod2;
-extern u16 D_00299D20[];
+extern u16 g_wreck_count[];
 
-void func_00211670(void) {
+void wrecks_update(void) {
     u32 temp_a0;
 
-    reg_d7.h[0] = D_00299D20[0];
+    reg_d7.h[0] = g_wreck_count[0];
     if (reg_d7.h[0] != 0) {
         reg_d5.w = 0;
         reg_d7.h[0] -= 1;
@@ -798,7 +798,7 @@ void func_00211670(void) {
         reg_tmp.w = reg_d6.w;
         reg_d6.h[0] = g_frame_mod8;
         reg_d6.h[1] = reg_tmp.h[0];
-        func_00211720();
+        wrecks_update_loop();
     }
 }
 
@@ -806,10 +806,10 @@ typedef void (*Fn)(void);
 
 extern u8 *reg_call_target_as_u8_p;
 
-void func_00211720(void) {
+void wrecks_update_loop(void) {
     u32 t1;
 
-    reg_a6 = (u8 *)((u8 *)D_00299780);
+    reg_a6 = (u8 *)((u8 *)g_wrecks);
     goto loop_1;
 skip_1:
     reg_a6 += 0x30;
@@ -831,7 +831,7 @@ loop_1:
         ENTITY(reg_a6)->hit_y_plus.h = ENTITY(reg_a6)->hit_y_minus.h;
     }
 block_1:
-    func_00211430();
+    wreck_follow_scroll();
     if (reg_d6.h[0] != 0) {
         goto block_2;
     }
@@ -854,7 +854,7 @@ block_2:
     return;
 block_3:
     ENTITY(reg_a6)->flags.sh = 0;
-    D_00299D20[0] -= 1;
+    g_wreck_count[0] -= 1;
     reg_a6 += 0x30;
     t1 = reg_d7.h[0] - 1;
     reg_d7.h[0] = t1;
@@ -866,7 +866,7 @@ block_3:
 extern u8 wreck_setups[];
 extern u32 D_0028E9A0;
 
-void func_00211920(void) {
+void wreck_spawn_setup(void) {
     D_0028E9A0 = reg_d0.w;
     reg_d3.h[0] = reg_d0.h[0];
     reg_d3.h[0] &= 0x3C;
@@ -875,7 +875,7 @@ void func_00211920(void) {
     reg_a2 += 2;
     *(u16 *)(reg_a0 + 2) = ENTITY(reg_a6)->y.h;
     *(u16 *)(reg_a0 + 4) = ENTITY(reg_a6)->x.h;
-    func_002119A0();
+    wreck_init();
 }
 
 s32 rng_next_bit();
@@ -890,7 +890,7 @@ extern u16 D_00299D24[];
 #define W6(o) (*(u16 *)(reg_a6 + (o)))
 #define NEXT_W() (*(u16 *)reg_a2)
 
-void func_002119A0(void) {
+void wreck_init(void) {
     u32 save_d0;
     u8 *save_a6;
     u32 save_d1;
@@ -916,11 +916,11 @@ next_1:
     reg_d5.h[0] = W0(2);
     reg_d7.h[0] = W0(4);
     W0(2) += 0x4400;
-    func_00211470();
+    wreck_limit_get();
     reg_d6.h[0] = reg_d3.h[0];
     D_00299D22[0] = 2;
     D_00299D24[0] = 0xA;
-    reg_a6 = (u8 *)((u8 *)D_00299780);
+    reg_a6 = (u8 *)((u8 *)g_wrecks);
 loop_2:
     if (W6(0) == 0) goto next_6;
     if (W6(4) != reg_d7.h[0]) goto next_3;
@@ -1020,10 +1020,10 @@ next_7:
     reg_a0[0x1E] = reg_d0.b[0];
     cond_flag = 0;
     reg_d0.w = D_0028E9A0;
-    D_00299D20[0] += 1;
+    g_wreck_count[0] += 1;
 }
 
-void func_00211E90(void) {
+void wreck_spawn_a_init(void) {
     D_0028E9A0 = reg_d0.w;
     *(s8 *)(reg_a0 + 0x1E) = 0x1F;
     reg_d3.h[0] = reg_d0.h[0];
@@ -1036,10 +1036,10 @@ void func_00211E90(void) {
     reg_d3.w += reg_d2.w;
     *(u16 *)(reg_a0 + 2) = (u16) reg_d3.h[1];
     *(u16 *)(reg_a0 + 4) = (u16) reg_d3.h[0];
-    func_002119A0();
+    wreck_init();
 }
 
-void func_00211F40(void) {
+void wreck_spawn_b_init(void) {
     D_0028E9A0 = reg_d0.w;
     *(s8 *)(reg_a0 + 0x1E) = 0x1F;
     reg_d3.h[0] = reg_d0.h[0];
@@ -1049,7 +1049,7 @@ void func_00211F40(void) {
     reg_a2 += 2;
     *(u16 *)(reg_a0 + 2) = reg_d2.h[1];
     *(u16 *)(reg_a0 + 4) = reg_d2.h[0];
-    func_002119A0();
+    wreck_init();
 }
 
 /* .sbss (the compiler lays these out in reverse) */
@@ -1058,5 +1058,5 @@ u8 death_D_00290568 __attribute__((aligned(4)));
 #endif
 
 /* .bss (the compiler lays these out in reverse) */
-u16 D_00299D20[8];
-u16 D_00299780[720];
+u16 g_wreck_count[8];
+u16 g_wrecks[720];

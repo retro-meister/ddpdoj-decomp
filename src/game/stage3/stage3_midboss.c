@@ -11,15 +11,15 @@ void stage3_midboss_side1_blow_off(void);
 void stage3_midboss_side2_blow_off(void);
 void stage3_midboss_dying(void);
 void stage3_midboss_next_mode(void);
-void func_001D6690(void);
-void func_001D66A0(void);
-void func_001D66B0(void);
-void func_001D66E0(void);
-void func_001D6710(void);
-void func_001D6790(void);
-void func_001D6990(void);
-void func_001D6A40(void);
-void func_001D6B60(void);
+void stage3_midboss_sides_open(void);
+void stage3_midboss_sides_close(void);
+void stage3_midboss_sides_moving_check(void);
+void stage3_midboss_sides_animate(void);
+void stage3_midboss_sides_animate_open(void);
+void stage3_midboss_sides_animate_close(void);
+void stage3_midboss_hit_box_set(void);
+void stage3_midboss_side1_draw(void);
+void stage3_midboss_side2_draw(void);
 
 
 /* The stage 3 mid-boss. */
@@ -86,7 +86,7 @@ void stage3_midboss_fan7(void) {
     } while ((s16)(--reg_d7.h[0]) >= 0);
 }
 
-void func_001D61B0();
+void stage3_midboss_sides_update();
 
 void enemy_set_entity_count(s32);
 
@@ -186,8 +186,8 @@ next_2:
     if (STAGE3_MIDBOSS(reg_a5)->time_left != 0) goto next_3;
     stage3_midboss_next_mode();
 next_3:
-    func_001D61B0();
-    func_001D66E0();
+    stage3_midboss_sides_update();
+    stage3_midboss_sides_animate();
     stage3_midboss_dying();
     if (STAGE3_MIDBOSS(reg_a5)->gone == 0) goto next_1;
     enemy_remove();
@@ -332,14 +332,14 @@ next_14:
     enemy_hitbox_debug_draw();
     reg_a0 = reg_a6 + 0x60;
     enemy_hitbox_debug_draw();
-    func_001D6990();
-    func_001D6A40();
-    func_001D6B60();
+    stage3_midboss_hit_box_set();
+    stage3_midboss_side1_draw();
+    stage3_midboss_side2_draw();
 }
 
 s32 explosion_spawn();
 
-void func_001D5040(arg2)
+void midboss_explode_by_table(arg2)
     u16 *arg2;
 {
     u16 *var_a2;
@@ -384,7 +384,7 @@ void stage3_midboss_side1_blow_off() {
         reg_a1 = D_00263470;
         reg_d2.h[1] = ENTITY(reg_a6)[1].y.h;
         reg_d2.h[0] = ENTITY(reg_a6)[1].x.h;
-        func_001D5040();
+        midboss_explode_by_table();
         sfx_explosion_ground_large();
     }
 }
@@ -396,7 +396,7 @@ void stage3_midboss_side2_blow_off() {
         reg_a1 = D_00263470;
         reg_d2.h[1] = ENTITY(reg_a6)[2].y.h;
         reg_d2.h[0] = ENTITY(reg_a6)[2].x.h;
-        func_001D5040();
+        midboss_explode_by_table();
         sfx_explosion_ground_large();
     }
 }
@@ -439,7 +439,7 @@ void stage3_midboss_dying(void) {
                 reg_d2.h[1] = ENTITY(reg_a6)->y.h;
                 reg_d2.h[0] = ENTITY(reg_a6)->x.h;
                 reg_a1 = (u8 *)(D_00263540);
-                func_001D5040();
+                midboss_explode_by_table();
                 rng_next();
                 reg_d0.b[0] = (s8) reg_d0.b[0] * 2;
                 reg_d1.b[0] = reg_d0.b[0];
@@ -549,7 +549,7 @@ s32 direction_turn_toward();
 s32 entity_distance_to();
 extern u8 stage3_midboss2_state_routines_0[];
 
-void func_001D5670(void) {
+void stage3_midboss_drift(void) {
     if (STAGE3_MIDBOSS(reg_a5)->dying != 0) {
         ENTITY(reg_a6)->move.sh = 0x420;
         entity_velocity();
@@ -600,7 +600,7 @@ void stage3_midboss_mode_00(void) {
 
 s32 aim_at_player();
 
-void func_001D5830(void) {
+void stage3_midboss_side_muzzle_get(void) {
     reg_d0.h[0] = ENTITY(reg_a6)[1].y.h;
     reg_d1.h[0] = ENTITY(reg_a6)[1].x.h;
     reg_d0.h[0] += ENTITY(reg_a6)[1].offset_y.h;
@@ -646,7 +646,7 @@ void stage3_midboss_mode_attack_a(void) {
     reg_d0.b[0] = ENTITY(reg_a6)[1].look.b.size;
     reg_d0.b[0] += ENTITY(reg_a6)[2].look.b.size;
     if (reg_d0.b[0] != 2) {
-        func_001D5670();
+        stage3_midboss_drift();
         if (STAGE3_MIDBOSS(reg_a5)->step == 1) {
             temp_v1 = ENTITY(reg_a6)[4].look.h;
             if (temp_v1 != 0) {
@@ -662,7 +662,7 @@ void stage3_midboss_mode_attack_a(void) {
                         ENTITY(reg_a6)[1].draw.h = 0x1CU;
                         ENTITY(reg_a6)[2].draw.h = 0x1CU;
                         STAGE3_MIDBOSS(reg_a5)->step = 2U;
-                        func_001D5830();
+                        stage3_midboss_side_muzzle_get();
                     }
                 }
             }
@@ -767,7 +767,7 @@ void stage3_midboss_mode_attack_b(void) {
     reg_d0.b[0] = ENTITY(reg_a6)[1].look.b.size;
     reg_d0.b[0] += ENTITY(reg_a6)[2].look.b.size;
     if (reg_d0.b[0] != 2) {
-        func_001D5670();
+        stage3_midboss_drift();
         if (STAGE3_MIDBOSS(reg_a5)->step == 1) {
             reg_tmp.b[0] = ENTITY(reg_a6)[1].sprite.b[1];
             ENTITY(reg_a6)[1].sprite.b[1] -= 1;
@@ -881,7 +881,7 @@ void stage3_midboss2_state_0_04(void)
 
 extern void bullet_fire256_double(void);
 
-void func_001D6160(void)
+void stage3_midboss_shot(void)
 {
     reg_d1.b[0] *= 4;
     reg_d0.w = 0x80003;
@@ -894,7 +894,7 @@ void func_001D6160(void)
 
 s32 direction256_to_target_player();
 
-void func_001D61B0(arg1, arg2)
+void stage3_midboss_sides_update(arg1, arg2)
     s32 arg1;
     s32 arg2;
 {
@@ -917,18 +917,18 @@ void func_001D61B0(arg1, arg2)
     if (STAGE3_MIDBOSS(reg_a5)->time_left != 0) {
         temp_a0 = ENTITY(reg_a6)[6].offset_y.b[1];
         if (temp_a0 == 1) {
-            func_001D66B0();
+            stage3_midboss_sides_moving_check();
             if (cond_flag == 0) {
                 ENTITY(reg_a6)[6].move.h -= 1;
                 if (ENTITY(reg_a6)[6].move.h == 0) {
-                    func_001D6690();
+                    stage3_midboss_sides_open();
                     ENTITY(reg_a6)[6].offset_y.b[1] = 2U;
                 }
             }
         }
         temp_a0_2 = ENTITY(reg_a6)[6].offset_y.b[1];
         if (temp_a0_2 == 2) {
-            func_001D66B0();
+            stage3_midboss_sides_moving_check();
             if ((cond_flag == 0) && (STAGE3_MIDBOSS(reg_a5)->dying == 0)) {
                 reg_tmp.b[0] = ENTITY(reg_a6)[6].draw.b.priority;
                 ENTITY(reg_a6)[6].draw.b.priority -= 1;
@@ -959,7 +959,7 @@ void func_001D61B0(arg1, arg2)
     if (temp_a0_3 == 3) {
         ENTITY(reg_a6)[6].move.h -= 1;
         if (ENTITY(reg_a6)[6].move.h == 0) {
-            func_001D66A0();
+            stage3_midboss_sides_close();
             ENTITY(reg_a6)[6].move.h = 0x60U;
             ENTITY(reg_a6)[6].offset_y.b[1] = 1U;
             ENTITY(reg_a6)[6].sprite.b[1] = ENTITY(reg_a6)[6].sprite.b[0];
@@ -985,9 +985,9 @@ void stage3_midboss_mode_05(void) {
         ENTITY(reg_a6)[6].hp.b[1] = 0U;
         ENTITY(reg_a6)[6].hit_x_plus.sb[1] = 0;
         ENTITY(reg_a6)->sprite.sh = 0x3001;
-        func_001D6690();
+        stage3_midboss_sides_open();
     }
-    func_001D5670();
+    stage3_midboss_drift();
     if (STAGE3_MIDBOSS(reg_a5)->dying == 0) {
         reg_tmp.b[0] = ENTITY(reg_a6)[6].look.b.size;
         ENTITY(reg_a6)[6].look.b.size -= 1;
@@ -1032,15 +1032,15 @@ void stage3_midboss_mode_05(void) {
     }
 }
 
-void func_001D6690(void) {
+void stage3_midboss_sides_open(void) {
     ENTITY(reg_a6)[3].offset_x.b[1] = 1;
 }
 
-void func_001D66A0(void) {
+void stage3_midboss_sides_close(void) {
     ENTITY(reg_a6)[3].offset_x.b[1] = 2;
 }
 
-void func_001D66B0(void) {
+void stage3_midboss_sides_moving_check(void) {
     if (ENTITY(reg_a6)[3].offset_x.b[1] == 0) {
         cond_flag = 0;
         return;
@@ -1049,12 +1049,12 @@ void func_001D66B0(void) {
 }
 
 
-void func_001D66E0(void) {
-    func_001D6710();
-    func_001D6790();
+void stage3_midboss_sides_animate(void) {
+    stage3_midboss_sides_animate_open();
+    stage3_midboss_sides_animate_close();
 }
 
-void func_001D6710(void) {
+void stage3_midboss_sides_animate_open(void) {
     if (ENTITY(reg_a6)[3].offset_x.b[1] == 1) {
         reg_tmp.b[0] = ENTITY(reg_a6)[3].draw.b.priority;
         ENTITY(reg_a6)[3].draw.b.priority -= 1;
@@ -1069,7 +1069,7 @@ void func_001D6710(void) {
     }
 }
 
-void func_001D6790(void) {
+void stage3_midboss_sides_animate_close(void) {
     if (ENTITY(reg_a6)[3].offset_x.b[1] == 2) {
         reg_d0.b[0] = ENTITY(reg_a6)[1].look.b.size;
         reg_d0.b[0] += ENTITY(reg_a6)[2].look.b.size;
@@ -1097,7 +1097,7 @@ void stage3_midboss_mode_leave(s32 arg0) {
 
     var_a0 = arg0;
     if (STAGE3_MIDBOSS(reg_a5)->step == 0) {
-        func_001D66A0();
+        stage3_midboss_sides_close();
         var_a0 = 0x600;
         ENTITY(reg_a6)->move.sh = 0x600;
         STAGE3_MIDBOSS(reg_a5)->step = 1U;
@@ -1134,7 +1134,7 @@ s32 sprite_draw_layer4();
 extern u8 D_00263630[];
 extern u8 D_00263650[];
 
-void func_001D6990(void) {
+void stage3_midboss_hit_box_set(void) {
     u16 temp_a0;
 
     reg_a0 = D_00263650;
@@ -1157,7 +1157,7 @@ void func_001D6990(void) {
 extern u8 D_00263670[];
 extern u8 D_00263690[];
 
-void func_001D6A40(void) {
+void stage3_midboss_side1_draw(void) {
     u16 temp_a0;
     u16 temp_a1;
 
@@ -1193,7 +1193,7 @@ void func_001D6A40(void) {
 extern u8 D_002636B0[];
 extern u8 D_002636D0[];
 
-void func_001D6B60(void) {
+void stage3_midboss_side2_draw(void) {
     u16 temp_a0;
     u16 temp_a1;
 

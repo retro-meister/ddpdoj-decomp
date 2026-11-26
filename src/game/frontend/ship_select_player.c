@@ -2,18 +2,18 @@
 #include "entity.h"
 #include "sdk/ps2sdk.h"
 
-void func_001AF8F0(void);
-void func_001AFCC0(void);
-void func_001B00D0(void);
-void func_001B0100(void);
-void func_001B0160(void);
-void func_001B0950(void);
+void join_select_ship_step(void);
+void join_select_doll_step(void);
+void join_select_prompt_update(void);
+void join_select_prompt_clear(void);
+void join_select_prompt_draw(void);
+void join_select_object_update(void);
 
 extern u16 g_two_player_game;
 extern u8 D_0029BF30[];
 extern u8 D_0029BF40[];
 
-void func_001AF2C0(void) {
+void join_select_doll_store(void) {
     reg_a0 = D_0029BF40;
     if (*(u8 *)(reg_a5 + 6) == 0) {
         reg_a0 = D_0029BF30;
@@ -25,7 +25,7 @@ void func_001AF2C0(void) {
 }
 
 
-void func_001AF310(void) {
+void join_select_doll_taken_check(void) {
     s32 d1 = reg_d1.w;
 
     reg_a0 = (u8 *)D_0029BF40;
@@ -51,7 +51,7 @@ s32 p2_bomb_stock_draw_empty();
 extern u8 join_select_p1_table[];
 extern u8 join_select_p2_table[];
 
-void func_001AF3A0() {
+void join_select_task_begin() {
     s32 player_panel_show();
     *(s8 *)(reg_a5 + 3) = 1;
     reg_a4 = join_select_p1_table;
@@ -78,7 +78,7 @@ s32 task_stop_self();
 extern u16 D_0028C11C[];
 extern u16 D_0028C120[];
 
-void func_001AF460(void) {
+void join_select_task_finish(void) {
     reg_tmp.h[1] = *(u16 *)(reg_a5 + 8);
     reg_tmp.h[0] = *(u16 *)(reg_a5 + 0xA);
     reg_d0.w = 0;
@@ -106,8 +106,8 @@ void p1_credits_get(void);
 void player_slot_request(void);
 void player_panel_show_unless_step_4(void);
 void player_panel_show_by_coin_mode(void);
-void ship_choice_mark_for_task(void);
-void ship_choice_next_free(void);
+void join_select_ship_get(void);
+void join_select_doll_next_free(void);
 extern u8 D_002623B0[];
 extern u8 D_0028E304;
 extern u16 D_0028E314;
@@ -119,7 +119,7 @@ extern u8 g_replay_mode;
 extern u8 g_simulation_active;
 extern u8 *reg_call_target_as_u8_p;
 
-void func_001AF560(void) {
+void join_select_task(void) {
     void func_00131610(void);
     void sprite_palette_load(void);
     void player_panel_show(void);
@@ -128,11 +128,11 @@ void func_001AF560(void) {
 
     state = *(u8 *)(reg_a5 + 3);
     if (state == 0) {
-        func_001AF3A0();
+        join_select_task_begin();
         return;
     }
     if (state == 2) {
-        func_001AF460();
+        join_select_task_finish();
         return;
     }
     func_00131610();
@@ -240,8 +240,8 @@ block_51:
     if (cond_flag != 0) {
         goto block_52;
     }
-    ship_choice_mark_for_task();
-    ship_choice_next_free();
+    join_select_ship_get();
+    join_select_doll_next_free();
     *(u8 *)(reg_a5 + 0xD) = 1;
     reg_d0.b[0] = *(u8 *)(reg_a5 + 6);
     player_panel_show();
@@ -265,13 +265,13 @@ block_51:
     reg_d0.b[0] = *(u8 *)(reg_a5 + 6);
     reg_d1.h[0] = 7;
     player_slot_request();
-    func_001B0100();
+    join_select_prompt_clear();
 block_52:
     seq = *(u8 *)(reg_a5 + 0xD);
     if (seq == 1) {
         reg_d0.b[0] = *(u8 *)(reg_a5 + 6);
         player_panel_show();
-        func_001AF8F0();
+        join_select_ship_step();
         if (cond_flag != 0) {
             *(u8 *)(reg_a5 + 0xD) = 2;
             *(s8 *)(reg_a5 + 0xC) = 1;
@@ -281,10 +281,10 @@ block_52:
     if (seq == 2) {
         reg_d0.b[0] = *(u8 *)(reg_a5 + 6);
         player_panel_show();
-        func_001AFCC0();
+        join_select_doll_step();
         return;
     }
-    func_001B00D0();
+    join_select_prompt_update();
 }
 
 typedef void (*Fn)();
@@ -300,7 +300,7 @@ extern u16 g_game_frame;
 extern s32 D_0028E998;
 extern s32 D_0028E99C;
 
-void func_001AF8F0(void) {
+void join_select_ship_step(void) {
     u32 temp_a1_3;
     u32 temp_v1;
     u32 temp_a1;
@@ -407,11 +407,11 @@ void func_001AF8F0(void) {
 
 extern u16 D_0028C130[];
 
-void func_001AFCC0(void) {
+void join_select_doll_step(void) {
     u16 var_a0;
     reg_d7.w = 0;
     reg_d7.b[0] = *(u8 *)(reg_a5 + 0xE);
-    func_001AF310();
+    join_select_doll_taken_check();
     if (cond_flag != 0) {
         reg_d7.b[0] -= 1;
         if (0 > reg_d7.sb[0]) {
@@ -434,7 +434,7 @@ void func_001AFCC0(void) {
             if (0 > reg_d7.sb[0]) {
                 reg_d7.b[0] = 2;
             }
-            func_001AF310();
+            join_select_doll_taken_check();
         } while (cond_flag != 0);
     }
     if (reg_d0.w & 8) {
@@ -444,7 +444,7 @@ void func_001AFCC0(void) {
             if ((s8) reg_d7.b[0] > 2) {
                 reg_d7.b[0] = 0;
             }
-            func_001AF310();
+            join_select_doll_taken_check();
         } while (cond_flag != 0);
     }
     if (reg_d6.b[0] != reg_d7.b[0]) {
@@ -458,7 +458,7 @@ void func_001AFCC0(void) {
     *(u16 *)(reg_a5 + 0x12) -= 1;
     if ((*(u16 *)(reg_a5 + 0x12) == 0) || (reg_d0.h[0] &= 0x70, (reg_d0.h[0] != 0))) {
         sfx_confirm();
-        func_001AF460();
+        join_select_task_finish();
         return;
     }
     reg_d1.w = 0x5BC00000;
@@ -497,7 +497,7 @@ void func_001AFCC0(void) {
     reg_d3.h[0] = 0x618;
     reg_d4.h[0] = *(u16 *)(reg_a4 + 0x14);
     sprite_draw_with_ship_select_keep();
-    func_001AF2C0();
+    join_select_doll_store();
     if (0 <= (s16)(reg_d0.h[0])) {
         reg_d0.h[0] += reg_d0.h[0];
         reg_d1.w = reg_d7.w;
@@ -513,17 +513,17 @@ void func_001AFCC0(void) {
 }
 
 
-void func_001B00D0(void) {
+void join_select_prompt_update(void) {
     s32 func_00131610();
     func_00131610();
     if (cond_flag == 0) {
-        func_001B0160();
+        join_select_prompt_draw();
     }
 }
 
 extern u8 D_00251B40[];
 
-void func_001B0100(void) {
+void join_select_prompt_clear(void) {
     s32 text_layer_print();
     reg_a0 = D_00251B40;
     reg_d0.h[0] = *(u16 *)(reg_a4 + 2);
@@ -548,7 +548,7 @@ extern u8 D_00251C00[];
 extern u8 g_setting_chute_type;
 extern u8 g_setting_coin_mode;
 
-void func_001B0160(void) {
+void join_select_prompt_draw(void) {
     void text_layer_print(void);
     p1_credits_get();
     if (*(u8 *)(reg_a5 + 6) == 0) {
@@ -673,7 +673,7 @@ void func_001B03E0(void) {
 s32 sprite_draw_layer5();                            /* extern */
 s32 sprite_draw_layer5_zoom_keep();                            /* extern */
 
-void func_001B0470(void) {
+void sprite_draw_layer5_blinking(void) {
     if (g_game_frame & 2) {
         sprite_draw_layer5();
         return;
@@ -684,7 +684,7 @@ void func_001B0470(void) {
 extern u8 D_0029BEE0[];
 
 
-void func_001B04B0(void) {
+void join_select_objects_clear(void) {
     memset(((s32 *)D_0029BEE0), 0, 0x48);
 }
 
@@ -804,7 +804,7 @@ void func_001B04D0(void) {
 }
 
 
-void func_001B07E0(void) {
+void join_select_objects_update(void) {
     u8 *save_a0;
     u8 *save_a1;
     u8 *save_a2;
@@ -838,10 +838,10 @@ void func_001B07E0(void) {
     save_a6 = reg_a6;
     if ((reg_d7.h[0] != 0) && (D_0029BEE1[0] & 1) && !(D_0029BEE1[0] & 4)) {
         reg_a6 = (u8 *)D_0029BEE0;
-        func_001B0950();
+        join_select_object_update();
     } else if ((D_0029BF05[0] & 1) && !(D_0029BF05[0] & 4)) {
         reg_a6 = (u8 *)D_0029BF04;
-        func_001B0950();
+        join_select_object_update();
     }
     reg_d0.w = save_d0;
     reg_d1.w = save_d1;
@@ -869,7 +869,7 @@ extern u8 D_00260F70[];
 extern u16 g_frame_mod8;
 extern u16 g_frame_mod2;
 
-void func_001B0950(void) {
+void join_select_object_update(void) {
     s32 sprite_palette_load();
     u8 flag;
 
@@ -968,24 +968,24 @@ skip_4:
             reg_d1.h[0] = reg_tmp.h[1];
             reg_d3.h[0] = (*(u16 *)(reg_a6 + (0x14)));
             reg_d4.h[0] = (*(u16 *)(reg_a6 + (0xE)));
-            func_001B0470();
+            sprite_draw_layer5_blinking();
             reg_d3.h[0] = (*(u16 *)(reg_a6 + (0x16)));
             if (reg_d3.h[0] != 0x200) {
                 reg_d1.w += 0xFC000000;
                 reg_d2.w += 1;
-                func_001B0470();
+                sprite_draw_layer5_blinking();
             }
             reg_d3.h[0] = (*(u16 *)(reg_a6 + (0x18)));
             if (reg_d3.h[0] != 0x200) {
                 reg_d1.w += 0xFC000000;
                 reg_d2.w += 1;
-                func_001B0470();
+                sprite_draw_layer5_blinking();
             }
             reg_d3.h[0] = (*(u16 *)(reg_a6 + (0x1A)));
             if (reg_d3.h[0] != 0x200) {
                 reg_d1.w += 0xFC000000;
                 reg_d2.w += 1;
-                func_001B0470();
+                sprite_draw_layer5_blinking();
             }
         }
         reg_tmp.b[0] = (*(u8 *)(reg_a6 + (0x11)));

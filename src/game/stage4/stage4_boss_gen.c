@@ -5,15 +5,15 @@
 struct D002637f0Record { u16 w0[10]; void *p1; u16 w2[4]; };
 extern struct D002637f0Record D_002637F0;
 
-void func_001E0B30(void);
-void func_001E0C20(void);
-void func_001E1F30(void);
-void func_001E3D60(void);
-void func_001E4410(void);
-void func_001E4460(void);
-void func_001E4490(void);
-void func_001E44F0(void);
-void func_001E4520(void);
+void heavy_cannon_target_pick_a(void);
+void heavy_cannon_target_pick_b(void);
+void wave_cannon_explode(void);
+void rail_turret_fire(void);
+void heavy_cannon_parts_draw(void);
+void heavy_cannon_part1_destroyed(void);
+void heavy_cannon_part1_remove(void);
+void heavy_cannon_part2_destroyed(void);
+void heavy_cannon_part2_remove(void);
 
 
 void stage4_gate_first(void) {
@@ -476,7 +476,7 @@ block_rts:
     return;
 }
 
-void func_001DF2B0(void) {
+void heavy_cannon_part1_timer(void) {
     u16 temp_v1;
 
     temp_v1 = ENTITY(reg_a6)[1].misc.h;
@@ -490,7 +490,7 @@ void func_001DF2B0(void) {
     }
 }
 
-void func_001DF300(void) {
+void heavy_cannon_part2_timer(void) {
     u16 temp_v1;
 
     temp_v1 = ENTITY(reg_a6)[2].misc.h;
@@ -506,7 +506,7 @@ void func_001DF300(void) {
 
 s32 sfx_explosion_ground_medium();
 
-void func_001DF350() {
+void heavy_cannon_part_explode() {
     u16 temp_a3;
 
     sfx_explosion_ground_medium();
@@ -755,11 +755,11 @@ next_90:
     if ((s32) reg_tmp.b[0] > 0) goto next_100;
     *(u8 *)(reg_a5 + 0x35) = *(u8 *)(reg_a5 + 0x34);
     *(u8 *)(reg_a5 + 0x2D) = *(u8 *)(reg_a5 + 0x2C);
-    func_001E0B30();
-    func_001E0C20();
+    heavy_cannon_target_pick_a();
+    heavy_cannon_target_pick_b();
 next_100:
     if (ENTITY(reg_a6)[1].flags.sb[0] >= 0) goto next_130;
-    func_001DF2B0();
+    heavy_cannon_part1_timer();
     goto next_200;
 next_130:
     if (*(u8 *)(reg_a5 + 0x2D) != 0) goto next_140;
@@ -794,13 +794,13 @@ next_160:
     reg_d2.b[0] = *(u8 *)(reg_a5 + 0x1A);
     reg_d0.b[0] ^= reg_d2.b[0];
     if (ENTITY(reg_a6)[1].hp.sh >= 0) goto next_190;
-    func_001E4460();
+    heavy_cannon_part1_destroyed();
     goto next_200;
 next_190:
     ENTITY(reg_a6)[1].attr.b.palette = reg_d0.b[0];
 next_200:
     if (ENTITY(reg_a6)[2].flags.sb[0] >= 0) goto next_230;
-    func_001DF300();
+    heavy_cannon_part2_timer();
     goto next_300;
 next_230:
     if (*(u8 *)(reg_a5 + 0x2D) != 0) goto next_240;
@@ -835,7 +835,7 @@ next_260:
     reg_d2.b[0] = *(u8 *)(reg_a5 + 0x1A);
     reg_d0.b[0] ^= reg_d2.b[0];
     if (ENTITY(reg_a6)[2].hp.sh >= 0) goto next_290;
-    func_001E44F0();
+    heavy_cannon_part2_destroyed();
     goto next_300;
 next_290:
     ENTITY(reg_a6)[2].attr.b.palette = reg_d0.b[0];
@@ -1012,7 +1012,7 @@ block_e:
     enemy_hitbox_debug_draw();
     reg_a0 = reg_a6 + 0x40;
     enemy_hitbox_debug_draw();
-    func_001E4410();
+    heavy_cannon_parts_draw();
     entity_draw_layer4();
     if (ENTITY(reg_a6)->flags.sb[0] < 0) goto block_rts;
     if (*(u16 *)(reg_a5 + 0x18) != 2) goto block_rts;
@@ -1041,11 +1041,11 @@ block_c:
     reg_d1.h[0] = *(u16 *)(reg_a5 + 0x32);
     bullet_cancel_with_flags_plain();
     if (ENTITY(reg_a6)[1].flags.sb[0] < 0) goto next_720;
-    func_001E4490();
+    heavy_cannon_part1_remove();
     *(u16 *)(reg_a5 + 0x2E) = 0;
 next_720:
     if (ENTITY(reg_a6)[2].flags.sb[0] < 0) goto next_740;
-    func_001E4520();
+    heavy_cannon_part2_remove();
     *(u16 *)(reg_a5 + 0x2E) = 0;
 next_740:
     if (*(s16 *)g_bomb_entities == 0) goto block_e;
@@ -1053,10 +1053,10 @@ next_740:
     goto block_e;
 block_b:
     if (ENTITY(reg_a6)[1].flags.sb[0] >= 0) goto next_620;
-    func_001DF2B0();
+    heavy_cannon_part1_timer();
 next_620:
     if (ENTITY(reg_a6)[2].flags.sb[0] >= 0) goto next_640;
-    func_001DF300();
+    heavy_cannon_part2_timer();
 next_640:
     if (*(u16 *)(reg_a5 + 0x24) != 0) goto next_6200;
     if (ENTITY(reg_a6)->misc.h != 0) goto next_680;
@@ -1066,12 +1066,12 @@ next_640:
     g_enemy_signal_2 = 0;
 next_650:
     if (*(u16 *)(reg_a5 + 0x2E) == 0) {
-        func_001E4410();
+        heavy_cannon_parts_draw();
         return;
     }
     *(u16 *)(reg_a5 + 0x2E) -= 1;
     if (*(u16 *)(reg_a5 + 0x2E) != 0) {
-        func_001E4410();
+        heavy_cannon_parts_draw();
         return;
     }
     reg_d0.h[0] = ENTITY(reg_a6)->y.h;
@@ -1083,7 +1083,7 @@ next_660:
     item_spawn();
     reg_tmp.w = saved_d0;
     ENTITY(reg_a6)->y.h = reg_tmp.h[0];
-    func_001E4410();
+    heavy_cannon_parts_draw();
     return;
 next_680:
     reg_d1.h[0] = *(u16 *)(reg_a5 + 0x32);
@@ -1095,7 +1095,7 @@ next_6200:
     bullet_cancel_with_flags_plain();
     *(u16 *)(reg_a5 + 0x24) -= 1;
     if (*(u16 *)(reg_a5 + 0x24) != 0) goto next_6240;
-    func_001DF350();
+    heavy_cannon_part_explode();
     reg_a0 = (u8 *)D_002639B0;
     fade_in_and_release();
     vibration_start_pad1(0xB4, 0x64);
@@ -1145,7 +1145,7 @@ next_6260:
 extern s16 g_player2[];
 extern s16 g_player1[];
 
-void func_001E0B30(void) {
+void heavy_cannon_target_pick_a(void) {
     s16 *temp_a0;
     s16 *var_a1;
 
@@ -1178,7 +1178,7 @@ block_st:
     *(s8 *)(reg_a5 + 0x2D) = 4;
 }
 
-void func_001E0C20(void) {
+void heavy_cannon_target_pick_b(void) {
     s16 *temp_a0;
     s16 *var_a1;
 
@@ -1692,9 +1692,9 @@ next_23:
     explosions_clear();
     x_save = ENTITY(reg_a6)->x.h;
     ENTITY(reg_a6)->x.h += 0xF280;
-    func_001E1F30();
+    wave_cannon_explode();
     ENTITY(reg_a6)->x.h += 0x1B00;
-    func_001E1F30();
+    wave_cannon_explode();
     ENTITY(reg_a6)->x.h = x_save;
     sfx_explosion_extra_1();
     vibration_start_pad1(0xB4, 0x64);
@@ -1748,7 +1748,7 @@ block_rts:
     return;
 }
 
-void func_001E1F30() {
+void wave_cannon_explode() {
     u16 temp_a3;
 
     sfx_explosion_ground_medium();
@@ -2222,7 +2222,7 @@ block_48:
     }
 }
 
-void func_001E2FD0(void) {
+void rail_turret_explode(void) {
     sfx_explosion_air_medium();
     reg_d0.h[0] = 0xC;
     explosion_spawn();
@@ -2338,7 +2338,7 @@ next_90:
     if ((s16) ENTITY(reg_a6)->y.h < 0x1000) goto block_move;
     reg_d0.h[0] = *(u16 *)(reg_a5 + 0x18);
     if (reg_d0.h[0] != 0) goto next_200;
-    func_001E3D60();
+    rail_turret_fire();
     reg_tmp.b[0] = *(u8 *)(reg_a5 + 0x1D);
     *(u8 *)(reg_a5 + 0x1D) -= 1;
     if ((s32) reg_tmp.b[0] > 0) goto block_move;
@@ -2543,7 +2543,7 @@ block_explos:
     reg_d3.h[0] -= 0x400;
     bullet_fire256_fixed();
 next_e3a:
-    func_001E2FD0();
+    rail_turret_explode();
     EXPLOSION(reg_a0)->start_x = (u16) *(u16 *)(reg_a5 + 0x30);
     if (g_loop != 0) goto next_e3b;
     if (*(u16 *)(reg_a5 + 0x18) == 0) goto next_e3b;
@@ -2579,7 +2579,7 @@ next_e50:
     reg_d3.h[0] -= 0x400;
     bullet_fire256_fixed();
 next_e4a:
-    func_001E2FD0();
+    rail_turret_explode();
     EXPLOSION(reg_a0)->start_x = (u16) *(u16 *)(reg_a5 + 0x32);
     if (g_loop != 0) goto next_e4b;
     if (*(u16 *)(reg_a5 + 0x18) == 0) goto next_e4b;
@@ -2606,7 +2606,7 @@ block_rts:
 }
 
 
-void func_001E3D60(void) {
+void rail_turret_fire(void) {
     u32 tmp;
     s32 tmp2;
 
@@ -2809,7 +2809,7 @@ next_200:
 
 s32 entity_draw_layer4();                            /* extern */
 
-void func_001E4410(void) {
+void heavy_cannon_parts_draw(void) {
     reg_a6 += 0x20;
     entity_draw_layer4();
     reg_a6 += 0x20;
@@ -2822,18 +2822,18 @@ void func_001E4410(void) {
 s32 sfx_explosion_ground_large();                            /* extern */
 s32 score_add();                            /* extern */
 
-void func_001E4460(void) {
+void heavy_cannon_part1_destroyed(void) {
     reg_d0.w = 0x385;
     score_add();
     sfx_explosion_ground_large();
-    func_001E4490();
+    heavy_cannon_part1_remove();
 }
 
 
-void func_001E4490(void) {
+void heavy_cannon_part1_remove(void) {
     ENTITY(reg_a6)[1].flags.h = 0x8080;
     reg_a6 += 0x20;
-    func_001DF350();
+    heavy_cannon_part_explode();
     reg_tmp.h[1] = *(u16 *)(reg_a5 + 6);
     reg_tmp.h[0] = *(u16 *)(reg_a5 + 8);
     reg_a6 = (void *) reg_tmp.w;
@@ -2841,17 +2841,17 @@ void func_001E4490(void) {
 }
 
 
-void func_001E44F0(void) {
+void heavy_cannon_part2_destroyed(void) {
     reg_d0.w = 0x385;
     score_add();
     sfx_explosion_ground_large();
-    func_001E4520();
+    heavy_cannon_part2_remove();
 }
 
-void func_001E4520(void) {
+void heavy_cannon_part2_remove(void) {
     ENTITY(reg_a6)[2].flags.h = 0x8080;
     reg_a6 += 0x40;
-    func_001DF350();
+    heavy_cannon_part_explode();
     reg_tmp.h[1] = *(u16 *)(reg_a5 + 6);
     reg_tmp.h[0] = *(u16 *)(reg_a5 + 8);
     reg_a6 = (void *) reg_tmp.w;

@@ -4669,15 +4669,15 @@ typedef struct {
 } SaveBlock;
 
 extern u8 g_game_mode;
-extern u16 D_002BB198[5];
-extern u16 D_002BB1A8[5];
-extern u16 D_002BB1B8[5];
-extern u16 D_002BB1C8[5];
-extern u16 D_002BB1D8[5];
-extern u16 D_002BB1E8[5];
-extern u16 D_002BB1F8[5];
-extern s32 D_002BB210[15];
-extern s32 D_002BB250[5];
+extern u16 g_stored_ranking_score_tops[5];
+extern u16 g_stored_ranking_continues[5];
+extern u16 g_stored_ranking_hits[5];
+extern u16 g_stored_ranking_power_styles[5];
+extern u16 g_stored_ranking_ship_types[5];
+extern u16 g_stored_ranking_stages[5];
+extern u16 g_stored_ranking_loops[5];
+extern s32 g_stored_ranking_names[15];
+extern s32 g_stored_ranking_scores[5];
 extern s8 g_display_offset_y;
 extern s8 g_display_offset_x;
 extern u8 D_0028E258;
@@ -4703,26 +4703,26 @@ extern u8 g_setting_chute_type;
 extern u8 g_setting_demo_sound;
 extern u8 g_setting_continue;
 extern u8 g_setting_coin_mode;
-extern u8 D_002BB060[5][30];
-extern u8 D_002BB100[5][30];
-extern u16 D_002BB268[5];
-extern u16 D_002BB278[5];
-extern u16 D_002BB288[5];
-extern u16 D_002BB298[5];
-extern u16 D_002BB2A8[5];
-extern u16 D_002BB2B8[5];
-extern u16 D_002BB2C8[5];
-extern s32 D_002BB2E0[15];
-extern s32 D_002BB320[5];
-extern u16 D_002BB338[5];
-extern u16 D_002BB348[5];
-extern u16 D_002BB358[5];
-extern u16 D_002BB368[5];
-extern u16 D_002BB378[5];
-extern u16 D_002BB388[5];
-extern u16 D_002BB398[5];
-extern s32 D_002BB3B0[15];
-extern s32 D_002BB3F0[5];
+extern u8 g_stored_ranking_texts[5][30];
+extern u8 g_death_label_ranking_texts[5][30];
+extern u16 g_death_label_ranking_score_tops[5];
+extern u16 g_death_label_ranking_continues[5];
+extern u16 g_death_label_ranking_hits[5];
+extern u16 g_death_label_ranking_power_styles[5];
+extern u16 g_death_label_ranking_ship_types[5];
+extern u16 g_death_label_ranking_stages[5];
+extern u16 g_death_label_ranking_loops[5];
+extern s32 g_death_label_ranking_names[15];
+extern s32 g_death_label_ranking_scores[5];
+extern u16 g_ranking_score_tops[5];
+extern u16 g_ranking_continues[5];
+extern u16 g_ranking_hits[5];
+extern u16 g_ranking_power_styles[5];
+extern u16 g_ranking_ship_types[5];
+extern u16 g_ranking_stages[5];
+extern u16 g_ranking_loops[5];
+extern s32 g_ranking_names[15];
+extern s32 g_ranking_scores[5];
 extern s32 D_00684CF0[10][4][5];
 
 void save_block_from_settings(void) {
@@ -4732,55 +4732,55 @@ void save_block_from_settings(void) {
     s32 k;
 
     for (i = 0; i < 5; i++) {
-        g_mc_save_buf_as_SaveBlock.a00[i] = D_002BB378[i];
-        g_mc_save_buf_as_SaveBlock.a0A[i] = D_002BB368[i];
-        g_mc_save_buf_as_SaveBlock.a14[i] = D_002BB398[i];
-        g_mc_save_buf_as_SaveBlock.a1E[i] = D_002BB388[i];
-        g_mc_save_buf_as_SaveBlock.a28[i] = D_002BB358[i];
-        g_mc_save_buf_as_SaveBlock.a70[i] = D_002BB3F0[i];
-        g_mc_save_buf_as_SaveBlock.a84[i] = D_002BB338[i];
-        g_mc_save_buf_as_SaveBlock.a8E[i] = D_002BB348[i];
-        g_mc_save_buf_as_SaveBlock.a98[i] = D_002BB2A8[i];
-        g_mc_save_buf_as_SaveBlock.aA2[i] = D_002BB298[i];
-        g_mc_save_buf_as_SaveBlock.aAC[i] = D_002BB2C8[i];
-        g_mc_save_buf_as_SaveBlock.aB6[i] = D_002BB2B8[i];
-        g_mc_save_buf_as_SaveBlock.aC0[i] = D_002BB288[i];
-        g_mc_save_buf_as_SaveBlock.a108[i] = D_002BB320[i];
-        g_mc_save_buf_as_SaveBlock.a11C[i] = D_002BB268[i];
-        g_mc_save_buf_as_SaveBlock.a126[i] = D_002BB278[i];
+        g_mc_save_buf_as_SaveBlock.a00[i] = g_ranking_ship_types[i];
+        g_mc_save_buf_as_SaveBlock.a0A[i] = g_ranking_power_styles[i];
+        g_mc_save_buf_as_SaveBlock.a14[i] = g_ranking_loops[i];
+        g_mc_save_buf_as_SaveBlock.a1E[i] = g_ranking_stages[i];
+        g_mc_save_buf_as_SaveBlock.a28[i] = g_ranking_hits[i];
+        g_mc_save_buf_as_SaveBlock.a70[i] = g_ranking_scores[i];
+        g_mc_save_buf_as_SaveBlock.a84[i] = g_ranking_score_tops[i];
+        g_mc_save_buf_as_SaveBlock.a8E[i] = g_ranking_continues[i];
+        g_mc_save_buf_as_SaveBlock.a98[i] = g_death_label_ranking_ship_types[i];
+        g_mc_save_buf_as_SaveBlock.aA2[i] = g_death_label_ranking_power_styles[i];
+        g_mc_save_buf_as_SaveBlock.aAC[i] = g_death_label_ranking_loops[i];
+        g_mc_save_buf_as_SaveBlock.aB6[i] = g_death_label_ranking_stages[i];
+        g_mc_save_buf_as_SaveBlock.aC0[i] = g_death_label_ranking_hits[i];
+        g_mc_save_buf_as_SaveBlock.a108[i] = g_death_label_ranking_scores[i];
+        g_mc_save_buf_as_SaveBlock.a11C[i] = g_death_label_ranking_score_tops[i];
+        g_mc_save_buf_as_SaveBlock.a126[i] = g_death_label_ranking_continues[i];
     }
     for (i = 0; i < 15; i++) {
-        g_mc_save_buf_as_SaveBlock.a34[i] = D_002BB3B0[i];
-        g_mc_save_buf_as_SaveBlock.aCC[i] = D_002BB2E0[i];
+        g_mc_save_buf_as_SaveBlock.a34[i] = g_ranking_names[i];
+        g_mc_save_buf_as_SaveBlock.aCC[i] = g_death_label_ranking_names[i];
     }
     for (i = 0; i < 5; i++) {
         for (j = 0; j < 30; j++) {
-            g_mc_save_buf_as_SaveBlock.a130[i][j] = D_002BB100[i][j];
-            g_mc_save_buf_as_SaveBlock.a1C6[i][j] = D_002BB060[i][j];
+            g_mc_save_buf_as_SaveBlock.a130[i][j] = g_death_label_ranking_texts[i][j];
+            g_mc_save_buf_as_SaveBlock.a1C6[i][j] = g_stored_ranking_texts[i][j];
         }
     }
     if (g_game_mode == 2) {
         for (i = 0; i < 5; i++) {
-            g_mc_save_buf_as_SaveBlock.a00[i] = D_002BB1D8[i];
-            g_mc_save_buf_as_SaveBlock.a0A[i] = D_002BB1C8[i];
-            g_mc_save_buf_as_SaveBlock.a14[i] = D_002BB1F8[i];
-            g_mc_save_buf_as_SaveBlock.a1E[i] = D_002BB1E8[i];
-            g_mc_save_buf_as_SaveBlock.a28[i] = D_002BB1B8[i];
-            g_mc_save_buf_as_SaveBlock.a70[i] = D_002BB250[i];
-            g_mc_save_buf_as_SaveBlock.a84[i] = D_002BB198[i];
-            g_mc_save_buf_as_SaveBlock.a8E[i] = D_002BB1A8[i];
-            g_mc_save_buf_as_SaveBlock.a98[i] = D_002BB378[i];
-            g_mc_save_buf_as_SaveBlock.aA2[i] = D_002BB368[i];
-            g_mc_save_buf_as_SaveBlock.aAC[i] = D_002BB398[i];
-            g_mc_save_buf_as_SaveBlock.aB6[i] = D_002BB388[i];
-            g_mc_save_buf_as_SaveBlock.aC0[i] = D_002BB358[i];
-            g_mc_save_buf_as_SaveBlock.a108[i] = D_002BB3F0[i];
-            g_mc_save_buf_as_SaveBlock.a11C[i] = D_002BB338[i];
-            g_mc_save_buf_as_SaveBlock.a126[i] = D_002BB348[i];
+            g_mc_save_buf_as_SaveBlock.a00[i] = g_stored_ranking_ship_types[i];
+            g_mc_save_buf_as_SaveBlock.a0A[i] = g_stored_ranking_power_styles[i];
+            g_mc_save_buf_as_SaveBlock.a14[i] = g_stored_ranking_loops[i];
+            g_mc_save_buf_as_SaveBlock.a1E[i] = g_stored_ranking_stages[i];
+            g_mc_save_buf_as_SaveBlock.a28[i] = g_stored_ranking_hits[i];
+            g_mc_save_buf_as_SaveBlock.a70[i] = g_stored_ranking_scores[i];
+            g_mc_save_buf_as_SaveBlock.a84[i] = g_stored_ranking_score_tops[i];
+            g_mc_save_buf_as_SaveBlock.a8E[i] = g_stored_ranking_continues[i];
+            g_mc_save_buf_as_SaveBlock.a98[i] = g_ranking_ship_types[i];
+            g_mc_save_buf_as_SaveBlock.aA2[i] = g_ranking_power_styles[i];
+            g_mc_save_buf_as_SaveBlock.aAC[i] = g_ranking_loops[i];
+            g_mc_save_buf_as_SaveBlock.aB6[i] = g_ranking_stages[i];
+            g_mc_save_buf_as_SaveBlock.aC0[i] = g_ranking_hits[i];
+            g_mc_save_buf_as_SaveBlock.a108[i] = g_ranking_scores[i];
+            g_mc_save_buf_as_SaveBlock.a11C[i] = g_ranking_score_tops[i];
+            g_mc_save_buf_as_SaveBlock.a126[i] = g_ranking_continues[i];
         }
         for (i = 0; i < 15; i++) {
-            g_mc_save_buf_as_SaveBlock.a34[i] = D_002BB210[i];
-            g_mc_save_buf_as_SaveBlock.aCC[i] = D_002BB3B0[i];
+            g_mc_save_buf_as_SaveBlock.a34[i] = g_stored_ranking_names[i];
+            g_mc_save_buf_as_SaveBlock.aCC[i] = g_ranking_names[i];
         }
     }
     g_mc_save_buf_as_SaveBlock.b25C = g_setting_coin_mode;
@@ -4884,55 +4884,55 @@ void save_block_to_settings(void) {
     s32 k;
 
     for (i = 0; i < 5; i++) {
-        D_002BB378[i] = g_mc_save_buf_as_SaveBlock.a00[i];
-        D_002BB368[i] = g_mc_save_buf_as_SaveBlock.a0A[i];
-        D_002BB398[i] = g_mc_save_buf_as_SaveBlock.a14[i];
-        D_002BB388[i] = g_mc_save_buf_as_SaveBlock.a1E[i];
-        D_002BB358[i] = g_mc_save_buf_as_SaveBlock.a28[i];
-        D_002BB3F0[i] = g_mc_save_buf_as_SaveBlock.a70[i];
-        D_002BB338[i] = g_mc_save_buf_as_SaveBlock.a84[i];
-        D_002BB348[i] = g_mc_save_buf_as_SaveBlock.a8E[i];
-        D_002BB1D8[i] = g_mc_save_buf_as_SaveBlock.a00[i];
-        D_002BB1C8[i] = g_mc_save_buf_as_SaveBlock.a0A[i];
-        D_002BB1F8[i] = g_mc_save_buf_as_SaveBlock.a14[i];
-        D_002BB1E8[i] = g_mc_save_buf_as_SaveBlock.a1E[i];
-        D_002BB1B8[i] = g_mc_save_buf_as_SaveBlock.a28[i];
-        D_002BB250[i] = g_mc_save_buf_as_SaveBlock.a70[i];
-        D_002BB198[i] = g_mc_save_buf_as_SaveBlock.a84[i];
-        D_002BB1A8[i] = g_mc_save_buf_as_SaveBlock.a8E[i];
-        D_002BB2A8[i] = g_mc_save_buf_as_SaveBlock.a98[i];
-        D_002BB298[i] = g_mc_save_buf_as_SaveBlock.aA2[i];
-        D_002BB2C8[i] = g_mc_save_buf_as_SaveBlock.aAC[i];
-        D_002BB2B8[i] = g_mc_save_buf_as_SaveBlock.aB6[i];
-        D_002BB288[i] = g_mc_save_buf_as_SaveBlock.aC0[i];
-        D_002BB320[i] = g_mc_save_buf_as_SaveBlock.a108[i];
-        D_002BB268[i] = g_mc_save_buf_as_SaveBlock.a11C[i];
-        D_002BB278[i] = g_mc_save_buf_as_SaveBlock.a126[i];
+        g_ranking_ship_types[i] = g_mc_save_buf_as_SaveBlock.a00[i];
+        g_ranking_power_styles[i] = g_mc_save_buf_as_SaveBlock.a0A[i];
+        g_ranking_loops[i] = g_mc_save_buf_as_SaveBlock.a14[i];
+        g_ranking_stages[i] = g_mc_save_buf_as_SaveBlock.a1E[i];
+        g_ranking_hits[i] = g_mc_save_buf_as_SaveBlock.a28[i];
+        g_ranking_scores[i] = g_mc_save_buf_as_SaveBlock.a70[i];
+        g_ranking_score_tops[i] = g_mc_save_buf_as_SaveBlock.a84[i];
+        g_ranking_continues[i] = g_mc_save_buf_as_SaveBlock.a8E[i];
+        g_stored_ranking_ship_types[i] = g_mc_save_buf_as_SaveBlock.a00[i];
+        g_stored_ranking_power_styles[i] = g_mc_save_buf_as_SaveBlock.a0A[i];
+        g_stored_ranking_loops[i] = g_mc_save_buf_as_SaveBlock.a14[i];
+        g_stored_ranking_stages[i] = g_mc_save_buf_as_SaveBlock.a1E[i];
+        g_stored_ranking_hits[i] = g_mc_save_buf_as_SaveBlock.a28[i];
+        g_stored_ranking_scores[i] = g_mc_save_buf_as_SaveBlock.a70[i];
+        g_stored_ranking_score_tops[i] = g_mc_save_buf_as_SaveBlock.a84[i];
+        g_stored_ranking_continues[i] = g_mc_save_buf_as_SaveBlock.a8E[i];
+        g_death_label_ranking_ship_types[i] = g_mc_save_buf_as_SaveBlock.a98[i];
+        g_death_label_ranking_power_styles[i] = g_mc_save_buf_as_SaveBlock.aA2[i];
+        g_death_label_ranking_loops[i] = g_mc_save_buf_as_SaveBlock.aAC[i];
+        g_death_label_ranking_stages[i] = g_mc_save_buf_as_SaveBlock.aB6[i];
+        g_death_label_ranking_hits[i] = g_mc_save_buf_as_SaveBlock.aC0[i];
+        g_death_label_ranking_scores[i] = g_mc_save_buf_as_SaveBlock.a108[i];
+        g_death_label_ranking_score_tops[i] = g_mc_save_buf_as_SaveBlock.a11C[i];
+        g_death_label_ranking_continues[i] = g_mc_save_buf_as_SaveBlock.a126[i];
     }
     for (i = 0; i < 15; i++) {
-        D_002BB3B0[i] = g_mc_save_buf_as_SaveBlock.a34[i];
-        D_002BB2E0[i] = g_mc_save_buf_as_SaveBlock.aCC[i];
-        D_002BB210[i] = g_mc_save_buf_as_SaveBlock.a34[i];
+        g_ranking_names[i] = g_mc_save_buf_as_SaveBlock.a34[i];
+        g_death_label_ranking_names[i] = g_mc_save_buf_as_SaveBlock.aCC[i];
+        g_stored_ranking_names[i] = g_mc_save_buf_as_SaveBlock.a34[i];
     }
     for (i = 0; i < 5; i++) {
         for (j = 0; j < 30; j++) {
-            D_002BB100[i][j] = g_mc_save_buf_as_SaveBlock.a130[i][j];
-            D_002BB060[i][j] = g_mc_save_buf_as_SaveBlock.a1C6[i][j];
+            g_death_label_ranking_texts[i][j] = g_mc_save_buf_as_SaveBlock.a130[i][j];
+            g_stored_ranking_texts[i][j] = g_mc_save_buf_as_SaveBlock.a1C6[i][j];
         }
     }
     if (g_game_mode == 2) {
         for (i = 0; i < 5; i++) {
-            D_002BB378[i] = g_mc_save_buf_as_SaveBlock.a98[i];
-            D_002BB368[i] = g_mc_save_buf_as_SaveBlock.aA2[i];
-            D_002BB398[i] = g_mc_save_buf_as_SaveBlock.aAC[i];
-            D_002BB388[i] = g_mc_save_buf_as_SaveBlock.aB6[i];
-            D_002BB358[i] = g_mc_save_buf_as_SaveBlock.aC0[i];
-            D_002BB3F0[i] = g_mc_save_buf_as_SaveBlock.a108[i];
-            D_002BB338[i] = g_mc_save_buf_as_SaveBlock.a11C[i];
-            D_002BB348[i] = g_mc_save_buf_as_SaveBlock.a126[i];
+            g_ranking_ship_types[i] = g_mc_save_buf_as_SaveBlock.a98[i];
+            g_ranking_power_styles[i] = g_mc_save_buf_as_SaveBlock.aA2[i];
+            g_ranking_loops[i] = g_mc_save_buf_as_SaveBlock.aAC[i];
+            g_ranking_stages[i] = g_mc_save_buf_as_SaveBlock.aB6[i];
+            g_ranking_hits[i] = g_mc_save_buf_as_SaveBlock.aC0[i];
+            g_ranking_scores[i] = g_mc_save_buf_as_SaveBlock.a108[i];
+            g_ranking_score_tops[i] = g_mc_save_buf_as_SaveBlock.a11C[i];
+            g_ranking_continues[i] = g_mc_save_buf_as_SaveBlock.a126[i];
         }
         for (i = 0; i < 15; i++) {
-            D_002BB3B0[i] = g_mc_save_buf_as_SaveBlock.aCC[i];
+            g_ranking_names[i] = g_mc_save_buf_as_SaveBlock.aCC[i];
         }
     }
     g_setting_coin_mode = g_mc_save_buf_as_SaveBlock.b25C;
@@ -5006,31 +5006,31 @@ void save_snapshot_take(void) {
 
     D_0028EC7C = 0;
     for (i = 0; i < 5; i++) {
-        D_006A3E50.a00[i] = D_002BB378[i];
-        D_006A3E50.a0A[i] = D_002BB368[i];
-        D_006A3E50.a14[i] = D_002BB398[i];
-        D_006A3E50.a1E[i] = D_002BB388[i];
-        D_006A3E50.a28[i] = D_002BB358[i];
-        D_006A3E50.a70[i] = D_002BB3F0[i];
-        D_006A3E50.a84[i] = D_002BB338[i];
-        D_006A3E50.a8E[i] = D_002BB348[i];
-        D_006A3E50.a98[i] = D_002BB2A8[i];
-        D_006A3E50.aA2[i] = D_002BB298[i];
-        D_006A3E50.aAC[i] = D_002BB2C8[i];
-        D_006A3E50.aB6[i] = D_002BB2B8[i];
-        D_006A3E50.aC0[i] = D_002BB288[i];
-        D_006A3E50.a108[i] = D_002BB320[i];
-        D_006A3E50.a11C[i] = D_002BB268[i];
-        D_006A3E50.a126[i] = D_002BB278[i];
+        D_006A3E50.a00[i] = g_ranking_ship_types[i];
+        D_006A3E50.a0A[i] = g_ranking_power_styles[i];
+        D_006A3E50.a14[i] = g_ranking_loops[i];
+        D_006A3E50.a1E[i] = g_ranking_stages[i];
+        D_006A3E50.a28[i] = g_ranking_hits[i];
+        D_006A3E50.a70[i] = g_ranking_scores[i];
+        D_006A3E50.a84[i] = g_ranking_score_tops[i];
+        D_006A3E50.a8E[i] = g_ranking_continues[i];
+        D_006A3E50.a98[i] = g_death_label_ranking_ship_types[i];
+        D_006A3E50.aA2[i] = g_death_label_ranking_power_styles[i];
+        D_006A3E50.aAC[i] = g_death_label_ranking_loops[i];
+        D_006A3E50.aB6[i] = g_death_label_ranking_stages[i];
+        D_006A3E50.aC0[i] = g_death_label_ranking_hits[i];
+        D_006A3E50.a108[i] = g_death_label_ranking_scores[i];
+        D_006A3E50.a11C[i] = g_death_label_ranking_score_tops[i];
+        D_006A3E50.a126[i] = g_death_label_ranking_continues[i];
     }
     for (i = 0; i < 15; i++) {
-        D_006A3E50.a34[i] = D_002BB3B0[i];
-        D_006A3E50.aCC[i] = D_002BB2E0[i];
+        D_006A3E50.a34[i] = g_ranking_names[i];
+        D_006A3E50.aCC[i] = g_death_label_ranking_names[i];
     }
     for (i = 0; i < 5; i++) {
         for (j = 0; j < 30; j++) {
-            D_006A3E50.a130[i][j] = D_002BB100[i][j];
-            D_006A3E50.a1C6[i][j] = D_002BB060[i][j];
+            D_006A3E50.a130[i][j] = g_death_label_ranking_texts[i][j];
+            D_006A3E50.a1C6[i][j] = g_stored_ranking_texts[i][j];
         }
     }
     D_006A3E50.b25C = g_setting_coin_mode;
@@ -5081,55 +5081,55 @@ s32 save_snapshot_changed_check(void) {
 
     stage = 0;
     for (i = 0; i < 5; i++) {
-        if (D_006A3E50.a00[i] != D_002BB378[i]) {
+        if (D_006A3E50.a00[i] != g_ranking_ship_types[i]) {
             printf("typhi chg\n", i);
             goto fail;
         }
-        if (D_006A3E50.a0A[i] != D_002BB368[i]) {
-            printf("kyohi chg[%d] [%d][%d]\n", i, D_006A3E50.a0A[i], D_002BB368[i]);
+        if (D_006A3E50.a0A[i] != g_ranking_power_styles[i]) {
+            printf("kyohi chg[%d] [%d][%d]\n", i, D_006A3E50.a0A[i], g_ranking_power_styles[i]);
             goto fail;
         }
-        if (D_006A3E50.a14[i] != D_002BB398[i]) {
+        if (D_006A3E50.a14[i] != g_ranking_loops[i]) {
             printf("roundhi chg\n", i);
             goto fail;
         }
-        if (D_006A3E50.a1E[i] != D_002BB388[i]) {
+        if (D_006A3E50.a1E[i] != g_ranking_stages[i]) {
             printf("areahi chg\n", i);
             goto fail;
         }
-        if (D_006A3E50.a28[i] != D_002BB358[i]) {
+        if (D_006A3E50.a28[i] != g_ranking_hits[i]) {
             printf("gphi chg\n", i);
             goto fail;
         }
-        if (D_006A3E50.a70[i] != D_002BB3F0[i]) {
+        if (D_006A3E50.a70[i] != g_ranking_scores[i]) {
             printf("scohi chg\n", i);
             goto fail;
         }
-        if (D_006A3E50.a84[i] != D_002BB338[i]) {
+        if (D_006A3E50.a84[i] != g_ranking_score_tops[i]) {
             printf("okuhi chg\n", i);
             goto fail;
         }
-        if (D_006A3E50.a8E[i] != D_002BB348[i]) {
+        if (D_006A3E50.a8E[i] != g_ranking_continues[i]) {
             printf("cnthi chg\n", i);
             goto fail;
         }
-        if (D_006A3E50.a98[i] != D_002BB2A8[i] || D_006A3E50.aA2[i] != D_002BB298[i] ||
-            D_006A3E50.aAC[i] != D_002BB2C8[i] || D_006A3E50.aB6[i] != D_002BB2B8[i] ||
-            D_006A3E50.aC0[i] != D_002BB288[i] || D_006A3E50.a108[i] != D_002BB320[i] ||
-            D_006A3E50.a11C[i] != D_002BB268[i] || D_006A3E50.a126[i] != D_002BB278[i]) {
+        if (D_006A3E50.a98[i] != g_death_label_ranking_ship_types[i] || D_006A3E50.aA2[i] != g_death_label_ranking_power_styles[i] ||
+            D_006A3E50.aAC[i] != g_death_label_ranking_loops[i] || D_006A3E50.aB6[i] != g_death_label_ranking_stages[i] ||
+            D_006A3E50.aC0[i] != g_death_label_ranking_hits[i] || D_006A3E50.a108[i] != g_death_label_ranking_scores[i] ||
+            D_006A3E50.a11C[i] != g_death_label_ranking_score_tops[i] || D_006A3E50.a126[i] != g_death_label_ranking_continues[i]) {
             goto fail;
         }
     }
     stage++;
     for (i = 0; i < 15; i++) {
-        if (D_006A3E50.a34[i] != D_002BB3B0[i] || D_006A3E50.aCC[i] != D_002BB2E0[i]) {
+        if (D_006A3E50.a34[i] != g_ranking_names[i] || D_006A3E50.aCC[i] != g_death_label_ranking_names[i]) {
             goto fail;
         }
     }
     stage++;
     for (i = 0; i < 5; i++) {
         for (j = 0; j < 30; j++) {
-            if (D_006A3E50.a130[i][j] != D_002BB100[i][j] || D_006A3E50.a1C6[i][j] != D_002BB060[i][j]) {
+            if (D_006A3E50.a130[i][j] != g_death_label_ranking_texts[i][j] || D_006A3E50.a1C6[i][j] != g_stored_ranking_texts[i][j]) {
                 goto fail;
             }
         }
