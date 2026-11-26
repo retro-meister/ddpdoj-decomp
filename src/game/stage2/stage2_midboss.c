@@ -1,5 +1,6 @@
 #include "common.h"
 #include "entity.h"
+#include "stage2_boss.h"
 #include "enemy.h"
 
 
@@ -39,13 +40,13 @@ extern u16 g_enemies_stopped;
 
 void func_001CBCE0(void) {
 #ifdef DEATH_LABEL
-    if ((g_enemies_stopped == 0) && (*(u16 *)(reg_a5 + 0x1A) == 0)) {
+    if ((g_enemies_stopped == 0) && (STAGE2_BOSS(reg_a5)->leave_delay == 0)) {
 #else
-    if ((g_enemies_stopped == 0) && (*(u16 *)(reg_a5 + 0x1A) -= 1, *(u16 *)(reg_a5 + 0x1A) == 0)) {
+    if ((g_enemies_stopped == 0) && (STAGE2_BOSS(reg_a5)->leave_delay -= 1, STAGE2_BOSS(reg_a5)->leave_delay == 0)) {
 #endif
         active_players_mask();
         if (reg_d0.h[0] == 0) {
-            *(u16 *)(reg_a5 + 0x1A) = 0x78U;
+            STAGE2_BOSS(reg_a5)->leave_delay = 0x78U;
             return;
         }
         ENTITY(reg_a6)[10].draw.sh = 0;

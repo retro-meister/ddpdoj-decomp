@@ -1,5 +1,7 @@
 #include "common.h"
 #include "entity.h"
+#include "stage2_boss.h"
+#include "enemy.h"
 
 void stage2_boss_mode_enter_start(void);
 void stage2_boss_mode_enter(void);
@@ -19,6 +21,120 @@ void stage2_boss_mode_rise_sway_start(void);
 void stage2_boss_mode_rise_sway(void);
 void stage2_boss_mode_rage_start(void);
 void stage2_boss_mode_rage(void);
+
+/*
+ * The mode part of the boss slot (reg_a4), one record per mode. `running` is cleared when the mode is over;
+ * `step` is where the mode is in its own sequence and `delay` the frames left of a wait.
+ */
+typedef struct {
+    /* 0x00 */ s16 running;
+    /* 0x02 */ u8 unused_02;
+    /* 0x03 */ u8 step;
+    /* 0x04 */ u16 delay;
+} RiseMode;
+
+/* The first form breaks up: an effect routine every few frames, taken in turn from a table. */
+typedef struct {
+    /* 0x00 */ s16 running;
+    /* 0x02 */ u8 unused_02;
+    /* 0x03 */ u8 step;
+    /* 0x04 */ u16 delay;
+    /* 0x06 */ SlotTimer effect_timer;
+    /* 0x08 */ u16 unread_08;
+    /* 0x0A */ u8 unused_0A[10];
+    /* 0x14 */ u16 effect;            /* offset of the next routine in the table */
+} SecondPhaseMode;
+
+typedef struct {
+    /* 0x00 */ s16 running;
+    /* 0x02 */ u8 unused_02;
+    /* 0x03 */ u8 step;               /* 0, 1: rounds of explosions, 2: flash, 3: last blast, 4: wait */
+    /* 0x04 */ u16 delay;
+    /* 0x06 */ SlotTimer blast_timer;
+    /* 0x08 */ u16 blast;             /* offset of the next explosion in the table */
+    /* 0x0A */ u16 rounds_left;
+    /* 0x0C */ u8 unused_0C;
+    /* 0x0D */ u8 force;              /* added to the speed the explosions fly apart with */
+    /* 0x0E */ SlotTimer speedup;     /* frames between two steps of blast_timer */
+    /* 0x10 */ SlotTimer burst;       /* frames between two explosions at a random place */
+    /* 0x12 */ SlotTimer effect_timer;
+    /* 0x14 */ u16 effect;
+} FinalExplosionMode;
+
+typedef struct {
+    /* 0x00 */ s16 running;
+    /* 0x02 */ u8 unused_02;
+    /* 0x03 */ u8 step;
+    /* 0x04 */ u16 delay;
+    /* 0x06 */ u16 last_attack;       /* the attack picked at random is never the last one again */
+    /* 0x08 */ u16 attacks_done;
+    /* 0x0A */ u16 knee_rounds;       /* the least rounds of a knee gun attack */
+    /* 0x0C */ SlotTimer knee;         /* wait between two knee gun attacks */
+    /* 0x0E */ SlotTimer missile_pace; /* handed to the missile attack; its count gets shorter */
+    /* 0x10 */ u16 rounds_left;
+} HighSlowMode;
+
+/* Two sequences at once: `gun_step` for the turrets and the sides, `step` for the rest. */
+typedef struct {
+    /* 0x00 */ s16 running;
+    /* 0x02 */ u8 gun_step;
+    /* 0x03 */ u8 step;
+    /* 0x04 */ u16 delay;
+    /* 0x06 */ SlotTimer torso;        /* wait between two torso attacks */
+    /* 0x08 */ u16 torso_shots;       /* shots of the next torso attack; rises to 0x28 */
+    /* 0x0A */ u8 unused_0A;
+    /* 0x0B */ u8 torso_side;         /* 1 or -1, changes with every attack */
+    /* 0x0C */ SlotTimer volleys;
+    /* 0x0E */ u16 unused_0E;
+    /* 0x10 */ SlotTimer pause_a;
+    /* 0x12 */ SlotTimer pause_b;     /* gets shorter, down to 0x10 */
+    /* 0x14 */ u8 level_b;            /* both levels rise to 4 */
+    /* 0x15 */ u8 level_a;
+    /* 0x16 */ SlotTimer body;         /* wait between two body spreads */
+    /* 0x18 */ Field16 body_arg;
+    /* 0x1A */ SlotTimer body_volleys;
+} HighFastMode;
+
+typedef struct {
+    /* 0x00 */ s16 running;
+    /* 0x02 */ u8 unused_02;
+    /* 0x03 */ u8 step;
+    /* 0x04 */ u16 delay;
+    /* 0x06 */ SlotTimer shot;
+    /* 0x08 */ u16 shots_left;
+    /* 0x0A */ Field16 aim;           /* the directions of the two cannons; handed to the attack, whose start routine
+                                         overwrites them */
+} RecoilMode;
+
+/* Rising along a table of positions, firing from one side and then the other. */
+typedef struct {
+    /* 0x00 */ s16 running;
+    /* 0x02 */ u8 started;
+    /* 0x03 */ u8 step;
+    /* 0x04 */ u16 delay;
+    /* 0x06 */ u16 waypoint;          /* offset of the next position */
+    /* 0x08 */ u16 path[2];           /* address of the table, high word first */
+    /* 0x0C */ u16 side;              /* 1 or -1 */
+} RiseSwayMode;
+
+typedef struct {
+    /* 0x00 */ s16 running;
+    /* 0x02 */ u8 unused_02;
+    /* 0x03 */ u8 step;
+    /* 0x04 */ u16 delay;
+    /* 0x06 */ u16 unread_06;
+    /* 0x08 */ u16 unused_08[2];
+    /* 0x0C */ u16 unread_0C;
+} RageMode;
+
+#define RISE(pointer) ((RiseMode *)(pointer))
+#define SECOND_PHASE(pointer) ((SecondPhaseMode *)(pointer))
+#define FINAL_EXPLOSION(pointer) ((FinalExplosionMode *)(pointer))
+#define HIGH_SLOW(pointer) ((HighSlowMode *)(pointer))
+#define HIGH_FAST(pointer) ((HighFastMode *)(pointer))
+#define RECOIL_MODE(pointer) ((RecoilMode *)(pointer))
+#define RISE_SWAY(pointer) ((RiseSwayMode *)(pointer))
+#define RAGE(pointer) ((RageMode *)(pointer))
 
 /* The set-up routine and the per-frame routine of every mode, by mode number. */
 void (*stage2_boss_mode_routines[])(void) = {
@@ -51,7 +167,7 @@ void stage2_boss_mode_high_slow();
 void stage2_boss_mode_high_fast();
 void stage2_boss_mode_recoil();
 void stage2_boss_mode_rise_sway(void);
-void func_001C9640(void);
+void stage2_boss_rise_sway_next(void);
 void stage2_boss_mode_rage(void);
 
 s32 boss_movement_start();                            /* extern */
@@ -73,10 +189,9 @@ void stage2_boss_mode_enter_start(void) {
     stage2_boss_mode_enter();
 }
 
-extern u16 *reg_a4_as_u16_p;
 
 void stage2_boss_mode_enter(void) {
-    *reg_a4_as_u16_p = 0;
+    RISE(reg_a4)->running = 0;
 }
 
 s32 boss_movement_start();                            /* extern */
@@ -94,10 +209,10 @@ void stage2_boss_mode_second_phase_start(void) {
     reg_d0.h[0] = 0x20;
     func_001CBC70();
     func_001CBBD0();
-    *(s8 *)(reg_a4 + 3) = 0;
-    *(s16 *)(reg_a4 + 4) = 0x10;
-    *(s16 *)(reg_a4 + 6) = 4;
-    *(s16 *)(reg_a4 + 8) = 0;
+    SECOND_PHASE(reg_a4)->step = 0;
+    SECOND_PHASE(reg_a4)->delay = 0x10;
+    SECOND_PHASE(reg_a4)->effect_timer.h = 4;
+    SECOND_PHASE(reg_a4)->unread_08 = 0;
     stage2_boss_mode_second_phase(0x10);
 }
 
@@ -110,31 +225,31 @@ s32 func_001CBA00();
 extern u8 D_0026C680[];
 
 void stage2_boss_mode_second_phase() {
-    if (*(u8 *)(reg_a4 + 3) == 0) {
+    if (SECOND_PHASE(reg_a4)->step == 0) {
         reg_a1 = D_0026C680;
         reg_d2.h[1] = ENTITY(reg_a6)->y.h;
         reg_d2.h[0] = ENTITY(reg_a6)->x.h;
         func_001CBA00();
-        *(u8 *)(reg_a4 + 3) = 1U;
+        SECOND_PHASE(reg_a4)->step = 1U;
     }
-    if (*(u8 *)(reg_a4 + 3) == 1) {
-        reg_tmp.b[0] = *(u8 *)(reg_a4 + 7);
-        *(u8 *)(reg_a4 + 7) -= 1;
+    if (SECOND_PHASE(reg_a4)->step == 1) {
+        reg_tmp.b[0] = SECOND_PHASE(reg_a4)->effect_timer.t.count;
+        SECOND_PHASE(reg_a4)->effect_timer.t.count -= 1;
         if ((s32) reg_tmp.b[0] <= 0) {
-            *(u8 *)(reg_a4 + 7) = (u8) *(u8 *)(reg_a4 + 6);
+            SECOND_PHASE(reg_a4)->effect_timer.t.count = (u8) SECOND_PHASE(reg_a4)->effect_timer.t.reload;
             reg_a0 = D_0026C6C0;
-            reg_a0 += *(u16 *)(reg_a4 + 0x14);
+            reg_a0 += SECOND_PHASE(reg_a4)->effect;
             reg_a0 = *(u8 **)reg_a0;
             reg_call_target = (Fn)(reg_a0);
             reg_call_target();
-            *(u16 *)(reg_a4 + 0x14) += 4;
-            *(u16 *)(reg_a4 + 8) &= 0x1F;
+            SECOND_PHASE(reg_a4)->effect += 4;
+            SECOND_PHASE(reg_a4)->unread_08 &= 0x1F;
         }
-        *(u16 *)(reg_a4 + 4) -= 1;
-        if (*(u16 *)(reg_a4 + 4) == 0) {
+        SECOND_PHASE(reg_a4)->delay -= 1;
+        if (SECOND_PHASE(reg_a4)->delay == 0) {
             reg_d0.w = 2;
             boss_part_hide();
-            *(s16 *)reg_a4 = 0;
+            SECOND_PHASE(reg_a4)->running = 0;
             reg_d0.w = 4;
             boss_phase_start();
         }
@@ -150,14 +265,14 @@ void stage2_boss_mode_final_explosion_start(void) {
     boss_movement_start();
     reg_a0 = (u8 *)D_0026C7B0;
     func_0013B8B0();
-    *(s8 *)(reg_a4 + 3) = 0;
-    *(s16 *)(reg_a4 + 6) = 0x101;
-    *(s16 *)(reg_a4 + 8) = 0;
-    *(s16 *)(reg_a4 + 0xA) = 1;
-    *(s8 *)(reg_a4 + 0xD) = 0;
-    *(s16 *)(reg_a4 + 0x10) = 0x2020;
-    *(s16 *)(reg_a4 + 0x12) = 4;
-    *(s16 *)(reg_a4 + 0x14) = 0;
+    FINAL_EXPLOSION(reg_a4)->step = 0;
+    FINAL_EXPLOSION(reg_a4)->blast_timer.h = 0x101;
+    FINAL_EXPLOSION(reg_a4)->blast = 0;
+    FINAL_EXPLOSION(reg_a4)->rounds_left = 1;
+    FINAL_EXPLOSION(reg_a4)->force = 0;
+    FINAL_EXPLOSION(reg_a4)->burst.h = 0x2020;
+    FINAL_EXPLOSION(reg_a4)->effect_timer.h = 4;
+    FINAL_EXPLOSION(reg_a4)->effect = 0;
     stage2_boss_mode_final_explosion(0x2020, 1, 0x101);
 }
 
@@ -192,14 +307,14 @@ void stage2_boss_mode_final_explosion() {
     u8 *v1;
 
     v1 = (u8 *)(reg_a4);
-    t7 = (*(u8 *)((u8 *)(v1) + (3)));
+    t7 = FINAL_EXPLOSION(v1)->step;
     if (t7 == 4) {
-        (*(u16 *)((u8 *)(v1) + (4))) -= 1;
-        if (*(u16 *)(reg_a4 + 4) != 0) {
+        FINAL_EXPLOSION(v1)->delay -= 1;
+        if (FINAL_EXPLOSION(reg_a4)->delay != 0) {
             goto block_rts;
         }
         boss_slots_end();
-        *(s16 *)reg_a4 = 0;
+        FINAL_EXPLOSION(reg_a4)->running = 0;
 block_rts:
         return;
     } else {
@@ -228,7 +343,7 @@ loop_6:
                 *(s16 *)(reg_a0 + 0x14) = 0;
                 rng_next();
                 reg_d0.b[0] += 4;
-                reg_d0.b[0] += *(u8 *)(reg_a4 + 0xD);
+                reg_d0.b[0] += FINAL_EXPLOSION(reg_a4)->force;
                 *(u8 *)(reg_a0 + 0x1B) = (u8) reg_d0.b[0];
                 rng_next_unsigned();
                 *(u8 *)(reg_a0 + 0x1A) = (u8) reg_d0.b[0];
@@ -248,26 +363,26 @@ loop_6:
             *(s16 *)(reg_a0 + 0x1E) = 4;
             sfx_explosion_boss();
             v1 = (u8 *)((void *)0x80);
-            *(u16 *)(reg_a4 + 4) = 0x80U;
-            *(u8 *)(reg_a4 + 3) = 4U;
+            FINAL_EXPLOSION(reg_a4)->delay = 0x80U;
+            FINAL_EXPLOSION(reg_a4)->step = 4U;
         }
-        t9 = *(u8 *)(reg_a4 + 3);
+        t9 = FINAL_EXPLOSION(reg_a4)->step;
         if (t9 == 2) {
             boss_flash_running();
             if (cond_flag == 0) {
                 reg_a0 = (u8 *)D_0026C790;
                 func_0013B2E0();
                 boss_part_hide_all();
-                *(u8 *)(reg_a4 + 3) = 3U;
-                *(u16 *)(reg_a4 + 0xA) = 1U;
+                FINAL_EXPLOSION(reg_a4)->step = 3U;
+                FINAL_EXPLOSION(reg_a4)->rounds_left = 1U;
             }
         }
-        t10 = *(u8 *)(reg_a4 + 3);
+        t10 = FINAL_EXPLOSION(reg_a4)->step;
         if (t10 == 1) {
-            reg_tmp.b[0] = *(u8 *)(reg_a4 + 0x11);
-            *(u8 *)(reg_a4 + 0x11) -= 1;
+            reg_tmp.b[0] = FINAL_EXPLOSION(reg_a4)->burst.t.count;
+            FINAL_EXPLOSION(reg_a4)->burst.t.count -= 1;
             if ((s32) reg_tmp.b[0] <= 0) {
-                *(u8 *)(reg_a4 + 0x11) = (u8) *(u8 *)(reg_a4 + 0x10);
+                FINAL_EXPLOSION(reg_a4)->burst.t.count = (u8) FINAL_EXPLOSION(reg_a4)->burst.t.reload;
                 rng_next_unsigned();
                 reg_d1.b[0] = reg_d0.b[0];
                 reg_d2.h[1] = ENTITY(reg_a6)->y.h;
@@ -290,34 +405,34 @@ loop_6:
                 explosion_burst_medium();
                 sfx_explosion_ground_medium();
             }
-            reg_tmp.b[0] = *(u8 *)(reg_a4 + 0xF);
-            *(u8 *)(reg_a4 + 0xF) -= 1;
+            reg_tmp.b[0] = FINAL_EXPLOSION(reg_a4)->speedup.t.count;
+            FINAL_EXPLOSION(reg_a4)->speedup.t.count -= 1;
             if ((s32) reg_tmp.b[0] <= 0) {
-                *(u8 *)(reg_a4 + 0xF) = (u8) *(u8 *)(reg_a4 + 0xE);
-                t11 = *(u8 *)(reg_a4 + 6);
+                FINAL_EXPLOSION(reg_a4)->speedup.t.count = (u8) FINAL_EXPLOSION(reg_a4)->speedup.t.reload;
+                t11 = FINAL_EXPLOSION(reg_a4)->blast_timer.t.reload;
                 if (t11 != 2) {
-                    *(u8 *)(reg_a4 + 6) = (u8) (t11 - 1);
-                    *(u8 *)(reg_a4 + 0xD) += 1;
+                    FINAL_EXPLOSION(reg_a4)->blast_timer.t.reload = (u8) (t11 - 1);
+                    FINAL_EXPLOSION(reg_a4)->force += 1;
                 }
             }
-            reg_tmp.b[0] = *(u8 *)(reg_a4 + 7);
-            *(u8 *)(reg_a4 + 7) -= 1;
+            reg_tmp.b[0] = FINAL_EXPLOSION(reg_a4)->blast_timer.t.count;
+            FINAL_EXPLOSION(reg_a4)->blast_timer.t.count -= 1;
             if ((s32) reg_tmp.b[0] <= 0) {
-                *(u8 *)(reg_a4 + 7) = (u8) *(u8 *)(reg_a4 + 6);
-                reg_tmp.b[0] = *(u8 *)(reg_a4 + 0x13);
-                *(u8 *)(reg_a4 + 0x13) -= 1;
+                FINAL_EXPLOSION(reg_a4)->blast_timer.t.count = (u8) FINAL_EXPLOSION(reg_a4)->blast_timer.t.reload;
+                reg_tmp.b[0] = FINAL_EXPLOSION(reg_a4)->effect_timer.t.count;
+                FINAL_EXPLOSION(reg_a4)->effect_timer.t.count -= 1;
                 if ((s32) reg_tmp.b[0] <= 0) {
-                    *(u8 *)(reg_a4 + 0x13) = (u8) *(u8 *)(reg_a4 + 0x12);
+                    FINAL_EXPLOSION(reg_a4)->effect_timer.t.count = (u8) FINAL_EXPLOSION(reg_a4)->effect_timer.t.reload;
                     reg_a0 = (u8 *)D_0026C6C0;
-                    reg_a0 += *(u16 *)(reg_a4 + 0x14);
+                    reg_a0 += FINAL_EXPLOSION(reg_a4)->effect;
                     reg_a0 = *(u8 **)reg_a0;
                     reg_call_target = (Fn)(reg_a0);
                     reg_call_target();
-                    *(u16 *)(reg_a4 + 0x14) += 4;
-                    *(u16 *)(reg_a4 + 0x14) &= 0x1F;
+                    FINAL_EXPLOSION(reg_a4)->effect += 4;
+                    FINAL_EXPLOSION(reg_a4)->effect &= 0x1F;
                 }
                 reg_a1 = (u8 *)(D_0026C6E0);
-                reg_a1 += *(u16 *)(reg_a4 + 8);
+                reg_a1 += FINAL_EXPLOSION(reg_a4)->blast;
                 reg_d0.h[0] = *(u16 *)reg_a1;
                 reg_a1 += 2;
                 explosion_spawn();
@@ -336,43 +451,43 @@ loop_6:
                 rng_next();
                 reg_d0.b[0] = (u8) ((s8) reg_d0.b[0] >> 2);
                 reg_d0.b[0] += 2;
-                reg_d1.b[0] = *(u8 *)(reg_a4 + 0xD);
+                reg_d1.b[0] = FINAL_EXPLOSION(reg_a4)->force;
                 reg_d1.b[0] = (u8) ((s8) reg_d1.b[0] >> 1);
                 reg_d0.b[0] += reg_d1.b[0];
                 *(u8 *)(reg_a0 + 0x1B) = (u8) reg_d0.b[0];
                 rng_next_unsigned();
                 *(u8 *)(reg_a0 + 0x1A) = (u8) reg_d0.b[0];
-                *(u16 *)(reg_a4 + 8) += 0xA;
-                if (*(u16 *)(reg_a4 + 8) == 0xA0) {
-                    *(u16 *)(reg_a4 + 8) = 0U;
-                    t8 = *(u8 *)(reg_a4 + 6);
+                FINAL_EXPLOSION(reg_a4)->blast += 0xA;
+                if (FINAL_EXPLOSION(reg_a4)->blast == 0xA0) {
+                    FINAL_EXPLOSION(reg_a4)->blast = 0U;
+                    t8 = FINAL_EXPLOSION(reg_a4)->blast_timer.t.reload;
                     if (t8 == 2) {
                         reg_d0.h[0] = 0x16;
                         boss_flash_start();
-                        *(u8 *)(reg_a4 + 3) = 2U;
+                        FINAL_EXPLOSION(reg_a4)->step = 2U;
                     }
                 }
             }
         }
-        if (*(u8 *)(reg_a4 + 3) == 0) {
-            reg_tmp.b[0] = *(u8 *)(reg_a4 + 0x13);
-            *(u8 *)(reg_a4 + 0x13) -= 1;
+        if (FINAL_EXPLOSION(reg_a4)->step == 0) {
+            reg_tmp.b[0] = FINAL_EXPLOSION(reg_a4)->effect_timer.t.count;
+            FINAL_EXPLOSION(reg_a4)->effect_timer.t.count -= 1;
             if ((s32) reg_tmp.b[0] <= 0) {
-                *(u8 *)(reg_a4 + 0x13) = (u8) *(u8 *)(reg_a4 + 0x12);
+                FINAL_EXPLOSION(reg_a4)->effect_timer.t.count = (u8) FINAL_EXPLOSION(reg_a4)->effect_timer.t.reload;
                 reg_a0 = (u8 *)D_0026C6C0;
-                reg_a0 += *(u16 *)(reg_a4 + 0x14);
+                reg_a0 += FINAL_EXPLOSION(reg_a4)->effect;
                 reg_a0 = *(u8 **)reg_a0;
                 reg_call_target = (Fn)(reg_a0);
                 reg_call_target();
-                *(u16 *)(reg_a4 + 0x14) += 4;
-                *(u16 *)(reg_a4 + 0x14) &= 0x1F;
+                FINAL_EXPLOSION(reg_a4)->effect += 4;
+                FINAL_EXPLOSION(reg_a4)->effect &= 0x1F;
             }
-            reg_tmp.b[0] = *(u8 *)(reg_a4 + 7);
-            *(u8 *)(reg_a4 + 7) -= 1;
+            reg_tmp.b[0] = FINAL_EXPLOSION(reg_a4)->blast_timer.t.count;
+            FINAL_EXPLOSION(reg_a4)->blast_timer.t.count -= 1;
             if ((s32) reg_tmp.b[0] <= 0) {
-                *(u8 *)(reg_a4 + 7) = (u8) *(u8 *)(reg_a4 + 6);
+                FINAL_EXPLOSION(reg_a4)->blast_timer.t.count = (u8) FINAL_EXPLOSION(reg_a4)->blast_timer.t.reload;
                 reg_a1 = (u8 *)(D_0026C6E0);
-                reg_a1 += *(u16 *)(reg_a4 + 8);
+                reg_a1 += FINAL_EXPLOSION(reg_a4)->blast;
                 reg_d0.h[0] = *(u16 *)reg_a1;
                 reg_a1 += 2;
                 explosion_spawn();
@@ -388,16 +503,16 @@ loop_6:
                 *(s16 *)(reg_a0 + 0x1E) = 8;
                 *(s16 *)(reg_a0 + 0x12) = 0;
                 *(s16 *)(reg_a0 + 0x14) = 0;
-                *(u16 *)(reg_a4 + 8) += 0xA;
-                if ((s16) *(u16 *)(reg_a4 + 8) >= 0xA0) {
-                    *(u16 *)(reg_a4 + 8) = 0U;
-                    *(u16 *)(reg_a4 + 0xA) -= 1;
-                    if (*(u16 *)(reg_a4 + 0xA) == 0) {
-                        *(u16 *)(reg_a4 + 6) = 0x2010;
-                        *(u16 *)(reg_a4 + 0xE) = 0x1111;
-                        *(u8 *)(reg_a4 + 3) = 1U;
-                        *(u16 *)(reg_a4 + 0x12) = 0x101;
-                        *(u16 *)(reg_a4 + 0x14) = 0U;
+                FINAL_EXPLOSION(reg_a4)->blast += 0xA;
+                if ((s16) FINAL_EXPLOSION(reg_a4)->blast >= 0xA0) {
+                    FINAL_EXPLOSION(reg_a4)->blast = 0U;
+                    FINAL_EXPLOSION(reg_a4)->rounds_left -= 1;
+                    if (FINAL_EXPLOSION(reg_a4)->rounds_left == 0) {
+                        FINAL_EXPLOSION(reg_a4)->blast_timer.h = 0x2010;
+                        FINAL_EXPLOSION(reg_a4)->speedup.h = 0x1111;
+                        FINAL_EXPLOSION(reg_a4)->step = 1U;
+                        FINAL_EXPLOSION(reg_a4)->effect_timer.h = 0x101;
+                        FINAL_EXPLOSION(reg_a4)->effect = 0U;
                     }
                 }
             }
@@ -409,15 +524,15 @@ s32 boss_movement_start();                            /* extern */
 s32 boss_animation_start();                            /* extern */
 
 void stage2_boss_mode_high_slow_start(void) {
-    *(s8 *)(reg_a4 + 3) = 0;
+    HIGH_SLOW(reg_a4)->step = 0;
     reg_d0.w = 2;
     boss_movement_start();
     reg_d0.w = 3;
     boss_animation_start();
-    *(s16 *)(reg_a4 + 4) = 0x40;
-    *(s16 *)(reg_a4 + 8) = 0;
-    *(s16 *)(reg_a4 + 6) = 0;
-    *(s16 *)(reg_a4 + 0xA) = 2;
+    HIGH_SLOW(reg_a4)->delay = 0x40;
+    HIGH_SLOW(reg_a4)->attacks_done = 0;
+    HIGH_SLOW(reg_a4)->last_attack = 0;
+    HIGH_SLOW(reg_a4)->knee_rounds = 2;
     stage2_boss_mode_high_slow(0x40);
 }
 
@@ -438,12 +553,12 @@ void stage2_boss_mode_high_slow() {
     u8 temp_v1_3;
     u8 *temp_a1;
 
-    if (*(u8 *)(reg_a4 + 3) == 0) {
-        temp_v1 = *(u16 *)(reg_a4 + 4);
+    if (HIGH_SLOW(reg_a4)->step == 0) {
+        temp_v1 = HIGH_SLOW(reg_a4)->delay;
         temp_a1 = (u8 *)(reg_a4 + 4);
         if (temp_v1 != 0) {
-            *(u16 *)(reg_a4 + 4) = (u16) (temp_v1 - 1);
-            if (*(u16 *)(reg_a4 + 4) == 0) {
+            HIGH_SLOW(reg_a4)->delay = (u16) (temp_v1 - 1);
+            if (HIGH_SLOW(reg_a4)->delay == 0) {
                 func_001CBBE0();
                 if (g_loop != 0) {
                     reg_d0.w = 0xD;
@@ -451,17 +566,17 @@ void stage2_boss_mode_high_slow() {
                 }
                 reg_d0.w = 6;
                 boss_attack_start();
-                *(u16 *)(reg_a0 + 4) = 0xA0U;
+                SHOULDER_SWEEP(reg_a0)->shots_left = 0xA0U;
             }
         } else {
             reg_d0.w = 6;
             boss_attack_running();
             if (cond_flag == 0) {
-                *(u8 *)(reg_a4 + 3) = 2U;
+                HIGH_SLOW(reg_a4)->step = 2U;
             }
         }
     }
-    temp_a0 = *(u8 *)(reg_a4 + 3);
+    temp_a0 = HIGH_SLOW(reg_a4)->step;
     if (temp_a0 == 2) {
         reg_d0.w = 6;
         boss_attack_running();
@@ -478,8 +593,8 @@ void stage2_boss_mode_high_slow() {
                         do {
                             rng_next_masked();
                             reg_d0.h[0] &= 3;
-                        } while (*(u16 *)(reg_a4 + 6) == reg_d0.h[0]);
-                        *(u16 *)(reg_a4 + 6) = (u16) reg_d0.h[0];
+                        } while (HIGH_SLOW(reg_a4)->last_attack == reg_d0.h[0]);
+                        HIGH_SLOW(reg_a4)->last_attack = (u16) reg_d0.h[0];
                         reg_a1 = (u8 *)(D_0026C800);
                         reg_d0.h[0] += reg_d0.h[0];
                         reg_d0.h[0] += reg_d0.h[0];
@@ -487,20 +602,20 @@ void stage2_boss_mode_high_slow() {
                         reg_d0.h[0] = *(u16 *)reg_a1;
                         reg_a1 += 2;
                         boss_attack_start();
-                        *(u16 *)(reg_a0 + 4) = (u16) *(u16 *)reg_a1;
+                        SHOULDER_SWEEP(reg_a0)->shots_left = (u16) *(u16 *)reg_a1;
                         reg_a1 += 2;
-                        *(u16 *)(reg_a4 + 8) += 1;
-                        if (*(u16 *)(reg_a4 + 8) == 3) {
-                            *(u16 *)(reg_a4 + 8) = 0U;
-                            *(u8 *)(reg_a4 + 3) = 3U;
-                            *(u16 *)(reg_a4 + 4) = 0x40U;
+                        HIGH_SLOW(reg_a4)->attacks_done += 1;
+                        if (HIGH_SLOW(reg_a4)->attacks_done == 3) {
+                            HIGH_SLOW(reg_a4)->attacks_done = 0U;
+                            HIGH_SLOW(reg_a4)->step = 3U;
+                            HIGH_SLOW(reg_a4)->delay = 0x40U;
                         }
                     }
                 }
             }
         }
     }
-    temp_a0_2 = *(u8 *)(reg_a4 + 3);
+    temp_a0_2 = HIGH_SLOW(reg_a4)->step;
     if (temp_a0_2 == 3) {
         reg_d0.w = 6;
         boss_attack_running();
@@ -514,13 +629,13 @@ void stage2_boss_mode_high_slow() {
                     reg_d0.w = 9;
                     boss_attack_running();
                     if (cond_flag == 0) {
-                        temp_v1_2 = *(u16 *)(reg_a4 + 4);
+                        temp_v1_2 = HIGH_SLOW(reg_a4)->delay;
                         if (temp_v1_2 != 0) {
-                            *(u16 *)(reg_a4 + 4) = (u16) (temp_v1_2 - 1);
-                            if (*(u16 *)(reg_a4 + 4) == 0) {
-                                *(s16 *)(reg_a4 + 0xC) = 0x20;
-                                *(u16 *)(reg_a4 + 0xE) = 0x4040U;
-                                *(u16 *)(reg_a4 + 0x10) = 4U;
+                            HIGH_SLOW(reg_a4)->delay = (u16) (temp_v1_2 - 1);
+                            if (HIGH_SLOW(reg_a4)->delay == 0) {
+                                HIGH_SLOW(reg_a4)->knee.h = 0x20;
+                                HIGH_SLOW(reg_a4)->missile_pace.h = 0x4040U;
+                                HIGH_SLOW(reg_a4)->rounds_left = 4U;
                             }
                         } else {
                             reg_d0.w = 0xB;
@@ -528,17 +643,17 @@ void stage2_boss_mode_high_slow() {
                             if (cond_flag == 0) {
                                 reg_d0.w = 0xB;
                                 boss_attack_start();
-                                *(u16 *)(reg_a0 + 0xC) = (u16) *(u16 *)(reg_a4 + 0xE);
-                                temp_v1_3 = *(u8 *)(reg_a4 + 0xF);
+                                SHOULDER_MISSILE(reg_a0)->shot.h = (u16) HIGH_SLOW(reg_a4)->missile_pace.h;
+                                temp_v1_3 = HIGH_SLOW(reg_a4)->missile_pace.t.count;
                                 if (temp_v1_3 != 0x10) {
-                                    *(u8 *)(reg_a4 + 0xF) = (u8) (temp_v1_3 - 8);
-                                    if ((s8) *(u8 *)(reg_a4 + 0xF) < 0x11) {
-                                        *(u8 *)(reg_a4 + 0xF) = 0x10U;
+                                    HIGH_SLOW(reg_a4)->missile_pace.t.count = (u8) (temp_v1_3 - 8);
+                                    if ((s8) HIGH_SLOW(reg_a4)->missile_pace.t.count < 0x11) {
+                                        HIGH_SLOW(reg_a4)->missile_pace.t.count = 0x10U;
                                     }
                                 }
-                                *(u16 *)(reg_a4 + 0x10) -= 1;
-                                if (*(u16 *)(reg_a4 + 0x10) == 0) {
-                                    *(u8 *)(reg_a4 + 3) = 2U;
+                                HIGH_SLOW(reg_a4)->rounds_left -= 1;
+                                if (HIGH_SLOW(reg_a4)->rounds_left == 0) {
+                                    HIGH_SLOW(reg_a4)->step = 2U;
                                 } else {
                                     goto block_31;
                                 }
@@ -547,16 +662,16 @@ block_31:
                                 reg_d0.w = 0xA;
                                 boss_attack_running();
                                 if (cond_flag == 0) {
-                                    reg_tmp.b[0] = *(u8 *)(reg_a4 + 0xD);
-                                    *(u8 *)(reg_a4 + 0xD) -= 1;
+                                    reg_tmp.b[0] = HIGH_SLOW(reg_a4)->knee.t.count;
+                                    HIGH_SLOW(reg_a4)->knee.t.count -= 1;
                                     if ((s32) reg_tmp.b[0] <= 0) {
-                                        *(u8 *)(reg_a4 + 0xD) = *(u8 *)(reg_a4 + 0xC);
+                                        HIGH_SLOW(reg_a4)->knee.t.count = HIGH_SLOW(reg_a4)->knee.t.reload;
                                         reg_d0.w = 0xA;
                                         boss_attack_start();
                                         rng_next_masked();
                                         reg_d0.h[0] &= 3;
-                                        reg_d0.h[0] += *(u16 *)(reg_a4 + 0xA);
-                                        *(u16 *)(reg_a0 + 4) = (u16) reg_d0.h[0];
+                                        reg_d0.h[0] += HIGH_SLOW(reg_a4)->knee_rounds;
+                                        KNEE_GUN(reg_a0)->rounds_left = (u16) reg_d0.h[0];
                                     }
                                 }
                             }
@@ -566,7 +681,7 @@ block_31:
             }
         }
     }
-    temp_a0_3 = *(u8 *)(reg_a4 + 3);
+    temp_a0_3 = HIGH_SLOW(reg_a4)->step;
     if (temp_a0_3 == 4) {
         reg_d0.w = 0xA;
         boss_attack_running();
@@ -574,8 +689,8 @@ block_31:
             reg_d0.w = 0xB;
             boss_attack_running();
             if (cond_flag == 0) {
-                *(u8 *)(reg_a4 + 3) = 0U;
-                *(u16 *)(reg_a4 + 4) = 0x40U;
+                HIGH_SLOW(reg_a4)->step = 0U;
+                HIGH_SLOW(reg_a4)->delay = 0x40U;
             }
         }
     }
@@ -583,21 +698,21 @@ block_31:
 
 
 void stage2_boss_mode_high_fast_start(void) {
-    *(s8 *)(reg_a4 + 3) = 0;
-    *(s8 *)(reg_a4 + 2) = 0;
-    *(s16 *)(reg_a4 + 4) = 0x60;
-    *(s16 *)(reg_a4 + 6) = 0x6060;
-    *(s16 *)(reg_a4 + 8) = 0x1E;
-    *(s8 *)(reg_a4 + 0xB) = 1;
-    *(s16 *)(reg_a4 + 0x10) = 0x3040;
-    *(s16 *)(reg_a4 + 0x12) = 0x20;
-    *(s16 *)(reg_a4 + 0xC) = 0x303;
-    *(s16 *)(reg_a4 + 0x16) = 0x2024;
-    *(s16 *)(reg_a4 + 0x1A) = 0x303;
-    *(s8 *)(reg_a4 + 0x15) = 0;
-    *(s8 *)(reg_a4 + 0x14) = 0;
-    *(s8 *)(reg_a4 + 0x19) = 2;
-    *(s8 *)(reg_a4 + 0x18) = 2;
+    HIGH_FAST(reg_a4)->step = 0;
+    HIGH_FAST(reg_a4)->gun_step = 0;
+    HIGH_FAST(reg_a4)->delay = 0x60;
+    HIGH_FAST(reg_a4)->torso.h = 0x6060;
+    HIGH_FAST(reg_a4)->torso_shots = 0x1E;
+    HIGH_FAST(reg_a4)->torso_side = 1;
+    HIGH_FAST(reg_a4)->pause_a.h = 0x3040;
+    HIGH_FAST(reg_a4)->pause_b.h = 0x20;
+    HIGH_FAST(reg_a4)->volleys.h = 0x303;
+    HIGH_FAST(reg_a4)->body.h = 0x2024;
+    HIGH_FAST(reg_a4)->body_volleys.h = 0x303;
+    HIGH_FAST(reg_a4)->level_a = 0;
+    HIGH_FAST(reg_a4)->level_b = 0;
+    HIGH_FAST(reg_a4)->body_arg.b[1] = 2;
+    HIGH_FAST(reg_a4)->body_arg.b[0] = 2;
     stage2_boss_mode_high_fast();
 }
 
@@ -618,19 +733,19 @@ void stage2_boss_mode_high_fast(arg1)
     u8 temp_a0_8;
 
     var_a1 = arg1;
-    if (*(u8 *)(reg_a4 + 3) == 0) {
-        *(u16 *)(reg_a4 + 4) -= 1;
-        if (*(u16 *)(reg_a4 + 4) == 0) {
+    if (HIGH_FAST(reg_a4)->step == 0) {
+        HIGH_FAST(reg_a4)->delay -= 1;
+        if (HIGH_FAST(reg_a4)->delay == 0) {
             reg_d0.w = 2;
             boss_animation_stop();
             reg_d0.w = 6;
             boss_animation_start();
             var_a1 = 2;
-            *(u8 *)(reg_a4 + 3) = 2U;
-            *(u8 *)(reg_a4 + 2) = 1U;
+            HIGH_FAST(reg_a4)->step = 2U;
+            HIGH_FAST(reg_a4)->gun_step = 1U;
         }
     }
-    temp_a0 = *(u8 *)(reg_a4 + 2);
+    temp_a0 = HIGH_FAST(reg_a4)->gun_step;
     if (temp_a0 == 1) {
         reg_d0.w = 1;
         boss_attack_running();
@@ -638,58 +753,58 @@ void stage2_boss_mode_high_fast(arg1)
             reg_d0.w = 0xE;
             boss_attack_running();
             if (cond_flag == 0) {
-                reg_tmp.b[0] = *(u8 *)(reg_a4 + 0x17);
-                *(u8 *)(reg_a4 + 0x17) -= 1;
+                reg_tmp.b[0] = HIGH_FAST(reg_a4)->body.t.count;
+                HIGH_FAST(reg_a4)->body.t.count -= 1;
                 if ((s32) reg_tmp.b[0] <= 0) {
-                    *(u8 *)(reg_a4 + 0x17) = (u8) *(u8 *)(reg_a4 + 0x16);
-                    reg_tmp.h[1] = *(u16 *)(reg_a5 + 0x16);
-                    reg_tmp.h[0] = *(u16 *)(reg_a5 + 0x18);
+                    HIGH_FAST(reg_a4)->body.t.count = (u8) HIGH_FAST(reg_a4)->body.t.reload;
+                    reg_tmp.h[1] = STAGE2_BOSS(reg_a5)->hp[0];
+                    reg_tmp.h[0] = STAGE2_BOSS(reg_a5)->hp[1];
                     if ((s32) reg_tmp.w < 0x7700) {
-                        *(u8 *)(reg_a4 + 0x17) = 8U;
+                        HIGH_FAST(reg_a4)->body.t.count = 8U;
                     }
                     reg_d0.w = 0xE;
                     boss_attack_start();
-                    *(u16 *)(reg_a0 + 6) = (u16) *(u16 *)(reg_a4 + 0x18);
-                    *(u16 *)(reg_a0 + 8) = 0xFFFB;
-                    *(s16 *)(reg_a0 + 0x16) = 4;
-                    *(s16 *)(reg_a0 + 0x18) = 5;
-                    reg_tmp.b[0] = *(u8 *)(reg_a4 + 0x1B);
-                    *(u8 *)(reg_a4 + 0x1B) -= 1;
+                    *(u16 *)(reg_a0 + 6) = (u16) HIGH_FAST(reg_a4)->body_arg.h;   /* BodySpread: unused_06 and angle_step */
+                    BODY_SPREAD(reg_a0)->speed = 0xFFFB;
+                    BODY_SPREAD(reg_a0)->bullet = 4;
+                    BODY_SPREAD(reg_a0)->next_bullet = 5;
+                    reg_tmp.b[0] = HIGH_FAST(reg_a4)->body_volleys.t.count;
+                    HIGH_FAST(reg_a4)->body_volleys.t.count -= 1;
                     if ((s32) reg_tmp.b[0] <= 0) {
-                        *(u8 *)(reg_a4 + 0x1B) = (u8) *(u8 *)(reg_a4 + 0x1A);
-                        *(u16 *)(reg_a0 + 8) = 0xFFFA;
-                        *(s16 *)(reg_a0 + 0x16) = 0xB;
+                        HIGH_FAST(reg_a4)->body_volleys.t.count = (u8) HIGH_FAST(reg_a4)->body_volleys.t.reload;
+                        BODY_SPREAD(reg_a0)->speed = 0xFFFA;
+                        BODY_SPREAD(reg_a0)->bullet = 0xB;
                         *(s16 *)(reg_a0 + 0x18) = 0xC;
                         *(s8 *)(reg_a0 + 7) = 4;
-                        *(u8 *)(reg_a4 + 2) = 2U;
+                        HIGH_FAST(reg_a4)->gun_step = 2U;
                     }
                 }
             }
         }
     }
-    temp_a0_2 = *(u8 *)(reg_a4 + 2);
+    temp_a0_2 = HIGH_FAST(reg_a4)->gun_step;
     if (temp_a0_2 == 2) {
         reg_d0.w = 1;
         boss_attack_running();
         if (cond_flag == 0) {
-            reg_tmp.b[0] = *(u8 *)(reg_a4 + 7);
-            *(u8 *)(reg_a4 + 7) -= 1;
+            reg_tmp.b[0] = HIGH_FAST(reg_a4)->torso.t.count;
+            HIGH_FAST(reg_a4)->torso.t.count -= 1;
             if ((s32) reg_tmp.b[0] <= 0) {
-                *(u8 *)(reg_a4 + 7) = (u8) *(u8 *)(reg_a4 + 6);
+                HIGH_FAST(reg_a4)->torso.t.count = (u8) HIGH_FAST(reg_a4)->torso.t.reload;
                 reg_d0.w = 1;
                 boss_attack_start();
-                *(u8 *)(reg_a0 + 5) = (u8) *(u8 *)(reg_a4 + 0xB);
-                *(u16 *)(reg_a0 + 6) = (u16) *(u16 *)(reg_a4 + 8);
-                *(u8 *)(reg_a4 + 0xB) = (u8) -(s8) *(u8 *)(reg_a4 + 0xB);
-                *(u8 *)(reg_a4 + 2) = 1U;
-                *(u16 *)(reg_a4 + 8) += 1;
-                if ((s16) *(u16 *)(reg_a4 + 8) >= 0x28) {
-                    *(u16 *)(reg_a4 + 8) = 0x28U;
+                TORSO_RAPID(reg_a0)->side = (u8) HIGH_FAST(reg_a4)->torso_side;
+                TORSO_RAPID(reg_a0)->shots_left = (u16) HIGH_FAST(reg_a4)->torso_shots;
+                HIGH_FAST(reg_a4)->torso_side = (u8) -(s8) HIGH_FAST(reg_a4)->torso_side;
+                HIGH_FAST(reg_a4)->gun_step = 1U;
+                HIGH_FAST(reg_a4)->torso_shots += 1;
+                if ((s16) HIGH_FAST(reg_a4)->torso_shots >= 0x28) {
+                    HIGH_FAST(reg_a4)->torso_shots = 0x28U;
                 }
             }
         }
     }
-    temp_a0_3 = *(u8 *)(reg_a4 + 3);
+    temp_a0_3 = HIGH_FAST(reg_a4)->step;
     if (temp_a0_3 == 2) {
         reg_d0.w = 0xA;
         boss_animation_running();
@@ -697,34 +812,34 @@ void stage2_boss_mode_high_fast(arg1)
             reg_d0.w = 0xC;
             boss_attack_running();
             if (cond_flag == 0) {
-                reg_tmp.b[0] = *(u8 *)(reg_a4 + 0x11);
-                *(u8 *)(reg_a4 + 0x11) -= 1;
+                reg_tmp.b[0] = HIGH_FAST(reg_a4)->pause_a.t.count;
+                HIGH_FAST(reg_a4)->pause_a.t.count -= 1;
                 if ((s32) reg_tmp.b[0] <= 0) {
-                    *(u8 *)(reg_a4 + 0x11) = (u8) *(u8 *)(reg_a4 + 0x10);
-                    *(u8 *)(reg_a4 + 3) = 3U;
-                    *(u16 *)(reg_a4 + 4) = 0x20U;
-                    temp_a0_4 = *(u8 *)(reg_a4 + 0x15);
+                    HIGH_FAST(reg_a4)->pause_a.t.count = (u8) HIGH_FAST(reg_a4)->pause_a.t.reload;
+                    HIGH_FAST(reg_a4)->step = 3U;
+                    HIGH_FAST(reg_a4)->delay = 0x20U;
+                    temp_a0_4 = HIGH_FAST(reg_a4)->level_a;
                     if (temp_a0_4 != 4) {
-                        *(u8 *)(reg_a4 + 0x15) = (u8) (temp_a0_4 + 1);
+                        HIGH_FAST(reg_a4)->level_a = (u8) (temp_a0_4 + 1);
                     }
                 }
             }
         }
     }
-    temp_a0_5 = *(u8 *)(reg_a4 + 3);
+    temp_a0_5 = HIGH_FAST(reg_a4)->step;
     if (temp_a0_5 == 3) {
         reg_d0.w = 0xC;
         boss_attack_running();
         if (cond_flag == 0) {
-            *(u16 *)(reg_a4 + 4) -= 1;
-            if (*(u16 *)(reg_a4 + 4) == 0) {
+            HIGH_FAST(reg_a4)->delay -= 1;
+            if (HIGH_FAST(reg_a4)->delay == 0) {
                 reg_d0.w = 9;
                 boss_animation_start();
-                *(u8 *)(reg_a4 + 3) = 4U;
+                HIGH_FAST(reg_a4)->step = 4U;
             }
         }
     }
-    temp_a0_6 = *(u8 *)(reg_a4 + 3);
+    temp_a0_6 = HIGH_FAST(reg_a4)->step;
     if (temp_a0_6 == 4) {
         reg_d0.w = 9;
         boss_animation_running();
@@ -732,38 +847,38 @@ void stage2_boss_mode_high_fast(arg1)
             reg_d0.w = 0xD;
             boss_attack_running();
             if (cond_flag == 0) {
-                reg_tmp.b[0] = *(u8 *)(reg_a4 + 0x13);
-                *(u8 *)(reg_a4 + 0x13) -= 1;
+                reg_tmp.b[0] = HIGH_FAST(reg_a4)->pause_b.t.count;
+                HIGH_FAST(reg_a4)->pause_b.t.count -= 1;
                 if ((s32) reg_tmp.b[0] <= 0) {
-                    *(u8 *)(reg_a4 + 0x13) = (u8) *(u8 *)(reg_a4 + 0x12);
+                    HIGH_FAST(reg_a4)->pause_b.t.count = (u8) HIGH_FAST(reg_a4)->pause_b.t.reload;
                     reg_d0.w = 0xD;
                     boss_attack_start();
-                    *(u16 *)(reg_a0 + 6) = 4U;
-                    *(u8 *)(reg_a4 + 0xD) -= 1;
-                    if (*(u8 *)(reg_a4 + 0xD) == 0) {
-                        *(u8 *)(reg_a4 + 0xD) = (u8) *(u8 *)(reg_a4 + 0xC);
-                        *(u8 *)(reg_a4 + 0x12) -= 4;
-                        if ((s8) *(u8 *)(reg_a4 + 0x12) < 0x11) {
-                            *(u8 *)(reg_a4 + 0x12) = 0x10U;
+                    SHOULDER_CANNON(reg_a0)->volleys_left = 4U;
+                    HIGH_FAST(reg_a4)->volleys.t.count -= 1;
+                    if (HIGH_FAST(reg_a4)->volleys.t.count == 0) {
+                        HIGH_FAST(reg_a4)->volleys.t.count = (u8) HIGH_FAST(reg_a4)->volleys.t.reload;
+                        HIGH_FAST(reg_a4)->pause_b.t.reload -= 4;
+                        if ((s8) HIGH_FAST(reg_a4)->pause_b.t.reload < 0x11) {
+                            HIGH_FAST(reg_a4)->pause_b.t.reload = 0x10U;
                         }
-                        *(u8 *)(reg_a4 + 0x13) = (u8) *(u8 *)(reg_a4 + 0x12);
-                        *(u8 *)(reg_a4 + 3) = 5U;
+                        HIGH_FAST(reg_a4)->pause_b.t.count = (u8) HIGH_FAST(reg_a4)->pause_b.t.reload;
+                        HIGH_FAST(reg_a4)->step = 5U;
                     }
                 }
             }
         }
     }
-    temp_a0_7 = *(u8 *)(reg_a4 + 3);
+    temp_a0_7 = HIGH_FAST(reg_a4)->step;
     if (temp_a0_7 == 5) {
         reg_d0.w = 0xD;
         boss_attack_running();
         if (cond_flag == 0) {
             reg_d0.w = 0xA;
             boss_animation_start();
-            *(u8 *)(reg_a4 + 3) = 2U;
-            temp_a0_8 = *(u8 *)(reg_a4 + 0x14);
+            HIGH_FAST(reg_a4)->step = 2U;
+            temp_a0_8 = HIGH_FAST(reg_a4)->level_b;
             if (temp_a0_8 != 4) {
-                *(u8 *)(reg_a4 + 0x14) = (u8) (temp_a0_8 + 1);
+                HIGH_FAST(reg_a4)->level_b = (u8) (temp_a0_8 + 1);
             }
         }
     }
@@ -771,10 +886,10 @@ void stage2_boss_mode_high_fast(arg1)
 
 
 void stage2_boss_mode_recoil_start(void) {
-    reg_a4[3] = 0;
-    *(s16 *)(reg_a4 + 4) = 0x60;
-    *(s16 *)(reg_a4 + 6) = 0;
-    *(s16 *)(reg_a4 + 8) = 8;
+    RECOIL_MODE(reg_a4)->step = 0;
+    RECOIL_MODE(reg_a4)->delay = 0x60;
+    RECOIL_MODE(reg_a4)->shot.h = 0;
+    RECOIL_MODE(reg_a4)->shots_left = 8;
     stage2_boss_mode_recoil(0x60);
 }
 
@@ -792,35 +907,35 @@ void stage2_boss_mode_recoil() {
     u16 temp_a1_4;
     u8 temp_a0_3;
 
-    if (*(u8 *)(reg_a4 + 3) == 0) {
-        *(u16 *)(reg_a4 + 4) -= 1;
-        if (*(u16 *)(reg_a4 + 4) == 0) {
-            *(u8 *)(reg_a4 + 3) = 1U;
+    if (RECOIL_MODE(reg_a4)->step == 0) {
+        RECOIL_MODE(reg_a4)->delay -= 1;
+        if (RECOIL_MODE(reg_a4)->delay == 0) {
+            RECOIL_MODE(reg_a4)->step = 1U;
             reg_d0.h[0] = ENTITY(reg_a6)->y.h;
             temp_a1 = ENTITY(reg_a6)->x.h;
             reg_d1.h[0] = temp_a1;
             reg_d0.h[0] += D_0026C250[0];
             reg_d1.h[0] += D_0026C252[0];
             aim_at_player();
-            *(u8 *)(reg_a4 + 0xB) = (u8) reg_d1.b[0];
+            RECOIL_MODE(reg_a4)->aim.b[1] = (u8) reg_d1.b[0];
             reg_d0.h[0] = ENTITY(reg_a6)->y.h;
             temp_a1_2 = ENTITY(reg_a6)->x.h;
             reg_d1.h[0] = temp_a1_2;
             reg_d0.h[0] += D_0026C260[0];
             reg_d1.h[0] += D_0026C262[0];
             aim_at_player();
-            *(u8 *)(reg_a4 + 0xA) = (u8) reg_d1.b[0];
+            RECOIL_MODE(reg_a4)->aim.b[0] = (u8) reg_d1.b[0];
         }
     }
-    temp_a0_3 = *(u8 *)(reg_a4 + 3);
+    temp_a0_3 = RECOIL_MODE(reg_a4)->step;
     if (temp_a0_3 == 1) {
         reg_d0.w = 8;
         boss_animation_running();
         if (cond_flag == 0) {
-            reg_tmp.b[0] = *(u8 *)(reg_a4 + 7);
-            *(u8 *)(reg_a4 + 7) -= 1;
+            reg_tmp.b[0] = RECOIL_MODE(reg_a4)->shot.t.count;
+            RECOIL_MODE(reg_a4)->shot.t.count -= 1;
             if ((s32) reg_tmp.b[0] <= 0) {
-                *(u8 *)(reg_a4 + 7) = (u8) *(u8 *)(reg_a4 + 6);
+                RECOIL_MODE(reg_a4)->shot.t.count = (u8) RECOIL_MODE(reg_a4)->shot.t.reload;
                 reg_d0.w = 8;
                 boss_animation_start();
                 reg_d7.w = 1;
@@ -831,25 +946,25 @@ void stage2_boss_mode_recoil() {
                     reg_d0.h[0] += D_0026C250[0];
                     reg_d1.h[0] += D_0026C252[0];
                     aim_at_player();
-                    reg_d0.b[0] = *(u8 *)(reg_a4 + 0xB);
+                    reg_d0.b[0] = RECOIL_MODE(reg_a4)->aim.b[1];
                     direction_turn_toward();
-                    *(u8 *)(reg_a4 + 0xB) = (u8) reg_d1.b[0];
+                    RECOIL_MODE(reg_a4)->aim.b[1] = (u8) reg_d1.b[0];
                     reg_d0.h[0] = ENTITY(reg_a6)->y.h;
                     temp_a1_4 = ENTITY(reg_a6)->x.h;
                     reg_d1.h[0] = temp_a1_4;
                     reg_d0.h[0] += D_0026C260[0];
                     reg_d1.h[0] += D_0026C262[0];
                     aim_at_player();
-                    reg_d0.b[0] = *(u8 *)(reg_a4 + 0xA);
+                    reg_d0.b[0] = RECOIL_MODE(reg_a4)->aim.b[0];
                     direction_turn_toward();
-                    *(u8 *)(reg_a4 + 0xA) = (u8) reg_d1.b[0];
+                    RECOIL_MODE(reg_a4)->aim.b[0] = (u8) reg_d1.b[0];
                 } while ((s16)(--reg_d7.h[0]) >= 0);
                 reg_d0.w = 0xD;
                 boss_attack_start();
-                *(u16 *)(reg_a0 + 4) = (u16) *(u16 *)(reg_a4 + 0xA);
-                *(u16 *)(reg_a4 + 8) -= 1;
-                if (*(u16 *)(reg_a4 + 8) == 0) {
-                    *(s16 *)reg_a4 = 0;
+                SHOULDER_CANNON(reg_a0)->shot.h = (u16) RECOIL_MODE(reg_a4)->aim.h;
+                RECOIL_MODE(reg_a4)->shots_left -= 1;
+                if (RECOIL_MODE(reg_a4)->shots_left == 0) {
+                    RECOIL_MODE(reg_a4)->running = 0;
                     reg_d0.w = 4;
                     boss_phase_start();
                 }
@@ -863,23 +978,23 @@ s32 boss_movement_start();                            /* extern */
 void stage2_boss_mode_rise_start(void) {
     reg_d0.w = 4;
     boss_movement_start();
-    *(s8 *)(reg_a4 + 3) = 0;
-    *(s16 *)(reg_a4 + 4) = 0x20;
+    RISE(reg_a4)->step = 0;
+    RISE(reg_a4)->delay = 0x20;
 }
 
 s32 boss_movement_current();
 
 void stage2_boss_mode_rise() {
-    if (*(u8 *)(reg_a4 + 3) == 0) {
+    if (RISE(reg_a4)->step == 0) {
         boss_movement_current();
         if (reg_d0.h[0] == 5) {
-            *(u8 *)(reg_a4 + 3) = 1U;
+            RISE(reg_a4)->step = 1U;
         }
     }
-    if (*(u8 *)(reg_a4 + 3) == 1) {
-        *(u16 *)(reg_a4 + 4) -= 1;
-        if (*(u16 *)(reg_a4 + 4) == 0) {
-            *(s16 *)reg_a4 = 0;
+    if (RISE(reg_a4)->step == 1) {
+        RISE(reg_a4)->delay -= 1;
+        if (RISE(reg_a4)->delay == 0) {
+            RISE(reg_a4)->running = 0;
             reg_d0.w = 3;
             boss_phase_start();
         }
@@ -889,14 +1004,15 @@ void stage2_boss_mode_rise() {
 extern u8 D_0026C810[];
 
 void stage2_boss_mode_rise_sway_start(void) {
-    *(s8 *)(reg_a4 + 3) = 0;
-    *(s8 *)(reg_a4 + 2) = 0;
-    *(s16 *)(reg_a4 + 6) = 0;
-    *(s16 *)(reg_a4 + 4) = 0x20;
+    RISE_SWAY(reg_a4)->step = 0;
+    RISE_SWAY(reg_a4)->started = 0;
+    RISE_SWAY(reg_a4)->waypoint = 0;
+    RISE_SWAY(reg_a4)->delay = 0x20;
     reg_tmp.w = (u32) D_0026C810;
-    *(u16 *)(reg_a5 + 8) = (u16) reg_tmp.h[1];
-    *(u16 *)(reg_a5 + 0xA) = (u16) reg_tmp.h[0];
-    *(s16 *)(reg_a4 + 0xC) = 1;
+    /* the path goes into the state block here, although the mode reads it from its slot */
+    ENEMY_STATE(reg_a5)->entities[1] = (u16) reg_tmp.h[1];
+    ENEMY_STATE(reg_a5)->line_step = (u16) reg_tmp.h[0];
+    RISE_SWAY(reg_a4)->side = 1;
     stage2_boss_mode_rise_sway();
 }
 
@@ -905,56 +1021,56 @@ void stage2_boss_mode_rise_sway(void) {
     u16 temp_a0_2;
     u8 temp_a0;
 
-    if (*(u8 *)(reg_a4 + 3) == 0) {
-        *(u16 *)(reg_a4 + 4) -= 1;
-        if (*(u16 *)(reg_a4 + 4) == 0) {
-            *(u8 *)(reg_a4 + 3) = 1U;
+    if (RISE_SWAY(reg_a4)->step == 0) {
+        RISE_SWAY(reg_a4)->delay -= 1;
+        if (RISE_SWAY(reg_a4)->delay == 0) {
+            RISE_SWAY(reg_a4)->step = 1U;
         }
     }
-    temp_a0 = *(u8 *)(reg_a4 + 3);
+    temp_a0 = RISE_SWAY(reg_a4)->step;
     if ((temp_a0 == 1) && (boss_movement_current(temp_a0), (reg_d0.h[0] == 5))) {
-        reg_tmp.h[1] = *(u16 *)(reg_a4 + 8);
-        reg_tmp.h[0] = *(u16 *)(reg_a4 + 0xA);
+        reg_tmp.h[1] = RISE_SWAY(reg_a4)->path[0];
+        reg_tmp.h[0] = RISE_SWAY(reg_a4)->path[1];
         reg_a1 = (u8 *)(reg_tmp.w);
-        temp_a0_2 = *(u16 *)(reg_a4 + 6);
+        temp_a0_2 = RISE_SWAY(reg_a4)->waypoint;
         reg_a1 += temp_a0_2;
         if (*(s16 *)reg_a1 != -1) {
-            func_001C9640();
+            stage2_boss_rise_sway_next();
             return;
         }
         reg_d0.w = 4;
         boss_phase_start();
-        *(s16 *)reg_a4 = 0;
+        RISE_SWAY(reg_a4)->running = 0;
     }
 }
 
 s32 boss_movement_start();
 s32 enemy_switch_target_player();
 
-void func_001C9640(void) {
+void stage2_boss_rise_sway_next(void) {
     reg_d0.w = 6;
     boss_movement_start();
     *(u16 *)(reg_a0 + 8) = (u16) *(u16 *)reg_a1;
     *(u16 *)(reg_a0 + 0xA) = (u16) *(u16 *)(reg_a1 + 2);
-    *(u16 *)(reg_a4 + 6) += 4;
+    RISE_SWAY(reg_a4)->waypoint += 4;
     enemy_switch_target_player();
-    if (*(u8 *)(reg_a4 + 2) != 0) {
+    if (RISE_SWAY(reg_a4)->started != 0) {
         reg_d0.w = 2;
         boss_attack_start();
-        *(u16 *)(reg_a0 + 8) = (u16) *(u16 *)(reg_a4 + 0xC);
-        *(u16 *)(reg_a4 + 0xC) *= 0xFFFF;
+        QUAD_GUN(reg_a0)->side = (u16) RISE_SWAY(reg_a4)->side;
+        RISE_SWAY(reg_a4)->side *= 0xFFFF;
     }
-    *(u8 *)(reg_a4 + 2) = 1U;
+    RISE_SWAY(reg_a4)->started = 1U;
 }
 
 s32 boss_animation_start(s32, s32, s32);   /* extern */
 s32 boss_attack_start();                            /* extern */
 
 void stage2_boss_mode_rage_start(void) {
-    *(s8 *)(reg_a4 + 3) = 0;
-    *(s16 *)(reg_a4 + 4) = 0x10;
-    *(s16 *)(reg_a4 + 6) = 0x200A;
-    *(s16 *)(reg_a4 + 0xC) = 0x101;
+    RAGE(reg_a4)->step = 0;
+    RAGE(reg_a4)->delay = 0x10;
+    RAGE(reg_a4)->unread_06 = 0x200A;
+    RAGE(reg_a4)->unread_0C = 0x101;
     reg_d0.w = 0xA;
     boss_animation_start(0x101, 0x200A, 0x10);
     reg_d0.w = 0xF;

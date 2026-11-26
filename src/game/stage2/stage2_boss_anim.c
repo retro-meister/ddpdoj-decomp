@@ -30,13 +30,6 @@ void stage2_boss_side_gun_anim(void);
 void stage2_boss_ripple_request_start(void);
 void stage2_boss_ripple_request(void);
 
-/* Two bytes of a boss slot that are set together as one word: a reload value and its countdown. */
-typedef union {
-    u16 h;
-    s16 sh;
-    struct { u8 reload; u8 count; } t;
-} SlotTimer;
-
 /*
  * The animation part of the boss slot (reg_a4). `running` is cleared when the animation is over. Most of the
  * animations are one step every few frames.
