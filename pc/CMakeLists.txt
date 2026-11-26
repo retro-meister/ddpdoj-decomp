@@ -137,7 +137,7 @@ target_compile_features(ddpdoj_gif PRIVATE c_std_11)
 target_compile_definitions(ddpdoj_gif PUBLIC DDPDOJ_PC)
 target_include_directories(ddpdoj_gif PUBLIC . ../include)
 
-add_library(ddpdoj_gs STATIC gs.c gs_texture.c)
+add_library(ddpdoj_gs STATIC gs.c gs_texture.c vblank.c)
 target_link_libraries(ddpdoj_gs PUBLIC ddpdoj_gif SDL3::SDL3)
 
 add_library(ddpdoj_disc STATIC disc_image.c)
@@ -164,6 +164,12 @@ target_compile_features(ddpdoj_video PRIVATE c_std_11)
 target_compile_definitions(ddpdoj_video PUBLIC DDPDOJ_PC)
 target_include_directories(ddpdoj_video PUBLIC . ../include)
 target_link_libraries(ddpdoj_video PUBLIC SDL3::SDL3)
+
+add_library(ddpdoj_death_video STATIC video.c)
+target_compile_features(ddpdoj_death_video PRIVATE c_std_11)
+target_compile_definitions(ddpdoj_death_video PRIVATE DDPDOJ_PC DEATH_LABEL)
+target_include_directories(ddpdoj_death_video PUBLIC . ../include)
+target_link_libraries(ddpdoj_death_video PUBLIC SDL3::SDL3)
 
 add_library(ddpdoj_pad STATIC pad.c)
 target_compile_features(ddpdoj_pad PRIVATE c_std_11)

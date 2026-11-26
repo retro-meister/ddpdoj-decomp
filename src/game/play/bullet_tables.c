@@ -493,7 +493,9 @@ PC_DATA_ALIAS(bullet_type_record_34, bullet_type_records, MAIN_OR_DEATH_LABEL(0x
 PC_DATA_ALIAS(bullet_type_record_35, bullet_type_records, MAIN_OR_DEATH_LABEL(0x34e, 0x35e));
 
 #ifdef DEATH_LABEL
+PC_DATA_ALIAS(death_D_002506F0, bullet_type_setup_routines, 0x90);
 PC_DATA_ALIAS(death_D_00250790, bullet_type_records, 0x90);
+PC_DATA_ALIAS(death_D_00250A72, bullet_type_records, 0x372);
 
 PC_DATA_ALIAS(death_D_00250B20, bullet_move_routines, 0x90);
 #else

@@ -229,16 +229,21 @@ void deferred_text_put(void) {
     d6 = reg_d6.w;
     d7 = reg_d7.w;
     a0 = reg_a0;
-    reg_a0 = (u8 *)g_deferred_text_next[0];
-    reg_tmp.w = (u32)reg_a0;
-    if (reg_tmp.w == (u32)(g_deferred_text + DEFERRED_TEXT_CELLS * 2)) goto queue_full;
+    reg_a0 = ARCADE_ADDRESS_DECODE(u8 *, g_deferred_text_next[0]);
+    reg_tmp.w = ARCADE_ADDRESS_ENCODE(reg_a0);
+    if (reg_tmp.w == ARCADE_ADDRESS_ENCODE(g_deferred_text + DEFERRED_TEXT_CELLS * 2)) goto queue_full;
     reg_d5.w = 0;
 next_row:
     reg_d6.h[0] = reg_d1.h[0];
     reg_d7.h[0] = reg_d3.h[0];
 next_cell:
-    reg_tmp.w = (u32)g_text_layer;
-    *(u32 *)reg_a0 = (u32)g_text_layer;
+#ifdef DDPDOJ_PC
+    if (reg_a0 == (u8 *)(g_deferred_text + DEFERRED_TEXT_CELLS * 2)) {
+        goto finish_queue;
+    }
+#endif
+    reg_tmp.w = ARCADE_ADDRESS_ENCODE(g_text_layer);
+    *(u32 *)reg_a0 = ARCADE_ADDRESS_ENCODE(g_text_layer);
     reg_d5.h[0] = reg_d6.h[0];
     reg_d5.h[0] += reg_d0.h[0];
     reg_tmp.w += reg_d5.w;
@@ -255,8 +260,11 @@ next_cell:
     t = reg_d2.h[0] - 1;
     reg_d2.h[0] = t;
     if (((s64) ((s64) (t & 0xFFFF) << 0x30) >> 0x30) >= 0) goto next_row;
+#ifdef DDPDOJ_PC
+finish_queue:
+#endif
     *(u32 *)reg_a0 = -1;
-    g_deferred_text_next[0] = (u32)reg_a0;
+    g_deferred_text_next[0] = ARCADE_ADDRESS_ENCODE(reg_a0);
 queue_full:
     reg_d0.w = d0;
     reg_d1.w = d1;
@@ -292,9 +300,9 @@ void deferred_text_put_sheet(void) {
     d6 = reg_d6.w;
     d7 = reg_d7.w;
     a0 = reg_a0;
-    reg_a0 = (u8 *)g_deferred_text_next[0];
-    reg_tmp.w = (u32)reg_a0;
-    if (reg_tmp.w == (u32)(g_deferred_text + DEFERRED_TEXT_CELLS * 2)) goto queue_full;
+    reg_a0 = ARCADE_ADDRESS_DECODE(u8 *, g_deferred_text_next[0]);
+    reg_tmp.w = ARCADE_ADDRESS_ENCODE(reg_a0);
+    if (reg_tmp.w == ARCADE_ADDRESS_ENCODE(g_deferred_text + DEFERRED_TEXT_CELLS * 2)) goto queue_full;
     reg_d5.h[0] -= reg_d3.h[0];
     reg_d5.h[0] -= 1;
     reg_tmp5.h[0] = reg_d5.h[0];
@@ -307,8 +315,13 @@ next_row:
     reg_d6.h[0] = reg_d1.h[0];
     reg_d7.h[0] = reg_d3.h[0];
 next_cell:
-    reg_tmp.w = (u32)g_text_layer;
-    *(u32 *)reg_a0 = (u32)g_text_layer;
+#ifdef DDPDOJ_PC
+    if (reg_a0 == (u8 *)(g_deferred_text + DEFERRED_TEXT_CELLS * 2)) {
+        goto finish_queue;
+    }
+#endif
+    reg_tmp.w = ARCADE_ADDRESS_ENCODE(g_text_layer);
+    *(u32 *)reg_a0 = ARCADE_ADDRESS_ENCODE(g_text_layer);
     reg_d5.h[0] = reg_d6.h[0];
     reg_d5.h[0] += reg_d0.h[0];
     reg_tmp.w += reg_d5.w;
@@ -326,8 +339,11 @@ next_cell:
     t = reg_d2.h[0] - 1;
     reg_d2.h[0] = t;
     if (((s64) ((s64) (t & 0xFFFF) << 0x30) >> 0x30) >= 0) goto next_row;
+#ifdef DDPDOJ_PC
+finish_queue:
+#endif
     *(u32 *)reg_a0 = -1;
-    g_deferred_text_next[0] = (u32)reg_a0;
+    g_deferred_text_next[0] = ARCADE_ADDRESS_ENCODE(reg_a0);
 queue_full:
     reg_d0.w = d0;
     reg_d1.w = d1;
@@ -363,17 +379,22 @@ void deferred_text_clear(void) {
     d6 = reg_d6.w;
     d7 = reg_d7.w;
     a0 = reg_a0;
-    reg_a0 = (u8 *)g_deferred_text_next[0];
-    reg_tmp.w = (u32)reg_a0;
-    if (reg_tmp.w == (u32)(g_deferred_text + DEFERRED_TEXT_CELLS * 2)) goto queue_full;
+    reg_a0 = ARCADE_ADDRESS_DECODE(u8 *, g_deferred_text_next[0]);
+    reg_tmp.w = ARCADE_ADDRESS_ENCODE(reg_a0);
+    if (reg_tmp.w == ARCADE_ADDRESS_ENCODE(g_deferred_text + DEFERRED_TEXT_CELLS * 2)) goto queue_full;
     reg_d4.w = 0;
     reg_d5.w = 0;
 next_row:
     reg_d6.h[0] = reg_d1.h[0];
     reg_d7.h[0] = reg_d3.h[0];
 next_cell:
-    reg_tmp.w = (u32)g_text_layer;
-    *(u32 *)reg_a0 = (u32)g_text_layer;
+#ifdef DDPDOJ_PC
+    if (reg_a0 == (u8 *)(g_deferred_text + DEFERRED_TEXT_CELLS * 2)) {
+        goto finish_queue;
+    }
+#endif
+    reg_tmp.w = ARCADE_ADDRESS_ENCODE(g_text_layer);
+    *(u32 *)reg_a0 = ARCADE_ADDRESS_ENCODE(g_text_layer);
     reg_d5.h[0] = reg_d6.h[0];
     reg_d5.h[0] += reg_d0.h[0];
     reg_tmp.w += reg_d5.w;
@@ -389,8 +410,11 @@ next_cell:
     t = reg_d2.h[0] - 1;
     reg_d2.h[0] = t;
     if (((s64) ((s64) (t & 0xFFFF) << 0x30) >> 0x30) >= 0) goto next_row;
+#ifdef DDPDOJ_PC
+finish_queue:
+#endif
     *(u32 *)reg_a0 = -1;
-    g_deferred_text_next[0] = (u32)reg_a0;
+    g_deferred_text_next[0] = ARCADE_ADDRESS_ENCODE(reg_a0);
 queue_full:
     reg_d0.w = d0;
     reg_d1.w = d1;
@@ -408,7 +432,7 @@ void deferred_text_reset(void) {
     g_deferred_text[0] = -1;
     reg_d0.w = 0;
     g_deferred_text_row_skip = 0;
-    g_deferred_text_next[0] = (u32)g_deferred_text;
+    g_deferred_text_next[0] = ARCADE_ADDRESS_ENCODE(g_deferred_text);
 }
 
 
@@ -419,7 +443,7 @@ next_pair:
     reg_tmp.w = *(u32 *)reg_a0;
     reg_a0 += 4;
     if (reg_tmp.w != -1U) {
-        reg_a1 = (u8 *)(reg_tmp.w);
+        reg_a1 = ARCADE_ADDRESS_DECODE(u8 *, reg_tmp.w);
         *(u32 *)reg_a1 = *(u32 *)reg_a0;
         reg_a0 += 4;
         goto next_pair;
@@ -442,5 +466,9 @@ u32 g_layer_b_fraction[2];
 u32 g_deferred_text_row_skip;
 
 /* .bss (the compiler lays these out in reverse) */
+#ifdef DDPDOJ_PC
+u32 g_deferred_text[DEFERRED_TEXT_CELLS * 2 + 1]; /* Final sentinel has its own word. */
+#else
 u32 g_deferred_text[1568];
+#endif
 u32 g_deferred_text_next[784];

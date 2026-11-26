@@ -11,6 +11,7 @@
 
 typedef struct {
     SDL_Renderer *renderer;
+    SDL_Texture *target;
     SDL_Vertex vertices[3];
     SDL_FPoint uv;
     SDL_Color color;
@@ -22,6 +23,8 @@ typedef struct {
     unsigned origin_x;
     unsigned origin_y;
     unsigned vertical_scale;
+    unsigned window_scale;
+    unsigned target_base;
     unsigned vertex_count;
     bool game;
     bool failed;
@@ -29,8 +32,17 @@ typedef struct {
 
 static GsDrawState gs;
 
+static void destroy_game_target(void)
+{
+    if (gs.target) {
+        SDL_SetRenderTarget(gs.renderer, NULL);
+        SDL_DestroyTexture(gs.target);
+    }
+}
+
 void pc_gs_bind_gallery(SDL_Renderer *renderer)
 {
+    destroy_game_target();
     pc_gs_textures_reset();
     gs = (GsDrawState){
         .renderer = renderer, .origin_x = 0x6c00, .origin_y = 0x7900, .vertical_scale = 2,
@@ -39,19 +51,21 @@ void pc_gs_bind_gallery(SDL_Renderer *renderer)
 
 void pc_gs_game_reset(void)
 {
+    destroy_game_target();
     pc_gs_textures_reset();
-    gs = (GsDrawState){.renderer = gs.renderer, .game = true, .vertical_scale = 1};
+    gs = (GsDrawState){.renderer = gs.renderer, .game = true, .vertical_scale = 1, .window_scale = 1};
 }
 
 void pc_gs_bind_game(SDL_Renderer *renderer)
 {
-    gs.renderer = renderer;
     pc_gs_game_reset();
+    gs.renderer = renderer;
 }
 
 bool pc_gs_game_display(int width, int field_height)
 {
-    gs.vertical_scale = field_height == 224 ? 2 : 1;
+    gs.window_scale = field_height == 224 ? 2 : 1;
+    gs.vertical_scale = gs.window_scale;
     if (!gs.renderer ||
         !SDL_SetRenderLogicalPresentation(gs.renderer, width, field_height * gs.vertical_scale,
                                           SDL_LOGICAL_PRESENTATION_LETTERBOX)) {
@@ -59,6 +73,14 @@ bool pc_gs_game_display(int width, int field_height)
         return false;
     }
     return true;
+}
+
+void pc_gs_game_target(unsigned base, int width, int height)
+{
+    gs.target_base = base;
+    gs.target = SDL_CreateTexture(gs.renderer, SDL_PIXELFORMAT_RGBA32,
+                                  SDL_TEXTUREACCESS_TARGET, width, height);
+    gs.failed |= !gs.target;
 }
 
 bool pc_gs_ok(void)
@@ -107,12 +129,14 @@ static bool draw_solid_rect(GsDrawState *state)
 
 static bool draw_textured(GsDrawState *state, unsigned primitive)
 {
-    SDL_Texture *texture = pc_gs_texture_get(state->renderer, state->tex0, state->texa);
+    bool framebuffer_texture = state->target && (state->tex0 & 0x3fff) == state->target_base;
+    SDL_Texture *texture = framebuffer_texture ? state->target :
+        pc_gs_texture_get(state->renderer, state->tex0, state->texa);
     SDL_BlendMode blend = draw_blend(state);
     if (!texture || blend == SDL_BLENDMODE_INVALID || !(state->prim & (1 << 8))) {
         return false;
     }
-    if (blend == SDL_BLENDMODE_NONE && ((state->tex0 >> 34) & 1)) {
+    if (!framebuffer_texture && blend == SDL_BLENDMODE_NONE && ((state->tex0 >> 34) & 1)) {
         /* Gallery's unblended indexed artwork uses transparent black. */
         blend = SDL_BLENDMODE_BLEND;
     }
@@ -227,6 +251,16 @@ static void write_register(void *context, u8 address, u64 value)
         if (state->game) {
             state->origin_x = value & 0xffff;
             state->origin_y = (value >> 32) & 0xffff;
+        }
+        break;
+    case 0x4c: /* FRAME_1, base in 8 KiB units */
+        if (state->game) {
+            unsigned base = (value & 0x1ff) * 32;
+            SDL_Texture *target = base == state->target_base ? state->target : NULL;
+            if (SDL_GetRenderTarget(state->renderer) != target) {
+                state->failed |= !SDL_SetRenderTarget(state->renderer, target);
+            }
+            state->vertical_scale = target ? 1 : state->window_scale;
         }
         break;
     case 0x40: /* SCISSOR_1, inclusive endpoints in target pixels */

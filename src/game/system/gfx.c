@@ -941,7 +941,6 @@ void bg_layer_queue_tile(s32 col, s32 row) {
 }
 
 
-#ifndef DDPDOJ_PC
 void quad_flush(void)
 {
     u8 *packet;
@@ -966,7 +965,7 @@ void quad_flush(void)
         quad_build_packet((Qword *)packet, firstEntry, batchCount);
         sceGsSyncPath(0, 0);
         FlushCache(0);
-        sceDmaSend(g_dma_gif, packet);
+        SEND_DMA_CHAIN(g_dma_gif, packet, sizeof(g_gif_buf[0]));
 
         bufferIndex ^= 1;
         firstEntry += batchCount;
@@ -974,7 +973,6 @@ void quad_flush(void)
     }
     sceGsSyncPath(0, 0);
 }
-#endif
 
 void quad_build_packet(Qword *pkt, s32 first, s32 count) {
     s32 qwc;
@@ -1106,6 +1104,9 @@ void render_target_init(RenderTarget *tex, void *buffer, s32 tbp, u32 width, u32
     tex->height = height;
     tex->tbp = tbp;
     tex->psm = 2;
+#ifdef DDPDOJ_PC
+    pc_gs_game_target(tbp, width, height);
+#endif
     tex->tw = 1;
     while (width > n) {
         tex->tw++;
@@ -1787,3 +1788,9 @@ s32 g_bg_tile_offsets[4624];
 s32 g_bg_tile_offsets[4608];
 #endif
 RenderTarget g_render_target;
+
+#if defined(DDPDOJ_PC) && defined(DEATH_LABEL)
+#include "pc_data_alias.h"
+
+PC_DATA_ALIAS(g_quad_queue_as_GlyphQuad_a, g_quad_queue, 0);
+#endif

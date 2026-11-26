@@ -29,4 +29,8 @@ s16 ending_state_clear_buffer[16];
 #include "pc_data_alias.h"
 
 PC_DATA_ALIAS(g_debug_number, ending_state_clear_buffer_2, 0x2);
+#ifdef DEATH_LABEL
+PC_DATA_ALIAS(death_D_00291191, D_0028E804, 1);
+PC_DATA_ALIAS(death_D_00291195, attract_demo_state_clear_state, 1);
+#endif
 #endif

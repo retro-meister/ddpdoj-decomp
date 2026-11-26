@@ -459,7 +459,11 @@ loop_1:
         pickup_collected_update();
         return;
     }
+#ifdef DDPDOJ_PC
+    pickups_update_loop_table[reg_d0.h[0] / 4]();
+#else
     ((Fn)*(u32 *)((u8 *)((u8 *)pickups_update_loop_table) + (reg_d0.h[0] & ~3)))();
+#endif
     reg_a6 += 0x2C;
     t1 = reg_d7.h[0] - 1;
     reg_d7.h[0] = t1;
@@ -563,7 +567,7 @@ next_4:
     pickup_follow_layer_b();
     reg_tmp.h[1] = *(u16 *)(reg_a6 + 0x28);
     reg_tmp.h[0] = *(u16 *)(reg_a6 + 0x2A);
-    reg_a0 = (u8 *)(reg_tmp.w);
+    reg_a0 = ARCADE_ADDRESS_DECODE(u8 *, reg_tmp.w);
     reg_call_target_as_u8_p = reg_a0;
     ((Fn)reg_call_target_as_u8_p)();
     return;
@@ -638,7 +642,7 @@ next_1:
     }
     reg_tmp.h[1] = *(u16 *)(reg_a6 + 0x28);
     reg_tmp.h[0] = *(u16 *)(reg_a6 + 0x2A);
-    reg_a0 = (u8 *) reg_tmp.w;
+    reg_a0 = ARCADE_ADDRESS_DECODE(u8 *, reg_tmp.w);
     reg_call_target = (Fn)(reg_a0);
     reg_call_target();
 }
@@ -692,7 +696,7 @@ next_1:
     }
     reg_tmp.h[1] = *(u16 *)(reg_a6 + 0x28);
     reg_tmp.h[0] = *(u16 *)(reg_a6 + 0x2A);
-    reg_a0 = (u8 *) reg_tmp.w;
+    reg_a0 = ARCADE_ADDRESS_DECODE(u8 *, reg_tmp.w);
     reg_call_target = (Fn)(reg_a0);
     reg_call_target();
 }
@@ -990,14 +994,23 @@ void pickup_spawn_cancel(void) {
     reg_a0 = ((void *)D_0028DE8C);
 }
 
+#ifdef DDPDOJ_PC
+extern void (*entity_draw_layer_routines[8])(void);
+#else
 extern u8 entity_draw_layer_routines_as_u8_a[];
+#endif
 
 void pickup_spawn_init(void) {
     u8 *save_a1;
 
+#ifdef DDPDOJ_PC
+    g_bullet_count += 1;
+    reg_a3 = pickup_init_routines[reg_d0.h[0] / 4];
+#else
     reg_a3 = (u8 *)((u8 *)pickup_init_routines);
     g_bullet_count += 1;
     reg_a3 = *(u8 **) (((u8 *)pickup_init_routines) + (reg_d0.h[0] & ~3));
+#endif
     *(u16 *) reg_a0 = reg_d0.h[0];
     *(u16 *) reg_a0 |= 0x8000;
     reg_a0 += 2;
@@ -1072,11 +1085,18 @@ void pickup_spawn_init(void) {
     reg_a0 += 2;
     reg_a0 -= 0x1E;
     save_a1 = reg_a1;
+#ifdef DDPDOJ_PC
+    Fn *layer = &entity_draw_layer_routines[reg_d2.h[0] / 4];
+    reg_a1 = (u8 *)layer;
+    STORE_ARCADE_ADDRESS_DIRECT((u16 *)(reg_a0 + 0x28), *layer);
+    pickup_spawn_init_table[reg_d0.h[0] / 4]();
+#else
     reg_a1 = (u8 *)entity_draw_layer_routines_as_u8_a;
     reg_a1 += reg_d2.h[0];
     *(u16 *) (reg_a0 + 0x28) = *(u16 *) (reg_a1 + 2);
     *(u16 *) (reg_a0 + 0x2A) = *(u16 *) (reg_a1 + 0);
     ((Fn) *(u32 *) (((u8 *)pickup_spawn_init_table) + (reg_d0.h[0] & ~3)))();
+#endif
     reg_a1 = save_a1;
     reg_d7.w = D_0028DE90;
     reg_a0 = D_0028DE8C;
@@ -1399,7 +1419,20 @@ void pickup_init_scatter_2(void) {
 }
 
 void rng_next(void);
+struct PickupCollectionTable {
+    u16 spawn[12];
+    const u16 *variants[3];
+    u16 collection[30];
+};
+extern struct PickupCollectionTable pickup_init_routines_7;
+#ifdef DDPDOJ_PC
+extern u16 D_00269750[24];
+extern u16 D_00269780[24];
+extern u16 D_002697B0[24];
+static const u16 *const pickup_collection_sprites[] = { D_00269750, D_00269780, D_002697B0 };
+#else
 extern u8 D_00269708[];
+#endif
 
 void pickup_collected_begin(void) {
 #ifndef DDPDOJ_PC
@@ -1407,19 +1440,30 @@ void pickup_collected_begin(void) {
 #endif
     reg_d0.h[1] = ENTITY(reg_a6)->hit_y_plus.h;
     reg_d0.h[0] = ENTITY(reg_a6)->hit_y_minus.h;
+#ifdef DDPDOJ_PC
+    unsigned variant = reg_d0.h[0] / 4;
+    reg_a0 = (u8 *)pickup_init_routines_7.variants[variant];
+#else
     reg_a0 = (u8 *)D_00269708;
     reg_a0 = *(u8 **)(D_00269708 + (reg_d0.h[0] & ~3));
+#endif
     reg_tmp.w = reg_d0.w;
     reg_d0.h[1] = reg_d0.h[0];
     reg_d0.h[0] = reg_tmp.h[1];
     reg_d0.h[0] += reg_d0.h[0];
     reg_d0.h[0] += reg_d0.h[0];
+#ifdef DDPDOJ_PC
+    reg_a0 += 4;
+    reg_a1 = reg_a6;
+    reg_a2 = (u8 *)pickup_collection_sprites[variant];
+#else
     reg_tmp.h[1] = *(u16 *)reg_a0;
     reg_a0 += 2;
     reg_tmp.h[0] = *(u16 *)reg_a0;
     reg_a0 += 2;
     reg_a1 = reg_a6;
     reg_a2 = (u8 *)reg_tmp.w;
+#endif
     ENTITY(reg_a6)->flags.h &= 0xF8DF;
     reg_a1 += 2;
     reg_tmp.h[1] = *(u16 *)(reg_a1 + 0);
@@ -2564,8 +2608,7 @@ extern u16 pickup_init_routines_2[16];
 extern u16 pickup_init_routines_3[16];
 extern u16 pickup_init_routines_5[16];
 extern u16 pickup_init_routines_6[16];
-struct D002696f0Record { u16 w0[12]; void *p1; void *p2; void *p3; u16 w4[30]; };
-extern struct D002696f0Record pickup_init_routines_7;
+
 
 void (*pickups_update_loop_table[20])() = {
     score_pickup_kind0,
@@ -2615,7 +2658,7 @@ u8 D_00269490[160] = {
     0x04, 0x8A, 0x0C, 0x00, 0x1F, 0x00, 0x04, 0x90, 0x00, 0x00, 0x20, 0x00, 0x00, 0x00, 0x00, 0x00,
 };
 
-void (*entity_draw_layer_routines[8])() = {
+void (*entity_draw_layer_routines[8])(void) = {
     entity_draw_layer1,
     entity_draw_layer1,
     entity_draw_layer2,
@@ -2718,11 +2761,10 @@ u16 pickup_init_routines_6[16] = {
     0x0680, 0x0101, 0x001C, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000,
 };
 
-struct D002696f0Record pickup_init_routines_7 = {
+struct PickupCollectionTable pickup_init_routines_7 = {
     { 0xF800, 0xFA00, 0x0000, 0x0BEF, 0x0830, 0x0980, 0x0980, 0x0780, 0x0780, 0x0101, 0x001C, 0x0000 },
-    (u8 *)&pickup_init_routines_7 + 40,
-    (u8 *)&pickup_init_routines_7 + 56,
-    (u8 *)&pickup_init_routines_7 + 72,
+    { pickup_init_routines_7.collection + 2, pickup_init_routines_7.collection + 10,
+      pickup_init_routines_7.collection + 18 },
     { 0x0000, 0x0000, 0x0000, 0x0001, 0xFC00, 0xFC00, 0x0420, 0x0001, 0x0000, 0x0000, 0x0000, 0x0001, 0xFC00, 0xFB00, 0x0428, 0x0001, 0x0000, 0x0000, 0x0000, 0x0001, 0xFC00, 0xFA00, 0x0430, 0x0001, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000 },
 };
 

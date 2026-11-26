@@ -213,6 +213,12 @@ void palette_banks_flush(void) {
 void palette_run_copy(void)
 {
     do {
+#ifdef DDPDOJ_PC
+        ((u16 *)reg_a1)[0] = ((u16 *)reg_a0)[0];
+        ((u16 *)reg_a1)[1] = ((u16 *)reg_a0)[1];
+        reg_a0 += 4;
+        reg_a1 += 4;
+#else
         *(u16 *)(*(u32 *)&reg_a1) = *(u16 *)(*(u32 *)&reg_a0);
         (*(u32 *)&reg_a0) += 2;
         (*(u32 *)&reg_a1) += 2;
@@ -220,6 +226,7 @@ void palette_run_copy(void)
         *(u16 *)(*(u32 *)&reg_a1) = *(u16 *)(*(u32 *)&reg_a0);
         (*(u32 *)&reg_a0) += 2;
         (*(u32 *)&reg_a1) += 2;
+#endif
     } while ((s16)(--reg_d0.h[0]) >= 0);
 }
 

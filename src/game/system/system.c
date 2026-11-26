@@ -1055,3 +1055,9 @@ u8 g_bg_tile_pixels[0x208000] __attribute__((aligned(64)));
 u8 g_unreferenced_2C4F40[0x40] __attribute__((aligned(64))); /* nothing reads or writes this */
 BootScratch g_boot_scratch __attribute__((aligned(64)));
 #endif
+
+#if defined(DDPDOJ_PC) && defined(DEATH_LABEL)
+#include "pc_data_alias.h"
+
+PC_DATA_ALIAS(g_gs_load_image_as_u8_a, g_gs_load_image, 0);
+#endif

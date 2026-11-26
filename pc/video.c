@@ -24,7 +24,9 @@ s8 g_fade_white;
 #endif
 
 void pc_video_bind(SDL_Renderer *renderer) {
-    SDL_DestroyTexture(splash);
+    if (splash) {
+        SDL_DestroyTexture(splash);
+    }
     splash = NULL;
     output = renderer;
     video_failed = false;
@@ -109,7 +111,8 @@ static bool draw_quad(SDL_Texture *texture, const Quad *quad) {
            SDL_RenderTextureRotated(output, texture, &source, &destination, 0, NULL, flip);
 }
 
-void quad_flush(void) {
+#ifndef DEATH_LABEL
+static void splash_quad_flush(void) {
     for (s32 i = 0; i < g_quad_count; ++i) {
         const Quad *quad = &g_quad_queue[i];
         if (!splash || quad->tbp != SPLASH_TEXTURE || quad->cbp != SPLASH_PALETTE ||
@@ -119,6 +122,7 @@ void quad_flush(void) {
     }
     g_quad_count = 0;
 }
+#endif
 
 void gfx_draw_color_box(s32 x, s32 y, s32 w, s32 h, s32 depth, s64 alpha,
                         s32 r, s32 g, s32 b) {
@@ -132,4 +136,6 @@ void gfx_draw_color_box(s32 x, s32 y, s32 w, s32 h, s32 depth, s64 alpha,
 }
 
 #include "screen_fade.inc.h"
+#define quad_flush splash_quad_flush
 #include "splash_draw.inc.h"
+#undef quad_flush

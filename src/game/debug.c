@@ -50,7 +50,7 @@ DebugTableView debug_table_views[3] = {
     { { 2, 0, 6, 8 }, { 4, 5 }, 0x0030, 0x1000 },
 };
 
-#ifdef DEATH_LABEL
+#if defined(DEATH_LABEL) && !defined(DDPDOJ_PC)
 extern u8 attract_demos_0[];
 extern u8 attract_demos_1[];
 extern u8 attract_demos_2[];
@@ -119,7 +119,11 @@ extern u16 D_0028E828;
 
 void attract_demo_state_clear(void) {
     D_0028E7F8 = 0;
+#ifdef DDPDOJ_PC
+    D_0028E7FC = NULL;
+#else
     (*(s32 *)&D_0028E7FC) = 0;
+#endif
     D_0028E800 = 0;
     D_0028E804 = 0;
     attract_demo_state_clear_state = 0;
@@ -183,10 +187,15 @@ void attract_demo_begin(void) {
     attract_demo_state_clear();
     D_0028E824 = 0x10;
     D_0028E820 = 0x960;
+#ifdef DDPDOJ_PC
+    reg_d2.h[0] = g_attract_demo_stage;
+    reg_a0 = (u8 *)&debug_table_views[reg_d2.h[0]];
+#else
     reg_a0 = (u8 *) attract_demos;
     reg_d2.h[0] = g_attract_demo_stage;
     reg_tmp.w = (u32)attract_demos[reg_d2.h[0]];
     reg_a0 = (u8 *) reg_tmp.w;
+#endif
     reg_d7.h[0] = *(u16 *)reg_a0;
     reg_a0 += 2;
     D_0028E818 = *(u16 *)reg_a0;
@@ -199,7 +208,7 @@ void attract_demo_begin(void) {
     reg_a0 += 2;
     reg_tmp.h[0] = *(u16 *)reg_a0;
     reg_a0 += 2;
-    D_0028E7FC = (u8 *) reg_tmp.w;
+    D_0028E7FC = ARCADE_ADDRESS_DECODE(u8 *, reg_tmp.w);
     reg_tmp.h[1] = *(u16 *)reg_a0;
     reg_a0 += 2;
     reg_tmp.h[0] = *(u16 *)reg_a0;

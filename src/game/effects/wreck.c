@@ -14,7 +14,9 @@ extern u16 D_0028DC68[];
 extern u8 D_00269920[];
 
 extern u16 slowdown_budget_limits_loop2[];
+#ifndef DDPDOJ_PC
 extern u16 D_00269708[];
+#endif
 extern u16 D_00269800[];
 extern u16 D_00269840[];
 extern u16 D_002698B0[];
@@ -107,7 +109,7 @@ extern u8 g_p2_options[80];
 extern u8 g_p1_options[80];
 extern s16 g_player2[];
 extern s16 g_player1[];
-extern u32 g_deferred_text[1568];
+extern u32 g_deferred_text[];
 extern u16 g_p1_score_extra_cell[];
 extern u16 g_p2_score_extra_cell[];
 extern u16 g_p1_score_cells[];
@@ -128,9 +130,11 @@ extern void input_get_p2_pressed(void);
 void startup_pointers_store_a(void) {
     STORE_POINTER(slowdown_budget_limits_loop2 + 16, slowdown_budget_limits_loop2_at_16);
     STORE_POINTER(slowdown_budget_limits_loop2 + 23, palette_white);
+#ifndef DDPDOJ_PC
     STORE_POINTER(D_00269708 + 8, D_00269750);
     STORE_POINTER(D_00269708 + 16, D_00269780);
     STORE_POINTER(D_00269708 + 24, D_002697B0);
+#endif
     STORE_POINTER(D_00269800 + 4, D_00262470);
     STORE_POINTER(D_00269800 + 11, palette_white);
     STORE_POINTER(D_00269840 + 4, D_00261F30);
@@ -211,9 +215,9 @@ void startup_pointers_store_a(void) {
     STORE_POINTER(debug_list_views[31].entries, g_bullet_cancel);
     STORE_POINTER(debug_list_views[32].entries, ((u16 *)g_explosions));
     STORE_POINTER(debug_list_views[33].entries, g_wrecks);
-    STORE_POINTER(debug_table_views[0].table, D_00274040);
-    STORE_POINTER(debug_table_views[1].table, D_00274840);
-    STORE_POINTER(debug_table_views[2].table, D_00275040);
+    STORE_ARCADE_ADDRESS(debug_table_views[0].table, D_00274040);
+    STORE_ARCADE_ADDRESS(debug_table_views[1].table, D_00274840);
+    STORE_ARCADE_ADDRESS(debug_table_views[2].table, D_00275040);
     STORE_POINTER(D_0026A3F0 + 4, D_00261DF0);
     STORE_POINTER(settings_notice_fade_palettes + 4, ((u16 *)settings_notice_fade_palettes_at_4));
     STORE_POINTER(settings_notice_fade_palettes + 11, ((u16 *)settings_notice_fade_palettes_at_11));
