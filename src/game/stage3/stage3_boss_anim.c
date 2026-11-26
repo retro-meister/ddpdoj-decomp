@@ -334,8 +334,8 @@ void stage3_boss_entrance_anim_start(void) {
 
 s32 boss_part_hide();
 s32 fade_in_and_release();
-s32 func_001D4550();
-s32 func_001D4560();
+s32 stage3_boss_shield_off();
+s32 stage3_boss_parts_flags_set();
 extern u8 g_boss_present_b1;
 
 void stage3_boss_entrance_anim() {
@@ -368,8 +368,8 @@ next_40:
             ENTRANCE(reg_a4)->running = 0;
             g_boss_present_b1 |= 2;
             g_boss_present_b1 |= 0x10;
-            func_001D4550();
-            func_001D4560();
+            stage3_boss_shield_off();
+            stage3_boss_parts_flags_set();
             reg_d0.w = 9;
             boss_part_hide();
             reg_d0.w = 0;

@@ -2,27 +2,27 @@
 #include "entity.h"
 #include "sdk/ps2sdk.h"
 
-void func_0014BE20(void);
+void player_shot_draw_unused(void);
 void scroll_events_run_line(void);
 
 s32 entity_draw_with_player_shots();                            /* extern */
 
-void func_001486D0(void) {
+void player_shot_draw_a(void) {
     reg_a0 = (u8 *)(((s32)reg_a6));
-    func_0014BE20();
+    player_shot_draw_unused();
     entity_draw_with_player_shots();
 }
 
-void func_00148700(void) {
+void player_shot_draw_b(void) {
     reg_a0 = (u8 *)(((s32)reg_a6));
-    func_0014BE20();
+    player_shot_draw_unused();
     entity_draw_with_player_shots();
 }
 
 s32 entity_draw_with_player_shots_zoom();
 extern u16 D_00257800[];
 
-void func_00148730(void) {
+void player_shot_2_frame_set(void) {
     u32 temp_s0;
 
     temp_s0 = reg_d6.w;
@@ -34,12 +34,12 @@ void func_00148730(void) {
     entity_draw_with_player_shots_zoom();
     reg_d6.w = temp_s0;
     reg_a0 = (u8 *)(reg_a6);
-    func_0014BE20();
+    player_shot_draw_unused();
 }
 
 s32 rng_next_pair_small_d1();                            /* extern */
 
-void func_00148800(void) {
+void player_shot_jitter_half(void) {
     rng_next_pair_small_d1();
     reg_d1.h[0] = (u16) ((s16) reg_d1.h[0] >> 1);
     reg_d0.h[0] += reg_d1.h[0];
@@ -50,7 +50,7 @@ void func_00148800(void) {
 
 s32 rng_next_pair_small_d1();
 
-void func_00148860() {
+void player_shot_jitter_quarter() {
     rng_next_pair_small_d1();
     reg_d1.h[0] = (u16) ((s16) reg_d1.h[0] >> 2);
     ENTITY(reg_a6)->y.h += reg_d1.h[0];
@@ -70,7 +70,7 @@ extern u8 D_0029E390[];
 extern s16 g_player2[56];
 extern s16 g_player1[56];
 
-void func_001488C0(void) {
+void player_shots_update(void) {
     u8 *saved_a4;
     u8 *saved_a5;
     u32 t;
@@ -136,7 +136,7 @@ void player_shot_1_update(void) {
     ENTITY(reg_a6)->x.h += reg_d1.h[0];
 block_obj:
     ENTITY(reg_a6)->attr.b.flip ^= 0x40;
-    func_001486D0();
+    player_shot_draw_a();
     return;
 block_first:
     ENTITY(reg_a6)->flags.h |= 8;
@@ -191,7 +191,7 @@ block_anim:
     if (*(s16 *)(reg_a6 + 0x24) >= 0) goto skip_1;
     *(u16 *)(reg_a6 + 0x24) = 4;
 skip_1:
-    func_001486D0();
+    player_shot_draw_a();
     return;
 block_main:
     if (reg_d1.sb[0] >= 0) goto block_anim;
@@ -213,7 +213,7 @@ loop_1:
     reg_d0.h[0] = *(u16 *)(reg_a6 + 0x24);
     ENTITY(reg_a6)->draw.h = (reg_d0.h[0] != 0) ? *(u16 *)(reg_a0 + ((s16)reg_d0.h[0] & ~1)) : *(u16 *)reg_a0;
     ENTITY(reg_a6)->sprite.h = ((reg_d0.h[0] + 2) != 0) ? *(u16 *)(reg_a0 + ((s16)(reg_d0.h[0] + 2) & ~1)) : *(u16 *)reg_a0;
-    func_001486D0();
+    player_shot_draw_a();
     return;
 block_touch_first:
     if (g_two_player_game == 0) goto skip_2;
@@ -230,7 +230,7 @@ skip_2:
 skip_3:
     ENTITY(reg_a6)->y.h -= 0x200;
 skip_4:
-    func_00148800();
+    player_shot_jitter_half();
     ENTITY(reg_a6)->y.h += reg_d0.h[0];
     ENTITY(reg_a6)->x.h += reg_d2.h[0];
     reg_d0.h[0] = (s16)reg_d0.h[0] >> 2;
@@ -279,7 +279,7 @@ void player_shot_2_update(void) {
     W(4) += reg_d1.h[0];
 next_5:
     ENTITY(reg_a6)->attr.b.flip ^= 0x40;
-    func_001486D0();
+    player_shot_draw_a();
     return;
 next_10:
     W(0) |= 8;
@@ -334,7 +334,7 @@ block_anime:
     if ((s16) W(0x24) >= 0) goto next_60;
     W(0x24) = 4;
 next_60:
-    func_001486D0();
+    player_shot_draw_a();
     goto block_rts;
 next_100:
     if (reg_d1.sb[0] >= 0) goto block_anime;
@@ -356,7 +356,7 @@ loop_110:
     reg_d0.h[0] = W(0x24);
     W(0xA) = (reg_d0.h[0] != 0) ? *(u16 *)((u8 *)reg_a0 + ((s16)reg_d0.h[0] & ~1)) : *(u16 *)reg_a0;
     W(0xC) = ((reg_d0.h[0] + 2) != 0) ? *(u16 *)((u8 *)reg_a0 + ((s16)(reg_d0.h[0] + 2) & ~1)) : *(u16 *)reg_a0;
-    func_00148730();
+    player_shot_2_frame_set();
     goto block_rts;
 next_200:
     if (g_two_player_game == 0) goto next_220;
@@ -373,7 +373,7 @@ next_220:
 next_230:
     W(2) += 0x300;
 next_240:
-    func_00148800();
+    player_shot_jitter_half();
     W(2) += reg_d0.h[0];
     W(4) += reg_d2.h[0];
     reg_d0.h[0] = (s16) reg_d0.h[0] >> 2;
@@ -418,7 +418,7 @@ void player_shot_3_update(void) {
     ENTITY(reg_a6)->flags.b[1] |= 1;
     goto next_10;
 next_5:
-    func_00148700();
+    player_shot_draw_b();
     return;
 next_10:
     W(0) |= 8;
@@ -466,7 +466,7 @@ block_anime:
     reg_tmp.h[0] = reg_d0.h[0];
     reg_d0.h[0] += 0xC000;
     if (!((s32) reg_tmp.h[0] < 0x4001)) goto block_clr;
-    func_00148700();
+    player_shot_draw_b();
     goto block_rts;
 next_100:
     if (reg_d1.sb[0] >= 0) goto block_anime;
@@ -484,7 +484,7 @@ loop_110:
     reg_d0.h[0] = W(0x24);
     W(0xA) = (reg_d0.h[0] != 0) ? *(u16 *)((u8 *)reg_a0 + ((s16)reg_d0.h[0] & ~1)) : *(u16 *)reg_a0;
     W(0xC) = ((reg_d0.h[0] + 2) != 0) ? *(u16 *)((u8 *)reg_a0 + ((s16)(reg_d0.h[0] + 2) & ~1)) : *(u16 *)reg_a0;
-    func_00148700();
+    player_shot_draw_b();
     goto block_rts;
 next_200:
     if (g_two_player_game == 0) goto next_220;
@@ -493,7 +493,7 @@ next_200:
 next_220:
     reg_d0.h[0] = W(0x2C);
     reg_d2.h[0] = W(0x2E);
-    func_00148860();
+    player_shot_jitter_quarter();
     W(2) += reg_d0.h[0];
     W(4) += reg_d2.h[0];
     reg_d0.h[0] = (s16) reg_d0.h[0] >> 2;
@@ -538,7 +538,7 @@ void player_shot_4_update(void) {
     ENTITY(reg_a6)->flags.b[1] |= 1;
     goto next_10;
 next_5:
-    func_00148700();
+    player_shot_draw_b();
     return;
 next_10:
     W(0) |= 8;
@@ -586,7 +586,7 @@ block_anime:
     reg_tmp.h[0] = reg_d0.h[0];
     reg_d0.h[0] += 0xBC00;
     if (!((s32) reg_tmp.h[0] < 0x4401)) goto block_clr;
-    func_00148700();
+    player_shot_draw_b();
     goto block_rts;
 next_100:
     if (reg_d1.sb[0] >= 0) goto block_anime;
@@ -604,7 +604,7 @@ loop_110:
     reg_d0.h[0] = W(0x24);
     W(0xA) = (reg_d0.h[0] != 0) ? *(u16 *)((u8 *)reg_a0 + ((s16)reg_d0.h[0] & ~1)) : *(u16 *)reg_a0;
     W(0xC) = ((reg_d0.h[0] + 2) != 0) ? *(u16 *)((u8 *)reg_a0 + ((s16)(reg_d0.h[0] + 2) & ~1)) : *(u16 *)reg_a0;
-    func_00148700();
+    player_shot_draw_b();
     goto block_rts;
 next_200:
     if (g_two_player_game == 0) goto next_220;
@@ -613,7 +613,7 @@ next_200:
 next_220:
     reg_d0.h[0] = W(0x2C);
     reg_d2.h[0] = W(0x2E);
-    func_00148860();
+    player_shot_jitter_quarter();
     W(2) += reg_d0.h[0];
     W(4) += reg_d2.h[0];
     reg_d0.h[0] = (s16) reg_d0.h[0] >> 2;
@@ -664,7 +664,7 @@ void player_shot_5_update(void) {
     W(4) += reg_d1.h[0];
 next_5:
     ENTITY(reg_a6)->attr.b.flip ^= 0x40;
-    func_001486D0();
+    player_shot_draw_a();
     return;
 next_10:
     W(0) |= 8;
@@ -720,7 +720,7 @@ block_anime:
     if ((s16) W(0x24) >= 0) goto next_60;
     W(0x24) = 4;
 next_60:
-    func_001486D0();
+    player_shot_draw_a();
     goto block_rts;
 next_100:
     if (reg_d1.sb[0] >= 0) goto block_anime;
@@ -742,7 +742,7 @@ loop_110:
     reg_d0.h[0] = W(0x24);
     W(0xA) = (reg_d0.h[0] != 0) ? *(u16 *)((u8 *)reg_a0 + ((s16)reg_d0.h[0] & ~1)) : *(u16 *)reg_a0;
     W(0xC) = ((reg_d0.h[0] + 2) != 0) ? *(u16 *)((u8 *)reg_a0 + ((s16)(reg_d0.h[0] + 2) & ~1)) : *(u16 *)reg_a0;
-    func_001486D0();
+    player_shot_draw_a();
     goto block_rts;
 next_200:
     if (g_two_player_game == 0) goto next_220;
@@ -801,7 +801,7 @@ void player_shot_6_update(void) {
     W(4) += reg_d1.h[0];
 next_5:
     ENTITY(reg_a6)->attr.b.flip ^= 0x40;
-    func_001486D0();
+    player_shot_draw_a();
     return;
 next_10:
     W(0) |= 8;
@@ -857,7 +857,7 @@ block_anime:
     if ((s16) W(0x24) >= 0) goto next_60;
     W(0x24) = 4;
 next_60:
-    func_001486D0();
+    player_shot_draw_a();
     goto block_rts;
 next_100:
     if (reg_d1.sb[0] >= 0) goto block_anime;
@@ -879,7 +879,7 @@ loop_110:
     reg_d0.h[0] = W(0x24);
     W(0xA) = (reg_d0.h[0] != 0) ? *(u16 *)((u8 *)reg_a0 + ((s16)reg_d0.h[0] & ~1)) : *(u16 *)reg_a0;
     W(0xC) = ((reg_d0.h[0] + 2) != 0) ? *(u16 *)((u8 *)reg_a0 + ((s16)(reg_d0.h[0] + 2) & ~1)) : *(u16 *)reg_a0;
-    func_001486D0();
+    player_shot_draw_a();
     goto block_rts;
 next_200:
     if (g_two_player_game == 0) goto next_220;
@@ -932,7 +932,7 @@ void player_shot_7_update(void) {
     ENTITY(reg_a6)->flags.b[1] |= 1;
     goto next_10;
 next_5:
-    func_00148700();
+    player_shot_draw_b();
     return;
 next_10:
     W(0) |= 8;
@@ -985,7 +985,7 @@ block_anime:
     if ((s16) W(0x24) >= 0) goto next_60;
     W(0x24) = 8;
 next_60:
-    func_00148700();
+    player_shot_draw_b();
     goto block_rts;
 next_100:
     if (reg_d1.sb[0] >= 0) goto block_anime;
@@ -1007,7 +1007,7 @@ loop_110:
     reg_d0.h[0] = W(0x24);
     W(0xA) = (reg_d0.h[0] != 0) ? *(u16 *)((u8 *)reg_a0 + ((s16)reg_d0.h[0] & ~1)) : *(u16 *)reg_a0;
     W(0xC) = ((reg_d0.h[0] + 2) != 0) ? *(u16 *)((u8 *)reg_a0 + ((s16)(reg_d0.h[0] + 2) & ~1)) : *(u16 *)reg_a0;
-    func_00148700();
+    player_shot_draw_b();
     goto block_rts;
 next_200:
     if (g_two_player_game == 0) goto next_220;
@@ -1060,7 +1060,7 @@ void player_shot_8_update(void) {
     ENTITY(reg_a6)->flags.b[1] |= 1;
     goto next_10;
 next_5:
-    func_00148700();
+    player_shot_draw_b();
     return;
 next_10:
     W(0) |= 8;
@@ -1113,7 +1113,7 @@ block_anime:
     if ((s16) W(0x24) >= 0) goto next_60;
     W(0x24) = 8;
 next_60:
-    func_00148700();
+    player_shot_draw_b();
     goto block_rts;
 next_100:
     if (reg_d1.sb[0] >= 0) goto block_anime;
@@ -1135,7 +1135,7 @@ loop_110:
     reg_d0.h[0] = W(0x24);
     W(0xA) = (reg_d0.h[0] != 0) ? *(u16 *)((u8 *)reg_a0 + ((s16)reg_d0.h[0] & ~1)) : *(u16 *)reg_a0;
     W(0xC) = ((reg_d0.h[0] + 2) != 0) ? *(u16 *)((u8 *)reg_a0 + ((s16)(reg_d0.h[0] + 2) & ~1)) : *(u16 *)reg_a0;
-    func_00148700();
+    player_shot_draw_b();
     goto block_rts;
 next_200:
     if (g_two_player_game == 0) goto next_220;
@@ -1175,5 +1175,5 @@ block_rts:
     return;
 }
 
-void func_0014BE20(void) {
+void player_shot_draw_unused(void) {
 }

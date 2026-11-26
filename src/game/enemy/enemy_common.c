@@ -158,16 +158,16 @@ void settings_notice_print_rapid_fire(void);
 void enemy_remove_entry(void);
 
 void layers_reset(void);
-void func_0012FA50(void);
-void func_0012FB00(void);
+void bg_scroll_reset(void);
+void bg_layer_clear(void);
 extern u32 D_00268FB0[];
 extern u8 g_bg_layer[16384];
 
 void settings_notice_layers_setup(void) {
     u32 t1;
 
-    func_0012FA50();
-    func_0012FB00();
+    bg_scroll_reset();
+    bg_layer_clear();
     layers_reset();
     reg_tmp.w = 0;
     reg_a1 = (u8 *)D_00268FB0;

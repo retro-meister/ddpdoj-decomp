@@ -776,7 +776,7 @@ extern u16 D_006C8E5C[];
 
 void replay_playback_begin(void) {
     extern void text_layer_clear(void);
-    extern void func_00171910(void);
+    extern void stage_doors_clear(void);
     extern void text_palette_load(void);
     extern void replay_header_save(void);
     u32 save_d0;
@@ -838,7 +838,7 @@ void replay_playback_begin(void) {
     reg_d0.h[0] = TASK_GAME;
     task_start();
     *(u16 *)(reg_a0 + 4) = g_replay_header.stage;
-    func_00171910();
+    stage_doors_clear();
     text_layer_clear();
     reg_d0.w = 0;
     reg_a0 = (u8 *)g_default_text_palette;
@@ -907,9 +907,9 @@ extern u8 D_006C91B0[];
 void replay_playback_start(void) {
     s32 enemies_stop();
     s32 enemies_resume();
-    s32 func_001719A0();
-    s32 func_001719B0();
-    s32 func_001719D0();
+    s32 stage_doors_open_request();
+    s32 stage_doors_open_requested_check();
+    s32 stage_doors_update();
     s32 music_play_bgm2();
     s32 base;
     u32 save_d0;
@@ -972,10 +972,10 @@ void replay_playback_start(void) {
             g_p1_lives = 0xFFFF;
         }
     }
-    func_001719D0();
+    stage_doors_update();
     switch (step) {
     case 0x0:
-        func_001719A0();
+        stage_doors_open_request();
         gfx_draw_color_box(0, 0, 0x1C2, 0xE0, 0x50, 0x80, 0xFF, 0xFF, 0xFF);
         step += 1;
         break;
@@ -999,7 +999,7 @@ void replay_playback_start(void) {
         step += 1;
         D_0028E368 = 1;
     case 0xC9:
-        func_001719B0();
+        stage_doors_open_requested_check();
         if (cond_flag == 0) {
             *(u8 *)(reg_a5 + 3) = 2;
         }
@@ -1102,7 +1102,7 @@ extern s8 D_0028E3F8;
 
 void replay_run_begin(void) {
     s32 text_layer_clear();
-    s32 func_00171910();
+    s32 stage_doors_clear();
     s32 text_palette_load();
     s32 replay_header_save();
     u32 save_d0;
@@ -1146,7 +1146,7 @@ void replay_run_begin(void) {
     reg_d0.h[0] = TASK_GAME;
     task_start();
     *(u16 *)(reg_a0 + 4) = g_replay_header.stage;
-    func_00171910();
+    stage_doors_clear();
     text_layer_clear();
     reg_d0.w = 0;
     reg_a0 = (u8 *)g_default_text_palette;
@@ -1181,9 +1181,9 @@ extern u8 D_0028E2D4;
 void replay_run_start(void) {
     extern void enemies_stop(void);
     extern void enemies_resume(void);
-    extern void func_001719A0(void);
-    extern void func_001719B0(void);
-    extern void func_001719D0(void);
+    extern void stage_doors_open_request(void);
+    extern void stage_doors_open_requested_check(void);
+    extern void stage_doors_update(void);
     extern void music_play_bgm2(void);
     u32 save_d0;
     u32 save_d1;
@@ -1220,13 +1220,13 @@ void replay_run_start(void) {
         replay_run_begin();
         return;
     }
-    func_001719D0();
+    stage_doors_update();
     switch (step) {
     default:
         step++;
         break;
     case 0:
-        func_001719A0();
+        stage_doors_open_request();
         step++;
         break;
     case 16:
@@ -1262,7 +1262,7 @@ void replay_run_start(void) {
         }
         break;
     case 19:
-        func_001719B0();
+        stage_doors_open_requested_check();
         if (cond_flag == 0) {
             *(u8 *)(reg_a5 + 3) = 2;
         }

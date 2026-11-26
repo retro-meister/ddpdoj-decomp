@@ -2839,7 +2839,7 @@ void shooter_drone_start(void)
 
 s32 bullet_fire();
 s32 debug_number_get();
-s32 func_00145D40();
+s32 shooter_drone_debug_print();
 s32 entity_draw_layer2();
 s32 velocity_from_direction();
 s32 direction_to_target_player();
@@ -2932,7 +2932,7 @@ void shooter_drone(void) {
     reg_d1.h[0] = 0x12;
     reg_d0.h[0] = 0xE;
     reg_d5.h[0] = 0;
-    func_00145D40();
+    shooter_drone_debug_print();
     reg_d0.w = save_d0; reg_d1.w = save_d1; reg_d2.w = save_d2; reg_d3.w = save_d3;
     reg_d4.w = save_d4; reg_d5.w = save_d5; reg_d6.w = save_d6; reg_d7.w = save_d7;
     reg_a0 = save_a0; reg_a1 = save_a1; reg_a2 = save_a2; reg_a3 = save_a3;
@@ -2945,7 +2945,7 @@ void shooter_drone(void) {
     reg_d1.h[0] = 0x11;
     reg_d0.h[0] = 0xE;
     reg_d5.h[0] = 0;
-    func_00145D40();
+    shooter_drone_debug_print();
     reg_d0.w = save_d0; reg_d1.w = save_d1; reg_d2.w = save_d2; reg_d3.w = save_d3;
     reg_d4.w = save_d4; reg_d5.w = save_d5; reg_d6.w = save_d6; reg_d7.w = save_d7;
     reg_a0 = save_a0; reg_a1 = save_a1; reg_a2 = save_a2; reg_a3 = save_a3;
@@ -2957,7 +2957,7 @@ void shooter_drone(void) {
     reg_d1.h[0] = 0x10;
     reg_d0.h[0] = 0xE;
     reg_d5.h[0] = 0;
-    func_00145D40();
+    shooter_drone_debug_print();
     reg_d0.w = save_d0; reg_d1.w = save_d1; reg_d2.w = save_d2; reg_d3.w = save_d3;
     reg_d4.w = save_d4; reg_d5.w = save_d5; reg_d6.w = save_d6; reg_d7.w = save_d7;
     reg_a0 = save_a0; reg_a1 = save_a1; reg_a2 = save_a2; reg_a3 = save_a3;

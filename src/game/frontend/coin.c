@@ -271,8 +271,8 @@ void p1_credit_spend_one(void) {
     p1_credit_spend();
 }
 
-s32 func_00131340();
-s32 func_001313A0();
+s32 p1_coins_decrement();
+s32 p1_credits_subtract();
 
 void p1_credit_spend(void) {
     reg_d0.b[0] = g_setting_coin_mode;
@@ -294,7 +294,7 @@ void p1_credit_spend(void) {
         }
         reg_d0.h[0] = reg_d2.h[0];
         D_0028E1E5[0] = 1;
-        func_001313A0();
+        p1_credits_subtract();
         credit_spend_accept();
         return;
     }
@@ -307,7 +307,7 @@ void p1_credit_spend(void) {
         credit_spend_accept();
         return;
     }
-    func_00131340();
+    p1_coins_decrement();
     credit_spend_accept();
 }
 
@@ -317,8 +317,8 @@ void p2_credit_spend_one(void) {
     p2_credit_spend();
 }
 
-s32 func_00131370();
-s32 func_001313E0();
+s32 p2_coins_decrement();
+s32 p2_credits_subtract();
 
 void p2_credit_spend(void) {
     reg_d0.b[0] = g_setting_coin_mode;
@@ -342,7 +342,7 @@ void p2_credit_spend(void) {
             }
             reg_d0.h[0] = reg_d2.h[0];
             D_0028E1D9[0] = 1;
-            func_001313A0();
+            p1_credits_subtract();
             credit_spend_accept();
             return;
         }
@@ -355,7 +355,7 @@ void p2_credit_spend(void) {
             credit_spend_accept();
             return;
         }
-        func_00131340();
+        p1_coins_decrement();
         credit_spend_accept();
         return;
     }
@@ -373,7 +373,7 @@ void p2_credit_spend(void) {
         }
         reg_d0.h[0] = reg_d2.h[0];
         D_0028E1D9[0] = 1;
-        func_001313E0();
+        p2_credits_subtract();
         credit_spend_accept();
         return;
     }
@@ -386,7 +386,7 @@ void p2_credit_spend(void) {
         credit_spend_accept();
         return;
     }
-    func_00131370();
+    p2_coins_decrement();
     credit_spend_accept();
 }
 

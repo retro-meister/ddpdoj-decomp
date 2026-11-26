@@ -1,10 +1,10 @@
 #include "common.h"
 #include "entity.h"
 
-void func_0019E980(void);
+void option_shot_fire_wide(void);
 
 
-void func_0019DC20(void) {
+void option_gun_cycle_a(void) {
     *(u16 *)(reg_a6 + 0x52) -= 4;
     if ((s16) *(u16 *)(reg_a6 + 0x52) < 0) {
         *(u16 *)(reg_a6 + 0x52) = 8U;
@@ -12,7 +12,7 @@ void func_0019DC20(void) {
     reg_d6.h[0] = *(u16 *)(reg_a6 + 0x52);
 }
 
-void func_0019DC60(void) {
+void option_gun_cycle_b(void) {
     *(u16 *)(reg_a6 + 0x52) -= 4;
     if ((s16) *(u16 *)(reg_a6 + 0x52) < 0) {
         *(u16 *)(reg_a6 + 0x52) = 8U;
@@ -20,7 +20,7 @@ void func_0019DC60(void) {
     reg_d6.h[0] = *(u16 *)(reg_a6 + 0x52);
 }
 
-void func_0019DCA0(void) {
+void option_gun_cycle_c(void) {
     *(u16 *)(reg_a6 + 0x52) -= 4;
     if ((s16) *(u16 *)(reg_a6 + 0x52) < 0) {
         *(u16 *)(reg_a6 + 0x52) = 8U;
@@ -28,7 +28,7 @@ void func_0019DCA0(void) {
     reg_d6.h[0] = *(u16 *)(reg_a6 + 0x52);
 }
 
-void func_0019DCE0(void) {
+void option_second_gun_cycle(void) {
     *(u16 *)(reg_a6 + 0x54) -= 4;
     if ((s16) *(u16 *)(reg_a6 + 0x54) < 0) {
         *(u16 *)(reg_a6 + 0x54) = 8U;
@@ -37,7 +37,7 @@ void func_0019DCE0(void) {
 }
 
 
-void func_0019DD20(void) {
+void option_shot_fire(void) {
     *(u16 *) reg_a0 = *(u16 *) reg_a1;
     reg_a1 += 2;
     reg_a0 += 2;
@@ -124,7 +124,7 @@ extern u16 g_two_player_game;
 extern u8 D_0029E390[];
 extern u8 D_0029EA50[];
 
-void func_0019E130(void) {
+void option_shots_fire_style_a(void) {
     u8 *save_a3;
     u8 *save_a5;
     u8 *save_a6;
@@ -183,8 +183,8 @@ next_3:
     reg_tmp.h[1] = (reg_d0.h[0] != 0) ? *(u16 *)((u8 *)reg_a2 + ((s16)reg_d0.h[0] & ~1)) : *(u16 *)reg_a2;
     reg_tmp.h[0] = (((reg_d0.h[0] & 0xFFFF) + 2) != 0) ? *(u16 *)((u8 *)reg_a2 + ((s16)((reg_d0.h[0] & 0xFFFF) + 2) & ~1)) : *(u16 *)reg_a2;
     reg_a2 = (u8 *)reg_tmp.w;
-    func_0019DC20();
-    func_0019DCE0();
+    option_gun_cycle_a();
+    option_second_gun_cycle();
 loop_0:
     if (*(s16 *)reg_a0 >= 0) goto next_4;
     reg_a0 += 0x30;
@@ -192,7 +192,7 @@ loop_0:
     goto next_5;
 next_4:
     push_a6 = reg_a6;
-    func_0019DD20();
+    option_shot_fire();
     reg_a6 = reg_a0 - 0x2C;
     entity_draw_keep();
     reg_a6 = push_a6;
@@ -206,7 +206,7 @@ loop_1:
     goto next_7;
 next_6:
     reg_a1 = reg_a2;
-    func_0019DD20();
+    option_shot_fire();
     reg_a6 = reg_a0 - 0x2C;
     entity_draw_keep();
 next_7:
@@ -219,7 +219,7 @@ next_7:
 
 extern u8 option_shot_lists_3[];
 
-void func_0019E5B0(void) {
+void option_shots_fire_style_b(void) {
     u8 *save_a3;
     u8 *save_a5;
     u32 save_d6;
@@ -291,14 +291,14 @@ loop_1:
     if ((s16)(reg_d5.h[0] -= 1) >= 0) goto loop_1;
     goto next_5;
 next_6:
-    func_0019DC60();
-    func_0019DCE0();
-    func_0019E980();
+    option_gun_cycle_b();
+    option_second_gun_cycle();
+    option_shot_fire_wide();
     reg_a0 = reg_a3;
-    func_0019DC60();
-    func_0019DCE0();
+    option_gun_cycle_b();
+    option_second_gun_cycle();
     reg_a6 += 0x20;
-    func_0019E980();
+    option_shot_fire_wide();
 next_5:
     reg_d6.w = save_d6;
     reg_d7.w = save_d7;
@@ -307,7 +307,7 @@ next_5:
     reg_a6 = save_a6;
 }
 
-void func_0019E980(void) {
+void option_shot_fire_wide(void) {
     u8 *save_a1;
     u8 *save_a6;
 
@@ -419,7 +419,7 @@ void func_0019E980(void) {
 s32 option_pair_draw();
 extern u8 option_shot_lists_4[];
 
-void func_0019EF20(void) {
+void option_shots_fire_style_c(void) {
     u32 save_d6;
     u32 save_d7;
     u8 *save_a3;
@@ -469,8 +469,8 @@ next_3:
     reg_tmp.h[1] = (reg_d0.h[0] != 0) ? *(u16 *)((u8 *)reg_a1 + ((s16)reg_d0.h[0] & ~1)) : *(u16 *)reg_a1;
     reg_tmp.h[0] = (((reg_d0.h[0] & 0xFFFF) + 2) != 0) ? *(u16 *)((u8 *)reg_a1 + ((s16)((reg_d0.h[0] & 0xFFFF) + 2) & ~1)) : *(u16 *)reg_a1;
     reg_a1 = (u8 *)reg_tmp.w;
-    func_0019DCA0();
-    func_0019DCE0();
+    option_gun_cycle_c();
+    option_second_gun_cycle();
 loop_0:
     if (*(s16 *)reg_a0 >= 0) goto next_4;
     reg_a0 += 0x30;

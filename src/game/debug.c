@@ -73,7 +73,7 @@ extern u16 D_0028E830;
 extern u16 D_0028E834;
 extern u16 g_game_flow_debug_value;
 
-void func_00137BF0(void) {
+void game_flow_debug_clear(void) {
     reg_d0.w = 0;
     g_game_flow_debug_value = reg_d0.h[0];
     D_0028E834 = reg_d0.h[0];
@@ -91,13 +91,13 @@ extern s16 g_ending_started;
 extern s16 D_002BF350[];
 extern s16 D_002BF370[];
 
-void func_00137C20(void) {
+void ending_state_clear(void) {
     g_ending_started = 0;
     (*(s16 **)&reg_a0) = D_002BF370;
     *(*(s16 **)&reg_a0) = 0;
     (*(s16 **)&reg_a0) = D_002BF350;
     *(*(s16 **)&reg_a0) = 0;
-    func_00137BF0();
+    game_flow_debug_clear();
 }
 
 extern u32 D_0028E7F8;
@@ -114,7 +114,7 @@ extern u16 D_0028E820;
 extern u16 D_0028E824;
 extern u16 D_0028E828;
 
-void func_00137C50(void) {
+void attract_demo_state_clear(void) {
     D_0028E7F8 = 0;
     (*(s32 *)&D_0028E7FC) = 0;
     D_0028E800 = 0;
@@ -131,7 +131,7 @@ void func_00137C50(void) {
 }
 
 #ifdef DEATH_LABEL
-s32 func_00171910();
+s32 stage_doors_clear();
 s32 text_palette_load();
 extern u8 death_D_0026EE20[];
 extern u16 g_attract_demo_stage;
@@ -144,7 +144,7 @@ extern u16 D_0028E818;
 extern u16 D_0028E820;
 extern u16 D_0028E824;
 
-void func_00137C90(void) {
+void attract_demo_begin(void) {
     u32 save_d0;
     u32 save_d1;
     u32 save_d2;
@@ -177,7 +177,7 @@ void func_00137C90(void) {
     save_a5 = reg_a5;
     save_a6 = reg_a6;
     g_attract_demo = 1;
-    func_00137C50();
+    attract_demo_state_clear();
     D_0028E824 = 0x10;
     D_0028E820 = 0x960;
     reg_a0 = (u8 *) attract_demos;
@@ -205,7 +205,7 @@ void func_00137C90(void) {
     reg_d0.h[0] = TASK_GAME;
     task_start();
     *(u16 *)(reg_a0 + 4) = reg_d7.h[0];
-    func_00171910();
+    stage_doors_clear();
     reg_a0 = death_D_0026EE20;
     reg_d0.h[0] = 0xC;
     text_palette_load();
@@ -233,7 +233,7 @@ extern u8 D_0028DF08;
 extern u16 g_attract_demo;
 extern s8 g_menu_pad;
 
-void func_00137C90(void) {
+void attract_demo_begin(void) {
     D_0028DF08 = 0;
     D_0028DF00 = 0x960;
     g_attract_picture_frame = 0;
@@ -342,10 +342,10 @@ extern u8 D_006C58DE[];
 extern u8 D_006C58DF[];
 extern u8 g_replay_snapshot[];
 
-void func_00137E00(void) {
+void attract_demo_start(void) {
     s32 layers_reset();
-    s32 func_0012FA50();
-    s32 func_0012FB00();
+    s32 bg_scroll_reset();
+    s32 bg_layer_clear();
     u32 save_d0;
     u32 save_d1;
     u32 save_d2;
@@ -423,8 +423,8 @@ void func_00137E00(void) {
             g_attract_demo = 0;
             g_replay_mode = 0;
             g_replay_buffer_state = 0;
-            func_0012FA50();
-            func_0012FB00();
+            bg_scroll_reset();
+            bg_layer_clear();
             layers_reset();
             menu_settings_restore();
             D_0028DF04 += 1;
@@ -513,8 +513,8 @@ void scripted_input_apply(void) {
 
 #ifdef DEATH_LABEL
 void ship_select_apply(void);
-void func_001719A0(void);
-void func_001719D0(void);
+void stage_doors_open_request(void);
+void stage_doors_update(void);
 extern u8 death_D_0026FDA0[];
 extern u8 g_game_frame_ran;
 extern u16 g_attract_demo_stage;
@@ -529,11 +529,11 @@ extern u16 D_0028E828;
 extern u8 death_D_00291191;
 extern u8 death_D_00291195;
 
-void func_00137E00(void) {
+void attract_demo_start(void) {
     void layers_reset(void);
     void deferred_text_put(void);
-    void func_0012FA50(void);
-    void func_0012FB00(void);
+    void bg_scroll_reset(void);
+    void bg_layer_clear(void);
     u32 save_d0;
     u32 save_d1;
     u32 save_d2;
@@ -565,7 +565,7 @@ void func_00137E00(void) {
     save_a4 = reg_a4;
     save_a5 = reg_a5;
     save_a6 = reg_a6;
-    func_001719D0();
+    stage_doors_update();
     reg_a0 = death_D_0026FDA0;
     reg_a0 += D_0028E81C;
     reg_d4.w = *(u32 *)reg_a0;
@@ -595,7 +595,7 @@ void func_00137E00(void) {
         D_0028E800 += 2;
         frame_counters_reset();
         g_game_frame_ran = 0;
-        func_001719A0();
+        stage_doors_open_request();
         reg_d0.w = 0;
         reg_d1.w = 0;
         reg_d0.h[0] = D_0028E818;
@@ -613,8 +613,8 @@ check_end:
     if (D_0028E828 == 1) {
         D_0028E820 -= 1;
         if (D_0028E820 == 0) {
-            func_0012FA50();
-            func_0012FB00();
+            bg_scroll_reset();
+            bg_layer_clear();
             layers_reset();
             goto finished;
         }

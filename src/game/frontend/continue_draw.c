@@ -206,7 +206,7 @@ next_120:
     ;
 }
 
-s32 func_00132210();
+s32 tally_digit_draw();
 s32 binary_to_bcd();
 extern u8 D_00269A30[];
 
@@ -228,10 +228,10 @@ void func_00133840(void) {
     sprite_draw_layer1();
     reg_d7.h[0] >>= 4;
     if (reg_d7.h[0] == 0) goto next_1;
-    func_00132210();
+    tally_digit_draw();
     reg_d7.h[0] >>= 4;
     if (reg_d7.h[0] == 0) goto next_1;
-    func_00132210();
+    tally_digit_draw();
 next_1:
     reg_d1.h[1] = ENTITY(reg_a6)[2].flags.h;
     reg_d1.h[0] = ENTITY(reg_a6)[2].y.h;
@@ -256,13 +256,13 @@ next_1:
     sprite_draw_layer1();
     reg_d7.w >>= 4;
     if (reg_d7.w == 0) goto next_2;
-    func_00132210();
+    tally_digit_draw();
     reg_d7.w >>= 4;
     if (reg_d7.w == 0) goto next_2;
-    func_00132210();
+    tally_digit_draw();
     reg_d7.w >>= 4;
     if (reg_d7.w == 0) goto next_2;
-    func_00132210();
+    tally_digit_draw();
 next_2:
     reg_d7.h[0] = ENTITY(reg_a6)->attr.h;
     reg_d2.w = 0xF;
@@ -279,11 +279,11 @@ next_2:
     sh = (u32) reg_d7.h[0] >> 4;
     reg_d7.h[0] = sh;
     if ((u16) sh == 0) goto next_3;
-    func_00132210();
+    tally_digit_draw();
     sh = (u32) reg_d7.h[0] >> 4;
     reg_d7.h[0] = sh;
     if ((u16) sh == 0) goto next_3;
-    func_00132210();
+    tally_digit_draw();
 next_3:
     reg_d1.h[1] = ENTITY(reg_a6)[2].flags.h;
     reg_d1.h[0] = ENTITY(reg_a6)[2].y.h;
@@ -309,19 +309,19 @@ next_3:
     sh = reg_d7.w >> 4;
     reg_d7.w = sh;
     if (sh == 0) goto next_7;
-    func_00132210();
+    tally_digit_draw();
     sh = reg_d7.w >> 4;
     reg_d7.w = sh;
     if (sh == 0) goto next_7;
-    func_00132210();
+    tally_digit_draw();
     sh = reg_d7.w >> 4;
     reg_d7.w = sh;
     if (sh == 0) goto next_7;
-    func_00132210();
+    tally_digit_draw();
     sh = reg_d7.w >> 4;
     reg_d7.w = sh;
     if (sh == 0) goto next_7;
-    func_00132210();
+    tally_digit_draw();
 next_7:
     if (g_player2[0] >= 0) goto block_rts;
     reg_d7.h[0] = ENTITY(reg_a6)[1].y.h;
@@ -339,11 +339,11 @@ next_7:
     sh = (u32) reg_d7.h[0] >> 4;
     reg_d7.h[0] = sh;
     if ((u16) sh == 0) goto next_4;
-    func_00132210();
+    tally_digit_draw();
     sh = (u32) reg_d7.h[0] >> 4;
     reg_d7.h[0] = sh;
     if ((u16) sh == 0) goto next_4;
-    func_00132210();
+    tally_digit_draw();
 next_4:
     reg_d1.h[1] = ENTITY(reg_a6)[2].x.h;
     reg_d1.h[0] = ENTITY(reg_a6)[2].offset_y.h;
@@ -369,15 +369,15 @@ next_4:
     sh = reg_d7.w >> 4;
     reg_d7.w = sh;
     if (sh == 0) goto next_5;
-    func_00132210();
+    tally_digit_draw();
     sh = reg_d7.w >> 4;
     reg_d7.w = sh;
     if (sh == 0) goto next_5;
-    func_00132210();
+    tally_digit_draw();
     sh = reg_d7.w >> 4;
     reg_d7.w = sh;
     if (sh == 0) goto next_5;
-    func_00132210();
+    tally_digit_draw();
 next_5:
     reg_d7.h[0] = ENTITY(reg_a6)[1].offset_y.h;
     reg_d2.w = 0xF;
@@ -394,11 +394,11 @@ next_5:
     sh = (u32) reg_d7.h[0] >> 4;
     reg_d7.h[0] = sh;
     if ((u16) sh == 0) goto next_6;
-    func_00132210();
+    tally_digit_draw();
     sh = (u32) reg_d7.h[0] >> 4;
     reg_d7.h[0] = sh;
     if ((u16) sh == 0) goto next_6;
-    func_00132210();
+    tally_digit_draw();
 next_6:
     reg_d1.h[1] = ENTITY(reg_a6)[2].x.h;
     reg_d1.h[0] = ENTITY(reg_a6)[2].offset_y.h;
@@ -424,19 +424,19 @@ next_6:
     sh = reg_d7.w >> 4;
     reg_d7.w = sh;
     if (sh == 0) goto block_rts;
-    func_00132210();
+    tally_digit_draw();
     sh = reg_d7.w >> 4;
     reg_d7.w = sh;
     if (sh == 0) goto block_rts;
-    func_00132210();
+    tally_digit_draw();
     sh = reg_d7.w >> 4;
     reg_d7.w = sh;
     if (sh == 0) goto block_rts;
-    func_00132210();
+    tally_digit_draw();
     sh = reg_d7.w >> 4;
     reg_d7.w = sh;
     if (sh == 0) goto block_rts;
-    func_00132210();
+    tally_digit_draw();
 block_rts:
     return;
 }

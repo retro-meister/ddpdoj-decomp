@@ -6554,8 +6554,8 @@ void pause_menu_quit_confirm(void) {
 }
 
 s32 layers_reset();
-s32 func_0012FA50();
-s32 func_0012FB00();
+s32 bg_scroll_reset();
+s32 bg_layer_clear();
 s32 layers_clear_all();
 s32 fades_reset();
 s32 sound_stop_effects();
@@ -6577,8 +6577,8 @@ extern s32 g_replay_position;
 void game_screen_teardown(void) {
     sound_stop_effects();
     music_stop();
-    func_0012FA50();
-    func_0012FB00();
+    bg_scroll_reset();
+    bg_layer_clear();
     layers_reset();
     g_attract_demo = 0;
     D_0028EAFC = 0xFF;
@@ -10567,7 +10567,7 @@ void simulation_task(void) {
 }
 
 extern void text_layer_clear(void);
-extern void func_00171910(void);
+extern void stage_doors_clear(void);
 extern void text_palette_load(void);
 extern void task_start(void);
 extern u8 g_default_text_palette[];
@@ -10658,7 +10658,7 @@ void simulation_task_begin() {
         task_start();
         *(u16 *)(reg_a0 + 4) = D_00684C80[6];
     }
-    func_00171910();
+    stage_doors_clear();
     printf("death round[%d]\n", death_D_00290DC0);
 #else
     g_game_mode = 2;
@@ -10685,7 +10685,7 @@ void simulation_task_begin() {
     D_00684C80[10] = 0;
     task_start();
     *(u16 *)(reg_a0 + 4) = D_00684C80[6];
-    func_00171910();
+    stage_doors_clear();
 #endif
     text_layer_clear();
     reg_d0.w = 0;
@@ -10718,9 +10718,9 @@ void task_stop_self_entry() {
 
 s32 frame_counters_reset();
 s32 enemies_resume();
-s32 func_001719A0();
-s32 func_001719B0();
-s32 func_001719D0();
+s32 stage_doors_open_request();
+s32 stage_doors_open_requested_check();
+s32 stage_doors_update();
 s32 music_play_bgm2();
 extern u8 g_pad_input_locked;
 extern u8 D_0028E2C4;
@@ -10778,13 +10778,13 @@ void simulation_task_run() {
     save_a3 = reg_a3;
     save_a4 = reg_a4;
     save_a5 = reg_a5;
-    func_001719D0();
+    stage_doors_update();
     switch (D_00684C94[0]) {                           /* irregular */
     default:
         D_00684C94[0] += 1;
         break;
     case 0:
-        func_001719A0();
+        stage_doors_open_request();
         D_00684C94[0] += 1;
         break;
 #ifdef DEATH_LABEL
@@ -10839,7 +10839,7 @@ void simulation_task_run() {
         }
         break;
     case MAIN_OR_DEATH_LABEL(19, 20):
-        func_001719B0();
+        stage_doors_open_requested_check();
         if (cond_flag == 0) {
             *(s8 *)(reg_a5 + 3) = 2;
         }

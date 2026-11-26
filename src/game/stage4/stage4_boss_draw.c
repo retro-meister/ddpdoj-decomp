@@ -2,33 +2,33 @@
 #include "entity.h"
 #include "stage4_boss.h"
 
-void func_001DC180(void);
-void func_001DC390(void);
-void func_001DC410(void);
-void func_001DC490(void);
-void func_001DC530(void);
-void func_001DC5D0(void);
-void func_001DC200(void);
-void func_001DC6D0(void);
-void func_001DC7E0(void);
-void func_001DC290(void);
-void func_001DC8F0(void);
-void func_001DC960(void);
+void stage4_boss_piece_0_draw(void);
+void stage4_boss_piece_1_draw(void);
+void stage4_boss_piece_2_draw(void);
+void stage4_boss_piece_3_draw(void);
+void stage4_boss_piece_4_draw(void);
+void stage4_boss_piece_5_draw(void);
+void stage4_boss_piece_6_draw(void);
+void stage4_boss_piece_7_draw(void);
+void stage4_boss_piece_8_draw(void);
+void stage4_boss_piece_9_draw(void);
+void stage4_boss_piece_10_draw(void);
+void stage4_boss_piece_11_draw(void);
 
 /* The draw routine of every part of the boss, by part number. */
 void (*stage4_boss_draw_routines[])(void) = {
-    func_001DC180,
-    func_001DC390,
-    func_001DC410,
-    func_001DC490,
-    func_001DC530,
-    func_001DC5D0,
-    func_001DC200,
-    func_001DC6D0,
-    func_001DC7E0,
-    func_001DC290,
-    func_001DC8F0,
-    func_001DC960,
+    stage4_boss_piece_0_draw,
+    stage4_boss_piece_1_draw,
+    stage4_boss_piece_2_draw,
+    stage4_boss_piece_3_draw,
+    stage4_boss_piece_4_draw,
+    stage4_boss_piece_5_draw,
+    stage4_boss_piece_6_draw,
+    stage4_boss_piece_7_draw,
+    stage4_boss_piece_8_draw,
+    stage4_boss_piece_9_draw,
+    stage4_boss_piece_10_draw,
+    stage4_boss_piece_11_draw,
     (void (*)(void))-1,
 };
 
@@ -44,7 +44,7 @@ void sprite_draw_layer4_keep_entry_2(void) {
 
 extern u32 D_0026EE10[];
 
-void func_001DC180(void) {
+void stage4_boss_piece_0_draw(void) {
     u8 *object = reg_a6;
     u16 *entry;
 
@@ -64,7 +64,7 @@ void func_001DC180(void) {
 
 extern u8 D_0026EE30[];
 
-void func_001DC200(void) {
+void stage4_boss_piece_6_draw(void) {
     reg_a0 = D_0026EE30;
     reg_a0 += ENTITY(reg_a6)[8].offset_y.h;
     reg_d2.h[1] = *(u16 *)reg_a0;
@@ -81,7 +81,7 @@ void func_001DC200(void) {
 
 extern u8 D_0026EE70[];
 
-void func_001DC290(void) {
+void stage4_boss_piece_9_draw(void) {
     u16 temp_a1;
     u16 temp_a1_2;
 
@@ -112,7 +112,7 @@ void func_001DC290(void) {
 
 extern u8 D_0026EEB0[];
 
-void func_001DC390(void) {
+void stage4_boss_piece_1_draw(void) {
     u8 *object = reg_a6;
     u16 *table_entry;
 
@@ -132,7 +132,7 @@ void func_001DC390(void) {
 
 extern u16 D_0026EED0[];
 
-void func_001DC410(void) {
+void stage4_boss_piece_2_draw(void) {
     u8 *object = reg_a6;
     u16 *entry;
 
@@ -152,7 +152,7 @@ void func_001DC410(void) {
 
 extern u8 D_0026EEF0[];
 
-void func_001DC490(void) {
+void stage4_boss_piece_3_draw(void) {
     reg_a0 = D_0026EEF0;
     reg_d0.h[0] = ENTITY(reg_a6)[6].offset_y.h;
     reg_d0.h[0] += reg_d0.h[0];
@@ -169,7 +169,7 @@ void func_001DC490(void) {
     sprite_draw_layer4_keep_entry();
 }
 
-void func_001DC530(void) {
+void stage4_boss_piece_4_draw(void) {
     reg_a0 = D_0026EEF0;
     reg_d0.h[0] = ENTITY(reg_a6)[7].offset_y.h;
     reg_d0.h[0] += reg_d0.h[0];
@@ -188,7 +188,7 @@ void func_001DC530(void) {
 
 extern u16 D_0026EF50[];
 
-void func_001DC5D0(void) {
+void stage4_boss_piece_5_draw(void) {
     u16 temp_a1;
     reg_d0.w = 0;
     reg_a0 = (u8 *)(D_0026EF50);
@@ -212,7 +212,7 @@ s32 sprite_draw_layer2();
 extern u8 D_0026EFD0[];
 extern u8 D_0026EFF0[];
 
-void func_001DC6D0(void) {
+void stage4_boss_piece_7_draw(void) {
     u16 temp_a0;
     u16 temp_a1;
 
@@ -245,7 +245,7 @@ void func_001DC6D0(void) {
 
 extern u8 D_0026F020[];
 
-void func_001DC7E0(void) {
+void stage4_boss_piece_8_draw(void) {
     u16 temp_a0;
     u16 temp_a1;
 
@@ -279,7 +279,7 @@ void func_001DC7E0(void) {
 extern void sprite_draw_layer5(void);
 extern u32 D_0026F040[];
 
-void func_001DC8F0(void) {
+void stage4_boss_piece_10_draw(void) {
     u8 *entity = reg_a6;
     u16 *tableEntry;
 
@@ -298,7 +298,7 @@ void func_001DC8F0(void) {
 
 extern u8 D_0026F080[];
 
-void func_001DC960(void) {
+void stage4_boss_piece_11_draw(void) {
     u8 *entity = reg_a6;
     u16 *tableEntry;
 

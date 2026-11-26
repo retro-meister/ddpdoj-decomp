@@ -92,7 +92,7 @@ extern u16 g_bullet_cancel[];
 extern u16 g_wrecks[];
 extern u8 g_sparks[2048];
 extern u8 g_sparks_second_half[];
-extern u16 D_0029A530[];
+extern u16 g_debris[];
 extern u8 g_explosions[4480];
 extern u16 g_bomb_entities[];
 extern u8 D_0029D710[32];
@@ -207,7 +207,7 @@ void startup_pointers_store_a(void) {
     STORE_POINTER(debug_list_views[27].entries, g_p2_score_extra_cell);
     STORE_POINTER(debug_list_views[28].entries, ((u16 *)g_bullets));
     STORE_POINTER(debug_list_views[29].entries, ((u16 *)D_002BB470));
-    STORE_POINTER(debug_list_views[30].entries, D_0029A530);
+    STORE_POINTER(debug_list_views[30].entries, g_debris);
     STORE_POINTER(debug_list_views[31].entries, g_bullet_cancel);
     STORE_POINTER(debug_list_views[32].entries, ((u16 *)g_explosions));
     STORE_POINTER(debug_list_views[33].entries, g_wrecks);
@@ -343,7 +343,7 @@ void clear_bonus_state_clear(void) {
 #endif
 }
 
-s32 func_001317E0();
+s32 next_stage_begin();
 s32 func_00133070();
 s32 fade_out();
 s32 fade_release();
@@ -431,7 +431,7 @@ void clear_bonus_task() {
                     replay_start_run_end();
                     return;
                 }
-                func_001317E0();
+                next_stage_begin();
                 *(s16 *)reg_a5 = 0;
             }
         }

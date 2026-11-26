@@ -2266,7 +2266,7 @@ extern void enemies_reset(void);
 extern void items_clear(void);
 extern void score_cells_init(void);
 extern void scores_reset(void);
-extern void func_001B82D0(void);
+extern void debris_clear(void);
 extern void sparks_clear(void);
 extern void wrecks_clear(void);
 void replay_start_state_load(u8 *p) {
@@ -2274,7 +2274,7 @@ void replay_start_state_load(u8 *p) {
 
     enemies_reset();
     explosions_clear();
-    func_001B82D0();
+    debris_clear();
     wrecks_clear();
     enemy_anims_clear();
     sparks_clear();

@@ -21,13 +21,13 @@ void laser_segment_move_hyper(void);
 void laser_segment_spawn(void);
 void laser_segment_end(void);
 void laser_segment_hit_check(void);
-void func_001480C0(void);
+void laser_segment_skip_check(void);
 void laser_impact_start(void);
 
 s32 debug_print_hex8_stub();
 s32 debug_print_hex_short_stub();
 
-void func_00145D40(void) {
+void shooter_drone_debug_print(void) {
     u8 *save_a0;
     u8 *save_a1;
     u8 *save_a2;
@@ -158,7 +158,7 @@ extern u16 g_input_p2_pressed;
 extern u16 g_input_p1_previous;
 extern u16 g_input_p1_pressed;
 
-void func_001460A0(void) {
+void ship_select_ship_begin(void) {
     ENTITY(reg_a6)->y.sh = 0;
     reg_a4 = (u8 *)D_00251AC0;
     if (reg_d7.h[0] != 0) {
@@ -246,7 +246,7 @@ s32 ship_palettes_load();
 extern u16 D_00251AD0[];
 extern u16 D_0028C118[];
 
-void func_00146350(void) {
+void ship_select_ship_confirm(void) {
     u16 temp_a0;
     reg_d0.w = 0;
     reg_d0.b[0] = *(u8 *)(reg_a6 + 2);
@@ -291,7 +291,7 @@ extern s32 D_0028E998;
 extern s32 D_0028E99C;
 extern u8 *reg_call_target_as_u8_p;
 
-void func_00146470(void) {
+void ship_select_ship_update(void) {
     u8 *temp_s0;
     u8 temp_v1;
     u8 temp_v1_2;
@@ -361,7 +361,7 @@ s32 entity_draw_with_player_lasers();
 extern u16 g_frame_mod2;
 extern u16 g_two_player_game;
 
-void func_00146690(arg0)
+void laser_draw_alternating(arg0)
     u16 arg0;
 {
     u16 var_a0;
@@ -609,7 +609,7 @@ block_4:
 block_5:
     if (g_p2_laser_bomb_active != 0) return;
 block_6:
-    func_00146690();
+    laser_draw_alternating();
 }
 
 extern u8 g_p1_options[];
@@ -705,7 +705,7 @@ block_9:
     *(u16 *)(reg_a6 + 0x20) = (u16) reg_tmp.h[0];
     reg_d0.h[0] = *(u16 *)(reg_a6 + 0x26);
     ENTITY(reg_a6)->y.h += reg_d0.h[0];
-    func_00146690();
+    laser_draw_alternating();
 }
 
 extern u8 g_p1_options[];
@@ -807,7 +807,7 @@ block_9:
     *(u16 *)(reg_a6 + 0x20) = (u16) reg_tmp.h[0];
     reg_d0.h[0] = *(u16 *)(reg_a6 + 0x26);
     ENTITY(reg_a6)->y.h += reg_d0.h[0];
-    func_00146690();
+    laser_draw_alternating();
 }
 
 
@@ -972,7 +972,7 @@ next_2:
 next_3:
     if (g_p2_laser_bomb_active != 0) return;
 next_4:
-    func_00146690();
+    laser_draw_alternating();
 }
 
 
@@ -1214,12 +1214,12 @@ block_1:
 block_2:
     if ((s32)reg_d1.h[0] <= (s32)reg_d0.h[0]) goto block_3;
     if ((s32)reg_d0.h[0] >= (s32)*(u16 *)(reg_a0 + 2)) goto next_1;
-    func_001480C0();
+    laser_segment_skip_check();
     return;
 next_1:
     reg_d1.h[0] = reg_d0.h[0];
     laser_impact_start();
-    func_001480C0();
+    laser_segment_skip_check();
     return;
 block_3:
     ENTITY(reg_a6)->flags.h = 0;
@@ -1229,11 +1229,11 @@ block_3:
 block_4:
     if (*(u16 *)(reg_a0 + 0x16) != 0) goto block_2;
     *(u16 *)reg_a0 = 0;
-    func_001480C0();
+    laser_segment_skip_check();
 }
 
 
-void func_001480C0(void) {
+void laser_segment_skip_check(void) {
     if (ENTITY(reg_a6)->move.h != 0) {
         if (g_p1_laser_bomb_active != 0) {
             return;
@@ -1242,7 +1242,7 @@ void func_001480C0(void) {
     }
     if (g_p2_laser_bomb_active == 0) {
 block_4:
-        func_00146690();
+        laser_draw_alternating();
     }
 }
 

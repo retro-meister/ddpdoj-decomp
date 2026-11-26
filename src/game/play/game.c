@@ -96,7 +96,7 @@ s32 bullets_clear();                            /* extern */
 s32 explosions_clear();                            /* extern */
 s32 enemies_reset();                            /* extern */
 s32 items_clear();                            /* extern */
-s32 func_001B82D0();                            /* extern */
+s32 debris_clear();                            /* extern */
 s32 sparks_clear();                            /* extern */
 s32 wrecks_clear();                            /* extern */
 
@@ -104,7 +104,7 @@ void game_stage_objects_clear(void) {
     game_stage_signals_clear();
     enemies_reset();
     explosions_clear();
-    func_001B82D0();
+    debris_clear();
     wrecks_clear();
     enemy_anims_clear();
     sparks_clear();
@@ -284,7 +284,7 @@ void player_slots_update(arg0)
     } while ((s16)(--reg_d7.h[0]) >= 0);
 }
 
-s32 func_0012FBD0();
+s32 screen_clear_unused();
 s32 side_scroll_reset();
 s32 hud_p1_lives_put();
 s32 hud_p2_lives_put();
@@ -300,7 +300,7 @@ extern u16 D_006E5C06[];
 void player_slot_next_ship(void) {
     u16 var_a0;
 
-    func_0012FBD0();
+    screen_clear_unused();
     PLAYER_SLOT(reg_a6)->ship_task[0] = 0U;
     PLAYER_SLOT(reg_a6)->ship_task[1] = 0U;
     g_bullets_blocked = 0x78;
@@ -354,7 +354,7 @@ extern u8 g_name_entry_player;
 void player_slot_out_of_ships(void) {
     u8 temp_a0;
 
-    func_0012FBD0();
+    screen_clear_unused();
     game_players_count();
     if (g_attract_demo == 0) {
         if (PLAYER_SLOT(reg_a6)->player == 0) {
@@ -521,7 +521,7 @@ void player_slot_join(void) {
     reg_d0.b[0] = PLAYER_SLOT(reg_a6)->player;
     player_panel_show_step_8();
     game_players_count();
-    func_0012FBD0();
+    screen_clear_unused();
     reg_d0.w = D_0028DEF0;
     reg_d1.w = D_0028DEEC;
     reg_d2.w = D_0028DEE8;
@@ -951,10 +951,10 @@ void game_restart(void) {
 }
 
 s32 pickups_clear();
-s32 func_00131630();
+s32 stage_clear_state_clear();
 s32 continue_panels_clear();
 s32 players_clear();
-s32 func_00171ED0();
+s32 stage_clear_color_orders_shuffle();
 s32 score_cells_init();
 s32 scores_reset();
 extern u8 text_palette_0[];
@@ -1017,8 +1017,8 @@ void game_task_begin(void) {
     }
     reg_d0.h[0] = *(u16 *)(reg_a5 + 4);
     game_stage_set();
-    func_00131630();
-    func_00171ED0();
+    stage_clear_state_clear();
+    stage_clear_color_orders_shuffle();
     if (g_loop == 0) {
         pickups_clear();
         scores_reset();

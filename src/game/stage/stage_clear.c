@@ -2,12 +2,12 @@
 #include "task.h"
 #include "entity.h"
 #include "sdk/ps2sdk.h"
-void func_00132420(void);
+void stage_clear_screen_update(void);
 
 s32 sfx_bonus_count();                            /* extern */
 extern u16 D_0028E954;
 
-void func_00131590(void) {
+void stage_clear_delay_a_tick(void) {
     if (D_0028E954 != 0) {
         D_0028E954 -= 1;
         return;
@@ -18,7 +18,7 @@ void func_00131590(void) {
 
 extern u16 D_0028E950;
 
-void func_001315D0(void) {
+void stage_clear_delay_b_tick(void) {
     if (D_0028E950 != 0) {
         D_0028E950 -= 1;
         return;
@@ -29,7 +29,7 @@ void func_001315D0(void) {
 
 extern u16 D_0028E95C;
 
-void func_00131610(void) {
+void stage_clear_running_check(void) {
     if (D_0028E95C != 0) {
         cond_flag = 1;
         return;
@@ -44,7 +44,7 @@ extern u16 D_0028E960;
 extern u8 D_002BF410[];
 extern u8 D_002BF450[];
 extern u8 D_002BF490[];
-void func_00131630(void) {
+void stage_clear_state_clear(void) {
     s32 var_a1;
     u8 *temp_a2;
     s32 var_a2;
@@ -100,8 +100,8 @@ void func_00131630(void) {
 
 s32 game_ground_task_stop();
 s32 fades_reset();
-s32 func_00171910();
-s32 func_00172060();
+s32 stage_doors_clear();
+s32 stage_clear_colors_reset();
 s32 chain_states_clear();
 s32 vibration_stop_all(s32, s32);
 s32 stage_map_hide();
@@ -122,7 +122,7 @@ extern u16 death_D_00290434;
 extern u16 death_D_00290438;
 #endif
 
-void func_00131700(void) {
+void stage_clear_task_begin(void) {
     *(s8 *)(reg_a5 + 3) = 1;
     *(s8 *)(reg_a5 + 7) = 0;
     *(s8 *)(reg_a5 + 6) = 4;
@@ -130,18 +130,18 @@ void func_00131700(void) {
     vibration_stop_all(4, 1);
     stage_map_hide();
     fades_reset();
-    func_00131630();
+    stage_clear_state_clear();
     chain_states_clear();
     D_0028E961 |= 1;
     D_0028E961 |= 8;
-    func_00171910();
+    stage_doors_clear();
     g_bullet_limit_raised_1[0] = 0;
     D_0028E95C = 1;
     g_bullet_limit_raised_2[0] = 0;
     D_0028E958 = 1;
     ((s16 *)g_bullet_limit_raised_3)[0] = 0;
     ((s16 *)D_0029976E)[0] = 0;
-    func_00172060();
+    stage_clear_colors_reset();
     game_ground_task_stop();
     D_0028ED60 = 0;
     g_players_hidden = 1;
@@ -155,7 +155,7 @@ void func_00131700(void) {
 extern u16 D_0028E960;
 
 
-void func_001317D0(void) {
+void stage_clear_task_finish(void) {
     D_0028E960 = 0;
     D_0028E95C = 0;
     task_stop_self();
@@ -173,10 +173,10 @@ extern u16 g_game_completed;
 extern u16 g_score_panel_intro;
 extern u8 g_boss_present;
 
-void func_001317E0(void) {
+void next_stage_begin(void) {
     fades_reset();
     task_reset_all();
-    func_00131630();
+    stage_clear_state_clear();
     stage_counts_reset();
     boss_hit_state_clear();
     (*(s16 *)&g_boss_present) = 0;
@@ -198,7 +198,7 @@ void func_001317E0(void) {
 
 s32 game_screen_teardown();                            /* extern */
 
-void func_00131840(void) {
+void stage_clear_to_replay(void) {
     game_screen_teardown();
     reg_d0.h[0] = TASK_REPLAY;
     task_start();
@@ -214,13 +214,13 @@ s32 fade_release();
 s32 fade_is_running();
 s32 p1_next_stage_setup();
 s32 p2_next_stage_setup();
-s32 func_00171990();
-s32 func_001719A0();
-s32 func_001719B0();
-s32 func_001719D0();
-s32 func_001720E0();
-s32 func_00172250();
-s32 func_00172260();
+s32 stage_doors_close_request();
+s32 stage_doors_open_request();
+s32 stage_doors_open_requested_check();
+s32 stage_doors_update();
+s32 stage_clear_colors_update();
+s32 stage_clear_colors_stop();
+s32 stage_clear_colors_apply();
 s32 sprite_palette_load();
 s32 boss_hit_state_clear();
 s32 replay_start_run_end();
@@ -252,7 +252,7 @@ extern u16 death_D_00290438;
 extern u8 death_D_00290568;
 #endif
 
-void func_00131880(void) {
+void stage_clear_task(void) {
     s8 var_a0;
     u16 temp_a0_3;
     u16 temp_v1_3;
@@ -263,17 +263,17 @@ void func_00131880(void) {
 
     temp_v1 = *(u8 *)(reg_a5 + 3);
     if (temp_v1 == 0) {
-        func_00131700();
+        stage_clear_task_begin();
         return;
     }
     if (temp_v1 == 2) {
-        func_001317D0();
+        stage_clear_task_finish();
         return;
     }
-    func_00172260();
+    stage_clear_colors_apply();
     temp_a0 = *(u8 *)(reg_a5 + 7);
     if (temp_a0 == 4) {
-        func_001719B0();
+        stage_doors_open_requested_check();
         if (cond_flag == 0) {
             *(u8 *)(reg_a5 + 3) = 2U;
         }
@@ -324,9 +324,9 @@ block_after:
         game_stage_set();
         stage_counts_reset();
         D_0028E958 = 0;
-        func_00172250();
+        stage_clear_colors_stop();
         g_game_frame_ran = 0;
-        func_001719A0();
+        stage_doors_open_request();
         boss_hit_state_clear();
         g_players_hidden = 0;
         *(u8 *)(reg_a5 + 7) = 3U;
@@ -337,7 +337,7 @@ block_25:
 #ifdef DEATH_LABEL
     if (temp_v1_2 == 0x16) {
         reg_a6 = D_002BF490;
-        func_00132420();
+        stage_clear_screen_update();
         if ((g_game_mode == 2) && ((s8)death_D_00290568 == 1)) {
             death_D_00290568 = 0;
             g_p1_lives = death_D_00290434;
@@ -359,12 +359,12 @@ block_25:
 #endif
     if (temp_v1_2 == 0x15) {
         reg_a6 = D_002BF490;
-        func_00132420();
+        stage_clear_screen_update();
         return;
     }
     if (temp_v1_2 == 0xB) {
         reg_a6 = D_002BF490;
-        func_00132420();
+        stage_clear_screen_update();
         reg_d0.h[1] = *(u16 *)(reg_a5 + 8);
         reg_d0.h[0] = *(u16 *)(reg_a5 + 0xA);
         fade_is_running();
@@ -372,7 +372,7 @@ block_25:
             reg_d0.h[1] = *(u16 *)(reg_a5 + 8);
             reg_d0.h[0] = *(u16 *)(reg_a5 + 0xA);
             if (g_simulation_active != 0) {
-                func_00131840();
+                stage_clear_to_replay();
                 *(u8 *)(reg_a5 + 3) = 2U;
                 return;
             }
@@ -388,14 +388,14 @@ block_25:
     }
     if (*(u8 *)(reg_a5 + 7) == 1) {
         reg_a6 = D_002BF490;
-        func_00132420();
+        stage_clear_screen_update();
     }
     if (*(u8 *)(reg_a5 + 7) == 0xA) {
         reg_a6 = D_002BF490;
-        func_00132420();
+        stage_clear_screen_update();
         *(u8 *)(reg_a5 + 6) -= 1;
         if (*(u8 *)(reg_a5 + 6) == 0) {
-            func_00171990();
+            stage_doors_close_request();
             reg_a0 = (u8 *)(D_00269840);
             fade_in_and_release();
             *(u8 *)(reg_a5 + 7) = 1U;
@@ -514,17 +514,17 @@ block_25:
         }
     }
     if (*(u8 *)(reg_a5 + 7) == 0) {
-        func_001720E0();
+        stage_clear_colors_update();
         if (cond_flag == 0) {
             *(u8 *)(reg_a5 + 7) = 0xAU;
         }
     }
-    func_001719D0();
+    stage_doors_update();
 }
 
 extern void sprite_draw_layer1(void);
 
-void func_00132210(void)
+void tally_digit_draw(void)
 {
     reg_d2.h[0] = (s16)reg_d7.h[0] & 0xF;
     reg_d2.w = ((u32 *)(*(s32 *)&reg_a1))[reg_d2.h[0]];
@@ -562,7 +562,7 @@ void func_00132250(void) {
     }
 }
 
-s32 func_0012FB00();
+s32 bg_layer_clear();
 s32 func_00133070();
 s32 func_001330F0();
 s32 func_00133840();
@@ -615,7 +615,7 @@ extern u8 g_game_mode;
 extern u8 death_D_00290568;
 #endif
 
-void func_00132420(void) {
+void stage_clear_screen_update(void) {
     u32 t1;
     u32 t2;
     u32 t3;
@@ -672,7 +672,7 @@ void func_00132420(void) {
     if (!(v1 & 4)) {
         *(u8 *)(reg_a6 + 3) = (u8) (v1 | 4);
         *(u16 *)(reg_a6 + 4) = 1U;
-        func_0012FB00();
+        bg_layer_clear();
         return;
     }
     t8 = *(u16 *)(reg_a6 + 4);
@@ -870,7 +870,7 @@ block_15:
                     reg_d7.h[0] = 1;
                     reg_d1.w = 0x10;
                     score_add_masked();
-                    func_00131590();
+                    stage_clear_delay_a_tick();
                     reg_d6.w = 1;
                 }
                 t14 = *(u16 *)(reg_a6 + 0x1E);
@@ -882,7 +882,7 @@ block_48:
                     reg_d1.w = 0x10;
                     score_add_masked();
                     if (reg_d6.h[0] == 0) {
-                        func_00131590();
+                        stage_clear_delay_a_tick();
                     }
                 }
             }
@@ -912,7 +912,7 @@ block_48:
                     reg_d7.h[0] = 1;
                     reg_d1.w = 8;
                     score_add_masked();
-                    func_001315D0();
+                    stage_clear_delay_b_tick();
                     reg_d6.w = 1;
                 }
                 t7 = *(u16 *)(reg_a6 + 0x28);
@@ -924,7 +924,7 @@ block_60:
                     reg_d1.w = 8;
                     score_add_masked();
                     if (reg_d6.h[0] == 0) {
-                        func_001315D0();
+                        stage_clear_delay_b_tick();
                     }
                 }
             }

@@ -10,7 +10,7 @@ s32 bullets_clear();                            /* extern */
 s32 enemy_anims_clear();                            /* extern */
 s32 enemies_reset();                            /* extern */
 s32 items_clear();                            /* extern */
-s32 func_001B82D0();                            /* extern */
+s32 debris_clear();                            /* extern */
 s32 sparks_clear();                            /* extern */
 s32 wrecks_clear();                            /* extern */
 
@@ -18,7 +18,7 @@ void func_00139B20(void) {
     items_clear();
     bullets_clear();
     explosions_clear();
-    func_001B82D0();
+    debris_clear();
     wrecks_clear();
     enemy_anims_clear();
     sparks_clear();
@@ -41,12 +41,12 @@ s32 p1_draw_while_entering();
 s32 p2_draw_while_entering();
 s32 player_lasers_update();
 s32 laser_impacts_update();
-s32 func_001488C0();
+s32 player_shots_update();
 s32 enemies_frame();
 s32 items_update();
 void ground_step_unused(s32, s32, s32);
 s32 p1_options_update();
-s32 func_001B8410();
+s32 debris_update();
 s32 sparks_update();
 s32 player_bullet_collisions();
 s32 player_collisions();
@@ -84,10 +84,10 @@ void func_00139B80(void) {
     enemy_anims_update();
     pickups_update();
     explosions_update();
-    func_001B8410();
+    debris_update();
     ground_step_unused(0x1F, 0, 0);
     bombs_update();
-    func_001488C0();
+    player_shots_update();
     p1_options_update();
     player_lasers_update();
     laser_impacts_update();

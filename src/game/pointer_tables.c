@@ -287,20 +287,20 @@ void player_shot_4_tables_init(void);
 void player_shot_8_tables_init(void);
 void player_tables_init(void);
 void maximum_level_texts_init(void);
-void func_001829B0(void);
+void option_power_pointers_store(void);
 void option_tables_init(void);
 void option_shot_lists_init(void);
-void func_00186310(void);
-void func_00186760(void);
-void func_001867B0(void);
-void func_00186A80(void);
-void func_00186CA0(void);
-void func_00187300(void);
-void func_00187360(void);
-void func_00187AE0(void);
-void func_00187E00(void);
-void func_001881E0(void);
-void func_001882D0(void);
+void ground_enemy_pointers_store(void);
+void explosion_test_pointers_store(void);
+void small_tank_pointers_store(void);
+void stage1_midboss_pointers_store(void);
+void stage3_midboss_pointers_store(void);
+void pointers_store_part_6(void);
+void pointers_store_part_7(void);
+void pointers_store_part_8(void);
+void pointers_store_part_9(void);
+void pointers_store_part_10(void);
+void pointers_store_part_11(void);
 void player_shot_7_tables_init(void);
 
 
@@ -317,26 +317,26 @@ void pointer_tables_init(void) {
     player_shot_8_tables_init();
     player_tables_init();
     maximum_level_texts_init();
-    func_001829B0();
+    option_power_pointers_store();
     option_tables_init();
     option_shot_lists_init();
-    func_00186310();
-    func_00186760();
-    func_001867B0();
-    func_00186A80();
-    func_00186CA0();
-    func_00187300();
-    func_00187360();
-    func_00187AE0();
-    func_00187E00();
-    func_001881E0();
-    func_001882D0();
+    ground_enemy_pointers_store();
+    explosion_test_pointers_store();
+    small_tank_pointers_store();
+    stage1_midboss_pointers_store();
+    stage3_midboss_pointers_store();
+    pointers_store_part_6();
+    pointers_store_part_7();
+    pointers_store_part_8();
+    pointers_store_part_9();
+    pointers_store_part_10();
+    pointers_store_part_11();
     player_shot_7_tables_init();
 }
 
 extern u16 g_task_table[];
 void ending_task();
-void func_00131880();
+void stage_clear_task();
 void continue_task();
 void game_task();
 void ground_task();
@@ -350,7 +350,7 @@ void name_entry_task();
 void player_panel_task();
 void join_select_task();
 void ship_select_task();
-void func_001B2200();
+void select_step2_task();
 void credits_task();
 void test_mode_task();
 void clear_bonus_task();
@@ -364,7 +364,7 @@ void task_table_init(void) {
     STORE_POINTER(g_task_table + 4 * TASK_PLAYER2, player2_task);
     STORE_POINTER(g_task_table + 4 * 4, player_panel_task);
     STORE_POINTER(g_task_table + 4 * 5, func_00139B80);
-    STORE_POINTER(g_task_table + 4 * 6, func_00131880);
+    STORE_POINTER(g_task_table + 4 * 6, stage_clear_task);
     STORE_POINTER(g_task_table + 4 * TASK_ENDING, ending_task);
     STORE_POINTER(g_task_table + 4 * TASK_ATTRACT, attract_task);
     STORE_POINTER(g_task_table + 4 * TASK_SHIP_SELECT, ship_select_task);
@@ -375,7 +375,7 @@ void task_table_init(void) {
     STORE_POINTER(g_task_table + 4 * TASK_GAME_OVER, game_over_task);
     STORE_POINTER(g_task_table + 4 * TASK_CREDITS, credits_task);
     STORE_POINTER(g_task_table + 4 * TASK_TEST_MODE, test_mode_task);
-    STORE_POINTER(g_task_table + 4 * 17, func_001B2200);
+    STORE_POINTER(g_task_table + 4 * 17, select_step2_task);
     STORE_POINTER(g_task_table + 4 * 18, 0);
     STORE_POINTER(g_task_table + 4 * 19, clear_bonus_task);
     STORE_POINTER(g_task_table + 4 * TASK_REPLAY, replay_task);
@@ -3484,7 +3484,7 @@ extern u16 option_sprites_b_01_04_05[];
 extern u16 option_hyper_sprite_b_00_05[];
 
 
-void func_001829B0(void) {
+void option_power_pointers_store(void) {
     STORE_POINTER(option_power_value_00 + 10, option_power_value_00_05);
     STORE_POINTER(option_power_value_00 + 15, option_power_value_00_07);
     STORE_POINTER(option_power_value_00 + 17, option_power_value_00_08);
@@ -4079,7 +4079,7 @@ extern u16 D_002586E0[];
 extern u16 D_00258760[];
 extern u16 D_00258770[];
 
-void func_00186310(void) {
+void ground_enemy_pointers_store(void) {
     STORE_POINTER(D_0028C9B0 + 4, ground_shot_random_b);
     STORE_POINTER(D_0028C9B0 + 6, ground_shot_random_a);
     STORE_POINTER(D_00258560, ground_gun_a_aim);
@@ -4121,7 +4121,7 @@ extern u16 D_00253280[];
 
 extern u16 g_explosion_test_labels[];
 
-void func_00186760(void) {
+void explosion_test_pointers_store(void) {
     STORE_POINTER(g_explosion_test_labels, D_00253250);
     STORE_POINTER(g_explosion_test_labels + 2, D_00253280);
 }
@@ -4138,7 +4138,7 @@ extern void sprite_draw_layer4(void);
 extern void sprite_draw_layer5(void);
 
 
-void func_001867B0(void) {
+void small_tank_pointers_store(void) {
     STORE_POINTER(small_tank_draw_routines, entity_draw_layer1);
     STORE_POINTER(small_tank_draw_routines + 2, sprite_draw_layer1);
     STORE_POINTER(small_tank_draw_routines + 4, entity_draw_layer1);
@@ -4180,7 +4180,7 @@ extern u16 D_002611F0[];
 extern u16 D_0028C0D0[];
 
 
-void func_00186A80(void) {
+void stage1_midboss_pointers_store(void) {
     STORE_POINTER(stage1_midboss_entities + 243, D_0028C0D0);
     STORE_POINTER(stage1_midboss_fade_script + 4, D_002610F0);
     STORE_POINTER(stage1_midboss_fade_script + 11, ((u16 *)D_002601B0));
@@ -4215,7 +4215,7 @@ extern u16 D_002635C2[];
 extern u16 stage3_midboss2_state_routines_1[];
 extern u16 D_00263612[];
 
-void func_00186CA0(void) {
+void stage3_midboss_pointers_store(void) {
     if (stage3_midboss_table[103] != 0x67) {
         printf("error! st3mb_tbl[103]\n");
     }
@@ -4329,7 +4329,7 @@ void func_00186CA0(void) {
 extern u16 D_00261D30[];
 
 
-void func_00187300(void) {
+void pointers_store_part_6(void) {
     STORE_POINTER(D_00265B60 + 91, D_00261D30);
     STORE_POINTER(D_00265F60 + 3, D_00261D30);
     STORE_POINTER(D_00266330 + 3, D_00261D30);
@@ -4355,7 +4355,7 @@ extern u16 D_0025AE10[];
 extern u16 D_0025AE50[];
 extern u16 D_0025AE70[];
 
-void func_00187360(void) {
+void pointers_store_part_7(void) {
     STORE_POINTER(D_0025A0B0 + 33, D_0028C0C8);
     STORE_POINTER(D_0025A0B0 + 40, D_0028C0C8);
     STORE_POINTER(D_0025A0B0 + 47, D_0028C0C0);
@@ -4430,7 +4430,7 @@ extern u16 D_002602B0[];
 extern u16 D_002602F0[];
 
 
-void func_00187AE0(void) {
+void pointers_store_part_8(void) {
     STORE_POINTER(D_00263030 + 48, D_0028C0C8);
     STORE_POINTER(D_00263030 + 56, D_0028C0C8);
     STORE_POINTER(D_00263030 + 64, D_0028C0C0);
@@ -4471,7 +4471,7 @@ extern u16 D_00263B10[];
 extern u16 D_00263B30[];
 
 
-void func_00187E00(void) {
+void pointers_store_part_9(void) {
     STORE_POINTER(D_002638B0 + 47, D_0028C0C8);
     STORE_POINTER(D_002638B0 + 54, D_0028C0C8);
     STORE_POINTER(D_002638B0 + 61, D_0028C0C0);
@@ -4507,7 +4507,7 @@ extern u16 D_002420D0[];
 extern u16 D_002420E0[];
 
 
-void func_001881E0(void) {
+void pointers_store_part_10(void) {
     STORE_POINTER(D_00242020 + 20, entity_draw_layer1);
     STORE_POINTER(D_00242020 + 22, sprite_draw_layer1);
     STORE_POINTER(D_00242070 + 20, entity_draw_layer1);
@@ -4517,7 +4517,7 @@ void func_001881E0(void) {
     STORE_POINTER(D_002420A8 + 4, D_002420E0);
 }
 
-void func_001882D0(void) {
+void pointers_store_part_11(void) {
 }
 
 

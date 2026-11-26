@@ -22,7 +22,7 @@ void player_draw_plain(void);
 void player_draw_entering();
 
 
-void func_0013F990(void) {
+void player_option_delay_clear(void) {
     *(u16 *)(reg_a4 + 0x60) = 0;
 }
 

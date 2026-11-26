@@ -17,21 +17,21 @@ void options_laser_fire(void);
 void option_move(void);
 
 s32 entity_draw_keep();                            /* extern */
-s32 func_0019DD20();                            /* extern */
+s32 option_shot_fire();                            /* extern */
 
 void option_pair_draw(void) {
     s32 temp_s0;
     s32 temp_s0_2;
 
     temp_s0 = (s32)reg_a6;
-    func_0019DD20();
+    option_shot_fire();
     reg_a6 = (u8 *)(((s32)reg_a0) - 0x2C);
     entity_draw_keep();
     reg_a6 = (u8 *)temp_s0;
     reg_a6 += 0x20;
     temp_s0_2 = (s32)reg_a6;
     reg_a0 = (u8 *)(((s32)reg_a3));
-    func_0019DD20();
+    option_shot_fire();
     reg_a6 = (u8 *)(((s32)reg_a0) - 0x2C);
     entity_draw_keep();
     reg_a6 = (u8 *)temp_s0_2;
@@ -291,7 +291,7 @@ s32 p2_laser_clear();
 s32 p1_afterimage_reset();
 s32 p2_afterimage_reset();
 s32 player_zoom_in_step();
-s32 func_0013F990();
+s32 player_option_delay_clear();
 extern u8 g_game_frame_ran;
 extern s32 g_replay_position;
 extern u8 g_replay_mode;
@@ -565,7 +565,7 @@ next_400:
     options_narrow_step();
     goto block_b;
 next_410:
-    func_0013F990();
+    player_option_delay_clear();
     options_widen_step();
     *(u8 *)(reg_a6 + 0x3E) = 0xA;
     if (!(*(u8 *)(reg_a6 + 1) & 0x40)) goto block_b;
@@ -701,7 +701,7 @@ block_rts:
     return;
 }
 
-s32 func_0019E130();
+s32 option_shots_fire_style_a();
 
 void func_001A0E90(void) {
     option_animate();
@@ -750,12 +750,12 @@ block_13:
                 reg_d0.w = 2;
             }
             *(u8 *)(reg_a4 + 0x35) = (u8) reg_d0.b[0];
-            func_0019E130();
+            option_shots_fire_style_a();
         }
     }
 }
 
-s32 func_0019E5B0();
+s32 option_shots_fire_style_b();
 
 void func_001A1040(void) {
     u32 t;
@@ -848,12 +848,12 @@ block_22:
                 reg_d0.w = 2;
             }
             *(u8 *)(reg_a4 + 0x35) = (u8) reg_d0.b[0];
-            func_0019E5B0();
+            option_shots_fire_style_b();
         }
     }
 }
 
-s32 func_0019EF20();
+s32 option_shots_fire_style_c();
 
 void func_001A1360(void) {
     option_animate();
@@ -902,7 +902,7 @@ block_13:
                 reg_d0.w = 2;
             }
             *(u8 *)(reg_a4 + 0x35) = (u8) reg_d0.b[0];
-            func_0019EF20();
+            option_shots_fire_style_c();
         }
     }
 }

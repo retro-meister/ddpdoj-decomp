@@ -9,7 +9,7 @@ extern s8 D_0026B210[];
 extern u16 g_game_frame;
 extern s8 D_002BB430[];
 
-void func_00171ED0(void) {
+void stage_clear_color_orders_shuffle(void) {
     reg_d6.w = 0;
     (*(s8 **)&reg_a4) = (s8 *)D_002BB430;
     reg_d7.w = 4;
@@ -54,7 +54,7 @@ extern u8 D_0028E790;
 extern u16 D_0028E794;
 extern u16 g_stage_x4;
 
-void func_00172060(void) {
+void stage_clear_colors_reset(void) {
     D_0028E784 = 0;
     (*(s16 *)&D_0028E790) = 0x707;
     D_0028E794 = 0;
@@ -65,7 +65,7 @@ void func_00172060(void) {
 
 extern u16 D_0028E788;
 
-void func_00172090(void)
+void stage_clear_color_table_get(void)
 {
     reg_d0.w = 0;
     reg_a0 = (u8 *)(*(s8 **)((u8 *)((u8 *)D_0026B230) + (D_0028E29C & ~3)));
@@ -81,13 +81,13 @@ extern u8 D_0028E790;
 extern u8 D_0028E791;
 extern u16 D_0028E794;
 
-void func_001720E0(void) {
+void stage_clear_colors_update(void) {
     s32 temp_a0;
     s32 temp_a0_3;
 
     if (D_0028E794 == 0) {
         D_0028E794 = 1;
-        func_00172090();
+        stage_clear_color_table_get();
         reg_d0.h[0] *= 2;
         reg_d0.h[0] += 1;
         temp_a0 = reg_d0.h[0] * 4;
@@ -102,7 +102,7 @@ void func_001720E0(void) {
             D_0028E78C = 7;
             D_0028E791 = D_0028E790;
             D_0028E788 -= 1;
-            func_00172090();
+            stage_clear_color_table_get();
             reg_d0.h[0] *= 2;
             reg_d0.h[0] += 1;
             temp_a0_3 = reg_d0.h[0] * 4;
@@ -133,7 +133,7 @@ block_z:
 
 extern u16 D_0028E784_as_u16;
 
-void func_00172250(void) {
+void stage_clear_colors_stop(void) {
     D_0028E784_as_u16 = 0xFFFF;
 }
 
@@ -141,11 +141,11 @@ s32 sprite_draw_layer1();
 s32 sprite_draw_with_bullets_zoom();
 extern u8 D_0026B280[];
 
-void func_00172260(void) {
+void stage_clear_colors_apply(void) {
     u32 temp_a3;
 
     if (D_0028E784 != -1) {
-        func_00172090();
+        stage_clear_color_table_get();
         reg_d0.h[0] *= 2;
         temp_a3 = *(u32 *)(((u8 *)&D_0026B250) + (reg_d0.h[0] * 4));
         reg_d1.w = 0x38001C00;

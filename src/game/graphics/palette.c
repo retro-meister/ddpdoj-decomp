@@ -9,7 +9,7 @@ extern s16 D_0028E0C0;
 extern u8 D_0029F2D0[];
 extern u8 g_palette_bank_a[];
 extern u8 g_palette_bank_b[];
-void func_001A2900(void) {
+void palettes_init(void) {
     s32 var_a1;
     u8 *temp_a2;
     s32 var_a2;
@@ -66,7 +66,7 @@ void func_001A2900(void) {
 }
 
 
-void func_001A29E0(void) {
+void palette_words_copy(void) {
     *(*(u16 **)&reg_a1) = *((u16 *)reg_a0);
     (*(u16 **)&reg_a0) += 1;
     (*(u16 **)&reg_a1) += 1;
@@ -117,7 +117,7 @@ void func_001A29E0(void) {
     (*(u16 **)&reg_a1) += 1;
 }
 
-void func_001A2C70(void) {
+void palette_flush_unused(void) {
 }
 
 s32 color_at_brightness();
@@ -134,17 +134,17 @@ extern s32 g_text_palette[128];
 extern u8 g_bg_palette[];
 extern u8 g_sprite_palette[];
 
-void func_001A2C80(void) {
+void palette_banks_flush(void) {
     if ((u16)D_0028E0C0 != 0) {
         reg_a0 = (u8 *)g_palette_bank_b;
         reg_a1 = (u8 *)g_sprite_palette;
         reg_d0.w = 0x1F;
         do {
-            func_001A29E0();
-            func_001A29E0();
+            palette_words_copy();
+            palette_words_copy();
         } while ((s16)(--reg_d0.h[0]) >= 0);
         D_0028E0C0 = 0;
-        func_001A2C70();
+        palette_flush_unused();
         sprite_palette_upload();
     }
     if ((u16)D_0028E0BC != 0) {
@@ -152,11 +152,11 @@ void func_001A2C80(void) {
         reg_a1 = (u8 *)g_bg_palette;
         reg_d0.w = 0x1F;
         do {
-            func_001A29E0();
-            func_001A29E0();
+            palette_words_copy();
+            palette_words_copy();
         } while ((s16)(--reg_d0.h[0]) >= 0);
         D_0028E0BC = 0;
-        func_001A2C70();
+        palette_flush_unused();
         bg_palette_upload();
     }
     if ((u16)D_0028E0B8 != 0) {
@@ -164,10 +164,10 @@ void func_001A2C80(void) {
         reg_a1 = (u8 *)((u8 *)g_text_palette);
         reg_d0.w = 0xE;
         do {
-            func_001A29E0();
+            palette_words_copy();
         } while ((s16)(--reg_d0.h[0]) >= 0);
         D_0028E0B8 = 0;
-        func_001A2C70();
+        palette_flush_unused();
         text_palette_upload();
     }
     if ((g_stage == 0) && ((s16)g_scroll_line < 0x130)) {
@@ -210,7 +210,7 @@ void func_001A2C80(void) {
 }
 
 
-void func_001A2F20(void)
+void palette_run_copy(void)
 {
     do {
         *(u16 *)(*(u32 *)&reg_a1) = *(u16 *)(*(u32 *)&reg_a0);
@@ -233,7 +233,7 @@ void text_palette_load(void) {
     reg_d0.h[0] <<= 5;
     reg_a1 += reg_d0.h[0];
     reg_d0.w = 7;
-    func_001A2F20();
+    palette_run_copy();
     reg_d0.w = temp_s0;
     D_0028E0B8 = 1;
     reg_a0 = (u8 *)temp_s1;
@@ -249,7 +249,7 @@ void sprite_palette_load(void) {
     reg_d0.h[0] <<= 6;
     reg_a1 += reg_d0.h[0];
     reg_d0.w = 0xF;
-    func_001A2F20();
+    palette_run_copy();
     reg_d0.w = temp_s0;
     D_0028E0C0 = 1;
     reg_a0 = (u8 *)temp_s1;

@@ -2,11 +2,11 @@
 #include "fade.h"
 #include "entity.h"
 
-void func_00171A30(void);
-void func_00171B90(void);
+void stage_doors_close_update(void);
+void stage_doors_open_update(void);
 
 
-void func_00171490(void) {
+void stage_door_record_copy(void) {
     (*(u16 **)&reg_a1) = ((u16 *)reg_a6);
     reg_d0.h[0] = 0xF;
     do {
@@ -20,7 +20,7 @@ void func_00171490(void) {
 }
 
 
-void func_00171520(void) {
+void stage_door_words_copy(void) {
     (*(u16 **)&reg_a1) = ((u16 *)reg_a4);
     do {
         *(*(u16 **)&reg_a1) = *((u16 *)reg_a0);
@@ -31,7 +31,7 @@ void func_00171520(void) {
 
 s32 velocity_from_direction();
 
-void func_00171580(void) {
+void stage_door_move_a(void) {
     reg_d0.h[0] = ENTITY(reg_a6)->hp.h;
     reg_d1.w = 0;
     reg_d1.b[0] = ENTITY(reg_a6)->move.b.speed;
@@ -55,7 +55,7 @@ void func_00171580(void) {
     }
 }
 
-void func_00171670(void) {
+void stage_door_move_b(void) {
     reg_d0.h[0] = ENTITY(reg_a6)->hp.h;
     reg_d1.w = 0;
     reg_d1.b[0] = ENTITY(reg_a6)->move.b.dir;
@@ -82,7 +82,7 @@ void func_00171670(void) {
 s32 entity_draw_with_bullets_keep();
 s32 sprite_draw_with_bullets_keep();
 
-void func_00171770(void) {
+void stage_door_draw_a(void) {
     entity_draw_with_bullets_keep();
     reg_d0.h[0] = 0x3800;
     reg_d0.h[0] -= ENTITY(reg_a6)->y.h;
@@ -100,7 +100,7 @@ void func_00171770(void) {
     sprite_draw_with_bullets_keep();
 }
 
-void func_00171820(void) {
+void stage_door_draw_b(void) {
     entity_draw_with_bullets_keep();
     reg_d0.h[0] = 0x3800;
     reg_d0.h[0] -= ENTITY(reg_a6)->y.h;
@@ -131,7 +131,7 @@ extern s16 D_002BB45C[];
 extern s16 D_002BB45E[];
 extern s16 D_002BB460[];
 extern u8 D_002BB470[];
-void func_00171910(void) {
+void stage_doors_clear(void) {
     s32 var_a1;
     u8 *temp_a2;
 
@@ -158,16 +158,16 @@ void func_00171910(void) {
     D_002BB460[0] = 0;
 }
 
-void func_00171990(void) {
+void stage_doors_close_request(void) {
     D_0028E798 = 1;
 }
 
-void func_001719A0(void) {
+void stage_doors_open_request(void) {
     D_0028E7A0 = 1;
 }
 
 
-void func_001719B0(void) {
+void stage_doors_open_requested_check(void) {
     if ((u16)D_0028E7A0 != 0) {
         cond_flag = 1;
         return;
@@ -177,15 +177,15 @@ void func_001719B0(void) {
 
 extern s32 D_002BB458[];
 
-void func_001719D0(void) {
+void stage_doors_update(void) {
     reg_a6 = (u8 *)((s32 *)D_002BB470);
     reg_a4 = (u8 *)D_002BB458;
     if ((u16)D_0028E79C != 0) {
-        func_00171A30();
+        stage_doors_close_update();
         return;
     }
     if ((u16)D_0028E7A0 != 0) {
-        func_00171B90();
+        stage_doors_open_update();
     }
 }
 
@@ -196,21 +196,21 @@ extern u8 D_0028DAC0[];
 extern s32 D_0028DC20;
 extern u16 g_stage_x2;
 
-void func_00171A30(void) {
+void stage_doors_close_update(void) {
     s32 temp_a1;
     s32 var_v0;
     u16 temp_a2;
 
     if (ENTITY(reg_a6)->flags.sh >= 0) {
         reg_a0 = (u8 *)D_0026B180;
-        func_00171490();
+        stage_door_record_copy();
         reg_a0 = (u8 *)D_0028DAC0;
         var_v0 = (s32) D_0028DC20 >> 1;
         if (D_0028DC20 < 0) {
             var_v0 = (s32) (D_0028DC20 + 1) >> 1;
         }
         reg_d0.w = var_v0 - 1;
-        func_00171520();
+        stage_door_words_copy();
         reg_d0.h[0] = g_stage_x2;
         temp_a2 = reg_d0.h[0];
         temp_a1 = temp_a2 & ~1;
@@ -236,14 +236,14 @@ void func_00171A30(void) {
         return;
     }
     if (ENTITY(reg_a6)->hit_y_plus.h != 0) {
-        func_00171580();
+        stage_door_move_a();
     }
-    func_00171770();
+    stage_door_draw_a();
     reg_a6 += 0x20;
     if (ENTITY(reg_a6)->hit_y_plus.h != 0) {
-        func_00171670();
+        stage_door_move_b();
     }
-    func_00171820();
+    stage_door_draw_b();
 }
 
 s32 p1_hyper_items_update();
@@ -262,7 +262,7 @@ extern u8 g_simulation_active;
 extern s16 g_player2[];
 extern s16 g_player1[];
 
-void func_00171B90(void) {
+void stage_doors_open_update(void) {
     s32 temp_a1;
     u16 temp_a0;
     u16 temp_a2;
@@ -273,10 +273,10 @@ void func_00171B90(void) {
 
     if (ENTITY(reg_a6)->flags.sh >= 0) {
         reg_a0 = (u8 *)D_0026B1D0;
-        func_00171490();
+        stage_door_record_copy();
         reg_a0 = (u8 *)D_0028DAC8;
         reg_d0.w = 1;
-        func_00171520();
+        stage_door_words_copy();
         reg_d0.h[0] = g_stage_x2;
         temp_a2 = reg_d0.h[0];
         temp_a1 = temp_a2 & ~1;
@@ -331,7 +331,7 @@ void func_00171B90(void) {
         }
     } else {
 block_25:
-        func_00171770();
+        stage_door_draw_a();
     }
     var_a0_2 = (u8 *)(reg_a6 + 0x20);
     reg_a6 = var_a0_2;
@@ -366,7 +366,7 @@ block_35:
         }
     } else {
 block_39:
-        func_00171820();
+        stage_door_draw_b();
     }
 }
 

@@ -7,9 +7,9 @@ s32 task_stop_self();
 extern u16 g_stage;
 extern u8 g_replay_mode;
 
-s32 func_0012FA80();
+s32 scroll_state_reset();
 s32 text_layer_clear();
-s32 func_0012FB00();
+s32 bg_layer_clear();
 s32 fade_in_and_release(s32, s32, s32, s32);
 s32 stage_map_reset();
 extern u8 D_0026A3F0[];
@@ -21,9 +21,9 @@ void func_0014BEC0(void) {
     g_replay_buffer_state = 2;
     D_0028E378 = 0xFF;
     D_0028E368 = 0;
-    func_0012FA80();
+    scroll_state_reset();
     text_layer_clear();
-    func_0012FB00();
+    bg_layer_clear();
     stage_map_reset();
     *(s8 *)(reg_a5 + 3) = 1;
     *(s16 *)(reg_a5 + 8) = 0x4400;

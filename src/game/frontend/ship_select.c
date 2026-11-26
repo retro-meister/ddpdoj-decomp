@@ -12,7 +12,7 @@ extern u16 D_0029BD80[];
 extern u16 D_0029BDC0[];
 extern u8 D_0029BE00[];
 
-void func_001B0E60(void) {
+void ship_select_palette_pulse(void) {
     u8 *s_a0;
     u8 *s_a1;
     u8 *s_a2;
@@ -96,7 +96,7 @@ block_exit:
 }
 
 s32 text_layer_clear();
-s32 func_00137C50();
+s32 attract_demo_state_clear();
 s32 music_play_bgm1();
 s32 voice_select();
 s32 text_palette_load();
@@ -125,10 +125,10 @@ extern u8 g_replay_buffer_state;
 extern u8 g_replay_mode;
 extern u8 g_simulation_active;
 
-void func_001B1080(void) {
+void ship_select_task_begin(void) {
     *(s8 *)(reg_a5 + 3) = 1;
     join_select_objects_clear();
-    func_00137C50();
+    attract_demo_state_clear();
     g_attract_demo = 0;
     g_simulation_active = 0;
     replay_header_clear();
@@ -335,7 +335,7 @@ void func_001B1080(void) {
 extern u8 D_0028E304;
 extern u16 g_loop;
 
-void func_001B1920(void) {
+void ship_select_task_finish(void) {
     task_stop_self();
     if ((D_0028E304 != 0) && (g_loop == 0)) {
         g_loop = 1;
@@ -348,9 +348,9 @@ s32 p2_credit_spend_one();
 s32 doll_select_start();
 s32 doll_select_confirm();
 s32 doll_select_input();
-s32 func_001460A0();
-s32 func_00146350();
-s32 func_00146470();
+s32 ship_select_ship_begin();
+s32 ship_select_ship_confirm();
+s32 ship_select_ship_update();
 s32 input_get_p1_held();
 s32 input_get_p2_held();
 s32 func_00204800();
@@ -374,11 +374,11 @@ void ship_select_task(void) {
 
     t1 = *(u8 *)(reg_a5 + 3);
     if (t1 == 0) {
-        func_001B1080();
+        ship_select_task_begin();
         return;
     }
     if (t1 == 2) {
-        func_001B1920();
+        ship_select_task_finish();
         return;
     }
     *(s8 *)(reg_a5 + 2) = 0;
@@ -435,13 +435,13 @@ void ship_select_task(void) {
             }
 #endif
             if (ENTITY(reg_a6)->flags.b[0] == 0) {
-                func_001460A0();
+                ship_select_ship_begin();
             }
             if (ENTITY(reg_a6)->flags.b[0] == 1) {
-                func_00146470();
+                ship_select_ship_update();
             }
             if (ENTITY(reg_a6)->flags.b[0] == 2) {
-                func_00146350();
+                ship_select_ship_confirm();
             }
             if ((s32) ENTITY(reg_a6)->flags.b[0] < 7) {
                 *(u8 *)(reg_a6 + 0x30) -= 1;
@@ -504,7 +504,7 @@ void ship_select_task(void) {
     if (reg_d0.h[0] == 3) {
         *(u8 *)(reg_a5 + 3) = 2U;
     }
-    func_001B0E60();
+    ship_select_palette_pulse();
 }
 
 s32 ship_palettes_load();
@@ -517,7 +517,7 @@ extern s16 g_player2[];
 extern s16 g_player1[];
 extern u8 g_replay_start_state[];
 
-void func_001B1D70(void) {
+void select_step2_task_begin(void) {
     *(s8 *)(reg_a5 + 3) = 1;
     join_select_objects_clear();
     D_0028DF14 = 0;
@@ -651,13 +651,13 @@ void func_001B1D70(void) {
     *(s16 *)(reg_a0 + 4) = 0;
 }
 
-void func_001B21F0(void) {
+void select_step2_task_finish(void) {
     g_select_screen_active = 0;
     task_stop_self();
 }
 
 
-void func_001B2200(void) {
+void select_step2_task(void) {
     u8 temp_a0;
     u8 temp_a0_2;
     u8 temp_a0_3;
@@ -666,11 +666,11 @@ void func_001B2200(void) {
 
     temp_a0 = *(u8 *)(reg_a5 + 3);
     if (temp_a0 == 0) {
-        func_001B1D70();
+        select_step2_task_begin();
         return;
     }
     if (temp_a0 == 2) {
-        func_001B21F0();
+        select_step2_task_finish();
         return;
     }
     *(s8 *)(reg_a5 + 2) = 0;

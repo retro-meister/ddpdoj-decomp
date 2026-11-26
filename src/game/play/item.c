@@ -194,7 +194,7 @@ void items_clear(void) {
 
 typedef void (*Fn)();
 
-s32 func_0016C4B0();
+s32 item_update_one();
 extern u16 g_item_count;
 extern u16 g_side_scroll_step[];
 
@@ -220,7 +220,7 @@ loop_1:
     ENTITY(reg_a6)->x.h -= reg_d0.h[0];
     flags = ENTITY(reg_a6)->flags.b[0];
     if ((flags & 0x80) || (flags & 1)) {
-        func_0016C4B0();
+        item_update_one();
         goto next_2;
     }
     reg_d0.w = 0x3C;

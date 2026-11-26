@@ -297,7 +297,7 @@ void continue_panels_update(u16 *arg0) {
 
 s32 deferred_text_clear();
 s32 text_layer_put_hex_digit();
-s32 func_00131610();
+s32 stage_clear_running_check();
 s32 text_layer_print();
 s32 sfx_countdown();
 #ifdef DEATH_LABEL
@@ -310,7 +310,7 @@ extern u16 D_0028E318;
 void continue_panel_step_countdown(void) {
     u16 temp_a0;
 
-    func_00131610();
+    stage_clear_running_check();
     if (cond_flag != 0) {
         continue_panel_small_text_erase();
         return;
@@ -729,7 +729,7 @@ next_3:
     reg_d1.b[0] = reg_a5[6];
     continue_panel_step_set();
 next_4:
-    func_00131610();
+    stage_clear_running_check();
     if (cond_flag != 0) {
         return;
     }

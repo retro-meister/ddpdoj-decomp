@@ -38,11 +38,11 @@ void attract_step_set() {
 
 typedef void (*Fn)();
 
-s32 func_0012FB00();
+s32 bg_layer_clear();
 s32 p1_credits_get();
 s32 p2_credits_get();
-s32 func_00131200();
-s32 func_00137C50();
+s32 credit_status_draw();
+s32 attract_demo_state_clear();
 s32 sfx_coin();
 s32 sound_stop_effects();
 s32 menu_settings_restore();
@@ -103,7 +103,7 @@ block_1:
     D_0028DF84 = 1;
     task_reset_all();
     fades_reset();
-    func_00137C50();
+    attract_demo_state_clear();
     if (g_attract_demo == 0) goto next_4;
     g_attract_demo = 0;
     replay_header_clear();
@@ -121,7 +121,7 @@ next_5:
     reg_a0 = (u8 *)text_palette_0;
     text_palette_load();
     text_layer_clear();
-    func_0012FB00();
+    bg_layer_clear();
     reg_d0.h[0] = TASK_ATTRACT;
     task_start();
     *(s16 *)(reg_a0 + 4) = 3;
@@ -140,14 +140,14 @@ block_2:
 next_6:
     attract_prompt_clear();
 next_7:
-    func_00131200();
+    credit_status_draw();
 block_3:
 #endif
     reg_d0.h[0] = g_attract_step;
     ((Fn)*(u32 *)((u8 *)attract_step_routines + (reg_d0.h[0] * 4)))();
 }
 
-s32 func_0012FBD0();                            /* extern */
+s32 screen_clear_unused();                            /* extern */
 s32 slowdown_reset();                            /* extern */
 extern u8 D_0028E7B4;
 
@@ -157,7 +157,7 @@ void attract_step_begin(void) {
     attract_step_set();
     D_0028E7B4 = 0;
     D_0028E7B8 = 0;
-    func_0012FBD0();
+    screen_clear_unused();
     slowdown_reset();
 }
 
@@ -325,7 +325,7 @@ void death_func_00136FF0(void) {
     s32 text_palette_load();
     if (reg_a5[2] == 0) {
         reg_a5[2] = 1U;
-        func_0012FB00();
+        bg_layer_clear();
         text_layer_clear();
         reg_d0.w = 0;
         reg_a0 = text_palette_0;
@@ -490,9 +490,9 @@ void attract_step_unused_4(void) {
 
 }
 
-s32 func_00137C50();                            /* extern */
-s32 func_00137C90();                            /* extern */
-s32 func_00137E00();                            /* extern */
+s32 attract_demo_state_clear();                            /* extern */
+s32 attract_demo_begin();                            /* extern */
+s32 attract_demo_start();                            /* extern */
 s32 sound_stop_effects();                            /* extern */
 s32 stage_map_reset();                            /* extern */
 extern u8 g_default_text_palette[];
@@ -505,19 +505,19 @@ void attract_step_demo_start(void) {
     s32 task_start();
     if (*(u8 *)(reg_a5 + 2) == 0) {
         *(u8 *)(reg_a5 + 2) = 1U;
-        func_00137C90();
+        attract_demo_begin();
         text_layer_clear();
         *(s16 *)(reg_a5 + 4) = 0;
         reg_a0 = (u8 *)((s32 *)g_default_text_palette);
         reg_d0.w = 0;
         text_palette_load();
     }
-    func_00137E00();
+    attract_demo_start();
     if (cond_flag == 0) {
         printf((const char *)"demo end\n");
         task_reset_all();
         fades_reset();
-        func_00137C50();
+        attract_demo_state_clear();
         stage_map_reset();
         text_layer_clear();
         reg_d0.h[0] = TASK_ATTRACT;
@@ -842,7 +842,7 @@ void attract_step_autosave(void) {
     switch (temp_a0) {                              /* irregular */
     case 0:
         text_layer_clear();
-        func_0012FB00();
+        bg_layer_clear();
         music_stop();
         *(u8 *)(reg_a5 + 2) = 1U;
         D_0028EC7C = 0;

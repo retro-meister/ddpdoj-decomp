@@ -3,8 +3,8 @@
 #include "stage3_boss.h"
 
 void stage3_boss_defeated(void);
-void func_001D4510(void);
-void func_001D4540(void);
+void stage3_boss_hit_mark_once(void);
+void stage3_boss_hit_mark(void);
 
 s32 boss_phase_start();
 s32 boss_phase_stop_all();
@@ -133,8 +133,8 @@ block_check:
     boss_phase_stop_all();
     reg_d0.w = 9;
     boss_phase_start();
-    func_001D4540();
-    func_001D4510();
+    stage3_boss_hit_mark();
+    stage3_boss_hit_mark_once();
     B(0x8D) = 1;
     ((u16 *)g_bullet_limit_raised_1)[0] = 1;
     ((u16 *)g_bullet_limit_raised_2)[0] = 1;
@@ -182,7 +182,7 @@ void stage3_boss_defeated() {
     boss_phase_start();
 }
 
-void func_001D4510(void) {
+void stage3_boss_hit_mark_once(void) {
     u8 *p = reg_a6 + 0xAF; if (*p == 0) { *p = 1; return; }
 }
 
@@ -192,15 +192,15 @@ struct UnkDataD28E450 {
 };
 
 
-void func_001D4540(void) {
+void stage3_boss_hit_mark(void) {
     ((struct UnkDataD28E450 *)reg_a6)->unk88 = 1;
 }
 
-void func_001D4550(void) {
+void stage3_boss_shield_off(void) {
     STAGE3_DAMAGE(reg_a6)->shielded = 0;
 }
 
-void func_001D4560(void) {
+void stage3_boss_parts_flags_set(void) {
     reg_d0.h[0] = 0xA001;
     ENTITY(reg_a6)->flags.h |= reg_d0.h[0];
     ENTITY(reg_a6)[1].flags.h |= reg_d0.h[0];
@@ -209,7 +209,7 @@ void func_001D4560(void) {
     ENTITY(reg_a6)[7].flags.h |= reg_d0.h[0];
 }
 
-void func_001D45D0(void) {
+void stage3_boss_parts_flags_init(void) {
     reg_d0.h[0] = 0x8000;
     ENTITY(reg_a6)->flags.h = (u16) reg_d0.h[0];
     ENTITY(reg_a6)[1].flags.h = (u16) reg_d0.h[0];

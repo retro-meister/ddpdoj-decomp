@@ -64,9 +64,9 @@ void enemy_pattern_count_0();
 void func_00168110();
 void func_00168120();
 void func_001683C0();
-void func_0016CCD0();
-void func_0016CCE0();
-void func_0016CD40();
+void item_test_count_0();
+void item_test_begin();
+void item_test_update();
 void large_tank_first();
 void large_tank_start();
 void large_tank();
@@ -353,7 +353,7 @@ void wreck_test_setup();
 /* The routines of every kind of enemy (enemy_kinds.h): the one that starts it and the one run every frame. */
 EnemyRoutines g_enemy_routines[128] = {
     /* 0x00 */ { dummy_enemy_main, dummy_enemy_main_b },
-    /* 0x01 */ { func_0016CCE0, func_0016CD40 },
+    /* 0x01 */ { item_test_begin, item_test_update },
     /* 0x02 */ { explosion_test_setup, explosion_test_main },
     /* 0x03 */ { debris_test_setup, debris_test_main },
     /* 0x04 */ { wreck_test_setup, wreck_test_main },
@@ -485,7 +485,7 @@ EnemyRoutines g_enemy_routines[128] = {
 /* The routine that claims the enemy's entities, by kind. */
 void (*g_enemy_first_routines[128])() = {
     /* 0x00 */ dummy_enemy_first,
-    /* 0x01 */ func_0016CCD0,
+    /* 0x01 */ item_test_count_0,
     /* 0x02 */ explosion_test_first,
     /* 0x03 */ debris_test_first,
     /* 0x04 */ wreck_test_first,

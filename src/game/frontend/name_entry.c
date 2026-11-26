@@ -84,7 +84,7 @@ void name_entry_task_begin() {
 
 s32 text_layer_clear();                            /* extern */
 s32 game_state_clear();                            /* extern */
-s32 func_00137C20();                            /* extern */
+s32 ending_state_clear();                            /* extern */
 s32 players_clear();                            /* extern */
 s32 sound_stop_effects();                            /* extern */
 s32 text_palette_load();                            /* extern */
@@ -96,7 +96,7 @@ extern s32 D_0028EAFC;
 
 void name_entry_task_finish() {
     players_clear();
-    func_00137C20();
+    ending_state_clear();
     game_state_clear();
     task_stop_self();
     sound_stop_effects();

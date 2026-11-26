@@ -556,7 +556,7 @@ void stage3_boss_mode_low_all_guns_start(void) {
 
 s32 boss_animation_start();
 s32 boss_attack_start();
-s32 func_001D4550();
+s32 stage3_boss_shield_off();
 
 void stage3_boss_mode_low_all_guns() {
     MODE(reg_a4)->delay -= 1;
@@ -567,7 +567,7 @@ void stage3_boss_mode_low_all_guns() {
         boss_attack_start();
         reg_d0.w = 2;
         boss_attack_start();
-        func_001D4550();
+        stage3_boss_shield_off();
         MODE(reg_a4)->running = 0;
     }
 }

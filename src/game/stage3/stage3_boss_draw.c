@@ -2,35 +2,35 @@
 #include "entity.h"
 #include "stage3_boss.h"
 
-void func_001D13B0(void);
-void func_001D1440(void);
-void func_001D1490(void);
-void func_001D1530(void);
-void func_001D15D0(void);
-void func_001D1650(void);
-void func_001D1760(void);
-void func_001D1870(void);
-void func_001D16D0(void);
-void func_001D1980(void);
+void stage3_boss_legs_draw(void);
+void stage3_boss_body_draw(void);
+void stage3_boss_bar_left_draw(void);
+void stage3_boss_bar_right_draw(void);
+void stage3_boss_lid_left_draw(void);
+void stage3_boss_lid_right_draw(void);
+void stage3_boss_turret_left_draw(void);
+void stage3_boss_turret_right_draw(void);
+void stage3_boss_six_gun_draw(void);
+void stage3_boss_entrance_draw(void);
 
 /* The draw routine of every part of the boss, by part number. */
 void (*stage3_boss_draw_routines[])(void) = {
-    func_001D13B0,
-    func_001D1440,
-    func_001D1490,
-    func_001D1530,
-    func_001D15D0,
-    func_001D1650,
-    func_001D1760,
-    func_001D1870,
-    func_001D16D0,
-    func_001D1980,
+    stage3_boss_legs_draw,
+    stage3_boss_body_draw,
+    stage3_boss_bar_left_draw,
+    stage3_boss_bar_right_draw,
+    stage3_boss_lid_left_draw,
+    stage3_boss_lid_right_draw,
+    stage3_boss_turret_left_draw,
+    stage3_boss_turret_right_draw,
+    stage3_boss_six_gun_draw,
+    stage3_boss_entrance_draw,
     (void (*)(void))-1,
 };
 
 extern u8 D_0026D320[];
 
-void func_001D13B0(void) {
+void stage3_boss_legs_draw(void) {
     s32 sprite_draw_layer2_keep();
     u16 temp_a1;
     u16 temp_a3;
@@ -52,7 +52,7 @@ void func_001D13B0(void) {
 }
 
 
-void func_001D1440(void)
+void stage3_boss_body_draw(void)
 {
     extern void sprite_draw_layer2_keep(void);
     u8 *object = reg_a6;
@@ -69,7 +69,7 @@ void func_001D1440(void)
 
 extern u8 D_0026D360[];
 
-void func_001D1490(void) {
+void stage3_boss_bar_left_draw(void) {
     s32 sprite_draw_layer2_keep();
     reg_a0 = (u8 *)D_0026D360;
     reg_a0 += *(u16 *) (reg_a6 + 0xAA);
@@ -86,7 +86,7 @@ void func_001D1490(void) {
     sprite_draw_layer2_keep();
 }
 
-void func_001D1530(void) {
+void stage3_boss_bar_right_draw(void) {
     s32 sprite_draw_layer2_keep();
     reg_a0 = (u8 *)D_0026D360;
     reg_a0 += *(u16 *) (reg_a6 + 0xAC);
@@ -105,7 +105,7 @@ void func_001D1530(void) {
 
 extern u8 D_0026D380[];
 
-void func_001D15D0(void) {
+void stage3_boss_lid_left_draw(void) {
     s32 sprite_draw_layer2_keep();
     u16 temp_a0;
     u16 temp_a2;
@@ -127,7 +127,7 @@ void func_001D15D0(void) {
 
 extern u8 D_0026D3A0[];
 
-void func_001D1650(void) {
+void stage3_boss_lid_right_draw(void) {
     s32 sprite_draw_layer2_keep();
     u16 temp_a0;
     u16 temp_a2;
@@ -149,7 +149,7 @@ void func_001D1650(void) {
 
 extern u8 D_0026D3C0[];
 
-void func_001D16D0(void) {
+void stage3_boss_six_gun_draw(void) {
     s32 sprite_draw_layer2_keep();
     reg_a0 = (u8 *)D_0026D3C0;
     reg_a0 += *(u16 *) (reg_a6 + 0xA8);
@@ -167,7 +167,7 @@ void func_001D16D0(void) {
 
 extern u16 g_direction_sprites_c[];
 
-void func_001D1760(void) {
+void stage3_boss_turret_left_draw(void) {
     s32 sprite_draw_layer2_keep();
     u16 temp_a0;
     reg_d2.h[0] = STAGE3_EXTRA(reg_a6)->left_turret_direction;
@@ -191,7 +191,7 @@ void func_001D1760(void) {
     sprite_draw_layer2_keep();
 }
 
-void func_001D1870(void) {
+void stage3_boss_turret_right_draw(void) {
     s32 sprite_draw_layer2_keep();
     u16 temp_a0;
     reg_d2.h[0] = STAGE3_EXTRA(reg_a6)->right_turret_direction;
@@ -217,7 +217,7 @@ void func_001D1870(void) {
 
 extern u16 D_0026D3E0[];
 
-void func_001D1980(void) {
+void stage3_boss_entrance_draw(void) {
     s32 sprite_draw_layer2_keep();
     reg_a0 = (u8 *)D_0026D3E0;
     reg_a0 += STAGE3_EXTRA(reg_a6)->start_anim;

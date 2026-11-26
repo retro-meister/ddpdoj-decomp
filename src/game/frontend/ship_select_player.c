@@ -101,7 +101,7 @@ void join_select_task_finish(void) {
 typedef void (*Fn)(void);
 
 
-void func_0012FBD0(void);
+void screen_clear_unused(void);
 void p1_credits_get(void);
 void player_slot_request(void);
 void player_panel_show_unless_step_4(void);
@@ -120,7 +120,7 @@ extern u8 g_simulation_active;
 extern u8 *reg_call_target_as_u8_p;
 
 void join_select_task(void) {
-    void func_00131610(void);
+    void stage_clear_running_check(void);
     void sprite_palette_load(void);
     void player_panel_show(void);
     u8 state;
@@ -135,7 +135,7 @@ void join_select_task(void) {
         join_select_task_finish();
         return;
     }
-    func_00131610();
+    stage_clear_running_check();
     if (cond_flag != 0) {
         goto block_50;
     }
@@ -228,7 +228,7 @@ block_51:
     if (!(reg_d0.w & 0x8000)) {
         goto block_52;
     }
-    func_00131610();
+    stage_clear_running_check();
     if (cond_flag != 0) {
         goto block_52;
     }
@@ -260,7 +260,7 @@ block_51:
     reg_d0.h[0] = *(u16 *)(reg_a4 + 0x14);
     reg_a0 = (u8 *)D_002623B0;
     sprite_palette_load();
-    func_0012FBD0();
+    screen_clear_unused();
     reg_d0.w = 0;
     reg_d0.b[0] = *(u8 *)(reg_a5 + 6);
     reg_d1.h[0] = 7;
@@ -514,8 +514,8 @@ void join_select_doll_step(void) {
 
 
 void join_select_prompt_update(void) {
-    s32 func_00131610();
-    func_00131610();
+    s32 stage_clear_running_check();
+    stage_clear_running_check();
     if (cond_flag == 0) {
         join_select_prompt_draw();
     }

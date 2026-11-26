@@ -3,19 +3,19 @@
 
 extern void *D_0026B090[8];
 
-void func_0016C620(void);
+void item_update_taken(void);
 
 s32 item_release();
 s32 sprite_draw_with_items();
 s32 entity_velocity();
 
-void func_0016C4B0(void) {
+void item_update_one(void) {
     u16 temp_a0;
     u16 temp_a0_2;
     u32 temp_a1;
 
     if (*(u8 *)reg_a6 & 0x80) {
-        func_0016C620();
+        item_update_taken();
         return;
     }
     reg_tmp.h[1] = *(u16 *)(reg_a6 + 6);
@@ -55,7 +55,7 @@ void func_0016C4B0(void) {
     }
 }
 
-void func_0016C620(void) {
+void item_update_taken(void) {
     u16 temp_a0;
     u16 temp_a0_2;
     u32 temp_a1;
@@ -221,7 +221,7 @@ void item_init_at_y(void) {
 
 void enemy_set_entity_count(s32 mode);
 
-void func_0016CCD0(void) {
+void item_test_count_0(void) {
     enemy_set_entity_count(0);
 }
 
@@ -230,7 +230,7 @@ s32 enemy_init_entities();                            /* extern */
 extern s32 D_0025B0E0[];
 extern s32 D_0028CA00;
 
-void func_0016CCE0(void) {
+void item_test_begin(void) {
     reg_a0 = (u8 *)D_0025B0E0;
     enemy_init_entities();
     reg_a0 = (u8 *)(&D_0028CA00);
@@ -247,7 +247,7 @@ s32 item_spawn();                            /* extern */
 s32 entity_draw();                            /* extern */
 s32 entity_move_by_p2_stick();                            /* extern */
 
-void func_0016CD40(void) {
+void item_test_update(void) {
     s64 temp_v0_2;
     u16 temp_v0;
 

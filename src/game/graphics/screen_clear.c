@@ -15,7 +15,7 @@ void coin_slots_clear(void);
 void free_play_text_print_at(void);
 
 extern void sprite_draw(void);
-void func_0012F9F0(void) {
+void logo_sprite_draw(void) {
     reg_d1.w = 0x20000E00;
     reg_d4.sh[0] = 0;
     reg_d2.sw = 0x155D;
@@ -26,7 +26,7 @@ void func_0012F9F0(void) {
 extern s16 D_0028E23C;
 extern s16 D_0028E240;
 
-void func_0012FA20(void) {
+void scroll_shadow_reset(void) {
     (*(s16 **)&reg_a0) = &D_0028E23C;
     *(*(s16 **)&reg_a0) = 0;
     (*(s16 **)&reg_a0) = &D_0028E240;
@@ -36,7 +36,7 @@ void func_0012FA20(void) {
 extern s16 g_bg_scroll_y;
 extern s16 g_bg_scroll_x;
 
-void func_0012FA50(void) {
+void bg_scroll_reset(void) {
     (*(s16 **)&reg_a0) = &g_bg_scroll_y;
     *(*(s16 **)&reg_a0) = 0;
     (*(s16 **)&reg_a0) = &g_bg_scroll_x;
@@ -44,9 +44,9 @@ void func_0012FA50(void) {
 }
 
 
-void func_0012FA80(void) {
-    func_0012FA20();
-    func_0012FA50();
+void scroll_state_reset(void) {
+    scroll_shadow_reset();
+    bg_scroll_reset();
 }
 
 extern u8 g_text_layer[8192];
@@ -62,7 +62,7 @@ void text_layer_clear(void) {
 
 extern u8 g_bg_layer[16384];
 
-void func_0012FB00(void) {
+void bg_layer_clear(void) {
     (*(s32 **)&reg_a0) = ((s32 *)g_bg_layer);
     reg_d0.h[0] = 0xFFF;
     do {
@@ -72,14 +72,14 @@ void func_0012FB00(void) {
 }
 
 
-void func_0012FB50(void) {
+void text_and_bg_layers_clear(void) {
     text_layer_clear();
-    func_0012FB00();
+    bg_layer_clear();
 }
 
 extern s32 g_arcade_sprites_as_s32_a[];
 
-void func_0012FB80(void) {
+void arcade_sprites_clear(void) {
     (*(s32 **)&reg_a0) = g_arcade_sprites_as_s32_a;
     reg_d0.h[0] = MAIN_OR_DEATH_LABEL(0x4FF, 0xBB7);
     do {
@@ -88,12 +88,12 @@ void func_0012FB80(void) {
     } while ((s16)(--reg_d0.h[0]) >= 0);
 }
 
-void func_0012FBD0(void) {
+void screen_clear_unused(void) {
 }
 
 extern s32 g_text_palette[];
 
-void func_0012FBE0(void) {
+void text_palette_clear(void) {
     (*(s32 **)&reg_a0) = g_text_palette;
     reg_d0.h[0] = 0x7F;
     do {
@@ -104,7 +104,7 @@ void func_0012FBE0(void) {
 
 extern s16 g_bg_palette[1024];
 
-void func_0012FC30(void) {
+void bg_palette_clear(void) {
     (*(s32 **)&reg_a0) = ((s32 *)g_bg_palette);
     reg_d0.h[0] = 0x1FF;
     do {
@@ -115,7 +115,7 @@ void func_0012FC30(void) {
 
 extern s16 g_sprite_palette[1024];
 
-void func_0012FC80(void) {
+void sprite_palette_clear(void) {
     (*(s32 **)&reg_a0) = ((s32 *)g_sprite_palette);
     reg_d0.h[0] = 0x1FF;
     do {
@@ -125,19 +125,19 @@ void func_0012FC80(void) {
 }
 
 
-void func_0012FCD0(void) {
-    func_0012FBE0();
-    func_0012FC30();
-    func_0012FC80();
+void palettes_clear(void) {
+    text_palette_clear();
+    bg_palette_clear();
+    sprite_palette_clear();
 }
 
 
 void layers_clear_all(void) {
-    func_0012FA80();
-    func_0012FB50();
-    func_0012FB80();
-    func_0012FBD0();
-    func_0012FCD0();
+    scroll_state_reset();
+    text_and_bg_layers_clear();
+    arcade_sprites_clear();
+    screen_clear_unused();
+    palettes_clear();
 }
 
 /* .bss (the compiler lays these out in reverse) */

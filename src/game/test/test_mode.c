@@ -7,7 +7,7 @@ extern void (*test_screen_routines[20])();
 /* own[1] of the task: the test mode has been set up */
 #define TEST_TASK_STARTED(task) (TASK(task)->own[1])
 
-s32 func_00137C50();
+s32 attract_demo_state_clear();
 s32 sound_stop_effects();
 s32 sound_stop_loops();
 s32 music_stop();
@@ -96,7 +96,7 @@ void test_mode_task(void) {
     music_stop();
     sound_stop_effects();
     sound_stop_loops();
-    func_00137C50();
+    attract_demo_state_clear();
     g_test_mode_entered = 1;
 }
 

@@ -2,28 +2,28 @@
 #include "entity.h"
 #include "sdk/ps2sdk.h"
 
-void func_001B8440(void);
-void func_001B8D00(void);
+void debris_update_loop(void);
+void debris_init(void);
 
-extern u16 D_0029AA30[];
+extern u16 g_debris_count[];
 
-void func_001B82B0(void) {
+void debris_release(void) {
     *(*(s16 **)&reg_a6) = 0;
-    D_0029AA30[0] -= 1;
+    g_debris_count[0] -= 1;
 }
 
-extern u16 D_0029A530[];
+extern u16 g_debris[];
 
 
-void func_001B82D0(void) {
-    memset(((s32 *)D_0029A530), 0, 0x502);
+void debris_clear(void) {
+    memset(((s32 *)g_debris), 0, 0x502);
 }
 
 
 extern u32 D_0028E52C;
 extern u16 g_loop;
 extern u16 g_two_player_game;
-extern u16 D_0029A530[];
+extern u16 g_debris[];
 
 void debris_spawn(void) {
     u32 tmp;
@@ -38,7 +38,7 @@ void debris_spawn(void) {
         reg_d3.w -= 0x10000;
     }
 loop_1:
-    reg_a0 = (u8 *)D_0029A530;
+    reg_a0 = (u8 *)g_debris;
     reg_d1.h[0] = 0x13;
     if ((g_loop != 0) || (g_two_player_game == 0)) {
         reg_d1.h[0] = 9;
@@ -57,8 +57,8 @@ loop_2:
         return;
     }
     D_0028E52C = reg_d0.w;
-    func_001B8D00();
-    D_0029AA30[0] += 1;
+    debris_init();
+    g_debris_count[0] += 1;
     reg_d0.w = D_0028E52C;
     tmp = reg_d3.h[0] - 1;
     reg_d3.h[0] = tmp;
@@ -69,11 +69,11 @@ loop_2:
 }
 
 
-void func_001B8410(void) {
+void debris_update(void) {
     s32 temp_s0;
 
     temp_s0 = (s32)reg_a5;
-    func_001B8440();
+    debris_update_loop();
     reg_a5 = (u8 *)temp_s0;
 }
 
@@ -90,7 +90,7 @@ extern u8 g_boss_present;
 extern u16 g_side_scroll_step[];
 extern u8 *reg_call_target_as_u8_p;
 
-void func_001B8440(void) {
+void debris_update_loop(void) {
     u32 cnt;
     s32 cnt2;
     u16 swp;
@@ -98,11 +98,11 @@ void func_001B8440(void) {
     u8 *p;
     s32 idx;
 
-    reg_d7.h[0] = D_0029AA30[0];
+    reg_d7.h[0] = g_debris_count[0];
     if (reg_d7.h[0] == 0) goto block_rts;
     reg_d7.h[0] -= 1;
     if (g_loop != 0) {
-        reg_a6 = (u8 *)((u8 *)D_0029A530);
+        reg_a6 = (u8 *)((u8 *)g_debris);
         goto next_clr;
     }
     reg_d5.w = 0;
@@ -117,7 +117,7 @@ next_1:
     reg_tmp.w = reg_d5.w;
     reg_d5.h[1] = reg_tmp.h[0];
     reg_d5.h[0] = g_game_frame;
-    reg_a6 = (u8 *)((u8 *)D_0029A530);
+    reg_a6 = (u8 *)((u8 *)g_debris);
     goto loop_2;
 next_2:
     reg_a6 += 0x40;
@@ -217,7 +217,7 @@ next_9:
     if (((s64) ((s64) (cnt & 0xFFFF) << 0x30) >> 0x30) >= 0) goto loop_2;
     goto block_rts;
 next_clr:
-    func_001B82B0();
+    debris_release();
     reg_a6 += 0x40;
     cnt = reg_d7.h[0] - 1;
     reg_d7.h[0] = cnt;
@@ -275,7 +275,7 @@ next_boss:
     if (reg_tmp.h[1] != 0) goto next_13;
     goto next_anim;
 next_13:
-    func_001B82B0();
+    debris_release();
     reg_a6 += 0x40;
     cnt = reg_d7.h[0] - 1;
     reg_d7.h[0] = cnt;
@@ -344,7 +344,7 @@ s32 rng_next_pair_medium_d4();
 extern u16 D_00250CE0[];
 extern u8 D_0028E52F;
 
-void func_001B8D00(void) {
+void debris_init(void) {
     u8 flag;
 
     reg_a2 = (u8 *)(D_00250CE0);
@@ -461,7 +461,7 @@ void func_001B8D00(void) {
 s32 rng_next_0_to_3();
 extern u8 debris_random_patterns[];
 
-void func_001B91C0(void) {
+void debris_pattern_random(void) {
     rng_next_0_to_3();
     reg_a1 = debris_random_patterns;
     reg_d0.h[0] += reg_d0.h[0];
@@ -481,7 +481,7 @@ void func_001B91C0(void) {
     *(u16 *)(reg_a0 + 0xC) = ((reg_d0.h[0] + 2) != 0) ? *(u16 *)((u8 *)reg_a1 + ((s16)(reg_d0.h[0] + 2) & ~1)) : *(u16 *)reg_a1;
 }
 
-void func_001B9300(void) {
+void debris_delay_random(void) {
     rng_next_0_to_3();
     reg_d0.h[0] += 1;
     reg_d0.h[0] <<= 5;
@@ -498,5 +498,5 @@ void func_001B9300(void) {
 u32 D_0028E52C;
 
 /* .bss (the compiler lays these out in reverse) */
-u16 D_0029AA30[8];
-u16 D_0029A530[640];
+u16 g_debris_count[8];
+u16 g_debris[640];

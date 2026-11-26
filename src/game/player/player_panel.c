@@ -1,6 +1,6 @@
 #include "common.h"
 
-s32 func_001A2F20();
+s32 palette_run_copy();
 extern s16 D_0028E0C0;
 extern u8 g_palette_bank_b[];
 
@@ -14,7 +14,7 @@ void palette_bank_b_load_half(void) {
     reg_d0.h[0] += 0x20;
     reg_a1 += reg_d0.h[0];
     reg_d0.w = 7;
-    func_001A2F20();
+    palette_run_copy();
     reg_d0.w = d0;
     D_0028E0C0 = 1;
     reg_a0 = a0;
@@ -62,7 +62,7 @@ void palette_bank_a_load(void) {
     reg_d0.h[0] <<= 6;
     reg_a1 += reg_d0.h[0];
     reg_d0.w = 0xF;
-    func_001A2F20();
+    palette_run_copy();
     reg_d0.w = temp_s0;
     D_0028E0BC = 1;
     reg_a0 = (u8 *)temp_s1;
@@ -84,7 +84,7 @@ void palette_bank_a_load_run(void) {
     reg_a1 += reg_d0.h[0];
     do {
         reg_d0.w = 0xF;
-        func_001A2F20();
+        palette_run_copy();
     } while ((s16)(--reg_d1.h[0]) >= 0);
     reg_d0.w = save_d0;
     D_0028E0BC = 1;

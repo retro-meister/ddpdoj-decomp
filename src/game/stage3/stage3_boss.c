@@ -14,7 +14,7 @@ s32 boss_part_show();
 s32 enemy_set_task_state();
 s32 enemy_init_entities();
 s32 sprite_palette_load();
-s32 func_001D45D0();
+s32 stage3_boss_parts_flags_init();
 extern u8 D_0025FD30[];
 extern u8 D_0025FD70[];
 extern u8 D_0025FDB0[];
@@ -81,7 +81,7 @@ void stage3_boss_start(void) {
     g_boss_present |= 1;
     reg_a0 = reg_a5 + 0x16;
     g_boss_hp = (u8 *)(reg_a0);
-    func_001D45D0();
+    stage3_boss_parts_flags_init();
     g_bullet_limit_raised_1[0] = 1;
     g_bullet_limit_raised_2[0] = 1;
     if (g_loop != 0) {

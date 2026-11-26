@@ -2775,7 +2775,7 @@ void logo_screen_begin(void) {
     reg_a6 = save_a6;
 }
 
-void func_0012F9F0(void);
+void logo_sprite_draw(void);
 void fade_to_black(void);
 void fade_release(void);
 void fade_is_running(void);
@@ -2829,7 +2829,7 @@ void logo_screen_update(void) {
             goto block_1;
         }
     }
-    func_0012F9F0();
+    logo_sprite_draw();
     reg_d0.w = sd0;
     reg_d1.w = sd1;
     reg_d2.w = sd2;
