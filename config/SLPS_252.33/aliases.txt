@@ -92,7 +92,6 @@ D_002695C0_as_u8_a = 0x2695c0; // alias of D_002695C0
 D_002695D0_as_u8_a = 0x2695d0; // alias of D_002695D0
 D_002698B0_as_u16_a = 0x2698b0; // alias of D_002698B0
 D_00269920_as_u16_a = 0x269920; // alias of D_00269920
-D_00269BA0_as_u32_a = 0x269ba0; // alias of D_00269BA0
 D_0026B580_as_s32_a = 0x26b580; // alias of D_0026B580
 D_0026ED10_as_u16_a = 0x26ed10; // alias of D_0026ED10
 D_00270810_as_s16_a = 0x270810; // alias of D_00270810

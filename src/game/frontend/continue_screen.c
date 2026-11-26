@@ -1,5 +1,69 @@
 #include "common.h"
+#include "continue_screen.h"
 #include "task.h"
+
+void func_00134410();
+void func_00134620();
+void func_00134750();
+void func_001349A0();
+
+
+void (*continue_step_routines[8])(void) = {
+    0,
+    func_00134410,
+    func_00134620,
+    func_00134750,
+    func_001349A0,
+    0,
+    0,
+    0,
+};
+
+char continue_text_continue[16] = " CONTINUE     ";
+
+char continue_text_blank[16] = "              ";
+
+u32 continue_title_frames[20] = {
+    0xF8F001A, 0x102F001A, 0x107F001A, 0x10CF001A, 0x111F001A, 0x116F001A, 0x11BF001A, 0x120F001A,
+    0x125F001A, 0x12AF001A, 0x12FF001A, 0x134F001A, 0x139F001A, 0x13EF001A, 0x143F001A, 0x148F001A,
+    0x14DF001A, 0x152F001A, 0x0000, 0x0000,
+};
+
+/* The frames of each countdown digit, behind the table that points at them. */
+typedef struct {
+    /* 0x00 */ u32 *sets[10];
+    /* 0x28 */ u32 frames[10][4];
+} ContinueDigitFrames;
+
+ContinueDigitFrames continue_digit_frames = {
+    {
+        continue_digit_frames.frames[0],
+        continue_digit_frames.frames[1],
+        continue_digit_frames.frames[2],
+        continue_digit_frames.frames[3],
+        continue_digit_frames.frames[4],
+        continue_digit_frames.frames[5],
+        continue_digit_frames.frames[6],
+        continue_digit_frames.frames[7],
+        continue_digit_frames.frames[8],
+        continue_digit_frames.frames[9],
+    },
+    {
+        { 0xBCF001A, 0xBD3001A, 0xBD7001A },
+        { 0xC2F001A, 0xC33001A, 0xC37001A },
+        { 0xC8F001A, 0xC93001A, 0xC97001A },
+        { 0xCEF001A, 0xCF3001A, 0xCF7001A },
+        { 0xD4F001A, 0xD53001A, 0xD57001A },
+        { 0xDAF001A, 0xDB3001A, 0xDB7001A },
+        { 0xE0F001A, 0xE13001A, 0xE17001A },
+        { 0xE6F001A, 0xE73001A, 0xE77001A },
+        { 0xECF001A, 0xED3001A, 0xED7001A },
+        { 0xF2F001A, 0xF33001A, 0xF37001A },
+    },
+};
+
+ContinuePlayer continue_player1 = { 0x36, 1, { 2, 3 }, { 4, 5 }, { 6, 7 }, { 8, 9 } };
+ContinuePlayer continue_player2 = { 0x36, 0xF, { 2, 3 }, { 4, 5 }, { 6, 7 }, { 8, 9 } };
 
 void func_001340E0(void);
 void func_00134660(void);
@@ -42,7 +106,7 @@ void func_001340E0(void) {
 }
 
 s32 text_palette_load();
-extern u8 D_00269340[];
+extern u16 continue_palette[];
 extern u8 D_002BF3E0[];
 
 void func_001340F0(void) {
@@ -68,7 +132,7 @@ void func_001340F0(void) {
             var_a0 += 1;
         } while (var_a0 < 0x2C);
     }
-    reg_a0 = D_00269340;
+    reg_a0 = (u8 *)continue_palette;
     reg_d0.h[0] = 0xD;
     text_palette_load();
 }
@@ -211,7 +275,6 @@ next_4:
 
 typedef void (*Fn)();
 
-extern u8 D_00269B70[];
 extern u16 D_002BF3E0_as_u16_a[];
 
 void func_00134380(u16 *arg0) {
@@ -225,7 +288,7 @@ void func_00134380(u16 *arg0) {
         temp_v1_2 = *(u16 *)reg_a4;
         reg_d0.h[0] = temp_v1_2;
         if (temp_v1_2 != 0) {
-            ((Fn)*(u32 *)((u8 *)D_00269B70 + (reg_d0.h[0] * 4)))();
+            ((Fn)*(u32 *)((u8 *)continue_step_routines + (reg_d0.h[0] * 4)))();
         }
         var_a0 = (u16 *)(reg_a4 + 0x16);
         reg_a4 = (u8 *)(var_a0);
@@ -238,8 +301,6 @@ s32 text_layer_put_hex_digit();
 s32 func_00131610();
 s32 text_layer_print();
 s32 sfx_countdown();
-extern u8 D_00269B90[];
-extern u8 D_00269BA0[];
 #ifdef DEATH_LABEL
 extern u8 credit_label_p1[];
 extern u8 credit_label_p2[];
@@ -258,22 +319,22 @@ void func_00134410(void) {
     if (*(u16 *)(reg_a4 + 2) == 0) {
         reg_d0.h[0] = 1;
         reg_d1.h[0] = 0x33;
-        reg_a0 = (u8 *)D_00269BA0;
+        reg_a0 = (u8 *)continue_text_blank;
         reg_d2.h[0] = 2;
         text_layer_print();
         reg_d0.h[0] = 0xF;
         reg_d1.h[0] = 0x33;
-        reg_a0 = (u8 *)D_00269BA0;
+        reg_a0 = (u8 *)continue_text_blank;
         reg_d2.h[0] = 2;
         text_layer_print();
         reg_d0.h[0] = 1;
         reg_d1.h[0] = 0x32;
-        reg_a0 = (u8 *)D_00269BA0;
+        reg_a0 = (u8 *)continue_text_blank;
         reg_d2.h[0] = 2;
         text_layer_print();
         reg_d0.h[0] = 0xF;
         reg_d1.h[0] = 0x32;
-        reg_a0 = (u8 *)D_00269BA0;
+        reg_a0 = (u8 *)continue_text_blank;
         reg_d2.h[0] = 2;
         text_layer_print();
         *(u16 *)(reg_a4 + 2) = 1U;
@@ -300,7 +361,7 @@ void func_00134410(void) {
     reg_d1.h[0] = *(u16 *)(reg_a4 + 6);
     temp_a0 = *(u16 *)(reg_a4 + 8);
     reg_d0.h[0] = temp_a0;
-    reg_a0 = (u8 *)D_00269B90;
+    reg_a0 = (u8 *)continue_text_continue;
     reg_d2.h[0] = 2;
     text_layer_print();
     reg_d4.w = 0;
@@ -367,21 +428,21 @@ void func_00134660() {
     }
     *(u16 *)(reg_a4 + 6) = (u16) reg_d1.h[0];
     *(u16 *)(reg_a4 + 8) = (u16) reg_d0.h[0];
-    reg_a0 = D_00269BA0;
+    reg_a0 = (u8 *)continue_text_blank;
     reg_d2.h[0] = 2;
     text_layer_print();
     func_00134740();
     if (*(u16 *)(reg_a4 + 4) == 0) {
         reg_d0.h[0] = 1;
         reg_d1.h[0] = 0x32;
-        reg_a0 = D_00269BA0;
+        reg_a0 = (u8 *)continue_text_blank;
         reg_d2.h[0] = 2;
         text_layer_print();
         return;
     }
     reg_d0.h[0] = 0xF;
     reg_d1.h[0] = 0x32;
-    reg_a0 = D_00269BA0;
+    reg_a0 = (u8 *)continue_text_blank;
     reg_d2.h[0] = 2;
     text_layer_print();
 }
@@ -394,9 +455,6 @@ void func_00134740(void) {
 
 s32 deferred_text_put();
 s32 deferred_text_put_sheet();
-extern u32 D_00269BA0_as_u32_a[];
-extern u8 D_00269BB0[];
-extern u8 D_00269C00[];
 extern s16 D_002BF3F6_as_s16_a[];
 #ifdef DEATH_LABEL
 s32 text_layer_put_hex_digit();
@@ -421,12 +479,12 @@ void func_00134750(void) {
         *(s16 *)(reg_a4 + 0x12) = 1;
         reg_d0.h[0] = 1;
         reg_d1.h[0] = 0x33;
-        reg_a0 = (u8 *)(D_00269BA0_as_u32_a);
+        reg_a0 = (u8 *)continue_text_blank;
         reg_d2.h[0] = 2;
         text_layer_print();
         reg_d0.h[0] = 0xF;
         reg_d1.h[0] = 0x33;
-        reg_a0 = (u8 *)(D_00269BA0_as_u32_a);
+        reg_a0 = (u8 *)continue_text_blank;
         reg_d2.h[0] = 2;
         text_layer_print();
         D_002BF3F6_as_s16_a[0] = 0;
@@ -462,7 +520,7 @@ void func_00134750(void) {
         *(u8 *)(reg_a4 + 0xF) = *(u8 *)(reg_a4 + 0xE);
         reg_tmp.h[0] = *(u16 *)(reg_a4 + 0x10);
         temp_a3 = reg_tmp.h[0] & ~3;
-        temp_a2 = *(u32 *)(D_00269BB0 + temp_a3);
+        temp_a2 = *(u32 *)((u8 *)continue_title_frames + temp_a3);
         reg_d4.w = temp_a2;
         reg_d0.h[0] = 0x8C;
         reg_d1.h[0] = 0x400;
@@ -476,7 +534,7 @@ void func_00134750(void) {
     }
     reg_d4.w = 0;
     reg_d4.b[0] = (u8) *(s8 *)(reg_a4 + 0xA);
-    reg_a0 = *(u8 **)(D_00269C00 + (reg_d4.h[0] * 4));
+    reg_a0 = *(u8 **)((u8 *)continue_digit_frames.sets + (reg_d4.h[0] * 4));
     reg_a0 += *(u16 *)(reg_a4 + 0x14);
     temp_a3_2 = *(u32 *)reg_a0;
     reg_d4.w = temp_a3_2;
@@ -518,12 +576,12 @@ void func_001349A0() {
         deferred_text_clear();
         reg_d0.h[0] = 1;
         reg_d1.h[0] = 0x32;
-        reg_a0 = D_00269BA0;
+        reg_a0 = (u8 *)continue_text_blank;
         reg_d2.h[0] = 2;
         text_layer_print();
         reg_d0.h[0] = 0xF;
         reg_d1.h[0] = 0x32;
-        reg_a0 = D_00269BA0;
+        reg_a0 = (u8 *)continue_text_blank;
         reg_d2.h[0] = 2;
         text_layer_print();
     }
@@ -545,14 +603,12 @@ void func_00134A70(void)
 s32 func_001A3560();
 s32 func_001ACA00();
 s32 func_001ACA80();
-extern u8 D_00269CD0[];
-extern u8 D_00269CF0[];
 
 void func_00134AC0() {
     *(s8 *)(reg_a5 + 3) = 1;
-    reg_a4 = D_00269CD0;
+    reg_a4 = (u8 *)&continue_player1;
     if (*(u8 *)(reg_a5 + 6) != 0) {
-        reg_a4 = D_00269CF0;
+        reg_a4 = (u8 *)&continue_player2;
     }
     reg_tmp.w = (u32) reg_a4;
     *(u16 *)(reg_a5 + 8) = (u16) reg_tmp.h[1];
@@ -757,11 +813,6 @@ next_13:
     reg_d0.b[0] = reg_a5[5];
     *reg_a0 = reg_d0.b[0];
 }
-
-u8 D_00269340[32] = {
-    0x48, 0x00, 0x0F, 0x00, 0x33, 0x00, 0xB5, 0x00, 0xF5, 0x00, 0x55, 0x05, 0x38, 0x00, 0xD7, 0x09,
-    0x9A, 0x00, 0xDB, 0x00, 0x5B, 0x01, 0xBD, 0x01, 0x5E, 0x02, 0x1E, 0x03, 0x7F, 0x0B, 0x00, 0x00,
-};
 
 /* .bss (the compiler lays these out in reverse) */
 u8 D_002BF3E0[32];

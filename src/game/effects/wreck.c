@@ -3,6 +3,7 @@
 #include "player.h"
 #include "entity.h"
 #include "sdk/ps2sdk.h"
+#include "continue_screen.h"
 
 extern u16 D_0026ED10[];
 extern u16 D_0028DC68[];
@@ -14,8 +15,6 @@ extern u16 D_00269708[];
 extern u16 D_00269800[];
 extern u16 D_00269840[];
 extern u16 D_002698B0[];
-extern u16 D_00269CD0[];
-extern u16 D_00269CF0[];
 extern u16 D_00269D10[];
 extern u16 D_00269D20[];
 extern u16 D_0026A3F0[];
@@ -206,14 +205,14 @@ void func_0020F550(void) {
     STORE_POINTER((u16 *)D_00269920 + 99, D_00255470);
     STORE_POINTER((u16 *)D_00269920 + 105, D_00255470);
     STORE_POINTER((u16 *)D_00269920 + 111, D_00255470);
-    STORE_POINTER(D_00269CD0 + 2, func_00130250);
-    STORE_POINTER(D_00269CD0 + 4, input_get_p1_held);
-    STORE_POINTER(D_00269CD0 + 6, input_get_p1_pressed);
-    STORE_POINTER(D_00269CD0 + 8, D_002BF3EA_as_u16_a);
-    STORE_POINTER(D_00269CF0 + 2, func_00130260);
-    STORE_POINTER(D_00269CF0 + 4, input_get_p2_held);
-    STORE_POINTER(D_00269CF0 + 6, input_get_p2_pressed);
-    STORE_POINTER(D_00269CF0 + 8, D_002BF400);
+    STORE_POINTER(continue_player1.other_routine, func_00130250);
+    STORE_POINTER(continue_player1.held, input_get_p1_held);
+    STORE_POINTER(continue_player1.pressed, input_get_p1_pressed);
+    STORE_POINTER(continue_player1.other_state, D_002BF3EA_as_u16_a);
+    STORE_POINTER(continue_player2.other_routine, func_00130260);
+    STORE_POINTER(continue_player2.held, input_get_p2_held);
+    STORE_POINTER(continue_player2.pressed, input_get_p2_pressed);
+    STORE_POINTER(continue_player2.other_state, D_002BF400);
     STORE_POINTER(D_00269D10 + 6, &g_p1_lives_as_u32);
     STORE_POINTER(D_00269D20 + 6, &g_p2_lives_as_u32);
     STORE_POINTER(D_00269E26, g_bomb_entities);
