@@ -486,3 +486,14 @@ void scroll_event_flags(void) {
 ScrollEventsState g_scroll_events;
 GroundState g_ground_state;  /* the ground unit's; it lies inside this unit's block */
 SceneryState g_scenery;
+
+#ifdef DDPDOJ_PC
+#include "pc_data_alias.h"
+
+PC_DATA_ALIAS(g_side_scroll_x_prev, g_ground_state, 0x6);
+PC_DATA_ALIAS(g_side_scroll_x, g_ground_state, 0x8);
+PC_DATA_ALIAS(g_side_scroll_pixels, g_ground_state, 0xa);
+PC_DATA_ALIAS(g_side_scroll_step, g_ground_state, 0xc);
+PC_DATA_ALIAS(g_ground_map_row, g_ground_state, 0x1c);
+PC_DATA_ALIAS(g_ground_map_row_offset, g_ground_state, 0x1e);
+#endif

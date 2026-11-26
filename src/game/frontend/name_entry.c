@@ -1318,4 +1318,6 @@ u8 password_bits_unpack_buffer[32];
 #include "pc_data_alias.h"
 
 PC_DATA_ALIAS(D_002BAE82, D_002BAE80, 0x2);
+
+PC_DATA_ALIAS(D_002BAD63, password_bits_unpack_buffer, 0x13);
 #endif

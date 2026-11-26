@@ -1510,3 +1510,34 @@ u8 g_replay_snapshot[12784];
 u16 D_006C58D0[488];
 u8 g_replay_file[48];
 #endif
+
+#ifdef DDPDOJ_PC
+#include "pc_data_alias.h"
+
+PC_DATA_ALIAS(D_006E5BE2, g_replay_header, 0x2);
+PC_DATA_ALIAS(D_006E5BE4, g_replay_header, 0x4);
+PC_DATA_ALIAS(D_006E5BE6, g_replay_header, 0x6);
+PC_DATA_ALIAS(D_006E5BE8, g_replay_header, 0x8);
+PC_DATA_ALIAS(D_006E5BEA_as_s16_a, g_replay_header, 0xa);
+PC_DATA_ALIAS(D_006E5BEC_as_s16_a, g_replay_header, 0xc);
+PC_DATA_ALIAS(D_006E5BEE_as_s16_a, g_replay_header, 0xe);
+PC_DATA_ALIAS(D_006E5BF0, g_replay_header, 0x10);
+PC_DATA_ALIAS(D_006E5BF2, g_replay_header, 0x12);
+PC_DATA_ALIAS(D_006E5BF4, g_replay_header, 0x14);
+PC_DATA_ALIAS(D_006E5BF6, g_replay_header, 0x16);
+PC_DATA_ALIAS(D_006E5BF8_as_s16_a, g_replay_header, 0x18);
+PC_DATA_ALIAS(D_006E5BFA_as_s16_a, g_replay_header, 0x1a);
+PC_DATA_ALIAS(D_006E5BFC, g_replay_header, 0x1c);
+PC_DATA_ALIAS(D_006E5BFE_as_s16_a, g_replay_header, 0x1e);
+PC_DATA_ALIAS(D_006E5C00_as_s16_a, g_replay_header, 0x20);
+PC_DATA_ALIAS(D_006E5C02, g_replay_header, 0x22);
+PC_DATA_ALIAS(D_006E5C04_as_s16_a, g_replay_header, 0x24);
+PC_DATA_ALIAS(D_006E5C06, g_replay_header, 0x26);
+PC_DATA_ALIAS(D_006E5C08, g_replay_header, 0x28);
+PC_DATA_ALIAS(D_006E5C0A_as_s16_a, g_replay_header, 0x2a);
+PC_DATA_ALIAS(D_006E5C0C_as_s16_a, g_replay_header, 0x2c);
+PC_DATA_ALIAS(D_006E5C0E, g_replay_header, 0x2e);
+PC_DATA_ALIAS(D_006E5C10, g_replay_header, 0x30);
+PC_DATA_ALIAS(D_006E5C12, g_replay_header, 0x32);
+PC_DATA_ALIAS(D_006E5C14, g_replay_header, 0x34);
+#endif

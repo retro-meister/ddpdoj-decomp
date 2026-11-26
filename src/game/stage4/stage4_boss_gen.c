@@ -3137,3 +3137,9 @@ u8 stage4_reactor_start_table_2[8] = { 0x00, 0x00, 0x00, 0x00, 0x3C, 0x00, 0x00,
 u16 rail_turret_table_2[4] = { 0xFFF4, 0x18, 0x0F, 0xFFCA };
 
 u16 rail_turret_table_3[4] = { 0x0C, 0xFFE8, 0xFFF1, 0x36 };
+
+#ifdef DDPDOJ_PC
+#include "pc_data_alias.h"
+
+PC_DATA_ALIAS(D_00263EB8, stage4_tachyon_particle_start_table, 0x18);
+#endif

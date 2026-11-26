@@ -943,3 +943,64 @@ u16 option_sprites_b_01_04_05[4] = {
 u16 option_hyper_sprite_b_00_05[4] = {
     0x0000, 0x083E, 0x0000, 0x083F,
 };
+
+#ifdef DDPDOJ_PC
+#include "pc_data_alias.h"
+
+PC_DATA_ALIAS(D_00256FD8, replay_targets_option_sprites_15, 0x18);
+PC_DATA_ALIAS(D_00256FE8, replay_targets_option_sprites_15, 0x28);
+PC_DATA_ALIAS(D_00256FF8, replay_targets_option_sprites_15, 0x38);
+PC_DATA_ALIAS(D_00257008, replay_targets_option_sprites_15, 0x48);
+PC_DATA_ALIAS(D_00257018, replay_targets_option_sprites_15, 0x58);
+PC_DATA_ALIAS(D_00257048, replay_targets_option_sprites_16, 0x18);
+PC_DATA_ALIAS(D_00257058, replay_targets_option_sprites_16, 0x28);
+PC_DATA_ALIAS(D_00257068, replay_targets_option_sprites_16, 0x38);
+PC_DATA_ALIAS(D_00257078, replay_targets_option_sprites_16, 0x48);
+PC_DATA_ALIAS(D_00257088, replay_targets_option_sprites_16, 0x58);
+PC_DATA_ALIAS(D_002570B8, replay_targets_option_sprites_17, 0x18);
+PC_DATA_ALIAS(D_002570C8, replay_targets_option_sprites_17, 0x28);
+PC_DATA_ALIAS(D_002570D8, replay_targets_option_sprites_17, 0x38);
+PC_DATA_ALIAS(D_002570E8, replay_targets_option_sprites_17, 0x48);
+PC_DATA_ALIAS(D_002570F8, replay_targets_option_sprites_17, 0x58);
+PC_DATA_ALIAS(D_00257128, replay_targets_option_sprites_18, 0x18);
+PC_DATA_ALIAS(replay_targets_option_params_b_0, replay_targets_option_sprites_18, 0x28);
+PC_DATA_ALIAS(replay_targets_option_params_b_1, replay_targets_option_sprites_18, 0x38);
+PC_DATA_ALIAS(replay_targets_option_params_b_2, replay_targets_option_sprites_18, 0x48);
+PC_DATA_ALIAS(replay_targets_option_params_b_3, replay_targets_option_sprites_18, 0x58);
+PC_DATA_ALIAS(replay_targets_option_params_b_4, replay_targets_option_sprites_18, 0x68);
+PC_DATA_ALIAS(replay_targets_option_params_b_5, replay_targets_option_sprites_18, 0x78);
+PC_DATA_ALIAS(replay_targets_option_params_b_6, replay_targets_option_sprites_18, 0x88);
+PC_DATA_ALIAS(replay_targets_option_params_b_7, replay_targets_option_sprites_18, 0x98);
+PC_DATA_ALIAS(replay_targets_option_params_b_8, replay_targets_option_sprites_18, 0xa8);
+PC_DATA_ALIAS(replay_targets_option_params_b_9, replay_targets_option_sprites_18, 0xb8);
+PC_DATA_ALIAS(replay_targets_option_params_b_10, replay_targets_option_sprites_18, 0xc8);
+PC_DATA_ALIAS(replay_targets_option_params_b_11, replay_targets_option_sprites_18, 0xd8);
+PC_DATA_ALIAS(replay_targets_option_params_b_12, replay_targets_option_sprites_18, 0xe8);
+PC_DATA_ALIAS(replay_targets_option_params_b_13, replay_targets_option_sprites_18, 0xf8);
+PC_DATA_ALIAS(replay_targets_option_params_b_14, replay_targets_option_sprites_18, 0x108);
+PC_DATA_ALIAS(replay_targets_option_params_b_15, replay_targets_option_sprites_18, 0x118);
+PC_DATA_ALIAS(replay_targets_option_params_b_16, replay_targets_option_sprites_18, 0x128);
+PC_DATA_ALIAS(replay_targets_option_params_b_17, replay_targets_option_sprites_18, 0x138);
+PC_DATA_ALIAS(replay_targets_option_params_b_18, replay_targets_option_sprites_18, 0x148);
+PC_DATA_ALIAS(replay_targets_option_params_b_19, replay_targets_option_sprites_18, 0x158);
+PC_DATA_ALIAS(option_power_value_00_08, replay_targets_option_sprites_18, 0x168);
+PC_DATA_ALIAS(option_power_value_01_08, replay_targets_option_sprites_18, 0x178);
+PC_DATA_ALIAS(option_power_value_02_08, replay_targets_option_sprites_18, 0x188);
+PC_DATA_ALIAS(option_power_value_03_08, replay_targets_option_sprites_18, 0x198);
+PC_DATA_ALIAS(option_power_value_04_08, replay_targets_option_sprites_18, 0x1a8);
+PC_DATA_ALIAS(option_power_value_05_08, replay_targets_option_sprites_18, 0x1b8);
+PC_DATA_ALIAS(option_power_value_06_08, replay_targets_option_sprites_18, 0x1c8);
+PC_DATA_ALIAS(option_power_value_07_08, replay_targets_option_sprites_18, 0x1d8);
+PC_DATA_ALIAS(option_power_value_08_08, replay_targets_option_sprites_18, 0x1e8);
+PC_DATA_ALIAS(option_power_value_09_08, replay_targets_option_sprites_18, 0x1f8);
+PC_DATA_ALIAS(option_strong_param_00_08, replay_targets_option_sprites_18, 0x208);
+PC_DATA_ALIAS(option_strong_param_01_08, replay_targets_option_sprites_18, 0x218);
+PC_DATA_ALIAS(option_strong_param_02_08, replay_targets_option_sprites_18, 0x228);
+PC_DATA_ALIAS(option_strong_param_03_08, replay_targets_option_sprites_18, 0x238);
+PC_DATA_ALIAS(option_strong_param_04_08, replay_targets_option_sprites_18, 0x248);
+PC_DATA_ALIAS(replay_blocks_option_params_19, replay_targets_option_sprites_18, 0x258);
+PC_DATA_ALIAS(replay_blocks_option_params_20, replay_targets_option_sprites_18, 0x268);
+PC_DATA_ALIAS(replay_blocks_option_params_21, replay_targets_option_sprites_18, 0x278);
+PC_DATA_ALIAS(replay_blocks_option_params_22, replay_targets_option_sprites_18, 0x288);
+PC_DATA_ALIAS(option_hyper_param_00_08, replay_targets_option_sprites_18, 0x298);
+#endif

@@ -29,3 +29,11 @@ Entity g_enemy_entities_second[50];
 Entity g_enemy_entities[100];
 EnemyState g_spawn_requests[40];
 EnemyState g_spawn_request_spare;
+
+#ifdef DDPDOJ_PC
+#include "pc_data_alias.h"
+
+PC_DATA_ALIAS(D_002BDAA4, g_spare_entities, 0x24);
+PC_DATA_ALIAS(D_002BDAA6, g_spare_entities, 0x26);
+PC_DATA_ALIAS(D_002BDAA8, g_spare_entities, 0x28);
+#endif

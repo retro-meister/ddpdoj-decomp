@@ -63,8 +63,13 @@ u16 g_enemy_signal_c __attribute__((aligned(4)));
 u16 g_enemy_signal_d __attribute__((aligned(4)));
 u16 g_enemy_signal_e __attribute__((aligned(4)));
 u16 g_enemy_signal_f __attribute__((aligned(4)));
+#ifdef DDPDOJ_PC
+/* The replay snapshot reads and writes both flag bytes together. */
+_Alignas(4) u16 pc_boss_present;
+#else
 u8 g_boss_present_b1;
 u8 g_boss_present __attribute__((aligned(4)));
+#endif
 u16 g_continue_pending_count;
 s32 g_ground_task_handle;
 s32 g_misc_task_handle;
@@ -79,4 +84,10 @@ u8 g_player_slots[80];
 #include "pc_data_alias.h"
 
 PC_DATA_ALIAS(g_player_slot2, g_player_slots, 0x24);
+
+PC_DATA_ALIAS(g_enemy_signal_6_as_u8, g_enemy_signal_6, 0x0);
+PC_DATA_ALIAS(D_0028E87D, g_enemy_signal_6, 0x1);
+PC_DATA_ALIAS(g_boss_present, pc_boss_present, 0x0);
+PC_DATA_ALIAS(g_boss_present_as_u16, pc_boss_present, 0x0);
+PC_DATA_ALIAS(g_boss_present_b1, pc_boss_present, 0x1);
 #endif

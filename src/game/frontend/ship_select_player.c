@@ -1165,9 +1165,14 @@ u16 join_select_object_defaults_set_table[4] = {
 /* .bss (the compiler lays these out in reverse) */
 u8 join_select_p1_table_at_8[16];
 u8 join_select_p2_table_at_8[16];
+#ifdef DDPDOJ_PC
+/* The join-select reset spans this state and the adjacent spawn buffers. */
+_Alignas(16) u8 D_0029BEE0[0x50];
+#else
 u16 join_select_object_spawn_buffer_2[8];
 u16 join_select_object_spawn_buffer[16];
 u8 D_0029BEE0[32];
+#endif
 
 #ifdef DDPDOJ_PC
 #include "pc_data_alias.h"
@@ -1178,4 +1183,18 @@ PC_DATA_ALIAS(D_0029BEE6, D_0029BEE0, 0x6);
 PC_DATA_ALIAS(D_0029BEEE, D_0029BEE0, 0xe);
 PC_DATA_ALIAS(D_0029BEFC, D_0029BEE0, 0x1c);
 PC_DATA_ALIAS(D_0029BEFE, D_0029BEE0, 0x1e);
+
+PC_DATA_ALIAS(join_select_object_spawn_buffer, D_0029BEE0, 0x20);
+PC_DATA_ALIAS(D_0029BF02, D_0029BEE0, 0x22);
+PC_DATA_ALIAS(D_0029BF04, D_0029BEE0, 0x24);
+PC_DATA_ALIAS(D_0029BF05, D_0029BEE0, 0x25);
+PC_DATA_ALIAS(D_0029BF08, D_0029BEE0, 0x28);
+PC_DATA_ALIAS(D_0029BF0A, D_0029BEE0, 0x2a);
+PC_DATA_ALIAS(D_0029BF12, D_0029BEE0, 0x32);
+PC_DATA_ALIAS(join_select_object_spawn_buffer_2, D_0029BEE0, 0x40);
+PC_DATA_ALIAS(D_0029BF22, D_0029BEE0, 0x42);
+PC_DATA_ALIAS(D_0029BF24, D_0029BEE0, 0x44);
+PC_DATA_ALIAS(D_0029BF26, D_0029BEE0, 0x46);
+PC_DATA_ALIAS(D_0029BF41, join_select_p1_table_at_8, 0x1);
+PC_DATA_ALIAS(D_0029BF31, join_select_p2_table_at_8, 0x1);
 #endif

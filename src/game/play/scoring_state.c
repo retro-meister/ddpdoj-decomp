@@ -233,4 +233,11 @@ PC_DATA_ALIAS(g_stored_ranking_texts_as_s8_a5_a30, g_stored_ranking_texts, 0x0);
 PC_DATA_ALIAS(death_D_0068DAA6, g_p1_score_extra_cell, 0x6);
 PC_DATA_ALIAS(death_D_0068DAA8, g_p1_score_extra_cell, 0x8);
 #endif
+
+PC_DATA_ALIAS(g_p1_score_pending_as_u8, g_p1_score_pending, 0x0);
+PC_DATA_ALIAS(g_p2_score_pending_as_u8, g_p2_score_pending, 0x0);
+
+#ifdef DEATH_LABEL
+PC_DATA_ALIAS(death_D_0068DAB2, score_pending_apply_side_buffer, 0x2);
+#endif
 #endif

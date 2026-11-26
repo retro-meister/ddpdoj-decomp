@@ -1155,3 +1155,10 @@ u16 tally_bonus_sprite_draw_table_4[24] = {
 u16 death_D_00290438 __attribute__((aligned(4)));
 u16 death_D_00290434 __attribute__((aligned(4)));
 #endif
+
+#ifdef DDPDOJ_PC
+#include "pc_data_alias.h"
+
+PC_DATA_ALIAS(D_00269AAE, stage_clear_screen_update_table_7, 0x4e);
+PC_DATA_ALIAS(D_00269ADE, tally_bonus_sprite_draw_table, 0x2e);
+#endif

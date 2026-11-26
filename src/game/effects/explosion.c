@@ -481,3 +481,9 @@ block_2:
 /* .bss (the compiler lays these out in reverse) */
 u8 explosion_spawn_buffer[64];
 u8 g_explosions[4480];
+
+#ifdef DDPDOJ_PC
+#include "pc_data_alias.h"
+
+PC_DATA_ALIAS(g_explosion_count, explosion_spawn_buffer, 0x38);
+#endif

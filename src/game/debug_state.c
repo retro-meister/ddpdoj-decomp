@@ -24,3 +24,9 @@ u32 D_0028E7F8;
 /* .bss (the compiler lays these out in reverse) */
 s16 ending_state_clear_buffer_2[16];
 s16 ending_state_clear_buffer[16];
+
+#ifdef DDPDOJ_PC
+#include "pc_data_alias.h"
+
+PC_DATA_ALIAS(g_debug_number, ending_state_clear_buffer_2, 0x2);
+#endif

@@ -3,6 +3,18 @@
 #include "enemy_tables.h"
 #include "enemy.h"
 
+#ifdef DDPDOJ_PC
+#include <string.h>
+#ifdef DEATH_LABEL
+extern Entity g_enemy_entities_second[16];
+extern u8 g_twin_boss_second[32];
+extern u8 g_twin_boss_first_fire_point[32];
+extern u8 g_twin_boss_second_fire_point[1024];
+#else
+extern Entity g_enemy_entities_second[50];
+#endif
+#endif
+
 void stage_enemies_select(void);
 void enemies_run(void);
 void enemy_start(void);
@@ -34,10 +46,12 @@ extern u16 g_enemy_count_second;
 extern u16 g_enemy_count;
 extern u16 D_0028E7EC;
 
+#ifndef DDPDOJ_PC
 /* The reset clears the entity pools as bytes through the first one's address: the
    three entity pools follow one another. */
 typedef struct { s8 first[0xC80]; s8 second[0x640]; s8 spare[0x640]; } EntityBytes;
 extern EntityBytes g_enemy_entities_as_bytes;
+#endif
 
 void enemies_reset(void) {
     s32 i;
@@ -54,6 +68,16 @@ void enemies_reset(void) {
     for (i = 0; i < 0x50; i++) {
         g_enemy_slots.bytes.none[i] = 0;
     }
+#ifdef DDPDOJ_PC
+    memset(g_enemy_entities, 0, sizeof(g_enemy_entities));
+    memset(g_enemy_entities_second, 0, sizeof(g_enemy_entities_second));
+#ifdef DEATH_LABEL
+    memset(g_twin_boss_second, 0, sizeof(g_twin_boss_second));
+    memset(g_twin_boss_first_fire_point, 0, sizeof(g_twin_boss_first_fire_point));
+    memset(g_twin_boss_second_fire_point, 0, sizeof(g_twin_boss_second_fire_point));
+#endif
+    memset(g_spare_entities, 0, sizeof(g_spare_entities));
+#else
     for (i = 0; i < 0xC80; i++) {
         g_enemy_entities_as_bytes.first[i] = 0;
     }
@@ -63,6 +87,7 @@ void enemies_reset(void) {
     for (i = 0; i < 0x640; i++) {
         g_enemy_entities_as_bytes.spare[i] = 0;
     }
+#endif
     g_spawn_request_end = 0;
     D_0028E7D8 = 0;
     D_0028E7DC = 0;

@@ -2178,3 +2178,9 @@ void (*stage4_boss_fire_both_sides_table[2])() = {
     stage4_boss_fire_fixed_fan_a,
     stage4_boss_fire_fixed_fan_b,
 };
+
+#ifdef DDPDOJ_PC
+#include "pc_data_alias.h"
+
+PC_DATA_ALIAS(D_0026ED98, stage4_boss_fire_cutter_bay_b_table, 0x8);
+#endif

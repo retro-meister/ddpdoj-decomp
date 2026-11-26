@@ -11211,4 +11211,25 @@ PC_DATA_ALIAS(D_0068DF04, D_0068DF00, 0x4);
 #ifdef DEATH_LABEL
 PC_DATA_ALIAS(death_D_00262EC7, g_menu_page_item_counts, 0x17);
 #endif
+
+PC_DATA_ALIAS(D_0068DCF4, menu_arcade_adjust_buffer, 0x4);
+PC_DATA_ALIAS(D_0068DC41, menu_debug_option_adjust_buffer, 0x1);
+PC_DATA_ALIAS(D_0068DC42, menu_debug_option_adjust_buffer, 0x2);
+PC_DATA_ALIAS(D_0068DC43, menu_debug_option_adjust_buffer, 0x3);
+PC_DATA_ALIAS(D_0068DC44, menu_debug_option_adjust_buffer, 0x4);
+PC_DATA_ALIAS(D_0068DC45, menu_debug_option_adjust_buffer, 0x5);
+PC_DATA_ALIAS(D_0068DC21, menu_game_option_adjust_buffer, 0x1);
+PC_DATA_ALIAS(D_0068DC22, menu_game_option_adjust_buffer, 0x2);
+PC_DATA_ALIAS(D_0068DC23, menu_game_option_adjust_buffer, 0x3);
+PC_DATA_ALIAS(D_0068DC24, menu_game_option_adjust_buffer, 0x4);
+PC_DATA_ALIAS(D_0068DC33, menu_save_load_adjust_buffer, 0x3);
+PC_DATA_ALIAS(D_0068DC35, menu_save_load_adjust_buffer, 0x5);
+PC_DATA_ALIAS(D_0068DC36, menu_save_load_adjust_buffer, 0x6);
+PC_DATA_ALIAS(D_00684C94, simulation_task_run_buffer, 0x4);
+
+#ifdef DEATH_LABEL
+PC_DATA_ALIAS(death_D_00628F01, menu_death_option_adjust_buffer, 0x1);
+PC_DATA_ALIAS(death_D_00628F02, menu_death_option_adjust_buffer, 0x2);
+PC_DATA_ALIAS(death_D_00628DC6, menu_debug_option_adjust_buffer, 0x6);
+#endif
 #endif

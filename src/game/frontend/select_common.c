@@ -1610,4 +1610,7 @@ u8 D_0028C15C[4] = {
 
 PC_DATA_ALIAS(D_00252268, D_00252250, 0x18);
 PC_DATA_ALIAS(D_00252278, D_00252250, 0x28);
+
+PC_DATA_ALIAS(select_panel_piece_2_draw_table_as_u16_a, select_panel_piece_2_draw_table, 0x0);
+PC_DATA_ALIAS(D_0028C14A, select_panel_piece_2_draw_table, 0x2);
 #endif

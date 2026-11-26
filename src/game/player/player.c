@@ -3300,4 +3300,7 @@ PC_DATA_ALIAS(g_p2_option_level_data_lo, g_p2_option_level_data, 0x2);
 PC_DATA_ALIAS(g_p2_weapon_level_data_as_s32_a, g_p2_weapon_level_data, 0x0);
 PC_DATA_ALIAS(g_p2_weapon_level_data_as_u16_a, g_p2_weapon_level_data, 0x0);
 PC_DATA_ALIAS(g_p2_weapon_level_data_lo, g_p2_weapon_level_data, 0x2);
+
+PC_DATA_ALIAS(g_p1_hyper_ready_sprite_lo, g_p1_hyper_ready_sprite, 0x2);
+PC_DATA_ALIAS(g_p2_hyper_ready_sprite_lo, g_p2_hyper_ready_sprite, 0x2);
 #endif

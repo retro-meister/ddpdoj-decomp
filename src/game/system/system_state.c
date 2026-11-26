@@ -223,4 +223,15 @@ PC_DATA_ALIAS(D_0028E2BC, D_0028E2B8, 0x4);
 PC_DATA_ALIAS(D_0028E2BD, D_0028E2B8, 0x5);
 PC_DATA_ALIAS(D_0028E2BE, D_0028E2B8, 0x6);
 PC_DATA_ALIAS(D_0028E2BF, D_0028E2B8, 0x7);
+
+PC_DATA_ALIAS(D_0028E249, g_arcade_input_port, 0x1);
+PC_DATA_ALIAS(D_0028E24A, g_arcade_input_port, 0x2);
+PC_DATA_ALIAS(D_0028E24B, g_arcade_input_port, 0x3);
+PC_DATA_ALIAS(D_0028E24D, pad_mask_game_inputs_buffer, 0x1);
+PC_DATA_ALIAS(D_0028E24E, pad_mask_game_inputs_buffer, 0x2);
+PC_DATA_ALIAS(D_0028E24F, pad_mask_game_inputs_buffer, 0x3);
+PC_DATA_ALIAS(reg_a0_as_s8_p, reg_a0, 0x0);
+PC_DATA_ALIAS(reg_a4_as_u16_p, reg_a4, 0x0);
+PC_DATA_ALIAS(reg_call_target_as_fn, reg_call_target, 0x0);
+PC_DATA_ALIAS(reg_call_target_as_u8_p, reg_call_target, 0x0);
 #endif

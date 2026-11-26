@@ -376,3 +376,11 @@ u16 ending_mode_doll_a_table_4[4] = {
     0xD690, 0x0024, 0xFFFF, 0xFFFF,
 };
 #endif
+
+#ifdef DDPDOJ_PC
+#include "pc_data_alias.h"
+
+#ifndef DEATH_LABEL
+PC_DATA_ALIAS(D_0024D628, ending_text_script_event_table, 0x2e8);
+#endif
+#endif
