@@ -681,64 +681,64 @@ void enemy_path_start(void) {
     s8 t;
 
     enemy_move_end_requested = 0;
-    reg_d0.h[1] = *(u16 *)(reg_a5 + 0x12);
-    reg_d0.h[0] = *(u16 *)(reg_a5 + 0x14);
+    reg_d0.h[1] = ENEMY_STATE(reg_a5)->path[0];
+    reg_d0.h[0] = ENEMY_STATE(reg_a5)->path[1];
     if (reg_d0.w == 0) {
         enemy_remove_now();
         return;
     }
     reg_a0 = (u8 *)(reg_d0.w);
-    if (*(u8 *)(reg_a5 + 3) & 0x40) {
-        *(u16 *)(reg_a6 + 2) = *(u16 *)(reg_a5 + 0x48);
-        *(u16 *)(reg_a6 + 4) = *(u16 *)(reg_a5 + 0x4A);
+    if (ENEMY_STATE(reg_a5)->flags & ENEMY_FLAG_FROM_SPAWNER) {
+        ENTITY(reg_a6)->y.h = ENEMY_STATE(reg_a5)->start_y;
+        ENTITY(reg_a6)->x.h = ENEMY_STATE(reg_a5)->start_x;
         reg_d0.h[0] = g_side_scroll_x[0];
-        *(u16 *)(reg_a6 + 4) += reg_d0.sh[0];
+        ENTITY(reg_a6)->x.h += reg_d0.sh[0];
     } else {
         reg_d0.b[1] = *(s8 *)reg_a0;
         reg_a0 += 1;
         reg_d0.b[0] = *(s8 *)reg_a0;
         reg_a0 += 1;
-        *(u16 *)(reg_a6 + 2) = reg_d0.h[0];
+        ENTITY(reg_a6)->y.h = reg_d0.h[0];
         reg_tmp.b[1] = *(s8 *)reg_a0;
         reg_a0 += 1;
         reg_tmp.b[0] = *(s8 *)reg_a0;
         reg_a0 += 1;
-        *(u16 *)(reg_a6 + 4) = reg_tmp.h[0];
+        ENTITY(reg_a6)->x.h = reg_tmp.h[0];
     }
-    if ((s32) *(u8 *)(reg_a6 + 5) >= 0x80) {
-        *(u8 *)(reg_a6 + 5) |= 0x80;
+    if ((s32) ENTITY(reg_a6)->x.b[1] >= 0x80) {
+        ENTITY(reg_a6)->x.b[1] |= 0x80;
     }
-loop_1:
+before_first_move:
     t = *(s8 *)reg_a0;
     reg_d1.b[0] = t;
-    if (t >= 0) goto next_1;
+    if (t >= 0) goto first_move;
     reg_a0 += 1;
     if ((s32) reg_d1.b[0] >= 0xC0) {
-        *(s8 *)(reg_a6 + 0x1B) = *(s8 *)reg_a0;
+        ENTITY(reg_a6)->move.sb.speed = *(s8 *)reg_a0;
         reg_a0 += 1;
-        goto loop_1;
+        goto before_first_move;
     }
     enemy_move_end_requested = 0;
     reg_d1.h[0] &= 0xF;
     ((Fn)*(u32 *)((u8 *)g_enemy_path_commands + (reg_d1.h[0] * 4)))();
-    if (enemy_move_end_requested == 0) goto loop_1;
+    if (enemy_move_end_requested == 0) goto before_first_move;
     return;
-next_1:
+first_move:
     reg_tmp.w = (u32)reg_a0;
-    *(u16 *)(reg_a5 + 0x12) = (u16) reg_tmp.h[1];
-    *(u16 *)(reg_a5 + 0x14) = (u16) reg_tmp.h[0];
-    *(u8 *)(reg_a6 + 0x1A) = (u8) reg_d1.b[0];
-    reg_d0.h[0] = *(u16 *)(reg_a5 + 0xA);
+    ENEMY_STATE(reg_a5)->path[0] = (u16) reg_tmp.h[1];
+    ENEMY_STATE(reg_a5)->path[1] = (u16) reg_tmp.h[0];
+    ENTITY(reg_a6)->move.b.dir = (u8) reg_d1.b[0];
+    reg_d0.h[0] = ENEMY_STATE(reg_a5)->line_step;
     reg_d0.h[0] -= g_scroll_line_step;
     reg_d0.h[0] &= 0x7F;
     reg_tmp.h[0] = reg_d0.h[0];
     reg_d0.h[0] >>= 7;
     reg_d0.h[0] |= ((s16) reg_tmp.h[0] << 9) & 0xFFFF;
-    *(u16 *)(reg_a6 + 4) += reg_d0.h[0];
-    *(u16 *)(reg_a6 + 4) -= 0x800;
+    ENTITY(reg_a6)->x.h += reg_d0.h[0];
+    ENTITY(reg_a6)->x.h -= 0x800;
     reg_d1.w = 0;
-    *(u16 *)(reg_a5 + 0x10) = (u16) reg_d1.h[0];
-    *(u8 *)(reg_a5 + 3) |= 0x20;
+    ENEMY_STATE(reg_a5)->path_frames.h = (u16) reg_d1.h[0];
+    ENEMY_STATE(reg_a5)->flags |= ENEMY_FLAG_NEW_STEP;
 }
 
 s32 entity_follow_scroll();
@@ -751,71 +751,71 @@ void enemy_path_step(void) {
     u8 c;
 
     enemy_move_end_requested = 0;
-    if (g_enemies_stopped != 0) goto block_7;
-    if (*(u8 *)(reg_a5 + 0xC) & 1) {
+    if (g_enemies_stopped != 0) goto enemies_stopped;
+    if (ENEMY_STATE(reg_a5)->start_flags & 1) {
         entity_follow_scroll();
     }
-    reg_tmp.h[1] = *(u16 *)(reg_a5 + 0x12);
-    reg_tmp.h[0] = *(u16 *)(reg_a5 + 0x14);
+    reg_tmp.h[1] = ENEMY_STATE(reg_a5)->path[0];
+    reg_tmp.h[0] = ENEMY_STATE(reg_a5)->path[1];
     reg_a0 = (u8 *)reg_tmp.w;
-loop_1:
+next_step:
     p = reg_a0;
     reg_a0 = p + 1;
     v = *(s8 *)p;
     reg_d1.b[0] = v;
-    if (v < 0) goto block_5;
+    if (v < 0) goto not_a_move;
     p = reg_a0;
     reg_a0 = p + 1;
     v = *(s8 *)p;
     reg_d0.b[0] = v;
-    if ((v & 0xFF) == 0) goto next_2;
-    c = *(u8 *)(reg_a5 + 0x11);
-    if (c == reg_d0.b[0]) goto block_3;
-    *(u8 *)(reg_a5 + 0x11) = c + 1;
-next_2:
+    if ((v & 0xFF) == 0) goto move_on;
+    c = ENEMY_STATE(reg_a5)->path_frames.b[1];
+    if (c == reg_d0.b[0]) goto step_done;
+    ENEMY_STATE(reg_a5)->path_frames.b[1] = c + 1;
+move_on:
     reg_d1.h[0] &= 0x7F;
     ENTITY(reg_a6)->move.b.dir = reg_d1.b[0];
-    if ((s32)reg_d1.h[0] >= 0x40) goto block_2;
-    if (*(u8 *)(reg_a5 + 3) & 0x20) goto block_1;
-    reg_d2.h[0] = *(u16 *)(reg_a5 + 0x40);
-    reg_d3.h[0] = *(u16 *)(reg_a5 + 0x42);
+    if ((s32)reg_d1.h[0] >= 0x40) goto stay;
+    if (ENEMY_STATE(reg_a5)->flags & ENEMY_FLAG_NEW_STEP) goto new_speed;
+    reg_d2.h[0] = ENEMY_STATE(reg_a5)->path_speed_y;
+    reg_d3.h[0] = ENEMY_STATE(reg_a5)->path_speed_x;
     ENTITY(reg_a6)->y.h += reg_d2.h[0];
     ENTITY(reg_a6)->x.h += reg_d3.h[0];
     cond_flag = 0;
     return;
-block_1:
-    *(u8 *)(reg_a5 + 3) &= 0xDF;
+new_speed:
+    ENEMY_STATE(reg_a5)->flags &= 0xDF;
     entity_velocity();
-    *(u16 *)(reg_a5 + 0x40) = reg_d2.h[0];
-    *(u16 *)(reg_a5 + 0x42) = reg_d3.h[0];
+    ENEMY_STATE(reg_a5)->path_speed_y = reg_d2.h[0];
+    ENEMY_STATE(reg_a5)->path_speed_x = reg_d3.h[0];
     cond_flag = 0;
     return;
-block_2:
+stay:
     reg_d2.w = 0;
     reg_d3.h[0] = reg_d2.h[0];
     cond_flag = 0;
     return;
-block_3:
-    *(u8 *)(reg_a5 + 0x11) = 0;
-block_4:
+step_done:
+    ENEMY_STATE(reg_a5)->path_frames.b[1] = 0;
+path_advanced:
     reg_tmp.w = (u32)reg_a0;
-    *(u16 *)(reg_a5 + 0x12) = reg_tmp.h[1];
-    *(u16 *)(reg_a5 + 0x14) = reg_tmp.h[0];
-    *(u8 *)(reg_a5 + 3) |= 0x20;
-    goto loop_1;
-block_5:
-    if ((s32)reg_d1.b[0] < 0xC0) goto block_6;
+    ENEMY_STATE(reg_a5)->path[0] = reg_tmp.h[1];
+    ENEMY_STATE(reg_a5)->path[1] = reg_tmp.h[0];
+    ENEMY_STATE(reg_a5)->flags |= ENEMY_FLAG_NEW_STEP;
+    goto next_step;
+not_a_move:
+    if ((s32)reg_d1.b[0] < 0xC0) goto command;
     ENTITY(reg_a6)->move.sb.speed = *(s8 *)reg_a0;
     reg_a0 += 1;
-    goto block_4;
-block_6:
+    goto path_advanced;
+command:
     enemy_move_end_requested = 0;
     reg_d1.h[0] &= 0xF;
     ((Fn) *(u32 *)((u8 *)g_enemy_path_commands + reg_d1.h[0] * 4))();
-    if (enemy_move_end_requested == 0) goto block_4;
+    if (enemy_move_end_requested == 0) goto path_advanced;
     cond_flag = 0;
     return;
-block_7:
+enemies_stopped:
     cond_flag = 0;
     reg_d2.w = 0;
     reg_d3.w = 0;
@@ -823,7 +823,7 @@ block_7:
 
 extern s8 *reg_a0_as_s8_p;
 
-void enemy_script_loop(void) {
+void enemy_path_loop(void) {
     reg_d0.w = 0;
     reg_d0.b[0] = (u8) *(s8 *)reg_a0;
     reg_a0 += 1;
@@ -832,13 +832,13 @@ void enemy_script_loop(void) {
 }
 
 
-void enemy_script_set_entity_1f(void) {
-    *(s8 *)(reg_a6 + 0x1E) = *(s8 *)reg_a0;
+void enemy_path_draw_layer(void) {
+    ENTITY(reg_a6)->misc.sb.draw_layer = *(s8 *)reg_a0;
     reg_a0 += 1;
 }
 
 
-void enemy_script_ground_collision(void)
+void enemy_path_ground_hits(void)
 {
     reg_d0.b[0] = *reg_a0_as_s8_p++;
     reg_d0.b[0] -= 1;
@@ -852,7 +852,7 @@ void enemy_script_ground_collision(void)
 
 extern u16 *reg_a6_as_u16_p;
 
-void enemy_script_air_collision(void)
+void enemy_path_air_hits(void)
 {
     reg_d0.b[0] = (u8)*reg_a0_as_s8_p;
     reg_a0_as_s8_p += 1;
@@ -866,13 +866,13 @@ void enemy_script_air_collision(void)
 }
 
 
-void enemy_script_set_state_22(void) {
+void enemy_path_state_23(void) {
     *(s8 *)(reg_a5 + 0x23) = *(s8 *)reg_a0;
     reg_a0 += 1;
 }
 
 
-void enemy_script_poke_task(void) {
+void enemy_path_poke_state(void) {
     s8 temp_a2;
 
     reg_d0.h[0] = 0;
@@ -895,7 +895,7 @@ void enemy_script_poke_task(void) {
     *(u16 *)(reg_a5 + ((s32) reg_d0.h[0] >> 1)) = reg_d1.h[0];
 }
 
-void enemy_script_poke_entity(void) {
+void enemy_path_poke_entity(void) {
     s8 temp_a2;
 
     reg_d0.h[0] = 0;
@@ -918,31 +918,31 @@ void enemy_script_poke_entity(void) {
     *(u16 *)(reg_a6 + ((s32) reg_d0.h[0] >> 1)) = reg_d1.h[0];
 }
 
-void enemy_script_set_state_24(void) {
+void enemy_path_state_25(void) {
     *(s8 *)(reg_a5 + 0x25) = *(s8 *)reg_a0;
     reg_a0 += 1;
 }
 
-void enemy_script_set_entity_1e(void) {
-    *(s8 *)(reg_a6 + 0x1F) = *(s8 *)reg_a0;
+void enemy_path_user(void) {
+    ENTITY(reg_a6)->misc.sb.user = *(s8 *)reg_a0;
     reg_a0 += 1;
 }
 
-void enemy_script_air_scroll_check(void) {
+void enemy_path_side_scroll(void) {
     reg_d0.h[0] = g_side_scroll_x[0];
-    *(u16 *)(reg_a6 + 4) -= reg_d0.h[0];
+    ENTITY(reg_a6)->x.h -= reg_d0.h[0];
     reg_a0 += 1;
 }
 
 extern u8 enemy_move_end_requested_as_u8;
 
 
-void enemy_script_end(void) {
+void enemy_path_end(void) {
     enemy_move_end_requested_as_u8 = 1;
     enemy_remove();
 }
 
-void enemy_script_unused(void) {
+void enemy_path_nothing(void) {
 
 }
 
@@ -964,20 +964,20 @@ StageEnemies g_stage_boss_start_enemies[5] = {
     { g_stage5_boss_start_placements, g_stage5_enemy_path_offsets, g_stage5_enemy_paths },
 };
 
-/* The routines of the path commands 0x80 to 0x8B. */
+/* The routines of the path commands 0x80 to 0x8B (the PATH_ macros of enemy_tables.h). */
 void (*g_enemy_path_commands[12])() = {
-    enemy_script_loop,
-    enemy_script_set_entity_1f,
-    enemy_script_ground_collision,
-    enemy_script_air_collision,
-    enemy_script_set_state_22,
-    enemy_script_poke_task,
-    enemy_script_poke_entity,
-    enemy_script_set_state_24,
-    enemy_script_set_entity_1e,
-    enemy_script_air_scroll_check,
-    enemy_script_end,
-    enemy_script_unused,
+    enemy_path_loop,
+    enemy_path_draw_layer,
+    enemy_path_ground_hits,
+    enemy_path_air_hits,
+    enemy_path_state_23,
+    enemy_path_poke_state,
+    enemy_path_poke_entity,
+    enemy_path_state_25,
+    enemy_path_user,
+    enemy_path_side_scroll,
+    enemy_path_end,
+    enemy_path_nothing,
 };
 
 /* .sbss (the compiler lays these out in reverse) */

@@ -24,7 +24,7 @@ u16 scroll_event_routines[14] = { POINTER_SLOT(0), POINTER_SLOT(2), POINTER_SLOT
 /* The routines of the sound commands: scroll_sound_call, _music_stop, _music_fade. */
 u16 scroll_sound_routines[6] = { POINTER_SLOT(0), POINTER_SLOT(2), POINTER_SLOT(4) };
 
-/* By stage. */
+/* By stage: the 32 palettes of the map, and the map. */
 u16 stage_map_palettes[10] = { POINTER_SLOT(0), POINTER_SLOT(2), POINTER_SLOT(4), POINTER_SLOT(6), POINTER_SLOT(8) };
 
 u16 stage_maps[10] = { POINTER_SLOT(0), POINTER_SLOT(2), POINTER_SLOT(4), POINTER_SLOT(6), POINTER_SLOT(8) };

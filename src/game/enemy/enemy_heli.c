@@ -209,7 +209,7 @@ void heli_a_start(void) {
         reg_a0 = (u8 *)(D_00257950);
         HELI(reg_a5)->shadow_sprite[0] = (reg_d1.h[0] != 0) ? *(u16 *)((u8 *)reg_a0 + ((s16)reg_d1.h[0] & ~1)) : *(u16 *)reg_a0;
         HELI(reg_a5)->shadow_sprite[1] = ((reg_d1.h[0] + 2) != 0) ? *(u16 *)((u8 *)reg_a0 + ((s16)(reg_d1.h[0] + 2) & ~1)) : *(u16 *)reg_a0;
-        if (ENEMY_WORK(reg_a5)->kind & 0x20) {
+        if (ENEMY_STATE(reg_a5)->kind & 0x20) {
             func_002036F0();
         }
         reg_d0.h[0] = g_rank_2_16;
@@ -366,7 +366,7 @@ void heli_b_start(void) {
                 reg_a0 = (u8 *)(D_00257950);
                 HELI(reg_a5)->shadow_sprite[0] = (reg_d1.h[0] != 0) ? *(u16 *)((u8 *)reg_a0 + ((s16)reg_d1.h[0] & ~1)) : *(u16 *)reg_a0;
                 HELI(reg_a5)->shadow_sprite[1] = ((reg_d1.h[0] + 2) != 0) ? *(u16 *)((u8 *)reg_a0 + ((s16)(reg_d1.h[0] + 2) & ~1)) : *(u16 *)reg_a0;
-                if (ENEMY_WORK(reg_a5)->kind & 0x20) {
+                if (ENEMY_STATE(reg_a5)->kind & 0x20) {
                     func_002036F0();
                 }
                 reg_d0.h[0] = g_rank_2_16;
@@ -480,7 +480,7 @@ void heli_c_start(void) {
                 reg_a0 = (u8 *)(D_00257950);
                 HELI(reg_a5)->shadow_sprite[0] = (reg_d1.h[0] != 0) ? *(u16 *)((u8 *)reg_a0 + ((s16)reg_d1.h[0] & ~1)) : *(u16 *)reg_a0;
                 HELI(reg_a5)->shadow_sprite[1] = ((reg_d1.h[0] + 2) != 0) ? *(u16 *)((u8 *)reg_a0 + ((s16)(reg_d1.h[0] + 2) & ~1)) : *(u16 *)reg_a0;
-                if (ENEMY_WORK(reg_a5)->kind & 0x20) {
+                if (ENEMY_STATE(reg_a5)->kind & 0x20) {
                     func_002036F0();
                 }
                 reg_d0.b[0] = ENTITY(reg_a6)->move.b.dir;
@@ -629,7 +629,7 @@ void heli_d_start(void) {
         reg_a0 = (u8 *)(D_00257950);
         HELI(reg_a5)->shadow_sprite[0] = (reg_d1.h[0] != 0) ? *(u16 *)((u8 *)reg_a0 + ((s16)reg_d1.h[0] & ~1)) : *(u16 *)reg_a0;
         HELI(reg_a5)->shadow_sprite[1] = ((reg_d1.h[0] + 2) != 0) ? *(u16 *)((u8 *)reg_a0 + ((s16)(reg_d1.h[0] + 2) & ~1)) : *(u16 *)reg_a0;
-        if (ENEMY_WORK(reg_a5)->kind & 0x20) {
+        if (ENEMY_STATE(reg_a5)->kind & 0x20) {
             func_002036F0();
         }
         reg_d1.w = 0x20;
@@ -795,7 +795,7 @@ void heli_e_start(void) {
             reg_a0 = (u8 *)(D_00257950);
             HELI(reg_a5)->shadow_sprite[0] = (reg_d1.h[0] != 0) ? *(u16 *)((u8 *)reg_a0 + ((s16)reg_d1.h[0] & ~1)) : *(u16 *)reg_a0;
             HELI(reg_a5)->shadow_sprite[1] = ((reg_d1.h[0] + 2) != 0) ? *(u16 *)((u8 *)reg_a0 + ((s16)(reg_d1.h[0] + 2) & ~1)) : *(u16 *)reg_a0;
-            if (ENEMY_WORK(reg_a5)->kind & 0x20) {
+            if (ENEMY_STATE(reg_a5)->kind & 0x20) {
                 func_002036F0();
             }
             reg_d0.b[0] = ENTITY(reg_a6)->move.b.dir;
@@ -923,7 +923,7 @@ void heli_f_start(void) {
                 reg_d1.w = 0x20;
             }
             HELI(reg_a5)->facing = (u8) reg_d1.b[0];
-            if (ENEMY_WORK(reg_a5)->kind & 0x20) {
+            if (ENEMY_STATE(reg_a5)->kind & 0x20) {
                 func_002036F0();
             }
             reg_d0.h[0] = g_rank_2_16;
@@ -1002,7 +1002,7 @@ void heli_g_start(void) {
         reg_a0 = (u8 *)(D_00257950);
         HELI(reg_a5)->shadow_sprite[0] = (reg_d1.h[0] != 0) ? *(u16 *)((u8 *)reg_a0 + ((s16)reg_d1.h[0] & ~1)) : *(u16 *)reg_a0;
         HELI(reg_a5)->shadow_sprite[1] = ((reg_d1.h[0] + 2) != 0) ? *(u16 *)((u8 *)reg_a0 + ((s16)(reg_d1.h[0] + 2) & ~1)) : *(u16 *)reg_a0;
-        if (ENEMY_WORK(reg_a5)->kind & 0x20) {
+        if (ENEMY_STATE(reg_a5)->kind & 0x20) {
             func_002036F0();
         }
         reg_d0.b[0] = ENTITY(reg_a6)->move.b.dir;
@@ -1194,7 +1194,7 @@ void heli_h_start(void) {
             reg_d1.w = 0x20;
         }
         HELI(reg_a5)->facing = (u8) reg_d1.b[0];
-        if (ENEMY_WORK(reg_a5)->kind & 0x20) {
+        if (ENEMY_STATE(reg_a5)->kind & 0x20) {
             func_002036F0();
         }
         reg_d0.h[0] = g_rank_4_16;

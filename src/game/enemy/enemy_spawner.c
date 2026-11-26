@@ -32,8 +32,8 @@ void enemy_spawner_setup(void) {
 
     reg_a0 = (u8 *)((s8 *)g_enemy_spawner_entities);
     enemy_init_entities();
-    reg_tmp.h[1] = ENEMY_WORK(reg_a5)->script[0];
-    reg_tmp.h[0] = ENEMY_WORK(reg_a5)->script[1];
+    reg_tmp.h[1] = ENEMY_STATE(reg_a5)->path[0];
+    reg_tmp.h[0] = ENEMY_STATE(reg_a5)->path[1];
     reg_a0 = (u8 *)((s8 *) reg_tmp.w);
     reg_tmp.b[1] = *(s8 *)reg_a0;
     reg_a0 += 1;
@@ -79,8 +79,8 @@ void enemy_spawner_setup(void) {
     SPAWNER(reg_a5)->remaining.h = (u16) reg_d1.h[0];
     *(u16 *)&SPAWNER(reg_a5)->interval = (u16) reg_d2.h[0];
     reg_tmp.w = (u32) ((s8 *)reg_a0);
-    ENEMY_WORK(reg_a5)->script[0] = (u16) reg_tmp.h[1];
-    ENEMY_WORK(reg_a5)->script[1] = (u16) reg_tmp.h[0];
+    ENEMY_STATE(reg_a5)->path[0] = (u16) reg_tmp.h[1];
+    ENEMY_STATE(reg_a5)->path[1] = (u16) reg_tmp.h[0];
 }
 
 s32 enemy_request_start_flags();
@@ -128,13 +128,13 @@ run_timer:
     SPAWNER(reg_a5)->countdown = SPAWNER(reg_a5)->interval;
     reg_d0.h[0] = SPAWNER(reg_a5)->kind;
     reg_d1.w = 0;
-    reg_d1.b[0] = ENEMY_WORK(reg_a5)->start_flags;
+    reg_d1.b[0] = ENEMY_STATE(reg_a5)->start_flags;
     enemy_request_start_flags();
-    ENEMY_WORK(reg_a0)->script[0] = ENEMY_WORK(reg_a5)->script[0];
-    ENEMY_WORK(reg_a0)->script[1] = ENEMY_WORK(reg_a5)->script[1];
-    ENEMY_WORK(reg_a0)->start_y = ENTITY(reg_a6)->y.h;
-    ENEMY_WORK(reg_a0)->start_x = ENTITY(reg_a6)->x.h;
-    ENEMY_WORK(reg_a0)->flags |= ENEMY_FLAG_FROM_SPAWNER;
+    ENEMY_STATE(reg_a0)->path[0] = ENEMY_STATE(reg_a5)->path[0];
+    ENEMY_STATE(reg_a0)->path[1] = ENEMY_STATE(reg_a5)->path[1];
+    ENEMY_STATE(reg_a0)->start_y = ENTITY(reg_a6)->y.h;
+    ENEMY_STATE(reg_a0)->start_x = ENTITY(reg_a6)->x.h;
+    ENEMY_STATE(reg_a0)->flags |= ENEMY_FLAG_FROM_SPAWNER;
     if (SPAWNER(reg_a5)->remaining.h == 0) return;
     SPAWNER(reg_a5)->remaining.b[0] -= 1;
     if (SPAWNER(reg_a5)->remaining.b[0] == 0) goto remove;

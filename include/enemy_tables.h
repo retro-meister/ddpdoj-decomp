@@ -66,11 +66,21 @@ extern const u8 g_stage5_enemy_paths[];
 #define PATH_GROUND_HITS(mode) 0x82, mode
 /* 1: clear bits 13 and 0 of the entity's flags; other values set them. */
 #define PATH_AIR_HITS(mode) 0x83, mode
+/* Set byte 0x23 of the enemy's state, which is the enemy's own (the helicopters' wanted facing). */
+#define PATH_STATE_23(value) 0x84, value
+/* Write 16 bits into the enemy's state or its entity, at half the given offset. The value is spelled in
+   four bytes, a digit in the upper half of the second and the lower half of the first of each pair. */
+#define PATH_POKE_STATE(offset2, b0, b1, b2, b3) 0x85, offset2, b0, b1, b2, b3
+#define PATH_POKE_ENTITY(offset2, b0, b1, b2, b3) 0x86, offset2, b0, b1, b2, b3
+/* Set byte 0x25 of the enemy's state. */
+#define PATH_STATE_25(value) 0x87, value
 /* Set Entity.misc.user. */
 #define PATH_USER(value) 0x88, value
 /* Take the sideways scroll position off x; the number is not read. */
 #define PATH_SIDE_SCROLL(unused) 0x89, unused
 /* Remove the enemy. */
 #define PATH_END 0x8A
+/* Does nothing. The stages use none of 0x84 to 0x87 and 0x8B. */
+#define PATH_NOTHING 0x8B
 
 #endif

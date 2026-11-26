@@ -163,16 +163,16 @@ next_1:
                     }
                     reg_a6 += 0x20;
                     func_0016A9B0();
-                    reg_tmp.h[1] = ENEMY_WORK(reg_a5)->entities[0];
-                    reg_tmp.h[0] = ENEMY_WORK(reg_a5)->entities[1];
+                    reg_tmp.h[1] = ENEMY_STATE(reg_a5)->entities[0];
+                    reg_tmp.h[0] = ENEMY_STATE(reg_a5)->entities[1];
                     reg_a6 = (void *) reg_tmp.w;
                     func_002016D0();
                     STAGE1_BOSS(reg_a5)->shake = 0x6E;
                     if (ENTITY(reg_a6)[8].hit_x_plus.h != 0) {
                         reg_a6 += 0x60;
                         func_0016A9B0();
-                        reg_tmp.h[1] = ENEMY_WORK(reg_a5)->entities[0];
-                        reg_tmp.h[0] = ENEMY_WORK(reg_a5)->entities[1];
+                        reg_tmp.h[1] = ENEMY_STATE(reg_a5)->entities[0];
+                        reg_tmp.h[0] = ENEMY_STATE(reg_a5)->entities[1];
                         reg_a6 = (void *) reg_tmp.w;
                     }
                     goto next_2;
@@ -245,16 +245,16 @@ next_3:
                     }
                     reg_a6 += 0x60;
                     func_0016A9B0();
-                    reg_tmp.h[1] = ENEMY_WORK(reg_a5)->entities[0];
-                    reg_tmp.h[0] = ENEMY_WORK(reg_a5)->entities[1];
+                    reg_tmp.h[1] = ENEMY_STATE(reg_a5)->entities[0];
+                    reg_tmp.h[0] = ENEMY_STATE(reg_a5)->entities[1];
                     reg_a6 = (void *) reg_tmp.w;
                     func_002016D0();
                     STAGE1_BOSS(reg_a5)->shake = 0x6E;
                     if (ENTITY(reg_a6)[8].hit_x_plus.h != 0) {
                         reg_a6 += 0x20;
                         func_0016A9B0();
-                        reg_tmp.h[1] = ENEMY_WORK(reg_a5)->entities[0];
-                        reg_tmp.h[0] = ENEMY_WORK(reg_a5)->entities[1];
+                        reg_tmp.h[1] = ENEMY_STATE(reg_a5)->entities[0];
+                        reg_tmp.h[0] = ENEMY_STATE(reg_a5)->entities[1];
                         reg_a6 = (void *) reg_tmp.w;
                     }
                     goto next_4;
