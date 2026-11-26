@@ -106,14 +106,14 @@ s32 chain_states_clear();
 s32 vibration_stop_all(s32, s32);
 s32 stage_map_hide();
 extern u16 g_players_hidden;
-extern u8 D_0028E378;
+extern u8 g_stage_jump_state;
 extern u8 D_0028E961;
-extern u8 D_0028ED60;
+extern u8 g_stage_clear_screen_shown;
 extern u8 g_replay_buffer_state;
 extern s16 g_bullet_limit_raised_1[];
 extern s16 g_bullet_limit_raised_2[];
 extern u16 g_bullet_limit_raised_3[];
-extern u16 D_0029976E[];
+extern u16 g_bullets_clear_request[];
 
 #ifdef DEATH_LABEL
 extern u16 g_p2_lives;
@@ -126,7 +126,7 @@ void stage_clear_task_begin(void) {
     *(s8 *)(reg_a5 + 3) = 1;
     *(s8 *)(reg_a5 + 7) = 0;
     *(s8 *)(reg_a5 + 6) = 4;
-    D_0028E378 = 0xFF;
+    g_stage_jump_state = 0xFF;
     vibration_stop_all(4, 1);
     stage_map_hide();
     fades_reset();
@@ -140,10 +140,10 @@ void stage_clear_task_begin(void) {
     g_bullet_limit_raised_2[0] = 0;
     D_0028E958 = 1;
     ((s16 *)g_bullet_limit_raised_3)[0] = 0;
-    ((s16 *)D_0029976E)[0] = 0;
+    ((s16 *)g_bullets_clear_request)[0] = 0;
     stage_clear_colors_reset();
     game_ground_task_stop();
-    D_0028ED60 = 0;
+    g_stage_clear_screen_shown = 0;
     g_players_hidden = 1;
     g_replay_buffer_state = 2;
 #ifdef DEATH_LABEL
@@ -234,7 +234,7 @@ extern u16 g_p2_score_billions;
 extern u16 g_p1_score_billions;
 extern u32 g_p2_score;
 extern u32 g_p1_score;
-extern s8 D_0028EC58;
+extern s8 g_stage_load_finished;
 extern u8 g_replay_begin_pending;
 extern u8 g_replay_mode;
 extern u8 g_simulation_active;
@@ -280,7 +280,7 @@ void stage_clear_task(void) {
     }
     temp_a0_2 = *(u8 *)(reg_a5 + 7);
     if (temp_a0_2 == 3) {
-        if ((g_replay_mode == 2) && (D_0028ED60 == 0)) {
+        if ((g_replay_mode == 2) && (g_stage_clear_screen_shown == 0)) {
             replay_start_run_end(temp_a0_2);
             *(u8 *)(reg_a5 + 3) = 2U;
             return;
@@ -297,7 +297,7 @@ void stage_clear_task(void) {
         goto block_after;
     }
     if (temp_a0_2 == 0x1E) {
-        if (D_0028EC58 != 0) {
+        if (g_stage_load_finished != 0) {
             if (g_replay_mode == 1) {
                 g_replay_begin_pending = 1;
             }
@@ -316,7 +316,7 @@ void stage_clear_task(void) {
     }
 block_after:
     if (*(u8 *)(reg_a5 + 7) == 2) {
-        if ((g_replay_mode == 2) && (D_0028ED60 == 0)) {
+        if ((g_replay_mode == 2) && (g_stage_clear_screen_shown == 0)) {
             *(u8 *)(reg_a5 + 7) = 3U;
             return;
         }
@@ -585,8 +585,8 @@ extern u8 D_00269920[];
 extern u16 stage_clear_screen_update_table_6[];
 extern u16 stage_clear_screen_update_table_7[];
 extern u8 D_00269AAE[];
-extern u8 D_0028E2A0;
-extern u8 D_0028E2A4;
+extern u8 g_replay_save_asked;
+extern u8 g_stage_clear_wait_timer;
 extern s16 g_loaded_stage;
 extern u16 g_boss_hits;
 extern u8 g_boss_present;
@@ -958,7 +958,7 @@ next_499:
                 if ((*(u16 *)(reg_a5 + 4) == 0) && (g_simulation_active != 1)) {
                     reg_a0 = (u8 *)(((u16 *)D_00269920));
                     *(u8 *)(reg_a5 + 7) = 0x15U;
-                    D_0028ED60 = 1;
+                    g_stage_clear_screen_shown = 1;
                     hyper_ready_displays_reset();
                     if (g_player1[0] < 0) {
                         p1_hyper_end();
@@ -1006,33 +1006,33 @@ next_499:
 #else
             if ((g_boss_present & 2) && (v2 = *(u8 *)(reg_a5 + 7), (v2 != 0xB)) && (v2 != 0x15)) {
                 if ((g_simulation_active != 0) || (v2 = g_replay_mode, (v2 == 2))) {
-                    if (D_0028E2A4 != 0) {
-                        D_0028E2A4 -= 1;
+                    if (g_stage_clear_wait_timer != 0) {
+                        g_stage_clear_wait_timer -= 1;
                         return;
                     }
-                    D_0028E2A4 = 0;
-                    D_0028E2A0 = 0;
+                    g_stage_clear_wait_timer = 0;
+                    g_replay_save_asked = 0;
                     goto block_77;
                 }
 block_77:
                 t4 = *(u16 *)(reg_a5 + 4);
                 if (t4 != 0) {
                     if ((g_simulation_active != 0) || (g_replay_mode == 2)) {
-                        D_0028E2A4 = 0;
-                        D_0028E2A0 = 0;
+                        g_stage_clear_wait_timer = 0;
+                        g_replay_save_asked = 0;
                     } else {
                         reg_d0.h[0] = t4;
                         game_stage_set();
-                        if (D_0028E2A4 != 0) {
-                            D_0028E2A4 -= 1;
+                        if (g_stage_clear_wait_timer != 0) {
+                            g_stage_clear_wait_timer -= 1;
                         }
-                        if ((g_loaded_stage != g_stage) && (D_0028E2A4 == 0)) {
+                        if ((g_loaded_stage != g_stage) && (g_stage_clear_wait_timer == 0)) {
                             stage_load_step(g_loaded_stage);
                         }
                     }
-                    if ((D_0028E2A0 == 0) && (replay_save_wanted_check() != 0)) {
+                    if ((g_replay_save_asked == 0) && (replay_save_wanted_check() != 0)) {
                         if (replay_file_finalize() != 0) {
-                            D_0028E2A0 = 1;
+                            g_replay_save_asked = 1;
                             goto block_90;
                         }
                     } else {
@@ -1046,7 +1046,7 @@ block_91:
                     if ((*(u16 *)(reg_a5 + 4) == 0) && (v2 = 1, (g_simulation_active != 1))) {
                         reg_a0 = (u8 *)(((u16 *)D_00269920));
                         *(u8 *)(reg_a5 + 7) = 0x15U;
-                        D_0028ED60 = 1;
+                        g_stage_clear_screen_shown = 1;
                         reg_d0.h[0] = 0x13;
                         task_start();
                     } else {

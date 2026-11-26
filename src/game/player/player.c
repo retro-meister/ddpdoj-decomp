@@ -39,7 +39,7 @@ s32 hud_p1_lives_put();
 extern u16 g_p1_stage_bomb_used;
 extern u16 g_p1_stage_misses;
 extern u8 g_game_mode;
-extern s8 D_0028E3F8;
+extern s8 g_bomb_panel_seen;
 extern u16 g_p1_lives;
 extern u16 g_loop;
 extern u16 g_stage;
@@ -99,7 +99,7 @@ void p1_stage_clear_reward(void) {
                 sfx_extend();
             }
 #else
-            if ((D_0028E3F8 == 0) && ((s32) g_stage < 4)) {
+            if ((g_bomb_panel_seen == 0) && ((s32) g_stage < 4)) {
                 sfx_extend();
             }
 #endif
@@ -183,7 +183,7 @@ void p2_stage_clear_reward(void) {
                 sfx_extend();
             }
 #else
-            if ((D_0028E3F8 == 0) && ((s32) g_stage < 4)) {
+            if ((g_bomb_panel_seen == 0) && ((s32) g_stage < 4)) {
                 sfx_extend();
             }
 #endif
@@ -348,8 +348,8 @@ extern s32 g_p1_afterimage_positions[16];
 extern u16 g_bomb_entities[24];
 extern u8 D_0029D710[];
 extern u8 D_0029D730[];
-extern u8 D_0029D750[];
-extern u8 D_0029D770[];
+extern u8 g_p2_laser_segments[];
+extern u8 g_p1_laser_segments[];
 extern u8 g_p2_laser_entities[];
 extern u8 g_p1_laser_entities[];
 extern u8 D_0029E390[];
@@ -456,8 +456,8 @@ void players_clear(void) {
     } while (var_t0_2 < 0x600);
     var_t0_3 = 0;
     do {
-        temp_a2_4 = (u8 *)(D_0029D770 + var_t0_3);
-        temp_a3_3 = (u8 *)(D_0029D750 + var_t0_3);
+        temp_a2_4 = (u8 *)(g_p1_laser_segments + var_t0_3);
+        temp_a3_3 = (u8 *)(g_p2_laser_segments + var_t0_3);
         (*(s8 *)((u8 *)(temp_a2_4) + (0))) = 0;
         var_t0_3 += 8;
         (*(s8 *)((u8 *)(temp_a3_3) + (0))) = 0;
@@ -762,13 +762,13 @@ extern u16 g_players_hidden;
 extern u16 g_player_shots_disabled;
 extern u16 g_p2_death_count;
 extern u16 g_p1_death_count;
-extern u8 D_0028E280;
-extern u8 D_0028E284;
-extern u8 D_0028E288;
+extern u8 g_stage_select_choice;
+extern u8 g_p2_stage_start_timer;
+extern u8 g_p1_stage_start_timer;
 extern u8 D_0028E2A8;
-extern u16 D_0028E2AC;
+extern u16 g_start_hyper_gauge;
 extern u8 D_0028E2B0;
-extern u8 D_0028E2C4;
+extern u8 g_start_rule_death;
 extern u8 g_simulation_active;
 extern u16 D_006E5BF0[];
 extern u16 D_006E5BF2[];
@@ -899,7 +899,7 @@ next_36:
 next_40:
     if (g_simulation_active == 0) goto next_76;
     if (reg_d6.h[0] == 0) goto next_41;
-    if (D_0028E2C4 == 0) goto next_76;
+    if (g_start_rule_death == 0) goto next_76;
 next_41:
 #ifndef DEATH_LABEL
     if (reg_a6 == ((u8 *)g_player1)) {
@@ -926,9 +926,9 @@ next_41:
     }
 #ifdef DEATH_LABEL
     if (reg_a6 == ((u8 *)g_player1)) {
-        if (D_0028E2AC == 0) goto next_50;
+        if (g_start_hyper_gauge == 0) goto next_50;
         if (reg_d6.h[0] == 0) {
-            val = D_0028E2AC & 0xFFFF;
+            val = g_start_hyper_gauge & 0xFFFF;
             rem = val % 100;
             g_p1_hyper_gauge = (rem * 0x960) / 100;
             if (val == 0x1F4) {
@@ -938,7 +938,7 @@ next_41:
                 g_p1_hyper_items_pending = val / 100;
             }
         } else {
-            val = D_0028E2AC & 0xFFFF;
+            val = g_start_hyper_gauge & 0xFFFF;
             if (val >= 100) {
                 g_p1_hyper_items_pending = 0;
                 g_p1_hyper_gauge = 0x95F;
@@ -948,9 +948,9 @@ next_41:
             }
         }
     } else {
-        if (D_0028E2AC == 0) goto next_50;
+        if (g_start_hyper_gauge == 0) goto next_50;
         if (reg_d6.h[0] == 0) {
-            val = D_0028E2AC & 0xFFFF;
+            val = g_start_hyper_gauge & 0xFFFF;
             rem = val % 100;
             g_p2_hyper_gauge = (rem * 0x960) / 100;
             if (val == 0x1F4) {
@@ -960,7 +960,7 @@ next_41:
                 g_p2_hyper_items_pending = val / 100;
             }
         } else {
-            val = D_0028E2AC & 0xFFFF;
+            val = g_start_hyper_gauge & 0xFFFF;
             if (val >= 100) {
                 g_p2_hyper_items_pending = 0;
                 g_p2_hyper_gauge = 0x95F;
@@ -972,20 +972,20 @@ next_41:
     }
 #else
     if (reg_d6.h[0] != 0) goto next_45;
-    if (D_0028E280 != 5) goto next_45;
+    if (g_stage_select_choice != 5) goto next_45;
     if (reg_a6 == ((u8 *)g_player1)) {
         if (g_p1_hyper_items != 0) {
             g_p1_hyper_time = 0;
-            D_0028E288 = 0x78;
+            g_p1_stage_start_timer = 0x78;
         }
     } else if (g_p2_hyper_items != 0) {
         g_p2_hyper_time = 0;
-        D_0028E284 = 0x78;
+        g_p2_stage_start_timer = 0x78;
     }
 next_45:
     if (reg_a6 == ((u8 *)g_player1)) {
-        if (D_0028E2AC == 0) goto next_50;
-        val = D_0028E2AC & 0xFFFF;
+        if (g_start_hyper_gauge == 0) goto next_50;
+        val = g_start_hyper_gauge & 0xFFFF;
         rem = val % 100;
         g_p1_hyper_gauge = (rem * 0x960) / 100;
         if (val == 0x1F4) {
@@ -997,8 +997,8 @@ next_45:
         if (reg_d6.h[0] == 0) goto next_50;
         p1_hyper_items_pending_take();
     } else {
-        if (D_0028E2AC == 0) goto next_50;
-        val = D_0028E2AC & 0xFFFF;
+        if (g_start_hyper_gauge == 0) goto next_50;
+        val = g_start_hyper_gauge & 0xFFFF;
         rem = val % 100;
         g_p2_hyper_gauge = (rem * 0x960) / 100;
         if (val == 0x1F4) {
@@ -1035,8 +1035,8 @@ next_60:
         PLAYER(reg_a6)->flags.b[0] |= 1;
         g_p1_hyper_level = n;
         g_p1_hyper_items = 0;
-        if (D_0028E2AC != 0) {
-            val = D_0028E2AC & 0xFFFF;
+        if (g_start_hyper_gauge != 0) {
+            val = g_start_hyper_gauge & 0xFFFF;
             rem = val % 100;
             g_p1_hyper_gauge = (rem * 0x960) / 100;
             if (val == 0x1F4) {
@@ -1058,8 +1058,8 @@ next_60:
         PLAYER(reg_a6)->flags.b[0] |= 1;
         g_p2_hyper_level = n;
         g_p2_hyper_items = 0;
-        if (D_0028E2AC != 0) {
-            val = D_0028E2AC & 0xFFFF;
+        if (g_start_hyper_gauge != 0) {
+            val = g_start_hyper_gauge & 0xFFFF;
             rem = val % 100;
             g_p2_hyper_gauge = (rem * 0x960) / 100;
             if (val == 0x1F4) {
@@ -1169,7 +1169,7 @@ void player_spawn_power_setup(void) {
     u32 sd7;
     u8 *sa6;
 
-    if (reg_d6.h[0] == 0 || D_0028E2C4 != 0) {
+    if (reg_d6.h[0] == 0 || g_start_rule_death != 0) {
         sd0 = reg_d0.w;
         sd1 = reg_d1.w;
         sd2 = reg_d2.w;
@@ -1541,7 +1541,7 @@ extern u8 g_p2_score_pending_as_u8;
 extern u8 g_p1_score_pending_as_u8;
 extern u8 g_boss_present_b1;
 extern u16 g_true_last_boss;
-extern u8 D_0028EC4C;
+extern u8 g_replay_save_prompt_active;
 
 void player_sprite_update(void) {
     u8 *p0;
@@ -1597,7 +1597,7 @@ void player_sprite_update(void) {
         reg_d4.h[0] = 0x18;
         sprite_draw_with_player_shadows();
     }
-    if ((g_game_frame_ran != 0) && (D_0028EC4C == 0) && (g_select_screen_active == 0) && !(g_boss_present_b1 & 1) && (g_true_last_boss == 0) && !(PLAYER(reg_a6)->flags.b[1] & 0x40)) {
+    if ((g_game_frame_ran != 0) && (g_replay_save_prompt_active == 0) && (g_select_screen_active == 0) && !(g_boss_present_b1 & 1) && (g_true_last_boss == 0) && !(PLAYER(reg_a6)->flags.b[1] & 0x40)) {
         if (*(u8 *)(reg_a5 + 6) == 0) {
             if (g_p1_maximum_anim_delay == 0) {
                 p0 = &g_p1_score_pending_as_u8;
@@ -2394,7 +2394,7 @@ block_244:
         reg_d4.h[0] = 0x18;
         sprite_draw_with_player_shadows();
     }
-    if ((g_game_frame_ran != 0) && (D_0028EC4C == 0) && (g_select_screen_active == 0) && !(g_boss_present_b1 & 1) && (g_true_last_boss == 0) && !(PLAYER(reg_a6)->flags.b[1] & 0x40)) {
+    if ((g_game_frame_ran != 0) && (g_replay_save_prompt_active == 0) && (g_select_screen_active == 0) && !(g_boss_present_b1 & 1) && (g_true_last_boss == 0) && !(PLAYER(reg_a6)->flags.b[1] & 0x40)) {
         if (*(u8 *)(reg_a5 + 6) == 0) {
             if (g_p1_maximum_anim_delay == 0) {
                 p0 = &g_p1_score_pending_as_u8;
@@ -2911,7 +2911,7 @@ extern u16 player_exhaust_sprite_tables[];
 extern u16 player_exhaust_slow_sprite_tables[];
 extern u16 D_0028C868[];
 extern u16 D_0028C880[];
-extern u8 D_0028E30C;
+extern u8 g_setting_hitbox_display;
 
 void player_draw(void) {
 #ifndef DDPDOJ_PC
@@ -2976,11 +2976,11 @@ next_30:
 next_60:
     sprite_draw_with_players();
 next_100:
-    if (D_0028E30C != 0) goto next_110;
+    if (g_setting_hitbox_display != 0) goto next_110;
     entity_draw_with_players();
 next_110:
     ship_afterimage_update();
-    if (D_0028E30C == 0) goto next_120;
+    if (g_setting_hitbox_display == 0) goto next_120;
     reg_a0 = reg_a6;
     player_draw_unused();
 next_120:
@@ -3244,8 +3244,8 @@ u8 D_0029DD30[96];
 u8 D_0029DCD0[96];
 u8 objects_task_buffer[48];
 u8 g_p2_laser_entities[1296];
-u8 D_0029D770[32];
-u8 D_0029D750[32];
+u8 g_p1_laser_segments[32];
+u8 g_p2_laser_segments[32];
 u8 D_0029D730[32];
 u8 D_0029D710[32];
 u16 g_bomb_entities_1[1056];

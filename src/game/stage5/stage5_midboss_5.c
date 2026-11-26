@@ -1425,13 +1425,13 @@ s32 sprite_draw_layer3();
 #ifndef DDPDOJ_PC
 s32 velocity_from_direction();
 #endif
-extern u8 D_0028E2E4;
+extern u8 g_no_enemy_bullets;
 
 void stage5_midboss5_small_missile(void) {
 #ifndef DDPDOJ_PC
     s32 enemy_remove();
 #endif
-    if (D_0028E2E4 != 0) goto remove;
+    if (g_no_enemy_bullets != 0) goto remove;
     reg_d1.w = 0;
     reg_d0.w = 0;
     reg_d0.b[0] = ENTITY(reg_a6)->move.b.speed;
@@ -1503,7 +1503,7 @@ void stage5_midboss5_small_blast(void) {
     u16 t2;
     u8 t3;
 
-    if (D_0028E2E4 != 0) goto remove;
+    if (g_no_enemy_bullets != 0) goto remove;
     {
         if (g_enemy_signal_4 == 0) {
             stage5_midboss5_missile_explode();
@@ -1596,7 +1596,7 @@ void stage5_midboss5_large_missile(void) {
 #ifndef DDPDOJ_PC
     s32 enemy_remove();
 #endif
-    if (D_0028E2E4 != 0) goto remove;
+    if (g_no_enemy_bullets != 0) goto remove;
     if (g_enemy_signal_4 == 0) {
         stage5_midboss5_missile_explode();
         return;
@@ -1680,7 +1680,7 @@ void stage5_midboss5_large_blast(void) {
     u8 t4;
     u8 t5;
 
-    if (D_0028E2E4 != 0) goto remove;
+    if (g_no_enemy_bullets != 0) goto remove;
     {
         entity_check_bounds();
         if (cond_flag != 0) {

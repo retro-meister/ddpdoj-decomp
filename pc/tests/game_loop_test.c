@@ -9,8 +9,8 @@
 
 u8 *reg_a0;
 Reg32 reg_d0;
-s8 g_cd_async_state, g_cd_async_busy, D_0028EC58;
-u8 g_stage_load_state, g_paused, D_0028E374, D_0028DF08, g_game_frame_ran;
+s8 g_cd_async_state, g_cd_async_busy, g_stage_load_finished;
+u8 g_stage_load_state, g_paused, g_disc_notice_kind, D_0028DF08, g_game_frame_ran;
 u16 g_attract_demo, g_stage;
 #ifdef DEATH_LABEL
 u8 g_game_mode;
@@ -164,10 +164,10 @@ int main(void) {
     check_events("[P]");
     require(!game_boot_frame(), "Startup fade is still pending");
     check_events("[Md]");
-    D_0028E374 = 1;
+    g_disc_notice_kind = 1;
     require(!game_boot_frame(), "Startup must wait for the original fade condition");
     check_events("[]");
-    D_0028E374 = 0;
+    g_disc_notice_kind = 0;
     require(game_boot_frame(), "Startup must finish after the fade condition clears");
     check_events("[]W");
     require(game_boot_frame(), "Completed startup is stable");
@@ -175,7 +175,7 @@ int main(void) {
 
     g_attract_demo = 1;
     g_input_p1_pressed = 0x4000;
-    D_0028EC58 = 1;
+    g_stage_load_finished = 1;
     game_run_frame();
     check_events(running_frame);
     require(g_game_frame_ran == 1, "Gameplay frame must publish the original frame flag");

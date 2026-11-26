@@ -21,7 +21,7 @@ extern u8 *bullets_update_state;
 extern u16 g_sprite_bullets2_used;
 extern u16 g_sprite_bullets_used;
 extern u8 g_slowdown_timer;
-extern u8 D_0028E37C;
+extern u8 g_slowdown_setting;
 extern u8 g_boss_present_b1;
 extern u16 g_loop;
 extern u16 g_stage;
@@ -51,7 +51,7 @@ void bullets_update(void) {
     g_sprite_bullets_used = reg_d0.h[0];
     g_sprite_bullets2_used = reg_tmp.h[0];
 #ifdef DEATH_LABEL
-    if (D_0028E37C != 0) {
+    if (g_slowdown_setting != 0) {
         s16 *limit;
 
         if (g_loop == 0) {
@@ -62,12 +62,12 @@ void bullets_update(void) {
         reg_tmp.h[0] = (s16) g_sprite_bullets2_used + (s16) g_sprite_bullets_used;
         reg_tmp.h[0] /= 0xC;
         if ((g_boss_present_b1 & 2) && (reg_tmp.h[0] >= *limit)) {
-            D_0028E37C |= 0x80;
+            g_slowdown_setting |= 0x80;
             g_slowdown_timer = 1;
         }
     }
 #else
-    if (D_0028E37C != 0) {
+    if (g_slowdown_setting != 0) {
         reg_tmp.h[0] = (s16) g_sprite_bullets2_used + (s16) g_sprite_bullets_used;
         reg_tmp.h[0] /= 0xC;
         if ((g_boss_present_b1 & 2) && (g_loop != 0) && (reg_tmp.h[0] > D_0024F330[g_stage])) {
@@ -92,7 +92,7 @@ void bullet_target_player_get();
 extern u16 bullet_type_records[456];
 extern u8 D_0024F0F0[];
 extern u8 D_00262570[];
-extern u32 D_0028DEA4;
+extern u32 g_bullet_spawn_saved_d7;
 extern u16 g_frame_mod2;
 extern u16 g_boss_present_as_u16;
 extern u16 g_enemy_signal_2;
@@ -105,7 +105,7 @@ extern u16 D_00299762[];
 extern s16 g_bullet_limit_raised_1[];
 extern s16 g_bullet_limit_raised_2[];
 extern u16 g_bullet_limit_raised_3[];
-extern u16 D_0029976E[];
+extern u16 g_bullets_clear_request[];
 extern u8 *D_00299770[];
 extern u16 g_side_scroll_step[];
 extern u16 g_bomb_entities[24];
@@ -232,7 +232,7 @@ void bullets_update_loop(void) {
             reg_d7.h[0] = MAIN_OR_DEATH_LABEL(0x9F, 0x31F);
             if (g_bullet_limit_raised_3[0] != 0) {
                 reg_d7.h[0] = MAIN_OR_DEATH_LABEL(0xBD, 0x3B5);
-                if (D_0029976E[0] != 0) {
+                if (g_bullets_clear_request[0] != 0) {
                     reg_d7.h[0] = MAIN_OR_DEATH_LABEL(0xD1, 0x419);
                 }
             }
@@ -246,9 +246,9 @@ L_bom_bui:
         goto block_12;
     }
     reg_d0.w = 0;
-    D_0028DEA4 = reg_d7.w;
+    g_bullet_spawn_saved_d7 = reg_d7.w;
     MAIN_OR_DEATH_LABEL(pickup_spawn_here, bullet_cancel_to_pickup)();
-    reg_d7.w = D_0028DEA4;
+    reg_d7.w = g_bullet_spawn_saved_d7;
     bullet_slot_reset();
 
 block_9:
@@ -504,9 +504,9 @@ block_33:
     if (ENTITY(reg_a6)->hit_x_minus.h == 0) {
         reg_d0.h[0] = *(u16 *)(reg_a6 + 0x3C);
         if ((s16)reg_d0.h[0] >= 0) {
-            D_0028DEA4 = reg_d7.w;
+            g_bullet_spawn_saved_d7 = reg_d7.w;
             MAIN_OR_DEATH_LABEL(pickup_spawn_here, bullet_cancel_to_pickup)();
-            reg_d7.w = D_0028DEA4;
+            reg_d7.w = g_bullet_spawn_saved_d7;
         }
         bullet_slot_reset();
     }
@@ -2901,6 +2901,6 @@ PC_DATA_ALIAS(g_bullet_limit_raised_1, g_bullets, 0x3488);
 PC_DATA_ALIAS(g_bullet_limit_raised_2, g_bullets, 0x348a);
 PC_DATA_ALIAS(g_bullet_limit_raised_3, g_bullets, 0x348c);
 PC_DATA_ALIAS(g_bullet_limit_raised_3_as_s16_a, g_bullets, 0x348c);
-PC_DATA_ALIAS(D_0029976E, g_bullets, 0x348e);
+PC_DATA_ALIAS(g_bullets_clear_request, g_bullets, 0x348e);
 #endif
 #endif

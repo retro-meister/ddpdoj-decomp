@@ -25,7 +25,7 @@ extern u16 g_p1_bombs_used;
 extern u16 g_p2_death_count;
 extern u16 g_p1_death_count;
 extern u8 g_game_mode;
-extern u8 D_0028E2EC;
+extern u8 g_setting_loop_count;
 extern u16 g_boss_hyper_wait;
 extern u16 g_p2_hyper_active;
 extern u16 g_p1_hyper_active;
@@ -39,7 +39,7 @@ extern s16 g_player2[];
 extern s16 g_player1[];
 
 void ending_second_loop_check(void) {
-    if (D_0028E2EC != 0) goto block_1;
+    if (g_setting_loop_count != 0) goto block_1;
     if (g_game_mode == 1) goto block_1;
 #ifdef DEATH_LABEL
     if (g_game_mode == 2) goto block_1;
@@ -143,26 +143,26 @@ block_6:
     }
 }
 
-extern u16 D_00295E2E[];
+extern u16 g_picture_change_state[];
 extern u16 D_00295E30[];
 extern u16 D_00295E32[];
 extern u32 D_00295E34[];
 
 void picture_change_reset(void) {
-    ((s16 *)D_00295E2E)[0] = 0;
+    ((s16 *)g_picture_change_state)[0] = 0;
     ((s16 *)D_00295E30)[0] = 0;
     ((s16 *)D_00295E32)[0] = 0;
     ((s32 *)D_00295E34)[0] = 0;
 }
 
 #ifndef DEATH_LABEL
-extern u16 D_00295E2E[];
+extern u16 g_picture_change_state[];
 extern u16 D_00295E30[];
 extern u16 D_00295E32[];
 
 void picture_change_request(void) {
-    if (D_00295E2E[0] == 0) {
-        D_00295E2E[0] = 1;
+    if (g_picture_change_state[0] == 0) {
+        g_picture_change_state[0] = 1;
         D_00295E30[0] = reg_d0.h[0];
         D_00295E32[0] = reg_d1.h[0];
     }
@@ -182,8 +182,8 @@ void picture_change_update(void) {
     s32 fade_release();
     s32 fade_is_running();
 #endif
-    if (D_00295E2E[0] == 0) goto block_rts;
-    if (D_00295E2E[0] != 1) goto next_1;
+    if (g_picture_change_state[0] == 0) goto block_rts;
+    if (g_picture_change_state[0] != 1) goto next_1;
     if (D_00295E2C[0] == 0) goto next_2;
     reg_a0 = (u8 *)picture_change_update_table;
     reg_d0.h[0] = D_00295E32[0];
@@ -193,20 +193,20 @@ void picture_change_update(void) {
     reg_a0 = *(u8 **)reg_a0;
     fade_to_black();
     D_00295E34[0] = reg_d0.w;
-    D_00295E2E[0] = 2;
+    g_picture_change_state[0] = 2;
 next_1:
-    if (D_00295E2E[0] != 2) goto next_3;
+    if (g_picture_change_state[0] != 2) goto next_3;
     reg_d0.w = D_00295E34[0];
     fade_is_running();
     if (cond_flag != 0) goto next_3;
     fade_release();
 next_2:
     D_00295E2C[0] = D_00295E30[0];
-    D_00295E2E[0] = 3;
+    g_picture_change_state[0] = 3;
     if (D_00295E2C[0] != 0) goto next_3;
-    D_00295E2E[0] = 0;
+    g_picture_change_state[0] = 0;
 next_3:
-    if (D_00295E2E[0] != 3) goto next_4;
+    if (g_picture_change_state[0] != 3) goto next_4;
     reg_a0 = (u8 *)picture_change_update_table_2;
     reg_d0.h[0] = D_00295E32[0];
     reg_d0.h[0] += reg_d0.h[0];
@@ -215,14 +215,14 @@ next_3:
     reg_a0 = *(u8 **)reg_a0;
     fade_in();
     D_00295E34[0] = reg_d0.w;
-    D_00295E2E[0] = 4;
+    g_picture_change_state[0] = 4;
 next_4:
-    if (D_00295E2E[0] != 4) goto block_rts;
+    if (g_picture_change_state[0] != 4) goto block_rts;
     reg_d0.w = D_00295E34[0];
     fade_is_running();
     if (cond_flag != 0) goto block_rts;
     fade_release();
-    D_00295E2E[0] = 0;
+    g_picture_change_state[0] = 0;
 block_rts:
     return;
 }
@@ -508,8 +508,8 @@ void intro_text_update(void);
 #endif
 extern u32 ending_task_table[];
 extern u8 ending_task_table_2[];
-extern u8 D_0028E368;
-extern u8 D_0028E378;
+extern u8 g_replay_file_finalized;
+extern u8 g_stage_jump_state;
 extern u16 D_00295E2C[];
 extern u8 D_00295E3E[];
 extern u8 D_00295E3F[];
@@ -520,8 +520,8 @@ void ending_task(void) {
 
     mode = *(u8 *)(reg_a5 + 3);
     if (mode == 0) {
-        D_0028E368 = 0;
-        D_0028E378 = 0xFF;
+        g_replay_file_finalized = 0;
+        g_stage_jump_state = 0xFF;
         ending_task_begin();
         return;
     }
@@ -833,7 +833,7 @@ PC_DATA_ALIAS(D_00295E20, D_00295E00, 0x20);
 PC_DATA_ALIAS(D_00295E24, D_00295E00, 0x24);
 PC_DATA_ALIAS(D_00295E28, D_00295E00, 0x28);
 PC_DATA_ALIAS(D_00295E2C, D_00295E00, 0x2c);
-PC_DATA_ALIAS(D_00295E2E, D_00295E00, 0x2e);
+PC_DATA_ALIAS(g_picture_change_state, D_00295E00, 0x2e);
 PC_DATA_ALIAS(D_00295E30, D_00295E00, 0x30);
 PC_DATA_ALIAS(D_00295E32, D_00295E00, 0x32);
 PC_DATA_ALIAS(D_00295E34, D_00295E00, 0x34);

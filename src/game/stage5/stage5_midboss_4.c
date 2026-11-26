@@ -1097,10 +1097,10 @@ void stage5_midboss4_wave_beam_start(void) {
 s32 sfx_shockwave();
 s32 stage5_midboss4_wave_beam_fire();
 extern u8 stage5_midboss4_wave_beam_table[];
-extern u8 D_0028E2E4;
+extern u8 g_no_enemy_bullets;
 
 void stage5_midboss4_wave_beam(void) {
-    if (D_0028E2E4 != 0) return;
+    if (g_no_enemy_bullets != 0) return;
     ENTITY(reg_a6)->hp.sh = 0x7FFF;
     if (g_enemy_signal_1 == 0) goto remove;
     reg_tmp.h[1] = STAGE5_MIDBOSS4_WAVE_BEAM(reg_a5)->owner[0];

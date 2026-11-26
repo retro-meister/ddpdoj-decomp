@@ -92,7 +92,7 @@ extern s8 D_0028E249[];
 extern u8 g_stage_load_state;
 extern u8 g_paused;
 extern u8 g_game_frame_ran;
-extern u8 D_0028E374;
+extern u8 g_disc_notice_kind;
 extern u16 g_attract_demo;
 extern u16 g_stage;
 extern s8 D_0028E9A4;
@@ -103,7 +103,7 @@ extern u16 D_0028E9B0;
 extern u16 D_0028E9B4;
 extern s8 g_cd_async_state;
 extern s8 g_cd_async_busy;
-extern s8 D_0028EC58;
+extern s8 g_stage_load_finished;
 #ifndef DDPDOJ_PC
 extern u8 g_replay_file_loaded[];
 extern u8 g_replay_file[];
@@ -237,7 +237,7 @@ bool game_boot_frame(void) {
             }
             break;
         case 4:
-            if (D_0028E374 == 0) {
+            if (g_disc_notice_kind == 0) {
                 t3 += 1;
             }
             break;
@@ -282,7 +282,7 @@ loop_15:
         frame_counters_advance();
         fades_update();
         sprite_lists_build();
-        if (D_0028EC58 != 0) {
+        if (g_stage_load_finished != 0) {
             g_game_frame_ran = 1;
         }
         t2 = 1;

@@ -13,7 +13,7 @@ extern u8 D_0028DF0C;
 extern u8 ship_select_palette_pulse_state;
 extern u16 ship_select_palette_pulse_buffer[];
 extern u16 D_0029BDC0[];
-extern u8 D_0029BE00[];
+extern u8 g_ship_select_state[];
 
 void ship_select_palette_pulse(void) {
     u8 *s_a0;
@@ -49,7 +49,7 @@ void ship_select_palette_pulse(void) {
     s_a5 = reg_a5;
     s_a6 = reg_a6;
     if (D_0028DF0C != 0) goto block_exit;
-    reg_a6 = (u8 *)D_0029BE00;
+    reg_a6 = (u8 *)g_ship_select_state;
     if (ENTITY(reg_a6)->flags.sb[0] >= 6) goto block_set;
     if (*(s8 *)(reg_a6 + 0x70) < 6) goto next_1;
 block_set:
@@ -140,13 +140,13 @@ void ship_select_task_begin(void) {
     slowdown_reset();
     D_0028DF14 = 0;
     D_0028DF0C = 0;
-    reg_a0 = (u8 *)D_0029BE00;
+    reg_a0 = (u8 *)g_ship_select_state;
     reg_d0.h[0] = 0x6F;
     do {
         *(u16 *)reg_a0 = 0U;
         reg_a0 += 2;
     } while ((s16)(--reg_d0.h[0]) >= 0);
-    reg_a0 = (u8 *)D_0029BE00;
+    reg_a0 = (u8 *)g_ship_select_state;
     reg_d0.w = 1;
     do {
         *(s8 *)(reg_a0 + 1) = 0;
@@ -164,7 +164,7 @@ void ship_select_task_begin(void) {
         reg_a0 += 0x70;
     } while ((s16)(--reg_d0.h[0]) >= 0);
     D_0028DF18 = 0;
-    reg_a0 = (u8 *)D_0029BE00;
+    reg_a0 = (u8 *)g_ship_select_state;
     reg_d0.b[0] = *(u8 *)(reg_a5 + 5);
     if (reg_d0.b[0] == 3) {
         *(s8 *)(reg_a0 + 1) = 1;
@@ -335,12 +335,12 @@ void ship_select_task_begin(void) {
     reg_a1 += 2;
 }
 
-extern u8 D_0028E304;
+extern u8 g_setting_start_round;
 extern u16 g_loop;
 
 void ship_select_task_finish(void) {
     task_stop_self();
-    if ((D_0028E304 != 0) && (g_loop == 0)) {
+    if ((g_setting_start_round != 0) && (g_loop == 0)) {
         g_loop = 1;
     }
 }
@@ -369,7 +369,7 @@ s32 fade_reset();
 extern u8 g_default_text_palette[];
 extern u8 g_game_mode;
 extern u8 D_0028E7B4;
-extern u16 D_00684C80[];
+extern u16 g_sim_rules[];
 #endif
 
 void ship_select_task(void) {
@@ -385,7 +385,7 @@ void ship_select_task(void) {
         return;
     }
     *(s8 *)(reg_a5 + 2) = 0;
-    reg_a6 = (u8 *)D_0029BE00;
+    reg_a6 = (u8 *)g_ship_select_state;
     reg_d7.w = 1;
     do {
         if (ENTITY(reg_a6)->flags.b[1] != 0) {
@@ -405,19 +405,19 @@ void ship_select_task(void) {
                 reg_d0.w = 0;
                 reg_a0 = (u8 *)g_default_text_palette;
                 text_palette_load();
-                D_00684C80[0] = 0xFF;
-                D_00684C80[1] = 0xFF;
-                D_00684C80[2] = 0xFF;
-                D_00684C80[3] = 0xFF;
-                D_00684C80[9] = 0xFF;
+                g_sim_rules[0] = 0xFF;
+                g_sim_rules[1] = 0xFF;
+                g_sim_rules[2] = 0xFF;
+                g_sim_rules[3] = 0xFF;
+                g_sim_rules[9] = 0xFF;
                 if (D_0028E7B4 & 1) {
-                    D_00684C80[0] = *(u8 *)(reg_a5 + 9);
-                    D_00684C80[1] = *(u8 *)(reg_a5 + 5);
-                    D_00684C80[9] = D_00684C80[1];
+                    g_sim_rules[0] = *(u8 *)(reg_a5 + 9);
+                    g_sim_rules[1] = *(u8 *)(reg_a5 + 5);
+                    g_sim_rules[9] = g_sim_rules[1];
                 } else {
-                    D_00684C80[2] = *(u8 *)(reg_a5 + 8);
-                    D_00684C80[3] = *(u8 *)(reg_a5 + 4);
-                    D_00684C80[9] = D_00684C80[3];
+                    g_sim_rules[2] = *(u8 *)(reg_a5 + 8);
+                    g_sim_rules[3] = *(u8 *)(reg_a5 + 4);
+                    g_sim_rules[9] = g_sim_rules[3];
                 }
                 task_stop_self();
                 voice_ok();
@@ -470,17 +470,17 @@ void ship_select_task(void) {
                     }
                 }
             }
-        } else if ((reg_d7.h[0] != 0) && (D_0028E304 == 0)) {
+        } else if ((reg_d7.h[0] != 0) && (g_setting_start_round == 0)) {
             input_get_p1_held();
-            if ((reg_d0.w & 0x8000) && ((reg_a0 = (u8 *)D_0029BE00, (*(u8 *)(reg_a0 + 0x71) == 0)) || ((s32) *(u8 *)(reg_a0 + 0x70) < 6))) {
+            if ((reg_d0.w & 0x8000) && ((reg_a0 = (u8 *)g_ship_select_state, (*(u8 *)(reg_a0 + 0x71) == 0)) || ((s32) *(u8 *)(reg_a0 + 0x70) < 6))) {
                 p1_credit_spend_one();
                 if (cond_flag == 0) {
                     ENTITY(reg_a6)->flags.sb[1] = 1;
                 }
             }
-        } else if (D_0028E304 == 0) {
+        } else if (g_setting_start_round == 0) {
             input_get_p2_held();
-            if ((reg_d0.w & 0x8000) && ((reg_a0 = (u8 *)D_0029BE00, (*(u8 *)(reg_a0 + 1) == 0)) || ((s32) *(u8 *)reg_a0 < 6))) {
+            if ((reg_d0.w & 0x8000) && ((reg_a0 = (u8 *)g_ship_select_state, (*(u8 *)(reg_a0 + 1) == 0)) || ((s32) *(u8 *)reg_a0 < 6))) {
                 p2_credit_spend_one();
                 if (cond_flag == 0) {
                     ENTITY(reg_a6)->flags.sb[1] = 1;
@@ -491,7 +491,7 @@ void ship_select_task(void) {
         reg_a6 += 0x70;
     } while ((s16)(--reg_d7.h[0]) >= 0);
     reg_d0.w = 3;
-    reg_a6 = (u8 *)D_0029BE00;
+    reg_a6 = (u8 *)g_ship_select_state;
     if (ENTITY(reg_a6)->flags.b[1] != 0) {
         reg_d0.h[0] &= 0xFFFE;
         if (ENTITY(reg_a6)->flags.b[0] == 8) {
@@ -527,13 +527,13 @@ void select_step2_task_begin(void) {
     join_select_objects_clear();
     D_0028DF14 = 0;
     g_select_screen_active = 1;
-    reg_a0 = (u8 *)D_0029BE00;
+    reg_a0 = (u8 *)g_ship_select_state;
     reg_d0.h[0] = 0x6F;
     do {
         *(s16 *)reg_a0 = 0;
         reg_a0 += 2;
     } while ((s16)(--reg_d0.h[0]) >= 0);
-    reg_a0 = (u8 *)D_0029BE00;
+    reg_a0 = (u8 *)g_ship_select_state;
     reg_d0.w = 1;
     do {
         *(s8 *)(reg_a0 + 1) = 0;
@@ -559,14 +559,14 @@ void select_step2_task_begin(void) {
     *(u8 *)(reg_a5 + 9) = 0xFFU;
     *(u8 *)(reg_a5 + 8) = 0xFFU;
     *(s16 *)(reg_a5 + 0xA) = 0;
-    reg_a0 = (u8 *)D_0029BE00;
+    reg_a0 = (u8 *)g_ship_select_state;
     reg_d0.w = 0;
     if (0 > g_player1[0]) {
         reg_d0.h[0] = 1;
     } else if (0 > g_player2[0]) {
         reg_d0.h[0] = 2;
     }
-    reg_a6 = (u8 *)D_0029BE00;
+    reg_a6 = (u8 *)g_ship_select_state;
     if (reg_d0.b[0] == 2) {
         *(s8 *)(reg_a0 + 0x71) = 1;
         reg_d1.h[0] = PLAYER(g_player2)->ship_type.h;
@@ -679,7 +679,7 @@ void select_step2_task(void) {
         return;
     }
     *(s8 *)(reg_a5 + 2) = 0;
-    reg_a6 = D_0029BE00;
+    reg_a6 = g_ship_select_state;
     reg_d7.w = 1;
     do {
         if (ENTITY(reg_a6)->flags.b[1] != 0) {
@@ -704,7 +704,7 @@ void select_step2_task(void) {
         reg_a6 += 0x70;
     } while ((s16)(--reg_d7.h[0]) >= 0);
     reg_d0.w = 3;
-    reg_a6 = D_0029BE00;
+    reg_a6 = g_ship_select_state;
     if (ENTITY(reg_a6)->flags.b[1] != 0) {
         reg_d0.h[0] &= 0xFFFE;
         if (ENTITY(reg_a6)->flags.b[0] == 8) {
@@ -732,6 +732,6 @@ u8 ship_select_palette_pulse_state __attribute__((aligned(4)));
 u8 D_0028DF0C __attribute__((aligned(4)));
 
 /* .bss (the compiler lays these out in reverse) */
-u8 D_0029BE00[224];
+u8 g_ship_select_state[224];
 u16 D_0029BDC0[32];
 u16 ship_select_palette_pulse_buffer[32];

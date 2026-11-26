@@ -9,11 +9,11 @@ void ground_step_unused(void) {
 
 typedef void (*Fn)(void);
 extern u8 *reg_call_target_as_u8_p;
-extern u16 D_0025AE10[];
+extern u16 entity_draw_by_layer_routines[];
 
 void enemy_variant_offset_a_get(void) {
     reg_d0.h[0] = ENTITY(reg_a6)->misc.h;
-    reg_a0 = (u8 *)D_0025AE10;
+    reg_a0 = (u8 *)entity_draw_by_layer_routines;
     reg_d0.h[0] <<= 2;
     reg_tmp.h[1] = (reg_d0.h[0] != 0) ? *(u16 *)(reg_a0 + ((s16)reg_d0.h[0] & ~1)) : *(u16 *)reg_a0;
     reg_tmp.h[0] = (((u16)reg_d0.h[0] + 2) != 0) ? *(u16 *)(reg_a0 + ((s16)((u16)reg_d0.h[0] + 2) & ~1)) : *(u16 *)reg_a0;
@@ -35,11 +35,11 @@ void enemy_variant_offset_b_get(void) {
     ((Fn)reg_call_target_as_u8_p)();
 }
 
-extern u16 D_0025AE70[];
+extern u16 sprite_draw_by_layer_routines[];
 
 void enemy_variant_offset_c_get(void) {
     reg_d0.h[0] = ENTITY(reg_a6)->misc.h;
-    reg_a0 = (u8 *)D_0025AE70;
+    reg_a0 = (u8 *)sprite_draw_by_layer_routines;
     reg_d0.h[0] <<= 2;
     reg_tmp.h[1] = (reg_d0.h[0] != 0) ? *(u16 *)(reg_a0 + ((s16)reg_d0.h[0] & ~1)) : *(u16 *)reg_a0;
     reg_tmp.h[0] = (((u16)reg_d0.h[0] + 2) != 0) ? *(u16 *)(reg_a0 + ((s16)((u16)reg_d0.h[0] + 2) & ~1)) : *(u16 *)reg_a0;

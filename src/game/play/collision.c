@@ -253,7 +253,7 @@ extern u8 g_bullets[];
 extern s16 g_bullet_limit_raised_1[];
 extern s16 g_bullet_limit_raised_2[];
 extern u16 g_bullet_limit_raised_3[];
-extern u16 D_0029976E[];
+extern u16 g_bullets_clear_request[];
 extern u16 g_bomb_entities[];
 extern u16 g_items_from_y[];
 extern u8 g_pickups[3080];
@@ -262,7 +262,7 @@ extern u16 g_attract_demo;
 extern u16 g_stage;
 extern u8 g_death_boss_form;
 extern u8 death_D_00290DC0;
-extern u16 D_00684C80[];
+extern u16 g_sim_rules[];
 #endif
 
 void player_collisions(void) {
@@ -816,10 +816,10 @@ loop_130:
                     base = reg_d5.h[0];
                     gain = base;
                     if (death_D_00290DC0 == 0) {
-                        if (D_00684C80[9] == 2) {
+                        if (g_sim_rules[9] == 2) {
                             gain = 0;
                         }
-                        if (D_00684C80[9] == 4) {
+                        if (g_sim_rules[9] == 4) {
                             if ((g_stage == 0) || (g_stage == 1) || (g_stage == 2) || (g_stage == 3)) {
                                 gain /= 5;
                             } else {
@@ -829,7 +829,7 @@ loop_130:
                                 gain = 0;
                             }
                         }
-                        if (D_00684C80[9] == 6) {
+                        if (g_sim_rules[9] == 6) {
                             gain /= 10;
                             if ((g_stage == 0) || (g_stage == 1) || (g_stage == 2)) {
                                 gain = 0;
@@ -839,19 +839,19 @@ loop_130:
                             }
                         }
                     } else {
-                        if (D_00684C80[9] == 2) {
+                        if (g_sim_rules[9] == 2) {
                             gain *= 2;
                             if (g_stage == 4) {
                                 gain = 0;
                             }
                         }
-                        if (D_00684C80[9] == 4) {
+                        if (g_sim_rules[9] == 4) {
                             gain *= 2;
                             if (g_stage == 4) {
                                 gain = 0;
                             }
                         }
-                        if (D_00684C80[9] == 6) {
+                        if (g_sim_rules[9] == 6) {
                             gain *= 2;
                             if (g_stage == 4) {
                                 gain = 0;
@@ -966,10 +966,10 @@ done_140:
 #ifdef DEATH_LABEL
                     gain = 0x208;
                     if (death_D_00290DC0 == 0) {
-                        if (D_00684C80[9] == 2) {
+                        if (g_sim_rules[9] == 2) {
                             gain = 0;
                         }
-                        if (D_00684C80[9] == 4) {
+                        if (g_sim_rules[9] == 4) {
                             if ((g_stage == 0) || (g_stage == 1) || (g_stage == 2) || (g_stage == 3)) {
                                 gain /= 5;
                             } else {
@@ -979,7 +979,7 @@ done_140:
                                 gain = 0;
                             }
                         }
-                        if (D_00684C80[9] == 6) {
+                        if (g_sim_rules[9] == 6) {
                             gain /= 10;
                             if ((g_stage == 0) || (g_stage == 1) || (g_stage == 2)) {
                                 gain = 0;
@@ -989,19 +989,19 @@ done_140:
                             }
                         }
                     } else {
-                        if (D_00684C80[9] == 2) {
+                        if (g_sim_rules[9] == 2) {
                             gain *= 2;
                             if (g_stage == 4) {
                                 gain = 0;
                             }
                         }
-                        if (D_00684C80[9] == 4) {
+                        if (g_sim_rules[9] == 4) {
                             gain *= 2;
                             if (g_stage == 4) {
                                 gain = 0;
                             }
                         }
-                        if (D_00684C80[9] == 6) {
+                        if (g_sim_rules[9] == 6) {
                             gain *= 2;
                             if (g_stage == 4) {
                                 gain = 0;
@@ -1111,7 +1111,7 @@ start_160:
             reg_d7.h[0] = MAIN_OR_DEATH_LABEL(0x9F, 0x31F);
             if (g_bullet_limit_raised_3[0] == 0) goto loop_160;
             reg_d7.h[0] = MAIN_OR_DEATH_LABEL(0xBD, 0x3B5);
-            if (D_0029976E[0] == 0) goto loop_160;
+            if (g_bullets_clear_request[0] == 0) goto loop_160;
             reg_d7.h[0] = MAIN_OR_DEATH_LABEL(0xD1, 0x419);
 loop_160:
             reg_d0.h[0] = *(u16 *)reg_a5;
@@ -1191,7 +1191,7 @@ void player_vs_bullets(void) {
     reg_d6.h[0] = MAIN_OR_DEATH_LABEL(0xF, 79);
     if (g_bullet_limit_raised_3[0] == 0) goto loop_5;
     reg_d6.h[0] = MAIN_OR_DEATH_LABEL(0x12, 94);
-    if (D_0029976E[0] == 0) goto loop_5;
+    if (g_bullets_clear_request[0] == 0) goto loop_5;
     reg_d6.h[0] = MAIN_OR_DEATH_LABEL(0x14, 104);
 loop_5:
     bullet_hits_player_check();

@@ -315,8 +315,8 @@ s32 sfx_countdown();
 #ifdef DEATH_LABEL
 extern u8 credit_label_p1[];
 extern u8 credit_label_p2[];
-extern u16 D_0028E314;
-extern u16 D_0028E318;
+extern u16 g_p2_continue_count;
+extern u16 g_p1_continue_count;
 #endif
 
 void continue_panel_step_countdown(void) {
@@ -399,7 +399,7 @@ void continue_panel_step_countdown(void) {
         reg_d4.w = 0;
         reg_d1.h[0] = 0x32;
         reg_d2.h[0] = 2;
-        reg_d4.h[0] = D_0028E318;
+        reg_d4.h[0] = g_p1_continue_count;
         reg_d0.h[0] += 0xA;
         text_layer_put_hex_digit();
     } else {
@@ -412,7 +412,7 @@ void continue_panel_step_countdown(void) {
         reg_d4.w = 0;
         reg_d1.h[0] = 0x32;
         reg_d2.h[0] = 2;
-        reg_d4.h[0] = D_0028E314;
+        reg_d4.h[0] = g_p2_continue_count;
         reg_d0.h[0] += 0xA;
         text_layer_put_hex_digit();
     }
@@ -469,8 +469,8 @@ s32 deferred_text_put_sheet();
 s32 text_layer_put_hex_digit();
 extern u8 credit_label_p1[];
 extern u8 credit_label_p2[];
-extern u16 D_0028E314;
-extern u16 D_0028E318;
+extern u16 g_p2_continue_count;
+extern u16 g_p1_continue_count;
 #endif
 
 void continue_panel_step_countdown_wide(void) {
@@ -508,7 +508,7 @@ void continue_panel_step_countdown_wide(void) {
     reg_d4.w = 0;
     reg_d1.h[0] = 0x32;
     reg_d2.h[0] = 2;
-    reg_d4.h[0] = D_0028E318;
+    reg_d4.h[0] = g_p1_continue_count;
     reg_d0.h[0] += 0xA;
     text_layer_put_hex_digit();
     reg_d0.h[0] = 0xF;
@@ -520,7 +520,7 @@ void continue_panel_step_countdown_wide(void) {
     reg_d4.w = 0;
     reg_d1.h[0] = 0x32;
     reg_d2.h[0] = 2;
-    reg_d4.h[0] = D_0028E314;
+    reg_d4.h[0] = g_p2_continue_count;
     reg_d0.h[0] += 0xA;
     text_layer_put_hex_digit();
 #endif
@@ -656,7 +656,7 @@ s32 music_stop();                            /* extern */
 #endif
 extern u16 g_loop;
 extern u16 g_stage;
-extern u8 D_0028ED64;
+extern u8 g_game_over_after_continue;
 
 void continue_to_game_over(void) {
     music_stop();
@@ -671,7 +671,7 @@ void continue_to_game_over(void) {
         }
     } else {
 block_3:
-        D_0028ED64 = 1;
+        g_game_over_after_continue = 1;
     }
 }
 

@@ -36,7 +36,7 @@ extern u8 g_replay_mode_begun;
 extern u8 g_replay_mode;
 extern u8 g_simulation_active;
 #ifndef DDPDOJ_PC
-extern u16 D_006C58A4[];
+extern u16 g_replay_file_kind[];
 extern u16 D_006C58A8[];
 extern u8 death_D_002B1ED8[];
 extern u8 g_replay_inputs[];
@@ -97,7 +97,7 @@ void replay_filter_input(void) {
             if (g_replay_taken_over != 0) {
                 swap = 0;
                 if (g_menu_pad == 0) {
-                    if (D_006C58A4[0] == 0xFF) {
+                    if (g_replay_file_kind[0] == 0xFF) {
                         swap = 1;
                     }
                 } else if (D_006C58A8[0] == 0xFF) {
@@ -115,7 +115,7 @@ void replay_filter_input(void) {
                 if (g_replay_mode_begun != g_replay_mode) {
                     g_replay_mode = 0;
                 }
-                if (D_006C58A4[0] != 0xFF) {
+                if (g_replay_file_kind[0] != 0xFF) {
                     reg_d0.b[0] = g_replay_inputs[(u32)g_replay_position] ^ death_D_002B1ED8[(u32)g_replay_position & 0x1F];
                 } else {
                     reg_d1.b[0] = g_replay_inputs[(u32)g_replay_position] ^ death_D_002B1ED8[(u32)g_replay_position & 0x1F];
@@ -127,7 +127,7 @@ void replay_filter_input(void) {
             if (g_replay_mode_begun != g_replay_mode) {
                 g_replay_mode = 0;
             }
-            if (D_006C58A4[0] != 0xFF) {
+            if (g_replay_file_kind[0] != 0xFF) {
                 g_replay_inputs[(u32)g_replay_position] = reg_d0.b[0];
             } else {
                 g_replay_inputs[(u32)g_replay_position] = reg_d1.b[0];
@@ -163,7 +163,7 @@ extern u8 g_replay_mode_begun;
 extern u8 g_replay_mode;
 extern u8 g_simulation_active;
 #ifndef DDPDOJ_PC
-extern u16 D_006C58A4[];
+extern u16 g_replay_file_kind[];
 extern u16 D_006C58A8[];
 extern u8 D_006CB588[];
 extern u8 g_replay_inputs[];
@@ -218,7 +218,7 @@ void replay_filter_input(void) {
             if (g_replay_taken_over != 0) {
                 swap = 0;
                 if (g_menu_pad == 0) {
-                    if (D_006C58A4[0] == 0xFF) {
+                    if (g_replay_file_kind[0] == 0xFF) {
                         swap = 1;
                     }
                 } else if (D_006C58A8[0] == 0xFF) {
@@ -236,7 +236,7 @@ void replay_filter_input(void) {
                 if (g_replay_mode_begun != g_replay_mode) {
                     g_replay_mode = 0;
                 }
-                if (D_006C58A4[0] != 0xFF) {
+                if (g_replay_file_kind[0] != 0xFF) {
                     reg_d0.b[0] = g_replay_inputs[(u32)g_replay_position] ^ D_006CB588[(u32)g_replay_position & 0x1F];
                 } else {
                     reg_d1.b[0] = g_replay_inputs[(u32)g_replay_position] ^ D_006CB588[(u32)g_replay_position & 0x1F];
@@ -248,7 +248,7 @@ void replay_filter_input(void) {
             if (g_replay_mode_begun != g_replay_mode) {
                 g_replay_mode = 0;
             }
-            if (D_006C58A4[0] != 0xFF) {
+            if (g_replay_file_kind[0] != 0xFF) {
                 g_replay_inputs[(u32)g_replay_position] = reg_d0.b[0];
             } else {
                 g_replay_inputs[(u32)g_replay_position] = reg_d1.b[0];
@@ -371,7 +371,7 @@ extern s16 g_loaded_stage;
 extern u16 g_stage;
 extern s8 g_cd_async_state;
 extern s8 g_cd_async_busy;
-extern s8 D_0028EC20;
+extern s8 g_menu_replay_chosen;
 
 void replay_exit(void) {
     u32 save_d0;
@@ -432,7 +432,7 @@ void replay_exit(void) {
         step++;
         settings_notice_begin();
         settings_notice_draw_static();
-        if (D_0028EC20 != 0) {
+        if (g_menu_replay_chosen != 0) {
             menu_reset_keep_sim_rules_and_page();
         } else {
             menu_reset_keep_sim_rules();
@@ -564,7 +564,7 @@ extern void fade_is_running(void);
 extern void ranking_sprite_draw(void);
 extern s32 result_menu_update(void);
 extern u8 D_0026B5F0[];
-extern s8 D_0028EACC;
+extern s8 g_result_menu_step;
 
 void replay_result_menu(void) {
 #ifndef DDPDOJ_PC
@@ -650,7 +650,7 @@ void replay_result_menu(void) {
     if (done == 0) {
         *(u16 *)(reg_a5 + 6) = step;
     } else {
-        D_0028EACC = 0;
+        g_result_menu_step = 0;
     }
     reg_a0 = save_a0;
     reg_d0.w = save_d0;
@@ -665,21 +665,21 @@ extern u16 g_input_p2_held;
 extern u16 g_input_p1_previous;
 extern u16 g_input_p1_pressed;
 extern u16 g_input_p1_held;
-extern u8 D_0028E2BB;
-extern u8 D_0028E2BC;
-extern u8 D_0028E2E4;
+extern u8 g_session_date_3;
+extern u8 g_session_date_4;
+extern u8 g_no_enemy_bullets;
 extern u8 g_setting_difficulty;
 extern u16 g_scroll_line;
 extern u16 g_scroll_line_offset;
 extern u16 g_loop;
-extern u8 D_0028ED64;
+extern u8 g_game_over_after_continue;
 extern s32 g_replay_position;
 extern u8 g_replay_buffer_state;
 extern u8 g_replay_mode_begun;
 #ifndef DDPDOJ_PC
 extern u8 g_replay_file[48];
 extern u16 D_006C58A2[];
-extern u16 D_006C58A4[];
+extern u16 g_replay_file_kind[];
 extern u16 D_006C58A6[];
 extern u16 D_006C58A8[];
 extern u8 g_replay_snapshot[];
@@ -703,7 +703,7 @@ void replay_record_begin() {
         save = ((u16 *)g_replay_file);
     g_replay_mode_begun = 1;
     g_replay_buffer_state = 1;
-    D_0028ED64 = 0;
+    g_game_over_after_continue = 0;
     g_replay_position = 0;
     printf((const char *)"replay recording start!!\n");
     memset(save, 0, 0x400);
@@ -713,7 +713,7 @@ void replay_record_begin() {
     if (g_stage != 0 || g_loop == 0) {
         memset(g_replay_start_state, 0, 0x3A4);
     }
-    srand(D_0028E2BC * D_0028E2BB);
+    srand(g_session_date_4 * g_session_date_3);
     for (i = 0; i < 0x20; i++) {
         ((u8 *)((u16 *)g_replay_file))[0x5CE8 + i] = rand();
     }
@@ -723,7 +723,7 @@ void replay_record_begin() {
     D_006CB580[0] = g_input_p2_pressed;
     D_006CB57E[0] = g_input_p2_held;
     D_006C58A2[0] = 0xFF;
-    D_006C58A4[0] = 0xFF;
+    g_replay_file_kind[0] = 0xFF;
     D_006C58A6[0] = 0xFF;
     D_006C58A8[0] = 0xFF;
     D_006CB582[0] = g_input_p2_previous;
@@ -742,7 +742,7 @@ void replay_record_begin() {
         save[3] = 0xFF;
     }
     save[5] = g_setting_difficulty;
-    save[18] = D_0028E2E4;
+    save[18] = g_no_enemy_bullets;
     printf((const char *)"real_l[%d] real_l_scr[%d]\n", g_scroll_line, g_scroll_line_offset);
     }
 }
@@ -799,14 +799,14 @@ void replay_input_playback_begin() {
 extern void label_draw(s32 a, s32 b, s32 c, s32 d);
 extern void replay_start_state_load(u8 *arg);
 extern u8 g_default_text_palette[];
-extern u16 D_0028E314;
-extern u16 D_0028E318;
-extern u8 D_0028E368;
+extern u16 g_p2_continue_count;
+extern u16 g_p1_continue_count;
+extern u8 g_replay_file_finalized;
 extern u8 g_game_frame_ran;
 extern u16 g_attract_demo;
-extern s8 D_0028E3F8;
+extern s8 g_bomb_panel_seen;
 extern u8 g_replay_taken_over;
-extern u8 D_0028ED5C;
+extern u8 g_replay_start_pending;
 extern ReplayHeader g_replay_file_as_SaveHeader; /* the header at the start of the save buffer */
 #ifndef DDPDOJ_PC
 extern u16 D_006C8E56[];
@@ -837,11 +837,11 @@ void replay_playback_begin(void) {
     u8 *save_a6;
 
     g_game_frame_ran = 0;
-    D_0028E3F8 = 0;
+    g_bomb_panel_seen = 0;
     g_replay_buffer_state = 0;
     g_replay_position = 0;
-    D_0028E368 = 0;
-    D_0028ED5C = 1;
+    g_replay_file_finalized = 0;
+    g_replay_start_pending = 1;
     g_replay_taken_over = 0;
     save_d0 = reg_d0.w;
     save_d1 = reg_d1.w;
@@ -868,12 +868,12 @@ void replay_playback_begin(void) {
     if (g_attract_demo == 0)
 #endif
     {
-        if (D_006C58A4[0] != 0xFF) {
-            D_0028E314 = 0;
-            D_0028E318 = 9;
+        if (g_replay_file_kind[0] != 0xFF) {
+            g_p2_continue_count = 0;
+            g_p1_continue_count = 9;
         } else {
-            D_0028E318 = 0;
-            D_0028E314 = 9;
+            g_p1_continue_count = 0;
+            g_p2_continue_count = 9;
         }
     }
     reg_d0.h[0] = TASK_GAME;
@@ -911,8 +911,8 @@ extern void replay_header_apply(void);
 s32 replay_text_layer_load();
 extern u8 D_0028DEF8;
 extern u16 g_players_hidden;
-extern u8 D_0028E2EC;
-extern u8 D_0028E304;
+extern u8 g_setting_loop_count;
+extern u8 g_setting_start_round;
 extern u8 g_setting_ship_stock;
 extern u8 g_setting_extend;
 extern u16 g_frame_mod16;
@@ -928,7 +928,7 @@ extern u16 g_p2_lives;
 extern u16 g_p1_lives;
 extern s32 D_0028E998;
 extern s32 D_0028E99C;
-extern s8 D_0028EC58;
+extern s8 g_stage_load_finished;
 extern s16 g_player2[56];
 extern s16 g_player1[56];
 #ifndef DDPDOJ_PC
@@ -1004,7 +1004,7 @@ void replay_playback_start(void) {
         return;
     }
     if (step < 0xC8) {
-        D_0028E368 = 0;
+        g_replay_file_finalized = 0;
         g_score_task_active = 0;
         if ((D_006C8E56[0] != 0) && (step < 0x65)) {
             deferred_text_reset();
@@ -1033,16 +1033,16 @@ void replay_playback_start(void) {
         g_setting_difficulty = D_006C91AC[0];
         g_setting_ship_stock = D_006C91AE[0];
         g_setting_extend = D_006C91AD[0];
-        D_0028E2EC = D_006C91AF[0];
-        D_0028E304 = replay_playback_start_buffer_3[0];
-        D_0028E2E4 = D_006C58C4[0];
+        g_setting_loop_count = D_006C91AF[0];
+        g_setting_start_round = replay_playback_start_buffer_3[0];
+        g_no_enemy_bullets = D_006C58C4[0];
         replay_header_apply();
         enemies_stop();
         step = 0x64;
         break;
     case 0xC8:
         step += 1;
-        D_0028E368 = 1;
+        g_replay_file_finalized = 1;
     case 0xC9:
         stage_doors_open_requested_check();
         if (cond_flag == 0) {
@@ -1053,7 +1053,7 @@ void replay_playback_start(void) {
     if (D_006C8E56[0] == 0) {
         switch (step) {
         case 0x64:
-            if (D_0028EC58 != 0) {
+            if (g_stage_load_finished != 0) {
                 step += 1;
 #ifdef DEATH_LABEL
                 if (g_replay_header.stage == 0) {
@@ -1063,7 +1063,7 @@ void replay_playback_start(void) {
                     music_play_bgm2();
                 }
                 enemies_resume();
-                D_0028ED5C = 0;
+                g_replay_start_pending = 0;
                 if (g_loop == 0) {
                     memcpy(((u16 *)g_player1), D_006C68B6, 0x62);
                     memcpy(((u16 *)g_player2), D_006C6918, 0x62);
@@ -1079,7 +1079,7 @@ void replay_playback_start(void) {
                 memcpy(((u16 *)g_player1), D_006C68B6, 0x62);
                 memcpy(((u16 *)g_player2), D_006C6918, 0x62);
                 g_players_hidden = 0;
-                D_0028ED5C = 0;
+                g_replay_start_pending = 0;
             }
             if (g_scroll_line == 0x38) {
                 g_game_frame = 0x11A;
@@ -1105,11 +1105,11 @@ void replay_playback_start(void) {
     } else {
         switch (step) {
         case 0x64:
-            if (D_0028EC58 != 0) {
+            if (g_stage_load_finished != 0) {
                 step += 1;
             case 0x65:
                 if (g_score_panel_intro == 0) {
-                    D_0028ED5C = 0;
+                    g_replay_start_pending = 0;
                     g_replay_begin_pending = 1;
 #ifndef DEATH_LABEL
                     D_0028DEF8 = 1;
@@ -1143,7 +1143,7 @@ void replay_playback_start(void) {
     reg_a5 = save_a5;
 }
 
-extern s8 D_0028E3F8;
+extern s8 g_bomb_panel_seen;
 
 void replay_run_begin(void) {
 #ifndef DDPDOJ_PC
@@ -1180,9 +1180,9 @@ void replay_run_begin(void) {
     save_a6 = reg_a6;
     g_game_frame_ran = 0;
     save_d1 = reg_d1.w;
-    D_0028E3F8 = 0;
-    D_0028E368 = 0;
-    D_0028ED5C = 1;
+    g_bomb_panel_seen = 0;
+    g_replay_file_finalized = 0;
+    g_replay_start_pending = 1;
     g_simulation_active = 1;
     save_d2 = reg_d2.w;
     save_d3 = reg_d3.w;
@@ -1219,11 +1219,11 @@ void replay_run_begin(void) {
 extern void frame_counters_reset(void);
 extern u8 g_pad_input_locked;
 extern u8 D_0028E2A8;
-extern u16 D_0028E2AC;
+extern u16 g_start_hyper_gauge;
 extern u8 D_0028E2B0;
-extern u8 D_0028E2C4;
+extern u8 g_start_rule_death;
 extern u8 g_simulation_boss_start;
-extern u8 D_0028E2D4;
+extern u8 g_start_rule_rank;
 
 void replay_run_start(void) {
 #ifndef DDPDOJ_PC
@@ -1280,12 +1280,12 @@ void replay_run_start(void) {
         break;
     case 16:
         g_setting_difficulty = *(u8 *)&g_replay_header.difficulty;
-        D_0028E2E4 = *(u8 *)&g_replay_header.bullet;
+        g_no_enemy_bullets = *(u8 *)&g_replay_header.bullet;
         g_simulation_boss_start = *(u8 *)&g_replay_header.start;
-        D_0028E2C4 = *(u8 *)&g_replay_header.death;
-        D_0028E2D4 = *(u8 *)&g_replay_header.rank;
+        g_start_rule_death = *(u8 *)&g_replay_header.death;
+        g_start_rule_rank = *(u8 *)&g_replay_header.rank;
         D_0028E2B0 = *(u8 *)&g_replay_header.unk2A;
-        D_0028E2AC = g_replay_header.hyper_gauge;
+        g_start_hyper_gauge = g_replay_header.hyper_gauge;
         D_0028E2A8 = *(u8 *)&g_replay_header.unk2C;
         replay_header_apply();
         enemies_stop();
@@ -1294,7 +1294,7 @@ void replay_run_start(void) {
         break;
     case 17:
         if (g_score_panel_intro == 0) {
-            D_0028ED5C = 0;
+            g_replay_start_pending = 0;
             step++;
         }
         break;
@@ -1360,7 +1360,7 @@ static void replay_run_end_begin(void)
     saved_d7 = reg_d7.w;
 
     D_0028DF84 = 0;
-    D_0028E368 = 0;
+    g_replay_file_finalized = 0;
     reg_a5[3] = 1;
     *(u16 *)(reg_a5 + 0xC) = 0;
 
@@ -1432,7 +1432,7 @@ void replay_run_end(void) {
         break;
     case 16:
         gfx_draw_color_box(0, 0, 0x1C2, 0xE0, 0x50, 0x80, 0xFF, 0xFF, 0xFF);
-        D_0028E368 = 1;
+        g_replay_file_finalized = 1;
         g_replay_mode = 2;
         task_reset_all();
         reg_d0.h[0] = TASK_REPLAY;
@@ -1486,16 +1486,16 @@ u8 g_replay_buffer_state;
 s32 g_replay_position;
 u8 g_replay_begin_pending __attribute__((aligned(4)));
 u8 g_replay_watch_after_run __attribute__((aligned(4)));
-u8 D_0028ED64 __attribute__((aligned(4)));
-u8 D_0028ED60 __attribute__((aligned(4)));
-u8 D_0028ED5C __attribute__((aligned(4)));
+u8 g_game_over_after_continue __attribute__((aligned(4)));
+u8 g_stage_clear_screen_shown __attribute__((aligned(4)));
+u8 g_replay_start_pending __attribute__((aligned(4)));
 u8 g_replay_taken_over __attribute__((aligned(4)));
-u16 D_0028ED54;
-s32 D_0028ED50;
-u16 D_0028ED4C __attribute__((aligned(4)));
-u16 D_0028ED48;
-s32 D_0028ED44;
-u16 D_0028ED40;
+u16 g_replay_start_p1_score_digits;
+s32 g_replay_start_p1_score;
+u16 g_replay_start_p1_score_billions __attribute__((aligned(4)));
+u16 g_replay_start_p2_score_digits;
+s32 g_replay_start_p2_score;
+u16 g_replay_start_p2_score_billions;
 s32 g_replay_checksum;
 
 /* .bss (the compiler lays these out in reverse) */

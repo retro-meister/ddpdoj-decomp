@@ -1191,10 +1191,10 @@ extern s32 g_p2_option_level_data_as_s32_a[];
 extern s32 g_p1_weapon_level_data_as_s32_a[];
 extern s32 g_p1_option_level_data_as_s32_a[];
 extern u16 g_laser_bomb_impact_frame;
-extern u8 D_0028E284;
-extern u8 D_0028E288;
-extern u8 D_0028E2EC;
-extern u8 D_0028E304;
+extern u8 g_p2_stage_start_timer;
+extern u8 g_p1_stage_start_timer;
+extern u8 g_setting_loop_count;
+extern u8 g_setting_start_round;
 extern u8 g_setting_ship_stock;
 extern u8 g_setting_extend;
 extern u8 g_setting_difficulty;
@@ -1397,8 +1397,8 @@ extern s32 g_p1_afterimage_positions[];
 extern u16 g_bomb_entities[24];
 extern u8 D_0029D710[];
 extern u8 D_0029D730[];
-extern u8 D_0029D750[];
-extern u8 D_0029D770[];
+extern u8 g_p2_laser_segments[];
+extern u8 g_p1_laser_segments[];
 extern u8 g_p2_laser_entities[];
 extern u8 g_p1_laser_entities[];
 extern u8 D_0029E390[];
@@ -1467,8 +1467,8 @@ void replay_snapshot_save(Buf *buf) {
         buf->f2122[i] = g_p2_laser_entities[i];
     }
     for (i = 0; i < 0x20; i++) {
-        buf->f2722[i] = D_0029D770[i];
-        buf->f2742[i] = D_0029D750[i];
+        buf->f2722[i] = g_p1_laser_segments[i];
+        buf->f2742[i] = g_p2_laser_segments[i];
     }
     for (i = 0; i < 0x20; i++) {
         buf->f2762[i] = D_0029D730[i];
@@ -1736,8 +1736,8 @@ void replay_snapshot_save(Buf *buf) {
     p[0x350C] = g_setting_difficulty;
     p[0x350D] = g_setting_extend;
     p[0x350E] = g_setting_ship_stock;
-    p[0x350F] = D_0028E2EC;
-    p[0x3510] = D_0028E304;
+    p[0x350F] = g_setting_loop_count;
+    p[0x3510] = g_setting_start_round;
     *(u16 *)(p + 0x3500) = g_game_frame;
     *(u16 *)(p + 0x3502) = g_frame_mod2;
     *(u16 *)(p + 0x3504) = g_frame_mod3;
@@ -1748,8 +1748,8 @@ void replay_snapshot_save(Buf *buf) {
     for (i = 0; i < 0x2000; i++) {
         buf->f3511[i] = ((s8 *)g_text_layer)[i];
     }
-    p[0x5532] = D_0028E288;
-    p[0x5533] = D_0028E284;
+    p[0x5532] = g_p1_stage_start_timer;
+    p[0x5533] = g_p2_stage_start_timer;
     ((s16 *)D_006C58D6)[0] = MAIN_OR_DEATH_LABEL(0xCB, 0x6E);
     ((s16 *)D_006C58AA)[0] = g_setting_difficulty;
     ((s16 *)D_006C58C8)[0] = g_setting_extend;
@@ -1968,8 +1968,8 @@ void replay_snapshot_load(u8 *p) {
         g_p2_laser_entities[i] = p[0x2122 + i];
     }
     for (i = 0; i < 0x20; i++) {
-        D_0029D770[i] = p[0x2722 + i];
-        D_0029D750[i] = p[0x2742 + i];
+        g_p1_laser_segments[i] = p[0x2722 + i];
+        g_p2_laser_segments[i] = p[0x2742 + i];
     }
     for (i = 0; i < 0x20; i++) {
         D_0029D730[i] = p[0x2762 + i];
@@ -2239,8 +2239,8 @@ void replay_snapshot_load(u8 *p) {
     g_setting_difficulty = p[0x350C];
     g_setting_extend = p[0x350D];
     g_setting_ship_stock = p[0x350E];
-    D_0028E2EC = p[0x350F];
-    D_0028E304 = p[0x3510];
+    g_setting_loop_count = p[0x350F];
+    g_setting_start_round = p[0x3510];
     g_game_frame = *(u16 *)(p + 0x3500);
     g_frame_mod2 = *(u16 *)(p + 0x3502);
     g_frame_mod3 = *(u16 *)(p + 0x3504);
@@ -2248,8 +2248,8 @@ void replay_snapshot_load(u8 *p) {
     g_frame_mod8 = *(u16 *)(p + 0x3508);
     g_frame_mod16 = *(u16 *)(p + 0x350A);
     *(Row16 *)&g_ground_state = ((RowSrc *)p)->row;
-    D_0028E288 = p[0x5532];
-    D_0028E284 = p[0x5533];
+    g_p1_stage_start_timer = p[0x5532];
+    g_p2_stage_start_timer = p[0x5533];
     replay_text_layer_load((const Src *)p);
 }
 

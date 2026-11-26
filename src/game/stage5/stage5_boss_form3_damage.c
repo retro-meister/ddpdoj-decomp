@@ -48,7 +48,7 @@ extern u16 g_damage_blink_counter;
 extern s16 g_bullet_limit_raised_1[];
 extern s16 g_bullet_limit_raised_2[];
 extern u16 g_bullet_limit_raised_3[];
-extern u16 D_0029976E[];
+extern u16 g_bullets_clear_request[];
 extern u16 g_bomb_entities[];
 
 void stage5_boss_form3_take_damage(void) {
@@ -202,7 +202,7 @@ next_10:
         g_bullet_limit_raised_1[0] = 1;
         g_bullet_limit_raised_2[0] = 1;
         ((s16 *)g_bullet_limit_raised_3)[0] = 1;
-        ((s16 *)D_0029976E)[0] = 1;
+        ((s16 *)g_bullets_clear_request)[0] = 1;
         bullet_cancel_on_boss_hit();
     }
     if (STAGE5_DAMAGE(reg_a6)->form3_second_phase < 2) {
@@ -223,7 +223,7 @@ next_10:
         g_bullet_limit_raised_1[0] = 1;
         g_bullet_limit_raised_2[0] = 1;
         ((s16 *)g_bullet_limit_raised_3)[0] = 1;
-        ((s16 *)D_0029976E)[0] = 1;
+        ((s16 *)g_bullets_clear_request)[0] = 1;
         bullet_cancel_on_boss_hit();
     }
 #else
@@ -247,7 +247,7 @@ next_10:
     g_bullet_limit_raised_1[0] = 1;
     g_bullet_limit_raised_2[0] = 1;
     ((s16 *)g_bullet_limit_raised_3)[0] = 1;
-    ((s16 *)D_0029976E)[0] = 1;
+    ((s16 *)g_bullets_clear_request)[0] = 1;
     bullet_cancel_on_boss_hit();
 #endif
 next_11:

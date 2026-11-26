@@ -90,7 +90,7 @@ s32 font_init();
 s32 mc_init();
 extern s16 g_loaded_stage;
 extern u8 sys_init_state;
-extern s8 D_0028EB00;
+extern s8 g_menu_exit_code;
 extern u8 g_pad_dma_area[];
 void sys_init(void) {
     iop_reboot_and_load_modules();
@@ -109,7 +109,7 @@ void sys_init(void) {
     g_frame_counter = 0;
     sys_init_state = 0;
     g_display_reset_pending = 0;
-    D_0028EB00 = 0;
+    g_menu_exit_code = 0;
     fade_reset();
     disc_files_locate();
     tex_load_common();
@@ -154,9 +154,9 @@ s32 replay_save_prompt_draw();
 s32 mc_frame_draw();
 extern u8 g_slowdown_frame_state;
 extern u8 g_slowdown_timer;
-extern u16 D_0028E32C;
-extern u8 D_0028E378;
-extern u8 D_0028E37C;
+extern u16 g_setting_wallpaper;
+extern u8 g_stage_jump_state;
+extern u8 g_slowdown_setting;
 extern u16 g_game_frame;
 extern u16 g_scroll_line;
 void sys_end_frame(void) {
@@ -182,7 +182,7 @@ void sys_end_frame(void) {
             render_target_present_wide(&g_render_target, g_gif_buf);
         } else {
             framebuffer_begin_present(g_gif_buf);
-            if (D_0028E32C != 5) {
+            if (g_setting_wallpaper != 5) {
                 wallpaper_draw(g_gif_buf);
             }
             render_target_present(&g_render_target, g_gif_buf);
@@ -195,11 +195,11 @@ void sys_end_frame(void) {
     vibration_update();
     sceGsSyncPath(0, 0);
     g_frame_counter += 1;
-    D_0028E37C = 1;
+    g_slowdown_setting = 1;
     half = (sceGsSyncV(0) != 0) ^ 1;
-    if (D_0028E378 == 1) {
-        D_0028E378 = 0;
-    } else if (D_0028E37C != 0) {
+    if (g_stage_jump_state == 1) {
+        g_stage_jump_state = 0;
+    } else if (g_slowdown_setting != 0) {
         if (g_slowdown_frame_state == 2) {
             sceGsSyncV(0);
         } else {
@@ -210,7 +210,7 @@ void sys_end_frame(void) {
                 sceGsSyncV(0);
             }
         }
-        D_0028E37C &= 1;
+        g_slowdown_setting &= 1;
     }
     g_slowdown_frame_state = 0;
     if ((g_screen_mode != 2) && (g_screen_mode != 3)) {
@@ -231,12 +231,12 @@ void sys_end_frame(void) {
 
 extern u8 g_game_frame_ran;
 extern u16 g_attract_demo;
-extern s8 D_0028E3F8;
+extern s8 g_bomb_panel_seen;
 extern u8 g_replay_taken_over;
 extern u8 g_replay_buffer_state;
 extern u8 g_replay_mode;
 #ifndef DDPDOJ_PC
-extern u16 D_006C58A4[];
+extern u16 g_replay_file_kind[];
 #endif
 
 void sys_draw_replay_label(void) {
@@ -244,20 +244,20 @@ void sys_draw_replay_label(void) {
     s32 var_a2_2;
 
 #ifdef DEATH_LABEL
-    if ((g_game_frame_ran != 0) && (D_0028E3F8 != 0) && (g_replay_buffer_state == 1) && (g_replay_mode == 2)) {
+    if ((g_game_frame_ran != 0) && (g_bomb_panel_seen != 0) && (g_replay_buffer_state == 1) && (g_replay_mode == 2)) {
 #else
-    if ((g_game_frame_ran != 0) && (D_0028E3F8 != 0) && (g_attract_demo == 0) && (g_replay_buffer_state == 1) && (g_replay_mode == 2)) {
+    if ((g_game_frame_ran != 0) && (g_bomb_panel_seen != 0) && (g_attract_demo == 0) && (g_replay_buffer_state == 1) && (g_replay_mode == 2)) {
 #endif
         if (g_replay_taken_over != 0) {
             var_a2 = 0x88;
-            if (D_006C58A4[0] == 0xFF) {
+            if (g_replay_file_kind[0] == 0xFF) {
                 var_a2 = 0x18;
             }
             label_draw(&g_render_target, 2, var_a2, "OVERRIDE");
             return;
         }
         var_a2_2 = 0x90;
-        if (D_006C58A4[0] == 0xFF) {
+        if (g_replay_file_kind[0] == 0xFF) {
             var_a2_2 = 0x20;
         }
         label_draw(&g_render_target, 2, var_a2_2, "REPLAY");
@@ -479,7 +479,7 @@ extern void sfx_confirm(void);
 extern u16 g_pause_player;
 extern u8 g_stage_load_state;
 extern u8 g_pause_lock_timer;
-extern u8 D_0028E368;
+extern u8 g_replay_file_finalized;
 extern u8 g_paused;
 extern s8 g_menu_pad;
 extern s16 g_player2[];
@@ -494,7 +494,7 @@ void pause_check_start_button(void) {
     if (state != 0) {
         return;
     }
-    switch (D_0028E368) {
+    switch (g_replay_file_finalized) {
     case 0:
         goto block_rts;
     }

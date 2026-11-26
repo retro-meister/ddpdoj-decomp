@@ -97,8 +97,8 @@ extern u8 g_explosions[4480];
 extern u16 g_bomb_entities[];
 extern u8 D_0029D710[32];
 extern u8 D_0029D730[32];
-extern u8 D_0029D750[32];
-extern u8 D_0029D770[32];
+extern u8 g_p2_laser_segments[32];
+extern u8 g_p1_laser_segments[32];
 extern u8 g_p2_laser_entities[1296];
 extern u8 g_p1_laser_entities[1296];
 extern u8 D_0029E390[1728];
@@ -186,8 +186,8 @@ void startup_pointers_store_a(void) {
     STORE_POINTER(debug_list_views[6].entries, ((u16 *)D_0029EA50));
     STORE_POINTER(debug_list_views[7].entries, ((u16 *)g_p1_laser_entities));
     STORE_POINTER(debug_list_views[8].entries, ((u16 *)g_p2_laser_entities));
-    STORE_POINTER(debug_list_views[9].entries, ((u16 *)D_0029D770));
-    STORE_POINTER(debug_list_views[10].entries, ((u16 *)D_0029D750));
+    STORE_POINTER(debug_list_views[9].entries, ((u16 *)g_p1_laser_segments));
+    STORE_POINTER(debug_list_views[10].entries, ((u16 *)g_p2_laser_segments));
     STORE_POINTER(debug_list_views[11].entries, ((u16 *)D_0029D730));
     STORE_POINTER(debug_list_views[12].entries, ((u16 *)D_0029D710));
     STORE_POINTER(debug_list_views[13].entries, g_p1_weapon_level_data_as_u16_a);
@@ -315,7 +315,7 @@ void startup_pointers_store_b(void) {
 extern u8 D_002BAE90[];
 
 #ifdef DEATH_LABEL
-extern u8 D_0028E2A4;
+extern u8 g_stage_clear_wait_timer;
 #endif
 
 void clear_bonus_state_clear(void) {
@@ -339,7 +339,7 @@ void clear_bonus_state_clear(void) {
     ENTITY(reg_a6)->draw.sh = 0x60;
     ENTITY(reg_a6)->sprite.sh = 0x10;
 #ifdef DEATH_LABEL
-    D_0028E2A4 = 0x78;
+    g_stage_clear_wait_timer = 0x78;
 #endif
 }
 
@@ -357,10 +357,10 @@ extern u16 g_stage;
 extern u8 g_replay_mode;
 #ifdef DEATH_LABEL
 s32 stage_load_step();
-extern u8 D_0028E2A4;
+extern u8 g_stage_clear_wait_timer;
 extern u8 g_game_mode;
 extern s16 g_loaded_stage;
-extern u8 D_0028ED60;
+extern u8 g_stage_clear_screen_shown;
 extern u8 death_D_00290568;
 #endif
 
@@ -375,10 +375,10 @@ void clear_bonus_task() {
         return;
     }
 #ifdef DEATH_LABEL
-    if (D_0028E2A4 != 0) {
-        D_0028E2A4 -= 1;
+    if (g_stage_clear_wait_timer != 0) {
+        g_stage_clear_wait_timer -= 1;
     }
-    if ((D_0028E2A4 == 0) && (g_loaded_stage != g_stage) && (D_0028E2A4 == 0)) {
+    if ((g_stage_clear_wait_timer == 0) && (g_loaded_stage != g_stage) && (g_stage_clear_wait_timer == 0)) {
         stage_load_step();
     }
 #endif
@@ -397,7 +397,7 @@ void clear_bonus_task() {
                 if (g_loaded_stage != g_stage) {
                     return;
                 }
-                if ((g_game_mode == 2) && (D_0028ED60 == 0)) {
+                if ((g_game_mode == 2) && (g_stage_clear_screen_shown == 0)) {
                     death_D_00290568 = 1;
                     *(s16 *)reg_a5 = 0;
                     return;
@@ -450,7 +450,7 @@ extern u16 g_p1_lives;
 extern u16 g_p1_maximum_value[];
 extern s16 g_player1[];
 #ifdef DEATH_LABEL
-extern u16 D_00684C80[];
+extern u16 g_sim_rules[];
 #endif
 
 void clear_bonus_p1_step(void) {
@@ -533,9 +533,9 @@ block_3:
         }
         reg_d0.w = 0x01000000;
 #ifdef DEATH_LABEL
-        if (D_00684C80[1] == 2) {
+        if (g_sim_rules[1] == 2) {
             *(s32 *)&reg_d0 = 0x01000000;
-        } else if (D_00684C80[1] == 4) {
+        } else if (g_sim_rules[1] == 4) {
             reg_d0.w = 0x01500000;
         } else {
             reg_d0.w = 0x03000000;
@@ -561,7 +561,7 @@ extern u16 g_p2_lives;
 extern u16 g_p2_maximum_value[];
 extern s16 g_player2[];
 #ifdef DEATH_LABEL
-extern u16 D_00684C80[];
+extern u16 g_sim_rules[];
 #endif
 
 void clear_bonus_p2_step(void) {
@@ -658,9 +658,9 @@ block_3:
     }
     reg_d0.w = 0x01000000;
 #ifdef DEATH_LABEL
-    if (D_00684C80[3] == 2) {
+    if (g_sim_rules[3] == 2) {
         *(s32 *)&reg_d0 = 0x01000000;
-    } else if (D_00684C80[3] == 4) {
+    } else if (g_sim_rules[3] == 4) {
         reg_d0.w = 0x01500000;
     } else {
         reg_d0.w = 0x03000000;

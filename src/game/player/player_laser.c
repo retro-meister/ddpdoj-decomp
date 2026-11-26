@@ -506,12 +506,12 @@ void p1_laser_front_strong(void) {
 }
 
 extern u8 D_0029D730[];
-extern u8 D_0029D770[];
+extern u8 g_p1_laser_segments[];
 void p1_laser_front_hyper(void)
 {
   u16 value = PLAYER(((u8 *)g_player1))->moved_y.h;
   int new_var;
-  reg_a0 = D_0029D770;
+  reg_a0 = g_p1_laser_segments;
   if ((!new_var) && (!new_var))
   {
   }
@@ -535,7 +535,7 @@ void p2_laser_front_strong(void) {
 }
 
 extern u8 D_0029D710[];
-extern u8 D_0029D750[];
+extern u8 g_p2_laser_segments[];
 inline int inline_fn(u16 arg0, u16 arg1, u16 arg2)
 {
   return (arg0 && arg1) && arg2;
@@ -547,7 +547,7 @@ void p2_laser_front_hyper(void)
   u16 new_var;
   u16 new_var3;
   int new_var2;
-  reg_a0 = D_0029D750;
+  reg_a0 = g_p2_laser_segments;
   new_var = sourceValue;
   new_var2 = 0;
   new_var3 = PLAYER(g_player2)->x.h;
@@ -1131,12 +1131,12 @@ void laser_segment_spawn(void) {
     u16 var_a0;
     temp_a3 = (u8 *)(reg_a4);
     (*(u8 *)((u8 *)(temp_a3) + (1))) |= 0x20;
-    reg_a2 = (u8 *)D_0029D770;
+    reg_a2 = (u8 *)g_p1_laser_segments;
     reg_a3 = (u8 *)D_0029E330;
     reg_a4 = &(*(u8 *)&g_p1_laser_stop_y);
     reg_a5 = (u8 *)((u8 *)g_player1);
     if (ENTITY(reg_a6)->move.h == 0) {
-        reg_a2 = (u8 *)D_0029D750;
+        reg_a2 = (u8 *)g_p2_laser_segments;
         reg_a3 = (u8 *)D_0029DD30;
         reg_a4 = &(*(u8 *)&g_p2_laser_stop_y);
         reg_a5 = (u8 *)((u8 *)g_player2);
@@ -1192,9 +1192,9 @@ void laser_segment_spawn(void) {
 }
 
 void laser_segment_end(void) {
-    reg_a0 = D_0029D770;
+    reg_a0 = g_p1_laser_segments;
     if (ENTITY(reg_a6)->move.h == 0) {
-        reg_a0 = D_0029D750;
+        reg_a0 = g_p2_laser_segments;
     }
     if (*(u16 *)(reg_a0 + 0xC) == 0) {
         *(u8 *)reg_a0 |= 1;
@@ -1209,12 +1209,12 @@ extern u16 g_p1_laser_stop_y;
 void laser_segment_hit_check(void) {
     reg_d1.h[0] = g_p1_laser_stop_y;
     reg_a0 = (u8 *)D_0029D730;
-    reg_a2 = (u8 *)D_0029D770;
+    reg_a2 = (u8 *)g_p1_laser_segments;
     reg_a5 = (u8 *)((u8 *)g_player1);
     if (ENTITY(reg_a6)->move.h != 0) goto block_1;
     reg_d1.h[0] = g_p2_laser_stop_y;
     reg_a0 = (u8 *)D_0029D710;
-    reg_a2 = (u8 *)D_0029D750;
+    reg_a2 = (u8 *)g_p2_laser_segments;
     reg_a5 = (u8 *)((u8 *)g_player2);
 block_1:
     switch (*(u8 *)(reg_a2 + 1) & 0x10) {

@@ -37,13 +37,13 @@ s32 entity_check_bounds();
 extern u8 D_0024EBC0[];
 extern u16 D_0024EC80[];
 extern u16 D_0024EEF0[];
-extern u8 D_0028E2E4;
+extern u8 g_no_enemy_bullets;
 
 void stage4_boss_missile(void) {
     u16 temp_a0;
     u16 temp_a1;
     u8 temp_v1;
-    if (D_0028E2E4 == 0) {
+    if (g_no_enemy_bullets == 0) {
         reg_d1.w = 0x5C;
         reg_d1.b[0] &= ENTITY(reg_a6)->flags.b[1];
         if (reg_d1.b[0] != 0) {

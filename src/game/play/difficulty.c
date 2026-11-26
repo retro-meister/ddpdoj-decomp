@@ -26,7 +26,7 @@ void difficulty_apply(void) {
     g_stage_base_ranks = g_stage_base_ranks_by_difficulty[reg_d0.h[0] >> 1];
 }
 
-extern u8 D_0028E2D4;
+extern u8 g_start_rule_rank;
 extern u16 g_p2_hyper_total;
 extern u16 g_p1_hyper_total;
 extern u16 g_p2_hyper_active;
@@ -61,7 +61,7 @@ void rank_update(void) {
     reg_d2.w = (u32)g_play_time;
     reg_d3.w = 8;
     if (g_simulation_active != 0 && D_006E5C02[0] != 0) {
-        reg_d1.b[0] = D_0028E2D4;
+        reg_d1.b[0] = g_start_rule_rank;
     }
     reg_d2.w >>= reg_d3.w;
     reg_d1.h[0] += reg_d2.h[0];

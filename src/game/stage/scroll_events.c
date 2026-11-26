@@ -457,7 +457,7 @@ void scroll_sound_music_fade(void) {
 extern s16 g_bullet_limit_raised_1[];
 extern s16 g_bullet_limit_raised_2[];
 extern s16 g_bullet_limit_raised_3_as_s16_a[];
-extern u16 D_0029976E[];
+extern u16 g_bullets_clear_request[];
 
 void scroll_event_flags(void) {
     reg_d0.h[0] = *(u16 *)reg_a1;
@@ -478,7 +478,7 @@ void scroll_event_flags(void) {
         g_bullet_limit_raised_1[0] = 1;
         g_bullet_limit_raised_2[0] = 1;
         g_bullet_limit_raised_3_as_s16_a[0] = 1;
-        ((s16 *)D_0029976E)[0] = 1;
+        ((s16 *)g_bullets_clear_request)[0] = 1;
     }
 }
 

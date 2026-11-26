@@ -1060,7 +1060,7 @@ void p2_boss_hits_score()
 }
 
 extern s8 g_boss_hp_bar_flags;
-extern u8 D_0028E635;
+extern u8 g_boss_bar_flags;
 
 void hud_p1_hyper_count_put(void) {
 #ifndef DDPDOJ_PC
@@ -1069,7 +1069,7 @@ void hud_p1_hyper_count_put(void) {
     reg_d0.h[0] = 0xC8;
     reg_d1.h[0] = 0x200;
     if ((g_boss_present & 1) && (g_boss_hp_bar_flags >= 0)) {
-        if (D_0028E635 & 0x10) {
+        if (g_boss_bar_flags & 0x10) {
             reg_d1.h[0] = 0;
             reg_d0.h[0] = 0xCC;
             goto block_4;
@@ -1100,7 +1100,7 @@ void hud_p2_hyper_count_put(void) {
     reg_d0.h[0] = 0xC8;
     reg_d1.h[0] = 0x1400;
     if ((g_boss_present & 1) && (g_boss_hp_bar_flags >= 0)) {
-        if (D_0028E635 & 0x10) {
+        if (g_boss_bar_flags & 0x10) {
             reg_d0.h[0] = 0xCC;
             reg_d1.h[0] = 0x1600;
             goto block_4;
@@ -2098,7 +2098,7 @@ void hud_p1_lives_put(void) {
     reg_d0.h[0] = 0xBC;
     reg_d1.h[0] = 0x200;
     if ((g_boss_present & 1) && (g_boss_hp_bar_flags >= 0)) {
-        if (D_0028E635 & 0x10) {
+        if (g_boss_bar_flags & 0x10) {
             reg_d1.h[0] = 0;
             reg_d0.h[0] = 0xC0;
             goto block_4;
@@ -2177,7 +2177,7 @@ void hud_p2_lives_put(void) {
     reg_d0.h[0] = 0xBC;
     reg_d1.h[0] = 0x1900;
     if ((g_boss_present & 1) && (g_boss_hp_bar_flags >= 0)) {
-        if (D_0028E635 & 0x10) {
+        if (g_boss_bar_flags & 0x10) {
             reg_d0.h[0] = 0xC0;
             reg_d1.h[0] = 0x1B00;
             goto block_4;
@@ -2333,7 +2333,7 @@ void hud_p1_caption_clear_shifted(void)
     reg_d3.h[0] = 7;
 
     if ((g_boss_present & 1) && g_boss_hp_bar_flags >= 0) {
-        if (!(D_0028E635 & 0x10)) {
+        if (!(g_boss_bar_flags & 0x10)) {
             return;
         }
 
@@ -2355,7 +2355,7 @@ void hud_p2_caption_clear_shifted(void) {
     reg_d2.h[0] = 7;
     reg_d3.h[0] = 7;
     if ((g_boss_present & 1) && (g_boss_hp_bar_flags >= 0)) {
-        if (D_0028E635 & 0x10) {
+        if (g_boss_bar_flags & 0x10) {
             reg_d0.h[0] = 0xCC;
             reg_d1.h[0] = 0x1600;
             reg_d2.h[0] = 5;

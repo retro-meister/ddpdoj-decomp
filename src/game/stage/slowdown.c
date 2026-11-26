@@ -29,7 +29,7 @@ void slowdown_init(void) {
 extern u16 g_player_laser_count;
 extern u16 g_player_shot_count;
 extern u8 g_paused;
-extern u8 D_0028E378;
+extern u8 g_stage_jump_state;
 extern s16 g_slowdown_loop2_allowed;
 extern s16 g_slowdown_off;
 extern s16 g_slowdown_boss_allowed;
@@ -96,7 +96,7 @@ next_17:
     g_slowdown_budget += 2;
 next_20:
     g_slowdown_frame_state = 2;
-    if (D_0028E378 == 0xFF) {
+    if (g_stage_jump_state == 0xFF) {
         g_slowdown_frame_state = 0;
     }
 }

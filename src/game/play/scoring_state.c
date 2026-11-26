@@ -80,7 +80,7 @@ s16 g_boss_hit_palette __attribute__((aligned(4)));
 u16 g_boss_hit_bonus_timer;
 s32 g_boss_hit_bonus;
 s32 g_boss_score;
-u8 D_0028E635;
+u8 g_boss_bar_flags;
 s8 g_boss_hp_bar_flags __attribute__((aligned(4)));
 u16 g_boss_hp_bar_move_count __attribute__((aligned(4)));
 u16 g_lives_display_move_y __attribute__((aligned(4)));

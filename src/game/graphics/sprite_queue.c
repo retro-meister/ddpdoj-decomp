@@ -110,8 +110,8 @@ extern u16 g_sprite_layer4_used;
 extern u16 g_sprite_layer3_used;
 extern u16 g_sprite_layer2_used;
 extern u16 g_sprite_layer1_used;
-extern u8 D_0028E308;
-extern u8 D_0028E30C;
+extern u8 g_setting_hitbox_bullets_shown;
+extern u8 g_setting_hitbox_display;
 extern u8 g_sprite_last_boss_buf[];
 extern u8 g_sprite_laser_trail_buf[];
 extern u8 g_sprite_hyper_display_buf[];
@@ -166,11 +166,11 @@ void sprite_lists_build(void) {
     reg_d0.h[0] += g_sprite_options_used;
     reg_d0.h[0] += g_sprite_players_used;
     reg_d0.h[0] += g_sprite_sparks_used;
-    if ((D_0028E30C == 0) || (D_0028E308 == 0)) {
+    if ((g_setting_hitbox_display == 0) || (g_setting_hitbox_bullets_shown == 0)) {
         reg_d0.h[0] += g_sprite_bullets_used;
         reg_d0.h[0] += g_sprite_bullets2_used;
     }
-    if (D_0028E30C != 0) {
+    if (g_setting_hitbox_display != 0) {
         reg_d0.h[0] += g_sprite_extra_used;
     }
     reg_d0.h[0] += g_sprite_warning_used;
@@ -288,23 +288,23 @@ void sprite_lists_build(void) {
     reg_a1 = (u8 *)(&g_sprite_warning_used);
     sprite_list_emit();
     if (cond_flag != 0) goto next_50;
-    if (D_0028E30C == 0) goto next_30;
-    if (D_0028E308 != 0) goto next_32;
+    if (g_setting_hitbox_display == 0) goto next_30;
+    if (g_setting_hitbox_bullets_shown != 0) goto next_32;
 next_30:
     reg_a0 = (u8 *)g_sprite_bullets_buf;
     reg_a1 = (u8 *)(&g_sprite_bullets_used);
     sprite_list_emit();
     if (cond_flag != 0) goto next_50;
 next_32:
-    if (D_0028E30C == 0) goto next_34;
-    if (D_0028E308 != 0) goto next_36;
+    if (g_setting_hitbox_display == 0) goto next_34;
+    if (g_setting_hitbox_bullets_shown != 0) goto next_36;
 next_34:
     reg_a0 = (u8 *)g_sprite_bullets2_buf;
     reg_a1 = (u8 *)(&g_sprite_bullets2_used);
     sprite_list_emit();
     if (cond_flag != 0) goto next_50;
 next_36:
-    if (D_0028E30C == 0) goto next_40;
+    if (g_setting_hitbox_display == 0) goto next_40;
     reg_a0 = (u8 *)g_sprite_extra_buf;
     reg_a1 = (u8 *)(&g_sprite_extra_used);
     sprite_list_emit();

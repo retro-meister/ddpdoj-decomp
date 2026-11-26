@@ -62,12 +62,12 @@ void credit_status_draw(void) {
 }
 #endif
 
-extern u8 D_0028E1E6[];
+extern u8 g_credit_display_last_coins[];
 
 void p1_coins_decrement(void) {
-    reg_d0.b[0] = D_0028E1E6[0];
+    reg_d0.b[0] = g_credit_display_last_coins[0];
     if (reg_d0.b[0] != 0) {
-        D_0028E1E6[0] -= 1;
+        g_credit_display_last_coins[0] -= 1;
     }
 }
 
@@ -80,26 +80,26 @@ void p2_coins_decrement(void) {
     }
 }
 
-extern u8 D_0028E1E4[];
+extern u8 g_credit_display_last[];
 
 void p1_credits_subtract(void) {
-    reg_d1.b[0] = D_0028E1E4[0];
+    reg_d1.b[0] = g_credit_display_last[0];
     reg_d1.b[0] -= reg_d0.b[0];
     if ((s8) reg_d1.b[0] < 0) {
         reg_d1.w = 0;
     }
-    D_0028E1E4[0] = reg_d1.b[0];
+    g_credit_display_last[0] = reg_d1.b[0];
 }
 
-extern u8 D_0028E1D8[];
+extern u8 g_coin_counts[];
 
 void p2_credits_subtract(void) {
-    reg_d1.b[0] = D_0028E1D8[0];
+    reg_d1.b[0] = g_coin_counts[0];
     reg_d1.b[0] -= reg_d0.b[0];
     if ((s8) reg_d1.b[0] < 0) {
         reg_d1.w = 0;
     }
-    D_0028E1D8[0] = reg_d1.b[0];
+    g_coin_counts[0] = reg_d1.b[0];
 }
 
 extern s8 D_0028E1FC;

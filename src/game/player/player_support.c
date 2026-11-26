@@ -78,7 +78,7 @@ extern u8 *reg_save_a1;
 extern s32 reg_save_a0;
 extern u16 g_p1_hyper_active;
 extern u8 D_0029D730[];
-extern u8 D_0029D770[];
+extern u8 g_p1_laser_segments[];
 extern u8 g_p1_laser_entities[];
 extern u8 g_p1_options[];
 extern u16 D_0029F2B8[];
@@ -103,7 +103,7 @@ void p1_laser_clear(void) {
     reg_call_target = (Fn)reg_a0;
     reg_call_target();
     reg_a6 = (u8 *)g_p1_laser_entities;
-    reg_a0 = (u8 *)D_0029D770;
+    reg_a0 = (u8 *)g_p1_laser_segments;
     reg_a1 = (u8 *)D_0029D730;
     reg_a2 = (u8 *)g_p1_options;
     laser_entities_clear();
@@ -119,7 +119,7 @@ void p2_laser_stop(void) {
 
 extern u16 g_p2_hyper_active;
 extern u8 D_0029D710[];
-extern u8 D_0029D750[];
+extern u8 g_p2_laser_segments[];
 extern u8 g_p2_laser_entities[];
 extern u8 g_p2_options[];
 extern u16 D_0029F248[];
@@ -144,7 +144,7 @@ void p2_laser_clear(void) {
     reg_call_target = (Fn)reg_a0;
     reg_call_target();
     reg_a6 = (u8 *)g_p2_laser_entities;
-    reg_a0 = (u8 *)D_0029D750;
+    reg_a0 = (u8 *)g_p2_laser_segments;
     reg_a1 = (u8 *)D_0029D710;
     reg_a2 = (u8 *)g_p2_options;
     laser_entities_clear();
@@ -825,7 +825,7 @@ block_52:
 }
 
 s32 hud_p1_hyper_count_put();                            /* extern */
-extern u8 D_0028E288;
+extern u8 g_p1_stage_start_timer;
 extern u16 g_p1_hyper_time;
 
 void p1_hyper_item_take(void) {
@@ -836,11 +836,11 @@ void p1_hyper_item_take(void) {
     g_p1_hyper_time = 0x95F;
     p1_bomb_capacity_draw();
     hud_p1_hyper_count_put();
-    D_0028E288 = 0;
+    g_p1_stage_start_timer = 0;
 }
 
 s32 hud_p2_hyper_count_put();                            /* extern */
-extern u8 D_0028E284;
+extern u8 g_p2_stage_start_timer;
 extern u16 g_p2_hyper_time;
 
 void p2_hyper_item_take(void) {
@@ -851,7 +851,7 @@ void p2_hyper_item_take(void) {
     g_p2_hyper_time = 0x95F;
     p2_bomb_capacity_draw();
     hud_p2_hyper_count_put();
-    D_0028E284 = 0;
+    g_p2_stage_start_timer = 0;
 }
 
 s32 hud_p1_lives_put(u16);
@@ -1304,10 +1304,10 @@ void bomb_capacity_draw(void) {
     reg_a0 = (u8 *)reg_save_a0;
 }
 
-extern s8 D_0028E3F8;
+extern s8 g_bomb_panel_seen;
 
 void p1_bomb_panel_draw(void) {
-    D_0028E3F8 = 1;
+    g_bomb_panel_seen = 1;
     if ((g_p1_hyper_items != 0) || (!(PLAYER(((u8 *)g_player1))->flags.b[1] & 0x40) && (g_p1_maximum_value[0] != 0))) {
         p1_bomb_stock_draw();
         p1_bomb_capacity_draw();
@@ -1318,7 +1318,7 @@ void p1_bomb_panel_draw(void) {
 
 
 void p2_bomb_panel_draw(void) {
-    D_0028E3F8 = 1;
+    g_bomb_panel_seen = 1;
     if ((g_p2_hyper_items != 0) || (!(PLAYER(((u8 *)g_player2))->flags.b[1] & 0x40) && (g_p2_maximum_value[0] != 0))) {
         p2_bomb_stock_draw();
         p2_bomb_capacity_draw();
