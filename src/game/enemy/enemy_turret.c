@@ -4,9 +4,9 @@
 s32 enemy_init_entities_n();
 extern u8 D_00242008[];
 extern u8 D_00242020[];
-extern u8 D_0025B100[];
-extern u8 D_0025B2C0[];
-extern u8 D_0025B3C0[];
+extern u8 small_tank_draw_routines[];
+extern u8 small_tank_a_body_sprites[];
+extern u8 small_tank_a_turret_sprites[];
 extern u16 g_rank_1_16;
 extern u16 g_rank_5_16;
 extern u16 g_stage_x2;
@@ -75,7 +75,7 @@ void func_00119B10(void) {
     ENTITY(reg_a6)->x.h = (u16) reg_d1.h[0];
     reg_d0.w = 0;
     reg_d0.b[0] = *(u8 *)(reg_a4 + 0x1E);
-    reg_a0 = (u8 *)D_0025B100;
+    reg_a0 = (u8 *)small_tank_draw_routines;
     reg_d1.h[0] = reg_d0.h[0];
     reg_d0.h[0] *= 8;
     reg_a0 += reg_d0.h[0];
@@ -93,7 +93,7 @@ void func_00119B10(void) {
     ENTITY(reg_a6)->misc.b.user = (u8) reg_d1.b[0];
     reg_d7.b[0] = ENTITY(reg_a6)->move.b.dir;
     reg_d1.w = 0x3E;
-    reg_a0 = (u8 *)D_0025B2C0;
+    reg_a0 = (u8 *)small_tank_a_body_sprites;
     reg_d1.b[0] &= reg_d7.b[0];
     reg_d1.h[0] += reg_d1.h[0];
     reg_d6.h[0] = reg_d1.h[0];
@@ -101,7 +101,7 @@ void func_00119B10(void) {
     ENTITY(reg_a6)->draw.h = (reg_d1.h[0] != 0) ? *(u16 *)((u8 *)reg_a0 + ((s16)reg_d1.h[0] & ~1)) : *(u16 *)reg_a0;
     ENTITY(reg_a6)->sprite.h = ((reg_d1.h[0] + 2) != 0) ? *(u16 *)((u8 *)reg_a0 + ((s16)(reg_d1.h[0] + 2) & ~1)) : *(u16 *)reg_a0;
     *(u8 *)(reg_a6 + 0x3F) = (u8) reg_d7.b[0];
-    reg_a0 = (u8 *)D_0025B3C0;
+    reg_a0 = (u8 *)small_tank_a_turret_sprites;
     *(u16 *)(reg_a6 + 0x22) = (reg_d6.h[0] != 0) ? *(u16 *)((u8 *)reg_a0 + ((s16)reg_d6.h[0] & ~1)) : *(u16 *)reg_a0;
     *(u16 *)(reg_a6 + 0x24) = ((reg_d6.h[0] + 2) != 0) ? *(u16 *)((u8 *)reg_a0 + ((s16)(reg_d6.h[0] + 2) & ~1)) : *(u16 *)reg_a0;
     reg_a0 = (u8 *)D_00242008;
@@ -131,12 +131,12 @@ void func_00119B10(void) {
 typedef void (*Fn)();
 
 extern u8 D_002420A8[];
-extern u8 D_0025B1C0[];
+extern u8 small_tank_a_muzzles[];
 extern u8 D_0028C080[8];
 s32 bullet_fire_fast();
 s32 explosion_spawn();
 s32 enemy_hitbox_debug_draw();
-s32 func_0016D290();
+s32 enemy_fire_distance_check();
 s32 sfx_explosion_air_small();
 s32 score_add_no_chain();
 s32 score_add();
@@ -144,8 +144,8 @@ s32 rng_next_bit();
 s32 func_00201230();
 s32 aim_at_player();
 s32 direction_turn_toward();
-extern u16 D_0025B130[];
-extern u16 D_0025B140[];
+extern u16 small_tank_destroyed_explosions[];
+extern u16 small_tank_damaged_explosions[];
 extern u16 g_frame_mod2;
 extern u16 g_enemies_stopped;
 extern u16 g_rank_3_16;
@@ -271,7 +271,7 @@ block_b:
     reg_d0.b[0] = *(u8 *)(reg_a6 + 0x3F);
     direction_turn_toward();
     *(u8 *)(reg_a6 + 0x3F) = (u8) reg_d1.b[0];
-    reg_a0 = (u8 *)D_0025B3C0;
+    reg_a0 = (u8 *)small_tank_a_turret_sprites;
     reg_d1.b[0] += 1;
     reg_d1.h[0] &= 0x3E;
     reg_d1.h[0] += reg_d1.h[0];
@@ -336,7 +336,7 @@ block_d:
     reg_tmp1.w += reg_tmp.w;
     reg_d1.h[0] += 0xA200;
     if (reg_tmp1.h[1] != 0) goto block_c;
-    func_0016D290();
+    enemy_fire_distance_check();
     if (cond_flag != 0) goto block_c;
     reg_d0.h[0] = *(u16 *)(reg_a6 + 2);
     reg_d1.h[0] = *(u16 *)(reg_a6 + 4);
@@ -364,7 +364,7 @@ next_6:
     *(u8 *)(reg_a6 + 0x2F) = (u8) reg_d0.b[0];
 next_7:
     reg_d3.b[0] = *(u8 *)(reg_a6 + 0x3F);
-    reg_a0 = (u8 *)D_0025B1C0;
+    reg_a0 = (u8 *)small_tank_a_muzzles;
     reg_d3.h[0] += 1;
     reg_d3.h[0] &= 0x3E;
     reg_d3.h[0] += reg_d3.h[0];
@@ -392,7 +392,7 @@ block_e:
     *(u16 *)(reg_a0 + 4) = (u16) *(u16 *)(reg_a6 + 4);
     reg_d0.w = 0;
     reg_d0.b[0] = *(u8 *)(reg_a6 + 0x1F);
-    reg_a1 = (u8 *)(D_0025B140);
+    reg_a1 = (u8 *)(small_tank_damaged_explosions);
     *(u16 *)(reg_a0 + 0x1E) = (reg_d0.h[0] != 0) ? *(u16 *)((u8 *)reg_a1 + ((s16)reg_d0.h[0] & ~1)) : *(u16 *)reg_a1;
     *(u16 *)(reg_a0 + 0x20) = ((reg_d0.h[0] + 2) != 0) ? *(u16 *)((u8 *)reg_a1 + ((s16)(reg_d0.h[0] + 2) & ~1)) : *(u16 *)reg_a1;
     *(s16 *)(reg_a0 + 0x10) = 1;
@@ -410,7 +410,7 @@ block_g:
     *(u16 *)(reg_a0 + 4) = (u16) *(u16 *)(reg_a6 + 4);
     reg_d0.w = 0;
     reg_d0.b[0] = *(u8 *)(reg_a6 + 0x1F);
-    reg_a1 = (u8 *)(D_0025B130);
+    reg_a1 = (u8 *)(small_tank_destroyed_explosions);
     *(u16 *)(reg_a0 + 0x1E) = (reg_d0.h[0] != 0) ? *(u16 *)((u8 *)reg_a1 + ((s16)reg_d0.h[0] & ~1)) : *(u16 *)reg_a1;
     *(u16 *)(reg_a0 + 0x20) = ((reg_d0.h[0] + 2) != 0) ? *(u16 *)((u8 *)reg_a1 + ((s16)(reg_d0.h[0] + 2) & ~1)) : *(u16 *)reg_a1;
     *(s16 *)(reg_a0 + 0x10) = 1;
@@ -480,8 +480,8 @@ next_9:
 s32 rng_next_masked();
 extern u8 D_00242058[];
 extern u8 D_00242070[];
-extern u8 D_0025B510[];
-extern u8 D_0025B610[];
+extern u8 small_tank_b_body_sprites[];
+extern u8 small_tank_b_turret_sprites[];
 extern u16 g_rank_6_16;
 
 void func_0011AD50(void) {
@@ -546,7 +546,7 @@ void func_0011AD50(void) {
     ENTITY(reg_a6)->x.h = (u16) reg_d1.h[0];
     reg_d0.w = 0;
     reg_d0.b[0] = *(u8 *)(reg_a4 + 0x1E);
-    reg_a0 = (u8 *)D_0025B100;
+    reg_a0 = (u8 *)small_tank_draw_routines;
     reg_d1.h[0] = reg_d0.h[0];
     reg_d0.h[0] *= 8;
     reg_a0 += reg_d0.h[0];
@@ -564,7 +564,7 @@ void func_0011AD50(void) {
     ENTITY(reg_a6)->misc.b.user = (u8) reg_d1.b[0];
     reg_d7.b[0] = ENTITY(reg_a6)->move.b.dir;
     reg_d1.w = 0x3E;
-    reg_a0 = (u8 *)D_0025B510;
+    reg_a0 = (u8 *)small_tank_b_body_sprites;
     reg_d1.b[0] &= reg_d7.b[0];
     reg_d1.h[0] += reg_d1.h[0];
     reg_d6.h[0] = reg_d1.h[0];
@@ -572,7 +572,7 @@ void func_0011AD50(void) {
     ENTITY(reg_a6)->draw.h = (reg_d1.h[0] != 0) ? *(u16 *)((u8 *)reg_a0 + ((s16)reg_d1.h[0] & ~1)) : *(u16 *)reg_a0;
     ENTITY(reg_a6)->sprite.h = ((reg_d1.h[0] + 2) != 0) ? *(u16 *)((u8 *)reg_a0 + ((s16)(reg_d1.h[0] + 2) & ~1)) : *(u16 *)reg_a0;
     *(u8 *)(reg_a6 + 0x3F) = (u8) reg_d7.b[0];
-    reg_a0 = (u8 *)D_0025B610;
+    reg_a0 = (u8 *)small_tank_b_turret_sprites;
     *(u16 *)(reg_a6 + 0x22) = (reg_d6.h[0] != 0) ? *(u16 *)((u8 *)reg_a0 + ((s16)reg_d6.h[0] & ~1)) : *(u16 *)reg_a0;
     *(u16 *)(reg_a6 + 0x24) = ((reg_d6.h[0] + 2) != 0) ? *(u16 *)((u8 *)reg_a0 + ((s16)(reg_d6.h[0] + 2) & ~1)) : *(u16 *)reg_a0;
     reg_a0 = (u8 *)D_00242058;
@@ -599,7 +599,7 @@ void func_0011AD50(void) {
     reg_a6 = save_a6;
 }
 
-extern u8 D_0025B490[];
+extern u8 small_tank_b_muzzles[];
 s32 score_add_masked();
 extern u16 g_rank_10_16;
 
@@ -723,7 +723,7 @@ block_b:
     reg_d0.b[0] = *(u8 *)(reg_a6 + 0x3F);
     direction_turn_toward();
     *(u8 *)(reg_a6 + 0x3F) = (u8) reg_d1.b[0];
-    reg_a0 = (u8 *)D_0025B610;
+    reg_a0 = (u8 *)small_tank_b_turret_sprites;
     reg_d1.b[0] += 1;
     reg_d1.h[0] &= 0x3E;
     reg_d1.h[0] += reg_d1.h[0];
@@ -791,7 +791,7 @@ block_d:
     reg_tmp1.w += reg_tmp.w;
     reg_d1.h[0] += 0xA200;
     if (reg_tmp1.h[1] != 0) goto block_c;
-    func_0016D290();
+    enemy_fire_distance_check();
     if (cond_flag != 0) goto block_c;
     if (!(*(u8 *)(reg_a6 + 1) & 0x20)) goto block_c;
     reg_d2.b[0] = *(u8 *)(reg_a6 + 0x3F);
@@ -799,7 +799,7 @@ block_d:
     reg_d2.h[0] += 1;
     reg_d2.h[0] &= 0x3E;
     reg_d2.h[0] += reg_d2.h[0];
-    reg_a0 = (u8 *)D_0025B490;
+    reg_a0 = (u8 *)small_tank_b_muzzles;
     reg_d2.h[1] = (reg_d2.h[0] != 0) ? *(u16 *)((u8 *)reg_a0 + ((s16)reg_d2.h[0] & ~1)) : *(u16 *)reg_a0;
     reg_d2.h[0] = ((reg_d2.h[0] + 2) != 0) ? *(u16 *)((u8 *)reg_a0 + ((s16)(reg_d2.h[0] + 2) & ~1)) : *(u16 *)reg_a0;
     reg_tmp.h[1] = *(u16 *)(reg_a6 + 2);
@@ -823,7 +823,7 @@ block_e:
     *(u16 *)(reg_a0 + 4) = (u16) *(u16 *)(reg_a6 + 4);
     reg_d0.w = 0;
     reg_d0.b[0] = *(u8 *)(reg_a6 + 0x1F);
-    reg_a1 = (u8 *)(D_0025B140);
+    reg_a1 = (u8 *)(small_tank_damaged_explosions);
     *(u16 *)(reg_a0 + 0x1E) = (reg_d0.h[0] != 0) ? *(u16 *)((u8 *)reg_a1 + ((s16)reg_d0.h[0] & ~1)) : *(u16 *)reg_a1;
     *(u16 *)(reg_a0 + 0x20) = ((reg_d0.h[0] + 2) != 0) ? *(u16 *)((u8 *)reg_a1 + ((s16)(reg_d0.h[0] + 2) & ~1)) : *(u16 *)reg_a1;
     *(s16 *)(reg_a0 + 0x10) = 1;
@@ -840,7 +840,7 @@ block_f:
     *(u16 *)(reg_a0 + 4) = (u16) *(u16 *)(reg_a6 + 4);
     reg_d0.w = 0;
     reg_d0.b[0] = *(u8 *)(reg_a6 + 0x1F);
-    reg_a1 = (u8 *)(D_0025B130);
+    reg_a1 = (u8 *)(small_tank_destroyed_explosions);
     *(u16 *)(reg_a0 + 0x1E) = (reg_d0.h[0] != 0) ? *(u16 *)((u8 *)reg_a1 + ((s16)reg_d0.h[0] & ~1)) : *(u16 *)reg_a1;
     *(u16 *)(reg_a0 + 0x20) = ((reg_d0.h[0] + 2) != 0) ? *(u16 *)((u8 *)reg_a1 + ((s16)(reg_d0.h[0] + 2) & ~1)) : *(u16 *)reg_a1;
     *(s16 *)(reg_a0 + 0x10) = 1;

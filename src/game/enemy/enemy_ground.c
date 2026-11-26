@@ -3546,7 +3546,7 @@ void func_0015AEF0(void) {
 extern u16 D_002589A0[];
 extern u16 D_002589B0[];
 extern u16 D_002589D0[];
-extern u16 D_0025B610_as_u16_a[];
+extern u16 small_tank_b_turret_sprites[];
 extern u16 g_enemy_signal_2;
 extern u16 g_enemy_signal_1;
 extern u16 g_rank_6_16;
@@ -3583,7 +3583,7 @@ void func_0015AF00(void) {
         reg_a6 = (u8 *)reg_tmp.w;
         reg_d1.b[0] = ENTITY(reg_a6)->move.b.dir;
         *(u8 *)(reg_a5 + 0x32) = (u8) reg_d1.b[0];
-        reg_a0 = (u8 *)(D_0025B610_as_u16_a);
+        reg_a0 = (u8 *)(small_tank_b_turret_sprites);
         reg_d1.b[0] += 1;
         reg_d1.h[0] &= 0x3E;
         reg_d1.h[0] += reg_d1.h[0];
@@ -3621,11 +3621,10 @@ void func_0015AF00(void) {
     }
 }
 
-extern u8 D_0025B490[];
-extern u8 D_0025B510[];
-extern u8 D_0025B610[];
+extern u8 small_tank_b_muzzles[];
+extern u8 small_tank_b_body_sprites[];
 
-s32 func_0016D040();
+s32 enemy_fire_zone_check();
 s32 score_add_masked();
 s32 func_002031E0();
 s32 wreck_spawn();
@@ -3679,7 +3678,7 @@ block_body:
     if (!(g_game_frame & 4)) goto skip_2;
     reg_d1.h[0] += 4;
 skip_2:
-    reg_a0 = (u8 *)D_0025B510;
+    reg_a0 = (u8 *)small_tank_b_body_sprites;
     ENTITY(reg_a6)->draw.h = (reg_d1.h[0] != 0) ? *(u16 *)(reg_a0 + ((s16)reg_d1.h[0] & ~1)) : *(u16 *)reg_a0;
     ENTITY(reg_a6)->sprite.h = ((reg_d1.h[0] + 2) != 0) ? *(u16 *)(reg_a0 + ((s16)(reg_d1.h[0] + 2) & ~1)) : *(u16 *)reg_a0;
 block_obj:
@@ -3722,7 +3721,7 @@ block_turret:
     reg_d0.b[0] = *(u8 *)(reg_a5 + 0x32);
     direction_turn_toward();
     *(u8 *)(reg_a5 + 0x32) = reg_d1.b[0];
-    reg_a0 = (u8 *)D_0025B610;
+    reg_a0 = (u8 *)small_tank_b_turret_sprites;
     reg_d1.b[0] += 1;
     reg_d1.h[0] &= 0x3E;
     reg_d1.h[0] += reg_d1.h[0];
@@ -3750,11 +3749,11 @@ block_shot:
     reg_d0.h[0] -= g_rank_10_16;
     reg_d0.h[0] += 4;
     *(u8 *)(reg_a5 + 0x29) = reg_d0.b[0];
-    func_0016D040();
+    enemy_fire_zone_check();
     if (cond_flag != 0) goto block_turret_obj;
     if (!(ENTITY(reg_a6)->flags.b[1] & 0x20)) goto block_turret_obj;
     reg_d1.b[0] = *(u8 *)(reg_a5 + 0x32);
-    reg_a0 = (u8 *)D_0025B490;
+    reg_a0 = (u8 *)small_tank_b_muzzles;
     reg_d1.b[0] += 2;
     reg_d1.h[0] &= 0x3C;
     reg_d2.h[0] = reg_d1.h[0];

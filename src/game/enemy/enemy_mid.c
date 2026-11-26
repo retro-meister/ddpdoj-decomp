@@ -3143,7 +3143,7 @@ void ground_turret_a_start(void) {
 }
 
 s32 func_00125EB0();
-s32 func_0016D290();
+s32 enemy_fire_distance_check();
 s32 func_00170B20();
 s32 func_00170CA0();
 s32 func_00170DE0();
@@ -3239,7 +3239,7 @@ block_21:
                         *(u8 *)(reg_a5 + 0x1B) -= 1;
                         if ((s32) reg_tmp.b[0] <= 0) {
                             *(u8 *)(reg_a5 + 0x1B) = (u8) *(u8 *)(reg_a5 + 0x16);
-                            func_0016D290();
+                            enemy_fire_distance_check();
                             if (cond_flag == 0) {
                                 reg_a4 = (u8 *)(D_00259570);
                                 reg_d1.h[0] = *(u16 *)(reg_a5 + 0x20);
@@ -3729,7 +3729,7 @@ block_fire:
     reg_d1.h[0] >>= 2;
     reg_d0.h[0] -= reg_d1.h[0];
     reg_a5[0x1B] = reg_d0.b[0];
-    func_0016D290();
+    enemy_fire_distance_check();
     if (cond_flag != 0) goto block_rts;
     reg_a4 = (u8 *) D_0025A7B0;
     reg_d1.h[0] = *(u16 *)(reg_a5 + 0x24);
@@ -3890,7 +3890,7 @@ block_12:
                 *(u8 *)(reg_a5 + 0x1F) -= 1;
                 if ((s32) reg_tmp.b[0] <= 0) {
                     *(u8 *)(reg_a5 + 0x1F) = (u8) *(u8 *)(reg_a5 + 0x1E);
-                    func_0016D290();
+                    enemy_fire_distance_check();
                     if (cond_flag == 0) {
                         reg_d0.b[0] = *(u8 *)(reg_a5 + 0x1D);
                         if (*(u8 *)(reg_a5 + 0x1C) == reg_d0.b[0]) {
@@ -3933,7 +3933,7 @@ block_22:
                     *(u8 *)(reg_a5 + 0x1B) -= 1;
                     if ((s32) reg_tmp.b[0] <= 0) {
                         *(u8 *)(reg_a5 + 0x1B) = (u8) *(u8 *)(reg_a5 + 0x16);
-                        func_0016D290();
+                        enemy_fire_distance_check();
                         if (cond_flag == 0) {
                             reg_a4 = (u8 *)(D_002595F0);
                             reg_d1.h[0] = *(u16 *)(reg_a5 + 0x20);
@@ -4137,7 +4137,7 @@ next_21:
     goto block_rts;
 next_9:
     reg_a5[0x1B] = reg_a5[0x16];
-    func_0016D290();
+    enemy_fire_distance_check();
     if (cond_flag != 0) goto block_rts;
     if (g_stage != 3) goto next_10;
     if (g_scroll_line < 0x2E) goto block_rts;

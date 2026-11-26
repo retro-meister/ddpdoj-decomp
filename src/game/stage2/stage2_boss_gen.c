@@ -656,7 +656,7 @@ void stage2_sliding_gun_start(void) {
 
 s32 func_00125EB0();
 s32 bullet_fire256_2way();
-s32 func_0016D290();
+s32 enemy_fire_distance_check();
 s32 func_00170DE0();
 s32 sfx_explosion_ground_medium();
 s32 direction256_between();
@@ -735,7 +735,7 @@ block_12:
                     *(u8 *)(reg_a5 + 0x1D) -= 1;
                     if ((s32) reg_tmp.b[0] <= 0) {
                         *(u8 *)(reg_a5 + 0x1D) = (u8) *(u8 *)(reg_a5 + 0x16);
-                        func_0016D290();
+                        enemy_fire_distance_check();
                         if (cond_flag == 0) {
                             reg_a0 = (u8 *)(g_player1_as_u16_a);
                             reg_a1 = (u8 *)(g_player2_as_u16_a);

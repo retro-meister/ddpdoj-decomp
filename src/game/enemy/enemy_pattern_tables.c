@@ -67,12 +67,12 @@ void func_001683C0();
 void func_0016CCD0();
 void func_0016CCE0();
 void func_0016CD40();
-void func_0016EA90();
-void func_0016EAA0();
-void func_0016ED40();
-void func_0016F930();
-void func_0016F940();
-void func_0016FAE0();
+void large_tank_first();
+void large_tank_start();
+void large_tank();
+void hatch_gunner_first();
+void hatch_gunner_start();
+void hatch_gunner();
 void func_001CBD50();
 void func_001CBD60();
 void func_001CC0A0();
@@ -378,8 +378,8 @@ EnemyRoutines g_enemy_routines[128] = {
     /* 0x17 */ { battleship_b_start, battleship_b },
     /* 0x18 */ { func_00159040, func_001590B0 },
     /* 0x19 */ { func_0015AE10, func_0015AE70 },
-    /* 0x1A */ { func_0016EAA0, func_0016ED40 },
-    /* 0x1B */ { func_0016F940, func_0016FAE0 },
+    /* 0x1A */ { large_tank_start, large_tank },
+    /* 0x1B */ { hatch_gunner_start, hatch_gunner },
     /* 0x1C */ { stage1_midboss_wreck_start, stage1_midboss_wreck },
     /* 0x1D */ { dummy_enemy_main, dummy_enemy_main_b },
     /* 0x1E */ { stage1_boss_side_bullet_start, stage1_boss_side_bullet },
@@ -510,8 +510,8 @@ void (*g_enemy_first_routines[128])() = {
     /* 0x17 */ battleship_b_first,
     /* 0x18 */ func_00159030,
     /* 0x19 */ func_0015AE00,
-    /* 0x1A */ func_0016EA90,
-    /* 0x1B */ func_0016F930,
+    /* 0x1A */ large_tank_first,
+    /* 0x1B */ hatch_gunner_first,
     /* 0x1C */ stage1_midboss_wreck_first,
     /* 0x1D */ dummy_enemy_first,
     /* 0x1E */ stage1_boss_side_bullet_first,

@@ -1,26 +1,136 @@
 #include "common.h"
 #include "player.h"
 #include "entity.h"
+#include "enemy.h"
 
-void func_0016D290(void);
+/*
+ * The enemies of this unit keep these in the enemy state block (reg_a5), after what every enemy has
+ * (EnemyState). A pair of bytes named interval/countdown or shots/shots_left is a value and the counter that
+ * is loaded from it.
+ */
 
-extern u8 D_0025B100[];
+/* The two small tanks. One hit point count is used up twice: after the first it smokes and stops turning. */
+typedef struct {
+    /* 0x00 */ u8 common[0x16];
+    /* 0x16 */ u16 seen;              /* it has been on the screen; when it is off it again it is removed */
+    /* 0x18 */ u8 turn_interval;      /* frames between two turns of the turret towards the player */
+    /* 0x19 */ u8 turn_countdown;
+    /* 0x1A */ u8 fire_interval;      /* frames between the shots of a burst */
+    /* 0x1B */ u8 other_1B;
+    /* 0x1C */ u8 burst_shots;
+    /* 0x1D */ u8 burst_left;
+    /* 0x1E */ u16 smoke_frame;       /* 0 to 3 */
+    /* 0x20 */ u8 other_20;
+    /* 0x21 */ u8 damage;             /* bit 7: the first hit points are gone */
+    /* 0x22 */ u16 turret_sprite[2];  /* high word first */
+    /* 0x26 */ u16 second_hp;
+    /* 0x28 */ u8 other_28;
+    /* 0x29 */ u8 fire_countdown;
+    /* 0x2A */ u16 draw_body[2];      /* the sprite queue routines of its draw layer, addresses high word first */
+    /* 0x2E */ u16 draw_turret[2];
+    /* 0x32 */ u8 turret_dir;
+    /* 0x33 */ u8 entering;           /* it started beyond the lower edge and has not come in yet */
+    /* 0x34 */ u8 hit_palette;        /* mixed into the palette on the frame of a hit */
+    /* 0x35 */ u8 palette;
+} SmallTankState;
 
-void func_0016CDD0(void) {
+#define SMALL_TANK(pointer) ((SmallTankState *)(pointer))
+
+/* The large tank: a turret that turns towards a player and fires bursts, and a gun on either side. */
+typedef struct {
+    /* 0x00 */ u8 common[0x16];
+    /* 0x16 */ u8 other_16;
+    /* 0x17 */ u8 seen;
+    /* 0x18 */ u8 other_18[4];
+    /* 0x1C */ u8 hit_palette;
+    /* 0x1D */ u8 palette;
+    /* 0x1E */ u8 turret_pause;       /* frames between two bursts */
+    /* 0x1F */ u8 turret_countdown;
+    /* 0x20 */ u8 turret_shots;
+    /* 0x21 */ u8 turret_shots_left;
+    /* 0x22 */ u8 turn_interval;
+    /* 0x23 */ u8 turn_countdown;
+    /* 0x24 */ u16 turret_sprite[2];
+    /* 0x28 */ Field16 turret_dir;
+    /* 0x2A */ u8 turret_interval;    /* frames between the shots of a burst */
+    /* 0x2B */ u8 gun_interval;
+    /* 0x2C */ u8 other_2C[2];
+    /* 0x2E */ u8 gun_pause;
+    /* 0x2F */ u8 gun_countdown;
+    /* 0x30 */ u8 gun_shots;
+    /* 0x31 */ u8 gun_shots_left;
+    /* 0x32 */ u8 gun_aim[2];         /* the direction (of 256) each gun's burst goes in */
+    /* 0x34 */ u8 other_34[0x10];
+    /* 0x44 */ u16 after_entities[2]; /* where enemy_init_entities stopped in its table */
+} LargeTankState;
+
+#define LARGE_TANK(pointer) ((LargeTankState *)(pointer))
+
+/* The hatch gunner: a hatch that opens, fires a run of shots and closes again, and a gun that fires bursts. */
+typedef struct {
+    /* 0x00 */ u8 common[0x16];
+    /* 0x16 */ u8 other_16;
+    /* 0x17 */ u8 seen;
+    /* 0x18 */ u16 hatch_state;       /* 0: shut, 1: opening, 2: firing, 3: shutting */
+    /* 0x1A */ u8 other_1A[2];
+    /* 0x1C */ u8 hit_palette;
+    /* 0x1D */ u8 palette;
+    /* 0x1E */ u8 hatch_pause;
+    /* 0x1F */ u8 hatch_countdown;
+    /* 0x20 */ u8 hatch_shots;
+    /* 0x21 */ u8 hatch_shots_left;
+    /* 0x22 */ u8 frame_interval;     /* frames a picture of the moving hatch stays */
+    /* 0x23 */ u8 frame_countdown;
+    /* 0x24 */ u16 hatch_frame;       /* byte offset into its table of pictures */
+    /* 0x26 */ u16 hatch_sprite[2];
+    /* 0x2A */ u8 other_2A[4];
+    /* 0x2E */ u8 gun_interval;
+    /* 0x2F */ u8 hatch_interval;
+    /* 0x30 */ u8 gun_pause;
+    /* 0x31 */ u8 gun_countdown;
+    /* 0x32 */ u8 gun_shots;
+    /* 0x33 */ u8 gun_shots_left;
+    /* 0x34 */ u16 shot_number;       /* of the hatch's run; it sets how each shot spreads */
+    /* 0x36 */ u8 other_36[0xE];
+    /* 0x44 */ u16 after_entities[2];
+} HatchGunnerState;
+
+#define HATCH_GUNNER(pointer) ((HatchGunnerState *)(pointer))
+
+/* The warning sign before a boss: it comes on, flashes a number of times and goes off. */
+typedef struct {
+    /* 0x00 */ u8 common[0x16];
+    /* 0x16 */ u16 phase;             /* 0: coming on, 1: flashing, 2: going off */
+    /* 0x18 */ u16 frame_time;        /* frames the present picture still stays */
+    /* 0x1A */ u16 frame;             /* byte offset into its table of pictures */
+    /* 0x1C */ u16 flashes_left;
+    /* 0x1E */ u8 sound_interval;
+    /* 0x1F */ u8 sound_countdown;
+    /* 0x20 */ u16 sounds_left;
+} WarningSignState;
+
+#define WARNING_SIGN(pointer) ((WarningSignState *)(pointer))
+
+void enemy_fire_distance_check(void);
+
+extern u8 small_tank_draw_routines[];
+
+/* Takes the two sprite queue routines of the tank's draw layer. */
+void small_tank_set_draw_routines(void) {
     u8 temp_v1;
 
     reg_d0.w = 0;
     reg_d0.b[0] = ENTITY(reg_a6)->misc.b.draw_layer;
-    reg_a0 = D_0025B100;
+    reg_a0 = small_tank_draw_routines;
     reg_d1.h[0] = reg_d0.h[0];
     reg_d0.h[0] *= 8;
     reg_a0 += reg_d0.h[0];
-    *(u16 *)(reg_a5 + 0x2A) = (u16) *(u16 *)reg_a0;
+    SMALL_TANK(reg_a5)->draw_body[0] = (u16) *(u16 *)reg_a0;
     reg_a0 += 2;
-    *(u16 *)(reg_a5 + 0x2C) = (u16) *(u16 *)reg_a0;
+    SMALL_TANK(reg_a5)->draw_body[1] = (u16) *(u16 *)reg_a0;
     reg_a0 += 2;
-    *(u16 *)(reg_a5 + 0x2E) = (u16) *(u16 *)reg_a0;
-    *(u16 *)(reg_a5 + 0x30) = (u16) *(u16 *)(reg_a0 + 2);
+    SMALL_TANK(reg_a5)->draw_turret[0] = (u16) *(u16 *)reg_a0;
+    SMALL_TANK(reg_a5)->draw_turret[1] = (u16) *(u16 *)(reg_a0 + 2);
     temp_v1 = ENTITY(reg_a6)->misc.b.user;
     if (temp_v1 != 0) {
         reg_d1.b[0] = temp_v1;
@@ -31,7 +141,7 @@ void func_0016CDD0(void) {
 
 s32 explosion_spawn();
 
-void func_0016CEA0(void) {
+void small_tank_explosion(void) {
     explosion_spawn();
     *(u16 *)(reg_a0 + 2) = (u16) ENTITY(reg_a6)->y.h;
     *(u16 *)(reg_a0 + 4) = (u16) ENTITY(reg_a6)->x.h;
@@ -42,12 +152,12 @@ void func_0016CEA0(void) {
 }
 
 s32 wreck_spawn();
-extern u16 D_0025B150[];
+extern u16 small_tank_wrecks[];
 
-void func_0016CF40(void) {
+void small_tank_wreck(void) {
     reg_d1.w = 0;
     reg_d1.b[0] = ENTITY(reg_a6)->misc.b.draw_layer;
-    reg_a0 = (u8 *)D_0025B150;
+    reg_a0 = (u8 *)small_tank_wrecks;
     reg_d1.h[0] += reg_d1.h[0];
     reg_d1.h[0] = (reg_d1.h[0] != 0) ? *(u16 *)((u8 *)((u16 *)reg_a0) + ((s16)reg_d1.h[0] & ~1)) : *(u16 *)reg_a0;
     wreck_spawn();
@@ -56,19 +166,19 @@ void func_0016CF40(void) {
 typedef void (*Fn)(void);
 extern u8 *reg_call_target_as_u8_p;
 
-void func_0016CFB0(void) {
+void small_tank_smoke(void) {
     reg_d2.w = 0;
-    reg_d2.h[0] = *(u16 *)(reg_a5 + 0x1E);
+    reg_d2.h[0] = SMALL_TANK(reg_a5)->smoke_frame;
     reg_d2.h[0] += 1;
     if (reg_d2.h[0] == 4) {
         reg_d2.w = 0;
     }
-    *(u16 *)(reg_a5 + 0x1E) = reg_d2.h[0];
+    SMALL_TANK(reg_a5)->smoke_frame = reg_d2.h[0];
     reg_d3.h[0] = 0x410;
     reg_d4.h[0] = 0x1E;
     reg_d2.w += 0x13D8;
-    reg_tmp.h[1] = *(u16 *)(reg_a5 + 0x2E);
-    reg_tmp.h[0] = *(u16 *)(reg_a5 + 0x30);
+    reg_tmp.h[1] = SMALL_TANK(reg_a5)->draw_turret[0];
+    reg_tmp.h[0] = SMALL_TANK(reg_a5)->draw_turret[1];
     reg_a0 = (u8 *)reg_tmp.w;
     reg_call_target_as_u8_p = reg_a0;
     ((Fn)reg_call_target_as_u8_p)();
@@ -82,7 +192,8 @@ extern u8 D_00267090[];
 extern u16 g_loop;
 extern u16 g_stage_x4;
 
-void func_0016D040(void) {
+/* Sets cond_flag (hold fire) unless the enemy is inside the stage's box and no player is too near. */
+void enemy_fire_zone_check(void) {
     cond_flag = 0;
     reg_d0.h[0] = g_stage_x4;
     reg_a0 = (u8 *)D_00267050;
@@ -125,20 +236,21 @@ void func_0016D040(void) {
         reg_tmp1.w += reg_tmp.w;
         reg_d1.h[0] += reg_d3.h[0];
         if (reg_tmp1.h[1] == 0) {
-            func_0016D290();
+            enemy_fire_distance_check();
             return;
         }
     }
     cond_flag = 1;
 }
 
-extern u16 D_0025B160[];
+extern u16 enemy_fire_distances[];
 extern u16 g_stage;
 extern s16 g_player2[];
 extern s16 g_player1[];
 
 
-void func_0016D290(void) {
+/* Sets cond_flag (hold fire) when a player is nearer than the stage's distance. */
+void enemy_fire_distance_check(void) {
     reg_d0.h[0] = 0x7FFF;
     if (g_player1[0] < 0) {
         reg_d2.h[0] = PLAYER(g_player1)->y.h;
@@ -193,7 +305,7 @@ void func_0016D290(void) {
     if ((s32) reg_d0.h[0] > (s32) reg_d4.h[0]) {
         reg_d0.h[0] = reg_d4.h[0];
     }
-    reg_a0 = (u8 *)(D_0025B160);
+    reg_a0 = (u8 *)(enemy_fire_distances);
     reg_d4.h[0] = g_stage;
     reg_d4.h[0] += reg_d4.h[0];
     reg_a0 += reg_d4.h[0];
@@ -213,67 +325,66 @@ void small_tank_a_first(void) {
 s32 enemy_set_task_state();
 s32 enemy_init_entities();
 s32 enemy_path_start();
-extern u16 D_0025B170[];
-extern u16 D_0025B180[];
-extern u16 D_0025B1A0[];
-extern u16 D_0025B3C0_as_u16_a[];
+extern u16 small_tank_a_palettes[];
+extern u16 small_tank_a_state[];
+extern u16 small_tank_a_entities[];
+extern u16 small_tank_a_turret_sprites[];
 extern u16 g_rank_1_16;
 extern u16 g_rank_5_16;
 extern u16 g_stage_x2;
 extern s8 enemy_move_end_requested;
 
 void small_tank_a_start(void) {
-    reg_a0 = (u8 *)(D_0025B1A0);
+    reg_a0 = (u8 *)(small_tank_a_entities);
     enemy_init_entities();
-    reg_a0 = (u8 *)(D_0025B180);
+    reg_a0 = (u8 *)(small_tank_a_state);
     reg_d0.w = 0xF;
     enemy_set_task_state();
     reg_d0.h[0] = g_stage;
     reg_d0.h[0] >>= 1;
     reg_d0.h[0] += 2;
-    *(u8 *)(reg_a5 + 0x1D) = (u8) reg_d0.b[0];
-    *(u8 *)(reg_a5 + 0x1C) = (u8) reg_d0.b[0];
+    SMALL_TANK(reg_a5)->burst_left = (u8) reg_d0.b[0];
+    SMALL_TANK(reg_a5)->burst_shots = (u8) reg_d0.b[0];
     reg_d0.h[0] = g_rank_5_16;
-    *(u8 *)(reg_a5 + 0x29) -= reg_d0.b[0];
+    SMALL_TANK(reg_a5)->fire_countdown -= reg_d0.b[0];
     reg_d0.h[0] = g_rank_1_16;
     reg_d0.h[0] >>= 4;
-    *(u8 *)(reg_a5 + 0x18) -= reg_d0.b[0];
+    SMALL_TANK(reg_a5)->turn_interval -= reg_d0.b[0];
     enemy_path_start();
     if (enemy_move_end_requested == 0) {
         if ((s32) ENTITY(reg_a6)->y.h >= 0x7600) {
-            *(s8 *)(reg_a5 + 0x33) = 1;
+            SMALL_TANK(reg_a5)->entering = 1;
         }
         if (g_stage == 2) {
             ENTITY(reg_a6)->misc.sb.draw_layer = 2;
         }
-        func_0016CDD0();
-        reg_tmp.h[1] = *(u16 *)(reg_a5 + 6);
-        reg_tmp.h[0] = *(u16 *)(reg_a5 + 8);
+        small_tank_set_draw_routines();
+        reg_tmp.h[1] = ENEMY_STATE(reg_a5)->entities[0];
+        reg_tmp.h[0] = ENEMY_STATE(reg_a5)->entities[1];
         reg_a6 = (void *) reg_tmp.w;
         reg_d1.b[0] = ENTITY(reg_a6)->move.b.dir;
-        *(u8 *)(reg_a5 + 0x32) = (u8) reg_d1.b[0];
-        reg_a0 = (u8 *)(D_0025B3C0_as_u16_a);
+        SMALL_TANK(reg_a5)->turret_dir = (u8) reg_d1.b[0];
+        reg_a0 = (u8 *)(small_tank_a_turret_sprites);
         reg_d1.b[0] += 1;
         reg_d1.h[0] &= 0x3E;
         reg_d1.h[0] += reg_d1.h[0];
-        *(u16 *)(reg_a5 + 0x22) = (reg_d1.h[0] != 0) ? *(u16 *)((u8 *)reg_a0 + ((s16)reg_d1.h[0] & ~1)) : *(u16 *)reg_a0;
-        *(u16 *)(reg_a5 + 0x24) = ((reg_d1.h[0] + 2) != 0) ? *(u16 *)((u8 *)reg_a0 + ((s16)(reg_d1.h[0] + 2) & ~1)) : *(u16 *)reg_a0;
-        reg_a0 = (u8 *)(D_0025B170);
+        SMALL_TANK(reg_a5)->turret_sprite[0] = (reg_d1.h[0] != 0) ? *(u16 *)((u8 *)reg_a0 + ((s16)reg_d1.h[0] & ~1)) : *(u16 *)reg_a0;
+        SMALL_TANK(reg_a5)->turret_sprite[1] = ((reg_d1.h[0] + 2) != 0) ? *(u16 *)((u8 *)reg_a0 + ((s16)(reg_d1.h[0] + 2) & ~1)) : *(u16 *)reg_a0;
+        reg_a0 = (u8 *)(small_tank_a_palettes);
         reg_d0.h[0] = g_stage_x2;
         reg_a0 += reg_d0.h[0];
         ENTITY(reg_a6)->attr.sb.palette = *(s8 *)reg_a0;
-        *(s8 *)(reg_a5 + 0x35) = *(s8 *)reg_a0;
+        SMALL_TANK(reg_a5)->palette = *(s8 *)reg_a0;
         reg_a0 += 1;
-        *(s8 *)(reg_a5 + 0x34) = *(s8 *)reg_a0;
+        SMALL_TANK(reg_a5)->hit_palette = *(s8 *)reg_a0;
         reg_a0 += 1;
     }
 }
 
 typedef void (*Fn)();
 
-extern u8 D_0025B1C0[];
-extern u8 D_0025B2C0[];
-extern u8 D_0025B3C0[];
+extern u8 small_tank_a_muzzles[];
+extern u8 small_tank_a_body_sprites[];
 
 s32 bullet_fire_fast();
 s32 enemy_hitbox_debug_draw();
@@ -284,8 +395,8 @@ s32 score_add_no_chain();
 s32 score_add();
 s32 aim_at_player();
 s32 direction_turn_toward();
-extern u8 D_0025B130_as_u8_a[];
-extern u8 D_0025B140_as_u8_a[];
+extern u8 small_tank_destroyed_explosions[];
+extern u8 small_tank_damaged_explosions[];
 extern u16 g_frame_mod2;
 extern u16 g_game_frame;
 extern u16 g_enemy_signal_0;
@@ -310,9 +421,9 @@ void small_tank_a(void) {
     reg_tmp.h[0] = reg_d0.h[0];
     reg_d0.h[0] = reg_d0.h[1];
     reg_d0.h[1] = reg_tmp.h[0];
-    if (*(u8 *)(reg_a5 + 0x33) == 0) goto next_1;
+    if (SMALL_TANK(reg_a5)->entering == 0) goto next_1;
     if (!((s32) reg_d0.h[0] < 0x7600)) goto next_1;
-    *(u8 *)(reg_a5 + 0x33) = 0;
+    SMALL_TANK(reg_a5)->entering = 0;
 next_1:
     reg_tmp1.w = 0;
     reg_tmp.w = 0;
@@ -323,35 +434,35 @@ next_1:
     reg_d0.h[0] += 0x7C00;
     if (reg_tmp.h[1] == 0) goto next_2;
 block_a:
-    if (*(u16 *)(reg_a5 + 0x16) == 0) goto next_3;
+    if (SMALL_TANK(reg_a5)->seen == 0) goto next_3;
     enemy_remove();
     return;
 next_2:
-    *(u16 *)(reg_a5 + 0x16) = 1;
+    SMALL_TANK(reg_a5)->seen = 1;
 next_3:
     reg_d1.w = 0x5C;
     reg_d1.b[0] &= ENTITY(reg_a6)->flags.b[1];
     switch (reg_d1.b[0]) { case 0: goto next_4; }
     ENTITY(reg_a6)->flags.b[1] &= 0xA3;
-    reg_d0.b[0] = *(u8 *)(reg_a5 + 0x34);
+    reg_d0.b[0] = SMALL_TANK(reg_a5)->hit_palette;
     ENTITY(reg_a6)->attr.b.palette ^= reg_d0.b[0];
     score_add_no_chain();
     if (ENTITY(reg_a6)->hp.sh >= 0) goto next_5;
-    if (*(s8 *)(reg_a5 + 0x21) < 0) goto block_e;
+    if ((s8) SMALL_TANK(reg_a5)->damage < 0) goto block_e;
     ENTITY(reg_a6)->flags.b[1] &= 0xFD;
-    ENTITY(reg_a6)->hp.h = *(u16 *)(reg_a5 + 0x26);
+    ENTITY(reg_a6)->hp.h = SMALL_TANK(reg_a5)->second_hp;
     reg_d0.w = 8;
     score_add();
-    *(u8 *)(reg_a5 + 0x21) |= 0x80;
+    SMALL_TANK(reg_a5)->damage |= 0x80;
     reg_d0.w = 3;
-    reg_a1 = (u8 *)D_0025B140_as_u8_a;
-    func_0016CEA0();
+    reg_a1 = (u8 *)small_tank_damaged_explosions;
+    small_tank_explosion();
     *(u16 *)(reg_a0 + 0x26) = 0xFE00;
     *(s16 *)(reg_a0 + 0x12) = 0;
     *(s16 *)(reg_a0 + 0x14) = 0;
     goto next_5;
 next_4:
-    ENTITY(reg_a6)->attr.b.palette = *(u8 *)(reg_a5 + 0x35);
+    ENTITY(reg_a6)->attr.b.palette = SMALL_TANK(reg_a5)->palette;
 next_5:
     if (g_enemies_stopped != 0) goto next_7;
     reg_d7.h[0] = ENTITY(reg_a6)->move.h;
@@ -362,59 +473,59 @@ next_5:
     if (!(g_game_frame & 4)) goto next_6;
     reg_d1.h[0] += 4;
 next_6:
-    reg_a0 = (u8 *)D_0025B2C0;
+    reg_a0 = (u8 *)small_tank_a_body_sprites;
     ENTITY(reg_a6)->draw.h = (reg_d1.h[0] != 0) ? *(u16 *)((u8 *)reg_a0 + ((s16)reg_d1.h[0] & ~1)) : *(u16 *)reg_a0;
     ENTITY(reg_a6)->sprite.h = ((reg_d1.h[0] + 2) != 0) ? *(u16 *)((u8 *)reg_a0 + ((s16)(reg_d1.h[0] + 2) & ~1)) : *(u16 *)reg_a0;
 next_7:
-    reg_tmp.h[1] = *(u16 *)(reg_a5 + 0x2A);
-    reg_tmp.h[0] = *(u16 *)(reg_a5 + 0x2C);
+    reg_tmp.h[1] = SMALL_TANK(reg_a5)->draw_body[0];
+    reg_tmp.h[0] = SMALL_TANK(reg_a5)->draw_body[1];
     reg_a0 = (u8 *) reg_tmp.w;
     reg_call_target = (Fn)(reg_a0);
     reg_call_target();
     reg_a0 = reg_a6;
     enemy_hitbox_debug_draw();
-    if (*(s8 *)(reg_a5 + 0x21) >= 0) goto block_b;
+    if ((s8) SMALL_TANK(reg_a5)->damage >= 0) goto block_b;
     if (g_frame_mod2 == 0) goto block_rts;
     reg_d1.h[1] = ENTITY(reg_a6)->y.h;
     reg_d1.h[0] = ENTITY(reg_a6)->x.h;
     reg_d1.w += 0xFE00;
-    func_0016CFB0();
+    small_tank_smoke();
     goto block_rts;
 block_b:
     if (g_enemies_stopped != 0) goto block_c;
-    reg_d1.b[0] = *(u8 *)(reg_a5 + 0x32);
-    reg_tmp.b[0] = *(u8 *)(reg_a5 + 0x19);
-    *(u8 *)(reg_a5 + 0x19) -= 1;
+    reg_d1.b[0] = SMALL_TANK(reg_a5)->turret_dir;
+    reg_tmp.b[0] = SMALL_TANK(reg_a5)->turn_countdown;
+    SMALL_TANK(reg_a5)->turn_countdown -= 1;
     if ((s32) reg_tmp.b[0] > 0) goto next_8;
-    *(u8 *)(reg_a5 + 0x19) = *(u8 *)(reg_a5 + 0x18);
+    SMALL_TANK(reg_a5)->turn_countdown = SMALL_TANK(reg_a5)->turn_interval;
     reg_d0.h[0] = ENTITY(reg_a6)->y.h;
     reg_d1.h[0] = ENTITY(reg_a6)->x.h;
     reg_d0.h[0] += 0x200;
     aim_at_player();
     if (cond_flag != 0) goto block_c;
-    reg_d0.b[0] = *(u8 *)(reg_a5 + 0x32);
+    reg_d0.b[0] = SMALL_TANK(reg_a5)->turret_dir;
     direction_turn_toward();
-    *(u8 *)(reg_a5 + 0x32) = reg_d1.b[0];
-    reg_a0 = (u8 *)D_0025B3C0;
+    SMALL_TANK(reg_a5)->turret_dir = reg_d1.b[0];
+    reg_a0 = (u8 *)small_tank_a_turret_sprites;
     reg_d1.b[0] += 1;
     reg_d1.h[0] &= 0x3E;
     reg_d1.h[0] += reg_d1.h[0];
-    *(u16 *)(reg_a5 + 0x22) = (reg_d1.h[0] != 0) ? *(u16 *)((u8 *)reg_a0 + ((s16)reg_d1.h[0] & ~1)) : *(u16 *)reg_a0;
-    *(u16 *)(reg_a5 + 0x24) = ((reg_d1.h[0] + 2) != 0) ? *(u16 *)((u8 *)reg_a0 + ((s16)(reg_d1.h[0] + 2) & ~1)) : *(u16 *)reg_a0;
+    SMALL_TANK(reg_a5)->turret_sprite[0] = (reg_d1.h[0] != 0) ? *(u16 *)((u8 *)reg_a0 + ((s16)reg_d1.h[0] & ~1)) : *(u16 *)reg_a0;
+    SMALL_TANK(reg_a5)->turret_sprite[1] = ((reg_d1.h[0] + 2) != 0) ? *(u16 *)((u8 *)reg_a0 + ((s16)(reg_d1.h[0] + 2) & ~1)) : *(u16 *)reg_a0;
 next_8:
     if (!(ENTITY(reg_a6)->flags.b[1] & 0x20)) goto block_c;
-    *(u8 *)(reg_a5 + 0x29) -= 1;
-    if (*(u8 *)(reg_a5 + 0x29) == 0) goto block_d;
+    SMALL_TANK(reg_a5)->fire_countdown -= 1;
+    if (SMALL_TANK(reg_a5)->fire_countdown == 0) goto block_d;
 block_c:
     reg_d1.h[1] = ENTITY(reg_a6)->y.h;
     reg_d1.h[0] = ENTITY(reg_a6)->x.h;
     reg_d1.w += 0xFA00FA00;
-    reg_d2.h[1] = *(u16 *)(reg_a5 + 0x22);
-    reg_d2.h[0] = *(u16 *)(reg_a5 + 0x24);
+    reg_d2.h[1] = SMALL_TANK(reg_a5)->turret_sprite[0];
+    reg_d2.h[0] = SMALL_TANK(reg_a5)->turret_sprite[1];
     reg_d3.h[0] = 0x830;
     reg_d4.h[0] = ENTITY(reg_a6)->attr.h;
-    reg_tmp.h[1] = *(u16 *)(reg_a5 + 0x2E);
-    reg_tmp.h[0] = *(u16 *)(reg_a5 + 0x30);
+    reg_tmp.h[1] = SMALL_TANK(reg_a5)->draw_turret[0];
+    reg_tmp.h[0] = SMALL_TANK(reg_a5)->draw_turret[1];
     reg_a0 = (u8 *) reg_tmp.w;
     reg_call_target = (Fn)(reg_a0);
     reg_call_target();
@@ -422,8 +533,8 @@ block_c:
 block_d:
     reg_d0.w = 0x18;
     reg_d0.h[0] -= g_rank_1_16;
-    *(u8 *)(reg_a5 + 0x29) = reg_d0.b[0];
-    func_0016D040();
+    SMALL_TANK(reg_a5)->fire_countdown = reg_d0.b[0];
+    enemy_fire_zone_check();
     if (cond_flag != 0) goto block_c;
     if (g_stage != 1) goto next_9;
     if (g_enemy_signal_0 != 0) goto block_c;
@@ -437,24 +548,24 @@ next_9:
     reg_d0.w = 0x3C;
     reg_d2.b[0] += 2;
     reg_d2.h[0] &= reg_d0.h[0];
-    reg_d3.b[0] = *(u8 *)(reg_a5 + 0x32);
+    reg_d3.b[0] = SMALL_TANK(reg_a5)->turret_dir;
     reg_d3.b[0] += 2;
     reg_d3.h[0] &= reg_d0.h[0];
     if (reg_d3.b[0] == reg_d2.b[0]) goto next_10;
-    reg_d0.b[0] = *(u8 *)(reg_a5 + 0x1C);
-    if (*(u8 *)(reg_a5 + 0x1D) == reg_d0.b[0]) goto block_c;
+    reg_d0.b[0] = SMALL_TANK(reg_a5)->burst_shots;
+    if (SMALL_TANK(reg_a5)->burst_left == reg_d0.b[0]) goto block_c;
 next_10:
-    *(u8 *)(reg_a5 + 0x29) = *(u8 *)(reg_a5 + 0x1A);
-    reg_tmp.b[0] = *(u8 *)(reg_a5 + 0x1D);
-    *(u8 *)(reg_a5 + 0x1D) -= 1;
+    SMALL_TANK(reg_a5)->fire_countdown = SMALL_TANK(reg_a5)->fire_interval;
+    reg_tmp.b[0] = SMALL_TANK(reg_a5)->burst_left;
+    SMALL_TANK(reg_a5)->burst_left -= 1;
     if ((s32) reg_tmp.b[0] > 0) goto next_11;
-    *(u8 *)(reg_a5 + 0x1D) = *(u8 *)(reg_a5 + 0x1C);
+    SMALL_TANK(reg_a5)->burst_left = SMALL_TANK(reg_a5)->burst_shots;
     reg_d0.w = 0x40;
     reg_d0.h[0] -= g_rank_3_16;
-    *(u8 *)(reg_a5 + 0x29) = reg_d0.b[0];
+    SMALL_TANK(reg_a5)->fire_countdown = reg_d0.b[0];
 next_11:
-    reg_d1.b[0] = *(u8 *)(reg_a5 + 0x32);
-    reg_a0 = (u8 *)D_0025B1C0;
+    reg_d1.b[0] = SMALL_TANK(reg_a5)->turret_dir;
+    reg_a0 = (u8 *)small_tank_a_muzzles;
     reg_d3.h[0] = reg_d1.h[0];
     reg_d3.h[0] += 1;
     reg_d3.h[0] &= 0x3E;
@@ -474,13 +585,13 @@ block_e:
     reg_d0.w = 0x10;
     score_add();
     reg_d0.w = 4;
-    reg_a1 = (u8 *)D_0025B130_as_u8_a;
-    func_0016CEA0();
+    reg_a1 = (u8 *)small_tank_destroyed_explosions;
+    small_tank_explosion();
     *(u16 *)(reg_a0 + 0x26) = 0xFE00;
     *(s16 *)(reg_a0 + 0x12) = 0;
     *(s16 *)(reg_a0 + 0x14) = 0;
     reg_d0.w = 4;
-    func_0016CF40();
+    small_tank_wreck();
     sfx_explosion_air_small();
     enemy_remove();
 block_rts:
@@ -493,67 +604,65 @@ void small_tank_b_first(void) {
 }
 
 s32 rng_next_masked();
-extern u16 D_0025B440[];
-extern u16 D_0025B450[];
-extern u16 D_0025B470[];
-extern u16 D_0025B610_as_u16_a[];
+extern u16 small_tank_b_palettes[];
+extern u16 small_tank_b_state[];
+extern u16 small_tank_b_entities[];
+extern u16 small_tank_b_turret_sprites[];
 extern u16 g_scroll_line;
 extern u16 g_rank_2_16;
 extern u16 g_rank_6_16;
 
 void small_tank_b_start(void) {
-    reg_a0 = (u8 *)(D_0025B470);
+    reg_a0 = (u8 *)(small_tank_b_entities);
     enemy_init_entities();
-    reg_a0 = (u8 *)(D_0025B450);
+    reg_a0 = (u8 *)(small_tank_b_state);
     reg_d0.w = 0xF;
     enemy_set_task_state();
     reg_d0.h[0] = g_rank_6_16;
-    *(u8 *)(reg_a5 + 0x29) -= reg_d0.b[0];
-    *(u8 *)(reg_a5 + 0x1B) -= reg_d0.b[0];
+    SMALL_TANK(reg_a5)->fire_countdown -= reg_d0.b[0];
+    SMALL_TANK(reg_a5)->other_1B -= reg_d0.b[0];
     rng_next_masked();
     reg_d0.b[0] >>= 1;
-    *(u8 *)(reg_a5 + 0x29) += reg_d0.b[0];
+    SMALL_TANK(reg_a5)->fire_countdown += reg_d0.b[0];
     reg_d0.h[0] = g_rank_1_16;
     reg_d0.h[0] >>= 4;
-    *(u8 *)(reg_a5 + 0x19) -= reg_d0.b[0];
+    SMALL_TANK(reg_a5)->turn_countdown -= reg_d0.b[0];
     if ((g_stage == 1) && ((s32) g_scroll_line >= 0x159)) {
         reg_d0.w = 0x30;
         reg_d0.h[0] -= g_rank_2_16;
         reg_d0.h[0] -= 6;
-        *(u8 *)(reg_a5 + 0x29) = (u8) reg_d0.b[0];
+        SMALL_TANK(reg_a5)->fire_countdown = (u8) reg_d0.b[0];
     }
     enemy_path_start();
     if (enemy_move_end_requested == 0) {
         if (g_stage == 2) {
             ENTITY(reg_a6)->misc.sb.draw_layer = 2;
         }
-        func_0016CDD0();
-        reg_tmp.h[1] = *(u16 *)(reg_a5 + 6);
-        reg_tmp.h[0] = *(u16 *)(reg_a5 + 8);
+        small_tank_set_draw_routines();
+        reg_tmp.h[1] = ENEMY_STATE(reg_a5)->entities[0];
+        reg_tmp.h[0] = ENEMY_STATE(reg_a5)->entities[1];
         reg_a6 = (void *) reg_tmp.w;
         reg_d1.b[0] = ENTITY(reg_a6)->move.b.dir;
-        *(u8 *)(reg_a5 + 0x32) = (u8) reg_d1.b[0];
-        reg_a0 = (u8 *)(D_0025B610_as_u16_a);
+        SMALL_TANK(reg_a5)->turret_dir = (u8) reg_d1.b[0];
+        reg_a0 = (u8 *)(small_tank_b_turret_sprites);
         reg_d1.b[0] += 1;
         reg_d1.h[0] &= 0x3E;
         reg_d1.h[0] += reg_d1.h[0];
-        *(u16 *)(reg_a5 + 0x22) = (reg_d1.h[0] != 0) ? *(u16 *)((u8 *)reg_a0 + ((s16)reg_d1.h[0] & ~1)) : *(u16 *)reg_a0;
-        *(u16 *)(reg_a5 + 0x24) = ((reg_d1.h[0] + 2) != 0) ? *(u16 *)((u8 *)reg_a0 + ((s16)(reg_d1.h[0] + 2) & ~1)) : *(u16 *)reg_a0;
-        reg_a0 = (u8 *)(D_0025B440);
+        SMALL_TANK(reg_a5)->turret_sprite[0] = (reg_d1.h[0] != 0) ? *(u16 *)((u8 *)reg_a0 + ((s16)reg_d1.h[0] & ~1)) : *(u16 *)reg_a0;
+        SMALL_TANK(reg_a5)->turret_sprite[1] = ((reg_d1.h[0] + 2) != 0) ? *(u16 *)((u8 *)reg_a0 + ((s16)(reg_d1.h[0] + 2) & ~1)) : *(u16 *)reg_a0;
+        reg_a0 = (u8 *)(small_tank_b_palettes);
         reg_d0.h[0] = g_stage_x2;
         reg_a0 += reg_d0.h[0];
         ENTITY(reg_a6)->attr.sb.palette = *(s8 *)reg_a0;
-        *(s8 *)(reg_a5 + 0x35) = *(s8 *)reg_a0;
+        SMALL_TANK(reg_a5)->palette = *(s8 *)reg_a0;
         reg_a0 += 1;
-        *(s8 *)(reg_a5 + 0x34) = *(s8 *)reg_a0;
+        SMALL_TANK(reg_a5)->hit_palette = *(s8 *)reg_a0;
         reg_a0 += 1;
     }
 }
 
-extern u16 D_0025B130[];
-extern u16 D_0025B140[];
-extern u16 D_0025B490_as_u16_a[];
-extern u16 D_0025B510_as_u16_a[];
+extern u16 small_tank_b_muzzles[];
+extern u16 small_tank_b_body_sprites[];
 extern u16 D_0028E7DC_as_u16;
 extern u16 D_0028E7E0_as_u16;
 extern u16 g_rank_10_16;
@@ -589,36 +698,36 @@ void small_tank_b(void) {
     reg_d0.h[0] += 0x8400;
 next_lim:
     if (reg_tmp1.h[1] == 0) goto next_40;
-    if (*(u16 *)(reg_a5 + 0x16) == 0) goto next_50;
+    if (SMALL_TANK(reg_a5)->seen == 0) goto next_50;
     enemy_remove();
     return;
 next_40:
-    *(u16 *)(reg_a5 + 0x16) = 1;
+    SMALL_TANK(reg_a5)->seen = 1;
 next_50:
     reg_d1.w = 0x5C;
     reg_d1.b[0] &= ENTITY(reg_a6)->flags.b[1];
     if (reg_d1.b[0] == 0) goto next_100;
     ENTITY(reg_a6)->flags.b[1] &= 0xA3;
-    reg_d0.b[0] = reg_a5[0x34];
+    reg_d0.b[0] = SMALL_TANK(reg_a5)->hit_palette;
     ENTITY(reg_a6)->attr.b.palette ^= reg_d0.b[0];
     score_add_no_chain();
     if (ENTITY(reg_a6)->hp.sh >= 0) goto next_110;
-    if ((s8) reg_a5[0x21] < 0) goto block_70;
-    ENTITY(reg_a6)->hp.h = *(u16 *)(reg_a5 + 0x26);
+    if ((s8) SMALL_TANK(reg_a5)->damage < 0) goto block_70;
+    ENTITY(reg_a6)->hp.h = SMALL_TANK(reg_a5)->second_hp;
     reg_d0.w = 8;
     score_add();
-    reg_a5[0x21] |= 0x80;
+    SMALL_TANK(reg_a5)->damage |= 0x80;
     if (D_0028E7E0_as_u16 != 0) goto next_110;
     D_0028E7E0_as_u16 = 1;
     reg_d0.w = 3;
-    reg_a1 = (u8 *)((u16 *)D_0025B140);
-    func_0016CEA0();
+    reg_a1 = (u8 *)((u16 *)small_tank_damaged_explosions);
+    small_tank_explosion();
     *(u16 *)(reg_a0 + 0x26) = 0xFE00;
     *(u16 *)(reg_a0 + 0x12) = 0;
     *(u16 *)(reg_a0 + 0x14) = 0;
     goto next_110;
 next_100:
-    ENTITY(reg_a6)->attr.b.palette = reg_a5[0x35];
+    ENTITY(reg_a6)->attr.b.palette = SMALL_TANK(reg_a5)->palette;
 next_110:
     if (g_enemies_stopped != 0) goto next_225;
     reg_d7.h[0] = ENTITY(reg_a6)->move.h;
@@ -629,59 +738,59 @@ next_110:
     if (!(g_game_frame & 4)) goto next_220;
     reg_d1.h[0] += 4;
 next_220:
-    reg_a0 = (u8 *) D_0025B510_as_u16_a;
+    reg_a0 = (u8 *) small_tank_b_body_sprites;
     ENTITY(reg_a6)->draw.h = (reg_d1.h[0] != 0) ? *(u16 *)((u8 *)reg_a0 + ((s16)reg_d1.h[0] & ~1)) : *(u16 *)reg_a0;
     ENTITY(reg_a6)->sprite.h = ((reg_d1.h[0] + 2) != 0) ? *(u16 *)((u8 *)reg_a0 + ((s16)(reg_d1.h[0] + 2) & ~1)) : *(u16 *)reg_a0;
 next_225:
-    reg_tmp.h[1] = *(u16 *)(reg_a5 + 0x2A);
-    reg_tmp.h[0] = *(u16 *)(reg_a5 + 0x2C);
+    reg_tmp.h[1] = SMALL_TANK(reg_a5)->draw_body[0];
+    reg_tmp.h[0] = SMALL_TANK(reg_a5)->draw_body[1];
     reg_a0 = (u8 *) reg_tmp.w;
     reg_call_target = (Fn) reg_a0;
     reg_call_target();
     reg_a0 = reg_a6;
     enemy_hitbox_debug_draw();
-    if ((s8) reg_a5[0x21] >= 0) goto next_300;
+    if ((s8) SMALL_TANK(reg_a5)->damage >= 0) goto next_300;
     if (g_frame_mod2 == 0) goto block_rts;
     reg_d1.h[1] = ENTITY(reg_a6)->y.h;
     reg_d1.h[0] = ENTITY(reg_a6)->x.h;
     reg_d1.w += 0x100FE00;
-    func_0016CFB0();
+    small_tank_smoke();
     return;
 next_300:
     if (g_enemies_stopped != 0) goto block_objset;
-    reg_d1.b[0] = reg_a5[0x32];
-    reg_tmp.b[0] = reg_a5[0x19];
-    reg_a5[0x19] -= 1;
+    reg_d1.b[0] = SMALL_TANK(reg_a5)->turret_dir;
+    reg_tmp.b[0] = SMALL_TANK(reg_a5)->turn_countdown;
+    SMALL_TANK(reg_a5)->turn_countdown -= 1;
     if ((s32) reg_tmp.b[0] > 0) goto next_500;
-    reg_a5[0x19] = reg_a5[0x18];
+    SMALL_TANK(reg_a5)->turn_countdown = SMALL_TANK(reg_a5)->turn_interval;
     reg_d0.h[0] = ENTITY(reg_a6)->y.h;
     reg_d1.h[0] = ENTITY(reg_a6)->x.h;
     reg_d0.h[0] += 0x200;
     aim_at_player();
     if (cond_flag != 0) goto block_objset;
-    reg_d0.b[0] = reg_a5[0x32];
+    reg_d0.b[0] = SMALL_TANK(reg_a5)->turret_dir;
     direction_turn_toward();
-    reg_a5[0x32] = reg_d1.b[0];
-    reg_a0 = (u8 *) D_0025B610_as_u16_a;
+    SMALL_TANK(reg_a5)->turret_dir = reg_d1.b[0];
+    reg_a0 = (u8 *) small_tank_b_turret_sprites;
     reg_d1.b[0] += 1;
     reg_d1.h[0] &= 0x3E;
     reg_d1.h[0] += reg_d1.h[0];
-    *(u16 *)(reg_a5 + 0x22) = (reg_d1.h[0] != 0) ? *(u16 *)((u8 *)reg_a0 + ((s16)reg_d1.h[0] & ~1)) : *(u16 *)reg_a0;
-    *(u16 *)(reg_a5 + 0x24) = ((reg_d1.h[0] + 2) != 0) ? *(u16 *)((u8 *)reg_a0 + ((s16)(reg_d1.h[0] + 2) & ~1)) : *(u16 *)reg_a0;
+    SMALL_TANK(reg_a5)->turret_sprite[0] = (reg_d1.h[0] != 0) ? *(u16 *)((u8 *)reg_a0 + ((s16)reg_d1.h[0] & ~1)) : *(u16 *)reg_a0;
+    SMALL_TANK(reg_a5)->turret_sprite[1] = ((reg_d1.h[0] + 2) != 0) ? *(u16 *)((u8 *)reg_a0 + ((s16)(reg_d1.h[0] + 2) & ~1)) : *(u16 *)reg_a0;
 next_500:
     if (!(ENTITY(reg_a6)->flags.b[1] & 0x20)) goto block_objset;
-    reg_a5[0x29] -= 1;
-    if (reg_a5[0x29] == 0) goto block_shot;
+    SMALL_TANK(reg_a5)->fire_countdown -= 1;
+    if (SMALL_TANK(reg_a5)->fire_countdown == 0) goto block_shot;
 block_objset:
     reg_d1.h[1] = ENTITY(reg_a6)->y.h;
     reg_d1.h[0] = ENTITY(reg_a6)->x.h;
     reg_d1.w += 0xFC00FC00;
-    reg_d2.h[1] = *(u16 *)(reg_a5 + 0x22);
-    reg_d2.h[0] = *(u16 *)(reg_a5 + 0x24);
+    reg_d2.h[1] = SMALL_TANK(reg_a5)->turret_sprite[0];
+    reg_d2.h[0] = SMALL_TANK(reg_a5)->turret_sprite[1];
     reg_d3.h[0] = 0x620;
     reg_d4.h[0] = ENTITY(reg_a6)->attr.h;
-    reg_tmp.h[1] = *(u16 *)(reg_a5 + 0x2E);
-    reg_tmp.h[0] = *(u16 *)(reg_a5 + 0x30);
+    reg_tmp.h[1] = SMALL_TANK(reg_a5)->draw_turret[0];
+    reg_tmp.h[0] = SMALL_TANK(reg_a5)->draw_turret[1];
     reg_a0 = (u8 *) reg_tmp.w;
     reg_call_target = (Fn) reg_a0;
     reg_call_target();
@@ -698,15 +807,15 @@ block_shot:
     reg_d0.h[0] -= g_rank_2_16;
     reg_d0.h[0] -= 6;
 next_610:
-    reg_a5[0x29] = reg_d0.b[0];
-    func_0016D040();
+    SMALL_TANK(reg_a5)->fire_countdown = reg_d0.b[0];
+    enemy_fire_zone_check();
     if (cond_flag != 0) goto block_objset;
     if (g_stage != 1) goto next_620;
     if (g_enemy_signal_0 != 0) goto block_objset;
 next_620:
     if (!(ENTITY(reg_a6)->flags.b[1] & 0x20)) goto block_objset;
-    reg_d1.b[0] = reg_a5[0x32];
-    reg_a0 = (u8 *) D_0025B490_as_u16_a;
+    reg_d1.b[0] = SMALL_TANK(reg_a5)->turret_dir;
+    reg_a0 = (u8 *) small_tank_b_muzzles;
     reg_d1.b[0] += 2;
     reg_d1.h[0] &= 0x3C;
     reg_d2.h[0] = reg_d1.h[0];
@@ -727,8 +836,8 @@ block_70:
     reg_d0.w = 0x10;
     score_add();
     reg_d0.w = 7;
-    reg_a1 = (u8 *)((u16 *)D_0025B130);
-    func_0016CEA0();
+    reg_a1 = (u8 *)((u16 *)small_tank_destroyed_explosions);
+    small_tank_explosion();
     *(u16 *)(reg_a0 + 0x26) = 0xFE00;
     *(u16 *)(reg_a0 + 0x12) = 0;
     *(u16 *)(reg_a0 + 0x14) = 0;
@@ -739,31 +848,31 @@ next_71:
     D_0028E7DC_as_u16 += 1;
     if (!(D_0028E7DC_as_u16 & 1)) goto next_72;
     reg_d0.w = 4;
-    func_0016CF40();
+    small_tank_wreck();
 next_72:
     sfx_explosion_air_small();
     enemy_remove();
 }
 
-void func_0016EA90(void) {
+void large_tank_first(void) {
     void enemy_set_entity_count(s32 mode);
     enemy_set_entity_count(1);
 }
 
 s32 direction_between();
 extern u16 D_00258FF0[];
-extern u16 D_0025B690[];
-extern u16 D_0025B6A0[];
-extern u16 D_0025B6C0[];
-extern u16 D_0025B740[];
+extern u16 large_tank_palettes[];
+extern u16 large_tank_state[];
+extern u16 large_tank_entities[];
+extern u16 large_tank_part_sprites[];
 
-void func_0016EAA0(void) {
-    reg_a0 = (u8 *)(D_0025B6C0);
+void large_tank_start(void) {
+    reg_a0 = (u8 *)(large_tank_entities);
     enemy_init_entities();
     reg_tmp.w = (u32) reg_a0;
-    *(u16 *)(reg_a5 + 0x44) = (u16) reg_tmp.h[1];
-    *(u16 *)(reg_a5 + 0x46) = (u16) reg_tmp.h[0];
-    reg_a0 = (u8 *)(D_0025B6A0);
+    LARGE_TANK(reg_a5)->after_entities[0] = (u16) reg_tmp.h[1];
+    LARGE_TANK(reg_a5)->after_entities[1] = (u16) reg_tmp.h[0];
+    reg_a0 = (u8 *)(large_tank_state);
     reg_d0.w = 0xE;
     enemy_set_task_state();
     reg_d0.b[0] = 4;
@@ -774,8 +883,8 @@ void func_0016EAA0(void) {
         reg_d1.b[0] = 6;
         reg_d2.b[0] = 1;
     }
-    *(u8 *)(reg_a5 + 0x2B) = (u8) reg_d0.b[0];
-    *(u8 *)(reg_a5 + 0x2A) = (u8) reg_d1.b[0];
+    LARGE_TANK(reg_a5)->gun_interval = (u8) reg_d0.b[0];
+    LARGE_TANK(reg_a5)->turret_interval = (u8) reg_d1.b[0];
     ENTITY(reg_a6)[1].hit_y_plus.b[1] = (u8) reg_d2.b[0];
     enemy_path_start();
     if (enemy_move_end_requested == 0) {
@@ -787,21 +896,21 @@ void func_0016EAA0(void) {
         if (cond_flag != 0) {
             reg_d1.b[0] = ENTITY(reg_a6)->move.b.dir;
         }
-        *(u8 *)(reg_a5 + 0x28) = (u8) reg_d1.b[0];
+        LARGE_TANK(reg_a5)->turret_dir.b[0] = (u8) reg_d1.b[0];
         reg_d1.h[0] &= 0x3E;
         reg_d1.h[0] += reg_d1.h[0];
-        *(u16 *)(reg_a5 + 0x24) = (reg_d1.h[0] != 0) ? *(u16 *)((u8 *)reg_a0 + ((s16)reg_d1.h[0] & ~1)) : *(u16 *)reg_a0;
-        *(u16 *)(reg_a5 + 0x26) = ((reg_d1.h[0] + 2) != 0) ? *(u16 *)((u8 *)reg_a0 + ((s16)(reg_d1.h[0] + 2) & ~1)) : *(u16 *)reg_a0;
+        LARGE_TANK(reg_a5)->turret_sprite[0] = (reg_d1.h[0] != 0) ? *(u16 *)((u8 *)reg_a0 + ((s16)reg_d1.h[0] & ~1)) : *(u16 *)reg_a0;
+        LARGE_TANK(reg_a5)->turret_sprite[1] = ((reg_d1.h[0] + 2) != 0) ? *(u16 *)((u8 *)reg_a0 + ((s16)(reg_d1.h[0] + 2) & ~1)) : *(u16 *)reg_a0;
         reg_d0.h[0] = ENTITY(reg_a6)[1].offset_x.h;
-        reg_a0 = (u8 *)(D_0025B740);
+        reg_a0 = (u8 *)(large_tank_part_sprites);
         ENTITY(reg_a6)[1].draw.h = (reg_d0.h[0] != 0) ? *(u16 *)((u8 *)reg_a0 + ((s16)reg_d0.h[0] & ~1)) : *(u16 *)reg_a0;
         ENTITY(reg_a6)[1].sprite.h = ((reg_d0.h[0] + 2) != 0) ? *(u16 *)((u8 *)reg_a0 + ((s16)(reg_d0.h[0] + 2) & ~1)) : *(u16 *)reg_a0;
-        reg_a0 = (u8 *)(D_0025B690);
+        reg_a0 = (u8 *)(large_tank_palettes);
         reg_d0.h[0] = g_stage_x2;
         reg_a0 += reg_d0.h[0];
-        *(s8 *)(reg_a5 + 0x1D) = *(s8 *)reg_a0;
+        LARGE_TANK(reg_a5)->palette = *(s8 *)reg_a0;
         reg_a0 += 1;
-        *(s8 *)(reg_a5 + 0x1C) = *(s8 *)reg_a0;
+        LARGE_TANK(reg_a5)->hit_palette = *(s8 *)reg_a0;
         reg_a0 += 1;
     }
 }
@@ -823,7 +932,7 @@ extern u16 g_damage_blink_counter;
 extern u16 g_player2_as_u16_a[];
 extern u16 g_player1_as_u16_a[];
 
-void func_0016ED40(void) {
+void large_tank(void) {
     s16 *t1;
     s16 *t2;
     u16 t3;
@@ -841,19 +950,19 @@ void func_0016ED40(void) {
         reg_tmp.w += reg_tmp1.w;
         reg_d0.h[0] += 0x6E00;
         if (reg_tmp.h[1] != 0) {
-            if (*(u8 *)(reg_a5 + 0x17) != 0) {
+            if (LARGE_TANK(reg_a5)->seen != 0) {
                 enemy_remove();
                 return;
             }
             goto next_1;
         }
-        *(u8 *)(reg_a5 + 0x17) = 1U;
+        LARGE_TANK(reg_a5)->seen = 1U;
 next_1:
         t1 = (s16 *)(reg_a6);
         reg_d1.w = 0x5C;
         reg_d1.b[0] &= (*(u8 *)((u8 *)(t1) + (1)));
         if (reg_d1.b[0] == 0) {
-            reg_d0.b[0] = *(u8 *)(reg_a5 + 0x1D);
+            reg_d0.b[0] = LARGE_TANK(reg_a5)->palette;
             if (((s32) (*(u16 *)((u8 *)(t1) + (0x18))) < 0x7C0) && (g_damage_blink_counter == 0)) {
                 reg_d0.w = 0x19;
             }
@@ -863,9 +972,9 @@ next_1:
         score_add_no_chain();
         reg_d0.b[0] = ENTITY(reg_a6)->attr.b.palette;
         if (reg_d0.b[0] == 0x19) {
-            reg_d0.b[0] = *(u8 *)(reg_a5 + 0x1D);
+            reg_d0.b[0] = LARGE_TANK(reg_a5)->palette;
         }
-        reg_d2.b[0] = *(u8 *)(reg_a5 + 0x1C);
+        reg_d2.b[0] = LARGE_TANK(reg_a5)->hit_palette;
         reg_d0.b[0] ^= reg_d2.b[0];
         if ((s16) ENTITY(reg_a6)->hp.h >= 0) {
 next_2:
@@ -895,19 +1004,19 @@ next_2:
                             }
                         }
                         reg_d0.h[0] = ENTITY(reg_a6)[1].offset_x.h;
-                        reg_a0 = (u8 *)(D_0025B740);
+                        reg_a0 = (u8 *)(large_tank_part_sprites);
                         ENTITY(reg_a6)->draw.h = (reg_d0.h[0] != 0) ? *(u16 *)((u8 *)reg_a0 + ((s16)reg_d0.h[0] & ~1)) : *(u16 *)reg_a0;
                         ENTITY(reg_a6)->sprite.h = ((reg_d0.h[0] + 2) != 0) ? *(u16 *)((u8 *)reg_a0 + ((s16)(reg_d0.h[0] + 2) & ~1)) : *(u16 *)reg_a0;
                     }
                 }
             }
             if ((g_enemies_stopped == 0) && (g_bullets_blocked == 0)) {
-                reg_tmp.b[0] = *(u8 *)(reg_a5 + 0x23);
-                *(u8 *)(reg_a5 + 0x23) -= 1;
-                if (((s32) reg_tmp.b[0] <= 0) && (*(u8 *)(reg_a5 + 0x23) = (u8) *(u8 *)(reg_a5 + 0x22), reg_d0.b[0] = *(u8 *)(reg_a5 + 0x21), (*(u8 *)(reg_a5 + 0x20) == reg_d0.b[0]))) {
+                reg_tmp.b[0] = LARGE_TANK(reg_a5)->turn_countdown;
+                LARGE_TANK(reg_a5)->turn_countdown -= 1;
+                if (((s32) reg_tmp.b[0] <= 0) && (LARGE_TANK(reg_a5)->turn_countdown = (u8) LARGE_TANK(reg_a5)->turn_interval, reg_d0.b[0] = LARGE_TANK(reg_a5)->turret_shots_left, (LARGE_TANK(reg_a5)->turret_shots == reg_d0.b[0]))) {
                     reg_a0 = (u8 *)(g_player1_as_u16_a);
                     reg_a1 = (u8 *)(g_player2_as_u16_a);
-                    if (*(u8 *)(reg_a5 + 2) != 0) {
+                    if (ENEMY_STATE(reg_a5)->target_player != 0) {
                         reg_atmp = (u8 *)(reg_a0);
                         reg_a0 = (u8 *)(reg_a1);
                         reg_a1 = (u8 *)(reg_atmp);
@@ -930,24 +1039,24 @@ next_3:
                         reg_a3 = (u8 *)(D_00258FF0);
                         reg_d0.h[0] += 0xB00;
                         direction_between();
-                        reg_d0.h[0] = *(u16 *)(reg_a5 + 0x28);
+                        reg_d0.h[0] = LARGE_TANK(reg_a5)->turret_dir.h;
                         direction_turn_toward();
-                        *(u16 *)(reg_a5 + 0x28) = (u16) reg_d1.h[0];
+                        LARGE_TANK(reg_a5)->turret_dir.h = (u16) reg_d1.h[0];
                         reg_d1.h[0] &= 0x3E;
                         reg_d1.h[0] += reg_d1.h[0];
-                        *(u16 *)(reg_a5 + 0x24) = (reg_d1.h[0] != 0) ? *(u16 *)((u8 *)reg_a3 + ((s16)reg_d1.h[0] & ~1)) : *(u16 *)reg_a3;
-                        *(u16 *)(reg_a5 + 0x26) = ((reg_d1.h[0] + 2) != 0) ? *(u16 *)((u8 *)reg_a3 + ((s16)(reg_d1.h[0] + 2) & ~1)) : *(u16 *)reg_a3;
+                        LARGE_TANK(reg_a5)->turret_sprite[0] = (reg_d1.h[0] != 0) ? *(u16 *)((u8 *)reg_a3 + ((s16)reg_d1.h[0] & ~1)) : *(u16 *)reg_a3;
+                        LARGE_TANK(reg_a5)->turret_sprite[1] = ((reg_d1.h[0] + 2) != 0) ? *(u16 *)((u8 *)reg_a3 + ((s16)(reg_d1.h[0] + 2) & ~1)) : *(u16 *)reg_a3;
                         goto next_4;
                     }
                 } else {
 next_4:
                     if ((g_enemies_stopped == 0) && (g_bullets_blocked == 0) && ((s16) ENTITY(reg_a6)->y.h >= 0x1000)) {
-                        reg_tmp.b[0] = *(u8 *)(reg_a5 + 0x1F);
-                        *(u8 *)(reg_a5 + 0x1F) -= 1;
+                        reg_tmp.b[0] = LARGE_TANK(reg_a5)->turret_countdown;
+                        LARGE_TANK(reg_a5)->turret_countdown -= 1;
                         if ((s32) reg_tmp.b[0] <= 0) {
-                            *(u8 *)(reg_a5 + 0x1F) = (u8) *(u8 *)(reg_a5 + 0x2A);
+                            LARGE_TANK(reg_a5)->turret_countdown = (u8) LARGE_TANK(reg_a5)->turret_interval;
                             reg_a4 = (u8 *)(D_00259370);
-                            reg_d1.h[0] = *(u16 *)(reg_a5 + 0x28);
+                            reg_d1.h[0] = LARGE_TANK(reg_a5)->turret_dir.h;
                             reg_d0.h[0] = reg_d1.h[0];
                             reg_d1.h[0] *= 4;
                             func_00201100();
@@ -980,11 +1089,11 @@ next_4:
                                 bullet_fire256_double();
                                 reg_d1.h[0] += 0xC;
                             } while ((s16)(--reg_d7.h[0]) >= 0);
-                            reg_tmp.b[0] = *(u8 *)(reg_a5 + 0x21);
-                            *(u8 *)(reg_a5 + 0x21) -= 1;
+                            reg_tmp.b[0] = LARGE_TANK(reg_a5)->turret_shots_left;
+                            LARGE_TANK(reg_a5)->turret_shots_left -= 1;
                             if ((s32) reg_tmp.b[0] <= 0) {
-                                *(u8 *)(reg_a5 + 0x21) = (u8) *(u8 *)(reg_a5 + 0x20);
-                                *(u8 *)(reg_a5 + 0x1F) = (u8) *(u8 *)(reg_a5 + 0x1E);
+                                LARGE_TANK(reg_a5)->turret_shots_left = (u8) LARGE_TANK(reg_a5)->turret_shots;
+                                LARGE_TANK(reg_a5)->turret_countdown = (u8) LARGE_TANK(reg_a5)->turret_pause;
                             }
                         }
                     }
@@ -996,8 +1105,8 @@ next_4:
             t4 = reg_d1.h[0];
             reg_d1.h[1] += 0x500;
             reg_d1.h[0] = (u32)t4 + 0x7FFF + 0x7C01;
-            reg_d2.h[1] = *(u16 *)(reg_a5 + 0x24);
-            reg_d2.h[0] = *(u16 *)(reg_a5 + 0x26);
+            reg_d2.h[1] = LARGE_TANK(reg_a5)->turret_sprite[0];
+            reg_d2.h[0] = LARGE_TANK(reg_a5)->turret_sprite[1];
             reg_d3.h[0] = 0x620;
             reg_d4.h[0] = ENTITY(reg_a6)->attr.h;
             sprite_draw_layer1();
@@ -1013,18 +1122,18 @@ next_4:
             return;
 next_5:
             if ((s16) (ENTITY(reg_a6)->y.h) >= 0x1000) {
-                if (reg_a5[0x31] != 0) {
+                if (LARGE_TANK(reg_a5)->gun_shots_left != 0) {
                     goto next_6;
                 }
-                reg_tmp.b[0] = reg_a5[0x2F];
-                reg_a5[0x2F] -= 1;
+                reg_tmp.b[0] = LARGE_TANK(reg_a5)->gun_countdown;
+                LARGE_TANK(reg_a5)->gun_countdown -= 1;
                 if ((s32) reg_tmp.b[0] > 0) {
                     goto block_rts;
                 }
-                reg_a5[0x2F] = reg_a5[0x2B];
-                reg_a5[0x31] = reg_a5[0x30];
-                reg_a5[0x33] = 0x80;
-                reg_a5[0x32] = 0x80;
+                LARGE_TANK(reg_a5)->gun_countdown = LARGE_TANK(reg_a5)->gun_interval;
+                LARGE_TANK(reg_a5)->gun_shots_left = LARGE_TANK(reg_a5)->gun_shots;
+                LARGE_TANK(reg_a5)->gun_aim[1] = 0x80;
+                LARGE_TANK(reg_a5)->gun_aim[0] = 0x80;
                 reg_d0.h[0] = ENTITY(reg_a6)->y.h;
                 reg_d1.h[0] = ENTITY(reg_a6)->x.h;
                 reg_d0.h[0] += 0xFA00;
@@ -1033,22 +1142,22 @@ next_5:
                 if (cond_flag != 0) {
                     goto next_6;
                 }
-                reg_a5[0x33] = reg_d1.b[0];
+                LARGE_TANK(reg_a5)->gun_aim[1] = reg_d1.b[0];
                 reg_d0.h[0] = ENTITY(reg_a6)->y.h;
                 reg_d1.h[0] = ENTITY(reg_a6)->x.h;
                 reg_d0.h[0] += 0x7FFF + 0x7A01;
                 reg_d1.h[0] += 0x7FFF + 0x7981;
                 aim256_at_player();
-                reg_a5[0x32] = reg_d1.b[0];
+                LARGE_TANK(reg_a5)->gun_aim[0] = reg_d1.b[0];
 next_6:
-                reg_tmp.b[0] = reg_a5[0x2F];
-                reg_a5[0x2F] -= 1;
+                reg_tmp.b[0] = LARGE_TANK(reg_a5)->gun_countdown;
+                LARGE_TANK(reg_a5)->gun_countdown -= 1;
                 if ((s32) reg_tmp.b[0] > 0) {
                     goto block_rts;
                 }
-                reg_a5[0x2F] = reg_a5[0x2B];
+                LARGE_TANK(reg_a5)->gun_countdown = LARGE_TANK(reg_a5)->gun_interval;
                 reg_d1.w = 0;
-                reg_d1.b[0] = reg_a5[0x33];
+                reg_d1.b[0] = LARGE_TANK(reg_a5)->gun_aim[1];
                 rng_next();
                 reg_d0.b[0] = (u8) ((s8) reg_d0.b[0] >> 2);
                 reg_d1.b[0] += reg_d0.b[0];
@@ -1059,7 +1168,7 @@ next_6:
                 reg_d4.w = 0;
                 bullet_fire256_fast();
                 reg_d1.w = 0;
-                reg_d1.b[0] = reg_a5[0x32];
+                reg_d1.b[0] = LARGE_TANK(reg_a5)->gun_aim[0];
                 rng_next();
                 reg_d0.b[0] = (u8) ((s8) reg_d0.b[0] >> 2);
                 reg_d1.b[0] += reg_d0.b[0];
@@ -1069,12 +1178,12 @@ next_6:
                 reg_d3.w = 0xF9FFF980;
                 reg_d4.w = 0;
                 bullet_fire256_fast();
-                reg_tmp.b[0] = reg_a5[0x31];
-                reg_a5[0x31] -= 1;
+                reg_tmp.b[0] = LARGE_TANK(reg_a5)->gun_shots_left;
+                LARGE_TANK(reg_a5)->gun_shots_left -= 1;
                 if ((s32) reg_tmp.b[0] > 0) {
                     goto block_rts;
                 }
-                reg_a5[0x2F] = reg_a5[0x2E];
+                LARGE_TANK(reg_a5)->gun_countdown = LARGE_TANK(reg_a5)->gun_pause;
 block_rts:
                 return;
             }
@@ -1128,23 +1237,23 @@ block_rts:
     }
 }
 
-void func_0016F930(void) {
+void hatch_gunner_first(void) {
     void enemy_set_entity_count(s32 mode);
     enemy_set_entity_count(1);
 }
 
-extern u16 D_0025B750[];
-extern u16 D_0025B760[];
-extern u16 D_0025B780[];
-extern u16 D_0025B7F0_as_u16_a[];
+extern u16 hatch_gunner_palettes[];
+extern u16 hatch_gunner_state[];
+extern u16 hatch_gunner_entities[];
+extern u16 hatch_gunner_part_sprites[];
 
-void func_0016F940(void) {
-    reg_a0 = (u8 *)(D_0025B780);
+void hatch_gunner_start(void) {
+    reg_a0 = (u8 *)(hatch_gunner_entities);
     enemy_init_entities();
     reg_tmp.w = (u32) reg_a0;
-    *(u16 *)(reg_a5 + 0x44) = (u16) reg_tmp.h[1];
-    *(u16 *)(reg_a5 + 0x46) = (u16) reg_tmp.h[0];
-    reg_a0 = (u8 *)(D_0025B760);
+    HATCH_GUNNER(reg_a5)->after_entities[0] = (u16) reg_tmp.h[1];
+    HATCH_GUNNER(reg_a5)->after_entities[1] = (u16) reg_tmp.h[0];
+    reg_a0 = (u8 *)(hatch_gunner_state);
     reg_d0.w = 0xE;
     enemy_set_task_state();
     reg_d0.b[0] = 4;
@@ -1153,18 +1262,18 @@ void func_0016F940(void) {
         reg_d1.b[0] = 0;
         reg_d0.b[0] = 3;
     }
-    *(u8 *)(reg_a5 + 0x2E) = (u8) reg_d0.b[0];
-    *(u8 *)(reg_a5 + 0x2F) = (u8) reg_d1.b[0];
+    HATCH_GUNNER(reg_a5)->gun_interval = (u8) reg_d0.b[0];
+    HATCH_GUNNER(reg_a5)->hatch_interval = (u8) reg_d1.b[0];
     reg_d0.h[0] = ENTITY(reg_a6)[1].offset_x.h;
-    reg_a0 = (u8 *)(D_0025B7F0_as_u16_a);
+    reg_a0 = (u8 *)(hatch_gunner_part_sprites);
     ENTITY(reg_a6)[1].draw.h = (reg_d0.h[0] != 0) ? *(u16 *)((u8 *)reg_a0 + ((s16)reg_d0.h[0] & ~1)) : *(u16 *)reg_a0;
     ENTITY(reg_a6)[1].sprite.h = ((reg_d0.h[0] + 2) != 0) ? *(u16 *)((u8 *)reg_a0 + ((s16)(reg_d0.h[0] + 2) & ~1)) : *(u16 *)reg_a0;
-    reg_a0 = (u8 *)(D_0025B750);
+    reg_a0 = (u8 *)(hatch_gunner_palettes);
     reg_d0.h[0] = g_stage_x2;
     reg_a0 += reg_d0.h[0];
-    *(s8 *)(reg_a5 + 0x1D) = *(s8 *)reg_a0;
+    HATCH_GUNNER(reg_a5)->palette = *(s8 *)reg_a0;
     reg_a0 += 1;
-    *(s8 *)(reg_a5 + 0x1C) = *(s8 *)reg_a0;
+    HATCH_GUNNER(reg_a5)->hit_palette = *(s8 *)reg_a0;
     reg_a0 += 1;
     g_enemy_signal_0 += 1;
     enemy_path_start();
@@ -1177,11 +1286,10 @@ s32 func_00125EC0();
 s32 sfx_explosion_air_large();
 s32 entity_draw_layer4();
 s32 sprite_draw_layer4();
-extern u16 D_0025B7E0[];
-extern u8 D_0025B7F0[];
-extern u8 D_0025B800[];
+extern u16 hatch_gunner_explosion_offsets[];
+extern u8 hatch_gunner_hatch_sprites[];
 
-void func_0016FAE0(void) {
+void hatch_gunner(void) {
     u8 *t1;
     u32 t2;
     u32 t3;
@@ -1200,20 +1308,20 @@ void func_0016FAE0(void) {
         reg_tmp.w += reg_tmp1.w;
         reg_d0.h[0] += 0x7800;
         if (reg_tmp.h[1] != 0) {
-            if (*(u8 *)(reg_a5 + 0x17) != 0) {
+            if (HATCH_GUNNER(reg_a5)->seen != 0) {
                 g_enemy_signal_0 -= 1;
                 enemy_remove();
                 return;
             }
             goto next_1;
         }
-        *(u8 *)(reg_a5 + 0x17) = 1U;
+        HATCH_GUNNER(reg_a5)->seen = 1U;
 next_1:
         t1 = (u8 *)(reg_a6);
         reg_d1.w = 0x5C;
         reg_d1.b[0] &= (*(u8 *)((u8 *)(t1) + (1)));
         if (reg_d1.b[0] == 0) {
-            reg_d0.b[0] = *(u8 *)(reg_a5 + 0x1D);
+            reg_d0.b[0] = HATCH_GUNNER(reg_a5)->palette;
             if (((s32) (*(u16 *)((u8 *)(t1) + (0x18))) < 0x380) && (g_damage_blink_counter == 0)) {
                 reg_d0.w = 0x19;
             }
@@ -1223,9 +1331,9 @@ next_1:
         score_add_no_chain();
         reg_d0.b[0] = ENTITY(reg_a6)->attr.b.palette;
         if (reg_d0.b[0] == 0x19) {
-            reg_d0.b[0] = *(u8 *)(reg_a5 + 0x1D);
+            reg_d0.b[0] = HATCH_GUNNER(reg_a5)->palette;
         }
-        reg_d2.b[0] = *(u8 *)(reg_a5 + 0x1C);
+        reg_d2.b[0] = HATCH_GUNNER(reg_a5)->hit_palette;
         reg_d0.b[0] ^= reg_d2.b[0];
         if ((s16) ENTITY(reg_a6)->hp.h >= 0) {
 next_2:
@@ -1255,43 +1363,43 @@ next_2:
                             }
                         }
                         reg_d0.h[0] = ENTITY(reg_a6)[1].offset_x.h;
-                        reg_a0 = (u8 *)D_0025B7F0;
+                        reg_a0 = (u8 *)hatch_gunner_part_sprites;
                         ENTITY(reg_a6)[1].draw.h = (reg_d0.h[0] != 0) ? *(u16 *)((u8 *)reg_a0 + ((s16)reg_d0.h[0] & ~1)) : *(u16 *)reg_a0;
                         ENTITY(reg_a6)[1].sprite.h = ((reg_d0.h[0] + 2) != 0) ? *(u16 *)((u8 *)reg_a0 + ((s16)(reg_d0.h[0] + 2) & ~1)) : *(u16 *)reg_a0;
                     }
                 }
             }
             if ((g_enemies_stopped == 0) && (g_bullets_blocked == 0) && (g_enemies_stopped == 0) && (g_bullets_blocked == 0) && ((s16) ENTITY(reg_a6)->y.h >= 0x1000)) {
-                reg_d0.h[0] = *(u16 *)(reg_a5 + 0x18);
+                reg_d0.h[0] = HATCH_GUNNER(reg_a5)->hatch_state;
                 if (reg_d0.h[0] == 0) {
-                    reg_tmp.b[0] = *(u8 *)(reg_a5 + 0x1F);
-                    *(u8 *)(reg_a5 + 0x1F) -= 1;
+                    reg_tmp.b[0] = HATCH_GUNNER(reg_a5)->hatch_countdown;
+                    HATCH_GUNNER(reg_a5)->hatch_countdown -= 1;
                     if ((s32) reg_tmp.b[0] <= 0) {
-                        *(u8 *)(reg_a5 + 0x1F) = 0x10U;
-                        *(u16 *)(reg_a5 + 0x18) = 1U;
+                        HATCH_GUNNER(reg_a5)->hatch_countdown = 0x10U;
+                        HATCH_GUNNER(reg_a5)->hatch_state = 1U;
                     }
                 } else if ((reg_d0.h[0] & 0xFFFF) == 1) {
-                    reg_tmp.b[0] = *(u8 *)(reg_a5 + 0x23);
-                    *(u8 *)(reg_a5 + 0x23) -= 1;
+                    reg_tmp.b[0] = HATCH_GUNNER(reg_a5)->frame_countdown;
+                    HATCH_GUNNER(reg_a5)->frame_countdown -= 1;
                     if ((s32) reg_tmp.b[0] <= 0) {
-                        *(u8 *)(reg_a5 + 0x23) = (u8) *(u8 *)(reg_a5 + 0x22);
+                        HATCH_GUNNER(reg_a5)->frame_countdown = (u8) HATCH_GUNNER(reg_a5)->frame_interval;
                         if ((s16) ENTITY(reg_a6)->y.h < 0x6C00) {
-                            *(u16 *)(reg_a5 + 0x24) += 4;
-                            reg_d0.h[0] = *(u16 *)(reg_a5 + 0x24);
-                            reg_a0 = (u8 *)D_0025B800;
-                            *(u16 *)(reg_a5 + 0x26) = (reg_d0.h[0] != 0) ? *(u16 *)((u8 *)reg_a0 + ((s16)reg_d0.h[0] & ~1)) : *(u16 *)reg_a0;
-                            *(u16 *)(reg_a5 + 0x28) = ((reg_d0.h[0] + 2) != 0) ? *(u16 *)((u8 *)reg_a0 + ((s16)(reg_d0.h[0] + 2) & ~1)) : *(u16 *)reg_a0;
+                            HATCH_GUNNER(reg_a5)->hatch_frame += 4;
+                            reg_d0.h[0] = HATCH_GUNNER(reg_a5)->hatch_frame;
+                            reg_a0 = (u8 *)hatch_gunner_hatch_sprites;
+                            HATCH_GUNNER(reg_a5)->hatch_sprite[0] = (reg_d0.h[0] != 0) ? *(u16 *)((u8 *)reg_a0 + ((s16)reg_d0.h[0] & ~1)) : *(u16 *)reg_a0;
+                            HATCH_GUNNER(reg_a5)->hatch_sprite[1] = ((reg_d0.h[0] + 2) != 0) ? *(u16 *)((u8 *)reg_a0 + ((s16)(reg_d0.h[0] + 2) & ~1)) : *(u16 *)reg_a0;
                             if (reg_d0.h[0] == 0x1C) {
-                                *(u16 *)(reg_a5 + 0x34) = 0xFFFEU;
-                                *(u16 *)(reg_a5 + 0x18) = 2U;
+                                HATCH_GUNNER(reg_a5)->shot_number = 0xFFFEU;
+                                HATCH_GUNNER(reg_a5)->hatch_state = 2U;
                             }
                         }
                     }
                 } else if ((reg_d0.h[0] & 0xFFFF) == 2) {
-                    reg_tmp.b[0] = *(u8 *)(reg_a5 + 0x1F);
-                    *(u8 *)(reg_a5 + 0x1F) -= 1;
+                    reg_tmp.b[0] = HATCH_GUNNER(reg_a5)->hatch_countdown;
+                    HATCH_GUNNER(reg_a5)->hatch_countdown -= 1;
                     if ((s32) reg_tmp.b[0] <= 0) {
-                        *(u8 *)(reg_a5 + 0x1F) = (u8) *(u8 *)(reg_a5 + 0x2F);
+                        HATCH_GUNNER(reg_a5)->hatch_countdown = (u8) HATCH_GUNNER(reg_a5)->hatch_interval;
                         reg_d0.h[0] = ENTITY(reg_a6)->y.h;
                         reg_d1.h[0] = ENTITY(reg_a6)->x.h;
                         reg_d0.h[0] += 0xA80;
@@ -1305,7 +1413,7 @@ next_2:
                         reg_d2.h[0] = t4;
                         reg_d3.w = 0x0A800400;
                         reg_d4.w = 0;
-                        reg_d0.h[0] = *(u16 *)(reg_a5 + 0x34);
+                        reg_d0.h[0] = HATCH_GUNNER(reg_a5)->shot_number;
                         reg_tmp.h[0] = reg_d0.h[0];
                         reg_d0.h[0] = 0x13;
                         reg_d0.h[1] = reg_tmp.h[0];
@@ -1319,35 +1427,35 @@ next_2:
                         reg_d2.h[0] = t5;
                         reg_d3.w = 0x0A7FFC00;
                         reg_d4.w = 0;
-                        reg_d0.h[0] = *(u16 *)(reg_a5 + 0x34);
+                        reg_d0.h[0] = HATCH_GUNNER(reg_a5)->shot_number;
                         reg_tmp.h[0] = reg_d0.h[0];
                         reg_d0.h[0] = 0x13;
                         reg_d0.h[1] = reg_tmp.h[0];
                         bullet_fire256_fast();
-                        *(u16 *)(reg_a5 + 0x34) += 1;
-                        reg_tmp.b[0] = *(u8 *)(reg_a5 + 0x21);
-                        *(u8 *)(reg_a5 + 0x21) -= 1;
+                        HATCH_GUNNER(reg_a5)->shot_number += 1;
+                        reg_tmp.b[0] = HATCH_GUNNER(reg_a5)->hatch_shots_left;
+                        HATCH_GUNNER(reg_a5)->hatch_shots_left -= 1;
                         if ((s32) reg_tmp.b[0] <= 0) {
-                            *(u8 *)(reg_a5 + 0x21) = (u8) *(u8 *)(reg_a5 + 0x20);
-                            if (*(u8 *)(reg_a5 + 0x21) != 0) {
-                                *(u8 *)(reg_a5 + 0x1F) = (u8) *(u8 *)(reg_a5 + 0x1E);
-                                *(u16 *)(reg_a5 + 0x18) = 3U;
-                                *(u8 *)(reg_a5 + 0x23) = 0x10U;
+                            HATCH_GUNNER(reg_a5)->hatch_shots_left = (u8) HATCH_GUNNER(reg_a5)->hatch_shots;
+                            if (HATCH_GUNNER(reg_a5)->hatch_shots_left != 0) {
+                                HATCH_GUNNER(reg_a5)->hatch_countdown = (u8) HATCH_GUNNER(reg_a5)->hatch_pause;
+                                HATCH_GUNNER(reg_a5)->hatch_state = 3U;
+                                HATCH_GUNNER(reg_a5)->frame_countdown = 0x10U;
                             }
                         }
                     }
                 } else {
-                    reg_tmp.b[0] = *(u8 *)(reg_a5 + 0x23);
-                    *(u8 *)(reg_a5 + 0x23) -= 1;
+                    reg_tmp.b[0] = HATCH_GUNNER(reg_a5)->frame_countdown;
+                    HATCH_GUNNER(reg_a5)->frame_countdown -= 1;
                     if ((s32) reg_tmp.b[0] <= 0) {
-                        *(u8 *)(reg_a5 + 0x23) = (u8) *(u8 *)(reg_a5 + 0x22);
-                        *(u16 *)(reg_a5 + 0x24) -= 4;
-                        reg_d0.h[0] = *(u16 *)(reg_a5 + 0x24);
-                        reg_a0 = (u8 *)D_0025B800;
-                        *(u16 *)(reg_a5 + 0x26) = (reg_d0.h[0] != 0) ? *(u16 *)((u8 *)reg_a0 + ((s16)reg_d0.h[0] & ~1)) : *(u16 *)reg_a0;
-                        *(u16 *)(reg_a5 + 0x28) = ((reg_d0.h[0] + 2) != 0) ? *(u16 *)((u8 *)reg_a0 + ((s16)(reg_d0.h[0] + 2) & ~1)) : *(u16 *)reg_a0;
+                        HATCH_GUNNER(reg_a5)->frame_countdown = (u8) HATCH_GUNNER(reg_a5)->frame_interval;
+                        HATCH_GUNNER(reg_a5)->hatch_frame -= 4;
+                        reg_d0.h[0] = HATCH_GUNNER(reg_a5)->hatch_frame;
+                        reg_a0 = (u8 *)hatch_gunner_hatch_sprites;
+                        HATCH_GUNNER(reg_a5)->hatch_sprite[0] = (reg_d0.h[0] != 0) ? *(u16 *)((u8 *)reg_a0 + ((s16)reg_d0.h[0] & ~1)) : *(u16 *)reg_a0;
+                        HATCH_GUNNER(reg_a5)->hatch_sprite[1] = ((reg_d0.h[0] + 2) != 0) ? *(u16 *)((u8 *)reg_a0 + ((s16)(reg_d0.h[0] + 2) & ~1)) : *(u16 *)reg_a0;
                         if (reg_d0.h[0] == 0) {
-                            *(u16 *)(reg_a5 + 0x18) = 0U;
+                            HATCH_GUNNER(reg_a5)->hatch_state = 0U;
                         }
                     }
                 }
@@ -1382,8 +1490,8 @@ next_2:
             reg_tmp1.h[0] = reg_d1.h[0];
             reg_d1.h[0] = reg_d1.h[1];
             reg_d1.h[1] = reg_tmp1.h[0];
-            reg_d2.h[1] = *(u16 *)(reg_a5 + 0x26);
-            reg_d2.h[0] = *(u16 *)(reg_a5 + 0x28);
+            reg_d2.h[1] = HATCH_GUNNER(reg_a5)->hatch_sprite[0];
+            reg_d2.h[0] = HATCH_GUNNER(reg_a5)->hatch_sprite[1];
             reg_d3.h[0] = 0x430;
             reg_d4.h[0] = ENTITY(reg_a6)->attr.h;
             sprite_draw_layer4();
@@ -1401,12 +1509,12 @@ next_2:
             if ((s16) ENTITY(reg_a6)->y.h < 0x1000) {
                 goto block_rts;
             }
-            reg_tmp.b[0] = *(u8 *)(reg_a5 + 0x31);
-            *(u8 *)(reg_a5 + 0x31) -= 1;
+            reg_tmp.b[0] = HATCH_GUNNER(reg_a5)->gun_countdown;
+            HATCH_GUNNER(reg_a5)->gun_countdown -= 1;
             if ((s32) reg_tmp.b[0] > 0) {
                 goto block_rts;
             }
-            *(u8 *)(reg_a5 + 0x31) = (u8) *(u8 *)(reg_a5 + 0x2E);
+            HATCH_GUNNER(reg_a5)->gun_countdown = (u8) HATCH_GUNNER(reg_a5)->gun_interval;
             reg_d0.w = 0xFFFE0004;
             reg_d2.h[1] = ENTITY(reg_a6)->y.h;
             reg_d2.h[0] = ENTITY(reg_a6)->x.h;
@@ -1418,13 +1526,13 @@ next_2:
                 bullet_fire256_fast();
                 reg_d1.h[0] += 7;
             } while ((s16)(--reg_d7.h[0]) >= 0);
-            reg_tmp.b[0] = *(u8 *)(reg_a5 + 0x33);
-            *(u8 *)(reg_a5 + 0x33) -= 1;
+            reg_tmp.b[0] = HATCH_GUNNER(reg_a5)->gun_shots_left;
+            HATCH_GUNNER(reg_a5)->gun_shots_left -= 1;
             if ((s32) reg_tmp.b[0] > 0) {
                 goto block_rts;
             }
-            *(u8 *)(reg_a5 + 0x33) = (u8) *(u8 *)(reg_a5 + 0x32);
-            *(u8 *)(reg_a5 + 0x31) = (u8) *(u8 *)(reg_a5 + 0x30);
+            HATCH_GUNNER(reg_a5)->gun_shots_left = (u8) HATCH_GUNNER(reg_a5)->gun_shots;
+            HATCH_GUNNER(reg_a5)->gun_countdown = (u8) HATCH_GUNNER(reg_a5)->gun_pause;
 block_rts:
             return;
         } else {
@@ -1467,7 +1575,7 @@ block_rts:
             *(s16 *)(reg_a0 + 0x10) = 1;
             g_enemy_signal_0 -= 1;
             reg_d0.w = 8;
-            reg_a4 = (u8 *)(D_0025B7E0);
+            reg_a4 = (u8 *)(hatch_gunner_explosion_offsets);
             reg_d6.w = 3;
             do {
                 reg_d1.h[1] = *(u16 *)reg_a4;
@@ -1483,17 +1591,17 @@ block_rts:
     }
 }
 
-extern u8 D_0025B870[];
+extern u8 warning_sign_frames[];
 
-void func_00170690(void) {
-    reg_d0.h[0] = *(u16 *)(reg_a5 + 0x1A);
-    reg_a0 = D_0025B870;
+void warning_sign_set_frame(void) {
+    reg_d0.h[0] = WARNING_SIGN(reg_a5)->frame;
+    reg_a0 = warning_sign_frames;
     reg_a0 += reg_d0.h[0];
     ENTITY(reg_a6)->draw.h = *(u16 *)reg_a0;
     reg_a0 += 2;
     ENTITY(reg_a6)->sprite.h = *(u16 *)reg_a0;
     reg_a0 += 2;
-    *(u16 *)(reg_a5 + 0x18) = *(u16 *)reg_a0;
+    WARNING_SIGN(reg_a5)->frame_time = *(u16 *)reg_a0;
     reg_a0 += 2;
 }
 
@@ -1504,17 +1612,17 @@ void warning_sign_first(void) {
 
 s32 voice_warning();
 s32 sprite_palette_load();
-extern u16 D_0025B820[];
-extern u16 D_0025B830[];
-extern u8 D_0025B840[];
-extern u8 D_0025B850[];
+extern u16 warning_sign_palette_numbers[];
+extern u16 warning_sign_second_palette_numbers[];
+extern u8 warning_sign_state[];
+extern u8 warning_sign_entities[];
 extern u8 D_00261C30[];
 extern u8 D_00261CF0[];
 
 void warning_sign_start(void) {
-    reg_a0 = D_0025B850;
+    reg_a0 = warning_sign_entities;
     enemy_init_entities();
-    reg_a0 = D_0025B840;
+    reg_a0 = warning_sign_state;
     reg_d0.w = 5;
     enemy_set_task_state();
     reg_tmp.w = 0x40001C00;
@@ -1523,12 +1631,12 @@ void warning_sign_start(void) {
     voice_warning();
     reg_a0 = D_00261CF0;
     reg_d6.h[0] = g_stage_x2;
-    reg_a1 = (u8 *)(D_0025B820);
+    reg_a1 = (u8 *)(warning_sign_palette_numbers);
     reg_d0.h[0] = (reg_d6.h[0] != 0) ? *(u16 *)((u8 *)reg_a1 + ((s16)reg_d6.h[0] & ~1)) : *(u16 *)reg_a1;
     ENTITY(reg_a6)->attr.b.palette = (u8) reg_d0.b[0];
     sprite_palette_load();
     reg_a0 = D_00261C30;
-    reg_a1 = (u8 *)(D_0025B830);
+    reg_a1 = (u8 *)(warning_sign_second_palette_numbers);
     reg_d0.h[0] = (reg_d6.h[0] != 0) ? *(u16 *)((u8 *)reg_a1 + ((s16)reg_d6.h[0] & ~1)) : *(u16 *)reg_a1;
     sprite_palette_load();
 }
@@ -1539,40 +1647,40 @@ s32 entity_draw_with_warning();
 void warning_sign(void) {
     u16 m;
 
-    if (*(u16 *)(reg_a5 + 0x20) == 0) goto next_20;
-    reg_tmp.b[0] = *(u8 *)(reg_a5 + 0x1F);
-    *(u8 *)(reg_a5 + 0x1F) -= 1;
+    if (WARNING_SIGN(reg_a5)->sounds_left == 0) goto next_20;
+    reg_tmp.b[0] = WARNING_SIGN(reg_a5)->sound_countdown;
+    WARNING_SIGN(reg_a5)->sound_countdown -= 1;
     if ((s32) reg_tmp.b[0] > 0) goto next_20;
-    *(u8 *)(reg_a5 + 0x1F) = *(u8 *)(reg_a5 + 0x1E);
+    WARNING_SIGN(reg_a5)->sound_countdown = WARNING_SIGN(reg_a5)->sound_interval;
     sfx_warning();
-    *(u16 *)(reg_a5 + 0x20) -= 1;
+    WARNING_SIGN(reg_a5)->sounds_left -= 1;
 next_20:
     ENTITY(reg_a6)->x.sh = 0x1C00;
-    reg_tmp.h[0] = *(u16 *)(reg_a5 + 0x18);
-    *(u16 *)(reg_a5 + 0x18) -= 1;
+    reg_tmp.h[0] = WARNING_SIGN(reg_a5)->frame_time;
+    WARNING_SIGN(reg_a5)->frame_time -= 1;
     if ((s32) reg_tmp.h[0] > 0) goto block_objset;
-    m = *(u16 *)(reg_a5 + 0x16);
+    m = WARNING_SIGN(reg_a5)->phase;
     if (m != 0) goto next_100;
-    func_00170690();
-    *(u16 *)(reg_a5 + 0x1A) += 8;
-    if (*(u16 *)(reg_a5 + 0x1A) != 0xF0) goto block_objset;
-    *(u16 *)(reg_a5 + 0x16) = 1;
+    warning_sign_set_frame();
+    WARNING_SIGN(reg_a5)->frame += 8;
+    if (WARNING_SIGN(reg_a5)->frame != 0xF0) goto block_objset;
+    WARNING_SIGN(reg_a5)->phase = 1;
     goto block_objset;
 next_100:
     if ((m & 0xFFFF) != 1) goto next_200;
-    func_00170690();
-    *(u16 *)(reg_a5 + 0x1A) += 8;
-    if (*(u16 *)(reg_a5 + 0x1A) != 0x128) goto block_objset;
-    *(u16 *)(reg_a5 + 0x1A) = 0x100;
-    reg_tmp.h[0] = *(u16 *)(reg_a5 + 0x1C);
-    *(u16 *)(reg_a5 + 0x1C) -= 1;
+    warning_sign_set_frame();
+    WARNING_SIGN(reg_a5)->frame += 8;
+    if (WARNING_SIGN(reg_a5)->frame != 0x128) goto block_objset;
+    WARNING_SIGN(reg_a5)->frame = 0x100;
+    reg_tmp.h[0] = WARNING_SIGN(reg_a5)->flashes_left;
+    WARNING_SIGN(reg_a5)->flashes_left -= 1;
     if ((s32) reg_tmp.h[0] > 0) goto block_objset;
-    *(u16 *)(reg_a5 + 0x16) = 2;
+    WARNING_SIGN(reg_a5)->phase = 2;
     goto block_objset;
 next_200:
-    func_00170690();
-    *(u16 *)(reg_a5 + 0x1A) += 8;
-    if (*(u16 *)(reg_a5 + 0x1A) != 0x230) goto block_objset;
+    warning_sign_set_frame();
+    WARNING_SIGN(reg_a5)->frame += 8;
+    if (WARNING_SIGN(reg_a5)->frame != 0x230) goto block_objset;
     enemy_remove();
     return;
 block_objset:
