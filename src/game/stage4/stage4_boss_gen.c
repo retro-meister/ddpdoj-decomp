@@ -129,8 +129,8 @@ typedef void (*Fn)();
 extern u8 D_00261730[];
 extern u8 D_00263840[];
 extern u8 D_00263860[];
-s32 func_00119B10();
-s32 func_0011AD50();
+s32 mounted_tank_a_start();
+s32 mounted_tank_b_start();
 s32 enemy_init_entities_n();
 s32 rng_next_unsigned();
 extern u8 D_002637F0[];
@@ -157,7 +157,7 @@ void stage4_lift_start(void) {
         ENTITY(reg_a6)->flags.b[0] |= 0x40;
     }
     reg_d7.w = 4;
-    reg_a0 = (u8 *)func_0011AD50;
+    reg_a0 = (u8 *)mounted_tank_b_start;
     reg_a3 = (u8 *)D_002637F0;
     reg_d0.b[0] = ENTITY(reg_a6)->misc.b.draw_layer;
     if ((s8) reg_d0.b[0] < 0) {
@@ -175,7 +175,7 @@ void stage4_lift_start(void) {
         ENTITY(reg_a6)[9].flags.sh = 0;
         ENTITY(reg_a6)[10].flags.sh = 0;
         reg_d7.w = 1;
-        reg_a0 = (u8 *)func_00119B10;
+        reg_a0 = (u8 *)mounted_tank_a_start;
         reg_a3 = (u8 *)D_00263810;
     }
     reg_a6 += 0x20;
@@ -189,8 +189,8 @@ void stage4_lift_start(void) {
 
 extern u8 D_00259870_as_u8_a[];
 extern u8 D_00263880[];
-s32 func_00119FE0();
-s32 func_0011B220();
+s32 mounted_tank_a();
+s32 mounted_tank_b();
 s32 bullet_fire256_2way();
 s32 explosion_spawn();
 s32 sfx_explosion_ground_large();
@@ -324,10 +324,10 @@ block_objset:
     entity_draw_layer3();
     reg_d7.w = 4;
     reg_d6.w = 0;
-    reg_a0 = (u8 *)func_0011B220;
+    reg_a0 = (u8 *)mounted_tank_b;
     if (ENTITY(reg_a6)->attr.b.flip != 0x40) goto next_sen;
     reg_d7.w = 1;
-    reg_a0 = (u8 *)func_00119FE0;
+    reg_a0 = (u8 *)mounted_tank_a;
 next_sen:
     reg_a6 += 0x20;
 loop_1:
