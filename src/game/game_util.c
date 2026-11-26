@@ -25,7 +25,7 @@ void func_00200D30(void) {
 
 s32 sprite_palette_load();
 extern u8 D_0025F770[];
-extern s16 g_game_completed_as_s16;
+extern u16 g_game_completed;
 extern u16 g_loop;
 
 void func_00200D60(void) {
@@ -43,7 +43,7 @@ void func_00200D60(void) {
 #endif
     }
 #ifndef DEATH_LABEL
-    g_game_completed_as_s16 = 1;
+    g_game_completed = 1;
 #endif
 }
 
@@ -330,11 +330,11 @@ extern u32 reg_save_d1;
 extern u32 reg_save_d0;
 extern u8 *reg_save_a6;
 extern u8 *reg_save_a5;
-extern u8 *reg_save_a4_as_u8_p;
-extern u8 *reg_save_a3_as_u8_p;
+extern s32 reg_save_a4;
+extern s32 reg_save_a3;
 extern u8 *reg_save_a2;
 extern u8 *reg_save_a1;
-extern u8 *reg_save_a0_as_u8_p;
+extern s32 reg_save_a0;
 extern u8 g_boss_present_b1;
 
 void func_002014D0(void) {
@@ -354,11 +354,11 @@ void func_002014D0(void) {
         reg_save_d5 = reg_d5.w;
         reg_save_d6 = reg_d6.w;
         reg_save_d7 = reg_d7.w;
-        reg_save_a0_as_u8_p = reg_a0;
+        (*(u8 **)&reg_save_a0) = reg_a0;
         reg_save_a1 = reg_a1;
         reg_save_a2 = reg_a2;
-        reg_save_a3_as_u8_p = reg_a3;
-        reg_save_a4_as_u8_p = reg_a4;
+        (*(u8 **)&reg_save_a3) = reg_a3;
+        (*(u8 **)&reg_save_a4) = reg_a4;
         reg_save_a5 = reg_a5;
         reg_save_a6 = reg_a6;
         reg_d1.h[0] = 0x8010;
@@ -383,11 +383,11 @@ void func_002015B0(void) {
         reg_save_d5 = reg_d5.w;
         reg_save_d6 = reg_d6.w;
         reg_save_d7 = reg_d7.w;
-        reg_save_a0_as_u8_p = reg_a0;
+        (*(u8 **)&reg_save_a0) = reg_a0;
         reg_save_a1 = reg_a1;
         reg_save_a2 = reg_a2;
-        reg_save_a3_as_u8_p = reg_a3;
-        reg_save_a4_as_u8_p = reg_a4;
+        (*(u8 **)&reg_save_a3) = reg_a3;
+        (*(u8 **)&reg_save_a4) = reg_a4;
         reg_save_a5 = reg_a5;
         reg_save_a6 = reg_a6;
         reg_d1.h[0] = 0x8008;

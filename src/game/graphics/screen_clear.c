@@ -25,23 +25,22 @@ void func_0012F9F0(void) {
 
 extern s16 D_0028E23C;
 extern s16 D_0028E240;
-extern s16 *reg_a0_as_s16_p;
 
 void func_0012FA20(void) {
-    reg_a0_as_s16_p = &D_0028E23C;
-    *reg_a0_as_s16_p = 0;
-    reg_a0_as_s16_p = &D_0028E240;
-    *reg_a0_as_s16_p = 1;
+    (*(s16 **)&reg_a0) = &D_0028E23C;
+    *(*(s16 **)&reg_a0) = 0;
+    (*(s16 **)&reg_a0) = &D_0028E240;
+    *(*(s16 **)&reg_a0) = 1;
 }
 
 extern s16 g_bg_scroll_y;
 extern s16 g_bg_scroll_x;
 
 void func_0012FA50(void) {
-    reg_a0_as_s16_p = &g_bg_scroll_y;
-    *reg_a0_as_s16_p = 0;
-    reg_a0_as_s16_p = &g_bg_scroll_x;
-    *reg_a0_as_s16_p = 0;
+    (*(s16 **)&reg_a0) = &g_bg_scroll_y;
+    *(*(s16 **)&reg_a0) = 0;
+    (*(s16 **)&reg_a0) = &g_bg_scroll_x;
+    *(*(s16 **)&reg_a0) = 0;
 }
 
 
@@ -50,26 +49,25 @@ void func_0012FA80(void) {
     func_0012FA50();
 }
 
-extern s32 g_text_layer_as_s32_a[];
-extern s32 *reg_a0_as_s32_p;
+extern u8 g_text_layer[8192];
 
 void text_layer_clear(void) {
-    reg_a0_as_s32_p = g_text_layer_as_s32_a;
+    (*(s32 **)&reg_a0) = ((s32 *)g_text_layer);
     reg_d0.h[0] = 0x7FF;
     do {
-        *reg_a0_as_s32_p = 0;
-        reg_a0_as_s32_p += 1;
+        *(*(s32 **)&reg_a0) = 0;
+        (*(s32 **)&reg_a0) += 1;
     } while ((s16)(--reg_d0.h[0]) >= 0);
 }
 
-extern s32 g_bg_layer_as_s32_a[];
+extern u8 g_bg_layer[16384];
 
 void func_0012FB00(void) {
-    reg_a0_as_s32_p = g_bg_layer_as_s32_a;
+    (*(s32 **)&reg_a0) = ((s32 *)g_bg_layer);
     reg_d0.h[0] = 0xFFF;
     do {
-        *reg_a0_as_s32_p = 0;
-        reg_a0_as_s32_p += 1;
+        *(*(s32 **)&reg_a0) = 0;
+        (*(s32 **)&reg_a0) += 1;
     } while ((s16)(--reg_d0.h[0]) >= 0);
 }
 
@@ -82,11 +80,11 @@ void func_0012FB50(void) {
 extern s32 g_arcade_sprites_as_s32_a[];
 
 void func_0012FB80(void) {
-    reg_a0_as_s32_p = g_arcade_sprites_as_s32_a;
+    (*(s32 **)&reg_a0) = g_arcade_sprites_as_s32_a;
     reg_d0.h[0] = MAIN_OR_DEATH_LABEL(0x4FF, 0xBB7);
     do {
-        *reg_a0_as_s32_p = 0;
-        reg_a0_as_s32_p += 1;
+        *(*(s32 **)&reg_a0) = 0;
+        (*(s32 **)&reg_a0) += 1;
     } while ((s16)(--reg_d0.h[0]) >= 0);
 }
 
@@ -96,33 +94,33 @@ void func_0012FBD0(void) {
 extern s32 g_text_palette[];
 
 void func_0012FBE0(void) {
-    reg_a0_as_s32_p = g_text_palette;
+    (*(s32 **)&reg_a0) = g_text_palette;
     reg_d0.h[0] = 0x7F;
     do {
-        *reg_a0_as_s32_p = 0;
-        reg_a0_as_s32_p += 1;
+        *(*(s32 **)&reg_a0) = 0;
+        (*(s32 **)&reg_a0) += 1;
     } while ((s16)(--reg_d0.h[0]) >= 0);
 }
 
-extern s32 g_bg_palette_as_s32_a[];
+extern s16 g_bg_palette[1024];
 
 void func_0012FC30(void) {
-    reg_a0_as_s32_p = g_bg_palette_as_s32_a;
+    (*(s32 **)&reg_a0) = ((s32 *)g_bg_palette);
     reg_d0.h[0] = 0x1FF;
     do {
-        *reg_a0_as_s32_p = 0;
-        reg_a0_as_s32_p += 1;
+        *(*(s32 **)&reg_a0) = 0;
+        (*(s32 **)&reg_a0) += 1;
     } while ((s16)(--reg_d0.h[0]) >= 0);
 }
 
-extern s32 g_sprite_palette_as_s32_a[];
+extern s16 g_sprite_palette[1024];
 
 void func_0012FC80(void) {
-    reg_a0_as_s32_p = g_sprite_palette_as_s32_a;
+    (*(s32 **)&reg_a0) = ((s32 *)g_sprite_palette);
     reg_d0.h[0] = 0x1FF;
     do {
-        *reg_a0_as_s32_p = 0;
-        reg_a0_as_s32_p += 1;
+        *(*(s32 **)&reg_a0) = 0;
+        (*(s32 **)&reg_a0) += 1;
     } while ((s16)(--reg_d0.h[0]) >= 0);
 }
 

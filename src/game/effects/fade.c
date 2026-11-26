@@ -142,8 +142,8 @@ extern u32 reg_save_d2;
 extern u32 reg_save_d1;
 extern s32 reg_save_a4;
 extern s32 reg_save_a3;
-extern s32 reg_save_a2_as_s32;
-extern s32 reg_save_a1_as_s32;
+extern u8 *reg_save_a2;
+extern u8 *reg_save_a1;
 extern s32 reg_save_a0;
 
 
@@ -157,8 +157,8 @@ void fade_in_and_release(void)
     reg_save_d6 = reg_d6.w;
     reg_save_d7 = reg_d7.w;
     reg_save_a0 = (s32)reg_a0;
-    reg_save_a1_as_s32 = (s32)reg_a1;
-    reg_save_a2_as_s32 = (s32)reg_a2;
+    (*(s32 *)&reg_save_a1) = (s32)reg_a1;
+    (*(s32 *)&reg_save_a2) = (s32)reg_a2;
     reg_save_a3 = (s32)reg_a3;
     reg_save_a4 = (s32)reg_a4;
 
@@ -176,8 +176,8 @@ void fade_in(void)
     reg_save_d6 = reg_d6.w;
     reg_save_d7 = reg_d7.w;
     reg_save_a0 = (s32)reg_a0;
-    reg_save_a1_as_s32 = (s32)reg_a1;
-    reg_save_a2_as_s32 = (s32)reg_a2;
+    (*(s32 *)&reg_save_a1) = (s32)reg_a1;
+    (*(s32 *)&reg_save_a2) = (s32)reg_a2;
     reg_save_a3 = (s32)reg_a3;
     reg_save_a4 = (s32)reg_a4;
     reg_d6.h[0] = 0;
@@ -186,11 +186,8 @@ void fade_in(void)
 
 extern u16 fade_speeds[32][2];
 extern FadeArea fade_areas[3];
-extern u16 *reg_save_a4_as_u16_p;
-extern u32 reg_save_a3_as_u32;
 extern u8 *reg_save_a2;
 extern u8 *reg_save_a1;
-extern u16 *reg_save_a0_as_u16_p;
 
 void fade_in_start(void) {
     u8 *saved_a0;
@@ -304,11 +301,11 @@ next_4:
     reg_d5.w = reg_save_d5;
     reg_d6.w = reg_save_d6;
     reg_d7.w = reg_save_d7;
-    reg_a0 = (u8 *) reg_save_a0_as_u16_p;
+    reg_a0 = (u8 *) (*(u16 **)&reg_save_a0);
     reg_a1 = (u8 *)reg_save_a1;
     reg_a2 = (u8 *)reg_save_a2;
-    reg_a3 = (u8 *) reg_save_a3_as_u32;
-    reg_a4 = (u8 *) reg_save_a4_as_u16_p;
+    reg_a3 = (u8 *) (u32)reg_save_a3;
+    reg_a4 = (u8 *) (*(u16 **)&reg_save_a4);
     return;
 next_3:
     reg_a1 += 0x30;
@@ -324,11 +321,11 @@ next_5:
     reg_d5.w = reg_save_d5;
     reg_d6.w = reg_save_d6;
     reg_d7.w = reg_save_d7;
-    reg_a0 = (u8 *) reg_save_a0_as_u16_p;
+    reg_a0 = (u8 *) (*(u16 **)&reg_save_a0);
     reg_a1 = (u8 *)reg_save_a1;
     reg_a2 = (u8 *)reg_save_a2;
-    reg_a3 = (u8 *) reg_save_a3_as_u32;
-    reg_a4 = (u8 *) reg_save_a4_as_u16_p;
+    reg_a3 = (u8 *) (u32)reg_save_a3;
+    reg_a4 = (u8 *) (*(u16 **)&reg_save_a4);
 }
 
 
@@ -345,8 +342,8 @@ void fade_out_and_release(void)
     reg_d6.h[0] = 1;
     reg_save_d7 = reg_d7.w;
     reg_save_a0 = (s32)reg_a0;
-    reg_save_a1_as_s32 = (s32)reg_a1;
-    reg_save_a2_as_s32 = (s32)reg_a2;
+    (*(s32 *)&reg_save_a1) = (s32)reg_a1;
+    (*(s32 *)&reg_save_a2) = (s32)reg_a2;
     reg_save_a3 = (s32)reg_a3;
     reg_save_a4 = (s32)reg_a4;
     fade_out_start();
@@ -362,8 +359,8 @@ void fade_out(void)
     reg_save_d6 = reg_d6.w;
     reg_save_d7 = reg_d7.w;
     reg_save_a0 = (s32)reg_a0;
-    reg_save_a1_as_s32 = (s32)reg_a1;
-    reg_save_a2_as_s32 = (s32)reg_a2;
+    (*(s32 *)&reg_save_a1) = (s32)reg_a1;
+    (*(s32 *)&reg_save_a2) = (s32)reg_a2;
     reg_save_a3 = (s32)reg_a3;
     reg_save_a4 = (s32)reg_a4;
     reg_d6.h[0] = 0;
@@ -467,11 +464,11 @@ next_4:
     reg_d5.w = reg_save_d5;
     reg_d6.w = reg_save_d6;
     reg_d7.w = reg_save_d7;
-    reg_a0 = (u8 *) reg_save_a0_as_u16_p;
+    reg_a0 = (u8 *) (*(u16 **)&reg_save_a0);
     reg_a1 = (u8 *)reg_save_a1;
     reg_a2 = (u8 *)reg_save_a2;
-    reg_a3 = (u8 *) reg_save_a3_as_u32;
-    reg_a4 = (u8 *) reg_save_a4_as_u16_p;
+    reg_a3 = (u8 *) (u32)reg_save_a3;
+    reg_a4 = (u8 *) (*(u16 **)&reg_save_a4);
     return;
 next_3:
     reg_a1 += 0x30;
@@ -487,11 +484,11 @@ next_5:
     reg_d5.w = reg_save_d5;
     reg_d6.w = reg_save_d6;
     reg_d7.w = reg_save_d7;
-    reg_a0 = (u8 *) reg_save_a0_as_u16_p;
+    reg_a0 = (u8 *) (*(u16 **)&reg_save_a0);
     reg_a1 = (u8 *)reg_save_a1;
     reg_a2 = (u8 *)reg_save_a2;
-    reg_a3 = (u8 *) reg_save_a3_as_u32;
-    reg_a4 = (u8 *) reg_save_a4_as_u16_p;
+    reg_a3 = (u8 *) (u32)reg_save_a3;
+    reg_a4 = (u8 *) (*(u16 **)&reg_save_a4);
 }
 
 
@@ -507,8 +504,8 @@ void fade_to_black_and_release(void)
     reg_save_d6 = reg_d6.w;
     reg_save_d7 = reg_d7.w;
     reg_save_a0 = (s32)reg_a0;
-    reg_save_a1_as_s32 = (s32)reg_a1;
-    reg_save_a2_as_s32 = (s32)reg_a2;
+    (*(s32 *)&reg_save_a1) = (s32)reg_a1;
+    (*(s32 *)&reg_save_a2) = (s32)reg_a2;
     reg_save_a3 = (s32)reg_a3;
     reg_save_a4 = (s32)reg_a4;
     reg_d6.h[0] = 1;
@@ -525,8 +522,8 @@ void fade_to_black(void)
     reg_save_d6 = reg_d6.w;
     reg_save_d7 = reg_d7.w;
     reg_save_a0 = (s32)reg_a0;
-    reg_save_a1_as_s32 = (s32)reg_a1;
-    reg_save_a2_as_s32 = (s32)reg_a2;
+    (*(s32 *)&reg_save_a1) = (s32)reg_a1;
+    (*(s32 *)&reg_save_a2) = (s32)reg_a2;
     reg_save_a3 = (s32)reg_a3;
     reg_save_a4 = (s32)reg_a4;
     reg_d6.h[0] = 0;
@@ -630,11 +627,11 @@ next_4:
     reg_d5.w = reg_save_d5;
     reg_d6.w = reg_save_d6;
     reg_d7.w = reg_save_d7;
-    reg_a0 = (u8 *) reg_save_a0_as_u16_p;
+    reg_a0 = (u8 *) (*(u16 **)&reg_save_a0);
     reg_a1 = (u8 *)reg_save_a1;
     reg_a2 = (u8 *)reg_save_a2;
-    reg_a3 = (u8 *) reg_save_a3_as_u32;
-    reg_a4 = (u8 *) reg_save_a4_as_u16_p;
+    reg_a3 = (u8 *) (u32)reg_save_a3;
+    reg_a4 = (u8 *) (*(u16 **)&reg_save_a4);
     return;
 next_3:
     reg_a1 += 0x30;
@@ -650,11 +647,11 @@ next_5:
     reg_d5.w = reg_save_d5;
     reg_d6.w = reg_save_d6;
     reg_d7.w = reg_save_d7;
-    reg_a0 = (u8 *) reg_save_a0_as_u16_p;
+    reg_a0 = (u8 *) (*(u16 **)&reg_save_a0);
     reg_a1 = (u8 *)reg_save_a1;
     reg_a2 = (u8 *)reg_save_a2;
-    reg_a3 = (u8 *) reg_save_a3_as_u32;
-    reg_a4 = (u8 *) reg_save_a4_as_u16_p;
+    reg_a3 = (u8 *) (u32)reg_save_a3;
+    reg_a4 = (u8 *) (*(u16 **)&reg_save_a4);
 }
 
 

@@ -65,15 +65,14 @@ void stage3_boss_parts_follow(void) {
     ENTITY(reg_a6)[7].x.h = (u16) ENTITY(reg_a6)[2].x.h;
 }
 
-extern void *reg_a6_as_void_p;
 
 void stage3_boss_move_enter_start(void)
 {
     ENTER(reg_a4)->brake.sh = 0x1818;
-    ((u8 *)reg_a6_as_void_p)[0x1B] = 0xC;
-    ((u8 *)reg_a6_as_void_p)[0x1A] = 0xE;
-    ((u16 *)reg_a6_as_void_p)[1] = 0x4400;
-    ((u16 *)reg_a6_as_void_p)[2] = 0xEC00;
+    ((u8 *)((void *)reg_a6))[0x1B] = 0xC;
+    ((u8 *)((void *)reg_a6))[0x1A] = 0xE;
+    ((u16 *)((void *)reg_a6))[1] = 0x4400;
+    ((u16 *)((void *)reg_a6))[2] = 0xEC00;
     stage3_boss_move_enter();
 }
 

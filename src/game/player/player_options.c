@@ -248,14 +248,14 @@ void option_setup_from_template(void) {
     reg_a1 += 2;
 }
 
-extern s32 D_0029D730_as_s32_a[];
-extern s16 g_p1_options_as_s16_a[];
-extern s32 g_player1_as_s32_a[];
+extern u8 D_0029D730[];
+extern u8 g_p1_options[80];
+extern s16 g_player1[56];
 
 void p1_options_update(void) {
-    reg_a6 = (u8 *)g_p1_options_as_s16_a;
-    reg_a4 = (u8 *)g_player1_as_s32_a;
-    reg_a2 = (u8 *)D_0029D730_as_s32_a;
+    reg_a6 = (u8 *)((s16 *)g_p1_options);
+    reg_a4 = (u8 *)((s32 *)g_player1);
+    reg_a2 = (u8 *)((s32 *)D_0029D730);
     reg_d7.w = 1;
     if (*(s16 *)reg_a6 < 0) {
         options_update();
@@ -265,14 +265,14 @@ void p1_options_update(void) {
     p2_options_update();
 }
 
-extern s32 D_0029D710_as_s32_a[];
-extern s16 g_p2_options_as_s16_a[];
-extern s32 g_player2_as_s32_a[];
+extern u8 D_0029D710[];
+extern u8 g_p2_options[];
+extern s16 g_player2[56];
 
 void p2_options_update(void) {
-    reg_a6 = (u8 *)g_p2_options_as_s16_a;
-    reg_a4 = (u8 *)g_player2_as_s32_a;
-    reg_a2 = (u8 *)D_0029D710_as_s32_a;
+    reg_a6 = (u8 *)((s16 *)g_p2_options);
+    reg_a4 = (u8 *)((s32 *)g_player2);
+    reg_a2 = (u8 *)((s32 *)D_0029D710);
     if (*(s16 *)reg_a6 < 0) {
         options_update();
     }
@@ -296,7 +296,6 @@ extern u8 g_game_frame_ran;
 extern s32 g_replay_position;
 extern u8 g_replay_mode;
 extern u8 D_0029D710[];
-extern u8 g_player2_as_u8_a[];
 
 void options_update(void) {
     u32 temp;
@@ -306,7 +305,7 @@ void options_update(void) {
     goto next_20;
 loop_10:
     reg_a6 = (u8 *)g_p2_options;
-    reg_a4 = (u8 *)g_player2_as_u8_a;
+    reg_a4 = (u8 *)((u8 *)g_player2);
     reg_a2 = (u8 *)D_0029D710;
     if (*(s16 *)reg_a6 < 0) goto next_20;
     return;
@@ -1041,9 +1040,9 @@ void option_table_load(void) {
 extern u16 option_strong_sprites_a[];
 extern u16 option_hyper_sprites_a[];
 extern u16 option_hyper_sprites_b[];
-extern u16 option_sprites_a_tables_as_u16;
-extern u16 option_sprites_b_tables_as_u16;
-extern u16 option_strong_sprites_b_tables_as_u16;
+extern u16 option_sprites_a_tables[2];
+extern u16 option_sprites_b_tables[2];
+extern u16 option_strong_sprites_b_tables[2];
 extern u16 g_p2_laser_stop_y;
 extern u16 g_p1_laser_stop_y;
 extern u8 D_0029D730[];
@@ -1064,13 +1063,13 @@ void options_laser_fire(void) {
     reg_a1 = (u8 *)g_p1_laser_entities;
     reg_a2 = (u8 *)D_0029D730;
     reg_a3 = (u8 *)D_0029D770;
-    reg_d4.h[0] = PLAYER(g_player1_as_s32_a)->moved_y.h;
+    reg_d4.h[0] = PLAYER(((s32 *)g_player1))->moved_y.h;
     if (reg_d7.h[0] != 0) goto next_10;
     reg_a0 = (u8 *)&g_p2_laser_stop_y;
     reg_a1 = (u8 *)g_p2_laser_entities;
     reg_a2 = (u8 *)D_0029D710;
     reg_a3 = (u8 *)D_0029D750;
-    reg_d4.h[0] = PLAYER(g_player2_as_u8_a)->moved_y.h;
+    reg_d4.h[0] = PLAYER(((u8 *)g_player2))->moved_y.h;
 next_10:
     reg_d4.h[0] += 0x300;
     reg_d0.h[1] = *(u16 *)(reg_a4 + 2);
@@ -1113,7 +1112,7 @@ next_60:
     reg_a0 = (u8 *)option_strong_sprites_a;
     if (reg_a4[0x5A] & 4) goto next_64;
     reg_d3.h[0] = *(u16 *)(reg_a4 + 0x58);
-    reg_a0 = (u8 *)&option_sprites_a_tables_as_u16;
+    reg_a0 = (u8 *)&(*(u16 *)option_sprites_a_tables);
     reg_d3.h[0] += reg_d3.h[0];
     reg_tmp.h[1] = (reg_d3.h[0] != 0) ? *(u16 *)((u8 *)reg_a0 + ((s16)reg_d3.h[0] & ~1)) : *(u16 *)reg_a0;
     reg_tmp.h[0] = (((u16) reg_d3.h[0] + 2) != 0) ? *(u16 *)((u8 *)reg_a0 + ((s16)((u16) reg_d3.h[0] + 2) & ~1)) : *(u16 *)reg_a0;
@@ -1180,10 +1179,10 @@ block_sen:
     reg_a2 = reg_a1;
     reg_a1 += 0x510;
     reg_d3.h[0] = *(u16 *)(reg_a4 + 0x58);
-    reg_a0 = (u8 *)&option_sprites_b_tables_as_u16;
+    reg_a0 = (u8 *)&(*(u16 *)option_sprites_b_tables);
     reg_d3.h[0] += reg_d3.h[0];
     if (reg_a4[0x5A] & 4) {
-        reg_a0 = (u8 *)&option_strong_sprites_b_tables_as_u16;
+        reg_a0 = (u8 *)&(*(u16 *)option_strong_sprites_b_tables);
     }
     reg_tmp.h[1] = (reg_d3.h[0] != 0) ? *(u16 *)((u8 *)reg_a0 + ((s16)reg_d3.h[0] & ~1)) : *(u16 *)reg_a0;
     reg_tmp.h[0] = (((u16) reg_d3.h[0] + 2) != 0) ? *(u16 *)((u8 *)reg_a0 + ((s16)((u16) reg_d3.h[0] + 2) & ~1)) : *(u16 *)reg_a0;

@@ -26,13 +26,13 @@ void enemy_hitbox_debug_draw(void) {
 #endif
 }
 
-extern s16 g_spawn_request_end_as_s16;
+extern u16 g_spawn_request_end;
 extern s16 D_0028E7D8;
 extern s16 D_0028E7DC;
 extern s16 D_0028E7E0;
-extern s16 g_enemy_count_second_as_s16;
-extern s16 g_enemy_count_as_s16;
-extern s16 D_0028E7EC_as_s16;
+extern u16 g_enemy_count_second;
+extern u16 g_enemy_count;
+extern u16 D_0028E7EC;
 
 /* The reset clears the entity pools as bytes through the first one's address: the
    three entity pools follow one another. */
@@ -63,13 +63,13 @@ void enemies_reset(void) {
     for (i = 0; i < 0x640; i++) {
         g_enemy_entities_as_bytes.spare[i] = 0;
     }
-    g_spawn_request_end_as_s16 = 0;
+    g_spawn_request_end = 0;
     D_0028E7D8 = 0;
     D_0028E7DC = 0;
     D_0028E7E0 = 0;
-    g_enemy_count_second_as_s16 = 0;
-    g_enemy_count_as_s16 = 0;
-    D_0028E7EC_as_s16 = 0;
+    g_enemy_count_second = 0;
+    g_enemy_count = 0;
+    D_0028E7EC = 0;
     for (i = 0; i < 0xC80; i++) {
         ((s8 *)g_spawn_requests)[i] = 0;
     }
@@ -108,7 +108,7 @@ void stage_enemies_select(void) {
     reg_a0 += 2;
     *(u16 *)(reg_a4 + 8) = (u16) reg_d0.h[1];
     *(u16 *)(reg_a4 + 0xA) = (u16) reg_d0.h[0];
-    g_spawn_request_end_as_s16 = 0;
+    g_spawn_request_end = 0;
 }
 
 
@@ -349,8 +349,8 @@ block_7:
 }
 
 extern u16 g_side_scroll_x[];
-extern u8 g_player2_as_u8_a[];
-extern u8 g_player1_as_u8_a[];
+extern s16 g_player2[56];
+extern s16 g_player1[56];
 
 void enemy_start(void) {
     s8 temp_s0;
@@ -382,10 +382,10 @@ void enemy_start(void) {
         }
         *(u16 *)(reg_a5 + 0x4C) = (u16) reg_tmp.h[1];
         *(u16 *)(reg_a5 + 0x4E) = (u16) reg_tmp.h[0];
-        reg_a0 = (u8 *)g_player1_as_u8_a;
+        reg_a0 = (u8 *)((u8 *)g_player1);
         reg_d0.w = 0;
         if (*(u8 *)reg_a5 & 1) {
-            reg_a0 = (u8 *)g_player2_as_u8_a;
+            reg_a0 = (u8 *)((u8 *)g_player2);
             reg_d0.w = 1;
         }
         *(u8 *)(reg_a5 + 2) = (u8) reg_d0.b[0];
@@ -546,8 +546,6 @@ void enemy_remove_entities()
     *(u16 *)reg_a5 = 0;
 }
 
-extern u16 *reg_a0_as_u16_p;
-extern u16 *reg_a1_as_u16_p;
 
 void enemy_set_task_state(void)
 {
@@ -555,20 +553,20 @@ void enemy_set_task_state(void)
     u16 *savedSource;
     u16 *savedDestination;
 
-    savedDestination = reg_a1_as_u16_p;
+    savedDestination = ((u16 *)reg_a1);
     savedCounter = reg_d0.w;
-    savedSource = reg_a0_as_u16_p;
-    reg_a1_as_u16_p = (u16 *)(reg_a5 + 0x16);
+    savedSource = ((u16 *)reg_a0);
+    (*(u16 **)&reg_a1) = (u16 *)(reg_a5 + 0x16);
 
     do {
-        *reg_a1_as_u16_p = *reg_a0_as_u16_p;
-        reg_a0_as_u16_p++;
-        reg_a1_as_u16_p++;
+        *(*(u16 **)&reg_a1) = *((u16 *)reg_a0);
+        (*(u16 **)&reg_a0)++;
+        (*(u16 **)&reg_a1)++;
     } while ((s16)(--reg_d0.h[0]) >= 0);
 
     reg_d0.w = savedCounter;
-    reg_a0_as_u16_p = savedSource;
-    reg_a1_as_u16_p = savedDestination;
+    (*(u16 **)&reg_a0) = savedSource;
+    (*(u16 **)&reg_a1) = savedDestination;
 }
 
 
@@ -850,7 +848,6 @@ void enemy_path_ground_hits(void)
     }
 }
 
-extern u16 *reg_a6_as_u16_p;
 
 void enemy_path_air_hits(void)
 {
@@ -859,9 +856,9 @@ void enemy_path_air_hits(void)
     reg_d0.b[0] -= 1;
 
     if (reg_d0.b[0] == 0) {
-        *reg_a6_as_u16_p &= 0xDFFE;
+        *(*(u16 **)&reg_a6) &= 0xDFFE;
     } else {
-        *reg_a6_as_u16_p |= 0x2001;
+        *(*(u16 **)&reg_a6) |= 0x2001;
     }
 }
 
@@ -934,11 +931,10 @@ void enemy_path_side_scroll(void) {
     reg_a0 += 1;
 }
 
-extern u8 enemy_move_end_requested_as_u8;
 
 
 void enemy_path_end(void) {
-    enemy_move_end_requested_as_u8 = 1;
+    enemy_move_end_requested = 1;
     enemy_remove();
 }
 

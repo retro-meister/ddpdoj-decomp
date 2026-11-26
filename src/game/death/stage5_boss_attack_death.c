@@ -274,8 +274,8 @@ void twin_boss_fire_attack_c_start(void) {
 s32 enemy_switch_target_player();
 s32 direction256_between();
 extern u16 g_bullets_blocked;
-extern u16 g_player2_as_u16_a[];
-extern u16 g_player1_as_u16_a[];
+extern s16 g_player2[];
+extern s16 g_player1[];
 
 void twin_boss_fire_attack_c(arg0, arg1)
     u8 *arg0;
@@ -296,8 +296,8 @@ void twin_boss_fire_attack_c(arg0, arg1)
             FORM3_C(reg_a4)->shot.t.count = (u8) FORM3_C(reg_a4)->shot_interval;
             reg_d2.b[0] = FORM3_C(reg_a4)->burst.t.count;
             if (FORM3_C(reg_a4)->burst.t.reload == reg_d2.b[0]) {
-                reg_a0 = (u8 *)(g_player1_as_u16_a);
-                reg_a1 = (u8 *)(g_player2_as_u16_a);
+                reg_a0 = (u8 *)(((u16 *)g_player1));
+                reg_a1 = (u8 *)(((u16 *)g_player2));
                 if (ENEMY_STATE(reg_a5)->target_player != 0) {
                     reg_atmp = (u8 *)(reg_a0);
                     reg_a0 = (u8 *)(reg_a1);
@@ -557,8 +557,6 @@ void twin_boss_fire_rage_start(void) {
 }
 
 extern u16 g_direction64_offsets_2CC[];
-extern s16 g_enemy_signal_1_as_s16;
-extern s16 g_enemy_signal_0_as_s16;
 
 void twin_boss_fire_rage(void) {
     u8 *p;
@@ -589,8 +587,8 @@ next_1:
     reg_d1.b[0] = FORM3_RAGE(reg_a4)->aim[1].direction;
     reg_d2.h[1] = ENTITY(reg_a6)->y.h;
     reg_d2.h[0] = ENTITY(reg_a6)->x.h;
-    g_enemy_signal_0_as_s16 = 0;
-    g_enemy_signal_1_as_s16 = 0;
+    g_enemy_signal_0 = 0;
+    g_enemy_signal_1 = 0;
     reg_d4.h[0] = 0x101;
     reg_tmp.w = reg_d4.w;
     reg_d4.h[1] = reg_tmp.h[0];
@@ -810,18 +808,15 @@ next_23:;
 
 extern u16 D_00264800[];
 extern u32 D_0028DA14;
-extern u16 *reg_a0_as_u16_p;
-extern u16 *reg_a1_as_u16_p;
-extern s32 reg_a4_as_s32;
 
 void twin_boss_fire_form1_rage_start(void) {
-    reg_a0_as_u16_p = D_00264800;
-    reg_a1_as_u16_p = (u16 *)(reg_a4_as_s32 + 2);
+    (*(u16 **)&reg_a0) = D_00264800;
+    (*(u16 **)&reg_a1) = (u16 *)((*(s32 *)&reg_a4) + 2);
     reg_d0.w = ((u32) D_0028DA14 >> 1) - 1;
     do {
-        *reg_a1_as_u16_p = *reg_a0_as_u16_p;
-        reg_a0_as_u16_p += 1;
-        reg_a1_as_u16_p += 1;
+        *(*(u16 **)&reg_a1) = *((u16 *)reg_a0);
+        (*(u16 **)&reg_a0) += 1;
+        (*(u16 **)&reg_a1) += 1;
     } while ((s16)(--reg_d0.h[0]) >= 0);
 }
 
@@ -933,13 +928,13 @@ extern u16 D_00264390[];
 extern u32 D_0028D9E4;
 
 void twin_boss_fire_jet_start(void) {
-    reg_a0_as_u16_p = D_00264390;
-    reg_a1_as_u16_p = (u16 *)(reg_a4 + 2);
+    (*(u16 **)&reg_a0) = D_00264390;
+    (*(u16 **)&reg_a1) = (u16 *)(reg_a4 + 2);
     reg_d0.w = ((u32) D_0028D9E4 >> 1) - 1;
     do {
-        *reg_a1_as_u16_p = *reg_a0_as_u16_p;
-        reg_a0_as_u16_p += 1;
-        reg_a1_as_u16_p += 1;
+        *(*(u16 **)&reg_a1) = *((u16 *)reg_a0);
+        (*(u16 **)&reg_a0) += 1;
+        (*(u16 **)&reg_a1) += 1;
     } while ((s16)(--reg_d0.h[0]) >= 0);
     reg_d0.h[0] = *(u16 *)(reg_a6 + 0x1E8);
     JET(reg_a4)->speed += reg_d0.h[0];

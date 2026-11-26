@@ -60,7 +60,7 @@ extern u16 g_direction_sprites_c[];
 extern u8 D_00263000[];
 extern u8 D_00263030[];
 extern u8 D_002630D0[];
-extern s16 g_enemy_signal_0_as_s16;
+extern u16 g_enemy_signal_0;
 extern u16 g_loop;
 extern u16 g_stage;
 extern s16 D_00299768[];
@@ -126,7 +126,7 @@ void stage2_midboss_start(void) {
         STAGE2_MIDBOSS(reg_a5)->spread_interval = (u8) reg_d2.b[0];
         reg_a0 = D_002630D0;
         fade_in_and_release();
-        g_enemy_signal_0_as_s16 = 1;
+        g_enemy_signal_0 = 1;
         sfx_heli_start();
         D_00299768[0] = 1;
         if (g_loop != 0) {
@@ -184,8 +184,8 @@ extern u16 g_damage_blink_counter;
 extern u16 g_rank_1_16;
 extern u16 g_rank_5_16;
 extern u16 g_side_scroll_x[];
-extern u16 g_player2_as_u16_a[];
-extern u16 g_player1_as_u16_a[];
+extern s16 g_player2[56];
+extern s16 g_player1[56];
 
 void stage2_midboss(void) {
     u32 cnt;
@@ -343,8 +343,8 @@ next_220:
     reg_d1.h[0] >>= 2;
     reg_d0.b[0] -= reg_d1.b[0];
     STAGE2_MIDBOSS(reg_a5)->hatch_wait = reg_d0.b[0];
-    reg_a0 = (u8 *) g_player1_as_u16_a;
-    reg_a1 = (u8 *) g_player2_as_u16_a;
+    reg_a0 = (u8 *) ((u16 *)g_player1);
+    reg_a1 = (u8 *) ((u16 *)g_player2);
     if (ENEMY_STATE(reg_a5)->target_player == 0) goto next_240;
     reg_atmp = (u8 *) reg_a0;
     reg_a0 = reg_a1;
@@ -430,8 +430,8 @@ next_400:
     reg_a0 += 2;
     ENTITY(reg_a6)[1].hit_x_minus.h = *(u16 *)reg_a0;
     reg_a0 += 2;
-    reg_a0 = (u8 *) g_player1_as_u16_a;
-    reg_a1 = (u8 *) g_player2_as_u16_a;
+    reg_a0 = (u8 *) ((u16 *)g_player1);
+    reg_a1 = (u8 *) ((u16 *)g_player2);
     if (ENEMY_STATE(reg_a5)->target_player == 0) goto next_420;
     reg_atmp = (u8 *) reg_a0;
     reg_a0 = reg_a1;
@@ -631,8 +631,8 @@ next_820:
     reg_d1.h[0] = reg_d0.h[0];
     goto next_870;
 next_830:
-    reg_a0 = (u8 *) g_player1_as_u16_a;
-    reg_a1 = (u8 *) g_player2_as_u16_a;
+    reg_a0 = (u8 *) ((u16 *)g_player1);
+    reg_a1 = (u8 *) ((u16 *)g_player2);
     if (ENEMY_STATE(reg_a5)->target_player == 0) goto next_840;
     reg_atmp = (u8 *) reg_a0;
     reg_a0 = reg_a1;

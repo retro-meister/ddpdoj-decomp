@@ -444,7 +444,6 @@ extern u16 laser_bomb_b_beam_row_09[];
 extern u16 laser_bomb_b_beam_row_10[];
 extern u16 laser_bomb_b_beam_row_11[];
 
-extern u16 laser_bomb_b_beam_frames_as_u16_a[];
 
 void bomb_tables_init(void) {
     STORE_POINTER(spread_bomb_phase1_template + 8, spread_bomb_a_phase1_frames);
@@ -470,7 +469,7 @@ void bomb_tables_init(void) {
     STORE_POINTER(laser_bomb_a_beam_table + 98, laser_bomb_a_beam_row_09);
     STORE_POINTER(laser_bomb_a_beam_table + 108, laser_bomb_a_beam_row_10);
     STORE_POINTER(laser_bomb_a_beam_table + 118, laser_bomb_a_beam_row_11);
-    STORE_POINTER(laser_bomb_b_beam_frames_as_u16_a, laser_bomb_b_beam_frame_00);
+    STORE_POINTER(((u16 *)laser_bomb_b_beam_frames), laser_bomb_b_beam_frame_00);
     STORE_POINTER(laser_bomb_b_beam_frames + 2, laser_bomb_b_beam_frame_01);
     STORE_POINTER(laser_bomb_b_beam_frames + 4, laser_bomb_b_beam_frame_02);
     STORE_POINTER(laser_bomb_b_beam_frames + 6, laser_bomb_b_beam_frame_03);
@@ -3078,12 +3077,6 @@ extern u16 D_0028C930[];
 extern u16 D_0028C938[];
 extern u16 D_0028C940[];
 
-extern u16 player_weapon_tables_as_u16_a[];
-extern u16 ship0_shot_lists_1_as_u16_a[];
-extern u16 ship0_shot_lists_2_as_u16_a[];
-extern u16 ship0_shot_lists_3_as_u16_a[];
-extern u16 D_00255EE0_as_u16_a[];
-extern u16 player_ship_sprite_tables_as_u16_a[];
 extern u16 player_ship_hitbox_tables[];
 extern u16 player_ship_shadow_tables[];
 extern u16 player_shield_sprite_tables[];
@@ -3093,7 +3086,7 @@ extern u16 D_0028C868[];
 extern u16 D_0028C880[];
 
 void player_tables_init(void) {
-    STORE_POINTER(player_weapon_tables_as_u16_a, player_shot_levels_0);
+    STORE_POINTER(((u16 *)player_weapon_tables), player_shot_levels_0);
     STORE_POINTER(player_weapon_tables + 2, player_laser_levels_0);
     STORE_POINTER(player_weapon_tables + 4, player_shot_levels_1);
     STORE_POINTER(player_weapon_tables + 6, player_laser_levels_1);
@@ -3109,23 +3102,23 @@ void player_tables_init(void) {
     STORE_POINTER(player_laser_levels_5 + 10, (u32)player_laser_levels_2 + 8);
     STORE_POINTER(player_laser_levels_5 + 12, (u32)player_shot_levels_3 + 8);
     STORE_POINTER(player_laser_levels_5 + 14, (u32)player_laser_levels_3 + 8);
-    STORE_POINTER(player_ship_sprite_tables_as_u16_a, player_ship_sprites_00);
+    STORE_POINTER(((u16 *)player_ship_sprite_tables), player_ship_sprites_00);
     STORE_POINTER(player_ship_sprite_tables + 2, player_ship_sprites_01);
     STORE_POINTER(player_ship_hitbox_tables, player_ship_hitboxes_00);
     STORE_POINTER(player_ship_hitbox_tables + 2, player_ship_hitboxes_01);
     STORE_POINTER(player_ship_shadow_tables, player_ship_shadows_00);
     STORE_POINTER(player_ship_shadow_tables + 2, player_ship_shadows_01);
-    STORE_POINTER(ship0_shot_lists_1_as_u16_a, ship0_shot_list_1_00);
+    STORE_POINTER(((u16 *)ship0_shot_lists_1), ship0_shot_list_1_00);
     STORE_POINTER(ship0_shot_lists_1 + 2, ship0_shot_list_1_01);
     STORE_POINTER(ship0_shot_lists_1 + 4, ship0_shot_list_1_02);
     STORE_POINTER(ship0_shot_lists_1 + 6, ship0_shot_list_1_03);
     STORE_POINTER(ship0_shot_lists_1 + 8, ship0_shot_list_1_04);
     STORE_POINTER(ship0_shot_lists_1 + 10, ship0_shot_list_1_05);
-    STORE_POINTER(ship0_shot_lists_2_as_u16_a, ship0_shot_list_2_00);
+    STORE_POINTER(((u16 *)ship0_shot_lists_2), ship0_shot_list_2_00);
     STORE_POINTER(ship0_shot_lists_2 + 2, ship0_shot_list_2_01);
     STORE_POINTER(ship0_shot_lists_2 + 8, ship0_shot_list_2_04);
     STORE_POINTER(ship0_shot_lists_2 + 10, ship0_shot_list_2_05);
-    STORE_POINTER(ship0_shot_lists_3_as_u16_a, ship0_shot_list_3_00);
+    STORE_POINTER(((u16 *)ship0_shot_lists_3), ship0_shot_list_3_00);
     STORE_POINTER(ship0_shot_lists_3 + 2, ship0_shot_list_3_01);
     STORE_POINTER(ship0_shot_lists_3 + 4, ship0_shot_list_3_02);
     STORE_POINTER(ship0_shot_lists_3 + 6, ship0_shot_list_3_03);
@@ -3325,7 +3318,7 @@ void player_tables_init(void) {
     STORE_POINTER(D_00255E08 + 48, D_00255EC8);
     STORE_POINTER(D_00255E08 + 50, D_00255EC8);
     STORE_POINTER(D_00255E08 + 52, D_00255EC8);
-    STORE_POINTER(D_00255EE0_as_u16_a, D_00255F80);
+    STORE_POINTER(((u16 *)D_00255EE0), D_00255F80);
     STORE_POINTER(D_00255EE0 + 2, D_0028C890);
     STORE_POINTER(D_00255EE0 + 4, D_0028C898);
     STORE_POINTER(D_00255EE0 + 6, D_0028C8A0);
@@ -3369,15 +3362,13 @@ extern u16 D_00261E30[];
 extern u16 D_00261E70[];
 extern u16 D_00261EB0[];
 
-extern u16 p1_maximum_level_texts_as_u16_a[];
-extern u16 p2_maximum_level_texts_as_u16_a[];
 
 void maximum_level_texts_init(void) {
-    STORE_POINTER(p1_maximum_level_texts_as_u16_a, D_00261CB0);
+    STORE_POINTER(((u16 *)p1_maximum_level_texts), D_00261CB0);
     STORE_POINTER(p1_maximum_level_texts + 4, D_00261E30);
     STORE_POINTER(p1_maximum_level_texts + 8, D_00261E70);
     STORE_POINTER(D_0028C5E0 + 4, D_00261EB0);
-    STORE_POINTER(p2_maximum_level_texts_as_u16_a, D_00261CB0);
+    STORE_POINTER(((u16 *)p2_maximum_level_texts), D_00261CB0);
     STORE_POINTER(p2_maximum_level_texts + 4, D_00261E30);
     STORE_POINTER(p2_maximum_level_texts + 8, D_00261E70);
     STORE_POINTER(D_0028C5E0 + 8, D_00261EB0);
@@ -3765,10 +3756,7 @@ extern u16 option_strong_sprites_b_01[];
 extern u16 option_strong_sprites_b_02[];
 extern u16 option_strong_sprites_b_03[];
 
-extern u16 option_style_params_as_u16_a[];
 extern u16 option_power_values[];
-extern u16 option_strong_params_as_u16_a[];
-extern u16 option_hyper_params_as_u16_a[];
 extern u16 option_strong_sprites_a[];
 extern u16 option_hyper_sprites_a[];
 extern u16 option_hyper_sprites_b[];
@@ -3789,7 +3777,7 @@ void option_tables_init(void) {
     STORE_POINTER(option_style_param_02 + 19, option_style_param_02_04);
     STORE_POINTER(option_style_param_02 + 30, option_style_param_02_15);
     STORE_POINTER(option_style_param_02 + 39, option_style_param_02_19);
-    STORE_POINTER(option_style_params_as_u16_a, option_style_param_00);
+    STORE_POINTER(((u16 *)option_style_params), option_style_param_00);
     STORE_POINTER(option_style_params + 2, option_style_param_01);
     STORE_POINTER(option_style_params + 4, option_style_param_02);
     STORE_POINTER(option_power_values, option_power_value_00);
@@ -3802,7 +3790,7 @@ void option_tables_init(void) {
     STORE_POINTER(option_power_values + 14, option_power_value_07);
     STORE_POINTER(option_power_values + 16, option_power_value_08);
     STORE_POINTER(option_power_values + 18, option_power_value_09);
-    STORE_POINTER(option_strong_params_as_u16_a, option_strong_param_00);
+    STORE_POINTER(((u16 *)option_strong_params), option_strong_param_00);
     STORE_POINTER(option_strong_params + 2, option_strong_param_01);
     STORE_POINTER(option_strong_params + 4, option_strong_param_02);
     STORE_POINTER(option_strong_params + 6, option_strong_param_03);
@@ -3812,7 +3800,7 @@ void option_tables_init(void) {
     STORE_POINTER(option_strong_params + 14, option_strong_param_07);
     STORE_POINTER(option_strong_params + 16, option_strong_param_08);
     STORE_POINTER(option_strong_params + 18, option_strong_param_09);
-    STORE_POINTER(option_hyper_params_as_u16_a, option_hyper_param_00);
+    STORE_POINTER(((u16 *)option_hyper_params), option_hyper_param_00);
     STORE_POINTER(option_hyper_params + 2, option_hyper_param_01);
     STORE_POINTER(option_hyper_params + 4, option_hyper_param_02);
     STORE_POINTER(option_hyper_params + 6, option_hyper_param_03);
@@ -3969,13 +3957,9 @@ extern u16 option_shot_list_4_02[];
 extern u16 option_shot_list_4_01[];
 extern u16 option_shot_list_4_03[];
 
-extern u16 option_shot_lists_1_as_u16_a[];
-extern u16 option_shot_lists_2_as_u16_a[];
-extern u16 option_shot_lists_3_as_u16_a[];
-extern u16 option_shot_lists_4_as_u16_a[];
 
 void option_shot_lists_init(void) {
-    STORE_POINTER(option_shot_lists_1_as_u16_a, option_shot_list_1_00);
+    STORE_POINTER(((u16 *)option_shot_lists_1), option_shot_list_1_00);
     STORE_POINTER(option_shot_lists_1 + 2, option_shot_list_1_01);
     STORE_POINTER(option_shot_lists_1 + 4, option_shot_list_1_02);
     STORE_POINTER(option_shot_lists_1 + 6, option_shot_list_1_03);
@@ -3999,7 +3983,7 @@ void option_shot_lists_init(void) {
     STORE_POINTER(option_shot_list_1_03 + 4, option_shot_list_1_03_02);
     STORE_POINTER(option_shot_list_1_03 + 6, option_shot_list_1_03_03);
     STORE_POINTER(option_shot_list_1_03 + 8, option_shot_list_1_03_04);
-    STORE_POINTER(option_shot_lists_2_as_u16_a, option_shot_list_2_00);
+    STORE_POINTER(((u16 *)option_shot_lists_2), option_shot_list_2_00);
     STORE_POINTER(option_shot_lists_2 + 2, option_shot_list_2_01);
     STORE_POINTER(option_shot_lists_2 + 4, option_shot_list_2_02);
     STORE_POINTER(option_shot_lists_2 + 6, option_shot_list_2_03);
@@ -4023,7 +4007,7 @@ void option_shot_lists_init(void) {
     STORE_POINTER(option_shot_list_2_03 + 4, option_shot_list_2_03_02);
     STORE_POINTER(option_shot_list_2_03 + 6, option_shot_list_2_03_03);
     STORE_POINTER(option_shot_list_2_03 + 8, option_shot_list_2_03_04);
-    STORE_POINTER(option_shot_lists_3_as_u16_a, option_shot_list_3_00);
+    STORE_POINTER(((u16 *)option_shot_lists_3), option_shot_list_3_00);
     STORE_POINTER(option_shot_lists_3 + 2, option_shot_list_3_01);
     STORE_POINTER(option_shot_lists_3 + 4, option_shot_list_3_02);
     STORE_POINTER(option_shot_lists_3 + 6, option_shot_list_3_03);
@@ -4047,7 +4031,7 @@ void option_shot_lists_init(void) {
     STORE_POINTER(option_shot_list_3_03 + 4, option_shot_list_3_03_02);
     STORE_POINTER(option_shot_list_3_03 + 6, option_shot_list_3_03_03);
     STORE_POINTER(option_shot_list_3_03 + 8, option_shot_list_3_03_04);
-    STORE_POINTER(option_shot_lists_4_as_u16_a, option_shot_list_4_00);
+    STORE_POINTER(((u16 *)option_shot_lists_4), option_shot_list_4_00);
     STORE_POINTER(option_shot_lists_4 + 2, option_shot_list_4_01);
     STORE_POINTER(option_shot_lists_4 + 4, option_shot_list_4_02);
     STORE_POINTER(option_shot_lists_4 + 6, option_shot_list_4_03);
@@ -4094,7 +4078,6 @@ extern u16 D_00258560[];
 extern u16 D_002586E0[];
 extern u16 D_00258760[];
 extern u16 D_00258770[];
-extern u16 D_0028C9D8_as_u16_a[];
 
 void func_00186310(void) {
     STORE_POINTER(D_0028C9B0 + 4, func_00157140);
@@ -4123,7 +4106,7 @@ void func_00186310(void) {
     STORE_POINTER(D_00258770 + 10, wing_gunner_fire);
     STORE_POINTER(D_00258770 + 12, wing_gunner_fire);
     STORE_POINTER(D_00258770 + 14, func_0015A390);
-    STORE_POINTER(D_0028C9D8_as_u16_a, D_00258880);
+    STORE_POINTER(((u16 *)D_0028C9D8), D_00258880);
     STORE_POINTER(D_0028C9D8 + 2, D_00258900);
     STORE_POINTER(D_002589B0 + 10, entity_draw_layer1);
     STORE_POINTER(D_002589B0 + 12, sprite_draw_layer1);
@@ -4186,9 +4169,9 @@ extern u16 D_002448F0[];
 extern u16 D_00244970[];
 extern u16 D_002449B0[];
 extern u16 D_002449F0[];
-extern u16 D_002601B0_as_u16_a[];
-extern u16 D_002601F0_as_u16_a[];
-extern u16 D_00260230_as_u16_a[];
+extern u8 D_002601B0[];
+extern u8 D_002601F0[];
+extern u8 D_00260230[];
 extern u16 D_002610F0[];
 extern u16 D_00261130[];
 extern u16 D_00261170[];
@@ -4200,9 +4183,9 @@ extern u16 D_0028C0D0[];
 void func_00186A80(void) {
     STORE_POINTER(stage1_midboss_entities + 243, D_0028C0D0);
     STORE_POINTER(stage1_midboss_fade_script + 4, D_002610F0);
-    STORE_POINTER(stage1_midboss_fade_script + 11, D_002601B0_as_u16_a);
-    STORE_POINTER(stage1_midboss_fade_script + 18, D_002601F0_as_u16_a);
-    STORE_POINTER(stage1_midboss_fade_script + 25, D_00260230_as_u16_a);
+    STORE_POINTER(stage1_midboss_fade_script + 11, ((u16 *)D_002601B0));
+    STORE_POINTER(stage1_midboss_fade_script + 18, ((u16 *)D_002601F0));
+    STORE_POINTER(stage1_midboss_fade_script + 25, ((u16 *)D_00260230));
     STORE_POINTER(stage1_midboss_fade_script + 32, D_00261170);
     STORE_POINTER(stage1_midboss_fade_script + 39, D_00261130);
     STORE_POINTER(stage1_midboss_fade_script + 46, D_002611B0);
@@ -4475,12 +4458,12 @@ void func_00187AE0(void) {
 extern u16 D_00249E10[];
 extern u16 D_00249E50[];
 extern u16 D_00249E90[];
-extern u16 D_002616F0_as_u16_a[];
-extern u16 D_00261770_as_u16_a[];
-extern u16 D_002617B0_as_u16_a[];
-extern u16 D_002617F0_as_u16_a[];
-extern u16 D_00261830_as_u16_a[];
-extern u16 D_00261870_as_u16_a[];
+extern u8 D_002616F0[];
+extern u8 D_00261770[];
+extern u8 D_002617B0[];
+extern u8 D_002617F0[];
+extern u8 D_00261830[];
+extern u8 D_00261870[];
 extern u16 D_002619B0[];
 extern u16 D_002619F0[];
 extern u16 D_00263AE0[];
@@ -4494,10 +4477,10 @@ void func_00187E00(void) {
     STORE_POINTER(D_002638B0 + 61, D_0028C0C0);
     STORE_POINTER(D_002638B0 + 68, D_0028C0C0);
     STORE_POINTER(D_002639B0 + 4, D_002610F0);
-    STORE_POINTER(D_002639B0 + 11, D_002616F0_as_u16_a);
-    STORE_POINTER(D_002639B0 + 18, D_002617B0_as_u16_a);
-    STORE_POINTER(D_002639B0 + 25, D_002617F0_as_u16_a);
-    STORE_POINTER(D_002639B0 + 32, D_00261870_as_u16_a);
+    STORE_POINTER(D_002639B0 + 11, ((u16 *)D_002616F0));
+    STORE_POINTER(D_002639B0 + 18, ((u16 *)D_002617B0));
+    STORE_POINTER(D_002639B0 + 25, ((u16 *)D_002617F0));
+    STORE_POINTER(D_002639B0 + 32, ((u16 *)D_00261870));
     STORE_POINTER(D_002639B0 + 39, D_002619B0);
     STORE_POINTER(D_002639B0 + 46, D_00249E10);
     STORE_POINTER(D_002639B0 + 53, D_00249E50);
@@ -4508,29 +4491,28 @@ void func_00187E00(void) {
     STORE_POINTER(D_00263B80 + 54, D_0028C0C8);
     STORE_POINTER(D_00263B80 + 61, D_0028C0C0);
     STORE_POINTER(D_00263B80 + 68, D_0028C0C0);
-    STORE_POINTER(D_00263C70 + 3, D_00261770_as_u16_a);
+    STORE_POINTER(D_00263C70 + 3, ((u16 *)D_00261770));
     STORE_POINTER(D_00263C80 + 3, D_00261D30);
     STORE_POINTER(D_00263C90 + 4, D_002610F0);
-    STORE_POINTER(D_00263C90 + 11, D_00261770_as_u16_a);
+    STORE_POINTER(D_00263C90 + 11, ((u16 *)D_00261770));
     STORE_POINTER(D_00263C90 + 18, D_00249E50);
     STORE_POINTER(D_00263C90 + 25, D_00249E90);
-    STORE_POINTER(D_00263C90 + 32, D_00261870_as_u16_a);
+    STORE_POINTER(D_00263C90 + 32, ((u16 *)D_00261870));
     STORE_POINTER(D_00263C90 + 39, D_002619F0);
-    STORE_POINTER(D_00263CF0 + 4, D_00261830_as_u16_a);
+    STORE_POINTER(D_00263CF0 + 4, ((u16 *)D_00261830));
 }
 
 extern u16 D_002420C0[];
 extern u16 D_002420D0[];
 extern u16 D_002420E0[];
 
-extern u16 D_002420A8_as_u16_a[];
 
 void func_001881E0(void) {
     STORE_POINTER(D_00242020 + 20, entity_draw_layer1);
     STORE_POINTER(D_00242020 + 22, sprite_draw_layer1);
     STORE_POINTER(D_00242070 + 20, entity_draw_layer1);
     STORE_POINTER(D_00242070 + 22, sprite_draw_layer1);
-    STORE_POINTER(D_002420A8_as_u16_a, D_002420C0);
+    STORE_POINTER(((u16 *)D_002420A8), D_002420C0);
     STORE_POINTER(D_002420A8 + 2, D_002420D0);
     STORE_POINTER(D_002420A8 + 4, D_002420E0);
 }

@@ -394,8 +394,8 @@ s32 sprite_palette_load();
 extern u8 D_002601B0[];
 extern u8 D_002601F0[];
 extern u8 D_00260230[];
-extern s16 g_enemy_signal_1_as_s16;
-extern s16 g_enemy_signal_0_as_s16;
+extern u16 g_enemy_signal_1;
+extern u16 g_enemy_signal_0;
 extern s8 enemy_move_end_requested;
 
 void stage1_midboss_start() {
@@ -412,8 +412,8 @@ void stage1_midboss_start() {
         ENTITY(reg_a6)->y.h += 0xA40;
         stage1_midboss_place_arms();
         stage1_midboss_move_arms();
-        g_enemy_signal_1_as_s16 = 0;
-        g_enemy_signal_0_as_s16 = 1;
+        g_enemy_signal_1 = 0;
+        g_enemy_signal_0 = 1;
         reg_d0.h[0] = 0x10;
         reg_a0 = D_002601B0;
         sprite_palette_load();
@@ -956,7 +956,7 @@ extern u32 D_00251720[];
 extern u16 g_attract_demo;
 extern u8 g_replay_mode;
 extern u8 g_simulation_active;
-extern u32 g_bg_layer_as_u32_a[];
+extern u8 g_bg_layer[16384];
 extern u32 D_002B6DF4[];
 extern u32 D_002B6E0C[];
 
@@ -997,7 +997,7 @@ loop_2:
     if (((s64) ((s64) (u16) cnt << 0x30) >> 0x30) >= 0) {
         goto loop_2;
     }
-    (*(u8 **)&reg_tmp1) = (u8 *)g_bg_layer_as_u32_a;
+    (*(u8 **)&reg_tmp1) = (u8 *)((u32 *)g_bg_layer);
     reg_tmp.w += 4;
     reg_tmp.w = (u32) reg_tmp.b[0];
     (*(u8 **)&reg_tmp1) += reg_tmp.w;

@@ -3,7 +3,7 @@
 
 extern void (*D_00250D00[8])();
 extern void *D_00251120[256];
-extern u8 g_player2_as_u8_a[];
+extern s16 g_player2[56];
 #include "entity.h"
 #include "sdk/ps2sdk.h"
 
@@ -54,11 +54,11 @@ void func_00209EC0(void) {
     D_0029A528[0] -= 1;
 }
 
-extern s32 D_0028E570_as_s32;
+extern u8 *D_0028E570;
 extern u16 g_sprite_sparks_used;
 
 void func_00209EE0(void) {
-    reg_a4 -= D_0028E570_as_s32;
+    reg_a4 -= (*(s32 *)&D_0028E570);
     reg_tmp.sw = (s32)reg_a4;
     g_sprite_sparks_used = reg_tmp.h[0];
 }
@@ -85,7 +85,7 @@ extern u8 *reg_save4_a1;
 extern u8 *reg_save4_a0;
 extern u16 g_loop;
 extern u8 D_0029A12C[];
-extern u8 g_player1_as_u8_a[];
+extern s16 g_player1[56];
 
 void func_00209F20(void) {
     if (g_loop != 0) {
@@ -112,7 +112,7 @@ void func_00209F20(void) {
     reg_d1.w = 0;
     reg_a2 = *(u8 **)(((u8 *)D_00251120) + reg_d5.h[0] * 4);
     reg_a0 = (u8 *)D_00299D30;
-    if (g_player1_as_u8_a == reg_a4) {
+    if (((u8 *)g_player1) == reg_a4) {
         func_0020A370();
         return;
     }
@@ -203,7 +203,7 @@ void func_0020A1C0(void) {
 
 s32 func_00201230();
 extern u8 D_00250D88[];
-extern u8 g_bomb_entities_as_u8_a[];
+extern u16 g_bomb_entities[24];
 
 void func_0020A270(void) {
     s32 temp_a1;
@@ -232,7 +232,7 @@ void func_0020A270(void) {
     reg_d7.h[0] = 0xFFFF;
     reg_a0 = (u8 *)D_00299D30;
     reg_d0.w = 0;
-    if (!(g_bomb_entities_as_u8_a[0] & 0x80)) {
+    if (!(((u8 *)g_bomb_entities)[0] & 0x80)) {
         func_0020A370();
         return;
     }
@@ -252,13 +252,6 @@ void func_0020A370(void) {
     func_0020A3B0();
 }
 
-extern s32 reg_save4_a6_as_s32;
-extern s32 reg_save4_a5_as_s32;
-extern s32 reg_save4_a4_as_s32;
-extern s32 reg_save4_a3_as_s32;
-extern s32 reg_save4_a2_as_s32;
-extern s32 reg_save4_a1_as_s32;
-extern u16 *reg_save4_a0_as_u16_p;
 
 void func_0020A3B0(void) {
     u32 t;
@@ -278,13 +271,13 @@ loop_1:
     reg_d5.w = reg_save4_d5;
     reg_d6.w = reg_save4_d6;
     reg_d7.w = reg_save4_d7;
-    reg_a0 = (u8 *)reg_save4_a0_as_u16_p;
-    reg_a1 = (u8 *)reg_save4_a1_as_s32;
-    reg_a2 = (u8 *)reg_save4_a2_as_s32;
-    reg_a3 = (u8 *)reg_save4_a3_as_s32;
-    reg_a4 = (u8 *)reg_save4_a4_as_s32;
-    reg_a5 = (u8 *)reg_save4_a5_as_s32;
-    reg_a6 = (u8 *)reg_save4_a6_as_s32;
+    reg_a0 = (u8 *)((u16 *)reg_save4_a0);
+    reg_a1 = (u8 *)(*(s32 *)&reg_save4_a1);
+    reg_a2 = (u8 *)(*(s32 *)&reg_save4_a2);
+    reg_a3 = (u8 *)(*(s32 *)&reg_save4_a3);
+    reg_a4 = (u8 *)(*(s32 *)&reg_save4_a4);
+    reg_a5 = (u8 *)(*(s32 *)&reg_save4_a5);
+    reg_a6 = (u8 *)(*(s32 *)&reg_save4_a6);
     return;
 next_2:
     func_0020AAA0();
@@ -304,13 +297,13 @@ next_3:
     reg_d5.w = reg_save4_d5;
     reg_d6.w = reg_save4_d6;
     reg_d7.w = reg_save4_d7;
-    reg_a0 = (u8 *)reg_save4_a0_as_u16_p;
-    reg_a1 = (u8 *)reg_save4_a1_as_s32;
-    reg_a2 = (u8 *)reg_save4_a2_as_s32;
-    reg_a3 = (u8 *)reg_save4_a3_as_s32;
-    reg_a4 = (u8 *)reg_save4_a4_as_s32;
-    reg_a5 = (u8 *)reg_save4_a5_as_s32;
-    reg_a6 = (u8 *)reg_save4_a6_as_s32;
+    reg_a0 = (u8 *)((u16 *)reg_save4_a0);
+    reg_a1 = (u8 *)(*(s32 *)&reg_save4_a1);
+    reg_a2 = (u8 *)(*(s32 *)&reg_save4_a2);
+    reg_a3 = (u8 *)(*(s32 *)&reg_save4_a3);
+    reg_a4 = (u8 *)(*(s32 *)&reg_save4_a4);
+    reg_a5 = (u8 *)(*(s32 *)&reg_save4_a5);
+    reg_a6 = (u8 *)(*(s32 *)&reg_save4_a6);
 }
 
 extern u16 g_frame_mod8;
@@ -452,7 +445,7 @@ block_clr8:
 typedef void (*Fn)();
 
 s32 func_00201200();
-extern u16 *D_0028E530_as_u16_p;
+extern s32 D_0028E530;
 
 void func_0020AAA0(void) {
     u16 *temp_a2;
@@ -461,7 +454,7 @@ void func_0020AAA0(void) {
     u32 temp_a0_2;
     u32 temp_a1;
 
-    D_0028E530_as_u16_p = (u16 *)(reg_a2);
+    (*(u16 **)&D_0028E530) = (u16 *)(reg_a2);
     reg_d3.h[0] = reg_d0.h[0];
     reg_d3.h[0] |= 0x8000;
     *(u16 *)reg_a0 = reg_d3.h[0];
@@ -557,16 +550,16 @@ void func_0020AD50(void) {
     reg_d0.h[0] = 0xC0;
     if (0 <= (s16)(reg_d7.h[0])) {
         if (reg_d7.h[0] & 0xFFFF) {
-            reg_d1.h[0] = PLAYER(g_player2_as_u8_a)->laser_power.h;
+            reg_d1.h[0] = PLAYER(((u8 *)g_player2))->laser_power.h;
         } else {
-            reg_d1.h[0] = PLAYER(g_player1_as_u8_a)->laser_power.h;
+            reg_d1.h[0] = PLAYER(((u8 *)g_player1))->laser_power.h;
         }
         reg_a2 = (u8 *)(D_00250D20);
         reg_a2 += reg_d1.h[0];
         reg_d0.h[0] = *(u16 *)reg_a2;
     } else {
         reg_d3.h[0] = 2;
-        if (g_bomb_entities_as_u8_a[0] & 0x80) {
+        if (((u8 *)g_bomb_entities)[0] & 0x80) {
             reg_d3.h[0] = 3;
         }
         (*(u8 *)((u8 *)(reg_a0) + (-0x12))) = (u8) reg_d3.b[0];
@@ -578,7 +571,7 @@ void func_0020AD50(void) {
     reg_d1.w = temp_s2;
     reg_d2.w = temp_s3;
     reg_a0 += 2;
-    reg_a2 = (u8 *)(D_0028E530_as_u16_p);
+    reg_a2 = (u8 *)((*(u16 **)&D_0028E530));
 }
 
 

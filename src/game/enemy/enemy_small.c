@@ -638,8 +638,8 @@ void small_tank_b_start(void) {
 
 extern u16 small_tank_b_muzzles[];
 extern u16 small_tank_b_body_sprites[];
-extern u16 D_0028E7DC_as_u16;
-extern u16 D_0028E7E0_as_u16;
+extern s16 D_0028E7DC;
+extern s16 D_0028E7E0;
 extern u16 g_rank_10_16;
 
 void small_tank_b(void) {
@@ -692,8 +692,8 @@ next_50:
     reg_d0.w = 8;
     score_add();
     SMALL_TANK(reg_a5)->damage |= 0x80;
-    if (D_0028E7E0_as_u16 != 0) goto next_110;
-    D_0028E7E0_as_u16 = 1;
+    if ((u16)D_0028E7E0 != 0) goto next_110;
+    D_0028E7E0 = 1;
     reg_d0.w = 3;
     reg_a1 = (u8 *)((u16 *)small_tank_damaged_explosions);
     small_tank_explosion();
@@ -816,12 +816,12 @@ block_70:
     *(u16 *)(reg_a0 + 0x26) = 0xFE00;
     *(u16 *)(reg_a0 + 0x12) = 0;
     *(u16 *)(reg_a0 + 0x14) = 0;
-    if (D_0028E7E0_as_u16 == 0) goto next_71;
+    if ((u16)D_0028E7E0 == 0) goto next_71;
     *(u16 *)(reg_a0 + 0x12) = 0xFFFF;
 next_71:
-    D_0028E7E0_as_u16 = 1;
-    D_0028E7DC_as_u16 += 1;
-    if (!(D_0028E7DC_as_u16 & 1)) goto next_72;
+    D_0028E7E0 = 1;
+    (*(u16 *)&D_0028E7DC) += 1;
+    if (!((u16)D_0028E7DC & 1)) goto next_72;
     reg_d0.w = 4;
     small_tank_wreck();
 next_72:
@@ -904,8 +904,6 @@ extern u16 g_direction_offsets_540[];
 extern u16 g_direction64_offsets_2CC[];
 extern u16 g_bullets_blocked;
 extern u16 g_damage_blink_counter;
-extern u16 g_player2_as_u16_a[];
-extern u16 g_player1_as_u16_a[];
 
 void large_tank(void) {
     s16 *t1;
@@ -989,8 +987,8 @@ next_2:
                 reg_tmp.b[0] = LARGE_TANK(reg_a5)->turn_countdown;
                 LARGE_TANK(reg_a5)->turn_countdown -= 1;
                 if (((s32) reg_tmp.b[0] <= 0) && (LARGE_TANK(reg_a5)->turn_countdown = (u8) LARGE_TANK(reg_a5)->turn_interval, reg_d0.b[0] = LARGE_TANK(reg_a5)->turret_shots_left, (LARGE_TANK(reg_a5)->turret_shots == reg_d0.b[0]))) {
-                    reg_a0 = (u8 *)(g_player1_as_u16_a);
-                    reg_a1 = (u8 *)(g_player2_as_u16_a);
+                    reg_a0 = (u8 *)(((u16 *)g_player1));
+                    reg_a1 = (u8 *)(((u16 *)g_player2));
                     if (ENEMY_STATE(reg_a5)->target_player != 0) {
                         reg_atmp = (u8 *)(reg_a0);
                         reg_a0 = (u8 *)(reg_a1);

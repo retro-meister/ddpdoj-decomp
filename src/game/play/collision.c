@@ -50,7 +50,7 @@ void collision_reset(void) {
     D_0028E090 = 0;
 }
 
-extern s16 g_player_was_hit_as_s16;
+extern u16 g_player_was_hit;
 
 
 #ifdef DEATH_LABEL
@@ -84,7 +84,7 @@ void bullet_hits_player_check(void) {
                 reg_d4.w = 0x10;
                 *temp_a2 |= reg_d4.b[0];
                 *(u8 *)(reg_a4 + 1) |= reg_d4.b[0];
-                g_player_was_hit_as_s16 = 1;
+                g_player_was_hit = 1;
                 cond_flag = 1;
             }
         }
@@ -159,7 +159,7 @@ next_9:
     reg_a1 = save_a1;
 }
 
-extern u8 g_bomb_entities_as_u8_a[];
+extern u16 g_bomb_entities[];
 
 void bomb_bounds_get(void) {
     reg_d0.h[0] = 0xF800;
@@ -173,7 +173,7 @@ void bomb_bounds_get(void) {
     *(u16 *) reg_a5 = 0x7C00;
     reg_a5 += 2;
     reg_d5.h[0] = 0x2C;
-    reg_a6 = (u8 *)g_bomb_entities_as_u8_a;
+    reg_a6 = (u8 *)((u8 *)g_bomb_entities);
 loop_1:
     reg_tmp.h[0] = ENTITY(reg_a6)->flags.h;
     reg_a6 += 2;
@@ -240,10 +240,9 @@ void player_bullet_collisions(void)
     }
 }
 
-extern u32 g_laser_bomb_hit_entity_as_u32;
+extern s32 g_laser_bomb_hit_entity;
 extern u16 g_laser_bomb_hit_position;
 extern u16 g_player_was_hit;
-extern u16 g_collision_bounds_as_u16_a[];
 extern u8 g_game_mode;
 extern u16 g_item_count;
 extern u16 g_enemy_count_second;
@@ -251,13 +250,13 @@ extern u16 g_enemy_count;
 extern u16 g_two_player_game;
 extern u16 g_bullet_count;
 extern u8 g_bullets[];
-extern u16 D_00299768_as_u16_a[];
-extern u16 D_0029976A_as_u16_a[];
+extern s16 D_00299768[];
+extern s16 D_0029976A[];
 extern u16 D_0029976C[];
 extern u16 D_0029976E[];
 extern u16 g_bomb_entities[];
 extern u16 g_items_from_y[];
-extern u16 D_002BF4F0_as_u16_a[];
+extern u8 D_002BF4F0[3080];
 #ifdef DEATH_LABEL
 extern u16 g_attract_demo;
 extern u16 g_stage;
@@ -327,7 +326,7 @@ loop_5:
             }
             reg_d6.h[0] = g_bullet_count;
             if (reg_d6.h[0] != 0) {
-                reg_a6 = (u8 *)D_002BF4F0_as_u16_a;
+                reg_a6 = (u8 *)((u16 *)D_002BF4F0);
                 goto loop_17;
 skip_17:
                 reg_a6 += 0x2A;
@@ -447,7 +446,7 @@ loop_48:
         reg_a1 += 2;
         reg_d1.h[0] -= *(u16 *)reg_a1;
         reg_a1 += 2;
-        reg_a6 = (u8 *)g_collision_bounds_as_u16_a;
+        reg_a6 = (u8 *)((u16 *)g_collision_bounds);
         reg_tmp.h[0] = *(u16 *)reg_a6;
         reg_a6 += 2;
         if ((s32) reg_tmp.h[0] < (s32) reg_d1.h[0]) goto next_48;
@@ -539,7 +538,7 @@ done_48:
         if (reg_d6.h[0] == 0) goto done_76;
         reg_d6.h[0] -= 1;
         reg_d7.h[0] = 0xF000;
-        reg_a1 = (u8 *)(g_collision_bounds_as_u16_a);
+        reg_a1 = (u8 *)(((u16 *)g_collision_bounds));
         *(u16 *)reg_a1 += reg_d7.h[0];
         reg_a1 += 2;
         *(u16 *)reg_a1 += reg_d7.h[0];
@@ -572,7 +571,7 @@ loop_76:
         reg_a1 += 2;
         reg_d1.h[0] -= *(u16 *)reg_a1;
         reg_a1 += 2;
-        reg_a6 = (u8 *)g_collision_bounds_as_u16_a;
+        reg_a6 = (u8 *)((u16 *)g_collision_bounds);
         reg_tmp.h[0] = *(u16 *)reg_a6;
         reg_a6 += 2;
         if ((s32) reg_tmp.h[0] < (s32) reg_d1.h[0]) goto next_76;
@@ -778,7 +777,7 @@ block_120:
         if (((s16)(reg_d5.h[0]) < 0) && (*(u8 *)reg_a4 & 0x40)) {
             reg_d0.w = 0;
             g_laser_bomb_hit_position = 0x7800;
-            g_laser_bomb_hit_entity_as_u32 = reg_d0.w;
+            g_laser_bomb_hit_entity = reg_d0.w;
             if (!(reg_d5.h[0] & 0xFFFF & 1)) {
                 reg_a5 = (u8 *)g_enemy_entities;
                 reg_d6.h[0] = g_collision_hit_bits;
@@ -903,7 +902,7 @@ hit_140:
             reg_d1.h[0] -= *(u16 *)reg_a2; reg_a2 += 2;
             reg_d2.h[0] += *(u16 *)reg_a2; reg_a2 += 2;
             reg_d3.h[0] -= *(u16 *)reg_a2; reg_a2 += 2;
-            reg_a6 = (u8 *) g_collision_bounds_as_u16_a;
+            reg_a6 = (u8 *) ((u16 *)g_collision_bounds);
             reg_tmp.h[0] = *(u16 *)reg_a6; reg_a6 += 2;
             if ((s32) reg_tmp.h[0] < (s32) reg_d3.h[0]) goto skip_140;
             reg_tmp.h[0] = *(u16 *)reg_a6; reg_a6 += 2;
@@ -945,7 +944,7 @@ loop_145:
             if ((s32) reg_d5.h[0] < (s32) reg_d4.h[0]) goto store_145;
             reg_d4.h[0] = reg_d5.h[0];
 store_145:
-            g_laser_bomb_hit_entity_as_u32 = (u32) reg_a5;
+            g_laser_bomb_hit_entity = (u32) reg_a5;
             g_laser_bomb_hit_position = reg_d4.h[0];
 next_145:
             reg_a6 += 0x30;
@@ -958,8 +957,8 @@ next_145:
             tmp_dec = reg_d7.h[0] - 1; reg_d7.h[0] = tmp_dec;
             if (((s64) ((s64) (tmp_dec & 0xFFFF) << 0x30) >> 0x30) >= 0) goto loop_140;
 done_140:
-            if (g_laser_bomb_hit_entity_as_u32 != 0) {
-                reg_a5 = (u8 *) g_laser_bomb_hit_entity_as_u32;
+            if ((u32)g_laser_bomb_hit_entity != 0) {
+                reg_a5 = (u8 *) (u32)g_laser_bomb_hit_entity;
                 reg_d4.h[0] = g_collision_hit_bits;
                 reg_d4.h[0] |= 0x400;
                 ENTITY(reg_a5)->flags.h |= reg_d4.h[0];
@@ -1049,7 +1048,7 @@ hit_150:
             reg_d1.h[0] -= *(u16 *)reg_a2; reg_a2 += 2;
             reg_d2.h[0] += *(u16 *)reg_a2; reg_a2 += 2;
             reg_d3.h[0] -= *(u16 *)reg_a2; reg_a2 += 2;
-            reg_a6 = (u8 *) g_collision_bounds_as_u16_a;
+            reg_a6 = (u8 *) ((u16 *)g_collision_bounds);
             reg_tmp.h[0] = *(u16 *)reg_a6; reg_a6 += 2;
             if ((s32) reg_tmp.h[0] < (s32) reg_d3.h[0]) goto skip_150;
             reg_tmp.h[0] = *(u16 *)reg_a6; reg_a6 += 2;
@@ -1060,7 +1059,7 @@ hit_150:
             if ((s32) reg_tmp.h[0] > (s32) reg_d0.h[0]) goto skip_150;
             reg_d4.h[0] = ENTITY(reg_a5)->y.h;
             if (!((s32) reg_d4.h[0] < 0x7000)) goto skip_150;
-            if (g_laser_bomb_hit_entity_as_u32 == 0) goto scan_150;
+            if ((u32)g_laser_bomb_hit_entity == 0) goto scan_150;
             if (!((s32) reg_d4.h[0] < (s32) g_laser_bomb_hit_position)) goto skip_150;
 scan_150:
             reg_tmp7.h[0] = reg_d7.h[0];
@@ -1106,9 +1105,9 @@ end_155:
 start_160:
             reg_a5 = (u8 *)(g_bullets + 2);
             reg_d7.h[0] = MAIN_OR_DEATH_LABEL(0x45, 0x15D);
-            if (D_00299768_as_u16_a[0] == 0) goto loop_160;
+            if (((u16 *)D_00299768)[0] == 0) goto loop_160;
             reg_d7.h[0] = MAIN_OR_DEATH_LABEL(0x6D, 0x225);
-            if (D_0029976A_as_u16_a[0] == 0) goto loop_160;
+            if (((u16 *)D_0029976A)[0] == 0) goto loop_160;
             reg_d7.h[0] = MAIN_OR_DEATH_LABEL(0x9F, 0x31F);
             if (D_0029976C[0] == 0) goto loop_160;
             reg_d7.h[0] = MAIN_OR_DEATH_LABEL(0xBD, 0x3B5);
@@ -1117,13 +1116,13 @@ start_160:
 loop_160:
             reg_d0.h[0] = *(u16 *)reg_a5;
             if ((s16) reg_d0.h[0] < 0) goto next_160;
-            if (g_laser_bomb_hit_entity_as_u32 == 0) goto hit_160;
+            if ((u32)g_laser_bomb_hit_entity == 0) goto hit_160;
             if ((s32) g_laser_bomb_hit_position <= (s32) (reg_d0.h[0] & 0xFFFF)) goto next_160;
 hit_160:
             reg_d0.h[0] += reg_d6.h[0];
             reg_d2.h[0] = *(u16 *)(reg_a5 + 2);
             reg_d2.h[0] += reg_d6.h[0];
-            reg_a6 = (u8 *) g_collision_bounds_as_u16_a;
+            reg_a6 = (u8 *) ((u16 *)g_collision_bounds);
             reg_tmp.h[0] = *(u16 *)reg_a6; reg_a6 += 2;
             if ((s32) reg_tmp.h[0] < (s32) reg_d2.h[0]) goto next_160;
             reg_tmp.h[0] = *(u16 *)reg_a6; reg_a6 += 2;
@@ -1186,9 +1185,9 @@ void player_vs_bullets(void) {
     reg_d3.h[0] -= ENTITY(reg_a4)->hit_x_minus.h;
     reg_a6 = (u8 *)g_bullets + 2;
     reg_d6.h[0] = MAIN_OR_DEATH_LABEL(6, 34);
-    if (D_00299768_as_u16_a[0] == 0) goto loop_5;
+    if (((u16 *)D_00299768)[0] == 0) goto loop_5;
     reg_d6.h[0] = MAIN_OR_DEATH_LABEL(0xA, 54);
-    if (D_0029976A_as_u16_a[0] == 0) goto loop_5;
+    if (((u16 *)D_0029976A)[0] == 0) goto loop_5;
     reg_d6.h[0] = MAIN_OR_DEATH_LABEL(0xF, 79);
     if (D_0029976C[0] == 0) goto loop_5;
     reg_d6.h[0] = MAIN_OR_DEATH_LABEL(0x12, 94);
@@ -1228,10 +1227,10 @@ loop_5:
     if ((s16) --reg_d6.h[0] >= 0) goto loop_5;
 }
 
-extern s16 D_0028E098_as_s16;
+extern u16 D_0028E098;
 
 void laser_collisions() {
-    D_0028E098_as_s16 = 0;
+    D_0028E098 = 0;
     reg_a2 = reg_a1;
     if (*(s16 *)reg_a1 < 0) {
         reg_tmp.b[0] = *(u8 *)(reg_a1 + 1);

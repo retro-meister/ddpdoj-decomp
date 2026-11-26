@@ -3,72 +3,72 @@
 
 void sprite_list_emit(void);
 
-extern s16 g_sprite_unused_count_as_s16;
-extern s16 g_sprite_last_boss_used_as_s16;
-extern s16 g_sprite_hyper_display_used_as_s16;
-extern s16 g_sprite_hyper_ready_used_as_s16;
-extern s16 g_sprite_maximum_used_as_s16;
-extern s16 g_sprite_stage_clear2_used_as_s16;
-extern s16 g_sprite_stage_clear1_used_as_s16;
-extern s16 g_sprite_ship_select_used_as_s16;
-extern s16 g_sprite_bombs_used_as_s16;
-extern s16 g_sprite_laser_trail_used_as_s16;
-extern s16 g_sprite_sight_used_as_s16;
-extern s16 g_sprite_score_used_as_s16;
-extern s16 g_sprite_warning_used_as_s16;
-extern s16 g_sprite_bullets2_used_as_s16;
-extern s16 g_sprite_bullets_used_as_s16;
-extern s16 g_sprite_sparks_used_as_s16;
-extern s16 g_sprite_players_used_as_s16;
-extern s16 g_sprite_options_used_as_s16;
-extern s16 g_sprite_player_lasers_used_as_s16;
-extern s16 g_sprite_player_shots_used_as_s16;
-extern s16 g_sprite_debris2_used_as_s16;
-extern s16 g_sprite_debris1_used_as_s16;
-extern s16 g_sprite_player_shadows_used_as_s16;
-extern s16 g_sprite_items_used_as_s16;
-extern s16 g_sprite_items_first_used_as_s16;
-extern s16 g_sprite_special_items_used_as_s16;
-extern s16 g_sprite_extra_used_as_s16;
-extern s16 g_sprite_layer5_used_as_s16;
-extern s16 g_sprite_layer4_used_as_s16;
-extern s16 g_sprite_layer3_used_as_s16;
-extern s16 g_sprite_layer2_used_as_s16;
-extern s16 g_sprite_layer1_used_as_s16;
+extern u16 g_sprite_unused_count;
+extern u16 g_sprite_last_boss_used;
+extern u16 g_sprite_hyper_display_used;
+extern u16 g_sprite_hyper_ready_used;
+extern u16 g_sprite_maximum_used;
+extern u16 g_sprite_stage_clear2_used;
+extern u16 g_sprite_stage_clear1_used;
+extern u16 g_sprite_ship_select_used;
+extern u16 g_sprite_bombs_used;
+extern u16 g_sprite_laser_trail_used;
+extern u16 g_sprite_sight_used;
+extern u16 g_sprite_score_used;
+extern u16 g_sprite_warning_used;
+extern u16 g_sprite_bullets2_used;
+extern u16 g_sprite_bullets_used;
+extern u16 g_sprite_sparks_used;
+extern u16 g_sprite_players_used;
+extern u16 g_sprite_options_used;
+extern u16 g_sprite_player_lasers_used;
+extern u16 g_sprite_player_shots_used;
+extern u16 g_sprite_debris2_used;
+extern u16 g_sprite_debris1_used;
+extern u16 g_sprite_player_shadows_used;
+extern u16 g_sprite_items_used;
+extern u16 g_sprite_items_first_used;
+extern u16 g_sprite_special_items_used;
+extern u16 g_sprite_extra_used;
+extern u16 g_sprite_layer5_used;
+extern u16 g_sprite_layer4_used;
+extern u16 g_sprite_layer3_used;
+extern u16 g_sprite_layer2_used;
+extern u16 g_sprite_layer1_used;
 
 void sprite_lists_reset(void) {
-    g_sprite_layer1_used_as_s16 = 0;
-    g_sprite_layer2_used_as_s16 = 0;
-    g_sprite_layer3_used_as_s16 = 0;
-    g_sprite_layer4_used_as_s16 = 0;
-    g_sprite_layer5_used_as_s16 = 0;
-    g_sprite_extra_used_as_s16 = 0;
-    g_sprite_special_items_used_as_s16 = 0;
-    g_sprite_items_first_used_as_s16 = 0;
-    g_sprite_items_used_as_s16 = 0;
-    g_sprite_player_shadows_used_as_s16 = 0;
-    g_sprite_debris1_used_as_s16 = 0;
-    g_sprite_debris2_used_as_s16 = 0;
-    g_sprite_sparks_used_as_s16 = 0;
-    g_sprite_bullets_used_as_s16 = 0;
-    g_sprite_bullets2_used_as_s16 = 0;
-    g_sprite_player_shots_used_as_s16 = 0;
-    g_sprite_player_lasers_used_as_s16 = 0;
-    g_sprite_options_used_as_s16 = 0;
-    g_sprite_players_used_as_s16 = 0;
-    g_sprite_warning_used_as_s16 = 0;
-    g_sprite_score_used_as_s16 = 0;
-    g_sprite_sight_used_as_s16 = 0;
-    g_sprite_laser_trail_used_as_s16 = 0;
-    g_sprite_bombs_used_as_s16 = 0;
-    g_sprite_ship_select_used_as_s16 = 0;
-    g_sprite_stage_clear1_used_as_s16 = 0;
-    g_sprite_stage_clear2_used_as_s16 = 0;
-    g_sprite_maximum_used_as_s16 = 0;
-    g_sprite_hyper_ready_used_as_s16 = 0;
-    g_sprite_hyper_display_used_as_s16 = 0;
-    g_sprite_last_boss_used_as_s16 = 0;
-    g_sprite_unused_count_as_s16 = 0;
+    g_sprite_layer1_used = 0;
+    g_sprite_layer2_used = 0;
+    g_sprite_layer3_used = 0;
+    g_sprite_layer4_used = 0;
+    g_sprite_layer5_used = 0;
+    g_sprite_extra_used = 0;
+    g_sprite_special_items_used = 0;
+    g_sprite_items_first_used = 0;
+    g_sprite_items_used = 0;
+    g_sprite_player_shadows_used = 0;
+    g_sprite_debris1_used = 0;
+    g_sprite_debris2_used = 0;
+    g_sprite_sparks_used = 0;
+    g_sprite_bullets_used = 0;
+    g_sprite_bullets2_used = 0;
+    g_sprite_player_shots_used = 0;
+    g_sprite_player_lasers_used = 0;
+    g_sprite_options_used = 0;
+    g_sprite_players_used = 0;
+    g_sprite_warning_used = 0;
+    g_sprite_score_used = 0;
+    g_sprite_sight_used = 0;
+    g_sprite_laser_trail_used = 0;
+    g_sprite_bombs_used = 0;
+    g_sprite_ship_select_used = 0;
+    g_sprite_stage_clear1_used = 0;
+    g_sprite_stage_clear2_used = 0;
+    g_sprite_maximum_used = 0;
+    g_sprite_hyper_ready_used = 0;
+    g_sprite_hyper_display_used = 0;
+    g_sprite_last_boss_used = 0;
+    g_sprite_unused_count = 0;
 }
 
 
@@ -142,7 +142,7 @@ extern u8 g_sprite_layer5_buf[];
 extern u8 g_sprite_layer4_buf[];
 extern u8 g_sprite_layer3_buf[];
 extern u8 g_sprite_layer2_buf[];
-extern u16 g_sprite_layer1_buf_as_u16_a[];
+extern u8 g_sprite_layer1_buf[];
 extern u8 g_arcade_sprites[];
 
 void sprite_lists_build(void) {
@@ -343,7 +343,7 @@ next_50:
     reg_d3.h[0] = count;
     reg_d7.h[0] -= count;
     if (reg_d0.h[0] != 0) {
-        reg_a1 = (u8 *)(g_sprite_layer1_buf_as_u16_a);
+        reg_a1 = (u8 *)(((u16 *)g_sprite_layer1_buf));
         if (reg_d0.h[0] > MAIN_OR_DEATH_LABEL(0x1758, 0x36C0)) {
             reg_d0.h[0] = MAIN_OR_DEATH_LABEL(0x1758, 0x36C0);
         }
@@ -453,7 +453,7 @@ void sprite_list_emit(void) {
     case 0:
         goto block_rts;
     default:
-        reg_a2 = (u8 *)g_sprite_layer1_buf_as_u16_a;
+        reg_a2 = (u8 *)((u16 *)g_sprite_layer1_buf);
         reg_a2 += g_sprite_layer1_used;
 loop_1:
         *(u16 *)reg_a2 = *(u16 *)reg_a0;
@@ -540,7 +540,6 @@ void sprite_entry_from_entity(void) {
 typedef void (*Fn)(void);
 
 extern u8 multiply_d1_routines[];
-extern Fn reg_call_target_as_Fn;
 
 void sprite_zoom_prepare_entity(void) {
     u32 k;
@@ -555,8 +554,8 @@ void sprite_zoom_prepare_entity(void) {
     reg_d0.h[0] = ENTITY(reg_a6)->look.h;
     reg_d0.h[0] &= 0x1FF;
     reg_d0.h[0] >>= 1;
-    reg_call_target_as_Fn = *(Fn *)(multiply_d1_routines + (reg_d0.h[0] & ~3));
-    reg_call_target_as_Fn();
+    reg_call_target = *(Fn *)(multiply_d1_routines + (reg_d0.h[0] & ~3));
+    reg_call_target();
     reg_tmp1.h[0] = reg_d1.h[0];
     reg_a0 = (u8 *)multiply_d1_routines;
     reg_d0.w = 0x3E;
@@ -567,8 +566,8 @@ void sprite_zoom_prepare_entity(void) {
     reg_d1.h[0] += 0x80;
     reg_d0.b[0] &= ENTITY(reg_a6)->look.b.size;
     reg_d0.h[0] *= 4;
-    reg_call_target_as_Fn = *(Fn *)(multiply_d1_routines + (reg_d0.h[0] & ~3));
-    reg_call_target_as_Fn();
+    reg_call_target = *(Fn *)(multiply_d1_routines + (reg_d0.h[0] & ~3));
+    reg_call_target();
 }
 
 void sprite_entry_from_entity_zoomed(void) {
@@ -603,25 +602,24 @@ void sprite_entry_from_entity_zoomed(void) {
     reg_a0 += 2;
 }
 
-extern u16 *reg_a0_as_u16_p;
 
 void sprite_entry_from_regs(void) {
     reg_d0.w = reg_d1.w;
     reg_d0.w = (u32) ((s32) reg_d0.w >> 6);
     reg_d0.w &= 0x07FF03FF;
     reg_d0.w |= 0x80008000;
-    *reg_a0_as_u16_p = reg_d0.h[1];
-    reg_a0_as_u16_p += 1;
-    *reg_a0_as_u16_p = reg_d0.h[0];
-    reg_a0_as_u16_p += 1;
-    *reg_a0_as_u16_p = reg_d2.h[1];
-    reg_a0_as_u16_p += 1;
-    *reg_a0_as_u16_p = reg_d2.h[0];
-    reg_a0_as_u16_p += 1;
-    *reg_a0_as_u16_p = reg_d3.h[0];
-    reg_a0_as_u16_p += 1;
-    *reg_a0_as_u16_p = reg_d4.h[0];
-    reg_a0_as_u16_p += 1;
+    *(*(u16 **)&reg_a0) = reg_d0.h[1];
+    (*(u16 **)&reg_a0) += 1;
+    *(*(u16 **)&reg_a0) = reg_d0.h[0];
+    (*(u16 **)&reg_a0) += 1;
+    *(*(u16 **)&reg_a0) = reg_d2.h[1];
+    (*(u16 **)&reg_a0) += 1;
+    *(*(u16 **)&reg_a0) = reg_d2.h[0];
+    (*(u16 **)&reg_a0) += 1;
+    *(*(u16 **)&reg_a0) = reg_d3.h[0];
+    (*(u16 **)&reg_a0) += 1;
+    *(*(u16 **)&reg_a0) = reg_d4.h[0];
+    (*(u16 **)&reg_a0) += 1;
 }
 
 extern u8 multiply_d7_routines[];
@@ -641,8 +639,8 @@ void sprite_zoom_prepare_regs(void) {
     reg_d4.h[0] = reg_d3.h[0];
     reg_d4.h[0] &= 0x1FF;
     reg_d4.h[0] >>= 1;
-    reg_call_target_as_Fn = *(entry = (Fn *)(multiply_d7_routines + (reg_d4.h[0] & ~3)));
-    reg_call_target_as_Fn();
+    reg_call_target = *(entry = (Fn *)(multiply_d7_routines + (reg_d4.h[0] & ~3)));
+    reg_call_target();
     reg_tmp7.h[0] = reg_d7.h[0];
     reg_a0 = (u8 *)multiply_d7_routines;
     t = reg_d7.h[1];
@@ -653,8 +651,8 @@ void sprite_zoom_prepare_regs(void) {
     reg_d4.h[0] = reg_d3.h[0];
     reg_d4.h[0] &= 0x3E00;
     reg_d4.h[0] >>= 6;
-    reg_call_target_as_Fn = *(entry = (Fn *)(multiply_d7_routines + (reg_d4.h[0] & ~3)));
-    reg_call_target_as_Fn();
+    reg_call_target = *(entry = (Fn *)(multiply_d7_routines + (reg_d4.h[0] & ~3)));
+    reg_call_target();
 }
 
 void sprite_entry_from_regs_zoomed(void) {

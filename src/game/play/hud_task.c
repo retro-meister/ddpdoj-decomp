@@ -8,7 +8,7 @@ s32 hud_update();
 s32 func_001AEA80();
 s32 task_stop_self();
 extern u8 g_game_frame_ran;
-extern s16 g_score_task_active_as_s16;
+extern u16 g_score_task_active;
 extern u16 g_stage;
 extern u8 g_replay_mode;
 
@@ -27,9 +27,9 @@ next_1:
     return;
 block_1:
     reg_a5[3] = 1;
-    g_score_task_active_as_s16 = 1;
+    g_score_task_active = 1;
     return;
 block_2:
-    g_score_task_active_as_s16 = 0;
+    g_score_task_active = 0;
     task_stop_self();
 }

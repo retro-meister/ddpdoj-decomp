@@ -9,7 +9,7 @@ void stage1_boss_breakable_bullet_first(void) {
 }
 
 s32 enemy_init_entities();
-extern u16 D_0024EBC0_as_u16_a[];
+extern u16 D_0024EBC0[];
 extern u16 D_0024EC80[];
 extern u16 D_0024EEF0[];
 extern u16 D_0026E740[];
@@ -31,7 +31,7 @@ void stage1_boss_breakable_bullet_start(void) {
     reg_d1.h[0] += reg_d1.h[0];
     reg_d1.h[0] += reg_d1.h[0];
     reg_d0.h[0] = (reg_d1.h[0] != 0) ? *(u16 *)((u8 *)reg_a0 + ((s16)reg_d1.h[0] & ~1)) : *(u16 *)reg_a0;
-    reg_a0 = (u8 *)(D_0024EBC0_as_u16_a);
+    reg_a0 = (u8 *)(((u16 *)D_0024EBC0));
     BREAKABLE_BULLET(reg_a5)->now.frame_list[0] = (reg_d0.h[0] != 0) ? *(u16 *)((u8 *)reg_a0 + ((s16)reg_d0.h[0] & ~1)) : *(u16 *)reg_a0;
     BREAKABLE_BULLET(reg_a5)->now.frame_list[1] = ((reg_d0.h[0] + 2) != 0) ? *(u16 *)((u8 *)reg_a0 + ((s16)(reg_d0.h[0] + 2) & ~1)) : *(u16 *)reg_a0;
     BREAKABLE_BULLET(reg_a5)->frame_timer.both = 2;

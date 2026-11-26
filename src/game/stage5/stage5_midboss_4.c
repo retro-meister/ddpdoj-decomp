@@ -209,7 +209,7 @@ void stage5_midboss4_first(void) {
 
 extern u8 D_00265C90[];
 extern u8 D_0028DA30[8];
-extern s16 g_enemy_signal_1_as_s16;
+extern u16 g_enemy_signal_1;
 extern s16 D_00299768[];
 
 void stage5_midboss4_start() {
@@ -223,7 +223,7 @@ void stage5_midboss4_start() {
     reg_a0 = D_0028DA30;
     reg_d0.h[0] = 2;
     enemy_set_task_state();
-    g_enemy_signal_1_as_s16 = 1;
+    g_enemy_signal_1 = 1;
     D_00299768[0] = 1;
 }
 

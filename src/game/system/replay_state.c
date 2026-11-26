@@ -1243,16 +1243,16 @@ extern u16 g_p2_max_hits;
 extern u16 g_p1_max_hits;
 extern u16 g_boss_explosion_flash;
 extern u16 g_boss_near_death;
-extern s32 g_boss_hp_as_s32;
+extern u8 *g_boss_hp;
 extern s32 g_boss_hp_unit;
 extern u16 g_lives_display_move_x;
 extern u16 g_lives_display_move_y;
 extern u16 g_boss_hp_bar_move_count;
-extern u16 g_boss_hp_bar_flags_as_u16;
+extern s8 g_boss_hp_bar_flags;
 extern s32 g_boss_score;
 extern s32 g_boss_hit_bonus;
 extern u16 g_boss_hit_bonus_timer;
-extern u16 g_boss_hit_palette_as_u16;
+extern s16 g_boss_hit_palette;
 extern u16 g_boss_hits;
 extern u16 g_boss_hit_anim_count;
 extern u16 g_boss_hit_decay_timer;
@@ -1265,10 +1265,10 @@ extern s32 g_p2_chain_points_shown;
 extern s32 g_p2_chain_points;
 extern u16 g_p2_hit10_anim_count;
 extern u16 g_p2_hit10_color_timer;
-extern u16 g_p2_hit10_display_timer_as_u16;
+extern s16 g_p2_hit10_display_timer;
 extern u16 g_p2_combo_break_color_timer;
 extern u16 g_p2_hit_display_timer;
-extern u16 g_p2_chain_points_display_timer_as_u16;
+extern s16 g_p2_chain_points_display_timer;
 extern u16 g_p2_combo_timer;
 extern s32 g_p2_chain_first_score_shown;
 extern s32 g_p2_chain_first_score;
@@ -1281,10 +1281,10 @@ extern s32 g_p1_chain_points_shown;
 extern s32 g_p1_chain_points;
 extern u16 g_p1_hit10_anim_count;
 extern u16 g_p1_hit10_color_timer;
-extern u16 g_p1_hit10_display_timer_as_u16;
+extern s16 g_p1_hit10_display_timer;
 extern u16 g_p1_combo_break_color_timer;
 extern u16 g_p1_hit_display_timer;
-extern u16 g_p1_chain_points_display_timer_as_u16;
+extern s16 g_p1_chain_points_display_timer;
 extern u16 g_p1_combo_timer;
 extern s32 g_p1_chain_first_score_shown;
 extern s32 g_p1_chain_first_score;
@@ -1313,8 +1313,8 @@ extern s32 g_p2_extend_score;
 extern s32 g_p1_extend_score;
 extern u16 g_p2_score_billions_saved;
 extern u16 g_p1_score_billions_saved;
-extern s32 g_p2_score_saved_as_s32;
-extern s32 g_p1_score_saved_as_s32;
+extern u32 g_p2_score_saved;
+extern u32 g_p1_score_saved;
 extern u16 g_p2_score_digits;
 extern u16 g_high_score_digits;
 extern u16 g_p1_score_digits;
@@ -1322,10 +1322,10 @@ extern u16 g_high_score_billions;
 extern u16 g_p2_score_billions;
 extern u16 g_p1_score_billions;
 extern s32 g_high_score;
-extern s32 g_p2_score_as_s32;
-extern s32 g_p1_score_as_s32;
+extern u32 g_p2_score;
+extern u32 g_p1_score;
 extern u16 g_continue_pending_count;
-extern u16 g_boss_present_as_u16;
+extern u8 g_boss_present;
 extern u16 g_enemy_signal_f;
 extern u16 g_enemy_signal_e;
 extern u16 g_enemy_signal_d;
@@ -1383,15 +1383,15 @@ extern u16 g_p1_stage_stars_large;
 extern u16 g_bee_value_step;
 extern u16 g_stage_bees_collected;
 extern u16 g_bullet_count;
-extern f32 g_p2_maximum_value_as_f32_a[];
+extern u16 g_p2_maximum_value[16];
 extern u16 g_p2_maximum_count[];
-extern f32 g_p1_maximum_value_as_f32_a[];
+extern u16 g_p1_maximum_value[];
 extern u16 g_p1_maximum_count[];
-extern s32 g_p2_afterimage_sprites_as_s32_a[];
+extern u8 g_p2_afterimage_sprites[64];
 extern s32 g_p1_afterimage_sprites[];
-extern s32 g_p2_afterimage_positions_as_s32_a[];
+extern u8 g_p2_afterimage_positions[64];
 extern s32 g_p1_afterimage_positions[];
-extern u8 g_bomb_entities_as_u8_a[];
+extern u16 g_bomb_entities[24];
 extern u8 D_0029D710[];
 extern u8 D_0029D730[];
 extern u8 D_0029D750[];
@@ -1401,35 +1401,35 @@ extern u8 g_p1_laser_entities[];
 extern u8 D_0029E390[];
 extern u8 g_p2_options[];
 extern u8 g_p1_options[];
-extern u8 g_player2_as_u8_a[];
-extern u8 g_player1_as_u8_a[];
-extern s8 g_text_layer_as_s8_a[];
+extern u8 g_player2[];
+extern u8 g_player1[];
+extern u8 g_text_layer[];
 extern s32 g_p2_position_trail[];
 extern s32 g_p1_position_trail[];
 extern Bank10 D_002BAF30_as_Bank10;
 extern Bank90 D_002BAF50_as_Bank90;
 extern u8 g_player_slots[];
 extern u8 D_002BF4F0[];
-extern s16 D_006C58AA_as_s16_a[];
+extern u16 D_006C58AA[];
 extern u16 D_006C58B0[];
 extern u16 D_006C58B2[];
 extern u16 D_006C58B4[];
-extern s16 D_006C58B6_as_s16_a[];
-extern s16 D_006C58B8_as_s16_a[];
-extern s16 D_006C58BA_as_s16_a[];
+extern u16 D_006C58B6[];
+extern u16 D_006C58B8[];
+extern u16 D_006C58BA[];
 extern u16 D_006C58BC[];
 extern u16 D_006C58BE[];
 extern u16 D_006C58C0[];
-extern s16 D_006C58C2_as_s16_a[];
+extern u16 D_006C58C2[];
 extern u16 D_006C58C6[];
-extern s16 D_006C58C8_as_s16_a[];
-extern s16 D_006C58CA_as_s16_a[];
-extern s16 D_006C58CC_as_s16_a[];
-extern s16 D_006C58CE_as_s16_a[];
-extern s16 D_006C58D0_as_s16_a[];
+extern u16 D_006C58C8[];
+extern u16 D_006C58CA[];
+extern u16 D_006C58CC[];
+extern u16 D_006C58CE[];
+extern u16 D_006C58D0[488];
 extern u16 D_006C58D2[];
 extern u16 D_006C58D4[];
-extern s16 D_006C58D6_as_s16_a[];
+extern u16 D_006C58D6[];
 void replay_snapshot_save(Buf *buf) {
     s32 i;
     s32 v;
@@ -1447,8 +1447,8 @@ void replay_snapshot_save(Buf *buf) {
     *(u16 *)(p + 0xC12) = g_p2_stage_stars_large;
     *(u16 *)(p + 0xC14) = g_p2_stage_stars_small;
     for (i = 0; i < 98; i++) {
-        buf->fC16[i] = g_player1_as_u8_a[i];
-        buf->fC78[i] = g_player2_as_u8_a[i];
+        buf->fC16[i] = ((u8 *)g_player1)[i];
+        buf->fC78[i] = ((u8 *)g_player2)[i];
     }
     for (i = 0; i < 100; i++) {
         buf->fCDA[i] = g_p1_options[i];
@@ -1470,7 +1470,7 @@ void replay_snapshot_save(Buf *buf) {
         buf->f2782[i] = D_0029D710[i];
     }
     for (i = 0; i < 0x870; i++) {
-        buf->f27A2[i] = g_bomb_entities_as_u8_a[i];
+        buf->f27A2[i] = ((u8 *)g_bomb_entities)[i];
     }
     *(u16 *)(p + 0x301A) = g_laser_bomb_impact_frame;
     *(s32 *)(p + 0x301C) = g_p1_weapon_level_data_as_s32_a[0];
@@ -1479,12 +1479,12 @@ void replay_snapshot_save(Buf *buf) {
     *(s32 *)(p + 0x3028) = g_p2_option_level_data_as_s32_a[0];
     for (i = 0; i < 16; i++) {
         buf->f302C[i] = g_p1_afterimage_positions[i];
-        buf->f306C[i] = g_p2_afterimage_positions_as_s32_a[i];
+        buf->f306C[i] = ((s32 *)g_p2_afterimage_positions)[i];
         buf->f30AC[i] = g_p1_afterimage_sprites[i];
-        buf->f30EC[i] = g_p2_afterimage_sprites_as_s32_a[i];
+        buf->f30EC[i] = ((s32 *)g_p2_afterimage_sprites)[i];
     }
-    *(Vec4 *)(p + 0x312C) = *(Vec4 *)g_p1_maximum_value_as_f32_a;
-    *(Vec4 *)(p + 0x313C) = *(Vec4 *)g_p2_maximum_value_as_f32_a;
+    *(Vec4 *)(p + 0x312C) = *(Vec4 *)((f32 *)g_p1_maximum_value);
+    *(Vec4 *)(p + 0x313C) = *(Vec4 *)((f32 *)g_p2_maximum_value);
     *(u16 *)(p + 0x314C) = g_p1_maximum_level;
     *(u16 *)(p + 0x314E) = g_p2_maximum_level;
     *(u16 *)(p + 0x3150) = g_p1_maximum_anim_delay;
@@ -1582,13 +1582,13 @@ void replay_snapshot_save(Buf *buf) {
     *(u16 *)(p + 0x3216) = g_enemy_signal_d;
     *(u16 *)(p + 0x3218) = g_enemy_signal_e;
     *(u16 *)(p + 0x321A) = g_enemy_signal_f;
-    *(u16 *)(p + 0x321C) = g_boss_present_as_u16;
+    *(u16 *)(p + 0x321C) = (*(u16 *)&g_boss_present);
     for (i = 0; i < 0x48; i++) {
         buf->f321E[i] = g_player_slots[i];
     }
     *(u16 *)(p + 0x3266) = g_continue_pending_count;
-    *(s32 *)(p + 0x327C) = g_p1_score_as_s32;
-    *(s32 *)(p + 0x3280) = g_p2_score_as_s32;
+    *(s32 *)(p + 0x327C) = (s32)g_p1_score;
+    *(s32 *)(p + 0x3280) = (s32)g_p2_score;
     *(s32 *)(p + 0x3284) = g_high_score;
     *(u16 *)(p + 0x3288) = g_p1_score_billions;
     *(u16 *)(p + 0x328A) = g_p2_score_billions;
@@ -1596,8 +1596,8 @@ void replay_snapshot_save(Buf *buf) {
     *(u16 *)(p + 0x328E) = g_p1_score_digits;
     *(u16 *)(p + 0x3290) = g_high_score_digits;
     *(u16 *)(p + 0x3292) = g_p2_score_digits;
-    *(s32 *)(p + 0x3294) = g_p1_score_saved_as_s32;
-    *(s32 *)(p + 0x3298) = g_p2_score_saved_as_s32;
+    *(s32 *)(p + 0x3294) = (s32)g_p1_score_saved;
+    *(s32 *)(p + 0x3298) = (s32)g_p2_score_saved;
     *(u16 *)(p + 0x329C) = g_p1_score_billions_saved;
     *(u16 *)(p + 0x329E) = g_p2_score_billions_saved;
     *(s32 *)(p + 0x32A0) = g_p1_extend_score;
@@ -1638,10 +1638,10 @@ void replay_snapshot_save(Buf *buf) {
     *(s32 *)(p + 0x33A8) = g_p1_chain_first_score;
     *(s32 *)(p + 0x33AC) = g_p1_chain_first_score_shown;
     *(u16 *)(p + 0x33B0) = g_p1_combo_timer;
-    *(u16 *)(p + 0x33B2) = g_p1_chain_points_display_timer_as_u16;
+    *(u16 *)(p + 0x33B2) = (*(u16 *)&g_p1_chain_points_display_timer);
     *(u16 *)(p + 0x33B4) = g_p1_hit_display_timer;
     *(u16 *)(p + 0x33B6) = g_p1_combo_break_color_timer;
-    *(u16 *)(p + 0x33B8) = g_p1_hit10_display_timer_as_u16;
+    *(u16 *)(p + 0x33B8) = (*(u16 *)&g_p1_hit10_display_timer);
     *(u16 *)(p + 0x33BA) = g_p1_hit10_color_timer;
     *(u16 *)(p + 0x33BC) = g_p1_hit10_anim_count;
     *(s32 *)(p + 0x33C0) = g_p1_chain_points;
@@ -1654,10 +1654,10 @@ void replay_snapshot_save(Buf *buf) {
     *(s32 *)(p + 0x33D4) = g_p2_chain_first_score;
     *(s32 *)(p + 0x33D8) = g_p2_chain_first_score_shown;
     *(u16 *)(p + 0x33DC) = g_p2_combo_timer;
-    *(u16 *)(p + 0x33DE) = g_p2_chain_points_display_timer_as_u16;
+    *(u16 *)(p + 0x33DE) = (*(u16 *)&g_p2_chain_points_display_timer);
     *(u16 *)(p + 0x33E0) = g_p2_hit_display_timer;
     *(u16 *)(p + 0x33E2) = g_p2_combo_break_color_timer;
-    *(u16 *)(p + 0x33E4) = g_p2_hit10_display_timer_as_u16;
+    *(u16 *)(p + 0x33E4) = (*(u16 *)&g_p2_hit10_display_timer);
     *(u16 *)(p + 0x33E6) = g_p2_hit10_color_timer;
     *(u16 *)(p + 0x33E8) = g_p2_hit10_anim_count;
     *(s32 *)(p + 0x33EC) = g_p2_chain_points;
@@ -1670,16 +1670,16 @@ void replay_snapshot_save(Buf *buf) {
     *(u16 *)(p + 0x3400) = g_boss_hit_decay_timer;
     *(u16 *)(p + 0x3402) = g_boss_hit_anim_count;
     *(u16 *)(p + 0x3404) = g_boss_hits;
-    *(u16 *)(p + 0x3406) = g_boss_hit_palette_as_u16;
+    *(u16 *)(p + 0x3406) = (*(u16 *)&g_boss_hit_palette);
     *(u16 *)(p + 0x3408) = g_boss_hit_bonus_timer;
     *(s32 *)(p + 0x340C) = g_boss_hit_bonus;
     *(s32 *)(p + 0x3410) = g_boss_score;
-    *(u16 *)(p + 0x3414) = g_boss_hp_bar_flags_as_u16;
+    *(u16 *)(p + 0x3414) = (*(u16 *)&g_boss_hp_bar_flags);
     *(u16 *)(p + 0x3416) = g_boss_hp_bar_move_count;
     *(u16 *)(p + 0x3418) = g_lives_display_move_y;
     *(u16 *)(p + 0x341A) = g_lives_display_move_x;
     *(s32 *)(p + 0x341C) = g_boss_hp_unit;
-    *(s32 *)(p + 0x3420) = g_boss_hp_as_s32;
+    *(s32 *)(p + 0x3420) = (*(s32 *)&g_boss_hp);
     *(u16 *)(p + 0x3424) = g_boss_near_death;
     *(u16 *)(p + 0x3426) = g_boss_explosion_flash;
     *(u16 *)(p + 0x3428) = g_p1_max_hits;
@@ -1741,38 +1741,38 @@ void replay_snapshot_save(Buf *buf) {
     *(u16 *)(p + 0x350A) = g_frame_mod16;
     *(Row16 *)(p + 0x5512) = *(Row16 *)&g_ground_state;
     for (i = 0; i < 0x2000; i++) {
-        buf->f3511[i] = g_text_layer_as_s8_a[i];
+        buf->f3511[i] = ((s8 *)g_text_layer)[i];
     }
     p[0x5532] = D_0028E288;
     p[0x5533] = D_0028E284;
-    D_006C58D6_as_s16_a[0] = MAIN_OR_DEATH_LABEL(0xCB, 0x6E);
-    D_006C58AA_as_s16_a[0] = g_setting_difficulty;
-    D_006C58C8_as_s16_a[0] = g_setting_extend;
-    if (*(s16 *)g_player1_as_u8_a < 0) {
+    ((s16 *)D_006C58D6)[0] = MAIN_OR_DEATH_LABEL(0xCB, 0x6E);
+    ((s16 *)D_006C58AA)[0] = g_setting_difficulty;
+    ((s16 *)D_006C58C8)[0] = g_setting_extend;
+    if (*(s16 *)((u8 *)g_player1) < 0) {
         D_006C58C6[0] = g_p1_lives;
     } else {
         D_006C58C6[0] = g_p2_lives;
     }
-    D_006C58B8_as_s16_a[0] = 0;
-    D_006C58C2_as_s16_a[0] = 1;
-    D_006C58BA_as_s16_a[0] = 0;
+    ((s16 *)D_006C58B8)[0] = 0;
+    ((s16 *)D_006C58C2)[0] = 1;
+    ((s16 *)D_006C58BA)[0] = 0;
 #ifdef DEATH_LABEL
     D_006C58D4[0] = 0;
 #endif
     D_006C58C0[0] = g_rank;
-    if (*(s16 *)g_player1_as_u8_a < 0) {
+    if (*(s16 *)((u8 *)g_player1) < 0) {
 #ifndef DEATH_LABEL
         D_006C58D4[0] = g_p1_death_count;
         if (D_006C58D4[0] > 8) {
             D_006C58D4[0] = 8;
         }
 #endif
-        v = PLAYER(g_player1_as_u8_a)->shot_power.h;
+        v = PLAYER(((u8 *)g_player1))->shot_power.h;
         if (v != 0) {
             v /= 2;
         }
         D_006C58B2[0] = v;
-        v = PLAYER(g_player1_as_u8_a)->laser_power.h;
+        v = PLAYER(((u8 *)g_player1))->laser_power.h;
         if (v != 0) {
             v /= 2;
         }
@@ -1790,52 +1790,52 @@ void replay_snapshot_save(Buf *buf) {
         } else {
             v = 0;
         }
-        D_006C58CC_as_s16_a[0] = v;
+        ((s16 *)D_006C58CC)[0] = v;
         if (g_p1_hyper_in_effect != 0) {
-            D_006C58CA_as_s16_a[0] = 1;
+            ((s16 *)D_006C58CA)[0] = 1;
             D_006C58BC[0] = g_p1_hyper_level;
         } else {
-            D_006C58CA_as_s16_a[0] = 0;
-            D_006C58CC_as_s16_a[0] = 0;
+            ((s16 *)D_006C58CA)[0] = 0;
+            ((s16 *)D_006C58CC)[0] = 0;
             D_006C58BC[0] = g_p1_hyper_items;
         }
-        D_006C58B4[0] = PLAYER(g_player1_as_u8_a)->bombs.b.capacity;
+        D_006C58B4[0] = PLAYER(((u8 *)g_player1))->bombs.b.capacity;
         if (D_006C58B4[0] != 0) {
             D_006C58B4[0] -= 1;
         }
-        D_006C58B6_as_s16_a[0] = PLAYER(g_player1_as_u8_a)->bombs.b.count;
+        ((s16 *)D_006C58B6)[0] = PLAYER(((u8 *)g_player1))->bombs.b.count;
 #ifdef DEATH_LABEL
-        if (g_player1_as_u8_a[0] & 2) {
-            D_006C58B6_as_s16_a[0] = 7;
+        if (((u8 *)g_player1)[0] & 2) {
+            ((s16 *)D_006C58B6)[0] = 7;
         }
 #else
-        if ((g_player1_as_u8_a[0] & 2) && !(PLAYER(g_player1_as_u8_a)->flags.b[1] & 0x40) && *(u16 *)g_p1_maximum_value_as_f32_a != 0) {
-            D_006C58B6_as_s16_a[0] = 7;
+        if ((((u8 *)g_player1)[0] & 2) && !(PLAYER(((u8 *)g_player1))->flags.b[1] & 0x40) && *(u16 *)((f32 *)g_p1_maximum_value) != 0) {
+            ((s16 *)D_006C58B6)[0] = 7;
         }
-        if (*(u8 *)g_player1_as_u8_a & 2) {
+        if (*(u8 *)((u8 *)g_player1) & 2) {
             printf("------1  on-\n");
         } else {
             printf("------1  off-\n");
         }
-        if (PLAYER(g_player1_as_u8_a)->flags.b[1] & 0x40) {
+        if (PLAYER(((u8 *)g_player1))->flags.b[1] & 0x40) {
             printf("------6  on-\n");
         } else {
             printf("------6  off-\n");
         }
-        printf("------[%d]\n", *(u16 *)g_p1_maximum_value_as_f32_a);
+        printf("------[%d]\n", *(u16 *)((f32 *)g_p1_maximum_value));
 #endif
         if (g_p1_maximum_count[0] != 0) {
             v = (u16)g_p1_maximum_count[0] - 1;
         } else {
             v = 0;
         }
-        D_006C58D0_as_s16_a[0] = v;
+        ((s16 *)D_006C58D0)[0] = v;
         if (g_p1_maximum_level != 0) {
             v = (u16)g_p1_maximum_level / 4;
         } else {
             v = 0;
         }
-        D_006C58CE_as_s16_a[0] = v;
+        ((s16 *)D_006C58CE)[0] = v;
     } else {
 #ifndef DEATH_LABEL
         D_006C58D4[0] = g_p2_death_count;
@@ -1843,12 +1843,12 @@ void replay_snapshot_save(Buf *buf) {
             D_006C58D4[0] = 8;
         }
 #endif
-        v = PLAYER(g_player2_as_u8_a)->shot_power.h;
+        v = PLAYER(((u8 *)g_player2))->shot_power.h;
         if (v != 0) {
             v /= 2;
         }
         D_006C58B2[0] = v;
-        v = PLAYER(g_player2_as_u8_a)->laser_power.h;
+        v = PLAYER(((u8 *)g_player2))->laser_power.h;
         if (v != 0) {
             v /= 2;
         }
@@ -1866,52 +1866,52 @@ void replay_snapshot_save(Buf *buf) {
         } else {
             v = 0;
         }
-        D_006C58CC_as_s16_a[0] = v;
+        ((s16 *)D_006C58CC)[0] = v;
         if (g_p2_hyper_in_effect != 0) {
-            D_006C58CA_as_s16_a[0] = 1;
+            ((s16 *)D_006C58CA)[0] = 1;
             D_006C58BC[0] = g_p2_hyper_level;
         } else {
-            D_006C58CA_as_s16_a[0] = 0;
-            D_006C58CC_as_s16_a[0] = 0;
+            ((s16 *)D_006C58CA)[0] = 0;
+            ((s16 *)D_006C58CC)[0] = 0;
             D_006C58BC[0] = g_p2_hyper_items;
         }
-        D_006C58B4[0] = PLAYER(g_player2_as_u8_a)->bombs.b.capacity;
+        D_006C58B4[0] = PLAYER(((u8 *)g_player2))->bombs.b.capacity;
         if (D_006C58B4[0] != 0) {
             D_006C58B4[0] -= 1;
         }
-        D_006C58B6_as_s16_a[0] = PLAYER(g_player2_as_u8_a)->bombs.b.count;
+        ((s16 *)D_006C58B6)[0] = PLAYER(((u8 *)g_player2))->bombs.b.count;
 #ifdef DEATH_LABEL
-        if (g_player2_as_u8_a[0] & 2) {
-            D_006C58B6_as_s16_a[0] = 7;
+        if (((u8 *)g_player2)[0] & 2) {
+            ((s16 *)D_006C58B6)[0] = 7;
         }
 #else
-        if ((g_player2_as_u8_a[0] & 2) && !(PLAYER(g_player2_as_u8_a)->flags.b[1] & 0x40) && *(u16 *)g_p2_maximum_value_as_f32_a != 0) {
-            D_006C58B6_as_s16_a[0] = 7;
+        if ((((u8 *)g_player2)[0] & 2) && !(PLAYER(((u8 *)g_player2))->flags.b[1] & 0x40) && *(u16 *)((f32 *)g_p2_maximum_value) != 0) {
+            ((s16 *)D_006C58B6)[0] = 7;
         }
-        if (*(u8 *)g_player2_as_u8_a & 2) {
+        if (*(u8 *)((u8 *)g_player2) & 2) {
             printf("------1  on-\n");
         } else {
             printf("------1  off-\n");
         }
-        if (PLAYER(g_player2_as_u8_a)->flags.b[1] & 0x40) {
+        if (PLAYER(((u8 *)g_player2))->flags.b[1] & 0x40) {
             printf("------6  on-\n");
         } else {
             printf("------6  off-\n");
         }
-        printf("------[%d]\n", *(u16 *)g_p2_maximum_value_as_f32_a);
+        printf("------[%d]\n", *(u16 *)((f32 *)g_p2_maximum_value));
 #endif
         if (g_p2_maximum_count[0] != 0) {
             v = (u16)g_p2_maximum_count[0] - 1;
         } else {
             v = 0;
         }
-        D_006C58D0_as_s16_a[0] = v;
+        ((s16 *)D_006C58D0)[0] = v;
         if (g_p2_maximum_level != 0) {
             v = (u16)g_p2_maximum_level / 4;
         } else {
             v = 0;
         }
-        D_006C58CE_as_s16_a[0] = v;
+        ((s16 *)D_006C58CE)[0] = v;
     }
 }
 
@@ -1934,8 +1934,6 @@ typedef struct {
     Row16 row;
 } RowSrc;
 
-extern u8 g_p2_maximum_value_as_u8_a[];
-extern u8 g_p1_maximum_value_as_u8_a[];
 void replay_snapshot_load(u8 *p) {
     s32 i;
 
@@ -1950,8 +1948,8 @@ void replay_snapshot_load(u8 *p) {
     g_p2_stage_stars_large = *(u16 *)(p + 0xC12);
     g_p2_stage_stars_small = *(u16 *)(p + 0xC14);
     for (i = 0; i < 98; i++) {
-        g_player1_as_u8_a[i] = p[0xC16 + i];
-        g_player2_as_u8_a[i] = p[0xC78 + i];
+        ((u8 *)g_player1)[i] = p[0xC16 + i];
+        ((u8 *)g_player2)[i] = p[0xC78 + i];
     }
     for (i = 0; i < 100; i++) {
         g_p1_options[i] = p[0xCDA + i];
@@ -1973,21 +1971,21 @@ void replay_snapshot_load(u8 *p) {
         D_0029D710[i] = p[0x2782 + i];
     }
     for (i = 0; i < 0x870; i++) {
-        g_bomb_entities_as_u8_a[i] = p[0x27A2 + i];
+        ((u8 *)g_bomb_entities)[i] = p[0x27A2 + i];
     }
     g_laser_bomb_impact_frame = *(u16 *)(p + 0x301A);
     for (i = 0; i < 16; i++) {
         g_p1_afterimage_positions[i] = ((QuadSrc *)p)->a[i];
-        g_p2_afterimage_positions_as_s32_a[i] = ((QuadSrc *)p)->b[i];
+        ((s32 *)g_p2_afterimage_positions)[i] = ((QuadSrc *)p)->b[i];
         g_p1_afterimage_sprites[i] = ((QuadSrc *)p)->c[i];
-        g_p2_afterimage_sprites_as_s32_a[i] = ((QuadSrc *)p)->d[i];
+        ((s32 *)g_p2_afterimage_sprites)[i] = ((QuadSrc *)p)->d[i];
     }
     g_p1_weapon_level_data_as_s32_a[0] = *(s32 *)(p + 0x301C);
     g_p2_weapon_level_data_as_s32_a[0] = *(s32 *)(p + 0x3024);
     g_p1_option_level_data_as_s32_a[0] = *(s32 *)(p + 0x3020);
     g_p2_option_level_data_as_s32_a[0] = *(s32 *)(p + 0x3028);
-    *(Vec4 *)g_p1_maximum_value_as_u8_a = *(Vec4 *)(p + 0x312C);
-    *(Vec4 *)g_p2_maximum_value_as_u8_a = *(Vec4 *)(p + 0x313C);
+    *(Vec4 *)((u8 *)g_p1_maximum_value) = *(Vec4 *)(p + 0x312C);
+    *(Vec4 *)((u8 *)g_p2_maximum_value) = *(Vec4 *)(p + 0x313C);
     g_p1_maximum_level = *(u16 *)(p + 0x314C);
     g_p2_maximum_level = *(u16 *)(p + 0x314E);
     g_p1_maximum_anim_delay = *(u16 *)(p + 0x3150);
@@ -2085,13 +2083,13 @@ void replay_snapshot_load(u8 *p) {
     g_enemy_signal_d = *(u16 *)(p + 0x3216);
     g_enemy_signal_e = *(u16 *)(p + 0x3218);
     g_enemy_signal_f = *(u16 *)(p + 0x321A);
-    g_boss_present_as_u16 = *(u16 *)(p + 0x321C);
+    (*(u16 *)&g_boss_present) = *(u16 *)(p + 0x321C);
     for (i = 0; i < 0x48; i++) {
         g_player_slots[i] = p[0x321E + i];
     }
     g_continue_pending_count = *(u16 *)(p + 0x3266);
-    g_p1_score_as_s32 = *(s32 *)(p + 0x327C);
-    g_p2_score_as_s32 = *(s32 *)(p + 0x3280);
+    g_p1_score = *(s32 *)(p + 0x327C);
+    g_p2_score = *(s32 *)(p + 0x3280);
     g_high_score = *(s32 *)(p + 0x3284);
     g_p1_score_billions = *(u16 *)(p + 0x3288);
     g_p2_score_billions = *(u16 *)(p + 0x328A);
@@ -2099,8 +2097,8 @@ void replay_snapshot_load(u8 *p) {
     g_p1_score_digits = *(u16 *)(p + 0x328E);
     g_high_score_digits = *(u16 *)(p + 0x3290);
     g_p2_score_digits = *(u16 *)(p + 0x3292);
-    g_p1_score_saved_as_s32 = *(s32 *)(p + 0x3294);
-    g_p2_score_saved_as_s32 = *(s32 *)(p + 0x3298);
+    g_p1_score_saved = *(s32 *)(p + 0x3294);
+    g_p2_score_saved = *(s32 *)(p + 0x3298);
     g_p1_score_billions_saved = *(u16 *)(p + 0x329C);
     g_p2_score_billions_saved = *(u16 *)(p + 0x329E);
     g_p1_extend_score = *(s32 *)(p + 0x32A0);
@@ -2141,10 +2139,10 @@ void replay_snapshot_load(u8 *p) {
     g_p1_chain_first_score = *(s32 *)(p + 0x33A8);
     g_p1_chain_first_score_shown = *(s32 *)(p + 0x33AC);
     g_p1_combo_timer = *(u16 *)(p + 0x33B0);
-    g_p1_chain_points_display_timer_as_u16 = *(u16 *)(p + 0x33B2);
+    g_p1_chain_points_display_timer = *(u16 *)(p + 0x33B2);
     g_p1_hit_display_timer = *(u16 *)(p + 0x33B4);
     g_p1_combo_break_color_timer = *(u16 *)(p + 0x33B6);
-    g_p1_hit10_display_timer_as_u16 = *(u16 *)(p + 0x33B8);
+    g_p1_hit10_display_timer = *(u16 *)(p + 0x33B8);
     g_p1_hit10_color_timer = *(u16 *)(p + 0x33BA);
     g_p1_hit10_anim_count = *(u16 *)(p + 0x33BC);
     g_p1_chain_points = *(s32 *)(p + 0x33C0);
@@ -2157,10 +2155,10 @@ void replay_snapshot_load(u8 *p) {
     g_p2_chain_first_score = *(s32 *)(p + 0x33D4);
     g_p2_chain_first_score_shown = *(s32 *)(p + 0x33D8);
     g_p2_combo_timer = *(u16 *)(p + 0x33DC);
-    g_p2_chain_points_display_timer_as_u16 = *(u16 *)(p + 0x33DE);
+    g_p2_chain_points_display_timer = *(u16 *)(p + 0x33DE);
     g_p2_hit_display_timer = *(u16 *)(p + 0x33E0);
     g_p2_combo_break_color_timer = *(u16 *)(p + 0x33E2);
-    g_p2_hit10_display_timer_as_u16 = *(u16 *)(p + 0x33E4);
+    g_p2_hit10_display_timer = *(u16 *)(p + 0x33E4);
     g_p2_hit10_color_timer = *(u16 *)(p + 0x33E6);
     g_p2_hit10_anim_count = *(u16 *)(p + 0x33E8);
     g_p2_chain_points = *(s32 *)(p + 0x33EC);
@@ -2173,18 +2171,18 @@ void replay_snapshot_load(u8 *p) {
     g_boss_hit_decay_timer = *(u16 *)(p + 0x3400);
     g_boss_hit_anim_count = *(u16 *)(p + 0x3402);
     g_boss_hits = *(u16 *)(p + 0x3404);
-    g_boss_hit_palette_as_u16 = *(u16 *)(p + 0x3406);
+    g_boss_hit_palette = *(u16 *)(p + 0x3406);
     g_boss_hit_bonus_timer = *(u16 *)(p + 0x3408);
     g_boss_hit_bonus = *(s32 *)(p + 0x340C);
     g_boss_score = *(s32 *)(p + 0x3410);
-    g_boss_hp_bar_flags_as_u16 = *(u16 *)(p + 0x3414);
+    (*(u16 *)&g_boss_hp_bar_flags) = *(u16 *)(p + 0x3414);
     if (g_stage != 0) {
         g_boss_hp_bar_move_count = *(u16 *)(p + 0x3416);
     }
     g_lives_display_move_y = *(u16 *)(p + 0x3418);
     g_lives_display_move_x = *(u16 *)(p + 0x341A);
     g_boss_hp_unit = *(s32 *)(p + 0x341C);
-    g_boss_hp_as_s32 = *(s32 *)(p + 0x3420);
+    (*(s32 *)&g_boss_hp) = *(s32 *)(p + 0x3420);
     g_boss_near_death = *(u16 *)(p + 0x3424);
     g_boss_explosion_flash = *(u16 *)(p + 0x3426);
     g_p1_max_hits = *(u16 *)(p + 0x3428);
@@ -2250,12 +2248,11 @@ void replay_snapshot_load(u8 *p) {
     replay_text_layer_load((const Src *)p);
 }
 
-extern s8 g_text_layer_as_s8_a0x2000[0x2000];
 
 void replay_text_layer_load(const Src *src) {
     s32 i;
     for (i = 0; i < 0x2000; i++) {
-        g_text_layer_as_s8_a0x2000[i] = src->data[i];
+        ((s8 *)g_text_layer)[i] = src->data[i];
     }
 }
 
@@ -2295,11 +2292,11 @@ void replay_start_state_load(u8 *p) {
     g_p2_stage_stars_large = *(u16 *)(p + 0x8);
     g_p2_stage_stars_small = *(u16 *)(p + 0xA);
     for (i = 0; i < 98; i++) {
-        g_player1_as_u8_a[i] = p[12 + i];
-        g_player2_as_u8_a[i] = p[110 + i];
+        ((u8 *)g_player1)[i] = p[12 + i];
+        ((u8 *)g_player2)[i] = p[110 + i];
     }
-    *(Vec4 *)g_p1_maximum_value_as_u8_a = *(Vec4 *)(p + 0xD0);
-    *(Vec4 *)g_p2_maximum_value_as_u8_a = *(Vec4 *)(p + 0xE0);
+    *(Vec4 *)((u8 *)g_p1_maximum_value) = *(Vec4 *)(p + 0xD0);
+    *(Vec4 *)((u8 *)g_p2_maximum_value) = *(Vec4 *)(p + 0xE0);
     g_p1_maximum_level = *(u16 *)(p + 0xF0);
     g_p2_maximum_level = *(u16 *)(p + 0xF2);
     g_p1_maximum_anim_delay = *(u16 *)(p + 0xF4);
@@ -2393,9 +2390,9 @@ void replay_start_state_load(u8 *p) {
     g_enemy_signal_d = *(u16 *)(p + 0x1AA);
     g_enemy_signal_e = *(u16 *)(p + 0x1AC);
     g_enemy_signal_f = *(u16 *)(p + 0x1AE);
-    g_boss_present_as_u16 = *(u16 *)(p + 0x1B0);
-    g_p1_score_as_s32 = *(s32 *)(p + 0x1B4);
-    g_p2_score_as_s32 = *(s32 *)(p + 0x1B8);
+    (*(u16 *)&g_boss_present) = *(u16 *)(p + 0x1B0);
+    g_p1_score = *(s32 *)(p + 0x1B4);
+    g_p2_score = *(s32 *)(p + 0x1B8);
     g_high_score = *(s32 *)(p + 0x1BC);
     g_p1_score_billions = *(u16 *)(p + 0x1C0);
     g_p2_score_billions = *(u16 *)(p + 0x1C2);
@@ -2403,8 +2400,8 @@ void replay_start_state_load(u8 *p) {
     g_p1_score_digits = *(u16 *)(p + 0x1C6);
     g_high_score_digits = *(u16 *)(p + 0x1C8);
     g_p2_score_digits = *(u16 *)(p + 0x1CA);
-    g_p1_score_saved_as_s32 = *(s32 *)(p + 0x1CC);
-    g_p2_score_saved_as_s32 = *(s32 *)(p + 0x1D0);
+    g_p1_score_saved = *(s32 *)(p + 0x1CC);
+    g_p2_score_saved = *(s32 *)(p + 0x1D0);
     g_p1_score_billions_saved = *(u16 *)(p + 0x1D4);
     g_p2_score_billions_saved = *(u16 *)(p + 0x1D6);
     g_p1_extend_score = *(s32 *)(p + 0x1D8);
@@ -2445,10 +2442,10 @@ void replay_start_state_load(u8 *p) {
     g_p1_chain_first_score = *(s32 *)(p + 0x2E0);
     g_p1_chain_first_score_shown = *(s32 *)(p + 0x2E4);
     g_p1_combo_timer = *(u16 *)(p + 0x2E8);
-    g_p1_chain_points_display_timer_as_u16 = *(u16 *)(p + 0x2EA);
+    g_p1_chain_points_display_timer = *(u16 *)(p + 0x2EA);
     g_p1_hit_display_timer = *(u16 *)(p + 0x2EC);
     g_p1_combo_break_color_timer = *(u16 *)(p + 0x2EE);
-    g_p1_hit10_display_timer_as_u16 = *(u16 *)(p + 0x2F0);
+    g_p1_hit10_display_timer = *(u16 *)(p + 0x2F0);
     g_p1_hit10_color_timer = *(u16 *)(p + 0x2F2);
     g_p1_hit10_anim_count = *(u16 *)(p + 0x2F4);
     g_p1_chain_points = *(s32 *)(p + 0x2F8);
@@ -2461,10 +2458,10 @@ void replay_start_state_load(u8 *p) {
     g_p2_chain_first_score = *(s32 *)(p + 0x30C);
     g_p2_chain_first_score_shown = *(s32 *)(p + 0x310);
     g_p2_combo_timer = *(u16 *)(p + 0x314);
-    g_p2_chain_points_display_timer_as_u16 = *(u16 *)(p + 0x316);
+    g_p2_chain_points_display_timer = *(u16 *)(p + 0x316);
     g_p2_hit_display_timer = *(u16 *)(p + 0x318);
     g_p2_combo_break_color_timer = *(u16 *)(p + 0x31A);
-    g_p2_hit10_display_timer_as_u16 = *(u16 *)(p + 0x31C);
+    g_p2_hit10_display_timer = *(u16 *)(p + 0x31C);
     g_p2_hit10_color_timer = *(u16 *)(p + 0x31E);
     g_p2_hit10_anim_count = *(u16 *)(p + 0x320);
     g_p2_chain_points = *(s32 *)(p + 0x324);
@@ -2477,11 +2474,11 @@ void replay_start_state_load(u8 *p) {
     g_boss_hit_decay_timer = *(u16 *)(p + 0x338);
     g_boss_hit_anim_count = *(u16 *)(p + 0x33A);
     g_boss_hits = *(u16 *)(p + 0x33C);
-    g_boss_hit_palette_as_u16 = *(u16 *)(p + 0x33E);
+    g_boss_hit_palette = *(u16 *)(p + 0x33E);
     g_boss_hit_bonus_timer = *(u16 *)(p + 0x340);
     g_boss_hit_bonus = *(s32 *)(p + 0x344);
     g_boss_score = *(s32 *)(p + 0x348);
-    g_boss_hp_bar_flags_as_u16 = *(u16 *)(p + 0x34C);
+    (*(u16 *)&g_boss_hp_bar_flags) = *(u16 *)(p + 0x34C);
     g_p1_max_hits = *(u16 *)(p + 0x34E);
     g_p2_max_hits = *(u16 *)(p + 0x350);
     g_p1_laser_hyper_timer = *(u16 *)(p + 0x352);
@@ -2543,11 +2540,11 @@ void replay_start_state_save(Buf2 *buf) {
     *(u16 *)(p + 0x8) = g_p2_stage_stars_large;
     *(u16 *)(p + 0xA) = g_p2_stage_stars_small;
     for (i = 0; i < 98; i++) {
-        p[12 + i] = g_player1_as_u8_a[i];
-        p[110 + i] = g_player2_as_u8_a[i];
+        p[12 + i] = ((u8 *)g_player1)[i];
+        p[110 + i] = ((u8 *)g_player2)[i];
     }
-    *(Vec4 *)(p + 0xD0) = *(Vec4 *)g_p1_maximum_value_as_u8_a;
-    *(Vec4 *)(p + 0xE0) = *(Vec4 *)g_p2_maximum_value_as_u8_a;
+    *(Vec4 *)(p + 0xD0) = *(Vec4 *)((u8 *)g_p1_maximum_value);
+    *(Vec4 *)(p + 0xE0) = *(Vec4 *)((u8 *)g_p2_maximum_value);
     *(u16 *)(p + 0xF0) = g_p1_maximum_level;
     *(u16 *)(p + 0xF2) = g_p2_maximum_level;
     *(u16 *)(p + 0xF4) = g_p1_maximum_anim_delay;
@@ -2641,9 +2638,9 @@ void replay_start_state_save(Buf2 *buf) {
     *(u16 *)(p + 0x1AA) = g_enemy_signal_d;
     *(u16 *)(p + 0x1AC) = g_enemy_signal_e;
     *(u16 *)(p + 0x1AE) = g_enemy_signal_f;
-    *(u16 *)(p + 0x1B0) = g_boss_present_as_u16;
-    *(s32 *)(p + 0x1B4) = g_p1_score_as_s32;
-    *(s32 *)(p + 0x1B8) = g_p2_score_as_s32;
+    *(u16 *)(p + 0x1B0) = (*(u16 *)&g_boss_present);
+    *(s32 *)(p + 0x1B4) = (s32)g_p1_score;
+    *(s32 *)(p + 0x1B8) = (s32)g_p2_score;
     *(s32 *)(p + 0x1BC) = g_high_score;
     *(u16 *)(p + 0x1C0) = g_p1_score_billions;
     *(u16 *)(p + 0x1C2) = g_p2_score_billions;
@@ -2651,8 +2648,8 @@ void replay_start_state_save(Buf2 *buf) {
     *(u16 *)(p + 0x1C6) = g_p1_score_digits;
     *(u16 *)(p + 0x1C8) = g_high_score_digits;
     *(u16 *)(p + 0x1CA) = g_p2_score_digits;
-    *(s32 *)(p + 0x1CC) = g_p1_score_saved_as_s32;
-    *(s32 *)(p + 0x1D0) = g_p2_score_saved_as_s32;
+    *(s32 *)(p + 0x1CC) = (s32)g_p1_score_saved;
+    *(s32 *)(p + 0x1D0) = (s32)g_p2_score_saved;
     *(u16 *)(p + 0x1D4) = g_p1_score_billions_saved;
     *(u16 *)(p + 0x1D6) = g_p2_score_billions_saved;
     *(s32 *)(p + 0x1D8) = g_p1_extend_score;
@@ -2693,10 +2690,10 @@ void replay_start_state_save(Buf2 *buf) {
     *(s32 *)(p + 0x2E0) = g_p1_chain_first_score;
     *(s32 *)(p + 0x2E4) = g_p1_chain_first_score_shown;
     *(u16 *)(p + 0x2E8) = g_p1_combo_timer;
-    *(u16 *)(p + 0x2EA) = g_p1_chain_points_display_timer_as_u16;
+    *(u16 *)(p + 0x2EA) = (*(u16 *)&g_p1_chain_points_display_timer);
     *(u16 *)(p + 0x2EC) = g_p1_hit_display_timer;
     *(u16 *)(p + 0x2EE) = g_p1_combo_break_color_timer;
-    *(u16 *)(p + 0x2F0) = g_p1_hit10_display_timer_as_u16;
+    *(u16 *)(p + 0x2F0) = (*(u16 *)&g_p1_hit10_display_timer);
     *(u16 *)(p + 0x2F2) = g_p1_hit10_color_timer;
     *(u16 *)(p + 0x2F4) = g_p1_hit10_anim_count;
     *(s32 *)(p + 0x2F8) = g_p1_chain_points;
@@ -2709,10 +2706,10 @@ void replay_start_state_save(Buf2 *buf) {
     *(s32 *)(p + 0x30C) = g_p2_chain_first_score;
     *(s32 *)(p + 0x310) = g_p2_chain_first_score_shown;
     *(u16 *)(p + 0x314) = g_p2_combo_timer;
-    *(u16 *)(p + 0x316) = g_p2_chain_points_display_timer_as_u16;
+    *(u16 *)(p + 0x316) = (*(u16 *)&g_p2_chain_points_display_timer);
     *(u16 *)(p + 0x318) = g_p2_hit_display_timer;
     *(u16 *)(p + 0x31A) = g_p2_combo_break_color_timer;
-    *(u16 *)(p + 0x31C) = g_p2_hit10_display_timer_as_u16;
+    *(u16 *)(p + 0x31C) = (*(u16 *)&g_p2_hit10_display_timer);
     *(u16 *)(p + 0x31E) = g_p2_hit10_color_timer;
     *(u16 *)(p + 0x320) = g_p2_hit10_anim_count;
     *(s32 *)(p + 0x324) = g_p2_chain_points;
@@ -2725,11 +2722,11 @@ void replay_start_state_save(Buf2 *buf) {
     *(u16 *)(p + 0x338) = g_boss_hit_decay_timer;
     *(u16 *)(p + 0x33A) = g_boss_hit_anim_count;
     *(u16 *)(p + 0x33C) = g_boss_hits;
-    *(u16 *)(p + 0x33E) = g_boss_hit_palette_as_u16;
+    *(u16 *)(p + 0x33E) = (*(u16 *)&g_boss_hit_palette);
     *(u16 *)(p + 0x340) = g_boss_hit_bonus_timer;
     *(s32 *)(p + 0x344) = g_boss_hit_bonus;
     *(s32 *)(p + 0x348) = g_boss_score;
-    *(u16 *)(p + 0x34C) = g_boss_hp_bar_flags_as_u16;
+    *(u16 *)(p + 0x34C) = (*(u16 *)&g_boss_hp_bar_flags);
     *(u16 *)(p + 0x34E) = g_p1_max_hits;
     *(u16 *)(p + 0x350) = g_p2_max_hits;
     *(u16 *)(p + 0x352) = g_p1_laser_hyper_timer;
@@ -2893,7 +2890,6 @@ s32 pointer_to_array_offset_swapped(Reg32 *entry, u8 *code, u32 count, u32 strid
 extern u16 entity_draw_layer_routines[];
 extern void *replay_targets_players[2];
 extern void *replay_targets_lives[2];
-extern u16 g_text_layer_as_u16_a[];
 
 void replay_snapshot_pointers_encode(u8 *base) {
     s32 off;
@@ -2976,8 +2972,8 @@ void replay_snapshot_pointers_encode(u8 *base) {
     pointer_to_table_index((void *)(base + 0x3226), (void *)replay_targets_lives, 2);
     pointer_to_table_index((void *)(base + 0x324A), (void *)replay_targets_lives, 2);
     for (n = 0; n < 0x5A; n += 10) {
-        pointer_to_array_offset((void *)(&((u8 (*)[10])(base + 0x32B6))[0][n]), (void *)g_text_layer_as_u16_a, 0x800, 4);
-        pointer_to_array_offset((void *)(&((u8 (*)[10])(base + 0x3310))[0][n]), (void *)g_text_layer_as_u16_a, 0x800, 4);
+        pointer_to_array_offset((void *)(&((u8 (*)[10])(base + 0x32B6))[0][n]), (void *)((u16 *)g_text_layer), 0x800, 4);
+        pointer_to_array_offset((void *)(&((u8 (*)[10])(base + 0x3310))[0][n]), (void *)((u16 *)g_text_layer), 0x800, 4);
     }
 }
 
@@ -3151,8 +3147,8 @@ void replay_snapshot_pointers_decode(u8 *base) {
     pointer_decode(base + 0x3226, (u16 *)replay_targets_lives, 0x80);
     pointer_decode(base + 0x324A, (u16 *)replay_targets_lives, 0x80);
     for (n = 0; n < 0x5A; n += 10) {
-        pointer_decode(&((u8 (*)[10])(base + 0x32B6))[0][n], g_text_layer_as_u16_a, 0x82);
-        pointer_decode(&((u8 (*)[10])(base + 0x3310))[0][n], g_text_layer_as_u16_a, 0x82);
+        pointer_decode(&((u8 (*)[10])(base + 0x32B6))[0][n], ((u16 *)g_text_layer), 0x82);
+        pointer_decode(&((u8 (*)[10])(base + 0x3310))[0][n], ((u16 *)g_text_layer), 0x82);
     }
 }
 

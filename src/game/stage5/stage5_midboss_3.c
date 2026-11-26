@@ -81,7 +81,7 @@ s32 slowdown_allow_with_boss();
 extern u8 D_00261AF0[];
 extern u8 D_00265AB0[];
 extern u8 D_00265AD0[];
-extern s16 g_enemy_signal_2_as_s16;
+extern u16 g_enemy_signal_2;
 extern s16 D_00299768[];
 extern s8 enemy_move_end_requested;
 
@@ -95,7 +95,7 @@ void stage5_midboss3_start(void) {
     if (enemy_move_end_requested == 0) {
         reg_d0.h[0] = 0x10;
         D_00299768[0] = 1;
-        g_enemy_signal_2_as_s16 = 1;
+        g_enemy_signal_2 = 1;
         reg_a0 = D_00261AF0;
         sprite_palette_load();
         slowdown_allow_with_boss();
@@ -117,8 +117,8 @@ s32 vibration_start_pad1();
 s32 vibration_start_pad2();
 extern u8 D_00265B40[];
 extern u8 D_00265B60[];
-extern u16 g_slowdown_off_as_u16;
-extern u16 g_slowdown_boss_allowed_as_u16;
+extern s16 g_slowdown_off;
+extern s16 g_slowdown_boss_allowed;
 extern u16 g_enemy_signal_2;
 extern u16 g_bullets_blocked;
 extern u16 g_enemies_stopped;
@@ -215,8 +215,8 @@ follow_scroll:
                     STAGE5_MIDBOSS3(reg_a5)->frame += 4;
                     if ((s32) STAGE5_MIDBOSS3(reg_a5)->frame >= 0x1C) {
                         STAGE5_MIDBOSS3(reg_a5)->frame = 0x1CU;
-                        g_slowdown_boss_allowed_as_u16 = 0;
-                        g_slowdown_off_as_u16 = 0;
+                        g_slowdown_boss_allowed = 0;
+                        g_slowdown_off = 0;
                         STAGE5_MIDBOSS3(reg_a5)->step = 2U;
                         STAGE5_MIDBOSS3(reg_a5)->unread_1E = 0x1020;
                         STAGE5_MIDBOSS3(reg_a5)->unread_20 = 0x606;

@@ -287,13 +287,13 @@ s32 slowdown_turn_off();                            /* extern */
 extern u16 g_stage5_boss_all_forms;
 
 #ifdef DEATH_LABEL
-extern s8 g_death_boss_form_as_s8;
+extern u8 g_death_boss_form;
 #endif
 
 void stage5_boss_mode_form1_idle_start(void) {
     s32 boss_movement_start();
 #ifdef DEATH_LABEL
-    g_death_boss_form_as_s8 = 0;
+    g_death_boss_form = 0;
 #endif
     reg_d0.w = 0;
     boss_animation_start();
@@ -315,12 +315,12 @@ void stage5_boss_mode_form1_idle_start(void) {
 s32 boss_phase_start();
 s32 fade_in_and_release();
 s32 stage5_boss_form1_take_hits();
-extern s16 g_boss_hyper_wait_as_s16;
+extern u16 g_boss_hyper_wait;
 extern u8 *g_boss_hp;
 extern s32 g_boss_hp_unit;
 extern u8 g_boss_present;
 extern u8 g_boss_present_b1;
-extern s16 g_true_last_boss_as_s16;
+extern u16 g_true_last_boss;
 
 void stage5_boss_mode_form1_idle() {
     u16 temp_v1;
@@ -344,12 +344,12 @@ void stage5_boss_mode_form1_idle() {
     }
     MODE(reg_a4)->wait -= 1;
     if (MODE(reg_a4)->wait == 0) {
-        g_boss_hyper_wait_as_s16 = 1;
+        g_boss_hyper_wait = 1;
         if (g_stage5_boss_all_forms == 0) {
             g_boss_present_b1 |= 2;
             g_boss_present_b1 |= 0x10;
         } else {
-            g_true_last_boss_as_s16 = 1;
+            g_true_last_boss = 1;
         }
         stage5_boss_form1_take_hits();
         reg_a0 = (u8 *)stage5_boss_fade_palettes_b;
@@ -581,12 +581,12 @@ block_rts:
 
 
 #ifdef DEATH_LABEL
-extern s8 g_death_boss_form_as_s8;
+extern u8 g_death_boss_form;
 #endif
 
 void stage5_boss_mode_form1_to_form2_start(void) {
 #ifdef DEATH_LABEL
-    g_death_boss_form_as_s8 = 1;
+    g_death_boss_form = 1;
 #endif
     MODE(reg_a4)->wait = 1;
     MODE(reg_a4)->second_wait = 0x80;
@@ -835,20 +835,20 @@ block_join:
     }
 }
 
-extern s16 g_enemy_signal_2_as_s16;
+extern u16 g_enemy_signal_2;
 
 
 #ifdef DEATH_LABEL
-extern s8 g_death_boss_form_as_s8;
+extern u8 g_death_boss_form;
 #endif
 
 void stage5_boss_mode_form2_to_form3_start(void) {
 #ifdef DEATH_LABEL
-    g_death_boss_form_as_s8 = 2;
+    g_death_boss_form = 2;
 #endif
     MODE(reg_a4)->wait = 1;
     MODE(reg_a4)->second_wait = 0x80;
-    g_enemy_signal_2_as_s16 = 0;
+    g_enemy_signal_2 = 0;
     stage5_boss_mode_form2_to_form3(1);
 }
 
@@ -856,10 +856,9 @@ s32 boss_movement_stop();
 s32 boss_animation_start();
 s32 music_play_bgm9();
 s32 stage5_boss_form3_take_hits();
-extern void *g_boss_hp_as_void_p;
 extern u16 g_true_last_boss;
-extern u16 D_00299768_as_u16_a[];
-extern u16 D_0029976A_as_u16_a[];
+extern s16 D_00299768[];
+extern s16 D_0029976A[];
 extern u16 D_0029976C[];
 extern u16 D_0029976E[];
 
@@ -910,15 +909,15 @@ void stage5_boss_mode_form2_to_form3() {
             STAGE5_BOSS(reg_a5)->hp_scratch[1] = (u16) reg_d0.h[0];
             g_boss_hp_unit = 0x580;
             reg_a0 = (u8 *)(reg_a5 + 0x16);
-            g_boss_hp_as_void_p = (void *)reg_a0;
+            (*(void **)&g_boss_hp) = (void *)reg_a0;
             g_boss_present_b1 |= 1;
             g_boss_present_b1 |= 4;
             g_boss_present |= 1;
             stage5_boss_shield_off();
             stage5_boss_form3_take_hits();
             stage5_boss_start_damage();
-            D_00299768_as_u16_a[0] = 1;
-            D_0029976A_as_u16_a[0] = 1;
+            ((u16 *)D_00299768)[0] = 1;
+            ((u16 *)D_0029976A)[0] = 1;
             D_0029976C[0] = 1;
             D_0029976E[0] = 1;
             slowdown_turn_off();

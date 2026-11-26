@@ -456,8 +456,8 @@ extern u8 D_002604B0[];
 extern u8 D_002604F0[];
 extern u8 D_002661C8[];
 extern u8 D_002661E0[];
-extern s16 g_enemy_signal_4_as_s16;
-extern s16 g_enemy_signal_3_as_s16;
+extern u16 g_enemy_signal_4;
+extern u16 g_enemy_signal_3;
 extern s16 D_00299768[];
 extern u16 g_side_scroll_x[];
 
@@ -473,8 +473,8 @@ void stage5_midboss5_start(void) {
     reg_d0.h[0] = g_side_scroll_x[0];
     ENTITY(reg_a6)->x.h -= reg_d0.h[0];
     D_00299768[0] = 1;
-    g_enemy_signal_3_as_s16 = 1;
-    g_enemy_signal_4_as_s16 = 1;
+    g_enemy_signal_3 = 1;
+    g_enemy_signal_4 = 1;
     reg_d0.h[0] = 0x12;
     reg_a0 = (u8 *)D_00260470;
     sprite_palette_load();

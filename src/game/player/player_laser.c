@@ -85,7 +85,7 @@ void func_00145D40(void) {
 extern u8 player_weapon_tables[];
 extern u8 g_p2_weapon_level_data[];
 extern u8 g_p1_weapon_level_data[];
-extern u8 g_player1_as_u8_a[];
+extern s16 g_player1[];
 
 void weapon_level_data_set(u8 *arg0) {
     u8 *sa0;
@@ -103,7 +103,7 @@ void weapon_level_data_set(u8 *arg0) {
     sd0 = reg_d0.w;
     sd1 = reg_d1.w;
     stmp = reg_tmp.w;
-    if (g_player1_as_u8_a == arg0) {
+    if (((u8 *)g_player1) == arg0) {
         reg_a4 = (u8 *)g_p1_weapon_level_data;
     } else {
         reg_a4 = (u8 *)g_p2_weapon_level_data;
@@ -402,8 +402,8 @@ extern u16 g_player_laser_count;
 extern u16 g_hyper_hit_scratch;
 extern u16 g_p2_hyper_active;
 extern u16 g_p1_hyper_active;
-extern u16 g_p2_laser_entities_as_u16_a[];
-extern u16 g_p1_laser_entities_as_u16_a[];
+extern u8 g_p2_laser_entities[1296];
+extern u8 g_p1_laser_entities[1296];
 extern s16 g_player2[];
 extern s16 g_player1[];
 
@@ -413,7 +413,7 @@ void player_lasers_update(void) {
     g_hyper_hit_scratch = 0;
     g_player_laser_count = 0;
     if (g_player1[0] < 0) {
-        reg_a6 = (u8 *)(g_p1_laser_entities_as_u16_a);
+        reg_a6 = (u8 *)(((u16 *)g_p1_laser_entities));
         reg_d7.w = 0x1F;
         g_hyper_hit_scratch = g_p1_hyper_active;
         do {
@@ -428,7 +428,7 @@ void player_lasers_update(void) {
         } while ((s16)(--reg_d7.h[0]) >= 0);
     }
     if (g_player2[0] < 0) {
-        reg_a6 = (u8 *)(g_p2_laser_entities_as_u16_a);
+        reg_a6 = (u8 *)(((u16 *)g_p2_laser_entities));
         reg_d7.w = 0x1F;
         g_hyper_hit_scratch = g_p2_hyper_active;
         do {
@@ -452,8 +452,8 @@ void p1_laser_segment_a(void) {
 
 
 void p1_laser_segment_b(void) {
-    reg_d0.h[0] = PLAYER(g_player1_as_u8_a)->moved_y.h;
-    reg_d1.h[0] = PLAYER(g_player1_as_u8_a)->x.h;
+    reg_d0.h[0] = PLAYER(((u8 *)g_player1))->moved_y.h;
+    reg_d1.h[0] = PLAYER(((u8 *)g_player1))->x.h;
     laser_segment_move();
 }
 
@@ -502,13 +502,13 @@ extern u8 D_0029D730[];
 extern u8 D_0029D770[];
 void p1_laser_front_hyper(void)
 {
-  u16 value = PLAYER(g_player1_as_u8_a)->moved_y.h;
+  u16 value = PLAYER(((u8 *)g_player1))->moved_y.h;
   int new_var;
   reg_a0 = D_0029D770;
   if ((!new_var) && (!new_var))
   {
   }
-  reg_d2.h[0] = (new_var = PLAYER(g_player1_as_u8_a)->x.h);
+  reg_d2.h[0] = (new_var = PLAYER(((u8 *)g_player1))->x.h);
   reg_a1 = D_0029D730;
   reg_d1.h[0] = value;
   laser_front_update(value);
@@ -612,14 +612,14 @@ block_6:
     func_00146690();
 }
 
-extern u16 g_p1_options_as_u16_a[];
+extern u8 g_p1_options[];
 extern u16 D_0029F182[];
 extern u16 D_0029F184[];
 void p1_laser_muzzle_a(void)
 {
     extern void sfx_p1_laser_a_start(void);
   unsigned int highWord = D_0029F182[0];
-  reg_a4 = (u8 *)((u32) g_p1_options_as_u16_a);
+  reg_a4 = (u8 *)((u32) ((u16 *)g_p1_options));
   reg_d0.h[0] = D_0029F184[0];
   reg_a3 = (u8 *)((u32) (&sfx_p1_laser_a_start));
   reg_d0.h[1] = highWord;
@@ -629,14 +629,14 @@ void p1_laser_muzzle_a(void)
 void p1_laser_muzzle_b(void) {
     extern void sfx_p1_laser_b_start(void);
     unsigned int highWord = D_0029F182[0];
-    reg_a4 = (u8 *)((u32)g_p1_options_as_u16_a);
+    reg_a4 = (u8 *)((u32)((u16 *)g_p1_options));
     reg_d0.h[0] = D_0029F184[0];
     reg_a3 = (u8 *)((u32)(&sfx_p1_laser_b_start));
     reg_d0.h[1] = highWord;
     laser_muzzle_update(highWord);
 }
 
-extern u16 g_p2_options_as_u16_a[];
+extern u8 g_p2_options[];
 extern u16 D_0029F112[];
 extern u16 D_0029F114[];
 void p2_laser_muzzle_a(void)
@@ -644,7 +644,7 @@ void p2_laser_muzzle_a(void)
     extern void sfx_p2_laser_a_start(void);
   u16 highWord = D_0029F112[0];
   reg_d0.h[1] = highWord;
-  reg_a4 = (u8 *)((u32) g_p2_options_as_u16_a);
+  reg_a4 = (u8 *)((u32) ((u16 *)g_p2_options));
   reg_d0.h[0] = D_0029F114[0];
   reg_a3 = (u8 *)((u32) sfx_p2_laser_a_start);
   reg_d0.h[0] = D_0029F114[0];
@@ -654,7 +654,7 @@ void p2_laser_muzzle_a(void)
 void p2_laser_muzzle_b(void) {
     extern void sfx_p2_laser_b_start(void);
     unsigned int highWord = D_0029F112[0];
-    reg_a4 = (u8 *)((u32)g_p2_options_as_u16_a);
+    reg_a4 = (u8 *)((u32)((u16 *)g_p2_options));
     reg_d0.h[0] = D_0029F114[0];
     reg_a3 = (u8 *)((u32)(&sfx_p2_laser_b_start));
     reg_d0.h[1] = highWord;
@@ -718,7 +718,7 @@ void p1_laser_muzzle_strong(void) {
     reg_a3 = (void *)sfx_p1_laser_a_start;
     reg_d0.h[1] = D_0029F182[0];
     reg_d0.h[0] = D_0029F184[0];
-    if (PLAYER(g_player1_as_u8_a)->ship_type.h == 0) {
+    if (PLAYER(((u8 *)g_player1))->ship_type.h == 0) {
         laser_muzzle_update_strong(D_0029F182[0]);
         return;
     }
@@ -730,7 +730,7 @@ extern void sfx_p1_laser_hyper_start(void);
 
 void p1_laser_muzzle_hyper(void) {
     unsigned int highWord = D_0029F182[0];
-    reg_a4 = (u8 *)((u32)g_p1_options_as_u16_a);
+    reg_a4 = (u8 *)((u32)((u16 *)g_p1_options));
     reg_d0.h[0] = D_0029F184[0];
     reg_a3 = (u8 *)((u32)(&sfx_p1_laser_hyper_start));
     reg_d0.h[1] = highWord;
@@ -757,7 +757,7 @@ extern void sfx_p2_laser_hyper_start(void);
 
 void p2_laser_muzzle_hyper(void) {
     unsigned int highWord = D_0029F112[0];
-    reg_a4 = (u8 *)((u32)g_p2_options_as_u16_a);
+    reg_a4 = (u8 *)((u32)((u16 *)g_p2_options));
     reg_d0.h[0] = D_0029F114[0];
     reg_a3 = (u8 *)((u32)(&sfx_p2_laser_hyper_start));
     reg_d0.h[1] = highWord;
@@ -826,8 +826,8 @@ void p1_laser_ship_glow_strong(void) {
 
 
 void p1_laser_ship_glow_hyper(void) {
-    reg_d0.h[1] = PLAYER(g_player1_as_u8_a)->y.h;
-    *(u16 *)&reg_d0 = PLAYER(g_player1_as_u8_a)->x.h;
+    reg_d0.h[1] = PLAYER(((u8 *)g_player1))->y.h;
+    *(u16 *)&reg_d0 = PLAYER(((u8 *)g_player1))->x.h;
     laser_ship_glow_update();
 }
 
@@ -900,7 +900,7 @@ void p1_laser_option_glow_strong(void) {
 void p1_laser_option_glow_hyper(void) {
     reg_d0.h[1] = D_0029F182[0];
     reg_d0.h[0] = D_0029F184[0];
-    reg_d1.h[0] = PLAYER(g_player1_as_u8_a)->laser_power.h;
+    reg_d1.h[0] = PLAYER(((u8 *)g_player1))->laser_power.h;
     laser_option_glow_update();
 }
 
@@ -977,8 +977,8 @@ next_4:
 
 
 void p1_laser_segment_strong(void) {
-    reg_d0.h[0] = PLAYER(g_player1_as_u8_a)->moved_y.h;
-    reg_d1.h[0] = PLAYER(g_player1_as_u8_a)->x.h;
+    reg_d0.h[0] = PLAYER(((u8 *)g_player1))->moved_y.h;
+    reg_d1.h[0] = PLAYER(((u8 *)g_player1))->x.h;
     laser_segment_move_strong();
 }
 
@@ -1004,8 +1004,8 @@ extern Reg32 reg_d0;
 extern Reg32 reg_d1;
 
 void p1_laser_segment_hyper(void) {
-    reg_d0.h[0] = PLAYER(g_player1_as_u8_a)->moved_y.h;
-    reg_d1.h[0] = PLAYER(g_player1_as_u8_a)->x.h;
+    reg_d0.h[0] = PLAYER(((u8 *)g_player1))->moved_y.h;
+    reg_d1.h[0] = PLAYER(((u8 *)g_player1))->x.h;
     laser_segment_move_hyper();
 }
 
@@ -1108,11 +1108,10 @@ void laser_parts_spawn(void) {
 }
 
 extern u8 D_00256130[];
-extern u8 g_p2_laser_stop_y_as_u8;
-extern u8 g_p1_laser_stop_y_as_u8;
+extern u16 g_p2_laser_stop_y;
+extern u16 g_p1_laser_stop_y;
 extern u8 D_0029DD30[];
 extern u8 D_0029E330[];
-extern u8 g_player2_as_u8_a[];
 
 void laser_segment_spawn(void) {
     u8 *temp_a3;
@@ -1123,13 +1122,13 @@ void laser_segment_spawn(void) {
     (*(u8 *)((u8 *)(temp_a3) + (1))) |= 0x20;
     reg_a2 = (u8 *)D_0029D770;
     reg_a3 = (u8 *)D_0029E330;
-    reg_a4 = &g_p1_laser_stop_y_as_u8;
-    reg_a5 = (u8 *)g_player1_as_u8_a;
+    reg_a4 = &(*(u8 *)&g_p1_laser_stop_y);
+    reg_a5 = (u8 *)((u8 *)g_player1);
     if (ENTITY(reg_a6)->move.h == 0) {
         reg_a2 = (u8 *)D_0029D750;
         reg_a3 = (u8 *)D_0029DD30;
-        reg_a4 = &g_p2_laser_stop_y_as_u8;
-        reg_a5 = (u8 *)g_player2_as_u8_a;
+        reg_a4 = &(*(u8 *)&g_p2_laser_stop_y);
+        reg_a5 = (u8 *)((u8 *)g_player2);
     }
     reg_tmp.h[1] = *(u16 *)(reg_a6 + 0x2C);
     reg_tmp.h[0] = *(u16 *)(reg_a6 + 0x2E);
@@ -1200,12 +1199,12 @@ void laser_segment_hit_check(void) {
     reg_d1.h[0] = g_p1_laser_stop_y;
     reg_a0 = (u8 *)D_0029D730;
     reg_a2 = (u8 *)D_0029D770;
-    reg_a5 = (u8 *)g_player1_as_u8_a;
+    reg_a5 = (u8 *)((u8 *)g_player1);
     if (ENTITY(reg_a6)->move.h != 0) goto block_1;
     reg_d1.h[0] = g_p2_laser_stop_y;
     reg_a0 = (u8 *)D_0029D710;
     reg_a2 = (u8 *)D_0029D750;
-    reg_a5 = (u8 *)g_player2_as_u8_a;
+    reg_a5 = (u8 *)((u8 *)g_player2);
 block_1:
     switch (*(u8 *)(reg_a2 + 1) & 0x10) {
     case 0:
@@ -1315,7 +1314,7 @@ void laser_impacts_update(void) {
         reg_a0 += temp_a2;
         *(u16 *)reg_a1 = reg_d0.h[0];
         reg_a1 += 2;
-        *(u16 *)reg_a1 = PLAYER(g_player1_as_u8_a)->x.h;
+        *(u16 *)reg_a1 = PLAYER(((u8 *)g_player1))->x.h;
         reg_a1 += 2;
         *(u16 *)reg_a1 = *(u16 *)reg_a0;
         reg_a0 += 2;

@@ -93,8 +93,8 @@ void func_0016AA30(void) {
     reg_d2.h[0] -= 1;
 }
 
-extern s16 D_0028E7AC_as_s16;
-extern s16 g_item_count_as_s16;
+extern u16 D_0028E7AC;
+extern u16 g_item_count;
 
 void func_0016AAB0(void) {
     u8 *p0;
@@ -188,8 +188,8 @@ void func_0016AAB0(void) {
         p5[6] = 0;
         p5[7] = 0;
     } while (n5 < 0x40);
-    g_item_count_as_s16 = 0;
-    D_0028E7AC_as_s16 = 0;
+    g_item_count = 0;
+    D_0028E7AC = 0;
 }
 
 typedef void (*Fn)();
@@ -697,7 +697,7 @@ extern u8 D_0026AF40[];
 extern u16 g_frame_mod2;
 extern u16 g_p1_hyper_items;
 extern u16 g_p1_hyper_active;
-extern u16 D_0028E958_as_u16;
+extern s16 D_0028E958;
 
 void item_hyper_p1(void) {
     s32 func_0016C260();
@@ -712,7 +712,7 @@ void item_hyper_p1(void) {
         ENTITY(reg_a6)->sprite.sh = 0x202;
         ENTITY(reg_a6)->look.sh = 0;
     }
-    if (D_0028E958_as_u16 != 0) {
+    if ((u16)D_0028E958 != 0) {
         func_0016C260();
         return;
     }
@@ -821,7 +821,6 @@ void func_0016BCC0(void) {
     reg_a0 += 2;
 }
 
-extern u16 D_00269490_as_u16_a[];
 
 void func_0016BD50(void) {
     s32 func_0016C260();
@@ -856,7 +855,7 @@ block_7:
         if (ENTITY(reg_a6)->misc.b.draw_layer == 0) {
             reg_d0.w = 0;
             reg_d0.b[0] = ENTITY(reg_a6)->misc.b.user;
-            reg_a0 = (u8 *)(D_00269490_as_u16_a);
+            reg_a0 = (u8 *)(((u16 *)D_00269490));
             reg_a0 += reg_d0.h[0];
             ENTITY(reg_a6)->misc.h = *(u16 *)reg_a0;
             reg_a0 += 2;
@@ -971,7 +970,7 @@ void item_hyper_p2(void) {
         ENTITY(reg_a6)->sprite.sh = 0x202;
         ENTITY(reg_a6)->look.sh = 0;
     }
-    if (D_0028E958_as_u16 != 0) {
+    if ((u16)D_0028E958 != 0) {
         func_0016C260();
         return;
     }

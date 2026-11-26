@@ -360,7 +360,7 @@ extern u8 D_00257C10[];
 extern u8 D_0028C9B0;
 extern u16 g_enemy_signal_f;
 extern u16 g_enemy_signal_e;
-extern s16 g_enemy_signal_d_as_s16;
+extern u16 g_enemy_signal_d;
 extern u16 g_scroll_line;
 extern s8 enemy_move_end_requested;
 
@@ -399,15 +399,15 @@ next_1:
 next_2:
     g_enemy_signal_f = 1;
     g_enemy_signal_e = 1;
-    g_enemy_signal_d_as_s16 = 1;
+    g_enemy_signal_d = 1;
     return;
 block_f2:
     ENTITY(reg_a6)[6].hp.sb[0] = 1;
     g_enemy_signal_e = 1;
-    g_enemy_signal_d_as_s16 = 1;
+    g_enemy_signal_d = 1;
     return;
 block_f3:
-    g_enemy_signal_d_as_s16 = 1;
+    g_enemy_signal_d = 1;
 }
 
 s32 bullet_fire_fast();
@@ -1458,9 +1458,9 @@ void stage3_large_gun_first(void) {
 s32 rng_next_unsigned();
 extern u8 D_00258100[];
 extern u8 D_00258130[];
-extern s16 g_enemy_signal_2_as_s16;
-extern s16 g_enemy_signal_1_as_s16;
-extern s16 g_enemy_signal_0_as_s16;
+extern u16 g_enemy_signal_2;
+extern u16 g_enemy_signal_1;
+extern u16 g_enemy_signal_0;
 extern s16 D_00299768[];
 
 void stage3_large_gun_start(void) {
@@ -1478,19 +1478,19 @@ void stage3_large_gun_start(void) {
         reg_d0.h[0] = g_scroll_line;
         STAGE3_LARGE_GUN(reg_a5)->start_line = (u16) reg_d0.h[0];
         if (reg_d0.h[0] == 0x48) {
-            g_enemy_signal_0_as_s16 = 1;
-            g_enemy_signal_1_as_s16 = 1;
-            g_enemy_signal_2_as_s16 = 1;
+            g_enemy_signal_0 = 1;
+            g_enemy_signal_1 = 1;
+            g_enemy_signal_2 = 1;
             ENTITY(reg_a6)->y.h += 0x900;
             ENTITY(reg_a6)->x.h -= 0x100;
         }
         if (reg_d0.h[0] == 0x8D) {
-            g_enemy_signal_1_as_s16 = 1;
+            g_enemy_signal_1 = 1;
             ENTITY(reg_a6)->y.h += 0x900;
             ENTITY(reg_a6)->x.h -= 0x100;
         }
         if (reg_d0.h[0] == 0xAC) {
-            g_enemy_signal_2_as_s16 = 1;
+            g_enemy_signal_2 = 1;
             ENTITY(reg_a6)->y.h += 0x900;
             ENTITY(reg_a6)->x.h -= 0x100;
         }
@@ -1505,13 +1505,13 @@ void stage3_large_gun_start(void) {
 void stage3_large_gun_clear_signal(void) {
     reg_d0.h[0] = STAGE3_LARGE_GUN(reg_a5)->start_line;
     if (reg_d0.h[0] == 0x48) {
-        g_enemy_signal_0_as_s16 = 0;
+        g_enemy_signal_0 = 0;
     }
     if (reg_d0.h[0] == 0x8D) {
-        g_enemy_signal_1_as_s16 = 0;
+        g_enemy_signal_1 = 0;
     }
     if (reg_d0.h[0] == 0xAC) {
-        g_enemy_signal_2_as_s16 = 0;
+        g_enemy_signal_2 = 0;
     }
 }
 
@@ -1807,7 +1807,6 @@ void small_flyer_a_first(void) {
 
 extern u8 D_00258220[];
 extern u8 D_00258240[];
-extern s16 g_scroll_line_as_s16;
 
 void small_flyer_a_start(void) {
     s32 enemy_remove();
@@ -1820,7 +1819,7 @@ void small_flyer_a_start(void) {
     reg_d0.w = 9;
     enemy_set_task_state();
     enemy_path_start();
-    if ((enemy_move_end_requested == 0) && (g_scroll_line_as_s16 > 0x10) && (g_scroll_line_as_s16 < 0x36) && (g_enemy_signal_d != 0)) {
+    if ((enemy_move_end_requested == 0) && ((s16)g_scroll_line > 0x10) && ((s16)g_scroll_line < 0x36) && (g_enemy_signal_d != 0)) {
         enemy_remove();
     }
 }
@@ -2184,7 +2183,7 @@ extern u16 g_enemy_signal_0;
 
 void flyer_spawner() {
     s32 enemy_remove();
-    if (g_scroll_line_as_s16 >= 0x9C) {
+    if ((s16)g_scroll_line >= 0x9C) {
         enemy_remove();
         return;
     }
@@ -2521,7 +2520,6 @@ void battleship_b_start() {
 s32 sprite_draw_layer4();
 s32 func_00201710();
 extern u8 D_00258520[];
-extern u16 g_slowdown_boss_allowed_as_u16;
 
 void battleship_b(void) {
     s32 enemy_remove();
@@ -2559,7 +2557,7 @@ void battleship_b(void) {
             reg_d0.w = 0x234;
             score_add();
             var_a0 = (u8 *)((void *)0x8000);
-            g_slowdown_boss_allowed_as_u16 = 0;
+            g_slowdown_boss_allowed = 0;
             ENTITY(reg_a6)->flags.h = 0x8000;
             BATTLESHIP_B(reg_a5)->dying = 1U;
             goto block_5;
@@ -2606,7 +2604,7 @@ block_5:
             ENTITY(reg_a6)->y.h = (u16) (temp_a1 + reg_d0.h[0]);
             temp_a0_3 = ENTITY(reg_a6)->y.h;
             if ((s32) temp_a0_3 >= 0x9800) {
-                g_slowdown_boss_allowed_as_u16 = 0;
+                g_slowdown_boss_allowed = 0;
                 enemy_remove();
                 return;
             }
@@ -3745,15 +3743,15 @@ void signal_timer_start(void) {
     SIGNAL_TIMER(reg_a5)->burst.both = 0x303;
 }
 
-extern s16 g_enemy_signal_8_as_s16;
+extern u16 g_enemy_signal_8;
 
 void signal_timer(void) {
-    g_enemy_signal_8_as_s16 = 0;
+    g_enemy_signal_8 = 0;
     reg_tmp.b[0] = SIGNAL_TIMER(reg_a5)->pulse.b.countdown;
     SIGNAL_TIMER(reg_a5)->pulse.b.countdown -= 1;
     if ((s32) reg_tmp.b[0] <= 0) {
         SIGNAL_TIMER(reg_a5)->pulse.b.countdown = (u8) SIGNAL_TIMER(reg_a5)->pulse.b.interval;
-        g_enemy_signal_8_as_s16 = 1;
+        g_enemy_signal_8 = 1;
         reg_tmp.b[0] = SIGNAL_TIMER(reg_a5)->burst.b.pulses_left;
         SIGNAL_TIMER(reg_a5)->burst.b.pulses_left -= 1;
         if ((s32) reg_tmp.b[0] <= 0) {

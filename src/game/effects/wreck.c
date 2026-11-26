@@ -45,16 +45,16 @@ void func_00211F40(void);
 
 extern u16 D_00246C50[];
 extern u16 g_stage3_map_palettes[];
-extern u16 D_0025F770_as_u16_a[];
-extern u16 D_0025FBB0_as_u16_a[];
-extern u16 D_0025FBF0_as_u16_a[];
-extern u16 D_0025FC30_as_u16_a[];
-extern u16 D_0025FC70_as_u16_a[];
-extern u16 D_0025FCB0_as_u16_a[];
-extern u16 D_0025FCF0_as_u16_a[];
-extern u16 D_0025FD30_as_u16_a[];
-extern u16 D_0025FD70_as_u16_a[];
-extern u16 D_0025FDB0_as_u16_a[];
+extern u16 D_0025F770[352];
+extern u8 D_0025FBB0[];
+extern u8 D_0025FBF0[];
+extern u8 D_0025FC30[];
+extern u8 D_0025FC70[];
+extern u8 D_0025FCB0[];
+extern u8 D_0025FCF0[];
+extern u8 D_0025FD30[];
+extern u8 D_0025FD70[];
+extern u8 D_0025FDB0[];
 extern u16 D_00260FF0[];
 extern u16 D_002610F0[];
 extern u16 D_00261D30[];
@@ -70,53 +70,53 @@ extern u16 D_002622B0[];
 extern u16 D_002622F0[];
 extern u16 D_00262330[];
 extern u16 D_00262370[];
-extern u16 D_002623F0_as_u16_a[];
-extern u16 D_00262430_as_u16_a[];
+extern u8 D_002623F0[];
+extern u8 D_00262430[];
 extern u16 D_00262470[];
 extern u16 D_002624B0[];
-extern u16 D_002687B0_as_u16_a[];
+extern struct D002687b0Record D_002687B0;
 extern u16 D_00269750[];
 extern u16 D_00269780[];
 extern u16 D_002697B0[];
 extern u16 D_00274040[];
 extern u16 D_00274840[];
 extern u16 D_00275040[];
-extern u32 g_p2_laser_stop_y_as_u32;
-extern u32 g_p1_laser_stop_y_as_u32;
+extern u16 g_p2_laser_stop_y;
+extern u16 g_p1_laser_stop_y;
 extern u16 g_p2_weapon_level_data_as_u16_a[];
 extern u16 g_p1_weapon_level_data_as_u16_a[];
-extern u32 g_p2_lives_as_u32;
-extern u32 g_p1_lives_as_u32;
-extern u16 g_bullets_as_u16_a[];
+extern u16 g_p2_lives;
+extern u16 g_p1_lives;
+extern u8 g_bullets[67216];
 extern u16 D_00299764[];
 extern u16 D_00299780[];
-extern u16 D_00299D30_as_u16_a[];
-extern u16 D_0029A12C_as_u16_a[];
+extern u8 D_00299D30[2048];
+extern u8 D_0029A12C[];
 extern u16 D_0029A530[];
-extern u16 g_explosions_as_u16_a[];
+extern u8 g_explosions[4480];
 extern u16 g_bomb_entities[];
-extern u16 D_0029D710_as_u16_a[];
-extern u16 D_0029D730_as_u16_a[];
-extern u16 D_0029D750_as_u16_a[];
-extern u16 D_0029D770_as_u16_a[];
-extern u16 g_p2_laser_entities_as_u16_a[];
-extern u16 g_p1_laser_entities_as_u16_a[];
-extern u16 D_0029E390_as_u16_a[];
-extern u16 D_0029EA50_as_u16_a[];
-extern u16 g_p2_options_as_u16_a[];
-extern u16 g_p1_options_as_u16_a[];
-extern u16 g_player2_as_u16_a[];
-extern u16 g_player1_as_u16_a[];
-extern u16 g_deferred_text_as_u16_a[];
+extern u8 D_0029D710[32];
+extern u8 D_0029D730[32];
+extern u8 D_0029D750[32];
+extern u8 D_0029D770[32];
+extern u8 g_p2_laser_entities[1296];
+extern u8 g_p1_laser_entities[1296];
+extern u8 D_0029E390[1728];
+extern u8 D_0029EA50[1728];
+extern u8 g_p2_options[80];
+extern u8 g_p1_options[80];
+extern s16 g_player2[];
+extern s16 g_player1[];
+extern u32 g_deferred_text[1568];
 extern u16 D_002BAF30[];
 extern u16 D_002BAF3A[];
 extern u16 D_002BAF50[];
 extern u16 D_002BAFAA[];
-extern u16 D_002BB470_as_u16_a[];
-extern u16 g_items_as_u16_a[];
-extern u16 D_002BF3EA_as_u16_a[];
+extern u8 D_002BB470[64];
+extern u8 g_items[512];
+extern u8 D_002BF3EA[];
 extern u16 D_002BF400[];
-extern u16 D_002BF4F0_as_u16_a[];
+extern u8 D_002BF4F0[3080];
 extern void func_00130250(void);
 extern void func_00130260(void);
 extern void input_get_p1_held(void);
@@ -170,55 +170,55 @@ void func_0020F550(void) {
     STORE_POINTER(continue_player1.other_routine, func_00130250);
     STORE_POINTER(continue_player1.held, input_get_p1_held);
     STORE_POINTER(continue_player1.pressed, input_get_p1_pressed);
-    STORE_POINTER(continue_player1.other_state, D_002BF3EA_as_u16_a);
+    STORE_POINTER(continue_player1.other_state, ((u16 *)D_002BF3EA));
     STORE_POINTER(continue_player2.other_routine, func_00130260);
     STORE_POINTER(continue_player2.held, input_get_p2_held);
     STORE_POINTER(continue_player2.pressed, input_get_p2_pressed);
     STORE_POINTER(continue_player2.other_state, D_002BF400);
-    STORE_POINTER(player_starts[0].lives, &g_p1_lives_as_u32);
-    STORE_POINTER(player_starts[1].lives, &g_p2_lives_as_u32);
+    STORE_POINTER(player_starts[0].lives, &(*(u32 *)&g_p1_lives));
+    STORE_POINTER(player_starts[1].lives, &(*(u32 *)&g_p2_lives));
     STORE_POINTER(debug_list_views[0].entries, g_bomb_entities);
-    STORE_POINTER(debug_list_views[1].entries, g_player1_as_u16_a);
-    STORE_POINTER(debug_list_views[2].entries, g_player2_as_u16_a);
-    STORE_POINTER(debug_list_views[3].entries, g_p1_options_as_u16_a);
-    STORE_POINTER(debug_list_views[4].entries, g_p2_options_as_u16_a);
-    STORE_POINTER(debug_list_views[5].entries, D_0029E390_as_u16_a);
-    STORE_POINTER(debug_list_views[6].entries, D_0029EA50_as_u16_a);
-    STORE_POINTER(debug_list_views[7].entries, g_p1_laser_entities_as_u16_a);
-    STORE_POINTER(debug_list_views[8].entries, g_p2_laser_entities_as_u16_a);
-    STORE_POINTER(debug_list_views[9].entries, D_0029D770_as_u16_a);
-    STORE_POINTER(debug_list_views[10].entries, D_0029D750_as_u16_a);
-    STORE_POINTER(debug_list_views[11].entries, D_0029D730_as_u16_a);
-    STORE_POINTER(debug_list_views[12].entries, D_0029D710_as_u16_a);
+    STORE_POINTER(debug_list_views[1].entries, ((u16 *)g_player1));
+    STORE_POINTER(debug_list_views[2].entries, ((u16 *)g_player2));
+    STORE_POINTER(debug_list_views[3].entries, ((u16 *)g_p1_options));
+    STORE_POINTER(debug_list_views[4].entries, ((u16 *)g_p2_options));
+    STORE_POINTER(debug_list_views[5].entries, ((u16 *)D_0029E390));
+    STORE_POINTER(debug_list_views[6].entries, ((u16 *)D_0029EA50));
+    STORE_POINTER(debug_list_views[7].entries, ((u16 *)g_p1_laser_entities));
+    STORE_POINTER(debug_list_views[8].entries, ((u16 *)g_p2_laser_entities));
+    STORE_POINTER(debug_list_views[9].entries, ((u16 *)D_0029D770));
+    STORE_POINTER(debug_list_views[10].entries, ((u16 *)D_0029D750));
+    STORE_POINTER(debug_list_views[11].entries, ((u16 *)D_0029D730));
+    STORE_POINTER(debug_list_views[12].entries, ((u16 *)D_0029D710));
     STORE_POINTER(debug_list_views[13].entries, g_p1_weapon_level_data_as_u16_a);
     STORE_POINTER(debug_list_views[14].entries, g_p2_weapon_level_data_as_u16_a);
     STORE_POINTER(debug_list_views[15].entries, ((u16 *)g_enemy_entities));
     STORE_POINTER(debug_list_views[16].entries, ((u16 *)g_enemy_entities_second));
-    STORE_POINTER(debug_list_views[17].entries, g_items_as_u16_a);
-    STORE_POINTER(debug_list_views[18].entries, &g_p1_laser_stop_y_as_u32);
-    STORE_POINTER(debug_list_views[19].entries, &g_p2_laser_stop_y_as_u32);
-    STORE_POINTER(debug_list_views[20].entries, D_002BF4F0_as_u16_a);
-    STORE_POINTER(debug_list_views[21].entries, D_00299D30_as_u16_a);
-    STORE_POINTER(debug_list_views[22].entries, D_0029A12C_as_u16_a);
-    STORE_POINTER(debug_list_views[23].entries, g_deferred_text_as_u16_a);
+    STORE_POINTER(debug_list_views[17].entries, ((u16 *)g_items));
+    STORE_POINTER(debug_list_views[18].entries, &(*(u32 *)&g_p1_laser_stop_y));
+    STORE_POINTER(debug_list_views[19].entries, &(*(u32 *)&g_p2_laser_stop_y));
+    STORE_POINTER(debug_list_views[20].entries, ((u16 *)D_002BF4F0));
+    STORE_POINTER(debug_list_views[21].entries, ((u16 *)D_00299D30));
+    STORE_POINTER(debug_list_views[22].entries, ((u16 *)D_0029A12C));
+    STORE_POINTER(debug_list_views[23].entries, ((u16 *)g_deferred_text));
     STORE_POINTER(debug_list_views[24].entries, D_002BAF50);
     STORE_POINTER(debug_list_views[25].entries, D_002BAFAA);
     STORE_POINTER(debug_list_views[26].entries, D_002BAF30);
     STORE_POINTER(debug_list_views[27].entries, D_002BAF3A);
-    STORE_POINTER(debug_list_views[28].entries, g_bullets_as_u16_a);
-    STORE_POINTER(debug_list_views[29].entries, D_002BB470_as_u16_a);
+    STORE_POINTER(debug_list_views[28].entries, ((u16 *)g_bullets));
+    STORE_POINTER(debug_list_views[29].entries, ((u16 *)D_002BB470));
     STORE_POINTER(debug_list_views[30].entries, D_0029A530);
     STORE_POINTER(debug_list_views[31].entries, D_00299764);
-    STORE_POINTER(debug_list_views[32].entries, g_explosions_as_u16_a);
+    STORE_POINTER(debug_list_views[32].entries, ((u16 *)g_explosions));
     STORE_POINTER(debug_list_views[33].entries, D_00299780);
     STORE_POINTER(debug_table_views[0].table, D_00274040);
     STORE_POINTER(debug_table_views[1].table, D_00274840);
     STORE_POINTER(debug_table_views[2].table, D_00275040);
     STORE_POINTER(D_0026A3F0 + 4, D_00261DF0);
-    STORE_POINTER(settings_notice_fade_palettes + 4, D_00262430_as_u16_a);
-    STORE_POINTER(settings_notice_fade_palettes + 11, D_002623F0_as_u16_a);
-    STORE_POINTER(settings_notice_fade_palettes + 18, D_0025F770_as_u16_a);
-    STORE_POINTER(settings_notice_fade_palettes + 25, D_002687B0_as_u16_a);
+    STORE_POINTER(settings_notice_fade_palettes + 4, ((u16 *)D_00262430));
+    STORE_POINTER(settings_notice_fade_palettes + 11, ((u16 *)D_002623F0));
+    STORE_POINTER(settings_notice_fade_palettes + 18, ((u16 *)D_0025F770));
+    STORE_POINTER(settings_notice_fade_palettes + 25, ((u16 *)&D_002687B0));
     STORE_POINTER(D_0026B580 + 4, D_00262230);
     STORE_POINTER(D_0026B580 + 11, D_00262270);
     STORE_POINTER(D_0026B580 + 18, D_002622F0);
@@ -234,15 +234,15 @@ void func_0020F550(void) {
     STORE_POINTER(stage2_boss_fade_palettes + 21, D_00261D30);
     STORE_POINTER(stage2_boss_fade_palettes + 27, D_00261D30);
     STORE_POINTER(stage2_boss_fade_palettes + 33, D_00261D30);
-    STORE_POINTER(stage2_boss_enter_flash + 4, D_0025FBB0_as_u16_a);
-    STORE_POINTER(stage2_boss_enter_flash + 11, D_0025FBF0_as_u16_a);
-    STORE_POINTER(stage2_boss_enter_flash + 18, D_0025FC30_as_u16_a);
-    STORE_POINTER(stage2_boss_enter_flash + 25, D_0025FC70_as_u16_a);
-    STORE_POINTER(stage2_boss_enter_flash + 32, D_0025FCB0_as_u16_a);
-    STORE_POINTER(stage2_boss_enter_flash + 39, D_0025FCF0_as_u16_a);
-    STORE_POINTER(stage3_boss_enter_flash + 4, D_0025FD30_as_u16_a);
-    STORE_POINTER(stage3_boss_enter_flash + 11, D_0025FD70_as_u16_a);
-    STORE_POINTER(stage3_boss_enter_flash + 18, D_0025FDB0_as_u16_a);
+    STORE_POINTER(stage2_boss_enter_flash + 4, ((u16 *)D_0025FBB0));
+    STORE_POINTER(stage2_boss_enter_flash + 11, ((u16 *)D_0025FBF0));
+    STORE_POINTER(stage2_boss_enter_flash + 18, ((u16 *)D_0025FC30));
+    STORE_POINTER(stage2_boss_enter_flash + 25, ((u16 *)D_0025FC70));
+    STORE_POINTER(stage2_boss_enter_flash + 32, ((u16 *)D_0025FCB0));
+    STORE_POINTER(stage2_boss_enter_flash + 39, ((u16 *)D_0025FCF0));
+    STORE_POINTER(stage3_boss_enter_flash + 4, ((u16 *)D_0025FD30));
+    STORE_POINTER(stage3_boss_enter_flash + 11, ((u16 *)D_0025FD70));
+    STORE_POINTER(stage3_boss_enter_flash + 18, ((u16 *)D_0025FDB0));
     STORE_POINTER(stage3_boss_final_flash + 4, D_002610F0);
     STORE_POINTER(stage3_boss_final_flash + 11, g_stage3_map_palettes);
     STORE_POINTER(stage3_boss_final_flash + 18, g_stage3_map_palettes);
@@ -266,11 +266,11 @@ void func_0020F550(void) {
 
 extern u16 D_00244930[];
 extern u16 D_00249E90[];
-extern u16 stage1_boss_palette_as_u16_a[];
-extern u16 D_0025FA70_as_u16_a[];
-extern u16 D_0025FE70_as_u16_a[];
-extern u16 D_0025FEB0_as_u16_a[];
-extern u16 D_0025FEF0_as_u16_a[];
+extern u16 stage1_boss_palette[1504];
+extern u8 D_0025FA70[];
+extern u8 D_0025FE70[];
+extern u8 D_0025FEB0[];
+extern u8 D_0025FEF0[];
 extern u16 D_00261D70[];
 extern u16 D_0026ED30[];
 extern u16 D_0026ED40[];
@@ -279,23 +279,21 @@ extern u16 D_0026ED60[];
 extern u16 D_0026ED70[];
 extern u16 D_0028DC70[];
 
-extern u16 D_0026ED10_as_u16_a[];
-extern u16 D_0028DC68_as_u16_a[];
 
 void func_002108C0(void) {
-    STORE_POINTER(stage1_boss_blast_flash + 4, stage1_boss_palette_as_u16_a);
-    STORE_POINTER(stage1_boss_blast_flash + 11, D_0025FA70_as_u16_a);
-    STORE_POINTER(stage1_boss_blast_flash + 18, D_0025FA70_as_u16_a);
-    STORE_POINTER(stage1_boss_blast_flash + 25, D_0025FA70_as_u16_a);
+    STORE_POINTER(stage1_boss_blast_flash + 4, ((u16 *)stage1_boss_palette));
+    STORE_POINTER(stage1_boss_blast_flash + 11, ((u16 *)D_0025FA70));
+    STORE_POINTER(stage1_boss_blast_flash + 18, ((u16 *)D_0025FA70));
+    STORE_POINTER(stage1_boss_blast_flash + 25, ((u16 *)D_0025FA70));
     STORE_POINTER(stage1_boss_blast_flash + 32, D_00244930);
     STORE_POINTER(stage1_boss_final_flash + 4, D_002610F0);
     STORE_POINTER(stage1_boss_final_flash + 11, D_00244930);
-    STORE_POINTER(stage1_boss_enter_flash + 4, stage1_boss_palette_as_u16_a);
-    STORE_POINTER(stage1_boss_enter_flash + 11, D_0025FA70_as_u16_a);
-    STORE_POINTER(stage1_boss_enter_flash + 18, D_0025FA70_as_u16_a);
-    STORE_POINTER(stage1_boss_enter_flash + 25, D_0025FA70_as_u16_a);
+    STORE_POINTER(stage1_boss_enter_flash + 4, ((u16 *)stage1_boss_palette));
+    STORE_POINTER(stage1_boss_enter_flash + 11, ((u16 *)D_0025FA70));
+    STORE_POINTER(stage1_boss_enter_flash + 18, ((u16 *)D_0025FA70));
+    STORE_POINTER(stage1_boss_enter_flash + 25, ((u16 *)D_0025FA70));
     STORE_POINTER(stage1_boss_enter_flash + 32, D_00261D70);
-    STORE_POINTER(D_0026ED10_as_u16_a, D_0026ED30);
+    STORE_POINTER(((u16 *)D_0026ED10), D_0026ED30);
     STORE_POINTER(D_0026ED10 + 2, D_0026ED40);
     STORE_POINTER(D_0026ED10 + 4, D_0026ED50);
     STORE_POINTER(D_0026ED10 + 6, D_0026ED60);
@@ -303,21 +301,21 @@ void func_002108C0(void) {
     STORE_POINTER(D_0026ED10 + 10, D_0026ED40);
     STORE_POINTER(D_0026ED10 + 12, D_0026ED50);
     STORE_POINTER(D_0026ED10 + 14, D_0026ED60);
-    STORE_POINTER(D_0028DC68_as_u16_a, D_0026ED70);
+    STORE_POINTER(((u16 *)D_0028DC68), D_0026ED70);
     STORE_POINTER(D_0028DC68 + 2, D_0028DC70);
     STORE_POINTER(stage4_boss_flash_palettes + 4, D_002610F0);
     STORE_POINTER(stage4_boss_flash_palettes + 11, D_00249E90);
     STORE_POINTER(stage4_boss_fade_palettes + 3, D_00261D30);
-    STORE_POINTER(stage4_boss_enter_flash + 4, D_0025FE70_as_u16_a);
-    STORE_POINTER(stage4_boss_enter_flash + 11, D_0025FEB0_as_u16_a);
-    STORE_POINTER(stage4_boss_enter_flash + 18, D_0025FEF0_as_u16_a);
+    STORE_POINTER(stage4_boss_enter_flash + 4, ((u16 *)D_0025FE70));
+    STORE_POINTER(stage4_boss_enter_flash + 11, ((u16 *)D_0025FEB0));
+    STORE_POINTER(stage4_boss_enter_flash + 18, ((u16 *)D_0025FEF0));
     STORE_POINTER(stage4_boss_enter_flash + 25, D_00261D70);
 }
 
 extern u8 D_002BAE90[];
 
 #ifdef DEATH_LABEL
-extern s8 D_0028E2A4_as_s8;
+extern u8 D_0028E2A4;
 #endif
 
 void func_00210C90(void) {
@@ -341,7 +339,7 @@ void func_00210C90(void) {
     ENTITY(reg_a6)->draw.sh = 0x60;
     ENTITY(reg_a6)->sprite.sh = 0x10;
 #ifdef DEATH_LABEL
-    D_0028E2A4_as_s8 = 0x78;
+    D_0028E2A4 = 0x78;
 #endif
 }
 
@@ -707,11 +705,10 @@ block_3:
     }
 }
 
-extern s32 D_00299780_as_s32_a[];
 
 
 void func_002114A0(void) {
-    memset(D_00299780_as_s32_a, 0, 0x5A6);
+    memset(((s32 *)D_00299780), 0, 0x5A6);
 }
 
 
@@ -807,13 +804,12 @@ void func_00211670(void) {
 
 typedef void (*Fn)(void);
 
-extern u8 D_00299780_as_u8_a[];
 extern u8 *reg_call_target_as_u8_p;
 
 void func_00211720(void) {
     u32 t1;
 
-    reg_a6 = (u8 *)D_00299780_as_u8_a;
+    reg_a6 = (u8 *)((u8 *)D_00299780);
     goto loop_1;
 skip_1:
     reg_a6 += 0x30;
@@ -924,7 +920,7 @@ next_1:
     reg_d6.h[0] = reg_d3.h[0];
     D_00299D22[0] = 2;
     D_00299D24[0] = 0xA;
-    reg_a6 = (u8 *)D_00299780_as_u8_a;
+    reg_a6 = (u8 *)((u8 *)D_00299780);
 loop_2:
     if (W6(0) == 0) goto next_6;
     if (W6(4) != reg_d7.h[0]) goto next_3;

@@ -13,7 +13,7 @@ extern u16 g_p1_score_digits;
 extern u16 g_two_player_seen;
 extern s8 g_menu_pad;
 extern u8 g_replay_taken_over;
-extern u32 g_replay_position_as_u32;
+extern s32 g_replay_position;
 extern u8 g_replay_buffer_state;
 extern u8 g_replay_mode_begun;
 extern u8 g_replay_mode;
@@ -49,20 +49,20 @@ void replay_filter_input(void) {
     reg_d7.h[0] &= 0xFF00;
     switch (g_replay_buffer_state) {
     case 0:
-        g_replay_position_as_u32 = 0;
+        g_replay_position = 0;
         reg_d1.b[0] = 0x80;
         reg_d0.b[0] = 0x80;
         break;
     case 1:
-        if (g_replay_position_as_u32 == 0x1A5E0) {
-            g_replay_position_as_u32 = 0x1A5DF;
+        if ((u32)g_replay_position == 0x1A5E0) {
+            g_replay_position = 0x1A5DF;
             printf("replay buffer over!!!\n");
         }
         switch (g_replay_mode) {
         case 0:
             break;
         case 2:
-            if (g_replay_position_as_u32 > 2 && g_replay_taken_over == 0) {
+            if ((u32)g_replay_position > 2 && g_replay_taken_over == 0) {
                 if (g_menu_pad == 0) {
                     if (reg_d0.b[0] & 0x7F) {
                         g_replay_taken_over = 1;
@@ -97,11 +97,11 @@ void replay_filter_input(void) {
                     g_replay_mode = 0;
                 }
                 if (D_006C58A4[0] != 0xFF) {
-                    reg_d0.b[0] = g_replay_inputs[g_replay_position_as_u32] ^ death_D_002B1ED8[g_replay_position_as_u32 & 0x1F];
+                    reg_d0.b[0] = g_replay_inputs[(u32)g_replay_position] ^ death_D_002B1ED8[(u32)g_replay_position & 0x1F];
                 } else {
-                    reg_d1.b[0] = g_replay_inputs[g_replay_position_as_u32] ^ death_D_002B1ED8[g_replay_position_as_u32 & 0x1F];
+                    reg_d1.b[0] = g_replay_inputs[(u32)g_replay_position] ^ death_D_002B1ED8[(u32)g_replay_position & 0x1F];
                 }
-                g_replay_position_as_u32++;
+                (*(u32 *)&g_replay_position)++;
             }
             break;
         case 1:
@@ -109,12 +109,12 @@ void replay_filter_input(void) {
                 g_replay_mode = 0;
             }
             if (D_006C58A4[0] != 0xFF) {
-                g_replay_inputs[g_replay_position_as_u32] = reg_d0.b[0];
+                g_replay_inputs[(u32)g_replay_position] = reg_d0.b[0];
             } else {
-                g_replay_inputs[g_replay_position_as_u32] = reg_d1.b[0];
+                g_replay_inputs[(u32)g_replay_position] = reg_d1.b[0];
             }
-            g_replay_inputs[g_replay_position_as_u32] ^= death_D_002B1ED8[g_replay_position_as_u32 & 0x1F];
-            g_replay_position_as_u32++;
+            g_replay_inputs[(u32)g_replay_position] ^= death_D_002B1ED8[(u32)g_replay_position & 0x1F];
+            (*(u32 *)&g_replay_position)++;
             if (g_two_player_seen == 3 || g_p1_score_digits != 0 || g_p2_score_digits != 0) {
                 g_replay_mode = 0;
             }
@@ -138,7 +138,7 @@ extern u16 g_p1_score_digits;
 extern u16 g_two_player_seen;
 extern s8 g_menu_pad;
 extern u8 g_replay_taken_over;
-extern u32 g_replay_position_as_u32;
+extern s32 g_replay_position;
 extern u8 g_replay_buffer_state;
 extern u8 g_replay_mode_begun;
 extern u8 g_replay_mode;
@@ -168,20 +168,20 @@ void replay_filter_input(void) {
     reg_d7.h[0] &= 0xFF00;
     switch (g_replay_buffer_state) {
     case 0:
-        g_replay_position_as_u32 = 0;
+        g_replay_position = 0;
         reg_d1.b[0] = 0x80;
         reg_d0.b[0] = 0x80;
         break;
     case 1:
-        if (g_replay_position_as_u32 == 0x1A5E0) {
-            g_replay_position_as_u32 = 0x1A5DF;
+        if ((u32)g_replay_position == 0x1A5E0) {
+            g_replay_position = 0x1A5DF;
             printf((const char *)"replay buffer over!!!\n");
         }
         switch (g_replay_mode) {
         case 0:
             break;
         case 2:
-            if (g_replay_position_as_u32 > 2 && g_replay_taken_over == 0 && g_attract_demo == 0) {
+            if ((u32)g_replay_position > 2 && g_replay_taken_over == 0 && g_attract_demo == 0) {
                 if (g_menu_pad == 0) {
                     if (reg_d0.b[0] & 0x7F) {
                         g_replay_taken_over = 1;
@@ -216,11 +216,11 @@ void replay_filter_input(void) {
                     g_replay_mode = 0;
                 }
                 if (D_006C58A4[0] != 0xFF) {
-                    reg_d0.b[0] = g_replay_inputs[g_replay_position_as_u32] ^ D_006CB588[g_replay_position_as_u32 & 0x1F];
+                    reg_d0.b[0] = g_replay_inputs[(u32)g_replay_position] ^ D_006CB588[(u32)g_replay_position & 0x1F];
                 } else {
-                    reg_d1.b[0] = g_replay_inputs[g_replay_position_as_u32] ^ D_006CB588[g_replay_position_as_u32 & 0x1F];
+                    reg_d1.b[0] = g_replay_inputs[(u32)g_replay_position] ^ D_006CB588[(u32)g_replay_position & 0x1F];
                 }
-                g_replay_position_as_u32++;
+                (*(u32 *)&g_replay_position)++;
             }
             break;
         case 1:
@@ -228,12 +228,12 @@ void replay_filter_input(void) {
                 g_replay_mode = 0;
             }
             if (D_006C58A4[0] != 0xFF) {
-                g_replay_inputs[g_replay_position_as_u32] = reg_d0.b[0];
+                g_replay_inputs[(u32)g_replay_position] = reg_d0.b[0];
             } else {
-                g_replay_inputs[g_replay_position_as_u32] = reg_d1.b[0];
+                g_replay_inputs[(u32)g_replay_position] = reg_d1.b[0];
             }
-            g_replay_inputs[g_replay_position_as_u32] ^= D_006CB588[g_replay_position_as_u32 & 0x1F];
-            g_replay_position_as_u32++;
+            g_replay_inputs[(u32)g_replay_position] ^= D_006CB588[(u32)g_replay_position & 0x1F];
+            (*(u32 *)&g_replay_position)++;
             if (g_two_player_seen == 3 || g_p1_score_digits != 0 || g_p2_score_digits != 0) {
                 g_replay_mode = 0;
             }
@@ -346,8 +346,8 @@ extern void func_002271D0(void);
 extern u8 g_stage_load_state;
 extern s16 g_loaded_stage;
 extern u16 g_stage;
-extern u8 g_cd_async_state_as_u8;
-extern u8 g_cd_async_busy_as_u8;
+extern s8 g_cd_async_state;
+extern s8 g_cd_async_busy;
 extern s8 D_0028EC20;
 
 void replay_exit(void) {
@@ -391,9 +391,9 @@ void replay_exit(void) {
         step++;
         break;
     case 0:
-        g_cd_async_busy_as_u8 = 1;
+        g_cd_async_busy = 1;
         g_stage_load_state = 0;
-        g_cd_async_state_as_u8 = 0;
+        g_cd_async_state = 0;
         func_00225630();
         g_stage = 0;
         step++;
@@ -504,8 +504,7 @@ s32 text_layer_clear();                            /* extern */
 s32 fade_in();                            /* extern */
 s32 text_palette_load();                            /* extern */
 s32 func_00225B70();                            /* extern */
-extern s32 text_palette_0_as_s32_a[];
-extern s32 D_0026B580_as_s32_a[];
+extern u8 D_0026B580[];
 extern u32 g_replay_fade_id;
 
 void replay_result_menu_begin(void) {
@@ -516,12 +515,12 @@ void replay_result_menu_begin(void) {
     temp_s1 = reg_d0.w;
     text_layer_clear();
     reg_d0.w = 0;
-    reg_a0 = (u8 *)text_palette_0_as_s32_a;
+    reg_a0 = (u8 *)((s32 *)text_palette_0);
     text_palette_load();
     *(s8 *)(reg_a5 + 3) = 1;
     *(s16 *)(reg_a5 + 6) = 0;
     func_00225B70();
-    reg_a0 = (u8 *)D_0026B580_as_s32_a;
+    reg_a0 = (u8 *)((s32 *)D_0026B580);
     fade_in();
     reg_a0 = (u8 *)temp_s0;
     g_replay_fade_id = reg_d0.w;
@@ -644,12 +643,12 @@ extern u8 D_0028ED64;
 extern s32 g_replay_position;
 extern u8 g_replay_buffer_state;
 extern u8 g_replay_mode_begun;
-extern u16 g_replay_file_as_u16_a[];
+extern u8 g_replay_file[48];
 extern u16 D_006C58A2[];
 extern u16 D_006C58A4[];
 extern u16 D_006C58A6[];
 extern u16 D_006C58A8[];
-extern u16 g_replay_snapshot_as_u16_a[];
+extern u8 g_replay_snapshot[];
 extern u8 g_replay_start_state[];
 extern u16 D_006CB578[];
 extern u16 D_006CB57A[];
@@ -665,8 +664,8 @@ void replay_record_begin() {
     u16 *save;
 
     if (g_simulation_active == 0 && g_replay_buffer_state == 2) {
-        data = g_replay_snapshot_as_u16_a;
-        save = g_replay_file_as_u16_a;
+        data = ((u16 *)g_replay_snapshot);
+        save = ((u16 *)g_replay_file);
     g_replay_mode_begun = 1;
     g_replay_buffer_state = 1;
     D_0028ED64 = 0;
@@ -681,7 +680,7 @@ void replay_record_begin() {
     }
     srand(D_0028E2BC * D_0028E2BB);
     for (i = 0; i < 0x20; i++) {
-        ((u8 *)g_replay_file_as_u16_a)[0x5CE8 + i] = rand();
+        ((u8 *)((u16 *)g_replay_file))[0x5CE8 + i] = rand();
     }
     D_006CB57A[0] = g_input_p1_pressed;
     D_006CB578[0] = g_input_p1_held;
@@ -715,11 +714,10 @@ void replay_record_begin() {
 
 extern u8 g_game_mode;
 extern u8 g_replay_begin_pending;
-extern s8 g_replay_buffer_state_as_s8;
 
 void replay_begin_pending(void) {
     if (g_game_mode == 2) {
-        g_replay_buffer_state_as_s8 = 2;
+        g_replay_buffer_state = 2;
         g_replay_begin_pending = 0;
         g_replay_mode = 0;
     }
@@ -742,15 +740,13 @@ void replay_begin_pending(void) {
 
 s32 replay_snapshot_load(s32 *);                   /* extern */
 extern s32 g_replay_checksum;
-extern s8 g_replay_mode_begun_as_s8;
-extern s32 g_replay_snapshot_as_s32_a[];
 extern s32 g_replay_file_checksum[];
 
 void replay_input_playback_begin() {
-    g_replay_mode_begun_as_s8 = 2;
-    replay_snapshot_load(g_replay_snapshot_as_s32_a);
+    g_replay_mode_begun = 2;
+    replay_snapshot_load(((s32 *)g_replay_snapshot));
     if (g_replay_file_checksum[0] == g_replay_checksum) {
-        g_replay_buffer_state_as_s8 = 1;
+        g_replay_buffer_state = 1;
         g_replay_position = 0;
         g_input_p1_pressed = D_006CB57A[0];
         g_input_p1_held = D_006CB578[0];
@@ -771,7 +767,7 @@ extern u16 D_0028E318;
 extern u8 D_0028E368;
 extern u8 g_game_frame_ran;
 extern u16 g_attract_demo;
-extern u8 D_0028E3F8_as_u8;
+extern s8 D_0028E3F8;
 extern u8 g_replay_taken_over;
 extern u8 D_0028ED5C;
 extern ReplayHeader g_replay_file_as_SaveHeader; /* the header at the start of the save buffer */
@@ -800,7 +796,7 @@ void replay_playback_begin(void) {
     u8 *save_a6;
 
     g_game_frame_ran = 0;
-    D_0028E3F8_as_u8 = 0;
+    D_0028E3F8 = 0;
     g_replay_buffer_state = 0;
     g_replay_position = 0;
     D_0028E368 = 0;
@@ -892,8 +888,8 @@ extern u16 g_p1_lives;
 extern s32 D_0028E998;
 extern s32 D_0028E99C;
 extern s8 D_0028EC58;
-extern u16 g_player2_as_u16_a[];
-extern u16 g_player1_as_u16_a[];
+extern s16 g_player2[56];
+extern s16 g_player1[56];
 extern u8 D_006C58C4[];
 extern u8 g_replay_snapshot[];
 extern u8 D_006C68B6[];
@@ -1024,10 +1020,10 @@ void replay_playback_start(void) {
                 func_00135110();
                 D_0028ED5C = 0;
                 if (g_loop == 0) {
-                    memcpy(g_player1_as_u16_a, D_006C68B6, 0x62);
-                    memcpy(g_player2_as_u16_a, D_006C6918, 0x62);
-                    g_player1_as_u16_a[0] = 0;
-                    g_player2_as_u16_a[0] = 0;
+                    memcpy(((u16 *)g_player1), D_006C68B6, 0x62);
+                    memcpy(((u16 *)g_player2), D_006C6918, 0x62);
+                    ((u16 *)g_player1)[0] = 0;
+                    ((u16 *)g_player2)[0] = 0;
                 } else {
                     g_players_hidden = 1;
                 }
@@ -1035,8 +1031,8 @@ void replay_playback_start(void) {
             break;
         case 0x65:
             if ((g_loop != 0) && (g_scroll_line == 0x69) && (g_scroll_line_offset == 0x140)) {
-                memcpy(g_player1_as_u16_a, D_006C68B6, 0x62);
-                memcpy(g_player2_as_u16_a, D_006C6918, 0x62);
+                memcpy(((u16 *)g_player1), D_006C68B6, 0x62);
+                memcpy(((u16 *)g_player2), D_006C6918, 0x62);
                 g_players_hidden = 0;
                 D_0028ED5C = 0;
             }
@@ -1102,11 +1098,7 @@ void replay_playback_start(void) {
     reg_a5 = save_a5;
 }
 
-extern s8 D_0028E368_as_s8;
-extern s8 g_game_frame_ran_as_s8;
 extern s8 D_0028E3F8;
-extern s8 D_0028ED5C_as_s8;
-extern s8 g_simulation_active_as_s8;
 
 void replay_run_begin(void) {
     s32 text_layer_clear();
@@ -1139,12 +1131,12 @@ void replay_run_begin(void) {
     save_a4 = reg_a4;
     save_a5 = reg_a5;
     save_a6 = reg_a6;
-    g_game_frame_ran_as_s8 = 0;
+    g_game_frame_ran = 0;
     save_d1 = reg_d1.w;
     D_0028E3F8 = 0;
-    D_0028E368_as_s8 = 0;
-    D_0028ED5C_as_s8 = 1;
-    g_simulation_active_as_s8 = 1;
+    D_0028E368 = 0;
+    D_0028ED5C = 1;
+    g_simulation_active = 1;
     save_d2 = reg_d2.w;
     save_d3 = reg_d3.w;
     save_d4 = reg_d4.w;
@@ -1178,7 +1170,7 @@ void replay_run_begin(void) {
 }
 
 extern void frame_counters_reset(void);
-extern s8 g_pad_input_locked_as_s8;
+extern u8 g_pad_input_locked;
 extern u8 D_0028E2A8;
 extern u16 D_0028E2AC;
 extern u8 D_0028E2B0;
@@ -1249,18 +1241,18 @@ void replay_run_start(void) {
         replay_header_apply();
         func_00135100();
         step++;
-        g_pad_input_locked_as_s8 = 1;
+        g_pad_input_locked = 1;
         break;
     case 17:
         if (g_score_panel_intro == 0) {
-            D_0028ED5C_as_s8 = 0;
+            D_0028ED5C = 0;
             step++;
         }
         break;
     case 18:
         frame_counters_reset();
         if (g_game_frame_ran != 0) {
-            g_pad_input_locked_as_s8 = 0;
+            g_pad_input_locked = 0;
             step++;
             g_loop = g_replay_header.round;
             func_00135110();
@@ -1293,7 +1285,6 @@ void replay_run_start(void) {
     reg_a5 = save_a5;
 }
 
-extern s8 g_replay_mode_as_s8;
 extern s32 func_0022B2F0(void);
 extern u8 g_replay_watch_after_run;
 
@@ -1308,7 +1299,7 @@ static void replay_run_end_begin(void)
     u32 saved_d6;
     u32 saved_d7;
 
-    g_replay_mode_as_s8 = 2;
+    g_replay_mode = 2;
 
     saved_d0 = reg_d0.w;
     saved_d1 = reg_d1.w;
@@ -1320,7 +1311,7 @@ static void replay_run_end_begin(void)
     saved_d7 = reg_d7.w;
 
     D_0028DF84 = 0;
-    D_0028E368_as_s8 = 0;
+    D_0028E368 = 0;
     reg_a5[3] = 1;
     *(u16 *)(reg_a5 + 0xC) = 0;
 
@@ -1392,8 +1383,8 @@ void replay_run_end(void) {
         break;
     case 16:
         gfx_draw_color_box(0, 0, 0x1C2, 0xE0, 0x50, 0x80, 0xFF, 0xFF, 0xFF);
-        D_0028E368_as_s8 = 1;
-        g_replay_mode_as_s8 = 2;
+        D_0028E368 = 1;
+        g_replay_mode = 2;
         task_reset_all();
         reg_d0.h[0] = TASK_REPLAY;
         task_start();

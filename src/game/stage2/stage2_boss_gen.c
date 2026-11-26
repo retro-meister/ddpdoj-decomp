@@ -80,27 +80,26 @@ extern s8 D_00262C60[];
 extern u16 g_loop;
 extern u16 g_stage_x2;
 extern s8 enemy_move_end_requested;
-extern s8 *reg_a0_as_s8_p;
 
 void stage2_blooming_base_start(void) {
     s32 enemy_set_task_state();
     s32 enemy_init_entities();
     s32 enemy_path_start();
-    reg_a0_as_s8_p = D_00262C60;
+    (*(s8 **)&reg_a0) = D_00262C60;
     enemy_init_entities();
-    reg_a0_as_s8_p = D_00262C50;
+    (*(s8 **)&reg_a0) = D_00262C50;
     reg_d0.w = 5;
     enemy_set_task_state();
     enemy_path_start();
     if (enemy_move_end_requested == 0) {
-        reg_a0_as_s8_p = D_00262C40;
+        (*(s8 **)&reg_a0) = D_00262C40;
         reg_d0.h[0] = g_stage_x2;
-        reg_a0_as_s8_p = &reg_a0_as_s8_p[reg_d0.h[0]];
-        ENTITY(reg_a6)->attr.sb.palette = (s8) *reg_a0_as_s8_p;
-        BLOOMING_BASE(reg_a5)->palette = (s8) *reg_a0_as_s8_p;
-        reg_a0_as_s8_p += 1;
-        BLOOMING_BASE(reg_a5)->hit_flash = (s8) *reg_a0_as_s8_p;
-        reg_a0_as_s8_p += 1;
+        (*(s8 **)&reg_a0) = &(*(s8 **)&reg_a0)[reg_d0.h[0]];
+        ENTITY(reg_a6)->attr.sb.palette = (s8) *((s8 *)reg_a0);
+        BLOOMING_BASE(reg_a5)->palette = (s8) *((s8 *)reg_a0);
+        (*(s8 **)&reg_a0) += 1;
+        BLOOMING_BASE(reg_a5)->hit_flash = (s8) *((s8 *)reg_a0);
+        (*(s8 **)&reg_a0) += 1;
         if (g_loop != 0) {
             BLOOMING_BASE(reg_a5)->drops = 0;
         }
@@ -263,21 +262,21 @@ extern s8 D_00262C90[];
 extern s8 D_0028D9A0;
 
 void stage2_long_warehouse_start(void) {
-    reg_a0_as_s8_p = D_00262C90;
+    (*(s8 **)&reg_a0) = D_00262C90;
     enemy_init_entities();
-    reg_a0_as_s8_p = &D_0028D9A0;
+    (*(s8 **)&reg_a0) = &D_0028D9A0;
     reg_d0.w = 1;
     enemy_set_task_state();
     enemy_path_start();
     if (enemy_move_end_requested == 0) {
-        reg_a0_as_s8_p = D_00262C80;
+        (*(s8 **)&reg_a0) = D_00262C80;
         reg_d0.h[0] = g_stage_x2;
-        reg_a0_as_s8_p = &reg_a0_as_s8_p[reg_d0.h[0]];
-        ENTITY(reg_a6)->attr.sb.palette = (s8) *reg_a0_as_s8_p;
-        BUILDING(reg_a5)->palette = (s8) *reg_a0_as_s8_p;
-        reg_a0_as_s8_p += 1;
-        BUILDING(reg_a5)->hit_flash = (s8) *reg_a0_as_s8_p;
-        reg_a0_as_s8_p += 1;
+        (*(s8 **)&reg_a0) = &(*(s8 **)&reg_a0)[reg_d0.h[0]];
+        ENTITY(reg_a6)->attr.sb.palette = (s8) *((s8 *)reg_a0);
+        BUILDING(reg_a5)->palette = (s8) *((s8 *)reg_a0);
+        (*(s8 **)&reg_a0) += 1;
+        BUILDING(reg_a5)->hit_flash = (s8) *((s8 *)reg_a0);
+        (*(s8 **)&reg_a0) += 1;
     }
 }
 
@@ -409,21 +408,21 @@ void stage2_square_warehouse_start(void) {
     s32 enemy_set_task_state();
     s32 enemy_init_entities();
     s32 enemy_path_start();
-    reg_a0_as_s8_p = D_00262CE0;
+    (*(s8 **)&reg_a0) = D_00262CE0;
     enemy_init_entities();
-    reg_a0_as_s8_p = &D_0028D9A4;
+    (*(s8 **)&reg_a0) = &D_0028D9A4;
     reg_d0.w = 1;
     enemy_set_task_state();
     enemy_path_start();
     if (enemy_move_end_requested == 0) {
-        reg_a0_as_s8_p = D_00262CD0;
+        (*(s8 **)&reg_a0) = D_00262CD0;
         reg_d0.h[0] = g_stage_x2;
-        reg_a0_as_s8_p = &reg_a0_as_s8_p[reg_d0.h[0]];
-        ENTITY(reg_a6)->attr.sb.palette = (s8) *reg_a0_as_s8_p;
-        BUILDING(reg_a5)->palette = (s8) *reg_a0_as_s8_p;
-        reg_a0_as_s8_p += 1;
-        BUILDING(reg_a5)->hit_flash = (s8) *reg_a0_as_s8_p;
-        reg_a0_as_s8_p += 1;
+        (*(s8 **)&reg_a0) = &(*(s8 **)&reg_a0)[reg_d0.h[0]];
+        ENTITY(reg_a6)->attr.sb.palette = (s8) *((s8 *)reg_a0);
+        BUILDING(reg_a5)->palette = (s8) *((s8 *)reg_a0);
+        (*(s8 **)&reg_a0) += 1;
+        BUILDING(reg_a5)->hit_flash = (s8) *((s8 *)reg_a0);
+        (*(s8 **)&reg_a0) += 1;
         if (ENTITY(reg_a6)->misc.b.user != 0) {
             ENTITY(reg_a6)->misc.b.user = 0U;
             ENTITY(reg_a6)->attr.b.flip |= 0x40;
@@ -538,21 +537,21 @@ extern s8 D_00262D10[];
 extern s8 D_0028D9A8;
 
 void stage2_gymnasium_start(void) {
-    reg_a0_as_s8_p = D_00262D10;
+    (*(s8 **)&reg_a0) = D_00262D10;
     enemy_init_entities();
-    reg_a0_as_s8_p = &D_0028D9A8;
+    (*(s8 **)&reg_a0) = &D_0028D9A8;
     reg_d0.w = 1;
     enemy_set_task_state();
     enemy_path_start();
     if (enemy_move_end_requested == 0) {
-        reg_a0_as_s8_p = D_00262D00;
+        (*(s8 **)&reg_a0) = D_00262D00;
         reg_d0.h[0] = g_stage_x2;
-        reg_a0_as_s8_p = &reg_a0_as_s8_p[reg_d0.h[0]];
-        ENTITY(reg_a6)->attr.sb.palette = (s8) *reg_a0_as_s8_p;
-        BUILDING(reg_a5)->palette = (s8) *reg_a0_as_s8_p;
-        reg_a0_as_s8_p += 1;
-        BUILDING(reg_a5)->hit_flash = (s8) *reg_a0_as_s8_p;
-        reg_a0_as_s8_p += 1;
+        (*(s8 **)&reg_a0) = &(*(s8 **)&reg_a0)[reg_d0.h[0]];
+        ENTITY(reg_a6)->attr.sb.palette = (s8) *((s8 *)reg_a0);
+        BUILDING(reg_a5)->palette = (s8) *((s8 *)reg_a0);
+        (*(s8 **)&reg_a0) += 1;
+        BUILDING(reg_a5)->hit_flash = (s8) *((s8 *)reg_a0);
+        (*(s8 **)&reg_a0) += 1;
     }
 }
 
@@ -731,8 +730,8 @@ s32 direction256_between();
 extern u16 g_bullets_blocked;
 extern u16 g_enemies_stopped;
 extern u16 g_rank_4_16;
-extern u16 g_player2_as_u16_a[];
-extern u16 g_player1_as_u16_a[];
+extern s16 g_player2[56];
+extern s16 g_player1[56];
 
 void stage2_sliding_gun(void) {
     s16 *temp_v1;
@@ -805,8 +804,8 @@ block_12:
                         SLIDING_GUN(reg_a5)->wait = (u8) SLIDING_GUN(reg_a5)->shot_interval;
                         enemy_fire_distance_check();
                         if (cond_flag == 0) {
-                            reg_a0 = (u8 *)(g_player1_as_u16_a);
-                            reg_a1 = (u8 *)(g_player2_as_u16_a);
+                            reg_a0 = (u8 *)(((u16 *)g_player1));
+                            reg_a1 = (u8 *)(((u16 *)g_player2));
                             if (ENEMY_STATE(reg_a5)->target_player != 0) {
                                 reg_atmp = (u8 *)(reg_a0);
                                 reg_a0 = (u8 *)(reg_a1);
@@ -923,9 +922,9 @@ void stage2_wrecker_gun_start(void) {
     s32 enemy_set_task_state();
     s32 enemy_init_entities();
     s32 enemy_path_start();
-    reg_a0_as_s8_p = D_00262E30;
+    (*(s8 **)&reg_a0) = D_00262E30;
     enemy_init_entities();
-    reg_a0_as_s8_p = D_00262E10;
+    (*(s8 **)&reg_a0) = D_00262E10;
     reg_d0.w = 0xB;
     enemy_set_task_state();
     enemy_path_start();
@@ -937,14 +936,14 @@ void stage2_wrecker_gun_start(void) {
         WRECKER_GUN(reg_a5)->shot_interval = (u8) reg_d0.b[0];
         reg_d0.h[0] = g_rank_1_16;
         WRECKER_GUN(reg_a5)->first_wait -= reg_d0.b[0];
-        reg_a0_as_s8_p = D_00262E00;
+        (*(s8 **)&reg_a0) = D_00262E00;
         reg_d0.h[0] = g_stage_x2;
-        reg_a0_as_s8_p = &reg_a0_as_s8_p[reg_d0.h[0]];
-        ENTITY(reg_a6)->attr.sb.palette = (s8) *reg_a0_as_s8_p;
-        WRECKER_GUN(reg_a5)->palette = (s8) *reg_a0_as_s8_p;
-        reg_a0_as_s8_p += 1;
-        WRECKER_GUN(reg_a5)->hit_flash = (s8) *reg_a0_as_s8_p;
-        reg_a0_as_s8_p += 1;
+        (*(s8 **)&reg_a0) = &(*(s8 **)&reg_a0)[reg_d0.h[0]];
+        ENTITY(reg_a6)->attr.sb.palette = (s8) *((s8 *)reg_a0);
+        WRECKER_GUN(reg_a5)->palette = (s8) *((s8 *)reg_a0);
+        (*(s8 **)&reg_a0) += 1;
+        WRECKER_GUN(reg_a5)->hit_flash = (s8) *((s8 *)reg_a0);
+        (*(s8 **)&reg_a0) += 1;
     }
 }
 
@@ -954,7 +953,7 @@ s32 func_00201710();
 extern u16 g_direction64_offsets_432[];
 extern u16 D_00262E50[];
 extern u16 g_rank_2_16;
-extern s16 g_bomb_entities_as_s16_a[];
+extern u16 g_bomb_entities[24];
 
 void stage2_wrecker_gun(s32 arg0, s32 arg1, s32 arg2, s32 arg3) {
     s16 *temp_v1;
@@ -993,7 +992,7 @@ block_6:
             if ((s16) WRECKER_GUN(reg_a5)->shield >= 0) {
                 ENTITY(reg_a6)->hp.h = 0x7FFFU;
                 reg_d0.w = 1;
-                if (g_bomb_entities_as_s16_a[0] < 0) {
+                if (((s16 *)g_bomb_entities)[0] < 0) {
                     reg_d0.w = 2;
                 }
                 WRECKER_GUN(reg_a5)->shield -= reg_d0.h[0];
@@ -1053,8 +1052,8 @@ block_18:
                         if ((s32) reg_tmp.b[0] <= 0) {
                             WRECKER_GUN(reg_a5)->wait = (u8) WRECKER_GUN(reg_a5)->shot_interval;
                             if ((s16) ENTITY(reg_a6)->y.h >= 0x1000) {
-                                reg_a0 = (u8 *)(g_player1_as_u16_a);
-                                reg_a1 = (u8 *)(g_player2_as_u16_a);
+                                reg_a0 = (u8 *)(((u16 *)g_player1));
+                                reg_a1 = (u8 *)(((u16 *)g_player2));
                                 if (ENEMY_STATE(reg_a5)->target_player != 0) {
                                     reg_atmp = (u8 *)(reg_a0);
                                     reg_a0 = (u8 *)(reg_a1);

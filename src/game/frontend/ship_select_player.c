@@ -681,11 +681,11 @@ void func_001B0470(void) {
     sprite_draw_layer5_zoom_keep();
 }
 
-extern s32 D_0029BEE0_as_s32_a[];
+extern u8 D_0029BEE0[];
 
 
 void func_001B04B0(void) {
-    memset(D_0029BEE0_as_s32_a, 0, 0x48);
+    memset(((s32 *)D_0029BEE0), 0, 0x48);
 }
 
 extern u16 D_00251CC0[];

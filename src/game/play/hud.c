@@ -16,9 +16,9 @@ extern u32 hud_boss_hit_label_frames[];
 extern u32 hud_boss_hit_digits_d[];
 extern u32 hud_boss_hit_digits_steady[];
 extern u16 hud_boss_hit_flicker[];
-extern u8 g_player1_as_u8_a[];
+extern s16 g_player1[];
 #include "player.h"
-extern u8 g_player2_as_u8_a[];
+extern s16 g_player2[];
 
 void hud_update_playing(void);
 void hud_p1_panel(void);
@@ -127,7 +127,7 @@ void hud_p1_ship_and_hyper_count_draw(void) {
     reg_d5.w = reg_d1.w;
     reg_d1.h[0] += 0xFF00;
     reg_d1.h[1] += 0xFE00;
-    reg_d2.h[0] = PLAYER(g_player1_as_u8_a)->ship_type.h;
+    reg_d2.h[0] = PLAYER(((u8 *)g_player1))->ship_type.h;
     reg_d2.h[0] += reg_d2.h[0];
     reg_a0 = (u8 *)lives_sprites_p1;
     reg_d2.w = *(u32 *)(reg_a0 + reg_d2.h[0]);
@@ -161,7 +161,7 @@ void hud_p2_ship_and_hyper_count_draw(void) {
     reg_d5.w = reg_d1.w;
     reg_d1.h[0] += 0xFF00;
     reg_d1.h[1] += 0xFE00;
-    reg_d2.h[0] = PLAYER(g_player2_as_u8_a)->ship_type.h;
+    reg_d2.h[0] = PLAYER(((u8 *)g_player2))->ship_type.h;
     reg_d2.h[0] += reg_d2.h[0];
     reg_a0 = (u8 *)lives_sprites_p2;
     reg_d2.w = *(u32 *)(reg_a0 + reg_d2.h[0]);
@@ -197,7 +197,7 @@ void hud_p1_lives_row_draw(arg0)
     if ((s16) reg_d7.h[0] >= 0) {
         reg_d2.h[0] = 1;
         reg_a0 = (u8 *)(lives_text_p1);
-        reg_d4.h[0] = PLAYER(g_player1_as_u8_a)->ship_type.h;
+        reg_d4.h[0] = PLAYER(((u8 *)g_player1))->ship_type.h;
         reg_d4.h[0] += reg_d4.h[0];
         reg_d3.h[0] = 0;
         reg_d4.h[1] = (reg_d4.h[0] != 0) ? *(u16 *)((u8 *)reg_a0 + ((s16)reg_d4.h[0] & ~1)) : *(u16 *)reg_a0;
@@ -218,7 +218,7 @@ void hud_p2_lives_row_draw(void) {
     if ((s16)reg_d7.h[0] >= 0) {
         reg_d2.h[0] = 1;
         reg_a0 = (u8 *)lives_text_p2;
-        reg_d4.h[0] = PLAYER(g_player2_as_u8_a)->ship_type.h;
+        reg_d4.h[0] = PLAYER(((u8 *)g_player2))->ship_type.h;
         reg_d4.h[0] += reg_d4.h[0];
         reg_d3.h[0] = 0;
         reg_d4.h[1] = (reg_d4.h[0] != 0) ? *(u16 *)(reg_a0 + ((s16)reg_d4.h[0] & ~1)) : *(u16 *)reg_a0;
@@ -232,10 +232,10 @@ void hud_p2_lives_row_draw(void) {
     }
 }
 
-extern s16 g_p1_lives_as_s16;
+extern u16 g_p1_lives;
 
 void hud_p1_hyper_gauge_draw_boss(void) {
-    if (g_p1_lives_as_s16 >= 0) {
+    if ((*(s16 *)&g_p1_lives) >= 0) {
         reg_d6.w = 0x12;
         reg_d6.h[0] -= 0x32;
         reg_d6.h[0] <<= 7;
@@ -243,10 +243,10 @@ void hud_p1_hyper_gauge_draw_boss(void) {
     }
 }
 
-extern s16 g_p2_lives_as_s16;
+extern u16 g_p2_lives;
 
 void hud_p2_hyper_gauge_draw_boss(void) {
-    if (g_p2_lives_as_s16 >= 0) {
+    if ((*(s16 *)&g_p2_lives) >= 0) {
         reg_d6.w = 0x12;
         reg_d6.h[0] -= 0x32;
         reg_d6.h[0] <<= 7;
@@ -308,24 +308,24 @@ void hud_update_playing(void) {
 
 extern u16 g_p1_maximum_level;
 extern u16 g_game_frame;
-extern u8 g_p1_hyper_combo_decay_as_u8;
+extern u16 g_p1_hyper_combo_decay;
 extern u8 D_0028E5DD;
 extern u16 g_p1_max_hits;
 extern s8 g_boss_hp_bar_flags;
 extern u16 g_p1_hits_shown;
-extern u32 g_p1_chain_points_as_u32;
+extern s32 g_p1_chain_points;
 extern u16 g_p1_hit10_anim_count;
 extern u16 g_p1_hit10_color_timer;
-extern u16 g_p1_hit10_display_timer_as_u16;
+extern s16 g_p1_hit10_display_timer;
 extern u16 g_p1_combo_timer;
-extern u32 g_p1_chain_first_score_as_u32;
-extern u32 g_maximum_text_anim_sprite_as_u32;
-extern u32 g_hyper_text_anim_sprite_as_u32;
+extern s32 g_p1_chain_first_score;
+extern s32 g_maximum_text_anim_sprite;
+extern s32 g_hyper_text_anim_sprite;
 extern u8 g_p1_score_panel_flags;
 extern u16 g_p1_maximum_count_digits[];
 extern u8 D_0029F261[];
 void hud_p1_panel(void) {
-    if (g_p1_lives_as_s16 < 0) {
+    if ((*(s16 *)&g_p1_lives) < 0) {
         hud_p2_panel();
         return;
     }
@@ -338,7 +338,7 @@ void hud_p1_panel(void) {
                 hud_p1_item_count_frame_restore();
             }
             reg_d1.w = 0x64C00400;
-            reg_d2.w = g_hyper_text_anim_sprite_as_u32;
+            reg_d2.w = (*(u32 *)&g_hyper_text_anim_sprite);
             hud_text_sprite_draw();
         } else {
             g_p1_score_panel_flags &= 0xFE;
@@ -349,7 +349,7 @@ void hud_p1_panel(void) {
                     if ((s32) reg_d0.h[0] < 0x14) {
                         hud_p1_multiplier_frame_restore();
                         reg_d1.w = 0x64C00400;
-                        reg_d2.w = g_maximum_text_anim_sprite_as_u32;
+                        reg_d2.w = (*(u32 *)&g_maximum_text_anim_sprite);
                         hud_text_sprite_draw();
                     } else {
                         reg_d0.h[0] = 0xD4;
@@ -369,14 +369,14 @@ block_15:
             }
         }
     }
-    if (g_p1_hit10_display_timer_as_u16 != 0) {
-        g_p1_hit10_display_timer_as_u16 -= 1;
+    if ((*(u16 *)&g_p1_hit10_display_timer) != 0) {
+        (*(u16 *)&g_p1_hit10_display_timer) -= 1;
         reg_d1.h[0] = 0x40;
         reg_d6.w = 0;
         reg_d0.h[0] = g_p1_hits_shown;
         reg_d6.h[0] = g_p1_hit10_anim_count;
         g_p1_hit10_anim_count += 1;
-        reg_d3.h[0] = g_p1_hit10_display_timer_as_u16;
+        reg_d3.h[0] = (*(u16 *)&g_p1_hit10_display_timer);
         if ((s32) reg_d3.h[0] < 0x2A) {
             reg_d3.h[0] -= 0x2A;
             reg_d3.h[0] <<= 7;
@@ -394,7 +394,7 @@ block_15:
         if (g_p1_hyper_active != 0) {
             D_0028E5DD -= 1;
             if ((s8) D_0028E5DD < 0) {
-                D_0028E5DD = g_p1_hyper_combo_decay_as_u8;
+                D_0028E5DD = (*(u8 *)&g_p1_hyper_combo_decay);
                 goto block_26;
             }
             goto block_29;
@@ -403,8 +403,8 @@ block_26:
         g_p1_combo_timer -= 1;
         if (g_p1_combo_timer == 0) {
             reg_d0.w = 0;
-            g_p1_chain_first_score_as_u32 = reg_d0.w;
-            g_p1_chain_points_as_u32 = reg_d0.w;
+            g_p1_chain_first_score = reg_d0.w;
+            g_p1_chain_points = reg_d0.w;
         } else {
 block_29:
             reg_d1.w = 0x5BC00000;
@@ -416,21 +416,21 @@ block_29:
 }
 
 extern u16 g_p2_maximum_level;
-extern u8 g_p2_hyper_combo_decay_as_u8;
+extern u16 g_p2_hyper_combo_decay;
 extern u8 D_0028E5D9;
 extern u16 g_p2_max_hits;
 extern u16 g_p2_hits_shown;
-extern u32 g_p2_chain_points_as_u32;
+extern s32 g_p2_chain_points;
 extern u16 g_p2_hit10_anim_count;
 extern u16 g_p2_hit10_color_timer;
-extern u16 g_p2_hit10_display_timer_as_u16;
+extern s16 g_p2_hit10_display_timer;
 extern u16 g_p2_combo_timer;
-extern u32 g_p2_chain_first_score_as_u32;
+extern s32 g_p2_chain_first_score;
 extern u8 g_p2_score_panel_flags;
 extern u16 g_p2_maximum_count_digits[];
 extern u8 D_0029F1F1[];
 void hud_p2_panel(void) {
-    if (g_p2_lives_as_s16 < 0) {
+    if ((*(s16 *)&g_p2_lives) < 0) {
         hud_boss_hits_update();
         return;
     }
@@ -443,7 +443,7 @@ void hud_p2_panel(void) {
                 hud_p2_item_count_frame_restore();
             }
             reg_d1.w = 0x64C02800;
-            reg_d2.w = g_hyper_text_anim_sprite_as_u32;
+            reg_d2.w = (*(u32 *)&g_hyper_text_anim_sprite);
             hud_text_sprite_draw();
         } else {
             g_p2_score_panel_flags &= 0xFE;
@@ -454,7 +454,7 @@ void hud_p2_panel(void) {
                     if ((s32) reg_d0.h[0] < 0x2C) {
                         hud_p2_multiplier_frame_restore();
                         reg_d1.w = 0x64C02800;
-                        reg_d2.w = g_maximum_text_anim_sprite_as_u32;
+                        reg_d2.w = (*(u32 *)&g_maximum_text_anim_sprite);
                         hud_text_sprite_draw();
                     } else {
                         reg_d0.h[0] = 0xD4;
@@ -474,14 +474,14 @@ block_15:
             }
         }
     }
-    if (g_p2_hit10_display_timer_as_u16 != 0) {
-        g_p2_hit10_display_timer_as_u16 -= 1;
+    if ((*(u16 *)&g_p2_hit10_display_timer) != 0) {
+        (*(u16 *)&g_p2_hit10_display_timer) -= 1;
         reg_d1.h[0] = 0x1FC0;
         reg_d6.w = 0;
         reg_d0.h[0] = g_p2_hits_shown;
         reg_d6.h[0] = g_p2_hit10_anim_count;
         g_p2_hit10_anim_count += 1;
-        reg_d3.h[0] = g_p2_hit10_display_timer_as_u16;
+        reg_d3.h[0] = (*(u16 *)&g_p2_hit10_display_timer);
         if ((s32) reg_d3.h[0] < 0x2A) {
             reg_d3.h[0] -= 0x2A;
             reg_d3.h[0] <<= 7;
@@ -499,7 +499,7 @@ block_15:
         if (g_p2_hyper_active != 0) {
             D_0028E5D9 -= 1;
             if ((s8) D_0028E5D9 < 0) {
-                D_0028E5D9 = g_p2_hyper_combo_decay_as_u8;
+                D_0028E5D9 = (*(u8 *)&g_p2_hyper_combo_decay);
                 goto block_26;
             }
             goto block_29;
@@ -508,8 +508,8 @@ block_26:
         g_p2_combo_timer -= 1;
         if (g_p2_combo_timer == 0) {
             reg_d0.w = 0;
-            g_p2_chain_first_score_as_u32 = reg_d0.w;
-            g_p2_chain_points_as_u32 = reg_d0.w;
+            g_p2_chain_first_score = reg_d0.w;
+            g_p2_chain_points = reg_d0.w;
         } else {
 block_29:
             reg_d1.w = 0x5BC03400;
@@ -528,7 +528,7 @@ extern u8 D_00261C30[];
 extern u8 D_00261C70[];
 extern u8 D_0028E61D;
 extern u8 *g_boss_hp;
-extern u32 g_boss_hp_unit_as_u32;
+extern s32 g_boss_hp_unit;
 extern u16 g_lives_display_move_x;
 extern u16 g_lives_display_move_y;
 extern u16 g_boss_hp_bar_move_count;
@@ -684,7 +684,7 @@ next_240:
     reg_d1.w = 0x67C001C0;
     reg_d2.w = 0xCA1;
     reg_d3.h[0] = 0x200;
-    reg_d0.w = g_boss_hp_unit_as_u32;
+    reg_d0.w = (*(u32 *)&g_boss_hp_unit);
 loop_260:
     reg_tmp7.w = reg_d7.w;
     reg_d7.w -= reg_d0.w;
@@ -705,7 +705,7 @@ s32 func_001AC320();
 extern s16 g_boss_hit_palette;
 extern u16 g_boss_hit_anim_count;
 extern u16 g_boss_hit_decay_timer;
-extern s16 g_two_player_state_as_s16;
+extern u16 g_two_player_state;
 extern u16 g_two_player_game;
 
 void hud_boss_hits_update(void) {
@@ -722,7 +722,7 @@ next_0:
     g_boss_hit_anim_count += 1;
 next_1:
     if (flags & 0x40) goto next_4;
-    if (g_two_player_state_as_s16 < 0) goto next_6;
+    if ((*(s16 *)&g_two_player_state) < 0) goto next_6;
     if (g_boss_hit_decay_timer == 0) goto next_7;
     g_boss_hit_decay_timer -= 1;
     if (g_boss_hit_decay_timer != 0) goto next_5;
@@ -759,9 +759,6 @@ next_7:
 s32 deferred_text_clear();
 s32 func_001AC950();
 s32 func_001AC9D0();
-extern s16 g_lives_display_move_x_as_s16;
-extern s16 g_lives_display_move_y_as_s16;
-extern u8 g_boss_hp_bar_flags_as_u8;
 extern s16 g_p2_chain_points_display_timer;
 extern s16 g_p1_hit10_display_timer;
 extern s16 g_p1_chain_points_display_timer;
@@ -769,23 +766,23 @@ extern s16 g_p1_chain_points_display_timer;
 void hud_boss_bar_leave(void) {
     u8 flags;
 
-    flags = g_boss_hp_bar_flags_as_u8;
+    flags = (*(u8 *)&g_boss_hp_bar_flags);
     if ((s8)flags >= 0) goto next_0;
     hud_p1_panel();
     return;
 next_0:
     if (flags & 8) goto next_5;
     if (flags & 1) goto next_2;
-    g_boss_hp_bar_flags_as_u8 |= 1;
+    (*(u8 *)&g_boss_hp_bar_flags) |= 1;
     g_boss_hp_bar_move_count = 0x38;
-    g_lives_display_move_x_as_s16 = 0x10;
-    g_lives_display_move_y_as_s16 = 8;
-    if (!(g_boss_hp_bar_flags_as_u8 & 2)) {
-        g_boss_hp_bar_flags_as_u8 |= 2;
+    g_lives_display_move_x = 0x10;
+    g_lives_display_move_y = 8;
+    if (!((*(u8 *)&g_boss_hp_bar_flags) & 2)) {
+        (*(u8 *)&g_boss_hp_bar_flags) |= 2;
         goto next_1;
     }
-    if (!(g_boss_hp_bar_flags_as_u8 & 4)) {
-        g_boss_hp_bar_flags_as_u8 |= 4;
+    if (!((*(u8 *)&g_boss_hp_bar_flags) & 4)) {
+        (*(u8 *)&g_boss_hp_bar_flags) |= 4;
         goto next_1;
     }
     reg_d0.h[0] = 0xD4;
@@ -795,7 +792,7 @@ next_0:
     deferred_text_clear();
     goto next_2;
 next_1:
-    g_boss_hp_bar_flags_as_u8 &= 0xFE;
+    (*(u8 *)&g_boss_hp_bar_flags) &= 0xFE;
 next_2:
     hud_lives_draw_boss_leaving();
     reg_d1.h[0] = 0x75C0;
@@ -817,7 +814,7 @@ next_2:
         hud_boss_hits_update();
         return;
     }
-    g_boss_hp_bar_flags_as_u8 |= 8;
+    (*(u8 *)&g_boss_hp_bar_flags) |= 8;
     g_boss_hp_bar_move_count = 0x41;
     hud_boss_hits_update();
     return;
@@ -836,16 +833,16 @@ next_6:
     hud_boss_hits_update();
     return;
 next_7:
-    g_boss_hp_bar_flags_as_u8 |= 0x80;
+    (*(u8 *)&g_boss_hp_bar_flags) |= 0x80;
     g_p1_chain_points_display_timer = 0;
     g_p2_chain_points_display_timer = 0;
     g_p1_hit10_display_timer = 0;
     hud_lives_draw_boss_leaving();
-    if (g_p1_lives_as_s16 < 0) goto next_8;
+    if ((*(s16 *)&g_p1_lives) < 0) goto next_8;
     func_001AC950();
     hud_p1_multiplier_frame_restore();
 next_8:
-    if (g_p2_lives_as_s16 < 0) {
+    if ((*(s16 *)&g_p2_lives) < 0) {
         hud_boss_hits_update();
         return;
     }
@@ -858,7 +855,6 @@ s32 func_001AA8F0();
 s32 func_001AAA20();
 s32 func_001AC3A0();
 s32 func_001AC5F0();
-extern s16 g_score_panel_intro_as_s16;
 extern u16 g_p2_lives;
 extern u16 g_p1_lives;
 
@@ -872,7 +868,7 @@ next_0:
     func_001AAA20();
     func_001AC5F0();
 next_1:
-    g_score_panel_intro_as_s16 = 0;
+    g_score_panel_intro = 0;
     hud_update_playing();
     return;
 next_2:
@@ -947,7 +943,7 @@ next_12:
     func_001AC9D0();
     hud_p2_multiplier_frame_restore();
 next_13:
-    g_score_panel_intro_as_s16 = 0;
+    g_score_panel_intro = 0;
 }
 
 #pragma push
@@ -956,7 +952,7 @@ next_13:
 
 void hud_p1_gauge_plate_draw(void)
 {
-    if (g_p1_lives_as_s16 >= 0) {
+    if ((*(s16 *)&g_p1_lives) >= 0) {
         u16 offset = reg_d6.h[0];
         u32 savedRegister;
 
@@ -978,7 +974,7 @@ void hud_p1_gauge_plate_draw(void)
 
 
 void hud_p2_gauge_plate_draw(void) {
-    if (g_p2_lives_as_s16 >= 0) {
+    if ((*(s16 *)&g_p2_lives) >= 0) {
         u32 savedRegister;
         u16 savedLow;
 
@@ -1072,7 +1068,7 @@ void hud_lives_draw_boss_leaving(void) {
     reg_tmp1.w = reg_d1.w;
     reg_d1.h[1] = reg_d1.h[0];
     reg_d1.h[0] = reg_tmp1.h[1];
-    if ((g_boss_hp_bar_flags_as_u8 & 8) && ((s32) g_boss_hp_bar_move_count < 0x11)) {
+    if (((*(u8 *)&g_boss_hp_bar_flags) & 8) && ((s32) g_boss_hp_bar_move_count < 0x11)) {
         g_lives_display_move_x -= 1;
         if ((s16) g_lives_display_move_x < 0) {
             g_lives_display_move_x = 0;
@@ -1095,7 +1091,7 @@ void hud_lives_draw_boss_leaving(void) {
         reg_d3.h[0] = 0x208;
         reg_d1.h[0] -= reg_d6.h[0];
         hud_p1_ship_and_hyper_count_draw();
-        if ((s8) g_boss_hp_bar_flags_as_u8 < 0) {
+        if ((s8) (*(u8 *)&g_boss_hp_bar_flags) < 0) {
             reg_d0.h[0] = 0xBC;
             reg_d1.h[0] = 0x200;
             hud_p1_lives_row_draw();
@@ -1117,7 +1113,7 @@ void hud_lives_draw_boss_leaving(void) {
         reg_d3.h[0] = 0x208;
         reg_d1.h[0] += reg_d6.h[0];
         hud_p2_ship_and_hyper_count_draw();
-        if ((s8) g_boss_hp_bar_flags_as_u8 < 0) {
+        if ((s8) (*(u8 *)&g_boss_hp_bar_flags) < 0) {
             reg_d0.h[0] = 0xBC;
             reg_d1.h[0] = 0x1900;
             hud_p2_lives_row_draw();
@@ -1135,10 +1131,10 @@ s32 music_fade_out();
 s32 func_001A9180();
 s32 func_001A9190();
 s32 score_value_add();
-extern s8 D_0028E2A0_as_s8;
-extern s8 D_0028E2A4_as_s8;
-extern u32 g_boss_score_as_u32;
-extern u32 g_boss_hit_bonus_as_u32;
+extern u8 D_0028E2A0;
+extern u8 D_0028E2A4;
+extern s32 g_boss_score;
+extern s32 g_boss_hit_bonus;
 extern u16 g_boss_hit_bonus_timer;
 extern u8 g_simulation_active;
 extern s16 g_player2[];
@@ -1157,7 +1153,7 @@ void hud_boss_hit_bonus(void) {
     g_boss_present = flags | 0x10;
     g_boss_hit_bonus_timer = 7;
     reg_a0 = (u8 *)&g_boss_hit_bonus_timer;
-    reg_d0.w = g_boss_score_as_u32;
+    reg_d0.w = (*(u32 *)&g_boss_score);
     reg_d0.w <<= 4;
     score_value_add();
 next_0:
@@ -1173,7 +1169,7 @@ next_0:
     if (cond_flag != 0) goto next_6;
     g_boss_hit_bonus_timer -= 1;
     if ((s16)g_boss_hit_bonus_timer >= 0) goto next_9;
-    if (g_boss_hit_bonus_as_u32 == 0) goto next_1;
+    if ((*(u32 *)&g_boss_hit_bonus) == 0) goto next_1;
     sfx_bonus_count();
 next_1:
     reg_d0.w = 0x10;
@@ -1206,22 +1202,22 @@ next_7:
     if (g_boss_hits == 0) goto next_6;
     if ((s16)g_boss_hits >= 0) goto next_8;
     if (reg_tmp.h[1] != 0) goto next_10;
-    D_0028E2A0_as_s8 = 0;
-    D_0028E2A4_as_s8 = 0;
+    D_0028E2A0 = 0;
+    D_0028E2A4 = 0;
     g_boss_present |= 2;
     if (g_simulation_active == 0) goto next_11;
-    D_0028E2A4_as_s8 = 0x78;
+    D_0028E2A4 = 0x78;
     music_fade_out();
     goto next_12;
 next_11:
     if (g_stage == 4) goto next_12;
-    D_0028E2A4_as_s8 = 0x78;
+    D_0028E2A4 = 0x78;
     music_fade_out();
 next_12:
     reg_d0.w = 0;
     g_boss_hits = reg_d0.h[0];
     g_boss_hit_bonus_timer = reg_d0.h[0];
-    g_boss_hit_bonus_as_u32 = reg_d0.w;
+    g_boss_hit_bonus = reg_d0.w;
     hud_boss_hit_bonus_draw();
     return;
 next_10:
@@ -1233,7 +1229,7 @@ next_6:
     g_boss_hit_anim_count = 0x17;
     g_boss_hit_bonus_timer = 0x12;
 next_8:
-    reg_d0.w = g_boss_score_as_u32;
+    reg_d0.w = (*(u32 *)&g_boss_score);
     reg_d0.w >>= 8;
 loop_0:
     p = (u8 *)&g_boss_hit_bonus_timer;
@@ -1257,7 +1253,7 @@ next_13:
     if (g_boss_hit_bonus_timer == 8) goto next_14;
     hud_boss_hit_bonus_draw();
 next_14:
-    reg_d1.w = g_boss_hit_bonus_as_u32;
+    reg_d1.w = (*(u32 *)&g_boss_hit_bonus);
     if (reg_d1.w == 0) goto next_15;
     sfx_bonus_count();
     reg_d0.w = reg_d1.w;
@@ -1269,7 +1265,7 @@ next_16:
     func_001A9190();
 next_17:
     reg_d0.w = 0;
-    g_boss_hit_bonus_as_u32 = reg_d0.w;
+    g_boss_hit_bonus = reg_d0.w;
 next_15:
     hud_boss_hit_bonus_draw();
 }
@@ -1417,7 +1413,6 @@ next_2:
 }
 
 s32 func_00200EE0();
-extern u16 g_boss_hit_palette_as_u16;
 
 void hud_boss_hits_draw(void) {
     u32 save_d6;
@@ -1430,7 +1425,7 @@ next_0:
     reg_d0.w = reg_d2.w;
     reg_d1.w = 0x5BBFFE00;
     reg_d1.h[0] += 0x440;
-    reg_d4.h[0] = g_boss_hit_palette_as_u16;
+    reg_d4.h[0] = (*(u16 *)&g_boss_hit_palette);
     reg_d6.w = 0;
     reg_d6.h[0] = g_boss_hit_anim_count;
     reg_d7.w = 7;
@@ -1495,7 +1490,7 @@ next_6:
 s32 sprite_draw_layer2_keep();
 
 void hud_boss_hit_bonus_draw(void) {
-    reg_d0.w = g_boss_hit_bonus_as_u32;
+    reg_d0.w = (*(u32 *)&g_boss_hit_bonus);
     reg_d1.w = 0x0E000C00;
     reg_d3.h[0] = 0x410;
     reg_d4.h[0] = 0x10;
@@ -1548,8 +1543,6 @@ extern u8 g_game_frame_ran;
 extern u16 g_select_screen_active;
 extern u16 g_p1_hyper_in_effect;
 extern u16 g_p1_hyper_level;
-extern s8 g_p1_hyper_combo_decay_as_s8;
-extern s8 D_0028E5DD_as_s8;
 extern u16 g_p1_hyper_total;
 extern u16 g_p1_hyper_time;
 extern u16 g_p1_hits;
@@ -1581,8 +1574,8 @@ void hud_p1_hyper_update(void) {
             if (g_p1_hyper_total > 0xF) {
                 g_p1_hyper_total = 0xF;
             }
-            D_0028E5DD_as_s8 = 0;
-            g_p1_hyper_combo_decay_as_s8 = 0;
+            D_0028E5DD = 0;
+            (*(s8 *)&g_p1_hyper_combo_decay) = 0;
             g_p1_hyper_items = 0;
             p1_invincible_start();
             goto block_9;
@@ -1614,11 +1607,11 @@ block_9:
 s32 p1_laser_release();                            /* extern */
 s32 func_001AA8F0();                            /* extern */
 s32 func_001ABB80();                            /* extern */
-extern s16 g_p1_hyper_effect_frame_as_s16;
+extern u16 g_p1_hyper_effect_frame;
 
 void p1_hyper_end(void) {
     if (g_p1_hyper_active != 0) {
-        g_p1_hyper_effect_frame_as_s16 = 0x48;
+        g_p1_hyper_effect_frame = 0x48;
     }
     p1_laser_release();
     reg_d0.w = 0;
@@ -1637,8 +1630,6 @@ s32 func_001ABB00();
 extern u8 D_0028E284;
 extern u16 g_p2_hyper_in_effect;
 extern u16 g_p2_hyper_level;
-extern s8 g_p2_hyper_combo_decay_as_s8;
-extern s8 D_0028E5D9_as_s8;
 extern u16 g_p2_hyper_total;
 extern u16 g_p2_hyper_time;
 extern u16 g_p2_hits;
@@ -1669,8 +1660,8 @@ void hud_p2_hyper_update(void) {
             if (g_p2_hyper_total > 0xF) {
                 g_p2_hyper_total = 0xF;
             }
-            D_0028E5D9_as_s8 = 0;
-            g_p2_hyper_combo_decay_as_s8 = 0;
+            D_0028E5D9 = 0;
+            (*(s8 *)&g_p2_hyper_combo_decay) = 0;
             g_p2_hyper_items = 0;
             p2_invincible_start();
             goto block_9;
@@ -1702,11 +1693,11 @@ block_9:
 s32 p2_laser_release();                            /* extern */
 s32 func_001AAA20();                            /* extern */
 s32 func_001ABD80();                            /* extern */
-extern s16 g_p2_hyper_effect_frame_as_s16;
+extern u16 g_p2_hyper_effect_frame;
 
 void p2_hyper_end(void) {
     if (g_p2_hyper_active != 0) {
-        g_p2_hyper_effect_frame_as_s16 = 0x48;
+        g_p2_hyper_effect_frame = 0x48;
     }
     p2_laser_release();
     reg_d0.w = 0;
@@ -1971,7 +1962,7 @@ next_5:
 
 extern s32 g_hyper_text_anim_sprite;
 extern u16 g_hyper_text_anim_frame;
-extern u8 g_hyper_text_anim_delay_as_u8;
+extern u16 g_hyper_text_anim_delay;
 extern u8 D_0028E705;
 
 void hyper_text_animate(void)
@@ -1981,7 +1972,7 @@ void hyper_text_animate(void)
     D_0028E705 -= 1;
     if ((s8)D_0028E705 < 0) {
         reg_a0 = (u8 *)hyper_text_frames;
-        D_0028E705 = g_hyper_text_anim_delay_as_u8;
+        D_0028E705 = (*(u8 *)&g_hyper_text_anim_delay);
         reg_d0.h[0] = g_hyper_text_anim_frame;
         tableEntry = *(s32 *)(reg_a0 + reg_d0.h[0]);
         g_hyper_text_anim_frame -= 4;

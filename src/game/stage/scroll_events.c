@@ -59,7 +59,6 @@ void scenery_run(void) {
 
 typedef void (*Fn)(void);
 
-extern Fn reg_call_target_as_Fn;
 
 void scenery_start(void) {
     u8 *save_a0;
@@ -106,8 +105,8 @@ loop_1:
     reg_d0.h[0] += reg_d0.h[0];
     reg_a1 += reg_d0.h[0];
     reg_a1 = *(u8 **)reg_a1;
-    reg_call_target_as_Fn = (Fn)reg_a1;
-    reg_call_target_as_Fn();
+    reg_call_target = (Fn)reg_a1;
+    reg_call_target();
     reg_d0.w = save_d0;
     reg_d1.w = save_d1;
     reg_d2.w = save_d2;
@@ -354,17 +353,14 @@ void scroll_event_map_loop(void) {
     reg_a1 += 2;
 }
 
-extern u16 *reg_a1_as_u16_p;
-extern u16 *reg_a2_as_u16_p;
-extern s32 reg_a5_as_s32;
 
 void scroll_event_speed(void) {
-    reg_a2_as_u16_p = &GROUND_TASK(reg_a5_as_s32)->second_speed;
+    (*(u16 **)&reg_a2) = &GROUND_TASK((*(s32 *)&reg_a5))->second_speed;
     if (reg_d6.h[0] != 0) {
-        reg_a2_as_u16_p = &GROUND_TASK(reg_a5_as_s32)->speed;
+        (*(u16 **)&reg_a2) = &GROUND_TASK((*(s32 *)&reg_a5))->speed;
     }
-    *reg_a2_as_u16_p = *reg_a1_as_u16_p;
-    reg_a1_as_u16_p += 1;
+    *(*(u16 **)&reg_a2) = *((u16 *)reg_a1);
+    (*(u16 **)&reg_a1) += 1;
 }
 
 
@@ -455,7 +451,7 @@ void scroll_sound_music_fade(void) {
 extern s16 D_00299768[];
 extern s16 D_0029976A[];
 extern s16 D_0029976C_as_s16_a[];
-extern s16 D_0029976E_as_s16_a[];
+extern u16 D_0029976E[];
 
 void scroll_event_flags(void) {
     reg_d0.h[0] = *(u16 *)reg_a1;
@@ -476,7 +472,7 @@ void scroll_event_flags(void) {
         D_00299768[0] = 1;
         D_0029976A[0] = 1;
         D_0029976C_as_s16_a[0] = 1;
-        D_0029976E_as_s16_a[0] = 1;
+        ((s16 *)D_0029976E)[0] = 1;
     }
 }
 

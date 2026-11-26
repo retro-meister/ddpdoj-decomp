@@ -120,7 +120,7 @@ extern u8 D_00260E70[];
 extern u8 g_default_text_palette[];
 extern s16 D_0028DF14;
 extern s16 D_0028DF18;
-extern s16 g_attract_demo_as_s16;
+extern u16 g_attract_demo;
 extern u8 g_replay_buffer_state;
 extern u8 g_replay_mode;
 extern u8 g_simulation_active;
@@ -129,7 +129,7 @@ void func_001B1080(void) {
     *(s8 *)(reg_a5 + 3) = 1;
     func_001B04B0();
     func_00137C50();
-    g_attract_demo_as_s16 = 0;
+    g_attract_demo = 0;
     g_simulation_active = 0;
     replay_header_clear();
     g_replay_mode = 1;
@@ -510,7 +510,7 @@ void ship_select_task(void) {
 s32 func_001A33C0();
 s32 func_001A35A0();
 s32 replay_start_state_save();
-extern s16 g_select_screen_active_as_s16;
+extern u16 g_select_screen_active;
 extern u16 g_p2_ship_type;
 extern u16 g_p1_ship_type;
 extern s16 g_player2[];
@@ -521,7 +521,7 @@ void func_001B1D70(void) {
     *(s8 *)(reg_a5 + 3) = 1;
     func_001B04B0();
     D_0028DF14 = 0;
-    g_select_screen_active_as_s16 = 1;
+    g_select_screen_active = 1;
     reg_a0 = (u8 *)D_0029BE00;
     reg_d0.h[0] = 0x6F;
     do {
@@ -652,7 +652,7 @@ void func_001B1D70(void) {
 }
 
 void func_001B21F0(void) {
-    g_select_screen_active_as_s16 = 0;
+    g_select_screen_active = 0;
     task_stop_self();
 }
 

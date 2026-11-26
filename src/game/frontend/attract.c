@@ -54,9 +54,9 @@ extern u8 g_setting_coin_mode;
 extern u16 g_attract_demo;
 extern u16 D_0028E7B8;
 extern s8 g_cd_async_state;
-extern s8 g_replay_buffer_state_as_s8;
-extern s8 g_replay_mode_as_s8;
-extern s8 g_simulation_active_as_s8;
+extern u8 g_replay_buffer_state;
+extern u8 g_replay_mode;
+extern u8 g_simulation_active;
 
 void attract_task(void) {
     s32 text_layer_clear();
@@ -107,9 +107,9 @@ block_1:
     if (g_attract_demo == 0) goto next_4;
     g_attract_demo = 0;
     replay_header_clear();
-    g_simulation_active_as_s8 = 0;
-    g_replay_mode_as_s8 = 0;
-    g_replay_buffer_state_as_s8 = 0;
+    g_simulation_active = 0;
+    g_replay_mode = 0;
+    g_replay_buffer_state = 0;
     sound_stop_effects();
     sfx_coin();
     menu_settings_restore();
@@ -149,22 +149,21 @@ block_3:
 
 s32 func_0012FBD0();                            /* extern */
 s32 slowdown_reset();                            /* extern */
-extern s8 D_0028E7B4_as_s8;
-extern s16 D_0028E7B8_as_s16;
+extern u8 D_0028E7B4;
 
 void func_00168E30(void) {
     *(s8 *)(reg_a5 + 3) = 1;
     reg_d0.h[0] = *(u16 *)(reg_a5 + 4);
     func_00168BA0();
-    D_0028E7B4_as_s8 = 0;
-    D_0028E7B8_as_s16 = 0;
+    D_0028E7B4 = 0;
+    D_0028E7B8 = 0;
     func_0012FBD0();
     slowdown_reset();
 }
 
 s32 func_0015BBD0();                            /* extern */
-extern s16 D_0028E314_as_s16;
-extern s16 D_0028E318_as_s16;
+extern u16 D_0028E314;
+extern u16 D_0028E318;
 
 void func_00168E80(void) {
     s32 text_layer_clear();
@@ -176,8 +175,8 @@ void func_00168E80(void) {
     }
     func_0015BBD0();
     if (cond_flag == 0) {
-        D_0028E318_as_s16 = 1;
-        D_0028E314_as_s16 = 1;
+        D_0028E318 = 1;
+        D_0028E314 = 1;
         reg_d0.h[0] = 5;
         D_0028DF84 = 0;
         func_00168BA0();
@@ -190,7 +189,6 @@ s32 func_001A3E70();
 s32 stage_load_step();
 s32 func_00225630();
 s32 func_002256B0();
-extern u8 D_0028DF84_as_u8;
 extern u8 D_0028E294;
 extern u8 D_0028E304;
 extern u8 g_slowdown_timer;
@@ -198,8 +196,7 @@ extern u8 D_0028E368;
 extern u8 D_0028E378;
 extern s16 g_loaded_stage;
 extern u16 g_stage;
-extern u8 g_cd_async_state_as_u8;
-extern u8 g_cd_async_busy_as_u8;
+extern s8 g_cd_async_busy;
 
 void func_00168EF0(void) {
     s32 text_layer_clear();
@@ -218,10 +215,10 @@ void func_00168EF0(void) {
         func_001A3D30();
         D_0028E368 = 0;
         D_0028E378 = 0xFF;
-        D_0028DF84_as_u8 = 0;
-        g_cd_async_busy_as_u8 = 1;
+        D_0028DF84 = 0;
+        g_cd_async_busy = 1;
         g_stage_load_state = 0;
-        g_cd_async_state_as_u8 = 0;
+        g_cd_async_state = 0;
         func_00225630();
     }
     if (*(u8 *)(reg_a5 + 2) == 1) {
@@ -271,8 +268,8 @@ void func_00168FD0(void) {
         stage_map_reset();
         boot_scratch_clear();
         g_stage_load_state = 0;
-        g_cd_async_busy_as_u8 = 1;
-        g_cd_async_state_as_u8 = 0;
+        g_cd_async_busy = 1;
+        g_cd_async_state = 0;
         func_00225630();
     }
     if (reg_a5[2] == 1) {
@@ -300,8 +297,8 @@ void func_00168FD0(void) {
         }
         return;
     block_set:
-        D_0028E318_as_s16 = 1;
-        D_0028E314_as_s16 = 1;
+        D_0028E318 = 1;
+        D_0028E314 = 1;
         reg_d0.h[0] = 5;
         D_0028E288 = 0;
         D_0028E284 = 0;
@@ -365,25 +362,23 @@ void fade_start_in(void);
 void func_0021D570(void);
 s32 func_0022BB80(u8 *);
 void func_00235890(void);
-extern s8 D_0028E25C_as_s8;
-extern s8 D_0028E284_as_s8;
-extern s8 D_0028E288_as_s8;
-extern s8 g_pad_input_locked_as_s8;
-extern s8 D_0028E2A0_as_s8;
-extern s8 D_0028E2A4_as_s8;
-extern u8 D_0028E2B8_as_u8;
+extern u8 D_0028E25C;
+extern u8 D_0028E284;
+extern u8 D_0028E288;
+extern u8 g_pad_input_locked;
+extern u8 D_0028E2A0;
+extern u8 D_0028E2A4;
+extern u8 D_0028E2B8[8];
 extern u8 D_0028E2B9;
 extern u8 D_0028E2BA;
 extern u8 D_0028E2BB;
 extern u8 D_0028E2BC;
-extern s8 D_0028E2BD_as_s8;
+extern u8 D_0028E2BD;
 extern s8 D_0028E2BE;
 extern s8 D_0028E2BF;
 extern u16 D_0028E2FC;
 extern u16 D_0028E300;
-extern s8 g_slowdown_timer_as_s8;
-extern s8 D_0028E368_as_s8;
-extern s8 g_game_frame_ran_as_s8;
+extern u8 g_game_frame_ran;
 extern s8 D_0028E3F8;
 extern s8 D_0028EB00;
 extern s32 D_0028EB94;
@@ -399,13 +394,13 @@ void func_00169140(void) {
         fades_reset();
         func_0015BA20();
         slowdown_init();
-        g_slowdown_timer_as_s8 = 0;
-        D_0028E288_as_s8 = 0;
-        D_0028E284_as_s8 = 0;
-        g_pad_input_locked_as_s8 = 0;
-        D_0028E2A4_as_s8 = 0;
-        D_0028E2A0_as_s8 = 0;
-        D_0028E368_as_s8 = 0;
+        g_slowdown_timer = 0;
+        D_0028E288 = 0;
+        D_0028E284 = 0;
+        g_pad_input_locked = 0;
+        D_0028E2A4 = 0;
+        D_0028E2A0 = 0;
+        D_0028E368 = 0;
         text_layer_clear();
 #ifdef DEATH_LABEL
         func_00235890();
@@ -427,62 +422,62 @@ void func_00169140(void) {
         } else if (D_0028EB00 == 30) {
             D_0028DF84 = 0;
             reg_d0.h[0] = 0x10;
-            g_game_frame_ran_as_s8 = 0;
+            g_game_frame_ran = 0;
             D_0028E3F8 = 0;
             func_00168BA0();
         } else if (D_0028EB00 == 40) {
 #ifdef DEATH_LABEL
-            D_0028E2B8_as_u8 = 0;
+            (*(u8 *)D_0028E2B8) = 0;
             D_0028E2B9 = 0;
             D_0028E2BA = 0;
             D_0028E2BB = 0;
             D_0028E2BC = 0;
-            D_0028E2BD_as_s8 = 0;
+            D_0028E2BD = 0;
             D_0028E2BE = 0;
             D_0028E2BF = 0;
-            reg_a0 = &D_0028E2B8_as_u8;
+            reg_a0 = &(*(u8 *)D_0028E2B8);
             if (func_0022BB80(reg_a0) != 0) {
                 sceGsSyncV(0);
                 if (func_0022BB80(reg_a0) != 0) {
-                    D_0028E2B8_as_u8 = 0;
+                    (*(u8 *)D_0028E2B8) = 0;
                     D_0028E2B9 = 0;
                     D_0028E2BA = 0;
                     D_0028E2BB = 0;
                     D_0028E2BC = 0;
                 }
             }
-            printf((const char *)"--date [%d][%d][%d][%d][%d]\n", D_0028E2B8_as_u8, D_0028E2B9, D_0028E2BA, D_0028E2BB, D_0028E2BC);
+            printf((const char *)"--date [%d][%d][%d][%d][%d]\n", (*(u8 *)D_0028E2B8), D_0028E2B9, D_0028E2BA, D_0028E2BB, D_0028E2BC);
 #endif
             D_0028DF84 = 0;
             reg_d0.h[0] = 0x13;
-            g_game_frame_ran_as_s8 = 0;
+            g_game_frame_ran = 0;
             D_0028E3F8 = 0;
             func_00168BA0();
         } else {
-            D_0028E318_as_s16 = 9;
-            D_0028E314_as_s16 = 9;
+            D_0028E318 = 9;
+            D_0028E314 = 9;
             D_0028E2FC = D_0028E300;
-            D_0028E25C_as_s8 = 0;
-            D_0028E2B8_as_u8 = 0;
+            D_0028E25C = 0;
+            (*(u8 *)D_0028E2B8) = 0;
             D_0028E2B9 = 0;
             D_0028E2BA = 0;
             D_0028E2BB = 0;
             D_0028E2BC = 0;
-            D_0028E2BD_as_s8 = 0;
+            D_0028E2BD = 0;
             D_0028E2BE = 0;
             D_0028E2BF = 0;
-            reg_a0 = &D_0028E2B8_as_u8;
+            reg_a0 = &(*(u8 *)D_0028E2B8);
             if (func_0022BB80(reg_a0) != 0) {
                 sceGsSyncV(0);
                 if (func_0022BB80(reg_a0) != 0) {
-                    D_0028E2B8_as_u8 = 0;
+                    (*(u8 *)D_0028E2B8) = 0;
                     D_0028E2B9 = 0;
                     D_0028E2BA = 0;
                     D_0028E2BB = 0;
                     D_0028E2BC = 0;
                 }
             }
-            printf((const char *)"--date [%d][%d][%d][%d][%d]\n", D_0028E2B8_as_u8, D_0028E2B9, D_0028E2BA, D_0028E2BB, D_0028E2BC);
+            printf((const char *)"--date [%d][%d][%d][%d][%d]\n", (*(u8 *)D_0028E2B8), D_0028E2B9, D_0028E2BA, D_0028E2BB, D_0028E2BC);
             reg_d0.h[0] = 0xE;
             func_00168BA0();
         }
@@ -500,7 +495,7 @@ s32 func_00137C90();                            /* extern */
 s32 func_00137E00();                            /* extern */
 s32 sound_stop_effects();                            /* extern */
 s32 stage_map_reset();                            /* extern */
-extern s32 g_default_text_palette_as_s32_a[];
+extern u8 g_default_text_palette[];
 
 void func_00169320(void) {
     s32 text_layer_clear();
@@ -513,7 +508,7 @@ void func_00169320(void) {
         func_00137C90();
         text_layer_clear();
         *(s16 *)(reg_a5 + 4) = 0;
-        reg_a0 = (u8 *)g_default_text_palette_as_s32_a;
+        reg_a0 = (u8 *)((s32 *)g_default_text_palette);
         reg_d0.w = 0;
         text_palette_load();
     }
@@ -599,7 +594,7 @@ void func_001694F0() {
     u16 temp_v1_2;
 
     if (*(u8 *)(reg_a5 + 2) == 0) {
-        D_0028DF84_as_u8 = 0;
+        D_0028DF84 = 0;
         *(u8 *)(reg_a5 + 2) = 1U;
         text_layer_clear();
         reg_d0.w = 0;
@@ -648,21 +643,21 @@ void func_00169640(void) {
 extern u8 D_0028DE40[];
 extern u8 D_0028DE44[];
 extern u8 D_0028DE48[];
-extern s8 g_game_mode_as_s8;
+extern u8 g_game_mode;
 extern s8 g_menu_pad;
 extern u8 g_replay_mode;
-extern s16 D_0068DEC8_as_s16_a[];
+extern u8 D_0068DEC8[];
 extern s16 D_0068DECA[];
 extern s16 D_0068DECC[];
 extern s16 D_0068DECE[];
 extern s16 D_0068DED0[];
 extern s16 D_0068DED2[];
-extern s16 D_0068DED8_as_s16_a[];
+extern u8 D_0068DED8[];
 extern s16 D_0068DEDA[];
 extern s16 D_0068DEDC[];
 extern s16 D_0068DEDE[];
 extern s16 D_0068DEE0[];
-extern s16 D_0068DEF0_as_s16_a[];
+extern u8 D_0068DEF0[];
 extern s16 D_0068DEF2[];
 extern s16 D_0068DEF4[];
 extern s16 D_0068DEF6[];
@@ -680,25 +675,25 @@ extern s16 D_006E5BE8[];
 extern s16 D_006E5BEA_as_s16_a[];
 extern s16 D_006E5BEC_as_s16_a[];
 extern s16 D_006E5BEE_as_s16_a[];
-extern s16 D_006E5BF0_as_s16_a[];
-extern s16 D_006E5BF2_as_s16_a[];
-extern s16 D_006E5BF4_as_s16_a[];
-extern s16 D_006E5BF6_as_s16_a[];
+extern u16 D_006E5BF0[];
+extern u16 D_006E5BF2[];
+extern u16 D_006E5BF4[];
+extern u16 D_006E5BF6[];
 extern s16 D_006E5BF8_as_s16_a[];
 extern s16 D_006E5BFA_as_s16_a[];
-extern s16 D_006E5BFC_as_s16_a[];
+extern u16 D_006E5BFC[];
 extern s16 D_006E5BFE_as_s16_a[];
 extern s16 D_006E5C00_as_s16_a[];
-extern s16 D_006E5C02_as_s16_a[];
+extern u16 D_006E5C02[];
 extern s16 D_006E5C04_as_s16_a[];
-extern s16 D_006E5C06_as_s16_a[];
-extern s16 D_006E5C08_as_s16_a[];
+extern u16 D_006E5C06[];
+extern u8 D_006E5C08[];
 extern s16 D_006E5C0A_as_s16_a[];
 extern s16 D_006E5C0C_as_s16_a[];
-extern s16 D_006E5C0E_as_s16_a[];
-extern s16 D_006E5C10_as_s16_a[];
-extern s16 D_006E5C12_as_s16_a[];
-extern s16 D_006E5C14_as_s16_a[];
+extern u16 D_006E5C0E[];
+extern u16 D_006E5C10[];
+extern u16 D_006E5C12[];
+extern u16 D_006E5C14[];
 
 void func_00169680(void) {
     void text_layer_clear(void);
@@ -709,7 +704,7 @@ void func_00169680(void) {
     s32 a;
     s32 b;
 
-    g_game_mode_as_s8 = 0;
+    g_game_mode = 0;
     task_reset_all();
     text_layer_clear();
     reg_d0.w = 0;
@@ -726,27 +721,27 @@ void func_00169680(void) {
         D_006E5BE8[0] = D_0028DE44[b];
     }
     D_006E5C04_as_s16_a[0] = 0;
-    D_006E5BEA_as_s16_a[0] = D_0068DED8_as_s16_a[0];
+    D_006E5BEA_as_s16_a[0] = ((s16 *)D_0068DED8)[0];
     D_006E5BEC_as_s16_a[0] = D_0068DF02[0] / 5;
     D_006E5BFE_as_s16_a[0] = D_0068DF00[0];
-    D_006E5BFC_as_s16_a[0] = D_0068DEFE[0];
-    D_006E5BF4_as_s16_a[0] = D_0068DEF6[0];
-    D_006E5BF6_as_s16_a[0] = D_0068DEF8[0];
-    D_006E5BF8_as_s16_a[0] = D_0068DEF0_as_s16_a[0];
+    ((s16 *)D_006E5BFC)[0] = D_0068DEFE[0];
+    ((s16 *)D_006E5BF4)[0] = D_0068DEF6[0];
+    ((s16 *)D_006E5BF6)[0] = D_0068DEF8[0];
+    D_006E5BF8_as_s16_a[0] = ((s16 *)D_0068DEF0)[0];
     D_006E5BFA_as_s16_a[0] = D_0068DEF2[0];
     D_006E5C00_as_s16_a[0] = D_0068DEF4[0];
-    D_006E5C02_as_s16_a[0] = D_0068DF04[0];
-    D_006E5C06_as_s16_a[0] = D_0068DEDE[0];
-    D_006E5C08_as_s16_a[0] = D_0068DEE0[0];
+    ((s16 *)D_006E5C02)[0] = D_0068DF04[0];
+    ((s16 *)D_006E5C06)[0] = D_0068DEDE[0];
+    ((s16 *)D_006E5C08)[0] = D_0068DEE0[0];
     D_006E5C0A_as_s16_a[0] = D_0068DEFA[0];
     D_006E5C0C_as_s16_a[0] = D_0068DEFC[0];
-    D_006E5C0E_as_s16_a[0] = D_0068DEC8_as_s16_a[0];
-    D_006E5C10_as_s16_a[0] = D_0068DECA[0];
-    D_006E5C12_as_s16_a[0] = D_0068DECC[0];
+    ((s16 *)D_006E5C0E)[0] = ((s16 *)D_0068DEC8)[0];
+    ((s16 *)D_006E5C10)[0] = D_0068DECA[0];
+    ((s16 *)D_006E5C12)[0] = D_0068DECC[0];
     D_006E5BEE_as_s16_a[0] = D_0068DF02[0] % 5;
-    D_006E5BF0_as_s16_a[0] = D_0028DE48[D_0068DECE[0]];
-    D_006E5BF2_as_s16_a[0] = D_0028DE48[D_0068DED0[0]];
-    D_006E5C14_as_s16_a[0] = D_0068DED2[0];
+    ((s16 *)D_006E5BF0)[0] = D_0028DE48[D_0068DECE[0]];
+    ((s16 *)D_006E5BF2)[0] = D_0028DE48[D_0068DED0[0]];
+    ((s16 *)D_006E5C14)[0] = D_0068DED2[0];
     reg_d0.h[0] = TASK_REPLAY;
     task_start();
     if (g_replay_mode == 2) {
@@ -766,14 +761,14 @@ void func_00169900(void) {
     s32 text_palette_load();
     s32 task_reset_all();
     s32 task_start();
-    g_game_mode_as_s8 = 2;
+    g_game_mode = 2;
 #ifdef DEATH_LABEL
     death_D_00290DC0 = 0;
 #endif
     task_reset_all();
     text_layer_clear();
     reg_d0.w = 0;
-    reg_a0 = (u8 *)g_default_text_palette_as_s32_a;
+    reg_a0 = (u8 *)((s32 *)g_default_text_palette);
     text_palette_load();
     reg_d0.h[0] = MAIN_OR_DEATH_LABEL(0x15, 9);
     task_start();

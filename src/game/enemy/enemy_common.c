@@ -161,7 +161,7 @@ void layers_reset(void);
 void func_0012FA50(void);
 void func_0012FB00(void);
 extern u32 D_00268FB0[];
-extern u32 g_bg_layer_as_u32_a[];
+extern u8 g_bg_layer[16384];
 
 void func_0015B930(void) {
     u32 t1;
@@ -173,7 +173,7 @@ void func_0015B930(void) {
     reg_a1 = (u8 *)D_00268FB0;
     reg_d6.w = 0xD;
     do {
-        reg_a2 = (u8 *)g_bg_layer_as_u32_a;
+        reg_a2 = (u8 *)((u32 *)g_bg_layer);
         reg_a2 += reg_tmp.w;
         reg_d7.w = 6;
     loop_1:
@@ -190,10 +190,10 @@ void func_0015B930(void) {
     } while ((s16)(--reg_d6.h[0]) >= 0);
 }
 
-extern s32 D_0028E7C0_as_s32;
+extern u32 D_0028E7C0;
 extern s16 D_0028E7C4;
-extern s16 D_0028E7C8_as_s16;
-extern s16 D_0028E7CC_as_s16;
+extern u16 D_0028E7C8;
+extern u16 D_0028E7CC;
 extern s16 D_0028E7D0;
 
 void func_0015BA20(void) {
@@ -224,10 +224,10 @@ void func_0015BA20(void) {
     save_a4 = reg_a4;
     save_a5 = reg_a5;
     save_a6 = reg_a6;
-    D_0028E7C0_as_s32 = 0;
+    D_0028E7C0 = 0;
     save_d1 = reg_d1.w;
-    D_0028E7C8_as_s16 = 0;
-    D_0028E7CC_as_s16 = 0;
+    D_0028E7C8 = 0;
+    D_0028E7CC = 0;
     D_0028E7D0 = 0;
     save_d2 = reg_d2.w;
     save_d3 = reg_d3.w;
@@ -444,17 +444,16 @@ s32 fade_to_black();                            /* extern */
 s32 fade_release();                            /* extern */
 s32 fade_is_running();                            /* extern */
 extern u8 g_stage_load_state;
-extern u16 D_0028E7C4_as_u16;
 
 void func_0015BFD0(void) {
-    if (D_0028E7C4_as_u16 != 0) {
+    if ((u16)D_0028E7C4 != 0) {
         if (g_stage_load_state == 0) {
-            D_0028E7C4_as_u16 -= 1;
+            (*(u16 *)&D_0028E7C4) -= 1;
         }
         if (g_pad_held[2] != 0) {
-            D_0028E7C4_as_u16 = 0x258;
+            D_0028E7C4 = 0x258;
         }
-        if (D_0028E7C4_as_u16 != 0) {
+        if ((u16)D_0028E7C4 != 0) {
             func_0015C090();
             return;
         }
@@ -504,19 +503,12 @@ void func_0015C0E0(void) {
     cond_flag = 1;
 }
 
-extern s32 D_0028DF48_as_s32;
 
-extern s32 D_0028DF4C_as_s32;
 
-extern s32 D_0028DF50_as_s32;
 
-extern s32 D_0028DF54_as_s32;
 
-extern s32 D_0028DF58_as_s32;
 
-extern s32 D_0028DF5C_as_s32;
 
-extern s32 D_0028DF60_as_s32;
 
 void func_0015C170(void) {
     reg_d0.w = D_0028DF80;
@@ -527,13 +519,13 @@ void func_0015C170(void) {
     reg_d5.w = D_0028DF6C;
     reg_d6.w = D_0028DF68;
     reg_d7.w = D_0028DF64;
-    reg_a0 = (u8 *)D_0028DF60_as_s32;
-    reg_a1 = (u8 *)D_0028DF5C_as_s32;
-    reg_a2 = (u8 *)D_0028DF58_as_s32;
-    reg_a3 = (u8 *)D_0028DF54_as_s32;
-    reg_a4 = (u8 *)D_0028DF50_as_s32;
-    reg_a5 = (u8 *)D_0028DF4C_as_s32;
-    reg_a6 = (u8 *)D_0028DF48_as_s32;
+    reg_a0 = (u8 *)(*(s32 *)&D_0028DF60);
+    reg_a1 = (u8 *)(*(s32 *)&D_0028DF5C);
+    reg_a2 = (u8 *)(*(s32 *)&D_0028DF58);
+    reg_a3 = (u8 *)(*(s32 *)&D_0028DF54);
+    reg_a4 = (u8 *)(*(s32 *)&D_0028DF50);
+    reg_a5 = (u8 *)(*(s32 *)&D_0028DF4C);
+    reg_a6 = (u8 *)(*(s32 *)&D_0028DF48);
     cond_flag = 0;
 }
 

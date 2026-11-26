@@ -63,12 +63,12 @@ typedef void (*Fn)();
 
 extern u8 player_shot_update_routines[];
 extern u16 g_player_shot_count;
-extern u8 g_p2_hyper_active_as_u8;
-extern u8 g_p1_hyper_active_as_u8;
+extern u16 g_p2_hyper_active;
+extern u16 g_p1_hyper_active;
 extern u16 g_side_scroll_step[];
 extern u8 D_0029E390[];
-extern u8 g_player2_as_u8_a[];
-extern u8 g_player1_as_u8_a[];
+extern s16 g_player2[56];
+extern s16 g_player1[56];
 
 void func_001488C0(void) {
     u8 *saved_a4;
@@ -80,8 +80,8 @@ void func_001488C0(void) {
     g_player_shot_count = 0;
     saved_a4 = reg_a4;
     saved_a5 = reg_a5;
-    reg_a4 = (u8 *)g_player1_as_u8_a;
-    reg_a5 = &g_p1_hyper_active_as_u8;
+    reg_a4 = (u8 *)((u8 *)g_player1);
+    reg_a5 = &(*(u8 *)&g_p1_hyper_active);
     reg_tmp6.h[0] = reg_d6.h[0];
     reg_d6.h[0] = 1;
     reg_d6.h[1] = reg_tmp6.h[0];
@@ -103,8 +103,8 @@ next_1:
     t = reg_d7.h[0] - 1;
     reg_d7.h[0] = t;
     if (((s64) ((s64) (u16) t << 0x30) >> 0x30) >= 0) goto loop_2;
-    reg_a4 = (u8 *)g_player2_as_u8_a;
-    reg_a5 = &g_p2_hyper_active_as_u8;
+    reg_a4 = (u8 *)((u8 *)g_player2);
+    reg_a5 = &(*(u8 *)&g_p2_hyper_active);
     reg_tmp6.h[0] = reg_d6.h[0];
     reg_d6.h[0] = reg_d6.h[1];
     reg_d6.h[1] = reg_tmp6.h[0];

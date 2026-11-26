@@ -104,30 +104,30 @@ void func_001313E0(void) {
 
 extern s8 D_0028E1FC;
 extern s8 D_0028E200;
-extern s8 D_0028E204_as_s8;
-extern s8 D_0028E208_as_s8;
+extern u8 D_0028E204;
+extern u8 D_0028E208;
 
 void coin_counters_pulse(void) {
-    D_0028E208_as_s8 = 1;
-    D_0028E204_as_s8 = 1;
+    D_0028E208 = 1;
+    D_0028E204 = 1;
     D_0028E200 = 1;
     D_0028E1FC = 1;
 }
 
-extern s16 g_frame_mod16_as_s16;
-extern s16 g_frame_mod8_as_s16;
-extern s16 g_frame_mod4_as_s16;
-extern s16 g_frame_mod3_as_s16;
-extern s16 g_frame_mod2_as_s16;
-extern s16 g_game_frame_as_s16;
+extern u16 g_frame_mod16;
+extern u16 g_frame_mod8;
+extern u16 g_frame_mod4;
+extern u16 g_frame_mod3;
+extern u16 g_frame_mod2;
+extern u16 g_game_frame;
 
 void frame_counters_reset(void) {
-    g_game_frame_as_s16 = 0;
-    g_frame_mod2_as_s16 = 0;
-    g_frame_mod3_as_s16 = 0;
-    g_frame_mod4_as_s16 = 0;
-    g_frame_mod8_as_s16 = 0;
-    g_frame_mod16_as_s16 = 0;
+    g_game_frame = 0;
+    g_frame_mod2 = 0;
+    g_frame_mod3 = 0;
+    g_frame_mod4 = 0;
+    g_frame_mod8 = 0;
+    g_frame_mod16 = 0;
     rng_cursor = 0;
 }
 
@@ -144,36 +144,36 @@ void test_switch_read(void) {
 
 s32 slowdown_reset();                            /* extern */
 s32 replay_header_clear();                            /* extern */
-extern s16 g_select_screen_active_as_s16;
+extern u16 g_select_screen_active;
 extern s16 g_test_mode_entered;
-extern s16 g_attract_demo_stage_as_s16;
-extern s16 g_attract_demo_as_s16;
+extern u16 g_attract_demo_stage;
+extern u16 g_attract_demo;
 extern s16 D_0028E3C4;
 extern s16 g_debug_build;
 extern s16 g_publicity_build;
 extern s16 g_location_test_build;
-extern s8 g_replay_mode_as_s8;
-extern s8 g_simulation_active_as_s8;
+extern u8 g_replay_mode;
+extern u8 g_simulation_active;
 
 void func_00131490(void) {
     D_0028E3C4 = 0;
-    g_game_frame_as_s16 = 0;
-    g_frame_mod2_as_s16 = 0;
-    g_frame_mod3_as_s16 = 0;
-    g_frame_mod4_as_s16 = 0;
-    g_frame_mod8_as_s16 = 0;
-    g_frame_mod16_as_s16 = 0;
+    g_game_frame = 0;
+    g_frame_mod2 = 0;
+    g_frame_mod3 = 0;
+    g_frame_mod4 = 0;
+    g_frame_mod8 = 0;
+    g_frame_mod16 = 0;
     rng_cursor = 0;
     g_location_test_build = 0;
-    g_select_screen_active_as_s16 = 0;
+    g_select_screen_active = 0;
     slowdown_reset();
     g_publicity_build = 0;
     g_debug_build = 0;
-    g_simulation_active_as_s8 = 0;
-    g_replay_mode_as_s8 = 0;
+    g_simulation_active = 0;
+    g_replay_mode = 0;
     replay_header_clear();
-    g_attract_demo_as_s16 = 0;
-    g_attract_demo_stage_as_s16 = 0;
+    g_attract_demo = 0;
+    g_attract_demo_stage = 0;
     g_test_mode_entered = 0;
     test_switch_read();
 }

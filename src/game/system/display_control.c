@@ -89,10 +89,9 @@ void func_00206BE0(void) {
     D_0028E220 |= reg_d0.h[0];
 }
 
-extern s16 D_0028E220_as_s16;
 
 void func_00206C20(void) {
-    D_0028E220_as_s16 = 0;
+    D_0028E220 = 0;
     reg_d0.w = 0;
     func_00206920();
     reg_d0.w = 1;

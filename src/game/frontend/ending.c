@@ -14,25 +14,25 @@ void func_00141640(void);
 void p1_hyper_end(void);
 void p2_hyper_end(void);
 extern u8 D_0028C608[];
-extern u8 g_p2_loop2_extend_ok_as_u8;
-extern u8 g_p1_loop2_extend_ok_as_u8;
+extern u16 g_p2_loop2_extend_ok;
+extern u16 g_p1_loop2_extend_ok;
 extern u16 g_p2_bombs_used;
 extern u16 g_p1_bombs_used;
 extern u16 g_p2_death_count;
 extern u16 g_p1_death_count;
 extern u8 g_game_mode;
 extern u8 D_0028E2EC;
-extern s16 g_boss_hyper_wait_as_s16;
+extern u16 g_boss_hyper_wait;
 extern u16 g_p2_hyper_active;
 extern u16 g_p1_hyper_active;
 extern u16 g_p2_score_digits;
 extern u16 g_p1_score_digits;
-extern s16 g_p1_lives_as_s16;
+extern u16 g_p1_lives;
 extern u16 g_loop;
 extern u16 g_two_player_seen;
 extern u16 g_bee_value_step;
-extern u8 g_player2_as_u8_a[];
-extern u8 g_player1_as_u8_a[];
+extern s16 g_player2[];
+extern s16 g_player1[];
 
 void func_00122CE0(void) {
     if (D_0028E2EC != 0) goto block_1;
@@ -50,18 +50,18 @@ void func_00122CE0(void) {
         func_0013FD50();
     }
     func_00141640();
-    g_boss_hyper_wait_as_s16 = 0;
+    g_boss_hyper_wait = 0;
     if (g_two_player_seen == 3) goto block_1;
-    reg_a0 = &g_p1_loop2_extend_ok_as_u8;
+    reg_a0 = &(*(u8 *)&g_p1_loop2_extend_ok);
     reg_d0.h[0] = g_bee_value_step;
-    reg_a1 = (u8 *)g_player1_as_u8_a;
+    reg_a1 = (u8 *)((u8 *)g_player1);
     reg_d1.h[0] = g_p1_bombs_used;
     reg_d2.h[0] = g_p1_score_digits;
     reg_d3.h[0] = g_p1_death_count;
-    if (0 > g_p1_lives_as_s16) {
-        reg_a0 = &g_p2_loop2_extend_ok_as_u8;
+    if (0 > (s16)g_p1_lives) {
+        reg_a0 = &(*(u8 *)&g_p2_loop2_extend_ok);
         reg_d1.h[0] = g_p2_bombs_used;
-        reg_a1 = (u8 *)g_player2_as_u8_a;
+        reg_a1 = (u8 *)((u8 *)g_player2);
         reg_d2.h[0] = g_p2_score_digits;
         reg_d3.h[0] = g_p2_death_count;
     }
@@ -87,9 +87,8 @@ void func_00122CE0(void) {
 s32 stage_load_step();
 s32 func_00225630();
 s32 func_002256B0();
-extern s8 g_stage_load_state_as_s8;
+extern u8 g_stage_load_state;
 extern s16 g_loaded_stage;
-extern s16 g_loop_as_s16;
 extern u16 g_stage;
 extern s8 g_cd_async_state;
 extern s8 g_cd_async_busy;
@@ -109,7 +108,7 @@ void func_00122EB0(void) {
             }
             g_cd_async_busy = 1;
             D_00295E3C[0] = 2;
-            g_stage_load_state_as_s8 = 0;
+            g_stage_load_state = 0;
             g_cd_async_state = 0;
             func_00225630(temp_a0);
             goto block_6;
@@ -119,7 +118,7 @@ block_6:
             g_stage = 0;
             stage_load_step(D_00295E3C[0]);
             if (g_loaded_stage == g_stage) {
-                g_loop_as_s16 = 1;
+                g_loop = 1;
                 D_00295E3C[0] = 0;
                 func_002256B0(g_loaded_stage);
                 reg_d0.h[0] = 0x11;
@@ -140,16 +139,16 @@ block_6:
     }
 }
 
-extern s16 D_00295E2E_as_s16_a[];
-extern s16 D_00295E30_as_s16_a[];
-extern s16 D_00295E32_as_s16_a[];
-extern s32 D_00295E34_as_s32_a[];
+extern u16 D_00295E2E[];
+extern u16 D_00295E30[];
+extern u16 D_00295E32[];
+extern u32 D_00295E34[];
 
 void func_00122FD0(void) {
-    D_00295E2E_as_s16_a[0] = 0;
-    D_00295E30_as_s16_a[0] = 0;
-    D_00295E32_as_s16_a[0] = 0;
-    D_00295E34_as_s32_a[0] = 0;
+    ((s16 *)D_00295E2E)[0] = 0;
+    ((s16 *)D_00295E30)[0] = 0;
+    ((s16 *)D_00295E32)[0] = 0;
+    ((s32 *)D_00295E34)[0] = 0;
 }
 
 #ifndef DEATH_LABEL
@@ -234,11 +233,11 @@ void func_00123210(void) {
 
 s32 sprite_palette_load();
 extern u8 D_0024D030[];
-extern s16 D_00295E1C_as_s16_a[];
-extern s16 D_00295E1E_as_s16_a[];
-extern s16 D_00295E20_as_s16_a[];
-extern s32 D_00295E24_as_s32_a[];
-extern s32 D_00295E28_as_s32_a[];
+extern u16 D_00295E1C[];
+extern u8 D_00295E1E[];
+extern u16 D_00295E20[];
+extern u32 D_00295E24[];
+extern u32 D_00295E28[];
 
 void func_00123240(void) {
     reg_a3 = (u8 *)g_spare_entities;
@@ -250,13 +249,13 @@ void func_00123240(void) {
         *(s16 *)(reg_a3 + 6) = 0;
         reg_a3 += 8;
     } while ((s16)(--reg_d7.h[0]) >= 0);
-    D_00295E1C_as_s16_a[0] = 0;
+    ((s16 *)D_00295E1C)[0] = 0;
     reg_a0 = D_0024D030;
-    D_00295E1E_as_s16_a[0] = 0;
+    ((s16 *)D_00295E1E)[0] = 0;
     reg_d0.h[0] = 0;
-    D_00295E20_as_s16_a[0] = 0;
-    D_00295E24_as_s32_a[0] = 0;
-    D_00295E28_as_s32_a[0] = 0;
+    ((s16 *)D_00295E20)[0] = 0;
+    ((s32 *)D_00295E24)[0] = 0;
+    ((s32 *)D_00295E28)[0] = 0;
     sprite_palette_load();
 }
 
@@ -343,7 +342,6 @@ next_1:
 
 #ifndef DEATH_LABEL
 extern u8 D_0024D340[];
-extern u16 D_00295E1E_as_u16_a[];
 extern u16 D_00295E20[];
 extern u32 D_00295E24[];
 
@@ -352,7 +350,7 @@ void func_00123540(void) {
     void fade_release(void);
     void fade_is_running(void);
     if (reg_d0.h[0] == 0x8000) {
-        D_00295E1E_as_u16_a[0] = *(u16 *)reg_a2;
+        ((u16 *)D_00295E1E)[0] = *(u16 *)reg_a2;
         reg_a2 += 2;
         D_00295E1C[0] += 4;
         func_00123410();
@@ -414,8 +412,8 @@ s32 sound_stop_effects();
 s32 sound_stop_loops();
 s32 music_stop();
 extern s16 g_ending_started;
-extern s16 D_00295E3E_as_s16_a[];
-extern s16 D_00295E40_as_s16_a[];
+extern u8 D_00295E3E[];
+extern u16 D_00295E40[];
 extern s16 g_player2[];
 extern s16 g_player1[];
 
@@ -433,8 +431,8 @@ void func_00123780(void) {
         reg_d0.h[0] += 1;
     }
     ENTITY(reg_a6)->hit_y_plus.h = (u16) reg_d0.h[0];
-    D_00295E3E_as_s16_a[0] = 0x101;
-    D_00295E40_as_s16_a[0] = 0;
+    ((s16 *)D_00295E3E)[0] = 0x101;
+    ((s16 *)D_00295E40)[0] = 0;
     layers_clear_all();
     music_stop();
     sound_stop_effects();
@@ -449,7 +447,7 @@ void func_00123780(void) {
 
 extern u16 g_p2_power_style;
 extern u16 g_p1_power_style;
-extern s16 D_00295E2C_as_s16_a[];
+extern u16 D_00295E2C[];
 
 void func_00123870(void) {
     *(s8 *)(reg_a5 + 3) = 1;
@@ -457,11 +455,11 @@ void func_00123870(void) {
     func_00122FD0();
     reg_d0.w = 0;
     func_00123210();
-    D_00295E2C_as_s16_a[0] = 0;
+    ((s16 *)D_00295E2C)[0] = 0;
     reg_a6 = (u8 *)D_00295E00;
     if (ENTITY(reg_a6)->hit_y_plus.h != 1) goto next_0;
     reg_d0.h[0] = g_p1_power_style;
-    if (0 > PLAYER(g_player1_as_u8_a)->flags.sb[1]) goto next_1;
+    if (0 > PLAYER(((u8 *)g_player1))->flags.sb[1]) goto next_1;
     reg_d0.h[0] = g_p2_power_style;
     goto next_1;
 next_0:
@@ -594,11 +592,10 @@ s32 sfx_cursor_move();
 s32 sprite_draw_layer5_keep();
 extern u32 D_0024D640[];
 extern u32 D_0024D660[];
-extern u32 D_0025F770_as_u32_a[];
+extern u16 D_0025F770[352];
 extern u32 D_0028C090;
 extern u32 D_0028C098;
 extern u16 D_00295E3A[];
-extern s16 D_00295E3C_as_s16_a[];
 void input_get_p1_pressed();
 void input_get_p2_pressed();
 extern u32 reg_call_target_as_u32;
@@ -613,10 +610,10 @@ void func_00123C20(void) {
     W(6) = 1;
     func_00123240();
     W(0xC) = 0;
-    D_00295E3C_as_s16_a[0] = 1;
+    ((s16 *)D_00295E3C)[0] = 1;
     D_00295E38[0] = 1;
     D_00295E3A[0] = 0x258;
-    reg_a0 = (u8 *) D_0025F770_as_u32_a;
+    reg_a0 = (u8 *) ((u32 *)D_0025F770);
     reg_d0.h[0] = 3;
     sprite_palette_load();
 next_10:

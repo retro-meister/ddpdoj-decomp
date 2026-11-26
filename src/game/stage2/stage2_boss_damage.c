@@ -649,19 +649,17 @@ void stage2_boss_parts_stop_hits(void) {
     ENTITY(reg_a6)[8].flags.h = (u16) reg_d0.h[0];
 }
 
-extern u32 reg_a6_as_u32;
-extern u32 reg_a0_as_u32;
 
 void stage2_boss_part_take_hits(void) {
-    reg_a0_as_u32 = reg_a6_as_u32;
-    reg_a0_as_u32 += reg_d0.h[0];
-    *(u16 *)reg_a0_as_u32 = 0xA000;
+    (*(u32 *)&reg_a0) = (*(u32 *)&reg_a6);
+    (*(u32 *)&reg_a0) += reg_d0.h[0];
+    *(u16 *)(*(u32 *)&reg_a0) = 0xA000;
 }
 
 void stage2_boss_part_stop_hits(void) {
-    reg_a0_as_u32 = reg_a6_as_u32;
-    reg_a0_as_u32 += reg_d0.h[0];
-    *(u16 *)reg_a0_as_u32 = 0x8000;
+    (*(u32 *)&reg_a0) = (*(u32 *)&reg_a6);
+    (*(u32 *)&reg_a0) += reg_d0.h[0];
+    *(u16 *)(*(u32 *)&reg_a0) = 0x8000;
 }
 
 void stage2_boss_stop_damage(void) {

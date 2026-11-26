@@ -71,7 +71,7 @@ extern s32 g_tex_upload_tbp;
 extern s32 g_quad_count;
 extern u16 D_00295E40[];
 extern TextScript death_D_002AB800;
-extern u16 g_arcade_sprites_as_u16_a[];
+extern u8 g_arcade_sprites[12000];
 extern u8 g_splash_file_buf[];
 extern u8 g_noise_file_buf[];
 extern u8 g_gs_load_image_as_u8_a[];
@@ -184,7 +184,7 @@ void death_func_00138ED0(TextScript *script) {
             sprite_palette_load();
             sprite_lists_build();
             arcade_sprite_draw();
-            head = (ListHead *) g_arcade_sprites_as_u16_a;
+            head = (ListHead *) ((u16 *)g_arcade_sprites);
             head->e = 0;
             head->d = 0;
             head->c = 0;

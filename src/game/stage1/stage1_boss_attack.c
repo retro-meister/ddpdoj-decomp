@@ -139,7 +139,6 @@ void stage1_boss_fire_front_guns_rage(void);
 void stage1_boss_fire_front_guns_rage_spread(void);
 void stage1_boss_fire_side_spread();
 
-extern u16 *reg_a4_as_u16_p;
 
 void stage1_boss_fire_clear(void) {
     RAGE(reg_a4)->running = 0;

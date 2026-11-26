@@ -72,10 +72,9 @@ void stage4_boss_left_pod_close(void);
 void stage4_boss_aimed_gun_track(void);
 void stage4_boss_body_anim(void);
 
-extern s16 *reg_a4_as_s16_p;
 
 void stage4_boss_anim_end(void) {
-    *reg_a4_as_s16_p = 0;
+    *(*(s16 **)&reg_a4) = 0;
 }
 
 s32 boss_part_show();                            /* extern */

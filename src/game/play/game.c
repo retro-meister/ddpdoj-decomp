@@ -44,52 +44,52 @@ void func_00134FE0(void) {
     g_stage_x4 = value;
 }
 
-extern s16 g_boss_present_as_s16;
-extern s16 g_enemy_signal_f_as_s16;
-extern s16 g_enemy_signal_e_as_s16;
-extern s16 g_enemy_signal_d_as_s16;
-extern s16 g_enemy_signal_c_as_s16;
-extern s16 g_enemy_signal_b_as_s16;
-extern s16 g_enemy_signal_a_as_s16;
-extern s16 g_enemy_signal_9_as_s16;
-extern s16 g_enemy_signal_8_as_s16;
-extern s16 g_enemy_signal_7_as_s16;
-extern s16 g_enemy_signal_6_as_s16;
-extern s16 g_enemy_signal_5_as_s16;
-extern s16 g_enemy_signal_4_as_s16;
-extern s16 g_enemy_signal_3_as_s16;
-extern s16 g_enemy_signal_2_as_s16;
-extern s16 g_enemy_signal_1_as_s16;
-extern s16 g_enemy_signal_0_as_s16;
-extern s16 g_stopped_and_blocked_as_s16;
-extern s16 g_bullets_blocked_as_s16;
-extern s16 g_enemies_stopped_as_s16;
-extern s16 g_scroll_line_step_as_s16;
-extern s16 g_scroll_line_as_s16;
+extern u8 g_boss_present;
+extern u16 g_enemy_signal_f;
+extern u16 g_enemy_signal_e;
+extern u16 g_enemy_signal_d;
+extern u16 g_enemy_signal_c;
+extern u16 g_enemy_signal_b;
+extern u16 g_enemy_signal_a;
+extern u16 g_enemy_signal_9;
+extern u16 g_enemy_signal_8;
+extern u16 g_enemy_signal_7;
+extern u16 g_enemy_signal_6;
+extern u16 g_enemy_signal_5;
+extern u16 g_enemy_signal_4;
+extern u16 g_enemy_signal_3;
+extern u16 g_enemy_signal_2;
+extern u16 g_enemy_signal_1;
+extern u16 g_enemy_signal_0;
+extern u16 g_stopped_and_blocked;
+extern u16 g_bullets_blocked;
+extern u16 g_enemies_stopped;
+extern u16 g_scroll_line_step;
+extern u16 g_scroll_line;
 
 void func_00135010(void) {
-    g_boss_present_as_s16 = 0;
-    g_enemy_signal_f_as_s16 = 0;
-    g_enemy_signal_e_as_s16 = 0;
-    g_enemy_signal_d_as_s16 = 0;
-    g_enemy_signal_c_as_s16 = 0;
-    g_enemy_signal_b_as_s16 = 0;
-    g_enemy_signal_a_as_s16 = 0;
-    g_enemy_signal_9_as_s16 = 0;
-    g_enemy_signal_8_as_s16 = 0;
-    g_enemy_signal_7_as_s16 = 0;
-    g_enemy_signal_6_as_s16 = 0;
-    g_enemy_signal_5_as_s16 = 0;
-    g_enemy_signal_4_as_s16 = 0;
-    g_enemy_signal_3_as_s16 = 0;
-    g_enemy_signal_2_as_s16 = 0;
-    g_enemy_signal_1_as_s16 = 0;
-    g_enemy_signal_0_as_s16 = 0;
-    g_stopped_and_blocked_as_s16 = 0;
-    g_bullets_blocked_as_s16 = 0;
-    g_enemies_stopped_as_s16 = 0;
-    g_scroll_line_step_as_s16 = 0;
-    g_scroll_line_as_s16 = 0;
+    (*(s16 *)&g_boss_present) = 0;
+    g_enemy_signal_f = 0;
+    g_enemy_signal_e = 0;
+    g_enemy_signal_d = 0;
+    g_enemy_signal_c = 0;
+    g_enemy_signal_b = 0;
+    g_enemy_signal_a = 0;
+    g_enemy_signal_9 = 0;
+    g_enemy_signal_8 = 0;
+    g_enemy_signal_7 = 0;
+    g_enemy_signal_6 = 0;
+    g_enemy_signal_5 = 0;
+    g_enemy_signal_4 = 0;
+    g_enemy_signal_3 = 0;
+    g_enemy_signal_2 = 0;
+    g_enemy_signal_1 = 0;
+    g_enemy_signal_0 = 0;
+    g_stopped_and_blocked = 0;
+    g_bullets_blocked = 0;
+    g_enemies_stopped = 0;
+    g_scroll_line_step = 0;
+    g_scroll_line = 0;
 }
 
 s32 func_00128660();                            /* extern */
@@ -99,7 +99,6 @@ s32 func_0016AAB0();                            /* extern */
 s32 func_001B82D0();                            /* extern */
 s32 func_00209E60();                            /* extern */
 s32 func_002114A0();                            /* extern */
-extern u32 g_ground_task_handle_as_u32;
 
 void func_00135070(void) {
     func_00135010();
@@ -116,16 +115,16 @@ void func_00135070(void) {
     reg_tmp.h[0] = reg_d0.h[1];
     reg_d0.h[1] = reg_d0.h[0];
     reg_d0.h[0] = reg_tmp.h[0];
-    g_ground_task_handle_as_u32 = reg_d0.w;
+    g_ground_task_handle = reg_d0.w;
     *(s16 *)(reg_a0 + 6) = 0;
 }
 
 void func_00135100() {
-    g_enemies_stopped_as_s16 = 1;
+    g_enemies_stopped = 1;
 }
 
 void func_00135110(void) {
-    g_enemies_stopped_as_s16 = 0;
+    g_enemies_stopped = 0;
 }
 
 extern u16 g_two_player_state;
@@ -159,10 +158,9 @@ void func_00135120(void) {
 }
 
 extern u16 g_continue_pending_count;
-extern s16 g_two_player_state_as_s16;
 
 void func_001351F0(void) {
-    if ((g_continue_pending_count == 0) && (g_two_player_state_as_s16 == -1)) {
+    if ((g_continue_pending_count == 0) && ((s16)g_two_player_state == -1)) {
         cond_flag = 1;
         return;
     }
@@ -199,9 +197,9 @@ void (*player_slot_steps[12])(void) = {
     0,
 };
 
-extern u32 g_player_panel2_task_handle_as_u32;
-extern u32 g_player_panel1_task_handle_as_u32;
-extern u32 g_gauge_task_handle_as_u32;
+extern s32 g_player_panel2_task_handle;
+extern s32 g_player_panel1_task_handle;
+extern s32 g_gauge_task_handle;
 
 void player_slots_init(void) {
     u16 temp_a0;
@@ -235,21 +233,21 @@ void player_slots_init(void) {
     reg_tmp.h[0] = temp_a0;
     reg_d0.h[1] = reg_d0.h[0];
     reg_d0.h[0] = reg_tmp.h[0];
-    g_gauge_task_handle_as_u32 = reg_d0.w;
+    g_gauge_task_handle = reg_d0.w;
     reg_d0.h[0] = 4;
     task_start();
     temp_a1 = reg_d0.h[1];
     reg_tmp.h[0] = temp_a1;
     reg_d0.h[1] = reg_d0.h[0];
     reg_d0.h[0] = reg_tmp.h[0];
-    g_player_panel1_task_handle_as_u32 = reg_d0.w;
+    g_player_panel1_task_handle = reg_d0.w;
     *(u8 *)(reg_a0 + 6) = 0;
     reg_d0.h[0] = 4;
     task_start();
     reg_tmp.h[0] = reg_d0.h[1];
     reg_d0.h[1] = reg_d0.h[0];
     reg_d0.h[0] = reg_tmp.h[0];
-    g_player_panel2_task_handle_as_u32 = reg_d0.w;
+    g_player_panel2_task_handle = reg_d0.w;
     *(u8 *)(reg_a0 + 6) = 1;
 }
 
@@ -290,12 +288,12 @@ s32 func_0012FBD0();
 s32 side_scroll_reset();
 s32 func_001AC3A0();
 s32 func_001AC5F0();
-extern s16 g_p2_death_count_as_s16;
-extern s16 g_p1_death_count_as_s16;
-extern s16 g_p2_continued_as_s16;
-extern s16 g_p1_continued_as_s16;
-extern s16 g_p2_past_first_ship_as_s16;
-extern s16 g_p1_past_first_ship_as_s16;
+extern u16 g_p2_death_count;
+extern u16 g_p1_death_count;
+extern u16 g_p2_continued;
+extern u16 g_p1_continued;
+extern u16 g_p2_past_first_ship;
+extern u16 g_p1_past_first_ship;
 extern u8 g_simulation_active;
 extern u16 D_006E5C06[];
 
@@ -305,7 +303,7 @@ void player_slot_next_ship(void) {
     func_0012FBD0();
     PLAYER_SLOT(reg_a6)->ship_task[0] = 0U;
     PLAYER_SLOT(reg_a6)->ship_task[1] = 0U;
-    g_bullets_blocked_as_s16 = 0x78;
+    g_bullets_blocked = 0x78;
     side_scroll_reset();
     reg_tmp.h[1] = PLAYER_SLOT(reg_a6)->lives[0];
     reg_tmp.h[0] = PLAYER_SLOT(reg_a6)->lives[1];
@@ -320,13 +318,13 @@ void player_slot_next_ship(void) {
     }
     if ((s16) *(u16 *)reg_a0 < 0) {
         if (PLAYER_SLOT(reg_a6)->player == 0) {
-            g_p1_past_first_ship_as_s16 = 0;
-            g_p1_continued_as_s16 = 1;
-            g_p1_death_count_as_s16 = 0;
+            g_p1_past_first_ship = 0;
+            g_p1_continued = 1;
+            g_p1_death_count = 0;
         } else {
-            g_p2_past_first_ship_as_s16 = 0;
-            g_p2_continued_as_s16 = 1;
-            g_p2_death_count_as_s16 = 0;
+            g_p2_past_first_ship = 0;
+            g_p2_continued = 1;
+            g_p2_death_count = 0;
         }
         PLAYER_SLOT(reg_a6)->step = 2;
     } else {
@@ -386,7 +384,7 @@ void player_slot_out_of_ships(void) {
     PLAYER_SLOT(reg_a6)->other_02 = 0;
 }
 
-extern u8 *D_0028DEB8_as_u8_p;
+extern void *D_0028DEB8;
 extern u8 *D_0028DEBC;
 extern u8 *D_0028DEC0;
 extern u8 *D_0028DEC4;
@@ -421,7 +419,7 @@ void player_join(void) {
     D_0028DEC4 = reg_a3;
     D_0028DEC0 = reg_a4;
     D_0028DEBC = reg_a5;
-    D_0028DEB8_as_u8_p = (u8 *)(reg_a6);
+    (*(u8 **)&D_0028DEB8) = (u8 *)(reg_a6);
     if (reg_d2.h[0] != 0) {
         reg_a6 = (u8 *)g_player_slot2;
         g_p2_ship_type = reg_d0.h[0];
@@ -435,13 +433,7 @@ void player_join(void) {
     player_slot_join();
 }
 
-extern s32 D_0028DEB8_as_s32;
-extern s32 D_0028DEBC_as_s32;
-extern s32 D_0028DEC0_as_s32;
-extern s32 D_0028DEC4_as_s32;
-extern s32 D_0028DEC8_as_s32;
-extern s32 D_0028DECC_as_s32;
-extern s32 D_0028DED0_as_s32;
+extern void *D_0028DEB8;
 
 void player_slot_join_step(void) {
     D_0028DEF0 = reg_d0.w;
@@ -452,13 +444,13 @@ void player_slot_join_step(void) {
     D_0028DEDC = reg_d5.w;
     D_0028DED8 = reg_d6.w;
     D_0028DED4 = reg_d7.w;
-    D_0028DED0_as_s32 = (s32)reg_a0;
-    D_0028DECC_as_s32 = (s32)reg_a1;
-    D_0028DEC8_as_s32 = (s32)reg_a2;
-    D_0028DEC4_as_s32 = (s32)reg_a3;
-    D_0028DEC0_as_s32 = (s32)reg_a4;
-    D_0028DEBC_as_s32 = (s32)reg_a5;
-    D_0028DEB8_as_s32 = (s32)reg_a6;
+    (*(s32 *)&D_0028DED0) = (s32)reg_a0;
+    (*(s32 *)&D_0028DECC) = (s32)reg_a1;
+    (*(s32 *)&D_0028DEC8) = (s32)reg_a2;
+    (*(s32 *)&D_0028DEC4) = (s32)reg_a3;
+    (*(s32 *)&D_0028DEC0) = (s32)reg_a4;
+    (*(s32 *)&D_0028DEBC) = (s32)reg_a5;
+    (*(s32 *)&D_0028DEB8) = (s32)reg_a6;
     player_slot_join();
 }
 
@@ -478,7 +470,6 @@ s32 func_001AC900();
 s32 func_001AC980();
 extern u16 D_0024F3A8[];
 extern void *D_0028DEB8;
-extern u32 D_0028DED0_as_u32;
 extern u8 g_setting_ship_stock;
 
 void player_slot_join(void) {
@@ -539,12 +530,12 @@ void player_slot_join(void) {
     reg_d5.w = D_0028DEDC;
     reg_d6.w = D_0028DED8;
     reg_d7.w = D_0028DED4;
-    reg_a0 = (u8 *)D_0028DED0_as_u32;
-    reg_a1 = (u8 *)D_0028DECC_as_s32;
-    reg_a2 = (u8 *)D_0028DEC8_as_s32;
-    reg_a3 = (u8 *)D_0028DEC4_as_s32;
-    reg_a4 = (u8 *)D_0028DEC0_as_s32;
-    reg_a5 = (u8 *)D_0028DEBC_as_s32;
+    reg_a0 = (u8 *)(*(u32 *)&D_0028DED0);
+    reg_a1 = (u8 *)(*(s32 *)&D_0028DECC);
+    reg_a2 = (u8 *)(*(s32 *)&D_0028DEC8);
+    reg_a3 = (u8 *)(*(s32 *)&D_0028DEC4);
+    reg_a4 = (u8 *)(*(s32 *)&D_0028DEC0);
+    reg_a5 = (u8 *)(*(s32 *)&D_0028DEBC);
     reg_a6 = (u8 *)D_0028DEB8;
 }
 
@@ -602,11 +593,7 @@ void player_slot_start(void) {
 
 s32 sound_stop_effects();
 s32 music_stop();
-extern u8 g_player_panel2_task_handle_as_u8;
-extern u8 g_player_panel1_task_handle_as_u8;
-extern u8 g_gauge_task_handle_as_u8;
-extern u8 g_misc_task_handle_as_u8;
-extern u8 g_ground_task_handle_as_u8;
+extern s32 g_misc_task_handle;
 
 void player_slot_game_over(void) {
     reg_a2 = g_player_slots;
@@ -619,15 +606,15 @@ void player_slot_game_over(void) {
     task_request_stop();
     reg_a0 = (u8 *)PLAYER_SLOT(reg_a3)->other_task_20;
     task_request_stop();
-    reg_a0 = &g_misc_task_handle_as_u8;
+    reg_a0 = &(*(u8 *)&g_misc_task_handle);
     task_request_stop();
-    reg_a0 = &g_ground_task_handle_as_u8;
+    reg_a0 = &(*(u8 *)&g_ground_task_handle);
     task_request_stop();
-    reg_a0 = &g_gauge_task_handle_as_u8;
+    reg_a0 = &(*(u8 *)&g_gauge_task_handle);
     task_request_stop();
-    reg_a0 = &g_player_panel1_task_handle_as_u8;
+    reg_a0 = &(*(u8 *)&g_player_panel1_task_handle);
     task_request_stop();
-    reg_a0 = &g_player_panel2_task_handle_as_u8;
+    reg_a0 = &(*(u8 *)&g_player_panel2_task_handle);
     task_request_stop();
     music_stop();
     sound_stop_effects();
@@ -698,7 +685,6 @@ extern s32 g_player_panel2_task_handle;
 extern s32 g_player_panel1_task_handle;
 extern s32 g_gauge_task_handle;
 extern s32 g_misc_task_handle;
-extern u16 g_boss_present_as_u16;
 extern u16 g_enemy_signal_f;
 extern u16 g_enemy_signal_e;
 extern u16 g_enemy_signal_d;
@@ -750,7 +736,7 @@ void func_00135ED0(void) {
 
     var_a1 = 0;
     g_two_player_game = g_two_player_state = g_two_player_seen = g_stage = g_stage_x2 = g_stage_x4 = g_loop = g_game_completed = g_true_last_boss = g_rank = g_rank_15_16 = g_rank_14_16 = g_rank_13_16 = g_rank_12_16 = g_rank_11_16 = g_rank_10_16 = g_rank_9_16 = g_rank_8_16 = g_rank_7_16 = g_rank_6_16 = g_rank_5_16 = g_rank_4_16 = g_rank_3_16 = g_rank_2_16 = g_rank_1_16 = g_p1_lives = g_p2_lives = g_play_time = g_damage_blink_counter = (g_name_entry_player = g_name_entry_player_pad = (g_scroll_line = g_scroll_line_step = g_enemies_stopped = g_bullets_blocked = g_stopped_and_blocked = 0));
-    g_boss_present_as_u16 = 0;
+    (*(u16 *)&g_boss_present) = 0;
     g_enemy_signal_f = 0;
     g_enemy_signal_e = 0;
     g_enemy_signal_d = 0;
@@ -916,7 +902,6 @@ s32 difficulty_apply();
 s32 text_palette_load();
 s32 func_001A3300();
 extern u8 g_default_text_palette[];
-extern u32 g_misc_task_handle_as_u32;
 extern u16 g_game_flow_scroll_line;
 
 void func_00136330() {
@@ -930,7 +915,7 @@ void func_00136330() {
     reg_tmp.h[0] = temp_a0;
     reg_d0.h[1] = reg_d0.h[0];
     reg_d0.h[0] = reg_tmp.h[0];
-    g_misc_task_handle_as_u32 = reg_d0.w;
+    g_misc_task_handle = reg_d0.w;
     reg_d0.h[0] = 1;
     task_start();
     temp_a1 = reg_d0.h[1];
@@ -938,7 +923,7 @@ void func_00136330() {
     reg_d0.h[1] = reg_d0.h[0];
     reg_d0.h[0] = reg_tmp.h[0];
     temp_a0_2 = reg_d0.w;
-    g_ground_task_handle_as_u32 = temp_a0_2;
+    g_ground_task_handle = temp_a0_2;
     *(u16 *)(reg_a0 + 6) = (u16) g_game_flow_scroll_line;
     if (g_player_start_request != 0) {
         reg_d0.w = 0x10000E00;
@@ -953,10 +938,10 @@ void func_00136330() {
     difficulty_apply();
 }
 
-extern s16 g_player_shots_disabled_as_s16;
+extern u16 g_player_shots_disabled;
 
 void func_00136400(void) {
-    g_player_shots_disabled_as_s16 = 0;
+    g_player_shots_disabled = 0;
     g_game_flow_scroll_line = reg_d7.h[0];
     g_player_start_request = reg_d6.h[0];
     func_001362F0();
@@ -1167,11 +1152,11 @@ block_end1:
     task_stop_self();
 }
 
-extern s32 D_0029BC00_as_s32_a[];
+extern u8 D_0029BC00[];
 
 
 void func_001368C0(void) {
-    memset(&D_0029BC00_as_s32_a[0], 0, 0x180);
+    memset(&((s32 *)D_0029BC00)[0], 0, 0x180);
 }
 
 
@@ -1224,11 +1209,10 @@ void func_00136A30(void) {
     (*(u8 *)&cond_flag) = 0;
 }
 
-extern u16 D_0029BC00_as_u16_a[];
 extern u16 D_0029BD7C[];
 
 void func_00136A40(void) {
-    reg_a0 = (u8 *)D_0029BC00_as_u16_a;
+    reg_a0 = (u8 *)((u16 *)D_0029BC00);
     reg_d0.w = 9;
 loop_0:
     if (*(u16 *)reg_a0 == 0) goto next_0;
@@ -1357,7 +1341,7 @@ extern u8 D_0024F460[];
 extern u8 D_0024F480[];
 extern u8 D_0024F4A0[];
 extern u16 g_frame_mod2;
-extern s8 g_boss_present_b1_as_s8;
+extern u8 g_boss_present_b1;
 extern u8 D_0029BC00[];
 
 void func_00136F30(void) {
@@ -1394,7 +1378,7 @@ loop_40:
     reg_d1.h[0] = *(u16 *)reg_a0;
     if (!(0 > (s16)reg_d1.h[0])) goto block_clr;
     if (0 > (s8)reg_d1.b[0]) goto block_clr;
-    if (0 > g_boss_present_b1_as_s8) goto block_clr;
+    if (0 > (s8)g_boss_present_b1) goto block_clr;
 next_50:
     if (g_frame_mod2 == 0) goto next_90;
     if (0 > (s8)reg_d2.b[0]) goto next_60;

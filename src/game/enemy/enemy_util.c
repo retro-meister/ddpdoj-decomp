@@ -81,7 +81,7 @@ s32 func_00200EE0();
 s32 func_00201010();
 extern u16 g_p1_stage_misses;
 extern u16 g_p1_hyper_gauge;
-extern s16 g_p1_hyper_active_as_s16;
+extern u16 g_p1_hyper_active;
 extern u16 g_boss_hits;
 extern u16 g_boss_hit_decay_timer;
 extern u16 g_p1_hits;
@@ -110,7 +110,7 @@ void func_00170DF0(void) {
             reg_d4.w = 0;
         }
     }
-    if ((g_p1_hyper_active_as_s16 == 0) && ((s16) reg_d4.h[0] != 0)) {
+    if (((s16)g_p1_hyper_active == 0) && ((s16) reg_d4.h[0] != 0)) {
         t = (s64) ((s64) reg_d5.h[0] << 0x30) >> 0x30;
         if ((t != 0) && (t >= 0)) {
             save_d0 = reg_d0.w;
@@ -151,7 +151,7 @@ loop_11:
 s32 func_001AC160();
 extern u16 g_p2_stage_misses;
 extern u16 g_p2_hyper_gauge;
-extern s16 g_p2_hyper_active_as_s16;
+extern u16 g_p2_hyper_active;
 extern u16 g_p2_hits;
 extern u16 g_p2_combo_timer;
 
@@ -177,7 +177,7 @@ void func_00170F80(void) {
             reg_d4.w = 0;
         }
     }
-    if ((g_p2_hyper_active_as_s16 == 0) && ((s16) reg_d4.h[0] != 0)) {
+    if (((s16)g_p2_hyper_active == 0) && ((s16) reg_d4.h[0] != 0)) {
         t = (s64) ((s64) reg_d5.h[0] << 0x30) >> 0x30;
         if ((t != 0) && (t >= 0)) {
             save_d0 = reg_d0.w;

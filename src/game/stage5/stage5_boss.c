@@ -37,7 +37,7 @@ extern u16 g_stage5_boss_all_forms;
 extern u16 g_loop;
 extern s16 D_00299768[];
 extern s16 D_0029976A[];
-extern s16 D_0029976C_as_s16_a[];
+extern u16 D_0029976C[];
 
 void stage5_boss_start(void) {
     reg_a0 = D_00264F50;
@@ -112,7 +112,7 @@ void stage5_boss_start(void) {
     sprite_palette_load();
     D_00299768[0] = 1;
     D_0029976A[0] = 1;
-    D_0029976C_as_s16_a[0] = 1;
+    ((s16 *)D_0029976C)[0] = 1;
     stage5_boss_form1_stop_hits();
 }
 

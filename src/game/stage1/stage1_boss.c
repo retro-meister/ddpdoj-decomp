@@ -42,7 +42,7 @@ extern void (*stage1_boss_draw_routines[])(void);
 extern void (*stage1_boss_mode_routines[])(void);
 extern void (*stage1_boss_move_routines[])(void);
 extern s32 D_0028DC90;
-extern s16 g_boss_hyper_wait_as_s16;
+extern u16 g_boss_hyper_wait;
 extern u8 *g_boss_hp;
 extern s32 g_boss_hp_unit;
 extern u8 g_boss_present;
@@ -50,7 +50,7 @@ extern u8 g_boss_present_b1;
 extern u16 g_loop;
 extern s16 D_00299768[];
 extern s16 D_0029976A[];
-extern s16 D_0029976C_as_s16_a[];
+extern u16 D_0029976C[];
 extern u16 g_side_scroll_x[];
 
 void stage1_boss_start(void) {
@@ -95,7 +95,7 @@ void stage1_boss_start(void) {
     reg_d0.h[0] = 0x11;
     reg_a0 = (u8 *)D_0025FB70;
     sprite_palette_load();
-    g_boss_hyper_wait_as_s16 = 1;
+    g_boss_hyper_wait = 1;
     g_boss_present_b1 |= 1;
     g_boss_present_b1 |= 4;
     g_boss_hp_unit = 0x1A0;
@@ -109,7 +109,7 @@ void stage1_boss_start(void) {
     D_00299768[0] = 1;
     D_0029976A[0] = 1;
     if (g_loop != 0) {
-        D_0029976C_as_s16_a[0] = 1;
+        ((s16 *)D_0029976C)[0] = 1;
     }
 }
 

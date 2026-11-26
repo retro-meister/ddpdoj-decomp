@@ -47,11 +47,11 @@ extern u32 reg_save_d1;
 extern u32 reg_save_d0;
 extern u8 *reg_save_a6;
 extern u8 *reg_save_a5;
-extern u8 *reg_save_a4_as_u8_p;
-extern u8 *reg_save_a3_as_u8_p;
+extern s32 reg_save_a4;
+extern s32 reg_save_a3;
 extern u8 *reg_save_a2;
 extern u8 *reg_save_a1;
-extern u8 *reg_save_a0_as_u8_p;
+extern s32 reg_save_a0;
 extern u8 g_boss_present_b1;
 extern u16 D_00299764[];
 extern u16 D_00299766[];
@@ -73,11 +73,11 @@ void func_00201710(void) {
         reg_save_d5 = reg_d5.w;
         reg_save_d6 = reg_d6.w;
         reg_save_d7 = reg_d7.w;
-        reg_save_a0_as_u8_p = reg_a0;
+        (*(u8 **)&reg_save_a0) = reg_a0;
         reg_save_a1 = reg_a1;
         reg_save_a2 = reg_a2;
-        reg_save_a3_as_u8_p = reg_a3;
-        reg_save_a4_as_u8_p = reg_a4;
+        (*(u8 **)&reg_save_a3) = reg_a3;
+        (*(u8 **)&reg_save_a4) = reg_a4;
         reg_save_a5 = reg_a5;
         reg_save_a6 = reg_a6;
         reg_d1.h[0] |= 0x8000;
@@ -85,14 +85,12 @@ void func_00201710(void) {
     }
 }
 
-extern s16 D_00299764_as_s16_a[];
-extern s16 D_00299766_as_s16_a[];
 
 void func_00201800(void) {
     func_00201450();
     if (cond_flag == 0) {
-        D_00299766_as_s16_a[0] = 0;
-        D_00299764_as_s16_a[0] = 1;
+        ((s16 *)D_00299766)[0] = 0;
+        ((s16 *)D_00299764)[0] = 1;
         if (g_boss_present_b1 & 2) {
             func_00201B30();
             return;
@@ -105,11 +103,11 @@ void func_00201800(void) {
         reg_save_d5 = reg_d5.w;
         reg_save_d6 = reg_d6.w;
         reg_save_d7 = reg_d7.w;
-        reg_save_a0_as_u8_p = reg_a0;
+        (*(u8 **)&reg_save_a0) = reg_a0;
         reg_save_a1 = reg_a1;
         reg_save_a2 = reg_a2;
-        reg_save_a3_as_u8_p = reg_a3;
-        reg_save_a4_as_u8_p = reg_a4;
+        (*(u8 **)&reg_save_a3) = reg_a3;
+        (*(u8 **)&reg_save_a4) = reg_a4;
         reg_save_a5 = reg_a5;
         reg_save_a6 = reg_a6;
         reg_d1.h[0] |= 0x8000;
@@ -138,11 +136,11 @@ void func_00201920(void) {
     reg_save_d5 = reg_d5.w;
     reg_save_d6 = reg_d6.w;
     reg_save_d7 = reg_d7.w;
-    reg_save_a0_as_u8_p = reg_a0;
+    (*(u8 **)&reg_save_a0) = reg_a0;
     reg_save_a1 = reg_a1;
     reg_save_a2 = reg_a2;
-    reg_save_a3_as_u8_p = reg_a3;
-    reg_save_a4_as_u8_p = reg_a4;
+    (*(u8 **)&reg_save_a3) = reg_a3;
+    (*(u8 **)&reg_save_a4) = reg_a4;
     reg_save_a5 = reg_a5;
     reg_save_a6 = reg_a6;
     reg_d1.h[0] = 0x8000;
@@ -157,20 +155,16 @@ void func_00201920(void) {
 
 s32 func_001A9180();
 s32 func_001A9190();
-extern s32 reg_save_a6_as_s32;
-extern s32 reg_save_a5_as_s32;
 extern s32 reg_save_a4;
 extern s32 reg_save_a3;
-extern u16 *reg_save_a2_as_u16_p;
-extern s32 reg_save_a1_as_s32;
 extern s32 reg_save_a0;
-extern u16 g_bullets_as_u16_a[];
+extern u8 g_bullets[67216];
 
 void func_00201A00(void) {
     u16 *var_a0;
-    var_a0 = (u16 *)(g_bullets_as_u16_a);
+    var_a0 = (u16 *)(((u16 *)g_bullets));
     reg_d2.w = 0;
-    reg_a2 = (u8 *)(g_bullets_as_u16_a);
+    reg_a2 = (u8 *)(((u16 *)g_bullets));
     reg_d7.h[0] = MAIN_OR_DEATH_LABEL(0xD1, 0x419);
     do {
         reg_d0.h[0] = *(u16 *)reg_a2;
@@ -196,12 +190,12 @@ void func_00201A00(void) {
     reg_d6.w = reg_save_d6;
     reg_d7.w = reg_save_d7;
     reg_a0 = (u8 *)reg_save_a0;
-    reg_a1 = (u8 *)reg_save_a1_as_s32;
-    reg_a2 = (u8 *)(reg_save_a2_as_u16_p);
+    reg_a1 = (u8 *)(*(s32 *)&reg_save_a1);
+    reg_a2 = (u8 *)(((u16 *)reg_save_a2));
     reg_a3 = (u8 *)reg_save_a3;
     reg_a4 = (u8 *)reg_save_a4;
-    reg_a5 = (u8 *)reg_save_a5_as_s32;
-    reg_a6 = (u8 *)reg_save_a6_as_s32;
+    reg_a5 = (u8 *)(*(s32 *)&reg_save_a5);
+    reg_a6 = (u8 *)(*(s32 *)&reg_save_a6);
 }
 
 #pragma push
@@ -734,19 +728,17 @@ block_rts:
 }
 #pragma pop
 
-extern u8 g_player2_as_u8_a[];
-extern u8 g_player1_as_u8_a[];
 
 
 void func_00202A80(void)
 {
     s16 firstResult;
 
-    reg_a0 = g_player1_as_u8_a;
+    reg_a0 = ((u8 *)g_player1);
     func_00202AE0();
     firstResult = (s16)reg_d0.h[0];
 
-    reg_a0 = g_player2_as_u8_a;
+    reg_a0 = ((u8 *)g_player2);
     func_00202AE0();
     reg_d1.h[0] = (u16)firstResult;
 
@@ -1005,18 +997,18 @@ next_1:
 }
 
 
-extern u32 reg_save_atmp_as_u32;
+extern s16 *reg_save_atmp;
 
 void target_player_get(void)
 {
-    reg_a0 = (u8 *)((u32)g_player1_as_u8_a);
+    reg_a0 = (u8 *)((u32)((u8 *)g_player1));
     cond_flag = 0;
-    reg_a1 = (u8 *)((u32)g_player2_as_u8_a);
+    reg_a1 = (u8 *)((u32)((u8 *)g_player2));
 
     if (((u8 *)((u32)reg_a5))[2] != 0) {
-        reg_save_atmp_as_u32 = (u32)reg_a1;
+        (*(u32 *)&reg_save_atmp) = (u32)reg_a1;
         reg_a1 = (u8 *)(((u32)reg_a0));
-        reg_a0 = (u8 *)reg_save_atmp_as_u32;
+        reg_a0 = (u8 *)(*(u32 *)&reg_save_atmp);
     }
 
     func_002032F0();
@@ -1041,17 +1033,14 @@ block_4:
     cond_flag = 0;
 }
 
-extern s32 *reg_save_atmp_as_s32_p;
-extern s32 g_player2_as_s32_a[];
-extern s32 g_player1_as_s32_a[];
 
 void func_00203330(void) {
-    reg_a0 = (u8 *)g_player1_as_s32_a;
-    reg_a1 = (u8 *)g_player2_as_s32_a;
+    reg_a0 = (u8 *)((s32 *)g_player1);
+    reg_a1 = (u8 *)((s32 *)g_player2);
     if (*(u8 *)(reg_a6 + 0x2B) != 0) {
-        reg_save_atmp_as_s32_p = (s32 *)reg_a1;
+        (*(s32 **)&reg_save_atmp) = (s32 *)reg_a1;
         reg_a1 = (u8 *)(((s32 *)reg_a0));
-        reg_a0 = (u8 *)reg_save_atmp_as_s32_p;
+        reg_a0 = (u8 *)((s32 *)reg_save_atmp);
     }
     func_002032F0();
 }
@@ -1079,25 +1068,25 @@ void active_players_mask(void) {
 }
 
 s32 music_stop();
-extern s16 g_player_shots_disabled_as_s16;
+extern u16 g_player_shots_disabled;
 void func_00203460(void) {
     music_stop();
-    g_player_shots_disabled_as_s16 = 1;
+    g_player_shots_disabled = 1;
     if (g_player1[0] < 0) {
-        PLAYER(g_player1_as_u8_a)->state.b.invincible = 0xFF;
+        PLAYER(((u8 *)g_player1))->state.b.invincible = 0xFF;
     }
     if (g_player2[0] < 0) {
-        PLAYER(g_player2_as_u8_a)->state.b.invincible = 0xFF;
+        PLAYER(((u8 *)g_player2))->state.b.invincible = 0xFF;
     }
 }
 
 s32 music_play_bgm10();
 s32 slowdown_reset();
-extern s16 g_players_stage_clear_as_s16;
+extern u16 g_players_stage_clear;
 void func_002034C0(void) {
     slowdown_reset();
     music_play_bgm10();
-    g_players_stage_clear_as_s16 = 1;
+    g_players_stage_clear = 1;
     g_boss_present_b1 |= 8;
     g_boss_present_b1 &= 0xEF;
     if (*(s16 *)g_player1 < 0) goto block_1;
@@ -1171,9 +1160,9 @@ void func_002036F0(void) {
     u16 temp_a0;
 
     cond_flag = 0;
-    reg_a0 = g_player1_as_u8_a;
+    reg_a0 = ((u8 *)g_player1);
     if (*(u8 *)(reg_a5 + 2) & 1) {
-        reg_a0 = g_player2_as_u8_a;
+        reg_a0 = ((u8 *)g_player2);
     }
     reg_d0.h[0] = *(u16 *)(reg_a0 + 4);
     reg_d6.h[0] = ENTITY(reg_a6)->x.h;

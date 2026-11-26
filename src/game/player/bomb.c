@@ -350,8 +350,8 @@ extern u16 g_bomb_afterglow_timer;
 extern u16 g_bomb_entities[];
 extern u8 g_p2_options[];
 extern u8 g_p1_options[];
-extern u8 g_player2_as_u8_a[];
-extern u8 g_player1_as_u8_a[];
+extern s16 g_player2[56];
+extern s16 g_player1[56];
 
 void bombs_update(void) {
     u8 *sa5;
@@ -368,10 +368,10 @@ void bombs_update(void) {
     } else {
         sa5 = (u8 *)(reg_a5);
         reg_a4 = (u8 *)g_p1_options;
-        reg_a5 = (u8 *)g_player1_as_u8_a;
+        reg_a5 = (u8 *)((u8 *)g_player1);
         if (ENTITY(reg_a6)->flags.sb[0] < 0) {
             reg_a4 = (u8 *)g_p2_options;
-            reg_a5 = (u8 *)g_player2_as_u8_a;
+            reg_a5 = (u8 *)((u8 *)g_player2);
         }
         reg_d0.h[0] &= 7;
         switch (reg_d0.h[0]) {
@@ -403,7 +403,6 @@ s32 vibration_start_pad1();
 s32 vibration_start_pad2();
 extern u16 g_frame_mod2;
 extern u16 g_side_scroll_step[];
-extern u8 g_bomb_entities_as_u8_a[];
 
 void spread_bomb_update(void) {
     u8 temp;
@@ -471,7 +470,7 @@ void spread_bomb_update(void) {
 next_1:
     reg_call_target = (Fn)(reg_a0);
     reg_call_target();
-    if (reg_a5 != g_player1_as_u8_a) goto next_2;
+    if (reg_a5 != ((u8 *)g_player1)) goto next_2;
     vibration_start_pad1(0xC8, 0x64);
     goto block_a;
 next_2:
@@ -668,11 +667,11 @@ block_f:
     *(u16 *)(reg_a6 + 0x20) = (u16) reg_tmp.h[0];
     return;
 block_g:
-    reg_a0 = (u8 *)g_player1_as_u8_a;
+    reg_a0 = (u8 *)((u8 *)g_player1);
     reg_d1.w = 0;
-    reg_a6 = (u8 *)g_bomb_entities_as_u8_a;
+    reg_a6 = (u8 *)((u8 *)g_bomb_entities);
     if (ENTITY(reg_a6)->flags.sb[0] >= 0) goto next_6;
-    reg_a0 = (u8 *)g_player2_as_u8_a;
+    reg_a0 = (u8 *)((u8 *)g_player2);
     reg_d1.w = 2;
 next_6:
     reg_d0.b[0] = *(u8 *)(reg_a0 + 0x38);
@@ -687,7 +686,6 @@ block_rts:
 s32 sfx_laser_bomb_a();
 s32 sfx_laser_bomb_b();
 s32 func_0020A270();
-extern s16 g_bomb_afterglow_timer_as_s16;
 extern u16 g_laser_bomb_sizzle;
 
 void laser_bomb_update(arg3)
@@ -988,7 +986,7 @@ void laser_bomb_update(arg3)
         }
         reg_call_target = (Fn)(reg_a0);
         reg_call_target();
-        if (reg_a5 == g_player1_as_u8_a) {
+        if (reg_a5 == ((u8 *)g_player1)) {
             vibration_start_pad1(0xC8, 0x78);
         } else {
             vibration_start_pad2(0xC8, 0x78);
@@ -1087,7 +1085,7 @@ block_40:
         laser_bomb_beam_rebuild();
         goto block_36;
     } else {
-        g_bomb_afterglow_timer_as_s16 = 0x28;
+        g_bomb_afterglow_timer = 0x28;
         laser_bomb_end();
         bombs_clear();
     }
@@ -1452,22 +1450,21 @@ next_160:
 
 s32 p1_laser_stop();                            /* extern */
 s32 p2_laser_stop();                            /* extern */
-extern s16 g_p2_laser_bomb_active_as_s16;
-extern s16 g_p1_laser_bomb_active_as_s16;
-extern s8 g_bomb_entities_as_s8_a[];
+extern u16 g_p2_laser_bomb_active;
+extern u16 g_p1_laser_bomb_active;
 
 void laser_bomb_end(void) {
-    reg_a6 = (u8 *)g_bomb_entities_as_s8_a;
+    reg_a6 = (u8 *)((s8 *)g_bomb_entities);
     if (*(s8 *)reg_a6 >= 0) {
-        reg_a0 = g_player1_as_u8_a;
+        reg_a0 = ((u8 *)g_player1);
         p1_laser_stop();
-        g_p1_laser_bomb_active_as_s16 = 0;
-        g_player1_as_u8_a[0] &= 0xBF;
+        g_p1_laser_bomb_active = 0;
+        ((u8 *)g_player1)[0] &= 0xBF;
     } else {
-        reg_a0 = g_player2_as_u8_a;
+        reg_a0 = ((u8 *)g_player2);
         p2_laser_stop();
-        g_p2_laser_bomb_active_as_s16 = 0;
-        g_player2_as_u8_a[0] &= 0xBF;
+        g_p2_laser_bomb_active = 0;
+        ((u8 *)g_player2)[0] &= 0xBF;
     }
     *reg_a0 &= 0x7F;
     reg_d0.w = 0;
@@ -1476,8 +1473,8 @@ void laser_bomb_end(void) {
 
 void bomb_afterglow_end(void) {
     reg_d0.w = 0;
-    PLAYER(g_player1_as_u8_a)->state.b.invincible = reg_d0.b[0];
-    PLAYER(g_player2_as_u8_a)->state.b.invincible = reg_d0.b[0];
+    PLAYER(((u8 *)g_player1))->state.b.invincible = reg_d0.b[0];
+    PLAYER(((u8 *)g_player2))->state.b.invincible = reg_d0.b[0];
 }
 
 s32 p1_chain_reset();
@@ -1494,12 +1491,12 @@ void bombs_clear(void) {
         p2_chain_reset();
     }
     reg_d7.w = 0x2C;
-    g_p1_laser_bomb_active_as_s16 = 0;
-    g_p2_laser_bomb_active_as_s16 = 0;
+    g_p1_laser_bomb_active = 0;
+    g_p2_laser_bomb_active = 0;
     reg_a0 = (u8 *)(g_bomb_entities);
     reg_d0.w = 0;
-    g_player1_as_u8_a[0] &= 0xBF;
-    g_player2_as_u8_a[0] &= 0xBF;
+    ((u8 *)g_player1)[0] &= 0xBF;
+    ((u8 *)g_player2)[0] &= 0xBF;
     do {
         *(u16 *)reg_a0 = reg_d0.h[0];
         reg_a0 += 0x30;

@@ -209,7 +209,6 @@ void stage4_boss_right_spinner_volleys_start(void) {
 
 typedef void (*Fn)();
 
-extern Fn reg_call_target_as_Fn;
 
 #define LOOKUP(d) (((d) != 0) ? *(u16 *)(reg_a6 + ((s16)(d) & ~1)) : ENTITY(reg_a6)->flags.h)
 
@@ -218,8 +217,8 @@ void stage4_boss_spinner_volleys(u32 arg0, u32 arg1, s32 (*arg2)(void *), s32 ar
     SPINNER_VOLLEYS(reg_a4)->shot.t.count -= 1;
     if ((s32) reg_tmp.b[0] > 0) goto next_2;
     SPINNER_VOLLEYS(reg_a4)->shot.t.count = SPINNER_VOLLEYS(reg_a4)->shot.t.reload;
-    reg_call_target_as_Fn = (Fn) arg2;
-    reg_call_target_as_Fn();
+    reg_call_target = (Fn) arg2;
+    reg_call_target();
     reg_tmp.w = arg0;
     reg_d0.h[0] = LOOKUP(reg_tmp.h[0]);
     stage4_boss_spinner_muzzle();
@@ -374,8 +373,8 @@ void stage4_boss_spinner_volleys_b(arg0, arg1, arg2)
     SPINNER_VOLLEYS(reg_a4)->shot.t.count -= 1;
     if ((s32) reg_tmp.b[0] > 0) goto next_2;
     SPINNER_VOLLEYS(reg_a4)->shot.t.count = SPINNER_VOLLEYS(reg_a4)->shot.t.reload;
-    reg_call_target_as_Fn = (Fn) arg2;
-    reg_call_target_as_Fn();
+    reg_call_target = (Fn) arg2;
+    reg_call_target();
     reg_d0.h[0] = LOOKUP(arg0);
     stage4_boss_spinner_muzzle();
     reg_d0.h[0] = SPINNER_VOLLEYS(reg_a4)->speed;
@@ -1317,11 +1316,10 @@ void stage4_boss_fire_left_pod_start(void) {
     stage4_boss_fire_left_pod();
 }
 
-extern s16 *reg_a4_as_s16_p;
 
 void stage4_boss_fire_left_pod(void) {
     if (ENTITY(reg_a6)[4].misc.b.draw_layer != 0) {
-        *reg_a4_as_s16_p = 0;
+        *(*(s16 **)&reg_a4) = 0;
         return;
     }
     stage4_boss_pod_aimed(0xA2, -0x1C0);
@@ -1441,7 +1439,7 @@ void stage4_boss_fire_4way(void) {
     reg_d1.w = temp_s0;
 }
 
-extern s16 g_enemy_signal_e_as_s16;
+extern u16 g_enemy_signal_e;
 
 void stage4_boss_fire_cutters_start(void) {
     CUTTERS(reg_a4)->wait.sh = 0x820;
@@ -1449,7 +1447,7 @@ void stage4_boss_fire_cutters_start(void) {
     CUTTERS(reg_a4)->unread_06 = 0xC;
     CUTTERS(reg_a4)->unread_09 = 3;
     CUTTERS(reg_a4)->angle = 0x48;
-    g_enemy_signal_e_as_s16 = 0;
+    g_enemy_signal_e = 0;
     CUTTERS(reg_a4)->release_delay = 0x50;
     STAGE4_EXTRA(reg_a6)->cutters_gone = 0;
     stage4_boss_fire_cutters();

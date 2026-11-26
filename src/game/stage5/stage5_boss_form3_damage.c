@@ -38,8 +38,8 @@ extern u16 g_bullets_blocked;
 extern u16 g_damage_blink_counter;
 extern s16 D_00299768[];
 extern s16 D_0029976A[];
-extern s16 D_0029976C_as_s16_a[];
-extern s16 D_0029976E_as_s16_a[];
+extern u16 D_0029976C[];
+extern u16 D_0029976E[];
 extern u16 g_bomb_entities[];
 
 void stage5_boss_form3_take_damage(void) {
@@ -190,8 +190,8 @@ next_10:
         STAGE5_DAMAGE(reg_a6)->form3_second_phase = 1;
         D_00299768[0] = 1;
         D_0029976A[0] = 1;
-        D_0029976C_as_s16_a[0] = 1;
-        D_0029976E_as_s16_a[0] = 1;
+        ((s16 *)D_0029976C)[0] = 1;
+        ((s16 *)D_0029976E)[0] = 1;
         func_002016D0();
     }
     if (STAGE5_DAMAGE(reg_a6)->form3_second_phase < 2) {
@@ -211,8 +211,8 @@ next_10:
         STAGE5_DAMAGE(reg_a6)->form3_second_phase = 2;
         D_00299768[0] = 1;
         D_0029976A[0] = 1;
-        D_0029976C_as_s16_a[0] = 1;
-        D_0029976E_as_s16_a[0] = 1;
+        ((s16 *)D_0029976C)[0] = 1;
+        ((s16 *)D_0029976E)[0] = 1;
         func_002016D0();
     }
 #else
@@ -235,8 +235,8 @@ next_10:
     STAGE5_DAMAGE(reg_a6)->form3_second_phase = 1;
     D_00299768[0] = 1;
     D_0029976A[0] = 1;
-    D_0029976C_as_s16_a[0] = 1;
-    D_0029976E_as_s16_a[0] = 1;
+    ((s16 *)D_0029976C)[0] = 1;
+    ((s16 *)D_0029976E)[0] = 1;
     func_002016D0();
 #endif
 next_11:

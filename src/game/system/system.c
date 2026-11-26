@@ -87,8 +87,7 @@ s32 font_init();
 s32 func_0022C630();
 extern s16 g_loaded_stage;
 extern u8 D_0028E400;
-extern u8 *g_pad_dma_buf_as_u8_p;
-extern u8 D_0028EB00_as_u8;
+extern s8 D_0028EB00;
 extern u8 g_pad_dma_area[];
 void sys_init(void) {
     iop_reboot_and_load_modules();
@@ -99,13 +98,13 @@ void sys_init(void) {
     display_reset();
     render_target_init(&g_render_target, g_gif_buf, 0x12C0, 0x200, 0x100);
     pad_init_system();
-    g_pad_dma_buf_as_u8_p = (u8 *)(g_pad_dma_area);
+    (*(u8 **)&g_pad_dma_buf) = (u8 *)(g_pad_dma_area);
     *(s32 *)0x10000010 = 0x83;
     g_loaded_stage = 0xFF;
     g_frame_counter = 0;
     D_0028E400 = 0;
     g_display_reset_pending = 0;
-    D_0028EB00_as_u8 = 0;
+    D_0028EB00 = 0;
     fade_reset();
     disc_files_locate();
     tex_load_common();
@@ -256,9 +255,9 @@ void sys_draw_replay_label(void) {
     }
 }
 
-extern u16 g_arcade_coin_port_as_u16;
+extern u8 g_arcade_coin_port;
 extern s8 g_arcade_input_port[];
-extern u8 g_p1_btn_map_a_as_u8;
+extern u8 g_p1_btn_map_a;
 extern u8 g_p1_btn_map_b;
 extern u8 g_p1_btn_map_c;
 extern u8 g_p2_btn_map_a;
@@ -390,7 +389,7 @@ void pad_update(void)
     if (buttons & SCE_PADLright) {
         *(u8 *)&reg_d0 |= 0x10;
     }
-    if (buttons & (1 << g_p1_btn_map_a_as_u8)) {
+    if (buttons & (1 << (u8)g_p1_btn_map_a)) {
         *(u8 *)&reg_d0 |= 0x20;
     }
     if (buttons & (1 << g_p1_btn_map_b)) {
@@ -430,7 +429,7 @@ void pad_update(void)
     }
     *reg_a0 = ~*(u8 *)&reg_d0;
 
-    reg_a0 = (u8 *)&g_arcade_coin_port_as_u16;
+    reg_a0 = (u8 *)&(*(u16 *)&g_arcade_coin_port);
     reg_d0.w = 0;
     if (g_pad_held[0] & SCE_PADselect) {
         *(u8 *)&reg_d0 |= 0x01;
@@ -468,7 +467,7 @@ void pad_mask_game_inputs(void) {
 }
 
 extern void sfx_confirm(void);
-extern s16 g_pause_player_as_s16;
+extern u16 g_pause_player;
 extern u8 g_stage_load_state;
 extern u8 g_pause_lock_timer;
 extern u8 D_0028E368;
@@ -524,20 +523,20 @@ void pause_check_start_button(void) {
         }
         sfx_confirm();
         g_paused = 1;
-        g_pause_player_as_s16 = g_menu_pad;
+        g_pause_player = g_menu_pad;
 block_rts:
         return;
     }
     if ((g_pad_trigger[0] & 0x800) && g_player1[0] < 0) {
         sfx_confirm();
-        g_pause_player_as_s16 = 0;
+        g_pause_player = 0;
         g_paused = 1;
         return;
     }
     if ((g_pad_trigger[1] & 0x800) && g_player2[0] < 0) {
         sfx_confirm();
         g_paused = 1;
-        g_pause_player_as_s16 = 1;
+        g_pause_player = 1;
     }
 }
 

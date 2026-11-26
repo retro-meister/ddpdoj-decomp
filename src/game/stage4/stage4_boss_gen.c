@@ -619,8 +619,8 @@ extern u8 D_002617B0[];
 extern u8 D_002617F0[];
 extern u8 D_00263890[];
 extern u8 D_002638B0[];
-extern s16 g_enemy_signal_2_as_s16;
-extern s16 g_enemy_signal_0_as_s16;
+extern u16 g_enemy_signal_2;
+extern u16 g_enemy_signal_0;
 extern u16 g_rank_6_16;
 extern s16 D_00299768[];
 
@@ -638,10 +638,10 @@ void stage4_heavy_cannon_start(void) {
     if (enemy_move_end_requested == 0) {
         reg_d0.h[0] = g_rank_6_16;
         *(u8 *)(reg_a5 + 0x1C) -= reg_d0.b[0];
-        g_enemy_signal_0_as_s16 = 1;
+        g_enemy_signal_0 = 1;
         reg_a0 = D_002616F0;
         reg_d0.h[0] = 0xF;
-        g_enemy_signal_2_as_s16 = 1;
+        g_enemy_signal_2 = 1;
         D_00299768[0] = 1;
         sprite_palette_load();
         reg_a0 = D_002617B0;
@@ -658,8 +658,8 @@ extern u8 D_00263940[];
 extern u8 D_00263960[];
 extern u8 D_002639A0[];
 extern u8 D_002639B0[];
-extern u8 g_player2_as_u8_a[];
-extern u8 g_player1_as_u8_a[];
+extern s16 g_player2[];
+extern s16 g_player1[];
 s32 bullet_fire256_fixed();
 s32 bullet_fire256_double();
 s32 bullet_fire256_3way();
@@ -861,8 +861,8 @@ next_400:
     *(u8 *)(reg_a5 + 0x29) = *(u8 *)(reg_a5 + 0x28);
     *(u16 *)(reg_a5 + 0x20) += 4;
     if (*(u16 *)(reg_a5 + 0x20) != 0x24) goto block_d;
-    reg_a0 = (u8 *)g_player1_as_u8_a;
-    reg_a1 = (u8 *)g_player2_as_u8_a;
+    reg_a0 = (u8 *)((u8 *)g_player1);
+    reg_a1 = (u8 *)((u8 *)g_player2);
     if (*(u8 *)(reg_a5 + 2) == 0) goto next_440;
     reg_atmp = reg_a0;
     reg_a0 = reg_a1;
@@ -1948,12 +1948,11 @@ extern s8 D_00263D90[];
 extern u16 g_rank_3_16;
 extern u16 g_rank_4_16;
 extern u16 g_stage_x2;
-extern s8 *reg_a0_as_s8_p;
 
 void crane_turret_start(void) {
-    reg_a0_as_s8_p = D_00263D90;
+    (*(s8 **)&reg_a0) = D_00263D90;
     enemy_init_entities();
-    reg_a0_as_s8_p = D_00263D70;
+    (*(s8 **)&reg_a0) = D_00263D70;
     reg_d0.w = 0xE;
     enemy_set_task_state();
     enemy_path_start();
@@ -1975,14 +1974,14 @@ void crane_turret_start(void) {
         reg_tmp.w += reg_d0.w;
         *(u16 *)(reg_a5 + 0x24) = (u16) reg_tmp.h[1];
         *(u16 *)(reg_a5 + 0x26) = (u16) reg_tmp.h[0];
-        reg_a0_as_s8_p = D_00263D60;
+        (*(s8 **)&reg_a0) = D_00263D60;
         reg_d0.h[0] = g_stage_x2;
-        reg_a0_as_s8_p = &reg_a0_as_s8_p[reg_d0.h[0]];
-        ENTITY(reg_a6)->attr.sb.palette = (s8) *reg_a0_as_s8_p;
-        *(s8 *)(reg_a5 + 0x1B) = (s8) *reg_a0_as_s8_p;
-        reg_a0_as_s8_p += 1;
-        *(s8 *)(reg_a5 + 0x1A) = (s8) *reg_a0_as_s8_p;
-        reg_a0_as_s8_p += 1;
+        (*(s8 **)&reg_a0) = &(*(s8 **)&reg_a0)[reg_d0.h[0]];
+        ENTITY(reg_a6)->attr.sb.palette = (s8) *((s8 *)reg_a0);
+        *(s8 *)(reg_a5 + 0x1B) = (s8) *((s8 *)reg_a0);
+        (*(s8 **)&reg_a0) += 1;
+        *(s8 *)(reg_a5 + 0x1A) = (s8) *((s8 *)reg_a0);
+        (*(s8 **)&reg_a0) += 1;
     }
 }
 
@@ -2285,8 +2284,6 @@ extern u16 D_0028D9B8[4];
 extern u16 D_0028D9C0[4];
 extern u16 g_rank_2_16;
 extern u16 g_loop;
-extern u16 g_player2_as_u16_a[];
-extern u16 g_player1_as_u16_a[];
 void rail_turret(void) {
     u8 *temp;
 
@@ -2366,8 +2363,8 @@ next_220:
     *(u8 *)(reg_a5 + 0x1D) = (u8) *(u8 *)(reg_a5 + 0x16);
     reg_d0.b[0] = *(u8 *)(reg_a5 + 0x1F);
     if (*(u8 *)(reg_a5 + 0x1E) != reg_d0.b[0]) goto next_280;
-    reg_a0 = (u8 *)(g_player1_as_u16_a);
-    reg_a1 = (u8 *)(g_player2_as_u16_a);
+    reg_a0 = (u8 *)(((u16 *)g_player1));
+    reg_a1 = (u8 *)(((u16 *)g_player2));
     if (*(u8 *)(reg_a5 + 2) == 0) goto next_240;
     reg_atmp = (u8 *)(reg_a0);
     reg_a0 = (u8 *)(reg_a1);
@@ -2621,8 +2618,8 @@ void func_001E3D60(void) {
     reg_d0.h[0] += 4;
 next_1:
     *(u8 *)(reg_a5 + 0x39) = reg_d0.b[0];
-    reg_a0 = (u8 *)g_player1_as_u16_a;
-    reg_a1 = (u8 *)g_player2_as_u16_a;
+    reg_a0 = (u8 *)((u16 *)g_player1);
+    reg_a1 = (u8 *)((u16 *)g_player2);
     if (*(u8 *)(reg_a5 + 2) == 0) goto next_2;
     reg_atmp = reg_a0;
     reg_a0 = reg_a1;

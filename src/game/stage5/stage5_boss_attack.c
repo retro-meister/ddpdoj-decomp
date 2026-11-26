@@ -634,17 +634,15 @@ void stage5_boss_arm_gun_b_fire(void) {
 
 extern u16 D_002642E0[];
 extern u32 D_0028D9D4;
-extern u16 *reg_a0_as_u16_p;
-extern u16 *reg_a1_as_u16_p;
 
 void stage5_boss_fire_form1_arm_guns_fixed_start(void) {
-    reg_a0_as_u16_p = D_002642E0;
-    reg_a1_as_u16_p = (u16 *)(reg_a4 + 2);
+    (*(u16 **)&reg_a0) = D_002642E0;
+    (*(u16 **)&reg_a1) = (u16 *)(reg_a4 + 2);
     reg_d0.w = ((u32) D_0028D9D4 >> 1) - 1;
     do {
-        *reg_a1_as_u16_p = *reg_a0_as_u16_p;
-        reg_a0_as_u16_p += 1;
-        reg_a1_as_u16_p += 1;
+        *(*(u16 **)&reg_a1) = *((u16 *)reg_a0);
+        (*(u16 **)&reg_a0) += 1;
+        (*(u16 **)&reg_a1) += 1;
     } while ((s16)(--reg_d0.h[0]) >= 0);
     if (STAGE5_EXTRA(reg_a6)->arm_guns_b_turn != 0) {
         ARM_GUNS_B(reg_a4)->turn *= -1;
@@ -858,13 +856,13 @@ extern u16 D_00264300[];
 extern u32 D_0028D9D8;
 
 void stage5_boss_fire_form1_horn_start(void) {
-    reg_a0_as_u16_p = D_00264300;
-    reg_a1_as_u16_p = (u16 *)(reg_a4 + 2);
+    (*(u16 **)&reg_a0) = D_00264300;
+    (*(u16 **)&reg_a1) = (u16 *)(reg_a4 + 2);
     reg_d0.w = ((u32) D_0028D9D8 >> 1) - 1;
     do {
-        *reg_a1_as_u16_p = *reg_a0_as_u16_p;
-        reg_a0_as_u16_p += 1;
-        reg_a1_as_u16_p += 1;
+        *(*(u16 **)&reg_a1) = *((u16 *)reg_a0);
+        (*(u16 **)&reg_a0) += 1;
+        (*(u16 **)&reg_a1) += 1;
     } while ((s16)(--reg_d0.h[0]) >= 0);
     reg_d0.h[0] = STAGE5_EXTRA(reg_a6)->horn_speed_add;
     HORN(reg_a4)->shots.speed += reg_d0.h[0];
@@ -1069,16 +1067,15 @@ void stage5_boss_form1_rage_fire(void) {
 
 extern u16 D_00264360[];
 extern u32 D_0028D9DC;
-extern s32 reg_a4_as_s32;
 
 void stage5_boss_fire_form1_rage_start(void) {
-    reg_a0_as_u16_p = D_00264360;
-    reg_a1_as_u16_p = (u16 *)(reg_a4_as_s32 + 2);
+    (*(u16 **)&reg_a0) = D_00264360;
+    (*(u16 **)&reg_a1) = (u16 *)((*(s32 *)&reg_a4) + 2);
     reg_d0.w = ((u32) D_0028D9DC >> 1) - 1;
     do {
-        *reg_a1_as_u16_p = *reg_a0_as_u16_p;
-        reg_a0_as_u16_p += 1;
-        reg_a1_as_u16_p += 1;
+        *(*(u16 **)&reg_a1) = *((u16 *)reg_a0);
+        (*(u16 **)&reg_a0) += 1;
+        (*(u16 **)&reg_a1) += 1;
     } while ((s16)(--reg_d0.h[0]) >= 0);
 }
 
@@ -1344,13 +1341,13 @@ extern u16 D_00264390[];
 extern u32 D_0028D9E4;
 
 void stage5_boss_fire_form2_jet_start(void) {
-    reg_a0_as_u16_p = D_00264390;
-    reg_a1_as_u16_p = (u16 *)(reg_a4 + 2);
+    (*(u16 **)&reg_a0) = D_00264390;
+    (*(u16 **)&reg_a1) = (u16 *)(reg_a4 + 2);
     reg_d0.w = ((u32) D_0028D9E4 >> 1) - 1;
     do {
-        *reg_a1_as_u16_p = *reg_a0_as_u16_p;
-        reg_a0_as_u16_p += 1;
-        reg_a1_as_u16_p += 1;
+        *(*(u16 **)&reg_a1) = *((u16 *)reg_a0);
+        (*(u16 **)&reg_a0) += 1;
+        (*(u16 **)&reg_a1) += 1;
     } while ((s16)(--reg_d0.h[0]) >= 0);
     reg_d0.h[0] = STAGE5_ADJUST_B(reg_a6)->jet_speed_add;
     JET(reg_a4)->speed += reg_d0.h[0];
@@ -1478,13 +1475,13 @@ extern u16 D_002643C0[];
 extern u32 D_0028D9E8;
 
 void stage5_boss_fire_form2_horn_start(void) {
-    reg_a0_as_u16_p = D_002643C0;
-    reg_a1_as_u16_p = (u16 *)(reg_a4 + 2);
+    (*(u16 **)&reg_a0) = D_002643C0;
+    (*(u16 **)&reg_a1) = (u16 *)(reg_a4 + 2);
     reg_d0.w = ((u32) D_0028D9E8 >> 1) - 1;
     do {
-        *reg_a1_as_u16_p = *reg_a0_as_u16_p;
-        reg_a0_as_u16_p += 1;
-        reg_a1_as_u16_p += 1;
+        *(*(u16 **)&reg_a1) = *((u16 *)reg_a0);
+        (*(u16 **)&reg_a0) += 1;
+        (*(u16 **)&reg_a1) += 1;
     } while ((s16)(--reg_d0.h[0]) >= 0);
     reg_d0.h[0] = STAGE5_ADJUST_B(reg_a6)->form2_horn_speed_add;
     FORM2_HORN(reg_a4)->large.speed += reg_d0.h[0];
@@ -1916,13 +1913,13 @@ extern u16 D_00264550[];
 extern u32 D_0028D9F4;
 
 void stage5_boss_fire_form3_attack_b_start(void) {
-    reg_a0_as_u16_p = D_00264550;
-    reg_a1_as_u16_p = (u16 *)(reg_a4 + 2);
+    (*(u16 **)&reg_a0) = D_00264550;
+    (*(u16 **)&reg_a1) = (u16 *)(reg_a4 + 2);
     reg_d0.w = ((u32) D_0028D9F4 >> 1) - 1;
     do {
-        *reg_a1_as_u16_p = *reg_a0_as_u16_p;
-        reg_a0_as_u16_p += 1;
-        reg_a1_as_u16_p += 1;
+        *(*(u16 **)&reg_a1) = *((u16 *)reg_a0);
+        (*(u16 **)&reg_a0) += 1;
+        (*(u16 **)&reg_a1) += 1;
     } while ((s16)(--reg_d0.h[0]) >= 0);
     reg_d0.b[0] = STAGE5_ADJUST_B(reg_a6)->form3_b_burst_add;
     FORM3_B(reg_a4)->burst.t.count += reg_d0.b[0];
@@ -1939,17 +1936,17 @@ void stage5_boss_fire_form3_attack_b_start(void) {
 }
 
 s32 func_00202A80();
-extern s16 g_enemy_signal_2_as_s16;
+extern u16 g_enemy_signal_2;
 
 void stage5_boss_fire_form3_attack_b() {
     u16 temp_v0_2;
     u16 temp_v0_3;
     u8 temp_v0;
 
-    g_enemy_signal_2_as_s16 = 0;
+    g_enemy_signal_2 = 0;
     func_00202A80();
     if ((s32) reg_d0.h[0] < 0x2000) {
-        g_enemy_signal_2_as_s16 = 1;
+        g_enemy_signal_2 = 1;
     }
     reg_tmp.b[0] = FORM3_B(reg_a4)->shot.t.count;
     FORM3_B(reg_a4)->shot.t.count -= 1;
@@ -2030,19 +2027,17 @@ extern u16 D_00264560[];
 extern u32 D_0028D9F8;
 
 void stage5_boss_fire_form3_attack_c_start(void) {
-    reg_a0_as_u16_p = D_00264560;
-    reg_a1_as_u16_p = (u16 *)(reg_a4 + 2);
+    (*(u16 **)&reg_a0) = D_00264560;
+    (*(u16 **)&reg_a1) = (u16 *)(reg_a4 + 2);
     reg_d0.w = ((u32) D_0028D9F8 >> 1) - 1;
     do {
-        *reg_a1_as_u16_p = *reg_a0_as_u16_p;
-        reg_a0_as_u16_p += 1;
-        reg_a1_as_u16_p += 1;
+        *(*(u16 **)&reg_a1) = *((u16 *)reg_a0);
+        (*(u16 **)&reg_a0) += 1;
+        (*(u16 **)&reg_a1) += 1;
     } while ((s16)(--reg_d0.h[0]) >= 0);
     FORM3_C(reg_a4)->other_0C.sh = 0x404;
 }
 
-extern u16 g_player2_as_u16_a[];
-extern u16 g_player1_as_u16_a[];
 
 void stage5_boss_fire_form3_attack_c(u8 *arg0, s16 *arg1) {
     s16 *temp_a0;
@@ -2060,8 +2055,8 @@ void stage5_boss_fire_form3_attack_c(u8 *arg0, s16 *arg1) {
             FORM3_C(reg_a4)->shot.t.count = (u8) FORM3_C(reg_a4)->shot_interval;
             reg_d2.b[0] = FORM3_C(reg_a4)->burst.t.count;
             if (FORM3_C(reg_a4)->burst.t.reload == reg_d2.b[0]) {
-                reg_a0 = (u8 *)(g_player1_as_u16_a);
-                reg_a1 = (u8 *)(g_player2_as_u16_a);
+                reg_a0 = (u8 *)(((u16 *)g_player1));
+                reg_a1 = (u8 *)(((u16 *)g_player2));
                 if (ENEMY_STATE(reg_a5)->target_player != 0) {
                     reg_atmp = (u8 *)(reg_a0);
                     reg_a0 = (u8 *)(reg_a1);
@@ -2376,8 +2371,6 @@ void stage5_boss_fire_form3_rage_start(void) {
 }
 
 extern u16 g_direction64_offsets_2CC[];
-extern s16 g_enemy_signal_1_as_s16;
-extern s16 g_enemy_signal_0_as_s16;
 
 void stage5_boss_fire_form3_rage(void) {
     s32 bullet_fire256_direct();
@@ -2409,8 +2402,8 @@ next_1:
     reg_d1.b[0] = FORM3_RAGE(reg_a4)->aim[1].direction;
     reg_d2.h[1] = ENTITY(reg_a6)->y.h;
     reg_d2.h[0] = ENTITY(reg_a6)->x.h;
-    g_enemy_signal_0_as_s16 = 0;
-    g_enemy_signal_1_as_s16 = 0;
+    g_enemy_signal_0 = 0;
+    g_enemy_signal_1 = 0;
     reg_d4.h[0] = 0x101;
     reg_tmp.w = reg_d4.w;
     reg_d4.h[1] = reg_tmp.h[0];

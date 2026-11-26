@@ -88,47 +88,46 @@ void debug_number_get(void) {
 }
 
 extern s16 g_ending_started;
-extern s16 *reg_a0_as_s16_p;
 extern s16 D_002BF350[];
 extern s16 D_002BF370[];
 
 void func_00137C20(void) {
     g_ending_started = 0;
-    reg_a0_as_s16_p = D_002BF370;
-    *reg_a0_as_s16_p = 0;
-    reg_a0_as_s16_p = D_002BF350;
-    *reg_a0_as_s16_p = 0;
+    (*(s16 **)&reg_a0) = D_002BF370;
+    *(*(s16 **)&reg_a0) = 0;
+    (*(s16 **)&reg_a0) = D_002BF350;
+    *(*(s16 **)&reg_a0) = 0;
     func_00137BF0();
 }
 
-extern s32 D_0028E7F8_as_s32;
-extern s32 D_0028E7FC_as_s32;
-extern s16 D_0028E800_as_s16;
-extern s16 D_0028E804_as_s16;
+extern u32 D_0028E7F8;
+extern u8 *D_0028E7FC;
+extern u16 D_0028E800;
+extern u16 D_0028E804;
 extern s16 D_0028E808;
-extern s16 D_0028E80C_as_s16;
-extern s16 D_0028E810_as_s16;
-extern s16 D_0028E814_as_s16;
-extern s16 D_0028E818_as_s16;
-extern s16 D_0028E81C_as_s16;
-extern s16 D_0028E820_as_s16;
-extern s16 D_0028E824_as_s16;
-extern s16 D_0028E828_as_s16;
+extern u16 D_0028E80C;
+extern u16 D_0028E810;
+extern u16 D_0028E814;
+extern u16 D_0028E818;
+extern u16 D_0028E81C;
+extern u16 D_0028E820;
+extern u16 D_0028E824;
+extern u16 D_0028E828;
 
 void func_00137C50(void) {
-    D_0028E7F8_as_s32 = 0;
-    D_0028E7FC_as_s32 = 0;
-    D_0028E800_as_s16 = 0;
-    D_0028E804_as_s16 = 0;
+    D_0028E7F8 = 0;
+    (*(s32 *)&D_0028E7FC) = 0;
+    D_0028E800 = 0;
+    D_0028E804 = 0;
     D_0028E808 = 0;
-    D_0028E80C_as_s16 = 0;
-    D_0028E810_as_s16 = 0;
-    D_0028E814_as_s16 = 0;
-    D_0028E818_as_s16 = 0;
-    D_0028E81C_as_s16 = 0;
-    D_0028E820_as_s16 = 0;
-    D_0028E824_as_s16 = 0;
-    D_0028E828_as_s16 = 0;
+    D_0028E80C = 0;
+    D_0028E810 = 0;
+    D_0028E814 = 0;
+    D_0028E818 = 0;
+    D_0028E81C = 0;
+    D_0028E820 = 0;
+    D_0028E824 = 0;
+    D_0028E828 = 0;
 }
 
 #ifdef DEATH_LABEL
@@ -227,19 +226,19 @@ void func_00137C90(void) {
     reg_a6 = save_a6;
 }
 #else
-extern s8 D_0028DEF8_as_s8;
-extern s16 g_attract_picture_frame_as_s16;
-extern s16 D_0028DF00_as_s16;
-extern s8 D_0028DF08_as_s8;
-extern s16 g_attract_demo_as_s16;
+extern u8 D_0028DEF8;
+extern u16 g_attract_picture_frame;
+extern u16 D_0028DF00;
+extern u8 D_0028DF08;
+extern u16 g_attract_demo;
 extern s8 g_menu_pad;
 
 void func_00137C90(void) {
-    D_0028DF08_as_s8 = 0;
-    D_0028DF00_as_s16 = 0x960;
-    g_attract_picture_frame_as_s16 = 0;
-    g_attract_demo_as_s16 = 1;
-    D_0028DEF8_as_s8 = 1;
+    D_0028DF08 = 0;
+    D_0028DF00 = 0x960;
+    g_attract_picture_frame = 0;
+    g_attract_demo = 1;
+    D_0028DEF8 = 1;
     g_menu_pad = 0;
 }
 #endif
@@ -320,7 +319,7 @@ extern u16 g_attract_picture_frame;
 extern u16 D_0028DF00;
 extern u8 D_0028DF04;
 extern u8 D_0028DF08;
-extern s16 g_attract_demo_as_s16;
+extern u16 g_attract_demo;
 extern u8 D_0028ED30;
 extern u8 D_0028ED31;
 extern u8 D_0028ED32;
@@ -329,8 +328,8 @@ extern u8 D_0028ED34;
 extern u8 D_0028ED35;
 extern u8 D_0028ED36;
 extern u8 D_0028ED37;
-extern s8 g_replay_buffer_state_as_s8;
-extern s8 g_replay_mode_as_s8;
+extern u8 g_replay_buffer_state;
+extern u8 g_replay_mode;
 extern u8 g_replay_file_loaded[];
 extern u8 g_replay_file[];
 extern u8 D_006C58D8[];
@@ -394,7 +393,7 @@ void func_00137E00(void) {
             memcpy(g_replay_file, g_replay_file_loaded, 0x202E8);
             delta_encode(g_replay_snapshot);
             replay_file_pointers_decode(g_replay_file);
-            g_replay_mode_as_s8 = 2;
+            g_replay_mode = 2;
             D_0028ED30 = D_006C58D8[0];
             reg_d0.h[0] = 0x14;
             D_0028ED31 = D_006C58D9[0];
@@ -421,9 +420,9 @@ void func_00137E00(void) {
         if (D_0028DF00 == 0) {
             D_0028DF08 = 0;
             cond_flag = 0;
-            g_attract_demo_as_s16 = 0;
-            g_replay_mode_as_s8 = 0;
-            g_replay_buffer_state_as_s8 = 0;
+            g_attract_demo = 0;
+            g_replay_mode = 0;
+            g_replay_buffer_state = 0;
             func_0012FA50();
             func_0012FB00();
             layers_reset();
@@ -528,7 +527,7 @@ extern u16 D_0028E820;
 extern u16 D_0028E824;
 extern u16 D_0028E828;
 extern u8 death_D_00291191;
-extern s8 death_D_00291195_as_s8;
+extern u8 death_D_00291195;
 
 void func_00137E00(void) {
     void layers_reset(void);
@@ -592,7 +591,7 @@ void func_00137E00(void) {
         reg_a0 += D_0028E800;
         reg_d0.b[0] = *(s8 *)reg_a0;
         D_0028E804 = reg_d0.h[0];
-        death_D_00291195_as_s8 = *(s8 *)(reg_a0 + 1);
+        death_D_00291195 = *(s8 *)(reg_a0 + 1);
         D_0028E800 += 2;
         frame_counters_reset();
         g_game_frame_ran = 0;

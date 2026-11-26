@@ -1300,8 +1300,6 @@ void stage3_boss_fire_six_gun_b_start(void) {
 }
 
 extern u16 D_0026D1B8[];
-extern u16 g_player2_as_u16_a[];
-extern u16 g_player1_as_u16_a[];
 
 void stage3_boss_fire_six_gun_b(void) {
     s16 *temp_a0_2;
@@ -1321,8 +1319,8 @@ void stage3_boss_fire_six_gun_b(void) {
         temp_a0 = SIX_GUN_B(reg_a4)->aimed;
         if (!(temp_a0 & 1)) {
             SIX_GUN_B(reg_a4)->aimed = (u8) (temp_a0 | 1);
-            reg_a0 = (u8 *)(g_player1_as_u16_a);
-            reg_a1 = (u8 *)(g_player2_as_u16_a);
+            reg_a0 = (u8 *)(((u16 *)g_player1));
+            reg_a1 = (u8 *)(((u16 *)g_player2));
             if (ENEMY_STATE(reg_a5)->target_player != 0) {
                 reg_save_atmp = (s16 *)(reg_a1);
                 reg_a1 = (u8 *)(reg_a0);

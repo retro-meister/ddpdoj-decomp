@@ -56,8 +56,8 @@ s32 func_00205D20();
 s32 func_00206080();
 extern u16 D_002523E0[];
 extern u8 D_002610B0[];
-extern u16 D_0028DF14_as_u16;
-extern u16 D_0028DF18_as_u16;
+extern s16 D_0028DF14;
+extern s16 D_0028DF18;
 extern u8 g_pad_vib_enabled;
 extern u16 g_pad_vib_power_p2;
 extern u16 g_pad_vib_power_p1;
@@ -94,8 +94,8 @@ next_5:
     reg_d0.h[0] &= 1;
     func_001A35A0();
 next_6:
-    if (D_0028DF14_as_u16 != 0) goto next_7;
-    D_0028DF14_as_u16 = 1;
+    if ((u16)D_0028DF14 != 0) goto next_7;
+    D_0028DF14 = 1;
     music_play_bgm2();
 next_7:
     W(0x32) += 1;
@@ -209,8 +209,8 @@ next_53:
     reg_d0.w = reg_d1.w;
     reg_d1.w = reg_tmp.w;
 next_54:
-    if (D_0028DF18_as_u16 != 0) goto next_60;
-    D_0028DF18_as_u16 = 1;
+    if ((u16)D_0028DF18 != 0) goto next_60;
+    D_0028DF18 = 1;
     func_00136010();
     goto next_60;
 block_end:

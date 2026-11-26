@@ -26,20 +26,20 @@ extern void (*stage4_boss_mode_routines[])(void);
 extern void (*stage4_boss_move_routines[])(void);
 extern u8 D_0026F4D0[];
 extern u8 D_0028DC88[];
-extern s16 g_boss_hyper_wait_as_s16;
+extern u16 g_boss_hyper_wait;
 extern u8 *g_boss_hp;
 extern s32 g_boss_hp_unit;
 extern u8 g_boss_present;
 extern u8 g_boss_present_b1;
-extern s16 g_enemy_signal_c_as_s16;
-extern s16 g_enemy_signal_9_as_s16;
-extern s16 g_enemy_signal_8_as_s16;
-extern s16 g_enemy_signal_7_as_s16;
-extern s16 g_enemy_signal_6_as_s16;
+extern u16 g_enemy_signal_c;
+extern u16 g_enemy_signal_9;
+extern u16 g_enemy_signal_8;
+extern u16 g_enemy_signal_7;
+extern u16 g_enemy_signal_6;
 extern u16 g_loop;
 extern s16 D_00299768[];
 extern s16 D_0029976A[];
-extern s16 D_0029976C_as_s16_a[];
+extern u16 D_0029976C[];
 
 void stage4_boss_start(void) {
     reg_a0 = (u8 *)D_0026F4D0;
@@ -67,23 +67,23 @@ void stage4_boss_start(void) {
     reg_d0.h[0] = 0x12;
     reg_a0 = (u8 *)palette_white;
     sprite_palette_load();
-    g_boss_hyper_wait_as_s16 = 1;
+    g_boss_hyper_wait = 1;
     slowdown_turn_off();
     D_00299768[0] = 1;
     D_0029976A[0] = 1;
     if (g_loop != 0) {
-        D_0029976C_as_s16_a[0] = 1;
+        ((s16 *)D_0029976C)[0] = 1;
     }
     g_boss_present_b1 |= 1;
     g_boss_present_b1 |= 4;
     g_boss_hp_unit = 0x500;
-    g_enemy_signal_c_as_s16 = 0;
-    g_enemy_signal_6_as_s16 = 0;
-    g_enemy_signal_7_as_s16 = 0;
+    g_enemy_signal_c = 0;
+    g_enemy_signal_6 = 0;
+    g_enemy_signal_7 = 0;
     g_boss_present |= 1;
     reg_a0 = reg_a5;
-    g_enemy_signal_8_as_s16 = 0;
-    g_enemy_signal_9_as_s16 = 0;
+    g_enemy_signal_8 = 0;
+    g_enemy_signal_9 = 0;
     reg_a0 += 0x16;
     g_boss_hp = (u8 *)(reg_a0);
     stage4_boss_damage_none();

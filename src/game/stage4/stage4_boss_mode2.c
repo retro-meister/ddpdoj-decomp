@@ -689,7 +689,6 @@ void stage4_boss_mode_rage_start() {
 }
 
 s32 rng_next_unsigned();
-extern s16 g_enemy_signal_d_as_s16;
 
 void stage4_boss_mode_rage() {
     u16 temp_a0;
@@ -708,10 +707,10 @@ void stage4_boss_mode_rage() {
     }
     var_a0 = 1;
     if (RAGE(reg_a4)->step == 1) {
-        g_enemy_signal_d_as_s16 = 0;
+        g_enemy_signal_d = 0;
         RAGE(reg_a4)->wait -= 1;
         if ((s16) RAGE(reg_a4)->wait == 0) {
-            g_enemy_signal_d_as_s16 = 1;
+            g_enemy_signal_d = 1;
             rng_next_unsigned();
             reg_d0.h[0] &= 0x7F;
             reg_d0.h[0] += 0x1C0;

@@ -5,19 +5,18 @@
 void func_001B8440(void);
 void func_001B8D00(void);
 
-extern s16 *reg_a6_as_s16_p;
 extern u16 D_0029AA30[];
 
 void func_001B82B0(void) {
-    *reg_a6_as_s16_p = 0;
+    *(*(s16 **)&reg_a6) = 0;
     D_0029AA30[0] -= 1;
 }
 
-extern s32 D_0029A530_as_s32_a[];
+extern u16 D_0029A530[];
 
 
 void func_001B82D0(void) {
-    memset(D_0029A530_as_s32_a, 0, 0x502);
+    memset(((s32 *)D_0029A530), 0, 0x502);
 }
 
 
@@ -87,8 +86,7 @@ extern u8 D_00262570[];
 extern u16 g_frame_mod8;
 extern u16 g_frame_mod2;
 extern u16 g_game_frame;
-extern u16 g_boss_present_as_u16;
-extern u8 D_0029A530_as_u8_a[];
+extern u8 g_boss_present;
 extern u16 g_side_scroll_step[];
 extern u8 *reg_call_target_as_u8_p;
 
@@ -104,7 +102,7 @@ void func_001B8440(void) {
     if (reg_d7.h[0] == 0) goto block_rts;
     reg_d7.h[0] -= 1;
     if (g_loop != 0) {
-        reg_a6 = (u8 *)D_0029A530_as_u8_a;
+        reg_a6 = (u8 *)((u8 *)D_0029A530);
         goto next_clr;
     }
     reg_d5.w = 0;
@@ -113,13 +111,13 @@ void func_001B8440(void) {
     reg_tmp.w = reg_d6.w;
     reg_d6.h[0] = g_frame_mod2;
     reg_d6.h[1] = reg_tmp.h[0];
-    if (g_boss_present_as_u16 == 0) goto next_1;
+    if ((*(u16 *)&g_boss_present) == 0) goto next_1;
     reg_d5.h[0] = 0x8000;
 next_1:
     reg_tmp.w = reg_d5.w;
     reg_d5.h[1] = reg_tmp.h[0];
     reg_d5.h[0] = g_game_frame;
-    reg_a6 = (u8 *)D_0029A530_as_u8_a;
+    reg_a6 = (u8 *)((u8 *)D_0029A530);
     goto loop_2;
 next_2:
     reg_a6 += 0x40;

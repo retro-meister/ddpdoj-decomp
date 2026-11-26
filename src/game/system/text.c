@@ -112,7 +112,7 @@ u8 g_font_alt_palette_rgb[48] = {
 };
 extern s8 g_glyph_upload_buf[];
 extern void *g_dma_gif;
-extern u8 g_gif_buf_as_u8_a2_a0x10000[2][0x10000];
+extern u8 g_gif_buf[2][0x10000];
 
 void font_upload_palettes(void);
 void font_init_palettes(void);
@@ -690,9 +690,9 @@ void text_flush_rects(void)
     if (g_text_queue_count == 0) {
         return;
     }
-    font_build_gs_setup_packet(g_gif_buf_as_u8_a2_a0x10000[0]);
+    font_build_gs_setup_packet(((u8 (*)[0x10000])g_gif_buf)[0]);
     FlushCache(0);
-    sceDmaSend(g_dma_gif, g_gif_buf_as_u8_a2_a0x10000[0]);
+    sceDmaSend(g_dma_gif, ((u8 (*)[0x10000])g_gif_buf)[0]);
     sceGsSyncPath(0, 0);
 
     bufferIndex = 0;
@@ -704,7 +704,7 @@ void text_flush_rects(void)
             batchCount = remainingEntries;
         }
 
-        packet = g_gif_buf_as_u8_a2_a0x10000[bufferIndex];
+        packet = ((u8 (*)[0x10000])g_gif_buf)[bufferIndex];
         text_build_rect_packet((Qword *)packet, firstEntry, batchCount);
         sceGsSyncPath(0, 0);
         FlushCache(0);
@@ -1093,9 +1093,9 @@ void text_flush(void)
     if (g_text_queue_count == 0) {
         return;
     }
-    font_build_gs_setup_packet(g_gif_buf_as_u8_a2_a0x10000[0]);
+    font_build_gs_setup_packet(((u8 (*)[0x10000])g_gif_buf)[0]);
     FlushCache(0);
-    sceDmaSend(g_dma_gif, g_gif_buf_as_u8_a2_a0x10000[0]);
+    sceDmaSend(g_dma_gif, ((u8 (*)[0x10000])g_gif_buf)[0]);
     sceGsSyncPath(0, 0);
 
     bufferIndex = 0;
@@ -1107,7 +1107,7 @@ void text_flush(void)
             batchCount = remainingEntries;
         }
 
-        packet = g_gif_buf_as_u8_a2_a0x10000[bufferIndex];
+        packet = ((u8 (*)[0x10000])g_gif_buf)[bufferIndex];
         text_build_quad_packet((Qword *)packet, firstEntry, batchCount);
         sceGsSyncPath(0, 0);
         FlushCache(0);
@@ -1239,9 +1239,9 @@ void overlay_flush(void)
     if (g_overlay_queue_count == 0) {
         return;
     }
-    font_build_gs_setup_packet(g_gif_buf_as_u8_a2_a0x10000[0]);
+    font_build_gs_setup_packet(((u8 (*)[0x10000])g_gif_buf)[0]);
     FlushCache(0);
-    sceDmaSend(g_dma_gif, g_gif_buf_as_u8_a2_a0x10000[0]);
+    sceDmaSend(g_dma_gif, ((u8 (*)[0x10000])g_gif_buf)[0]);
     sceGsSyncPath(0, 0);
 
     bufferIndex = 0;
@@ -1253,7 +1253,7 @@ void overlay_flush(void)
             batchCount = remainingEntries;
         }
 
-        packet = g_gif_buf_as_u8_a2_a0x10000[bufferIndex];
+        packet = ((u8 (*)[0x10000])g_gif_buf)[bufferIndex];
         overlay_build_quad_packet((Qword *)packet, firstEntry, batchCount);
         sceGsSyncPath(0, 0);
         FlushCache(0);
@@ -1371,7 +1371,7 @@ void overlay_build_quad_packet(Qword *pkt, s32 startIndex, s32 count)
 }
 
 void gfx_draw_shaded_box(s32 x, s32 y, s32 w, s32 h, s32 depth, s32 alpha) {
-    Qword *packet = (Qword *)g_gif_buf_as_u8_a2_a0x10000[0];
+    Qword *packet = (Qword *)((u8 (*)[0x10000])g_gif_buf)[0];
 
     packet[0].q = 0;
     packet[0].w[0] = 0x1000000C;
@@ -1418,12 +1418,12 @@ void gfx_draw_shaded_box(s32 x, s32 y, s32 w, s32 h, s32 depth, s32 alpha) {
     packet[13].q = 0;
     packet[13].w[0] = 0x70000000;
     FlushCache(0);
-    sceDmaSend(g_dma_gif, g_gif_buf_as_u8_a2_a0x10000[0]);
+    sceDmaSend(g_dma_gif, ((u8 (*)[0x10000])g_gif_buf)[0]);
     sceGsSyncPath(0, 0);
 }
 
 void gfx_draw_color_box(s32 x, s32 y, s32 w, s32 h, s32 depth, s32 alpha, s32 r, s32 g, s32 b) {
-    Qword *packet = (Qword *)g_gif_buf_as_u8_a2_a0x10000[0];
+    Qword *packet = (Qword *)((u8 (*)[0x10000])g_gif_buf)[0];
 
     packet[0].q = 0;
     packet[0].w[0] = 0x1000000C;
@@ -1470,7 +1470,7 @@ void gfx_draw_color_box(s32 x, s32 y, s32 w, s32 h, s32 depth, s32 alpha, s32 r,
     packet[13].q = 0;
     packet[13].w[0] = 0x70000000;
     FlushCache(0);
-    sceDmaSend(g_dma_gif, g_gif_buf_as_u8_a2_a0x10000[0]);
+    sceDmaSend(g_dma_gif, ((u8 (*)[0x10000])g_gif_buf)[0]);
     sceGsSyncPath(0, 0);
 }
 

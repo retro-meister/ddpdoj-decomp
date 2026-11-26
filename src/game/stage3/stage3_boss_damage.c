@@ -16,8 +16,8 @@ s32 active_players_mask();
 extern u8 g_game_mode;
 extern s32 g_boss_score;
 extern u16 g_damage_blink_counter;
-extern u16 D_00299768_as_u16_a[];
-extern u16 D_0029976A_as_u16_a[];
+extern s16 D_00299768[];
+extern s16 D_0029976A[];
 extern u16 D_0029976C[];
 
 #define W(o) (*(u16 *)(reg_a6 + (o)))
@@ -136,8 +136,8 @@ block_check:
     func_001D4540();
     func_001D4510();
     B(0x8D) = 1;
-    D_00299768_as_u16_a[0] = 1;
-    D_0029976A_as_u16_a[0] = 1;
+    ((u16 *)D_00299768)[0] = 1;
+    ((u16 *)D_0029976A)[0] = 1;
     D_0029976C[0] = 1;
     func_002016D0();
 block_tail:
@@ -191,10 +191,9 @@ struct UnkDataD28E450 {
     s16 unk88;
 };
 
-extern struct UnkDataD28E450 *reg_a6_as_UnkDataD28E450_p;
 
 void func_001D4540(void) {
-    reg_a6_as_UnkDataD28E450_p->unk88 = 1;
+    ((struct UnkDataD28E450 *)reg_a6)->unk88 = 1;
 }
 
 void func_001D4550(void) {

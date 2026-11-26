@@ -6,13 +6,13 @@ void boss_slots_step(void);
 void boss_flash_update(void);
 
 extern u8 D_00295E50[];
-extern s32 D_00295E54_as_s32_a[];
+extern u8 *D_00295E54[];
 extern u16 D_00295E5A[];
 extern u32 *D_00295E9C[];
 extern u8 D_00295EA0[];
-extern s32 D_00295F40_as_s32_a[];
+extern u8 *D_00295F40[];
 extern s64 D_002960A8[];
-extern s32 D_00296210_as_s32_a[];
+extern u8 *D_00296210[];
 
 void boss_slots_init(void) {
     u8 *save_a0;
@@ -48,11 +48,11 @@ void boss_slots_init(void) {
     save_a6 = reg_a6;
     memset(D_00295E50, 0, MAIN_OR_DEATH_LABEL(0x490, 0x4D0));
     if (reg_a0 != 0) {
-        D_00295E54_as_s32_a[0] = (int)reg_a0;
+        ((s32 *)D_00295E54)[0] = (int)reg_a0;
         D_00295E5A[0] = 0xFFFF;
     }
     if (reg_a3 != 0) {
-        D_00295F40_as_s32_a[0] = (int)reg_a3;
+        ((s32 *)D_00295F40)[0] = (int)reg_a3;
     }
     if (reg_a1 != 0) {
         D_002960A8[0] = (s32)reg_a1;
@@ -72,7 +72,7 @@ loop_8:
         }
     }
     if (reg_a4 != 0) {
-        D_00296210_as_s32_a[0] = (int)reg_a4;
+        ((s32 *)D_00296210)[0] = (int)reg_a4;
     }
     reg_d0.w = save_d0;
     reg_d1.w = save_d1;
@@ -91,10 +91,10 @@ loop_8:
     reg_a6 = save_a6;
 }
 
-extern s16 D_002962DE_as_s16_a[];
+extern u16 D_002962DE[];
 
 void boss_slots_end(void) {
-    D_002962DE_as_s16_a[0] = 1;
+    ((s16 *)D_002962DE)[0] = 1;
 }
 
 #pragma push
@@ -129,8 +129,7 @@ extern u16 g_p2_hyper_active;
 extern u16 g_p1_hyper_active;
 extern u8 g_boss_present_b1;
 extern u16 g_enemies_stopped;
-extern s16 g_true_last_boss_as_s16;
-extern s32 D_00295E9C_as_s32_a[];
+extern u16 g_true_last_boss;
 extern u16 D_002962DE[];
 extern u8 *reg_call_target_as_u8_p;
 
@@ -150,12 +149,12 @@ void boss_slots_run(void) {
             reg_d0.h[0] = g_p1_hyper_active;
             temp_v0 = reg_d0.h[0] | g_p2_hyper_active;
             reg_d0.h[0] = temp_v0;
-            if ((temp_v0 & 0xFFFF) && (0 <= g_true_last_boss_as_s16) && (g_frame_mod2 != 0)) {
+            if ((temp_v0 & 0xFFFF) && (0 <= (s16)g_true_last_boss) && (g_frame_mod2 != 0)) {
                 boss_slots_step();
             }
         }
     }
-    if (D_00295E9C_as_s32_a[0] != 0) {
+    if (((s32 *)D_00295E9C)[0] != 0) {
         reg_a4 = (u8 *)D_00295EA0;
         reg_d7.h[0] = 0x13;
         do {
@@ -178,7 +177,6 @@ void boss_slots_run(void) {
 }
 
 extern u8 D_00295E7C[];
-extern u16 D_00295E50_as_u16_a[];
 extern u16 D_00295E52[];
 extern u8 *D_00295E54[];
 extern u16 D_00295E58[];
@@ -219,8 +217,8 @@ void boss_slots_step(void) {
         } while ((s16)(--reg_d7.h[0]) >= 0);
     }
     if (D_00295E54[0] != 0) {
-        if (D_00295E50_as_u16_a[0] != 0) {
-            D_00295E50_as_u16_a[0] = 0;
+        if (((u16 *)D_00295E50)[0] != 0) {
+            ((u16 *)D_00295E50)[0] = 0;
             reg_a0 = (u8 *)D_00295E7C;
             D_00295E58[0] = 0;
             reg_a1 = (u8 *)(D_00295E5C);
@@ -299,7 +297,6 @@ void boss_slots_step(void) {
     }
 }
 
-extern s16 D_00296214_as_s16_a[];
 extern s16 D_002962B4[];
 
 void boss_phase_start(void) {
@@ -307,7 +304,7 @@ void boss_phase_start(void) {
     s32 d1 = reg_d1.w;
     u32 tmp;
 
-    reg_a0 = (u8 *) D_00296214_as_s16_a;
+    reg_a0 = (u8 *) ((s16 *)D_00296214);
     reg_d1.w = 4;
 loop_1:
     if (*(s16 *) reg_a0 != 0) goto next_1;
@@ -392,27 +389,26 @@ next_1:
     reg_a0 = a0;
 }
 
-extern s16 *reg_a0_as_s16_p;
 void boss_phase_stop_all(void)
 {
   s16 *savedAddressRegister;
   u32 savedDataRegister;
   s16 *firstEntry;
   savedDataRegister = reg_d0.w;
-  firstEntry = D_00296214_as_s16_a;
-  savedAddressRegister = reg_a0_as_s16_p;
+  firstEntry = ((s16 *)D_00296214);
+  savedAddressRegister = ((s16 *)reg_a0);
   reg_d0.w = 4;
   if (reg_d0.w && reg_d0.w)
   {
   }
-  reg_a0_as_s16_p = firstEntry;
+  (*(s16 **)&reg_a0) = firstEntry;
   do
   {
-    *reg_a0_as_s16_p = 0;
-    reg_a0_as_s16_p += 0x10;
+    *(*(s16 **)&reg_a0) = 0;
+    (*(s16 **)&reg_a0) += 0x10;
   }
   while (((s16) (--reg_d0.h[0])) >= 0);
-  reg_a0_as_s16_p = savedAddressRegister;
+  (*(s16 **)&reg_a0) = savedAddressRegister;
   reg_d0.w = savedDataRegister;
 }
 
@@ -424,10 +420,9 @@ void boss_movement_current(void) {
     *(u16 *)&reg_d0 = D_00295E5A[0];
 }
 
-extern s16 D_00295E50_as_s16_a[];
 
 void boss_movement_start(void) {
-    D_00295E50_as_s16_a[0] = 1;
+    ((s16 *)D_00295E50)[0] = 1;
     reg_a0 = (u8 *)D_00295E7C;
     D_00295E52[0] = reg_d0.h[0];
 }
@@ -446,7 +441,6 @@ void boss_part_show(void) {
     reg_d0.w = savedData;
 }
 
-extern s16 D_00295EA0_as_s16_a[];
 
 void boss_part_show_all(void)
 {
@@ -455,21 +449,21 @@ void boss_part_show_all(void)
     s16 *table;
 
     savedData = reg_d0.w;
-    table = D_00295EA0_as_s16_a;
-    savedAddress = reg_a0_as_s16_p;
-    reg_a0_as_s16_p = table;
+    table = ((s16 *)D_00295EA0);
+    savedAddress = ((s16 *)reg_a0);
+    (*(s16 **)&reg_a0) = table;
     reg_d0.h[0] = 0x13;
 
     do {
-        s16 flags = *reg_a0_as_s16_p;
+        s16 flags = *((s16 *)reg_a0);
 
         if (0 > (s64)flags) {
-            *reg_a0_as_s16_p = flags | 1;
+            *(*(s16 **)&reg_a0) = flags | 1;
         }
-        reg_a0_as_s16_p += 4;
+        (*(s16 **)&reg_a0) += 4;
     } while ((s16)(--reg_d0.h[0]) >= 0);
 
-    reg_a0_as_s16_p = savedAddress;
+    (*(s16 **)&reg_a0) = savedAddress;
     reg_d0.w = savedData;
 }
 
@@ -480,22 +474,22 @@ void boss_part_hide_all(void)
     s32 entryFlags;
 
     savedDataRegister = reg_d0.w;
-    savedAddressRegister = reg_a0_as_s16_p;
-    reg_a0_as_s16_p = D_00295EA0_as_s16_a;
+    savedAddressRegister = ((s16 *)reg_a0);
+    (*(s16 **)&reg_a0) = ((s16 *)D_00295EA0);
     reg_d0.h[0] = 0x13;
 
     do {
-        entryFlags = *reg_a0_as_s16_p;
+        entryFlags = *((s16 *)reg_a0);
         if (0 <= entryFlags) {
             goto nextEntry;
         }
-        *reg_a0_as_s16_p = entryFlags & ~1;
+        *(*(s16 **)&reg_a0) = entryFlags & ~1;
 
     nextEntry:
-        reg_a0_as_s16_p += 4;
+        (*(s16 **)&reg_a0) += 4;
     } while ((s16)(--reg_d0.h[0]) >= 0);
 
-    reg_a0_as_s16_p = savedAddressRegister;
+    (*(s16 **)&reg_a0) = savedAddressRegister;
     reg_d0.w = savedDataRegister;
 }
 
@@ -638,7 +632,6 @@ next_1:
     reg_a0 = a0;
 }
 
-extern s16 D_002960B0_as_s16_a[];
 extern s16 D_002961F0[];
 
 void boss_attack_start(void) {
@@ -646,7 +639,7 @@ void boss_attack_start(void) {
     s32 d1 = reg_d1.w;
     u32 tmp;
 
-    reg_a0 = (u8 *) D_002960B0_as_s16_a;
+    reg_a0 = (u8 *) ((s16 *)D_002960B0);
     reg_d1.w = 9;
 loop_1:
     if (*(s16 *) reg_a0 != 0) goto next_1;
@@ -737,28 +730,28 @@ void boss_attack_stop_all(void)
     u32 savedDataRegister;
 
     savedDataRegister = reg_d0.w;
-    savedAddressRegister = reg_a0_as_s16_p;
-    reg_a0_as_s16_p = D_002960B0_as_s16_a;
+    savedAddressRegister = ((s16 *)reg_a0);
+    (*(s16 **)&reg_a0) = ((s16 *)D_002960B0);
     reg_d0.w = 9;
 
     do {
-        *reg_a0_as_s16_p = 0;
-        reg_a0_as_s16_p += 0x10;
+        *(*(s16 **)&reg_a0) = 0;
+        (*(s16 **)&reg_a0) += 0x10;
     } while ((s16)(--reg_d0.h[0]) >= 0);
 
-    reg_a0_as_s16_p = savedAddressRegister;
+    (*(s16 **)&reg_a0) = savedAddressRegister;
     reg_d0.w = savedDataRegister;
 }
 
-extern s16 D_002962D4_as_s16_a[];
+extern u16 D_002962D4[];
 extern u16 D_002962D6[];
-extern s16 D_002962D8_as_s16_a[];
-extern s16 D_002962DA_as_s16_a[];
+extern u16 D_002962D8[];
+extern u16 D_002962DA[];
 void boss_flash_start(void) {
     D_002962D6[0] = reg_d0.h[0];
-    D_002962D4_as_s16_a[0] = 1;
-    D_002962D8_as_s16_a[0] = 0x1C00;
-    D_002962DA_as_s16_a[0] = 1;
+    ((s16 *)D_002962D4)[0] = 1;
+    ((s16 *)D_002962D8)[0] = 0x1C00;
+    ((s16 *)D_002962DA)[0] = 1;
 }
 
 extern u16 D_002962D4[];

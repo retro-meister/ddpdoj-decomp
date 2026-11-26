@@ -722,8 +722,8 @@ void stage5_small_spider_head_first(void) {
 
 extern s16 D_00265280[];
 extern s16 D_00265290[];
-extern s16 g_enemy_signal_6_as_s16;
-extern s16 g_enemy_signal_4_as_s16;
+extern u16 g_enemy_signal_6;
+extern u16 g_enemy_signal_4;
 
 void stage5_small_spider_head_start(void) {
     s32 enemy_set_task_state();
@@ -743,9 +743,9 @@ next_1:
     ENTITY(reg_a6)->attr.b.palette = SMALL_SPIDER_HEAD(reg_a5)->palette;
     D_00299768[0] = 1;
     D_0029976A[0] = 1;
-    reg_a0 = (u8 *)(&g_enemy_signal_4_as_s16);
+    reg_a0 = (u8 *)(&(*(s16 *)&g_enemy_signal_4));
     if ((s32) g_scroll_line < 0x260) goto next_2;
-    reg_a0 = (u8 *)(&g_enemy_signal_6_as_s16);
+    reg_a0 = (u8 *)(&(*(s16 *)&g_enemy_signal_6));
 next_2:
     reg_tmp.w = (u32) reg_a0;
     SMALL_SPIDER_HEAD(reg_a5)->owner_flag[0] = reg_tmp.h[1];
@@ -1062,8 +1062,8 @@ void stage5_large_spider_head_first(void) {
 
 extern s16 D_002655E0[];
 extern s16 D_00265600[];
-extern s16 g_enemy_signal_7_as_s16;
-extern s16 g_enemy_signal_5_as_s16;
+extern u16 g_enemy_signal_7;
+extern u16 g_enemy_signal_5;
 
 void stage5_large_spider_head_start(void) {
     s32 enemy_set_task_state();
@@ -1083,10 +1083,10 @@ next_1:
     ENTITY(reg_a6)->attr.b.palette = LARGE_SPIDER_HEAD(reg_a5)->palette;
     D_00299768[0] = 1;
     D_0029976A[0] = 1;
-    g_enemy_signal_5_as_s16 = 1;
-    reg_a0 = (u8 *)(&g_enemy_signal_5_as_s16);
+    g_enemy_signal_5 = 1;
+    reg_a0 = (u8 *)(&(*(s16 *)&g_enemy_signal_5));
     if ((s32) g_scroll_line < 0x280) goto next_2;
-    reg_a0 = (u8 *)(&g_enemy_signal_7_as_s16);
+    reg_a0 = (u8 *)(&(*(s16 *)&g_enemy_signal_7));
     LARGE_SPIDER_HEAD(reg_a5)->shot.both = 0x202;
 next_2:
     reg_tmp.w = (u32) reg_a0;

@@ -27,7 +27,7 @@ extern void (*stage3_boss_mode_routines[])(void);
 extern void (*stage3_boss_move_routines[])(void);
 extern u8 D_0026DA00[];
 extern u8 D_0028DC18[];
-extern s16 g_boss_hyper_wait_as_s16;
+extern u16 g_boss_hyper_wait;
 extern u8 *g_boss_hp;
 extern s32 g_boss_hp_unit;
 extern u8 g_boss_present;
@@ -35,7 +35,7 @@ extern u8 g_boss_present_b1;
 extern u16 g_loop;
 extern s16 D_00299768[];
 extern s16 D_0029976A[];
-extern s16 D_0029976C_as_s16_a[];
+extern u16 D_0029976C[];
 
 void stage3_boss_start(void) {
     reg_a0 = (u8 *)D_0026DA00;
@@ -74,7 +74,7 @@ void stage3_boss_start(void) {
     reg_d0.h[0] = 0xA;
     reg_a0 = (u8 *)palette_white;
     sprite_palette_load();
-    g_boss_hyper_wait_as_s16 = 1;
+    g_boss_hyper_wait = 1;
     g_boss_present_b1 |= 1;
     g_boss_hp_unit = 0x4A0;
     g_boss_present_b1 |= 4;
@@ -85,7 +85,7 @@ void stage3_boss_start(void) {
     D_00299768[0] = 1;
     D_0029976A[0] = 1;
     if (g_loop != 0) {
-        D_0029976C_as_s16_a[0] = 1;
+        ((s16 *)D_0029976C)[0] = 1;
     }
 }
 

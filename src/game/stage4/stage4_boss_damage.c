@@ -33,7 +33,7 @@ extern u16 g_enemy_signal_9;
 extern u16 g_enemy_signal_8;
 extern u16 g_enemy_signal_7;
 extern u16 g_damage_blink_counter;
-extern s16 g_bomb_entities_as_s16_a[];
+extern u16 g_bomb_entities[24];
 #ifdef DEATH_LABEL
 extern u8 death_D_00290DC0;
 extern u16 D_00684C80[];
@@ -120,7 +120,7 @@ damage_found:
     reg_d0.h[0] = (s32)(reg_d0.h[0] & 0xFFFF) >> 1;
     g_enemy_signal_8 = 0;
     reg_d2.w = reg_d0.w;
-    if (g_bomb_entities_as_s16_a[0] >= 0) goto cutter_damage_seen;
+    if (((s16 *)g_bomb_entities)[0] >= 0) goto cutter_damage_seen;
 #ifdef DEATH_LABEL
     hp = reg_d2.w;
     if (hp != 0) {

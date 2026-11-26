@@ -988,7 +988,7 @@ void heli_g_first(void) {
 
 extern u16 D_00257B90[];
 extern u16 D_00257BB0[];
-extern s16 g_scroll_line_as_s16;
+extern u16 g_scroll_line;
 
 void heli_g_start(void) {
     s32 enemy_remove();
@@ -1019,16 +1019,16 @@ void heli_g_start(void) {
         reg_d0.b[0] -= 8;
         HELI(reg_a5)->fire.b.countdown -= reg_d0.b[0];
         if (g_stage == 4) {
-            if (g_scroll_line_as_s16 >= 0x290) {
+            if ((s16)g_scroll_line >= 0x290) {
                 if (g_enemy_signal_7 != 0) {
                     enemy_remove();
                 }
-            } else if (g_scroll_line_as_s16 > 0x1FC) {
-                if (((g_scroll_line_as_s16 < 0x240) || (g_scroll_line_as_s16 > 0x274)) && (g_enemy_signal_4 != 0)) {
+            } else if ((s16)g_scroll_line > 0x1FC) {
+                if ((((s16)g_scroll_line < 0x240) || ((s16)g_scroll_line > 0x274)) && (g_enemy_signal_4 != 0)) {
                     enemy_remove();
                     return;
                 }
-                if ((g_enemy_signal_5 != 0) && (g_scroll_line_as_s16 > 0x228)) {
+                if ((g_enemy_signal_5 != 0) && ((s16)g_scroll_line > 0x228)) {
                     enemy_remove();
                     return;
                 }

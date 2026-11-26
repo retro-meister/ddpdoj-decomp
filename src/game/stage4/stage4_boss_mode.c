@@ -221,11 +221,11 @@ void stage4_boss_explosions_scattered(void) {
 s32 boss_movement_start();                            /* extern */
 s32 boss_part_show();                            /* extern */
 s32 sprite_palette_load();                            /* extern */
-extern s32 D_0025FF30_as_s32_a[];
+extern u8 D_0025FF30[];
 
 void stage4_boss_mode_enter_start(void) {
     reg_d0.h[0] = 0x15;
-    reg_a0 = (u8 *)D_0025FF30_as_s32_a;
+    reg_a0 = (u8 *)((s32 *)D_0025FF30);
     sprite_palette_load();
     reg_d0.w = 0;
     boss_movement_start();
@@ -234,10 +234,9 @@ void stage4_boss_mode_enter_start(void) {
     stage4_boss_mode_enter();
 }
 
-extern u16 *reg_a4_as_u16_p;
 
 void stage4_boss_mode_enter(void) {
-    *reg_a4_as_u16_p = 0;
+    *(*(u16 **)&reg_a4) = 0;
 }
 
 s32 boss_movement_start();

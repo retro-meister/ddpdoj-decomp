@@ -92,8 +92,8 @@ extern u16 g_damage_blink_counter;
 extern u16 g_rank_4_16;
 extern u16 g_loop;
 extern u16 g_side_scroll_x[];
-extern u16 g_player2_as_u16_a[];
-extern u16 g_player1_as_u16_a[];
+extern s16 g_player2[56];
+extern s16 g_player1[56];
 
 void func_001683C0(void) {
     u16 swap;
@@ -159,8 +159,8 @@ next_1:
 next_2:
             ENTITY(reg_a6)->attr.b.palette = (u8) reg_d0.b[0];
             if ((g_enemies_stopped == 0) && (g_bullets_blocked == 0)) {
-                reg_a0 = (u8 *)(g_player1_as_u16_a);
-                reg_a1 = (u8 *)(g_player2_as_u16_a);
+                reg_a0 = (u8 *)(((u16 *)g_player1));
+                reg_a1 = (u8 *)(((u16 *)g_player2));
                 if (*(u8 *)(reg_a5 + 2) != 0) {
                     reg_save_atmp = (s16 *)(reg_a1);
                     reg_a1 = (u8 *)(reg_a0);

@@ -21,7 +21,6 @@ void func_001A30A0(void) {
     reg_a1 = a1;
 }
 
-extern u16 D_0029FCB0_as_u16_a[];
 
 void func_001A3130(void) {
     s32 d0;
@@ -34,7 +33,7 @@ void func_001A3130(void) {
     d1 = reg_d1.w;
     a0 = reg_a0;
     a1 = reg_a1;
-    reg_a1 = (u8 *) D_0029FCB0_as_u16_a;
+    reg_a1 = (u8 *) ((u16 *)D_0029FCB0);
     reg_d0.h[0] <<= 6;
     reg_a1 += reg_d0.h[0];
 loop_1:
@@ -237,13 +236,13 @@ void func_001A35F0(void) {
 }
 
 extern u8 g_setting_chute_type;
-extern s8 g_setting_coin_mode_as_s8;
+extern u8 g_setting_coin_mode;
 extern u16 g_loop;
 
 void func_001A3630(void) {
     u8 *temp_s0;
 
-    if (g_setting_coin_mode_as_s8 >= 9) {
+    if ((s8)g_setting_coin_mode >= 9) {
         func_001A3560();
         return;
     }

@@ -20,12 +20,12 @@ extern s16 D_0024F330[];
 extern u8 *D_0028DEAC;
 extern u16 g_sprite_bullets2_used;
 extern u16 g_sprite_bullets_used;
-extern s8 g_slowdown_timer_as_s8;
+extern u8 g_slowdown_timer;
 extern u8 D_0028E37C;
 extern u8 g_boss_present_b1;
 extern u16 g_loop;
 extern u16 g_stage;
-extern s16 D_00299760_as_s16_a[];
+extern u16 D_00299760[];
 extern u8 g_bullets[];
 #ifdef DEATH_LABEL
 extern s16 death_D_002512A0[];
@@ -36,7 +36,7 @@ extern u8 g_sprite_bullets_buf[];
 
 void func_00129DB0(void) {
     func_00129BE0();
-    D_00299760_as_s16_a[0] = 0;
+    ((s16 *)D_00299760)[0] = 0;
     reg_a4 = (u8 *)g_sprite_bullets2_buf;
     reg_a0 = (u8 *)g_sprite_bullets_buf;
     D_0028DEAC = (u8 *)(reg_a4);
@@ -63,7 +63,7 @@ void func_00129DB0(void) {
         reg_tmp.h[0] /= 0xC;
         if ((g_boss_present_b1 & 2) && (reg_tmp.h[0] >= *limit)) {
             D_0028E37C |= 0x80;
-            g_slowdown_timer_as_s8 = 1;
+            g_slowdown_timer = 1;
         }
     }
 #else
@@ -71,7 +71,7 @@ void func_00129DB0(void) {
         reg_tmp.h[0] = (s16) g_sprite_bullets2_used + (s16) g_sprite_bullets_used;
         reg_tmp.h[0] /= 0xC;
         if ((g_boss_present_b1 & 2) && (g_loop != 0) && (reg_tmp.h[0] > D_0024F330[g_stage])) {
-            g_slowdown_timer_as_s8 = 2;
+            g_slowdown_timer = 2;
         }
     }
 #endif
@@ -89,7 +89,7 @@ void bullet_spawn256();
 void spawn_request_add();
 void func_00202760();
 void func_00203330();
-extern u8 bullet_type_records_as_u8_a[];
+extern u16 bullet_type_records[456];
 extern u8 D_0024F0F0[];
 extern u8 D_00262570[];
 extern u32 D_0028DEA4;
@@ -102,14 +102,13 @@ extern u8 g_death_boss_form;
 #endif
 extern u16 D_00299760[];
 extern u16 D_00299762[];
-extern u16 D_00299768_as_u16_a[];
-extern u16 D_0029976A_as_u16_a[];
+extern s16 D_00299768[];
+extern s16 D_0029976A[];
 extern u16 D_0029976C[];
 extern u16 D_0029976E[];
 extern u8 *D_00299770[];
 extern u16 g_side_scroll_step[];
-extern u8 g_bomb_entities_as_u8_a[];
-extern u16 *reg_a4_as_u16_p;
+extern u16 g_bomb_entities[24];
 
 #define SLOT_PHASE MAIN_OR_DEATH_LABEL(D_00299762[0], *(u16 *)(g_bullets + 0x10682))
 #define SLOT_CURSOR MAIN_OR_DEATH_LABEL(D_00299770[0], *(u8 **)(g_bullets + 0x10690))
@@ -227,9 +226,9 @@ void func_00129EF0(void) {
     reg_a6 = g_bullets;
     reg_d7.h[0] = MAIN_OR_DEATH_LABEL(0x45, 0x15D);
     reg_d6.h[0] = g_side_scroll_step[0];
-    if (D_00299768_as_u16_a[0] != 0) {
+    if (((u16 *)D_00299768)[0] != 0) {
         reg_d7.h[0] = MAIN_OR_DEATH_LABEL(0x6D, 0x225);
-        if (D_0029976A_as_u16_a[0] != 0) {
+        if (((u16 *)D_0029976A)[0] != 0) {
             reg_d7.h[0] = MAIN_OR_DEATH_LABEL(0x9F, 0x31F);
             if (D_0029976C[0] != 0) {
                 reg_d7.h[0] = MAIN_OR_DEATH_LABEL(0xBD, 0x3B5);
@@ -242,7 +241,7 @@ void func_00129EF0(void) {
     goto loop_10;
 
 L_bom_bui:
-    reg_d1.h[0] = *(u16 *)g_bomb_entities_as_u8_a;
+    reg_d1.h[0] = *(u16 *)((u8 *)g_bomb_entities);
     if ((reg_d1.h[0] != 0) && (reg_d1.w & 1) && (0 <= (s64)(s16)g_boss_present_as_u16)) {
         goto block_12;
     }
@@ -265,7 +264,7 @@ loop_10:
         goto block_9;
     }
     D_00299760[0] += 1;
-    reg_d1.h[0] = *(u16 *)g_bomb_entities_as_u8_a;
+    reg_d1.h[0] = *(u16 *)((u8 *)g_bomb_entities);
     if ((s16)(reg_d1.h[0] |= (s16)g_boss_present_as_u16) < 0) {
         goto L_bom_bui;
     }
@@ -325,20 +324,20 @@ block_12:
     reg_d0.w = temp_a1_2 & 0x07FF03FF;
     temp_a0 = reg_d0.w;
     reg_d0.w = temp_a0 | 0x80008000;
-    *reg_a4_as_u16_p = reg_d0.h[1];
-    reg_a4_as_u16_p += 1;
-    *reg_a4_as_u16_p = reg_d0.h[0];
-    reg_a4_as_u16_p += 1;
-    *reg_a4_as_u16_p = *(u16 *)(reg_a1 + 0);
+    *(*(u16 **)&reg_a4) = reg_d0.h[1];
+    (*(u16 **)&reg_a4) += 1;
+    *(*(u16 **)&reg_a4) = reg_d0.h[0];
+    (*(u16 **)&reg_a4) += 1;
+    *(*(u16 **)&reg_a4) = *(u16 *)(reg_a1 + 0);
     reg_a1 += 2;
-    reg_a4_as_u16_p += 1;
-    *reg_a4_as_u16_p = *(u16 *)(reg_a1 + 0);
+    (*(u16 **)&reg_a4) += 1;
+    *(*(u16 **)&reg_a4) = *(u16 *)(reg_a1 + 0);
     reg_a1 += 2;
-    reg_a4_as_u16_p += 1;
-    *reg_a4_as_u16_p = *(u16 *)(reg_a1 + 0);
-    reg_a4_as_u16_p += 1;
-    *reg_a4_as_u16_p = ENTITY(reg_a6)->attr.h;
-    reg_a4_as_u16_p += 1;
+    (*(u16 **)&reg_a4) += 1;
+    *(*(u16 **)&reg_a4) = *(u16 *)(reg_a1 + 0);
+    (*(u16 **)&reg_a4) += 1;
+    *(*(u16 **)&reg_a4) = ENTITY(reg_a6)->attr.h;
+    (*(u16 **)&reg_a4) += 1;
     func_0012DCC0();
     reg_tmp.h[1] = *(u16 *)(reg_a6 + 0x22);
     reg_tmp.h[0] = *(u16 *)(reg_a6 + 0x24);
@@ -474,7 +473,7 @@ block_33:
         ENTITY(reg_a6)->draw.h = reg_tmp.h[1];
         ENTITY(reg_a6)->sprite.h = reg_tmp.h[0];
         reg_d0.h[0] = ENTITY(reg_a6)->flags.h;
-        reg_a1 = bullet_type_records_as_u8_a;
+        reg_a1 = ((u8 *)bullet_type_records);
         reg_d0.h[0] &= 0x3F;
         reg_d0.h[0] += reg_d0.h[0];
         reg_d0.h[0] += reg_d0.h[0];
@@ -1285,9 +1284,9 @@ block_202:
                                 }
                                 return;
                             case 27:                /* switch 1 */
-                                reg_a4_as_u16_p -= 6;
+                                (*(u16 **)&reg_a4) -= 6;
                                 reg_a0 = SLOT_CURSOR;
-                                reg_a2 = (u8 *)reg_a4_as_u16_p;
+                                reg_a2 = (u8 *)((u16 *)reg_a4);
                                 *(u16 *)(reg_a0 + 0) = *(u16 *)reg_a2;
                                 reg_a2 += 2;
                                 reg_a0 += 2;
@@ -2717,8 +2716,8 @@ s32 fade_in();
 s32 func_0015B930();
 extern u8 D_00269800[];
 extern u32 D_0028E964;
-extern s16 D_0028E968_as_s16;
-extern s16 D_0028E96C_as_s16;
+extern u16 D_0028E968;
+extern u16 D_0028E96C;
 
 void func_0012F6A0(void) {
     u32 save_d0;
@@ -2737,7 +2736,7 @@ void func_0012F6A0(void) {
     u8 *save_a5;
     u8 *save_a6;
 
-    D_0028E968_as_s16 = 0xF0;
+    D_0028E968 = 0xF0;
     save_d0 = reg_d0.w;
     save_d6 = reg_d6.w;
     save_d7 = reg_d7.w;
@@ -2751,7 +2750,7 @@ void func_0012F6A0(void) {
     reg_a0 = (u8 *)D_00269800;
     save_d1 = reg_d1.w;
     D_0028E964 = 0;
-    D_0028E96C_as_s16 = 0;
+    D_0028E96C = 0;
     save_d2 = reg_d2.w;
     save_d3 = reg_d3.w;
     save_d4 = reg_d4.w;
