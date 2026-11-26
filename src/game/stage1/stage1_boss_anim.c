@@ -674,7 +674,7 @@ s32 boss_flash_start();
 s32 boss_flash_running();
 s32 explosion_burst_large();
 s32 explosion_burst_small();
-s32 func_0013B2E0();
+s32 fade_in_and_release();
 s32 sfx_explosion_boss();
 s32 rng_next_unsigned();
 extern u8 g_slowdown_timer;
@@ -801,7 +801,7 @@ void stage1_boss_body_explode(void) {
         if (cond_flag == 0) {
             g_slowdown_timer = 0xA;
             reg_a0 = ((u8 *)stage1_boss_final_flash);
-            func_0013B2E0();
+            fade_in_and_release();
             reg_d0.w = 2;
             boss_part_hide();
             reg_d0.w = 4;
@@ -905,7 +905,7 @@ void stage1_boss_body_explode(void) {
                 if (EXPLODE(reg_a4)->toggle == 0) {
                     g_slowdown_timer = 0xA;
                     reg_a0 = ((u8 *)stage1_boss_blast_flash);
-                    func_0013B2E0();
+                    fade_in_and_release();
                     rng_next_unsigned();
                     reg_d1.b[0] = reg_d0.b[0];
                     reg_d2.h[1] = ENTITY(reg_a6)->y.h;

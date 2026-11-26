@@ -405,7 +405,7 @@ void stage3_midboss_side2_blow_off() {
 
 s32 scroll_line_release();
 s32 explosion_burst_small();
-s32 func_0013B2E0();
+s32 fade_in_and_release();
 s32 sfx_explosion_air_medium();
 s32 sfx_explosion_extra_1();
 s32 rng_next();
@@ -436,7 +436,7 @@ void stage3_midboss_dying(void) {
             if (STAGE3_MIDBOSS(reg_a5)->blast_timer.b.countdown == 0) {
                 STAGE3_MIDBOSS(reg_a5)->shown = 0;
                 reg_a0 = (u8 *)stage3_midboss_flash_palettes;
-                func_0013B2E0();
+                fade_in_and_release();
                 reg_d2.h[1] = ENTITY(reg_a6)->y.h;
                 reg_d2.h[0] = ENTITY(reg_a6)->x.h;
                 reg_a1 = (u8 *)(D_00263540);

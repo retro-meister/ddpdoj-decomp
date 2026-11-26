@@ -212,7 +212,7 @@ s32 boss_phase_start();
 s32 boss_movement_start();
 s32 boss_part_show();
 s32 boss_part_hide();
-s32 func_0013B2E0();
+s32 fade_in_and_release();
 s32 sprite_palette_load();
 s32 velocity_from_dir256();
 extern u8 D_0025FEF0[];
@@ -298,7 +298,7 @@ void stage4_boss_move_enter(void) {
                 ENTITY(reg_a6)[2].flags.h = 0xA001;
                 ENTITY(reg_a6)[3].flags.h = 0xA001;
                 reg_a0 = (u8 *)stage4_boss_enter_flash;
-                func_0013B2E0();
+                fade_in_and_release();
             }
         }
     }

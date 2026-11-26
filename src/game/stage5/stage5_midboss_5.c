@@ -487,7 +487,7 @@ void stage5_midboss5_start(void) {
 }
 
 s32 ground_speeds_request();
-s32 func_0013B8B0();
+s32 fade_out_and_release();
 s32 enemy_hitbox_debug_draw();
 s32 score_add_no_chain();
 s32 score_add();
@@ -549,7 +549,7 @@ void stage5_midboss5_main() {
                 reg_d0.w = 6;
                 stage5_midboss5_set_move();
                 reg_a0 = D_00266330;
-                func_0013B8B0();
+                fade_out_and_release();
                 goto normal_palette;
             }
         } else {

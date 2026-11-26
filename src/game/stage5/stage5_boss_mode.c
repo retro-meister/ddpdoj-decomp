@@ -1,4 +1,5 @@
 #include "common.h"
+#include "fade.h"
 #include "entity.h"
 #include "explosion.h"
 #include "stage5_boss.h"
@@ -312,7 +313,7 @@ void stage5_boss_mode_form1_idle_start(void) {
 }
 
 s32 boss_phase_start();
-s32 func_0013B2E0();
+s32 fade_in_and_release();
 s32 stage5_boss_form1_take_hits();
 extern s16 g_boss_hyper_wait_as_s16;
 extern u8 *g_boss_hp;
@@ -352,7 +353,7 @@ void stage5_boss_mode_form1_idle() {
         }
         stage5_boss_form1_take_hits();
         reg_a0 = (u8 *)stage5_boss_fade_palettes_b;
-        func_0013B2E0();
+        fade_in_and_release();
         reg_d0.w = 6;
         boss_phase_start();
         MODE(reg_a4)->running = 0;
@@ -502,7 +503,7 @@ void stage5_boss_mode_form1_explosion() {
         ENTITY(reg_a6)->y.h = t1;
         ENTITY(reg_a6)->x.h = t2;
         reg_a0 = (u8 *)stage5_boss_flash_palettes_a;
-        func_0013B2E0();
+        fade_in_and_release();
         if (g_stage5_boss_all_forms == 0) {
             sfx_explosion_boss();
             boss_part_hide_all();
@@ -777,7 +778,7 @@ void stage5_boss_mode_form2_explosion(void) {
         vibration_start_pad1(0xC8, 0x50, 0x460, 0x400);
         vibration_start_pad2(0xC8, 0x50);
         reg_a0 = (u8 *)stage5_boss_flash_palettes_b;
-        func_0013B2E0();
+        fade_in_and_release();
         reg_d0.h[0] = 0x200;
         reg_d1.h[0] = 0x200;
         ground_speeds_request();
@@ -933,16 +934,15 @@ void stage5_boss_mode_form2_to_form3() {
     }
 }
 
-s32 func_0013B8B0();                            /* extern */
+s32 fade_out_and_release();                            /* extern */
 s32 sprite_palette_load();                            /* extern */
-extern s32 g_default_sprite_palette_as_s32_a[];
 
 void stage5_boss_mode_form3_explosion_start(void) {
     reg_d0.h[0] = 0xE;
-    reg_a0 = (u8 *)g_default_sprite_palette_as_s32_a;
+    reg_a0 = (u8 *)palette_white;
     sprite_palette_load();
     reg_a0 = (u8 *)stage5_boss_fade_palettes_a;
-    func_0013B8B0();
+    fade_out_and_release();
     FINAL_EXPLOSION(reg_a4)->step = 0;
     FINAL_EXPLOSION(reg_a4)->blast.sh = 0x101;
     FINAL_EXPLOSION(reg_a4)->entry = 0;
@@ -1034,7 +1034,7 @@ block_2:
     boss_flash_running();
     if (cond_flag != 0) goto block_1;
     reg_a0 = (u8 *)stage5_boss_flash_palettes_c;
-    func_0013B2E0();
+    fade_in_and_release();
     boss_part_hide_all();
     FINAL_EXPLOSION(reg_a4)->rounds = 1;
     FINAL_EXPLOSION(reg_a4)->step = 3;

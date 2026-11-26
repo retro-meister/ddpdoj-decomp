@@ -47,9 +47,9 @@ void func_00200D60(void) {
 #endif
 }
 
-s32 func_0013BE50();
-s32 func_0013C300();
-s32 func_0013C350();
+s32 fade_to_black();
+s32 fade_release();
+s32 fade_is_running();
 s32 music_fade_out();
 extern u8 D_0024E090[];
 
@@ -77,7 +77,7 @@ void credits_task() {
 #endif
             *(u16 *)(reg_a5 + 4) = 1U;
             reg_a0 = D_0024E090;
-            func_0013BE50();
+            fade_to_black();
             *(u16 *)(reg_a5 + 8) = (u16) reg_d0.h[1];
             *(u16 *)(reg_a5 + 0xA) = (u16) reg_d0.h[0];
             reg_d1.w = 0;
@@ -88,9 +88,9 @@ void credits_task() {
     if (temp_a0 == 1) {
         reg_d0.h[1] = *(u16 *)(reg_a5 + 8);
         reg_d0.h[0] = *(u16 *)(reg_a5 + 0xA);
-        func_0013C350();
+        fade_is_running();
         if (cond_flag == 0) {
-            func_0013C300();
+            fade_release();
             *(u8 *)(reg_a5 + 3) = 2U;
         }
     }

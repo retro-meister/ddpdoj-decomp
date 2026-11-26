@@ -50,7 +50,7 @@ void stage2_midboss_first(void) {
 }
 
 
-s32 func_0013B2E0();
+s32 fade_in_and_release();
 s32 enemy_set_task_state();
 s32 enemy_init_entities();
 s32 enemy_path_start();
@@ -125,7 +125,7 @@ void stage2_midboss_start(void) {
         STAGE2_MIDBOSS(reg_a5)->side_interval = (u8) reg_d1.b[0];
         STAGE2_MIDBOSS(reg_a5)->spread_interval = (u8) reg_d2.b[0];
         reg_a0 = D_002630D0;
-        func_0013B2E0();
+        fade_in_and_release();
         g_enemy_signal_0_as_s16 = 1;
         sfx_heli_start();
         D_00299768[0] = 1;
@@ -711,7 +711,7 @@ next_700:
     vibration_start_pad2(0xB4, 0x3C);
     g_slowdown_timer = 0x3C;
     reg_a0 = (u8 *) D_00263290;
-    func_0013B2E0();
+    fade_in_and_release();
     reg_d0.h[0] = 0x8080;
     ENTITY(reg_a6)->flags.sh = (s16) reg_d0.h[0];
     ENTITY(reg_a6)[1].flags.h = (u16) reg_d0.h[0];

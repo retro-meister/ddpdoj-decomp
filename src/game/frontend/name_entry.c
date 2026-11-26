@@ -523,7 +523,7 @@ void func_00198D90() {
     func_00198EF0();
 }
 
-s32 func_0013B2E0();
+s32 fade_in_and_release();
 extern u8 D_0025BF90[];
 extern s16 D_002BAE80_as_s16_a[];
 
@@ -531,11 +531,11 @@ void func_00198EF0() {
     *(s16 *)(reg_a4 + 0x2E) = 1;
     D_002BAE80_as_s16_a[0] = 1;
     reg_a0 = D_0025BF90;
-    func_0013B2E0();
+    fade_in_and_release();
     func_00198F30();
 }
 
-s32 func_0013BDE0();
+s32 fade_to_black_and_release();
 s32 sfx_confirm();
 extern u8 D_0025BD60[];
 extern u8 D_0025BFD0[];
@@ -567,7 +567,7 @@ next_1:
     if (W(0x1E) != 0x30) goto next_4;
     W(0x1E) -= 1;
     reg_a0 = (u8 *)D_0025BFD0;
-    func_0013BDE0();
+    fade_to_black_and_release();
     return;
 next_4:
     W(0x1E) -= 1;

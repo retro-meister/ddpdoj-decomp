@@ -1,4 +1,5 @@
 #include "common.h"
+#include "fade.h"
 #include "entity.h"
 #include "stage1_boss.h"
 
@@ -31,7 +32,6 @@ s32 sprite_palette_load();
 s32 stage1_boss_damage_init();
 s32 stage1_boss_shield_on();
 s32 stage1_boss_parts_disable();
-extern u8 g_default_sprite_palette[];
 extern u8 D_0025FA70[];
 extern u8 D_0025FAB0[];
 extern u8 D_0025FAF0[];
@@ -90,7 +90,7 @@ void stage1_boss_start(void) {
     reg_a0 = (u8 *)D_0025FAF0;
     sprite_palette_load();
     reg_d0.h[0] = 0x12;
-    reg_a0 = (u8 *)g_default_sprite_palette;
+    reg_a0 = (u8 *)palette_white;
     sprite_palette_load();
     reg_d0.h[0] = 0x11;
     reg_a0 = (u8 *)D_0025FB70;

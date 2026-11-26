@@ -1,4 +1,5 @@
 #include "common.h"
+#include "fade.h"
 #include "entity.h"
 
 void enemy_set_entity_count(s32 id);
@@ -16,7 +17,6 @@ s32 sprite_palette_load();
 s32 stage2_boss_damage_none();
 s32 stage2_boss_shield_on();
 s32 stage2_boss_parts_stop_hits();
-extern u8 g_default_sprite_palette[];
 extern u8 D_0025FBB0[];
 extern u8 D_0025FBF0[];
 extern u8 D_0025FC30[];
@@ -77,7 +77,7 @@ void stage2_boss_start(void) {
     reg_a0 = (u8 *)D_0025FCF0;
     sprite_palette_load();
     reg_d0.h[0] = 0x16;
-    reg_a0 = (u8 *)g_default_sprite_palette;
+    reg_a0 = (u8 *)palette_white;
     sprite_palette_load();
     g_boss_hyper_wait_as_s16 = 1;
     g_boss_present_b1 |= 1;

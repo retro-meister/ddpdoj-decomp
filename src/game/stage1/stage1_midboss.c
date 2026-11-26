@@ -429,7 +429,7 @@ void stage1_midboss_start() {
 s32 bullet_fire256_3way();
 s32 func_001368E0();
 s32 ground_speeds_request();
-s32 func_0013B2E0();
+s32 fade_in_and_release();
 s32 enemy_hitbox_debug_draw();
 s32 spawn_request_add();
 s32 enemy_remove();
@@ -515,7 +515,7 @@ void stage1_midboss_main(void) {
                 vibration_start_pad2(0xB4, 0x50);
                 g_slowdown_timer = MAIN_OR_DEATH_LABEL(0x54, 0x5A);
                 reg_a0 = (u8 *) stage1_midboss_fade_script;
-                func_0013B2E0();
+                fade_in_and_release();
                 reg_d1.h[0] = STAGE1_MIDBOSS(reg_a5)->wreck_value;
                 func_00201800();
                 ENTITY(reg_a6)->flags.h = 0x8080;

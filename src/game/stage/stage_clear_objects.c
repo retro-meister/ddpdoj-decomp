@@ -1,4 +1,5 @@
 #include "common.h"
+#include "fade.h"
 #include "entity.h"
 
 void func_00171A30(void);
@@ -196,7 +197,6 @@ void func_001719D0(void) {
 }
 
 s32 sprite_palette_load();
-extern u8 g_default_sprite_palette[];
 extern u8 D_0026B170[];
 extern u8 D_0026B180[];
 extern u8 D_0028DAC0[];
@@ -225,7 +225,7 @@ void func_00171A30(void) {
         reg_d0.h[0] = *(u16 *)(D_0026B170 + temp_a1);
         ENTITY(reg_a6)->attr.b.palette = (u8) reg_d0.b[0];
         *(u8 *)(reg_a6 + 0x3C) = (u8) reg_d0.b[0];
-        reg_a0 = (u8 *)g_default_sprite_palette;
+        reg_a0 = (u8 *)palette_white;
         sprite_palette_load();
         return;
     }
@@ -291,7 +291,7 @@ void func_00171B90(void) {
         reg_d0.h[0] = *(u16 *)(D_0026B1C0 + temp_a1);
         ENTITY(reg_a6)->attr.b.palette = (u8) reg_d0.b[0];
         *(u8 *)(reg_a6 + 0x3C) = (u8) reg_d0.b[0];
-        reg_a0 = (u8 *)g_default_sprite_palette;
+        reg_a0 = (u8 *)palette_white;
         sprite_palette_load();
     }
     var_a0 = 1;

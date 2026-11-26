@@ -435,13 +435,13 @@ void stage4_boss_mode_second_form() {
     }
 }
 
-s32 func_0013B8B0();
+s32 fade_out_and_release();
 
 void stage4_boss_mode_final_explosion_start(void) {
     reg_d0.w = 5;
     boss_movement_start();
     reg_a0 = (u8 *)stage4_boss_fade_palettes;
-    func_0013B8B0();
+    fade_out_and_release();
     EXPLODING(reg_a4)->step = 0;
     EXPLODING(reg_a4)->wait = 0x10;
     EXPLODING(reg_a4)->burst_a.h = 0xFF02;
@@ -528,7 +528,7 @@ void stage4_boss_mode_final_explosion() {
 
 s32 boss_flash_start();
 s32 boss_flash_running();
-s32 func_0013B2E0();
+s32 fade_in_and_release();
 s32 sfx_explosion_boss();
 
 void stage4_boss_final_explosion_step(arg1)
@@ -586,7 +586,7 @@ void stage4_boss_final_explosion_step(arg1)
         boss_flash_running();
         if (cond_flag == 0) {
             reg_a0 = (u8 *)stage4_boss_flash_palettes;
-            func_0013B2E0();
+            fade_in_and_release();
             EXPLODING(reg_a4)->step = 4U;
         }
     }

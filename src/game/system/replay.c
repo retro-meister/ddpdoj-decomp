@@ -501,7 +501,7 @@ void replay_start_run_end(void) {
 }
 
 s32 text_layer_clear();                            /* extern */
-s32 func_0013B350();                            /* extern */
+s32 fade_in();                            /* extern */
 s32 text_palette_load();                            /* extern */
 s32 func_00225B70();                            /* extern */
 extern s32 text_palette_0_as_s32_a[];
@@ -522,15 +522,15 @@ void replay_result_menu_begin(void) {
     *(s16 *)(reg_a5 + 6) = 0;
     func_00225B70();
     reg_a0 = (u8 *)D_0026B580_as_s32_a;
-    func_0013B350();
+    fade_in();
     reg_a0 = (u8 *)temp_s0;
     g_replay_fade_id = reg_d0.w;
     reg_d0.w = temp_s1;
 }
 
-extern void func_0013BE50(void);
-extern void func_0013C300(void);
-extern void func_0013C350(void);
+extern void fade_to_black(void);
+extern void fade_release(void);
+extern void fade_is_running(void);
 extern void func_001A42A0(void);
 extern s32 func_00225CD0(void);
 extern u8 D_0026B5F0[];
@@ -557,9 +557,9 @@ void replay_result_menu(void) {
         break;
     case 0:
         reg_d0.w = g_replay_fade_id;
-        func_0013C350();
+        fade_is_running();
         if (cond_flag == 0) {
-            func_0013C300();
+            fade_release();
             step++;
         }
         break;
@@ -580,7 +580,7 @@ void replay_result_menu(void) {
     case 300:
     case 400:
         reg_a0 = (u8 *)D_0026B5F0;
-        func_0013BE50();
+        fade_to_black();
         step++;
         g_replay_fade_id = reg_d0.w;
         break;
@@ -588,9 +588,9 @@ void replay_result_menu(void) {
     case 316:
     case 416:
         reg_d0.w = g_replay_fade_id;
-        func_0013C350();
+        fade_is_running();
         if (cond_flag == 0) {
-            func_0013C300();
+            fade_release();
             step++;
         }
         break;

@@ -160,7 +160,7 @@ void stage2_boss_move_enter_start(void) {
 
 s32 boss_phase_start();
 s32 boss_movement_stop();
-s32 func_0013B2E0();
+s32 fade_in_and_release();
 s32 sprite_palette_load();
 s32 stage2_boss_radome_show();
 s32 entity_follow_scroll();
@@ -210,7 +210,7 @@ void stage2_boss_move_enter(void) {
     stage2_boss_radome_show();
     boss_movement_stop();
     reg_a0 = (u8 *)stage2_boss_enter_flash;
-    func_0013B2E0();
+    fade_in_and_release();
     stage2_boss_parts_follow();
 }
 

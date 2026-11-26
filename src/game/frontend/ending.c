@@ -167,16 +167,16 @@ void func_00123000(void) {
 #endif
 
 #ifndef DEATH_LABEL
-s32 func_0013B350();
+s32 fade_in();
 extern u8 D_0024D200[];
 extern u8 D_0024D2D0[];
 extern u16 D_00295E2C[];
 extern u32 D_00295E34[];
 
 void func_00123040(void) {
-    s32 func_0013BE50();
-    s32 func_0013C300();
-    s32 func_0013C350();
+    s32 fade_to_black();
+    s32 fade_release();
+    s32 fade_is_running();
     if (D_00295E2E[0] == 0) goto block_rts;
     if (D_00295E2E[0] != 1) goto next_1;
     if (D_00295E2C[0] == 0) goto next_2;
@@ -186,15 +186,15 @@ void func_00123040(void) {
     reg_d0.h[0] += reg_d0.h[0];
     reg_a0 += reg_d0.h[0];
     reg_a0 = *(u8 **)reg_a0;
-    func_0013BE50();
+    fade_to_black();
     D_00295E34[0] = reg_d0.w;
     D_00295E2E[0] = 2;
 next_1:
     if (D_00295E2E[0] != 2) goto next_3;
     reg_d0.w = D_00295E34[0];
-    func_0013C350();
+    fade_is_running();
     if (cond_flag != 0) goto next_3;
-    func_0013C300();
+    fade_release();
 next_2:
     D_00295E2C[0] = D_00295E30[0];
     D_00295E2E[0] = 3;
@@ -208,15 +208,15 @@ next_3:
     reg_d0.h[0] += reg_d0.h[0];
     reg_a0 += reg_d0.h[0];
     reg_a0 = *(u8 **)reg_a0;
-    func_0013B350();
+    fade_in();
     D_00295E34[0] = reg_d0.w;
     D_00295E2E[0] = 4;
 next_4:
     if (D_00295E2E[0] != 4) goto block_rts;
     reg_d0.w = D_00295E34[0];
-    func_0013C350();
+    fade_is_running();
     if (cond_flag != 0) goto block_rts;
-    func_0013C300();
+    fade_release();
     D_00295E2E[0] = 0;
 block_rts:
     return;
@@ -348,9 +348,9 @@ extern u16 D_00295E20[];
 extern u32 D_00295E24[];
 
 void func_00123540(void) {
-    void func_0013BE50(void);
-    void func_0013C300(void);
-    void func_0013C350(void);
+    void fade_to_black(void);
+    void fade_release(void);
+    void fade_is_running(void);
     if (reg_d0.h[0] == 0x8000) {
         D_00295E1E_as_u16_a[0] = *(u16 *)reg_a2;
         reg_a2 += 2;
@@ -383,17 +383,17 @@ void func_00123540(void) {
             reg_d0.h[0] += reg_d0.h[0];
             reg_a0 += reg_d0.h[0];
             reg_a0 = *(u8 **)reg_a0;
-            func_0013BE50();
+            fade_to_black();
             D_00295E24[0] = reg_d0.w;
             cond_flag = 1;
             return;
         }
-        func_0013C350();
+        fade_is_running();
         if (cond_flag != 0) {
             cond_flag = 1;
             return;
         }
-        func_0013C300();
+        fade_release();
         D_00295E24[0] = 0;
         D_00295E1C[0] += 4;
         func_00123410();
@@ -606,9 +606,9 @@ extern u32 reg_call_target_as_u32;
 #define W(o) (*(u16 *)(reg_a6 + (o)))
 
 void func_00123C20(void) {
-    s32 func_0013BE50();
-    s32 func_0013C300();
-    s32 func_0013C350();
+    s32 fade_to_black();
+    s32 fade_release();
+    s32 fade_is_running();
     if (W(6) != 0) goto next_10;
     W(6) = 1;
     func_00123240();
@@ -667,7 +667,7 @@ next_28:
 next_32:
     sfx_confirm();
     reg_a0 = (u8 *) D_0024D640;
-    func_0013BE50();
+    fade_to_black();
     W(0x14) = reg_d0.h[1];
     W(0x16) = reg_d0.h[0];
     W(6) = 3;
@@ -679,9 +679,9 @@ next_40:
     if (W(6) != 3) goto next_50;
     reg_d0.h[1] = W(0x14);
     reg_d0.h[0] = W(0x16);
-    func_0013C350();
+    fade_is_running();
     if (cond_flag != 0) goto next_50;
-    func_0013C300();
+    fade_release();
     *(s8 *)(reg_a5 + 3) = 2;
 next_50:
     if ((s16) W(6) < 2) goto block_rts;

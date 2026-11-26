@@ -10,7 +10,7 @@ extern u8 g_replay_mode;
 s32 func_0012FA80();
 s32 text_layer_clear();
 s32 func_0012FB00();
-s32 func_0013B2E0(s32, s32, s32, s32);
+s32 fade_in_and_release(s32, s32, s32, s32);
 s32 stage_map_reset();
 extern u8 D_0026A3F0[];
 extern u8 D_0028E368;
@@ -36,13 +36,13 @@ void func_0014BEC0(void) {
     *(s16 *)(reg_a5 + 0x18) = 0;
     *(s16 *)(reg_a5 + 4) = 0x1E0;
     reg_a0 = D_0026A3F0;
-    func_0013B2E0(0x1E0, 0x1C00, 0x4400, 1);
+    fade_in_and_release(0x1E0, 0x1C00, 0x4400, 1);
     *(s16 *)(reg_a5 + 0x1A) = 0x20;
     *(s16 *)(reg_a5 + 0x1C) = 0x20;
 }
 
 s32 player_slot_request();
-s32 func_0013B190();
+s32 fades_reset();
 s32 task_start();
 
 void func_0014BF90() {
@@ -51,7 +51,7 @@ void func_0014BF90() {
         reg_d0.w = 0;
         reg_d1.h[0] = 6;
         player_slot_request();
-        func_0013B190();
+        fades_reset();
         reg_d0.h[0] = 0xC;
         task_start();
         task_stop_self();

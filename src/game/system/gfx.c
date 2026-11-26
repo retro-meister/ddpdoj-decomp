@@ -1,4 +1,5 @@
 #include "common.h"
+#include "fade.h"
 #include "sdk/ps2sdk.h"
 #include "gfx_types.h"
 #include "glyph_cache.h"
@@ -385,7 +386,6 @@ void stage_load_step(void) {
 }
 
 extern s16 g_default_text_palette[];
-extern s16 g_default_sprite_palette[];
 
 extern u8 g_text_layer[];
 
@@ -414,7 +414,7 @@ void clut_upload_defaults(void)
     g_clut_upload_cbp = 0x3830;
     clut_upload((u8 *)g_clut_buf, 0, 1);
 
-    source = g_default_sprite_palette;
+    source = (s16 *)palette_white;
     palette = g_clut_buf;
     for (colorIndex = 0; colorIndex < 31; colorIndex++) {
         palette[colorIndex] = *source++ | 0x8000;

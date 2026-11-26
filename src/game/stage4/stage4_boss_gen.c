@@ -664,7 +664,7 @@ s32 bullet_fire256_fixed();
 s32 bullet_fire256_double();
 s32 bullet_fire256_3way();
 s32 func_001368E0();
-s32 func_0013B2E0();
+s32 fade_in_and_release();
 s32 spawn_request_add();
 s32 func_0016A9B0();
 s32 enemy_switch_target_player();
@@ -1097,7 +1097,7 @@ next_6200:
     if (*(u16 *)(reg_a5 + 0x24) != 0) goto next_6240;
     func_001DF350();
     reg_a0 = (u8 *)D_002639B0;
-    func_0013B2E0();
+    fade_in_and_release();
     vibration_start_pad1(0xB4, 0x64);
     vibration_start_pad2(0xB4, 0x64);
     sfx_explosion_extra_1();
@@ -1450,8 +1450,8 @@ extern u8 D_00263C80[];
 extern u8 D_00263C90[];
 extern u8 D_00263CF0[];
 s32 explosions_clear();
-s32 func_0013B920();
-s32 func_0013C300();
+s32 fade_out();
+s32 fade_release();
 s32 sfx_charge_begin();
 s32 sfx_charge_loop_start();
 s32 sfx_beam_fire();
@@ -1539,7 +1539,7 @@ next_9:
     if (*(u16 *)(reg_a5 + 0x18) != 1) goto next_10;
     if (!((s16) ENTITY(reg_a6)->y.h < 0x5001)) goto next_15;
     reg_a0 = (u8 *)D_00263C70;
-    func_0013B920();
+    fade_out();
     sfx_charge_begin();
     *(u16 *)(reg_a5 + 0x38) = 0x20;
     *(u16 *)(reg_a5 + 0x18) = 2;
@@ -1579,7 +1579,7 @@ next_13:
     *(u16 *)(reg_a5 + 0x26) = 0x3C;
     *(u16 *)(reg_a5 + 0x28) = 0x34;
     reg_a0 = (u8 *)D_00263CF0;
-    func_0013B2E0();
+    fade_in_and_release();
     sfx_charge_loop_stop();
     *(u16 *)(reg_a5 + 0x18) = 4;
     goto next_15;
@@ -1657,7 +1657,7 @@ block_b:
     reg_d1.h[0] = *(u16 *)(reg_a5 + 0x3A);
     func_00201710();
     reg_a0 = (u8 *)D_00263C80;
-    func_0013B920();
+    fade_out();
     *(u16 *)(reg_a5 + 0x34) = (u16) reg_d0.h[1];
     *(u16 *)(reg_a5 + 0x36) = (u16) reg_d0.h[0];
     entity_draw_layer1();
@@ -1684,9 +1684,9 @@ next_22:
     if (*(u16 *)(reg_a5 + 0x2C) != 1) goto next_24;
     reg_d0.h[1] = *(u16 *)(reg_a5 + 0x34);
     reg_d0.h[0] = *(u16 *)(reg_a5 + 0x36);
-    func_0013C300();
+    fade_release();
     reg_a0 = (u8 *)D_00263C90;
-    func_0013B2E0();
+    fade_in_and_release();
     goto next_24;
 next_23:
     explosions_clear();

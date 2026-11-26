@@ -6598,7 +6598,7 @@ s32 layers_reset();
 s32 func_0012FA50();
 s32 func_0012FB00();
 s32 layers_clear_all();
-s32 func_0013B190();
+s32 fades_reset();
 s32 sound_stop_effects();
 s32 music_stop();
 s32 stage_map_reset();
@@ -6643,7 +6643,7 @@ void func_00224A90(void) {
 #endif
     layers_clear_all();
     task_reset_all();
-    func_0013B190();
+    fades_reset();
     stage_map_reset();
     g_loop_as_s16 = 0;
     D_0028E1DA[0] = 0;

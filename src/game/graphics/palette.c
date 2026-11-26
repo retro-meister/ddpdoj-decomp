@@ -122,7 +122,7 @@ void func_001A29E0(void) {
 void func_001A2C70(void) {
 }
 
-s32 func_0013AFF0();
+s32 color_at_brightness();
 s32 text_palette_upload();
 s32 sprite_palette_upload();
 s32 bg_palette_upload();
@@ -182,16 +182,16 @@ void func_001A2C80(void) {
         reg_a0 += 0x540;
         reg_d1.h[0] = D_0028E0B4;
         reg_d0.h[0] = *(u16 *)(reg_a0 + 6);
-        func_0013AFF0();
+        color_at_brightness();
         *(u16 *)(reg_a1 + 6) = (u16) reg_d0.h[0];
         reg_d0.h[0] = *(u16 *)(reg_a0 + 4);
-        func_0013AFF0();
+        color_at_brightness();
         *(u16 *)(reg_a1 + 4) = (u16) reg_d0.h[0];
         reg_d0.h[0] = *(u16 *)(reg_a0 + 2);
-        func_0013AFF0();
+        color_at_brightness();
         *(u16 *)(reg_a1 + 2) = (u16) reg_d0.h[0];
         reg_d0.h[0] = *(u16 *)reg_a0;
-        func_0013AFF0();
+        color_at_brightness();
         *(u16 *)reg_a1 = (u16) reg_d0.h[0];
         bg_palette_upload();
         reg_tmp.b[0] = D_0028E0AD;

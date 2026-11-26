@@ -228,7 +228,7 @@ void stage5_midboss4_start() {
 }
 
 s32 ground_speeds_request();
-s32 func_0013B8B0();
+s32 fade_out_and_release();
 s32 enemy_hitbox_debug_draw();
 s32 score_add_no_chain();
 extern u8 D_00265F60[];
@@ -309,7 +309,7 @@ void stage5_midboss4_main(void) {
                     g_enemy_signal_1 = 0;
                     ground_speeds_request();
                     reg_a0 = (u8 *)D_00265F60;
-                    func_0013B8B0();
+                    fade_out_and_release();
                     goto normal_palette;
                 }
             }

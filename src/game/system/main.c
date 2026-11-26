@@ -12,8 +12,8 @@ s32 frame_counters_advance();
 s32 func_00135EC0();
 s32 func_00137C20();
 s32 func_00137C50();
-s32 func_0013B190();
-s32 func_0013C3F0();
+s32 fades_reset();
+s32 fades_update();
 s32 func_0013FD80();
 s32 input_clear();
 s32 input_update_pressed();
@@ -126,7 +126,7 @@ void func_002120D0(void) {
     func_0012FD40();
     input_clear();
     func_001A2900();
-    func_0013B190();
+    fades_reset();
     sprite_lists_reset();
     task_reset_all();
     func_00135EC0();
@@ -229,7 +229,7 @@ loop_15:
     } else {
         task_run_all();
         frame_counters_advance();
-        func_0013C3F0();
+        fades_update();
         sprite_lists_build();
         if (D_0028EC58 != 0) {
             g_game_frame_ran_as_s8 = 1;

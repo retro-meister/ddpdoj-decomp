@@ -60,7 +60,7 @@ extern s8 g_simulation_active_as_s8;
 
 void attract_task(void) {
     s32 text_layer_clear();
-    s32 func_0013B190();
+    s32 fades_reset();
     s32 text_palette_load();
     s32 task_reset_all();
     s32 task_start();
@@ -102,7 +102,7 @@ next_3:
 block_1:
     D_0028DF84 = 1;
     task_reset_all();
-    func_0013B190();
+    fades_reset();
     func_00137C50();
     if (g_attract_demo == 0) goto next_4;
     g_attract_demo = 0;
@@ -255,13 +255,13 @@ extern u8 g_splash_visible;
 
 void func_00168FD0(void) {
     s32 text_layer_clear();
-    s32 func_0013B190();
+    s32 fades_reset();
     s32 func_0015BA20();
     s32 func_0015BD00();
     if (reg_a5[2] == 0) {
         reg_a5[2] = 1U;
         text_layer_clear();
-        func_0013B190();
+        fades_reset();
         func_0015BA20();
         music_stop();
         D_0028E368 = 0;
@@ -324,7 +324,7 @@ extern s8 D_0028EB88;
 
 void death_func_00136FF0(void) {
     s32 text_layer_clear();
-    s32 func_0013B190();
+    s32 fades_reset();
     s32 text_palette_load();
     if (reg_a5[2] == 0) {
         reg_a5[2] = 1U;
@@ -333,7 +333,7 @@ void death_func_00136FF0(void) {
         reg_d0.w = 0;
         reg_a0 = text_palette_0;
         text_palette_load();
-        func_0013B190();
+        fades_reset();
         music_stop();
         D_0028E368 = 0;
         D_0028E378 = 0xFF;
@@ -390,13 +390,13 @@ extern s32 D_0028EB94;
 
 void func_00169140(void) {
     void text_layer_clear(void);
-    void func_0013B190(void);
+    void fades_reset(void);
     void func_0015BA20(void);
     void func_0015BD00(void);
     void slowdown_init(void);
     if (*(u8 *)(reg_a5 + 2) == 0) {
         *(u8 *)(reg_a5 + 2) = 1;
-        func_0013B190();
+        fades_reset();
         func_0015BA20();
         slowdown_init();
         g_slowdown_timer_as_s8 = 0;
@@ -504,7 +504,7 @@ extern s32 g_default_text_palette_as_s32_a[];
 
 void func_00169320(void) {
     s32 text_layer_clear();
-    s32 func_0013B190();
+    s32 fades_reset();
     s32 text_palette_load();
     s32 task_reset_all();
     s32 task_start();
@@ -521,7 +521,7 @@ void func_00169320(void) {
     if (cond_flag == 0) {
         printf((const char *)"demo end\n");
         task_reset_all();
-        func_0013B190();
+        fades_reset();
         func_00137C50();
         stage_map_reset();
         text_layer_clear();

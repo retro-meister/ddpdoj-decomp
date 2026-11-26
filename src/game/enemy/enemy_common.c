@@ -278,9 +278,9 @@ loop_1:
 }
 
 
-s32 func_0013B350();
-s32 func_0013C300();
-s32 func_0013C350();
+s32 fade_in();
+s32 fade_release();
+s32 fade_is_running();
 extern u8 *D_0028DF48;
 extern u8 *D_0028DF4C;
 extern u8 *D_0028DF50;
@@ -319,14 +319,14 @@ void func_0015BBD0(void) {
     if (!(D_0028E7D1 & 1)) {
         D_0028E7D1 |= 1;
         reg_a0 = (u8 *)settings_notice_fade_palettes;
-        func_0013B350();
+        fade_in();
         D_0028E7C0 = reg_d0.w;
     }
     if (!(D_0028E7D1 & 2)) {
         reg_d0.w = D_0028E7C0;
-        func_0013C350();
+        fade_is_running();
         if (cond_flag == 0) {
-            func_0013C300();
+            fade_release();
             reg_d0.w = 0;
             D_0028E7CC = 1;
             D_0028E7C0 = reg_d0.w;
@@ -440,9 +440,9 @@ void func_0015BEF0(void) {
 }
 #endif
 
-s32 func_0013BE50();                            /* extern */
-s32 func_0013C300();                            /* extern */
-s32 func_0013C350();                            /* extern */
+s32 fade_to_black();                            /* extern */
+s32 fade_release();                            /* extern */
+s32 fade_is_running();                            /* extern */
 extern u8 g_stage_load_state;
 extern u16 D_0028E7C4_as_u16;
 
@@ -459,18 +459,18 @@ void func_0015BFD0(void) {
             return;
         }
         reg_a0 = (u8 *)settings_notice_fade_palettes_b;
-        func_0013BE50();
+        fade_to_black();
         D_0028E7C0 = reg_d0.w;
         func_0015C090();
         return;
     }
     reg_d0.w = D_0028E7C0;
-    func_0013C350();
+    fade_is_running();
     if (cond_flag != 0) {
         func_0015C090();
         return;
     }
-    func_0013C300();
+    fade_release();
     func_0015C170();
 }
 

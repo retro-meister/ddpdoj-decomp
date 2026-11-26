@@ -333,7 +333,7 @@ void stage3_boss_entrance_anim_start(void) {
 }
 
 s32 boss_part_hide();
-s32 func_0013B2E0();
+s32 fade_in_and_release();
 s32 func_001D4550();
 s32 func_001D4560();
 extern u8 g_boss_present_b1;
@@ -397,7 +397,7 @@ next_40:
             reg_d0.w = 6;
             boss_animation_start();
             reg_a0 = (u8 *)stage3_boss_enter_flash;
-            func_0013B2E0();
+            fade_in_and_release();
         }
     }
     }

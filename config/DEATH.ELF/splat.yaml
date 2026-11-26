@@ -226,7 +226,7 @@ segments:
       - [0x155588, .data, game/player/player_shot_2_tables]
       - [0x155df0, .data, game/player/player_shot_5_tables]
       - [0x156630, .data, game/player/player_shot_6_tables]
-      - [0x156dd0, .data, game/effects/fade_tables]
+      - [0x156dd0, .data, game/effects/fade]
       - [0x156ef0, .data, game/player/player_support]
       - [0x156fa0, .data, game/player/player_tables]
       - [0x157b10, .data, game/player/player_laser_tables]

@@ -154,11 +154,11 @@ void stage3_boss_mode_enter(void) {
     MODE(reg_a4)->running = 0;
 }
 
-s32 func_0013B8B0();                            /* extern */
+s32 fade_out_and_release();                            /* extern */
 
 void stage3_boss_mode_final_explosion_start(void) {
     reg_a0 = (u8 *)stage3_boss_final_fade;
-    func_0013B8B0();
+    fade_out_and_release();
     FINAL(reg_a4)->step = 0;
     FINAL(reg_a4)->chain.sh = 0x101;
     FINAL(reg_a4)->chain_position = 0;
@@ -177,7 +177,7 @@ s32 boss_flash_start();
 s32 boss_flash_running();
 s32 explosion_spawn();
 s32 explosion_burst_medium();
-s32 func_0013B2E0();
+s32 fade_in_and_release();
 s32 sfx_explosion_air_medium();
 s32 sfx_explosion_air_large();
 s32 sfx_explosion_ground_medium();
@@ -236,7 +236,7 @@ next_s2:
     boss_flash_running();
     if (cond_flag != 0) goto next_s1;
     reg_a0 = (u8 *) stage3_boss_final_flash;
-    func_0013B2E0();
+    fade_in_and_release();
     boss_part_hide_all();
     FINAL(reg_a4)->rounds_left = 1;
     FINAL(reg_a4)->step = 3;

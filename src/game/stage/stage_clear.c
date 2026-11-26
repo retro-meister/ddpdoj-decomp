@@ -102,7 +102,7 @@ void func_00131630(void) {
 }
 
 s32 func_00134FB0();
-s32 func_0013B190();
+s32 fades_reset();
 s32 func_00171910();
 s32 func_00172060();
 s32 func_001AD690();
@@ -132,7 +132,7 @@ void func_00131700(void) {
     D_0028E378 = 0xFF;
     vibration_stop_all(4, 1);
     stage_map_hide();
-    func_0013B190();
+    fades_reset();
     func_00131630();
     func_001AD690();
     D_0028E961 |= 1;
@@ -165,7 +165,7 @@ void func_001317D0(void) {
 }
 
 s32 stage_counts_reset();                            /* extern */
-s32 func_0013B190();                            /* extern */
+s32 fades_reset();                            /* extern */
 s32 p1_next_stage_setup();                            /* extern */
 s32 p2_next_stage_setup();                            /* extern */
 s32 func_001AD720();                            /* extern */
@@ -177,7 +177,7 @@ extern s16 g_score_panel_intro_as_s16;
 extern s16 g_boss_present_as_s16;
 
 void func_001317E0(void) {
-    func_0013B190();
+    fades_reset();
     task_reset_all();
     func_00131630();
     stage_counts_reset();
@@ -211,10 +211,10 @@ void func_00131840(void) {
 s32 stage_counts_reset();
 s32 func_00134FE0();
 s32 func_00135070();
-s32 func_0013AFF0();
-s32 func_0013B2E0();
-s32 func_0013C300();
-s32 func_0013C350();
+s32 color_at_brightness();
+s32 fade_in_and_release();
+s32 fade_release();
+s32 fade_is_running();
 s32 p1_next_stage_setup();
 s32 p2_next_stage_setup();
 s32 func_00171990();
@@ -245,7 +245,7 @@ extern u16 g_sprite_palette_as_u16_a[];
 extern u16 D_002BF410_as_u16_a[];
 extern u16 D_002BF450_as_u16_a[];
 #ifdef DEATH_LABEL
-s32 func_0013B920();
+s32 fade_out();
 s32 music_fade_out();
 extern u8 D_00269920[];
 extern u8 D_002698B0[];
@@ -353,7 +353,7 @@ block_25:
                 reg_a0 = (u8 *)D_002698B0;
             }
             *(u8 *)(reg_a5 + 7) = 0xB;
-            func_0013B920();
+            fade_out();
             *(u16 *)(reg_a5 + 8) = reg_d0.h[1];
             *(u16 *)(reg_a5 + 0xA) = reg_d0.h[0];
             reg_d1.w = 0;
@@ -372,7 +372,7 @@ block_25:
         func_00132420();
         reg_d0.h[1] = *(u16 *)(reg_a5 + 8);
         reg_d0.h[0] = *(u16 *)(reg_a5 + 0xA);
-        func_0013C350();
+        fade_is_running();
         if (cond_flag == 0) {
             reg_d0.h[1] = *(u16 *)(reg_a5 + 8);
             reg_d0.h[0] = *(u16 *)(reg_a5 + 0xA);
@@ -381,7 +381,7 @@ block_25:
                 *(u8 *)(reg_a5 + 3) = 2U;
                 return;
             }
-            func_0013C300();
+            fade_release();
             p1_next_stage_setup();
             p2_next_stage_setup();
             g_boss_present_as_s16 = 0;
@@ -402,7 +402,7 @@ block_25:
         if (*(u8 *)(reg_a5 + 6) == 0) {
             func_00171990();
             reg_a0 = (u8 *)(D_00269840);
-            func_0013B2E0();
+            fade_in_and_release();
             *(u8 *)(reg_a5 + 7) = 1U;
             reg_a0 = (u8 *)(g_sprite_palette_as_u16_a);
             reg_a1 = (u8 *)(D_002BF450_as_u16_a);
@@ -509,7 +509,7 @@ block_25:
                 reg_d0.h[0] = temp_a0_3;
                 reg_a0 += 2;
                 reg_d1.h[0] = 0x10;
-                func_0013AFF0();
+                color_at_brightness();
                 *(u16 *)reg_a1 = reg_d0.h[0];
                 reg_a1 += 2;
             } while ((s16)(reg_d7.h[0]--) >= 0);
@@ -572,7 +572,7 @@ s32 func_0012FB00();
 s32 func_00133070();
 s32 func_001330F0();
 s32 func_00133840();
-s32 func_0013B920();
+s32 fade_out();
 s32 input_get_p1_pressed();
 s32 input_get_p2_pressed();
 s32 music_fade_out();
@@ -1003,7 +1003,7 @@ next_499:
                         reg_a0 = (u8 *)D_002698B0_as_u16_a;
                     }
                     *(u8 *)(reg_a5 + 7) = 0xBU;
-                    func_0013B920();
+                    fade_out();
                     *(u16 *)(reg_a5 + 8) = (u16) reg_d0.h[1];
                     *(u16 *)(reg_a5 + 0xA) = (u16) reg_d0.h[0];
                 }
@@ -1063,7 +1063,7 @@ block_91:
                             reg_a0 = (u8 *)D_002698B0_as_u16_a;
                         }
                         *(u8 *)(reg_a5 + 7) = 0xBU;
-                        func_0013B920();
+                        fade_out();
                         *(u16 *)(reg_a5 + 8) = (u16) reg_d0.h[1];
                         *(u16 *)(reg_a5 + 0xA) = (u16) reg_d0.h[0];
                     }

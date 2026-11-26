@@ -639,7 +639,7 @@ void func_00134BA0(void) {
     task_stop_self();
 }
 
-s32 func_0013B190();                            /* extern */
+s32 fades_reset();                            /* extern */
 s32 sound_stop_effects();                            /* extern */
 s32 music_stop();                            /* extern */
 extern u16 g_loop;
@@ -649,7 +649,7 @@ extern s8 D_0028ED64_as_s8;
 void func_00134BD0(void) {
     music_stop();
     sound_stop_effects();
-    func_0013B190();
+    fades_reset();
     task_reset_all();
     reg_d0.h[0] = TASK_GAME_OVER;
     task_start();

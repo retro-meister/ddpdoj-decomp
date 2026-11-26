@@ -1,4 +1,5 @@
 #include "common.h"
+#include "fade.h"
 #include "task.h"
 #include "entity.h"
 #include "sdk/ps2sdk.h"
@@ -286,7 +287,6 @@ extern u16 stage5_scroll_palettes[];
 extern u16 stage5_scroll_sounds[];
 extern u16 stage5_scroll_events[];
 extern u16 stage5_plane2_scroll_events[];
-extern u16 D_00255470[];
 extern u16 D_0025C040[];
 extern u16 D_0025C060[];
 extern u16 D_0025C080[];
@@ -2154,7 +2154,7 @@ void func_0018E5A0(void) {
     if (stage1_scroll_palettes[18] != 0x12) {
         printf("error! avram_pal_tbl1[18]\n");
     }
-    STORE_POINTER(stage1_scroll_palettes + 18, D_00255470);
+    STORE_POINTER(stage1_scroll_palettes + 18, palette_black);
     if (stage1_scroll_palettes[21] != 0x15) {
         printf("error! avram_pal_tbl1[21]\n");
     }
@@ -2230,7 +2230,7 @@ void func_0018E5A0(void) {
     if (stage2_scroll_palettes[0] != 0x0) {
         printf("error! avram_pal_tbl2[0]\n");
     }
-    STORE_POINTER(stage2_scroll_palettes, D_00255470);
+    STORE_POINTER(stage2_scroll_palettes, palette_black);
     if (stage2_scroll_palettes[3] != 0x3) {
         printf("error! avram_pal_tbl2[3]\n");
     }
@@ -2350,7 +2350,7 @@ void func_0018E5A0(void) {
     if (stage3_scroll_palettes[0] != 0x0) {
         printf("error! avram_pal_tbl3[0]\n");
     }
-    STORE_POINTER(stage3_scroll_palettes, D_00255470);
+    STORE_POINTER(stage3_scroll_palettes, palette_black);
     if (stage3_scroll_palettes[3] != 0x3) {
         printf("error! avram_pal_tbl3[3]\n");
     }
@@ -2462,7 +2462,7 @@ void func_0018E5A0(void) {
     if (stage4_scroll_palettes[0] != 0x0) {
         printf("error! avram_pal_tbl4[0]\n");
     }
-    STORE_POINTER(stage4_scroll_palettes, D_00255470);
+    STORE_POINTER(stage4_scroll_palettes, palette_black);
     if (stage4_scroll_palettes[3] != 0x3) {
         printf("error! avram_pal_tbl4[3]\n");
     }
@@ -2566,7 +2566,7 @@ void func_0018E5A0(void) {
     if (stage5_scroll_palettes[0] != 0x0) {
         printf("error! avram_pal_tbl5[0]\n");
     }
-    STORE_POINTER(stage5_scroll_palettes, D_00255470);
+    STORE_POINTER(stage5_scroll_palettes, palette_black);
     if (stage5_scroll_palettes[3] != 0x3) {
         printf("error! avram_pal_tbl5[3]\n");
     }

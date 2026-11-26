@@ -318,13 +318,13 @@ void stage2_boss_mode_second_phase() {
 }
 
 s32 boss_movement_start();                            /* extern */
-s32 func_0013B8B0();                            /* extern */
+s32 fade_out_and_release();                            /* extern */
 
 void stage2_boss_mode_final_explosion_start(void) {
     reg_d0.w = 1;
     boss_movement_start();
     reg_a0 = (u8 *)stage2_boss_fade_palettes;
-    func_0013B8B0();
+    fade_out_and_release();
     FINAL_EXPLOSION(reg_a4)->step = 0;
     FINAL_EXPLOSION(reg_a4)->blast_timer.h = 0x101;
     FINAL_EXPLOSION(reg_a4)->blast = 0;
@@ -343,7 +343,7 @@ s32 boss_flash_start();
 s32 boss_flash_running();
 s32 explosion_spawn();
 s32 explosion_burst_medium();
-s32 func_0013B2E0();
+s32 fade_in_and_release();
 void sfx_explosion_ground_medium();
 s32 sfx_explosion_boss();
 s32 rng_next();
@@ -429,7 +429,7 @@ loop_6:
             boss_flash_running();
             if (cond_flag == 0) {
                 reg_a0 = (u8 *)stage2_boss_flash_palettes;
-                func_0013B2E0();
+                fade_in_and_release();
                 boss_part_hide_all();
                 FINAL_EXPLOSION(reg_a4)->step = 3U;
                 FINAL_EXPLOSION(reg_a4)->rounds_left = 1U;

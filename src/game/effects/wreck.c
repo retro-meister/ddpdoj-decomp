@@ -1,4 +1,5 @@
 #include "common.h"
+#include "fade.h"
 #include "enemy.h"
 #include "player.h"
 #include "entity.h"
@@ -44,8 +45,6 @@ void func_00211F40(void);
 
 extern u16 D_00246C50[];
 extern u16 g_stage3_map_palettes[];
-extern u16 D_00255470[];
-extern u16 g_default_sprite_palette_as_u16_a[];
 extern u16 D_0025F770_as_u16_a[];
 extern u16 D_0025FBB0_as_u16_a[];
 extern u16 D_0025FBF0_as_u16_a[];
@@ -128,12 +127,12 @@ extern void input_get_p2_pressed(void);
 
 void func_0020F550(void) {
     STORE_POINTER(slowdown_budget_limits_loop2 + 16, D_002624B0);
-    STORE_POINTER(slowdown_budget_limits_loop2 + 23, g_default_sprite_palette_as_u16_a);
+    STORE_POINTER(slowdown_budget_limits_loop2 + 23, palette_white);
     STORE_POINTER(D_00269708 + 8, D_00269750);
     STORE_POINTER(D_00269708 + 16, D_00269780);
     STORE_POINTER(D_00269708 + 24, D_002697B0);
     STORE_POINTER(D_00269800 + 4, D_00262470);
-    STORE_POINTER(D_00269800 + 11, g_default_sprite_palette_as_u16_a);
+    STORE_POINTER(D_00269800 + 11, palette_white);
     STORE_POINTER(D_00269840 + 4, D_00261F30);
     STORE_POINTER(D_00269840 + 11, D_00261FF0);
     STORE_POINTER(D_00269840 + 18, D_00262030);
@@ -141,33 +140,33 @@ void func_0020F550(void) {
     STORE_POINTER(D_00269840 + 32, D_002620B0);
     STORE_POINTER(D_00269840 + 39, D_002622B0);
     STORE_POINTER(D_00269840 + 46, D_00260FF0);
-    STORE_POINTER(D_002698B0 + 3, g_default_sprite_palette_as_u16_a);
-    STORE_POINTER(D_002698B0 + 9, g_default_sprite_palette_as_u16_a);
-    STORE_POINTER(D_002698B0 + 15, g_default_sprite_palette_as_u16_a);
-    STORE_POINTER(D_002698B0 + 21, g_default_sprite_palette_as_u16_a);
-    STORE_POINTER(D_002698B0 + 27, g_default_sprite_palette_as_u16_a);
-    STORE_POINTER(D_002698B0 + 33, g_default_sprite_palette_as_u16_a);
-    STORE_POINTER(D_002698B0 + 39, g_default_sprite_palette_as_u16_a);
-    STORE_POINTER(D_002698B0 + 45, g_default_sprite_palette_as_u16_a);
-    STORE_POINTER((u16 *)D_00269920 + 3, D_00255470);
-    STORE_POINTER((u16 *)D_00269920 + 9, D_00255470);
-    STORE_POINTER((u16 *)D_00269920 + 15, D_00255470);
-    STORE_POINTER((u16 *)D_00269920 + 21, D_00255470);
-    STORE_POINTER((u16 *)D_00269920 + 27, D_00255470);
-    STORE_POINTER((u16 *)D_00269920 + 33, D_00255470);
-    STORE_POINTER((u16 *)D_00269920 + 39, D_00255470);
-    STORE_POINTER((u16 *)D_00269920 + 45, D_00255470);
-    STORE_POINTER((u16 *)D_00269920 + 51, D_00255470);
-    STORE_POINTER((u16 *)D_00269920 + 57, D_00255470);
-    STORE_POINTER((u16 *)D_00269920 + 63, D_00255470);
-    STORE_POINTER((u16 *)D_00269920 + 69, D_00255470);
-    STORE_POINTER((u16 *)D_00269920 + 75, D_00255470);
-    STORE_POINTER((u16 *)D_00269920 + 81, D_00255470);
-    STORE_POINTER((u16 *)D_00269920 + 87, D_00255470);
-    STORE_POINTER((u16 *)D_00269920 + 93, D_00255470);
-    STORE_POINTER((u16 *)D_00269920 + 99, D_00255470);
-    STORE_POINTER((u16 *)D_00269920 + 105, D_00255470);
-    STORE_POINTER((u16 *)D_00269920 + 111, D_00255470);
+    STORE_POINTER(D_002698B0 + 3, palette_white);
+    STORE_POINTER(D_002698B0 + 9, palette_white);
+    STORE_POINTER(D_002698B0 + 15, palette_white);
+    STORE_POINTER(D_002698B0 + 21, palette_white);
+    STORE_POINTER(D_002698B0 + 27, palette_white);
+    STORE_POINTER(D_002698B0 + 33, palette_white);
+    STORE_POINTER(D_002698B0 + 39, palette_white);
+    STORE_POINTER(D_002698B0 + 45, palette_white);
+    STORE_POINTER((u16 *)D_00269920 + 3, palette_black);
+    STORE_POINTER((u16 *)D_00269920 + 9, palette_black);
+    STORE_POINTER((u16 *)D_00269920 + 15, palette_black);
+    STORE_POINTER((u16 *)D_00269920 + 21, palette_black);
+    STORE_POINTER((u16 *)D_00269920 + 27, palette_black);
+    STORE_POINTER((u16 *)D_00269920 + 33, palette_black);
+    STORE_POINTER((u16 *)D_00269920 + 39, palette_black);
+    STORE_POINTER((u16 *)D_00269920 + 45, palette_black);
+    STORE_POINTER((u16 *)D_00269920 + 51, palette_black);
+    STORE_POINTER((u16 *)D_00269920 + 57, palette_black);
+    STORE_POINTER((u16 *)D_00269920 + 63, palette_black);
+    STORE_POINTER((u16 *)D_00269920 + 69, palette_black);
+    STORE_POINTER((u16 *)D_00269920 + 75, palette_black);
+    STORE_POINTER((u16 *)D_00269920 + 81, palette_black);
+    STORE_POINTER((u16 *)D_00269920 + 87, palette_black);
+    STORE_POINTER((u16 *)D_00269920 + 93, palette_black);
+    STORE_POINTER((u16 *)D_00269920 + 99, palette_black);
+    STORE_POINTER((u16 *)D_00269920 + 105, palette_black);
+    STORE_POINTER((u16 *)D_00269920 + 111, palette_black);
     STORE_POINTER(continue_player1.other_routine, func_00130250);
     STORE_POINTER(continue_player1.held, input_get_p1_held);
     STORE_POINTER(continue_player1.pressed, input_get_p1_pressed);
@@ -348,9 +347,9 @@ void func_00210C90(void) {
 
 s32 func_001317E0();
 s32 func_00133070();
-s32 func_0013B920();
-s32 func_0013C300();
-s32 func_0013C350();
+s32 fade_out();
+s32 fade_release();
+s32 fade_is_running();
 s32 func_0022B660();
 s32 replay_start_result();
 s32 replay_start_run_end();
@@ -413,7 +412,7 @@ void func_00210D00() {
                 ENTITY(reg_a6)->sprite.h -= 1;
                 if (ENTITY(reg_a6)->sprite.h == 0) {
                     reg_a0 = D_00269920;
-                    func_0013B920();
+                    fade_out();
                     ENTITY(reg_a6)->hit_y_minus.h = (u16) reg_d0.h[1];
                     ENTITY(reg_a6)->hit_x_plus.h = (u16) reg_d0.h[0];
                 }
@@ -421,11 +420,11 @@ void func_00210D00() {
         } else {
             reg_d0.h[1] = ENTITY(reg_a6)->hit_y_minus.h;
             reg_d0.h[0] = ENTITY(reg_a6)->hit_x_plus.h;
-            func_0013C350();
+            fade_is_running();
             if (cond_flag == 0) {
                 reg_d0.h[1] = ENTITY(reg_a6)->hit_y_minus.h;
                 reg_d0.h[0] = ENTITY(reg_a6)->hit_x_plus.h;
-                func_0013C300();
+                fade_release();
                 if (g_replay_mode == 2) {
                     if ((g_loop == 1) && (g_stage == 4)) {
                         replay_start_result();

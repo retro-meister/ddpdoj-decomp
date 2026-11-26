@@ -3,7 +3,7 @@
 #include "task.h"
 #include "entity.h"
 
-s32 func_0013AFF0();
+s32 color_at_brightness();
 s32 sprite_palette_load();
 s32 velocity_from_dir256();
 extern u8 D_0028DF0C;
@@ -68,7 +68,7 @@ loop_2:
     reg_d0.h[0] = *(u16 *)reg_a0;
     reg_a0 += 2;
     reg_d1.h[0] = reg_d6.h[0];
-    func_0013AFF0();
+    color_at_brightness();
     *(u16 *)reg_a1 = reg_d0.h[0];
     reg_a1 += 2;
     t = reg_d7.h[0] - 1;

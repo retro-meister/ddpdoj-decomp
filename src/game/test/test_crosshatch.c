@@ -1,18 +1,18 @@
 #include "common.h"
+#include "fade.h"
 #include "test_mode.h"
 
 s32 sprite_palette_load();
 s32 input_get_p1_held();
 s32 sprite_draw();
 
-extern s32 g_default_sprite_palette[];
 extern s32 test_crosshatch_text_exit[];
 
 void test_crosshatch_begin(void) {
     layers_clear_all();
     test_palettes_load();
     reg_d0.h[0] = 0;
-    reg_a0 = (u8 *)g_default_sprite_palette;
+    reg_a0 = (u8 *)palette_white;
     sprite_palette_load();
     g_test_cursor = 0;
     g_test_redraw = 1;

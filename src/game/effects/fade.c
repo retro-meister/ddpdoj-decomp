@@ -1,12 +1,13 @@
 #include "common.h"
+#include "fade.h"
 
-void func_0013B3C0(void);
-void func_0013B990(void);
-void func_0013BEC0(void);
-void func_0013C300(void);
-void func_0013C4B0(void);
+void fade_in_start(void);
+void fade_out_start(void);
+void fade_to_black_start(void);
+void fade_release(void);
+void fade_step(void);
 
-void func_0013AF10(void) {
+void color_to_rgb(void) {
     reg_d2.h[0] = reg_d1.h[0];
     reg_d0.w = 0xA;
     reg_d4.h[0] = reg_d1.h[0];
@@ -18,7 +19,7 @@ void func_0013AF10(void) {
     reg_d3.h[0] >>= 5;
 }
 
-void func_0013AF70(void) {
+void rgb_to_color(void) {
     reg_d1.w = 0;
     reg_d0.w = 0xA;
     reg_d2.h[0] <<= 0xA;
@@ -32,7 +33,7 @@ void func_0013AF70(void) {
 }
 
 
-void func_0013AFF0(void) {
+void color_at_brightness(void) {
     u32 save_d1;
     u32 save_d2;
     u32 save_d3;
@@ -50,7 +51,7 @@ void func_0013AFF0(void) {
     save_d7 = reg_d7.w;
     reg_d7.h[0] = reg_d1.h[0];
     reg_d1.h[0] = reg_d0.h[0];
-    func_0013AF10();
+    color_to_rgb();
     reg_d2.h[0] = (s16)reg_d2.h[0] << 8;
     reg_d3.h[0] = (s16)reg_d3.h[0] << 8;
     reg_d4.h[0] = (s16)reg_d4.h[0] << 8;
@@ -75,7 +76,7 @@ void func_0013AFF0(void) {
     if ((s16)reg_d4.h[0] > 0x1F) {
         reg_d4.h[0] = 0x1F;
     }
-    func_0013AF70();
+    rgb_to_color();
     reg_d0.h[0] = reg_d1.h[0];
     reg_d1.w = save_d1;
     reg_d2.w = save_d2;
@@ -96,7 +97,7 @@ extern s32 D_0028DF38;
 extern u8 D_0029C0C0[];
 extern u8 D_0029C150[];
 
-void func_0013B190(void) {
+void fades_reset(void) {
     s32 i;
 
     for (i = 0; i < 0x8C0; i++) {
@@ -146,7 +147,7 @@ extern s32 reg_save_a1_as_s32;
 extern s32 reg_save_a0;
 
 
-void func_0013B2E0(void)
+void fade_in_and_release(void)
 {
     reg_save_d1 = reg_d1.w;
     reg_save_d2 = reg_d2.w;
@@ -162,10 +163,10 @@ void func_0013B2E0(void)
     reg_save_a4 = (s32)reg_a4;
 
     reg_d6.h[0] = 1;
-    func_0013B3C0();
+    fade_in_start();
 }
 
-void func_0013B350(void)
+void fade_in(void)
 {
     reg_save_d1 = reg_d1.w;
     reg_save_d2 = reg_d2.w;
@@ -180,18 +181,18 @@ void func_0013B350(void)
     reg_save_a3 = (s32)reg_a3;
     reg_save_a4 = (s32)reg_a4;
     reg_d6.h[0] = 0;
-    func_0013B3C0();
+    fade_in_start();
 }
 
-extern u8 D_002553F0[];
-extern u8 D_002554F0[];
+extern u16 fade_speeds[32][2];
+extern FadeArea fade_areas[3];
 extern u16 *reg_save_a4_as_u16_p;
 extern u32 reg_save_a3_as_u32;
 extern u8 *reg_save_a2;
 extern u8 *reg_save_a1;
 extern u16 *reg_save_a0_as_u16_p;
 
-void func_0013B3C0(void) {
+void fade_in_start(void) {
     u8 *saved_a0;
     u8 *saved_a1;
     u32 t;
@@ -227,10 +228,10 @@ loop_2:
     reg_a0 += 2;
     reg_d2.h[0] = *(u16 *)reg_a0;
     reg_a0 += 2;
-    reg_tmp.w = (*(u32 *)((u8 *)((D_002554F0 + (reg_d2.h[0] & ~3))) + (4)));
+    reg_tmp.w = (*(u32 *)((u8 *)(((u8 *)fade_areas + (reg_d2.h[0] & ~3))) + (4)));
     *(u16 *)(reg_a2 + 6) = reg_tmp.h[1];
     *(u16 *)(reg_a2 + 8) = reg_tmp.h[0];
-    reg_a3 = *(u8 **)(D_002554F0 + (reg_d2.h[0] & ~3));
+    reg_a3 = *(u8 **)((u8 *)fade_areas + (reg_d2.h[0] & ~3));
     t5 = *(u16 *)reg_a0;
     reg_a3 += t5;
     reg_a0 += 2;
@@ -245,7 +246,7 @@ loop_2:
     reg_a0 += 2;
     reg_d3.h[0] = *(u16 *)reg_a0;
     reg_a0 += 2;
-    reg_a3 = (u8 *)((u32) D_002553F0);
+    reg_a3 = (u8 *)((u32) fade_speeds);
     reg_d3.h[0] &= 0x1F;
     reg_d3.h[0] *= 4;
     reg_a3 += reg_d3.h[0];
@@ -292,7 +293,7 @@ next_2:
     reg_a1 = saved_a1;
     if ((s16) reg_d0.h[0] >= 0) goto next_4;
     reg_d0.w = (u32) reg_a1;
-    func_0013C300();
+    fade_release();
     goto next_5;
 next_4:
     reg_d0.w = (u32) reg_a1;
@@ -333,7 +334,7 @@ next_5:
 
 
 
-void func_0013B8B0(void)
+void fade_out_and_release(void)
 {
     reg_save_d1 = reg_d1.w;
     reg_save_d2 = reg_d2.w;
@@ -348,10 +349,10 @@ void func_0013B8B0(void)
     reg_save_a2_as_s32 = (s32)reg_a2;
     reg_save_a3 = (s32)reg_a3;
     reg_save_a4 = (s32)reg_a4;
-    func_0013B990();
+    fade_out_start();
 }
 
-void func_0013B920(void)
+void fade_out(void)
 {
     reg_save_d1 = reg_d1.w;
     reg_save_d2 = reg_d2.w;
@@ -366,10 +367,10 @@ void func_0013B920(void)
     reg_save_a3 = (s32)reg_a3;
     reg_save_a4 = (s32)reg_a4;
     reg_d6.h[0] = 0;
-    func_0013B990();
+    fade_out_start();
 }
 
-void func_0013B990(void) {
+void fade_out_start(void) {
     u8 *saved_a0;
     u8 *saved_a1;
     u32 t;
@@ -403,10 +404,10 @@ loop_2:
     *(s16 *)(reg_a2 + 2) = 0;
     reg_d2.h[0] = *(u16 *)reg_a0;
     reg_a0 += 2;
-    reg_tmp.w = (*(u32 *)((u8 *)((D_002554F0 + (reg_d2.h[0] & ~3))) + (4)));
+    reg_tmp.w = (*(u32 *)((u8 *)(((u8 *)fade_areas + (reg_d2.h[0] & ~3))) + (4)));
     *(u16 *)(reg_a2 + 6) = reg_tmp.h[1];
     *(u16 *)(reg_a2 + 8) = reg_tmp.h[0];
-    reg_a3 = *(u8 **)(D_002554F0 + (reg_d2.h[0] & ~3));
+    reg_a3 = *(u8 **)((u8 *)fade_areas + (reg_d2.h[0] & ~3));
     t5 = *(u16 *)reg_a0;
     reg_a3 += t5;
     reg_a0 += 2;
@@ -421,7 +422,7 @@ loop_2:
     reg_a0 += 2;
     reg_d3.h[0] = *(u16 *)reg_a0;
     reg_a0 += 2;
-    reg_a3 = (u8 *)((u32) D_002553F0);
+    reg_a3 = (u8 *)((u32) fade_speeds);
     reg_d3.h[0] &= 0x1F;
     reg_d3.h[0] *= 4;
     reg_a3 += reg_d3.h[0];
@@ -455,7 +456,7 @@ next_2:
     reg_a1 = saved_a1;
     if ((s16) reg_d0.h[0] >= 0) goto next_4;
     reg_d0.w = (u32) reg_a1;
-    func_0013C300();
+    fade_release();
     goto next_5;
 next_4:
     reg_d0.w = (u32) reg_a1;
@@ -496,7 +497,7 @@ next_5:
 
 
 
-void func_0013BDE0(void)
+void fade_to_black_and_release(void)
 {
     reg_save_d1 = reg_d1.w;
     reg_save_d2 = reg_d2.w;
@@ -511,10 +512,10 @@ void func_0013BDE0(void)
     reg_save_a3 = (s32)reg_a3;
     reg_save_a4 = (s32)reg_a4;
     reg_d6.h[0] = 1;
-    func_0013BEC0();
+    fade_to_black_start();
 }
 
-void func_0013BE50(void)
+void fade_to_black(void)
 {
     reg_save_d1 = reg_d1.w;
     reg_save_d2 = reg_d2.w;
@@ -529,12 +530,11 @@ void func_0013BE50(void)
     reg_save_a3 = (s32)reg_a3;
     reg_save_a4 = (s32)reg_a4;
     reg_d6.h[0] = 0;
-    func_0013BEC0();
+    fade_to_black_start();
 }
 
-extern u8 D_00255470_as_u8_a[];
 
-void func_0013BEC0(void) {
+void fade_to_black_start(void) {
     u8 *saved_a0;
     u8 *saved_a1;
     u32 t;
@@ -568,24 +568,24 @@ loop_2:
     *(s16 *)(reg_a2 + 0x1E) = 1;
     reg_d2.h[0] = *(u16 *)reg_a0;
     reg_a0 += 2;
-    reg_tmp.w = (*(u32 *)((u8 *)((D_002554F0 + (reg_d2.h[0] & ~3))) + (4)));
+    reg_tmp.w = (*(u32 *)((u8 *)(((u8 *)fade_areas + (reg_d2.h[0] & ~3))) + (4)));
     *(u16 *)(reg_a2 + 6) = reg_tmp.h[1];
     *(u16 *)(reg_a2 + 8) = reg_tmp.h[0];
-    reg_a3 = *(u8 **)(D_002554F0 + (reg_d2.h[0] & ~3));
+    reg_a3 = *(u8 **)((u8 *)fade_areas + (reg_d2.h[0] & ~3));
     t5 = *(u16 *)reg_a0;
     reg_a3 += t5;
     reg_a0 += 2;
     reg_tmp.w = (u32)reg_a3;
     *(u16 *)(reg_a2 + 0xE) = reg_tmp.h[1];
     *(u16 *)(reg_a2 + 0x10) = reg_tmp.h[0];
-    reg_tmp.w = (u32) D_00255470_as_u8_a;
+    reg_tmp.w = (u32) palette_black;
     *(u16 *)(reg_a2 + 0xA) = reg_tmp.h[1];
     *(u16 *)(reg_a2 + 0xC) = reg_tmp.h[0];
     *(u16 *)(reg_a2 + 4) = *(u16 *)reg_a0;
     reg_a0 += 2;
     reg_d3.h[0] = *(u16 *)reg_a0;
     reg_a0 += 2;
-    reg_a3 = (u8 *)((u32) D_002553F0);
+    reg_a3 = (u8 *)((u32) fade_speeds);
     reg_d3.h[0] &= 0x1F;
     reg_d3.h[0] *= 4;
     reg_a3 += reg_d3.h[0];
@@ -619,7 +619,7 @@ next_2:
     reg_a1 = saved_a1;
     if ((s16) reg_d0.h[0] >= 0) goto next_4;
     reg_d0.w = (u32) reg_a1;
-    func_0013C300();
+    fade_release();
     goto next_5;
 next_4:
     reg_d0.w = (u32) reg_a1;
@@ -658,7 +658,7 @@ next_5:
 }
 
 
-void func_0013C300(void)
+void fade_release(void)
 {
     u32 saved_data_register = reg_d0.w;
     u32 saved_address_register = (u32)reg_a0;
@@ -678,7 +678,7 @@ void func_0013C300(void)
 }
 
 
-void func_0013C350(void) {
+void fade_is_running(void) {
     u32 temp_d0;
     u32 temp_d1;
     u8 *temp_a0;
@@ -710,7 +710,7 @@ void func_0013C350(void) {
 }
 
 
-void func_0013C3F0(void) {
+void fades_update(void) {
     u16 temp_a0;
     reg_d7.w = 2;
     reg_a0 = D_0029C0C0;
@@ -719,14 +719,14 @@ void func_0013C3F0(void) {
         if ((s16) reg_tmp.h[0] < 0) {
             reg_d0.h[1] = *(u16 *)(reg_a0 + 0x2C);
             reg_d0.h[0] = *(u16 *)(reg_a0 + 0x2E);
-            func_0013C4B0();
+            fade_step();
             temp_a0 = *(u16 *)(reg_a0 + 4);
             if ((temp_a0 != 0) && (temp_a0 == 1)) {
                 reg_d0.w = (u32) reg_a0;
-                func_0013C350();
+                fade_is_running();
                 if (cond_flag == 0) {
                     reg_d0.w = (u32) reg_a0;
-                    func_0013C300();
+                    fade_release();
                 }
             }
         }
@@ -735,7 +735,7 @@ void func_0013C3F0(void) {
 }
 
 
-void func_0013C4B0(void) {
+void fade_step(void) {
 loop_1:
     reg_a4 = (u8 *)reg_d0.w;
     reg_tmp.h[0] = *(u16 *)(reg_a4 + 0);
@@ -774,12 +774,12 @@ loop_2:
     reg_d2.h[0] &= 0x7FFF;
     if (reg_d2.h[0] == reg_d1.h[0]) goto next_1;
     reg_d1.h[0] = *(u16 *)reg_a3;
-    func_0013AF10();
+    color_to_rgb();
     D_0028DF34 = reg_d2.h[0];
     D_0028DF30 = reg_d3.h[0];
     D_0028DF2C = reg_d4.h[0];
     reg_d1.h[0] = *(u16 *)reg_a2;
-    func_0013AF10();
+    color_to_rgb();
     D_0028DF28 = reg_d2.h[0];
     D_0028DF24 = reg_d3.h[0];
     D_0028DF20 = reg_d4.h[0];
@@ -850,7 +850,7 @@ skip_b:
     reg_d2.h[0] = *(u16 *)&D_0028DF34;
     reg_d3.h[0] = *(u16 *)&D_0028DF30;
     reg_d4.h[0] = *(u16 *)&D_0028DF2C;
-    func_0013AF70();
+    rgb_to_color();
     *(u16 *)reg_a3 = reg_d1.h[0];
     *(u16 *)reg_a1 = 1;
 next_1:
@@ -863,6 +863,70 @@ block_next:
     reg_d0.h[0] = *(u16 *)(reg_a4 + 0x2E);
     if (reg_d0.w != 0) goto loop_1;
 }
+
+extern u8 D_0029FCB0[];
+extern u8 D_0028E0C0[];
+extern u8 D_0029F4B0[];
+extern u8 D_0028E0BC[];
+extern u8 D_0029F2D0[];
+extern u8 D_0028E0B8[];
+
+/* How fast a fade runs: the frames between two steps and the brightness added at a step. */
+u16 fade_speeds[32][2] = {
+    { 0, 4 },
+    { 0, 3 },
+    { 0, 2 },
+    { 0, 1 },
+    { 1, 1 },
+    { 2, 1 },
+    { 3, 1 },
+    { 4, 1 },
+    { 5, 1 },
+    { 6, 1 },
+    { 7, 1 },
+    { 8, 1 },
+    { 9, 1 },
+    { 10, 1 },
+    { 11, 1 },
+    { 12, 1 },
+    { 13, 1 },
+    { 14, 1 },
+    { 15, 1 },
+    { 16, 1 },
+    { 17, 1 },
+    { 18, 1 },
+    { 19, 1 },
+    { 20, 1 },
+    { 21, 1 },
+    { 22, 1 },
+    { 23, 1 },
+    { 24, 1 },
+    { 25, 1 },
+    { 26, 1 },
+    { 27, 1 },
+    { 28, 1 },
+};
+
+u16 palette_black[32] = {
+    0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000,
+    0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000,
+    0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000,
+    0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000,
+};
+
+u16 palette_white[32] = {
+    0x7FFF, 0x7FFF, 0x7FFF, 0x7FFF, 0x7FFF, 0x7FFF, 0x7FFF, 0x7FFF,
+    0x7FFF, 0x7FFF, 0x7FFF, 0x7FFF, 0x7FFF, 0x7FFF, 0x7FFF, 0x7FFF,
+    0x7FFF, 0x7FFF, 0x7FFF, 0x7FFF, 0x7FFF, 0x7FFF, 0x7FFF, 0x7FFF,
+    0x7FFF, 0x7FFF, 0x7FFF, 0x7FFF, 0x7FFF, 0x7FFF, 0x7FFF, 0x7FFF,
+};
+
+/* The colours a fade can work on, and the flag that says they changed. */
+FadeArea fade_areas[3] = {
+    { D_0029FCB0, D_0028E0C0 },
+    { D_0029F4B0, D_0028E0BC },
+    { D_0029F2D0, D_0028E0B8 },
+};
 
 /* .sbss (the compiler lays these out in reverse) */
 s32 D_0028DF38;

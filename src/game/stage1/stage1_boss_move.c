@@ -182,7 +182,7 @@ s32 boss_phase_start();
 s32 boss_movement_start();
 s32 boss_part_show();
 s32 boss_animation_start();
-s32 func_0013B2E0();
+s32 fade_in_and_release();
 s32 stage1_boss_shield_off();
 s32 stage1_boss_parts_enable();
 s32 entity_velocity();
@@ -273,7 +273,7 @@ void stage1_boss_move_enter(void) {
                 boss_part_show();
                 reg_d0.w = 6;
                 reg_a0 = (u8 *)(stage1_boss_enter_flash);
-                func_0013B2E0();
+                fade_in_and_release();
             }
         }
     }
