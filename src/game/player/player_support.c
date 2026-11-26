@@ -5,8 +5,13 @@
 #include "player.h"
 #include "entity.h"
 
+#ifdef DDPDOJ_PC
+extern void (*const p1_laser_clear_table[2])();
+extern void (*const D_0028C5E0[2])();
+#else
 extern void (*p1_laser_clear_table[2])();
 extern void (*D_0028C5E0[2])();
+#endif
 
 u16 hyper_bullet_speed_table[] = {
     0x0001, 0x0001, 0x0002, 0x0002, 0x0003, 0x0003, 0x0004, 0x0004,
@@ -754,12 +759,12 @@ void p2_maximum_digits_update(void) {
 
 
 void p1_bomb_item_take(void) {
-    reg_d6.b[0] = *(u8 *)(u32)(&PLAYER(((u8 *)g_player1))->bombs.b.count);
-    if (*(u8 *)(u32)(&PLAYER(((u8 *)g_player1))->bombs.b.capacity) == reg_d6.b[0]) goto block_50;
+    reg_d6.b[0] = *(u8 *)(ArcadeSavedAddress)(&PLAYER(((u8 *)g_player1))->bombs.b.count);
+    if (*(u8 *)(ArcadeSavedAddress)(&PLAYER(((u8 *)g_player1))->bombs.b.capacity) == reg_d6.b[0]) goto block_50;
     reg_d5.h[0] = reg_d6.h[0];
     reg_d5.b[0] += 1;
-    *(u8 *)(u32)(&PLAYER(((u8 *)g_player1))->bombs.b.count) = reg_d5.b[0];
-    if (*(u8 *)(u32)(&PLAYER(((u8 *)g_player1))->bombs.b.capacity) != reg_d5.b[0]) goto block_51;
+    *(u8 *)(ArcadeSavedAddress)(&PLAYER(((u8 *)g_player1))->bombs.b.count) = reg_d5.b[0];
+    if (*(u8 *)(ArcadeSavedAddress)(&PLAYER(((u8 *)g_player1))->bombs.b.capacity) != reg_d5.b[0]) goto block_51;
     PLAYER(((u8 *)g_player1))->flags.b[1] &= 0xBF;
     ((u8 *)g_player1)[0] |= 2;
     if (g_p1_maximum_count[0] == 0x63) goto block_end;
@@ -778,8 +783,8 @@ block_50:
     if (g_p1_maximum_count[0] == 0x63) goto block_end;
     g_p1_maximum_value[0] += 0x16;
     g_p1_maximum_count[0] += 1;
-    reg_tmp.b[0] = *(u8 *)(u32)(&PLAYER(((u8 *)g_player1))->flags.b[1]);
-    *(u8 *)(u32)(&PLAYER(((u8 *)g_player1))->flags.b[1]) &= 0xBF;
+    reg_tmp.b[0] = *(u8 *)(ArcadeSavedAddress)(&PLAYER(((u8 *)g_player1))->flags.b[1]);
+    *(u8 *)(ArcadeSavedAddress)(&PLAYER(((u8 *)g_player1))->flags.b[1]) &= 0xBF;
     if (reg_tmp.b[0] & 0x40) goto block_52;
     reg_tmp.b[0] = ((u8 *)g_player1)[0];
     ((u8 *)g_player1)[0] |= 2;
@@ -794,12 +799,12 @@ block_52:
 
 
 void p2_bomb_item_take(void) {
-    reg_d6.b[0] = *(u8 *)(u32)(&PLAYER(((u8 *)g_player2))->bombs.b.count);
-    if (*(u8 *)(u32)(&PLAYER(((u8 *)g_player2))->bombs.b.capacity) == reg_d6.b[0]) goto block_50;
+    reg_d6.b[0] = *(u8 *)(ArcadeSavedAddress)(&PLAYER(((u8 *)g_player2))->bombs.b.count);
+    if (*(u8 *)(ArcadeSavedAddress)(&PLAYER(((u8 *)g_player2))->bombs.b.capacity) == reg_d6.b[0]) goto block_50;
     reg_d5.h[0] = reg_d6.h[0];
     reg_d5.b[0] += 1;
-    *(u8 *)(u32)(&PLAYER(((u8 *)g_player2))->bombs.b.count) = reg_d5.b[0];
-    if (*(u8 *)(u32)(&PLAYER(((u8 *)g_player2))->bombs.b.capacity) != reg_d5.b[0]) goto block_51;
+    *(u8 *)(ArcadeSavedAddress)(&PLAYER(((u8 *)g_player2))->bombs.b.count) = reg_d5.b[0];
+    if (*(u8 *)(ArcadeSavedAddress)(&PLAYER(((u8 *)g_player2))->bombs.b.capacity) != reg_d5.b[0]) goto block_51;
     PLAYER(((u8 *)g_player2))->flags.b[1] &= 0xBF;
     ((u8 *)g_player2)[0] |= 2;
     if (g_p2_maximum_count[0] == 0x63) goto block_end;
@@ -818,8 +823,8 @@ block_50:
     if (g_p2_maximum_count[0] == 0x63) goto block_end;
     g_p2_maximum_value[0] += 0x16;
     g_p2_maximum_count[0] += 1;
-    reg_tmp.b[0] = *(u8 *)(u32)(&PLAYER(((u8 *)g_player2))->flags.b[1]);
-    *(u8 *)(u32)(&PLAYER(((u8 *)g_player2))->flags.b[1]) &= 0xBF;
+    reg_tmp.b[0] = *(u8 *)(ArcadeSavedAddress)(&PLAYER(((u8 *)g_player2))->flags.b[1]);
+    *(u8 *)(ArcadeSavedAddress)(&PLAYER(((u8 *)g_player2))->flags.b[1]) &= 0xBF;
     if (reg_tmp.b[0] & 0x40) goto block_52;
     reg_tmp.b[0] = ((u8 *)g_player2)[0];
     ((u8 *)g_player2)[0] |= 2;
@@ -980,14 +985,14 @@ void p1_invincible_start(void) {
 
 void p2_invincible_start(void)
 {
-    u32 destinationAddress;
+    ArcadeSavedAddress destinationAddress;
 
     reg_d0.b[0] = 0x50;
     if (g_boss_present_b1 & 4) {
         reg_d0.b[0] = 0x78;
     }
 
-    destinationAddress = (u32)(&PLAYER(((u8 *)g_player2))->state.b.invincible);
+    destinationAddress = (ArcadeSavedAddress)(&PLAYER(((u8 *)g_player2))->state.b.invincible);
     *(u8 *)destinationAddress = reg_d0.b[0];
     *(u8 *)destinationAddress = 0x50;
 }
@@ -1590,12 +1595,20 @@ void sfx_p1_laser_b_stop();
 void sfx_p2_laser_a_stop();
 void sfx_p2_laser_b_stop();
 
+#ifdef DDPDOJ_PC
+void (*const p1_laser_clear_table[2])() = {
+#else
 void (*p1_laser_clear_table[2])() = {
+#endif
     sfx_p1_laser_a_stop,
     sfx_p1_laser_b_stop,
 };
 
+#ifdef DDPDOJ_PC
+void (*const D_0028C5E0[2])() = {
+#else
 void (*D_0028C5E0[2])() = {
+#endif
     sfx_p2_laser_a_stop,
     sfx_p2_laser_b_stop,
 };

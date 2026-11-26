@@ -5,6 +5,10 @@
 u16 spread_bomb_phase1_template[] = {
     0x4400, 0x1800, 0x1800, 0x1800, 0x1800, 0x0002, 0x0000, 0x0006,
     0x0008, 0x0009, 0x0001,
+#ifdef DDPDOJ_PC
+    /* The original copy reads four zero words from linker padding. */
+    0, 0, 0, 0,
+#endif
 };
 
 u16 spread_bomb_a_phase1_frames[] = {
@@ -463,7 +467,7 @@ void spread_bomb_update(void) {
     reg_a0 = (u8 *)sfx_spread_bomb_a;
     reg_a1 += 2;
     switch (ENTITY(reg_a6)->flags.b[0] & 2) { case 0: goto next_1; }
-    reg_tmp.w = (u32) spread_bomb_b_phase1_frames;
+    reg_tmp.w = ARCADE_ADDRESS_ENCODE(spread_bomb_b_phase1_frames);
     ENTITY(reg_a6)->misc.h = (u16) reg_tmp.h[1];
     *(u16 *)(reg_a6 + 0x20) = (u16) reg_tmp.h[0];
     reg_a0 = (u8 *)sfx_spread_bomb_b;
@@ -479,7 +483,7 @@ block_a:
     if (*(u16 *)(reg_a6 + 0x28) != 0) goto block_c;
     reg_tmp.h[1] = ENTITY(reg_a6)->misc.h;
     reg_tmp.h[0] = *(u16 *)(reg_a6 + 0x20);
-    reg_a0 = (u8 *) reg_tmp.w;
+    reg_a0 = ARCADE_ADDRESS_DECODE(u8 *, reg_tmp.w);
     reg_d1.h[0] = ENTITY(reg_a6)->y.h;
     reg_d1.h[0] += *(u16 *)reg_a0;
     reg_a0 += 2;
@@ -503,7 +507,7 @@ block_a:
     if ((s32) reg_tmp.b[0] > 0) goto block_rts_2;
     *(u8 *)(reg_a6 + 0x23) = (u8) *(u8 *)(reg_a6 + 0x22);
     if (*(u16 *)reg_a0 == 0xFFFF) goto block_b;
-    reg_tmp.w = (u32) reg_a0;
+    reg_tmp.w = ARCADE_ADDRESS_ENCODE(reg_a0);
     ENTITY(reg_a6)->misc.h = (u16) reg_tmp.h[1];
     *(u16 *)(reg_a6 + 0x20) = (u16) reg_tmp.h[0];
 block_rts_2:
@@ -564,7 +568,7 @@ block_b:
     reg_a0 += 2;
     reg_a1 += 2;
     if (!(ENTITY(reg_a6)->flags.b[0] & 2)) goto block_c;
-    reg_tmp.w = (u32) spread_bomb_b_phase2_frames;
+    reg_tmp.w = ARCADE_ADDRESS_ENCODE(spread_bomb_b_phase2_frames);
     ENTITY(reg_a6)->misc.h = (u16) reg_tmp.h[1];
     *(u16 *)(reg_a6 + 0x20) = (u16) reg_tmp.h[0];
 block_c:
@@ -579,7 +583,7 @@ next_3:
     reg_d0.h[0] = *(u16 *)(reg_a6 + 0x24);
     reg_tmp.h[1] = ENTITY(reg_a6)->misc.h;
     reg_tmp.h[0] = *(u16 *)(reg_a6 + 0x20);
-    reg_a0 = (u8 *) reg_tmp.w;
+    reg_a0 = ARCADE_ADDRESS_DECODE(u8 *, reg_tmp.w);
     ENTITY(reg_a6)->draw.h = (reg_d0.h[0] != 0) ? *(u16 *)((u8 *)reg_a0 + ((s16)reg_d0.h[0] & ~1)) : *(u16 *)reg_a0;
     ENTITY(reg_a6)->sprite.h = ((reg_d0.h[0] + 2) != 0) ? *(u16 *)((u8 *)reg_a0 + ((s16)(reg_d0.h[0] + 2) & ~1)) : *(u16 *)reg_a0;
     reg_tmp.h[0] = *(u16 *)(reg_a6 + 0x24);
@@ -639,7 +643,7 @@ block_d:
     reg_a0 += 2;
     reg_a1 += 2;
     if (!(ENTITY(reg_a6)->flags.b[0] & 2)) goto block_e;
-    reg_tmp.w = (u32) spread_bomb_b_phase3_frames;
+    reg_tmp.w = ARCADE_ADDRESS_ENCODE(spread_bomb_b_phase3_frames);
     ENTITY(reg_a6)->misc.h = (u16) reg_tmp.h[1];
     *(u16 *)(reg_a6 + 0x20) = (u16) reg_tmp.h[0];
 block_e:
@@ -653,7 +657,7 @@ next_5:
 block_f:
     reg_tmp.h[1] = ENTITY(reg_a6)->misc.h;
     reg_tmp.h[0] = *(u16 *)(reg_a6 + 0x20);
-    reg_a0 = (u8 *) reg_tmp.w;
+    reg_a0 = ARCADE_ADDRESS_DECODE(u8 *, reg_tmp.w);
     ENTITY(reg_a6)->draw.h = (u16) *(u16 *)reg_a0;
     reg_a0 += 2;
     ENTITY(reg_a6)->sprite.h = (u16) *(u16 *)reg_a0;
@@ -662,7 +666,7 @@ block_f:
     reg_tmp.h[1] = *(u16 *)reg_a0;
     reg_tmp.h[0] = *(u16 *)(reg_a0 + 2);
     if (reg_tmp.w == -1U) goto block_g;
-    reg_tmp.w = (u32) reg_a0;
+    reg_tmp.w = ARCADE_ADDRESS_ENCODE(reg_a0);
     ENTITY(reg_a6)->misc.h = (u16) reg_tmp.h[1];
     *(u16 *)(reg_a6 + 0x20) = (u16) reg_tmp.h[0];
     return;
@@ -960,25 +964,25 @@ void laser_bomb_update(arg3)
         reg_d0.w = 0;
         g_laser_bomb_sizzle = reg_d0.h[0];
         if (ENTITY(reg_a6)->flags.b[0] & 2) {
-            reg_tmp.w = (u32) laser_bomb_b_base_frames;
+            reg_tmp.w = ARCADE_ADDRESS_ENCODE(laser_bomb_b_base_frames);
             ENTITY(reg_a6)->misc.h = (u16) reg_tmp.h[1];
             *(u16 *)(reg_a6 + 0x20) = (u16) reg_tmp.h[0];
-            reg_tmp.w = (u32) laser_bomb_b_beam_table;
+            reg_tmp.w = ARCADE_ADDRESS_ENCODE(laser_bomb_b_beam_table);
             *(u16 *)(reg_a6 + 0x28) = (u16) reg_tmp.h[1];
             *(u16 *)(reg_a6 + 0x2A) = (u16) reg_tmp.h[0];
-            reg_tmp.w = (u32) laser_bomb_b_beam_frames;
+            reg_tmp.w = ARCADE_ADDRESS_ENCODE(laser_bomb_b_beam_frames);
             *(u16 *)(reg_a6 + 0x2C) = (u16) reg_tmp.h[1];
             var_a3 = reg_tmp.h[0];
             *(u16 *)(reg_a6 + 0x2E) = var_a3;
-            reg_tmp.w = (u32) laser_bomb_b_tip_frames;
+            reg_tmp.w = ARCADE_ADDRESS_ENCODE(laser_bomb_b_tip_frames);
             *(u16 *)(reg_a6 + 0x7FE) = (u16) reg_tmp.h[1];
             var_a2 = (u8 *) reg_tmp.h[0];
             *(u16 *)(reg_a6 + 0x800) = (u16) var_a2;
-            reg_tmp.w = (u32) laser_bomb_b_muzzle_frames;
+            reg_tmp.w = ARCADE_ADDRESS_ENCODE(laser_bomb_b_muzzle_frames);
             *(u16 *)(reg_a6 + 0x82E) = (u16) reg_tmp.h[1];
             var_a1 = (u16 *) reg_tmp.h[0];
             *(u16 *)(reg_a6 + 0x830) = (u16) var_a1;
-            reg_tmp.w = (u32) laser_bomb_b_impact_frames;
+            reg_tmp.w = ARCADE_ADDRESS_ENCODE(laser_bomb_b_impact_frames);
             *(u16 *)(reg_a6 + 0x85E) = (u16) reg_tmp.h[1];
             var_a0 = reg_tmp.h[0];
             *(u16 *)(reg_a6 + 0x860) = var_a0;
@@ -1009,22 +1013,22 @@ void laser_bomb_update(arg3)
         reg_d0.h[0] = *(u16 *)(reg_a6 + 0x24);
         reg_tmp.h[1] = ENTITY(reg_a6)->misc.h;
         reg_tmp.h[0] = *(u16 *)(reg_a6 + 0x20);
-        reg_a0 = (u8 *) reg_tmp.w;
+        reg_a0 = ARCADE_ADDRESS_DECODE(u8 *, reg_tmp.w);
         ENTITY(reg_a6)->draw.h = (reg_d0.h[0] != 0) ? *(u16 *)((u8 *)reg_a0 + ((s16)reg_d0.h[0] & ~1)) : *(u16 *)reg_a0;
         ENTITY(reg_a6)->sprite.h = ((reg_d0.h[0] + 2) != 0) ? *(u16 *)((u8 *)reg_a0 + ((s16)(reg_d0.h[0] + 2) & ~1)) : *(u16 *)reg_a0;
         reg_tmp.h[1] = *(u16 *)(reg_a6 + 0x7FE);
         reg_tmp.h[0] = *(u16 *)(reg_a6 + 0x800);
-        reg_a0 = (u8 *) reg_tmp.w;
+        reg_a0 = ARCADE_ADDRESS_DECODE(u8 *, reg_tmp.w);
         *(u16 *)(reg_a6 + 0x7EA) = (reg_d0.h[0] != 0) ? *(u16 *)((u8 *)reg_a0 + ((s16)reg_d0.h[0] & ~1)) : *(u16 *)reg_a0;
         *(u16 *)(reg_a6 + 0x7EC) = ((reg_d0.h[0] + 2) != 0) ? *(u16 *)((u8 *)reg_a0 + ((s16)(reg_d0.h[0] + 2) & ~1)) : *(u16 *)reg_a0;
         reg_tmp.h[1] = *(u16 *)(reg_a6 + 0x82E);
         reg_tmp.h[0] = *(u16 *)(reg_a6 + 0x830);
-        reg_a0 = (u8 *) reg_tmp.w;
+        reg_a0 = ARCADE_ADDRESS_DECODE(u8 *, reg_tmp.w);
         *(u16 *)(reg_a6 + 0x81A) = (reg_d0.h[0] != 0) ? *(u16 *)((u8 *)reg_a0 + ((s16)reg_d0.h[0] & ~1)) : *(u16 *)reg_a0;
         *(u16 *)(reg_a6 + 0x81C) = ((reg_d0.h[0] + 2) != 0) ? *(u16 *)((u8 *)reg_a0 + ((s16)(reg_d0.h[0] + 2) & ~1)) : *(u16 *)reg_a0;
         reg_tmp.h[1] = *(u16 *)(reg_a6 + 0x85E);
         reg_tmp.h[0] = *(u16 *)(reg_a6 + 0x860);
-        reg_a0 = (u8 *) reg_tmp.w;
+        reg_a0 = ARCADE_ADDRESS_DECODE(u8 *, reg_tmp.w);
         *(u16 *)(reg_a6 + 0x84A) = (reg_d0.h[0] != 0) ? *(u16 *)((u8 *)reg_a0 + ((s16)reg_d0.h[0] & ~1)) : *(u16 *)reg_a0;
         *(u16 *)(reg_a6 + 0x84C) = ((reg_d0.h[0] + 2) != 0) ? *(u16 *)((u8 *)reg_a0 + ((s16)(reg_d0.h[0] + 2) & ~1)) : *(u16 *)reg_a0;
         ENTITY(reg_a6)->move.h -= 1;
@@ -1055,7 +1059,7 @@ block_36:
 block_40:
     reg_tmp.h[1] = *(u16 *)(reg_a6 + 0x28);
     reg_tmp.h[0] = *(u16 *)(reg_a6 + 0x2A);
-    reg_a0 = (u8 *) reg_tmp.w;
+    reg_a0 = ARCADE_ADDRESS_DECODE(u8 *, reg_tmp.w);
     reg_tmp.h[1] = *(u16 *)reg_a0;
     reg_tmp.h[0] = *(u16 *)(reg_a0 + 2);
     if (reg_tmp.w != -1U) {
@@ -1079,7 +1083,7 @@ block_40:
         reg_a0 += 2;
         *(u16 *)(reg_a6 + 0x2E) = (u16) *(u16 *)reg_a0;
         reg_a0 += 2;
-        reg_tmp.w = (u32) reg_a0;
+        reg_tmp.w = ARCADE_ADDRESS_ENCODE(reg_a0);
         *(u16 *)(reg_a6 + 0x28) = (u16) reg_tmp.h[1];
         *(u16 *)(reg_a6 + 0x2A) = (u16) reg_tmp.h[0];
         laser_bomb_beam_rebuild();
@@ -1110,11 +1114,11 @@ next_20:
     reg_d0.h[0] = W(0x80A);
     reg_tmp.h[1] = W(0x2C);
     reg_tmp.h[0] = W(0x2E);
-    reg_a0 = (u8 *) reg_tmp.w;
+    reg_a0 = ARCADE_ADDRESS_DECODE(u8 *, reg_tmp.w);
     reg_tmp.h[1] = (reg_d0.h[0] != 0) ? *(u16 *)((u8 *)reg_a0 + ((s16)reg_d0.h[0] & ~1)) : *(u16 *)reg_a0;
     reg_tmp.h[0] = (((reg_d0.h[0] & 0xFFFF) + 2) != 0) ? *(u16 *)((u8 *)reg_a0 + ((s16)((reg_d0.h[0] & 0xFFFF) + 2) & ~1)) : *(u16 *)reg_a0;
-    reg_a0 = (u8 *) reg_tmp.w;
-    reg_d5.w = (u32) reg_a0;
+    reg_a0 = ARCADE_ADDRESS_DECODE(u8 *, reg_tmp.w);
+    reg_d5.w = ARCADE_ADDRESS_ENCODE(reg_a0);
     reg_d4.h[0] = W(0x24);
     reg_a0 += reg_d4.h[0];
     reg_d7.w = 0x28;
@@ -1172,7 +1176,7 @@ loop_40:
 next_100:
     reg_tmp.h[1] = W(0x18);
     reg_tmp.h[0] = W(0x1A);
-    reg_a1 = (u8 *) reg_tmp.w;
+    reg_a1 = ARCADE_ADDRESS_DECODE(u8 *, reg_tmp.w);
     W(0xA) = (reg_d4.h[0] != 0) ? *(u16 *)((u8 *)reg_a1 + ((s16)reg_d4.h[0] & ~1)) : *(u16 *)reg_a1;
     W(0xC) = ((reg_d4.h[0] + 2) != 0) ? *(u16 *)((u8 *)reg_a1 + ((s16)(reg_d4.h[0] + 2) & ~1)) : *(u16 *)reg_a1;
     reg_d0.h[0] = W(2);
@@ -1202,12 +1206,12 @@ next_190:
 }
 
 void laser_bomb_beam_draw_fading(void) {
-    u32 base;
+    ArcadeSavedAddress base;
 
     reg_tmp.h[1] = *(u16 *)(reg_a6 + 0x2C);
     reg_tmp.h[0] = *(u16 *)(reg_a6 + 0x2E);
-    reg_a0 = (u8 *)reg_tmp.w;
-    base = (u32)(reg_a0 + *(u16 *)(reg_a6 + 0x80A));
+    reg_a0 = ARCADE_ADDRESS_DECODE(u8 *, reg_tmp.w);
+    base = (ArcadeSavedAddress)(reg_a0 + *(u16 *)(reg_a6 + 0x80A));
     reg_d7.w = 0x28;
     reg_a6 = (u8 *)g_bomb_entities_1;
     reg_a0 = (u8 *)base;
@@ -1375,7 +1379,7 @@ loop_20:
 next_40:
     reg_tmp.h[1] = *(u16 *) (reg_a6 + 0x2C);
     reg_tmp.h[0] = *(u16 *) (reg_a6 + 0x2E);
-    reg_a0 = (u8 *) reg_tmp.w;
+    reg_a0 = ARCADE_ADDRESS_DECODE(u8 *, reg_tmp.w);
     reg_a0 += *(u16 *) (reg_a6 + 0x80A);
     reg_a2 = (u8 *) laser_bomb_segment_template;
     *(u16 *) reg_a1 = *(u16 *) reg_a2;

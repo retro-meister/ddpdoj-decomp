@@ -272,7 +272,12 @@ extern u16 D_00263CF0[];
 extern u16 D_00265B60[];
 extern u16 D_00265F60[];
 extern u16 D_00266330[];
+#ifdef DDPDOJ_PC
+extern u16 D_0028C5E8[];
+extern u16 D_0028C5F0[];
+#else
 extern u16 D_0028C5E0[];
+#endif
 extern u16 D_0028C9B0[];
 
 void task_table_init(void);
@@ -418,55 +423,55 @@ extern u16 laser_bomb_b_beam_row_11[];
 
 
 void bomb_tables_init(void) {
-    STORE_POINTER(spread_bomb_phase1_template + 8, spread_bomb_a_phase1_frames);
-    STORE_POINTER(spread_bomb_phase2_template + 10, spread_bomb_a_phase2_frames);
-    STORE_POINTER(spread_bomb_phase3_template + 10, spread_bomb_a_phase3_frames);
-    STORE_POINTER(laser_bomb_a_beam_frames, laser_bomb_a_beam_frame_00);
-    STORE_POINTER(laser_bomb_a_beam_frames + 2, laser_bomb_a_beam_frame_01);
-    STORE_POINTER(laser_bomb_a_beam_frames + 4, laser_bomb_a_beam_frame_02);
-    STORE_POINTER(laser_bomb_a_beam_frames + 6, laser_bomb_a_beam_frame_03);
-    STORE_POINTER(laser_bomb_a_beam_frames + 8, laser_bomb_a_beam_frame_04);
-    STORE_POINTER(laser_bomb_a_beam_frames + 10, laser_bomb_a_beam_frame_05);
-    STORE_POINTER(laser_bomb_a_beam_frames + 12, laser_bomb_a_beam_frame_06);
-    STORE_POINTER(laser_bomb_a_beam_frames + 14, laser_bomb_a_beam_frame_07);
-    STORE_POINTER(laser_bomb_a_beam_table + 8, laser_bomb_a_beam_row_00);
-    STORE_POINTER(laser_bomb_a_beam_table + 18, laser_bomb_a_beam_row_01);
-    STORE_POINTER(laser_bomb_a_beam_table + 28, laser_bomb_a_beam_row_02);
-    STORE_POINTER(laser_bomb_a_beam_table + 38, laser_bomb_a_beam_row_03);
-    STORE_POINTER(laser_bomb_a_beam_table + 48, laser_bomb_a_beam_row_04);
-    STORE_POINTER(laser_bomb_a_beam_table + 58, laser_bomb_a_beam_row_05);
-    STORE_POINTER(laser_bomb_a_beam_table + 68, laser_bomb_a_beam_row_06);
-    STORE_POINTER(laser_bomb_a_beam_table + 78, laser_bomb_a_beam_row_07);
-    STORE_POINTER(laser_bomb_a_beam_table + 88, laser_bomb_a_beam_row_08);
-    STORE_POINTER(laser_bomb_a_beam_table + 98, laser_bomb_a_beam_row_09);
-    STORE_POINTER(laser_bomb_a_beam_table + 108, laser_bomb_a_beam_row_10);
-    STORE_POINTER(laser_bomb_a_beam_table + 118, laser_bomb_a_beam_row_11);
-    STORE_POINTER(((u16 *)laser_bomb_b_beam_frames), laser_bomb_b_beam_frame_00);
-    STORE_POINTER(laser_bomb_b_beam_frames + 2, laser_bomb_b_beam_frame_01);
-    STORE_POINTER(laser_bomb_b_beam_frames + 4, laser_bomb_b_beam_frame_02);
-    STORE_POINTER(laser_bomb_b_beam_frames + 6, laser_bomb_b_beam_frame_03);
-    STORE_POINTER(laser_bomb_b_beam_frames + 8, laser_bomb_b_beam_frame_04);
-    STORE_POINTER(laser_bomb_b_beam_frames + 10, laser_bomb_b_beam_frame_05);
-    STORE_POINTER(laser_bomb_b_beam_frames + 12, laser_bomb_b_beam_frame_06);
-    STORE_POINTER(laser_bomb_b_beam_frames + 14, laser_bomb_b_beam_frame_07);
-    STORE_POINTER(laser_bomb_b_beam_table + 8, laser_bomb_b_beam_row_00);
-    STORE_POINTER(laser_bomb_b_beam_table + 18, laser_bomb_b_beam_row_01);
-    STORE_POINTER(laser_bomb_b_beam_table + 28, laser_bomb_b_beam_row_02);
-    STORE_POINTER(laser_bomb_b_beam_table + 38, laser_bomb_b_beam_row_03);
-    STORE_POINTER(laser_bomb_b_beam_table + 48, laser_bomb_b_beam_row_04);
-    STORE_POINTER(laser_bomb_b_beam_table + 58, laser_bomb_b_beam_row_05);
-    STORE_POINTER(laser_bomb_b_beam_table + 68, laser_bomb_b_beam_row_06);
-    STORE_POINTER(laser_bomb_b_beam_table + 78, laser_bomb_b_beam_row_07);
-    STORE_POINTER(laser_bomb_b_beam_table + 88, laser_bomb_b_beam_row_08);
-    STORE_POINTER(laser_bomb_b_beam_table + 98, laser_bomb_b_beam_row_09);
-    STORE_POINTER(laser_bomb_b_beam_table + 108, laser_bomb_b_beam_row_10);
-    STORE_POINTER(laser_bomb_b_beam_table + 118, laser_bomb_b_beam_row_11);
-    STORE_POINTER(laser_bomb_template + 10, laser_bomb_a_base_frames);
-    STORE_POINTER(laser_bomb_template + 15, laser_bomb_a_beam_table);
-    STORE_POINTER(laser_bomb_template + 17, laser_bomb_a_beam_frames);
-    STORE_POINTER(laser_bomb_template + 30, laser_bomb_a_tip_frames);
-    STORE_POINTER(laser_bomb_template + 50, laser_bomb_a_muzzle_frames);
-    STORE_POINTER(laser_bomb_template + 70, laser_bomb_a_impact_frames);
+    STORE_ARCADE_ADDRESS(spread_bomb_phase1_template + 8, spread_bomb_a_phase1_frames);
+    STORE_ARCADE_ADDRESS(spread_bomb_phase2_template + 10, spread_bomb_a_phase2_frames);
+    STORE_ARCADE_ADDRESS(spread_bomb_phase3_template + 10, spread_bomb_a_phase3_frames);
+    STORE_ARCADE_ADDRESS(laser_bomb_a_beam_frames, laser_bomb_a_beam_frame_00);
+    STORE_ARCADE_ADDRESS(laser_bomb_a_beam_frames + 2, laser_bomb_a_beam_frame_01);
+    STORE_ARCADE_ADDRESS(laser_bomb_a_beam_frames + 4, laser_bomb_a_beam_frame_02);
+    STORE_ARCADE_ADDRESS(laser_bomb_a_beam_frames + 6, laser_bomb_a_beam_frame_03);
+    STORE_ARCADE_ADDRESS(laser_bomb_a_beam_frames + 8, laser_bomb_a_beam_frame_04);
+    STORE_ARCADE_ADDRESS(laser_bomb_a_beam_frames + 10, laser_bomb_a_beam_frame_05);
+    STORE_ARCADE_ADDRESS(laser_bomb_a_beam_frames + 12, laser_bomb_a_beam_frame_06);
+    STORE_ARCADE_ADDRESS(laser_bomb_a_beam_frames + 14, laser_bomb_a_beam_frame_07);
+    STORE_ARCADE_ADDRESS(laser_bomb_a_beam_table + 8, laser_bomb_a_beam_row_00);
+    STORE_ARCADE_ADDRESS(laser_bomb_a_beam_table + 18, laser_bomb_a_beam_row_01);
+    STORE_ARCADE_ADDRESS(laser_bomb_a_beam_table + 28, laser_bomb_a_beam_row_02);
+    STORE_ARCADE_ADDRESS(laser_bomb_a_beam_table + 38, laser_bomb_a_beam_row_03);
+    STORE_ARCADE_ADDRESS(laser_bomb_a_beam_table + 48, laser_bomb_a_beam_row_04);
+    STORE_ARCADE_ADDRESS(laser_bomb_a_beam_table + 58, laser_bomb_a_beam_row_05);
+    STORE_ARCADE_ADDRESS(laser_bomb_a_beam_table + 68, laser_bomb_a_beam_row_06);
+    STORE_ARCADE_ADDRESS(laser_bomb_a_beam_table + 78, laser_bomb_a_beam_row_07);
+    STORE_ARCADE_ADDRESS(laser_bomb_a_beam_table + 88, laser_bomb_a_beam_row_08);
+    STORE_ARCADE_ADDRESS(laser_bomb_a_beam_table + 98, laser_bomb_a_beam_row_09);
+    STORE_ARCADE_ADDRESS(laser_bomb_a_beam_table + 108, laser_bomb_a_beam_row_10);
+    STORE_ARCADE_ADDRESS(laser_bomb_a_beam_table + 118, laser_bomb_a_beam_row_11);
+    STORE_ARCADE_ADDRESS(((u16 *)laser_bomb_b_beam_frames), laser_bomb_b_beam_frame_00);
+    STORE_ARCADE_ADDRESS(laser_bomb_b_beam_frames + 2, laser_bomb_b_beam_frame_01);
+    STORE_ARCADE_ADDRESS(laser_bomb_b_beam_frames + 4, laser_bomb_b_beam_frame_02);
+    STORE_ARCADE_ADDRESS(laser_bomb_b_beam_frames + 6, laser_bomb_b_beam_frame_03);
+    STORE_ARCADE_ADDRESS(laser_bomb_b_beam_frames + 8, laser_bomb_b_beam_frame_04);
+    STORE_ARCADE_ADDRESS(laser_bomb_b_beam_frames + 10, laser_bomb_b_beam_frame_05);
+    STORE_ARCADE_ADDRESS(laser_bomb_b_beam_frames + 12, laser_bomb_b_beam_frame_06);
+    STORE_ARCADE_ADDRESS(laser_bomb_b_beam_frames + 14, laser_bomb_b_beam_frame_07);
+    STORE_ARCADE_ADDRESS(laser_bomb_b_beam_table + 8, laser_bomb_b_beam_row_00);
+    STORE_ARCADE_ADDRESS(laser_bomb_b_beam_table + 18, laser_bomb_b_beam_row_01);
+    STORE_ARCADE_ADDRESS(laser_bomb_b_beam_table + 28, laser_bomb_b_beam_row_02);
+    STORE_ARCADE_ADDRESS(laser_bomb_b_beam_table + 38, laser_bomb_b_beam_row_03);
+    STORE_ARCADE_ADDRESS(laser_bomb_b_beam_table + 48, laser_bomb_b_beam_row_04);
+    STORE_ARCADE_ADDRESS(laser_bomb_b_beam_table + 58, laser_bomb_b_beam_row_05);
+    STORE_ARCADE_ADDRESS(laser_bomb_b_beam_table + 68, laser_bomb_b_beam_row_06);
+    STORE_ARCADE_ADDRESS(laser_bomb_b_beam_table + 78, laser_bomb_b_beam_row_07);
+    STORE_ARCADE_ADDRESS(laser_bomb_b_beam_table + 88, laser_bomb_b_beam_row_08);
+    STORE_ARCADE_ADDRESS(laser_bomb_b_beam_table + 98, laser_bomb_b_beam_row_09);
+    STORE_ARCADE_ADDRESS(laser_bomb_b_beam_table + 108, laser_bomb_b_beam_row_10);
+    STORE_ARCADE_ADDRESS(laser_bomb_b_beam_table + 118, laser_bomb_b_beam_row_11);
+    STORE_ARCADE_ADDRESS(laser_bomb_template + 10, laser_bomb_a_base_frames);
+    STORE_ARCADE_ADDRESS(laser_bomb_template + 15, laser_bomb_a_beam_table);
+    STORE_ARCADE_ADDRESS(laser_bomb_template + 17, laser_bomb_a_beam_frames);
+    STORE_ARCADE_ADDRESS(laser_bomb_template + 30, laser_bomb_a_tip_frames);
+    STORE_ARCADE_ADDRESS(laser_bomb_template + 50, laser_bomb_a_muzzle_frames);
+    STORE_ARCADE_ADDRESS(laser_bomb_template + 70, laser_bomb_a_impact_frames);
 }
 
 extern u16 ship0_shot_list_1_00_00_02[];
@@ -3346,11 +3351,19 @@ void maximum_level_texts_init(void) {
     STORE_ARCADE_ADDRESS(((u16 *)p1_maximum_level_texts), D_00261CB0);
     STORE_ARCADE_ADDRESS(p1_maximum_level_texts + 4, D_00261E30);
     STORE_ARCADE_ADDRESS(p1_maximum_level_texts + 8, D_00261E70);
+#ifdef DDPDOJ_PC
+    STORE_ARCADE_ADDRESS(D_0028C5E8, D_00261EB0);
+#else
     STORE_POINTER(D_0028C5E0 + 4, D_00261EB0);
+#endif
     STORE_ARCADE_ADDRESS(((u16 *)p2_maximum_level_texts), D_00261CB0);
     STORE_ARCADE_ADDRESS(p2_maximum_level_texts + 4, D_00261E30);
     STORE_ARCADE_ADDRESS(p2_maximum_level_texts + 8, D_00261E70);
+#ifdef DDPDOJ_PC
+    STORE_ARCADE_ADDRESS(D_0028C5F0, D_00261EB0);
+#else
     STORE_POINTER(D_0028C5E0 + 8, D_00261EB0);
+#endif
 }
 
 extern u16 option_power_value_00_05[];

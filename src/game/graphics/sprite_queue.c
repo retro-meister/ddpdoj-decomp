@@ -760,12 +760,12 @@ void entity_draw_layer5(void) {
 
 void entity_draw_keep(void) {
     u8 *temp_s1;
-    s32 temp_s2;
+    ArcadeSavedAddress temp_s2;
     u32 temp_s0;
 
     temp_s1 = reg_a0;
     temp_s0 = reg_d0.w;
-    temp_s2 = (s32)reg_a1;
+    temp_s2 = (ArcadeSavedAddress)reg_a1;
     reg_a0 = g_sprite_layer1_buf;
     reg_a0 += g_sprite_layer1_used;
     sprite_entry_from_entity();
@@ -777,12 +777,12 @@ void entity_draw_keep(void) {
 
 void entity_draw_layer1_keep(void) {
     u8 *temp_s1;
-    s32 temp_s2;
+    ArcadeSavedAddress temp_s2;
     u32 temp_s0;
 
     temp_s1 = reg_a0;
     temp_s0 = reg_d0.w;
-    temp_s2 = (s32)reg_a1;
+    temp_s2 = (ArcadeSavedAddress)reg_a1;
     reg_a0 = g_sprite_layer1_buf;
     reg_a0 += g_sprite_layer1_used;
     sprite_entry_from_entity();
@@ -794,12 +794,12 @@ void entity_draw_layer1_keep(void) {
 
 void entity_draw_layer2_keep(void) {
     u8 *temp_s1;
-    s32 temp_s2;
+    ArcadeSavedAddress temp_s2;
     u32 temp_s0;
 
     temp_s1 = reg_a0;
     temp_s0 = reg_d0.w;
-    temp_s2 = (s32)reg_a1;
+    temp_s2 = (ArcadeSavedAddress)reg_a1;
     reg_a0 = g_sprite_layer2_buf;
     reg_a0 += g_sprite_layer2_used;
     sprite_entry_from_entity();
@@ -811,12 +811,12 @@ void entity_draw_layer2_keep(void) {
 
 void entity_draw_layer3_keep(void) {
     u8 *temp_s1;
-    s32 temp_s2;
+    ArcadeSavedAddress temp_s2;
     u32 temp_s0;
 
     temp_s1 = reg_a0;
     temp_s0 = reg_d0.w;
-    temp_s2 = (s32)reg_a1;
+    temp_s2 = (ArcadeSavedAddress)reg_a1;
     reg_a0 = g_sprite_layer3_buf;
     reg_a0 += g_sprite_layer3_used;
     sprite_entry_from_entity();
@@ -828,12 +828,12 @@ void entity_draw_layer3_keep(void) {
 
 void entity_draw_layer4_keep(void) {
     u8 *temp_s1;
-    s32 temp_s2;
+    ArcadeSavedAddress temp_s2;
     u32 temp_s0;
 
     temp_s1 = reg_a0;
     temp_s0 = reg_d0.w;
-    temp_s2 = (s32)reg_a1;
+    temp_s2 = (ArcadeSavedAddress)reg_a1;
     reg_a0 = g_sprite_layer4_buf;
     reg_a0 += g_sprite_layer4_used;
     sprite_entry_from_entity();
@@ -845,12 +845,12 @@ void entity_draw_layer4_keep(void) {
 
 void entity_draw_layer5_keep(void) {
     u8 *temp_s1;
-    s32 temp_s2;
+    ArcadeSavedAddress temp_s2;
     u32 temp_s0;
 
     temp_s1 = reg_a0;
     temp_s0 = reg_d0.w;
-    temp_s2 = (s32)reg_a1;
+    temp_s2 = (ArcadeSavedAddress)reg_a1;
     reg_a0 = g_sprite_layer5_buf;
     reg_a0 += g_sprite_layer5_used;
     sprite_entry_from_entity();
@@ -1442,10 +1442,10 @@ void sprite_draw_with_special_items(void) {
 
 
 void sprite_draw_with_special_items_keep(void) {
-    s32 temp_s0;
+    ArcadeSavedAddress temp_s0;
     u32 temp_s1;
 
-    temp_s0 = (s32)reg_a0;
+    temp_s0 = (ArcadeSavedAddress)reg_a0;
     temp_s1 = reg_d0.w;
     sprite_special_items_take_entry();
     sprite_entry_from_regs();
@@ -1471,10 +1471,10 @@ void sprite_draw_with_player_shadows(void) {
 }
 
 void sprite_draw_with_player_shadows_keep(void) {
-    s32 temp_s0;
+    ArcadeSavedAddress temp_s0;
     u32 temp_s1;
 
-    temp_s0 = (s32)reg_a0;
+    temp_s0 = (ArcadeSavedAddress)reg_a0;
     temp_s1 = reg_d0.w;
     sprite_player_shadows_take_entry();
     sprite_entry_from_regs();
@@ -1505,10 +1505,10 @@ void sprite_draw_with_players(void) {
 }
 
 void sprite_draw_with_players_keep(void) {
-    s32 temp_s0;
+    ArcadeSavedAddress temp_s0;
     u32 temp_s1;
 
-    temp_s0 = (s32)reg_a0;
+    temp_s0 = (ArcadeSavedAddress)reg_a0;
     temp_s1 = reg_d0.w;
     sprite_players_take_entry();
     sprite_entry_from_regs();
@@ -1592,13 +1592,13 @@ void entity_draw_with_bullets(void) {
 
 void entity_draw_with_bullets_keep(void)
 {
-    s32 saved_a0;
-    s32 saved_a1;
+    ArcadeSavedAddress saved_a0;
+    ArcadeSavedAddress saved_a1;
     u32 saved_d0;
 
     saved_d0 = reg_d0.w;
-    saved_a0 = (s32)reg_a0;
-    saved_a1 = (s32)reg_a1;
+    saved_a0 = (ArcadeSavedAddress)reg_a0;
+    saved_a1 = (ArcadeSavedAddress)reg_a1;
 
     sprite_bullets_take_entry();
     sprite_entry_from_entity();
@@ -1614,10 +1614,10 @@ void sprite_draw_with_bullets(void) {
 }
 
 void sprite_draw_with_bullets_keep(void) {
-    s32 temp_s0;
+    ArcadeSavedAddress temp_s0;
     u32 temp_s1;
 
-    temp_s0 = (s32)reg_a0;
+    temp_s0 = (ArcadeSavedAddress)reg_a0;
     temp_s1 = reg_d0.w;
     sprite_bullets_take_entry();
     sprite_entry_from_regs();
@@ -1653,10 +1653,10 @@ void entity_draw_with_warning(void) {
 }
 
 void sprite_draw_with_warning_keep(void) {
-    s32 temp_s0;
+    ArcadeSavedAddress temp_s0;
     u32 temp_s1;
 
-    temp_s0 = (s32)reg_a0;
+    temp_s0 = (ArcadeSavedAddress)reg_a0;
     temp_s1 = reg_d0.w;
     sprite_warning_take_entry();
     sprite_entry_from_regs();
@@ -1683,10 +1683,10 @@ void sprite_draw_with_score(void) {
 }
 
 void sprite_draw_with_score_keep(void) {
-    s32 temp_s0;
+    ArcadeSavedAddress temp_s0;
     u32 temp_s1;
 
-    temp_s0 = (s32)reg_a0;
+    temp_s0 = (ArcadeSavedAddress)reg_a0;
     temp_s1 = reg_d0.w;
     sprite_score_take_entry();
     sprite_entry_from_regs();
@@ -1708,10 +1708,10 @@ void sprite_laser_trail_take_entry(void) {
 
 
 void sprite_draw_with_laser_trail_keep(void) {
-    s32 temp_s0;
+    ArcadeSavedAddress temp_s0;
     u32 temp_s1;
 
-    temp_s0 = (s32)reg_a0;
+    temp_s0 = (ArcadeSavedAddress)reg_a0;
     temp_s1 = reg_d0.w;
     sprite_laser_trail_take_entry();
     sprite_entry_from_regs();
@@ -1734,10 +1734,10 @@ void sprite_last_boss_take_entry(void) {
 
 
 void sprite_draw_with_last_boss_keep(void) {
-    s32 temp_s0;
+    ArcadeSavedAddress temp_s0;
     u32 temp_s1;
 
-    temp_s0 = (s32)reg_a0;
+    temp_s0 = (ArcadeSavedAddress)reg_a0;
     temp_s1 = reg_d0.w;
     sprite_last_boss_take_entry();
     sprite_entry_from_regs();
@@ -1762,13 +1762,13 @@ void entity_draw_with_bombs(void) {
 void entity_draw_with_bombs_keep(void)
 {
     extern void sprite_entry_from_entity(void);
-    s32 saved_a0;
-    s32 saved_a1;
+    ArcadeSavedAddress saved_a0;
+    ArcadeSavedAddress saved_a1;
     u32 saved_d0;
 
     saved_d0 = reg_d0.w;
-    saved_a0 = (s32)reg_a0;
-    saved_a1 = (s32)reg_a1;
+    saved_a0 = (ArcadeSavedAddress)reg_a0;
+    saved_a1 = (ArcadeSavedAddress)reg_a1;
     sprite_bombs_take_entry();
     sprite_entry_from_entity();
     reg_d0.w = saved_d0;
@@ -1777,10 +1777,10 @@ void entity_draw_with_bombs_keep(void)
 }
 
 void sprite_draw_with_bombs_keep(void) {
-    s32 temp_s0;
+    ArcadeSavedAddress temp_s0;
     u32 temp_s1;
 
-    temp_s0 = (s32)reg_a0;
+    temp_s0 = (ArcadeSavedAddress)reg_a0;
     temp_s1 = reg_d0.w;
     sprite_bombs_take_entry();
     sprite_entry_from_regs();
@@ -1804,10 +1804,10 @@ void sprite_ship_select_take_entry(void) {
 
 
 void sprite_draw_with_ship_select_keep(void) {
-    s32 temp_s0;
+    ArcadeSavedAddress temp_s0;
     u32 temp_s1;
 
-    temp_s0 = (s32)reg_a0;
+    temp_s0 = (ArcadeSavedAddress)reg_a0;
     temp_s1 = reg_d0.w;
     sprite_ship_select_take_entry();
     sprite_entry_from_regs();
@@ -1872,10 +1872,10 @@ void sprite_draw_with_hyper_display(void) {
 }
 
 void sprite_draw_with_hyper_display_keep(void) {
-    s32 temp_s0;
+    ArcadeSavedAddress temp_s0;
     u32 temp_s1;
 
-    temp_s0 = (s32)reg_a0;
+    temp_s0 = (ArcadeSavedAddress)reg_a0;
     temp_s1 = reg_d0.w;
     sprite_hyper_display_take_entry();
     sprite_entry_from_regs();
