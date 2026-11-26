@@ -2,19 +2,26 @@
 #include "enemy.h"
 #include "entity.h"
 
-void death_func_00224F20(u8 index);
-void death_func_00225090(u8 index);
-void death_func_002251F0(u8 index);
-void death_func_00225360(u8 index);
-void death_func_00225500(u8 index);
+typedef struct {
+    /* 0x00 */ u8 turning;
+    /* 0x01 */ u8 target_dir;
+} MoveWander;
+
+#define WANDER(pointer) ((MoveWander *)(pointer))
+
+void twin_boss_wander_a(u8 boss);
+void twin_boss_wander_b(u8 boss);
+void twin_boss_wander_c(u8 boss);
+void twin_boss_wander_d(u8 boss);
+void twin_boss_wander_e(u8 boss);
 
 
-void death_func_00224EF0(u8 index) {
+void twin_boss_wander_a_start(u8 boss) {
     reg_d0.w = 0;
-    *(u8 *)(reg_a4 + 1) = reg_d0.b[0];
-    *(u8 *)(reg_a4 + 0) = reg_d0.b[0];
+    WANDER(reg_a4)->target_dir = reg_d0.b[0];
+    WANDER(reg_a4)->turning = reg_d0.b[0];
     ENTITY(reg_a6)->move.b.speed = 6;
-    death_func_00224F20(index);
+    twin_boss_wander_a(boss);
 }
 
 typedef struct {
@@ -25,30 +32,30 @@ typedef struct {
 s32 rng_next();
 s32 entity_velocity();
 s32 func_002024C0();
-const Range death_D_0028E490[2] = { { 13312, 16384 }, { 18432, 21504 } };
-const Range death_D_0028E4A0[2] = { { 12288, 15360 }, { 19456, 22528 } };
-const Range death_D_0028E4B0[2] = { { 11264, 16384 }, { 18432, 23552 } };
-const Range death_D_0028E4C0[2] = { { 12288, 15872 }, { 18944, 22528 } };
-const Range death_D_0028E4D0[2] = { { 12288, 14848 }, { 19968, 22528 } };
+const Range twin_boss_wander_a_ranges[2] = { { 13312, 16384 }, { 18432, 21504 } };
+const Range twin_boss_wander_b_ranges[2] = { { 12288, 15360 }, { 19456, 22528 } };
+const Range twin_boss_wander_c_ranges[2] = { { 11264, 16384 }, { 18432, 23552 } };
+const Range twin_boss_wander_d_ranges[2] = { { 12288, 15872 }, { 18944, 22528 } };
+const Range twin_boss_wander_e_ranges[2] = { { 12288, 14848 }, { 19968, 22528 } };
 
-void death_func_00224F20(u8 index) {
+void twin_boss_wander_a(u8 boss) {
     entity_velocity();
-    if (*(u8 *)reg_a4 != 0) {
-        reg_d1.b[0] = *(u8 *)(reg_a4 + 1);
+    if (WANDER(reg_a4)->turning != 0) {
+        reg_d1.b[0] = WANDER(reg_a4)->target_dir;
         func_002024C0();
-        if (*(u8 *)(reg_a4 + 1) == reg_d1.b[0]) {
-            *(u8 *)reg_a4 = 0U;
+        if (WANDER(reg_a4)->target_dir == reg_d1.b[0]) {
+            WANDER(reg_a4)->turning = 0U;
         }
     }
     rng_next();
     reg_d1.h[1] = ENTITY(reg_a6)->y.h;
     reg_d1.h[0] = ENTITY(reg_a6)->x.h;
     reg_d1.h[0] += 0x2800;
-    if ((s32) reg_d1.h[0] < death_D_0028E490[index].low) {
+    if ((s32) reg_d1.h[0] < twin_boss_wander_a_ranges[boss].low) {
         reg_d0.b[0] += 0x10;
         goto block_11;
     }
-    if (death_D_0028E490[index].high <= (s32) reg_d1.h[0]) {
+    if (twin_boss_wander_a_ranges[boss].high <= (s32) reg_d1.h[0]) {
         reg_d0.b[0] += 0x30;
         goto block_11;
     }
@@ -63,39 +70,39 @@ void death_func_00224F20(u8 index) {
     } else {
 block_11:
         reg_d0.b[0] &= 0x3F;
-        *(u8 *)(reg_a4 + 1) = (u8) reg_d0.b[0];
-        *(u8 *)reg_a4 = 1U;
+        WANDER(reg_a4)->target_dir = (u8) reg_d0.b[0];
+        WANDER(reg_a4)->turning = 1U;
     }
 }
 
 
-void death_func_00225060(u8 index) {
+void twin_boss_wander_b_start(u8 boss) {
     reg_d0.w = 0;
-    *(u8 *)(reg_a4 + 1) = reg_d0.b[0];
-    *(u8 *)(reg_a4 + 0) = reg_d0.b[0];
+    WANDER(reg_a4)->target_dir = reg_d0.b[0];
+    WANDER(reg_a4)->turning = reg_d0.b[0];
     ENTITY(reg_a6)->move.b.speed = 2;
-    death_func_00225090(index);
+    twin_boss_wander_b(boss);
 }
 
 
-void death_func_00225090(u8 index) {
+void twin_boss_wander_b(u8 boss) {
     entity_velocity();
-    if (*(u8 *)reg_a4 != 0) {
-        reg_d1.b[0] = *(u8 *)(reg_a4 + 1);
+    if (WANDER(reg_a4)->turning != 0) {
+        reg_d1.b[0] = WANDER(reg_a4)->target_dir;
         func_002024C0();
-        if (*(u8 *)(reg_a4 + 1) == reg_d1.b[0]) {
-            *(u8 *)reg_a4 = 0U;
+        if (WANDER(reg_a4)->target_dir == reg_d1.b[0]) {
+            WANDER(reg_a4)->turning = 0U;
         }
     }
     rng_next();
     reg_d1.h[1] = ENTITY(reg_a6)->y.h;
     reg_d1.h[0] = ENTITY(reg_a6)->x.h;
     reg_d1.h[0] += 0x2800;
-    if ((s32) reg_d1.h[0] < death_D_0028E4A0[index].low) {
+    if ((s32) reg_d1.h[0] < twin_boss_wander_b_ranges[boss].low) {
         reg_d0.b[0] += 0x10;
         goto block_11;
     }
-    if (death_D_0028E4A0[index].high <= (s32) reg_d1.h[0]) {
+    if (twin_boss_wander_b_ranges[boss].high <= (s32) reg_d1.h[0]) {
         reg_d0.b[0] += 0x30;
         goto block_11;
     }
@@ -110,38 +117,38 @@ void death_func_00225090(u8 index) {
     } else {
 block_11:
         reg_d0.b[0] &= 0x3F;
-        *(u8 *)(reg_a4 + 1) = (u8) reg_d0.b[0];
-        *(u8 *)reg_a4 = 1U;
+        WANDER(reg_a4)->target_dir = (u8) reg_d0.b[0];
+        WANDER(reg_a4)->turning = 1U;
     }
 }
 
 
-void death_func_002251D0(u8 index) {
+void twin_boss_wander_c_start(u8 boss) {
     reg_d0.w = 0;
-    *(u8 *)(reg_a4 + 1) = reg_d0.b[0];
-    *(u8 *)(reg_a4 + 0) = reg_d0.b[0];
-    death_func_002251F0(index);
+    WANDER(reg_a4)->target_dir = reg_d0.b[0];
+    WANDER(reg_a4)->turning = reg_d0.b[0];
+    twin_boss_wander_c(boss);
 }
 
 
-void death_func_002251F0(u8 index) {
+void twin_boss_wander_c(u8 boss) {
     entity_velocity();
-    if (*(u8 *)reg_a4 != 0) {
-        reg_d1.b[0] = *(u8 *)(reg_a4 + 1);
+    if (WANDER(reg_a4)->turning != 0) {
+        reg_d1.b[0] = WANDER(reg_a4)->target_dir;
         func_002024C0();
-        if (*(u8 *)(reg_a4 + 1) == reg_d1.b[0]) {
-            *(u8 *)reg_a4 = 0U;
+        if (WANDER(reg_a4)->target_dir == reg_d1.b[0]) {
+            WANDER(reg_a4)->turning = 0U;
         }
     }
     rng_next();
     reg_d1.h[1] = ENTITY(reg_a6)->y.h;
     reg_d1.h[0] = ENTITY(reg_a6)->x.h;
     reg_d1.h[0] += 0x2800;
-    if ((s32) reg_d1.h[0] < death_D_0028E4B0[index].low) {
+    if ((s32) reg_d1.h[0] < twin_boss_wander_c_ranges[boss].low) {
         reg_d0.b[0] += 0x10;
         goto block_11;
     }
-    if (death_D_0028E4B0[index].high <= (s32) reg_d1.h[0]) {
+    if (twin_boss_wander_c_ranges[boss].high <= (s32) reg_d1.h[0]) {
         reg_d0.b[0] += 0x30;
         goto block_11;
     }
@@ -156,39 +163,39 @@ void death_func_002251F0(u8 index) {
     } else {
 block_11:
         reg_d0.b[0] &= 0x3F;
-        *(u8 *)(reg_a4 + 1) = (u8) reg_d0.b[0];
-        *(u8 *)reg_a4 = 1U;
+        WANDER(reg_a4)->target_dir = (u8) reg_d0.b[0];
+        WANDER(reg_a4)->turning = 1U;
     }
 }
 
 
-void death_func_00225330(u8 index) {
+void twin_boss_wander_d_start(u8 boss) {
     reg_d0.w = 0;
-    *(u8 *)(reg_a4 + 1) = reg_d0.b[0];
-    *(u8 *)(reg_a4 + 0) = reg_d0.b[0];
+    WANDER(reg_a4)->target_dir = reg_d0.b[0];
+    WANDER(reg_a4)->turning = reg_d0.b[0];
     ENTITY(reg_a6)->move.b.speed = 4;
-    death_func_00225360(index);
+    twin_boss_wander_d(boss);
 }
 
 
-void death_func_00225360(u8 index) {
+void twin_boss_wander_d(u8 boss) {
     entity_velocity();
-    if (*(u8 *)reg_a4 != 0) {
-        reg_d1.b[0] = *(u8 *)(reg_a4 + 1);
+    if (WANDER(reg_a4)->turning != 0) {
+        reg_d1.b[0] = WANDER(reg_a4)->target_dir;
         func_002024C0();
-        if (*(u8 *)(reg_a4 + 1) == reg_d1.b[0]) {
-            *(u8 *)reg_a4 = 0U;
+        if (WANDER(reg_a4)->target_dir == reg_d1.b[0]) {
+            WANDER(reg_a4)->turning = 0U;
         }
     }
     rng_next();
     reg_d1.h[1] = ENTITY(reg_a6)->y.h;
     reg_d1.h[0] = ENTITY(reg_a6)->x.h;
     reg_d1.h[0] += 0x2800;
-    if ((s32) reg_d1.h[0] < death_D_0028E4C0[index].low) {
+    if ((s32) reg_d1.h[0] < twin_boss_wander_d_ranges[boss].low) {
         reg_d0.b[0] += 0x10;
         goto block_11;
     }
-    if (death_D_0028E4C0[index].high <= (s32) reg_d1.h[0]) {
+    if (twin_boss_wander_d_ranges[boss].high <= (s32) reg_d1.h[0]) {
         reg_d0.b[0] += 0x30;
         goto block_11;
     }
@@ -203,42 +210,42 @@ void death_func_00225360(u8 index) {
     } else {
 block_11:
         reg_d0.b[0] &= 0x3F;
-        *(u8 *)(reg_a4 + 1) = (u8) reg_d0.b[0];
-        *(u8 *)reg_a4 = 1U;
+        WANDER(reg_a4)->target_dir = (u8) reg_d0.b[0];
+        WANDER(reg_a4)->turning = 1U;
     }
 }
 
 s32 rng_next_masked();
 
-void death_func_002254A0(u8 index) {
+void twin_boss_wander_e_start(u8 boss) {
     reg_d0.w = 0;
-    *(u8 *)(reg_a4 + 1) = reg_d0.b[0];
-    *(u8 *)(reg_a4 + 0) = reg_d0.b[0];
+    WANDER(reg_a4)->target_dir = reg_d0.b[0];
+    WANDER(reg_a4)->turning = reg_d0.b[0];
     ENTITY(reg_a6)->move.b.speed = 4;
     rng_next_masked();
     ENTITY(reg_a6)->move.b.dir = reg_d0.b[0];
-    death_func_00225500(index);
+    twin_boss_wander_e(boss);
 }
 
 
-void death_func_00225500(u8 index) {
+void twin_boss_wander_e(u8 boss) {
     entity_velocity();
-    if (*(u8 *)reg_a4 != 0) {
-        reg_d1.b[0] = *(u8 *)(reg_a4 + 1);
+    if (WANDER(reg_a4)->turning != 0) {
+        reg_d1.b[0] = WANDER(reg_a4)->target_dir;
         func_002024C0();
-        if (*(u8 *)(reg_a4 + 1) == reg_d1.b[0]) {
-            *(u8 *)reg_a4 = 0U;
+        if (WANDER(reg_a4)->target_dir == reg_d1.b[0]) {
+            WANDER(reg_a4)->turning = 0U;
         }
     }
     rng_next();
     reg_d1.h[1] = ENTITY(reg_a6)->y.h;
     reg_d1.h[0] = ENTITY(reg_a6)->x.h;
     reg_d1.h[0] += 0x2800;
-    if ((s32) reg_d1.h[0] < death_D_0028E4D0[index].low) {
+    if ((s32) reg_d1.h[0] < twin_boss_wander_e_ranges[boss].low) {
         reg_d0.b[0] += 0x10;
         goto block_11;
     }
-    if (death_D_0028E4D0[index].high <= (s32) reg_d1.h[0]) {
+    if (twin_boss_wander_e_ranges[boss].high <= (s32) reg_d1.h[0]) {
         reg_d0.b[0] += 0x30;
         goto block_11;
     }
@@ -253,316 +260,316 @@ void death_func_00225500(u8 index) {
     } else {
 block_11:
         reg_d0.b[0] &= 0x3F;
-        *(u8 *)(reg_a4 + 1) = (u8) reg_d0.b[0];
-        *(u8 *)reg_a4 = 1U;
+        WANDER(reg_a4)->target_dir = (u8) reg_d0.b[0];
+        WANDER(reg_a4)->turning = 1U;
     }
 }
 
 
-void death_func_00225640(void) {
+void twin_boss_first_wander_a_start(void) {
     u8 *save_a6;
 
     save_a6 = reg_a6;
     reg_a6 = (u8 *)g_enemy_entities_second;
-    death_func_00224EF0(0);
+    twin_boss_wander_a_start(0);
     reg_a6 = save_a6;
 }
 
-void death_func_00225680(void) {
+void twin_boss_first_wander_a(void) {
     u8 *save_a6;
 
     save_a6 = reg_a6;
     reg_a6 = (u8 *)g_enemy_entities_second;
-    death_func_00224F20(0);
+    twin_boss_wander_a(0);
     reg_a6 = save_a6;
 }
 
 extern u16 g_side_scroll_step[];
-extern u8 death_D_006901B0[];
+extern u8 g_twin_boss_second[];
 
-void death_func_002256C0(void) {
+void twin_boss_second_wander_a_start(void) {
     u8 *save_a6;
     u8 *save_a4;
 
     save_a6 = reg_a6;
     save_a4 = reg_a4;
-    reg_a6 = death_D_006901B0;
+    reg_a6 = g_twin_boss_second;
     reg_a4 += 0x10;
     ENTITY(reg_a6)->x.h -= g_side_scroll_step[0];
-    death_func_00224EF0(1);
+    twin_boss_wander_a_start(1);
     reg_a6 = save_a6;
     reg_a4 = save_a4;
 }
 
-void death_func_00225730(void) {
+void twin_boss_second_wander_a(void) {
     u8 *save_a6;
     u8 *save_a4;
 
     save_a6 = reg_a6;
     save_a4 = reg_a4;
-    reg_a6 = death_D_006901B0;
+    reg_a6 = g_twin_boss_second;
     reg_a4 += 0x10;
     ENTITY(reg_a6)->x.h -= g_side_scroll_step[0];
-    death_func_00224F20(1);
+    twin_boss_wander_a(1);
     reg_a6 = save_a6;
     reg_a4 = save_a4;
 }
 
 
-void death_func_002257A0(void) {
+void twin_boss_first_wander_b_start(void) {
     u8 *save_a6;
 
     save_a6 = reg_a6;
     reg_a6 = (u8 *)g_enemy_entities_second;
-    death_func_00225060(0);
+    twin_boss_wander_b_start(0);
     reg_a6 = save_a6;
 }
 
-void death_func_002257E0(void) {
+void twin_boss_first_wander_b(void) {
     u8 *save_a6;
 
     save_a6 = reg_a6;
     reg_a6 = (u8 *)g_enemy_entities_second;
-    death_func_00225090(0);
+    twin_boss_wander_b(0);
     reg_a6 = save_a6;
 }
 
-void death_func_00225820(void) {
+void twin_boss_second_wander_b_start(void) {
     u8 *save_a6;
     u8 *save_a4;
 
     save_a6 = reg_a6;
     save_a4 = reg_a4;
-    reg_a6 = death_D_006901B0;
+    reg_a6 = g_twin_boss_second;
     reg_a4 += 0x10;
     ENTITY(reg_a6)->x.h -= g_side_scroll_step[0];
-    death_func_00225060(1);
+    twin_boss_wander_b_start(1);
     reg_a6 = save_a6;
     reg_a4 = save_a4;
 }
 
-void death_func_00225890(void) {
+void twin_boss_second_wander_b(void) {
     u8 *save_a6;
     u8 *save_a4;
 
     save_a6 = reg_a6;
     save_a4 = reg_a4;
-    reg_a6 = death_D_006901B0;
+    reg_a6 = g_twin_boss_second;
     reg_a4 += 0x10;
     ENTITY(reg_a6)->x.h -= g_side_scroll_step[0];
-    death_func_00225090(1);
-    reg_a6 = save_a6;
-    reg_a4 = save_a4;
-}
-
-
-void death_func_00225900(void) {
-    u8 *save_a6;
-
-    save_a6 = reg_a6;
-    reg_a6 = (u8 *)g_enemy_entities_second;
-    death_func_002251D0(0);
-    reg_a6 = save_a6;
-}
-
-void death_func_00225940(void) {
-    u8 *save_a6;
-
-    save_a6 = reg_a6;
-    reg_a6 = (u8 *)g_enemy_entities_second;
-    death_func_002251F0(0);
-    reg_a6 = save_a6;
-}
-
-void death_func_00225980(void) {
-    u8 *save_a6;
-    u8 *save_a4;
-
-    save_a6 = reg_a6;
-    save_a4 = reg_a4;
-    reg_a6 = death_D_006901B0;
-    reg_a4 += 0x10;
-    ENTITY(reg_a6)->x.h -= g_side_scroll_step[0];
-    death_func_002251D0(1);
-    reg_a6 = save_a6;
-    reg_a4 = save_a4;
-}
-
-void death_func_002259F0(void) {
-    u8 *save_a6;
-    u8 *save_a4;
-
-    save_a6 = reg_a6;
-    save_a4 = reg_a4;
-    reg_a6 = death_D_006901B0;
-    reg_a4 += 0x10;
-    ENTITY(reg_a6)->x.h -= g_side_scroll_step[0];
-    death_func_002251F0(1);
+    twin_boss_wander_b(1);
     reg_a6 = save_a6;
     reg_a4 = save_a4;
 }
 
 
-void death_func_00225A60(void) {
+void twin_boss_first_wander_c_start(void) {
     u8 *save_a6;
 
     save_a6 = reg_a6;
     reg_a6 = (u8 *)g_enemy_entities_second;
-    death_func_00225330(0);
+    twin_boss_wander_c_start(0);
     reg_a6 = save_a6;
 }
 
-void death_func_00225AA0(void) {
+void twin_boss_first_wander_c(void) {
     u8 *save_a6;
 
     save_a6 = reg_a6;
     reg_a6 = (u8 *)g_enemy_entities_second;
-    death_func_00225360(0);
+    twin_boss_wander_c(0);
     reg_a6 = save_a6;
 }
 
-void death_func_00225AE0(void) {
+void twin_boss_second_wander_c_start(void) {
     u8 *save_a6;
     u8 *save_a4;
 
     save_a6 = reg_a6;
     save_a4 = reg_a4;
-    reg_a6 = death_D_006901B0;
+    reg_a6 = g_twin_boss_second;
     reg_a4 += 0x10;
     ENTITY(reg_a6)->x.h -= g_side_scroll_step[0];
-    death_func_00225330(1);
+    twin_boss_wander_c_start(1);
     reg_a6 = save_a6;
     reg_a4 = save_a4;
 }
 
-void death_func_00225B50(void) {
+void twin_boss_second_wander_c(void) {
     u8 *save_a6;
     u8 *save_a4;
 
     save_a6 = reg_a6;
     save_a4 = reg_a4;
-    reg_a6 = death_D_006901B0;
+    reg_a6 = g_twin_boss_second;
     reg_a4 += 0x10;
     ENTITY(reg_a6)->x.h -= g_side_scroll_step[0];
-    death_func_00225360(1);
+    twin_boss_wander_c(1);
     reg_a6 = save_a6;
     reg_a4 = save_a4;
 }
 
 
-void death_func_00225BC0(void) {
+void twin_boss_first_wander_d_start(void) {
     u8 *save_a6;
 
     save_a6 = reg_a6;
     reg_a6 = (u8 *)g_enemy_entities_second;
-    death_func_002254A0(0);
+    twin_boss_wander_d_start(0);
     reg_a6 = save_a6;
 }
 
-void death_func_00225C00(void) {
+void twin_boss_first_wander_d(void) {
     u8 *save_a6;
 
     save_a6 = reg_a6;
     reg_a6 = (u8 *)g_enemy_entities_second;
-    death_func_00225500(0);
+    twin_boss_wander_d(0);
     reg_a6 = save_a6;
 }
 
-void death_func_00225C40(void) {
+void twin_boss_second_wander_d_start(void) {
     u8 *save_a6;
     u8 *save_a4;
 
     save_a6 = reg_a6;
     save_a4 = reg_a4;
-    reg_a6 = death_D_006901B0;
+    reg_a6 = g_twin_boss_second;
     reg_a4 += 0x10;
     ENTITY(reg_a6)->x.h -= g_side_scroll_step[0];
-    death_func_002254A0(1);
+    twin_boss_wander_d_start(1);
     reg_a6 = save_a6;
     reg_a4 = save_a4;
 }
 
-void death_func_00225CB0(void) {
+void twin_boss_second_wander_d(void) {
     u8 *save_a6;
     u8 *save_a4;
 
     save_a6 = reg_a6;
     save_a4 = reg_a4;
-    reg_a6 = death_D_006901B0;
+    reg_a6 = g_twin_boss_second;
     reg_a4 += 0x10;
     ENTITY(reg_a6)->x.h -= g_side_scroll_step[0];
-    death_func_00225500(1);
+    twin_boss_wander_d(1);
+    reg_a6 = save_a6;
+    reg_a4 = save_a4;
+}
+
+
+void twin_boss_first_wander_e_start(void) {
+    u8 *save_a6;
+
+    save_a6 = reg_a6;
+    reg_a6 = (u8 *)g_enemy_entities_second;
+    twin_boss_wander_e_start(0);
+    reg_a6 = save_a6;
+}
+
+void twin_boss_first_wander_e(void) {
+    u8 *save_a6;
+
+    save_a6 = reg_a6;
+    reg_a6 = (u8 *)g_enemy_entities_second;
+    twin_boss_wander_e(0);
+    reg_a6 = save_a6;
+}
+
+void twin_boss_second_wander_e_start(void) {
+    u8 *save_a6;
+    u8 *save_a4;
+
+    save_a6 = reg_a6;
+    save_a4 = reg_a4;
+    reg_a6 = g_twin_boss_second;
+    reg_a4 += 0x10;
+    ENTITY(reg_a6)->x.h -= g_side_scroll_step[0];
+    twin_boss_wander_e_start(1);
+    reg_a6 = save_a6;
+    reg_a4 = save_a4;
+}
+
+void twin_boss_second_wander_e(void) {
+    u8 *save_a6;
+    u8 *save_a4;
+
+    save_a6 = reg_a6;
+    save_a4 = reg_a4;
+    reg_a6 = g_twin_boss_second;
+    reg_a4 += 0x10;
+    ENTITY(reg_a6)->x.h -= g_side_scroll_step[0];
+    twin_boss_wander_e(1);
     reg_a6 = save_a6;
     reg_a4 = save_a4;
 }
 
 s32 stage5_boss_parts_follow();
 
-void death_func_00225D20(void) {
-    death_func_00225640();
-    death_func_002256C0();
+void twin_boss_move_wander_a_start(void) {
+    twin_boss_first_wander_a_start();
+    twin_boss_second_wander_a_start();
     stage5_boss_parts_follow();
 }
 
 
-void death_func_00225D50(void) {
-    death_func_00225680();
-    death_func_00225730();
+void twin_boss_move_wander_a(void) {
+    twin_boss_first_wander_a();
+    twin_boss_second_wander_a();
     stage5_boss_parts_follow();
 }
 
 
-void death_func_00225D80(void) {
-    death_func_002257A0();
-    death_func_00225820();
+void twin_boss_move_wander_b_start(void) {
+    twin_boss_first_wander_b_start();
+    twin_boss_second_wander_b_start();
     stage5_boss_parts_follow();
 }
 
 
-void death_func_00225DB0(void) {
-    death_func_002257E0();
-    death_func_00225890();
+void twin_boss_move_wander_b(void) {
+    twin_boss_first_wander_b();
+    twin_boss_second_wander_b();
     stage5_boss_parts_follow();
 }
 
 
-void death_func_00225DE0(void) {
-    death_func_00225900();
-    death_func_00225980();
+void twin_boss_move_wander_c_start(void) {
+    twin_boss_first_wander_c_start();
+    twin_boss_second_wander_c_start();
     stage5_boss_parts_follow();
 }
 
 
-void death_func_00225E10(void) {
-    death_func_00225940();
-    death_func_002259F0();
+void twin_boss_move_wander_c(void) {
+    twin_boss_first_wander_c();
+    twin_boss_second_wander_c();
     stage5_boss_parts_follow();
 }
 
 
-void death_func_00225E40(void) {
-    death_func_00225A60();
-    death_func_00225AE0();
+void twin_boss_move_wander_d_start(void) {
+    twin_boss_first_wander_d_start();
+    twin_boss_second_wander_d_start();
     stage5_boss_parts_follow();
 }
 
 
-void death_func_00225E70(void) {
-    death_func_00225AA0();
-    death_func_00225B50();
+void twin_boss_move_wander_d(void) {
+    twin_boss_first_wander_d();
+    twin_boss_second_wander_d();
     stage5_boss_parts_follow();
 }
 
 
-void death_func_00225EA0(void) {
-    death_func_00225BC0();
-    death_func_00225C40();
+void twin_boss_move_wander_e_start(void) {
+    twin_boss_first_wander_e_start();
+    twin_boss_second_wander_e_start();
     stage5_boss_parts_follow();
 }
 
 
-void death_func_00225ED0(void) {
-    death_func_00225C00();
-    death_func_00225CB0();
+void twin_boss_move_wander_e(void) {
+    twin_boss_first_wander_e();
+    twin_boss_second_wander_e();
     stage5_boss_parts_follow();
 }

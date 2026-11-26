@@ -1814,8 +1814,8 @@ extern u16 D_0029976E[];
 extern u16 g_bomb_entities[];
 #ifdef DEATH_LABEL
 extern u16 g_attract_demo;
-extern u8 death_D_00290858;
-extern u8 death_D_0029085C;
+extern u8 g_twin_boss_bullet_speed_limit;
+extern u8 g_death_boss_form;
 #endif
 
 void bullet_spawn(void) {
@@ -1940,8 +1940,8 @@ next_5:
     reg_d7.h[0] += D_0028E7F0;
     reg_d7.h[0] += g_hyper_bullet_speed;
 #ifdef DEATH_LABEL
-    if ((death_D_0029085C == 2) && (reg_d7.h[0] > death_D_00290858)) {
-        reg_d7.h[0] = death_D_00290858;
+    if ((g_death_boss_form == 2) && (reg_d7.h[0] > g_twin_boss_bullet_speed_limit)) {
+        reg_d7.h[0] = g_twin_boss_bullet_speed_limit;
     }
 #endif
     reg_d1.b[0] += reg_d1.b[0];
@@ -2121,32 +2121,32 @@ void bullet_fire256(void) {
 }
 
 #ifdef DEATH_LABEL
-extern u8 death_D_00290854;
-extern u8 death_D_0029085C;
-extern s32 death_D_0029040C;
-extern s32 death_D_00290410;
-extern u8 death_D_006901D0[];
+extern u8 g_twin_boss_bullets_halved;
+extern u8 g_death_boss_form;
+extern s32 g_twin_boss_first_bullets;
+extern s32 g_twin_boss_second_bullets;
+extern u8 g_twin_boss_first_fire_point[];
 #endif
 
 void bullet_fire256_direct(void) {
 #ifdef DEATH_LABEL
-    if (death_D_0029085C == 2) {
-        if (death_D_00290854 != 0) {
-            if (reg_a6 == death_D_006901D0) {
-                death_D_0029040C += 1;
-                if (death_D_0029040C & 1) {
+    if (g_death_boss_form == 2) {
+        if (g_twin_boss_bullets_halved != 0) {
+            if (reg_a6 == g_twin_boss_first_fire_point) {
+                g_twin_boss_first_bullets += 1;
+                if (g_twin_boss_first_bullets & 1) {
                     return;
                 }
             } else {
-                death_D_00290410 += 1;
-                if (!(death_D_00290410 & 1)) {
+                g_twin_boss_second_bullets += 1;
+                if (!(g_twin_boss_second_bullets & 1)) {
                     return;
                 }
             }
         }
     } else {
-        death_D_00290410 = 0;
-        death_D_0029040C = 0;
+        g_twin_boss_second_bullets = 0;
+        g_twin_boss_first_bullets = 0;
     }
 #endif
     bullet_spawn256();
@@ -2154,8 +2154,8 @@ void bullet_fire256_direct(void) {
 
 #ifdef DEATH_LABEL
 extern u16 g_attract_demo;
-extern u8 death_D_00290858;
-extern u8 death_D_0029085C;
+extern u8 g_twin_boss_bullet_speed_limit;
+extern u8 g_death_boss_form;
 #endif
 
 void bullet_spawn256(void) {
@@ -2282,8 +2282,8 @@ next_5:
     reg_d7.h[0] += D_0028E7F0;
     reg_d7.h[0] += g_hyper_bullet_speed;
 #ifdef DEATH_LABEL
-    if ((death_D_0029085C == 2) && (reg_d7.h[0] > death_D_00290858)) {
-        reg_d7.h[0] = death_D_00290858;
+    if ((g_death_boss_form == 2) && (reg_d7.h[0] > g_twin_boss_bullet_speed_limit)) {
+        reg_d7.h[0] = g_twin_boss_bullet_speed_limit;
     }
 #endif
     *(u8 *) (reg_a0 + 0xB) = reg_d7.b[0];
@@ -2507,8 +2507,8 @@ u32 D_0028DEA0;
 u32 D_0028DE9C;
 s32 D_0028DE98;
 #ifdef DEATH_LABEL
-s32 death_D_00290410;
-s32 death_D_0029040C;
+s32 g_twin_boss_second_bullets;
+s32 g_twin_boss_first_bullets;
 #endif
 u32 D_0028DE94;
 u32 D_0028DE90;

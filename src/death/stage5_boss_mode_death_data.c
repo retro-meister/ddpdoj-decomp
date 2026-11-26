@@ -1,32 +1,32 @@
 /* Data of the Death Label stage 5 boss modes. */
 #include "common.h"
 
-void death_func_00223950();
-void death_func_00223980();
-void death_func_00223A40();
-void death_func_00223A70();
-void death_func_00223B50();
-void death_func_00223B70();
-void death_func_00223C50();
-void death_func_00223C90();
-void death_func_00223D00();
-void death_func_00223D40();
+void twin_boss_mode_attack_b_start();
+void twin_boss_mode_attack_b();
+void twin_boss_mode_attack_c_start();
+void twin_boss_mode_attack_c();
+void twin_boss_mode_spiral_start();
+void twin_boss_mode_spiral();
+void twin_boss_mode_rage_start();
+void twin_boss_mode_rage();
+void twin_boss_mode_jet_start();
+void twin_boss_mode_jet();
 
-struct D0026a420Record { void *p0[10]; u16 w1[4]; };
-extern struct D0026a420Record D_0026A420;
+struct TwinBossModes { void *routines[10]; u16 words[4]; };
+extern struct TwinBossModes g_twin_boss_modes;
 
-struct D0026a420Record D_0026A420 = {
+struct TwinBossModes g_twin_boss_modes = {
     {
-        death_func_00223950,
-        death_func_00223980,
-        death_func_00223A40,
-        death_func_00223A70,
-        death_func_00223B50,
-        death_func_00223B70,
-        death_func_00223C50,
-        death_func_00223C90,
-        death_func_00223D00,
-        death_func_00223D40,
+        twin_boss_mode_attack_b_start,
+        twin_boss_mode_attack_b,
+        twin_boss_mode_attack_c_start,
+        twin_boss_mode_attack_c,
+        twin_boss_mode_spiral_start,
+        twin_boss_mode_spiral,
+        twin_boss_mode_rage_start,
+        twin_boss_mode_rage,
+        twin_boss_mode_jet_start,
+        twin_boss_mode_jet,
     },
     { 0x0000, 0x0000, 0x0000, 0x0000 },
 };

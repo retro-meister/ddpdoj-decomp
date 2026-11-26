@@ -2958,8 +2958,8 @@ extern u8 D_0068DD0F_as_u8_a[];
 extern u8 D_0068DD10[];
 
 #ifdef DEATH_LABEL
-extern u8 death_D_00290854;
-extern u8 death_D_00290858;
+extern u8 g_twin_boss_bullets_halved;
+extern u8 g_twin_boss_bullet_speed_limit;
 extern u8 death_D_00628DC6[];
 #endif
 
@@ -2975,8 +2975,8 @@ void func_0021E1A0(void) {
     D_0068DC43[0] = D_0028E308;
     D_0068DC44_as_u8_a[0] = D_0028E2EC;
 #ifdef DEATH_LABEL
-    D_0068DC45[0] = death_D_00290858;
-    death_D_00628DC6[0] = death_D_00290854;
+    D_0068DC45[0] = g_twin_boss_bullet_speed_limit;
+    death_D_00628DC6[0] = g_twin_boss_bullets_halved;
 #else
     D_0068DC45[0] = D_0028E2E4;
 #endif
@@ -3318,8 +3318,8 @@ extern s8 D_0068DC44[];
 
 #ifdef DEATH_LABEL
 extern s8 D_0068DC45_as_s8_a[];
-extern s8 death_D_00290854_as_s8;
-extern s8 death_D_00290858_as_s8;
+extern s8 g_twin_boss_bullets_halved_as_s8;
+extern s8 g_twin_boss_bullet_speed_limit_as_s8;
 extern s8 death_D_00628DC6_as_s8_a[];
 #endif
 
@@ -3329,8 +3329,8 @@ void func_0021EA10(void) {
     D_0028E308_as_s8 = D_0068DC43_as_s8_a[0];
     D_0028E2EC_as_s8 = D_0068DC44[0];
 #ifdef DEATH_LABEL
-    death_D_00290858_as_s8 = D_0068DC45_as_s8_a[0];
-    death_D_00290854_as_s8 = death_D_00628DC6_as_s8_a[0];
+    g_twin_boss_bullet_speed_limit_as_s8 = D_0068DC45_as_s8_a[0];
+    g_twin_boss_bullets_halved_as_s8 = death_D_00628DC6_as_s8_a[0];
 #endif
 }
 
@@ -10646,7 +10646,7 @@ extern u16 D_00684C80[];
 #ifdef DEATH_LABEL
 extern u8 death_D_00290DC0;
 extern u8 death_D_00290DBC;
-extern u8 death_D_0029085C;
+extern u8 g_death_boss_form;
 extern u8 death_D_00290850;
 extern u32 death_D_00290DB8;
 extern u32 death_D_00290DB4;
@@ -10709,7 +10709,7 @@ void func_0022BFD0() {
         D_00684C80[7] = 3;
     }
     D_00684C80[10] = 0;
-    death_D_0029085C = 0;
+    g_death_boss_form = 0;
     death_D_00290850 = 0;
     death_D_00290DBC = 0;
     g_game_frame_ran = 0;

@@ -97,8 +97,8 @@ extern u16 g_frame_mod2;
 extern u16 g_boss_present_as_u16;
 extern u16 g_enemy_signal_2;
 #ifdef DEATH_LABEL
-extern u8 death_D_00290858;
-extern u8 death_D_0029085C;
+extern u8 g_twin_boss_bullet_speed_limit;
+extern u8 g_death_boss_form;
 #endif
 extern u16 D_00299760[];
 extern u16 D_00299762[];
@@ -1344,8 +1344,8 @@ block_202:
                                         reg_d0.h[0] = *(u16 *)(reg_a6 + 0x38);
                                         ENTITY(reg_a6)->move.b.speed += reg_d0.b[0];
 #ifdef DEATH_LABEL
-                                        if ((death_D_0029085C == 2) && (ENTITY(reg_a6)->move.b.speed > death_D_00290858)) {
-                                            ENTITY(reg_a6)->move.b.speed = death_D_00290858;
+                                        if ((g_death_boss_form == 2) && (ENTITY(reg_a6)->move.b.speed > g_twin_boss_bullet_speed_limit)) {
+                                            ENTITY(reg_a6)->move.b.speed = g_twin_boss_bullet_speed_limit;
                                         }
 #endif
                                         reg_d1.w = 1;

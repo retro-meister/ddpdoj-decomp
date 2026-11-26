@@ -17,9 +17,9 @@ u8 g_stage_enemy_cursor[32];
 EnemySlots g_enemy_slots;
 Entity g_spare_entities[50];
 #ifdef DEATH_LABEL
-u8 death_D_006901F0[1024];
-u8 death_D_006901D0[32];
-u8 death_D_006901B0[32];
+u8 g_twin_boss_second_fire_point[1024];
+u8 g_twin_boss_first_fire_point[32];
+u8 g_twin_boss_second[32];
 #endif
 #ifdef DEATH_LABEL
 Entity g_enemy_entities_second[16];

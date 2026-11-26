@@ -1,28 +1,28 @@
 /* Data of the Death Label stage 5 boss movement. */
 #include "common.h"
 
-void death_func_00225D20();
-void death_func_00225D50();
-void death_func_00225D80();
-void death_func_00225DB0();
-void death_func_00225DE0();
-void death_func_00225E10();
-void death_func_00225E40();
-void death_func_00225E70();
-void death_func_00225EA0();
-void death_func_00225ED0();
+void twin_boss_move_wander_a_start();
+void twin_boss_move_wander_a();
+void twin_boss_move_wander_b_start();
+void twin_boss_move_wander_b();
+void twin_boss_move_wander_c_start();
+void twin_boss_move_wander_c();
+void twin_boss_move_wander_d_start();
+void twin_boss_move_wander_d();
+void twin_boss_move_wander_e_start();
+void twin_boss_move_wander_e();
 
-extern void *D_0026A7E0[10];
+extern void *g_twin_boss_move_routines[10];
 
-void *D_0026A7E0[10] = {
-    death_func_00225D20,
-    death_func_00225D50,
-    death_func_00225D80,
-    death_func_00225DB0,
-    death_func_00225DE0,
-    death_func_00225E10,
-    death_func_00225E40,
-    death_func_00225E70,
-    death_func_00225EA0,
-    death_func_00225ED0,
+void *g_twin_boss_move_routines[10] = {
+    twin_boss_move_wander_a_start,
+    twin_boss_move_wander_a,
+    twin_boss_move_wander_b_start,
+    twin_boss_move_wander_b,
+    twin_boss_move_wander_c_start,
+    twin_boss_move_wander_c,
+    twin_boss_move_wander_d_start,
+    twin_boss_move_wander_d,
+    twin_boss_move_wander_e_start,
+    twin_boss_move_wander_e,
 };

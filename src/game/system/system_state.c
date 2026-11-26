@@ -145,9 +145,9 @@ u8 g_stage_map_enabled __attribute__((aligned(4)));
 u8 D_0028E288 __attribute__((aligned(4)));
 u8 D_0028E284 __attribute__((aligned(4)));
 #ifdef DEATH_LABEL
-u8 death_D_0029085C __attribute__((aligned(4)));
-u8 death_D_00290858 __attribute__((aligned(4)));
-u8 death_D_00290854 __attribute__((aligned(4)));
+u8 g_death_boss_form __attribute__((aligned(4)));
+u8 g_twin_boss_bullet_speed_limit __attribute__((aligned(4)));
+u8 g_twin_boss_bullets_halved __attribute__((aligned(4)));
 u8 death_D_00290850 __attribute__((aligned(4)));
 #endif
 #ifndef DEATH_LABEL

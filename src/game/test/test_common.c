@@ -170,8 +170,8 @@ void test_screen_request() {
 }
 
 #ifdef DEATH_LABEL
-extern u8 death_D_00290854;
-extern u8 death_D_00290858;
+extern u8 g_twin_boss_bullets_halved;
+extern u8 g_twin_boss_bullet_speed_limit;
 #endif
 
 void settings_reset(void) {
@@ -251,11 +251,11 @@ void settings_reset(void) {
     D_0028EAFC = 0xFF;
     D_0028ED32 = 0;
 #ifdef DEATH_LABEL
-    death_D_00290858 = 0x2A;
+    g_twin_boss_bullet_speed_limit = 0x2A;
 #endif
     D_0028ED33 = 0;
 #ifdef DEATH_LABEL
-    death_D_00290854 = 1;
+    g_twin_boss_bullets_halved = 1;
 #endif
     D_0028ED34 = 0;
     D_0028ED35 = 0;

@@ -226,7 +226,7 @@ extern u16 D_002BF4F0_as_u16_a[];
 #ifdef DEATH_LABEL
 extern u16 g_attract_demo;
 extern u16 g_stage;
-extern u8 death_D_0029085C;
+extern u8 g_death_boss_form;
 extern u8 death_D_00290DC0;
 extern u16 D_00684C80[];
 #endif
@@ -791,7 +791,7 @@ loop_130:
                             } else {
                                 gain /= 10;
                             }
-                            if ((g_stage == 4) && (death_D_0029085C == 2)) {
+                            if ((g_stage == 4) && (g_death_boss_form == 2)) {
                                 gain = 0;
                             }
                         }
@@ -800,7 +800,7 @@ loop_130:
                             if ((g_stage == 0) || (g_stage == 1) || (g_stage == 2)) {
                                 gain = 0;
                             }
-                            if ((g_stage == 4) && (death_D_0029085C == 2)) {
+                            if ((g_stage == 4) && (g_death_boss_form == 2)) {
                                 gain = 0;
                             }
                         }
@@ -941,7 +941,7 @@ done_140:
                             } else {
                                 gain /= 10;
                             }
-                            if ((g_stage == 4) && (death_D_0029085C == 2)) {
+                            if ((g_stage == 4) && (g_death_boss_form == 2)) {
                                 gain = 0;
                             }
                         }
@@ -950,7 +950,7 @@ done_140:
                             if ((g_stage == 0) || (g_stage == 1) || (g_stage == 2)) {
                                 gain = 0;
                             }
-                            if ((g_stage == 4) && (death_D_0029085C == 2)) {
+                            if ((g_stage == 4) && (g_death_boss_form == 2)) {
                                 gain = 0;
                             }
                         }

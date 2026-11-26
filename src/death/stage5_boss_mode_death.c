@@ -1,30 +1,38 @@
 #include "common.h"
 #include "entity.h"
 
-void death_func_002237F0(u8 phase);
-void death_func_00223870(void);
-void death_func_00223980(void);
-void death_func_00223A70(void);
-void death_func_00223B70(void);
-void death_func_00223C90(void);
-void death_func_00223D40(void);
+typedef struct {
+    /* 0x00 */ u16 running;
+    /* 0x02 */ u16 wait;
+    /* 0x04 */ u16 second_wait;
+} Mode;
+
+#define MODE(pointer) ((Mode *)(pointer))
+
+void twin_boss_set_bullet_limits(u8 attack);
+void twin_boss_mode_stinger(void);
+void twin_boss_mode_attack_b(void);
+void twin_boss_mode_attack_c(void);
+void twin_boss_mode_spiral(void);
+void twin_boss_mode_rage(void);
+void twin_boss_mode_jet(void);
 
 s32 boss_movement_start();
-extern u8 death_D_0029085C;
+extern u8 g_death_boss_form;
 
-void death_func_002237B0(void) {
-    death_D_0029085C = 2;
-    death_func_002237F0(0);
-    *(u16 *)(reg_a4 + 2) = 0x60;
-    death_func_00223870();
+void twin_boss_mode_stinger_start(void) {
+    g_death_boss_form = 2;
+    twin_boss_set_bullet_limits(0);
+    MODE(reg_a4)->wait = 0x60;
+    twin_boss_mode_stinger();
 }
 
 typedef struct {
-    u8 first;
-    u8 second;
-} Pair;
+    u8 speed_limit;
+    u8 halved;
+} BulletLimits;
 
-const Pair death_D_0028E450[2][3][5] = {
+const BulletLimits g_twin_boss_bullet_limits[2][3][5] = {
     {
         { { 42, 1 }, { 24, 1 }, { 24, 1 }, { 10, 1 }, { 24, 1 } },
         { { 24, 1 }, { 42, 1 }, { 42, 1 }, { 24, 1 }, { 42, 1 } },
@@ -36,17 +44,17 @@ const Pair death_D_0028E450[2][3][5] = {
         { { 42, 0 }, { 42, 0 }, { 42, 0 }, { 24, 0 }, { 42, 1 } },
     },
 };
-extern u8 death_D_00290854;
-extern u8 death_D_00290858;
+extern u8 g_twin_boss_bullets_halved;
+extern u8 g_twin_boss_bullet_speed_limit;
 extern u8 death_D_00290DC0;
 extern u16 D_00684C80[];
 
-void death_func_002237F0(u8 phase) {
+void twin_boss_set_bullet_limits(u8 attack) {
     u8 type;
 
     type = D_00684C80[9] / 2 - 1;
-    death_D_00290858 = death_D_0028E450[death_D_00290DC0][type][phase].first;
-    death_D_00290854 = death_D_0028E450[death_D_00290DC0][type][phase].second;
+    g_twin_boss_bullet_speed_limit = g_twin_boss_bullet_limits[death_D_00290DC0][type][attack].speed_limit;
+    g_twin_boss_bullets_halved = g_twin_boss_bullet_limits[death_D_00290DC0][type][attack].halved;
 }
 
 s32 boss_phase_start();
@@ -54,16 +62,16 @@ s32 boss_attack_start();
 s32 boss_attack_running();
 extern u16 g_bullets_blocked;
 
-void death_func_00223870(void) {
+void twin_boss_mode_stinger(void) {
     s8 first_busy;
     s8 second_busy;
 
-    if (*(u16 *)(reg_a4 + 2) != 0) {
+    if (MODE(reg_a4)->wait != 0) {
         if (g_bullets_blocked != 0) {
             return;
         }
-        *(u16 *)(reg_a4 + 2) -= 1;
-        if (*(u16 *)(reg_a4 + 2) != 0) {
+        MODE(reg_a4)->wait -= 1;
+        if (MODE(reg_a4)->wait != 0) {
             return;
         }
         reg_d0.w = 0x18;
@@ -83,28 +91,28 @@ void death_func_00223870(void) {
         reg_d0.w = 0xe;
         boss_movement_start();
         ENTITY(reg_a6)->move.b.speed = 0xC;
-        *(u8 *)(reg_a6 + 0x21B) = 0xC;
-        *(u16 *)reg_a4 = 0;
+        ENTITY(reg_a6)[16].move.b.speed = 0xC;
+        MODE(reg_a4)->running = 0;
     }
 }
 
 
-void death_func_00223950(void) {
-    death_func_002237F0(2);
-    *(u16 *)(reg_a4 + 2) = 0x60;
-    death_func_00223980();
+void twin_boss_mode_attack_b_start(void) {
+    twin_boss_set_bullet_limits(2);
+    MODE(reg_a4)->wait = 0x60;
+    twin_boss_mode_attack_b();
 }
 
-void death_func_00223980(void) {
+void twin_boss_mode_attack_b(void) {
     s8 first_busy;
     s8 second_busy;
 
-    if (*(u16 *)(reg_a4 + 2) != 0) {
+    if (MODE(reg_a4)->wait != 0) {
         if (g_bullets_blocked != 0) {
             return;
         }
-        *(u16 *)(reg_a4 + 2) -= 1;
-        if (*(u16 *)(reg_a4 + 2) != 0) {
+        MODE(reg_a4)->wait -= 1;
+        if (MODE(reg_a4)->wait != 0) {
             return;
         }
         reg_d0.w = 0x10;
@@ -123,27 +131,27 @@ void death_func_00223980(void) {
         boss_phase_start();
         reg_d0.w = 0x10;
         boss_movement_start();
-        *(u16 *)reg_a4 = 0;
+        MODE(reg_a4)->running = 0;
     }
 }
 
 
-void death_func_00223A40(void) {
-    death_func_002237F0(1);
-    *(u16 *)(reg_a4 + 2) = 0x60;
-    death_func_00223A70();
+void twin_boss_mode_attack_c_start(void) {
+    twin_boss_set_bullet_limits(1);
+    MODE(reg_a4)->wait = 0x60;
+    twin_boss_mode_attack_c();
 }
 
-void death_func_00223A70(void) {
+void twin_boss_mode_attack_c(void) {
     s8 first_busy;
     s8 second_busy;
 
-    if (*(u16 *)(reg_a4 + 2) != 0) {
+    if (MODE(reg_a4)->wait != 0) {
         if (g_bullets_blocked != 0) {
             return;
         }
-        *(u16 *)(reg_a4 + 2) -= 1;
-        if (*(u16 *)(reg_a4 + 2) != 0) {
+        MODE(reg_a4)->wait -= 1;
+        if (MODE(reg_a4)->wait != 0) {
             return;
         }
         reg_d0.w = 0x12;
@@ -151,7 +159,7 @@ void death_func_00223A70(void) {
         reg_d0.w = 0x13;
         boss_attack_start();
         ENTITY(reg_a6)->move.b.speed = 4;
-        *(u8 *)(reg_a6 + 0x21B) = 4;
+        ENTITY(reg_a6)[16].move.b.speed = 4;
     }
     reg_d0.w = 0x12;
     boss_attack_running();
@@ -164,27 +172,27 @@ void death_func_00223A70(void) {
         boss_phase_start();
         reg_d0.w = 0xd;
         boss_movement_start();
-        *(u16 *)reg_a4 = 0;
+        MODE(reg_a4)->running = 0;
     }
 }
 
 
-void death_func_00223B50(void) {
-    *(u16 *)(reg_a4 + 2) = 0x60;
-    *(u16 *)(reg_a4 + 4) = 0x40;
-    death_func_00223B70();
+void twin_boss_mode_spiral_start(void) {
+    MODE(reg_a4)->wait = 0x60;
+    MODE(reg_a4)->second_wait = 0x40;
+    twin_boss_mode_spiral();
 }
 
-void death_func_00223B70(void) {
+void twin_boss_mode_spiral(void) {
     s8 first_busy;
     s8 second_busy;
 
-    if (*(u16 *)(reg_a4 + 2) != 0) {
+    if (MODE(reg_a4)->wait != 0) {
         if (g_bullets_blocked != 0) {
             return;
         }
-        *(u16 *)(reg_a4 + 2) -= 1;
-        if (*(u16 *)(reg_a4 + 2) != 0) {
+        MODE(reg_a4)->wait -= 1;
+        if (MODE(reg_a4)->wait != 0) {
             return;
         }
         reg_d0.w = 0x14;
@@ -199,32 +207,32 @@ void death_func_00223B70(void) {
     boss_attack_running();
     second_busy = cond_flag;
     if ((first_busy == 0) && (second_busy == 0)) {
-        *(u16 *)(reg_a4 + 4) -= 1;
-        if (*(u16 *)(reg_a4 + 4) == 0) {
+        MODE(reg_a4)->second_wait -= 1;
+        if (MODE(reg_a4)->second_wait == 0) {
             reg_d0.w = 0x15;
             boss_phase_start();
             reg_d0.w = 0x10;
             boss_movement_start();
-            *(u16 *)reg_a4 = 0;
+            MODE(reg_a4)->running = 0;
         }
     }
 }
 
 
-void death_func_00223C50(void) {
-    *(u16 *)(reg_a4 + 2) = 0x60;
-    death_func_002237F0(4);
+void twin_boss_mode_rage_start(void) {
+    MODE(reg_a4)->wait = 0x60;
+    twin_boss_set_bullet_limits(4);
     reg_d0.w = 0x10;
     boss_movement_start();
-    death_func_00223C90();
+    twin_boss_mode_rage();
 }
 
 s32 stage5_boss_shield_off();
 
-void death_func_00223C90(void) {
-    if ((*(u16 *)(reg_a4 + 2) != 0) && (g_bullets_blocked == 0)) {
-        *(u16 *)(reg_a4 + 2) -= 1;
-        if (*(u16 *)(reg_a4 + 2) == 0) {
+void twin_boss_mode_rage(void) {
+    if ((MODE(reg_a4)->wait != 0) && (g_bullets_blocked == 0)) {
+        MODE(reg_a4)->wait -= 1;
+        if (MODE(reg_a4)->wait == 0) {
             reg_d0.w = 0x16;
             boss_attack_start();
             reg_d0.w = 0x17;
@@ -235,18 +243,18 @@ void death_func_00223C90(void) {
 }
 
 
-void death_func_00223D00(void) {
-    death_func_002237F0(3);
-    *(u16 *)(reg_a4 + 2) = 0x60;
+void twin_boss_mode_jet_start(void) {
+    twin_boss_set_bullet_limits(3);
+    MODE(reg_a4)->wait = 0x60;
     reg_d0.w = 0xC;
     boss_movement_start();
-    death_func_00223D40();
+    twin_boss_mode_jet();
 }
 
-void death_func_00223D40(void) {
-    if ((*(u16 *)(reg_a4 + 2) != 0) && (g_bullets_blocked == 0)) {
-        *(u16 *)(reg_a4 + 2) -= 1;
-        if (*(u16 *)(reg_a4 + 2) == 0) {
+void twin_boss_mode_jet(void) {
+    if ((MODE(reg_a4)->wait != 0) && (g_bullets_blocked == 0)) {
+        MODE(reg_a4)->wait -= 1;
+        if (MODE(reg_a4)->wait == 0) {
             reg_d0.w = 0x1c;
             boss_attack_start();
             reg_d0.w = 0x1d;
