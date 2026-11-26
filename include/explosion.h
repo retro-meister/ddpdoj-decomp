@@ -49,6 +49,7 @@ typedef struct {
 /* A row of a list of explosions: six words. The list ends with BLAST_END in place of a row. */
 #define BLAST(delay, kind, flip, start_y, start_x) delay, kind, flip, start_y, start_x, 0
 #define BLAST_NOW(kind, flip, start_y, start_x) kind, flip, start_y, start_x, 0   /* five words */
+#define BLAST_SHORT(kind, flip, start_y, start_x) kind, flip, start_y, start_x      /* four words */
 #define BLAST_END -1
 
 #endif

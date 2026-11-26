@@ -83,6 +83,16 @@ void stage5_boss_mode_form1_explosion_afterglow(void);
 #ifdef DEATH_LABEL
 void twin_boss_mode_stinger_start(void);
 void twin_boss_mode_stinger(void);
+void twin_boss_mode_attack_b_start(void);
+void twin_boss_mode_attack_b(void);
+void twin_boss_mode_attack_c_start(void);
+void twin_boss_mode_attack_c(void);
+void twin_boss_mode_spiral_start(void);
+void twin_boss_mode_spiral(void);
+void twin_boss_mode_rage_start(void);
+void twin_boss_mode_rage(void);
+void twin_boss_mode_jet_start(void);
+void twin_boss_mode_jet(void);
 #endif
 
 /* The set-up routine and the per-frame routine of every mode, by mode number. */
@@ -130,12 +140,123 @@ void (*stage5_boss_mode_routines[])(void) = {
     stage5_boss_mode_form1_explosion_afterglow_start,
     stage5_boss_mode_form1_explosion_afterglow,
 #ifdef DEATH_LABEL
-    twin_boss_mode_stinger_start, /* a mode only Death Label has */
+    twin_boss_mode_stinger_start, /* the modes only Death Label has */
     twin_boss_mode_stinger,
+    twin_boss_mode_attack_b_start,
+    twin_boss_mode_attack_b,
+    twin_boss_mode_attack_c_start,
+    twin_boss_mode_attack_c,
+    twin_boss_mode_spiral_start,
+    twin_boss_mode_spiral,
+    twin_boss_mode_rage_start,
+    twin_boss_mode_rage,
+    twin_boss_mode_jet_start,
+    twin_boss_mode_jet,
 #else
     0,
     0,
 #endif
+};
+
+s16 stage5_boss_wreck_positions[24][2] = {
+    { 0xE00, 0x800 },
+    { 0xE00, -0xA00 },
+    { 0xC00, 0x1400 },
+    { 0xC00, -0x1400 },
+    { 0x400, 0x1C00 },
+    { 0x400, -0x1C00 },
+    { -0x400, 0x1200 },
+    { -0x400, -0x1200 },
+    { 0x200, 0xA00 },
+    { -0x200, -0x800 },
+    { -0x1000, 0xC00 },
+    { -0x1000, -0xA00 },
+    { -0x2000, 0x800 },
+    { -0x2000, -0x600 },
+    { -0x3000, 0xE00 },
+    { -0x3000, -0x800 },
+    { 0xC00, -0x100 },
+    { -0x200, 0 },
+    { -0x1200, 0x200 },
+    { -0x2400, 0x200 },
+    { -0x3400, 0 },
+    { 0, 0 },
+    { 0, 0 },
+    { 0, 0 },
+};
+
+u16 stage5_boss_blast_kinds[16] = {
+    0x000D, 0x0085, 0x0009, 0x0005, 0x0084, 0x000C, 0x000A, 0x0004,
+    0x0008, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000,
+};
+
+u16 stage5_boss_flash_palettes_a[104] = {
+    0x000E, 0x7FFF, 0x0000, 0x0780, 0x0004, 0x0005, 0x001F, 0x0004,
+    0x7FFF, 0x0000, 0x0400, 0x000B, 0x000C, 0x001F, 0x0005, 0x7FFF,
+    0x0000, 0x0440, 0x0012, 0x0013, 0x001F, 0x0005, 0x7FFF, 0x0000,
+    0x0480, 0x0019, 0x001A, 0x001F, 0x0005, 0x7FFF, 0x0000, 0x04C0,
+    0x0020, 0x0021, 0x001F, 0x0005, 0x7FFF, 0x0000, 0x0500, 0x0027,
+    0x0028, 0x001F, 0x0005, 0x7FFF, 0x0000, 0x0540, 0x002E, 0x002F,
+    0x001F, 0x0005, 0x7FFF, 0x0000, 0x0580, 0x0035, 0x0036, 0x001F,
+    0x0005, 0x7FFF, 0x0008, 0x0200, 0x003C, 0x003D, 0x001F, 0x0005,
+    0x7FFF, 0x0008, 0x0280, 0x0043, 0x0044, 0x001F, 0x0005, 0x7FFF,
+    0x0008, 0x02C0, 0x004A, 0x004B, 0x001F, 0x0005, 0x7FFF, 0x0008,
+    0x0580, 0x0051, 0x0052, 0x001F, 0x0005, 0x7FFF, 0x0008, 0x05C0,
+    0x0058, 0x0059, 0x001F, 0x0005, 0x7FFF, 0x0008, 0x0740, 0x005F,
+    0x0060, 0x001F, 0x0005, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000,
+};
+
+u16 stage5_boss_flash_palettes_b[64] = {
+    0x0009, 0x7FFF, 0x0000, 0x0780, 0x0004, 0x0005, 0x001F, 0x0004,
+    0x7FFF, 0x0000, 0x05C0, 0x000B, 0x000C, 0x001F, 0x0006, 0x7FFF,
+    0x0000, 0x03C0, 0x0012, 0x0013, 0x001F, 0x0006, 0x7FFF, 0x0008,
+    0x0200, 0x0019, 0x001A, 0x001F, 0x0006, 0x7FFF, 0x0008, 0x0280,
+    0x0020, 0x0021, 0x001F, 0x0006, 0x7FFF, 0x0008, 0x02C0, 0x0027,
+    0x0028, 0x001F, 0x0006, 0x7FFF, 0x0008, 0x0580, 0x002E, 0x002F,
+    0x001F, 0x0006, 0x7FFF, 0x0008, 0x05C0, 0x0035, 0x0036, 0x001F,
+    0x0006, 0x7FFF, 0x0008, 0x0740, 0x003C, 0x003D, 0x001F, 0x0006,
+};
+
+s16 stage5_boss_final_blasts[72] = {
+    BLAST_SHORT(0x09, 0, 0, 0),
+    BLAST_SHORT(0x85, 0, -0x1800, 0xA00),
+    BLAST_SHORT(0x0C, 0, -0x1000, -0x600),
+    BLAST_SHORT(0x85, 0, -0x2400, -0x200),
+    BLAST_SHORT(0x09, 0, -0x400, 0x800),
+    BLAST_SHORT(0x0C, 0, 0x800, -0xA00),
+    BLAST_SHORT(0x09, 0, -0x800, -0xC00),
+    BLAST_SHORT(0x85, 0, -0x1C00, 0xC00),
+    BLAST_SHORT(0x09, 0, 0, 0),
+    BLAST_SHORT(0x85, 0, -0x1800, -0xA00),
+    BLAST_SHORT(0x0C, 0, -0x1000, 0x600),
+    BLAST_SHORT(0x85, 0, -0x2400, 0x200),
+    BLAST_SHORT(0x09, 0, -0x400, -0x800),
+    BLAST_SHORT(0x0C, 0, 0x800, 0xA00),
+    BLAST_SHORT(0x09, 0, -0x800, 0xC00),
+    BLAST_SHORT(0x85, 0, -0x1C00, -0xC00),
+    BLAST_END,
+};
+
+u16 stage5_boss_flash_palettes_c[56] = {
+    0x0006, 0x7FFF, 0x0000, 0x0780, 0x0004, 0x0005, 0x001F, 0x0004,
+    0x7FFF, 0x0008, 0x0200, 0x000B, 0x000C, 0x001F, 0x0006, 0x7FFF,
+    0x0008, 0x0280, 0x0012, 0x0013, 0x001F, 0x0006, 0x7FFF, 0x0008,
+    0x02C0, 0x0019, 0x001A, 0x001F, 0x0006, 0x7FFF, 0x0008, 0x0580,
+    0x0020, 0x0021, 0x001F, 0x0006, 0x7FFF, 0x0008, 0x05C0, 0x0027,
+    0x0028, 0x001F, 0x0006, 0x7FFF, 0x0008, 0x0740, 0x002E, 0x002F,
+    0x001F, 0x0006, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000,
+};
+
+u16 stage5_boss_fade_palettes_a[16] = {
+    0x0002, 0x0000, 0x05C0, 0x0003, 0x0004, 0x001F, 0x0014, 0x0000,
+    0x03C0, 0x0009, 0x000A, 0x001F, 0x0014, 0x0000, 0x0000, 0x0000,
+};
+
+u16 stage5_boss_fade_palettes_b[32] = {
+    0x0004, 0x7FFF, 0x0000, 0x0400, 0x0004, 0x0005, 0x001F, 0x0003,
+    0x7FFF, 0x0000, 0x0440, 0x000B, 0x000C, 0x001F, 0x0003, 0x7FFF,
+    0x0000, 0x0480, 0x0012, 0x0013, 0x001F, 0x0003, 0x7FFF, 0x0000,
+    0x0580, 0x0019, 0x001A, 0x001F, 0x0003, 0x0000, 0x0000, 0x0000,
 };
 
 void stage5_boss_mode_form1_idle();
@@ -193,7 +314,6 @@ void stage5_boss_mode_form1_idle_start(void) {
 s32 boss_phase_start();
 s32 func_0013B2E0();
 s32 stage5_boss_form1_take_hits();
-extern u8 stage5_boss_fade_palettes_b[];
 extern s16 g_boss_hyper_wait_as_s16;
 extern u8 *g_boss_hp;
 extern s32 g_boss_hp_unit;
@@ -248,7 +368,6 @@ void stage5_boss_mode_form1_explosion_start(void) {
 
 typedef void (*Fn)();
 
-extern u8 stage5_boss_flash_palettes_a[];
 s32 boss_part_hide_all();
 s32 ground_speeds_request();
 s32 explosions_clear();
@@ -264,8 +383,6 @@ s32 rng_next_word();
 s32 func_00211550();
 s32 vibration_start_pad1();
 s32 vibration_start_pad2();
-extern u16 D_00264BB0[];
-extern u16 D_00264C10[];
 extern u8 g_slowdown_timer;
 
 void stage5_boss_mode_form1_explosion() {
@@ -390,7 +507,7 @@ void stage5_boss_mode_form1_explosion() {
             sfx_explosion_boss();
             boss_part_hide_all();
             reg_d7.w = 0x14;
-            reg_a3 = (u8 *)(D_00264BB0);
+            reg_a3 = (u8 *)(stage5_boss_wreck_positions);
             do {
                 reg_d1.h[0] = 0;
                 reg_d2.h[1] = *(u16 *)reg_a3;
@@ -435,7 +552,7 @@ block_rts:
     rng_next_unsigned();
     reg_d0.h[0] &= 7;
     reg_d0.h[0] += reg_d0.h[0];
-    reg_a1 = (u8 *)(D_00264C10);
+    reg_a1 = (u8 *)(stage5_boss_blast_kinds);
     reg_d0.h[0] = (reg_d0.h[0] != 0) ? *(u16 *)((u8 *)reg_a1 + ((s16)reg_d0.h[0] & ~1)) : *(u16 *)reg_a1;
     explosion_spawn();
     EXPLOSION(reg_a0)->y = (u16) ENTITY(reg_a6)->y.h;
@@ -553,7 +670,6 @@ void stage5_boss_mode_form2_explosion_start(void) {
     stage5_boss_mode_form2_explosion();
 }
 
-extern u8 stage5_boss_flash_palettes_b[];
 
 void stage5_boss_mode_form2_explosion(void) {
     u16 temp_a1;
@@ -687,7 +803,7 @@ block_rts:
         reg_call_target();
         rng_next_unsigned();
         reg_d0.h[0] &= 7;
-        reg_a1 = (u8 *)(D_00264C10);
+        reg_a1 = (u8 *)(stage5_boss_blast_kinds);
         reg_d0.h[0] += reg_d0.h[0];
         switch (reg_d0.h[0]) { case 0: goto block_zero; }
         temp_a3 = *(u16 *)((u8 *)reg_a1 + ((s16)reg_d0.h[0] & ~1));
@@ -820,7 +936,6 @@ void stage5_boss_mode_form2_to_form3() {
 s32 func_0013B8B0();                            /* extern */
 s32 sprite_palette_load();                            /* extern */
 extern s32 g_default_sprite_palette_as_s32_a[];
-extern s32 stage5_boss_fade_palettes_a[];
 
 void stage5_boss_mode_form3_explosion_start(void) {
     reg_d0.h[0] = 0xE;
@@ -838,7 +953,6 @@ void stage5_boss_mode_form3_explosion_start(void) {
     stage5_boss_mode_form3_explosion(1, 0x101);
 }
 
-extern u8 stage5_boss_flash_palettes_c[];
 
 s32 boss_slots_end();
 s32 boss_flash_start();
@@ -846,7 +960,6 @@ s32 boss_flash_running();
 s32 explosion_burst_medium();
 s32 sfx_explosion_ground_medium();
 s32 rng_next();
-extern u16 D_00264D80[];
 
 /* Death Label runs each emitter twice, once per boss body. */
 #ifdef DEATH_LABEL
@@ -879,7 +992,7 @@ block_3:
     for (i = 0; i < 2; i++) {
 #endif
     reg_d6.w = 0;
-    reg_a1 = (u8 *)D_00264D80;
+    reg_a1 = (u8 *)stage5_boss_final_blasts;
 loop_1:
     reg_d0.h[0] = *(u16 *)reg_a1;
     reg_a1 += 2;
@@ -989,7 +1102,7 @@ next_3:
     x = ENTITY(reg_a6)->y.h;
     for (i = 0; i < 2; i++) {
 #endif
-    reg_a1 = (u8 *)D_00264D80;
+    reg_a1 = (u8 *)stage5_boss_final_blasts;
     reg_a1 += FINAL_EXPLOSION(reg_a4)->entry;
     reg_d0.h[0] = *(u16 *)reg_a1;
     reg_a1 += 2;
@@ -1050,7 +1163,7 @@ next_4:
     x = ENTITY(reg_a6)->y.h;
     for (i = 0; i < 2; i++) {
 #endif
-    reg_a1 = (u8 *)D_00264D80;
+    reg_a1 = (u8 *)stage5_boss_final_blasts;
     reg_a1 += FINAL_EXPLOSION(reg_a4)->entry;
     reg_d0.h[0] = *(u16 *)reg_a1;
     reg_a1 += 2;

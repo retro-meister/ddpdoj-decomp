@@ -259,7 +259,6 @@ segments:
       - [0x164630, .data, game/stage5/stage5_boss_attack1]
       - [0x1648a0, .data, game/stage5/stage5_boss_draw]
       - [0x164b80, .data, game/stage5/stage5_boss_mode]
-      - [0x164c30, .data, game/stage5/stage5_boss_mode_data]
       - [0x164f60, .data, game/stage5/stage5_boss_move]
       - [0x164fc0, .data, game/stage5/stage5_boss]
       - [0x165190, .data, game/stage5/stage5_enemy_data]
