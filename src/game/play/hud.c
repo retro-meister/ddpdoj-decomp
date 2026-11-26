@@ -1390,8 +1390,12 @@ loop_1:
     goto loop_1;
 next_4:
     reg_d6.w = save_d6;
+#ifdef DDPDOJ_PC
+    reg_a0 = (u8 *)hud_hit_digit_sets[reg_d5.h[0] / 4];
+#else
     reg_a0 = (u8 *)hud_hit_digit_sets;
     reg_a0 = *(u8 **)(reg_a0 + reg_d5.h[0]);
+#endif
     reg_d2.h[0] += reg_d2.h[0];
     reg_d2.h[0] += reg_d2.h[0];
     reg_tmp2.w = reg_d2.w;

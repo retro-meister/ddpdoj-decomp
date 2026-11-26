@@ -519,16 +519,16 @@ void p1_power_up(void) {
         reg_d0.h[0] <<= 2;
         reg_tmp.h[1] = (((u16)reg_d0.h[0] + 4) != 0) ? *(u16 *)(reg_a0 + ((s16)((u16)reg_d0.h[0] + 4) & ~1)) : *(u16 *)reg_a0;
         reg_tmp.h[0] = (((u16)reg_d0.h[0] + 6) != 0) ? *(u16 *)(reg_a0 + ((s16)((u16)reg_d0.h[0] + 6) & ~1)) : *(u16 *)reg_a0;
-        reg_a1 = (u8 *)reg_tmp.w;
+        reg_a1 = ARCADE_ADDRESS_DECODE(u8 *, reg_tmp.w);
         reg_d1.h[0] = *(u16 *)(reg_a1 + 8);
         reg_tmp.h[1] = (reg_d0.h[0]) ? *(u16 *)(reg_a0 + ((s16)reg_d0.h[0] & ~1)) : *(u16 *)reg_a0;
         reg_tmp.h[0] = (((u16)reg_d0.h[0] + 2) != 0) ? *(u16 *)(reg_a0 + ((s16)((u16)reg_d0.h[0] + 2) & ~1)) : *(u16 *)reg_a0;
-        reg_a0 = (u8 *)reg_tmp.w;
+        reg_a0 = ARCADE_ADDRESS_DECODE(u8 *, reg_tmp.w);
         reg_d0.h[0] = *(u16 *)(reg_a0 + 8);
         reg_a1 = (u8 *)g_p1_weapon_level_data;
         reg_tmp.h[1] = *(u16 *)(reg_a1 + 0);
         reg_tmp.h[0] = *(u16 *)(reg_a1 + 2);
-        reg_a0 = (u8 *)reg_tmp.w;
+        reg_a0 = ARCADE_ADDRESS_DECODE(u8 *, reg_tmp.w);
         if (*(u16 *)(reg_a0 + 0) != reg_d0.h[0]) {
             reg_tmp.h[1] = *(u16 *)(reg_a1 + 0);
             reg_tmp.h[0] = *(u16 *)(reg_a1 + 2);
@@ -539,7 +539,7 @@ void p1_power_up(void) {
         reg_a2 = (u8 *)g_p1_option_level_data_as_u8_a;
         reg_tmp.h[1] = *(u16 *)(reg_a2 + 0);
         reg_tmp.h[0] = *(u16 *)(reg_a2 + 2);
-        reg_a0 = (u8 *)reg_tmp.w;
+        reg_a0 = ARCADE_ADDRESS_DECODE(u8 *, reg_tmp.w);
         if (*(u16 *)(reg_a0 + 0) != reg_d1.h[0]) {
             reg_tmp.h[1] = *(u16 *)(reg_a1 + 4);
             reg_tmp.h[0] = *(u16 *)(reg_a1 + 6);
@@ -582,16 +582,16 @@ void p2_power_up(void) {
         reg_d0.h[0] <<= 2;
         reg_tmp.h[1] = (((u16)reg_d0.h[0] + 4) != 0) ? *(u16 *)(reg_a0 + ((s16)((u16)reg_d0.h[0] + 4) & ~1)) : *(u16 *)reg_a0;
         reg_tmp.h[0] = (((u16)reg_d0.h[0] + 6) != 0) ? *(u16 *)(reg_a0 + ((s16)((u16)reg_d0.h[0] + 6) & ~1)) : *(u16 *)reg_a0;
-        reg_a1 = (u8 *)reg_tmp.w;
+        reg_a1 = ARCADE_ADDRESS_DECODE(u8 *, reg_tmp.w);
         reg_d1.h[0] = *(u16 *)(reg_a1 + 8);
         reg_tmp.h[1] = (reg_d0.h[0]) ? *(u16 *)(reg_a0 + ((s16)reg_d0.h[0] & ~1)) : *(u16 *)reg_a0;
         reg_tmp.h[0] = (((u16)reg_d0.h[0] + 2) != 0) ? *(u16 *)(reg_a0 + ((s16)((u16)reg_d0.h[0] + 2) & ~1)) : *(u16 *)reg_a0;
-        reg_a0 = (u8 *)reg_tmp.w;
+        reg_a0 = ARCADE_ADDRESS_DECODE(u8 *, reg_tmp.w);
         reg_d0.h[0] = *(u16 *)(reg_a0 + 8);
         reg_a1 = (u8 *)g_p2_weapon_level_data;
         reg_tmp.h[1] = *(u16 *)(reg_a1 + 0);
         reg_tmp.h[0] = *(u16 *)(reg_a1 + 2);
-        reg_a0 = (u8 *)reg_tmp.w;
+        reg_a0 = ARCADE_ADDRESS_DECODE(u8 *, reg_tmp.w);
         if (*(u16 *)(reg_a0 + 0) != reg_d0.h[0]) {
             reg_tmp.h[1] = *(u16 *)(reg_a1 + 0);
             reg_tmp.h[0] = *(u16 *)(reg_a1 + 2);
@@ -602,7 +602,7 @@ void p2_power_up(void) {
         reg_a2 = (u8 *)g_p2_option_level_data_as_u8_a;
         reg_tmp.h[1] = *(u16 *)(reg_a2 + 0);
         reg_tmp.h[0] = *(u16 *)(reg_a2 + 2);
-        reg_a0 = (u8 *)reg_tmp.w;
+        reg_a0 = ARCADE_ADDRESS_DECODE(u8 *, reg_tmp.w);
         if (*(u16 *)(reg_a0 + 0) != reg_d1.h[0]) {
             reg_tmp.h[1] = *(u16 *)(reg_a1 + 4);
             reg_tmp.h[0] = *(u16 *)(reg_a1 + 6);
@@ -937,7 +937,7 @@ void p1_maximum_level_show() {
     reg_a1 += 2;
     reg_tmp.h[0] = *(u16 *)reg_a1;
     reg_a1 += 2;
-    reg_a0 = (u8 *)reg_tmp.w;
+    reg_a0 = ARCADE_ADDRESS_DECODE(u8 *, reg_tmp.w);
     reg_d0.h[0] = *(u16 *)reg_a1;
     reg_a1 += 2;
     reg_d1.h[0] = *(u16 *)reg_a1;
@@ -954,7 +954,7 @@ void p2_maximum_level_show() {
     reg_a1 += 2;
     reg_tmp.h[0] = *(u16 *)reg_a1;
     reg_a1 += 2;
-    reg_a0 = (u8 *)reg_tmp.w;
+    reg_a0 = ARCADE_ADDRESS_DECODE(u8 *, reg_tmp.w);
     reg_d0.h[0] = *(u16 *)reg_a1;
     reg_a1 += 2;
     reg_d1.h[0] = *(u16 *)reg_a1;

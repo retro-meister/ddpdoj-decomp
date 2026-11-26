@@ -569,131 +569,131 @@ extern u16 player_shot_1_flight_table[];
 extern u16 player_shot_1_impact_table[];
 
 void player_shot_1_tables_init(void) {
-    STORE_POINTER(ship0_shot_list_1_00_00 + 5, ship0_shot_list_1_00_00_02);
-    STORE_POINTER(ship0_shot_list_1_00_00 + 15, ship0_shot_list_1_00_00_07);
-    STORE_POINTER(ship0_shot_list_2_00_00 + 5, ship0_shot_list_1_00_00_02);
-    STORE_POINTER(ship0_shot_list_2_00_00 + 15, ship0_shot_list_1_00_00_07);
-    STORE_POINTER(ship0_shot_list_1_00_01 + 5, ship0_shot_list_1_00_01_02);
-    STORE_POINTER(ship0_shot_list_1_00_01 + 15, ship0_shot_list_1_00_01_07);
-    STORE_POINTER(ship0_shot_list_2_00_01 + 5, ship0_shot_list_1_00_01_02);
-    STORE_POINTER(ship0_shot_list_2_00_01 + 15, ship0_shot_list_1_00_01_07);
-    STORE_POINTER(ship0_shot_list_1_00_02 + 5, ship0_shot_list_1_00_02_02);
-    STORE_POINTER(ship0_shot_list_1_00_02 + 15, ship0_shot_list_1_00_02_07);
-    STORE_POINTER(ship0_shot_list_2_00_02 + 5, ship0_shot_list_1_00_02_02);
-    STORE_POINTER(ship0_shot_list_2_00_02 + 15, ship0_shot_list_1_00_02_07);
-    STORE_POINTER(ship0_shot_list_1_00_03 + 5, ship0_shot_list_1_00_03_02);
-    STORE_POINTER(ship0_shot_list_1_00_03 + 15, ship0_shot_list_1_00_03_07);
-    STORE_POINTER(ship0_shot_list_2_00_03 + 5, ship0_shot_list_1_00_03_02);
-    STORE_POINTER(ship0_shot_list_2_00_03 + 15, ship0_shot_list_1_00_03_07);
-    STORE_POINTER(ship0_shot_list_1_00_04 + 5, ship0_shot_list_1_00_04_02);
-    STORE_POINTER(ship0_shot_list_1_00_04 + 15, ship0_shot_list_1_00_04_07);
-    STORE_POINTER(ship0_shot_list_2_00_04 + 5, ship0_shot_list_1_00_04_02);
-    STORE_POINTER(ship0_shot_list_2_00_04 + 15, ship0_shot_list_1_00_04_07);
-    STORE_POINTER(ship0_shot_list_1_02_00 + 5, ship0_shot_list_1_02_00_02);
-    STORE_POINTER(ship0_shot_list_1_02_00 + 15, ship0_shot_list_1_02_00_07);
-    STORE_POINTER(ship0_shot_list_1_02_01 + 5, ship0_shot_list_1_02_01_02);
-    STORE_POINTER(ship0_shot_list_1_02_01 + 15, ship0_shot_list_1_02_01_07);
-    STORE_POINTER(ship0_shot_list_1_02_02 + 5, ship0_shot_list_1_02_02_02);
-    STORE_POINTER(ship0_shot_list_1_02_02 + 15, ship0_shot_list_1_02_02_07);
-    STORE_POINTER(ship0_shot_list_1_02_03 + 5, ship0_shot_list_1_02_03_02);
-    STORE_POINTER(ship0_shot_list_1_02_03 + 15, ship0_shot_list_1_02_03_07);
-    STORE_POINTER(ship0_shot_list_1_02_04 + 5, ship0_shot_list_1_02_04_02);
-    STORE_POINTER(ship0_shot_list_1_02_04 + 15, ship0_shot_list_1_02_04_07);
-    STORE_POINTER(ship0_shot_list_1_04_00 + 5, ship0_shot_list_1_04_00_02);
-    STORE_POINTER(ship0_shot_list_1_04_00 + 15, ship0_shot_list_1_04_00_07);
-    STORE_POINTER(ship0_shot_list_2_04_00 + 5, ship0_shot_list_1_04_00_02);
-    STORE_POINTER(ship0_shot_list_2_04_00 + 15, ship0_shot_list_1_04_00_07);
-    STORE_POINTER(ship0_shot_list_1_04_01 + 5, ship0_shot_list_1_04_01_02);
-    STORE_POINTER(ship0_shot_list_1_04_01 + 15, ship0_shot_list_1_04_01_07);
-    STORE_POINTER(ship0_shot_list_2_04_01 + 5, ship0_shot_list_1_04_01_02);
-    STORE_POINTER(ship0_shot_list_2_04_01 + 15, ship0_shot_list_1_04_01_07);
-    STORE_POINTER(ship0_shot_list_1_04_02 + 5, ship0_shot_list_1_04_02_02);
-    STORE_POINTER(ship0_shot_list_1_04_02 + 15, ship0_shot_list_1_04_02_07);
-    STORE_POINTER(ship0_shot_list_2_04_02 + 5, ship0_shot_list_1_04_02_02);
-    STORE_POINTER(ship0_shot_list_2_04_02 + 15, ship0_shot_list_1_04_02_07);
-    STORE_POINTER(ship0_shot_list_1_04_03 + 5, ship0_shot_list_1_04_03_02);
-    STORE_POINTER(ship0_shot_list_1_04_03 + 15, ship0_shot_list_1_04_03_07);
-    STORE_POINTER(ship0_shot_list_2_04_03 + 5, ship0_shot_list_1_04_03_02);
-    STORE_POINTER(ship0_shot_list_2_04_03 + 15, ship0_shot_list_1_04_03_07);
-    STORE_POINTER(ship0_shot_list_1_04_04 + 5, ship0_shot_list_1_04_04_02);
-    STORE_POINTER(ship0_shot_list_1_04_04 + 15, ship0_shot_list_1_04_04_07);
-    STORE_POINTER(ship0_shot_list_2_04_04 + 5, ship0_shot_list_1_04_04_02);
-    STORE_POINTER(ship0_shot_list_2_04_04 + 15, ship0_shot_list_1_04_04_07);
-    STORE_POINTER(player_shot_1_flight_table, player_shot_1_flight_00);
-    STORE_POINTER(player_shot_1_flight_table + 2, player_shot_1_flight_01);
-    STORE_POINTER(player_shot_1_flight_table + 4, player_shot_1_flight_02);
-    STORE_POINTER(player_shot_1_flight_table + 6, player_shot_1_flight_03);
-    STORE_POINTER(player_shot_1_flight_table + 8, player_shot_1_flight_04);
-    STORE_POINTER(player_shot_1_flight_table + 10, player_shot_1_flight_05);
-    STORE_POINTER(player_shot_1_flight_table + 12, player_shot_1_flight_06);
-    STORE_POINTER(player_shot_1_flight_table + 14, player_shot_1_flight_07);
-    STORE_POINTER(player_shot_1_flight_table + 16, player_shot_1_flight_08);
-    STORE_POINTER(player_shot_1_flight_table + 18, player_shot_1_flight_09);
-    STORE_POINTER(player_shot_1_flight_table + 20, player_shot_1_flight_10);
-    STORE_POINTER(player_shot_1_flight_table + 22, player_shot_1_flight_11);
-    STORE_POINTER(player_shot_1_flight_table + 24, player_shot_1_flight_12);
-    STORE_POINTER(player_shot_1_flight_table + 26, player_shot_1_flight_13);
-    STORE_POINTER(player_shot_1_flight_table + 28, player_shot_1_flight_14);
-    STORE_POINTER(player_shot_1_flight_table + 30, player_shot_1_flight_15);
-    STORE_POINTER(player_shot_1_flight_table + 32, player_shot_1_flight_16);
-    STORE_POINTER(player_shot_1_flight_table + 34, player_shot_1_flight_17);
-    STORE_POINTER(player_shot_1_flight_table + 36, player_shot_1_flight_18);
-    STORE_POINTER(player_shot_1_flight_table + 38, player_shot_1_flight_19);
-    STORE_POINTER(player_shot_1_flight_table + 40, player_shot_1_flight_20);
-    STORE_POINTER(player_shot_1_flight_table + 42, player_shot_1_flight_21);
-    STORE_POINTER(player_shot_1_flight_table + 44, player_shot_1_flight_22);
-    STORE_POINTER(player_shot_1_flight_table + 46, player_shot_1_flight_23);
-    STORE_POINTER(player_shot_1_flight_table + 48, player_shot_1_flight_24);
-    STORE_POINTER(player_shot_1_impact_table, player_shot_1_impact_00);
-    STORE_POINTER(player_shot_1_impact_table + 2, player_shot_1_impact_01);
-    STORE_POINTER(player_shot_1_impact_table + 4, player_shot_1_impact_02);
-    STORE_POINTER(player_shot_1_impact_table + 6, player_shot_1_impact_03);
-    STORE_POINTER(player_shot_1_impact_table + 8, player_shot_1_impact_04);
-    STORE_POINTER(player_shot_1_impact_table + 10, player_shot_1_impact_05);
-    STORE_POINTER(player_shot_1_impact_table + 12, player_shot_1_impact_06);
-    STORE_POINTER(player_shot_1_impact_table + 14, player_shot_1_impact_07);
-    STORE_POINTER(player_shot_1_impact_table + 16, player_shot_1_impact_08);
-    STORE_POINTER(player_shot_1_impact_table + 18, player_shot_1_impact_09);
-    STORE_POINTER(player_shot_1_impact_table + 20, player_shot_1_impact_10);
-    STORE_POINTER(player_shot_1_impact_table + 22, player_shot_1_impact_11);
-    STORE_POINTER(player_shot_1_impact_table + 24, player_shot_1_impact_12);
-    STORE_POINTER(player_shot_1_impact_table + 26, player_shot_1_impact_13);
-    STORE_POINTER(player_shot_1_impact_table + 28, player_shot_1_impact_14);
-    STORE_POINTER(player_shot_1_impact_table + 30, player_shot_1_impact_15);
-    STORE_POINTER(player_shot_1_impact_table + 32, player_shot_1_impact_16);
-    STORE_POINTER(player_shot_1_impact_table + 34, player_shot_1_impact_17);
-    STORE_POINTER(player_shot_1_impact_table + 36, player_shot_1_impact_18);
-    STORE_POINTER(player_shot_1_impact_table + 38, player_shot_1_impact_19);
-    STORE_POINTER(player_shot_1_impact_table + 40, player_shot_1_impact_20);
-    STORE_POINTER(player_shot_1_impact_table + 42, player_shot_1_impact_21);
-    STORE_POINTER(player_shot_1_impact_table + 44, player_shot_1_impact_22);
-    STORE_POINTER(player_shot_1_impact_table + 46, player_shot_1_impact_23);
-    STORE_POINTER(player_shot_1_impact_table + 48, player_shot_1_impact_24);
-    STORE_POINTER(player_shot_1_impact_00 + 3, player_shot_1_impact_frames_00);
-    STORE_POINTER(player_shot_1_impact_01 + 3, player_shot_1_impact_frames_00);
-    STORE_POINTER(player_shot_1_impact_02 + 3, player_shot_1_impact_frames_02);
-    STORE_POINTER(player_shot_1_impact_03 + 3, player_shot_1_impact_frames_02);
-    STORE_POINTER(player_shot_1_impact_04 + 3, player_shot_1_impact_frames_04);
-    STORE_POINTER(player_shot_1_impact_05 + 3, player_shot_1_impact_frames_04);
-    STORE_POINTER(player_shot_1_impact_06 + 3, player_shot_1_impact_frames_06);
-    STORE_POINTER(player_shot_1_impact_07 + 3, player_shot_1_impact_frames_06);
-    STORE_POINTER(player_shot_1_impact_08 + 3, player_shot_1_impact_frames_08);
-    STORE_POINTER(player_shot_1_impact_09 + 3, player_shot_1_impact_frames_08);
-    STORE_POINTER(player_shot_1_impact_10 + 3, player_shot_1_impact_frames_10);
-    STORE_POINTER(player_shot_1_impact_11 + 3, player_shot_1_impact_frames_11);
-    STORE_POINTER(player_shot_1_impact_12 + 3, player_shot_1_impact_frames_12);
-    STORE_POINTER(player_shot_1_impact_13 + 3, player_shot_1_impact_frames_13);
-    STORE_POINTER(player_shot_1_impact_14 + 3, player_shot_1_impact_frames_14);
-    STORE_POINTER(player_shot_1_impact_15 + 3, player_shot_1_impact_frames_15);
-    STORE_POINTER(player_shot_1_impact_16 + 3, player_shot_1_impact_frames_15);
-    STORE_POINTER(player_shot_1_impact_17 + 3, player_shot_1_impact_frames_17);
-    STORE_POINTER(player_shot_1_impact_18 + 3, player_shot_1_impact_frames_17);
-    STORE_POINTER(player_shot_1_impact_19 + 3, player_shot_1_impact_frames_19);
-    STORE_POINTER(player_shot_1_impact_20 + 3, player_shot_1_impact_frames_19);
-    STORE_POINTER(player_shot_1_impact_21 + 3, player_shot_1_impact_frames_21);
-    STORE_POINTER(player_shot_1_impact_22 + 3, player_shot_1_impact_frames_21);
-    STORE_POINTER(player_shot_1_impact_23 + 3, player_shot_1_impact_frames_23);
-    STORE_POINTER(player_shot_1_impact_24 + 3, player_shot_1_impact_frames_23);
+    STORE_ARCADE_ADDRESS(ship0_shot_list_1_00_00 + 5, ship0_shot_list_1_00_00_02);
+    STORE_ARCADE_ADDRESS(ship0_shot_list_1_00_00 + 15, ship0_shot_list_1_00_00_07);
+    STORE_ARCADE_ADDRESS(ship0_shot_list_2_00_00 + 5, ship0_shot_list_1_00_00_02);
+    STORE_ARCADE_ADDRESS(ship0_shot_list_2_00_00 + 15, ship0_shot_list_1_00_00_07);
+    STORE_ARCADE_ADDRESS(ship0_shot_list_1_00_01 + 5, ship0_shot_list_1_00_01_02);
+    STORE_ARCADE_ADDRESS(ship0_shot_list_1_00_01 + 15, ship0_shot_list_1_00_01_07);
+    STORE_ARCADE_ADDRESS(ship0_shot_list_2_00_01 + 5, ship0_shot_list_1_00_01_02);
+    STORE_ARCADE_ADDRESS(ship0_shot_list_2_00_01 + 15, ship0_shot_list_1_00_01_07);
+    STORE_ARCADE_ADDRESS(ship0_shot_list_1_00_02 + 5, ship0_shot_list_1_00_02_02);
+    STORE_ARCADE_ADDRESS(ship0_shot_list_1_00_02 + 15, ship0_shot_list_1_00_02_07);
+    STORE_ARCADE_ADDRESS(ship0_shot_list_2_00_02 + 5, ship0_shot_list_1_00_02_02);
+    STORE_ARCADE_ADDRESS(ship0_shot_list_2_00_02 + 15, ship0_shot_list_1_00_02_07);
+    STORE_ARCADE_ADDRESS(ship0_shot_list_1_00_03 + 5, ship0_shot_list_1_00_03_02);
+    STORE_ARCADE_ADDRESS(ship0_shot_list_1_00_03 + 15, ship0_shot_list_1_00_03_07);
+    STORE_ARCADE_ADDRESS(ship0_shot_list_2_00_03 + 5, ship0_shot_list_1_00_03_02);
+    STORE_ARCADE_ADDRESS(ship0_shot_list_2_00_03 + 15, ship0_shot_list_1_00_03_07);
+    STORE_ARCADE_ADDRESS(ship0_shot_list_1_00_04 + 5, ship0_shot_list_1_00_04_02);
+    STORE_ARCADE_ADDRESS(ship0_shot_list_1_00_04 + 15, ship0_shot_list_1_00_04_07);
+    STORE_ARCADE_ADDRESS(ship0_shot_list_2_00_04 + 5, ship0_shot_list_1_00_04_02);
+    STORE_ARCADE_ADDRESS(ship0_shot_list_2_00_04 + 15, ship0_shot_list_1_00_04_07);
+    STORE_ARCADE_ADDRESS(ship0_shot_list_1_02_00 + 5, ship0_shot_list_1_02_00_02);
+    STORE_ARCADE_ADDRESS(ship0_shot_list_1_02_00 + 15, ship0_shot_list_1_02_00_07);
+    STORE_ARCADE_ADDRESS(ship0_shot_list_1_02_01 + 5, ship0_shot_list_1_02_01_02);
+    STORE_ARCADE_ADDRESS(ship0_shot_list_1_02_01 + 15, ship0_shot_list_1_02_01_07);
+    STORE_ARCADE_ADDRESS(ship0_shot_list_1_02_02 + 5, ship0_shot_list_1_02_02_02);
+    STORE_ARCADE_ADDRESS(ship0_shot_list_1_02_02 + 15, ship0_shot_list_1_02_02_07);
+    STORE_ARCADE_ADDRESS(ship0_shot_list_1_02_03 + 5, ship0_shot_list_1_02_03_02);
+    STORE_ARCADE_ADDRESS(ship0_shot_list_1_02_03 + 15, ship0_shot_list_1_02_03_07);
+    STORE_ARCADE_ADDRESS(ship0_shot_list_1_02_04 + 5, ship0_shot_list_1_02_04_02);
+    STORE_ARCADE_ADDRESS(ship0_shot_list_1_02_04 + 15, ship0_shot_list_1_02_04_07);
+    STORE_ARCADE_ADDRESS(ship0_shot_list_1_04_00 + 5, ship0_shot_list_1_04_00_02);
+    STORE_ARCADE_ADDRESS(ship0_shot_list_1_04_00 + 15, ship0_shot_list_1_04_00_07);
+    STORE_ARCADE_ADDRESS(ship0_shot_list_2_04_00 + 5, ship0_shot_list_1_04_00_02);
+    STORE_ARCADE_ADDRESS(ship0_shot_list_2_04_00 + 15, ship0_shot_list_1_04_00_07);
+    STORE_ARCADE_ADDRESS(ship0_shot_list_1_04_01 + 5, ship0_shot_list_1_04_01_02);
+    STORE_ARCADE_ADDRESS(ship0_shot_list_1_04_01 + 15, ship0_shot_list_1_04_01_07);
+    STORE_ARCADE_ADDRESS(ship0_shot_list_2_04_01 + 5, ship0_shot_list_1_04_01_02);
+    STORE_ARCADE_ADDRESS(ship0_shot_list_2_04_01 + 15, ship0_shot_list_1_04_01_07);
+    STORE_ARCADE_ADDRESS(ship0_shot_list_1_04_02 + 5, ship0_shot_list_1_04_02_02);
+    STORE_ARCADE_ADDRESS(ship0_shot_list_1_04_02 + 15, ship0_shot_list_1_04_02_07);
+    STORE_ARCADE_ADDRESS(ship0_shot_list_2_04_02 + 5, ship0_shot_list_1_04_02_02);
+    STORE_ARCADE_ADDRESS(ship0_shot_list_2_04_02 + 15, ship0_shot_list_1_04_02_07);
+    STORE_ARCADE_ADDRESS(ship0_shot_list_1_04_03 + 5, ship0_shot_list_1_04_03_02);
+    STORE_ARCADE_ADDRESS(ship0_shot_list_1_04_03 + 15, ship0_shot_list_1_04_03_07);
+    STORE_ARCADE_ADDRESS(ship0_shot_list_2_04_03 + 5, ship0_shot_list_1_04_03_02);
+    STORE_ARCADE_ADDRESS(ship0_shot_list_2_04_03 + 15, ship0_shot_list_1_04_03_07);
+    STORE_ARCADE_ADDRESS(ship0_shot_list_1_04_04 + 5, ship0_shot_list_1_04_04_02);
+    STORE_ARCADE_ADDRESS(ship0_shot_list_1_04_04 + 15, ship0_shot_list_1_04_04_07);
+    STORE_ARCADE_ADDRESS(ship0_shot_list_2_04_04 + 5, ship0_shot_list_1_04_04_02);
+    STORE_ARCADE_ADDRESS(ship0_shot_list_2_04_04 + 15, ship0_shot_list_1_04_04_07);
+    STORE_ARCADE_ADDRESS(player_shot_1_flight_table, player_shot_1_flight_00);
+    STORE_ARCADE_ADDRESS(player_shot_1_flight_table + 2, player_shot_1_flight_01);
+    STORE_ARCADE_ADDRESS(player_shot_1_flight_table + 4, player_shot_1_flight_02);
+    STORE_ARCADE_ADDRESS(player_shot_1_flight_table + 6, player_shot_1_flight_03);
+    STORE_ARCADE_ADDRESS(player_shot_1_flight_table + 8, player_shot_1_flight_04);
+    STORE_ARCADE_ADDRESS(player_shot_1_flight_table + 10, player_shot_1_flight_05);
+    STORE_ARCADE_ADDRESS(player_shot_1_flight_table + 12, player_shot_1_flight_06);
+    STORE_ARCADE_ADDRESS(player_shot_1_flight_table + 14, player_shot_1_flight_07);
+    STORE_ARCADE_ADDRESS(player_shot_1_flight_table + 16, player_shot_1_flight_08);
+    STORE_ARCADE_ADDRESS(player_shot_1_flight_table + 18, player_shot_1_flight_09);
+    STORE_ARCADE_ADDRESS(player_shot_1_flight_table + 20, player_shot_1_flight_10);
+    STORE_ARCADE_ADDRESS(player_shot_1_flight_table + 22, player_shot_1_flight_11);
+    STORE_ARCADE_ADDRESS(player_shot_1_flight_table + 24, player_shot_1_flight_12);
+    STORE_ARCADE_ADDRESS(player_shot_1_flight_table + 26, player_shot_1_flight_13);
+    STORE_ARCADE_ADDRESS(player_shot_1_flight_table + 28, player_shot_1_flight_14);
+    STORE_ARCADE_ADDRESS(player_shot_1_flight_table + 30, player_shot_1_flight_15);
+    STORE_ARCADE_ADDRESS(player_shot_1_flight_table + 32, player_shot_1_flight_16);
+    STORE_ARCADE_ADDRESS(player_shot_1_flight_table + 34, player_shot_1_flight_17);
+    STORE_ARCADE_ADDRESS(player_shot_1_flight_table + 36, player_shot_1_flight_18);
+    STORE_ARCADE_ADDRESS(player_shot_1_flight_table + 38, player_shot_1_flight_19);
+    STORE_ARCADE_ADDRESS(player_shot_1_flight_table + 40, player_shot_1_flight_20);
+    STORE_ARCADE_ADDRESS(player_shot_1_flight_table + 42, player_shot_1_flight_21);
+    STORE_ARCADE_ADDRESS(player_shot_1_flight_table + 44, player_shot_1_flight_22);
+    STORE_ARCADE_ADDRESS(player_shot_1_flight_table + 46, player_shot_1_flight_23);
+    STORE_ARCADE_ADDRESS(player_shot_1_flight_table + 48, player_shot_1_flight_24);
+    STORE_ARCADE_ADDRESS(player_shot_1_impact_table, player_shot_1_impact_00);
+    STORE_ARCADE_ADDRESS(player_shot_1_impact_table + 2, player_shot_1_impact_01);
+    STORE_ARCADE_ADDRESS(player_shot_1_impact_table + 4, player_shot_1_impact_02);
+    STORE_ARCADE_ADDRESS(player_shot_1_impact_table + 6, player_shot_1_impact_03);
+    STORE_ARCADE_ADDRESS(player_shot_1_impact_table + 8, player_shot_1_impact_04);
+    STORE_ARCADE_ADDRESS(player_shot_1_impact_table + 10, player_shot_1_impact_05);
+    STORE_ARCADE_ADDRESS(player_shot_1_impact_table + 12, player_shot_1_impact_06);
+    STORE_ARCADE_ADDRESS(player_shot_1_impact_table + 14, player_shot_1_impact_07);
+    STORE_ARCADE_ADDRESS(player_shot_1_impact_table + 16, player_shot_1_impact_08);
+    STORE_ARCADE_ADDRESS(player_shot_1_impact_table + 18, player_shot_1_impact_09);
+    STORE_ARCADE_ADDRESS(player_shot_1_impact_table + 20, player_shot_1_impact_10);
+    STORE_ARCADE_ADDRESS(player_shot_1_impact_table + 22, player_shot_1_impact_11);
+    STORE_ARCADE_ADDRESS(player_shot_1_impact_table + 24, player_shot_1_impact_12);
+    STORE_ARCADE_ADDRESS(player_shot_1_impact_table + 26, player_shot_1_impact_13);
+    STORE_ARCADE_ADDRESS(player_shot_1_impact_table + 28, player_shot_1_impact_14);
+    STORE_ARCADE_ADDRESS(player_shot_1_impact_table + 30, player_shot_1_impact_15);
+    STORE_ARCADE_ADDRESS(player_shot_1_impact_table + 32, player_shot_1_impact_16);
+    STORE_ARCADE_ADDRESS(player_shot_1_impact_table + 34, player_shot_1_impact_17);
+    STORE_ARCADE_ADDRESS(player_shot_1_impact_table + 36, player_shot_1_impact_18);
+    STORE_ARCADE_ADDRESS(player_shot_1_impact_table + 38, player_shot_1_impact_19);
+    STORE_ARCADE_ADDRESS(player_shot_1_impact_table + 40, player_shot_1_impact_20);
+    STORE_ARCADE_ADDRESS(player_shot_1_impact_table + 42, player_shot_1_impact_21);
+    STORE_ARCADE_ADDRESS(player_shot_1_impact_table + 44, player_shot_1_impact_22);
+    STORE_ARCADE_ADDRESS(player_shot_1_impact_table + 46, player_shot_1_impact_23);
+    STORE_ARCADE_ADDRESS(player_shot_1_impact_table + 48, player_shot_1_impact_24);
+    STORE_ARCADE_ADDRESS(player_shot_1_impact_00 + 3, player_shot_1_impact_frames_00);
+    STORE_ARCADE_ADDRESS(player_shot_1_impact_01 + 3, player_shot_1_impact_frames_00);
+    STORE_ARCADE_ADDRESS(player_shot_1_impact_02 + 3, player_shot_1_impact_frames_02);
+    STORE_ARCADE_ADDRESS(player_shot_1_impact_03 + 3, player_shot_1_impact_frames_02);
+    STORE_ARCADE_ADDRESS(player_shot_1_impact_04 + 3, player_shot_1_impact_frames_04);
+    STORE_ARCADE_ADDRESS(player_shot_1_impact_05 + 3, player_shot_1_impact_frames_04);
+    STORE_ARCADE_ADDRESS(player_shot_1_impact_06 + 3, player_shot_1_impact_frames_06);
+    STORE_ARCADE_ADDRESS(player_shot_1_impact_07 + 3, player_shot_1_impact_frames_06);
+    STORE_ARCADE_ADDRESS(player_shot_1_impact_08 + 3, player_shot_1_impact_frames_08);
+    STORE_ARCADE_ADDRESS(player_shot_1_impact_09 + 3, player_shot_1_impact_frames_08);
+    STORE_ARCADE_ADDRESS(player_shot_1_impact_10 + 3, player_shot_1_impact_frames_10);
+    STORE_ARCADE_ADDRESS(player_shot_1_impact_11 + 3, player_shot_1_impact_frames_11);
+    STORE_ARCADE_ADDRESS(player_shot_1_impact_12 + 3, player_shot_1_impact_frames_12);
+    STORE_ARCADE_ADDRESS(player_shot_1_impact_13 + 3, player_shot_1_impact_frames_13);
+    STORE_ARCADE_ADDRESS(player_shot_1_impact_14 + 3, player_shot_1_impact_frames_14);
+    STORE_ARCADE_ADDRESS(player_shot_1_impact_15 + 3, player_shot_1_impact_frames_15);
+    STORE_ARCADE_ADDRESS(player_shot_1_impact_16 + 3, player_shot_1_impact_frames_15);
+    STORE_ARCADE_ADDRESS(player_shot_1_impact_17 + 3, player_shot_1_impact_frames_17);
+    STORE_ARCADE_ADDRESS(player_shot_1_impact_18 + 3, player_shot_1_impact_frames_17);
+    STORE_ARCADE_ADDRESS(player_shot_1_impact_19 + 3, player_shot_1_impact_frames_19);
+    STORE_ARCADE_ADDRESS(player_shot_1_impact_20 + 3, player_shot_1_impact_frames_19);
+    STORE_ARCADE_ADDRESS(player_shot_1_impact_21 + 3, player_shot_1_impact_frames_21);
+    STORE_ARCADE_ADDRESS(player_shot_1_impact_22 + 3, player_shot_1_impact_frames_21);
+    STORE_ARCADE_ADDRESS(player_shot_1_impact_23 + 3, player_shot_1_impact_frames_23);
+    STORE_ARCADE_ADDRESS(player_shot_1_impact_24 + 3, player_shot_1_impact_frames_23);
 }
 
 extern u16 ship0_shot_list_3_00_00_02[];
@@ -796,131 +796,131 @@ extern u16 player_shot_2_flight_table[];
 extern u16 player_shot_2_impact_table[];
 
 void player_shot_2_tables_init(void) {
-    STORE_POINTER(ship0_shot_list_3_00_00 + 5, ship0_shot_list_3_00_00_02);
-    STORE_POINTER(ship0_shot_list_3_00_00 + 15, ship0_shot_list_3_00_00_07);
-    STORE_POINTER(ship0_shot_list_3_00_00 + 24, ship0_shot_list_3_00_00_02);
-    STORE_POINTER(ship0_shot_list_3_00_00 + 34, ship0_shot_list_3_00_00_07);
-    STORE_POINTER(ship0_shot_list_3_00_01 + 5, ship0_shot_list_3_00_01_02);
-    STORE_POINTER(ship0_shot_list_3_00_01 + 15, ship0_shot_list_3_00_01_07);
-    STORE_POINTER(ship0_shot_list_3_00_01 + 24, ship0_shot_list_3_00_01_02);
-    STORE_POINTER(ship0_shot_list_3_00_01 + 34, ship0_shot_list_3_00_01_07);
-    STORE_POINTER(ship0_shot_list_3_00_02 + 5, ship0_shot_list_3_00_02_02);
-    STORE_POINTER(ship0_shot_list_3_00_02 + 15, ship0_shot_list_3_00_02_07);
-    STORE_POINTER(ship0_shot_list_3_00_02 + 24, ship0_shot_list_3_00_02_02);
-    STORE_POINTER(ship0_shot_list_3_00_02 + 34, ship0_shot_list_3_00_02_07);
-    STORE_POINTER(ship0_shot_list_3_00_03 + 5, ship0_shot_list_3_00_03_02);
-    STORE_POINTER(ship0_shot_list_3_00_03 + 15, ship0_shot_list_3_00_03_07);
-    STORE_POINTER(ship0_shot_list_3_00_03 + 24, ship0_shot_list_3_00_03_02);
-    STORE_POINTER(ship0_shot_list_3_00_03 + 34, ship0_shot_list_3_00_03_07);
-    STORE_POINTER(ship0_shot_list_3_00_04 + 5, ship0_shot_list_3_00_04_02);
-    STORE_POINTER(ship0_shot_list_3_00_04 + 15, ship0_shot_list_3_00_04_07);
-    STORE_POINTER(ship0_shot_list_3_00_04 + 24, ship0_shot_list_3_00_04_02);
-    STORE_POINTER(ship0_shot_list_3_00_04 + 34, ship0_shot_list_3_00_04_07);
-    STORE_POINTER(ship0_shot_list_3_02_00 + 5, ship0_shot_list_3_02_00_02);
-    STORE_POINTER(ship0_shot_list_3_02_00 + 15, ship0_shot_list_3_02_00_07);
-    STORE_POINTER(ship0_shot_list_3_02_01 + 5, ship0_shot_list_3_02_01_02);
-    STORE_POINTER(ship0_shot_list_3_02_01 + 15, ship0_shot_list_3_02_01_07);
-    STORE_POINTER(ship0_shot_list_3_02_02 + 5, ship0_shot_list_3_02_02_02);
-    STORE_POINTER(ship0_shot_list_3_02_02 + 15, ship0_shot_list_3_02_02_07);
-    STORE_POINTER(ship0_shot_list_3_02_03 + 5, ship0_shot_list_3_02_03_02);
-    STORE_POINTER(ship0_shot_list_3_02_03 + 15, ship0_shot_list_3_02_03_07);
-    STORE_POINTER(ship0_shot_list_3_02_04 + 5, ship0_shot_list_3_02_04_02);
-    STORE_POINTER(ship0_shot_list_3_02_04 + 15, ship0_shot_list_3_02_04_07);
-    STORE_POINTER(ship0_shot_list_3_04_00 + 5, ship0_shot_list_3_04_00_02);
-    STORE_POINTER(ship0_shot_list_3_04_00 + 15, ship0_shot_list_3_04_00_07);
-    STORE_POINTER(ship0_shot_list_3_04_00 + 24, ship0_shot_list_3_04_00_02);
-    STORE_POINTER(ship0_shot_list_3_04_00 + 34, ship0_shot_list_3_04_00_07);
-    STORE_POINTER(ship0_shot_list_3_04_01 + 5, ship0_shot_list_3_04_01_02);
-    STORE_POINTER(ship0_shot_list_3_04_01 + 15, ship0_shot_list_3_04_01_07);
-    STORE_POINTER(ship0_shot_list_3_04_01 + 24, ship0_shot_list_3_04_01_02);
-    STORE_POINTER(ship0_shot_list_3_04_01 + 34, ship0_shot_list_3_04_01_07);
-    STORE_POINTER(ship0_shot_list_3_04_02 + 5, ship0_shot_list_3_04_02_02);
-    STORE_POINTER(ship0_shot_list_3_04_02 + 15, ship0_shot_list_3_04_02_07);
-    STORE_POINTER(ship0_shot_list_3_04_02 + 24, ship0_shot_list_3_04_02_02);
-    STORE_POINTER(ship0_shot_list_3_04_02 + 34, ship0_shot_list_3_04_02_07);
-    STORE_POINTER(ship0_shot_list_3_04_03 + 5, ship0_shot_list_3_04_03_02);
-    STORE_POINTER(ship0_shot_list_3_04_03 + 15, ship0_shot_list_3_04_03_07);
-    STORE_POINTER(ship0_shot_list_3_04_03 + 24, ship0_shot_list_3_04_03_02);
-    STORE_POINTER(ship0_shot_list_3_04_03 + 34, ship0_shot_list_3_04_03_07);
-    STORE_POINTER(ship0_shot_list_3_04_04 + 5, ship0_shot_list_3_04_04_02);
-    STORE_POINTER(ship0_shot_list_3_04_04 + 15, ship0_shot_list_3_04_04_07);
-    STORE_POINTER(ship0_shot_list_3_04_04 + 24, ship0_shot_list_3_04_04_02);
-    STORE_POINTER(ship0_shot_list_3_04_04 + 34, ship0_shot_list_3_04_04_07);
-    STORE_POINTER(player_shot_2_flight_table, player_shot_2_flight_00);
-    STORE_POINTER(player_shot_2_flight_table + 2, player_shot_2_flight_01);
-    STORE_POINTER(player_shot_2_flight_table + 4, player_shot_2_flight_02);
-    STORE_POINTER(player_shot_2_flight_table + 6, player_shot_2_flight_03);
-    STORE_POINTER(player_shot_2_flight_table + 8, player_shot_2_flight_04);
-    STORE_POINTER(player_shot_2_flight_table + 10, player_shot_2_flight_05);
-    STORE_POINTER(player_shot_2_flight_table + 12, player_shot_2_flight_06);
-    STORE_POINTER(player_shot_2_flight_table + 14, player_shot_2_flight_07);
-    STORE_POINTER(player_shot_2_flight_table + 16, player_shot_2_flight_08);
-    STORE_POINTER(player_shot_2_flight_table + 18, player_shot_2_flight_09);
-    STORE_POINTER(player_shot_2_flight_table + 20, player_shot_2_flight_10);
-    STORE_POINTER(player_shot_2_flight_table + 22, player_shot_2_flight_11);
-    STORE_POINTER(player_shot_2_flight_table + 24, player_shot_2_flight_12);
-    STORE_POINTER(player_shot_2_flight_table + 26, player_shot_2_flight_13);
-    STORE_POINTER(player_shot_2_flight_table + 28, player_shot_2_flight_14);
-    STORE_POINTER(player_shot_2_flight_table + 30, player_shot_2_flight_15);
-    STORE_POINTER(player_shot_2_flight_table + 32, player_shot_2_flight_16);
-    STORE_POINTER(player_shot_2_flight_table + 34, player_shot_2_flight_17);
-    STORE_POINTER(player_shot_2_flight_table + 36, player_shot_2_flight_18);
-    STORE_POINTER(player_shot_2_flight_table + 38, player_shot_2_flight_19);
-    STORE_POINTER(player_shot_2_flight_table + 40, player_shot_2_flight_20);
-    STORE_POINTER(player_shot_2_flight_table + 42, player_shot_2_flight_21);
-    STORE_POINTER(player_shot_2_flight_table + 44, player_shot_2_flight_22);
-    STORE_POINTER(player_shot_2_flight_table + 46, player_shot_2_flight_23);
-    STORE_POINTER(player_shot_2_flight_table + 48, player_shot_2_flight_24);
-    STORE_POINTER(player_shot_2_impact_table, player_shot_2_impact_00);
-    STORE_POINTER(player_shot_2_impact_table + 2, player_shot_2_impact_01);
-    STORE_POINTER(player_shot_2_impact_table + 4, player_shot_2_impact_02);
-    STORE_POINTER(player_shot_2_impact_table + 6, player_shot_2_impact_03);
-    STORE_POINTER(player_shot_2_impact_table + 8, player_shot_2_impact_04);
-    STORE_POINTER(player_shot_2_impact_table + 10, player_shot_2_impact_05);
-    STORE_POINTER(player_shot_2_impact_table + 12, player_shot_2_impact_06);
-    STORE_POINTER(player_shot_2_impact_table + 14, player_shot_2_impact_07);
-    STORE_POINTER(player_shot_2_impact_table + 16, player_shot_2_impact_08);
-    STORE_POINTER(player_shot_2_impact_table + 18, player_shot_2_impact_09);
-    STORE_POINTER(player_shot_2_impact_table + 20, player_shot_2_impact_10);
-    STORE_POINTER(player_shot_2_impact_table + 22, player_shot_2_impact_11);
-    STORE_POINTER(player_shot_2_impact_table + 24, player_shot_2_impact_12);
-    STORE_POINTER(player_shot_2_impact_table + 26, player_shot_2_impact_13);
-    STORE_POINTER(player_shot_2_impact_table + 28, player_shot_2_impact_14);
-    STORE_POINTER(player_shot_2_impact_table + 30, player_shot_2_impact_15);
-    STORE_POINTER(player_shot_2_impact_table + 32, player_shot_2_impact_16);
-    STORE_POINTER(player_shot_2_impact_table + 34, player_shot_2_impact_17);
-    STORE_POINTER(player_shot_2_impact_table + 36, player_shot_2_impact_18);
-    STORE_POINTER(player_shot_2_impact_table + 38, player_shot_2_impact_19);
-    STORE_POINTER(player_shot_2_impact_table + 40, player_shot_2_impact_20);
-    STORE_POINTER(player_shot_2_impact_table + 42, player_shot_2_impact_21);
-    STORE_POINTER(player_shot_2_impact_table + 44, player_shot_2_impact_22);
-    STORE_POINTER(player_shot_2_impact_table + 46, player_shot_2_impact_23);
-    STORE_POINTER(player_shot_2_impact_table + 48, player_shot_2_impact_24);
-    STORE_POINTER(player_shot_2_impact_00 + 3, player_shot_2_impact_frames_00);
-    STORE_POINTER(player_shot_2_impact_01 + 3, player_shot_2_impact_frames_00);
-    STORE_POINTER(player_shot_2_impact_02 + 3, player_shot_2_impact_frames_02);
-    STORE_POINTER(player_shot_2_impact_03 + 3, player_shot_2_impact_frames_02);
-    STORE_POINTER(player_shot_2_impact_04 + 3, player_shot_2_impact_frames_04);
-    STORE_POINTER(player_shot_2_impact_05 + 3, player_shot_2_impact_frames_04);
-    STORE_POINTER(player_shot_2_impact_06 + 3, player_shot_2_impact_frames_06);
-    STORE_POINTER(player_shot_2_impact_07 + 3, player_shot_2_impact_frames_06);
-    STORE_POINTER(player_shot_2_impact_08 + 3, player_shot_2_impact_frames_08);
-    STORE_POINTER(player_shot_2_impact_09 + 3, player_shot_2_impact_frames_08);
-    STORE_POINTER(player_shot_2_impact_10 + 3, player_shot_2_impact_frames_10);
-    STORE_POINTER(player_shot_2_impact_11 + 3, player_shot_2_impact_frames_11);
-    STORE_POINTER(player_shot_2_impact_12 + 3, player_shot_2_impact_frames_12);
-    STORE_POINTER(player_shot_2_impact_13 + 3, player_shot_2_impact_frames_13);
-    STORE_POINTER(player_shot_2_impact_14 + 3, player_shot_2_impact_frames_14);
-    STORE_POINTER(player_shot_2_impact_15 + 3, player_shot_2_impact_frames_15);
-    STORE_POINTER(player_shot_2_impact_16 + 3, player_shot_2_impact_frames_15);
-    STORE_POINTER(player_shot_2_impact_17 + 3, player_shot_2_impact_frames_17);
-    STORE_POINTER(player_shot_2_impact_18 + 3, player_shot_2_impact_frames_17);
-    STORE_POINTER(player_shot_2_impact_19 + 3, player_shot_2_impact_frames_19);
-    STORE_POINTER(player_shot_2_impact_20 + 3, player_shot_2_impact_frames_19);
-    STORE_POINTER(player_shot_2_impact_21 + 3, player_shot_2_impact_frames_21);
-    STORE_POINTER(player_shot_2_impact_22 + 3, player_shot_2_impact_frames_21);
-    STORE_POINTER(player_shot_2_impact_23 + 3, player_shot_2_impact_frames_23);
-    STORE_POINTER(player_shot_2_impact_24 + 3, player_shot_2_impact_frames_23);
+    STORE_ARCADE_ADDRESS(ship0_shot_list_3_00_00 + 5, ship0_shot_list_3_00_00_02);
+    STORE_ARCADE_ADDRESS(ship0_shot_list_3_00_00 + 15, ship0_shot_list_3_00_00_07);
+    STORE_ARCADE_ADDRESS(ship0_shot_list_3_00_00 + 24, ship0_shot_list_3_00_00_02);
+    STORE_ARCADE_ADDRESS(ship0_shot_list_3_00_00 + 34, ship0_shot_list_3_00_00_07);
+    STORE_ARCADE_ADDRESS(ship0_shot_list_3_00_01 + 5, ship0_shot_list_3_00_01_02);
+    STORE_ARCADE_ADDRESS(ship0_shot_list_3_00_01 + 15, ship0_shot_list_3_00_01_07);
+    STORE_ARCADE_ADDRESS(ship0_shot_list_3_00_01 + 24, ship0_shot_list_3_00_01_02);
+    STORE_ARCADE_ADDRESS(ship0_shot_list_3_00_01 + 34, ship0_shot_list_3_00_01_07);
+    STORE_ARCADE_ADDRESS(ship0_shot_list_3_00_02 + 5, ship0_shot_list_3_00_02_02);
+    STORE_ARCADE_ADDRESS(ship0_shot_list_3_00_02 + 15, ship0_shot_list_3_00_02_07);
+    STORE_ARCADE_ADDRESS(ship0_shot_list_3_00_02 + 24, ship0_shot_list_3_00_02_02);
+    STORE_ARCADE_ADDRESS(ship0_shot_list_3_00_02 + 34, ship0_shot_list_3_00_02_07);
+    STORE_ARCADE_ADDRESS(ship0_shot_list_3_00_03 + 5, ship0_shot_list_3_00_03_02);
+    STORE_ARCADE_ADDRESS(ship0_shot_list_3_00_03 + 15, ship0_shot_list_3_00_03_07);
+    STORE_ARCADE_ADDRESS(ship0_shot_list_3_00_03 + 24, ship0_shot_list_3_00_03_02);
+    STORE_ARCADE_ADDRESS(ship0_shot_list_3_00_03 + 34, ship0_shot_list_3_00_03_07);
+    STORE_ARCADE_ADDRESS(ship0_shot_list_3_00_04 + 5, ship0_shot_list_3_00_04_02);
+    STORE_ARCADE_ADDRESS(ship0_shot_list_3_00_04 + 15, ship0_shot_list_3_00_04_07);
+    STORE_ARCADE_ADDRESS(ship0_shot_list_3_00_04 + 24, ship0_shot_list_3_00_04_02);
+    STORE_ARCADE_ADDRESS(ship0_shot_list_3_00_04 + 34, ship0_shot_list_3_00_04_07);
+    STORE_ARCADE_ADDRESS(ship0_shot_list_3_02_00 + 5, ship0_shot_list_3_02_00_02);
+    STORE_ARCADE_ADDRESS(ship0_shot_list_3_02_00 + 15, ship0_shot_list_3_02_00_07);
+    STORE_ARCADE_ADDRESS(ship0_shot_list_3_02_01 + 5, ship0_shot_list_3_02_01_02);
+    STORE_ARCADE_ADDRESS(ship0_shot_list_3_02_01 + 15, ship0_shot_list_3_02_01_07);
+    STORE_ARCADE_ADDRESS(ship0_shot_list_3_02_02 + 5, ship0_shot_list_3_02_02_02);
+    STORE_ARCADE_ADDRESS(ship0_shot_list_3_02_02 + 15, ship0_shot_list_3_02_02_07);
+    STORE_ARCADE_ADDRESS(ship0_shot_list_3_02_03 + 5, ship0_shot_list_3_02_03_02);
+    STORE_ARCADE_ADDRESS(ship0_shot_list_3_02_03 + 15, ship0_shot_list_3_02_03_07);
+    STORE_ARCADE_ADDRESS(ship0_shot_list_3_02_04 + 5, ship0_shot_list_3_02_04_02);
+    STORE_ARCADE_ADDRESS(ship0_shot_list_3_02_04 + 15, ship0_shot_list_3_02_04_07);
+    STORE_ARCADE_ADDRESS(ship0_shot_list_3_04_00 + 5, ship0_shot_list_3_04_00_02);
+    STORE_ARCADE_ADDRESS(ship0_shot_list_3_04_00 + 15, ship0_shot_list_3_04_00_07);
+    STORE_ARCADE_ADDRESS(ship0_shot_list_3_04_00 + 24, ship0_shot_list_3_04_00_02);
+    STORE_ARCADE_ADDRESS(ship0_shot_list_3_04_00 + 34, ship0_shot_list_3_04_00_07);
+    STORE_ARCADE_ADDRESS(ship0_shot_list_3_04_01 + 5, ship0_shot_list_3_04_01_02);
+    STORE_ARCADE_ADDRESS(ship0_shot_list_3_04_01 + 15, ship0_shot_list_3_04_01_07);
+    STORE_ARCADE_ADDRESS(ship0_shot_list_3_04_01 + 24, ship0_shot_list_3_04_01_02);
+    STORE_ARCADE_ADDRESS(ship0_shot_list_3_04_01 + 34, ship0_shot_list_3_04_01_07);
+    STORE_ARCADE_ADDRESS(ship0_shot_list_3_04_02 + 5, ship0_shot_list_3_04_02_02);
+    STORE_ARCADE_ADDRESS(ship0_shot_list_3_04_02 + 15, ship0_shot_list_3_04_02_07);
+    STORE_ARCADE_ADDRESS(ship0_shot_list_3_04_02 + 24, ship0_shot_list_3_04_02_02);
+    STORE_ARCADE_ADDRESS(ship0_shot_list_3_04_02 + 34, ship0_shot_list_3_04_02_07);
+    STORE_ARCADE_ADDRESS(ship0_shot_list_3_04_03 + 5, ship0_shot_list_3_04_03_02);
+    STORE_ARCADE_ADDRESS(ship0_shot_list_3_04_03 + 15, ship0_shot_list_3_04_03_07);
+    STORE_ARCADE_ADDRESS(ship0_shot_list_3_04_03 + 24, ship0_shot_list_3_04_03_02);
+    STORE_ARCADE_ADDRESS(ship0_shot_list_3_04_03 + 34, ship0_shot_list_3_04_03_07);
+    STORE_ARCADE_ADDRESS(ship0_shot_list_3_04_04 + 5, ship0_shot_list_3_04_04_02);
+    STORE_ARCADE_ADDRESS(ship0_shot_list_3_04_04 + 15, ship0_shot_list_3_04_04_07);
+    STORE_ARCADE_ADDRESS(ship0_shot_list_3_04_04 + 24, ship0_shot_list_3_04_04_02);
+    STORE_ARCADE_ADDRESS(ship0_shot_list_3_04_04 + 34, ship0_shot_list_3_04_04_07);
+    STORE_ARCADE_ADDRESS(player_shot_2_flight_table, player_shot_2_flight_00);
+    STORE_ARCADE_ADDRESS(player_shot_2_flight_table + 2, player_shot_2_flight_01);
+    STORE_ARCADE_ADDRESS(player_shot_2_flight_table + 4, player_shot_2_flight_02);
+    STORE_ARCADE_ADDRESS(player_shot_2_flight_table + 6, player_shot_2_flight_03);
+    STORE_ARCADE_ADDRESS(player_shot_2_flight_table + 8, player_shot_2_flight_04);
+    STORE_ARCADE_ADDRESS(player_shot_2_flight_table + 10, player_shot_2_flight_05);
+    STORE_ARCADE_ADDRESS(player_shot_2_flight_table + 12, player_shot_2_flight_06);
+    STORE_ARCADE_ADDRESS(player_shot_2_flight_table + 14, player_shot_2_flight_07);
+    STORE_ARCADE_ADDRESS(player_shot_2_flight_table + 16, player_shot_2_flight_08);
+    STORE_ARCADE_ADDRESS(player_shot_2_flight_table + 18, player_shot_2_flight_09);
+    STORE_ARCADE_ADDRESS(player_shot_2_flight_table + 20, player_shot_2_flight_10);
+    STORE_ARCADE_ADDRESS(player_shot_2_flight_table + 22, player_shot_2_flight_11);
+    STORE_ARCADE_ADDRESS(player_shot_2_flight_table + 24, player_shot_2_flight_12);
+    STORE_ARCADE_ADDRESS(player_shot_2_flight_table + 26, player_shot_2_flight_13);
+    STORE_ARCADE_ADDRESS(player_shot_2_flight_table + 28, player_shot_2_flight_14);
+    STORE_ARCADE_ADDRESS(player_shot_2_flight_table + 30, player_shot_2_flight_15);
+    STORE_ARCADE_ADDRESS(player_shot_2_flight_table + 32, player_shot_2_flight_16);
+    STORE_ARCADE_ADDRESS(player_shot_2_flight_table + 34, player_shot_2_flight_17);
+    STORE_ARCADE_ADDRESS(player_shot_2_flight_table + 36, player_shot_2_flight_18);
+    STORE_ARCADE_ADDRESS(player_shot_2_flight_table + 38, player_shot_2_flight_19);
+    STORE_ARCADE_ADDRESS(player_shot_2_flight_table + 40, player_shot_2_flight_20);
+    STORE_ARCADE_ADDRESS(player_shot_2_flight_table + 42, player_shot_2_flight_21);
+    STORE_ARCADE_ADDRESS(player_shot_2_flight_table + 44, player_shot_2_flight_22);
+    STORE_ARCADE_ADDRESS(player_shot_2_flight_table + 46, player_shot_2_flight_23);
+    STORE_ARCADE_ADDRESS(player_shot_2_flight_table + 48, player_shot_2_flight_24);
+    STORE_ARCADE_ADDRESS(player_shot_2_impact_table, player_shot_2_impact_00);
+    STORE_ARCADE_ADDRESS(player_shot_2_impact_table + 2, player_shot_2_impact_01);
+    STORE_ARCADE_ADDRESS(player_shot_2_impact_table + 4, player_shot_2_impact_02);
+    STORE_ARCADE_ADDRESS(player_shot_2_impact_table + 6, player_shot_2_impact_03);
+    STORE_ARCADE_ADDRESS(player_shot_2_impact_table + 8, player_shot_2_impact_04);
+    STORE_ARCADE_ADDRESS(player_shot_2_impact_table + 10, player_shot_2_impact_05);
+    STORE_ARCADE_ADDRESS(player_shot_2_impact_table + 12, player_shot_2_impact_06);
+    STORE_ARCADE_ADDRESS(player_shot_2_impact_table + 14, player_shot_2_impact_07);
+    STORE_ARCADE_ADDRESS(player_shot_2_impact_table + 16, player_shot_2_impact_08);
+    STORE_ARCADE_ADDRESS(player_shot_2_impact_table + 18, player_shot_2_impact_09);
+    STORE_ARCADE_ADDRESS(player_shot_2_impact_table + 20, player_shot_2_impact_10);
+    STORE_ARCADE_ADDRESS(player_shot_2_impact_table + 22, player_shot_2_impact_11);
+    STORE_ARCADE_ADDRESS(player_shot_2_impact_table + 24, player_shot_2_impact_12);
+    STORE_ARCADE_ADDRESS(player_shot_2_impact_table + 26, player_shot_2_impact_13);
+    STORE_ARCADE_ADDRESS(player_shot_2_impact_table + 28, player_shot_2_impact_14);
+    STORE_ARCADE_ADDRESS(player_shot_2_impact_table + 30, player_shot_2_impact_15);
+    STORE_ARCADE_ADDRESS(player_shot_2_impact_table + 32, player_shot_2_impact_16);
+    STORE_ARCADE_ADDRESS(player_shot_2_impact_table + 34, player_shot_2_impact_17);
+    STORE_ARCADE_ADDRESS(player_shot_2_impact_table + 36, player_shot_2_impact_18);
+    STORE_ARCADE_ADDRESS(player_shot_2_impact_table + 38, player_shot_2_impact_19);
+    STORE_ARCADE_ADDRESS(player_shot_2_impact_table + 40, player_shot_2_impact_20);
+    STORE_ARCADE_ADDRESS(player_shot_2_impact_table + 42, player_shot_2_impact_21);
+    STORE_ARCADE_ADDRESS(player_shot_2_impact_table + 44, player_shot_2_impact_22);
+    STORE_ARCADE_ADDRESS(player_shot_2_impact_table + 46, player_shot_2_impact_23);
+    STORE_ARCADE_ADDRESS(player_shot_2_impact_table + 48, player_shot_2_impact_24);
+    STORE_ARCADE_ADDRESS(player_shot_2_impact_00 + 3, player_shot_2_impact_frames_00);
+    STORE_ARCADE_ADDRESS(player_shot_2_impact_01 + 3, player_shot_2_impact_frames_00);
+    STORE_ARCADE_ADDRESS(player_shot_2_impact_02 + 3, player_shot_2_impact_frames_02);
+    STORE_ARCADE_ADDRESS(player_shot_2_impact_03 + 3, player_shot_2_impact_frames_02);
+    STORE_ARCADE_ADDRESS(player_shot_2_impact_04 + 3, player_shot_2_impact_frames_04);
+    STORE_ARCADE_ADDRESS(player_shot_2_impact_05 + 3, player_shot_2_impact_frames_04);
+    STORE_ARCADE_ADDRESS(player_shot_2_impact_06 + 3, player_shot_2_impact_frames_06);
+    STORE_ARCADE_ADDRESS(player_shot_2_impact_07 + 3, player_shot_2_impact_frames_06);
+    STORE_ARCADE_ADDRESS(player_shot_2_impact_08 + 3, player_shot_2_impact_frames_08);
+    STORE_ARCADE_ADDRESS(player_shot_2_impact_09 + 3, player_shot_2_impact_frames_08);
+    STORE_ARCADE_ADDRESS(player_shot_2_impact_10 + 3, player_shot_2_impact_frames_10);
+    STORE_ARCADE_ADDRESS(player_shot_2_impact_11 + 3, player_shot_2_impact_frames_11);
+    STORE_ARCADE_ADDRESS(player_shot_2_impact_12 + 3, player_shot_2_impact_frames_12);
+    STORE_ARCADE_ADDRESS(player_shot_2_impact_13 + 3, player_shot_2_impact_frames_13);
+    STORE_ARCADE_ADDRESS(player_shot_2_impact_14 + 3, player_shot_2_impact_frames_14);
+    STORE_ARCADE_ADDRESS(player_shot_2_impact_15 + 3, player_shot_2_impact_frames_15);
+    STORE_ARCADE_ADDRESS(player_shot_2_impact_16 + 3, player_shot_2_impact_frames_15);
+    STORE_ARCADE_ADDRESS(player_shot_2_impact_17 + 3, player_shot_2_impact_frames_17);
+    STORE_ARCADE_ADDRESS(player_shot_2_impact_18 + 3, player_shot_2_impact_frames_17);
+    STORE_ARCADE_ADDRESS(player_shot_2_impact_19 + 3, player_shot_2_impact_frames_19);
+    STORE_ARCADE_ADDRESS(player_shot_2_impact_20 + 3, player_shot_2_impact_frames_19);
+    STORE_ARCADE_ADDRESS(player_shot_2_impact_21 + 3, player_shot_2_impact_frames_21);
+    STORE_ARCADE_ADDRESS(player_shot_2_impact_22 + 3, player_shot_2_impact_frames_21);
+    STORE_ARCADE_ADDRESS(player_shot_2_impact_23 + 3, player_shot_2_impact_frames_23);
+    STORE_ARCADE_ADDRESS(player_shot_2_impact_24 + 3, player_shot_2_impact_frames_23);
 }
 
 extern u16 ship0_shot_list_1_01_00_02[];
@@ -999,131 +999,131 @@ extern u16 player_shot_5_flight_table[];
 extern u16 player_shot_5_impact_table[];
 
 void player_shot_5_tables_init(void) {
-    STORE_POINTER(ship0_shot_list_1_01_00 + 5, ship0_shot_list_1_01_00_02);
-    STORE_POINTER(ship0_shot_list_1_01_00 + 15, ship0_shot_list_1_01_00_07);
-    STORE_POINTER(ship0_shot_list_2_01_00 + 5, ship0_shot_list_1_01_00_02);
-    STORE_POINTER(ship0_shot_list_2_01_00 + 15, ship0_shot_list_1_01_00_07);
-    STORE_POINTER(ship0_shot_list_1_01_01 + 5, ship0_shot_list_1_01_00_02);
-    STORE_POINTER(ship0_shot_list_1_01_01 + 15, ship0_shot_list_1_01_00_07);
-    STORE_POINTER(ship0_shot_list_2_01_01 + 5, ship0_shot_list_1_01_00_02);
-    STORE_POINTER(ship0_shot_list_2_01_01 + 15, ship0_shot_list_1_01_00_07);
-    STORE_POINTER(ship0_shot_list_1_01_02 + 5, ship0_shot_list_1_01_00_02);
-    STORE_POINTER(ship0_shot_list_1_01_02 + 15, ship0_shot_list_1_01_00_07);
-    STORE_POINTER(ship0_shot_list_2_01_02 + 5, ship0_shot_list_1_01_00_02);
-    STORE_POINTER(ship0_shot_list_2_01_02 + 15, ship0_shot_list_1_01_00_07);
-    STORE_POINTER(ship0_shot_list_1_01_03 + 5, ship0_shot_list_1_01_00_02);
-    STORE_POINTER(ship0_shot_list_1_01_03 + 15, ship0_shot_list_1_01_00_07);
-    STORE_POINTER(ship0_shot_list_2_01_03 + 5, ship0_shot_list_1_01_00_02);
-    STORE_POINTER(ship0_shot_list_2_01_03 + 15, ship0_shot_list_1_01_00_07);
-    STORE_POINTER(ship0_shot_list_1_01_04 + 5, ship0_shot_list_1_01_00_02);
-    STORE_POINTER(ship0_shot_list_1_01_04 + 15, ship0_shot_list_1_01_00_07);
-    STORE_POINTER(ship0_shot_list_2_01_04 + 5, ship0_shot_list_1_01_00_02);
-    STORE_POINTER(ship0_shot_list_2_01_04 + 15, ship0_shot_list_1_01_00_07);
-    STORE_POINTER(ship0_shot_list_1_03_00 + 5, ship0_shot_list_1_03_00_02);
-    STORE_POINTER(ship0_shot_list_1_03_00 + 15, ship0_shot_list_1_03_00_07);
-    STORE_POINTER(ship0_shot_list_1_03_01 + 5, ship0_shot_list_1_03_00_02);
-    STORE_POINTER(ship0_shot_list_1_03_01 + 15, ship0_shot_list_1_03_00_07);
-    STORE_POINTER(ship0_shot_list_1_03_02 + 5, ship0_shot_list_1_03_00_02);
-    STORE_POINTER(ship0_shot_list_1_03_02 + 15, ship0_shot_list_1_03_00_07);
-    STORE_POINTER(ship0_shot_list_1_03_03 + 5, ship0_shot_list_1_03_00_02);
-    STORE_POINTER(ship0_shot_list_1_03_03 + 15, ship0_shot_list_1_03_00_07);
-    STORE_POINTER(ship0_shot_list_1_03_04 + 5, ship0_shot_list_1_03_00_02);
-    STORE_POINTER(ship0_shot_list_1_03_04 + 15, ship0_shot_list_1_03_00_07);
-    STORE_POINTER(ship0_shot_list_1_05_00 + 5, ship0_shot_list_1_05_00_02);
-    STORE_POINTER(ship0_shot_list_1_05_00 + 15, ship0_shot_list_1_05_00_07);
-    STORE_POINTER(ship0_shot_list_2_05_00 + 5, ship0_shot_list_1_05_00_02);
-    STORE_POINTER(ship0_shot_list_2_05_00 + 15, ship0_shot_list_1_05_00_07);
-    STORE_POINTER(ship0_shot_list_1_05_01 + 5, ship0_shot_list_1_05_00_02);
-    STORE_POINTER(ship0_shot_list_1_05_01 + 15, ship0_shot_list_1_05_00_07);
-    STORE_POINTER(ship0_shot_list_2_05_01 + 5, ship0_shot_list_1_05_00_02);
-    STORE_POINTER(ship0_shot_list_2_05_01 + 15, ship0_shot_list_1_05_00_07);
-    STORE_POINTER(ship0_shot_list_1_05_02 + 5, ship0_shot_list_1_05_00_02);
-    STORE_POINTER(ship0_shot_list_1_05_02 + 15, ship0_shot_list_1_05_00_07);
-    STORE_POINTER(ship0_shot_list_2_05_02 + 5, ship0_shot_list_1_05_00_02);
-    STORE_POINTER(ship0_shot_list_2_05_02 + 15, ship0_shot_list_1_05_00_07);
-    STORE_POINTER(ship0_shot_list_1_05_03 + 5, ship0_shot_list_1_05_00_02);
-    STORE_POINTER(ship0_shot_list_1_05_03 + 15, ship0_shot_list_1_05_00_07);
-    STORE_POINTER(ship0_shot_list_2_05_03 + 5, ship0_shot_list_1_05_00_02);
-    STORE_POINTER(ship0_shot_list_2_05_03 + 15, ship0_shot_list_1_05_00_07);
-    STORE_POINTER(ship0_shot_list_1_05_04 + 5, ship0_shot_list_1_05_00_02);
-    STORE_POINTER(ship0_shot_list_1_05_04 + 15, ship0_shot_list_1_05_00_07);
-    STORE_POINTER(ship0_shot_list_2_05_04 + 5, ship0_shot_list_1_05_00_02);
-    STORE_POINTER(ship0_shot_list_2_05_04 + 15, ship0_shot_list_1_05_00_07);
-    STORE_POINTER(player_shot_5_flight_table, player_shot_5_flight_00);
-    STORE_POINTER(player_shot_5_flight_table + 2, player_shot_5_flight_01);
-    STORE_POINTER(player_shot_5_flight_table + 4, player_shot_5_flight_02);
-    STORE_POINTER(player_shot_5_flight_table + 6, player_shot_5_flight_03);
-    STORE_POINTER(player_shot_5_flight_table + 8, player_shot_5_flight_04);
-    STORE_POINTER(player_shot_5_flight_table + 10, player_shot_5_flight_05);
-    STORE_POINTER(player_shot_5_flight_table + 12, player_shot_5_flight_06);
-    STORE_POINTER(player_shot_5_flight_table + 14, player_shot_5_flight_07);
-    STORE_POINTER(player_shot_5_flight_table + 16, player_shot_5_flight_08);
-    STORE_POINTER(player_shot_5_flight_table + 18, player_shot_5_flight_09);
-    STORE_POINTER(player_shot_5_flight_table + 20, player_shot_5_flight_10);
-    STORE_POINTER(player_shot_5_flight_table + 22, player_shot_5_flight_11);
-    STORE_POINTER(player_shot_5_flight_table + 24, player_shot_5_flight_12);
-    STORE_POINTER(player_shot_5_flight_table + 26, player_shot_5_flight_13);
-    STORE_POINTER(player_shot_5_flight_table + 28, player_shot_5_flight_14);
-    STORE_POINTER(player_shot_5_flight_table + 30, player_shot_5_flight_15);
-    STORE_POINTER(player_shot_5_flight_table + 32, player_shot_5_flight_16);
-    STORE_POINTER(player_shot_5_flight_table + 34, player_shot_5_flight_17);
-    STORE_POINTER(player_shot_5_flight_table + 36, player_shot_5_flight_18);
-    STORE_POINTER(player_shot_5_flight_table + 38, player_shot_5_flight_19);
-    STORE_POINTER(player_shot_5_flight_table + 40, player_shot_5_flight_20);
-    STORE_POINTER(player_shot_5_flight_table + 42, player_shot_5_flight_21);
-    STORE_POINTER(player_shot_5_flight_table + 44, player_shot_5_flight_22);
-    STORE_POINTER(player_shot_5_flight_table + 46, player_shot_5_flight_23);
-    STORE_POINTER(player_shot_5_flight_table + 48, player_shot_5_flight_24);
-    STORE_POINTER(player_shot_5_impact_table, player_shot_5_impact_00);
-    STORE_POINTER(player_shot_5_impact_table + 2, player_shot_5_impact_01);
-    STORE_POINTER(player_shot_5_impact_table + 4, player_shot_5_impact_02);
-    STORE_POINTER(player_shot_5_impact_table + 6, player_shot_5_impact_03);
-    STORE_POINTER(player_shot_5_impact_table + 8, player_shot_5_impact_04);
-    STORE_POINTER(player_shot_5_impact_table + 10, player_shot_5_impact_05);
-    STORE_POINTER(player_shot_5_impact_table + 12, player_shot_5_impact_06);
-    STORE_POINTER(player_shot_5_impact_table + 14, player_shot_5_impact_07);
-    STORE_POINTER(player_shot_5_impact_table + 16, player_shot_5_impact_08);
-    STORE_POINTER(player_shot_5_impact_table + 18, player_shot_5_impact_09);
-    STORE_POINTER(player_shot_5_impact_table + 20, player_shot_5_impact_10);
-    STORE_POINTER(player_shot_5_impact_table + 22, player_shot_5_impact_11);
-    STORE_POINTER(player_shot_5_impact_table + 24, player_shot_5_impact_12);
-    STORE_POINTER(player_shot_5_impact_table + 26, player_shot_5_impact_13);
-    STORE_POINTER(player_shot_5_impact_table + 28, player_shot_5_impact_14);
-    STORE_POINTER(player_shot_5_impact_table + 30, player_shot_5_impact_15);
-    STORE_POINTER(player_shot_5_impact_table + 32, player_shot_5_impact_16);
-    STORE_POINTER(player_shot_5_impact_table + 34, player_shot_5_impact_17);
-    STORE_POINTER(player_shot_5_impact_table + 36, player_shot_5_impact_18);
-    STORE_POINTER(player_shot_5_impact_table + 38, player_shot_5_impact_19);
-    STORE_POINTER(player_shot_5_impact_table + 40, player_shot_5_impact_20);
-    STORE_POINTER(player_shot_5_impact_table + 42, player_shot_5_impact_21);
-    STORE_POINTER(player_shot_5_impact_table + 44, player_shot_5_impact_22);
-    STORE_POINTER(player_shot_5_impact_table + 46, player_shot_5_impact_23);
-    STORE_POINTER(player_shot_5_impact_table + 48, player_shot_5_impact_24);
-    STORE_POINTER(player_shot_5_impact_00 + 3, player_shot_5_impact_frames_00);
-    STORE_POINTER(player_shot_5_impact_01 + 3, player_shot_5_impact_frames_00);
-    STORE_POINTER(player_shot_5_impact_02 + 3, player_shot_5_impact_frames_02);
-    STORE_POINTER(player_shot_5_impact_03 + 3, player_shot_5_impact_frames_02);
-    STORE_POINTER(player_shot_5_impact_04 + 3, player_shot_5_impact_frames_04);
-    STORE_POINTER(player_shot_5_impact_05 + 3, player_shot_5_impact_frames_04);
-    STORE_POINTER(player_shot_5_impact_06 + 3, player_shot_5_impact_frames_06);
-    STORE_POINTER(player_shot_5_impact_07 + 3, player_shot_5_impact_frames_06);
-    STORE_POINTER(player_shot_5_impact_08 + 3, player_shot_5_impact_frames_08);
-    STORE_POINTER(player_shot_5_impact_09 + 3, player_shot_5_impact_frames_08);
-    STORE_POINTER(player_shot_5_impact_10 + 3, player_shot_5_impact_frames_10);
-    STORE_POINTER(player_shot_5_impact_11 + 3, player_shot_5_impact_frames_11);
-    STORE_POINTER(player_shot_5_impact_12 + 3, player_shot_5_impact_frames_12);
-    STORE_POINTER(player_shot_5_impact_13 + 3, player_shot_5_impact_frames_13);
-    STORE_POINTER(player_shot_5_impact_14 + 3, player_shot_5_impact_frames_14);
-    STORE_POINTER(player_shot_5_impact_15 + 3, player_shot_5_impact_frames_15);
-    STORE_POINTER(player_shot_5_impact_16 + 3, player_shot_5_impact_frames_15);
-    STORE_POINTER(player_shot_5_impact_17 + 3, player_shot_5_impact_frames_17);
-    STORE_POINTER(player_shot_5_impact_18 + 3, player_shot_5_impact_frames_17);
-    STORE_POINTER(player_shot_5_impact_19 + 3, player_shot_5_impact_frames_19);
-    STORE_POINTER(player_shot_5_impact_20 + 3, player_shot_5_impact_frames_19);
-    STORE_POINTER(player_shot_5_impact_21 + 3, player_shot_5_impact_frames_21);
-    STORE_POINTER(player_shot_5_impact_22 + 3, player_shot_5_impact_frames_21);
-    STORE_POINTER(player_shot_5_impact_23 + 3, player_shot_5_impact_frames_23);
-    STORE_POINTER(player_shot_5_impact_24 + 3, player_shot_5_impact_frames_23);
+    STORE_ARCADE_ADDRESS(ship0_shot_list_1_01_00 + 5, ship0_shot_list_1_01_00_02);
+    STORE_ARCADE_ADDRESS(ship0_shot_list_1_01_00 + 15, ship0_shot_list_1_01_00_07);
+    STORE_ARCADE_ADDRESS(ship0_shot_list_2_01_00 + 5, ship0_shot_list_1_01_00_02);
+    STORE_ARCADE_ADDRESS(ship0_shot_list_2_01_00 + 15, ship0_shot_list_1_01_00_07);
+    STORE_ARCADE_ADDRESS(ship0_shot_list_1_01_01 + 5, ship0_shot_list_1_01_00_02);
+    STORE_ARCADE_ADDRESS(ship0_shot_list_1_01_01 + 15, ship0_shot_list_1_01_00_07);
+    STORE_ARCADE_ADDRESS(ship0_shot_list_2_01_01 + 5, ship0_shot_list_1_01_00_02);
+    STORE_ARCADE_ADDRESS(ship0_shot_list_2_01_01 + 15, ship0_shot_list_1_01_00_07);
+    STORE_ARCADE_ADDRESS(ship0_shot_list_1_01_02 + 5, ship0_shot_list_1_01_00_02);
+    STORE_ARCADE_ADDRESS(ship0_shot_list_1_01_02 + 15, ship0_shot_list_1_01_00_07);
+    STORE_ARCADE_ADDRESS(ship0_shot_list_2_01_02 + 5, ship0_shot_list_1_01_00_02);
+    STORE_ARCADE_ADDRESS(ship0_shot_list_2_01_02 + 15, ship0_shot_list_1_01_00_07);
+    STORE_ARCADE_ADDRESS(ship0_shot_list_1_01_03 + 5, ship0_shot_list_1_01_00_02);
+    STORE_ARCADE_ADDRESS(ship0_shot_list_1_01_03 + 15, ship0_shot_list_1_01_00_07);
+    STORE_ARCADE_ADDRESS(ship0_shot_list_2_01_03 + 5, ship0_shot_list_1_01_00_02);
+    STORE_ARCADE_ADDRESS(ship0_shot_list_2_01_03 + 15, ship0_shot_list_1_01_00_07);
+    STORE_ARCADE_ADDRESS(ship0_shot_list_1_01_04 + 5, ship0_shot_list_1_01_00_02);
+    STORE_ARCADE_ADDRESS(ship0_shot_list_1_01_04 + 15, ship0_shot_list_1_01_00_07);
+    STORE_ARCADE_ADDRESS(ship0_shot_list_2_01_04 + 5, ship0_shot_list_1_01_00_02);
+    STORE_ARCADE_ADDRESS(ship0_shot_list_2_01_04 + 15, ship0_shot_list_1_01_00_07);
+    STORE_ARCADE_ADDRESS(ship0_shot_list_1_03_00 + 5, ship0_shot_list_1_03_00_02);
+    STORE_ARCADE_ADDRESS(ship0_shot_list_1_03_00 + 15, ship0_shot_list_1_03_00_07);
+    STORE_ARCADE_ADDRESS(ship0_shot_list_1_03_01 + 5, ship0_shot_list_1_03_00_02);
+    STORE_ARCADE_ADDRESS(ship0_shot_list_1_03_01 + 15, ship0_shot_list_1_03_00_07);
+    STORE_ARCADE_ADDRESS(ship0_shot_list_1_03_02 + 5, ship0_shot_list_1_03_00_02);
+    STORE_ARCADE_ADDRESS(ship0_shot_list_1_03_02 + 15, ship0_shot_list_1_03_00_07);
+    STORE_ARCADE_ADDRESS(ship0_shot_list_1_03_03 + 5, ship0_shot_list_1_03_00_02);
+    STORE_ARCADE_ADDRESS(ship0_shot_list_1_03_03 + 15, ship0_shot_list_1_03_00_07);
+    STORE_ARCADE_ADDRESS(ship0_shot_list_1_03_04 + 5, ship0_shot_list_1_03_00_02);
+    STORE_ARCADE_ADDRESS(ship0_shot_list_1_03_04 + 15, ship0_shot_list_1_03_00_07);
+    STORE_ARCADE_ADDRESS(ship0_shot_list_1_05_00 + 5, ship0_shot_list_1_05_00_02);
+    STORE_ARCADE_ADDRESS(ship0_shot_list_1_05_00 + 15, ship0_shot_list_1_05_00_07);
+    STORE_ARCADE_ADDRESS(ship0_shot_list_2_05_00 + 5, ship0_shot_list_1_05_00_02);
+    STORE_ARCADE_ADDRESS(ship0_shot_list_2_05_00 + 15, ship0_shot_list_1_05_00_07);
+    STORE_ARCADE_ADDRESS(ship0_shot_list_1_05_01 + 5, ship0_shot_list_1_05_00_02);
+    STORE_ARCADE_ADDRESS(ship0_shot_list_1_05_01 + 15, ship0_shot_list_1_05_00_07);
+    STORE_ARCADE_ADDRESS(ship0_shot_list_2_05_01 + 5, ship0_shot_list_1_05_00_02);
+    STORE_ARCADE_ADDRESS(ship0_shot_list_2_05_01 + 15, ship0_shot_list_1_05_00_07);
+    STORE_ARCADE_ADDRESS(ship0_shot_list_1_05_02 + 5, ship0_shot_list_1_05_00_02);
+    STORE_ARCADE_ADDRESS(ship0_shot_list_1_05_02 + 15, ship0_shot_list_1_05_00_07);
+    STORE_ARCADE_ADDRESS(ship0_shot_list_2_05_02 + 5, ship0_shot_list_1_05_00_02);
+    STORE_ARCADE_ADDRESS(ship0_shot_list_2_05_02 + 15, ship0_shot_list_1_05_00_07);
+    STORE_ARCADE_ADDRESS(ship0_shot_list_1_05_03 + 5, ship0_shot_list_1_05_00_02);
+    STORE_ARCADE_ADDRESS(ship0_shot_list_1_05_03 + 15, ship0_shot_list_1_05_00_07);
+    STORE_ARCADE_ADDRESS(ship0_shot_list_2_05_03 + 5, ship0_shot_list_1_05_00_02);
+    STORE_ARCADE_ADDRESS(ship0_shot_list_2_05_03 + 15, ship0_shot_list_1_05_00_07);
+    STORE_ARCADE_ADDRESS(ship0_shot_list_1_05_04 + 5, ship0_shot_list_1_05_00_02);
+    STORE_ARCADE_ADDRESS(ship0_shot_list_1_05_04 + 15, ship0_shot_list_1_05_00_07);
+    STORE_ARCADE_ADDRESS(ship0_shot_list_2_05_04 + 5, ship0_shot_list_1_05_00_02);
+    STORE_ARCADE_ADDRESS(ship0_shot_list_2_05_04 + 15, ship0_shot_list_1_05_00_07);
+    STORE_ARCADE_ADDRESS(player_shot_5_flight_table, player_shot_5_flight_00);
+    STORE_ARCADE_ADDRESS(player_shot_5_flight_table + 2, player_shot_5_flight_01);
+    STORE_ARCADE_ADDRESS(player_shot_5_flight_table + 4, player_shot_5_flight_02);
+    STORE_ARCADE_ADDRESS(player_shot_5_flight_table + 6, player_shot_5_flight_03);
+    STORE_ARCADE_ADDRESS(player_shot_5_flight_table + 8, player_shot_5_flight_04);
+    STORE_ARCADE_ADDRESS(player_shot_5_flight_table + 10, player_shot_5_flight_05);
+    STORE_ARCADE_ADDRESS(player_shot_5_flight_table + 12, player_shot_5_flight_06);
+    STORE_ARCADE_ADDRESS(player_shot_5_flight_table + 14, player_shot_5_flight_07);
+    STORE_ARCADE_ADDRESS(player_shot_5_flight_table + 16, player_shot_5_flight_08);
+    STORE_ARCADE_ADDRESS(player_shot_5_flight_table + 18, player_shot_5_flight_09);
+    STORE_ARCADE_ADDRESS(player_shot_5_flight_table + 20, player_shot_5_flight_10);
+    STORE_ARCADE_ADDRESS(player_shot_5_flight_table + 22, player_shot_5_flight_11);
+    STORE_ARCADE_ADDRESS(player_shot_5_flight_table + 24, player_shot_5_flight_12);
+    STORE_ARCADE_ADDRESS(player_shot_5_flight_table + 26, player_shot_5_flight_13);
+    STORE_ARCADE_ADDRESS(player_shot_5_flight_table + 28, player_shot_5_flight_14);
+    STORE_ARCADE_ADDRESS(player_shot_5_flight_table + 30, player_shot_5_flight_15);
+    STORE_ARCADE_ADDRESS(player_shot_5_flight_table + 32, player_shot_5_flight_16);
+    STORE_ARCADE_ADDRESS(player_shot_5_flight_table + 34, player_shot_5_flight_17);
+    STORE_ARCADE_ADDRESS(player_shot_5_flight_table + 36, player_shot_5_flight_18);
+    STORE_ARCADE_ADDRESS(player_shot_5_flight_table + 38, player_shot_5_flight_19);
+    STORE_ARCADE_ADDRESS(player_shot_5_flight_table + 40, player_shot_5_flight_20);
+    STORE_ARCADE_ADDRESS(player_shot_5_flight_table + 42, player_shot_5_flight_21);
+    STORE_ARCADE_ADDRESS(player_shot_5_flight_table + 44, player_shot_5_flight_22);
+    STORE_ARCADE_ADDRESS(player_shot_5_flight_table + 46, player_shot_5_flight_23);
+    STORE_ARCADE_ADDRESS(player_shot_5_flight_table + 48, player_shot_5_flight_24);
+    STORE_ARCADE_ADDRESS(player_shot_5_impact_table, player_shot_5_impact_00);
+    STORE_ARCADE_ADDRESS(player_shot_5_impact_table + 2, player_shot_5_impact_01);
+    STORE_ARCADE_ADDRESS(player_shot_5_impact_table + 4, player_shot_5_impact_02);
+    STORE_ARCADE_ADDRESS(player_shot_5_impact_table + 6, player_shot_5_impact_03);
+    STORE_ARCADE_ADDRESS(player_shot_5_impact_table + 8, player_shot_5_impact_04);
+    STORE_ARCADE_ADDRESS(player_shot_5_impact_table + 10, player_shot_5_impact_05);
+    STORE_ARCADE_ADDRESS(player_shot_5_impact_table + 12, player_shot_5_impact_06);
+    STORE_ARCADE_ADDRESS(player_shot_5_impact_table + 14, player_shot_5_impact_07);
+    STORE_ARCADE_ADDRESS(player_shot_5_impact_table + 16, player_shot_5_impact_08);
+    STORE_ARCADE_ADDRESS(player_shot_5_impact_table + 18, player_shot_5_impact_09);
+    STORE_ARCADE_ADDRESS(player_shot_5_impact_table + 20, player_shot_5_impact_10);
+    STORE_ARCADE_ADDRESS(player_shot_5_impact_table + 22, player_shot_5_impact_11);
+    STORE_ARCADE_ADDRESS(player_shot_5_impact_table + 24, player_shot_5_impact_12);
+    STORE_ARCADE_ADDRESS(player_shot_5_impact_table + 26, player_shot_5_impact_13);
+    STORE_ARCADE_ADDRESS(player_shot_5_impact_table + 28, player_shot_5_impact_14);
+    STORE_ARCADE_ADDRESS(player_shot_5_impact_table + 30, player_shot_5_impact_15);
+    STORE_ARCADE_ADDRESS(player_shot_5_impact_table + 32, player_shot_5_impact_16);
+    STORE_ARCADE_ADDRESS(player_shot_5_impact_table + 34, player_shot_5_impact_17);
+    STORE_ARCADE_ADDRESS(player_shot_5_impact_table + 36, player_shot_5_impact_18);
+    STORE_ARCADE_ADDRESS(player_shot_5_impact_table + 38, player_shot_5_impact_19);
+    STORE_ARCADE_ADDRESS(player_shot_5_impact_table + 40, player_shot_5_impact_20);
+    STORE_ARCADE_ADDRESS(player_shot_5_impact_table + 42, player_shot_5_impact_21);
+    STORE_ARCADE_ADDRESS(player_shot_5_impact_table + 44, player_shot_5_impact_22);
+    STORE_ARCADE_ADDRESS(player_shot_5_impact_table + 46, player_shot_5_impact_23);
+    STORE_ARCADE_ADDRESS(player_shot_5_impact_table + 48, player_shot_5_impact_24);
+    STORE_ARCADE_ADDRESS(player_shot_5_impact_00 + 3, player_shot_5_impact_frames_00);
+    STORE_ARCADE_ADDRESS(player_shot_5_impact_01 + 3, player_shot_5_impact_frames_00);
+    STORE_ARCADE_ADDRESS(player_shot_5_impact_02 + 3, player_shot_5_impact_frames_02);
+    STORE_ARCADE_ADDRESS(player_shot_5_impact_03 + 3, player_shot_5_impact_frames_02);
+    STORE_ARCADE_ADDRESS(player_shot_5_impact_04 + 3, player_shot_5_impact_frames_04);
+    STORE_ARCADE_ADDRESS(player_shot_5_impact_05 + 3, player_shot_5_impact_frames_04);
+    STORE_ARCADE_ADDRESS(player_shot_5_impact_06 + 3, player_shot_5_impact_frames_06);
+    STORE_ARCADE_ADDRESS(player_shot_5_impact_07 + 3, player_shot_5_impact_frames_06);
+    STORE_ARCADE_ADDRESS(player_shot_5_impact_08 + 3, player_shot_5_impact_frames_08);
+    STORE_ARCADE_ADDRESS(player_shot_5_impact_09 + 3, player_shot_5_impact_frames_08);
+    STORE_ARCADE_ADDRESS(player_shot_5_impact_10 + 3, player_shot_5_impact_frames_10);
+    STORE_ARCADE_ADDRESS(player_shot_5_impact_11 + 3, player_shot_5_impact_frames_11);
+    STORE_ARCADE_ADDRESS(player_shot_5_impact_12 + 3, player_shot_5_impact_frames_12);
+    STORE_ARCADE_ADDRESS(player_shot_5_impact_13 + 3, player_shot_5_impact_frames_13);
+    STORE_ARCADE_ADDRESS(player_shot_5_impact_14 + 3, player_shot_5_impact_frames_14);
+    STORE_ARCADE_ADDRESS(player_shot_5_impact_15 + 3, player_shot_5_impact_frames_15);
+    STORE_ARCADE_ADDRESS(player_shot_5_impact_16 + 3, player_shot_5_impact_frames_15);
+    STORE_ARCADE_ADDRESS(player_shot_5_impact_17 + 3, player_shot_5_impact_frames_17);
+    STORE_ARCADE_ADDRESS(player_shot_5_impact_18 + 3, player_shot_5_impact_frames_17);
+    STORE_ARCADE_ADDRESS(player_shot_5_impact_19 + 3, player_shot_5_impact_frames_19);
+    STORE_ARCADE_ADDRESS(player_shot_5_impact_20 + 3, player_shot_5_impact_frames_19);
+    STORE_ARCADE_ADDRESS(player_shot_5_impact_21 + 3, player_shot_5_impact_frames_21);
+    STORE_ARCADE_ADDRESS(player_shot_5_impact_22 + 3, player_shot_5_impact_frames_21);
+    STORE_ARCADE_ADDRESS(player_shot_5_impact_23 + 3, player_shot_5_impact_frames_23);
+    STORE_ARCADE_ADDRESS(player_shot_5_impact_24 + 3, player_shot_5_impact_frames_23);
 }
 
 extern u16 ship0_shot_list_3_01_00_02[];
@@ -1202,131 +1202,131 @@ extern u16 player_shot_6_flight_table[];
 extern u16 player_shot_6_impact_table[];
 
 void player_shot_6_tables_init(void) {
-    STORE_POINTER(ship0_shot_list_3_01_00 + 5, ship0_shot_list_3_01_00_02);
-    STORE_POINTER(ship0_shot_list_3_01_00 + 15, ship0_shot_list_3_01_00_07);
-    STORE_POINTER(ship0_shot_list_3_01_00 + 24, ship0_shot_list_3_01_00_02);
-    STORE_POINTER(ship0_shot_list_3_01_00 + 34, ship0_shot_list_3_01_00_07);
-    STORE_POINTER(ship0_shot_list_3_01_01 + 5, ship0_shot_list_3_01_00_02);
-    STORE_POINTER(ship0_shot_list_3_01_01 + 15, ship0_shot_list_3_01_00_07);
-    STORE_POINTER(ship0_shot_list_3_01_01 + 24, ship0_shot_list_3_01_00_02);
-    STORE_POINTER(ship0_shot_list_3_01_01 + 34, ship0_shot_list_3_01_00_07);
-    STORE_POINTER(ship0_shot_list_3_01_02 + 5, ship0_shot_list_3_01_00_02);
-    STORE_POINTER(ship0_shot_list_3_01_02 + 15, ship0_shot_list_3_01_00_07);
-    STORE_POINTER(ship0_shot_list_3_01_02 + 24, ship0_shot_list_3_01_00_02);
-    STORE_POINTER(ship0_shot_list_3_01_02 + 34, ship0_shot_list_3_01_00_07);
-    STORE_POINTER(ship0_shot_list_3_01_03 + 5, ship0_shot_list_3_01_00_02);
-    STORE_POINTER(ship0_shot_list_3_01_03 + 15, ship0_shot_list_3_01_00_07);
-    STORE_POINTER(ship0_shot_list_3_01_03 + 24, ship0_shot_list_3_01_00_02);
-    STORE_POINTER(ship0_shot_list_3_01_03 + 34, ship0_shot_list_3_01_00_07);
-    STORE_POINTER(ship0_shot_list_3_01_04 + 5, ship0_shot_list_3_01_00_02);
-    STORE_POINTER(ship0_shot_list_3_01_04 + 15, ship0_shot_list_3_01_00_07);
-    STORE_POINTER(ship0_shot_list_3_01_04 + 24, ship0_shot_list_3_01_00_02);
-    STORE_POINTER(ship0_shot_list_3_01_04 + 34, ship0_shot_list_3_01_00_07);
-    STORE_POINTER(ship0_shot_list_3_03_00 + 5, ship0_shot_list_3_03_00_02);
-    STORE_POINTER(ship0_shot_list_3_03_00 + 15, ship0_shot_list_3_03_00_07);
-    STORE_POINTER(ship0_shot_list_3_03_01 + 5, ship0_shot_list_3_03_00_02);
-    STORE_POINTER(ship0_shot_list_3_03_01 + 15, ship0_shot_list_3_03_00_07);
-    STORE_POINTER(ship0_shot_list_3_03_02 + 5, ship0_shot_list_3_03_00_02);
-    STORE_POINTER(ship0_shot_list_3_03_02 + 15, ship0_shot_list_3_03_00_07);
-    STORE_POINTER(ship0_shot_list_3_03_03 + 5, ship0_shot_list_3_03_00_02);
-    STORE_POINTER(ship0_shot_list_3_03_03 + 15, ship0_shot_list_3_03_00_07);
-    STORE_POINTER(ship0_shot_list_3_03_04 + 5, ship0_shot_list_3_03_00_02);
-    STORE_POINTER(ship0_shot_list_3_03_04 + 15, ship0_shot_list_3_03_00_07);
-    STORE_POINTER(ship0_shot_list_3_05_00 + 5, ship0_shot_list_3_05_00_02);
-    STORE_POINTER(ship0_shot_list_3_05_00 + 15, ship0_shot_list_3_05_00_07);
-    STORE_POINTER(ship0_shot_list_3_05_00 + 24, ship0_shot_list_3_05_00_02);
-    STORE_POINTER(ship0_shot_list_3_05_00 + 34, ship0_shot_list_3_05_00_07);
-    STORE_POINTER(ship0_shot_list_3_05_01 + 5, ship0_shot_list_3_05_00_02);
-    STORE_POINTER(ship0_shot_list_3_05_01 + 15, ship0_shot_list_3_05_00_07);
-    STORE_POINTER(ship0_shot_list_3_05_01 + 24, ship0_shot_list_3_05_00_02);
-    STORE_POINTER(ship0_shot_list_3_05_01 + 34, ship0_shot_list_3_05_00_07);
-    STORE_POINTER(ship0_shot_list_3_05_02 + 5, ship0_shot_list_3_05_00_02);
-    STORE_POINTER(ship0_shot_list_3_05_02 + 15, ship0_shot_list_3_05_00_07);
-    STORE_POINTER(ship0_shot_list_3_05_02 + 24, ship0_shot_list_3_05_00_02);
-    STORE_POINTER(ship0_shot_list_3_05_02 + 34, ship0_shot_list_3_05_00_07);
-    STORE_POINTER(ship0_shot_list_3_05_03 + 5, ship0_shot_list_3_05_00_02);
-    STORE_POINTER(ship0_shot_list_3_05_03 + 15, ship0_shot_list_3_05_00_07);
-    STORE_POINTER(ship0_shot_list_3_05_03 + 24, ship0_shot_list_3_05_00_02);
-    STORE_POINTER(ship0_shot_list_3_05_03 + 34, ship0_shot_list_3_05_00_07);
-    STORE_POINTER(ship0_shot_list_3_05_04 + 5, ship0_shot_list_3_05_00_02);
-    STORE_POINTER(ship0_shot_list_3_05_04 + 15, ship0_shot_list_3_05_00_07);
-    STORE_POINTER(ship0_shot_list_3_05_04 + 24, ship0_shot_list_3_05_00_02);
-    STORE_POINTER(ship0_shot_list_3_05_04 + 34, ship0_shot_list_3_05_00_07);
-    STORE_POINTER(player_shot_6_flight_table, player_shot_6_flight_00);
-    STORE_POINTER(player_shot_6_flight_table + 2, player_shot_6_flight_01);
-    STORE_POINTER(player_shot_6_flight_table + 4, player_shot_6_flight_02);
-    STORE_POINTER(player_shot_6_flight_table + 6, player_shot_6_flight_03);
-    STORE_POINTER(player_shot_6_flight_table + 8, player_shot_6_flight_04);
-    STORE_POINTER(player_shot_6_flight_table + 10, player_shot_6_flight_05);
-    STORE_POINTER(player_shot_6_flight_table + 12, player_shot_6_flight_06);
-    STORE_POINTER(player_shot_6_flight_table + 14, player_shot_6_flight_07);
-    STORE_POINTER(player_shot_6_flight_table + 16, player_shot_6_flight_08);
-    STORE_POINTER(player_shot_6_flight_table + 18, player_shot_6_flight_09);
-    STORE_POINTER(player_shot_6_flight_table + 20, player_shot_6_flight_10);
-    STORE_POINTER(player_shot_6_flight_table + 22, player_shot_6_flight_11);
-    STORE_POINTER(player_shot_6_flight_table + 24, player_shot_6_flight_12);
-    STORE_POINTER(player_shot_6_flight_table + 26, player_shot_6_flight_13);
-    STORE_POINTER(player_shot_6_flight_table + 28, player_shot_6_flight_14);
-    STORE_POINTER(player_shot_6_flight_table + 30, player_shot_6_flight_15);
-    STORE_POINTER(player_shot_6_flight_table + 32, player_shot_6_flight_16);
-    STORE_POINTER(player_shot_6_flight_table + 34, player_shot_6_flight_17);
-    STORE_POINTER(player_shot_6_flight_table + 36, player_shot_6_flight_18);
-    STORE_POINTER(player_shot_6_flight_table + 38, player_shot_6_flight_19);
-    STORE_POINTER(player_shot_6_flight_table + 40, player_shot_6_flight_20);
-    STORE_POINTER(player_shot_6_flight_table + 42, player_shot_6_flight_21);
-    STORE_POINTER(player_shot_6_flight_table + 44, player_shot_6_flight_22);
-    STORE_POINTER(player_shot_6_flight_table + 46, player_shot_6_flight_23);
-    STORE_POINTER(player_shot_6_flight_table + 48, player_shot_6_flight_24);
-    STORE_POINTER(player_shot_6_impact_table, player_shot_6_impact_00);
-    STORE_POINTER(player_shot_6_impact_table + 2, player_shot_6_impact_01);
-    STORE_POINTER(player_shot_6_impact_table + 4, player_shot_6_impact_02);
-    STORE_POINTER(player_shot_6_impact_table + 6, player_shot_6_impact_03);
-    STORE_POINTER(player_shot_6_impact_table + 8, player_shot_6_impact_04);
-    STORE_POINTER(player_shot_6_impact_table + 10, player_shot_6_impact_05);
-    STORE_POINTER(player_shot_6_impact_table + 12, player_shot_6_impact_06);
-    STORE_POINTER(player_shot_6_impact_table + 14, player_shot_6_impact_07);
-    STORE_POINTER(player_shot_6_impact_table + 16, player_shot_6_impact_08);
-    STORE_POINTER(player_shot_6_impact_table + 18, player_shot_6_impact_09);
-    STORE_POINTER(player_shot_6_impact_table + 20, player_shot_6_impact_10);
-    STORE_POINTER(player_shot_6_impact_table + 22, player_shot_6_impact_11);
-    STORE_POINTER(player_shot_6_impact_table + 24, player_shot_6_impact_12);
-    STORE_POINTER(player_shot_6_impact_table + 26, player_shot_6_impact_13);
-    STORE_POINTER(player_shot_6_impact_table + 28, player_shot_6_impact_14);
-    STORE_POINTER(player_shot_6_impact_table + 30, player_shot_6_impact_15);
-    STORE_POINTER(player_shot_6_impact_table + 32, player_shot_6_impact_16);
-    STORE_POINTER(player_shot_6_impact_table + 34, player_shot_6_impact_17);
-    STORE_POINTER(player_shot_6_impact_table + 36, player_shot_6_impact_18);
-    STORE_POINTER(player_shot_6_impact_table + 38, player_shot_6_impact_19);
-    STORE_POINTER(player_shot_6_impact_table + 40, player_shot_6_impact_20);
-    STORE_POINTER(player_shot_6_impact_table + 42, player_shot_6_impact_21);
-    STORE_POINTER(player_shot_6_impact_table + 44, player_shot_6_impact_22);
-    STORE_POINTER(player_shot_6_impact_table + 46, player_shot_6_impact_23);
-    STORE_POINTER(player_shot_6_impact_table + 48, player_shot_6_impact_24);
-    STORE_POINTER(player_shot_6_impact_00 + 3, player_shot_6_impact_frames_00);
-    STORE_POINTER(player_shot_6_impact_01 + 3, player_shot_6_impact_frames_00);
-    STORE_POINTER(player_shot_6_impact_02 + 3, player_shot_6_impact_frames_02);
-    STORE_POINTER(player_shot_6_impact_03 + 3, player_shot_6_impact_frames_02);
-    STORE_POINTER(player_shot_6_impact_04 + 3, player_shot_6_impact_frames_04);
-    STORE_POINTER(player_shot_6_impact_05 + 3, player_shot_6_impact_frames_04);
-    STORE_POINTER(player_shot_6_impact_06 + 3, player_shot_6_impact_frames_06);
-    STORE_POINTER(player_shot_6_impact_07 + 3, player_shot_6_impact_frames_06);
-    STORE_POINTER(player_shot_6_impact_08 + 3, player_shot_6_impact_frames_08);
-    STORE_POINTER(player_shot_6_impact_09 + 3, player_shot_6_impact_frames_08);
-    STORE_POINTER(player_shot_6_impact_10 + 3, player_shot_6_impact_frames_10);
-    STORE_POINTER(player_shot_6_impact_11 + 3, player_shot_6_impact_frames_11);
-    STORE_POINTER(player_shot_6_impact_12 + 3, player_shot_6_impact_frames_12);
-    STORE_POINTER(player_shot_6_impact_13 + 3, player_shot_6_impact_frames_13);
-    STORE_POINTER(player_shot_6_impact_14 + 3, player_shot_6_impact_frames_14);
-    STORE_POINTER(player_shot_6_impact_15 + 3, player_shot_6_impact_frames_15);
-    STORE_POINTER(player_shot_6_impact_16 + 3, player_shot_6_impact_frames_15);
-    STORE_POINTER(player_shot_6_impact_17 + 3, player_shot_6_impact_frames_17);
-    STORE_POINTER(player_shot_6_impact_18 + 3, player_shot_6_impact_frames_17);
-    STORE_POINTER(player_shot_6_impact_19 + 3, player_shot_6_impact_frames_19);
-    STORE_POINTER(player_shot_6_impact_20 + 3, player_shot_6_impact_frames_19);
-    STORE_POINTER(player_shot_6_impact_21 + 3, player_shot_6_impact_frames_21);
-    STORE_POINTER(player_shot_6_impact_22 + 3, player_shot_6_impact_frames_21);
-    STORE_POINTER(player_shot_6_impact_23 + 3, player_shot_6_impact_frames_23);
-    STORE_POINTER(player_shot_6_impact_24 + 3, player_shot_6_impact_frames_23);
+    STORE_ARCADE_ADDRESS(ship0_shot_list_3_01_00 + 5, ship0_shot_list_3_01_00_02);
+    STORE_ARCADE_ADDRESS(ship0_shot_list_3_01_00 + 15, ship0_shot_list_3_01_00_07);
+    STORE_ARCADE_ADDRESS(ship0_shot_list_3_01_00 + 24, ship0_shot_list_3_01_00_02);
+    STORE_ARCADE_ADDRESS(ship0_shot_list_3_01_00 + 34, ship0_shot_list_3_01_00_07);
+    STORE_ARCADE_ADDRESS(ship0_shot_list_3_01_01 + 5, ship0_shot_list_3_01_00_02);
+    STORE_ARCADE_ADDRESS(ship0_shot_list_3_01_01 + 15, ship0_shot_list_3_01_00_07);
+    STORE_ARCADE_ADDRESS(ship0_shot_list_3_01_01 + 24, ship0_shot_list_3_01_00_02);
+    STORE_ARCADE_ADDRESS(ship0_shot_list_3_01_01 + 34, ship0_shot_list_3_01_00_07);
+    STORE_ARCADE_ADDRESS(ship0_shot_list_3_01_02 + 5, ship0_shot_list_3_01_00_02);
+    STORE_ARCADE_ADDRESS(ship0_shot_list_3_01_02 + 15, ship0_shot_list_3_01_00_07);
+    STORE_ARCADE_ADDRESS(ship0_shot_list_3_01_02 + 24, ship0_shot_list_3_01_00_02);
+    STORE_ARCADE_ADDRESS(ship0_shot_list_3_01_02 + 34, ship0_shot_list_3_01_00_07);
+    STORE_ARCADE_ADDRESS(ship0_shot_list_3_01_03 + 5, ship0_shot_list_3_01_00_02);
+    STORE_ARCADE_ADDRESS(ship0_shot_list_3_01_03 + 15, ship0_shot_list_3_01_00_07);
+    STORE_ARCADE_ADDRESS(ship0_shot_list_3_01_03 + 24, ship0_shot_list_3_01_00_02);
+    STORE_ARCADE_ADDRESS(ship0_shot_list_3_01_03 + 34, ship0_shot_list_3_01_00_07);
+    STORE_ARCADE_ADDRESS(ship0_shot_list_3_01_04 + 5, ship0_shot_list_3_01_00_02);
+    STORE_ARCADE_ADDRESS(ship0_shot_list_3_01_04 + 15, ship0_shot_list_3_01_00_07);
+    STORE_ARCADE_ADDRESS(ship0_shot_list_3_01_04 + 24, ship0_shot_list_3_01_00_02);
+    STORE_ARCADE_ADDRESS(ship0_shot_list_3_01_04 + 34, ship0_shot_list_3_01_00_07);
+    STORE_ARCADE_ADDRESS(ship0_shot_list_3_03_00 + 5, ship0_shot_list_3_03_00_02);
+    STORE_ARCADE_ADDRESS(ship0_shot_list_3_03_00 + 15, ship0_shot_list_3_03_00_07);
+    STORE_ARCADE_ADDRESS(ship0_shot_list_3_03_01 + 5, ship0_shot_list_3_03_00_02);
+    STORE_ARCADE_ADDRESS(ship0_shot_list_3_03_01 + 15, ship0_shot_list_3_03_00_07);
+    STORE_ARCADE_ADDRESS(ship0_shot_list_3_03_02 + 5, ship0_shot_list_3_03_00_02);
+    STORE_ARCADE_ADDRESS(ship0_shot_list_3_03_02 + 15, ship0_shot_list_3_03_00_07);
+    STORE_ARCADE_ADDRESS(ship0_shot_list_3_03_03 + 5, ship0_shot_list_3_03_00_02);
+    STORE_ARCADE_ADDRESS(ship0_shot_list_3_03_03 + 15, ship0_shot_list_3_03_00_07);
+    STORE_ARCADE_ADDRESS(ship0_shot_list_3_03_04 + 5, ship0_shot_list_3_03_00_02);
+    STORE_ARCADE_ADDRESS(ship0_shot_list_3_03_04 + 15, ship0_shot_list_3_03_00_07);
+    STORE_ARCADE_ADDRESS(ship0_shot_list_3_05_00 + 5, ship0_shot_list_3_05_00_02);
+    STORE_ARCADE_ADDRESS(ship0_shot_list_3_05_00 + 15, ship0_shot_list_3_05_00_07);
+    STORE_ARCADE_ADDRESS(ship0_shot_list_3_05_00 + 24, ship0_shot_list_3_05_00_02);
+    STORE_ARCADE_ADDRESS(ship0_shot_list_3_05_00 + 34, ship0_shot_list_3_05_00_07);
+    STORE_ARCADE_ADDRESS(ship0_shot_list_3_05_01 + 5, ship0_shot_list_3_05_00_02);
+    STORE_ARCADE_ADDRESS(ship0_shot_list_3_05_01 + 15, ship0_shot_list_3_05_00_07);
+    STORE_ARCADE_ADDRESS(ship0_shot_list_3_05_01 + 24, ship0_shot_list_3_05_00_02);
+    STORE_ARCADE_ADDRESS(ship0_shot_list_3_05_01 + 34, ship0_shot_list_3_05_00_07);
+    STORE_ARCADE_ADDRESS(ship0_shot_list_3_05_02 + 5, ship0_shot_list_3_05_00_02);
+    STORE_ARCADE_ADDRESS(ship0_shot_list_3_05_02 + 15, ship0_shot_list_3_05_00_07);
+    STORE_ARCADE_ADDRESS(ship0_shot_list_3_05_02 + 24, ship0_shot_list_3_05_00_02);
+    STORE_ARCADE_ADDRESS(ship0_shot_list_3_05_02 + 34, ship0_shot_list_3_05_00_07);
+    STORE_ARCADE_ADDRESS(ship0_shot_list_3_05_03 + 5, ship0_shot_list_3_05_00_02);
+    STORE_ARCADE_ADDRESS(ship0_shot_list_3_05_03 + 15, ship0_shot_list_3_05_00_07);
+    STORE_ARCADE_ADDRESS(ship0_shot_list_3_05_03 + 24, ship0_shot_list_3_05_00_02);
+    STORE_ARCADE_ADDRESS(ship0_shot_list_3_05_03 + 34, ship0_shot_list_3_05_00_07);
+    STORE_ARCADE_ADDRESS(ship0_shot_list_3_05_04 + 5, ship0_shot_list_3_05_00_02);
+    STORE_ARCADE_ADDRESS(ship0_shot_list_3_05_04 + 15, ship0_shot_list_3_05_00_07);
+    STORE_ARCADE_ADDRESS(ship0_shot_list_3_05_04 + 24, ship0_shot_list_3_05_00_02);
+    STORE_ARCADE_ADDRESS(ship0_shot_list_3_05_04 + 34, ship0_shot_list_3_05_00_07);
+    STORE_ARCADE_ADDRESS(player_shot_6_flight_table, player_shot_6_flight_00);
+    STORE_ARCADE_ADDRESS(player_shot_6_flight_table + 2, player_shot_6_flight_01);
+    STORE_ARCADE_ADDRESS(player_shot_6_flight_table + 4, player_shot_6_flight_02);
+    STORE_ARCADE_ADDRESS(player_shot_6_flight_table + 6, player_shot_6_flight_03);
+    STORE_ARCADE_ADDRESS(player_shot_6_flight_table + 8, player_shot_6_flight_04);
+    STORE_ARCADE_ADDRESS(player_shot_6_flight_table + 10, player_shot_6_flight_05);
+    STORE_ARCADE_ADDRESS(player_shot_6_flight_table + 12, player_shot_6_flight_06);
+    STORE_ARCADE_ADDRESS(player_shot_6_flight_table + 14, player_shot_6_flight_07);
+    STORE_ARCADE_ADDRESS(player_shot_6_flight_table + 16, player_shot_6_flight_08);
+    STORE_ARCADE_ADDRESS(player_shot_6_flight_table + 18, player_shot_6_flight_09);
+    STORE_ARCADE_ADDRESS(player_shot_6_flight_table + 20, player_shot_6_flight_10);
+    STORE_ARCADE_ADDRESS(player_shot_6_flight_table + 22, player_shot_6_flight_11);
+    STORE_ARCADE_ADDRESS(player_shot_6_flight_table + 24, player_shot_6_flight_12);
+    STORE_ARCADE_ADDRESS(player_shot_6_flight_table + 26, player_shot_6_flight_13);
+    STORE_ARCADE_ADDRESS(player_shot_6_flight_table + 28, player_shot_6_flight_14);
+    STORE_ARCADE_ADDRESS(player_shot_6_flight_table + 30, player_shot_6_flight_15);
+    STORE_ARCADE_ADDRESS(player_shot_6_flight_table + 32, player_shot_6_flight_16);
+    STORE_ARCADE_ADDRESS(player_shot_6_flight_table + 34, player_shot_6_flight_17);
+    STORE_ARCADE_ADDRESS(player_shot_6_flight_table + 36, player_shot_6_flight_18);
+    STORE_ARCADE_ADDRESS(player_shot_6_flight_table + 38, player_shot_6_flight_19);
+    STORE_ARCADE_ADDRESS(player_shot_6_flight_table + 40, player_shot_6_flight_20);
+    STORE_ARCADE_ADDRESS(player_shot_6_flight_table + 42, player_shot_6_flight_21);
+    STORE_ARCADE_ADDRESS(player_shot_6_flight_table + 44, player_shot_6_flight_22);
+    STORE_ARCADE_ADDRESS(player_shot_6_flight_table + 46, player_shot_6_flight_23);
+    STORE_ARCADE_ADDRESS(player_shot_6_flight_table + 48, player_shot_6_flight_24);
+    STORE_ARCADE_ADDRESS(player_shot_6_impact_table, player_shot_6_impact_00);
+    STORE_ARCADE_ADDRESS(player_shot_6_impact_table + 2, player_shot_6_impact_01);
+    STORE_ARCADE_ADDRESS(player_shot_6_impact_table + 4, player_shot_6_impact_02);
+    STORE_ARCADE_ADDRESS(player_shot_6_impact_table + 6, player_shot_6_impact_03);
+    STORE_ARCADE_ADDRESS(player_shot_6_impact_table + 8, player_shot_6_impact_04);
+    STORE_ARCADE_ADDRESS(player_shot_6_impact_table + 10, player_shot_6_impact_05);
+    STORE_ARCADE_ADDRESS(player_shot_6_impact_table + 12, player_shot_6_impact_06);
+    STORE_ARCADE_ADDRESS(player_shot_6_impact_table + 14, player_shot_6_impact_07);
+    STORE_ARCADE_ADDRESS(player_shot_6_impact_table + 16, player_shot_6_impact_08);
+    STORE_ARCADE_ADDRESS(player_shot_6_impact_table + 18, player_shot_6_impact_09);
+    STORE_ARCADE_ADDRESS(player_shot_6_impact_table + 20, player_shot_6_impact_10);
+    STORE_ARCADE_ADDRESS(player_shot_6_impact_table + 22, player_shot_6_impact_11);
+    STORE_ARCADE_ADDRESS(player_shot_6_impact_table + 24, player_shot_6_impact_12);
+    STORE_ARCADE_ADDRESS(player_shot_6_impact_table + 26, player_shot_6_impact_13);
+    STORE_ARCADE_ADDRESS(player_shot_6_impact_table + 28, player_shot_6_impact_14);
+    STORE_ARCADE_ADDRESS(player_shot_6_impact_table + 30, player_shot_6_impact_15);
+    STORE_ARCADE_ADDRESS(player_shot_6_impact_table + 32, player_shot_6_impact_16);
+    STORE_ARCADE_ADDRESS(player_shot_6_impact_table + 34, player_shot_6_impact_17);
+    STORE_ARCADE_ADDRESS(player_shot_6_impact_table + 36, player_shot_6_impact_18);
+    STORE_ARCADE_ADDRESS(player_shot_6_impact_table + 38, player_shot_6_impact_19);
+    STORE_ARCADE_ADDRESS(player_shot_6_impact_table + 40, player_shot_6_impact_20);
+    STORE_ARCADE_ADDRESS(player_shot_6_impact_table + 42, player_shot_6_impact_21);
+    STORE_ARCADE_ADDRESS(player_shot_6_impact_table + 44, player_shot_6_impact_22);
+    STORE_ARCADE_ADDRESS(player_shot_6_impact_table + 46, player_shot_6_impact_23);
+    STORE_ARCADE_ADDRESS(player_shot_6_impact_table + 48, player_shot_6_impact_24);
+    STORE_ARCADE_ADDRESS(player_shot_6_impact_00 + 3, player_shot_6_impact_frames_00);
+    STORE_ARCADE_ADDRESS(player_shot_6_impact_01 + 3, player_shot_6_impact_frames_00);
+    STORE_ARCADE_ADDRESS(player_shot_6_impact_02 + 3, player_shot_6_impact_frames_02);
+    STORE_ARCADE_ADDRESS(player_shot_6_impact_03 + 3, player_shot_6_impact_frames_02);
+    STORE_ARCADE_ADDRESS(player_shot_6_impact_04 + 3, player_shot_6_impact_frames_04);
+    STORE_ARCADE_ADDRESS(player_shot_6_impact_05 + 3, player_shot_6_impact_frames_04);
+    STORE_ARCADE_ADDRESS(player_shot_6_impact_06 + 3, player_shot_6_impact_frames_06);
+    STORE_ARCADE_ADDRESS(player_shot_6_impact_07 + 3, player_shot_6_impact_frames_06);
+    STORE_ARCADE_ADDRESS(player_shot_6_impact_08 + 3, player_shot_6_impact_frames_08);
+    STORE_ARCADE_ADDRESS(player_shot_6_impact_09 + 3, player_shot_6_impact_frames_08);
+    STORE_ARCADE_ADDRESS(player_shot_6_impact_10 + 3, player_shot_6_impact_frames_10);
+    STORE_ARCADE_ADDRESS(player_shot_6_impact_11 + 3, player_shot_6_impact_frames_11);
+    STORE_ARCADE_ADDRESS(player_shot_6_impact_12 + 3, player_shot_6_impact_frames_12);
+    STORE_ARCADE_ADDRESS(player_shot_6_impact_13 + 3, player_shot_6_impact_frames_13);
+    STORE_ARCADE_ADDRESS(player_shot_6_impact_14 + 3, player_shot_6_impact_frames_14);
+    STORE_ARCADE_ADDRESS(player_shot_6_impact_15 + 3, player_shot_6_impact_frames_15);
+    STORE_ARCADE_ADDRESS(player_shot_6_impact_16 + 3, player_shot_6_impact_frames_15);
+    STORE_ARCADE_ADDRESS(player_shot_6_impact_17 + 3, player_shot_6_impact_frames_17);
+    STORE_ARCADE_ADDRESS(player_shot_6_impact_18 + 3, player_shot_6_impact_frames_17);
+    STORE_ARCADE_ADDRESS(player_shot_6_impact_19 + 3, player_shot_6_impact_frames_19);
+    STORE_ARCADE_ADDRESS(player_shot_6_impact_20 + 3, player_shot_6_impact_frames_19);
+    STORE_ARCADE_ADDRESS(player_shot_6_impact_21 + 3, player_shot_6_impact_frames_21);
+    STORE_ARCADE_ADDRESS(player_shot_6_impact_22 + 3, player_shot_6_impact_frames_21);
+    STORE_ARCADE_ADDRESS(player_shot_6_impact_23 + 3, player_shot_6_impact_frames_23);
+    STORE_ARCADE_ADDRESS(player_shot_6_impact_24 + 3, player_shot_6_impact_frames_23);
 }
 
 extern u16 option_shot_list_1_00_00_02[];
@@ -1567,291 +1567,291 @@ extern u16 player_shot_3_flight_table[];
 extern u16 player_shot_3_impact_table[];
 
 void player_shot_3_tables_init(void) {
-    STORE_POINTER(option_shot_list_1_00_00 + 5, option_shot_list_1_00_00_02);
-    STORE_POINTER(option_shot_list_1_00_00 + 15, option_shot_list_1_00_00_07);
-    STORE_POINTER(option_shot_list_2_00_00 + 5, option_shot_list_1_00_00_02);
-    STORE_POINTER(option_shot_list_2_00_00 + 15, option_shot_list_1_00_00_07);
-    STORE_POINTER(option_shot_list_1_00_01 + 5, option_shot_list_1_00_00_02);
-    STORE_POINTER(option_shot_list_1_00_01 + 15, option_shot_list_1_00_01_07);
-    STORE_POINTER(option_shot_list_2_00_01 + 5, option_shot_list_1_00_00_02);
-    STORE_POINTER(option_shot_list_2_00_01 + 15, option_shot_list_1_00_01_07);
-    STORE_POINTER(option_shot_list_1_00_02 + 5, option_shot_list_1_00_02_02);
-    STORE_POINTER(option_shot_list_1_00_02 + 15, option_shot_list_1_00_02_07);
-    STORE_POINTER(option_shot_list_2_00_02 + 5, option_shot_list_1_00_02_02);
-    STORE_POINTER(option_shot_list_2_00_02 + 15, option_shot_list_1_00_02_07);
-    STORE_POINTER(option_shot_list_1_00_03 + 5, option_shot_list_1_00_02_02);
-    STORE_POINTER(option_shot_list_1_00_03 + 15, option_shot_list_1_00_03_07);
-    STORE_POINTER(option_shot_list_2_00_03 + 5, option_shot_list_1_00_02_02);
-    STORE_POINTER(option_shot_list_2_00_03 + 15, option_shot_list_1_00_03_07);
-    STORE_POINTER(option_shot_list_1_00_04 + 5, option_shot_list_1_00_04_02);
-    STORE_POINTER(option_shot_list_1_00_04 + 15, option_shot_list_1_00_04_07);
-    STORE_POINTER(option_shot_list_2_00_04 + 5, option_shot_list_1_00_04_02);
-    STORE_POINTER(option_shot_list_2_00_04 + 15, option_shot_list_1_00_04_07);
-    STORE_POINTER(option_shot_list_3_00_00 + 1, option_shot_list_3_00_00_00);
-    STORE_POINTER(option_shot_list_3_00_00 + 5, option_shot_list_3_00_00_02);
-    STORE_POINTER(option_shot_list_3_00_01 + 1, option_shot_list_3_00_01_00);
-    STORE_POINTER(option_shot_list_3_00_01 + 5, option_shot_list_3_00_00_02);
-    STORE_POINTER(option_shot_list_3_00_02 + 1, option_shot_list_3_00_02_00);
-    STORE_POINTER(option_shot_list_3_00_02 + 5, option_shot_list_3_00_02_02);
-    STORE_POINTER(option_shot_list_3_00_03 + 1, option_shot_list_3_00_03_00);
-    STORE_POINTER(option_shot_list_3_00_03 + 5, option_shot_list_3_00_02_02);
-    STORE_POINTER(option_shot_list_3_00_04 + 1, option_shot_list_3_00_04_00);
-    STORE_POINTER(option_shot_list_3_00_04 + 5, option_shot_list_3_00_04_02);
-    STORE_POINTER(option_shot_list_4_00_00 + 5, option_shot_list_4_00_00_02);
-    STORE_POINTER(option_shot_list_4_00_00 + 15, option_shot_list_4_00_00_07);
-    STORE_POINTER(option_shot_list_4_00_00 + 24, option_shot_list_4_00_00_02);
-    STORE_POINTER(option_shot_list_4_00_00 + 34, option_shot_list_4_00_00_07);
-    STORE_POINTER(option_shot_list_4_00_01 + 5, option_shot_list_4_00_00_02);
-    STORE_POINTER(option_shot_list_4_00_01 + 15, option_shot_list_4_00_01_07);
-    STORE_POINTER(option_shot_list_4_00_01 + 24, option_shot_list_4_00_00_02);
-    STORE_POINTER(option_shot_list_4_00_01 + 34, option_shot_list_4_00_01_07);
-    STORE_POINTER(option_shot_list_4_00_02 + 5, option_shot_list_4_00_02_02);
-    STORE_POINTER(option_shot_list_4_00_02 + 15, option_shot_list_4_00_02_07);
-    STORE_POINTER(option_shot_list_4_00_02 + 24, option_shot_list_4_00_02_02);
-    STORE_POINTER(option_shot_list_4_00_02 + 34, option_shot_list_4_00_02_07);
-    STORE_POINTER(option_shot_list_4_00_03 + 5, option_shot_list_4_00_02_02);
-    STORE_POINTER(option_shot_list_4_00_03 + 15, option_shot_list_4_00_03_07);
-    STORE_POINTER(option_shot_list_4_00_03 + 24, option_shot_list_4_00_02_02);
-    STORE_POINTER(option_shot_list_4_00_03 + 34, option_shot_list_4_00_03_07);
-    STORE_POINTER(option_shot_list_4_00_04 + 5, option_shot_list_4_00_04_02);
-    STORE_POINTER(option_shot_list_4_00_04 + 15, option_shot_list_4_00_04_07);
-    STORE_POINTER(option_shot_list_4_00_04 + 24, option_shot_list_4_00_04_02);
-    STORE_POINTER(option_shot_list_4_00_04 + 34, option_shot_list_4_00_04_07);
-    STORE_POINTER(player_shot_3_flight_table, player_shot_3_flight_00);
-    STORE_POINTER(player_shot_3_flight_table + 2, player_shot_3_flight_00);
-    STORE_POINTER(player_shot_3_flight_table + 4, player_shot_3_flight_02);
-    STORE_POINTER(player_shot_3_flight_table + 6, player_shot_3_flight_02);
-    STORE_POINTER(player_shot_3_flight_table + 8, player_shot_3_flight_04);
-    STORE_POINTER(player_shot_3_flight_table + 10, player_shot_3_flight_04);
-    STORE_POINTER(player_shot_3_flight_table + 12, player_shot_3_flight_06);
-    STORE_POINTER(player_shot_3_flight_table + 14, player_shot_3_flight_06);
-    STORE_POINTER(player_shot_3_flight_table + 16, player_shot_3_flight_08);
-    STORE_POINTER(player_shot_3_flight_table + 18, player_shot_3_flight_08);
-    STORE_POINTER(player_shot_3_flight_table + 20, player_shot_3_flight_10);
-    STORE_POINTER(player_shot_3_flight_table + 22, player_shot_3_flight_11);
-    STORE_POINTER(player_shot_3_flight_table + 24, player_shot_3_flight_12);
-    STORE_POINTER(player_shot_3_flight_table + 26, player_shot_3_flight_13);
-    STORE_POINTER(player_shot_3_flight_table + 28, player_shot_3_flight_14);
-    STORE_POINTER(player_shot_3_flight_table + 30, player_shot_3_flight_15);
-    STORE_POINTER(player_shot_3_flight_table + 32, player_shot_3_flight_15);
-    STORE_POINTER(player_shot_3_flight_table + 34, player_shot_3_flight_17);
-    STORE_POINTER(player_shot_3_flight_table + 36, player_shot_3_flight_17);
-    STORE_POINTER(player_shot_3_flight_table + 38, player_shot_3_flight_19);
-    STORE_POINTER(player_shot_3_flight_table + 40, player_shot_3_flight_19);
-    STORE_POINTER(player_shot_3_flight_table + 42, player_shot_3_flight_21);
-    STORE_POINTER(player_shot_3_flight_table + 44, player_shot_3_flight_21);
-    STORE_POINTER(player_shot_3_flight_table + 46, player_shot_3_flight_23);
-    STORE_POINTER(player_shot_3_flight_table + 48, player_shot_3_flight_23);
-    STORE_POINTER(option_shot_list_3_00_00_00, option_shot_list_3_00_00_00_00);
-    STORE_POINTER(option_shot_list_3_00_00_00 + 2, option_shot_list_3_00_00_00_01);
-    STORE_POINTER(option_shot_list_3_00_00_00 + 4, option_shot_list_3_00_00_00_02);
-    STORE_POINTER(option_shot_list_3_00_00_00 + 6, option_shot_list_3_00_00_00_03);
-    STORE_POINTER(option_shot_list_3_00_00_00 + 8, option_shot_list_3_00_00_00_04);
-    STORE_POINTER(option_shot_list_3_00_00_00 + 10, option_shot_list_3_00_00_00_05);
-    STORE_POINTER(option_shot_list_3_00_00_00 + 12, option_shot_list_3_00_00_00_06);
-    STORE_POINTER(option_shot_list_3_00_00_00 + 14, option_shot_list_3_00_00_00_07);
-    STORE_POINTER(option_shot_list_3_00_00_00 + 16, option_shot_list_3_00_00_00_08);
-    STORE_POINTER(option_shot_list_3_00_00_00 + 18, option_shot_list_3_00_00_00_09);
-    STORE_POINTER(option_shot_list_3_00_00_00 + 20, option_shot_list_3_00_00_00_10);
-    STORE_POINTER(option_shot_list_3_00_00_00 + 22, option_shot_list_3_00_00_00_11);
-    STORE_POINTER(option_shot_list_3_00_00_00 + 24, option_shot_list_3_00_00_00_12);
-    STORE_POINTER(option_shot_list_3_00_00_00 + 26, option_shot_list_3_00_00_00_13);
-    STORE_POINTER(option_shot_list_3_00_00_00 + 28, option_shot_list_3_00_00_00_14);
-    STORE_POINTER(option_shot_list_3_00_00_00 + 30, option_shot_list_3_00_00_00_15);
-    STORE_POINTER(option_shot_list_3_00_00_00 + 32, option_shot_list_3_00_00_00_16);
-    STORE_POINTER(option_shot_list_3_00_00_00_00 + 2, option_shot_list_3_00_00_00_00_01);
-    STORE_POINTER(option_shot_list_3_00_00_00_01 + 2, option_shot_list_3_00_00_00_01_01);
-    STORE_POINTER(option_shot_list_3_00_00_00_02 + 2, option_shot_list_3_00_00_00_02_01);
-    STORE_POINTER(option_shot_list_3_00_00_00_03 + 2, option_shot_list_3_00_00_00_03_01);
-    STORE_POINTER(option_shot_list_3_00_00_00_04 + 2, option_shot_list_3_00_00_00_04_01);
-    STORE_POINTER(option_shot_list_3_00_00_00_05 + 2, option_shot_list_3_00_00_00_05_01);
-    STORE_POINTER(option_shot_list_3_00_00_00_06 + 2, option_shot_list_3_00_00_00_06_01);
-    STORE_POINTER(option_shot_list_3_00_00_00_07 + 2, option_shot_list_3_00_00_00_07_01);
-    STORE_POINTER(option_shot_list_3_00_00_00_08 + 2, option_shot_list_3_00_00_00_08_01);
-    STORE_POINTER(option_shot_list_3_00_00_00_09 + 2, option_shot_list_3_00_00_00_09_01);
-    STORE_POINTER(option_shot_list_3_00_00_00_10 + 2, option_shot_list_3_00_00_00_10_01);
-    STORE_POINTER(option_shot_list_3_00_00_00_11 + 2, option_shot_list_3_00_00_00_11_01);
-    STORE_POINTER(option_shot_list_3_00_00_00_12 + 2, option_shot_list_3_00_00_00_12_01);
-    STORE_POINTER(option_shot_list_3_00_00_00_13 + 2, option_shot_list_3_00_00_00_13_01);
-    STORE_POINTER(option_shot_list_3_00_00_00_14 + 2, option_shot_list_3_00_00_00_14_01);
-    STORE_POINTER(option_shot_list_3_00_00_00_15 + 2, option_shot_list_3_00_00_00_15_01);
-    STORE_POINTER(option_shot_list_3_00_00_00_16 + 2, option_shot_list_3_00_00_00_16_01);
-    STORE_POINTER(option_shot_list_3_00_01_00, option_shot_list_3_00_01_00_00);
-    STORE_POINTER(option_shot_list_3_00_01_00 + 2, option_shot_list_3_00_01_00_01);
-    STORE_POINTER(option_shot_list_3_00_01_00 + 4, option_shot_list_3_00_01_00_02);
-    STORE_POINTER(option_shot_list_3_00_01_00 + 6, option_shot_list_3_00_01_00_03);
-    STORE_POINTER(option_shot_list_3_00_01_00 + 8, option_shot_list_3_00_01_00_04);
-    STORE_POINTER(option_shot_list_3_00_01_00 + 10, option_shot_list_3_00_01_00_05);
-    STORE_POINTER(option_shot_list_3_00_01_00 + 12, option_shot_list_3_00_01_00_06);
-    STORE_POINTER(option_shot_list_3_00_01_00 + 14, option_shot_list_3_00_01_00_07);
-    STORE_POINTER(option_shot_list_3_00_01_00 + 16, option_shot_list_3_00_01_00_08);
-    STORE_POINTER(option_shot_list_3_00_01_00 + 18, option_shot_list_3_00_01_00_09);
-    STORE_POINTER(option_shot_list_3_00_01_00 + 20, option_shot_list_3_00_01_00_10);
-    STORE_POINTER(option_shot_list_3_00_01_00 + 22, option_shot_list_3_00_01_00_11);
-    STORE_POINTER(option_shot_list_3_00_01_00 + 24, option_shot_list_3_00_01_00_12);
-    STORE_POINTER(option_shot_list_3_00_01_00 + 26, option_shot_list_3_00_01_00_13);
-    STORE_POINTER(option_shot_list_3_00_01_00 + 28, option_shot_list_3_00_01_00_14);
-    STORE_POINTER(option_shot_list_3_00_01_00 + 30, option_shot_list_3_00_01_00_15);
-    STORE_POINTER(option_shot_list_3_00_01_00 + 32, option_shot_list_3_00_01_00_16);
-    STORE_POINTER(option_shot_list_3_00_01_00_00 + 2, option_shot_list_3_00_01_00_00_01);
-    STORE_POINTER(option_shot_list_3_00_01_00_01 + 2, option_shot_list_3_00_01_00_01_01);
-    STORE_POINTER(option_shot_list_3_00_01_00_02 + 2, option_shot_list_3_00_01_00_02_01);
-    STORE_POINTER(option_shot_list_3_00_01_00_03 + 2, option_shot_list_3_00_01_00_03_01);
-    STORE_POINTER(option_shot_list_3_00_01_00_04 + 2, option_shot_list_3_00_01_00_04_01);
-    STORE_POINTER(option_shot_list_3_00_01_00_05 + 2, option_shot_list_3_00_01_00_05_01);
-    STORE_POINTER(option_shot_list_3_00_01_00_06 + 2, option_shot_list_3_00_01_00_06_01);
-    STORE_POINTER(option_shot_list_3_00_01_00_07 + 2, option_shot_list_3_00_01_00_07_01);
-    STORE_POINTER(option_shot_list_3_00_01_00_08 + 2, option_shot_list_3_00_01_00_08_01);
-    STORE_POINTER(option_shot_list_3_00_01_00_09 + 2, option_shot_list_3_00_01_00_09_01);
-    STORE_POINTER(option_shot_list_3_00_01_00_10 + 2, option_shot_list_3_00_01_00_10_01);
-    STORE_POINTER(option_shot_list_3_00_01_00_11 + 2, option_shot_list_3_00_01_00_11_01);
-    STORE_POINTER(option_shot_list_3_00_01_00_12 + 2, option_shot_list_3_00_01_00_12_01);
-    STORE_POINTER(option_shot_list_3_00_01_00_13 + 2, option_shot_list_3_00_01_00_13_01);
-    STORE_POINTER(option_shot_list_3_00_01_00_14 + 2, option_shot_list_3_00_01_00_14_01);
-    STORE_POINTER(option_shot_list_3_00_01_00_15 + 2, option_shot_list_3_00_01_00_15_01);
-    STORE_POINTER(option_shot_list_3_00_01_00_16 + 2, option_shot_list_3_00_01_00_16_01);
-    STORE_POINTER(option_shot_list_3_00_02_00, option_shot_list_3_00_02_00_00);
-    STORE_POINTER(option_shot_list_3_00_02_00 + 2, option_shot_list_3_00_02_00_01);
-    STORE_POINTER(option_shot_list_3_00_02_00 + 4, option_shot_list_3_00_02_00_02);
-    STORE_POINTER(option_shot_list_3_00_02_00 + 6, option_shot_list_3_00_02_00_03);
-    STORE_POINTER(option_shot_list_3_00_02_00 + 8, option_shot_list_3_00_02_00_04);
-    STORE_POINTER(option_shot_list_3_00_02_00 + 10, option_shot_list_3_00_02_00_05);
-    STORE_POINTER(option_shot_list_3_00_02_00 + 12, option_shot_list_3_00_02_00_06);
-    STORE_POINTER(option_shot_list_3_00_02_00 + 14, option_shot_list_3_00_02_00_07);
-    STORE_POINTER(option_shot_list_3_00_02_00 + 16, option_shot_list_3_00_02_00_08);
-    STORE_POINTER(option_shot_list_3_00_02_00 + 18, option_shot_list_3_00_02_00_09);
-    STORE_POINTER(option_shot_list_3_00_02_00 + 20, option_shot_list_3_00_02_00_10);
-    STORE_POINTER(option_shot_list_3_00_02_00 + 22, option_shot_list_3_00_02_00_11);
-    STORE_POINTER(option_shot_list_3_00_02_00 + 24, option_shot_list_3_00_02_00_12);
-    STORE_POINTER(option_shot_list_3_00_02_00 + 26, option_shot_list_3_00_02_00_13);
-    STORE_POINTER(option_shot_list_3_00_02_00 + 28, option_shot_list_3_00_02_00_14);
-    STORE_POINTER(option_shot_list_3_00_02_00 + 30, option_shot_list_3_00_02_00_15);
-    STORE_POINTER(option_shot_list_3_00_02_00 + 32, option_shot_list_3_00_02_00_16);
-    STORE_POINTER(option_shot_list_3_00_02_00_00 + 2, option_shot_list_3_00_02_00_00_01);
-    STORE_POINTER(option_shot_list_3_00_02_00_01 + 2, option_shot_list_3_00_02_00_01_01);
-    STORE_POINTER(option_shot_list_3_00_02_00_02 + 2, option_shot_list_3_00_02_00_02_01);
-    STORE_POINTER(option_shot_list_3_00_02_00_03 + 2, option_shot_list_3_00_02_00_03_01);
-    STORE_POINTER(option_shot_list_3_00_02_00_04 + 2, option_shot_list_3_00_02_00_04_01);
-    STORE_POINTER(option_shot_list_3_00_02_00_05 + 2, option_shot_list_3_00_02_00_05_01);
-    STORE_POINTER(option_shot_list_3_00_02_00_06 + 2, option_shot_list_3_00_02_00_06_01);
-    STORE_POINTER(option_shot_list_3_00_02_00_07 + 2, option_shot_list_3_00_02_00_07_01);
-    STORE_POINTER(option_shot_list_3_00_02_00_08 + 2, option_shot_list_3_00_02_00_08_01);
-    STORE_POINTER(option_shot_list_3_00_02_00_09 + 2, option_shot_list_3_00_02_00_09_01);
-    STORE_POINTER(option_shot_list_3_00_02_00_10 + 2, option_shot_list_3_00_02_00_10_01);
-    STORE_POINTER(option_shot_list_3_00_02_00_11 + 2, option_shot_list_3_00_02_00_11_01);
-    STORE_POINTER(option_shot_list_3_00_02_00_12 + 2, option_shot_list_3_00_02_00_12_01);
-    STORE_POINTER(option_shot_list_3_00_02_00_13 + 2, option_shot_list_3_00_02_00_13_01);
-    STORE_POINTER(option_shot_list_3_00_02_00_14 + 2, option_shot_list_3_00_02_00_14_01);
-    STORE_POINTER(option_shot_list_3_00_02_00_15 + 2, option_shot_list_3_00_02_00_15_01);
-    STORE_POINTER(option_shot_list_3_00_02_00_16 + 2, option_shot_list_3_00_02_00_16_01);
-    STORE_POINTER(option_shot_list_3_00_03_00, option_shot_list_3_00_03_00_00);
-    STORE_POINTER(option_shot_list_3_00_03_00 + 2, option_shot_list_3_00_03_00_01);
-    STORE_POINTER(option_shot_list_3_00_03_00 + 4, option_shot_list_3_00_03_00_02);
-    STORE_POINTER(option_shot_list_3_00_03_00 + 6, option_shot_list_3_00_03_00_03);
-    STORE_POINTER(option_shot_list_3_00_03_00 + 8, option_shot_list_3_00_03_00_04);
-    STORE_POINTER(option_shot_list_3_00_03_00 + 10, option_shot_list_3_00_03_00_05);
-    STORE_POINTER(option_shot_list_3_00_03_00 + 12, option_shot_list_3_00_03_00_06);
-    STORE_POINTER(option_shot_list_3_00_03_00 + 14, option_shot_list_3_00_03_00_07);
-    STORE_POINTER(option_shot_list_3_00_03_00 + 16, option_shot_list_3_00_03_00_08);
-    STORE_POINTER(option_shot_list_3_00_03_00 + 18, option_shot_list_3_00_03_00_09);
-    STORE_POINTER(option_shot_list_3_00_03_00 + 20, option_shot_list_3_00_03_00_10);
-    STORE_POINTER(option_shot_list_3_00_03_00 + 22, option_shot_list_3_00_03_00_11);
-    STORE_POINTER(option_shot_list_3_00_03_00 + 24, option_shot_list_3_00_03_00_12);
-    STORE_POINTER(option_shot_list_3_00_03_00 + 26, option_shot_list_3_00_03_00_13);
-    STORE_POINTER(option_shot_list_3_00_03_00 + 28, option_shot_list_3_00_03_00_14);
-    STORE_POINTER(option_shot_list_3_00_03_00 + 30, option_shot_list_3_00_03_00_15);
-    STORE_POINTER(option_shot_list_3_00_03_00 + 32, option_shot_list_3_00_03_00_16);
-    STORE_POINTER(option_shot_list_3_00_03_00_00 + 2, option_shot_list_3_00_03_00_00_01);
-    STORE_POINTER(option_shot_list_3_00_03_00_01 + 2, option_shot_list_3_00_03_00_01_01);
-    STORE_POINTER(option_shot_list_3_00_03_00_02 + 2, option_shot_list_3_00_03_00_02_01);
-    STORE_POINTER(option_shot_list_3_00_03_00_03 + 2, option_shot_list_3_00_03_00_03_01);
-    STORE_POINTER(option_shot_list_3_00_03_00_04 + 2, option_shot_list_3_00_03_00_04_01);
-    STORE_POINTER(option_shot_list_3_00_03_00_05 + 2, option_shot_list_3_00_03_00_05_01);
-    STORE_POINTER(option_shot_list_3_00_03_00_06 + 2, option_shot_list_3_00_03_00_06_01);
-    STORE_POINTER(option_shot_list_3_00_03_00_07 + 2, option_shot_list_3_00_03_00_07_01);
-    STORE_POINTER(option_shot_list_3_00_03_00_08 + 2, option_shot_list_3_00_03_00_08_01);
-    STORE_POINTER(option_shot_list_3_00_03_00_09 + 2, option_shot_list_3_00_03_00_09_01);
-    STORE_POINTER(option_shot_list_3_00_03_00_10 + 2, option_shot_list_3_00_03_00_10_01);
-    STORE_POINTER(option_shot_list_3_00_03_00_11 + 2, option_shot_list_3_00_03_00_11_01);
-    STORE_POINTER(option_shot_list_3_00_03_00_12 + 2, option_shot_list_3_00_03_00_12_01);
-    STORE_POINTER(option_shot_list_3_00_03_00_13 + 2, option_shot_list_3_00_03_00_13_01);
-    STORE_POINTER(option_shot_list_3_00_03_00_14 + 2, option_shot_list_3_00_03_00_14_01);
-    STORE_POINTER(option_shot_list_3_00_03_00_15 + 2, option_shot_list_3_00_03_00_15_01);
-    STORE_POINTER(option_shot_list_3_00_03_00_16 + 2, option_shot_list_3_00_03_00_16_01);
-    STORE_POINTER(option_shot_list_3_00_04_00, option_shot_list_3_00_04_00_00);
-    STORE_POINTER(option_shot_list_3_00_04_00 + 2, option_shot_list_3_00_04_00_01);
-    STORE_POINTER(option_shot_list_3_00_04_00 + 4, option_shot_list_3_00_04_00_02);
-    STORE_POINTER(option_shot_list_3_00_04_00 + 6, option_shot_list_3_00_04_00_03);
-    STORE_POINTER(option_shot_list_3_00_04_00 + 8, option_shot_list_3_00_04_00_04);
-    STORE_POINTER(option_shot_list_3_00_04_00 + 10, option_shot_list_3_00_04_00_05);
-    STORE_POINTER(option_shot_list_3_00_04_00 + 12, option_shot_list_3_00_04_00_06);
-    STORE_POINTER(option_shot_list_3_00_04_00 + 14, option_shot_list_3_00_04_00_07);
-    STORE_POINTER(option_shot_list_3_00_04_00 + 16, option_shot_list_3_00_04_00_08);
-    STORE_POINTER(option_shot_list_3_00_04_00 + 18, option_shot_list_3_00_04_00_09);
-    STORE_POINTER(option_shot_list_3_00_04_00 + 20, option_shot_list_3_00_04_00_10);
-    STORE_POINTER(option_shot_list_3_00_04_00 + 22, option_shot_list_3_00_04_00_11);
-    STORE_POINTER(option_shot_list_3_00_04_00 + 24, option_shot_list_3_00_04_00_12);
-    STORE_POINTER(option_shot_list_3_00_04_00 + 26, option_shot_list_3_00_04_00_13);
-    STORE_POINTER(option_shot_list_3_00_04_00 + 28, option_shot_list_3_00_04_00_14);
-    STORE_POINTER(option_shot_list_3_00_04_00 + 30, option_shot_list_3_00_04_00_15);
-    STORE_POINTER(option_shot_list_3_00_04_00 + 32, option_shot_list_3_00_04_00_16);
-    STORE_POINTER(option_shot_list_3_00_04_00_00 + 2, option_shot_list_3_00_04_00_00_01);
-    STORE_POINTER(option_shot_list_3_00_04_00_01 + 2, option_shot_list_3_00_04_00_01_01);
-    STORE_POINTER(option_shot_list_3_00_04_00_02 + 2, option_shot_list_3_00_04_00_02_01);
-    STORE_POINTER(option_shot_list_3_00_04_00_03 + 2, option_shot_list_3_00_04_00_03_01);
-    STORE_POINTER(option_shot_list_3_00_04_00_04 + 2, option_shot_list_3_00_04_00_04_01);
-    STORE_POINTER(option_shot_list_3_00_04_00_05 + 2, option_shot_list_3_00_04_00_05_01);
-    STORE_POINTER(option_shot_list_3_00_04_00_06 + 2, option_shot_list_3_00_04_00_06_01);
-    STORE_POINTER(option_shot_list_3_00_04_00_07 + 2, option_shot_list_3_00_04_00_07_01);
-    STORE_POINTER(option_shot_list_3_00_04_00_08 + 2, option_shot_list_3_00_04_00_08_01);
-    STORE_POINTER(option_shot_list_3_00_04_00_09 + 2, option_shot_list_3_00_04_00_09_01);
-    STORE_POINTER(option_shot_list_3_00_04_00_10 + 2, option_shot_list_3_00_04_00_10_01);
-    STORE_POINTER(option_shot_list_3_00_04_00_11 + 2, option_shot_list_3_00_04_00_11_01);
-    STORE_POINTER(option_shot_list_3_00_04_00_12 + 2, option_shot_list_3_00_04_00_12_01);
-    STORE_POINTER(option_shot_list_3_00_04_00_13 + 2, option_shot_list_3_00_04_00_13_01);
-    STORE_POINTER(option_shot_list_3_00_04_00_14 + 2, option_shot_list_3_00_04_00_14_01);
-    STORE_POINTER(option_shot_list_3_00_04_00_15 + 2, option_shot_list_3_00_04_00_15_01);
-    STORE_POINTER(option_shot_list_3_00_04_00_16 + 2, option_shot_list_3_00_04_00_16_01);
-    STORE_POINTER(player_shot_3_impact_table, player_shot_3_impact_00);
-    STORE_POINTER(player_shot_3_impact_table + 2, player_shot_3_impact_00);
-    STORE_POINTER(player_shot_3_impact_table + 4, player_shot_3_impact_02);
-    STORE_POINTER(player_shot_3_impact_table + 6, player_shot_3_impact_02);
-    STORE_POINTER(player_shot_3_impact_table + 8, player_shot_3_impact_04);
-    STORE_POINTER(player_shot_3_impact_table + 10, player_shot_3_impact_04);
-    STORE_POINTER(player_shot_3_impact_table + 12, player_shot_3_impact_06);
-    STORE_POINTER(player_shot_3_impact_table + 14, player_shot_3_impact_06);
-    STORE_POINTER(player_shot_3_impact_table + 16, player_shot_3_impact_08);
-    STORE_POINTER(player_shot_3_impact_table + 18, player_shot_3_impact_08);
-    STORE_POINTER(player_shot_3_impact_table + 20, player_shot_3_impact_10);
-    STORE_POINTER(player_shot_3_impact_table + 22, player_shot_3_impact_11);
-    STORE_POINTER(player_shot_3_impact_table + 24, player_shot_3_impact_12);
-    STORE_POINTER(player_shot_3_impact_table + 26, player_shot_3_impact_13);
-    STORE_POINTER(player_shot_3_impact_table + 28, player_shot_3_impact_14);
-    STORE_POINTER(player_shot_3_impact_table + 30, player_shot_3_impact_15);
-    STORE_POINTER(player_shot_3_impact_table + 32, player_shot_3_impact_15);
-    STORE_POINTER(player_shot_3_impact_table + 34, player_shot_3_impact_17);
-    STORE_POINTER(player_shot_3_impact_table + 36, player_shot_3_impact_17);
-    STORE_POINTER(player_shot_3_impact_table + 38, player_shot_3_impact_19);
-    STORE_POINTER(player_shot_3_impact_table + 40, player_shot_3_impact_19);
-    STORE_POINTER(player_shot_3_impact_table + 42, player_shot_3_impact_21);
-    STORE_POINTER(player_shot_3_impact_table + 44, player_shot_3_impact_21);
-    STORE_POINTER(player_shot_3_impact_table + 46, player_shot_3_impact_23);
-    STORE_POINTER(player_shot_3_impact_table + 48, player_shot_3_impact_23);
-    STORE_POINTER(player_shot_3_impact_00 + 3, player_shot_3_impact_frames_00);
-    STORE_POINTER(player_shot_3_impact_02 + 3, player_shot_3_impact_frames_00);
-    STORE_POINTER(player_shot_3_impact_04 + 3, player_shot_3_impact_frames_04);
-    STORE_POINTER(player_shot_3_impact_06 + 3, player_shot_3_impact_frames_04);
-    STORE_POINTER(player_shot_3_impact_08 + 3, player_shot_3_impact_frames_08);
-    STORE_POINTER(player_shot_3_impact_10 + 3, player_shot_3_impact_frames_10);
-    STORE_POINTER(player_shot_3_impact_11 + 3, player_shot_3_impact_frames_10);
-    STORE_POINTER(player_shot_3_impact_12 + 3, player_shot_3_impact_frames_12);
-    STORE_POINTER(player_shot_3_impact_13 + 3, player_shot_3_impact_frames_12);
-    STORE_POINTER(player_shot_3_impact_14 + 3, player_shot_3_impact_frames_14);
-    STORE_POINTER(player_shot_3_impact_15 + 3, player_shot_3_impact_frames_15);
-    STORE_POINTER(player_shot_3_impact_17 + 3, player_shot_3_impact_frames_15);
-    STORE_POINTER(player_shot_3_impact_19 + 3, player_shot_3_impact_frames_19);
-    STORE_POINTER(player_shot_3_impact_21 + 3, player_shot_3_impact_frames_19);
-    STORE_POINTER(player_shot_3_impact_23 + 3, player_shot_3_impact_frames_23);
+    STORE_ARCADE_ADDRESS(option_shot_list_1_00_00 + 5, option_shot_list_1_00_00_02);
+    STORE_ARCADE_ADDRESS(option_shot_list_1_00_00 + 15, option_shot_list_1_00_00_07);
+    STORE_ARCADE_ADDRESS(option_shot_list_2_00_00 + 5, option_shot_list_1_00_00_02);
+    STORE_ARCADE_ADDRESS(option_shot_list_2_00_00 + 15, option_shot_list_1_00_00_07);
+    STORE_ARCADE_ADDRESS(option_shot_list_1_00_01 + 5, option_shot_list_1_00_00_02);
+    STORE_ARCADE_ADDRESS(option_shot_list_1_00_01 + 15, option_shot_list_1_00_01_07);
+    STORE_ARCADE_ADDRESS(option_shot_list_2_00_01 + 5, option_shot_list_1_00_00_02);
+    STORE_ARCADE_ADDRESS(option_shot_list_2_00_01 + 15, option_shot_list_1_00_01_07);
+    STORE_ARCADE_ADDRESS(option_shot_list_1_00_02 + 5, option_shot_list_1_00_02_02);
+    STORE_ARCADE_ADDRESS(option_shot_list_1_00_02 + 15, option_shot_list_1_00_02_07);
+    STORE_ARCADE_ADDRESS(option_shot_list_2_00_02 + 5, option_shot_list_1_00_02_02);
+    STORE_ARCADE_ADDRESS(option_shot_list_2_00_02 + 15, option_shot_list_1_00_02_07);
+    STORE_ARCADE_ADDRESS(option_shot_list_1_00_03 + 5, option_shot_list_1_00_02_02);
+    STORE_ARCADE_ADDRESS(option_shot_list_1_00_03 + 15, option_shot_list_1_00_03_07);
+    STORE_ARCADE_ADDRESS(option_shot_list_2_00_03 + 5, option_shot_list_1_00_02_02);
+    STORE_ARCADE_ADDRESS(option_shot_list_2_00_03 + 15, option_shot_list_1_00_03_07);
+    STORE_ARCADE_ADDRESS(option_shot_list_1_00_04 + 5, option_shot_list_1_00_04_02);
+    STORE_ARCADE_ADDRESS(option_shot_list_1_00_04 + 15, option_shot_list_1_00_04_07);
+    STORE_ARCADE_ADDRESS(option_shot_list_2_00_04 + 5, option_shot_list_1_00_04_02);
+    STORE_ARCADE_ADDRESS(option_shot_list_2_00_04 + 15, option_shot_list_1_00_04_07);
+    STORE_ARCADE_ADDRESS(option_shot_list_3_00_00 + 1, option_shot_list_3_00_00_00);
+    STORE_ARCADE_ADDRESS(option_shot_list_3_00_00 + 5, option_shot_list_3_00_00_02);
+    STORE_ARCADE_ADDRESS(option_shot_list_3_00_01 + 1, option_shot_list_3_00_01_00);
+    STORE_ARCADE_ADDRESS(option_shot_list_3_00_01 + 5, option_shot_list_3_00_00_02);
+    STORE_ARCADE_ADDRESS(option_shot_list_3_00_02 + 1, option_shot_list_3_00_02_00);
+    STORE_ARCADE_ADDRESS(option_shot_list_3_00_02 + 5, option_shot_list_3_00_02_02);
+    STORE_ARCADE_ADDRESS(option_shot_list_3_00_03 + 1, option_shot_list_3_00_03_00);
+    STORE_ARCADE_ADDRESS(option_shot_list_3_00_03 + 5, option_shot_list_3_00_02_02);
+    STORE_ARCADE_ADDRESS(option_shot_list_3_00_04 + 1, option_shot_list_3_00_04_00);
+    STORE_ARCADE_ADDRESS(option_shot_list_3_00_04 + 5, option_shot_list_3_00_04_02);
+    STORE_ARCADE_ADDRESS(option_shot_list_4_00_00 + 5, option_shot_list_4_00_00_02);
+    STORE_ARCADE_ADDRESS(option_shot_list_4_00_00 + 15, option_shot_list_4_00_00_07);
+    STORE_ARCADE_ADDRESS(option_shot_list_4_00_00 + 24, option_shot_list_4_00_00_02);
+    STORE_ARCADE_ADDRESS(option_shot_list_4_00_00 + 34, option_shot_list_4_00_00_07);
+    STORE_ARCADE_ADDRESS(option_shot_list_4_00_01 + 5, option_shot_list_4_00_00_02);
+    STORE_ARCADE_ADDRESS(option_shot_list_4_00_01 + 15, option_shot_list_4_00_01_07);
+    STORE_ARCADE_ADDRESS(option_shot_list_4_00_01 + 24, option_shot_list_4_00_00_02);
+    STORE_ARCADE_ADDRESS(option_shot_list_4_00_01 + 34, option_shot_list_4_00_01_07);
+    STORE_ARCADE_ADDRESS(option_shot_list_4_00_02 + 5, option_shot_list_4_00_02_02);
+    STORE_ARCADE_ADDRESS(option_shot_list_4_00_02 + 15, option_shot_list_4_00_02_07);
+    STORE_ARCADE_ADDRESS(option_shot_list_4_00_02 + 24, option_shot_list_4_00_02_02);
+    STORE_ARCADE_ADDRESS(option_shot_list_4_00_02 + 34, option_shot_list_4_00_02_07);
+    STORE_ARCADE_ADDRESS(option_shot_list_4_00_03 + 5, option_shot_list_4_00_02_02);
+    STORE_ARCADE_ADDRESS(option_shot_list_4_00_03 + 15, option_shot_list_4_00_03_07);
+    STORE_ARCADE_ADDRESS(option_shot_list_4_00_03 + 24, option_shot_list_4_00_02_02);
+    STORE_ARCADE_ADDRESS(option_shot_list_4_00_03 + 34, option_shot_list_4_00_03_07);
+    STORE_ARCADE_ADDRESS(option_shot_list_4_00_04 + 5, option_shot_list_4_00_04_02);
+    STORE_ARCADE_ADDRESS(option_shot_list_4_00_04 + 15, option_shot_list_4_00_04_07);
+    STORE_ARCADE_ADDRESS(option_shot_list_4_00_04 + 24, option_shot_list_4_00_04_02);
+    STORE_ARCADE_ADDRESS(option_shot_list_4_00_04 + 34, option_shot_list_4_00_04_07);
+    STORE_ARCADE_ADDRESS(player_shot_3_flight_table, player_shot_3_flight_00);
+    STORE_ARCADE_ADDRESS(player_shot_3_flight_table + 2, player_shot_3_flight_00);
+    STORE_ARCADE_ADDRESS(player_shot_3_flight_table + 4, player_shot_3_flight_02);
+    STORE_ARCADE_ADDRESS(player_shot_3_flight_table + 6, player_shot_3_flight_02);
+    STORE_ARCADE_ADDRESS(player_shot_3_flight_table + 8, player_shot_3_flight_04);
+    STORE_ARCADE_ADDRESS(player_shot_3_flight_table + 10, player_shot_3_flight_04);
+    STORE_ARCADE_ADDRESS(player_shot_3_flight_table + 12, player_shot_3_flight_06);
+    STORE_ARCADE_ADDRESS(player_shot_3_flight_table + 14, player_shot_3_flight_06);
+    STORE_ARCADE_ADDRESS(player_shot_3_flight_table + 16, player_shot_3_flight_08);
+    STORE_ARCADE_ADDRESS(player_shot_3_flight_table + 18, player_shot_3_flight_08);
+    STORE_ARCADE_ADDRESS(player_shot_3_flight_table + 20, player_shot_3_flight_10);
+    STORE_ARCADE_ADDRESS(player_shot_3_flight_table + 22, player_shot_3_flight_11);
+    STORE_ARCADE_ADDRESS(player_shot_3_flight_table + 24, player_shot_3_flight_12);
+    STORE_ARCADE_ADDRESS(player_shot_3_flight_table + 26, player_shot_3_flight_13);
+    STORE_ARCADE_ADDRESS(player_shot_3_flight_table + 28, player_shot_3_flight_14);
+    STORE_ARCADE_ADDRESS(player_shot_3_flight_table + 30, player_shot_3_flight_15);
+    STORE_ARCADE_ADDRESS(player_shot_3_flight_table + 32, player_shot_3_flight_15);
+    STORE_ARCADE_ADDRESS(player_shot_3_flight_table + 34, player_shot_3_flight_17);
+    STORE_ARCADE_ADDRESS(player_shot_3_flight_table + 36, player_shot_3_flight_17);
+    STORE_ARCADE_ADDRESS(player_shot_3_flight_table + 38, player_shot_3_flight_19);
+    STORE_ARCADE_ADDRESS(player_shot_3_flight_table + 40, player_shot_3_flight_19);
+    STORE_ARCADE_ADDRESS(player_shot_3_flight_table + 42, player_shot_3_flight_21);
+    STORE_ARCADE_ADDRESS(player_shot_3_flight_table + 44, player_shot_3_flight_21);
+    STORE_ARCADE_ADDRESS(player_shot_3_flight_table + 46, player_shot_3_flight_23);
+    STORE_ARCADE_ADDRESS(player_shot_3_flight_table + 48, player_shot_3_flight_23);
+    STORE_ARCADE_ADDRESS(option_shot_list_3_00_00_00, option_shot_list_3_00_00_00_00);
+    STORE_ARCADE_ADDRESS(option_shot_list_3_00_00_00 + 2, option_shot_list_3_00_00_00_01);
+    STORE_ARCADE_ADDRESS(option_shot_list_3_00_00_00 + 4, option_shot_list_3_00_00_00_02);
+    STORE_ARCADE_ADDRESS(option_shot_list_3_00_00_00 + 6, option_shot_list_3_00_00_00_03);
+    STORE_ARCADE_ADDRESS(option_shot_list_3_00_00_00 + 8, option_shot_list_3_00_00_00_04);
+    STORE_ARCADE_ADDRESS(option_shot_list_3_00_00_00 + 10, option_shot_list_3_00_00_00_05);
+    STORE_ARCADE_ADDRESS(option_shot_list_3_00_00_00 + 12, option_shot_list_3_00_00_00_06);
+    STORE_ARCADE_ADDRESS(option_shot_list_3_00_00_00 + 14, option_shot_list_3_00_00_00_07);
+    STORE_ARCADE_ADDRESS(option_shot_list_3_00_00_00 + 16, option_shot_list_3_00_00_00_08);
+    STORE_ARCADE_ADDRESS(option_shot_list_3_00_00_00 + 18, option_shot_list_3_00_00_00_09);
+    STORE_ARCADE_ADDRESS(option_shot_list_3_00_00_00 + 20, option_shot_list_3_00_00_00_10);
+    STORE_ARCADE_ADDRESS(option_shot_list_3_00_00_00 + 22, option_shot_list_3_00_00_00_11);
+    STORE_ARCADE_ADDRESS(option_shot_list_3_00_00_00 + 24, option_shot_list_3_00_00_00_12);
+    STORE_ARCADE_ADDRESS(option_shot_list_3_00_00_00 + 26, option_shot_list_3_00_00_00_13);
+    STORE_ARCADE_ADDRESS(option_shot_list_3_00_00_00 + 28, option_shot_list_3_00_00_00_14);
+    STORE_ARCADE_ADDRESS(option_shot_list_3_00_00_00 + 30, option_shot_list_3_00_00_00_15);
+    STORE_ARCADE_ADDRESS(option_shot_list_3_00_00_00 + 32, option_shot_list_3_00_00_00_16);
+    STORE_ARCADE_ADDRESS(option_shot_list_3_00_00_00_00 + 2, option_shot_list_3_00_00_00_00_01);
+    STORE_ARCADE_ADDRESS(option_shot_list_3_00_00_00_01 + 2, option_shot_list_3_00_00_00_01_01);
+    STORE_ARCADE_ADDRESS(option_shot_list_3_00_00_00_02 + 2, option_shot_list_3_00_00_00_02_01);
+    STORE_ARCADE_ADDRESS(option_shot_list_3_00_00_00_03 + 2, option_shot_list_3_00_00_00_03_01);
+    STORE_ARCADE_ADDRESS(option_shot_list_3_00_00_00_04 + 2, option_shot_list_3_00_00_00_04_01);
+    STORE_ARCADE_ADDRESS(option_shot_list_3_00_00_00_05 + 2, option_shot_list_3_00_00_00_05_01);
+    STORE_ARCADE_ADDRESS(option_shot_list_3_00_00_00_06 + 2, option_shot_list_3_00_00_00_06_01);
+    STORE_ARCADE_ADDRESS(option_shot_list_3_00_00_00_07 + 2, option_shot_list_3_00_00_00_07_01);
+    STORE_ARCADE_ADDRESS(option_shot_list_3_00_00_00_08 + 2, option_shot_list_3_00_00_00_08_01);
+    STORE_ARCADE_ADDRESS(option_shot_list_3_00_00_00_09 + 2, option_shot_list_3_00_00_00_09_01);
+    STORE_ARCADE_ADDRESS(option_shot_list_3_00_00_00_10 + 2, option_shot_list_3_00_00_00_10_01);
+    STORE_ARCADE_ADDRESS(option_shot_list_3_00_00_00_11 + 2, option_shot_list_3_00_00_00_11_01);
+    STORE_ARCADE_ADDRESS(option_shot_list_3_00_00_00_12 + 2, option_shot_list_3_00_00_00_12_01);
+    STORE_ARCADE_ADDRESS(option_shot_list_3_00_00_00_13 + 2, option_shot_list_3_00_00_00_13_01);
+    STORE_ARCADE_ADDRESS(option_shot_list_3_00_00_00_14 + 2, option_shot_list_3_00_00_00_14_01);
+    STORE_ARCADE_ADDRESS(option_shot_list_3_00_00_00_15 + 2, option_shot_list_3_00_00_00_15_01);
+    STORE_ARCADE_ADDRESS(option_shot_list_3_00_00_00_16 + 2, option_shot_list_3_00_00_00_16_01);
+    STORE_ARCADE_ADDRESS(option_shot_list_3_00_01_00, option_shot_list_3_00_01_00_00);
+    STORE_ARCADE_ADDRESS(option_shot_list_3_00_01_00 + 2, option_shot_list_3_00_01_00_01);
+    STORE_ARCADE_ADDRESS(option_shot_list_3_00_01_00 + 4, option_shot_list_3_00_01_00_02);
+    STORE_ARCADE_ADDRESS(option_shot_list_3_00_01_00 + 6, option_shot_list_3_00_01_00_03);
+    STORE_ARCADE_ADDRESS(option_shot_list_3_00_01_00 + 8, option_shot_list_3_00_01_00_04);
+    STORE_ARCADE_ADDRESS(option_shot_list_3_00_01_00 + 10, option_shot_list_3_00_01_00_05);
+    STORE_ARCADE_ADDRESS(option_shot_list_3_00_01_00 + 12, option_shot_list_3_00_01_00_06);
+    STORE_ARCADE_ADDRESS(option_shot_list_3_00_01_00 + 14, option_shot_list_3_00_01_00_07);
+    STORE_ARCADE_ADDRESS(option_shot_list_3_00_01_00 + 16, option_shot_list_3_00_01_00_08);
+    STORE_ARCADE_ADDRESS(option_shot_list_3_00_01_00 + 18, option_shot_list_3_00_01_00_09);
+    STORE_ARCADE_ADDRESS(option_shot_list_3_00_01_00 + 20, option_shot_list_3_00_01_00_10);
+    STORE_ARCADE_ADDRESS(option_shot_list_3_00_01_00 + 22, option_shot_list_3_00_01_00_11);
+    STORE_ARCADE_ADDRESS(option_shot_list_3_00_01_00 + 24, option_shot_list_3_00_01_00_12);
+    STORE_ARCADE_ADDRESS(option_shot_list_3_00_01_00 + 26, option_shot_list_3_00_01_00_13);
+    STORE_ARCADE_ADDRESS(option_shot_list_3_00_01_00 + 28, option_shot_list_3_00_01_00_14);
+    STORE_ARCADE_ADDRESS(option_shot_list_3_00_01_00 + 30, option_shot_list_3_00_01_00_15);
+    STORE_ARCADE_ADDRESS(option_shot_list_3_00_01_00 + 32, option_shot_list_3_00_01_00_16);
+    STORE_ARCADE_ADDRESS(option_shot_list_3_00_01_00_00 + 2, option_shot_list_3_00_01_00_00_01);
+    STORE_ARCADE_ADDRESS(option_shot_list_3_00_01_00_01 + 2, option_shot_list_3_00_01_00_01_01);
+    STORE_ARCADE_ADDRESS(option_shot_list_3_00_01_00_02 + 2, option_shot_list_3_00_01_00_02_01);
+    STORE_ARCADE_ADDRESS(option_shot_list_3_00_01_00_03 + 2, option_shot_list_3_00_01_00_03_01);
+    STORE_ARCADE_ADDRESS(option_shot_list_3_00_01_00_04 + 2, option_shot_list_3_00_01_00_04_01);
+    STORE_ARCADE_ADDRESS(option_shot_list_3_00_01_00_05 + 2, option_shot_list_3_00_01_00_05_01);
+    STORE_ARCADE_ADDRESS(option_shot_list_3_00_01_00_06 + 2, option_shot_list_3_00_01_00_06_01);
+    STORE_ARCADE_ADDRESS(option_shot_list_3_00_01_00_07 + 2, option_shot_list_3_00_01_00_07_01);
+    STORE_ARCADE_ADDRESS(option_shot_list_3_00_01_00_08 + 2, option_shot_list_3_00_01_00_08_01);
+    STORE_ARCADE_ADDRESS(option_shot_list_3_00_01_00_09 + 2, option_shot_list_3_00_01_00_09_01);
+    STORE_ARCADE_ADDRESS(option_shot_list_3_00_01_00_10 + 2, option_shot_list_3_00_01_00_10_01);
+    STORE_ARCADE_ADDRESS(option_shot_list_3_00_01_00_11 + 2, option_shot_list_3_00_01_00_11_01);
+    STORE_ARCADE_ADDRESS(option_shot_list_3_00_01_00_12 + 2, option_shot_list_3_00_01_00_12_01);
+    STORE_ARCADE_ADDRESS(option_shot_list_3_00_01_00_13 + 2, option_shot_list_3_00_01_00_13_01);
+    STORE_ARCADE_ADDRESS(option_shot_list_3_00_01_00_14 + 2, option_shot_list_3_00_01_00_14_01);
+    STORE_ARCADE_ADDRESS(option_shot_list_3_00_01_00_15 + 2, option_shot_list_3_00_01_00_15_01);
+    STORE_ARCADE_ADDRESS(option_shot_list_3_00_01_00_16 + 2, option_shot_list_3_00_01_00_16_01);
+    STORE_ARCADE_ADDRESS(option_shot_list_3_00_02_00, option_shot_list_3_00_02_00_00);
+    STORE_ARCADE_ADDRESS(option_shot_list_3_00_02_00 + 2, option_shot_list_3_00_02_00_01);
+    STORE_ARCADE_ADDRESS(option_shot_list_3_00_02_00 + 4, option_shot_list_3_00_02_00_02);
+    STORE_ARCADE_ADDRESS(option_shot_list_3_00_02_00 + 6, option_shot_list_3_00_02_00_03);
+    STORE_ARCADE_ADDRESS(option_shot_list_3_00_02_00 + 8, option_shot_list_3_00_02_00_04);
+    STORE_ARCADE_ADDRESS(option_shot_list_3_00_02_00 + 10, option_shot_list_3_00_02_00_05);
+    STORE_ARCADE_ADDRESS(option_shot_list_3_00_02_00 + 12, option_shot_list_3_00_02_00_06);
+    STORE_ARCADE_ADDRESS(option_shot_list_3_00_02_00 + 14, option_shot_list_3_00_02_00_07);
+    STORE_ARCADE_ADDRESS(option_shot_list_3_00_02_00 + 16, option_shot_list_3_00_02_00_08);
+    STORE_ARCADE_ADDRESS(option_shot_list_3_00_02_00 + 18, option_shot_list_3_00_02_00_09);
+    STORE_ARCADE_ADDRESS(option_shot_list_3_00_02_00 + 20, option_shot_list_3_00_02_00_10);
+    STORE_ARCADE_ADDRESS(option_shot_list_3_00_02_00 + 22, option_shot_list_3_00_02_00_11);
+    STORE_ARCADE_ADDRESS(option_shot_list_3_00_02_00 + 24, option_shot_list_3_00_02_00_12);
+    STORE_ARCADE_ADDRESS(option_shot_list_3_00_02_00 + 26, option_shot_list_3_00_02_00_13);
+    STORE_ARCADE_ADDRESS(option_shot_list_3_00_02_00 + 28, option_shot_list_3_00_02_00_14);
+    STORE_ARCADE_ADDRESS(option_shot_list_3_00_02_00 + 30, option_shot_list_3_00_02_00_15);
+    STORE_ARCADE_ADDRESS(option_shot_list_3_00_02_00 + 32, option_shot_list_3_00_02_00_16);
+    STORE_ARCADE_ADDRESS(option_shot_list_3_00_02_00_00 + 2, option_shot_list_3_00_02_00_00_01);
+    STORE_ARCADE_ADDRESS(option_shot_list_3_00_02_00_01 + 2, option_shot_list_3_00_02_00_01_01);
+    STORE_ARCADE_ADDRESS(option_shot_list_3_00_02_00_02 + 2, option_shot_list_3_00_02_00_02_01);
+    STORE_ARCADE_ADDRESS(option_shot_list_3_00_02_00_03 + 2, option_shot_list_3_00_02_00_03_01);
+    STORE_ARCADE_ADDRESS(option_shot_list_3_00_02_00_04 + 2, option_shot_list_3_00_02_00_04_01);
+    STORE_ARCADE_ADDRESS(option_shot_list_3_00_02_00_05 + 2, option_shot_list_3_00_02_00_05_01);
+    STORE_ARCADE_ADDRESS(option_shot_list_3_00_02_00_06 + 2, option_shot_list_3_00_02_00_06_01);
+    STORE_ARCADE_ADDRESS(option_shot_list_3_00_02_00_07 + 2, option_shot_list_3_00_02_00_07_01);
+    STORE_ARCADE_ADDRESS(option_shot_list_3_00_02_00_08 + 2, option_shot_list_3_00_02_00_08_01);
+    STORE_ARCADE_ADDRESS(option_shot_list_3_00_02_00_09 + 2, option_shot_list_3_00_02_00_09_01);
+    STORE_ARCADE_ADDRESS(option_shot_list_3_00_02_00_10 + 2, option_shot_list_3_00_02_00_10_01);
+    STORE_ARCADE_ADDRESS(option_shot_list_3_00_02_00_11 + 2, option_shot_list_3_00_02_00_11_01);
+    STORE_ARCADE_ADDRESS(option_shot_list_3_00_02_00_12 + 2, option_shot_list_3_00_02_00_12_01);
+    STORE_ARCADE_ADDRESS(option_shot_list_3_00_02_00_13 + 2, option_shot_list_3_00_02_00_13_01);
+    STORE_ARCADE_ADDRESS(option_shot_list_3_00_02_00_14 + 2, option_shot_list_3_00_02_00_14_01);
+    STORE_ARCADE_ADDRESS(option_shot_list_3_00_02_00_15 + 2, option_shot_list_3_00_02_00_15_01);
+    STORE_ARCADE_ADDRESS(option_shot_list_3_00_02_00_16 + 2, option_shot_list_3_00_02_00_16_01);
+    STORE_ARCADE_ADDRESS(option_shot_list_3_00_03_00, option_shot_list_3_00_03_00_00);
+    STORE_ARCADE_ADDRESS(option_shot_list_3_00_03_00 + 2, option_shot_list_3_00_03_00_01);
+    STORE_ARCADE_ADDRESS(option_shot_list_3_00_03_00 + 4, option_shot_list_3_00_03_00_02);
+    STORE_ARCADE_ADDRESS(option_shot_list_3_00_03_00 + 6, option_shot_list_3_00_03_00_03);
+    STORE_ARCADE_ADDRESS(option_shot_list_3_00_03_00 + 8, option_shot_list_3_00_03_00_04);
+    STORE_ARCADE_ADDRESS(option_shot_list_3_00_03_00 + 10, option_shot_list_3_00_03_00_05);
+    STORE_ARCADE_ADDRESS(option_shot_list_3_00_03_00 + 12, option_shot_list_3_00_03_00_06);
+    STORE_ARCADE_ADDRESS(option_shot_list_3_00_03_00 + 14, option_shot_list_3_00_03_00_07);
+    STORE_ARCADE_ADDRESS(option_shot_list_3_00_03_00 + 16, option_shot_list_3_00_03_00_08);
+    STORE_ARCADE_ADDRESS(option_shot_list_3_00_03_00 + 18, option_shot_list_3_00_03_00_09);
+    STORE_ARCADE_ADDRESS(option_shot_list_3_00_03_00 + 20, option_shot_list_3_00_03_00_10);
+    STORE_ARCADE_ADDRESS(option_shot_list_3_00_03_00 + 22, option_shot_list_3_00_03_00_11);
+    STORE_ARCADE_ADDRESS(option_shot_list_3_00_03_00 + 24, option_shot_list_3_00_03_00_12);
+    STORE_ARCADE_ADDRESS(option_shot_list_3_00_03_00 + 26, option_shot_list_3_00_03_00_13);
+    STORE_ARCADE_ADDRESS(option_shot_list_3_00_03_00 + 28, option_shot_list_3_00_03_00_14);
+    STORE_ARCADE_ADDRESS(option_shot_list_3_00_03_00 + 30, option_shot_list_3_00_03_00_15);
+    STORE_ARCADE_ADDRESS(option_shot_list_3_00_03_00 + 32, option_shot_list_3_00_03_00_16);
+    STORE_ARCADE_ADDRESS(option_shot_list_3_00_03_00_00 + 2, option_shot_list_3_00_03_00_00_01);
+    STORE_ARCADE_ADDRESS(option_shot_list_3_00_03_00_01 + 2, option_shot_list_3_00_03_00_01_01);
+    STORE_ARCADE_ADDRESS(option_shot_list_3_00_03_00_02 + 2, option_shot_list_3_00_03_00_02_01);
+    STORE_ARCADE_ADDRESS(option_shot_list_3_00_03_00_03 + 2, option_shot_list_3_00_03_00_03_01);
+    STORE_ARCADE_ADDRESS(option_shot_list_3_00_03_00_04 + 2, option_shot_list_3_00_03_00_04_01);
+    STORE_ARCADE_ADDRESS(option_shot_list_3_00_03_00_05 + 2, option_shot_list_3_00_03_00_05_01);
+    STORE_ARCADE_ADDRESS(option_shot_list_3_00_03_00_06 + 2, option_shot_list_3_00_03_00_06_01);
+    STORE_ARCADE_ADDRESS(option_shot_list_3_00_03_00_07 + 2, option_shot_list_3_00_03_00_07_01);
+    STORE_ARCADE_ADDRESS(option_shot_list_3_00_03_00_08 + 2, option_shot_list_3_00_03_00_08_01);
+    STORE_ARCADE_ADDRESS(option_shot_list_3_00_03_00_09 + 2, option_shot_list_3_00_03_00_09_01);
+    STORE_ARCADE_ADDRESS(option_shot_list_3_00_03_00_10 + 2, option_shot_list_3_00_03_00_10_01);
+    STORE_ARCADE_ADDRESS(option_shot_list_3_00_03_00_11 + 2, option_shot_list_3_00_03_00_11_01);
+    STORE_ARCADE_ADDRESS(option_shot_list_3_00_03_00_12 + 2, option_shot_list_3_00_03_00_12_01);
+    STORE_ARCADE_ADDRESS(option_shot_list_3_00_03_00_13 + 2, option_shot_list_3_00_03_00_13_01);
+    STORE_ARCADE_ADDRESS(option_shot_list_3_00_03_00_14 + 2, option_shot_list_3_00_03_00_14_01);
+    STORE_ARCADE_ADDRESS(option_shot_list_3_00_03_00_15 + 2, option_shot_list_3_00_03_00_15_01);
+    STORE_ARCADE_ADDRESS(option_shot_list_3_00_03_00_16 + 2, option_shot_list_3_00_03_00_16_01);
+    STORE_ARCADE_ADDRESS(option_shot_list_3_00_04_00, option_shot_list_3_00_04_00_00);
+    STORE_ARCADE_ADDRESS(option_shot_list_3_00_04_00 + 2, option_shot_list_3_00_04_00_01);
+    STORE_ARCADE_ADDRESS(option_shot_list_3_00_04_00 + 4, option_shot_list_3_00_04_00_02);
+    STORE_ARCADE_ADDRESS(option_shot_list_3_00_04_00 + 6, option_shot_list_3_00_04_00_03);
+    STORE_ARCADE_ADDRESS(option_shot_list_3_00_04_00 + 8, option_shot_list_3_00_04_00_04);
+    STORE_ARCADE_ADDRESS(option_shot_list_3_00_04_00 + 10, option_shot_list_3_00_04_00_05);
+    STORE_ARCADE_ADDRESS(option_shot_list_3_00_04_00 + 12, option_shot_list_3_00_04_00_06);
+    STORE_ARCADE_ADDRESS(option_shot_list_3_00_04_00 + 14, option_shot_list_3_00_04_00_07);
+    STORE_ARCADE_ADDRESS(option_shot_list_3_00_04_00 + 16, option_shot_list_3_00_04_00_08);
+    STORE_ARCADE_ADDRESS(option_shot_list_3_00_04_00 + 18, option_shot_list_3_00_04_00_09);
+    STORE_ARCADE_ADDRESS(option_shot_list_3_00_04_00 + 20, option_shot_list_3_00_04_00_10);
+    STORE_ARCADE_ADDRESS(option_shot_list_3_00_04_00 + 22, option_shot_list_3_00_04_00_11);
+    STORE_ARCADE_ADDRESS(option_shot_list_3_00_04_00 + 24, option_shot_list_3_00_04_00_12);
+    STORE_ARCADE_ADDRESS(option_shot_list_3_00_04_00 + 26, option_shot_list_3_00_04_00_13);
+    STORE_ARCADE_ADDRESS(option_shot_list_3_00_04_00 + 28, option_shot_list_3_00_04_00_14);
+    STORE_ARCADE_ADDRESS(option_shot_list_3_00_04_00 + 30, option_shot_list_3_00_04_00_15);
+    STORE_ARCADE_ADDRESS(option_shot_list_3_00_04_00 + 32, option_shot_list_3_00_04_00_16);
+    STORE_ARCADE_ADDRESS(option_shot_list_3_00_04_00_00 + 2, option_shot_list_3_00_04_00_00_01);
+    STORE_ARCADE_ADDRESS(option_shot_list_3_00_04_00_01 + 2, option_shot_list_3_00_04_00_01_01);
+    STORE_ARCADE_ADDRESS(option_shot_list_3_00_04_00_02 + 2, option_shot_list_3_00_04_00_02_01);
+    STORE_ARCADE_ADDRESS(option_shot_list_3_00_04_00_03 + 2, option_shot_list_3_00_04_00_03_01);
+    STORE_ARCADE_ADDRESS(option_shot_list_3_00_04_00_04 + 2, option_shot_list_3_00_04_00_04_01);
+    STORE_ARCADE_ADDRESS(option_shot_list_3_00_04_00_05 + 2, option_shot_list_3_00_04_00_05_01);
+    STORE_ARCADE_ADDRESS(option_shot_list_3_00_04_00_06 + 2, option_shot_list_3_00_04_00_06_01);
+    STORE_ARCADE_ADDRESS(option_shot_list_3_00_04_00_07 + 2, option_shot_list_3_00_04_00_07_01);
+    STORE_ARCADE_ADDRESS(option_shot_list_3_00_04_00_08 + 2, option_shot_list_3_00_04_00_08_01);
+    STORE_ARCADE_ADDRESS(option_shot_list_3_00_04_00_09 + 2, option_shot_list_3_00_04_00_09_01);
+    STORE_ARCADE_ADDRESS(option_shot_list_3_00_04_00_10 + 2, option_shot_list_3_00_04_00_10_01);
+    STORE_ARCADE_ADDRESS(option_shot_list_3_00_04_00_11 + 2, option_shot_list_3_00_04_00_11_01);
+    STORE_ARCADE_ADDRESS(option_shot_list_3_00_04_00_12 + 2, option_shot_list_3_00_04_00_12_01);
+    STORE_ARCADE_ADDRESS(option_shot_list_3_00_04_00_13 + 2, option_shot_list_3_00_04_00_13_01);
+    STORE_ARCADE_ADDRESS(option_shot_list_3_00_04_00_14 + 2, option_shot_list_3_00_04_00_14_01);
+    STORE_ARCADE_ADDRESS(option_shot_list_3_00_04_00_15 + 2, option_shot_list_3_00_04_00_15_01);
+    STORE_ARCADE_ADDRESS(option_shot_list_3_00_04_00_16 + 2, option_shot_list_3_00_04_00_16_01);
+    STORE_ARCADE_ADDRESS(player_shot_3_impact_table, player_shot_3_impact_00);
+    STORE_ARCADE_ADDRESS(player_shot_3_impact_table + 2, player_shot_3_impact_00);
+    STORE_ARCADE_ADDRESS(player_shot_3_impact_table + 4, player_shot_3_impact_02);
+    STORE_ARCADE_ADDRESS(player_shot_3_impact_table + 6, player_shot_3_impact_02);
+    STORE_ARCADE_ADDRESS(player_shot_3_impact_table + 8, player_shot_3_impact_04);
+    STORE_ARCADE_ADDRESS(player_shot_3_impact_table + 10, player_shot_3_impact_04);
+    STORE_ARCADE_ADDRESS(player_shot_3_impact_table + 12, player_shot_3_impact_06);
+    STORE_ARCADE_ADDRESS(player_shot_3_impact_table + 14, player_shot_3_impact_06);
+    STORE_ARCADE_ADDRESS(player_shot_3_impact_table + 16, player_shot_3_impact_08);
+    STORE_ARCADE_ADDRESS(player_shot_3_impact_table + 18, player_shot_3_impact_08);
+    STORE_ARCADE_ADDRESS(player_shot_3_impact_table + 20, player_shot_3_impact_10);
+    STORE_ARCADE_ADDRESS(player_shot_3_impact_table + 22, player_shot_3_impact_11);
+    STORE_ARCADE_ADDRESS(player_shot_3_impact_table + 24, player_shot_3_impact_12);
+    STORE_ARCADE_ADDRESS(player_shot_3_impact_table + 26, player_shot_3_impact_13);
+    STORE_ARCADE_ADDRESS(player_shot_3_impact_table + 28, player_shot_3_impact_14);
+    STORE_ARCADE_ADDRESS(player_shot_3_impact_table + 30, player_shot_3_impact_15);
+    STORE_ARCADE_ADDRESS(player_shot_3_impact_table + 32, player_shot_3_impact_15);
+    STORE_ARCADE_ADDRESS(player_shot_3_impact_table + 34, player_shot_3_impact_17);
+    STORE_ARCADE_ADDRESS(player_shot_3_impact_table + 36, player_shot_3_impact_17);
+    STORE_ARCADE_ADDRESS(player_shot_3_impact_table + 38, player_shot_3_impact_19);
+    STORE_ARCADE_ADDRESS(player_shot_3_impact_table + 40, player_shot_3_impact_19);
+    STORE_ARCADE_ADDRESS(player_shot_3_impact_table + 42, player_shot_3_impact_21);
+    STORE_ARCADE_ADDRESS(player_shot_3_impact_table + 44, player_shot_3_impact_21);
+    STORE_ARCADE_ADDRESS(player_shot_3_impact_table + 46, player_shot_3_impact_23);
+    STORE_ARCADE_ADDRESS(player_shot_3_impact_table + 48, player_shot_3_impact_23);
+    STORE_ARCADE_ADDRESS(player_shot_3_impact_00 + 3, player_shot_3_impact_frames_00);
+    STORE_ARCADE_ADDRESS(player_shot_3_impact_02 + 3, player_shot_3_impact_frames_00);
+    STORE_ARCADE_ADDRESS(player_shot_3_impact_04 + 3, player_shot_3_impact_frames_04);
+    STORE_ARCADE_ADDRESS(player_shot_3_impact_06 + 3, player_shot_3_impact_frames_04);
+    STORE_ARCADE_ADDRESS(player_shot_3_impact_08 + 3, player_shot_3_impact_frames_08);
+    STORE_ARCADE_ADDRESS(player_shot_3_impact_10 + 3, player_shot_3_impact_frames_10);
+    STORE_ARCADE_ADDRESS(player_shot_3_impact_11 + 3, player_shot_3_impact_frames_10);
+    STORE_ARCADE_ADDRESS(player_shot_3_impact_12 + 3, player_shot_3_impact_frames_12);
+    STORE_ARCADE_ADDRESS(player_shot_3_impact_13 + 3, player_shot_3_impact_frames_12);
+    STORE_ARCADE_ADDRESS(player_shot_3_impact_14 + 3, player_shot_3_impact_frames_14);
+    STORE_ARCADE_ADDRESS(player_shot_3_impact_15 + 3, player_shot_3_impact_frames_15);
+    STORE_ARCADE_ADDRESS(player_shot_3_impact_17 + 3, player_shot_3_impact_frames_15);
+    STORE_ARCADE_ADDRESS(player_shot_3_impact_19 + 3, player_shot_3_impact_frames_19);
+    STORE_ARCADE_ADDRESS(player_shot_3_impact_21 + 3, player_shot_3_impact_frames_19);
+    STORE_ARCADE_ADDRESS(player_shot_3_impact_23 + 3, player_shot_3_impact_frames_23);
 }
 
 extern u16 option_shot_list_1_02_00_02[];
@@ -2092,291 +2092,291 @@ extern u16 player_shot_4_flight_table[];
 extern u16 player_shot_4_impact_table[];
 
 void player_shot_4_tables_init(void) {
-    STORE_POINTER(option_shot_list_1_02_00 + 5, option_shot_list_1_02_00_02);
-    STORE_POINTER(option_shot_list_1_02_00 + 15, option_shot_list_1_02_00_07);
-    STORE_POINTER(option_shot_list_2_02_00 + 5, option_shot_list_1_02_00_02);
-    STORE_POINTER(option_shot_list_2_02_00 + 15, option_shot_list_1_02_00_07);
-    STORE_POINTER(option_shot_list_1_02_01 + 5, option_shot_list_1_02_00_02);
-    STORE_POINTER(option_shot_list_1_02_01 + 15, option_shot_list_1_02_01_07);
-    STORE_POINTER(option_shot_list_2_02_01 + 5, option_shot_list_1_02_00_02);
-    STORE_POINTER(option_shot_list_2_02_01 + 15, option_shot_list_1_02_01_07);
-    STORE_POINTER(option_shot_list_1_02_02 + 5, option_shot_list_1_02_02_02);
-    STORE_POINTER(option_shot_list_1_02_02 + 15, option_shot_list_1_02_02_07);
-    STORE_POINTER(option_shot_list_2_02_02 + 5, option_shot_list_1_02_02_02);
-    STORE_POINTER(option_shot_list_2_02_02 + 15, option_shot_list_1_02_02_07);
-    STORE_POINTER(option_shot_list_1_02_03 + 5, option_shot_list_1_02_02_02);
-    STORE_POINTER(option_shot_list_1_02_03 + 15, option_shot_list_1_02_03_07);
-    STORE_POINTER(option_shot_list_2_02_03 + 5, option_shot_list_1_02_02_02);
-    STORE_POINTER(option_shot_list_2_02_03 + 15, option_shot_list_1_02_03_07);
-    STORE_POINTER(option_shot_list_1_02_04 + 5, option_shot_list_1_02_04_02);
-    STORE_POINTER(option_shot_list_1_02_04 + 15, option_shot_list_1_02_04_07);
-    STORE_POINTER(option_shot_list_2_02_04 + 5, option_shot_list_1_02_04_02);
-    STORE_POINTER(option_shot_list_2_02_04 + 15, option_shot_list_1_02_04_07);
-    STORE_POINTER(option_shot_list_3_02_00 + 1, option_shot_list_3_02_00_00);
-    STORE_POINTER(option_shot_list_3_02_00 + 5, option_shot_list_3_02_00_02);
-    STORE_POINTER(option_shot_list_3_02_01 + 1, option_shot_list_3_02_01_00);
-    STORE_POINTER(option_shot_list_3_02_01 + 5, option_shot_list_3_02_00_02);
-    STORE_POINTER(option_shot_list_3_02_02 + 1, option_shot_list_3_02_02_00);
-    STORE_POINTER(option_shot_list_3_02_02 + 5, option_shot_list_3_02_02_02);
-    STORE_POINTER(option_shot_list_3_02_03 + 1, option_shot_list_3_02_03_00);
-    STORE_POINTER(option_shot_list_3_02_03 + 5, option_shot_list_3_02_02_02);
-    STORE_POINTER(option_shot_list_3_02_04 + 1, option_shot_list_3_02_04_00);
-    STORE_POINTER(option_shot_list_3_02_04 + 5, option_shot_list_3_02_04_02);
-    STORE_POINTER(option_shot_list_4_02_00 + 5, option_shot_list_4_02_00_02);
-    STORE_POINTER(option_shot_list_4_02_00 + 15, option_shot_list_4_02_00_07);
-    STORE_POINTER(option_shot_list_4_02_00 + 24, option_shot_list_4_02_00_02);
-    STORE_POINTER(option_shot_list_4_02_00 + 34, option_shot_list_4_02_00_07);
-    STORE_POINTER(option_shot_list_4_02_01 + 5, option_shot_list_4_02_00_02);
-    STORE_POINTER(option_shot_list_4_02_01 + 15, option_shot_list_4_02_01_07);
-    STORE_POINTER(option_shot_list_4_02_01 + 24, option_shot_list_4_02_00_02);
-    STORE_POINTER(option_shot_list_4_02_01 + 34, option_shot_list_4_02_01_07);
-    STORE_POINTER(option_shot_list_4_02_02 + 5, option_shot_list_4_02_02_02);
-    STORE_POINTER(option_shot_list_4_02_02 + 15, option_shot_list_4_02_02_07);
-    STORE_POINTER(option_shot_list_4_02_02 + 24, option_shot_list_4_02_02_02);
-    STORE_POINTER(option_shot_list_4_02_02 + 34, option_shot_list_4_02_02_07);
-    STORE_POINTER(option_shot_list_4_02_03 + 5, option_shot_list_4_02_02_02);
-    STORE_POINTER(option_shot_list_4_02_03 + 15, option_shot_list_4_02_03_07);
-    STORE_POINTER(option_shot_list_4_02_03 + 24, option_shot_list_4_02_02_02);
-    STORE_POINTER(option_shot_list_4_02_03 + 34, option_shot_list_4_02_03_07);
-    STORE_POINTER(option_shot_list_4_02_04 + 5, option_shot_list_4_02_04_02);
-    STORE_POINTER(option_shot_list_4_02_04 + 15, option_shot_list_4_02_04_07);
-    STORE_POINTER(option_shot_list_4_02_04 + 24, option_shot_list_4_02_04_02);
-    STORE_POINTER(option_shot_list_4_02_04 + 34, option_shot_list_4_02_04_07);
-    STORE_POINTER(player_shot_4_flight_table, player_shot_4_flight_00);
-    STORE_POINTER(player_shot_4_flight_table + 2, player_shot_4_flight_00);
-    STORE_POINTER(player_shot_4_flight_table + 4, player_shot_4_flight_02);
-    STORE_POINTER(player_shot_4_flight_table + 6, player_shot_4_flight_02);
-    STORE_POINTER(player_shot_4_flight_table + 8, player_shot_4_flight_04);
-    STORE_POINTER(player_shot_4_flight_table + 10, player_shot_4_flight_04);
-    STORE_POINTER(player_shot_4_flight_table + 12, player_shot_4_flight_06);
-    STORE_POINTER(player_shot_4_flight_table + 14, player_shot_4_flight_06);
-    STORE_POINTER(player_shot_4_flight_table + 16, player_shot_4_flight_08);
-    STORE_POINTER(player_shot_4_flight_table + 18, player_shot_4_flight_08);
-    STORE_POINTER(player_shot_4_flight_table + 20, player_shot_4_flight_10);
-    STORE_POINTER(player_shot_4_flight_table + 22, player_shot_4_flight_11);
-    STORE_POINTER(player_shot_4_flight_table + 24, player_shot_4_flight_12);
-    STORE_POINTER(player_shot_4_flight_table + 26, player_shot_4_flight_13);
-    STORE_POINTER(player_shot_4_flight_table + 28, player_shot_4_flight_14);
-    STORE_POINTER(player_shot_4_flight_table + 30, player_shot_4_flight_15);
-    STORE_POINTER(player_shot_4_flight_table + 32, player_shot_4_flight_15);
-    STORE_POINTER(player_shot_4_flight_table + 34, player_shot_4_flight_17);
-    STORE_POINTER(player_shot_4_flight_table + 36, player_shot_4_flight_17);
-    STORE_POINTER(player_shot_4_flight_table + 38, player_shot_4_flight_19);
-    STORE_POINTER(player_shot_4_flight_table + 40, player_shot_4_flight_19);
-    STORE_POINTER(player_shot_4_flight_table + 42, player_shot_4_flight_21);
-    STORE_POINTER(player_shot_4_flight_table + 44, player_shot_4_flight_21);
-    STORE_POINTER(player_shot_4_flight_table + 46, player_shot_4_flight_23);
-    STORE_POINTER(player_shot_4_flight_table + 48, player_shot_4_flight_23);
-    STORE_POINTER(option_shot_list_3_02_00_00, option_shot_list_3_02_00_00_00);
-    STORE_POINTER(option_shot_list_3_02_00_00 + 2, option_shot_list_3_02_00_00_01);
-    STORE_POINTER(option_shot_list_3_02_00_00 + 4, option_shot_list_3_02_00_00_02);
-    STORE_POINTER(option_shot_list_3_02_00_00 + 6, option_shot_list_3_02_00_00_03);
-    STORE_POINTER(option_shot_list_3_02_00_00 + 8, option_shot_list_3_02_00_00_04);
-    STORE_POINTER(option_shot_list_3_02_00_00 + 10, option_shot_list_3_02_00_00_05);
-    STORE_POINTER(option_shot_list_3_02_00_00 + 12, option_shot_list_3_02_00_00_06);
-    STORE_POINTER(option_shot_list_3_02_00_00 + 14, option_shot_list_3_02_00_00_07);
-    STORE_POINTER(option_shot_list_3_02_00_00 + 16, option_shot_list_3_02_00_00_08);
-    STORE_POINTER(option_shot_list_3_02_00_00 + 18, option_shot_list_3_02_00_00_09);
-    STORE_POINTER(option_shot_list_3_02_00_00 + 20, option_shot_list_3_02_00_00_10);
-    STORE_POINTER(option_shot_list_3_02_00_00 + 22, option_shot_list_3_02_00_00_11);
-    STORE_POINTER(option_shot_list_3_02_00_00 + 24, option_shot_list_3_02_00_00_12);
-    STORE_POINTER(option_shot_list_3_02_00_00 + 26, option_shot_list_3_02_00_00_13);
-    STORE_POINTER(option_shot_list_3_02_00_00 + 28, option_shot_list_3_02_00_00_14);
-    STORE_POINTER(option_shot_list_3_02_00_00 + 30, option_shot_list_3_02_00_00_15);
-    STORE_POINTER(option_shot_list_3_02_00_00 + 32, option_shot_list_3_02_00_00_16);
-    STORE_POINTER(option_shot_list_3_02_00_00_00 + 2, option_shot_list_3_02_00_00_00_01);
-    STORE_POINTER(option_shot_list_3_02_00_00_01 + 2, option_shot_list_3_02_00_00_01_01);
-    STORE_POINTER(option_shot_list_3_02_00_00_02 + 2, option_shot_list_3_02_00_00_02_01);
-    STORE_POINTER(option_shot_list_3_02_00_00_03 + 2, option_shot_list_3_02_00_00_03_01);
-    STORE_POINTER(option_shot_list_3_02_00_00_04 + 2, option_shot_list_3_02_00_00_04_01);
-    STORE_POINTER(option_shot_list_3_02_00_00_05 + 2, option_shot_list_3_02_00_00_05_01);
-    STORE_POINTER(option_shot_list_3_02_00_00_06 + 2, option_shot_list_3_02_00_00_06_01);
-    STORE_POINTER(option_shot_list_3_02_00_00_07 + 2, option_shot_list_3_02_00_00_07_01);
-    STORE_POINTER(option_shot_list_3_02_00_00_08 + 2, option_shot_list_3_02_00_00_08_01);
-    STORE_POINTER(option_shot_list_3_02_00_00_09 + 2, option_shot_list_3_02_00_00_09_01);
-    STORE_POINTER(option_shot_list_3_02_00_00_10 + 2, option_shot_list_3_02_00_00_10_01);
-    STORE_POINTER(option_shot_list_3_02_00_00_11 + 2, option_shot_list_3_02_00_00_11_01);
-    STORE_POINTER(option_shot_list_3_02_00_00_12 + 2, option_shot_list_3_02_00_00_12_01);
-    STORE_POINTER(option_shot_list_3_02_00_00_13 + 2, option_shot_list_3_02_00_00_13_01);
-    STORE_POINTER(option_shot_list_3_02_00_00_14 + 2, option_shot_list_3_02_00_00_14_01);
-    STORE_POINTER(option_shot_list_3_02_00_00_15 + 2, option_shot_list_3_02_00_00_15_01);
-    STORE_POINTER(option_shot_list_3_02_00_00_16 + 2, option_shot_list_3_02_00_00_16_01);
-    STORE_POINTER(option_shot_list_3_02_01_00, option_shot_list_3_02_01_00_00);
-    STORE_POINTER(option_shot_list_3_02_01_00 + 2, option_shot_list_3_02_01_00_01);
-    STORE_POINTER(option_shot_list_3_02_01_00 + 4, option_shot_list_3_02_01_00_02);
-    STORE_POINTER(option_shot_list_3_02_01_00 + 6, option_shot_list_3_02_01_00_03);
-    STORE_POINTER(option_shot_list_3_02_01_00 + 8, option_shot_list_3_02_01_00_04);
-    STORE_POINTER(option_shot_list_3_02_01_00 + 10, option_shot_list_3_02_01_00_05);
-    STORE_POINTER(option_shot_list_3_02_01_00 + 12, option_shot_list_3_02_01_00_06);
-    STORE_POINTER(option_shot_list_3_02_01_00 + 14, option_shot_list_3_02_01_00_07);
-    STORE_POINTER(option_shot_list_3_02_01_00 + 16, option_shot_list_3_02_01_00_08);
-    STORE_POINTER(option_shot_list_3_02_01_00 + 18, option_shot_list_3_02_01_00_09);
-    STORE_POINTER(option_shot_list_3_02_01_00 + 20, option_shot_list_3_02_01_00_10);
-    STORE_POINTER(option_shot_list_3_02_01_00 + 22, option_shot_list_3_02_01_00_11);
-    STORE_POINTER(option_shot_list_3_02_01_00 + 24, option_shot_list_3_02_01_00_12);
-    STORE_POINTER(option_shot_list_3_02_01_00 + 26, option_shot_list_3_02_01_00_13);
-    STORE_POINTER(option_shot_list_3_02_01_00 + 28, option_shot_list_3_02_01_00_14);
-    STORE_POINTER(option_shot_list_3_02_01_00 + 30, option_shot_list_3_02_01_00_15);
-    STORE_POINTER(option_shot_list_3_02_01_00 + 32, option_shot_list_3_02_01_00_16);
-    STORE_POINTER(option_shot_list_3_02_01_00_00 + 2, option_shot_list_3_02_01_00_00_01);
-    STORE_POINTER(option_shot_list_3_02_01_00_01 + 2, option_shot_list_3_02_01_00_01_01);
-    STORE_POINTER(option_shot_list_3_02_01_00_02 + 2, option_shot_list_3_02_01_00_02_01);
-    STORE_POINTER(option_shot_list_3_02_01_00_03 + 2, option_shot_list_3_02_01_00_03_01);
-    STORE_POINTER(option_shot_list_3_02_01_00_04 + 2, option_shot_list_3_02_01_00_04_01);
-    STORE_POINTER(option_shot_list_3_02_01_00_05 + 2, option_shot_list_3_02_01_00_05_01);
-    STORE_POINTER(option_shot_list_3_02_01_00_06 + 2, option_shot_list_3_02_01_00_06_01);
-    STORE_POINTER(option_shot_list_3_02_01_00_07 + 2, option_shot_list_3_02_01_00_07_01);
-    STORE_POINTER(option_shot_list_3_02_01_00_08 + 2, option_shot_list_3_02_01_00_08_01);
-    STORE_POINTER(option_shot_list_3_02_01_00_09 + 2, option_shot_list_3_02_01_00_09_01);
-    STORE_POINTER(option_shot_list_3_02_01_00_10 + 2, option_shot_list_3_02_01_00_10_01);
-    STORE_POINTER(option_shot_list_3_02_01_00_11 + 2, option_shot_list_3_02_01_00_11_01);
-    STORE_POINTER(option_shot_list_3_02_01_00_12 + 2, option_shot_list_3_02_01_00_12_01);
-    STORE_POINTER(option_shot_list_3_02_01_00_13 + 2, option_shot_list_3_02_01_00_13_01);
-    STORE_POINTER(option_shot_list_3_02_01_00_14 + 2, option_shot_list_3_02_01_00_14_01);
-    STORE_POINTER(option_shot_list_3_02_01_00_15 + 2, option_shot_list_3_02_01_00_15_01);
-    STORE_POINTER(option_shot_list_3_02_01_00_16 + 2, option_shot_list_3_02_01_00_16_01);
-    STORE_POINTER(option_shot_list_3_02_02_00, option_shot_list_3_02_02_00_00);
-    STORE_POINTER(option_shot_list_3_02_02_00 + 2, option_shot_list_3_02_02_00_01);
-    STORE_POINTER(option_shot_list_3_02_02_00 + 4, option_shot_list_3_02_02_00_02);
-    STORE_POINTER(option_shot_list_3_02_02_00 + 6, option_shot_list_3_02_02_00_03);
-    STORE_POINTER(option_shot_list_3_02_02_00 + 8, option_shot_list_3_02_02_00_04);
-    STORE_POINTER(option_shot_list_3_02_02_00 + 10, option_shot_list_3_02_02_00_05);
-    STORE_POINTER(option_shot_list_3_02_02_00 + 12, option_shot_list_3_02_02_00_06);
-    STORE_POINTER(option_shot_list_3_02_02_00 + 14, option_shot_list_3_02_02_00_07);
-    STORE_POINTER(option_shot_list_3_02_02_00 + 16, option_shot_list_3_02_02_00_08);
-    STORE_POINTER(option_shot_list_3_02_02_00 + 18, option_shot_list_3_02_02_00_09);
-    STORE_POINTER(option_shot_list_3_02_02_00 + 20, option_shot_list_3_02_02_00_10);
-    STORE_POINTER(option_shot_list_3_02_02_00 + 22, option_shot_list_3_02_02_00_11);
-    STORE_POINTER(option_shot_list_3_02_02_00 + 24, option_shot_list_3_02_02_00_12);
-    STORE_POINTER(option_shot_list_3_02_02_00 + 26, option_shot_list_3_02_02_00_13);
-    STORE_POINTER(option_shot_list_3_02_02_00 + 28, option_shot_list_3_02_02_00_14);
-    STORE_POINTER(option_shot_list_3_02_02_00 + 30, option_shot_list_3_02_02_00_15);
-    STORE_POINTER(option_shot_list_3_02_02_00 + 32, option_shot_list_3_02_02_00_16);
-    STORE_POINTER(option_shot_list_3_02_02_00_00 + 2, option_shot_list_3_02_02_00_00_01);
-    STORE_POINTER(option_shot_list_3_02_02_00_01 + 2, option_shot_list_3_02_02_00_01_01);
-    STORE_POINTER(option_shot_list_3_02_02_00_02 + 2, option_shot_list_3_02_02_00_02_01);
-    STORE_POINTER(option_shot_list_3_02_02_00_03 + 2, option_shot_list_3_02_02_00_03_01);
-    STORE_POINTER(option_shot_list_3_02_02_00_04 + 2, option_shot_list_3_02_02_00_04_01);
-    STORE_POINTER(option_shot_list_3_02_02_00_05 + 2, option_shot_list_3_02_02_00_05_01);
-    STORE_POINTER(option_shot_list_3_02_02_00_06 + 2, option_shot_list_3_02_02_00_06_01);
-    STORE_POINTER(option_shot_list_3_02_02_00_07 + 2, option_shot_list_3_02_02_00_07_01);
-    STORE_POINTER(option_shot_list_3_02_02_00_08 + 2, option_shot_list_3_02_02_00_08_01);
-    STORE_POINTER(option_shot_list_3_02_02_00_09 + 2, option_shot_list_3_02_02_00_09_01);
-    STORE_POINTER(option_shot_list_3_02_02_00_10 + 2, option_shot_list_3_02_02_00_10_01);
-    STORE_POINTER(option_shot_list_3_02_02_00_11 + 2, option_shot_list_3_02_02_00_11_01);
-    STORE_POINTER(option_shot_list_3_02_02_00_12 + 2, option_shot_list_3_02_02_00_12_01);
-    STORE_POINTER(option_shot_list_3_02_02_00_13 + 2, option_shot_list_3_02_02_00_13_01);
-    STORE_POINTER(option_shot_list_3_02_02_00_14 + 2, option_shot_list_3_02_02_00_14_01);
-    STORE_POINTER(option_shot_list_3_02_02_00_15 + 2, option_shot_list_3_02_02_00_15_01);
-    STORE_POINTER(option_shot_list_3_02_02_00_16 + 2, option_shot_list_3_02_02_00_16_01);
-    STORE_POINTER(option_shot_list_3_02_03_00, option_shot_list_3_02_03_00_00);
-    STORE_POINTER(option_shot_list_3_02_03_00 + 2, option_shot_list_3_02_03_00_01);
-    STORE_POINTER(option_shot_list_3_02_03_00 + 4, option_shot_list_3_02_03_00_02);
-    STORE_POINTER(option_shot_list_3_02_03_00 + 6, option_shot_list_3_02_03_00_03);
-    STORE_POINTER(option_shot_list_3_02_03_00 + 8, option_shot_list_3_02_03_00_04);
-    STORE_POINTER(option_shot_list_3_02_03_00 + 10, option_shot_list_3_02_03_00_05);
-    STORE_POINTER(option_shot_list_3_02_03_00 + 12, option_shot_list_3_02_03_00_06);
-    STORE_POINTER(option_shot_list_3_02_03_00 + 14, option_shot_list_3_02_03_00_07);
-    STORE_POINTER(option_shot_list_3_02_03_00 + 16, option_shot_list_3_02_03_00_08);
-    STORE_POINTER(option_shot_list_3_02_03_00 + 18, option_shot_list_3_02_03_00_09);
-    STORE_POINTER(option_shot_list_3_02_03_00 + 20, option_shot_list_3_02_03_00_10);
-    STORE_POINTER(option_shot_list_3_02_03_00 + 22, option_shot_list_3_02_03_00_11);
-    STORE_POINTER(option_shot_list_3_02_03_00 + 24, option_shot_list_3_02_03_00_12);
-    STORE_POINTER(option_shot_list_3_02_03_00 + 26, option_shot_list_3_02_03_00_13);
-    STORE_POINTER(option_shot_list_3_02_03_00 + 28, option_shot_list_3_02_03_00_14);
-    STORE_POINTER(option_shot_list_3_02_03_00 + 30, option_shot_list_3_02_03_00_15);
-    STORE_POINTER(option_shot_list_3_02_03_00 + 32, option_shot_list_3_02_03_00_16);
-    STORE_POINTER(option_shot_list_3_02_03_00_00 + 2, option_shot_list_3_02_03_00_00_01);
-    STORE_POINTER(option_shot_list_3_02_03_00_01 + 2, option_shot_list_3_02_03_00_01_01);
-    STORE_POINTER(option_shot_list_3_02_03_00_02 + 2, option_shot_list_3_02_03_00_02_01);
-    STORE_POINTER(option_shot_list_3_02_03_00_03 + 2, option_shot_list_3_02_03_00_03_01);
-    STORE_POINTER(option_shot_list_3_02_03_00_04 + 2, option_shot_list_3_02_03_00_04_01);
-    STORE_POINTER(option_shot_list_3_02_03_00_05 + 2, option_shot_list_3_02_03_00_05_01);
-    STORE_POINTER(option_shot_list_3_02_03_00_06 + 2, option_shot_list_3_02_03_00_06_01);
-    STORE_POINTER(option_shot_list_3_02_03_00_07 + 2, option_shot_list_3_02_03_00_07_01);
-    STORE_POINTER(option_shot_list_3_02_03_00_08 + 2, option_shot_list_3_02_03_00_08_01);
-    STORE_POINTER(option_shot_list_3_02_03_00_09 + 2, option_shot_list_3_02_03_00_09_01);
-    STORE_POINTER(option_shot_list_3_02_03_00_10 + 2, option_shot_list_3_02_03_00_10_01);
-    STORE_POINTER(option_shot_list_3_02_03_00_11 + 2, option_shot_list_3_02_03_00_11_01);
-    STORE_POINTER(option_shot_list_3_02_03_00_12 + 2, option_shot_list_3_02_03_00_12_01);
-    STORE_POINTER(option_shot_list_3_02_03_00_13 + 2, option_shot_list_3_02_03_00_13_01);
-    STORE_POINTER(option_shot_list_3_02_03_00_14 + 2, option_shot_list_3_02_03_00_14_01);
-    STORE_POINTER(option_shot_list_3_02_03_00_15 + 2, option_shot_list_3_02_03_00_15_01);
-    STORE_POINTER(option_shot_list_3_02_03_00_16 + 2, option_shot_list_3_02_03_00_16_01);
-    STORE_POINTER(option_shot_list_3_02_04_00, option_shot_list_3_02_04_00_00);
-    STORE_POINTER(option_shot_list_3_02_04_00 + 2, option_shot_list_3_02_04_00_01);
-    STORE_POINTER(option_shot_list_3_02_04_00 + 4, option_shot_list_3_02_04_00_02);
-    STORE_POINTER(option_shot_list_3_02_04_00 + 6, option_shot_list_3_02_04_00_03);
-    STORE_POINTER(option_shot_list_3_02_04_00 + 8, option_shot_list_3_02_04_00_04);
-    STORE_POINTER(option_shot_list_3_02_04_00 + 10, option_shot_list_3_02_04_00_05);
-    STORE_POINTER(option_shot_list_3_02_04_00 + 12, option_shot_list_3_02_04_00_06);
-    STORE_POINTER(option_shot_list_3_02_04_00 + 14, option_shot_list_3_02_04_00_07);
-    STORE_POINTER(option_shot_list_3_02_04_00 + 16, option_shot_list_3_02_04_00_08);
-    STORE_POINTER(option_shot_list_3_02_04_00 + 18, option_shot_list_3_02_04_00_09);
-    STORE_POINTER(option_shot_list_3_02_04_00 + 20, option_shot_list_3_02_04_00_10);
-    STORE_POINTER(option_shot_list_3_02_04_00 + 22, option_shot_list_3_02_04_00_11);
-    STORE_POINTER(option_shot_list_3_02_04_00 + 24, option_shot_list_3_02_04_00_12);
-    STORE_POINTER(option_shot_list_3_02_04_00 + 26, option_shot_list_3_02_04_00_13);
-    STORE_POINTER(option_shot_list_3_02_04_00 + 28, option_shot_list_3_02_04_00_14);
-    STORE_POINTER(option_shot_list_3_02_04_00 + 30, option_shot_list_3_02_04_00_15);
-    STORE_POINTER(option_shot_list_3_02_04_00 + 32, option_shot_list_3_02_04_00_16);
-    STORE_POINTER(option_shot_list_3_02_04_00_00 + 2, option_shot_list_3_02_04_00_00_01);
-    STORE_POINTER(option_shot_list_3_02_04_00_01 + 2, option_shot_list_3_02_04_00_01_01);
-    STORE_POINTER(option_shot_list_3_02_04_00_02 + 2, option_shot_list_3_02_04_00_02_01);
-    STORE_POINTER(option_shot_list_3_02_04_00_03 + 2, option_shot_list_3_02_04_00_03_01);
-    STORE_POINTER(option_shot_list_3_02_04_00_04 + 2, option_shot_list_3_02_04_00_04_01);
-    STORE_POINTER(option_shot_list_3_02_04_00_05 + 2, option_shot_list_3_02_04_00_05_01);
-    STORE_POINTER(option_shot_list_3_02_04_00_06 + 2, option_shot_list_3_02_04_00_06_01);
-    STORE_POINTER(option_shot_list_3_02_04_00_07 + 2, option_shot_list_3_02_04_00_07_01);
-    STORE_POINTER(option_shot_list_3_02_04_00_08 + 2, option_shot_list_3_02_04_00_08_01);
-    STORE_POINTER(option_shot_list_3_02_04_00_09 + 2, option_shot_list_3_02_04_00_09_01);
-    STORE_POINTER(option_shot_list_3_02_04_00_10 + 2, option_shot_list_3_02_04_00_10_01);
-    STORE_POINTER(option_shot_list_3_02_04_00_11 + 2, option_shot_list_3_02_04_00_11_01);
-    STORE_POINTER(option_shot_list_3_02_04_00_12 + 2, option_shot_list_3_02_04_00_12_01);
-    STORE_POINTER(option_shot_list_3_02_04_00_13 + 2, option_shot_list_3_02_04_00_13_01);
-    STORE_POINTER(option_shot_list_3_02_04_00_14 + 2, option_shot_list_3_02_04_00_14_01);
-    STORE_POINTER(option_shot_list_3_02_04_00_15 + 2, option_shot_list_3_02_04_00_15_01);
-    STORE_POINTER(option_shot_list_3_02_04_00_16 + 2, option_shot_list_3_02_04_00_16_01);
-    STORE_POINTER(player_shot_4_impact_table, player_shot_4_impact_00);
-    STORE_POINTER(player_shot_4_impact_table + 2, player_shot_4_impact_00);
-    STORE_POINTER(player_shot_4_impact_table + 4, player_shot_4_impact_02);
-    STORE_POINTER(player_shot_4_impact_table + 6, player_shot_4_impact_02);
-    STORE_POINTER(player_shot_4_impact_table + 8, player_shot_4_impact_04);
-    STORE_POINTER(player_shot_4_impact_table + 10, player_shot_4_impact_04);
-    STORE_POINTER(player_shot_4_impact_table + 12, player_shot_4_impact_06);
-    STORE_POINTER(player_shot_4_impact_table + 14, player_shot_4_impact_06);
-    STORE_POINTER(player_shot_4_impact_table + 16, player_shot_4_impact_08);
-    STORE_POINTER(player_shot_4_impact_table + 18, player_shot_4_impact_08);
-    STORE_POINTER(player_shot_4_impact_table + 20, player_shot_4_impact_10);
-    STORE_POINTER(player_shot_4_impact_table + 22, player_shot_4_impact_11);
-    STORE_POINTER(player_shot_4_impact_table + 24, player_shot_4_impact_12);
-    STORE_POINTER(player_shot_4_impact_table + 26, player_shot_4_impact_13);
-    STORE_POINTER(player_shot_4_impact_table + 28, player_shot_4_impact_14);
-    STORE_POINTER(player_shot_4_impact_table + 30, player_shot_4_impact_15);
-    STORE_POINTER(player_shot_4_impact_table + 32, player_shot_4_impact_15);
-    STORE_POINTER(player_shot_4_impact_table + 34, player_shot_4_impact_17);
-    STORE_POINTER(player_shot_4_impact_table + 36, player_shot_4_impact_17);
-    STORE_POINTER(player_shot_4_impact_table + 38, player_shot_4_impact_19);
-    STORE_POINTER(player_shot_4_impact_table + 40, player_shot_4_impact_19);
-    STORE_POINTER(player_shot_4_impact_table + 42, player_shot_4_impact_21);
-    STORE_POINTER(player_shot_4_impact_table + 44, player_shot_4_impact_21);
-    STORE_POINTER(player_shot_4_impact_table + 46, player_shot_4_impact_23);
-    STORE_POINTER(player_shot_4_impact_table + 48, player_shot_4_impact_23);
-    STORE_POINTER(player_shot_4_impact_00 + 3, player_shot_4_impact_frames_00);
-    STORE_POINTER(player_shot_4_impact_02 + 3, player_shot_4_impact_frames_00);
-    STORE_POINTER(player_shot_4_impact_04 + 3, player_shot_4_impact_frames_04);
-    STORE_POINTER(player_shot_4_impact_06 + 3, player_shot_4_impact_frames_04);
-    STORE_POINTER(player_shot_4_impact_08 + 3, player_shot_4_impact_frames_08);
-    STORE_POINTER(player_shot_4_impact_10 + 3, player_shot_4_impact_frames_10);
-    STORE_POINTER(player_shot_4_impact_11 + 3, player_shot_4_impact_frames_10);
-    STORE_POINTER(player_shot_4_impact_12 + 3, player_shot_4_impact_frames_12);
-    STORE_POINTER(player_shot_4_impact_13 + 3, player_shot_4_impact_frames_12);
-    STORE_POINTER(player_shot_4_impact_14 + 3, player_shot_4_impact_frames_14);
-    STORE_POINTER(player_shot_4_impact_15 + 3, player_shot_4_impact_frames_15);
-    STORE_POINTER(player_shot_4_impact_17 + 3, player_shot_4_impact_frames_15);
-    STORE_POINTER(player_shot_4_impact_19 + 3, player_shot_4_impact_frames_19);
-    STORE_POINTER(player_shot_4_impact_21 + 3, player_shot_4_impact_frames_19);
-    STORE_POINTER(player_shot_4_impact_23 + 3, player_shot_4_impact_frames_23);
+    STORE_ARCADE_ADDRESS(option_shot_list_1_02_00 + 5, option_shot_list_1_02_00_02);
+    STORE_ARCADE_ADDRESS(option_shot_list_1_02_00 + 15, option_shot_list_1_02_00_07);
+    STORE_ARCADE_ADDRESS(option_shot_list_2_02_00 + 5, option_shot_list_1_02_00_02);
+    STORE_ARCADE_ADDRESS(option_shot_list_2_02_00 + 15, option_shot_list_1_02_00_07);
+    STORE_ARCADE_ADDRESS(option_shot_list_1_02_01 + 5, option_shot_list_1_02_00_02);
+    STORE_ARCADE_ADDRESS(option_shot_list_1_02_01 + 15, option_shot_list_1_02_01_07);
+    STORE_ARCADE_ADDRESS(option_shot_list_2_02_01 + 5, option_shot_list_1_02_00_02);
+    STORE_ARCADE_ADDRESS(option_shot_list_2_02_01 + 15, option_shot_list_1_02_01_07);
+    STORE_ARCADE_ADDRESS(option_shot_list_1_02_02 + 5, option_shot_list_1_02_02_02);
+    STORE_ARCADE_ADDRESS(option_shot_list_1_02_02 + 15, option_shot_list_1_02_02_07);
+    STORE_ARCADE_ADDRESS(option_shot_list_2_02_02 + 5, option_shot_list_1_02_02_02);
+    STORE_ARCADE_ADDRESS(option_shot_list_2_02_02 + 15, option_shot_list_1_02_02_07);
+    STORE_ARCADE_ADDRESS(option_shot_list_1_02_03 + 5, option_shot_list_1_02_02_02);
+    STORE_ARCADE_ADDRESS(option_shot_list_1_02_03 + 15, option_shot_list_1_02_03_07);
+    STORE_ARCADE_ADDRESS(option_shot_list_2_02_03 + 5, option_shot_list_1_02_02_02);
+    STORE_ARCADE_ADDRESS(option_shot_list_2_02_03 + 15, option_shot_list_1_02_03_07);
+    STORE_ARCADE_ADDRESS(option_shot_list_1_02_04 + 5, option_shot_list_1_02_04_02);
+    STORE_ARCADE_ADDRESS(option_shot_list_1_02_04 + 15, option_shot_list_1_02_04_07);
+    STORE_ARCADE_ADDRESS(option_shot_list_2_02_04 + 5, option_shot_list_1_02_04_02);
+    STORE_ARCADE_ADDRESS(option_shot_list_2_02_04 + 15, option_shot_list_1_02_04_07);
+    STORE_ARCADE_ADDRESS(option_shot_list_3_02_00 + 1, option_shot_list_3_02_00_00);
+    STORE_ARCADE_ADDRESS(option_shot_list_3_02_00 + 5, option_shot_list_3_02_00_02);
+    STORE_ARCADE_ADDRESS(option_shot_list_3_02_01 + 1, option_shot_list_3_02_01_00);
+    STORE_ARCADE_ADDRESS(option_shot_list_3_02_01 + 5, option_shot_list_3_02_00_02);
+    STORE_ARCADE_ADDRESS(option_shot_list_3_02_02 + 1, option_shot_list_3_02_02_00);
+    STORE_ARCADE_ADDRESS(option_shot_list_3_02_02 + 5, option_shot_list_3_02_02_02);
+    STORE_ARCADE_ADDRESS(option_shot_list_3_02_03 + 1, option_shot_list_3_02_03_00);
+    STORE_ARCADE_ADDRESS(option_shot_list_3_02_03 + 5, option_shot_list_3_02_02_02);
+    STORE_ARCADE_ADDRESS(option_shot_list_3_02_04 + 1, option_shot_list_3_02_04_00);
+    STORE_ARCADE_ADDRESS(option_shot_list_3_02_04 + 5, option_shot_list_3_02_04_02);
+    STORE_ARCADE_ADDRESS(option_shot_list_4_02_00 + 5, option_shot_list_4_02_00_02);
+    STORE_ARCADE_ADDRESS(option_shot_list_4_02_00 + 15, option_shot_list_4_02_00_07);
+    STORE_ARCADE_ADDRESS(option_shot_list_4_02_00 + 24, option_shot_list_4_02_00_02);
+    STORE_ARCADE_ADDRESS(option_shot_list_4_02_00 + 34, option_shot_list_4_02_00_07);
+    STORE_ARCADE_ADDRESS(option_shot_list_4_02_01 + 5, option_shot_list_4_02_00_02);
+    STORE_ARCADE_ADDRESS(option_shot_list_4_02_01 + 15, option_shot_list_4_02_01_07);
+    STORE_ARCADE_ADDRESS(option_shot_list_4_02_01 + 24, option_shot_list_4_02_00_02);
+    STORE_ARCADE_ADDRESS(option_shot_list_4_02_01 + 34, option_shot_list_4_02_01_07);
+    STORE_ARCADE_ADDRESS(option_shot_list_4_02_02 + 5, option_shot_list_4_02_02_02);
+    STORE_ARCADE_ADDRESS(option_shot_list_4_02_02 + 15, option_shot_list_4_02_02_07);
+    STORE_ARCADE_ADDRESS(option_shot_list_4_02_02 + 24, option_shot_list_4_02_02_02);
+    STORE_ARCADE_ADDRESS(option_shot_list_4_02_02 + 34, option_shot_list_4_02_02_07);
+    STORE_ARCADE_ADDRESS(option_shot_list_4_02_03 + 5, option_shot_list_4_02_02_02);
+    STORE_ARCADE_ADDRESS(option_shot_list_4_02_03 + 15, option_shot_list_4_02_03_07);
+    STORE_ARCADE_ADDRESS(option_shot_list_4_02_03 + 24, option_shot_list_4_02_02_02);
+    STORE_ARCADE_ADDRESS(option_shot_list_4_02_03 + 34, option_shot_list_4_02_03_07);
+    STORE_ARCADE_ADDRESS(option_shot_list_4_02_04 + 5, option_shot_list_4_02_04_02);
+    STORE_ARCADE_ADDRESS(option_shot_list_4_02_04 + 15, option_shot_list_4_02_04_07);
+    STORE_ARCADE_ADDRESS(option_shot_list_4_02_04 + 24, option_shot_list_4_02_04_02);
+    STORE_ARCADE_ADDRESS(option_shot_list_4_02_04 + 34, option_shot_list_4_02_04_07);
+    STORE_ARCADE_ADDRESS(player_shot_4_flight_table, player_shot_4_flight_00);
+    STORE_ARCADE_ADDRESS(player_shot_4_flight_table + 2, player_shot_4_flight_00);
+    STORE_ARCADE_ADDRESS(player_shot_4_flight_table + 4, player_shot_4_flight_02);
+    STORE_ARCADE_ADDRESS(player_shot_4_flight_table + 6, player_shot_4_flight_02);
+    STORE_ARCADE_ADDRESS(player_shot_4_flight_table + 8, player_shot_4_flight_04);
+    STORE_ARCADE_ADDRESS(player_shot_4_flight_table + 10, player_shot_4_flight_04);
+    STORE_ARCADE_ADDRESS(player_shot_4_flight_table + 12, player_shot_4_flight_06);
+    STORE_ARCADE_ADDRESS(player_shot_4_flight_table + 14, player_shot_4_flight_06);
+    STORE_ARCADE_ADDRESS(player_shot_4_flight_table + 16, player_shot_4_flight_08);
+    STORE_ARCADE_ADDRESS(player_shot_4_flight_table + 18, player_shot_4_flight_08);
+    STORE_ARCADE_ADDRESS(player_shot_4_flight_table + 20, player_shot_4_flight_10);
+    STORE_ARCADE_ADDRESS(player_shot_4_flight_table + 22, player_shot_4_flight_11);
+    STORE_ARCADE_ADDRESS(player_shot_4_flight_table + 24, player_shot_4_flight_12);
+    STORE_ARCADE_ADDRESS(player_shot_4_flight_table + 26, player_shot_4_flight_13);
+    STORE_ARCADE_ADDRESS(player_shot_4_flight_table + 28, player_shot_4_flight_14);
+    STORE_ARCADE_ADDRESS(player_shot_4_flight_table + 30, player_shot_4_flight_15);
+    STORE_ARCADE_ADDRESS(player_shot_4_flight_table + 32, player_shot_4_flight_15);
+    STORE_ARCADE_ADDRESS(player_shot_4_flight_table + 34, player_shot_4_flight_17);
+    STORE_ARCADE_ADDRESS(player_shot_4_flight_table + 36, player_shot_4_flight_17);
+    STORE_ARCADE_ADDRESS(player_shot_4_flight_table + 38, player_shot_4_flight_19);
+    STORE_ARCADE_ADDRESS(player_shot_4_flight_table + 40, player_shot_4_flight_19);
+    STORE_ARCADE_ADDRESS(player_shot_4_flight_table + 42, player_shot_4_flight_21);
+    STORE_ARCADE_ADDRESS(player_shot_4_flight_table + 44, player_shot_4_flight_21);
+    STORE_ARCADE_ADDRESS(player_shot_4_flight_table + 46, player_shot_4_flight_23);
+    STORE_ARCADE_ADDRESS(player_shot_4_flight_table + 48, player_shot_4_flight_23);
+    STORE_ARCADE_ADDRESS(option_shot_list_3_02_00_00, option_shot_list_3_02_00_00_00);
+    STORE_ARCADE_ADDRESS(option_shot_list_3_02_00_00 + 2, option_shot_list_3_02_00_00_01);
+    STORE_ARCADE_ADDRESS(option_shot_list_3_02_00_00 + 4, option_shot_list_3_02_00_00_02);
+    STORE_ARCADE_ADDRESS(option_shot_list_3_02_00_00 + 6, option_shot_list_3_02_00_00_03);
+    STORE_ARCADE_ADDRESS(option_shot_list_3_02_00_00 + 8, option_shot_list_3_02_00_00_04);
+    STORE_ARCADE_ADDRESS(option_shot_list_3_02_00_00 + 10, option_shot_list_3_02_00_00_05);
+    STORE_ARCADE_ADDRESS(option_shot_list_3_02_00_00 + 12, option_shot_list_3_02_00_00_06);
+    STORE_ARCADE_ADDRESS(option_shot_list_3_02_00_00 + 14, option_shot_list_3_02_00_00_07);
+    STORE_ARCADE_ADDRESS(option_shot_list_3_02_00_00 + 16, option_shot_list_3_02_00_00_08);
+    STORE_ARCADE_ADDRESS(option_shot_list_3_02_00_00 + 18, option_shot_list_3_02_00_00_09);
+    STORE_ARCADE_ADDRESS(option_shot_list_3_02_00_00 + 20, option_shot_list_3_02_00_00_10);
+    STORE_ARCADE_ADDRESS(option_shot_list_3_02_00_00 + 22, option_shot_list_3_02_00_00_11);
+    STORE_ARCADE_ADDRESS(option_shot_list_3_02_00_00 + 24, option_shot_list_3_02_00_00_12);
+    STORE_ARCADE_ADDRESS(option_shot_list_3_02_00_00 + 26, option_shot_list_3_02_00_00_13);
+    STORE_ARCADE_ADDRESS(option_shot_list_3_02_00_00 + 28, option_shot_list_3_02_00_00_14);
+    STORE_ARCADE_ADDRESS(option_shot_list_3_02_00_00 + 30, option_shot_list_3_02_00_00_15);
+    STORE_ARCADE_ADDRESS(option_shot_list_3_02_00_00 + 32, option_shot_list_3_02_00_00_16);
+    STORE_ARCADE_ADDRESS(option_shot_list_3_02_00_00_00 + 2, option_shot_list_3_02_00_00_00_01);
+    STORE_ARCADE_ADDRESS(option_shot_list_3_02_00_00_01 + 2, option_shot_list_3_02_00_00_01_01);
+    STORE_ARCADE_ADDRESS(option_shot_list_3_02_00_00_02 + 2, option_shot_list_3_02_00_00_02_01);
+    STORE_ARCADE_ADDRESS(option_shot_list_3_02_00_00_03 + 2, option_shot_list_3_02_00_00_03_01);
+    STORE_ARCADE_ADDRESS(option_shot_list_3_02_00_00_04 + 2, option_shot_list_3_02_00_00_04_01);
+    STORE_ARCADE_ADDRESS(option_shot_list_3_02_00_00_05 + 2, option_shot_list_3_02_00_00_05_01);
+    STORE_ARCADE_ADDRESS(option_shot_list_3_02_00_00_06 + 2, option_shot_list_3_02_00_00_06_01);
+    STORE_ARCADE_ADDRESS(option_shot_list_3_02_00_00_07 + 2, option_shot_list_3_02_00_00_07_01);
+    STORE_ARCADE_ADDRESS(option_shot_list_3_02_00_00_08 + 2, option_shot_list_3_02_00_00_08_01);
+    STORE_ARCADE_ADDRESS(option_shot_list_3_02_00_00_09 + 2, option_shot_list_3_02_00_00_09_01);
+    STORE_ARCADE_ADDRESS(option_shot_list_3_02_00_00_10 + 2, option_shot_list_3_02_00_00_10_01);
+    STORE_ARCADE_ADDRESS(option_shot_list_3_02_00_00_11 + 2, option_shot_list_3_02_00_00_11_01);
+    STORE_ARCADE_ADDRESS(option_shot_list_3_02_00_00_12 + 2, option_shot_list_3_02_00_00_12_01);
+    STORE_ARCADE_ADDRESS(option_shot_list_3_02_00_00_13 + 2, option_shot_list_3_02_00_00_13_01);
+    STORE_ARCADE_ADDRESS(option_shot_list_3_02_00_00_14 + 2, option_shot_list_3_02_00_00_14_01);
+    STORE_ARCADE_ADDRESS(option_shot_list_3_02_00_00_15 + 2, option_shot_list_3_02_00_00_15_01);
+    STORE_ARCADE_ADDRESS(option_shot_list_3_02_00_00_16 + 2, option_shot_list_3_02_00_00_16_01);
+    STORE_ARCADE_ADDRESS(option_shot_list_3_02_01_00, option_shot_list_3_02_01_00_00);
+    STORE_ARCADE_ADDRESS(option_shot_list_3_02_01_00 + 2, option_shot_list_3_02_01_00_01);
+    STORE_ARCADE_ADDRESS(option_shot_list_3_02_01_00 + 4, option_shot_list_3_02_01_00_02);
+    STORE_ARCADE_ADDRESS(option_shot_list_3_02_01_00 + 6, option_shot_list_3_02_01_00_03);
+    STORE_ARCADE_ADDRESS(option_shot_list_3_02_01_00 + 8, option_shot_list_3_02_01_00_04);
+    STORE_ARCADE_ADDRESS(option_shot_list_3_02_01_00 + 10, option_shot_list_3_02_01_00_05);
+    STORE_ARCADE_ADDRESS(option_shot_list_3_02_01_00 + 12, option_shot_list_3_02_01_00_06);
+    STORE_ARCADE_ADDRESS(option_shot_list_3_02_01_00 + 14, option_shot_list_3_02_01_00_07);
+    STORE_ARCADE_ADDRESS(option_shot_list_3_02_01_00 + 16, option_shot_list_3_02_01_00_08);
+    STORE_ARCADE_ADDRESS(option_shot_list_3_02_01_00 + 18, option_shot_list_3_02_01_00_09);
+    STORE_ARCADE_ADDRESS(option_shot_list_3_02_01_00 + 20, option_shot_list_3_02_01_00_10);
+    STORE_ARCADE_ADDRESS(option_shot_list_3_02_01_00 + 22, option_shot_list_3_02_01_00_11);
+    STORE_ARCADE_ADDRESS(option_shot_list_3_02_01_00 + 24, option_shot_list_3_02_01_00_12);
+    STORE_ARCADE_ADDRESS(option_shot_list_3_02_01_00 + 26, option_shot_list_3_02_01_00_13);
+    STORE_ARCADE_ADDRESS(option_shot_list_3_02_01_00 + 28, option_shot_list_3_02_01_00_14);
+    STORE_ARCADE_ADDRESS(option_shot_list_3_02_01_00 + 30, option_shot_list_3_02_01_00_15);
+    STORE_ARCADE_ADDRESS(option_shot_list_3_02_01_00 + 32, option_shot_list_3_02_01_00_16);
+    STORE_ARCADE_ADDRESS(option_shot_list_3_02_01_00_00 + 2, option_shot_list_3_02_01_00_00_01);
+    STORE_ARCADE_ADDRESS(option_shot_list_3_02_01_00_01 + 2, option_shot_list_3_02_01_00_01_01);
+    STORE_ARCADE_ADDRESS(option_shot_list_3_02_01_00_02 + 2, option_shot_list_3_02_01_00_02_01);
+    STORE_ARCADE_ADDRESS(option_shot_list_3_02_01_00_03 + 2, option_shot_list_3_02_01_00_03_01);
+    STORE_ARCADE_ADDRESS(option_shot_list_3_02_01_00_04 + 2, option_shot_list_3_02_01_00_04_01);
+    STORE_ARCADE_ADDRESS(option_shot_list_3_02_01_00_05 + 2, option_shot_list_3_02_01_00_05_01);
+    STORE_ARCADE_ADDRESS(option_shot_list_3_02_01_00_06 + 2, option_shot_list_3_02_01_00_06_01);
+    STORE_ARCADE_ADDRESS(option_shot_list_3_02_01_00_07 + 2, option_shot_list_3_02_01_00_07_01);
+    STORE_ARCADE_ADDRESS(option_shot_list_3_02_01_00_08 + 2, option_shot_list_3_02_01_00_08_01);
+    STORE_ARCADE_ADDRESS(option_shot_list_3_02_01_00_09 + 2, option_shot_list_3_02_01_00_09_01);
+    STORE_ARCADE_ADDRESS(option_shot_list_3_02_01_00_10 + 2, option_shot_list_3_02_01_00_10_01);
+    STORE_ARCADE_ADDRESS(option_shot_list_3_02_01_00_11 + 2, option_shot_list_3_02_01_00_11_01);
+    STORE_ARCADE_ADDRESS(option_shot_list_3_02_01_00_12 + 2, option_shot_list_3_02_01_00_12_01);
+    STORE_ARCADE_ADDRESS(option_shot_list_3_02_01_00_13 + 2, option_shot_list_3_02_01_00_13_01);
+    STORE_ARCADE_ADDRESS(option_shot_list_3_02_01_00_14 + 2, option_shot_list_3_02_01_00_14_01);
+    STORE_ARCADE_ADDRESS(option_shot_list_3_02_01_00_15 + 2, option_shot_list_3_02_01_00_15_01);
+    STORE_ARCADE_ADDRESS(option_shot_list_3_02_01_00_16 + 2, option_shot_list_3_02_01_00_16_01);
+    STORE_ARCADE_ADDRESS(option_shot_list_3_02_02_00, option_shot_list_3_02_02_00_00);
+    STORE_ARCADE_ADDRESS(option_shot_list_3_02_02_00 + 2, option_shot_list_3_02_02_00_01);
+    STORE_ARCADE_ADDRESS(option_shot_list_3_02_02_00 + 4, option_shot_list_3_02_02_00_02);
+    STORE_ARCADE_ADDRESS(option_shot_list_3_02_02_00 + 6, option_shot_list_3_02_02_00_03);
+    STORE_ARCADE_ADDRESS(option_shot_list_3_02_02_00 + 8, option_shot_list_3_02_02_00_04);
+    STORE_ARCADE_ADDRESS(option_shot_list_3_02_02_00 + 10, option_shot_list_3_02_02_00_05);
+    STORE_ARCADE_ADDRESS(option_shot_list_3_02_02_00 + 12, option_shot_list_3_02_02_00_06);
+    STORE_ARCADE_ADDRESS(option_shot_list_3_02_02_00 + 14, option_shot_list_3_02_02_00_07);
+    STORE_ARCADE_ADDRESS(option_shot_list_3_02_02_00 + 16, option_shot_list_3_02_02_00_08);
+    STORE_ARCADE_ADDRESS(option_shot_list_3_02_02_00 + 18, option_shot_list_3_02_02_00_09);
+    STORE_ARCADE_ADDRESS(option_shot_list_3_02_02_00 + 20, option_shot_list_3_02_02_00_10);
+    STORE_ARCADE_ADDRESS(option_shot_list_3_02_02_00 + 22, option_shot_list_3_02_02_00_11);
+    STORE_ARCADE_ADDRESS(option_shot_list_3_02_02_00 + 24, option_shot_list_3_02_02_00_12);
+    STORE_ARCADE_ADDRESS(option_shot_list_3_02_02_00 + 26, option_shot_list_3_02_02_00_13);
+    STORE_ARCADE_ADDRESS(option_shot_list_3_02_02_00 + 28, option_shot_list_3_02_02_00_14);
+    STORE_ARCADE_ADDRESS(option_shot_list_3_02_02_00 + 30, option_shot_list_3_02_02_00_15);
+    STORE_ARCADE_ADDRESS(option_shot_list_3_02_02_00 + 32, option_shot_list_3_02_02_00_16);
+    STORE_ARCADE_ADDRESS(option_shot_list_3_02_02_00_00 + 2, option_shot_list_3_02_02_00_00_01);
+    STORE_ARCADE_ADDRESS(option_shot_list_3_02_02_00_01 + 2, option_shot_list_3_02_02_00_01_01);
+    STORE_ARCADE_ADDRESS(option_shot_list_3_02_02_00_02 + 2, option_shot_list_3_02_02_00_02_01);
+    STORE_ARCADE_ADDRESS(option_shot_list_3_02_02_00_03 + 2, option_shot_list_3_02_02_00_03_01);
+    STORE_ARCADE_ADDRESS(option_shot_list_3_02_02_00_04 + 2, option_shot_list_3_02_02_00_04_01);
+    STORE_ARCADE_ADDRESS(option_shot_list_3_02_02_00_05 + 2, option_shot_list_3_02_02_00_05_01);
+    STORE_ARCADE_ADDRESS(option_shot_list_3_02_02_00_06 + 2, option_shot_list_3_02_02_00_06_01);
+    STORE_ARCADE_ADDRESS(option_shot_list_3_02_02_00_07 + 2, option_shot_list_3_02_02_00_07_01);
+    STORE_ARCADE_ADDRESS(option_shot_list_3_02_02_00_08 + 2, option_shot_list_3_02_02_00_08_01);
+    STORE_ARCADE_ADDRESS(option_shot_list_3_02_02_00_09 + 2, option_shot_list_3_02_02_00_09_01);
+    STORE_ARCADE_ADDRESS(option_shot_list_3_02_02_00_10 + 2, option_shot_list_3_02_02_00_10_01);
+    STORE_ARCADE_ADDRESS(option_shot_list_3_02_02_00_11 + 2, option_shot_list_3_02_02_00_11_01);
+    STORE_ARCADE_ADDRESS(option_shot_list_3_02_02_00_12 + 2, option_shot_list_3_02_02_00_12_01);
+    STORE_ARCADE_ADDRESS(option_shot_list_3_02_02_00_13 + 2, option_shot_list_3_02_02_00_13_01);
+    STORE_ARCADE_ADDRESS(option_shot_list_3_02_02_00_14 + 2, option_shot_list_3_02_02_00_14_01);
+    STORE_ARCADE_ADDRESS(option_shot_list_3_02_02_00_15 + 2, option_shot_list_3_02_02_00_15_01);
+    STORE_ARCADE_ADDRESS(option_shot_list_3_02_02_00_16 + 2, option_shot_list_3_02_02_00_16_01);
+    STORE_ARCADE_ADDRESS(option_shot_list_3_02_03_00, option_shot_list_3_02_03_00_00);
+    STORE_ARCADE_ADDRESS(option_shot_list_3_02_03_00 + 2, option_shot_list_3_02_03_00_01);
+    STORE_ARCADE_ADDRESS(option_shot_list_3_02_03_00 + 4, option_shot_list_3_02_03_00_02);
+    STORE_ARCADE_ADDRESS(option_shot_list_3_02_03_00 + 6, option_shot_list_3_02_03_00_03);
+    STORE_ARCADE_ADDRESS(option_shot_list_3_02_03_00 + 8, option_shot_list_3_02_03_00_04);
+    STORE_ARCADE_ADDRESS(option_shot_list_3_02_03_00 + 10, option_shot_list_3_02_03_00_05);
+    STORE_ARCADE_ADDRESS(option_shot_list_3_02_03_00 + 12, option_shot_list_3_02_03_00_06);
+    STORE_ARCADE_ADDRESS(option_shot_list_3_02_03_00 + 14, option_shot_list_3_02_03_00_07);
+    STORE_ARCADE_ADDRESS(option_shot_list_3_02_03_00 + 16, option_shot_list_3_02_03_00_08);
+    STORE_ARCADE_ADDRESS(option_shot_list_3_02_03_00 + 18, option_shot_list_3_02_03_00_09);
+    STORE_ARCADE_ADDRESS(option_shot_list_3_02_03_00 + 20, option_shot_list_3_02_03_00_10);
+    STORE_ARCADE_ADDRESS(option_shot_list_3_02_03_00 + 22, option_shot_list_3_02_03_00_11);
+    STORE_ARCADE_ADDRESS(option_shot_list_3_02_03_00 + 24, option_shot_list_3_02_03_00_12);
+    STORE_ARCADE_ADDRESS(option_shot_list_3_02_03_00 + 26, option_shot_list_3_02_03_00_13);
+    STORE_ARCADE_ADDRESS(option_shot_list_3_02_03_00 + 28, option_shot_list_3_02_03_00_14);
+    STORE_ARCADE_ADDRESS(option_shot_list_3_02_03_00 + 30, option_shot_list_3_02_03_00_15);
+    STORE_ARCADE_ADDRESS(option_shot_list_3_02_03_00 + 32, option_shot_list_3_02_03_00_16);
+    STORE_ARCADE_ADDRESS(option_shot_list_3_02_03_00_00 + 2, option_shot_list_3_02_03_00_00_01);
+    STORE_ARCADE_ADDRESS(option_shot_list_3_02_03_00_01 + 2, option_shot_list_3_02_03_00_01_01);
+    STORE_ARCADE_ADDRESS(option_shot_list_3_02_03_00_02 + 2, option_shot_list_3_02_03_00_02_01);
+    STORE_ARCADE_ADDRESS(option_shot_list_3_02_03_00_03 + 2, option_shot_list_3_02_03_00_03_01);
+    STORE_ARCADE_ADDRESS(option_shot_list_3_02_03_00_04 + 2, option_shot_list_3_02_03_00_04_01);
+    STORE_ARCADE_ADDRESS(option_shot_list_3_02_03_00_05 + 2, option_shot_list_3_02_03_00_05_01);
+    STORE_ARCADE_ADDRESS(option_shot_list_3_02_03_00_06 + 2, option_shot_list_3_02_03_00_06_01);
+    STORE_ARCADE_ADDRESS(option_shot_list_3_02_03_00_07 + 2, option_shot_list_3_02_03_00_07_01);
+    STORE_ARCADE_ADDRESS(option_shot_list_3_02_03_00_08 + 2, option_shot_list_3_02_03_00_08_01);
+    STORE_ARCADE_ADDRESS(option_shot_list_3_02_03_00_09 + 2, option_shot_list_3_02_03_00_09_01);
+    STORE_ARCADE_ADDRESS(option_shot_list_3_02_03_00_10 + 2, option_shot_list_3_02_03_00_10_01);
+    STORE_ARCADE_ADDRESS(option_shot_list_3_02_03_00_11 + 2, option_shot_list_3_02_03_00_11_01);
+    STORE_ARCADE_ADDRESS(option_shot_list_3_02_03_00_12 + 2, option_shot_list_3_02_03_00_12_01);
+    STORE_ARCADE_ADDRESS(option_shot_list_3_02_03_00_13 + 2, option_shot_list_3_02_03_00_13_01);
+    STORE_ARCADE_ADDRESS(option_shot_list_3_02_03_00_14 + 2, option_shot_list_3_02_03_00_14_01);
+    STORE_ARCADE_ADDRESS(option_shot_list_3_02_03_00_15 + 2, option_shot_list_3_02_03_00_15_01);
+    STORE_ARCADE_ADDRESS(option_shot_list_3_02_03_00_16 + 2, option_shot_list_3_02_03_00_16_01);
+    STORE_ARCADE_ADDRESS(option_shot_list_3_02_04_00, option_shot_list_3_02_04_00_00);
+    STORE_ARCADE_ADDRESS(option_shot_list_3_02_04_00 + 2, option_shot_list_3_02_04_00_01);
+    STORE_ARCADE_ADDRESS(option_shot_list_3_02_04_00 + 4, option_shot_list_3_02_04_00_02);
+    STORE_ARCADE_ADDRESS(option_shot_list_3_02_04_00 + 6, option_shot_list_3_02_04_00_03);
+    STORE_ARCADE_ADDRESS(option_shot_list_3_02_04_00 + 8, option_shot_list_3_02_04_00_04);
+    STORE_ARCADE_ADDRESS(option_shot_list_3_02_04_00 + 10, option_shot_list_3_02_04_00_05);
+    STORE_ARCADE_ADDRESS(option_shot_list_3_02_04_00 + 12, option_shot_list_3_02_04_00_06);
+    STORE_ARCADE_ADDRESS(option_shot_list_3_02_04_00 + 14, option_shot_list_3_02_04_00_07);
+    STORE_ARCADE_ADDRESS(option_shot_list_3_02_04_00 + 16, option_shot_list_3_02_04_00_08);
+    STORE_ARCADE_ADDRESS(option_shot_list_3_02_04_00 + 18, option_shot_list_3_02_04_00_09);
+    STORE_ARCADE_ADDRESS(option_shot_list_3_02_04_00 + 20, option_shot_list_3_02_04_00_10);
+    STORE_ARCADE_ADDRESS(option_shot_list_3_02_04_00 + 22, option_shot_list_3_02_04_00_11);
+    STORE_ARCADE_ADDRESS(option_shot_list_3_02_04_00 + 24, option_shot_list_3_02_04_00_12);
+    STORE_ARCADE_ADDRESS(option_shot_list_3_02_04_00 + 26, option_shot_list_3_02_04_00_13);
+    STORE_ARCADE_ADDRESS(option_shot_list_3_02_04_00 + 28, option_shot_list_3_02_04_00_14);
+    STORE_ARCADE_ADDRESS(option_shot_list_3_02_04_00 + 30, option_shot_list_3_02_04_00_15);
+    STORE_ARCADE_ADDRESS(option_shot_list_3_02_04_00 + 32, option_shot_list_3_02_04_00_16);
+    STORE_ARCADE_ADDRESS(option_shot_list_3_02_04_00_00 + 2, option_shot_list_3_02_04_00_00_01);
+    STORE_ARCADE_ADDRESS(option_shot_list_3_02_04_00_01 + 2, option_shot_list_3_02_04_00_01_01);
+    STORE_ARCADE_ADDRESS(option_shot_list_3_02_04_00_02 + 2, option_shot_list_3_02_04_00_02_01);
+    STORE_ARCADE_ADDRESS(option_shot_list_3_02_04_00_03 + 2, option_shot_list_3_02_04_00_03_01);
+    STORE_ARCADE_ADDRESS(option_shot_list_3_02_04_00_04 + 2, option_shot_list_3_02_04_00_04_01);
+    STORE_ARCADE_ADDRESS(option_shot_list_3_02_04_00_05 + 2, option_shot_list_3_02_04_00_05_01);
+    STORE_ARCADE_ADDRESS(option_shot_list_3_02_04_00_06 + 2, option_shot_list_3_02_04_00_06_01);
+    STORE_ARCADE_ADDRESS(option_shot_list_3_02_04_00_07 + 2, option_shot_list_3_02_04_00_07_01);
+    STORE_ARCADE_ADDRESS(option_shot_list_3_02_04_00_08 + 2, option_shot_list_3_02_04_00_08_01);
+    STORE_ARCADE_ADDRESS(option_shot_list_3_02_04_00_09 + 2, option_shot_list_3_02_04_00_09_01);
+    STORE_ARCADE_ADDRESS(option_shot_list_3_02_04_00_10 + 2, option_shot_list_3_02_04_00_10_01);
+    STORE_ARCADE_ADDRESS(option_shot_list_3_02_04_00_11 + 2, option_shot_list_3_02_04_00_11_01);
+    STORE_ARCADE_ADDRESS(option_shot_list_3_02_04_00_12 + 2, option_shot_list_3_02_04_00_12_01);
+    STORE_ARCADE_ADDRESS(option_shot_list_3_02_04_00_13 + 2, option_shot_list_3_02_04_00_13_01);
+    STORE_ARCADE_ADDRESS(option_shot_list_3_02_04_00_14 + 2, option_shot_list_3_02_04_00_14_01);
+    STORE_ARCADE_ADDRESS(option_shot_list_3_02_04_00_15 + 2, option_shot_list_3_02_04_00_15_01);
+    STORE_ARCADE_ADDRESS(option_shot_list_3_02_04_00_16 + 2, option_shot_list_3_02_04_00_16_01);
+    STORE_ARCADE_ADDRESS(player_shot_4_impact_table, player_shot_4_impact_00);
+    STORE_ARCADE_ADDRESS(player_shot_4_impact_table + 2, player_shot_4_impact_00);
+    STORE_ARCADE_ADDRESS(player_shot_4_impact_table + 4, player_shot_4_impact_02);
+    STORE_ARCADE_ADDRESS(player_shot_4_impact_table + 6, player_shot_4_impact_02);
+    STORE_ARCADE_ADDRESS(player_shot_4_impact_table + 8, player_shot_4_impact_04);
+    STORE_ARCADE_ADDRESS(player_shot_4_impact_table + 10, player_shot_4_impact_04);
+    STORE_ARCADE_ADDRESS(player_shot_4_impact_table + 12, player_shot_4_impact_06);
+    STORE_ARCADE_ADDRESS(player_shot_4_impact_table + 14, player_shot_4_impact_06);
+    STORE_ARCADE_ADDRESS(player_shot_4_impact_table + 16, player_shot_4_impact_08);
+    STORE_ARCADE_ADDRESS(player_shot_4_impact_table + 18, player_shot_4_impact_08);
+    STORE_ARCADE_ADDRESS(player_shot_4_impact_table + 20, player_shot_4_impact_10);
+    STORE_ARCADE_ADDRESS(player_shot_4_impact_table + 22, player_shot_4_impact_11);
+    STORE_ARCADE_ADDRESS(player_shot_4_impact_table + 24, player_shot_4_impact_12);
+    STORE_ARCADE_ADDRESS(player_shot_4_impact_table + 26, player_shot_4_impact_13);
+    STORE_ARCADE_ADDRESS(player_shot_4_impact_table + 28, player_shot_4_impact_14);
+    STORE_ARCADE_ADDRESS(player_shot_4_impact_table + 30, player_shot_4_impact_15);
+    STORE_ARCADE_ADDRESS(player_shot_4_impact_table + 32, player_shot_4_impact_15);
+    STORE_ARCADE_ADDRESS(player_shot_4_impact_table + 34, player_shot_4_impact_17);
+    STORE_ARCADE_ADDRESS(player_shot_4_impact_table + 36, player_shot_4_impact_17);
+    STORE_ARCADE_ADDRESS(player_shot_4_impact_table + 38, player_shot_4_impact_19);
+    STORE_ARCADE_ADDRESS(player_shot_4_impact_table + 40, player_shot_4_impact_19);
+    STORE_ARCADE_ADDRESS(player_shot_4_impact_table + 42, player_shot_4_impact_21);
+    STORE_ARCADE_ADDRESS(player_shot_4_impact_table + 44, player_shot_4_impact_21);
+    STORE_ARCADE_ADDRESS(player_shot_4_impact_table + 46, player_shot_4_impact_23);
+    STORE_ARCADE_ADDRESS(player_shot_4_impact_table + 48, player_shot_4_impact_23);
+    STORE_ARCADE_ADDRESS(player_shot_4_impact_00 + 3, player_shot_4_impact_frames_00);
+    STORE_ARCADE_ADDRESS(player_shot_4_impact_02 + 3, player_shot_4_impact_frames_00);
+    STORE_ARCADE_ADDRESS(player_shot_4_impact_04 + 3, player_shot_4_impact_frames_04);
+    STORE_ARCADE_ADDRESS(player_shot_4_impact_06 + 3, player_shot_4_impact_frames_04);
+    STORE_ARCADE_ADDRESS(player_shot_4_impact_08 + 3, player_shot_4_impact_frames_08);
+    STORE_ARCADE_ADDRESS(player_shot_4_impact_10 + 3, player_shot_4_impact_frames_10);
+    STORE_ARCADE_ADDRESS(player_shot_4_impact_11 + 3, player_shot_4_impact_frames_10);
+    STORE_ARCADE_ADDRESS(player_shot_4_impact_12 + 3, player_shot_4_impact_frames_12);
+    STORE_ARCADE_ADDRESS(player_shot_4_impact_13 + 3, player_shot_4_impact_frames_12);
+    STORE_ARCADE_ADDRESS(player_shot_4_impact_14 + 3, player_shot_4_impact_frames_14);
+    STORE_ARCADE_ADDRESS(player_shot_4_impact_15 + 3, player_shot_4_impact_frames_15);
+    STORE_ARCADE_ADDRESS(player_shot_4_impact_17 + 3, player_shot_4_impact_frames_15);
+    STORE_ARCADE_ADDRESS(player_shot_4_impact_19 + 3, player_shot_4_impact_frames_19);
+    STORE_ARCADE_ADDRESS(player_shot_4_impact_21 + 3, player_shot_4_impact_frames_19);
+    STORE_ARCADE_ADDRESS(player_shot_4_impact_23 + 3, player_shot_4_impact_frames_23);
 }
 
 extern u16 option_shot_list_1_03_00_02[];
@@ -2519,291 +2519,291 @@ extern u16 player_shot_8_flight_table[];
 extern u16 player_shot_8_impact_table[];
 
 void player_shot_8_tables_init(void) {
-    STORE_POINTER(option_shot_list_1_03_00 + 5, option_shot_list_1_03_00_02);
-    STORE_POINTER(option_shot_list_1_03_00 + 15, option_shot_list_1_03_00_07);
-    STORE_POINTER(option_shot_list_2_03_00 + 5, option_shot_list_1_03_00_02);
-    STORE_POINTER(option_shot_list_2_03_00 + 15, option_shot_list_1_03_00_07);
-    STORE_POINTER(option_shot_list_1_03_01 + 5, option_shot_list_1_03_00_02);
-    STORE_POINTER(option_shot_list_1_03_01 + 15, option_shot_list_1_03_00_07);
-    STORE_POINTER(option_shot_list_2_03_01 + 5, option_shot_list_1_03_00_02);
-    STORE_POINTER(option_shot_list_2_03_01 + 15, option_shot_list_1_03_00_07);
-    STORE_POINTER(option_shot_list_1_03_02 + 5, option_shot_list_1_03_00_02);
-    STORE_POINTER(option_shot_list_1_03_02 + 15, option_shot_list_1_03_00_07);
-    STORE_POINTER(option_shot_list_2_03_02 + 5, option_shot_list_1_03_00_02);
-    STORE_POINTER(option_shot_list_2_03_02 + 15, option_shot_list_1_03_00_07);
-    STORE_POINTER(option_shot_list_1_03_03 + 5, option_shot_list_1_03_00_02);
-    STORE_POINTER(option_shot_list_1_03_03 + 15, option_shot_list_1_03_00_07);
-    STORE_POINTER(option_shot_list_2_03_03 + 5, option_shot_list_1_03_00_02);
-    STORE_POINTER(option_shot_list_2_03_03 + 15, option_shot_list_1_03_00_07);
-    STORE_POINTER(option_shot_list_1_03_04 + 5, option_shot_list_1_03_00_02);
-    STORE_POINTER(option_shot_list_1_03_04 + 15, option_shot_list_1_03_00_07);
-    STORE_POINTER(option_shot_list_2_03_04 + 5, option_shot_list_1_03_00_02);
-    STORE_POINTER(option_shot_list_2_03_04 + 15, option_shot_list_1_03_00_07);
-    STORE_POINTER(option_shot_list_3_03_00 + 1, option_shot_list_3_03_00_00);
-    STORE_POINTER(option_shot_list_3_03_00 + 5, option_shot_list_3_03_00_02);
-    STORE_POINTER(option_shot_list_3_03_01 + 1, option_shot_list_3_03_00_00);
-    STORE_POINTER(option_shot_list_3_03_01 + 5, option_shot_list_3_03_00_02);
-    STORE_POINTER(option_shot_list_3_03_02 + 1, option_shot_list_3_03_00_00);
-    STORE_POINTER(option_shot_list_3_03_02 + 5, option_shot_list_3_03_00_02);
-    STORE_POINTER(option_shot_list_3_03_03 + 1, option_shot_list_3_03_00_00);
-    STORE_POINTER(option_shot_list_3_03_03 + 5, option_shot_list_3_03_00_02);
-    STORE_POINTER(option_shot_list_3_03_04 + 1, option_shot_list_3_03_00_00);
-    STORE_POINTER(option_shot_list_3_03_04 + 5, option_shot_list_3_03_00_02);
-    STORE_POINTER(option_shot_list_4_03_00 + 5, option_shot_list_4_03_00_02);
-    STORE_POINTER(option_shot_list_4_03_00 + 15, option_shot_list_4_03_00_07);
-    STORE_POINTER(option_shot_list_4_03_00 + 24, option_shot_list_4_03_00_02);
-    STORE_POINTER(option_shot_list_4_03_00 + 34, option_shot_list_4_03_00_07);
-    STORE_POINTER(option_shot_list_4_03_01 + 5, option_shot_list_4_03_00_02);
-    STORE_POINTER(option_shot_list_4_03_01 + 15, option_shot_list_4_03_00_07);
-    STORE_POINTER(option_shot_list_4_03_01 + 24, option_shot_list_4_03_00_02);
-    STORE_POINTER(option_shot_list_4_03_01 + 34, option_shot_list_4_03_00_07);
-    STORE_POINTER(option_shot_list_4_03_02 + 5, option_shot_list_4_03_00_02);
-    STORE_POINTER(option_shot_list_4_03_02 + 15, option_shot_list_4_03_00_07);
-    STORE_POINTER(option_shot_list_4_03_02 + 24, option_shot_list_4_03_00_02);
-    STORE_POINTER(option_shot_list_4_03_02 + 34, option_shot_list_4_03_00_07);
-    STORE_POINTER(option_shot_list_4_03_03 + 5, option_shot_list_4_03_00_02);
-    STORE_POINTER(option_shot_list_4_03_03 + 15, option_shot_list_4_03_00_07);
-    STORE_POINTER(option_shot_list_4_03_03 + 24, option_shot_list_4_03_00_02);
-    STORE_POINTER(option_shot_list_4_03_03 + 34, option_shot_list_4_03_00_07);
-    STORE_POINTER(option_shot_list_4_03_04 + 5, option_shot_list_4_03_00_02);
-    STORE_POINTER(option_shot_list_4_03_04 + 15, option_shot_list_4_03_00_07);
-    STORE_POINTER(option_shot_list_4_03_04 + 24, option_shot_list_4_03_00_02);
-    STORE_POINTER(option_shot_list_4_03_04 + 34, option_shot_list_4_03_00_07);
-    STORE_POINTER(player_shot_8_flight_table, player_shot_8_flight_000);
-    STORE_POINTER(player_shot_8_flight_table + 2, player_shot_8_flight_000);
-    STORE_POINTER(player_shot_8_flight_table + 4, player_shot_8_flight_002);
-    STORE_POINTER(player_shot_8_flight_table + 6, player_shot_8_flight_002);
-    STORE_POINTER(player_shot_8_flight_table + 8, player_shot_8_flight_004);
-    STORE_POINTER(player_shot_8_flight_table + 10, player_shot_8_flight_004);
-    STORE_POINTER(player_shot_8_flight_table + 12, player_shot_8_flight_006);
-    STORE_POINTER(player_shot_8_flight_table + 14, player_shot_8_flight_006);
-    STORE_POINTER(player_shot_8_flight_table + 16, player_shot_8_flight_008);
-    STORE_POINTER(player_shot_8_flight_table + 18, player_shot_8_flight_008);
-    STORE_POINTER(player_shot_8_flight_table + 20, player_shot_8_flight_010);
-    STORE_POINTER(player_shot_8_flight_table + 22, player_shot_8_flight_011);
-    STORE_POINTER(player_shot_8_flight_table + 24, player_shot_8_flight_012);
-    STORE_POINTER(player_shot_8_flight_table + 26, player_shot_8_flight_013);
-    STORE_POINTER(player_shot_8_flight_table + 28, player_shot_8_flight_014);
-    STORE_POINTER(player_shot_8_flight_table + 30, player_shot_8_flight_015);
-    STORE_POINTER(player_shot_8_flight_table + 32, player_shot_8_flight_015);
-    STORE_POINTER(player_shot_8_flight_table + 34, player_shot_8_flight_017);
-    STORE_POINTER(player_shot_8_flight_table + 36, player_shot_8_flight_017);
-    STORE_POINTER(player_shot_8_flight_table + 38, player_shot_8_flight_019);
-    STORE_POINTER(player_shot_8_flight_table + 40, player_shot_8_flight_019);
-    STORE_POINTER(player_shot_8_flight_table + 42, player_shot_8_flight_021);
-    STORE_POINTER(player_shot_8_flight_table + 44, player_shot_8_flight_021);
-    STORE_POINTER(player_shot_8_flight_table + 46, player_shot_8_flight_023);
-    STORE_POINTER(player_shot_8_flight_table + 48, player_shot_8_flight_023);
-    STORE_POINTER(player_shot_8_flight_table + 56, player_shot_8_flight_028);
-    STORE_POINTER(player_shot_8_flight_table + 58, player_shot_8_flight_029);
-    STORE_POINTER(player_shot_8_flight_table + 60, player_shot_8_flight_030);
-    STORE_POINTER(player_shot_8_flight_table + 62, player_shot_8_flight_031);
-    STORE_POINTER(player_shot_8_flight_table + 64, player_shot_8_flight_032);
-    STORE_POINTER(player_shot_8_flight_table + 66, player_shot_8_flight_033);
-    STORE_POINTER(player_shot_8_flight_table + 68, player_shot_8_flight_034);
-    STORE_POINTER(player_shot_8_flight_table + 70, player_shot_8_flight_035);
-    STORE_POINTER(player_shot_8_flight_table + 72, player_shot_8_flight_036);
-    STORE_POINTER(player_shot_8_flight_table + 74, player_shot_8_flight_037);
-    STORE_POINTER(player_shot_8_flight_table + 76, player_shot_8_flight_038);
-    STORE_POINTER(player_shot_8_flight_table + 78, player_shot_8_flight_039);
-    STORE_POINTER(player_shot_8_flight_table + 80, player_shot_8_flight_040);
-    STORE_POINTER(player_shot_8_flight_table + 82, player_shot_8_flight_041);
-    STORE_POINTER(player_shot_8_flight_table + 84, player_shot_8_flight_042);
-    STORE_POINTER(player_shot_8_flight_table + 86, player_shot_8_flight_043);
-    STORE_POINTER(player_shot_8_flight_table + 88, player_shot_8_flight_044);
-    STORE_POINTER(player_shot_8_flight_028 + 2, player_shot_8_flight_028_01);
-    STORE_POINTER(player_shot_8_flight_029 + 2, player_shot_8_flight_028_01);
-    STORE_POINTER(player_shot_8_flight_030 + 2, player_shot_8_flight_028_01);
-    STORE_POINTER(player_shot_8_flight_031 + 2, player_shot_8_flight_028_01);
-    STORE_POINTER(player_shot_8_flight_032 + 2, player_shot_8_flight_028_01);
-    STORE_POINTER(player_shot_8_flight_033 + 2, player_shot_8_flight_028_01);
-    STORE_POINTER(player_shot_8_flight_034 + 2, player_shot_8_flight_028_01);
-    STORE_POINTER(player_shot_8_flight_035 + 2, player_shot_8_flight_028_01);
-    STORE_POINTER(player_shot_8_flight_036 + 2, player_shot_8_flight_028_01);
-    STORE_POINTER(player_shot_8_flight_037 + 2, player_shot_8_flight_028_01);
-    STORE_POINTER(player_shot_8_flight_038 + 2, player_shot_8_flight_028_01);
-    STORE_POINTER(player_shot_8_flight_039 + 2, player_shot_8_flight_028_01);
-    STORE_POINTER(player_shot_8_flight_040 + 2, player_shot_8_flight_028_01);
-    STORE_POINTER(player_shot_8_flight_041 + 2, player_shot_8_flight_028_01);
-    STORE_POINTER(player_shot_8_flight_042 + 2, player_shot_8_flight_028_01);
-    STORE_POINTER(player_shot_8_flight_043 + 2, player_shot_8_flight_028_01);
-    STORE_POINTER(player_shot_8_flight_044 + 2, player_shot_8_flight_028_01);
-    STORE_POINTER(player_shot_8_flight_table + 96, player_shot_8_flight_048);
-    STORE_POINTER(player_shot_8_flight_table + 98, player_shot_8_flight_049);
-    STORE_POINTER(player_shot_8_flight_table + 100, player_shot_8_flight_050);
-    STORE_POINTER(player_shot_8_flight_table + 102, player_shot_8_flight_051);
-    STORE_POINTER(player_shot_8_flight_table + 104, player_shot_8_flight_052);
-    STORE_POINTER(player_shot_8_flight_table + 106, player_shot_8_flight_053);
-    STORE_POINTER(player_shot_8_flight_table + 108, player_shot_8_flight_054);
-    STORE_POINTER(player_shot_8_flight_table + 110, player_shot_8_flight_055);
-    STORE_POINTER(player_shot_8_flight_table + 112, player_shot_8_flight_056);
-    STORE_POINTER(player_shot_8_flight_table + 114, player_shot_8_flight_057);
-    STORE_POINTER(player_shot_8_flight_table + 116, player_shot_8_flight_058);
-    STORE_POINTER(player_shot_8_flight_table + 118, player_shot_8_flight_059);
-    STORE_POINTER(player_shot_8_flight_table + 120, player_shot_8_flight_060);
-    STORE_POINTER(player_shot_8_flight_table + 122, player_shot_8_flight_061);
-    STORE_POINTER(player_shot_8_flight_table + 124, player_shot_8_flight_062);
-    STORE_POINTER(player_shot_8_flight_table + 126, player_shot_8_flight_063);
-    STORE_POINTER(player_shot_8_flight_table + 128, player_shot_8_flight_064);
-    STORE_POINTER(player_shot_8_flight_048 + 2, player_shot_8_flight_048_01);
-    STORE_POINTER(player_shot_8_flight_049 + 2, player_shot_8_flight_048_01);
-    STORE_POINTER(player_shot_8_flight_050 + 2, player_shot_8_flight_048_01);
-    STORE_POINTER(player_shot_8_flight_051 + 2, player_shot_8_flight_048_01);
-    STORE_POINTER(player_shot_8_flight_052 + 2, player_shot_8_flight_048_01);
-    STORE_POINTER(player_shot_8_flight_053 + 2, player_shot_8_flight_048_01);
-    STORE_POINTER(player_shot_8_flight_054 + 2, player_shot_8_flight_048_01);
-    STORE_POINTER(player_shot_8_flight_055 + 2, player_shot_8_flight_048_01);
-    STORE_POINTER(player_shot_8_flight_056 + 2, player_shot_8_flight_048_01);
-    STORE_POINTER(player_shot_8_flight_057 + 2, player_shot_8_flight_048_01);
-    STORE_POINTER(player_shot_8_flight_058 + 2, player_shot_8_flight_048_01);
-    STORE_POINTER(player_shot_8_flight_059 + 2, player_shot_8_flight_048_01);
-    STORE_POINTER(player_shot_8_flight_060 + 2, player_shot_8_flight_048_01);
-    STORE_POINTER(player_shot_8_flight_061 + 2, player_shot_8_flight_048_01);
-    STORE_POINTER(player_shot_8_flight_062 + 2, player_shot_8_flight_048_01);
-    STORE_POINTER(player_shot_8_flight_063 + 2, player_shot_8_flight_048_01);
-    STORE_POINTER(player_shot_8_flight_064 + 2, player_shot_8_flight_048_01);
-    STORE_POINTER(player_shot_8_flight_table + 136, player_shot_8_flight_068);
-    STORE_POINTER(player_shot_8_flight_table + 138, player_shot_8_flight_069);
-    STORE_POINTER(player_shot_8_flight_table + 140, player_shot_8_flight_070);
-    STORE_POINTER(player_shot_8_flight_table + 142, player_shot_8_flight_071);
-    STORE_POINTER(player_shot_8_flight_table + 144, player_shot_8_flight_072);
-    STORE_POINTER(player_shot_8_flight_table + 146, player_shot_8_flight_073);
-    STORE_POINTER(player_shot_8_flight_table + 148, player_shot_8_flight_074);
-    STORE_POINTER(player_shot_8_flight_table + 150, player_shot_8_flight_075);
-    STORE_POINTER(player_shot_8_flight_table + 152, player_shot_8_flight_076);
-    STORE_POINTER(player_shot_8_flight_table + 154, player_shot_8_flight_077);
-    STORE_POINTER(player_shot_8_flight_table + 156, player_shot_8_flight_078);
-    STORE_POINTER(player_shot_8_flight_table + 158, player_shot_8_flight_079);
-    STORE_POINTER(player_shot_8_flight_table + 160, player_shot_8_flight_080);
-    STORE_POINTER(player_shot_8_flight_table + 162, player_shot_8_flight_081);
-    STORE_POINTER(player_shot_8_flight_table + 164, player_shot_8_flight_082);
-    STORE_POINTER(player_shot_8_flight_table + 166, player_shot_8_flight_083);
-    STORE_POINTER(player_shot_8_flight_table + 168, player_shot_8_flight_084);
-    STORE_POINTER(player_shot_8_flight_068 + 2, player_shot_8_flight_068_01);
-    STORE_POINTER(player_shot_8_flight_069 + 2, player_shot_8_flight_068_01);
-    STORE_POINTER(player_shot_8_flight_070 + 2, player_shot_8_flight_068_01);
-    STORE_POINTER(player_shot_8_flight_071 + 2, player_shot_8_flight_068_01);
-    STORE_POINTER(player_shot_8_flight_072 + 2, player_shot_8_flight_068_01);
-    STORE_POINTER(player_shot_8_flight_073 + 2, player_shot_8_flight_068_01);
-    STORE_POINTER(player_shot_8_flight_074 + 2, player_shot_8_flight_068_01);
-    STORE_POINTER(player_shot_8_flight_075 + 2, player_shot_8_flight_068_01);
-    STORE_POINTER(player_shot_8_flight_076 + 2, player_shot_8_flight_068_01);
-    STORE_POINTER(player_shot_8_flight_077 + 2, player_shot_8_flight_068_01);
-    STORE_POINTER(player_shot_8_flight_078 + 2, player_shot_8_flight_068_01);
-    STORE_POINTER(player_shot_8_flight_079 + 2, player_shot_8_flight_068_01);
-    STORE_POINTER(player_shot_8_flight_080 + 2, player_shot_8_flight_068_01);
-    STORE_POINTER(player_shot_8_flight_081 + 2, player_shot_8_flight_068_01);
-    STORE_POINTER(player_shot_8_flight_082 + 2, player_shot_8_flight_068_01);
-    STORE_POINTER(player_shot_8_flight_083 + 2, player_shot_8_flight_068_01);
-    STORE_POINTER(player_shot_8_flight_084 + 2, player_shot_8_flight_068_01);
-    STORE_POINTER(player_shot_8_flight_table + 176, player_shot_8_flight_088);
-    STORE_POINTER(player_shot_8_flight_table + 178, player_shot_8_flight_089);
-    STORE_POINTER(player_shot_8_flight_table + 180, player_shot_8_flight_090);
-    STORE_POINTER(player_shot_8_flight_table + 182, player_shot_8_flight_091);
-    STORE_POINTER(player_shot_8_flight_table + 184, player_shot_8_flight_092);
-    STORE_POINTER(player_shot_8_flight_table + 186, player_shot_8_flight_093);
-    STORE_POINTER(player_shot_8_flight_table + 188, player_shot_8_flight_094);
-    STORE_POINTER(player_shot_8_flight_table + 190, player_shot_8_flight_095);
-    STORE_POINTER(player_shot_8_flight_table + 192, player_shot_8_flight_096);
-    STORE_POINTER(player_shot_8_flight_table + 194, player_shot_8_flight_097);
-    STORE_POINTER(player_shot_8_flight_table + 196, player_shot_8_flight_098);
-    STORE_POINTER(player_shot_8_flight_table + 198, player_shot_8_flight_099);
-    STORE_POINTER(player_shot_8_flight_table + 200, player_shot_8_flight_100);
-    STORE_POINTER(player_shot_8_flight_table + 202, player_shot_8_flight_101);
-    STORE_POINTER(player_shot_8_flight_table + 204, player_shot_8_flight_102);
-    STORE_POINTER(player_shot_8_flight_table + 206, player_shot_8_flight_103);
-    STORE_POINTER(player_shot_8_flight_table + 208, player_shot_8_flight_104);
-    STORE_POINTER(player_shot_8_flight_088 + 2, player_shot_8_flight_088_01);
-    STORE_POINTER(player_shot_8_flight_089 + 2, player_shot_8_flight_088_01);
-    STORE_POINTER(player_shot_8_flight_090 + 2, player_shot_8_flight_088_01);
-    STORE_POINTER(player_shot_8_flight_091 + 2, player_shot_8_flight_088_01);
-    STORE_POINTER(player_shot_8_flight_092 + 2, player_shot_8_flight_088_01);
-    STORE_POINTER(player_shot_8_flight_093 + 2, player_shot_8_flight_088_01);
-    STORE_POINTER(player_shot_8_flight_094 + 2, player_shot_8_flight_088_01);
-    STORE_POINTER(player_shot_8_flight_095 + 2, player_shot_8_flight_088_01);
-    STORE_POINTER(player_shot_8_flight_096 + 2, player_shot_8_flight_088_01);
-    STORE_POINTER(player_shot_8_flight_097 + 2, player_shot_8_flight_088_01);
-    STORE_POINTER(player_shot_8_flight_098 + 2, player_shot_8_flight_088_01);
-    STORE_POINTER(player_shot_8_flight_099 + 2, player_shot_8_flight_088_01);
-    STORE_POINTER(player_shot_8_flight_100 + 2, player_shot_8_flight_088_01);
-    STORE_POINTER(player_shot_8_flight_101 + 2, player_shot_8_flight_088_01);
-    STORE_POINTER(player_shot_8_flight_102 + 2, player_shot_8_flight_088_01);
-    STORE_POINTER(player_shot_8_flight_103 + 2, player_shot_8_flight_088_01);
-    STORE_POINTER(player_shot_8_flight_104 + 2, player_shot_8_flight_088_01);
-    STORE_POINTER(option_shot_list_3_03_00_00, option_shot_list_3_03_00_00_at_0);
-    STORE_POINTER(option_shot_list_3_03_00_00 + 2, option_shot_list_3_03_00_00_at_2);
-    STORE_POINTER(option_shot_list_3_03_00_00 + 4, option_shot_list_3_03_00_00_at_4);
-    STORE_POINTER(option_shot_list_3_03_00_00 + 6, option_shot_list_3_03_00_00_at_6);
-    STORE_POINTER(option_shot_list_3_03_00_00 + 8, option_shot_list_3_03_00_00_at_8);
-    STORE_POINTER(option_shot_list_3_03_00_00 + 10, option_shot_list_3_03_00_00_at_10);
-    STORE_POINTER(option_shot_list_3_03_00_00 + 12, option_shot_list_3_03_00_00_at_12);
-    STORE_POINTER(option_shot_list_3_03_00_00 + 14, option_shot_list_3_03_00_00_at_14);
-    STORE_POINTER(option_shot_list_3_03_00_00 + 16, option_shot_list_3_03_00_00_at_16);
-    STORE_POINTER(option_shot_list_3_03_00_00 + 18, option_shot_list_3_03_00_00_at_18);
-    STORE_POINTER(option_shot_list_3_03_00_00 + 20, option_shot_list_3_03_00_00_at_20);
-    STORE_POINTER(option_shot_list_3_03_00_00 + 22, option_shot_list_3_03_00_00_at_22);
-    STORE_POINTER(option_shot_list_3_03_00_00 + 24, option_shot_list_3_03_00_00_at_24);
-    STORE_POINTER(option_shot_list_3_03_00_00 + 26, option_shot_list_3_03_00_00_at_26);
-    STORE_POINTER(option_shot_list_3_03_00_00 + 28, option_shot_list_3_03_00_00_at_28);
-    STORE_POINTER(option_shot_list_3_03_00_00 + 30, option_shot_list_3_03_00_00_at_30);
-    STORE_POINTER(option_shot_list_3_03_00_00 + 32, option_shot_list_3_03_00_00_at_32);
-    STORE_POINTER(option_shot_list_3_03_00_00_at_0 + 2, replay_targets_shot_lists_292);
-    STORE_POINTER(option_shot_list_3_03_00_00_at_2 + 2, replay_targets_shot_lists_292);
-    STORE_POINTER(option_shot_list_3_03_00_00_at_4 + 2, replay_targets_shot_lists_292);
-    STORE_POINTER(option_shot_list_3_03_00_00_at_6 + 2, replay_targets_shot_lists_292);
-    STORE_POINTER(option_shot_list_3_03_00_00_at_8 + 2, replay_targets_shot_lists_292);
-    STORE_POINTER(option_shot_list_3_03_00_00_at_10 + 2, replay_targets_shot_lists_292);
-    STORE_POINTER(option_shot_list_3_03_00_00_at_12 + 2, replay_targets_shot_lists_292);
-    STORE_POINTER(option_shot_list_3_03_00_00_at_14 + 2, replay_targets_shot_lists_292);
-    STORE_POINTER(option_shot_list_3_03_00_00_at_16 + 2, replay_targets_shot_lists_292);
-    STORE_POINTER(option_shot_list_3_03_00_00_at_18 + 2, replay_targets_shot_lists_292);
-    STORE_POINTER(option_shot_list_3_03_00_00_at_20 + 2, replay_targets_shot_lists_292);
-    STORE_POINTER(option_shot_list_3_03_00_00_at_22 + 2, replay_targets_shot_lists_292);
-    STORE_POINTER(option_shot_list_3_03_00_00_at_24 + 2, replay_targets_shot_lists_292);
-    STORE_POINTER(option_shot_list_3_03_00_00_at_26 + 2, replay_targets_shot_lists_292);
-    STORE_POINTER(option_shot_list_3_03_00_00_at_28 + 2, replay_targets_shot_lists_292);
-    STORE_POINTER(option_shot_list_3_03_00_00_at_30 + 2, replay_targets_shot_lists_292);
-    STORE_POINTER(option_shot_list_3_03_00_00_at_32 + 2, replay_targets_shot_lists_292);
-    STORE_POINTER(player_shot_8_impact_table, player_shot_8_impact_00);
-    STORE_POINTER(player_shot_8_impact_table + 2, player_shot_8_impact_00);
-    STORE_POINTER(player_shot_8_impact_table + 4, player_shot_8_impact_02);
-    STORE_POINTER(player_shot_8_impact_table + 6, player_shot_8_impact_02);
-    STORE_POINTER(player_shot_8_impact_table + 8, player_shot_8_impact_04);
-    STORE_POINTER(player_shot_8_impact_table + 10, player_shot_8_impact_04);
-    STORE_POINTER(player_shot_8_impact_table + 12, player_shot_8_impact_06);
-    STORE_POINTER(player_shot_8_impact_table + 14, player_shot_8_impact_06);
-    STORE_POINTER(player_shot_8_impact_table + 16, player_shot_8_impact_08);
-    STORE_POINTER(player_shot_8_impact_table + 18, player_shot_8_impact_08);
-    STORE_POINTER(player_shot_8_impact_table + 20, player_shot_8_impact_10);
-    STORE_POINTER(player_shot_8_impact_table + 22, player_shot_8_impact_11);
-    STORE_POINTER(player_shot_8_impact_table + 24, player_shot_8_impact_12);
-    STORE_POINTER(player_shot_8_impact_table + 26, player_shot_8_impact_13);
-    STORE_POINTER(player_shot_8_impact_table + 28, player_shot_8_impact_14);
-    STORE_POINTER(player_shot_8_impact_table + 30, player_shot_8_impact_15);
-    STORE_POINTER(player_shot_8_impact_table + 32, player_shot_8_impact_15);
-    STORE_POINTER(player_shot_8_impact_table + 34, player_shot_8_impact_17);
-    STORE_POINTER(player_shot_8_impact_table + 36, player_shot_8_impact_17);
-    STORE_POINTER(player_shot_8_impact_table + 38, player_shot_8_impact_19);
-    STORE_POINTER(player_shot_8_impact_table + 40, player_shot_8_impact_19);
-    STORE_POINTER(player_shot_8_impact_table + 42, player_shot_8_impact_21);
-    STORE_POINTER(player_shot_8_impact_table + 44, player_shot_8_impact_21);
-    STORE_POINTER(player_shot_8_impact_table + 46, player_shot_8_impact_23);
-    STORE_POINTER(player_shot_8_impact_table + 48, player_shot_8_impact_23);
-    STORE_POINTER(player_shot_8_impact_00 + 3, player_shot_8_impact_frames_00);
-    STORE_POINTER(player_shot_8_impact_02 + 3, player_shot_8_impact_frames_02);
-    STORE_POINTER(player_shot_8_impact_04 + 3, player_shot_8_impact_frames_02);
-    STORE_POINTER(player_shot_8_impact_06 + 3, player_shot_8_impact_frames_06);
-    STORE_POINTER(player_shot_8_impact_08 + 3, player_shot_8_impact_frames_06);
-    STORE_POINTER(player_shot_8_impact_10 + 3, player_shot_8_impact_frames_10);
-    STORE_POINTER(player_shot_8_impact_11 + 3, player_shot_8_impact_frames_11);
-    STORE_POINTER(player_shot_8_impact_12 + 3, player_shot_8_impact_frames_11);
-    STORE_POINTER(player_shot_8_impact_13 + 3, player_shot_8_impact_frames_13);
-    STORE_POINTER(player_shot_8_impact_14 + 3, player_shot_8_impact_frames_13);
-    STORE_POINTER(player_shot_8_impact_15 + 3, player_shot_8_impact_frames_15);
-    STORE_POINTER(player_shot_8_impact_17 + 3, player_shot_8_impact_frames_17);
-    STORE_POINTER(player_shot_8_impact_19 + 3, player_shot_8_impact_frames_17);
-    STORE_POINTER(player_shot_8_impact_21 + 3, player_shot_8_impact_frames_21);
-    STORE_POINTER(player_shot_8_impact_23 + 3, player_shot_8_impact_frames_21);
+    STORE_ARCADE_ADDRESS(option_shot_list_1_03_00 + 5, option_shot_list_1_03_00_02);
+    STORE_ARCADE_ADDRESS(option_shot_list_1_03_00 + 15, option_shot_list_1_03_00_07);
+    STORE_ARCADE_ADDRESS(option_shot_list_2_03_00 + 5, option_shot_list_1_03_00_02);
+    STORE_ARCADE_ADDRESS(option_shot_list_2_03_00 + 15, option_shot_list_1_03_00_07);
+    STORE_ARCADE_ADDRESS(option_shot_list_1_03_01 + 5, option_shot_list_1_03_00_02);
+    STORE_ARCADE_ADDRESS(option_shot_list_1_03_01 + 15, option_shot_list_1_03_00_07);
+    STORE_ARCADE_ADDRESS(option_shot_list_2_03_01 + 5, option_shot_list_1_03_00_02);
+    STORE_ARCADE_ADDRESS(option_shot_list_2_03_01 + 15, option_shot_list_1_03_00_07);
+    STORE_ARCADE_ADDRESS(option_shot_list_1_03_02 + 5, option_shot_list_1_03_00_02);
+    STORE_ARCADE_ADDRESS(option_shot_list_1_03_02 + 15, option_shot_list_1_03_00_07);
+    STORE_ARCADE_ADDRESS(option_shot_list_2_03_02 + 5, option_shot_list_1_03_00_02);
+    STORE_ARCADE_ADDRESS(option_shot_list_2_03_02 + 15, option_shot_list_1_03_00_07);
+    STORE_ARCADE_ADDRESS(option_shot_list_1_03_03 + 5, option_shot_list_1_03_00_02);
+    STORE_ARCADE_ADDRESS(option_shot_list_1_03_03 + 15, option_shot_list_1_03_00_07);
+    STORE_ARCADE_ADDRESS(option_shot_list_2_03_03 + 5, option_shot_list_1_03_00_02);
+    STORE_ARCADE_ADDRESS(option_shot_list_2_03_03 + 15, option_shot_list_1_03_00_07);
+    STORE_ARCADE_ADDRESS(option_shot_list_1_03_04 + 5, option_shot_list_1_03_00_02);
+    STORE_ARCADE_ADDRESS(option_shot_list_1_03_04 + 15, option_shot_list_1_03_00_07);
+    STORE_ARCADE_ADDRESS(option_shot_list_2_03_04 + 5, option_shot_list_1_03_00_02);
+    STORE_ARCADE_ADDRESS(option_shot_list_2_03_04 + 15, option_shot_list_1_03_00_07);
+    STORE_ARCADE_ADDRESS(option_shot_list_3_03_00 + 1, option_shot_list_3_03_00_00);
+    STORE_ARCADE_ADDRESS(option_shot_list_3_03_00 + 5, option_shot_list_3_03_00_02);
+    STORE_ARCADE_ADDRESS(option_shot_list_3_03_01 + 1, option_shot_list_3_03_00_00);
+    STORE_ARCADE_ADDRESS(option_shot_list_3_03_01 + 5, option_shot_list_3_03_00_02);
+    STORE_ARCADE_ADDRESS(option_shot_list_3_03_02 + 1, option_shot_list_3_03_00_00);
+    STORE_ARCADE_ADDRESS(option_shot_list_3_03_02 + 5, option_shot_list_3_03_00_02);
+    STORE_ARCADE_ADDRESS(option_shot_list_3_03_03 + 1, option_shot_list_3_03_00_00);
+    STORE_ARCADE_ADDRESS(option_shot_list_3_03_03 + 5, option_shot_list_3_03_00_02);
+    STORE_ARCADE_ADDRESS(option_shot_list_3_03_04 + 1, option_shot_list_3_03_00_00);
+    STORE_ARCADE_ADDRESS(option_shot_list_3_03_04 + 5, option_shot_list_3_03_00_02);
+    STORE_ARCADE_ADDRESS(option_shot_list_4_03_00 + 5, option_shot_list_4_03_00_02);
+    STORE_ARCADE_ADDRESS(option_shot_list_4_03_00 + 15, option_shot_list_4_03_00_07);
+    STORE_ARCADE_ADDRESS(option_shot_list_4_03_00 + 24, option_shot_list_4_03_00_02);
+    STORE_ARCADE_ADDRESS(option_shot_list_4_03_00 + 34, option_shot_list_4_03_00_07);
+    STORE_ARCADE_ADDRESS(option_shot_list_4_03_01 + 5, option_shot_list_4_03_00_02);
+    STORE_ARCADE_ADDRESS(option_shot_list_4_03_01 + 15, option_shot_list_4_03_00_07);
+    STORE_ARCADE_ADDRESS(option_shot_list_4_03_01 + 24, option_shot_list_4_03_00_02);
+    STORE_ARCADE_ADDRESS(option_shot_list_4_03_01 + 34, option_shot_list_4_03_00_07);
+    STORE_ARCADE_ADDRESS(option_shot_list_4_03_02 + 5, option_shot_list_4_03_00_02);
+    STORE_ARCADE_ADDRESS(option_shot_list_4_03_02 + 15, option_shot_list_4_03_00_07);
+    STORE_ARCADE_ADDRESS(option_shot_list_4_03_02 + 24, option_shot_list_4_03_00_02);
+    STORE_ARCADE_ADDRESS(option_shot_list_4_03_02 + 34, option_shot_list_4_03_00_07);
+    STORE_ARCADE_ADDRESS(option_shot_list_4_03_03 + 5, option_shot_list_4_03_00_02);
+    STORE_ARCADE_ADDRESS(option_shot_list_4_03_03 + 15, option_shot_list_4_03_00_07);
+    STORE_ARCADE_ADDRESS(option_shot_list_4_03_03 + 24, option_shot_list_4_03_00_02);
+    STORE_ARCADE_ADDRESS(option_shot_list_4_03_03 + 34, option_shot_list_4_03_00_07);
+    STORE_ARCADE_ADDRESS(option_shot_list_4_03_04 + 5, option_shot_list_4_03_00_02);
+    STORE_ARCADE_ADDRESS(option_shot_list_4_03_04 + 15, option_shot_list_4_03_00_07);
+    STORE_ARCADE_ADDRESS(option_shot_list_4_03_04 + 24, option_shot_list_4_03_00_02);
+    STORE_ARCADE_ADDRESS(option_shot_list_4_03_04 + 34, option_shot_list_4_03_00_07);
+    STORE_ARCADE_ADDRESS(player_shot_8_flight_table, player_shot_8_flight_000);
+    STORE_ARCADE_ADDRESS(player_shot_8_flight_table + 2, player_shot_8_flight_000);
+    STORE_ARCADE_ADDRESS(player_shot_8_flight_table + 4, player_shot_8_flight_002);
+    STORE_ARCADE_ADDRESS(player_shot_8_flight_table + 6, player_shot_8_flight_002);
+    STORE_ARCADE_ADDRESS(player_shot_8_flight_table + 8, player_shot_8_flight_004);
+    STORE_ARCADE_ADDRESS(player_shot_8_flight_table + 10, player_shot_8_flight_004);
+    STORE_ARCADE_ADDRESS(player_shot_8_flight_table + 12, player_shot_8_flight_006);
+    STORE_ARCADE_ADDRESS(player_shot_8_flight_table + 14, player_shot_8_flight_006);
+    STORE_ARCADE_ADDRESS(player_shot_8_flight_table + 16, player_shot_8_flight_008);
+    STORE_ARCADE_ADDRESS(player_shot_8_flight_table + 18, player_shot_8_flight_008);
+    STORE_ARCADE_ADDRESS(player_shot_8_flight_table + 20, player_shot_8_flight_010);
+    STORE_ARCADE_ADDRESS(player_shot_8_flight_table + 22, player_shot_8_flight_011);
+    STORE_ARCADE_ADDRESS(player_shot_8_flight_table + 24, player_shot_8_flight_012);
+    STORE_ARCADE_ADDRESS(player_shot_8_flight_table + 26, player_shot_8_flight_013);
+    STORE_ARCADE_ADDRESS(player_shot_8_flight_table + 28, player_shot_8_flight_014);
+    STORE_ARCADE_ADDRESS(player_shot_8_flight_table + 30, player_shot_8_flight_015);
+    STORE_ARCADE_ADDRESS(player_shot_8_flight_table + 32, player_shot_8_flight_015);
+    STORE_ARCADE_ADDRESS(player_shot_8_flight_table + 34, player_shot_8_flight_017);
+    STORE_ARCADE_ADDRESS(player_shot_8_flight_table + 36, player_shot_8_flight_017);
+    STORE_ARCADE_ADDRESS(player_shot_8_flight_table + 38, player_shot_8_flight_019);
+    STORE_ARCADE_ADDRESS(player_shot_8_flight_table + 40, player_shot_8_flight_019);
+    STORE_ARCADE_ADDRESS(player_shot_8_flight_table + 42, player_shot_8_flight_021);
+    STORE_ARCADE_ADDRESS(player_shot_8_flight_table + 44, player_shot_8_flight_021);
+    STORE_ARCADE_ADDRESS(player_shot_8_flight_table + 46, player_shot_8_flight_023);
+    STORE_ARCADE_ADDRESS(player_shot_8_flight_table + 48, player_shot_8_flight_023);
+    STORE_ARCADE_ADDRESS(player_shot_8_flight_table + 56, player_shot_8_flight_028);
+    STORE_ARCADE_ADDRESS(player_shot_8_flight_table + 58, player_shot_8_flight_029);
+    STORE_ARCADE_ADDRESS(player_shot_8_flight_table + 60, player_shot_8_flight_030);
+    STORE_ARCADE_ADDRESS(player_shot_8_flight_table + 62, player_shot_8_flight_031);
+    STORE_ARCADE_ADDRESS(player_shot_8_flight_table + 64, player_shot_8_flight_032);
+    STORE_ARCADE_ADDRESS(player_shot_8_flight_table + 66, player_shot_8_flight_033);
+    STORE_ARCADE_ADDRESS(player_shot_8_flight_table + 68, player_shot_8_flight_034);
+    STORE_ARCADE_ADDRESS(player_shot_8_flight_table + 70, player_shot_8_flight_035);
+    STORE_ARCADE_ADDRESS(player_shot_8_flight_table + 72, player_shot_8_flight_036);
+    STORE_ARCADE_ADDRESS(player_shot_8_flight_table + 74, player_shot_8_flight_037);
+    STORE_ARCADE_ADDRESS(player_shot_8_flight_table + 76, player_shot_8_flight_038);
+    STORE_ARCADE_ADDRESS(player_shot_8_flight_table + 78, player_shot_8_flight_039);
+    STORE_ARCADE_ADDRESS(player_shot_8_flight_table + 80, player_shot_8_flight_040);
+    STORE_ARCADE_ADDRESS(player_shot_8_flight_table + 82, player_shot_8_flight_041);
+    STORE_ARCADE_ADDRESS(player_shot_8_flight_table + 84, player_shot_8_flight_042);
+    STORE_ARCADE_ADDRESS(player_shot_8_flight_table + 86, player_shot_8_flight_043);
+    STORE_ARCADE_ADDRESS(player_shot_8_flight_table + 88, player_shot_8_flight_044);
+    STORE_ARCADE_ADDRESS(player_shot_8_flight_028 + 2, player_shot_8_flight_028_01);
+    STORE_ARCADE_ADDRESS(player_shot_8_flight_029 + 2, player_shot_8_flight_028_01);
+    STORE_ARCADE_ADDRESS(player_shot_8_flight_030 + 2, player_shot_8_flight_028_01);
+    STORE_ARCADE_ADDRESS(player_shot_8_flight_031 + 2, player_shot_8_flight_028_01);
+    STORE_ARCADE_ADDRESS(player_shot_8_flight_032 + 2, player_shot_8_flight_028_01);
+    STORE_ARCADE_ADDRESS(player_shot_8_flight_033 + 2, player_shot_8_flight_028_01);
+    STORE_ARCADE_ADDRESS(player_shot_8_flight_034 + 2, player_shot_8_flight_028_01);
+    STORE_ARCADE_ADDRESS(player_shot_8_flight_035 + 2, player_shot_8_flight_028_01);
+    STORE_ARCADE_ADDRESS(player_shot_8_flight_036 + 2, player_shot_8_flight_028_01);
+    STORE_ARCADE_ADDRESS(player_shot_8_flight_037 + 2, player_shot_8_flight_028_01);
+    STORE_ARCADE_ADDRESS(player_shot_8_flight_038 + 2, player_shot_8_flight_028_01);
+    STORE_ARCADE_ADDRESS(player_shot_8_flight_039 + 2, player_shot_8_flight_028_01);
+    STORE_ARCADE_ADDRESS(player_shot_8_flight_040 + 2, player_shot_8_flight_028_01);
+    STORE_ARCADE_ADDRESS(player_shot_8_flight_041 + 2, player_shot_8_flight_028_01);
+    STORE_ARCADE_ADDRESS(player_shot_8_flight_042 + 2, player_shot_8_flight_028_01);
+    STORE_ARCADE_ADDRESS(player_shot_8_flight_043 + 2, player_shot_8_flight_028_01);
+    STORE_ARCADE_ADDRESS(player_shot_8_flight_044 + 2, player_shot_8_flight_028_01);
+    STORE_ARCADE_ADDRESS(player_shot_8_flight_table + 96, player_shot_8_flight_048);
+    STORE_ARCADE_ADDRESS(player_shot_8_flight_table + 98, player_shot_8_flight_049);
+    STORE_ARCADE_ADDRESS(player_shot_8_flight_table + 100, player_shot_8_flight_050);
+    STORE_ARCADE_ADDRESS(player_shot_8_flight_table + 102, player_shot_8_flight_051);
+    STORE_ARCADE_ADDRESS(player_shot_8_flight_table + 104, player_shot_8_flight_052);
+    STORE_ARCADE_ADDRESS(player_shot_8_flight_table + 106, player_shot_8_flight_053);
+    STORE_ARCADE_ADDRESS(player_shot_8_flight_table + 108, player_shot_8_flight_054);
+    STORE_ARCADE_ADDRESS(player_shot_8_flight_table + 110, player_shot_8_flight_055);
+    STORE_ARCADE_ADDRESS(player_shot_8_flight_table + 112, player_shot_8_flight_056);
+    STORE_ARCADE_ADDRESS(player_shot_8_flight_table + 114, player_shot_8_flight_057);
+    STORE_ARCADE_ADDRESS(player_shot_8_flight_table + 116, player_shot_8_flight_058);
+    STORE_ARCADE_ADDRESS(player_shot_8_flight_table + 118, player_shot_8_flight_059);
+    STORE_ARCADE_ADDRESS(player_shot_8_flight_table + 120, player_shot_8_flight_060);
+    STORE_ARCADE_ADDRESS(player_shot_8_flight_table + 122, player_shot_8_flight_061);
+    STORE_ARCADE_ADDRESS(player_shot_8_flight_table + 124, player_shot_8_flight_062);
+    STORE_ARCADE_ADDRESS(player_shot_8_flight_table + 126, player_shot_8_flight_063);
+    STORE_ARCADE_ADDRESS(player_shot_8_flight_table + 128, player_shot_8_flight_064);
+    STORE_ARCADE_ADDRESS(player_shot_8_flight_048 + 2, player_shot_8_flight_048_01);
+    STORE_ARCADE_ADDRESS(player_shot_8_flight_049 + 2, player_shot_8_flight_048_01);
+    STORE_ARCADE_ADDRESS(player_shot_8_flight_050 + 2, player_shot_8_flight_048_01);
+    STORE_ARCADE_ADDRESS(player_shot_8_flight_051 + 2, player_shot_8_flight_048_01);
+    STORE_ARCADE_ADDRESS(player_shot_8_flight_052 + 2, player_shot_8_flight_048_01);
+    STORE_ARCADE_ADDRESS(player_shot_8_flight_053 + 2, player_shot_8_flight_048_01);
+    STORE_ARCADE_ADDRESS(player_shot_8_flight_054 + 2, player_shot_8_flight_048_01);
+    STORE_ARCADE_ADDRESS(player_shot_8_flight_055 + 2, player_shot_8_flight_048_01);
+    STORE_ARCADE_ADDRESS(player_shot_8_flight_056 + 2, player_shot_8_flight_048_01);
+    STORE_ARCADE_ADDRESS(player_shot_8_flight_057 + 2, player_shot_8_flight_048_01);
+    STORE_ARCADE_ADDRESS(player_shot_8_flight_058 + 2, player_shot_8_flight_048_01);
+    STORE_ARCADE_ADDRESS(player_shot_8_flight_059 + 2, player_shot_8_flight_048_01);
+    STORE_ARCADE_ADDRESS(player_shot_8_flight_060 + 2, player_shot_8_flight_048_01);
+    STORE_ARCADE_ADDRESS(player_shot_8_flight_061 + 2, player_shot_8_flight_048_01);
+    STORE_ARCADE_ADDRESS(player_shot_8_flight_062 + 2, player_shot_8_flight_048_01);
+    STORE_ARCADE_ADDRESS(player_shot_8_flight_063 + 2, player_shot_8_flight_048_01);
+    STORE_ARCADE_ADDRESS(player_shot_8_flight_064 + 2, player_shot_8_flight_048_01);
+    STORE_ARCADE_ADDRESS(player_shot_8_flight_table + 136, player_shot_8_flight_068);
+    STORE_ARCADE_ADDRESS(player_shot_8_flight_table + 138, player_shot_8_flight_069);
+    STORE_ARCADE_ADDRESS(player_shot_8_flight_table + 140, player_shot_8_flight_070);
+    STORE_ARCADE_ADDRESS(player_shot_8_flight_table + 142, player_shot_8_flight_071);
+    STORE_ARCADE_ADDRESS(player_shot_8_flight_table + 144, player_shot_8_flight_072);
+    STORE_ARCADE_ADDRESS(player_shot_8_flight_table + 146, player_shot_8_flight_073);
+    STORE_ARCADE_ADDRESS(player_shot_8_flight_table + 148, player_shot_8_flight_074);
+    STORE_ARCADE_ADDRESS(player_shot_8_flight_table + 150, player_shot_8_flight_075);
+    STORE_ARCADE_ADDRESS(player_shot_8_flight_table + 152, player_shot_8_flight_076);
+    STORE_ARCADE_ADDRESS(player_shot_8_flight_table + 154, player_shot_8_flight_077);
+    STORE_ARCADE_ADDRESS(player_shot_8_flight_table + 156, player_shot_8_flight_078);
+    STORE_ARCADE_ADDRESS(player_shot_8_flight_table + 158, player_shot_8_flight_079);
+    STORE_ARCADE_ADDRESS(player_shot_8_flight_table + 160, player_shot_8_flight_080);
+    STORE_ARCADE_ADDRESS(player_shot_8_flight_table + 162, player_shot_8_flight_081);
+    STORE_ARCADE_ADDRESS(player_shot_8_flight_table + 164, player_shot_8_flight_082);
+    STORE_ARCADE_ADDRESS(player_shot_8_flight_table + 166, player_shot_8_flight_083);
+    STORE_ARCADE_ADDRESS(player_shot_8_flight_table + 168, player_shot_8_flight_084);
+    STORE_ARCADE_ADDRESS(player_shot_8_flight_068 + 2, player_shot_8_flight_068_01);
+    STORE_ARCADE_ADDRESS(player_shot_8_flight_069 + 2, player_shot_8_flight_068_01);
+    STORE_ARCADE_ADDRESS(player_shot_8_flight_070 + 2, player_shot_8_flight_068_01);
+    STORE_ARCADE_ADDRESS(player_shot_8_flight_071 + 2, player_shot_8_flight_068_01);
+    STORE_ARCADE_ADDRESS(player_shot_8_flight_072 + 2, player_shot_8_flight_068_01);
+    STORE_ARCADE_ADDRESS(player_shot_8_flight_073 + 2, player_shot_8_flight_068_01);
+    STORE_ARCADE_ADDRESS(player_shot_8_flight_074 + 2, player_shot_8_flight_068_01);
+    STORE_ARCADE_ADDRESS(player_shot_8_flight_075 + 2, player_shot_8_flight_068_01);
+    STORE_ARCADE_ADDRESS(player_shot_8_flight_076 + 2, player_shot_8_flight_068_01);
+    STORE_ARCADE_ADDRESS(player_shot_8_flight_077 + 2, player_shot_8_flight_068_01);
+    STORE_ARCADE_ADDRESS(player_shot_8_flight_078 + 2, player_shot_8_flight_068_01);
+    STORE_ARCADE_ADDRESS(player_shot_8_flight_079 + 2, player_shot_8_flight_068_01);
+    STORE_ARCADE_ADDRESS(player_shot_8_flight_080 + 2, player_shot_8_flight_068_01);
+    STORE_ARCADE_ADDRESS(player_shot_8_flight_081 + 2, player_shot_8_flight_068_01);
+    STORE_ARCADE_ADDRESS(player_shot_8_flight_082 + 2, player_shot_8_flight_068_01);
+    STORE_ARCADE_ADDRESS(player_shot_8_flight_083 + 2, player_shot_8_flight_068_01);
+    STORE_ARCADE_ADDRESS(player_shot_8_flight_084 + 2, player_shot_8_flight_068_01);
+    STORE_ARCADE_ADDRESS(player_shot_8_flight_table + 176, player_shot_8_flight_088);
+    STORE_ARCADE_ADDRESS(player_shot_8_flight_table + 178, player_shot_8_flight_089);
+    STORE_ARCADE_ADDRESS(player_shot_8_flight_table + 180, player_shot_8_flight_090);
+    STORE_ARCADE_ADDRESS(player_shot_8_flight_table + 182, player_shot_8_flight_091);
+    STORE_ARCADE_ADDRESS(player_shot_8_flight_table + 184, player_shot_8_flight_092);
+    STORE_ARCADE_ADDRESS(player_shot_8_flight_table + 186, player_shot_8_flight_093);
+    STORE_ARCADE_ADDRESS(player_shot_8_flight_table + 188, player_shot_8_flight_094);
+    STORE_ARCADE_ADDRESS(player_shot_8_flight_table + 190, player_shot_8_flight_095);
+    STORE_ARCADE_ADDRESS(player_shot_8_flight_table + 192, player_shot_8_flight_096);
+    STORE_ARCADE_ADDRESS(player_shot_8_flight_table + 194, player_shot_8_flight_097);
+    STORE_ARCADE_ADDRESS(player_shot_8_flight_table + 196, player_shot_8_flight_098);
+    STORE_ARCADE_ADDRESS(player_shot_8_flight_table + 198, player_shot_8_flight_099);
+    STORE_ARCADE_ADDRESS(player_shot_8_flight_table + 200, player_shot_8_flight_100);
+    STORE_ARCADE_ADDRESS(player_shot_8_flight_table + 202, player_shot_8_flight_101);
+    STORE_ARCADE_ADDRESS(player_shot_8_flight_table + 204, player_shot_8_flight_102);
+    STORE_ARCADE_ADDRESS(player_shot_8_flight_table + 206, player_shot_8_flight_103);
+    STORE_ARCADE_ADDRESS(player_shot_8_flight_table + 208, player_shot_8_flight_104);
+    STORE_ARCADE_ADDRESS(player_shot_8_flight_088 + 2, player_shot_8_flight_088_01);
+    STORE_ARCADE_ADDRESS(player_shot_8_flight_089 + 2, player_shot_8_flight_088_01);
+    STORE_ARCADE_ADDRESS(player_shot_8_flight_090 + 2, player_shot_8_flight_088_01);
+    STORE_ARCADE_ADDRESS(player_shot_8_flight_091 + 2, player_shot_8_flight_088_01);
+    STORE_ARCADE_ADDRESS(player_shot_8_flight_092 + 2, player_shot_8_flight_088_01);
+    STORE_ARCADE_ADDRESS(player_shot_8_flight_093 + 2, player_shot_8_flight_088_01);
+    STORE_ARCADE_ADDRESS(player_shot_8_flight_094 + 2, player_shot_8_flight_088_01);
+    STORE_ARCADE_ADDRESS(player_shot_8_flight_095 + 2, player_shot_8_flight_088_01);
+    STORE_ARCADE_ADDRESS(player_shot_8_flight_096 + 2, player_shot_8_flight_088_01);
+    STORE_ARCADE_ADDRESS(player_shot_8_flight_097 + 2, player_shot_8_flight_088_01);
+    STORE_ARCADE_ADDRESS(player_shot_8_flight_098 + 2, player_shot_8_flight_088_01);
+    STORE_ARCADE_ADDRESS(player_shot_8_flight_099 + 2, player_shot_8_flight_088_01);
+    STORE_ARCADE_ADDRESS(player_shot_8_flight_100 + 2, player_shot_8_flight_088_01);
+    STORE_ARCADE_ADDRESS(player_shot_8_flight_101 + 2, player_shot_8_flight_088_01);
+    STORE_ARCADE_ADDRESS(player_shot_8_flight_102 + 2, player_shot_8_flight_088_01);
+    STORE_ARCADE_ADDRESS(player_shot_8_flight_103 + 2, player_shot_8_flight_088_01);
+    STORE_ARCADE_ADDRESS(player_shot_8_flight_104 + 2, player_shot_8_flight_088_01);
+    STORE_ARCADE_ADDRESS(option_shot_list_3_03_00_00, option_shot_list_3_03_00_00_at_0);
+    STORE_ARCADE_ADDRESS(option_shot_list_3_03_00_00 + 2, option_shot_list_3_03_00_00_at_2);
+    STORE_ARCADE_ADDRESS(option_shot_list_3_03_00_00 + 4, option_shot_list_3_03_00_00_at_4);
+    STORE_ARCADE_ADDRESS(option_shot_list_3_03_00_00 + 6, option_shot_list_3_03_00_00_at_6);
+    STORE_ARCADE_ADDRESS(option_shot_list_3_03_00_00 + 8, option_shot_list_3_03_00_00_at_8);
+    STORE_ARCADE_ADDRESS(option_shot_list_3_03_00_00 + 10, option_shot_list_3_03_00_00_at_10);
+    STORE_ARCADE_ADDRESS(option_shot_list_3_03_00_00 + 12, option_shot_list_3_03_00_00_at_12);
+    STORE_ARCADE_ADDRESS(option_shot_list_3_03_00_00 + 14, option_shot_list_3_03_00_00_at_14);
+    STORE_ARCADE_ADDRESS(option_shot_list_3_03_00_00 + 16, option_shot_list_3_03_00_00_at_16);
+    STORE_ARCADE_ADDRESS(option_shot_list_3_03_00_00 + 18, option_shot_list_3_03_00_00_at_18);
+    STORE_ARCADE_ADDRESS(option_shot_list_3_03_00_00 + 20, option_shot_list_3_03_00_00_at_20);
+    STORE_ARCADE_ADDRESS(option_shot_list_3_03_00_00 + 22, option_shot_list_3_03_00_00_at_22);
+    STORE_ARCADE_ADDRESS(option_shot_list_3_03_00_00 + 24, option_shot_list_3_03_00_00_at_24);
+    STORE_ARCADE_ADDRESS(option_shot_list_3_03_00_00 + 26, option_shot_list_3_03_00_00_at_26);
+    STORE_ARCADE_ADDRESS(option_shot_list_3_03_00_00 + 28, option_shot_list_3_03_00_00_at_28);
+    STORE_ARCADE_ADDRESS(option_shot_list_3_03_00_00 + 30, option_shot_list_3_03_00_00_at_30);
+    STORE_ARCADE_ADDRESS(option_shot_list_3_03_00_00 + 32, option_shot_list_3_03_00_00_at_32);
+    STORE_ARCADE_ADDRESS(option_shot_list_3_03_00_00_at_0 + 2, replay_targets_shot_lists_292);
+    STORE_ARCADE_ADDRESS(option_shot_list_3_03_00_00_at_2 + 2, replay_targets_shot_lists_292);
+    STORE_ARCADE_ADDRESS(option_shot_list_3_03_00_00_at_4 + 2, replay_targets_shot_lists_292);
+    STORE_ARCADE_ADDRESS(option_shot_list_3_03_00_00_at_6 + 2, replay_targets_shot_lists_292);
+    STORE_ARCADE_ADDRESS(option_shot_list_3_03_00_00_at_8 + 2, replay_targets_shot_lists_292);
+    STORE_ARCADE_ADDRESS(option_shot_list_3_03_00_00_at_10 + 2, replay_targets_shot_lists_292);
+    STORE_ARCADE_ADDRESS(option_shot_list_3_03_00_00_at_12 + 2, replay_targets_shot_lists_292);
+    STORE_ARCADE_ADDRESS(option_shot_list_3_03_00_00_at_14 + 2, replay_targets_shot_lists_292);
+    STORE_ARCADE_ADDRESS(option_shot_list_3_03_00_00_at_16 + 2, replay_targets_shot_lists_292);
+    STORE_ARCADE_ADDRESS(option_shot_list_3_03_00_00_at_18 + 2, replay_targets_shot_lists_292);
+    STORE_ARCADE_ADDRESS(option_shot_list_3_03_00_00_at_20 + 2, replay_targets_shot_lists_292);
+    STORE_ARCADE_ADDRESS(option_shot_list_3_03_00_00_at_22 + 2, replay_targets_shot_lists_292);
+    STORE_ARCADE_ADDRESS(option_shot_list_3_03_00_00_at_24 + 2, replay_targets_shot_lists_292);
+    STORE_ARCADE_ADDRESS(option_shot_list_3_03_00_00_at_26 + 2, replay_targets_shot_lists_292);
+    STORE_ARCADE_ADDRESS(option_shot_list_3_03_00_00_at_28 + 2, replay_targets_shot_lists_292);
+    STORE_ARCADE_ADDRESS(option_shot_list_3_03_00_00_at_30 + 2, replay_targets_shot_lists_292);
+    STORE_ARCADE_ADDRESS(option_shot_list_3_03_00_00_at_32 + 2, replay_targets_shot_lists_292);
+    STORE_ARCADE_ADDRESS(player_shot_8_impact_table, player_shot_8_impact_00);
+    STORE_ARCADE_ADDRESS(player_shot_8_impact_table + 2, player_shot_8_impact_00);
+    STORE_ARCADE_ADDRESS(player_shot_8_impact_table + 4, player_shot_8_impact_02);
+    STORE_ARCADE_ADDRESS(player_shot_8_impact_table + 6, player_shot_8_impact_02);
+    STORE_ARCADE_ADDRESS(player_shot_8_impact_table + 8, player_shot_8_impact_04);
+    STORE_ARCADE_ADDRESS(player_shot_8_impact_table + 10, player_shot_8_impact_04);
+    STORE_ARCADE_ADDRESS(player_shot_8_impact_table + 12, player_shot_8_impact_06);
+    STORE_ARCADE_ADDRESS(player_shot_8_impact_table + 14, player_shot_8_impact_06);
+    STORE_ARCADE_ADDRESS(player_shot_8_impact_table + 16, player_shot_8_impact_08);
+    STORE_ARCADE_ADDRESS(player_shot_8_impact_table + 18, player_shot_8_impact_08);
+    STORE_ARCADE_ADDRESS(player_shot_8_impact_table + 20, player_shot_8_impact_10);
+    STORE_ARCADE_ADDRESS(player_shot_8_impact_table + 22, player_shot_8_impact_11);
+    STORE_ARCADE_ADDRESS(player_shot_8_impact_table + 24, player_shot_8_impact_12);
+    STORE_ARCADE_ADDRESS(player_shot_8_impact_table + 26, player_shot_8_impact_13);
+    STORE_ARCADE_ADDRESS(player_shot_8_impact_table + 28, player_shot_8_impact_14);
+    STORE_ARCADE_ADDRESS(player_shot_8_impact_table + 30, player_shot_8_impact_15);
+    STORE_ARCADE_ADDRESS(player_shot_8_impact_table + 32, player_shot_8_impact_15);
+    STORE_ARCADE_ADDRESS(player_shot_8_impact_table + 34, player_shot_8_impact_17);
+    STORE_ARCADE_ADDRESS(player_shot_8_impact_table + 36, player_shot_8_impact_17);
+    STORE_ARCADE_ADDRESS(player_shot_8_impact_table + 38, player_shot_8_impact_19);
+    STORE_ARCADE_ADDRESS(player_shot_8_impact_table + 40, player_shot_8_impact_19);
+    STORE_ARCADE_ADDRESS(player_shot_8_impact_table + 42, player_shot_8_impact_21);
+    STORE_ARCADE_ADDRESS(player_shot_8_impact_table + 44, player_shot_8_impact_21);
+    STORE_ARCADE_ADDRESS(player_shot_8_impact_table + 46, player_shot_8_impact_23);
+    STORE_ARCADE_ADDRESS(player_shot_8_impact_table + 48, player_shot_8_impact_23);
+    STORE_ARCADE_ADDRESS(player_shot_8_impact_00 + 3, player_shot_8_impact_frames_00);
+    STORE_ARCADE_ADDRESS(player_shot_8_impact_02 + 3, player_shot_8_impact_frames_02);
+    STORE_ARCADE_ADDRESS(player_shot_8_impact_04 + 3, player_shot_8_impact_frames_02);
+    STORE_ARCADE_ADDRESS(player_shot_8_impact_06 + 3, player_shot_8_impact_frames_06);
+    STORE_ARCADE_ADDRESS(player_shot_8_impact_08 + 3, player_shot_8_impact_frames_06);
+    STORE_ARCADE_ADDRESS(player_shot_8_impact_10 + 3, player_shot_8_impact_frames_10);
+    STORE_ARCADE_ADDRESS(player_shot_8_impact_11 + 3, player_shot_8_impact_frames_11);
+    STORE_ARCADE_ADDRESS(player_shot_8_impact_12 + 3, player_shot_8_impact_frames_11);
+    STORE_ARCADE_ADDRESS(player_shot_8_impact_13 + 3, player_shot_8_impact_frames_13);
+    STORE_ARCADE_ADDRESS(player_shot_8_impact_14 + 3, player_shot_8_impact_frames_13);
+    STORE_ARCADE_ADDRESS(player_shot_8_impact_15 + 3, player_shot_8_impact_frames_15);
+    STORE_ARCADE_ADDRESS(player_shot_8_impact_17 + 3, player_shot_8_impact_frames_17);
+    STORE_ARCADE_ADDRESS(player_shot_8_impact_19 + 3, player_shot_8_impact_frames_17);
+    STORE_ARCADE_ADDRESS(player_shot_8_impact_21 + 3, player_shot_8_impact_frames_21);
+    STORE_ARCADE_ADDRESS(player_shot_8_impact_23 + 3, player_shot_8_impact_frames_21);
 }
 
 extern u16 ship0_shot_list_1_00_00[];
@@ -3058,124 +3058,131 @@ extern u16 D_0028C868[];
 extern u16 D_0028C880[];
 
 void player_tables_init(void) {
-    STORE_POINTER(((u16 *)player_weapon_tables), player_shot_levels_0);
-    STORE_POINTER(player_weapon_tables + 2, player_laser_levels_0);
-    STORE_POINTER(player_weapon_tables + 4, player_shot_levels_1);
-    STORE_POINTER(player_weapon_tables + 6, player_laser_levels_1);
-    STORE_POINTER(player_weapon_tables + 8, player_shot_levels_2);
-    STORE_POINTER(player_weapon_tables + 10, player_laser_levels_2);
-    STORE_POINTER(player_weapon_tables + 12, player_shot_levels_3);
-    STORE_POINTER(player_weapon_tables + 14, player_laser_levels_3);
-    STORE_POINTER(player_weapon_tables + 16, player_shot_levels_4);
-    STORE_POINTER(player_weapon_tables + 18, player_laser_levels_4);
-    STORE_POINTER(player_weapon_tables + 20, player_shot_levels_5);
-    STORE_POINTER(player_weapon_tables + 22, player_laser_levels_5);
-    STORE_POINTER(player_laser_levels_5 + 8, (u32)player_shot_levels_2 + 8);
-    STORE_POINTER(player_laser_levels_5 + 10, (u32)player_laser_levels_2 + 8);
-    STORE_POINTER(player_laser_levels_5 + 12, (u32)player_shot_levels_3 + 8);
-    STORE_POINTER(player_laser_levels_5 + 14, (u32)player_laser_levels_3 + 8);
+    STORE_ARCADE_ADDRESS(((u16 *)player_weapon_tables), player_shot_levels_0);
+    STORE_ARCADE_ADDRESS(player_weapon_tables + 2, player_laser_levels_0);
+    STORE_ARCADE_ADDRESS(player_weapon_tables + 4, player_shot_levels_1);
+    STORE_ARCADE_ADDRESS(player_weapon_tables + 6, player_laser_levels_1);
+    STORE_ARCADE_ADDRESS(player_weapon_tables + 8, player_shot_levels_2);
+    STORE_ARCADE_ADDRESS(player_weapon_tables + 10, player_laser_levels_2);
+    STORE_ARCADE_ADDRESS(player_weapon_tables + 12, player_shot_levels_3);
+    STORE_ARCADE_ADDRESS(player_weapon_tables + 14, player_laser_levels_3);
+    STORE_ARCADE_ADDRESS(player_weapon_tables + 16, player_shot_levels_4);
+    STORE_ARCADE_ADDRESS(player_weapon_tables + 18, player_laser_levels_4);
+    STORE_ARCADE_ADDRESS(player_weapon_tables + 20, player_shot_levels_5);
+    STORE_ARCADE_ADDRESS(player_weapon_tables + 22, player_laser_levels_5);
+#ifdef DDPDOJ_PC
+    STORE_ARCADE_ADDRESS(player_laser_levels_5 + 8, player_shot_levels_2 + 4);
+    STORE_ARCADE_ADDRESS(player_laser_levels_5 + 10, player_laser_levels_2 + 4);
+    STORE_ARCADE_ADDRESS(player_laser_levels_5 + 12, player_shot_levels_3 + 4);
+    STORE_ARCADE_ADDRESS(player_laser_levels_5 + 14, player_laser_levels_3 + 4);
+#else
+    STORE_ARCADE_ADDRESS(player_laser_levels_5 + 8, (u32)player_shot_levels_2 + 8);
+    STORE_ARCADE_ADDRESS(player_laser_levels_5 + 10, (u32)player_laser_levels_2 + 8);
+    STORE_ARCADE_ADDRESS(player_laser_levels_5 + 12, (u32)player_shot_levels_3 + 8);
+    STORE_ARCADE_ADDRESS(player_laser_levels_5 + 14, (u32)player_laser_levels_3 + 8);
+#endif
     STORE_ARCADE_ADDRESS(((u16 *)player_ship_sprite_tables), player_ship_sprites_00);
     STORE_ARCADE_ADDRESS(player_ship_sprite_tables + 2, player_ship_sprites_01);
     STORE_ARCADE_ADDRESS(player_ship_hitbox_tables, player_ship_hitboxes_00);
     STORE_ARCADE_ADDRESS(player_ship_hitbox_tables + 2, player_ship_hitboxes_01);
     STORE_ARCADE_ADDRESS(player_ship_shadow_tables, player_ship_shadows_00);
     STORE_ARCADE_ADDRESS(player_ship_shadow_tables + 2, player_ship_shadows_01);
-    STORE_POINTER(((u16 *)ship0_shot_lists_1), ship0_shot_list_1_00);
-    STORE_POINTER(ship0_shot_lists_1 + 2, ship0_shot_list_1_01);
-    STORE_POINTER(ship0_shot_lists_1 + 4, ship0_shot_list_1_02);
-    STORE_POINTER(ship0_shot_lists_1 + 6, ship0_shot_list_1_03);
-    STORE_POINTER(ship0_shot_lists_1 + 8, ship0_shot_list_1_04);
-    STORE_POINTER(ship0_shot_lists_1 + 10, ship0_shot_list_1_05);
-    STORE_POINTER(((u16 *)ship0_shot_lists_2), ship0_shot_list_2_00);
-    STORE_POINTER(ship0_shot_lists_2 + 2, ship0_shot_list_2_01);
-    STORE_POINTER(ship0_shot_lists_2 + 8, ship0_shot_list_2_04);
-    STORE_POINTER(ship0_shot_lists_2 + 10, ship0_shot_list_2_05);
-    STORE_POINTER(((u16 *)ship0_shot_lists_3), ship0_shot_list_3_00);
-    STORE_POINTER(ship0_shot_lists_3 + 2, ship0_shot_list_3_01);
-    STORE_POINTER(ship0_shot_lists_3 + 4, ship0_shot_list_3_02);
-    STORE_POINTER(ship0_shot_lists_3 + 6, ship0_shot_list_3_03);
-    STORE_POINTER(ship0_shot_lists_3 + 8, ship0_shot_list_3_04);
-    STORE_POINTER(ship0_shot_lists_3 + 10, ship0_shot_list_3_05);
-    STORE_POINTER(ship0_shot_list_1_00, ship0_shot_list_1_00_00);
-    STORE_POINTER(ship0_shot_list_1_00 + 2, ship0_shot_list_1_00_01);
-    STORE_POINTER(ship0_shot_list_1_00 + 4, ship0_shot_list_1_00_02);
-    STORE_POINTER(ship0_shot_list_1_00 + 6, ship0_shot_list_1_00_03);
-    STORE_POINTER(ship0_shot_list_1_00 + 8, ship0_shot_list_1_00_04);
-    STORE_POINTER(ship0_shot_list_2_00, ship0_shot_list_2_00_00);
-    STORE_POINTER(ship0_shot_list_2_00 + 2, ship0_shot_list_2_00_01);
-    STORE_POINTER(ship0_shot_list_2_00 + 4, ship0_shot_list_2_00_02);
-    STORE_POINTER(ship0_shot_list_2_00 + 6, ship0_shot_list_2_00_03);
-    STORE_POINTER(ship0_shot_list_2_00 + 8, ship0_shot_list_2_00_04);
-    STORE_POINTER(ship0_shot_list_3_00, ship0_shot_list_3_00_00);
-    STORE_POINTER(ship0_shot_list_3_00 + 2, ship0_shot_list_3_00_01);
-    STORE_POINTER(ship0_shot_list_3_00 + 4, ship0_shot_list_3_00_02);
-    STORE_POINTER(ship0_shot_list_3_00 + 6, ship0_shot_list_3_00_03);
-    STORE_POINTER(ship0_shot_list_3_00 + 8, ship0_shot_list_3_00_04);
-    STORE_POINTER(ship0_shot_list_1_01, ship0_shot_list_1_01_00);
-    STORE_POINTER(ship0_shot_list_1_01 + 2, ship0_shot_list_1_01_01);
-    STORE_POINTER(ship0_shot_list_1_01 + 4, ship0_shot_list_1_01_02);
-    STORE_POINTER(ship0_shot_list_1_01 + 6, ship0_shot_list_1_01_03);
-    STORE_POINTER(ship0_shot_list_1_01 + 8, ship0_shot_list_1_01_04);
-    STORE_POINTER(ship0_shot_list_2_01, ship0_shot_list_2_01_00);
-    STORE_POINTER(ship0_shot_list_2_01 + 2, ship0_shot_list_2_01_01);
-    STORE_POINTER(ship0_shot_list_2_01 + 4, ship0_shot_list_2_01_02);
-    STORE_POINTER(ship0_shot_list_2_01 + 6, ship0_shot_list_2_01_03);
-    STORE_POINTER(ship0_shot_list_2_01 + 8, ship0_shot_list_2_01_04);
-    STORE_POINTER(ship0_shot_list_3_01, ship0_shot_list_3_01_00);
-    STORE_POINTER(ship0_shot_list_3_01 + 2, ship0_shot_list_3_01_01);
-    STORE_POINTER(ship0_shot_list_3_01 + 4, ship0_shot_list_3_01_02);
-    STORE_POINTER(ship0_shot_list_3_01 + 6, ship0_shot_list_3_01_03);
-    STORE_POINTER(ship0_shot_list_3_01 + 8, ship0_shot_list_3_01_04);
-    STORE_POINTER(ship0_shot_list_1_02, ship0_shot_list_1_02_00);
-    STORE_POINTER(ship0_shot_list_1_02 + 2, ship0_shot_list_1_02_01);
-    STORE_POINTER(ship0_shot_list_1_02 + 4, ship0_shot_list_1_02_02);
-    STORE_POINTER(ship0_shot_list_1_02 + 6, ship0_shot_list_1_02_03);
-    STORE_POINTER(ship0_shot_list_1_02 + 8, ship0_shot_list_1_02_04);
-    STORE_POINTER(ship0_shot_list_3_02, ship0_shot_list_3_02_00);
-    STORE_POINTER(ship0_shot_list_3_02 + 2, ship0_shot_list_3_02_01);
-    STORE_POINTER(ship0_shot_list_3_02 + 4, ship0_shot_list_3_02_02);
-    STORE_POINTER(ship0_shot_list_3_02 + 6, ship0_shot_list_3_02_03);
-    STORE_POINTER(ship0_shot_list_3_02 + 8, ship0_shot_list_3_02_04);
-    STORE_POINTER(ship0_shot_list_1_03, ship0_shot_list_1_03_00);
-    STORE_POINTER(ship0_shot_list_1_03 + 2, ship0_shot_list_1_03_01);
-    STORE_POINTER(ship0_shot_list_1_03 + 4, ship0_shot_list_1_03_02);
-    STORE_POINTER(ship0_shot_list_1_03 + 6, ship0_shot_list_1_03_03);
-    STORE_POINTER(ship0_shot_list_1_03 + 8, ship0_shot_list_1_03_04);
-    STORE_POINTER(ship0_shot_list_3_03, ship0_shot_list_3_03_00);
-    STORE_POINTER(ship0_shot_list_3_03 + 2, ship0_shot_list_3_03_01);
-    STORE_POINTER(ship0_shot_list_3_03 + 4, ship0_shot_list_3_03_02);
-    STORE_POINTER(ship0_shot_list_3_03 + 6, ship0_shot_list_3_03_03);
-    STORE_POINTER(ship0_shot_list_3_03 + 8, ship0_shot_list_3_03_04);
-    STORE_POINTER(ship0_shot_list_1_04, ship0_shot_list_1_04_00);
-    STORE_POINTER(ship0_shot_list_1_04 + 2, ship0_shot_list_1_04_01);
-    STORE_POINTER(ship0_shot_list_1_04 + 4, ship0_shot_list_1_04_02);
-    STORE_POINTER(ship0_shot_list_1_04 + 6, ship0_shot_list_1_04_03);
-    STORE_POINTER(ship0_shot_list_1_04 + 8, ship0_shot_list_1_04_04);
-    STORE_POINTER(ship0_shot_list_2_04, ship0_shot_list_2_04_00);
-    STORE_POINTER(ship0_shot_list_2_04 + 2, ship0_shot_list_2_04_01);
-    STORE_POINTER(ship0_shot_list_2_04 + 4, ship0_shot_list_2_04_02);
-    STORE_POINTER(ship0_shot_list_2_04 + 6, ship0_shot_list_2_04_03);
-    STORE_POINTER(ship0_shot_list_2_04 + 8, ship0_shot_list_2_04_04);
-    STORE_POINTER(ship0_shot_list_3_04, ship0_shot_list_3_04_00);
-    STORE_POINTER(ship0_shot_list_3_04 + 2, ship0_shot_list_3_04_01);
-    STORE_POINTER(ship0_shot_list_3_04 + 4, ship0_shot_list_3_04_02);
-    STORE_POINTER(ship0_shot_list_3_04 + 6, ship0_shot_list_3_04_03);
-    STORE_POINTER(ship0_shot_list_3_04 + 8, ship0_shot_list_3_04_04);
-    STORE_POINTER(ship0_shot_list_1_05, ship0_shot_list_1_05_00);
-    STORE_POINTER(ship0_shot_list_1_05 + 2, ship0_shot_list_1_05_01);
-    STORE_POINTER(ship0_shot_list_1_05 + 4, ship0_shot_list_1_05_02);
-    STORE_POINTER(ship0_shot_list_1_05 + 6, ship0_shot_list_1_05_03);
-    STORE_POINTER(ship0_shot_list_1_05 + 8, ship0_shot_list_1_05_04);
-    STORE_POINTER(ship0_shot_list_2_05, ship0_shot_list_2_05_00);
-    STORE_POINTER(ship0_shot_list_2_05 + 2, ship0_shot_list_2_05_01);
-    STORE_POINTER(ship0_shot_list_2_05 + 4, ship0_shot_list_2_05_02);
-    STORE_POINTER(ship0_shot_list_2_05 + 6, ship0_shot_list_2_05_03);
-    STORE_POINTER(ship0_shot_list_2_05 + 8, ship0_shot_list_2_05_04);
-    STORE_POINTER(ship0_shot_list_3_05, ship0_shot_list_3_05_00);
-    STORE_POINTER(ship0_shot_list_3_05 + 2, ship0_shot_list_3_05_01);
-    STORE_POINTER(ship0_shot_list_3_05 + 4, ship0_shot_list_3_05_02);
-    STORE_POINTER(ship0_shot_list_3_05 + 6, ship0_shot_list_3_05_03);
-    STORE_POINTER(ship0_shot_list_3_05 + 8, ship0_shot_list_3_05_04);
+    STORE_ARCADE_ADDRESS(((u16 *)ship0_shot_lists_1), ship0_shot_list_1_00);
+    STORE_ARCADE_ADDRESS(ship0_shot_lists_1 + 2, ship0_shot_list_1_01);
+    STORE_ARCADE_ADDRESS(ship0_shot_lists_1 + 4, ship0_shot_list_1_02);
+    STORE_ARCADE_ADDRESS(ship0_shot_lists_1 + 6, ship0_shot_list_1_03);
+    STORE_ARCADE_ADDRESS(ship0_shot_lists_1 + 8, ship0_shot_list_1_04);
+    STORE_ARCADE_ADDRESS(ship0_shot_lists_1 + 10, ship0_shot_list_1_05);
+    STORE_ARCADE_ADDRESS(((u16 *)ship0_shot_lists_2), ship0_shot_list_2_00);
+    STORE_ARCADE_ADDRESS(ship0_shot_lists_2 + 2, ship0_shot_list_2_01);
+    STORE_ARCADE_ADDRESS(ship0_shot_lists_2 + 8, ship0_shot_list_2_04);
+    STORE_ARCADE_ADDRESS(ship0_shot_lists_2 + 10, ship0_shot_list_2_05);
+    STORE_ARCADE_ADDRESS(((u16 *)ship0_shot_lists_3), ship0_shot_list_3_00);
+    STORE_ARCADE_ADDRESS(ship0_shot_lists_3 + 2, ship0_shot_list_3_01);
+    STORE_ARCADE_ADDRESS(ship0_shot_lists_3 + 4, ship0_shot_list_3_02);
+    STORE_ARCADE_ADDRESS(ship0_shot_lists_3 + 6, ship0_shot_list_3_03);
+    STORE_ARCADE_ADDRESS(ship0_shot_lists_3 + 8, ship0_shot_list_3_04);
+    STORE_ARCADE_ADDRESS(ship0_shot_lists_3 + 10, ship0_shot_list_3_05);
+    STORE_ARCADE_ADDRESS(ship0_shot_list_1_00, ship0_shot_list_1_00_00);
+    STORE_ARCADE_ADDRESS(ship0_shot_list_1_00 + 2, ship0_shot_list_1_00_01);
+    STORE_ARCADE_ADDRESS(ship0_shot_list_1_00 + 4, ship0_shot_list_1_00_02);
+    STORE_ARCADE_ADDRESS(ship0_shot_list_1_00 + 6, ship0_shot_list_1_00_03);
+    STORE_ARCADE_ADDRESS(ship0_shot_list_1_00 + 8, ship0_shot_list_1_00_04);
+    STORE_ARCADE_ADDRESS(ship0_shot_list_2_00, ship0_shot_list_2_00_00);
+    STORE_ARCADE_ADDRESS(ship0_shot_list_2_00 + 2, ship0_shot_list_2_00_01);
+    STORE_ARCADE_ADDRESS(ship0_shot_list_2_00 + 4, ship0_shot_list_2_00_02);
+    STORE_ARCADE_ADDRESS(ship0_shot_list_2_00 + 6, ship0_shot_list_2_00_03);
+    STORE_ARCADE_ADDRESS(ship0_shot_list_2_00 + 8, ship0_shot_list_2_00_04);
+    STORE_ARCADE_ADDRESS(ship0_shot_list_3_00, ship0_shot_list_3_00_00);
+    STORE_ARCADE_ADDRESS(ship0_shot_list_3_00 + 2, ship0_shot_list_3_00_01);
+    STORE_ARCADE_ADDRESS(ship0_shot_list_3_00 + 4, ship0_shot_list_3_00_02);
+    STORE_ARCADE_ADDRESS(ship0_shot_list_3_00 + 6, ship0_shot_list_3_00_03);
+    STORE_ARCADE_ADDRESS(ship0_shot_list_3_00 + 8, ship0_shot_list_3_00_04);
+    STORE_ARCADE_ADDRESS(ship0_shot_list_1_01, ship0_shot_list_1_01_00);
+    STORE_ARCADE_ADDRESS(ship0_shot_list_1_01 + 2, ship0_shot_list_1_01_01);
+    STORE_ARCADE_ADDRESS(ship0_shot_list_1_01 + 4, ship0_shot_list_1_01_02);
+    STORE_ARCADE_ADDRESS(ship0_shot_list_1_01 + 6, ship0_shot_list_1_01_03);
+    STORE_ARCADE_ADDRESS(ship0_shot_list_1_01 + 8, ship0_shot_list_1_01_04);
+    STORE_ARCADE_ADDRESS(ship0_shot_list_2_01, ship0_shot_list_2_01_00);
+    STORE_ARCADE_ADDRESS(ship0_shot_list_2_01 + 2, ship0_shot_list_2_01_01);
+    STORE_ARCADE_ADDRESS(ship0_shot_list_2_01 + 4, ship0_shot_list_2_01_02);
+    STORE_ARCADE_ADDRESS(ship0_shot_list_2_01 + 6, ship0_shot_list_2_01_03);
+    STORE_ARCADE_ADDRESS(ship0_shot_list_2_01 + 8, ship0_shot_list_2_01_04);
+    STORE_ARCADE_ADDRESS(ship0_shot_list_3_01, ship0_shot_list_3_01_00);
+    STORE_ARCADE_ADDRESS(ship0_shot_list_3_01 + 2, ship0_shot_list_3_01_01);
+    STORE_ARCADE_ADDRESS(ship0_shot_list_3_01 + 4, ship0_shot_list_3_01_02);
+    STORE_ARCADE_ADDRESS(ship0_shot_list_3_01 + 6, ship0_shot_list_3_01_03);
+    STORE_ARCADE_ADDRESS(ship0_shot_list_3_01 + 8, ship0_shot_list_3_01_04);
+    STORE_ARCADE_ADDRESS(ship0_shot_list_1_02, ship0_shot_list_1_02_00);
+    STORE_ARCADE_ADDRESS(ship0_shot_list_1_02 + 2, ship0_shot_list_1_02_01);
+    STORE_ARCADE_ADDRESS(ship0_shot_list_1_02 + 4, ship0_shot_list_1_02_02);
+    STORE_ARCADE_ADDRESS(ship0_shot_list_1_02 + 6, ship0_shot_list_1_02_03);
+    STORE_ARCADE_ADDRESS(ship0_shot_list_1_02 + 8, ship0_shot_list_1_02_04);
+    STORE_ARCADE_ADDRESS(ship0_shot_list_3_02, ship0_shot_list_3_02_00);
+    STORE_ARCADE_ADDRESS(ship0_shot_list_3_02 + 2, ship0_shot_list_3_02_01);
+    STORE_ARCADE_ADDRESS(ship0_shot_list_3_02 + 4, ship0_shot_list_3_02_02);
+    STORE_ARCADE_ADDRESS(ship0_shot_list_3_02 + 6, ship0_shot_list_3_02_03);
+    STORE_ARCADE_ADDRESS(ship0_shot_list_3_02 + 8, ship0_shot_list_3_02_04);
+    STORE_ARCADE_ADDRESS(ship0_shot_list_1_03, ship0_shot_list_1_03_00);
+    STORE_ARCADE_ADDRESS(ship0_shot_list_1_03 + 2, ship0_shot_list_1_03_01);
+    STORE_ARCADE_ADDRESS(ship0_shot_list_1_03 + 4, ship0_shot_list_1_03_02);
+    STORE_ARCADE_ADDRESS(ship0_shot_list_1_03 + 6, ship0_shot_list_1_03_03);
+    STORE_ARCADE_ADDRESS(ship0_shot_list_1_03 + 8, ship0_shot_list_1_03_04);
+    STORE_ARCADE_ADDRESS(ship0_shot_list_3_03, ship0_shot_list_3_03_00);
+    STORE_ARCADE_ADDRESS(ship0_shot_list_3_03 + 2, ship0_shot_list_3_03_01);
+    STORE_ARCADE_ADDRESS(ship0_shot_list_3_03 + 4, ship0_shot_list_3_03_02);
+    STORE_ARCADE_ADDRESS(ship0_shot_list_3_03 + 6, ship0_shot_list_3_03_03);
+    STORE_ARCADE_ADDRESS(ship0_shot_list_3_03 + 8, ship0_shot_list_3_03_04);
+    STORE_ARCADE_ADDRESS(ship0_shot_list_1_04, ship0_shot_list_1_04_00);
+    STORE_ARCADE_ADDRESS(ship0_shot_list_1_04 + 2, ship0_shot_list_1_04_01);
+    STORE_ARCADE_ADDRESS(ship0_shot_list_1_04 + 4, ship0_shot_list_1_04_02);
+    STORE_ARCADE_ADDRESS(ship0_shot_list_1_04 + 6, ship0_shot_list_1_04_03);
+    STORE_ARCADE_ADDRESS(ship0_shot_list_1_04 + 8, ship0_shot_list_1_04_04);
+    STORE_ARCADE_ADDRESS(ship0_shot_list_2_04, ship0_shot_list_2_04_00);
+    STORE_ARCADE_ADDRESS(ship0_shot_list_2_04 + 2, ship0_shot_list_2_04_01);
+    STORE_ARCADE_ADDRESS(ship0_shot_list_2_04 + 4, ship0_shot_list_2_04_02);
+    STORE_ARCADE_ADDRESS(ship0_shot_list_2_04 + 6, ship0_shot_list_2_04_03);
+    STORE_ARCADE_ADDRESS(ship0_shot_list_2_04 + 8, ship0_shot_list_2_04_04);
+    STORE_ARCADE_ADDRESS(ship0_shot_list_3_04, ship0_shot_list_3_04_00);
+    STORE_ARCADE_ADDRESS(ship0_shot_list_3_04 + 2, ship0_shot_list_3_04_01);
+    STORE_ARCADE_ADDRESS(ship0_shot_list_3_04 + 4, ship0_shot_list_3_04_02);
+    STORE_ARCADE_ADDRESS(ship0_shot_list_3_04 + 6, ship0_shot_list_3_04_03);
+    STORE_ARCADE_ADDRESS(ship0_shot_list_3_04 + 8, ship0_shot_list_3_04_04);
+    STORE_ARCADE_ADDRESS(ship0_shot_list_1_05, ship0_shot_list_1_05_00);
+    STORE_ARCADE_ADDRESS(ship0_shot_list_1_05 + 2, ship0_shot_list_1_05_01);
+    STORE_ARCADE_ADDRESS(ship0_shot_list_1_05 + 4, ship0_shot_list_1_05_02);
+    STORE_ARCADE_ADDRESS(ship0_shot_list_1_05 + 6, ship0_shot_list_1_05_03);
+    STORE_ARCADE_ADDRESS(ship0_shot_list_1_05 + 8, ship0_shot_list_1_05_04);
+    STORE_ARCADE_ADDRESS(ship0_shot_list_2_05, ship0_shot_list_2_05_00);
+    STORE_ARCADE_ADDRESS(ship0_shot_list_2_05 + 2, ship0_shot_list_2_05_01);
+    STORE_ARCADE_ADDRESS(ship0_shot_list_2_05 + 4, ship0_shot_list_2_05_02);
+    STORE_ARCADE_ADDRESS(ship0_shot_list_2_05 + 6, ship0_shot_list_2_05_03);
+    STORE_ARCADE_ADDRESS(ship0_shot_list_2_05 + 8, ship0_shot_list_2_05_04);
+    STORE_ARCADE_ADDRESS(ship0_shot_list_3_05, ship0_shot_list_3_05_00);
+    STORE_ARCADE_ADDRESS(ship0_shot_list_3_05 + 2, ship0_shot_list_3_05_01);
+    STORE_ARCADE_ADDRESS(ship0_shot_list_3_05 + 4, ship0_shot_list_3_05_02);
+    STORE_ARCADE_ADDRESS(ship0_shot_list_3_05 + 6, ship0_shot_list_3_05_03);
+    STORE_ARCADE_ADDRESS(ship0_shot_list_3_05 + 8, ship0_shot_list_3_05_04);
     STORE_POINTER(player_shield_sprite_tables, player_shield_sprites_00);
     STORE_POINTER(player_shield_sprite_tables + 2, player_shield_sprites_01);
     STORE_ARCADE_ADDRESS(player_exhaust_sprite_tables, player_exhaust_sprites_00);
@@ -3336,13 +3343,13 @@ extern u16 D_00261EB0[];
 
 
 void maximum_level_texts_init(void) {
-    STORE_POINTER(((u16 *)p1_maximum_level_texts), D_00261CB0);
-    STORE_POINTER(p1_maximum_level_texts + 4, D_00261E30);
-    STORE_POINTER(p1_maximum_level_texts + 8, D_00261E70);
+    STORE_ARCADE_ADDRESS(((u16 *)p1_maximum_level_texts), D_00261CB0);
+    STORE_ARCADE_ADDRESS(p1_maximum_level_texts + 4, D_00261E30);
+    STORE_ARCADE_ADDRESS(p1_maximum_level_texts + 8, D_00261E70);
     STORE_POINTER(D_0028C5E0 + 4, D_00261EB0);
-    STORE_POINTER(((u16 *)p2_maximum_level_texts), D_00261CB0);
-    STORE_POINTER(p2_maximum_level_texts + 4, D_00261E30);
-    STORE_POINTER(p2_maximum_level_texts + 8, D_00261E70);
+    STORE_ARCADE_ADDRESS(((u16 *)p2_maximum_level_texts), D_00261CB0);
+    STORE_ARCADE_ADDRESS(p2_maximum_level_texts + 4, D_00261E30);
+    STORE_ARCADE_ADDRESS(p2_maximum_level_texts + 8, D_00261E70);
     STORE_POINTER(D_0028C5E0 + 8, D_00261EB0);
 }
 
@@ -3931,102 +3938,102 @@ extern u16 option_shot_list_4_03[];
 
 
 void option_shot_lists_init(void) {
-    STORE_POINTER(((u16 *)option_shot_lists_1), option_shot_list_1_00);
-    STORE_POINTER(option_shot_lists_1 + 2, option_shot_list_1_01);
-    STORE_POINTER(option_shot_lists_1 + 4, option_shot_list_1_02);
-    STORE_POINTER(option_shot_lists_1 + 6, option_shot_list_1_03);
-    STORE_POINTER(option_shot_list_1_00, option_shot_list_1_00_00);
-    STORE_POINTER(option_shot_list_1_00 + 2, option_shot_list_1_00_01);
-    STORE_POINTER(option_shot_list_1_00 + 4, option_shot_list_1_00_02);
-    STORE_POINTER(option_shot_list_1_00 + 6, option_shot_list_1_00_03);
-    STORE_POINTER(option_shot_list_1_00 + 8, option_shot_list_1_00_04);
-    STORE_POINTER(option_shot_list_1_02, option_shot_list_1_02_00);
-    STORE_POINTER(option_shot_list_1_02 + 2, option_shot_list_1_02_01);
-    STORE_POINTER(option_shot_list_1_02 + 4, option_shot_list_1_02_02);
-    STORE_POINTER(option_shot_list_1_02 + 6, option_shot_list_1_02_03);
-    STORE_POINTER(option_shot_list_1_02 + 8, option_shot_list_1_02_04);
-    STORE_POINTER(option_shot_list_1_01, option_shot_list_1_01_00);
-    STORE_POINTER(option_shot_list_1_01 + 2, option_shot_list_1_01_01);
-    STORE_POINTER(option_shot_list_1_01 + 4, option_shot_list_1_01_02);
-    STORE_POINTER(option_shot_list_1_01 + 6, option_shot_list_1_01_03);
-    STORE_POINTER(option_shot_list_1_01 + 8, option_shot_list_1_01_04);
-    STORE_POINTER(option_shot_list_1_03, option_shot_list_1_03_00);
-    STORE_POINTER(option_shot_list_1_03 + 2, option_shot_list_1_03_01);
-    STORE_POINTER(option_shot_list_1_03 + 4, option_shot_list_1_03_02);
-    STORE_POINTER(option_shot_list_1_03 + 6, option_shot_list_1_03_03);
-    STORE_POINTER(option_shot_list_1_03 + 8, option_shot_list_1_03_04);
-    STORE_POINTER(((u16 *)option_shot_lists_2), option_shot_list_2_00);
-    STORE_POINTER(option_shot_lists_2 + 2, option_shot_list_2_01);
-    STORE_POINTER(option_shot_lists_2 + 4, option_shot_list_2_02);
-    STORE_POINTER(option_shot_lists_2 + 6, option_shot_list_2_03);
-    STORE_POINTER(option_shot_list_2_00, option_shot_list_2_00_00);
-    STORE_POINTER(option_shot_list_2_00 + 2, option_shot_list_2_00_01);
-    STORE_POINTER(option_shot_list_2_00 + 4, option_shot_list_2_00_02);
-    STORE_POINTER(option_shot_list_2_00 + 6, option_shot_list_2_00_03);
-    STORE_POINTER(option_shot_list_2_00 + 8, option_shot_list_2_00_04);
-    STORE_POINTER(option_shot_list_2_02, option_shot_list_2_02_00);
-    STORE_POINTER(option_shot_list_2_02 + 2, option_shot_list_2_02_01);
-    STORE_POINTER(option_shot_list_2_02 + 4, option_shot_list_2_02_02);
-    STORE_POINTER(option_shot_list_2_02 + 6, option_shot_list_2_02_03);
-    STORE_POINTER(option_shot_list_2_02 + 8, option_shot_list_2_02_04);
-    STORE_POINTER(option_shot_list_2_01, option_shot_list_2_01_00);
-    STORE_POINTER(option_shot_list_2_01 + 2, option_shot_list_2_01_01);
-    STORE_POINTER(option_shot_list_2_01 + 4, option_shot_list_2_01_02);
-    STORE_POINTER(option_shot_list_2_01 + 6, option_shot_list_2_01_03);
-    STORE_POINTER(option_shot_list_2_01 + 8, option_shot_list_2_01_04);
-    STORE_POINTER(option_shot_list_2_03, option_shot_list_2_03_00);
-    STORE_POINTER(option_shot_list_2_03 + 2, option_shot_list_2_03_01);
-    STORE_POINTER(option_shot_list_2_03 + 4, option_shot_list_2_03_02);
-    STORE_POINTER(option_shot_list_2_03 + 6, option_shot_list_2_03_03);
-    STORE_POINTER(option_shot_list_2_03 + 8, option_shot_list_2_03_04);
-    STORE_POINTER(((u16 *)option_shot_lists_3), option_shot_list_3_00);
-    STORE_POINTER(option_shot_lists_3 + 2, option_shot_list_3_01);
-    STORE_POINTER(option_shot_lists_3 + 4, option_shot_list_3_02);
-    STORE_POINTER(option_shot_lists_3 + 6, option_shot_list_3_03);
-    STORE_POINTER(option_shot_list_3_00, option_shot_list_3_00_00);
-    STORE_POINTER(option_shot_list_3_00 + 2, option_shot_list_3_00_01);
-    STORE_POINTER(option_shot_list_3_00 + 4, option_shot_list_3_00_02);
-    STORE_POINTER(option_shot_list_3_00 + 6, option_shot_list_3_00_03);
-    STORE_POINTER(option_shot_list_3_00 + 8, option_shot_list_3_00_04);
-    STORE_POINTER(option_shot_list_3_02, option_shot_list_3_02_00);
-    STORE_POINTER(option_shot_list_3_02 + 2, option_shot_list_3_02_01);
-    STORE_POINTER(option_shot_list_3_02 + 4, option_shot_list_3_02_02);
-    STORE_POINTER(option_shot_list_3_02 + 6, option_shot_list_3_02_03);
-    STORE_POINTER(option_shot_list_3_02 + 8, option_shot_list_3_02_04);
-    STORE_POINTER(option_shot_list_3_01, option_shot_list_3_01_00);
-    STORE_POINTER(option_shot_list_3_01 + 2, option_shot_list_3_01_01);
-    STORE_POINTER(option_shot_list_3_01 + 4, option_shot_list_3_01_02);
-    STORE_POINTER(option_shot_list_3_01 + 6, option_shot_list_3_01_03);
-    STORE_POINTER(option_shot_list_3_01 + 8, option_shot_list_3_01_04);
-    STORE_POINTER(option_shot_list_3_03, option_shot_list_3_03_00);
-    STORE_POINTER(option_shot_list_3_03 + 2, option_shot_list_3_03_01);
-    STORE_POINTER(option_shot_list_3_03 + 4, option_shot_list_3_03_02);
-    STORE_POINTER(option_shot_list_3_03 + 6, option_shot_list_3_03_03);
-    STORE_POINTER(option_shot_list_3_03 + 8, option_shot_list_3_03_04);
-    STORE_POINTER(((u16 *)option_shot_lists_4), option_shot_list_4_00);
-    STORE_POINTER(option_shot_lists_4 + 2, option_shot_list_4_01);
-    STORE_POINTER(option_shot_lists_4 + 4, option_shot_list_4_02);
-    STORE_POINTER(option_shot_lists_4 + 6, option_shot_list_4_03);
-    STORE_POINTER(option_shot_list_4_00, option_shot_list_4_00_00);
-    STORE_POINTER(option_shot_list_4_00 + 2, option_shot_list_4_00_01);
-    STORE_POINTER(option_shot_list_4_00 + 4, option_shot_list_4_00_02);
-    STORE_POINTER(option_shot_list_4_00 + 6, option_shot_list_4_00_03);
-    STORE_POINTER(option_shot_list_4_00 + 8, option_shot_list_4_00_04);
-    STORE_POINTER(option_shot_list_4_02, option_shot_list_4_02_00);
-    STORE_POINTER(option_shot_list_4_02 + 2, option_shot_list_4_02_01);
-    STORE_POINTER(option_shot_list_4_02 + 4, option_shot_list_4_02_02);
-    STORE_POINTER(option_shot_list_4_02 + 6, option_shot_list_4_02_03);
-    STORE_POINTER(option_shot_list_4_02 + 8, option_shot_list_4_02_04);
-    STORE_POINTER(option_shot_list_4_01, option_shot_list_4_01_00);
-    STORE_POINTER(option_shot_list_4_01 + 2, option_shot_list_4_01_01);
-    STORE_POINTER(option_shot_list_4_01 + 4, option_shot_list_4_01_02);
-    STORE_POINTER(option_shot_list_4_01 + 6, option_shot_list_4_01_03);
-    STORE_POINTER(option_shot_list_4_01 + 8, option_shot_list_4_01_04);
-    STORE_POINTER(option_shot_list_4_03, option_shot_list_4_03_00);
-    STORE_POINTER(option_shot_list_4_03 + 2, option_shot_list_4_03_01);
-    STORE_POINTER(option_shot_list_4_03 + 4, option_shot_list_4_03_02);
-    STORE_POINTER(option_shot_list_4_03 + 6, option_shot_list_4_03_03);
-    STORE_POINTER(option_shot_list_4_03 + 8, option_shot_list_4_03_04);
+    STORE_ARCADE_ADDRESS(((u16 *)option_shot_lists_1), option_shot_list_1_00);
+    STORE_ARCADE_ADDRESS(option_shot_lists_1 + 2, option_shot_list_1_01);
+    STORE_ARCADE_ADDRESS(option_shot_lists_1 + 4, option_shot_list_1_02);
+    STORE_ARCADE_ADDRESS(option_shot_lists_1 + 6, option_shot_list_1_03);
+    STORE_ARCADE_ADDRESS(option_shot_list_1_00, option_shot_list_1_00_00);
+    STORE_ARCADE_ADDRESS(option_shot_list_1_00 + 2, option_shot_list_1_00_01);
+    STORE_ARCADE_ADDRESS(option_shot_list_1_00 + 4, option_shot_list_1_00_02);
+    STORE_ARCADE_ADDRESS(option_shot_list_1_00 + 6, option_shot_list_1_00_03);
+    STORE_ARCADE_ADDRESS(option_shot_list_1_00 + 8, option_shot_list_1_00_04);
+    STORE_ARCADE_ADDRESS(option_shot_list_1_02, option_shot_list_1_02_00);
+    STORE_ARCADE_ADDRESS(option_shot_list_1_02 + 2, option_shot_list_1_02_01);
+    STORE_ARCADE_ADDRESS(option_shot_list_1_02 + 4, option_shot_list_1_02_02);
+    STORE_ARCADE_ADDRESS(option_shot_list_1_02 + 6, option_shot_list_1_02_03);
+    STORE_ARCADE_ADDRESS(option_shot_list_1_02 + 8, option_shot_list_1_02_04);
+    STORE_ARCADE_ADDRESS(option_shot_list_1_01, option_shot_list_1_01_00);
+    STORE_ARCADE_ADDRESS(option_shot_list_1_01 + 2, option_shot_list_1_01_01);
+    STORE_ARCADE_ADDRESS(option_shot_list_1_01 + 4, option_shot_list_1_01_02);
+    STORE_ARCADE_ADDRESS(option_shot_list_1_01 + 6, option_shot_list_1_01_03);
+    STORE_ARCADE_ADDRESS(option_shot_list_1_01 + 8, option_shot_list_1_01_04);
+    STORE_ARCADE_ADDRESS(option_shot_list_1_03, option_shot_list_1_03_00);
+    STORE_ARCADE_ADDRESS(option_shot_list_1_03 + 2, option_shot_list_1_03_01);
+    STORE_ARCADE_ADDRESS(option_shot_list_1_03 + 4, option_shot_list_1_03_02);
+    STORE_ARCADE_ADDRESS(option_shot_list_1_03 + 6, option_shot_list_1_03_03);
+    STORE_ARCADE_ADDRESS(option_shot_list_1_03 + 8, option_shot_list_1_03_04);
+    STORE_ARCADE_ADDRESS(((u16 *)option_shot_lists_2), option_shot_list_2_00);
+    STORE_ARCADE_ADDRESS(option_shot_lists_2 + 2, option_shot_list_2_01);
+    STORE_ARCADE_ADDRESS(option_shot_lists_2 + 4, option_shot_list_2_02);
+    STORE_ARCADE_ADDRESS(option_shot_lists_2 + 6, option_shot_list_2_03);
+    STORE_ARCADE_ADDRESS(option_shot_list_2_00, option_shot_list_2_00_00);
+    STORE_ARCADE_ADDRESS(option_shot_list_2_00 + 2, option_shot_list_2_00_01);
+    STORE_ARCADE_ADDRESS(option_shot_list_2_00 + 4, option_shot_list_2_00_02);
+    STORE_ARCADE_ADDRESS(option_shot_list_2_00 + 6, option_shot_list_2_00_03);
+    STORE_ARCADE_ADDRESS(option_shot_list_2_00 + 8, option_shot_list_2_00_04);
+    STORE_ARCADE_ADDRESS(option_shot_list_2_02, option_shot_list_2_02_00);
+    STORE_ARCADE_ADDRESS(option_shot_list_2_02 + 2, option_shot_list_2_02_01);
+    STORE_ARCADE_ADDRESS(option_shot_list_2_02 + 4, option_shot_list_2_02_02);
+    STORE_ARCADE_ADDRESS(option_shot_list_2_02 + 6, option_shot_list_2_02_03);
+    STORE_ARCADE_ADDRESS(option_shot_list_2_02 + 8, option_shot_list_2_02_04);
+    STORE_ARCADE_ADDRESS(option_shot_list_2_01, option_shot_list_2_01_00);
+    STORE_ARCADE_ADDRESS(option_shot_list_2_01 + 2, option_shot_list_2_01_01);
+    STORE_ARCADE_ADDRESS(option_shot_list_2_01 + 4, option_shot_list_2_01_02);
+    STORE_ARCADE_ADDRESS(option_shot_list_2_01 + 6, option_shot_list_2_01_03);
+    STORE_ARCADE_ADDRESS(option_shot_list_2_01 + 8, option_shot_list_2_01_04);
+    STORE_ARCADE_ADDRESS(option_shot_list_2_03, option_shot_list_2_03_00);
+    STORE_ARCADE_ADDRESS(option_shot_list_2_03 + 2, option_shot_list_2_03_01);
+    STORE_ARCADE_ADDRESS(option_shot_list_2_03 + 4, option_shot_list_2_03_02);
+    STORE_ARCADE_ADDRESS(option_shot_list_2_03 + 6, option_shot_list_2_03_03);
+    STORE_ARCADE_ADDRESS(option_shot_list_2_03 + 8, option_shot_list_2_03_04);
+    STORE_ARCADE_ADDRESS(((u16 *)option_shot_lists_3), option_shot_list_3_00);
+    STORE_ARCADE_ADDRESS(option_shot_lists_3 + 2, option_shot_list_3_01);
+    STORE_ARCADE_ADDRESS(option_shot_lists_3 + 4, option_shot_list_3_02);
+    STORE_ARCADE_ADDRESS(option_shot_lists_3 + 6, option_shot_list_3_03);
+    STORE_ARCADE_ADDRESS(option_shot_list_3_00, option_shot_list_3_00_00);
+    STORE_ARCADE_ADDRESS(option_shot_list_3_00 + 2, option_shot_list_3_00_01);
+    STORE_ARCADE_ADDRESS(option_shot_list_3_00 + 4, option_shot_list_3_00_02);
+    STORE_ARCADE_ADDRESS(option_shot_list_3_00 + 6, option_shot_list_3_00_03);
+    STORE_ARCADE_ADDRESS(option_shot_list_3_00 + 8, option_shot_list_3_00_04);
+    STORE_ARCADE_ADDRESS(option_shot_list_3_02, option_shot_list_3_02_00);
+    STORE_ARCADE_ADDRESS(option_shot_list_3_02 + 2, option_shot_list_3_02_01);
+    STORE_ARCADE_ADDRESS(option_shot_list_3_02 + 4, option_shot_list_3_02_02);
+    STORE_ARCADE_ADDRESS(option_shot_list_3_02 + 6, option_shot_list_3_02_03);
+    STORE_ARCADE_ADDRESS(option_shot_list_3_02 + 8, option_shot_list_3_02_04);
+    STORE_ARCADE_ADDRESS(option_shot_list_3_01, option_shot_list_3_01_00);
+    STORE_ARCADE_ADDRESS(option_shot_list_3_01 + 2, option_shot_list_3_01_01);
+    STORE_ARCADE_ADDRESS(option_shot_list_3_01 + 4, option_shot_list_3_01_02);
+    STORE_ARCADE_ADDRESS(option_shot_list_3_01 + 6, option_shot_list_3_01_03);
+    STORE_ARCADE_ADDRESS(option_shot_list_3_01 + 8, option_shot_list_3_01_04);
+    STORE_ARCADE_ADDRESS(option_shot_list_3_03, option_shot_list_3_03_00);
+    STORE_ARCADE_ADDRESS(option_shot_list_3_03 + 2, option_shot_list_3_03_01);
+    STORE_ARCADE_ADDRESS(option_shot_list_3_03 + 4, option_shot_list_3_03_02);
+    STORE_ARCADE_ADDRESS(option_shot_list_3_03 + 6, option_shot_list_3_03_03);
+    STORE_ARCADE_ADDRESS(option_shot_list_3_03 + 8, option_shot_list_3_03_04);
+    STORE_ARCADE_ADDRESS(((u16 *)option_shot_lists_4), option_shot_list_4_00);
+    STORE_ARCADE_ADDRESS(option_shot_lists_4 + 2, option_shot_list_4_01);
+    STORE_ARCADE_ADDRESS(option_shot_lists_4 + 4, option_shot_list_4_02);
+    STORE_ARCADE_ADDRESS(option_shot_lists_4 + 6, option_shot_list_4_03);
+    STORE_ARCADE_ADDRESS(option_shot_list_4_00, option_shot_list_4_00_00);
+    STORE_ARCADE_ADDRESS(option_shot_list_4_00 + 2, option_shot_list_4_00_01);
+    STORE_ARCADE_ADDRESS(option_shot_list_4_00 + 4, option_shot_list_4_00_02);
+    STORE_ARCADE_ADDRESS(option_shot_list_4_00 + 6, option_shot_list_4_00_03);
+    STORE_ARCADE_ADDRESS(option_shot_list_4_00 + 8, option_shot_list_4_00_04);
+    STORE_ARCADE_ADDRESS(option_shot_list_4_02, option_shot_list_4_02_00);
+    STORE_ARCADE_ADDRESS(option_shot_list_4_02 + 2, option_shot_list_4_02_01);
+    STORE_ARCADE_ADDRESS(option_shot_list_4_02 + 4, option_shot_list_4_02_02);
+    STORE_ARCADE_ADDRESS(option_shot_list_4_02 + 6, option_shot_list_4_02_03);
+    STORE_ARCADE_ADDRESS(option_shot_list_4_02 + 8, option_shot_list_4_02_04);
+    STORE_ARCADE_ADDRESS(option_shot_list_4_01, option_shot_list_4_01_00);
+    STORE_ARCADE_ADDRESS(option_shot_list_4_01 + 2, option_shot_list_4_01_01);
+    STORE_ARCADE_ADDRESS(option_shot_list_4_01 + 4, option_shot_list_4_01_02);
+    STORE_ARCADE_ADDRESS(option_shot_list_4_01 + 6, option_shot_list_4_01_03);
+    STORE_ARCADE_ADDRESS(option_shot_list_4_01 + 8, option_shot_list_4_01_04);
+    STORE_ARCADE_ADDRESS(option_shot_list_4_03, option_shot_list_4_03_00);
+    STORE_ARCADE_ADDRESS(option_shot_list_4_03 + 2, option_shot_list_4_03_01);
+    STORE_ARCADE_ADDRESS(option_shot_list_4_03 + 4, option_shot_list_4_03_02);
+    STORE_ARCADE_ADDRESS(option_shot_list_4_03 + 6, option_shot_list_4_03_03);
+    STORE_ARCADE_ADDRESS(option_shot_list_4_03 + 8, option_shot_list_4_03_04);
 }
 
 extern u16 ground_gun_a_aim[];
@@ -4641,87 +4648,87 @@ void player_shot_7_tables_init(void) {
     if (option_shot_list_1_01_00[5] != 0x5) {
         printf("error! hoshot_a_sh_r_p1[5]\n");
     }
-    STORE_POINTER(option_shot_list_1_01_00 + 5, option_shot_list_1_01_00_02);
+    STORE_ARCADE_ADDRESS(option_shot_list_1_01_00 + 5, option_shot_list_1_01_00_02);
     if (option_shot_list_1_01_00[15] != 0xf) {
         printf("error! hoshot_a_sh_r_p1[15]\n");
     }
-    STORE_POINTER(option_shot_list_1_01_00 + 15, option_shot_list_1_01_00_07);
+    STORE_ARCADE_ADDRESS(option_shot_list_1_01_00 + 15, option_shot_list_1_01_00_07);
     if (option_shot_list_2_01_00[5] != 0x5) {
         printf("error! hoshot_a_sh_l_p1[5]\n");
     }
-    STORE_POINTER(option_shot_list_2_01_00 + 5, option_shot_list_1_01_00_02);
+    STORE_ARCADE_ADDRESS(option_shot_list_2_01_00 + 5, option_shot_list_1_01_00_02);
     if (option_shot_list_2_01_00[15] != 0xf) {
         printf("error! hoshot_a_sh_l_p1[15]\n");
     }
-    STORE_POINTER(option_shot_list_2_01_00 + 15, option_shot_list_1_01_00_07);
+    STORE_ARCADE_ADDRESS(option_shot_list_2_01_00 + 15, option_shot_list_1_01_00_07);
     if (option_shot_list_1_01_01[5] != 0x5) {
         printf("error! hoshot_a_sh_r_p2[5]\n");
     }
-    STORE_POINTER(option_shot_list_1_01_01 + 5, option_shot_list_1_01_00_02);
+    STORE_ARCADE_ADDRESS(option_shot_list_1_01_01 + 5, option_shot_list_1_01_00_02);
     if (option_shot_list_1_01_01[15] != 0xf) {
         printf("error! hoshot_a_sh_r_p2[15]\n");
     }
-    STORE_POINTER(option_shot_list_1_01_01 + 15, option_shot_list_1_01_00_07);
+    STORE_ARCADE_ADDRESS(option_shot_list_1_01_01 + 15, option_shot_list_1_01_00_07);
     if (option_shot_list_2_01_01[5] != 0x5) {
         printf("error! hoshot_a_sh_l_p2[5]\n");
     }
-    STORE_POINTER(option_shot_list_2_01_01 + 5, option_shot_list_1_01_00_02);
+    STORE_ARCADE_ADDRESS(option_shot_list_2_01_01 + 5, option_shot_list_1_01_00_02);
     if (option_shot_list_2_01_01[15] != 0xf) {
         printf("error! hoshot_a_sh_l_p2[15]\n");
     }
-    STORE_POINTER(option_shot_list_2_01_01 + 15, option_shot_list_1_01_00_07);
+    STORE_ARCADE_ADDRESS(option_shot_list_2_01_01 + 15, option_shot_list_1_01_00_07);
     if (option_shot_list_1_01_02[5] != 0x5) {
         printf("error! hoshot_a_sh_r_p3[5]\n");
     }
-    STORE_POINTER(option_shot_list_1_01_02 + 5, option_shot_list_1_01_00_02);
+    STORE_ARCADE_ADDRESS(option_shot_list_1_01_02 + 5, option_shot_list_1_01_00_02);
     if (option_shot_list_1_01_02[15] != 0xf) {
         printf("error! hoshot_a_sh_r_p3[15]\n");
     }
-    STORE_POINTER(option_shot_list_1_01_02 + 15, option_shot_list_1_01_00_07);
+    STORE_ARCADE_ADDRESS(option_shot_list_1_01_02 + 15, option_shot_list_1_01_00_07);
     if (option_shot_list_2_01_02[5] != 0x5) {
         printf("error! hoshot_a_sh_l_p3[5]\n");
     }
-    STORE_POINTER(option_shot_list_2_01_02 + 5, option_shot_list_1_01_00_02);
+    STORE_ARCADE_ADDRESS(option_shot_list_2_01_02 + 5, option_shot_list_1_01_00_02);
     if (option_shot_list_2_01_02[15] != 0xf) {
         printf("error! hoshot_a_sh_l_p3[15]\n");
     }
-    STORE_POINTER(option_shot_list_2_01_02 + 15, option_shot_list_1_01_00_07);
+    STORE_ARCADE_ADDRESS(option_shot_list_2_01_02 + 15, option_shot_list_1_01_00_07);
     if (option_shot_list_1_01_03[5] != 0x5) {
         printf("error! hoshot_a_sh_r_p4[5]\n");
     }
-    STORE_POINTER(option_shot_list_1_01_03 + 5, option_shot_list_1_01_00_02);
+    STORE_ARCADE_ADDRESS(option_shot_list_1_01_03 + 5, option_shot_list_1_01_00_02);
     if (option_shot_list_1_01_03[15] != 0xf) {
         printf("error! hoshot_a_sh_r_p4[15]\n");
     }
-    STORE_POINTER(option_shot_list_1_01_03 + 15, option_shot_list_1_01_00_07);
+    STORE_ARCADE_ADDRESS(option_shot_list_1_01_03 + 15, option_shot_list_1_01_00_07);
     if (option_shot_list_2_01_03[5] != 0x5) {
         printf("error! hoshot_a_sh_l_p4[5]\n");
     }
-    STORE_POINTER(option_shot_list_2_01_03 + 5, option_shot_list_1_01_00_02);
+    STORE_ARCADE_ADDRESS(option_shot_list_2_01_03 + 5, option_shot_list_1_01_00_02);
     if (option_shot_list_2_01_03[15] != 0xf) {
         printf("error! hoshot_a_sh_l_p4[15]\n");
     }
-    STORE_POINTER(option_shot_list_2_01_03 + 15, option_shot_list_1_01_00_07);
+    STORE_ARCADE_ADDRESS(option_shot_list_2_01_03 + 15, option_shot_list_1_01_00_07);
     if (option_shot_list_1_01_04[5] != 0x5) {
         printf("error! hoshot_a_sh_r_p5[5]\n");
     }
-    STORE_POINTER(option_shot_list_1_01_04 + 5, option_shot_list_1_01_00_02);
+    STORE_ARCADE_ADDRESS(option_shot_list_1_01_04 + 5, option_shot_list_1_01_00_02);
     if (option_shot_list_1_01_04[15] != 0xf) {
         printf("error! hoshot_a_sh_r_p5[15]\n");
     }
-    STORE_POINTER(option_shot_list_1_01_04 + 15, option_shot_list_1_01_00_07);
+    STORE_ARCADE_ADDRESS(option_shot_list_1_01_04 + 15, option_shot_list_1_01_00_07);
     if (option_shot_list_2_01_04[5] != 0x5) {
         printf("error! hoshot_a_sh_l_p5[5]\n");
     }
-    STORE_POINTER(option_shot_list_2_01_04 + 5, option_shot_list_1_01_00_02);
+    STORE_ARCADE_ADDRESS(option_shot_list_2_01_04 + 5, option_shot_list_1_01_00_02);
     if (option_shot_list_2_01_04[15] != 0xf) {
         printf("error! hoshot_a_sh_l_p5[15]\n");
     }
-    STORE_POINTER(option_shot_list_2_01_04 + 15, option_shot_list_1_01_00_07);
+    STORE_ARCADE_ADDRESS(option_shot_list_2_01_04 + 15, option_shot_list_1_01_00_07);
     if (option_shot_list_3_01_00[1] != 0x1) {
         printf("error! hoshot_a_la_p1[1]\n");
     }
-    STORE_POINTER(option_shot_list_3_01_00 + 1, player_shot_7_directions_5);
+    STORE_ARCADE_ADDRESS(option_shot_list_3_01_00 + 1, player_shot_7_directions_5);
     if (D_0025DB94[3] != 0x5) {
         printf("error! hoshot_a_la_p1[5]\n");
     }
@@ -4729,7 +4736,7 @@ void player_shot_7_tables_init(void) {
     if (option_shot_list_3_01_01[1] != 0x1) {
         printf("error! hoshot_a_la_p2[1]\n");
     }
-    STORE_POINTER(option_shot_list_3_01_01 + 1, player_shot_7_directions_5);
+    STORE_ARCADE_ADDRESS(option_shot_list_3_01_01 + 1, player_shot_7_directions_5);
     if (D_0025DBC4[3] != 0x5) {
         printf("error! hoshot_a_la_p2[5]\n");
     }
@@ -4737,7 +4744,7 @@ void player_shot_7_tables_init(void) {
     if (option_shot_list_3_01_02[1] != 0x1) {
         printf("error! hoshot_a_la_p3[1]\n");
     }
-    STORE_POINTER(option_shot_list_3_01_02 + 1, player_shot_7_directions_5);
+    STORE_ARCADE_ADDRESS(option_shot_list_3_01_02 + 1, player_shot_7_directions_5);
     if (D_0025DBF4[3] != 0x5) {
         printf("error! hoshot_a_la_p3[5]\n");
     }
@@ -4745,7 +4752,7 @@ void player_shot_7_tables_init(void) {
     if (option_shot_list_3_01_03[1] != 0x1) {
         printf("error! hoshot_a_la_p4[1]\n");
     }
-    STORE_POINTER(option_shot_list_3_01_03 + 1, player_shot_7_directions_5);
+    STORE_ARCADE_ADDRESS(option_shot_list_3_01_03 + 1, player_shot_7_directions_5);
     if (D_0025DC24[3] != 0x5) {
         printf("error! hoshot_a_la_p4[5]\n");
     }
@@ -4753,7 +4760,7 @@ void player_shot_7_tables_init(void) {
     if (option_shot_list_3_01_04[1] != 0x1) {
         printf("error! hoshot_a_la_p5[1]\n");
     }
-    STORE_POINTER(option_shot_list_3_01_04 + 1, player_shot_7_directions_5);
+    STORE_ARCADE_ADDRESS(option_shot_list_3_01_04 + 1, player_shot_7_directions_5);
     if (D_0025DC54[3] != 0x5) {
         printf("error! hoshot_a_la_p5[5]\n");
     }
@@ -4761,1021 +4768,1021 @@ void player_shot_7_tables_init(void) {
     if (option_shot_list_4_01_00[5] != 0x5) {
         printf("error! hoshot_a_ex_p1[5]\n");
     }
-    STORE_POINTER(option_shot_list_4_01_00 + 5, option_shot_list_4_01_00_02);
+    STORE_ARCADE_ADDRESS(option_shot_list_4_01_00 + 5, option_shot_list_4_01_00_02);
     if (option_shot_list_4_01_00[15] != 0xf) {
         printf("error! hoshot_a_ex_p1[15]\n");
     }
-    STORE_POINTER(option_shot_list_4_01_00 + 15, option_shot_list_4_01_00_07);
+    STORE_ARCADE_ADDRESS(option_shot_list_4_01_00 + 15, option_shot_list_4_01_00_07);
     if (option_shot_list_4_01_00[24] != 0x18) {
         printf("error! hoshot_a_ex_p1[24]\n");
     }
-    STORE_POINTER(option_shot_list_4_01_00 + 24, option_shot_list_4_01_00_02);
+    STORE_ARCADE_ADDRESS(option_shot_list_4_01_00 + 24, option_shot_list_4_01_00_02);
     if (option_shot_list_4_01_00[34] != 0x22) {
         printf("error! hoshot_a_ex_p1[34]\n");
     }
-    STORE_POINTER(option_shot_list_4_01_00 + 34, option_shot_list_4_01_00_07);
+    STORE_ARCADE_ADDRESS(option_shot_list_4_01_00 + 34, option_shot_list_4_01_00_07);
     if (option_shot_list_4_01_01[5] != 0x5) {
         printf("error! hoshot_a_ex_p2[5]\n");
     }
-    STORE_POINTER(option_shot_list_4_01_01 + 5, option_shot_list_4_01_00_02);
+    STORE_ARCADE_ADDRESS(option_shot_list_4_01_01 + 5, option_shot_list_4_01_00_02);
     if (option_shot_list_4_01_01[15] != 0xf) {
         printf("error! hoshot_a_ex_p2[15]\n");
     }
-    STORE_POINTER(option_shot_list_4_01_01 + 15, option_shot_list_4_01_00_07);
+    STORE_ARCADE_ADDRESS(option_shot_list_4_01_01 + 15, option_shot_list_4_01_00_07);
     if (option_shot_list_4_01_01[24] != 0x18) {
         printf("error! hoshot_a_ex_p2[24]\n");
     }
-    STORE_POINTER(option_shot_list_4_01_01 + 24, option_shot_list_4_01_00_02);
+    STORE_ARCADE_ADDRESS(option_shot_list_4_01_01 + 24, option_shot_list_4_01_00_02);
     if (option_shot_list_4_01_01[34] != 0x22) {
         printf("error! hoshot_a_ex_p2[34]\n");
     }
-    STORE_POINTER(option_shot_list_4_01_01 + 34, option_shot_list_4_01_00_07);
+    STORE_ARCADE_ADDRESS(option_shot_list_4_01_01 + 34, option_shot_list_4_01_00_07);
     if (option_shot_list_4_01_02[5] != 0x5) {
         printf("error! hoshot_a_ex_p3[5]\n");
     }
-    STORE_POINTER(option_shot_list_4_01_02 + 5, option_shot_list_4_01_00_02);
+    STORE_ARCADE_ADDRESS(option_shot_list_4_01_02 + 5, option_shot_list_4_01_00_02);
     if (option_shot_list_4_01_02[15] != 0xf) {
         printf("error! hoshot_a_ex_p3[15]\n");
     }
-    STORE_POINTER(option_shot_list_4_01_02 + 15, option_shot_list_4_01_00_07);
+    STORE_ARCADE_ADDRESS(option_shot_list_4_01_02 + 15, option_shot_list_4_01_00_07);
     if (option_shot_list_4_01_02[24] != 0x18) {
         printf("error! hoshot_a_ex_p3[24]\n");
     }
-    STORE_POINTER(option_shot_list_4_01_02 + 24, option_shot_list_4_01_00_02);
+    STORE_ARCADE_ADDRESS(option_shot_list_4_01_02 + 24, option_shot_list_4_01_00_02);
     if (option_shot_list_4_01_02[34] != 0x22) {
         printf("error! hoshot_a_ex_p3[34]\n");
     }
-    STORE_POINTER(option_shot_list_4_01_02 + 34, option_shot_list_4_01_00_07);
+    STORE_ARCADE_ADDRESS(option_shot_list_4_01_02 + 34, option_shot_list_4_01_00_07);
     if (option_shot_list_4_01_03[5] != 0x5) {
         printf("error! hoshot_a_ex_p4[5]\n");
     }
-    STORE_POINTER(option_shot_list_4_01_03 + 5, option_shot_list_4_01_00_02);
+    STORE_ARCADE_ADDRESS(option_shot_list_4_01_03 + 5, option_shot_list_4_01_00_02);
     if (option_shot_list_4_01_03[15] != 0xf) {
         printf("error! hoshot_a_ex_p4[15]\n");
     }
-    STORE_POINTER(option_shot_list_4_01_03 + 15, option_shot_list_4_01_00_07);
+    STORE_ARCADE_ADDRESS(option_shot_list_4_01_03 + 15, option_shot_list_4_01_00_07);
     if (option_shot_list_4_01_03[24] != 0x18) {
         printf("error! hoshot_a_ex_p4[24]\n");
     }
-    STORE_POINTER(option_shot_list_4_01_03 + 24, option_shot_list_4_01_00_02);
+    STORE_ARCADE_ADDRESS(option_shot_list_4_01_03 + 24, option_shot_list_4_01_00_02);
     if (option_shot_list_4_01_03[34] != 0x22) {
         printf("error! hoshot_a_ex_p4[34]\n");
     }
-    STORE_POINTER(option_shot_list_4_01_03 + 34, option_shot_list_4_01_00_07);
+    STORE_ARCADE_ADDRESS(option_shot_list_4_01_03 + 34, option_shot_list_4_01_00_07);
     if (option_shot_list_4_01_04[5] != 0x5) {
         printf("error! hoshot_a_ex_p5[5]\n");
     }
-    STORE_POINTER(option_shot_list_4_01_04 + 5, option_shot_list_4_01_00_02);
+    STORE_ARCADE_ADDRESS(option_shot_list_4_01_04 + 5, option_shot_list_4_01_00_02);
     if (option_shot_list_4_01_04[15] != 0xf) {
         printf("error! hoshot_a_ex_p5[15]\n");
     }
-    STORE_POINTER(option_shot_list_4_01_04 + 15, option_shot_list_4_01_00_07);
+    STORE_ARCADE_ADDRESS(option_shot_list_4_01_04 + 15, option_shot_list_4_01_00_07);
     if (option_shot_list_4_01_04[24] != 0x18) {
         printf("error! hoshot_a_ex_p5[24]\n");
     }
-    STORE_POINTER(option_shot_list_4_01_04 + 24, option_shot_list_4_01_00_02);
+    STORE_ARCADE_ADDRESS(option_shot_list_4_01_04 + 24, option_shot_list_4_01_00_02);
     if (option_shot_list_4_01_04[34] != 0x22) {
         printf("error! hoshot_a_ex_p5[34]\n");
     }
-    STORE_POINTER(option_shot_list_4_01_04 + 34, option_shot_list_4_01_00_07);
+    STORE_ARCADE_ADDRESS(option_shot_list_4_01_04 + 34, option_shot_list_4_01_00_07);
     if (player_shot_7_flight_table[0] != 0x0) {
         printf("error! hoa_data[0]\n");
     }
-    STORE_POINTER(player_shot_7_flight_table, player_shot_7_flight_000);
+    STORE_ARCADE_ADDRESS(player_shot_7_flight_table, player_shot_7_flight_000);
     if (player_shot_7_flight_table[2] != 0x2) {
         printf("error! hoa_data[2]\n");
     }
-    STORE_POINTER(player_shot_7_flight_table + 2, player_shot_7_flight_000);
+    STORE_ARCADE_ADDRESS(player_shot_7_flight_table + 2, player_shot_7_flight_000);
     if (player_shot_7_flight_table[4] != 0x4) {
         printf("error! hoa_data[4]\n");
     }
-    STORE_POINTER(player_shot_7_flight_table + 4, player_shot_7_flight_002);
+    STORE_ARCADE_ADDRESS(player_shot_7_flight_table + 4, player_shot_7_flight_002);
     if (player_shot_7_flight_table[6] != 0x6) {
         printf("error! hoa_data[6]\n");
     }
-    STORE_POINTER(player_shot_7_flight_table + 6, player_shot_7_flight_002);
+    STORE_ARCADE_ADDRESS(player_shot_7_flight_table + 6, player_shot_7_flight_002);
     if (player_shot_7_flight_table[8] != 0x8) {
         printf("error! hoa_data[8]\n");
     }
-    STORE_POINTER(player_shot_7_flight_table + 8, player_shot_7_flight_004);
+    STORE_ARCADE_ADDRESS(player_shot_7_flight_table + 8, player_shot_7_flight_004);
     if (player_shot_7_flight_table[10] != 0xa) {
         printf("error! hoa_data[10]\n");
     }
-    STORE_POINTER(player_shot_7_flight_table + 10, player_shot_7_flight_004);
+    STORE_ARCADE_ADDRESS(player_shot_7_flight_table + 10, player_shot_7_flight_004);
     if (player_shot_7_flight_table[12] != 0xc) {
         printf("error! hoa_data[12]\n");
     }
-    STORE_POINTER(player_shot_7_flight_table + 12, player_shot_7_flight_006);
+    STORE_ARCADE_ADDRESS(player_shot_7_flight_table + 12, player_shot_7_flight_006);
     if (player_shot_7_flight_table[14] != 0xe) {
         printf("error! hoa_data[14]\n");
     }
-    STORE_POINTER(player_shot_7_flight_table + 14, player_shot_7_flight_006);
+    STORE_ARCADE_ADDRESS(player_shot_7_flight_table + 14, player_shot_7_flight_006);
     if (player_shot_7_flight_table[16] != 0x10) {
         printf("error! hoa_data[16]\n");
     }
-    STORE_POINTER(player_shot_7_flight_table + 16, player_shot_7_flight_008);
+    STORE_ARCADE_ADDRESS(player_shot_7_flight_table + 16, player_shot_7_flight_008);
     if (player_shot_7_flight_table[18] != 0x12) {
         printf("error! hoa_data[18]\n");
     }
-    STORE_POINTER(player_shot_7_flight_table + 18, player_shot_7_flight_008);
+    STORE_ARCADE_ADDRESS(player_shot_7_flight_table + 18, player_shot_7_flight_008);
     if (player_shot_7_flight_table[20] != 0x14) {
         printf("error! hoa_data[20]\n");
     }
-    STORE_POINTER(player_shot_7_flight_table + 20, player_shot_7_flight_010);
+    STORE_ARCADE_ADDRESS(player_shot_7_flight_table + 20, player_shot_7_flight_010);
     if (player_shot_7_flight_table[22] != 0x16) {
         printf("error! hoa_data[22]\n");
     }
-    STORE_POINTER(player_shot_7_flight_table + 22, player_shot_7_flight_011);
+    STORE_ARCADE_ADDRESS(player_shot_7_flight_table + 22, player_shot_7_flight_011);
     if (player_shot_7_flight_table[24] != 0x18) {
         printf("error! hoa_data[24]\n");
     }
-    STORE_POINTER(player_shot_7_flight_table + 24, player_shot_7_flight_012);
+    STORE_ARCADE_ADDRESS(player_shot_7_flight_table + 24, player_shot_7_flight_012);
     if (player_shot_7_flight_table[26] != 0x1a) {
         printf("error! hoa_data[26]\n");
     }
-    STORE_POINTER(player_shot_7_flight_table + 26, player_shot_7_flight_013);
+    STORE_ARCADE_ADDRESS(player_shot_7_flight_table + 26, player_shot_7_flight_013);
     if (player_shot_7_flight_table[28] != 0x1c) {
         printf("error! hoa_data[28]\n");
     }
-    STORE_POINTER(player_shot_7_flight_table + 28, player_shot_7_flight_014);
+    STORE_ARCADE_ADDRESS(player_shot_7_flight_table + 28, player_shot_7_flight_014);
     if (player_shot_7_flight_table[30] != 0x1e) {
         printf("error! hoa_data[30]\n");
     }
-    STORE_POINTER(player_shot_7_flight_table + 30, player_shot_7_flight_015);
+    STORE_ARCADE_ADDRESS(player_shot_7_flight_table + 30, player_shot_7_flight_015);
     if (player_shot_7_flight_table[32] != 0x20) {
         printf("error! hoa_data[32]\n");
     }
-    STORE_POINTER(player_shot_7_flight_table + 32, player_shot_7_flight_015);
+    STORE_ARCADE_ADDRESS(player_shot_7_flight_table + 32, player_shot_7_flight_015);
     if (player_shot_7_flight_table[34] != 0x22) {
         printf("error! hoa_data[34]\n");
     }
-    STORE_POINTER(player_shot_7_flight_table + 34, player_shot_7_flight_017);
+    STORE_ARCADE_ADDRESS(player_shot_7_flight_table + 34, player_shot_7_flight_017);
     if (player_shot_7_flight_table[36] != 0x24) {
         printf("error! hoa_data[36]\n");
     }
-    STORE_POINTER(player_shot_7_flight_table + 36, player_shot_7_flight_017);
+    STORE_ARCADE_ADDRESS(player_shot_7_flight_table + 36, player_shot_7_flight_017);
     if (player_shot_7_flight_table[38] != 0x26) {
         printf("error! hoa_data[38]\n");
     }
-    STORE_POINTER(player_shot_7_flight_table + 38, player_shot_7_flight_019);
+    STORE_ARCADE_ADDRESS(player_shot_7_flight_table + 38, player_shot_7_flight_019);
     if (player_shot_7_flight_table[40] != 0x28) {
         printf("error! hoa_data[40]\n");
     }
-    STORE_POINTER(player_shot_7_flight_table + 40, player_shot_7_flight_019);
+    STORE_ARCADE_ADDRESS(player_shot_7_flight_table + 40, player_shot_7_flight_019);
     if (player_shot_7_flight_table[42] != 0x2a) {
         printf("error! hoa_data[42]\n");
     }
-    STORE_POINTER(player_shot_7_flight_table + 42, player_shot_7_flight_021);
+    STORE_ARCADE_ADDRESS(player_shot_7_flight_table + 42, player_shot_7_flight_021);
     if (player_shot_7_flight_table[44] != 0x2c) {
         printf("error! hoa_data[44]\n");
     }
-    STORE_POINTER(player_shot_7_flight_table + 44, player_shot_7_flight_021);
+    STORE_ARCADE_ADDRESS(player_shot_7_flight_table + 44, player_shot_7_flight_021);
     if (player_shot_7_flight_table[46] != 0x2e) {
         printf("error! hoa_data[46]\n");
     }
-    STORE_POINTER(player_shot_7_flight_table + 46, player_shot_7_flight_023);
+    STORE_ARCADE_ADDRESS(player_shot_7_flight_table + 46, player_shot_7_flight_023);
     if (player_shot_7_flight_table[48] != 0x30) {
         printf("error! hoa_data[48]\n");
     }
-    STORE_POINTER(player_shot_7_flight_table + 48, player_shot_7_flight_023);
+    STORE_ARCADE_ADDRESS(player_shot_7_flight_table + 48, player_shot_7_flight_023);
     if (player_shot_7_flight_table[56] != 0x0) {
         printf("error! hopt_la_a1_shdip[0]\n");
     }
-    STORE_POINTER(player_shot_7_flight_table + 56, player_shot_7_flight_028);
+    STORE_ARCADE_ADDRESS(player_shot_7_flight_table + 56, player_shot_7_flight_028);
     if (player_shot_7_flight_table[58] != 0x2) {
         printf("error! hopt_la_a1_shdip[2]\n");
     }
-    STORE_POINTER(player_shot_7_flight_table + 58, player_shot_7_flight_029);
+    STORE_ARCADE_ADDRESS(player_shot_7_flight_table + 58, player_shot_7_flight_029);
     if (player_shot_7_flight_table[60] != 0x4) {
         printf("error! hopt_la_a1_shdip[4]\n");
     }
-    STORE_POINTER(player_shot_7_flight_table + 60, player_shot_7_flight_030);
+    STORE_ARCADE_ADDRESS(player_shot_7_flight_table + 60, player_shot_7_flight_030);
     if (player_shot_7_flight_table[62] != 0x6) {
         printf("error! hopt_la_a1_shdip[6]\n");
     }
-    STORE_POINTER(player_shot_7_flight_table + 62, player_shot_7_flight_031);
+    STORE_ARCADE_ADDRESS(player_shot_7_flight_table + 62, player_shot_7_flight_031);
     if (player_shot_7_flight_table[64] != 0x8) {
         printf("error! hopt_la_a1_shdip[8]\n");
     }
-    STORE_POINTER(player_shot_7_flight_table + 64, player_shot_7_flight_032);
+    STORE_ARCADE_ADDRESS(player_shot_7_flight_table + 64, player_shot_7_flight_032);
     if (player_shot_7_flight_table[66] != 0xa) {
         printf("error! hopt_la_a1_shdip[10]\n");
     }
-    STORE_POINTER(player_shot_7_flight_table + 66, player_shot_7_flight_033);
+    STORE_ARCADE_ADDRESS(player_shot_7_flight_table + 66, player_shot_7_flight_033);
     if (player_shot_7_flight_table[68] != 0xc) {
         printf("error! hopt_la_a1_shdip[12]\n");
     }
-    STORE_POINTER(player_shot_7_flight_table + 68, player_shot_7_flight_034);
+    STORE_ARCADE_ADDRESS(player_shot_7_flight_table + 68, player_shot_7_flight_034);
     if (player_shot_7_flight_table[70] != 0xe) {
         printf("error! hopt_la_a1_shdip[14]\n");
     }
-    STORE_POINTER(player_shot_7_flight_table + 70, player_shot_7_flight_035);
+    STORE_ARCADE_ADDRESS(player_shot_7_flight_table + 70, player_shot_7_flight_035);
     if (player_shot_7_flight_table[72] != 0x10) {
         printf("error! hopt_la_a1_shdip[16]\n");
     }
-    STORE_POINTER(player_shot_7_flight_table + 72, player_shot_7_flight_036);
+    STORE_ARCADE_ADDRESS(player_shot_7_flight_table + 72, player_shot_7_flight_036);
     if (player_shot_7_flight_table[74] != 0x12) {
         printf("error! hopt_la_a1_shdip[18]\n");
     }
-    STORE_POINTER(player_shot_7_flight_table + 74, player_shot_7_flight_037);
+    STORE_ARCADE_ADDRESS(player_shot_7_flight_table + 74, player_shot_7_flight_037);
     if (player_shot_7_flight_table[76] != 0x14) {
         printf("error! hopt_la_a1_shdip[20]\n");
     }
-    STORE_POINTER(player_shot_7_flight_table + 76, player_shot_7_flight_038);
+    STORE_ARCADE_ADDRESS(player_shot_7_flight_table + 76, player_shot_7_flight_038);
     if (player_shot_7_flight_table[78] != 0x16) {
         printf("error! hopt_la_a1_shdip[22]\n");
     }
-    STORE_POINTER(player_shot_7_flight_table + 78, player_shot_7_flight_039);
+    STORE_ARCADE_ADDRESS(player_shot_7_flight_table + 78, player_shot_7_flight_039);
     if (player_shot_7_flight_table[80] != 0x18) {
         printf("error! hopt_la_a1_shdip[24]\n");
     }
-    STORE_POINTER(player_shot_7_flight_table + 80, player_shot_7_flight_040);
+    STORE_ARCADE_ADDRESS(player_shot_7_flight_table + 80, player_shot_7_flight_040);
     if (player_shot_7_flight_table[82] != 0x1a) {
         printf("error! hopt_la_a1_shdip[26]\n");
     }
-    STORE_POINTER(player_shot_7_flight_table + 82, player_shot_7_flight_041);
+    STORE_ARCADE_ADDRESS(player_shot_7_flight_table + 82, player_shot_7_flight_041);
     if (player_shot_7_flight_table[84] != 0x1c) {
         printf("error! hopt_la_a1_shdip[28]\n");
     }
-    STORE_POINTER(player_shot_7_flight_table + 84, player_shot_7_flight_042);
+    STORE_ARCADE_ADDRESS(player_shot_7_flight_table + 84, player_shot_7_flight_042);
     if (player_shot_7_flight_table[86] != 0x1e) {
         printf("error! hopt_la_a1_shdip[30]\n");
     }
-    STORE_POINTER(player_shot_7_flight_table + 86, player_shot_7_flight_043);
+    STORE_ARCADE_ADDRESS(player_shot_7_flight_table + 86, player_shot_7_flight_043);
     if (player_shot_7_flight_table[88] != 0x20) {
         printf("error! hopt_la_a1_shdip[32]\n");
     }
-    STORE_POINTER(player_shot_7_flight_table + 88, player_shot_7_flight_044);
+    STORE_ARCADE_ADDRESS(player_shot_7_flight_table + 88, player_shot_7_flight_044);
     if (player_shot_7_flight_028[2] != 0x2) {
         printf("error! hop_la_a1_d00[2]\n");
     }
-    STORE_POINTER(player_shot_7_flight_028 + 2, player_shot_7_flight_028_01);
+    STORE_ARCADE_ADDRESS(player_shot_7_flight_028 + 2, player_shot_7_flight_028_01);
     if (player_shot_7_flight_029[2] != 0x2) {
         printf("error! hop_la_a1_d02[2]\n");
     }
-    STORE_POINTER(player_shot_7_flight_029 + 2, player_shot_7_flight_028_01);
+    STORE_ARCADE_ADDRESS(player_shot_7_flight_029 + 2, player_shot_7_flight_028_01);
     if (player_shot_7_flight_030[2] != 0x2) {
         printf("error! hop_la_a1_d04[2]\n");
     }
-    STORE_POINTER(player_shot_7_flight_030 + 2, player_shot_7_flight_028_01);
+    STORE_ARCADE_ADDRESS(player_shot_7_flight_030 + 2, player_shot_7_flight_028_01);
     if (player_shot_7_flight_031[2] != 0x2) {
         printf("error! hop_la_a1_d06[2]\n");
     }
-    STORE_POINTER(player_shot_7_flight_031 + 2, player_shot_7_flight_028_01);
+    STORE_ARCADE_ADDRESS(player_shot_7_flight_031 + 2, player_shot_7_flight_028_01);
     if (player_shot_7_flight_032[2] != 0x2) {
         printf("error! hop_la_a1_d08[2]\n");
     }
-    STORE_POINTER(player_shot_7_flight_032 + 2, player_shot_7_flight_028_01);
+    STORE_ARCADE_ADDRESS(player_shot_7_flight_032 + 2, player_shot_7_flight_028_01);
     if (player_shot_7_flight_033[2] != 0x2) {
         printf("error! hop_la_a1_d0a[2]\n");
     }
-    STORE_POINTER(player_shot_7_flight_033 + 2, player_shot_7_flight_028_01);
+    STORE_ARCADE_ADDRESS(player_shot_7_flight_033 + 2, player_shot_7_flight_028_01);
     if (player_shot_7_flight_034[2] != 0x2) {
         printf("error! hop_la_a1_d0c[2]\n");
     }
-    STORE_POINTER(player_shot_7_flight_034 + 2, player_shot_7_flight_028_01);
+    STORE_ARCADE_ADDRESS(player_shot_7_flight_034 + 2, player_shot_7_flight_028_01);
     if (player_shot_7_flight_035[2] != 0x2) {
         printf("error! hop_la_a1_d0e[2]\n");
     }
-    STORE_POINTER(player_shot_7_flight_035 + 2, player_shot_7_flight_028_01);
+    STORE_ARCADE_ADDRESS(player_shot_7_flight_035 + 2, player_shot_7_flight_028_01);
     if (player_shot_7_flight_036[2] != 0x2) {
         printf("error! hop_la_a1_d10[2]\n");
     }
-    STORE_POINTER(player_shot_7_flight_036 + 2, player_shot_7_flight_028_01);
+    STORE_ARCADE_ADDRESS(player_shot_7_flight_036 + 2, player_shot_7_flight_028_01);
     if (player_shot_7_flight_037[2] != 0x2) {
         printf("error! hop_la_a1_d12[2]\n");
     }
-    STORE_POINTER(player_shot_7_flight_037 + 2, player_shot_7_flight_028_01);
+    STORE_ARCADE_ADDRESS(player_shot_7_flight_037 + 2, player_shot_7_flight_028_01);
     if (player_shot_7_flight_038[2] != 0x2) {
         printf("error! hop_la_a1_d14[2]\n");
     }
-    STORE_POINTER(player_shot_7_flight_038 + 2, player_shot_7_flight_028_01);
+    STORE_ARCADE_ADDRESS(player_shot_7_flight_038 + 2, player_shot_7_flight_028_01);
     if (player_shot_7_flight_039[2] != 0x2) {
         printf("error! hop_la_a1_d16[2]\n");
     }
-    STORE_POINTER(player_shot_7_flight_039 + 2, player_shot_7_flight_028_01);
+    STORE_ARCADE_ADDRESS(player_shot_7_flight_039 + 2, player_shot_7_flight_028_01);
     if (player_shot_7_flight_040[2] != 0x2) {
         printf("error! hop_la_a1_d18[2]\n");
     }
-    STORE_POINTER(player_shot_7_flight_040 + 2, player_shot_7_flight_028_01);
+    STORE_ARCADE_ADDRESS(player_shot_7_flight_040 + 2, player_shot_7_flight_028_01);
     if (player_shot_7_flight_041[2] != 0x2) {
         printf("error! hop_la_a1_d1a[2]\n");
     }
-    STORE_POINTER(player_shot_7_flight_041 + 2, player_shot_7_flight_028_01);
+    STORE_ARCADE_ADDRESS(player_shot_7_flight_041 + 2, player_shot_7_flight_028_01);
     if (player_shot_7_flight_042[2] != 0x2) {
         printf("error! hop_la_a1_d1c[2]\n");
     }
-    STORE_POINTER(player_shot_7_flight_042 + 2, player_shot_7_flight_028_01);
+    STORE_ARCADE_ADDRESS(player_shot_7_flight_042 + 2, player_shot_7_flight_028_01);
     if (player_shot_7_flight_043[2] != 0x2) {
         printf("error! hop_la_a1_d1e[2]\n");
     }
-    STORE_POINTER(player_shot_7_flight_043 + 2, player_shot_7_flight_028_01);
+    STORE_ARCADE_ADDRESS(player_shot_7_flight_043 + 2, player_shot_7_flight_028_01);
     if (player_shot_7_flight_044[2] != 0x2) {
         printf("error! hop_la_a1_d20[2]\n");
     }
-    STORE_POINTER(player_shot_7_flight_044 + 2, player_shot_7_flight_028_01);
+    STORE_ARCADE_ADDRESS(player_shot_7_flight_044 + 2, player_shot_7_flight_028_01);
     if (player_shot_7_flight_table[96] != 0x0) {
         printf("error! hopt_la_a2_shdip[0]\n");
     }
-    STORE_POINTER(player_shot_7_flight_table + 96, player_shot_7_flight_048);
+    STORE_ARCADE_ADDRESS(player_shot_7_flight_table + 96, player_shot_7_flight_048);
     if (player_shot_7_flight_table[98] != 0x2) {
         printf("error! hopt_la_a2_shdip[2]\n");
     }
-    STORE_POINTER(player_shot_7_flight_table + 98, player_shot_7_flight_049);
+    STORE_ARCADE_ADDRESS(player_shot_7_flight_table + 98, player_shot_7_flight_049);
     if (player_shot_7_flight_table[100] != 0x4) {
         printf("error! hopt_la_a2_shdip[4]\n");
     }
-    STORE_POINTER(player_shot_7_flight_table + 100, player_shot_7_flight_050);
+    STORE_ARCADE_ADDRESS(player_shot_7_flight_table + 100, player_shot_7_flight_050);
     if (player_shot_7_flight_table[102] != 0x6) {
         printf("error! hopt_la_a2_shdip[6]\n");
     }
-    STORE_POINTER(player_shot_7_flight_table + 102, player_shot_7_flight_051);
+    STORE_ARCADE_ADDRESS(player_shot_7_flight_table + 102, player_shot_7_flight_051);
     if (player_shot_7_flight_table[104] != 0x8) {
         printf("error! hopt_la_a2_shdip[8]\n");
     }
-    STORE_POINTER(player_shot_7_flight_table + 104, player_shot_7_flight_052);
+    STORE_ARCADE_ADDRESS(player_shot_7_flight_table + 104, player_shot_7_flight_052);
     if (player_shot_7_flight_table[106] != 0xa) {
         printf("error! hopt_la_a2_shdip[10]\n");
     }
-    STORE_POINTER(player_shot_7_flight_table + 106, player_shot_7_flight_053);
+    STORE_ARCADE_ADDRESS(player_shot_7_flight_table + 106, player_shot_7_flight_053);
     if (player_shot_7_flight_table[108] != 0xc) {
         printf("error! hopt_la_a2_shdip[12]\n");
     }
-    STORE_POINTER(player_shot_7_flight_table + 108, player_shot_7_flight_054);
+    STORE_ARCADE_ADDRESS(player_shot_7_flight_table + 108, player_shot_7_flight_054);
     if (player_shot_7_flight_table[110] != 0xe) {
         printf("error! hopt_la_a2_shdip[14]\n");
     }
-    STORE_POINTER(player_shot_7_flight_table + 110, player_shot_7_flight_055);
+    STORE_ARCADE_ADDRESS(player_shot_7_flight_table + 110, player_shot_7_flight_055);
     if (player_shot_7_flight_table[112] != 0x10) {
         printf("error! hopt_la_a2_shdip[16]\n");
     }
-    STORE_POINTER(player_shot_7_flight_table + 112, player_shot_7_flight_056);
+    STORE_ARCADE_ADDRESS(player_shot_7_flight_table + 112, player_shot_7_flight_056);
     if (player_shot_7_flight_table[114] != 0x12) {
         printf("error! hopt_la_a2_shdip[18]\n");
     }
-    STORE_POINTER(player_shot_7_flight_table + 114, player_shot_7_flight_057);
+    STORE_ARCADE_ADDRESS(player_shot_7_flight_table + 114, player_shot_7_flight_057);
     if (player_shot_7_flight_table[116] != 0x14) {
         printf("error! hopt_la_a2_shdip[20]\n");
     }
-    STORE_POINTER(player_shot_7_flight_table + 116, player_shot_7_flight_058);
+    STORE_ARCADE_ADDRESS(player_shot_7_flight_table + 116, player_shot_7_flight_058);
     if (player_shot_7_flight_table[118] != 0x16) {
         printf("error! hopt_la_a2_shdip[22]\n");
     }
-    STORE_POINTER(player_shot_7_flight_table + 118, player_shot_7_flight_059);
+    STORE_ARCADE_ADDRESS(player_shot_7_flight_table + 118, player_shot_7_flight_059);
     if (player_shot_7_flight_table[120] != 0x18) {
         printf("error! hopt_la_a2_shdip[24]\n");
     }
-    STORE_POINTER(player_shot_7_flight_table + 120, player_shot_7_flight_060);
+    STORE_ARCADE_ADDRESS(player_shot_7_flight_table + 120, player_shot_7_flight_060);
     if (player_shot_7_flight_table[122] != 0x1a) {
         printf("error! hopt_la_a2_shdip[26]\n");
     }
-    STORE_POINTER(player_shot_7_flight_table + 122, player_shot_7_flight_061);
+    STORE_ARCADE_ADDRESS(player_shot_7_flight_table + 122, player_shot_7_flight_061);
     if (player_shot_7_flight_table[124] != 0x1c) {
         printf("error! hopt_la_a2_shdip[28]\n");
     }
-    STORE_POINTER(player_shot_7_flight_table + 124, player_shot_7_flight_062);
+    STORE_ARCADE_ADDRESS(player_shot_7_flight_table + 124, player_shot_7_flight_062);
     if (player_shot_7_flight_table[126] != 0x1e) {
         printf("error! hopt_la_a2_shdip[30]\n");
     }
-    STORE_POINTER(player_shot_7_flight_table + 126, player_shot_7_flight_063);
+    STORE_ARCADE_ADDRESS(player_shot_7_flight_table + 126, player_shot_7_flight_063);
     if (player_shot_7_flight_table[128] != 0x20) {
         printf("error! hopt_la_a2_shdip[32]\n");
     }
-    STORE_POINTER(player_shot_7_flight_table + 128, player_shot_7_flight_064);
+    STORE_ARCADE_ADDRESS(player_shot_7_flight_table + 128, player_shot_7_flight_064);
     if (player_shot_7_flight_048[2] != 0x2) {
         printf("error! hop_la_a2_d00[2]\n");
     }
-    STORE_POINTER(player_shot_7_flight_048 + 2, player_shot_7_flight_048_01);
+    STORE_ARCADE_ADDRESS(player_shot_7_flight_048 + 2, player_shot_7_flight_048_01);
     if (player_shot_7_flight_049[2] != 0x2) {
         printf("error! hop_la_a2_d02[2]\n");
     }
-    STORE_POINTER(player_shot_7_flight_049 + 2, player_shot_7_flight_048_01);
+    STORE_ARCADE_ADDRESS(player_shot_7_flight_049 + 2, player_shot_7_flight_048_01);
     if (player_shot_7_flight_050[2] != 0x2) {
         printf("error! hop_la_a2_d04[2]\n");
     }
-    STORE_POINTER(player_shot_7_flight_050 + 2, player_shot_7_flight_048_01);
+    STORE_ARCADE_ADDRESS(player_shot_7_flight_050 + 2, player_shot_7_flight_048_01);
     if (player_shot_7_flight_051[2] != 0x2) {
         printf("error! hop_la_a2_d06[2]\n");
     }
-    STORE_POINTER(player_shot_7_flight_051 + 2, player_shot_7_flight_048_01);
+    STORE_ARCADE_ADDRESS(player_shot_7_flight_051 + 2, player_shot_7_flight_048_01);
     if (player_shot_7_flight_052[2] != 0x2) {
         printf("error! hop_la_a2_d08[2]\n");
     }
-    STORE_POINTER(player_shot_7_flight_052 + 2, player_shot_7_flight_048_01);
+    STORE_ARCADE_ADDRESS(player_shot_7_flight_052 + 2, player_shot_7_flight_048_01);
     if (player_shot_7_flight_053[2] != 0x2) {
         printf("error! hop_la_a2_d0a[2]\n");
     }
-    STORE_POINTER(player_shot_7_flight_053 + 2, player_shot_7_flight_048_01);
+    STORE_ARCADE_ADDRESS(player_shot_7_flight_053 + 2, player_shot_7_flight_048_01);
     if (player_shot_7_flight_054[2] != 0x2) {
         printf("error! hop_la_a2_d0c[2]\n");
     }
-    STORE_POINTER(player_shot_7_flight_054 + 2, player_shot_7_flight_048_01);
+    STORE_ARCADE_ADDRESS(player_shot_7_flight_054 + 2, player_shot_7_flight_048_01);
     if (player_shot_7_flight_055[2] != 0x2) {
         printf("error! hop_la_a2_d0e[2]\n");
     }
-    STORE_POINTER(player_shot_7_flight_055 + 2, player_shot_7_flight_048_01);
+    STORE_ARCADE_ADDRESS(player_shot_7_flight_055 + 2, player_shot_7_flight_048_01);
     if (player_shot_7_flight_056[2] != 0x2) {
         printf("error! hop_la_a2_d10[2]\n");
     }
-    STORE_POINTER(player_shot_7_flight_056 + 2, player_shot_7_flight_048_01);
+    STORE_ARCADE_ADDRESS(player_shot_7_flight_056 + 2, player_shot_7_flight_048_01);
     if (player_shot_7_flight_057[2] != 0x2) {
         printf("error! hop_la_a2_d12[2]\n");
     }
-    STORE_POINTER(player_shot_7_flight_057 + 2, player_shot_7_flight_048_01);
+    STORE_ARCADE_ADDRESS(player_shot_7_flight_057 + 2, player_shot_7_flight_048_01);
     if (player_shot_7_flight_058[2] != 0x2) {
         printf("error! hop_la_a2_d14[2]\n");
     }
-    STORE_POINTER(player_shot_7_flight_058 + 2, player_shot_7_flight_048_01);
+    STORE_ARCADE_ADDRESS(player_shot_7_flight_058 + 2, player_shot_7_flight_048_01);
     if (player_shot_7_flight_059[2] != 0x2) {
         printf("error! hop_la_a2_d16[2]\n");
     }
-    STORE_POINTER(player_shot_7_flight_059 + 2, player_shot_7_flight_048_01);
+    STORE_ARCADE_ADDRESS(player_shot_7_flight_059 + 2, player_shot_7_flight_048_01);
     if (player_shot_7_flight_060[2] != 0x2) {
         printf("error! hop_la_a2_d18[2]\n");
     }
-    STORE_POINTER(player_shot_7_flight_060 + 2, player_shot_7_flight_048_01);
+    STORE_ARCADE_ADDRESS(player_shot_7_flight_060 + 2, player_shot_7_flight_048_01);
     if (player_shot_7_flight_061[2] != 0x2) {
         printf("error! hop_la_a2_d1a[2]\n");
     }
-    STORE_POINTER(player_shot_7_flight_061 + 2, player_shot_7_flight_048_01);
+    STORE_ARCADE_ADDRESS(player_shot_7_flight_061 + 2, player_shot_7_flight_048_01);
     if (player_shot_7_flight_062[2] != 0x2) {
         printf("error! hop_la_a2_d1c[2]\n");
     }
-    STORE_POINTER(player_shot_7_flight_062 + 2, player_shot_7_flight_048_01);
+    STORE_ARCADE_ADDRESS(player_shot_7_flight_062 + 2, player_shot_7_flight_048_01);
     if (player_shot_7_flight_063[2] != 0x2) {
         printf("error! hop_la_a2_d1e[2]\n");
     }
-    STORE_POINTER(player_shot_7_flight_063 + 2, player_shot_7_flight_048_01);
+    STORE_ARCADE_ADDRESS(player_shot_7_flight_063 + 2, player_shot_7_flight_048_01);
     if (player_shot_7_flight_064[2] != 0x2) {
         printf("error! hop_la_a2_d20[2]\n");
     }
-    STORE_POINTER(player_shot_7_flight_064 + 2, player_shot_7_flight_048_01);
+    STORE_ARCADE_ADDRESS(player_shot_7_flight_064 + 2, player_shot_7_flight_048_01);
     if (player_shot_7_flight_table[136] != 0x0) {
         printf("error! hopt_la_a3_shdip[0]\n");
     }
-    STORE_POINTER(player_shot_7_flight_table + 136, player_shot_7_flight_068);
+    STORE_ARCADE_ADDRESS(player_shot_7_flight_table + 136, player_shot_7_flight_068);
     if (player_shot_7_flight_table[138] != 0x2) {
         printf("error! hopt_la_a3_shdip[2]\n");
     }
-    STORE_POINTER(player_shot_7_flight_table + 138, player_shot_7_flight_069);
+    STORE_ARCADE_ADDRESS(player_shot_7_flight_table + 138, player_shot_7_flight_069);
     if (player_shot_7_flight_table[140] != 0x4) {
         printf("error! hopt_la_a3_shdip[4]\n");
     }
-    STORE_POINTER(player_shot_7_flight_table + 140, player_shot_7_flight_070);
+    STORE_ARCADE_ADDRESS(player_shot_7_flight_table + 140, player_shot_7_flight_070);
     if (player_shot_7_flight_table[142] != 0x6) {
         printf("error! hopt_la_a3_shdip[6]\n");
     }
-    STORE_POINTER(player_shot_7_flight_table + 142, player_shot_7_flight_071);
+    STORE_ARCADE_ADDRESS(player_shot_7_flight_table + 142, player_shot_7_flight_071);
     if (player_shot_7_flight_table[144] != 0x8) {
         printf("error! hopt_la_a3_shdip[8]\n");
     }
-    STORE_POINTER(player_shot_7_flight_table + 144, player_shot_7_flight_072);
+    STORE_ARCADE_ADDRESS(player_shot_7_flight_table + 144, player_shot_7_flight_072);
     if (player_shot_7_flight_table[146] != 0xa) {
         printf("error! hopt_la_a3_shdip[10]\n");
     }
-    STORE_POINTER(player_shot_7_flight_table + 146, player_shot_7_flight_073);
+    STORE_ARCADE_ADDRESS(player_shot_7_flight_table + 146, player_shot_7_flight_073);
     if (player_shot_7_flight_table[148] != 0xc) {
         printf("error! hopt_la_a3_shdip[12]\n");
     }
-    STORE_POINTER(player_shot_7_flight_table + 148, player_shot_7_flight_074);
+    STORE_ARCADE_ADDRESS(player_shot_7_flight_table + 148, player_shot_7_flight_074);
     if (player_shot_7_flight_table[150] != 0xe) {
         printf("error! hopt_la_a3_shdip[14]\n");
     }
-    STORE_POINTER(player_shot_7_flight_table + 150, player_shot_7_flight_075);
+    STORE_ARCADE_ADDRESS(player_shot_7_flight_table + 150, player_shot_7_flight_075);
     if (player_shot_7_flight_table[152] != 0x10) {
         printf("error! hopt_la_a3_shdip[16]\n");
     }
-    STORE_POINTER(player_shot_7_flight_table + 152, player_shot_7_flight_076);
+    STORE_ARCADE_ADDRESS(player_shot_7_flight_table + 152, player_shot_7_flight_076);
     if (player_shot_7_flight_table[154] != 0x12) {
         printf("error! hopt_la_a3_shdip[18]\n");
     }
-    STORE_POINTER(player_shot_7_flight_table + 154, player_shot_7_flight_077);
+    STORE_ARCADE_ADDRESS(player_shot_7_flight_table + 154, player_shot_7_flight_077);
     if (player_shot_7_flight_table[156] != 0x14) {
         printf("error! hopt_la_a3_shdip[20]\n");
     }
-    STORE_POINTER(player_shot_7_flight_table + 156, player_shot_7_flight_078);
+    STORE_ARCADE_ADDRESS(player_shot_7_flight_table + 156, player_shot_7_flight_078);
     if (player_shot_7_flight_table[158] != 0x16) {
         printf("error! hopt_la_a3_shdip[22]\n");
     }
-    STORE_POINTER(player_shot_7_flight_table + 158, player_shot_7_flight_079);
+    STORE_ARCADE_ADDRESS(player_shot_7_flight_table + 158, player_shot_7_flight_079);
     if (player_shot_7_flight_table[160] != 0x18) {
         printf("error! hopt_la_a3_shdip[24]\n");
     }
-    STORE_POINTER(player_shot_7_flight_table + 160, player_shot_7_flight_080);
+    STORE_ARCADE_ADDRESS(player_shot_7_flight_table + 160, player_shot_7_flight_080);
     if (player_shot_7_flight_table[162] != 0x1a) {
         printf("error! hopt_la_a3_shdip[26]\n");
     }
-    STORE_POINTER(player_shot_7_flight_table + 162, player_shot_7_flight_081);
+    STORE_ARCADE_ADDRESS(player_shot_7_flight_table + 162, player_shot_7_flight_081);
     if (player_shot_7_flight_table[164] != 0x1c) {
         printf("error! hopt_la_a3_shdip[28]\n");
     }
-    STORE_POINTER(player_shot_7_flight_table + 164, player_shot_7_flight_082);
+    STORE_ARCADE_ADDRESS(player_shot_7_flight_table + 164, player_shot_7_flight_082);
     if (player_shot_7_flight_table[166] != 0x1e) {
         printf("error! hopt_la_a3_shdip[30]\n");
     }
-    STORE_POINTER(player_shot_7_flight_table + 166, player_shot_7_flight_083);
+    STORE_ARCADE_ADDRESS(player_shot_7_flight_table + 166, player_shot_7_flight_083);
     if (player_shot_7_flight_table[168] != 0x20) {
         printf("error! hopt_la_a3_shdip[32]\n");
     }
-    STORE_POINTER(player_shot_7_flight_table + 168, player_shot_7_flight_084);
+    STORE_ARCADE_ADDRESS(player_shot_7_flight_table + 168, player_shot_7_flight_084);
     if (player_shot_7_flight_068[2] != 0x2) {
         printf("error! hop_la_a3_d00[2]\n");
     }
-    STORE_POINTER(player_shot_7_flight_068 + 2, player_shot_7_flight_068_01);
+    STORE_ARCADE_ADDRESS(player_shot_7_flight_068 + 2, player_shot_7_flight_068_01);
     if (player_shot_7_flight_069[2] != 0x2) {
         printf("error! hop_la_a3_d02[2]\n");
     }
-    STORE_POINTER(player_shot_7_flight_069 + 2, player_shot_7_flight_068_01);
+    STORE_ARCADE_ADDRESS(player_shot_7_flight_069 + 2, player_shot_7_flight_068_01);
     if (player_shot_7_flight_070[2] != 0x2) {
         printf("error! hop_la_a3_d04[2]\n");
     }
-    STORE_POINTER(player_shot_7_flight_070 + 2, player_shot_7_flight_068_01);
+    STORE_ARCADE_ADDRESS(player_shot_7_flight_070 + 2, player_shot_7_flight_068_01);
     if (player_shot_7_flight_071[2] != 0x2) {
         printf("error! hop_la_a3_d06[2]\n");
     }
-    STORE_POINTER(player_shot_7_flight_071 + 2, player_shot_7_flight_068_01);
+    STORE_ARCADE_ADDRESS(player_shot_7_flight_071 + 2, player_shot_7_flight_068_01);
     if (player_shot_7_flight_072[2] != 0x2) {
         printf("error! hop_la_a3_d08[2]\n");
     }
-    STORE_POINTER(player_shot_7_flight_072 + 2, player_shot_7_flight_068_01);
+    STORE_ARCADE_ADDRESS(player_shot_7_flight_072 + 2, player_shot_7_flight_068_01);
     if (player_shot_7_flight_073[2] != 0x2) {
         printf("error! hop_la_a3_d0a[2]\n");
     }
-    STORE_POINTER(player_shot_7_flight_073 + 2, player_shot_7_flight_068_01);
+    STORE_ARCADE_ADDRESS(player_shot_7_flight_073 + 2, player_shot_7_flight_068_01);
     if (player_shot_7_flight_074[2] != 0x2) {
         printf("error! hop_la_a3_d0c[2]\n");
     }
-    STORE_POINTER(player_shot_7_flight_074 + 2, player_shot_7_flight_068_01);
+    STORE_ARCADE_ADDRESS(player_shot_7_flight_074 + 2, player_shot_7_flight_068_01);
     if (player_shot_7_flight_075[2] != 0x2) {
         printf("error! hop_la_a3_d0e[2]\n");
     }
-    STORE_POINTER(player_shot_7_flight_075 + 2, player_shot_7_flight_068_01);
+    STORE_ARCADE_ADDRESS(player_shot_7_flight_075 + 2, player_shot_7_flight_068_01);
     if (player_shot_7_flight_076[2] != 0x2) {
         printf("error! hop_la_a3_d10[2]\n");
     }
-    STORE_POINTER(player_shot_7_flight_076 + 2, player_shot_7_flight_068_01);
+    STORE_ARCADE_ADDRESS(player_shot_7_flight_076 + 2, player_shot_7_flight_068_01);
     if (player_shot_7_flight_077[2] != 0x2) {
         printf("error! hop_la_a3_d12[2]\n");
     }
-    STORE_POINTER(player_shot_7_flight_077 + 2, player_shot_7_flight_068_01);
+    STORE_ARCADE_ADDRESS(player_shot_7_flight_077 + 2, player_shot_7_flight_068_01);
     if (player_shot_7_flight_078[2] != 0x2) {
         printf("error! hop_la_a3_d14[2]\n");
     }
-    STORE_POINTER(player_shot_7_flight_078 + 2, player_shot_7_flight_068_01);
+    STORE_ARCADE_ADDRESS(player_shot_7_flight_078 + 2, player_shot_7_flight_068_01);
     if (player_shot_7_flight_079[2] != 0x2) {
         printf("error! hop_la_a3_d16[2]\n");
     }
-    STORE_POINTER(player_shot_7_flight_079 + 2, player_shot_7_flight_068_01);
+    STORE_ARCADE_ADDRESS(player_shot_7_flight_079 + 2, player_shot_7_flight_068_01);
     if (player_shot_7_flight_080[2] != 0x2) {
         printf("error! hop_la_a3_d18[2]\n");
     }
-    STORE_POINTER(player_shot_7_flight_080 + 2, player_shot_7_flight_068_01);
+    STORE_ARCADE_ADDRESS(player_shot_7_flight_080 + 2, player_shot_7_flight_068_01);
     if (player_shot_7_flight_081[2] != 0x2) {
         printf("error! hop_la_a3_d1a[2]\n");
     }
-    STORE_POINTER(player_shot_7_flight_081 + 2, player_shot_7_flight_068_01);
+    STORE_ARCADE_ADDRESS(player_shot_7_flight_081 + 2, player_shot_7_flight_068_01);
     if (player_shot_7_flight_082[2] != 0x2) {
         printf("error! hop_la_a3_d1c[2]\n");
     }
-    STORE_POINTER(player_shot_7_flight_082 + 2, player_shot_7_flight_068_01);
+    STORE_ARCADE_ADDRESS(player_shot_7_flight_082 + 2, player_shot_7_flight_068_01);
     if (player_shot_7_flight_083[2] != 0x2) {
         printf("error! hop_la_a3_d1e[2]\n");
     }
-    STORE_POINTER(player_shot_7_flight_083 + 2, player_shot_7_flight_068_01);
+    STORE_ARCADE_ADDRESS(player_shot_7_flight_083 + 2, player_shot_7_flight_068_01);
     if (player_shot_7_flight_084[2] != 0x2) {
         printf("error! hop_la_a3_d20[2]\n");
     }
-    STORE_POINTER(player_shot_7_flight_084 + 2, player_shot_7_flight_068_01);
+    STORE_ARCADE_ADDRESS(player_shot_7_flight_084 + 2, player_shot_7_flight_068_01);
     if (player_shot_7_flight_table[176] != 0x0) {
         printf("error! hopt_la_a4_shdip[0]\n");
     }
-    STORE_POINTER(player_shot_7_flight_table + 176, player_shot_7_flight_088);
+    STORE_ARCADE_ADDRESS(player_shot_7_flight_table + 176, player_shot_7_flight_088);
     if (player_shot_7_flight_table[178] != 0x2) {
         printf("error! hopt_la_a4_shdip[2]\n");
     }
-    STORE_POINTER(player_shot_7_flight_table + 178, player_shot_7_flight_089);
+    STORE_ARCADE_ADDRESS(player_shot_7_flight_table + 178, player_shot_7_flight_089);
     if (player_shot_7_flight_table[180] != 0x4) {
         printf("error! hopt_la_a4_shdip[4]\n");
     }
-    STORE_POINTER(player_shot_7_flight_table + 180, player_shot_7_flight_090);
+    STORE_ARCADE_ADDRESS(player_shot_7_flight_table + 180, player_shot_7_flight_090);
     if (player_shot_7_flight_table[182] != 0x6) {
         printf("error! hopt_la_a4_shdip[6]\n");
     }
-    STORE_POINTER(player_shot_7_flight_table + 182, player_shot_7_flight_091);
+    STORE_ARCADE_ADDRESS(player_shot_7_flight_table + 182, player_shot_7_flight_091);
     if (player_shot_7_flight_table[184] != 0x8) {
         printf("error! hopt_la_a4_shdip[8]\n");
     }
-    STORE_POINTER(player_shot_7_flight_table + 184, player_shot_7_flight_092);
+    STORE_ARCADE_ADDRESS(player_shot_7_flight_table + 184, player_shot_7_flight_092);
     if (player_shot_7_flight_table[186] != 0xa) {
         printf("error! hopt_la_a4_shdip[10]\n");
     }
-    STORE_POINTER(player_shot_7_flight_table + 186, player_shot_7_flight_093);
+    STORE_ARCADE_ADDRESS(player_shot_7_flight_table + 186, player_shot_7_flight_093);
     if (player_shot_7_flight_table[188] != 0xc) {
         printf("error! hopt_la_a4_shdip[12]\n");
     }
-    STORE_POINTER(player_shot_7_flight_table + 188, player_shot_7_flight_094);
+    STORE_ARCADE_ADDRESS(player_shot_7_flight_table + 188, player_shot_7_flight_094);
     if (player_shot_7_flight_table[190] != 0xe) {
         printf("error! hopt_la_a4_shdip[14]\n");
     }
-    STORE_POINTER(player_shot_7_flight_table + 190, player_shot_7_flight_095);
+    STORE_ARCADE_ADDRESS(player_shot_7_flight_table + 190, player_shot_7_flight_095);
     if (player_shot_7_flight_table[192] != 0x10) {
         printf("error! hopt_la_a4_shdip[16]\n");
     }
-    STORE_POINTER(player_shot_7_flight_table + 192, player_shot_7_flight_096);
+    STORE_ARCADE_ADDRESS(player_shot_7_flight_table + 192, player_shot_7_flight_096);
     if (player_shot_7_flight_table[194] != 0x12) {
         printf("error! hopt_la_a4_shdip[18]\n");
     }
-    STORE_POINTER(player_shot_7_flight_table + 194, player_shot_7_flight_097);
+    STORE_ARCADE_ADDRESS(player_shot_7_flight_table + 194, player_shot_7_flight_097);
     if (player_shot_7_flight_table[196] != 0x14) {
         printf("error! hopt_la_a4_shdip[20]\n");
     }
-    STORE_POINTER(player_shot_7_flight_table + 196, player_shot_7_flight_098);
+    STORE_ARCADE_ADDRESS(player_shot_7_flight_table + 196, player_shot_7_flight_098);
     if (player_shot_7_flight_table[198] != 0x16) {
         printf("error! hopt_la_a4_shdip[22]\n");
     }
-    STORE_POINTER(player_shot_7_flight_table + 198, player_shot_7_flight_099);
+    STORE_ARCADE_ADDRESS(player_shot_7_flight_table + 198, player_shot_7_flight_099);
     if (player_shot_7_flight_table[200] != 0x18) {
         printf("error! hopt_la_a4_shdip[24]\n");
     }
-    STORE_POINTER(player_shot_7_flight_table + 200, player_shot_7_flight_100);
+    STORE_ARCADE_ADDRESS(player_shot_7_flight_table + 200, player_shot_7_flight_100);
     if (player_shot_7_flight_table[202] != 0x1a) {
         printf("error! hopt_la_a4_shdip[26]\n");
     }
-    STORE_POINTER(player_shot_7_flight_table + 202, player_shot_7_flight_101);
+    STORE_ARCADE_ADDRESS(player_shot_7_flight_table + 202, player_shot_7_flight_101);
     if (player_shot_7_flight_table[204] != 0x1c) {
         printf("error! hopt_la_a4_shdip[28]\n");
     }
-    STORE_POINTER(player_shot_7_flight_table + 204, player_shot_7_flight_102);
+    STORE_ARCADE_ADDRESS(player_shot_7_flight_table + 204, player_shot_7_flight_102);
     if (player_shot_7_flight_table[206] != 0x1e) {
         printf("error! hopt_la_a4_shdip[30]\n");
     }
-    STORE_POINTER(player_shot_7_flight_table + 206, player_shot_7_flight_103);
+    STORE_ARCADE_ADDRESS(player_shot_7_flight_table + 206, player_shot_7_flight_103);
     if (player_shot_7_flight_table[208] != 0x20) {
         printf("error! hopt_la_a4_shdip[32]\n");
     }
-    STORE_POINTER(player_shot_7_flight_table + 208, player_shot_7_flight_104);
+    STORE_ARCADE_ADDRESS(player_shot_7_flight_table + 208, player_shot_7_flight_104);
     if (player_shot_7_flight_088[2] != 0x2) {
         printf("error! hop_la_a4_d00[2]\n");
     }
-    STORE_POINTER(player_shot_7_flight_088 + 2, player_shot_7_flight_088_01);
+    STORE_ARCADE_ADDRESS(player_shot_7_flight_088 + 2, player_shot_7_flight_088_01);
     if (player_shot_7_flight_089[2] != 0x2) {
         printf("error! hop_la_a4_d02[2]\n");
     }
-    STORE_POINTER(player_shot_7_flight_089 + 2, player_shot_7_flight_088_01);
+    STORE_ARCADE_ADDRESS(player_shot_7_flight_089 + 2, player_shot_7_flight_088_01);
     if (player_shot_7_flight_090[2] != 0x2) {
         printf("error! hop_la_a4_d04[2]\n");
     }
-    STORE_POINTER(player_shot_7_flight_090 + 2, player_shot_7_flight_088_01);
+    STORE_ARCADE_ADDRESS(player_shot_7_flight_090 + 2, player_shot_7_flight_088_01);
     if (player_shot_7_flight_091[2] != 0x2) {
         printf("error! hop_la_a4_d06[2]\n");
     }
-    STORE_POINTER(player_shot_7_flight_091 + 2, player_shot_7_flight_088_01);
+    STORE_ARCADE_ADDRESS(player_shot_7_flight_091 + 2, player_shot_7_flight_088_01);
     if (player_shot_7_flight_092[2] != 0x2) {
         printf("error! hop_la_a4_d08[2]\n");
     }
-    STORE_POINTER(player_shot_7_flight_092 + 2, player_shot_7_flight_088_01);
+    STORE_ARCADE_ADDRESS(player_shot_7_flight_092 + 2, player_shot_7_flight_088_01);
     if (player_shot_7_flight_093[2] != 0x2) {
         printf("error! hop_la_a4_d0a[2]\n");
     }
-    STORE_POINTER(player_shot_7_flight_093 + 2, player_shot_7_flight_088_01);
+    STORE_ARCADE_ADDRESS(player_shot_7_flight_093 + 2, player_shot_7_flight_088_01);
     if (player_shot_7_flight_094[2] != 0x2) {
         printf("error! hop_la_a4_d0c[2]\n");
     }
-    STORE_POINTER(player_shot_7_flight_094 + 2, player_shot_7_flight_088_01);
+    STORE_ARCADE_ADDRESS(player_shot_7_flight_094 + 2, player_shot_7_flight_088_01);
     if (player_shot_7_flight_095[2] != 0x2) {
         printf("error! hop_la_a4_d0e[2]\n");
     }
-    STORE_POINTER(player_shot_7_flight_095 + 2, player_shot_7_flight_088_01);
+    STORE_ARCADE_ADDRESS(player_shot_7_flight_095 + 2, player_shot_7_flight_088_01);
     if (player_shot_7_flight_096[2] != 0x2) {
         printf("error! hop_la_a4_d10[2]\n");
     }
-    STORE_POINTER(player_shot_7_flight_096 + 2, player_shot_7_flight_088_01);
+    STORE_ARCADE_ADDRESS(player_shot_7_flight_096 + 2, player_shot_7_flight_088_01);
     if (player_shot_7_flight_097[2] != 0x2) {
         printf("error! hop_la_a4_d12[2]\n");
     }
-    STORE_POINTER(player_shot_7_flight_097 + 2, player_shot_7_flight_088_01);
+    STORE_ARCADE_ADDRESS(player_shot_7_flight_097 + 2, player_shot_7_flight_088_01);
     if (player_shot_7_flight_098[2] != 0x2) {
         printf("error! hop_la_a4_d14[2]\n");
     }
-    STORE_POINTER(player_shot_7_flight_098 + 2, player_shot_7_flight_088_01);
+    STORE_ARCADE_ADDRESS(player_shot_7_flight_098 + 2, player_shot_7_flight_088_01);
     if (player_shot_7_flight_099[2] != 0x2) {
         printf("error! hop_la_a4_d16[2]\n");
     }
-    STORE_POINTER(player_shot_7_flight_099 + 2, player_shot_7_flight_088_01);
+    STORE_ARCADE_ADDRESS(player_shot_7_flight_099 + 2, player_shot_7_flight_088_01);
     if (player_shot_7_flight_100[2] != 0x2) {
         printf("error! hop_la_a4_d18[2]\n");
     }
-    STORE_POINTER(player_shot_7_flight_100 + 2, player_shot_7_flight_088_01);
+    STORE_ARCADE_ADDRESS(player_shot_7_flight_100 + 2, player_shot_7_flight_088_01);
     if (player_shot_7_flight_101[2] != 0x2) {
         printf("error! hop_la_a4_d1a[2]\n");
     }
-    STORE_POINTER(player_shot_7_flight_101 + 2, player_shot_7_flight_088_01);
+    STORE_ARCADE_ADDRESS(player_shot_7_flight_101 + 2, player_shot_7_flight_088_01);
     if (player_shot_7_flight_102[2] != 0x2) {
         printf("error! hop_la_a4_d1c[2]\n");
     }
-    STORE_POINTER(player_shot_7_flight_102 + 2, player_shot_7_flight_088_01);
+    STORE_ARCADE_ADDRESS(player_shot_7_flight_102 + 2, player_shot_7_flight_088_01);
     if (player_shot_7_flight_103[2] != 0x2) {
         printf("error! hop_la_a4_d1e[2]\n");
     }
-    STORE_POINTER(player_shot_7_flight_103 + 2, player_shot_7_flight_088_01);
+    STORE_ARCADE_ADDRESS(player_shot_7_flight_103 + 2, player_shot_7_flight_088_01);
     if (player_shot_7_flight_104[2] != 0x2) {
         printf("error! hop_la_a4_d20[2]\n");
     }
-    STORE_POINTER(player_shot_7_flight_104 + 2, player_shot_7_flight_088_01);
+    STORE_ARCADE_ADDRESS(player_shot_7_flight_104 + 2, player_shot_7_flight_088_01);
     if (player_shot_7_directions_5[0] != 0x0) {
         printf("error! hopt_la_a5_shdip[0]\n");
     }
-    STORE_POINTER(player_shot_7_directions_5, player_shot_7_direction_5_00);
+    STORE_ARCADE_ADDRESS(player_shot_7_directions_5, player_shot_7_direction_5_00);
     if (player_shot_7_directions_5[2] != 0x2) {
         printf("error! hopt_la_a5_shdip[2]\n");
     }
-    STORE_POINTER(player_shot_7_directions_5 + 2, player_shot_7_direction_5_01);
+    STORE_ARCADE_ADDRESS(player_shot_7_directions_5 + 2, player_shot_7_direction_5_01);
     if (player_shot_7_directions_5[4] != 0x4) {
         printf("error! hopt_la_a5_shdip[4]\n");
     }
-    STORE_POINTER(player_shot_7_directions_5 + 4, player_shot_7_direction_5_02);
+    STORE_ARCADE_ADDRESS(player_shot_7_directions_5 + 4, player_shot_7_direction_5_02);
     if (player_shot_7_directions_5[6] != 0x6) {
         printf("error! hopt_la_a5_shdip[6]\n");
     }
-    STORE_POINTER(player_shot_7_directions_5 + 6, player_shot_7_direction_5_03);
+    STORE_ARCADE_ADDRESS(player_shot_7_directions_5 + 6, player_shot_7_direction_5_03);
     if (player_shot_7_directions_5[8] != 0x8) {
         printf("error! hopt_la_a5_shdip[8]\n");
     }
-    STORE_POINTER(player_shot_7_directions_5 + 8, player_shot_7_direction_5_04);
+    STORE_ARCADE_ADDRESS(player_shot_7_directions_5 + 8, player_shot_7_direction_5_04);
     if (player_shot_7_directions_5[10] != 0xa) {
         printf("error! hopt_la_a5_shdip[10]\n");
     }
-    STORE_POINTER(player_shot_7_directions_5 + 10, player_shot_7_direction_5_05);
+    STORE_ARCADE_ADDRESS(player_shot_7_directions_5 + 10, player_shot_7_direction_5_05);
     if (player_shot_7_directions_5[12] != 0xc) {
         printf("error! hopt_la_a5_shdip[12]\n");
     }
-    STORE_POINTER(player_shot_7_directions_5 + 12, player_shot_7_direction_5_06);
+    STORE_ARCADE_ADDRESS(player_shot_7_directions_5 + 12, player_shot_7_direction_5_06);
     if (player_shot_7_directions_5[14] != 0xe) {
         printf("error! hopt_la_a5_shdip[14]\n");
     }
-    STORE_POINTER(player_shot_7_directions_5 + 14, player_shot_7_direction_5_07);
+    STORE_ARCADE_ADDRESS(player_shot_7_directions_5 + 14, player_shot_7_direction_5_07);
     if (player_shot_7_directions_5[16] != 0x10) {
         printf("error! hopt_la_a5_shdip[16]\n");
     }
-    STORE_POINTER(player_shot_7_directions_5 + 16, player_shot_7_direction_5_08);
+    STORE_ARCADE_ADDRESS(player_shot_7_directions_5 + 16, player_shot_7_direction_5_08);
     if (player_shot_7_directions_5[18] != 0x12) {
         printf("error! hopt_la_a5_shdip[18]\n");
     }
-    STORE_POINTER(player_shot_7_directions_5 + 18, player_shot_7_direction_5_09);
+    STORE_ARCADE_ADDRESS(player_shot_7_directions_5 + 18, player_shot_7_direction_5_09);
     if (player_shot_7_directions_5[20] != 0x14) {
         printf("error! hopt_la_a5_shdip[20]\n");
     }
-    STORE_POINTER(player_shot_7_directions_5 + 20, player_shot_7_direction_5_10);
+    STORE_ARCADE_ADDRESS(player_shot_7_directions_5 + 20, player_shot_7_direction_5_10);
     if (player_shot_7_directions_5[22] != 0x16) {
         printf("error! hopt_la_a5_shdip[22]\n");
     }
-    STORE_POINTER(player_shot_7_directions_5 + 22, player_shot_7_direction_5_11);
+    STORE_ARCADE_ADDRESS(player_shot_7_directions_5 + 22, player_shot_7_direction_5_11);
     if (player_shot_7_directions_5[24] != 0x18) {
         printf("error! hopt_la_a5_shdip[24]\n");
     }
-    STORE_POINTER(player_shot_7_directions_5 + 24, player_shot_7_direction_5_12);
+    STORE_ARCADE_ADDRESS(player_shot_7_directions_5 + 24, player_shot_7_direction_5_12);
     if (player_shot_7_directions_5[26] != 0x1a) {
         printf("error! hopt_la_a5_shdip[26]\n");
     }
-    STORE_POINTER(player_shot_7_directions_5 + 26, player_shot_7_direction_5_13);
+    STORE_ARCADE_ADDRESS(player_shot_7_directions_5 + 26, player_shot_7_direction_5_13);
     if (player_shot_7_directions_5[28] != 0x1c) {
         printf("error! hopt_la_a5_shdip[28]\n");
     }
-    STORE_POINTER(player_shot_7_directions_5 + 28, player_shot_7_direction_5_14);
+    STORE_ARCADE_ADDRESS(player_shot_7_directions_5 + 28, player_shot_7_direction_5_14);
     if (player_shot_7_directions_5[30] != 0x1e) {
         printf("error! hopt_la_a5_shdip[30]\n");
     }
-    STORE_POINTER(player_shot_7_directions_5 + 30, player_shot_7_direction_5_15);
+    STORE_ARCADE_ADDRESS(player_shot_7_directions_5 + 30, player_shot_7_direction_5_15);
     if (player_shot_7_directions_5[32] != 0x20) {
         printf("error! hopt_la_a5_shdip[32]\n");
     }
-    STORE_POINTER(player_shot_7_directions_5 + 32, player_shot_7_direction_5_16);
+    STORE_ARCADE_ADDRESS(player_shot_7_directions_5 + 32, player_shot_7_direction_5_16);
     if (player_shot_7_direction_5_00[2] != 0x2) {
         printf("error! hop_la_a5_d00[2]\n");
     }
-    STORE_POINTER(player_shot_7_direction_5_00 + 2, player_shot_7_direction_5_00_01);
+    STORE_ARCADE_ADDRESS(player_shot_7_direction_5_00 + 2, player_shot_7_direction_5_00_01);
     if (player_shot_7_direction_5_01[2] != 0x2) {
         printf("error! hop_la_a5_d02[2]\n");
     }
-    STORE_POINTER(player_shot_7_direction_5_01 + 2, player_shot_7_direction_5_00_01);
+    STORE_ARCADE_ADDRESS(player_shot_7_direction_5_01 + 2, player_shot_7_direction_5_00_01);
     if (player_shot_7_direction_5_02[2] != 0x2) {
         printf("error! hop_la_a5_d04[2]\n");
     }
-    STORE_POINTER(player_shot_7_direction_5_02 + 2, player_shot_7_direction_5_00_01);
+    STORE_ARCADE_ADDRESS(player_shot_7_direction_5_02 + 2, player_shot_7_direction_5_00_01);
     if (player_shot_7_direction_5_03[2] != 0x2) {
         printf("error! hop_la_a5_d06[2]\n");
     }
-    STORE_POINTER(player_shot_7_direction_5_03 + 2, player_shot_7_direction_5_00_01);
+    STORE_ARCADE_ADDRESS(player_shot_7_direction_5_03 + 2, player_shot_7_direction_5_00_01);
     if (player_shot_7_direction_5_04[2] != 0x2) {
         printf("error! hop_la_a5_d08[2]\n");
     }
-    STORE_POINTER(player_shot_7_direction_5_04 + 2, player_shot_7_direction_5_00_01);
+    STORE_ARCADE_ADDRESS(player_shot_7_direction_5_04 + 2, player_shot_7_direction_5_00_01);
     if (player_shot_7_direction_5_05[2] != 0x2) {
         printf("error! hop_la_a5_d0a[2]\n");
     }
-    STORE_POINTER(player_shot_7_direction_5_05 + 2, player_shot_7_direction_5_00_01);
+    STORE_ARCADE_ADDRESS(player_shot_7_direction_5_05 + 2, player_shot_7_direction_5_00_01);
     if (player_shot_7_direction_5_06[2] != 0x2) {
         printf("error! hop_la_a5_d0c[2]\n");
     }
-    STORE_POINTER(player_shot_7_direction_5_06 + 2, player_shot_7_direction_5_00_01);
+    STORE_ARCADE_ADDRESS(player_shot_7_direction_5_06 + 2, player_shot_7_direction_5_00_01);
     if (player_shot_7_direction_5_07[2] != 0x2) {
         printf("error! hop_la_a5_d0e[2]\n");
     }
-    STORE_POINTER(player_shot_7_direction_5_07 + 2, player_shot_7_direction_5_00_01);
+    STORE_ARCADE_ADDRESS(player_shot_7_direction_5_07 + 2, player_shot_7_direction_5_00_01);
     if (player_shot_7_direction_5_08[2] != 0x2) {
         printf("error! hop_la_a5_d10[2]\n");
     }
-    STORE_POINTER(player_shot_7_direction_5_08 + 2, player_shot_7_direction_5_00_01);
+    STORE_ARCADE_ADDRESS(player_shot_7_direction_5_08 + 2, player_shot_7_direction_5_00_01);
     if (player_shot_7_direction_5_09[2] != 0x2) {
         printf("error! hop_la_a5_d12[2]\n");
     }
-    STORE_POINTER(player_shot_7_direction_5_09 + 2, player_shot_7_direction_5_00_01);
+    STORE_ARCADE_ADDRESS(player_shot_7_direction_5_09 + 2, player_shot_7_direction_5_00_01);
     if (player_shot_7_direction_5_10[2] != 0x2) {
         printf("error! hop_la_a5_d14[2]\n");
     }
-    STORE_POINTER(player_shot_7_direction_5_10 + 2, player_shot_7_direction_5_00_01);
+    STORE_ARCADE_ADDRESS(player_shot_7_direction_5_10 + 2, player_shot_7_direction_5_00_01);
     if (player_shot_7_direction_5_11[2] != 0x2) {
         printf("error! hop_la_a5_d16[2]\n");
     }
-    STORE_POINTER(player_shot_7_direction_5_11 + 2, player_shot_7_direction_5_00_01);
+    STORE_ARCADE_ADDRESS(player_shot_7_direction_5_11 + 2, player_shot_7_direction_5_00_01);
     if (player_shot_7_direction_5_12[2] != 0x2) {
         printf("error! hop_la_a5_d18[2]\n");
     }
-    STORE_POINTER(player_shot_7_direction_5_12 + 2, player_shot_7_direction_5_00_01);
+    STORE_ARCADE_ADDRESS(player_shot_7_direction_5_12 + 2, player_shot_7_direction_5_00_01);
     if (player_shot_7_direction_5_13[2] != 0x2) {
         printf("error! hop_la_a5_d1a[2]\n");
     }
-    STORE_POINTER(player_shot_7_direction_5_13 + 2, player_shot_7_direction_5_00_01);
+    STORE_ARCADE_ADDRESS(player_shot_7_direction_5_13 + 2, player_shot_7_direction_5_00_01);
     if (player_shot_7_direction_5_14[2] != 0x2) {
         printf("error! hop_la_a5_d1c[2]\n");
     }
-    STORE_POINTER(player_shot_7_direction_5_14 + 2, player_shot_7_direction_5_00_01);
+    STORE_ARCADE_ADDRESS(player_shot_7_direction_5_14 + 2, player_shot_7_direction_5_00_01);
     if (player_shot_7_direction_5_15[2] != 0x2) {
         printf("error! hop_la_a5_d1e[2]\n");
     }
-    STORE_POINTER(player_shot_7_direction_5_15 + 2, player_shot_7_direction_5_00_01);
+    STORE_ARCADE_ADDRESS(player_shot_7_direction_5_15 + 2, player_shot_7_direction_5_00_01);
     if (player_shot_7_direction_5_16[2] != 0x2) {
         printf("error! hop_la_a5_d20[2]\n");
     }
-    STORE_POINTER(player_shot_7_direction_5_16 + 2, player_shot_7_direction_5_00_01);
+    STORE_ARCADE_ADDRESS(player_shot_7_direction_5_16 + 2, player_shot_7_direction_5_00_01);
     if (player_shot_7_impact_table[0] != 0x0) {
         printf("error! hoa_tou_data[0]\n");
     }
-    STORE_POINTER(player_shot_7_impact_table, player_shot_7_impact_00);
+    STORE_ARCADE_ADDRESS(player_shot_7_impact_table, player_shot_7_impact_00);
     if (player_shot_7_impact_table[2] != 0x2) {
         printf("error! hoa_tou_data[2]\n");
     }
-    STORE_POINTER(player_shot_7_impact_table + 2, player_shot_7_impact_00);
+    STORE_ARCADE_ADDRESS(player_shot_7_impact_table + 2, player_shot_7_impact_00);
     if (player_shot_7_impact_table[4] != 0x4) {
         printf("error! hoa_tou_data[4]\n");
     }
-    STORE_POINTER(player_shot_7_impact_table + 4, player_shot_7_impact_02);
+    STORE_ARCADE_ADDRESS(player_shot_7_impact_table + 4, player_shot_7_impact_02);
     if (player_shot_7_impact_table[6] != 0x6) {
         printf("error! hoa_tou_data[6]\n");
     }
-    STORE_POINTER(player_shot_7_impact_table + 6, player_shot_7_impact_02);
+    STORE_ARCADE_ADDRESS(player_shot_7_impact_table + 6, player_shot_7_impact_02);
     if (player_shot_7_impact_table[8] != 0x8) {
         printf("error! hoa_tou_data[8]\n");
     }
-    STORE_POINTER(player_shot_7_impact_table + 8, player_shot_7_impact_04);
+    STORE_ARCADE_ADDRESS(player_shot_7_impact_table + 8, player_shot_7_impact_04);
     if (player_shot_7_impact_table[10] != 0xa) {
         printf("error! hoa_tou_data[10]\n");
     }
-    STORE_POINTER(player_shot_7_impact_table + 10, player_shot_7_impact_04);
+    STORE_ARCADE_ADDRESS(player_shot_7_impact_table + 10, player_shot_7_impact_04);
     if (player_shot_7_impact_table[12] != 0xc) {
         printf("error! hoa_tou_data[12]\n");
     }
-    STORE_POINTER(player_shot_7_impact_table + 12, player_shot_7_impact_06);
+    STORE_ARCADE_ADDRESS(player_shot_7_impact_table + 12, player_shot_7_impact_06);
     if (player_shot_7_impact_table[14] != 0xe) {
         printf("error! hoa_tou_data[14]\n");
     }
-    STORE_POINTER(player_shot_7_impact_table + 14, player_shot_7_impact_06);
+    STORE_ARCADE_ADDRESS(player_shot_7_impact_table + 14, player_shot_7_impact_06);
     if (player_shot_7_impact_table[16] != 0x10) {
         printf("error! hoa_tou_data[16]\n");
     }
-    STORE_POINTER(player_shot_7_impact_table + 16, player_shot_7_impact_08);
+    STORE_ARCADE_ADDRESS(player_shot_7_impact_table + 16, player_shot_7_impact_08);
     if (player_shot_7_impact_table[18] != 0x12) {
         printf("error! hoa_tou_data[18]\n");
     }
-    STORE_POINTER(player_shot_7_impact_table + 18, player_shot_7_impact_08);
+    STORE_ARCADE_ADDRESS(player_shot_7_impact_table + 18, player_shot_7_impact_08);
     if (player_shot_7_impact_table[20] != 0x14) {
         printf("error! hoa_tou_data[20]\n");
     }
-    STORE_POINTER(player_shot_7_impact_table + 20, player_shot_7_impact_10);
+    STORE_ARCADE_ADDRESS(player_shot_7_impact_table + 20, player_shot_7_impact_10);
     if (player_shot_7_impact_table[22] != 0x16) {
         printf("error! hoa_tou_data[22]\n");
     }
-    STORE_POINTER(player_shot_7_impact_table + 22, player_shot_7_impact_11);
+    STORE_ARCADE_ADDRESS(player_shot_7_impact_table + 22, player_shot_7_impact_11);
     if (player_shot_7_impact_table[24] != 0x18) {
         printf("error! hoa_tou_data[24]\n");
     }
-    STORE_POINTER(player_shot_7_impact_table + 24, player_shot_7_impact_12);
+    STORE_ARCADE_ADDRESS(player_shot_7_impact_table + 24, player_shot_7_impact_12);
     if (player_shot_7_impact_table[26] != 0x1a) {
         printf("error! hoa_tou_data[26]\n");
     }
-    STORE_POINTER(player_shot_7_impact_table + 26, player_shot_7_impact_13);
+    STORE_ARCADE_ADDRESS(player_shot_7_impact_table + 26, player_shot_7_impact_13);
     if (player_shot_7_impact_table[28] != 0x1c) {
         printf("error! hoa_tou_data[28]\n");
     }
-    STORE_POINTER(player_shot_7_impact_table + 28, player_shot_7_impact_14);
+    STORE_ARCADE_ADDRESS(player_shot_7_impact_table + 28, player_shot_7_impact_14);
     if (player_shot_7_impact_table[30] != 0x1e) {
         printf("error! hoa_tou_data[30]\n");
     }
-    STORE_POINTER(player_shot_7_impact_table + 30, player_shot_7_impact_15);
+    STORE_ARCADE_ADDRESS(player_shot_7_impact_table + 30, player_shot_7_impact_15);
     if (player_shot_7_impact_table[32] != 0x20) {
         printf("error! hoa_tou_data[32]\n");
     }
-    STORE_POINTER(player_shot_7_impact_table + 32, player_shot_7_impact_15);
+    STORE_ARCADE_ADDRESS(player_shot_7_impact_table + 32, player_shot_7_impact_15);
     if (player_shot_7_impact_table[34] != 0x22) {
         printf("error! hoa_tou_data[34]\n");
     }
-    STORE_POINTER(player_shot_7_impact_table + 34, player_shot_7_impact_17);
+    STORE_ARCADE_ADDRESS(player_shot_7_impact_table + 34, player_shot_7_impact_17);
     if (player_shot_7_impact_table[36] != 0x24) {
         printf("error! hoa_tou_data[36]\n");
     }
-    STORE_POINTER(player_shot_7_impact_table + 36, player_shot_7_impact_17);
+    STORE_ARCADE_ADDRESS(player_shot_7_impact_table + 36, player_shot_7_impact_17);
     if (player_shot_7_impact_table[38] != 0x26) {
         printf("error! hoa_tou_data[38]\n");
     }
-    STORE_POINTER(player_shot_7_impact_table + 38, player_shot_7_impact_19);
+    STORE_ARCADE_ADDRESS(player_shot_7_impact_table + 38, player_shot_7_impact_19);
     if (player_shot_7_impact_table[40] != 0x28) {
         printf("error! hoa_tou_data[40]\n");
     }
-    STORE_POINTER(player_shot_7_impact_table + 40, player_shot_7_impact_19);
+    STORE_ARCADE_ADDRESS(player_shot_7_impact_table + 40, player_shot_7_impact_19);
     if (player_shot_7_impact_table[42] != 0x2a) {
         printf("error! hoa_tou_data[42]\n");
     }
-    STORE_POINTER(player_shot_7_impact_table + 42, player_shot_7_impact_21);
+    STORE_ARCADE_ADDRESS(player_shot_7_impact_table + 42, player_shot_7_impact_21);
     if (player_shot_7_impact_table[44] != 0x2c) {
         printf("error! hoa_tou_data[44]\n");
     }
-    STORE_POINTER(player_shot_7_impact_table + 44, player_shot_7_impact_21);
+    STORE_ARCADE_ADDRESS(player_shot_7_impact_table + 44, player_shot_7_impact_21);
     if (player_shot_7_impact_table[46] != 0x2e) {
         printf("error! hoa_tou_data[46]\n");
     }
-    STORE_POINTER(player_shot_7_impact_table + 46, player_shot_7_impact_23);
+    STORE_ARCADE_ADDRESS(player_shot_7_impact_table + 46, player_shot_7_impact_23);
     if (player_shot_7_impact_table[48] != 0x30) {
         printf("error! hoa_tou_data[48]\n");
     }
-    STORE_POINTER(player_shot_7_impact_table + 48, player_shot_7_impact_23);
+    STORE_ARCADE_ADDRESS(player_shot_7_impact_table + 48, player_shot_7_impact_23);
     if (player_shot_7_impact_00[3] != 0x3) {
         printf("error! hot_sh_a1_r[3]\n");
     }
-    STORE_POINTER(player_shot_7_impact_00 + 3, player_shot_7_impact_frames_00);
+    STORE_ARCADE_ADDRESS(player_shot_7_impact_00 + 3, player_shot_7_impact_frames_00);
     if (player_shot_7_impact_02[3] != 0x3) {
         printf("error! hot_sh_a2_r[3]\n");
     }
-    STORE_POINTER(player_shot_7_impact_02 + 3, player_shot_7_impact_frames_02);
+    STORE_ARCADE_ADDRESS(player_shot_7_impact_02 + 3, player_shot_7_impact_frames_02);
     if (player_shot_7_impact_04[3] != 0x3) {
         printf("error! hot_sh_a3_r[3]\n");
     }
-    STORE_POINTER(player_shot_7_impact_04 + 3, player_shot_7_impact_frames_02);
+    STORE_ARCADE_ADDRESS(player_shot_7_impact_04 + 3, player_shot_7_impact_frames_02);
     if (player_shot_7_impact_06[3] != 0x3) {
         printf("error! hot_sh_a4_r[3]\n");
     }
-    STORE_POINTER(player_shot_7_impact_06 + 3, player_shot_7_impact_frames_06);
+    STORE_ARCADE_ADDRESS(player_shot_7_impact_06 + 3, player_shot_7_impact_frames_06);
     if (player_shot_7_impact_08[3] != 0x3) {
         printf("error! hot_sh_a5_r[3]\n");
     }
-    STORE_POINTER(player_shot_7_impact_08 + 3, player_shot_7_impact_frames_06);
+    STORE_ARCADE_ADDRESS(player_shot_7_impact_08 + 3, player_shot_7_impact_frames_06);
     if (player_shot_7_impact_10[3] != 0x3) {
         printf("error! hot_la_a1[3]\n");
     }
-    STORE_POINTER(player_shot_7_impact_10 + 3, player_shot_7_impact_frames_10);
+    STORE_ARCADE_ADDRESS(player_shot_7_impact_10 + 3, player_shot_7_impact_frames_10);
     if (player_shot_7_impact_11[3] != 0x3) {
         printf("error! hot_la_a2[3]\n");
     }
-    STORE_POINTER(player_shot_7_impact_11 + 3, player_shot_7_impact_frames_11);
+    STORE_ARCADE_ADDRESS(player_shot_7_impact_11 + 3, player_shot_7_impact_frames_11);
     if (player_shot_7_impact_12[3] != 0x3) {
         printf("error! hot_la_a3[3]\n");
     }
-    STORE_POINTER(player_shot_7_impact_12 + 3, player_shot_7_impact_frames_11);
+    STORE_ARCADE_ADDRESS(player_shot_7_impact_12 + 3, player_shot_7_impact_frames_11);
     if (player_shot_7_impact_13[3] != 0x3) {
         printf("error! hot_la_a4[3]\n");
     }
-    STORE_POINTER(player_shot_7_impact_13 + 3, player_shot_7_impact_frames_13);
+    STORE_ARCADE_ADDRESS(player_shot_7_impact_13 + 3, player_shot_7_impact_frames_13);
     if (player_shot_7_impact_14[3] != 0x3) {
         printf("error! hot_la_a5[3]\n");
     }
-    STORE_POINTER(player_shot_7_impact_14 + 3, player_shot_7_impact_frames_13);
+    STORE_ARCADE_ADDRESS(player_shot_7_impact_14 + 3, player_shot_7_impact_frames_13);
     if (player_shot_7_impact_15[3] != 0x3) {
         printf("error! hot_ex_a1_r[3]\n");
     }
-    STORE_POINTER(player_shot_7_impact_15 + 3, player_shot_7_impact_frames_15);
+    STORE_ARCADE_ADDRESS(player_shot_7_impact_15 + 3, player_shot_7_impact_frames_15);
     if (player_shot_7_impact_17[3] != 0x3) {
         printf("error! hot_ex_a2_r[3]\n");
     }
-    STORE_POINTER(player_shot_7_impact_17 + 3, player_shot_7_impact_frames_17);
+    STORE_ARCADE_ADDRESS(player_shot_7_impact_17 + 3, player_shot_7_impact_frames_17);
     if (player_shot_7_impact_19[3] != 0x3) {
         printf("error! hot_ex_a3_r[3]\n");
     }
-    STORE_POINTER(player_shot_7_impact_19 + 3, player_shot_7_impact_frames_17);
+    STORE_ARCADE_ADDRESS(player_shot_7_impact_19 + 3, player_shot_7_impact_frames_17);
     if (player_shot_7_impact_21[3] != 0x3) {
         printf("error! hot_ex_a4_r[3]\n");
     }
-    STORE_POINTER(player_shot_7_impact_21 + 3, player_shot_7_impact_frames_21);
+    STORE_ARCADE_ADDRESS(player_shot_7_impact_21 + 3, player_shot_7_impact_frames_21);
     if (player_shot_7_impact_23[3] != 0x3) {
         printf("error! hot_ex_a5_r[3]\n");
     }
-    STORE_POINTER(player_shot_7_impact_23 + 3, player_shot_7_impact_frames_21);
+    STORE_ARCADE_ADDRESS(player_shot_7_impact_23 + 3, player_shot_7_impact_frames_21);
 }

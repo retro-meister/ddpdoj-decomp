@@ -61,7 +61,7 @@ void option_shot_fire(void) {
     reg_a1 += 2;
     reg_tmp.h[0] = *(u16 *) reg_a1;
     reg_a1 += 2;
-    reg_a5 = (u8 *) reg_tmp.w;
+    reg_a5 = ARCADE_ADDRESS_DECODE(u8 *, reg_tmp.w);
     reg_d0.w = 0;
     *(u16 *) reg_a0 = (reg_d6.h[0]) ? *(u16 *) (reg_a5 + ((s16) reg_d6.h[0] & ~1)) : *(u16 *) reg_a5;
     reg_a0 += 2;
@@ -140,12 +140,12 @@ void option_shots_fire_style_a(void) {
     reg_a0 = (u8 *)D_0029E390;
     reg_tmp.h[1] = g_p1_option_level_data[0];
     reg_tmp.h[0] = g_p1_option_level_data_lo[0];
-    reg_a1 = (u8 *)reg_tmp.w;
+    reg_a1 = ARCADE_ADDRESS_DECODE(u8 *, reg_tmp.w);
     if (reg_d7.h[0] != 0) goto next_0;
     reg_a0 = (u8 *)D_0029EA50;
     reg_tmp.h[1] = g_p2_option_level_data[0];
     reg_tmp.h[0] = g_p2_option_level_data_lo[0];
-    reg_a1 = (u8 *)reg_tmp.w;
+    reg_a1 = ARCADE_ADDRESS_DECODE(u8 *, reg_tmp.w);
 next_0:
     reg_d0.h[0] = 0x150;
     if (*(u16 *)(reg_a4 + 0x58) == 0) goto next_1;
@@ -171,18 +171,18 @@ next_3:
     reg_a2 = (u8 *)option_shot_lists_2;
     reg_tmp.h[1] = (reg_d0.h[0] != 0) ? *(u16 *)((u8 *)reg_a1 + ((s16)reg_d0.h[0] & ~1)) : *(u16 *)reg_a1;
     reg_tmp.h[0] = (((u16)reg_d0.h[0] + 2) != 0) ? *(u16 *)((u8 *)reg_a1 + ((s16)((u16)reg_d0.h[0] + 2) & ~1)) : *(u16 *)reg_a1;
-    reg_a1 = (u8 *)reg_tmp.w;
+    reg_a1 = ARCADE_ADDRESS_DECODE(u8 *, reg_tmp.w);
     reg_tmp.h[1] = (reg_d0.h[0] != 0) ? *(u16 *)((u8 *)reg_a2 + ((s16)reg_d0.h[0] & ~1)) : *(u16 *)reg_a2;
     reg_tmp.h[0] = (((u16)reg_d0.h[0] + 2) != 0) ? *(u16 *)((u8 *)reg_a2 + ((s16)((u16)reg_d0.h[0] + 2) & ~1)) : *(u16 *)reg_a2;
-    reg_a2 = (u8 *)reg_tmp.w;
+    reg_a2 = ARCADE_ADDRESS_DECODE(u8 *, reg_tmp.w);
     reg_d0.h[0] = *(u16 *)(reg_a4 + 0x20);
     reg_d0.h[0] *= 2;
     reg_tmp.h[1] = (reg_d0.h[0] != 0) ? *(u16 *)((u8 *)reg_a1 + ((s16)reg_d0.h[0] & ~1)) : *(u16 *)reg_a1;
     reg_tmp.h[0] = (((reg_d0.h[0] & 0xFFFF) + 2) != 0) ? *(u16 *)((u8 *)reg_a1 + ((s16)((reg_d0.h[0] & 0xFFFF) + 2) & ~1)) : *(u16 *)reg_a1;
-    reg_a1 = (u8 *)reg_tmp.w;
+    reg_a1 = ARCADE_ADDRESS_DECODE(u8 *, reg_tmp.w);
     reg_tmp.h[1] = (reg_d0.h[0] != 0) ? *(u16 *)((u8 *)reg_a2 + ((s16)reg_d0.h[0] & ~1)) : *(u16 *)reg_a2;
     reg_tmp.h[0] = (((reg_d0.h[0] & 0xFFFF) + 2) != 0) ? *(u16 *)((u8 *)reg_a2 + ((s16)((reg_d0.h[0] & 0xFFFF) + 2) & ~1)) : *(u16 *)reg_a2;
-    reg_a2 = (u8 *)reg_tmp.w;
+    reg_a2 = ARCADE_ADDRESS_DECODE(u8 *, reg_tmp.w);
     option_gun_cycle_a();
     option_second_gun_cycle();
 loop_0:
@@ -234,12 +234,12 @@ void option_shots_fire_style_b(void) {
     reg_a0 = (u8 *)D_0029E390;
     reg_tmp.h[1] = g_p1_option_level_data[0];
     reg_tmp.h[0] = g_p1_option_level_data_lo[0];
-    reg_a1 = (u8 *)reg_tmp.w;
+    reg_a1 = ARCADE_ADDRESS_DECODE(u8 *, reg_tmp.w);
     if (reg_d7.h[0] != 0) goto next_0;
     reg_a0 = (u8 *)D_0029EA50;
     reg_tmp.h[1] = g_p2_option_level_data[0];
     reg_tmp.h[0] = g_p2_option_level_data_lo[0];
-    reg_a1 = (u8 *)reg_tmp.w;
+    reg_a1 = ARCADE_ADDRESS_DECODE(u8 *, reg_tmp.w);
 next_0:
     reg_d0.h[0] = 0x450;
     if (*(u16 *)(reg_a4 + 0x58) == 0) goto next_1;
@@ -274,12 +274,12 @@ next_4:
     reg_a1 = (u8 *)option_shot_lists_3;
     reg_tmp.h[1] = (reg_d0.h[0] != 0) ? *(u16 *)((u8 *)reg_a1 + ((s16)reg_d0.h[0] & ~1)) : *(u16 *)reg_a1;
     reg_tmp.h[0] = (((u16)reg_d0.h[0] + 2) != 0) ? *(u16 *)((u8 *)reg_a1 + ((s16)((u16)reg_d0.h[0] + 2) & ~1)) : *(u16 *)reg_a1;
-    reg_a1 = (u8 *)reg_tmp.w;
+    reg_a1 = ARCADE_ADDRESS_DECODE(u8 *, reg_tmp.w);
     reg_d0.h[0] = *(u16 *)(reg_a4 + 0x20);
     reg_d0.h[0] *= 2;
     reg_tmp.h[1] = (reg_d0.h[0] != 0) ? *(u16 *)((u8 *)reg_a1 + ((s16)reg_d0.h[0] & ~1)) : *(u16 *)reg_a1;
     reg_tmp.h[0] = (((reg_d0.h[0] & 0xFFFF) + 2) != 0) ? *(u16 *)((u8 *)reg_a1 + ((s16)((reg_d0.h[0] & 0xFFFF) + 2) & ~1)) : *(u16 *)reg_a1;
-    reg_a1 = (u8 *)reg_tmp.w;
+    reg_a1 = ARCADE_ADDRESS_DECODE(u8 *, reg_tmp.w);
 loop_0:
     if (*(s16 *)reg_a0 >= 0) goto loop_1;
     reg_a0 += 0x30;
@@ -322,7 +322,7 @@ void option_shot_fire_wide(void) {
     reg_a1 += 2;
     reg_d3.w = 0;
     reg_d0.w = 0;
-    reg_a2 = (u8 *)reg_tmp.w;
+    reg_a2 = ARCADE_ADDRESS_DECODE(u8 *, reg_tmp.w);
     reg_d0.b[0] = *(u8 *)(reg_a6 + 0x14);
     reg_d0.h[0] &= 0x3E;
     if ((reg_d0.h[0] != 0) && ((s32)reg_d0.b[0] > 0x20)) {
@@ -333,7 +333,7 @@ void option_shot_fire_wide(void) {
     reg_d0.h[0] *= 2;
     reg_tmp.h[1] = (reg_d0.h[0] != 0) ? *(u16 *)(reg_a2 + ((s16)reg_d0.h[0] & ~1)) : *(u16 *)reg_a2;
     reg_tmp.h[0] = (((reg_d0.h[0] & 0xFFFF) + 2) != 0) ? *(u16 *)(reg_a2 + ((s16)((reg_d0.h[0] & 0xFFFF) + 2) & ~1)) : *(u16 *)reg_a2;
-    reg_a2 = (u8 *)reg_tmp.w;
+    reg_a2 = ARCADE_ADDRESS_DECODE(u8 *, reg_tmp.w);
     reg_d1.h[0] = *(u16 *)(reg_a6 + 2);
     reg_d1.h[0] += *(u16 *)reg_a2;
     reg_a2 += 2;
@@ -357,7 +357,7 @@ void option_shot_fire_wide(void) {
     reg_tmp.h[0] = *(u16 *)reg_a1;
     reg_a1 += 2;
     reg_d0.w = 0;
-    reg_a5 = (u8 *)reg_tmp.w;
+    reg_a5 = ARCADE_ADDRESS_DECODE(u8 *, reg_tmp.w);
     *(u16 *)reg_a0 = (reg_d6.h[0] != 0) ? *(u16 *)(reg_a5 + ((s16)reg_d6.h[0] & ~1)) : *(u16 *)reg_a5;
     reg_a0 += 2;
     *(u16 *)reg_a0 = ((reg_d6.h[0] + 2) != 0) ? *(u16 *)(reg_a5 + ((s16)(reg_d6.h[0] + 2) & ~1)) : *(u16 *)reg_a5;
@@ -434,12 +434,12 @@ void option_shots_fire_style_c(void) {
     reg_a0 = (u8 *)D_0029E390;
     reg_tmp.h[1] = g_p1_option_level_data[0];
     reg_tmp.h[0] = g_p1_option_level_data_lo[0];
-    reg_a1 = (u8 *)reg_tmp.w;
+    reg_a1 = ARCADE_ADDRESS_DECODE(u8 *, reg_tmp.w);
     if (reg_d7.h[0] != 0) goto next_0;
     reg_a0 = (u8 *)D_0029EA50;
     reg_tmp.h[1] = g_p2_option_level_data[0];
     reg_tmp.h[0] = g_p2_option_level_data_lo[0];
-    reg_a1 = (u8 *)reg_tmp.w;
+    reg_a1 = ARCADE_ADDRESS_DECODE(u8 *, reg_tmp.w);
 next_0:
     reg_d0.h[0] = 0x150;
     if (*(u16 *)(reg_a4 + 0x58) == 0) goto next_1;
@@ -463,12 +463,12 @@ next_3:
     reg_a1 = (u8 *)option_shot_lists_4;
     reg_tmp.h[1] = (reg_d0.h[0] != 0) ? *(u16 *)((u8 *)reg_a1 + ((s16)reg_d0.h[0] & ~1)) : *(u16 *)reg_a1;
     reg_tmp.h[0] = (((u16)reg_d0.h[0] + 2) != 0) ? *(u16 *)((u8 *)reg_a1 + ((s16)((u16)reg_d0.h[0] + 2) & ~1)) : *(u16 *)reg_a1;
-    reg_a1 = (u8 *)reg_tmp.w;
+    reg_a1 = ARCADE_ADDRESS_DECODE(u8 *, reg_tmp.w);
     reg_d0.h[0] = *(u16 *)(reg_a4 + 0x20);
     reg_d0.h[0] *= 2;
     reg_tmp.h[1] = (reg_d0.h[0] != 0) ? *(u16 *)((u8 *)reg_a1 + ((s16)reg_d0.h[0] & ~1)) : *(u16 *)reg_a1;
     reg_tmp.h[0] = (((reg_d0.h[0] & 0xFFFF) + 2) != 0) ? *(u16 *)((u8 *)reg_a1 + ((s16)((reg_d0.h[0] & 0xFFFF) + 2) & ~1)) : *(u16 *)reg_a1;
-    reg_a1 = (u8 *)reg_tmp.w;
+    reg_a1 = ARCADE_ADDRESS_DECODE(u8 *, reg_tmp.w);
     option_gun_cycle_c();
     option_second_gun_cycle();
 loop_0:

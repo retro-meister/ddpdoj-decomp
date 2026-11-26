@@ -11,14 +11,14 @@ void player_shot_7_update();
 void player_shot_8_update();
 
 extern u16 player_shot_2_frame_set_table[16];
-extern void *player_shot_update_routines[16];
+extern void (*player_shot_update_routines[16])(void);
 
 u16 player_shot_2_frame_set_table[16] = {
     0x8000, 0xA000, 0x8000, 0xB000, 0x8000, 0xC000, 0x8000, 0xD000,
     0x8000, 0xE000, 0x8000, 0xF800, 0x0000, 0x0000, 0x0000, 0x0000,
 };
 
-void *player_shot_update_routines[16] = {
+void (*player_shot_update_routines[16])(void) = {
     player_shot_1_update,
     player_shot_2_update,
     player_shot_3_update,

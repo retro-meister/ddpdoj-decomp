@@ -8,13 +8,21 @@ void scroll_events_run_line(void);
 s32 entity_draw_with_player_shots();                            /* extern */
 
 void player_shot_draw_a(void) {
+#ifdef DDPDOJ_PC
+    reg_a0 = reg_a6;
+#else
     reg_a0 = (u8 *)(((s32)reg_a6));
+#endif
     player_shot_draw_unused();
     entity_draw_with_player_shots();
 }
 
 void player_shot_draw_b(void) {
+#ifdef DDPDOJ_PC
+    reg_a0 = reg_a6;
+#else
     reg_a0 = (u8 *)(((s32)reg_a6));
+#endif
     player_shot_draw_unused();
     entity_draw_with_player_shots();
 }
@@ -61,7 +69,11 @@ void player_shot_jitter_quarter() {
 
 typedef void (*Fn)();
 
+#ifdef DDPDOJ_PC
+extern Fn player_shot_update_routines[16];
+#else
 extern u8 player_shot_update_routines[];
+#endif
 extern u16 g_player_shot_count;
 extern u16 g_p2_hyper_active;
 extern u16 g_p1_hyper_active;
@@ -97,7 +109,11 @@ loop_2:
     ENTITY(reg_a6)->x.h -= reg_d6.h[0];
     reg_d0.w = 0xF;
     reg_d0.h[0] &= reg_d1.h[0];
+#ifdef DDPDOJ_PC
+    player_shot_update_routines[reg_d0.h[0]]();
+#else
     ((Fn)*(u32 *)((u8 *)player_shot_update_routines + (reg_d0.h[0] * 4)))();
+#endif
 next_1:
     reg_a6 += 0x30;
     t = reg_d7.h[0] - 1;
@@ -152,7 +168,7 @@ block_first:
     reg_a0 = (u8 *)player_shot_1_flight_table;
     reg_tmp.h[1] = (reg_d0.h[0] != 0) ? *(u16 *)(reg_a0 + ((s16)reg_d0.h[0] & ~1)) : *(u16 *)reg_a0;
     reg_tmp.h[0] = (((u16)reg_d0.h[0] + 2) != 0) ? *(u16 *)(reg_a0 + ((s16)((u16)reg_d0.h[0] + 2) & ~1)) : *(u16 *)reg_a0;
-    reg_a0 = (u8 *)reg_tmp.w;
+    reg_a0 = ARCADE_ADDRESS_DECODE(u8 *, reg_tmp.w);
     ENTITY(reg_a6)->offset_y.h = *(u16 *)reg_a0;
     reg_a0 += 2;
     ENTITY(reg_a6)->offset_x.h = *(u16 *)reg_a0;
@@ -183,7 +199,7 @@ block_anim:
     if ((s32)reg_tmp.h[0] > 0x4000) goto block_clr;
     reg_tmp.h[1] = ENTITY(reg_a6)->misc.h;
     reg_tmp.h[0] = *(u16 *)(reg_a6 + 0x20);
-    reg_a0 = (u8 *)reg_tmp.w;
+    reg_a0 = ARCADE_ADDRESS_DECODE(u8 *, reg_tmp.w);
     reg_d0.h[0] = *(u16 *)(reg_a6 + 0x24);
     ENTITY(reg_a6)->draw.h = (reg_d0.h[0] != 0) ? *(u16 *)(reg_a0 + ((s16)reg_d0.h[0] & ~1)) : *(u16 *)reg_a0;
     ENTITY(reg_a6)->sprite.h = ((reg_d0.h[0] + 2) != 0) ? *(u16 *)(reg_a0 + ((s16)(reg_d0.h[0] + 2) & ~1)) : *(u16 *)reg_a0;
@@ -209,7 +225,7 @@ loop_1:
     ENTITY(reg_a6)->x.h += reg_d1.h[0];
     reg_tmp.h[1] = ENTITY(reg_a6)->misc.h;
     reg_tmp.h[0] = *(u16 *)(reg_a6 + 0x20);
-    reg_a0 = (u8 *)reg_tmp.w;
+    reg_a0 = ARCADE_ADDRESS_DECODE(u8 *, reg_tmp.w);
     reg_d0.h[0] = *(u16 *)(reg_a6 + 0x24);
     ENTITY(reg_a6)->draw.h = (reg_d0.h[0] != 0) ? *(u16 *)(reg_a0 + ((s16)reg_d0.h[0] & ~1)) : *(u16 *)reg_a0;
     ENTITY(reg_a6)->sprite.h = ((reg_d0.h[0] + 2) != 0) ? *(u16 *)(reg_a0 + ((s16)(reg_d0.h[0] + 2) & ~1)) : *(u16 *)reg_a0;
@@ -242,7 +258,7 @@ skip_4:
     reg_a0 = (u8 *)player_shot_1_impact_table;
     reg_tmp.h[1] = (reg_d0.h[0] != 0) ? *(u16 *)(reg_a0 + ((s16)reg_d0.h[0] & ~1)) : *(u16 *)reg_a0;
     reg_tmp.h[0] = (((u16)reg_d0.h[0] + 2) != 0) ? *(u16 *)(reg_a0 + ((s16)((u16)reg_d0.h[0] + 2) & ~1)) : *(u16 *)reg_a0;
-    reg_a0 = (u8 *)reg_tmp.w;
+    reg_a0 = ARCADE_ADDRESS_DECODE(u8 *, reg_tmp.w);
     ENTITY(reg_a6)->offset_y.h = *(u16 *)reg_a0;
     reg_a0 += 2;
     ENTITY(reg_a6)->offset_x.h = *(u16 *)reg_a0;
@@ -288,7 +304,7 @@ next_10:
     reg_a0 = (u8 *) player_shot_2_flight_table;
     reg_tmp.h[1] = (reg_d0.h[0] != 0) ? *(u16 *)((u8 *)reg_a0 + ((s16)reg_d0.h[0] & ~1)) : *(u16 *)reg_a0;
     reg_tmp.h[0] = (((u16) reg_d0.h[0] + 2) != 0) ? *(u16 *)((u8 *)reg_a0 + ((s16)((u16) reg_d0.h[0] + 2) & ~1)) : *(u16 *)reg_a0;
-    reg_a0 = (u8 *) reg_tmp.w;
+    reg_a0 = ARCADE_ADDRESS_DECODE(u8 *, reg_tmp.w);
     W(6) = *(u16 *)reg_a0;
     reg_a0 += 2;
     W(8) = *(u16 *)reg_a0;
@@ -326,7 +342,7 @@ block_anime:
     if (!((s32) reg_tmp.h[0] < 0x4801)) goto block_clr;
     reg_tmp.h[1] = W(0x1E);
     reg_tmp.h[0] = W(0x20);
-    reg_a0 = (u8 *) reg_tmp.w;
+    reg_a0 = ARCADE_ADDRESS_DECODE(u8 *, reg_tmp.w);
     reg_d0.h[0] = W(0x24);
     W(0xA) = (reg_d0.h[0] != 0) ? *(u16 *)((u8 *)reg_a0 + ((s16)reg_d0.h[0] & ~1)) : *(u16 *)reg_a0;
     W(0xC) = ((reg_d0.h[0] + 2) != 0) ? *(u16 *)((u8 *)reg_a0 + ((s16)(reg_d0.h[0] + 2) & ~1)) : *(u16 *)reg_a0;
@@ -352,7 +368,7 @@ loop_110:
     W(4) += reg_d1.h[0];
     reg_tmp.h[1] = W(0x1E);
     reg_tmp.h[0] = W(0x20);
-    reg_a0 = (u8 *) reg_tmp.w;
+    reg_a0 = ARCADE_ADDRESS_DECODE(u8 *, reg_tmp.w);
     reg_d0.h[0] = W(0x24);
     W(0xA) = (reg_d0.h[0] != 0) ? *(u16 *)((u8 *)reg_a0 + ((s16)reg_d0.h[0] & ~1)) : *(u16 *)reg_a0;
     W(0xC) = ((reg_d0.h[0] + 2) != 0) ? *(u16 *)((u8 *)reg_a0 + ((s16)(reg_d0.h[0] + 2) & ~1)) : *(u16 *)reg_a0;
@@ -385,7 +401,7 @@ next_240:
     reg_a0 = (u8 *) player_shot_2_impact_table;
     reg_tmp.h[1] = (reg_d0.h[0] != 0) ? *(u16 *)((u8 *)reg_a0 + ((s16)reg_d0.h[0] & ~1)) : *(u16 *)reg_a0;
     reg_tmp.h[0] = (((u16) reg_d0.h[0] + 2) != 0) ? *(u16 *)((u8 *)reg_a0 + ((s16)((u16) reg_d0.h[0] + 2) & ~1)) : *(u16 *)reg_a0;
-    reg_a0 = (u8 *) reg_tmp.w;
+    reg_a0 = ARCADE_ADDRESS_DECODE(u8 *, reg_tmp.w);
     W(6) = *(u16 *)reg_a0;
     reg_a0 += 2;
     W(8) = *(u16 *)reg_a0;
@@ -427,7 +443,7 @@ next_10:
     reg_a0 = (u8 *) player_shot_3_flight_table;
     reg_tmp.h[1] = (reg_d0.h[0] != 0) ? *(u16 *)((u8 *)reg_a0 + ((s16)reg_d0.h[0] & ~1)) : *(u16 *)reg_a0;
     reg_tmp.h[0] = (((u16) reg_d0.h[0] + 2) != 0) ? *(u16 *)((u8 *)reg_a0 + ((s16)((u16) reg_d0.h[0] + 2) & ~1)) : *(u16 *)reg_a0;
-    reg_a0 = (u8 *) reg_tmp.w;
+    reg_a0 = ARCADE_ADDRESS_DECODE(u8 *, reg_tmp.w);
     W(6) = *(u16 *)reg_a0;
     reg_a0 += 2;
     W(8) = *(u16 *)reg_a0;
@@ -443,7 +459,7 @@ next_10:
     W(0x2E) = reg_d3.h[0];
     reg_tmp.h[1] = W(0x1E);
     reg_tmp.h[0] = W(0x20);
-    reg_a0 = (u8 *) reg_tmp.w;
+    reg_a0 = ARCADE_ADDRESS_DECODE(u8 *, reg_tmp.w);
     W(0xA) = *(u16 *)reg_a0;
     W(0xC) = *(u16 *)(reg_a0 + 2);
     ENTITY(reg_a6)->flags.b[1] &= 0xFE;
@@ -480,7 +496,7 @@ loop_110:
     if ((s32) reg_tmp.h[0] < 4) goto block_clr;
     reg_tmp.h[1] = W(0x1E);
     reg_tmp.h[0] = W(0x20);
-    reg_a0 = (u8 *) reg_tmp.w;
+    reg_a0 = ARCADE_ADDRESS_DECODE(u8 *, reg_tmp.w);
     reg_d0.h[0] = W(0x24);
     W(0xA) = (reg_d0.h[0] != 0) ? *(u16 *)((u8 *)reg_a0 + ((s16)reg_d0.h[0] & ~1)) : *(u16 *)reg_a0;
     W(0xC) = ((reg_d0.h[0] + 2) != 0) ? *(u16 *)((u8 *)reg_a0 + ((s16)(reg_d0.h[0] + 2) & ~1)) : *(u16 *)reg_a0;
@@ -505,7 +521,7 @@ next_220:
     reg_a0 = (u8 *) player_shot_3_impact_table;
     reg_tmp.h[1] = (reg_d0.h[0] != 0) ? *(u16 *)((u8 *)reg_a0 + ((s16)reg_d0.h[0] & ~1)) : *(u16 *)reg_a0;
     reg_tmp.h[0] = (((u16) reg_d0.h[0] + 2) != 0) ? *(u16 *)((u8 *)reg_a0 + ((s16)((u16) reg_d0.h[0] + 2) & ~1)) : *(u16 *)reg_a0;
-    reg_a0 = (u8 *) reg_tmp.w;
+    reg_a0 = ARCADE_ADDRESS_DECODE(u8 *, reg_tmp.w);
     W(6) = *(u16 *)reg_a0;
     reg_a0 += 2;
     W(8) = *(u16 *)reg_a0;
@@ -547,7 +563,7 @@ next_10:
     reg_a0 = (u8 *) player_shot_4_flight_table;
     reg_tmp.h[1] = (reg_d0.h[0] != 0) ? *(u16 *)((u8 *)reg_a0 + ((s16)reg_d0.h[0] & ~1)) : *(u16 *)reg_a0;
     reg_tmp.h[0] = (((u16) reg_d0.h[0] + 2) != 0) ? *(u16 *)((u8 *)reg_a0 + ((s16)((u16) reg_d0.h[0] + 2) & ~1)) : *(u16 *)reg_a0;
-    reg_a0 = (u8 *) reg_tmp.w;
+    reg_a0 = ARCADE_ADDRESS_DECODE(u8 *, reg_tmp.w);
     W(6) = *(u16 *)reg_a0;
     reg_a0 += 2;
     W(8) = *(u16 *)reg_a0;
@@ -563,7 +579,7 @@ next_10:
     W(0x2E) = reg_d3.h[0];
     reg_tmp.h[1] = W(0x1E);
     reg_tmp.h[0] = W(0x20);
-    reg_a0 = (u8 *) reg_tmp.w;
+    reg_a0 = ARCADE_ADDRESS_DECODE(u8 *, reg_tmp.w);
     W(0xA) = *(u16 *)reg_a0;
     W(0xC) = *(u16 *)(reg_a0 + 2);
     ENTITY(reg_a6)->flags.b[1] &= 0xFE;
@@ -600,7 +616,7 @@ loop_110:
     if ((s32) reg_tmp.h[0] < 4) goto block_clr;
     reg_tmp.h[1] = W(0x1E);
     reg_tmp.h[0] = W(0x20);
-    reg_a0 = (u8 *) reg_tmp.w;
+    reg_a0 = ARCADE_ADDRESS_DECODE(u8 *, reg_tmp.w);
     reg_d0.h[0] = W(0x24);
     W(0xA) = (reg_d0.h[0] != 0) ? *(u16 *)((u8 *)reg_a0 + ((s16)reg_d0.h[0] & ~1)) : *(u16 *)reg_a0;
     W(0xC) = ((reg_d0.h[0] + 2) != 0) ? *(u16 *)((u8 *)reg_a0 + ((s16)(reg_d0.h[0] + 2) & ~1)) : *(u16 *)reg_a0;
@@ -625,7 +641,7 @@ next_220:
     reg_a0 = (u8 *) player_shot_4_impact_table;
     reg_tmp.h[1] = (reg_d0.h[0] != 0) ? *(u16 *)((u8 *)reg_a0 + ((s16)reg_d0.h[0] & ~1)) : *(u16 *)reg_a0;
     reg_tmp.h[0] = (((u16) reg_d0.h[0] + 2) != 0) ? *(u16 *)((u8 *)reg_a0 + ((s16)((u16) reg_d0.h[0] + 2) & ~1)) : *(u16 *)reg_a0;
-    reg_a0 = (u8 *) reg_tmp.w;
+    reg_a0 = ARCADE_ADDRESS_DECODE(u8 *, reg_tmp.w);
     W(6) = *(u16 *)reg_a0;
     reg_a0 += 2;
     W(8) = *(u16 *)reg_a0;
@@ -673,7 +689,7 @@ next_10:
     reg_a0 = (u8 *) player_shot_5_flight_table;
     reg_tmp.h[1] = (reg_d0.h[0] != 0) ? *(u16 *)((u8 *)reg_a0 + ((s16)reg_d0.h[0] & ~1)) : *(u16 *)reg_a0;
     reg_tmp.h[0] = (((u16) reg_d0.h[0] + 2) != 0) ? *(u16 *)((u8 *)reg_a0 + ((s16)((u16) reg_d0.h[0] + 2) & ~1)) : *(u16 *)reg_a0;
-    reg_a0 = (u8 *) reg_tmp.w;
+    reg_a0 = ARCADE_ADDRESS_DECODE(u8 *, reg_tmp.w);
     W(6) = *(u16 *)reg_a0;
     reg_a0 += 2;
     W(8) = *(u16 *)reg_a0;
@@ -712,7 +728,7 @@ block_anime:
     if (!((s32) reg_tmp.h[0] < 0x5001)) goto block_clr;
     reg_tmp.h[1] = W(0x1E);
     reg_tmp.h[0] = W(0x20);
-    reg_a0 = (u8 *) reg_tmp.w;
+    reg_a0 = ARCADE_ADDRESS_DECODE(u8 *, reg_tmp.w);
     reg_d0.h[0] = W(0x24);
     W(0xA) = (reg_d0.h[0] != 0) ? *(u16 *)((u8 *)reg_a0 + ((s16)reg_d0.h[0] & ~1)) : *(u16 *)reg_a0;
     W(0xC) = ((reg_d0.h[0] + 2) != 0) ? *(u16 *)((u8 *)reg_a0 + ((s16)(reg_d0.h[0] + 2) & ~1)) : *(u16 *)reg_a0;
@@ -738,7 +754,7 @@ loop_110:
     W(4) += reg_d1.h[0];
     reg_tmp.h[1] = W(0x1E);
     reg_tmp.h[0] = W(0x20);
-    reg_a0 = (u8 *) reg_tmp.w;
+    reg_a0 = ARCADE_ADDRESS_DECODE(u8 *, reg_tmp.w);
     reg_d0.h[0] = W(0x24);
     W(0xA) = (reg_d0.h[0] != 0) ? *(u16 *)((u8 *)reg_a0 + ((s16)reg_d0.h[0] & ~1)) : *(u16 *)reg_a0;
     W(0xC) = ((reg_d0.h[0] + 2) != 0) ? *(u16 *)((u8 *)reg_a0 + ((s16)(reg_d0.h[0] + 2) & ~1)) : *(u16 *)reg_a0;
@@ -762,7 +778,7 @@ next_220:
     reg_a0 = (u8 *) player_shot_5_impact_table;
     reg_tmp.h[1] = (reg_d0.h[0] != 0) ? *(u16 *)((u8 *)reg_a0 + ((s16)reg_d0.h[0] & ~1)) : *(u16 *)reg_a0;
     reg_tmp.h[0] = (((u16) reg_d0.h[0] + 2) != 0) ? *(u16 *)((u8 *)reg_a0 + ((s16)((u16) reg_d0.h[0] + 2) & ~1)) : *(u16 *)reg_a0;
-    reg_a0 = (u8 *) reg_tmp.w;
+    reg_a0 = ARCADE_ADDRESS_DECODE(u8 *, reg_tmp.w);
     W(6) = *(u16 *)reg_a0;
     reg_a0 += 2;
     W(8) = *(u16 *)reg_a0;
@@ -810,7 +826,7 @@ next_10:
     reg_a0 = (u8 *) player_shot_6_flight_table;
     reg_tmp.h[1] = (reg_d0.h[0] != 0) ? *(u16 *)((u8 *)reg_a0 + ((s16)reg_d0.h[0] & ~1)) : *(u16 *)reg_a0;
     reg_tmp.h[0] = (((u16) reg_d0.h[0] + 2) != 0) ? *(u16 *)((u8 *)reg_a0 + ((s16)((u16) reg_d0.h[0] + 2) & ~1)) : *(u16 *)reg_a0;
-    reg_a0 = (u8 *) reg_tmp.w;
+    reg_a0 = ARCADE_ADDRESS_DECODE(u8 *, reg_tmp.w);
     W(6) = *(u16 *)reg_a0;
     reg_a0 += 2;
     W(8) = *(u16 *)reg_a0;
@@ -849,7 +865,7 @@ block_anime:
     if (!((s32) reg_tmp.h[0] < 0x5001)) goto block_clr;
     reg_tmp.h[1] = W(0x1E);
     reg_tmp.h[0] = W(0x20);
-    reg_a0 = (u8 *) reg_tmp.w;
+    reg_a0 = ARCADE_ADDRESS_DECODE(u8 *, reg_tmp.w);
     reg_d0.h[0] = W(0x24);
     W(0xA) = (reg_d0.h[0] != 0) ? *(u16 *)((u8 *)reg_a0 + ((s16)reg_d0.h[0] & ~1)) : *(u16 *)reg_a0;
     W(0xC) = ((reg_d0.h[0] + 2) != 0) ? *(u16 *)((u8 *)reg_a0 + ((s16)(reg_d0.h[0] + 2) & ~1)) : *(u16 *)reg_a0;
@@ -875,7 +891,7 @@ loop_110:
     W(4) += reg_d1.h[0];
     reg_tmp.h[1] = W(0x1E);
     reg_tmp.h[0] = W(0x20);
-    reg_a0 = (u8 *) reg_tmp.w;
+    reg_a0 = ARCADE_ADDRESS_DECODE(u8 *, reg_tmp.w);
     reg_d0.h[0] = W(0x24);
     W(0xA) = (reg_d0.h[0] != 0) ? *(u16 *)((u8 *)reg_a0 + ((s16)reg_d0.h[0] & ~1)) : *(u16 *)reg_a0;
     W(0xC) = ((reg_d0.h[0] + 2) != 0) ? *(u16 *)((u8 *)reg_a0 + ((s16)(reg_d0.h[0] + 2) & ~1)) : *(u16 *)reg_a0;
@@ -899,7 +915,7 @@ next_220:
     reg_a0 = (u8 *) player_shot_6_impact_table;
     reg_tmp.h[1] = (reg_d0.h[0] != 0) ? *(u16 *)((u8 *)reg_a0 + ((s16)reg_d0.h[0] & ~1)) : *(u16 *)reg_a0;
     reg_tmp.h[0] = (((u16) reg_d0.h[0] + 2) != 0) ? *(u16 *)((u8 *)reg_a0 + ((s16)((u16) reg_d0.h[0] + 2) & ~1)) : *(u16 *)reg_a0;
-    reg_a0 = (u8 *) reg_tmp.w;
+    reg_a0 = ARCADE_ADDRESS_DECODE(u8 *, reg_tmp.w);
     W(6) = *(u16 *)reg_a0;
     reg_a0 += 2;
     W(8) = *(u16 *)reg_a0;
@@ -941,7 +957,7 @@ next_10:
     reg_a0 = (u8 *) player_shot_7_flight_table;
     reg_tmp.h[1] = (reg_d0.h[0] != 0) ? *(u16 *)((u8 *)reg_a0 + ((s16)reg_d0.h[0] & ~1)) : *(u16 *)reg_a0;
     reg_tmp.h[0] = (((u16) reg_d0.h[0] + 2) != 0) ? *(u16 *)((u8 *)reg_a0 + ((s16)((u16) reg_d0.h[0] + 2) & ~1)) : *(u16 *)reg_a0;
-    reg_a0 = (u8 *) reg_tmp.w;
+    reg_a0 = ARCADE_ADDRESS_DECODE(u8 *, reg_tmp.w);
     W(6) = *(u16 *)reg_a0;
     reg_a0 += 2;
     W(8) = *(u16 *)reg_a0;
@@ -977,7 +993,7 @@ block_anime:
     if (!((s32) reg_tmp.h[0] < 0x4C01)) goto block_clr;
     reg_tmp.h[1] = W(0x1E);
     reg_tmp.h[0] = W(0x20);
-    reg_a0 = (u8 *) reg_tmp.w;
+    reg_a0 = ARCADE_ADDRESS_DECODE(u8 *, reg_tmp.w);
     reg_d0.h[0] = W(0x24);
     W(0xA) = (reg_d0.h[0] != 0) ? *(u16 *)((u8 *)reg_a0 + ((s16)reg_d0.h[0] & ~1)) : *(u16 *)reg_a0;
     W(0xC) = ((reg_d0.h[0] + 2) != 0) ? *(u16 *)((u8 *)reg_a0 + ((s16)(reg_d0.h[0] + 2) & ~1)) : *(u16 *)reg_a0;
@@ -1003,7 +1019,7 @@ loop_110:
     W(4) += reg_d1.h[0];
     reg_tmp.h[1] = W(0x1E);
     reg_tmp.h[0] = W(0x20);
-    reg_a0 = (u8 *) reg_tmp.w;
+    reg_a0 = ARCADE_ADDRESS_DECODE(u8 *, reg_tmp.w);
     reg_d0.h[0] = W(0x24);
     W(0xA) = (reg_d0.h[0] != 0) ? *(u16 *)((u8 *)reg_a0 + ((s16)reg_d0.h[0] & ~1)) : *(u16 *)reg_a0;
     W(0xC) = ((reg_d0.h[0] + 2) != 0) ? *(u16 *)((u8 *)reg_a0 + ((s16)(reg_d0.h[0] + 2) & ~1)) : *(u16 *)reg_a0;
@@ -1027,7 +1043,7 @@ next_220:
     reg_a0 = (u8 *) player_shot_7_impact_table;
     reg_tmp.h[1] = (reg_d0.h[0] != 0) ? *(u16 *)((u8 *)reg_a0 + ((s16)reg_d0.h[0] & ~1)) : *(u16 *)reg_a0;
     reg_tmp.h[0] = (((u16) reg_d0.h[0] + 2) != 0) ? *(u16 *)((u8 *)reg_a0 + ((s16)((u16) reg_d0.h[0] + 2) & ~1)) : *(u16 *)reg_a0;
-    reg_a0 = (u8 *) reg_tmp.w;
+    reg_a0 = ARCADE_ADDRESS_DECODE(u8 *, reg_tmp.w);
     W(6) = *(u16 *)reg_a0;
     reg_a0 += 2;
     W(8) = *(u16 *)reg_a0;
@@ -1069,7 +1085,7 @@ next_10:
     reg_a0 = (u8 *) player_shot_8_flight_table;
     reg_tmp.h[1] = (reg_d0.h[0] != 0) ? *(u16 *)((u8 *)reg_a0 + ((s16)reg_d0.h[0] & ~1)) : *(u16 *)reg_a0;
     reg_tmp.h[0] = (((u16) reg_d0.h[0] + 2) != 0) ? *(u16 *)((u8 *)reg_a0 + ((s16)((u16) reg_d0.h[0] + 2) & ~1)) : *(u16 *)reg_a0;
-    reg_a0 = (u8 *) reg_tmp.w;
+    reg_a0 = ARCADE_ADDRESS_DECODE(u8 *, reg_tmp.w);
     W(6) = *(u16 *)reg_a0;
     reg_a0 += 2;
     W(8) = *(u16 *)reg_a0;
@@ -1105,7 +1121,7 @@ block_anime:
     if (!((s32) reg_tmp.h[0] < 0x4C01)) goto block_clr;
     reg_tmp.h[1] = W(0x1E);
     reg_tmp.h[0] = W(0x20);
-    reg_a0 = (u8 *) reg_tmp.w;
+    reg_a0 = ARCADE_ADDRESS_DECODE(u8 *, reg_tmp.w);
     reg_d0.h[0] = W(0x24);
     W(0xA) = (reg_d0.h[0] != 0) ? *(u16 *)((u8 *)reg_a0 + ((s16)reg_d0.h[0] & ~1)) : *(u16 *)reg_a0;
     W(0xC) = ((reg_d0.h[0] + 2) != 0) ? *(u16 *)((u8 *)reg_a0 + ((s16)(reg_d0.h[0] + 2) & ~1)) : *(u16 *)reg_a0;
@@ -1131,7 +1147,7 @@ loop_110:
     W(4) += reg_d1.h[0];
     reg_tmp.h[1] = W(0x1E);
     reg_tmp.h[0] = W(0x20);
-    reg_a0 = (u8 *) reg_tmp.w;
+    reg_a0 = ARCADE_ADDRESS_DECODE(u8 *, reg_tmp.w);
     reg_d0.h[0] = W(0x24);
     W(0xA) = (reg_d0.h[0] != 0) ? *(u16 *)((u8 *)reg_a0 + ((s16)reg_d0.h[0] & ~1)) : *(u16 *)reg_a0;
     W(0xC) = ((reg_d0.h[0] + 2) != 0) ? *(u16 *)((u8 *)reg_a0 + ((s16)(reg_d0.h[0] + 2) & ~1)) : *(u16 *)reg_a0;
@@ -1155,7 +1171,7 @@ next_220:
     reg_a0 = (u8 *) player_shot_8_impact_table;
     reg_tmp.h[1] = (reg_d0.h[0] != 0) ? *(u16 *)((u8 *)reg_a0 + ((s16)reg_d0.h[0] & ~1)) : *(u16 *)reg_a0;
     reg_tmp.h[0] = (((u16) reg_d0.h[0] + 2) != 0) ? *(u16 *)((u8 *)reg_a0 + ((s16)((u16) reg_d0.h[0] + 2) & ~1)) : *(u16 *)reg_a0;
-    reg_a0 = (u8 *) reg_tmp.w;
+    reg_a0 = ARCADE_ADDRESS_DECODE(u8 *, reg_tmp.w);
     W(6) = *(u16 *)reg_a0;
     reg_a0 += 2;
     W(8) = *(u16 *)reg_a0;

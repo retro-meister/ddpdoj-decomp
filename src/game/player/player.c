@@ -2137,12 +2137,12 @@ block_135:
                                 reg_a0 = (u8 *)D_0029E390;
                                 reg_tmp.h[1] = ((u16 *)g_p1_weapon_level_data)[0];
                                 reg_tmp.h[0] = g_p1_weapon_level_data_lo[0];
-                                reg_a2 = (u8 *) reg_tmp.w;
+                                reg_a2 = ARCADE_ADDRESS_DECODE(u8 *, reg_tmp.w);
                                 if (*(u8 *)(reg_a5 + 6) != 0) {
                                     reg_a0 = (u8 *)D_0029EA50;
                                     reg_tmp.h[1] = ((u16 *)g_p2_weapon_level_data)[0];
                                     reg_tmp.h[0] = g_p2_weapon_level_data_lo[0];
-                                    reg_a2 = (u8 *) reg_tmp.w;
+                                    reg_a2 = ARCADE_ADDRESS_DECODE(u8 *, reg_tmp.w);
                                 }
                                 reg_d7.h[0] = *(u16 *)reg_a2;
                                 if (PLAYER(reg_a6)->flags.b[0] & 1) {
@@ -2159,13 +2159,13 @@ block_135:
                                 reg_d5.h[0] = var_a3;
                                 reg_tmp.h[1] = (var_a3 != 0) ? *(u16 *)((u8 *)reg_a1 + ((s16)var_a3 & ~1)) : *(u16 *)reg_a1;
                                 reg_tmp.h[0] = (((var_a3 & 0xFFFF) + 2) != 0) ? *(u16 *)((u8 *)reg_a1 + ((s16)((var_a3 & 0xFFFF) + 2) & ~1)) : *(u16 *)reg_a1;
-                                reg_a1 = (u8 *) reg_tmp.w;
+                                reg_a1 = ARCADE_ADDRESS_DECODE(u8 *, reg_tmp.w);
                                 reg_d0.h[0] = PLAYER(reg_a6)->shot_power.h;
                                 reg_d0.h[0] *= 2;
                                 temp_a1_3 = (u8 *)(reg_a6 + 0x20);
                                 reg_tmp.h[1] = (reg_d0.h[0] != 0) ? *(u16 *)((u8 *)reg_a1 + ((s16)reg_d0.h[0] & ~1)) : *(u16 *)reg_a1;
                                 reg_tmp.h[0] = (((u16)reg_d0.h[0] + 2) != 0) ? *(u16 *)((u8 *)reg_a1 + ((s16)((u16)reg_d0.h[0] + 2) & ~1)) : *(u16 *)reg_a1;
-                                reg_a1 = (u8 *) reg_tmp.w;
+                                reg_a1 = ARCADE_ADDRESS_DECODE(u8 *, reg_tmp.w);
                                 if (PLAYER(reg_a6)->power_style.h != 4) {
                                     reg_a0 += 0x2A0;
                                     reg_a4 = reg_a0 + 0x150;
@@ -2186,12 +2186,12 @@ loop_164:
                                     reg_a1 = (u8 *)ship0_shot_lists_2;
                                     reg_tmp.h[1] = (reg_d5.h[0] != 0) ? *(u16 *)((u8 *)reg_a1 + ((s16)reg_d5.h[0] & ~1)) : *(u16 *)reg_a1;
                                     reg_tmp.h[0] = (((u16)reg_d5.h[0] + 2) != 0) ? *(u16 *)((u8 *)reg_a1 + ((s16)((u16)reg_d5.h[0] + 2) & ~1)) : *(u16 *)reg_a1;
-                                    reg_a1 = (u8 *) reg_tmp.w;
+                                    reg_a1 = ARCADE_ADDRESS_DECODE(u8 *, reg_tmp.w);
                                     reg_d0.h[0] = PLAYER(reg_a6)->shot_power.h;
                                     reg_d0.h[0] *= 2;
                                     reg_tmp.h[1] = (reg_d0.h[0] != 0) ? *(u16 *)((u8 *)reg_a1 + ((s16)reg_d0.h[0] & ~1)) : *(u16 *)reg_a1;
                                     reg_tmp.h[0] = (((u16)reg_d0.h[0] + 2) != 0) ? *(u16 *)((u8 *)reg_a1 + ((s16)((u16)reg_d0.h[0] + 2) & ~1)) : *(u16 *)reg_a1;
-                                    reg_a1 = (u8 *) reg_tmp.w;
+                                    reg_a1 = ARCADE_ADDRESS_DECODE(u8 *, reg_tmp.w);
 loop_181:
                                     if ((*(s16 *)reg_a4) < 0) {
                                         reg_a4 += 0x30;
@@ -2248,12 +2248,12 @@ block_196:
                                 reg_a0 = (u8 *)D_0029E390;
                                 reg_tmp.h[1] = ((u16 *)g_p1_weapon_level_data)[0];
                                 reg_tmp.h[0] = g_p1_weapon_level_data_lo[0];
-                                reg_a2 = (u8 *) reg_tmp.w;
+                                reg_a2 = ARCADE_ADDRESS_DECODE(u8 *, reg_tmp.w);
                                 if (*(u8 *)(reg_a5 + 6) != 0) {
                                     reg_a0 = (u8 *)D_0029EA50;
                                     reg_tmp.h[1] = ((u16 *)g_p2_weapon_level_data)[0];
                                     reg_tmp.h[0] = g_p2_weapon_level_data_lo[0];
-                                    reg_a2 = (u8 *) reg_tmp.w;
+                                    reg_a2 = ARCADE_ADDRESS_DECODE(u8 *, reg_tmp.w);
                                 }
                                 reg_d7.h[0] = *(u16 *)reg_a2;
                                 if (PLAYER(reg_a6)->flags.b[0] & 1) {
@@ -2268,13 +2268,13 @@ block_196:
                                 reg_a1 = (u8 *)ship0_shot_lists_3;
                                 reg_tmp.h[1] = (reg_d0.h[0] != 0) ? *(u16 *)((u8 *)reg_a1 + ((s16)reg_d0.h[0] & ~1)) : *(u16 *)reg_a1;
                                 reg_tmp.h[0] = (((u16)reg_d0.h[0] + 2) != 0) ? *(u16 *)((u8 *)reg_a1 + ((s16)((u16)reg_d0.h[0] + 2) & ~1)) : *(u16 *)reg_a1;
-                                reg_a1 = (u8 *) reg_tmp.w;
+                                reg_a1 = ARCADE_ADDRESS_DECODE(u8 *, reg_tmp.w);
                                 reg_d0.h[0] = PLAYER(reg_a6)->shot_power.h;
                                 reg_d0.h[0] *= 2;
                                 temp_a1_8 = (u8 *)(reg_a6 + 0x20);
                                 reg_tmp.h[1] = (reg_d0.h[0] != 0) ? *(u16 *)((u8 *)reg_a1 + ((s16)reg_d0.h[0] & ~1)) : *(u16 *)reg_a1;
                                 reg_tmp.h[0] = (((u16)reg_d0.h[0] + 2) != 0) ? *(u16 *)((u8 *)reg_a1 + ((s16)((u16)reg_d0.h[0] + 2) & ~1)) : *(u16 *)reg_a1;
-                                reg_a1 = (u8 *) reg_tmp.w;
+                                reg_a1 = ARCADE_ADDRESS_DECODE(u8 *, reg_tmp.w);
                                 if (PLAYER(reg_a6)->power_style.h != 4) {
                                     reg_a0 += 0x2A0;
                                     reg_d7.h[0] *= 2;
@@ -2722,7 +2722,7 @@ void player_shot_fire(void) {
     reg_a1 += 2;
     reg_tmp.h[0] = *(u16 *) reg_a1;
     reg_a1 += 2;
-    reg_a2 = (u8 *) reg_tmp.w;
+    reg_a2 = ARCADE_ADDRESS_DECODE(u8 *, reg_tmp.w);
     reg_d0.h[0] = *(u16 *) (reg_a6 + 0x42);
     *(u16 *) reg_a0 = (reg_d0.h[0] != 0) ? *(u16 *)(reg_a2 + ((s16) reg_d0.h[0] & ~1)) : *(u16 *) reg_a2;
     reg_a0 += 2;
@@ -3192,10 +3192,16 @@ block_2:
 
 /* .sbss (the compiler lays these out in reverse) */
 u16 g_laser_bomb_impact_frame;
+#ifdef DDPDOJ_PC
+/* Each setup writes the pair of packed addresses through the shot-level base. */
+_Alignas(4) u8 g_p1_weapon_level_data[8];
+_Alignas(4) u8 g_p2_weapon_level_data[8];
+#else
 u16 g_p1_option_level_data[2];
 u8 g_p1_weapon_level_data[4];
 u16 g_p2_option_level_data[2];
 u8 g_p2_weapon_level_data[4];
+#endif
 u16 g_p1_maximum_level __attribute__((aligned(4)));
 u16 g_p2_maximum_level __attribute__((aligned(4)));
 u16 g_p1_maximum_anim_delay __attribute__((aligned(4)));
@@ -3304,17 +3310,19 @@ PC_DATA_ALIAS(g_p1_maximum_count, g_p2_maximum_value, 0x1c);
 PC_DATA_ALIAS(g_p1_maximum_count_as_s16_a, g_p2_maximum_value, 0x1c);
 PC_DATA_ALIAS(g_p1_maximum_count_digits, g_p2_maximum_value, 0x1e);
 
-PC_DATA_ALIAS(g_p1_option_level_data_as_s32_a, g_p1_option_level_data, 0x0);
-PC_DATA_ALIAS(g_p1_option_level_data_as_u8_a, g_p1_option_level_data, 0x0);
-PC_DATA_ALIAS(g_p1_option_level_data_lo, g_p1_option_level_data, 0x2);
+PC_DATA_ALIAS(g_p1_option_level_data, g_p1_weapon_level_data, 0x4);
+PC_DATA_ALIAS(g_p1_option_level_data_as_s32_a, g_p1_weapon_level_data, 0x4);
+PC_DATA_ALIAS(g_p1_option_level_data_as_u8_a, g_p1_weapon_level_data, 0x4);
+PC_DATA_ALIAS(g_p1_option_level_data_lo, g_p1_weapon_level_data, 0x6);
 
 PC_DATA_ALIAS(g_p1_weapon_level_data_as_s32_a, g_p1_weapon_level_data, 0x0);
 PC_DATA_ALIAS(g_p1_weapon_level_data_as_u16_a, g_p1_weapon_level_data, 0x0);
 PC_DATA_ALIAS(g_p1_weapon_level_data_lo, g_p1_weapon_level_data, 0x2);
 
-PC_DATA_ALIAS(g_p2_option_level_data_as_s32_a, g_p2_option_level_data, 0x0);
-PC_DATA_ALIAS(g_p2_option_level_data_as_u8_a, g_p2_option_level_data, 0x0);
-PC_DATA_ALIAS(g_p2_option_level_data_lo, g_p2_option_level_data, 0x2);
+PC_DATA_ALIAS(g_p2_option_level_data, g_p2_weapon_level_data, 0x4);
+PC_DATA_ALIAS(g_p2_option_level_data_as_s32_a, g_p2_weapon_level_data, 0x4);
+PC_DATA_ALIAS(g_p2_option_level_data_as_u8_a, g_p2_weapon_level_data, 0x4);
+PC_DATA_ALIAS(g_p2_option_level_data_lo, g_p2_weapon_level_data, 0x6);
 
 PC_DATA_ALIAS(g_p2_weapon_level_data_as_s32_a, g_p2_weapon_level_data, 0x0);
 PC_DATA_ALIAS(g_p2_weapon_level_data_as_u16_a, g_p2_weapon_level_data, 0x0);
