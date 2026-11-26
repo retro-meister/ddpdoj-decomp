@@ -3255,8 +3255,13 @@ u8 g_p1_options[80];
 s16 D_0029F160[16];
 u8 g_p2_options[80];
 #endif
+#ifdef DDPDOJ_PC
+/* The original clear and update loops walk both shot pools in one pass. */
+_Alignas(16) u8 D_0029E390[0xD80];
+#else
 u8 D_0029EA50[1728];
 u8 D_0029E390[1728];
+#endif
 #ifdef DDPDOJ_PC
 _Alignas(16) u8 g_p1_laser_entities[0x600];
 _Alignas(16) u8 g_p2_laser_entities[0x600];
@@ -3302,6 +3307,7 @@ PC_DATA_ALIAS(D_0029F248, g_player2, 0x58);
 
 PC_DATA_ALIAS(D_0029F261, g_player1, 0x1);
 PC_DATA_ALIAS(D_0029F2B8, g_player1, 0x58);
+PC_DATA_ALIAS(D_0029EA50, D_0029E390, 0x6c0);
 
 PC_DATA_ALIAS(g_p2_maximum_value_digits, g_p2_maximum_value, 0x4);
 PC_DATA_ALIAS(g_p2_maximum_half_digits, g_p2_maximum_value, 0x8);
