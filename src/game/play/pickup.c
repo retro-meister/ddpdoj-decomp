@@ -69,7 +69,7 @@ void pickup_draw_when_crowded(void) {
     if (g_bullet_count < 35) goto call;
     reg_tmp.h[1] = *(u16 *)(reg_a6 + 0x24);
     reg_tmp.h[0] = *(u16 *)(reg_a6 + 0x26);
-    reg_a0 = (u8 *)reg_tmp.w;
+    reg_a0 = ARCADE_ADDRESS_DECODE(u8 *, reg_tmp.w);
     reg_d2.h[0] = *(u16 *)(reg_a0 + 4);
     reg_d0.h[0] = ENTITY(reg_a6)->x.h;
     reg_d0.h[0] -= reg_d2.h[0];
@@ -286,7 +286,7 @@ void pickup_home_on_target(void) {
     if (ENTITY(reg_a6)->misc.b.user == 0) {
         reg_tmp.h[1] = *(u16 *)(reg_a6 + 0x24);
         reg_tmp.h[0] = *(u16 *)(reg_a6 + 0x26);
-        reg_a0 = (u8 *)reg_tmp.w;
+        reg_a0 = ARCADE_ADDRESS_DECODE(u8 *, reg_tmp.w);
         direction256_to_entity();
         ENTITY(reg_a6)->move.b.dir = reg_d1.b[0];
         reg_d0.w = 0x40;
@@ -299,7 +299,7 @@ void pickup_home_on_target(void) {
     if ((reg_d0.b[0] &= ENTITY(reg_a6)->move.b.speed) == 0) {
         reg_tmp.h[1] = *(u16 *)(reg_a6 + 0x24);
         reg_tmp.h[0] = *(u16 *)(reg_a6 + 0x26);
-        reg_a0 = (u8 *)reg_tmp.w;
+        reg_a0 = ARCADE_ADDRESS_DECODE(u8 *, reg_tmp.w);
         if (*(s16 *)reg_a0 >= 0) {
             bullet_release();
             return;
@@ -1257,7 +1257,7 @@ extern s16 g_player2[56];
 
 void pickup_init_to_player2_offsets_3(void) {
     reg_a3 = ((u8 *)pickup_start_offsets_3);
-    reg_tmp.w = (u32) ((u8 *)g_player2);
+    reg_tmp.w = ARCADE_ADDRESS_ENCODE((u8 *)g_player2);
     *(u16 *)(reg_a0 + 0x24) = (u16) reg_tmp.h[1];
     *(u16 *)(reg_a0 + 0x26) = (u16) reg_tmp.h[0];
     pickup_init_to_target();
@@ -1267,7 +1267,7 @@ extern u16 pickup_start_offsets_0[];
 
 void pickup_init_to_player2_offsets_0(void) {
     reg_a3 = ((u8 *)pickup_start_offsets_0);
-    reg_tmp.w = (u32) ((u8 *)g_player2);
+    reg_tmp.w = ARCADE_ADDRESS_ENCODE((u8 *)g_player2);
     *(u16 *)(reg_a0 + 0x24) = (u16) reg_tmp.h[1];
     *(u16 *)(reg_a0 + 0x26) = (u16) reg_tmp.h[0];
     pickup_init_to_target();
@@ -1277,7 +1277,7 @@ extern u16 pickup_start_offsets_1[];
 
 void pickup_init_to_player2_offsets_1(void) {
     reg_a3 = ((u8 *)pickup_start_offsets_1);
-    reg_tmp.w = (u32) ((u8 *)g_player2);
+    reg_tmp.w = ARCADE_ADDRESS_ENCODE((u8 *)g_player2);
     *(u16 *)(reg_a0 + 0x24) = (u16) reg_tmp.h[1];
     *(u16 *)(reg_a0 + 0x26) = (u16) reg_tmp.h[0];
     pickup_init_to_target();
@@ -1287,7 +1287,7 @@ extern u16 pickup_start_offsets_2[];
 
 void pickup_init_to_player2_offsets_2(void) {
     reg_a3 = ((u8 *)pickup_start_offsets_2);
-    reg_tmp.w = (u32) ((u8 *)g_player2);
+    reg_tmp.w = ARCADE_ADDRESS_ENCODE((u8 *)g_player2);
     *(u16 *)(reg_a0 + 0x24) = (u16) reg_tmp.h[1];
     *(u16 *)(reg_a0 + 0x26) = (u16) reg_tmp.h[0];
     pickup_init_to_target();
@@ -1326,7 +1326,7 @@ void pickup_init_to_player1_offsets_2(void)
 
 extern s16 g_player1[56];
 void pickup_init_to_player1(void) {
-    reg_tmp.w = (u32)((u8 *)g_player1);
+    reg_tmp.w = ARCADE_ADDRESS_ENCODE((u8 *)g_player1);
     *(u16 *)(reg_a0 + 0x24) = reg_tmp.h[1];
     *(u16 *)(reg_a0 + 0x26) = reg_tmp.h[0];
     pickup_init_to_target();

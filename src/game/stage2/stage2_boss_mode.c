@@ -1085,9 +1085,14 @@ void stage2_boss_mode_rise_sway_start(void) {
     RISE_SWAY(reg_a4)->started = 0;
     RISE_SWAY(reg_a4)->waypoint = 0;
     RISE_SWAY(reg_a4)->delay = 0x20;
-    reg_tmp.w = (u32) stage2_boss_rise_sway_waypoints;
+    reg_tmp.w = ARCADE_ADDRESS_ENCODE(stage2_boss_rise_sway_waypoints);
+#ifdef DDPDOJ_PC
+    RISE_SWAY(reg_a4)->path[0] = reg_tmp.h[1];
+    RISE_SWAY(reg_a4)->path[1] = reg_tmp.h[0];
+#else
     ENEMY_STATE(reg_a5)->entities[1] = (u16) reg_tmp.h[1];
     ENEMY_STATE(reg_a5)->line_step = (u16) reg_tmp.h[0];
+#endif
     RISE_SWAY(reg_a4)->side = 1;
     stage2_boss_mode_rise_sway();
 }
@@ -1107,7 +1112,7 @@ void stage2_boss_mode_rise_sway(void) {
     if ((temp_a0 == 1) && (boss_movement_current(temp_a0), (reg_d0.h[0] == 5))) {
         reg_tmp.h[1] = RISE_SWAY(reg_a4)->path[0];
         reg_tmp.h[0] = RISE_SWAY(reg_a4)->path[1];
-        reg_a1 = (u8 *)(reg_tmp.w);
+        reg_a1 = ARCADE_ADDRESS_DECODE(u8 *, reg_tmp.w);
         temp_a0_2 = RISE_SWAY(reg_a4)->waypoint;
         reg_a1 += temp_a0_2;
         if (*(s16 *)reg_a1 != -1) {

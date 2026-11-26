@@ -712,7 +712,7 @@ void stage2_sliding_gun_start(void) {
             SLIDING_GUN(reg_a5)->hit_side[1] = (u16) reg_tmp.h[0];
             SLIDING_GUN(reg_a5)->muzzle_x = 0;
         }
-        reg_d0.w = (u32) reg_a6;
+        reg_d0.w = ARCADE_ADDRESS_ENCODE(reg_a6);
         reg_tmp.h[1] = SLIDING_GUN(reg_a5)->hit_side[0];
         reg_tmp.h[0] = SLIDING_GUN(reg_a5)->hit_side[1];
         reg_tmp.w += reg_d0.w;
@@ -722,7 +722,7 @@ void stage2_sliding_gun_start(void) {
         reg_a0 = (u8 *)(D_00262D80);
         reg_tmp.h[1] = SLIDING_GUN(reg_a5)->hit_side[0];
         reg_tmp.h[0] = SLIDING_GUN(reg_a5)->hit_side[1];
-        reg_a1 = (u8 *)(reg_tmp.w);
+        reg_a1 = ARCADE_ADDRESS_DECODE(u8 *, reg_tmp.w);
         *(u16 *)reg_a1 = (reg_d0.h[0] != 0) ? *(u16 *)((u8 *)reg_a0 + ((s16)reg_d0.h[0] & ~1)) : *(u16 *)reg_a0;
         reg_a0 = (u8 *)(stage2_sliding_gun_start_table);
         reg_d0.h[0] = g_stage_x2;
@@ -891,7 +891,7 @@ block_38:
                             reg_a0 += 2;
                             reg_tmp.h[1] = SLIDING_GUN(reg_a5)->hit_side[0];
                             reg_tmp.h[0] = SLIDING_GUN(reg_a5)->hit_side[1];
-                            reg_a1 = (u8 *) reg_tmp.w;
+                            reg_a1 = ARCADE_ADDRESS_DECODE(u8 *, reg_tmp.w);
                             *(s16 *)reg_a1 = (s16) *(u16 *)reg_a0;
                             reg_a0 += 2;
                         }
@@ -1350,10 +1350,10 @@ void stage2_boss_hangar_start(void)
     extern void enemy_init_entities(void);
     extern void enemy_path_start(void);
 #endif
-    reg_a0 = (u8 *)((u32)stage2_boss_hangar_start_table_2);
+    reg_a0 = (u8 *)((ArcadeSavedAddress)stage2_boss_hangar_start_table_2);
     enemy_init_entities();
 
-    reg_a0 = (u8 *)((u32)stage2_boss_hangar_start_table);
+    reg_a0 = (u8 *)((ArcadeSavedAddress)stage2_boss_hangar_start_table);
     reg_d0.w = 5;
     enemy_set_task_state();
     enemy_path_start();

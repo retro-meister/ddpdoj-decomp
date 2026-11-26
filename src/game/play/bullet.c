@@ -2695,8 +2695,8 @@ void bullet_look_set_small_by_dir(void) {
     reg_d1.h[0] = (reg_d0.h[0] != 0) ? *(u16 *)((u8 *)reg_a1 + ((s16)reg_d0.h[0] & ~1)) : *(u16 *)reg_a1;
     reg_tmp.h[1] = (reg_d1.h[0] != 0) ? *(u16 *)((u8 *)reg_a0 + ((s16)reg_d1.h[0] & ~1)) : *(u16 *)reg_a0;
     reg_tmp.h[0] = (((reg_d1.h[0] & 0xFFFF) + 2) != 0) ? *(u16 *)((u8 *)reg_a0 + ((s16)((reg_d1.h[0] & 0xFFFF) + 2) & ~1)) : *(u16 *)reg_a0;
-    reg_a0 = (u8 *) reg_tmp.w;
-    reg_tmp.w = (u32) reg_a0;
+    reg_a0 = ARCADE_ADDRESS_DECODE(u8 *, reg_tmp.w);
+    reg_tmp.w = ARCADE_ADDRESS_ENCODE(reg_a0);
     ENTITY(reg_a6)->hit_y_minus.h = (u16) reg_tmp.h[1];
     ENTITY(reg_a6)->hit_x_plus.h = (u16) reg_tmp.h[0];
     reg_d1.h[0] = ENTITY(reg_a6)->hit_x_minus.h;

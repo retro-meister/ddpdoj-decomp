@@ -149,7 +149,7 @@ block_l1:
         STAGE2_SHOT(reg_a5)->now.frame_timer.b.countdown = (u8) STAGE2_SHOT(reg_a5)->now.frame_timer.b.interval;
         reg_tmp.h[1] = STAGE2_SHOT(reg_a5)->now.frame_list[0];
         reg_tmp.h[0] = STAGE2_SHOT(reg_a5)->now.frame_list[1];
-        reg_a0 = (u8 *)(reg_tmp.w);
+        reg_a0 = ARCADE_ADDRESS_DECODE(u8 *, reg_tmp.w);
         reg_d0.h[0] = STAGE2_SHOT(reg_a5)->frame;
         ENTITY(reg_a6)->draw.h = (reg_d0.h[0] != 0) ? *(u16 *)((u8 *)reg_a0 + ((s16)reg_d0.h[0] & ~1)) : *(u16 *)reg_a0;
         ENTITY(reg_a6)->sprite.h = ((reg_d0.h[0] + 2) != 0) ? *(u16 *)((u8 *)reg_a0 + ((s16)(reg_d0.h[0] + 2) & ~1)) : *(u16 *)reg_a0;

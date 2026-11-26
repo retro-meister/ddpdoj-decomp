@@ -651,15 +651,25 @@ void stage2_boss_parts_stop_hits(void) {
 
 
 void stage2_boss_part_take_hits(void) {
+#ifdef DDPDOJ_PC
+    reg_a0 = reg_a6 + reg_d0.h[0];
+    *(u16 *)reg_a0 = 0xA000;
+#else
     (*(u32 *)&reg_a0) = (*(u32 *)&reg_a6);
     (*(u32 *)&reg_a0) += reg_d0.h[0];
     *(u16 *)(*(u32 *)&reg_a0) = 0xA000;
+#endif
 }
 
 void stage2_boss_part_stop_hits(void) {
+#ifdef DDPDOJ_PC
+    reg_a0 = reg_a6 + reg_d0.h[0];
+    *(u16 *)reg_a0 = 0x8000;
+#else
     (*(u32 *)&reg_a0) = (*(u32 *)&reg_a6);
     (*(u32 *)&reg_a0) += reg_d0.h[0];
     *(u16 *)(*(u32 *)&reg_a0) = 0x8000;
+#endif
 }
 
 void stage2_boss_stop_damage(void) {

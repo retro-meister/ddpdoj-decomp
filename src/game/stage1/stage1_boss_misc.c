@@ -87,8 +87,14 @@ next_3:
     BREAKABLE_BULLET(reg_a5)->frame_timer.b.countdown -= 1;
     if ((s32) reg_tmp.b[0] > 0) goto next_2;
     BREAKABLE_BULLET(reg_a5)->frame_timer.b.countdown = BREAKABLE_BULLET(reg_a5)->frame_timer.b.interval;
+#ifdef DDPDOJ_PC
+    reg_tmp.h[1] = BREAKABLE_BULLET(reg_a5)->now.frame_list[0];
+    reg_tmp.h[0] = BREAKABLE_BULLET(reg_a5)->now.frame_list[1];
+    reg_a0 = ARCADE_ADDRESS_DECODE(u8 *, reg_tmp.w);
+#else
     EXPLOSION(reg_a0)->kind.h = BREAKABLE_BULLET(reg_a5)->now.frame_list[0];
     EXPLOSION(reg_a0)->y = BREAKABLE_BULLET(reg_a5)->now.frame_list[1];
+#endif
     reg_d0.h[0] = BREAKABLE_BULLET(reg_a5)->frame;
     W(0xA) = (reg_d0.h[0] != 0) ? *(u16 *)(reg_a0 + ((s16) reg_d0.h[0] & ~1)) : EXPLOSION(reg_a0)->kind.h;
     W(0xC) = ((reg_d0.h[0] + 2) != 0) ? *(u16 *)(reg_a0 + ((s16) (reg_d0.h[0] + 2) & ~1)) : EXPLOSION(reg_a0)->kind.h;

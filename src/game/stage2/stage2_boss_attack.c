@@ -169,8 +169,12 @@ next_2:
     reg_d0.h[0] = SHOULDER_SPREAD(reg_a4)->speed;
     reg_d0.h[0] += reg_d0.h[0];
     reg_d0.h[0] += reg_d0.h[0];
+#ifdef DDPDOJ_PC
+    reg_call_target = stage2_boss_fire_shoulder_spread_table_2[reg_d0.h[0] / 4];
+#else
     reg_tmp.w = *(u32 *)(reg_a0 + reg_d0.h[0]);
     reg_call_target = *(Fn *)reg_tmp.w;
+#endif
     reg_call_target();
     SHOULDER_SPREAD(reg_a4)->side *= 0xFFFF;
     SHOULDER_SPREAD(reg_a4)->volleys_left -= 1;

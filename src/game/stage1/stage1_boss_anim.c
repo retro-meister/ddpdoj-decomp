@@ -820,7 +820,11 @@ void stage1_boss_body_explode(void) {
             temp_a0_6 = EXPLODE(reg_a4)->sound_position;
             reg_a0 += temp_a0_6;
             reg_tmp.h[0] = EXPLODE(reg_a4)->sound_position;
+#ifdef DDPDOJ_PC
+            stage1_boss_blast_sounds[reg_tmp.h[0] / 4]();
+#else
             ((Fn)*(u32 *)((u8 *)stage1_boss_blast_sounds + (reg_tmp.h[0] & ~3)))();
+#endif
             EXPLODE(reg_a4)->sound_position += 4;
             EXPLODE(reg_a4)->sound_position &= 0x1F;
         }
@@ -871,7 +875,11 @@ void stage1_boss_body_explode(void) {
                 temp_a0_7 = EXPLODE(reg_a4)->sound_position;
                 reg_a0 += temp_a0_7;
                 reg_tmp.h[0] = EXPLODE(reg_a4)->sound_position;
+#ifdef DDPDOJ_PC
+                stage1_boss_blast_sounds[reg_tmp.h[0] / 4]();
+#else
                 ((Fn)*(u32 *)((u8 *)stage1_boss_blast_sounds + (reg_tmp.h[0] & ~3)))();
+#endif
                 EXPLODE(reg_a4)->sound_position += 4;
                 EXPLODE(reg_a4)->sound_position &= 0x1F;
             }
@@ -1148,7 +1156,7 @@ void stage1_boss_spin_start(void) {
     *(u16 *)(reg_a0 + 4) = (u16) reg_d2.h[0];
     *(u8 *)(reg_a0 + 0xA) = (u8) reg_d3.b[0];
     *(u16 *)(reg_a0 + 0xC) = (u16) reg_d4.h[0];
-    reg_tmp.w = (u32) reg_a0;
+    reg_tmp.w = ARCADE_ADDRESS_ENCODE(reg_a0);
     SPIN(reg_a4)->saved_a[0] = (u16) reg_tmp.h[1];
     SPIN(reg_a4)->saved_a[1] = (u16) reg_tmp.h[0];
     reg_d0.w = 6;
@@ -1156,7 +1164,7 @@ void stage1_boss_spin_start(void) {
     *(u16 *)(reg_a0 + 4) = (u16) reg_d2.h[0];
     *(u8 *)(reg_a0 + 0xA) = (u8) reg_d3.b[0];
     *(u16 *)(reg_a0 + 0xC) = (u16) reg_d4.h[0];
-    reg_tmp.w = (u32) reg_a0;
+    reg_tmp.w = ARCADE_ADDRESS_ENCODE(reg_a0);
     SPIN(reg_a4)->saved_b[0] = (u16) reg_tmp.h[1];
     SPIN(reg_a4)->saved_b[1] = (u16) reg_tmp.h[0];
     reg_d0.w = 0xE;
@@ -1213,10 +1221,10 @@ block_3:
                         SPIN(reg_a4)->turn.t.count = (u8) SPIN(reg_a4)->turn.t.reload;
                         reg_tmp.h[1] = SPIN(reg_a4)->saved_a[0];
                         reg_tmp.h[0] = SPIN(reg_a4)->saved_a[1];
-                        reg_a0 = (u8 *)reg_tmp.w;
+                        reg_a0 = ARCADE_ADDRESS_DECODE(u8 *, reg_tmp.w);
                         reg_tmp.h[1] = SPIN(reg_a4)->saved_b[0];
                         reg_tmp.h[0] = SPIN(reg_a4)->saved_b[1];
-                        reg_a0 = (u8 *)reg_tmp.w;
+                        reg_a0 = ARCADE_ADDRESS_DECODE(u8 *, reg_tmp.w);
                         reg_d0.b[0] = SPIN(reg_a4)->direction;
                         SPIN(reg_a4)->angle -= reg_d0.b[0];
                     }

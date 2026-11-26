@@ -107,7 +107,7 @@ block_8:
             reg_a0 = (u8 *)D_0024EBC0;
             reg_tmp.h[1] = (reg_d0.h[0] != 0) ? *(u16 *)((u8 *)reg_a0 + ((s16)reg_d0.h[0] & ~1)) : *(u16 *)reg_a0;
             reg_tmp.h[0] = (((reg_d0.h[0] & 0xFFFF) + 2) != 0) ? *(u16 *)((u8 *)reg_a0 + ((s16)((reg_d0.h[0] & 0xFFFF) + 2) & ~1)) : *(u16 *)reg_a0;
-            reg_a0 = (u8 *) reg_tmp.w;
+            reg_a0 = ARCADE_ADDRESS_DECODE(u8 *, reg_tmp.w);
             reg_d2.h[1] = *(u16 *)reg_a0;
             temp_a1 = *(u16 *)(reg_a0 + 2);
             reg_d2.h[0] = temp_a1;

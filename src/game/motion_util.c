@@ -199,12 +199,21 @@ void bullets_cancel_sweep(void) {
     reg_d6.w = reg_save_d6;
     reg_d7.w = reg_save_d7;
     reg_a0 = (u8 *)reg_save_a0;
+#ifdef DDPDOJ_PC
+    reg_a1 = reg_save_a1;
+#else
     reg_a1 = (u8 *)(*(s32 *)&reg_save_a1);
+#endif
     reg_a2 = (u8 *)(((u16 *)reg_save_a2));
     reg_a3 = (u8 *)reg_save_a3;
     reg_a4 = (u8 *)reg_save_a4;
+#ifdef DDPDOJ_PC
+    reg_a5 = reg_save_a5;
+    reg_a6 = reg_save_a6;
+#else
     reg_a5 = (u8 *)(*(s32 *)&reg_save_a5);
     reg_a6 = (u8 *)(*(s32 *)&reg_save_a6);
+#endif
 }
 
 #pragma push
