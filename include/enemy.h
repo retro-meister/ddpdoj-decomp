@@ -60,7 +60,11 @@ extern EnemyState g_spawn_requests[40];
 extern EnemyState g_spawn_request_spare;
 /* The enemies' entities: 100 in the first pool, 50 in the second (start flags 0x20 and 0x80), and 50 more that
    the ending, the credits and two bosses use for themselves. */
+#ifdef DDPDOJ_PC
+extern Entity g_enemy_entities[150];
+#else
 extern Entity g_enemy_entities[100];
+#endif
 extern Entity g_enemy_entities_second[];
 extern Entity g_spare_entities[50];
 

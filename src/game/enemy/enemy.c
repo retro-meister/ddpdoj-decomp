@@ -5,14 +5,6 @@
 
 #ifdef DDPDOJ_PC
 #include <string.h>
-#ifdef DEATH_LABEL
-extern Entity g_enemy_entities_second[16];
-extern u8 g_twin_boss_second[32];
-extern u8 g_twin_boss_first_fire_point[32];
-extern u8 g_twin_boss_second_fire_point[1024];
-#else
-extern Entity g_enemy_entities_second[50];
-#endif
 #endif
 
 void stage_enemies_select(void);
@@ -70,12 +62,6 @@ void enemies_reset(void) {
     }
 #ifdef DDPDOJ_PC
     memset(g_enemy_entities, 0, sizeof(g_enemy_entities));
-    memset(g_enemy_entities_second, 0, sizeof(g_enemy_entities_second));
-#ifdef DEATH_LABEL
-    memset(g_twin_boss_second, 0, sizeof(g_twin_boss_second));
-    memset(g_twin_boss_first_fire_point, 0, sizeof(g_twin_boss_first_fire_point));
-    memset(g_twin_boss_second_fire_point, 0, sizeof(g_twin_boss_second_fire_point));
-#endif
     memset(g_spare_entities, 0, sizeof(g_spare_entities));
 #else
     for (i = 0; i < 0xC80; i++) {

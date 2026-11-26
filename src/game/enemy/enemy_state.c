@@ -16,6 +16,10 @@ u16 g_spawn_request_end __attribute__((aligned(4)));
 u8 g_stage_enemy_cursor[32];
 EnemySlots g_enemy_slots;
 Entity g_spare_entities[50];
+#ifdef DDPDOJ_PC
+/* Collision scans cross the first and second pools and the Death Label boss parts. */
+_Alignas(16) Entity g_enemy_entities[150];
+#else
 #ifdef DEATH_LABEL
 u8 g_twin_boss_second_fire_point[1024];
 u8 g_twin_boss_first_fire_point[32];
@@ -27,12 +31,19 @@ Entity g_enemy_entities_second[16];
 Entity g_enemy_entities_second[50];
 #endif
 Entity g_enemy_entities[100];
+#endif
 EnemyState g_spawn_requests[40];
 EnemyState g_spawn_request_spare;
 
 #ifdef DDPDOJ_PC
 #include "pc_data_alias.h"
 
+PC_DATA_ALIAS(g_enemy_entities_second, g_enemy_entities, 0xc80);
+#ifdef DEATH_LABEL
+PC_DATA_ALIAS(g_twin_boss_second, g_enemy_entities, 0xe80);
+PC_DATA_ALIAS(g_twin_boss_first_fire_point, g_enemy_entities, 0xea0);
+PC_DATA_ALIAS(g_twin_boss_second_fire_point, g_enemy_entities, 0xec0);
+#endif
 PC_DATA_ALIAS(D_002BDAA4, g_spare_entities, 0x24);
 PC_DATA_ALIAS(D_002BDAA6, g_spare_entities, 0x26);
 PC_DATA_ALIAS(D_002BDAA8, g_spare_entities, 0x28);
