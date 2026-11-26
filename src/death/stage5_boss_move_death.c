@@ -1,4 +1,5 @@
 #include "common.h"
+#include "enemy.h"
 #include "entity.h"
 
 void death_func_00224F20(u8 index);
@@ -257,13 +258,12 @@ block_11:
     }
 }
 
-extern u16 D_002BD440[];
 
 void death_func_00225640(void) {
     u8 *save_a6;
 
     save_a6 = reg_a6;
-    reg_a6 = (u8 *) D_002BD440;
+    reg_a6 = (u8 *)g_enemy_entities_second;
     death_func_00224EF0(0);
     reg_a6 = save_a6;
 }
@@ -272,7 +272,7 @@ void death_func_00225680(void) {
     u8 *save_a6;
 
     save_a6 = reg_a6;
-    reg_a6 = (u8 *) D_002BD440;
+    reg_a6 = (u8 *)g_enemy_entities_second;
     death_func_00224F20(0);
     reg_a6 = save_a6;
 }
@@ -313,7 +313,7 @@ void death_func_002257A0(void) {
     u8 *save_a6;
 
     save_a6 = reg_a6;
-    reg_a6 = (u8 *) D_002BD440;
+    reg_a6 = (u8 *)g_enemy_entities_second;
     death_func_00225060(0);
     reg_a6 = save_a6;
 }
@@ -322,7 +322,7 @@ void death_func_002257E0(void) {
     u8 *save_a6;
 
     save_a6 = reg_a6;
-    reg_a6 = (u8 *) D_002BD440;
+    reg_a6 = (u8 *)g_enemy_entities_second;
     death_func_00225090(0);
     reg_a6 = save_a6;
 }
@@ -360,7 +360,7 @@ void death_func_00225900(void) {
     u8 *save_a6;
 
     save_a6 = reg_a6;
-    reg_a6 = (u8 *) D_002BD440;
+    reg_a6 = (u8 *)g_enemy_entities_second;
     death_func_002251D0(0);
     reg_a6 = save_a6;
 }
@@ -369,7 +369,7 @@ void death_func_00225940(void) {
     u8 *save_a6;
 
     save_a6 = reg_a6;
-    reg_a6 = (u8 *) D_002BD440;
+    reg_a6 = (u8 *)g_enemy_entities_second;
     death_func_002251F0(0);
     reg_a6 = save_a6;
 }
@@ -407,7 +407,7 @@ void death_func_00225A60(void) {
     u8 *save_a6;
 
     save_a6 = reg_a6;
-    reg_a6 = (u8 *) D_002BD440;
+    reg_a6 = (u8 *)g_enemy_entities_second;
     death_func_00225330(0);
     reg_a6 = save_a6;
 }
@@ -416,7 +416,7 @@ void death_func_00225AA0(void) {
     u8 *save_a6;
 
     save_a6 = reg_a6;
-    reg_a6 = (u8 *) D_002BD440;
+    reg_a6 = (u8 *)g_enemy_entities_second;
     death_func_00225360(0);
     reg_a6 = save_a6;
 }
@@ -454,7 +454,7 @@ void death_func_00225BC0(void) {
     u8 *save_a6;
 
     save_a6 = reg_a6;
-    reg_a6 = (u8 *) D_002BD440;
+    reg_a6 = (u8 *)g_enemy_entities_second;
     death_func_002254A0(0);
     reg_a6 = save_a6;
 }
@@ -463,7 +463,7 @@ void death_func_00225C00(void) {
     u8 *save_a6;
 
     save_a6 = reg_a6;
-    reg_a6 = (u8 *) D_002BD440;
+    reg_a6 = (u8 *)g_enemy_entities_second;
     death_func_00225500(0);
     reg_a6 = save_a6;
 }

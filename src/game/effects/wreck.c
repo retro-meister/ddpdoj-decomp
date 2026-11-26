@@ -1,4 +1,5 @@
 #include "common.h"
+#include "enemy.h"
 #include "player.h"
 #include "entity.h"
 #include "sdk/ps2sdk.h"
@@ -115,8 +116,6 @@ extern u16 D_002BAF50[];
 extern u16 D_002BAFAA[];
 extern u16 D_002BB470_as_u16_a[];
 extern u16 D_002BB4B0_as_u16_a[];
-extern u16 D_002BC7C0_as_u16_a[];
-extern u16 D_002BD440[];
 extern u16 D_002BF3EA_as_u16_a[];
 extern u16 D_002BF400[];
 extern u16 D_002BF4F0_as_u16_a[];
@@ -232,8 +231,8 @@ void func_0020F550(void) {
     STORE_POINTER(D_00269FA6, D_0029D710_as_u16_a);
     STORE_POINTER(D_00269FC6, g_p1_weapon_level_data_as_u16_a);
     STORE_POINTER(D_00269FE6, g_p2_weapon_level_data_as_u16_a);
-    STORE_POINTER(D_0026A006, D_002BC7C0_as_u16_a);
-    STORE_POINTER(D_0026A026, D_002BD440);
+    STORE_POINTER(D_0026A006, ((u16 *)g_enemy_entities));
+    STORE_POINTER(D_0026A026, ((u16 *)g_enemy_entities_second));
     STORE_POINTER(D_0026A046, D_002BB4B0_as_u16_a);
     STORE_POINTER(D_0026A066, &g_p1_laser_stop_y_as_u32);
     STORE_POINTER(D_0026A086, &g_p2_laser_stop_y_as_u32);

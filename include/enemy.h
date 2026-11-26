@@ -27,6 +27,33 @@ typedef struct {
     /* 0x4C */ u16 routine[2];       /* address of the routine run every frame, high word first */
 } EnemyState;
 
+/* The running enemies: two slots for the largest enemies, eight for spawners, 48 for every other
+   enemy. A claim that finds no free slot gets `none`. */
+typedef union {
+    struct {
+        /* 0x0000 */ EnemyState large[2];
+        /* 0x00A0 */ EnemyState spawners[8];
+        /* 0x0320 */ EnemyState others[48];
+        /* 0x1220 */ EnemyState none;
+    } slot;
+    struct {             /* the same as bytes: the reset clears them so */
+        s8 large[0xA0];
+        s8 spawners[0x280];
+        s8 others[0xF00];
+        s8 none[0x50];
+    } bytes;
+} EnemySlots;
+
+extern EnemySlots g_enemy_slots;
+/* Requests to start an enemy, served at the start of the next frame. */
+extern EnemyState g_spawn_requests[40];
+extern EnemyState g_spawn_request_spare;
+/* The enemies' entities: 100 in the first pool, 50 in the second (start flags 0x20 and 0x80), and 50 more that
+   the ending, the credits and two bosses use for themselves. */
+extern Entity g_enemy_entities[100];
+extern Entity g_enemy_entities_second[];
+extern Entity g_spare_entities[50];
+
 /* An enemy kind's routines. */
 typedef struct {
     void (*start)();

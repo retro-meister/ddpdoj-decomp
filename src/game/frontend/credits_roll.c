@@ -1,4 +1,5 @@
 #include "common.h"
+#include "enemy.h"
 #include "credits_roll.h"
 
 /*
@@ -35,11 +36,10 @@ typedef struct {
 s16 g_ending_started __attribute__((aligned(4)));
 CreditsRoll g_credits_roll __attribute__((aligned(4)));
 
-extern u8 g_spare_entities[];
 
 void credits_roll_begin(void)
 {
-    reg_a6 = g_spare_entities;
+    reg_a6 = (u8 *)g_spare_entities;
     reg_d7.w = CREDIT_LINES - 1;
 
     do {

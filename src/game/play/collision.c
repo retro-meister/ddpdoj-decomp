@@ -1,4 +1,5 @@
 #include "common.h"
+#include "enemy.h"
 #include "entity.h"
 
 void func_0020E020(void);
@@ -221,8 +222,6 @@ extern u16 D_0029976C[];
 extern u16 D_0029976E[];
 extern u16 g_bomb_entities[];
 extern u16 D_002BB4B2[];
-extern u16 D_002BC7C0_as_u16_a[];
-extern u16 D_002BD440[];
 extern u16 D_002BF4F0_as_u16_a[];
 #ifdef DEATH_LABEL
 extern u16 g_attract_demo;
@@ -325,7 +324,7 @@ next_17:
                     tmp_dec = reg_d6.h[0] - 1; reg_d6.h[0] = tmp_dec;
                     if (((s64) ((s64) (tmp_dec & 0xFFFF) << 0x30) >> 0x30) >= 0) goto loop_17;
             }
-            reg_a6 = (u8 *)(D_002BC7C0_as_u16_a);
+            reg_a6 = (u8 *)g_enemy_entities;
             reg_d6.h[0] = D_0028E7E8;
             reg_d6.h[0] += D_0028E7E4;
             if (reg_d6.h[0] != 0) {
@@ -386,7 +385,7 @@ found_40:
     {
         func_0020B770();
         saved_a1 = reg_a1;
-        reg_a5 = (u8 *)(D_002BC7C0_as_u16_a);
+        reg_a5 = (u8 *)g_enemy_entities;
         reg_d6.h[0] = D_0028E7E8;
         if (reg_d6.h[0] == 0) goto done_48;
         reg_d6.h[0] -= 1;
@@ -500,7 +499,7 @@ end_59:
         tmp_dec = reg_d6.h[0] - 1; reg_d6.h[0] = tmp_dec;
         if (((s64) ((s64) (tmp_dec & 0xFFFF) << 0x30) >> 0x30) >= 0) goto loop_48;
 done_48:
-        reg_a5 = (u8 *)(D_002BD440);
+        reg_a5 = (u8 *)g_enemy_entities_second;
         reg_d6.h[0] = D_0028E7E4;
         if (reg_d6.h[0] == 0) goto done_76;
         reg_d6.h[0] -= 1;
@@ -638,7 +637,7 @@ exit_40:
         reg_d3.h[0] = reg_d2.h[0];
         reg_d2.h[0] += *(u16 *)reg_a0; reg_a0 += 2;
         reg_d3.h[0] -= *(u16 *)reg_a0; reg_a0 += 2;
-        reg_a5 = (u8 *) D_002BC7C0_as_u16_a;
+        reg_a5 = (u8 *)g_enemy_entities;
         reg_d7.h[0] = 0x95;
 loop_100:
         reg_d4.h[0] = *(u16 *)reg_a5;
@@ -695,7 +694,7 @@ check_110:
         reg_d3.h[0] = reg_d2.h[0];
         reg_d2.h[0] += *(u16 *)reg_a0; reg_a0 += 2;
         reg_d3.h[0] -= *(u16 *)reg_a0; reg_a0 += 2;
-        reg_a5 = (u8 *) D_002BC7C0_as_u16_a;
+        reg_a5 = (u8 *)g_enemy_entities;
         reg_d7.h[0] = 0x95;
 loop_110:
         reg_d4.b[0] = *(u8 *)(reg_a5 + 1);
@@ -746,7 +745,7 @@ block_120:
             g_laser_bomb_hit_position = 0x7800;
             g_laser_bomb_hit_entity_as_u32 = reg_d0.w;
             if (!(reg_d5.h[0] & 0xFFFF & 1)) {
-                reg_a5 = (u8 *) D_002BC7C0_as_u16_a;
+                reg_a5 = (u8 *)g_enemy_entities;
                 reg_d6.h[0] = D_0028E0A8;
                 reg_d7.h[0] = 0x95;
                 reg_d5.w = 0x50;
@@ -844,7 +843,7 @@ next_130:
                 return;
             }
             func_0020BA40();
-            reg_a5 = (u8 *) D_002BD440;
+            reg_a5 = (u8 *)g_enemy_entities_second;
             reg_d7.w = 0x31;
             goto loop_140;
 skip_140:
@@ -988,7 +987,7 @@ done_140:
                 }
             }
             reg_a1 = reg_a0;
-            reg_a5 = (u8 *)(D_002BC7C0_as_u16_a);
+            reg_a5 = (u8 *)g_enemy_entities;
             reg_d7.h[0] = 0x63;
             goto loop_150;
 skip_150:
@@ -1210,7 +1209,6 @@ void func_0020E230() {
 
 extern u16 D_0028E098;
 extern u16 D_00299764[];
-extern u8 D_002BC7C0[];
 
 void func_0020E290(void) {
     *(u8 *) (reg_a1 + 1) &= 0xEF;
@@ -1244,7 +1242,7 @@ loop_20:
     if ((s16) --reg_d7.h[0] >= 0) goto loop_20;
     *(u16 *) (reg_a1 + 0xE) = reg_d5.h[0];
 next_30:
-    reg_a5 = (u8 *)D_002BC7C0;
+    reg_a5 = (u8 *)g_enemy_entities;
     reg_d7.h[0] = 0x63;
     goto loop_10;
 skip_2:
@@ -1317,7 +1315,6 @@ next_70:
 }
 
 extern u8 g_boss_present_b1;
-extern u8 D_002BD440_as_u8_a[];
 
 void func_0020E6F0(void) {
     reg_a1 = reg_a2;
@@ -1338,7 +1335,7 @@ loop_6:
     if ((s16) --reg_d7.h[0] >= 0) goto loop_6;
     *(u16 *) (reg_a1 + 0xE) = reg_d5.h[0];
 next_10:
-    reg_a5 = (u8 *)D_002BD440_as_u8_a;
+    reg_a5 = (u8 *)g_enemy_entities_second;
     reg_d7.h[0] = 0x31;
     goto loop_20;
 skip_2:

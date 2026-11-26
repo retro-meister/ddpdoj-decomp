@@ -1,4 +1,5 @@
 #include "common.h"
+#include "enemy.h"
 #include "entity.h"
 
 void func_001D5150(void);
@@ -78,7 +79,6 @@ extern u16 D_00263370[];
 extern u16 stage3_midboss_table[];
 extern s16 g_enemy_signal_e_as_s16;
 extern s16 g_enemy_signal_4_as_s16;
-extern u16 g_spare_entities_as_u16_a[];
 extern u16 *reg_a0_as_u16_p;
 
 void stage3_midboss_start(void) {
@@ -93,7 +93,7 @@ void stage3_midboss_start(void) {
     reg_tmp.w = 0xF0001C00;
     ENTITY(reg_a6)->y.h = (u16) reg_tmp.h[1];
     ENTITY(reg_a6)->x.h = (u16) reg_tmp.h[0];
-    reg_a0_as_u16_p = g_spare_entities_as_u16_a;
+    reg_a0_as_u16_p = (u16 *)g_spare_entities;
     reg_d1.h[1] = ENTITY(reg_a6)->y.h;
     reg_d1.h[0] = ENTITY(reg_a6)->x.h;
     reg_d0.w = 9;

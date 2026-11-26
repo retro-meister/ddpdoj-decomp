@@ -1,4 +1,5 @@
 #include "common.h"
+#include "enemy.h"
 #include "entity.h"
 
 void stage1_boss_move_enter_start(void);
@@ -90,8 +91,7 @@ s32 velocity_from_dir256();
 s32 direction_between();
 
 /* The last five positions of the body, oldest last; the side parts follow the body with this delay. */
-extern u16 g_spare_entities_as_u16_a[];
-#define POSITION_HISTORY g_spare_entities_as_u16_a
+#define POSITION_HISTORY ((u16 *)g_spare_entities)
 
 void stage1_boss_parts_follow(void) {
     u32 t;
@@ -337,7 +337,7 @@ void stage1_boss_move_wander_start(void) {
 }
 
 void stage1_boss_move_wander(void) {
-    reg_a0 = ((u8 *)stage1_boss_wander_waypoints);
+    reg_a0 = (u8 *)stage1_boss_wander_waypoints;
     reg_a0 += MOVE(reg_a4)->waypoint;
     reg_d2.h[0] = *(u16 *)reg_a0;
     reg_d3.h[0] = *(u16 *)(reg_a0 + 2);
@@ -349,7 +349,7 @@ void stage1_boss_move_wander(void) {
     ENTITY(reg_a6)->move.b.dir = (u8) reg_d1.b[0];
     stage1_boss_speed_approach();
     entity_velocity();
-    reg_a0 = ((u8 *)stage1_boss_wander_waypoints);
+    reg_a0 = (u8 *)stage1_boss_wander_waypoints;
     reg_a0 += MOVE(reg_a4)->waypoint;
     reg_d2.h[0] = *(u16 *)reg_a0;
     reg_d3.h[0] = *(u16 *)(reg_a0 + 2);
@@ -395,7 +395,7 @@ void stage1_boss_move_sway_start(void) {
 }
 
 void stage1_boss_move_sway(void) {
-    reg_a0 = ((u8 *)stage1_boss_sway_waypoints);
+    reg_a0 = (u8 *)stage1_boss_sway_waypoints;
     reg_a0 += MOVE(reg_a4)->waypoint;
     reg_d2.h[0] = *(u16 *)reg_a0;
     reg_d3.h[0] = *(u16 *)(reg_a0 + 2);
@@ -407,7 +407,7 @@ void stage1_boss_move_sway(void) {
     ENTITY(reg_a6)->move.b.dir = (u8) reg_d1.b[0];
     stage1_boss_speed_approach();
     entity_velocity();
-    reg_a0 = ((u8 *)stage1_boss_sway_waypoints);
+    reg_a0 = (u8 *)stage1_boss_sway_waypoints;
     reg_a0 += MOVE(reg_a4)->waypoint;
     reg_d2.h[0] = *(u16 *)reg_a0;
     reg_d3.h[0] = *(u16 *)(reg_a0 + 2);
@@ -487,7 +487,7 @@ void stage1_boss_move_sway_b_start(void) {
 }
 
 void stage1_boss_move_sway_b(void) {
-    reg_a0 = ((u8 *)stage1_boss_sway_b_waypoints);
+    reg_a0 = (u8 *)stage1_boss_sway_b_waypoints;
     reg_a0 += MOVE(reg_a4)->waypoint;
     reg_d2.h[0] = *(u16 *)reg_a0;
     reg_d3.h[0] = *(u16 *)(reg_a0 + 2);
@@ -499,7 +499,7 @@ void stage1_boss_move_sway_b(void) {
     ENTITY(reg_a6)->move.b.dir = (u8) reg_d1.b[0];
     stage1_boss_speed_approach();
     entity_velocity();
-    reg_a0 = ((u8 *)stage1_boss_sway_b_waypoints);
+    reg_a0 = (u8 *)stage1_boss_sway_b_waypoints;
     reg_a0 += MOVE(reg_a4)->waypoint;
     reg_d2.h[0] = *(u16 *)reg_a0;
     reg_d3.h[0] = *(u16 *)(reg_a0 + 2);

@@ -1,4 +1,5 @@
 #include "common.h"
+#include "enemy.h"
 #include "ground.h"
 #include "player.h"
 #include "sdk/ps2sdk.h"
@@ -2893,7 +2894,6 @@ extern u16 entity_draw_layer_routines[];
 extern u16 replay_targets_players[4];
 extern u16 replay_targets_lives[4];
 extern u16 g_text_layer_as_u16_a[];
-extern u16 D_002BD440[];
 
 void replay_snapshot_pointers_encode(u8 *base) {
     s32 off;
@@ -2972,7 +2972,7 @@ void replay_snapshot_pointers_encode(u8 *base) {
     pointer_to_block_offset((void *)(base + 0x3020), (void *)replay_blocks_weapon_levels, (void *)replay_block_sizes_weapon_levels, 0xC);
     pointer_to_block_offset((void *)(base + 0x3024), (void *)replay_blocks_weapon_levels, (void *)replay_block_sizes_weapon_levels, 0xC);
     pointer_to_block_offset((void *)(base + 0x3028), (void *)replay_blocks_weapon_levels, (void *)replay_block_sizes_weapon_levels, 0xC);
-    pointer_to_array_offset_swapped((void *)(base + 0x318C), (void *)D_002BD440, 0x32, 0x20);
+    pointer_to_array_offset_swapped((void *)(base + 0x318C), (void *)g_enemy_entities_second, 0x32, 0x20);
     pointer_to_table_index((void *)(base + 0x3226), (void *)replay_targets_lives, 2);
     pointer_to_table_index((void *)(base + 0x324A), (void *)replay_targets_lives, 2);
     for (n = 0; n < 0x5A; n += 10) {
@@ -3147,7 +3147,7 @@ void replay_snapshot_pointers_decode(u8 *base) {
     pointer_decode(base + 0x3020, (u16 *)replay_blocks_weapon_levels, 0x81);
     pointer_decode(base + 0x3024, (u16 *)replay_blocks_weapon_levels, 0x81);
     pointer_decode(base + 0x3028, (u16 *)replay_blocks_weapon_levels, 0x81);
-    pointer_decode(base + 0x318C, D_002BD440, 0x83);
+    pointer_decode(base + 0x318C, ((u16 *)g_enemy_entities_second), 0x83);
     pointer_decode(base + 0x3226, replay_targets_lives, 0x80);
     pointer_decode(base + 0x324A, replay_targets_lives, 0x80);
     for (n = 0; n < 0x5A; n += 10) {

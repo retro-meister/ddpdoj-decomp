@@ -6015,3 +6015,7 @@ D_006E5C10 = 0x6e5c10;
 D_00271BD0 = 0x271bd0;
 D_00271BC8 = 0x271bc8;
 g_stage_enemy_cursor = 0x2bf330;
+g_enemy_entities = 0x2bc7c0;
+g_enemy_entities_second = 0x2bd440;
+g_enemy_slots = 0x2be0c0;
+g_enemy_slot_none = 0x2bf2e0;

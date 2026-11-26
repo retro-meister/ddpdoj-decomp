@@ -1,4 +1,5 @@
 #include "common.h"
+#include "enemy.h"
 #include "player.h"
 #include "task.h"
 #include "entity.h"
@@ -226,7 +227,7 @@ extern Reg32 reg_d0;
 extern u8 D_00295E00[];
 
 void func_00123210(void) {
-    reg_a6 = (u8 *)((u16 *)D_00295E00);
+    reg_a6 = (u8 *)D_00295E00;
     *(u16 *)(reg_a6 + 8) = reg_d0.h[0];
     *(u16 *)(reg_a6 + 6) = 0;
 }
@@ -238,10 +239,9 @@ extern s16 D_00295E1E_as_s16_a[];
 extern s16 D_00295E20_as_s16_a[];
 extern s32 D_00295E24_as_s32_a[];
 extern s32 D_00295E28_as_s32_a[];
-extern u8 g_spare_entities[];
 
 void func_00123240(void) {
-    reg_a3 = g_spare_entities;
+    reg_a3 = (u8 *)g_spare_entities;
     reg_d7.h[0] = 0xC7;
     do {
         *(s16 *)reg_a3 = 0;
@@ -264,7 +264,7 @@ void func_00123240(void) {
 s32 sprite_draw_keep();
 
 void func_001232E0(void) {
-    reg_a3 = g_spare_entities;
+    reg_a3 = (u8 *)g_spare_entities;
     reg_d7.h[0] = 0xC7;
     do {
         reg_d2.h[1] = *(u16 *)reg_a3;

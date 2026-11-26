@@ -1,4 +1,5 @@
 #include "common.h"
+#include "enemy.h"
 #include "task.h"
 #include "entity.h"
 #include "sdk/ps2sdk.h"
@@ -1333,7 +1334,6 @@ extern u8 D_0024F430[];
 extern u8 D_0024F460[];
 extern u8 D_0024F480[];
 extern u8 D_0024F4A0[];
-extern u8 D_002BC7C0[];
 extern u16 g_frame_mod2;
 extern s8 g_boss_present_b1_as_s8;
 extern u8 D_0029BC00[];
@@ -1344,7 +1344,7 @@ void func_00136F30(void) {
 
     reg_d0.h[0] = 0x95;
     reg_d1.w = 0;
-    reg_a0 = (u8 *)D_002BC7C0;
+    reg_a0 = (u8 *)g_enemy_entities;
 loop_10:
     bits = *(u8 *)(reg_a0 + 1);
     if (bits == 0) goto next_20;

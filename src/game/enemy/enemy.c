@@ -33,36 +33,35 @@ extern s16 D_0028E7E0;
 extern s16 D_0028E7E4_as_s16;
 extern s16 D_0028E7E8_as_s16;
 extern s16 D_0028E7EC_as_s16;
-extern s8 g_spawn_request_spare_as_s8_a[];
-extern s8 g_spawn_requests_as_s8_a[];
-typedef struct { s8 a[0xC80]; s8 b[0x640]; s8 c[0x640]; } S1;
-extern S1 D_002BC7C0_as_S1;
-typedef struct { s8 a[0xA0]; s8 b[0x280]; s8 c[0xF00]; s8 d[0x50]; } S0;
-extern S0 D_002BE0C0_as_S0;
+
+/* The reset clears the entity pools as bytes through the first one's address: the
+   three entity pools follow one another. */
+typedef struct { s8 first[0xC80]; s8 second[0x640]; s8 spare[0x640]; } EntityBytes;
+extern EntityBytes g_enemy_entities_as_bytes;
 
 void enemies_reset(void) {
     s32 i;
 
     for (i = 0; i < 0xA0; i++) {
-        D_002BE0C0_as_S0.a[i] = 0;
+        g_enemy_slots.bytes.large[i] = 0;
     }
     for (i = 0; i < 0x280; i++) {
-        D_002BE0C0_as_S0.b[i] = 0;
+        g_enemy_slots.bytes.spawners[i] = 0;
     }
     for (i = 0; i < 0xF00; i++) {
-        D_002BE0C0_as_S0.c[i] = 0;
+        g_enemy_slots.bytes.others[i] = 0;
     }
     for (i = 0; i < 0x50; i++) {
-        D_002BE0C0_as_S0.d[i] = 0;
+        g_enemy_slots.bytes.none[i] = 0;
     }
     for (i = 0; i < 0xC80; i++) {
-        D_002BC7C0_as_S1.a[i] = 0;
+        g_enemy_entities_as_bytes.first[i] = 0;
     }
     for (i = 0; i < 0x640; i++) {
-        D_002BC7C0_as_S1.b[i] = 0;
+        g_enemy_entities_as_bytes.second[i] = 0;
     }
     for (i = 0; i < 0x640; i++) {
-        D_002BC7C0_as_S1.c[i] = 0;
+        g_enemy_entities_as_bytes.spare[i] = 0;
     }
     g_spawn_request_end_as_s16 = 0;
     D_0028E7D8 = 0;
@@ -72,10 +71,10 @@ void enemies_reset(void) {
     D_0028E7E8_as_s16 = 0;
     D_0028E7EC_as_s16 = 0;
     for (i = 0; i < 0xC80; i++) {
-        g_spawn_requests_as_s8_a[i] = 0;
+        ((s8 *)g_spawn_requests)[i] = 0;
     }
     for (i = 0; i < 0x50; i++) {
-        g_spawn_request_spare_as_s8_a[i] = 0;
+        ((s8 *)&g_spawn_request_spare)[i] = 0;
     }
     stage_enemies_select();
 }
@@ -115,8 +114,6 @@ void stage_enemies_select(void) {
 
 extern u16 g_spawn_request_end;
 extern u16 g_scroll_line;
-extern u8 g_spawn_requests[];
-extern u8 D_002BF2E0[];
 
 void enemies_start_due(void) {
     u8 *save_a2;
@@ -211,7 +208,7 @@ next_request:
             *(u16 *)(reg_a0 + 0x4A) = (u16) *(u16 *)(reg_a4 + 0x4A);
         }
         g_spawn_request_end = reg_d6.h[0];
-        if (D_002BF2E0 != reg_a0) {
+        if (((u8 *)&g_enemy_slots.slot.none) != reg_a0) {
             reg_a5 = reg_a0;
             enemy_start();
         }
@@ -237,13 +234,12 @@ extern u16 D_0028E7E4;
 extern u16 D_0028E7E8;
 extern u16 D_0028E7EC;
 extern u16 g_side_scroll_step[];
-extern u8 D_002BE0C0[];
 extern u8 *reg_call_target_as_u8_p;
 
 void enemies_run(void) {
     u32 temp_s0;
 
-    reg_a5 = D_002BE0C0;
+    reg_a5 = (u8 *)&g_enemy_slots;
     D_0028E7EC = 0;
     D_0028E7E8 = 0;
     reg_d6.h[0] = 0x39;
@@ -282,14 +278,13 @@ void enemies_run(void) {
 }
 
 s32 active_players_mask();
-extern u8 D_002BC7C0[];
 
 void func_0014DBF0(u8 *arg1) {
     u8 *var_a1;
     u8 temp_a0;
 
     var_a1 = (u8 *)(arg1);
-    reg_a0 = D_002BC7C0;
+    reg_a0 = (u8 *)g_enemy_entities;
     reg_d3.w = 0x63;
     do {
         temp_a0 = *(u8 *)(reg_a0 + 1);
@@ -307,7 +302,6 @@ block_4:
     } while ((s16)(--reg_d3.h[0]) >= 0);
 }
 
-extern u8 D_002BD440_as_u8_a[];
 
 s32 enemy_entities_claim(void) {
     u32 count;
@@ -318,12 +312,12 @@ s32 enemy_entities_claim(void) {
     reg_d2.b[0] = *(u8 *)(reg_a5 + 0xC);
     if ((s8)reg_d2.b[0] >= 0) goto block_2;
 block_1:
-    reg_a6 = (u8 *)D_002BD440_as_u8_a;
+    reg_a6 = (u8 *)g_enemy_entities_second;
     reg_d2.w = 0x32;
     goto loop_3;
 block_2:
     if (reg_d2.w & 0x20) goto block_1;
-    reg_a6 = (u8 *)D_002BC7C0;
+    reg_a6 = (u8 *)g_enemy_entities;
     reg_d2.w = 0x64;
 loop_3:
     reg_tmp2.w = reg_d2.h[0];
@@ -444,7 +438,6 @@ void enemy_request_start_flags(void) {
     spawn_request_alloc(reg_d0.w);
 }
 
-extern u8 g_spawn_request_spare[];
 
 void spawn_request_alloc() {
     reg_d2.h[0] = g_spawn_request_end;
@@ -462,14 +455,12 @@ void spawn_request_alloc() {
     reg_d2.w = D_0028DF3C;
     return;
 next_1:
-    reg_a0 = (u8 *)g_spawn_request_spare;
+    reg_a0 = (u8 *)&g_spawn_request_spare;
     reg_d0.w = D_0028DF44;
     reg_d1.w = D_0028DF40;
     reg_d2.w = D_0028DF3C;
 }
 
-extern u8 D_002BE160[];
-extern u8 D_002BE3E0[];
 
 
 void enemy_slot_claim(void) {
@@ -482,14 +473,14 @@ void enemy_slot_claim(void) {
     sd1 = reg_d1.w;
     sd2 = reg_d2.w;
     if (((s16) reg_d0.h[0] >= 0x20) && ((s16) reg_d0.h[0] < 0x24)) {
-        reg_a0 = (u8 *)D_002BE160;
+        reg_a0 = (u8 *)g_enemy_slots.slot.spawners;
         reg_d2.w = 7;
     } else if ((s16) reg_d1.h[0] < 0) {
-        reg_a0 = (u8 *)D_002BE0C0;
+        reg_a0 = (u8 *)g_enemy_slots.slot.large;
         reg_d2.w = 1;
     } else {
         reg_d3.w = 0;
-        reg_a0 = (u8 *)D_002BE3E0;
+        reg_a0 = (u8 *)g_enemy_slots.slot.others;
         reg_d2.w = 0x2F;
     }
 loop_1:
@@ -517,7 +508,7 @@ loop_1:
     reg_d0.w = sd0;
     reg_d1.w = sd1;
     reg_d2.w = sd2;
-    reg_a0 = (u8 *)D_002BF2E0;
+    reg_a0 = (u8 *)&g_enemy_slots.slot.none;
     cond_flag = 1;
 }
 
