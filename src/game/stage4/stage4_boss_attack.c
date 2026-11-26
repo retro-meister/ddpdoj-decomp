@@ -1137,7 +1137,7 @@ void stage4_boss_fire_center_hatch(arg1)
     CENTER_HATCH(reg_a4)->shot.t.count -= 1;
     if ((s32) reg_tmp.b[0] <= 0) {
         CENTER_HATCH(reg_a4)->shot.t.count = (u8) CENTER_HATCH(reg_a4)->shot.t.reload;
-        if (CENTER_HATCH(reg_a4)->sides & 1) {
+        if (CENTER_HATCH(reg_a4)->sides.b[1] & 1) {
             reg_a3 = (u8 *)D_0026EBD0;
             temp_a0 = CENTER_HATCH(reg_a4)->muzzle;
             reg_a3 += temp_a0;
@@ -1159,7 +1159,7 @@ void stage4_boss_fire_center_hatch(arg1)
             reg_d1.b[0] += reg_d0.b[0];
             STAGE4_MISSILE(reg_a0)->at_start.move.b.dir = (u8) reg_d1.b[0];
         }
-        if (CENTER_HATCH(reg_a4)->sides & 2) {
+        if (CENTER_HATCH(reg_a4)->sides.b[1] & 2) {
             reg_a3 = (u8 *)D_0026EBE0;
             temp_a0_3 = CENTER_HATCH(reg_a4)->muzzle;
             reg_a3 += temp_a0_3;
@@ -1808,7 +1808,7 @@ void stage4_boss_fire_both_sides_start(void)
     BOTH_SIDES(reg_a4)->shot.h = 0x808;
     BOTH_SIDES(reg_a4)->burst.h = 1;
     BOTH_SIDES(reg_a4)->pattern = 0;
-    BOTH_SIDES(reg_a4)->burst.t.reload = BOTH_SIDES(reg_a4)->burst_shots;
+    BOTH_SIDES(reg_a4)->burst.t.reload = BOTH_SIDES(reg_a4)->burst_shots.b[0];
     stage4_boss_fire_both_sides();
 }
 

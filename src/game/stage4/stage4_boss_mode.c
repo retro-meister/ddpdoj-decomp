@@ -1,5 +1,23 @@
 #include "common.h"
 #include "entity.h"
+#include "stage4_boss.h"
+
+typedef struct {
+    /* 0x00 */ s16 running;
+    /* 0x02 */ u8 unused_02;
+    /* 0x03 */ u8 step;
+    /* 0x04 */ u16 wait;
+    /* 0x06 */ SlotTimer burst_a;     /* count 0xFF: off */
+    /* 0x08 */ SlotTimer burst_b;
+    /* 0x0A */ u16 blast;
+    /* 0x0C */ SlotTimer blast_timer;
+    /* 0x0E */ u16 blast_rounds;
+    /* 0x10 */ SlotTimer cycle_timer;
+    /* 0x12 */ u16 cycle;
+} ExplodingMode;
+
+#define EXPLODING(pointer) ((ExplodingMode *)(pointer))
+
 
 void stage4_boss_mode_enter_start(void);
 void stage4_boss_mode_enter(void);
@@ -39,12 +57,12 @@ void (*stage4_boss_mode_routines[])(void) = {
 void stage4_boss_mode_enter(void);
 void stage4_boss_mode_second_form();
 void stage4_boss_mode_final_explosion();
-void func_001E6540();
-void func_001E6B40(void);
+void stage4_boss_final_explosion_step();
+void stage4_boss_final_explosion_cycle(void);
 
 s32 explosion_spawn();
 
-void func_001E58E0(void) {
+void stage4_boss_explosions_from_table(void) {
     u16 *temp_a1_2;
     u16 temp_a1;
 
@@ -75,7 +93,7 @@ void func_001E58E0(void) {
         reg_d0.b[0] += reg_d0.b[0];
         *(u8 *)(reg_a0 + 0x1A) = (u8) reg_d0.b[0];
         reg_a1 += 2;
-        func_001E58E0();
+        stage4_boss_explosions_from_table();
     }
 }
 
@@ -83,7 +101,7 @@ s32 rng_next();
 s32 rng_next_unsigned();
 s32 rng_next_word();
 
-void func_001E5A20(void) {
+void stage4_boss_explosions_scattered(void) {
     u16 temp_a0;
     u16 temp_a1;
 
@@ -120,7 +138,7 @@ void func_001E5A20(void) {
         rng_next_unsigned();
         *(u8 *)(reg_a0 + 0x1A) = (u8) reg_d0.b[0];
         reg_a1 += 2;
-        func_001E5A20();
+        stage4_boss_explosions_scattered();
     }
 }
 
@@ -158,10 +176,10 @@ void stage4_boss_mode_second_form_start(void) {
     stage4_boss_part_stop_hits();
     reg_d0.w = 2;
     boss_movement_start();
-    *(s8 *)(reg_a4 + 3) = 0;
-    *(u16 *)(reg_a4 + 4) = 1;
-    *(u16 *)(reg_a4 + 6) = 0xFF02;
-    *(u16 *)(reg_a4 + 8) = 0xFF04;
+    EXPLODING(reg_a4)->step = 0;
+    EXPLODING(reg_a4)->wait = 1;
+    EXPLODING(reg_a4)->burst_a.h = 0xFF02;
+    EXPLODING(reg_a4)->burst_b.h = 0xFF04;
     stage4_boss_mode_second_form(0xFF02, 1);
 }
 
@@ -183,12 +201,12 @@ void stage4_boss_mode_second_form() {
     u8 temp_a0_2;
     u8 temp_a0_3;
 
-    temp_a0 = *(u8 *)(reg_a4 + 7);
+    temp_a0 = EXPLODING(reg_a4)->burst_a.t.count;
     if (temp_a0 != -1) {
         reg_tmp.b[0] = temp_a0;
-        *(u8 *)(reg_a4 + 7) -= 1;
+        EXPLODING(reg_a4)->burst_a.t.count -= 1;
         if ((s32) reg_tmp.b[0] <= 0) {
-            *(u8 *)(reg_a4 + 7) = (u8) *(u8 *)(reg_a4 + 6);
+            EXPLODING(reg_a4)->burst_a.t.count = (u8) EXPLODING(reg_a4)->burst_a.t.reload;
             reg_d0.w = 1;
             explosion_spawn();
             *(s16 *)(reg_a0 + 0x1E) = 0xC;
@@ -207,12 +225,12 @@ void stage4_boss_mode_second_form() {
             *(u16 *)(reg_a0 + 0x28) = (u16) reg_d0.h[0];
         }
     }
-    temp_a0_2 = *(u8 *)(reg_a4 + 9);
+    temp_a0_2 = EXPLODING(reg_a4)->burst_b.t.count;
     if (temp_a0_2 != -1U) {
         reg_tmp.b[0] = temp_a0_2;
-        *(u8 *)(reg_a4 + 9) -= 1;
+        EXPLODING(reg_a4)->burst_b.t.count -= 1;
         if ((s32) reg_tmp.b[0] <= 0) {
-            *(u8 *)(reg_a4 + 9) = (u8) *(u8 *)(reg_a4 + 8);
+            EXPLODING(reg_a4)->burst_b.t.count = (u8) EXPLODING(reg_a4)->burst_b.t.reload;
             reg_d0.w = 0x10;
             explosion_spawn();
             *(s16 *)(reg_a0 + 0x1E) = 0xC;
@@ -247,25 +265,25 @@ void stage4_boss_mode_second_form() {
             *(u16 *)(reg_a0 + 0x28) = (u16) reg_d0.h[0];
         }
     }
-    if (*(u8 *)(reg_a4 + 3) == 0) {
-        *(u16 *)(reg_a4 + 4) -= 1;
-        if ((s16) *(u16 *)(reg_a4 + 4) < 0) {
-            *(u8 *)(reg_a4 + 7) = 0U;
+    if (EXPLODING(reg_a4)->step == 0) {
+        EXPLODING(reg_a4)->wait -= 1;
+        if ((s16) EXPLODING(reg_a4)->wait < 0) {
+            EXPLODING(reg_a4)->burst_a.t.count = 0U;
             reg_d2.h[1] = ENTITY(reg_a6)[8].y.h;
             reg_d2.h[0] = ENTITY(reg_a6)[8].x.h;
             reg_a1 = (u8 *)D_0026F260;
-            func_001E58E0();
+            stage4_boss_explosions_from_table();
             reg_d0.w = 5;
             boss_part_hide();
             sfx_explosion_ground_medium();
-            *(u16 *)(reg_a4 + 4) = 8U;
-            *(u8 *)(reg_a4 + 3) = 1U;
+            EXPLODING(reg_a4)->wait = 8U;
+            EXPLODING(reg_a4)->step = 1U;
         }
     }
-    if (*(u8 *)(reg_a4 + 3) == 1) {
-        *(u16 *)(reg_a4 + 4) -= 1;
-        if ((s16) *(u16 *)(reg_a4 + 4) < 0) {
-            *(u8 *)(reg_a4 + 9) = 0U;
+    if (EXPLODING(reg_a4)->step == 1) {
+        EXPLODING(reg_a4)->wait -= 1;
+        if ((s16) EXPLODING(reg_a4)->wait < 0) {
+            EXPLODING(reg_a4)->burst_b.t.count = 0U;
             rng_next_unsigned();
             reg_d1.b[0] = reg_d0.b[0];
             reg_d2.h[1] = ENTITY(reg_a6)[6].y.h;
@@ -276,40 +294,40 @@ void stage4_boss_mode_second_form() {
             reg_d2.h[1] = ENTITY(reg_a6)[6].y.h;
             reg_d2.h[0] = ENTITY(reg_a6)[6].x.h;
             reg_a1 = (u8 *)D_0026F280;
-            func_001E58E0();
+            stage4_boss_explosions_from_table();
             reg_d2.h[1] = ENTITY(reg_a6)[7].y.h;
             reg_d2.h[0] = ENTITY(reg_a6)[7].x.h;
             reg_a1 = (u8 *)D_0026F280;
-            func_001E58E0();
+            stage4_boss_explosions_from_table();
             reg_d0.w = 3;
             boss_part_hide();
             reg_d0.w = 4;
             boss_part_hide();
             sfx_explosion_air_small();
-            *(u16 *)(reg_a4 + 4) = 8U;
-            *(u8 *)(reg_a4 + 3) = 2U;
+            EXPLODING(reg_a4)->wait = 8U;
+            EXPLODING(reg_a4)->step = 2U;
         }
     }
-    temp_a0_3 = *(u8 *)(reg_a4 + 3);
+    temp_a0_3 = EXPLODING(reg_a4)->step;
     if (temp_a0_3 == 2) {
-        *(u16 *)(reg_a4 + 4) -= 1;
-        if ((s16) *(u16 *)(reg_a4 + 4) < 0) {
+        EXPLODING(reg_a4)->wait -= 1;
+        if ((s16) EXPLODING(reg_a4)->wait < 0) {
             sfx_explosion_air_medium();
             reg_d2.h[1] = ENTITY(reg_a6)[3].y.h;
             reg_d2.h[0] = ENTITY(reg_a6)[3].x.h;
             reg_a1 = (u8 *)D_0026F290;
-            func_001E58E0();
+            stage4_boss_explosions_from_table();
             reg_d0.w = 2;
             boss_part_hide();
-            *(u16 *)(reg_a4 + 4) = 0x60U;
-            *(u8 *)(reg_a4 + 3) = 3U;
+            EXPLODING(reg_a4)->wait = 0x60U;
+            EXPLODING(reg_a4)->step = 3U;
         }
     }
-    if (*(u8 *)(reg_a4 + 3) == 3) {
-        *(u16 *)(reg_a4 + 4) -= 1;
-        if ((s16) *(u16 *)(reg_a4 + 4) < 0) {
-            *(u8 *)(reg_a4 + 7) = 0xFFU;
-            *(u8 *)(reg_a4 + 9) = 0xFFU;
+    if (EXPLODING(reg_a4)->step == 3) {
+        EXPLODING(reg_a4)->wait -= 1;
+        if ((s16) EXPLODING(reg_a4)->wait < 0) {
+            EXPLODING(reg_a4)->burst_a.t.count = 0xFFU;
+            EXPLODING(reg_a4)->burst_b.t.count = 0xFFU;
             rng_next();
             reg_d0.b[0] = (s8) reg_d0.b[0] * 2;
             reg_d1.b[0] = reg_d0.b[0];
@@ -334,13 +352,13 @@ void stage4_boss_mode_second_form() {
             reg_d2.h[1] = ENTITY(reg_a6)[2].y.h;
             reg_d2.h[0] = ENTITY(reg_a6)[2].x.h;
             reg_a1 = (u8 *)D_0026F2D0;
-            func_001E58E0();
+            stage4_boss_explosions_from_table();
             reg_d0.w = 1;
             boss_part_hide();
             reg_d0.w = 3;
             boss_movement_start();
             sfx_explosion_ground_large();
-            *(s16 *)reg_a4 = 0;
+            EXPLODING(reg_a4)->running = 0;
         }
     }
 }
@@ -353,15 +371,15 @@ void stage4_boss_mode_final_explosion_start(void) {
     boss_movement_start();
     reg_a0 = D_0026F340;
     func_0013B8B0();
-    *(s8 *)(reg_a4 + 3) = 0;
-    *(u16 *)(reg_a4 + 4) = 0x10;
-    *(u16 *)(reg_a4 + 6) = 0xFF02;
-    *(u16 *)(reg_a4 + 8) = 0xFF04;
-    *(u16 *)(reg_a4 + 0xA) = 0;
-    *(u16 *)(reg_a4 + 0xC) = 0xC0C;
-    *(u16 *)(reg_a4 + 0xE) = 3;
-    *(u16 *)(reg_a4 + 0x10) = 4;
-    *(u16 *)(reg_a4 + 0x12) = 0;
+    EXPLODING(reg_a4)->step = 0;
+    EXPLODING(reg_a4)->wait = 0x10;
+    EXPLODING(reg_a4)->burst_a.h = 0xFF02;
+    EXPLODING(reg_a4)->burst_b.h = 0xFF04;
+    EXPLODING(reg_a4)->blast = 0;
+    EXPLODING(reg_a4)->blast_timer.h = 0xC0C;
+    EXPLODING(reg_a4)->blast_rounds = 3;
+    EXPLODING(reg_a4)->cycle_timer.h = 4;
+    EXPLODING(reg_a4)->cycle = 0;
     stage4_boss_mode_final_explosion(3, 0xC0C, 0xFF04, 0xFF02);
 }
 
@@ -372,12 +390,12 @@ void stage4_boss_mode_final_explosion() {
     u8 temp_a1;
     u8 temp_a1_2;
 
-    temp_a1 = *(u8 *)(reg_a4 + 7);
+    temp_a1 = EXPLODING(reg_a4)->burst_a.t.count;
     if (((s64) ((s64) temp_a1 << 0x38) >> 0x38) != -1) {
         reg_tmp.b[0] = temp_a1;
-        *(u8 *)(reg_a4 + 7) -= 1;
+        EXPLODING(reg_a4)->burst_a.t.count -= 1;
         if ((s32) reg_tmp.b[0] <= 0) {
-            *(u8 *)(reg_a4 + 7) = (u8) *(u8 *)(reg_a4 + 6);
+            EXPLODING(reg_a4)->burst_a.t.count = (u8) EXPLODING(reg_a4)->burst_a.t.reload;
             reg_d0.w = 1;
             explosion_spawn();
             *(s16 *)(reg_a0 + 0x1E) = 0x10;
@@ -398,12 +416,12 @@ void stage4_boss_mode_final_explosion() {
             *(u16 *)(reg_a0 + 0x28) += 0x400;
         }
     }
-    temp_a1_2 = *(u8 *)(reg_a4 + 9);
+    temp_a1_2 = EXPLODING(reg_a4)->burst_b.t.count;
     if (((s64) ((s64) temp_a1_2 << 0x38) >> 0x38) != -1) {
         reg_tmp.b[0] = temp_a1_2;
-        *(u8 *)(reg_a4 + 9) -= 1;
+        EXPLODING(reg_a4)->burst_b.t.count -= 1;
         if ((s32) reg_tmp.b[0] <= 0) {
-            *(u8 *)(reg_a4 + 9) = (u8) *(u8 *)(reg_a4 + 8);
+            EXPLODING(reg_a4)->burst_b.t.count = (u8) EXPLODING(reg_a4)->burst_b.t.reload;
             reg_d0.w = 0x10;
             explosion_spawn();
             *(s16 *)(reg_a0 + 0x1E) = 0xC;
@@ -424,15 +442,15 @@ void stage4_boss_mode_final_explosion() {
             *(u16 *)(reg_a0 + 0x28) += 0x7FFF + 0x7A01;
         }
     }
-    temp_a0 = *(u8 *)(reg_a4 + 3);
+    temp_a0 = EXPLODING(reg_a4)->step;
     if (temp_a0 != 5) {
-        func_001E6540();
+        stage4_boss_final_explosion_step();
         return;
     }
-    *(u16 *)(reg_a4 + 4) -= 1;
-    if (*(u16 *)(reg_a4 + 4) == 0) {
+    EXPLODING(reg_a4)->wait -= 1;
+    if (EXPLODING(reg_a4)->wait == 0) {
         boss_slots_end();
-        *(s16 *)reg_a4 = 0;
+        EXPLODING(reg_a4)->running = 0;
     }
 }
 
@@ -445,7 +463,7 @@ extern u8 D_0026F320[];
 extern u16 D_0026F350[];
 extern u16 D_0026F3A0[];
 
-void func_001E6540(arg1)
+void stage4_boss_final_explosion_step(arg1)
     s32 arg1;
 {
     s32 var_a1;
@@ -459,15 +477,15 @@ void func_001E6540(arg1)
     u32 var_a0;
 
     var_a1 = arg1;
-    if (*(u8 *)(reg_a4 + 3) == 4) {
+    if (EXPLODING(reg_a4)->step == 4) {
         reg_d2.h[1] = ENTITY(reg_a6)[1].y.h;
         reg_d2.h[0] = ENTITY(reg_a6)[1].x.h;
         reg_a1 = (u8 *)(D_0026F350);
-        func_001E58E0();
+        stage4_boss_explosions_from_table();
         reg_d2.h[1] = ENTITY(reg_a6)[1].y.h;
         reg_d2.h[0] = ENTITY(reg_a6)[1].x.h;
         reg_a1 = (u8 *)(D_0026F350);
-        func_001E5A20();
+        stage4_boss_explosions_scattered();
         rng_next();
         reg_d0.h[0] = (s16) reg_d0.h[0] * 2;
         reg_d1.b[0] = reg_d0.b[0];
@@ -492,27 +510,27 @@ void func_001E6540(arg1)
         explosion_burst_small();
         sfx_explosion_boss();
         var_a1 = 5;
-        *(u8 *)(reg_a4 + 3) = 5U;
-        *(u16 *)(reg_a4 + 4) = 0x80U;
+        EXPLODING(reg_a4)->step = 5U;
+        EXPLODING(reg_a4)->wait = 0x80U;
     }
-    temp_a0_3 = *(u8 *)(reg_a4 + 3);
+    temp_a0_3 = EXPLODING(reg_a4)->step;
     if (temp_a0_3 == 3) {
         boss_flash_running();
         if (cond_flag == 0) {
             reg_a0 = (u8 *)D_0026F320;
             func_0013B2E0();
-            *(u8 *)(reg_a4 + 3) = 4U;
+            EXPLODING(reg_a4)->step = 4U;
         }
     }
-    temp_a0_4 = *(u8 *)(reg_a4 + 3);
+    temp_a0_4 = EXPLODING(reg_a4)->step;
     if (temp_a0_4 == 2) {
-        func_001E6B40();
-        reg_tmp.b[0] = *(u8 *)(reg_a4 + 0xD);
-        *(u8 *)(reg_a4 + 0xD) -= 1;
+        stage4_boss_final_explosion_cycle();
+        reg_tmp.b[0] = EXPLODING(reg_a4)->blast_timer.t.count;
+        EXPLODING(reg_a4)->blast_timer.t.count -= 1;
         if ((s32) reg_tmp.b[0] <= 0) {
-            *(u8 *)(reg_a4 + 0xD) = (u8) *(u8 *)(reg_a4 + 0xC);
+            EXPLODING(reg_a4)->blast_timer.t.count = (u8) EXPLODING(reg_a4)->blast_timer.t.reload;
             reg_a1 = (u8 *)(D_0026F3A0);
-            reg_a1 += *(u16 *)(reg_a4 + 0xA);
+            reg_a1 += EXPLODING(reg_a4)->blast;
             reg_d1.h[0] = *(u16 *)reg_a1;
             reg_a1 += 2;
             reg_d0.h[0] = *(u16 *)reg_a1;
@@ -538,32 +556,32 @@ void func_001E6540(arg1)
             *(u8 *)(reg_a0 + 0x1B) = (u8) reg_d0.b[0];
             rng_next_unsigned();
             *(u8 *)(reg_a0 + 0x1A) = (u8) reg_d0.b[0];
-            *(u16 *)(reg_a4 + 0xA) += 0xC;
-            if (*(u16 *)(reg_a4 + 0xA) == 0x48) {
-                *(u16 *)(reg_a4 + 0xA) = 0U;
-                *(u16 *)(reg_a4 + 0xE) -= 1;
-                if (*(u16 *)(reg_a4 + 0xE) == 0) {
-                    *(u8 *)(reg_a4 + 3) = 3U;
+            EXPLODING(reg_a4)->blast += 0xC;
+            if (EXPLODING(reg_a4)->blast == 0x48) {
+                EXPLODING(reg_a4)->blast = 0U;
+                EXPLODING(reg_a4)->blast_rounds -= 1;
+                if (EXPLODING(reg_a4)->blast_rounds == 0) {
+                    EXPLODING(reg_a4)->step = 3U;
                     reg_d0.w = 9;
                     boss_part_hide();
                     reg_d0.h[0] = 0x12;
                     boss_flash_start();
-                    *(u8 *)(reg_a4 + 7) = 0xFF;
-                    *(u8 *)(reg_a4 + 9) = 0xFF;
+                    EXPLODING(reg_a4)->burst_a.t.count = 0xFF;
+                    EXPLODING(reg_a4)->burst_b.t.count = 0xFF;
                 }
             }
         }
     }
-    var_a0 = *(u8 *)(reg_a4 + 3);
-    if ((var_a0 == 1) && ((temp_v1 = *(u16 *)(reg_a4 + 4), var_a0 = (u32) (reg_a4 + 4), (temp_v1 == 0)) || (*(u16 *)var_a0 = (s16) (temp_v1 - 1), (*(u16 *)(reg_a4 + 4) == 0)))) {
-        func_001E6B40();
+    var_a0 = EXPLODING(reg_a4)->step;
+    if ((var_a0 == 1) && ((temp_v1 = EXPLODING(reg_a4)->wait, var_a0 = (u32) (reg_a4 + 4), (temp_v1 == 0)) || (*(u16 *)var_a0 = (s16) (temp_v1 - 1), (EXPLODING(reg_a4)->wait == 0)))) {
+        stage4_boss_final_explosion_cycle();
         var_a0 = (u32) (reg_a4);
         reg_tmp.b[0] = (*(u8 *)((u8 *)(var_a0) + (0xD)));
         (*(u8 *)((u8 *)(var_a0) + (0xD))) -= 1;
         if ((s32) reg_tmp.b[0] <= 0) {
-            *(u8 *)(reg_a4 + 0xD) = (u8) *(u8 *)(reg_a4 + 0xC);
+            EXPLODING(reg_a4)->blast_timer.t.count = (u8) EXPLODING(reg_a4)->blast_timer.t.reload;
             reg_a1 = (u8 *)(D_0026F3A0);
-            reg_a1 += *(u16 *)(reg_a4 + 0xA);
+            reg_a1 += EXPLODING(reg_a4)->blast;
             reg_d1.h[0] = *(u16 *)reg_a1;
             reg_a1 += 2;
             reg_d0.h[0] = *(u16 *)reg_a1;
@@ -587,32 +605,32 @@ void func_001E6540(arg1)
             reg_d0.b[0] += reg_d0.b[0];
             reg_d0.b[0] += reg_d0.b[0];
             *(u8 *)(reg_a0 + 0x1A) = (u8) reg_d0.b[0];
-            *(u16 *)(reg_a4 + 0xA) += 0xC;
-            var_a0 = *(u16 *)(reg_a4 + 0xA);
+            EXPLODING(reg_a4)->blast += 0xC;
+            var_a0 = EXPLODING(reg_a4)->blast;
             if (var_a0 == 0x48) {
-                *(u16 *)(reg_a4 + 0xA) = 0U;
+                EXPLODING(reg_a4)->blast = 0U;
                 var_a0 = 8;
-                *(u16 *)(reg_a4 + 0xC) = 0x606;
-                *(u8 *)(reg_a4 + 3) = 2U;
-                *(s16 *)(reg_a4 + 0x10) = 8;
-                *(s16 *)(reg_a4 + 0x12) = 0;
+                EXPLODING(reg_a4)->blast_timer.h = 0x606;
+                EXPLODING(reg_a4)->step = 2U;
+                EXPLODING(reg_a4)->cycle_timer.sh = 8;
+                EXPLODING(reg_a4)->cycle = 0;
             }
         }
     }
-    if (*(u8 *)(reg_a4 + 3) == 0) {
-        func_001E6B40();
-        *(u16 *)(reg_a4 + 4) -= 1;
-        if ((s16) *(u16 *)(reg_a4 + 4) < 0) {
+    if (EXPLODING(reg_a4)->step == 0) {
+        stage4_boss_final_explosion_cycle();
+        EXPLODING(reg_a4)->wait -= 1;
+        if ((s16) EXPLODING(reg_a4)->wait < 0) {
             reg_d2.h[1] = ENTITY(reg_a6)[1].y.h;
             reg_d2.h[0] = ENTITY(reg_a6)[1].x.h;
             reg_a1 = (u8 *)(D_0026F350);
-            func_001E58E0();
-            *(s8 *)(reg_a4 + 7) = 0;
-            *(s8 *)(reg_a4 + 9) = 0;
-            *(u16 *)(reg_a4 + 4) = 0x50U;
-            *(u8 *)(reg_a4 + 3) = 1U;
-            *(s16 *)(reg_a4 + 0x10) = 0x10;
-            *(s16 *)(reg_a4 + 0x12) = 0;
+            stage4_boss_explosions_from_table();
+            EXPLODING(reg_a4)->burst_a.t.count = 0;
+            EXPLODING(reg_a4)->burst_b.t.count = 0;
+            EXPLODING(reg_a4)->wait = 0x50U;
+            EXPLODING(reg_a4)->step = 1U;
+            EXPLODING(reg_a4)->cycle_timer.sh = 0x10;
+            EXPLODING(reg_a4)->cycle = 0;
         }
     }
 }
@@ -621,14 +639,14 @@ typedef void (*Fn)();
 
 extern u8 D_0026F240[];
 
-void func_001E6B40(void) {
-    reg_tmp.b[0] = *(u8 *)(reg_a4 + 0x11);
-    *(u8 *)(reg_a4 + 0x11) -= 1;
+void stage4_boss_final_explosion_cycle(void) {
+    reg_tmp.b[0] = EXPLODING(reg_a4)->cycle_timer.t.count;
+    EXPLODING(reg_a4)->cycle_timer.t.count -= 1;
     if ((s32) reg_tmp.b[0] <= 0) {
-        *(u8 *)(reg_a4 + 0x11) = (u8) *(u8 *)(reg_a4 + 0x10);
-        reg_tmp.h[0] = *(u16 *)(reg_a4 + 0x12);
+        EXPLODING(reg_a4)->cycle_timer.t.count = (u8) EXPLODING(reg_a4)->cycle_timer.t.reload;
+        reg_tmp.h[0] = EXPLODING(reg_a4)->cycle;
         ((Fn)*(u32 *)((u8 *)D_0026F240 + (reg_tmp.h[0] & ~3)))();
-        *(u16 *)(reg_a4 + 0x12) += 4;
-        *(u16 *)(reg_a4 + 0x12) &= 0x1F;
+        EXPLODING(reg_a4)->cycle += 4;
+        EXPLODING(reg_a4)->cycle &= 0x1F;
     }
 }

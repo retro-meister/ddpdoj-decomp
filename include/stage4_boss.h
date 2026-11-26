@@ -165,8 +165,7 @@ typedef struct {
 
 typedef struct {
     /* 0x00 */ s16 running;
-    /* 0x02 */ u8 unused_02;
-    /* 0x03 */ u8 sides;          /* bit 0, bit 1: one side each */
+    /* 0x02 */ Field16 sides;     /* b[1] bit 0, bit 1: one side each */
     /* 0x04 */ SlotTimer shot;
     /* 0x06 */ u16 muzzle;
     /* 0x08 */ u16 volleys_left;
@@ -246,7 +245,8 @@ typedef struct {
     /* 0x08 */ SlotTimer burst;
     /* 0x0A */ u16 pattern;       /* 0, 4 */
     /* 0x0C */ u8 unused_0C[4];
-    /* 0x10 */ u8 burst_shots;
+    /* 0x10 */ Field16 burst_shots;   /* the number is b[0] */
+    /* 0x12 */ u16 unread_12;
 } BothSides;
 
 typedef struct {

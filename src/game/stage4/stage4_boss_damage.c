@@ -336,7 +336,7 @@ void stage4_boss_defeated(void) {
 s32 boss_part_hide(s32, s32, s32);
 s32 explosion_burst_small(void *);
 s32 sfx_explosion_ground_medium();
-s32 func_001E58E0();
+s32 stage4_boss_explosions_from_table();
 s32 rng_next_unsigned();
 extern u8 D_0026F640[];
 
@@ -352,7 +352,7 @@ void stage4_boss_part4_blow_off(void) {
         reg_a1 = D_0026F640;
         reg_d2.h[1] = ENTITY(reg_a6)[4].y.h;
         reg_d2.h[0] = ENTITY(reg_a6)[4].x.h;
-        func_001E58E0();
+        stage4_boss_explosions_from_table();
         rng_next_unsigned();
         reg_d1.b[0] = reg_d0.b[0];
         reg_d2.h[1] = ENTITY(reg_a6)[4].y.h;
@@ -377,7 +377,7 @@ void stage4_boss_part5_blow_off(void) {
         reg_a1 = D_0026F670;
         reg_d2.h[1] = ENTITY(reg_a6)[5].y.h;
         reg_d2.h[0] = ENTITY(reg_a6)[5].x.h;
-        func_001E58E0();
+        stage4_boss_explosions_from_table();
         rng_next_unsigned();
         reg_d1.b[0] = reg_d0.b[0];
         reg_d2.h[1] = ENTITY(reg_a6)[5].y.h;
