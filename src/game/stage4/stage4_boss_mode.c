@@ -147,15 +147,15 @@ void stage4_boss_mode_enter(void) {
 }
 
 s32 boss_movement_start();
-s32 func_001E8700();
-s32 func_001E8760();
+s32 stage4_boss_shield_on();
+s32 stage4_boss_part_stop_hits();
 
 void stage4_boss_mode_second_form_start(void) {
-    func_001E8700();
+    stage4_boss_shield_on();
     reg_d0.h[0] = 0x40;
-    func_001E8760();
+    stage4_boss_part_stop_hits();
     reg_d0.h[0] = 0x60;
-    func_001E8760();
+    stage4_boss_part_stop_hits();
     reg_d0.w = 2;
     boss_movement_start();
     *(s8 *)(reg_a4 + 3) = 0;

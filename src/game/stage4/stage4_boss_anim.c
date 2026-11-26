@@ -1,5 +1,14 @@
 #include "common.h"
 #include "entity.h"
+#include "stage4_boss.h"
+
+typedef struct {
+    /* 0x00 */ s16 running;
+    /* 0x02 */ SlotTimer frame;
+} FrameStep;
+
+#define STEP(pointer) ((FrameStep *)(pointer))
+
 
 void stage4_boss_form2_spin_start(void);
 void stage4_boss_form2_spin(void);
@@ -65,7 +74,7 @@ void stage4_boss_body_anim(void);
 
 extern s16 *reg_a4_as_s16_p;
 
-void func_001D71C0(void) {
+void stage4_boss_anim_end(void) {
     *reg_a4_as_s16_p = 0;
 }
 
@@ -78,21 +87,21 @@ void stage4_boss_form2_spin_start(void) {
     boss_part_hide();
     reg_d0.w = 6;
     boss_part_show();
-    *(s16 *)(reg_a4 + 2) = 0x202;
+    STEP(reg_a4)->frame.sh = 0x202;
 }
 
 s32 boss_part_show();
 s32 boss_part_hide();
-s32 func_001E8710();
-s32 func_001E8730();
+s32 stage4_boss_shield_off();
+s32 stage4_boss_part_take_hits();
 
 void stage4_boss_form2_spin() {
     u16 temp_a0;
 
-    reg_tmp.b[0] = *(u8 *)(reg_a4 + 3);
-    *(u8 *)(reg_a4 + 3) -= 1;
+    reg_tmp.b[0] = STEP(reg_a4)->frame.t.count;
+    STEP(reg_a4)->frame.t.count -= 1;
     if ((s32) reg_tmp.b[0] <= 0) {
-        *(u8 *)(reg_a4 + 3) = (u8) *(u8 *)(reg_a4 + 2);
+        STEP(reg_a4)->frame.t.count = (u8) STEP(reg_a4)->frame.t.reload;
         ENTITY(reg_a6)[8].offset_y.h += 4;
         temp_a0 = ENTITY(reg_a6)[8].offset_y.h;
         if (temp_a0 == 0x3C) {
@@ -110,76 +119,76 @@ void stage4_boss_form2_spin() {
             ENTITY(reg_a6)[1].hit_x_plus.sh = 0x900;
             ENTITY(reg_a6)[1].hit_x_minus.sh = 0x900;
             reg_d0.h[0] = 0x80;
-            func_001E8730();
+            stage4_boss_part_take_hits();
             reg_d0.h[0] = 0xA0;
-            func_001E8730();
-            func_001E8710();
-            func_001D71C0();
+            stage4_boss_part_take_hits();
+            stage4_boss_shield_off();
+            stage4_boss_anim_end();
         }
     }
 }
 
 
 void stage4_boss_center_hatch_open_start(void) {
-    *(s16 *)(reg_a4 + 2) = 0x202;
+    STEP(reg_a4)->frame.sh = 0x202;
     stage4_boss_center_hatch_open();
 }
 
 void stage4_boss_center_hatch_open() {
     u16 temp_a0;
 
-    reg_tmp.b[0] = *(u8 *)(reg_a4 + 3);
-    *(u8 *)(reg_a4 + 3) -= 1;
+    reg_tmp.b[0] = STEP(reg_a4)->frame.t.count;
+    STEP(reg_a4)->frame.t.count -= 1;
     if ((s32) reg_tmp.b[0] <= 0) {
-        *(u8 *)(reg_a4 + 3) = (u8) *(u8 *)(reg_a4 + 2);
+        STEP(reg_a4)->frame.t.count = (u8) STEP(reg_a4)->frame.t.reload;
         ENTITY(reg_a6)[3].offset_y.h += 4;
         temp_a0 = ENTITY(reg_a6)[3].offset_y.h;
         if (temp_a0 == 0x1C) {
-            func_001D71C0();
+            stage4_boss_anim_end();
         }
     }
 }
 
 
 void stage4_boss_center_hatch_close_start(void) {
-    *(u16 *)(reg_a4 + 2) = 0x202;
+    STEP(reg_a4)->frame.h = 0x202;
     stage4_boss_center_hatch_close();
 }
 
 void stage4_boss_center_hatch_close() {
-    reg_tmp.b[0] = *(u8 *)(reg_a4 + 3);
-    *(u8 *)(reg_a4 + 3) -= 1;
+    reg_tmp.b[0] = STEP(reg_a4)->frame.t.count;
+    STEP(reg_a4)->frame.t.count -= 1;
     if ((s32) reg_tmp.b[0] <= 0) {
-        *(u8 *)(reg_a4 + 3) = (u8) *(u8 *)(reg_a4 + 2);
+        STEP(reg_a4)->frame.t.count = (u8) STEP(reg_a4)->frame.t.reload;
         ENTITY(reg_a6)[3].offset_y.h -= 4;
         if (ENTITY(reg_a6)[3].offset_y.h == 0) {
-            func_001D71C0();
+            stage4_boss_anim_end();
         }
     }
 }
 
 
 void stage4_boss_cutter_bay_open_start(void) {
-    *(u16 *)(reg_a4 + 2) = 1;
+    STEP(reg_a4)->frame.h = 1;
     stage4_boss_cutter_bay_open();
 }
 
 void stage4_boss_cutter_bay_open() {
-    reg_tmp.b[0] = *(u8 *)(reg_a4 + 3);
-    *(u8 *)(reg_a4 + 3) -= 1;
+    reg_tmp.b[0] = STEP(reg_a4)->frame.t.count;
+    STEP(reg_a4)->frame.t.count -= 1;
     if ((s32) reg_tmp.b[0] <= 0) {
-        *(u8 *)(reg_a4 + 3) = (u8) *(u8 *)(reg_a4 + 2);
+        STEP(reg_a4)->frame.t.count = (u8) STEP(reg_a4)->frame.t.reload;
         ENTITY(reg_a6)[8].offset_y.h += 4;
         if ((s16) ENTITY(reg_a6)[8].offset_y.h >= 0x3C) {
             ENTITY(reg_a6)[8].offset_y.h = 0x3CU;
-            func_001D71C0();
+            stage4_boss_anim_end();
         }
     }
 }
 
 
 void stage4_boss_cutter_bay_close_start(void) {
-    *(s16 *)(reg_a4 + 2) = 1;
+    STEP(reg_a4)->frame.sh = 1;
     stage4_boss_cutter_bay_close();
 }
 
@@ -188,53 +197,53 @@ void stage4_boss_cutter_bay_close(void)
 {
     s32 remainingIsPositive;
 
-    reg_tmp.b[0] = reg_a4[3];
-    reg_a4[3] -= 1;
+    reg_tmp.b[0] = STEP(reg_a4)->frame.t.count;
+    STEP(reg_a4)->frame.t.count -= 1;
 
     if ((s32)reg_tmp.b[0] <= 0) {
-        reg_a4[3] = reg_a4[2];
+        STEP(reg_a4)->frame.t.count = STEP(reg_a4)->frame.t.reload;
         ENTITY(reg_a6)[8].offset_y.h -= 4;
 
         remainingIsPositive = 0 < ENTITY(reg_a6)[8].offset_y.sh;
         if (remainingIsPositive == 0) {
             ENTITY(reg_a6)[8].offset_y.h = 0;
-            func_001D71C0();
+            stage4_boss_anim_end();
         }
     }
 }
 
 
 void stage4_boss_right_pod_open_start(void) {
-    *(s16 *)(reg_a4 + 2) = 1;
+    STEP(reg_a4)->frame.sh = 1;
     stage4_boss_right_pod_open();
 }
 
 void stage4_boss_right_pod_open() {
-    reg_tmp.b[0] = *(u8 *)(reg_a4 + 3);
-    *(u8 *)(reg_a4 + 3) -= 1;
+    reg_tmp.b[0] = STEP(reg_a4)->frame.t.count;
+    STEP(reg_a4)->frame.t.count -= 1;
     if ((s32) reg_tmp.b[0] <= 0) {
-        *(u8 *)(reg_a4 + 3) = (u8) *(u8 *)(reg_a4 + 2);
+        STEP(reg_a4)->frame.t.count = (u8) STEP(reg_a4)->frame.t.reload;
         ENTITY(reg_a6)[4].offset_x.h += 4;
         if ((s16) ENTITY(reg_a6)[4].offset_x.h >= 0x20) {
             ENTITY(reg_a6)[4].offset_x.h = 0x20U;
-            func_001D71C0();
+            stage4_boss_anim_end();
         }
     }
 }
 
 
 void stage4_boss_right_pod_close_start(void) {
-    *(s16 *)(reg_a4 + 2) = 1;
+    STEP(reg_a4)->frame.sh = 1;
     stage4_boss_right_pod_close();
 }
 
 void stage4_boss_right_pod_close(void)
 {
-    reg_tmp.b[0] = reg_a4[3];
-    reg_a4[3]--;
+    reg_tmp.b[0] = STEP(reg_a4)->frame.t.count;
+    STEP(reg_a4)->frame.t.count--;
 
     if ((s32)reg_tmp.b[0] <= 0) {
-        reg_a4[3] = reg_a4[2];
+        STEP(reg_a4)->frame.t.count = STEP(reg_a4)->frame.t.reload;
         ENTITY(reg_a6)[4].offset_x.h -= 4;
 
         if (0 < ENTITY(reg_a6)[4].offset_x.sh) {
@@ -242,50 +251,50 @@ void stage4_boss_right_pod_close(void)
         }
 
         ENTITY(reg_a6)[4].offset_x.h = 0;
-        func_001D71C0();
+        stage4_boss_anim_end();
     }
 }
 
 
 void stage4_boss_left_pod_open_start(void) {
-    *(s16 *)(reg_a4 + 2) = 1;
+    STEP(reg_a4)->frame.sh = 1;
     stage4_boss_left_pod_open();
 }
 
 void stage4_boss_left_pod_open() {
-    reg_tmp.b[0] = *(u8 *)(reg_a4 + 3);
-    *(u8 *)(reg_a4 + 3) -= 1;
+    reg_tmp.b[0] = STEP(reg_a4)->frame.t.count;
+    STEP(reg_a4)->frame.t.count -= 1;
     if ((s32) reg_tmp.b[0] <= 0) {
-        *(u8 *)(reg_a4 + 3) = (u8) *(u8 *)(reg_a4 + 2);
+        STEP(reg_a4)->frame.t.count = (u8) STEP(reg_a4)->frame.t.reload;
         ENTITY(reg_a6)[5].offset_x.h += 4;
         if ((s16) ENTITY(reg_a6)[5].offset_x.h >= 0x20) {
             ENTITY(reg_a6)[5].offset_x.h = 0x20U;
-            func_001D71C0();
+            stage4_boss_anim_end();
         }
     }
 }
 
 
 void stage4_boss_left_pod_close_start(void) {
-    *(u16 *)(reg_a4 + 2) = 1;
+    STEP(reg_a4)->frame.h = 1;
     stage4_boss_left_pod_close();
 }
 
 void stage4_boss_left_pod_close(void)
 {
-    reg_tmp.b[0] = reg_a4[3];
-    reg_a4[3] -= 1;
+    reg_tmp.b[0] = STEP(reg_a4)->frame.t.count;
+    STEP(reg_a4)->frame.t.count -= 1;
     if ((s32)reg_tmp.b[0] <= 0) {
         s16 *remaining;
 
-        reg_a4[3] = reg_a4[2];
+        STEP(reg_a4)->frame.t.count = STEP(reg_a4)->frame.t.reload;
         ENTITY(reg_a6)[5].offset_x.h -= 4;
         remaining = (s16 *)(reg_a6 + 0xA8);
         if (0 < *remaining) {
             return;
         }
         *remaining = 0;
-        func_001D71C0();
+        stage4_boss_anim_end();
     }
 }
 

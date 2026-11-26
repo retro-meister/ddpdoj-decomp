@@ -1,5 +1,7 @@
 #include "common.h"
 #include "entity.h"
+#include "enemy.h"
+#include "stage4_boss.h"
 
 void stage4_boss_missile_first(void) {
     void enemy_set_entity_count(s32);
@@ -12,16 +14,16 @@ extern u8 D_0026F0A0[];
 void stage4_boss_missile_start(void) {
     reg_a0 = D_0026F0A0;
     enemy_init_entities();
-    ENTITY(reg_a6)->y.h = (u16) *(u16 *)(reg_a5 + 0x16);
-    ENTITY(reg_a6)->x.h = (u16) *(u16 *)(reg_a5 + 0x18);
-    ENTITY(reg_a6)->move.h = (u16) *(u16 *)(reg_a5 + 0x1A);
-    *(s8 *)(reg_a5 + 0x17) = 0;
-    *(u8 *)(reg_a5 + 0x16) = 0;
-    *(u16 *)(reg_a5 + 0x18) = 0U;
-    *(u8 *)(reg_a5 + 0x1B) = (u8) ENTITY(reg_a6)->move.h;
-    *(s16 *)(reg_a5 + 0x1C) = 0x804;
-    *(s16 *)(reg_a5 + 0x1E) = 2;
-    *(s16 *)(reg_a5 + 0x20) = 0;
+    ENTITY(reg_a6)->y.h = (u16) STAGE4_MISSILE(reg_a5)->at_start.y;
+    ENTITY(reg_a6)->x.h = (u16) STAGE4_MISSILE(reg_a5)->at_start.x;
+    ENTITY(reg_a6)->move.h = (u16) STAGE4_MISSILE(reg_a5)->at_start.move;
+    STAGE4_MISSILE(reg_a5)->now.seen = 0;
+    STAGE4_MISSILE(reg_a5)->now.step = 0;
+    STAGE4_MISSILE(reg_a5)->now.speed_timer.both = 0U;
+    STAGE4_MISSILE(reg_a5)->now.direction = (u8) ENTITY(reg_a6)->move.h;
+    STAGE4_MISSILE(reg_a5)->unread_1C = 0x804;
+    STAGE4_MISSILE(reg_a5)->unread_1E = 2;
+    STAGE4_MISSILE(reg_a5)->unread_20 = 0;
 }
 
 
@@ -52,38 +54,38 @@ void stage4_boss_missile(void) {
         if (cond_flag == 0) {
             entity_check_bounds();
             if (cond_flag != 0) {
-                if (*(u8 *)(reg_a5 + 0x17) != 0) {
+                if (STAGE4_MISSILE(reg_a5)->now.seen != 0) {
 block_6:
                     enemy_remove();
                     return;
                 }
                 goto block_8;
             }
-            *(u8 *)(reg_a5 + 0x17) = 1U;
+            STAGE4_MISSILE(reg_a5)->now.seen = 1U;
 block_8:
             entity_velocity();
-            if (*(u8 *)(reg_a5 + 0x16) == 0) {
-                *(u8 *)(reg_a5 + 0x1B) += 4;
-                *(u8 *)(reg_a5 + 0x1B) &= 0x3F;
-                reg_tmp.b[0] = *(u8 *)(reg_a5 + 0x19);
-                *(u8 *)(reg_a5 + 0x19) -= 1;
+            if (STAGE4_MISSILE(reg_a5)->now.step == 0) {
+                STAGE4_MISSILE(reg_a5)->now.direction += 4;
+                STAGE4_MISSILE(reg_a5)->now.direction &= 0x3F;
+                reg_tmp.b[0] = STAGE4_MISSILE(reg_a5)->now.speed_timer.b.countdown;
+                STAGE4_MISSILE(reg_a5)->now.speed_timer.b.countdown -= 1;
                 if ((s32) reg_tmp.b[0] <= 0) {
-                    *(u8 *)(reg_a5 + 0x19) = (u8) *(u8 *)(reg_a5 + 0x18);
+                    STAGE4_MISSILE(reg_a5)->now.speed_timer.b.countdown = (u8) STAGE4_MISSILE(reg_a5)->now.speed_timer.b.interval;
                     ENTITY(reg_a6)->move.b.speed -= 1;
                     if (ENTITY(reg_a6)->move.b.speed == 0) {
-                        *(u8 *)(reg_a5 + 0x16) = 1U;
-                        *(u16 *)(reg_a5 + 0x18) = 0;
+                        STAGE4_MISSILE(reg_a5)->now.step = 1U;
+                        STAGE4_MISSILE(reg_a5)->now.speed_timer.both = 0;
                         func_00202180();
-                        *(u8 *)(reg_a5 + 0x1B) = (u8) reg_d1.b[0];
+                        STAGE4_MISSILE(reg_a5)->now.direction = (u8) reg_d1.b[0];
                         ENTITY(reg_a6)->move.b.dir = (u8) reg_d1.b[0];
                     }
                 }
             }
-            if (*(u8 *)(reg_a5 + 0x16) == 1) {
-                reg_tmp.b[0] = *(u8 *)(reg_a5 + 0x19);
-                *(u8 *)(reg_a5 + 0x19) -= 1;
+            if (STAGE4_MISSILE(reg_a5)->now.step == 1) {
+                reg_tmp.b[0] = STAGE4_MISSILE(reg_a5)->now.speed_timer.b.countdown;
+                STAGE4_MISSILE(reg_a5)->now.speed_timer.b.countdown -= 1;
                 if ((s32) reg_tmp.b[0] <= 0) {
-                    *(u8 *)(reg_a5 + 0x19) = (u8) *(u8 *)(reg_a5 + 0x18);
+                    STAGE4_MISSILE(reg_a5)->now.speed_timer.b.countdown = (u8) STAGE4_MISSILE(reg_a5)->now.speed_timer.b.interval;
                     temp_v1 = ENTITY(reg_a6)->move.b.speed;
                     if (temp_v1 != 0x24) {
                         ENTITY(reg_a6)->move.b.speed = (u8) (temp_v1 + 1);
@@ -91,7 +93,7 @@ block_8:
                 }
             }
             reg_d1.w = 0;
-            reg_d1.b[0] = *(u8 *)(reg_a5 + 0x1B);
+            reg_d1.b[0] = STAGE4_MISSILE(reg_a5)->now.direction;
             reg_a0 = (u8 *)D_0024EEF0_as_u8_a;
             reg_d1.b[0] += 1;
             reg_d1.h[0] &= 0x3E;
@@ -137,14 +139,14 @@ void stage4_boss_cutter_start(void) {
 
     reg_a0 = (u8 *)D_0026F0C0;
     enemy_init_entities();
-    ENTITY(reg_a6)->y.h = (u16) *(u16 *)(reg_a5 + 0x16);
-    ENTITY(reg_a6)->x.h = (u16) *(u16 *)(reg_a5 + 0x18);
+    ENTITY(reg_a6)->y.h = (u16) STAGE4_CUTTER(reg_a5)->at_start.y;
+    ENTITY(reg_a6)->x.h = (u16) STAGE4_CUTTER(reg_a5)->at_start.x;
     ENTITY(reg_a6)->move.sb.speed = 0;
-    *(s8 *)(reg_a5 + 0x17) = 0;
-    *(u8 *)(reg_a5 + 0x16) = 0;
-    ENTITY(reg_a6)[1].attr.b.flip = (u8) *(u8 *)(reg_a5 + 0x20);
+    STAGE4_CUTTER(reg_a5)->now.seen = 0;
+    STAGE4_CUTTER(reg_a5)->now.unread_16 = 0;
+    ENTITY(reg_a6)[1].attr.b.flip = (u8) STAGE4_CUTTER(reg_a5)->at_start.look;
     reg_d0.w = 0;
-    reg_d0.b[0] = *(u8 *)(reg_a5 + 0x1B);
+    reg_d0.b[0] = STAGE4_CUTTER(reg_a5)->at_start.turn;
     reg_d0.h[0] = (u16) (s8) reg_d0.b[0];
     ENTITY(reg_a6)[1].offset_y.h = (u16) reg_d0.h[0];
     ENTITY(reg_a6)[1].hp.h = (u16) ENTITY(reg_a6)[1].offset_y.h;
@@ -154,37 +156,37 @@ void stage4_boss_cutter_start(void) {
         ENTITY(reg_a6)[3].sprite.sh = 1;
     }
     reg_d0.w = 0;
-    reg_d0.b[0] = *(u8 *)(reg_a5 + 0x1A);
+    reg_d0.b[0] = STAGE4_CUTTER(reg_a5)->at_start.radius;
     reg_d0.h[0] = (u16) reg_d0.b[0];
     if ((reg_d0.b[0] == 0x10) || (reg_d0.b[0] == 0x65) || (reg_d0.b[0] == 0xBB) || (reg_d0.b[0] == -0x10U) || (reg_d0.b[0] == 0x45) || (reg_d0.b[0] == 0x9B)) {
         ENTITY(reg_a6)[4].sprite.sb[0] = 1;
     }
     reg_d0.h[0] = (s16) reg_d0.h[0] * 0x10;
     ENTITY(reg_a6)[1].offset_x.h = (u16) reg_d0.h[0];
-    *(u8 *)(reg_a5 + 0x18) = 0;
-    *(u8 *)(reg_a5 + 0x1B) = (u8) *(u8 *)(reg_a5 + 0x21);
+    STAGE4_CUTTER(reg_a5)->now.unread_18 = 0;
+    STAGE4_CUTTER(reg_a5)->now.angle = (u8) STAGE4_CUTTER(reg_a5)->at_start.angle;
     reg_d0.w = 0;
-    reg_d0.b[0] = *(u8 *)(reg_a5 + 0x1B);
+    reg_d0.b[0] = STAGE4_CUTTER(reg_a5)->now.angle;
     reg_d1.h[0] = ENTITY(reg_a6)[1].offset_x.h;
     reg_d1.h[0] = (u16) ((s16) reg_d1.h[0] >> 4);
     velocity_from_dir256();
     reg_d2.h[0] = (s16) reg_d2.h[0] * 8;
     reg_d0.h[0] = 0x2000;
     reg_d3.h[0] = (s16) reg_d3.h[0] * 8;
-    *(u16 *)(reg_a5 + 0x20) = (u16) reg_d0.h[0];
-    reg_tmp.h[1] = *(u16 *)(reg_a5 + 0x1C);
-    reg_tmp.h[0] = *(u16 *)(reg_a5 + 0x1E);
+    STAGE4_CUTTER(reg_a5)->now.y_offset = (u16) reg_d0.h[0];
+    reg_tmp.h[1] = STAGE4_CUTTER(reg_a5)->now.owner[0];
+    reg_tmp.h[0] = STAGE4_CUTTER(reg_a5)->now.owner[1];
     reg_a0 = (u8 *) reg_tmp.w;
-    reg_d2.h[0] += *(u16 *)(reg_a0 + 0x22);
-    reg_d2.h[0] -= (u16) *(u16 *)(reg_a5 + 0x20);
-    reg_d3.h[0] += *(u16 *)(reg_a0 + 0x24);
+    reg_d2.h[0] += ENTITY(reg_a0)[1].y.h;
+    reg_d2.h[0] -= (u16) STAGE4_CUTTER(reg_a5)->now.y_offset;
+    reg_d3.h[0] += ENTITY(reg_a0)[1].x.h;
     ENTITY(reg_a6)->y.h = (u16) reg_d2.h[0];
     ENTITY(reg_a6)->x.h = (u16) reg_d3.h[0];
-    *(s16 *)(reg_a5 + 0x22) = 0x404;
-    *(s8 *)(reg_a5 + 0x3B) = 0;
-    *(s8 *)(reg_a5 + 0x3A) = 0x18;
-    *(s16 *)(reg_a5 + 0x3C) = 0;
-    *(s16 *)(reg_a5 + 0x3E) = 0;
+    STAGE4_CUTTER(reg_a5)->unread_22 = 0x404;
+    STAGE4_CUTTER(reg_a5)->released = 0;
+    STAGE4_CUTTER(reg_a5)->unread_3A = 0x18;
+    STAGE4_CUTTER(reg_a5)->frame = 0;
+    STAGE4_CUTTER(reg_a5)->frame_timer.both = 0;
     temp_a0 = ENTITY(reg_a6)[1].attr.b.flip;
     if ((temp_a0 != 0x70) && (temp_a0 != 0x71)) {
         ENTITY(reg_a6)->flags.h = 0x8000;
@@ -270,47 +272,47 @@ next_30:
 next_100:
     ENTITY(reg_a6)->attr.b.palette = ENTITY(reg_a6)[1].misc.b.user;
 next_110:
-    if (*(u8 *)(reg_a5 + 0x3B) != 1) goto next_130;
+    if (STAGE4_CUTTER(reg_a5)->released != 1) goto next_130;
     if (ENTITY(reg_a6)->x.sh <= -0x400) goto block_b;
     if (!(ENTITY(reg_a6)->x.sh < 0x3C00)) goto block_b;
     entity_check_bounds();
     if ((s8) (*(u8 *)&cond_flag) == 0) goto next_120;
-    if (*(u8 *)(reg_a5 + 0x17) == 0) goto next_130;
+    if (STAGE4_CUTTER(reg_a5)->now.seen == 0) goto next_130;
 block_b:
     enemy_remove();
     return;
 next_120:
-    *(u8 *)(reg_a5 + 0x17) = 1;
+    STAGE4_CUTTER(reg_a5)->now.seen = 1;
 next_130:
     if (g_enemies_stopped != 0) goto block_c;
-    reg_tmp.h[1] = *(u16 *)(reg_a5 + 0x1C);
-    reg_tmp.h[0] = *(u16 *)(reg_a5 + 0x1E);
+    reg_tmp.h[1] = STAGE4_CUTTER(reg_a5)->now.owner[0];
+    reg_tmp.h[0] = STAGE4_CUTTER(reg_a5)->now.owner[1];
     reg_a0 = (u8 *) reg_tmp.w;
-    *(u16 *)(reg_a5 + 0x30) = *(u16 *)(reg_a0 + 0x22);
-    *(u16 *)(reg_a5 + 0x32) = *(u16 *)(reg_a0 + 0x24);
-    reg_d0.h[0] = *(u16 *)(reg_a5 + 0x20);
-    *(u16 *)(reg_a5 + 0x30) -= reg_d0.h[0];
+    STAGE4_CUTTER(reg_a5)->center_y = ENTITY(reg_a0)[1].y.h;
+    STAGE4_CUTTER(reg_a5)->center_x = ENTITY(reg_a0)[1].x.h;
+    reg_d0.h[0] = STAGE4_CUTTER(reg_a5)->now.y_offset;
+    STAGE4_CUTTER(reg_a5)->center_y -= reg_d0.h[0];
     reg_d0.w = 0;
-    reg_d0.b[0] = *(u8 *)(reg_a5 + 0x1B);
+    reg_d0.b[0] = STAGE4_CUTTER(reg_a5)->now.angle;
     reg_d1.h[0] = ENTITY(reg_a6)[1].offset_x.h;
     reg_d1.h[0] = (s16) reg_d1.h[0] >> 4;
     velocity_from_dir256();
     reg_d2.h[0] = (s16) reg_d2.h[0] * 8;
     reg_d3.h[0] = (s16) reg_d3.h[0] * 8;
-    if (*(u8 *)(reg_a5 + 0x3B) != 1) goto next_140;
+    if (STAGE4_CUTTER(reg_a5)->released != 1) goto next_140;
     reg_d0.h[0] = g_side_scroll_step[0];
     ENTITY(reg_a6)[1].hit_y_minus.h -= reg_d0.h[0];
     reg_d2.h[0] += ENTITY(reg_a6)[1].hit_y_plus.h;
     reg_d3.h[0] += ENTITY(reg_a6)[1].hit_y_minus.h;
     goto next_150;
 next_140:
-    reg_tmp.h[1] = *(u16 *)(reg_a5 + 0x1C);
-    reg_tmp.h[0] = *(u16 *)(reg_a5 + 0x1E);
+    reg_tmp.h[1] = STAGE4_CUTTER(reg_a5)->now.owner[0];
+    reg_tmp.h[0] = STAGE4_CUTTER(reg_a5)->now.owner[1];
     reg_a0 = (u8 *) reg_tmp.w;
-    reg_d2.h[0] += *(u16 *)(reg_a0 + 0x22);
-    reg_d3.h[0] += *(u16 *)(reg_a0 + 0x24);
+    reg_d2.h[0] += ENTITY(reg_a0)[1].y.h;
+    reg_d3.h[0] += ENTITY(reg_a0)[1].x.h;
 next_150:
-    reg_d2.h[0] -= *(u16 *)(reg_a5 + 0x20);
+    reg_d2.h[0] -= STAGE4_CUTTER(reg_a5)->now.y_offset;
     ENTITY(reg_a6)->offset_y.h = reg_d2.h[0];
     ENTITY(reg_a6)->offset_x.h = reg_d3.h[0];
     reg_d0.h[0] = ENTITY(reg_a6)->y.h;
@@ -360,12 +362,12 @@ next_200:
     ENTITY(reg_a6)->misc.b.draw_layer = 1;
     ENTITY(reg_a6)->hp.h = 0x7FFF;
     ENTITY(reg_a6)->flags.h = 0xA001;
-    reg_tmp.h[1] = *(u16 *)(reg_a5 + 0x1C);
-    reg_tmp.h[0] = *(u16 *)(reg_a5 + 0x1E);
+    reg_tmp.h[1] = STAGE4_CUTTER(reg_a5)->now.owner[0];
+    reg_tmp.h[0] = STAGE4_CUTTER(reg_a5)->now.owner[1];
     reg_a0 = (u8 *) reg_tmp.w;
-    *(u16 *)(reg_a0 + 0x19E) += 1;
+    ENTITY(reg_a0)[12].misc.h += 1;
 next_210:
-    if (*(u8 *)(reg_a5 + 0x3B) != 1) goto next_250;
+    if (STAGE4_CUTTER(reg_a5)->released != 1) goto next_250;
     if (ENTITY(reg_a6)[2].hit_x_minus.h == 0) goto next_220;
     ENTITY(reg_a6)[2].hit_x_minus.h -= 1;
     if (ENTITY(reg_a6)[2].hit_x_minus.h != 0) goto next_250;
@@ -375,32 +377,32 @@ next_210:
     goto next_250;
 next_220:
     if (ENTITY(reg_a6)[3].hit_y_plus.b[0] != 0) goto next_230;
-    *(u8 *)(reg_a5 + 0x1B) -= 1;
-    if (!(*(s8 *)(reg_a5 + 0x1B) < 9)) goto next_230;
-    *(u8 *)(reg_a5 + 0x1B) = 8;
+    STAGE4_CUTTER(reg_a5)->now.angle -= 1;
+    if (!((s8) STAGE4_CUTTER(reg_a5)->now.angle < 9)) goto next_230;
+    STAGE4_CUTTER(reg_a5)->now.angle = 8;
     ENTITY(reg_a6)[3].hit_y_plus.b[0] = 1;
     ENTITY(reg_a6)[3].misc.b.user = 0x40;
     ENTITY(reg_a6)[3].misc.b.draw_layer = 0;
 next_230:
     if (ENTITY(reg_a6)[3].hit_y_plus.b[0] != 1) goto next_250;
     reg_d0.w = 0;
-    reg_d0.b[0] = *(u8 *)(reg_a5 + 0x1B);
+    reg_d0.b[0] = STAGE4_CUTTER(reg_a5)->now.angle;
     reg_d0.h[0] += 2;
     if (!((s16) reg_d0.h[0] < 0x100)) goto block_b;
-    *(u8 *)(reg_a5 + 0x1B) = reg_d0.b[0];
+    STAGE4_CUTTER(reg_a5)->now.angle = reg_d0.b[0];
 next_250:
-    if (*(u8 *)(reg_a5 + 0x3B) == 1) goto next_260;
+    if (STAGE4_CUTTER(reg_a5)->released == 1) goto next_260;
     if (g_enemy_signal_e != 1) goto next_260;
-    *(u8 *)(reg_a5 + 0x3B) = 1;
+    STAGE4_CUTTER(reg_a5)->released = 1;
     ENTITY(reg_a6)[2].offset_x.h = ENTITY(reg_a6)[1].offset_y.h;
     ENTITY(reg_a6)[1].offset_y.h = 0;
     ENTITY(reg_a6)[1].hp.h = 0;
     ENTITY(reg_a6)[2].hit_x_minus.h = 0x60;
-    reg_tmp.h[1] = *(u16 *)(reg_a5 + 0x1C);
-    reg_tmp.h[0] = *(u16 *)(reg_a5 + 0x1E);
+    reg_tmp.h[1] = STAGE4_CUTTER(reg_a5)->now.owner[0];
+    reg_tmp.h[0] = STAGE4_CUTTER(reg_a5)->now.owner[1];
     reg_a0 = (u8 *) reg_tmp.w;
-    ENTITY(reg_a6)[1].hit_y_plus.h = *(u16 *)(reg_a0 + 0x22);
-    ENTITY(reg_a6)[1].hit_y_minus.h = *(u16 *)(reg_a0 + 0x24);
+    ENTITY(reg_a6)[1].hit_y_plus.h = ENTITY(reg_a0)[1].y.h;
+    ENTITY(reg_a6)[1].hit_y_minus.h = ENTITY(reg_a0)[1].x.h;
 next_260:
     if (g_enemy_signal_e != 2) goto next_300;
     if (ENTITY(reg_a6)[3].sprite.h == 0) goto next_300;
@@ -451,17 +453,17 @@ next_310:
     if ((s32) reg_tmp.b[0] > 0) goto next_330;
     ENTITY(reg_a6)[4].offset_x.b[1] = ENTITY(reg_a6)[4].offset_x.b[0];
     reg_d0.b[0] = ENTITY(reg_a6)[4].sprite.b[1];
-    *(u8 *)(reg_a5 + 0x1B) += reg_d0.b[0];
+    STAGE4_CUTTER(reg_a5)->now.angle += reg_d0.b[0];
     if (ENTITY(reg_a6)[4].sprite.sb[1] >= 0) goto next_320;
     reg_d0.w = 0;
-    reg_d0.b[0] = *(u8 *)(reg_a5 + 0x1B);
+    reg_d0.b[0] = STAGE4_CUTTER(reg_a5)->now.angle;
     if (!((s16) reg_d0.h[0] < 0x21)) goto next_330;
     ENTITY(reg_a6)[4].sprite.b[1] *= -1;
     ENTITY(reg_a6)[4].offset_y.h = 0;
     goto next_330;
 next_320:
     reg_d0.w = 0;
-    reg_d0.b[0] = *(u8 *)(reg_a5 + 0x1B);
+    reg_d0.b[0] = STAGE4_CUTTER(reg_a5)->now.angle;
     if ((s16) reg_d0.h[0] < 0x60) goto next_330;
     ENTITY(reg_a6)[4].sprite.b[1] *= -1;
     ENTITY(reg_a6)[4].offset_y.h = 0;
@@ -584,7 +586,7 @@ next_500:
 next_600:
     if (g_enemy_signal_e == 2) goto block_c;
     if (ENTITY(reg_a6)->misc.b.draw_layer == 0) goto block_c;
-    if (*(u8 *)(reg_a5 + 0x3B) == 1) goto next_620;
+    if (STAGE4_CUTTER(reg_a5)->released == 1) goto next_620;
     if (ENTITY(reg_a6)[2].look.b.size != 0) goto next_650;
     reg_d0.h[0] = g_game_frame;
     reg_d0.h[0] &= 0x1F;
@@ -632,12 +634,12 @@ next_650:
     bullet_fire256_fast();
     ENTITY(reg_a6)[2].look.b.size -= 1;
 block_c:
-    reg_tmp.b[0] = *(u8 *)(reg_a5 + 0x3F);
-    *(u8 *)(reg_a5 + 0x3F) -= 1;
+    reg_tmp.b[0] = STAGE4_CUTTER(reg_a5)->frame_timer.b.countdown;
+    STAGE4_CUTTER(reg_a5)->frame_timer.b.countdown -= 1;
     if ((s32) reg_tmp.b[0] > 0) goto next_700;
-    *(u8 *)(reg_a5 + 0x3F) = *(u8 *)(reg_a5 + 0x3E);
-    *(u16 *)(reg_a5 + 0x3C) += 4;
-    *(u16 *)(reg_a5 + 0x3C) &= 0x1F;
+    STAGE4_CUTTER(reg_a5)->frame_timer.b.countdown = STAGE4_CUTTER(reg_a5)->frame_timer.b.interval;
+    STAGE4_CUTTER(reg_a5)->frame += 4;
+    STAGE4_CUTTER(reg_a5)->frame &= 0x1F;
 next_700:
     reg_a0 = reg_a6;
     enemy_hitbox_debug_draw();
@@ -645,7 +647,7 @@ next_700:
     if (ENTITY(reg_a6)[1].attr.b.flip == 0x70) goto block_rts;
     if (ENTITY(reg_a6)[1].attr.b.flip == 0x71) goto block_rts;
     reg_a0 = (u8 *)D_0026F150;
-    reg_a0 += *(u16 *)(reg_a5 + 0x3C);
+    reg_a0 += STAGE4_CUTTER(reg_a5)->frame;
     reg_d2.h[1] = *(u16 *)reg_a0;
     reg_d2.h[0] = *(u16 *)(reg_a0 + 2);
     reg_d3.h[0] = 0x620;

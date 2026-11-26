@@ -12,9 +12,9 @@ s32 boss_phase_start();
 s32 enemy_set_task_state();
 s32 enemy_init_entities();
 s32 sprite_palette_load();
-s32 func_001E7C50();
-s32 func_001E8700();
-s32 func_001E8720();
+s32 stage4_boss_damage_none();
+s32 stage4_boss_shield_on();
+s32 stage4_boss_start_none();
 s32 slowdown_turn_off();
 extern u8 g_default_sprite_palette[];
 extern u8 D_0025FE70[];
@@ -86,15 +86,15 @@ void stage4_boss_start(void) {
     g_enemy_signal_9_as_s16 = 0;
     reg_a0 += 0x16;
     g_boss_hp = (u8 *)(reg_a0);
-    func_001E7C50();
-    func_001E8700();
-    func_001E8720();
+    stage4_boss_damage_none();
+    stage4_boss_shield_on();
+    stage4_boss_start_none();
 }
 
 s32 enemy_remove();                           /* extern */
 s32 boss_slots_run();                            /* extern */
 s32 enemy_hitbox_debug_draw();                            /* extern */
-s32 func_001E7C60();                            /* extern */
+s32 stage4_boss_damage();                            /* extern */
 s32 func_002035A0();                            /* extern */
 
 void stage4_boss_main(void) {
@@ -104,7 +104,7 @@ void stage4_boss_main(void) {
         enemy_remove();
         return;
     }
-    func_001E7C60();
+    stage4_boss_damage();
     reg_a0 = (u8 *)(((s32)reg_a6) + 0x20);
     enemy_hitbox_debug_draw();
     reg_a0 = (u8 *)(((s32)reg_a6) + 0x40);

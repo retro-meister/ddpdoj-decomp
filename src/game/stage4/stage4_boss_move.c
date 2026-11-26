@@ -1,5 +1,6 @@
 #include "common.h"
 #include "entity.h"
+#include "stage4_boss.h"
 
 void stage4_boss_move_enter_start(void);
 void stage4_boss_move_enter(void);
@@ -19,13 +20,6 @@ void stage4_boss_move_hover_high_start(void);
 void stage4_boss_move_hover_high(void);
 void stage4_boss_move_rage_start(void);
 void stage4_boss_move_rage(void);
-
-/* Two bytes of a boss slot that are set together as one word: a reload value and its countdown. */
-typedef union {
-    u16 h;
-    s16 sh;
-    struct { u8 reload; u8 count; } t;
-} SlotTimer;
 
 /*
  * The movement part of the boss slot (reg_a4). Every movement eases the speed toward target_speed, one step
@@ -197,7 +191,7 @@ void stage4_boss_parts_follow(void) {
     ENTITY(reg_a6)[9].x.h = (u16) reg_d0.h[0];
 }
 
-s32 func_001E8710(s32, s32, s32, s32); /* extern */
+s32 stage4_boss_shield_off(s32, s32, s32, s32); /* extern */
 
 void stage4_boss_move_enter_start(void) {
     ENTER(reg_a4)->target_speed = 0;
@@ -210,7 +204,7 @@ void stage4_boss_move_enter_start(void) {
     ENTER(reg_a4)->wait.sh = 0x101;
     ENTITY(reg_a6)[9].offset_y.sh = 0x1C;
     ENTITY(reg_a6)[9].offset_x.sh = 0;
-    func_001E8710(0x101, 1, 0x280, 0x20);
+    stage4_boss_shield_off(0x101, 1, 0x280, 0x20);
     stage4_boss_move_enter();
 }
 
