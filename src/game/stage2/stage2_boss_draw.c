@@ -1,55 +1,55 @@
 #include "common.h"
 #include "entity.h"
 
-void func_001C3EC0(void);
-void func_001C3FD0(void);
-void func_001C4090(void);
-void func_001C3F50(void);
-void func_001C4120(void);
-void func_001C41D0(void);
-void func_001C4280(void);
-void func_001C4320(void);
-void func_001C43C0(void);
-void func_001C4460(void);
-void func_001C4500(void);
+void stage2_boss_draw_lower(void);
+void stage2_boss_draw_shoulder_cannon(void);
+void stage2_boss_draw_shoulder_turret_mount(void);
+void stage2_boss_draw_torso(void);
+void stage2_boss_draw_side_gun_a(void);
+void stage2_boss_draw_side_gun_b(void);
+void stage2_boss_draw_turret_2(void);
+void stage2_boss_draw_turret_3(void);
+void stage2_boss_draw_shoulder_turret_a(void);
+void stage2_boss_draw_shoulder_turret_b(void);
+void stage2_boss_draw_radome(void);
 
 /* The draw routine of every part of the boss, by part number. */
 void (*stage2_boss_draw_routines[])(void) = {
-    func_001C3EC0,
-    func_001C3FD0,
-    func_001C4090,
-    func_001C3F50,
-    func_001C4120,
-    func_001C41D0,
-    func_001C4280,
-    func_001C4320,
-    func_001C43C0,
-    func_001C4460,
-    func_001C4500,
+    stage2_boss_draw_lower,
+    stage2_boss_draw_shoulder_cannon,
+    stage2_boss_draw_shoulder_turret_mount,
+    stage2_boss_draw_torso,
+    stage2_boss_draw_side_gun_a,
+    stage2_boss_draw_side_gun_b,
+    stage2_boss_draw_turret_2,
+    stage2_boss_draw_turret_3,
+    stage2_boss_draw_shoulder_turret_a,
+    stage2_boss_draw_shoulder_turret_b,
+    stage2_boss_draw_radome,
     (void (*)(void))-1,
 };
 
 extern u8 D_0026C2A0[];
 
-void func_001C3EC0(void) {
+void stage2_boss_draw_lower(void) {
     s32 sprite_draw_layer2_keep();
     reg_a0 = (u8 *)D_0026C2A0;
-    reg_a0 += *(u16 *) (reg_a6 + 0x28);
-    reg_tmp.h[0] = *(u16 *) (reg_a6 + 0x28);
+    reg_a0 += ENTITY(reg_a6)[1].offset_x.h;
+    reg_tmp.h[0] = ENTITY(reg_a6)[1].offset_x.h;
     reg_d2.w = *(u32 *) (D_0026C2A0 + (reg_tmp.h[0] & ~3));
-    reg_d1.h[1] = *(u16 *) (reg_a6 + 0x22);
-    reg_d1.h[0] = *(u16 *) (reg_a6 + 0x24);
+    reg_d1.h[1] = ENTITY(reg_a6)[1].y.h;
+    reg_d1.h[0] = ENTITY(reg_a6)[1].x.h;
     reg_d1.h[0] += 0xFD00;
     reg_d1.w += 0xEC00F000;
     reg_d3.h[0] = 0x1480;
-    reg_d4.h[0] = *(u16 *) (reg_a6 + 0x1C);
+    reg_d4.h[0] = ENTITY(reg_a6)->attr.h;
     reg_d4.b[0] = ENTITY(reg_a6)[9].offset_y.b[1];
     sprite_draw_layer2_keep();
 }
 
 extern u8 D_0026C2C0[];
 
-void func_001C3F50(void) {
+void stage2_boss_draw_torso(void) {
     s32 sprite_draw_layer2_keep();
     u16 temp_a0;
     u16 temp_a2;
@@ -71,7 +71,7 @@ void func_001C3F50(void) {
 
 extern u8 D_0026C2F0[];
 
-void func_001C3FD0(void) {
+void stage2_boss_draw_shoulder_cannon(void) {
     s32 sprite_draw_layer2_keep();
     u16 temp_a2;
     u32 temp_a3;
@@ -98,7 +98,7 @@ void func_001C3FD0(void) {
 
 extern u8 D_0026C330[];
 
-void func_001C4090(void) {
+void stage2_boss_draw_shoulder_turret_mount(void) {
     s32 sprite_draw_layer2_keep();
     u16 temp_a1;
     u16 temp_a3;
@@ -121,7 +121,7 @@ void func_001C4090(void) {
 
 extern u8 D_0026C3B0[];
 
-void func_001C4120(void) {
+void stage2_boss_draw_side_gun_a(void) {
     s32 sprite_draw_layer2_keep();
     u16 temp_a1;
     u16 temp_a3;
@@ -149,7 +149,7 @@ void func_001C4120(void) {
 
 extern u8 D_0026C370[];
 
-void func_001C41D0(void) {
+void stage2_boss_draw_side_gun_b(void) {
     s32 sprite_draw_layer2_keep();
     u16 temp_a1;
     u16 temp_a3;
@@ -177,7 +177,7 @@ void func_001C41D0(void) {
 
 extern u8 D_0026C3F0[];
 
-void func_001C4280(void) {
+void stage2_boss_draw_turret_2(void) {
     s32 sprite_draw_layer2_keep();
     u16 temp_a0;
 
@@ -198,7 +198,7 @@ void func_001C4280(void) {
     sprite_draw_layer2_keep();
 }
 
-void func_001C4320(void) {
+void stage2_boss_draw_turret_3(void) {
     s32 sprite_draw_layer2_keep();
     u16 temp_a0;
 
@@ -221,7 +221,7 @@ void func_001C4320(void) {
 
 extern u8 D_0026C470[];
 
-void func_001C43C0(void) {
+void stage2_boss_draw_shoulder_turret_a(void) {
     s32 sprite_draw_layer2_keep();
     u16 temp_a0;
 
@@ -242,7 +242,7 @@ void func_001C43C0(void) {
     sprite_draw_layer2_keep();
 }
 
-void func_001C4460(void) {
+void stage2_boss_draw_shoulder_turret_b(void) {
     s32 sprite_draw_layer2_keep();
     u16 temp_a0;
 
@@ -265,7 +265,7 @@ void func_001C4460(void) {
 
 extern u8 D_0026C4F0[];
 
-void func_001C4500(void) {
+void stage2_boss_draw_radome(void) {
     void sprite_draw_layer2_keep();
     reg_d0.w = 0;
     reg_a0 = D_0026C4F0;

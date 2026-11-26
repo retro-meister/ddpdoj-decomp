@@ -162,7 +162,7 @@ s32 boss_phase_start();
 s32 boss_movement_stop();
 s32 func_0013B2E0();
 s32 sprite_palette_load();
-s32 func_001CBBF0();
+s32 stage2_boss_radome_show();
 s32 entity_follow_scroll();
 extern u8 D_0025FCB0[];
 extern u8 g_boss_present;
@@ -207,7 +207,7 @@ void stage2_boss_move_enter(void) {
     g_boss_present_b1 |= 2;
     reg_d0.w = 3;
     boss_phase_start();
-    func_001CBBF0();
+    stage2_boss_radome_show();
     boss_movement_stop();
     reg_a0 = (u8 *)stage2_boss_enter_flash;
     func_0013B2E0();
@@ -305,7 +305,7 @@ void stage2_boss_move_dive_start(void) {
 }
 
 s32 boss_movement_start();
-s32 func_001CBBE0();
+s32 stage2_boss_shield_off();
 
 void stage2_boss_move_dive(void) {
     s32 direction_between();
@@ -324,7 +324,7 @@ void stage2_boss_move_dive(void) {
     if ((s16) reg_d0.h[0] < 0x101) {
         reg_d0.w = 5;
         boss_movement_start();
-        func_001CBBE0();
+        stage2_boss_shield_off();
     }
     reg_tmp.b[0] = GOAL(reg_a4)->pace.t.count;
     GOAL(reg_a4)->pace.t.count -= 1;

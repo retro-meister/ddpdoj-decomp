@@ -4,56 +4,6 @@
 #include "enemy.h"
 
 
-void func_001CBC10(void) {
-    reg_d0.h[0] = 0x8000;
-    ENTITY(reg_a6)[2].flags.h = (u16) reg_d0.h[0];
-    ENTITY(reg_a6)[3].flags.h = (u16) reg_d0.h[0];
-    ENTITY(reg_a6)[4].flags.h = (u16) reg_d0.h[0];
-    ENTITY(reg_a6)[5].flags.h = (u16) reg_d0.h[0];
-    ENTITY(reg_a6)[6].flags.h = (u16) reg_d0.h[0];
-    ENTITY(reg_a6)[7].flags.h = (u16) reg_d0.h[0];
-    ENTITY(reg_a6)[8].flags.h = (u16) reg_d0.h[0];
-}
-
-extern u32 reg_a6_as_u32;
-extern u32 reg_a0_as_u32;
-
-void func_001CBC70(void) {
-    reg_a0_as_u32 = reg_a6_as_u32;
-    reg_a0_as_u32 += reg_d0.h[0];
-    *(u16 *)reg_a0_as_u32 = 0xA000;
-}
-
-void func_001CBCA0(void) {
-    reg_a0_as_u32 = reg_a6_as_u32;
-    reg_a0_as_u32 += reg_d0.h[0];
-    *(u16 *)reg_a0_as_u32 = 0x8000;
-}
-
-void func_001CBCD0(void) {
-    ENTITY(reg_a6)[10].offset_y.sh = 1;
-}
-
-s32 func_001CB6B0();
-void active_players_mask(void);
-extern u16 g_enemies_stopped;
-
-void func_001CBCE0(void) {
-#ifdef DEATH_LABEL
-    if ((g_enemies_stopped == 0) && (STAGE2_BOSS(reg_a5)->leave_delay == 0)) {
-#else
-    if ((g_enemies_stopped == 0) && (STAGE2_BOSS(reg_a5)->leave_delay -= 1, STAGE2_BOSS(reg_a5)->leave_delay == 0)) {
-#endif
-        active_players_mask();
-        if (reg_d0.h[0] == 0) {
-            STAGE2_BOSS(reg_a5)->leave_delay = 0x78U;
-            return;
-        }
-        ENTITY(reg_a6)[10].draw.sh = 0;
-        func_001CB6B0();
-    }
-}
-
 /*
  * The stage 2 mid-boss, kind 0x8C. It has three attacks in turn: volleys from the hatch, which opens for them,
  * bursts from the two side guns, and spreads. Its second entity keeps the frame of the hatch in `look`, the
@@ -95,6 +45,7 @@ typedef struct {
 
 #define STAGE2_MIDBOSS(pointer) ((Stage2MidbossState *)(pointer))
 
+extern u16 g_enemies_stopped;
 void enemy_set_entity_count(s32);
 
 void stage2_midboss_first(void) {

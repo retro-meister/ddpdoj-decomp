@@ -195,20 +195,20 @@ void stage2_boss_mode_enter(void) {
 }
 
 s32 boss_movement_start();                            /* extern */
-s32 func_001CBBD0();                            /* extern */
-s32 func_001CBC70();                            /* extern */
-s32 func_001CBCA0();                            /* extern */
+s32 stage2_boss_shield_on();                            /* extern */
+s32 stage2_boss_part_take_hits();                            /* extern */
+s32 stage2_boss_part_stop_hits();                            /* extern */
 
 void stage2_boss_mode_second_phase_start(void) {
     reg_d0.w = 3;
     boss_movement_start();
     reg_d0.h[0] = 0x100;
-    func_001CBCA0();
+    stage2_boss_part_stop_hits();
     reg_d0.h[0] = 0;
-    func_001CBC70();
+    stage2_boss_part_take_hits();
     reg_d0.h[0] = 0x20;
-    func_001CBC70();
-    func_001CBBD0();
+    stage2_boss_part_take_hits();
+    stage2_boss_shield_on();
     SECOND_PHASE(reg_a4)->step = 0;
     SECOND_PHASE(reg_a4)->delay = 0x10;
     SECOND_PHASE(reg_a4)->effect_timer.h = 4;
@@ -221,7 +221,7 @@ typedef void (*Fn)();
 extern u8 D_0026C6C0[];
 s32 boss_phase_start();
 s32 boss_part_hide();
-s32 func_001CBA00();
+s32 stage2_boss_explosions_from_table();
 extern u8 D_0026C680[];
 
 void stage2_boss_mode_second_phase() {
@@ -229,7 +229,7 @@ void stage2_boss_mode_second_phase() {
         reg_a1 = D_0026C680;
         reg_d2.h[1] = ENTITY(reg_a6)->y.h;
         reg_d2.h[0] = ENTITY(reg_a6)->x.h;
-        func_001CBA00();
+        stage2_boss_explosions_from_table();
         SECOND_PHASE(reg_a4)->step = 1U;
     }
     if (SECOND_PHASE(reg_a4)->step == 1) {
@@ -539,7 +539,7 @@ void stage2_boss_mode_high_slow_start(void) {
 s32 boss_animation_stop();
 s32 boss_attack_start();
 s32 boss_attack_running();
-s32 func_001CBBE0();
+s32 stage2_boss_shield_off();
 s32 rng_next_masked();
 extern u16 D_0026C800[];
 extern u16 g_loop;
@@ -559,7 +559,7 @@ void stage2_boss_mode_high_slow() {
         if (temp_v1 != 0) {
             HIGH_SLOW(reg_a4)->delay = (u16) (temp_v1 - 1);
             if (HIGH_SLOW(reg_a4)->delay == 0) {
-                func_001CBBE0();
+                stage2_boss_shield_off();
                 if (g_loop != 0) {
                     reg_d0.w = 0xD;
                     boss_animation_stop();

@@ -2,14 +2,14 @@
 #include "entity.h"
 #include "stage2_boss.h"
 
-void func_001CB6B0(void);
-void func_001CB7E0(void);
-void func_001CB890(void);
-void func_001CB940(void);
-void func_001CBA00();
-void func_001CBB10(void);
+void stage2_boss_defeated(void);
+void stage2_boss_part2_blow_off(void);
+void stage2_boss_part3_blow_off(void);
+void stage2_boss_part4_blow_off(void);
+void stage2_boss_explosions_from_table();
+void stage2_boss_part5_blow_off(void);
 
-void func_001CA720(void) {
+void stage2_boss_damage_none(void) {
 }
 
 s32 boss_phase_start();
@@ -17,14 +17,14 @@ s32 boss_phase_stop_all();
 s32 boss_attack_stop_all();
 s32 score_add_no_chain();
 s32 score_add();
-s32 func_001CBCE0();
+void stage2_boss_leave_timer(void);
 s32 func_002016D0();
 s32 active_players_mask();
 extern u8 g_game_mode;
 extern s32 g_boss_score;
 extern u16 g_damage_blink_counter;
 
-void func_001CA730(void) {
+void stage2_boss_take_damage(void) {
     s32 m;
     u32 cnt;
     s32 h1;
@@ -167,7 +167,7 @@ next_110:
     goto next_130;
 next_120:
     g_boss_score = 0x40000;
-    func_001CB6B0();
+    stage2_boss_defeated();
     return;
 next_130:
     if (ENTITY(reg_a6)[2].flags.h == 0x8000) goto next_29;
@@ -194,7 +194,7 @@ next_22:
     reg_d1.h[0] = ENTITY(reg_a6)[10].draw.h;
     reg_d0.w = 0x800;
     score_add();
-    func_001CB7E0();
+    stage2_boss_part2_blow_off();
     goto next_29;
 next_25:
     ENTITY(reg_a6)[9].offset_x.b[0] = 0x11;
@@ -227,7 +227,7 @@ next_32:
     reg_d1.h[0] = ENTITY(reg_a6)[10].draw.h;
     reg_d0.w = 0x800;
     score_add();
-    func_001CB890();
+    stage2_boss_part3_blow_off();
     goto next_39;
 next_35:
     ENTITY(reg_a6)[9].draw.b.priority = 0x11;
@@ -260,7 +260,7 @@ next_42:
     reg_d1.h[0] = ENTITY(reg_a6)[10].draw.h;
     reg_d0.w = 0x800;
     score_add();
-    func_001CB940();
+    stage2_boss_part4_blow_off();
     goto next_49;
 next_45:
     ENTITY(reg_a6)[9].draw.b.flip = 0x12;
@@ -293,7 +293,7 @@ next_52:
     reg_d1.h[0] = ENTITY(reg_a6)[10].draw.h;
     reg_d0.w = 0x800;
     score_add();
-    func_001CBB10();
+    stage2_boss_part5_blow_off();
     goto next_59;
 next_55:
     ENTITY(reg_a6)[9].sprite.b[1] = 0x12;
@@ -437,10 +437,10 @@ next_710:
     boss_phase_stop_all();
     reg_d0.w = 1;
     boss_phase_start();
-    func_001CB7E0();
-    func_001CB890();
-    func_001CB940();
-    func_001CBB10();
+    stage2_boss_part2_blow_off();
+    stage2_boss_part3_blow_off();
+    stage2_boss_part4_blow_off();
+    stage2_boss_part5_blow_off();
     ENTITY(reg_a6)[9].sprite.b[0] = 0x13;
     ENTITY(reg_a6)[9].look.b.size = 0xD;
     ENTITY(reg_a6)[10].sprite.b[1] = 1;
@@ -456,23 +456,23 @@ next_720:
     reg_d0.w = 8;
     boss_phase_start();
 next_730:
-    func_001CBCE0();
+    stage2_boss_leave_timer();
 }
 
 s32 boss_animation_stop(s32, s32, s32, s32);
 s32 func_0013F3C0();
-s32 func_001CBCD0();
+void stage2_boss_stop_damage(void);
 s32 func_00203460();
 s32 slowdown_turn_off();
 extern u8 g_boss_present_b1;
 
-void func_001CB6B0(void) {
+void stage2_boss_defeated(void) {
     g_boss_present_b1 |= 0x40;
     g_boss_present_b1 |= 0x80;
     slowdown_turn_off();
     func_0013F3C0();
     func_00203460();
-    func_001CBCD0();
+    stage2_boss_stop_damage();
     boss_attack_stop_all();
     boss_phase_stop_all();
     reg_tmp.w = -1U;
@@ -503,7 +503,7 @@ void func_001CB6B0(void) {
 s32 boss_part_hide(s32, s32, s32);
 s32 explosion_spawn();
 
-void func_001CB7E0(void) {
+void stage2_boss_part2_blow_off(void) {
     if (ENTITY(reg_a6)[2].misc.b.draw_layer == 0) {
         ENTITY(reg_a6)[2].hp.h = 0xFFFF;
         ENTITY(reg_a6)[2].misc.b.draw_layer = 1U;
@@ -521,7 +521,7 @@ void func_001CB7E0(void) {
     }
 }
 
-void func_001CB890(void) {
+void stage2_boss_part3_blow_off(void) {
     if (ENTITY(reg_a6)[3].misc.b.draw_layer == 0) {
         ENTITY(reg_a6)[3].hp.h = 0xFFFF;
         ENTITY(reg_a6)[3].misc.b.draw_layer = 1U;
@@ -543,7 +543,7 @@ s32 explosion_burst_small(void *);
 s32 rng_next_unsigned();
 extern u8 D_0026CA80[];
 
-void func_001CB940(void) {
+void stage2_boss_part4_blow_off(void) {
     if (ENTITY(reg_a6)[4].misc.b.draw_layer == 0) {
         ENTITY(reg_a6)[4].hp.h = 0xFFFF;
         ENTITY(reg_a6)[4].misc.b.draw_layer = 1U;
@@ -554,7 +554,7 @@ void func_001CB940(void) {
         reg_a1 = D_0026CA80;
         reg_d2.h[1] = ENTITY(reg_a6)[4].y.h;
         reg_d2.h[0] = ENTITY(reg_a6)[4].x.h;
-        func_001CBA00();
+        stage2_boss_explosions_from_table();
         rng_next_unsigned();
         reg_d1.b[0] = reg_d0.b[0];
         reg_d2.h[1] = ENTITY(reg_a6)[4].y.h;
@@ -565,7 +565,7 @@ void func_001CB940(void) {
     }
 }
 
-void func_001CBA00(arg2)
+void stage2_boss_explosions_from_table(arg2)
     u16 *arg2;
 {
     u16 *var_a2;
@@ -602,7 +602,7 @@ loop_1:
 
 extern u8 D_0026CAB0[];
 
-void func_001CBB10(void) {
+void stage2_boss_part5_blow_off(void) {
     if (ENTITY(reg_a6)[5].misc.b.draw_layer == 0) {
         ENTITY(reg_a6)[5].hp.h = 0xFFFF;
         ENTITY(reg_a6)[5].misc.b.draw_layer = 1U;
@@ -613,7 +613,7 @@ void func_001CBB10(void) {
         reg_a1 = D_0026CAB0;
         reg_d2.h[1] = ENTITY(reg_a6)[5].y.h;
         reg_d2.h[0] = ENTITY(reg_a6)[5].x.h;
-        func_001CBA00();
+        stage2_boss_explosions_from_table();
         rng_next_unsigned();
         reg_d1.b[0] = reg_d0.b[0];
         reg_d2.h[1] = ENTITY(reg_a6)[5].y.h;
@@ -624,17 +624,65 @@ void func_001CBB10(void) {
     }
 }
 
-void func_001CBBD0(void) {
+void stage2_boss_shield_on(void) {
     ENTITY(reg_a6)[10].offset_x.sh = 1;
 }
 
-void func_001CBBE0(void) {
+void stage2_boss_shield_off(void) {
     ENTITY(reg_a6)[10].offset_x.sh = 0;
 }
 
-void func_001CBBF0(void) {
+void stage2_boss_radome_show(void) {
     reg_d0.h[0] = 0xA000;
     ENTITY(reg_a6)[8].flags.h |= reg_d0.h[0];
+}
+
+void stage2_boss_parts_stop_hits(void) {
+    reg_d0.h[0] = 0x8000;
+    ENTITY(reg_a6)[2].flags.h = (u16) reg_d0.h[0];
+    ENTITY(reg_a6)[3].flags.h = (u16) reg_d0.h[0];
+    ENTITY(reg_a6)[4].flags.h = (u16) reg_d0.h[0];
+    ENTITY(reg_a6)[5].flags.h = (u16) reg_d0.h[0];
+    ENTITY(reg_a6)[6].flags.h = (u16) reg_d0.h[0];
+    ENTITY(reg_a6)[7].flags.h = (u16) reg_d0.h[0];
+    ENTITY(reg_a6)[8].flags.h = (u16) reg_d0.h[0];
+}
+
+extern u32 reg_a6_as_u32;
+extern u32 reg_a0_as_u32;
+
+void stage2_boss_part_take_hits(void) {
+    reg_a0_as_u32 = reg_a6_as_u32;
+    reg_a0_as_u32 += reg_d0.h[0];
+    *(u16 *)reg_a0_as_u32 = 0xA000;
+}
+
+void stage2_boss_part_stop_hits(void) {
+    reg_a0_as_u32 = reg_a6_as_u32;
+    reg_a0_as_u32 += reg_d0.h[0];
+    *(u16 *)reg_a0_as_u32 = 0x8000;
+}
+
+void stage2_boss_stop_damage(void) {
+    ENTITY(reg_a6)[10].offset_y.sh = 1;
+}
+
+extern u16 g_enemies_stopped;
+
+void stage2_boss_leave_timer(void) {
+#ifdef DEATH_LABEL
+    if ((g_enemies_stopped == 0) && (STAGE2_BOSS(reg_a5)->leave_delay == 0)) {
+#else
+    if ((g_enemies_stopped == 0) && (STAGE2_BOSS(reg_a5)->leave_delay -= 1, STAGE2_BOSS(reg_a5)->leave_delay == 0)) {
+#endif
+        active_players_mask();
+        if (reg_d0.h[0] == 0) {
+            STAGE2_BOSS(reg_a5)->leave_delay = 0x78U;
+            return;
+        }
+        ENTITY(reg_a6)[10].draw.sh = 0;
+        stage2_boss_defeated();
+    }
 }
 
 u8 D_0026CA80[96] = {
