@@ -519,7 +519,11 @@ next_1:
 next_2:
     reg_d0.b[0] = *(s8 *)(direction_ratio_angles + reg_d0.h[0]);
     reg_d1.h[0] = *(s16 *)(direction_octant_bases + (reg_d4.h[0] & ~1));
+#ifdef DDPDOJ_PC
+    direction_octant_combines[reg_d4.h[0] >> 1]();
+#else
     ((Fn)*(u32 *)((u8 *)((u8 *)direction_octant_combines) + (((s32) reg_d4.h[0] >> 1) * 4)))();
+#endif
 block_rts:
     return;
 }
@@ -1012,14 +1016,14 @@ extern s16 *reg_save_atmp;
 
 void target_player_get(void)
 {
-    reg_a0 = (u8 *)((u32)((u8 *)g_player1));
+    reg_a0 = (u8 *)g_player1;
     cond_flag = 0;
-    reg_a1 = (u8 *)((u32)((u8 *)g_player2));
+    reg_a1 = (u8 *)g_player2;
 
-    if (((u8 *)((u32)reg_a5))[2] != 0) {
-        (*(u32 *)&reg_save_atmp) = (u32)reg_a1;
-        reg_a1 = (u8 *)(((u32)reg_a0));
-        reg_a0 = (u8 *)(*(u32 *)&reg_save_atmp);
+    if (reg_a5[2] != 0) {
+        reg_save_atmp = (s16 *)reg_a1;
+        reg_a1 = reg_a0;
+        reg_a0 = (u8 *)reg_save_atmp;
     }
 
     player_pair_pick_alive();

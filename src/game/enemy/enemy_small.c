@@ -157,7 +157,7 @@ void small_tank_smoke(void) {
     reg_d2.w += 0x13D8;
     reg_tmp.h[1] = SMALL_TANK(reg_a5)->draw_turret[0];
     reg_tmp.h[0] = SMALL_TANK(reg_a5)->draw_turret[1];
-    reg_a0 = (u8 *)reg_tmp.w;
+    reg_a0 = ARCADE_ADDRESS_DECODE(u8 *, reg_tmp.w);
     reg_call_target_as_u8_p = reg_a0;
     ((Fn)reg_call_target_as_u8_p)();
 }
@@ -463,7 +463,7 @@ next_6:
 next_7:
     reg_tmp.h[1] = SMALL_TANK(reg_a5)->draw_body[0];
     reg_tmp.h[0] = SMALL_TANK(reg_a5)->draw_body[1];
-    reg_a0 = (u8 *) reg_tmp.w;
+    reg_a0 = ARCADE_ADDRESS_DECODE(u8 *, reg_tmp.w);
     reg_call_target = (Fn)(reg_a0);
     reg_call_target();
     reg_a0 = reg_a6;
@@ -510,7 +510,7 @@ block_c:
     reg_d4.h[0] = ENTITY(reg_a6)->attr.h;
     reg_tmp.h[1] = SMALL_TANK(reg_a5)->draw_turret[0];
     reg_tmp.h[0] = SMALL_TANK(reg_a5)->draw_turret[1];
-    reg_a0 = (u8 *) reg_tmp.w;
+    reg_a0 = ARCADE_ADDRESS_DECODE(u8 *, reg_tmp.w);
     reg_call_target = (Fn)(reg_a0);
     reg_call_target();
     goto block_rts;
@@ -728,7 +728,7 @@ next_220:
 next_225:
     reg_tmp.h[1] = SMALL_TANK(reg_a5)->draw_body[0];
     reg_tmp.h[0] = SMALL_TANK(reg_a5)->draw_body[1];
-    reg_a0 = (u8 *) reg_tmp.w;
+    reg_a0 = ARCADE_ADDRESS_DECODE(u8 *, reg_tmp.w);
     reg_call_target = (Fn) reg_a0;
     reg_call_target();
     reg_a0 = reg_a6;
@@ -775,7 +775,7 @@ block_objset:
     reg_d4.h[0] = ENTITY(reg_a6)->attr.h;
     reg_tmp.h[1] = SMALL_TANK(reg_a5)->draw_turret[0];
     reg_tmp.h[0] = SMALL_TANK(reg_a5)->draw_turret[1];
-    reg_a0 = (u8 *) reg_tmp.w;
+    reg_a0 = ARCADE_ADDRESS_DECODE(u8 *, reg_tmp.w);
     reg_call_target = (Fn) reg_a0;
     reg_call_target();
 block_rts:

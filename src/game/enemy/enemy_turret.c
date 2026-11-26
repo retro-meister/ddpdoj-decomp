@@ -79,7 +79,7 @@ void mounted_tank_a_start(void) {
     reg_tmp.h[0] = (*(u16 *)((u8 *)(save_a5) + (8)));
     reg_a0 = (u8 *)D_00242020;
     reg_d7.w = 1;
-    reg_a4 = (u8 *)reg_tmp.w;
+    reg_a4 = ARCADE_ADDRESS_DECODE(u8 *, reg_tmp.w);
     enemy_init_entities_n();
     MOUNTED_TANK(reg_a6)->mount_y = (u16) *(u16 *)reg_a3;
     reg_a3 += 2;
@@ -214,7 +214,7 @@ void mounted_tank_a(void) {
     save_a6 = reg_a6;
     reg_tmp.h[1] = (*(u16 *)((u8 *)(save_a5) + (6)));
     reg_tmp.h[0] = (*(u16 *)((u8 *)(save_a5) + (8)));
-    reg_a4 = (u8 *)reg_tmp.w;
+    reg_a4 = ARCADE_ADDRESS_DECODE(u8 *, reg_tmp.w);
     if (*(s8 *)reg_a4 < 0) goto block_g;
     reg_d0.h[0] = *(u16 *)(reg_a4 + 2);
     reg_d1.h[0] = *(u16 *)(reg_a4 + 4);
@@ -244,7 +244,7 @@ next_3:
 block_a:
     reg_tmp.h[1] = MOUNTED_TANK(reg_a6)->draw_body[0];
     reg_tmp.h[0] = MOUNTED_TANK(reg_a6)->draw_body[1];
-    reg_a0 = (u8 *) reg_tmp.w;
+    reg_a0 = ARCADE_ADDRESS_DECODE(u8 *, reg_tmp.w);
     reg_call_target = (Fn)(reg_a0);
     reg_call_target();
     reg_a0 = reg_a6;
@@ -266,7 +266,7 @@ next_4:
     reg_d2.w += 0x13D8;
     reg_tmp.h[1] = MOUNTED_TANK(reg_a6)->draw_turret[0];
     reg_tmp.h[0] = MOUNTED_TANK(reg_a6)->draw_turret[1];
-    reg_a0 = (u8 *) reg_tmp.w;
+    reg_a0 = ARCADE_ADDRESS_DECODE(u8 *, reg_tmp.w);
     reg_call_target = (Fn)(reg_a0);
     reg_call_target();
 block_rts:
@@ -321,7 +321,7 @@ block_c:
     reg_d4.h[0] = ENTITY(reg_a6)->attr.h;
     reg_tmp.h[1] = MOUNTED_TANK(reg_a6)->draw_turret[0];
     reg_tmp.h[0] = MOUNTED_TANK(reg_a6)->draw_turret[1];
-    reg_a0 = (u8 *) reg_tmp.w;
+    reg_a0 = ARCADE_ADDRESS_DECODE(u8 *, reg_tmp.w);
     reg_call_target = (Fn)(reg_a0);
     reg_call_target();
     reg_d0.w = save_d0;
@@ -476,7 +476,7 @@ block_h:
     ENTITY(reg_a6)->hit_x_plus.b[1] = (u8) ENTITY(reg_a6)->hit_x_plus.b[0];
     reg_tmp.h[1] = ENTITY(reg_a6)->hit_y_plus.h;
     reg_tmp.h[0] = ENTITY(reg_a6)->hit_y_minus.h;
-    reg_a0 = (u8 *) reg_tmp.w;
+    reg_a0 = ARCADE_ADDRESS_DECODE(u8 *, reg_tmp.w);
     reg_d0.h[0] = ENTITY(reg_a6)->hit_x_minus.h;
     ENTITY(reg_a6)->draw.h = (reg_d0.h[0] != 0) ? *(u16 *)((u8 *)reg_a0 + ((s16)reg_d0.h[0] & ~1)) : *(u16 *)reg_a0;
     ENTITY(reg_a6)->sprite.h = ((reg_d0.h[0] + 2) != 0) ? *(u16 *)((u8 *)reg_a0 + ((s16)(reg_d0.h[0] + 2) & ~1)) : *(u16 *)reg_a0;
@@ -487,7 +487,7 @@ block_h:
 next_9:
     reg_tmp.h[1] = MOUNTED_TANK(reg_a6)->draw_body[0];
     reg_tmp.h[0] = MOUNTED_TANK(reg_a6)->draw_body[1];
-    reg_a0 = (u8 *) reg_tmp.w;
+    reg_a0 = ARCADE_ADDRESS_DECODE(u8 *, reg_tmp.w);
     reg_call_target = (Fn)(reg_a0);
     reg_call_target();
     reg_d0.w = save_d0;
@@ -551,7 +551,7 @@ void mounted_tank_b_start(void) {
     reg_tmp.h[0] = (*(u16 *)((u8 *)(save_a5) + (8)));
     reg_a0 = (u8 *)D_00242070;
     reg_d7.w = 1;
-    reg_a4 = (u8 *)reg_tmp.w;
+    reg_a4 = ARCADE_ADDRESS_DECODE(u8 *, reg_tmp.w);
     enemy_init_entities_n();
     MOUNTED_TANK(reg_a6)->mount_y = (u16) *(u16 *)reg_a3;
     reg_a3 += 2;
@@ -667,7 +667,7 @@ void mounted_tank_b(void) {
     save_a6 = reg_a6;
     reg_tmp.h[1] = (*(u16 *)((u8 *)(save_a5) + (6)));
     reg_tmp.h[0] = (*(u16 *)((u8 *)(save_a5) + (8)));
-    reg_a4 = (u8 *)reg_tmp.w;
+    reg_a4 = ARCADE_ADDRESS_DECODE(u8 *, reg_tmp.w);
     reg_d0.h[0] = *(u16 *)(reg_a4 + 2);
     reg_d1.h[0] = *(u16 *)(reg_a4 + 4);
     reg_d0.h[0] += MOUNTED_TANK(reg_a6)->mount_y;
@@ -696,7 +696,7 @@ next_3:
 block_a:
     reg_tmp.h[1] = MOUNTED_TANK(reg_a6)->draw_body[0];
     reg_tmp.h[0] = MOUNTED_TANK(reg_a6)->draw_body[1];
-    reg_a0 = (u8 *) reg_tmp.w;
+    reg_a0 = ARCADE_ADDRESS_DECODE(u8 *, reg_tmp.w);
     reg_call_target = (Fn)(reg_a0);
     reg_call_target();
     reg_a0 = reg_a6;
@@ -718,7 +718,7 @@ next_4:
     reg_d2.w += 0x13D8;
     reg_tmp.h[1] = MOUNTED_TANK(reg_a6)->draw_turret[0];
     reg_tmp.h[0] = MOUNTED_TANK(reg_a6)->draw_turret[1];
-    reg_a0 = (u8 *) reg_tmp.w;
+    reg_a0 = ARCADE_ADDRESS_DECODE(u8 *, reg_tmp.w);
     reg_call_target = (Fn)(reg_a0);
     reg_call_target();
 block_rts:
@@ -773,7 +773,7 @@ block_c:
     reg_d4.h[0] = ENTITY(reg_a6)->attr.h;
     reg_tmp.h[1] = MOUNTED_TANK(reg_a6)->draw_turret[0];
     reg_tmp.h[0] = MOUNTED_TANK(reg_a6)->draw_turret[1];
-    reg_a0 = (u8 *) reg_tmp.w;
+    reg_a0 = ARCADE_ADDRESS_DECODE(u8 *, reg_tmp.w);
     reg_call_target = (Fn)(reg_a0);
     reg_call_target();
     reg_d0.w = save_d0;
@@ -906,7 +906,7 @@ block_h:
     ENTITY(reg_a6)->hit_x_plus.b[1] = (u8) ENTITY(reg_a6)->hit_x_plus.b[0];
     reg_tmp.h[1] = ENTITY(reg_a6)->hit_y_plus.h;
     reg_tmp.h[0] = ENTITY(reg_a6)->hit_y_minus.h;
-    reg_a0 = (u8 *) reg_tmp.w;
+    reg_a0 = ARCADE_ADDRESS_DECODE(u8 *, reg_tmp.w);
     reg_d0.h[0] = ENTITY(reg_a6)->hit_x_minus.h;
     ENTITY(reg_a6)->draw.h = (reg_d0.h[0] != 0) ? *(u16 *)((u8 *)reg_a0 + ((s16)reg_d0.h[0] & ~1)) : *(u16 *)reg_a0;
     ENTITY(reg_a6)->sprite.h = ((reg_d0.h[0] + 2) != 0) ? *(u16 *)((u8 *)reg_a0 + ((s16)(reg_d0.h[0] + 2) & ~1)) : *(u16 *)reg_a0;
@@ -917,7 +917,7 @@ block_h:
 next_9:
     reg_tmp.h[1] = MOUNTED_TANK(reg_a6)->draw_body[0];
     reg_tmp.h[0] = MOUNTED_TANK(reg_a6)->draw_body[1];
-    reg_a0 = (u8 *) reg_tmp.w;
+    reg_a0 = ARCADE_ADDRESS_DECODE(u8 *, reg_tmp.w);
     reg_call_target = (Fn)(reg_a0);
     reg_call_target();
     reg_d0.w = save_d0;

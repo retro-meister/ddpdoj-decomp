@@ -2758,7 +2758,7 @@ void battleship_b_fire(void) {
     reg_a0 += reg_d0.h[0];
     reg_tmp.h[1] = *(u16 *)reg_a0;
     reg_tmp.h[0] = *(u16 *)(reg_a0 + 2);
-    reg_call_target_as_u8_p = (u8 *)reg_tmp.w;
+    reg_call_target_as_u8_p = ARCADE_ADDRESS_DECODE(u8 *, reg_tmp.w);
     ((Fn)reg_call_target_as_u8_p)();
 }
 
@@ -3226,7 +3226,7 @@ void battleship_c_fire(void) {
     reg_a0 += reg_d0.h[0];
     reg_tmp.h[1] = *(u16 *)reg_a0;
     reg_tmp.h[0] = *(u16 *)(reg_a0 + 2);
-    reg_call_target_as_u8_p = (u8 *)reg_tmp.w;
+    reg_call_target_as_u8_p = ARCADE_ADDRESS_DECODE(u8 *, reg_tmp.w);
     ((Fn)reg_call_target_as_u8_p)();
 }
 
@@ -3794,7 +3794,7 @@ block_11:
         reg_tmp.h[1] = *(u16 *)reg_a0;
         reg_tmp.h[0] = *(u16 *)(reg_a0 + 2);
         reg_d0.w = 0;
-        reg_a0 = (u8 *) reg_tmp.w;
+        reg_a0 = ARCADE_ADDRESS_DECODE(u8 *, reg_tmp.w);
         reg_d0.b[0] = HOVER_GUNNER(reg_a5)->turret_dir;
         reg_d0.b[0] += 1;
         reg_d0.h[0] &= 0x3E;
@@ -3916,12 +3916,12 @@ void small_tank_c_start(void) {
         SMALL_TANK(reg_a5)->palette = *(s8 *)reg_a0;
         reg_a0 += 1;
         SMALL_TANK(reg_a5)->hit_palette = *(s8 *)reg_a0;
-        reg_tmp.w = (u32) (void *)entity_draw_layer2;
+        reg_tmp.w = ARCADE_ADDRESS_ENCODE((void *)entity_draw_layer2);
         temp_a2 = (u16 *)(reg_a0 + 1);
         reg_a0 = (u8 *)(temp_a2);
         SMALL_TANK(reg_a5)->draw_body[0] = (u16) reg_tmp.h[1];
         SMALL_TANK(reg_a5)->draw_body[1] = (u16) reg_tmp.h[0];
-        reg_tmp.w = (u32) (void *)sprite_draw_layer2;
+        reg_tmp.w = ARCADE_ADDRESS_ENCODE((void *)sprite_draw_layer2);
         SMALL_TANK(reg_a5)->draw_turret[0] = (u16) reg_tmp.h[1];
         SMALL_TANK(reg_a5)->draw_turret[1] = (u16) reg_tmp.h[0];
         reg_d0.h[0] = g_scroll_line;
@@ -4005,7 +4005,7 @@ skip_2:
 block_obj:
     reg_tmp.h[1] = SMALL_TANK(reg_a5)->draw_body[0];
     reg_tmp.h[0] = SMALL_TANK(reg_a5)->draw_body[1];
-    reg_a0 = (u8 *)reg_tmp.w;
+    reg_a0 = ARCADE_ADDRESS_DECODE(u8 *, reg_tmp.w);
     reg_call_target = (Fn)reg_a0;
     reg_call_target();
     reg_a0 = reg_a6;
@@ -4061,7 +4061,7 @@ block_turret_obj:
     reg_d4.h[0] = ENTITY(reg_a6)->attr.h;
     reg_tmp.h[1] = SMALL_TANK(reg_a5)->draw_turret[0];
     reg_tmp.h[0] = SMALL_TANK(reg_a5)->draw_turret[1];
-    reg_a0 = (u8 *)reg_tmp.w;
+    reg_a0 = ARCADE_ADDRESS_DECODE(u8 *, reg_tmp.w);
     reg_call_target = (Fn)reg_a0;
     reg_call_target();
     return;

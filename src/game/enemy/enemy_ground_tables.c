@@ -9,7 +9,9 @@ extern u16 D_0028C9BC[2];
 extern u16 battleship_c_volley_update_table[4];
 extern u16 ground_pointer_rows_fill_table[4];
 extern u16 ground_pointer_rows_fill_table_2[4];
+#ifndef DDPDOJ_PC
 extern u16 D_0028C9D8[2];
+#endif
 extern u16 D_0028C9DC[2];
 struct D00257c10Record {
     u16 w0[94];
@@ -57,6 +59,11 @@ u16 ground_pointer_rows_fill_table_2[4] = {
     0x28D8, 0x24DC, 0x20E0, 0x0000,
 };
 
+#ifdef DDPDOJ_PC
+u16 D_0028C9D8[4] = {
+    0x0000, 0x0001, 0x0002, 0x0003,
+};
+#else
 u16 D_0028C9D8[2] = {
     0x0000, 0x0001,
 };
@@ -64,6 +71,7 @@ u16 D_0028C9D8[2] = {
 u16 D_0028C9DC[2] = {
     0x0002, 0x0003,
 };
+#endif
 
 #ifdef DDPDOJ_PC
 #include "pc_data_alias.h"
