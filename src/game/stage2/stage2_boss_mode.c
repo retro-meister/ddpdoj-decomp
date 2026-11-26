@@ -154,6 +154,75 @@ void (*stage2_boss_mode_routines[])(void) = {
     0,
 };
 
+void sfx_explosion_air_small();
+void sfx_explosion_air_medium();
+void sfx_explosion_ground_small();
+void sfx_explosion_ground_medium();
+
+s16 stage2_boss_second_phase_blasts[32] = {
+    BLAST(0, 0x09, 0, -0x800, 0xCC0),
+    BLAST(2, 0x05, 0, -0xC00, 0x600),
+    BLAST(4, 0x05, 0, -0xA00, -0x680),
+    BLAST(0, 0x09, 0, -0x800, -0xCC0),
+    BLAST_END,
+};
+
+void (*stage2_boss_blast_sounds[8])(void) = {
+    sfx_explosion_air_small,
+    sfx_explosion_air_medium,
+    sfx_explosion_air_small,
+    sfx_explosion_air_medium,
+    sfx_explosion_ground_small,
+    sfx_explosion_air_small,
+    sfx_explosion_ground_medium,
+    sfx_explosion_ground_small,
+};
+
+s16 stage2_boss_final_blasts[88] = {
+    BLAST_NOW(0x09, 0, 0, 0),
+    BLAST_NOW(0x85, 0, -0x1800, 0xA00),
+    BLAST_NOW(0x0C, 0, -0x1000, -0x600),
+    BLAST_NOW(0x85, 0, -0x2400, -0x200),
+    BLAST_NOW(0x09, 0, -0x400, 0x800),
+    BLAST_NOW(0x8C, 0, 0x800, -0xA00),
+    BLAST_NOW(0x09, 0, -0x800, -0xC00),
+    BLAST_NOW(0x85, 0, -0x1C00, 0xC00),
+    BLAST_NOW(0x09, 0, 0, 0),
+    BLAST_NOW(0x85, 0, -0x1800, -0xA00),
+    BLAST_NOW(0x0C, 0, -0x1000, 0x600),
+    BLAST_NOW(0x85, 0, -0x2400, 0x200),
+    BLAST_NOW(0x09, 0, -0x400, -0x800),
+    BLAST_NOW(0x8C, 0, 0x800, 0xA00),
+    BLAST_NOW(0x09, 0, -0x800, 0xC00),
+    BLAST_NOW(0x85, 0, -0x1C00, -0xC00),
+    BLAST_END,
+};
+
+u16 stage2_boss_flash_palettes[16] = {
+    0x0002, 0x7FFF, 0x0000, 0x0780, 0x0004, 0x0005, 0x001F, 0x0004,
+    0x7FFF, 0x0008, 0x0400, 0x000B, 0x000C, 0x001F, 0x0004, 0x0000,
+};
+
+u16 stage2_boss_fade_palettes[40] = {
+    0x0006, 0x0000, 0x0400, 0x0003, 0x0004, 0x001F, 0x0014, 0x0000,
+    0x0440, 0x0009, 0x000A, 0x001F, 0x0014, 0x0000, 0x0480, 0x000F,
+    0x0010, 0x001F, 0x0014, 0x0000, 0x05C0, 0x0015, 0x0016, 0x001F,
+    0x0014, 0x0000, 0x0340, 0x001B, 0x001C, 0x001F, 0x0014, 0x0000,
+    0x04C0, 0x0021, 0x0022, 0x001F, 0x0014, 0x0000, 0x0000, 0x0000,
+};
+
+/* attack, shots */
+u16 stage2_boss_high_slow_attacks[4][2] = {
+    { 6, 0x40 },
+    { 7, 0xA0 },
+    { 8, 0x40 },
+    { 9, 0x30 },
+};
+
+u16 stage2_boss_rise_sway_waypoints[8] = {
+    0x4600, 0x3800, 0x5600, 0x0800, 0x6400, 0x1C00, 0xFFFF, 0x0000,
+};
+
 void stage2_boss_mode_enter(void);
 void stage2_boss_mode_second_phase();
 void stage2_boss_mode_final_explosion();
@@ -212,15 +281,13 @@ void stage2_boss_mode_second_phase_start(void) {
 
 typedef void (*Fn)();
 
-extern u8 D_0026C6C0[];
 s32 boss_phase_start();
 s32 boss_part_hide();
 s32 stage2_boss_explosions_from_table();
-extern u8 D_0026C680[];
 
 void stage2_boss_mode_second_phase() {
     if (SECOND_PHASE(reg_a4)->step == 0) {
-        reg_a1 = D_0026C680;
+        reg_a1 = (u8 *)stage2_boss_second_phase_blasts;
         reg_d2.h[1] = ENTITY(reg_a6)->y.h;
         reg_d2.h[0] = ENTITY(reg_a6)->x.h;
         stage2_boss_explosions_from_table();
@@ -231,7 +298,7 @@ void stage2_boss_mode_second_phase() {
         SECOND_PHASE(reg_a4)->effect_timer.t.count -= 1;
         if ((s32) reg_tmp.b[0] <= 0) {
             SECOND_PHASE(reg_a4)->effect_timer.t.count = (u8) SECOND_PHASE(reg_a4)->effect_timer.t.reload;
-            reg_a0 = D_0026C6C0;
+            reg_a0 = (u8 *)stage2_boss_blast_sounds;
             reg_a0 += SECOND_PHASE(reg_a4)->effect;
             reg_a0 = *(u8 **)reg_a0;
             reg_call_target = (Fn)(reg_a0);
@@ -252,12 +319,11 @@ void stage2_boss_mode_second_phase() {
 
 s32 boss_movement_start();                            /* extern */
 s32 func_0013B8B0();                            /* extern */
-extern s32 D_0026C7B0[];
 
 void stage2_boss_mode_final_explosion_start(void) {
     reg_d0.w = 1;
     boss_movement_start();
-    reg_a0 = (u8 *)D_0026C7B0;
+    reg_a0 = (u8 *)stage2_boss_fade_palettes;
     func_0013B8B0();
     FINAL_EXPLOSION(reg_a4)->step = 0;
     FINAL_EXPLOSION(reg_a4)->blast_timer.h = 0x101;
@@ -270,7 +336,6 @@ void stage2_boss_mode_final_explosion_start(void) {
     stage2_boss_mode_final_explosion(0x2020, 1, 0x101);
 }
 
-extern u8 D_0026C790[];
 
 s32 boss_slots_end();
 s32 boss_part_hide_all();
@@ -279,12 +344,11 @@ s32 boss_flash_running();
 s32 explosion_spawn();
 s32 explosion_burst_medium();
 s32 func_0013B2E0();
-s32 sfx_explosion_ground_medium();
+void sfx_explosion_ground_medium();
 s32 sfx_explosion_boss();
 s32 rng_next();
 s32 rng_next_unsigned();
 s32 rng_next_word();
-extern u16 D_0026C6E0[];
 
 void stage2_boss_mode_final_explosion() {
     u16 *t1;
@@ -314,7 +378,7 @@ block_rts:
     } else {
         if (t7 == 3) {
             reg_d6.w = 0;
-            reg_a1 = (u8 *)(D_0026C6E0);
+            reg_a1 = (u8 *)(stage2_boss_final_blasts);
 loop_6:
             t3 = *(u16 *)reg_a1;
             reg_d0.h[0] = t3;
@@ -364,7 +428,7 @@ loop_6:
         if (t9 == 2) {
             boss_flash_running();
             if (cond_flag == 0) {
-                reg_a0 = (u8 *)D_0026C790;
+                reg_a0 = (u8 *)stage2_boss_flash_palettes;
                 func_0013B2E0();
                 boss_part_hide_all();
                 FINAL_EXPLOSION(reg_a4)->step = 3U;
@@ -417,7 +481,7 @@ loop_6:
                 FINAL_EXPLOSION(reg_a4)->effect_timer.t.count -= 1;
                 if ((s32) reg_tmp.b[0] <= 0) {
                     FINAL_EXPLOSION(reg_a4)->effect_timer.t.count = (u8) FINAL_EXPLOSION(reg_a4)->effect_timer.t.reload;
-                    reg_a0 = (u8 *)D_0026C6C0;
+                    reg_a0 = (u8 *)stage2_boss_blast_sounds;
                     reg_a0 += FINAL_EXPLOSION(reg_a4)->effect;
                     reg_a0 = *(u8 **)reg_a0;
                     reg_call_target = (Fn)(reg_a0);
@@ -425,7 +489,7 @@ loop_6:
                     FINAL_EXPLOSION(reg_a4)->effect += 4;
                     FINAL_EXPLOSION(reg_a4)->effect &= 0x1F;
                 }
-                reg_a1 = (u8 *)(D_0026C6E0);
+                reg_a1 = (u8 *)(stage2_boss_final_blasts);
                 reg_a1 += FINAL_EXPLOSION(reg_a4)->blast;
                 reg_d0.h[0] = *(u16 *)reg_a1;
                 reg_a1 += 2;
@@ -468,7 +532,7 @@ loop_6:
             FINAL_EXPLOSION(reg_a4)->effect_timer.t.count -= 1;
             if ((s32) reg_tmp.b[0] <= 0) {
                 FINAL_EXPLOSION(reg_a4)->effect_timer.t.count = (u8) FINAL_EXPLOSION(reg_a4)->effect_timer.t.reload;
-                reg_a0 = (u8 *)D_0026C6C0;
+                reg_a0 = (u8 *)stage2_boss_blast_sounds;
                 reg_a0 += FINAL_EXPLOSION(reg_a4)->effect;
                 reg_a0 = *(u8 **)reg_a0;
                 reg_call_target = (Fn)(reg_a0);
@@ -480,7 +544,7 @@ loop_6:
             FINAL_EXPLOSION(reg_a4)->blast_timer.t.count -= 1;
             if ((s32) reg_tmp.b[0] <= 0) {
                 FINAL_EXPLOSION(reg_a4)->blast_timer.t.count = (u8) FINAL_EXPLOSION(reg_a4)->blast_timer.t.reload;
-                reg_a1 = (u8 *)(D_0026C6E0);
+                reg_a1 = (u8 *)(stage2_boss_final_blasts);
                 reg_a1 += FINAL_EXPLOSION(reg_a4)->blast;
                 reg_d0.h[0] = *(u16 *)reg_a1;
                 reg_a1 += 2;
@@ -535,7 +599,6 @@ s32 boss_attack_start();
 s32 boss_attack_running();
 s32 stage2_boss_shield_off();
 s32 rng_next_masked();
-extern u16 D_0026C800[];
 extern u16 g_loop;
 
 void stage2_boss_mode_high_slow() {
@@ -589,7 +652,7 @@ void stage2_boss_mode_high_slow() {
                             reg_d0.h[0] &= 3;
                         } while (HIGH_SLOW(reg_a4)->last_attack == reg_d0.h[0]);
                         HIGH_SLOW(reg_a4)->last_attack = (u16) reg_d0.h[0];
-                        reg_a1 = (u8 *)(D_0026C800);
+                        reg_a1 = (u8 *)(stage2_boss_high_slow_attacks);
                         reg_d0.h[0] += reg_d0.h[0];
                         reg_d0.h[0] += reg_d0.h[0];
                         reg_a1 += reg_d0.h[0];
@@ -995,14 +1058,13 @@ void stage2_boss_mode_rise() {
     }
 }
 
-extern u8 D_0026C810[];
 
 void stage2_boss_mode_rise_sway_start(void) {
     RISE_SWAY(reg_a4)->step = 0;
     RISE_SWAY(reg_a4)->started = 0;
     RISE_SWAY(reg_a4)->waypoint = 0;
     RISE_SWAY(reg_a4)->delay = 0x20;
-    reg_tmp.w = (u32) D_0026C810;
+    reg_tmp.w = (u32) stage2_boss_rise_sway_waypoints;
     ENEMY_STATE(reg_a5)->entities[1] = (u16) reg_tmp.h[1];
     ENEMY_STATE(reg_a5)->line_step = (u16) reg_tmp.h[0];
     RISE_SWAY(reg_a4)->side = 1;

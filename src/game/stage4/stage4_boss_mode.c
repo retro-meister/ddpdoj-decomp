@@ -55,6 +55,81 @@ void (*stage4_boss_mode_routines[])(void) = {
     0,
 };
 
+void sfx_explosion_air_small();
+void sfx_explosion_air_medium();
+void sfx_explosion_ground_small();
+void sfx_explosion_ground_medium();
+
+void (*stage4_boss_blast_sounds[8])(void) = {
+    sfx_explosion_air_small,
+    sfx_explosion_air_medium,
+    sfx_explosion_air_small,
+    sfx_explosion_air_medium,
+    sfx_explosion_ground_small,
+    sfx_explosion_air_small,
+    sfx_explosion_ground_medium,
+    sfx_explosion_ground_small,
+};
+
+s16 stage4_boss_second_form_blasts_a[16] = {
+    BLAST(0, 0x05, 0, 0, 0),
+    BLAST(0, 0x08, 0, 0, 0),
+    BLAST_END,
+};
+
+s16 stage4_boss_second_form_blasts_b[8] = {
+    BLAST(0, 0x05, 0, 0, 0),
+    BLAST_END,
+};
+
+s16 stage4_boss_second_form_blasts_c[32] = {
+    BLAST(4, 0x08, 0, 0x800, 0x400),
+    BLAST(8, 0x85, 0, 0, 0x200),
+    BLAST(0, 0x8D, 0, -0x800, 0),
+    BLAST(0xC, 0x08, 0x40, -0x1000, -0x400),
+    BLAST(0x10, 0x85, 0, -0x1800, -0x400),
+    BLAST_END,
+};
+
+s16 stage4_boss_second_form_blasts_d[40] = {
+    BLAST(4, 0x08, 0, 0x800, 0x400),
+    BLAST(2, 0x85, 0, 0, -0x800),
+    BLAST(0, 0x8D, 0, -0x800, 0),
+    BLAST(6, 0x08, 0x40, -0x1000, -0x400),
+    BLAST(8, 0x85, 0, -0x1800, -0x800),
+    BLAST(7, 0x85, 0, -0x1400, 0xA00),
+    BLAST_END,
+};
+
+u16 stage4_boss_flash_palettes[16] = {
+    0x0002, 0x7FFF, 0x0000, 0x0780, 0x0004, 0x0005, 0x001F, 0x0004,
+    0x7FFF, 0x0008, 0x0140, 0x000B, 0x000C, 0x001F, 0x0004, 0x0000,
+};
+
+u16 stage4_boss_fade_palettes[8] = {
+    0x0001, 0x0000, 0x04C0, 0x0003, 0x0004, 0x001F, 0x0014, 0x0000,
+};
+
+s16 stage4_boss_final_blasts[40] = {
+    BLAST(2, 0x08, 0, 0x800, 0x400),
+    BLAST(4, 0x85, 0, 0, 0x200),
+    BLAST(0, 0x8D, 0, -0x800, 0),
+    BLAST(6, 0x08, 0x40, -0x1000, -0x400),
+    BLAST(8, 0x85, 0, -0x1800, -0x400),
+    BLAST(0xA, 0x8D, 0, -0x1800, 0x800),
+    BLAST_END,
+};
+
+s16 stage4_boss_final_blast_series[40] = {
+    BLAST(0, 0x08, 0, 0x800, 0x400),
+    BLAST(0, 0x85, 0, 0, 0x200),
+    BLAST(0, 0x8D, 0, -0x800, 0),
+    BLAST(0, 0x08, 0x40, -0x1000, -0x400),
+    BLAST(0, 0x85, 0, -0x1800, -0x400),
+    BLAST(0, 0x8D, 0, -0x1800, 0x800),
+    BLAST_END,
+};
+
 void stage4_boss_mode_enter(void);
 void stage4_boss_mode_second_form();
 void stage4_boss_mode_final_explosion();
@@ -186,14 +261,10 @@ void stage4_boss_mode_second_form_start(void) {
 
 s32 boss_part_hide();
 s32 explosion_burst_small();
-s32 sfx_explosion_air_small();
-s32 sfx_explosion_air_medium();
-s32 sfx_explosion_ground_medium();
+void sfx_explosion_air_small();
+void sfx_explosion_air_medium();
+void sfx_explosion_ground_medium();
 s32 sfx_explosion_ground_large();
-extern u8 D_0026F260[];
-extern u8 D_0026F280[];
-extern u8 D_0026F290[];
-extern u8 D_0026F2D0[];
 
 void stage4_boss_mode_second_form() {
     u16 temp_a0_4;
@@ -272,7 +343,7 @@ void stage4_boss_mode_second_form() {
             EXPLODING(reg_a4)->burst_a.t.count = 0U;
             reg_d2.h[1] = ENTITY(reg_a6)[8].y.h;
             reg_d2.h[0] = ENTITY(reg_a6)[8].x.h;
-            reg_a1 = (u8 *)D_0026F260;
+            reg_a1 = (u8 *)stage4_boss_second_form_blasts_a;
             stage4_boss_explosions_from_table();
             reg_d0.w = 5;
             boss_part_hide();
@@ -294,11 +365,11 @@ void stage4_boss_mode_second_form() {
             explosion_burst_small();
             reg_d2.h[1] = ENTITY(reg_a6)[6].y.h;
             reg_d2.h[0] = ENTITY(reg_a6)[6].x.h;
-            reg_a1 = (u8 *)D_0026F280;
+            reg_a1 = (u8 *)stage4_boss_second_form_blasts_b;
             stage4_boss_explosions_from_table();
             reg_d2.h[1] = ENTITY(reg_a6)[7].y.h;
             reg_d2.h[0] = ENTITY(reg_a6)[7].x.h;
-            reg_a1 = (u8 *)D_0026F280;
+            reg_a1 = (u8 *)stage4_boss_second_form_blasts_b;
             stage4_boss_explosions_from_table();
             reg_d0.w = 3;
             boss_part_hide();
@@ -316,7 +387,7 @@ void stage4_boss_mode_second_form() {
             sfx_explosion_air_medium();
             reg_d2.h[1] = ENTITY(reg_a6)[3].y.h;
             reg_d2.h[0] = ENTITY(reg_a6)[3].x.h;
-            reg_a1 = (u8 *)D_0026F290;
+            reg_a1 = (u8 *)stage4_boss_second_form_blasts_c;
             stage4_boss_explosions_from_table();
             reg_d0.w = 2;
             boss_part_hide();
@@ -352,7 +423,7 @@ void stage4_boss_mode_second_form() {
             explosion_burst_small();
             reg_d2.h[1] = ENTITY(reg_a6)[2].y.h;
             reg_d2.h[0] = ENTITY(reg_a6)[2].x.h;
-            reg_a1 = (u8 *)D_0026F2D0;
+            reg_a1 = (u8 *)stage4_boss_second_form_blasts_d;
             stage4_boss_explosions_from_table();
             reg_d0.w = 1;
             boss_part_hide();
@@ -365,12 +436,11 @@ void stage4_boss_mode_second_form() {
 }
 
 s32 func_0013B8B0();
-extern u8 D_0026F340[];
 
 void stage4_boss_mode_final_explosion_start(void) {
     reg_d0.w = 5;
     boss_movement_start();
-    reg_a0 = D_0026F340;
+    reg_a0 = (u8 *)stage4_boss_fade_palettes;
     func_0013B8B0();
     EXPLODING(reg_a4)->step = 0;
     EXPLODING(reg_a4)->wait = 0x10;
@@ -460,9 +530,6 @@ s32 boss_flash_start();
 s32 boss_flash_running();
 s32 func_0013B2E0();
 s32 sfx_explosion_boss();
-extern u8 D_0026F320[];
-extern u16 D_0026F350[];
-extern u16 D_0026F3A0[];
 
 void stage4_boss_final_explosion_step(arg1)
     s32 arg1;
@@ -481,11 +548,11 @@ void stage4_boss_final_explosion_step(arg1)
     if (EXPLODING(reg_a4)->step == 4) {
         reg_d2.h[1] = ENTITY(reg_a6)[1].y.h;
         reg_d2.h[0] = ENTITY(reg_a6)[1].x.h;
-        reg_a1 = (u8 *)(D_0026F350);
+        reg_a1 = (u8 *)(stage4_boss_final_blasts);
         stage4_boss_explosions_from_table();
         reg_d2.h[1] = ENTITY(reg_a6)[1].y.h;
         reg_d2.h[0] = ENTITY(reg_a6)[1].x.h;
-        reg_a1 = (u8 *)(D_0026F350);
+        reg_a1 = (u8 *)(stage4_boss_final_blasts);
         stage4_boss_explosions_scattered();
         rng_next();
         reg_d0.h[0] = (s16) reg_d0.h[0] * 2;
@@ -518,7 +585,7 @@ void stage4_boss_final_explosion_step(arg1)
     if (temp_a0_3 == 3) {
         boss_flash_running();
         if (cond_flag == 0) {
-            reg_a0 = (u8 *)D_0026F320;
+            reg_a0 = (u8 *)stage4_boss_flash_palettes;
             func_0013B2E0();
             EXPLODING(reg_a4)->step = 4U;
         }
@@ -530,7 +597,7 @@ void stage4_boss_final_explosion_step(arg1)
         EXPLODING(reg_a4)->blast_timer.t.count -= 1;
         if ((s32) reg_tmp.b[0] <= 0) {
             EXPLODING(reg_a4)->blast_timer.t.count = (u8) EXPLODING(reg_a4)->blast_timer.t.reload;
-            reg_a1 = (u8 *)(D_0026F3A0);
+            reg_a1 = (u8 *)(stage4_boss_final_blast_series);
             reg_a1 += EXPLODING(reg_a4)->blast;
             reg_d1.h[0] = *(u16 *)reg_a1;
             reg_a1 += 2;
@@ -581,7 +648,7 @@ void stage4_boss_final_explosion_step(arg1)
         (*(u8 *)((u8 *)(var_a0) + (0xD))) -= 1;
         if ((s32) reg_tmp.b[0] <= 0) {
             EXPLODING(reg_a4)->blast_timer.t.count = (u8) EXPLODING(reg_a4)->blast_timer.t.reload;
-            reg_a1 = (u8 *)(D_0026F3A0);
+            reg_a1 = (u8 *)(stage4_boss_final_blast_series);
             reg_a1 += EXPLODING(reg_a4)->blast;
             reg_d1.h[0] = *(u16 *)reg_a1;
             reg_a1 += 2;
@@ -624,7 +691,7 @@ void stage4_boss_final_explosion_step(arg1)
         if ((s16) EXPLODING(reg_a4)->wait < 0) {
             reg_d2.h[1] = ENTITY(reg_a6)[1].y.h;
             reg_d2.h[0] = ENTITY(reg_a6)[1].x.h;
-            reg_a1 = (u8 *)(D_0026F350);
+            reg_a1 = (u8 *)(stage4_boss_final_blasts);
             stage4_boss_explosions_from_table();
             EXPLODING(reg_a4)->burst_a.t.count = 0;
             EXPLODING(reg_a4)->burst_b.t.count = 0;
@@ -638,7 +705,6 @@ void stage4_boss_final_explosion_step(arg1)
 
 typedef void (*Fn)();
 
-extern u8 D_0026F240[];
 
 void stage4_boss_final_explosion_cycle(void) {
     reg_tmp.b[0] = EXPLODING(reg_a4)->cycle_timer.t.count;
@@ -646,7 +712,7 @@ void stage4_boss_final_explosion_cycle(void) {
     if ((s32) reg_tmp.b[0] <= 0) {
         EXPLODING(reg_a4)->cycle_timer.t.count = (u8) EXPLODING(reg_a4)->cycle_timer.t.reload;
         reg_tmp.h[0] = EXPLODING(reg_a4)->cycle;
-        ((Fn)*(u32 *)((u8 *)D_0026F240 + (reg_tmp.h[0] & ~3)))();
+        ((Fn)*(u32 *)((u8 *)stage4_boss_blast_sounds + (reg_tmp.h[0] & ~3)))();
         EXPLODING(reg_a4)->cycle += 4;
         EXPLODING(reg_a4)->cycle &= 0x1F;
     }
