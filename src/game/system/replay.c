@@ -339,10 +339,10 @@ void replay_exit_begin(void) {
 extern void settings_notice_begin(void);
 extern void settings_notice_draw_static(void);
 extern void stage_load_step(void);
-extern void func_00225630(void);
-extern void func_002256B0(void);
-extern void func_00227120(void);
-extern void func_002271D0(void);
+extern void disc_notice_begin(void);
+extern void disc_notice_end(void);
+extern void menu_reset_keep_sim_rules(void);
+extern void menu_reset_keep_sim_rules_and_page(void);
 extern u8 g_stage_load_state;
 extern s16 g_loaded_stage;
 extern u16 g_stage;
@@ -394,14 +394,14 @@ void replay_exit(void) {
         g_cd_async_busy = 1;
         g_stage_load_state = 0;
         g_cd_async_state = 0;
-        func_00225630();
+        disc_notice_begin();
         g_stage = 0;
         step++;
         break;
     case 1:
         stage_load_step();
         if (g_loaded_stage == g_stage) {
-            func_002256B0();
+            disc_notice_end();
             step++;
         }
         break;
@@ -410,9 +410,9 @@ void replay_exit(void) {
         settings_notice_begin();
         settings_notice_draw_static();
         if (D_0028EC20 != 0) {
-            func_002271D0();
+            menu_reset_keep_sim_rules_and_page();
         } else {
-            func_00227120();
+            menu_reset_keep_sim_rules();
         }
         break;
     case 4:
@@ -456,7 +456,7 @@ extern u8 g_replay_mode;
 extern u8 g_simulation_active;
 
 void replay_start_result() {
-    s32 func_00224A90();
+    s32 game_screen_teardown();
     u32 temp_s0;
     u8 *temp_s1;
     s32 var_s2;
@@ -470,7 +470,7 @@ void replay_start_result() {
     if (g_replay_mode == 2) {
         var_s2 = 0;
     }
-    func_00224A90();
+    game_screen_teardown();
     reg_d0.h[0] = TASK_REPLAY;
     task_start();
     if (var_s2 != 0) {
@@ -482,8 +482,8 @@ void replay_start_result() {
     reg_a0 = temp_s1;
 }
 
-s32 func_00224A90();                            /* extern */
-s32 func_0022B620();                            /* extern */
+s32 game_screen_teardown();                            /* extern */
+s32 replay_scores_snapshot();                            /* extern */
 
 void replay_start_run_end(void) {
     u32 temp_s0;
@@ -491,8 +491,8 @@ void replay_start_run_end(void) {
 
     temp_s0 = reg_d0.w;
     temp_s1 = reg_a0;
-    func_0022B620();
-    func_00224A90();
+    replay_scores_snapshot();
+    game_screen_teardown();
     reg_d0.h[0] = TASK_REPLAY;
     task_start();
     *(s8 *)(reg_a0 + 5) = 4;
@@ -503,7 +503,7 @@ void replay_start_run_end(void) {
 s32 text_layer_clear();                            /* extern */
 s32 fade_in();                            /* extern */
 s32 text_palette_load();                            /* extern */
-s32 func_00225B70();                            /* extern */
+s32 result_menu_reset();                            /* extern */
 extern u8 D_0026B580[];
 extern u32 g_replay_fade_id;
 
@@ -519,7 +519,7 @@ void replay_result_menu_begin(void) {
     text_palette_load();
     *(s8 *)(reg_a5 + 3) = 1;
     *(s16 *)(reg_a5 + 6) = 0;
-    func_00225B70();
+    result_menu_reset();
     reg_a0 = (u8 *)((s32 *)D_0026B580);
     fade_in();
     reg_a0 = (u8 *)temp_s0;
@@ -531,12 +531,12 @@ extern void fade_to_black(void);
 extern void fade_release(void);
 extern void fade_is_running(void);
 extern void func_001A42A0(void);
-extern s32 func_00225CD0(void);
+extern s32 result_menu_update(void);
 extern u8 D_0026B5F0[];
 extern s8 D_0028EACC;
 
 void replay_result_menu(void) {
-    extern void func_00224A90(void);
+    extern void game_screen_teardown(void);
     s32 step;
     s32 done;
     u8 *save_a0;
@@ -563,7 +563,7 @@ void replay_result_menu(void) {
         }
         break;
     case 1:
-        switch (func_00225CD0()) {
+        switch (result_menu_update()) {
         case 4:
             step = 200;
             break;
@@ -606,7 +606,7 @@ void replay_result_menu(void) {
         break;
     case 417:
         task_reset_all();
-        func_00224A90();
+        game_screen_teardown();
         reg_d0.h[0] = TASK_REPLAY;
         task_start();
         done = 1;
@@ -1285,7 +1285,7 @@ void replay_run_start(void) {
     reg_a5 = save_a5;
 }
 
-extern s32 func_0022B2F0(void);
+extern s32 replay_save_prompt_update(void);
 extern u8 g_replay_watch_after_run;
 
 static void replay_run_end_begin(void)
@@ -1368,7 +1368,7 @@ void replay_run_end(void) {
             replay_start_result();
             return;
         }
-        if (func_0022B2F0() != 0) {
+        if (replay_save_prompt_update() != 0) {
             if (g_replay_watch_after_run != 0) {
                 step++;
             } else {

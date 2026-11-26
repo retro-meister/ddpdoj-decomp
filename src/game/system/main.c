@@ -50,11 +50,11 @@ s32 wallpaper_load();
 s32 arcade_sprite_init();
 s32 sprite_header_load_async();
 s32 sprite_pixels_load_async();
-s32 func_0021D8C0();
-s32 func_002232F0();
-s32 func_00225630();
-s32 func_002256B0();
-s32 func_00236900();
+s32 sim_rules_set_defaults();
+s32 pause_update();
+s32 disc_notice_begin();
+s32 disc_notice_end();
+s32 replay_slot_infos_clear();
 s32 replay_begin_pending();
 extern u8 D_002620F0[];
 extern u8 text_palette_0[];
@@ -102,10 +102,10 @@ void func_002120D0(void) {
     printf("--card   size[%d]\n", 0x9A8);
     printf("--replay size[%d]\n", 0x206EC);
     printf("--replay_data size[%d]\n", 0x202E8);
-    func_00236900();
+    replay_slot_infos_clear();
     memset(g_replay_file, 0, 0x202E8);
     memset(g_replay_file_loaded, 0, 0x202E8);
-    func_0021D8C0();
+    sim_rules_set_defaults();
     sys_start();
     pointer_tables_init();
     func_0018E5A0();
@@ -159,7 +159,7 @@ void func_002120D0(void) {
     printf("memory[%x]\n", memalign(0x40, 0x10));
     g_cd_async_state = 0;
     t3 = 0;
-    func_00225630();
+    disc_notice_begin();
     printf("cd_read start\n");
     do {
         sys_begin_frame();
@@ -196,7 +196,7 @@ void func_002120D0(void) {
                 g_cd_async_state = 0;
                 g_cd_async_busy = 1;
                 t3 += 1;
-                func_002256B0();
+                disc_notice_end();
             }
             break;
         case 4:
@@ -216,7 +216,7 @@ loop_15:
     t1 = 0;
     t2 = 0;
     if (g_paused != 0) {
-        func_002232F0();
+        pause_update();
         if (g_paused == 0) {
             t1 = 1;
             g_input_p1_previous = D_0028E9B4;

@@ -146,7 +146,7 @@ loop_2:
     GROUND_TASK(reg_a5)->plane_row = 0xF;
 }
 
-s32 func_00225670();
+s32 disc_notice_begin_for_stage();
 extern u16 g_sprite_last_boss_used;
 extern u16 g_sprite_hyper_display_used;
 extern u16 g_sprite_hyper_ready_used;
@@ -253,7 +253,7 @@ void ground_task(void) {
     }
 reload_check:
     if (g_loaded_stage != g_stage) {
-        func_00225670();
+        disc_notice_begin_for_stage();
     }
 load_begin:
     g_stage_load_state = 0;
@@ -478,7 +478,7 @@ s32 frame_counters_reset();
 s32 difficulty_apply();
 s32 stage_load_step();
 s32 stage_map_show();
-s32 func_002256B0();
+s32 disc_notice_end();
 extern u8 D_0028E25C;
 extern u8 D_0028E280;
 extern u8 D_0028E2BD;
@@ -514,7 +514,7 @@ void ground_wait_stage_load(void) {
             D_0028E368 = 1;
         }
         ground_rows_fill();
-        func_002256B0();
+        disc_notice_end();
         difficulty_apply();
         stage_map_show();
 #ifdef DEATH_LABEL

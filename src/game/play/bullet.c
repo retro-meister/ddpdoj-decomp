@@ -2719,7 +2719,7 @@ extern u32 D_0028E964;
 extern u16 D_0028E968;
 extern u16 D_0028E96C;
 
-void func_0012F6A0(void) {
+void logo_screen_begin(void) {
     u32 save_d0;
     u32 save_d1;
     u32 save_d2;
@@ -2784,7 +2784,7 @@ extern u8 D_00269820[];
 extern u16 D_0028E968;
 extern u16 D_0028E96C;
 
-void func_0012F7D0(void) {
+void logo_screen_update(void) {
     u32 sd0, sd1, sd2, sd3, sd4, sd5, sd6, sd7;
     u8 *sa0, *sa1, *sa2, *sa3, *sa4, *sa5, *sa6;
 

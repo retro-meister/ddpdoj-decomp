@@ -85,8 +85,8 @@ void func_00122CE0(void) {
 }
 
 s32 stage_load_step();
-s32 func_00225630();
-s32 func_002256B0();
+s32 disc_notice_begin();
+s32 disc_notice_end();
 extern u8 g_stage_load_state;
 extern s16 g_loaded_stage;
 extern u16 g_stage;
@@ -110,7 +110,7 @@ void func_00122EB0(void) {
             D_00295E3C[0] = 2;
             g_stage_load_state = 0;
             g_cd_async_state = 0;
-            func_00225630(temp_a0);
+            disc_notice_begin(temp_a0);
             goto block_6;
         }
 block_6:
@@ -120,7 +120,7 @@ block_6:
             if (g_loaded_stage == g_stage) {
                 g_loop = 1;
                 D_00295E3C[0] = 0;
-                func_002256B0(g_loaded_stage);
+                disc_notice_end(g_loaded_stage);
                 reg_d0.h[0] = 0x11;
                 task_start();
                 task_stop_self();

@@ -196,10 +196,10 @@ void func_001317E0(void) {
     task_start();
 }
 
-s32 func_00224A90();                            /* extern */
+s32 game_screen_teardown();                            /* extern */
 
 void func_00131840(void) {
-    func_00224A90();
+    game_screen_teardown();
     reg_d0.h[0] = TASK_REPLAY;
     task_start();
     *(s8 *)(reg_a0 + 5) = 1;
@@ -573,7 +573,7 @@ s32 music_fade_out();
 s32 score_add_masked();
 s32 binary_to_bcd();
 s32 stage_load_step();
-s32 func_0022B660();
+s32 replay_file_finalize();
 extern u16 D_00261F30[];
 extern u16 D_00261FF0[];
 extern u16 D_00262030[];
@@ -1031,7 +1031,7 @@ block_77:
                         }
                     }
                     if ((D_0028E2A0 == 0) && (func_00133070() != 0)) {
-                        if (func_0022B660() != 0) {
+                        if (replay_file_finalize() != 0) {
                             D_0028E2A0 = 1;
                             goto block_90;
                         }

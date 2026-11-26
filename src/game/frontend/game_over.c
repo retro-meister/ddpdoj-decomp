@@ -62,7 +62,7 @@ s32 func_00133070();
 s32 music_play_bgm12();
 s32 sprite_draw_layer1();
 s32 rng_next_masked();
-s32 func_0022B660();
+s32 replay_file_finalize();
 s32 replay_start_result();
 extern u16 D_0026A380[];
 extern u16 D_0026A3A0[];
@@ -81,7 +81,7 @@ void game_over_task(void) {
     }
     if (st == 2) {
         if ((D_0028ED64 != 0) && (func_00133070(reg_a5) != 0)) {
-            if (func_0022B660() == 0) {
+            if (replay_file_finalize() == 0) {
                 return;
             }
             goto block_1;

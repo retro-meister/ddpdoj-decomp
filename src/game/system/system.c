@@ -84,7 +84,7 @@ void sys_start(void) {
 
 s32 disc_files_locate();
 s32 font_init();
-s32 func_0022C630();
+s32 mc_init();
 extern s16 g_loaded_stage;
 extern u8 D_0028E400;
 extern s8 D_0028EB00;
@@ -110,12 +110,12 @@ void sys_init(void) {
     tex_load_common();
     font_init();
     sceMcInit();
-    func_0022C630();
+    mc_init();
 }
 
 s32 input_read();                            /* extern */
 s32 text_queue_clear();                            /* extern */
-s32 func_0021DF60();                            /* extern */
+s32 screen_setting_apply();                            /* extern */
 
 void sys_begin_frame(void) {
     *(s32 *)0x10000000 = 0;
@@ -125,7 +125,7 @@ void sys_begin_frame(void) {
     input_read();
     if (g_display_reset_pending != 0) {
         g_display_reset_pending = 0;
-        func_0021DF60();
+        screen_setting_apply();
         display_reset();
     }
     if (g_screen_mode < 2) {
@@ -138,13 +138,13 @@ void sys_begin_frame(void) {
 s32 sound_update();
 s32 text_flush_rects();
 s32 arcade_sprite_draw();
-s32 func_0021FA50();
-s32 func_00221CF0();
+s32 menu_draw();
+s32 menu_overlay_draw();
 s32 pause_menu_draw();
-s32 func_002256C0();
+s32 disc_notice_draw();
 s32 result_menu_items_draw();
-s32 func_0022B870();
-s32 func_0022C5A0();
+s32 replay_save_prompt_draw();
+s32 mc_frame_draw();
 extern u8 g_slowdown_frame_state;
 extern u8 g_slowdown_timer;
 extern u16 D_0028E32C;
@@ -162,13 +162,13 @@ void sys_end_frame(void) {
     arcade_sprite_draw();
     text_layer_draw();
     sys_draw_replay_label();
-    func_0021FA50();
-    func_00221CF0();
+    menu_draw();
+    menu_overlay_draw();
     pause_menu_draw();
-    func_0022B870();
+    replay_save_prompt_draw();
     result_menu_items_draw();
-    func_0022C5A0();
-    func_002256C0();
+    mc_frame_draw();
+    disc_notice_draw();
     fade_update_and_draw();
     if (g_screen_mode >= 2) {
         if (g_screen_mode >= 4) {

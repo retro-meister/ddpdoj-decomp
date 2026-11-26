@@ -3,11 +3,11 @@
 
 s32 text_layer_put(void);
 s32 stage_map_reset();
-s32 func_0021D500();
-s32 func_0021DF60();
-s32 func_0021E2D0();
-s32 func_0021F440();
-s32 func_00235890();
+s32 menu_item_values_clear();
+s32 screen_setting_apply();
+s32 menu_game_option_defaults();
+s32 menu_system_option_defaults();
+s32 save_snapshot_take();
 
 extern s8 g_default_setting_continue[];
 extern s8 g_default_setting_demo_sound[];
@@ -188,9 +188,9 @@ void settings_reset(void) {
     g_setting_extend = g_default_setting_extend[0];
     g_setting_ship_stock = g_default_setting_ship_stock[0];
     g_setting_rapid_fire = g_default_setting_rapid_fire[0];
-    func_0021E2D0(g_default_setting_difficulty[0], g_default_setting_chute_type[0], g_default_setting_demo_sound[0], g_default_setting_continue[0]);
-    func_0021F440();
-    func_0021DF60();
+    menu_game_option_defaults(g_default_setting_difficulty[0], g_default_setting_chute_type[0], g_default_setting_demo_sound[0], g_default_setting_continue[0]);
+    menu_system_option_defaults();
+    screen_setting_apply();
     D_0028E2D4 = 2;
     D_0028E2D0 = 3;
     g_p1_btn_map_a = 7;
@@ -242,9 +242,9 @@ void settings_reset(void) {
     D_0028E2A4 = 0;
     D_0028E29C = 0;
     D_0028E2A0 = 0;
-    func_00235890(5, 6, 7);
+    save_snapshot_take(5, 6, 7);
     stage_map_reset();
-    func_0021D500();
+    menu_item_values_clear();
     D_0028ED30 = 0;
     D_0028E258 = 0xA;
     D_0028ED31 = 0;

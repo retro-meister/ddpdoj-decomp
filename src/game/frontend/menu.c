@@ -2031,11 +2031,11 @@ extern MenuPage g_menu_stage_difficulty;
 extern MenuPage g_menu_sim_param;
 
 void delta_encode(u8 *buf);
-void func_0021D500(void);
-void func_0021D570(void);
-void func_0021D6C0(void);
-void func_0021D850();
-void func_0021D8C0(void);
+void menu_item_values_clear(void);
+void menu_task_update(void);
+void menu_page_dispatch(void);
+void menu_exit_when_faded();
+void sim_rules_set_defaults(void);
 void menu_main_page(void);
 void menu_main_step0(void);
 void menu_main_step1(void);
@@ -2046,42 +2046,42 @@ void menu_game_option_page(void);
 void menu_game_option_step0();
 void menu_game_option_step1();
 void menu_game_option_step2();
-void func_0021DF60(void);
-void func_0021E000(void);
-void func_0021E160(void);
-void func_0021E1A0(void);
-void func_0021E2D0(void);
+void screen_setting_apply(void);
+void menu_game_option_adjust(void);
+void menu_game_option_commit(void);
+void menu_values_from_settings(void);
+void menu_game_option_defaults(void);
 void menu_save_load_page(void);
 void menu_save_load_step0();
 void menu_save_load_step1();
 void menu_save_load_step2();
-void func_0021E5C0(void);
+void menu_save_load_adjust(void);
 void menu_debug_option_page(void);
 void menu_debug_option_step0();
 void menu_debug_option_step1();
 void menu_debug_option_step2();
-void func_0021E8D0(void);
-void func_0021EA10(void);
+void menu_debug_option_adjust(void);
+void menu_debug_option_commit(void);
 void menu_arcade_page(void);
 void menu_arcade_step0(void);
 void menu_arcade_step1(void);
 void menu_arcade_step2(void);
 void menu_arcade_step3(void);
 void menu_arcade_step4(void);
-void func_0021EDC0(void);
+void menu_arcade_adjust(void);
 void menu_system_option_page(void);
 void menu_system_option_step0();
 void menu_system_option_step1();
 void menu_system_option_step2();
 void menu_system_option_step3();
-void func_0021F1C0(void);
-void func_0021F2C0(void);
-void func_0021F440(void);
+void menu_system_option_adjust(void);
+void menu_system_option_commit(void);
+void menu_system_option_defaults(void);
 void menu_launch_page(void);
 void menu_launch_step0();
 void menu_launch_step1();
 void menu_launch_step2();
-void func_0021F750();
+void menu_launch_when_faded();
 void death_func_001B7460(void);
 void death_func_001B74D0(void);
 void death_func_001B7520(void);
@@ -2091,63 +2091,63 @@ void menu_ranking_page(void);
 void menu_ranking_step0();
 void menu_ranking_step1();
 void menu_ranking_step2();
-void func_0021FA50(void);
+void menu_draw(void);
 void menu_main_draw(void);
 void menu_game_option_draw(void);
 void menu_save_load_draw(void);
 void menu_debug_option_draw(void);
 void menu_arcade_draw(void);
 void menu_system_option_draw(void);
-void func_00221000(void);
+void menu_alpha_a_update(void);
 void death_func_001B9120(void);
-void func_00221080(void);
+void menu_alpha_b_update(void);
 s32 menu_cursor_input(s32 page);
-s32 func_002212C0();
-void func_00221360(void);
-void func_00221440(void);
+s32 menu_ranking_cursor_move();
+void menu_box_draw(void);
+void menu_box_draw_wide(void);
 void menu_help_draw(void);
-s32 func_00221C20(void);
-void func_00221CF0(void);
-void func_00221E20(void);
+s32 menu_notice_update(void);
+void menu_overlay_draw(void);
+void menu_notice_draw(void);
 void menu_reset();
-void func_00222170(void);
+void menu_items_clear(void);
 void menu_items_place(s32 group);
 void menu_items_slide_in(s32 group);
 s32 menu_items_slide_update(s32 group);
 void menu_button_assign_input(void);
 void menu_message_draw(s32 x, s32 y);
-void func_00222C30(s32 x, s32 y, s32 attr);
-void func_00222F90(s32 x, s32 y, s32 attr);
-void func_002232F0(void);
-void func_002234C0(void);
-void func_00223550(void);
-void func_00223A60(void);
-void func_00223AA0(void);
-s32 func_00223BE0(void);
-void func_00223D70(void);
-void func_00223E80(void);
-void func_00224020(s32 x, s32 y);
-void func_002242B0(s32 x, s32 y);
+void menu_text_queue(s32 x, s32 y, s32 attr);
+void menu_text_queue_plain(s32 x, s32 y, s32 attr);
+void pause_update(void);
+void pause_begin(void);
+void pause_menu_update(void);
+void pause_end(void);
+void pause_menu_confirm(void);
+s32 pause_menu_cursor_move(void);
+void pause_menu_box_draw(void);
+void pause_menu_items_draw(void);
+void pause_menu_item_draw(s32 x, s32 y);
+void menu_help_item_draw(s32 x, s32 y);
 void pause_menu_draw(void);
-void func_00224A30(void);
-void func_00224A90(void);
+void pause_menu_quit_confirm(void);
+void game_screen_teardown(void);
 void menu_settings_restore(void);
 void menu_arrows_draw(s32 arg0, s32 arg1, s32 arg2, s32 arg3, s32 arg4, s32 arg5, s32 arg6, s32 flags);
-void func_00224CC0(void);
+void pause_screen_adjust_update(void);
 void menu_screen_adjust_page(void);
-void func_002252E0(void *buffer);
+void screen_adjust_frame_draw(void *buffer);
 void menu_screen_adjust_draw(void);
-void func_00225630(void);
-void func_00225670(void);
-void func_002256B0(void);
-void func_002256C0(void);
+void disc_notice_begin(void);
+void disc_notice_begin_for_stage(void);
+void disc_notice_end(void);
+void disc_notice_draw(void);
 void menu_card_save_page(void);
 void menu_card_load_page(void);
-void func_00225B70(void);
-void func_00225B90(void);
-void func_00225CB0(void);
-s8 func_00225CD0(void);
-void func_00225E20(void);
+void result_menu_reset(void);
+void result_menu_input(void);
+void result_menu_wait_faded(void);
+s8 result_menu_update(void);
+void result_menu_box_draw(void);
 void result_menu_items_draw(void);
 void result_menu_draw(void);
 s32 replay_slots_update(void);
@@ -2168,15 +2168,15 @@ void replay_slots_disc_select(void);
 s32 replay_slots_disc_load(void);
 void replay_slot_draw(s32 slot, s32 x, s32 y, s32 alpha, s32 selected, SaveInfo *info);
 s32 replay_slots_draw(void);
-void func_00227120(void);
-void func_002271D0(void);
+void menu_reset_keep_sim_rules(void);
+void menu_reset_keep_sim_rules_and_page(void);
 void menu_close_begin(void);
 static void menu_page_enter(MenuPage *fade);
-s32 func_00227350(MenuPage *fade, s32 command);
+s32 menu_simulation_slide_in_step(MenuPage *fade, s32 command);
 static s32 menu_page_advance(MenuPage *fade, s32 command);
 void menu_idle_cancel(void);
 static void menu_page_fade(MenuPage *fade);
-void func_002274C0(MenuPage *arg0, u8 **arg1, s32 arg2);
+void menu_simulation_items_draw(MenuPage *arg0, u8 **arg1, s32 arg2);
 void menu_simulation_step0(void);
 void menu_simulation_step1(void);
 void menu_simulation_step10(void);
@@ -2194,13 +2194,13 @@ void menu_file_select_step0(void);
 void menu_file_select_step1(void);
 void menu_replay_step2(void);
 void menu_replay_page(void);
-void func_00227E00(void);
+void menu_file_select_draw(void);
 void menu_super_replay_step0(void);
 void menu_super_replay_step2(void);
 void menu_super_replay_page(void);
 void menu_settings_load_page(void);
 void menu_settings_load_step2(void);
-void func_00228060(void);
+void menu_settings_load_apply(void);
 void menu_sim_setting_step0(void);
 void menu_sim_setting_step1(void);
 void menu_sim_setting_step2(void);
@@ -2216,7 +2216,7 @@ void menu_sim_rules_step1(void);
 void menu_sim_rules_step2(void);
 void menu_sim_rules_page(void);
 void menu_sim_rules_draw(void);
-void func_00229950(s32 x, s32 y, s32 alpha, s32 mode, s32 kind);
+void menu_sim_rule_gauge_draw(s32 x, s32 y, s32 alpha, s32 mode, s32 kind);
 void menu_sim_param_step0(void);
 void menu_sim_param_step1(void);
 void menu_sim_param_step2(void);
@@ -2227,32 +2227,32 @@ void menu_practice_ranking_step1(void);
 void menu_practice_ranking_step2(void);
 void menu_practice_ranking_page(void);
 void menu_practice_ranking_draw(void);
-void func_0022A870(void);
-void func_0022A8F0();
-void func_0022A930();
-void func_0022A9A0();
-void func_0022AA00();
+void result_notice_update(void);
+void result_notice_begin();
+void result_notice_slide();
+void result_notice_wait_button();
+void result_notice_finish();
 void menu_ranking_draw(void);
 void menu_ranking_scores_format(s32 arg0, s32 arg1);
-void func_0022B1D0(void);
-void func_0022B2F0(void);
-void func_0022B330(void);
-s32 func_0022B4B0(void);
-s32 func_0022B540(void);
-void func_0022B620(void);
-s32 func_0022B660(void);
-void func_0022B7A0(s32 arg0);
-void func_0022B870(void);
-void func_0022BA60(void);
+void menu_ranking_box_draw(void);
+void replay_save_prompt_update(void);
+void replay_loaded_file_adopt(void);
+s32 replay_save_prompt_update_card(void);
+s32 replay_save_prompt_update_disc(void);
+void replay_scores_snapshot(void);
+s32 replay_file_finalize(void);
+void delta_decode(s32 arg0);
+void replay_save_prompt_draw(void);
+void replay_save_prompt_text_draw(void);
 s32 replay_snapshot_checksum(const u8 *data);
-s32 func_0022BB80(u8 *out);
+s32 clock_read(u8 *out);
 s32 replay_disc_headers_load(void);
 s32 replay_disc_file_load(u8 arg0);
-void func_0022BF60(void);
-void func_0022BFD0();
+void simulation_task(void);
+void simulation_task_begin();
 void task_stop_self_entry();
-void func_0022C1F0();
-void func_0022C450();
+void simulation_task_run();
+void simulation_ships_start();
 
 #ifndef DEATH_LABEL
 void delta_encode(u8 *buf) {
@@ -2272,7 +2272,7 @@ void delta_encode(u8 *buf) {
 
 extern s32 D_00684CF0[10][4][5];
 
-void func_0021D500(void) {
+void menu_item_values_clear(void) {
     s32 i;
     s32 j;
     s32 k;
@@ -2288,7 +2288,7 @@ void func_0021D500(void) {
 
 extern s8 D_0028EB88;
 
-void func_0021D570(void) {
+void menu_task_update(void) {
     u8 *save_a0;
     u8 *save_a1;
     u8 *save_a2;
@@ -2325,10 +2325,10 @@ void func_0021D570(void) {
         menu_reset(2, D_0028EB88);
         /* fallthrough */
     case 1:
-        func_0021D6C0();
+        menu_page_dispatch();
         break;
     case 2:
-        func_0021D850(2, D_0028EB88);
+        menu_exit_when_faded(2, D_0028EB88);
         break;
     }
     reg_d0.w = save_d0;
@@ -2353,7 +2353,7 @@ extern s8 g_menu_page;
 #ifdef DEATH_LABEL
 #endif
 
-void func_0021D6C0(void) {
+void menu_page_dispatch(void) {
     switch (g_menu_page) {
     case MENU_PAGE_MAIN:
         menu_main_page();
@@ -2429,7 +2429,7 @@ void func_0021D6C0(void) {
 extern s8 g_fade_state;
 extern s8 D_0028EB00;
 
-void func_0021D850() {
+void menu_exit_when_faded() {
     if (g_fade_state == 0) {
         D_0028EB88 = 0;
         if (D_0028EB00 == 2) {
@@ -2451,7 +2451,7 @@ extern u8 D_0068DEC8[];
 extern u8 D_0068DED8[];
 extern u8 D_0068DEF0[];
 
-void func_0021D8C0(void) {
+void sim_rules_set_defaults(void) {
     memcpy(((s32 *)D_0068DEF0), D_00270810, 0x16);
     memcpy(((s32 *)D_0068DED8), D_00270828, 0xA);
     memcpy(((s32 *)D_0068DEC8), D_00270838, 0xC);
@@ -2533,7 +2533,7 @@ extern u8 D_0028E2E4;
 extern u8 D_0028E304;
 extern s32 D_0028EAFC;
 extern s8 D_0028EB00;
-s32 func_00169BC0();
+s32 start_buttons_take_credits();
 #endif
 
 void menu_main_step2(void) {
@@ -2575,7 +2575,7 @@ void menu_main_step2(void) {
             g_game_mode = 2;
             D_0028E304 = 1;
             D_0028EAFC = 0xFF;
-            func_00169BC0();
+            start_buttons_take_credits();
             fade_start_out();
             D_0028EB88 = 2;
             D_0028EB00 = 4;
@@ -2676,10 +2676,10 @@ void menu_main_step3(void) {
 
 #pragma push
 #pragma opt_propagation off
-extern s32 func_002365A0(void);
+extern s32 autosave_update(void);
 
 void menu_main_step4(void) {
-    if (func_002365A0() != 0) {
+    if (autosave_update() != 0) {
         s8 val = g_menu_main_cursor;
         g_menu_main_step = 2;
         D_0028EB54 = 1;
@@ -2747,9 +2747,9 @@ void menu_game_option_step2() {
     s32 var_a1;
 
     if (menu_cursor_input(1) == 0) {
-        func_0021E000();
+        menu_game_option_adjust();
     }
-    func_0021E160();
+    menu_game_option_commit();
     var_a1 = 0;
     g_menu_idle_timer = 0xE10;
     if (g_pad_held[2] == 0) {
@@ -2783,8 +2783,8 @@ void menu_game_option_step2() {
             break;
         case 5:
             sfx_menu_confirm();
-            func_0021E2D0();
-            func_0021E160();
+            menu_game_option_defaults();
+            menu_game_option_commit();
             break;
         case 6:
             sfx_menu_confirm();
@@ -2808,7 +2808,7 @@ extern u8 D_0028E354;
 extern u8 D_0028E358;
 extern s8 D_0068DD01[];
 
-void func_0021DF60(void) {
+void screen_setting_apply(void) {
     s32 value;
 
     D_0028E358 = D_0068DD01[0];
@@ -2839,7 +2839,7 @@ extern u8 g_pad_vib_state_p2;
 extern u8 g_pad_vib_state_p1;
 extern s8 D_0068DC20[];
 
-void func_0021E000(void) {
+void menu_game_option_adjust(void) {
     extern void sfx_menu_tick(void);
     s32 sel;
     s32 cur;
@@ -2900,7 +2900,7 @@ extern s8 D_0068DC22[];
 extern s8 D_0068DC23[];
 extern s8 D_0068DC24[];
 
-void func_0021E160(void) {
+void menu_game_option_commit(void) {
     g_setting_difficulty = D_0068DC21[0];
     g_setting_ship_stock = D_0068DC22[0];
     g_setting_extend = D_0068DC23[0];
@@ -2957,7 +2957,7 @@ extern u8 g_twin_boss_bullet_speed_limit;
 extern u8 death_D_00628DC6[];
 #endif
 
-void func_0021E1A0(void) {
+void menu_values_from_settings(void) {
     ((u8 *)D_0068DC21)[0] = g_setting_difficulty;
     ((u8 *)D_0068DC22)[0] = g_setting_ship_stock;
     ((u8 *)D_0068DC23)[0] = g_setting_extend;
@@ -2990,7 +2990,7 @@ void func_0021E1A0(void) {
     D_0068DD10[0] = D_0028E277;
 }
 
-void func_0021E2D0(void) {
+void menu_game_option_defaults(void) {
     D_0068DC22[0] = 0;
     D_0068DC23[0] = 0;
     D_0068DC21[0] = 1;
@@ -3059,7 +3059,7 @@ void menu_save_load_step2() {
     s32 var_a1;
 
     if (menu_cursor_input(2) == 0) {
-        func_0021E5C0();
+        menu_save_load_adjust();
     }
     var_a1 = 0;
     g_menu_idle_timer = 0xE10;
@@ -3123,7 +3123,7 @@ void menu_save_load_step2() {
 
 extern s8 D_0068DC30[];
 
-void func_0021E5C0(void) {
+void menu_save_load_adjust(void) {
     void sfx_menu_tick(void);
     s32 value;
 
@@ -3202,9 +3202,9 @@ void menu_debug_option_step2() {
     s32 var_a1;
 
     if (menu_cursor_input(3) == 0) {
-        func_0021E8D0();
+        menu_debug_option_adjust();
     }
-    func_0021EA10();
+    menu_debug_option_commit();
     var_a1 = 0;
     g_menu_idle_timer = 0xE10;
     if (g_pad_held[2] == 0) {
@@ -3254,7 +3254,7 @@ void menu_debug_option_step2() {
 extern u16 D_0028E300;
 extern s8 D_0068DC40[];
 
-void func_0021E8D0(void) {
+void menu_debug_option_adjust(void) {
     extern void sfx_menu_tick(void);
     s32 count;
     s32 value;
@@ -3302,7 +3302,7 @@ extern u8 g_twin_boss_bullet_speed_limit;
 extern u8 death_D_00628DC6[];
 #endif
 
-void func_0021EA10(void) {
+void menu_debug_option_commit(void) {
     D_0028E304 = D_0068DC41[0];
     D_0028E30C = ((s8 *)D_0068DC42)[0];
     D_0028E308 = ((s8 *)D_0068DC43)[0];
@@ -3371,12 +3371,12 @@ extern s32 D_0028EAFC;
 
 void menu_arcade_step2(void) {
     extern void sfx_menu_confirm(void);
-    extern void func_00169BC0(void);
+    extern void start_buttons_take_credits(void);
     extern void fade_start_out(void);
     s32 var_a1;
 
     if (menu_cursor_input(0xE) == 0) {
-        func_0021EDC0();
+        menu_arcade_adjust();
     }
     var_a1 = 0;
     g_menu_idle_timer = 0xE10;
@@ -3408,7 +3408,7 @@ void menu_arcade_step2(void) {
             g_game_mode = 0;
             D_0028E2E4 = 0;
             sfx_menu_confirm();
-            func_00169BC0();
+            start_buttons_take_credits();
             fade_start_out();
             D_0028EB88 = 2;
             D_0028EB00 = 2;
@@ -3422,7 +3422,7 @@ void menu_arcade_step2(void) {
             D_0028EB3C = 2;
             D_0028EB54 = 2;
             sfx_menu_confirm();
-            func_00169BC0();
+            start_buttons_take_credits();
             fade_start_out();
             D_0028EB88 = 2;
             D_0028EB00 = 2;
@@ -3462,7 +3462,7 @@ void menu_arcade_step3(void) {
 #pragma push
 #pragma opt_propagation off
 void menu_arcade_step4(void) {
-    if (func_002365A0() != 0) {
+    if (autosave_update() != 0) {
         s8 val = g_menu_arcade_cursor;
         g_menu_arcade_step = 2;
         D_0028EB54 = 1;
@@ -3474,7 +3474,7 @@ void menu_arcade_step4(void) {
 
 extern s8 D_0068DCF0[];
 
-void func_0021EDC0(void) {
+void menu_arcade_adjust(void) {
     void sfx_menu_tick(void);
     s32 value;
 
@@ -3561,9 +3561,9 @@ void menu_system_option_step2() {
     s32 var_a1;
 
     if (menu_cursor_input(0xF) == 0) {
-        func_0021F1C0();
+        menu_system_option_adjust();
     }
-    func_0021F2C0();
+    menu_system_option_commit();
     var_a1 = 0;
     g_menu_idle_timer = 0xE10;
     if (g_pad_held[2] == 0) {
@@ -3616,8 +3616,8 @@ void menu_system_option_step2() {
             break;
         case 12:
             sfx_menu_confirm();
-            func_0021F440();
-            func_0021F2C0();
+            menu_system_option_defaults();
+            menu_system_option_commit();
             break;
         case 13:
             sfx_menu_confirm();
@@ -3653,7 +3653,7 @@ void menu_system_option_step3()
 
 extern s8 D_0068DD00[];
 
-void func_0021F1C0(void) {
+void menu_system_option_adjust(void) {
     extern void sfx_menu_tick(void);
     s32 sel;
     s32 cur;
@@ -3698,7 +3698,7 @@ extern s8 D_0068DD0B[];
 extern s8 D_0068DD0D[];
 extern s8 D_0068DD0E[];
 extern s8 D_0068DD0F[];
-void func_0021F2C0(void) {
+void menu_system_option_commit(void) {
     extern void wallpaper_load(s32, s32);
     s32 temp_a0;
 
@@ -3745,7 +3745,7 @@ extern u8 death_D_00628F01[];
 extern u8 death_D_00628F02[];
 #endif
 
-void func_0021F440(void) {
+void menu_system_option_defaults(void) {
     if (D_0028E354 != 0) {
         g_display_reset_pending = 1;
     }
@@ -3785,7 +3785,7 @@ void menu_launch_page(void) {
         break;
     case 3:
 #ifndef DEATH_LABEL
-        func_0021F750(g_menu_launch_step);
+        menu_launch_when_faded(g_menu_launch_step);
 #endif
         break;
     }
@@ -3890,7 +3890,7 @@ void menu_launch_step2() {
 #ifndef DEATH_LABEL
 s32 func_00212580(s32);                     /* extern */
 
-void func_0021F750() {
+void menu_launch_when_faded() {
     if (g_fade_state == 0) {
         switch (D_0028EAA8) {                       /* irregular */
         case 1:
@@ -4083,7 +4083,7 @@ void menu_ranking_step2() {
     s32 var_s0;
 
     if (D_0028EAF0 == 0) {
-        func_002212C0(0x18);
+        menu_ranking_cursor_move(0x18);
     }
     var_s0 = 0;
     D_0028E294 = 1;
@@ -4148,7 +4148,7 @@ void menu_ranking_step2() {
 #ifdef DEATH_LABEL
 #endif
 
-void func_0021FA50(void) {
+void menu_draw(void) {
     extern void gfx_draw_color_box(s32 x, s32 y, s32 w, s32 h, s32 depth, s32 alpha, s32 r, s32 g, s32 b);
     extern void glyph_queue_clear(void);
     extern void glyph_queue_flush(void);
@@ -4190,9 +4190,9 @@ void func_0021FA50(void) {
         save_a6 = reg_a6;
         if (D_0028EB94 == 0) {
             gfx_draw_color_box(0, 0, 0x1C2, 0xE0, 0x50, 0x60, 1, 1, 1);
-            func_00221440();
+            menu_box_draw_wide();
         } else {
-            func_00221360();
+            menu_box_draw();
         }
         glyph_queue_clear();
         menu_main_draw();
@@ -4201,11 +4201,11 @@ void func_0021FA50(void) {
         menu_debug_option_draw();
         menu_arcade_draw();
         menu_system_option_draw();
-        func_00221000();
+        menu_alpha_a_update();
 #ifdef DEATH_LABEL
         death_func_001B9120();
 #endif
-        func_00221080();
+        menu_alpha_b_update();
         menu_simulation_draw();
         menu_stage_select_draw();
         menu_sim_setting_draw();
@@ -4213,9 +4213,9 @@ void func_0021FA50(void) {
         menu_sim_rules_draw();
         menu_sim_param_draw();
         menu_practice_ranking_draw();
-        func_00221E20();
+        menu_notice_draw();
         glyph_queue_flush();
-        func_00227E00();
+        menu_file_select_draw();
         menu_help_draw();
         reg_d0.w = save_d0;
         reg_d1.w = save_d1;
@@ -4732,7 +4732,7 @@ void menu_system_option_draw(void) {
 }
 #pragma pop
 
-void func_00221000(void) {
+void menu_alpha_a_update(void) {
     switch (D_0028EB30) {
     case 0:
         break;
@@ -4827,7 +4827,7 @@ void death_func_001B9120(void) {
 s32 func_001A4140();
 extern u8 D_0028E294;
 
-void func_00221080(void) {
+void menu_alpha_b_update(void) {
     switch (D_0028EB2C) {                           /* irregular */
     case 0:
         break;
@@ -4908,7 +4908,7 @@ s32 menu_cursor_input(s32 page) {
 
 s32 sfx_menu_move();                            /* extern */
 
-s32 func_002212C0() {
+s32 menu_ranking_cursor_move() {
     if (g_pad_repeat[2] & 0x1000) {
         sfx_menu_move();
         g_menu_cursor -= 1;
@@ -4929,7 +4929,7 @@ s32 func_002212C0() {
 }
 
 
-void func_00221360(void) {
+void menu_box_draw(void) {
     extern void gfx_draw_color_box(s32 x, s32 y, s32 w, s32 h, s32 depth, s64 alpha, s32 r, s32 g, s32 b);
     s32 x;
 
@@ -4959,7 +4959,7 @@ void func_00221360(void) {
     }
 }
 
-void func_00221440(void) {
+void menu_box_draw_wide(void) {
     extern void gfx_draw_color_box(s32 x, s32 y, s32 w, s32 h, s32 depth, s64 alpha, s32 r, s32 g, s32 b);
     s32 sel;
     s32 x;
@@ -5096,7 +5096,7 @@ void menu_help_draw(void) {
             menu_message_draw(0x36, 8);
             reg_a0 = (u8 *)MAIN_OR_DEATH_LABEL(g_menu_launch_warning, death_D_00290080)[D_0028EAE8];
             menu_message_draw(0x136, 8);
-            func_002242B0(0xC, 4);
+            menu_help_item_draw(0xC, 4);
         }
 #ifdef DEATH_LABEL
         if (g_menu_page == MENU_PAGE_23) {
@@ -5175,7 +5175,7 @@ void menu_help_draw(void) {
 s32 sfx_menu_confirm(s32);                         /* extern */
 extern s32 D_0028EAF8;
 
-s32 func_00221C20(void) {
+s32 menu_notice_update(void) {
     s32 var_s0;
 
     var_s0 = 0;
@@ -5207,7 +5207,7 @@ s32 func_00221C20(void) {
 }
 
 
-void func_00221CF0(void) {
+void menu_overlay_draw(void) {
     s32 glyph_queue_clear();
     s32 glyph_queue_flush();
     u8 * spA0;
@@ -5243,7 +5243,7 @@ void func_00221CF0(void) {
         spF0 = reg_a5;
         temp_fp = reg_a6;
         glyph_queue_clear();
-        func_00221E20();
+        menu_notice_draw();
         glyph_queue_flush();
         reg_d0.w = temp_s7;
         reg_d1.w = temp_s6;
@@ -5267,7 +5267,7 @@ extern void frame_draw_right_panel(s32 level);
 extern u8 D_002BB060[160];
 extern u8 D_002BB100[272];
 
-void func_00221E20(void) {
+void menu_notice_draw(void) {
     extern void gfx_draw_color_box(s32 x, s32 y, s32 w, s32 h, s32 depth, s32 alpha, s32 r, s32 g, s32 b);
     extern s32 glyph_queue_add(s32 x, s32 y, s32 z, s32 page, s32 alpha, s32 attr, s32 wide);
     char buf[2];
@@ -5306,7 +5306,7 @@ void func_00221E20(void) {
             gfx_draw_color_box(0xEC, 8, 0x40, 0xD0, 0x12C, alpha, 1, 1, 0x40);
         }
         (*(char **)&reg_a0) = (char *)g_menu_password_title;
-        func_00222C30(0x116, 8, D_0028EAEC);
+        menu_text_queue(0x116, 8, D_0028EAEC);
         buf[1] = 0;
         i = 0;
         y = 0;
@@ -5410,11 +5410,11 @@ void menu_reset() {
     replay_slots_reset();
     D_0028E368 = 0;
     D_0028EB00 = 1;
-    func_00222170();
-    func_0021E1A0();
+    menu_items_clear();
+    menu_values_from_settings();
 }
 
-void func_00222170(void) {
+void menu_items_clear(void) {
     s32 i;
     s32 j;
 
@@ -5709,7 +5709,7 @@ void menu_message_draw(s32 x, s32 y) {
     }
 }
 
-void func_00222C30(s32 x, s32 y, s32 attr) {
+void menu_text_queue(s32 x, s32 y, s32 attr) {
     void text_queue_glyph(s16 x, s16 y, s32 glyph, s32 w, s32 a4, s32 h, u16 attr, s32 z);
     u8 buf[4];
     s32 n;
@@ -5788,7 +5788,7 @@ void overlay_queue_sjis(s16 x, s16 y, u8 *text, s32 a3, s32 w, s32 h, u16 attr, 
 void overlay_queue_glyph(s16 x, s16 y, s32 glyph, s32 w, s32 a4, s32 h, u16 attr, s32 z);
 void overlay_queue_ascii(s16 x, s16 y, u8 *text, s32 a3, s32 w, s32 h, u16 attr, s32 z);
 
-void func_00222F90(s32 x, s32 y, s32 attr) {
+void menu_text_queue_plain(s32 x, s32 y, s32 attr) {
     u8 buf[4];
     s32 n;
     s32 single;
@@ -5865,7 +5865,7 @@ void func_00222F90(s32 x, s32 y, s32 attr) {
 
 extern u8 g_paused;
 
-void func_002232F0(void) {
+void pause_update(void) {
     extern void sfx_menu_confirm(void);
     u8 *save_a0;
     u8 *save_a1;
@@ -5903,23 +5903,23 @@ void func_002232F0(void) {
         case 0:
             break;
         case 1:
-            func_002234C0();
+            pause_begin();
             break;
         case 2:
             sfx_menu_confirm();
             g_paused++;
             break;
         case 3:
-            func_00223550();
+            pause_menu_update();
             break;
         case 4:
-            func_00223A60();
+            pause_end();
             break;
         case 5:
-            func_00223AA0();
+            pause_menu_confirm();
             break;
         case 0xB:
-            func_00224CC0();
+            pause_screen_adjust_update();
             break;
         case 0x63:
             break;
@@ -5958,7 +5958,7 @@ extern u8 D_0028EBCC;
 extern s8 g_pause_menu_cursor;
 extern u8 g_replay_buffer_state;
 
-void func_002234C0(void) {
+void pause_begin(void) {
     g_paused++;
     D_0028EBC8 = 0;
     g_menu_alpha = 0;
@@ -6009,7 +6009,7 @@ extern u8 *D_00271BCC[];
 extern u8 *D_00271BD0[];
 extern u8 *D_00271BD4[];
 
-void func_00223550(void) {
+void pause_menu_update(void) {
     extern void sfx_menu_confirm(void);
     extern void sfx_menu_tick(void);
     extern void wallpaper_load(s32 a, s32 b);
@@ -6023,7 +6023,7 @@ void func_00223550(void) {
         g_paused++;
         return;
     }
-    if (func_00223BE0() != 0) {
+    if (pause_menu_cursor_move() != 0) {
         return;
     }
     switch (g_pause_menu_cursor) {
@@ -6146,7 +6146,7 @@ void func_00223550(void) {
     MAIN_OR_DEATH_LABEL(g_loop, death_D_00290DC0) = D_0028E324;
 }
 
-void func_00223A60(void) {
+void pause_end(void) {
     g_paused = 0;
     streams_resume();
     g_pause_lock_timer = 0x3C;
@@ -6156,7 +6156,7 @@ void func_00223A60(void) {
     }
 }
 
-void func_00223AA0(void) {
+void pause_menu_confirm(void) {
     extern void sfx_menu_confirm(void);
     extern void sfx_menu_tick(void);
     u32 buttons;
@@ -6165,13 +6165,13 @@ void func_00223AA0(void) {
     if (buttons & 0x20) {
         if (D_0028EBC4 == 0) {
             if (g_simulation_active == 0 && g_replay_mode != 2) {
-                func_00224A30();
+                pause_menu_quit_confirm();
             } else {
                 sfx_menu_confirm();
                 if (g_pause_menu_cursor == 7) {
                     replay_start_result();
                 } else {
-                    func_00224A90();
+                    game_screen_teardown();
                     replay_start_run();
                 }
             }
@@ -6199,7 +6199,7 @@ void func_00223AA0(void) {
     }
 }
 
-s32 func_00223BE0(void) {
+s32 pause_menu_cursor_move(void) {
     s32 sfx_menu_move();
     s32 temp_s0;
     s32 temp_v1;
@@ -6253,7 +6253,7 @@ block_21:
     return 0;
 }
 
-void func_00223D70(void) {
+void pause_menu_box_draw(void) {
     extern void gfx_draw_color_box(s32 x, s32 y, s32 w, s32 h, s32 depth, s64 alpha, s32 r, s32 g, s32 b);
     s32 x;
 
@@ -6285,7 +6285,7 @@ void func_00223D70(void) {
     }
 }
 
-void func_00223E80(void) {
+void pause_menu_items_draw(void) {
     extern void gfx_draw_color_box(s32 x, s32 y, s32 w, s32 h, s32 depth, s64 alpha, s32 r, s32 g, s32 b);
     s64 alpha;
 
@@ -6329,13 +6329,13 @@ void func_00223E80(void) {
             }
             menu_message_draw(0x36, 8);
         } else {
-            func_00224020(0xC, 8);
+            pause_menu_item_draw(0xC, 8);
         }
         text_flush();
     }
 }
 
-void func_00224020(s32 x, s32 y) {
+void pause_menu_item_draw(s32 x, s32 y) {
     s32 shrink;
     s32 w;
     s32 h;
@@ -6382,7 +6382,7 @@ void func_00224020(s32 x, s32 y) {
     }
 }
 
-void func_002242B0(s32 x, s32 y) {
+void menu_help_item_draw(s32 x, s32 y) {
     s32 shrink;
     s32 w;
     s32 h;
@@ -6462,8 +6462,8 @@ void pause_menu_draw(void) {
         save_a5 = reg_a5;
         save_a6 = reg_a6;
         gfx_draw_color_box(0, 0, 0x1C2, 0xE0, 0x50, 0x60, 1, 1, 1);
-        func_00223D70();
-        func_00223E80();
+        pause_menu_box_draw();
+        pause_menu_items_draw();
         glyph_queue_clear();
         x = g_pause_menu_positions[0].x;
         y = g_pause_menu_positions[0].y;
@@ -6539,14 +6539,14 @@ void pause_menu_draw(void) {
     }
 }
 
-extern u16 D_0028E7BC;
+extern u16 g_attract_step;
 
-void func_00224A30(void) {
+void pause_menu_quit_confirm(void) {
     extern void sfx_menu_confirm(void);
-    if (D_0028E7BC == 1 || D_0028E7BC == 0xF) {
+    if (g_attract_step == 1 || g_attract_step == 0xF) {
         return;
     }
-    func_00224A90();
+    game_screen_teardown();
     sfx_menu_confirm();
     reg_d0.h[0] = TASK_ATTRACT;
     task_start();
@@ -6574,7 +6574,7 @@ extern u8 D_0028ED64;
 extern u8 g_replay_begin_pending;
 extern s32 g_replay_position;
 
-void func_00224A90(void) {
+void game_screen_teardown(void) {
     sound_stop_effects();
     music_stop();
     func_0012FA50();
@@ -6646,7 +6646,7 @@ void menu_arrows_draw(s32 arg0, s32 arg1, s32 arg2, s32 arg3, s32 arg4, s32 arg5
 }
 
 s32 display_set_offset();
-void func_00224CC0(void) {
+void pause_screen_adjust_update(void) {
     s32 sfx_menu_confirm();
     s32 sfx_menu_tick();
     s32 temp_v1;
@@ -6785,7 +6785,7 @@ void menu_screen_adjust_page(void) {
 
 extern void *g_dma_gif;
 
-void func_002252E0(void *buffer) {
+void screen_adjust_frame_draw(void *buffer) {
     sceGifPacket packet;
     s32 i;
     u64 x;
@@ -6856,7 +6856,7 @@ void menu_screen_adjust_draw(void) {
     save_a5 = reg_a5;
     save_a6 = reg_a6;
     gfx_draw_color_box(0, 0, 0x1C2, 0xE0, 0x50, 0x60, 1, 1, 1);
-    func_002252E0(((u8 (*)[0x10000])g_gif_buf)[0]);
+    screen_adjust_frame_draw(((u8 (*)[0x10000])g_gif_buf)[0]);
     text_queue_clear();
     frame_draw_wide_left_panel(0x80);
     gfx_draw_color_box(0xC, 8, 0x70, 0xD0, 0x12C, 0x40, 1, 1, 0x40);
@@ -6890,7 +6890,7 @@ extern s8 g_cd_async_state;
 extern s8 g_cd_async_busy;
 extern s8 D_0028EC64;
 
-void func_00225630(void) {
+void disc_notice_begin(void) {
     D_0028EC64 = 0;
     if (g_cd_async_state != 0) {
         sceCdBreak();
@@ -6901,7 +6901,7 @@ void func_00225630(void) {
 }
 
 
-void func_00225670(void) {
+void disc_notice_begin_for_stage(void) {
     D_0028EC64 = 0;
     if (g_cd_async_state != 0) {
         sceCdBreak();
@@ -6912,7 +6912,7 @@ void func_00225670(void) {
 }
 
 
-void func_002256B0(void) {
+void disc_notice_end(void) {
     D_0028EC64 = 3;
 }
 
@@ -6920,7 +6920,7 @@ extern u8 D_0028E374;
 extern s16 D_0028EC5C;
 extern s8 D_0028EC60;
 
-void func_002256C0(void) {
+void disc_notice_draw(void) {
     extern void gfx_draw_color_box(s32 x, s32 y, s32 w, s32 h, s32 depth, s32 alpha, s32 r, s32 g, s32 b);
     extern void glyph_queue_clear(void);
     extern void glyph_queue_add(s32 arg0, s32 arg1, s32 arg2, s32 arg3, s32 arg4, s32 arg5, s32 arg6);
@@ -7037,7 +7037,7 @@ void func_002256C0(void) {
 }
 
 s32 mc_save_update();
-s32 func_00235890();
+s32 save_snapshot_take();
 extern s32 D_0028EAD4;
 extern s32 D_0028ED0C;
 
@@ -7053,7 +7053,7 @@ void menu_card_save_page(void) {
         case 0:                                     /* switch 2 */
             mc_save_update(0);
             if (D_0028ED0C != 0) {
-                func_00235890();
+                save_snapshot_take();
                 D_0028EAD4 += 1;
                 break;
             }
@@ -7071,7 +7071,7 @@ void menu_card_save_page(void) {
 }
 
 s32 mc_load_update();
-s32 func_00234EF0();
+s32 save_block_to_settings();
 extern s32 D_0028EAD0;
 extern s32 D_0028ECC4;
 
@@ -7094,8 +7094,8 @@ void menu_card_load_page(void) {
         case 1:                                     /* switch 2 */
             D_0028ED0C = 0;
             if (D_0028ECC4 != 0) {
-                func_00234EF0(D_0028EAD0);
-                func_00235890();
+                save_block_to_settings(D_0028EAD0);
+                save_snapshot_take();
             }
             g_menu_card_load_step += 1;
             break;
@@ -7112,7 +7112,7 @@ extern s32 D_0028EAC4;
 extern s8 D_0028EACC;
 
 
-void func_00225B70(void) {
+void result_menu_reset(void) {
     D_0028EAC4 = 0;
     D_0028EACC = 1;
     D_0028EAC0 = 1;
@@ -7123,7 +7123,7 @@ void func_00225B70(void) {
 }
 
 extern s8 D_0028EAC8;
-void func_00225B90(void) {
+void result_menu_input(void) {
     s32 sfx_menu_confirm();
     s32 sfx_menu_move();
     s32 temp_a0;
@@ -7167,14 +7167,14 @@ void func_00225B90(void) {
     }
 }
 
-void func_00225CB0(void) {
+void result_menu_wait_faded(void) {
     if (D_0028EAC4 == 0) {
         D_0028EACC += 1;
     }
 }
 
 
-s8 func_00225CD0(void) {
+s8 result_menu_update(void) {
     s8 var_s0;
 
     var_s0 = 0;
@@ -7185,14 +7185,14 @@ s8 func_00225CD0(void) {
         }
         break;
     case 0x1:
-        func_00225B90();
+        result_menu_input();
         break;
     case 0x2:
         var_s0 = D_0028EAC8;
         D_0028EACC += 1;
         break;
     case 0x3:
-        func_00225CB0();
+        result_menu_wait_faded();
         break;
     case 0x20:
         D_0028EACC = 0;
@@ -7210,7 +7210,7 @@ s8 func_00225CD0(void) {
         }
         break;
     case 0x50:
-        func_0022A870();
+        result_notice_update();
         break;
     case 0x51:
         D_0028EAC4 = 0;
@@ -7226,7 +7226,7 @@ s8 func_00225CD0(void) {
 }
 
 
-void func_00225E20(void) {
+void result_menu_box_draw(void) {
     extern void gfx_draw_color_box(s32 x, s32 y, s32 w, s32 h, s32 depth, s32 alpha, s32 r, s32 g, s32 b);
     s32 x;
 
@@ -7297,7 +7297,7 @@ void result_menu_items_draw(void) {
         if (D_0028EACC == 0x50 || D_0028EACC == 0x51) {
             menu_ranking_draw();
         } else {
-            func_00225E20();
+            result_menu_box_draw();
             result_menu_draw();
             replay_slots_draw();
             glyph_queue_clear();
@@ -7619,12 +7619,12 @@ void replay_slots_close(void) {
     g_replay_slots_fade = 2;
 }
 
-s32 func_00236900();                            /* extern */
+s32 replay_slot_infos_clear();                            /* extern */
 extern s32 g_memcard_watch_step;
 
 void replay_slots_card_scan_begin(void) {
     g_memcard_watch_step = 0;
-    func_00236900();
+    replay_slot_infos_clear();
     g_replay_slots_state = 2;
 }
 
@@ -7708,9 +7708,9 @@ void replay_slots_card_select(void) {
     }
 }
 
-s32 func_0022C750();
+s32 mc_replay_save_begin();
 s32 memcard_watch_recheck();
-s32 func_00236960();
+s32 replay_slot_info_fill();
 extern s32 D_0028EABC;
 extern u8 g_replay_slots_step;
 extern s32 D_0028ECC0;
@@ -7722,7 +7722,7 @@ s32 replay_slots_card_save(void) {
         D_0028ED0C = 0;
         g_replay_slots_step += 1;
     case 1:
-        func_0022C750(g_replay_slots_cursor + 1);
+        mc_replay_save_begin(g_replay_slots_cursor + 1);
         if (D_0028ED0C != 0) {
             memcard_watch_recheck();
             D_0028ED0C = 0;
@@ -7730,7 +7730,7 @@ s32 replay_slots_card_save(void) {
             g_replay_slots_step += 1;
             D_0028EABC = D_0028ECC0;
             if (D_0028ECC0 != 0) {
-                func_00236960(g_replay_slots_cursor);
+                replay_slot_info_fill(g_replay_slots_cursor);
             }
         }
         break;
@@ -7749,7 +7749,7 @@ s32 replay_slots_card_save(void) {
     return 1;
 }
 
-s32 func_0022C760(s32);                         /* extern */
+s32 mc_replay_load_begin(s32);                         /* extern */
 s32 memcard_watch_recheck();                            /* extern */
 s32 replay_file_pointers_decode(s32 *);                   /* extern */
 extern s8 g_replay_slot_loaded;
@@ -7781,7 +7781,7 @@ s32 replay_slots_card_load(void) {
         g_replay_slots_step += 1;
         /* fallthrough */
     case 1:
-        func_0022C760(g_replay_slots_cursor + 1);
+        mc_replay_load_begin(g_replay_slots_cursor + 1);
         if (D_0028ED0C != 0) {
             memcard_watch_recheck();
             g_replay_slots_state = 4;
@@ -8113,7 +8113,7 @@ extern s8 g_menu_page;
 extern u8 D_0068DEC8[];
 extern u8 D_0068DED8[];
 extern u8 D_0068DEF0[];
-void func_00227120(void) {
+void menu_reset_keep_sim_rules(void) {
     u8 sp10[0x16];
     u8 sp30[0xA];
     u8 sp40[0xC];
@@ -8131,7 +8131,7 @@ void func_00227120(void) {
     fade_start_in();
 }
 extern u8 g_replay_slots_from_disc;
-void func_002271D0(void) {
+void menu_reset_keep_sim_rules_and_page(void) {
     u8 sp10[0x16];
     u8 sp30[0xA];
     u8 sp40[0xC];
@@ -8182,7 +8182,7 @@ extern s8 D_0028EB4C;
 extern s8 g_menu_main_step;
 extern s8 g_menu_pad;
 extern s32 D_0028EC7C;
-s32 func_002365A0();
+s32 autosave_update();
 extern s16 D_0068DF02[];
 extern s16 D_00270822[];
 extern s8 D_002714FA[];
@@ -8252,7 +8252,7 @@ static void menu_page_enter(MenuPage *fade) {
     g_menu_box_alpha = 0;
 }
 
-s32 func_00227350(MenuPage *fade, s32 command) {
+s32 menu_simulation_slide_in_step(MenuPage *fade, s32 command) {
     if (menu_items_slide_update(command) != 0) {
         fade->step += 1;
         g_menu_cursor = 1;
@@ -8308,7 +8308,7 @@ static void menu_page_fade(MenuPage *fade) {
     }
 }
 
-void func_002274C0(MenuPage *arg0, u8 **arg1, s32 arg2) {
+void menu_simulation_items_draw(MenuPage *arg0, u8 **arg1, s32 arg2) {
     void glyph_queue_add(s32 x, s32 y, s32 z, s32 page, s32 bright, s32 alpha, s32 flag);
     s32 count;
     s32 i;
@@ -8368,7 +8368,7 @@ void menu_simulation_step10(void) {
 }
 
 void menu_simulation_step11(void) {
-    if (func_00227350(&g_menu_simulation, 7) != 0) {
+    if (menu_simulation_slide_in_step(&g_menu_simulation, 7) != 0) {
         g_menu_cursor = 1;
         g_menu_simulation.step = 2;
     }
@@ -8456,7 +8456,7 @@ void menu_simulation_page(void) {
 
 void menu_simulation_draw(void) {
     menu_page_fade(&g_menu_simulation);
-    func_002274C0(&g_menu_simulation, (u8 **)g_menu_simulation_items, 7);
+    menu_simulation_items_draw(&g_menu_simulation, (u8 **)g_menu_simulation_items, 7);
 }
 
 void menu_stage_select_step0(void) {
@@ -8466,7 +8466,7 @@ void menu_stage_select_step0(void) {
 }
 
 void menu_stage_select_step1(void) {
-    if (func_002365A0() != 0) {
+    if (autosave_update() != 0) {
         g_menu_stage_select.step += 1;
     }
 }
@@ -8646,7 +8646,7 @@ void menu_replay_page(void) {
     }
 }
 
-void func_00227E00(void) {
+void menu_file_select_draw(void) {
     menu_page_fade(&g_menu_file_select);
     replay_slots_draw();
 }
@@ -8731,13 +8731,13 @@ void menu_settings_load_step2(void) {
         g_menu_sim_setting.step = 0;
         break;
     case 3:
-        func_00228060();
+        menu_settings_load_apply();
         replay_slots_close();
         break;
     }
 }
 
-void func_00228060(void) {
+void menu_settings_load_apply(void) {
     memcpy(D_0068DEF0_as_s16_a, ((s16 *)D_00270810), 0x16);
     memcpy(((s16 *)D_0068DED8), D_00270828, 0xA);
     memcpy(((s16 *)D_0068DEC8), D_00270838, 0xC);
@@ -9458,15 +9458,15 @@ void menu_sim_rules_draw(void) {
         flag = 1;
         if (i == 3) {
             if (D_0068DF04[0] == 1) {
-                func_00229950(x, y, g_menu_sim_rules.alpha, bright, 2);
+                menu_sim_rule_gauge_draw(x, y, g_menu_sim_rules.alpha, bright, 2);
             } else {
                 glyph_queue_add(x, y, z, 0, bright, g_menu_sim_rules.alpha, flag);
                 flag = 0;
             }
         } else if (i == 9) {
-            func_00229950(x, y, g_menu_sim_rules.alpha, bright, 8);
+            menu_sim_rule_gauge_draw(x, y, g_menu_sim_rules.alpha, bright, 8);
         } else if (i == 7) {
-            func_00229950(x, y, g_menu_sim_rules.alpha, bright, 6);
+            menu_sim_rule_gauge_draw(x, y, g_menu_sim_rules.alpha, bright, 6);
         } else {
             glyph_queue_add(x, y, z, 0, bright, g_menu_sim_rules.alpha, flag);
         }
@@ -9476,7 +9476,7 @@ void menu_sim_rules_draw(void) {
     }
 }
 
-void func_00229950(s32 x, s32 y, s32 alpha, s32 mode, s32 kind) {
+void menu_sim_rule_gauge_draw(s32 x, s32 y, s32 alpha, s32 mode, s32 kind) {
     void glyph_queue_add(s32 x, s32 y, s32 z, s32 page, s32 bright, s32 alpha, s32 flag);
     extern void gfx_draw_color_box(s32 x, s32 y, s32 w, s32 h, s32 depth, s32 alpha, s32 r, s32 g, s32 b);
     u8 *saved;
@@ -9873,19 +9873,19 @@ void menu_practice_ranking_draw(void) {
 
 extern s8 D_0028EB64;
 
-void func_0022A870(void) {
+void result_notice_update(void) {
     switch (D_0028EB64) {                           /* irregular */
     case 0:
-        func_0022A8F0(D_0028EB64);
+        result_notice_begin(D_0028EB64);
         break;
     case 1:
-        func_0022A930(D_0028EB64);
+        result_notice_slide(D_0028EB64);
         break;
     case 2:
-        func_0022A9A0(D_0028EB64);
+        result_notice_wait_button(D_0028EB64);
         break;
     case 3:
-        func_0022AA00(D_0028EB64);
+        result_notice_finish(D_0028EB64);
         break;
     }
 }
@@ -9894,7 +9894,7 @@ extern s8 D_0028EB10;
 extern s8 D_0028EB34;
 extern s32 D_0028EB9C;
 
-void func_0022A8F0() {
+void result_notice_begin() {
     D_0028EB9C = 0;
     D_0028EB64 += 1;
     menu_items_slide_in(0xC);
@@ -9904,7 +9904,7 @@ void func_0022A8F0() {
 
 extern s8 D_0028EADC;
 
-void func_0022A930() {
+void result_notice_slide() {
     if (menu_items_slide_update(0xC) != 0) {
         D_0028EB64 += 1;
         if ((0 <= D_0028EADC) && (D_0028EADC < 5)) {
@@ -9917,7 +9917,7 @@ void func_0022A930() {
     }
 }
 
-void func_0022A9A0()
+void result_notice_wait_button()
 {
     extern void sfx_menu_confirm(void);
     if (g_pad_trigger[g_menu_pad] & 0x60) {
@@ -9930,7 +9930,7 @@ void func_0022A9A0()
 
 extern s8 D_0028EACC;
 
-void func_0022AA00() {
+void result_notice_finish() {
     if (D_0028EB34 == 0) {
         D_0028EACC = 0x51;
     }
@@ -9979,7 +9979,7 @@ void menu_ranking_draw(void) {
     page = D_006C58AE[0] + D_006C58AC[0] * 5;
     sel = D_006C58AA[0];
     menu_ranking_scores_format(page, sel);
-    func_0022B1D0();
+    menu_ranking_box_draw();
     glyph_queue_clear();
     for (i = 0; i < count; i++) {
         item = &g_menu_items[0][i];
@@ -10105,7 +10105,7 @@ void menu_ranking_scores_format(s32 arg0, s32 arg1) {
 }
 
 
-void func_0022B1D0(void) {
+void menu_ranking_box_draw(void) {
     extern void gfx_draw_color_box(s32 x, s32 y, s32 w, s32 h, s32 depth, s64 alpha, s32 r, s32 g, s32 b);
     s32 x;
 
@@ -10139,12 +10139,12 @@ void func_0022B1D0(void) {
 }
 
 
-void func_0022B2F0(void) {
+void replay_save_prompt_update(void) {
     if (g_replay_slots_from_disc == 0) {
-        func_0022B4B0();
+        replay_save_prompt_update_card();
         return;
     }
-    func_0022B540();
+    replay_save_prompt_update_disc();
 }
 
 extern u8 D_0028ED30_as_u8_a8[8];
@@ -10158,7 +10158,7 @@ extern u8 g_replay_watch_after_run;
 extern u8 D_006A4C00[];
 
 
-void func_0022B330(void) {
+void replay_loaded_file_adopt(void) {
     extern void replay_file_pointers_decode(void *data);
     s32 count;
     s32 i;
@@ -10189,14 +10189,14 @@ void func_0022B330(void) {
     }
 }
 
-s32 func_0022C780();
+s32 mc_replay_autosave_begin();
 extern u8 D_0028E378;
 extern u8 D_0028EC4C;
 extern s32 D_0028EC50;
 extern s32 D_0028ECC4;
 extern s32 D_0028ED0C;
 
-s32 func_0022B4B0(void) {
+s32 replay_save_prompt_update_card(void) {
     switch (D_0028EC50) {                           /* irregular */
     case 0:
         D_0028EC4C = 1;
@@ -10206,13 +10206,13 @@ s32 func_0022B4B0(void) {
         D_0028E378 = 0xFF;
         /* fallthrough */
     case 1:
-        func_0022C780();
+        mc_replay_autosave_begin();
         if (D_0028ED0C != 0) {
             D_0028ED0C = 0;
             D_0028EC50 = 0;
             D_0028EC4C = 0;
             if (D_0028ECC4 != 0) {
-                func_0022B330();
+                replay_loaded_file_adopt();
             }
             return 1;
         }
@@ -10221,10 +10221,10 @@ s32 func_0022B4B0(void) {
     }
 }
 
-u8 func_00231840();
+u8 replay_slot_infos_next();
 extern u8 D_0028EAB8;
 
-s32 func_0022B540(void) {
+s32 replay_save_prompt_update_disc(void) {
     switch (D_0028EC50) {
     case 0:
         D_0028EC4C = 1;
@@ -10233,7 +10233,7 @@ s32 func_0022B540(void) {
         D_0028E378 = 0xFF;
         /* fallthrough */
     case 1:
-        D_0028EAB8 = func_00231840();
+        D_0028EAB8 = replay_slot_infos_next();
         if (D_0028EAB8 == 0xFF) {
             D_0028EC50 = 3;
         } else {
@@ -10244,7 +10244,7 @@ s32 func_0022B540(void) {
     case 2:
         if (replay_disc_file_load(D_0028EAB8) != 0) {
             D_0028EC50 += 1;
-            func_0022B330();
+            replay_loaded_file_adopt();
         }
         break;
     case 3:
@@ -10262,7 +10262,7 @@ extern u16 g_p1_score_billions;
 extern u32 g_p2_score;
 extern u32 g_p1_score;
 
-void func_0022B620(void) {
+void replay_scores_snapshot(void) {
     D_0028ED54 = g_p1_score_digits;
     D_0028ED50 = (s32)g_p1_score;
     D_0028ED4C = g_p1_score_billions;
@@ -10276,7 +10276,7 @@ extern u8 D_0028E2B8[8];
 extern u8 D_0028E368;
 extern s32 D_0028EB8C;
 
-s32 func_0022B660(void) {
+s32 replay_file_finalize(void) {
     u8 *save = g_replay_file;
     s32 state;
 
@@ -10298,7 +10298,7 @@ s32 func_0022B660(void) {
         D_0028E368 = 0;
         memcpy(g_replay_file_loaded, save, 0x202E8);
         replay_file_pointers_encode(g_replay_file_loaded);
-        func_0022B7A0((s32)D_006A4C00);
+        delta_decode((s32)D_006A4C00);
         replay_slots_reset();
         replay_slots_open(1, 2, 0);
         g_menu_alpha = 0;
@@ -10321,7 +10321,7 @@ s32 func_0022B660(void) {
     return 0;
 }
 
-void func_0022B7A0(s32 arg0) {
+void delta_decode(s32 arg0) {
     s32 var_v1;
     s8 *temp_a1;
     s8 *temp_t0_2;
@@ -10354,7 +10354,7 @@ void func_0022B7A0(s32 arg0) {
 
 extern u8 g_replay_mode;
 
-void func_0022B870(void) {
+void replay_save_prompt_draw(void) {
     extern void gfx_draw_color_box(s32 x, s32 y, s32 w, s32 h, s32 depth, s32 alpha, s32 r, s32 g, s32 b);
     u8 *save_a0;
     u8 *save_a1;
@@ -10409,7 +10409,7 @@ void func_0022B870(void) {
         }
         gfx_draw_color_box(0, 0, 0x1C2, 0xE0, 0x50, g_menu_alpha / 2, 1, 1, 1);
         if (g_replay_mode == 1) {
-            func_0022BA60();
+            replay_save_prompt_text_draw();
             replay_slots_draw();
         }
         glyph_queue_flush();
@@ -10432,7 +10432,7 @@ void func_0022B870(void) {
 }
 
 
-void func_0022BA60(void) {
+void replay_save_prompt_text_draw(void) {
     s32 text_queue_clear();
     s32 text_flush();
     void gfx_draw_color_box(s32 a, s32 b, s32 c, s32 d, s32 e, s32 alpha, s32 g, s32 h, s32 i);
@@ -10477,7 +10477,7 @@ s32 sceCdReadClock(CdClock *clock);
 
 #define FROM_BCD(x) (((x) & 0xF) + ((x) >> 4) * 10)
 
-s32 func_0022BB80(u8 *out)
+s32 clock_read(u8 *out)
 {
     CdClock clock;
 
@@ -10498,7 +10498,7 @@ extern u8 g_replay_file_headers[672];
 s32 replay_disc_headers_load(void) {
     s32 i;
 
-    func_00236900();
+    replay_slot_infos_clear();
     for (i = 0; i < 10; i++) {
         *(Row *)((s16 (*)[512])g_replay_slot_infos)[i] = ((Row *)g_replay_file_headers)[i];
     }
@@ -10549,16 +10549,16 @@ s32 replay_disc_file_load(u8 arg0) {
 }
 
 
-void func_0022BF60(void) {
+void simulation_task(void) {
     u8 temp_a0;
 
     temp_a0 = *(u8 *)(reg_a5 + 3);
     switch (temp_a0) {                              /* irregular */
     case 0:
-        func_0022BFD0(temp_a0);
+        simulation_task_begin(temp_a0);
         break;
     case 1:
-        func_0022C1F0(temp_a0);
+        simulation_task_run(temp_a0);
         break;
     case 2:
         task_stop_self_entry(temp_a0);
@@ -10590,7 +10590,7 @@ extern u16 g_p2_max_hits;
 extern u16 g_loop;
 #endif
 
-void func_0022BFD0() {
+void simulation_task_begin() {
     u32 save_d0;
     u32 save_d1;
     u32 save_d2;
@@ -10651,7 +10651,7 @@ void func_0022BFD0() {
     D_0028E3F8 = 0;
     D_0028E368 = 0;
     if (death_D_00290DC0 != 0) {
-        func_0022B620();
+        replay_scores_snapshot();
         reg_d0.h[0] = 10;
         death_D_00290DB8 = g_p1_max_hits;
         death_D_00290DB4 = g_p2_max_hits;
@@ -10748,7 +10748,7 @@ extern u16 g_p1_max_hits;
 extern u16 g_p2_max_hits;
 #endif
 
-void func_0022C1F0() {
+void simulation_task_run() {
     u32 save_d0;
     u32 save_d1;
     u32 save_d2;
@@ -10801,7 +10801,7 @@ void func_0022C1F0() {
         g_setting_difficulty = D_00684C88[0];
         g_setting_extend = D_00684C90[0];
         g_setting_ship_stock = D_00684C8E[0];
-        func_0022C450(D_00684C88[0]);
+        simulation_ships_start(D_00684C88[0]);
         g_pad_input_locked = 1;
 #ifdef DEATH_LABEL
         if (death_D_00290DC0 != 0) {
@@ -10863,7 +10863,7 @@ void func_0022C1F0() {
 
 extern void ship_select_apply(void);
 
-void func_0022C450() {
+void simulation_ships_start() {
     u32 save_d0;
     u32 save_d1;
     u32 save_d2;

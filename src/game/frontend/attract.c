@@ -3,37 +3,37 @@
 #include "sdk/ps2sdk.h"
 #include "pad.h"
 
-void func_00168E30(void);
-void func_00169B40(void);
-void func_00169C60(void);
-void func_00169D30(void);
-void func_00169DA0(void);
-void func_00169E20(void);
-void func_00169EA0(void);
-void func_00169F50(void);
-void func_0016A010(void);
-void func_0016A0D0(void);
-void func_0016A140(void);
-void func_0016A170(void);
-void func_0016A220(void);
-void func_0016A2D0(void);
-void func_0016A2E0(void);
-void func_0016A2F0(void);
-void func_0016A340(void);
-void func_0016A3A0(void);
-void func_0016A3E0(void);
-void func_0016A420(void);
-void func_0016A4A0(void);
-void func_0016A550(void);
-void func_0016A5C0(void);
-void func_0016A630(void);
-void func_0016A690(void);
+void attract_step_begin(void);
+void attract_start_button_check(void);
+void attract_prompt_draw(void);
+void attract_prompt_clear(void);
+void attract_prompt_press_start(void);
+void attract_prompt_insert_coin(void);
+void attract_prompt_by_credits(void);
+void attract_prompt_coins_missing(void);
+void attract_prompt_by_coins(void);
+void attract_prompt_one_more_coin(void);
+void attract_side_prompts_draw(void);
+void attract_side_prompt_p1(void);
+void attract_side_prompt_p2(void);
+void attract_side_press_start_p1(void);
+void attract_side_press_start_p2(void);
+void attract_side_two_lines_print(void);
+void attract_side_insert_coin(void);
+void attract_side_coins_p1(void);
+void attract_side_coins_p2(void);
+void attract_side_insert_coins(void);
+void attract_side_coins_missing(void);
+void attract_side_one_coin_p1(void);
+void attract_side_one_coin_p2(void);
+void attract_side_insert_2_coins(void);
+void attract_side_one_more_coin(void);
 
-extern u16 D_0028E7BC;
+extern u16 g_attract_step;
 
-void func_00168BA0() {
+void attract_step_set() {
     reg_a5[2] = 0;
-    D_0028E7BC = reg_d0.h[0];
+    g_attract_step = reg_d0.h[0];
 }
 
 typedef void (*Fn)();
@@ -70,11 +70,11 @@ void attract_task(void) {
 #endif
 
     if (*(u8 *)(reg_a5 + 3) == 0) {
-        func_00168E30();
+        attract_step_begin();
         return;
     }
 #ifndef DEATH_LABEL
-    reg_d0.h[0] = D_0028E7BC;
+    reg_d0.h[0] = g_attract_step;
     if (g_attract_demo != 0) goto next_1;
     if (g_stage_load_state != 0) goto block_3;
     goto next_2;
@@ -114,7 +114,7 @@ block_1:
     sfx_coin();
     menu_settings_restore();
 next_4:
-    if (D_0028E7BC != 0xC) goto next_5;
+    if (g_attract_step != 0xC) goto next_5;
     sound_stop_effects();
 next_5:
     reg_d0.w = 0;
@@ -127,7 +127,7 @@ next_5:
     *(s16 *)(reg_a0 + 4) = 3;
     return;
 block_2:
-    if (D_0028E7BC == 0xD) goto block_3;
+    if (g_attract_step == 0xD) goto block_3;
     if (reg_d0.h[0] == 0x11) goto block_3;
     if (reg_d0.h[0] == 0x12) goto block_3;
     D_0028E7B8 += 1;
@@ -135,15 +135,15 @@ block_2:
     t = reg_d0.h[0] & 0x10;
     reg_d0.h[0] = t;
     if (!(t & 0xFFFF)) goto next_6;
-    func_00169C60();
+    attract_prompt_draw();
     goto next_7;
 next_6:
-    func_00169D30();
+    attract_prompt_clear();
 next_7:
     func_00131200();
 block_3:
 #endif
-    reg_d0.h[0] = D_0028E7BC;
+    reg_d0.h[0] = g_attract_step;
     ((Fn)*(u32 *)((u8 *)attract_step_routines + (reg_d0.h[0] * 4)))();
 }
 
@@ -151,10 +151,10 @@ s32 func_0012FBD0();                            /* extern */
 s32 slowdown_reset();                            /* extern */
 extern u8 D_0028E7B4;
 
-void func_00168E30(void) {
+void attract_step_begin(void) {
     *(s8 *)(reg_a5 + 3) = 1;
     reg_d0.h[0] = *(u16 *)(reg_a5 + 4);
-    func_00168BA0();
+    attract_step_set();
     D_0028E7B4 = 0;
     D_0028E7B8 = 0;
     func_0012FBD0();
@@ -165,7 +165,7 @@ s32 settings_notice_update_with_fade_in();                            /* extern 
 extern u16 D_0028E314;
 extern u16 D_0028E318;
 
-void func_00168E80(void) {
+void attract_step_settings_notice(void) {
     s32 text_layer_clear();
     s32 settings_notice_begin();
     if (*(u8 *)(reg_a5 + 2) == 0) {
@@ -179,7 +179,7 @@ void func_00168E80(void) {
         D_0028E314 = 1;
         reg_d0.h[0] = 5;
         D_0028DF84 = 0;
-        func_00168BA0();
+        attract_step_set();
     }
 }
 
@@ -187,8 +187,8 @@ s32 func_001A3D20();
 s32 func_001A3D30();
 s32 func_001A3E70();
 s32 stage_load_step();
-s32 func_00225630();
-s32 func_002256B0();
+s32 disc_notice_begin();
+s32 disc_notice_end();
 extern u8 D_0028E294;
 extern u8 D_0028E304;
 extern u8 g_slowdown_timer;
@@ -198,7 +198,7 @@ extern s16 g_loaded_stage;
 extern u16 g_stage;
 extern s8 g_cd_async_busy;
 
-void func_00168EF0(void) {
+void attract_step_stage_preload(void) {
     s32 text_layer_clear();
     s32 text_palette_load();
     s32 slowdown_init();
@@ -219,21 +219,21 @@ void func_00168EF0(void) {
         g_cd_async_busy = 1;
         g_stage_load_state = 0;
         g_cd_async_state = 0;
-        func_00225630();
+        disc_notice_begin();
     }
     if (*(u8 *)(reg_a5 + 2) == 1) {
         g_stage = 0;
         stage_load_step();
         if (g_loaded_stage == g_stage) {
             *(u8 *)(reg_a5 + 2) = 2U;
-            func_002256B0();
+            disc_notice_end();
             func_001A3D20();
         }
     }
     func_001A3E70();
     if (cond_flag == 0) {
         reg_d0.h[0] = 0xC;
-        func_00168BA0();
+        attract_step_set();
     }
 }
 
@@ -250,7 +250,7 @@ extern u8 g_game_mode;
 extern u8 D_0028E2E4;
 extern u8 g_splash_visible;
 
-void func_00168FD0(void) {
+void attract_step_settings_notice_timed(void) {
     s32 text_layer_clear();
     s32 fades_reset();
     s32 settings_notice_begin();
@@ -270,20 +270,20 @@ void func_00168FD0(void) {
         g_stage_load_state = 0;
         g_cd_async_busy = 1;
         g_cd_async_state = 0;
-        func_00225630();
+        disc_notice_begin();
     }
     if (reg_a5[2] == 1) {
         g_stage = 0;
         stage_load_step();
         if (g_loaded_stage == g_stage) {
             reg_a5[2] = 2U;
-            func_002256B0();
+            disc_notice_end();
         }
     }
     if (g_setting_coin_mode != 0x12) {
         settings_notice_draw_static();
         if (g_stage_load_state == 0) {
-            func_00169B40();
+            attract_start_button_check();
         }
     } else {
         if (D_0028DF84 != 0) {
@@ -293,7 +293,7 @@ void func_00168FD0(void) {
         }
         switch (cond_flag) { case 0: goto block_set; }
         if (g_stage_load_state == 0) {
-            func_00169B40();
+            attract_start_button_check();
         }
         return;
     block_set:
@@ -306,7 +306,7 @@ void func_00168FD0(void) {
         g_game_mode = 0;
         D_0028E2E4 = 0;
         D_0028DF84 = 0;
-        func_00168BA0();
+        attract_step_set();
     }
 }
 #endif
@@ -340,28 +340,28 @@ void death_func_00136FF0(void) {
         g_stage_load_state = 0;
         g_cd_async_busy = 1;
         g_cd_async_state = 0;
-        func_00225630();
+        disc_notice_begin();
     }
     if (reg_a5[2] == 1) {
         g_stage = 0;
         stage_load_step();
         if (g_loaded_stage == g_stage) {
             reg_a5[2] = 2U;
-            func_002256B0();
+            disc_notice_end();
         }
     }
     if (g_stage_load_state == 0) {
         D_0028EB88 = 0;
         reg_d0.h[0] = 0xF;
-        func_00168BA0();
+        attract_step_set();
     }
 }
 #endif
 
 void fade_start_in(void);
-void func_0021D570(void);
-s32 func_0022BB80(u8 *);
-void func_00235890(void);
+void menu_task_update(void);
+s32 clock_read(u8 *);
+void save_snapshot_take(void);
 extern u8 D_0028E25C;
 extern u8 D_0028E284;
 extern u8 D_0028E288;
@@ -383,7 +383,7 @@ extern s8 D_0028E3F8;
 extern s8 D_0028EB00;
 extern s32 D_0028EB94;
 
-void func_00169140(void) {
+void attract_step_menu(void) {
     void text_layer_clear(void);
     void fades_reset(void);
     void settings_notice_begin(void);
@@ -403,28 +403,28 @@ void func_00169140(void) {
         D_0028E368 = 0;
         text_layer_clear();
 #ifdef DEATH_LABEL
-        func_00235890();
+        save_snapshot_take();
 #else
         if (D_0028DF84 != 0) {
-            func_00235890();
+            save_snapshot_take();
         }
 #endif
     }
     if (D_0028EB94 == 0) {
         settings_notice_draw_static();
     }
-    func_0021D570();
+    menu_task_update();
     if (D_0028EB00 >= 10) {
         if (D_0028EB00 == 10) {
             D_0028DF84 = 1;
             reg_d0.h[0] = 3;
-            func_00168BA0();
+            attract_step_set();
         } else if (D_0028EB00 == 30) {
             D_0028DF84 = 0;
             reg_d0.h[0] = 0x10;
             g_game_frame_ran = 0;
             D_0028E3F8 = 0;
-            func_00168BA0();
+            attract_step_set();
         } else if (D_0028EB00 == 40) {
 #ifdef DEATH_LABEL
             (*(u8 *)D_0028E2B8) = 0;
@@ -436,9 +436,9 @@ void func_00169140(void) {
             D_0028E2BE = 0;
             D_0028E2BF = 0;
             reg_a0 = &(*(u8 *)D_0028E2B8);
-            if (func_0022BB80(reg_a0) != 0) {
+            if (clock_read(reg_a0) != 0) {
                 sceGsSyncV(0);
-                if (func_0022BB80(reg_a0) != 0) {
+                if (clock_read(reg_a0) != 0) {
                     (*(u8 *)D_0028E2B8) = 0;
                     D_0028E2B9 = 0;
                     D_0028E2BA = 0;
@@ -452,7 +452,7 @@ void func_00169140(void) {
             reg_d0.h[0] = 0x13;
             g_game_frame_ran = 0;
             D_0028E3F8 = 0;
-            func_00168BA0();
+            attract_step_set();
         } else {
             D_0028E318 = 9;
             D_0028E314 = 9;
@@ -467,9 +467,9 @@ void func_00169140(void) {
             D_0028E2BE = 0;
             D_0028E2BF = 0;
             reg_a0 = &(*(u8 *)D_0028E2B8);
-            if (func_0022BB80(reg_a0) != 0) {
+            if (clock_read(reg_a0) != 0) {
                 sceGsSyncV(0);
-                if (func_0022BB80(reg_a0) != 0) {
+                if (clock_read(reg_a0) != 0) {
                     (*(u8 *)D_0028E2B8) = 0;
                     D_0028E2B9 = 0;
                     D_0028E2BA = 0;
@@ -479,14 +479,14 @@ void func_00169140(void) {
             }
             printf((const char *)"--date [%d][%d][%d][%d][%d]\n", (*(u8 *)D_0028E2B8), D_0028E2B9, D_0028E2BA, D_0028E2BB, D_0028E2BC);
             reg_d0.h[0] = 0xE;
-            func_00168BA0();
+            attract_step_set();
         }
         D_0028EB00 = 0;
         fade_start_in();
     }
 }
 
-void func_00169310(void) {
+void attract_step_unused_4(void) {
 
 }
 
@@ -497,7 +497,7 @@ s32 sound_stop_effects();                            /* extern */
 s32 stage_map_reset();                            /* extern */
 extern u8 g_default_text_palette[];
 
-void func_00169320(void) {
+void attract_step_demo_start(void) {
     s32 text_layer_clear();
     s32 fades_reset();
     s32 text_palette_load();
@@ -527,15 +527,15 @@ void func_00169320(void) {
     }
 }
 
-void func_001693E0(void) {
+void attract_step_unused_6(void) {
 
 }
 
-void func_001693F0(void) {
+void attract_step_unused_7(void) {
 
 }
 
-void func_00169400(void) {
+void attract_step_unused_8(void) {
 
 }
 
@@ -543,7 +543,7 @@ s32 splash_begin();                            /* extern */
 s32 splash_update();                            /* extern */
 extern u8 g_splash_visible;
 
-void func_00169410(void) {
+void attract_step_splash(void) {
     if (*(u8 *)(reg_a5 + 2) == 0) {
         *(u8 *)(reg_a5 + 2) = 1U;
         splash_begin();
@@ -555,30 +555,30 @@ void func_00169410(void) {
         if (g_setting_coin_mode == 0x12) {
             reg_d0.h[0] = 3;
         }
-        func_00168BA0();
+        attract_step_set();
     }
 }
 
-void func_00169480(void) {
+void attract_step_unused_10(void) {
 
 }
 
-void func_00169490(void) {
+void attract_step_unused_11(void) {
 
 }
 
-s32 func_0012F6A0();                            /* extern */
-s32 func_0012F7D0();                            /* extern */
+s32 logo_screen_begin();                            /* extern */
+s32 logo_screen_update();                            /* extern */
 
-void func_001694A0(void) {
+void attract_step_logo(void) {
     if (*(u8 *)(reg_a5 + 2) == 0) {
         *(u8 *)(reg_a5 + 2) = 1U;
-        func_0012F6A0();
+        logo_screen_begin();
     }
-    func_0012F7D0();
+    logo_screen_update();
     if (cond_flag == 0) {
         reg_d0.h[0] = 9;
-        func_00168BA0();
+        attract_step_set();
     }
 }
 
@@ -587,7 +587,7 @@ s32 text_layer_print_wide();
 extern u8 g_default_text_palette[];
 extern u8 D_0026A880[];
 
-void func_001694F0() {
+void attract_step_caution_text() {
     s32 text_layer_clear();
     s32 text_palette_load();
     u16 temp_v1;
@@ -623,7 +623,7 @@ void func_001694F0() {
         reg_tmp.h[0] = *(u16 *)(reg_a5 + 4);
         if (*(u16 *)(reg_a5 + 4) == 0) {
             reg_d0.h[0] = 2;
-            func_00168BA0();
+            attract_step_set();
             text_layer_clear();
         }
     }
@@ -631,7 +631,7 @@ void func_001694F0() {
 
 extern u8 D_0028E7B4;
 
-void func_00169640(void) {
+void attract_step_ship_select(void) {
     s32 task_reset_all();
     s32 task_start();
     task_reset_all();
@@ -695,7 +695,7 @@ extern u16 D_006E5C10[];
 extern u16 D_006E5C12[];
 extern u16 D_006E5C14[];
 
-void func_00169680(void) {
+void attract_step_game_start(void) {
     void text_layer_clear(void);
     void text_palette_load(void);
     void task_reset_all(void);
@@ -756,7 +756,7 @@ extern u8 D_0028E7B4;
 extern u8 death_D_00290DC0;
 #endif
 
-void func_00169900(void) {
+void attract_step_mode2_start(void) {
     s32 text_layer_clear();
     s32 text_palette_load();
     s32 task_reset_all();
@@ -778,13 +778,13 @@ void func_00169900(void) {
 }
 
 s32 mc_autoload_update();
-s32 func_0022C710();
-s32 func_00234EF0();
+s32 mc_startup_load_begin();
+s32 save_block_to_settings();
 extern u8 D_0028ECF4;
 extern s32 D_0028ED0C;
 extern s32 D_006A0E40[];
 
-void func_00169950(void) {
+void attract_step_card_load(void) {
     u8 temp_a0;
     u8 *temp_a1;
 
@@ -796,7 +796,7 @@ void func_00169950(void) {
         *(u8 *)(reg_a5 + 2) = 1U;
         break;
     case 1:
-        func_0022C710(temp_a0, temp_a1);
+        mc_startup_load_begin(temp_a0, temp_a1);
         if (D_0028ED0C != 0) {
             D_0028ED0C = 0;
             printf((const char *)"-----[%d]---\n", D_0028ECF4);
@@ -813,7 +813,7 @@ void func_00169950(void) {
         if (D_0028ED0C != 0) {
             *(u8 *)(reg_a5 + 2) = 3U;
             if (D_006A0E40[0] != 0) {
-                func_00234EF0(3);
+                save_block_to_settings(3);
             }
             D_0028ED0C = 0;
             break;
@@ -821,20 +821,20 @@ void func_00169950(void) {
         break;
     case 3:
         reg_d0.h[0] = MAIN_OR_DEATH_LABEL(0xD, 0x3);
-        func_00168BA0();
+        attract_step_set();
         break;
     }
 }
 
 s32 music_stop();
-s32 func_00221C20();
-s32 func_002365A0();
-s32 func_002368E0();
+s32 menu_notice_update();
+s32 autosave_update();
+s32 unlock_notice_reset();
 extern s32 D_0028EAF8;
 extern s32 D_0028EC78;
 extern s32 D_0028EC7C;
 
-void func_00169A50(void) {
+void attract_step_autosave(void) {
     s32 text_layer_clear();
     u8 temp_a0;
 
@@ -850,22 +850,22 @@ void func_00169A50(void) {
         menu_settings_restore();
         break;
     case 1:
-        if (func_00221C20(temp_a0) != 0) {
+        if (menu_notice_update(temp_a0) != 0) {
             *(u8 *)(reg_a5 + 2) = 2U;
             break;
         }
         break;
     case 2:
-        if (func_002365A0(temp_a0) != 0) {
+        if (autosave_update(temp_a0) != 0) {
             *(u8 *)(reg_a5 + 2) = 3U;
             D_0028EC78 = 0;
             break;
         }
         break;
     case 3:
-        if (func_002368E0(temp_a0) != 0) {
+        if (unlock_notice_reset(temp_a0) != 0) {
             reg_d0.h[0] = MAIN_OR_DEATH_LABEL(2, 3);
-            func_00168BA0();
+            attract_step_set();
         }
         break;
     }
@@ -876,19 +876,19 @@ s32 sfx_confirm();                            /* extern */
 extern u8 D_0028E1E6[];
 extern s8 D_0028EB88;
 
-void func_00169B40(void) {
+void attract_start_button_check(void) {
     if (g_pad_trigger[2] & 0x800) {
         if (g_setting_coin_mode == 0x12) {
             D_0028EB88 = 0;
             reg_d0.h[0] = 0xF;
-            func_00168BA0(g_setting_coin_mode);
+            attract_step_set(g_setting_coin_mode);
             sfx_confirm();
             return;
         }
         if (D_0028E1E6[0] != 0) {
             D_0028EB88 = 0;
             reg_d0.h[0] = 0xF;
-            func_00168BA0(g_setting_coin_mode);
+            attract_step_set(g_setting_coin_mode);
         }
     }
 }
@@ -896,7 +896,7 @@ void func_00169B40(void) {
 
 s32 p1_credit_spend_one();
 s32 p2_credit_spend_one();
-void func_00169BC0(void) {
+void start_buttons_take_credits(void) {
     D_0028E7B4 = 0;
     if (g_pad_trigger[0] & 0x20) {
         p1_credit_spend_one();
@@ -915,40 +915,40 @@ void func_00169BC0(void) {
 #ifndef DEATH_LABEL
 extern u8 g_setting_chute_type;
 
-void func_00169C60(void) {
+void attract_prompt_draw(void) {
     reg_d0.b[0] = g_setting_chute_type;
     if (reg_d0.b[0] == 1) {
-        func_0016A140();
+        attract_side_prompts_draw();
         return;
     }
     p1_credits_get();
     if (reg_d0.h[0] != 0) {
-        func_00169DA0();
+        attract_prompt_press_start();
         return;
     }
     reg_d0.b[0] = g_setting_coin_mode;
     if (reg_d0.b[0] == 0x12) {
-        func_00169DA0();
+        attract_prompt_press_start();
         return;
     }
     if (reg_d0.b[0] == 0x11) {
-        func_0016A010();
+        attract_prompt_by_coins();
         return;
     }
     if ((s8)(reg_d0.b[0]) >= 9) {
-        func_00169EA0();
+        attract_prompt_by_credits();
         return;
     }
-    func_00169E20();
+    attract_prompt_insert_coin();
 }
 #endif
 
 #ifndef DEATH_LABEL
 s32 text_layer_print();
-extern u8 D_0026AA40[];
+extern u8 attract_text_blank[];
 
-void func_00169D30(void) {
-    reg_a0 = D_0026AA40;
+void attract_prompt_clear(void) {
+    reg_a0 = attract_text_blank;
     reg_d0.h[0] = 0;
     reg_d1.h[0] = 0x13;
     reg_d2.h[0] = 0;
@@ -963,13 +963,13 @@ void func_00169D30(void) {
 #endif
 
 #ifndef DEATH_LABEL
-extern u8 D_0026AAA0[];
+extern u8 attract_text_press_start[];
 
-void func_00169DA0(void) {
+void attract_prompt_press_start(void) {
     if (g_stage_load_state == 0) {
         reg_d0.h[0] = 0;
         reg_d2.h[0] = 0;
-        reg_a0 = D_0026AAA0;
+        reg_a0 = attract_text_press_start;
         reg_d1.h[0] = 0x13;
         text_layer_print();
         reg_a0 += 0x20;
@@ -983,13 +983,13 @@ void func_00169DA0(void) {
 #endif
 
 #ifndef DEATH_LABEL
-extern u8 D_0026AC80[];
+extern u8 attract_text_insert_coin[];
 
-void func_00169E20(void) {
+void attract_prompt_insert_coin(void) {
     if (g_stage_load_state == 0) {
         reg_d0.h[0] = 0;
         reg_d2.h[0] = 0;
-        reg_a0 = D_0026AC80;
+        reg_a0 = attract_text_insert_coin;
         reg_d1.h[0] = 0x13;
         text_layer_print();
         reg_a0 += 0x20;
@@ -1005,16 +1005,16 @@ void func_00169E20(void) {
 #ifndef DEATH_LABEL
 s32 credits_get();
 s32 text_layer_put_hex_digit();
-extern u8 D_0026ABC0[];
+extern u8 attract_text_insert_coins[];
 
-void func_00169EA0(void) {
+void attract_prompt_by_credits(void) {
     credits_get();
     if (reg_d1.h[0] != 0) {
-        func_00169F50();
+        attract_prompt_coins_missing();
         return;
     }
     reg_d2.h[0] = 0;
-    reg_a0 = D_0026ABC0;
+    reg_a0 = attract_text_insert_coins;
     reg_d1.h[0] = 0x13;
     reg_d4.h[0] = reg_d0.h[0];
     reg_d0.h[0] = 0;
@@ -1032,20 +1032,20 @@ void func_00169EA0(void) {
 #endif
 
 #ifndef DEATH_LABEL
-extern u8 D_0026AC20[];
+extern u8 attract_text_insert_more_coins[];
 
-void func_00169F50(void) {
+void attract_prompt_coins_missing(void) {
     u16 temp_a0;
 
     reg_d0.h[0] -= reg_d1.h[0];
     reg_d4.h[0] = reg_d0.h[0];
     if (reg_d4.h[0] == 1) {
-        func_0016A0D0();
+        attract_prompt_one_more_coin();
         return;
     }
     reg_d0.h[0] = 0;
     reg_d2.h[0] = 0;
-    reg_a0 = D_0026AC20;
+    reg_a0 = attract_text_insert_more_coins;
     reg_d1.h[0] = 0x13;
     text_layer_print();
     reg_a0 += 0x20;
@@ -1061,21 +1061,21 @@ void func_00169F50(void) {
 #endif
 
 #ifndef DEATH_LABEL
-extern u8 D_0026AB00[];
+extern u8 attract_text_insert_2_coins[];
 
-void func_0016A010(void) {
+void attract_prompt_by_coins(void) {
     p2_credits_get();
     if (reg_d0.h[0] == 1) {
-        func_0016A0D0();
+        attract_prompt_one_more_coin();
         return;
     }
     if ((s16)(reg_d0.h[0]) >= 2) {
-        func_00169DA0();
+        attract_prompt_press_start();
         return;
     }
     reg_d0.h[0] = 0;
     reg_d2.h[0] = 0;
-    reg_a0 = D_0026AB00;
+    reg_a0 = attract_text_insert_2_coins;
     reg_d1.h[0] = 0x13;
     text_layer_print();
     reg_a0 += 0x20;
@@ -1088,10 +1088,10 @@ void func_0016A010(void) {
 #endif
 
 #ifndef DEATH_LABEL
-extern u8 D_0026AB60[];
+extern u8 attract_text_insert_1_more_coin[];
 
-void func_0016A0D0(void) {
-    reg_a0 = D_0026AB60;
+void attract_prompt_one_more_coin(void) {
+    reg_a0 = attract_text_insert_1_more_coin;
     reg_d0.h[0] = 0;
     reg_d1.h[0] = 0x13;
     reg_d2.h[0] = 0;
@@ -1107,71 +1107,71 @@ void func_0016A0D0(void) {
 
 #ifndef DEATH_LABEL
 
-void func_0016A140(void) {
+void attract_side_prompts_draw(void) {
     reg_d6.w = 0xA;
-    func_0016A170();
-    func_0016A220();
+    attract_side_prompt_p1();
+    attract_side_prompt_p2();
 }
 #endif
 
 #ifndef DEATH_LABEL
 
-void func_0016A170(void) {
+void attract_side_prompt_p1(void) {
     reg_d7.w = 0;
     p1_credits_get();
     if (reg_d0.h[0] != 0) {
-        func_0016A2D0();
+        attract_side_press_start_p1();
         return;
     }
     reg_d0.b[0] = g_setting_coin_mode;
     if (reg_d0.b[0] == 0x12) {
-        func_0016A2D0();
+        attract_side_press_start_p1();
         return;
     }
     if (reg_d0.b[0] == 0x11) {
-        func_0016A550();
+        attract_side_one_coin_p1();
         return;
     }
     if ((s8)(reg_d0.b[0]) >= 9) {
-        func_0016A3A0();
+        attract_side_coins_p1();
         return;
     }
-    func_0016A340();
+    attract_side_insert_coin();
 }
 #endif
 
 #ifndef DEATH_LABEL
 
-void func_0016A220(void) {
+void attract_side_prompt_p2(void) {
     reg_d7.w = 0xE;
     p1_credits_get();
     if (reg_d1.h[0] != 0) {
-        func_0016A2E0();
+        attract_side_press_start_p2();
         return;
     }
     reg_d0.b[0] = g_setting_coin_mode;
     if (reg_d0.b[0] == 0x12) {
-        func_0016A2E0();
+        attract_side_press_start_p2();
         return;
     }
     if (reg_d0.b[0] == 0x11) {
-        func_0016A5C0();
+        attract_side_one_coin_p2();
         return;
     }
     if ((s8)(reg_d0.b[0]) >= 9) {
-        func_0016A3E0();
+        attract_side_coins_p2();
         return;
     }
-    func_0016A340();
+    attract_side_insert_coin();
 }
 #endif
 
 #ifndef DEATH_LABEL
 extern char attract_text_press_start_p1[2][16];
 
-void func_0016A2D0(void) {
+void attract_side_press_start_p1(void) {
     reg_a0 = (u8 *)attract_text_press_start_p1;
-    func_0016A2F0();
+    attract_side_two_lines_print();
 }
 #endif
 
@@ -1179,16 +1179,16 @@ void func_0016A2D0(void) {
 extern char attract_text_press_start_p2[2][16];
 
 
-void func_0016A2E0(void) {
+void attract_side_press_start_p2(void) {
     reg_a0 = (u8 *)attract_text_press_start_p2;
-    func_0016A2F0();
+    attract_side_two_lines_print();
 }
 #endif
 
 #ifndef DEATH_LABEL
 s32 text_layer_print();                            /* extern */
 
-void func_0016A2F0(void) {
+void attract_side_two_lines_print(void) {
     reg_d2.h[0] = 0;
     reg_d0.h[0] = reg_d7.h[0];
     reg_d1.h[0] = reg_d6.h[0];
@@ -1200,10 +1200,10 @@ void func_0016A2F0(void) {
 #endif
 
 #ifndef DEATH_LABEL
-extern u8 D_0026AD60[];
+extern u8 attract_side_text_insert_coin[];
 
-void func_0016A340(void) {
-    reg_a0 = D_0026AD60;
+void attract_side_insert_coin(void) {
+    reg_a0 = attract_side_text_insert_coin;
     reg_d2.h[0] = 0;
     reg_d0.h[0] = reg_d7.h[0];
     reg_d1.h[0] = reg_d6.h[0];
@@ -1217,36 +1217,36 @@ void func_0016A340(void) {
 #ifndef DEATH_LABEL
 s32 credits_get();                            /* extern */
 
-void func_0016A3A0(void) {
+void attract_side_coins_p1(void) {
     credits_get();
     if (reg_d1.h[0] != 0) {
-        func_0016A4A0();
+        attract_side_coins_missing();
         return;
     }
-    func_0016A420();
+    attract_side_insert_coins();
 }
 #endif
 
 #ifndef DEATH_LABEL
 s32 coins_get();                            /* extern */
 
-void func_0016A3E0(void) {
+void attract_side_coins_p2(void) {
     coins_get();
     if (reg_d1.h[0] != 0) {
-        func_0016A4A0();
+        attract_side_coins_missing();
         return;
     }
-    func_0016A420();
+    attract_side_insert_coins();
 }
 #endif
 
 #ifndef DEATH_LABEL
-extern u8 D_0026AD20[];
+extern u8 attract_side_text_insert_2_coins[];
 
-void func_0016A420(void) {
+void attract_side_insert_coins(void) {
     u16 temp_a0;
 
-    reg_a0 = D_0026AD20;
+    reg_a0 = attract_side_text_insert_2_coins;
     temp_a0 = reg_d0.h[0];
     reg_d2.h[0] = 0;
     reg_d4.h[0] = temp_a0;
@@ -1263,19 +1263,19 @@ void func_0016A420(void) {
 #endif
 
 #ifndef DEATH_LABEL
-extern u8 D_0026AD80[];
+extern u8 attract_side_text_insert_more_coins[];
 
-void func_0016A4A0(void) {
+void attract_side_coins_missing(void) {
     u16 temp_a0;
 
     reg_d0.h[0] -= reg_d1.h[0];
     reg_d4.h[0] = reg_d0.h[0];
     if (reg_d4.h[0] == 1) {
-        func_0016A690();
+        attract_side_one_more_coin();
         return;
     }
     reg_d2.h[0] = 0;
-    reg_a0 = D_0026AD80;
+    reg_a0 = attract_side_text_insert_more_coins;
     reg_d0.h[0] = reg_d7.h[0];
     reg_d1.h[0] = reg_d6.h[0];
     text_layer_print();
@@ -1290,39 +1290,39 @@ void func_0016A4A0(void) {
 
 #ifndef DEATH_LABEL
 
-void func_0016A550(void) {
+void attract_side_one_coin_p1(void) {
     p2_credits_get();
     if (reg_d0.h[0] == 1) {
-        func_0016A690();
+        attract_side_one_more_coin();
         return;
     }
     if ((s16)(reg_d0.h[0]) >= 2) {
-        func_0016A2D0();
+        attract_side_press_start_p1();
         return;
     }
-    func_0016A630();
+    attract_side_insert_2_coins();
 }
 #endif
 
 #ifndef DEATH_LABEL
-void func_0016A5C0(void) {
+void attract_side_one_coin_p2(void) {
     p2_credits_get();
     reg_d0.h[0] = reg_d1.h[0];
     if (reg_d0.h[0] == 1) {
-        func_0016A690();
+        attract_side_one_more_coin();
         return;
     }
     if ((s16)(reg_d0.h[0]) >= 2) {
-        func_0016A2E0();
+        attract_side_press_start_p2();
         return;
     }
-    func_0016A630();
+    attract_side_insert_2_coins();
 }
 #endif
 
 #ifndef DEATH_LABEL
-void func_0016A630(void) {
-    reg_a0 = D_0026AD20;
+void attract_side_insert_2_coins(void) {
+    reg_a0 = attract_side_text_insert_2_coins;
     reg_d2.h[0] = 0;
     reg_d0.h[0] = reg_d7.h[0];
     reg_d1.h[0] = reg_d6.h[0];
@@ -1334,10 +1334,10 @@ void func_0016A630(void) {
 #endif
 
 #ifndef DEATH_LABEL
-extern u8 D_0026AD40[];
+extern u8 attract_side_text_insert_1_more_coin[];
 
-void func_0016A690(void) {
-    reg_a0 = D_0026AD40;
+void attract_side_one_more_coin(void) {
+    reg_a0 = attract_side_text_insert_1_more_coin;
     reg_d2.h[0] = 0;
     reg_d0.h[0] = reg_d7.h[0];
     reg_d1.h[0] = reg_d6.h[0];
@@ -1350,48 +1350,48 @@ void func_0016A690(void) {
 
 #ifdef DEATH_LABEL
 void death_func_00136FF0();
-void func_00168E30();
-void func_00168E80();
-void func_00168EF0();
-void func_00169140();
-void func_00169310();
-void func_00169320();
-void func_001693E0();
-void func_001693F0();
-void func_00169400();
-void func_00169410();
-void func_00169480();
-void func_00169490();
-void func_001694A0();
-void func_001694F0();
-void func_00169640();
-void func_00169680();
-void func_00169900();
-void func_00169950();
-void func_00169A50();
+void attract_step_begin();
+void attract_step_settings_notice();
+void attract_step_stage_preload();
+void attract_step_menu();
+void attract_step_unused_4();
+void attract_step_demo_start();
+void attract_step_unused_6();
+void attract_step_unused_7();
+void attract_step_unused_8();
+void attract_step_splash();
+void attract_step_unused_10();
+void attract_step_unused_11();
+void attract_step_logo();
+void attract_step_caution_text();
+void attract_step_ship_select();
+void attract_step_game_start();
+void attract_step_mode2_start();
+void attract_step_card_load();
+void attract_step_autosave();
 
 
 void (*attract_step_routines[20])() = {
-    func_00168E30,
-    func_00168E80,
-    func_00168EF0,
+    attract_step_begin,
+    attract_step_settings_notice,
+    attract_step_stage_preload,
     death_func_00136FF0,
-    func_00169310,
-    func_00169320,
-    func_001693E0,
-    func_001693F0,
-    func_00169400,
-    func_00169410,
-    func_00169480,
-    func_00169490,
-    func_001694A0,
-    func_001694F0,
-    func_00169640,
-    func_00169140,
-    func_00169680,
-    func_00169950,
-    func_00169A50,
-    func_00169900,
+    attract_step_unused_4,
+    attract_step_demo_start,
+    attract_step_unused_6,
+    attract_step_unused_7,
+    attract_step_unused_8,
+    attract_step_splash,
+    attract_step_unused_10,
+    attract_step_unused_11,
+    attract_step_logo,
+    attract_step_caution_text,
+    attract_step_ship_select,
+    attract_step_menu,
+    attract_step_game_start,
+    attract_step_card_load,
+    attract_step_autosave,
+    attract_step_mode2_start,
 };
 
 u8 D_0026A880[448] = {
@@ -1425,49 +1425,49 @@ u8 D_0026A880[448] = {
     0x41, 0x53, 0x54, 0x45, 0x52, 0x20, 0x56, 0x45, 0x52, 0x20, 0x20, 0x20, 0x00, 0x00, 0x00, 0x00,
 };
 #else
-void func_00168E30();
-void func_00168E80();
-void func_00168EF0();
-void func_00168FD0();
-void func_00169140();
-void func_00169310();
-void func_00169320();
-void func_001693E0();
-void func_001693F0();
-void func_00169400();
-void func_00169410();
-void func_00169480();
-void func_00169490();
-void func_001694A0();
-void func_001694F0();
-void func_00169640();
-void func_00169680();
-void func_00169900();
-void func_00169950();
-void func_00169A50();
+void attract_step_begin();
+void attract_step_settings_notice();
+void attract_step_stage_preload();
+void attract_step_settings_notice_timed();
+void attract_step_menu();
+void attract_step_unused_4();
+void attract_step_demo_start();
+void attract_step_unused_6();
+void attract_step_unused_7();
+void attract_step_unused_8();
+void attract_step_splash();
+void attract_step_unused_10();
+void attract_step_unused_11();
+void attract_step_logo();
+void attract_step_caution_text();
+void attract_step_ship_select();
+void attract_step_game_start();
+void attract_step_mode2_start();
+void attract_step_card_load();
+void attract_step_autosave();
 
 
 void (*attract_step_routines[20])() = {
-    func_00168E30,
-    func_00168E80,
-    func_00168EF0,
-    func_00168FD0,
-    func_00169310,
-    func_00169320,
-    func_001693E0,
-    func_001693F0,
-    func_00169400,
-    func_00169410,
-    func_00169480,
-    func_00169490,
-    func_001694A0,
-    func_001694F0,
-    func_00169640,
-    func_00169140,
-    func_00169680,
-    func_00169950,
-    func_00169A50,
-    func_00169900,
+    attract_step_begin,
+    attract_step_settings_notice,
+    attract_step_stage_preload,
+    attract_step_settings_notice_timed,
+    attract_step_unused_4,
+    attract_step_demo_start,
+    attract_step_unused_6,
+    attract_step_unused_7,
+    attract_step_unused_8,
+    attract_step_splash,
+    attract_step_unused_10,
+    attract_step_unused_11,
+    attract_step_logo,
+    attract_step_caution_text,
+    attract_step_ship_select,
+    attract_step_menu,
+    attract_step_game_start,
+    attract_step_card_load,
+    attract_step_autosave,
+    attract_step_mode2_start,
 };
 
 u8 D_0026A880[448] = {
@@ -1501,7 +1501,7 @@ u8 D_0026A880[448] = {
     0x41, 0x53, 0x54, 0x45, 0x52, 0x20, 0x56, 0x45, 0x52, 0x20, 0x20, 0x20, 0x00, 0x00, 0x00, 0x00,
 };
 
-u8 D_0026AA40[96] = {
+u8 attract_text_blank[96] = {
     0x20, 0x20, 0x20, 0x20, 0x20, 0x20, 0x20, 0x20, 0x20, 0x20, 0x20, 0x20, 0x20, 0x20, 0x20, 0x20,
     0x20, 0x20, 0x20, 0x20, 0x20, 0x20, 0x20, 0x20, 0x20, 0x20, 0x20, 0x20, 0x00, 0x00, 0x20, 0x20,
     0x20, 0x20, 0x20, 0x20, 0x20, 0x20, 0x20, 0x20, 0x20, 0x20, 0x20, 0x20, 0x20, 0x20, 0x20, 0x20,
@@ -1510,7 +1510,7 @@ u8 D_0026AA40[96] = {
     0x20, 0x20, 0x20, 0x20, 0x20, 0x20, 0x20, 0x20, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00,
 };
 
-u8 D_0026AAA0[96] = {
+u8 attract_text_press_start[96] = {
     0x20, 0x20, 0x20, 0x20, 0x50, 0x52, 0x45, 0x53, 0x53, 0x20, 0x31, 0x50, 0x20, 0x4F, 0x52, 0x20,
     0x32, 0x50, 0x20, 0x53, 0x54, 0x41, 0x52, 0x54, 0x20, 0x20, 0x20, 0x20, 0x00, 0x00, 0x00, 0x00,
     0x20, 0x20, 0x20, 0x20, 0x20, 0x20, 0x20, 0x20, 0x20, 0x20, 0x20, 0x20, 0x20, 0x20, 0x20, 0x20,
@@ -1519,7 +1519,7 @@ u8 D_0026AAA0[96] = {
     0x20, 0x20, 0x20, 0x20, 0x20, 0x20, 0x20, 0x20, 0x20, 0x20, 0x20, 0x20, 0x00, 0x00, 0x00, 0x00,
 };
 
-u8 D_0026AB00[96] = {
+u8 attract_text_insert_2_coins[96] = {
     0x20, 0x20, 0x20, 0x20, 0x20, 0x20, 0x20, 0x49, 0x4E, 0x53, 0x45, 0x52, 0x54, 0x20, 0x32, 0x20,
     0x43, 0x4F, 0x49, 0x4E, 0x53, 0x20, 0x20, 0x20, 0x20, 0x20, 0x20, 0x20, 0x00, 0x00, 0x00, 0x00,
     0x20, 0x20, 0x20, 0x20, 0x20, 0x20, 0x43, 0x4F, 0x4E, 0x54, 0x49, 0x4E, 0x55, 0x45, 0x20, 0x52,
@@ -1528,7 +1528,7 @@ u8 D_0026AB00[96] = {
     0x43, 0x4F, 0x49, 0x4E, 0x20, 0x20, 0x20, 0x20, 0x20, 0x20, 0x20, 0x20, 0x00, 0x00, 0x00, 0x00,
 };
 
-u8 D_0026AB60[96] = {
+u8 attract_text_insert_1_more_coin[96] = {
     0x20, 0x20, 0x20, 0x20, 0x20, 0x49, 0x4E, 0x53, 0x45, 0x52, 0x54, 0x20, 0x31, 0x20, 0x4D, 0x4F,
     0x52, 0x45, 0x20, 0x43, 0x4F, 0x49, 0x4E, 0x20, 0x20, 0x20, 0x20, 0x20, 0x00, 0x00, 0x00, 0x00,
     0x20, 0x20, 0x20, 0x20, 0x20, 0x20, 0x20, 0x20, 0x20, 0x20, 0x20, 0x20, 0x20, 0x20, 0x20, 0x20,
@@ -1537,7 +1537,7 @@ u8 D_0026AB60[96] = {
     0x20, 0x20, 0x20, 0x20, 0x20, 0x20, 0x20, 0x20, 0x20, 0x20, 0x20, 0x20, 0x00, 0x00, 0x00, 0x00,
 };
 
-u8 D_0026ABC0[96] = {
+u8 attract_text_insert_coins[96] = {
     0x20, 0x20, 0x20, 0x20, 0x20, 0x20, 0x20, 0x49, 0x4E, 0x53, 0x45, 0x52, 0x54, 0x20, 0x20, 0x20,
     0x43, 0x4F, 0x49, 0x4E, 0x53, 0x20, 0x20, 0x20, 0x20, 0x20, 0x20, 0x20, 0x00, 0x00, 0x00, 0x00,
     0x20, 0x20, 0x20, 0x20, 0x20, 0x20, 0x20, 0x20, 0x20, 0x20, 0x20, 0x20, 0x20, 0x20, 0x20, 0x20,
@@ -1546,7 +1546,7 @@ u8 D_0026ABC0[96] = {
     0x20, 0x20, 0x20, 0x20, 0x20, 0x20, 0x20, 0x20, 0x20, 0x20, 0x20, 0x20, 0x00, 0x00, 0x00, 0x00,
 };
 
-u8 D_0026AC20[96] = {
+u8 attract_text_insert_more_coins[96] = {
     0x20, 0x20, 0x20, 0x20, 0x20, 0x49, 0x4E, 0x53, 0x45, 0x52, 0x54, 0x20, 0x20, 0x20, 0x4D, 0x4F,
     0x52, 0x45, 0x20, 0x43, 0x4F, 0x49, 0x4E, 0x53, 0x20, 0x20, 0x20, 0x20, 0x00, 0x00, 0x00, 0x00,
     0x20, 0x20, 0x20, 0x20, 0x20, 0x20, 0x20, 0x20, 0x20, 0x20, 0x20, 0x20, 0x20, 0x20, 0x20, 0x20,
@@ -1555,7 +1555,7 @@ u8 D_0026AC20[96] = {
     0x20, 0x20, 0x20, 0x20, 0x20, 0x20, 0x20, 0x20, 0x20, 0x20, 0x20, 0x20, 0x00, 0x00, 0x00, 0x00,
 };
 
-u8 D_0026AC80[96] = {
+u8 attract_text_insert_coin[96] = {
     0x20, 0x20, 0x20, 0x20, 0x20, 0x20, 0x20, 0x20, 0x20, 0x49, 0x4E, 0x53, 0x45, 0x52, 0x54, 0x20,
     0x43, 0x4F, 0x49, 0x4E, 0x20, 0x20, 0x20, 0x20, 0x20, 0x20, 0x20, 0x20, 0x00, 0x00, 0x00, 0x00,
     0x20, 0x20, 0x20, 0x20, 0x20, 0x20, 0x20, 0x20, 0x20, 0x20, 0x20, 0x20, 0x20, 0x20, 0x20, 0x20,
@@ -1574,22 +1574,22 @@ char attract_text_press_start_p2[2][16] = {
     "   2P START   ",
 };
 
-u8 D_0026AD20[32] = {
+u8 attract_side_text_insert_2_coins[32] = {
     0x20, 0x20, 0x20, 0x49, 0x4E, 0x53, 0x45, 0x52, 0x54, 0x20, 0x20, 0x20, 0x20, 0x20, 0x00, 0x00,
     0x20, 0x20, 0x20, 0x32, 0x20, 0x43, 0x4F, 0x49, 0x4E, 0x53, 0x20, 0x20, 0x20, 0x20, 0x00, 0x00,
 };
 
-u8 D_0026AD40[32] = {
+u8 attract_side_text_insert_1_more_coin[32] = {
     0x20, 0x20, 0x49, 0x4E, 0x53, 0x45, 0x52, 0x54, 0x20, 0x20, 0x20, 0x20, 0x20, 0x20, 0x00, 0x00,
     0x20, 0x20, 0x31, 0x20, 0x4D, 0x4F, 0x52, 0x45, 0x20, 0x43, 0x4F, 0x49, 0x4E, 0x20, 0x00, 0x00,
 };
 
-u8 D_0026AD60[32] = {
+u8 attract_side_text_insert_coin[32] = {
     0x20, 0x20, 0x49, 0x4E, 0x53, 0x45, 0x52, 0x54, 0x20, 0x43, 0x4F, 0x49, 0x4E, 0x20, 0x00, 0x00,
     0x20, 0x20, 0x20, 0x20, 0x20, 0x20, 0x20, 0x20, 0x20, 0x20, 0x20, 0x20, 0x20, 0x20, 0x00, 0x00,
 };
 
-u8 D_0026AD80[32] = {
+u8 attract_side_text_insert_more_coins[32] = {
     0x20, 0x20, 0x49, 0x4E, 0x53, 0x45, 0x52, 0x54, 0x20, 0x20, 0x20, 0x20, 0x20, 0x20, 0x00, 0x00,
     0x20, 0x20, 0x20, 0x20, 0x4D, 0x4F, 0x52, 0x45, 0x20, 0x43, 0x4F, 0x49, 0x4E, 0x53, 0x00, 0x00,
 };

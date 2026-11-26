@@ -348,7 +348,7 @@ s32 func_00133070();
 s32 fade_out();
 s32 fade_release();
 s32 fade_is_running();
-s32 func_0022B660();
+s32 replay_file_finalize();
 s32 replay_start_result();
 s32 replay_start_run_end();
 extern u8 D_00269920[];
@@ -405,7 +405,7 @@ void func_00210D00() {
             }
             {
 #else
-            if ((temp_a0 != 1) || (func_00133070() == 0) || (func_0022B660() != 0)) {
+            if ((temp_a0 != 1) || (func_00133070() == 0) || (replay_file_finalize() != 0)) {
 #endif
                 ENTITY(reg_a6)->sprite.h -= 1;
                 if (ENTITY(reg_a6)->sprite.h == 0) {

@@ -354,7 +354,7 @@ void func_001B2200();
 void credits_task();
 void test_mode_task();
 void func_00210D00();
-void func_0022BF60();
+void simulation_task();
 void replay_task();
 
 void task_table_init(void) {
@@ -379,7 +379,7 @@ void task_table_init(void) {
     STORE_POINTER(g_task_table + 4 * 18, 0);
     STORE_POINTER(g_task_table + 4 * 19, func_00210D00);
     STORE_POINTER(g_task_table + 4 * TASK_REPLAY, replay_task);
-    STORE_POINTER(g_task_table + 4 * 21, func_0022BF60);
+    STORE_POINTER(g_task_table + 4 * 21, simulation_task);
 }
 
 extern u16 option_offset_13[];
