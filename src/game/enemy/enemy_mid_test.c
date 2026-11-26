@@ -13,7 +13,7 @@ s32 enemy_remove();
 s32 enemy_set_task_state();
 s32 enemy_init_entities();
 s32 enemy_path_start();
-s32 func_00202180();
+s32 direction_to_target_player();
 extern u16 D_0025AEF0[];
 extern u16 D_0025AF00[];
 extern u16 D_0025AF20[];
@@ -40,7 +40,7 @@ void func_00168120(void) {
     enemy_set_task_state();
     enemy_path_start();
     if (enemy_move_end_requested == 0) {
-        func_00202180();
+        direction_to_target_player();
         if (cond_flag != 0) {
             reg_d1.b[0] = ENTITY(reg_a6)->move.b.dir;
         }
@@ -80,7 +80,7 @@ s32 score_add_no_chain();
 s32 score_add();
 s32 direction_between();
 s32 direction_turn_toward();
-s32 func_00202730();
+s32 direction256_to_target_player();
 extern u16 D_0025B040[];
 extern u16 g_frame_mod2;
 extern s16 *reg_save_atmp;
@@ -261,7 +261,7 @@ next_3:
             reg_d0.w = 0x11;
             score_add();
             if (g_loop != 0) {
-                func_00202730();
+                direction256_to_target_player();
                 if (cond_flag == 0) {
                     reg_d0.w = 0x1000C;
                     reg_d2.h[1] = ENTITY(reg_a6)->y.h;

@@ -31,7 +31,7 @@ typedef struct {
 
 s32 rng_next();
 s32 entity_velocity();
-s32 func_002024C0();
+s32 entity_turn_toward();
 const Range twin_boss_wander_a_ranges[2] = { { 13312, 16384 }, { 18432, 21504 } };
 const Range twin_boss_wander_b_ranges[2] = { { 12288, 15360 }, { 19456, 22528 } };
 const Range twin_boss_wander_c_ranges[2] = { { 11264, 16384 }, { 18432, 23552 } };
@@ -42,7 +42,7 @@ void twin_boss_wander_a(u8 boss) {
     entity_velocity();
     if (WANDER(reg_a4)->turning != 0) {
         reg_d1.b[0] = WANDER(reg_a4)->target_dir;
-        func_002024C0();
+        entity_turn_toward();
         if (WANDER(reg_a4)->target_dir == reg_d1.b[0]) {
             WANDER(reg_a4)->turning = 0U;
         }
@@ -89,7 +89,7 @@ void twin_boss_wander_b(u8 boss) {
     entity_velocity();
     if (WANDER(reg_a4)->turning != 0) {
         reg_d1.b[0] = WANDER(reg_a4)->target_dir;
-        func_002024C0();
+        entity_turn_toward();
         if (WANDER(reg_a4)->target_dir == reg_d1.b[0]) {
             WANDER(reg_a4)->turning = 0U;
         }
@@ -135,7 +135,7 @@ void twin_boss_wander_c(u8 boss) {
     entity_velocity();
     if (WANDER(reg_a4)->turning != 0) {
         reg_d1.b[0] = WANDER(reg_a4)->target_dir;
-        func_002024C0();
+        entity_turn_toward();
         if (WANDER(reg_a4)->target_dir == reg_d1.b[0]) {
             WANDER(reg_a4)->turning = 0U;
         }
@@ -182,7 +182,7 @@ void twin_boss_wander_d(u8 boss) {
     entity_velocity();
     if (WANDER(reg_a4)->turning != 0) {
         reg_d1.b[0] = WANDER(reg_a4)->target_dir;
-        func_002024C0();
+        entity_turn_toward();
         if (WANDER(reg_a4)->target_dir == reg_d1.b[0]) {
             WANDER(reg_a4)->turning = 0U;
         }
@@ -232,7 +232,7 @@ void twin_boss_wander_e(u8 boss) {
     entity_velocity();
     if (WANDER(reg_a4)->turning != 0) {
         reg_d1.b[0] = WANDER(reg_a4)->target_dir;
-        func_002024C0();
+        entity_turn_toward();
         if (WANDER(reg_a4)->target_dir == reg_d1.b[0]) {
             WANDER(reg_a4)->turning = 0U;
         }

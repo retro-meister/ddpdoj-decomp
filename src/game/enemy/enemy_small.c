@@ -160,10 +160,10 @@ void small_tank_smoke(void) {
 }
 
 
-extern u8 D_00267030[];
-extern u8 D_00267050[];
-extern u8 D_00267070[];
-extern u8 D_00267090[];
+extern u8 shot_limits_y[];
+extern u8 shot_limits_x[];
+extern u8 shot_limits_y_second_loop[];
+extern u8 shot_limits_x_second_loop[];
 extern u16 g_loop;
 extern u16 g_stage_x4;
 
@@ -171,15 +171,15 @@ extern u16 g_stage_x4;
 void enemy_fire_zone_check(void) {
     cond_flag = 0;
     reg_d0.h[0] = g_stage_x4;
-    reg_a0 = (u8 *)D_00267050;
+    reg_a0 = (u8 *)shot_limits_x;
     if (g_loop != 0) {
-        reg_a0 = (u8 *)D_00267090;
+        reg_a0 = (u8 *)shot_limits_x_second_loop;
     }
     reg_d2.h[1] = (reg_d0.h[0] != 0) ? *(u16 *)(reg_a0 + ((s16)reg_d0.h[0] & ~1)) : *(u16 *)reg_a0;
     reg_d2.h[0] = (((reg_d0.h[0] & 0xFFFF) + 2) != 0) ? *(u16 *)(reg_a0 + ((s16)((reg_d0.h[0] & 0xFFFF) + 2) & ~1)) : *(u16 *)reg_a0;
-    reg_a0 = (u8 *)D_00267030;
+    reg_a0 = (u8 *)shot_limits_y;
     if (g_loop != 0) {
-        reg_a0 = (u8 *)D_00267070;
+        reg_a0 = (u8 *)shot_limits_y_second_loop;
     }
     reg_d3.h[1] = (reg_d0.h[0] != 0) ? *(u16 *)(reg_a0 + ((s16)reg_d0.h[0] & ~1)) : *(u16 *)reg_a0;
     reg_d3.h[0] = (((reg_d0.h[0] & 0xFFFF) + 2) != 0) ? *(u16 *)(reg_a0 + ((s16)((reg_d0.h[0] & 0xFFFF) + 2) & ~1)) : *(u16 *)reg_a0;
@@ -897,7 +897,7 @@ s32 sfx_explosion_ground_large();
 s32 entity_draw_layer1();
 s32 sprite_draw_layer1();
 s32 rng_next();
-s32 func_00201100();
+s32 rng_next_d5();
 s32 aim256_at_player();
 s32 func_00211550();
 extern u16 g_direction_offsets_540[];
@@ -1032,7 +1032,7 @@ next_4:
                             reg_d1.h[0] = LARGE_TANK(reg_a5)->turret_dir.h;
                             reg_d0.h[0] = reg_d1.h[0];
                             reg_d1.h[0] *= 4;
-                            func_00201100();
+                            rng_next_d5();
                             reg_d1.b[0] += reg_d5.b[0];
                             reg_d0.h[0] &= 0x3E;
                             reg_d0.h[0] += reg_d0.h[0];
@@ -1255,7 +1255,7 @@ void hatch_gunner_start(void) {
     }
 }
 
-s32 func_00125EC0();
+s32 pickup_spawn_variant();
 s32 sfx_explosion_air_large();
 s32 entity_draw_layer4();
 s32 sprite_draw_layer4();
@@ -1557,7 +1557,7 @@ block_rts:
                 reg_d1.h[0] = t3;
                 reg_a4 += 2;
                 reg_d2.w = 3;
-                func_00125EC0();
+                pickup_spawn_variant();
             } while ((s16)(--reg_d6.h[0]) >= 0);
             enemy_remove();
         }

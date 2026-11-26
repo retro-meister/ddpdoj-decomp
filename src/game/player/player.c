@@ -1640,10 +1640,10 @@ s32 sfx_shot_hyper();
 s32 sfx_misc_2();
 s32 func_001ABB80();
 s32 func_001ABD80();
-s32 func_00200EE0();
-s32 func_002014D0();
-s32 func_002015B0();
-s32 func_00201690();
+s32 binary_to_bcd();
+s32 bullet_cancel_by_player1();
+s32 bullet_cancel_by_player2();
+s32 bullet_cancel_begin();
 s32 entity_velocity();
 extern u8 D_00255700[];
 extern u16 D_00255750[];
@@ -1661,8 +1661,8 @@ extern u16 g_p2_combo_at_bomb;
 extern u16 g_p1_combo_at_bomb;
 extern u16 g_scroll_line;
 extern u16 g_two_player_game;
-extern u16 D_00299764[];
-extern u16 D_00299766[];
+extern u16 g_bullet_cancel[];
+extern u16 g_bullet_cancel_kind[];
 extern u16 g_side_scroll_step[];
 
 void func_001420E0(void) {
@@ -1897,16 +1897,16 @@ block_13:
                 reg_d6.h[0] -= 1;
                 reg_d6.h[0] *= 2;
                 reg_d6.h[0] = (reg_d6.h[0] != 0) ? *(u16 *)((u8 *)reg_a1 + ((s16)reg_d6.h[0] & ~1)) : *(u16 *)reg_a1;
-                D_00299764[0] += 8;
-                D_00299766[0] = (reg_d1.h[0] != 0) ? *(u16 *)((u8 *)reg_a3 + ((s16)reg_d1.h[0] & ~1)) : *(u16 *)reg_a3;
+                g_bullet_cancel[0] += 8;
+                g_bullet_cancel_kind[0] = (reg_d1.h[0] != 0) ? *(u16 *)((u8 *)reg_a3 + ((s16)reg_d1.h[0] & ~1)) : *(u16 *)reg_a3;
                 reg_call_target = (Fn)(reg_a0);
                 reg_call_target();
                 *(s16 *)reg_a2 = 1;
                 PLAYER(reg_a6)->flags.b[0] |= 1;
                 sfx_misc_2();
-                reg_a0 = (u8 *)func_002014D0;
+                reg_a0 = (u8 *)bullet_cancel_by_player1;
                 if (*(u8 *)(reg_a5 + 6) != 0) {
-                    reg_a0 = (u8 *)func_002015B0;
+                    reg_a0 = (u8 *)bullet_cancel_by_player2;
                 }
                 reg_call_target = (Fn)(reg_a0);
                 reg_call_target();
@@ -1983,16 +1983,16 @@ block_13:
                             }
                             reg_d0.h[0] = *(u16 *)reg_a4;
                             reg_d5.h[0] = reg_d0.h[0];
-                            func_00200EE0();
+                            binary_to_bcd();
                             *(u16 *)(reg_a4 + 4) = (u16) reg_d2.h[1];
                             *(u16 *)(reg_a4 + 6) = (u16) reg_d2.h[0];
                             reg_d5.h[0] >>= 1;
                             reg_d0.h[0] = reg_d5.h[0];
-                            func_00200EE0();
+                            binary_to_bcd();
                             *(u16 *)(reg_a4 + 8) = (u16) reg_d2.h[1];
                             *(u16 *)(reg_a4 + 0xA) = (u16) reg_d2.h[0];
                             reg_d0.h[0] = *(u16 *)(reg_a4 + 0xC);
-                            func_00200EE0();
+                            binary_to_bcd();
                             *(u16 *)(reg_a4 + 0xE) = (u16) reg_d2.h[0];
                         }
                     }
@@ -2041,7 +2041,7 @@ block_13:
                         *(s16 *)(reg_a1 + 0x56) = 8;
                         *(s16 *)reg_a2 = 1;
                         reg_a2 = temp_s0;
-                        func_00201690();
+                        bullet_cancel_begin();
                         reg_a0 = (u8 *)D_0028C94C;
                     }
                     reg_a0 += reg_d1.h[0];

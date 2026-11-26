@@ -63,8 +63,8 @@ extern u8 D_002630D0[];
 extern u16 g_enemy_signal_0;
 extern u16 g_loop;
 extern u16 g_stage;
-extern s16 D_00299768[];
-extern s16 D_0029976A[];
+extern s16 g_bullet_limit_raised_1[];
+extern s16 g_bullet_limit_raised_2[];
 extern s8 enemy_move_end_requested;
 
 void stage2_midboss_start(void) {
@@ -128,9 +128,9 @@ void stage2_midboss_start(void) {
         fade_in_and_release();
         g_enemy_signal_0 = 1;
         sfx_heli_start();
-        D_00299768[0] = 1;
+        g_bullet_limit_raised_1[0] = 1;
         if (g_loop != 0) {
-            D_0029976A[0] = 1;
+            g_bullet_limit_raised_2[0] = 1;
         }
     }
 }
@@ -158,10 +158,10 @@ s32 sprite_draw_layer4();
 s32 sprite_draw_layer5();
 s32 score_add_no_chain();
 s32 score_add();
-s32 func_002010D0();
+s32 rng_next_d1();
 s32 rng_next_unsigned();
-s32 func_00201800();
-s32 func_002025E0();
+s32 bullet_cancel_with_flags_plain();
+s32 direction_steps_toward();
 s32 direction256_between();
 s32 vibration_start_pad1(s32, s32);
 s32 vibration_start_pad2(s32, s32);
@@ -371,7 +371,7 @@ next_260:
     reg_d6.h[0] = reg_d1.h[0];
     reg_d7.w = 0xB;
 loop_280:
-    func_002010D0();
+    rng_next_d1();
     reg_d1.b[0] = (s8) reg_d1.b[0] * 8;
     reg_d1.b[0] += reg_d6.b[0];
     reg_d0.h[0] = STAGE2_MIDBOSS(reg_a5)->hatch_speed;
@@ -464,7 +464,7 @@ next_460:
     reg_d1.h[0] += 0x780;
     direction256_between();
     reg_d0.h[0] = STAGE2_MIDBOSS(reg_a5)->gun[0].dir.h;
-    func_002025E0();
+    direction_steps_toward();
     STAGE2_MIDBOSS(reg_a5)->gun[0].dir.h = reg_d1.h[0];
     reg_d1.b[0] += 4;
     reg_d1.h[0] &= 0xF8;
@@ -477,7 +477,7 @@ next_480:
     reg_d1.h[0] += 0xF880;
     direction256_between();
     reg_d0.h[0] = STAGE2_MIDBOSS(reg_a5)->gun[1].dir.h;
-    func_002025E0();
+    direction_steps_toward();
     STAGE2_MIDBOSS(reg_a5)->gun[1].dir.h = reg_d1.h[0];
     reg_d1.h[0] += 4;
     reg_d1.h[0] &= 0xF8;
@@ -851,7 +851,7 @@ skip_1:
         g_enemy_signal_0 = 0;
     }
     reg_d1.h[0] = ENTITY(reg_a6)[2].look.h;
-    func_00201800();
+    bullet_cancel_with_flags_plain();
     ENTITY(reg_a6)[2].sprite.h -= 1;
     if (ENTITY(reg_a6)[2].sprite.h == 0) {
         sfx_beam_loop_stop();

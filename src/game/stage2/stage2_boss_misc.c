@@ -114,7 +114,7 @@ void stage2_boss_spread_bullet_start(void) {
 }
 
 s32 entity_draw_with_bullets();
-s32 func_00201F20();
+s32 entity_advance256();
 
 void stage2_boss_spread_bullet(void) {
     reg_d1.w = 0x5C;
@@ -123,7 +123,7 @@ void stage2_boss_spread_bullet(void) {
         ENTITY(reg_a6)->flags.b[1] &= reg_d0.b[0];
         ENTITY(reg_a6)->hp.sh = 0x7FFF;
     }
-    func_00201F20();
+    entity_advance256();
     if (0 > ENTITY(reg_a6)->y.sh) goto block_e1;
     if (ENTITY(reg_a6)->y.sh > 0x7000) goto block_e1;
     if (0 > ENTITY(reg_a6)->x.sh) goto block_e1;
@@ -233,7 +233,7 @@ void stage2_boss_dropped_bomb_first(void) {
     enemy_set_entity_count(0);
 }
 
-s32 func_00202180();
+s32 direction_to_target_player();
 extern u8 D_0026C5D0[];
 
 void stage2_boss_dropped_bomb_start(void) {
@@ -242,7 +242,7 @@ void stage2_boss_dropped_bomb_start(void) {
     ENTITY(reg_a6)->y.h = STAGE2_SHOT(reg_a5)->at_start.y;
     ENTITY(reg_a6)->x.h = STAGE2_SHOT(reg_a5)->at_start.x;
     ENTITY(reg_a6)->move.h = STAGE2_SHOT(reg_a5)->at_start.move;
-    func_00202180();
+    direction_to_target_player();
     ENTITY(reg_a6)->move.b.dir = reg_d1.b[0];
     STAGE2_SHOT(reg_a5)->now.seen = 0;
     STAGE2_SHOT(reg_a5)->now.frame_timer.both = 2;

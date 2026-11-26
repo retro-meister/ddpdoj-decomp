@@ -5983,7 +5983,7 @@ void func_002234C0(void) {
 extern s8 D_0028EBC4;
 
 
-extern void func_002035F0(void);
+extern void stage_clear_from_menu(void);
 extern void vibration_start_pad1(s32 a, s32 b);
 extern void vibration_start_pad2(s32 a, s32 b);
 extern Pair g_menu_wallpapers_as_Pair_a[];
@@ -6138,7 +6138,7 @@ void func_00223550(void) {
             if (reg_d7.h[0] == 5) {
                 reg_d7.h[0] = 0;
             }
-            func_002035F0();
+            stage_clear_from_menu();
             g_paused = 0;
         }
         break;

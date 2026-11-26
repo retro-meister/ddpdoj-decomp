@@ -2,14 +2,14 @@
 #include "task.h"
 #include "credits_roll.h"
 
-extern u16 D_00267010[16];
+extern u16 decimal_place_values[16];
 
 #ifdef DEATH_LABEL
 extern u8 death_D_00290DC0;
 #else
 #endif
 
-void func_00200D30(void) {
+void credits_task_finish(void) {
 #ifdef DEATH_LABEL
     death_D_00290DC0 = 1;
     task_reset_all();
@@ -28,7 +28,7 @@ extern u8 D_0025F770[];
 extern u16 g_game_completed;
 extern u16 g_loop;
 
-void func_00200D60(void) {
+void credits_task_begin(void) {
     *(s8 *)(reg_a5 + 3) = 1;
     credits_roll_begin();
     reg_a0 = D_0025F770;
@@ -59,11 +59,11 @@ void credits_task() {
 
     temp_v1 = *(u8 *)(reg_a5 + 3);
     if (temp_v1 == 0) {
-        func_00200D60();
+        credits_task_begin();
         return;
     }
     if (temp_v1 == 2) {
-        func_00200D30();
+        credits_task_finish();
         return;
     }
 #ifdef DEATH_LABEL
@@ -99,7 +99,7 @@ void credits_task() {
 s64 __divdi3(s64, s64);
 s64 __moddi3(s64, s64);
 
-void func_00200EE0(void) {
+void binary_to_bcd(void) {
     s8 buf[4];
     u8 *a0;
     u32 s0;
@@ -120,7 +120,7 @@ void func_00200EE0(void) {
     off = 0;
     for (i = 0; i < 4; i++) {
         x = (s32) reg_d0.h[0];
-        t = *(s64 *)((u8 *)((s64 *)D_00267010) + off);
+        t = *(s64 *)((u8 *)((s64 *)decimal_place_values) + off);
         if (x >= t) {
             buf[i] = __divdi3(x, t);
             reg_d0.h[0] = __moddi3(x, t);
@@ -139,7 +139,7 @@ void func_00200EE0(void) {
     reg_d0.w = s0;
 }
 
-void func_00201010(void)
+void bcd_to_binary(void)
 {
     unsigned char low = reg_d0.b[0];
     unsigned char high = reg_d0.b[1];
@@ -160,7 +160,7 @@ void rng_next(void)
     reg_d0.b[0] = rng_values[reg_d0.h[0]];
 }
 
-void func_002010D0(void)
+void rng_next_d1(void)
 {
     ++*(u8 *)&rng_cursor;
     reg_d1.h[0] = rng_cursor;
@@ -169,7 +169,7 @@ void func_002010D0(void)
 
 extern Reg32 reg_d5;
 
-void func_00201100(void)
+void rng_next_d5(void)
 {
     ++*(u8 *)&rng_cursor;
     reg_d5.h[0] = rng_cursor;
@@ -178,7 +178,7 @@ void func_00201100(void)
 
 extern s8 rng_signed_word_values[256];
 
-void func_00201130(void)
+void rng_next_wide(void)
 {
     ++*(u8 *)&rng_cursor;
     reg_d0.h[0] = rng_cursor;
@@ -205,58 +205,58 @@ void rng_next_unsigned(void)
 
 extern u16 rng_cursor;
 extern Reg32 reg_d0;
-extern s8 D_00266B90[];
+extern s8 rng_values_0_1[];
 
 void rng_next_bit(void) {
     *(u8 *)&rng_cursor += 1;
     reg_d0.h[0] = rng_cursor;
-    reg_d0.h[0] = D_00266B90[reg_d0.h[0]];
+    reg_d0.h[0] = rng_values_0_1[reg_d0.h[0]];
 }
 
-void func_00201200(void) {
+void rng_next_bit_d5(void) {
     *(u8 *)&rng_cursor += 1;
     reg_d5.h[0] = rng_cursor;
-    reg_d5.h[0] = (u16)D_00266B90[reg_d5.h[0]];
+    reg_d5.h[0] = (u16)rng_values_0_1[reg_d5.h[0]];
 }
 
-extern s8 D_00266B10[];
+extern s8 rng_values_0_2[];
 
-void func_00201230(void)
+void rng_next_0_to_2(void)
 {
     *(u8 *)&rng_cursor += 1;
     reg_d0.w = rng_cursor & 0x7F;
-    reg_d0.b[0] = D_00266B10[reg_d0.h[0]];
+    reg_d0.b[0] = rng_values_0_2[reg_d0.h[0]];
 }
 
-extern s8 D_00266AD0[];
+extern s8 rng_values_0_3[];
 
-void func_00201270(void)
+void rng_next_0_to_3(void)
 {
     *(u8 *)&rng_cursor += 1;
     reg_d0.w = rng_cursor & 0x3F;
-    reg_d0.b[0] = D_00266AD0[reg_d0.h[0]];
+    reg_d0.b[0] = rng_values_0_3[reg_d0.h[0]];
 }
 
-void func_002012B0(void)
+void rng_next_0_to_3_d1(void)
 {
     *(u8 *)&rng_cursor += 1;
     reg_d1.w = rng_cursor & 0x3F;
-    reg_d1.b[0] = D_00266AD0[reg_d1.h[0]];
+    reg_d1.b[0] = rng_values_0_3[reg_d1.h[0]];
 }
 
-extern s16 D_002669D0[];
+extern s16 rng_word_values[];
 
 void rng_next_word(void)
 {
     *(u8 *)&rng_cursor += 1;
     reg_d0.w = rng_cursor & 0x7F;
-    reg_d0.h[0] = D_002669D0[reg_d0.h[0]];
+    reg_d0.h[0] = rng_word_values[reg_d0.h[0]];
 }
 
-extern s16 D_002668D0[];
-extern s16 D_002668D2[];
+extern s16 rng_pair_values_small[];
+extern s16 rng_pair_values_small_second[];
 
-void func_00201330(void)
+void rng_next_pair_small_d1(void)
 {
     s32 table_index;
 
@@ -264,14 +264,14 @@ void func_00201330(void)
     reg_d1.w = rng_cursor & 0x3F;
     reg_d1.h[0] *= 2;
     table_index = reg_d1.h[0];
-    reg_d1.sh[1] = D_002668D0[table_index];
-    reg_d1.h[0] = (u16)D_002668D2[table_index];
+    reg_d1.sh[1] = rng_pair_values_small[table_index];
+    reg_d1.h[0] = (u16)rng_pair_values_small_second[table_index];
 }
 
-extern s16 D_002667D0[];
-extern s16 D_002667D2[];
+extern s16 rng_pair_values_medium[];
+extern s16 rng_pair_values_medium_second[];
 
-void func_00201390(void)
+void rng_next_pair_medium_d4(void)
 {
     u16 table_index;
 
@@ -279,14 +279,14 @@ void func_00201390(void)
     reg_d4.w = rng_cursor & 0x3F;
     reg_d4.h[0] <<= 1;
     table_index = reg_d4.h[0];
-    reg_d4.sh[1] = D_002667D0[table_index];
-    reg_d4.h[0] = (u16)D_002667D2[table_index];
+    reg_d4.sh[1] = rng_pair_values_medium[table_index];
+    reg_d4.h[0] = (u16)rng_pair_values_medium_second[table_index];
 }
 
-extern s16 D_002666D0[];
-extern s16 D_002666D2[];
+extern s16 rng_pair_values_large[];
+extern s16 rng_pair_values_large_second[];
 
-void func_002013F0(void)
+void rng_next_pair_large_d1(void)
 {
     u16 table_index;
 
@@ -294,32 +294,32 @@ void func_002013F0(void)
     reg_d1.w = rng_cursor & 0x3F;
     reg_d1.h[0] *= 2;
     table_index = reg_d1.h[0];
-    reg_d1.sh[1] = D_002666D0[table_index];
-    reg_d1.h[0] = (u16)D_002666D2[table_index];
+    reg_d1.sh[1] = rng_pair_values_large[table_index];
+    reg_d1.h[0] = (u16)rng_pair_values_large_second[table_index];
 }
 
-extern u16 D_00299764[];
-extern u16 D_00299766[];
+extern u16 g_bullet_cancel[];
+extern u16 g_bullet_cancel_kind[];
 
-void func_00201450(void) {
+void bullet_cancel_hyper_active(void) {
     cond_flag = 0;
-    if ((D_00299764[0] != 0) && ((s32) D_00299766[0] >= 0x20) && ((s32) D_00299766[0] < 0x3D)) {
+    if ((g_bullet_cancel[0] != 0) && ((s32) g_bullet_cancel_kind[0] >= 0x20) && ((s32) g_bullet_cancel_kind[0] < 0x3D)) {
         cond_flag = 1;
     }
 }
 
-s32 func_002018E0();
-void func_00201490(void) {
-    func_00201450();
+s32 bullet_cancel_credit_players();
+void bullet_cancel_for_alive_players(void) {
+    bullet_cancel_hyper_active();
     if (cond_flag == 0) {
-        D_00299764[0] = 1;
-        D_00299766[0] = 0xFFFF;
-        func_002018E0();
+        g_bullet_cancel[0] = 1;
+        g_bullet_cancel_kind[0] = 0xFFFF;
+        bullet_cancel_credit_players();
     }
 }
 
-s32 func_00201A00();
-s32 func_00201B30();
+s32 bullets_cancel_sweep();
+s32 bullet_cancel_skip();
 extern u32 reg_save_d7;
 extern u32 reg_save_d6;
 extern u32 reg_save_d5;
@@ -337,13 +337,13 @@ extern u8 *reg_save_a1;
 extern s32 reg_save_a0;
 extern u8 g_boss_present_b1;
 
-void func_002014D0(void) {
-    func_00201450();
+void bullet_cancel_by_player1(void) {
+    bullet_cancel_hyper_active();
     if (cond_flag == 0) {
-        D_00299764[0] = 1;
-        D_00299766[0] = 0xFFFF;
+        g_bullet_cancel[0] = 1;
+        g_bullet_cancel_kind[0] = 0xFFFF;
         if (g_boss_present_b1 & 2) {
-            func_00201B30();
+            bullet_cancel_skip();
             return;
         }
         reg_save_d0 = reg_d0.w;
@@ -362,17 +362,17 @@ void func_002014D0(void) {
         reg_save_a5 = reg_a5;
         reg_save_a6 = reg_a6;
         reg_d1.h[0] = 0x8010;
-        func_00201A00();
+        bullets_cancel_sweep();
     }
 }
 
-void func_002015B0(void) {
-    func_00201450();
+void bullet_cancel_by_player2(void) {
+    bullet_cancel_hyper_active();
     if (cond_flag == 0) {
-        D_00299764[0] = 1;
-        D_00299766[0] = 0xFFFF;
+        g_bullet_cancel[0] = 1;
+        g_bullet_cancel_kind[0] = 0xFFFF;
         if (g_boss_present_b1 & 2) {
-            func_00201B30();
+            bullet_cancel_skip();
             return;
         }
         reg_save_d0 = reg_d0.w;
@@ -391,28 +391,28 @@ void func_002015B0(void) {
         reg_save_a5 = reg_a5;
         reg_save_a6 = reg_a6;
         reg_d1.h[0] = 0x8008;
-        func_00201A00();
+        bullets_cancel_sweep();
     }
 }
 
-void func_00201690(void) {
-    func_00201450();
+void bullet_cancel_begin(void) {
+    bullet_cancel_hyper_active();
     if (cond_flag == 0) {
-        D_00299764[0] = 1;
-        D_00299766[0] = 0xFFFF;
+        g_bullet_cancel[0] = 1;
+        g_bullet_cancel_kind[0] = 0xFFFF;
     }
 }
 
-void func_002016D0(void) {
-    func_00201450();
+void bullet_cancel_on_boss_hit(void) {
+    bullet_cancel_hyper_active();
     if (cond_flag == 0) {
-        D_00299764[0] = 1;
-        D_00299766[0] = 0xFFFF;
-        func_00201B30();
+        g_bullet_cancel[0] = 1;
+        g_bullet_cancel_kind[0] = 0xFFFF;
+        bullet_cancel_skip();
     }
 }
 
-s16 D_002666D0[128] = {
+s16 rng_pair_values_large[128] = {
     0x02AA, 0x0555, 0x0000, 0x0400, 0x06AA, 0xFC00, 0x0000, 0xFC00,
     0x0800, 0xFEAB, 0xFAAB, 0x0155, 0x0400, 0xF800, 0x0555, 0xFD56,
     0xF800, 0x02AA, 0xFAAB, 0x0555, 0xFD56, 0x0555, 0x02AA, 0x0000,
@@ -431,7 +431,7 @@ s16 D_002666D0[128] = {
     0xFEAB, 0xF800, 0x06AA, 0x02AA, 0x0155, 0xFD56, 0x0555, 0xF956,
 };
 
-s16 D_002667D0[128] = {
+s16 rng_pair_values_medium[128] = {
     0x0200, 0x0400, 0x0000, 0x0300, 0x0500, 0xFD00, 0x0000, 0xFD00,
     0x0600, 0xFF00, 0xFC00, 0x0100, 0x0300, 0xFA00, 0x0400, 0xFE00,
     0xFA00, 0x0200, 0xFC00, 0x0400, 0xFE00, 0x0400, 0x0200, 0x0000,
@@ -450,7 +450,7 @@ s16 D_002667D0[128] = {
     0xFF00, 0xFA00, 0x0500, 0x0200, 0x0100, 0xFE00, 0x0400, 0xFB00,
 };
 
-s16 D_002668D0[128] = {
+s16 rng_pair_values_small[128] = {
     0x00CC, 0x0199, 0x0000, 0x0133, 0x0200, 0xFECD, 0x0000, 0xFECD,
     0x0266, 0xFF9A, 0xFE67, 0x0066, 0x0133, 0xFD9A, 0x0199, 0xFF34,
     0xFD9A, 0x00CC, 0xFE67, 0x0199, 0xFF34, 0x0199, 0x00CC, 0x0000,
@@ -469,7 +469,7 @@ s16 D_002668D0[128] = {
     0xFF9A, 0xFD9A, 0x0200, 0x00CC, 0x0066, 0xFF34, 0x0199, 0xFE00,
 };
 
-s16 D_002669D0[128] = {
+s16 rng_word_values[128] = {
     0x0800, 0x1000, 0x0000, 0x0C00, 0x1400, 0xF400, 0x0000, 0xF400,
     0x1800, 0xFC00, 0xF000, 0x0400, 0x0C00, 0xE800, 0x1000, 0xF800,
     0xE800, 0x0800, 0xF000, 0x1000, 0xF800, 0x1000, 0x0800, 0x0000,
@@ -488,14 +488,14 @@ s16 D_002669D0[128] = {
     0xFC00, 0xE800, 0x1400, 0x0800, 0x0400, 0xF800, 0x1000, 0xEC00,
 };
 
-s8 D_00266AD0[64] = {
+s8 rng_values_0_3[64] = {
     0x00, 0x02, 0x01, 0x03, 0x01, 0x02, 0x00, 0x02, 0x03, 0x00, 0x01, 0x03, 0x01, 0x02, 0x00, 0x03,
     0x02, 0x01, 0x00, 0x00, 0x02, 0x01, 0x02, 0x03, 0x03, 0x00, 0x03, 0x01, 0x03, 0x00, 0x02, 0x02,
     0x00, 0x03, 0x01, 0x03, 0x00, 0x03, 0x01, 0x02, 0x00, 0x00, 0x03, 0x01, 0x00, 0x02, 0x02, 0x03,
     0x00, 0x01, 0x02, 0x01, 0x03, 0x02, 0x00, 0x03, 0x01, 0x02, 0x03, 0x01, 0x01, 0x03, 0x02, 0x00,
 };
 
-s8 D_00266B10[128] = {
+s8 rng_values_0_2[128] = {
     0x00, 0x02, 0x01, 0x00, 0x02, 0x01, 0x02, 0x01, 0x00, 0x01, 0x00, 0x02, 0x01, 0x02, 0x00, 0x02,
     0x00, 0x01, 0x01, 0x00, 0x02, 0x01, 0x02, 0x00, 0x02, 0x00, 0x01, 0x00, 0x01, 0x00, 0x01, 0x02,
     0x02, 0x01, 0x00, 0x02, 0x00, 0x02, 0x01, 0x02, 0x00, 0x01, 0x02, 0x01, 0x00, 0x02, 0x01, 0x00,
@@ -506,7 +506,7 @@ s8 D_00266B10[128] = {
     0x00, 0x01, 0x01, 0x02, 0x01, 0x02, 0x00, 0x01, 0x02, 0x00, 0x01, 0x00, 0x02, 0x00, 0x02, 0x01,
 };
 
-s8 D_00266B90[256] = {
+s8 rng_values_0_1[256] = {
     0x01, 0x00, 0x00, 0x01, 0x01, 0x00, 0x01, 0x00, 0x01, 0x01, 0x01, 0x00, 0x01, 0x00, 0x01, 0x01,
     0x00, 0x01, 0x00, 0x00, 0x00, 0x01, 0x01, 0x00, 0x00, 0x01, 0x00, 0x01, 0x00, 0x01, 0x00, 0x00,
     0x00, 0x00, 0x00, 0x01, 0x01, 0x00, 0x01, 0x00, 0x00, 0x00, 0x01, 0x01, 0x00, 0x00, 0x00, 0x01,
@@ -593,27 +593,27 @@ s8 rng_values[256] = {
     0x06, 0x05, 0xFB, 0x02, 0x03, 0x07, 0x04, 0xFE, 0xF9, 0x00, 0xFF, 0x02, 0x07, 0xFA, 0xFD, 0xFB,
 };
 
-u16 D_00267010[16] = {
+u16 decimal_place_values[16] = {
     0x2710, 0x0000, 0x0000, 0x0000, 0x03E8, 0x0000, 0x0000, 0x0000,
     0x0064, 0x0000, 0x0000, 0x0000, 0x000A, 0x0000, 0x0000, 0x0000,
 };
 
-u16 D_00267030[16] = {
+u16 shot_limits_y[16] = {
     0xC800, 0x3400, 0xC600, 0x3200, 0xC200, 0x3000, 0xC000, 0x2E00,
     0xBC00, 0x2C00, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000,
 };
 
-u16 D_00267050[16] = {
+u16 shot_limits_x[16] = {
     0xD400, 0x0600, 0xD000, 0x0400, 0xD000, 0x0400, 0xCC00, 0x0200,
     0xCC00, 0x0200, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000,
 };
 
-u16 D_00267070[16] = {
+u16 shot_limits_y_second_loop[16] = {
     0xBC00, 0x2C00, 0xBA00, 0x2A00, 0xB800, 0x2800, 0xB600, 0x2600,
     0xB400, 0x2400, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000,
 };
 
-u16 D_00267090[16] = {
+u16 shot_limits_x_second_loop[16] = {
     0xCC00, 0x0200, 0xCC00, 0x0200, 0xCC00, 0x0200, 0xCC00, 0x0200,
     0xCC00, 0x0200, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000,
 };

@@ -1409,7 +1409,7 @@ extern s32 g_p1_position_trail[];
 extern Bank10 D_002BAF30_as_Bank10;
 extern Bank90 D_002BAF50_as_Bank90;
 extern u8 g_player_slots[];
-extern u8 D_002BF4F0[];
+extern u8 g_pickups[];
 extern u16 D_006C58AA[];
 extern u16 D_006C58B0[];
 extern u16 D_006C58B2[];
@@ -1437,7 +1437,7 @@ void replay_snapshot_save(Buf *buf) {
 
     printf("replay size[%d]\n", 0x5534);
     for (i = 0; i < 0xC08; i++) {
-        buf->f0000[i] = D_002BF4F0[i];
+        buf->f0000[i] = g_pickups[i];
     }
     *(u16 *)(p + 0xC08) = g_bullet_count;
     *(u16 *)(p + 0xC0A) = g_stage_bees_collected;
@@ -1938,7 +1938,7 @@ void replay_snapshot_load(u8 *p) {
     s32 i;
 
     for (i = 0; i < 0xC08; i++) {
-        D_002BF4F0[i] = p[0x0 + i];
+        g_pickups[i] = p[0x0 + i];
     }
     g_bullet_count = *(u16 *)(p + 0xC08);
     g_stage_bees_collected = *(u16 *)(p + 0xC0A);
@@ -2256,8 +2256,8 @@ void replay_text_layer_load(const Src *src) {
     }
 }
 
-extern void func_00125DE0(void);
-extern void func_00128660(void);
+extern void pickups_clear(void);
+extern void bullets_clear(void);
 extern void func_00135ED0(void);
 extern void func_001368C0(void);
 extern void explosions_clear(void);
@@ -2267,7 +2267,7 @@ extern void func_0016AAB0(void);
 extern void func_001AACC0(void);
 extern void func_001AE490(void);
 extern void func_001B82D0(void);
-extern void func_00209E60(void);
+extern void sparks_clear(void);
 extern void func_002114A0(void);
 void replay_start_state_load(u8 *p) {
     s32 i;
@@ -2277,11 +2277,11 @@ void replay_start_state_load(u8 *p) {
     func_001B82D0();
     func_002114A0();
     func_001368C0();
-    func_00209E60();
+    sparks_clear();
     func_0016AAB0();
-    func_00128660();
+    bullets_clear();
     func_00135ED0();
-    func_00125DE0();
+    pickups_clear();
     func_001AE490();
     func_001AACC0();
     func_0013FD80();

@@ -106,7 +106,7 @@ void stage2_blooming_base_start(void) {
     }
 }
 
-s32 func_00125EF0();
+s32 pickup_spawn_plain();
 s32 explosion_spawn();
 s32 enemy_hitbox_debug_draw();
 s32 enemy_remove();
@@ -116,7 +116,7 @@ s32 sfx_explosion_ground_large();
 s32 entity_draw_layer1();
 s32 score_add_no_chain();
 s32 score_add();
-s32 func_00201270();
+s32 rng_next_0_to_3();
 extern u8 D_0028D998[8];
 extern u16 g_damage_blink_counter;
 
@@ -187,12 +187,12 @@ next_50:
         reg_tmp1.h[0] = reg_d1.h[0];
         reg_d1.h[0] = reg_d1.h[1];
         reg_d1.h[1] = reg_tmp1.h[0];
-        func_00201270();
+        rng_next_0_to_3();
         reg_d0.h[0] += reg_d0.h[0];
         reg_a0 = D_0028D998;
         reg_d1.h[0] = (reg_d0.h[0] != 0) ? *(u16 *)((u8 *)reg_a0 + ((s16)reg_d0.h[0] & ~1)) : *(u16 *)reg_a0;
         reg_d0.w = 0x10;
-        func_00125EF0();
+        pickup_spawn_plain();
     } while ((s16)(--reg_d6.h[0]) >= 0);
     reg_d0.w = t;
     BLOOMING_BASE(reg_a5)->next_drop_hp -= 0x100;
@@ -390,7 +390,7 @@ block_explos:
         reg_a4 += 2;
         reg_d1.h[0] = *(u16 *)reg_a4;
         reg_a4 += 2;
-        func_00125EF0();
+        pickup_spawn_plain();
     } while ((s16)(--reg_d6.h[0]) >= 0);
     enemy_remove();
 }
@@ -430,7 +430,7 @@ void stage2_square_warehouse_start(void) {
     }
 }
 
-s32 func_00125EC0();
+s32 pickup_spawn_variant();
 
 void stage2_square_warehouse(void) {
     enemy_path_step();
@@ -520,7 +520,7 @@ next_2:
         reg_d1.h[0] *= -1;
     }
     reg_d2.b[0] = ENTITY(reg_a6)->misc.b.draw_layer;
-    func_00125EC0();
+    pickup_spawn_variant();
     enemy_remove();
 }
 
@@ -655,7 +655,7 @@ next_2:
     reg_d0.w = 0xC;
     reg_d1.w = 0xFAC0FA40;
     reg_d2.b[0] = ENTITY(reg_a6)->misc.b.draw_layer;
-    func_00125EC0();
+    pickup_spawn_variant();
     enemy_remove();
 }
 
@@ -721,7 +721,7 @@ void stage2_sliding_gun_start(void) {
 }
 
 
-s32 func_00125EB0();
+s32 pickup_spawn_variant_here();
 s32 bullet_fire256_2way();
 s32 enemy_fire_distance_check();
 s32 func_00170DE0();
@@ -893,7 +893,7 @@ block_38:
         score_add();
         reg_d0.w = 8;
         func_00170DE0();
-        func_00125EB0();
+        pickup_spawn_variant_here();
         reg_d0.w = 0xC;
         explosion_spawn();
         EXPLOSION(reg_a0)->y = (u16) ENTITY(reg_a6)->y.h;
@@ -949,7 +949,7 @@ void stage2_wrecker_gun_start(void) {
 
 s32 bullet_fire256();
 s32 enemy_switch_target_player();
-s32 func_00201710();
+s32 bullet_cancel_with_flags();
 extern u16 g_direction64_offsets_432[];
 extern u16 D_00262E50[];
 extern u16 g_rank_2_16;
@@ -1284,7 +1284,7 @@ block_60:
 block_63:
         if (WRECKER_GUN(reg_a5)->shake != 0) {
             reg_d1.h[0] = WRECKER_GUN(reg_a5)->wreck_value;
-            func_00201710();
+            bullet_cancel_with_flags();
             WRECKER_GUN(reg_a5)->shake -= 1;
         }
         temp_v0_6 = WRECKER_GUN(reg_a5)->wreck_delay;

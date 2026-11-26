@@ -19,7 +19,7 @@ s32 boss_attack_stop_all();
 s32 score_add_no_chain();
 s32 score_add();
 void stage2_boss_time_limit(void);
-s32 func_002016D0();
+s32 bullet_cancel_on_boss_hit();
 s32 active_players_mask();
 extern u8 g_game_mode;
 extern s32 g_boss_score;
@@ -445,7 +445,7 @@ next_710:
     STAGE2_PALETTES(reg_a6)->right_side_gun = 0x13;
     STAGE2_PALETTES(reg_a6)->left_side_gun = 0xD;
     STAGE2_DAMAGE(reg_a6)->second_form = 1;
-    func_002016D0();
+    bullet_cancel_on_boss_hit();
 next_720:
     if (STAGE2_DAMAGE(reg_a6)->rage != 0) goto next_730;
     reg_tmp.h[1] = STAGE2_BOSS(reg_a5)->hp[0];
@@ -463,7 +463,7 @@ next_730:
 s32 boss_animation_stop(s32, s32, s32, s32);
 s32 func_0013F3C0();
 void stage2_boss_stop_damage(void);
-s32 func_00203460();
+s32 boss_defeat_begin();
 s32 slowdown_turn_off();
 extern u8 g_boss_present_b1;
 
@@ -472,7 +472,7 @@ void stage2_boss_defeated(void) {
     g_boss_present_b1 |= 0x80;
     slowdown_turn_off();
     func_0013F3C0();
-    func_00203460();
+    boss_defeat_begin();
     stage2_boss_stop_damage();
     boss_attack_stop_all();
     boss_phase_stop_all();

@@ -88,10 +88,10 @@ extern u16 g_p1_weapon_level_data_as_u16_a[];
 extern u16 g_p2_lives;
 extern u16 g_p1_lives;
 extern u8 g_bullets[67216];
-extern u16 D_00299764[];
+extern u16 g_bullet_cancel[];
 extern u16 D_00299780[];
-extern u8 D_00299D30[2048];
-extern u8 D_0029A12C[];
+extern u8 g_sparks[2048];
+extern u8 g_sparks_second_half[];
 extern u16 D_0029A530[];
 extern u8 g_explosions[4480];
 extern u16 g_bomb_entities[];
@@ -116,7 +116,7 @@ extern u8 D_002BB470[64];
 extern u8 g_items[512];
 extern u8 D_002BF3EA[];
 extern u16 D_002BF400[];
-extern u8 D_002BF4F0[3080];
+extern u8 g_pickups[3080];
 extern void func_00130250(void);
 extern void func_00130260(void);
 extern void input_get_p1_held(void);
@@ -197,9 +197,9 @@ void func_0020F550(void) {
     STORE_POINTER(debug_list_views[17].entries, ((u16 *)g_items));
     STORE_POINTER(debug_list_views[18].entries, &(*(u32 *)&g_p1_laser_stop_y));
     STORE_POINTER(debug_list_views[19].entries, &(*(u32 *)&g_p2_laser_stop_y));
-    STORE_POINTER(debug_list_views[20].entries, ((u16 *)D_002BF4F0));
-    STORE_POINTER(debug_list_views[21].entries, ((u16 *)D_00299D30));
-    STORE_POINTER(debug_list_views[22].entries, ((u16 *)D_0029A12C));
+    STORE_POINTER(debug_list_views[20].entries, ((u16 *)g_pickups));
+    STORE_POINTER(debug_list_views[21].entries, ((u16 *)g_sparks));
+    STORE_POINTER(debug_list_views[22].entries, ((u16 *)g_sparks_second_half));
     STORE_POINTER(debug_list_views[23].entries, ((u16 *)g_deferred_text));
     STORE_POINTER(debug_list_views[24].entries, D_002BAF50);
     STORE_POINTER(debug_list_views[25].entries, D_002BAFAA);
@@ -208,7 +208,7 @@ void func_0020F550(void) {
     STORE_POINTER(debug_list_views[28].entries, ((u16 *)g_bullets));
     STORE_POINTER(debug_list_views[29].entries, ((u16 *)D_002BB470));
     STORE_POINTER(debug_list_views[30].entries, D_0029A530);
-    STORE_POINTER(debug_list_views[31].entries, D_00299764);
+    STORE_POINTER(debug_list_views[31].entries, g_bullet_cancel);
     STORE_POINTER(debug_list_views[32].entries, ((u16 *)g_explosions));
     STORE_POINTER(debug_list_views[33].entries, D_00299780);
     STORE_POINTER(debug_table_views[0].table, D_00274040);
@@ -774,7 +774,7 @@ next_1:
     reg_d3.h[0] -= 1;
 }
 
-extern u8 D_002515A0[];
+extern u8 wreck_draw_routines[];
 extern u16 g_frame_mod8;
 extern u16 g_frame_mod2;
 extern u16 D_00299D20[];
@@ -789,7 +789,7 @@ void func_00211670(void) {
         reg_d4.h[0] = 0xFFC0;
         reg_d2.h[0] = 0x3FF;
         reg_d6.h[0] = g_frame_mod2;
-        reg_a4 = D_002515A0;
+        reg_a4 = wreck_draw_routines;
         reg_tmp.h[0] = reg_d6.h[0];
         reg_d6.h[0] <<= 0xF;
         temp_a0 = reg_d6.h[0];
@@ -863,14 +863,14 @@ block_3:
     }
 }
 
-extern u8 D_00251700[];
+extern u8 wreck_setups[];
 extern u32 D_0028E9A0;
 
 void func_00211920(void) {
     D_0028E9A0 = reg_d0.w;
     reg_d3.h[0] = reg_d0.h[0];
     reg_d3.h[0] &= 0x3C;
-    reg_a2 = (u8 *)(*(u16 **)(D_00251700 + (reg_d3.h[0] & ~3)));
+    reg_a2 = (u8 *)(*(u16 **)(wreck_setups + (reg_d3.h[0] & ~3)));
     *(u16 *)(reg_a0 + 0) = *(u16 *)reg_a2;
     reg_a2 += 2;
     *(u16 *)(reg_a0 + 2) = ENTITY(reg_a6)->y.h;
@@ -879,8 +879,8 @@ void func_00211920(void) {
 }
 
 s32 rng_next_bit();
-s32 func_00201230();
-s32 func_00201270();
+s32 rng_next_0_to_2();
+s32 rng_next_0_to_3();
 s32 entity_distance_to();
 extern u8 g_boss_present_b1;
 extern u16 D_00299D22[];
@@ -987,7 +987,7 @@ next_7:
     W0(0x18) = NEXT_W();
     reg_a2 += 2;
     reg_a0[0x1C] = 0x1E;
-    func_00201230();
+    rng_next_0_to_2();
     reg_d0.h[0] += reg_d0.h[0];
     reg_d0.h[0] += reg_d0.h[0];
     W0(0x10) = reg_d0.h[0];
@@ -1001,9 +1001,9 @@ next_7:
     if (0 > (s16) reg_tmp.h[0]) {
         rng_next_bit();
     } else if (!reg_tmp.h[0]) {
-        func_00201230();
+        rng_next_0_to_2();
     } else {
-        func_00201270();
+        rng_next_0_to_3();
     }
     reg_d0.h[0] += reg_d0.h[0];
     reg_d0.h[0] += reg_d0.h[0];
@@ -1028,7 +1028,7 @@ void func_00211E90(void) {
     *(s8 *)(reg_a0 + 0x1E) = 0x1F;
     reg_d3.h[0] = reg_d0.h[0];
     reg_d3.h[0] &= 0x3C;
-    reg_a2 = *(u8 **)(D_00251700 + (reg_d3.h[0] & ~3));
+    reg_a2 = *(u8 **)(wreck_setups + (reg_d3.h[0] & ~3));
     *(u16 *)reg_a0 = (u16) *(u16 *)reg_a2;
     reg_a2 += 2;
     reg_d3.h[1] = ENTITY(reg_a6)->y.h;
@@ -1044,7 +1044,7 @@ void func_00211F40(void) {
     *(s8 *)(reg_a0 + 0x1E) = 0x1F;
     reg_d3.h[0] = reg_d0.h[0];
     reg_d3.h[0] &= 0x3C;
-    reg_a2 = (u8 *)(*(u16 **)(D_00251700 + (reg_d3.h[0] & ~3)));
+    reg_a2 = (u8 *)(*(u16 **)(wreck_setups + (reg_d3.h[0] & ~3)));
     *(u16 *)(reg_a0 + 0) = *(u16 *)reg_a2;
     reg_a2 += 2;
     *(u16 *)(reg_a0 + 2) = reg_d2.h[1];

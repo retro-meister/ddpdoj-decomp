@@ -1874,8 +1874,8 @@ void func_001ABF80(void) {
 }
 
 extern u16 D_00255740[];
-extern u16 D_00299764[];
-extern u16 D_00299766[];
+extern u16 g_bullet_cancel[];
+extern u16 g_bullet_cancel_kind[];
 
 void func_001ABF90(void) {
     u32 save_d0;
@@ -1906,12 +1906,12 @@ next_2:
         reg_d0.h[0] = g_p1_hyper_items_pending;
         reg_d0.h[0] -= 1;
         reg_d0.h[0] += reg_d0.h[0];
-        D_00299764[0] = (reg_d0.h[0] != 0) ? *(u16 *)((u8 *)reg_a0 + ((s16)reg_d0.h[0] & ~1)) : *(u16 *)reg_a0;
+        g_bullet_cancel[0] = (reg_d0.h[0] != 0) ? *(u16 *)((u8 *)reg_a0 + ((s16)reg_d0.h[0] & ~1)) : *(u16 *)reg_a0;
         reg_d0.w = 0x20;
         if ((g_p1_hyper_items_pending & 0xFFFF) == 5) {
             reg_d0.w = 0x2C;
         }
-        D_00299766[0] = reg_d0.h[0];
+        g_bullet_cancel_kind[0] = reg_d0.h[0];
     }
     return;
 next_3:
@@ -1966,12 +1966,12 @@ next_2:
         reg_d0.h[0] = g_p2_hyper_items_pending;
         reg_d0.h[0] -= 1;
         reg_d0.h[0] += reg_d0.h[0];
-        D_00299764[0] = (reg_d0.h[0] != 0) ? *(u16 *)((u8 *)reg_a0 + ((s16)reg_d0.h[0] & ~1)) : *(u16 *)reg_a0;
+        g_bullet_cancel[0] = (reg_d0.h[0] != 0) ? *(u16 *)((u8 *)reg_a0 + ((s16)reg_d0.h[0] & ~1)) : *(u16 *)reg_a0;
         reg_d0.w = 0x30;
         if ((g_p2_hyper_items_pending & 0xFFFF) == 5) {
             reg_d0.w = 0x3C;
         }
-        D_00299766[0] = reg_d0.h[0];
+        g_bullet_cancel_kind[0] = reg_d0.h[0];
     }
     return;
 next_3:

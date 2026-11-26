@@ -1268,7 +1268,7 @@ next_sen10:
     entity_draw_with_options();
 }
 
-s32 func_00201C20();
+s32 velocity_from_dir_unless_stopped();
 s32 velocity_from_direction();
 extern u16 D_0025F5A8[];
 extern u16 option_offsets[];
@@ -1323,7 +1323,7 @@ void option_move(void) {
         reg_a0 = (u8 *)(D_0025F5A8);
         reg_d1.h[0] = ((temp_a0_2 + 2) != 0) ? *(u16 *)((u8 *)reg_a0 + ((s16)(temp_a0_2 + 2) & ~1)) : *(u16 *)reg_a0;
         reg_d0.h[0] = (temp_a0_2 != 0) ? *(u16 *)((u8 *)reg_a0 + ((s16)temp_a0_2 & ~1)) : *(u16 *)reg_a0;
-        func_00201C20();
+        velocity_from_dir_unless_stopped();
         option_shadow_draw_single();
         entity_draw_with_options();
     }

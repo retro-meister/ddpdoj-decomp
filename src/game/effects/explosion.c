@@ -6,29 +6,29 @@
 void explosions_clear(void);
 void explosions_update(void);
 
-s32 func_00128660();                            /* extern */
+s32 bullets_clear();                            /* extern */
 s32 func_001368C0();                            /* extern */
 s32 enemies_reset();                            /* extern */
 s32 func_0016AAB0();                            /* extern */
 s32 func_001B82D0();                            /* extern */
-s32 func_00209E60();                            /* extern */
+s32 sparks_clear();                            /* extern */
 s32 func_002114A0();                            /* extern */
 
 void func_00139B20(void) {
     func_0016AAB0();
-    func_00128660();
+    bullets_clear();
     explosions_clear();
     func_001B82D0();
     func_002114A0();
     func_001368C0();
-    func_00209E60();
+    sparks_clear();
     enemies_reset();
     *(s8 *)(reg_a5 + 3) = 1;
 }
 
 s32 bombs_update();
-s32 func_00125FA0();
-s32 func_00129DB0();
+s32 pickups_update();
+s32 bullets_update();
 s32 func_00136F30();
 s32 hyper_stock_draw();
 s32 maximum_marks_draw();
@@ -47,7 +47,7 @@ s32 func_0016AC30();
 void func_00170A50(s32, s32, s32);
 s32 p1_options_update();
 s32 func_001B8410();
-s32 func_0020A540();
+s32 sparks_update();
 s32 player_bullet_collisions();
 s32 player_collisions();
 s32 func_00211670();
@@ -82,7 +82,7 @@ void func_00139B80(void) {
     enemies_frame();
     func_00170A50(0, 0, 0);
     func_00136F30();
-    func_00125FA0();
+    pickups_update();
     explosions_update();
     func_001B8410();
     func_00170A50(0x1F, 0, 0);
@@ -91,7 +91,7 @@ void func_00139B80(void) {
     p1_options_update();
     player_lasers_update();
     laser_impacts_update();
-    func_0020A540();
+    sparks_update();
     hyper_stock_draw();
     func_00144E40();
     func_00144EA0();
@@ -101,7 +101,7 @@ void func_00139B80(void) {
     func_0016AC30();
     func_00170A50(0x1F, 0x1F, 0);
     hyper_bullet_speed_update();
-    func_00129DB0();
+    bullets_update();
     func_0013F380();
     maximum_marks_draw();
     hyper_ready_marks_draw();

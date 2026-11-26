@@ -622,7 +622,7 @@ extern u8 D_002638B0[];
 extern u16 g_enemy_signal_2;
 extern u16 g_enemy_signal_0;
 extern u16 g_rank_6_16;
-extern s16 D_00299768[];
+extern s16 g_bullet_limit_raised_1[];
 
 void stage4_heavy_cannon_start(void) {
 
@@ -642,7 +642,7 @@ void stage4_heavy_cannon_start(void) {
         reg_a0 = D_002616F0;
         reg_d0.h[0] = 0xF;
         g_enemy_signal_2 = 1;
-        D_00299768[0] = 1;
+        g_bullet_limit_raised_1[0] = 1;
         sprite_palette_load();
         reg_a0 = D_002617B0;
         reg_d0.h[0] = 0x10;
@@ -673,11 +673,11 @@ s32 sfx_explosion_air_large();
 s32 sfx_explosion_extra_1();
 s32 entity_draw_layer4();
 s32 sprite_draw_layer4();
-s32 func_00201270();
+s32 rng_next_0_to_3();
 s32 rng_next_word();
-s32 func_00201800();
+s32 bullet_cancel_with_flags_plain();
 s32 direction256_between();
-s32 func_00202C50();
+s32 nearest_player_by_x();
 s32 vibration_start_pad1();
 s32 vibration_start_pad2();
 extern u16 g_enemy_signal_2;
@@ -765,7 +765,7 @@ next_130:
     if (*(u8 *)(reg_a5 + 0x2D) != 0) goto next_140;
     saved_x = ENTITY(reg_a6)->x.h;
     ENTITY(reg_a6)->x.h += 0xE880;
-    func_00202C50();
+    nearest_player_by_x();
     ENTITY(reg_a6)->x.sh = saved_x;
     if (!((s32) reg_d0.h[0] < 0xC00)) goto next_140;
     reg_d1.b[0] = ENTITY(reg_a6)[1].move.b.dir;
@@ -806,7 +806,7 @@ next_230:
     if (*(u8 *)(reg_a5 + 0x2D) != 0) goto next_240;
     saved_x = ENTITY(reg_a6)->x.h;
     ENTITY(reg_a6)->x.h += 0x1780;
-    func_00202C50();
+    nearest_player_by_x();
     ENTITY(reg_a6)->x.sh = saved_x;
     if (!((s32) reg_d0.h[0] < 0xC00)) goto next_240;
     reg_d1.b[0] = ENTITY(reg_a6)[2].move.b.dir;
@@ -1039,7 +1039,7 @@ block_c:
     ENTITY(reg_a6)->flags.h = 0x8080;
     ENTITY(reg_a6)->attr.b.palette = *(u8 *)(reg_a5 + 0x1B);
     reg_d1.h[0] = *(u16 *)(reg_a5 + 0x32);
-    func_00201800();
+    bullet_cancel_with_flags_plain();
     if (ENTITY(reg_a6)[1].flags.sb[0] < 0) goto next_720;
     func_001E4490();
     *(u16 *)(reg_a5 + 0x2E) = 0;
@@ -1087,12 +1087,12 @@ next_660:
     return;
 next_680:
     reg_d1.h[0] = *(u16 *)(reg_a5 + 0x32);
-    func_00201800();
+    bullet_cancel_with_flags_plain();
     ENTITY(reg_a6)->misc.h -= 1;
     goto block_e;
 next_6200:
     reg_d1.h[0] = *(u16 *)(reg_a5 + 0x32);
-    func_00201800();
+    bullet_cancel_with_flags_plain();
     *(u16 *)(reg_a5 + 0x24) -= 1;
     if (*(u16 *)(reg_a5 + 0x24) != 0) goto next_6240;
     func_001DF350();
@@ -1125,7 +1125,7 @@ next_6260:
     EXPLOSION(reg_a0)->draw_layer = 0x10;
     EXPLOSION(reg_a0)->debris = 0;
     EXPLOSION(reg_a0)->debris_arg = 0x800;
-    func_00201270();
+    rng_next_0_to_3();
     reg_d0.b[0] += 3;
     EXPLOSION(reg_a0)->move.b.speed = reg_d0.b[0];
     rng_next_unsigned();
@@ -1460,7 +1460,7 @@ s32 sfx_heli_stop();
 s32 sfx_charge_loop_stop();
 s32 entity_draw_layer1();
 s32 sprite_draw_layer1();
-s32 func_00201710();
+s32 bullet_cancel_with_flags();
 
 void stage4_wave_cannon(void) {
     s16 x_save;
@@ -1655,7 +1655,7 @@ block_b:
     ENTITY(reg_a6)[2].flags.h = 0x8000;
     ENTITY(reg_a6)->attr.b.palette = 0x13;
     reg_d1.h[0] = *(u16 *)(reg_a5 + 0x3A);
-    func_00201710();
+    bullet_cancel_with_flags();
     reg_a0 = (u8 *)D_00263C80;
     fade_out();
     *(u16 *)(reg_a5 + 0x34) = (u16) reg_d0.h[1];
@@ -1666,7 +1666,7 @@ block_c:
     if (*(u16 *)(reg_a5 + 0x2C) != 0) goto next_22;
     if (*(u16 *)(reg_a5 + 0x30) == 0) goto next_26;
     reg_d1.h[0] = *(u16 *)(reg_a5 + 0x3A);
-    func_00201710();
+    bullet_cancel_with_flags();
     *(u16 *)(reg_a5 + 0x30) -= 1;
     if (*(u16 *)(reg_a5 + 0x30) != 0) goto next_26;
     reg_tmp.w = 0x1DD3;
@@ -1678,7 +1678,7 @@ block_c:
     goto next_26;
 next_22:
     reg_d1.h[0] = *(u16 *)(reg_a5 + 0x3A);
-    func_00201710();
+    bullet_cancel_with_flags();
     *(u16 *)(reg_a5 + 0x2C) -= 1;
     if (*(u16 *)(reg_a5 + 0x2C) == 0) goto next_23;
     if (*(u16 *)(reg_a5 + 0x2C) != 1) goto next_24;
@@ -1723,7 +1723,7 @@ next_25:
     EXPLOSION(reg_a0)->draw_layer = 0x10;
     EXPLOSION(reg_a0)->debris = 0;
     EXPLOSION(reg_a0)->debris_arg = 0x800;
-    func_00201270();
+    rng_next_0_to_3();
     reg_d0.b[0] += 3;
     EXPLOSION(reg_a0)->move.b.speed = (u8) reg_d0.b[0];
     rng_next_unsigned();
@@ -2276,7 +2276,7 @@ void rail_turret_start(void) {
     }
 }
 
-s32 func_00125EC0();
+s32 pickup_spawn_variant();
 s32 bullet_fire256_fast();
 s32 entity_follow_scroll();
 extern u16 D_00263E80[];
@@ -2500,7 +2500,7 @@ block_dead:
     reg_d0.w = 0x4C;
     reg_d1.h[0] = *(u16 *)(reg_a5 + 0x2C);
     reg_d2.h[0] = 4;
-    func_00125EC0();
+    pickup_spawn_variant();
 next_d20:
     reg_d0.h[0] = 0xD;
     explosion_spawn();
@@ -2552,13 +2552,13 @@ next_e3a:
     reg_d1.h[0] = *(u16 *)(reg_a5 + 0x30);
     reg_d2.h[0] = 4;
     reg_d1.h[0] += 0x200;
-    func_00125EC0();
+    pickup_spawn_variant();
     reg_d0.w = 0x48;
     reg_d1.w = 0;
     reg_d1.h[0] = *(u16 *)(reg_a5 + 0x30);
     reg_d2.h[0] = 4;
     reg_d1.h[0] -= 0x200;
-    func_00125EC0();
+    pickup_spawn_variant();
 next_e3b:
     *(u16 *)(reg_a5 + 0x30) -= 0x800;
 next_e50:
@@ -2588,13 +2588,13 @@ next_e4a:
     reg_d1.h[0] = *(u16 *)(reg_a5 + 0x32);
     reg_d2.h[0] = 4;
     reg_d1.h[0] += 0x200;
-    func_00125EC0();
+    pickup_spawn_variant();
     reg_d0.w = 0x48;
     reg_d1.w = 0;
     reg_d1.h[0] = *(u16 *)(reg_a5 + 0x32);
     reg_d2.h[0] = 4;
     reg_d1.h[0] -= 0x200;
-    func_00125EC0();
+    pickup_spawn_variant();
 next_e4b:
     *(u16 *)(reg_a5 + 0x32) += 0x800;
 next_e90:
@@ -2681,8 +2681,8 @@ void stage4_tachyon_particle_first(void) {
     enemy_set_entity_count(0);
 }
 
-s32 func_00201230();
-s32 func_002013F0();
+s32 rng_next_0_to_2();
+s32 rng_next_pair_large_d1();
 extern u16 D_00263EA0[];
 extern u16 D_00263EB8[];
 extern u16 D_00263ED0[];
@@ -2696,7 +2696,7 @@ void stage4_tachyon_particle_start(void) {
     reg_tmp.w = 0x1C00;
     ENTITY(reg_a6)->y.h = (u16) reg_tmp.h[1];
     ENTITY(reg_a6)->x.h = (u16) reg_tmp.h[0];
-    func_002013F0();
+    rng_next_pair_large_d1();
     *(u16 *)(reg_a5 + 0x20) = (u16) reg_d0.h[0];
     rng_next();
     reg_d0.b[0] = (s8) reg_d0.b[0] * 2;
@@ -2706,7 +2706,7 @@ void stage4_tachyon_particle_start(void) {
     reg_d0.h[0] &= 0x7F;
     reg_d0.b[0] += 0x40;
     ENTITY(reg_a6)->move.b.dir = (u8) reg_d0.b[0];
-    func_00201230();
+    rng_next_0_to_2();
     reg_a0 = (u8 *)(D_00263EA0);
     reg_d0.h[0] *= 8;
     reg_a0 += reg_d0.h[0];
@@ -2719,7 +2719,7 @@ void stage4_tachyon_particle_start(void) {
     *(u16 *)(reg_a5 + 0x18) = (u16) *(u16 *)reg_a0;
     reg_d0.w = 0;
     reg_a0 += 2;
-    func_00201270();
+    rng_next_0_to_3();
     reg_tmp.h[1] = ENTITY(reg_a6)->draw.h;
     reg_tmp.h[0] = ENTITY(reg_a6)->sprite.h;
     reg_tmp.w += reg_d0.w;
@@ -2727,8 +2727,8 @@ void stage4_tachyon_particle_start(void) {
     ENTITY(reg_a6)->sprite.h = (u16) reg_tmp.h[0];
 }
 
-s32 func_00201FC0();
-s32 func_00202040();
+s32 entity_advance_scaled();
+s32 velocity_from_dir_scaled();
 
 void stage4_tachyon_particle(u8 *arg0, u8 *arg1) {
     u8 *t1;
@@ -2747,14 +2747,14 @@ void stage4_tachyon_particle(u8 *arg0, u8 *arg1) {
         ENTITY(reg_a6)->y.h = (u16) reg_d0.h[0];
         ENTITY(reg_a6)->x.h = (u16) reg_d1.h[0];
         reg_d4.w = 1;
-        func_00201FC0();
+        entity_advance_scaled();
         ENTITY(reg_a6)->y.h += reg_d2.h[0];
         reg_d1.w = 0;
         reg_d0.w = 0;
         reg_d0.b[0] = ENTITY(reg_a6)->move.b.speed;
         reg_d1.b[0] = ENTITY(reg_a6)->move.b.dir;
         reg_d4.w = 3;
-        func_00202040();
+        velocity_from_dir_scaled();
         t2 = (u8 *)(reg_a5);
         reg_tmp.h[1] = (*(u16 *)((u8 *)(t2) + (0x24)));
         reg_tmp.h[0] = (*(u16 *)((u8 *)(t2) + (0x26)));

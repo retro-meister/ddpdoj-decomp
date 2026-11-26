@@ -77,8 +77,8 @@ void func_00170DE0(void) {
 }
 
 s32 func_001ABF90();
-s32 func_00200EE0();
-s32 func_00201010();
+s32 binary_to_bcd();
+s32 bcd_to_binary();
 extern u16 g_p1_stage_misses;
 extern u16 g_p1_hyper_gauge;
 extern u16 g_p1_hyper_active;
@@ -103,7 +103,7 @@ void func_00170DF0(void) {
     if (g_boss_present_b1 & 2) {
         reg_d0.h[0] = g_boss_hits;
         if ((s16) reg_d0.h[0] >= 0) {
-            func_00200EE0();
+            binary_to_bcd();
             reg_d5.w = reg_d2.w;
             reg_d4.h[0] = g_boss_hit_decay_timer;
         } else {
@@ -123,7 +123,7 @@ void func_00170DF0(void) {
                 reg_d5.h[0] = 0x200;
             }
             reg_d0.h[0] = reg_d5.h[0];
-            func_00201010();
+            bcd_to_binary();
             reg_d0.w = 0;
 loop_11:
             reg_tmp2.w = 0;
@@ -170,7 +170,7 @@ void func_00170F80(void) {
     if (g_boss_present_b1 & 2) {
         reg_d0.h[0] = g_boss_hits;
         if ((s16) reg_d0.h[0] >= 0) {
-            func_00200EE0();
+            binary_to_bcd();
             reg_d5.w = reg_d2.w;
             reg_d4.h[0] = g_boss_hit_decay_timer;
         } else {
@@ -190,7 +190,7 @@ void func_00170F80(void) {
                 reg_d5.h[0] = 0x200;
             }
             reg_d0.h[0] = reg_d5.h[0];
-            func_00201010();
+            bcd_to_binary();
             reg_d0.w = 0;
 loop_11:
             reg_tmp2.w = 0;

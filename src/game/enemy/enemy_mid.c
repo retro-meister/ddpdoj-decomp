@@ -810,8 +810,8 @@ extern s8 D_0025A128[];
 extern s8 D_0025A140[];
 extern s8 D_0025A160[];
 extern u16 g_rank_7_16;
-extern s16 D_00299768[];
-extern s16 D_0029976A[];
+extern s16 g_bullet_limit_raised_1[];
+extern s16 g_bullet_limit_raised_2[];
 
 void mid_flyer_b_start(void) {
     s32 enemy_set_task_state();
@@ -871,8 +871,8 @@ void mid_flyer_b_start(void) {
         MID_FLYER_B(reg_a5)->palette = (s8) *((s8 *)reg_a0);
         (*(s8 **)&reg_a0) += 1;
         MID_FLYER_B(reg_a5)->hit_palette = (s8) *((s8 *)reg_a0);
-        D_00299768[0] = 1;
-        D_0029976A[0] = 1;
+        g_bullet_limit_raised_1[0] = 1;
+        g_bullet_limit_raised_2[0] = 1;
         (*(s8 **)&reg_a0) += 1;
     }
 }
@@ -1767,8 +1767,8 @@ block_4:
     }
 }
 
-s32 func_002012B0();
-s32 func_00202C50();
+s32 rng_next_0_to_3_d1();
+s32 nearest_player_by_x();
 extern u16 D_0025A330[];
 
 void mid_flyer_d(void) {
@@ -1845,7 +1845,7 @@ next_90:
     if ((s16) ENTITY(reg_a6)->y.h < 0x1000) goto next_500;
     MID_FLYER_D(reg_a5)->player_in_range = 0;
     if (g_stage == 4) goto next_200;
-    func_00202C50();
+    nearest_player_by_x();
     reg_d1.h[0] = 0xC00;
     if (g_stage != 4) goto next_150;
     reg_d1.h[0] = 0x1800;
@@ -1979,7 +1979,7 @@ next_610:
     if (g_stage != 4) goto loop_620;
     reg_d5.w = 0x30000;
 loop_620:
-    func_002012B0();
+    rng_next_0_to_3_d1();
     reg_d1.b[0] += 0x7E;
     reg_d3.h[0] = reg_d1.h[0];
     reg_d3.h[0] += 2;
@@ -2016,7 +2016,7 @@ next_6205:
     reg_d6.h[0] = 0xFAC0;
     reg_d7.w = 5;
 loop_640:
-    func_002012B0();
+    rng_next_0_to_3_d1();
     reg_d1.b[0] += 0x7F;
     reg_d3.h[0] = reg_d1.h[0];
     reg_d3.h[0] += 2;
@@ -2165,11 +2165,11 @@ void mid_tank_vertical_start(void) {
     }
 }
 
-s32 func_00125EF0();
+s32 pickup_spawn_plain();
 s32 entity_draw_layer1();
 s32 sprite_draw_layer1();
 s32 rng_next();
-s32 func_00201200();
+s32 rng_next_bit_d5();
 s32 func_00211550();
 extern u16 D_0025A440[];
 extern u16 D_0025A460[];
@@ -2350,7 +2350,7 @@ block_55:
                                 reg_d0.w = 0x30013;
                                 bullet_fire256_2way();
                                 reg_d1.h[0] -= 0x10;
-                                func_00201200();
+                                rng_next_bit_d5();
                                 if (reg_d5.h[0] != 0) {
                                     reg_d1.h[0] += 0x20;
                                 }
@@ -2373,7 +2373,7 @@ block_55:
                                 reg_d0.w = 0x30013;
                                 bullet_fire256_2way();
                                 reg_d1.h[0] -= 0x10;
-                                func_00201200();
+                                rng_next_bit_d5();
                                 if (reg_d5.h[0] != 0) {
                                     reg_d1.h[0] += 0x20;
                                 }
@@ -2467,7 +2467,7 @@ block_55:
             reg_a4 += 2;
             reg_d1.h[0] = *(u16 *)reg_a4;
             reg_a4 += 2;
-            func_00125EF0();
+            pickup_spawn_plain();
         } while ((s16)(--reg_d6.h[0]) >= 0);
         reg_d0.h[0] = 0x85;
         explosion_spawn();
@@ -2582,7 +2582,7 @@ void item_carrier_start(void) {
 
 s32 bullet_fire_fixed();
 s32 func_0016A9B0();
-s32 func_00203120();
+s32 entity_bounds_check_wide();
 extern u16 g_two_player_game;
 
 void item_carrier(void) {
@@ -2597,7 +2597,7 @@ void item_carrier(void) {
 
     enemy_path_step();
     if (enemy_move_end_requested == 0) {
-        func_00203120();
+        entity_bounds_check_wide();
         if (cond_flag != 0) {
             if (CARRIER(reg_a5)->seen != 0) {
                 enemy_remove();
@@ -2842,9 +2842,9 @@ s32 debug_number_get();
 s32 func_00145D40();
 s32 entity_draw_layer2();
 s32 velocity_from_direction();
-s32 func_00202180();
+s32 direction_to_target_player();
 s32 aim256_at_player();
-s32 func_00202D50();
+s32 entity_in_shot_limits();
 s32 entity_move_by_p2_stick();
 extern u16 g_game_frame;
 
@@ -2853,7 +2853,7 @@ void shooter_drone(void) {
     u32 save_d0, save_d1, save_d2, save_d3, save_d4, save_d5, save_d6, save_d7;
     u8 *save_a0, *save_a1, *save_a2, *save_a3, *save_a4, *save_a5, *save_a6;
 
-    func_00202D50();
+    entity_in_shot_limits();
     if (cond_flag == 0) {
         reg_d0.w = 0x7F;
         reg_d0.h[0] &= g_game_frame;
@@ -2862,7 +2862,7 @@ void shooter_drone(void) {
             explosion_spawn();
             EXPLOSION(reg_a0)->y = (u16) ENTITY(reg_a6)->y.h;
             EXPLOSION(reg_a0)->x = (u16) ENTITY(reg_a6)->x.h;
-            func_00202180();
+            direction_to_target_player();
             reg_d0.w = 0;
             debug_number_get();
             if ((s32) reg_d0.b[0] < 0x1B) {
@@ -3336,7 +3336,7 @@ block_d:
         reg_a4 += 2;
         reg_d1.h[0] = *(u16 *)reg_a4;
         reg_a4 += 2;
-        func_00125EF0();
+        pickup_spawn_plain();
     } while ((s16)(--reg_d6.h[0]) >= 0);
     reg_d0.w = 0xD;
     explosion_spawn();
@@ -3407,7 +3407,7 @@ void ground_turret_a_start(void) {
             ENTITY(reg_a6)->hp.sh = 0x500;
         }
         reg_d1.b[0] = ENTITY(reg_a6)->move.b.dir;
-        func_00202180();
+        direction_to_target_player();
         reg_a0 = (u8 *)(g_direction_sprites_c);
         GROUND_TURRET(reg_a5)->dir.b[0] = (u8) reg_d1.b[0];
         reg_d1.h[0] &= 0x3E;
@@ -3432,7 +3432,7 @@ void ground_turret_a_start(void) {
     }
 }
 
-s32 func_00125EB0();
+s32 pickup_spawn_variant_here();
 s32 enemy_fire_distance_check();
 s32 func_00170B20();
 s32 func_00170CA0();
@@ -3572,7 +3572,7 @@ block_21:
         wreck_spawn();
         reg_d0.w = 8;
         func_00170DE0();
-        func_00125EB0();
+        pickup_spawn_variant_here();
         reg_d0.w = 0xC;
         explosion_spawn();
         EXPLOSION(reg_a0)->y = (u16) ENTITY(reg_a6)->y.h;
@@ -3611,7 +3611,7 @@ void bee_container_start(void) {
 }
 
 s32 entity_follow_scroll();
-s32 func_00203380();
+s32 players_alive_mask();
 extern u8 g_boss_present_b1;
 
 void bee_container(void) {
@@ -3664,7 +3664,7 @@ next_3:
     if (ENTITY(reg_a6)->hp.sh < 0) goto block_3;
 next_4:
     if (g_bomb_entities[0] != 0) goto next_9;
-    func_00203380();
+    players_alive_mask();
     if (reg_d0.h[0] == 0) goto block_rts;
     if (!(reg_d0.h[0] & 1)) goto next_6;
     reg_d2.h[0] = PLAYER(g_player1)->x.h;
@@ -3707,7 +3707,7 @@ block_3:
     sfx_explosion_air_small();
     reg_d0.h[0] = CONTAINER(reg_a5)->second;
     reg_d2.b[0] = ENTITY(reg_a6)->misc.b.draw_layer;
-    func_00125EB0();
+    pickup_spawn_variant_here();
     reg_d0.w = 0xC;
     explosion_spawn();
     EXPLOSION(reg_a0)->y = ENTITY(reg_a6)->y.h;
@@ -3799,7 +3799,7 @@ block_2:
     sfx_explosion_air_small();
     reg_d0.h[0] = CONTAINER(reg_a5)->first;
     reg_d2.b[0] = ENTITY(reg_a6)->misc.b.draw_layer;
-    func_00125EB0();
+    pickup_spawn_variant_here();
     reg_d0.w = 1;
     explosion_spawn();
     EXPLOSION(reg_a0)->y = ENTITY(reg_a6)->y.h;
@@ -3848,7 +3848,7 @@ void water_flower_turret_start(void) {
     enemy_path_start();
     if (enemy_move_end_requested == 0) {
         reg_d1.b[0] = ENTITY(reg_a6)->move.b.dir;
-        func_00202180();
+        direction_to_target_player();
         WATER_FLOWER(reg_a5)->dir.b[0] = (u8) reg_d1.b[0];
         reg_a0 = (u8 *)(D_0025A710);
         reg_d1.h[0] &= 0x3E;
@@ -4110,7 +4110,7 @@ void ground_turret_b_start(void) {
             ENTITY(reg_a6)->hp.sh = 0x280;
         }
         reg_d1.b[0] = ENTITY(reg_a6)->move.b.dir;
-        func_00202180();
+        direction_to_target_player();
         reg_a0 = (u8 *)(g_direction_sprites_e);
         GROUND_TURRET(reg_a5)->dir.b[0] = (u8) reg_d1.b[0];
         reg_d1.h[0] &= 0x3E;
@@ -4271,7 +4271,7 @@ block_22:
         wreck_spawn();
         reg_d0.w = 8;
         func_00170DE0();
-        func_00125EB0();
+        pickup_spawn_variant_here();
         reg_d0.w = 0xC;
         explosion_spawn();
         EXPLOSION(reg_a0)->y = (u16) ENTITY(reg_a6)->y.h;
@@ -4307,7 +4307,7 @@ void ground_turret_c_start(void) {
     enemy_path_start();
     if (enemy_move_end_requested == 0) {
         reg_d1.b[0] = ENTITY(reg_a6)->move.b.dir;
-        func_00202180();
+        direction_to_target_player();
         reg_a0 = (u8 *)(g_direction_sprites_f);
         GROUND_TURRET(reg_a5)->dir.b[0] = (u8) reg_d1.b[0];
         reg_d1.h[0] &= 0x3E;
@@ -4486,7 +4486,7 @@ next_11:
     wreck_spawn();
     reg_d0.w = 8;
     func_00170DE0();
-    func_00125EB0();
+    pickup_spawn_variant_here();
     reg_d0.w = 0xC;
     explosion_spawn();
     EXPLOSION(reg_a0)->y = ENTITY(reg_a6)->y.h;
@@ -5207,7 +5207,7 @@ block_rts:
                 reg_a4 += 2;
                 reg_d1.h[0] = *(u16 *)reg_a4;
                 reg_a4 += 2;
-                func_00125EF0();
+                pickup_spawn_plain();
             } while ((s16)(--reg_d6.h[0]) >= 0);
             reg_d0.w = 0xD;
             explosion_spawn();

@@ -68,7 +68,7 @@ s32 explosion_spawn();
 s32 enemy_hitbox_debug_draw();
 s32 sfx_explosion_air_large();
 s32 entity_draw_layer5();
-s32 func_00201F20();
+s32 entity_advance256();
 s32 aim256_at_player();
 extern u8 D_0026D360[];
 extern u8 D_0026D640[];
@@ -88,7 +88,7 @@ void stage3_boss_drone(void) {
     ENTITY(reg_a6)->misc.b.user = bits - 1;
 next_20:
     if (g_boss_present_b1 & 0x40) goto block_dead;
-    func_00201F20();
+    entity_advance256();
     reg_d0.h[0] = ENTITY(reg_a6)->y.h;
     reg_tmp1.w = 0;
     reg_tmp1.h[0] = 0x7000;
@@ -360,7 +360,7 @@ void stage3_boss_lid_bullet(void) {
         enemy_remove();
         return;
     }
-    func_00201F20();
+    entity_advance256();
     reg_d0.h[0] = ENTITY(reg_a6)->y.h;
     reg_tmp1.w = 0;
     reg_tmp1.h[0] = 0xFFC6;
@@ -401,10 +401,10 @@ block_10:
     enemy_hitbox_debug_draw();
 }
 
-s32 func_00125EE0();
+s32 pickup_spawn_here();
 extern u8 g_boss_present;
-extern u16 D_00299764[];
-extern u16 D_00299766[];
+extern u16 g_bullet_cancel[];
+extern u16 g_bullet_cancel_kind[];
 extern u16 g_bomb_entities[];
 
 void breakable_bullet_check(void) {
@@ -430,13 +430,13 @@ block_5:
         goto block_9;
     }
 block_6:
-    if (D_00299764[0] != 0) {
-        reg_d0.h[0] = D_00299766[0];
+    if (g_bullet_cancel[0] != 0) {
+        reg_d0.h[0] = g_bullet_cancel_kind[0];
         if ((s16) reg_d0.h[0] < 0) {
             *reg_a6 = 0x80;
         } else {
 block_9:
-            func_00125EE0();
+            pickup_spawn_here();
         }
 block_11:
         cond_flag = 1;

@@ -82,7 +82,7 @@ extern u8 D_00261AF0[];
 extern u8 D_00265AB0[];
 extern u8 D_00265AD0[];
 extern u16 g_enemy_signal_2;
-extern s16 D_00299768[];
+extern s16 g_bullet_limit_raised_1[];
 extern s8 enemy_move_end_requested;
 
 void stage5_midboss3_start(void) {
@@ -94,7 +94,7 @@ void stage5_midboss3_start(void) {
     enemy_path_start();
     if (enemy_move_end_requested == 0) {
         reg_d0.h[0] = 0x10;
-        D_00299768[0] = 1;
+        g_bullet_limit_raised_1[0] = 1;
         g_enemy_signal_2 = 1;
         reg_a0 = D_00261AF0;
         sprite_palette_load();
@@ -490,12 +490,12 @@ no_reload:;
     cond_flag = 0;
 }
 
-s32 func_00201710(void *);
+s32 bullet_cancel_with_flags(void *);
 
 void stage5_midboss3_dying(void) {
     if ((STAGE5_MIDBOSS3_DAMAGE(reg_a6)->dying != 0) && (STAGE5_MIDBOSS3_DAMAGE(reg_a6)->other_07 == 0)) {
         reg_d1.h[0] = STAGE5_MIDBOSS3_DAMAGE(reg_a6)->hit_by;
-        func_00201710(reg_a6);
+        bullet_cancel_with_flags(reg_a6);
         STAGE5_MIDBOSS3_DAMAGE(reg_a6)->dying_frames -= 1;
         if (STAGE5_MIDBOSS3_DAMAGE(reg_a6)->dying_frames == 0) {
             STAGE5_MIDBOSS3_DAMAGE(reg_a6)->gone = 1;

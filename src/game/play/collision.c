@@ -250,13 +250,13 @@ extern u16 g_enemy_count;
 extern u16 g_two_player_game;
 extern u16 g_bullet_count;
 extern u8 g_bullets[];
-extern s16 D_00299768[];
-extern s16 D_0029976A[];
-extern u16 D_0029976C[];
+extern s16 g_bullet_limit_raised_1[];
+extern s16 g_bullet_limit_raised_2[];
+extern u16 g_bullet_limit_raised_3[];
 extern u16 D_0029976E[];
 extern u16 g_bomb_entities[];
 extern u16 g_items_from_y[];
-extern u8 D_002BF4F0[3080];
+extern u8 g_pickups[3080];
 #ifdef DEATH_LABEL
 extern u16 g_attract_demo;
 extern u16 g_stage;
@@ -326,7 +326,7 @@ loop_5:
             }
             reg_d6.h[0] = g_bullet_count;
             if (reg_d6.h[0] != 0) {
-                reg_a6 = (u8 *)((u16 *)D_002BF4F0);
+                reg_a6 = (u8 *)((u16 *)g_pickups);
                 goto loop_17;
 skip_17:
                 reg_a6 += 0x2A;
@@ -1105,11 +1105,11 @@ end_155:
 start_160:
             reg_a5 = (u8 *)(g_bullets + 2);
             reg_d7.h[0] = MAIN_OR_DEATH_LABEL(0x45, 0x15D);
-            if (((u16 *)D_00299768)[0] == 0) goto loop_160;
+            if (((u16 *)g_bullet_limit_raised_1)[0] == 0) goto loop_160;
             reg_d7.h[0] = MAIN_OR_DEATH_LABEL(0x6D, 0x225);
-            if (((u16 *)D_0029976A)[0] == 0) goto loop_160;
+            if (((u16 *)g_bullet_limit_raised_2)[0] == 0) goto loop_160;
             reg_d7.h[0] = MAIN_OR_DEATH_LABEL(0x9F, 0x31F);
-            if (D_0029976C[0] == 0) goto loop_160;
+            if (g_bullet_limit_raised_3[0] == 0) goto loop_160;
             reg_d7.h[0] = MAIN_OR_DEATH_LABEL(0xBD, 0x3B5);
             if (D_0029976E[0] == 0) goto loop_160;
             reg_d7.h[0] = MAIN_OR_DEATH_LABEL(0xD1, 0x419);
@@ -1185,11 +1185,11 @@ void player_vs_bullets(void) {
     reg_d3.h[0] -= ENTITY(reg_a4)->hit_x_minus.h;
     reg_a6 = (u8 *)g_bullets + 2;
     reg_d6.h[0] = MAIN_OR_DEATH_LABEL(6, 34);
-    if (((u16 *)D_00299768)[0] == 0) goto loop_5;
+    if (((u16 *)g_bullet_limit_raised_1)[0] == 0) goto loop_5;
     reg_d6.h[0] = MAIN_OR_DEATH_LABEL(0xA, 54);
-    if (((u16 *)D_0029976A)[0] == 0) goto loop_5;
+    if (((u16 *)g_bullet_limit_raised_2)[0] == 0) goto loop_5;
     reg_d6.h[0] = MAIN_OR_DEATH_LABEL(0xF, 79);
-    if (D_0029976C[0] == 0) goto loop_5;
+    if (g_bullet_limit_raised_3[0] == 0) goto loop_5;
     reg_d6.h[0] = MAIN_OR_DEATH_LABEL(0x12, 94);
     if (D_0029976E[0] == 0) goto loop_5;
     reg_d6.h[0] = MAIN_OR_DEATH_LABEL(0x14, 104);
@@ -1242,7 +1242,7 @@ void laser_collisions() {
 }
 
 extern u16 D_0028E098;
-extern u16 D_00299764[];
+extern u16 g_bullet_cancel[];
 
 void laser_vs_enemies(void) {
     *(u8 *) (reg_a1 + 1) &= 0xEF;
@@ -1265,7 +1265,7 @@ void laser_vs_enemies(void) {
     reg_d3.h[0] -= *(u16 *) reg_a0;
     reg_a0 += 2;
     if (g_hyper_hit_scratch == 0) goto next_30;
-    if (D_00299764[0] != 0) goto next_30;
+    if (g_bullet_cancel[0] != 0) goto next_30;
     reg_d5.h[0] = *(u16 *) (reg_a1 + 0x1C);
     reg_d4.h[0] = reg_d5.h[0];
     reg_d4.h[0] >>= 2;
@@ -1310,7 +1310,7 @@ loop_10:
     if (ENTITY(reg_a5)->hp.sh < 0) goto next_60;
     reg_d5.h[0] = *(u16 *) (reg_a1 + 0xE);
     if (g_hyper_hit_scratch == 0) goto next_13;
-    if (D_00299764[0] != 0) goto next_20;
+    if (g_bullet_cancel[0] != 0) goto next_20;
 next_13:
     if (*(u16 *) (reg_a1 + 0x1A) == 0) goto next_20;
     if (!(ENTITY(reg_a5)->flags.b[1] & 2)) goto next_20;
@@ -1353,7 +1353,7 @@ extern u8 g_boss_present_b1;
 void laser_vs_enemies_second(void) {
     reg_a1 = reg_a2;
     if (g_hyper_hit_scratch == 0) goto next_10;
-    if (D_00299764[0] == 0) goto next_5;
+    if (g_bullet_cancel[0] == 0) goto next_5;
     *(u16 *) (reg_a1 + 0xE) = 0;
     goto next_10;
 next_5:

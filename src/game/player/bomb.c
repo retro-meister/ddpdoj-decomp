@@ -685,7 +685,7 @@ block_rts:
 }
 s32 sfx_laser_bomb_a();
 s32 sfx_laser_bomb_b();
-s32 func_0020A270();
+s32 sparks_spawn_for_bomb();
 extern u16 g_laser_bomb_sizzle;
 
 void laser_bomb_update(arg3)
@@ -1048,7 +1048,7 @@ block_36:
         if (!(ENTITY(reg_a6)->flags.b[1] & 2)) {
             entity_draw_with_bombs();
             reg_d0.w = 2;
-            func_0020A270();
+            sparks_spawn_for_bomb();
         }
         return;
     }

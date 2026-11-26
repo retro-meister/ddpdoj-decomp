@@ -211,13 +211,13 @@ void twin_boss_fire_attack_b_start(void) {
 }
 
 s32 boss_attack_stop();
-s32 func_00202A80();
+s32 nearest_player_distance();
 extern u16 stage1_midboss_direction64_offsets_166[];
 extern u16 g_enemy_signal_2;
 
 void twin_boss_fire_attack_b(void) {
     g_enemy_signal_2 = 0;
-    func_00202A80();
+    nearest_player_distance();
     if ((s32) reg_d0.h[0] < 0x2000) {
         g_enemy_signal_2 = 1;
     }
@@ -369,7 +369,7 @@ block_13:
 }
 
 s32 rng_next_masked();
-s32 func_00201230();
+s32 rng_next_0_to_2();
 extern u16 D_00264570[];
 extern u32 D_0028D9FC;
 
@@ -391,7 +391,7 @@ void twin_boss_fire_spiral_start(void) {
     if (0 > reg_d0.sb[0]) {
         FORM3_D(reg_a4)->turn *= -1;
     }
-    func_00201230();
+    rng_next_0_to_2();
     reg_d0.w = (u32) (s16) reg_d0.h[0];
     FORM3_D(reg_a4)->spin_step_add = (u16) reg_d0.h[0];
     reg_d0.h[0] += 2;
@@ -673,7 +673,7 @@ void twin_boss_fire_stinger_start(void) {
     STINGER(reg_a4)->burst.t.reload += reg_d0.b[0];
 }
 
-s32 func_00201100();
+s32 rng_next_d5();
 
 void twin_boss_fire_stinger(void) {
     s16 *t1;
@@ -721,7 +721,7 @@ next_1:
                 reg_d2.h[0] = ENTITY(reg_a6)->x.h;
                 reg_d3.w = 0;
                 reg_d4.w = 0;
-                func_00201100();
+                rng_next_d5();
                 reg_d5.b[0] = (u8) ((s8) reg_d5.b[0] >> 1);
                 reg_d1.b[0] += reg_d5.b[0];
                 bullet_fire256_direct();

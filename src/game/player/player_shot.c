@@ -37,24 +37,24 @@ void func_00148730(void) {
     func_0014BE20();
 }
 
-s32 func_00201330();                            /* extern */
+s32 rng_next_pair_small_d1();                            /* extern */
 
 void func_00148800(void) {
-    func_00201330();
+    rng_next_pair_small_d1();
     reg_d1.h[0] = (u16) ((s16) reg_d1.h[0] >> 1);
     reg_d0.h[0] += reg_d1.h[0];
-    func_00201330();
+    rng_next_pair_small_d1();
     reg_d1.h[0] = (u16) ((s16) reg_d1.h[0] >> 1);
     reg_d2.h[0] += reg_d1.h[0];
 }
 
-s32 func_00201330();
+s32 rng_next_pair_small_d1();
 
 void func_00148860() {
-    func_00201330();
+    rng_next_pair_small_d1();
     reg_d1.h[0] = (u16) ((s16) reg_d1.h[0] >> 2);
     ENTITY(reg_a6)->y.h += reg_d1.h[0];
-    func_00201330();
+    rng_next_pair_small_d1();
     reg_d1.h[0] = (u16) ((s16) reg_d1.h[0] >> 2);
     ENTITY(reg_a6)->x.h += reg_d1.h[0];
 }
@@ -117,7 +117,7 @@ next_1:
 
 s32 sfx_enemy_fire_0();
 s32 velocity_from_dir256();
-s32 func_00209F20();
+s32 sparks_spawn_for_shot();
 extern u16 player_shot_1_flight_table[];
 extern u16 player_shot_1_impact_table[];
 extern u16 g_two_player_game;
@@ -218,7 +218,7 @@ loop_1:
 block_touch_first:
     if (g_two_player_game == 0) goto skip_2;
     reg_d0.w = 0x14;
-    func_00209F20();
+    sparks_spawn_for_shot();
 skip_2:
     reg_d0.h[0] = *(u16 *)(reg_a6 + 0x2C);
     reg_d2.h[0] = *(u16 *)(reg_a6 + 0x2E);
@@ -361,7 +361,7 @@ loop_110:
 next_200:
     if (g_two_player_game == 0) goto next_220;
     reg_d0.w = 0x14;
-    func_00209F20();
+    sparks_spawn_for_shot();
 next_220:
     reg_d0.h[0] = W(0x2C);
     reg_d2.h[0] = W(0x2E);
@@ -489,7 +489,7 @@ loop_110:
 next_200:
     if (g_two_player_game == 0) goto next_220;
     reg_d0.w = 0x14;
-    func_00209F20();
+    sparks_spawn_for_shot();
 next_220:
     reg_d0.h[0] = W(0x2C);
     reg_d2.h[0] = W(0x2E);
@@ -609,7 +609,7 @@ loop_110:
 next_200:
     if (g_two_player_game == 0) goto next_220;
     reg_d0.w = 0x14;
-    func_00209F20();
+    sparks_spawn_for_shot();
 next_220:
     reg_d0.h[0] = W(0x2C);
     reg_d2.h[0] = W(0x2E);
@@ -747,7 +747,7 @@ loop_110:
 next_200:
     if (g_two_player_game == 0) goto next_220;
     reg_d0.w = 0x14;
-    func_00209F20();
+    sparks_spawn_for_shot();
 next_220:
     reg_d0.h[0] = W(0x2C);
     reg_d2.h[0] = W(0x2E);
@@ -884,7 +884,7 @@ loop_110:
 next_200:
     if (g_two_player_game == 0) goto next_220;
     reg_d0.w = 0x14;
-    func_00209F20();
+    sparks_spawn_for_shot();
 next_220:
     reg_d0.h[0] = W(0x2C);
     reg_d2.h[0] = W(0x2E);
@@ -1012,7 +1012,7 @@ loop_110:
 next_200:
     if (g_two_player_game == 0) goto next_220;
     reg_d0.w = 0x14;
-    func_00209F20();
+    sparks_spawn_for_shot();
 next_220:
     reg_d0.h[0] = W(0x2C);
     reg_d2.h[0] = W(0x2E);
@@ -1140,7 +1140,7 @@ loop_110:
 next_200:
     if (g_two_player_game == 0) goto next_220;
     reg_d0.w = 0x14;
-    func_00209F20();
+    sparks_spawn_for_shot();
 next_220:
     reg_d0.h[0] = W(0x2C);
     reg_d2.h[0] = W(0x2E);

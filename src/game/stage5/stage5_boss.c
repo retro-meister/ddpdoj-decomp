@@ -35,9 +35,9 @@ extern u32 D_0028D9C8;
 extern u8 g_game_mode;
 extern u16 g_stage5_boss_all_forms;
 extern u16 g_loop;
-extern s16 D_00299768[];
-extern s16 D_0029976A[];
-extern u16 D_0029976C[];
+extern s16 g_bullet_limit_raised_1[];
+extern s16 g_bullet_limit_raised_2[];
+extern u16 g_bullet_limit_raised_3[];
 
 void stage5_boss_start(void) {
     reg_a0 = D_00264F50;
@@ -110,9 +110,9 @@ void stage5_boss_start(void) {
     reg_d0.h[0] = 0xF;
     reg_a0 = D_00260170;
     sprite_palette_load();
-    D_00299768[0] = 1;
-    D_0029976A[0] = 1;
-    ((s16 *)D_0029976C)[0] = 1;
+    g_bullet_limit_raised_1[0] = 1;
+    g_bullet_limit_raised_2[0] = 1;
+    ((s16 *)g_bullet_limit_raised_3)[0] = 1;
     stage5_boss_form1_stop_hits();
 }
 
@@ -120,13 +120,13 @@ s32 enemy_remove();                           /* extern */
 s32 boss_slots_run();                            /* extern */
 s32 enemy_hitbox_debug_draw();                            /* extern */
 s32 stage5_boss_form1_take_damage();                            /* extern */
-s32 func_002035A0();                            /* extern */
+s32 stage_clear_to_next_stage();                            /* extern */
 
 void stage5_boss_main(void) {
     stage5_boss_form1_take_damage();
     boss_slots_run();
     if (cond_flag != 0) {
-        func_002035A0();
+        stage_clear_to_next_stage();
         enemy_remove();
         return;
     }

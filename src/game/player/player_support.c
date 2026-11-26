@@ -690,7 +690,7 @@ block_end:
     cond_flag = 0;
 }
 
-extern void func_00200EE0(void);
+extern void binary_to_bcd(void);
 extern s32 g_p1_maximum_value_digits[];
 extern u32 g_p1_maximum_half_digits[];
 extern u16 g_p1_maximum_count[];
@@ -700,16 +700,16 @@ void p1_maximum_digits_update(void)
 {
     reg_d0.h[0] = g_p1_maximum_value[0];
     reg_d5.h[0] = reg_d0.h[0];
-    func_00200EE0();
+    binary_to_bcd();
 
     ((u32 *)g_p1_maximum_value_digits)[0] = reg_d2.w;
     reg_d5.h[0] >>= 1;
     reg_d0.h[0] = reg_d5.h[0];
-    func_00200EE0();
+    binary_to_bcd();
 
     g_p1_maximum_half_digits[0] = reg_d2.w;
     reg_d0.h[0] = g_p1_maximum_count[0];
-    func_00200EE0();
+    binary_to_bcd();
 
     g_p1_maximum_count_digits[0] = reg_d2.h[0];
 }
@@ -723,16 +723,16 @@ extern u16 g_p2_maximum_count_digits[];
 void p2_maximum_digits_update(void) {
     reg_d0.h[0] = g_p2_maximum_value[0];
     reg_d5.h[0] = reg_d0.h[0];
-    func_00200EE0();
+    binary_to_bcd();
 
     ((u32 *)g_p2_maximum_value_digits)[0] = reg_d2.w;
     reg_d5.h[0] >>= 1;
     reg_d0.h[0] = reg_d5.h[0];
-    func_00200EE0();
+    binary_to_bcd();
 
     g_p2_maximum_half_digits[0] = reg_d2.w;
     reg_d0.h[0] = g_p2_maximum_count[0];
-    func_00200EE0();
+    binary_to_bcd();
 
     g_p2_maximum_count_digits[0] = reg_d2.h[0];
 }

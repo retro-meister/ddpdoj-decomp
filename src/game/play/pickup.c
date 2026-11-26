@@ -5,27 +5,27 @@
 
 extern void (*D_002693E0[20])();
 extern void (*D_00269550[20])();
-extern void *D_002695E0[20];
+extern void *pickup_init_routines[20];
 
-void func_00125EC0(void);
-void func_00125EF0(void);
-void func_00125F00(void);
-void func_00125FF0(void);
-void func_00126F10(void);
-void func_001273D0(void);
-void func_00127400(void);
-void func_001278A0(void);
-void func_001278D0(void);
-void func_00127CA0(void);
-void func_00127FA0(void);
-void func_00128130(void);
-void func_00128320(void);
-void func_001285A0(void);
+void pickup_spawn_variant(void);
+void pickup_spawn_plain(void);
+void pickup_spawn(void);
+void pickups_update_loop(void);
+void pickup_spawn_init(void);
+void pickup_init_jitter_small(void);
+void pickup_init_jitter(void);
+void pickup_init_to_player1(void);
+void pickup_init_to_target(void);
+void pickup_collected_begin(void);
+void pickup_collected_update(void);
+void pickup_collected_update_blinking(void);
+void pickup_draw_value_large(void);
+void pickup_draw_value(void);
 void bullet_fire_loop2_double();
 void bullet_fire_loop2_3way();
 void bullet_fire_direct(void);
 void bullet_spawn(void);
-void func_00128F70(void);
+void bullet_position_offset_add(void);
 void bullet_fire256_loop2_double();
 void bullet_fire256_loop2_3way();
 void bullet_fire256_direct(void);
@@ -36,7 +36,7 @@ void bullet_type_setup_31(void);
 extern u16 g_frame_mod2;
 extern u16 g_bullet_count;
 
-void func_00125590(u16 arg0) {
+void pickup_draw_alternating(u16 arg0) {
     extern void entity_draw_with_special_items(u16);
     if (g_bullet_count >= 0x34) {
         reg_d0.w = 1;
@@ -50,7 +50,7 @@ void func_00125590(u16 arg0) {
 }
 
 
-void func_001255F0(void) {
+void pickup_draw_when_crowded(void) {
     s32 entity_draw_with_special_items();
     u16 t;
 
@@ -77,7 +77,7 @@ call:
 
 extern u16 g_side_scroll_x[];
 
-void func_001256C0(void) {
+void pickup_bounds_check(void) {
     reg_d0.h[1] = ENTITY(reg_a6)->y.h;
     reg_d0.h[0] = ENTITY(reg_a6)->x.h;
     reg_tmp1.w = 0;
@@ -110,7 +110,7 @@ void func_001256C0(void) {
 }
 
 extern u16 g_enemies_stopped;
-void func_001257B0(void) {
+void pickup_follow_layer_b(void) {
     if (g_enemies_stopped == 0) {
         reg_d0.h[0] = g_layer_b_shift[0];
         *(u16 *)(reg_a6 + 2) += reg_d0.h[0];
@@ -170,7 +170,7 @@ void p2_stage_stars_small_add(void) {
 
 extern u16 g_frame_mod8;
 
-void func_00125930(void) {
+void pickup_accelerate(void) {
     s32 velocity_from_direction();
     if (g_frame_mod8 == 0) {
         if (g_enemies_stopped == 0) {
@@ -193,7 +193,7 @@ void func_00125930(void) {
     ENTITY(reg_a6)->y.h += reg_d2.h[0];
 }
 
-void func_00125A00(void) {
+void pickup_spin_frames_0(void) {
     ENTITY(reg_a6)->hp.b[1] -= 1;
     if ((s8) ENTITY(reg_a6)->hp.b[1] < 0) {
         ENTITY(reg_a6)->hp.b[1] = (u8) ENTITY(reg_a6)->hp.b[0];
@@ -211,7 +211,7 @@ void func_00125A00(void) {
     }
 }
 
-void func_00125AA0(void) {
+void pickup_spin_frames_1(void) {
     ENTITY(reg_a6)->hp.b[1] -= 1;
     if ((s8) ENTITY(reg_a6)->hp.b[1] < 0) {
         ENTITY(reg_a6)->hp.b[1] = (u8) ENTITY(reg_a6)->hp.b[0];
@@ -229,7 +229,7 @@ void func_00125AA0(void) {
     }
 }
 
-void func_00125B40(void) {
+void pickup_spin_frames_2(void) {
     ENTITY(reg_a6)->hp.b[1] -= 1;
     if ((s8) ENTITY(reg_a6)->hp.b[1] < 0) {
         ENTITY(reg_a6)->hp.b[1] = (u8) ENTITY(reg_a6)->hp.b[0];
@@ -247,7 +247,7 @@ void func_00125B40(void) {
     }
 }
 
-void func_00125BE0(void) {
+void pickup_spin_frames_3(void) {
     ENTITY(reg_a6)->hp.b[1] -= 1;
     if ((s8) ENTITY(reg_a6)->hp.b[1] < 0) {
         ENTITY(reg_a6)->hp.b[1] = (u8) ENTITY(reg_a6)->hp.b[0];
@@ -266,14 +266,14 @@ void func_00125BE0(void) {
 }
 
 void velocity_from_dir256(void);
-void func_00202760(void);
+void direction256_to_entity(void);
 
-void func_00125C80(void) {
+void pickup_home_on_target(void) {
     if (ENTITY(reg_a6)->misc.b.user == 0) {
         reg_tmp.h[1] = *(u16 *)(reg_a6 + 0x24);
         reg_tmp.h[0] = *(u16 *)(reg_a6 + 0x26);
         reg_a0 = (u8 *)reg_tmp.w;
-        func_00202760();
+        direction256_to_entity();
         ENTITY(reg_a6)->move.b.dir = reg_d1.b[0];
         reg_d0.w = 0x40;
         velocity_from_dir256();
@@ -290,7 +290,7 @@ void func_00125C80(void) {
             bullet_release();
             return;
         }
-        func_00202760();
+        direction256_to_entity();
         if (ENTITY(reg_a6)->move.b.dir != reg_d1.b[0]) {
             ENTITY(reg_a6)->move.b.dir = reg_d1.b[0];
             reg_d0.w = 0x40;
@@ -307,14 +307,14 @@ void func_00125C80(void) {
 
 extern u16 g_bee_value_step;
 extern u16 g_stage_bees_collected;
-extern u8 D_002BF4F0[];
-void func_00125DE0(void) {
+extern u8 g_pickups[];
+void pickups_clear(void) {
     s32 var_a1;
     u8 *temp_a2;
 
     var_a1 = 0;
     do {
-        temp_a2 = D_002BF4F0 + var_a1;
+        temp_a2 = g_pickups + var_a1;
         (*(s8 *)((u8 *)(temp_a2) + (0))) = 0;
         var_a1 += 8;
         (*(s8 *)((u8 *)(temp_a2) + (1))) = 0;
@@ -366,42 +366,42 @@ void bee_counts_reset(void) {
 }
 
 
-void func_00125EB0(void) {
+void pickup_spawn_variant_here(void) {
     reg_d1.w = 0;
-    func_00125EC0();
+    pickup_spawn_variant();
 }
 
-void func_00125EC0(void) {
+void pickup_spawn_variant(void) {
     reg_d2.h[0] = (u8)reg_d2.h[0];
     reg_d2.h[0] <<= 2;
-    func_00125F00();
+    pickup_spawn();
 }
 
 
-void func_00125EE0(void) {
+void pickup_spawn_here(void) {
     reg_d1.w = 0;
-    func_00125EF0();
+    pickup_spawn_plain();
 }
 
 
-void func_00125EF0(void) {
+void pickup_spawn_plain(void) {
     reg_d2.sw = 0;
-    func_00125F00();
+    pickup_spawn();
 }
 
 extern u8 *D_0028DE8C;
 extern u32 D_0028DE90;
 
-void func_00125F00(void) {
+void pickup_spawn(void) {
     u32 tmp;
 
     D_0028DE90 = reg_d7.w;
     D_0028DE8C = reg_a0;
-    reg_a0 = (u8 *) ((u16 *)D_002BF4F0);
+    reg_a0 = (u8 *) ((u16 *)g_pickups);
     reg_d7.h[0] = 0x45;
 loop_1:
     if (*(u16 *) reg_a0 != 0) goto next_1;
-    func_00126F10();
+    pickup_spawn_init();
     cond_flag = 0;
     return;
 next_1:
@@ -416,20 +416,20 @@ next_1:
 
 extern u16 g_side_scroll_step[];
 
-void func_00125FA0(void) {
+void pickups_update(void) {
     reg_d7.h[0] = g_bullet_count;
     if (reg_d7.h[0] != 0) {
-        reg_a6 = (u8 *)((s32 *)D_002BF4F0);
+        reg_a6 = (u8 *)((s32 *)g_pickups);
         reg_d7.w -= 1;
         reg_d6.h[0] = g_side_scroll_step[0];
-        func_00125FF0();
+        pickups_update_loop();
     }
 }
 
 typedef void (*Fn)();
 
 
-void func_00125FF0(void) {
+void pickups_update_loop(void) {
     u32 t1;
 
 loop_1:
@@ -442,7 +442,7 @@ loop_1:
     reg_d0.w = 0x7C;
     reg_d0.h[0] &= reg_d1.h[0];
     if ((s8) reg_d1.b[0] < 0) {
-        func_00127FA0();
+        pickup_collected_update();
         return;
     }
     ((Fn)*(u32 *)((u8 *)((u8 *)D_002693E0) + (reg_d0.h[0] & ~3)))();
@@ -457,7 +457,7 @@ loop_1:
 s32 sfx_score_item_pickup();
 s32 score_add_masked();
 
-void func_001260B0() {
+void pickup_collect_score_item() {
     reg_d0.w = 1;
     stage_stars_small_add();
     reg_tmp.w = 0x50000;
@@ -468,23 +468,23 @@ void func_001260B0() {
     score_add_masked();
     sfx_score_item_pickup();
     ENTITY(reg_a6)->flags.b[0] = 0x84;
-    func_00127CA0();
+    pickup_collected_begin();
 }
 
 
 void score_pickup_kind0(void) {
-    void func_00125590(void);
+    void pickup_draw_alternating(void);
     void bullet_release(void);
-    void func_00125930(void);
-    void func_00125A00(void);
+    void pickup_accelerate(void);
+    void pickup_spin_frames_0(void);
     if ((u16)(reg_d1.h[0] &= 0x1800) != 0) {
-        func_001260B0();
+        pickup_collect_score_item();
         return;
     }
-    func_00125A00();
-    func_00125930();
+    pickup_spin_frames_0();
+    pickup_accelerate();
     if (0 <= (s64)ENTITY(reg_a6)->y.sh) {
-        func_00125590();
+        pickup_draw_alternating();
     } else {
         bullet_release();
     }
@@ -505,7 +505,7 @@ void score_pickup_bee(void) {
     u32 t;
 
     if (reg_d1.w & 1) {
-        func_00128130();
+        pickup_collected_update_blinking();
         return;
     }
     reg_d0.w = 0;
@@ -519,7 +519,7 @@ next_2:
     func_00171100();
     sfx_bee_pickup();
     ENTITY(reg_a6)->flags.b[0] |= 1;
-    func_00127CA0();
+    pickup_collected_begin();
     return;
 block_1:
     bullet_release();
@@ -535,14 +535,14 @@ next_3:
     ENTITY(reg_a6)->draw.h = reg_tmp.h[1];
     ENTITY(reg_a6)->sprite.h = reg_tmp.h[0];
 next_4:
-    func_001256C0();
+    pickup_bounds_check();
     if (cond_flag != 0) goto block_1;
     reg_d0.w = 4;
     reg_d1.h[0] &= reg_d0.h[0];
     t = reg_d1.h[0] ^ reg_d0.h[0];
     reg_d1.h[0] = t;
     if (t & 0xFFFF) goto next_5;
-    func_001257B0();
+    pickup_follow_layer_b();
     reg_tmp.h[1] = *(u16 *)(reg_a6 + 0x28);
     reg_tmp.h[0] = *(u16 *)(reg_a6 + 0x2A);
     reg_a0 = (u8 *)(reg_tmp.w);
@@ -591,14 +591,14 @@ void score_pickup_ground_star_small(void) {
     score_add_masked();
     sfx_score_item_pickup();
     ENTITY(reg_a6)->flags.b[0] = 0x84;
-    func_00127CA0();
+    pickup_collected_begin();
     return;
 next_2:
     bullet_release();
     return;
 next_1:
-    func_001257B0();
-    func_001256C0();
+    pickup_follow_layer_b();
+    pickup_bounds_check();
     if (cond_flag != 0) goto next_2;
     ENTITY(reg_a6)->hp.b[1] -= 1;
     if ((s8) ENTITY(reg_a6)->hp.b[1] < 0) {
@@ -643,14 +643,14 @@ void score_pickup_ground_star_large(void) {
     score_add_masked();
     sfx_score_item_pickup_2();
     ENTITY(reg_a6)->flags.b[0] = 0x84;
-    func_00127CA0();
+    pickup_collected_begin();
     return;
 next_2:
     bullet_release();
     return;
 next_1:
-    func_001257B0();
-    func_001256C0();
+    pickup_follow_layer_b();
+    pickup_bounds_check();
     if (cond_flag != 0) goto next_2;
     ENTITY(reg_a6)->hp.b[1] -= 1;
     if ((s8) ENTITY(reg_a6)->hp.b[1] < 0) {
@@ -677,9 +677,9 @@ next_1:
 
 
 void score_pickup_air_star_medium(void) {
-    s32 func_00125590();
+    s32 pickup_draw_alternating();
     s32 bullet_release();
-    s32 func_00125930();
+    s32 pickup_accelerate();
     u32 temp_v0;
 
     temp_v0 = reg_d1.h[0] & 0x1800;
@@ -695,13 +695,13 @@ void score_pickup_air_star_medium(void) {
         score_add_masked();
         sfx_score_item_pickup();
         ENTITY(reg_a6)->flags.b[0] = 0x84;
-        func_00127CA0();
+        pickup_collected_begin();
         return;
     }
-    func_00125AA0();
-    func_00125930();
+    pickup_spin_frames_1();
+    pickup_accelerate();
     if (ENTITY(reg_a6)->y.sh >= -0x200) {
-        func_00125590();
+        pickup_draw_alternating();
         return;
     }
     bullet_release();
@@ -709,9 +709,9 @@ void score_pickup_air_star_medium(void) {
 
 
 void score_pickup_air_star_large(void) {
-    s32 func_00125590();
+    s32 pickup_draw_alternating();
     s32 bullet_release();
-    s32 func_00125930();
+    s32 pickup_accelerate();
     u32 temp_v0;
 
     temp_v0 = reg_d1.h[0] & 0x1800;
@@ -727,13 +727,13 @@ void score_pickup_air_star_large(void) {
         score_add_masked();
         sfx_score_item_pickup();
         ENTITY(reg_a6)->flags.b[0] = 0x84;
-        func_00127CA0();
+        pickup_collected_begin();
         return;
     }
-    func_00125B40();
-    func_00125930();
+    pickup_spin_frames_2();
+    pickup_accelerate();
     if (ENTITY(reg_a6)->y.sh >= -0x400) {
-        func_00125590();
+        pickup_draw_alternating();
         return;
     }
     bullet_release();
@@ -741,9 +741,9 @@ void score_pickup_air_star_large(void) {
 
 
 void score_pickup_air_star_huge(void) {
-    s32 func_00125590();
+    s32 pickup_draw_alternating();
     s32 bullet_release();
-    s32 func_00125930();
+    s32 pickup_accelerate();
     u32 temp_v0;
 
     temp_v0 = reg_d1.h[0] & 0x1800;
@@ -759,13 +759,13 @@ void score_pickup_air_star_huge(void) {
         score_add_masked();
         sfx_score_item_pickup_2();
         ENTITY(reg_a6)->flags.b[0] = 0x84;
-        func_00127CA0();
+        pickup_collected_begin();
         return;
     }
-    func_00125BE0();
-    func_00125930();
+    pickup_spin_frames_3();
+    pickup_accelerate();
     if (ENTITY(reg_a6)->y.sh >= -0x600) {
-        func_00125590();
+        pickup_draw_alternating();
         return;
     }
     bullet_release();
@@ -774,7 +774,7 @@ void score_pickup_air_star_huge(void) {
 
 void score_pickup_p1_homing_star_small() {
     s32 bullet_release();
-    s32 func_00125A00();
+    s32 pickup_spin_frames_0();
     if (reg_d1.w & 0x1000) {
         reg_d0.w = 1;
         p1_stage_stars_small_add();
@@ -788,9 +788,9 @@ void score_pickup_p1_homing_star_small() {
         bullet_release();
         return;
     }
-    func_00125C80();
-    func_00125A00();
-    func_001255F0();
+    pickup_home_on_target();
+    pickup_spin_frames_0();
+    pickup_draw_when_crowded();
 }
 
 void score_pickup_p1_homing_star_medium() {
@@ -808,9 +808,9 @@ void score_pickup_p1_homing_star_medium() {
         bullet_release();
         return;
     }
-    func_00125C80();
-    func_00125AA0();
-    func_001255F0();
+    pickup_home_on_target();
+    pickup_spin_frames_1();
+    pickup_draw_when_crowded();
 }
 
 void score_pickup_p1_homing_star_large() {
@@ -828,9 +828,9 @@ void score_pickup_p1_homing_star_large() {
         bullet_release();
         return;
     }
-    func_00125C80();
-    func_00125B40();
-    func_001255F0();
+    pickup_home_on_target();
+    pickup_spin_frames_2();
+    pickup_draw_when_crowded();
 }
 
 void score_pickup_p1_homing_star_huge() {
@@ -848,15 +848,15 @@ void score_pickup_p1_homing_star_huge() {
         bullet_release();
         return;
     }
-    func_00125C80();
-    func_00125BE0();
-    func_001255F0();
+    pickup_home_on_target();
+    pickup_spin_frames_3();
+    pickup_draw_when_crowded();
 }
 
 
 void score_pickup_p2_homing_star_small() {
     s32 bullet_release();
-    s32 func_00125A00();
+    s32 pickup_spin_frames_0();
     if (reg_d1.w & 0x800) {
         reg_d0.w = 1;
         p2_stage_stars_small_add();
@@ -870,9 +870,9 @@ void score_pickup_p2_homing_star_small() {
         bullet_release();
         return;
     }
-    func_00125C80();
-    func_00125A00();
-    func_001255F0();
+    pickup_home_on_target();
+    pickup_spin_frames_0();
+    pickup_draw_when_crowded();
 }
 
 void score_pickup_p2_homing_star_medium() {
@@ -890,9 +890,9 @@ void score_pickup_p2_homing_star_medium() {
         bullet_release();
         return;
     }
-    func_00125C80();
-    func_00125AA0();
-    func_001255F0();
+    pickup_home_on_target();
+    pickup_spin_frames_1();
+    pickup_draw_when_crowded();
 }
 
 void score_pickup_p2_homing_star_large() {
@@ -910,9 +910,9 @@ void score_pickup_p2_homing_star_large() {
         bullet_release();
         return;
     }
-    func_00125C80();
-    func_00125B40();
-    func_001255F0();
+    pickup_home_on_target();
+    pickup_spin_frames_2();
+    pickup_draw_when_crowded();
 }
 
 void score_pickup_p2_homing_star_huge() {
@@ -930,14 +930,14 @@ void score_pickup_p2_homing_star_huge() {
         bullet_release();
         return;
     }
-    func_00125C80();
-    func_00125BE0();
-    func_001255F0();
+    pickup_home_on_target();
+    pickup_spin_frames_3();
+    pickup_draw_when_crowded();
 }
 
 extern u32 D_0028DE94;
 
-void func_00126ED0(void) {
+void pickup_spawn_cancel(void) {
     reg_d1.w = D_0028DE94;
     g_bullet_count -= 1;
     (*(s16 *)((u8 *)(reg_a0) + (-6))) = 0;
@@ -948,12 +948,12 @@ void func_00126ED0(void) {
 
 extern u8 entity_draw_layer_routines_as_u8_a[];
 
-void func_00126F10(void) {
+void pickup_spawn_init(void) {
     u8 *save_a1;
 
-    reg_a3 = (u8 *)((u8 *)D_002695E0);
+    reg_a3 = (u8 *)((u8 *)pickup_init_routines);
     g_bullet_count += 1;
-    reg_a3 = *(u8 **) (((u8 *)D_002695E0) + (reg_d0.h[0] & ~3));
+    reg_a3 = *(u8 **) (((u8 *)pickup_init_routines) + (reg_d0.h[0] & ~3));
     *(u16 *) reg_a0 = reg_d0.h[0];
     *(u16 *) reg_a0 |= 0x8000;
     reg_a0 += 2;
@@ -975,7 +975,7 @@ void func_00126F10(void) {
     reg_tmp1.w += reg_tmp.w;
     reg_d1.h[0] += 0xAC00;
     if (reg_tmp1.h[1] != 0) {
-        func_00126ED0();
+        pickup_spawn_cancel();
         return;
     }
     reg_tmp.w = 0;
@@ -989,7 +989,7 @@ void func_00126F10(void) {
     reg_d1.h[0] += 0x6000;
     reg_tmp1.w += (s32) reg_tmp.w;
     if (reg_tmp1.h[1] != 0) {
-        func_00126ED0();
+        pickup_spawn_cancel();
         return;
     }
     reg_d1.w = D_0028DE94;
@@ -1039,9 +1039,9 @@ void func_00126F10(void) {
 }
 
 s32 rng_next_unsigned();
-extern u16 D_002695D0[];
+extern u16 pickup_start_offsets_3[];
 
-void func_00127310(void) {
+void pickup_init_scatter_3(void) {
     u8 *sa1;
 
     reg_tmp.w = reg_d0.w;
@@ -1053,7 +1053,7 @@ void func_00127310(void) {
     reg_d0.h[0] &= 0xE;
     sa1 = reg_a1;
     reg_d1.w = 0;
-    reg_a1 = (u8 *)D_002695D0;
+    reg_a1 = (u8 *)pickup_start_offsets_3;
     reg_a1 += reg_d0.h[0];
     reg_d1.h[0] = *(u16 *)reg_a1;
     reg_a1 = sa1;
@@ -1062,19 +1062,19 @@ void func_00127310(void) {
     reg_tmp1.w += reg_d1.w;
     *(u16 *)(reg_a0 + 0xA) = reg_tmp1.h[1];
     *(u16 *)(reg_a0 + 0xC) = reg_tmp1.h[0];
-    func_001273D0();
+    pickup_init_jitter_small();
 }
 
-s32 func_00201270();
-void func_001273D0(void) {
-    func_00201270();
+s32 rng_next_0_to_3();
+void pickup_init_jitter_small(void) {
+    rng_next_0_to_3();
     reg_d0.h[0] >>= 1;
-    func_00127400();
+    pickup_init_jitter();
 }
 
 s32 rng_next_bit();
 
-void func_00127400(void) {
+void pickup_init_jitter(void) {
     s32 velocity_from_direction();
     u32 save_d0;
     u32 save_d2;
@@ -1088,7 +1088,7 @@ void func_00127400(void) {
     rng_next_bit();
     reg_d0.h[0] += 1;
     reg_d1.h[0] = reg_d0.h[0];
-    func_00201270();
+    rng_next_0_to_3();
     reg_d0.b[0] -= reg_d1.b[0];
     *(u8 *)(reg_a0 + 0x1A) += reg_d0.b[0];
     temp_a1 = (u8 *)(reg_a0);
@@ -1117,7 +1117,7 @@ void func_00127400(void) {
 
 extern void rng_next(void);
 
-void func_00127530(void) {
+void pickup_init_spread(void) {
     reg_tmp.w = reg_d0.w;
     reg_d0.h[1] = reg_d0.h[0];
     reg_d7.w = reg_d1.w;
@@ -1129,17 +1129,17 @@ void func_00127530(void) {
     }
     reg_d0.h[0] = (s8)reg_d0.b[0];
     reg_d0.h[0] >>= 1;
-    func_00127400();
+    pickup_init_jitter();
 }
 
-void func_001275B0(void) {
+void pickup_init_timer(void) {
     *(u16 *)((u8 *)((void *)reg_a0) + 0x1E) = 0x9601;
     cond_flag = 0;
 }
 
 s32 rng_next_masked();
 
-void func_001275D0(void) {
+void pickup_init_random_delay_a(void) {
     reg_d7.w = reg_d0.w;
     rng_next_masked();
     reg_d0.h[0] &= 0x1F;
@@ -1149,7 +1149,7 @@ void func_001275D0(void) {
     reg_d0.w = reg_d7.w;
 }
 
-void func_00127630(void) {
+void pickup_init_random_delay_b(void) {
     reg_d7.w = reg_d0.w;
     rng_next_masked();
     reg_d0.h[0] &= 0x1F;
@@ -1160,111 +1160,111 @@ void func_00127630(void) {
 }
 
 
-void func_00127690(void) {
-    func_00127530();
+void pickup_init_spread_reset(void) {
+    pickup_init_spread();
     *(s8 *)reg_a0 = 0;
     *(u8 *)(reg_a0 + 0x1B) += 5;
     cond_flag = 0;
 }
 
-void func_001276D0(void) {
-    func_00127530();
+void pickup_init_spread_a(void) {
+    pickup_init_spread();
     *(u8 *)(reg_a0 + 0x1B) += 5;
     cond_flag = 0;
 }
 
-void func_00127700(void) {
-    func_00127530();
+void pickup_init_spread_b(void) {
+    pickup_init_spread();
     *(u8 *)(reg_a0 + 0x1B) += 5;
     cond_flag = 0;
 }
 
-void func_00127730(void) {
-    func_00127530();
+void pickup_init_spread_c(void) {
+    pickup_init_spread();
     *(u8 *)(reg_a0 + 0x1B) += 5;
     cond_flag = 0;
 }
 
 extern s16 g_player2[56];
 
-void func_00127760(void) {
-    reg_a3 = ((u8 *)D_002695D0);
+void pickup_init_to_player2_offsets_3(void) {
+    reg_a3 = ((u8 *)pickup_start_offsets_3);
     reg_tmp.w = (u32) ((u8 *)g_player2);
     *(u16 *)(reg_a0 + 0x24) = (u16) reg_tmp.h[1];
     *(u16 *)(reg_a0 + 0x26) = (u16) reg_tmp.h[0];
-    func_001278D0();
+    pickup_init_to_target();
 }
 
-extern u16 D_002695A0[];
+extern u16 pickup_start_offsets_0[];
 
-void func_001277A0(void) {
-    reg_a3 = ((u8 *)D_002695A0);
+void pickup_init_to_player2_offsets_0(void) {
+    reg_a3 = ((u8 *)pickup_start_offsets_0);
     reg_tmp.w = (u32) ((u8 *)g_player2);
     *(u16 *)(reg_a0 + 0x24) = (u16) reg_tmp.h[1];
     *(u16 *)(reg_a0 + 0x26) = (u16) reg_tmp.h[0];
-    func_001278D0();
+    pickup_init_to_target();
 }
 
-extern u16 D_002695B0[];
+extern u16 pickup_start_offsets_1[];
 
-void func_001277E0(void) {
-    reg_a3 = ((u8 *)D_002695B0);
+void pickup_init_to_player2_offsets_1(void) {
+    reg_a3 = ((u8 *)pickup_start_offsets_1);
     reg_tmp.w = (u32) ((u8 *)g_player2);
     *(u16 *)(reg_a0 + 0x24) = (u16) reg_tmp.h[1];
     *(u16 *)(reg_a0 + 0x26) = (u16) reg_tmp.h[0];
-    func_001278D0();
+    pickup_init_to_target();
 }
 
-extern u16 D_002695C0[];
+extern u16 pickup_start_offsets_2[];
 
-void func_00127820(void) {
-    reg_a3 = ((u8 *)D_002695C0);
+void pickup_init_to_player2_offsets_2(void) {
+    reg_a3 = ((u8 *)pickup_start_offsets_2);
     reg_tmp.w = (u32) ((u8 *)g_player2);
     *(u16 *)(reg_a0 + 0x24) = (u16) reg_tmp.h[1];
     *(u16 *)(reg_a0 + 0x26) = (u16) reg_tmp.h[0];
-    func_001278D0();
+    pickup_init_to_target();
 }
 
 
 
-void func_00127860(void) {
-    reg_a3 = (u8 *)D_002695D0;
-    func_001278A0();
+void pickup_init_to_player1_offsets_3(void) {
+    reg_a3 = (u8 *)pickup_start_offsets_3;
+    pickup_init_to_player1();
 }
 
-extern u16 D_002695A0[];
+extern u16 pickup_start_offsets_0[];
 
 
-void func_00127870(void) {
-    reg_a3 = (u8 *)D_002695A0;
-    func_001278A0();
+void pickup_init_to_player1_offsets_0(void) {
+    reg_a3 = (u8 *)pickup_start_offsets_0;
+    pickup_init_to_player1();
 }
 
-extern u16 D_002695B0[];
+extern u16 pickup_start_offsets_1[];
 
 
-void func_00127880(void) {
-    reg_a3 = (u8 *)D_002695B0;
-    func_001278A0();
+void pickup_init_to_player1_offsets_1(void) {
+    reg_a3 = (u8 *)pickup_start_offsets_1;
+    pickup_init_to_player1();
 }
 
-extern u16 D_002695C0[];
+extern u16 pickup_start_offsets_2[];
 
-void func_00127890(void)
+void pickup_init_to_player1_offsets_2(void)
 {
-    reg_a3 = (u8 *)D_002695C0;
-    func_001278A0();
+    reg_a3 = (u8 *)pickup_start_offsets_2;
+    pickup_init_to_player1();
 }
 
 extern s16 g_player1[56];
-void func_001278A0(void) {
+void pickup_init_to_player1(void) {
     reg_tmp.w = (u32)((u8 *)g_player1);
     *(u16 *)(reg_a0 + 0x24) = reg_tmp.h[1];
     *(u16 *)(reg_a0 + 0x26) = reg_tmp.h[0];
-    func_001278D0();
+    pickup_init_to_target();
 }
 
-void func_001278D0(void) {
+void pickup_init_to_target(void) {
     reg_d7.h[0] &= 0xF;
     *(u8 *)(reg_a0 + 0x1B) = (u8) reg_d7.b[0];
     *(s8 *)(reg_a0 + 0x1F) = 0;
@@ -1281,7 +1281,7 @@ void func_001278D0(void) {
     reg_d0.w = reg_d7.w;
 }
 
-void func_001279A0(void) {
+void pickup_init_scatter_0(void) {
     u16 temp_a1;
     temp_a1 = reg_d0.h[0];
     reg_tmp.w = reg_d0.w;
@@ -1290,7 +1290,7 @@ void func_001279A0(void) {
     reg_d0.h[0] = reg_tmp.h[1];
     *(s16 *)(reg_a0 + 0x1A) = 0x420;
     rng_next_unsigned();
-    reg_a3 = (u8 *)(D_002695A0);
+    reg_a3 = (u8 *)(pickup_start_offsets_0);
     reg_d0.h[0] &= 0xE;
     reg_d1.w = 0;
     reg_d1.h[0] = (reg_d0.h[0] != 0) ? *(u16 *)((u8 *)reg_a3 + ((s16)reg_d0.h[0] & ~1)) : *(u16 *)reg_a3;
@@ -1299,12 +1299,12 @@ void func_001279A0(void) {
     reg_tmp1.w = (s32) ((s32) reg_tmp1.w + reg_d1.w);
     *(u16 *)(reg_a0 + 0xA) = (u16) reg_tmp1.h[1];
     *(u16 *)(reg_a0 + 0xC) = reg_tmp1.h[0];
-    func_001273D0();
+    pickup_init_jitter_small();
     *(u16 *)reg_a0 &= 0xFF83;
     *(u16 *)reg_a0 |= 0x14;
 }
 
-void func_00127AA0(void) {
+void pickup_init_scatter_1(void) {
     u16 temp_a1;
     temp_a1 = reg_d0.h[0];
     reg_tmp.w = reg_d0.w;
@@ -1313,7 +1313,7 @@ void func_00127AA0(void) {
     reg_d0.h[0] = reg_tmp.h[1];
     *(s16 *)(reg_a0 + 0x1A) = 0x420;
     rng_next_unsigned();
-    reg_a3 = (u8 *)(D_002695B0);
+    reg_a3 = (u8 *)(pickup_start_offsets_1);
     reg_d0.h[0] &= 0xE;
     reg_d1.w = 0;
     reg_d1.h[0] = (reg_d0.h[0] != 0) ? *(u16 *)((u8 *)reg_a3 + ((s16)reg_d0.h[0] & ~1)) : *(u16 *)reg_a3;
@@ -1322,12 +1322,12 @@ void func_00127AA0(void) {
     reg_tmp1.w = (s32) ((s32) reg_tmp1.w + reg_d1.w);
     *(u16 *)(reg_a0 + 0xA) = (u16) reg_tmp1.h[1];
     *(u16 *)(reg_a0 + 0xC) = reg_tmp1.h[0];
-    func_001273D0();
+    pickup_init_jitter_small();
     *(u16 *)reg_a0 &= 0xFF83;
     *(u16 *)reg_a0 |= 0x18;
 }
 
-void func_00127BA0(void) {
+void pickup_init_scatter_2(void) {
     u16 temp_a1;
     temp_a1 = reg_d0.h[0];
     reg_tmp.w = reg_d0.w;
@@ -1336,7 +1336,7 @@ void func_00127BA0(void) {
     reg_d0.h[0] = reg_tmp.h[1];
     *(s16 *)(reg_a0 + 0x1A) = 0x420;
     rng_next_unsigned();
-    reg_a3 = (u8 *)(D_002695C0);
+    reg_a3 = (u8 *)(pickup_start_offsets_2);
     reg_d0.h[0] &= 0xE;
     reg_d1.w = 0;
     reg_d1.h[0] = (reg_d0.h[0] != 0) ? *(u16 *)((u8 *)reg_a3 + ((s16)reg_d0.h[0] & ~1)) : *(u16 *)reg_a3;
@@ -1345,7 +1345,7 @@ void func_00127BA0(void) {
     reg_tmp1.w = (s32) ((s32) reg_tmp1.w + reg_d1.w);
     *(u16 *)(reg_a0 + 0xA) = (u16) reg_tmp1.h[1];
     *(u16 *)(reg_a0 + 0xC) = reg_tmp1.h[0];
-    func_001273D0();
+    pickup_init_jitter_small();
     *(u16 *)reg_a0 &= 0xFF83;
     *(u16 *)reg_a0 |= 0x1C;
 }
@@ -1353,7 +1353,7 @@ void func_00127BA0(void) {
 void rng_next(void);
 extern u8 D_00269708[];
 
-void func_00127CA0(void) {
+void pickup_collected_begin(void) {
     void velocity_from_direction(void);
     reg_d0.h[1] = ENTITY(reg_a6)->hit_y_plus.h;
     reg_d0.h[0] = ENTITY(reg_a6)->hit_y_minus.h;
@@ -1417,7 +1417,7 @@ void func_00127CA0(void) {
 
 void entity_draw_layer5_zoom(void);
 
-void func_00127FA0(void) {
+void pickup_collected_update(void) {
     u32 sd6;
     u8 t;
     u32 t1;
@@ -1465,12 +1465,12 @@ block_4:
     t1 = reg_d7.h[0] - 1;
     reg_d7.h[0] = t1;
     if (((s64)((s64)(u16)t1 << 0x30) >> 0x30) >= 0) {
-        func_00125FF0();
+        pickups_update_loop();
     }
 }
 
 
-void func_00128130(void) {
+void pickup_collected_update_blinking(void) {
     u32 sd6;
     u8 t;
 
@@ -1514,9 +1514,9 @@ block_1:
     reg_d1.h[0] = *(u16 *)(reg_a6 + 4);
     reg_d1.h[0] -= *(u16 *)(reg_a6 + 8);
     reg_d1.h[1] += *(u16 *)(reg_a6 + 6);
-    func_00128320();
+    pickup_draw_value_large();
     if (*(u8 *)(reg_a6 + 1) & 0x20) {
-        func_001285A0();
+        pickup_draw_value();
     }
     return;
 block_3:
@@ -1527,7 +1527,7 @@ void sprite_draw_with_special_items_keep(void);
 extern u16 g_loop;
 extern u16 g_stage;
 
-void func_00128320(void) {
+void pickup_draw_value_large(void) {
     void sprite_draw_with_special_items(void);
     u32 sd6;
     u32 sd7;
@@ -1595,7 +1595,7 @@ void func_00128320(void) {
 
 extern u32 D_002697E0[];
 
-void func_001285A0(void) {
+void pickup_draw_value(void) {
     s32 sprite_draw_with_special_items();
     u16 temp_a2;
     u16 temp_a3;
@@ -1625,14 +1625,14 @@ s32 death_func_001271E0(void) {
 }
 #endif
 
-void func_00128640(void) {
+void bullet_slot_reset(void) {
     *(u16 *)reg_a6 = 0;
     *(u16 *)(reg_a6 + 2) = 0xFFFF;
 }
 
 extern u8 g_bullets[];
 
-void func_00128660(void) {
+void bullets_clear(void) {
     memset(g_bullets, 0, MAIN_OR_DEATH_LABEL(0x3494, 0x10694));
     reg_a0 = g_bullets + 2;
     reg_d0.h[0] = MAIN_OR_DEATH_LABEL(0xD1, 0x419);
@@ -1643,7 +1643,7 @@ void func_00128660(void) {
 }
 
 
-void func_001286D0(void) {
+void bullet_fire_loop2_double_from_task(void) {
     reg_tmp1.w = reg_d1.w;
     reg_d1.h[1] = reg_tmp1.h[0];
     reg_d1.h[0] = reg_tmp1.h[1];
@@ -1676,7 +1676,7 @@ void bullet_fire_loop2(void) {
     reg_d1.h[0] = 0x81;
     reg_d1.h[1] = reg_tmp1.h[0];
     if ((reg_d1.b[0] &= *(u8 *)(reg_a5 + 0xC)) != 0) {
-        func_001286D0();
+        bullet_fire_loop2_double_from_task();
         return;
     }
     reg_tmp1.w = reg_d1.w;
@@ -1798,9 +1798,9 @@ extern u16 g_hyper_bullet_speed;
 extern u8 D_0028E2E4;
 extern u16 g_bullet_speed_bonus;
 extern u16 g_bullets_blocked;
-extern s16 D_00299768[];
-extern s16 D_0029976A[];
-extern u16 D_0029976C[];
+extern s16 g_bullet_limit_raised_1[];
+extern s16 g_bullet_limit_raised_2[];
+extern u16 g_bullet_limit_raised_3[];
 extern u16 D_0029976E[];
 extern u16 g_bomb_entities[];
 #ifdef DEATH_LABEL
@@ -1833,15 +1833,15 @@ void bullet_spawn(void) {
 next_1:
     reg_a0 = (u8 *)g_bullets;
     reg_d7.w = MAIN_OR_DEATH_LABEL(0xD, 0x45);
-    if (((u16 *)D_00299768)[0] == 0) {
+    if (((u16 *)g_bullet_limit_raised_1)[0] == 0) {
         goto loop_2;
     }
     reg_d7.h[0] = MAIN_OR_DEATH_LABEL(0x15, 0x6D);
-    if (((u16 *)D_0029976A)[0] == 0) {
+    if (((u16 *)g_bullet_limit_raised_2)[0] == 0) {
         goto loop_2;
     }
     reg_d7.h[0] = MAIN_OR_DEATH_LABEL(0x1F, 0x9F);
-    if (D_0029976C[0] == 0) {
+    if (g_bullet_limit_raised_3[0] == 0) {
         goto loop_2;
     }
     reg_d7.h[0] = MAIN_OR_DEATH_LABEL(0x25, 0xBD);
@@ -1942,12 +1942,12 @@ next_5:
     *(u8 *) (reg_a0 + 0x2B) = reg_d7.b[0];
     *(u8 *) (reg_a0 + 0x2A) = reg_d1.b[0];
     reg_d1.b[0] >>= 2;
-    func_00128F70();
+    bullet_position_offset_add();
 }
 
 extern u8 bullet_type_setup_routines[];
 
-void func_00128F70(void) {
+void bullet_position_offset_add(void) {
     if (reg_d3.w == 0) {
         goto next_1;
     }
@@ -1980,7 +1980,7 @@ next_2:
 }
 
 
-void func_00129070(void) {
+void bullet_fire256_loop2_double_from_task(void) {
     reg_tmp1.w = reg_d1.w;
     reg_d1.h[1] = reg_tmp1.h[0];
     reg_d1.h[0] = reg_tmp1.h[1];
@@ -2009,7 +2009,7 @@ void bullet_fire256_loop2(void) {
     reg_d1.h[0] = 0x81;
     reg_d1.h[1] = reg_tmp1.h[0];
     if ((reg_d1.b[0] &= *(u8 *)(reg_a5 + 0xC)) != 0) {
-        func_00129070();
+        bullet_fire256_loop2_double_from_task();
         return;
     }
     reg_tmp1.w = reg_d1.w;
@@ -2172,15 +2172,15 @@ void bullet_spawn256(void) {
 next_1:
     reg_a0 = (u8 *)g_bullets;
     reg_d7.w = MAIN_OR_DEATH_LABEL(0xD, 0x45);
-    if (((u16 *)D_00299768)[0] == 0) {
+    if (((u16 *)g_bullet_limit_raised_1)[0] == 0) {
         goto loop_2;
     }
     reg_d7.h[0] = MAIN_OR_DEATH_LABEL(0x15, 0x6D);
-    if (((u16 *)D_0029976A)[0] == 0) {
+    if (((u16 *)g_bullet_limit_raised_2)[0] == 0) {
         goto loop_2;
     }
     reg_d7.h[0] = MAIN_OR_DEATH_LABEL(0x1F, 0x9F);
-    if (D_0029976C[0] == 0) {
+    if (g_bullet_limit_raised_3[0] == 0) {
         goto loop_2;
     }
     reg_d7.h[0] = MAIN_OR_DEATH_LABEL(0x25, 0xBD);
@@ -2280,7 +2280,7 @@ next_5:
     *(u8 *) (reg_a0 + 0xA) = reg_d1.b[0];
     *(u8 *) (reg_a0 + 0x2B) = reg_d7.b[0];
     *(u8 *) (reg_a0 + 0x2A) = reg_d1.b[0];
-    func_00128F70();
+    bullet_position_offset_add();
 }
 
 extern s32 D_0028DEB0;
@@ -2377,7 +2377,7 @@ void bullet_type_setup_32(void) {
     reg_a1 = (u8 *)D_0028DEB0;
 }
 
-void func_00129B10(void) {
+void bullet_init_from_task(void) {
     *(u8 *)(reg_a0 + 0x1B) = (u8) *(u8 *)(reg_a5 + 2);
     *(u16 *)(reg_a0 + 0x1C) = (u16) reg_d4.h[1];
     *(u16 *)(reg_a0 + 0x1E) = (u16) reg_d4.h[0];
@@ -2407,16 +2407,16 @@ void bullet_type_setup_31(void) {
     reg_a1 = (u8 *)D_0028DEB0;
 }
 
-extern u16 D_00299764[];
+extern u16 g_bullet_cancel[];
 
 #ifdef DEATH_LABEL
 s32 death_func_00128A90();
 #endif
 
-void func_00129BE0(void) {
+void bullets_cancel_update(void) {
     u32 t;
 
-    if (D_00299764[0] == 0) {
+    if (g_bullet_cancel[0] == 0) {
         return;
     }
     reg_d0.h[0] = *(u16 *)(g_bullets + MAIN_OR_DEATH_LABEL(0x3486, 0x10686));
@@ -2425,15 +2425,15 @@ void func_00129BE0(void) {
     }
     reg_a6 = (u8 *)g_bullets;
     reg_d7.h[0] = MAIN_OR_DEATH_LABEL(0x45, 0x15D);
-    if (((u16 *)D_00299768)[0] == 0) {
+    if (((u16 *)g_bullet_limit_raised_1)[0] == 0) {
         goto loop_1;
     }
     reg_d7.h[0] = MAIN_OR_DEATH_LABEL(0x6D, 0x225);
-    if (((u16 *)D_0029976A)[0] == 0) {
+    if (((u16 *)g_bullet_limit_raised_2)[0] == 0) {
         goto loop_1;
     }
     reg_d7.h[0] = MAIN_OR_DEATH_LABEL(0x9F, 0x31F);
-    if (D_0029976C[0] == 0) {
+    if (g_bullet_limit_raised_3[0] == 0) {
         goto loop_1;
     }
     reg_d7.h[0] = MAIN_OR_DEATH_LABEL(0xBD, 0x3B5);
@@ -2445,9 +2445,9 @@ loop_1:
     if (0 > (s64) *(s8 *) (reg_a6 + 1)) {
         D_0028DEA4 = reg_d7.w;
         reg_d0.h[0] = *(u16 *)(g_bullets + MAIN_OR_DEATH_LABEL(0x3486, 0x10686));
-        MAIN_OR_DEATH_LABEL(func_00125EE0, death_func_00128A90)();
+        MAIN_OR_DEATH_LABEL(pickup_spawn_here, death_func_00128A90)();
         reg_d7.w = D_0028DEA4;
-        func_00128640();
+        bullet_slot_reset();
     }
     reg_a6 += 0x40;
     if ((s16)(--reg_d7.h[0]) >= 0) {
@@ -2458,15 +2458,15 @@ next_3:
     reg_a6 = (u8 *)g_bullets;
     reg_d2.w = 0x40;
     reg_d7.h[0] = MAIN_OR_DEATH_LABEL(0x45, 0x15D);
-    if (((u16 *)D_00299768)[0] == 0) {
+    if (((u16 *)g_bullet_limit_raised_1)[0] == 0) {
         goto loop_4;
     }
     reg_d7.h[0] = MAIN_OR_DEATH_LABEL(0x6D, 0x225);
-    if (((u16 *)D_0029976A)[0] == 0) {
+    if (((u16 *)g_bullet_limit_raised_2)[0] == 0) {
         goto loop_4;
     }
     reg_d7.h[0] = MAIN_OR_DEATH_LABEL(0x9F, 0x31F);
-    if (D_0029976C[0] == 0) {
+    if (g_bullet_limit_raised_3[0] == 0) {
         goto loop_4;
     }
     reg_d7.h[0] = MAIN_OR_DEATH_LABEL(0xBD, 0x3B5);
@@ -2560,45 +2560,45 @@ void (*entity_draw_layer_routines[8])() = {
 };
 
 void (*D_00269550[20])() = {
-    func_00127310,
-    func_001275B0,
-    func_001275D0,
-    func_00127630,
-    func_00127690,
-    func_001276D0,
-    func_00127700,
-    func_00127730,
-    func_00127860,
-    func_00127870,
-    func_00127880,
-    func_00127890,
-    func_00127760,
-    func_001277A0,
-    func_001277E0,
-    func_00127820,
-    func_001275B0,
-    func_001279A0,
-    func_00127AA0,
-    func_00127BA0,
+    pickup_init_scatter_3,
+    pickup_init_timer,
+    pickup_init_random_delay_a,
+    pickup_init_random_delay_b,
+    pickup_init_spread_reset,
+    pickup_init_spread_a,
+    pickup_init_spread_b,
+    pickup_init_spread_c,
+    pickup_init_to_player1_offsets_3,
+    pickup_init_to_player1_offsets_0,
+    pickup_init_to_player1_offsets_1,
+    pickup_init_to_player1_offsets_2,
+    pickup_init_to_player2_offsets_3,
+    pickup_init_to_player2_offsets_0,
+    pickup_init_to_player2_offsets_1,
+    pickup_init_to_player2_offsets_2,
+    pickup_init_timer,
+    pickup_init_scatter_0,
+    pickup_init_scatter_1,
+    pickup_init_scatter_2,
 };
 
-u16 D_002695A0[8] = {
+u16 pickup_start_offsets_0[8] = {
     0x0000, 0x0002, 0x0004, 0x0006, 0x0008, 0x000A, 0x000C, 0x000E,
 };
 
-u16 D_002695B0[8] = {
+u16 pickup_start_offsets_1[8] = {
     0x0000, 0x0002, 0x0004, 0x0006, 0x0008, 0x000A, 0x000C, 0x000E,
 };
 
-u16 D_002695C0[8] = {
+u16 pickup_start_offsets_2[8] = {
     0x0000, 0x0002, 0x0004, 0x0006, 0x0008, 0x000A, 0x000C, 0x000E,
 };
 
-u16 D_002695D0[8] = {
+u16 pickup_start_offsets_3[8] = {
     0x0000, 0x0002, 0x0004, 0x0006, 0x0008, 0x000A, 0x000C, 0x000E,
 };
 
-void *D_002695E0[20] = {
+void *pickup_init_routines[20] = {
     D_00269630,
     D_00269650,
     D_00269670,

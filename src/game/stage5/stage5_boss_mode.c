@@ -379,7 +379,7 @@ s32 sfx_explosion_extra_1();
 s32 sfx_explosion_boss();
 s32 func_001E1F30();
 s32 rng_next_unsigned();
-s32 func_00201270();
+s32 rng_next_0_to_3();
 s32 rng_next_word();
 s32 func_00211550();
 s32 vibration_start_pad1();
@@ -562,7 +562,7 @@ block_rts:
     EXPLOSION(reg_a0)->draw_layer = 0x10;
     EXPLOSION(reg_a0)->debris = 0;
     EXPLOSION(reg_a0)->debris_arg = 0x800;
-    func_00201270();
+    rng_next_0_to_3();
     reg_d0.b[0] += 3;
     EXPLOSION(reg_a0)->move.b.speed = (u8) reg_d0.b[0];
     rng_next_unsigned();
@@ -820,7 +820,7 @@ block_join:
         EXPLOSION(reg_a0)->draw_layer = 0x10;
         EXPLOSION(reg_a0)->debris = 0;
         EXPLOSION(reg_a0)->debris_arg = 0x800;
-        func_00201270();
+        rng_next_0_to_3();
         reg_d0.b[0] += 3;
         EXPLOSION(reg_a0)->move.b.speed = (u8) reg_d0.b[0];
         rng_next_unsigned();
@@ -857,9 +857,9 @@ s32 boss_animation_start();
 s32 music_play_bgm9();
 s32 stage5_boss_form3_take_hits();
 extern u16 g_true_last_boss;
-extern s16 D_00299768[];
-extern s16 D_0029976A[];
-extern u16 D_0029976C[];
+extern s16 g_bullet_limit_raised_1[];
+extern s16 g_bullet_limit_raised_2[];
+extern u16 g_bullet_limit_raised_3[];
 extern u16 D_0029976E[];
 
 #ifdef DEATH_LABEL
@@ -916,9 +916,9 @@ void stage5_boss_mode_form2_to_form3() {
             stage5_boss_shield_off();
             stage5_boss_form3_take_hits();
             stage5_boss_start_damage();
-            ((u16 *)D_00299768)[0] = 1;
-            ((u16 *)D_0029976A)[0] = 1;
-            D_0029976C[0] = 1;
+            ((u16 *)g_bullet_limit_raised_1)[0] = 1;
+            ((u16 *)g_bullet_limit_raised_2)[0] = 1;
+            g_bullet_limit_raised_3[0] = 1;
             D_0029976E[0] = 1;
             slowdown_turn_off();
             music_play_bgm9();

@@ -419,7 +419,7 @@ loop_6:
 }
 
 s32 rng_next_unsigned();
-s32 func_00201270();
+s32 rng_next_0_to_3();
 extern u16 D_002642C0[];
 extern u32 D_0028D9D0;
 
@@ -438,9 +438,9 @@ void stage5_boss_fire_form1_mouth_start(void) {
     if (0 > reg_d0.sb[0]) {
         MOUTH(reg_a4)->fixed_turn_left *= -1;
         MOUTH(reg_a4)->fixed_turn_right *= -1;
-        func_00201270();
+        rng_next_0_to_3();
         MOUTH(reg_a4)->fixed_turn_left += reg_d0.b[0];
-        func_00201270();
+        rng_next_0_to_3();
         MOUTH(reg_a4)->fixed_turn_right += reg_d0.b[0];
     }
     ENTITY(reg_a6)[1].misc.sb.user = 1;
@@ -666,7 +666,7 @@ void stage5_boss_fire_form1_arm_guns_fixed_start(void) {
     ARM_GUNS_B(reg_a4)->direction_right_bottom = (u8) reg_d0.b[0];
 }
 
-s32 func_00201100();
+s32 rng_next_d5();
 extern u8 D_00264160[];
 
 void stage5_boss_fire_form1_arm_guns_fixed(void) {
@@ -728,7 +728,7 @@ block_9:
                 reg_d5.h[0] += 0x7FFF + 0x7601;
                 if ((s32) reg_d5.h[0] <= (s32) reg_d7.h[0]) {
                     reg_d0.w += 0x100000;
-                    func_00201100();
+                    rng_next_d5();
                     reg_d5.b[0] = (u8) ((s8) reg_d5.b[0] >> 1);
                     reg_d1.b[0] += reg_d5.b[0];
                     bullet_fire256_fixed();
@@ -901,7 +901,7 @@ void stage5_boss_fire_form1_horn(void) {
         reg_d0.b[0] = HORN(reg_a4)->burst.t.count;
         t8 = HORN(reg_a4)->burst.t.reload;
         if (t8 == reg_d0.b[0]) {
-            func_00201270();
+            rng_next_0_to_3();
             HORN(reg_a4)->direction_shift = (u8) reg_d0.b[0];
         }
         reg_a0 = (u8 *)(g_player1);
@@ -1664,7 +1664,7 @@ next_1:
                 reg_d2.h[0] = ENTITY(reg_a6)->x.h;
                 reg_d3.w = 0xD8000000;
                 reg_d4.w = 0;
-                func_00201100();
+                rng_next_d5();
                 reg_d5.b[0] = (u8) ((s8) reg_d5.b[0] >> 1);
                 reg_d1.b[0] += reg_d5.b[0];
                 bullet_fire256_direct();
@@ -1935,7 +1935,7 @@ void stage5_boss_fire_form3_attack_b_start(void) {
     }
 }
 
-s32 func_00202A80();
+s32 nearest_player_distance();
 extern u16 g_enemy_signal_2;
 
 void stage5_boss_fire_form3_attack_b() {
@@ -1944,7 +1944,7 @@ void stage5_boss_fire_form3_attack_b() {
     u8 temp_v0;
 
     g_enemy_signal_2 = 0;
-    func_00202A80();
+    nearest_player_distance();
     if ((s32) reg_d0.h[0] < 0x2000) {
         g_enemy_signal_2 = 1;
     }
@@ -2123,7 +2123,7 @@ block_13:
     }
 }
 
-s32 func_00201230();
+s32 rng_next_0_to_2();
 extern u16 D_00264570[];
 extern u32 D_0028D9FC;
 
@@ -2145,7 +2145,7 @@ void stage5_boss_fire_form3_spiral_start(void) {
     if (0 > reg_d0.sb[0]) {
         FORM3_D(reg_a4)->turn *= -1;
     }
-    func_00201230();
+    rng_next_0_to_2();
     reg_d0.w = (u32) (s16) reg_d0.h[0];
     FORM3_D(reg_a4)->spin_step_add = (u16) reg_d0.h[0];
     reg_d0.h[0] += 2;

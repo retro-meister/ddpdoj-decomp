@@ -26,8 +26,8 @@ extern u16 D_0024EBC0[];
 extern u16 D_0024EDB0[];
 extern u16 D_0024EF30[];
 extern u16 debris_random_patterns[];
-extern u16 D_00250D20[];
-extern u16 D_00250E00[];
+extern u16 spark_spans_by_laser_power[];
+extern u16 spark_setup_laser[];
 extern u16 join_select_p1_table[];
 extern u16 join_select_p2_table[];
 extern u16 stage5_boss_flash_palettes_a[];
@@ -210,23 +210,23 @@ extern u16 debris_pattern_1[];
 extern u16 debris_pattern_2[];
 extern u16 debris_pattern_3[];
 extern u16 debris_pattern_4[];
-extern u16 D_00250DA0[];
-extern u16 D_00250DC0[];
-extern u16 D_00250DE0[];
-extern u16 D_00250E20[];
-extern u16 D_00250EB0[];
-extern u16 D_002515C0[];
-extern u16 D_002515D0[];
-extern u16 D_002515E0[];
-extern u16 D_002515F0[];
-extern u16 D_00251600[];
-extern u16 D_00251610[];
-extern u16 D_00251620[];
-extern u16 D_00251630[];
-extern u16 D_00251640[];
-extern u16 D_00251650[];
-extern u16 D_00251660[];
-extern u16 D_00251670[];
+extern u16 spark_frames_small_0[];
+extern u16 spark_frames_small_1[];
+extern u16 spark_frames_small_2[];
+extern u16 spark_frames_long_0[];
+extern u16 spark_frames_long_1[];
+extern u16 wreck_frames_00[];
+extern u16 wreck_frames_01[];
+extern u16 wreck_frames_02[];
+extern u16 wreck_frames_03[];
+extern u16 wreck_frames_04[];
+extern u16 wreck_frames_05[];
+extern u16 wreck_frames_06[];
+extern u16 wreck_frames_07[];
+extern u16 wreck_frames_08[];
+extern u16 wreck_frames_09[];
+extern u16 wreck_frames_10[];
+extern u16 wreck_frames_11[];
 extern u16 D_00251CE0[];
 extern u16 D_00251D10[];
 extern u16 D_00251D40[];
@@ -410,17 +410,17 @@ extern void bullet_type_setup_19(void);
 extern void bullet_type_setup_23(void);
 extern void bullet_type_setup_27(void);
 extern void bullet_type_setup_32(void);
-extern void func_00129B10(void);
+extern void bullet_init_from_task(void);
 extern void bullet_type_setup_30(void);
 extern void bullet_type_setup_31(void);
-extern void func_0012D940(void);
-extern void func_0012D960(void);
-extern void func_0012D980(void);
-extern void func_0012D990(void);
-extern void func_0012D9B0(void);
-extern void func_0012D9D0(void);
-extern void func_0012D9F0(void);
-extern void func_0012DA10(void);
+extern void velocity_octant_negate_y_swap(void);
+extern void velocity_octant_swap(void);
+extern void velocity_octant_keep(void);
+extern void velocity_octant_swap_negate_y(void);
+extern void velocity_octant_negate_y(void);
+extern void velocity_octant_swap_negate_both(void);
+extern void velocity_octant_negate_both(void);
+extern void velocity_octant_negate_x(void);
 extern void bullet_move_type_00(void);
 extern void bullet_move_type_01(void);
 extern void bullet_move_type_02(void);
@@ -639,7 +639,7 @@ void func_0018E5A0(void) {
     if (bullet_type_setup_routines[56] != 0x38) {
         printf("error! shot_para_tbl[56]\n");
     }
-    STORE_POINTER_DIRECT(bullet_type_setup_routines + 56, func_00129B10);
+    STORE_POINTER_DIRECT(bullet_type_setup_routines + 56, bullet_init_from_task);
     if (bullet_type_setup_routines[58] != 0x3a) {
         printf("error! shot_para_tbl[58]\n");
     }
@@ -672,7 +672,7 @@ void func_0018E5A0(void) {
     if (death_D_002506F0[0] != 0x48) {
         printf("error! shot_para_tbl[72]\n");
     }
-    STORE_POINTER_DIRECT(death_D_002506F0, func_00129B10);
+    STORE_POINTER_DIRECT(death_D_002506F0, bullet_init_from_task);
 #endif
     if (bullet_type_records[0] != 0x0) {
         printf("error! shot_tbl[0]\n");
@@ -1049,35 +1049,35 @@ void func_0018E5A0(void) {
     if (D_0024EF30[192] != 0x0) {
         printf("error! bull_spdjmp[0]\n");
     }
-    STORE_POINTER_DIRECT(D_0024EF30 + 192, func_0012D980);
+    STORE_POINTER_DIRECT(D_0024EF30 + 192, velocity_octant_keep);
     if (D_0024EF30[196] != 0x4) {
         printf("error! bull_spdjmp[4]\n");
     }
-    STORE_POINTER_DIRECT(D_0024EF30 + 196, func_0012D960);
+    STORE_POINTER_DIRECT(D_0024EF30 + 196, velocity_octant_swap);
     if (D_0024EF30[200] != 0x8) {
         printf("error! bull_spdjmp[8]\n");
     }
-    STORE_POINTER_DIRECT(D_0024EF30 + 200, func_0012D990);
+    STORE_POINTER_DIRECT(D_0024EF30 + 200, velocity_octant_swap_negate_y);
     if (D_0024EF30[204] != 0xc) {
         printf("error! bull_spdjmp[12]\n");
     }
-    STORE_POINTER_DIRECT(D_0024EF30 + 204, func_0012D9B0);
+    STORE_POINTER_DIRECT(D_0024EF30 + 204, velocity_octant_negate_y);
     if (D_0024EF30[208] != 0x10) {
         printf("error! bull_spdjmp[16]\n");
     }
-    STORE_POINTER_DIRECT(D_0024EF30 + 208, func_0012D9F0);
+    STORE_POINTER_DIRECT(D_0024EF30 + 208, velocity_octant_negate_both);
     if (D_0024EF30[212] != 0x14) {
         printf("error! bull_spdjmp[20]\n");
     }
-    STORE_POINTER_DIRECT(D_0024EF30 + 212, func_0012D9D0);
+    STORE_POINTER_DIRECT(D_0024EF30 + 212, velocity_octant_swap_negate_both);
     if (D_0024EF30[216] != 0x18) {
         printf("error! bull_spdjmp[24]\n");
     }
-    STORE_POINTER_DIRECT(D_0024EF30 + 216, func_0012D940);
+    STORE_POINTER_DIRECT(D_0024EF30 + 216, velocity_octant_negate_y_swap);
     if (D_0024EF30[220] != 0x1c) {
         printf("error! bull_spdjmp[28]\n");
     }
-    STORE_POINTER_DIRECT(D_0024EF30 + 220, func_0012DA10);
+    STORE_POINTER_DIRECT(D_0024EF30 + 220, velocity_octant_negate_x);
     if (explosion_scripts[0] != 0x0) {
         printf("error! exp_tbl[0]\n");
     }
@@ -1658,127 +1658,127 @@ void func_0018E5A0(void) {
         printf("error! hah_random_tbl[6]\n");
     }
     STORE_POINTER_DIRECT(debris_random_patterns + 6, debris_pattern_4);
-    if (D_00250D20[16] != 0x8) {
+    if (spark_spans_by_laser_power[16] != 0x8) {
         printf("error! tili_a[8]\n");
     }
-    STORE_POINTER_DIRECT(D_00250D20 + 16, D_00250DA0);
-    if (D_00250D20[32] != 0x8) {
+    STORE_POINTER_DIRECT(spark_spans_by_laser_power + 16, spark_frames_small_0);
+    if (spark_spans_by_laser_power[32] != 0x8) {
         printf("error! tili_a2[8]\n");
     }
-    STORE_POINTER_DIRECT(D_00250D20 + 32, D_00250DC0);
-    if (D_00250D20[48] != 0x8) {
+    STORE_POINTER_DIRECT(spark_spans_by_laser_power + 32, spark_frames_small_1);
+    if (spark_spans_by_laser_power[48] != 0x8) {
         printf("error! tili_a3[8]\n");
     }
-    STORE_POINTER_DIRECT(D_00250D20 + 48, D_00250DE0);
-    if (D_00250E00[8] != 0x8) {
+    STORE_POINTER_DIRECT(spark_spans_by_laser_power + 48, spark_frames_small_2);
+    if (spark_setup_laser[8] != 0x8) {
         printf("error! tili_b[8]\n");
     }
-    STORE_POINTER_DIRECT(D_00250E00 + 8, D_00250E20);
-    if (D_00250EB0[80] != 0x8) {
+    STORE_POINTER_DIRECT(spark_setup_laser + 8, spark_frames_long_0);
+    if (spark_frames_long_1[80] != 0x8) {
         printf("error! tili_d1[8]\n");
     }
-    STORE_POINTER_DIRECT(D_00250EB0 + 80, D_00250EB0);
-    if (D_00250EB0[96] != 0x8) {
+    STORE_POINTER_DIRECT(spark_frames_long_1 + 80, spark_frames_long_1);
+    if (spark_frames_long_1[96] != 0x8) {
         printf("error! tili_d2[8]\n");
     }
-    STORE_POINTER_DIRECT(D_00250EB0 + 96, D_00250EB0);
-    if (D_00250EB0[112] != 0x8) {
+    STORE_POINTER_DIRECT(spark_frames_long_1 + 96, spark_frames_long_1);
+    if (spark_frames_long_1[112] != 0x8) {
         printf("error! tili_d3[8]\n");
     }
-    STORE_POINTER_DIRECT(D_00250EB0 + 112, D_00250EB0);
-    if (D_00250EB0[128] != 0x8) {
+    STORE_POINTER_DIRECT(spark_frames_long_1 + 112, spark_frames_long_1);
+    if (spark_frames_long_1[128] != 0x8) {
         printf("error! tili_d4[8]\n");
     }
-    STORE_POINTER_DIRECT(D_00250EB0 + 128, D_00250EB0);
-    if (D_00250EB0[144] != 0x8) {
+    STORE_POINTER_DIRECT(spark_frames_long_1 + 128, spark_frames_long_1);
+    if (spark_frames_long_1[144] != 0x8) {
         printf("error! tili_d5[8]\n");
     }
-    STORE_POINTER_DIRECT(D_00250EB0 + 144, D_00250EB0);
-    if (D_00250EB0[160] != 0x8) {
+    STORE_POINTER_DIRECT(spark_frames_long_1 + 144, spark_frames_long_1);
+    if (spark_frames_long_1[160] != 0x8) {
         printf("error! tili_d6[8]\n");
     }
-    STORE_POINTER_DIRECT(D_00250EB0 + 160, D_00250EB0);
-    if (D_00250EB0[176] != 0x8) {
+    STORE_POINTER_DIRECT(spark_frames_long_1 + 160, spark_frames_long_1);
+    if (spark_frames_long_1[176] != 0x8) {
         printf("error! tili_d7[8]\n");
     }
-    STORE_POINTER_DIRECT(D_00250EB0 + 176, D_00250EB0);
-    if (D_00250EB0[192] != 0x8) {
+    STORE_POINTER_DIRECT(spark_frames_long_1 + 176, spark_frames_long_1);
+    if (spark_frames_long_1[192] != 0x8) {
         printf("error! tili_d8[8]\n");
     }
-    STORE_POINTER_DIRECT(D_00250EB0 + 192, D_00250EB0);
-    if (D_00250EB0[208] != 0x8) {
+    STORE_POINTER_DIRECT(spark_frames_long_1 + 192, spark_frames_long_1);
+    if (spark_frames_long_1[208] != 0x8) {
         printf("error! tili_d9[8]\n");
     }
-    STORE_POINTER_DIRECT(D_00250EB0 + 208, D_00250EB0);
-    if (D_00250EB0[224] != 0x8) {
+    STORE_POINTER_DIRECT(spark_frames_long_1 + 208, spark_frames_long_1);
+    if (spark_frames_long_1[224] != 0x8) {
         printf("error! tili_d10[8]\n");
     }
-    STORE_POINTER_DIRECT(D_00250EB0 + 224, D_00250EB0);
-    if (D_00250EB0[240] != 0x8) {
+    STORE_POINTER_DIRECT(spark_frames_long_1 + 224, spark_frames_long_1);
+    if (spark_frames_long_1[240] != 0x8) {
         printf("error! tili_d11[8]\n");
     }
-    STORE_POINTER_DIRECT(D_00250EB0 + 240, D_00250EB0);
-    if (D_00250EB0[256] != 0x8) {
+    STORE_POINTER_DIRECT(spark_frames_long_1 + 240, spark_frames_long_1);
+    if (spark_frames_long_1[256] != 0x8) {
         printf("error! tili_d12[8]\n");
     }
-    STORE_POINTER_DIRECT(D_00250EB0 + 256, D_00250EB0);
-    if (D_00250EB0[272] != 0x8) {
+    STORE_POINTER_DIRECT(spark_frames_long_1 + 256, spark_frames_long_1);
+    if (spark_frames_long_1[272] != 0x8) {
         printf("error! tili_d13[8]\n");
     }
-    STORE_POINTER_DIRECT(D_00250EB0 + 272, D_00250EB0);
-    if (D_00250EB0[288] != 0x8) {
+    STORE_POINTER_DIRECT(spark_frames_long_1 + 272, spark_frames_long_1);
+    if (spark_frames_long_1[288] != 0x8) {
         printf("error! tili_d14[8]\n");
     }
-    STORE_POINTER_DIRECT(D_00250EB0 + 288, D_00250EB0);
-    if (D_00250EB0[304] != 0x8) {
+    STORE_POINTER_DIRECT(spark_frames_long_1 + 288, spark_frames_long_1);
+    if (spark_frames_long_1[304] != 0x8) {
         printf("error! tili_d15[8]\n");
     }
-    STORE_POINTER_DIRECT(D_00250EB0 + 304, D_00250EB0);
-    if (D_00251670[16] != 0x8) {
+    STORE_POINTER_DIRECT(spark_frames_long_1 + 304, spark_frames_long_1);
+    if (wreck_frames_11[16] != 0x8) {
         printf("error! zan_n0[8]\n");
     }
-    STORE_POINTER_DIRECT(D_00251670 + 16, D_002515C0);
-    if (D_00251670[18] != 0xa) {
+    STORE_POINTER_DIRECT(wreck_frames_11 + 16, wreck_frames_00);
+    if (wreck_frames_11[18] != 0xa) {
         printf("error! zan_n0[10]\n");
     }
-    STORE_POINTER_DIRECT(D_00251670 + 18, D_002515D0);
-    if (D_00251670[20] != 0xc) {
+    STORE_POINTER_DIRECT(wreck_frames_11 + 18, wreck_frames_01);
+    if (wreck_frames_11[20] != 0xc) {
         printf("error! zan_n0[12]\n");
     }
-    STORE_POINTER_DIRECT(D_00251670 + 20, D_002515E0);
-    STORE_POINTER_DIRECT(D_00251670 + 32, D_002515F0);
-    if (D_00251670[34] != 0xa) {
+    STORE_POINTER_DIRECT(wreck_frames_11 + 20, wreck_frames_02);
+    STORE_POINTER_DIRECT(wreck_frames_11 + 32, wreck_frames_03);
+    if (wreck_frames_11[34] != 0xa) {
         printf("error! zan_n1[10]\n");
     }
-    STORE_POINTER_DIRECT(D_00251670 + 34, D_00251600);
-    if (D_00251670[36] != 0xc) {
+    STORE_POINTER_DIRECT(wreck_frames_11 + 34, wreck_frames_04);
+    if (wreck_frames_11[36] != 0xc) {
         printf("error! zan_n1[12]\n");
     }
-    STORE_POINTER_DIRECT(D_00251670 + 36, D_00251610);
-    if (D_00251670[48] != 0x8) {
+    STORE_POINTER_DIRECT(wreck_frames_11 + 36, wreck_frames_05);
+    if (wreck_frames_11[48] != 0x8) {
         printf("error! zan_n2[8]\n");
     }
-    STORE_POINTER_DIRECT(D_00251670 + 48, D_00251620);
-    if (D_00251670[50] != 0xa) {
+    STORE_POINTER_DIRECT(wreck_frames_11 + 48, wreck_frames_06);
+    if (wreck_frames_11[50] != 0xa) {
         printf("error! zan_n2[10]\n");
     }
-    STORE_POINTER_DIRECT(D_00251670 + 50, D_00251630);
-    if (D_00251670[52] != 0xc) {
+    STORE_POINTER_DIRECT(wreck_frames_11 + 50, wreck_frames_07);
+    if (wreck_frames_11[52] != 0xc) {
         printf("error! zan_n2[12]\n");
     }
-    STORE_POINTER_DIRECT(D_00251670 + 52, D_00251640);
-    if (D_00251670[64] != 0x8) {
+    STORE_POINTER_DIRECT(wreck_frames_11 + 52, wreck_frames_08);
+    if (wreck_frames_11[64] != 0x8) {
         printf("error! zan_n3[8]\n");
     }
-    STORE_POINTER_DIRECT(D_00251670 + 64, D_00251650);
-    if (D_00251670[66] != 0xa) {
+    STORE_POINTER_DIRECT(wreck_frames_11 + 64, wreck_frames_09);
+    if (wreck_frames_11[66] != 0xa) {
         printf("error! zan_n3[10]\n");
     }
-    STORE_POINTER_DIRECT(D_00251670 + 66, D_00251660);
-    if (D_00251670[68] != 0xc) {
+    STORE_POINTER_DIRECT(wreck_frames_11 + 66, wreck_frames_10);
+    if (wreck_frames_11[68] != 0xc) {
         printf("error! zan_n3[12]\n");
     }
-    STORE_POINTER_DIRECT(D_00251670 + 68, D_00251670);
+    STORE_POINTER_DIRECT(wreck_frames_11 + 68, wreck_frames_11);
     if (ending_fade_in_table[4] != 0x4) {
         printf("error! end_fadein_tbl[4]\n");
     }

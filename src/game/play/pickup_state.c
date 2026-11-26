@@ -13,7 +13,7 @@ u16 g_p2_stage_stars_small __attribute__((aligned(4)));
 
 /* .bss (the compiler lays these out in reverse) */
 #ifdef DEATH_LABEL
-u8 D_002BF4F0[3080];
+u8 g_pickups[3080];
 #else
-u8 D_002BF4F0[3088];
+u8 g_pickups[3088];
 #endif

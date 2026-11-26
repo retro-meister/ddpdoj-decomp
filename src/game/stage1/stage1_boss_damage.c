@@ -18,7 +18,7 @@ s32 boss_phase_running();
 s32 func_0016A9B0();
 s32 score_add_no_chain();
 s32 score_add();
-s32 func_002016D0();
+s32 bullet_cancel_on_boss_hit();
 extern u8 g_game_mode;
 extern s32 g_boss_score;
 extern u16 g_damage_blink_counter;
@@ -166,7 +166,7 @@ next_1:
                     reg_tmp.h[1] = ENEMY_STATE(reg_a5)->entities[0];
                     reg_tmp.h[0] = ENEMY_STATE(reg_a5)->entities[1];
                     reg_a6 = (void *) reg_tmp.w;
-                    func_002016D0();
+                    bullet_cancel_on_boss_hit();
                     STAGE1_BOSS(reg_a5)->bullet_clear_time = 0x6E;
                     if (STAGE1_EXTRA(reg_a6)->spinning != 0) {
                         reg_a6 += 0x60;
@@ -248,7 +248,7 @@ next_3:
                     reg_tmp.h[1] = ENEMY_STATE(reg_a5)->entities[0];
                     reg_tmp.h[0] = ENEMY_STATE(reg_a5)->entities[1];
                     reg_a6 = (void *) reg_tmp.w;
-                    func_002016D0();
+                    bullet_cancel_on_boss_hit();
                     STAGE1_BOSS(reg_a5)->bullet_clear_time = 0x6E;
                     if (STAGE1_EXTRA(reg_a6)->spinning != 0) {
                         reg_a6 += 0x20;
@@ -301,7 +301,7 @@ s32 boss_movement_start();
 s32 boss_animation_start();
 s32 boss_attack_stop_all();
 s32 func_0013F3C0();
-s32 func_00203460();
+s32 boss_defeat_begin();
 s32 slowdown_turn_off();
 extern u8 g_boss_present_b1;
 
@@ -310,7 +310,7 @@ void stage1_boss_body_destroyed() {
     g_boss_present_b1 |= 0x80;
     slowdown_turn_off();
     func_0013F3C0();
-    func_00203460();
+    boss_defeat_begin();
     func_001BC430();
     stage1_boss_right_side_destroyed();
     stage1_boss_left_side_destroyed();

@@ -458,7 +458,7 @@ extern u8 D_002661C8[];
 extern u8 D_002661E0[];
 extern u16 g_enemy_signal_4;
 extern u16 g_enemy_signal_3;
-extern s16 D_00299768[];
+extern s16 g_bullet_limit_raised_1[];
 extern u16 g_side_scroll_x[];
 
 void stage5_midboss5_start(void) {
@@ -472,7 +472,7 @@ void stage5_midboss5_start(void) {
     ENTITY(reg_a6)->x.h = reg_tmp.h[0];
     reg_d0.h[0] = g_side_scroll_x[0];
     ENTITY(reg_a6)->x.h -= reg_d0.h[0];
-    D_00299768[0] = 1;
+    g_bullet_limit_raised_1[0] = 1;
     g_enemy_signal_3 = 1;
     g_enemy_signal_4 = 1;
     reg_d0.h[0] = 0x12;
@@ -1253,8 +1253,8 @@ void stage5_midboss5_move_away(void) {
     }
 }
 
-s32 func_002021D0();                            /* extern */
-s32 func_002024F0();                            /* extern */
+s32 direction_to_point();                            /* extern */
+s32 entity_dir_turned_toward();                            /* extern */
 s32 entity_distance_to();                            /* extern */
 
 void stage5_midboss5_move_toward(void) {
@@ -1262,8 +1262,8 @@ void stage5_midboss5_move_toward(void) {
     reg_d3.h[0] -= reg_d0.h[0];
     entity_distance_to();
     if (((s16) reg_d0.h[0] >= 0x200) || (ENTITY(reg_a6)->move.sb.speed = 8, (((s16) reg_d0.h[0] < 0x100) == 0)) || (ENTITY(reg_a6)->move.sb.speed = 6, (((s16) reg_d0.h[0] < 0x40) == 0))) {
-        func_002021D0();
-        func_002024F0();
+        direction_to_point();
+        entity_dir_turned_toward();
         ENTITY(reg_a6)->move.b.dir = (u8) reg_d1.b[0];
         cond_flag = 1;
         return;
@@ -1277,7 +1277,7 @@ s32 sfx_explosion_air_medium();
 s32 sfx_explosion_extra_1();
 s32 func_001D5040();
 s32 rng_next();
-s32 func_00201710();
+s32 bullet_cancel_with_flags();
 s32 vibration_start_pad1();
 s32 vibration_start_pad2();
 extern u16 D_00266290[];
@@ -1291,7 +1291,7 @@ void stage5_midboss5_dying(void) {
     if (STAGE5_MIDBOSS5_DAMAGE(reg_a6)->dying != 0) {
         ENTITY(reg_a6)->y.h -= 0x40;
         reg_d1.h[0] = STAGE5_MIDBOSS5_DAMAGE(reg_a6)->hit_by;
-        func_00201710();
+        bullet_cancel_with_flags();
         temp_a0 = STAGE5_MIDBOSS5_DAMAGE(reg_a6)->dying_step;
         if (temp_a0 == 2) {
             STAGE5_MIDBOSS5_DAMAGE(reg_a6)->gone = 1;
@@ -1745,7 +1745,7 @@ void stage5_midboss5_drone_start() {
 }
 
 s32 sfx_explosion_ground_medium();
-s32 func_00202490();
+s32 entity_turn_to_target_player();
 s32 direction_turn_toward();
 
 void stage5_midboss5_drone(void) {
@@ -1834,7 +1834,7 @@ check_aiming:
     if (!(STAGE5_MIDBOSS5_DRONE(reg_a5)->now.mode & 4)) goto check_stepping;
     reg_d6.w = 0;
     reg_d7.b[0] = ENTITY(reg_a6)->move.b.dir;
-    func_00202490();
+    entity_turn_to_target_player();
     if (cond_flag != 0) goto stop_aiming;
     reg_d6.w = 1;
     reg_d7.b[0] -= reg_d1.b[0];
@@ -1976,7 +1976,7 @@ void stage5_midboss5_spin_drone_first(void) {
     enemy_set_entity_count(0);
 }
 
-s32 func_00202180();
+s32 direction_to_target_player();
 extern u8 D_002666A0[];
 extern u8 D_002666B0[];
 
@@ -2000,7 +2000,7 @@ void stage5_midboss5_spin_drone_start() {
     STAGE5_MIDBOSS5_SPIN_DRONE(reg_a5)->speed_y = (u16) reg_d2.h[0];
     STAGE5_MIDBOSS5_SPIN_DRONE(reg_a5)->speed_x = (u16) reg_d3.h[0];
     STAGE5_MIDBOSS5_SPIN_DRONE(reg_a5)->shot_direction = 0x20U;
-    func_00202180();
+    direction_to_target_player();
     if (cond_flag == 0) {
         STAGE5_MIDBOSS5_SPIN_DRONE(reg_a5)->shot_direction = (u8) reg_d1.b[0];
     }

@@ -42,8 +42,8 @@ extern u16 g_enemy_count_second;
 extern u16 g_loop;
 extern u16 g_stage_x4;
 extern u16 g_stage_x2;
-extern u16 D_00299760[];
-extern s16 D_0029976A[];
+extern u16 g_bullets_alive[];
+extern s16 g_bullet_limit_raised_2[];
 void slowdown_update(void) {
     u8 *tbl;
 
@@ -56,7 +56,7 @@ void slowdown_update(void) {
         goto next_20;
     }
     if ((u16)g_slowdown_off != 0) return;
-    reg_d0.h[0] = D_00299760[0];
+    reg_d0.h[0] = g_bullets_alive[0];
     if (g_enemy_count_second == 0) goto next_5;
     if ((u16)g_slowdown_boss_allowed == 0) return;
 next_5:
@@ -73,7 +73,7 @@ next_8:
     reg_d2.h[0] = g_stage_x4;
     tbl += reg_d2.h[0] & ~1;
     reg_d1.h[0] += *(s16 *) (tbl + 0);
-    if (((u16 *)D_0029976A)[0] == 0) goto next_10;
+    if (((u16 *)g_bullet_limit_raised_2)[0] == 0) goto next_10;
     reg_d1.h[0] += *(s16 *) (tbl + 2);
 next_10:
     reg_d2.h[0] = g_p1_hyper_active;

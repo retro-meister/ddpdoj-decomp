@@ -222,7 +222,7 @@ void stage5_small_turret_first(void) {
 
 extern u8 D_00265110[];
 extern u8 D_00265130[];
-extern s16 D_00299768[];
+extern s16 g_bullet_limit_raised_1[];
 extern s8 enemy_move_end_requested;
 
 void stage5_small_turret_start(void)
@@ -240,19 +240,19 @@ void stage5_small_turret_start(void)
 
     if (enemy_move_end_requested == 0) {
         ENTITY(reg_a6)->attr.b.palette = SMALL_TURRET(reg_a5)->palette;
-        D_00299768[0] = 1;
+        g_bullet_limit_raised_1[0] = 1;
     }
 }
 
 
-s32 func_00125EC0();
+s32 pickup_spawn_variant();
 s32 bullet_fire_fast();
 s32 enemy_remove();
 s32 sfx_explosion_air_small();
 s32 score_add_no_chain();
 s32 score_add();
 s32 entity_follow_scroll();
-s32 func_00202180();
+s32 direction_to_target_player();
 extern u8 D_00265150[];
 
 void stage5_small_turret(void) {
@@ -292,7 +292,7 @@ void stage5_small_turret(void) {
             reg_d1.w = 0;
             reg_d0.w = 8;
             reg_d2.w = 1;
-            func_00125EC0();
+            pickup_spawn_variant();
             enemy_remove();
             return;
         }
@@ -316,7 +316,7 @@ block_6:
             SMALL_TURRET(reg_a5)->frame += 4;
             if ((s16) SMALL_TURRET(reg_a5)->frame >= 0x1C) {
                 SMALL_TURRET(reg_a5)->frame = 0x1CU;
-                func_00202180();
+                direction_to_target_player();
                 if (cond_flag == 0) {
                     reg_d1.b[0] += 2;
                     reg_d1.h[0] &= 0x3C;
@@ -358,7 +358,7 @@ block_20:
                 SMALL_TURRET(reg_a5)->burst.b.shots_left -= 1;
                 if (SMALL_TURRET(reg_a5)->burst.b.shots_left == 0) {
                     reg_d1.b[0] = SMALL_TURRET(reg_a5)->fire_dir;
-                    func_00202180();
+                    direction_to_target_player();
                     SMALL_TURRET(reg_a5)->fire_dir = (u8) reg_d1.b[0];
                 }
             }
@@ -541,7 +541,7 @@ void stage5_small_spider_turret_first(void) {
 
 extern u8 D_002651C0[];
 extern u8 D_002651E0[];
-extern s16 D_0029976A[];
+extern s16 g_bullet_limit_raised_2[];
 
 void stage5_small_spider_turret_start(void) {
     s32 enemy_set_task_state();
@@ -558,8 +558,8 @@ void stage5_small_spider_turret_start(void) {
             ENTITY(reg_a6)->attr.sb.flip = 0x40;
             SPIDER_TURRET(reg_a5)->mirrored = 1;
         }
-        D_00299768[0] = 1;
-        D_0029976A[0] = 1;
+        g_bullet_limit_raised_1[0] = 1;
+        g_bullet_limit_raised_2[0] = 1;
         ENTITY(reg_a6)->attr.b.palette = (u8) SPIDER_TURRET(reg_a5)->palette;
         rng_next_unsigned();
         SPIDER_TURRET(reg_a5)->fire_dir = (u8) reg_d0.b[0];
@@ -741,8 +741,8 @@ void stage5_small_spider_head_start(void) {
     SMALL_SPIDER_HEAD(reg_a5)->mirrored = 1;
 next_1:
     ENTITY(reg_a6)->attr.b.palette = SMALL_SPIDER_HEAD(reg_a5)->palette;
-    D_00299768[0] = 1;
-    D_0029976A[0] = 1;
+    g_bullet_limit_raised_1[0] = 1;
+    g_bullet_limit_raised_2[0] = 1;
     reg_a0 = (u8 *)(&(*(s16 *)&g_enemy_signal_4));
     if ((s32) g_scroll_line < 0x260) goto next_2;
     reg_a0 = (u8 *)(&(*(s16 *)&g_enemy_signal_6));
@@ -900,8 +900,8 @@ void stage5_large_spider_turret_start(void) {
             ENTITY(reg_a6)->attr.sb.flip = 0x40;
             SPIDER_TURRET(reg_a5)->mirrored = 1;
         }
-        D_00299768[0] = 1;
-        D_0029976A[0] = 1;
+        g_bullet_limit_raised_1[0] = 1;
+        g_bullet_limit_raised_2[0] = 1;
         ENTITY(reg_a6)->attr.b.palette = (u8) SPIDER_TURRET(reg_a5)->palette;
         rng_next_unsigned();
         SPIDER_TURRET(reg_a5)->fire_dir = (u8) reg_d0.b[0];
@@ -1081,8 +1081,8 @@ void stage5_large_spider_head_start(void) {
     LARGE_SPIDER_HEAD(reg_a5)->mirrored = 1;
 next_1:
     ENTITY(reg_a6)->attr.b.palette = LARGE_SPIDER_HEAD(reg_a5)->palette;
-    D_00299768[0] = 1;
-    D_0029976A[0] = 1;
+    g_bullet_limit_raised_1[0] = 1;
+    g_bullet_limit_raised_2[0] = 1;
     g_enemy_signal_5 = 1;
     reg_a0 = (u8 *)(&(*(s16 *)&g_enemy_signal_5));
     if ((s32) g_scroll_line < 0x280) goto next_2;
@@ -1252,10 +1252,10 @@ s32 bullet_fire256();
 s32 sprite_draw_layer5();
 s32 sprite_draw_layer5_zoom_keep();
 s32 rng_next();
-s32 func_00201100();
+s32 rng_next_d5();
 s32 entity_velocity();
-s32 func_00202490();
-s32 func_00202730();
+s32 entity_turn_to_target_player();
+s32 direction256_to_target_player();
 s32 entity_check_bounds();
 extern u8 D_00265830[];
 extern u8 D_0028DA28[8];
@@ -1283,7 +1283,7 @@ void stage5_spiderling(void) {
         if (ENTITY(reg_a6)->hp.sh < 0) {
             reg_d0.w = 0x10;
             score_add();
-            func_00202730();
+            direction256_to_target_player();
             if (cond_flag == 0) {
                 reg_d0.w = 0xFFFC0006;
                 reg_d2.h[1] = ENTITY(reg_a6)->y.h;
@@ -1291,7 +1291,7 @@ void stage5_spiderling(void) {
                 reg_d4.w = 0;
                 reg_d3.w = 0;
                 bullet_fire256();
-                func_00201100();
+                rng_next_d5();
                 reg_d1.b[0] += reg_d5.b[0];
                 reg_d0.w += 0x30000;
                 bullet_fire256();
@@ -1345,14 +1345,14 @@ block_10:
                 SPIDERLING(reg_a5)->legs = 0x3CU;
                 SPIDERLING(reg_a5)->now.phase = 2U;
                 ENTITY(reg_a6)->move.b.speed = 0x18U;
-                func_00202180();
+                direction_to_target_player();
                 if (cond_flag == 0) {
                     ENTITY(reg_a6)->move.b.dir = (u8) reg_d1.b[0];
                 }
             }
         }
         if (SPIDERLING(reg_a5)->now.phase == 2) {
-            func_00202490();
+            entity_turn_to_target_player();
             ENTITY(reg_a6)->move.b.speed -= 1;
             if ((s8) ENTITY(reg_a6)->move.b.speed < 3) {
                 ENTITY(reg_a6)->move.b.dir += 0x20;
@@ -1368,7 +1368,7 @@ block_10:
                 SPIDERLING(reg_a5)->now.pause_countdown = (u8) SPIDERLING(reg_a5)->now.pause;
                 SPIDERLING(reg_a5)->shots_left = (u8) SPIDERLING(reg_a5)->shots;
                 SPIDERLING(reg_a5)->fire_dir = 0x20U;
-                func_00202180();
+                direction_to_target_player();
                 if (cond_flag == 0) {
                     SPIDERLING(reg_a5)->fire_dir = (u8) reg_d1.b[0];
                     rng_next();

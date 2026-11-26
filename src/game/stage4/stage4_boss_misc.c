@@ -32,7 +32,7 @@ s32 enemy_remove();
 s32 sprite_draw_with_bullets_zoom();
 s32 breakable_bullet_check();
 s32 entity_velocity();
-s32 func_00202180();
+s32 direction_to_target_player();
 s32 entity_check_bounds();
 extern u8 D_0024EBC0[];
 extern u16 D_0024EC80[];
@@ -76,7 +76,7 @@ block_8:
                     if (ENTITY(reg_a6)->move.b.speed == 0) {
                         STAGE4_MISSILE(reg_a5)->now.step = 1U;
                         STAGE4_MISSILE(reg_a5)->now.speed_timer.both = 0;
-                        func_00202180();
+                        direction_to_target_player();
                         STAGE4_MISSILE(reg_a5)->now.direction = (u8) reg_d1.b[0];
                         ENTITY(reg_a6)->move.b.dir = (u8) reg_d1.b[0];
                     }
@@ -204,7 +204,7 @@ s32 sprite_draw_layer3();
 s32 sprite_draw_with_bullets();
 s32 score_add_no_chain();
 s32 score_add();
-s32 func_00201F20();
+s32 entity_advance256();
 s32 direction256_between();
 s32 distance_between();
 extern u8 D_0026F150[];
@@ -336,7 +336,7 @@ loop_160:
     if ((s16) reg_d1.h[0] < (s16) reg_d0.h[0]) goto loop_160;
     ENTITY(reg_a6)->move.b.speed = reg_d2.b[0];
 next_170:
-    func_00201F20();
+    entity_advance256();
     reg_d0.h[0] = ENTITY(reg_a6)[1].offset_y.h;
     ENTITY(reg_a6)[1].offset_x.h += reg_d0.h[0];
     ENTITY(reg_a6)[1].offset_x.h &= 0xFFF;

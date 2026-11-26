@@ -1628,7 +1628,7 @@ void stage2_boss_fire_shoulder_cannon(void) {
 }
 
 s32 enemy_switch_target_player();                            /* extern */
-s32 func_00202730(s32, s32);            /* extern */
+s32 direction256_to_target_player(s32, s32);            /* extern */
 
 void stage2_boss_fire_body_spread_start(void) {
     enemy_switch_target_player();
@@ -1636,7 +1636,7 @@ void stage2_boss_fire_body_spread_start(void) {
     BODY_SPREAD(reg_a4)->shot.h = 8;
     BODY_SPREAD(reg_a4)->shots_left = 2;
     BODY_SPREAD(reg_a4)->direction = 0x80U;
-    func_00202730(2, 8);
+    direction256_to_target_player(2, 8);
     if (cond_flag != 0) {
         stage2_boss_fire_body_spread();
         return;
@@ -1777,7 +1777,7 @@ void stage2_boss_fire_body_rage_start(void) {
 s32 bullet_fire256_double();
 s32 bullet_fire256_2way();
 s32 rng_next_word();
-s32 func_00202730();
+s32 direction256_to_target_player();
 extern u16 g_frame_mod2;
 
 void stage2_boss_fire_body_rage(void) {
@@ -1797,7 +1797,7 @@ void stage2_boss_fire_body_rage(void) {
     if (g_frame_mod2 != 0) goto loop_1;
     reg_d7.w = 1;
 loop_1:
-    func_00202730();
+    direction256_to_target_player();
     if (cond_flag != 0) goto block_rts;
     rng_next_word();
     reg_d0.h[0] = (s16) reg_d0.h[0] >> 3;

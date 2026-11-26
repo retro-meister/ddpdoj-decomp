@@ -556,7 +556,7 @@ void p2_laser_front_hyper(void)
   laser_front_update(new_var);
 }
 
-void func_0020A040(void);
+void sparks_spawn_for_laser(void);
 extern u16 g_p2_laser_bomb_active;
 extern u16 g_p1_laser_bomb_active;
 
@@ -585,7 +585,7 @@ void laser_front_update() {
                 *(u8 *)(reg_a6 + 0x27) -= 1;
                 if ((s32)reg_tmp.b[0] <= 0) {
                     *(u8 *)(reg_a6 + 0x27) = *(u8 *)(reg_a6 + 0x26);
-                    func_0020A040();
+                    sparks_spawn_for_laser();
                 }
                 break;
         }
@@ -1285,8 +1285,8 @@ void laser_impact_start(void) {
     *(u8 *)(reg_a0 + 4) = (u8) ENTITY(reg_a6)->attr.b.palette;
 }
 
-s32 func_0020A120();
-s32 func_0020A1C0();
+s32 sparks_spawn_for_laser_first_half();
+s32 sparks_spawn_for_laser_second_half();
 
 void laser_impacts_update(void) {
     u16 temp_a2;
@@ -1297,7 +1297,7 @@ void laser_impacts_update(void) {
     reg_a6 = (u8 *)D_0029D730;
     if (ENTITY(reg_a6)->flags.sh < 0) {
         if ((g_frame_mod2 != 0) && (g_two_player_game != 0) && (g_p1_laser_bomb_active == 0)) {
-            func_0020A120();
+            sparks_spawn_for_laser_first_half();
         }
         reg_d0.h[0] = g_p1_laser_stop_y;
         reg_d1.h[0] = D_0029F182[0];
@@ -1344,7 +1344,7 @@ void laser_impacts_update(void) {
     reg_a6 = (u8 *)D_0029D710;
     if (ENTITY(reg_a6)->flags.sh < 0) {
         if ((g_frame_mod2 == 0) && (g_two_player_game != 0) && (g_p2_laser_bomb_active == 0)) {
-            func_0020A1C0();
+            sparks_spawn_for_laser_second_half();
         }
         reg_d0.h[0] = g_p2_laser_stop_y;
         reg_d1.h[0] = D_0029F112[0];

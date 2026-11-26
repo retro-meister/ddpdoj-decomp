@@ -621,7 +621,7 @@ next_2:
 
 void func_0016B780(void)
 {
-    extern void func_002021D0(void);
+    extern void direction_to_point(void);
     u16 savedD1;
 
     ENTITY(reg_a6)->hp.h = 0x700;
@@ -629,7 +629,7 @@ void func_0016B780(void)
     savedD1 = reg_d1.h[0];
     reg_d2.h[0] = 0x4600;
     reg_d3.h[0] = 0x1C00;
-    func_002021D0();
+    direction_to_point();
     ENTITY(reg_a6)->move.b.dir = reg_d1.b[0];
     reg_d1.h[0] = savedD1;
     ENTITY(reg_a6)->misc.h = 0x714;
@@ -640,13 +640,13 @@ extern u16 g_frame_mod8;
 
 void func_0016B7F0(void) {
     s32 func_0016C260();
-    s32 func_002021D0();
+    s32 direction_to_point();
     if (!(g_boss_present_b1 & 0x40)) {
         if (!(ENTITY(reg_a6)->flags.b[1] & 1)) {
             if (g_frame_mod8 == 0) {
                 reg_d2.h[0] = 0x4600;
                 reg_d3.h[0] = 0x1C00;
-                func_002021D0();
+                direction_to_point();
                 ENTITY(reg_a6)->move.b.dir = (u8) reg_d1.b[0];
             }
             reg_d2.h[0] = 0x4600;
@@ -690,7 +690,7 @@ void func_0016B7F0(void) {
     }
 }
 
-s32 func_00125EB0();
+s32 pickup_spawn_variant_here();
 s32 p1_hyper_item_take();
 s32 sfx_hyper_pickup();
 extern u8 D_0026AF40[];
@@ -723,7 +723,7 @@ block_10:
     saved_d7 = reg_d7.w;
     reg_d0.w = 0x1C;
     reg_d2.w = 5;
-    func_00125EB0();
+    pickup_spawn_variant_here();
     reg_d7.w = saved_d7;
     func_0016C260();
     return;
@@ -940,11 +940,11 @@ void func_0016BFD0(void) {
 void func_0016C0B0(void) {
 }
 
-s32 func_00201BE0();
+s32 layer_b_shift_get();
 
 void func_0016C0C0() {
     s32 func_0016C260();
-    func_00201BE0();
+    layer_b_shift_get();
     ENTITY(reg_a6)->y.h += reg_d2.h[0];
     cond_flag = 0;
     entity_check_bounds();
@@ -981,7 +981,7 @@ block_10:
     saved_d7 = reg_d7.w;
     reg_d0.w = 0x1C;
     reg_d2.w = 5;
-    func_00125EB0();
+    pickup_spawn_variant_here();
     reg_d7.w = saved_d7;
     func_0016C260();
     return;

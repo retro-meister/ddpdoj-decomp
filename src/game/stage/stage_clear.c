@@ -110,9 +110,9 @@ extern u8 D_0028E378;
 extern u8 D_0028E961;
 extern u8 D_0028ED60;
 extern u8 g_replay_buffer_state;
-extern s16 D_00299768[];
-extern s16 D_0029976A[];
-extern u16 D_0029976C[];
+extern s16 g_bullet_limit_raised_1[];
+extern s16 g_bullet_limit_raised_2[];
+extern u16 g_bullet_limit_raised_3[];
 extern u16 D_0029976E[];
 
 #ifdef DEATH_LABEL
@@ -135,11 +135,11 @@ void func_00131700(void) {
     D_0028E961 |= 1;
     D_0028E961 |= 8;
     func_00171910();
-    D_00299768[0] = 0;
+    g_bullet_limit_raised_1[0] = 0;
     D_0028E95C = 1;
-    D_0029976A[0] = 0;
+    g_bullet_limit_raised_2[0] = 0;
     D_0028E958 = 1;
-    ((s16 *)D_0029976C)[0] = 0;
+    ((s16 *)g_bullet_limit_raised_3)[0] = 0;
     ((s16 *)D_0029976E)[0] = 0;
     func_00172060();
     func_00134FB0();
@@ -571,7 +571,7 @@ s32 input_get_p1_pressed();
 s32 input_get_p2_pressed();
 s32 music_fade_out();
 s32 score_add_masked();
-s32 func_00200EE0();
+s32 binary_to_bcd();
 s32 stage_load_step();
 s32 func_0022B660();
 extern u16 D_00261F30[];
@@ -796,14 +796,14 @@ block_15:
                     reg_d0.h[0] = g_p1_stage_stars_small;
                     reg_d7.w = 1;
                     reg_d5.h[0] = reg_d0.h[0];
-                    func_00200EE0();
+                    binary_to_bcd();
                     *(u16 *)(reg_a6 + 0x18) = (u16) reg_d2.h[0];
                     t1 = reg_d5.h[0];
                     reg_d5.h[0] = t1 * 0xA;
                     *(u16 *)(reg_a6 + 0x1A) = (u16) reg_d5.h[0];
                     reg_d0.h[0] = g_p1_stage_stars_large;
                     reg_d5.h[0] = reg_d0.h[0];
-                    func_00200EE0();
+                    binary_to_bcd();
                     *(u16 *)(reg_a6 + 0x1C) = (u16) reg_d2.h[0];
                     t3 = reg_d5.h[0];
                     reg_d5.h[0] = t3 * 0x14;
@@ -817,14 +817,14 @@ block_15:
                     reg_d0.h[0] = g_p2_stage_stars_small;
                     reg_d7.w = 1;
                     reg_d5.h[0] = reg_d0.h[0];
-                    func_00200EE0();
+                    binary_to_bcd();
                     *(u16 *)(reg_a6 + 0x22) = (u16) reg_d2.h[0];
                     t2 = reg_d5.h[0];
                     reg_d5.h[0] = t2 * 0xA;
                     *(u16 *)(reg_a6 + 0x24) = (u16) reg_d5.h[0];
                     reg_d0.h[0] = g_p2_stage_stars_large;
                     reg_d5.h[0] = reg_d0.h[0];
-                    func_00200EE0();
+                    binary_to_bcd();
                     *(u16 *)(reg_a6 + 0x26) = (u16) reg_d2.h[0];
                     t3 = reg_d5.h[0];
                     reg_d5.h[0] = t3 * 0x14;
@@ -855,7 +855,7 @@ block_15:
                 reg_d0.h[0] = t12;
                 if (t12 & 0xFFFF) {
                     reg_d0.h[0] = reg_d6.h[0];
-                    func_00200EE0();
+                    binary_to_bcd();
                     reg_d0.w = reg_d2.w;
                     reg_d0.w *= 0x10;
                     *(u16 *)(reg_a6 + 0x1A) = 0U;
@@ -897,7 +897,7 @@ block_48:
                 reg_d0.h[0] = t15;
                 if (t15 & 0xFFFF) {
                     reg_d0.h[0] = reg_d6.h[0];
-                    func_00200EE0();
+                    binary_to_bcd();
                     reg_d0.w = reg_d2.w;
                     reg_d0.w *= 0x10;
                     *(u16 *)(reg_a6 + 0x24) = 0U;

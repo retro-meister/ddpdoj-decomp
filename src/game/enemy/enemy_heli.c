@@ -184,7 +184,7 @@ void heli_a_first(void) {
 s32 enemy_set_task_state();
 s32 enemy_init_entities();
 s32 enemy_path_start();
-s32 func_002036F0();
+s32 heli_x_limit_check();
 extern u16 D_00257890[];
 extern u16 D_002578B0[];
 extern u16 D_002578D0[];
@@ -211,7 +211,7 @@ void heli_a_start(void) {
         HELI(reg_a5)->shadow_sprite[0] = (reg_d1.h[0] != 0) ? *(u16 *)((u8 *)reg_a0 + ((s16)reg_d1.h[0] & ~1)) : *(u16 *)reg_a0;
         HELI(reg_a5)->shadow_sprite[1] = ((reg_d1.h[0] + 2) != 0) ? *(u16 *)((u8 *)reg_a0 + ((s16)(reg_d1.h[0] + 2) & ~1)) : *(u16 *)reg_a0;
         if (ENEMY_STATE(reg_a5)->kind & 0x20) {
-            func_002036F0();
+            heli_x_limit_check();
         }
         reg_d0.h[0] = g_rank_2_16;
         reg_d0.b[0] -= 8;
@@ -243,9 +243,9 @@ void heli_a_start(void) {
 s32 bullet_fire();
 s32 func_00171430();
 s32 entity_velocity();
-s32 func_00202180();
-s32 func_00202490();
-s32 func_00202D50();
+s32 direction_to_target_player();
+s32 entity_turn_to_target_player();
+s32 entity_in_shot_limits();
 extern u16 g_enemies_stopped;
 extern u16 g_rank_5_16;
 
@@ -266,7 +266,7 @@ void heli_a(void) {
             if ((s32) reg_tmp.b[0] <= 0) {
                 HELI(reg_a5)->turn_countdown = (u8) HELI(reg_a5)->turn_interval;
                 HELI(reg_a5)->turns_left.h -= 1;
-                func_00202490();
+                entity_turn_to_target_player();
                 if (cond_flag != 0) {
                     heli_draw();
                     return;
@@ -293,12 +293,12 @@ block_21:
         reg_d0.h[0] -= g_rank_5_16;
         reg_d0.h[0] += 2;
         HELI(reg_a5)->fire.b.countdown = (u8) reg_d0.b[0];
-        func_00202D50();
+        entity_in_shot_limits();
         if (cond_flag != 0) {
             heli_draw();
             return;
         }
-        func_00202180();
+        direction_to_target_player();
         if (cond_flag != 0) {
             heli_draw();
             return;
@@ -368,7 +368,7 @@ void heli_b_start(void) {
                 HELI(reg_a5)->shadow_sprite[0] = (reg_d1.h[0] != 0) ? *(u16 *)((u8 *)reg_a0 + ((s16)reg_d1.h[0] & ~1)) : *(u16 *)reg_a0;
                 HELI(reg_a5)->shadow_sprite[1] = ((reg_d1.h[0] + 2) != 0) ? *(u16 *)((u8 *)reg_a0 + ((s16)(reg_d1.h[0] + 2) & ~1)) : *(u16 *)reg_a0;
                 if (ENEMY_STATE(reg_a5)->kind & 0x20) {
-                    func_002036F0();
+                    heli_x_limit_check();
                 }
                 reg_d0.h[0] = g_rank_2_16;
                 reg_d0.b[0] -= 8;
@@ -404,7 +404,7 @@ block_7:
                 if ((s32) reg_tmp.b[0] <= 0) {
                     HELI(reg_a5)->turn_countdown = (u8) HELI(reg_a5)->turn_interval;
                     HELI(reg_a5)->turns_left.b[1] -= 1;
-                    func_00202490();
+                    entity_turn_to_target_player();
                     goto block_13;
                 }
             } else {
@@ -428,12 +428,12 @@ block_13:
             reg_d0.h[0] -= g_rank_5_16;
             reg_d0.h[0] += 2;
             HELI(reg_a5)->fire.b.countdown = (u8) reg_d0.b[0];
-            func_00202D50();
+            entity_in_shot_limits();
             if (cond_flag != 0) {
                 heli_draw();
                 return;
             }
-            func_00202180();
+            direction_to_target_player();
             if (cond_flag != 0) {
                 heli_draw();
                 return;
@@ -482,13 +482,13 @@ void heli_c_start(void) {
                 HELI(reg_a5)->shadow_sprite[0] = (reg_d1.h[0] != 0) ? *(u16 *)((u8 *)reg_a0 + ((s16)reg_d1.h[0] & ~1)) : *(u16 *)reg_a0;
                 HELI(reg_a5)->shadow_sprite[1] = ((reg_d1.h[0] + 2) != 0) ? *(u16 *)((u8 *)reg_a0 + ((s16)(reg_d1.h[0] + 2) & ~1)) : *(u16 *)reg_a0;
                 if (ENEMY_STATE(reg_a5)->kind & 0x20) {
-                    func_002036F0();
+                    heli_x_limit_check();
                 }
                 reg_d0.b[0] = ENTITY(reg_a6)->move.b.dir;
                 reg_d0.b[0] += 0x20;
                 reg_d0.b[0] &= 0x3C;
                 HELI(reg_a5)->facing_wanted = (u8) reg_d0.b[0];
-                func_00202180();
+                direction_to_target_player();
                 if (cond_flag != 0) {
                     reg_d1.w = 0x20;
                 }
@@ -542,7 +542,7 @@ next_0:
 next_1:
     reg_d1.b[0] = HELI(reg_a5)->facing;
     if (g_frame_mod4 != 0) goto next_2;
-    func_00202180();
+    direction_to_target_player();
     reg_d0.b[0] = HELI(reg_a5)->facing;
     direction_turn_toward();
     HELI(reg_a5)->facing = reg_d1.b[0];
@@ -587,12 +587,12 @@ next_7:
     reg_d0.h[0] -= g_rank_5_16;
     reg_d0.h[0] += 2;
     HELI(reg_a5)->fire.b.countdown = reg_d0.b[0];
-    func_00202D50();
+    entity_in_shot_limits();
     if (cond_flag != 0) {
         heli_set_direction_sprite();
         return;
     }
-    func_00202180();
+    direction_to_target_player();
     if (cond_flag != 0) {
         heli_set_direction_sprite();
         return;
@@ -631,10 +631,10 @@ void heli_d_start(void) {
         HELI(reg_a5)->shadow_sprite[0] = (reg_d1.h[0] != 0) ? *(u16 *)((u8 *)reg_a0 + ((s16)reg_d1.h[0] & ~1)) : *(u16 *)reg_a0;
         HELI(reg_a5)->shadow_sprite[1] = ((reg_d1.h[0] + 2) != 0) ? *(u16 *)((u8 *)reg_a0 + ((s16)(reg_d1.h[0] + 2) & ~1)) : *(u16 *)reg_a0;
         if (ENEMY_STATE(reg_a5)->kind & 0x20) {
-            func_002036F0();
+            heli_x_limit_check();
         }
         reg_d1.w = 0x20;
-        func_00202180();
+        direction_to_target_player();
         HELI(reg_a5)->facing = (u8) reg_d1.b[0];
         reg_d0.h[0] = g_rank_2_16;
         reg_d0.b[0] -= 8;
@@ -660,7 +660,7 @@ void heli_d_start(void) {
 }
 
 #ifdef DEATH_LABEL
-s32 func_00202490();
+s32 entity_turn_to_target_player();
 #endif
 
 void heli_d(void) {
@@ -691,7 +691,7 @@ void heli_d(void) {
 next_1:
     reg_d1.b[0] = HELI(reg_a5)->facing;
     if (g_frame_mod4 != 0) goto next_2;
-    func_00202180();
+    direction_to_target_player();
     reg_d0.b[0] = HELI(reg_a5)->facing;
     direction_turn_toward();
     HELI(reg_a5)->facing = reg_d1.b[0];
@@ -714,7 +714,7 @@ next_5:
     if ((s32)reg_tmp.b[0] > 0) goto next_6;
     HELI(reg_a5)->turn_countdown = HELI(reg_a5)->turn_interval;
     HELI(reg_a5)->turns_left.h -= 1;
-    func_00202490();
+    entity_turn_to_target_player();
     heli_set_direction_sprite();
     return;
 #else
@@ -748,12 +748,12 @@ next_7:
     reg_d0.h[0] -= g_rank_5_16;
     reg_d0.h[0] += 2;
     HELI(reg_a5)->fire.b.countdown = reg_d0.b[0];
-    func_00202D50();
+    entity_in_shot_limits();
     if (cond_flag != 0) {
         heli_set_direction_sprite();
         return;
     }
-    func_00202180();
+    direction_to_target_player();
     if (cond_flag != 0) {
         heli_set_direction_sprite();
         return;
@@ -797,13 +797,13 @@ void heli_e_start(void) {
             HELI(reg_a5)->shadow_sprite[0] = (reg_d1.h[0] != 0) ? *(u16 *)((u8 *)reg_a0 + ((s16)reg_d1.h[0] & ~1)) : *(u16 *)reg_a0;
             HELI(reg_a5)->shadow_sprite[1] = ((reg_d1.h[0] + 2) != 0) ? *(u16 *)((u8 *)reg_a0 + ((s16)(reg_d1.h[0] + 2) & ~1)) : *(u16 *)reg_a0;
             if (ENEMY_STATE(reg_a5)->kind & 0x20) {
-                func_002036F0();
+                heli_x_limit_check();
             }
             reg_d0.b[0] = ENTITY(reg_a6)->move.b.dir;
             reg_d0.b[0] += 0x20;
             reg_d0.b[0] &= 0x3C;
             HELI(reg_a5)->facing_wanted = (u8) reg_d0.b[0];
-            func_00202180();
+            direction_to_target_player();
             if (cond_flag != 0) {
                 reg_d1.w = 0x20;
             }
@@ -834,9 +834,9 @@ void heli_e(void) {
             reg_d0.h[0] -= g_rank_5_16;
             reg_d0.h[0] += 2;
             HELI(reg_a5)->fire.b.countdown = (u8) reg_d0.b[0];
-            func_00202D50();
+            entity_in_shot_limits();
             if (cond_flag == 0) {
-                func_00202180();
+                direction_to_target_player();
                 if (cond_flag == 0) {
                     heli_muzzle_offset(reg_d1.b[0]);
                     reg_tmp.h[1] = ENTITY(reg_a6)->y.h;
@@ -884,7 +884,7 @@ void heli_e(void) {
             heli_set_direction_sprite();
             return;
         }
-        func_00202180();
+        direction_to_target_player();
         reg_d0.b[0] = HELI(reg_a5)->facing;
         direction_turn_toward();
         HELI(reg_a5)->facing = (u8) reg_d1.b[0];
@@ -919,13 +919,13 @@ void heli_f_start(void) {
             reg_a0 = (u8 *)(D_00257950);
             HELI(reg_a5)->shadow_sprite[0] = (reg_d1.h[0] != 0) ? *(u16 *)((u8 *)reg_a0 + ((s16)reg_d1.h[0] & ~1)) : *(u16 *)reg_a0;
             HELI(reg_a5)->shadow_sprite[1] = ((reg_d1.h[0] + 2) != 0) ? *(u16 *)((u8 *)reg_a0 + ((s16)(reg_d1.h[0] + 2) & ~1)) : *(u16 *)reg_a0;
-            func_00202180();
+            direction_to_target_player();
             if (cond_flag != 0) {
                 reg_d1.w = 0x20;
             }
             HELI(reg_a5)->facing = (u8) reg_d1.b[0];
             if (ENEMY_STATE(reg_a5)->kind & 0x20) {
-                func_002036F0();
+                heli_x_limit_check();
             }
             reg_d0.h[0] = g_rank_2_16;
             reg_d0.b[0] -= 8;
@@ -951,9 +951,9 @@ void heli_f(void) {
             reg_d0.h[0] -= g_rank_5_16;
             reg_d0.h[0] += 2;
             HELI(reg_a5)->fire.b.countdown = (u8) reg_d0.b[0];
-            func_00202D50();
+            entity_in_shot_limits();
             if (cond_flag == 0) {
-                func_00202180();
+                direction_to_target_player();
                 if (cond_flag == 0) {
                     heli_muzzle_offset(HELI(reg_a5)->facing);
                     reg_tmp.h[1] = ENTITY(reg_a6)->y.h;
@@ -972,7 +972,7 @@ void heli_f(void) {
             heli_set_direction_sprite();
             return;
         }
-        func_00202180();
+        direction_to_target_player();
         reg_d0.b[0] = HELI(reg_a5)->facing;
         direction_turn_toward();
         HELI(reg_a5)->facing = (u8) reg_d1.b[0];
@@ -1004,13 +1004,13 @@ void heli_g_start(void) {
         HELI(reg_a5)->shadow_sprite[0] = (reg_d1.h[0] != 0) ? *(u16 *)((u8 *)reg_a0 + ((s16)reg_d1.h[0] & ~1)) : *(u16 *)reg_a0;
         HELI(reg_a5)->shadow_sprite[1] = ((reg_d1.h[0] + 2) != 0) ? *(u16 *)((u8 *)reg_a0 + ((s16)(reg_d1.h[0] + 2) & ~1)) : *(u16 *)reg_a0;
         if (ENEMY_STATE(reg_a5)->kind & 0x20) {
-            func_002036F0();
+            heli_x_limit_check();
         }
         reg_d0.b[0] = ENTITY(reg_a6)->move.b.dir;
         reg_d0.b[0] += 0x20;
         reg_d0.b[0] &= 0x3C;
         HELI(reg_a5)->facing_wanted = (u8) reg_d0.b[0];
-        func_00202180();
+        direction_to_target_player();
         if (cond_flag != 0) {
             reg_d1.w = 0x20;
         }
@@ -1061,9 +1061,9 @@ void heli_g(void) {
             HELI(reg_a5)->turns_left.b[1] -= 1;
             if (HELI(reg_a5)->turns_left.b[1] == 0) {
                 HELI(reg_a5)->turns_left.b[1] = (u8) HELI(reg_a5)->turns_left.b[0];
-                func_00202D50();
+                entity_in_shot_limits();
                 if (cond_flag == 0) {
-                    func_00202180();
+                    direction_to_target_player();
                     if (cond_flag == 0) {
                         heli_muzzle_offset(HELI(reg_a5)->facing);
                         reg_tmp.h[1] = ENTITY(reg_a6)->y.h;
@@ -1105,7 +1105,7 @@ void heli_g(void) {
                 heli_set_direction_sprite();
                 return;
             }
-            func_00202180();
+            direction_to_target_player();
             if (cond_flag != 0) {
                 heli_set_direction_sprite();
                 return;
@@ -1121,7 +1121,7 @@ void heli_g(void) {
             if (HELI(reg_a5)->fire.b.countdown == 0) {
                 HELI(reg_a5)->fire.b.countdown = (u8) HELI(reg_a5)->fire.b.other;
                 HELI(reg_a5)->facing_started.b[0] -= 1;
-                func_00202D50();
+                entity_in_shot_limits();
                 if (cond_flag == 0) {
                     reg_d2.b[0] = HELI(reg_a5)->facing;
                     reg_d1.b[0] = reg_d2.b[0];
@@ -1190,13 +1190,13 @@ void heli_h_start(void) {
         reg_a0 = (u8 *)(D_00257950);
         HELI(reg_a5)->shadow_sprite[0] = (reg_d1.h[0] != 0) ? *(u16 *)((u8 *)reg_a0 + ((s16)reg_d1.h[0] & ~1)) : *(u16 *)reg_a0;
         HELI(reg_a5)->shadow_sprite[1] = ((reg_d1.h[0] + 2) != 0) ? *(u16 *)((u8 *)reg_a0 + ((s16)(reg_d1.h[0] + 2) & ~1)) : *(u16 *)reg_a0;
-        func_00202180();
+        direction_to_target_player();
         if (cond_flag != 0) {
             reg_d1.w = 0x20;
         }
         HELI(reg_a5)->facing = (u8) reg_d1.b[0];
         if (ENEMY_STATE(reg_a5)->kind & 0x20) {
-            func_002036F0();
+            heli_x_limit_check();
         }
         reg_d0.h[0] = g_rank_4_16;
         reg_d0.b[0] -= 8;
@@ -1240,13 +1240,13 @@ block_7:
                 if ((s32) reg_tmp.b[0] <= 0) {
                     HELI(reg_a5)->turn_countdown = (u8) HELI(reg_a5)->turn_interval;
                     HELI(reg_a5)->turns_left.h -= 1;
-                    func_00202490();
+                    entity_turn_to_target_player();
                     if (cond_flag != 0) {
                         reg_d1.b[0] = ENTITY(reg_a6)->move.b.dir;
                     }
                 }
             }
-            func_00202180();
+            direction_to_target_player();
             reg_d0.b[0] = HELI(reg_a5)->facing;
             direction_turn_toward();
             HELI(reg_a5)->facing = (u8) reg_d1.b[0];
@@ -1260,12 +1260,12 @@ block_7:
             reg_d0.h[0] -= g_rank_5_16;
             reg_d0.h[0] += 2;
             HELI(reg_a5)->fire.b.countdown = (u8) reg_d0.b[0];
-            func_00202D50();
+            entity_in_shot_limits();
             if (cond_flag != 0) {
                 heli_set_direction_sprite();
                 return;
             }
-            func_00202180();
+            direction_to_target_player();
             if (cond_flag != 0) {
                 heli_set_direction_sprite();
                 return;

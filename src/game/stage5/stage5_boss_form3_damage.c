@@ -32,13 +32,13 @@ s32 score_add_no_chain();
 s32 stage5_boss_shield_on();
 void stage5_boss_form3_defeated();
 void stage5_boss_form3_time_limit(void);
-s32 func_002016D0();
+s32 bullet_cancel_on_boss_hit();
 extern s32 g_boss_score;
 extern u16 g_bullets_blocked;
 extern u16 g_damage_blink_counter;
-extern s16 D_00299768[];
-extern s16 D_0029976A[];
-extern u16 D_0029976C[];
+extern s16 g_bullet_limit_raised_1[];
+extern s16 g_bullet_limit_raised_2[];
+extern u16 g_bullet_limit_raised_3[];
 extern u16 D_0029976E[];
 extern u16 g_bomb_entities[];
 
@@ -188,11 +188,11 @@ next_10:
         boss_phase_start();
         stage5_boss_shield_on();
         STAGE5_DAMAGE(reg_a6)->form3_second_phase = 1;
-        D_00299768[0] = 1;
-        D_0029976A[0] = 1;
-        ((s16 *)D_0029976C)[0] = 1;
+        g_bullet_limit_raised_1[0] = 1;
+        g_bullet_limit_raised_2[0] = 1;
+        ((s16 *)g_bullet_limit_raised_3)[0] = 1;
         ((s16 *)D_0029976E)[0] = 1;
-        func_002016D0();
+        bullet_cancel_on_boss_hit();
     }
     if (STAGE5_DAMAGE(reg_a6)->form3_second_phase < 2) {
         reg_d0.h[1] = STAGE5_BOSS(reg_a5)->hp[0];
@@ -209,11 +209,11 @@ next_10:
         boss_phase_start();
         stage5_boss_shield_on();
         STAGE5_DAMAGE(reg_a6)->form3_second_phase = 2;
-        D_00299768[0] = 1;
-        D_0029976A[0] = 1;
-        ((s16 *)D_0029976C)[0] = 1;
+        g_bullet_limit_raised_1[0] = 1;
+        g_bullet_limit_raised_2[0] = 1;
+        ((s16 *)g_bullet_limit_raised_3)[0] = 1;
         ((s16 *)D_0029976E)[0] = 1;
-        func_002016D0();
+        bullet_cancel_on_boss_hit();
     }
 #else
     if (STAGE5_DAMAGE(reg_a6)->form3_second_phase != 0) {
@@ -233,11 +233,11 @@ next_10:
     boss_phase_start();
     stage5_boss_shield_on();
     STAGE5_DAMAGE(reg_a6)->form3_second_phase = 1;
-    D_00299768[0] = 1;
-    D_0029976A[0] = 1;
-    ((s16 *)D_0029976C)[0] = 1;
+    g_bullet_limit_raised_1[0] = 1;
+    g_bullet_limit_raised_2[0] = 1;
+    ((s16 *)g_bullet_limit_raised_3)[0] = 1;
     ((s16 *)D_0029976E)[0] = 1;
-    func_002016D0();
+    bullet_cancel_on_boss_hit();
 #endif
 next_11:
     stage5_boss_form3_time_limit();
@@ -249,8 +249,8 @@ s32 boss_part_hide();
 s32 boss_attack_stop_all();
 s32 func_0013F3C0();
 s32 stage5_boss_stop_damage();
-s32 func_002016D0();
-s32 func_00203460();
+s32 bullet_cancel_on_boss_hit();
+s32 boss_defeat_begin();
 s32 slowdown_turn_off();
 extern u8 g_boss_present_b1;
 
@@ -259,8 +259,8 @@ void stage5_boss_form3_defeated() {
     g_boss_present_b1 |= 0x80;
     slowdown_turn_off();
     func_0013F3C0();
-    func_00203460();
-    func_002016D0();
+    boss_defeat_begin();
+    bullet_cancel_on_boss_hit();
     stage5_boss_stop_damage();
     boss_attack_stop_all();
     boss_phase_stop_all();

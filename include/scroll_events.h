@@ -24,7 +24,7 @@
 #define SCROLL_SCENERY(line, object, y, x) SCROLL_EVENT(line, 0x10), (object), (y), (x)
 /* Run the next `count` commands of the stage's sound list. */
 #define SCROLL_SOUNDS(line, count) SCROLL_EVENT(line, 0x14), (count)
-/* Set the first `count` of the four flags at D_00299768. */
+/* Set the first `count` of the four flags at g_bullet_limit_raised_1. */
 #define SCROLL_FLAGS(line, count) SCROLL_EVENT(line, 0x18), (count)
 #define SCROLL_EVENTS_END 0xFFFF
 

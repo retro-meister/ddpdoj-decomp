@@ -584,7 +584,7 @@ void stage3_boss_mode_phase_explosion_start(void) {
 s32 boss_phase_start();
 s32 boss_part_hide();
 s32 rng_next_masked();
-s32 func_002013F0();
+s32 rng_next_pair_large_d1();
 
 void stage3_boss_mode_phase_explosion() {
     u16 temp_a2;
@@ -625,11 +625,11 @@ void stage3_boss_mode_phase_explosion() {
         EXPLOSION(reg_a0)->move.b.dir = (u8) reg_d0.b[0];
         EXPLOSION(reg_a0)->drag_timer.h = 0;
         EXPLOSION(reg_a0)->drag_y = 0xFFF9;
-        func_002013F0();
+        rng_next_pair_large_d1();
         reg_d1.h[0] = (u16) ((s16) reg_d1.h[0] >> 1);
         reg_d1.h[0] += 0x7FFF + 0x6641;
         EXPLOSION(reg_a0)->start_y = (u16) reg_d1.h[0];
-        func_002013F0();
+        rng_next_pair_large_d1();
         reg_d0.h[0] = reg_d1.h[0];
         reg_d1.h[0] = (u16) ((s16) reg_d1.h[0] >> 1);
         reg_d1.h[0] += reg_d0.h[0];

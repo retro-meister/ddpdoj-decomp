@@ -11,14 +11,14 @@ s32 boss_phase_stop_all();
 s32 boss_attack_stop_all();
 s32 score_add_no_chain();
 void stage3_boss_time_limit(void);
-s32 func_002016D0();
+s32 bullet_cancel_on_boss_hit();
 s32 active_players_mask();
 extern u8 g_game_mode;
 extern s32 g_boss_score;
 extern u16 g_damage_blink_counter;
-extern s16 D_00299768[];
-extern s16 D_0029976A[];
-extern u16 D_0029976C[];
+extern s16 g_bullet_limit_raised_1[];
+extern s16 g_bullet_limit_raised_2[];
+extern u16 g_bullet_limit_raised_3[];
 
 #define W(o) (*(u16 *)(reg_a6 + (o)))
 #define B(o) (*(u8 *)(reg_a6 + (o)))
@@ -136,10 +136,10 @@ block_check:
     func_001D4540();
     func_001D4510();
     B(0x8D) = 1;
-    ((u16 *)D_00299768)[0] = 1;
-    ((u16 *)D_0029976A)[0] = 1;
-    D_0029976C[0] = 1;
-    func_002016D0();
+    ((u16 *)g_bullet_limit_raised_1)[0] = 1;
+    ((u16 *)g_bullet_limit_raised_2)[0] = 1;
+    g_bullet_limit_raised_3[0] = 1;
+    bullet_cancel_on_boss_hit();
 block_tail:
     stage3_boss_time_limit();
 }
@@ -147,7 +147,7 @@ block_tail:
 s32 boss_animation_stop();
 s32 func_0013F3C0();
 void stage3_boss_stop_damage(void);
-s32 func_00203460();
+s32 boss_defeat_begin();
 s32 slowdown_turn_off();
 extern u8 g_boss_present_b1;
 
@@ -156,7 +156,7 @@ void stage3_boss_defeated() {
     g_boss_present_b1 |= 0x80;
     slowdown_turn_off();
     func_0013F3C0();
-    func_00203460();
+    boss_defeat_begin();
     stage3_boss_stop_damage();
     boss_attack_stop_all();
     boss_phase_stop_all();

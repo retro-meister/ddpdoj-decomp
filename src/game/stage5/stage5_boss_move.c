@@ -272,14 +272,14 @@ void stage5_boss_move_form2_mouth_wander_start() {
 }
 
 s32 rng_next();
-s32 func_002024C0();
+s32 entity_turn_toward();
 
 void stage5_boss_move_form2_mouth_wander(void) {
     s32 entity_velocity();
     entity_velocity();
     if (WANDER(reg_a4)->turning != 0) {
         reg_d1.b[0] = WANDER(reg_a4)->target_dir;
-        func_002024C0();
+        entity_turn_toward();
         if (WANDER(reg_a4)->target_dir == reg_d1.b[0]) {
             WANDER(reg_a4)->turning = 0U;
         }
@@ -343,7 +343,7 @@ void stage5_boss_move_form3_wander_a() {
     entity_velocity();
     if (WANDER(reg_a4)->turning != 0) {
         reg_d1.b[0] = WANDER(reg_a4)->target_dir;
-        func_002024C0();
+        entity_turn_toward();
         if (WANDER(reg_a4)->target_dir == reg_d1.b[0]) {
             WANDER(reg_a4)->turning = 0U;
         }
@@ -393,7 +393,7 @@ void stage5_boss_move_form2_jet_wander(void) {
     entity_velocity();
     if (WANDER(reg_a4)->turning != 0) {
         reg_d1.b[0] = WANDER(reg_a4)->target_dir;
-        func_002024C0();
+        entity_turn_toward();
         if (WANDER(reg_a4)->target_dir == reg_d1.b[0]) {
             WANDER(reg_a4)->turning = 0U;
         }
@@ -443,7 +443,7 @@ void stage5_boss_move_form2_horn_wander(void) {
     entity_velocity();
     if (WANDER(reg_a4)->turning != 0) {
         reg_d1.b[0] = WANDER(reg_a4)->target_dir;
-        func_002024C0();
+        entity_turn_toward();
         if (WANDER(reg_a4)->target_dir == reg_d1.b[0]) {
             WANDER(reg_a4)->turning = 0U;
         }
@@ -494,7 +494,7 @@ void stage5_boss_move_form2_stinger_wander(void) {
     entity_velocity();
     if (WANDER(reg_a4)->turning != 0) {
         reg_d1.b[0] = WANDER(reg_a4)->target_dir;
-        func_002024C0();
+        entity_turn_toward();
         if (WANDER(reg_a4)->target_dir == reg_d1.b[0]) {
             WANDER(reg_a4)->turning = 0U;
         }
@@ -545,7 +545,7 @@ void stage5_boss_move_form3_wander_b() {
     entity_velocity();
     if (WANDER(reg_a4)->turning != 0) {
         reg_d1.b[0] = WANDER(reg_a4)->target_dir;
-        func_002024C0();
+        entity_turn_toward();
         if (WANDER(reg_a4)->target_dir == reg_d1.b[0]) {
             WANDER(reg_a4)->turning = 0U;
         }
@@ -592,7 +592,7 @@ void stage5_boss_move_form3_wander_c(void) {
     entity_velocity();
     if (WANDER(reg_a4)->turning != 0) {
         reg_d1.b[0] = WANDER(reg_a4)->target_dir;
-        func_002024C0();
+        entity_turn_toward();
         if (WANDER(reg_a4)->target_dir == reg_d1.b[0]) {
             WANDER(reg_a4)->turning = 0U;
         }
@@ -644,7 +644,7 @@ u8 stage5_boss_move_form3_wander_d(u8 arg0) {
     entity_velocity();
     if (WANDER(reg_a4)->turning != 0) {
         reg_d1.b[0] = WANDER(reg_a4)->target_dir;
-        func_002024C0();
+        entity_turn_toward();
         if (WANDER(reg_a4)->target_dir == reg_d1.b[0]) {
             WANDER(reg_a4)->turning = 0U;
         }
@@ -694,7 +694,7 @@ void stage5_boss_move_form3_rage_wander(void) {
     entity_velocity();
     if (WANDER(reg_a4)->turning != 0) {
         reg_d1.b[0] = WANDER(reg_a4)->target_dir;
-        func_002024C0();
+        entity_turn_toward();
         if (WANDER(reg_a4)->target_dir == reg_d1.b[0]) {
             WANDER(reg_a4)->turning = 0U;
         }

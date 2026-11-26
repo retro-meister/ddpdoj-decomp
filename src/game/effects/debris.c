@@ -79,7 +79,7 @@ void func_001B8410(void) {
 
 typedef void (*Fn)();
 
-s32 func_00201F20();
+s32 entity_advance256();
 extern u8 D_00250780[];
 extern u8 D_002507A0[];
 extern u8 D_00262570[];
@@ -235,7 +235,7 @@ next_11:
     reg_a4[1] -= 1;
 next_12:
     save = reg_a2;
-    func_00201F20();
+    entity_advance256();
     reg_a2 = save;
 next_10:
     *(u16 *)(reg_a2 + 0) -= 0x20;
@@ -244,7 +244,7 @@ next_10:
     goto next_7;
 next_boss:
     save = reg_a2;
-    func_00201F20();
+    entity_advance256();
     reg_a2 = save;
     reg_d0.h[0] = ENTITY(reg_a6)->misc.h;
     reg_d1.w = 0;
@@ -336,11 +336,11 @@ block_rts:
 
 extern u8 D_002509E0[];
 s32 rng_next();
-s32 func_00201130();
+s32 rng_next_wide();
 s32 rng_next_masked();
 s32 rng_next_unsigned();
 s32 rng_next_bit();
-s32 func_00201390();
+s32 rng_next_pair_medium_d4();
 extern u16 D_00250CE0[];
 extern u8 D_0028E52F;
 
@@ -368,7 +368,7 @@ void func_001B8D00(void) {
     *(u16 *)(reg_a0 + 2) = (u16) ENTITY(reg_a6)->y.h;
     *(u16 *)(reg_a0 + 4) = (u16) ENTITY(reg_a6)->x.h;
     if (0 > (s32) reg_d3.w) {
-        func_00201390();
+        rng_next_pair_medium_d4();
         *(u16 *)(reg_a0 + 4) += reg_d4.h[0];
     }
     *(u16 *)(reg_a0 + 6) = (u16) *(u16 *)reg_a2;
@@ -408,7 +408,7 @@ void func_001B8D00(void) {
     *(u16 *)(reg_a0 + 0x10) = (u16) *(u16 *)reg_a2;
     *(u16 *)(reg_a0 + 0x12) = (u16) *(u16 *)reg_a2;
     reg_a2 += 2;
-    func_00201130();
+    rng_next_wide();
     reg_d0.h[0] = (s16) reg_d0.h[0] * 4;
     reg_d0.h[0] += 0x30;
     *(u16 *)(reg_a0 + 0x22) = (u16) reg_d0.h[0];
@@ -458,18 +458,18 @@ void func_001B8D00(void) {
     *(u8 *)(reg_a0 + 0x1A) = (u8) reg_d1.b[0];
 }
 
-s32 func_00201270();
+s32 rng_next_0_to_3();
 extern u8 debris_random_patterns[];
 
 void func_001B91C0(void) {
-    func_00201270();
+    rng_next_0_to_3();
     reg_a1 = debris_random_patterns;
     reg_d0.h[0] += reg_d0.h[0];
     reg_d0.h[0] += reg_d0.h[0];
     reg_a1 += reg_d0.h[0];
     *(u16 *)(reg_a0 + 0x14) = (u16) *(u16 *)reg_a1;
     *(u16 *)(reg_a0 + 0x16) = (u16) *(u16 *)(reg_a1 + 2);
-    func_00201270();
+    rng_next_0_to_3();
     reg_d0.h[0] += 1;
     reg_d0.h[0] <<= 5;
     reg_d0.h[0] -= 4;
@@ -482,7 +482,7 @@ void func_001B91C0(void) {
 }
 
 void func_001B9300(void) {
-    func_00201270();
+    rng_next_0_to_3();
     reg_d0.h[0] += 1;
     reg_d0.h[0] <<= 5;
     reg_d0.h[0] -= 4;

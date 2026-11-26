@@ -1177,7 +1177,7 @@ s32 bullet_fire256_fixed();
 s32 bullet_fire256_2way();
 s32 sfx_explosion_ground_medium();
 s32 entity_follow_scroll();
-s32 func_00202F50();
+s32 entity_in_shot_limits_y();
 s32 func_002115E0();
 extern u8 D_00257FB0[];
 extern u8 D_00258030[];
@@ -1275,7 +1275,7 @@ block_13:
                 STAGE3_GUN(reg_a5)->shot_countdown -= 1;
                 if ((s32) reg_tmp.b[0] <= 0) {
                     STAGE3_GUN(reg_a5)->shot_countdown = (u8) STAGE3_GUN(reg_a5)->shot_interval;
-                    func_00202F50();
+                    entity_in_shot_limits_y();
                     if (cond_flag == 0) {
                         reg_d3.w = 0;
                         reg_a4 = (u8 *)D_00257FB0;
@@ -1461,7 +1461,7 @@ extern u8 D_00258130[];
 extern u16 g_enemy_signal_2;
 extern u16 g_enemy_signal_1;
 extern u16 g_enemy_signal_0;
-extern s16 D_00299768[];
+extern s16 g_bullet_limit_raised_1[];
 
 void stage3_large_gun_start(void) {
     s32 enemy_set_task_state();
@@ -1474,7 +1474,7 @@ void stage3_large_gun_start(void) {
     enemy_set_task_state();
     enemy_path_start();
     if (enemy_move_end_requested == 0) {
-        D_00299768[0] = 1;
+        g_bullet_limit_raised_1[0] = 1;
         reg_d0.h[0] = g_scroll_line;
         STAGE3_LARGE_GUN(reg_a5)->start_line = (u16) reg_d0.h[0];
         if (reg_d0.h[0] == 0x48) {
@@ -1828,7 +1828,7 @@ s32 bullet_fire256_3way();
 s32 bullet_fire256();
 s32 sfx_explosion_ground_small();
 s32 entity_velocity();
-s32 func_00202490();
+s32 entity_turn_to_target_player();
 s32 entity_check_bounds();
 extern u16 g_rank_3_16;
 extern u16 g_stage;
@@ -1858,7 +1858,7 @@ block_4:
         SMALL_FLYER(reg_a5)->turn_countdown -= 1;
         if ((s32) reg_tmp.b[0] <= 0) {
             SMALL_FLYER(reg_a5)->turn_countdown = (u8) SMALL_FLYER(reg_a5)->turn_interval;
-            func_00202490();
+            entity_turn_to_target_player();
         }
     }
     ENTITY(reg_a6)[1].y.h = (u16) ENTITY(reg_a6)->y.h;
@@ -2064,7 +2064,7 @@ block_4:
         SMALL_FLYER(reg_a5)->turn_countdown -= 1;
         if ((s32) reg_tmp.b[0] <= 0) {
             SMALL_FLYER(reg_a5)->turn_countdown = (u8) SMALL_FLYER(reg_a5)->turn_interval;
-            func_00202490();
+            entity_turn_to_target_player();
         }
     }
     ENTITY(reg_a6)[1].y.h = (u16) ENTITY(reg_a6)->y.h;
@@ -2138,7 +2138,7 @@ block_16:
     SMALL_FLYER(reg_a5)->fire_countdown -= 1;
     if ((s32) reg_tmp.b[0] <= 0) {
         SMALL_FLYER(reg_a5)->fire_countdown = (u8) SMALL_FLYER(reg_a5)->fire_interval;
-        func_00202F50();
+        entity_in_shot_limits_y();
         if (cond_flag == 0) {
             reg_d1.w = 0;
             temp_a0_2 = ENTITY(reg_a6)->move.b.dir;
@@ -2513,12 +2513,12 @@ void battleship_b_start() {
     reg_a0 = D_002584B0;
     reg_d0.w = 0x11;
     enemy_set_task_state();
-    D_00299768[0] = 1;
+    g_bullet_limit_raised_1[0] = 1;
     g_slowdown_boss_allowed = 1;
 }
 
 s32 sprite_draw_layer4();
-s32 func_00201710();
+s32 bullet_cancel_with_flags();
 extern u8 D_00258520[];
 
 void battleship_b(void) {
@@ -2569,7 +2569,7 @@ block_5:
     battleship_b_blow_up();
     if (BATTLESHIP_B(reg_a5)->dying_frames != 0) {
         reg_d1.h[0] = BATTLESHIP_B(reg_a5)->dying_dir;
-        func_00201710();
+        bullet_cancel_with_flags();
         BATTLESHIP_B(reg_a5)->dying_frames -= 1;
         if (BATTLESHIP_B(reg_a5)->dying_frames == 0) {
             enemy_remove();
@@ -2778,7 +2778,7 @@ void func_00158E10() {
 }
 
 s32 bullet_fire256_fast();
-s32 func_00202590();
+s32 direction_step_toward();
 
 void func_00158ED0(void) {
     reg_tmp.b[0] = ENTITY(reg_a6)[1].offset_x.b[1];
@@ -2789,11 +2789,11 @@ void func_00158ED0(void) {
         do {
             reg_d1.b[0] = ENTITY(reg_a6)[1].look.b.palette;
             reg_d0.b[0] = ENTITY(reg_a6)[1].hit_y_plus.b[0];
-            func_00202590();
+            direction_step_toward();
             ENTITY(reg_a6)[1].hit_y_plus.b[0] = (u8) reg_d1.b[0];
             reg_d1.b[0] = ENTITY(reg_a6)[1].look.b.size;
             reg_d0.b[0] = ENTITY(reg_a6)[1].hit_y_plus.b[1];
-            func_00202590();
+            direction_step_toward();
             ENTITY(reg_a6)[1].hit_y_plus.b[1] = (u8) reg_d1.b[0];
         } while ((s16)(--reg_d7.h[0]) >= 0);
         reg_d4.w = 0;
@@ -2889,7 +2889,7 @@ block_5:
     battleship_b_blow_up();
     if (BATTLESHIP_B(reg_a5)->dying_frames != 0) {
         reg_d1.h[0] = BATTLESHIP_B(reg_a5)->dying_dir;
-        func_00201710();
+        bullet_cancel_with_flags();
         BATTLESHIP_B(reg_a5)->dying_frames -= 1;
         if (BATTLESHIP_B(reg_a5)->dying_frames == 0) {
             enemy_remove();
@@ -3183,7 +3183,7 @@ void func_00159B20() {
         reg_d1.h[0] = ENTITY(reg_a6)->x.h;
         aim256_at_player();
         reg_d0.b[0] = ENTITY(reg_a6)[1].look.b.size;
-        func_00202590();
+        direction_step_toward();
         ENTITY(reg_a6)[1].look.b.size = (u8) reg_d0.b[0];
         reg_d1.b[0] = ENTITY(reg_a6)[1].look.b.size;
         reg_d4.w = 0;
@@ -3485,7 +3485,7 @@ void hover_gunner_first(void) {
     enemy_set_entity_count(0);
 }
 
-s32 func_00202180();
+s32 direction_to_target_player();
 extern u8 D_002587C0[];
 extern u8 D_002587E0[];
 
@@ -3501,7 +3501,7 @@ void hover_gunner_start(void) {
     enemy_path_start();
     if (enemy_move_end_requested == 0) {
         reg_d1.b[0] = ENTITY(reg_a6)->move.b.dir;
-        func_00202180();
+        direction_to_target_player();
         HOVER_GUNNER(reg_a5)->turret_dir = (u8) reg_d1.b[0];
         if (g_stage == 4) {
             ENTITY(reg_a6)->flags.h = 0xA200;
@@ -3848,7 +3848,7 @@ extern u8 small_tank_b_body_sprites[];
 
 s32 enemy_fire_zone_check();
 s32 score_add_masked();
-s32 func_002031E0();
+s32 entity_bounds_check_narrow();
 s32 wreck_spawn();
 extern u16 g_frame_mod2;
 extern u16 g_rank_10_16;
@@ -3859,7 +3859,7 @@ void small_tank_c(void) {
     s32 sprite_draw_layer2();
     enemy_path_step();
     if (enemy_move_end_requested != 0) return;
-    func_002031E0();
+    entity_bounds_check_narrow();
     switch (cond_flag) { case 0: goto skip_1; }
     if (SMALL_TANK(reg_a5)->seen == 0) goto block_touch;
     enemy_remove();

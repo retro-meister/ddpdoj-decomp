@@ -151,7 +151,7 @@ s32 enemy_hitbox_debug_draw();
 s32 enemy_remove();
 s32 score_add_no_chain();
 s32 score_add();
-s32 func_00201800();
+s32 bullet_cancel_with_flags_plain();
 s32 vibration_start_pad1();
 s32 vibration_start_pad2();
 extern u16 g_enemy_signal_4;
@@ -258,7 +258,7 @@ next_5:
     vibration_start_pad1(0xB4, 0x78);
     vibration_start_pad2(0xB4, 0x78);
     reg_d1.w = saved_d1;
-    func_00201800();
+    bullet_cancel_with_flags_plain();
     ENTITY(reg_a6)->flags.h = 0x8000;
     STAGE3_MIDBOSS(reg_a5)->dying = 1;
     g_enemy_signal_4 = 0;
@@ -892,7 +892,7 @@ void func_001D6160(void)
     bullet_fire256_double();
 }
 
-s32 func_00202730();
+s32 direction256_to_target_player();
 
 void func_001D61B0(arg1, arg2)
     s32 arg1;
@@ -935,7 +935,7 @@ void func_001D61B0(arg1, arg2)
                 if ((s32) reg_tmp.b[0] <= 0) {
                     ENTITY(reg_a6)[6].draw.b.priority = ENTITY(reg_a6)[6].draw.b.flip;
                     reg_d1.h[0] = 0x80;
-                    func_00202730();
+                    direction256_to_target_player();
                     reg_d7.b[0] = reg_d1.b[0];
                     reg_d0.w = 0x13;
                     spawn_request_add();
@@ -997,7 +997,7 @@ void stage3_midboss_mode_05(void) {
             reg_d1.h[0] >>= 2;
             reg_d0.b[0] -= reg_d1.b[0];
             ENTITY(reg_a6)[6].look.b.size = (u8) reg_d0.b[0];
-            func_00202730();
+            direction256_to_target_player();
             if (cond_flag == 0) {
                 reg_d0.w = 0x70004;
                 t1 = 0xF6000000;
@@ -1253,7 +1253,7 @@ void stage3_midboss_pod_start(void) {
 
 s32 sfx_explosion_air_small();
 s32 entity_draw_layer5_zoom();
-s32 func_00201F20();
+s32 entity_advance256();
 s32 entity_check_bounds();
 extern u8 D_00263710[];
 extern u8 D_00263750[];
@@ -1317,7 +1317,7 @@ next_6:
     if (g_enemies_stopped != 0) {
         goto next_15;
     }
-    func_00201F20();
+    entity_advance256();
     reg_tmp.b[0] = POD(reg_a5)->now.accel.b.countdown;
     POD(reg_a5)->now.accel.b.countdown -= 1;
     if ((s32) reg_tmp.b[0] > 0) {
@@ -1348,7 +1348,7 @@ next_8:
         goto next_10;
     }
     POD(reg_a5)->now.shot.b.countdown = POD(reg_a5)->now.shot.b.interval;
-    func_00202730();
+    direction256_to_target_player();
     if (cond_flag != 0) {
         goto next_10;
     }

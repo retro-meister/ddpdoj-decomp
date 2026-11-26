@@ -1412,7 +1412,7 @@ next_2:
     sprite_draw_with_score_entry_2();
 }
 
-s32 func_00200EE0();
+s32 binary_to_bcd();
 
 void hud_boss_hits_draw(void) {
     u32 save_d6;
@@ -1421,7 +1421,7 @@ void hud_boss_hits_draw(void) {
     if ((s16)reg_d0.h[0] >= 0) goto next_0;
     reg_d0.w = 0;
 next_0:
-    func_00200EE0();
+    binary_to_bcd();
     reg_d0.w = reg_d2.w;
     reg_d1.w = 0x5BBFFE00;
     reg_d1.h[0] += 0x440;

@@ -301,7 +301,7 @@ void stage5_boss_fire_loop1_form1_arm_guns_aimed(void) {
 }
 
 s32 rng_next_unsigned();
-s32 func_00201270();
+s32 rng_next_0_to_3();
 extern u16 D_00264760[];
 extern u32 D_0028DA08;
 
@@ -320,9 +320,9 @@ void stage5_boss_fire_loop1_form1_mouth_start(void) {
     if (0 > reg_d0.sb[0]) {
         MOUTH(reg_a4)->fixed_turn_left *= -1;
         MOUTH(reg_a4)->fixed_turn_right *= -1;
-        func_00201270();
+        rng_next_0_to_3();
         MOUTH(reg_a4)->fixed_turn_left += reg_d0.b[0];
-        func_00201270();
+        rng_next_0_to_3();
         MOUTH(reg_a4)->fixed_turn_right += reg_d0.b[0];
     }
     ENTITY(reg_a6)[1].misc.sb.user = 1;
@@ -566,7 +566,7 @@ void stage5_boss_fire_loop1_form1_arm_guns_fixed_start(void) {
     ARM_GUNS_B(reg_a4)->direction_right_bottom = (u8) reg_d0.b[0];
 }
 
-s32 func_00201100();
+s32 rng_next_d5();
 extern u8 D_00264600[];
 
 void stage5_boss_fire_loop1_form1_arm_guns_fixed(void) {
@@ -625,7 +625,7 @@ block_7:
                 reg_d5.h[0] += 0x7FFF + 0x7601;
                 if ((s32) reg_d5.h[0] <= (s32) reg_d7.h[0]) {
                     reg_d0.w += 0x100000;
-                    func_00201100();
+                    rng_next_d5();
                     reg_d5.b[0] = (u8) ((s8) reg_d5.b[0] >> 1);
                     reg_d1.b[0] += reg_d5.b[0];
                     bullet_fire256();
@@ -808,7 +808,7 @@ void stage5_boss_fire_loop1_form1_horn(void) {
         reg_d0.b[0] = HORN(reg_a4)->burst.t.count;
         temp_a0 = HORN(reg_a4)->burst.t.reload;
         if (temp_a0 == reg_d0.b[0]) {
-            func_00201270();
+            rng_next_0_to_3();
             HORN(reg_a4)->direction_shift = (u8) reg_d0.b[0];
         }
         reg_a0 = (u8 *)(g_player1);

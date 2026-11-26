@@ -25,7 +25,7 @@ s32 boss_phase_stop_all();
 s32 boss_attack_stop_all();
 s32 score_add_no_chain();
 s32 score_add();
-s32 func_002016D0();
+s32 bullet_cancel_on_boss_hit();
 extern u8 g_game_mode;
 extern s32 g_boss_score;
 extern u16 g_enemy_signal_c;
@@ -277,7 +277,7 @@ second_form:
     STAGE4_DAMAGE(reg_a6)->second_form = 1;
     boss_attack_stop_all();
     boss_phase_stop_all();
-    func_002016D0();
+    bullet_cancel_on_boss_hit();
     reg_d0.w = 1;
     boss_phase_start();
     ENTITY(reg_a6)[2].misc.b.draw_layer = 1;
@@ -294,14 +294,14 @@ check_rage:
     boss_phase_start();
     stage4_boss_right_pod_blow_off();
     stage4_boss_left_pod_blow_off();
-    func_002016D0();
+    bullet_cancel_on_boss_hit();
 check_time:
     stage4_boss_time_limit();
 }
 
 s32 func_0013F3C0();
-s32 func_00201490();
-s32 func_00203460();
+s32 bullet_cancel_for_alive_players();
+s32 boss_defeat_begin();
 s32 slowdown_turn_off();
 extern u8 g_boss_present_b1;
 
@@ -311,8 +311,8 @@ void stage4_boss_defeated(void) {
     g_boss_present_b1 |= 0x80;
     slowdown_turn_off();
     func_0013F3C0();
-    func_00203460();
-    func_00201490();
+    boss_defeat_begin();
+    bullet_cancel_for_alive_players();
     stage4_boss_stop_damage();
     boss_attack_stop_all();
     boss_phase_stop_all();

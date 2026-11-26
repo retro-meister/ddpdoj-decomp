@@ -148,7 +148,7 @@ void stage1_boss_fire_clear(void) {
 s32 func_001713B0();
 s32 enemy_switch_target_player();
 s32 rng_next();
-s32 func_00202730();
+s32 direction256_to_target_player();
 
 void stage1_boss_fire_body_ports_rage_start(void) {
     enemy_switch_target_player();
@@ -156,7 +156,7 @@ void stage1_boss_fire_body_ports_rage_start(void) {
     RAGE(reg_a4)->speed = 0;
     RAGE(reg_a4)->spread = 8;
     RAGE(reg_a4)->direction = 0x80U;
-    func_00202730();
+    direction256_to_target_player();
     if (cond_flag == 0) {
         rng_next();
         reg_d1.b[0] += reg_d0.b[0];
@@ -386,7 +386,7 @@ void stage1_boss_fire_gatling_a_start(void) {
 }
 
 s32 bullet_fire256_fixed();
-s32 func_00201200();
+s32 rng_next_bit_d5();
 s32 aim_at_player();
 s32 direction_turn_toward();
 
@@ -445,7 +445,7 @@ void stage1_boss_fire_gatling_a(void) {
             reg_tmp.w = reg_d0.w;
             reg_d0.h[1] = reg_d0.h[0];
             reg_d0.h[0] = 7;
-            func_00201200();
+            rng_next_bit_d5();
             reg_d5.b[0] -= 1;
             reg_d5.b[0] += GATLING(reg_a4)->target_angle;
             reg_a0 = (u8 *)(stage1_boss_gatling_muzzles);
@@ -813,7 +813,7 @@ void stage1_boss_fire_gatling_b(void) {
             reg_tmp.w = reg_d0.w;
             reg_d0.h[1] = reg_d0.h[0];
             reg_d0.h[0] = 7;
-            func_00201200();
+            rng_next_bit_d5();
             reg_d5.b[0] -= 1;
             reg_d5.b[0] += GATLING(reg_a4)->target_angle;
             reg_a0 = (u8 *)(stage1_boss_gatling_muzzles);

@@ -208,10 +208,10 @@ void stage1_midboss_place_arms(void) {
 }
 
 s32 rng_next_bit();
-s32 func_00201270();
+s32 rng_next_0_to_3();
 
 void stage1_midboss_next_spin(void) {
-    func_00201270();
+    rng_next_0_to_3();
     reg_tmp.h[0] = (u16) (s8) reg_d0.b[0];
     reg_d0.h[0] = reg_tmp.h[0];
     reg_d0.b[0] += reg_d0.b[0];
@@ -219,7 +219,7 @@ void stage1_midboss_next_spin(void) {
     STAGE1_MIDBOSS(reg_a5)->spin_top_speed = (u8) reg_d0.b[0];
     STAGE1_MIDBOSS(reg_a5)->spin_speed = 0;
     STAGE1_MIDBOSS(reg_a5)->spin_step.b.countdown = 0;
-    func_00201270();
+    rng_next_0_to_3();
     reg_d0.b[0] += reg_d0.b[0];
     reg_d0.b[0] += 0x10;
     STAGE1_MIDBOSS(reg_a5)->spin_step.b.interval = (u8) reg_d0.b[0];
@@ -228,7 +228,7 @@ void stage1_midboss_next_spin(void) {
     if (reg_d0.h[0] != 0) {
         STAGE1_MIDBOSS(reg_a5)->spin_backward = 1;
     }
-    func_00201270();
+    rng_next_0_to_3();
     reg_d0.b[0] *= 4;
     reg_d0.b[0] += 0x10;
     STAGE1_MIDBOSS(reg_a5)->spin_hold = (u8) reg_d0.b[0];
@@ -436,7 +436,7 @@ s32 enemy_remove();
 s32 sfx_explosion_air_small();
 s32 score_add_no_chain();
 s32 score_add();
-s32 func_00201800();
+s32 bullet_cancel_with_flags_plain();
 s32 entity_follow_scroll();
 s32 aim256_at_player();
 s32 vibration_start_pad1();
@@ -460,7 +460,7 @@ void stage1_midboss_main(void) {
     if (STAGE1_MIDBOSS(reg_a5)->dying != 0) {
         entity_follow_scroll();
         reg_d1.h[0] = STAGE1_MIDBOSS(reg_a5)->wreck_value;
-        func_00201800();
+        bullet_cancel_with_flags_plain();
         STAGE1_MIDBOSS(reg_a5)->dying -= 1;
         temp_a0 = STAGE1_MIDBOSS(reg_a5)->dying;
         if (temp_a0 != 0) {
@@ -517,7 +517,7 @@ void stage1_midboss_main(void) {
                 reg_a0 = (u8 *) stage1_midboss_fade_script;
                 fade_in_and_release();
                 reg_d1.h[0] = STAGE1_MIDBOSS(reg_a5)->wreck_value;
-                func_00201800();
+                bullet_cancel_with_flags_plain();
                 ENTITY(reg_a6)->flags.h = 0x8080;
                 goto block_18;
             }

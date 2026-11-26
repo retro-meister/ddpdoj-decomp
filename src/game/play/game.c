@@ -92,12 +92,12 @@ void func_00135010(void) {
     g_scroll_line = 0;
 }
 
-s32 func_00128660();                            /* extern */
+s32 bullets_clear();                            /* extern */
 s32 explosions_clear();                            /* extern */
 s32 enemies_reset();                            /* extern */
 s32 func_0016AAB0();                            /* extern */
 s32 func_001B82D0();                            /* extern */
-s32 func_00209E60();                            /* extern */
+s32 sparks_clear();                            /* extern */
 s32 func_002114A0();                            /* extern */
 
 void func_00135070(void) {
@@ -107,9 +107,9 @@ void func_00135070(void) {
     func_001B82D0();
     func_002114A0();
     func_001368C0();
-    func_00209E60();
+    sparks_clear();
     func_0016AAB0();
-    func_00128660();
+    bullets_clear();
     reg_d0.h[0] = 1;
     task_start();
     reg_tmp.h[0] = reg_d0.h[1];
@@ -950,7 +950,7 @@ void func_00136400(void) {
     player_slots_update();
 }
 
-s32 func_00125DE0();
+s32 pickups_clear();
 s32 func_00131630();
 s32 func_001340F0();
 s32 func_0013FD80();
@@ -1020,7 +1020,7 @@ void func_00136450(void) {
     func_00131630();
     func_00171ED0();
     if (g_loop == 0) {
-        func_00125DE0();
+        pickups_clear();
         func_001AE490();
         func_001AACC0();
         func_0013FD80();
@@ -1116,7 +1116,7 @@ s32 rank_update();
 extern u8 g_stage_load_state;
 extern u16 g_game_frame;
 extern u8 D_0028EC4C;
-extern s16 D_00299768[];
+extern s16 g_bullet_limit_raised_1[];
 
 void game_task(void) {
     u8 t;
@@ -1143,7 +1143,7 @@ void game_task(void) {
         rank_update();
         func_00134380();
         if (g_loop != 0) {
-            D_00299768[0] = 1;
+            g_bullet_limit_raised_1[0] = 1;
         }
     }
     return;

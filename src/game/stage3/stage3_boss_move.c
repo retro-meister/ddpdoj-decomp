@@ -120,13 +120,13 @@ void stage3_boss_move_wander_low_start(void) {
 }
 
 s32 rng_next();
-s32 func_002024C0();
+s32 entity_turn_toward();
 
 void stage3_boss_move_wander_low(void) {
     entity_velocity();
     if (WANDER(reg_a4)->turning != 0) {
         reg_d1.b[0] = WANDER(reg_a4)->target_dir;
-        func_002024C0();
+        entity_turn_toward();
         if (WANDER(reg_a4)->target_dir == reg_d1.b[0]) {
             WANDER(reg_a4)->turning = 0U;
         }
@@ -173,7 +173,7 @@ void stage3_boss_move_wander_high(void) {
     entity_velocity();
     if (WANDER(reg_a4)->turning != 0) {
         reg_d1.b[0] = WANDER(reg_a4)->target_dir;
-        func_002024C0();
+        entity_turn_toward();
         if (WANDER(reg_a4)->target_dir == reg_d1.b[0]) {
             WANDER(reg_a4)->turning = 0U;
         }
@@ -220,7 +220,7 @@ void stage3_boss_move_wander_mid(void) {
     entity_velocity();
     if (WANDER(reg_a4)->turning != 0) {
         reg_d1.b[0] = WANDER(reg_a4)->target_dir;
-        func_002024C0();
+        entity_turn_toward();
         if (WANDER(reg_a4)->target_dir == reg_d1.b[0]) {
             WANDER(reg_a4)->turning = 0U;
         }

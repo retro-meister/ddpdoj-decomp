@@ -210,7 +210,7 @@ void stage5_midboss4_first(void) {
 extern u8 D_00265C90[];
 extern u8 D_0028DA30[8];
 extern u16 g_enemy_signal_1;
-extern s16 D_00299768[];
+extern s16 g_bullet_limit_raised_1[];
 
 void stage5_midboss4_start() {
     u16 temp_a1;
@@ -224,7 +224,7 @@ void stage5_midboss4_start() {
     reg_d0.h[0] = 2;
     enemy_set_task_state();
     g_enemy_signal_1 = 1;
-    D_00299768[0] = 1;
+    g_bullet_limit_raised_1[0] = 1;
 }
 
 s32 ground_speeds_request();
@@ -434,7 +434,7 @@ void stage5_midboss4_set_move(void) {
     }
 }
 
-s32 func_00201F20();                            /* extern */
+s32 entity_advance256();                            /* extern */
 
 void stage5_midboss4_move(void) {
     reg_d0.h[0] = STAGE5_MIDBOSS4_MOVE(reg_a6)->mode;
@@ -455,7 +455,7 @@ void stage5_midboss4_move(void) {
         stage5_midboss4_move_away();
         break;
     }
-    func_00201F20();
+    entity_advance256();
 }
 
 s32 rng_next_unsigned();
@@ -593,7 +593,7 @@ next_speed:
     }
 }
 
-s32 func_00202590();
+s32 direction_step_toward();
 extern u16 D_00265E50[];
 extern u16 g_game_frame;
 
@@ -660,7 +660,7 @@ next_speed:
         reg_d1.h[0] = ENTITY(reg_a6)->x.h;
         direction256_between();
         reg_d0.b[0] = ENTITY(reg_a6)->move.b.dir;
-        func_00202590();
+        direction_step_toward();
         ENTITY(reg_a6)->move.b.dir = (u8) reg_d1.b[0];
         reg_d2.h[0] = STAGE5_MIDBOSS4_MOVE(reg_a6)->target_y;
         reg_d3.h[0] = STAGE5_MIDBOSS4_MOVE(reg_a6)->target_x;
@@ -780,7 +780,7 @@ void stage5_midboss4_attack(void) {
 
 s32 bullet_fire256_2way();
 s32 bullet_fire256();
-s32 func_00202730();
+s32 direction256_to_target_player();
 extern u16 g_direction64_offsets_2CC[];
 extern u16 g_direction64_offsets_432[];
 extern u16 g_bullets_blocked;
@@ -839,7 +839,7 @@ void stage5_midboss4_attack_fan() {
     if ((s32) reg_tmp.b[0] <= 0) {
         STAGE5_MIDBOSS4_FAN(reg_a4)->aimed_timer.b.countdown = STAGE5_MIDBOSS4_FAN(reg_a4)->aimed_timer.b.interval;
         if (g_bullets_blocked == 0) {
-            func_00202730();
+            direction256_to_target_player();
             if (cond_flag == 0) {
                 reg_d0.w = 0x30004;
                 reg_d2.h[1] = ENTITY(reg_a6)->y.h;
@@ -936,7 +936,7 @@ s32 sfx_explosion_air_medium();
 s32 sfx_explosion_extra_1();
 s32 func_001D5040();
 s32 rng_next();
-s32 func_00201710();
+s32 bullet_cancel_with_flags();
 s32 vibration_start_pad1();
 s32 vibration_start_pad2();
 extern u16 D_00265EC0[];
@@ -949,7 +949,7 @@ void stage5_midboss4_dying(void) {
 
     if (STAGE5_MIDBOSS4_DAMAGE(reg_a6)->dying != 0) {
         reg_d1.h[0] = STAGE5_MIDBOSS4_DAMAGE(reg_a6)->hit_by;
-        func_00201710();
+        bullet_cancel_with_flags();
         temp_a0 = STAGE5_MIDBOSS4_DAMAGE(reg_a6)->dying_step;
         if (temp_a0 == 2) {
             STAGE5_MIDBOSS4_DAMAGE(reg_a6)->gone = 1;

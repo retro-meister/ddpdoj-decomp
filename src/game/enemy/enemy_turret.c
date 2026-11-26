@@ -171,7 +171,7 @@ s32 sfx_explosion_air_small();
 s32 score_add_no_chain();
 s32 score_add();
 s32 rng_next_bit();
-s32 func_00201230();
+s32 rng_next_0_to_2();
 s32 aim_at_player();
 s32 direction_turn_toward();
 extern u16 small_tank_destroyed_explosions[];
@@ -461,7 +461,7 @@ block_g:
     if (reg_d0.b[0] != 0) goto next_8;
     ENTITY(reg_a6)->attr.b.flip |= 0x20;
 next_8:
-    func_00201230();
+    rng_next_0_to_2();
     reg_d0.h[0] *= 4;
     reg_a0 = (u8 *)D_002420A8;
     ENTITY(reg_a6)->hit_y_plus.h = (reg_d0.h[0] != 0) ? *(u16 *)((u8 *)reg_a0 + ((s16)reg_d0.h[0] & ~1)) : *(u16 *)reg_a0;
@@ -891,7 +891,7 @@ block_f:
     if (reg_d0.b[0] != 0) goto next_8;
     ENTITY(reg_a6)->attr.b.flip |= 0x20;
 next_8:
-    func_00201230();
+    rng_next_0_to_2();
     reg_d0.h[0] *= 4;
     reg_a0 = (u8 *)D_002420A8;
     ENTITY(reg_a6)->hit_y_plus.h = (reg_d0.h[0] != 0) ? *(u16 *)((u8 *)reg_a0 + ((s16)reg_d0.h[0] & ~1)) : *(u16 *)reg_a0;

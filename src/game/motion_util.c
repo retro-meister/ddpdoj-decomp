@@ -3,40 +3,40 @@
 #include "layers.h"
 #include "entity.h"
 
-extern void (*D_00267120[8])();
+extern void (*direction_octant_combines[8])();
 
-void func_00201920(void);
-void func_00201A00(void);
-void func_00201B30(void);
+void bullet_cancel_credit_alive(void);
+void bullets_cancel_sweep(void);
+void bullet_cancel_skip(void);
 void velocity_from_dir(void);
 void velocity_from_direction(void);
-void func_00201F70();
-void func_00201FE0(void);
-void func_00202040(void);
-void func_002021B0(void);
-void func_002021D0(void);
+void entity_advance256_apply();
+void entity_advance_scaled_apply(void);
+void velocity_from_dir_scaled(void);
+void direction_to_entity(void);
+void direction_to_point(void);
 void direction_between(void);
-void func_002024C0(void);
-void func_002024F0(void);
+void entity_turn_toward(void);
+void entity_dir_turned_toward(void);
 void direction_turn_toward(void);
-void func_00202760(void);
-void func_00202780(void);
+void direction256_to_entity(void);
+void direction256_to_point(void);
 void direction256_between(void);
-void func_00202AE0(void);
-void func_00202B30(void);
+void player_distance_or_max(void);
+void entity_distance_to_entity(void);
 void entity_distance_to(void);
 void distance_between(void);
-void func_00202C40(void);
-void func_00202D00(void);
+void cond_flag_clear(void);
+void entity_x_distance(void);
 void target_player_get(void);
-void func_002032F0(void);
-void func_00203630(void);
+void player_pair_pick_alive(void);
+void stage_clear_task_start(void);
 void func_00203660(void);
-void func_002037B0(void);
-void func_002037E0(void);
+void heli_x_limit_apply(void);
+void heli_x_limit_far(void);
 
 
-s32 func_00201450();
+s32 bullet_cancel_hyper_active();
 extern u32 reg_save_d7;
 extern u32 reg_save_d6;
 extern u32 reg_save_d5;
@@ -53,16 +53,16 @@ extern u8 *reg_save_a2;
 extern u8 *reg_save_a1;
 extern s32 reg_save_a0;
 extern u8 g_boss_present_b1;
-extern u16 D_00299764[];
-extern u16 D_00299766[];
+extern u16 g_bullet_cancel[];
+extern u16 g_bullet_cancel_kind[];
 
-void func_00201710(void) {
-    func_00201450();
+void bullet_cancel_with_flags(void) {
+    bullet_cancel_hyper_active();
     if (cond_flag == 0) {
-        D_00299764[0] = 1;
-        D_00299766[0] = 0xFFFF;
+        g_bullet_cancel[0] = 1;
+        g_bullet_cancel_kind[0] = 0xFFFF;
         if (g_boss_present_b1 & 2) {
-            func_00201B30();
+            bullet_cancel_skip();
             return;
         }
         reg_save_d0 = reg_d0.w;
@@ -81,18 +81,18 @@ void func_00201710(void) {
         reg_save_a5 = reg_a5;
         reg_save_a6 = reg_a6;
         reg_d1.h[0] |= 0x8000;
-        func_00201A00();
+        bullets_cancel_sweep();
     }
 }
 
 
-void func_00201800(void) {
-    func_00201450();
+void bullet_cancel_with_flags_plain(void) {
+    bullet_cancel_hyper_active();
     if (cond_flag == 0) {
-        ((s16 *)D_00299766)[0] = 0;
-        ((s16 *)D_00299764)[0] = 1;
+        ((s16 *)g_bullet_cancel_kind)[0] = 0;
+        ((s16 *)g_bullet_cancel)[0] = 1;
         if (g_boss_present_b1 & 2) {
-            func_00201B30();
+            bullet_cancel_skip();
             return;
         }
         reg_save_d0 = reg_d0.w;
@@ -111,23 +111,23 @@ void func_00201800(void) {
         reg_save_a5 = reg_a5;
         reg_save_a6 = reg_a6;
         reg_d1.h[0] |= 0x8000;
-        func_00201A00();
+        bullets_cancel_sweep();
     }
 }
 
 
-void func_002018E0(void) {
+void bullet_cancel_credit_players(void) {
     if (!(g_boss_present_b1 & 2)) {
-        func_00201920();
+        bullet_cancel_credit_alive();
         return;
     }
-    func_00201B30();
+    bullet_cancel_skip();
 }
 
 extern s16 g_player2[];
 extern s16 g_player1[];
 
-void func_00201920(void) {
+void bullet_cancel_credit_alive(void) {
     reg_save_d0 = reg_d0.w;
     reg_save_d1 = reg_d1.w;
     reg_save_d2 = reg_d2.w;
@@ -150,7 +150,7 @@ void func_00201920(void) {
     if ((g_player2[0] < 0) && !(PLAYER(g_player2)->flags.b[1] & 1)) {
         reg_d1.h[0] |= 8;
     }
-    func_00201A00();
+    bullets_cancel_sweep();
 }
 
 s32 func_001A9180();
@@ -160,7 +160,7 @@ extern s32 reg_save_a3;
 extern s32 reg_save_a0;
 extern u8 g_bullets[67216];
 
-void func_00201A00(void) {
+void bullets_cancel_sweep(void) {
     u16 *var_a0;
     var_a0 = (u16 *)(((u16 *)g_bullets));
     reg_d2.w = 0;
@@ -210,7 +210,7 @@ extern Reg32 reg_d5;
 extern Reg32 reg_d6;
 extern Reg32 reg_d7;
 
-void func_00201B30(void) {
+void bullet_cancel_skip(void) {
     u32 d5, d4, d3, d2, d1, d0, d7, d6;
 
     d4 = reg_d4.w;
@@ -245,7 +245,7 @@ void entity_follow_scroll(void) {
     }
 }
 
-void func_00201BE0(void) {
+void layer_b_shift_get(void) {
     if (g_enemies_stopped == 0) {
         reg_d2.h[0] = g_layer_b_shift[0];
         reg_d3.h[0] = g_layer_b_shift[1];
@@ -256,7 +256,7 @@ void func_00201BE0(void) {
 }
 
 
-void func_00201C20(void) {
+void velocity_from_dir_unless_stopped(void) {
     if (g_enemies_stopped == 0) {
         velocity_from_dir();
         return;
@@ -290,13 +290,13 @@ void velocity_from_dir(void) {
 
 extern u8 D_00262570[];
 extern u8 D_00262572[];
-extern u8 D_002671E0[];
+extern u8 dir_vector_index_fine[];
 
 void velocity_from_direction(void) {
     s32 t;
 
     reg_d1.h[0] *= 4;
-    reg_d3.h[0] = *(s16 *)(D_002671E0 + reg_d1.h[0] * 2);
+    reg_d3.h[0] = *(s16 *)(dir_vector_index_fine + reg_d1.h[0] * 2);
     t = reg_d3.h[0] * 2;
     reg_d2.w = reg_d0.h[0] * *(u16 *)(D_00262570 + t);
     reg_d3.w = reg_d0.h[0] * *(u16 *)(D_00262572 + t);
@@ -319,12 +319,12 @@ void velocity_from_direction(void) {
     }
 }
 
-extern u8 D_00267660[];
+extern u8 dir_vector_index[];
 
 void velocity_from_dir256(void) {
     s32 t;
 
-    reg_d3.h[0] = *(s16 *)(D_00267660 + reg_d1.h[0] * 2);
+    reg_d3.h[0] = *(s16 *)(dir_vector_index + reg_d1.h[0] * 2);
     t = reg_d3.h[0] * 2;
     reg_d2.w = reg_d0.h[0] * *(u16 *)(D_00262570 + t);
     reg_d3.w = reg_d0.h[0] * *(u16 *)(D_00262572 + t);
@@ -348,8 +348,8 @@ void velocity_from_dir256(void) {
 }
 
 
-void func_00201F20(void) {
-    extern void func_00201F70(u8, void *);
+void entity_advance256(void) {
+    extern void entity_advance256_apply(u8, void *);
     u8 temp_a0;
 
     reg_d0.w = 0;
@@ -362,11 +362,11 @@ void func_00201F20(void) {
         reg_d2.w = 0;
         return;
     }
-    func_00201F70(temp_a0, reg_a6);
+    entity_advance256_apply(temp_a0, reg_a6);
 }
 
 
-void func_00201F70() {
+void entity_advance256_apply() {
     velocity_from_dir256();
     ENTITY(reg_a6)->y.h += reg_d2.h[0];
     ENTITY(reg_a6)->x.h += reg_d3.h[0];
@@ -374,20 +374,20 @@ void func_00201F70() {
 
 
 
-void func_00201FC0(void) {
+void entity_advance_scaled(void) {
     u8 *base = (u8 *)((void *)reg_a6);
 
     reg_d0.w = 0;
     reg_d0.b[0] = base[0x1B];
     reg_d1.w = 0;
     reg_d1.b[0] = base[0x1A];
-    func_00201FE0();
+    entity_advance_scaled_apply();
 }
 
 
-void func_00201FE0(void) {
+void entity_advance_scaled_apply(void) {
     if (g_enemies_stopped == 0) {
-        func_00202040();
+        velocity_from_dir_scaled();
         ENTITY(reg_a6)->y.h += reg_d2.h[0];
         ENTITY(reg_a6)->x.h += reg_d3.h[0];
         return;
@@ -396,10 +396,10 @@ void func_00201FE0(void) {
     reg_d3.w = 0;
 }
 
-void func_00202040(void) {
+void velocity_from_dir_scaled(void) {
     s32 t;
 
-    reg_d3.h[0] = *(s16 *)(D_00267660 + reg_d1.h[0] * 2);
+    reg_d3.h[0] = *(s16 *)(dir_vector_index + reg_d1.h[0] * 2);
     t = reg_d3.h[0] * 2;
     reg_d2.w = reg_d0.h[0] * *(u16 *)(D_00262570 + t);
     reg_d3.w = reg_d0.h[0] * *(u16 *)(D_00262572 + t);
@@ -433,24 +433,24 @@ void aim_at_player(void) {
 }
 
 
-void func_00202180(void) {
+void direction_to_target_player(void) {
     target_player_get();
     if (cond_flag == 0) {
-        func_002021B0();
+        direction_to_entity();
     }
 }
 
 
 
-void func_002021B0(void) {
+void direction_to_entity(void) {
     u8 *base = (u8 *)((void *)reg_a0);
     reg_d2.h[0] = *(u16 *)(base + 0x2);
     reg_d3.h[0] = *(u16 *)(base + 0x4);
-    func_002021D0();
+    direction_to_point();
 }
 
 
-void func_002021D0(void) {
+void direction_to_point(void) {
     reg_d0.h[0] = *(u16 *)(reg_a6 + 2);
     reg_d1.h[0] = *(u16 *)(reg_a6 + 4);
     direction_between();
@@ -460,8 +460,8 @@ void func_002021D0(void) {
 #pragma divbyzerocheck on
 typedef void (*Fn)();
 
-extern u8 D_00267140[];
-extern u8 D_00267150[];
+extern u8 direction_octant_bases[];
+extern u8 direction_ratio_angles[];
 
 void direction_between(void) {
     reg_d4.h[0] = 0x1800;
@@ -506,22 +506,22 @@ next_1:
     if (!((s32) reg_d1.h[0] < (s32) reg_d2.h[0])) goto next_2;
     reg_d0.h[0] += 1;
 next_2:
-    reg_d0.b[0] = *(s8 *)(D_00267150 + reg_d0.h[0]);
-    reg_d1.h[0] = *(s16 *)(D_00267140 + (reg_d4.h[0] & ~1));
-    ((Fn)*(u32 *)((u8 *)((u8 *)D_00267120) + (((s32) reg_d4.h[0] >> 1) * 4)))();
+    reg_d0.b[0] = *(s8 *)(direction_ratio_angles + reg_d0.h[0]);
+    reg_d1.h[0] = *(s16 *)(direction_octant_bases + (reg_d4.h[0] & ~1));
+    ((Fn)*(u32 *)((u8 *)((u8 *)direction_octant_combines) + (((s32) reg_d4.h[0] >> 1) * 4)))();
 block_rts:
     return;
 }
 #pragma pop
 
-void func_00202410(void) {
+void direction_octant_subtract(void) {
     reg_d1.h[0] -= reg_d0.h[0];
     reg_d1.h[0] += 4;
     reg_d1.h[0] >>= 3;
     reg_d1.h[0] &= 0x3F;
 }
 
-void func_00202450(void) {
+void direction_octant_add(void) {
     reg_d1.h[0] += reg_d0.h[0];
     reg_d1.h[0] += 4;
     reg_d1.h[0] >>= 3;
@@ -529,21 +529,21 @@ void func_00202450(void) {
 }
 
 
-void func_00202490(void) {
-    func_00202180();
+void entity_turn_to_target_player(void) {
+    direction_to_target_player();
     if (cond_flag == 0) {
-        func_002024C0();
+        entity_turn_toward();
     }
 }
 
 
-void func_002024C0(void) {
-    func_002024F0();
+void entity_turn_toward(void) {
+    entity_dir_turned_toward();
     ENTITY(reg_a6)->move.b.dir = (u8) reg_d1.b[0];
 }
 
 
-void func_002024F0(void) {
+void entity_dir_turned_toward(void) {
     *(u8 *)&reg_d0 = ENTITY(reg_a6)->move.b.dir;
     direction_turn_toward();
 }
@@ -564,7 +564,7 @@ void direction_turn_toward(void) {
     reg_d1.h[0] = reg_d0.h[0];
 }
 
-void func_00202590(void) {
+void direction_step_toward(void) {
     reg_d1.b[0] -= reg_d0.b[0];
     if (reg_d1.b[0] != 0) {
         reg_d0.b[0] += 1;
@@ -576,7 +576,7 @@ void func_00202590(void) {
     reg_d1.h[0] = (u16) reg_d1.b[0];
 }
 
-void func_002025E0(void) {
+void direction_steps_toward(void) {
     u32 tmp;
 
     reg_d0.h[0] = reg_d0.b[0];
@@ -622,23 +622,23 @@ void aim256_at_player(void) {
 }
 
 
-void func_00202730(void) {
+void direction256_to_target_player(void) {
     target_player_get();
     if (cond_flag == 0) {
-        func_00202760();
+        direction256_to_entity();
     }
 }
 
 
 
-void func_00202760(void) {
+void direction256_to_entity(void) {
     reg_d2.h[0] = *(u16 *)(reg_a0 + 2);
     reg_d3.h[0] = *(u16 *)(reg_a0 + 4);
-    func_00202780();
+    direction256_to_point();
 }
 
 
-void func_00202780(void) {
+void direction256_to_point(void) {
     reg_d0.h[0] = *(u16 *)(reg_a6 + 2);
     reg_d1.h[0] = *(u16 *)(reg_a6 + 4);
     direction256_between();
@@ -646,8 +646,8 @@ void func_00202780(void) {
 
 #pragma push
 #pragma divbyzerocheck on
-extern u8 D_002670C0[];
-extern u8 D_002670D0[];
+extern u8 direction256_octant_bases[];
+extern u8 direction256_ratio_angles[];
 
 void direction256_between(void) {
     reg_d4.h[0] = 0x1800;
@@ -687,8 +687,8 @@ next_1:
     if (!((s32) reg_d2.h[0] > (s32) reg_d1.h[0])) goto next_2;
     reg_d0.h[0] += 1;
 next_2:
-    reg_d0.b[0] = *(s8 *)(D_002670D0 + reg_d0.h[0]);
-    reg_d1.h[0] = *(s16 *)(D_002670C0 + (reg_d4.h[0] & ~1));
+    reg_d0.b[0] = *(s8 *)(direction256_ratio_angles + reg_d0.h[0]);
+    reg_d1.h[0] = *(s16 *)(direction256_octant_bases + (reg_d4.h[0] & ~1));
     switch ((s32) reg_d4.h[0] >> 1) {
     case 0:
         reg_d1.h[0] += reg_d0.h[0];
@@ -730,16 +730,16 @@ block_rts:
 
 
 
-void func_00202A80(void)
+void nearest_player_distance(void)
 {
     s16 firstResult;
 
     reg_a0 = ((u8 *)g_player1);
-    func_00202AE0();
+    player_distance_or_max();
     firstResult = (s16)reg_d0.h[0];
 
     reg_a0 = ((u8 *)g_player2);
-    func_00202AE0();
+    player_distance_or_max();
     reg_d1.h[0] = (u16)firstResult;
 
     if (reg_d0.h[0] > reg_d1.h[0]) {
@@ -748,17 +748,17 @@ void func_00202A80(void)
 }
 
 
-void func_00202AE0(void) {
+void player_distance_or_max(void) {
     reg_d0.h[0] = 0x7FFF;
     if (*(s16 *)reg_a0 >= 0) {
-        func_00202C40();
+        cond_flag_clear();
         return;
     }
-    func_00202B30();
+    entity_distance_to_entity();
 }
 
 
-void func_00202B30(void) {
+void entity_distance_to_entity(void) {
     reg_d2.h[0] = *(u16 *)(reg_a0 + 2);
     reg_d3.h[0] = *(u16 *)(reg_a0 + 4);
     entity_distance_to();
@@ -795,29 +795,29 @@ void distance_between(void) {
     }
     reg_d1.h[0] >>= 1;
     reg_d0.h[0] += reg_d1.h[0];
-    func_00202C40();
+    cond_flag_clear();
 }
 
 
-void func_00202C40(void) {
+void cond_flag_clear(void) {
     (*(u8 *)&cond_flag) = 0;
 }
 
 
-void func_00202C50(void) {
+void nearest_player_by_x(void) {
     s16 *temp_s0;
 
     reg_d0.h[0] = 0x7FFF;
     reg_a0 = (u8 *)(g_player1);
     reg_d1.h[0] = reg_d0.h[0];
     if (*(s16 *)reg_a0 < 0) {
-        func_00202D00();
+        entity_x_distance();
     }
     temp_s0 = (s16 *)(reg_a0);
     reg_a0 = (u8 *)(g_player2);
     if (*(s16 *)reg_a0 < 0) {
         reg_d1.h[0] = reg_d0.h[0];
-        func_00202D00();
+        entity_x_distance();
         reg_a1 = (u8 *)(reg_a0);
     }
     reg_a0 = (u8 *)(temp_s0);
@@ -827,7 +827,7 @@ void func_00202C50(void) {
     }
 }
 
-void func_00202D00(void) {
+void entity_x_distance(void) {
     reg_d2.h[0] = *(u16 *)(reg_a0 + 4);
     reg_d0.h[0] = ENTITY(reg_a6)->x.h;
     reg_d0.h[0] -= reg_d2.h[0];
@@ -837,15 +837,15 @@ void func_00202D00(void) {
     cond_flag = 0;
 }
 
-extern u8 D_00267030[];
-extern u8 D_00267050[];
-extern u8 D_00267070[];
-extern u8 D_00267090[];
+extern u8 shot_limits_y[];
+extern u8 shot_limits_x[];
+extern u8 shot_limits_y_second_loop[];
+extern u8 shot_limits_x_second_loop[];
 extern u16 g_loop;
 extern u16 g_stage_x4;
 
 
-void func_00202D50(void) {
+void entity_in_shot_limits(void) {
     u8 *save_a0;
     u32 save_d0;
     u32 save_d1;
@@ -854,9 +854,9 @@ void func_00202D50(void) {
     save_d0 = reg_d0.w;
     save_a0 = reg_a0;
     reg_d0.h[0] = g_stage_x4;
-    reg_a0 = (u8 *)D_00267030;
+    reg_a0 = (u8 *)shot_limits_y;
     if (g_loop == 0) goto next_1;
-    reg_a0 = (u8 *)D_00267070;
+    reg_a0 = (u8 *)shot_limits_y_second_loop;
 next_1:
     reg_d0.h[1] = (reg_d0.h[0] != 0) ? *(u16 *)(reg_a0 + ((s16) reg_d0.h[0] & ~1)) : *(u16 *)reg_a0;
     reg_d0.h[0] = ((reg_d0.h[0] + 2) != 0) ? *(u16 *)(reg_a0 + ((s16) (reg_d0.h[0] + 2) & ~1)) : *(u16 *)reg_a0;
@@ -870,9 +870,9 @@ next_1:
     reg_d1.h[0] += reg_d0.h[1];
     if (reg_tmp1.h[1] != 0) goto next_3;
     reg_d0.h[0] = g_stage_x4;
-    reg_a0 = (u8 *)D_00267050;
+    reg_a0 = (u8 *)shot_limits_x;
     if (g_loop == 0) goto next_2;
-    reg_a0 = (u8 *)D_00267090;
+    reg_a0 = (u8 *)shot_limits_x_second_loop;
 next_2:
     reg_d0.h[1] = (reg_d0.h[0] != 0) ? *(u16 *)(reg_a0 + ((s16) reg_d0.h[0] & ~1)) : *(u16 *)reg_a0;
     reg_d0.h[0] = ((reg_d0.h[0] + 2) != 0) ? *(u16 *)(reg_a0 + ((s16) (reg_d0.h[0] + 2) & ~1)) : *(u16 *)reg_a0;
@@ -894,7 +894,7 @@ next_3:
     reg_a0 = save_a0;
 }
 
-void func_00202F50(void) {
+void entity_in_shot_limits_y(void) {
     u8 *save_a0;
     u32 save_d0;
     u32 save_d1;
@@ -903,7 +903,7 @@ void func_00202F50(void) {
     save_d0 = reg_d0.w;
     save_a0 = reg_a0;
     reg_d0.h[0] = g_stage_x4;
-    reg_a0 = (u8 *)D_00267030;
+    reg_a0 = (u8 *)shot_limits_y;
     reg_d0.h[1] = (reg_d0.h[0] != 0) ? *(u16 *)(reg_a0 + ((s16) reg_d0.h[0] & ~1)) : *(u16 *)reg_a0;
     reg_d0.h[0] = ((reg_d0.h[0] + 2) != 0) ? *(u16 *)(reg_a0 + ((s16) (reg_d0.h[0] + 2) & ~1)) : *(u16 *)reg_a0;
     reg_d1.h[0] = ENTITY(reg_a6)->y.h;
@@ -950,7 +950,7 @@ void entity_check_bounds(void) {
     }
 }
 
-void func_00203120(void) {
+void entity_bounds_check_wide(void) {
     reg_d0.h[1] = *(u16 *) (reg_a6 + 2);
     reg_d0.h[0] = *(u16 *) (reg_a6 + 4);
     reg_tmp.w = 0;
@@ -973,7 +973,7 @@ next_1:
     cond_flag = 1;
 }
 
-void func_002031E0(void) {
+void entity_bounds_check_narrow(void) {
     reg_d0.h[1] = *(u16 *) (reg_a6 + 2);
     reg_d0.h[0] = *(u16 *) (reg_a6 + 4);
     reg_tmp.w = 0;
@@ -1011,11 +1011,11 @@ void target_player_get(void)
         reg_a0 = (u8 *)(*(u32 *)&reg_save_atmp);
     }
 
-    func_002032F0();
+    player_pair_pick_alive();
 }
 
 
-void func_002032F0(void) {
+void player_pair_pick_alive(void) {
     s16 *temp_a0;
 
     temp_a0 = (s16 *)reg_a0;
@@ -1034,7 +1034,7 @@ block_4:
 }
 
 
-void func_00203330(void) {
+void bullet_target_player_get(void) {
     reg_a0 = (u8 *)((s32 *)g_player1);
     reg_a1 = (u8 *)((s32 *)g_player2);
     if (*(u8 *)(reg_a6 + 0x2B) != 0) {
@@ -1042,10 +1042,10 @@ void func_00203330(void) {
         reg_a1 = (u8 *)(((s32 *)reg_a0));
         reg_a0 = (u8 *)((s32 *)reg_save_atmp);
     }
-    func_002032F0();
+    player_pair_pick_alive();
 }
 
-void func_00203380(void) {
+void players_alive_mask(void) {
     reg_d1.b[0] = PLAYER(g_player1)->flags.b[1];
     reg_d0.w = 0;
     if (((s8) reg_d1.b[0] < 0) && !(reg_d1.h[0] & (1 << reg_d0.h[0]))) {
@@ -1069,7 +1069,7 @@ void active_players_mask(void) {
 
 s32 music_stop();
 extern u16 g_player_shots_disabled;
-void func_00203460(void) {
+void boss_defeat_begin(void) {
     music_stop();
     g_player_shots_disabled = 1;
     if (g_player1[0] < 0) {
@@ -1083,7 +1083,7 @@ void func_00203460(void) {
 s32 music_play_bgm10();
 s32 slowdown_reset();
 extern u16 g_players_stage_clear;
-void func_002034C0(void) {
+void stage_clear_begin(void) {
     slowdown_reset();
     music_play_bgm10();
     g_players_stage_clear = 1;
@@ -1106,28 +1106,28 @@ next_2:
 
 extern u16 g_stage;
 
-void func_002035A0(void) {
-    func_002034C0();
+void stage_clear_to_next_stage(void) {
+    stage_clear_begin();
     reg_d7.h[0] = g_stage;
     reg_d7.h[0] += 1;
     if ((s32) reg_d7.h[0] >= 5) {
         reg_d7.w = 0;
     }
-    func_00203630();
+    stage_clear_task_start();
 }
 
-s32 func_00125DE0();                            /* extern */
+s32 pickups_clear();                            /* extern */
 
-void func_002035F0(void) {
+void stage_clear_from_menu(void) {
     func_00203660();
-    func_00125DE0();
-    func_002034C0();
-    func_00203630();
+    pickups_clear();
+    stage_clear_begin();
+    stage_clear_task_start();
 }
 
 s32 task_start();                            /* extern */
 
-void func_00203630(void) {
+void stage_clear_task_start(void) {
     reg_d0.h[0] = 6;
     task_start();
     *(u16 *)(reg_a0 + 4) = (u16) reg_d7.h[0];
@@ -1156,7 +1156,7 @@ void entity_move_by_p2_stick(void) {
 }
 
 
-void func_002036F0(void) {
+void heli_x_limit_check(void) {
     u16 temp_a0;
 
     cond_flag = 0;
@@ -1171,17 +1171,17 @@ void func_002036F0(void) {
     temp_a0 = (u32)reg_d6.h[0] + 0x800;
     reg_d6.h[0] = temp_a0;
     if ((s32) reg_tmp.h[0] >= 0x1C00) {
-        func_002037E0();
+        heli_x_limit_far();
         return;
     }
     reg_tmp.h[0] = reg_d6.h[0];
     reg_d6.h[0] -= 0x2400;
     if ((s32) reg_tmp.h[0] < 0x2400) {
-        func_002037B0();
+        heli_x_limit_apply();
     }
 }
 
-void func_002037B0(void) {
+void heli_x_limit_apply(void) {
     u32 scaled = (u32)reg_d6.h[0] << 16;
     reg_d6.h[0] = (u16)(scaled - reg_d6.h[0]);
     reg_d6.h[0] += 0x1C00;
@@ -1189,7 +1189,7 @@ void func_002037B0(void) {
 }
 
 
-void func_002037E0(void) {
+void heli_x_limit_far(void) {
     Reg32 *temporaryRegister = &reg_tmp;
     Reg32 *dataRegister6 = &reg_d6;
     u32 originalD6;
@@ -1209,7 +1209,7 @@ void func_002037E0(void) {
         return;
     }
 
-    func_002037B0();
+    heli_x_limit_apply();
     reg_d0.w = -1;
     cond_flag = 1;
 }
@@ -1218,11 +1218,11 @@ s8 g_stick_directions[16] = {
     0xFF, 0x00, 0x20, 0xFF, 0x30, 0x38, 0x28, 0xFF, 0x10, 0x08, 0x18, 0xFF, 0xFF, 0xFF, 0xFF, 0xFF,
 };
 
-u8 D_002670C0[16] = {
+u8 direction256_octant_bases[16] = {
     0x40, 0x00, 0x80, 0x00, 0x40, 0x00, 0x00, 0x00, 0xC0, 0x00, 0x80, 0x00, 0xC0, 0x00, 0x00, 0x00,
 };
 
-u8 D_002670D0[80] = {
+u8 direction256_ratio_angles[80] = {
     0x00, 0x01, 0x02, 0x02, 0x03, 0x04, 0x04, 0x05, 0x06, 0x06, 0x07, 0x07, 0x08, 0x09, 0x09, 0x0A,
     0x0A, 0x0B, 0x0B, 0x0C, 0x0D, 0x0D, 0x0E, 0x0E, 0x0F, 0x10, 0x10, 0x11, 0x11, 0x12, 0x12, 0x13,
     0x13, 0x14, 0x14, 0x15, 0x16, 0x16, 0x16, 0x17, 0x17, 0x17, 0x18, 0x18, 0x19, 0x19, 0x1A, 0x1A,
@@ -1230,22 +1230,22 @@ u8 D_002670D0[80] = {
     0x20, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00,
 };
 
-void (*D_00267120[8])() = {
-    func_00202450,
-    func_00202410,
-    func_00202410,
-    func_00202450,
-    func_00202410,
-    func_00202450,
-    func_00202450,
-    func_00202410,
+void (*direction_octant_combines[8])() = {
+    direction_octant_add,
+    direction_octant_subtract,
+    direction_octant_subtract,
+    direction_octant_add,
+    direction_octant_subtract,
+    direction_octant_add,
+    direction_octant_add,
+    direction_octant_subtract,
 };
 
-u8 D_00267140[16] = {
+u8 direction_octant_bases[16] = {
     0x80, 0x00, 0x00, 0x01, 0x80, 0x00, 0x00, 0x00, 0x80, 0x01, 0x00, 0x01, 0x80, 0x01, 0x00, 0x00,
 };
 
-u8 D_00267150[144] = {
+u8 direction_ratio_angles[144] = {
     0x00, 0x01, 0x01, 0x02, 0x02, 0x03, 0x04, 0x05, 0x06, 0x07, 0x08, 0x08, 0x09, 0x09, 0x0A, 0x0A,
     0x0B, 0x0B, 0x0C, 0x0C, 0x0D, 0x0D, 0x0E, 0x0E, 0x0F, 0x10, 0x10, 0x11, 0x12, 0x12, 0x13, 0x14,
     0x14, 0x15, 0x15, 0x16, 0x16, 0x17, 0x17, 0x18, 0x19, 0x1A, 0x1A, 0x1B, 0x1B, 0x1C, 0x1C, 0x1D,
@@ -1257,7 +1257,7 @@ u8 D_00267150[144] = {
     0x40, 0x40, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00,
 };
 
-u8 D_002671E0[1152] = {
+u8 dir_vector_index_fine[1152] = {
     0x00, 0x00, 0x02, 0x00, 0x04, 0x00, 0x06, 0x00, 0x08, 0x00, 0x0A, 0x00, 0x0C, 0x00, 0x0E, 0x00,
     0x10, 0x00, 0x12, 0x00, 0x14, 0x00, 0x16, 0x00, 0x18, 0x00, 0x1A, 0x00, 0x1C, 0x00, 0x1E, 0x00,
     0x20, 0x00, 0x22, 0x00, 0x24, 0x00, 0x26, 0x00, 0x28, 0x00, 0x2A, 0x00, 0x2C, 0x00, 0x2E, 0x00,
@@ -1332,7 +1332,7 @@ u8 D_002671E0[1152] = {
     0x30, 0x00, 0x32, 0x00, 0x34, 0x00, 0x36, 0x00, 0x38, 0x00, 0x3A, 0x00, 0x3C, 0x00, 0x3E, 0x00,
 };
 
-u8 D_00267660[576] = {
+u8 dir_vector_index[576] = {
     0x00, 0x00, 0x02, 0x00, 0x04, 0x00, 0x06, 0x00, 0x08, 0x00, 0x0A, 0x00, 0x0C, 0x00, 0x0E, 0x00,
     0x10, 0x00, 0x12, 0x00, 0x14, 0x00, 0x16, 0x00, 0x18, 0x00, 0x1A, 0x00, 0x1C, 0x00, 0x1E, 0x00,
     0x20, 0x00, 0x22, 0x00, 0x24, 0x00, 0x26, 0x00, 0x28, 0x00, 0x2A, 0x00, 0x2C, 0x00, 0x2E, 0x00,

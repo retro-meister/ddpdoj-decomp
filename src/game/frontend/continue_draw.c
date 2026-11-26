@@ -207,7 +207,7 @@ next_120:
 }
 
 s32 func_00132210();
-s32 func_00200EE0();
+s32 binary_to_bcd();
 extern u8 D_00269A30[];
 
 void func_00133840(void) {
@@ -246,7 +246,7 @@ next_1:
     reg_d1.h[0] -= 0x200;
     sprite_draw_layer1();
     reg_d0.h[0] = ENTITY(reg_a6)->move.h;
-    func_00200EE0();
+    binary_to_bcd();
     reg_d7.w = reg_d2.w;
     reg_d2.w = 0xF;
     reg_d2.h[0] &= reg_d7.h[0];
@@ -298,7 +298,7 @@ next_3:
     reg_d1.h[0] -= 0x200;
     sprite_draw_layer1();
     reg_d0.h[0] = ENTITY(reg_a6)->misc.h;
-    func_00200EE0();
+    binary_to_bcd();
     reg_d7.w = reg_d2.w;
     reg_d2.w = 0xF;
     reg_d2.h[0] &= reg_d7.h[0];
@@ -358,7 +358,7 @@ next_4:
     reg_d1.h[0] -= 0x200;
     sprite_draw_layer1();
     reg_d0.h[0] = ENTITY(reg_a6)[1].x.h;
-    func_00200EE0();
+    binary_to_bcd();
     reg_d7.w = reg_d2.w;
     reg_d2.w = 0xF;
     reg_d2.h[0] &= reg_d7.h[0];
@@ -413,7 +413,7 @@ next_6:
     reg_d1.h[0] -= 0x200;
     sprite_draw_layer1();
     reg_d0.h[0] = ENTITY(reg_a6)[1].offset_x.h;
-    func_00200EE0();
+    binary_to_bcd();
     reg_d7.w = reg_d2.w;
     reg_d2.w = 0xF;
     reg_d2.h[0] &= reg_d7.h[0];
