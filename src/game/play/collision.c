@@ -944,7 +944,7 @@ loop_145:
             if ((s32) reg_d5.h[0] < (s32) reg_d4.h[0]) goto store_145;
             reg_d4.h[0] = reg_d5.h[0];
 store_145:
-            g_laser_bomb_hit_entity = (u32) reg_a5;
+            g_laser_bomb_hit_entity = ARCADE_ADDRESS_ENCODE(reg_a5);
             g_laser_bomb_hit_position = reg_d4.h[0];
 next_145:
             reg_a6 += 0x30;
@@ -958,7 +958,7 @@ next_145:
             if (((s64) ((s64) (tmp_dec & 0xFFFF) << 0x30) >> 0x30) >= 0) goto loop_140;
 done_140:
             if ((u32)g_laser_bomb_hit_entity != 0) {
-                reg_a5 = (u8 *) (u32)g_laser_bomb_hit_entity;
+                reg_a5 = ARCADE_ADDRESS_DECODE(u8 *, (u32)g_laser_bomb_hit_entity);
                 reg_d4.h[0] = g_collision_hit_bits;
                 reg_d4.h[0] |= 0x400;
                 ENTITY(reg_a5)->flags.h |= reg_d4.h[0];

@@ -3,6 +3,13 @@
 
 #include "types.h"
 
+/* Score cells embed text addresses from the corresponding PS2 executable. */
+#ifdef DEATH_LABEL
+#define REPLAY_TEXT_PS2_BASE 0x2faed0u
+#else
+#define REPLAY_TEXT_PS2_BASE 0x2b4d50u
+#endif
+
 enum {
     PC_REPLAY_FILE_SIZE = 0x202E8,
     PC_REPLAY_CARD_SIZE = 0x206EC,

@@ -1202,22 +1202,14 @@ extern u16 g_p1_score_cells[];
 extern u16 g_p2_score_cells[];
 
 #ifdef DDPDOJ_PC
-/* The score cells are copied into the PS2 replay format, including their
- * text layer addresses. Keep those values stable across native processes. */
-#ifdef DEATH_LABEL
-#define SCORE_TEXT_PS2_BASE 0x2faed0u
-#else
-#define SCORE_TEXT_PS2_BASE 0x2b4d50u
-#endif
-
-#define SCORE_CELL_ADDRESS(symbol, offset) (SCORE_TEXT_PS2_BASE + (offset))
+#define SCORE_CELL_ADDRESS(symbol, offset) (REPLAY_TEXT_PS2_BASE + (offset))
 
 extern u8 g_text_layer[8192];
 
 static u8 *score_cell_destination(u32 address)
 {
     static u16 discarded_cell[2];
-    u32 offset = address - SCORE_TEXT_PS2_BASE;
+    u32 offset = address - REPLAY_TEXT_PS2_BASE;
 
     if ((offset & 1) != 0 || offset > sizeof(g_text_layer) - sizeof(discarded_cell)) {
         return (u8 *)discarded_cell;

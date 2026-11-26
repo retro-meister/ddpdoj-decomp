@@ -1,6 +1,7 @@
 #include "common.h"
 #ifdef DDPDOJ_PC
 #include "pc_replay_storage.h"
+#include <string.h>
 #endif
 #include "enemy.h"
 #include "ground.h"
@@ -964,6 +965,9 @@ s32 replay_block_sizes_option_params[] = {
     50, 50, 50, 50, 14, 14, 14, 14,
     14, 14, 14, 14, 14, 14, 14, 14,
     14, 14, 14,
+#ifdef DDPDOJ_PC
+    14, 14, 14, 14, 14,
+#endif
 };
 
 void *replay_targets_option_params_b[] = {
@@ -2776,6 +2780,106 @@ void replay_start_state_save(Buf2 *buf) {
 
 extern s32 g_replay_pointer_not_found;
 
+#ifdef DDPDOJ_PC
+static u16 replay_halfword(const u8 *entry)
+{
+    return entry[0] | ((u16)entry[1] << 8);
+}
+
+static u32 replay_address(const u8 *entry)
+{
+    return ((u32)replay_halfword(entry) << 16) | replay_halfword(entry + 2);
+}
+
+static void replay_write_address(u8 *entry, u32 address, bool swapped)
+{
+    unsigned upper = swapped ? 2 : 0;
+    unsigned lower = swapped ? 0 : 2;
+    entry[upper] = (u8)(address >> 16);
+    entry[upper + 1] = (u8)(address >> 24);
+    entry[lower] = (u8)address;
+    entry[lower + 1] = (u8)(address >> 8);
+}
+
+static void replay_write_offset(u8 *entry, u16 offset, u8 tag)
+{
+    entry[0] = (u8)offset;
+    entry[1] = (u8)(offset >> 8);
+    entry[2] = 0x99;
+    entry[3] = tag;
+}
+
+static uintptr_t replay_table_address(const void *table, unsigned index)
+{
+    /* The tables contain native-width data or function pointers. */
+    uintptr_t address;
+    memcpy(&address, (const u8 *)table + index * sizeof(address), sizeof(address));
+    return address;
+}
+
+static s32 pointer_to_table_index(u8 *entry, const void *table, s32 count)
+{
+    u32 slot = replay_address(entry);
+    if (!slot) return -1;
+
+    for (s32 index = 0; index < count; ++index) {
+        if (slot == ARCADE_ADDRESS_ENCODE(replay_table_address(table, index))) {
+            replay_write_offset(entry, index * 4, 0x80);
+            return 1;
+        }
+    }
+    g_replay_pointer_not_found = 1;
+    return 0;
+}
+
+static s32 pointer_to_block_offset(u8 *entry, const void *table, const s32 *sizes, s32 count)
+{
+    u32 slot = replay_address(entry);
+    if (!slot) return -1;
+
+    for (s32 index = 0; index < count; ++index) {
+        u32 offset = slot - ARCADE_ADDRESS_ENCODE(replay_table_address(table, index));
+        if ((offset & 1) == 0 && offset < (u32)sizes[index]) {
+            /* The low byte is the offset in the block, the high byte the PS2 table index. */
+            replay_write_offset(entry, (index * 4 << 8) | offset, 0x81);
+            return 1;
+        }
+    }
+    g_replay_pointer_not_found = 1;
+    return 0;
+}
+
+static s32 pointer_to_array_offset(u8 *entry, u8 *code, u32 count, u32 stride)
+{
+    (void)code;
+    u32 address = replay_address(entry);
+    if (!address) return -1;
+
+    u32 offset = address - REPLAY_TEXT_PS2_BASE;
+    if (offset < count * stride && offset % stride == 0) {
+        replay_write_offset(entry, offset, 0x82);
+        return 1;
+    }
+    g_replay_pointer_not_found = 1;
+    return 0;
+}
+
+static s32 pointer_to_array_offset_swapped(u8 *entry, u8 *code, u32 count, u32 stride)
+{
+    u32 slot = ((u32)replay_halfword(entry + 2) << 16) | replay_halfword(entry);
+    if (!slot) return -1;
+
+    u32 offset = slot - ARCADE_ADDRESS_ENCODE(code);
+    if (offset < count * stride && offset % stride == 0) {
+        replay_write_offset(entry, offset, 0x83);
+        return 1;
+    }
+    g_replay_pointer_not_found = 1;
+    return 0;
+}
+
+extern void (*entity_draw_layer_routines[8])(void);
+#else
 s32 pointer_to_table_index(Reg32 *entry, Reg32 *table, s32 count) {
     Reg32 key;
     Reg32 cur;
@@ -2846,15 +2950,7 @@ s32 pointer_to_block_offset(u16 *addr, u16 *starts, s32 *sizes, s32 count) {
     return 0;
 }
 
-#ifdef DDPDOJ_PC
-s32 pointer_to_array_offset(void *raw_entry, u8 *code, u32 count, u32 stride) {
-    /* Some file entries begin at a two-byte boundary. */
-    Reg32 aligned_entry;
-    memcpy(&aligned_entry, raw_entry, sizeof(aligned_entry));
-    Reg32 *entry = &aligned_entry;
-#else
 s32 pointer_to_array_offset(Reg32 *entry, u8 *code, u32 count, u32 stride) {
-#endif
     Reg32 key;
     u32 offset;
     u8 *mark = &entry->b[2];
@@ -2869,9 +2965,6 @@ s32 pointer_to_array_offset(Reg32 *entry, u8 *code, u32 count, u32 stride) {
             entry->h[0] = offset;
             entry->b[3] = 0x82;
             *mark = 0x99;
-#ifdef DDPDOJ_PC
-            memcpy(raw_entry, entry, sizeof(*entry));
-#endif
             return 1;
         }
         code += stride;
@@ -2904,6 +2997,7 @@ s32 pointer_to_array_offset_swapped(Reg32 *entry, u8 *code, u32 count, u32 strid
 }
 
 extern u16 entity_draw_layer_routines[];
+#endif
 extern void *replay_targets_players[2];
 extern void *replay_targets_lives[2];
 
@@ -3032,6 +3126,47 @@ void replay_file_pointers_encode(u8 *arg0) {
     (*(s32 *)((u8 *)(arg0) + (0x5CE4))) = replay_snapshot_checksum(arg0 + 0x400);
 }
 
+#ifdef DDPDOJ_PC
+static s32 replay_decode_table(u8 *entry, const void *table, unsigned count,
+                               const s32 *sizes, u8 op)
+{
+    if (entry[2] != 0x99) return -1;
+    if (entry[3] != op) return 0;
+
+    unsigned index_bytes = op == 0x81 ? entry[1] : replay_halfword(entry);
+    unsigned index = index_bytes / 4;
+    unsigned offset = op == 0x81 ? entry[0] : 0;
+    if ((index_bytes & 3) != 0 || index >= count ||
+        (sizes && ((offset & 1) != 0 || offset >= (unsigned)sizes[index]))) {
+        g_replay_pointer_not_found = 1;
+        return 0;
+    }
+    u32 slot = ARCADE_ADDRESS_ENCODE(replay_table_address(table, index) + offset);
+    replay_write_address(entry, slot, false);
+    return 1;
+}
+
+static s32 pointer_decode(u8 *entry, u16 *mem, s32 op)
+{
+    if (entry[2] != 0x99) return -1;
+    if (entry[3] != op) return 0;
+
+    u16 offset = replay_halfword(entry);
+    if (op == 0x82 && offset < 0x2000 && (offset & 3) == 0) {
+        replay_write_address(entry, REPLAY_TEXT_PS2_BASE + offset, false);
+        return 1;
+    }
+    if (op == 0x83 && offset < 50 * sizeof(Entity) && offset % sizeof(Entity) == 0) {
+        replay_write_address(entry, ARCADE_ADDRESS_ENCODE((u8 *)mem + offset), true);
+        return 1;
+    }
+    g_replay_pointer_not_found = 1;
+    return 0;
+}
+
+#define REPLAY_TABLE_DECODE(entry, table, count) replay_decode_table(entry, table, count, NULL, 0x80)
+#define REPLAY_BLOCK_DECODE(entry, table, sizes, count) replay_decode_table(entry, table, count, sizes, 0x81)
+#else
 typedef union {
     u32 w;
     u16 h[2];
@@ -3096,6 +3231,10 @@ s32 pointer_decode(u8 *entry, u16 *mem, s32 op) {
 }
 
 
+#define REPLAY_TABLE_DECODE(entry, table, count) pointer_decode(entry, (u16 *)(table), 0x80)
+#define REPLAY_BLOCK_DECODE(entry, table, sizes, count) pointer_decode(entry, (u16 *)(table), 0x81)
+#endif
+
 void replay_snapshot_pointers_decode(u8 *base) {
     s32 off;
     u8 *p;
@@ -3109,72 +3248,72 @@ void replay_snapshot_pointers_decode(u8 *base) {
 
     for (off = 0; off < 0xC08; off += 0x2C) {
         p = base + off;
-        pointer_decode(p + 0x24, (u16 *)replay_targets_players, 0x80);
-        pointer_decode(p + 0x28, entity_draw_layer_routines, 0x80);
+        REPLAY_TABLE_DECODE(p + 0x24, replay_targets_players, 0x2);
+        REPLAY_TABLE_DECODE(p + 0x28, entity_draw_layer_routines, 0x6);
     }
-    pointer_decode(base + 0xCF0, (u16 *)replay_targets_option_style_a, 0x80);
-    pointer_decode(base + 0xD0A, (u16 *)replay_targets_option_style_a, 0x80);
-    pointer_decode(base + 0xD20, (u16 *)replay_targets_option_style_b, 0x80);
-    pointer_decode(base + 0xD32, (u16 *)replay_targets_option_style_c, 0x80);
-    pointer_decode(base + 0xD54, (u16 *)replay_targets_option_style_a, 0x80);
-    pointer_decode(base + 0xD6E, (u16 *)replay_targets_option_style_a, 0x80);
-    pointer_decode(base + 0xD84, (u16 *)replay_targets_option_style_b, 0x80);
-    pointer_decode(base + 0xD96, (u16 *)replay_targets_option_style_c, 0x80);
+    REPLAY_TABLE_DECODE(base + 0xCF0, replay_targets_option_style_a, 0x3);
+    REPLAY_TABLE_DECODE(base + 0xD0A, replay_targets_option_style_a, 0x3);
+    REPLAY_TABLE_DECODE(base + 0xD20, replay_targets_option_style_b, 0x3);
+    REPLAY_TABLE_DECODE(base + 0xD32, replay_targets_option_style_c, 0x3);
+    REPLAY_TABLE_DECODE(base + 0xD54, replay_targets_option_style_a, 0x3);
+    REPLAY_TABLE_DECODE(base + 0xD6E, replay_targets_option_style_a, 0x3);
+    REPLAY_TABLE_DECODE(base + 0xD84, replay_targets_option_style_b, 0x3);
+    REPLAY_TABLE_DECODE(base + 0xD96, replay_targets_option_style_c, 0x3);
     for (off = 0; off < 0xD80; off += 0x30) {
-        pointer_decode(base + off + 0xDC0, (u16 *)replay_targets_shot_lists, 0x80);
+        REPLAY_TABLE_DECODE(base + off + 0xDC0, replay_targets_shot_lists, 0x150);
     }
     for (j = 0; j < 0x510; j += 0x30) {
         q = base + j;
-        pointer_decode(q + 0x1B40, (u16 *)replay_targets_option_sprites, 0x80);
-        pointer_decode(q + 0x1B4A, (u16 *)replay_targets_option_params_a, 0x80);
-        pointer_decode(q + 0x1B4E, (u16 *)replay_blocks_option_params, 0x81);
-        pointer_decode(q + 0x2140, (u16 *)replay_targets_option_sprites, 0x80);
-        pointer_decode(q + 0x214A, (u16 *)replay_targets_option_params_a, 0x80);
-        pointer_decode(q + 0x214E, (u16 *)replay_blocks_option_params, 0x81);
+        REPLAY_TABLE_DECODE(q + 0x1B40, replay_targets_option_sprites, 0x2c);
+        REPLAY_TABLE_DECODE(q + 0x1B4A, replay_targets_option_params_a, 0x5);
+        REPLAY_BLOCK_DECODE(q + 0x1B4E, replay_blocks_option_params, replay_block_sizes_option_params, 0x18);
+        REPLAY_TABLE_DECODE(q + 0x2140, replay_targets_option_sprites, 0x2c);
+        REPLAY_TABLE_DECODE(q + 0x214A, replay_targets_option_params_a, 0x5);
+        REPLAY_BLOCK_DECODE(q + 0x214E, replay_blocks_option_params, replay_block_sizes_option_params, 0x18);
     }
     q = base + j;
-    pointer_decode(q + 0x1B40, (u16 *)replay_targets_option_sprites, 0x80);
-    pointer_decode(q + 0x1B4A, (u16 *)replay_targets_option_params_a, 0x80);
-    pointer_decode(q + 0x1B4E, (u16 *)replay_blocks_option_params, 0x81);
-    pointer_decode(q + 0x2140, (u16 *)replay_targets_option_sprites, 0x80);
-    pointer_decode(q + 0x214A, (u16 *)replay_targets_option_params_a, 0x80);
-    pointer_decode(q + 0x214E, (u16 *)replay_blocks_option_params, 0x81);
+    REPLAY_TABLE_DECODE(q + 0x1B40, replay_targets_option_sprites, 0x2c);
+    REPLAY_TABLE_DECODE(q + 0x1B4A, replay_targets_option_params_a, 0x5);
+    REPLAY_BLOCK_DECODE(q + 0x1B4E, replay_blocks_option_params, replay_block_sizes_option_params, 0x18);
+    REPLAY_TABLE_DECODE(q + 0x2140, replay_targets_option_sprites, 0x2c);
+    REPLAY_TABLE_DECODE(q + 0x214A, replay_targets_option_params_a, 0x5);
+    REPLAY_BLOCK_DECODE(q + 0x214E, replay_blocks_option_params, replay_block_sizes_option_params, 0x18);
     for (k = 0x540; k < 0x5A0; k += 0x30) {
         r = base + k;
-        pointer_decode(r + 0x1B40, (u16 *)replay_blocks_option_params, 0x81);
-        pointer_decode(r + 0x1B4A, (u16 *)replay_targets_option_params_a, 0x80);
-        pointer_decode(r + 0x1B4E, (u16 *)replay_blocks_option_params, 0x81);
-        pointer_decode(r + 0x2140, (u16 *)replay_blocks_option_params, 0x81);
-        pointer_decode(r + 0x214A, (u16 *)replay_targets_option_params_a, 0x80);
-        pointer_decode(r + 0x214E, (u16 *)replay_blocks_option_params, 0x81);
+        REPLAY_BLOCK_DECODE(r + 0x1B40, replay_blocks_option_params, replay_block_sizes_option_params, 0x18);
+        REPLAY_TABLE_DECODE(r + 0x1B4A, replay_targets_option_params_a, 0x5);
+        REPLAY_BLOCK_DECODE(r + 0x1B4E, replay_blocks_option_params, replay_block_sizes_option_params, 0x18);
+        REPLAY_BLOCK_DECODE(r + 0x2140, replay_blocks_option_params, replay_block_sizes_option_params, 0x18);
+        REPLAY_TABLE_DECODE(r + 0x214A, replay_targets_option_params_a, 0x5);
+        REPLAY_BLOCK_DECODE(r + 0x214E, replay_blocks_option_params, replay_block_sizes_option_params, 0x18);
     }
     r = base + k;
-    pointer_decode(r + 0x1B40, (u16 *)replay_targets_option_sprites, 0x80);
-    pointer_decode(r + 0x1B4A, (u16 *)replay_targets_option_params_a, 0x80);
-    pointer_decode(r + 0x1B4E, (u16 *)replay_blocks_option_params, 0x81);
-    pointer_decode(r + 0x2140, (u16 *)replay_targets_option_sprites, 0x80);
-    pointer_decode(r + 0x214A, (u16 *)replay_targets_option_params_a, 0x80);
-    pointer_decode(r + 0x214E, (u16 *)replay_blocks_option_params, 0x81);
+    REPLAY_TABLE_DECODE(r + 0x1B40, replay_targets_option_sprites, 0x2c);
+    REPLAY_TABLE_DECODE(r + 0x1B4A, replay_targets_option_params_a, 0x5);
+    REPLAY_BLOCK_DECODE(r + 0x1B4E, replay_blocks_option_params, replay_block_sizes_option_params, 0x18);
+    REPLAY_TABLE_DECODE(r + 0x2140, replay_targets_option_sprites, 0x2c);
+    REPLAY_TABLE_DECODE(r + 0x214A, replay_targets_option_params_a, 0x5);
+    REPLAY_BLOCK_DECODE(r + 0x214E, replay_blocks_option_params, replay_block_sizes_option_params, 0x18);
     r = base + (k + 0x30);
-    pointer_decode(r + 0x1B40, (u16 *)replay_targets_option_sprites, 0x80);
-    pointer_decode(r + 0x1B4C, (u16 *)replay_targets_option_params_b, 0x80);
-    pointer_decode(r + 0x2140, (u16 *)replay_targets_option_sprites, 0x80);
-    pointer_decode(r + 0x214C, (u16 *)replay_targets_option_params_b, 0x80);
+    REPLAY_TABLE_DECODE(r + 0x1B40, replay_targets_option_sprites, 0x2c);
+    REPLAY_TABLE_DECODE(r + 0x1B4C, replay_targets_option_params_b, 0x14);
+    REPLAY_TABLE_DECODE(r + 0x2140, replay_targets_option_sprites, 0x2c);
+    REPLAY_TABLE_DECODE(r + 0x214C, replay_targets_option_params_b, 0x14);
     for (m = 0; m < 0x7E0; m += 0x30) {
         t = base + m + 0x27C0;
-        pointer_decode(t, (u16 *)replay_targets_bomb, 0x80);
-        pointer_decode(t, (u16 *)replay_blocks_bomb, 0x81);
+        REPLAY_TABLE_DECODE(t, replay_targets_bomb, 0x36);
+        REPLAY_BLOCK_DECODE(t, replay_blocks_bomb, replay_block_sizes_bomb, 0x6);
     }
     for (off = 0x7E0; off < 0x870; off += 0x30) {
-        pointer_decode(base + off + 0x27C0, (u16 *)replay_targets_bomb, 0x80);
+        REPLAY_TABLE_DECODE(base + off + 0x27C0, replay_targets_bomb, 0x36);
     }
-    pointer_decode(base + 0x301C, (u16 *)replay_blocks_weapon_levels, 0x81);
-    pointer_decode(base + 0x3020, (u16 *)replay_blocks_weapon_levels, 0x81);
-    pointer_decode(base + 0x3024, (u16 *)replay_blocks_weapon_levels, 0x81);
-    pointer_decode(base + 0x3028, (u16 *)replay_blocks_weapon_levels, 0x81);
+    REPLAY_BLOCK_DECODE(base + 0x301C, replay_blocks_weapon_levels, replay_block_sizes_weapon_levels, 0xc);
+    REPLAY_BLOCK_DECODE(base + 0x3020, replay_blocks_weapon_levels, replay_block_sizes_weapon_levels, 0xc);
+    REPLAY_BLOCK_DECODE(base + 0x3024, replay_blocks_weapon_levels, replay_block_sizes_weapon_levels, 0xc);
+    REPLAY_BLOCK_DECODE(base + 0x3028, replay_blocks_weapon_levels, replay_block_sizes_weapon_levels, 0xc);
     pointer_decode(base + 0x318C, ((u16 *)g_enemy_entities_second), 0x83);
-    pointer_decode(base + 0x3226, (u16 *)replay_targets_lives, 0x80);
-    pointer_decode(base + 0x324A, (u16 *)replay_targets_lives, 0x80);
+    REPLAY_TABLE_DECODE(base + 0x3226, replay_targets_lives, 0x2);
+    REPLAY_TABLE_DECODE(base + 0x324A, replay_targets_lives, 0x2);
     for (n = 0; n < 0x5A; n += 10) {
         pointer_decode(&((u8 (*)[10])(base + 0x32B6))[0][n], ((u16 *)g_text_layer), 0x82);
         pointer_decode(&((u8 (*)[10])(base + 0x3310))[0][n], ((u16 *)g_text_layer), 0x82);
