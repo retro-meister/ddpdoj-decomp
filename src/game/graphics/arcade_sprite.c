@@ -177,7 +177,16 @@ extern u8 g_noise_file_buf[];
 void arcade_sprite_init(void) {
     u8 *buffer;
 
+#ifdef DDPDOJ_PC
+    _Alignas(64) static u8 upload_buffer[0x80000];
+    _Alignas(64) static SpriteImage image_buffer[0x10000 / sizeof(SpriteImage)];
+    _Alignas(64) static u8 pixel_buffer[0xC20000];
+    _Alignas(64) static u8 stage_buffer[0x885800];
+    _Alignas(64) static u8 frame_buffer[0x10800];
+    buffer = upload_buffer;
+#else
     buffer = memalign(0x40, 0x80000);
+#endif
     cd_read_sync(buffer, g_data_files[DATA_FILE_BULLET].size, g_data_files[DATA_FILE_BULLET].lba);
     sceGsSetDefLoadImage(&g_gs_load_image, 0x2640, 8, SCE_GS_PSMT8, 0, 0, 512, 512);
     FlushCache(0);
@@ -192,11 +201,18 @@ void arcade_sprite_init(void) {
     FlushCache(0);
     sceGsExecLoadImage(&g_gs_load_image, buffer + 0x40000);
     sceGsSyncPath(0, 0);
+#ifdef DDPDOJ_PC
+    g_sprite_images = image_buffer;
+    g_sprite_pixels = pixel_buffer;
+    g_stage_sprite_buf = stage_buffer;
+    g_frame_file_buf = frame_buffer;
+#else
     free(buffer);
     g_sprite_images = (SpriteImage *)memalign(0x40, 0x10000);
     g_sprite_pixels = memalign(0x40, 0xC20000);
     g_stage_sprite_buf = memalign(0x40, 0x885800);
     g_frame_file_buf = memalign(0x40, 0x10800);
+#endif
     cd_read_sync(g_frame_file_buf, g_data_files[DATA_FILE_FRAME].size, g_data_files[DATA_FILE_FRAME].lba);
     g_clut_upload_cbp = 0x3834;
     clut_upload(g_frame_file_buf, 1, 1);

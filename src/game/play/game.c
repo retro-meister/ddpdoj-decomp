@@ -1,5 +1,8 @@
 #include "common.h"
 #include "player_slot.h"
+#ifdef DDPDOJ_PC
+#include "pc_enemy_animation.h"
+#endif
 
 extern u8 g_player_slots[];
 extern u8 g_player_slot2[];
@@ -1259,8 +1262,12 @@ void enemy_anim_init(void) {
     save = reg_a0;
     reg_d0.h[0] = *(u16 *)reg_a2;
     reg_a2 += 2;
+#ifdef DDPDOJ_PC
+    reg_a3 = pc_enemy_animation_definition(reg_d0.h[0]);
+#else
     reg_a3 = (u8 *)enemy_anim_definitions;
     reg_a3 = *(u8 **)(reg_a3 + reg_d0.h[0]);
+#endif
     reg_d0.h[0] = *(u16 *)reg_a3;
     reg_a3 += 2;
     if (0 <= (s64)*(s16 *)reg_a2) goto next_0;
@@ -1494,10 +1501,15 @@ block_objset:
     reg_d0.b[0] = *(u8 *)(reg_a0 + 0x1F);
     reg_d0.h[0] <<= 2;
 next_obj10:
+#ifdef DDPDOJ_PC
+    reg_call_target = pc_enemy_animation_draw(reg_d0.h[0]);
+    reg_a0 = (u8 *)reg_call_target;
+#else
     reg_a0 = (u8 *)enemy_anims_update_value;
     reg_a0 += reg_d0.h[0];
     reg_a0 = *(u8 **)reg_a0;
     reg_call_target = (Fn)(reg_a0);
+#endif
     reg_call_target();
     reg_a6 += 0x26;
     count = reg_d7.h[0] - 1;

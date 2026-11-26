@@ -2602,12 +2602,29 @@ u16 stage5_boss_horn_shot_offsets_at_2[40] = {
     0x06C0, 0xF940, 0x0000, 0xFFF2, 0x06C0, 0x06C0, 0x0000, 0x000E,
 };
 
+#ifdef DDPDOJ_PC
+struct D002644e0Record {
+    u16 w0[2];
+    u32 retail_text_address;
+    u16 w2[34];
+    u32 retail_text_address_tail;
+};
+#else
 struct D002644e0Record { u16 w0[2]; void *p1; u16 w2[34]; void *p3; };
+#endif
 struct D002644e0Record D_002644E0 = {
     { 0x0DC0, 0xED40 },
+#ifdef DDPDOJ_PC
+    0x00100000, /* Retail text address stored in this data record. */
+#else
     text_start,
+#endif
     { 0x0DC0, 0x12C0, 0x0000, 0xFFF0, 0x0B40, 0xF000, 0x0000, 0x0008, 0x0B40, 0x1000, 0x0000, 0xFFF8, 0x0940, 0xF300, 0x0000, 0x0000, 0x0940, 0x0D00, 0x0000, 0x0000, 0x0800, 0xF640, 0x0000, 0xFFF8, 0x0800, 0x09C0, 0x0000, 0x0008, 0x06C0, 0xF940, 0x0000, 0xFFF0, 0x06C0, 0x06C0 },
+#ifdef DDPDOJ_PC
+    0x00100000, /* Retail text address stored in this data record. */
+#else
     text_start,
+#endif
 };
 
 u16 D_00264530[8] = {

@@ -121,9 +121,15 @@ void font_load_async(void) {
 s32 clut_upload_defaults();
 
 void font_init(void) {
+#ifdef DDPDOJ_PC
+    _Alignas(64) static u8 font_buffer[0x300000];
+    g_font_file_buf = font_buffer;
+    printf("mozi buf[%p] size[%d]\n", (void *)g_font_file_buf, 0x2D9248);
+#else
     *(s32 *)0x10000000 = 0;
     g_font_file_buf = memalign(0x40, 0x300000);
     printf("mozi buf[%x] size[%d]\n", g_font_file_buf, 0x2D9248);
+#endif
     g_font_glyph_data = g_font_file_buf;
     font_init_palettes();
     font_upload_palettes();

@@ -6,7 +6,15 @@ void enemy_set_entity_count(u16 count);
 #include "entity.h"
 #include "explosion.h"
 
+#ifdef DDPDOJ_PC
+struct D002637f0Record {
+    u16 w0[10];
+    u32 retail_text_address;
+    u16 w2[4];
+};
+#else
 struct D002637f0Record { u16 w0[10]; void *p1; u16 w2[4]; };
+#endif
 extern struct D002637f0Record stage4_lift_start_value;
 
 void heavy_cannon_target_pick_a(void);
@@ -2910,7 +2918,11 @@ u8 stage4_gate_start_table_2[64] = {
 
 struct D002637f0Record stage4_lift_start_value = {
     { 0x1000, 0xF980, 0x0010, 0x0600, 0xFA00, 0x0010, 0xFC00, 0xF900, 0x0010, 0x0B00 },
+#ifdef DDPDOJ_PC
+    0x00100000, /* Retail text address stored in this data record. */
+#else
     text_start,
+#endif
     { 0xFF40, 0x0080, 0x0010, 0x0000 },
 };
 

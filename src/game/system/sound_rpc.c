@@ -1230,10 +1230,16 @@ void data_files_locate(void) {
 
 void replay_files_locate(void) {
     s32 i;
+#ifdef DDPDOJ_PC
+    _Alignas(64) u8 buf[0x800];
+#else
     void *buf;
+#endif
     ReplayHeader *dst;
 
+#ifndef DDPDOJ_PC
     buf = memalign(0x40, 0x800);
+#endif
     for (i = 0; i < 10; i++) {
         cd_search_file(g_replay_file_paths[i]);
         g_replay_files[i].size = g_cd_file.size;
@@ -1243,7 +1249,9 @@ void replay_files_locate(void) {
         memcpy(dst, buf, 0x42);
         dst->unk00 = 1;
     }
+#ifndef DDPDOJ_PC
     free(buf);
+#endif
 }
 
 /* .sbss (the compiler lays these out in reverse) */
