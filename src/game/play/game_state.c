@@ -74,3 +74,9 @@ s32 g_player_panel2_task_handle;
 
 /* .bss (the compiler lays these out in reverse) */
 u8 g_player_slots[80];
+
+#ifdef DDPDOJ_PC
+#include "pc_data_alias.h"
+
+PC_DATA_ALIAS(g_player_slot2, g_player_slots, 0x24);
+#endif

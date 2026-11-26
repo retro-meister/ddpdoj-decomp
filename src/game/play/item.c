@@ -1205,3 +1205,9 @@ u8 g_items_hyper_p1[384];
 u8 g_items_bomb[128];
 u8 g_items_max_powerup[128];
 u8 g_items[512];
+
+#ifdef DDPDOJ_PC
+#include "pc_data_alias.h"
+
+PC_DATA_ALIAS(g_items_from_y, g_items, 0x2);
+#endif

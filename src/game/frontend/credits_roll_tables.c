@@ -296,3 +296,16 @@ u8 g_credits_small_font[384] = {
 
 char credits_text_00[8] = "<STAFF>";
 #endif
+
+#ifdef DDPDOJ_PC
+#include "pc_data_alias.h"
+
+#ifdef DEATH_LABEL
+PC_DATA_ALIAS(death_D_0025495A, death_D_00254950, 0xa);
+PC_DATA_ALIAS(death_D_00254964, death_D_00254950, 0x14);
+PC_DATA_ALIAS(death_D_0025496E, death_D_00254950, 0x1e);
+
+PC_DATA_ALIAS(death_D_00254978, death_D_00254970, 0x8);
+PC_DATA_ALIAS(death_D_00254982, death_D_00254970, 0x12);
+#endif
+#endif

@@ -153,3 +153,84 @@ u16 g_p1_score_extra_cell[16];
 #endif
 s32 g_p1_position_trail[16];
 s32 g_p2_position_trail[16];
+
+#ifdef DDPDOJ_PC
+#include "pc_data_alias.h"
+
+PC_DATA_ALIAS(g_death_label_ranking_scores_as_s32_a, g_death_label_ranking_scores, 0x0);
+PC_DATA_ALIAS(g_ranking_score_tops, g_death_label_ranking_scores, 0x18);
+PC_DATA_ALIAS(g_ranking_score_tops_as_u16_a, g_death_label_ranking_scores, 0x18);
+PC_DATA_ALIAS(D_002BB342, g_death_label_ranking_scores, 0x22);
+PC_DATA_ALIAS(g_ranking_continues, g_death_label_ranking_scores, 0x28);
+PC_DATA_ALIAS(g_ranking_continues_as_u16_a, g_death_label_ranking_scores, 0x28);
+PC_DATA_ALIAS(D_002BB352, g_death_label_ranking_scores, 0x32);
+PC_DATA_ALIAS(g_ranking_hits, g_death_label_ranking_scores, 0x38);
+PC_DATA_ALIAS(g_ranking_hits_as_u16_a, g_death_label_ranking_scores, 0x38);
+PC_DATA_ALIAS(D_002BB362, g_death_label_ranking_scores, 0x42);
+PC_DATA_ALIAS(g_ranking_power_styles, g_death_label_ranking_scores, 0x48);
+PC_DATA_ALIAS(g_ranking_power_styles_as_u16_a, g_death_label_ranking_scores, 0x48);
+PC_DATA_ALIAS(D_002BB372, g_death_label_ranking_scores, 0x52);
+PC_DATA_ALIAS(g_ranking_ship_types, g_death_label_ranking_scores, 0x58);
+PC_DATA_ALIAS(g_ranking_ship_types_as_u16_a, g_death_label_ranking_scores, 0x58);
+PC_DATA_ALIAS(D_002BB382, g_death_label_ranking_scores, 0x62);
+PC_DATA_ALIAS(g_ranking_stages, g_death_label_ranking_scores, 0x68);
+PC_DATA_ALIAS(g_ranking_stages_as_u16_a, g_death_label_ranking_scores, 0x68);
+PC_DATA_ALIAS(D_002BB392, g_death_label_ranking_scores, 0x72);
+PC_DATA_ALIAS(g_ranking_loops, g_death_label_ranking_scores, 0x78);
+PC_DATA_ALIAS(g_ranking_loops_as_u16_a, g_death_label_ranking_scores, 0x78);
+PC_DATA_ALIAS(D_002BB3A2, g_death_label_ranking_scores, 0x82);
+
+PC_DATA_ALIAS(g_ranking_names_as_s32_a, g_ranking_names, 0x0);
+PC_DATA_ALIAS(D_002BB3EC, g_ranking_names, 0x3c);
+
+PC_DATA_ALIAS(g_ranking_scores_as_s32_a, g_ranking_scores, 0x0);
+PC_DATA_ALIAS(D_002BB404, g_ranking_scores, 0x14);
+
+PC_DATA_ALIAS(g_stored_ranking_scores_as_s32_a, g_stored_ranking_scores, 0x0);
+PC_DATA_ALIAS(g_death_label_ranking_score_tops, g_stored_ranking_scores, 0x18);
+PC_DATA_ALIAS(g_death_label_ranking_score_tops_as_u16_a, g_stored_ranking_scores, 0x18);
+PC_DATA_ALIAS(g_death_label_ranking_continues, g_stored_ranking_scores, 0x28);
+PC_DATA_ALIAS(g_death_label_ranking_continues_as_u16_a, g_stored_ranking_scores, 0x28);
+PC_DATA_ALIAS(g_death_label_ranking_hits, g_stored_ranking_scores, 0x38);
+PC_DATA_ALIAS(g_death_label_ranking_hits_as_u16_a, g_stored_ranking_scores, 0x38);
+PC_DATA_ALIAS(g_death_label_ranking_power_styles, g_stored_ranking_scores, 0x48);
+PC_DATA_ALIAS(g_death_label_ranking_power_styles_as_u16_a, g_stored_ranking_scores, 0x48);
+PC_DATA_ALIAS(g_death_label_ranking_ship_types, g_stored_ranking_scores, 0x58);
+PC_DATA_ALIAS(g_death_label_ranking_ship_types_as_u16_a, g_stored_ranking_scores, 0x58);
+PC_DATA_ALIAS(g_death_label_ranking_stages, g_stored_ranking_scores, 0x68);
+PC_DATA_ALIAS(g_death_label_ranking_stages_as_u16_a, g_stored_ranking_scores, 0x68);
+PC_DATA_ALIAS(g_death_label_ranking_loops, g_stored_ranking_scores, 0x78);
+PC_DATA_ALIAS(g_death_label_ranking_loops_as_u16_a, g_stored_ranking_scores, 0x78);
+
+PC_DATA_ALIAS(g_death_label_ranking_names_as_s32_a, g_death_label_ranking_names, 0x0);
+
+PC_DATA_ALIAS(g_death_label_ranking_texts_as_s8_a5_a30, g_death_label_ranking_texts, 0x0);
+PC_DATA_ALIAS(g_stored_ranking_score_tops, g_death_label_ranking_texts, 0x98);
+PC_DATA_ALIAS(g_stored_ranking_score_tops_as_u16_a, g_death_label_ranking_texts, 0x98);
+PC_DATA_ALIAS(g_stored_ranking_continues, g_death_label_ranking_texts, 0xa8);
+PC_DATA_ALIAS(g_stored_ranking_hits, g_death_label_ranking_texts, 0xb8);
+PC_DATA_ALIAS(g_stored_ranking_hits_as_u16_a, g_death_label_ranking_texts, 0xb8);
+PC_DATA_ALIAS(g_stored_ranking_power_styles, g_death_label_ranking_texts, 0xc8);
+PC_DATA_ALIAS(g_stored_ranking_power_styles_as_u16_a, g_death_label_ranking_texts, 0xc8);
+PC_DATA_ALIAS(g_stored_ranking_ship_types, g_death_label_ranking_texts, 0xd8);
+PC_DATA_ALIAS(g_stored_ranking_ship_types_as_u16_a, g_death_label_ranking_texts, 0xd8);
+PC_DATA_ALIAS(g_stored_ranking_stages, g_death_label_ranking_texts, 0xe8);
+PC_DATA_ALIAS(g_stored_ranking_stages_as_u16_a, g_death_label_ranking_texts, 0xe8);
+PC_DATA_ALIAS(g_stored_ranking_loops, g_death_label_ranking_texts, 0xf8);
+PC_DATA_ALIAS(g_stored_ranking_loops_as_u16_a, g_death_label_ranking_texts, 0xf8);
+
+PC_DATA_ALIAS(g_p1_score_cells_as_Bank90, g_p1_score_cells, 0x0);
+PC_DATA_ALIAS(g_p1_score_cells_as_Pair90, g_p1_score_cells, 0x0);
+PC_DATA_ALIAS(g_p2_score_cells, g_p1_score_cells, 0x5a);
+
+PC_DATA_ALIAS(g_p1_score_extra_cell_as_Bank10, g_p1_score_extra_cell, 0x0);
+PC_DATA_ALIAS(g_p1_score_extra_cell_as_Pair10, g_p1_score_extra_cell, 0x0);
+PC_DATA_ALIAS(g_p2_score_extra_cell, g_p1_score_extra_cell, 0xa);
+
+PC_DATA_ALIAS(g_stored_ranking_texts_as_s8_a5_a30, g_stored_ranking_texts, 0x0);
+
+#ifdef DEATH_LABEL
+PC_DATA_ALIAS(death_D_0068DAA6, g_p1_score_extra_cell, 0x6);
+PC_DATA_ALIAS(death_D_0068DAA8, g_p1_score_extra_cell, 0x8);
+#endif
+#endif

@@ -1379,3 +1379,11 @@ u32 reg_save4_d5;
 u32 reg_save4_d6;
 u32 reg_save4_d7;
 s32 D_0028E530;
+
+#ifdef DDPDOJ_PC
+#include "pc_data_alias.h"
+
+PC_DATA_ALIAS(g_sparks_second_half, g_sparks, 0x3fc);
+PC_DATA_ALIAS(g_spark_count, g_sparks, 0x7f8);
+PC_DATA_ALIAS(D_0029A52A, g_sparks, 0x7fa);
+#endif

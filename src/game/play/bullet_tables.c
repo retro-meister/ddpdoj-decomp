@@ -423,3 +423,80 @@ u16 bullet_move_routines[1032] = {
     0x00BC, 0x00BD, 0x00C8, 0x00BC, 0x03E8, 0x0000, 0x0000, 0x0000,
 };
 #endif
+
+#ifdef DDPDOJ_PC
+#include "pc_data_alias.h"
+
+PC_DATA_ALIAS(D_0024EBC0, bullet_move_routines, MAIN_OR_DEATH_LABEL(0x90, 0xa0));
+PC_DATA_ALIAS(D_0024EBF0, bullet_move_routines, MAIN_OR_DEATH_LABEL(0xc0, 0xd0));
+PC_DATA_ALIAS(D_0024EC00, bullet_move_routines, MAIN_OR_DEATH_LABEL(0xd0, 0xe0));
+PC_DATA_ALIAS(D_0024EC10, bullet_move_routines, MAIN_OR_DEATH_LABEL(0xe0, 0xf0));
+PC_DATA_ALIAS(D_0024EC20, bullet_move_routines, MAIN_OR_DEATH_LABEL(0xf0, 0x100));
+PC_DATA_ALIAS(D_0024EC30, bullet_move_routines, MAIN_OR_DEATH_LABEL(0x100, 0x110));
+PC_DATA_ALIAS(D_0024EC40, bullet_move_routines, MAIN_OR_DEATH_LABEL(0x110, 0x120));
+PC_DATA_ALIAS(D_0024EC50, bullet_move_routines, MAIN_OR_DEATH_LABEL(0x120, 0x130));
+PC_DATA_ALIAS(D_0024EC60, bullet_move_routines, MAIN_OR_DEATH_LABEL(0x130, 0x140));
+PC_DATA_ALIAS(D_0024EC70, bullet_move_routines, MAIN_OR_DEATH_LABEL(0x140, 0x150));
+PC_DATA_ALIAS(D_0024EC80, bullet_move_routines, MAIN_OR_DEATH_LABEL(0x150, 0x160));
+PC_DATA_ALIAS(D_0024ED80, bullet_move_routines, MAIN_OR_DEATH_LABEL(0x250, 0x260));
+PC_DATA_ALIAS(D_0024EDB0, bullet_move_routines, MAIN_OR_DEATH_LABEL(0x280, 0x290));
+PC_DATA_ALIAS(D_0024EDE0, bullet_move_routines, MAIN_OR_DEATH_LABEL(0x2b0, 0x2c0));
+PC_DATA_ALIAS(D_0024EDF0, bullet_move_routines, MAIN_OR_DEATH_LABEL(0x2c0, 0x2d0));
+PC_DATA_ALIAS(D_0024EE00, bullet_move_routines, MAIN_OR_DEATH_LABEL(0x2d0, 0x2e0));
+PC_DATA_ALIAS(D_0024EE10, bullet_move_routines, MAIN_OR_DEATH_LABEL(0x2e0, 0x2f0));
+PC_DATA_ALIAS(D_0024EE20, bullet_move_routines, MAIN_OR_DEATH_LABEL(0x2f0, 0x300));
+PC_DATA_ALIAS(D_0024EE30, bullet_move_routines, MAIN_OR_DEATH_LABEL(0x300, 0x310));
+PC_DATA_ALIAS(D_0024EE40, bullet_move_routines, MAIN_OR_DEATH_LABEL(0x310, 0x320));
+PC_DATA_ALIAS(D_0024EE50, bullet_move_routines, MAIN_OR_DEATH_LABEL(0x320, 0x330));
+PC_DATA_ALIAS(D_0024EE60, bullet_move_routines, MAIN_OR_DEATH_LABEL(0x330, 0x340));
+PC_DATA_ALIAS(D_0024EE90, bullet_move_routines, MAIN_OR_DEATH_LABEL(0x360, 0x370));
+PC_DATA_ALIAS(D_0024EEB0, bullet_move_routines, MAIN_OR_DEATH_LABEL(0x380, 0x390));
+PC_DATA_ALIAS(D_0024EEF0, bullet_move_routines, MAIN_OR_DEATH_LABEL(0x3c0, 0x3d0));
+PC_DATA_ALIAS(D_0024EF30, bullet_move_routines, MAIN_OR_DEATH_LABEL(0x400, 0x410));
+PC_DATA_ALIAS(D_0024F0F0, bullet_move_routines, MAIN_OR_DEATH_LABEL(0x5c0, 0x5d0));
+
+PC_DATA_ALIAS(bullet_type_record_00, bullet_type_records, MAIN_OR_DEATH_LABEL(0x92, 0xa2));
+PC_DATA_ALIAS(bullet_type_record_01, bullet_type_records, MAIN_OR_DEATH_LABEL(0xa6, 0xb6));
+PC_DATA_ALIAS(bullet_type_record_02, bullet_type_records, MAIN_OR_DEATH_LABEL(0xba, 0xca));
+PC_DATA_ALIAS(bullet_type_record_03, bullet_type_records, MAIN_OR_DEATH_LABEL(0xce, 0xde));
+PC_DATA_ALIAS(bullet_type_record_04, bullet_type_records, MAIN_OR_DEATH_LABEL(0xe2, 0xf2));
+PC_DATA_ALIAS(bullet_type_record_05, bullet_type_records, MAIN_OR_DEATH_LABEL(0xf6, 0x106));
+PC_DATA_ALIAS(bullet_type_record_06, bullet_type_records, MAIN_OR_DEATH_LABEL(0x10a, 0x11a));
+PC_DATA_ALIAS(bullet_type_record_07, bullet_type_records, MAIN_OR_DEATH_LABEL(0x11e, 0x12e));
+PC_DATA_ALIAS(bullet_type_record_08, bullet_type_records, MAIN_OR_DEATH_LABEL(0x132, 0x142));
+PC_DATA_ALIAS(bullet_type_record_09, bullet_type_records, MAIN_OR_DEATH_LABEL(0x146, 0x156));
+PC_DATA_ALIAS(bullet_type_record_10, bullet_type_records, MAIN_OR_DEATH_LABEL(0x15a, 0x16a));
+PC_DATA_ALIAS(bullet_type_record_11, bullet_type_records, MAIN_OR_DEATH_LABEL(0x16e, 0x17e));
+PC_DATA_ALIAS(bullet_type_record_12, bullet_type_records, MAIN_OR_DEATH_LABEL(0x182, 0x192));
+PC_DATA_ALIAS(bullet_type_record_13, bullet_type_records, MAIN_OR_DEATH_LABEL(0x196, 0x1a6));
+PC_DATA_ALIAS(bullet_type_record_14, bullet_type_records, MAIN_OR_DEATH_LABEL(0x1aa, 0x1ba));
+PC_DATA_ALIAS(bullet_type_record_15, bullet_type_records, MAIN_OR_DEATH_LABEL(0x1be, 0x1ce));
+PC_DATA_ALIAS(bullet_type_record_16, bullet_type_records, MAIN_OR_DEATH_LABEL(0x1d2, 0x1e2));
+PC_DATA_ALIAS(bullet_type_record_17, bullet_type_records, MAIN_OR_DEATH_LABEL(0x1e6, 0x1f6));
+PC_DATA_ALIAS(bullet_type_record_18, bullet_type_records, MAIN_OR_DEATH_LABEL(0x1fa, 0x20a));
+PC_DATA_ALIAS(bullet_type_record_19, bullet_type_records, MAIN_OR_DEATH_LABEL(0x20e, 0x21e));
+PC_DATA_ALIAS(bullet_type_record_20, bullet_type_records, MAIN_OR_DEATH_LABEL(0x222, 0x232));
+PC_DATA_ALIAS(bullet_type_record_21, bullet_type_records, MAIN_OR_DEATH_LABEL(0x236, 0x246));
+PC_DATA_ALIAS(bullet_type_record_22, bullet_type_records, MAIN_OR_DEATH_LABEL(0x24a, 0x25a));
+PC_DATA_ALIAS(bullet_type_record_23, bullet_type_records, MAIN_OR_DEATH_LABEL(0x25e, 0x26e));
+PC_DATA_ALIAS(bullet_type_record_24, bullet_type_records, MAIN_OR_DEATH_LABEL(0x272, 0x282));
+PC_DATA_ALIAS(bullet_type_record_25, bullet_type_records, MAIN_OR_DEATH_LABEL(0x286, 0x296));
+PC_DATA_ALIAS(bullet_type_record_26, bullet_type_records, MAIN_OR_DEATH_LABEL(0x29a, 0x2aa));
+PC_DATA_ALIAS(bullet_type_record_27, bullet_type_records, MAIN_OR_DEATH_LABEL(0x2ae, 0x2be));
+PC_DATA_ALIAS(bullet_type_record_28, bullet_type_records, MAIN_OR_DEATH_LABEL(0x2c2, 0x2d2));
+PC_DATA_ALIAS(bullet_type_record_29, bullet_type_records, MAIN_OR_DEATH_LABEL(0x2d6, 0x2e6));
+PC_DATA_ALIAS(bullet_type_record_30, bullet_type_records, MAIN_OR_DEATH_LABEL(0x2ea, 0x2fa));
+PC_DATA_ALIAS(bullet_type_record_31, bullet_type_records, MAIN_OR_DEATH_LABEL(0x2fe, 0x30e));
+PC_DATA_ALIAS(bullet_type_record_32, bullet_type_records, MAIN_OR_DEATH_LABEL(0x312, 0x322));
+PC_DATA_ALIAS(bullet_type_record_33, bullet_type_records, MAIN_OR_DEATH_LABEL(0x326, 0x336));
+PC_DATA_ALIAS(bullet_type_record_34, bullet_type_records, MAIN_OR_DEATH_LABEL(0x33a, 0x34a));
+PC_DATA_ALIAS(bullet_type_record_35, bullet_type_records, MAIN_OR_DEATH_LABEL(0x34e, 0x35e));
+
+#ifdef DEATH_LABEL
+PC_DATA_ALIAS(death_D_00250790, bullet_type_records, 0x90);
+
+PC_DATA_ALIAS(death_D_00250B20, bullet_move_routines, 0x90);
+#else
+PC_DATA_ALIAS(D_0024F330, bullet_move_routines, 0x800);
+#endif
+#endif

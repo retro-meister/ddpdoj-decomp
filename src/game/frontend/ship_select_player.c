@@ -1168,3 +1168,14 @@ u8 join_select_p2_table_at_8[16];
 u16 join_select_object_spawn_buffer_2[8];
 u16 join_select_object_spawn_buffer[16];
 u8 D_0029BEE0[32];
+
+#ifdef DDPDOJ_PC
+#include "pc_data_alias.h"
+
+PC_DATA_ALIAS(D_0029BEE1, D_0029BEE0, 0x1);
+PC_DATA_ALIAS(D_0029BEE4, D_0029BEE0, 0x4);
+PC_DATA_ALIAS(D_0029BEE6, D_0029BEE0, 0x6);
+PC_DATA_ALIAS(D_0029BEEE, D_0029BEE0, 0xe);
+PC_DATA_ALIAS(D_0029BEFC, D_0029BEE0, 0x1c);
+PC_DATA_ALIAS(D_0029BEFE, D_0029BEE0, 0x1e);
+#endif

@@ -151,3 +151,17 @@ u8 g_arcade_sprites[5120];
 s16 g_sprite_palette[1024];
 s16 g_bg_palette[1024];
 s32 g_text_palette[128];
+
+#ifdef DDPDOJ_PC
+#include "pc_data_alias.h"
+
+PC_DATA_ALIAS(D_002B4E28, g_text_layer, 0xd8);
+PC_DATA_ALIAS(D_002B5728, g_text_layer, 0x9d8);
+PC_DATA_ALIAS(D_002B5F28, g_text_layer, 0x11d8);
+PC_DATA_ALIAS(D_002B6828, g_text_layer, 0x1ad8);
+
+PC_DATA_ALIAS(D_002B6DF4, g_bg_layer, 0xa4);
+PC_DATA_ALIAS(D_002B6E0C, g_bg_layer, 0xbc);
+
+PC_DATA_ALIAS(g_arcade_sprites_as_s32_a, g_arcade_sprites, 0x0);
+#endif

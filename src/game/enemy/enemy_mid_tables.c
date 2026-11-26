@@ -416,3 +416,17 @@ u16 star_container_start_table_2[4] = {
 u16 mid_flyer_e_table_2[4] = {
     0x0600, 0x0400, 0x0200, 0x0000,
 };
+
+#ifdef DDPDOJ_PC
+#include "pc_data_alias.h"
+
+PC_DATA_ALIAS(D_0025A128, D_0025A0B0, 0x78);
+
+PC_DATA_ALIAS(D_0025A288, D_0025A230, 0x58);
+
+PC_DATA_ALIAS(D_0025A518, D_0025A4B0, 0x68);
+
+PC_DATA_ALIAS(D_0025AEA8, D_0025AE70, 0x38);
+PC_DATA_ALIAS(D_0025AEB8, D_0025AE70, 0x48);
+PC_DATA_ALIAS(D_0025AEC8, D_0025AE70, 0x58);
+#endif

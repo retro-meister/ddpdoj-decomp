@@ -617,3 +617,13 @@ u16 shot_limits_x_second_loop[16] = {
     0xCC00, 0x0200, 0xCC00, 0x0200, 0xCC00, 0x0200, 0xCC00, 0x0200,
     0xCC00, 0x0200, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000,
 };
+
+#ifdef DDPDOJ_PC
+#include "pc_data_alias.h"
+
+PC_DATA_ALIAS(rng_pair_values_large_second, rng_pair_values_large, 0x2);
+
+PC_DATA_ALIAS(rng_pair_values_medium_second, rng_pair_values_medium, 0x2);
+
+PC_DATA_ALIAS(rng_pair_values_small_second, rng_pair_values_small, 0x2);
+#endif

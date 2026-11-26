@@ -3255,3 +3255,49 @@ u8 g_p2_afterimage_positions[64];
 s32 g_p1_afterimage_sprites[16];
 u8 g_p2_afterimage_sprites[64];
 u16 g_p2_maximum_value[16];
+
+#ifdef DDPDOJ_PC
+#include "pc_data_alias.h"
+
+PC_DATA_ALIAS(D_0029CEBA, g_bomb_entities, 0x1a);
+
+PC_DATA_ALIAS(D_0029F112, g_p2_options, 0x2);
+PC_DATA_ALIAS(D_0029F114, g_p2_options, 0x4);
+
+PC_DATA_ALIAS(D_0029F182, g_p1_options, 0x2);
+PC_DATA_ALIAS(D_0029F184, g_p1_options, 0x4);
+
+PC_DATA_ALIAS(D_0029F1F1, g_player2, 0x1);
+PC_DATA_ALIAS(D_0029F248, g_player2, 0x58);
+
+PC_DATA_ALIAS(D_0029F261, g_player1, 0x1);
+PC_DATA_ALIAS(D_0029F2B8, g_player1, 0x58);
+
+PC_DATA_ALIAS(g_p2_maximum_value_digits, g_p2_maximum_value, 0x4);
+PC_DATA_ALIAS(g_p2_maximum_half_digits, g_p2_maximum_value, 0x8);
+PC_DATA_ALIAS(g_p2_maximum_count, g_p2_maximum_value, 0xc);
+PC_DATA_ALIAS(g_p2_maximum_count_as_s16_a, g_p2_maximum_value, 0xc);
+PC_DATA_ALIAS(g_p2_maximum_count_digits, g_p2_maximum_value, 0xe);
+PC_DATA_ALIAS(g_p1_maximum_value, g_p2_maximum_value, 0x10);
+PC_DATA_ALIAS(g_p1_maximum_value_digits, g_p2_maximum_value, 0x14);
+PC_DATA_ALIAS(g_p1_maximum_half_digits, g_p2_maximum_value, 0x18);
+PC_DATA_ALIAS(g_p1_maximum_count, g_p2_maximum_value, 0x1c);
+PC_DATA_ALIAS(g_p1_maximum_count_as_s16_a, g_p2_maximum_value, 0x1c);
+PC_DATA_ALIAS(g_p1_maximum_count_digits, g_p2_maximum_value, 0x1e);
+
+PC_DATA_ALIAS(g_p1_option_level_data_as_s32_a, g_p1_option_level_data, 0x0);
+PC_DATA_ALIAS(g_p1_option_level_data_as_u8_a, g_p1_option_level_data, 0x0);
+PC_DATA_ALIAS(g_p1_option_level_data_lo, g_p1_option_level_data, 0x2);
+
+PC_DATA_ALIAS(g_p1_weapon_level_data_as_s32_a, g_p1_weapon_level_data, 0x0);
+PC_DATA_ALIAS(g_p1_weapon_level_data_as_u16_a, g_p1_weapon_level_data, 0x0);
+PC_DATA_ALIAS(g_p1_weapon_level_data_lo, g_p1_weapon_level_data, 0x2);
+
+PC_DATA_ALIAS(g_p2_option_level_data_as_s32_a, g_p2_option_level_data, 0x0);
+PC_DATA_ALIAS(g_p2_option_level_data_as_u8_a, g_p2_option_level_data, 0x0);
+PC_DATA_ALIAS(g_p2_option_level_data_lo, g_p2_option_level_data, 0x2);
+
+PC_DATA_ALIAS(g_p2_weapon_level_data_as_s32_a, g_p2_weapon_level_data, 0x0);
+PC_DATA_ALIAS(g_p2_weapon_level_data_as_u16_a, g_p2_weapon_level_data, 0x0);
+PC_DATA_ALIAS(g_p2_weapon_level_data_lo, g_p2_weapon_level_data, 0x2);
+#endif

@@ -861,3 +861,23 @@ u16 player_update_table_5[2] = {
 u16 player_update_table_6[2] = {
     0x0000, 0x0000,
 };
+
+#ifdef DDPDOJ_PC
+#include "pc_data_alias.h"
+
+PC_DATA_ALIAS(D_00255D48, player_exhaust_slow_sprites_01, 0x28);
+PC_DATA_ALIAS(D_00255DB8, player_exhaust_slow_sprites_01, 0x98);
+PC_DATA_ALIAS(D_00255DC8, player_exhaust_slow_sprites_01, 0xa8);
+PC_DATA_ALIAS(D_00255DD8, player_exhaust_slow_sprites_01, 0xb8);
+PC_DATA_ALIAS(D_00255DE8, player_exhaust_slow_sprites_01, 0xc8);
+PC_DATA_ALIAS(D_00255DF8, player_exhaust_slow_sprites_01, 0xd8);
+PC_DATA_ALIAS(D_00255E08, player_exhaust_slow_sprites_01, 0xe8);
+PC_DATA_ALIAS(D_00255E78, player_exhaust_slow_sprites_01, 0x158);
+PC_DATA_ALIAS(D_00255E88, player_exhaust_slow_sprites_01, 0x168);
+PC_DATA_ALIAS(D_00255E98, player_exhaust_slow_sprites_01, 0x178);
+PC_DATA_ALIAS(D_00255EA8, player_exhaust_slow_sprites_01, 0x188);
+PC_DATA_ALIAS(D_00255EB8, player_exhaust_slow_sprites_01, 0x198);
+PC_DATA_ALIAS(D_00255EC8, player_exhaust_slow_sprites_01, 0x1a8);
+
+PC_DATA_ALIAS(D_0028C868_as_u8_a, D_0028C868, 0x0);
+#endif

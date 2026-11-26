@@ -2021,3 +2021,9 @@ u16 D_0028DC00[4] = {
 u16 D_0028DC08[4] = {
     0x080A, 0x1002, 0x0003, 0x0800,
 };
+
+#ifdef DDPDOJ_PC
+#include "pc_data_alias.h"
+
+PC_DATA_ALIAS(D_0026D1B8, D_0026D1A0, 0x18);
+#endif

@@ -1060,3 +1060,10 @@ u8 death_D_00290568 __attribute__((aligned(4)));
 /* .bss (the compiler lays these out in reverse) */
 u16 g_wreck_count[8];
 u16 g_wrecks[720];
+
+#ifdef DDPDOJ_PC
+#include "pc_data_alias.h"
+
+PC_DATA_ALIAS(D_00299D22, g_wreck_count, 0x2);
+PC_DATA_ALIAS(D_00299D24, g_wreck_count, 0x4);
+#endif

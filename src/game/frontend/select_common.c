@@ -1604,3 +1604,10 @@ u8 D_0028C158[4] = {
 u8 D_0028C15C[4] = {
     0x0E, 0x00, 0x09, 0x00,
 };
+
+#ifdef DDPDOJ_PC
+#include "pc_data_alias.h"
+
+PC_DATA_ALIAS(D_00252268, D_00252250, 0x18);
+PC_DATA_ALIAS(D_00252278, D_00252250, 0x28);
+#endif

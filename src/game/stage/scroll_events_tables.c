@@ -563,3 +563,15 @@ u16 stage2_scroll_event_lists[4] = { POINTER_SLOT(0), POINTER_SLOT(2) };
 u16 stage3_scroll_event_lists[4] = { POINTER_SLOT(0), POINTER_SLOT(2) };
 u16 stage4_scroll_event_lists[4] = { POINTER_SLOT(0), POINTER_SLOT(2) };
 u16 stage5_scroll_event_lists[4] = { POINTER_SLOT(0), POINTER_SLOT(2) };
+
+#ifdef DDPDOJ_PC
+#include "pc_data_alias.h"
+
+PC_DATA_ALIAS(D_002526D2, scroll_event_routines, 0x2);
+
+PC_DATA_ALIAS(D_002526F2, scroll_sound_routines, 0x2);
+
+PC_DATA_ALIAS(D_00252702, stage_map_palettes, 0x2);
+
+PC_DATA_ALIAS(D_00252722, stage_maps, 0x2);
+#endif

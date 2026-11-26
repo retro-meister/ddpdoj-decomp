@@ -1063,3 +1063,17 @@ u16 player_shot_7_direction_5_16[2] = {
 u16 D_0028D63C[2] = {
     0x0002, 0x0003,
 };
+
+#ifdef DDPDOJ_PC
+#include "pc_data_alias.h"
+
+PC_DATA_ALIAS(D_0025DB94, option_shot_list_3_01_00, 0x4);
+
+PC_DATA_ALIAS(D_0025DBC4, option_shot_list_3_01_01, 0x4);
+
+PC_DATA_ALIAS(D_0025DBF4, option_shot_list_3_01_02, 0x4);
+
+PC_DATA_ALIAS(D_0025DC24, option_shot_list_3_01_03, 0x4);
+
+PC_DATA_ALIAS(D_0025DC54, option_shot_list_3_01_04, 0x4);
+#endif

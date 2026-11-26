@@ -1917,3 +1917,15 @@ void (*stage2_boss_fire_shoulder_spread_table_2[2])() = {
     stage2_boss_rage_fan_a,
     stage2_boss_rage_fan_b,
 };
+
+#ifdef DDPDOJ_PC
+#include "pc_data_alias.h"
+
+PC_DATA_ALIAS(D_0026C252, D_0026C250, 0x2);
+PC_DATA_ALIAS(D_0026C254, D_0026C250, 0x4);
+PC_DATA_ALIAS(D_0026C256, D_0026C250, 0x6);
+
+PC_DATA_ALIAS(D_0026C262, D_0026C260, 0x2);
+PC_DATA_ALIAS(D_0026C264, D_0026C260, 0x4);
+PC_DATA_ALIAS(D_0026C266, D_0026C260, 0x6);
+#endif

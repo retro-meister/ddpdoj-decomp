@@ -277,3 +277,9 @@ struct D0028d988Record D_0028D988 = {
     D_0025F5F0,
     { 0xFFFF, 0xFFFF },
 };
+
+#ifdef DDPDOJ_PC
+#include "pc_data_alias.h"
+
+PC_DATA_ALIAS(D_0025F5A8, option_strong_sprites_b_03, 0x18);
+#endif

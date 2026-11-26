@@ -2888,3 +2888,19 @@ u8 g_bullets[13456];
 u16 D_0028E96C __attribute__((aligned(4)));
 u16 D_0028E968;
 u32 D_0028E964;
+
+#ifdef DDPDOJ_PC
+#include "pc_data_alias.h"
+
+#ifndef DEATH_LABEL
+PC_DATA_ALIAS(g_bullets_alive, g_bullets, 0x3480);
+PC_DATA_ALIAS(D_00299762, g_bullets, 0x3482);
+PC_DATA_ALIAS(g_bullet_cancel, g_bullets, 0x3484);
+PC_DATA_ALIAS(g_bullet_cancel_kind, g_bullets, 0x3486);
+PC_DATA_ALIAS(g_bullet_limit_raised_1, g_bullets, 0x3488);
+PC_DATA_ALIAS(g_bullet_limit_raised_2, g_bullets, 0x348a);
+PC_DATA_ALIAS(g_bullet_limit_raised_3, g_bullets, 0x348c);
+PC_DATA_ALIAS(g_bullet_limit_raised_3_as_s16_a, g_bullets, 0x348c);
+PC_DATA_ALIAS(D_0029976E, g_bullets, 0x348e);
+#endif
+#endif

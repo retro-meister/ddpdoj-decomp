@@ -5708,8 +5708,11 @@ u8 D_006A4C00[131824];
 u8 g_replay_file_loaded[1024];
 u8 D_006A3E50[2480];
 #endif
+#ifdef DDPDOJ_PC
+/* Four file status words followed by twelve 1 KiB replay slot records. */
+_Alignas(64) u8 pc_replay_slot_storage[0x10 + 12 * 0x400];
+#else
 u16 replay_slot_info_fill_buffer[6112];
-#ifndef DDPDOJ_PC
 s32 D_0069F590[1600];
 u8 g_mc_dir[16];
 #endif
@@ -5725,3 +5728,56 @@ u8 D_0068E230[48];
 u8 D_0068E200[48];
 u8 D_0068E1C0[64];
 u8 D_0068E1B0[16];
+
+#ifdef DDPDOJ_PC
+#include "pc_data_alias.h"
+
+PC_DATA_ALIAS(D_0068E1B6, D_0068E1B0, 0x6);
+PC_DATA_ALIAS(D_0068E1BC, D_0068E1B0, 0xc);
+
+PC_DATA_ALIAS(D_0068E2B4, D_0068E270, 0x44);
+PC_DATA_ALIAS(D_0068E2F4, D_0068E270, 0x84);
+PC_DATA_ALIAS(D_0068E334, D_0068E270, 0xc4);
+
+PC_DATA_ALIAS(D_006A0E40, pc_replay_slot_storage, 0x0);
+PC_DATA_ALIAS(D_006A0E40_as_Slot_a, pc_replay_slot_storage, 0x0);
+PC_DATA_ALIAS(D_006A0E44, pc_replay_slot_storage, 0x4);
+PC_DATA_ALIAS(D_006A0E48, pc_replay_slot_storage, 0x8);
+PC_DATA_ALIAS(D_006A0E4C, pc_replay_slot_storage, 0xc);
+PC_DATA_ALIAS(g_replay_slot_infos, pc_replay_slot_storage, 0x10);
+PC_DATA_ALIAS(D_006A0E52, pc_replay_slot_storage, 0x12);
+PC_DATA_ALIAS(D_006A0E54, pc_replay_slot_storage, 0x14);
+PC_DATA_ALIAS(D_006A0E56, pc_replay_slot_storage, 0x16);
+PC_DATA_ALIAS(D_006A0E58, pc_replay_slot_storage, 0x18);
+PC_DATA_ALIAS(D_006A0E5A, pc_replay_slot_storage, 0x1a);
+PC_DATA_ALIAS(D_006A0E5C, pc_replay_slot_storage, 0x1c);
+PC_DATA_ALIAS(D_006A0E5E, pc_replay_slot_storage, 0x1e);
+PC_DATA_ALIAS(D_006A0E60, pc_replay_slot_storage, 0x20);
+PC_DATA_ALIAS(D_006A0E62, pc_replay_slot_storage, 0x22);
+PC_DATA_ALIAS(D_006A0E64, pc_replay_slot_storage, 0x24);
+PC_DATA_ALIAS(D_006A0E66, pc_replay_slot_storage, 0x26);
+PC_DATA_ALIAS(D_006A0E68, pc_replay_slot_storage, 0x28);
+PC_DATA_ALIAS(D_006A0E6A, pc_replay_slot_storage, 0x2a);
+PC_DATA_ALIAS(D_006A0E6C, pc_replay_slot_storage, 0x2c);
+PC_DATA_ALIAS(D_006A0E6E, pc_replay_slot_storage, 0x2e);
+PC_DATA_ALIAS(D_006A0E70, pc_replay_slot_storage, 0x30);
+PC_DATA_ALIAS(D_006A0E72, pc_replay_slot_storage, 0x32);
+PC_DATA_ALIAS(D_006A0E76, pc_replay_slot_storage, 0x36);
+PC_DATA_ALIAS(D_006A0E78, pc_replay_slot_storage, 0x38);
+PC_DATA_ALIAS(D_006A0E7A, pc_replay_slot_storage, 0x3a);
+PC_DATA_ALIAS(D_006A0E7C, pc_replay_slot_storage, 0x3c);
+PC_DATA_ALIAS(D_006A0E7E, pc_replay_slot_storage, 0x3e);
+PC_DATA_ALIAS(D_006A0E80, pc_replay_slot_storage, 0x40);
+PC_DATA_ALIAS(D_006A0E82, pc_replay_slot_storage, 0x42);
+PC_DATA_ALIAS(D_006A0E86, pc_replay_slot_storage, 0x46);
+PC_DATA_ALIAS(D_006A0E88, pc_replay_slot_storage, 0x48);
+PC_DATA_ALIAS(D_006A0E89, pc_replay_slot_storage, 0x49);
+PC_DATA_ALIAS(D_006A0E8A, pc_replay_slot_storage, 0x4a);
+PC_DATA_ALIAS(D_006A0E8B, pc_replay_slot_storage, 0x4b);
+PC_DATA_ALIAS(D_006A0E8C, pc_replay_slot_storage, 0x4c);
+PC_DATA_ALIAS(D_006A0E8D, pc_replay_slot_storage, 0x4d);
+
+PC_DATA_ALIAS(replay_slot_info_fill_buffer, pc_replay_slot_storage, 0x50);
+
+PC_DATA_ALIAS(D_006C5494, g_mc_save_buf, 0x5a4);
+#endif

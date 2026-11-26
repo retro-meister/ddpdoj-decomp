@@ -830,3 +830,10 @@ next_13:
 
 /* .bss (the compiler lays these out in reverse) */
 u8 g_continue_panels[32];
+
+#ifdef DDPDOJ_PC
+#include "pc_data_alias.h"
+
+PC_DATA_ALIAS(D_002BF3EA, g_continue_panels, 0xa);
+PC_DATA_ALIAS(g_continue_panel_p2, g_continue_panels, 0x16);
+#endif

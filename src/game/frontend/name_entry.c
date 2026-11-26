@@ -1313,3 +1313,9 @@ u8 D_002BADF0[16];
 u8 D_002BADD0[32];
 u8 password_bits_unpack_buffer_2[96];
 u8 password_bits_unpack_buffer[32];
+
+#ifdef DDPDOJ_PC
+#include "pc_data_alias.h"
+
+PC_DATA_ALIAS(D_002BAE82, D_002BAE80, 0x2);
+#endif

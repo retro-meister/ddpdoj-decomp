@@ -1554,3 +1554,10 @@ void *D_0028DEB8;
 
 /* .bss (the compiler lays these out in reverse) */
 u8 g_enemy_anims[384];
+
+#ifdef DDPDOJ_PC
+#include "pc_data_alias.h"
+
+PC_DATA_ALIAS(g_enemy_anim_count, g_enemy_anims, 0x17c);
+PC_DATA_ALIAS(g_enemy_anim_count_as_u8_a, g_enemy_anims, 0x17c);
+#endif

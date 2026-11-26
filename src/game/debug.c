@@ -676,3 +676,11 @@ u16 g_attract_picture_frame __attribute__((aligned(4)));
 u8 D_0028DEF8 __attribute__((aligned(4)));
 u8 attract_demo_start_state __attribute__((aligned(4)));
 #endif
+
+#ifdef DDPDOJ_PC
+#include "pc_data_alias.h"
+
+#ifdef DEATH_LABEL
+PC_DATA_ALIAS(death_D_0026FDA0, attract_picture_frames, 0x0);
+#endif
+#endif

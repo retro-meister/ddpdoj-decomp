@@ -42,3 +42,11 @@ u16 D_002420E0[8] = {
 u16 D_0028C080[4] = {
     0xFA00, 0xFC00, 0x0620, 0x001E,
 };
+
+#ifdef DDPDOJ_PC
+#include "pc_data_alias.h"
+
+PC_DATA_ALIAS(D_00242058, D_00242020, 0x38);
+
+PC_DATA_ALIAS(D_002420A8, D_00242070, 0x38);
+#endif
