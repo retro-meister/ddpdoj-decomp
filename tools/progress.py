@@ -374,7 +374,7 @@ def plot_history(history):
                 name = f"{label}, bytes"
             axis.step(dates, values, where="post", color=colors[target], linewidth=width, linestyle=style, label=name, clip_on=False)
     fig.suptitle("DaiOuJou PS2 decompilation progress", fontsize=16, fontweight="bold")
-    axis.set_title("Share of each executable's functions (solid) and bytes (dashed) matched in C", fontsize=12)
+    axis.set_title("Percentage of functions (solid) and bytes (dashed) matched to C", fontsize=12)
     axis.set_ylim(0, 100)
     axis.set_ylabel("Decompilation progress")
     axis.set_xlabel("Date")
