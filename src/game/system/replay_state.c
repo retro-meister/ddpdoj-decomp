@@ -1,4 +1,5 @@
 #include "common.h"
+#include "ground.h"
 #include "player.h"
 #include "sdk/ps2sdk.h"
 
@@ -1381,7 +1382,6 @@ extern u16 g_p1_stage_stars_large;
 extern u16 g_bee_value_step;
 extern u16 g_stage_bees_collected;
 extern u16 g_bullet_count;
-extern s16 D_0029C060_as_s16_a[];
 extern f32 g_p2_maximum_value_as_f32_a[];
 extern u16 g_p2_maximum_count[];
 extern f32 g_p1_maximum_value_as_f32_a[];
@@ -1738,7 +1738,7 @@ void replay_snapshot_save(Buf *buf) {
     *(u16 *)(p + 0x3506) = g_frame_mod4;
     *(u16 *)(p + 0x3508) = g_frame_mod8;
     *(u16 *)(p + 0x350A) = g_frame_mod16;
-    *(Row16 *)(p + 0x5512) = *(Row16 *)D_0029C060_as_s16_a;
+    *(Row16 *)(p + 0x5512) = *(Row16 *)&g_ground_state;
     for (i = 0; i < 0x2000; i++) {
         buf->f3511[i] = g_text_layer_as_s8_a[i];
     }
@@ -2243,7 +2243,7 @@ void replay_snapshot_load(u8 *p) {
     g_frame_mod4 = *(u16 *)(p + 0x3506);
     g_frame_mod8 = *(u16 *)(p + 0x3508);
     g_frame_mod16 = *(u16 *)(p + 0x350A);
-    *(Row16 *)D_0029C060_as_s16_a = ((RowSrc *)p)->row;
+    *(Row16 *)&g_ground_state = ((RowSrc *)p)->row;
     D_0028E288 = p[0x5532];
     D_0028E284 = p[0x5533];
     replay_text_layer_load((const Src *)p);

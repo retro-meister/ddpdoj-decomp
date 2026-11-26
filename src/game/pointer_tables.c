@@ -339,7 +339,7 @@ void ending_task();
 void func_00131880();
 void func_00134C40();
 void game_task();
-void func_00138DA0();
+void ground_task();
 void func_00139B80();
 void player1_task();
 void player2_task();
@@ -359,7 +359,7 @@ void replay_task();
 
 void task_table_init(void) {
     STORE_POINTER(g_task_table + 4 * TASK_SCORE, score_task);
-    STORE_POINTER(g_task_table + 4 * 1, func_00138DA0);
+    STORE_POINTER(g_task_table + 4 * 1, ground_task);
     STORE_POINTER(g_task_table + 4 * TASK_PLAYER1, player1_task);
     STORE_POINTER(g_task_table + 4 * TASK_PLAYER2, player2_task);
     STORE_POINTER(g_task_table + 4 * 4, func_001A3730);

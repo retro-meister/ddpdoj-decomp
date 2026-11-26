@@ -379,7 +379,7 @@ void func_001D51C0() {
 }
 
 
-s32 func_00138A40();
+s32 scroll_line_release();
 s32 explosion_burst_small();
 s32 func_0013B2E0();
 s32 sfx_explosion_air_medium();
@@ -400,7 +400,7 @@ void func_001D5230(void) {
         if (temp_a0 == 2) {
             *(u8 *)(reg_a5 + 0x27) -= 1;
             if (*(u8 *)(reg_a5 + 0x27) == 0) {
-                func_00138A40();
+                scroll_line_release();
                 g_enemy_signal_e_as_s16 = 0;
                 *(s16 *)(reg_a5 + 0x30) = 1;
                 goto block_set;
@@ -1095,7 +1095,7 @@ void func_001D6830(s32 arg0) {
         }
     }
     if ((*(u8 *)(reg_a5 + 0x1B) == 2) && (ENTITY(reg_a6)->y.sh >= 0x6A00)) {
-        func_00138A40();
+        scroll_line_release();
         g_enemy_signal_e_as_s16 = 0;
         *(u8 *)(reg_a5 + 0x1B) = 3U;
     }

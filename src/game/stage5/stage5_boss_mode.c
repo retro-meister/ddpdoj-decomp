@@ -214,7 +214,7 @@ typedef void (*Fn)();
 
 extern u8 stage5_boss_flash_palettes_a[];
 s32 boss_part_hide_all();
-s32 func_001389D0();
+s32 ground_speeds_request();
 s32 func_00139EB0();
 s32 explosion_spawn();
 s32 sfx_explosion_air_medium();
@@ -376,7 +376,7 @@ void stage5_boss_mode_form1_explosion() {
         sfx_explosion_extra_1();
         reg_d0.h[0] = 0x10;
         reg_d1.h[0] = 0x10;
-        func_001389D0();
+        ground_speeds_request();
         reg_d0.w = 2;
         boss_phase_start();
         *(s16 *)reg_a4 = 0;
@@ -629,7 +629,7 @@ void stage5_boss_mode_form2_explosion(void) {
         func_0013B2E0();
         reg_d0.h[0] = 0x200;
         reg_d1.h[0] = 0x200;
-        func_001389D0();
+        ground_speeds_request();
         reg_d0.w = 4;
         boss_phase_start();
         *(s16 *)reg_a4 = 0;

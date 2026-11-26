@@ -16,7 +16,7 @@
 /* Move the plane's place in the map by `rows` rows, then show the `length` rows from there `times` times
    (-1: without end). */
 #define SCROLL_MAP_LOOP(line, rows, length, times) SCROLL_EVENT(line, 0x04), (u16)(rows), (length), (u16)(times)
-/* Set the plane's scroll speed, in 1/256 pixel a frame. */
+/* Set the plane's scroll speed, in 1/64 pixel a frame (0x40: one pixel). */
 #define SCROLL_SPEED(line, speed) SCROLL_EVENT(line, 0x08), (speed)
 /* Hold the scroll line while the map loop runs; when the loop ends the line goes on from four lines later. */
 #define SCROLL_LINE_HOLD(line) SCROLL_EVENT(line, 0x0C)

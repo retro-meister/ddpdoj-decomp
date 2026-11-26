@@ -1,40 +1,34 @@
 #include "common.h"
+#include "ground.h"
 #include "sdk/ps2sdk.h"
 
-void func_001391B0(void);
-void func_001394A0(void);
-void func_00139930(void);
+void ground_step(void);
+void ground_wait_stage_load(void);
+void side_scroll_step(void);
 
-extern s16 D_0029C076_as_s16_a[];
-extern u16 D_0029C078[];
-extern u16 D_0029C07A[];
 
-void func_001389D0(void) {
-    D_0029C076_as_s16_a[0] = 1;
-    D_0029C078[0] = reg_d0.h[0];
-    D_0029C07A[0] = reg_d1.h[0];
+void ground_speeds_request(void) {
+    g_ground_state.speeds_requested = 1;
+    g_ground_state.speed_request[0] = reg_d0.h[0];
+    g_ground_state.speed_request[1] = reg_d1.h[0];
 }
 
-extern s16 D_0029C060_as_s16_a[];
-extern s16 D_0029C062[];
 
-void func_00138A00(void) {
-    D_0029C060_as_s16_a[0] = 0;
-    D_0029C062[0] = 1;
+void side_scroll_reset(void) {
+    g_ground_state.side_move = 0;
+    g_ground_state.side_by_push = 1;
 }
 
-extern u16 D_0029C070[];
 
-void func_00138A20(void) {
-    if (D_0029C070[0] != 0) {
-        D_0029C062[0] = 0;
+void side_scroll_follow_at_limit(void) {
+    if (g_ground_state.side_at_limit != 0) {
+        g_ground_state.side_by_push = 0;
     }
 }
 
-extern s16 D_0029C074_as_s16_a[];
 
-void func_00138A40(void) {
-    D_0029C074_as_s16_a[0] = 2;
+void scroll_line_release(void) {
+    g_ground_state.line_hold_request = 2;
 }
 
 s32 layers_reset();
@@ -51,9 +45,8 @@ extern s8 g_pause_lock_timer_as_s8;
 extern u16 g_scroll_line;
 extern u16 g_scroll_line_offset;
 extern u16 g_stage_x4;
-extern u8 D_0029C060_as_u8_a[];
 
-void func_00138A50(void) {
+void ground_start(void) {
     u8 *temp_a0;
     u32 temp_a1;
     u32 temp_a1_2;
@@ -61,7 +54,7 @@ void func_00138A50(void) {
     g_slowdown_timer_as_s8 = 0;
     D_0028DF1C = 0;
     g_scroll_line = *(u16 *)(reg_a5 + 6);
-    memset(D_0029C060_as_u8_a, 0, 0x20);
+    memset(&g_ground_state, 0, 0x20);
     reg_d0.w = 0;
     reg_d1.w = 0xE;
     reg_a0 = reg_a5 + 4;
@@ -120,13 +113,13 @@ void func_00138A50(void) {
     *(u16 *)(reg_a5 + 0xC) = (u16) reg_tmp.h[0];
     scroll_events_start();
     ground_objects_reset();
-    func_00138A00();
+    side_scroll_reset();
     *(u8 *)(reg_a5 + 2) |= 4;
 }
 
 s32 bg_layer_put();
 
-void func_00138CC0(void) {
+void ground_rows_fill(void) {
     reg_tmp.h[1] = *(u16 *) (reg_a5 + 0xA);
     reg_tmp.h[0] = *(u16 *) (reg_a5 + 0xC);
     reg_a0 = (u8 *) reg_tmp.w;
@@ -198,7 +191,7 @@ extern u8 D_0028EC58_as_u8;
 extern u8 g_replay_mode;
 extern u8 g_simulation_active;
 
-void func_00138DA0(void) {
+void ground_task(void) {
     u16 save_22;
     u16 save_21;
     u16 save_20;
@@ -238,7 +231,7 @@ void func_00138DA0(void) {
     t = *(u8 *) (reg_a5 + 2);
     p = reg_a5 + 2;
     if (t & 8) {
-        func_001391B0();
+        ground_step();
         return;
     }
     if (t & 1) {
@@ -246,7 +239,7 @@ void func_00138DA0(void) {
         goto next_3;
     }
     *p = t | 1;
-    func_00138A50();
+    ground_start();
     if (g_simulation_active != 0) {
         goto next_1;
     }
@@ -273,7 +266,7 @@ next_3:
     t = *(u8 *) (reg_a5 + 2);
     p = reg_a5 + 2;
     if (!(t & 2)) {
-        func_001394A0();
+        ground_wait_stage_load();
         return;
     }
     *p = t | 8;
@@ -322,9 +315,9 @@ next_5:
     save_01 = g_sprite_laser_trail_used;
     save_00 = g_sprite_bombs_used;
 loop_6:
-    func_001391B0();
+    ground_step();
     if (done == 0 && g_stage == 2 && g_scroll_line == 0xE4 && *(u16 *) (reg_a5 + 8) == 1) {
-        func_00138A40();
+        scroll_line_release();
         done = 1;
     }
     if (g_stage == 4 && g_scroll_line == 0x319) {
@@ -386,13 +379,10 @@ extern u8 D_0028E288;
 extern s16 g_p2_hyper_effect_flag_as_s16;
 extern s16 g_p1_hyper_effect_flag_as_s16;
 extern u16 g_enemies_stopped;
-extern u16 D_0029C064[];
-extern u16 D_0029C074[];
-extern u16 D_0029C076[];
 extern u16 g_ground_map_row[];
 extern u16 g_ground_map_row_offset[];
 
-void func_001391B0(void) {
+void ground_step(void) {
     u16 temp_a0;
     u16 temp_a0_2;
     if (g_enemies_stopped == 0) {
@@ -412,16 +402,16 @@ void func_001391B0(void) {
                 g_p2_hyper_effect_flag_as_s16 = 0;
             }
         }
-        if (D_0029C076[0] != 0) {
-            D_0029C076[0] = 0;
-            *(u16 *)(reg_a5 + 0x1C) = (u16) D_0029C078[0];
-            *(u16 *)(reg_a5 + 0x22) = (u16) D_0029C07A[0];
+        if (g_ground_state.speeds_requested != 0) {
+            g_ground_state.speeds_requested = 0;
+            *(u16 *)(reg_a5 + 0x1C) = (u16) g_ground_state.speed_request[0];
+            *(u16 *)(reg_a5 + 0x22) = (u16) g_ground_state.speed_request[1];
         }
-        func_00139930();
+        side_scroll_step();
         scroll_events_run();
-        reg_d0.h[0] = D_0029C074[0];
+        reg_d0.h[0] = g_ground_state.line_hold_request;
         if (reg_d0.h[0] != 0) {
-            D_0029C074[0] = 0;
+            g_ground_state.line_hold_request = 0;
             if (reg_d0.h[0] != 1) {
                 *(u16 *)(reg_a5 + 8) = 0U;
             } else {
@@ -432,7 +422,7 @@ void func_001391B0(void) {
         temp_a0 = *(u16 *)(reg_a5 + 0x1E);
         reg_d1.w = 0;
         reg_d5.h[0] = temp_a0;
-        reg_d1.h[0] = D_0029C064[0];
+        reg_d1.h[0] = g_ground_state.side_step;
         reg_d0.w = 0;
         reg_d0.h[0] = reg_d6.h[0];
         reg_d5.h[0] += reg_d6.h[0];
@@ -475,7 +465,7 @@ void func_001391B0(void) {
         g_ground_map_row_offset[0] = *(u16 *)(reg_a5 + 0x20);
         reg_d6.h[0] = *(u16 *)(reg_a5 + 0x22);
         reg_d1.w = 0;
-        reg_d1.h[0] = D_0029C064[0];
+        reg_d1.h[0] = g_ground_state.side_step;
         reg_d0.w = 0;
         reg_d0.h[0] = reg_d6.h[0];
         layer_b_scroll();
@@ -508,7 +498,7 @@ extern s8 D_0028EC58;
 extern s16 g_player2[];
 extern s16 g_player1[];
 
-void func_001394A0(void) {
+void ground_wait_stage_load(void) {
     stage_load_step();
     D_0028DF1C += 1;
     if (D_0028EC58 == 0) {
@@ -525,7 +515,7 @@ void func_001394A0(void) {
         if (g_attract_demo == 0) {
             D_0028E368_as_s8 = 1;
         }
-        func_00138CC0();
+        ground_rows_fill();
         func_002256B0();
         func_00138110();
         stage_map_show();
@@ -573,13 +563,12 @@ void func_001394A0(void) {
     }
 }
 
-extern u16 D_0029C060[];
 
-void func_001396B0(void) {
-    D_0029C070[0] = 0;
+void side_scroll_apply(void) {
+    g_ground_state.side_at_limit = 0;
     reg_d2.h[0] = 0x800;
-    reg_d0.h[0] = D_0029C060[0];
-    D_0029C060[0] = 0;
+    reg_d0.h[0] = g_ground_state.side_move;
+    g_ground_state.side_move = 0;
     reg_d0.h[0] += *(u16 *)(reg_a5 + 0x2A);
     reg_d1.h[0] = reg_d0.h[0];
     if ((s16)(reg_d1.h[0]) < 0) {
@@ -588,7 +577,7 @@ void func_001396B0(void) {
     }
     if ((s32) reg_d1.h[0] > 0x800) {
         reg_d0.h[0] = reg_d2.h[0];
-        D_0029C070[0] = 1;
+        g_ground_state.side_at_limit = 1;
     }
     *(u16 *)(reg_a5 + 0x2A) = (u16) reg_d0.h[0];
     reg_d0.h[0] &= 0xFFC0;
@@ -599,7 +588,7 @@ void func_001396B0(void) {
 }
 
 
-void func_00139790(void) {
+void side_scroll_edge_check(void) {
     u8 *entry = (void *)reg_a1;
 
     if (0 <= (s64)*(s16 *)entry) {
@@ -619,7 +608,7 @@ void func_00139790(void) {
     ((u8 *)((void *)reg_a5))[0x31] |= (u8)(1 << (s8)reg_d3.b[0]);
 }
 
-void func_00139800(void) {
+void side_scroll_player_push(void) {
     if (0 <= (s64) *(s16 *) reg_a1) {
         goto block_rts;
     }
@@ -641,7 +630,7 @@ next_1:
     if ((1U << reg_d4.b[0]) & ((u8 *) ((void *)reg_a5))[0x31]) {
         goto block_rts;
     }
-    reg_d1.h[0] = D_0029C060[0];
+    reg_d1.h[0] = g_ground_state.side_move;
     if (reg_d1.h[0] == 0) {
         goto next_4;
     }
@@ -666,21 +655,19 @@ next_3:
     reg_d1.w = 0;
 next_4:
     reg_d1.h[0] += reg_d0.h[0];
-    D_0029C060[0] = reg_d1.h[0];
+    g_ground_state.side_move = reg_d1.h[0];
 block_rts:;
 }
 
-extern u16 D_0029C062_as_u16_a[];
 extern u16 g_side_scroll_x_prev[];
 extern u16 g_side_scroll_x[];
 extern u16 g_side_scroll_pixels[];
 extern u16 g_side_scroll_step[];
-extern u16 D_0029C06E[];
 extern u16 g_player2_as_u16_a[];
 extern u16 g_player1_as_u16_a[];
 
-void func_00139930(void) {
-    if (D_0029C062_as_u16_a[0] != 0) {
+void side_scroll_step(void) {
+    if (g_ground_state.side_by_push != 0) {
         goto next_1;
     }
     reg_d0.h[0] = g_player1_as_u16_a[0];
@@ -692,13 +679,13 @@ void func_00139930(void) {
 next_1:
     reg_a5[0x31] &= 0x3F;
     reg_a1 = (u8 *) g_player1_as_u16_a;
-    func_00139790();
+    side_scroll_edge_check();
     reg_a1 = (u8 *) g_player2_as_u16_a;
-    func_00139790();
+    side_scroll_edge_check();
     reg_a1 = (u8 *) g_player1_as_u16_a;
-    func_00139800();
+    side_scroll_player_push();
     reg_a1 = (u8 *) g_player2_as_u16_a;
-    func_00139800();
+    side_scroll_player_push();
     goto next_4;
 next_2:
     reg_a6 = (u8 *) g_player1_as_u16_a;
@@ -713,10 +700,10 @@ next_3:
     reg_d0.w = (s32) reg_d0.w / 200;
     reg_d0.h[0] <<= 6;
     reg_d0.h[0] -= *(u16 *) (reg_a5 + 0x28);
-    D_0029C060[0] = reg_d0.h[0];
+    g_ground_state.side_move = reg_d0.h[0];
 next_4:
-    func_001396B0();
-    D_0029C064[0] = reg_d0.h[0];
+    side_scroll_apply();
+    g_ground_state.side_step = reg_d0.h[0];
     reg_d1.h[0] = *(u16 *) (reg_a5 + 0x28);
     reg_d1.h[0] >>= 6;
     reg_d2.h[0] = reg_d1.h[0];
@@ -728,7 +715,7 @@ next_4:
     reg_d2.h[0] -= reg_d0.h[0];
     reg_d2.h[0] <<= 6;
     g_side_scroll_step[0] = reg_d2.h[0];
-    D_0029C06E[0] -= reg_d2.h[0];
+    g_ground_state.side_total -= reg_d2.h[0];
 }
 
 /* .sbss (the compiler lays these out in reverse) */

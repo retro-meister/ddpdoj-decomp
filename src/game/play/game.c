@@ -259,7 +259,7 @@ void func_00135420(arg0)
 }
 
 s32 func_0012FBD0();
-s32 func_00138A00();
+s32 side_scroll_reset();
 s32 func_001AC3A0();
 s32 func_001AC5F0();
 extern s16 g_p2_death_count_as_s16;
@@ -278,7 +278,7 @@ void func_001354C0(void) {
     *(u16 *)(reg_a6 + 0x18) = 0U;
     *(u16 *)(reg_a6 + 0x1A) = 0U;
     g_bullets_blocked_as_s16 = 0x78;
-    func_00138A00();
+    side_scroll_reset();
     reg_tmp.h[1] = *(u16 *)(reg_a6 + 8);
     reg_tmp.h[0] = *(u16 *)(reg_a6 + 0xA);
     reg_a0 = (u8 *)reg_tmp.w;

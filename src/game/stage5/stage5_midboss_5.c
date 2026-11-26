@@ -366,7 +366,7 @@ void stage5_midboss5_start(void) {
     sprite_palette_load();
 }
 
-s32 func_001389D0();
+s32 ground_speeds_request();
 s32 func_0013B8B0();
 s32 enemy_hitbox_debug_draw();
 s32 score_add_no_chain();
@@ -384,7 +384,7 @@ void stage5_midboss5_main() {
             g_enemy_signal_3 = 0;
             reg_d0.h[0] = 0x20;
             reg_d1.h[0] = 0x20;
-            func_001389D0();
+            ground_speeds_request();
             enemy_remove();
             return;
         }
@@ -425,7 +425,7 @@ void stage5_midboss5_main() {
                 reg_d1.h[0] = 0x20;
                 g_enemy_signal_3 = 0;
                 g_enemy_signal_4 = 0;
-                func_001389D0();
+                ground_speeds_request();
                 reg_d0.w = 6;
                 func_001FDDD0();
                 reg_a0 = D_00266330;

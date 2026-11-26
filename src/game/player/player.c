@@ -1646,7 +1646,7 @@ extern u8 g_p1_hyper_items_as_u8_a4[4];
 extern u8 D_0029EA50[];
 s32 func_001340C0();
 s32 func_001340D0();
-s32 func_00138A20();
+s32 side_scroll_follow_at_limit();
 s32 p1_laser_stop();
 s32 p1_laser_clear();
 s32 p2_laser_stop();
@@ -1817,7 +1817,7 @@ block_13:
                     temp_a0_4 = PLAYER(reg_a6)->moved_x.h;
                     PLAYER(reg_a6)->moved_x.h = (u16) (temp_a0_4 - reg_d3.h[0]);
                     reg_d3.h[0] = 0x300;
-                    func_00138A20();
+                    side_scroll_follow_at_limit();
                 }
             } else if (temp_a0_3 & 8) {
                 PLAYER(reg_a6)->flags.h |= 0x20;
@@ -1834,7 +1834,7 @@ block_13:
                     temp_a0_5 = PLAYER(reg_a6)->moved_x.h;
                     PLAYER(reg_a6)->moved_x.h = (u16) (temp_a0_5 - reg_d3.h[0]);
                     reg_d3.h[0] = 0x3500;
-                    func_00138A20();
+                    side_scroll_follow_at_limit();
                 }
             } else {
                 func_00144CB0();
@@ -2465,7 +2465,7 @@ L_else:
 
 s32 p1_stage_counts_reset();
 s32 p2_stage_counts_reset();
-s32 func_00138A00();
+s32 side_scroll_reset();
 s32 func_0016A9B0();
 s32 sfx_player_explosion();
 s32 func_001AA8F0();
@@ -2494,7 +2494,7 @@ void func_001440D0(void) {
     u32 saved1;
     u32 saved2;
 
-    func_00138A00();
+    side_scroll_reset();
     if (!(PLAYER(reg_a6)->flags.b[1] & 0x40)) {
         bomb_stock_draw_for_task();
     }

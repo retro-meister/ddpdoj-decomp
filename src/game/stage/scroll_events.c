@@ -1,5 +1,6 @@
 #include "common.h"
 #include "entity.h"
+#include "ground.h"
 #include "sdk/ps2sdk.h"
 
 typedef void (*Fn)();
@@ -494,5 +495,6 @@ void scroll_event_flags(void) {
 /* .bss (the compiler lays these out in reverse) */
 s16 D_0029C090[24];
 u16 D_0029C080[8];
-u8 *D_0029C050[12];
+GroundState g_ground_state;  /* the ground unit's; it lies inside this unit's block */
+u8 *D_0029C050[4];
 u8 D_0029BF50[256];

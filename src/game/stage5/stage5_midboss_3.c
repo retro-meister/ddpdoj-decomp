@@ -43,7 +43,7 @@ void stage5_midboss3_start(void) {
 }
 
 
-s32 func_001389D0();
+s32 ground_speeds_request();
 s32 enemy_hitbox_debug_draw();
 s32 enemy_remove();
 s32 sfx_explosion_extra_1();
@@ -77,7 +77,7 @@ void stage5_midboss3_main(void) {
             g_enemy_signal_2 = 0;
             reg_d0.h[0] = 0x20;
             reg_d1.h[0] = 0x20;
-            func_001389D0();
+            ground_speeds_request();
             enemy_remove();
             return;
         }
@@ -108,7 +108,7 @@ void stage5_midboss3_main(void) {
                 vibration_start_pad2(0xB4, 0x50);
                 reg_d0.h[0] = 0x20;
                 reg_d1.h[0] = 0x20;
-                func_001389D0();
+                ground_speeds_request();
                 ENTITY(reg_a6)->flags.h = 0x8000;
                 ENTITY(reg_a6)[3].misc.b.draw_layer = 1U;
                 g_enemy_signal_2 = 0;

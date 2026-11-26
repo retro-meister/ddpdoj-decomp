@@ -346,7 +346,7 @@ void stage1_midboss_start() {
 
 s32 bullet_fire256_3way();
 s32 func_001368E0();
-s32 func_001389D0();
+s32 ground_speeds_request();
 s32 func_0013B2E0();
 s32 enemy_hitbox_debug_draw();
 s32 spawn_request_add();
@@ -388,7 +388,7 @@ void stage1_midboss_main(void) {
             g_enemy_signal_0 = 0;
             reg_d0.h[0] = 0x20;
             reg_d1.h[0] = 0x20;
-            func_001389D0();
+            ground_speeds_request();
                 return;
             }
         } else {
