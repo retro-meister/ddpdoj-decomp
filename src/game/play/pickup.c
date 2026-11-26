@@ -1805,7 +1805,7 @@ extern u16 *D_0028DEB0_as_u16_p;
 extern u8 *D_0028DEB4_as_u8_p;
 extern u16 g_hyper_bullet_speed;
 extern u8 D_0028E2E4;
-extern u16 D_0028E7F0;
+extern u16 g_bullet_speed_bonus;
 extern u16 g_bullets_blocked;
 extern u16 D_00299768_as_u16_a[];
 extern u16 D_0029976A_as_u16_a[];
@@ -1937,7 +1937,7 @@ next_5:
     reg_d7.h[0] = *(u16 *) reg_a1;
     reg_a1 += 2;
     reg_d7.h[0] += hi;
-    reg_d7.h[0] += D_0028E7F0;
+    reg_d7.h[0] += g_bullet_speed_bonus;
     reg_d7.h[0] += g_hyper_bullet_speed;
 #ifdef DEATH_LABEL
     if ((g_death_boss_form == 2) && (reg_d7.h[0] > g_twin_boss_bullet_speed_limit)) {
@@ -2279,7 +2279,7 @@ next_5:
     reg_d7.h[0] = *(u16 *) reg_a1;
     reg_a1 += 2;
     reg_d7.h[0] += hi;
-    reg_d7.h[0] += D_0028E7F0;
+    reg_d7.h[0] += g_bullet_speed_bonus;
     reg_d7.h[0] += g_hyper_bullet_speed;
 #ifdef DEATH_LABEL
     if ((g_death_boss_form == 2) && (reg_d7.h[0] > g_twin_boss_bullet_speed_limit)) {

@@ -426,7 +426,7 @@ segments:
       - [0x18dab8, .sdata, game/stage5/stage5_midboss_5_data]
       - [0x18dae0, .sdata, game/test/test_input_data]
       - [0x18db14, .sdata, game/test/test_memory_data]
-      - [0x18db38, .sdata, game/play/difficulty]
+      - [0x18db18, .sdata, game/play/difficulty]
       - [0x18db40, .sdata, game/stage/stage_clear_objects]
       - [0x18db50, .sdata, game/play/hud_small_data]
       - [0x18db88, .sdata, game/stage2/stage2_boss_attack_data]

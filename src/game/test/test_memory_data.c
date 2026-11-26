@@ -29,19 +29,3 @@ u16 test_memory_text_palette_ram[7] = {
 u16 test_memory_ok[2] = {
     0x4B4F, 0x00FF,
 };
-
-u16 D_0028DA98[4] = {
-    0x1010, 0x2018, 0x0020, 0x0000,
-};
-
-u16 D_0028DAA0[4] = {
-    0x4434, 0x6454, 0x0064, 0x0000,
-};
-
-u16 D_0028DAA8[4] = {
-    0xA890, 0xD8C0, 0x00F0, 0x0000,
-};
-
-u16 D_0028DAB0[4] = {
-    0xFFFF, 0xFFFF, 0x00FF, 0x0000,
-};

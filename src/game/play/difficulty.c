@@ -1,17 +1,17 @@
 #include "common.h"
 #include "entity.h"
 
-extern void *D_0026A2A0[];
-extern u16 D_0028DAB8[];
+extern u8 *g_stage_base_ranks_by_difficulty[];
+extern s16 g_bullet_speed_bonus_by_difficulty[];
 extern u8 g_setting_difficulty;
-extern u16 D_0028E7F0;
-extern s32 D_0028E7F4;
+extern u16 g_bullet_speed_bonus;
+extern u8 *g_stage_base_ranks;
 
 #ifdef DEATH_LABEL
 extern u16 g_attract_demo;
 #endif
 
-void func_00138110(void) {
+void difficulty_apply(void) {
     reg_d0.w = 0;
     reg_d0.b[0] = g_setting_difficulty;
 #ifdef DEATH_LABEL
@@ -19,11 +19,11 @@ void func_00138110(void) {
         reg_d0.b[0] = 1;
     }
 #endif
-    reg_a0 = (u8 *)D_0028DAB8;
+    reg_a0 = (u8 *)g_bullet_speed_bonus_by_difficulty;
     reg_d0.h[0] += reg_d0.h[0];
     reg_a0 += reg_d0.h[0];
-    D_0028E7F0 = *(u16 *)reg_a0;
-    D_0028E7F4 = (s32)D_0026A2A0[reg_d0.h[0] >> 1];
+    g_bullet_speed_bonus = *(u16 *)reg_a0;
+    g_stage_base_ranks = g_stage_base_ranks_by_difficulty[reg_d0.h[0] >> 1];
 }
 
 extern u8 D_0028E2D4;
@@ -53,8 +53,8 @@ extern u16 g_stage;
 extern u8 g_simulation_active;
 extern u16 D_006E5C02[];
 
-void func_00138170(void) {
-    reg_a0 = (u8 *) D_0028E7F4;
+void rank_update(void) {
+    reg_a0 = g_stage_base_ranks;
     reg_d2.h[0] = g_stage;
     reg_d1.w = 0;
     reg_d1.b[0] = *(s8 *) (reg_a0 + reg_d2.h[0]);
@@ -345,21 +345,21 @@ void func_00138750(void) {
 }
 
 /* .sbss (the compiler lays these out in reverse) */
-s32 D_0028E7F4;
-u16 D_0028E7F0 __attribute__((aligned(4)));
+u8 *g_stage_base_ranks;
+u16 g_bullet_speed_bonus __attribute__((aligned(4)));
 
-extern u8 D_0028DA98[];
-extern u8 D_0028DAA0[];
-extern u8 D_0028DAA8[];
-extern u8 D_0028DAB0[];
+/* Base rank of each stage, for each difficulty setting. */
+u8 g_stage_base_ranks_easy[8] = { 0x10, 0x10, 0x18, 0x20, 0x20 };
+u8 g_stage_base_ranks_normal[8] = { 0x34, 0x44, 0x54, 0x64, 0x64 };
+u8 g_stage_base_ranks_hard[8] = { 0x90, 0xA8, 0xC0, 0xD8, 0xF0 };
+u8 g_stage_base_ranks_very_hard[8] = { 0xFF, 0xFF, 0xFF, 0xFF, 0xFF };
 
-void *D_0026A2A0[4] = {
-    D_0028DA98,
-    D_0028DAA0,
-    D_0028DAA8,
-    D_0028DAB0,
+u8 *g_stage_base_ranks_by_difficulty[4] = {
+    g_stage_base_ranks_easy,
+    g_stage_base_ranks_normal,
+    g_stage_base_ranks_hard,
+    g_stage_base_ranks_very_hard,
 };
 
-u16 D_0028DAB8[4] = {
-    0xFFFF, 0x0000, 0x0001, 0x0002,
-};
+/* Added to the speed of enemy bullets, for each difficulty setting. */
+s16 g_bullet_speed_bonus_by_difficulty[4] = { -1, 0, 1, 2 };

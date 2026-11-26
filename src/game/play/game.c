@@ -890,7 +890,7 @@ void func_001362F0(void) {
     }
 }
 
-s32 func_00138110();
+s32 difficulty_apply();
 s32 text_palette_load();
 s32 func_001A3300();
 extern u8 g_default_text_palette[];
@@ -928,7 +928,7 @@ void func_00136330() {
     reg_a0 = g_default_text_palette;
     text_palette_load();
     func_001A3300();
-    func_00138110();
+    difficulty_apply();
 }
 
 extern s16 g_player_shots_disabled_as_s16;
@@ -1105,7 +1105,7 @@ void ship_select_apply(void) {
 }
 
 s32 func_00134380();
-s32 func_00138170();
+s32 rank_update();
 extern u8 g_stage_load_state;
 extern u16 g_game_frame;
 extern u8 D_0028EC4C;
@@ -1133,7 +1133,7 @@ void game_task(void) {
         if ((g_enemies_stopped == 0) && (g_stage_load_state == 0) && (D_0028EC4C == 0)) {
             g_play_time += 1;
         }
-        func_00138170();
+        rank_update();
         func_00134380();
         if (g_loop != 0) {
             D_00299768[0] = 1;

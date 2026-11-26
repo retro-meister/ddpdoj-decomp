@@ -1378,7 +1378,7 @@ extern s16 g_p1_hyper_items_as_s16;
 #ifdef DEATH_LABEL
 extern u8 death_D_00290DC0;
 extern u16 g_hyper_bullet_speed;
-extern u16 D_0028E7F0;
+extern u16 g_bullet_speed_bonus;
 #endif
 
 void func_001417D0(void) {
@@ -1473,7 +1473,7 @@ void func_001417D0(void) {
     }
     g_p2_hyper_total_as_s16 = 0xF;
     g_hyper_bullet_speed = 0xA;
-    D_0028E7F0 = 2;
+    g_bullet_speed_bonus = 2;
 #else
     if (reg_a6 == g_player1_as_u8_a) {
         PLAYER(reg_a6)->flags.b[0] &= 0xFE;

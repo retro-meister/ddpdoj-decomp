@@ -475,7 +475,7 @@ void ground_step(void) {
 }
 
 s32 frame_counters_reset();
-s32 func_00138110();
+s32 difficulty_apply();
 s32 stage_load_step();
 s32 stage_map_show();
 s32 func_002256B0();
@@ -517,7 +517,7 @@ void ground_wait_stage_load(void) {
         }
         ground_rows_fill();
         func_002256B0();
-        func_00138110();
+        difficulty_apply();
         stage_map_show();
 #ifdef DEATH_LABEL
         if (g_loop == 0) {
