@@ -86,7 +86,7 @@ extern u16 D_0028E9B0;
 extern u16 D_0028E9B4;
 extern s8 g_cd_async_state;
 extern s8 g_cd_async_busy;
-extern s8 D_0028EC58;
+extern s8 g_stage_load_finished;
 extern u8 g_replay_file_loaded[];
 extern u8 g_replay_file[];
 
@@ -231,7 +231,7 @@ loop_15:
         frame_counters_advance();
         fades_update();
         sprite_lists_build();
-        if (D_0028EC58 != 0) {
+        if (g_stage_load_finished != 0) {
             g_game_frame_ran = 1;
         }
         t2 = 1;

@@ -317,7 +317,7 @@ s32 fade_reset();
 s32 stage_map_reset();
 extern u8 g_splash_visible;
 extern s8 g_cd_async_busy;
-extern s8 D_0028EB88;
+extern s8 g_menu_task_phase;
 
 void attract_step_death_label_notice(void) {
     s32 text_layer_clear();
@@ -351,7 +351,7 @@ void attract_step_death_label_notice(void) {
         }
     }
     if (g_stage_load_state == 0) {
-        D_0028EB88 = 0;
+        g_menu_task_phase = 0;
         reg_d0.h[0] = 0xF;
         attract_step_set();
     }
@@ -380,8 +380,8 @@ extern u16 D_0028E2FC;
 extern u16 D_0028E300;
 extern u8 g_game_frame_ran;
 extern s8 D_0028E3F8;
-extern s8 D_0028EB00;
-extern s32 D_0028EB94;
+extern s8 g_menu_exit_code;
+extern s32 g_menu_alpha_b;
 
 void attract_step_menu(void) {
     void text_layer_clear(void);
@@ -410,22 +410,22 @@ void attract_step_menu(void) {
         }
 #endif
     }
-    if (D_0028EB94 == 0) {
+    if (g_menu_alpha_b == 0) {
         settings_notice_draw_static();
     }
     menu_task_update();
-    if (D_0028EB00 >= 10) {
-        if (D_0028EB00 == 10) {
+    if (g_menu_exit_code >= 10) {
+        if (g_menu_exit_code == 10) {
             D_0028DF84 = 1;
             reg_d0.h[0] = 3;
             attract_step_set();
-        } else if (D_0028EB00 == 30) {
+        } else if (g_menu_exit_code == 30) {
             D_0028DF84 = 0;
             reg_d0.h[0] = 0x10;
             g_game_frame_ran = 0;
             D_0028E3F8 = 0;
             attract_step_set();
-        } else if (D_0028EB00 == 40) {
+        } else if (g_menu_exit_code == 40) {
 #ifdef DEATH_LABEL
             (*(u8 *)D_0028E2B8) = 0;
             D_0028E2B9 = 0;
@@ -481,7 +481,7 @@ void attract_step_menu(void) {
             reg_d0.h[0] = 0xE;
             attract_step_set();
         }
-        D_0028EB00 = 0;
+        g_menu_exit_code = 0;
         fade_start_in();
     }
 }
@@ -780,8 +780,8 @@ void attract_step_mode2_start(void) {
 s32 mc_autoload_update();
 s32 mc_startup_load_begin();
 s32 save_block_to_settings();
-extern u8 D_0028ECF4;
-extern s32 D_0028ED0C;
+extern u8 g_mc_startup_flags;
+extern s32 g_mc_operation_done;
 extern s32 D_006A0E40[];
 
 void attract_step_card_load(void) {
@@ -792,15 +792,15 @@ void attract_step_card_load(void) {
     temp_a0 = *(u8 *)(reg_a5 + 2);
     switch (temp_a0) {                              /* irregular */
     case 0:
-        D_0028ED0C = 0;
+        g_mc_operation_done = 0;
         *(u8 *)(reg_a5 + 2) = 1U;
         break;
     case 1:
         mc_startup_load_begin(temp_a0, temp_a1);
-        if (D_0028ED0C != 0) {
-            D_0028ED0C = 0;
-            printf((const char *)"-----[%d]---\n", D_0028ECF4);
-            if (D_0028ECF4 & 0xC) {
+        if (g_mc_operation_done != 0) {
+            g_mc_operation_done = 0;
+            printf((const char *)"-----[%d]---\n", g_mc_startup_flags);
+            if (g_mc_startup_flags & 0xC) {
                 *(u8 *)(reg_a5 + 2) = 2U;
                 break;
             }
@@ -810,12 +810,12 @@ void attract_step_card_load(void) {
         break;
     case 2:
         mc_autoload_update(temp_a0, temp_a1);
-        if (D_0028ED0C != 0) {
+        if (g_mc_operation_done != 0) {
             *(u8 *)(reg_a5 + 2) = 3U;
             if (D_006A0E40[0] != 0) {
                 save_block_to_settings(3);
             }
-            D_0028ED0C = 0;
+            g_mc_operation_done = 0;
             break;
         }
         break;
@@ -830,9 +830,9 @@ s32 music_stop();
 s32 menu_notice_update();
 s32 autosave_update();
 s32 unlock_notice_reset();
-extern s32 D_0028EAF8;
-extern s32 D_0028EC78;
-extern s32 D_0028EC7C;
+extern s32 g_menu_notice_step;
+extern s32 g_autosave_unread_flag;
+extern s32 g_autosave_step;
 
 void attract_step_autosave(void) {
     s32 text_layer_clear();
@@ -845,8 +845,8 @@ void attract_step_autosave(void) {
         bg_layer_clear();
         music_stop();
         *(u8 *)(reg_a5 + 2) = 1U;
-        D_0028EC7C = 0;
-        D_0028EAF8 = 0;
+        g_autosave_step = 0;
+        g_menu_notice_step = 0;
         menu_settings_restore();
         break;
     case 1:
@@ -858,7 +858,7 @@ void attract_step_autosave(void) {
     case 2:
         if (autosave_update(temp_a0) != 0) {
             *(u8 *)(reg_a5 + 2) = 3U;
-            D_0028EC78 = 0;
+            g_autosave_unread_flag = 0;
             break;
         }
         break;
@@ -874,19 +874,19 @@ void attract_step_autosave(void) {
 #ifndef DEATH_LABEL
 s32 sfx_confirm();                            /* extern */
 extern u8 D_0028E1E6[];
-extern s8 D_0028EB88;
+extern s8 g_menu_task_phase;
 
 void attract_start_button_check(void) {
     if (g_pad_trigger[2] & 0x800) {
         if (g_setting_coin_mode == 0x12) {
-            D_0028EB88 = 0;
+            g_menu_task_phase = 0;
             reg_d0.h[0] = 0xF;
             attract_step_set(g_setting_coin_mode);
             sfx_confirm();
             return;
         }
         if (D_0028E1E6[0] != 0) {
-            D_0028EB88 = 0;
+            g_menu_task_phase = 0;
             reg_d0.h[0] = 0xF;
             attract_step_set(g_setting_coin_mode);
         }

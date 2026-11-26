@@ -191,7 +191,7 @@ block_50:
 
 extern s8 rank_text_blank[30];
 extern u8 g_game_mode;
-extern s32 D_0028EAFC;
+extern s32 g_ranking_entry_index;
 extern u8 g_replay_mode;
 extern u8 g_stored_ranking_texts[5][30];
 extern u8 g_death_label_ranking_texts[5][30];
@@ -225,27 +225,27 @@ void rank_entry_place(void) {
     }
     cond_flag = 0;
     if (g_game_mode == 2) {
-        D_0028EAFC = 4 - reg_d1.w;
-        printf((const char *)"---death--rank[%d]\n", D_0028EAFC);
-        if (D_0028EAFC != 4) {
-            for (i = 4; D_0028EAFC < i; i--) {
+        g_ranking_entry_index = 4 - reg_d1.w;
+        printf((const char *)"---death--rank[%d]\n", g_ranking_entry_index);
+        if (g_ranking_entry_index != 4) {
+            for (i = 4; g_ranking_entry_index < i; i--) {
                 for (j = 0; j < 30; j++) {
                     g_stored_ranking_texts[i][j] = g_stored_ranking_texts[i - 1][j];
                 }
             }
         }
     } else {
-        D_0028EAFC = 4 - reg_d1.w;
-        printf((const char *)"-----rank[%d]\n", D_0028EAFC);
-        if (D_0028EAFC != 4) {
-            for (i = 4; D_0028EAFC < i; i--) {
+        g_ranking_entry_index = 4 - reg_d1.w;
+        printf((const char *)"-----rank[%d]\n", g_ranking_entry_index);
+        if (g_ranking_entry_index != 4) {
+            for (i = 4; g_ranking_entry_index < i; i--) {
                 for (j = 0; j < 30; j++) {
                     g_death_label_ranking_texts[i][j] = g_death_label_ranking_texts[i - 1][j];
                 }
             }
         }
         for (j = 0; j < 30; j++) {
-            g_death_label_ranking_texts[D_0028EAFC][j] = rank_text_blank[j];
+            g_death_label_ranking_texts[g_ranking_entry_index][j] = rank_text_blank[j];
         }
     }
     reg_d2.w = reg_d1.w;
@@ -996,10 +996,10 @@ extern u16 score_pending_apply_side_buffer[];
 extern u16 death_D_0068DAB2[];
 extern u16 g_p1_score_extra_cell[];
 extern u16 g_p2_score_extra_cell[];
-extern s32 D_0028ED50;
-extern u16 D_0028ED4C;
-extern s32 D_0028ED44;
-extern u16 D_0028ED40;
+extern s32 g_replay_start_p1_score;
+extern u16 g_replay_start_p1_score_billions;
+extern s32 g_replay_start_p2_score;
+extern u16 g_replay_start_p2_score_billions;
 extern u32 g_p1_score;
 extern u16 g_p1_score_billions;
 extern u32 g_p2_score;
@@ -1017,15 +1017,15 @@ void score_pending_apply_side(void) {
             death_D_0068DAA8[0] = 0;
             g_p1_score_extra_cell[0] = 1;
             death_D_0068DAA6[0] = 0xC030;
-            g_p1_score = (u32)D_0028ED50;
-            g_p1_score_billions = D_0028ED4C;
+            g_p1_score = (u32)g_replay_start_p1_score;
+            g_p1_score_billions = g_replay_start_p1_score_billions;
         }
         if (g_player2[0] < 0) {
             death_D_0068DAB2[0] = 0;
             g_p2_score_extra_cell[0] = 1;
             score_pending_apply_side_buffer[0] = 0xC030;
-            g_p2_score = (u32)D_0028ED44;
-            g_p2_score_billions = D_0028ED40;
+            g_p2_score = (u32)g_replay_start_p2_score;
+            g_p2_score_billions = g_replay_start_p2_score_billions;
         }
         g_score_check_billions = 0;
         g_score_check_scratch = 0;

@@ -256,7 +256,7 @@ extern u16 g_boss_hyper_wait;
 extern u16 g_p2_hyper_active;
 extern u16 g_p1_hyper_active;
 extern u16 g_stage;
-extern u8 D_0028ED5C;
+extern u8 g_replay_start_pending;
 extern u8 g_replay_mode;
 extern u8 g_simulation_active;
 extern s16 g_player2[];
@@ -302,7 +302,7 @@ void stage_doors_open_update(void) {
         ENTITY(reg_a6)->flags.sh = 0;
         return;
     }
-    if ((g_game_frame_ran != 0) && ((var_a0 = g_replay_mode, (var_a0 != 2)) || (D_0028ED5C == 0)) && ((g_simulation_active == 0) || (D_0028ED5C == 0))) {
+    if ((g_game_frame_ran != 0) && ((var_a0 = g_replay_mode, (var_a0 != 2)) || (g_replay_start_pending == 0)) && ((g_simulation_active == 0) || (g_replay_start_pending == 0))) {
         var_a0 = ENTITY(reg_a6)->hit_y_plus.h;
         if (var_a0 != 0) {
             temp_v1 = ENTITY(reg_a6)->hit_y_minus.h;
@@ -335,7 +335,7 @@ block_25:
     }
     var_a0_2 = (u8 *)(reg_a6 + 0x20);
     reg_a6 = var_a0_2;
-    if ((g_game_frame_ran != 0) && ((var_a0_2 = (void *) g_replay_mode, (var_a0_2 != (void *)2)) || (D_0028ED5C == 0)) && ((g_simulation_active == 0) || (D_0028ED5C == 0))) {
+    if ((g_game_frame_ran != 0) && ((var_a0_2 = (void *) g_replay_mode, (var_a0_2 != (void *)2)) || (g_replay_start_pending == 0)) && ((g_simulation_active == 0) || (g_replay_start_pending == 0))) {
         temp_a0 = ENTITY(reg_a6)->hit_y_plus.h;
         if (temp_a0 != 0) {
             temp_v1_2 = ENTITY(reg_a6)->hit_y_minus.h;

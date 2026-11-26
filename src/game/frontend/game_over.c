@@ -67,7 +67,7 @@ s32 replay_start_result();
 extern u16 game_over_task_table[];
 extern u16 game_over_task_table_2[];
 extern u16 game_over_task_table_3[];
-extern u8 D_0028ED64;
+extern u8 g_game_over_after_continue;
 extern u8 g_simulation_active;
 
 void game_over_task(void) {
@@ -80,7 +80,7 @@ void game_over_task(void) {
         return;
     }
     if (st == 2) {
-        if ((D_0028ED64 != 0) && (replay_save_wanted_check(reg_a5) != 0)) {
+        if ((g_game_over_after_continue != 0) && (replay_save_wanted_check(reg_a5) != 0)) {
             if (replay_file_finalize() == 0) {
                 return;
             }

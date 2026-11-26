@@ -87,7 +87,7 @@ s32 font_init();
 s32 mc_init();
 extern s16 g_loaded_stage;
 extern u8 sys_init_state;
-extern s8 D_0028EB00;
+extern s8 g_menu_exit_code;
 extern u8 g_pad_dma_area[];
 void sys_init(void) {
     iop_reboot_and_load_modules();
@@ -104,7 +104,7 @@ void sys_init(void) {
     g_frame_counter = 0;
     sys_init_state = 0;
     g_display_reset_pending = 0;
-    D_0028EB00 = 0;
+    g_menu_exit_code = 0;
     fade_reset();
     disc_files_locate();
     tex_load_common();

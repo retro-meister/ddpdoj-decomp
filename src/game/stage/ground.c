@@ -187,7 +187,7 @@ extern s16 g_loaded_stage;
 extern u16 g_stage;
 extern s8 g_cd_async_state;
 extern s8 g_cd_async_busy;
-extern s8 D_0028EC58;
+extern s8 g_stage_load_finished;
 extern u8 g_replay_mode;
 extern u8 g_simulation_active;
 
@@ -260,7 +260,7 @@ load_begin:
     g_cd_async_busy = 1;
     g_cd_async_state = 0;
     g_game_frame_ran = 0;
-    D_0028EC58 = 0;
+    g_stage_load_finished = 0;
     return;
 already_started:
     t = GROUND_TASK(reg_a5)->flags;
@@ -492,16 +492,16 @@ extern u16 g_p1_hyper_time;
 extern u16 g_p2_score_digits;
 extern u16 g_p1_score_digits;
 extern u16 g_loop;
-extern s8 D_0028EC58;
+extern s8 g_stage_load_finished;
 extern s16 g_player2[];
 extern s16 g_player1[];
 
 void ground_wait_stage_load(void) {
     stage_load_step();
     D_0028DF1C += 1;
-    if (D_0028EC58 == 0) {
+    if (g_stage_load_finished == 0) {
         if ((g_loaded_stage == g_stage) && (D_0028DF1C >= 0)) {
-            D_0028EC58 = 1;
+            g_stage_load_finished = 1;
             frame_counters_reset();
         }
     } else if (g_game_frame_ran != 0) {
@@ -509,7 +509,7 @@ void ground_wait_stage_load(void) {
             D_0028E378 = 0;
         }
         GROUND_TASK(reg_a5)->flags |= 2;
-        D_0028EC58 = 0;
+        g_stage_load_finished = 0;
         if (g_attract_demo == 0) {
             D_0028E368 = 1;
         }

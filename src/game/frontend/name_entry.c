@@ -92,7 +92,7 @@ extern u16 text_palette_0[16];
 extern u8 D_0028E258;
 extern u8 D_0028E25C;
 extern u8 g_game_mode;
-extern s32 D_0028EAFC;
+extern s32 g_ranking_entry_index;
 
 void name_entry_task_finish() {
     players_clear();
@@ -112,7 +112,7 @@ void name_entry_task_finish() {
     } else if (password_conditions_check() != 0) {
         password_make();
     } else {
-        D_0028EAFC = 0xFF;
+        g_ranking_entry_index = 0xFF;
     }
     reg_d0.h[0] = TASK_ATTRACT;
     task_start();
@@ -253,28 +253,28 @@ void password_make(void) {
     u8 sw;
     u8 x;
 
-    if (D_0028EAFC == 0xFF) return;
+    if (g_ranking_entry_index == 0xFF) return;
     save_d0 = reg_d0.w;
     for (j = 0; j < 14; j++) {
         rec[j] = 0;
     }
     flags = 0;
-    score = ((u32 *)((u8 *)g_ranking_scores))[D_0028EAFC];
+    score = ((u32 *)((u8 *)g_ranking_scores))[g_ranking_entry_index];
     for (i = 0; i < 3; i++) {
-        name[i] = ((u32 *)((u8 *)g_ranking_names))[D_0028EAFC * 3 + i];
+        name[i] = ((u32 *)((u8 *)g_ranking_names))[g_ranking_entry_index * 3 + i];
     }
-    v0 = ((u16 *)((u8 *)g_ranking_stages))[D_0028EAFC];
-    v1 = ((u16 *)((u8 *)g_ranking_ship_types))[D_0028EAFC];
-    v2 = ((u16 *)((u8 *)g_ranking_power_styles))[D_0028EAFC];
-    val_fc = ((u16 *)((u8 *)g_ranking_score_tops))[D_0028EAFC];
-    v3 = ((u16 *)((u8 *)g_ranking_loops))[D_0028EAFC];
-    val_fe = ((u16 *)((u8 *)g_ranking_hits))[D_0028EAFC];
-    v4 = ((u16 *)((u8 *)g_ranking_continues))[D_0028EAFC];
+    v0 = ((u16 *)((u8 *)g_ranking_stages))[g_ranking_entry_index];
+    v1 = ((u16 *)((u8 *)g_ranking_ship_types))[g_ranking_entry_index];
+    v2 = ((u16 *)((u8 *)g_ranking_power_styles))[g_ranking_entry_index];
+    val_fc = ((u16 *)((u8 *)g_ranking_score_tops))[g_ranking_entry_index];
+    v3 = ((u16 *)((u8 *)g_ranking_loops))[g_ranking_entry_index];
+    val_fe = ((u16 *)((u8 *)g_ranking_hits))[g_ranking_entry_index];
+    v4 = ((u16 *)((u8 *)g_ranking_continues))[g_ranking_entry_index];
     shift = (u32)D_0028E2BC & 3;
     if (shift == 0) {
         shift = (u8)(shift + 1);
     }
-    printf("--no[%x]\n", D_0028EAFC);
+    printf("--no[%x]\n", g_ranking_entry_index);
     printf("--byou[%x]\n", (u8)shift);
     printf("--okuhi[%x]\n", val_fc);
     printf("--scohi[%x]\n", score);
@@ -363,9 +363,9 @@ void password_make(void) {
     memcpy(D_002BADF0, code, 12);
     password_bits_unpack();
     if (g_game_mode == 2) {
-        memcpy(((u8 *)g_stored_ranking_texts) + D_0028EAFC * 0x1E, D_002BADD0, 0x1E);
+        memcpy(((u8 *)g_stored_ranking_texts) + g_ranking_entry_index * 0x1E, D_002BADD0, 0x1E);
     } else {
-        memcpy(((u8 *)g_death_label_ranking_texts) + D_0028EAFC * 0x1E, D_002BADD0, 0x1E);
+        memcpy(((u8 *)g_death_label_ranking_texts) + g_ranking_entry_index * 0x1E, D_002BADD0, 0x1E);
     }
     reg_d0.w = save_d0;
 }

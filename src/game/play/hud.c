@@ -1547,7 +1547,7 @@ extern u16 g_p1_hyper_total;
 extern u16 g_p1_hyper_time;
 extern u16 g_p1_hits;
 extern u16 g_max_combo_time;
-extern u8 D_0028EC4C;
+extern u8 g_replay_save_prompt_active;
 void hud_p1_hyper_update(void) {
     u32 temp_a0;
     u32 temp_v1;
@@ -1592,7 +1592,7 @@ block_9:
             g_p1_hit10_display_timer = 0x78;
             g_p1_chain_points_display_timer = 0x78;
         }
-        if (!(g_boss_present_b1 & 0x40) && (g_select_screen_active == 0) && (D_0028EC4C == 0) && (g_game_frame_ran != 0)) {
+        if (!(g_boss_present_b1 & 0x40) && (g_select_screen_active == 0) && (g_replay_save_prompt_active == 0) && (g_game_frame_ran != 0)) {
             g_p1_hyper_time -= 2;
             if ((s16) g_p1_hyper_time < 0) {
                 p1_hyper_end();
@@ -1678,7 +1678,7 @@ block_9:
             g_p2_hit10_display_timer = 0x78;
             g_p2_chain_points_display_timer = 0x78;
         }
-        if (!(g_boss_present_b1 & 0x40) && (g_select_screen_active == 0) && (D_0028EC4C == 0) && (g_game_frame_ran != 0)) {
+        if (!(g_boss_present_b1 & 0x40) && (g_select_screen_active == 0) && (g_replay_save_prompt_active == 0) && (g_game_frame_ran != 0)) {
             g_p2_hyper_time -= 2;
             if ((s16) g_p2_hyper_time < 0) {
                 p2_hyper_end();

@@ -108,7 +108,7 @@ s32 stage_map_hide();
 extern u16 g_players_hidden;
 extern u8 D_0028E378;
 extern u8 D_0028E961;
-extern u8 D_0028ED60;
+extern u8 g_stage_clear_screen_shown;
 extern u8 g_replay_buffer_state;
 extern s16 g_bullet_limit_raised_1[];
 extern s16 g_bullet_limit_raised_2[];
@@ -143,7 +143,7 @@ void stage_clear_task_begin(void) {
     ((s16 *)D_0029976E)[0] = 0;
     stage_clear_colors_reset();
     game_ground_task_stop();
-    D_0028ED60 = 0;
+    g_stage_clear_screen_shown = 0;
     g_players_hidden = 1;
     g_replay_buffer_state = 2;
 #ifdef DEATH_LABEL
@@ -234,7 +234,7 @@ extern u16 g_p2_score_billions;
 extern u16 g_p1_score_billions;
 extern u32 g_p2_score;
 extern u32 g_p1_score;
-extern s8 D_0028EC58;
+extern s8 g_stage_load_finished;
 extern u8 g_replay_begin_pending;
 extern u8 g_replay_mode;
 extern u8 g_simulation_active;
@@ -280,7 +280,7 @@ void stage_clear_task(void) {
     }
     temp_a0_2 = *(u8 *)(reg_a5 + 7);
     if (temp_a0_2 == 3) {
-        if ((g_replay_mode == 2) && (D_0028ED60 == 0)) {
+        if ((g_replay_mode == 2) && (g_stage_clear_screen_shown == 0)) {
             replay_start_run_end(temp_a0_2);
             *(u8 *)(reg_a5 + 3) = 2U;
             return;
@@ -297,7 +297,7 @@ void stage_clear_task(void) {
         goto block_after;
     }
     if (temp_a0_2 == 0x1E) {
-        if (D_0028EC58 != 0) {
+        if (g_stage_load_finished != 0) {
             if (g_replay_mode == 1) {
                 g_replay_begin_pending = 1;
             }
@@ -316,7 +316,7 @@ void stage_clear_task(void) {
     }
 block_after:
     if (*(u8 *)(reg_a5 + 7) == 2) {
-        if ((g_replay_mode == 2) && (D_0028ED60 == 0)) {
+        if ((g_replay_mode == 2) && (g_stage_clear_screen_shown == 0)) {
             *(u8 *)(reg_a5 + 7) = 3U;
             return;
         }
@@ -958,7 +958,7 @@ next_499:
                 if ((*(u16 *)(reg_a5 + 4) == 0) && (g_simulation_active != 1)) {
                     reg_a0 = (u8 *)(((u16 *)D_00269920));
                     *(u8 *)(reg_a5 + 7) = 0x15U;
-                    D_0028ED60 = 1;
+                    g_stage_clear_screen_shown = 1;
                     hyper_ready_displays_reset();
                     if (g_player1[0] < 0) {
                         p1_hyper_end();
@@ -1046,7 +1046,7 @@ block_91:
                     if ((*(u16 *)(reg_a5 + 4) == 0) && (v2 = 1, (g_simulation_active != 1))) {
                         reg_a0 = (u8 *)(((u16 *)D_00269920));
                         *(u8 *)(reg_a5 + 7) = 0x15U;
-                        D_0028ED60 = 1;
+                        g_stage_clear_screen_shown = 1;
                         reg_d0.h[0] = 0x13;
                         task_start();
                     } else {

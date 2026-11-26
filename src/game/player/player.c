@@ -1531,7 +1531,7 @@ extern u8 g_p2_score_pending_as_u8;
 extern u8 g_p1_score_pending_as_u8;
 extern u8 g_boss_present_b1;
 extern u16 g_true_last_boss;
-extern u8 D_0028EC4C;
+extern u8 g_replay_save_prompt_active;
 
 void player_sprite_update(void) {
     u8 *p0;
@@ -1587,7 +1587,7 @@ void player_sprite_update(void) {
         reg_d4.h[0] = 0x18;
         sprite_draw_with_player_shadows();
     }
-    if ((g_game_frame_ran != 0) && (D_0028EC4C == 0) && (g_select_screen_active == 0) && !(g_boss_present_b1 & 1) && (g_true_last_boss == 0) && !(PLAYER(reg_a6)->flags.b[1] & 0x40)) {
+    if ((g_game_frame_ran != 0) && (g_replay_save_prompt_active == 0) && (g_select_screen_active == 0) && !(g_boss_present_b1 & 1) && (g_true_last_boss == 0) && !(PLAYER(reg_a6)->flags.b[1] & 0x40)) {
         if (*(u8 *)(reg_a5 + 6) == 0) {
             if (g_p1_maximum_anim_delay == 0) {
                 p0 = &g_p1_score_pending_as_u8;
@@ -2382,7 +2382,7 @@ block_244:
         reg_d4.h[0] = 0x18;
         sprite_draw_with_player_shadows();
     }
-    if ((g_game_frame_ran != 0) && (D_0028EC4C == 0) && (g_select_screen_active == 0) && !(g_boss_present_b1 & 1) && (g_true_last_boss == 0) && !(PLAYER(reg_a6)->flags.b[1] & 0x40)) {
+    if ((g_game_frame_ran != 0) && (g_replay_save_prompt_active == 0) && (g_select_screen_active == 0) && !(g_boss_present_b1 & 1) && (g_true_last_boss == 0) && !(PLAYER(reg_a6)->flags.b[1] & 0x40)) {
         if (*(u8 *)(reg_a5 + 6) == 0) {
             if (g_p1_maximum_anim_delay == 0) {
                 p0 = &g_p1_score_pending_as_u8;

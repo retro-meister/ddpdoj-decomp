@@ -640,7 +640,7 @@ s32 sound_stop_effects();                            /* extern */
 s32 music_stop();                            /* extern */
 extern u16 g_loop;
 extern u16 g_stage;
-extern u8 D_0028ED64;
+extern u8 g_game_over_after_continue;
 
 void continue_to_game_over(void) {
     music_stop();
@@ -655,7 +655,7 @@ void continue_to_game_over(void) {
         }
     } else {
 block_3:
-        D_0028ED64 = 1;
+        g_game_over_after_continue = 1;
     }
 }
 

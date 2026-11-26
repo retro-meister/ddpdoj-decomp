@@ -1115,7 +1115,7 @@ s32 continue_panels_update();
 s32 rank_update();
 extern u8 g_stage_load_state;
 extern u16 g_game_frame;
-extern u8 D_0028EC4C;
+extern u8 g_replay_save_prompt_active;
 extern s16 g_bullet_limit_raised_1[];
 
 void game_task(void) {
@@ -1137,7 +1137,7 @@ void game_task(void) {
         reg_d0.w = 0xE;
         reg_d0.h[0] &= g_game_frame;
         g_damage_blink_counter = reg_d0.h[0];
-        if ((g_enemies_stopped == 0) && (g_stage_load_state == 0) && (D_0028EC4C == 0)) {
+        if ((g_enemies_stopped == 0) && (g_stage_load_state == 0) && (g_replay_save_prompt_active == 0)) {
             g_play_time += 1;
         }
         rank_update();

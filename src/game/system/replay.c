@@ -348,7 +348,7 @@ extern s16 g_loaded_stage;
 extern u16 g_stage;
 extern s8 g_cd_async_state;
 extern s8 g_cd_async_busy;
-extern s8 D_0028EC20;
+extern s8 g_menu_replay_chosen;
 
 void replay_exit(void) {
     u32 save_d0;
@@ -409,7 +409,7 @@ void replay_exit(void) {
         step++;
         settings_notice_begin();
         settings_notice_draw_static();
-        if (D_0028EC20 != 0) {
+        if (g_menu_replay_chosen != 0) {
             menu_reset_keep_sim_rules_and_page();
         } else {
             menu_reset_keep_sim_rules();
@@ -533,7 +533,7 @@ extern void fade_is_running(void);
 extern void ranking_sprite_draw(void);
 extern s32 result_menu_update(void);
 extern u8 D_0026B5F0[];
-extern s8 D_0028EACC;
+extern s8 g_result_menu_step;
 
 void replay_result_menu(void) {
     extern void game_screen_teardown(void);
@@ -617,7 +617,7 @@ void replay_result_menu(void) {
     if (done == 0) {
         *(u16 *)(reg_a5 + 6) = step;
     } else {
-        D_0028EACC = 0;
+        g_result_menu_step = 0;
     }
     reg_a0 = save_a0;
     reg_d0.w = save_d0;
@@ -639,7 +639,7 @@ extern u8 g_setting_difficulty;
 extern u16 g_scroll_line;
 extern u16 g_scroll_line_offset;
 extern u16 g_loop;
-extern u8 D_0028ED64;
+extern u8 g_game_over_after_continue;
 extern s32 g_replay_position;
 extern u8 g_replay_buffer_state;
 extern u8 g_replay_mode_begun;
@@ -668,7 +668,7 @@ void replay_record_begin() {
         save = ((u16 *)g_replay_file);
     g_replay_mode_begun = 1;
     g_replay_buffer_state = 1;
-    D_0028ED64 = 0;
+    g_game_over_after_continue = 0;
     g_replay_position = 0;
     printf((const char *)"replay recording start!!\n");
     memset(save, 0, 0x400);
@@ -769,7 +769,7 @@ extern u8 g_game_frame_ran;
 extern u16 g_attract_demo;
 extern s8 D_0028E3F8;
 extern u8 g_replay_taken_over;
-extern u8 D_0028ED5C;
+extern u8 g_replay_start_pending;
 extern ReplayHeader g_replay_file_as_SaveHeader; /* the header at the start of the save buffer */
 extern u16 D_006C8E56[];
 extern u16 D_006C8E5C[];
@@ -800,7 +800,7 @@ void replay_playback_begin(void) {
     g_replay_buffer_state = 0;
     g_replay_position = 0;
     D_0028E368 = 0;
-    D_0028ED5C = 1;
+    g_replay_start_pending = 1;
     g_replay_taken_over = 0;
     save_d0 = reg_d0.w;
     save_d1 = reg_d1.w;
@@ -887,7 +887,7 @@ extern u16 g_p2_lives;
 extern u16 g_p1_lives;
 extern s32 D_0028E998;
 extern s32 D_0028E99C;
-extern s8 D_0028EC58;
+extern s8 g_stage_load_finished;
 extern s16 g_player2[56];
 extern s16 g_player1[56];
 extern u8 D_006C58C4[];
@@ -1008,7 +1008,7 @@ void replay_playback_start(void) {
     if (D_006C8E56[0] == 0) {
         switch (step) {
         case 0x64:
-            if (D_0028EC58 != 0) {
+            if (g_stage_load_finished != 0) {
                 step += 1;
 #ifdef DEATH_LABEL
                 if (g_replay_header.stage == 0) {
@@ -1018,7 +1018,7 @@ void replay_playback_start(void) {
                     music_play_bgm2();
                 }
                 enemies_resume();
-                D_0028ED5C = 0;
+                g_replay_start_pending = 0;
                 if (g_loop == 0) {
                     memcpy(((u16 *)g_player1), D_006C68B6, 0x62);
                     memcpy(((u16 *)g_player2), D_006C6918, 0x62);
@@ -1034,7 +1034,7 @@ void replay_playback_start(void) {
                 memcpy(((u16 *)g_player1), D_006C68B6, 0x62);
                 memcpy(((u16 *)g_player2), D_006C6918, 0x62);
                 g_players_hidden = 0;
-                D_0028ED5C = 0;
+                g_replay_start_pending = 0;
             }
             if (g_scroll_line == 0x38) {
                 g_game_frame = 0x11A;
@@ -1060,11 +1060,11 @@ void replay_playback_start(void) {
     } else {
         switch (step) {
         case 0x64:
-            if (D_0028EC58 != 0) {
+            if (g_stage_load_finished != 0) {
                 step += 1;
             case 0x65:
                 if (g_score_panel_intro == 0) {
-                    D_0028ED5C = 0;
+                    g_replay_start_pending = 0;
                     g_replay_begin_pending = 1;
 #ifndef DEATH_LABEL
                     D_0028DEF8 = 1;
@@ -1135,7 +1135,7 @@ void replay_run_begin(void) {
     save_d1 = reg_d1.w;
     D_0028E3F8 = 0;
     D_0028E368 = 0;
-    D_0028ED5C = 1;
+    g_replay_start_pending = 1;
     g_simulation_active = 1;
     save_d2 = reg_d2.w;
     save_d3 = reg_d3.w;
@@ -1245,7 +1245,7 @@ void replay_run_start(void) {
         break;
     case 17:
         if (g_score_panel_intro == 0) {
-            D_0028ED5C = 0;
+            g_replay_start_pending = 0;
             step++;
         }
         break;
@@ -1437,16 +1437,16 @@ u8 g_replay_buffer_state;
 s32 g_replay_position;
 u8 g_replay_begin_pending __attribute__((aligned(4)));
 u8 g_replay_watch_after_run __attribute__((aligned(4)));
-u8 D_0028ED64 __attribute__((aligned(4)));
-u8 D_0028ED60 __attribute__((aligned(4)));
-u8 D_0028ED5C __attribute__((aligned(4)));
+u8 g_game_over_after_continue __attribute__((aligned(4)));
+u8 g_stage_clear_screen_shown __attribute__((aligned(4)));
+u8 g_replay_start_pending __attribute__((aligned(4)));
 u8 g_replay_taken_over __attribute__((aligned(4)));
-u16 D_0028ED54;
-s32 D_0028ED50;
-u16 D_0028ED4C __attribute__((aligned(4)));
-u16 D_0028ED48;
-s32 D_0028ED44;
-u16 D_0028ED40;
+u16 g_replay_start_p1_score_digits;
+s32 g_replay_start_p1_score;
+u16 g_replay_start_p1_score_billions __attribute__((aligned(4)));
+u16 g_replay_start_p2_score_digits;
+s32 g_replay_start_p2_score;
+u16 g_replay_start_p2_score_billions;
 s32 g_replay_checksum;
 
 /* .bss (the compiler lays these out in reverse) */

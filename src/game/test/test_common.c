@@ -72,18 +72,18 @@ extern u8 g_game_frame_ran;
 extern u8 D_0028E374;
 extern u8 D_0028E378;
 extern u8 D_0028E37C;
-extern s32 D_0028EAF8;
-extern s32 D_0028EAFC;
+extern s32 g_menu_notice_step;
+extern s32 g_ranking_entry_index;
 extern u8 settings_reset_state_5;
-extern s32 D_0028EC78;
-extern u8 D_0028ED30;
-extern u8 D_0028ED31;
-extern u8 D_0028ED32;
-extern u8 D_0028ED33;
-extern u8 D_0028ED34;
-extern u8 D_0028ED35;
-extern u8 D_0028ED36;
-extern u8 D_0028ED37;
+extern s32 g_autosave_unread_flag;
+extern u8 g_loaded_replay_id_0;
+extern u8 g_loaded_replay_id_1;
+extern u8 g_loaded_replay_id_2;
+extern u8 g_loaded_replay_id_3;
+extern u8 g_loaded_replay_id_4;
+extern u8 g_loaded_replay_id_5;
+extern u8 g_loaded_replay_id_6;
+extern u8 g_loaded_replay_id_7;
 
 void test_print_lines(void) {
     u32 saved_d0;
@@ -238,34 +238,34 @@ void settings_reset(void) {
     settings_reset_state = 0;
     D_0028E25C = 0;
     D_0028E258 = 0;
-    D_0028EC78 = 0;
+    g_autosave_unread_flag = 0;
     D_0028E2A4 = 0;
     D_0028E29C = 0;
     D_0028E2A0 = 0;
     save_snapshot_take(5, 6, 7);
     stage_map_reset();
     menu_item_values_clear();
-    D_0028ED30 = 0;
+    g_loaded_replay_id_0 = 0;
     D_0028E258 = 0xA;
-    D_0028ED31 = 0;
-    D_0028EAFC = 0xFF;
-    D_0028ED32 = 0;
+    g_loaded_replay_id_1 = 0;
+    g_ranking_entry_index = 0xFF;
+    g_loaded_replay_id_2 = 0;
 #ifdef DEATH_LABEL
     g_twin_boss_bullet_speed_limit = 0x2A;
 #endif
-    D_0028ED33 = 0;
+    g_loaded_replay_id_3 = 0;
 #ifdef DEATH_LABEL
     g_twin_boss_bullets_halved = 1;
 #endif
-    D_0028ED34 = 0;
-    D_0028ED35 = 0;
-    D_0028ED36 = 0;
-    D_0028ED37 = 0;
+    g_loaded_replay_id_4 = 0;
+    g_loaded_replay_id_5 = 0;
+    g_loaded_replay_id_6 = 0;
+    g_loaded_replay_id_7 = 0;
     g_pad_input_locked = 0;
     D_0028E294 = 0;
     D_0028E288 = 0;
     D_0028E284 = 0;
-    D_0028EAF8 = 0;
+    g_menu_notice_step = 0;
 }
 
 void settings_validate(void) {
