@@ -1,5 +1,89 @@
 #include "common.h"
 #include "player.h"
+#include "enemy.h"
+
+/*
+ * What the enemies of this unit keep in the enemy state block (reg_a5), after what every enemy has
+ * (EnemyState). The mid flyers have two sets of guns that fire bursts in turn: `first` and `second`. A pair
+ * named interval/countdown or shots/shots_left is a value and the counter loaded from it.
+ */
+#define MID_FLYER_GUNS \
+    /* 0x16 */ u8 other_16; \
+    /* 0x17 */ u8 seen;               /* it has been on the screen; when it is off it again it is removed */ \
+    /* 0x18 */ u16 second_guns;       /* 0: the first guns fire, 1: the second */ \
+    /* 0x1A */ u8 other_1A[2]; \
+    /* 0x1C */ u8 hit_palette;        /* mixed into the palette on the frame of a hit */ \
+    /* 0x1D */ u8 palette; \
+    /* 0x1E */ u8 first_pause; \
+    /* 0x1F */ u8 first_countdown; \
+    /* 0x20 */ u8 first_shots; \
+    /* 0x21 */ u8 first_shots_left; \
+    /* 0x22 */ u8 second_pause; \
+    /* 0x23 */ u8 second_countdown; \
+    /* 0x24 */ u8 second_shots; \
+    /* 0x25 */ u8 second_shots_left; \
+    /* 0x26 */ u8 turn_interval;      /* frames between two turns of the turrets towards the player */ \
+    /* 0x27 */ u8 turn_countdown;
+
+typedef struct {
+    /* 0x00 */ u8 common[0x16];
+    MID_FLYER_GUNS
+    /* 0x28 */ u16 turret_a_sprite[2];
+    /* 0x2C */ Field16 turret_a_dir;
+    /* 0x2E */ u16 turret_b_sprite[2];
+    /* 0x32 */ Field16 turret_b_dir;
+    /* 0x34 */ u8 second_interval;    /* frames between the shots of a burst */
+    /* 0x35 */ u8 first_interval;
+    /* 0x36 */ u16 hp;
+    /* 0x38 */ u8 other_38[0xC];
+    /* 0x44 */ u16 after_entities[2]; /* where enemy_init_entities stopped in its table */
+} MidFlyerAState;
+
+#define MID_FLYER_A(pointer) ((MidFlyerAState *)(pointer))
+
+typedef struct {
+    /* 0x00 */ u8 common[0x16];
+    MID_FLYER_GUNS
+    /* 0x28 */ u8 second_interval;
+    /* 0x29 */ u8 first_interval;
+    /* 0x2A */ u16 hp;
+    /* 0x2C */ u8 other_2C[0x18];
+    /* 0x44 */ u16 after_entities[2];
+} MidFlyerBState;
+
+#define MID_FLYER_B(pointer) ((MidFlyerBState *)(pointer))
+
+typedef struct {
+    /* 0x00 */ u8 common[0x16];
+    MID_FLYER_GUNS
+    /* 0x28 */ u16 turret_sprite[2];
+    /* 0x2C */ Field16 turret_dir;
+    /* 0x2E */ u8 second_interval;
+    /* 0x2F */ u8 first_interval;
+    /* 0x30 */ u8 aim[2];             /* the directions its two first guns' burst goes in */
+    /* 0x32 */ u8 other_32[0x12];
+    /* 0x44 */ u16 after_entities[2];
+} MidFlyerCState;
+
+#define MID_FLYER_C(pointer) ((MidFlyerCState *)(pointer))
+
+/* The three ground turrets: they turn towards the player and fire bursts along their direction. */
+typedef struct {
+    /* 0x00 */ u8 common[0x16];
+    /* 0x16 */ u8 shot_interval;
+    /* 0x17 */ u8 seen;
+    /* 0x18 */ u8 hit_palette;
+    /* 0x19 */ u8 palette;
+    /* 0x1A */ u8 other_1A;
+    /* 0x1B */ u8 shot_countdown;
+    /* 0x1C */ u8 shots;
+    /* 0x1D */ u8 shots_left;
+    /* 0x1E */ u8 turn_interval;
+    /* 0x1F */ u8 turn_countdown;
+    /* 0x20 */ Field16 dir;
+} GroundTurretState;
+
+#define GROUND_TURRET(pointer) ((GroundTurretState *)(pointer))
 #include "entity.h"
 
 extern void enemy_set_entity_count(s32);
@@ -28,8 +112,8 @@ void mid_flyer_a_start(void) {
     reg_a0_as_s8_p = D_0025A0B0;
     enemy_init_entities();
     reg_tmp.w = (u32) reg_a0_as_s8_p;
-    *(u16 *)(reg_a5 + 0x44) = (u16) reg_tmp.h[1];
-    *(u16 *)(reg_a5 + 0x46) = (u16) reg_tmp.h[0];
+    MID_FLYER_A(reg_a5)->after_entities[0] = (u16) reg_tmp.h[1];
+    MID_FLYER_A(reg_a5)->after_entities[1] = (u16) reg_tmp.h[0];
     reg_a0_as_s8_p = D_0025A080;
     reg_d0.w = 0x10;
     enemy_set_task_state();
@@ -49,11 +133,11 @@ void mid_flyer_a_start(void) {
         if (cond_flag != 0) {
             reg_d1.b[0] = ENTITY(reg_a6)->move.b.dir;
         }
-        *(u8 *)(reg_a5 + 0x2C) = (u8) reg_d1.b[0];
+        MID_FLYER_A(reg_a5)->turret_a_dir.b[0] = (u8) reg_d1.b[0];
         reg_d1.h[0] &= 0x3E;
         reg_d1.h[0] += reg_d1.h[0];
-        *(u16 *)(reg_a5 + 0x28) = (reg_d1.h[0] != 0) ? *(u16 *)((u8 *)reg_a2 + ((s16)reg_d1.h[0] & ~1)) : *(u16 *)reg_a2;
-        *(u16 *)(reg_a5 + 0x2A) = ((reg_d1.h[0] + 2) != 0) ? *(u16 *)((u8 *)reg_a2 + ((s16)(reg_d1.h[0] + 2) & ~1)) : *(u16 *)reg_a2;
+        MID_FLYER_A(reg_a5)->turret_a_sprite[0] = (reg_d1.h[0] != 0) ? *(u16 *)((u8 *)reg_a2 + ((s16)reg_d1.h[0] & ~1)) : *(u16 *)reg_a2;
+        MID_FLYER_A(reg_a5)->turret_a_sprite[1] = ((reg_d1.h[0] + 2) != 0) ? *(u16 *)((u8 *)reg_a2 + ((s16)(reg_d1.h[0] + 2) & ~1)) : *(u16 *)reg_a2;
         reg_d0.h[0] = ENTITY(reg_a6)->y.h;
         reg_d1.h[0] = ENTITY(reg_a6)->x.h;
         reg_d0.h[0] += 0x680;
@@ -62,44 +146,44 @@ void mid_flyer_a_start(void) {
         if (cond_flag != 0) {
             reg_d1.b[0] = ENTITY(reg_a6)->move.b.dir;
         }
-        *(u8 *)(reg_a5 + 0x32) = (u8) reg_d1.b[0];
+        MID_FLYER_A(reg_a5)->turret_b_dir.b[0] = (u8) reg_d1.b[0];
         reg_d1.h[0] &= 0x3E;
         reg_d1.h[0] += reg_d1.h[0];
-        *(u16 *)(reg_a5 + 0x2E) = (reg_d1.h[0] != 0) ? *(u16 *)((u8 *)reg_a2 + ((s16)reg_d1.h[0] & ~1)) : *(u16 *)reg_a2;
-        *(u16 *)(reg_a5 + 0x30) = ((reg_d1.h[0] + 2) != 0) ? *(u16 *)((u8 *)reg_a2 + ((s16)(reg_d1.h[0] + 2) & ~1)) : *(u16 *)reg_a2;
+        MID_FLYER_A(reg_a5)->turret_b_sprite[0] = (reg_d1.h[0] != 0) ? *(u16 *)((u8 *)reg_a2 + ((s16)reg_d1.h[0] & ~1)) : *(u16 *)reg_a2;
+        MID_FLYER_A(reg_a5)->turret_b_sprite[1] = ((reg_d1.h[0] + 2) != 0) ? *(u16 *)((u8 *)reg_a2 + ((s16)(reg_d1.h[0] + 2) & ~1)) : *(u16 *)reg_a2;
         reg_d0.b[0] = 0x10;
         reg_d1.b[0] = 4;
         if ((s32) g_stage > 1) {
             reg_d0.b[0] = 0x10;
             reg_d1.b[0] = 4;
         }
-        *(u8 *)(reg_a5 + 0x35) = (u8) reg_d0.b[0];
-        *(u8 *)(reg_a5 + 0x34) = (u8) reg_d1.b[0];
+        MID_FLYER_A(reg_a5)->first_interval = (u8) reg_d0.b[0];
+        MID_FLYER_A(reg_a5)->second_interval = (u8) reg_d1.b[0];
         if (g_stage == 4) {
             reg_d0.h[0] = 5;
-            *(u8 *)(reg_a5 + 0x21) = (u8) reg_d0.b[0];
-            *(u8 *)(reg_a5 + 0x20) = (u8) reg_d0.b[0];
+            MID_FLYER_A(reg_a5)->first_shots_left = (u8) reg_d0.b[0];
+            MID_FLYER_A(reg_a5)->first_shots = (u8) reg_d0.b[0];
             reg_d0.h[0] = 8;
-            *(u8 *)(reg_a5 + 0x25) = (u8) reg_d0.b[0];
-            *(u8 *)(reg_a5 + 0x24) = (u8) reg_d0.b[0];
-            *(u8 *)(reg_a5 + 0x35) = 0xCU;
+            MID_FLYER_A(reg_a5)->second_shots_left = (u8) reg_d0.b[0];
+            MID_FLYER_A(reg_a5)->second_shots = (u8) reg_d0.b[0];
+            MID_FLYER_A(reg_a5)->first_interval = 0xCU;
             reg_d0.h[0] = 0x7FFF;
             ENTITY(reg_a6)->hp.h = (u16) reg_d0.h[0];
             ENTITY(reg_a6)[1].hp.h = (u16) reg_d0.h[0];
-            *(s16 *)(reg_a5 + 0x36) = 0x30;
+            MID_FLYER_A(reg_a5)->hp = 0x30;
         }
         reg_d0.h[0] = g_rank_2_16;
-        *(u8 *)(reg_a5 + 0x1F) -= reg_d0.b[0];
+        MID_FLYER_A(reg_a5)->first_countdown -= reg_d0.b[0];
         reg_d0.h[0] = g_rank_2_16;
         reg_d0.b[0] -= 8;
-        *(u8 *)(reg_a5 + 0x23) -= reg_d0.b[0];
+        MID_FLYER_A(reg_a5)->second_countdown -= reg_d0.b[0];
         reg_a0_as_s8_p = D_0025A070;
         reg_d0.h[0] = g_stage_x2;
         reg_a0_as_s8_p = &reg_a0_as_s8_p[reg_d0.h[0]];
         ENTITY(reg_a6)->attr.sb.palette = (s8) *reg_a0_as_s8_p;
-        *(s8 *)(reg_a5 + 0x1D) = (s8) *reg_a0_as_s8_p;
+        MID_FLYER_A(reg_a5)->palette = (s8) *reg_a0_as_s8_p;
         reg_a0_as_s8_p += 1;
-        *(s8 *)(reg_a5 + 0x1C) = (s8) *reg_a0_as_s8_p;
+        MID_FLYER_A(reg_a5)->hit_palette = (s8) *reg_a0_as_s8_p;
         reg_a0_as_s8_p += 1;
     }
 }
@@ -164,15 +248,15 @@ void mid_flyer_a(void) {
     reg_d0.h[0] += 0x7400;
     if (reg_tmp.h[1] == 0) goto next_30;
 next_20:
-    if (*(u8 *)(reg_a5 + 0x17) == 0) goto next_40;
+    if (MID_FLYER_A(reg_a5)->seen == 0) goto next_40;
     enemy_remove();
     return;
 next_30:
-    *(u8 *)(reg_a5 + 0x17) = 1;
+    MID_FLYER_A(reg_a5)->seen = 1;
 next_40:
     ENTITY(reg_a6)[1].y.h = ENTITY(reg_a6)->y.h;
     ENTITY(reg_a6)[1].x.h = ENTITY(reg_a6)->x.h;
-    if (*(s16 *)(reg_a5 + 0x36) < 0) goto next_45;
+    if ((s16) MID_FLYER_A(reg_a5)->hp < 0) goto next_45;
     reg_d0.h[0] = 0x7FFF;
     ENTITY(reg_a6)->hp.h = reg_d0.h[0];
     ENTITY(reg_a6)[1].hp.h = reg_d0.h[0];
@@ -180,8 +264,8 @@ next_40:
     if (g_bomb_entities[0] == 0) goto next_42;
     reg_d0.h[0] = 2;
 next_42:
-    reg_tmp.h[0] = *(u16 *)(reg_a5 + 0x36);
-    *(u16 *)(reg_a5 + 0x36) -= reg_d0.h[0];
+    reg_tmp.h[0] = MID_FLYER_A(reg_a5)->hp;
+    MID_FLYER_A(reg_a5)->hp -= reg_d0.h[0];
     if (!((s32) reg_tmp.h[0] < (s32) reg_d0.h[0])) goto next_45;
     reg_d0.h[0] = 0x1400;
     ENTITY(reg_a6)->hp.h = reg_d0.h[0];
@@ -191,7 +275,7 @@ next_45:
     reg_d1.b[0] |= ENTITY(reg_a6)[1].flags.b[1];
     reg_d1.h[0] &= 0x5C;
     if (reg_d1.h[0] != 0) goto next_50;
-    reg_d0.b[0] = *(u8 *)(reg_a5 + 0x1D);
+    reg_d0.b[0] = MID_FLYER_A(reg_a5)->palette;
     if (!((s32) ENTITY(reg_a6)->hp.h < 0x255)) goto next_90;
     if (g_damage_blink_counter != 0) goto next_90;
     reg_d0.w = 0x19;
@@ -203,9 +287,9 @@ next_50:
     score_add_no_chain();
     reg_d0.b[0] = ENTITY(reg_a6)->attr.b.palette;
     if (reg_d0.b[0] != 0x19) goto next_60;
-    reg_d0.b[0] = *(u8 *)(reg_a5 + 0x1D);
+    reg_d0.b[0] = MID_FLYER_A(reg_a5)->palette;
 next_60:
-    reg_d2.b[0] = *(u8 *)(reg_a5 + 0x1C);
+    reg_d2.b[0] = MID_FLYER_A(reg_a5)->hit_palette;
     reg_d0.b[0] ^= reg_d2.b[0];
     reg_d4.h[0] = ENTITY(reg_a6)->hp.h;
     if (!((s16) ENTITY(reg_a6)[1].hp.h < (s16) reg_d4.h[0])) goto next_80;
@@ -219,15 +303,15 @@ next_90:
     func_001368E0();
     if (g_enemies_stopped != 0) goto next_500;
     if (g_bullets_blocked != 0) goto next_500;
-    if (*(u16 *)(reg_a5 + 0x18) != 0) goto next_300;
+    if (MID_FLYER_A(reg_a5)->second_guns != 0) goto next_300;
     if ((s16) ENTITY(reg_a6)->y.h < 0x1000) goto next_300;
-    reg_tmp.b[0] = *(u8 *)(reg_a5 + 0x1F);
-    *(u8 *)(reg_a5 + 0x1F) -= 1;
+    reg_tmp.b[0] = MID_FLYER_A(reg_a5)->first_countdown;
+    MID_FLYER_A(reg_a5)->first_countdown -= 1;
     if ((s32) reg_tmp.b[0] > 0) goto next_300;
-    *(u8 *)(reg_a5 + 0x1F) = *(u8 *)(reg_a5 + 0x35);
+    MID_FLYER_A(reg_a5)->first_countdown = MID_FLYER_A(reg_a5)->first_interval;
     reg_a0 = (u8 *) g_player1_as_u16_a;
     reg_a1 = (u8 *) g_player2_as_u16_a;
-    if (*(u8 *)(reg_a5 + 2) == 0) goto next_240;
+    if (ENEMY_STATE(reg_a5)->target_player == 0) goto next_240;
     reg_atmp = (u8 *) reg_a0;
     reg_a0 = reg_a1;
     reg_a1 = (u8 *) reg_atmp;
@@ -250,14 +334,14 @@ next_260:
     reg_d5.w = 0xFE000000;
     reg_d4.w = 0;
     if (g_stage != 4) goto next_262;
-    if (*(u8 *)(reg_a5 + 0x21) != 5) goto next_261;
+    if (MID_FLYER_A(reg_a5)->first_shots_left != 5) goto next_261;
     reg_d0.w = 4;
     goto next_264;
 next_261:
-    if (*(u8 *)(reg_a5 + 0x21) == 4) goto next_263;
+    if (MID_FLYER_A(reg_a5)->first_shots_left == 4) goto next_263;
     goto next_270;
 next_262:
-    if (*(u8 *)(reg_a5 + 0x21) != 1) goto next_270;
+    if (MID_FLYER_A(reg_a5)->first_shots_left != 1) goto next_270;
 next_263:
     reg_d0.w = 4;
     if (g_stage != 4) goto next_264;
@@ -302,24 +386,24 @@ loop_280:
     reg_d7.h[0] = cnt;
     if (((s64) ((s64) (cnt & 0xFFFF) << 0x30) >> 0x30) >= 0) goto loop_280;
 next_290:
-    reg_tmp.b[0] = *(u8 *)(reg_a5 + 0x21);
-    *(u8 *)(reg_a5 + 0x21) -= 1;
+    reg_tmp.b[0] = MID_FLYER_A(reg_a5)->first_shots_left;
+    MID_FLYER_A(reg_a5)->first_shots_left -= 1;
     if ((s32) reg_tmp.b[0] > 0) goto next_300;
-    *(u8 *)(reg_a5 + 0x21) = *(u8 *)(reg_a5 + 0x20);
+    MID_FLYER_A(reg_a5)->first_shots_left = MID_FLYER_A(reg_a5)->first_shots;
     reg_d0.h[0] = 0x50;
     reg_d0.h[0] -= g_rank_3_16;
-    *(u8 *)(reg_a5 + 0x1F) = reg_d0.b[0];
-    *(u16 *)(reg_a5 + 0x18) = 1;
+    MID_FLYER_A(reg_a5)->first_countdown = reg_d0.b[0];
+    MID_FLYER_A(reg_a5)->second_guns = 1;
 next_300:
-    reg_tmp.b[0] = *(u8 *)(reg_a5 + 0x27);
-    *(u8 *)(reg_a5 + 0x27) -= 1;
+    reg_tmp.b[0] = MID_FLYER_A(reg_a5)->turn_countdown;
+    MID_FLYER_A(reg_a5)->turn_countdown -= 1;
     if ((s32) reg_tmp.b[0] > 0) goto next_500;
-    *(u8 *)(reg_a5 + 0x27) = *(u8 *)(reg_a5 + 0x26);
-    reg_d0.b[0] = *(u8 *)(reg_a5 + 0x25);
-    if (*(u8 *)(reg_a5 + 0x24) != reg_d0.b[0]) goto next_500;
+    MID_FLYER_A(reg_a5)->turn_countdown = MID_FLYER_A(reg_a5)->turn_interval;
+    reg_d0.b[0] = MID_FLYER_A(reg_a5)->second_shots_left;
+    if (MID_FLYER_A(reg_a5)->second_shots != reg_d0.b[0]) goto next_500;
     reg_a0 = (u8 *) g_player1_as_u16_a;
     reg_a1 = (u8 *) g_player2_as_u16_a;
-    if (*(u8 *)(reg_a5 + 2) == 0) goto next_320;
+    if (ENEMY_STATE(reg_a5)->target_player == 0) goto next_320;
     reg_atmp = (u8 *) reg_a0;
     reg_a0 = reg_a1;
     reg_a1 = (u8 *) reg_atmp;
@@ -345,39 +429,39 @@ next_340:
     reg_d0.h[0] += 0x680;
     reg_d1.h[0] += 0x500;
     direction_between();
-    reg_d0.h[0] = *(u16 *)(reg_a5 + 0x2C);
+    reg_d0.h[0] = MID_FLYER_A(reg_a5)->turret_a_dir.h;
     direction_turn_toward();
-    *(u16 *)(reg_a5 + 0x2C) = reg_d1.h[0];
+    MID_FLYER_A(reg_a5)->turret_a_dir.h = reg_d1.h[0];
     reg_d1.h[0] &= 0x3E;
     reg_d1.h[0] += reg_d1.h[0];
-    *(u16 *)(reg_a5 + 0x28) = (reg_d1.h[0] != 0) ? *(u16 *)(reg_a3 + ((s16) reg_d1.h[0] & ~1)) : *(u16 *)reg_a3;
-    *(u16 *)(reg_a5 + 0x2A) = ((reg_d1.h[0] + 2) != 0) ? *(u16 *)(reg_a3 + ((s16) (reg_d1.h[0] + 2) & ~1)) : *(u16 *)reg_a3;
+    MID_FLYER_A(reg_a5)->turret_a_sprite[0] = (reg_d1.h[0] != 0) ? *(u16 *)(reg_a3 + ((s16) reg_d1.h[0] & ~1)) : *(u16 *)reg_a3;
+    MID_FLYER_A(reg_a5)->turret_a_sprite[1] = ((reg_d1.h[0] + 2) != 0) ? *(u16 *)(reg_a3 + ((s16) (reg_d1.h[0] + 2) & ~1)) : *(u16 *)reg_a3;
     goto next_500;
 next_380:
     reg_d0.h[0] += 0x680;
     reg_d1.h[0] += 0xFB00;
     direction_between();
-    reg_d0.h[0] = *(u16 *)(reg_a5 + 0x32);
+    reg_d0.h[0] = MID_FLYER_A(reg_a5)->turret_b_dir.h;
     direction_turn_toward();
-    *(u16 *)(reg_a5 + 0x32) = reg_d1.h[0];
+    MID_FLYER_A(reg_a5)->turret_b_dir.h = reg_d1.h[0];
     reg_d1.h[0] &= 0x3E;
     reg_d1.h[0] += reg_d1.h[0];
-    *(u16 *)(reg_a5 + 0x2E) = (reg_d1.h[0] != 0) ? *(u16 *)(reg_a3 + ((s16) reg_d1.h[0] & ~1)) : *(u16 *)reg_a3;
-    *(u16 *)(reg_a5 + 0x30) = ((reg_d1.h[0] + 2) != 0) ? *(u16 *)(reg_a3 + ((s16) (reg_d1.h[0] + 2) & ~1)) : *(u16 *)reg_a3;
+    MID_FLYER_A(reg_a5)->turret_b_sprite[0] = (reg_d1.h[0] != 0) ? *(u16 *)(reg_a3 + ((s16) reg_d1.h[0] & ~1)) : *(u16 *)reg_a3;
+    MID_FLYER_A(reg_a5)->turret_b_sprite[1] = ((reg_d1.h[0] + 2) != 0) ? *(u16 *)(reg_a3 + ((s16) (reg_d1.h[0] + 2) & ~1)) : *(u16 *)reg_a3;
 next_500:
     entity_draw_layer5();
     reg_d1.h[1] = ENTITY(reg_a6)->y.h;
     reg_d1.h[0] = ENTITY(reg_a6)->x.h;
     reg_d1.h[1] += 0x80;
-    reg_d2.h[1] = *(u16 *)(reg_a5 + 0x28);
-    reg_d2.h[0] = *(u16 *)(reg_a5 + 0x2A);
+    reg_d2.h[1] = MID_FLYER_A(reg_a5)->turret_a_sprite[0];
+    reg_d2.h[0] = MID_FLYER_A(reg_a5)->turret_a_sprite[1];
     reg_d3.h[0] = 0x628;
     reg_d4.h[0] = ENTITY(reg_a6)->attr.h;
     sprite_draw_layer5();
     reg_d1.h[0] = ENTITY(reg_a6)->x.h;
     reg_d1.h[0] += 0xF600;
-    reg_d2.h[1] = *(u16 *)(reg_a5 + 0x2E);
-    reg_d2.h[0] = *(u16 *)(reg_a5 + 0x30);
+    reg_d2.h[1] = MID_FLYER_A(reg_a5)->turret_b_sprite[0];
+    reg_d2.h[0] = MID_FLYER_A(reg_a5)->turret_b_sprite[1];
     sprite_draw_layer5();
     if (g_loop != 0) goto next_520;
     if (g_frame_mod2 == 0) goto next_520;
@@ -393,23 +477,23 @@ next_520:
     enemy_hitbox_debug_draw();
     reg_a0 = reg_a6 + 0x20;
     enemy_hitbox_debug_draw();
-    if (*(u16 *)(reg_a5 + 0x18) == 0) goto block_rts;
+    if (MID_FLYER_A(reg_a5)->second_guns == 0) goto block_rts;
     if (g_enemies_stopped != 0) goto block_rts;
     if (g_bullets_blocked != 0) goto block_rts;
     if ((s16) ENTITY(reg_a6)->y.h < 0x1000) goto block_rts;
-    reg_tmp.b[0] = *(u8 *)(reg_a5 + 0x23);
-    *(u8 *)(reg_a5 + 0x23) -= 1;
+    reg_tmp.b[0] = MID_FLYER_A(reg_a5)->second_countdown;
+    MID_FLYER_A(reg_a5)->second_countdown -= 1;
     if (reg_tmp.b[0] == 0) goto next_600;
 block_rts:
     return;
 next_600:
-    *(u8 *)(reg_a5 + 0x23) = *(u8 *)(reg_a5 + 0x34);
+    MID_FLYER_A(reg_a5)->second_countdown = MID_FLYER_A(reg_a5)->second_interval;
     reg_a4 = (u8 *) g_direction_offsets_600;
     reg_d0.w = 0x20013;
     if (g_stage != 4) goto next_620;
     reg_d0.w = 0x70013;
 next_620:
-    reg_d1.h[0] = *(u16 *)(reg_a5 + 0x2C);
+    reg_d1.h[0] = MID_FLYER_A(reg_a5)->turret_a_dir.h;
     reg_d5.h[0] = reg_d1.h[0];
     reg_d5.h[0] &= 0x3E;
     reg_d5.h[0] += reg_d5.h[0];
@@ -421,7 +505,7 @@ next_620:
     reg_d2.h[1] = ENTITY(reg_a6)->y.h;
     reg_d2.h[0] = ENTITY(reg_a6)->x.h;
     bullet_fire_3way();
-    reg_d1.h[0] = *(u16 *)(reg_a5 + 0x32);
+    reg_d1.h[0] = MID_FLYER_A(reg_a5)->turret_b_dir.h;
     reg_d5.h[0] = reg_d1.h[0];
     reg_d5.h[0] &= 0x3E;
     reg_d5.h[0] += reg_d5.h[0];
@@ -430,14 +514,14 @@ next_620:
     reg_d3.h[0] += 0xFB00;
     reg_d3.h[1] += 0x680;
     bullet_fire_3way();
-    reg_tmp.b[0] = *(u8 *)(reg_a5 + 0x25);
-    *(u8 *)(reg_a5 + 0x25) -= 1;
+    reg_tmp.b[0] = MID_FLYER_A(reg_a5)->second_shots_left;
+    MID_FLYER_A(reg_a5)->second_shots_left -= 1;
     if ((s32) reg_tmp.b[0] > 0) goto next_650;
-    *(u8 *)(reg_a5 + 0x25) = *(u8 *)(reg_a5 + 0x24);
+    MID_FLYER_A(reg_a5)->second_shots_left = MID_FLYER_A(reg_a5)->second_shots;
     reg_d0.h[0] = 0x30;
     reg_d0.h[0] -= g_rank_3_16;
-    *(u8 *)(reg_a5 + 0x23) = reg_d0.b[0];
-    *(u16 *)(reg_a5 + 0x18) = 0;
+    MID_FLYER_A(reg_a5)->second_countdown = reg_d0.b[0];
+    MID_FLYER_A(reg_a5)->second_guns = 0;
 next_650:
     return;
 next_700:
@@ -528,8 +612,8 @@ void mid_flyer_b_start(void) {
     reg_a0_as_s8_p = D_0025A160;
     enemy_init_entities();
     reg_tmp.w = (u32) reg_a0_as_s8_p;
-    *(u16 *)(reg_a5 + 0x44) = (u16) reg_tmp.h[1];
-    *(u16 *)(reg_a5 + 0x46) = (u16) reg_tmp.h[0];
+    MID_FLYER_B(reg_a5)->after_entities[0] = (u16) reg_tmp.h[1];
+    MID_FLYER_B(reg_a5)->after_entities[1] = (u16) reg_tmp.h[0];
     reg_a0_as_s8_p = D_0025A140;
     reg_d0.w = 0xA;
     enemy_set_task_state();
@@ -568,17 +652,17 @@ void mid_flyer_b_start(void) {
             reg_d0.b[0] = 0x10;
             reg_d1.b[0] = 8;
         }
-        *(u8 *)(reg_a5 + 0x29) = (u8) reg_d0.b[0];
-        *(u8 *)(reg_a5 + 0x28) = (u8) reg_d1.b[0];
+        MID_FLYER_B(reg_a5)->first_interval = (u8) reg_d0.b[0];
+        MID_FLYER_B(reg_a5)->second_interval = (u8) reg_d1.b[0];
         reg_d0.h[0] = g_rank_7_16;
-        *(u8 *)(reg_a5 + 0x1F) -= reg_d0.b[0];
+        MID_FLYER_B(reg_a5)->first_countdown -= reg_d0.b[0];
         reg_a0_as_s8_p = D_0025A128;
         reg_d0.h[0] = g_stage_x2;
         reg_a0_as_s8_p = &reg_a0_as_s8_p[reg_d0.h[0]];
         ENTITY(reg_a6)->attr.sb.palette = (s8) *reg_a0_as_s8_p;
-        *(s8 *)(reg_a5 + 0x1D) = (s8) *reg_a0_as_s8_p;
+        MID_FLYER_B(reg_a5)->palette = (s8) *reg_a0_as_s8_p;
         reg_a0_as_s8_p += 1;
-        *(s8 *)(reg_a5 + 0x1C) = (s8) *reg_a0_as_s8_p;
+        MID_FLYER_B(reg_a5)->hit_palette = (s8) *reg_a0_as_s8_p;
         D_00299768[0] = 1;
         D_0029976A[0] = 1;
         reg_a0_as_s8_p += 1;
@@ -618,22 +702,22 @@ void mid_flyer_b(void) {
         reg_tmp.w += reg_tmp1.w;
         reg_d0.h[0] += 0x7A00;
         if (reg_tmp.h[1] != 0) {
-            if (*(u8 *)(reg_a5 + 0x17) != 0) {
+            if (MID_FLYER_B(reg_a5)->seen != 0) {
                 enemy_remove();
                 return;
             }
             goto block_5;
         }
-        *(u8 *)(reg_a5 + 0x17) = 1U;
+        MID_FLYER_B(reg_a5)->seen = 1U;
 block_5:
-        if (*(s16 *)(reg_a5 + 0x2A) >= 0) {
+        if ((s16) MID_FLYER_B(reg_a5)->hp >= 0) {
             ENTITY(reg_a6)->hp.h = 0x7FFFU;
             reg_d0.w = 1;
             if (g_bomb_entities_as_s16_a[0] < 0) {
                 reg_d0.w = 2;
             }
-            reg_tmp.h[0] = *(u16 *)(reg_a5 + 0x2A);
-            *(u16 *)(reg_a5 + 0x2A) -= reg_d0.h[0];
+            reg_tmp.h[0] = MID_FLYER_B(reg_a5)->hp;
+            MID_FLYER_B(reg_a5)->hp -= reg_d0.h[0];
             if ((s32) reg_tmp.h[0] < (s32) reg_d0.h[0]) {
                 ENTITY(reg_a6)->hp.h = 0x2600U;
             }
@@ -642,7 +726,7 @@ block_5:
         reg_d1.w = 0x5C;
         reg_d1.b[0] &= (*(u8 *)((u8 *)(temp_a0) + (1)));
         if (reg_d1.b[0] == 0) {
-            reg_d0.b[0] = *(u8 *)(reg_a5 + 0x1D);
+            reg_d0.b[0] = MID_FLYER_B(reg_a5)->palette;
             if (((s32) (*(u16 *)((u8 *)(temp_a0) + (0x18))) < 0x980) && (g_damage_blink_counter == 0)) {
                 reg_d0.w = 0x19;
             }
@@ -652,9 +736,9 @@ block_5:
         score_add_no_chain();
         reg_d0.b[0] = ENTITY(reg_a6)->attr.b.palette;
         if (reg_d0.b[0] == 0x19) {
-            reg_d0.b[0] = *(u8 *)(reg_a5 + 0x1D);
+            reg_d0.b[0] = MID_FLYER_B(reg_a5)->palette;
         }
-        reg_d2.b[0] = *(u8 *)(reg_a5 + 0x1C);
+        reg_d2.b[0] = MID_FLYER_B(reg_a5)->hit_palette;
         reg_d0.b[0] ^= reg_d2.b[0];
         if ((s16) ENTITY(reg_a6)->hp.h >= 0) {
 block_17:
@@ -664,10 +748,10 @@ block_17:
                 if ((s16) ENTITY(reg_a6)->y.h >= 0x1000) {
                     reg_d0.h[0] = ENTITY(reg_a6)[1].hp.h;
                     if (reg_d0.h[0] == 0) {
-                        reg_tmp.b[0] = *(u8 *)(reg_a5 + 0x1F);
-                        *(u8 *)(reg_a5 + 0x1F) -= 1;
+                        reg_tmp.b[0] = MID_FLYER_B(reg_a5)->first_countdown;
+                        MID_FLYER_B(reg_a5)->first_countdown -= 1;
                         if ((s32) reg_tmp.b[0] <= 0) {
-                            *(u8 *)(reg_a5 + 0x1F) = (u8) *(u8 *)(reg_a5 + 0x29);
+                            MID_FLYER_B(reg_a5)->first_countdown = (u8) MID_FLYER_B(reg_a5)->first_interval;
                             ENTITY(reg_a6)[1].hp.h = 1U;
                         }
                     } else if ((reg_d0.h[0] & 0xFFFF) == 1) {
@@ -698,13 +782,13 @@ block_17:
                             ENTITY(reg_a6)[1].hit_y_minus.h = (reg_d0.h[0] != 0) ? *(u16 *)((u8 *)reg_a0 + ((s16)reg_d0.h[0] & ~1)) : *(u16 *)reg_a0;
                             ENTITY(reg_a6)[1].hit_x_plus.h = ((reg_d0.h[0] + 2) != 0) ? *(u16 *)((u8 *)reg_a0 + ((s16)(reg_d0.h[0] + 2) & ~1)) : *(u16 *)reg_a0;
                         }
-                        reg_tmp.b[0] = *(u8 *)(reg_a5 + 0x1F);
-                        *(u8 *)(reg_a5 + 0x1F) -= 1;
+                        reg_tmp.b[0] = MID_FLYER_B(reg_a5)->first_countdown;
+                        MID_FLYER_B(reg_a5)->first_countdown -= 1;
                         if ((s32) reg_tmp.b[0] <= 0) {
-                            *(u8 *)(reg_a5 + 0x1F) = (u8) *(u8 *)(reg_a5 + 0x29);
+                            MID_FLYER_B(reg_a5)->first_countdown = (u8) MID_FLYER_B(reg_a5)->first_interval;
                             reg_a0 = (u8 *)(g_player1_as_u16_a);
                             reg_a1 = (u8 *)(g_player2_as_u16_a);
-                            if (*(u8 *)(reg_a5 + 2) != 0) {
+                            if (ENEMY_STATE(reg_a5)->target_player != 0) {
                                 reg_atmp = (u8 *)(reg_a0);
                                 reg_a0 = (u8 *)(reg_a1);
                                 reg_a1 = (u8 *)(reg_atmp);
@@ -743,13 +827,13 @@ block_51:
                                 reg_d1.h[0] -= 0x14;
                                 bullet_fire256_2way();
                             }
-                            reg_tmp.b[0] = *(u8 *)(reg_a5 + 0x21);
-                            *(u8 *)(reg_a5 + 0x21) -= 1;
+                            reg_tmp.b[0] = MID_FLYER_B(reg_a5)->first_shots_left;
+                            MID_FLYER_B(reg_a5)->first_shots_left -= 1;
                             if ((s32) reg_tmp.b[0] <= 0) {
-                                *(u8 *)(reg_a5 + 0x21) = (u8) *(u8 *)(reg_a5 + 0x20);
+                                MID_FLYER_B(reg_a5)->first_shots_left = (u8) MID_FLYER_B(reg_a5)->first_shots;
                                 reg_d0.h[0] = 0x40;
                                 reg_d0.h[0] -= g_rank_4_16;
-                                *(u8 *)(reg_a5 + 0x1F) = (u8) reg_d0.b[0];
+                                MID_FLYER_B(reg_a5)->first_countdown = (u8) reg_d0.b[0];
                                 ENTITY(reg_a6)[1].hp.h = 3U;
                             }
                         }
@@ -771,15 +855,15 @@ block_51:
                         }
                     }
                 }
-                reg_tmp.b[0] = *(u8 *)(reg_a5 + 0x27);
-                *(u8 *)(reg_a5 + 0x27) -= 1;
+                reg_tmp.b[0] = MID_FLYER_B(reg_a5)->turn_countdown;
+                MID_FLYER_B(reg_a5)->turn_countdown -= 1;
                 if ((s32) reg_tmp.b[0] <= 0) {
-                    *(u8 *)(reg_a5 + 0x27) = (u8) *(u8 *)(reg_a5 + 0x26);
-                    reg_d0.b[0] = *(u8 *)(reg_a5 + 0x25);
-                    if (*(u8 *)(reg_a5 + 0x24) == reg_d0.b[0]) {
+                    MID_FLYER_B(reg_a5)->turn_countdown = (u8) MID_FLYER_B(reg_a5)->turn_interval;
+                    reg_d0.b[0] = MID_FLYER_B(reg_a5)->second_shots_left;
+                    if (MID_FLYER_B(reg_a5)->second_shots == reg_d0.b[0]) {
                         reg_a0 = (u8 *)(g_player1_as_u16_a);
                         reg_a1 = (u8 *)(g_player2_as_u16_a);
-                        switch (*(u8 *)(reg_a5 + 2)) { case 0: break; default:
+                        switch (ENEMY_STATE(reg_a5)->target_player) { case 0: break; default:
                             reg_atmp = (u8 *)(reg_a0);
                             reg_a0 = (u8 *)(reg_a1);
                             reg_a1 = (u8 *)(reg_atmp);
@@ -871,11 +955,11 @@ block_join:
             reg_a0 = (u8 *)(reg_a6);
             enemy_hitbox_debug_draw();
             if ((g_enemies_stopped == 0) && (g_bullets_blocked == 0) && ((s16) ENTITY(reg_a6)->y.h >= 0x1000)) {
-                reg_tmp.b[0] = *(u8 *)(reg_a5 + 0x23);
-                *(u8 *)(reg_a5 + 0x23) -= 1;
+                reg_tmp.b[0] = MID_FLYER_B(reg_a5)->second_countdown;
+                MID_FLYER_B(reg_a5)->second_countdown -= 1;
                 switch (reg_tmp.b[0]) {
                 case 0:
-                    *(u8 *)(reg_a5 + 0x23) = (u8) *(u8 *)(reg_a5 + 0x28);
+                    MID_FLYER_B(reg_a5)->second_countdown = (u8) MID_FLYER_B(reg_a5)->second_interval;
                     reg_a4 = (u8 *)(g_direction_offsets_500);
                     reg_d1.h[0] = ENTITY(reg_a6)[1].draw.h;
                     reg_d5.h[0] = reg_d1.h[0];
@@ -926,13 +1010,13 @@ block_join:
                         var_a0_2 = (u32)reg_d1.h[0] + 0xF;
                         reg_d1.h[0] = var_a0_2;
                     } while ((s16)(--reg_d7.h[0]) >= 0);
-                    reg_tmp.b[0] = *(u8 *)(reg_a5 + 0x25);
-                    *(u8 *)(reg_a5 + 0x25) -= 1;
+                    reg_tmp.b[0] = MID_FLYER_B(reg_a5)->second_shots_left;
+                    MID_FLYER_B(reg_a5)->second_shots_left -= 1;
                     if ((s32) reg_tmp.b[0] <= 0) {
-                        *(u8 *)(reg_a5 + 0x25) = (u8) *(u8 *)(reg_a5 + 0x24);
+                        MID_FLYER_B(reg_a5)->second_shots_left = (u8) MID_FLYER_B(reg_a5)->second_shots;
                         reg_d0.h[0] = 0x80;
                         reg_d0.h[0] -= g_rank_6_16;
-                        *(u8 *)(reg_a5 + 0x23) = (u8) reg_d0.b[0];
+                        MID_FLYER_B(reg_a5)->second_countdown = (u8) reg_d0.b[0];
                     }
                     return;
                 }
@@ -1083,8 +1167,8 @@ void mid_flyer_c_start(void) {
     reg_a0_as_s8_p = D_0025A230;
     enemy_init_entities();
     reg_tmp.w = (u32) reg_a0_as_s8_p;
-    *(u16 *)(reg_a5 + 0x44) = (u16) reg_tmp.h[1];
-    *(u16 *)(reg_a5 + 0x46) = (u16) reg_tmp.h[0];
+    MID_FLYER_C(reg_a5)->after_entities[0] = (u16) reg_tmp.h[1];
+    MID_FLYER_C(reg_a5)->after_entities[1] = (u16) reg_tmp.h[0];
     reg_a0_as_s8_p = D_0025A210;
     reg_d0.w = 0xD;
     enemy_set_task_state();
@@ -1098,38 +1182,38 @@ void mid_flyer_c_start(void) {
         if (cond_flag != 0) {
             reg_d1.b[0] = ENTITY(reg_a6)->move.b.dir;
         }
-        *(u8 *)(reg_a5 + 0x2C) = (u8) reg_d1.b[0];
+        MID_FLYER_C(reg_a5)->turret_dir.b[0] = (u8) reg_d1.b[0];
         reg_d1.h[0] &= 0x3E;
         reg_d1.h[0] += reg_d1.h[0];
         reg_a2 += reg_d1.h[0];
-        *(u16 *)(reg_a5 + 0x28) = (u16) *(u16 *)reg_a2;
-        *(u16 *)(reg_a5 + 0x2A) = (u16) *(u16 *)(reg_a2 + 2);
+        MID_FLYER_C(reg_a5)->turret_sprite[0] = (u16) *(u16 *)reg_a2;
+        MID_FLYER_C(reg_a5)->turret_sprite[1] = (u16) *(u16 *)(reg_a2 + 2);
         reg_d0.b[0] = 4;
         reg_d1.b[0] = 5;
         if ((s32) g_stage > 1) {
             reg_d0.b[0] = 4;
             reg_d1.b[0] = 5;
         }
-        *(u8 *)(reg_a5 + 0x2F) = (u8) reg_d0.b[0];
-        *(u8 *)(reg_a5 + 0x2E) = (u8) reg_d1.b[0];
+        MID_FLYER_C(reg_a5)->first_interval = (u8) reg_d0.b[0];
+        MID_FLYER_C(reg_a5)->second_interval = (u8) reg_d1.b[0];
         reg_d0.h[0] = g_rank_3_16;
-        *(u8 *)(reg_a5 + 0x1F) -= reg_d0.b[0];
+        MID_FLYER_C(reg_a5)->first_countdown -= reg_d0.b[0];
         reg_d0.h[0] = g_rank_5_16;
-        *(u8 *)(reg_a5 + 0x1E) -= reg_d0.b[0];
+        MID_FLYER_C(reg_a5)->first_pause -= reg_d0.b[0];
         reg_d0.h[0] = g_rank_3_16;
-        *(u8 *)(reg_a5 + 0x23) -= reg_d0.b[0];
+        MID_FLYER_C(reg_a5)->second_countdown -= reg_d0.b[0];
         if (g_loop != 0) {
-            *(u8 *)(reg_a5 + 0x23) -= 0x10;
+            MID_FLYER_C(reg_a5)->second_countdown -= 0x10;
         }
         reg_d0.h[0] = g_rank_6_16;
-        *(u8 *)(reg_a5 + 0x22) -= reg_d0.b[0];
+        MID_FLYER_C(reg_a5)->second_pause -= reg_d0.b[0];
         reg_a0_as_s8_p = D_0025A1F8;
         reg_d0.h[0] = g_stage_x2;
         reg_a0_as_s8_p = &reg_a0_as_s8_p[reg_d0.h[0]];
         ENTITY(reg_a6)->attr.sb.palette = (s8) *reg_a0_as_s8_p;
-        *(s8 *)(reg_a5 + 0x1D) = (s8) *reg_a0_as_s8_p;
+        MID_FLYER_C(reg_a5)->palette = (s8) *reg_a0_as_s8_p;
         reg_a0_as_s8_p += 1;
-        *(s8 *)(reg_a5 + 0x1C) = (s8) *reg_a0_as_s8_p;
+        MID_FLYER_C(reg_a5)->hit_palette = (s8) *reg_a0_as_s8_p;
         temp_a1 = (s8 *)(reg_a0_as_s8_p + 1);
         reg_a0_as_s8_p = temp_a1;
         if (g_stage == 4) {
@@ -1168,13 +1252,13 @@ void mid_flyer_c(void) {
     if (enemy_move_end_requested == 0) {
         entity_check_bounds();
         if (cond_flag != 0) {
-            if (*(u8 *)(reg_a5 + 0x17) != 0) {
+            if (MID_FLYER_C(reg_a5)->seen != 0) {
                 enemy_remove();
                 return;
             }
             goto block_5;
         }
-        *(u8 *)(reg_a5 + 0x17) = 1U;
+        MID_FLYER_C(reg_a5)->seen = 1U;
 block_5:
         ENTITY(reg_a6)[1].y.h = (u16) ENTITY(reg_a6)->y.h;
         ENTITY(reg_a6)[1].x.h = (u16) ENTITY(reg_a6)->x.h;
@@ -1184,7 +1268,7 @@ block_5:
         reg_d1.h[0] &= 0x5C;
         var_a1 = (s16 *)(var_a0 + 1);
         if (reg_d1.h[0] == 0) {
-            reg_d0.b[0] = *(u8 *)(reg_a5 + 0x1D);
+            reg_d0.b[0] = MID_FLYER_C(reg_a5)->palette;
             if (((s32) (*(u16 *)((u8 *)(var_a0) + (0x18))) < 0x80) && (g_damage_blink_counter == 0)) {
                 reg_d0.w = 0x19;
             }
@@ -1196,10 +1280,10 @@ block_5:
         score_add_no_chain();
         reg_d0.b[0] = ENTITY(reg_a6)->attr.b.palette;
         if (reg_d0.b[0] == 0x19) {
-            reg_d0.b[0] = *(u8 *)(reg_a5 + 0x1D);
+            reg_d0.b[0] = MID_FLYER_C(reg_a5)->palette;
         }
         var_a1 = (s16 *)(reg_a6 + 0x18);
-        reg_d2.b[0] = *(u8 *)(reg_a5 + 0x1C);
+        reg_d2.b[0] = MID_FLYER_C(reg_a5)->hit_palette;
         reg_d0.b[0] ^= reg_d2.b[0];
         reg_d4.h[0] = ENTITY(reg_a6)->hp.h;
         var_a0 = (s16 *) ENTITY(reg_a6)[1].hp.h;
@@ -1215,15 +1299,15 @@ block_14:
             if (g_enemies_stopped == 0) {
                 if (g_bullets_blocked == 0) {
                     if ((s16) ENTITY(reg_a6)->y.h >= 0x1000) {
-                        reg_tmp.b[0] = *(u8 *)(reg_a5 + 0x1F);
-                        *(u8 *)(reg_a5 + 0x1F) -= 1;
+                        reg_tmp.b[0] = MID_FLYER_C(reg_a5)->first_countdown;
+                        MID_FLYER_C(reg_a5)->first_countdown -= 1;
                         if ((s32) reg_tmp.b[0] <= 0) {
-                            *(u8 *)(reg_a5 + 0x1F) = (u8) *(u8 *)(reg_a5 + 0x2F);
-                            reg_d0.b[0] = *(u8 *)(reg_a5 + 0x21);
-                            if (*(u8 *)(reg_a5 + 0x20) == reg_d0.b[0]) {
+                            MID_FLYER_C(reg_a5)->first_countdown = (u8) MID_FLYER_C(reg_a5)->first_interval;
+                            reg_d0.b[0] = MID_FLYER_C(reg_a5)->first_shots_left;
+                            if (MID_FLYER_C(reg_a5)->first_shots == reg_d0.b[0]) {
                                 reg_a0 = (u8 *)(g_player1_as_u16_a);
                                 reg_a1 = (u8 *)(g_player2_as_u16_a);
-                                if (*(u8 *)(reg_a5 + 2) != 0) {
+                                if (ENEMY_STATE(reg_a5)->target_player != 0) {
                                     reg_atmp = (u8 *)(reg_a0);
                                     reg_a0 = (u8 *)(reg_a1);
                                     reg_a1 = (u8 *)(reg_atmp);
@@ -1248,7 +1332,7 @@ block_24:
                                     reg_d0.h[0] += temp_a1;
                                     reg_d1.h[0] += 0x7FFF + 0x7AC1;
                                     direction256_between();
-                                    *(u8 *)(reg_a5 + 0x31) = (u8) reg_d1.b[0];
+                                    MID_FLYER_C(reg_a5)->aim[1] = (u8) reg_d1.b[0];
                                     reg_d2.w = temp_s0;
                                     reg_d3.w = temp_s1;
                                     reg_d0.h[0] = ENTITY(reg_a6)->y.h;
@@ -1256,7 +1340,7 @@ block_24:
                                     reg_d0.h[0] += 0x7FFF + 0x77C1;
                                     reg_d1.h[0] += 0x500;
                                     direction256_between();
-                                    *(u8 *)(reg_a5 + 0x30) = (u8) reg_d1.b[0];
+                                    MID_FLYER_C(reg_a5)->aim[0] = (u8) reg_d1.b[0];
                                     goto block_25;
                                 }
                             } else {
@@ -1265,45 +1349,45 @@ block_25:
                                 reg_d2.h[1] = ENTITY(reg_a6)->y.h;
                                 reg_d2.h[0] = ENTITY(reg_a6)->x.h;
                                 reg_d4.w = 0;
-                                temp_a0 = *(u8 *)(reg_a5 + 0x31);
+                                temp_a0 = MID_FLYER_C(reg_a5)->aim[1];
                                 reg_d1.b[0] = temp_a0;
                                 reg_d3.w = 0xF7C0FAC0;
                                 reg_d0.w = 0x5000C;
-                                if (((s32) g_stage >= 3) && (reg_d0.w = 0x5000C, reg_d5.b[0] = *(u8 *)(reg_a5 + 0x21), (*(u8 *)(reg_a5 + 0x20) == reg_d5.b[0]))) {
+                                if (((s32) g_stage >= 3) && (reg_d0.w = 0x5000C, reg_d5.b[0] = MID_FLYER_C(reg_a5)->first_shots_left, (MID_FLYER_C(reg_a5)->first_shots == reg_d5.b[0]))) {
                                     func_0015EF00();
                                 } else {
                                     bullet_fire256_2way();
                                 }
-                                temp_a1_2 = *(u8 *)(reg_a5 + 0x30);
+                                temp_a1_2 = MID_FLYER_C(reg_a5)->aim[0];
                                 reg_d1.b[0] = temp_a1_2;
                                 reg_d3.h[0] = 0x500;
                                 reg_d0.w = 0x5000C;
-                                if (((s32) g_stage >= 3) && (reg_d0.w = 0x5000C, reg_d5.b[0] = *(u8 *)(reg_a5 + 0x21), (*(u8 *)(reg_a5 + 0x20) == reg_d5.b[0]))) {
+                                if (((s32) g_stage >= 3) && (reg_d0.w = 0x5000C, reg_d5.b[0] = MID_FLYER_C(reg_a5)->first_shots_left, (MID_FLYER_C(reg_a5)->first_shots == reg_d5.b[0]))) {
                                     func_0015EF60();
                                 } else {
                                     bullet_fire256_2way();
                                 }
-                                reg_tmp.b[0] = *(u8 *)(reg_a5 + 0x21);
-                                *(u8 *)(reg_a5 + 0x21) -= 1;
+                                reg_tmp.b[0] = MID_FLYER_C(reg_a5)->first_shots_left;
+                                MID_FLYER_C(reg_a5)->first_shots_left -= 1;
                                 if ((s32) reg_tmp.b[0] <= 0) {
-                                    *(u8 *)(reg_a5 + 0x21) = (u8) *(u8 *)(reg_a5 + 0x20);
+                                    MID_FLYER_C(reg_a5)->first_shots_left = (u8) MID_FLYER_C(reg_a5)->first_shots;
                                     reg_d0.h[0] = 0x70;
                                     reg_d0.h[0] -= g_rank_6_16;
                                     reg_d0.h[0] -= 4;
-                                    *(u8 *)(reg_a5 + 0x1F) = (u8) reg_d0.b[0];
+                                    MID_FLYER_C(reg_a5)->first_countdown = (u8) reg_d0.b[0];
                                 }
                             }
                         }
                     }
-                    reg_tmp.b[0] = *(u8 *)(reg_a5 + 0x27);
-                    *(u8 *)(reg_a5 + 0x27) -= 1;
+                    reg_tmp.b[0] = MID_FLYER_C(reg_a5)->turn_countdown;
+                    MID_FLYER_C(reg_a5)->turn_countdown -= 1;
                     if ((s32) reg_tmp.b[0] <= 0) {
-                        *(u8 *)(reg_a5 + 0x27) = (u8) *(u8 *)(reg_a5 + 0x26);
-                        reg_d0.b[0] = *(u8 *)(reg_a5 + 0x25);
-                        if (*(u8 *)(reg_a5 + 0x24) == reg_d0.b[0]) {
+                        MID_FLYER_C(reg_a5)->turn_countdown = (u8) MID_FLYER_C(reg_a5)->turn_interval;
+                        reg_d0.b[0] = MID_FLYER_C(reg_a5)->second_shots_left;
+                        if (MID_FLYER_C(reg_a5)->second_shots == reg_d0.b[0]) {
                             reg_a0 = (u8 *)(g_player1_as_u16_a);
                             reg_a1 = (u8 *)(g_player2_as_u16_a);
-                            switch (*(u8 *)(reg_a5 + 2)) { case 0: break; default:
+                            switch (ENEMY_STATE(reg_a5)->target_player) { case 0: break; default:
                                 reg_atmp = (u8 *)(reg_a0);
                                 reg_a0 = (u8 *)(reg_a1);
                                 reg_a1 = (u8 *)(reg_atmp);
@@ -1324,14 +1408,14 @@ block_42:
                                 reg_d1.h[0] = ENTITY(reg_a6)->x.h;
                                 reg_d0.h[0] += 0x240;
                                 direction_between();
-                                reg_d0.h[0] = *(u16 *)(reg_a5 + 0x2C);
+                                reg_d0.h[0] = MID_FLYER_C(reg_a5)->turret_dir.h;
                                 direction_turn_toward();
-                                *(u16 *)(reg_a5 + 0x2C) = (u16) reg_d1.h[0];
+                                MID_FLYER_C(reg_a5)->turret_dir.h = (u16) reg_d1.h[0];
                                 reg_a3 = (u8 *)(g_direction_sprites_d);
                                 reg_d1.h[0] &= 0x3E;
                                 reg_d1.h[0] += reg_d1.h[0];
-                                *(u16 *)(reg_a5 + 0x28) = (reg_d1.h[0] != 0) ? *(u16 *)((u8 *)reg_a3 + ((s16)reg_d1.h[0] & ~1)) : *(u16 *)reg_a3;
-                                *(u16 *)(reg_a5 + 0x2A) = ((reg_d1.h[0] + 2) != 0) ? *(u16 *)((u8 *)reg_a3 + ((s16)(reg_d1.h[0] + 2) & ~1)) : *(u16 *)reg_a3;
+                                MID_FLYER_C(reg_a5)->turret_sprite[0] = (reg_d1.h[0] != 0) ? *(u16 *)((u8 *)reg_a3 + ((s16)reg_d1.h[0] & ~1)) : *(u16 *)reg_a3;
+                                MID_FLYER_C(reg_a5)->turret_sprite[1] = ((reg_d1.h[0] + 2) != 0) ? *(u16 *)((u8 *)reg_a3 + ((s16)(reg_d1.h[0] + 2) & ~1)) : *(u16 *)reg_a3;
                             }
                         }
                     }
@@ -1344,8 +1428,8 @@ block_42:
             temp_a0_2 = reg_d1.h[0];
             reg_d1.h[1] += 0x7FFF + 0x7C41;
             reg_d1.h[0] = (u32)temp_a0_2 + 0x7FFF + 0x7C01;
-            reg_d2.h[1] = *(u16 *)(reg_a5 + 0x28);
-            reg_d2.h[0] = *(u16 *)(reg_a5 + 0x2A);
+            reg_d2.h[1] = MID_FLYER_C(reg_a5)->turret_sprite[0];
+            reg_d2.h[0] = MID_FLYER_C(reg_a5)->turret_sprite[1];
             reg_d3.h[0] = 0x620;
             reg_d4.h[0] = ENTITY(reg_a6)->attr.h;
             sprite_draw_layer5();
@@ -1364,13 +1448,13 @@ block_42:
             reg_a0 = (u8 *)(reg_a6 + 0x20);
             enemy_hitbox_debug_draw();
             if ((g_enemies_stopped == 0) && (g_bullets_blocked == 0) && ((s16) ENTITY(reg_a6)->y.h >= 0x1000)) {
-                reg_tmp.b[0] = *(u8 *)(reg_a5 + 0x23);
-                *(u8 *)(reg_a5 + 0x23) -= 1;
+                reg_tmp.b[0] = MID_FLYER_C(reg_a5)->second_countdown;
+                MID_FLYER_C(reg_a5)->second_countdown -= 1;
                 switch (reg_tmp.b[0]) {
                 case 0:
-                    *(u8 *)(reg_a5 + 0x23) = (u8) *(u8 *)(reg_a5 + 0x2E);
+                    MID_FLYER_C(reg_a5)->second_countdown = (u8) MID_FLYER_C(reg_a5)->second_interval;
                     reg_a4 = (u8 *)(g_direction_offsets_500);
-                    reg_d1.h[0] = *(u16 *)(reg_a5 + 0x2C);
+                    reg_d1.h[0] = MID_FLYER_C(reg_a5)->turret_dir.h;
                     reg_d0.h[0] = reg_d1.h[0];
                     reg_d0.h[0] &= 0x3E;
                     reg_d0.h[0] += reg_d0.h[0];
@@ -1382,14 +1466,14 @@ block_42:
                     reg_d2.h[0] = ENTITY(reg_a6)->x.h;
                     reg_d4.w = (u32) reg_a6;
                     bullet_fire_3way();
-                    reg_tmp.b[0] = *(u8 *)(reg_a5 + 0x25);
-                    *(u8 *)(reg_a5 + 0x25) -= 1;
+                    reg_tmp.b[0] = MID_FLYER_C(reg_a5)->second_shots_left;
+                    MID_FLYER_C(reg_a5)->second_shots_left -= 1;
                     if ((s32) reg_tmp.b[0] <= 0) {
-                        *(u8 *)(reg_a5 + 0x25) = (u8) *(u8 *)(reg_a5 + 0x24);
+                        MID_FLYER_C(reg_a5)->second_shots_left = (u8) MID_FLYER_C(reg_a5)->second_shots;
                         reg_d0.h[0] = 0x60;
                         reg_d0.h[0] -= g_rank_5_16;
                         reg_d0.h[0] += 4;
-                        *(u8 *)(reg_a5 + 0x23) = (u8) reg_d0.b[0];
+                        MID_FLYER_C(reg_a5)->second_countdown = (u8) reg_d0.b[0];
                     }
                     return;
                 }
@@ -3118,7 +3202,7 @@ void ground_turret_a_start(void) {
         reg_d1.b[0] = ENTITY(reg_a6)->move.b.dir;
         func_00202180();
         reg_a0 = (u8 *)(g_direction_sprites_c);
-        *(u8 *)(reg_a5 + 0x20) = (u8) reg_d1.b[0];
+        GROUND_TURRET(reg_a5)->dir.b[0] = (u8) reg_d1.b[0];
         reg_d1.h[0] &= 0x3E;
         reg_d1.h[0] += reg_d1.h[0];
         ENTITY(reg_a6)->draw.h = (reg_d1.h[0] != 0) ? *(u16 *)((u8 *)reg_a0 + ((s16)reg_d1.h[0] & ~1)) : *(u16 *)reg_a0;
@@ -3127,16 +3211,16 @@ void ground_turret_a_start(void) {
         if ((s32) g_stage > 1) {
             reg_d0.b[0] = 4;
         }
-        *(u8 *)(reg_a5 + 0x16) = (u8) reg_d0.b[0];
+        GROUND_TURRET(reg_a5)->shot_interval = (u8) reg_d0.b[0];
         reg_d0.h[0] = g_rank_5_16;
-        *(u8 *)(reg_a5 + 0x1B) -= reg_d0.b[0];
+        GROUND_TURRET(reg_a5)->shot_countdown -= reg_d0.b[0];
         reg_a0 = (u8 *)(D_0025A640);
         reg_d0.h[0] = g_stage_x2;
         reg_a0 += reg_d0.h[0];
         ENTITY(reg_a6)->attr.sb.palette = *(s8 *)reg_a0;
-        *(s8 *)(reg_a5 + 0x19) = *(s8 *)reg_a0;
+        GROUND_TURRET(reg_a5)->palette = *(s8 *)reg_a0;
         reg_a0 += 1;
-        *(s8 *)(reg_a5 + 0x18) = *(s8 *)reg_a0;
+        GROUND_TURRET(reg_a5)->hit_palette = *(s8 *)reg_a0;
         reg_a0 += 1;
     }
 }
@@ -3159,19 +3243,19 @@ void ground_turret_a(void) {
     if (enemy_move_end_requested == 0) {
         entity_check_bounds();
         if (cond_flag != 0) {
-            if (*(u8 *)(reg_a5 + 0x17) != 0) {
+            if (GROUND_TURRET(reg_a5)->seen != 0) {
                 enemy_remove();
                 return;
             }
             goto block_5;
         }
-        *(u8 *)(reg_a5 + 0x17) = 1U;
+        GROUND_TURRET(reg_a5)->seen = 1U;
 block_5:
         var_a0 = (s16 *)(reg_a6);
         reg_d1.w = 0x5C;
         reg_d1.b[0] &= (*(u8 *)((u8 *)(var_a0) + (1)));
         if (reg_d1.b[0] == 0) {
-            reg_d0.b[0] = *(u8 *)(reg_a5 + 0x19);
+            reg_d0.b[0] = GROUND_TURRET(reg_a5)->palette;
             if (((s32) (*(u16 *)((u8 *)(var_a0) + (0x18))) < 0x140) && (g_damage_blink_counter == 0)) {
                 reg_d0.w = 0x19;
             }
@@ -3182,19 +3266,19 @@ block_5:
         var_a0 = (s16 *)(reg_a6);
         reg_d0.b[0] = (*(u8 *)((u8 *)(var_a0) + (0x1C)));
         if (reg_d0.b[0] == 0x19) {
-            reg_d0.b[0] = *(u8 *)(reg_a5 + 0x19);
+            reg_d0.b[0] = GROUND_TURRET(reg_a5)->palette;
         }
-        reg_d2.b[0] = *(u8 *)(reg_a5 + 0x18);
+        reg_d2.b[0] = GROUND_TURRET(reg_a5)->hit_palette;
         reg_d0.b[0] ^= reg_d2.b[0];
         if ((s16) (*(u16 *)((u8 *)(var_a0) + (0x18))) >= 0) {
 block_12:
             ENTITY(reg_a6)->attr.b.palette = (u8) reg_d0.b[0];
             if (g_enemies_stopped == 0) {
                 if (g_bullets_blocked == 0) {
-                    reg_tmp.b[0] = *(u8 *)(reg_a5 + 0x1F);
-                    *(u8 *)(reg_a5 + 0x1F) -= 1;
+                    reg_tmp.b[0] = GROUND_TURRET(reg_a5)->turn_countdown;
+                    GROUND_TURRET(reg_a5)->turn_countdown -= 1;
                     if ((s32) reg_tmp.b[0] <= 0) {
-                        *(u8 *)(reg_a5 + 0x1F) = (u8) *(u8 *)(reg_a5 + 0x1E);
+                        GROUND_TURRET(reg_a5)->turn_countdown = (u8) GROUND_TURRET(reg_a5)->turn_interval;
                         var_a0 = (s16 *)(reg_a5);
                         reg_d0.b[0] = (*(u8 *)((u8 *)(var_a0) + (0x1D)));
                         if ((*(u8 *)((u8 *)(var_a0) + (0x1C))) == reg_d0.b[0]) {
@@ -3221,10 +3305,10 @@ block_21:
                                 reg_d0.h[0] = ENTITY(reg_a6)->y.h;
                                 reg_d1.h[0] = ENTITY(reg_a6)->x.h;
                                 direction_between();
-                                reg_d0.h[0] = *(u16 *)(reg_a5 + 0x20);
+                                reg_d0.h[0] = GROUND_TURRET(reg_a5)->dir.h;
                                 direction_turn_toward();
                                 var_a0 = (s16 *) reg_d1.h[0];
-                                *(u16 *)(reg_a5 + 0x20) = (u16) var_a0;
+                                GROUND_TURRET(reg_a5)->dir.h = (u16) var_a0;
                                 reg_a3 = (u8 *)(g_direction_sprites_c);
                                 reg_d1.h[0] &= 0x3E;
                                 reg_d1.h[0] += reg_d1.h[0];
@@ -3234,14 +3318,14 @@ block_21:
                         }
                     }
                     if ((s16) ENTITY(reg_a6)->y.h >= 0x1000) {
-                        reg_tmp.b[0] = *(u8 *)(reg_a5 + 0x1B);
-                        *(u8 *)(reg_a5 + 0x1B) -= 1;
+                        reg_tmp.b[0] = GROUND_TURRET(reg_a5)->shot_countdown;
+                        GROUND_TURRET(reg_a5)->shot_countdown -= 1;
                         if ((s32) reg_tmp.b[0] <= 0) {
-                            *(u8 *)(reg_a5 + 0x1B) = (u8) *(u8 *)(reg_a5 + 0x16);
+                            GROUND_TURRET(reg_a5)->shot_countdown = (u8) GROUND_TURRET(reg_a5)->shot_interval;
                             enemy_fire_distance_check();
                             if (cond_flag == 0) {
                                 reg_a4 = (u8 *)(g_direction_offsets_500);
-                                reg_d1.h[0] = *(u16 *)(reg_a5 + 0x20);
+                                reg_d1.h[0] = GROUND_TURRET(reg_a5)->dir.h;
                                 reg_d0.h[0] = reg_d1.h[0];
                                 reg_d0.h[0] &= 0x3E;
                                 reg_d0.h[0] += reg_d0.h[0];
@@ -3253,14 +3337,14 @@ block_21:
                                 reg_d2.h[1] = ENTITY(reg_a6)->y.h;
                                 reg_d2.h[0] = ENTITY(reg_a6)->x.h;
                                 bullet_fire_fixed();
-                                reg_tmp.b[0] = *(u8 *)(reg_a5 + 0x1D);
-                                *(u8 *)(reg_a5 + 0x1D) -= 1;
+                                reg_tmp.b[0] = GROUND_TURRET(reg_a5)->shots_left;
+                                GROUND_TURRET(reg_a5)->shots_left -= 1;
                                 if ((s32) reg_tmp.b[0] <= 0) {
-                                    *(u8 *)(reg_a5 + 0x1D) = (u8) *(u8 *)(reg_a5 + 0x1C);
+                                    GROUND_TURRET(reg_a5)->shots_left = (u8) GROUND_TURRET(reg_a5)->shots;
                                     reg_d0.h[0] = 0x40;
                                     reg_d0.h[0] -= g_rank_2_16;
                                     reg_d0.h[0] += 4;
-                                    *(u8 *)(reg_a5 + 0x1B) = (u8) reg_d0.b[0];
+                                    GROUND_TURRET(reg_a5)->shot_countdown = (u8) reg_d0.b[0];
                                 }
                             }
                         }
@@ -3822,7 +3906,7 @@ void ground_turret_b_start(void) {
         reg_d1.b[0] = ENTITY(reg_a6)->move.b.dir;
         func_00202180();
         reg_a0 = (u8 *)(g_direction_sprites_e);
-        *(u8 *)(reg_a5 + 0x20) = (u8) reg_d1.b[0];
+        GROUND_TURRET(reg_a5)->dir.b[0] = (u8) reg_d1.b[0];
         reg_d1.h[0] &= 0x3E;
         reg_d1.h[0] += reg_d1.h[0];
         ENTITY(reg_a6)->draw.h = (reg_d1.h[0] != 0) ? *(u16 *)((u8 *)reg_a0 + ((s16)reg_d1.h[0] & ~1)) : *(u16 *)reg_a0;
@@ -3831,16 +3915,16 @@ void ground_turret_b_start(void) {
         if ((s32) g_stage > 1) {
             reg_d0.b[0] = 4;
         }
-        *(u8 *)(reg_a5 + 0x16) = (u8) reg_d0.b[0];
+        GROUND_TURRET(reg_a5)->shot_interval = (u8) reg_d0.b[0];
         reg_d0.h[0] = g_rank_5_16;
-        *(u8 *)(reg_a5 + 0x1B) -= reg_d0.b[0];
+        GROUND_TURRET(reg_a5)->shot_countdown -= reg_d0.b[0];
         reg_a0 = (u8 *)(D_0025AC38);
         reg_d0.h[0] = g_stage_x2;
         reg_a0 += reg_d0.h[0];
         ENTITY(reg_a6)->attr.sb.palette = *(s8 *)reg_a0;
-        *(s8 *)(reg_a5 + 0x19) = *(s8 *)reg_a0;
+        GROUND_TURRET(reg_a5)->palette = *(s8 *)reg_a0;
         reg_a0 += 1;
-        *(s8 *)(reg_a5 + 0x18) = *(s8 *)reg_a0;
+        GROUND_TURRET(reg_a5)->hit_palette = *(s8 *)reg_a0;
         reg_a0 += 1;
     }
 }
@@ -3855,19 +3939,19 @@ void ground_turret_b(void) {
     if (enemy_move_end_requested == 0) {
         entity_check_bounds();
         if (cond_flag != 0) {
-            if (*(u8 *)(reg_a5 + 0x17) != 0) {
+            if (GROUND_TURRET(reg_a5)->seen != 0) {
                 enemy_remove();
                 return;
             }
             goto block_5;
         }
-        *(u8 *)(reg_a5 + 0x17) = 1U;
+        GROUND_TURRET(reg_a5)->seen = 1U;
 block_5:
         temp_a0 = (s16 *)(reg_a6);
         reg_d1.w = 0x5C;
         reg_d1.b[0] &= (*(u8 *)((u8 *)(temp_a0) + (1)));
         if (reg_d1.b[0] == 0) {
-            reg_d0.b[0] = *(u8 *)(reg_a5 + 0x19);
+            reg_d0.b[0] = GROUND_TURRET(reg_a5)->palette;
             if (((s32) (*(u16 *)((u8 *)(temp_a0) + (0x18))) < 0x120) && (g_damage_blink_counter == 0)) {
                 reg_d0.w = 0x19;
             }
@@ -3877,25 +3961,25 @@ block_5:
         score_add_no_chain();
         reg_d0.b[0] = ENTITY(reg_a6)->attr.b.palette;
         if (reg_d0.b[0] == 0x19) {
-            reg_d0.b[0] = *(u8 *)(reg_a5 + 0x19);
+            reg_d0.b[0] = GROUND_TURRET(reg_a5)->palette;
         }
-        reg_d2.b[0] = *(u8 *)(reg_a5 + 0x18);
+        reg_d2.b[0] = GROUND_TURRET(reg_a5)->hit_palette;
         reg_d0.b[0] ^= reg_d2.b[0];
         if ((s16) ENTITY(reg_a6)->hp.h >= 0) {
 block_12:
             ENTITY(reg_a6)->attr.b.palette = (u8) reg_d0.b[0];
             if ((g_enemies_stopped == 0) && (g_bullets_blocked == 0)) {
-                reg_tmp.b[0] = *(u8 *)(reg_a5 + 0x1F);
-                *(u8 *)(reg_a5 + 0x1F) -= 1;
+                reg_tmp.b[0] = GROUND_TURRET(reg_a5)->turn_countdown;
+                GROUND_TURRET(reg_a5)->turn_countdown -= 1;
                 if ((s32) reg_tmp.b[0] <= 0) {
-                    *(u8 *)(reg_a5 + 0x1F) = (u8) *(u8 *)(reg_a5 + 0x1E);
+                    GROUND_TURRET(reg_a5)->turn_countdown = (u8) GROUND_TURRET(reg_a5)->turn_interval;
                     enemy_fire_distance_check();
                     if (cond_flag == 0) {
-                        reg_d0.b[0] = *(u8 *)(reg_a5 + 0x1D);
-                        if (*(u8 *)(reg_a5 + 0x1C) == reg_d0.b[0]) {
+                        reg_d0.b[0] = GROUND_TURRET(reg_a5)->shots_left;
+                        if (GROUND_TURRET(reg_a5)->shots == reg_d0.b[0]) {
                             reg_a0 = (u8 *)(g_player1_as_u16_a);
                             reg_a1 = (u8 *)(g_player2_as_u16_a);
-                            if (*(u8 *)(reg_a5 + 2) != 0) {
+                            if (ENEMY_STATE(reg_a5)->target_player != 0) {
                                 reg_atmp = (u8 *)(reg_a0);
                                 reg_a0 = (u8 *)(reg_a1);
                                 reg_a1 = (u8 *)(reg_atmp);
@@ -3915,9 +3999,9 @@ block_22:
                                 reg_d0.h[0] = ENTITY(reg_a6)->y.h;
                                 reg_d1.h[0] = ENTITY(reg_a6)->x.h;
                                 direction_between();
-                                reg_d0.h[0] = *(u16 *)(reg_a5 + 0x20);
+                                reg_d0.h[0] = GROUND_TURRET(reg_a5)->dir.h;
                                 direction_turn_toward();
-                                *(u16 *)(reg_a5 + 0x20) = (u16) reg_d1.h[0];
+                                GROUND_TURRET(reg_a5)->dir.h = (u16) reg_d1.h[0];
                                 reg_a3 = (u8 *)(g_direction_sprites_e);
                                 reg_d1.h[0] &= 0x3E;
                                 reg_d1.h[0] += reg_d1.h[0];
@@ -3928,14 +4012,14 @@ block_22:
                     }
                 }
                 if ((s16) ENTITY(reg_a6)->y.h >= 0x1000) {
-                    reg_tmp.b[0] = *(u8 *)(reg_a5 + 0x1B);
-                    *(u8 *)(reg_a5 + 0x1B) -= 1;
+                    reg_tmp.b[0] = GROUND_TURRET(reg_a5)->shot_countdown;
+                    GROUND_TURRET(reg_a5)->shot_countdown -= 1;
                     if ((s32) reg_tmp.b[0] <= 0) {
-                        *(u8 *)(reg_a5 + 0x1B) = (u8) *(u8 *)(reg_a5 + 0x16);
+                        GROUND_TURRET(reg_a5)->shot_countdown = (u8) GROUND_TURRET(reg_a5)->shot_interval;
                         enemy_fire_distance_check();
                         if (cond_flag == 0) {
                             reg_a4 = (u8 *)(g_direction_twin_offsets_840);
-                            reg_d1.h[0] = *(u16 *)(reg_a5 + 0x20);
+                            reg_d1.h[0] = GROUND_TURRET(reg_a5)->dir.h;
                             reg_d0.h[0] = reg_d1.h[0];
                             reg_d0.h[0] &= 0x3E;
                             reg_d0.h[0] *= 4;
@@ -3955,14 +4039,14 @@ block_22:
                             reg_d3.h[0] = *(u16 *)reg_a4;
                             reg_a4 += 2;
                             bullet_fire_fixed();
-                            reg_tmp.b[0] = *(u8 *)(reg_a5 + 0x1D);
-                            *(u8 *)(reg_a5 + 0x1D) -= 1;
+                            reg_tmp.b[0] = GROUND_TURRET(reg_a5)->shots_left;
+                            GROUND_TURRET(reg_a5)->shots_left -= 1;
                             if ((s32) reg_tmp.b[0] <= 0) {
-                                *(u8 *)(reg_a5 + 0x1D) = (u8) *(u8 *)(reg_a5 + 0x1C);
+                                GROUND_TURRET(reg_a5)->shots_left = (u8) GROUND_TURRET(reg_a5)->shots;
                                 reg_d0.h[0] = 0x40;
                                 reg_d0.h[0] -= g_rank_4_16;
                                 reg_d0.h[0] += 8;
-                                *(u8 *)(reg_a5 + 0x1B) = (u8) reg_d0.b[0];
+                                GROUND_TURRET(reg_a5)->shot_countdown = (u8) reg_d0.b[0];
                             }
                         }
                     }
@@ -4019,7 +4103,7 @@ void ground_turret_c_start(void) {
         reg_d1.b[0] = ENTITY(reg_a6)->move.b.dir;
         func_00202180();
         reg_a0 = (u8 *)(g_direction_sprites_f);
-        *(u8 *)(reg_a5 + 0x20) = (u8) reg_d1.b[0];
+        GROUND_TURRET(reg_a5)->dir.b[0] = (u8) reg_d1.b[0];
         reg_d1.h[0] &= 0x3E;
         reg_d1.h[0] += reg_d1.h[0];
         ENTITY(reg_a6)->draw.h = (reg_d1.h[0] != 0) ? *(u16 *)((u8 *)reg_a0 + ((s16)reg_d1.h[0] & ~1)) : *(u16 *)reg_a0;
@@ -4028,17 +4112,17 @@ void ground_turret_c_start(void) {
         if ((s32) g_stage > 1) {
             reg_d0.b[0] = 4;
         }
-        *(u8 *)(reg_a5 + 0x16) = (u8) reg_d0.b[0];
+        GROUND_TURRET(reg_a5)->shot_interval = (u8) reg_d0.b[0];
         reg_d0.h[0] = g_rank_4_16;
         reg_d0.h[0] -= 4;
-        *(u8 *)(reg_a5 + 0x1B) -= reg_d0.b[0];
+        GROUND_TURRET(reg_a5)->shot_countdown -= reg_d0.b[0];
         reg_a0 = (u8 *)(D_0025AC80);
         reg_d0.h[0] = g_stage_x2;
         reg_a0 += reg_d0.h[0];
         ENTITY(reg_a6)->attr.sb.palette = *(s8 *)reg_a0;
-        *(s8 *)(reg_a5 + 0x19) = *(s8 *)reg_a0;
+        GROUND_TURRET(reg_a5)->palette = *(s8 *)reg_a0;
         reg_a0 += 1;
-        *(s8 *)(reg_a5 + 0x18) = *(s8 *)reg_a0;
+        GROUND_TURRET(reg_a5)->hit_palette = *(s8 *)reg_a0;
         reg_a0 += 1;
     }
 }
@@ -4055,16 +4139,16 @@ void ground_turret_c(void) {
     case 0:
         goto next_1;
     }
-    if (reg_a5[0x17] == 0) goto next_2;
+    if (GROUND_TURRET(reg_a5)->seen == 0) goto next_2;
     enemy_remove();
     return;
 next_1:
-    reg_a5[0x17] = 1;
+    GROUND_TURRET(reg_a5)->seen = 1;
 next_2:
     reg_d1.w = 0x5C;
     reg_d1.b[0] &= ENTITY(reg_a6)->flags.b[1];
     if (reg_d1.b[0] != 0) goto next_3;
-    reg_d0.b[0] = reg_a5[0x19];
+    reg_d0.b[0] = GROUND_TURRET(reg_a5)->palette;
     if ((s32) ENTITY(reg_a6)->hp.h >= 0xC0) goto next_5;
     if (g_damage_blink_counter != 0) goto next_5;
     reg_d0.w = 0x19;
@@ -4074,9 +4158,9 @@ next_3:
     score_add_no_chain();
     reg_d0.b[0] = ENTITY(reg_a6)->attr.b.palette;
     if (reg_d0.b[0] != 0x19) goto next_4;
-    reg_d0.b[0] = reg_a5[0x19];
+    reg_d0.b[0] = GROUND_TURRET(reg_a5)->palette;
 next_4:
-    reg_d2.b[0] = reg_a5[0x18];
+    reg_d2.b[0] = GROUND_TURRET(reg_a5)->hit_palette;
     reg_d0.b[0] ^= reg_d2.b[0];
     if (ENTITY(reg_a6)->hp.sh < 0) goto next_20;
 next_5:
@@ -4089,13 +4173,13 @@ next_5:
 next_6:
     if (g_enemies_stopped != 0) goto next_21;
     if (g_bullets_blocked != 0) goto next_21;
-    reg_tmp.b[0] = reg_a5[0x1F];
-    reg_a5[0x1F] -= 1;
+    reg_tmp.b[0] = GROUND_TURRET(reg_a5)->turn_countdown;
+    GROUND_TURRET(reg_a5)->turn_countdown -= 1;
     if ((s32) reg_tmp.b[0] > 0) goto next_21;
-    reg_a5[0x1F] = reg_a5[0x1E];
+    GROUND_TURRET(reg_a5)->turn_countdown = GROUND_TURRET(reg_a5)->turn_interval;
     reg_a0 = (u8 *) g_player1_as_u16_a;
     reg_a1 = (u8 *) g_player2_as_u16_a;
-    if (reg_a5[2] == 0) goto next_7;
+    if (ENEMY_STATE(reg_a5)->target_player == 0) goto next_7;
     reg_atmp = (u8 *) reg_a0;
     reg_a0 = reg_a1;
     reg_a1 = (u8 *) reg_atmp;
@@ -4112,9 +4196,9 @@ next_8:
     reg_d0.h[0] = ENTITY(reg_a6)->y.h;
     reg_d1.h[0] = ENTITY(reg_a6)->x.h;
     direction_between();
-    reg_d0.h[0] = *(u16 *)(reg_a5 + 0x20);
+    reg_d0.h[0] = GROUND_TURRET(reg_a5)->dir.h;
     direction_turn_toward();
-    *(u16 *)(reg_a5 + 0x20) = reg_d1.h[0];
+    GROUND_TURRET(reg_a5)->dir.h = reg_d1.h[0];
     reg_a3 = (u8 *) g_direction_sprites_f;
     reg_d1.h[0] &= 0x3E;
     reg_d1.h[0] += reg_d1.h[0];
@@ -4127,22 +4211,22 @@ next_21:
     if (g_enemies_stopped != 0) goto block_rts;
     if (g_bullets_blocked != 0) goto block_rts;
     if (ENTITY(reg_a6)->y.sh < 0x1000) goto block_rts;
-    reg_tmp.b[0] = reg_a5[0x1B];
-    reg_a5[0x1B] -= 1;
+    reg_tmp.b[0] = GROUND_TURRET(reg_a5)->shot_countdown;
+    GROUND_TURRET(reg_a5)->shot_countdown -= 1;
     switch (reg_tmp.b[0]) {
     case 0:
         goto next_9;
     }
     goto block_rts;
 next_9:
-    reg_a5[0x1B] = reg_a5[0x16];
+    GROUND_TURRET(reg_a5)->shot_countdown = GROUND_TURRET(reg_a5)->shot_interval;
     enemy_fire_distance_check();
     if (cond_flag != 0) goto block_rts;
     if (g_stage != 3) goto next_10;
     if (g_scroll_line < 0x2E) goto block_rts;
 next_10:
     reg_a4 = (u8 *) g_direction_offsets_500;
-    reg_d1.h[0] = *(u16 *)(reg_a5 + 0x20);
+    reg_d1.h[0] = GROUND_TURRET(reg_a5)->dir.h;
     reg_d0.h[0] = reg_d1.h[0];
     reg_d0.h[0] &= 0x3E;
     reg_d0.h[0] += reg_d0.h[0];
@@ -4155,14 +4239,14 @@ next_10:
     reg_d2.h[1] = ENTITY(reg_a6)->y.h;
     reg_d2.h[0] = ENTITY(reg_a6)->x.h;
     bullet_fire_fixed();
-    reg_tmp.b[0] = reg_a5[0x1D];
-    reg_a5[0x1D] -= 1;
+    reg_tmp.b[0] = GROUND_TURRET(reg_a5)->shots_left;
+    GROUND_TURRET(reg_a5)->shots_left -= 1;
     if ((s32) reg_tmp.b[0] > 0) goto next_12;
-    reg_a5[0x1D] = reg_a5[0x1C];
+    GROUND_TURRET(reg_a5)->shots_left = GROUND_TURRET(reg_a5)->shots;
     reg_d0.h[0] = 0x40;
     reg_d0.h[0] -= g_rank_4_16;
     reg_d0.h[0] += 4;
-    reg_a5[0x1B] = reg_d0.b[0];
+    GROUND_TURRET(reg_a5)->shot_countdown = reg_d0.b[0];
 next_12:
     return;
 next_20:
