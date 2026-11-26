@@ -15,7 +15,9 @@ s16 g_game_task_handle __attribute__((aligned(4)));
 u8 D_002BF490[96];
 u8 D_002BF450[64];
 u8 D_002BF410[64];
+#ifndef DDPDOJ_PC
 u16 D_002BF400[8];
+#endif
 
 #ifdef DDPDOJ_PC
 #include "pc_data_alias.h"

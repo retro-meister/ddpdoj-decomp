@@ -295,7 +295,11 @@ void continue_panels_update(u16 *arg0) {
         temp_v1_2 = *(u16 *)reg_a4;
         reg_d0.h[0] = temp_v1_2;
         if (temp_v1_2 != 0) {
+#ifdef DDPDOJ_PC
+            continue_step_routines[reg_d0.h[0]]();
+#else
             ((Fn)*(u32 *)((u8 *)continue_step_routines + (reg_d0.h[0] * 4)))();
+#endif
         }
         var_a0 = (u16 *)(reg_a4 + 0x16);
         reg_a4 = (u8 *)(var_a0);
@@ -543,7 +547,11 @@ void continue_panel_step_countdown_wide(void) {
     }
     reg_d4.w = 0;
     reg_d4.b[0] = (u8) *(s8 *)(reg_a4 + 0xA);
+#ifdef DDPDOJ_PC
+    reg_a0 = (u8 *)continue_digit_frames.sets[reg_d4.h[0]];
+#else
     reg_a0 = *(u8 **)((u8 *)continue_digit_frames.sets + (reg_d4.h[0] * 4));
+#endif
     reg_a0 += *(u16 *)(reg_a4 + 0x14);
     temp_a3_2 = *(u32 *)reg_a0;
     reg_d4.w = temp_a3_2;
@@ -603,9 +611,15 @@ void continue_count_store(void)
     *(u16 *)(reg_a5 + 4) = 0x93C;
     reg_tmp.h[1] = *(u16 *)(reg_a4 + 0x10);
     reg_tmp.h[0] = *(u16 *)(reg_a4 + 0x12);
+#ifdef DDPDOJ_PC
+    reg_a0 = ARCADE_ADDRESS_DECODE(u8 *, reg_tmp.w);
+    reg_d0.b[0] = reg_a5[5];
+    *reg_a0 = reg_d0.b[0];
+#else
     (*(u32 *)&reg_a0) = reg_tmp.w;
     reg_d0.b[0] = reg_a5[5];
     *(u8 *)(*(u32 *)&reg_a0) = reg_d0.b[0];
+#endif
 }
 
 #ifndef DDPDOJ_PC
@@ -620,7 +634,7 @@ void continue_task_begin() {
     if (*(u8 *)(reg_a5 + 6) != 0) {
         reg_a4 = (u8 *)&continue_player2;
     }
-    reg_tmp.w = (u32) reg_a4;
+    reg_tmp.w = ARCADE_ADDRESS_ENCODE(reg_a4);
     *(u16 *)(reg_a5 + 8) = (u16) reg_tmp.h[1];
     *(u16 *)(reg_a5 + 0xA) = (u16) reg_tmp.h[0];
     *(s16 *)(reg_a5 + 0x14) = 1;
@@ -690,7 +704,7 @@ void continue_task(void) {
 #endif
     reg_tmp.h[1] = *(u16 *) (reg_a5 + 8);
     reg_tmp.h[0] = *(u16 *) (reg_a5 + 0xA);
-    reg_a4 = (u8 *) reg_tmp.w;
+    reg_a4 = ARCADE_ADDRESS_DECODE(u8 *, reg_tmp.w);
     if (reg_a5[3] == 0) {
         continue_task_begin();
         return;
@@ -753,7 +767,7 @@ next_4:
     }
     reg_tmp.h[1] = *(u16 *) (reg_a4 + 0xC);
     reg_tmp.h[0] = *(u16 *) (reg_a4 + 0xE);
-    reg_a0 = (u8 *) reg_tmp.w;
+    reg_a0 = ARCADE_ADDRESS_DECODE(u8 *, reg_tmp.w);
     reg_call_target_as_u8_p = reg_a0;
     ((Fn) reg_call_target_as_u8_p)();
     if (((reg_d0.h[0] &= 0x70) & 0xFFFF) == 0) {
@@ -783,7 +797,7 @@ next_6:
 next_8:
     reg_tmp.h[1] = *(u16 *) (reg_a4 + 4);
     reg_tmp.h[0] = *(u16 *) (reg_a4 + 6);
-    reg_a0 = (u8 *) reg_tmp.w;
+    reg_a0 = ARCADE_ADDRESS_DECODE(u8 *, reg_tmp.w);
     reg_call_target_as_u8_p = reg_a0;
     ((Fn) reg_call_target_as_u8_p)();
     if (g_simulation_active != 0) {
@@ -823,17 +837,23 @@ next_12:
 next_13:
     reg_tmp.h[1] = *(u16 *) (reg_a4 + 0x10);
     reg_tmp.h[0] = *(u16 *) (reg_a4 + 0x12);
-    reg_a0 = (u8 *) reg_tmp.w;
+    reg_a0 = ARCADE_ADDRESS_DECODE(u8 *, reg_tmp.w);
     reg_d0.b[0] = reg_a5[5];
     *reg_a0 = reg_d0.b[0];
 }
 
 /* .bss (the compiler lays these out in reverse) */
+#ifdef DDPDOJ_PC
+/* The second panel extends into the following 16 bytes on PS2. */
+_Alignas(4) u8 g_continue_panels[48];
+#else
 u8 g_continue_panels[32];
+#endif
 
 #ifdef DDPDOJ_PC
 #include "pc_data_alias.h"
 
 PC_DATA_ALIAS(D_002BF3EA, g_continue_panels, 0xa);
 PC_DATA_ALIAS(g_continue_panel_p2, g_continue_panels, 0x16);
+PC_DATA_ALIAS(D_002BF400, g_continue_panels, 0x20);
 #endif
