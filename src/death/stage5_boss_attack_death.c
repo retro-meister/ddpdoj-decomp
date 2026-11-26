@@ -13,7 +13,7 @@ s32 death_func_0021B180(void) {
 
 s32 bullet_fire256();
 s32 bullet_fire256_direct();
-extern u16 D_00259770[];
+extern u16 g_direction64_offsets_166[];
 
 #define LOOKUP(d) (((d) != 0) ? *(u16 *)((u8 *)reg_a1 + ((s16)(d) & ~1)) : *(u16 *)reg_a1)
 
@@ -125,7 +125,7 @@ void death_func_0021B5F0(void) {
     reg_d2.h[0] = ENTITY(reg_a6)->x.h;
     reg_d6.w = 0xFE000000;
     reg_d7.w = 3;
-    reg_a1 = (u8 *) D_00259770;
+    reg_a1 = (u8 *) g_direction64_offsets_166;
     do {
         reg_d3.h[0] = reg_d1.h[0];
         reg_d3.h[0] += 2;
@@ -140,7 +140,7 @@ void death_func_0021B5F0(void) {
     *(u8 *)(reg_a4 + 0x17) += reg_d1.b[0];
 }
 
-extern u16 D_00259970[];
+extern u16 g_direction64_offsets_432[];
 
 #define LOOKUP(d) (((d) != 0) ? *(u16 *)((u8 *)reg_a1 + ((s16)(d) & ~1)) : *(u16 *)reg_a1)
 
@@ -159,7 +159,7 @@ void death_func_0021B770(void) {
     reg_d4.w = 0;
     reg_d6.w = 0xFE000000;
     reg_d7.w = 3;
-    reg_a1 = (u8 *) D_00259970;
+    reg_a1 = (u8 *) g_direction64_offsets_432;
     do {
         reg_d3.h[0] = reg_d1.h[0];
         reg_d3.h[0] += 2;
@@ -555,7 +555,7 @@ void death_func_0021C430(void) {
     *(s8 *)(reg_a6 + 0x1c) = 8;
 }
 
-extern u16 D_00259870[];
+extern u16 g_direction64_offsets_2CC[];
 extern s16 g_enemy_signal_1_as_s16;
 extern s16 g_enemy_signal_0_as_s16;
 
@@ -598,7 +598,7 @@ next_1:
     reg_d5.w = 0x01010001;
     reg_d6.w = 0xFE000000;
     reg_d7.w = 9;
-    reg_a1 = (u8 *)D_00259870;
+    reg_a1 = (u8 *)g_direction64_offsets_2CC;
 loop_0:
     reg_d3.h[0] = reg_d1.h[0];
     reg_d3.h[0] += 2;

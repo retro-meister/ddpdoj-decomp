@@ -860,7 +860,7 @@ void large_tank_first(void) {
 }
 
 s32 direction_between();
-extern u16 D_00258FF0[];
+extern u16 g_direction_sprites_a[];
 extern u16 large_tank_palettes[];
 extern u16 large_tank_state[];
 extern u16 large_tank_entities[];
@@ -888,7 +888,7 @@ void large_tank_start(void) {
     ENTITY(reg_a6)[1].hit_y_plus.b[1] = (u8) reg_d2.b[0];
     enemy_path_start();
     if (enemy_move_end_requested == 0) {
-        reg_a0 = (u8 *)(D_00258FF0);
+        reg_a0 = (u8 *)(g_direction_sprites_a);
         reg_d0.h[0] = ENTITY(reg_a6)->y.h;
         reg_d1.h[0] = ENTITY(reg_a6)->x.h;
         reg_d0.h[0] += 0xB00;
@@ -925,8 +925,8 @@ s32 rng_next();
 s32 func_00201100();
 s32 aim256_at_player();
 s32 func_00211550();
-extern u16 D_00259370[];
-extern u16 D_00259870[];
+extern u16 g_direction_offsets_540[];
+extern u16 g_direction64_offsets_2CC[];
 extern u16 g_bullets_blocked;
 extern u16 g_damage_blink_counter;
 extern u16 g_player2_as_u16_a[];
@@ -1036,7 +1036,7 @@ next_3:
                         reg_d0.h[0] = ENTITY(reg_a6)->y.h;
                         t3 = ENTITY(reg_a6)->x.h;
                         reg_d1.h[0] = t3;
-                        reg_a3 = (u8 *)(D_00258FF0);
+                        reg_a3 = (u8 *)(g_direction_sprites_a);
                         reg_d0.h[0] += 0xB00;
                         direction_between();
                         reg_d0.h[0] = LARGE_TANK(reg_a5)->turret_dir.h;
@@ -1055,7 +1055,7 @@ next_4:
                         LARGE_TANK(reg_a5)->turret_countdown -= 1;
                         if ((s32) reg_tmp.b[0] <= 0) {
                             LARGE_TANK(reg_a5)->turret_countdown = (u8) LARGE_TANK(reg_a5)->turret_interval;
-                            reg_a4 = (u8 *)(D_00259370);
+                            reg_a4 = (u8 *)(g_direction_offsets_540);
                             reg_d1.h[0] = LARGE_TANK(reg_a5)->turret_dir.h;
                             reg_d0.h[0] = reg_d1.h[0];
                             reg_d1.h[0] *= 4;
@@ -1078,7 +1078,7 @@ next_4:
                             reg_d2.h[0] = ENTITY(reg_a6)->x.h;
                             reg_d1.h[0] -= 0x24;
                             reg_d7.h[0] = 6;
-                            reg_a0 = (u8 *)(D_00259870);
+                            reg_a0 = (u8 *)(g_direction64_offsets_2CC);
                             do {
                                 reg_d3.h[0] = reg_d1.h[0];
                                 reg_d3.h[0] += 2;

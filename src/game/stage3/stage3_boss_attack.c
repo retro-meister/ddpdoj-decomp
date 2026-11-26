@@ -285,7 +285,7 @@ void stage3_boss_fire_side_turrets_start(void) {
     }
 }
 
-extern u16 D_002594F0[];
+extern u16 g_direction_offsets_400[];
 
 void stage3_boss_fire_side_turrets(void) {
     reg_tmp.b[0] = *(u8 *)(reg_a4 + 3);
@@ -302,7 +302,7 @@ void stage3_boss_fire_side_turrets(void) {
                 *(u8 *)(reg_a4 + 2) = 3U;
             }
         }
-        reg_a3 = (u8 *)(D_002594F0);
+        reg_a3 = (u8 *)(g_direction_offsets_400);
         reg_d1.h[0] = ENTITY(reg_a6)[5].hit_y_plus.h;
         reg_d0.h[0] = reg_d1.h[0];
         reg_d0.h[0] &= 0x3E;
@@ -868,7 +868,7 @@ void stage3_boss_fire_side_turrets_b(void) {
     *(u8 *)(reg_a4 + 3) -= 1;
     if (reg_tmp.b[0] == 0) {
         *(u8 *)(reg_a4 + 3) = (u8) *(u8 *)(reg_a4 + 4);
-        reg_a3 = (u8 *)(D_002594F0);
+        reg_a3 = (u8 *)(g_direction_offsets_400);
         reg_d1.h[0] = ENTITY(reg_a6)[5].hit_y_plus.h;
         reg_d0.h[0] = reg_d1.h[0];
         reg_d0.h[0] &= 0x3E;
@@ -906,7 +906,7 @@ void stage3_boss_fire_side_turrets_b(void) {
     if (reg_tmp.b[0] == 0) {
         *(u8 *)(reg_a4 + 5) = (u8) *(u8 *)(reg_a4 + 4);
         var_a0_4 = (u8 *)(reg_a6);
-        reg_a3 = (u8 *)(D_002594F0);
+        reg_a3 = (u8 *)(g_direction_offsets_400);
         reg_d1.h[0] = (*(u16 *)((u8 *)(var_a0_4) + (0xB2)));
         reg_d3.w = 0x1100FF80;
         reg_d5.h[0] = reg_d1.h[0];

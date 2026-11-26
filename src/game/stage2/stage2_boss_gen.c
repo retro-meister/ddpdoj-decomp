@@ -883,7 +883,7 @@ void stage2_wrecker_gun_start(void) {
 s32 bullet_fire256();
 s32 enemy_switch_target_player();
 s32 func_00201710();
-extern u16 D_00259970[];
+extern u16 g_direction64_offsets_432[];
 extern u16 D_00262E50[];
 extern u16 g_rank_2_16;
 extern s16 g_bomb_entities_as_s16_a[];
@@ -1012,7 +1012,7 @@ block_35:
                                     reg_d2.h[0] = ENTITY(reg_a6)->x.h;
                                     reg_d5.w = 0x0A000000;
                                     reg_d0.w = 0xB;
-                                    reg_a0 = (u8 *)(D_00259970);
+                                    reg_a0 = (u8 *)(g_direction64_offsets_432);
                                     reg_d4.w = 0;
                                     if (*(u8 *)(reg_a5 + 0x1F) & 1) {
                                         reg_d1.h[0] -= 0x28;

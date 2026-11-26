@@ -943,7 +943,7 @@ void stage4_boss_fire_aimed_gun_start(void) {
     *(u8 *)(reg_a4 + 6) = (u8) reg_d1.b[0];
 }
 
-extern u16 D_00259570[];
+extern u16 g_direction_offsets_500[];
 extern u16 g_bullets_blocked;
 
 void stage4_boss_fire_aimed_gun(void) {
@@ -957,7 +957,7 @@ void stage4_boss_fire_aimed_gun(void) {
             reg_d1.h[0] = ENTITY(reg_a6)[8].x.h;
             aim256_at_player();
             *(u8 *)(reg_a4 + 6) = (u8) reg_d1.b[0];
-            reg_a0 = (u8 *)(D_00259570);
+            reg_a0 = (u8 *)(g_direction_offsets_500);
             reg_d1.w = 0;
             reg_d1.b[0] = *(u8 *)(reg_a4 + 6);
             reg_d1.b[0] = (u8) ((s8) reg_d1.b[0] >> 2);

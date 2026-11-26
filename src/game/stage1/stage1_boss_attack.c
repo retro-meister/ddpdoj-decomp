@@ -1159,7 +1159,7 @@ void stage1_boss_fire_gatling_c_start(void) {
 }
 
 s32 rng_next_word();
-extern u16 D_00259970[];
+extern u16 g_direction64_offsets_432[];
 
 void stage1_boss_fire_gatling_c(void) {
     u16 temp_a0;
@@ -1190,7 +1190,7 @@ void stage1_boss_fire_gatling_c(void) {
         reg_d1.b[0] = reg_d0.b[0];
         reg_d0.w = 0xFFF9000B;
         reg_d7.w = 0xF;
-        reg_a0 = (u8 *)(D_00259970);
+        reg_a0 = (u8 *)(g_direction64_offsets_432);
         do {
             reg_d3.h[0] = reg_d1.h[0];
             reg_d3.h[0] += 2;

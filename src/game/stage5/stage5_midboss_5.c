@@ -29,7 +29,7 @@ void func_00200420(void);
 void func_002004E0(void);
 
 s32 bullet_fire_fixed();
-extern u16 D_00259970[];
+extern u16 g_direction64_offsets_432[];
 extern u16 g_loop;
 
 void func_001FC8E0(void) {
@@ -80,7 +80,7 @@ void func_001FC8E0(void) {
     reg_d2.h[1] = (*(u16 *)((u8 *)((u32)reg_a4) + (2)));
     temp_a0 = (*(u16 *)((u8 *)((u32)reg_a4) + (4)));
     reg_d2.h[0] = temp_a0;
-    reg_a0 = (u8 *)(D_00259970);
+    reg_a0 = (u8 *)(g_direction64_offsets_432);
     reg_d4.w = 0;
     reg_d3.w = 0;
     if (g_loop != 0) {
@@ -751,7 +751,7 @@ void func_001FE2F0(void) {
 
 s32 bullet_fire_fast();
 s32 rng_next_unsigned();
-extern u8 D_00259870_as_u8_a[];
+extern u8 g_direction64_offsets_2CC[];
 extern u16 g_frame_mod16;
 extern s16 g_player2[];
 extern s16 g_player1[];
@@ -789,7 +789,7 @@ void func_001FE330(void) {
                     reg_d1.h[0] = 0x2E;
                     reg_d2.h[1] = ENTITY(reg_a6)->y.h;
                     reg_d2.h[0] = ENTITY(reg_a6)->x.h;
-                    reg_a0 = (u8 *)D_00259870_as_u8_a;
+                    reg_a0 = (u8 *)g_direction64_offsets_2CC;
                     reg_d5.w = 0;
                     do {
                         reg_d3.h[0] = reg_d1.h[0];

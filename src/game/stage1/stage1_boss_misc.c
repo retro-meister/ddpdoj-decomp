@@ -303,9 +303,9 @@ void stage1_boss_side_bullet_start(void) {
 s32 bullet_fire_fixed();
 s32 sprite_draw_with_bullets();
 s32 rng_next_unsigned();
-extern u16 D_00259770[];
-extern u16 D_00259870[];
-extern u16 D_00259970[];
+extern u16 g_direction64_offsets_166[];
+extern u16 g_direction64_offsets_2CC[];
+extern u16 g_direction64_offsets_432[];
 extern u32 D_0026E7C0[];
 extern u16 g_bullets_blocked;
 
@@ -371,7 +371,7 @@ next_3:
     if (g_enemies_stopped != 0) goto block_end;
     if (g_bullets_blocked != 0) goto block_end;
     reg_d7.w = 0xF;
-    reg_a0 = (u8 *) D_00259970;
+    reg_a0 = (u8 *) g_direction64_offsets_432;
     do {
         reg_d3.h[0] = reg_d1.h[0];
         reg_d3.h[0] &= 0x3F;
@@ -386,7 +386,7 @@ next_3:
     reg_d0.h[0] = 4;
     reg_d1.b[0] += 2;
     reg_d7.w = 0xF;
-    reg_a0 = (u8 *) D_00259870;
+    reg_a0 = (u8 *) g_direction64_offsets_2CC;
     do {
         reg_d3.h[0] = reg_d1.h[0];
         reg_d3.h[0] &= 0x3F;
@@ -401,7 +401,7 @@ next_3:
     reg_d0.h[0] = 5;
     reg_d1.b[0] += 2;
     reg_d7.w = 0xF;
-    reg_a0 = (u8 *) D_00259770;
+    reg_a0 = (u8 *) g_direction64_offsets_166;
     do {
         reg_d3.h[0] = reg_d1.h[0];
         reg_d3.h[0] &= 0x3F;

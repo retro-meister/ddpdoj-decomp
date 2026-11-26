@@ -1361,7 +1361,7 @@ void stage5_bee_drone_start(void) {
 }
 
 s32 velocity_from_dir256();
-extern u8 D_00259870_as_u8_a[];
+extern u8 g_direction64_offsets_2CC[];
 extern u8 D_002658B0[];
 extern u8 D_002659B0[];
 
@@ -1506,7 +1506,7 @@ block_13:
                     if (*(u8 *)(reg_a5 + 0x2F) != 0) {
                         reg_d1.h[0] -= 0x34;
                         reg_d7.h[0] = 4;
-                        reg_a0 = D_00259870_as_u8_a;
+                        reg_a0 = g_direction64_offsets_2CC;
                         do {
                             reg_d3.h[0] = reg_d1.h[0];
                             reg_d3.h[0] += 2;
@@ -1537,7 +1537,7 @@ block_13:
                         reg_d0.w = 0xFFFF0004;
                         reg_d1.h[0] -= 0x22;
                         reg_d7.h[0] = 3;
-                        reg_a0 = D_00259870_as_u8_a;
+                        reg_a0 = g_direction64_offsets_2CC;
                         do {
                             reg_d3.h[0] = reg_d1.h[0];
                             reg_d3.h[0] += 2;

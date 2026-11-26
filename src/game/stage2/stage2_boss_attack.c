@@ -227,7 +227,7 @@ void stage2_boss_fire_torso_rapid_start(void) {
 s32 bullet_fire256_fixed();
 s32 rng_next();
 s32 aim_at_player();
-extern u16 D_00259770[];
+extern u16 g_direction64_offsets_166[];
 
 void stage2_boss_fire_torso_rapid(void) {
     u8 t1;
@@ -267,7 +267,7 @@ void stage2_boss_fire_torso_rapid(void) {
             rng_next();
             reg_d1.b[0] += reg_d0.b[0];
             reg_d0.w = 0x80013;
-            reg_a0 = (u8 *)(D_00259770);
+            reg_a0 = (u8 *)(g_direction64_offsets_166);
             reg_d3.h[0] = reg_d1.h[0];
             reg_d3.h[0] &= 0x3F;
             reg_d3.h[0] += reg_d3.h[0];
@@ -655,10 +655,10 @@ void stage2_boss_fire_shoulder_sweep_a(void) {
 }
 
 s32 bullet_fire_2way();
-extern u16 D_00259870[];
+extern u16 g_direction64_offsets_2CC[];
 
 void func_001C0A40(void) {
-    reg_a0 = (u8 *)(D_00259870);
+    reg_a0 = (u8 *)(g_direction64_offsets_2CC);
     reg_d0.w = 0xFFFA0007;
     reg_d1.h[0] &= 0x3F;
     if (((s32) reg_d1.b[0] < 0x10) || ((s32) reg_d1.b[0] > 0x30)) {
@@ -856,7 +856,7 @@ void stage2_boss_fire_shoulder_sweep_b(void) {
 }
 
 void func_001C1450(void) {
-    reg_a0 = (u8 *)(D_00259870);
+    reg_a0 = (u8 *)(g_direction64_offsets_2CC);
     reg_d0.w = 0xFFFF0007;
     reg_d1.b[0] -= 2;
     if (((s32) reg_d1.b[0] < 0x40) || ((s32) reg_d1.b[0] > 0xC0)) {
@@ -1060,7 +1060,7 @@ void stage2_boss_fire_shoulder_sweep_c(void) {
 void func_001C1E80(void) {
     s32 bullet_fire_fixed();
     u32 var_a1;
-    reg_a0 = (u8 *)(D_00259870);
+    reg_a0 = (u8 *)(g_direction64_offsets_2CC);
     reg_d0.w = 7;
     reg_d7.w = 3;
     reg_d1.h[0] &= 0x3F;
@@ -1236,7 +1236,7 @@ void stage2_boss_fire_shoulder_sweep_d(void) {
 }
 
 void func_001C2650(void) {
-    reg_a0 = (u8 *)(D_00259770);
+    reg_a0 = (u8 *)(g_direction64_offsets_166);
     reg_d0.h[0] = *(u16 *)(reg_a4 + 0xC);
     reg_tmp.w = reg_d0.w;
     reg_d0.h[1] = reg_d0.h[0];
@@ -1340,7 +1340,7 @@ void stage2_boss_fire_knee_gun_start(void)
 }
 
 s32 enemy_switch_target_player();
-extern u16 D_00259570[];
+extern u16 g_direction_offsets_500[];
 
 void stage2_boss_fire_knee_gun(void) {
     u16 t1;
@@ -1367,7 +1367,7 @@ void stage2_boss_fire_knee_gun(void) {
         enemy_switch_target_player();
         if (*(s16 *)(reg_a4 + 0xE) >= 0) {
             reg_d1.w = 0;
-            reg_a0 = (u8 *)(D_00259570);
+            reg_a0 = (u8 *)(g_direction_offsets_500);
             reg_d1.b[0] = ENTITY(reg_a6)[2].move.b.dir;
             t1 = reg_d1.h[0];
             reg_d1.b[0] += 1;
@@ -1386,7 +1386,7 @@ void stage2_boss_fire_knee_gun(void) {
             func_001C2650();
         } else {
             reg_d1.w = 0;
-            reg_a0 = (u8 *)(D_00259570);
+            reg_a0 = (u8 *)(g_direction_offsets_500);
             reg_d1.b[0] = ENTITY(reg_a6)[3].move.b.dir;
             t2 = reg_d1.h[0];
             reg_d1.b[0] += 1;
@@ -1693,7 +1693,7 @@ void func_001C3800() {
     reg_d3.h[0] += 2;
     reg_d3.h[0] &= 0xFC;
     reg_d5.w = 0x08000000;
-    reg_a0 = (u8 *)(D_00259870);
+    reg_a0 = (u8 *)(g_direction64_offsets_2CC);
     reg_tmp3.h[1] = (reg_d3.h[0] != 0) ? *(u16 *)((u8 *)reg_a0 + ((s16)reg_d3.h[0] & ~1)) : *(u16 *)reg_a0;
     reg_tmp3.h[0] = (((u16)reg_d3.h[0] + 2) != 0) ? *(u16 *)((u8 *)reg_a0 + ((s16)((u16)reg_d3.h[0] + 2) & ~1)) : *(u16 *)reg_a0;
     reg_d3.w = *(u32 *)&reg_tmp3.h[0];

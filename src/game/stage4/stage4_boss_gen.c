@@ -187,7 +187,7 @@ void stage4_lift_start(void) {
     } while ((s16)(--reg_d7.h[0]) >= 0);
 }
 
-extern u8 D_00259870_as_u8_a[];
+extern u8 g_direction64_offsets_2CC[];
 extern u8 D_00263880[];
 s32 mounted_tank_a();
 s32 mounted_tank_b();
@@ -270,7 +270,7 @@ next_90:
     reg_d5.h[1] = reg_tmp5.h[0];
     reg_d5.h[0] = *(u16 *)(reg_a5 + 0x2C);
     reg_d0.w = 0x13;
-    reg_a0 = (u8 *)D_00259870_as_u8_a;
+    reg_a0 = (u8 *)g_direction64_offsets_2CC;
     reg_d4.w = (u32) reg_a6;
     reg_d1.b[0] = *(u8 *)(reg_a5 + 0x29);
     reg_d3.b[0] = reg_d1.b[0];
@@ -650,7 +650,7 @@ void stage4_heavy_cannon_start(void) {
     }
 }
 
-extern u8 D_00259970_as_u8_a[];
+extern u8 g_direction64_offsets_432[];
 extern u8 D_00263940[];
 extern u8 D_00263960[];
 extern u8 D_002639A0[];
@@ -881,7 +881,7 @@ next_460:
     reg_d2.h[1] = ENTITY(reg_a6)->y.h;
     reg_d2.h[0] = ENTITY(reg_a6)->x.h;
     reg_d4.w = 0;
-    reg_a0 = (u8 *)D_00259970_as_u8_a;
+    reg_a0 = (u8 *)g_direction64_offsets_432;
     if (*(u8 *)(reg_a5 + 0x1F) == 0) goto next_475;
     reg_d5.h[0] = reg_d1.h[0];
     reg_d5.h[0] -= 0xC;

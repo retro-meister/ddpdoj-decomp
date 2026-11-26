@@ -716,8 +716,8 @@ void func_001FB700(void) {
 s32 bullet_fire256_2way();
 s32 bullet_fire256();
 s32 func_00202730();
-extern u16 D_00259870[];
-extern u16 D_00259970[];
+extern u16 g_direction64_offsets_2CC[];
+extern u16 g_direction64_offsets_432[];
 extern u16 g_bullets_blocked;
 
 void func_001FB770() {
@@ -754,7 +754,7 @@ void func_001FB770() {
                 reg_d2.h[0] = ENTITY(reg_a6)->x.h;
                 reg_d1.b[0] -= 0x79;
                 reg_d7.h[0] = 0x16;
-                reg_a0 = (u8 *)(D_00259970);
+                reg_a0 = (u8 *)(g_direction64_offsets_432);
                 reg_d4.w = 0;
                 reg_d3.w = 0;
                 do {
@@ -781,7 +781,7 @@ void func_001FB770() {
                 temp_a1 = ENTITY(reg_a6)->x.h;
                 reg_d3.w = 0;
                 reg_d2.h[0] = temp_a1;
-                reg_a0 = (u8 *)(D_00259870);
+                reg_a0 = (u8 *)(g_direction64_offsets_2CC);
                 reg_d7.b[0] = reg_d1.b[0];
                 reg_d3.h[0] = reg_d1.h[0];
                 reg_d3.h[0] += 2;

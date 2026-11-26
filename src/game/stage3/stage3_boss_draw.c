@@ -164,13 +164,13 @@ void func_001D16D0(void) {
     sprite_draw_layer2_keep();
 }
 
-extern u16 D_002590F0[];
+extern u16 g_direction_sprites_c[];
 
 void func_001D1760(void) {
     s32 sprite_draw_layer2_keep();
     u16 temp_a0;
     reg_d2.h[0] = ENTITY(reg_a6)[5].hit_y_plus.h;
-    reg_a0 = (u8 *)(D_002590F0);
+    reg_a0 = (u8 *)(g_direction_sprites_c);
     reg_d2.h[0] &= 0x3E;
     reg_d2.h[0] += reg_d2.h[0];
     reg_tmp2.h[1] = (reg_d2.h[0] != 0) ? *(u16 *)((u8 *)reg_a0 + ((s16)reg_d2.h[0] & ~1)) : *(u16 *)reg_a0;
@@ -194,7 +194,7 @@ void func_001D1870(void) {
     s32 sprite_draw_layer2_keep();
     u16 temp_a0;
     reg_d2.h[0] = ENTITY(reg_a6)[5].hit_y_minus.h;
-    reg_a0 = (u8 *)(D_002590F0);
+    reg_a0 = (u8 *)(g_direction_sprites_c);
     reg_d2.h[0] &= 0x3E;
     reg_d2.h[0] += reg_d2.h[0];
     reg_tmp2.h[1] = (reg_d2.h[0] != 0) ? *(u16 *)((u8 *)reg_a0 + ((s16)reg_d2.h[0] & ~1)) : *(u16 *)reg_a0;

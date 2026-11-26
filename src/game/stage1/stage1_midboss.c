@@ -359,7 +359,7 @@ s32 entity_follow_scroll();
 s32 aim256_at_player();
 s32 vibration_start_pad1();
 s32 vibration_start_pad2();
-extern u8 D_00259970_as_u8_a[];
+extern u8 g_direction64_offsets_432[];
 extern u8 D_00262B50[];
 extern u8 g_slowdown_timer;
 extern u16 g_enemy_signal_1;
@@ -575,7 +575,7 @@ block_50:
                                     } while ((s16)(--reg_d7.h[0]) >= 0);
                                 }
                                 reg_d1.h[0] = reg_d6.h[0];
-                                reg_a0 = D_00259970_as_u8_a;
+                                reg_a0 = g_direction64_offsets_432;
                                 reg_d1.h[0] -= 0x56;
                                 func_001BC4B0();
                                 func_001BC5D0();

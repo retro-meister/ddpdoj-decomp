@@ -65,7 +65,7 @@ s32 enemy_init_entities();
 s32 enemy_path_start();
 s32 sfx_heli_start();
 s32 aim256_at_player();
-extern u16 D_002590F0[];
+extern u16 g_direction_sprites_c[];
 extern u8 D_00263000[];
 extern u8 D_00263030[];
 extern u8 D_002630D0[];
@@ -93,7 +93,7 @@ void func_001CBD60(void) {
         reg_d2.h[0] &= 0xDFFE;
         reg_d0.h[0] |= reg_d2.h[0];
         ENTITY(reg_a6)[1].flags.h = (u16) reg_d0.h[0];
-        reg_a3 = (u8 *)(D_002590F0);
+        reg_a3 = (u8 *)(g_direction_sprites_c);
         reg_d0.h[0] = ENTITY(reg_a6)->y.h;
         reg_d1.h[0] = ENTITY(reg_a6)->x.h;
         reg_d0.h[0] += 0xAC0;
@@ -146,8 +146,7 @@ void func_001CBD60(void) {
 
 typedef void (*Fn)();
 
-extern u8 D_002590F0_as_u8_a[];
-extern u8 D_002594F0_as_u8_a[];
+extern u8 g_direction_offsets_400[];
 s32 bullet_fire256_fixed();
 s32 bullet_fire256_fast();
 s32 bullet_fire256_2way();
@@ -175,7 +174,7 @@ s32 func_002025E0();
 s32 direction256_between();
 s32 vibration_start_pad1(s32, s32);
 s32 vibration_start_pad2(s32, s32);
-extern u16 D_00259970[];
+extern u16 g_direction64_offsets_432[];
 extern u16 D_00262A50_as_u16_a[];
 extern u16 D_00263100[];
 extern u16 D_00263120[];
@@ -463,7 +462,7 @@ next_440:
     if (*(u8 *)(reg_a5 + 0x24) != reg_d0.b[0]) goto next_460;
     reg_d5.w = 1;
 next_460:
-    reg_a3 = (u8 *)D_002590F0_as_u8_a;
+    reg_a3 = (u8 *)g_direction_sprites_c;
     bits = ENTITY(reg_a6)->flags.b[0];
     if (bits & 0x40) {
         ENTITY(reg_a6)->flags.b[0] = bits & 0xBF;
@@ -579,7 +578,7 @@ block_rts:
     return;
 next_600:
     *(u8 *)(reg_a5 + 0x23) = *(u8 *)(reg_a5 + 0x34);
-    reg_a4 = (u8 *)D_002594F0_as_u8_a;
+    reg_a4 = (u8 *)g_direction_offsets_400;
     reg_d1.h[0] = *(u16 *)(reg_a5 + 0x2C);
     reg_d0.h[0] = reg_d1.h[0];
     reg_d0.h[0] += 4;
@@ -682,7 +681,7 @@ next_875:
     reg_d6.h[0] = (reg_d4.h[0] != 0) ? *(u16 *)(reg_a0 + ((s16) reg_d4.h[0] & ~1)) : *(u16 *)reg_a0;
     reg_d7.h[0] = (((u16) reg_d4.h[0] + 2) != 0) ? *(u16 *)(reg_a0 + ((s16) ((u16) reg_d4.h[0] + 2) & ~1)) : *(u16 *)reg_a0;
     reg_d4.w = 0;
-    reg_a0 = (u8 *) D_00259970;
+    reg_a0 = (u8 *) g_direction64_offsets_432;
 loop_880:
     reg_d3.h[0] = reg_d1.h[0];
     reg_d3.h[0] += 2;
