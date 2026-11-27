@@ -1,4 +1,5 @@
 #include "common.h"
+#include "simulation.h"
 #ifdef DDPDOJ_PC
 #include "pc_replay_storage.h"
 #endif
@@ -10819,8 +10820,6 @@ extern u8 g_game_mode;
 extern u8 g_game_frame_ran;
 extern s8 g_bomb_panel_seen;
 extern u8 D_0028E7B4;
-extern u16 g_sim_rules[];
-#define simulation_task_step g_sim_rules[10]
 #ifdef DEATH_LABEL
 extern u8 death_D_00290DC0;
 extern u8 death_D_00290DBC;
@@ -10868,25 +10867,25 @@ void simulation_task_begin() {
 #ifdef DEATH_LABEL
     g_game_mode = 2;
     g_loop = 0;
-    g_sim_rules[6] = 0;
-    g_sim_rules[4] = 3;
-    g_sim_rules[5] = 1;
-    g_sim_rules[7] = 0;
-    g_sim_rules[8] = 3;
+    g_sim_rules.stage = 0;
+    g_sim_rules.difficulty.h = 3;
+    g_sim_rules.loop = 1;
+    g_sim_rules.ship_stock.h = 0;
+    g_sim_rules.extend.h = 3;
     if (death_D_00290DC0 == 0) {
-        if (g_sim_rules[9] == 2) {
-            g_sim_rules[7] = 3;
+        if (g_sim_rules.death_power_style == 2) {
+            g_sim_rules.ship_stock.h = 3;
         }
-        if (g_sim_rules[9] == 4) {
-            g_sim_rules[7] = 0;
+        if (g_sim_rules.death_power_style == 4) {
+            g_sim_rules.ship_stock.h = 0;
         }
-        if (g_sim_rules[9] == 6) {
-            g_sim_rules[7] = 1;
+        if (g_sim_rules.death_power_style == 6) {
+            g_sim_rules.ship_stock.h = 1;
         }
     } else {
-        g_sim_rules[7] = 3;
+        g_sim_rules.ship_stock.h = 3;
     }
-    simulation_task_step = 0;
+    g_sim_rules.task_step = 0;
     g_death_boss_form = 0;
     death_D_00290850 = 0;
     death_D_00290DBC = 0;
@@ -10899,35 +10898,35 @@ void simulation_task_begin() {
         death_D_00290DB8 = g_p1_max_hits;
         death_D_00290DB4 = g_p2_max_hits;
         task_start();
-        *(u16 *)(reg_a0 + 4) = g_sim_rules[6];
+        *(u16 *)(reg_a0 + 4) = g_sim_rules.stage;
     }
     stage_doors_clear();
     printf("death round[%d]\n", death_D_00290DC0);
 #else
     g_game_mode = 2;
-    g_sim_rules[0] = 0xFF;
-    g_sim_rules[1] = 0xFF;
-    g_sim_rules[2] = 0xFF;
-    g_sim_rules[3] = 0xFF;
+    g_sim_rules.p1_ship_type = 0xFF;
+    g_sim_rules.p1_power_style = 0xFF;
+    g_sim_rules.p2_ship_type = 0xFF;
+    g_sim_rules.p2_power_style = 0xFF;
     if (D_0028E7B4 & 1) {
-        g_sim_rules[0] = D_0028DE40[0];
-        g_sim_rules[1] = D_0028DE44[0];
+        g_sim_rules.p1_ship_type = D_0028DE40[0];
+        g_sim_rules.p1_power_style = D_0028DE44[0];
     } else {
-        g_sim_rules[2] = D_0028DE40[0];
-        g_sim_rules[3] = D_0028DE44[0];
+        g_sim_rules.p2_ship_type = D_0028DE40[0];
+        g_sim_rules.p2_power_style = D_0028DE44[0];
     }
-    g_sim_rules[6] = 0;
-    g_sim_rules[4] = 3;
+    g_sim_rules.stage = 0;
+    g_sim_rules.difficulty.h = 3;
     g_game_frame_ran = 0;
     g_bomb_panel_seen = 0;
-    g_sim_rules[5] = 1;
-    g_sim_rules[8] = 3;
+    g_sim_rules.loop = 1;
+    g_sim_rules.extend.h = 3;
     reg_d0.h[0] = 10;
-    g_sim_rules[7] = 0;
+    g_sim_rules.ship_stock.h = 0;
     g_replay_file_finalized = 0;
-    simulation_task_step = 0;
+    g_sim_rules.task_step = 0;
     task_start();
-    *(u16 *)(reg_a0 + 4) = g_sim_rules[6];
+    *(u16 *)(reg_a0 + 4) = g_sim_rules.stage;
     stage_doors_clear();
 #endif
     text_layer_clear();
@@ -10975,10 +10974,6 @@ extern u8 g_setting_extend;
 extern u8 g_setting_difficulty;
 extern u16 g_score_panel_intro;
 extern u16 g_loop;
-extern u8 D_00684C88[];
-extern u16 D_00684C8A[];
-extern u16 D_00684C8C[];
-extern u8 D_00684C8E[];
 #ifdef DEATH_LABEL
 s32 fade_reset();
 extern u8 death_D_00290DC0;
@@ -11020,18 +11015,18 @@ void simulation_task_run() {
     save_a4 = reg_a4;
     save_a5 = reg_a5;
     stage_doors_update();
-    switch (simulation_task_step) {                           /* irregular */
+    switch (g_sim_rules.task_step) {                           /* irregular */
     default:
-        simulation_task_step += 1;
+        g_sim_rules.task_step += 1;
         break;
     case 0:
         stage_doors_open_request();
-        simulation_task_step += 1;
+        g_sim_rules.task_step += 1;
         break;
 #ifdef DEATH_LABEL
     case 2:
         fade_reset();
-        simulation_task_step += 1;
+        g_sim_rules.task_step += 1;
         break;
 #endif
     case 16:
@@ -11039,10 +11034,10 @@ void simulation_task_run() {
         g_no_enemy_bullets = 0;
         g_start_rule_rank = 0xFF;
         g_start_rule_death = 0;
-        g_setting_difficulty = D_00684C88[0];
-        g_setting_extend = *(u8 *)&g_sim_rules[8];
-        g_setting_ship_stock = D_00684C8E[0];
-        simulation_ships_start(D_00684C88[0]);
+        g_setting_difficulty = g_sim_rules.difficulty.b[0];
+        g_setting_extend = g_sim_rules.extend.b[0];
+        g_setting_ship_stock = g_sim_rules.ship_stock.b[0];
+        simulation_ships_start(g_sim_rules.difficulty.b[0]);
         g_pad_input_locked = 1;
 #ifdef DEATH_LABEL
         if (death_D_00290DC0 != 0) {
@@ -11051,30 +11046,30 @@ void simulation_task_run() {
             g_p2_max_hits = (*(u16 *)&death_D_00290DB4);
         }
 #endif
-        simulation_task_step += 1;
+        g_sim_rules.task_step += 1;
         break;
 #ifdef DEATH_LABEL
     case 17:
         death_D_00290DBC = 0;
-        simulation_task_step += 1;
+        g_sim_rules.task_step += 1;
         break;
 #endif
     case MAIN_OR_DEATH_LABEL(17, 18):
         if (g_score_panel_intro == 0) {
-            simulation_task_step += 1;
+            g_sim_rules.task_step += 1;
         }
         break;
     case MAIN_OR_DEATH_LABEL(18, 19):
         frame_counters_reset();
         if (g_game_frame_ran != 0) {
             g_pad_input_locked = 0;
-            simulation_task_step += 1;
-            g_loop = D_00684C8A[0];
+            g_sim_rules.task_step += 1;
+            g_loop = g_sim_rules.loop;
             enemies_resume();
 #ifdef DEATH_LABEL
             fade_reset();
 #endif
-            if (D_00684C8C[0] == 0) {
+            if (g_sim_rules.stage == 0) {
                 music_play_bgm2();
             }
         }
@@ -11136,14 +11131,14 @@ void simulation_ships_start() {
     save_a5 = reg_a5;
     reg_d0.w = 0;
     reg_d1.w = 0;
-    reg_d0.h[0] = g_sim_rules[0];
-    reg_d1.h[0] = g_sim_rules[1];
+    reg_d0.h[0] = g_sim_rules.p1_ship_type;
+    reg_d1.h[0] = g_sim_rules.p1_power_style;
     reg_d2.w = 0;
     g_game_frame_ran = 0;
     reg_d3.w = 0;
     reg_d4.w = 1;
-    reg_d2.h[0] = g_sim_rules[2];
-    reg_d3.h[0] = g_sim_rules[3];
+    reg_d2.h[0] = g_sim_rules.p2_ship_type;
+    reg_d3.h[0] = g_sim_rules.p2_power_style;
     ship_select_apply();
     reg_d0.w = save_d0;
     reg_d1.w = save_d1;
@@ -11185,7 +11180,7 @@ s8 g_menu_item_indices[16];
 MenuItem g_menu_items[40][MENU_ITEMS_PER_PAGE];
 s32 D_00684CF0[10][4][5];
 u8 g_menu_ranking_score_texts[80];
-u16 g_sim_rules[16];
+SimulationRules g_sim_rules;
 
 #ifdef DDPDOJ_PC
 #include "pc_data_alias.h"
@@ -11207,10 +11202,6 @@ PC_DATA_ALIAS(D_00271501, g_menu_page_item_counts, 0x11);
 PC_DATA_ALIAS(D_00271502, g_menu_page_item_counts, 0x12);
 PC_DATA_ALIAS(D_00271503, g_menu_page_item_counts, 0x13);
 
-PC_DATA_ALIAS(D_00684C88, g_sim_rules, 0x8);
-PC_DATA_ALIAS(D_00684C8A, g_sim_rules, 0xa);
-PC_DATA_ALIAS(D_00684C8C, g_sim_rules, 0xc);
-PC_DATA_ALIAS(D_00684C8E, g_sim_rules, 0xe);
 
 PC_DATA_ALIAS(D_00684CD7, g_menu_ranking_score_texts, 0x37);
 

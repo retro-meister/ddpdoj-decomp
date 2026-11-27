@@ -1,4 +1,5 @@
 #include "common.h"
+#include "simulation.h"
 #include "enemy.h"
 #include "entity.h"
 
@@ -262,7 +263,6 @@ extern u16 g_attract_demo;
 extern u16 g_stage;
 extern u8 g_death_boss_form;
 extern u8 death_D_00290DC0;
-extern u16 g_sim_rules[];
 #endif
 
 void player_collisions(void) {
@@ -816,10 +816,10 @@ loop_130:
                     base = reg_d5.h[0];
                     gain = base;
                     if (death_D_00290DC0 == 0) {
-                        if (g_sim_rules[9] == 2) {
+                        if (g_sim_rules.death_power_style == 2) {
                             gain = 0;
                         }
-                        if (g_sim_rules[9] == 4) {
+                        if (g_sim_rules.death_power_style == 4) {
                             if ((g_stage == 0) || (g_stage == 1) || (g_stage == 2) || (g_stage == 3)) {
                                 gain /= 5;
                             } else {
@@ -829,7 +829,7 @@ loop_130:
                                 gain = 0;
                             }
                         }
-                        if (g_sim_rules[9] == 6) {
+                        if (g_sim_rules.death_power_style == 6) {
                             gain /= 10;
                             if ((g_stage == 0) || (g_stage == 1) || (g_stage == 2)) {
                                 gain = 0;
@@ -839,19 +839,19 @@ loop_130:
                             }
                         }
                     } else {
-                        if (g_sim_rules[9] == 2) {
+                        if (g_sim_rules.death_power_style == 2) {
                             gain *= 2;
                             if (g_stage == 4) {
                                 gain = 0;
                             }
                         }
-                        if (g_sim_rules[9] == 4) {
+                        if (g_sim_rules.death_power_style == 4) {
                             gain *= 2;
                             if (g_stage == 4) {
                                 gain = 0;
                             }
                         }
-                        if (g_sim_rules[9] == 6) {
+                        if (g_sim_rules.death_power_style == 6) {
                             gain *= 2;
                             if (g_stage == 4) {
                                 gain = 0;
@@ -966,10 +966,10 @@ done_140:
 #ifdef DEATH_LABEL
                     gain = 0x208;
                     if (death_D_00290DC0 == 0) {
-                        if (g_sim_rules[9] == 2) {
+                        if (g_sim_rules.death_power_style == 2) {
                             gain = 0;
                         }
-                        if (g_sim_rules[9] == 4) {
+                        if (g_sim_rules.death_power_style == 4) {
                             if ((g_stage == 0) || (g_stage == 1) || (g_stage == 2) || (g_stage == 3)) {
                                 gain /= 5;
                             } else {
@@ -979,7 +979,7 @@ done_140:
                                 gain = 0;
                             }
                         }
-                        if (g_sim_rules[9] == 6) {
+                        if (g_sim_rules.death_power_style == 6) {
                             gain /= 10;
                             if ((g_stage == 0) || (g_stage == 1) || (g_stage == 2)) {
                                 gain = 0;
@@ -989,19 +989,19 @@ done_140:
                             }
                         }
                     } else {
-                        if (g_sim_rules[9] == 2) {
+                        if (g_sim_rules.death_power_style == 2) {
                             gain *= 2;
                             if (g_stage == 4) {
                                 gain = 0;
                             }
                         }
-                        if (g_sim_rules[9] == 4) {
+                        if (g_sim_rules.death_power_style == 4) {
                             gain *= 2;
                             if (g_stage == 4) {
                                 gain = 0;
                             }
                         }
-                        if (g_sim_rules[9] == 6) {
+                        if (g_sim_rules.death_power_style == 6) {
                             gain *= 2;
                             if (g_stage == 4) {
                                 gain = 0;

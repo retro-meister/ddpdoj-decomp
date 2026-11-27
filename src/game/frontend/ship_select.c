@@ -1,4 +1,5 @@
 #include "common.h"
+#include "simulation.h"
 #ifdef DDPDOJ_PC
 #include "pc_replay_storage.h"
 #endif
@@ -369,7 +370,6 @@ s32 fade_reset();
 extern u8 g_default_text_palette[];
 extern u8 g_game_mode;
 extern u8 D_0028E7B4;
-extern u16 g_sim_rules[];
 #endif
 
 void ship_select_task(void) {
@@ -405,19 +405,19 @@ void ship_select_task(void) {
                 reg_d0.w = 0;
                 reg_a0 = (u8 *)g_default_text_palette;
                 text_palette_load();
-                g_sim_rules[0] = 0xFF;
-                g_sim_rules[1] = 0xFF;
-                g_sim_rules[2] = 0xFF;
-                g_sim_rules[3] = 0xFF;
-                g_sim_rules[9] = 0xFF;
+                g_sim_rules.p1_ship_type = 0xFF;
+                g_sim_rules.p1_power_style = 0xFF;
+                g_sim_rules.p2_ship_type = 0xFF;
+                g_sim_rules.p2_power_style = 0xFF;
+                g_sim_rules.death_power_style = 0xFF;
                 if (D_0028E7B4 & 1) {
-                    g_sim_rules[0] = *(u8 *)(reg_a5 + 9);
-                    g_sim_rules[1] = *(u8 *)(reg_a5 + 5);
-                    g_sim_rules[9] = g_sim_rules[1];
+                    g_sim_rules.p1_ship_type = *(u8 *)(reg_a5 + 9);
+                    g_sim_rules.p1_power_style = *(u8 *)(reg_a5 + 5);
+                    g_sim_rules.death_power_style = g_sim_rules.p1_power_style;
                 } else {
-                    g_sim_rules[2] = *(u8 *)(reg_a5 + 8);
-                    g_sim_rules[3] = *(u8 *)(reg_a5 + 4);
-                    g_sim_rules[9] = g_sim_rules[3];
+                    g_sim_rules.p2_ship_type = *(u8 *)(reg_a5 + 8);
+                    g_sim_rules.p2_power_style = *(u8 *)(reg_a5 + 4);
+                    g_sim_rules.death_power_style = g_sim_rules.p2_power_style;
                 }
                 task_stop_self();
                 voice_ok();

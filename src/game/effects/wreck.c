@@ -1,4 +1,5 @@
 #include "common.h"
+#include "simulation.h"
 #include "fade.h"
 #include "enemy.h"
 #include "player.h"
@@ -461,7 +462,6 @@ extern u16 g_p1_lives;
 extern u16 g_p1_maximum_value[];
 extern s16 g_player1[];
 #ifdef DEATH_LABEL
-extern u16 g_sim_rules[];
 #endif
 
 void clear_bonus_p1_step(void) {
@@ -544,9 +544,9 @@ block_3:
         }
         reg_d0.w = 0x01000000;
 #ifdef DEATH_LABEL
-        if (g_sim_rules[1] == 2) {
+        if (g_sim_rules.p1_power_style == 2) {
             *(s32 *)&reg_d0 = 0x01000000;
-        } else if (g_sim_rules[1] == 4) {
+        } else if (g_sim_rules.p1_power_style == 4) {
             reg_d0.w = 0x01500000;
         } else {
             reg_d0.w = 0x03000000;
@@ -572,7 +572,6 @@ extern u16 g_p2_lives;
 extern u16 g_p2_maximum_value[];
 extern s16 g_player2[];
 #ifdef DEATH_LABEL
-extern u16 g_sim_rules[];
 #endif
 
 void clear_bonus_p2_step(void) {
@@ -669,9 +668,9 @@ block_3:
     }
     reg_d0.w = 0x01000000;
 #ifdef DEATH_LABEL
-    if (g_sim_rules[3] == 2) {
+    if (g_sim_rules.p2_power_style == 2) {
         *(s32 *)&reg_d0 = 0x01000000;
-    } else if (g_sim_rules[3] == 4) {
+    } else if (g_sim_rules.p2_power_style == 4) {
         reg_d0.w = 0x01500000;
     } else {
         reg_d0.w = 0x03000000;

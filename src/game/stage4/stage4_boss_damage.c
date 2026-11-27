@@ -1,4 +1,5 @@
 #include "common.h"
+#include "simulation.h"
 #ifdef DDPDOJ_PC
 #include "pc_gameplay_abi.h"
 #endif
@@ -41,7 +42,6 @@ extern u16 g_damage_blink_counter;
 extern u16 g_bomb_entities[24];
 #ifdef DEATH_LABEL
 extern u8 death_D_00290DC0;
-extern u16 g_sim_rules[];
 #endif
 
 void stage4_boss_take_damage(void) {
@@ -132,23 +132,23 @@ damage_found:
     hp = reg_d2.w;
     if (hp != 0) {
         if (death_D_00290DC0 == 0) {
-            if (g_sim_rules[9] == 2) {
+            if (g_sim_rules.death_power_style == 2) {
                 hp = 0;
             }
-            if (g_sim_rules[9] == 4) {
+            if (g_sim_rules.death_power_style == 4) {
                 hp /= 5;
             }
-            if (g_sim_rules[9] == 6) {
+            if (g_sim_rules.death_power_style == 6) {
                 hp /= 10;
             }
         } else {
-            if (g_sim_rules[9] == 2) {
+            if (g_sim_rules.death_power_style == 2) {
                 hp *= 2;
             }
-            if (g_sim_rules[9] == 4) {
+            if (g_sim_rules.death_power_style == 4) {
                 hp *= 2;
             }
-            if (g_sim_rules[9] == 6) {
+            if (g_sim_rules.death_power_style == 6) {
                 hp *= 2;
             }
         }

@@ -1,4 +1,5 @@
 #include "common.h"
+#include "simulation.h"
 #ifdef DDPDOJ_PC
 void boss_movement_start(void);
 #endif
@@ -52,12 +53,11 @@ const BulletLimits g_twin_boss_bullet_limits[2][3][5] = {
 extern u8 g_twin_boss_bullets_halved;
 extern u8 g_twin_boss_bullet_speed_limit;
 extern u8 death_D_00290DC0;
-extern u16 g_sim_rules[];
 
 void twin_boss_set_bullet_limits(u8 attack) {
     u8 type;
 
-    type = g_sim_rules[9] / 2 - 1;
+    type = g_sim_rules.death_power_style / 2 - 1;
     g_twin_boss_bullet_speed_limit = g_twin_boss_bullet_limits[death_D_00290DC0][type][attack].speed_limit;
     g_twin_boss_bullets_halved = g_twin_boss_bullet_limits[death_D_00290DC0][type][attack].halved;
 }
