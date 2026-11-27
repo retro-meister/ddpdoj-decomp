@@ -511,11 +511,7 @@ void stage4_boss_spinner_arms(s32 arg0, s32 arg1, void *arg2) {
     reg_d2.h[1] = ((arg1) != 0) ? *(u16 *)((u8 *)reg_a6 + ((s16)(arg1) & ~1)) : ENTITY(reg_a6)->flags.h;
     reg_d2.h[0] = ((arg1 + 2) != 0) ? *(u16 *)((u8 *)reg_a6 + ((s16)(arg1 + 2) & ~1)) : ENTITY(reg_a6)->flags.h;
     reg_d4.w = 0;
-#ifdef DDPDOJ_PC
-    ARCADE_POINTER_TABLE_AT(Fn, stage4_boss_spinner_arms_table, idx * 4)();
-#else
-    ((Fn)*(u32 *)((u8 *)((u8 *)stage4_boss_spinner_arms_table) + (idx * 4)))();
-#endif
+    stage4_boss_spinner_arms_table[idx]();
 next_0:
     if (SPINNER_ARMS(reg_a4)->arm != 1) goto next_1;
     reg_d0.h[0] = ((arg0) != 0) ? *(u16 *)((u8 *)reg_a6 + ((s16)(arg0) & ~1)) : ENTITY(reg_a6)->flags.h;
@@ -546,11 +542,7 @@ next_0:
     reg_d2.h[1] = ((arg1) != 0) ? *(u16 *)((u8 *)reg_a6 + ((s16)(arg1) & ~1)) : ENTITY(reg_a6)->flags.h;
     reg_d2.h[0] = ((arg1 + 2) != 0) ? *(u16 *)((u8 *)reg_a6 + ((s16)(arg1 + 2) & ~1)) : ENTITY(reg_a6)->flags.h;
     reg_d4.w = 0;
-#ifdef DDPDOJ_PC
-    ARCADE_POINTER_TABLE_AT(Fn, stage4_boss_spinner_arms_table, idx * 4)();
-#else
-    ((Fn)*(u32 *)((u8 *)((u8 *)stage4_boss_spinner_arms_table) + (idx * 4)))();
-#endif
+    stage4_boss_spinner_arms_table[idx]();
 next_1:
     if (SPINNER_ARMS(reg_a4)->arm != 2) goto next_2;
     reg_d0.h[0] = ((arg0) != 0) ? *(u16 *)((u8 *)reg_a6 + ((s16)(arg0) & ~1)) : ENTITY(reg_a6)->flags.h;
@@ -581,11 +573,7 @@ next_1:
     reg_d2.h[1] = ((arg1) != 0) ? *(u16 *)((u8 *)reg_a6 + ((s16)(arg1) & ~1)) : ENTITY(reg_a6)->flags.h;
     reg_d2.h[0] = ((arg1 + 2) != 0) ? *(u16 *)((u8 *)reg_a6 + ((s16)(arg1 + 2) & ~1)) : ENTITY(reg_a6)->flags.h;
     reg_d4.w = 0;
-#ifdef DDPDOJ_PC
-    ARCADE_POINTER_TABLE_AT(Fn, stage4_boss_spinner_arms_table, idx * 4)();
-#else
-    ((Fn)*(u32 *)((u8 *)((u8 *)stage4_boss_spinner_arms_table) + (idx * 4)))();
-#endif
+    stage4_boss_spinner_arms_table[idx]();
 next_2:
     SPINNER_ARMS(reg_a4)->arm += 1;
     if (SPINNER_ARMS(reg_a4)->arm != 3) goto next_3;
@@ -1920,11 +1908,7 @@ block_3:
             reg_d7.h[0] = reg_d1.h[0];
             reg_d4.w = 0;
             reg_tmp.h[0] = BOTH_SIDES(reg_a4)->pattern;
-#ifdef DDPDOJ_PC
-            ARCADE_POINTER_TABLE_AT(Fn, stage4_boss_fire_both_sides_table, reg_tmp.h[0] & ~3)();
-#else
-            ((Fn)*(u32 *)((u8 *)((u8 *)stage4_boss_fire_both_sides_table) + (reg_tmp.h[0] & ~3)))();
-#endif
+            stage4_boss_fire_both_sides_table[reg_tmp.h[0] >> 2]();
             BOTH_SIDES(reg_a4)->pattern += 4;
             BOTH_SIDES(reg_a4)->pattern &= 7;
             BOTH_SIDES(reg_a4)->burst.t.count -= 1;

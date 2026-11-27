@@ -728,11 +728,7 @@ void stage4_boss_final_explosion_cycle(void) {
     if ((s32) reg_tmp.b[0] <= 0) {
         EXPLODING(reg_a4)->cycle_timer.t.count = (u8) EXPLODING(reg_a4)->cycle_timer.t.reload;
         reg_tmp.h[0] = EXPLODING(reg_a4)->cycle;
-#ifdef DDPDOJ_PC
-        ARCADE_POINTER_TABLE_AT(Fn, stage4_boss_blast_sounds, reg_tmp.h[0] & ~3)();
-#else
-        ((Fn)*(u32 *)((u8 *)stage4_boss_blast_sounds + (reg_tmp.h[0] & ~3)))();
-#endif
+        stage4_boss_blast_sounds[reg_tmp.h[0] >> 2]();
         EXPLODING(reg_a4)->cycle += 4;
         EXPLODING(reg_a4)->cycle &= 0x1F;
     }
