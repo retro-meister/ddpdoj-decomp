@@ -10820,6 +10820,7 @@ extern u8 g_game_frame_ran;
 extern s8 g_bomb_panel_seen;
 extern u8 D_0028E7B4;
 extern u16 g_sim_rules[];
+#define simulation_task_step g_sim_rules[10]
 #ifdef DEATH_LABEL
 extern u8 death_D_00290DC0;
 extern u8 death_D_00290DBC;
@@ -10885,7 +10886,7 @@ void simulation_task_begin() {
     } else {
         g_sim_rules[7] = 3;
     }
-    g_sim_rules[10] = 0;
+    simulation_task_step = 0;
     g_death_boss_form = 0;
     death_D_00290850 = 0;
     death_D_00290DBC = 0;
@@ -10924,7 +10925,7 @@ void simulation_task_begin() {
     reg_d0.h[0] = 10;
     g_sim_rules[7] = 0;
     g_replay_file_finalized = 0;
-    g_sim_rules[10] = 0;
+    simulation_task_step = 0;
     task_start();
     *(u16 *)(reg_a0 + 4) = g_sim_rules[6];
     stage_doors_clear();
@@ -10978,8 +10979,6 @@ extern u8 D_00684C88[];
 extern u16 D_00684C8A[];
 extern u16 D_00684C8C[];
 extern u8 D_00684C8E[];
-extern u8 simulation_task_run_buffer[];
-extern u16 D_00684C94[];
 #ifdef DEATH_LABEL
 s32 fade_reset();
 extern u8 death_D_00290DC0;
@@ -11021,18 +11020,18 @@ void simulation_task_run() {
     save_a4 = reg_a4;
     save_a5 = reg_a5;
     stage_doors_update();
-    switch (D_00684C94[0]) {                           /* irregular */
+    switch (simulation_task_step) {                           /* irregular */
     default:
-        D_00684C94[0] += 1;
+        simulation_task_step += 1;
         break;
     case 0:
         stage_doors_open_request();
-        D_00684C94[0] += 1;
+        simulation_task_step += 1;
         break;
 #ifdef DEATH_LABEL
     case 2:
         fade_reset();
-        D_00684C94[0] += 1;
+        simulation_task_step += 1;
         break;
 #endif
     case 16:
@@ -11041,7 +11040,7 @@ void simulation_task_run() {
         g_start_rule_rank = 0xFF;
         g_start_rule_death = 0;
         g_setting_difficulty = D_00684C88[0];
-        g_setting_extend = simulation_task_run_buffer[0];
+        g_setting_extend = *(u8 *)&g_sim_rules[8];
         g_setting_ship_stock = D_00684C8E[0];
         simulation_ships_start(D_00684C88[0]);
         g_pad_input_locked = 1;
@@ -11052,24 +11051,24 @@ void simulation_task_run() {
             g_p2_max_hits = (*(u16 *)&death_D_00290DB4);
         }
 #endif
-        D_00684C94[0] += 1;
+        simulation_task_step += 1;
         break;
 #ifdef DEATH_LABEL
     case 17:
         death_D_00290DBC = 0;
-        D_00684C94[0] += 1;
+        simulation_task_step += 1;
         break;
 #endif
     case MAIN_OR_DEATH_LABEL(17, 18):
         if (g_score_panel_intro == 0) {
-            D_00684C94[0] += 1;
+            simulation_task_step += 1;
         }
         break;
     case MAIN_OR_DEATH_LABEL(18, 19):
         frame_counters_reset();
         if (g_game_frame_ran != 0) {
             g_pad_input_locked = 0;
-            D_00684C94[0] += 1;
+            simulation_task_step += 1;
             g_loop = D_00684C8A[0];
             enemies_resume();
 #ifdef DEATH_LABEL
@@ -11186,8 +11185,7 @@ s8 g_menu_item_indices[16];
 MenuItem g_menu_items[40][MENU_ITEMS_PER_PAGE];
 s32 D_00684CF0[10][4][5];
 u8 g_menu_ranking_score_texts[80];
-u8 simulation_task_run_buffer[16];
-u16 g_sim_rules[8];
+u16 g_sim_rules[16];
 
 #ifdef DDPDOJ_PC
 #include "pc_data_alias.h"
@@ -11272,7 +11270,6 @@ PC_DATA_ALIAS(g_menu_value_vibration, menu_game_option_adjust_buffer, 0x4);
 PC_DATA_ALIAS(g_menu_value_autosave, menu_save_load_adjust_buffer, 0x3);
 PC_DATA_ALIAS(D_0068DC35, menu_save_load_adjust_buffer, 0x5);
 PC_DATA_ALIAS(D_0068DC36, menu_save_load_adjust_buffer, 0x6);
-PC_DATA_ALIAS(D_00684C94, simulation_task_run_buffer, 0x4);
 
 #ifdef DEATH_LABEL
 PC_DATA_ALIAS(death_D_00628F01, menu_death_option_adjust_buffer, 0x1);
