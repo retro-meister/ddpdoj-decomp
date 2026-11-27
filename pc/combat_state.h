@@ -14,6 +14,14 @@ typedef struct {
     EnemySlots enemies;
     Entity entities[150], spare_entities[50];
     EnemyState requests[40], spare_request;
+    u8 explosions[4480];
+    u8 pending_explosion[64];
+    u8 sparks[2048];
+    u16 wrecks[720];
+    u16 wreck_counts[8];
+    u16 debris[640];
+    u16 debris_counts[8];
+    u32 debris_spawn;
     u8 placement[32];
     u8 bullets[PC_BULLET_POOL_BYTES];
     u16 request_end, enemy_count, second_count, occupied;
