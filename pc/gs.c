@@ -130,8 +130,10 @@ static bool draw_solid_rect(GsDrawState *state)
 static bool draw_textured(GsDrawState *state, unsigned primitive)
 {
     bool framebuffer_texture = state->target && (state->tex0 & 0x3fff) == state->target_base;
+    bool linear = (state->tex1 & (1 << 5)) != 0;
     SDL_Texture *texture = framebuffer_texture ? state->target :
-        pc_gs_texture_get(state->renderer, state->tex0, state->texa);
+        pc_gs_texture_get(state->renderer, state->tex0, state->texa, state->vertices,
+                          state->game ? state->vertex_count : 0, linear);
     SDL_BlendMode blend = draw_blend(state);
     if (!texture || blend == SDL_BLENDMODE_INVALID || !(state->prim & (1 << 8))) {
         return false;
@@ -140,7 +142,7 @@ static bool draw_textured(GsDrawState *state, unsigned primitive)
         /* Gallery's unblended indexed artwork uses transparent black. */
         blend = SDL_BLENDMODE_BLEND;
     }
-    SDL_ScaleMode scale = (state->tex1 & (1 << 5)) ? SDL_SCALEMODE_LINEAR : SDL_SCALEMODE_NEAREST;
+    SDL_ScaleMode scale = linear ? SDL_SCALEMODE_LINEAR : SDL_SCALEMODE_NEAREST;
     if (!SDL_SetTextureBlendMode(texture, blend) || !SDL_SetTextureScaleMode(texture, scale)) {
         return false;
     }

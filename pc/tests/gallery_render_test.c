@@ -1,6 +1,7 @@
 #include "gallery/gallery.h"
 #include "disc_image.h"
 #include "gs.h"
+#include "gs_texture.h"
 #include "pc_gs_game.h"
 
 #include <SDL3/SDL.h>
@@ -200,6 +201,53 @@ static void check_texture_draws(SDL_Renderer *renderer)
     g_gallery = NULL;
 }
 
+static void check_streamed_sprite(SDL_Renderer *renderer)
+{
+    enum { BASE = 0x1400, CLUT = 0x1700 };
+    const u64 tex0 = SCE_GS_SET_TEX0(BASE, 1, SCE_GS_PSMT8, 3, 2, 0, 0, CLUT, SCE_GS_PSMCT32, 0, 0, 1);
+    const SDL_Vertex corners[2] = { { .tex_coord = {2, 2} }, { .tex_coord = {0, 0} } };
+    const u8 background[32] = {0};
+    const u8 sprite[] = {1, 2, 2, 1};
+    const u8 edge = 2;
+    SDL_Color palette[256] = { [1] = {224, 0, 0, 128}, [2] = {0, 96, 0, 128} };
+    pc_gs_bind_game(renderer);
+    upload(CLUT, SCE_GS_PSMCT32, 0, 0, 16, 16, palette);
+    upload(BASE, SCE_GS_PSMT8, 0, 0, 8, 4, background);
+    upload(BASE, SCE_GS_PSMT8, 0, 0, 2, 2, sprite);
+    SDL_Texture *first = pc_gs_texture_get(renderer, tex0, 0, corners, 2, false);
+    require(first != NULL, "Resolve a flipped sprite");
+    upload(BASE, SCE_GS_PSMT8, 0, 0, 2, 2, sprite);
+    require(pc_gs_texture_get(renderer, tex0, 0, corners, 2, false) == first,
+            "Reuse an identical sprite and palette");
+
+    /* A flipped edge can sample one texel outside the upload. */
+    upload(BASE, SCE_GS_PSMT8, 2, 0, 1, 1, &edge);
+    upload(BASE, SCE_GS_PSMT8, 0, 0, 2, 2, sprite);
+    SDL_Texture *second = pc_gs_texture_get(renderer, tex0, 0, corners, 2, false);
+    require(second != NULL && second != first, "Preserve the changed edge texel");
+    palette[2].b = 192;
+    upload(CLUT, SCE_GS_PSMCT32, 0, 0, 16, 16, palette);
+    SDL_Texture *third = pc_gs_texture_get(renderer, tex0, 0, corners, 2, false);
+    require(third != NULL && third != second, "Refresh a sprite after a palette change");
+
+    SDL_Texture *versions[] = { first, second, third };
+    SDL_FRect source = {0, 0, 3, 1};
+    require(SDL_SetRenderClipRect(renderer, NULL) &&
+            SDL_SetRenderLogicalPresentation(renderer, 0, 0, SDL_LOGICAL_PRESENTATION_DISABLED),
+            "Use native pixels for sprite readback");
+    for (int row = 0; row < 3; ++row) {
+        SDL_FRect dest = {0, (float)row, 3, 1};
+        require(SDL_RenderTexture(renderer, versions[row], &source, &dest), "Draw each cached version");
+    }
+    SDL_Surface *pixels = SDL_RenderReadPixels(renderer, NULL);
+    require(pixels != NULL, "Read the sprite versions");
+    expect_pixel(pixels, 0, 0, 224, 0, 0);
+    expect_pixel(pixels, 2, 0, 0, 0, 0);
+    expect_pixel(pixels, 2, 1, 0, 96, 0);
+    expect_pixel(pixels, 2, 2, 0, 96, 192);
+    SDL_DestroySurface(pixels);
+}
+
 static void check_retail_loading_letter(SDL_Renderer *renderer, const char *iso)
 {
     static u8 atlas[FONT_WIDTH * FONT_HEIGHT / 2];
@@ -296,6 +344,7 @@ int main(int argc, char **argv)
         check_retail_loading_letter(renderer, argv[next + 1]);
     }
     check_game_clip(renderer);
+    check_streamed_sprite(renderer);
 
     pc_gs_bind_gallery(NULL);
     SDL_DestroyRenderer(renderer);
