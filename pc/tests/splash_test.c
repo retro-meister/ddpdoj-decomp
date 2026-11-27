@@ -57,14 +57,14 @@ static void check_menu_overlay(SDL_Renderer *renderer) {
     SDL_Surface *pixels = SDL_RenderReadPixels(renderer, NULL);
     require(pixels != NULL, "Read the menu target");
 
-    /* The upright view rotates target rows 16..239 across the playfield. */
+    /* The upright view samples the last covered row at its right edge. */
     Uint8 r, g, b;
     require(SDL_ReadSurfacePixel(pixels, 200, 120, &r, &g, &b, NULL) &&
             r >= 58 && r <= 62 && g == r && b == r, "Darken the center of the menu");
     expect_pixel(pixels, 200, 18, r, g, b);
-    expect_pixel(pixels, 200, 238, r, g, b);
+    expect_pixel(pixels, 200, 240, r, g, b);
     expect_pixel(pixels, 200, 12, 240, 240, 240);
-    expect_pixel(pixels, 200, 244, 240, 240, 240);
+    expect_pixel(pixels, 200, 241, 240, 240, 240);
     SDL_DestroySurface(pixels);
 }
 

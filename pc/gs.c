@@ -162,14 +162,6 @@ static bool draw_textured(GsDrawState *state, unsigned primitive)
     int count = 3;
     const int indices[] = { 0, 2, 1, 1, 2, 3 };
     if (primitive == SCE_GS_PRIM_SPRITE) {
-        if (state->game) {
-            /* The GS samples sprites at integer pixel coordinates. SDL samples
-             * at half-integers, including the first texel of a flipped sprite. */
-            for (int i = 0; i < 2; ++i) {
-                vertices[i].position.x += 0.5f;
-                vertices[i].position.y += 0.5f * state->vertical_scale;
-            }
-        }
         vertices[3] = vertices[1];
         vertices[1].position.y = vertices[0].position.y;
         vertices[1].tex_coord.y = vertices[0].tex_coord.y;
@@ -202,6 +194,12 @@ static void vertex_kick(GsDrawState *state, u64 value)
     SDL_FPoint point = { ((int)(value & 0xFFFF) - (int)state->origin_x) / 16.0f,
                          ((int)((value >> 16) & 0xFFFF) - (int)state->origin_y) *
                              (state->vertical_scale / 16.0f) };
+    /* Game packets address integer GS pixel centers. Apply the SDL half-pixel
+     * offset to both artwork and overlays before their coverage is rasterized. */
+    if (state->game) {
+        point.x += 0.5f;
+        point.y += 0.5f * state->vertical_scale;
+    }
     SDL_Color color = state->color;
     bool textured = state->prim & (1 << 4);
     float rgb_scale = textured ? 128.0f : 255.0f;
