@@ -294,7 +294,8 @@ int main(int argc, char **argv)
 {
     bool black_slot = argc == 6 && !strcmp(argv[5], "--black-label");
     bool later_stage = argc == 6 && !strcmp(argv[5], "--later-stage");
-    if (black_slot || later_stage) --argc;
+    bool boss_slot = argc == 6 && !strcmp(argv[5], "--boss");
+    if (black_slot || later_stage || boss_slot) --argc;
     const char *save_pools = argc == 5 && !strcmp(argv[3], "--save-pools") ? argv[4] : NULL;
     const char *load_pools = argc == 5 && !strcmp(argv[3], "--load-pools") ? argv[4] : NULL;
     if (save_pools || load_pools) argc = 3;
@@ -305,7 +306,7 @@ int main(int argc, char **argv)
 #endif
 #ifndef DEATH_LABEL
     const bool two_player = argc == 4 && strcmp(argv[3], "--two-player") == 0;
-    const RetailReplay *replay = later_stage ? &super_replays[4] : NULL;
+    const RetailReplay *replay = later_stage ? &super_replays[4] : boss_slot ? &super_replays[0] : NULL;
     if (argc >= 4 && strcmp(argv[3], "--super-replay") == 0) {
         if (argc == 4) replay = &super_replays[2];
         if (argc == 5 && strlen(argv[4]) == 1 && argv[4][0] >= '0' && argv[4][0] <= '9') {
@@ -355,7 +356,7 @@ int main(int argc, char **argv)
                     "Boot the fresh process before resuming gameplay");
         }
         require(pc_game_load(load_pools, pool_mode, 1), "Load gameplay in a fresh process");
-        require(later_stage || has_relocated_enemy(), "Resolve the saved entity and callback in this process");
+        require(later_stage || boss_slot || has_relocated_enemy(), "Resolve the saved entity and callback in this process");
         char *oracle = NULL;
         require(SDL_asprintf(&oracle, "%s.expected", load_pools) >= 0, "Resolve oracle file");
         size_t size;
@@ -433,6 +434,9 @@ int main(int argc, char **argv)
         require(game_take_mode_request() == GAME_MODE_NONE, "Keep running the selected mode");
         bool snapshot_frame = played >= 300 && has_relocated_enemy();
 #ifndef DEATH_LABEL
+        extern u8 g_boss_present;
+        if (boss_slot) snapshot_frame = g_replay_mode_begun == REPLAY_PLAYBACK &&
+                                        g_replay_position >= 6800 && g_boss_present;
         if (later_stage) snapshot_frame = g_replay_mode_begun == REPLAY_PLAYBACK &&
                                           g_replay_position >= 900;
 #endif
