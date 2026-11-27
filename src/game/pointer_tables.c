@@ -1,4 +1,7 @@
 #include "common.h"
+#include "player_tables.h"
+
+extern BombDisplayTable bomb_display_data;
 #include "enemy.h"
 #include "shot_placement.h"
 #include "task.h"
@@ -3214,7 +3217,6 @@ extern u16 D_00257600[];
 extern u16 D_00257630[];
 extern u16 D_00257660[];
 extern u16 D_00257690[];
-extern u16 option_sprites_b_00_00_05[];
 extern u16 option_sprites_b_00_01_05[];
 extern u16 option_sprites_b_00_02_05[];
 extern u16 option_sprites_b_00_03_05[];
@@ -3319,7 +3321,7 @@ void option_power_pointers_store(void) {
     STORE_ARCADE_ADDRESS(option_strong_sprite_a_03 + 3, option_strong_sprite_a_03_01);
     STORE_ARCADE_ADDRESS(option_strong_sprite_a_04 + 3, option_strong_sprite_a_04_01);
     STORE_ARCADE_ADDRESS(option_hyper_sprite_a_00 + 3, option_hyper_sprite_a_00_01);
-    STORE_ARCADE_ADDRESS(option_sprites_b_00_00 + 10, option_sprites_b_00_00_05);
+    STORE_ARCADE_ADDRESS(option_sprites_b_00_00 + 10, bomb_display_data.option_frames);
     STORE_ARCADE_ADDRESS(option_sprites_b_00_01 + 10, option_sprites_b_00_01_05);
     STORE_ARCADE_ADDRESS(option_sprites_b_00_02 + 10, option_sprites_b_00_02_05);
     STORE_ARCADE_ADDRESS(option_sprites_b_00_03 + 10, option_sprites_b_00_03_05);
@@ -3329,7 +3331,7 @@ void option_power_pointers_store(void) {
     STORE_ARCADE_ADDRESS(option_sprites_b_01_02 + 10, option_sprites_b_01_02_05);
     STORE_ARCADE_ADDRESS(option_sprites_b_01_03 + 10, option_sprites_b_01_03_05);
     STORE_ARCADE_ADDRESS(option_sprites_b_01_04 + 10, option_sprites_b_01_04_05);
-    STORE_ARCADE_ADDRESS(option_strong_sprites_b_00_00 + 10, option_sprites_b_00_00_05);
+    STORE_ARCADE_ADDRESS(option_strong_sprites_b_00_00 + 10, bomb_display_data.option_frames);
     STORE_ARCADE_ADDRESS(option_strong_sprites_b_00_01 + 10, option_sprites_b_00_01_05);
     STORE_ARCADE_ADDRESS(option_strong_sprites_b_00_02 + 10, option_sprites_b_00_02_05);
     STORE_ARCADE_ADDRESS(option_strong_sprites_b_00_03 + 10, option_sprites_b_00_03_05);

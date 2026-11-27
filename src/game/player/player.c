@@ -14,6 +14,9 @@ s32 p2_maximum_level_show();
 #endif
 #include "entity.h"
 #include "player.h"
+#include "player_tables.h"
+
+extern BombDisplayTable bomb_display_data PS2_SMALL_DATA;
 
 void player_spawn(void);
 void player_spawn_power_setup(void);
@@ -1660,13 +1663,10 @@ void player_sprite_update(void) {
 
 typedef void (*Fn)();
 
-extern u8 hyper_bullet_speed_table[];
 extern u8 player_update_table_2[];
 extern u8 ship0_shot_lists_1[];
 extern u8 ship0_shot_lists_2[];
 extern u8 ship0_shot_lists_3[];
-extern u8 player_update_table_5[2];
-extern u8 player_update_table_6[2];
 extern u8 D_0029EA50[];
 s32 bomb_palette_load_first();
 s32 bomb_palette_load_second();
@@ -1938,7 +1938,7 @@ block_13:
             if (reg_d1.h[0] != 0) {
                 reg_d1.h[0] -= 1;
                 reg_d1.h[0] *= 2;
-                reg_a1 = (u8 *)GAME_RULE(hyper_bullet_speed_table, (u8 *)black_label_hyper_speeds[g_loop != 0]);
+                reg_a1 = (u8 *)GAME_RULE(HYPER_SPEED_VALUES, BLACK_LABEL_SPEED_VALUES(g_loop != 0));
                 reg_d6.h[0] -= 1;
                 reg_d6.h[0] *= 2;
                 reg_d6.h[0] = (reg_d6.h[0] != 0) ? *(u16 *)((u8 *)reg_a1 + ((s16)reg_d6.h[0] & ~1)) : *(u16 *)reg_a1;
@@ -2062,7 +2062,7 @@ block_13:
                         PLAYER(reg_a6)->shield_anim_delay.h = 0U;
                         PLAYER(reg_a6)->shield_anim_frame.h = 0x3CU;
                         PLAYER(reg_a6)->move.b.speed += 6;
-                        reg_a0 = (u8 *)player_update_table_5;
+                        reg_a0 = (u8 *)&bomb_display_data;
                     } else {
                         bomb_palette_load_second();
                         PLAYER(reg_a6)->shield_anim_delay.h = 0x101U;
@@ -2087,7 +2087,7 @@ block_13:
                         *(s16 *)reg_a2 = 1;
                         reg_a2 = temp_s0;
                         bullet_cancel_begin();
-                        reg_a0 = (u8 *)player_update_table_6;
+                        reg_a0 = (u8 *)&bomb_display_data + sizeof(bomb_display_data.shot_bomb);
                     }
                     reg_a0 += reg_d1.h[0];
                     reg_d0.h[0] = *(u16 *)reg_a0;

@@ -1,5 +1,6 @@
 #include "common.h"
 #include "fade.h"
+#include "player_tables.h"
 
 void fade_in_start(void);
 void fade_out_start(void);
@@ -956,6 +957,22 @@ FadeArea fade_areas[3] = {
     { g_palette_bank_a, fade_areas_3 },
     { fade_areas_4, fade_areas_5 },
 };
+
+/* The last halfword of the alignment gap supplies the speed for zero hypers. */
+HyperSpeedTable hyper_speed_steps __attribute__((aligned(8))) = {
+    { 0, 0, 0 }, 0, {
+    0x0001, 0x0001, 0x0002, 0x0002, 0x0003, 0x0003, 0x0004, 0x0004,
+    0x0005, 0x0005, 0x0006, 0x0007, 0x0008, 0x0009, 0x000A, 0x000A,
+    0x000A, 0x000A, 0x000A, 0x000A, 0x000A, 0x000A, 0x000A, 0x000A,
+    0x000A,
+    },
+};
+
+#ifdef DDPDOJ_PC
+#include <stddef.h>
+_Static_assert(offsetof(HyperSpeedTable, values) == 8, "first hyper speed offset");
+_Static_assert(sizeof(HyperSpeedTable) == 58, "hyper speed lookup size");
+#endif
 
 /* .sbss (the compiler lays these out in reverse) */
 s32 fades_reset_state;

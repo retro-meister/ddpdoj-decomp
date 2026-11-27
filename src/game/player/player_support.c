@@ -8,6 +8,7 @@ void p1_maximum_level_show();
 void p2_maximum_level_show();
 #endif
 #include "player.h"
+#include "player_tables.h"
 #ifdef DDPDOJ_PC
 #include <stddef.h>
 #define AFTERIMAGE_START(field) ((u8 *)&g_player_afterimages + offsetof(PlayerAfterimageStorage, field))
@@ -25,29 +26,10 @@ extern void (*D_0028C5E0[2])();
 #endif
 
 #ifdef DDPDOJ_BONUS_FEATURES
-u16 black_label_hyper_speeds[2][35] = {
+BlackLabelHyperSpeedTable black_label_speed_steps = { 0, {
     { 1,1,1,1,1, 2,2,2,2,2, 3,3,3,3,3, 4,4,4,4,4, 5,5,5,5,6, 6,6,6,7,7, 7,7,8,8,8 },
     { 1,1,1,1,2, 2,2,2,3,3, 3,3,4,4,5, 5,6,6,7,7, 8,8,9,9,10, 10,11,11,12,12, 13,13,14,14,15 },
-};
-#endif
-
-#ifdef DDPDOJ_PC
-u16 hyper_bullet_speed_table_storage[] = {
-    0x0000,
-#else
-u16 hyper_bullet_speed_table[] = {
-#endif
-    0x0001, 0x0001, 0x0002, 0x0002, 0x0003, 0x0003, 0x0004, 0x0004,
-    0x0005, 0x0005, 0x0006, 0x0007, 0x0008, 0x0009, 0x000A, 0x000A,
-    0x000A, 0x000A, 0x000A, 0x000A, 0x000A, 0x000A, 0x000A, 0x000A,
-    0x000A,
-};
-
-#ifdef DDPDOJ_PC
-#include "pc_data_alias.h"
-
-extern u16 hyper_bullet_speed_table[];
-PC_DATA_ALIAS(hyper_bullet_speed_table, hyper_bullet_speed_table_storage, 2);
+} };
 #endif
 
 u16 bomb_capacity_glyphs[] = {
@@ -501,22 +483,22 @@ void hyper_bullet_speed_update(void) {
     if ((s32) g_p2_hyper_total > (s32) reg_d0.h[0]) {
         reg_d0.h[0] = g_p2_hyper_total;
     }
-    if (reg_d0.h[0] == 0) goto next_1;
+    if (reg_d0.h[0] == 0) goto apply_loop_speed;
     reg_d2.h[0] = g_p1_hyper_active;
     reg_d2.h[0] |= g_p2_hyper_active;
-    if (reg_d2.h[0] != 0) goto next_2;
+    if (reg_d2.h[0] != 0) goto lookup_hyper_speed;
     reg_d0.h[0] >>= 2;
-    if (reg_d0.h[0] == 0) goto next_1;
-next_2:
+    if (reg_d0.h[0] == 0) goto apply_loop_speed;
+lookup_hyper_speed:
     reg_d2.h[0] = reg_d0.h[0];
-    reg_a0 = (u8 *) GAME_RULE((u16 *)hyper_bullet_speed_table, black_label_hyper_speeds[g_loop != 0]);
+    reg_a0 = (u8 *) GAME_RULE(HYPER_SPEED_VALUES, BLACK_LABEL_SPEED_VALUES(g_loop != 0));
     reg_d2.h[0] -= 1;
     reg_d2.h[0] *= 2;
     reg_d0.h[0] = (reg_d2.h[0] != 0) ? *(u16 *) ((u8 *) reg_a0 + ((s16) reg_d2.h[0] & ~1)) : *(u16 *) reg_a0;
     if (g_boss_present_b1 & 4) {
         reg_d0.h[0] += GAME_RULE(2, g_stage < 2 ? 1 : 2);
     }
-next_1:
+apply_loop_speed:
     if (g_loop != 0) {
         reg_d0.h[0] += 1;
         if ((g_stage == 4) && (g_true_last_boss != 0)) {

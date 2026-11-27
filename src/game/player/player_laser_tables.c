@@ -134,7 +134,6 @@ extern u16 option_power_value_05_07[24];
 extern u16 option_strong_param_00_07[24];
 extern u16 option_strong_param_05_07[24];
 extern u16 option_hyper_param_00_07[24];
-extern u16 option_sprites_b_00_00_05[4];
 extern u16 option_sprites_b_00_01_05[4];
 extern u16 option_sprites_b_00_02_05[4];
 extern u16 option_sprites_b_00_03_05[4];
@@ -898,10 +897,6 @@ void (*p2_laser_part_routines[20])(void) = {
     p2_laser_muzzle_hyper,
     p2_laser_ship_glow_hyper,
     p2_laser_option_glow_hyper,
-};
-
-u16 option_sprites_b_00_00_05[4] = {
-    0x0000, 0x06F0, 0x0000, 0x06F1,
 };
 
 u16 option_sprites_b_00_01_05[4] = {

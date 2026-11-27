@@ -24,7 +24,6 @@ static inline unsigned int black_label_ring_frames(unsigned int type)
         return (type - 0x23) * 4;
     return 0;
 }
-extern unsigned short black_label_hyper_speeds[2][35];
 #define GAME_RULE(original, black) (g_black_label_active ? (black) : (original))
 #else
 #define GAME_RULE(original, black) (original)

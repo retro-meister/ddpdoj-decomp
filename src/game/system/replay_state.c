@@ -1,4 +1,7 @@
 #include "common.h"
+#include "player_tables.h"
+
+extern BombDisplayTable bomb_display_data;
 #include "score_cell.h"
 #include "pickups.h"
 #ifdef DDPDOJ_PC
@@ -359,7 +362,6 @@ extern u8 player_shot_2_impact_frames_17[];
 extern u8 player_shot_2_impact_frames_19[];
 extern u8 player_shot_2_impact_frames_21[];
 extern u8 player_shot_2_impact_frames_23[];
-extern u8 option_sprites_b_00_00_05[];
 extern u8 option_sprites_b_00_01_05[];
 extern u8 option_sprites_b_00_02_05[];
 extern u8 option_sprites_b_00_03_05[];
@@ -883,7 +885,7 @@ void *replay_targets_shot_lists[] = {
 };
 
 void *replay_targets_option_sprites[] = {
-    option_sprites_b_00_00_05,
+    bomb_display_data.option_frames,
     option_sprites_b_00_01_05,
     option_sprites_b_00_02_05,
     option_sprites_b_00_03_05,
