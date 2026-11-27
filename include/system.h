@@ -2,6 +2,7 @@
 #define DDPDOJ_SYSTEM_H
 
 #include "common.h"
+#include "gfx_types.h"
 #include "sdk/ps2sdk.h"
 
 extern sceGsDBuffDc g_gs_dbuff;
@@ -45,6 +46,6 @@ void vibration_resume(void);
 void vibration_update(void);
 
 void gfx_draw_shaded_box(s32 x, s32 y, s32 w, s32 h, s32 depth, s32 alpha);
-void gfx_draw_color_box(s32 x, s32 y, s32 w, s32 h, s32 depth, s64 alpha, s32 r, s32 g, s32 b);
+void gfx_draw_color_box(s32 x, s32 y, s32 w, s32 h, s32 depth, GfxBoxAlphaArg alpha, s32 r, s32 g, s32 b);
 
 #endif

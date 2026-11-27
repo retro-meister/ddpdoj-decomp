@@ -8,7 +8,7 @@ void fade_is_running(void);
 void fade_release(void);
 void fade_start_out(void);
 void fade_to_black(void);
-void gfx_draw_color_box(s32 x, s32 y, s32 w, s32 h, s32 depth, s64 alpha, s32 r, s32 g, s32 b);
+void gfx_draw_color_box(s32 x, s32 y, s32 w, s32 h, s32 depth, s32 alpha, s32 r, s32 g, s32 b);
 void glyph_queue_add(s32 x, s32 y, s32 z, s32 page, s32 alpha, s32 attr, s32 wide);
 void glyph_queue_clear(void);
 void glyph_queue_flush(void);

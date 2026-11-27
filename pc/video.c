@@ -124,17 +124,6 @@ static void splash_quad_flush(void) {
 }
 #endif
 
-void gfx_draw_color_box(s32 x, s32 y, s32 w, s32 h, s32 depth, s64 alpha,
-                        s32 r, s32 g, s32 b) {
-    (void)depth;
-    SDL_FRect rect = {x, y, w, h};
-    if (!output || !SDL_SetRenderDrawBlendMode(output, SDL_BLENDMODE_BLEND) ||
-        !SDL_SetRenderDrawColor(output, (Uint8)r, (Uint8)g, (Uint8)b, gs_opacity(alpha)) ||
-        !SDL_RenderFillRect(output, &rect)) {
-        video_failed = true;
-    }
-}
-
 #include "screen_fade.inc.h"
 #define quad_flush splash_quad_flush
 #include "splash_draw.inc.h"

@@ -586,7 +586,6 @@ void stage_map_hide(void) {
     g_stage_map_alpha = 0x80;
 }
 
-extern void gfx_draw_color_box(s32 x, s32 y, s32 w, s32 h, s32 depth, s64 alpha, s32 r, s32 g, s32 b);
 extern u8 g_stage_map_enabled;
 extern u8 g_paused;
 

@@ -188,7 +188,7 @@ target_link_libraries(ddpdoj_gallery PRIVATE ddpdoj_cdvd ddpdoj_gs ddpdoj_mode d
 foreach(mode IN ITEMS main death)
     # The original core groups call into one another. Let CMake rescan the
     # archive group when the platform linker resolves static inputs in order.
-    target_link_libraries(ddpdoj_${mode}_system PRIVATE ddpdoj_${mode}_frontend)
+    target_link_libraries(ddpdoj_${mode}_system PRIVATE ddpdoj_${mode}_frontend ddpdoj_mode)
     target_link_libraries(ddpdoj_${mode}_frontend PRIVATE ddpdoj_${mode}_gameplay)
     target_link_libraries(ddpdoj_${mode}_gameplay PRIVATE ddpdoj_${mode}_system)
     add_executable(ddpdoj_${mode} desktop.c)
@@ -288,9 +288,9 @@ if(BUILD_TESTING)
 
     add_executable(ddpdoj_disc_test tests/disc_test.c ../src/game/system/cd_io.c)
     add_executable(ddpdoj_gallery_disc_test tests/disc_test.c ../src/gallery/cd.c)
-    add_executable(ddpdoj_splash_test tests/splash_test.c
-        ../src/game/frontend/splash.c ../src/game/system/system_state.c)
-    target_link_libraries(ddpdoj_splash_test PRIVATE ddpdoj_video ddpdoj_disc)
+    add_executable(ddpdoj_splash_test tests/splash_test.c)
+    target_link_libraries(ddpdoj_splash_test PRIVATE ddpdoj_main_system ddpdoj_video
+        ddpdoj_sound ddpdoj_sfx ddpdoj_mode ddpdoj_cdvd ddpdoj_pad ddpdoj_memory_card ddpdoj_gs)
     add_test(NAME splash_render COMMAND ddpdoj_splash_test)
     add_executable(ddpdoj_pad_test tests/pad_test.c ../src/gallery/pad.c)
     target_link_libraries(ddpdoj_pad_test PRIVATE ddpdoj_pad ddpdoj_gallery_system ddpdoj_mode)

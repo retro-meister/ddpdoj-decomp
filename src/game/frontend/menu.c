@@ -4954,7 +4954,7 @@ s32 menu_ranking_cursor_move() {
 
 
 void menu_box_draw(void) {
-    extern void gfx_draw_color_box(s32 x, s32 y, s32 w, s32 h, s32 depth, s64 alpha, s32 r, s32 g, s32 b);
+    extern void gfx_draw_color_box(s32 x, s32 y, s32 w, s32 h, s32 depth, GfxBoxAlphaArg alpha, s32 r, s32 g, s32 b);
     s32 x;
 
     switch (g_menu_box_fade_state) {
@@ -4984,7 +4984,7 @@ void menu_box_draw(void) {
 }
 
 void menu_box_draw_wide(void) {
-    extern void gfx_draw_color_box(s32 x, s32 y, s32 w, s32 h, s32 depth, s64 alpha, s32 r, s32 g, s32 b);
+    extern void gfx_draw_color_box(s32 x, s32 y, s32 w, s32 h, s32 depth, GfxBoxAlphaArg alpha, s32 r, s32 g, s32 b);
     s32 sel;
     s32 x;
 
@@ -5030,7 +5030,7 @@ extern s8 death_D_00290C4C;
 #endif
 
 void menu_help_draw(void) {
-    extern void gfx_draw_color_box(s32 x, s32 y, s32 w, s32 h, s32 depth, s64 alpha, s32 r, s32 g, s32 b);
+    extern void gfx_draw_color_box(s32 x, s32 y, s32 w, s32 h, s32 depth, GfxBoxAlphaArg alpha, s32 r, s32 g, s32 b);
     s64 alpha;
     s32 item;
     u8 state;
@@ -6288,7 +6288,7 @@ block_21:
 }
 
 void pause_menu_box_draw(void) {
-    extern void gfx_draw_color_box(s32 x, s32 y, s32 w, s32 h, s32 depth, s64 alpha, s32 r, s32 g, s32 b);
+    extern void gfx_draw_color_box(s32 x, s32 y, s32 w, s32 h, s32 depth, GfxBoxAlphaArg alpha, s32 r, s32 g, s32 b);
     s32 x;
 
     switch ((s8)g_pause_box_fade_state) {
@@ -6324,7 +6324,7 @@ void pause_menu_box_draw(void) {
 }
 
 void pause_menu_items_draw(void) {
-    extern void gfx_draw_color_box(s32 x, s32 y, s32 w, s32 h, s32 depth, s64 alpha, s32 r, s32 g, s32 b);
+    extern void gfx_draw_color_box(s32 x, s32 y, s32 w, s32 h, s32 depth, GfxBoxAlphaArg alpha, s32 r, s32 g, s32 b);
     s64 alpha;
 
     switch (g_menu_fade_state) {
@@ -10160,7 +10160,7 @@ void menu_ranking_scores_format(s32 arg0, s32 arg1) {
 
 
 void menu_ranking_box_draw(void) {
-    extern void gfx_draw_color_box(s32 x, s32 y, s32 w, s32 h, s32 depth, s64 alpha, s32 r, s32 g, s32 b);
+    extern void gfx_draw_color_box(s32 x, s32 y, s32 w, s32 h, s32 depth, GfxBoxAlphaArg alpha, s32 r, s32 g, s32 b);
     s32 x;
 
     switch (g_menu_box_fade_state) {

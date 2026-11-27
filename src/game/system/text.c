@@ -1422,7 +1422,6 @@ void gfx_draw_shaded_box(s32 x, s32 y, s32 w, s32 h, s32 depth, s32 alpha) {
     sceGsSyncPath(0, 0);
 }
 
-#ifndef DDPDOJ_PC
 void gfx_draw_color_box(s32 x, s32 y, s32 w, s32 h, s32 depth, s32 alpha, s32 r, s32 g, s32 b) {
     Qword *packet = (Qword *)((u8 (*)[0x10000])g_gif_buf)[0];
 
@@ -1474,8 +1473,6 @@ void gfx_draw_color_box(s32 x, s32 y, s32 w, s32 h, s32 depth, s32 alpha, s32 r,
     SEND_DMA_CHAIN(g_dma_gif, ((u8 (*)[0x10000])g_gif_buf)[0], 0x10000);
     sceGsSyncPath(0, 0);
 }
-
-#endif
 
 /* Keep the CD routines in the original PS2 translation unit. */
 #ifndef DDPDOJ_PC

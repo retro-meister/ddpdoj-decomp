@@ -5,6 +5,13 @@
 
 /* Types the graphics layer of all three executables shares. */
 
+/* Some PS2 callers extend the color box alpha to a doubleword. */
+#ifdef DDPDOJ_PC
+typedef s32 GfxBoxAlphaArg;
+#else
+typedef s64 GfxBoxAlphaArg;
+#endif
+
 /* One 128-bit DMA/GIF quadword. */
 typedef union {
     unsigned __int128 q;
