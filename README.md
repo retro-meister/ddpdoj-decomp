@@ -56,28 +56,28 @@ uv run tools/build.py --target SLPS_252.33
 uv run tools/build.py --mod --iso
 ```
 
-## Native PC development
+## Native desktop port
 
-The native build requires CMake, Python 3, and the SDL3 development package. It currently
-provides headless checks for the shared task scheduler, startup and frame
-stepping, menu mode requests, asynchronous ISO reads, controller input, and
-the original startup splash. It also builds the Gallery sources as a desktop
-library with a host-stepped frame loop and tests for solid rectangles, fades,
-indexed textures, and the loading-screen font. With a retail ISO, the Gallery
-integration test drives loading, grid navigation, image viewing, and the
-return to the Main menu request. It also compares the original cursor,
-confirm, and page cues against decoded sound bank samples. The Main and Death
-Label frontend, system, and gameplay libraries build from the original source
-manifests. Linking and running Main and Death Label in the desktop application
-are still in development.
+Main, Death Label and Gallery run natively on macOS and 64-bit Windows. Open DaiOuJou and choose your retail ISO. The original Main menu launches the other two modes. They also accept an ISO path on the command line.
+
+Use an SDL gamepad or the keyboard. The arrow keys move, Enter is Start, and X confirms in the menus. Z, X, C and V map to Cross, Circle, Square and Triangle. Q and E map to L1 and R1. The game stores virtual memory cards in the per-user SDL preference directory.
+
+### Build and run
+
+Use CMake, Python 3 and the SDL3 development package with Clang on macOS or 64-bit MinGW-w64 GCC on Windows. On macOS, Homebrew provides the dependencies with `brew install cmake python sdl3`. On Windows, run the following in an MSYS2 UCRT64 shell with the UCRT64 GCC, CMake, Ninja, Python and SDL3 packages installed.
 
 ```sh
-cmake -S pc -B build/pc
-cmake --build build/pc --config Release
+cmake -S pc -B build/pc -DCMAKE_BUILD_TYPE=Release
+cmake --build build/pc --config Release --parallel
+cmake --install build/pc --config Release --prefix build/desktop
+```
+
+On macOS open `build/desktop/DaiOuJou.app`. On Windows open `build/desktop/DaiOuJou/ddpdoj.exe`. Move the whole app or Windows folder together to keep all three modes and the SDL runtime available. The desktop port reads assets directly from the ISO at runtime.
+
+### Desktop checks
+
+```sh
 ctest --test-dir build/pc -C Release --output-on-failure
 ```
 
-Configure with `-DDDPDOJ_TEST_ISO=/path/to/ddpdoj.iso` to also compare the
-three executables read through the native ISO reader with the files extracted
-to `baserom/` by the PS2 setup and test the startup splash from the disc.
-
+Configure with `-DDDPDOJ_TEST_ISO=/path/to/ddpdoj.iso` to enable retail integration tests. The disc comparison also uses the three executables extracted to `baserom/` during PS2 setup. The Super Replay tests use the game's menu and check the final input count and score for each recording. Run those ten tests with `ctest --test-dir build/pc -C Release -L super-replay --output-on-failure`.

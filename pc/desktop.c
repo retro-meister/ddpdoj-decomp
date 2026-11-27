@@ -31,7 +31,17 @@ static bool start_mode(GameMode mode, const char *iso)
 #endif
     char *path = NULL;
     const char *base = SDL_GetBasePath();
-    if (!base || SDL_asprintf(&path, "%s%s%s", base, executables[mode], suffix) < 0) {
+    if (!base) {
+        return false;
+    }
+    const char *directory = "";
+#ifdef __APPLE__
+    size_t length = SDL_strlen(base);
+    if (length >= 5 && SDL_strcmp(base + length - 5, ".app/") == 0) {
+        directory = "Contents/MacOS/";
+    }
+#endif
+    if (SDL_asprintf(&path, "%s%s%s%s", base, directory, executables[mode], suffix) < 0) {
         return false;
     }
     const char *args[] = { path, iso, NULL };
@@ -118,10 +128,39 @@ static bool run_mode(SDL_Renderer *renderer, const char *iso, GameMode *next_mod
 #endif
 }
 
+typedef struct {
+    SDL_AtomicInt done;
+    char *path;
+    bool canceled;
+} DiscSelection;
+
+static void SDLCALL disc_selected(void *userdata, const char *const *files, int filter)
+{
+    DiscSelection *selection = userdata;
+    (void)filter;
+    selection->canceled = files && !files[0];
+    if (files && files[0]) {
+        selection->path = SDL_strdup(files[0]);
+    }
+    SDL_SetAtomicInt(&selection->done, 1);
+}
+
+static void choose_disc(SDL_Window *window, DiscSelection *selection)
+{
+    static const SDL_DialogFileFilter filters[] = { { "Retail PS2 disc image", "iso" } };
+    SDL_ShowOpenFileDialog(disc_selected, selection, window, filters, 1, NULL, false);
+    while (!SDL_GetAtomicInt(&selection->done)) {
+        SDL_Event event;
+        if (SDL_WaitEventTimeout(&event, 20)) {
+            pc_pad_handle_event(&event);
+        }
+    }
+}
+
 int main(int argc, char **argv)
 {
-    if (argc != 2) {
-        SDL_Log("Usage: %s <retail PS2 ISO>", argv[0]);
+    if (argc > 2) {
+        SDL_Log("Usage: %s [retail PS2 ISO]", argv[0]);
         return 1;
     }
 #if defined(DDPDOJ_GALLERY_HOST)
@@ -133,14 +172,27 @@ int main(int argc, char **argv)
 #endif
     SDL_Window *window = NULL;
     SDL_Renderer *renderer = NULL;
+    DiscSelection selection = {0};
+    const char *iso = argc == 2 ? argv[1] : NULL;
     GameMode next_mode = GAME_MODE_NONE;
     bool ok = SDL_Init(SDL_INIT_VIDEO | SDL_INIT_GAMEPAD | SDL_INIT_AUDIO) &&
         SDL_CreateWindowAndRenderer(title, 768, 672, SDL_WINDOW_RESIZABLE | SDL_WINDOW_HIGH_PIXEL_DENSITY,
-                                    &window, &renderer) &&
-        pc_cdvd_mount(argv[1]) && pc_sfx_load(argv[1]) && pc_sfx_open_device() &&
-        run_mode(renderer, argv[1], &next_mode);
+                                    &window, &renderer);
+    if (ok && !iso) {
+        choose_disc(window, &selection);
+        iso = selection.path;
+    }
+    if (ok && !selection.canceled) {
+        ok = iso && pc_cdvd_mount(iso) && pc_sfx_load(iso) && pc_sfx_open_device() &&
+             run_mode(renderer, iso, &next_mode);
+    }
     if (!ok) {
-        SDL_LogError(SDL_LOG_CATEGORY_APPLICATION, "Game stopped. %s", SDL_GetError());
+        const char *error = SDL_GetError();
+        SDL_LogError(SDL_LOG_CATEGORY_APPLICATION, "Game stopped. %s", error);
+        if (argc == 1 && window) {
+            SDL_ShowSimpleMessageBox(SDL_MESSAGEBOX_ERROR, title,
+                                     *error ? error : "Could not load the retail disc image.", window);
+        }
     }
 
 #ifndef DDPDOJ_GALLERY_HOST
@@ -155,10 +207,11 @@ int main(int argc, char **argv)
     SDL_DestroyRenderer(renderer);
     SDL_DestroyWindow(window);
 
-    if (ok && next_mode != GAME_MODE_NONE && !start_mode(next_mode, argv[1])) {
+    if (ok && next_mode != GAME_MODE_NONE && !start_mode(next_mode, iso)) {
         SDL_LogError(SDL_LOG_CATEGORY_APPLICATION, "Could not launch the selected mode. %s", SDL_GetError());
         ok = false;
     }
+    SDL_free(selection.path);
     SDL_Quit();
     return ok ? 0 : 1;
 }
