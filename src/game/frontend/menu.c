@@ -11070,6 +11070,17 @@ s16 D_0068DEE0[16];
 s32 D_0068DEB0[12];
 s32 D_0068DEA0[4];
 s32 D_0068DE90[4];
+#ifdef DDPDOJ_PC
+s8 g_menu_item_indices[40 * MENU_ITEMS_PER_PAGE];
+extern s8 menu_game_option_adjust_buffer[16];
+extern s8 menu_save_load_adjust_buffer[16];
+extern s8 menu_debug_option_adjust_buffer[176];
+extern s8 menu_arcade_adjust_buffer[16];
+extern s8 D_0068DD00[17]; /* Includes the second player's fourth binding. */
+#ifdef DEATH_LABEL
+extern s8 menu_death_option_adjust_buffer[272];
+#endif
+#else
 #ifdef DEATH_LABEL
 s8 menu_death_option_adjust_buffer[272];
 #endif
@@ -11084,6 +11095,7 @@ s8 menu_debug_option_adjust_buffer[176];
 s8 menu_save_load_adjust_buffer[16];
 s8 menu_game_option_adjust_buffer[16];
 s8 g_menu_item_indices[16];
+#endif
 MenuItem g_menu_items[40][MENU_ITEMS_PER_PAGE];
 s32 D_00684CF0[10][4][5];
 u8 g_menu_ranking_score_texts[80];
@@ -11091,6 +11103,16 @@ SimulationRules g_sim_rules;
 
 #ifdef DDPDOJ_PC
 #include "pc_data_alias.h"
+
+PC_DATA_ALIAS(menu_game_option_adjust_buffer, g_menu_item_indices, 0x10);
+PC_DATA_ALIAS(menu_save_load_adjust_buffer, g_menu_item_indices, 0x20);
+PC_DATA_ALIAS(menu_debug_option_adjust_buffer, g_menu_item_indices, 0x30);
+PC_DATA_ALIAS(menu_arcade_adjust_buffer, g_menu_item_indices, 0xe0);
+PC_DATA_ALIAS(D_0068DD00, g_menu_item_indices, 0xf0);
+PC_DATA_ALIAS(g_menu_value_p2_btn_d, g_menu_item_indices, 0x100);
+#ifdef DEATH_LABEL
+PC_DATA_ALIAS(menu_death_option_adjust_buffer, g_menu_item_indices, 0x170);
+#endif
 
 PC_DATA_ALIAS(D_00270822, D_00270810, 0x12);
 
@@ -11180,6 +11202,7 @@ PC_DATA_ALIAS(death_D_00628DC6, menu_debug_option_adjust_buffer, 0x6);
 #include "pc_frame_regions.h"
 
 const PcFrameRegion pc_menu_regions[] = {
+    PC_FRAME_REGION(g_menu_item_indices),
     PC_FRAME_REGION(g_sim_rules),
     PC_FRAME_REGION(D_00684CF0),
     PC_FRAME_REGION(g_menu_card_save_step),
