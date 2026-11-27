@@ -1,4 +1,5 @@
 #include "common.h"
+#include "coin_slot.h"
 
 #include "arcade_frontend.h"
 void credit_display_changed_check_coins(void);
@@ -457,18 +458,15 @@ block_end:
     reg_d0.w = s0;
 }
 
-extern u8 D_0028E1C0[];
-extern u8 D_0028E1C8[];
-
 void coin_slots_clear(void) {
-    reg_a0 = D_0028E1C8;
+    reg_a0 = (u8 *)g_coin_slot_1;
     reg_d0.w = 1;
     do {
-        *(s8 *)(reg_a0 + 1) = 0;
-        *(s8 *)reg_a0 = 0;
-        *(s16 *)(reg_a0 + 2) = 0;
-        *(s16 *)(reg_a0 + 4) = 0;
-        reg_a0 = D_0028E1C0;
+        ((CoinSlot *)reg_a0)->pulse.phase = 0;
+        ((CoinSlot *)reg_a0)->pulse.unread_00 = 0;
+        ((CoinSlot *)reg_a0)->pulse.held_frames = 0;
+        ((CoinSlot *)reg_a0)->result.status = 0;
+        reg_a0 = (u8 *)g_coin_slot_2;
     } while ((s16)(--reg_d0.h[0]) >= 0);
 }
 
@@ -501,53 +499,53 @@ void coin_update(void) {
     sa6 = reg_a6;
     reg_a0 = (u8 *)&g_arcade_coin_port;
     reg_d0.h[0] = *(u16 *)reg_a0;
-    reg_a0 = (u8 *)D_0028E1C8;
+    reg_a0 = (u8 *)g_coin_slot_1;
     reg_d7.w = 1;
     reg_d0.h[0] = ~(s16)reg_d0.h[0];
-loop_1:
-    v = *(u8 *)(reg_a0 + 1);
-    if (v != 0) goto next_2;
-    if ((reg_d0.w & 1) == 0) goto next_5;
-    *(u8 *)(reg_a0 + 1) = 1;
-    *(s16 *)(reg_a0 + 4) = 0;
-    *(u16 *)(reg_a0 + 2) = 1;
-    goto next_5;
-next_2:
-    if (v != 1) goto next_3;
-    if ((reg_d0.w & 1) == 0) goto block_1;
-    c = *(u16 *)(reg_a0 + 2);
-    if (c == 0xFFFF) goto next_5;
-    *(u16 *)(reg_a0 + 2) = c + 1;
-    goto next_5;
-block_1:
-    *(u8 *)(reg_a0 + 1) = 2;
-    goto next_5;
-next_3:
-    if (v != 2) goto next_5;
-    if (reg_d0.w & 1) goto block_3;
-    *(u8 *)(reg_a0 + 1) = 0;
-    reg_d1.h[0] = *(u16 *)(reg_a0 + 2);
-    *(u16 *)(reg_a0 + 2) = 0;
-    if ((s16)reg_d1.h[0] < 3) goto block_2;
-    if ((s16)reg_d1.h[0] >= 0x27) goto block_2;
-    *(s16 *)(reg_a0 + 4) = 0x80;
-    goto next_5;
-block_2:
-    *(s16 *)(reg_a0 + 4) = 1;
-    goto next_5;
-block_3:
-    *(u8 *)(reg_a0 + 1) = 1;
-next_5:
+read_slot:
+    v = ((CoinSlot *)reg_a0)->pulse.phase;
+    if (v != 0) goto check_held;
+    if ((reg_d0.w & 1) == 0) goto advance_slot;
+    ((CoinSlot *)reg_a0)->pulse.phase = 1;
+    ((CoinSlot *)reg_a0)->result.status = 0;
+    ((CoinSlot *)reg_a0)->pulse.held_frames = 1;
+    goto advance_slot;
+check_held:
+    if (v != 1) goto check_release;
+    if ((reg_d0.w & 1) == 0) goto wait_for_release;
+    c = ((CoinSlot *)reg_a0)->pulse.held_frames;
+    if (c == 0xFFFF) goto advance_slot;
+    ((CoinSlot *)reg_a0)->pulse.held_frames = c + 1;
+    goto advance_slot;
+wait_for_release:
+    ((CoinSlot *)reg_a0)->pulse.phase = 2;
+    goto advance_slot;
+check_release:
+    if (v != 2) goto advance_slot;
+    if (reg_d0.w & 1) goto resume_count;
+    ((CoinSlot *)reg_a0)->pulse.phase = 0;
+    reg_d1.h[0] = ((CoinSlot *)reg_a0)->pulse.held_frames;
+    ((CoinSlot *)reg_a0)->pulse.held_frames = 0;
+    if ((s16)reg_d1.h[0] < 3) goto reject_pulse;
+    if ((s16)reg_d1.h[0] >= 0x27) goto reject_pulse;
+    ((CoinSlot *)reg_a0)->result.status = 0x80;
+    goto advance_slot;
+reject_pulse:
+    ((CoinSlot *)reg_a0)->result.status = 1;
+    goto advance_slot;
+resume_count:
+    ((CoinSlot *)reg_a0)->pulse.phase = 1;
+advance_slot:
     if (reg_d0.h[0] & 1) {
         reg_d0.h[0] = (s32)(reg_d0.h[0] & 0xFFFF) >> 1;
         reg_d0.h[0] |= 0x8000;
     } else {
         reg_d0.h[0] = (s32)(reg_d0.h[0] & 0xFFFF) >> 1;
     }
-    reg_a0 = (u8 *)D_0028E1C0;
+    reg_a0 = (u8 *)g_coin_slot_2;
     count = reg_d7.h[0] - 1;
     reg_d7.h[0] = count;
-    if (((s64)((s64)(count & 0xFFFF) << 0x30) >> 0x30) >= 0) goto loop_1;
+    if (((s64)((s64)(count & 0xFFFF) << 0x30) >> 0x30) >= 0) goto read_slot;
     reg_d0.w = sd0;
     reg_d1.w = sd1;
     reg_d2.w = sd2;
@@ -565,17 +563,15 @@ next_5:
     reg_a6 = sa6;
 }
 
-extern u16 coin_slots_take_buffer[];
-extern u16 coin_slots_take_buffer_2[];
 
 void coin_slots_take(void) {
     reg_d1.w = 0;
-    if (coin_slots_take_buffer_2[0] == 0x80) {
-        coin_slots_take_buffer_2[0] = 0;
+    if (g_coin_slot_1[0].result.status == 0x80) {
+        g_coin_slot_1[0].result.status = 0;
         reg_d1.h[0] |= 1;
     }
-    if (coin_slots_take_buffer[0] == 0x80) {
-        coin_slots_take_buffer[0] = 0;
+    if (g_coin_slot_2[0].result.status == 0x80) {
+        g_coin_slot_2[0].result.status = 0;
         reg_d1.h[0] |= 2;
     }
 }

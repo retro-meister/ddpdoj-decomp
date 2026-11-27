@@ -2,6 +2,7 @@
    test and option settings. Both executables keep it as one block, and its order follows no order of the
    code, so it is one object file's variables and not a run per unit; no unit of code owns it. */
 #include "common.h"
+#include "coin_slot.h"
 
 /* .sbss (the compiler lays these out in reverse) */
 #ifndef DEATH_LABEL
@@ -205,15 +206,8 @@ u8 D_0028E1DC;
 u8 g_coin_counts[4];
 u8 D_0028E1D4 __attribute__((aligned(4)));
 u8 D_0028E1D0;
-#ifdef DDPDOJ_PC
-u8 D_0028E1C8[8];
-u8 D_0028E1C0[8];
-#else
-u16 coin_slots_take_buffer_2[2];
-u8 D_0028E1C8[4];
-u16 coin_slots_take_buffer[2];
-u8 D_0028E1C0[4];
-#endif
+CoinSlot g_coin_slot_1[1];
+CoinSlot g_coin_slot_2[1];
 s32 D_0028E1BC;
 
 #ifdef DDPDOJ_PC
@@ -234,8 +228,6 @@ PC_DATA_ALIAS(D_0028E1DA, g_coin_counts, 0x2);
 PC_DATA_ALIAS(D_0028E1E5, g_credit_display_last, 0x1);
 PC_DATA_ALIAS(g_credit_display_last_coins, g_credit_display_last, 0x2);
 
-PC_DATA_ALIAS(coin_slots_take_buffer_2, D_0028E1C8, 0x4);
-PC_DATA_ALIAS(coin_slots_take_buffer, D_0028E1C0, 0x4);
 
 PC_DATA_ALIAS(g_session_date_1, g_session_date, 0x1);
 PC_DATA_ALIAS(g_session_date_2, g_session_date, 0x2);
@@ -259,6 +251,10 @@ PC_DATA_ALIAS(reg_call_target_as_u8_p, reg_call_target, 0x0);
 
 #ifdef DDPDOJ_PC
 #include "pc_frame_regions.h"
+
+_Static_assert(sizeof(CoinSlot) == 8, "coin slot size");
+_Static_assert(offsetof(CoinSlot, pulse.held_frames) == 2, "coin pulse duration offset");
+_Static_assert(offsetof(CoinSlot, result) == 4, "coin pulse result offset");
 
 const PcFrameRegion pc_system_regions[] = {
 #ifndef DEATH_LABEL
@@ -428,10 +424,10 @@ const PcFrameRegion pc_system_regions[] = {
     PC_FRAME_REGION(g_coin_counts),
     PC_FRAME_REGION(D_0028E1D4),
     PC_FRAME_REGION(D_0028E1D0),
-    { D_0028E1C8 + 4, 4, false },
-    { D_0028E1C8, 4, false },
-    { D_0028E1C0 + 4, 4, false },
-    { D_0028E1C0, 4, false },
+    PC_FRAME_REGION(g_coin_slot_1[0].result),
+    PC_FRAME_REGION(g_coin_slot_1[0].pulse),
+    PC_FRAME_REGION(g_coin_slot_2[0].result),
+    PC_FRAME_REGION(g_coin_slot_2[0].pulse),
     PC_FRAME_REGION(D_0028E1BC),
 #ifdef DEATH_LABEL
     PC_FRAME_REGION(g_death_boss_form),
