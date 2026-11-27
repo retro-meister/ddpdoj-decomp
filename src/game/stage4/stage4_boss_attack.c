@@ -195,7 +195,11 @@ void stage4_boss_fire_right_spinner(void) {
     reg_d0.h[0] = SPINNER(reg_a4)->pattern;
     reg_d0.h[0] <<= 1;
     reg_d0.h[0] += 1;
+#ifdef DDPDOJ_PC
+    stage4_boss_right_spinner_routines[reg_d0.h[0]]();
+#else
     (*(Fn *)((u8 *)((u8 *)stage4_boss_right_spinner_routines) + (reg_d0.h[0] << 2)))();
+#endif
 }
 
 void stage4_boss_spinner_volleys_start(s32 id) {
@@ -908,7 +912,11 @@ void stage4_boss_fire_left_spinner(void) {
     reg_d0.h[0] = SPINNER(reg_a4)->pattern;
     reg_d0.h[0] <<= 1;
     reg_d0.h[0] += 1;
+#ifdef DDPDOJ_PC
+    stage4_boss_left_spinner_routines[reg_d0.h[0]]();
+#else
     (*(Fn *)((u8 *)((u8 *)stage4_boss_left_spinner_routines) + (reg_d0.h[0] << 2)))();
+#endif
 }
 
 void stage4_boss_left_spinner_volleys_start(void) {
