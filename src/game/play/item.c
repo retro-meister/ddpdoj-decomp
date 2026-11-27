@@ -1185,3 +1185,16 @@ u8 g_items_bomb[128];
 u8 g_items_max_powerup[128];
 u8 g_items[512];
 #endif
+
+#ifdef DDPDOJ_PC
+#include "pc_frame_regions.h"
+
+const PcFrameRegion pc_items_regions[] = {
+    PC_FRAME_REGION(g_items),
+    PC_FRAME_REGION(g_item_count),
+    PC_FRAME_REGION(g_item_test_cursor),
+    PC_FRAME_REGION(D_0028E7A8),
+    PC_FRAME_REGION(D_0028E7A4),
+    { NULL, 0 },
+};
+#endif

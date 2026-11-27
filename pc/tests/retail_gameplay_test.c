@@ -251,14 +251,35 @@ static bool has_relocated_enemy(void)
 typedef struct {
     PcPlayerState at_save;
     PcPlayerState next[120];
+    Uint32 combat[120], image[4];
 } ExpectedTrajectory;
 
 static void run_trajectory(SDL_Renderer *renderer, ExpectedTrajectory *states, bool compare)
 {
+    PcCombatPools *combat = SDL_calloc(1, sizeof(*combat));
+    require(combat != NULL, "Allocate combat comparison buffer");
     for (unsigned i = 0; i < SDL_arraysize(states->next); ++i) {
         pc_pad_capture();
         game_run_frame();
+        if (i % 30 == 0) {
+            SDL_Surface *pixels = SDL_RenderReadPixels(renderer, NULL);
+            require(pixels != NULL, "Read rendered gameplay");
+            Uint32 hash = 0;
+            for (int y = 0; y < pixels->h; ++y) {
+                const u8 *row = (u8 *)pixels->pixels + (size_t)y * pixels->pitch;
+                hash = SDL_crc32(hash, row, (size_t)pixels->w * SDL_BYTESPERPIXEL(pixels->format));
+            }
+            SDL_DestroySurface(pixels);
+            if (compare && hash != states->image[i / 30])
+                SDL_Log("Image differs on frame %u (%08x vs %08x)", i, hash, states->image[i / 30]);
+            if (compare) require(hash == states->image[i / 30], "Reproduce the rendered frame");
+            else states->image[i / 30] = hash;
+        }
         require(pc_gs_ok() && SDL_RenderPresent(renderer), "Render after restoring gameplay");
+        pc_combat_capture(combat);
+        Uint32 hash = SDL_crc32(0, combat, sizeof(*combat));
+        if (compare) require(hash == states->combat[i], "Reproduce the combat trajectory");
+        else states->combat[i] = hash;
         PcPlayerState player;
         pc_player_state_capture(&player);
         if (compare) {
@@ -266,6 +287,7 @@ static void run_trajectory(SDL_Renderer *renderer, ExpectedTrajectory *states, b
                     "Reproduce player and weapon state on each subsequent frame");
         } else states->next[i] = player;
     }
+    SDL_free(combat);
 }
 
 int main(int argc, char **argv)

@@ -27,6 +27,10 @@ extern const PcFrameRegion pc_fade_regions[];
 extern const PcFrameRegion pc_collision_regions[];
 extern const PcFrameRegion pc_stage_clear_regions[];
 
+extern const PcFrameRegion pc_glyph_cache_regions[], pc_sprite_queue_regions[];
+
+extern const PcFrameRegion pc_items_regions[], pc_pickups_regions[], pc_slowdown_regions[];
+
 size_t pc_frame_regions_size(void);
 bool pc_frame_regions_capture(void *buffer, size_t size);
 bool pc_frame_regions_restore(const void *buffer, size_t size);

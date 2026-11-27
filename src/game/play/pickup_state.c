@@ -22,3 +22,15 @@ u8 g_pickups[3080];
 #else
 u8 g_pickups[3088];
 #endif
+
+#ifdef DDPDOJ_PC
+#include "pc_frame_regions.h"
+
+const PcFrameRegion pc_pickups_regions[] = {
+    PC_FRAME_REGION(g_pickups),
+#ifdef DDPDOJ_BONUS_FEATURES
+    PC_FRAME_REGION(black_label_pickups),
+#endif
+    { NULL, 0 },
+};
+#endif
