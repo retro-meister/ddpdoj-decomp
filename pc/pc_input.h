@@ -4,6 +4,7 @@
 typedef union SDL_Event SDL_Event;
 
 /* Forward hotplug events and capture once just before advancing a game frame. */
+void pc_pad_open_connected(void);
 void pc_pad_handle_event(const SDL_Event *event);
 void pc_pad_capture(void);
 void pc_pad_shutdown(void);

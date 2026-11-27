@@ -4,11 +4,13 @@
 
 #include "pc_arcade_address.h"
 #include <inttypes.h>
+#include <stdbool.h>
 #include <stdio.h>
 #include <stdlib.h>
 
 #if defined(__APPLE__)
-#include <mach-o/ldsyms.h>
+#include <dlfcn.h>
+#include <mach-o/loader.h>
 #include <string.h>
 #elif defined(_WIN32)
 #include <windows.h>
@@ -31,17 +33,23 @@ static int executable_bounds(struct dl_phdr_info *info, size_t size, void *conte
 {
     (void)size;
     uintptr_t *bounds = context;
-    bounds[0] = UINTPTR_MAX;
+    uintptr_t first = UINTPTR_MAX, last = 0;
+    bool found = false;
     for (unsigned i = 0; i < info->dlpi_phnum; i++) {
         const ElfW(Phdr) *segment = &info->dlpi_phdr[i];
         if (segment->p_type == PT_LOAD) {
             uintptr_t start = info->dlpi_addr + segment->p_vaddr;
             uintptr_t end = start + segment->p_memsz;
-            if (start < bounds[0]) bounds[0] = start;
-            if (end > bounds[1]) bounds[1] = end;
+            if (start < first) first = start;
+            if (end > last) last = end;
+            uintptr_t marker = (uintptr_t)&pc_arcade_image_base;
+            if (start <= marker && marker < end) found = true;
         }
     }
-    return 1; /* The loader visits the executable first. */
+    if (!found) return 0;
+    bounds[0] = first;
+    bounds[1] = last;
+    return 1;
 }
 #endif
 
@@ -50,11 +58,14 @@ void pc_arcade_address_init(void)
     uintptr_t base = 0;
     uintptr_t size = 0;
 #if defined(__APPLE__)
-    base = (uintptr_t)&_mh_execute_header;
+    Dl_info info;
+    if (!dladdr(&pc_arcade_image_base, &info)) abort();
+    const struct mach_header_64 *header = info.dli_fbase;
+    base = (uintptr_t)header;
     uint64_t text_address = 0;
     uint64_t image_end = 0;
-    const struct load_command *command = (const void *)(&_mh_execute_header + 1);
-    for (uint32_t i = 0; i < _mh_execute_header.ncmds; i++) {
+    const struct load_command *command = (const void *)(header + 1);
+    for (uint32_t i = 0; i < header->ncmds; i++) {
         if (command->cmd == LC_SEGMENT_64) {
             const struct segment_command_64 *segment = (const void *)command;
             if (strcmp(segment->segname, SEG_TEXT) == 0) {

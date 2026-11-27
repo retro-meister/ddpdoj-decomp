@@ -28,6 +28,15 @@ static void attach_pad(SDL_JoystickID id) {
     }
 }
 
+void pc_pad_open_connected(void) {
+    int count = 0;
+    SDL_JoystickID *ids = SDL_GetGamepads(&count);
+    for (int i = 0; i < count; ++i) {
+        attach_pad(ids[i]);
+    }
+    SDL_free(ids);
+}
+
 void pc_pad_handle_event(const SDL_Event *event) {
     if (event->type == SDL_EVENT_GAMEPAD_ADDED) {
         attach_pad(event->gdevice.which);
