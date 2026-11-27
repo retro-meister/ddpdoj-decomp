@@ -10,6 +10,7 @@
 #include "disc_image.h"
 #include "mode_runtime.h"
 #include "presentation.h"
+#include "window_placement.h"
 
 static const char *const titles[] = {
     [GAME_MODE_MAIN] = "DoDonPachi Dai-Ou-Jou",
@@ -91,15 +92,33 @@ static void choose_disc(SDL_Window *window, DiscSelection *selection)
     }
 }
 
-static char *disc_preference_path(void)
+static char *preference_path(const char *name)
 {
     char *directory = SDL_GetPrefPath("DaiOuJou", "DaiOuJou");
     char *path = NULL;
     if (directory) {
-        SDL_asprintf(&path, "%sdisc-path", directory);
+        SDL_asprintf(&path, "%s%s", directory, name);
         SDL_free(directory);
     }
     return path;
+}
+
+static bool save_preference(const char *preference, const char *value)
+{
+#ifdef _WIN32
+    int pid = _getpid();
+#else
+    int pid = getpid();
+#endif
+    char *temporary = NULL;
+    bool saved = SDL_asprintf(&temporary, "%s.%d.tmp", preference, pid) >= 0 &&
+                 SDL_SaveFile(temporary, value, SDL_strlen(value)) &&
+                 SDL_RenamePath(temporary, preference);
+    if (!saved && temporary) {
+        SDL_RemovePath(temporary);
+    }
+    SDL_free(temporary);
+    return saved;
 }
 
 static bool remember_disc(const char *preference, const char *iso)
@@ -111,19 +130,10 @@ static bool remember_disc(const char *preference, const char *iso)
     char *absolute = full ? SDL_iconv_string("UTF-8", "UTF-16LE", (const char *)full,
                                              (SDL_wcslen(full) + 1) * sizeof *full) : NULL;
     free(full);
-    int pid = _getpid();
 #else
     char *absolute = realpath(iso, NULL);
-    int pid = getpid();
 #endif
-    char *temporary = NULL;
-    bool saved = absolute && SDL_asprintf(&temporary, "%s.%d.tmp", preference, pid) >= 0 &&
-                 SDL_SaveFile(temporary, absolute, SDL_strlen(absolute)) &&
-                 SDL_RenamePath(temporary, preference);
-    if (!saved && temporary) {
-        SDL_RemovePath(temporary);
-    }
-    SDL_free(temporary);
+    bool saved = absolute && save_preference(preference, absolute);
 #ifdef _WIN32
     SDL_free(absolute);
 #else
@@ -151,16 +161,22 @@ int main(int argc, char **argv)
     SDL_Window *window = NULL;
     SDL_Renderer *renderer = NULL;
     DiscSelection selection = {0};
+    WindowPlacement placement = {0};
+    char *window_path = NULL;
     const char *iso = argc == 2 ? argv[1] : NULL;
     if (SDL_Init(SDL_INIT_VIDEO | SDL_INIT_GAMEPAD | SDL_INIT_AUDIO)) {
         window = SDL_CreateWindow(title, 768, 576, SDL_WINDOW_RESIZABLE |
                                   SDL_WINDOW_HIGH_PIXEL_DENSITY | SDL_WINDOW_HIDDEN);
         if (window) {
+            window_path = preference_path("window-placement");
+            char *geometry = window_path ? SDL_LoadFile(window_path, NULL) : NULL;
+            pc_restore_window(&placement, window, geometry);
+            SDL_free(geometry);
             renderer = pc_create_renderer(window);
         }
     }
     bool ok = renderer && SDL_ShowWindow(window);
-    char *preference = ok ? disc_preference_path() : NULL;
+    char *preference = ok ? preference_path("disc-path") : NULL;
     char *saved = preference ? SDL_LoadFile(preference, NULL) : NULL;
     bool validated = false;
     if (ok && !iso) {
@@ -189,6 +205,14 @@ int main(int argc, char **argv)
         }
     }
 
+    if (window) {
+        char geometry[96];
+        if (pc_save_window(&placement, geometry, sizeof(geometry)) && window_path &&
+            !save_preference(window_path, geometry)) {
+            SDL_LogWarn(SDL_LOG_CATEGORY_APPLICATION, "Could not save the window placement");
+        }
+    }
+    SDL_free(window_path);
     SDL_DestroyRenderer(renderer);
     SDL_DestroyWindow(window);
 

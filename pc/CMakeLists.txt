@@ -216,7 +216,7 @@ if(CMAKE_SYSTEM_NAME STREQUAL "Linux")
     endforeach()
 endif()
 function(add_launcher target name mode)
-    add_executable(${target} desktop.c presentation.c)
+    add_executable(${target} desktop.c presentation.c window_placement.c)
     target_include_directories(${target} PRIVATE ../include)
     target_compile_definitions(${target} PRIVATE START_MODE=${mode}
         MODE_SUFFIX="${CMAKE_SHARED_MODULE_SUFFIX}")
