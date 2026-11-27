@@ -30,6 +30,28 @@ static void expect_pixel(SDL_Surface *surface, int x, int y, u8 red, u8 green, u
     }
 }
 
+static void check_monitor(SDL_Renderer *renderer, int width, int height, int top, int display_height)
+{
+    SDL_FRect monitor;
+    int logical_w, logical_h;
+    float scale_x, scale_y;
+    require(SDL_GetRenderLogicalPresentationRect(renderer, &monitor) &&
+            SDL_GetRenderLogicalPresentation(renderer, &logical_w, &logical_h, NULL) &&
+            SDL_GetRenderScale(renderer, &scale_x, &scale_y), "Read the monitor transform");
+    require(monitor.x == 0 && monitor.y == top && monitor.w == 640 && monitor.h == display_height,
+            "Fit the selected monitor aspect inside the window");
+    require(SDL_fabsf(width * scale_x - logical_w) < 0.001f &&
+            SDL_fabsf(height * scale_y - logical_h) < 0.001f, "Map the full GS frame to the monitor");
+}
+
+static void bind_gallery_at_native_pixels(SDL_Renderer *renderer)
+{
+    pc_gs_bind_gallery(renderer);
+    check_monitor(renderer, 640, 448, 0, 480);
+    require(SDL_SetRenderLogicalPresentation(renderer, 0, 0, SDL_LOGICAL_PRESENTATION_DISABLED) &&
+            SDL_SetRenderScale(renderer, 1, 1), "Inspect individual Gallery texels");
+}
+
 static void upload(s16 base, s16 format, s16 x, s16 y, s16 width, s16 height, const void *data)
 {
     sceGsLoadImage packet;
@@ -55,7 +77,13 @@ static void send_packet(sceGifPacket *packet)
 static void check_game_clip(SDL_Renderer *renderer)
 {
     pc_gs_bind_game(renderer);
-    require(pc_gs_game_display(640, 224) && pc_gs_begin_frame(), "Start a game field");
+    require(pc_gs_game_display(384, 448, false), "Set standard interlaced mode");
+    check_monitor(renderer, 384, 448, 0, 480);
+    require(pc_gs_game_display(512, 448, true), "Set wide interlaced mode");
+    check_monitor(renderer, 512, 448, 60, 360);
+    require(pc_gs_game_display(640, 224, true), "Set wide field mode");
+    check_monitor(renderer, 640, 448, 60, 360);
+    require(pc_gs_game_display(448, 224, false) && pc_gs_begin_frame(), "Start a game field");
     sceGifPacket packet;
     sceGifPkInit(&packet, g_gif_buf);
     add_register(&packet, 0x18, 0x0000780000007000ULL);
@@ -77,15 +105,15 @@ static void check_game_clip(SDL_Renderer *renderer)
     require(SDL_SetRenderClipRect(renderer, NULL), "Reset the test scissor before readback");
     SDL_Surface *surface = SDL_RenderReadPixels(renderer, NULL);
     require(surface != NULL, "Read the game field");
-    expect_pixel(surface, 19, 20, 0, 0, 0);
-    expect_pixel(surface, 20, 19, 0, 0, 0);
-    expect_pixel(surface, 20, 20, 64, 192, 32);
-    expect_pixel(surface, 29, 39, 64, 192, 32);
-    expect_pixel(surface, 30, 39, 0, 0, 0);
-    expect_pixel(surface, 29, 40, 0, 0, 0);
-    expect_pixel(surface, 42, 6, 208, 48, 72);
-    expect_pixel(surface, 61, 40, 208, 48, 72);
-    expect_pixel(surface, 64, 40, 0, 0, 0);
+    expect_pixel(surface, 27, 30, 0, 0, 0);
+    expect_pixel(surface, 36, 19, 0, 0, 0);
+    expect_pixel(surface, 30, 23, 64, 192, 32);
+    expect_pixel(surface, 40, 39, 64, 192, 32);
+    expect_pixel(surface, 44, 39, 0, 0, 0);
+    expect_pixel(surface, 40, 45, 0, 0, 0);
+    expect_pixel(surface, 60, 6, 208, 48, 72);
+    expect_pixel(surface, 87, 40, 208, 48, 72);
+    expect_pixel(surface, 93, 40, 0, 0, 0);
     SDL_DestroySurface(surface);
 }
 
@@ -233,18 +261,45 @@ static void check_streamed_sprite(SDL_Renderer *renderer)
     SDL_Texture *versions[] = { first, second, third };
     SDL_FRect source = {0, 0, 3, 1};
     require(SDL_SetRenderClipRect(renderer, NULL) &&
-            SDL_SetRenderLogicalPresentation(renderer, 0, 0, SDL_LOGICAL_PRESENTATION_DISABLED),
+            SDL_SetRenderLogicalPresentation(renderer, 0, 0, SDL_LOGICAL_PRESENTATION_DISABLED) &&
+            SDL_SetRenderScale(renderer, 1, 1),
             "Use native pixels for sprite readback");
     for (int row = 0; row < 3; ++row) {
         SDL_FRect dest = {0, (float)row, 3, 1};
         require(SDL_RenderTexture(renderer, versions[row], &source, &dest), "Draw each cached version");
     }
+    /* Use the half-pixel XY and integer UV endpoints emitted by quad_build_packet.
+     * The colored texel at (2,0) is adjacent to the sprite in GS memory. */
+    sceGifPacket packet;
+    sceGifPkInit(&packet, g_gif_buf);
+    add_register(&packet, SCE_GS_TEX0_1, tex0);
+    for (int flip = 0; flip < 4; ++flip) {
+        int x = 20 + 4 * flip;
+        int u = (flip & 1) ? 32 : 0;
+        int v = (flip & 2) ? 32 : 0;
+        add_register(&packet, SCE_GS_PRIM, SCE_GS_SET_PRIM(SCE_GS_PRIM_SPRITE, 0, 1, 0, 0, 0, 1, 0, 0));
+        add_register(&packet, SCE_GS_RGBAQ, SCE_GS_SET_RGBAQ(128, 128, 128, 128, 0));
+        add_register(&packet, SCE_GS_UV, SCE_GS_SET_UV(u, v));
+        add_register(&packet, SCE_GS_XYZ2, SCE_GS_SET_XYZ2(x * 16 + 8, 328, 0));
+        add_register(&packet, SCE_GS_UV, SCE_GS_SET_UV(32 - u, 32 - v));
+        add_register(&packet, SCE_GS_XYZ2, SCE_GS_SET_XYZ2((x + 2) * 16 + 8, 360, 0));
+    }
+    send_packet(&packet);
     SDL_Surface *pixels = SDL_RenderReadPixels(renderer, NULL);
     require(pixels != NULL, "Read the sprite versions");
     expect_pixel(pixels, 0, 0, 224, 0, 0);
     expect_pixel(pixels, 2, 0, 0, 0, 0);
     expect_pixel(pixels, 2, 1, 0, 96, 0);
     expect_pixel(pixels, 2, 2, 0, 96, 192);
+    for (int flip = 0; flip < 4; ++flip) {
+        for (int y = 0; y < 2; ++y) {
+            for (int x = 0; x < 2; ++x) {
+                int texel = (y ^ (flip >> 1)) * 2 + (x ^ (flip & 1));
+                SDL_Color color = palette[sprite[texel]];
+                expect_pixel(pixels, 21 + 4 * flip + x, 21 + y, color.r, color.g, color.b);
+            }
+        }
+    }
     SDL_DestroySurface(pixels);
 }
 
@@ -288,16 +343,16 @@ int main(int argc, char **argv)
     SDL_Renderer *renderer;
     require(SDL_Init(driver ? SDL_INIT_VIDEO : 0), "Initialize SDL");
     if (driver) {
-        window = SDL_CreateWindow("Gallery draw test", 640, 448, SDL_WINDOW_HIDDEN);
+        window = SDL_CreateWindow("Gallery draw test", 640, 480, SDL_WINDOW_HIDDEN);
         require(window != NULL, "Open Gallery window");
         renderer = SDL_CreateRenderer(window, driver);
     } else {
-        canvas = SDL_CreateSurface(640, 448, SDL_PIXELFORMAT_RGBA32);
+        canvas = SDL_CreateSurface(640, 480, SDL_PIXELFORMAT_RGBA32);
         require(canvas != NULL, "Create Gallery surface");
         renderer = SDL_CreateSoftwareRenderer(canvas);
     }
     require(renderer != NULL, "Create Gallery renderer");
-    pc_gs_bind_gallery(renderer);
+    bind_gallery_at_native_pixels(renderer);
     g_dma_gif = sceDmaGetChan(SCE_DMA_GIF);
     require(g_dma_gif != NULL, "Get GIF channel");
     require(SDL_SetRenderDrawColor(renderer, 16, 32, 64, 255) && SDL_RenderClear(renderer),
@@ -324,10 +379,10 @@ int main(int argc, char **argv)
     SDL_memcpy(chain + 2, g_gif_buf[0], 5 * 16);
     pc_dma_send_chain(g_dma_gif, chain, sizeof(chain) - 16);
     require(!pc_gs_ok(), "Reject a GIF chain with no END tag");
-    pc_gs_bind_gallery(renderer);
+    bind_gallery_at_native_pixels(renderer);
     pc_dma_send_chain(g_dma_gif, chain, sizeof(chain) - 17);
     require(!pc_gs_ok(), "Reject a GIF chain shorter than its payload");
-    pc_gs_bind_gallery(renderer);
+    bind_gallery_at_native_pixels(renderer);
     require(SDL_SetRenderDrawColor(renderer, 160, 160, 160, 255) && SDL_RenderClear(renderer),
             "Clear the target before resubmitting the DMA payload");
     chain[12] = 0x70000000;

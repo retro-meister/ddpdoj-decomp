@@ -40,12 +40,24 @@ static void destroy_game_target(void)
     }
 }
 
+/* The GS scans the entire framebuffer out to the selected monitor aspect.
+ * SDL keeps this transform on the window target when rendering to textures. */
+static bool set_monitor_presentation(SDL_Renderer *renderer, int width, int height, bool wide)
+{
+    const int display_height = 576;
+    const int display_width = wide ? 1024 : 768;
+    return SDL_SetRenderLogicalPresentation(renderer, display_width, display_height,
+                                            SDL_LOGICAL_PRESENTATION_LETTERBOX) &&
+           SDL_SetRenderScale(renderer, (float)display_width / width, (float)display_height / height);
+}
+
 void pc_gs_bind_gallery(SDL_Renderer *renderer)
 {
     destroy_game_target();
     pc_gs_textures_reset();
     gs = (GsDrawState){
-        .renderer = renderer, .origin_x = 0x6c00, .origin_y = 0x7900, .vertical_scale = 2,
+        .renderer = renderer, .failed = renderer && !set_monitor_presentation(renderer, 640, 448, false),
+        .origin_x = 0x6c00, .origin_y = 0x7900, .vertical_scale = 2,
     };
 }
 
@@ -62,13 +74,12 @@ void pc_gs_bind_game(SDL_Renderer *renderer)
     gs.renderer = renderer;
 }
 
-bool pc_gs_game_display(int width, int field_height)
+bool pc_gs_game_display(int width, int field_height, bool wide)
 {
     gs.window_scale = field_height == 224 ? 2 : 1;
     gs.vertical_scale = gs.window_scale;
     if (!gs.renderer ||
-        !SDL_SetRenderLogicalPresentation(gs.renderer, width, field_height * gs.vertical_scale,
-                                          SDL_LOGICAL_PRESENTATION_LETTERBOX)) {
+        !set_monitor_presentation(gs.renderer, width, field_height * gs.vertical_scale, wide)) {
         gs.failed = true;
         return false;
     }
@@ -151,6 +162,14 @@ static bool draw_textured(GsDrawState *state, unsigned primitive)
     int count = 3;
     const int indices[] = { 0, 2, 1, 1, 2, 3 };
     if (primitive == SCE_GS_PRIM_SPRITE) {
+        if (state->game) {
+            /* The GS samples sprites at integer pixel coordinates. SDL samples
+             * at half-integers, including the first texel of a flipped sprite. */
+            for (int i = 0; i < 2; ++i) {
+                vertices[i].position.x += 0.5f;
+                vertices[i].position.y += 0.5f * state->vertical_scale;
+            }
+        }
         vertices[3] = vertices[1];
         vertices[1].position.y = vertices[0].position.y;
         vertices[1].tex_coord.y = vertices[0].tex_coord.y;

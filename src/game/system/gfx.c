@@ -1384,7 +1384,7 @@ void display_reset(void) {
     g_gs_dbuff.disp[0].dispfb.FBP = 0;
     g_gs_dbuff.disp[1].dispfb.FBP =
         ((mode->width + 63) / 64) * ((mode->height + 31) / 32);
-    pc_gs_game_display(mode->width, mode->height);
+    pc_gs_game_display(mode->width, mode->height, g_screen_wide != 0);
 #else
     sceGsResetGraph(0, (s16)mode->interlace, 2, (s16)mode->ffmode);
     g_screen_width = mode->width;

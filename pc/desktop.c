@@ -176,7 +176,7 @@ int main(int argc, char **argv)
     const char *iso = argc == 2 ? argv[1] : NULL;
     GameMode next_mode = GAME_MODE_NONE;
     bool ok = SDL_Init(SDL_INIT_VIDEO | SDL_INIT_GAMEPAD | SDL_INIT_AUDIO) &&
-        SDL_CreateWindowAndRenderer(title, 768, 672, SDL_WINDOW_RESIZABLE | SDL_WINDOW_HIGH_PIXEL_DENSITY,
+        SDL_CreateWindowAndRenderer(title, 768, 576, SDL_WINDOW_RESIZABLE | SDL_WINDOW_HIGH_PIXEL_DENSITY,
                                     &window, &renderer);
     if (ok && !iso) {
         choose_disc(window, &selection);
