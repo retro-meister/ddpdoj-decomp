@@ -74,16 +74,6 @@ cmake --build build/pc --parallel
 ./build/pc/ddpdoj
 ```
 
-**Linux Terminal Build**
-
-Install GCC, Make, CMake, Python 3 and [SDL’s build dependencies for your distribution](https://wiki.libsdl.org/SDL3/README-linux#build-dependencies).
-
-```sh
-cmake -S pc -B build/pc -DCMAKE_BUILD_TYPE=Release
-cmake --build build/pc --parallel
-./build/pc/ddpdoj
-```
-
 Select your retail ISO on first launch. The port remembers its path.
 
 **Windows PowerShell Build**
@@ -99,4 +89,15 @@ winget install --exact --id Python.Python.3.12
 cmake -S pc -B build/pc -G "MinGW Makefiles" -DCMAKE_BUILD_TYPE=Release
 cmake --build build/pc --parallel
 .\build\pc\ddpdoj.exe
+```
+
+
+**Linux Terminal Build**
+
+Install GCC, Make, CMake, Python 3 and [SDL’s build dependencies for your distribution](https://wiki.libsdl.org/SDL3/README-linux#build-dependencies).
+
+```sh
+cmake -S pc -B build/pc -DCMAKE_BUILD_TYPE=Release
+cmake --build build/pc --parallel
+./build/pc/ddpdoj
 ```
