@@ -14,7 +14,6 @@ SDL_Renderer *pc_create_renderer(SDL_Window *window)
     if (!driver) {
         driver = "metal";
     }
-    interval = 0;
 #endif
 
     SDL_Renderer *renderer = SDL_CreateRenderer(window, driver);
