@@ -62,9 +62,16 @@ extern u8 D_0028E790;
 extern u16 D_0028E794;
 extern u16 g_stage_x4;
 
+extern u8 stage_clear_colors_update_state;
+
 void stage_clear_colors_reset(void) {
     D_0028E784 = 0;
+#ifdef DDPDOJ_PC
+    D_0028E790 = 7;
+    stage_clear_colors_update_state = 7;
+#else
     (*(s16 *)&D_0028E790) = 0x707;
+#endif
     D_0028E794 = 0;
     D_0028E78C = 7;
     D_0028E788 = 4;
@@ -86,7 +93,6 @@ void stage_clear_color_table_get(void)
 s32 sprite_palette_load();
 extern u16 D_0028E78C;
 extern u8 D_0028E790;
-extern u8 stage_clear_colors_update_state;
 extern u16 D_0028E794;
 
 void stage_clear_colors_update(void) {
