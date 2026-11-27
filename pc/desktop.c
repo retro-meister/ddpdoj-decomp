@@ -6,6 +6,7 @@
 #include "gs.h"
 #include "pc_input.h"
 #include "sfx.h"
+#include "vblank.h"
 
 #ifdef DDPDOJ_GALLERY_HOST
 #include "gallery/gallery.h"
@@ -52,6 +53,7 @@ static bool start_mode(GameMode mode, const char *iso)
 
 static bool process_input(void)
 {
+    pc_wait_to_poll_input();
     SDL_Event event;
     while (SDL_PollEvent(&event)) {
         if (event.type == SDL_EVENT_QUIT) {
