@@ -1,6 +1,6 @@
-# DoDonPachi DaiOuJou Decompilation (PS2)
+# DoDonPachi DaiOuJou PS2 Decompilation & PC Port
 
-Byte-matching decompilation of **DoDonPachi DaiOuJou** (PS2), covering all three disc executables: the main game (`SLPS_252.33`), Death Label (`DEATH.ELF`), and the Gallery (`GALLERY.ELF`). No game assets or binaries are included; supply your own retail ISO to build.
+Byte-matching decompilation of **DoDonPachi DaiOuJou** (PS2), covering all three disc executables: the main game (`SLPS_252.33`), Death Label (`DEATH.ELF`), and the Gallery (`GALLERY.ELF`). Also builds a native PC port, currently supporting Windows and MacOS. No game assets or binaries are included; supply your own ISO to build.
 
 All functions have been 100% matched and all data has been moved into C. The build is also shiftable allowing for mods. However many parts of the code still need cleaning up.
 
@@ -56,28 +56,35 @@ uv run tools/build.py --target SLPS_252.33
 uv run tools/build.py --mod --iso
 ```
 
-## Native desktop port
-
-Main, Death Label and Gallery run natively on macOS and 64-bit Windows. Open DaiOuJou and choose your retail ISO. The original Main menu launches the other two modes. They also accept an ISO path on the command line.
-
-Use an SDL gamepad or the keyboard. The arrow keys move, Enter is Start, and X confirms in the menus. Z, X, C and V map to Cross, Circle, Square and Triangle. Q and E map to L1 and R1. The game stores virtual memory cards in the per-user SDL preference directory.
-
-### Build and run
-
-Use CMake, Python 3 and the SDL3 development package with Clang on macOS or 64-bit MinGW-w64 GCC on Windows. On macOS, Homebrew provides the dependencies with `brew install cmake python sdl3`. On Windows, run the following in an MSYS2 UCRT64 shell with the UCRT64 GCC, CMake, Ninja, Python and SDL3 packages installed.
+## Native PC port
+**Repo setup**
 
 ```sh
+git clone https://github.com/retro-meister/ddpdoj-decomp.git
+cd ddpdoj-decomp
+git submodule update --init
+```
+
+**macOS Terminal Build**
+
+```sh
+brew install cmake python
 cmake -S pc -B build/pc -DCMAKE_BUILD_TYPE=Release
-cmake --build build/pc --config Release --parallel
-cmake --install build/pc --config Release --prefix build/desktop
+cmake --build build/pc --parallel
+./build/pc/ddpdoj
 ```
 
-On macOS open `build/desktop/DaiOuJou.app`. On Windows open `build/desktop/DaiOuJou/ddpdoj.exe`. Move the whole app or Windows folder together to keep all three modes and the SDL runtime available. The desktop port reads assets directly from the ISO at runtime.
+**Windows PowerShell Build**
 
-### Desktop checks
+Install the build tools once, then reopen PowerShell in the repository root:
 
-```sh
-ctest --test-dir build/pc -C Release --output-on-failure
+```powershell
+winget install --exact --id BrechtSanders.WinLibs.POSIX.UCRT --architecture x64
+winget install --exact --id Python.Python.3.12
 ```
 
-Configure with `-DDDPDOJ_TEST_ISO=/path/to/ddpdoj.iso` to enable retail integration tests. The disc comparison also uses the three executables extracted to `baserom/` during PS2 setup. The Super Replay tests use the game's menu and check the final input count and score for each recording. Run those ten tests with `ctest --test-dir build/pc -C Release -L super-replay --output-on-failure`.
+```powershell
+cmake -S pc -B build/pc -G "MinGW Makefiles" -DCMAKE_BUILD_TYPE=Release
+cmake --build build/pc --parallel
+.\build\pc\ddpdoj.exe
+```
