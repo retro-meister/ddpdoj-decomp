@@ -2,7 +2,14 @@ cmake_minimum_required(VERSION 3.20)
 project(ddpdoj_pc LANGUAGES C)
 
 include(CTest)
-find_package(SDL3 3.2 CONFIG REQUIRED)
+set(SDL_SHARED ON)
+set(SDL_STATIC OFF)
+set(SDL_TEST_LIBRARY OFF)
+set(sdl_source "${CMAKE_CURRENT_SOURCE_DIR}/../vendor/SDL")
+add_subdirectory("${sdl_source}" vendor/SDL EXCLUDE_FROM_ALL)
+if(WIN32)
+    set_target_properties(SDL3-shared PROPERTIES RUNTIME_OUTPUT_DIRECTORY "${CMAKE_CURRENT_BINARY_DIR}")
+endif()
 find_package(Python3 COMPONENTS Interpreter REQUIRED)
 
 add_library(ddpdoj_arcade_address STATIC arcade_address.c)
@@ -193,26 +200,25 @@ target_compile_definitions(ddpdoj_gallery_host PRIVATE DDPDOJ_GALLERY_HOST)
 target_link_libraries(ddpdoj_gallery_host PRIVATE
     ddpdoj_gallery ddpdoj_gs ddpdoj_cdvd ddpdoj_mode ddpdoj_pad ddpdoj_sfx)
 
-if(WIN32 AND TARGET SDL3::SDL3-shared)
-    foreach(target IN ITEMS ddpdoj_main ddpdoj_death ddpdoj_gallery_host)
-        add_custom_command(TARGET ${target} POST_BUILD
-            COMMAND ${CMAKE_COMMAND} -E copy_if_different
-                $<TARGET_FILE:SDL3::SDL3-shared> $<TARGET_FILE_DIR:${target}>
-            VERBATIM)
-    endforeach()
-endif()
-
 set(desktop_modes ddpdoj_main ddpdoj_death ddpdoj_gallery_host)
 if(APPLE)
     set(app "DaiOuJou.app/Contents")
+    set_target_properties(${desktop_modes} PROPERTIES INSTALL_RPATH "@executable_path/../Frameworks")
     install(TARGETS ${desktop_modes} RUNTIME DESTINATION "${app}/MacOS")
+    install(FILES "$<TARGET_FILE:SDL3-shared>" DESTINATION "${app}/Frameworks"
+            RENAME "$<TARGET_SONAME_FILE_NAME:SDL3-shared>")
     install(FILES macos/Info.plist DESTINATION "${app}")
-    install(FILES SDL3-LICENSE.txt DESTINATION "${app}/Resources")
+    install(FILES "${sdl_source}/LICENSE.txt" DESTINATION "${app}/Resources" RENAME SDL3-LICENSE.txt)
     install(SCRIPT "${CMAKE_CURRENT_SOURCE_DIR}/macos/bundle.cmake")
 else()
     install(TARGETS ${desktop_modes} RUNTIME DESTINATION DaiOuJou)
-    if(WIN32 AND TARGET SDL3::SDL3-shared)
-        install(FILES "$<TARGET_FILE:SDL3::SDL3-shared>" SDL3-LICENSE.txt DESTINATION DaiOuJou)
+    install(FILES "${sdl_source}/LICENSE.txt" DESTINATION DaiOuJou RENAME SDL3-LICENSE.txt)
+    if(WIN32)
+        install(FILES "$<TARGET_FILE:SDL3-shared>" DESTINATION DaiOuJou)
+    else()
+        set_target_properties(${desktop_modes} PROPERTIES INSTALL_RPATH "$ORIGIN")
+        install(FILES "$<TARGET_FILE:SDL3-shared>" DESTINATION DaiOuJou
+                RENAME "$<TARGET_SONAME_FILE_NAME:SDL3-shared>")
     endif()
 endif()
 
@@ -285,15 +291,6 @@ if(BUILD_TESTING)
         target_compile_definitions(${target} PRIVATE DDPDOJ_PC)
         target_link_libraries(${target} PRIVATE ddpdoj_cdvd)
     endforeach()
-    if(WIN32 AND TARGET SDL3::SDL3-shared)
-        foreach(target IN ITEMS ddpdoj_disc_test ddpdoj_gallery_disc_test ddpdoj_splash_test
-                                ddpdoj_pad_test ddpdoj_gallery_render_test ddpdoj_gallery_boot_test)
-            add_custom_command(TARGET ${target} POST_BUILD
-                COMMAND ${CMAKE_COMMAND} -E copy_if_different
-                    $<TARGET_FILE:SDL3::SDL3-shared> $<TARGET_FILE_DIR:${target}>
-                VERBATIM)
-        endforeach()
-    endif()
     add_test(NAME disc_image COMMAND ddpdoj_disc_test main-disc-fixture.iso)
     add_test(NAME gallery_disc_image COMMAND ddpdoj_gallery_disc_test gallery-disc-fixture.iso)
 

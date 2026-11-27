@@ -173,11 +173,7 @@ static bool draw_textured(GsDrawState *state, unsigned primitive)
     }
     SDL_ScaleMode scale = linear ? SDL_SCALEMODE_LINEAR : SDL_SCALEMODE_NEAREST;
     if (framebuffer_texture && linear && sharp_upscale) {
-#if SDL_VERSION_ATLEAST(3, 4, 0)
         scale = SDL_SCALEMODE_PIXELART;
-#else
-        scale = SDL_SCALEMODE_NEAREST;
-#endif
     }
     if (!SDL_SetTextureBlendMode(texture, blend) || !SDL_SetTextureScaleMode(texture, scale)) {
         return false;
