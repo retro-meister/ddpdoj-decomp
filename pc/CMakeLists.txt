@@ -341,6 +341,13 @@ if(BUILD_TESTING)
             set_tests_properties(retail_${mode}_gameplay PROPERTIES
                 ENVIRONMENT "SDL_AUDIODRIVER=dummy" RUN_SERIAL TRUE TIMEOUT 180)
         endforeach()
+        add_executable(ddpdoj_retail_card_test tests/retail_card_test.c)
+        target_link_libraries(ddpdoj_retail_card_test PRIVATE ddpdoj_main_system ddpdoj_video
+            ddpdoj_sound ddpdoj_sfx ddpdoj_mode ddpdoj_cdvd ddpdoj_pad ddpdoj_memory_card ddpdoj_gs)
+        add_test(NAME retail_card_save_load COMMAND ddpdoj_retail_card_test "${DDPDOJ_TEST_ISO}"
+            "${CMAKE_CURRENT_BINARY_DIR}/test-cards-save-load")
+        set_tests_properties(retail_card_save_load PROPERTIES ENVIRONMENT "SDL_AUDIODRIVER=dummy")
+
         add_test(NAME retail_two_player COMMAND ddpdoj_main_retail_gameplay_test "${DDPDOJ_TEST_ISO}"
             "${CMAKE_CURRENT_BINARY_DIR}/test-cards-two-player" --two-player)
         set_tests_properties(retail_two_player PROPERTIES

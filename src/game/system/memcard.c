@@ -1614,20 +1614,27 @@ typedef struct {
 
 s32 sceMcWrite(s32 arg0, void *arg1, s32 arg2);
 #ifndef DDPDOJ_PC
-char *strcpy(u8 *dst, const char *src);
+char *strcpy(char *dst, const char *src);
 #endif
 extern s32 g_mc_fd;
-extern u8 D_0068E1B0[];
-extern s16 D_0068E1B6[];
-extern s32 D_0068E1BC[];
-extern u8 D_0068E1C0[];
-extern u8 D_0068E200[];
-extern u8 D_0068E230[];
-extern u8 D_0068E260[];
-extern u8 D_0068E270[];
-extern u8 D_0068E2B4[];
-extern u8 D_0068E2F4[];
-extern u8 D_0068E334[];
+typedef struct {
+    /* 0x000 */ char magic[4];
+    /* 0x004 */ u16 reserved_04;
+    /* 0x006 */ u16 title_line_break;
+    /* 0x008 */ u32 reserved_08;
+    /* 0x00C */ u32 transparency;
+    /* 0x010 */ s32 background[4][4];
+    /* 0x050 */ f32 light_directions[3][4];
+    /* 0x080 */ f32 light_colors[3][4];
+    /* 0x0B0 */ f32 ambient[4];
+    /* 0x0C0 */ char title[68];
+    /* 0x104 */ char view[64];
+    /* 0x144 */ char copy[64];
+    /* 0x184 */ char remove[64];
+    /* 0x1C4 */ u8 reserved_1C4[512];
+} CardIcon;
+
+extern CardIcon g_mc_icon;
 extern u8 g_mc_game_icon_file[];
 extern u8 g_mc_save_buf[];
 void mc_task_write_game(void) {
@@ -1679,23 +1686,23 @@ void mc_task_write_game(void) {
         }
         break;
     case 0x4:
-        memset(D_0068E1B0, 0, 0x3C4);
-        strcpy(D_0068E1B0, (char *)"PS2D");
-        strcpy(D_0068E270, (char *)SJIS("怒首領蜂大往生ゲームデータ"));
-        D_0068E1B6[0] = 0xE;
-        D_0068E1BC[0] = 0x60;
-        memcpy(D_0068E1C0, g_mc_icon_bg_color, 0x40);
-        memcpy(D_0068E200, g_mc_icon_light_dir, 0x30);
-        memcpy(D_0068E230, g_mc_icon_light_color, 0x30);
-        memcpy(D_0068E260, g_mc_icon_ambient, 0x10);
-        strcpy(D_0068E2B4, names.name[0]);
-        strcpy(D_0068E2F4, names.name[1]);
-        strcpy(D_0068E334, names.name[2]);
+        memset(&g_mc_icon, 0, sizeof(g_mc_icon));
+        strcpy((char *)&g_mc_icon, (char *)"PS2D");
+        strcpy(g_mc_icon.title, (char *)SJIS("怒首領蜂大往生ゲームデータ"));
+        g_mc_icon.title_line_break = 0xE;
+        g_mc_icon.transparency = 0x60;
+        memcpy(g_mc_icon.background, g_mc_icon_bg_color, 0x40);
+        memcpy(g_mc_icon.light_directions, g_mc_icon_light_dir, 0x30);
+        memcpy(g_mc_icon.light_colors, g_mc_icon_light_color, 0x30);
+        memcpy(g_mc_icon.ambient, g_mc_icon_ambient, 0x10);
+        strcpy(g_mc_icon.view, names.name[0]);
+        strcpy(g_mc_icon.copy, names.name[1]);
+        strcpy(g_mc_icon.remove, names.name[2]);
         g_mc_step += 1;
         g_mc_wait = 0xA;
         break;
     case 0x5:
-        if (sceMcWrite(g_mc_fd, D_0068E1B0, 0x3C4) == 0) {
+        if (sceMcWrite(g_mc_fd, &g_mc_icon, sizeof(g_mc_icon)) == 0) {
             g_mc_step += 1;
         } else {
             g_mc_wait -= 1;
@@ -2002,52 +2009,52 @@ void mc_task_write_replay(void) {
         }
         break;
     case 0x4:
-        memset(D_0068E1B0, 0, 0x3C4);
-        strcpy(D_0068E1B0, (char *)"PS2D");
+        memset(&g_mc_icon, 0, sizeof(g_mc_icon));
+        strcpy((char *)&g_mc_icon, (char *)"PS2D");
         if (g_mc_file == 1) {
-            strcpy(D_0068E270, (char *)SJIS("怒首領蜂大往生リプレイデータ１"));
+            strcpy(g_mc_icon.title, (char *)SJIS("怒首領蜂大往生リプレイデータ１"));
         }
         if (g_mc_file == 2) {
-            strcpy(D_0068E270, (char *)SJIS("怒首領蜂大往生リプレイデータ２"));
+            strcpy(g_mc_icon.title, (char *)SJIS("怒首領蜂大往生リプレイデータ２"));
         }
         if (g_mc_file == 3) {
-            strcpy(D_0068E270, (char *)SJIS("怒首領蜂大往生リプレイデータ３"));
+            strcpy(g_mc_icon.title, (char *)SJIS("怒首領蜂大往生リプレイデータ３"));
         }
         if (g_mc_file == 4) {
-            strcpy(D_0068E270, (char *)SJIS("怒首領蜂大往生リプレイデータ４"));
+            strcpy(g_mc_icon.title, (char *)SJIS("怒首領蜂大往生リプレイデータ４"));
         }
         if (g_mc_file == 5) {
-            strcpy(D_0068E270, (char *)SJIS("怒首領蜂大往生リプレイデータ５"));
+            strcpy(g_mc_icon.title, (char *)SJIS("怒首領蜂大往生リプレイデータ５"));
         }
         if (g_mc_file == 6) {
-            strcpy(D_0068E270, (char *)SJIS("怒首領蜂大往生リプレイデータ６"));
+            strcpy(g_mc_icon.title, (char *)SJIS("怒首領蜂大往生リプレイデータ６"));
         }
         if (g_mc_file == 7) {
-            strcpy(D_0068E270, (char *)SJIS("怒首領蜂大往生リプレイデータ７"));
+            strcpy(g_mc_icon.title, (char *)SJIS("怒首領蜂大往生リプレイデータ７"));
         }
         if (g_mc_file == 8) {
-            strcpy(D_0068E270, (char *)SJIS("怒首領蜂大往生リプレイデータ８"));
+            strcpy(g_mc_icon.title, (char *)SJIS("怒首領蜂大往生リプレイデータ８"));
         }
         if (g_mc_file == 9) {
-            strcpy(D_0068E270, (char *)SJIS("怒首領蜂大往生リプレイデータ９"));
+            strcpy(g_mc_icon.title, (char *)SJIS("怒首領蜂大往生リプレイデータ９"));
         }
         if (g_mc_file == 10) {
-            strcpy(D_0068E270, (char *)SJIS("怒首領蜂大往生リプレイデータ１０"));
+            strcpy(g_mc_icon.title, (char *)SJIS("怒首領蜂大往生リプレイデータ１０"));
         }
-        D_0068E1B6[0] = 0xE;
-        D_0068E1BC[0] = 0x60;
-        memcpy(D_0068E1C0, g_mc_icon_bg_color, 0x40);
-        memcpy(D_0068E200, g_mc_icon_light_dir, 0x30);
-        memcpy(D_0068E230, g_mc_icon_light_color, 0x30);
-        memcpy(D_0068E260, g_mc_icon_ambient, 0x10);
-        strcpy(D_0068E2B4, names.name[0]);
-        strcpy(D_0068E2F4, names.name[1]);
-        strcpy(D_0068E334, names.name[2]);
+        g_mc_icon.title_line_break = 0xE;
+        g_mc_icon.transparency = 0x60;
+        memcpy(g_mc_icon.background, g_mc_icon_bg_color, 0x40);
+        memcpy(g_mc_icon.light_directions, g_mc_icon_light_dir, 0x30);
+        memcpy(g_mc_icon.light_colors, g_mc_icon_light_color, 0x30);
+        memcpy(g_mc_icon.ambient, g_mc_icon_ambient, 0x10);
+        strcpy(g_mc_icon.view, names.name[0]);
+        strcpy(g_mc_icon.copy, names.name[1]);
+        strcpy(g_mc_icon.remove, names.name[2]);
         g_mc_step += 1;
         g_mc_wait = 0xA;
         break;
     case 0x5:
-        if (sceMcWrite(g_mc_fd, D_0068E1B0, 0x3C4) == 0) {
+        if (sceMcWrite(g_mc_fd, &g_mc_icon, sizeof(g_mc_icon)) == 0) {
             g_mc_step += 1;
         } else {
             g_mc_wait -= 1;
@@ -5709,22 +5716,10 @@ u8 g_mc_game_icon_file[34864];
 u8 g_mc_game_icon_file[34816];
 #endif
 u8 g_mc_replay_icon_file[34816];
-u8 D_0068E270[784];
-u8 D_0068E260[16];
-u8 D_0068E230[48];
-u8 D_0068E200[48];
-u8 D_0068E1C0[64];
-u8 D_0068E1B0[16];
+CardIcon g_mc_icon __attribute__((aligned(16)));
 
 #ifdef DDPDOJ_PC
 #include "pc_data_alias.h"
-
-PC_DATA_ALIAS(D_0068E1B6, D_0068E1B0, 0x6);
-PC_DATA_ALIAS(D_0068E1BC, D_0068E1B0, 0xc);
-
-PC_DATA_ALIAS(D_0068E2B4, D_0068E270, 0x44);
-PC_DATA_ALIAS(D_0068E2F4, D_0068E270, 0x84);
-PC_DATA_ALIAS(D_0068E334, D_0068E270, 0xc4);
 
 PC_DATA_ALIAS(D_006A0E40, pc_replay_slot_storage, 0x0);
 PC_DATA_ALIAS(D_006A0E40_as_Slot_a, pc_replay_slot_storage, 0x0);
