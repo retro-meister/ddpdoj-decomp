@@ -45,7 +45,7 @@ static bool run_modes(SDL_Window *window, SDL_Renderer *renderer, const char *is
     }
 #endif
     while (mode != GAME_MODE_NONE) {
-        SDL_SetWindowTitle(window, titles[mode]);
+        if (window) SDL_SetWindowTitle(window, titles[mode]);
         char *path = NULL;
         if (SDL_asprintf(&path, "%s%s%s", base, directory, modules[mode]) < 0) {
             return false;
@@ -57,9 +57,12 @@ static bool run_modes(SDL_Window *window, SDL_Renderer *renderer, const char *is
         }
         PcRunMode *run = (PcRunMode *)SDL_LoadFunction(module, "pc_run_mode");
         GameMode next_mode = GAME_MODE_NONE;
-        char *slot = preference_path("quick.state");
-        bool ok = run && run(renderer, iso, path, slot, mode, &next_mode);
-        SDL_free(slot);
+        bool ok = run != NULL;
+        if (ok && iso) {
+            char *slot = preference_path("quick.state");
+            ok = run(renderer, iso, path, slot, mode, &next_mode);
+            SDL_free(slot);
+        }
         SDL_free(path);
         mode = next_mode;
         SDL_UnloadObject(module);
@@ -158,6 +161,11 @@ static bool is_game_disc(const char *iso)
 
 int main(int argc, char **argv)
 {
+    if (argc == 2 && SDL_strcmp(argv[1], "--check-install") == 0) {
+        if (run_modes(NULL, NULL, NULL, START_MODE)) return 0;
+        SDL_LogError(SDL_LOG_CATEGORY_APPLICATION, "Could not load game module: %s", SDL_GetError());
+        return 1;
+    }
     if (argc > 2) {
         SDL_Log("Usage: %s [retail PS2 ISO]", argv[0]);
         return 1;

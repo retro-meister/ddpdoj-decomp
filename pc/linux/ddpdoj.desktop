@@ -1,0 +1,7 @@
+[Desktop Entry]
+Type=Application
+Name=DaiOuJou
+Exec=ddpdoj
+Icon=ddpdoj
+Categories=Game;ArcadeGame;
+Terminal=false
