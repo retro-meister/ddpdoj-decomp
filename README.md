@@ -1,5 +1,7 @@
 # DoDonPachi DaiOuJou PS2 Decompilation & PC Port
 
+[Join me on Discord](https://discord.gg/yQvS9MK95k)
+
 Byte-matching decompilation of **DoDonPachi DaiOuJou** (PS2), covering all three disc executables: the main game (`SLPS_252.33`), Death Label (`DEATH.ELF`), and the Gallery (`GALLERY.ELF`). Also builds a native PC port for Windows, macOS and Linux. Supply your own retail ISO to build the PS2 version or play the PC port.
 
 All functions have been 100% matched and all data has been moved into C. The build is also shiftable allowing for mods. However many parts of the code still need cleaning up.
