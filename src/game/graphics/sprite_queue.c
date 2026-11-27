@@ -1,4 +1,5 @@
 #include "common.h"
+#include "sprite_queue.h"
 #include "black_label.h"
 #include "entity.h"
 
@@ -113,37 +114,6 @@ extern u16 g_sprite_layer2_used;
 extern u16 g_sprite_layer1_used;
 extern u8 g_setting_hitbox_bullets_shown;
 extern u8 g_setting_hitbox_display;
-extern u8 g_sprite_last_boss_buf[];
-extern u8 g_sprite_laser_trail_buf[];
-extern u8 g_sprite_hyper_display_buf[];
-extern u8 g_sprite_hyper_ready_buf[];
-extern u8 g_sprite_maximum_buf[];
-extern u8 g_sprite_stage_clear2_buf[];
-extern u8 g_sprite_stage_clear1_buf[];
-extern u8 g_sprite_ship_select_buf[];
-extern u8 g_sprite_bombs_buf[];
-extern u8 g_sprite_sight_buf[];
-extern u8 g_sprite_score_buf[];
-extern u8 g_sprite_warning_buf[];
-extern u8 g_sprite_bullets2_buf[];
-extern u8 g_sprite_bullets_buf[];
-extern u8 g_sprite_sparks_buf[];
-extern u8 g_sprite_players_buf[];
-extern u8 g_sprite_options_buf[];
-extern u8 g_sprite_player_lasers_buf[];
-extern u8 g_sprite_player_shots_buf[];
-extern u8 g_sprite_debris2_buf[];
-extern u8 g_sprite_debris1_buf[];
-extern u8 g_sprite_player_shadows_buf[];
-extern u8 g_sprite_items_buf[];
-extern u8 g_sprite_items_first_buf[];
-extern u8 g_sprite_special_items_buf[];
-extern u8 g_sprite_extra_buf[];
-extern u8 g_sprite_layer5_buf[];
-extern u8 g_sprite_layer4_buf[];
-extern u8 g_sprite_layer3_buf[];
-extern u8 g_sprite_layer2_buf[];
-extern u8 g_sprite_layer1_buf[];
 extern u8 g_arcade_sprites[];
 
 void sprite_lists_build(void) {
@@ -205,136 +175,136 @@ void sprite_lists_build(void) {
             g_sprite_debris2_used = 0;
         }
     }
-    reg_a0 = (u8 *)g_sprite_layer2_buf;
+    reg_a0 = (u8 *)SPRITE_QUEUE_BASE(layer2);
     reg_a1 = (u8 *)(&g_sprite_layer2_used);
     sprite_list_emit();
-    if (cond_flag != 0) goto next_50;
-    reg_a0 = (u8 *)g_sprite_layer3_buf;
+    if (cond_flag != 0) goto finish_layer1;
+    reg_a0 = (u8 *)SPRITE_QUEUE_BASE(layer3);
     reg_a1 = (u8 *)(&g_sprite_layer3_used);
     sprite_list_emit();
-    if (cond_flag != 0) goto next_50;
-    reg_a0 = (u8 *)g_sprite_layer4_buf;
+    if (cond_flag != 0) goto finish_layer1;
+    reg_a0 = (u8 *)SPRITE_QUEUE_BASE(layer4);
     reg_a1 = (u8 *)(&g_sprite_layer4_used);
     sprite_list_emit();
-    if (cond_flag != 0) goto next_50;
-    reg_a0 = (u8 *)g_sprite_items_first_buf;
+    if (cond_flag != 0) goto finish_layer1;
+    reg_a0 = (u8 *)SPRITE_QUEUE_BASE(items_first);
     reg_a1 = (u8 *)(&g_sprite_items_first_used);
     sprite_list_emit();
-    if (cond_flag != 0) goto next_50;
-    reg_a0 = (u8 *)g_sprite_player_shadows_buf;
+    if (cond_flag != 0) goto finish_layer1;
+    reg_a0 = (u8 *)SPRITE_QUEUE_BASE(player_shadows);
     reg_a1 = (u8 *)(&g_sprite_player_shadows_used);
     sprite_list_emit();
-    if (cond_flag != 0) goto next_50;
-    reg_a0 = (u8 *)g_sprite_debris1_buf;
+    if (cond_flag != 0) goto finish_layer1;
+    reg_a0 = (u8 *)SPRITE_QUEUE_BASE(debris1);
     reg_a1 = (u8 *)(&g_sprite_debris1_used);
     sprite_list_emit();
-    if (cond_flag != 0) goto next_50;
-    reg_a0 = (u8 *)g_sprite_layer5_buf;
+    if (cond_flag != 0) goto finish_layer1;
+    reg_a0 = (u8 *)SPRITE_QUEUE_BASE(layer5);
     reg_a1 = (u8 *)(&g_sprite_layer5_used);
     sprite_list_emit();
-    if (cond_flag != 0) goto next_50;
-    reg_a0 = (u8 *)g_sprite_special_items_buf;
+    if (cond_flag != 0) goto finish_layer1;
+    reg_a0 = (u8 *)SPRITE_QUEUE_BASE(special_items);
     reg_a1 = (u8 *)(&g_sprite_special_items_used);
     sprite_list_emit();
-    if (cond_flag != 0) goto next_50;
-    reg_a0 = (u8 *)g_sprite_debris2_buf;
+    if (cond_flag != 0) goto finish_layer1;
+    reg_a0 = (u8 *)SPRITE_QUEUE_BASE(debris2);
     reg_a1 = (u8 *)(&g_sprite_debris2_used);
     sprite_list_emit();
-    if (cond_flag != 0) goto next_50;
-    reg_a0 = (u8 *)g_sprite_sight_buf;
+    if (cond_flag != 0) goto finish_layer1;
+    reg_a0 = (u8 *)SPRITE_QUEUE_BASE(sight);
     reg_a1 = (u8 *)(&g_sprite_sight_used);
     sprite_list_emit();
-    if (cond_flag != 0) goto next_50;
-    reg_a0 = (u8 *)g_sprite_stage_clear1_buf;
+    if (cond_flag != 0) goto finish_layer1;
+    reg_a0 = (u8 *)SPRITE_QUEUE_BASE(stage_clear1);
     reg_a1 = (u8 *)(&g_sprite_stage_clear1_used);
     sprite_list_emit();
-    if (cond_flag != 0) goto next_50;
-    reg_a0 = (u8 *)g_sprite_laser_trail_buf;
+    if (cond_flag != 0) goto finish_layer1;
+    reg_a0 = (u8 *)SPRITE_QUEUE_BASE(laser_trail);
     reg_a1 = (u8 *)(&g_sprite_laser_trail_used);
     sprite_list_emit();
-    if (cond_flag != 0) goto next_50;
-    reg_a0 = (u8 *)g_sprite_bombs_buf;
+    if (cond_flag != 0) goto finish_layer1;
+    reg_a0 = (u8 *)SPRITE_QUEUE_BASE(bombs);
     reg_a1 = (u8 *)(&g_sprite_bombs_used);
     sprite_list_emit();
-    if (cond_flag != 0) goto next_50;
-    reg_a0 = (u8 *)g_sprite_player_shots_buf;
+    if (cond_flag != 0) goto finish_layer1;
+    reg_a0 = (u8 *)SPRITE_QUEUE_BASE(player_shots);
     reg_a1 = (u8 *)(&g_sprite_player_shots_used);
     sprite_list_emit();
-    if (cond_flag != 0) goto next_50;
-    reg_a0 = (u8 *)g_sprite_options_buf;
+    if (cond_flag != 0) goto finish_layer1;
+    reg_a0 = (u8 *)SPRITE_QUEUE_BASE(options);
     reg_a1 = (u8 *)(&g_sprite_options_used);
     sprite_list_emit();
-    if (cond_flag != 0) goto next_50;
-    reg_a0 = (u8 *)g_sprite_player_lasers_buf;
+    if (cond_flag != 0) goto finish_layer1;
+    reg_a0 = (u8 *)SPRITE_QUEUE_BASE(player_lasers);
     reg_a1 = (u8 *)(&g_sprite_player_lasers_used);
     sprite_list_emit();
-    if (cond_flag != 0) goto next_50;
-    reg_a0 = (u8 *)g_sprite_items_buf;
+    if (cond_flag != 0) goto finish_layer1;
+    reg_a0 = (u8 *)SPRITE_QUEUE_BASE(items);
     reg_a1 = (u8 *)(&g_sprite_items_used);
     sprite_list_emit();
-    if (cond_flag != 0) goto next_50;
-    reg_a0 = (u8 *)g_sprite_hyper_display_buf;
+    if (cond_flag != 0) goto finish_layer1;
+    reg_a0 = (u8 *)SPRITE_QUEUE_BASE(hyper_display);
     reg_a1 = (u8 *)(&g_sprite_hyper_display_used);
     sprite_list_emit();
-    if (cond_flag != 0) goto next_50;
-    reg_a0 = (u8 *)g_sprite_players_buf;
+    if (cond_flag != 0) goto finish_layer1;
+    reg_a0 = (u8 *)SPRITE_QUEUE_BASE(players);
     reg_a1 = (u8 *)(&g_sprite_players_used);
     sprite_list_emit();
-    if (cond_flag != 0) goto next_50;
-    reg_a0 = (u8 *)g_sprite_sparks_buf;
+    if (cond_flag != 0) goto finish_layer1;
+    reg_a0 = (u8 *)SPRITE_QUEUE_BASE(sparks);
     reg_a1 = (u8 *)(&g_sprite_sparks_used);
     sprite_list_emit();
-    if (cond_flag != 0) goto next_50;
-    reg_a0 = (u8 *)g_sprite_warning_buf;
+    if (cond_flag != 0) goto finish_layer1;
+    reg_a0 = (u8 *)SPRITE_QUEUE_BASE(warning);
     reg_a1 = (u8 *)(&g_sprite_warning_used);
     sprite_list_emit();
-    if (cond_flag != 0) goto next_50;
-    if (g_setting_hitbox_display == 0) goto next_30;
-    if (g_setting_hitbox_bullets_shown != 0) goto next_32;
-next_30:
-    reg_a0 = (u8 *)g_sprite_bullets_buf;
+    if (cond_flag != 0) goto finish_layer1;
+    if (g_setting_hitbox_display == 0) goto emit_bullets;
+    if (g_setting_hitbox_bullets_shown != 0) goto check_second_bullet_queue;
+emit_bullets:
+    reg_a0 = (u8 *)SPRITE_QUEUE_BASE(bullets);
     reg_a1 = (u8 *)(&g_sprite_bullets_used);
     sprite_list_emit();
-    if (cond_flag != 0) goto next_50;
-next_32:
-    if (g_setting_hitbox_display == 0) goto next_34;
-    if (g_setting_hitbox_bullets_shown != 0) goto next_36;
-next_34:
-    reg_a0 = (u8 *)g_sprite_bullets2_buf;
+    if (cond_flag != 0) goto finish_layer1;
+check_second_bullet_queue:
+    if (g_setting_hitbox_display == 0) goto emit_second_bullet_queue;
+    if (g_setting_hitbox_bullets_shown != 0) goto check_hitbox_queue;
+emit_second_bullet_queue:
+    reg_a0 = (u8 *)SPRITE_QUEUE_BASE(bullets2);
     reg_a1 = (u8 *)(&g_sprite_bullets2_used);
     sprite_list_emit();
-    if (cond_flag != 0) goto next_50;
-next_36:
-    if (g_setting_hitbox_display == 0) goto next_40;
-    reg_a0 = (u8 *)g_sprite_extra_buf;
+    if (cond_flag != 0) goto finish_layer1;
+check_hitbox_queue:
+    if (g_setting_hitbox_display == 0) goto emit_last_boss;
+    reg_a0 = (u8 *)SPRITE_QUEUE_BASE(extra);
     reg_a1 = (u8 *)(&g_sprite_extra_used);
     sprite_list_emit();
-    if (cond_flag != 0) goto next_50;
-next_40:
-    reg_a0 = (u8 *)g_sprite_last_boss_buf;
+    if (cond_flag != 0) goto finish_layer1;
+emit_last_boss:
+    reg_a0 = (u8 *)SPRITE_QUEUE_BASE(last_boss);
     reg_a1 = (u8 *)(&g_sprite_last_boss_used);
     sprite_list_emit();
-    if (cond_flag != 0) goto next_50;
-    reg_a0 = (u8 *)g_sprite_score_buf;
+    if (cond_flag != 0) goto finish_layer1;
+    reg_a0 = (u8 *)SPRITE_QUEUE_BASE(score);
     reg_a1 = (u8 *)(&g_sprite_score_used);
     sprite_list_emit();
-    if (cond_flag != 0) goto next_50;
-    reg_a0 = (u8 *)g_sprite_ship_select_buf;
+    if (cond_flag != 0) goto finish_layer1;
+    reg_a0 = (u8 *)SPRITE_QUEUE_BASE(ship_select);
     reg_a1 = (u8 *)(&g_sprite_ship_select_used);
     sprite_list_emit();
-    if (cond_flag != 0) goto next_50;
-    reg_a0 = (u8 *)g_sprite_stage_clear2_buf;
+    if (cond_flag != 0) goto finish_layer1;
+    reg_a0 = (u8 *)SPRITE_QUEUE_BASE(stage_clear2);
     reg_a1 = (u8 *)(&g_sprite_stage_clear2_used);
     sprite_list_emit();
-    if (cond_flag != 0) goto next_50;
-    reg_a0 = (u8 *)g_sprite_maximum_buf;
+    if (cond_flag != 0) goto finish_layer1;
+    reg_a0 = (u8 *)SPRITE_QUEUE_BASE(maximum);
     reg_a1 = (u8 *)(&g_sprite_maximum_used);
     sprite_list_emit();
-    if (cond_flag != 0) goto next_50;
-    reg_a0 = (u8 *)g_sprite_hyper_ready_buf;
+    if (cond_flag != 0) goto finish_layer1;
+    reg_a0 = (u8 *)SPRITE_QUEUE_BASE(hyper_ready);
     reg_a1 = (u8 *)(&g_sprite_hyper_ready_used);
     sprite_list_emit();
-next_50:
+finish_layer1:
     count = g_sprite_layer1_used;
     reg_a0 = (u8 *)g_arcade_sprites;
     reg_d7.h[0] = g_sprite_unused_count;
@@ -344,7 +314,7 @@ next_50:
     reg_d3.h[0] = count;
     reg_d7.h[0] -= count;
     if (reg_d0.h[0] != 0) {
-        reg_a1 = (u8 *)(((u16 *)g_sprite_layer1_buf));
+        reg_a1 = (u8 *)(((u16 *)SPRITE_QUEUE_BASE(layer1)));
         if (reg_d0.h[0] > MAIN_OR_DEATH_LABEL(0x1758, 0x36C0)) {
             reg_d0.h[0] = MAIN_OR_DEATH_LABEL(0x1758, 0x36C0);
         }
@@ -467,7 +437,7 @@ void sprite_list_emit(void) {
     case 0:
         goto block_rts;
     default:
-        reg_a2 = (u8 *)((u16 *)g_sprite_layer1_buf);
+        reg_a2 = (u8 *)((u16 *)SPRITE_QUEUE_BASE(layer1));
         reg_a2 += g_sprite_layer1_used;
 loop_1:
         *(u16 *)reg_a2 = *(u16 *)reg_a0;
@@ -715,45 +685,44 @@ void sprite_entry_from_regs_zoomed(void) {
     reg_a0 += 2;
 }
 
-extern u8 g_sprite_layer1_buf[];
 
 void entity_draw(void) {
-    reg_a0 = g_sprite_layer1_buf;
+    reg_a0 = SPRITE_QUEUE_BASE(layer1);
     reg_a0 += g_sprite_layer1_used;
     sprite_entry_from_entity();
     g_sprite_layer1_used += 0xC;
 }
 
 void entity_draw_layer1(void) {
-    reg_a0 = g_sprite_layer1_buf;
+    reg_a0 = SPRITE_QUEUE_BASE(layer1);
     reg_a0 += g_sprite_layer1_used;
     sprite_entry_from_entity();
     g_sprite_layer1_used += 0xC;
 }
 
 void entity_draw_layer2(void) {
-    reg_a0 = g_sprite_layer2_buf;
+    reg_a0 = SPRITE_QUEUE_BASE(layer2);
     reg_a0 += g_sprite_layer2_used;
     sprite_entry_from_entity();
     g_sprite_layer2_used += 0xC;
 }
 
 void entity_draw_layer3(void) {
-    reg_a0 = g_sprite_layer3_buf;
+    reg_a0 = SPRITE_QUEUE_BASE(layer3);
     reg_a0 += g_sprite_layer3_used;
     sprite_entry_from_entity();
     g_sprite_layer3_used += 0xC;
 }
 
 void entity_draw_layer4(void) {
-    reg_a0 = g_sprite_layer4_buf;
+    reg_a0 = SPRITE_QUEUE_BASE(layer4);
     reg_a0 += g_sprite_layer4_used;
     sprite_entry_from_entity();
     g_sprite_layer4_used += 0xC;
 }
 
 void entity_draw_layer5(void) {
-    reg_a0 = g_sprite_layer5_buf;
+    reg_a0 = SPRITE_QUEUE_BASE(layer5);
     reg_a0 += g_sprite_layer5_used;
     sprite_entry_from_entity();
     g_sprite_layer5_used += 0xC;
@@ -768,7 +737,7 @@ void entity_draw_keep(void) {
     temp_s1 = reg_a0;
     temp_s0 = reg_d0.w;
     temp_s2 = (ArcadeSavedAddress)reg_a1;
-    reg_a0 = g_sprite_layer1_buf;
+    reg_a0 = SPRITE_QUEUE_BASE(layer1);
     reg_a0 += g_sprite_layer1_used;
     sprite_entry_from_entity();
     reg_d0.w = temp_s0;
@@ -785,7 +754,7 @@ void entity_draw_layer1_keep(void) {
     temp_s1 = reg_a0;
     temp_s0 = reg_d0.w;
     temp_s2 = (ArcadeSavedAddress)reg_a1;
-    reg_a0 = g_sprite_layer1_buf;
+    reg_a0 = SPRITE_QUEUE_BASE(layer1);
     reg_a0 += g_sprite_layer1_used;
     sprite_entry_from_entity();
     reg_d0.w = temp_s0;
@@ -802,7 +771,7 @@ void entity_draw_layer2_keep(void) {
     temp_s1 = reg_a0;
     temp_s0 = reg_d0.w;
     temp_s2 = (ArcadeSavedAddress)reg_a1;
-    reg_a0 = g_sprite_layer2_buf;
+    reg_a0 = SPRITE_QUEUE_BASE(layer2);
     reg_a0 += g_sprite_layer2_used;
     sprite_entry_from_entity();
     reg_d0.w = temp_s0;
@@ -819,7 +788,7 @@ void entity_draw_layer3_keep(void) {
     temp_s1 = reg_a0;
     temp_s0 = reg_d0.w;
     temp_s2 = (ArcadeSavedAddress)reg_a1;
-    reg_a0 = g_sprite_layer3_buf;
+    reg_a0 = SPRITE_QUEUE_BASE(layer3);
     reg_a0 += g_sprite_layer3_used;
     sprite_entry_from_entity();
     reg_d0.w = temp_s0;
@@ -836,7 +805,7 @@ void entity_draw_layer4_keep(void) {
     temp_s1 = reg_a0;
     temp_s0 = reg_d0.w;
     temp_s2 = (ArcadeSavedAddress)reg_a1;
-    reg_a0 = g_sprite_layer4_buf;
+    reg_a0 = SPRITE_QUEUE_BASE(layer4);
     reg_a0 += g_sprite_layer4_used;
     sprite_entry_from_entity();
     reg_d0.w = temp_s0;
@@ -853,7 +822,7 @@ void entity_draw_layer5_keep(void) {
     temp_s1 = reg_a0;
     temp_s0 = reg_d0.w;
     temp_s2 = (ArcadeSavedAddress)reg_a1;
-    reg_a0 = g_sprite_layer5_buf;
+    reg_a0 = SPRITE_QUEUE_BASE(layer5);
     reg_a0 += g_sprite_layer5_used;
     sprite_entry_from_entity();
     reg_d0.w = temp_s0;
@@ -865,7 +834,7 @@ void entity_draw_layer5_keep(void) {
 
 void entity_draw_layer1_zoom(void) {
     sprite_zoom_prepare_entity();
-    reg_a0 = g_sprite_layer1_buf;
+    reg_a0 = SPRITE_QUEUE_BASE(layer1);
     reg_a0 += g_sprite_layer1_used;
     sprite_entry_from_entity_zoomed();
     g_sprite_layer1_used += 0xC;
@@ -873,7 +842,7 @@ void entity_draw_layer1_zoom(void) {
 
 void entity_draw_layer2_zoom(void) {
     sprite_zoom_prepare_entity();
-    reg_a0 = g_sprite_layer2_buf;
+    reg_a0 = SPRITE_QUEUE_BASE(layer2);
     reg_a0 += g_sprite_layer2_used;
     sprite_entry_from_entity_zoomed();
     g_sprite_layer2_used += 0xC;
@@ -881,7 +850,7 @@ void entity_draw_layer2_zoom(void) {
 
 void entity_draw_layer3_zoom(void) {
     sprite_zoom_prepare_entity();
-    reg_a0 = g_sprite_layer3_buf;
+    reg_a0 = SPRITE_QUEUE_BASE(layer3);
     reg_a0 += g_sprite_layer3_used;
     sprite_entry_from_entity_zoomed();
     g_sprite_layer3_used += 0xC;
@@ -889,7 +858,7 @@ void entity_draw_layer3_zoom(void) {
 
 void entity_draw_layer4_zoom(void) {
     sprite_zoom_prepare_entity();
-    reg_a0 = g_sprite_layer4_buf;
+    reg_a0 = SPRITE_QUEUE_BASE(layer4);
     reg_a0 += g_sprite_layer4_used;
     sprite_entry_from_entity_zoomed();
     g_sprite_layer4_used += 0xC;
@@ -897,7 +866,7 @@ void entity_draw_layer4_zoom(void) {
 
 void entity_draw_layer5_zoom(void) {
     sprite_zoom_prepare_entity();
-    reg_a0 = g_sprite_layer5_buf;
+    reg_a0 = SPRITE_QUEUE_BASE(layer5);
     reg_a0 += g_sprite_layer5_used;
     sprite_entry_from_entity_zoomed();
     g_sprite_layer5_used += 0xC;
@@ -905,42 +874,42 @@ void entity_draw_layer5_zoom(void) {
 
 
 void sprite_draw(void) {
-    reg_a0 = g_sprite_layer1_buf;
+    reg_a0 = SPRITE_QUEUE_BASE(layer1);
     reg_a0 += g_sprite_layer1_used;
     sprite_entry_from_regs();
     g_sprite_layer1_used += 0xC;
 }
 
 void sprite_draw_layer1(void) {
-    reg_a0 = g_sprite_layer1_buf;
+    reg_a0 = SPRITE_QUEUE_BASE(layer1);
     reg_a0 += g_sprite_layer1_used;
     sprite_entry_from_regs();
     g_sprite_layer1_used += 0xC;
 }
 
 void sprite_draw_layer2(void) {
-    reg_a0 = g_sprite_layer2_buf;
+    reg_a0 = SPRITE_QUEUE_BASE(layer2);
     reg_a0 += g_sprite_layer2_used;
     sprite_entry_from_regs();
     g_sprite_layer2_used += 0xC;
 }
 
 void sprite_draw_layer3(void) {
-    reg_a0 = g_sprite_layer3_buf;
+    reg_a0 = SPRITE_QUEUE_BASE(layer3);
     reg_a0 += g_sprite_layer3_used;
     sprite_entry_from_regs();
     g_sprite_layer3_used += 0xC;
 }
 
 void sprite_draw_layer4(void) {
-    reg_a0 = g_sprite_layer4_buf;
+    reg_a0 = SPRITE_QUEUE_BASE(layer4);
     reg_a0 += g_sprite_layer4_used;
     sprite_entry_from_regs();
     g_sprite_layer4_used += 0xC;
 }
 
 void sprite_draw_layer5(void) {
-    reg_a0 = g_sprite_layer5_buf;
+    reg_a0 = SPRITE_QUEUE_BASE(layer5);
     reg_a0 += g_sprite_layer5_used;
     sprite_entry_from_regs();
     g_sprite_layer5_used += 0xC;
@@ -952,7 +921,7 @@ void sprite_draw_keep(void) {
 
     temp_s0 = reg_a0;
     temp_s1 = reg_d0.w;
-    reg_a0 = g_sprite_layer1_buf;
+    reg_a0 = SPRITE_QUEUE_BASE(layer1);
     reg_a0 += g_sprite_layer1_used;
     sprite_entry_from_regs();
     reg_d0.w = temp_s1;
@@ -966,7 +935,7 @@ void sprite_draw_layer1_keep(void) {
 
     temp_s0 = reg_a0;
     temp_s1 = reg_d0.w;
-    reg_a0 = g_sprite_layer1_buf;
+    reg_a0 = SPRITE_QUEUE_BASE(layer1);
     reg_a0 += g_sprite_layer1_used;
     sprite_entry_from_regs();
     reg_d0.w = temp_s1;
@@ -980,7 +949,7 @@ void sprite_draw_layer2_keep(void) {
 
     temp_s0 = reg_a0;
     temp_s1 = reg_d0.w;
-    reg_a0 = g_sprite_layer2_buf;
+    reg_a0 = SPRITE_QUEUE_BASE(layer2);
     reg_a0 += g_sprite_layer2_used;
     sprite_entry_from_regs();
     reg_d0.w = temp_s1;
@@ -994,7 +963,7 @@ void sprite_draw_layer3_keep(void) {
 
     temp_s0 = reg_a0;
     temp_s1 = reg_d0.w;
-    reg_a0 = g_sprite_layer3_buf;
+    reg_a0 = SPRITE_QUEUE_BASE(layer3);
     reg_a0 += g_sprite_layer3_used;
     sprite_entry_from_regs();
     reg_d0.w = temp_s1;
@@ -1008,7 +977,7 @@ void sprite_draw_layer4_keep(void) {
 
     temp_s0 = reg_a0;
     temp_s1 = reg_d0.w;
-    reg_a0 = g_sprite_layer4_buf;
+    reg_a0 = SPRITE_QUEUE_BASE(layer4);
     reg_a0 += g_sprite_layer4_used;
     sprite_entry_from_regs();
     reg_d0.w = temp_s1;
@@ -1022,7 +991,7 @@ void sprite_draw_layer5_keep(void) {
 
     temp_s0 = reg_a0;
     temp_s1 = reg_d0.w;
-    reg_a0 = g_sprite_layer5_buf;
+    reg_a0 = SPRITE_QUEUE_BASE(layer5);
     reg_a0 += g_sprite_layer5_used;
     sprite_entry_from_regs();
     reg_d0.w = temp_s1;
@@ -1033,7 +1002,7 @@ void sprite_draw_layer5_keep(void) {
 
 void sprite_draw_layer5_zoom(void) {
     sprite_zoom_prepare_regs();
-    reg_a0 = g_sprite_layer5_buf;
+    reg_a0 = SPRITE_QUEUE_BASE(layer5);
     reg_a0 += g_sprite_layer5_used;
     sprite_entry_from_regs_zoomed();
     g_sprite_layer5_used += 0xC;
@@ -1051,7 +1020,7 @@ void sprite_draw_layer1_zoom_keep(void)
     savedA0 = reg_a0;
     sprite_zoom_prepare_regs();
 
-    reg_a0 = g_sprite_layer1_buf;
+    reg_a0 = SPRITE_QUEUE_BASE(layer1);
     reg_a0 += g_sprite_layer1_used;
     sprite_entry_from_regs_zoomed();
 
@@ -1072,7 +1041,7 @@ void sprite_draw_layer2_zoom_keep(void)
     savedAddress = reg_a0;
     sprite_zoom_prepare_regs();
 
-    reg_a0 = g_sprite_layer2_buf;
+    reg_a0 = SPRITE_QUEUE_BASE(layer2);
     reg_a0 += g_sprite_layer2_used;
     sprite_entry_from_regs_zoomed();
 
@@ -1093,7 +1062,7 @@ void sprite_draw_layer3_zoom_keep(void)
     saved_a0 = reg_a0;
 
     sprite_zoom_prepare_regs();
-    reg_a0 = g_sprite_layer3_buf;
+    reg_a0 = SPRITE_QUEUE_BASE(layer3);
     reg_a0 += g_sprite_layer3_used;
     sprite_entry_from_regs_zoomed();
 
@@ -1114,7 +1083,7 @@ void sprite_draw_layer4_zoom_keep(void)
     savedAddress = reg_a0;
 
     sprite_zoom_prepare_regs();
-    reg_a0 = g_sprite_layer4_buf;
+    reg_a0 = SPRITE_QUEUE_BASE(layer4);
     reg_a0 += g_sprite_layer4_used;
     sprite_entry_from_regs_zoomed();
 
@@ -1135,7 +1104,7 @@ void sprite_draw_layer5_zoom_keep(void)
     saved_a0 = reg_a0;
 
     sprite_zoom_prepare_regs();
-    reg_a0 = g_sprite_layer5_buf;
+    reg_a0 = SPRITE_QUEUE_BASE(layer5);
     reg_a0 += g_sprite_layer5_used;
     sprite_entry_from_regs_zoomed();
 
@@ -1408,7 +1377,7 @@ void multiply_d7_by_56(void) {
 void sprite_items_take_entry(void) {
     u32 old_value;
 
-    reg_a0 = g_sprite_items_buf;
+    reg_a0 = SPRITE_QUEUE_BASE(items);
     old_value = g_sprite_items_used;
     reg_a0 += old_value;
     g_sprite_items_used = old_value + 0xC;
@@ -1424,7 +1393,7 @@ void sprite_special_items_take_entry(void) {
     u8 *base;
     s32 step;
 
-    base = g_sprite_special_items_buf;
+    base = SPRITE_QUEUE_BASE(special_items);
     reg_a0 = base;
     step = g_sprite_special_items_used;
     reg_a0 += step;
@@ -1459,7 +1428,7 @@ void sprite_player_shadows_take_entry(void) {
     u8 *base;
     s32 step;
 
-    base = g_sprite_player_shadows_buf;
+    base = SPRITE_QUEUE_BASE(player_shadows);
     reg_a0 = base;
     step = g_sprite_player_shadows_used;
     reg_a0 += step;
@@ -1488,7 +1457,7 @@ void sprite_players_take_entry(void) {
     u8 *base;
     s32 step;
 
-    base = g_sprite_players_buf;
+    base = SPRITE_QUEUE_BASE(players);
     reg_a0 = base;
     step = g_sprite_players_used;
     reg_a0 += step;
@@ -1522,7 +1491,7 @@ void sprite_options_take_entry(void) {
     u8 *base;
     s32 step;
 
-    base = g_sprite_options_buf;
+    base = SPRITE_QUEUE_BASE(options);
     reg_a0 = base;
     step = g_sprite_options_used;
     reg_a0 += step;
@@ -1539,7 +1508,7 @@ void sprite_player_shots_take_entry(void) {
     u8 *base;
     s32 step;
 
-    base = g_sprite_player_shots_buf;
+    base = SPRITE_QUEUE_BASE(player_shots);
     reg_a0 = base;
     step = g_sprite_player_shots_used;
     reg_a0 += step;
@@ -1563,7 +1532,7 @@ void sprite_player_lasers_take_entry(void) {
     u8 *base;
     s32 step;
 
-    base = g_sprite_player_lasers_buf;
+    base = SPRITE_QUEUE_BASE(player_lasers);
     reg_a0 = base;
     step = g_sprite_player_lasers_used;
     reg_a0 += step;
@@ -1579,7 +1548,7 @@ void entity_draw_with_player_lasers(void) {
 void sprite_bullets_take_entry(void) {
     u32 offset;
 
-    reg_a0 = g_sprite_bullets_buf;
+    reg_a0 = SPRITE_QUEUE_BASE(bullets);
     offset = g_sprite_bullets_used;
     reg_a0 += offset;
     g_sprite_bullets_used = offset + 0xC;
@@ -1635,13 +1604,12 @@ void sprite_draw_with_bullets_zoom(void) {
 }
 
 extern u16 g_sprite_warning_used;
-extern u8 g_sprite_warning_buf[];
 
 void sprite_warning_take_entry(void) {
     u8 *base;
     s32 step;
 
-    base = g_sprite_warning_buf;
+    base = SPRITE_QUEUE_BASE(warning);
     reg_a0 = base;
     step = g_sprite_warning_used;
     reg_a0 += step;
@@ -1667,12 +1635,11 @@ void sprite_draw_with_warning_keep(void) {
 }
 
 extern u16 g_sprite_score_used;
-extern u8 g_sprite_score_buf[];
 
 void sprite_score_take_entry(void) {
     u32 counter;
 
-    reg_a0 = g_sprite_score_buf;
+    reg_a0 = SPRITE_QUEUE_BASE(score);
     counter = g_sprite_score_used;
     reg_a0 += counter;
     g_sprite_score_used = counter + 0xC;
@@ -1697,12 +1664,11 @@ void sprite_draw_with_score_keep(void) {
 }
 
 extern u16 g_sprite_laser_trail_used;
-extern u8 g_sprite_laser_trail_buf[];
 
 void sprite_laser_trail_take_entry(void) {
     u32 temp;
 
-    reg_a0 = g_sprite_laser_trail_buf;
+    reg_a0 = SPRITE_QUEUE_BASE(laser_trail);
     temp = g_sprite_laser_trail_used;
     reg_a0 += temp;
     g_sprite_laser_trail_used = temp + 0xC;
@@ -1722,12 +1688,11 @@ void sprite_draw_with_laser_trail_keep(void) {
 }
 
 extern u16 g_sprite_last_boss_used;
-extern u8 g_sprite_last_boss_buf[];
 void sprite_last_boss_take_entry(void) {
     u8 *base;
     s32 step;
 
-    base = g_sprite_last_boss_buf;
+    base = SPRITE_QUEUE_BASE(last_boss);
     reg_a0 = base;
     step = g_sprite_last_boss_used;
     reg_a0 += step;
@@ -1748,9 +1713,8 @@ void sprite_draw_with_last_boss_keep(void) {
 }
 
 extern u16 g_sprite_bombs_used;
-extern u8 g_sprite_bombs_buf[];
 void sprite_bombs_take_entry(void) {
-    s32 step; reg_a0 = g_sprite_bombs_buf; step = g_sprite_bombs_used; reg_a0 += step; g_sprite_bombs_used = step + 0xC;
+    s32 step; reg_a0 = SPRITE_QUEUE_BASE(bombs); step = g_sprite_bombs_used; reg_a0 += step; g_sprite_bombs_used = step + 0xC;
 }
 
 
@@ -1791,13 +1755,12 @@ void sprite_draw_with_bombs_keep(void) {
 }
 
 extern u16 g_sprite_ship_select_used;
-extern u8 g_sprite_ship_select_buf[];
 
 void sprite_ship_select_take_entry(void) {
     u32 offset;
     u8 *cursor;
 
-    reg_a0 = g_sprite_ship_select_buf;
+    reg_a0 = SPRITE_QUEUE_BASE(ship_select);
     offset = g_sprite_ship_select_used;
     cursor = reg_a0;
     reg_a0 = cursor + offset;
@@ -1818,12 +1781,11 @@ void sprite_draw_with_ship_select_keep(void) {
 }
 
 extern u16 g_sprite_maximum_used;
-extern u8 g_sprite_maximum_buf[];
 
 void sprite_maximum_take_entry(void) {
     u32 offset;
 
-    reg_a0 = g_sprite_maximum_buf;
+    reg_a0 = SPRITE_QUEUE_BASE(maximum);
     offset = g_sprite_maximum_used;
     reg_a0 += offset;
     g_sprite_maximum_used = offset + 0xC;
@@ -1836,13 +1798,12 @@ void sprite_draw_with_maximum(void) {
 }
 
 extern u16 g_sprite_hyper_ready_used;
-extern u8 g_sprite_hyper_ready_buf[];
 
 void sprite_hyper_ready_take_entry(void) {
     u8 *base;
     s32 step;
 
-    base = g_sprite_hyper_ready_buf;
+    base = SPRITE_QUEUE_BASE(hyper_ready);
     reg_a0 = base;
     step = g_sprite_hyper_ready_used;
     reg_a0 += step;
@@ -1856,12 +1817,11 @@ void sprite_draw_with_hyper_ready(void) {
 }
 
 extern u16 g_sprite_hyper_display_used;
-extern u8 g_sprite_hyper_display_buf[];
 
 void sprite_hyper_display_take_entry(void) {
     u32 temp;
 
-    reg_a0 = g_sprite_hyper_display_buf;
+    reg_a0 = SPRITE_QUEUE_BASE(hyper_display);
     temp = g_sprite_hyper_display_used;
     reg_a0 += temp;
     g_sprite_hyper_display_used = temp + 0xC;
@@ -1923,135 +1883,43 @@ u16 g_sprite_overflow_bytes __attribute__((aligned(4)));
 s16 g_sprite_sparks_dropped __attribute__((aligned(4)));
 s16 g_sprite_debris_dropped __attribute__((aligned(4)));
 
-/* .bss (the compiler lays these out in reverse) */
-#ifndef DDPDOJ_PC
-#ifdef DEATH_LABEL
-u8 g_sprite_layer1_buf[28032];
-#else
-u8 g_sprite_layer1_buf[11952];
-#endif
-#ifdef DEATH_LABEL
-u8 g_sprite_layer2_buf[14016];
-#else
-u8 g_sprite_layer2_buf[5984];
-#endif
-#ifdef DEATH_LABEL
-u8 g_sprite_layer3_buf[14016];
-#else
-u8 g_sprite_layer3_buf[5984];
-#endif
-#ifdef DEATH_LABEL
-u8 g_sprite_layer4_buf[14016];
-#else
-u8 g_sprite_layer4_buf[5984];
-#endif
-#ifdef DEATH_LABEL
-u8 g_sprite_layer5_buf[14016];
-#else
-u8 g_sprite_layer5_buf[5984];
-#endif
-#ifdef DEATH_LABEL
-u8 g_sprite_extra_buf[28032];
-#else
-u8 g_sprite_extra_buf[11952];
-#endif
-u8 g_sprite_special_items_buf[848];
-u8 g_sprite_items_first_buf[304];
-u8 g_sprite_items_buf[304];
-u8 g_sprite_player_shadows_buf[80];
-u8 g_sprite_debris1_buf[240];
-u8 g_sprite_debris2_buf[240];
-u8 g_sprite_player_shots_buf[864];
-u8 g_sprite_player_lasers_buf[768];
-u8 g_sprite_options_buf[48];
-u8 g_sprite_players_buf[192];
-u8 g_sprite_sparks_buf[720];
-#ifdef DEATH_LABEL
-u8 g_sprite_bullets_buf[12608];
-#else
-u8 g_sprite_bullets_buf[2528];
-#endif
-#ifdef DEATH_LABEL
-u8 g_sprite_bullets2_buf[12608];
-#else
-u8 g_sprite_bullets2_buf[2528];
-#endif
-u8 g_sprite_warning_buf[192];
-u8 g_sprite_score_buf[384];
-u8 g_sprite_sight_buf[128];
-u8 g_sprite_bombs_buf[1088];
-u8 g_sprite_ship_select_buf[128];
-u8 g_sprite_stage_clear1_buf[128];
-u8 g_sprite_stage_clear2_buf[128];
-u8 g_sprite_maximum_buf[32];
-u8 g_sprite_hyper_ready_buf[32];
-u8 g_sprite_hyper_display_buf[128];
-u8 g_sprite_laser_trail_buf[128];
-u8 g_sprite_last_boss_buf[48];
-#else
-#ifdef DEATH_LABEL
-u8 g_sprite_last_boss_buf[0x23470];
-#else
-u8 g_sprite_last_boss_buf[0xea90];
-#endif
-
-#include "pc_data_alias.h"
-
-PC_DATA_ALIAS(g_sprite_laser_trail_buf, g_sprite_last_boss_buf, 0x0030);
-PC_DATA_ALIAS(g_sprite_hyper_display_buf, g_sprite_last_boss_buf, 0x00b0);
-PC_DATA_ALIAS(g_sprite_hyper_ready_buf, g_sprite_last_boss_buf, 0x0130);
-PC_DATA_ALIAS(g_sprite_maximum_buf, g_sprite_last_boss_buf, 0x0150);
-PC_DATA_ALIAS(g_sprite_stage_clear2_buf, g_sprite_last_boss_buf, 0x0170);
-PC_DATA_ALIAS(g_sprite_stage_clear1_buf, g_sprite_last_boss_buf, 0x01f0);
-PC_DATA_ALIAS(g_sprite_ship_select_buf, g_sprite_last_boss_buf, 0x0270);
-PC_DATA_ALIAS(g_sprite_bombs_buf, g_sprite_last_boss_buf, 0x02f0);
-PC_DATA_ALIAS(g_sprite_sight_buf, g_sprite_last_boss_buf, 0x0730);
-PC_DATA_ALIAS(g_sprite_score_buf, g_sprite_last_boss_buf, 0x07b0);
-PC_DATA_ALIAS(g_sprite_warning_buf, g_sprite_last_boss_buf, 0x0930);
-PC_DATA_ALIAS(g_sprite_bullets2_buf, g_sprite_last_boss_buf, 0x09f0);
-#ifdef DEATH_LABEL
-PC_DATA_ALIAS(g_sprite_bullets_buf, g_sprite_last_boss_buf, 0x3b30);
-PC_DATA_ALIAS(g_sprite_sparks_buf, g_sprite_last_boss_buf, 0x6c70);
-PC_DATA_ALIAS(g_sprite_players_buf, g_sprite_last_boss_buf, 0x6f40);
-PC_DATA_ALIAS(g_sprite_options_buf, g_sprite_last_boss_buf, 0x7000);
-PC_DATA_ALIAS(g_sprite_player_lasers_buf, g_sprite_last_boss_buf, 0x7030);
-PC_DATA_ALIAS(g_sprite_player_shots_buf, g_sprite_last_boss_buf, 0x7330);
-PC_DATA_ALIAS(g_sprite_debris2_buf, g_sprite_last_boss_buf, 0x7690);
-PC_DATA_ALIAS(g_sprite_debris1_buf, g_sprite_last_boss_buf, 0x7780);
-PC_DATA_ALIAS(g_sprite_player_shadows_buf, g_sprite_last_boss_buf, 0x7870);
-PC_DATA_ALIAS(g_sprite_items_buf, g_sprite_last_boss_buf, 0x78c0);
-PC_DATA_ALIAS(g_sprite_items_first_buf, g_sprite_last_boss_buf, 0x79f0);
-PC_DATA_ALIAS(g_sprite_special_items_buf, g_sprite_last_boss_buf, 0x7b20);
-PC_DATA_ALIAS(g_sprite_extra_buf, g_sprite_last_boss_buf, 0x7e70);
-PC_DATA_ALIAS(g_sprite_layer5_buf, g_sprite_last_boss_buf, 0xebf0);
-PC_DATA_ALIAS(g_sprite_layer4_buf, g_sprite_last_boss_buf, 0x122b0);
-PC_DATA_ALIAS(g_sprite_layer3_buf, g_sprite_last_boss_buf, 0x15970);
-PC_DATA_ALIAS(g_sprite_layer2_buf, g_sprite_last_boss_buf, 0x19030);
-PC_DATA_ALIAS(g_sprite_layer1_buf, g_sprite_last_boss_buf, 0x1c6f0);
-#else
-PC_DATA_ALIAS(g_sprite_bullets_buf, g_sprite_last_boss_buf, 0x13d0);
-PC_DATA_ALIAS(g_sprite_sparks_buf, g_sprite_last_boss_buf, 0x1db0);
-PC_DATA_ALIAS(g_sprite_players_buf, g_sprite_last_boss_buf, 0x2080);
-PC_DATA_ALIAS(g_sprite_options_buf, g_sprite_last_boss_buf, 0x2140);
-PC_DATA_ALIAS(g_sprite_player_lasers_buf, g_sprite_last_boss_buf, 0x2170);
-PC_DATA_ALIAS(g_sprite_player_shots_buf, g_sprite_last_boss_buf, 0x2470);
-PC_DATA_ALIAS(g_sprite_debris2_buf, g_sprite_last_boss_buf, 0x27d0);
-PC_DATA_ALIAS(g_sprite_debris1_buf, g_sprite_last_boss_buf, 0x28c0);
-PC_DATA_ALIAS(g_sprite_player_shadows_buf, g_sprite_last_boss_buf, 0x29b0);
-PC_DATA_ALIAS(g_sprite_items_buf, g_sprite_last_boss_buf, 0x2a00);
-PC_DATA_ALIAS(g_sprite_items_first_buf, g_sprite_last_boss_buf, 0x2b30);
-PC_DATA_ALIAS(g_sprite_special_items_buf, g_sprite_last_boss_buf, 0x2c60);
-PC_DATA_ALIAS(g_sprite_extra_buf, g_sprite_last_boss_buf, 0x2fb0);
-PC_DATA_ALIAS(g_sprite_layer5_buf, g_sprite_last_boss_buf, 0x5e60);
-PC_DATA_ALIAS(g_sprite_layer4_buf, g_sprite_last_boss_buf, 0x75c0);
-PC_DATA_ALIAS(g_sprite_layer3_buf, g_sprite_last_boss_buf, 0x8d20);
-PC_DATA_ALIAS(g_sprite_layer2_buf, g_sprite_last_boss_buf, 0xa480);
-PC_DATA_ALIAS(g_sprite_layer1_buf, g_sprite_last_boss_buf, 0xbbe0);
-#endif
-#endif
+SpriteQueueStorage g_sprite_queues __attribute__((aligned(16)));
 
 #ifdef DDPDOJ_PC
 #include "pc_frame_regions.h"
+
+_Static_assert(offsetof(SpriteQueueStorage, last_boss) == 0x0, "last_boss queue offset");
+_Static_assert(offsetof(SpriteQueueStorage, laser_trail) == 0x30, "laser_trail queue offset");
+_Static_assert(offsetof(SpriteQueueStorage, hyper_display) == 0xb0, "hyper_display queue offset");
+_Static_assert(offsetof(SpriteQueueStorage, hyper_ready) == 0x130, "hyper_ready queue offset");
+_Static_assert(offsetof(SpriteQueueStorage, maximum) == 0x150, "maximum queue offset");
+_Static_assert(offsetof(SpriteQueueStorage, stage_clear2) == 0x170, "stage_clear2 queue offset");
+_Static_assert(offsetof(SpriteQueueStorage, stage_clear1) == 0x1f0, "stage_clear1 queue offset");
+_Static_assert(offsetof(SpriteQueueStorage, ship_select) == 0x270, "ship_select queue offset");
+_Static_assert(offsetof(SpriteQueueStorage, bombs) == 0x2f0, "bombs queue offset");
+_Static_assert(offsetof(SpriteQueueStorage, sight) == 0x730, "sight queue offset");
+_Static_assert(offsetof(SpriteQueueStorage, score) == 0x7b0, "score queue offset");
+_Static_assert(offsetof(SpriteQueueStorage, warning) == 0x930, "warning queue offset");
+_Static_assert(offsetof(SpriteQueueStorage, bullets2) == 0x9f0, "bullets2 queue offset");
+_Static_assert(offsetof(SpriteQueueStorage, bullets) == MAIN_OR_DEATH_LABEL(0x13d0, 0x3b30), "bullets queue offset");
+_Static_assert(offsetof(SpriteQueueStorage, sparks) == MAIN_OR_DEATH_LABEL(0x1db0, 0x6c70), "sparks queue offset");
+_Static_assert(offsetof(SpriteQueueStorage, players) == MAIN_OR_DEATH_LABEL(0x2080, 0x6f40), "players queue offset");
+_Static_assert(offsetof(SpriteQueueStorage, options) == MAIN_OR_DEATH_LABEL(0x2140, 0x7000), "options queue offset");
+_Static_assert(offsetof(SpriteQueueStorage, player_lasers) == MAIN_OR_DEATH_LABEL(0x2170, 0x7030), "player_lasers queue offset");
+_Static_assert(offsetof(SpriteQueueStorage, player_shots) == MAIN_OR_DEATH_LABEL(0x2470, 0x7330), "player_shots queue offset");
+_Static_assert(offsetof(SpriteQueueStorage, debris2) == MAIN_OR_DEATH_LABEL(0x27d0, 0x7690), "debris2 queue offset");
+_Static_assert(offsetof(SpriteQueueStorage, debris1) == MAIN_OR_DEATH_LABEL(0x28c0, 0x7780), "debris1 queue offset");
+_Static_assert(offsetof(SpriteQueueStorage, player_shadows) == MAIN_OR_DEATH_LABEL(0x29b0, 0x7870), "player_shadows queue offset");
+_Static_assert(offsetof(SpriteQueueStorage, items) == MAIN_OR_DEATH_LABEL(0x2a00, 0x78c0), "items queue offset");
+_Static_assert(offsetof(SpriteQueueStorage, items_first) == MAIN_OR_DEATH_LABEL(0x2b30, 0x79f0), "items_first queue offset");
+_Static_assert(offsetof(SpriteQueueStorage, special_items) == MAIN_OR_DEATH_LABEL(0x2c60, 0x7b20), "special_items queue offset");
+_Static_assert(offsetof(SpriteQueueStorage, extra) == MAIN_OR_DEATH_LABEL(0x2fb0, 0x7e70), "extra queue offset");
+_Static_assert(offsetof(SpriteQueueStorage, layer5) == MAIN_OR_DEATH_LABEL(0x5e60, 0xebf0), "layer5 queue offset");
+_Static_assert(offsetof(SpriteQueueStorage, layer4) == MAIN_OR_DEATH_LABEL(0x75c0, 0x122b0), "layer4 queue offset");
+_Static_assert(offsetof(SpriteQueueStorage, layer3) == MAIN_OR_DEATH_LABEL(0x8d20, 0x15970), "layer3 queue offset");
+_Static_assert(offsetof(SpriteQueueStorage, layer2) == MAIN_OR_DEATH_LABEL(0xa480, 0x19030), "layer2 queue offset");
+_Static_assert(offsetof(SpriteQueueStorage, layer1) == MAIN_OR_DEATH_LABEL(0xbbe0, 0x1c6f0), "layer1 queue offset");
+_Static_assert(sizeof(SpriteQueueStorage) == MAIN_OR_DEATH_LABEL(0xea90, 0x23470), "sprite queue storage size");
 
 const PcFrameRegion pc_sprite_queue_regions[] = {
     PC_FRAME_REGION(g_sprite_layer1_used),
@@ -2090,51 +1958,37 @@ const PcFrameRegion pc_sprite_queue_regions[] = {
     PC_FRAME_REGION(g_sprite_overflow_bytes),
     PC_FRAME_REGION(g_sprite_sparks_dropped),
     PC_FRAME_REGION(g_sprite_debris_dropped),
-#ifdef DEATH_LABEL
-    PC_FRAME_REGION_BYTES(g_sprite_layer1_buf, 28032),
-    PC_FRAME_REGION_BYTES(g_sprite_layer2_buf, 14016),
-    PC_FRAME_REGION_BYTES(g_sprite_layer3_buf, 14016),
-    PC_FRAME_REGION_BYTES(g_sprite_layer4_buf, 14016),
-    PC_FRAME_REGION_BYTES(g_sprite_layer5_buf, 14016),
-    PC_FRAME_REGION_BYTES(g_sprite_extra_buf, 28032),
-#else
-    PC_FRAME_REGION_BYTES(g_sprite_layer1_buf, 11952),
-    PC_FRAME_REGION_BYTES(g_sprite_layer2_buf, 5984),
-    PC_FRAME_REGION_BYTES(g_sprite_layer3_buf, 5984),
-    PC_FRAME_REGION_BYTES(g_sprite_layer4_buf, 5984),
-    PC_FRAME_REGION_BYTES(g_sprite_layer5_buf, 5984),
-    PC_FRAME_REGION_BYTES(g_sprite_extra_buf, 11952),
-#endif
-    PC_FRAME_REGION_BYTES(g_sprite_special_items_buf, 848),
-    PC_FRAME_REGION_BYTES(g_sprite_items_first_buf, 304),
-    PC_FRAME_REGION_BYTES(g_sprite_items_buf, 304),
-    PC_FRAME_REGION_BYTES(g_sprite_player_shadows_buf, 80),
-    PC_FRAME_REGION_BYTES(g_sprite_debris1_buf, 240),
-    PC_FRAME_REGION_BYTES(g_sprite_debris2_buf, 240),
-    PC_FRAME_REGION_BYTES(g_sprite_player_shots_buf, 864),
-    PC_FRAME_REGION_BYTES(g_sprite_player_lasers_buf, 768),
-    PC_FRAME_REGION_BYTES(g_sprite_options_buf, 48),
-    PC_FRAME_REGION_BYTES(g_sprite_players_buf, 192),
-    PC_FRAME_REGION_BYTES(g_sprite_sparks_buf, 720),
-#ifdef DEATH_LABEL
-    PC_FRAME_REGION_BYTES(g_sprite_bullets_buf, 12608),
-    PC_FRAME_REGION_BYTES(g_sprite_bullets2_buf, 12608),
-#else
-    PC_FRAME_REGION_BYTES(g_sprite_bullets_buf, 2528),
-    PC_FRAME_REGION_BYTES(g_sprite_bullets2_buf, 2528),
-#endif
-    PC_FRAME_REGION_BYTES(g_sprite_warning_buf, 192),
-    PC_FRAME_REGION_BYTES(g_sprite_score_buf, 384),
-    PC_FRAME_REGION_BYTES(g_sprite_sight_buf, 128),
-    PC_FRAME_REGION_BYTES(g_sprite_bombs_buf, 1088),
-    PC_FRAME_REGION_BYTES(g_sprite_ship_select_buf, 128),
-    PC_FRAME_REGION_BYTES(g_sprite_stage_clear1_buf, 128),
-    PC_FRAME_REGION_BYTES(g_sprite_stage_clear2_buf, 128),
-    PC_FRAME_REGION_BYTES(g_sprite_maximum_buf, 32),
-    PC_FRAME_REGION_BYTES(g_sprite_hyper_ready_buf, 32),
-    PC_FRAME_REGION_BYTES(g_sprite_hyper_display_buf, 128),
-    PC_FRAME_REGION_BYTES(g_sprite_laser_trail_buf, 128),
-    PC_FRAME_REGION_BYTES(g_sprite_last_boss_buf, 48),
+    PC_FRAME_REGION(g_sprite_queues.layer1),
+    PC_FRAME_REGION(g_sprite_queues.layer2),
+    PC_FRAME_REGION(g_sprite_queues.layer3),
+    PC_FRAME_REGION(g_sprite_queues.layer4),
+    PC_FRAME_REGION(g_sprite_queues.layer5),
+    PC_FRAME_REGION(g_sprite_queues.extra),
+    PC_FRAME_REGION(g_sprite_queues.special_items),
+    PC_FRAME_REGION(g_sprite_queues.items_first),
+    PC_FRAME_REGION(g_sprite_queues.items),
+    PC_FRAME_REGION(g_sprite_queues.player_shadows),
+    PC_FRAME_REGION(g_sprite_queues.debris1),
+    PC_FRAME_REGION(g_sprite_queues.debris2),
+    PC_FRAME_REGION(g_sprite_queues.player_shots),
+    PC_FRAME_REGION(g_sprite_queues.player_lasers),
+    PC_FRAME_REGION(g_sprite_queues.options),
+    PC_FRAME_REGION(g_sprite_queues.players),
+    PC_FRAME_REGION(g_sprite_queues.sparks),
+    PC_FRAME_REGION(g_sprite_queues.bullets),
+    PC_FRAME_REGION(g_sprite_queues.bullets2),
+    PC_FRAME_REGION(g_sprite_queues.warning),
+    PC_FRAME_REGION(g_sprite_queues.score),
+    PC_FRAME_REGION(g_sprite_queues.sight),
+    PC_FRAME_REGION(g_sprite_queues.bombs),
+    PC_FRAME_REGION(g_sprite_queues.ship_select),
+    PC_FRAME_REGION(g_sprite_queues.stage_clear1),
+    PC_FRAME_REGION(g_sprite_queues.stage_clear2),
+    PC_FRAME_REGION(g_sprite_queues.maximum),
+    PC_FRAME_REGION(g_sprite_queues.hyper_ready),
+    PC_FRAME_REGION(g_sprite_queues.hyper_display),
+    PC_FRAME_REGION(g_sprite_queues.laser_trail),
+    PC_FRAME_REGION(g_sprite_queues.last_boss),
     { NULL, 0 },
 };
 #endif

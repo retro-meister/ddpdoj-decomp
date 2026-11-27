@@ -1,4 +1,5 @@
 #include "common.h"
+#include "sprite_queue.h" /* Queue offsets depend on DEATH_LABEL. */
 #include "player.h"
 
 extern void (*spark_velocity_routines[8])();
@@ -329,7 +330,6 @@ extern u16 g_frame_mod8;
 extern u16 g_frame_mod2;
 extern u8 *D_0028E570;
 extern u16 D_0029A52A[];
-extern u8 g_sprite_sparks_buf[];
 
 #define W(o) (*(u16 *)(reg_a6 + (o)))
 #define LOOKUP(d) (((d) != 0) ? *(u16 *)(reg_a0 + ((s16)(d) & ~1)) : *(u16 *)reg_a0)
@@ -358,7 +358,7 @@ void sparks_update(void) {
     reg_d2.w = 0x80008000;
     reg_d1.w = 0x1A;
     reg_a6 = (u8 *)g_sparks;
-    reg_a4 = (u8 *)g_sprite_sparks_buf;
+    reg_a4 = (u8 *)SPRITE_QUEUE_BASE(sparks);
     D_0028E570 = reg_a4;
     goto loop_2;
 loop_1:

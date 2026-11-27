@@ -1,4 +1,5 @@
 #include "common.h"
+#include "sprite_queue.h"
 #include "entity.h"
 #include "black_label.h"
 
@@ -32,8 +33,6 @@ extern u8 g_bullets[];
 extern s16 bullets_update_table[];
 extern s16 bullets_update_table_2[];
 #endif
-extern u8 g_sprite_bullets2_buf[];
-extern u8 g_sprite_bullets_buf[];
 
 #ifdef DDPDOJ_PC
 extern u8 *D_00299770[];
@@ -45,13 +44,13 @@ extern u8 *D_00299770[];
 void bullets_update(void) {
     bullets_cancel_update();
     ((s16 *)g_bullets_alive)[0] = 0;
-    reg_a4 = (u8 *)g_sprite_bullets2_buf;
-    reg_a0 = (u8 *)g_sprite_bullets_buf;
+    reg_a4 = (u8 *)SPRITE_QUEUE_BASE(bullets2);
+    reg_a0 = (u8 *)SPRITE_QUEUE_BASE(bullets);
     bullets_update_state = (u8 *)(reg_a4);
     reg_a0 += g_sprite_bullets_used;
     BULLET_SPRITE_CURSOR = reg_a0;
     bullets_update_loop();
-    reg_d1.w = (u32) g_sprite_bullets_buf;
+    reg_d1.w = (u32) SPRITE_QUEUE_BASE(bullets);
     reg_d0.w = (u32) BULLET_SPRITE_CURSOR;
     reg_d0.w -= reg_d1.w;
     reg_a4 = (u8 *)((u32)reg_a4 - (u32)bullets_update_state);
