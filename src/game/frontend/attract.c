@@ -1,5 +1,6 @@
 #include "common.h"
 #include "task.h"
+#include "black_label.h"
 #include "sdk/ps2sdk.h"
 #include "pad.h"
 
@@ -608,6 +609,11 @@ void attract_step_caution_text() {
     if ((*(u16 *)(reg_a5 + 6) != 0x1C0) && ((temp_v1 = *(u16 *)(reg_a5 + 0xA), (temp_v1 == 0)) || (*(u16 *)(reg_a5 + 0xA) = (u16) (temp_v1 - 1), (*(u16 *)(reg_a5 + 0xA) == 0)))) {
         reg_a0 = attract_step_caution_text_table;
         reg_a0 += *(u16 *)(reg_a5 + 6);
+#ifdef DDPDOJ_BONUS_FEATURES
+        if (g_black_label_active && *(u16 *)(reg_a5 + 6) == 13 * 32) {
+            reg_a0 = (u8 *)"    2002.10.07.BLACK VER    ";
+        }
+#endif
         reg_d0.h[0] = *(u16 *)(reg_a5 + 8);
         reg_d1.h[0] = 0;
         reg_d2.h[0] = 0;

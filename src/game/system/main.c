@@ -129,6 +129,7 @@ void game_main(void) {
 #endif
 #ifdef DDPDOJ_BONUS_FEATURES
     if (g_black_label_active) {
+        black_label_title_init();
         black_label_menu_init();
         black_label_card_init();
     }

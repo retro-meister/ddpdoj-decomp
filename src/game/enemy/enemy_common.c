@@ -1,4 +1,5 @@
 #include "common.h"
+#include "black_label.h"
 #include "arcade_gameplay.h"
 #include "pad.h"
 
@@ -214,7 +215,7 @@ void settings_notice_begin(void) {
     u8 *save_a5;
     u8 *save_a6;
 
-    g_settings_notice_time = 0xF0;
+    g_settings_notice_time = GAME_RULE(240, 480);
     save_d0 = reg_d0.w;
     save_d6 = reg_d6.w;
     save_d7 = reg_d7.w;
@@ -343,6 +344,44 @@ void settings_notice_update_with_fade_in(void) {
 
 s32 palette_bank_a_load();
 extern u8 D_002687B0[];
+extern u16 settings_notice_fade_palettes_at_4[32];
+extern u16 settings_notice_fade_palettes_at_11[32];
+
+#ifdef DDPDOJ_BONUS_FEATURES
+void black_label_title_init(void) {
+    static char extend_points[3][2][32] = {
+        { "       1ST 20000000PTS      ", "       2ND 50000000PTS      " },
+        { "      1ST  60000000PTS      ", "      2ND 120000000PTS      " },
+        { "       1ST  7000000PTS      ", "       2ND 18000000PTS      " },
+    };
+    static const u16 background[32] = {
+        0x0841, 0x0C62, 0x1062, 0x0C63, 0x1482, 0x1064, 0x1483, 0x1483,
+        0x1085, 0x18A3, 0x1485, 0x18A4, 0x1CC4, 0x18A6, 0x20C4, 0x18C7,
+        0x20E5, 0x24E5, 0x1CC9, 0x2506, 0x2906, 0x1CEA, 0x2D27, 0x2D28,
+        0x210B, 0x250C, 0x3148, 0x2D4B, 0x314A, 0x292D, 0x356C, 0x7FFF,
+    };
+    static const u16 lettering[32] = {
+        0x0002, 0x0025, 0x0008, 0x002A, 0x002D, 0x0050, 0x0032, 0x0035,
+        0x18C6, 0x2927, 0x316A, 0x296D, 0x35AC, 0x39CE, 0x41EF, 0x4210,
+        0x4631, 0x4A51, 0x4E52, 0x4E73, 0x5294, 0x5294, 0x56B5, 0x56B5,
+        0x5AD6, 0x5AD6, 0x5EF7, 0x6318, 0x6739, 0x6B5A, 0x6F7B, 0x0000,
+    };
+    static const u16 emblem[32] = {
+        0x0048, 0x0048, 0x0048, 0x0448, 0x0468, 0x0468, 0x0868, 0x0868,
+        0x0888, 0x0C88, 0x0C88, 0x0C88, 0x0CA8, 0x10A9, 0x10A9, 0x10A9,
+        0x14C9, 0x14C9, 0x14C9, 0x14C9, 0x18E9, 0x18C9, 0x18E9, 0x1CE9,
+        0x1CE9, 0x1D09, 0x1D09, 0x2109, 0x2109, 0x2109, 0x2109, 0x0000,
+    };
+    unsigned int i;
+    for (i = 0; i < 3; ++i) settings_notice_extend_texts[i] = extend_points[i][0];
+    for (i = 0; i < 32; ++i) {
+        ((u16 *)D_002687B0)[i] = background[i];
+        settings_notice_fade_palettes_at_4[i] = lettering[i];
+        settings_notice_fade_palettes_at_11[i] = emblem[i];
+    }
+}
+#endif
+
 extern u16 g_settings_notice_loaded;
 
 void settings_notice_draw_static(void) {
@@ -479,7 +518,7 @@ void settings_notice_draw(void) {
     settings_notice_draw_piece_1();
     settings_notice_draw_piece_0();
     settings_notice_draw_piece_2();
-    settings_notice_draw_piece_3();
+    if (GAME_RULE(1, 0)) settings_notice_draw_piece_3();
     settings_notice_draw_piece_4();
     settings_notice_objects_draw();
     settings_notice_return_running();
@@ -531,18 +570,16 @@ void settings_notice_return_finished(void) {
 }
 
 extern u8 settings_notice_fade_palettes_at_18[];
-extern u8 settings_notice_fade_palettes_at_11[];
-extern u8 settings_notice_fade_palettes_at_4[];
 
 extern void sprite_palette_load(void);
 
 void settings_notice_palettes_load(void)
 {
-    reg_a0 = settings_notice_fade_palettes_at_4;
+    reg_a0 = (u8 *)settings_notice_fade_palettes_at_4;
     reg_d0.h[0] = 0;
     sprite_palette_load();
 
-    reg_a0 = settings_notice_fade_palettes_at_11;
+    reg_a0 = (u8 *)settings_notice_fade_palettes_at_11;
     reg_d0.h[0] = 1;
     sprite_palette_load();
 
@@ -632,7 +669,7 @@ void settings_notice_print_extend(void) {
 #else
     reg_a0 = *(u8 **)((u8 *)reg_a0 + temp_a0);
 #endif
-    reg_d1.h[0] = 0xF;
+    reg_d1.h[0] = GAME_RULE(15, 16);
     reg_d0.h[0] = 0;
     reg_d2.h[0] = 0;
     text_layer_print();
