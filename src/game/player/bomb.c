@@ -1,3 +1,4 @@
+#include "black_label.h"
 #include "common.h"
 #include "player.h"
 #include "entity.h"
@@ -1477,6 +1478,16 @@ void laser_bomb_end(void) {
 }
 
 void bomb_afterglow_end(void) {
+#ifdef DDPDOJ_BONUS_FEATURES
+    if (g_black_label_active) {
+        int second = *(s8 *)g_bomb_entities < 0;
+        Player *owner = PLAYER(second ? g_player2 : g_player1);
+        Player *partner = PLAYER(second ? g_player1 : g_player2);
+        if (owner->state.b.invincible == 0xFF) owner->state.b.invincible = 0;
+        partner->state.b.invincible = 0;
+        return;
+    }
+#endif
     reg_d0.w = 0;
     PLAYER(((u8 *)g_player1))->state.b.invincible = reg_d0.b[0];
     PLAYER(((u8 *)g_player2))->state.b.invincible = reg_d0.b[0];

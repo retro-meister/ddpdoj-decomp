@@ -1,3 +1,4 @@
+#include "black_label.h"
 #include "common.h"
 #ifdef DDPDOJ_PC
 #include "arcade_gameplay.h"
@@ -1186,6 +1187,12 @@ void laser_segment_spawn(void) {
         }
     }
     reg_d0.h[0] = (reg_d0.h[0] != 0) ? *(u16 *)((u8 *)reg_a1 + ((s16)reg_d0.h[0] & ~1)) : *(u16 *)reg_a1;
+#ifdef DDPDOJ_BONUS_FEATURES
+    if (g_black_label_active && !(PLAYER(reg_a5)->flags.b[0] & 1)) {
+        if (reg_d3.h[0] == 0) reg_d0.h[0] += reg_d2.h[0] == 0 ? 2 : 4;
+        if (reg_d3.h[0] == 4 && reg_d2.h[0] == 0) reg_d0.h[0] += 4;
+    }
+#endif
     *(u16 *)(reg_a2 + 0xE) = (u16) reg_d0.h[0];
     *(u16 *)(reg_a2 + 0x18) = (u16) reg_d2.h[0];
     *(u16 *)(reg_a2 + 0x1A) = (u16) reg_d3.h[0];

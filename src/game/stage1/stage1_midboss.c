@@ -1,3 +1,4 @@
+#include "black_label.h"
 #include "common.h"
 #include "entity.h"
 #include "explosion.h"
@@ -503,6 +504,11 @@ void stage1_midboss_main(void) {
                 }
                 goto block_18;
             }
+#ifdef DDPDOJ_BONUS_FEATURES
+            if (g_black_label_active && g_scroll_line < 0xE7 && ENTITY(reg_a6)->hp.sh < 0) {
+                ENTITY(reg_a6)->hp.h = 0x200;
+            }
+#endif
             if ((s16) ENTITY(reg_a6)->hp.h < 0) {
                 g_enemy_signal_1 = 1;
                 reg_d0.w = ENEMY_STAGE1_MIDBOSS_WRECK;

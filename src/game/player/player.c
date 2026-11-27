@@ -2675,6 +2675,10 @@ block_4:
                 reg_d3.h[0] -= 2;
             }
         }
+#ifdef DDPDOJ_BONUS_FEATURES
+        if (g_black_label_active && (reg_d1.h[0] & 2) && (reg_d1.h[0] == 6 || g_loop)
+            && PLAYER(reg_a6)->laser_power.h == 0) reg_d2.h[0] = 0;
+#endif
         reg_d4.b[0] = PLAYER(reg_a6)->bombs.b.capacity;
         if (*(u16 *)reg_a4 == 0) {
             reg_d5.h[0] = PLAYER(reg_a6)->power_style.h;
@@ -2707,6 +2711,9 @@ block_4:
 }
 
 void player_shot_fire(void) {
+#ifdef DDPDOJ_BONUS_FEATURES
+    Entity *shot = ENTITY(reg_a0);
+#endif
     *(u16 *) reg_a0 = *(u16 *) reg_a1;
     reg_a1 += 2;
     reg_a0 += 2;
@@ -2783,6 +2790,9 @@ void player_shot_fire(void) {
     }
     *(u16 *) reg_a0 = reg_d0.h[0];
     reg_a0 += 2;
+#ifdef DDPDOJ_BONUS_FEATURES
+    if (g_black_label_active && PLAYER(reg_a6)->ship_type.h == 0) shot->hp.h += 5;
+#endif
 }
 
 

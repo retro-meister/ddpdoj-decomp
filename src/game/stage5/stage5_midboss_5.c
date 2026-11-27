@@ -1,3 +1,4 @@
+#include "black_label.h"
 #include "common.h"
 #include "arcade_gameplay.h"
 #include "player.h"
@@ -533,7 +534,7 @@ void stage5_midboss5_main() {
             reg_tmp.h[1] = STAGE5_MIDBOSS5(reg_a5)->hp[0];
             reg_tmp.h[0] = STAGE5_MIDBOSS5(reg_a5)->hp[1];
             if ((s32) reg_tmp.w < 0) {
-                reg_d0.w = 0x1000;
+                reg_d0.w = GAME_RULE(0x1000, 0x700);
                 score_add();
                 ENTITY(reg_a6)->flags.h = 0x8000;
                 STAGE5_MIDBOSS5_DAMAGE(reg_a6)->dying = 1U;

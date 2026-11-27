@@ -1,3 +1,4 @@
+#include "black_label.h"
 #include "common.h"
 #include "arcade_gameplay.h"
 #include "entity.h"
@@ -576,7 +577,7 @@ void stage5_small_spider_turret(void) {
                 reg_d0.b[0] ^= reg_d2.b[0];
                 ENTITY(reg_a6)->attr.b.palette = (u8) reg_d0.b[0];
                 if (ENTITY(reg_a6)->hp.sh < 0) {
-                    reg_d0.w = 0x230;
+                    reg_d0.w = GAME_RULE(0x230, 0x130);
                     score_add();
                     goto block_5;
                 }
@@ -762,7 +763,7 @@ void stage5_small_spider_head(void) {
         reg_d0.b[0] ^= reg_d2.b[0];
         (*(u8 *)((u8 *)(var_a0) + (0x1C))) = (u8) reg_d0.b[0];
         if (ENTITY(reg_a6)->hp.sh < 0) {
-            reg_d0.w = 0x350;
+            reg_d0.w = GAME_RULE(0x350, 0x250);
             score_add();
             reg_d2.h[1] = ENTITY(reg_a6)->y.h;
             reg_d2.h[0] = ENTITY(reg_a6)->x.h;
@@ -914,7 +915,7 @@ block_4:
             reg_d0.b[0] ^= reg_d2.b[0];
             ENTITY(reg_a6)->attr.b.palette = (u8) reg_d0.b[0];
             if (ENTITY(reg_a6)->hp.sh < 0) {
-                reg_d0.w = 0x280;
+                reg_d0.w = GAME_RULE(0x280, 0x180);
                 score_add();
 block_7:
                 ENTITY(reg_a6)->flags.h = 0x8000;
@@ -1091,7 +1092,7 @@ void stage5_large_spider_head(void) {
         reg_d0.b[0] ^= reg_d2.b[0];
         (*(u8 *)((u8 *)(var_a0) + (0x1C))) = (u8) reg_d0.b[0];
         if (ENTITY(reg_a6)->hp.sh < 0) {
-            reg_d0.w = 0x390;
+            reg_d0.w = GAME_RULE(0x390, 0x290);
             score_add();
             reg_d2.h[1] = ENTITY(reg_a6)->y.h;
             reg_d2.h[0] = ENTITY(reg_a6)->x.h;
@@ -1471,7 +1472,7 @@ void stage5_bee_drone(void) {
         reg_d0.b[0] ^= reg_d2.b[0];
         ENTITY(reg_a6)->attr.b.palette = (u8) reg_d0.b[0];
         if (ENTITY(reg_a6)->hp.sh < 0) {
-            reg_d0.w = 0x213;
+            reg_d0.w = GAME_RULE(0x213, 0x113);
             score_add();
             sfx_explosion_ground_large();
             reg_d2.h[1] = ENTITY(reg_a6)->y.h;

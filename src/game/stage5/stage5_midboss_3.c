@@ -1,3 +1,4 @@
+#include "black_label.h"
 #include "common.h"
 #include "entity.h"
 #include "enemy.h"
@@ -162,7 +163,7 @@ void stage5_midboss3_main(void) {
             reg_tmp.h[1] = STAGE5_MIDBOSS3(reg_a5)->hp[0];
             reg_tmp.h[0] = STAGE5_MIDBOSS3(reg_a5)->hp[1];
             if ((s32) reg_tmp.w < 0) {
-                reg_d0.w = 0x1000;
+                reg_d0.w = GAME_RULE(0x1000, 0x600);
                 score_add();
                 vibration_start_pad1(0xB4, 0x50);
                 vibration_start_pad2(0xB4, 0x50);

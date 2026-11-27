@@ -507,6 +507,11 @@ next_1:
             reg_d0.h[0] += 4;
         }
     }
+#ifdef DDPDOJ_BONUS_FEATURES
+    if (g_black_label_active && g_loop == 0 && g_black_label_single_loop && g_true_last_boss > 1) {
+        reg_d0.h[0] += 5;
+    }
+#endif
     if ((s32) reg_d0.h[0] > GAME_RULE(10, g_loop ? 15 : 8)) {
         reg_d0.h[0] = GAME_RULE(10, g_loop ? 15 : 8);
     }

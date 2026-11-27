@@ -1,3 +1,4 @@
+#include "black_label.h"
 #include "common.h"
 #include "arcade_gameplay.h"
 #include "player.h"
@@ -1155,7 +1156,7 @@ block_rts:
                 return;
             }
         } else {
-            reg_d0.w = 0x550;
+            reg_d0.w = GAME_RULE(0x550, 0x350);
             score_add();
             sfx_explosion_ground_large();
             reg_d1.h[0] = 0;
