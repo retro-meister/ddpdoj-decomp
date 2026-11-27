@@ -11,6 +11,7 @@
 #include <SDL3/SDL.h>
 #include <SDL3/SDL_main.h>
 #include <stdlib.h>
+#include <string.h>
 
 extern u16 g_attract_step;
 extern s8 g_menu_page, g_menu_main_step, g_menu_arcade_step, g_menu_cursor;
@@ -80,9 +81,54 @@ static SDL_GamepadButton next_button(bool *confirmed, unsigned *inputs)
     return SDL_GAMEPAD_BUTTON_INVALID;
 }
 
+#ifndef DEATH_LABEL
+extern u8 g_menu_simulation[];
+extern s8 g_replay_slots_state, g_replay_slots_cursor;
+extern u8 g_replay_mode, g_replay_mode_begun;
+extern s32 g_replay_position, g_replay_pointer_not_found;
+extern u32 g_p1_score;
+
+enum {
+    PAGE_SIMULATION = 7,
+    PAGE_SUPER_REPLAY = 22,
+    SIMULATION_MENU_ITEM = 2,
+    SUPER_REPLAY_MENU_ITEM = 4,
+    REPLAY_SLOTS_READY = 4,
+    REPLAY_PLAYBACK = 2,
+    RETAIL_STAGE_3_REPLAY = 2,
+    RETAIL_STAGE_3_INPUTS = 13690,
+    RETAIL_STAGE_3_FINAL_SCORE = 0x16208329,
+};
+
+static SDL_GamepadButton replay_menu_button(bool *confirmed)
+{
+    if (*confirmed) return SDL_GAMEPAD_BUTTON_INVALID;
+    if (g_attract_step != ATTRACT_MENU) return SDL_GAMEPAD_BUTTON_START;
+    if (g_menu_page == PAGE_MAIN && g_menu_main_step == MENU_READY) {
+        return g_menu_cursor == SIMULATION_MENU_ITEM ? SDL_GAMEPAD_BUTTON_EAST : SDL_GAMEPAD_BUTTON_DPAD_DOWN;
+    }
+    if (g_menu_page == PAGE_SIMULATION && g_menu_simulation[0] == MENU_READY) {
+        return g_menu_cursor == SUPER_REPLAY_MENU_ITEM ? SDL_GAMEPAD_BUTTON_EAST : SDL_GAMEPAD_BUTTON_DPAD_DOWN;
+    }
+    if (g_menu_page == PAGE_SUPER_REPLAY && g_replay_slots_state == REPLAY_SLOTS_READY) {
+        *confirmed = g_replay_slots_cursor == RETAIL_STAGE_3_REPLAY;
+        return *confirmed ? SDL_GAMEPAD_BUTTON_EAST : SDL_GAMEPAD_BUTTON_DPAD_DOWN;
+    }
+    return SDL_GAMEPAD_BUTTON_INVALID;
+}
+#endif
+
 int main(int argc, char **argv)
 {
+#ifndef DEATH_LABEL
+    const bool replay = argc == 4 && strcmp(argv[3], "--super-replay") == 0;
+    require(argc == 3 || replay, "Expected the retail ISO, a test-only memory card directory and optional replay mode");
+    s32 replay_inputs = 0;
+    bool replay_finished = false;
+#else
+    const bool replay = false;
     require(argc == 3, "Expected the retail ISO and a test-only memory card directory");
+#endif
     SDL_SetHint(SDL_HINT_JOYSTICK_ALLOW_BACKGROUND_EVENTS, "1");
     require(SDL_Init(SDL_INIT_VIDEO | SDL_INIT_GAMEPAD | SDL_INIT_AUDIO), "Initialize SDL");
 
@@ -115,12 +161,20 @@ int main(int argc, char **argv)
 #else
     const unsigned bomb_at = 95;
 #endif
-    for (unsigned frame = 0; frame < MAX_FRAMES && played < GAMEPLAY_FRAMES; ++frame) {
+    const unsigned max_frames = replay ? 20000 : MAX_FRAMES;
+    for (unsigned frame = 0; frame < max_frames && played < GAMEPLAY_FRAMES; ++frame) {
         if (pressed != SDL_GAMEPAD_BUTTON_INVALID) {
             require(SDL_SetJoystickVirtualButton(joystick, pressed, false), "Release controller button");
             pressed = SDL_GAMEPAD_BUTTON_INVALID;
         } else if (loaded && frame % 9 == 0) {
-            pressed = next_button(&confirmed, &inputs);
+#ifndef DEATH_LABEL
+            if (replay) {
+                pressed = replay_menu_button(&confirmed);
+            } else
+#endif
+            {
+                pressed = next_button(&confirmed, &inputs);
+            }
             if (pressed != SDL_GAMEPAD_BUTTON_INVALID) {
                 require(SDL_SetJoystickVirtualButton(joystick, pressed, true), "Press controller button");
             }
@@ -140,6 +194,19 @@ int main(int argc, char **argv)
         require(pc_gs_ok() && pc_video_ok() && SDL_RenderPresent(renderer), "Render game frame");
         require(game_take_mode_request() == GAME_MODE_NONE, "Keep running the selected mode");
 
+#ifndef DEATH_LABEL
+        if (replay) {
+            require(g_replay_pointer_not_found == 0, "Resolve every tagged replay address");
+            if (g_replay_mode_begun == REPLAY_PLAYBACK && g_replay_position > replay_inputs) {
+                replay_inputs = g_replay_position;
+            }
+            if (replay_inputs && g_replay_mode != REPLAY_PLAYBACK) {
+                replay_finished = true;
+                break;
+            }
+            continue;
+        }
+#endif
         shot_frames += g_player_shot_count != 0;
         laser_frames += g_player_laser_count != 0;
         if (g_bomb_entities[0] != 0) {
@@ -150,11 +217,20 @@ int main(int argc, char **argv)
         played += player_active();
     }
 
-    SDL_Log("Played %u frames, %u with shots, %u with a laser, %u with a bomb, scroll line %u",
-            played, shot_frames, laser_frames, bomb_frames, g_scroll_line);
-    require(played == GAMEPLAY_FRAMES && g_scroll_line > 100, "Advance through gameplay");
-    require(shot_frames > 100 && laser_frames > 30, "Fire shots and laser during gameplay");
-    require(bomb_frames > 30 && bomb_finished, "Fire a bomb and complete its animation");
+#ifndef DEATH_LABEL
+    if (replay) {
+        SDL_Log("Stage 3 replay consumed %d inputs and finished with score %x", replay_inputs, g_p1_score);
+        require(replay_finished && replay_inputs == RETAIL_STAGE_3_INPUTS, "Finish the retail Stage 3 replay");
+        require(g_p1_score == RETAIL_STAGE_3_FINAL_SCORE, "Match the starting score of the next retail stage");
+    } else
+#endif
+    {
+        SDL_Log("Played %u frames, %u with shots, %u with a laser, %u with a bomb, scroll line %u",
+                played, shot_frames, laser_frames, bomb_frames, g_scroll_line);
+        require(played == GAMEPLAY_FRAMES && g_scroll_line > 100, "Advance through gameplay");
+        require(shot_frames > 100 && laser_frames > 30, "Fire shots and laser during gameplay");
+        require(bomb_frames > 30 && bomb_finished, "Fire a bomb and complete its animation");
+    }
     pc_bgm_close();
     pc_mc_close_storage();
     pc_video_bind(NULL);
