@@ -14,6 +14,7 @@
      ((u64)(prim) << 47) | ((u64)(flg) << 58) | ((u64)(nreg) << 60))
 
 /* GS primitive types */
+#define SCE_GS_PRIM_LINE     0x01
 #define SCE_GS_PRIM_TRISTRIP 0x04
 #define SCE_GS_PRIM_TRIFAN   0x05
 #define SCE_GS_PRIM_SPRITE   0x06

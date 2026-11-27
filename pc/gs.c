@@ -227,6 +227,20 @@ static void vertex_kick(GsDrawState *state, u64 value)
     state->vertices[state->vertex_count++] = vertex;
     unsigned primitive = state->prim & 7;
     switch (primitive) {
+    case SCE_GS_PRIM_LINE:
+        if (state->vertex_count == 2) {
+            SDL_FPoint start = state->vertices[0].position;
+            SDL_FPoint end = vertex.position;
+            SDL_BlendMode blend = draw_blend(state);
+            state->failed |= textured || blend == SDL_BLENDMODE_INVALID ||
+                !SDL_SetRenderDrawBlendMode(state->renderer, blend) ||
+                !SDL_SetRenderDrawColorFloat(state->renderer, vertex.color.r, vertex.color.g,
+                                             vertex.color.b, vertex.color.a) ||
+                !SDL_RenderLine(state->renderer, SDL_floorf(start.x), SDL_floorf(start.y),
+                                SDL_floorf(end.x), SDL_floorf(end.y));
+            state->vertex_count = 0;
+        }
+        break;
     case SCE_GS_PRIM_SPRITE:
         if (state->vertex_count == 2) {
             state->failed |= !(textured ? draw_textured(state, primitive) : draw_solid_rect(state));

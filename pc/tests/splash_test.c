@@ -7,6 +7,7 @@
 
 enum { SPLASH_FILE_BYTES = 0x20200 };
 
+void screen_adjust_frame_draw(void *buffer);
 void splash_begin(void);
 void splash_update(void);
 
@@ -64,6 +65,15 @@ static void check_menu_overlay(SDL_Renderer *renderer) {
     expect_pixel(pixels, 200, 240, r, g, b);
     expect_pixel(pixels, 200, 12, 240, 240, 240);
     expect_pixel(pixels, 200, 241, 240, 240, 240);
+    SDL_DestroySurface(pixels);
+
+    screen_adjust_frame_draw(g_gif_buf);
+    require(pc_gs_ok(), "Draw the original Screen Adjust grid");
+    pixels = SDL_RenderReadPixels(renderer, NULL);
+    require(pixels != NULL, "Read the Screen Adjust grid");
+    expect_pixel(pixels, 64, 53, 128, 128, 128);
+    expect_pixel(pixels, 75, 64, 128, 128, 128);
+    expect_pixel(pixels, 75, 65, r, g, b);
     SDL_DestroySurface(pixels);
 }
 
