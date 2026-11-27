@@ -87,11 +87,13 @@ static SDL_GamepadButton next_button(bool *confirmed, unsigned *inputs)
         return SDL_GAMEPAD_BUTTON_EAST;
     }
     if (g_menu_page == PAGE_MAIN && g_menu_main_step == MENU_READY) {
-        if (g_menu_cursor != GAME_RULE(PLAY_MENU_ITEM, 4)) {
+        if (g_menu_cursor != PLAY_MENU_ITEM) {
             return SDL_GAMEPAD_BUTTON_DPAD_DOWN;
         }
 #ifdef DEATH_LABEL
         *confirmed = true;
+#elif defined(DDPDOJ_BONUS_FEATURES)
+        *confirmed = g_black_label_active;
 #endif
         return SDL_GAMEPAD_BUTTON_EAST;
     }

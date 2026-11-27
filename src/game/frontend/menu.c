@@ -2502,8 +2502,18 @@ extern s8 g_menu_main_step;
 
 #ifdef DDPDOJ_BONUS_FEATURES
 void black_label_menu_init(void) {
-    g_menu_main_items[6] = "BLACK LABEL RANKING";
-    g_menu_main_items[8] = "BLACK LABEL SAVE/LOAD";
+    g_menu_main_items[0] = "BLACK LABEL";
+    g_menu_main_items[1] = g_menu_arcade_items[1];
+    g_menu_main_items[3] = g_menu_arcade_items[2];
+    g_menu_main_items[4] = g_menu_arcade_items[4];
+    g_menu_main_items[5] = g_menu_arcade_items[3];
+    g_menu_main_help[1] = g_menu_arcade_help[1];
+    g_menu_main_help[3] = g_menu_arcade_help[2];
+    g_menu_main_help[4] = g_menu_arcade_help[4];
+    g_menu_main_help[5] = g_menu_arcade_help[3];
+    g_menu_main_help[9] = SJIS("怒首領蜂大往生を／起動します。￥");
+    g_menu_launch_ask[1] = SJIS("怒首領蜂大往生を／起動しますか？￥");
+    g_menu_launch_warning[1] = SJIS("　　　　　注意　　　　　／怒首領蜂大往生を起動すると／現在のゲームデータは／失われます。セーブを／行ってから起動して下さい。￥");
     g_menu_page_item_counts[MENU_PAGE_SIMULATION] = 5;
     g_menu_simulation_items[4] = g_menu_simulation_items[5];
     g_menu_simulation_help[4] = g_menu_simulation_help[5];
@@ -2614,6 +2624,12 @@ void menu_main_step2(void) {
         var_a1 = 1;
     }
     g_menu_main_cursor = g_menu_cursor;
+#ifdef DDPDOJ_BONUS_FEATURES
+    if (g_black_label_active && g_menu_cursor == 4) {
+        menu_arcade_adjust();
+        return;
+    }
+#endif
     if (var_a1 != 0) {
         g_menu_main_fade_state = 2;
         g_menu_box_fade_state = 2;
@@ -2662,24 +2678,44 @@ void menu_main_step2(void) {
             break;
         }
 #else
+#ifdef DDPDOJ_BONUS_FEATURES
+        if (g_black_label_active) {
+            extern u8 g_game_mode, g_no_enemy_bullets;
+            extern s32 g_ranking_entry_index;
+            extern s8 g_menu_game_option_step, g_menu_game_option_cursor;
+            switch (g_menu_cursor) {
+            case 1:
+            case 3:
+                g_game_mode = g_no_enemy_bullets = (g_menu_cursor == 3);
+                g_ranking_entry_index = 0xFF;
+                start_buttons_take_credits();
+                fade_start_out();
+                g_menu_task_phase = 2;
+                g_menu_exit_code = 2;
+                return;
+            case 5:
+                g_menu_game_option_step = 0;
+                g_menu_game_option_cursor = 0;
+                g_menu_page = MENU_PAGE_GAME_OPTION;
+                return;
+            case 9:
+                g_menu_launch_step = 0;
+                g_menu_launch_cursor = 0;
+                g_menu_launch_kind = 1;
+                g_menu_page = MENU_PAGE_LAUNCH;
+                return;
+            }
+        }
+#endif
         switch (g_menu_cursor) {
         case 0:
             break;
 #ifdef DDPDOJ_BONUS_FEATURES
         case 4:
-            if (!g_black_label_active) {
-                executable_launch(3);
-                break;
-            }
-            /* fall through */
+            executable_launch(3);
+            break;
 #endif
         case 1:
-#ifdef DDPDOJ_BONUS_FEATURES
-            if (g_black_label_active && g_menu_cursor == 1) {
-                executable_launch(2);
-                break;
-            }
-#endif
             g_menu_arcade_step = 0;
             g_menu_page = MENU_PAGE_ARCADE;
             g_menu_arcade_cursor = 0;
@@ -2858,11 +2894,22 @@ void menu_game_option_step2() {
             break;
         case 6:
             sfx_menu_confirm();
-            menu_items_place(0xE);
-            g_menu_arcade_step = 3;
-            g_menu_page = MENU_PAGE_ARCADE;
-            g_menu_alpha = 0x40;
-            g_menu_arcade_fade_state = 1;
+#ifdef DDPDOJ_BONUS_FEATURES
+            if (g_black_label_active) {
+                menu_items_place(MENU_PAGE_MAIN);
+                g_menu_main_step = 3;
+                g_menu_page = MENU_PAGE_MAIN;
+                g_menu_alpha = 0x40;
+                g_menu_main_fade_state = 1;
+            } else
+#endif
+            {
+                menu_items_place(0xE);
+                g_menu_arcade_step = 3;
+                g_menu_page = MENU_PAGE_ARCADE;
+                g_menu_alpha = 0x40;
+                g_menu_arcade_fade_state = 1;
+            }
             g_menu_box_fade_state = 2;
             g_menu_game_option_fade_state = 2;
             g_menu_fade_state = 1;
@@ -3971,7 +4018,7 @@ void menu_launch_when_faded() {
     if (g_fade_state == 0) {
         switch (g_menu_launch_choice) {                       /* irregular */
         case 1:
-            executable_launch(0);
+            executable_launch(GAME_RULE(0, 2));
             return;
         case 2:
             executable_launch(1);
@@ -4345,6 +4392,11 @@ void menu_main_draw(void) {
         if (label->active != 0) {
             label->alpha = g_menu_main_alpha;
             reg_a0 = (u8 *)g_menu_main_items[i];
+#ifdef DDPDOJ_BONUS_FEATURES
+            if (g_black_label_active && i == 4) {
+                reg_a0 = (u8 *)(g_setting_replay_save ? "REPLAY SAVE   ON" : "REPLAY SAVE   OFF");
+            }
+#endif
             x = label->x;
             y = label->y;
             z = label->z;
@@ -4657,11 +4709,6 @@ void menu_arcade_draw(void) {
         }
         item[MENU_PAGE_ARCADE * MENU_ITEMS_PER_PAGE].alpha = g_menu_arcade_alpha;
         reg_a0 = (u8 *)g_menu_arcade_items[i];
-#ifdef DDPDOJ_BONUS_FEATURES
-        if (g_black_label_active && i == 0) {
-            reg_a0 = (u8 *)"BLACK LABEL";
-        }
-#endif
         x = item[MENU_PAGE_ARCADE * MENU_ITEMS_PER_PAGE].x;
         alpha = item[MENU_PAGE_ARCADE * MENU_ITEMS_PER_PAGE].alpha;
         top = item[MENU_PAGE_ARCADE * MENU_ITEMS_PER_PAGE].y;
@@ -5480,7 +5527,7 @@ void menu_reset() {
     g_menu_notice_alpha = 0;
     g_menu_replay_chosen = 0;
     g_menu_task_phase = 1;
-    g_menu_main_cursor = GAME_RULE(1, 4);
+    g_menu_main_cursor = 1;
     memset(&g_menu_simulation, 0, 6);
     memset(&g_menu_sim_setting, 0, 6);
     memset(&g_menu_sim_player, 0, 6);
