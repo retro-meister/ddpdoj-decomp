@@ -91,7 +91,7 @@ void explosion_test_main(void) {
     reg_tmp.h[0] = (((reg_d0.h[0] & 0xFFFF) + 2) != 0) ? *(u16 *)((u8 *)reg_a0 + ((s16)((reg_d0.h[0] & 0xFFFF) + 2) & ~1)) : *(u16 *)reg_a0;
     reg_a0 = (u8 *)(g_explosion_test_positions);
     reg_d7.w = 8;
-    reg_a1 = (u8 *) reg_tmp.w;
+    reg_a1 = ARCADE_ADDRESS_DECODE(u8 *, reg_tmp.w);
     do {
         reg_d1.h[0] = *(u16 *)reg_a0;
         reg_d1.h[0] += 0x7FFF + 0x7D01;

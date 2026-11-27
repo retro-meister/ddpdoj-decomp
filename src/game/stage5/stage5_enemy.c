@@ -491,7 +491,7 @@ block_4:
                 spawn_request_add();
                 *(u16 *)(reg_a0 + 0x16) = (u16) ENTITY(reg_a6)->y.h;
                 *(u16 *)(reg_a0 + 0x18) = ENTITY(reg_a6)->x.h;
-                reg_tmp.w = (u32) reg_a5;
+                reg_tmp.w = ARCADE_ADDRESS_ENCODE(reg_a5);
                 *(u16 *)(reg_a0 + 0x1A) = (u16) reg_tmp.h[1];
                 *(u16 *)(reg_a0 + 0x1C) = (u16) reg_tmp.h[0];
                 BEE_HATCH(reg_a5)->phase = 4U;

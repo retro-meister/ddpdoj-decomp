@@ -15,7 +15,8 @@
 
 extern u16 g_attract_step;
 extern s8 g_menu_page, g_menu_main_step, g_menu_arcade_step, g_menu_cursor;
-extern s16 g_player1[];
+extern s16 g_player1[], g_player2[];
+extern u32 g_p2_score;
 extern u16 g_game_frame, g_player_shot_count, g_player_laser_count, g_scroll_line;
 extern u16 g_bomb_entities[];
 extern u8 g_game_frame_ran;
@@ -47,6 +48,21 @@ static void require(bool condition, const char *message)
         SDL_LogError(SDL_LOG_CATEGORY_TEST, "%s (%s)", message, SDL_GetError());
         exit(EXIT_FAILURE);
     }
+}
+
+static SDL_Joystick *attach_controller(void)
+{
+    SDL_VirtualJoystickDesc desc;
+    SDL_INIT_INTERFACE(&desc);
+    desc.type = SDL_JOYSTICK_TYPE_GAMEPAD;
+    desc.nbuttons = SDL_GAMEPAD_BUTTON_COUNT;
+    desc.naxes = SDL_GAMEPAD_AXIS_COUNT;
+    SDL_JoystickID id = SDL_AttachVirtualJoystick(&desc);
+    SDL_Joystick *joystick = SDL_OpenJoystick(id);
+    require(joystick != NULL, "Open virtual controller");
+    SDL_Event added = { .gdevice = { .type = SDL_EVENT_GAMEPAD_ADDED, .which = id } };
+    pc_pad_handle_event(&added);
+    return joystick;
 }
 
 static bool player_active(void)
@@ -134,6 +150,7 @@ static SDL_GamepadButton replay_menu_button(bool *confirmed, int slot)
 int main(int argc, char **argv)
 {
 #ifndef DEATH_LABEL
+    const bool two_player = argc == 4 && strcmp(argv[3], "--two-player") == 0;
     const RetailReplay *replay = NULL;
     if (argc >= 4 && strcmp(argv[3], "--super-replay") == 0) {
         if (argc == 4) replay = &super_replays[2];
@@ -141,11 +158,11 @@ int main(int argc, char **argv)
             replay = &super_replays[argv[4][0] - '0'];
         }
     }
-    require(argc == 3 || replay, "Expected the retail ISO, a test-only memory card directory and optional replay mode");
+    require(argc == 3 || replay || two_player, "Expected the retail ISO, a test-only memory card directory and optional replay mode");
     s32 replay_inputs = 0;
     bool replay_finished = false;
 #else
-    const bool replay = false;
+    const bool replay = false, two_player = false;
     require(argc == 3, "Expected the retail ISO and a test-only memory card directory");
 #endif
     SDL_SetHint(SDL_HINT_JOYSTICK_ALLOW_BACKGROUND_EVENTS, "1");
@@ -158,16 +175,8 @@ int main(int argc, char **argv)
     require(pc_cdvd_mount(argv[1]) && pc_bgm_open(argv[1]) && pc_sfx_load(argv[1]), "Load retail assets");
     require(pc_mc_open_storage(argv[2]), "Open test memory card");
 
-    SDL_VirtualJoystickDesc desc;
-    SDL_INIT_INTERFACE(&desc);
-    desc.type = SDL_JOYSTICK_TYPE_GAMEPAD;
-    desc.nbuttons = SDL_GAMEPAD_BUTTON_COUNT;
-    desc.naxes = SDL_GAMEPAD_AXIS_COUNT;
-    SDL_JoystickID id = SDL_AttachVirtualJoystick(&desc);
-    SDL_Joystick *joystick = SDL_OpenJoystick(id);
-    require(joystick != NULL, "Open virtual controller");
-    SDL_Event added = { .gdevice = { .type = SDL_EVENT_GAMEPAD_ADDED, .which = id } };
-    pc_pad_handle_event(&added);
+    SDL_Joystick *joystick = attach_controller();
+    SDL_Joystick *second = two_player ? attach_controller() : NULL;
 
     pc_gs_bind_game(renderer);
     pc_video_bind(renderer);
@@ -180,6 +189,7 @@ int main(int argc, char **argv)
 #else
     const unsigned bomb_at = 95;
 #endif
+    unsigned together = 0;
     const unsigned max_frames = replay ? 30000 : MAX_FRAMES;
     for (unsigned frame = 0; frame < max_frames && played < GAMEPLAY_FRAMES; ++frame) {
         if (pressed != SDL_GAMEPAD_BUTTON_INVALID) {
@@ -197,6 +207,13 @@ int main(int argc, char **argv)
             if (pressed != SDL_GAMEPAD_BUTTON_INVALID) {
                 require(SDL_SetJoystickVirtualButton(joystick, pressed, true), "Press controller button");
             }
+        }
+        if (second && played > 60) {
+            require(SDL_SetJoystickVirtualButton(second, SDL_GAMEPAD_BUTTON_START,
+                                                  g_player2[0] >= 0 && frame % 12 == 0) &&
+                    SDL_SetJoystickVirtualButton(second, SDL_GAMEPAD_BUTTON_EAST, frame % 5 == 0) &&
+                    SDL_SetJoystickVirtualButton(second, SDL_GAMEPAD_BUTTON_WEST, frame % 300 < 175),
+                    "Join and fire with the second controller");
         }
         bool laser = played >= 210 && played < 400 && player_active();
         bool bomb = played >= bomb_at && played < bomb_at + 6;
@@ -234,6 +251,7 @@ int main(int argc, char **argv)
             bomb_finished = true;
         }
         played += player_active();
+        together += player_active() && g_player2[0] < 0;
     }
 
 #ifndef DEATH_LABEL
@@ -249,6 +267,10 @@ int main(int argc, char **argv)
         require(played == GAMEPLAY_FRAMES && g_scroll_line > 100, "Advance through gameplay");
         require(shot_frames > 100 && laser_frames > 30, "Fire shots and laser during gameplay");
         require(bomb_frames > 30 && bomb_finished, "Fire a bomb and complete its animation");
+    }
+    if (second) {
+        require(together > 100 && g_p2_score != 0, "Both ships play and player two scores");
+        SDL_CloseJoystick(second);
     }
     pc_bgm_close();
     pc_mc_close_storage();

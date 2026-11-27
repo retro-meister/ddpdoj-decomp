@@ -341,6 +341,10 @@ if(BUILD_TESTING)
             set_tests_properties(retail_${mode}_gameplay PROPERTIES
                 ENVIRONMENT "SDL_AUDIODRIVER=dummy" RUN_SERIAL TRUE TIMEOUT 180)
         endforeach()
+        add_test(NAME retail_two_player COMMAND ddpdoj_main_retail_gameplay_test "${DDPDOJ_TEST_ISO}"
+            "${CMAKE_CURRENT_BINARY_DIR}/test-cards-two-player" --two-player)
+        set_tests_properties(retail_two_player PROPERTIES
+            ENVIRONMENT "SDL_AUDIODRIVER=dummy" RUN_SERIAL TRUE TIMEOUT 180)
         foreach(slot RANGE 0 9)
             set(name retail_super_replay_${slot})
             if(slot EQUAL 2)

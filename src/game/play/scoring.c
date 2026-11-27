@@ -1317,10 +1317,10 @@ loop_1:
     *(u8 *)(reg_a5 + 0xE) = (u8) reg_d7.b[0];
     reg_tmp.h[1] = *(u16 *)(reg_a5 + 8);
     reg_tmp.h[0] = *(u16 *)(reg_a5 + 0xA);
-    reg_a4 = (u8 *)reg_tmp.w;
+    reg_a4 = ARCADE_ADDRESS_DECODE(u8 *, reg_tmp.w);
     reg_tmp.h[1] = *(u16 *)(reg_a4 + 0x10);
     reg_tmp.h[0] = *(u16 *)(reg_a4 + 0x12);
-    reg_a0 = (u8 *)(reg_tmp.w);
+    reg_a0 = ARCADE_ADDRESS_DECODE(u8 *, reg_tmp.w);
     *(u8 *)reg_a0 = *(u8 *)(reg_a5 + 0xE);
 }
 

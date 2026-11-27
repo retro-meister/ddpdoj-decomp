@@ -473,7 +473,7 @@ void join_select_doll_step(void) {
     reg_d0.w = 0;
     reg_d1.w = reg_d7.w;
     reg_d0.b[0] = *(u8 *)(reg_a5 + 0xE);
-    reg_a0 = (u8 *)((u32) join_select_doll_step_table);
+    reg_a0 = (u8 *)join_select_doll_step_table;
     reg_d0.h[0] += reg_d0.h[0];
     if (reg_d0.h[0] != 0) {
         var_a0 = *(u16 *)((u8 *)reg_a0 + ((s16)reg_d0.h[0] & ~1));

@@ -10562,7 +10562,7 @@ void replay_save_prompt_text_draw(void) {
             gfx_draw_color_box(0xC, 8, 0x40, 0xD0, 0x12C, var_s0, 1, 1, 0x40);
         }
         if (((u8)g_replay_slots_state != 0) && ((u32) ((u8)g_replay_slots_state - 1) > 1U) && ((u32) ((u8)g_replay_slots_state - 5) > 1U)) {
-            reg_a0 = (u8 *)(*(s32 *)&g_menu_save_file_help);
+            reg_a0 = (u8 *)g_menu_save_file_help;
             menu_message_draw(0x36, 8);
         }
         text_flush();

@@ -1611,19 +1611,19 @@ void p1_score_cells_mark(void)
 void p2_score_cells_mark(void)
 {
     u32 saved_d0 = reg_d0.w;
-    u32 saved_a0 = (*(u32 *)&reg_a0);
+    u8 *saved_a0 = reg_a0;
 
-    (*(u32 *)&reg_a0) = (u32)((s16 *)g_p2_score_cells);
+    reg_a0 = (u8 *)g_p2_score_cells;
     reg_d0.w = 8;
 
     do {
-        *(s16 *)(*(u32 *)&reg_a0) = 1;
-        (*(u32 *)&reg_a0) += 10;
+        *(s16 *)reg_a0 = 1;
+        reg_a0 += 10;
     } while ((s16)(--reg_d0.h[0]) >= 0);
 
     reg_d0.w = saved_d0;
     ((s16 *)g_p2_score_extra_cell)[0] = 1;
-    (*(u32 *)&reg_a0) = saved_a0;
+    reg_a0 = saved_a0;
 }
 
 extern u16 g_players_hidden;
@@ -1751,8 +1751,8 @@ void p1_hyper_items_update(void) {
     u32 temp_s0;
     u32 temp_s1;
     u32 temp_s2;
-    s32 temp_s3;
-    s32 temp_s4;
+    u8 *saved_a0;
+    u8 *saved_a2;
     u16 var_a0;
     if (g_boss_hyper_wait != 0) {
         if (g_player1[0] >= 0) {
@@ -1777,8 +1777,8 @@ block_5:
             temp_s0 = reg_d0.w;
             temp_s1 = reg_d2.w;
             temp_s2 = reg_d6.w;
-            temp_s3 = (s32)reg_a0;
-            temp_s4 = (s32)reg_a2;
+            saved_a0 = reg_a0;
+            saved_a2 = reg_a2;
             do {
                 reg_d0.w = 0xC;
                 item_spawn_at_y();
@@ -1788,8 +1788,8 @@ block_5:
             reg_d0.w = temp_s0;
             reg_d2.w = temp_s1;
             reg_d6.w = temp_s2;
-            reg_a0 = (u8 *)temp_s3;
-            reg_a2 = (u8 *)temp_s4;
+            reg_a0 = saved_a0;
+            reg_a2 = saved_a2;
             g_p1_hyper_items_pending = 0;
         }
     }
@@ -1800,8 +1800,8 @@ void p1_hyper_items_pending_take(void) {
     u32 temp_s0;
     u32 temp_s1;
     u32 temp_s2;
-    s32 temp_s3;
-    s32 temp_s4;
+    u8 *saved_a0;
+    u8 *saved_a2;
     u16 var_a0;
     reg_d7.h[0] = g_p1_hyper_items_pending;
     if (g_p1_hyper_items_pending != 0) {
@@ -1814,8 +1814,8 @@ void p1_hyper_items_pending_take(void) {
         temp_s0 = reg_d0.w;
         temp_s1 = reg_d2.w;
         temp_s2 = reg_d6.w;
-        temp_s3 = (s32)reg_a0;
-        temp_s4 = (s32)reg_a2;
+        saved_a0 = reg_a0;
+        saved_a2 = reg_a2;
         do {
             reg_d0.w = 0xC;
             item_spawn_at_y();
@@ -1825,8 +1825,8 @@ void p1_hyper_items_pending_take(void) {
         reg_d0.w = temp_s0;
         reg_d2.w = temp_s1;
         reg_d6.w = temp_s2;
-        reg_a0 = (u8 *)temp_s3;
-        reg_a2 = (u8 *)temp_s4;
+        reg_a0 = saved_a0;
+        reg_a2 = saved_a2;
         g_p1_hyper_items_pending = 0;
     }
 }
@@ -1839,8 +1839,8 @@ void p2_hyper_items_update(void) {
     u32 temp_s0;
     u32 temp_s1;
     u32 temp_s2;
-    s32 temp_s3;
-    s32 temp_s4;
+    u8 *saved_a0;
+    u8 *saved_a2;
     u16 var_a0;
     if (g_boss_hyper_wait != 0) {
         if (g_player2[0] >= 0) {
@@ -1865,8 +1865,8 @@ block_5:
             temp_s0 = reg_d0.w;
             temp_s1 = reg_d2.w;
             temp_s2 = reg_d6.w;
-            temp_s3 = (s32)reg_a0;
-            temp_s4 = (s32)reg_a2;
+            saved_a0 = reg_a0;
+            saved_a2 = reg_a2;
             do {
                 reg_d0.w = 0x14;
                 item_spawn_at_y();
@@ -1876,8 +1876,8 @@ block_5:
             reg_d0.w = temp_s0;
             reg_d2.w = temp_s1;
             reg_d6.w = temp_s2;
-            reg_a0 = (u8 *)temp_s3;
-            reg_a2 = (u8 *)temp_s4;
+            reg_a0 = saved_a0;
+            reg_a2 = saved_a2;
             g_p2_hyper_items_pending = 0;
         }
     }
@@ -1888,8 +1888,8 @@ void p2_hyper_items_pending_take(void) {
     u32 temp_s0;
     u32 temp_s1;
     u32 temp_s2;
-    s32 temp_s3;
-    s32 temp_s4;
+    u8 *saved_a0;
+    u8 *saved_a2;
     u16 var_a0;
     reg_d7.h[0] = g_p2_hyper_items_pending;
     if (g_p2_hyper_items_pending != 0) {
@@ -1902,8 +1902,8 @@ void p2_hyper_items_pending_take(void) {
         temp_s0 = reg_d0.w;
         temp_s1 = reg_d2.w;
         temp_s2 = reg_d6.w;
-        temp_s3 = (s32)reg_a0;
-        temp_s4 = (s32)reg_a2;
+        saved_a0 = reg_a0;
+        saved_a2 = reg_a2;
         do {
             reg_d0.w = 0x14;
             item_spawn_at_y();
@@ -1913,8 +1913,8 @@ void p2_hyper_items_pending_take(void) {
         reg_d0.w = temp_s0;
         reg_d2.w = temp_s1;
         reg_d6.w = temp_s2;
-        reg_a0 = (u8 *)temp_s3;
-        reg_a2 = (u8 *)temp_s4;
+        reg_a0 = saved_a0;
+        reg_a2 = saved_a2;
         g_p2_hyper_items_pending = 0;
     }
 }
