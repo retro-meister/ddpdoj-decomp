@@ -20,12 +20,22 @@ typedef struct {
 
 /* The long warehouse, the square warehouse and the gymnasium. */
 typedef struct {
+    u8 dying;
+    u8 seen;
+    u8 hit_flash;
+    u8 palette;
+} BuildingDamageState;
+
+typedef struct {
     /* 0x00 */ u8 common[0x16];
-    /* 0x16 */ u8 dying;
-    /* 0x17 */ u8 seen;
-    /* 0x18 */ u8 hit_flash;
-    /* 0x19 */ u8 palette;
+    /* 0x16 */ BuildingDamageState damage;
 } BuildingState;
+
+#ifdef DDPDOJ_PC
+#include <stddef.h>
+_Static_assert(sizeof(BuildingDamageState) == 4, "building initial state size");
+_Static_assert(offsetof(BuildingState, damage) == 0x16, "building initial state destination");
+#endif
 
 /* What the sliding gun and the wrecker gun share. */
 #define STAGE2_GUN_HEAD \
@@ -252,20 +262,12 @@ void stage2_long_warehouse_first(void) {
 
 extern s8 stage2_long_warehouse_start_table[];
 extern s8 stage2_long_warehouse_start_table_2[];
-#ifdef DDPDOJ_PC
-extern s8 stage2_long_warehouse_start_value[];
-#else
-extern s8 stage2_long_warehouse_start_value;
-#endif
+extern BuildingDamageState stage2_long_warehouse_start_value;
 
 void stage2_long_warehouse_start(void) {
     (*(s8 **)&reg_a0) = stage2_long_warehouse_start_table_2;
     enemy_init_entities();
-#ifdef DDPDOJ_PC
-    (*(s8 **)&reg_a0) = stage2_long_warehouse_start_value;
-#else
-    (*(s8 **)&reg_a0) = &stage2_long_warehouse_start_value;
-#endif
+    reg_a0 = (u8 *)&stage2_long_warehouse_start_value;
     reg_d0.w = 1;
     enemy_set_task_state();
     enemy_path_start();
@@ -274,9 +276,9 @@ void stage2_long_warehouse_start(void) {
         reg_d0.h[0] = g_stage_x2;
         (*(s8 **)&reg_a0) = &(*(s8 **)&reg_a0)[reg_d0.h[0]];
         ENTITY(reg_a6)->attr.sb.palette = (s8) *((s8 *)reg_a0);
-        BUILDING(reg_a5)->palette = (s8) *((s8 *)reg_a0);
+        BUILDING(reg_a5)->damage.palette = (s8) *((s8 *)reg_a0);
         (*(s8 **)&reg_a0) += 1;
-        BUILDING(reg_a5)->hit_flash = (s8) *((s8 *)reg_a0);
+        BUILDING(reg_a5)->damage.hit_flash = (s8) *((s8 *)reg_a0);
         (*(s8 **)&reg_a0) += 1;
     }
 }
@@ -299,20 +301,20 @@ void stage2_long_warehouse(void) {
         reg_tmp.w += reg_tmp1.w;
         reg_d0.h[0] += 0x6C00;
         if (reg_tmp.h[1] != 0) {
-            if (BUILDING(reg_a5)->seen != 0) {
+            if (BUILDING(reg_a5)->damage.seen != 0) {
                 enemy_remove();
                 return;
             }
             goto next_1;
         }
-        BUILDING(reg_a5)->seen = 1U;
+        BUILDING(reg_a5)->damage.seen = 1U;
     }
 next_1:
     if (ENTITY(reg_a6)->flags.sb[0] < 0) goto block_explos;
     reg_d1.w = 0x5C;
     reg_d1.b[0] &= ENTITY(reg_a6)->flags.b[1];
     if (reg_d1.b[0] != 0) goto next_50;
-    reg_d0.b[0] = BUILDING(reg_a5)->palette;
+    reg_d0.b[0] = BUILDING(reg_a5)->damage.palette;
     if ((s32) ENTITY(reg_a6)->hp.h >= 0x380) goto next_90;
     if (g_damage_blink_counter != 0) goto next_90;
     reg_d0.w = 0x19;
@@ -322,9 +324,9 @@ next_50:
     score_add_no_chain();
     reg_d0.b[0] = ENTITY(reg_a6)->attr.b.palette;
     if (reg_d0.b[0] == 0x19) {
-        reg_d0.b[0] = BUILDING(reg_a5)->palette;
+        reg_d0.b[0] = BUILDING(reg_a5)->damage.palette;
     }
-    reg_d2.b[0] = BUILDING(reg_a5)->hit_flash;
+    reg_d2.b[0] = BUILDING(reg_a5)->damage.hit_flash;
     reg_d0.b[0] ^= reg_d2.b[0];
     reg_d2.h[0] = ENTITY(reg_a6)->hp.h;
     if ((s16) reg_d2.h[0] < 0) goto block_dead;
@@ -340,7 +342,7 @@ block_dead:
     reg_d0.w = 0x13;
     score_add();
     ENTITY(reg_a6)->flags.h = 0x8080;
-    t1 = BUILDING(reg_a5)->palette;
+    t1 = BUILDING(reg_a5)->damage.palette;
     ENTITY(reg_a6)->attr.b.palette = t1;
     reg_d0.w = 5;
     explosion_spawn();
@@ -378,8 +380,8 @@ block_dead:
     EXPLOSION(reg_a0)->delay = 0;
     goto block_objset;
 block_explos:
-    reg_tmp.b[0] = BUILDING(reg_a5)->dying;
-    BUILDING(reg_a5)->dying -= 1;
+    reg_tmp.b[0] = BUILDING(reg_a5)->damage.dying;
+    BUILDING(reg_a5)->damage.dying -= 1;
     if ((s32) reg_tmp.b[0] > 0) goto block_objset;
     reg_a4 = (u8 *)(stage2_long_warehouse_table);
     reg_d0.h[0] = *(u16 *)reg_a4;
@@ -403,20 +405,12 @@ void stage2_square_warehouse_first(void) {
 
 extern s8 stage2_square_warehouse_start_table[];
 extern s8 stage2_square_warehouse_start_table_2[];
-#ifdef DDPDOJ_PC
-extern s8 stage2_square_warehouse_start_value[];
-#else
-extern s8 stage2_square_warehouse_start_value;
-#endif
+extern BuildingDamageState stage2_square_warehouse_start_value;
 
 void stage2_square_warehouse_start(void) {
     (*(s8 **)&reg_a0) = stage2_square_warehouse_start_table_2;
     enemy_init_entities();
-#ifdef DDPDOJ_PC
-    (*(s8 **)&reg_a0) = stage2_square_warehouse_start_value;
-#else
-    (*(s8 **)&reg_a0) = &stage2_square_warehouse_start_value;
-#endif
+    reg_a0 = (u8 *)&stage2_square_warehouse_start_value;
     reg_d0.w = 1;
     enemy_set_task_state();
     enemy_path_start();
@@ -425,9 +419,9 @@ void stage2_square_warehouse_start(void) {
         reg_d0.h[0] = g_stage_x2;
         (*(s8 **)&reg_a0) = &(*(s8 **)&reg_a0)[reg_d0.h[0]];
         ENTITY(reg_a6)->attr.sb.palette = (s8) *((s8 *)reg_a0);
-        BUILDING(reg_a5)->palette = (s8) *((s8 *)reg_a0);
+        BUILDING(reg_a5)->damage.palette = (s8) *((s8 *)reg_a0);
         (*(s8 **)&reg_a0) += 1;
-        BUILDING(reg_a5)->hit_flash = (s8) *((s8 *)reg_a0);
+        BUILDING(reg_a5)->damage.hit_flash = (s8) *((s8 *)reg_a0);
         (*(s8 **)&reg_a0) += 1;
         if (ENTITY(reg_a6)->misc.b.user != 0) {
             ENTITY(reg_a6)->misc.b.user = 0U;
@@ -451,20 +445,20 @@ void stage2_square_warehouse(void) {
         reg_tmp.w += reg_tmp1.w;
         reg_d0.h[0] += 0x6800;
         if (reg_tmp.h[1] != 0) {
-            if (BUILDING(reg_a5)->seen != 0) {
+            if (BUILDING(reg_a5)->damage.seen != 0) {
                 enemy_remove();
                 return;
             }
             goto next_1;
         }
-        BUILDING(reg_a5)->seen = 1U;
+        BUILDING(reg_a5)->damage.seen = 1U;
     }
 next_1:
     if (ENTITY(reg_a6)->flags.sb[0] < 0) goto next_2;
     reg_d1.w = 0x5C;
     reg_d1.b[0] &= ENTITY(reg_a6)->flags.b[1];
     if (reg_d1.b[0] != 0) goto next_50;
-    reg_d0.b[0] = BUILDING(reg_a5)->palette;
+    reg_d0.b[0] = BUILDING(reg_a5)->damage.palette;
     if ((s32) ENTITY(reg_a6)->hp.h >= 0x380) goto next_90;
     if (g_damage_blink_counter != 0) goto next_90;
     reg_d0.w = 0x19;
@@ -474,9 +468,9 @@ next_50:
     score_add_no_chain();
     reg_d0.b[0] = ENTITY(reg_a6)->attr.b.palette;
     if (reg_d0.b[0] == 0x19) {
-        reg_d0.b[0] = BUILDING(reg_a5)->palette;
+        reg_d0.b[0] = BUILDING(reg_a5)->damage.palette;
     }
-    reg_d2.b[0] = BUILDING(reg_a5)->hit_flash;
+    reg_d2.b[0] = BUILDING(reg_a5)->damage.hit_flash;
     reg_d0.b[0] ^= reg_d2.b[0];
     reg_d2.h[0] = ENTITY(reg_a6)->hp.h;
     if ((s16) reg_d2.h[0] < 0) goto next_3;
@@ -492,7 +486,7 @@ next_3:
     reg_d0.w = 0x14;
     score_add();
     ENTITY(reg_a6)->flags.h = 0x8080;
-    ENTITY(reg_a6)->attr.b.palette = BUILDING(reg_a5)->palette;
+    ENTITY(reg_a6)->attr.b.palette = BUILDING(reg_a5)->damage.palette;
     reg_d0.w = 0xD;
     explosion_spawn();
     EXPLOSION(reg_a0)->y = (u16) ENTITY(reg_a6)->y.h;
@@ -517,8 +511,8 @@ next_3:
     EXPLOSION(reg_a0)->delay = 0;
     goto next_4;
 next_2:
-    reg_tmp.b[0] = BUILDING(reg_a5)->dying;
-    BUILDING(reg_a5)->dying -= 1;
+    reg_tmp.b[0] = BUILDING(reg_a5)->damage.dying;
+    BUILDING(reg_a5)->damage.dying -= 1;
     if ((s32) reg_tmp.b[0] > 0) goto next_4;
     reg_d0.w = 0xC;
     reg_d1.w = 0xFF00FE00;
@@ -537,20 +531,12 @@ void stage2_gymnasium_first(void) {
 
 extern s8 stage2_gymnasium_start_table[];
 extern s8 stage2_gymnasium_start_table_2[];
-#ifdef DDPDOJ_PC
-extern s8 stage2_gymnasium_start_value[];
-#else
-extern s8 stage2_gymnasium_start_value;
-#endif
+extern BuildingDamageState stage2_gymnasium_start_value;
 
 void stage2_gymnasium_start(void) {
     (*(s8 **)&reg_a0) = stage2_gymnasium_start_table_2;
     enemy_init_entities();
-#ifdef DDPDOJ_PC
-    (*(s8 **)&reg_a0) = stage2_gymnasium_start_value;
-#else
-    (*(s8 **)&reg_a0) = &stage2_gymnasium_start_value;
-#endif
+    reg_a0 = (u8 *)&stage2_gymnasium_start_value;
     reg_d0.w = 1;
     enemy_set_task_state();
     enemy_path_start();
@@ -559,9 +545,9 @@ void stage2_gymnasium_start(void) {
         reg_d0.h[0] = g_stage_x2;
         (*(s8 **)&reg_a0) = &(*(s8 **)&reg_a0)[reg_d0.h[0]];
         ENTITY(reg_a6)->attr.sb.palette = (s8) *((s8 *)reg_a0);
-        BUILDING(reg_a5)->palette = (s8) *((s8 *)reg_a0);
+        BUILDING(reg_a5)->damage.palette = (s8) *((s8 *)reg_a0);
         (*(s8 **)&reg_a0) += 1;
-        BUILDING(reg_a5)->hit_flash = (s8) *((s8 *)reg_a0);
+        BUILDING(reg_a5)->damage.hit_flash = (s8) *((s8 *)reg_a0);
         (*(s8 **)&reg_a0) += 1;
     }
 }
@@ -581,20 +567,20 @@ void stage2_gymnasium(void) {
         reg_tmp.w += reg_tmp1.w;
         reg_d0.h[0] += 0x6800;
         if (reg_tmp.h[1] != 0) {
-            if (BUILDING(reg_a5)->seen != 0) {
+            if (BUILDING(reg_a5)->damage.seen != 0) {
                 enemy_remove();
                 return;
             }
             goto next_1;
         }
-        BUILDING(reg_a5)->seen = 1U;
+        BUILDING(reg_a5)->damage.seen = 1U;
     }
 next_1:
     if (ENTITY(reg_a6)->flags.sb[0] < 0) goto next_2;
     reg_d1.w = 0x5C;
     reg_d1.b[0] &= ENTITY(reg_a6)->flags.b[1];
     if (reg_d1.b[0] != 0) goto next_50;
-    reg_d0.b[0] = BUILDING(reg_a5)->palette;
+    reg_d0.b[0] = BUILDING(reg_a5)->damage.palette;
     if ((s32) ENTITY(reg_a6)->hp.h >= 0x380) goto next_90;
     if (g_damage_blink_counter != 0) goto next_90;
     reg_d0.w = 0x19;
@@ -604,9 +590,9 @@ next_50:
     score_add_no_chain();
     reg_d0.b[0] = ENTITY(reg_a6)->attr.b.palette;
     if (reg_d0.b[0] == 0x19) {
-        reg_d0.b[0] = BUILDING(reg_a5)->palette;
+        reg_d0.b[0] = BUILDING(reg_a5)->damage.palette;
     }
-    reg_d2.b[0] = BUILDING(reg_a5)->hit_flash;
+    reg_d2.b[0] = BUILDING(reg_a5)->damage.hit_flash;
     reg_d0.b[0] ^= reg_d2.b[0];
     reg_d2.h[0] = ENTITY(reg_a6)->hp.h;
     if ((s16) reg_d2.h[0] < 0) goto next_3;
@@ -622,7 +608,7 @@ next_3:
     reg_d0.w = 0x15;
     score_add();
     ENTITY(reg_a6)->flags.h = 0x8080;
-    ENTITY(reg_a6)->attr.b.palette = BUILDING(reg_a5)->palette;
+    ENTITY(reg_a6)->attr.b.palette = BUILDING(reg_a5)->damage.palette;
     reg_d0.h[0] = 0x85;
     explosion_spawn();
     EXPLOSION(reg_a0)->y = (u16) ENTITY(reg_a6)->y.h;
@@ -660,8 +646,8 @@ next_3:
     EXPLOSION(reg_a0)->delay = 0;
     goto next_4;
 next_2:
-    reg_tmp.b[0] = BUILDING(reg_a5)->dying;
-    BUILDING(reg_a5)->dying -= 1;
+    reg_tmp.b[0] = BUILDING(reg_a5)->damage.dying;
+    BUILDING(reg_a5)->damage.dying -= 1;
     if ((s32) reg_tmp.b[0] > 0) goto next_4;
     reg_d0.w = 0xC;
     reg_d1.w = 0xFAC0FA40;
@@ -1530,16 +1516,6 @@ u16 stage2_boss_hangar_table[128] = {
 
 u8 stage2_blooming_base_table[8] = { 0x80, 0x04, 0x00, 0x06, 0x40, 0x07, 0xC0, 0x08 };
 
-#ifdef DDPDOJ_PC
-s8 stage2_long_warehouse_start_value[4] __attribute__((aligned(4))) = { 0xC, 0, 0, 0 };
-#else
-s8 stage2_long_warehouse_start_value __attribute__((aligned(4))) = 0xC;
-#endif
-
-#ifdef DDPDOJ_PC
-s8 stage2_square_warehouse_start_value[4] __attribute__((aligned(4))) = { 0x12, 0, 0, 0 };
-s8 stage2_gymnasium_start_value[4] __attribute__((aligned(4))) = { 0x12, 0, 0, 0 };
-#else
-s8 stage2_square_warehouse_start_value __attribute__((aligned(4))) = 0x12;
-s8 stage2_gymnasium_start_value __attribute__((aligned(4))) = 0x12;
-#endif
+BuildingDamageState stage2_long_warehouse_start_value __attribute__((aligned(4))) = { 0xC, 0, 0, 0 };
+BuildingDamageState stage2_square_warehouse_start_value __attribute__((aligned(4))) = { 0x12, 0, 0, 0 };
+BuildingDamageState stage2_gymnasium_start_value __attribute__((aligned(4))) = { 0x12, 0, 0, 0 };
