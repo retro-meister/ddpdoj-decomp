@@ -107,6 +107,8 @@ cmake --build build/pc --parallel
 ## PC Port Hotkeys
 
 - Hold `Tab` to fast-forward.
+- Press `F1` to save state.
+- Press `F2` to load state.
 
 ## Bonus features
 
