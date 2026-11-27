@@ -2506,7 +2506,7 @@ block_dead:
     ENTITY(reg_a6)->attr.b.palette = (u8) *(u8 *)(reg_a5 + 0x1B);
     ENTITY(reg_a6)[1].attr.b.palette = (u8) *(u8 *)(reg_a5 + 0x27);
     if (g_loop != 0) goto next_d20;
-    if (*(u16 *)(reg_a5 + 0x18) == 0) goto next_d20;
+    if (GAME_RULE(*(u16 *)(reg_a5 + 0x18) == 0, 0)) goto next_d20;
     reg_d1.w = 0;
     reg_d0.w = 0x4C;
     reg_d1.h[0] = *(u16 *)(reg_a5 + 0x2C);
@@ -2557,7 +2557,7 @@ next_e3a:
     rail_turret_explode();
     EXPLOSION(reg_a0)->start_x = (u16) *(u16 *)(reg_a5 + 0x30);
     if (g_loop != 0) goto next_e3b;
-    if (*(u16 *)(reg_a5 + 0x18) == 0) goto next_e3b;
+    if (GAME_RULE(*(u16 *)(reg_a5 + 0x18) == 0, 0)) goto next_e3b;
     reg_d1.w = 0;
     reg_d0.w = 0x48;
     reg_d1.h[0] = *(u16 *)(reg_a5 + 0x30);
@@ -2593,7 +2593,7 @@ next_e4a:
     rail_turret_explode();
     EXPLOSION(reg_a0)->start_x = (u16) *(u16 *)(reg_a5 + 0x32);
     if (g_loop != 0) goto next_e4b;
-    if (*(u16 *)(reg_a5 + 0x18) == 0) goto next_e4b;
+    if (GAME_RULE(*(u16 *)(reg_a5 + 0x18) == 0, 0)) goto next_e4b;
     reg_d1.w = 0;
     reg_d0.w = 0x48;
     reg_d1.h[0] = *(u16 *)(reg_a5 + 0x32);

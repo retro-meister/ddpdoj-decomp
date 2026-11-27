@@ -1,4 +1,5 @@
 #include "common.h"
+#include "black_label.h"
 
 s32 palette_run_copy();
 extern s16 fade_areas_1;
@@ -273,6 +274,7 @@ void player_panel_show_step_8(void) {
 extern u8 g_setting_chute_type;
 extern u8 g_setting_coin_mode;
 extern u16 g_loop;
+extern u16 g_stage;
 
 void player_panel_show_by_coin_mode(void) {
     u8 *temp_s0;
@@ -285,7 +287,7 @@ void player_panel_show_by_coin_mode(void) {
         player_panel_show();
         return;
     }
-    if (g_loop != 0) {
+    if (g_loop != 0 && GAME_RULE(1, g_stage == 4)) {
         player_panel_show_unless_step_4();
         return;
     }

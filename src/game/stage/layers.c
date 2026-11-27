@@ -24,6 +24,9 @@ void layers_reset(void) {
     g_layer_b_fraction[1] = 0;
     g_layer_b_step_fraction[0] = 0;
     g_layer_b_step_fraction[1] = 0;
+#ifdef DDPDOJ_BONUS_FEATURES
+    if (g_black_label_active) g_boss_shake_y = g_boss_shake_x = 0;
+#endif
     deferred_text_reset();
 }
 

@@ -137,7 +137,7 @@ char settings_notice_extend_none[2][32] = {
     "                            ",
 };
 
-#ifdef DEATH_LABEL
+#if defined(DEATH_LABEL) || defined(DDPDOJ_BONUS_FEATURES)
 char settings_notice_rapid_fire[2][32] = {
     "                            ",
     "     C BUTTON FULL-AUTO     ",
@@ -678,8 +678,8 @@ void settings_notice_print_extend(void) {
     text_layer_print();
 }
 
-#ifdef DEATH_LABEL
 extern u8 g_setting_rapid_fire;
+#ifdef DEATH_LABEL
 extern char *settings_notice_rapid_fire_texts[];
 #endif
 
@@ -699,6 +699,14 @@ void settings_notice_print_rapid_fire(void) {
     reg_d0.h[0] = 0;
     reg_d2.h[0] = 0;
     text_layer_print();
+#elif defined(DDPDOJ_BONUS_FEATURES)
+    if (g_black_label_active) {
+        reg_a0 = (u8 *)settings_notice_rapid_fire[g_setting_rapid_fire];
+        reg_d1.h[0] = 11;
+        reg_d0.h[0] = 0;
+        reg_d2.h[0] = 0;
+        text_layer_print();
+    }
 #endif
 }
 

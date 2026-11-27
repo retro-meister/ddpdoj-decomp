@@ -1,4 +1,5 @@
 #include "common.h"
+#include "black_label.h"
 #ifdef DDPDOJ_PC
 void boss_movement_start(void);
 #endif
@@ -153,6 +154,7 @@ s32 aim_at_player();
 s32 direction_turn_toward();
 
 extern u8 stage1_boss_palette[];
+extern u16 g_loop;
 extern u8 stage1_boss_turret_shot_waits[];
 extern u8 stage1_boss_turret_volleys[];
 extern u8 stage1_boss_beam_waits[];
@@ -190,11 +192,13 @@ void stage1_boss_mode_normal_start(void) {
     }
     NORMAL_MODE(reg_a4)->turret_volleys = (u8) reg_d1.b[0];
     reg_d1.b[0] = *(stage1_boss_turret_shot_waits + reg_d0.b[0]);
+    if (GAME_RULE(0, reg_d0.b[0] == 4)) reg_d1.b[0] = 5;
     reg_d1.b[0] -= STAGE1_EXTRA(reg_a6)->turrets_interval;
     if ((s8) reg_d1.b[0] < 3) {
         reg_d1.b[0] = 3;
     }
     NORMAL_MODE(reg_a4)->turret_shot.b.zero = 0;
+    if (GAME_RULE(0, g_loop != 0)) ++reg_d1.b[0];
     NORMAL_MODE(reg_a4)->turret_shot.b.wait = (u8) reg_d1.b[0];
     STAGE1_EXTRA(reg_a6)->turrets_burst += 2;
     if ((s32) STAGE1_EXTRA(reg_a6)->turrets_burst >= 0x80) {

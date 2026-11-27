@@ -1,4 +1,7 @@
 #include "common.h"
+#include "black_label.h"
+
+void slowdown_reset(void);
 #include "task.h"
 #include "entity.h"
 #include "sdk/ps2sdk.h"
@@ -141,6 +144,12 @@ void stage_clear_task_begin(void) {
     D_0028E958 = 1;
     ((s16 *)g_bullet_limit_raised_3)[0] = 0;
     ((s16 *)g_bullets_clear_request)[0] = 0;
+#ifdef DDPDOJ_BONUS_FEATURES
+    if (g_black_label_active) {
+        slowdown_reset();
+        black_label_shake_stop();
+    }
+#endif
     stage_clear_colors_reset();
     game_ground_task_stop();
     g_stage_clear_screen_shown = 0;

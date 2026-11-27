@@ -59,6 +59,10 @@ void black_label_shake_start(void) {
     g_slowdown_off = 0;
 }
 
+void black_label_shake_stop(void) {
+    shake_frame = 0;
+}
+
 void black_label_shake_step(void) {
     static const s8 offsets[][2] = {
         { -24, 0 }, { -24, 0 }, { -24, 0 }, { -8, 16 }, { -8, 12 },
@@ -184,8 +188,7 @@ extern s16 g_slowdown_forced_frames;
 
 void slowdown_reset(void) {
 #ifdef DDPDOJ_BONUS_FEATURES
-    shake_frame = burst_wait = 0;
-    g_boss_shake_y = g_boss_shake_x = 0;
+    burst_wait = 0;
 #endif
     g_slowdown_forced_frames = 0;
     g_slowdown_budget = 0;

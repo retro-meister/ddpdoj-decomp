@@ -229,6 +229,7 @@ next_9:
 
 extern u16 g_collision_hit_bits;
 extern u16 g_hyper_level_hit_scratch;
+extern u16 g_true_last_boss;
 extern u16 g_hyper_hit_scratch;
 
 void player_bullet_collisions(void)
@@ -1280,7 +1281,6 @@ void laser_vs_enemies(void) {
     reg_d4.h[0] >>= 2;
 #ifdef DDPDOJ_BONUS_FEATURES
     if (g_black_label_active) {
-        extern u16 g_true_last_boss;
         if ((s16)g_true_last_boss < 0) reg_d4.h[0] >>= 1;
     }
 #endif
@@ -1367,7 +1367,7 @@ extern u8 g_boss_present_b1;
 
 void laser_vs_enemies_second(void) {
     reg_a1 = reg_a2;
-    if (g_hyper_hit_scratch == 0) goto next_10;
+    if (g_hyper_hit_scratch == 0 || GAME_RULE(0, (s16)g_true_last_boss < 0)) goto next_10;
     if (g_bullet_cancel[0] == 0) goto next_5;
     *(u16 *) (reg_a1 + 0xE) = 0;
     goto next_10;

@@ -860,6 +860,7 @@ void stage1_boss_fire_main_guns_burst_start(void) {
     BURST(reg_a4)->shell_spare = (reg_d0.h[0] != 0) ? *(u16 *)((u8 *)reg_a0 + ((s16)reg_d0.h[0] & ~1)) : *(u16 *)reg_a0;
     reg_a0 = (u8 *)(stage1_boss_shell_burst_speed_levels);
     BURST(reg_a4)->shell_burst_speed = (reg_d0.h[0] != 0) ? *(u16 *)((u8 *)reg_a0 + ((s16)reg_d0.h[0] & ~1)) : *(u16 *)reg_a0;
+    if (GAME_RULE(0, reg_d0.h[0] == 4 * sizeof(u16))) BURST(reg_a4)->shell_burst_speed = (u16)-3;
     BURST(reg_a4)->shot.sh = 0x18;
     BURST(reg_a4)->side = 0U;
     BURST(reg_a4)->volleys_left = 2;
