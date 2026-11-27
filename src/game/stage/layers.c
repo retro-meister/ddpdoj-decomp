@@ -482,3 +482,25 @@ u32 g_deferred_text[DEFERRED_TEXT_CELLS * 2 + 1]; /* Final sentinel has its own 
 u32 g_deferred_text[1568];
 #endif
 u32 g_deferred_text_next[784];
+
+#ifdef DDPDOJ_PC
+#include "pc_frame_regions.h"
+
+const PcFrameRegion pc_layer_regions[] = {
+    PC_FRAME_REGION(g_layer_a_type),
+    PC_FRAME_REGION(g_layer_a_position),
+    PC_FRAME_REGION(g_layer_a_shift),
+    PC_FRAME_REGION(g_layer_a_step_fraction),
+    PC_FRAME_REGION(g_layer_a_fraction),
+    PC_FRAME_REGION(g_layer_unused),
+    PC_FRAME_REGION(g_layer_b_type),
+    PC_FRAME_REGION(g_layer_b_position),
+    PC_FRAME_REGION(g_layer_b_shift),
+    PC_FRAME_REGION(g_layer_b_step_fraction),
+    PC_FRAME_REGION(g_layer_b_fraction),
+    PC_FRAME_REGION(g_deferred_text_row_skip),
+    PC_FRAME_REGION(g_deferred_text),
+    PC_FRAME_REGION(g_deferred_text_next),
+    { NULL, 0 },
+};
+#endif

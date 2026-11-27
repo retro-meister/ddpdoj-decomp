@@ -3,6 +3,7 @@
 #include "pc_player_state.h"
 #include "pc_task_state.h"
 #include "pc_replay_frame.h"
+#include "pc_frame_regions.h"
 #include "state_slot.h"
 #include "pc_arcade_address.h"
 #include "black_label.h"
@@ -251,6 +252,7 @@ typedef struct {
     PcCombatPools pools;
     PcTaskState tasks;
     PcReplayFrame replay;
+    u8 regions[];
 } GameplaySnapshot;
 
 int main(int argc, char **argv)
@@ -267,9 +269,10 @@ int main(int argc, char **argv)
         size_t size;
         GameplaySnapshot *saved = pc_state_slot_read(load_pools, pool_mode, 1, &size);
         pc_arcade_address_init();
-        require(saved && size == sizeof(*saved) && pc_combat_restore(&saved->pools) &&
+        require(saved && size == sizeof(*saved) + pc_frame_regions_size() && pc_combat_restore(&saved->pools) &&
                 pc_player_state_restore(&saved->players) && pc_tasks_restore(&saved->tasks) &&
-                pc_replay_frame_restore(&saved->replay),
+                pc_replay_frame_restore(&saved->replay) &&
+                pc_frame_regions_restore(saved->regions, pc_frame_regions_size()),
                 "Restore combat pools into a fresh process");
         require(has_relocated_enemy(), "Resolve the saved entity and callback in this process");
         PcPlayerState restored;
@@ -388,13 +391,16 @@ int main(int argc, char **argv)
         require(pc_gs_ok() && SDL_RenderPresent(renderer), "Render game frame");
         require(game_take_mode_request() == GAME_MODE_NONE, "Keep running the selected mode");
         if (save_pools && played >= 300 && has_relocated_enemy()) {
-            GameplaySnapshot *saved = SDL_calloc(1, sizeof(*saved));
+            size_t size = sizeof(GameplaySnapshot) + pc_frame_regions_size();
+            GameplaySnapshot *saved = SDL_calloc(1, size);
             require(saved != NULL, "Allocate gameplay snapshot");
             pc_combat_capture(&saved->pools);
             pc_player_state_capture(&saved->players);
             pc_tasks_capture(&saved->tasks);
             pc_replay_frame_capture(&saved->replay);
-            require(pc_state_slot_write(save_pools, pool_mode, 1, saved, sizeof(*saved)),
+            require(pc_frame_regions_capture(saved->regions, pc_frame_regions_size()),
+                    "Capture stage flow and screen layers");
+            require(pc_state_slot_write(save_pools, pool_mode, 1, saved, size),
                     "Write pools from live gameplay");
             SDL_free(saved);
             goto cleanup;

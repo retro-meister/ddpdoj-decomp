@@ -364,7 +364,7 @@ if(BUILD_TESTING)
 
         foreach(mode IN ITEMS main death)
             set(target ddpdoj_${mode}_retail_gameplay_test)
-            add_executable(${target} tests/retail_gameplay_test.c combat_state.c state_slot.c)
+            add_executable(${target} tests/retail_gameplay_test.c combat_state.c frame_regions.c state_slot.c)
             target_link_libraries(${target} PRIVATE ddpdoj_${mode}_system
                 ddpdoj_sound ddpdoj_sfx ddpdoj_mode ddpdoj_cdvd ddpdoj_pad ddpdoj_memory_card ddpdoj_gs)
             set(pool_slot "${CMAKE_CURRENT_BINARY_DIR}/test-${mode}-combat.bin")
