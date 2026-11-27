@@ -96,11 +96,16 @@ typedef struct {
 
 typedef struct {
     /* 0x00 */ u8 unused_00[6];
-    /* 0x06 */ u8 unused_06;
+    /* 0x06 */ u8 black_label_horn_interval_sub;
     /* 0x07 */ u8 jet_burst_add;
     /* 0x08 */ u16 jet_speed_add;
-    /* 0x0A */ u8 unused_0A;
-    /* 0x0B */ u8 form2_horn_round_interval_sub;
+    union {
+        /* 0x0A */ u16 rage_bullet_offset;
+        struct {
+            /* 0x0A */ u8 unused_0A;
+            /* 0x0B */ u8 form2_horn_round_interval_sub;
+        } horn;
+    } pattern;
     /* 0x0C */ u16 form2_horn_speed_add;
     /* 0x0E */ u8 form3_d_rounds_add;
     /* 0x0F */ u8 stinger_burst_add;

@@ -300,6 +300,7 @@ void stage5_boss_fire_loop1_form1_arm_guns_aimed(void) {
 
 s32 rng_next_unsigned();
 s32 rng_next_0_to_3();
+extern u16 g_rank_1_16;
 extern u16 stage5_boss_fire_loop1_form1_mouth_start_table[];
 extern u32 stage5_boss_fire_loop1_form1_mouth_start_value;
 
@@ -358,7 +359,7 @@ void stage5_boss_fire_loop1_form1_mouth(s16 *arg1) {
     reg_tmp.b[0] = MOUTH(reg_a4)->shot.t.count;
     MOUTH(reg_a4)->shot.t.count -= 1;
     if (reg_tmp.b[0] == 0) {
-        MOUTH(reg_a4)->shot.t.count = (u8) MOUTH(reg_a4)->shot_interval;
+        MOUTH(reg_a4)->shot.t.count = GAME_RULE((u8) MOUTH(reg_a4)->shot_interval, 7 - (g_rank_1_16 >> 2));
         reg_d0.b[0] = MOUTH(reg_a4)->burst.t.count;
         reg_d0.h[0] &= 0xF;
         if (reg_d0.h[0] == 0) {

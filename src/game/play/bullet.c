@@ -1,5 +1,6 @@
 #include "common.h"
 #include "entity.h"
+#include "black_label.h"
 
 void bullets_update_loop(void);
 void bullet_frame_from_dir(void);
@@ -384,6 +385,9 @@ L_not_plain:
     reg_d0.w = 0x3F;
     reg_d0.h[0] &= ENTITY(reg_a6)->flags.h;
     reg_a0 = bullet_move_routines;
+#ifdef DDPDOJ_BONUS_FEATURES
+    if (black_label_ring_frames(reg_d0.h[0])) reg_d0.h[0] = 0x1B;
+#endif
     reg_d0.h[0] += reg_d0.h[0];
     reg_d0.h[0] += reg_d0.h[0];
     reg_a0 += reg_d0.h[0];
@@ -449,6 +453,9 @@ L_0012A5DC:
     reg_d0.w = 0x3F;
     reg_d0.h[0] &= ENTITY(reg_a6)->flags.h;
     reg_a0 = bullet_move_routines;
+#ifdef DDPDOJ_BONUS_FEATURES
+    if (black_label_ring_frames(reg_d0.h[0])) reg_d0.h[0] = 0x1B;
+#endif
     reg_d0.h[0] += reg_d0.h[0];
     reg_d0.h[0] += reg_d0.h[0];
     reg_a0 += reg_d0.h[0];
@@ -486,6 +493,9 @@ block_33:
         reg_d0.h[0] = ENTITY(reg_a6)->flags.h;
         reg_a1 = ((u8 *)bullet_type_records);
         reg_d0.h[0] &= 0x3F;
+#ifdef DDPDOJ_BONUS_FEATURES
+        if (black_label_ring_frames(reg_d0.h[0])) reg_d0.h[0] = 0x1B;
+#endif
         reg_d0.h[0] += reg_d0.h[0];
         reg_d0.h[0] += reg_d0.h[0];
         reg_a1 += reg_d0.h[0];
@@ -1323,11 +1333,11 @@ block_202:
                                 reg_tmp.w += 1;
                                 *(u16 *)reg_a1 = (u16) reg_tmp.h[1];
                                 *(u16 *)(reg_a1 + 2) = (u16) reg_tmp.h[0];
-                                reg_tmp.w = 0x1A2;
+                                reg_tmp.w = GAME_RULE(0x1A2, 0x1A2 + black_label_ring_frames(ENTITY(reg_a6)->flags.h & 0x3F));
                                 reg_tmp1.h[1] = *(u16 *)reg_a1;
                                 reg_tmp1.h[0] = *(u16 *)(reg_a1 + 2);
                                 if (reg_tmp.w == reg_tmp1.w) {
-                                    reg_tmp.w = 0x19E;
+                                    reg_tmp.w = GAME_RULE(0x19E, reg_tmp.w - 4);
                                     *(u16 *)reg_a1 = (u16) reg_tmp.h[1];
                                     *(u16 *)(reg_a1 + 2) = (u16) reg_tmp.h[0];
                                 }
@@ -2522,7 +2532,7 @@ extern u16 g_game_frame;
 
 void bullet_move_type_27(void) {
     bullet_turn_into_star();
-    reg_tmp.w = 0x19D;
+    reg_tmp.w = GAME_RULE(0x19D, 0x19D + black_label_ring_frames(ENTITY(reg_a6)->flags.h & 0x3F));
     ENTITY(reg_a6)->draw.h = (u16) reg_tmp.h[1];
     ENTITY(reg_a6)->sprite.h = (u16) reg_tmp.h[0];
     reg_d0.h[0] = g_game_frame;

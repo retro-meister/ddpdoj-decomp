@@ -1,4 +1,5 @@
 #include "common.h"
+#include "black_label.h"
 #ifdef DDPDOJ_PC
 #include "arcade_gameplay.h"
 #else
@@ -1986,6 +1987,9 @@ next_5:
     g_bullet_spawn_saved_d0 = reg_d0.w;
     hi = reg_d0.h[1];
     reg_d0.h[0] &= 0x3F;
+#ifdef DDPDOJ_BONUS_FEATURES
+    if (black_label_ring_frames(reg_d0.h[0])) reg_d0.h[0] = 0x1B;
+#endif
     reg_d0.h[0] += reg_d0.h[0];
     reg_d0.h[0] += reg_d0.h[0];
     reg_a1 = (u8 *) bullet_type_records;
@@ -1993,6 +1997,10 @@ next_5:
     reg_tmp.h[0] = (((u16) reg_d0.h[0] + 2) != 0) ? *(u16 *) (reg_a1 + ((s16) ((u16) reg_d0.h[0] + 2) & ~1)) : *(u16 *) reg_a1;
     reg_a1 = ARCADE_ADDRESS_DECODE(u8 *, reg_tmp.w);
     *(u16 *) reg_a0 = *(u16 *) reg_a1;
+#ifdef DDPDOJ_BONUS_FEATURES
+    if (black_label_ring_frames(g_bullet_spawn_saved_d0 & 0x3F))
+        *(u16 *)reg_a0 = (*(u16 *)reg_a0 & ~0x3F) | (g_bullet_spawn_saved_d0 & 0x3F);
+#endif
     reg_a1 += 2;
     reg_a0 += 2;
     *(u16 *) reg_a0 = reg_d2.h[1];
@@ -2325,6 +2333,9 @@ next_5:
     g_bullet_spawn_saved_d0 = reg_d0.w;
     hi = reg_d0.h[1];
     reg_d0.h[0] &= 0x3F;
+#ifdef DDPDOJ_BONUS_FEATURES
+    if (black_label_ring_frames(reg_d0.h[0])) reg_d0.h[0] = 0x1B;
+#endif
     reg_d0.h[0] += reg_d0.h[0];
     reg_d0.h[0] += reg_d0.h[0];
     reg_a1 = (u8 *) bullet_type_records;
@@ -2335,6 +2346,10 @@ next_5:
     reg_a1 += 2;
     reg_d7.w |= 0x200;
     *(u16 *) reg_a0 = reg_d7.h[0];
+#ifdef DDPDOJ_BONUS_FEATURES
+    if (black_label_ring_frames(g_bullet_spawn_saved_d0 & 0x3F))
+        *(u16 *)reg_a0 = (*(u16 *)reg_a0 & ~0x3F) | (g_bullet_spawn_saved_d0 & 0x3F);
+#endif
     reg_a0 += 2;
     *(u16 *) reg_a0 = reg_d2.h[1];
     reg_a0 += 2;

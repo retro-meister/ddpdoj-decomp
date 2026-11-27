@@ -1168,6 +1168,7 @@ void stage5_boss_fire_form2_mouth_start(void) {
     FORM2_MOUTH(reg_a4)->burst.t.reload += reg_d0.b[0];
     reg_d0.h[0] = STAGE5_ADJUST(reg_a6)->form2_mouth_speed_add;
     FORM2_MOUTH(reg_a4)->aimed.speed += reg_d0.h[0];
+    if (GAME_RULE(0, 1)) FORM2_MOUTH(reg_a4)->fixed.speed = 4;
     reg_d0.h[0] = STAGE5_ADJUST(reg_a6)->form2_mouth_speed2_add;
     FORM2_MOUTH(reg_a4)->fixed.speed += reg_d0.h[0];
 }
@@ -1312,7 +1313,7 @@ void stage5_boss_jet_fire(void) {
     bullet_fire256_direct();
     reg_d1.h[0] = reg_d7.h[0];
     reg_d0.h[0] = JET(reg_a4)->middle_bullet;
-    reg_d0.w += 0x40000;
+    reg_d0.w += GAME_RULE(0x40000, 0x50000);
     bullet_fire256_direct();
     reg_d1.b[0] -= 2;
     bullet_fire256_direct();
@@ -1321,7 +1322,7 @@ void stage5_boss_jet_fire(void) {
     reg_d1.h[0] = reg_d7.h[0];
     reg_d0.h[0] = JET(reg_a4)->side_bullet;
     temp_a0 = reg_d0.w;
-    reg_d0.w = temp_a0 + 0x40000;
+    reg_d0.w = temp_a0 + GAME_RULE(0x40000, 0x50000);
     reg_d1.b[0] -= 1;
     bullet_fire256_direct();
     reg_d1.b[0] += 2;
@@ -1348,6 +1349,10 @@ void stage5_boss_fire_form2_jet_start(void) {
         (*(u16 **)&reg_a0) += 1;
         (*(u16 **)&reg_a1) += 1;
     } while ((s16)(--reg_d0.h[0]) >= 0);
+    if (GAME_RULE(0, 1)) {
+        JET(reg_a4)->shot_interval = 2;
+        JET(reg_a4)->speed = (u16)-4;
+    }
     reg_d0.h[0] = STAGE5_ADJUST_B(reg_a6)->jet_speed_add;
     JET(reg_a4)->speed += reg_d0.h[0];
     reg_d0.b[0] = STAGE5_ADJUST_B(reg_a6)->jet_burst_add;
@@ -1472,6 +1477,8 @@ void stage5_boss_form2_horn_fire(void) {
 extern u16 stage5_boss_fire_form2_horn_start_table[];
 extern u32 stage5_boss_fire_form2_horn_start_value;
 
+#define FORM2_HORN_INTERVAL(p) (*GAME_RULE(&STAGE5_ADJUST_B(p)->pattern.horn.form2_horn_round_interval_sub, &STAGE5_ADJUST_B(p)->black_label_horn_interval_sub))
+
 void stage5_boss_fire_form2_horn_start(void) {
     (*(u16 **)&reg_a0) = stage5_boss_fire_form2_horn_start_table;
     (*(u16 **)&reg_a1) = (u16 *)(reg_a4 + 2);
@@ -1483,7 +1490,7 @@ void stage5_boss_fire_form2_horn_start(void) {
     } while ((s16)(--reg_d0.h[0]) >= 0);
     reg_d0.h[0] = STAGE5_ADJUST_B(reg_a6)->form2_horn_speed_add;
     FORM2_HORN(reg_a4)->large.speed += reg_d0.h[0];
-    reg_d0.b[0] = STAGE5_ADJUST_B(reg_a6)->form2_horn_round_interval_sub;
+    reg_d0.b[0] = FORM2_HORN_INTERVAL(reg_a6);
     FORM2_HORN(reg_a4)->round_interval -= reg_d0.b[0];
 }
 
@@ -1572,9 +1579,9 @@ block_8:
             reg_tmp.b[0] = FORM2_HORN(reg_a4)->rounds.t.count;
             FORM2_HORN(reg_a4)->rounds.t.count -= 1;
             if ((s32) reg_tmp.b[0] <= 0) {
-                temp_v0 = STAGE5_ADJUST_B(reg_a6)->form2_horn_round_interval_sub;
+                temp_v0 = FORM2_HORN_INTERVAL(reg_a6);
                 if ((s32) temp_v0 < 0x10) {
-                    STAGE5_ADJUST_B(reg_a6)->form2_horn_round_interval_sub = (u8) (temp_v0 + 8);
+                    FORM2_HORN_INTERVAL(reg_a6) = (u8) (temp_v0 + 8);
                 }
                 temp_v0_2 = STAGE5_ADJUST_B(reg_a6)->form2_horn_speed_add;
                 if ((s32) temp_v0_2 < 0xB) {
@@ -1843,13 +1850,13 @@ block_6:
             reg_d1.b[0] = (*(u8 *)((u8 *)(var_a0) + (0xE)));
             if (0 <= (s8)(reg_d1.b[0])) {
                 (*(u8 *)((u8 *)(var_a0) + (0xF))) += reg_d1.b[0];
-                if ((s8) FORM3_A(reg_a4)->direction > 0x10) {
+                if ((s8) FORM3_A(reg_a4)->direction > GAME_RULE(0x10, 0x20)) {
                     goto block_13;
                 }
                 goto block_end;
             } else {
                 (*(u8 *)((u8 *)(var_a0) + (0xF))) += reg_d1.b[0];
-                if ((s8) FORM3_A(reg_a4)->direction < -0x10) {
+                if ((s8) FORM3_A(reg_a4)->direction < GAME_RULE(-0x10, -0x20)) {
 block_13:
                     var_a0 = (s16 *)(reg_a4);
                     (*(u8 *)((u8 *)(var_a0) + (0xE))) *= -1;
@@ -1919,6 +1926,10 @@ void stage5_boss_fire_form3_attack_b_start(void) {
     reg_d0.b[0] = STAGE5_ADJUST_B(reg_a6)->form3_b_burst_add;
     FORM3_B(reg_a4)->burst.t.count += reg_d0.b[0];
     FORM3_B(reg_a4)->burst.t.reload += reg_d0.b[0];
+    if (GAME_RULE(0, 1)) {
+        FORM3_B(reg_a4)->shot_interval = 6;
+        FORM3_B(reg_a4)->shots.speed = 5;
+    }
     reg_d0.h[0] = STAGE5_ADJUST_B(reg_a6)->form3_b_speed_add;
     FORM3_B(reg_a4)->shots.speed += reg_d0.h[0];
     reg_d0.h[0] = STAGE5_ADJUST_B(reg_a6)->form3_b_speed2_add;
@@ -2389,6 +2400,12 @@ next_1:
     FORM3_RAGE(reg_a4)->shot[1].t.count = FORM3_RAGE(reg_a4)->shot[1].t.reload;
     reg_d0.h[1] = FORM3_RAGE(reg_a4)->volley[1].speed;
     reg_d0.h[0] = FORM3_RAGE(reg_a4)->volley[1].bullet;
+#ifdef DDPDOJ_BONUS_FEATURES
+    if (g_black_label_active) {
+        static const u16 rotating_bullets[] = { 0x1B, 0x24, 0x1B, 0x25, 0x1B, 0x24 };
+        reg_d0.h[0] = rotating_bullets[STAGE5_ADJUST_B(reg_a6)->pattern.rage_bullet_offset / 2];
+    }
+#endif
     reg_d1.b[0] = FORM3_RAGE(reg_a4)->aim[1].direction;
     reg_d2.h[1] = ENTITY(reg_a6)->y.h;
     reg_d2.h[0] = ENTITY(reg_a6)->x.h;
@@ -2415,6 +2432,12 @@ loop_0:
     if ((s16)(reg_d7.h[0] -= 1) >= 0) goto loop_0;
     reg_d1.b[0] = FORM3_RAGE(reg_a4)->aim[1].turn;
     FORM3_RAGE(reg_a4)->aim[1].direction += reg_d1.b[0];
+#ifdef DDPDOJ_BONUS_FEATURES
+    if (g_black_label_active) {
+        u16 *offset = &STAGE5_ADJUST_B(reg_a6)->pattern.rage_bullet_offset;
+        *offset = *offset ? *offset - 2 : 6;
+    }
+#endif
 next_2:
     reg_tmp.b[0] = STAGE5_ADJUST_B(reg_a6)->rage_turn_interval;
     STAGE5_ADJUST_B(reg_a6)->rage_turn_interval -= 1;

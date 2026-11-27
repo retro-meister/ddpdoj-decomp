@@ -61,6 +61,18 @@ void stage5_boss_start(void) {
     if (g_stage5_boss_all_forms == 0) {
         reg_a1 = (u8 *)stage5_boss_fire_loop1_routines;
     }
+#ifdef DDPDOJ_BONUS_FEATURES
+    if (g_black_label_active && !g_loop && g_black_label_single_loop && g_game_mode != 2) {
+        enum { form1_attacks = 5, total_attacks = 14 };
+        static void (*single_loop_attacks[total_attacks * 2])(void);
+        unsigned int i;
+        for (i = 0; i < form1_attacks * 2; ++i)
+            single_loop_attacks[i] = stage5_boss_fire_loop1_routines[i];
+        for (; i < total_attacks * 2; ++i)
+            single_loop_attacks[i] = stage5_boss_fire_routines[i];
+        reg_a1 = (u8 *)single_loop_attacks;
+    }
+#endif
     boss_slots_init();
     reg_d0.w = 0;
     boss_part_show();
