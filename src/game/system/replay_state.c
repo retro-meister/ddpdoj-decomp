@@ -1388,14 +1388,14 @@ extern u16 g_p1_stage_stars_large;
 extern u16 g_bee_value_step;
 extern u16 g_stage_bees_collected;
 extern u16 g_bullet_count;
-extern u16 g_p2_maximum_value[];
-extern u16 g_p2_maximum_count[];
-extern u16 g_p1_maximum_value[];
-extern u16 g_p1_maximum_count[];
-extern u8 g_p2_afterimage_sprites[64];
-extern s32 g_p1_afterimage_sprites[];
-extern u8 g_p2_afterimage_positions[64];
-extern s32 g_p1_afterimage_positions[];
+/* MWCC addresses these four streams independently in the retail copy loops. */
+#ifdef DDPDOJ_PC
+#define REPLAY_TRAIL(side, kind) g_player_afterimages.side##_##kind
+#else
+extern s32 g_p1_afterimage_positions[], g_p1_afterimage_sprites[];
+extern s32 g_p2_afterimage_positions[], g_p2_afterimage_sprites[];
+#define REPLAY_TRAIL(side, kind) g_##side##_afterimage_##kind
+#endif
 extern u16 g_bomb_entities[24];
 extern u8 D_0029D710[];
 extern u8 D_0029D730[];
@@ -1513,13 +1513,13 @@ void replay_snapshot_save(Buf *buf) {
     *(s32 *)(p + 0x3020) = g_p1_option_level_data_as_s32_a[0];
     *(s32 *)(p + 0x3028) = g_p2_option_level_data_as_s32_a[0];
     for (i = 0; i < 16; i++) {
-        buf->f302C[i] = g_p1_afterimage_positions[i];
-        buf->f306C[i] = ((s32 *)g_p2_afterimage_positions)[i];
-        buf->f30AC[i] = g_p1_afterimage_sprites[i];
-        buf->f30EC[i] = ((s32 *)g_p2_afterimage_sprites)[i];
+        buf->f302C[i] = REPLAY_TRAIL(p1, positions)[i];
+        buf->f306C[i] = REPLAY_TRAIL(p2, positions)[i];
+        buf->f30AC[i] = REPLAY_TRAIL(p1, sprites)[i];
+        buf->f30EC[i] = REPLAY_TRAIL(p2, sprites)[i];
     }
-    *(Vec4 *)(p + 0x312C) = *(Vec4 *)((f32 *)g_p1_maximum_value);
-    *(Vec4 *)(p + 0x313C) = *(Vec4 *)((f32 *)g_p2_maximum_value);
+    *(MaximumBonus *)(p + 0x312C) = g_player_afterimages.p1_maximum;
+    *(MaximumBonus *)(p + 0x313C) = g_player_afterimages.p2_maximum;
     *(u16 *)(p + 0x314C) = g_p1_maximum_level;
     *(u16 *)(p + 0x314E) = g_p2_maximum_level;
     *(u16 *)(p + 0x3150) = g_p1_maximum_anim_delay;
@@ -1851,7 +1851,7 @@ void replay_snapshot_save(Buf *buf) {
             ((s16 *)D_006C58B6)[0] = 7;
         }
 #else
-        if ((((u8 *)g_player1)[0] & 2) && !(PLAYER(((u8 *)g_player1))->flags.b[1] & 0x40) && *(u16 *)((f32 *)g_p1_maximum_value) != 0) {
+        if ((((u8 *)g_player1)[0] & 2) && !(PLAYER(((u8 *)g_player1))->flags.b[1] & 0x40) && g_player_afterimages.p1_maximum.value != 0) {
             ((s16 *)D_006C58B6)[0] = 7;
         }
         if (*(u8 *)((u8 *)g_player1) & 2) {
@@ -1864,10 +1864,10 @@ void replay_snapshot_save(Buf *buf) {
         } else {
             printf("------6  off-\n");
         }
-        printf("------[%d]\n", *(u16 *)((f32 *)g_p1_maximum_value));
+        printf("------[%d]\n", g_player_afterimages.p1_maximum.value);
 #endif
-        if (g_p1_maximum_count[0] != 0) {
-            v = (u16)g_p1_maximum_count[0] - 1;
+        if (g_player_afterimages.p1_maximum.count != 0) {
+            v = (u16)g_player_afterimages.p1_maximum.count - 1;
         } else {
             v = 0;
         }
@@ -1927,7 +1927,7 @@ void replay_snapshot_save(Buf *buf) {
             ((s16 *)D_006C58B6)[0] = 7;
         }
 #else
-        if ((((u8 *)g_player2)[0] & 2) && !(PLAYER(((u8 *)g_player2))->flags.b[1] & 0x40) && *(u16 *)((f32 *)g_p2_maximum_value) != 0) {
+        if ((((u8 *)g_player2)[0] & 2) && !(PLAYER(((u8 *)g_player2))->flags.b[1] & 0x40) && g_player_afterimages.p2_maximum.value != 0) {
             ((s16 *)D_006C58B6)[0] = 7;
         }
         if (*(u8 *)((u8 *)g_player2) & 2) {
@@ -1940,10 +1940,10 @@ void replay_snapshot_save(Buf *buf) {
         } else {
             printf("------6  off-\n");
         }
-        printf("------[%d]\n", *(u16 *)((f32 *)g_p2_maximum_value));
+        printf("------[%d]\n", g_player_afterimages.p2_maximum.value);
 #endif
-        if (g_p2_maximum_count[0] != 0) {
-            v = (u16)g_p2_maximum_count[0] - 1;
+        if (g_player_afterimages.p2_maximum.count != 0) {
+            v = (u16)g_player_afterimages.p2_maximum.count - 1;
         } else {
             v = 0;
         }
@@ -2017,17 +2017,17 @@ void replay_snapshot_load(u8 *p) {
     }
     g_laser_bomb_impact_frame = *(u16 *)(p + 0x301A);
     for (i = 0; i < 16; i++) {
-        g_p1_afterimage_positions[i] = ((QuadSrc *)p)->a[i];
-        ((s32 *)g_p2_afterimage_positions)[i] = ((QuadSrc *)p)->b[i];
-        g_p1_afterimage_sprites[i] = ((QuadSrc *)p)->c[i];
-        ((s32 *)g_p2_afterimage_sprites)[i] = ((QuadSrc *)p)->d[i];
+        REPLAY_TRAIL(p1, positions)[i] = ((QuadSrc *)p)->a[i];
+        REPLAY_TRAIL(p2, positions)[i] = ((QuadSrc *)p)->b[i];
+        REPLAY_TRAIL(p1, sprites)[i] = ((QuadSrc *)p)->c[i];
+        REPLAY_TRAIL(p2, sprites)[i] = ((QuadSrc *)p)->d[i];
     }
     g_p1_weapon_level_data_as_s32_a[0] = *(s32 *)(p + 0x301C);
     g_p2_weapon_level_data_as_s32_a[0] = *(s32 *)(p + 0x3024);
     g_p1_option_level_data_as_s32_a[0] = *(s32 *)(p + 0x3020);
     g_p2_option_level_data_as_s32_a[0] = *(s32 *)(p + 0x3028);
-    *(Vec4 *)((u8 *)g_p1_maximum_value) = *(Vec4 *)(p + 0x312C);
-    *(Vec4 *)((u8 *)g_p2_maximum_value) = *(Vec4 *)(p + 0x313C);
+    g_player_afterimages.p1_maximum = *(MaximumBonus *)(p + 0x312C);
+    g_player_afterimages.p2_maximum = *(MaximumBonus *)(p + 0x313C);
     g_p1_maximum_level = *(u16 *)(p + 0x314C);
     g_p2_maximum_level = *(u16 *)(p + 0x314E);
     g_p1_maximum_anim_delay = *(u16 *)(p + 0x3150);
@@ -2378,8 +2378,8 @@ void replay_start_state_load(u8 *p) {
         ((u8 *)g_player1)[i] = p[12 + i];
         ((u8 *)g_player2)[i] = p[110 + i];
     }
-    *(Vec4 *)((u8 *)g_p1_maximum_value) = *(Vec4 *)(p + 0xD0);
-    *(Vec4 *)((u8 *)g_p2_maximum_value) = *(Vec4 *)(p + 0xE0);
+    g_player_afterimages.p1_maximum = *(MaximumBonus *)(p + 0xD0);
+    g_player_afterimages.p2_maximum = *(MaximumBonus *)(p + 0xE0);
     g_p1_maximum_level = *(u16 *)(p + 0xF0);
     g_p2_maximum_level = *(u16 *)(p + 0xF2);
     g_p1_maximum_anim_delay = *(u16 *)(p + 0xF4);
@@ -2629,8 +2629,8 @@ void replay_start_state_save(Buf2 *buf) {
         p[12 + i] = ((u8 *)g_player1)[i];
         p[110 + i] = ((u8 *)g_player2)[i];
     }
-    *(Vec4 *)(p + 0xD0) = *(Vec4 *)((u8 *)g_p1_maximum_value);
-    *(Vec4 *)(p + 0xE0) = *(Vec4 *)((u8 *)g_p2_maximum_value);
+    *(MaximumBonus *)(p + 0xD0) = g_player_afterimages.p1_maximum;
+    *(MaximumBonus *)(p + 0xE0) = g_player_afterimages.p2_maximum;
     *(u16 *)(p + 0xF0) = g_p1_maximum_level;
     *(u16 *)(p + 0xF2) = g_p2_maximum_level;
     *(u16 *)(p + 0xF4) = g_p1_maximum_anim_delay;

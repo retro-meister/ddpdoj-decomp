@@ -456,7 +456,6 @@ s32 hud_p1_lives_put();
 extern s32 g_p1_extend_score;
 extern u16 g_p1_score_digits;
 extern u16 g_p1_lives;
-extern u16 g_p1_maximum_value[];
 extern s16 g_player1[];
 #ifdef DEATH_LABEL
 #endif
@@ -531,10 +530,10 @@ block_3:
             *(u16 *)(reg_a6 + 6) = 3;
         }
     } else if (*(u16 *)(reg_a6 + 6) == 3) {
-        if (!(PLAYER(g_player1)->flags.b[1] & 0x40) && g_p1_maximum_value[0] != 0) {
+        if (!(PLAYER(g_player1)->flags.b[1] & 0x40) && g_player_afterimages.p1_maximum.value != 0) {
             reg_d0.w = 0x10000000;
             score_add_p1();
-            g_p1_maximum_value[0] = 0;
+            g_player_afterimages.p1_maximum.value = 0;
             p1_bomb_stock_draw();
             *(s16 *)(reg_a6 + 0xA) = 0x30;
             *(u8 *)(reg_a6 + 0x11) |= 1;
@@ -576,7 +575,6 @@ s32 hud_p2_lives_put();
 extern s32 g_p2_extend_score;
 extern u16 g_p2_score_digits;
 extern u16 g_p2_lives;
-extern u16 g_p2_maximum_value[];
 extern s16 g_player2[];
 #ifdef DEATH_LABEL
 #endif
@@ -657,10 +655,10 @@ block_3:
         return;
     }
     if (*(u16 *)(reg_a6 + 8) == 3) {
-        if (!(PLAYER(g_player2)->flags.b[1] & 0x40) && g_p2_maximum_value[0] != 0) {
+        if (!(PLAYER(g_player2)->flags.b[1] & 0x40) && g_player_afterimages.p2_maximum.value != 0) {
             reg_d0.w = 0x10000000;
             score_add_p2();
-            g_p2_maximum_value[0] = 0;
+            g_player_afterimages.p2_maximum.value = 0;
             p2_bomb_stock_draw();
             if (*(u16 *)(reg_a6 + 0x10) & 1) {
                 *(u8 *)(reg_a6 + 0x11) &= 0xFE;

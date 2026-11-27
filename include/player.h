@@ -61,4 +61,24 @@ typedef struct {
 
 #define PLAYER(pointer) ((Player *)(pointer))
 
+typedef struct {
+    u16 value;
+    /* 0x02 */ u16 other_02;
+    union { u32 value_digits; u16 value_digit_words[2]; };
+    union { u32 half_digits; u16 half_digit_words[2]; };
+    u16 count;
+    u16 count_digits;
+} MaximumBonus;
+
+typedef struct {
+    MaximumBonus p2_maximum;
+    MaximumBonus p1_maximum;
+    s32 p2_sprites[16];
+    s32 p1_sprites[16];
+    s32 p2_positions[16];
+    s32 p1_positions[16];
+} PlayerAfterimageStorage;
+
+extern PlayerAfterimageStorage g_player_afterimages;
+
 #endif

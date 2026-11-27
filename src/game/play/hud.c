@@ -318,7 +318,6 @@ extern s32 g_p1_chain_first_score;
 extern s32 g_maximum_text_anim_sprite;
 extern s32 g_hyper_text_anim_sprite;
 extern u8 g_p1_score_panel_flags;
-extern u16 g_p1_maximum_count_digits[];
 extern u8 D_0029F261[];
 void hud_p1_panel(void) {
     if ((*(s16 *)&g_p1_lives) < 0) {
@@ -339,7 +338,7 @@ void hud_p1_panel(void) {
         } else {
             g_p1_score_panel_flags &= 0xFE;
             if (g_game_frame & 0x40) {
-                if (!(D_0029F261[0] & 0x40) && (reg_d6.h[0] = g_p1_maximum_count_digits[0], (g_p1_maximum_count_digits[0] != 0))) {
+                if (!(D_0029F261[0] & 0x40) && (reg_d6.h[0] = g_player_afterimages.p1_maximum.count_digits, (g_player_afterimages.p1_maximum.count_digits != 0))) {
                     reg_d0.w = 0x3F;
                     reg_d0.h[0] &= g_game_frame;
                     if ((s32) reg_d0.h[0] < 0x14) {
@@ -423,7 +422,6 @@ extern s16 g_p2_hit10_display_timer;
 extern u16 g_p2_combo_timer;
 extern s32 g_p2_chain_first_score;
 extern u8 g_p2_score_panel_flags;
-extern u16 g_p2_maximum_count_digits[];
 extern u8 D_0029F1F1[];
 void hud_p2_panel(void) {
     if ((*(s16 *)&g_p2_lives) < 0) {
@@ -444,7 +442,7 @@ void hud_p2_panel(void) {
         } else {
             g_p2_score_panel_flags &= 0xFE;
             if (g_game_frame & 0x40) {
-                if (!(D_0029F1F1[0] & 0x40) && (reg_d6.h[0] = g_p2_maximum_count_digits[0], (g_p2_maximum_count_digits[0] != 0))) {
+                if (!(D_0029F1F1[0] & 0x40) && (reg_d6.h[0] = g_player_afterimages.p2_maximum.count_digits, (g_player_afterimages.p2_maximum.count_digits != 0))) {
                     reg_d0.w = 0x3F;
                     reg_d0.h[0] &= g_game_frame;
                     if ((s32) reg_d0.h[0] < 0x2C) {

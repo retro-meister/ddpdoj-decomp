@@ -8,6 +8,12 @@ void p1_maximum_level_show();
 void p2_maximum_level_show();
 #endif
 #include "player.h"
+#ifdef DDPDOJ_PC
+#include <stddef.h>
+#define AFTERIMAGE_START(field) ((u8 *)&g_player_afterimages + offsetof(PlayerAfterimageStorage, field))
+#else
+#define AFTERIMAGE_START(field) ((u8 *)g_player_afterimages.field)
+#endif
 #include "entity.h"
 
 #ifdef DDPDOJ_PC
@@ -359,13 +365,11 @@ extern u16 g_p1_maximum_level;
 extern u16 g_select_screen_active;
 extern u8 g_boss_present_b1;
 extern u16 g_true_last_boss;
-extern u16 g_p2_maximum_value[];
-extern u16 g_p1_maximum_value[];
 
 void maximum_marks_draw(void) {
     if (g_select_screen_active == 0) {
         reg_d0.h[0] = ((u16 *)g_player1)[0];
-        if (((s16)(reg_d0.h[0]) < 0) && !(reg_d0.h[0] & 0xFFFF & 0x4000) && (g_p1_maximum_value[0] != 0)) {
+        if (((s16)(reg_d0.h[0]) < 0) && !(reg_d0.h[0] & 0xFFFF & 0x4000) && (g_player_afterimages.p1_maximum.value != 0)) {
             reg_a1 = (u8 *)(&PLAYER(g_player1)->max_text_sprite_hi.b[0]);
             reg_d0.h[0] = g_p1_maximum_level;
             reg_d4.h[0] = 7;
@@ -398,7 +402,7 @@ void maximum_marks_draw(void) {
             sprite_draw_with_maximum();
         }
         reg_d0.h[0] = ((u16 *)g_player2)[0];
-        if (((s16)(reg_d0.h[0]) < 0) && !(reg_d0.h[0] & 0xFFFF & 0x4000) && (g_p2_maximum_value[0] != 0)) {
+        if (((s16)(reg_d0.h[0]) < 0) && !(reg_d0.h[0] & 0xFFFF & 0x4000) && (g_player_afterimages.p2_maximum.value != 0)) {
             reg_a1 = (u8 *)(&PLAYER(g_player2)->max_text_sprite_hi.b[0]);
             reg_d0.h[0] = g_p2_maximum_level;
             reg_d4.h[0] = 8;
@@ -471,14 +475,14 @@ void hyper_ready_marks_draw(void) {
 #endif
     if (g_select_screen_active == 0) {
         reg_d0.h[0] = ((u16 *)g_player1)[0];
-        if ((((s64) ((s64) reg_d0.h[0] << 0x30) >> 0x30) < 0) && (g_p1_hyper_items != 0) && ((reg_d0.h[0] & 0xFFFF & 0x4000) || (g_p1_maximum_value[0] == 0) || (g_frame_mod4 != 0))) {
+        if ((((s64) ((s64) reg_d0.h[0] << 0x30) >> 0x30) < 0) && (g_p1_hyper_items != 0) && ((reg_d0.h[0] & 0xFFFF & 0x4000) || (g_player_afterimages.p1_maximum.value == 0) || (g_frame_mod4 != 0))) {
             reg_a0 = (u8 *)(&(*(s32 *)&g_p1_hyper_ready_anim_delay));
             reg_a1 = (u8 *)(&g_p1_hyper_ready_sprite);
             reg_d1.w = 0x810000;
             ARCADE_REGISTER_CALL(hyper_ready_mark_draw, reg_d0.h[0]);
         }
         reg_d0.h[0] = ((u16 *)g_player2)[0];
-        if ((((s64) ((s64) reg_d0.h[0] << 0x30) >> 0x30) < 0) && (g_p2_hyper_items != 0) && ((reg_d0.h[0] & 0xFFFF & 0x4000) || (g_p2_maximum_value[0] == 0) || (g_game_frame & 2))) {
+        if ((((s64) ((s64) reg_d0.h[0] << 0x30) >> 0x30) < 0) && (g_p2_hyper_items != 0) && ((reg_d0.h[0] & 0xFFFF & 0x4000) || (g_player_afterimages.p2_maximum.value == 0) || (g_game_frame & 2))) {
             reg_a0 = (u8 *)(&(*(s32 *)&g_p2_hyper_ready_anim_delay));
             reg_a1 = (u8 *)(&g_p2_hyper_ready_sprite);
             reg_d1.w = 0x811C00;
@@ -736,50 +740,42 @@ block_end:
 }
 
 extern void binary_to_bcd(void);
-extern s32 g_p1_maximum_value_digits[];
-extern u32 g_p1_maximum_half_digits[];
-extern u16 g_p1_maximum_count[];
-extern u16 g_p1_maximum_count_digits[];
 
 void p1_maximum_digits_update(void)
 {
-    reg_d0.h[0] = g_p1_maximum_value[0];
+    reg_d0.h[0] = g_player_afterimages.p1_maximum.value;
     reg_d5.h[0] = reg_d0.h[0];
     binary_to_bcd();
 
-    ((u32 *)g_p1_maximum_value_digits)[0] = reg_d2.w;
+    g_player_afterimages.p1_maximum.value_digits = reg_d2.w;
     reg_d5.h[0] >>= 1;
     reg_d0.h[0] = reg_d5.h[0];
     binary_to_bcd();
 
-    g_p1_maximum_half_digits[0] = reg_d2.w;
-    reg_d0.h[0] = g_p1_maximum_count[0];
+    g_player_afterimages.p1_maximum.half_digits = reg_d2.w;
+    reg_d0.h[0] = g_player_afterimages.p1_maximum.count;
     binary_to_bcd();
 
-    g_p1_maximum_count_digits[0] = reg_d2.h[0];
+    g_player_afterimages.p1_maximum.count_digits = reg_d2.h[0];
 }
 
-extern s32 g_p2_maximum_value_digits[];
-extern u32 g_p2_maximum_half_digits[];
-extern u16 g_p2_maximum_count[];
-extern u16 g_p2_maximum_count_digits[];
 
 
 void p2_maximum_digits_update(void) {
-    reg_d0.h[0] = g_p2_maximum_value[0];
+    reg_d0.h[0] = g_player_afterimages.p2_maximum.value;
     reg_d5.h[0] = reg_d0.h[0];
     binary_to_bcd();
 
-    ((u32 *)g_p2_maximum_value_digits)[0] = reg_d2.w;
+    g_player_afterimages.p2_maximum.value_digits = reg_d2.w;
     reg_d5.h[0] >>= 1;
     reg_d0.h[0] = reg_d5.h[0];
     binary_to_bcd();
 
-    g_p2_maximum_half_digits[0] = reg_d2.w;
-    reg_d0.h[0] = g_p2_maximum_count[0];
+    g_player_afterimages.p2_maximum.half_digits = reg_d2.w;
+    reg_d0.h[0] = g_player_afterimages.p2_maximum.count;
     binary_to_bcd();
 
-    g_p2_maximum_count_digits[0] = reg_d2.h[0];
+    g_player_afterimages.p2_maximum.count_digits = reg_d2.h[0];
 }
 
 
@@ -792,9 +788,9 @@ void p1_bomb_item_take(void) {
     if (*(u8 *)(ArcadeSavedAddress)(&PLAYER(((u8 *)g_player1))->bombs.b.capacity) != reg_d5.b[0]) goto block_51;
     PLAYER(((u8 *)g_player1))->flags.b[1] &= 0xBF;
     ((u8 *)g_player1)[0] |= 2;
-    if (g_p1_maximum_count[0] == 0x63) goto block_end;
-    g_p1_maximum_value[0] += GAME_RULE(22, 77);
-    g_p1_maximum_count[0] += 1;
+    if (g_player_afterimages.p1_maximum.count == 0x63) goto block_end;
+    g_player_afterimages.p1_maximum.value += GAME_RULE(22, 77);
+    g_player_afterimages.p1_maximum.count += 1;
     p1_maximum_digits_update();
     p1_bomb_capacity_draw();
     goto block_end;
@@ -805,17 +801,17 @@ block_end:
     cond_flag = 0;
     return;
 block_50:
-    if (g_p1_maximum_count[0] == 0x63) goto block_end;
-    g_p1_maximum_value[0] += GAME_RULE(22, 77);
-    g_p1_maximum_count[0] += 1;
+    if (g_player_afterimages.p1_maximum.count == 0x63) goto block_end;
+    g_player_afterimages.p1_maximum.value += GAME_RULE(22, 77);
+    g_player_afterimages.p1_maximum.count += 1;
     reg_tmp.b[0] = *(u8 *)(ArcadeSavedAddress)(&PLAYER(((u8 *)g_player1))->flags.b[1]);
     *(u8 *)(ArcadeSavedAddress)(&PLAYER(((u8 *)g_player1))->flags.b[1]) &= 0xBF;
     if (reg_tmp.b[0] & 0x40) goto block_52;
     reg_tmp.b[0] = ((u8 *)g_player1)[0];
     ((u8 *)g_player1)[0] |= 2;
     if (reg_tmp.b[0] & 2) goto block_52;
-    g_p1_maximum_value[0] += GAME_RULE(22, 77);
-    g_p1_maximum_count[0] += 1;
+    g_player_afterimages.p1_maximum.value += GAME_RULE(22, 77);
+    g_player_afterimages.p1_maximum.count += 1;
 block_52:
     p1_maximum_digits_update();
     p1_bomb_capacity_draw();
@@ -832,9 +828,9 @@ void p2_bomb_item_take(void) {
     if (*(u8 *)(ArcadeSavedAddress)(&PLAYER(((u8 *)g_player2))->bombs.b.capacity) != reg_d5.b[0]) goto block_51;
     PLAYER(((u8 *)g_player2))->flags.b[1] &= 0xBF;
     ((u8 *)g_player2)[0] |= 2;
-    if (g_p2_maximum_count[0] == 0x63) goto block_end;
-    g_p2_maximum_value[0] += GAME_RULE(22, 77);
-    g_p2_maximum_count[0] += 1;
+    if (g_player_afterimages.p2_maximum.count == 0x63) goto block_end;
+    g_player_afterimages.p2_maximum.value += GAME_RULE(22, 77);
+    g_player_afterimages.p2_maximum.count += 1;
     p2_maximum_digits_update();
     p2_bomb_capacity_draw();
     goto block_end;
@@ -845,17 +841,17 @@ block_end:
     cond_flag = 0;
     return;
 block_50:
-    if (g_p2_maximum_count[0] == 0x63) goto block_end;
-    g_p2_maximum_value[0] += GAME_RULE(22, 77);
-    g_p2_maximum_count[0] += 1;
+    if (g_player_afterimages.p2_maximum.count == 0x63) goto block_end;
+    g_player_afterimages.p2_maximum.value += GAME_RULE(22, 77);
+    g_player_afterimages.p2_maximum.count += 1;
     reg_tmp.b[0] = *(u8 *)(ArcadeSavedAddress)(&PLAYER(((u8 *)g_player2))->flags.b[1]);
     *(u8 *)(ArcadeSavedAddress)(&PLAYER(((u8 *)g_player2))->flags.b[1]) &= 0xBF;
     if (reg_tmp.b[0] & 0x40) goto block_52;
     reg_tmp.b[0] = ((u8 *)g_player2)[0];
     ((u8 *)g_player2)[0] |= 2;
     if (reg_tmp.b[0] & 2) goto block_52;
-    g_p2_maximum_value[0] += GAME_RULE(22, 77);
-    g_p2_maximum_count[0] += 1;
+    g_player_afterimages.p2_maximum.value += GAME_RULE(22, 77);
+    g_player_afterimages.p2_maximum.count += 1;
 block_52:
     p2_maximum_digits_update();
     p2_bomb_capacity_draw();
@@ -921,7 +917,6 @@ void p2_life_add(void) {
 s32 p1_stage_clear_reward();
 extern u16 g_p1_stage_bomb_used;
 extern u16 g_p1_stage_misses;
-extern s32 g_p1_maximum_value_digits[];
 void p1_next_stage_setup(void) {
     u16 temp_a0;
 
@@ -929,7 +924,7 @@ void p1_next_stage_setup(void) {
         p1_stage_clear_reward();
         g_p1_stage_misses = 0;
         g_p1_stage_bomb_used = 0;
-        if (!(PLAYER(((u8 *)g_player1))->flags.b[1] & 0x40) && (g_p1_maximum_value_digits[0] != 0)) {
+        if (!(PLAYER(((u8 *)g_player1))->flags.b[1] & 0x40) && (g_player_afterimages.p1_maximum.value_digits != 0)) {
             temp_a0 = g_p1_maximum_level;
             if (temp_a0 != 8) {
                 g_p1_maximum_level = temp_a0 + 4;
@@ -944,7 +939,6 @@ void p1_next_stage_setup(void) {
 s32 p2_stage_clear_reward();
 extern u16 g_p2_stage_bomb_used;
 extern u16 g_p2_stage_misses;
-extern s32 g_p2_maximum_value_digits[];
 void p2_next_stage_setup(void) {
     u16 temp_a0;
 
@@ -952,7 +946,7 @@ void p2_next_stage_setup(void) {
         p2_stage_clear_reward();
         g_p2_stage_misses = 0;
         g_p2_stage_bomb_used = 0;
-        if (!(PLAYER(((u8 *)g_player2))->flags.b[1] & 0x40) && (g_p2_maximum_value_digits[0] != 0)) {
+        if (!(PLAYER(((u8 *)g_player2))->flags.b[1] & 0x40) && (g_player_afterimages.p2_maximum.value_digits != 0)) {
             temp_a0 = g_p2_maximum_level;
             if (temp_a0 != 8) {
                 g_p2_maximum_level = temp_a0 + 4;
@@ -1343,7 +1337,7 @@ extern s8 g_bomb_panel_seen;
 
 void p1_bomb_panel_draw(void) {
     g_bomb_panel_seen = 1;
-    if ((g_p1_hyper_items != 0) || (!(PLAYER(((u8 *)g_player1))->flags.b[1] & 0x40) && (g_p1_maximum_value[0] != 0))) {
+    if ((g_p1_hyper_items != 0) || (!(PLAYER(((u8 *)g_player1))->flags.b[1] & 0x40) && (g_player_afterimages.p1_maximum.value != 0))) {
         p1_bomb_stock_draw();
         p1_bomb_capacity_draw();
         return;
@@ -1354,7 +1348,7 @@ void p1_bomb_panel_draw(void) {
 
 void p2_bomb_panel_draw(void) {
     g_bomb_panel_seen = 1;
-    if ((g_p2_hyper_items != 0) || (!(PLAYER(((u8 *)g_player2))->flags.b[1] & 0x40) && (g_p2_maximum_value[0] != 0))) {
+    if ((g_p2_hyper_items != 0) || (!(PLAYER(((u8 *)g_player2))->flags.b[1] & 0x40) && (g_player_afterimages.p2_maximum.value != 0))) {
         p2_bomb_stock_draw();
         p2_bomb_capacity_draw();
         return;
@@ -1458,23 +1452,19 @@ next_1:
     reg_a6 = sv_a6;
 }
 
-extern u8 g_p2_afterimage_positions[];
-extern u8 g_p2_afterimage_sprites[];
 
 
 void p2_afterimage_draw(void) {
-    reg_a0 = g_p2_afterimage_positions;
-    reg_a1 = g_p2_afterimage_sprites;
+    reg_a0 = AFTERIMAGE_START(p2_positions);
+    reg_a1 = AFTERIMAGE_START(p2_sprites);
     ship_afterimage_draw();
 }
 
-extern s32 g_p1_afterimage_sprites[];
-extern s32 g_p1_afterimage_positions[];
 
 
 void p1_afterimage_draw(void) {
-    reg_a0 = (u8 *)((ArcadeSavedAddress)&g_p1_afterimage_positions[0]);
-    reg_a1 = (u8 *)((ArcadeSavedAddress)&g_p1_afterimage_sprites[0]);
+    reg_a0 = AFTERIMAGE_START(p1_positions);
+    reg_a1 = AFTERIMAGE_START(p1_sprites);
     ship_afterimage_draw();
 }
 
@@ -1556,8 +1546,8 @@ void p1_afterimage_reset(void) {
     reg_save_a0 = (ArcadeSavedAddress)temp_a3;
     reg_save_a1 = temp_a2;
     reg_save_a2 = temp_a1;
-    reg_a0 = ((u8 *)g_p1_afterimage_positions);
-    reg_a1 = ((u8 *)g_p1_afterimage_sprites);
+    reg_a0 = (AFTERIMAGE_START(p1_positions));
+    reg_a1 = (AFTERIMAGE_START(p1_sprites));
     reg_a2 = ((u8 *)g_player1);
     afterimage_fill();
 }
@@ -1574,8 +1564,8 @@ void p2_afterimage_reset(void) {
     reg_save_a0 = (ArcadeSavedAddress)temp_a3;
     reg_save_a1 = temp_a2;
     reg_save_a2 = temp_a1;
-    reg_a0 = g_p2_afterimage_positions;
-    reg_a1 = g_p2_afterimage_sprites;
+    reg_a0 = AFTERIMAGE_START(p2_positions);
+    reg_a1 = AFTERIMAGE_START(p2_sprites);
     reg_a2 = ((u8 *)g_player2);
     afterimage_fill();
 }
