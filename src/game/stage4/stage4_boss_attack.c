@@ -1,7 +1,5 @@
 #include "common.h"
-#ifdef DDPDOJ_PC
-#include "pc_gameplay_abi.h"
-#endif
+#include "arcade_gameplay.h"
 #include "entity.h"
 #include "enemy_kinds.h"
 #include "stage4_boss.h"
@@ -149,9 +147,6 @@ void stage4_boss_fire_basic_start(void) {
     stage4_boss_fire_basic();
 }
 
-#ifndef DDPDOJ_PC
-s32 bullet_fire256();
-#endif
 
 void stage4_boss_fire_basic(void) {
     u16 t;
@@ -367,9 +362,6 @@ void stage4_boss_right_spinner_volleys_b_start(void) {
     stage4_boss_spinner_volleys_b_start(0x186);
 }
 
-#ifndef DDPDOJ_PC
-s32 bullet_fire256_fast();
-#endif
 
 #define LOOKUP(d) (((d) != 0) ? *(u16 *)(reg_a6 + ((s16)(d) & ~1)) : ENTITY(reg_a6)->flags.h)
 
@@ -471,9 +463,6 @@ s32 rng_next();
 s32 rng_next_unsigned();
 
 void stage4_boss_spinner_arms(s32 arg0, s32 arg1, void *arg2) {
-#ifndef DDPDOJ_PC
-    s32 aim256_at_player();
-#endif
     u32 saved;
     u32 idx;
 
@@ -763,9 +752,6 @@ void stage4_boss_spinner_sweep_start(arg0, arg1)
     u32 arg0;
     u8 arg1;
 {
-#ifndef DDPDOJ_PC
-    s32 aim256_at_player();
-#endif
     SPINNER_SWEEP(reg_a4)->shot.h = 4;
     SPINNER_SWEEP(reg_a4)->shots_left = 0x50;
     SPINNER_SWEEP(reg_a4)->speed = -4;
@@ -948,9 +934,6 @@ void stage4_boss_left_spinner_sweep(void) {
 }
 
 void stage4_boss_fire_aimed_gun_start(void) {
-#ifndef DDPDOJ_PC
-    s32 aim256_at_player(s32, s32);
-#endif
     AIMED_GUN(reg_a4)->shot.sh = 0xC20;
     AIMED_GUN(reg_a4)->spread = 3;
     AIMED_GUN(reg_a4)->outer_spread = 8;
@@ -964,9 +947,6 @@ extern u16 g_direction_offsets_500[];
 extern u16 g_bullets_blocked;
 
 void stage4_boss_fire_aimed_gun(void) {
-#ifndef DDPDOJ_PC
-    s32 aim256_at_player();
-#endif
     reg_tmp.b[0] = AIMED_GUN(reg_a4)->shot.t.count;
     AIMED_GUN(reg_a4)->shot.t.count -= 1;
     if ((s32) reg_tmp.b[0] <= 0) {
@@ -1085,9 +1065,6 @@ void stage4_boss_fire_both_spinners_start(void) {
 
 
 void stage4_boss_fire_both_spinners(void) {
-#ifndef DDPDOJ_PC
-    s32 aim256_at_player();
-#endif
     u16 t;
 
     reg_tmp.b[0] = BOTH_SPINNERS(reg_a4)->turn.t.count;
@@ -1222,9 +1199,6 @@ void stage4_boss_pod_aimed_start(s16 arg0) {
 }
 
 void stage4_boss_pod_aimed(s32 arg0, s32 arg1) {
-#ifndef DDPDOJ_PC
-    s32 aim256_at_player();
-#endif
     reg_tmp.b[0] = POD_AIMED(reg_a4)->shot.t.count;
     POD_AIMED(reg_a4)->shot.t.count -= 1;
     if ((s32) reg_tmp.b[0] > 0) goto block_rts;
@@ -1269,9 +1243,6 @@ void stage4_boss_fire_right_pod_start(void) {
 extern u16 g_loop;
 
 void stage4_boss_fire_right_pod(void) {
-#ifndef DDPDOJ_PC
-    s32 bullet_fire256_fixed();
-#endif
     u16 temp_a1;
     u16 temp_a2;
     u8 temp_a0;
@@ -1375,9 +1346,6 @@ void stage4_boss_fire_cutter_bay_start(void) {
 
 
 void stage4_boss_fire_cutter_bay() {
-#ifndef DDPDOJ_PC
-    s32 aim256_at_player();
-#endif
     if (CUTTER_BAY(reg_a4)->side[0].burst.t.count == 0) {
         reg_tmp.b[0] = CUTTER_BAY(reg_a4)->side[0].wait.t.count;
         CUTTER_BAY(reg_a4)->side[0].wait.t.count -= 1;
@@ -1451,9 +1419,6 @@ block_8:
     }
 }
 
-#ifndef DDPDOJ_PC
-s32 bullet_fire256();                            /* extern */
-#endif
 
 void stage4_boss_fire_4way(void) {
     u32 temp_s0;
@@ -1627,9 +1592,6 @@ extern u8 D_0026EDA8[];
 #endif
 
 void stage4_boss_fire_cutter_bay_b(void) {
-#ifndef DDPDOJ_PC
-    s32 aim256_at_player();
-#endif
     u16 *t1;
     u16 t2;
     u16 t3;
@@ -1776,16 +1738,10 @@ next_1:
 }
 
 void stage4_boss_fire_fixed_1(void) {
-#ifndef DDPDOJ_PC
-    void bullet_fire256_fixed(void);
-#endif
     bullet_fire256_fixed();
 }
 
 void stage4_boss_fire_fixed_2way(void) {
-#ifndef DDPDOJ_PC
-    s32 bullet_fire256_fixed();
-#endif
     reg_d1.b[0] -= 0xA;
     bullet_fire256_fixed();
     reg_d1.b[0] += 0x14;
@@ -1793,9 +1749,6 @@ void stage4_boss_fire_fixed_2way(void) {
 }
 
 void stage4_boss_fire_fixed_3way(void) {
-#ifndef DDPDOJ_PC
-    s32 bullet_fire256_fixed();
-#endif
     bullet_fire256_fixed();
     reg_d1.b[0] += 0xE;
     bullet_fire256_fixed();
@@ -1804,9 +1757,6 @@ void stage4_boss_fire_fixed_3way(void) {
 }
 
 void stage4_boss_fire_fixed_4way(void) {
-#ifndef DDPDOJ_PC
-    s32 bullet_fire256_fixed();
-#endif
     reg_d1.b[0] -= 9;
     bullet_fire256_fixed();
     reg_d1.b[0] -= 0x12;
@@ -1819,9 +1769,6 @@ void stage4_boss_fire_fixed_4way(void) {
 
 
 void stage4_boss_fire_aimed_gun_b_start(void) {
-#ifndef DDPDOJ_PC
-    s32 aim256_at_player(s32);
-#endif
     AIMED_GUN(reg_a4)->shot.sh = 0xC20;
     AIMED_GUN(reg_a4)->spread = 7;
     reg_d0.h[0] = ENTITY(reg_a6)[8].y.h;
@@ -1832,9 +1779,6 @@ void stage4_boss_fire_aimed_gun_b_start(void) {
 }
 
 void stage4_boss_fire_aimed_gun_b(void) {
-#ifndef DDPDOJ_PC
-    s32 aim256_at_player();
-#endif
     reg_tmp.b[0] = AIMED_GUN(reg_a4)->shot.t.count;
     AIMED_GUN(reg_a4)->shot.t.count -= 1;
     if ((s32) reg_tmp.b[0] <= 0) {
@@ -1920,9 +1864,6 @@ block_3:
 }
 
 void stage4_boss_fire_fixed_fan_a(void) {
-#ifndef DDPDOJ_PC
-    s32 bullet_fire256_fixed();
-#endif
     bullet_fire256_fixed();
     reg_d1.b[0] += 6;
     bullet_fire256_fixed();
@@ -1948,9 +1889,6 @@ void stage4_boss_fire_fixed_fan_a(void) {
 }
 
 void stage4_boss_fire_fixed_fan_b(void) {
-#ifndef DDPDOJ_PC
-    s32 bullet_fire256_fixed();
-#endif
     reg_d1.b[0] += 3;
     bullet_fire256_fixed();
     reg_d1.b[0] += 6;
@@ -1991,9 +1929,6 @@ void stage4_boss_fire_rage_wings_start(void)
 extern u8 stage4_boss_fire_rage_wings_table[];
 
 void stage4_boss_fire_rage_wings(void) {
-#ifndef DDPDOJ_PC
-    s32 aim256_at_player();
-#endif
     if (RAGE_WINGS(reg_a4)->burst.t.count == 0) {
         reg_tmp.b[0] = RAGE_WINGS(reg_a4)->wait.t.count;
         RAGE_WINGS(reg_a4)->wait.t.count -= 1;

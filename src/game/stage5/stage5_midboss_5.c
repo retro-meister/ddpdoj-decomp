@@ -1,7 +1,5 @@
 #include "common.h"
-#ifdef DDPDOJ_PC
-#include "pc_gameplay_abi.h"
-#endif
+#include "arcade_gameplay.h"
 #include "player.h"
 #include "entity.h"
 #include "explosion.h"
@@ -151,9 +149,6 @@ void stage5_midboss5_missile_explode(void);
 void stage5_midboss5_drone_draw_flying(void);
 void stage5_midboss5_drone_draw_animated(void);
 
-#ifndef DDPDOJ_PC
-s32 bullet_fire_fixed();
-#endif
 extern u16 g_direction64_offsets_432[];
 extern u16 g_loop;
 
@@ -453,10 +448,6 @@ void stage5_midboss5_first(void) {
     enemy_set_entity_count(4);
 }
 
-#ifndef DDPDOJ_PC
-s32 enemy_set_task_state();
-s32 enemy_init_entities();
-#endif
 s32 sprite_palette_load();
 extern u8 stage5_midboss5_start_table[];
 extern u8 stage5_midboss5_start_table_2[];
@@ -495,9 +486,6 @@ void stage5_midboss5_start(void) {
 
 s32 ground_speeds_request();
 s32 fade_out_and_release();
-#ifndef DDPDOJ_PC
-s32 enemy_hitbox_debug_draw();
-#endif
 s32 score_add_no_chain();
 s32 score_add();
 extern u8 D_00266330[];
@@ -507,9 +495,6 @@ extern u16 g_enemies_stopped;
 extern u16 g_scroll_line;
 
 void stage5_midboss5_main() {
-#ifndef DDPDOJ_PC
-    s32 enemy_remove();
-#endif
     if (g_enemies_stopped == 0) {
         if (STAGE5_MIDBOSS5_DAMAGE(reg_a6)->gone != 0) {
             g_enemy_signal_3 = 0;
@@ -618,10 +603,6 @@ void stage5_midboss5_draw_body(void) {
     stage5_midboss5_draw_part();
 }
 
-#ifndef DDPDOJ_PC
-s32 sprite_draw_layer1();                            /* extern */
-s32 sprite_draw_layer4();                            /* extern */
-#endif
 
 void stage5_midboss5_draw_part(void) {
     if (STAGE5_MIDBOSS5(reg_a5)->arrived == 0) {
@@ -702,9 +683,6 @@ void stage5_midboss5_set_move(void) {
     }
 }
 
-#ifndef DDPDOJ_PC
-s32 entity_velocity();
-#endif
 
 void stage5_midboss5_move(void) {
     reg_d0.h[0] = STAGE5_MIDBOSS5_MOVE(reg_a6)->mode;
@@ -1268,9 +1246,6 @@ void stage5_midboss5_move_away(void) {
     }
 }
 
-#ifndef DDPDOJ_PC
-s32 direction_to_point();                            /* extern */
-#endif
 s32 entity_dir_turned_toward();                            /* extern */
 s32 entity_distance_to();                            /* extern */
 
@@ -1422,15 +1397,9 @@ void stage5_midboss5_small_missile_start() {
 }
 
 s32 sprite_draw_layer3();
-#ifndef DDPDOJ_PC
-s32 velocity_from_direction();
-#endif
 extern u8 g_no_enemy_bullets;
 
 void stage5_midboss5_small_missile(void) {
-#ifndef DDPDOJ_PC
-    s32 enemy_remove();
-#endif
     if (g_no_enemy_bullets != 0) goto remove;
     reg_d1.w = 0;
     reg_d0.w = 0;
@@ -1496,9 +1465,6 @@ extern u8 stage5_midboss5_small_blast_table[];
 extern u16 g_frame_mod4;
 
 void stage5_midboss5_small_blast(void) {
-#ifndef DDPDOJ_PC
-    s32 enemy_remove();
-#endif
     u8 *t1;
     u16 t2;
     u8 t3;
@@ -1593,9 +1559,6 @@ void stage5_midboss5_large_missile_start() {
 }
 
 void stage5_midboss5_large_missile(void) {
-#ifndef DDPDOJ_PC
-    s32 enemy_remove();
-#endif
     if (g_no_enemy_bullets != 0) goto remove;
     if (g_enemy_signal_4 == 0) {
         stage5_midboss5_missile_explode();
@@ -1633,9 +1596,6 @@ draw:
 s32 explosion_spawn();                            /* extern */
 
 void stage5_midboss5_missile_explode(void) {
-#ifndef DDPDOJ_PC
-    s32 enemy_remove(u16);
-#endif
     u16 temp_a0;
 
     reg_d0.h[0] = 4;
@@ -1671,9 +1631,6 @@ void stage5_midboss5_large_blast_start() {
 extern u8 stage5_midboss5_large_blast_table[];
 
 void stage5_midboss5_large_blast(void) {
-#ifndef DDPDOJ_PC
-    s32 enemy_remove();
-#endif
     u8 *t1;
     u16 t2;
     u8 t3;
@@ -1778,9 +1735,6 @@ s32 entity_turn_to_target_player();
 s32 direction_turn_toward();
 
 void stage5_midboss5_drone(void) {
-#ifndef DDPDOJ_PC
-    s32 enemy_remove();
-#endif
     u8 t;
     u8 c;
 
@@ -1947,9 +1901,6 @@ draw:
     enemy_hitbox_debug_draw();
 }
 
-#ifndef DDPDOJ_PC
-s32 sprite_draw_layer5();
-#endif
 extern u8 D_00266480[];
 
 void stage5_midboss5_drone_draw_flying(void) {
@@ -2042,9 +1993,6 @@ void stage5_midboss5_spin_drone_start() {
 void bullet_fire_fast_in_arc(void);
 
 void stage5_midboss5_spin_drone(void) {
-#ifndef DDPDOJ_PC
-    s32 enemy_remove();
-#endif
     if (ENTITY(reg_a6)->y.sh > -0x400) goto move;
     enemy_remove();
     return;

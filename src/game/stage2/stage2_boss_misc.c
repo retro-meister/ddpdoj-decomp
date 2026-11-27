@@ -1,7 +1,5 @@
 #include "common.h"
-#ifdef DDPDOJ_PC
-#include "pc_gameplay_abi.h"
-#endif
+#include "arcade_gameplay.h"
 #include "entity.h"
 #include "explosion.h"
 #include "stage2_boss.h"
@@ -11,9 +9,6 @@ void stage2_boss_shoulder_bullet_first(void) {
     enemy_set_entity_count(0);
 }
 
-#ifndef DDPDOJ_PC
-s32 enemy_init_entities();                            /* extern */
-#endif
 extern s32 stage2_boss_shoulder_bullet_start_table[];
 
 void stage2_boss_shoulder_bullet_start(void) {
@@ -33,11 +28,6 @@ void stage2_boss_shoulder_bullet_start(void) {
 }
 
 
-#ifndef DDPDOJ_PC
-s32 enemy_remove();
-s32 sprite_draw_layer5();
-s32 entity_velocity();
-#endif
 s32 entity_check_bounds();
 extern u16 stage2_boss_shoulder_bullet_buffer[];
 
@@ -88,9 +78,6 @@ void stage2_boss_spread_bullet_first(void) {
     enemy_set_entity_count(0);
 }
 
-#ifndef DDPDOJ_PC
-s32 enemy_init_entities();
-#endif
 extern u16 D_0024EBC0[];
 extern u16 D_0024EC80[];
 extern u16 D_0024EEF0[];
@@ -122,9 +109,6 @@ void stage2_boss_spread_bullet_start(void) {
     STAGE2_SHOT(reg_a5)->now.seen = 0;
 }
 
-#ifndef DDPDOJ_PC
-s32 entity_draw_with_bullets();
-#endif
 s32 entity_advance256();
 
 void stage2_boss_spread_bullet(void) {
@@ -263,9 +247,6 @@ void stage2_boss_dropped_bomb_start(void) {
 s32 explosion_spawn();                            /* extern */
 
 void stage2_boss_dropped_bomb(void) {
-#ifndef DDPDOJ_PC
-    extern s32 enemy_remove(u16);
-#endif
     u16 temp_a0;
 
     reg_d0.h[0] = 3;
@@ -282,9 +263,6 @@ void stage2_boss_ripple_first(void) {
     enemy_set_entity_count(0);
 }
 
-#ifndef DDPDOJ_PC
-s32 enemy_init_entities();                            /* extern */
-#endif
 extern s32 stage2_boss_ripple_start_table[];
 
 void stage2_boss_ripple_start(void) {
@@ -297,9 +275,6 @@ void stage2_boss_ripple_start(void) {
     STAGE2_SHOT(reg_a5)->frame = 0;
 }
 
-#ifndef DDPDOJ_PC
-s32 sprite_draw_layer1();
-#endif
 s32 entity_follow_scroll();
 extern u32 stage2_boss_ripple_table[];
 

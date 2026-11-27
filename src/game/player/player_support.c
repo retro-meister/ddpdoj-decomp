@@ -1,6 +1,6 @@
 #include "common.h"
 #ifdef DDPDOJ_PC
-#include "pc_gameplay_abi.h"
+#include "arcade_gameplay.h"
 #endif
 #include "player.h"
 #include "entity.h"

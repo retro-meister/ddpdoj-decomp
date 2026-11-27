@@ -1,7 +1,5 @@
 #include "common.h"
-#ifdef DDPDOJ_PC
-#include "pc_gameplay_abi.h"
-#endif
+#include "arcade_gameplay.h"
 #include "entity.h"
 #include "stage1_boss.h"
 #include "enemy_kinds.h"
@@ -151,9 +149,6 @@ void stage1_boss_fire_clear(void) {
 s32 boss_level_get_from_58();
 s32 enemy_switch_target_player();
 s32 rng_next();
-#ifndef DDPDOJ_PC
-s32 direction256_to_target_player();
-#endif
 
 void stage1_boss_fire_body_ports_rage_start(void) {
     enemy_switch_target_player();
@@ -390,9 +385,6 @@ void stage1_boss_fire_gatling_a_start(void) {
     GATLING(reg_a4)->speed = 0xFFFC;
 }
 
-#ifndef DDPDOJ_PC
-s32 bullet_fire256_fixed();
-#endif
 s32 rng_next_bit_d5();
 s32 aim_at_player();
 s32 direction_turn_toward();
@@ -480,9 +472,6 @@ void stage1_boss_fire_gatling_a(void) {
     }
 }
 
-#ifndef DDPDOJ_PC
-s32 bullet_fire256_fast();
-#endif
 extern u16 g_loop;
 
 void stage1_boss_fire_beam_fan() {
@@ -510,10 +499,6 @@ loop_1:
     if (((s64) ((s64) (u16) tmp << 0x30) >> 0x30) >= 0) goto loop_1;
 }
 
-#ifndef DDPDOJ_PC
-s32 rng_next_bit();
-s32 aim256_at_player();
-#endif
 
 void stage1_boss_fire_right_beam_start(void) {
     u16 temp_a0;
@@ -960,9 +945,6 @@ void stage1_boss_fire_body_ports_rapid_start(void) {
     stage1_boss_fire_body_ports_rapid();
 }
 
-#ifndef DDPDOJ_PC
-s32 bullet_fire256();
-#endif
 
 void stage1_boss_fire_body_ports_rapid() {
     u16 temp_a2;

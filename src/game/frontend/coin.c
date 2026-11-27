@@ -1,8 +1,6 @@
 #include "common.h"
 
-#ifdef DDPDOJ_PC
-#include "pc_frontend_abi.h"
-#endif
+#include "arcade_frontend.h"
 void credit_display_changed_check_coins(void);
 void credit_display_changed_check_side(void);
 void credit_display_changed_check_side_coins(u8 arg0);
@@ -702,9 +700,6 @@ void text_layer_put_hex_digit(void) {
 extern char coin_text_free_play[];
 
 void free_play_text_print(void) {
-#ifndef DDPDOJ_PC
-    extern void text_layer_print(void);
-#endif
     reg_d0.h[0] = 10;
     reg_d1.h[0] = 3;
     reg_a0 = (u8 *)coin_text_free_play;
@@ -732,9 +727,6 @@ void free_play_text_print_p2(void) {
 
 #ifndef DEATH_LABEL
 void free_play_text_print_at(void) {
-#ifndef DDPDOJ_PC
-    extern void text_layer_print(void);
-#endif
     reg_d2.sh[0] = 0;
     reg_a0 = (u8 *)coin_text_free_play;
     text_layer_print();
@@ -745,9 +737,6 @@ void free_play_text_print_at(void) {
 extern s32 coin_text_coins;
 
 void coins_text_print(void) {
-#ifndef DDPDOJ_PC
-    s32 text_layer_print();
-#endif
     reg_d0.h[0] = 0xB;
     reg_d1.h[0] = 3;
     reg_a0 = &(*(u8 *)&coin_text_coins);
@@ -764,9 +753,6 @@ void coins_text_print(void) {
 extern s32 coin_text_coins;
 
 void coins_text_print_p1(void) {
-#ifndef DDPDOJ_PC
-    s32 text_layer_print();
-#endif
     reg_d0.h[0] = 4;
     reg_d1.h[0] = 3;
     reg_a0 = (u8 *)(&coin_text_coins);
@@ -780,9 +766,6 @@ void coins_text_print_p1(void) {
 
 #ifndef DEATH_LABEL
 void coins_text_print_p2(void) {
-#ifndef DDPDOJ_PC
-    s32 text_layer_print();
-#endif
     reg_d0.h[0] = 0x12;
     reg_d1.h[0] = 3;
     reg_a0 = (u8 *)(&coin_text_coins);
@@ -798,9 +781,6 @@ void coins_text_print_p2(void) {
 extern u8 coin_text_credits_with_coins[];
 
 void credits_with_coins_text_print(void) {
-#ifndef DDPDOJ_PC
-    s32 text_layer_print();
-#endif
     reg_d0.h[0] = 7;
     reg_d1.h[0] = 3;
     reg_d2.h[0] = 0;
@@ -824,9 +804,6 @@ extern s32 coin_text_credits_short;
 extern s32 coin_text_coins_frame;
 
 void credits_with_coins_text_print_p1(void) {
-#ifndef DDPDOJ_PC
-    s32 text_layer_print();
-#endif
     reg_d0.h[0] = 3;
     reg_d1.h[0] = 4;
     reg_a0 = (u8 *)(&coin_text_credits_short);
@@ -849,9 +826,6 @@ void credits_with_coins_text_print_p1(void) {
 
 #ifndef DEATH_LABEL
 void credits_with_coins_text_print_p2(void) {
-#ifndef DDPDOJ_PC
-    s32 text_layer_print();
-#endif
     reg_d0.h[0] = 0x11;
     reg_d1.h[0] = 4;
     reg_a0 = (u8 *)(&coin_text_credits_short);
@@ -876,9 +850,6 @@ void credits_with_coins_text_print_p2(void) {
 extern s32 coin_text_credits[];
 
 void credits_text_print(void) {
-#ifndef DDPDOJ_PC
-    s32 text_layer_print();
-#endif
     reg_d0.h[0] = 0xA;
     reg_d1.h[0] = 3;
     reg_d2.h[0] = 0;
@@ -892,9 +863,6 @@ void credits_text_print(void) {
 
 #ifndef DEATH_LABEL
 void credits_text_print_p1(void) {
-#ifndef DDPDOJ_PC
-    s32 text_layer_print();
-#endif
     reg_d0.h[0] = 3;
     reg_a0 = (u8 *)coin_text_credits;
     reg_d1.h[0] = 3;
@@ -908,9 +876,6 @@ void credits_text_print_p1(void) {
 
 #ifndef DEATH_LABEL
 void credits_text_print_p2(void) {
-#ifndef DDPDOJ_PC
-    s32 text_layer_print();
-#endif
     reg_d0.h[0] = 0x11;
     reg_d1.h[0] = 3;
     reg_d2.h[0] = 0;

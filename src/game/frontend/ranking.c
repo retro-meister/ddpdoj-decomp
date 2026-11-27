@@ -1,9 +1,7 @@
 #include "common.h"
 #include "entity.h"
 
-#ifdef DDPDOJ_PC
-#include "pc_frontend_abi.h"
-#endif
+#include "arcade_frontend.h"
 
 void ranking_screen_finish(void);
 void ranking_title_draw(void);
@@ -32,9 +30,6 @@ extern u32 D_0028E770;
 extern u16 D_0028E778;
 
 void ranking_screen_begin(void) {
-#ifndef DDPDOJ_PC
-    s32 music_stop();
-#endif
     u32 save_d0;
     u32 save_d1;
     u32 save_d2;
@@ -91,15 +86,6 @@ void ranking_screen_begin(void) {
 }
 
 
-#ifndef DDPDOJ_PC
-s32 fade_to_black();
-#endif
-#ifndef DDPDOJ_PC
-s32 fade_release();
-#endif
-#ifndef DDPDOJ_PC
-s32 fade_is_running();
-#endif
 extern u8 D_0026B5F0[];
 extern u8 g_ranking_opened_from_menu;
 extern u8 *reg_save2_a6;
@@ -196,9 +182,6 @@ block_11:
 
 
 void ranking_screen_finish(void) {
-#ifndef DDPDOJ_PC
-    void music_stop(void);
-#endif
     music_stop();
     reg_d0.w = reg_save2_d0;
     reg_d1.w = reg_save2_d1;
@@ -336,9 +319,6 @@ void ranking_draw_unused(void) {
 extern u8 ranking_header_draw_table[];
 
 void ranking_header_draw(void) {
-#ifndef DDPDOJ_PC
-    s32 sprite_draw_keep();
-#endif
     if (g_ranking_opened_from_menu != 0) {
         reg_d1.w = 0x628004C0;
     } else {
@@ -360,9 +340,6 @@ extern u16 ranking_ship_types_draw_table[];
 extern u16 g_ranking_ship_types[5];
 
 void ranking_ship_types_draw(void) {
-#ifndef DDPDOJ_PC
-    void sprite_draw_keep(void);
-#endif
     u16 idx;
 
     reg_a6 = (u8 *)((u16 *)g_ranking_ship_types);
@@ -392,9 +369,6 @@ extern u8 ranking_power_styles_draw_table[];
 extern u16 g_ranking_power_styles[5];
 
 void ranking_power_styles_draw(void) {
-#ifndef DDPDOJ_PC
-    s32 sprite_draw_keep();
-#endif
     u16 temp_a0;
 
     reg_a6 = (u8 *)(((u16 *)g_ranking_power_styles));
@@ -420,9 +394,6 @@ void ranking_power_styles_draw(void) {
 }
 
 void ranking_column_label_a_draw(void) {
-#ifndef DDPDOJ_PC
-    s32 sprite_draw_keep();
-#endif
     if (g_ranking_opened_from_menu != 0) {
         reg_d1.w = 0x5EC01800;
     } else {
@@ -443,9 +414,6 @@ extern u16 g_ranking_stages[5];
 extern u16 g_ranking_loops[5];
 
 void ranking_loops_and_stages_draw(void) {
-#ifndef DDPDOJ_PC
-    void sprite_draw_keep(void);
-#endif
     reg_a0 = (u8 *)ranking_loops_and_stages_draw_table;
     reg_a1 = (u8 *)((u16 *)g_ranking_loops);
     reg_a2 = (u8 *)((s8 *)g_ranking_stages);
@@ -496,9 +464,6 @@ next_2:
 }
 
 void ranking_column_label_b_draw(void) {
-#ifndef DDPDOJ_PC
-    s32 sprite_draw_keep();
-#endif
     if (g_ranking_opened_from_menu != 0) {
         reg_d1.w = 0x66C02BC0;
     } else {
@@ -518,9 +483,6 @@ extern u8 ranking_hits_draw_table[];
 extern u16 g_ranking_hits[5];
 
 void ranking_hits_draw(void) {
-#ifndef DDPDOJ_PC
-    void sprite_draw_keep(void);
-#endif
     u32 tmp;
 
     reg_a6 = (u8 *)((u16 *)g_ranking_hits);
@@ -564,9 +526,6 @@ extern u8 ranking_names_draw_table_2[];
 extern s32 g_ranking_names[16];
 
 void ranking_names_draw(void) {
-#ifndef DDPDOJ_PC
-    void sprite_draw_keep(void);
-#endif
     s32 flag;
     u32 tmp;
 
@@ -616,9 +575,6 @@ extern u16 g_ranking_score_tops[5];
 extern s32 g_ranking_scores[8];
 
 void ranking_scores_draw(void) {
-#ifndef DDPDOJ_PC
-    void sprite_draw_keep(void);
-#endif
     u32 tmp;
 
     reg_a1 = (u8 *)((u32 *)g_ranking_scores);
@@ -682,9 +638,6 @@ next_2:
 extern u16 g_ranking_continues[5];
 
 void ranking_continues_draw(void) {
-#ifndef DDPDOJ_PC
-    s32 sprite_draw_keep();
-#endif
     u16 temp_a0;
 
     reg_a6 = (u8 *)(((u16 *)g_ranking_continues));

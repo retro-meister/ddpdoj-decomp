@@ -1,7 +1,5 @@
 #include "common.h"
-#ifdef DDPDOJ_PC
-#include "pc_gameplay_abi.h"
-#endif
+#include "arcade_gameplay.h"
 #include "entity.h"
 #include "stage4_boss.h"
 
@@ -131,9 +129,6 @@ block_1:
 }
 
 
-#ifndef DDPDOJ_PC
-s32 entity_velocity();
-#endif
 
 void stage4_boss_parts_follow(void) {
     stage4_boss_speed_approach();
@@ -213,12 +208,6 @@ void stage4_boss_move_enter_start(void) {
     stage4_boss_move_enter();
 }
 
-#ifndef DDPDOJ_PC
-s32 boss_phase_start();
-#endif
-#ifndef DDPDOJ_PC
-s32 boss_movement_start();
-#endif
 s32 boss_part_show();
 s32 boss_part_hide();
 s32 fade_in_and_release();
@@ -326,9 +315,6 @@ s32 direction_turn_toward();
 
 void stage4_boss_move_wander_high(void) {
     s32 direction_between(void *);
-#ifndef DDPDOJ_PC
-    s32 distance_between(u16, void *);
-#endif
     u16 temp_a0;
 
     reg_a0 = ((u8 *)stage4_boss_wander_waypoints);
@@ -386,9 +372,6 @@ extern u8 stage4_boss_move_to_form2_b_table[];
 
 void stage4_boss_move_to_form2_b(void) {
     s32 direction_between();
-#ifndef DDPDOJ_PC
-    s32 distance_between();
-#endif
     reg_a0 = stage4_boss_move_to_form2_b_table;
     reg_d2.h[0] = *(u16 *)reg_a0;
     reg_d3.h[0] = *(u16 *)(reg_a0 + 2);
@@ -436,15 +419,9 @@ void stage4_boss_move_wander_high_b_start(void) {
     stage4_boss_move_wander_high_b();
 }
 
-#ifndef DDPDOJ_PC
-s32 velocity_from_direction();
-#endif
 
 void stage4_boss_move_wander_high_b(void) {
     s32 direction_between();
-#ifndef DDPDOJ_PC
-    s32 distance_between();
-#endif
     reg_a0 = (u8 *)stage4_boss_wander_b_waypoints;
     reg_a0 += PATH(reg_a4)->waypoint;
     reg_d2.h[0] = *(u16 *)reg_a0;
@@ -518,9 +495,6 @@ void stage4_boss_move_hover_high_start(void) {
 
 void stage4_boss_move_hover_high(void) {
     s32 direction_between();
-#ifndef DDPDOJ_PC
-    s32 distance_between();
-#endif
     u8 temp_v0;
 
     reg_tmp.b[0] = PATH(reg_a4)->hover.t.count;
@@ -583,9 +557,6 @@ void stage4_boss_move_rage_start(void) {
 
 void stage4_boss_move_rage(void) {
     s32 direction_between();
-#ifndef DDPDOJ_PC
-    s32 distance_between();
-#endif
     reg_a0 = (u8 *)stage4_boss_rage_waypoints;
     reg_a0 += PATH(reg_a4)->waypoint;
     reg_d2.h[0] = *(u16 *)reg_a0;

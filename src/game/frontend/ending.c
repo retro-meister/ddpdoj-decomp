@@ -6,9 +6,7 @@
 #include "entity.h"
 #include "sdk/ps2sdk.h"
 
-#ifdef DDPDOJ_PC
-#include "pc_frontend_abi.h"
-#endif
+#include "arcade_frontend.h"
 
 void ending_text_script_event(void);
 void ending_task_reset(void);
@@ -177,11 +175,6 @@ extern u16 D_00295E2C[];
 extern u32 D_00295E34[];
 
 void picture_change_update(void) {
-#ifndef DDPDOJ_PC
-    s32 fade_to_black();
-    s32 fade_release();
-    s32 fade_is_running();
-#endif
     if (g_picture_change_state[0] == 0) goto block_rts;
     if (g_picture_change_state[0] != 1) goto next_1;
     if (D_00295E2C[0] == 0) goto next_2;
@@ -237,9 +230,6 @@ void ending_mode_set(void) {
     *(u16 *)(reg_a6 + 6) = 0;
 }
 
-#ifndef DDPDOJ_PC
-s32 sprite_palette_load();
-#endif
 extern u8 ending_fade_in_table_at_4[];
 extern u16 D_00295E1C[];
 extern u8 D_00295E1E[];
@@ -268,9 +258,6 @@ void ending_text_lines_clear(void) {
 }
 
 #ifndef DEATH_LABEL
-#ifndef DDPDOJ_PC
-s32 sprite_draw_keep();
-#endif
 
 void ending_text_lines_draw(void) {
     reg_a3 = (u8 *)g_spare_entities;
@@ -355,11 +342,6 @@ extern u16 D_00295E20[];
 extern u32 D_00295E24[];
 
 void ending_text_script_event(void) {
-#ifndef DDPDOJ_PC
-    void fade_to_black(void);
-    void fade_release(void);
-    void fade_is_running(void);
-#endif
     if (reg_d0.h[0] == 0x8000) {
         ((u16 *)D_00295E1E)[0] = *(u16 *)reg_a2;
         reg_a2 += 2;
@@ -421,9 +403,6 @@ void ending_text_script_event(void) {
 s32 layers_clear_all();
 s32 sound_stop_effects();
 s32 sound_stop_loops();
-#ifndef DDPDOJ_PC
-s32 music_stop();
-#endif
 extern s16 g_ending_started;
 extern u8 D_00295E3E[];
 extern u16 D_00295E40[];
@@ -499,9 +478,6 @@ next_1:
 
 typedef void (*Fn)();
 
-#ifndef DDPDOJ_PC
-s32 sprite_draw_keep();
-#endif
 #ifdef DEATH_LABEL
 void intro_text_update(void);
 #endif
@@ -620,11 +596,6 @@ extern u32 reg_call_target_as_u32;
 #define W(o) (*(u16 *)(reg_a6 + (o)))
 
 void ending_mode_doll_a(void) {
-#ifndef DDPDOJ_PC
-    s32 fade_to_black();
-    s32 fade_release();
-    s32 fade_is_running();
-#endif
     if (W(6) != 0) goto next_10;
     W(6) = 1;
     ending_text_lines_clear();

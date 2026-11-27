@@ -1,7 +1,5 @@
 #include "common.h"
-#ifdef DDPDOJ_PC
-#include "pc_gameplay_abi.h"
-#endif
+#include "arcade_gameplay.h"
 #include "entity.h"
 #include "stage5_boss.h"
 
@@ -27,10 +25,6 @@ extern u16 g_damage_blink_counter;
 #define TW(o) (*(u16 *)(reg_a5 + (o)))
 
 void stage5_boss_form1_take_damage(void) {
-#ifndef DDPDOJ_PC
-    s32 boss_phase_start();
-    s32 active_players_mask();
-#endif
     s32 top;
     s32 p1;
     s32 p2;
@@ -248,9 +242,6 @@ s32 slowdown_turn_off();                            /* extern */
 extern u8 g_boss_present_b1;
 
 void stage5_boss_form1_defeated(void) {
-#ifndef DDPDOJ_PC
-    s32 boss_phase_start(s32, s32, s32, s32);
-#endif
     music_stop();
     slowdown_turn_off();
     if (g_stage5_boss_all_forms == 0) {
@@ -346,9 +337,6 @@ void stage5_boss_stop_damage(void) {
 extern u16 g_enemies_stopped;
 
 void stage5_boss_form1_time_limit(void) {
-#ifndef DDPDOJ_PC
-    void active_players_mask(void);
-#endif
 #ifdef DEATH_LABEL
     if ((g_enemies_stopped == 0) && (STAGE5_BOSS(reg_a5)->time_left == 0)) {
 #else
@@ -368,9 +356,6 @@ s32 stage5_boss_form2_time_limit();
 s32 stage5_boss_form3_take_damage();
 
 void stage5_boss_form2_take_damage(void) {
-#ifndef DDPDOJ_PC
-    s32 active_players_mask();
-#endif
     u32 big;
     u16 t;
 
@@ -494,9 +479,6 @@ s32 music_stop();
 s32 slowdown_turn_off();
 
 void stage5_boss_form2_defeated(void) {
-#ifndef DDPDOJ_PC
-    s32 boss_phase_start();
-#endif
     music_stop();
     slowdown_turn_off();
     STAGE5_BOSS(reg_a5)->time_left = 0x6270;

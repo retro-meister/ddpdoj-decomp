@@ -1,7 +1,5 @@
 #include "common.h"
-#ifdef DDPDOJ_PC
-#include "pc_gameplay_abi.h"
-#endif
+#include "arcade_gameplay.h"
 #include "player.h"
 #include "entity.h"
 #include "explosion.h"
@@ -300,11 +298,6 @@ void small_tank_a_first(void) {
     enemy_set_entity_count(0);
 }
 
-#ifndef DDPDOJ_PC
-s32 enemy_set_task_state();
-s32 enemy_init_entities();
-s32 enemy_path_start();
-#endif
 extern u16 small_tank_a_palettes[];
 extern u16 small_tank_a_state[];
 extern u16 small_tank_a_entities[];
@@ -369,11 +362,6 @@ extern u8 small_tank_a_muzzles[];
 extern u8 small_tank_a_body_sprites[];
 
 s32 bullet_fire_fast();
-#ifndef DDPDOJ_PC
-s32 enemy_hitbox_debug_draw();
-s32 enemy_remove();
-s32 enemy_path_step();
-#endif
 s32 sfx_explosion_air_small();
 s32 score_add_no_chain();
 s32 score_add();
@@ -899,21 +887,12 @@ void large_tank_start(void) {
     }
 }
 
-#ifndef DDPDOJ_PC
-s32 bullet_fire256_fast();
-#endif
 s32 bullet_fire256_double();
 s32 enemy_anims_spawn_listed();
 s32 sfx_explosion_ground_large();
 s32 entity_draw_layer1();
-#ifndef DDPDOJ_PC
-s32 sprite_draw_layer1();
-#endif
 s32 rng_next();
 s32 rng_next_d5();
-#ifndef DDPDOJ_PC
-s32 aim256_at_player();
-#endif
 s32 wreck_spawn_a();
 extern u16 g_direction_offsets_540[];
 extern u16 g_direction64_offsets_2CC[];
@@ -1273,9 +1252,6 @@ void hatch_gunner_start(void) {
 s32 pickup_spawn_variant();
 s32 sfx_explosion_air_large();
 s32 entity_draw_layer4();
-#ifndef DDPDOJ_PC
-s32 sprite_draw_layer4();
-#endif
 extern u16 hatch_gunner_explosion_offsets[];
 extern u8 hatch_gunner_hatch_sprites[];
 

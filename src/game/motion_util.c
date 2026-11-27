@@ -1,7 +1,5 @@
 #include "common.h"
-#ifdef DDPDOJ_PC
-#include "pc_gameplay_abi.h"
-#endif
+#include "arcade_gameplay.h"
 #include "player.h"
 #include "layers.h"
 #include "entity.h"
@@ -12,16 +10,10 @@ void bullet_cancel_credit_alive(void);
 void bullets_cancel_sweep(void);
 void bullet_cancel_skip(void);
 void velocity_from_dir(void);
-#ifndef DDPDOJ_PC
-void velocity_from_direction(void);
-#endif
 void entity_advance256_apply();
 void entity_advance_scaled_apply(void);
 void velocity_from_dir_scaled(void);
 void direction_to_entity(void);
-#ifndef DDPDOJ_PC
-void direction_to_point(void);
-#endif
 void direction_between(void);
 void entity_turn_toward(void);
 void entity_dir_turned_toward(void);
@@ -32,9 +24,6 @@ void direction256_between(void);
 void player_distance_or_max(void);
 void entity_distance_to_entity(void);
 void entity_distance_to(void);
-#ifndef DDPDOJ_PC
-void distance_between(void);
-#endif
 void cond_flag_clear(void);
 void entity_x_distance(void);
 void target_player_get(void);

@@ -2,9 +2,7 @@
 #include "entity.h"
 #include "sdk/ps2sdk.h"
 
-#ifdef DDPDOJ_PC
-#include "pc_frontend_abi.h"
-#endif
+#include "arcade_frontend.h"
 
 void join_select_ship_step(void);
 void join_select_doll_step(void);
@@ -56,9 +54,6 @@ extern u8 join_select_p1_table[];
 extern u8 join_select_p2_table[];
 
 void join_select_task_begin() {
-#ifndef DDPDOJ_PC
-    s32 player_panel_show();
-#endif
     *(s8 *)(reg_a5 + 3) = 1;
     reg_a4 = join_select_p1_table;
     if (*(u8 *)(reg_a5 + 6) != 0) {
@@ -109,7 +104,6 @@ typedef void (*Fn)(void);
 
 void screen_clear_unused(void);
 void p1_credits_get(void);
-void player_slot_request(void);
 void player_panel_show_unless_step_4(void);
 void player_panel_show_by_coin_mode(void);
 void join_select_ship_get(void);
@@ -126,11 +120,6 @@ extern u8 g_simulation_active;
 extern u8 *reg_call_target_as_u8_p;
 
 void join_select_task(void) {
-#ifndef DDPDOJ_PC
-    void stage_clear_running_check(void);
-    void sprite_palette_load(void);
-    void player_panel_show(void);
-#endif
     u8 state;
     u8 seq;
 
@@ -524,9 +513,6 @@ void join_select_doll_step(void) {
 
 
 void join_select_prompt_update(void) {
-#ifndef DDPDOJ_PC
-    s32 stage_clear_running_check();
-#endif
     stage_clear_running_check();
     if (cond_flag == 0) {
         join_select_prompt_draw();
@@ -536,9 +522,6 @@ void join_select_prompt_update(void) {
 extern u8 D_00251B40[];
 
 void join_select_prompt_clear(void) {
-#ifndef DDPDOJ_PC
-    s32 text_layer_print();
-#endif
     reg_a0 = D_00251B40;
     reg_d0.h[0] = *(u16 *)(reg_a4 + 2);
     reg_d1.h[0] = *(u16 *)reg_a4;
@@ -563,9 +546,6 @@ extern u8 g_setting_chute_type;
 extern u8 g_setting_coin_mode;
 
 void join_select_prompt_draw(void) {
-#ifndef DDPDOJ_PC
-    void text_layer_print(void);
-#endif
     p1_credits_get();
     if (*(u8 *)(reg_a5 + 6) == 0) {
         goto next_1;
@@ -886,9 +866,6 @@ extern u16 g_frame_mod8;
 extern u16 g_frame_mod2;
 
 void join_select_object_update(void) {
-#ifndef DDPDOJ_PC
-    s32 sprite_palette_load();
-#endif
     u8 flag;
 
     if (ENTITY(reg_a6)->y.h != 0) {

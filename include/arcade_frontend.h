@@ -1,10 +1,9 @@
-#ifndef DDPDOJ_PC_FRONTEND_ABI_H
-#define DDPDOJ_PC_FRONTEND_ABI_H
+#ifndef DDPDOJ_ARCADE_FRONTEND_H
+#define DDPDOJ_ARCADE_FRONTEND_H
 
 #include "types.h"
 
-/* Desktop callers use the real C signatures. The arcade routines that take
- * inputs through reg_a and reg_d still use that shared register bank. */
+/* Arcade routines without C arguments use the shared reg_a and reg_d registers. */
 void fade_is_running(void);
 void fade_release(void);
 void fade_start_out(void);

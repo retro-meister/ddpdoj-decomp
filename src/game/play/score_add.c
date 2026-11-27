@@ -1,6 +1,6 @@
 #include "common.h"
 #ifdef DDPDOJ_PC
-#include "pc_gameplay_abi.h"
+#include "arcade_gameplay.h"
 s32 bcd_add_registers(u32 *left, u32 *right);
 #endif
 #ifdef DDPDOJ_PC

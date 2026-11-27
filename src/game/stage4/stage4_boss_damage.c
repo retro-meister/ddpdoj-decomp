@@ -1,8 +1,6 @@
 #include "common.h"
 #include "simulation.h"
-#ifdef DDPDOJ_PC
-#include "pc_gameplay_abi.h"
-#endif
+#include "arcade_gameplay.h"
 #include "entity.h"
 #include "stage4_boss.h"
 
@@ -23,9 +21,6 @@ void stage4_boss_damage(void) {
     }
 }
 
-#ifndef DDPDOJ_PC
-s32 boss_phase_start();
-#endif
 s32 boss_phase_stop();
 s32 boss_phase_stop_all();
 s32 boss_attack_stop_all();
@@ -45,9 +40,6 @@ extern u8 death_D_00290DC0;
 #endif
 
 void stage4_boss_take_damage(void) {
-#ifndef DDPDOJ_PC
-    s32 active_players_mask();
-#endif
     s32 hp;
     s32 mid;
     s32 low;
@@ -425,9 +417,6 @@ void stage4_boss_stop_damage(void) {
 extern u16 g_enemies_stopped;
 
 void stage4_boss_time_limit(void) {
-#ifndef DDPDOJ_PC
-    void active_players_mask(void);
-#endif
 #ifdef DEATH_LABEL
     if ((g_enemies_stopped == 0) && (STAGE4_DAMAGE(reg_a6)->second_form != 0) && (STAGE4_BOSS(reg_a5)->time_left == 0)) {
 #else

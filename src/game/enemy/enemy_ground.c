@@ -1,7 +1,5 @@
 #include "common.h"
-#ifdef DDPDOJ_PC
-#include "pc_gameplay_abi.h"
-#endif
+#include "arcade_gameplay.h"
 #include "entity.h"
 #include "explosion.h"
 
@@ -283,9 +281,6 @@ loop_1:
     }
 }
 
-#ifndef DDPDOJ_PC
-s32 bullet_fire();
-#endif
 s32 rng_next();
 extern u16 g_direction64_offsets_2CC[];
 
@@ -370,12 +365,6 @@ extern u16 g_scroll_line;
 extern s8 enemy_move_end_requested;
 
 void battleship_start(void) {
-#ifndef DDPDOJ_PC
-    s32 enemy_remove();
-    s32 enemy_set_task_state();
-    s32 enemy_init_entities();
-    s32 enemy_path_start();
-#endif
     reg_a0 = (u8 *)D_00257C10;
     enemy_init_entities();
     reg_tmp.w = ARCADE_ADDRESS_ENCODE(reg_a0);
@@ -420,9 +409,6 @@ block_f3:
 s32 bullet_fire_fast();
 s32 bullet_fire_2way();
 s32 enemy_anims_spawn_listed_long();
-#ifndef DDPDOJ_PC
-s32 enemy_hitbox_debug_draw();
-#endif
 s32 sfx_explosion_air_small();
 s32 sfx_explosion_ground_large();
 s32 sprite_draw_layer4_keep();
@@ -440,10 +426,6 @@ extern u16 g_rank_1_16;
 extern u16 g_rank_2_16;
 
 void battleship(void) {
-#ifndef DDPDOJ_PC
-    s32 enemy_remove();
-    s32 enemy_path_step();
-#endif
     u16 temp_a0;
     u16 temp_a1_2;
     u16 temp_a2;
@@ -1167,11 +1149,6 @@ extern u32 D_00257D90[];
 
 void stage3_gun_a_start(void)
 {
-#ifndef DDPDOJ_PC
-    extern void enemy_set_task_state(void);
-    extern void enemy_init_entities(void);
-    extern void enemy_path_start(void);
-#endif
     reg_a0 = (u8 *)D_00257D90;
     enemy_init_entities();
 
@@ -1186,9 +1163,6 @@ void stage3_gun_a_start(void)
     }
 }
 
-#ifndef DDPDOJ_PC
-s32 bullet_fire256_fixed();
-#endif
 s32 bullet_fire256_2way();
 s32 sfx_explosion_ground_medium();
 s32 entity_follow_scroll();
@@ -1198,10 +1172,6 @@ extern u8 D_00257FB0[];
 extern u8 D_00258030[];
 
 void stage3_gun_a(void) {
-#ifndef DDPDOJ_PC
-    s32 enemy_remove();
-    s32 sprite_draw_layer3_keep();
-#endif
     u32 temp_a0;
     u32 temp_a0_3;
     u32 temp_a1;
@@ -1391,11 +1361,6 @@ extern u8 D_00258060[];
 
 void stage3_gun_b_start(void)
 {
-#ifndef DDPDOJ_PC
-    extern void enemy_set_task_state(void);
-    extern void enemy_init_entities(void);
-    extern void enemy_path_start(void);
-#endif
     reg_a0 = D_00258060;
     enemy_init_entities();
 
@@ -1419,11 +1384,6 @@ extern u8 D_002580A0[];
 
 void stage3_gun_c_start(void)
 {
-#ifndef DDPDOJ_PC
-    extern void enemy_set_task_state(void);
-    extern void enemy_init_entities(void);
-    extern void enemy_path_start(void);
-#endif
     reg_a0 = D_002580A0;
     enemy_init_entities();
 
@@ -1446,11 +1406,6 @@ extern u8 D_002580E0[];
 
 void stage3_gun_d_start(void)
 {
-#ifndef DDPDOJ_PC
-    extern void enemy_set_task_state(void);
-    extern void enemy_init_entities(void);
-    extern void enemy_path_start(void);
-#endif
     reg_a0 = D_002580E0;
     enemy_init_entities();
 
@@ -1487,11 +1442,6 @@ extern u16 g_enemy_signal_0;
 extern s16 g_bullet_limit_raised_1[];
 
 void stage3_large_gun_start(void) {
-#ifndef DDPDOJ_PC
-    s32 enemy_set_task_state();
-    s32 enemy_init_entities();
-    s32 enemy_path_start();
-#endif
     reg_a0 = D_00258130;
     enemy_init_entities();
     reg_a0 = D_00258100;
@@ -1548,10 +1498,6 @@ extern u16 g_rank;
 extern u16 g_bomb_entities[];
 
 void stage3_large_gun(void) {
-#ifndef DDPDOJ_PC
-    s32 enemy_remove();
-    s32 sprite_draw_layer3_keep();
-#endif
     u16 temp_a0_2;
     u16 temp_a0_3;
     u16 temp_a0_4;
@@ -1792,9 +1738,6 @@ block_19:
     enemy_hitbox_debug_draw();
 }
 
-#ifndef DDPDOJ_PC
-s32 bullet_fire_fixed();
-#endif
 s32 rng_next_masked();
 
 void ground_shot_random_a(void) {
@@ -1838,12 +1781,6 @@ extern u8 D_00258220[];
 extern u8 D_00258240[];
 
 void small_flyer_a_start(void) {
-#ifndef DDPDOJ_PC
-    s32 enemy_remove();
-    s32 enemy_set_task_state();
-    s32 enemy_init_entities();
-    s32 enemy_path_start();
-#endif
     reg_a0 = D_00258240;
     enemy_init_entities();
     reg_a0 = D_00258220;
@@ -1856,22 +1793,13 @@ void small_flyer_a_start(void) {
 }
 
 s32 bullet_fire256_3way();
-#ifndef DDPDOJ_PC
-s32 bullet_fire256();
-#endif
 s32 sfx_explosion_ground_small();
-#ifndef DDPDOJ_PC
-s32 entity_velocity();
-#endif
 s32 entity_turn_to_target_player();
 s32 entity_check_bounds();
 extern u16 g_rank_3_16;
 extern u16 g_stage;
 
 void small_flyer_a(void) {
-#ifndef DDPDOJ_PC
-    s32 enemy_remove();
-#endif
     u16 temp_a0;
     u16 temp_a0_2;
     u16 temp_a1;
@@ -2004,9 +1932,6 @@ block_14:
     small_flyer_draw();
 }
 
-#ifndef DDPDOJ_PC
-s32 sprite_draw_layer5();
-#endif
 extern u16 D_00258280[];
 extern u16 g_game_frame;
 
@@ -2047,11 +1972,6 @@ extern u8 D_002583A0[];
 extern u16 g_side_scroll_x[];
 
 void small_flyer_b_start(void) {
-#ifndef DDPDOJ_PC
-    s32 enemy_set_task_state();
-    s32 enemy_init_entities();
-    s32 enemy_path_start();
-#endif
     reg_a0 = D_002583A0;
     enemy_init_entities();
     reg_a0 = D_00258380;
@@ -2080,9 +2000,6 @@ block_3:
 s32 bullet_fire_3way();
 
 void small_flyer_b(void) {
-#ifndef DDPDOJ_PC
-    s32 enemy_remove();
-#endif
     u16 temp_a0;
     u16 temp_v1;
     u8 temp_a0_2;
@@ -2212,9 +2129,6 @@ void flyer_spawner_first(void) {
     enemy_set_entity_count(0);
 }
 
-#ifndef DDPDOJ_PC
-s32 enemy_init_entities();                            /* extern */
-#endif
 extern s32 D_002583E0[];
 
 void flyer_spawner_start(void) {
@@ -2227,9 +2141,6 @@ s32 spawn_request_add();
 extern u16 g_enemy_signal_0;
 
 void flyer_spawner() {
-#ifndef DDPDOJ_PC
-    s32 enemy_remove();
-#endif
     if ((s16)g_scroll_line >= 0x9C) {
         enemy_remove();
         return;
@@ -2254,10 +2165,6 @@ extern u8 D_00258410[];
 extern u16 g_side_scroll_x_prev[];
 
 void stage3_cloud_start(void) {
-#ifndef DDPDOJ_PC
-    s32 enemy_set_task_state();
-    s32 enemy_init_entities();
-#endif
     reg_a0 = D_00258410;
     enemy_init_entities();
     reg_a0 = D_00258400;
@@ -2275,15 +2182,9 @@ void stage3_cloud_start(void) {
 }
 
 s32 entity_draw_layer3_keep();
-#ifndef DDPDOJ_PC
-s32 velocity_from_direction();
-#endif
 extern u8 D_00258450[];
 
 void stage3_cloud(void) {
-#ifndef DDPDOJ_PC
-    s32 enemy_remove();
-#endif
     u16 t1;
 
     if (g_scroll_line == 0x118) {
@@ -2365,11 +2266,6 @@ extern u8 D_00258460[];
 extern u8 D_00258490[];
 
 void stage3_carrier_start(void) {
-#ifndef DDPDOJ_PC
-    s32 enemy_set_task_state();
-    s32 enemy_init_entities();
-    s32 enemy_path_start();
-#endif
     reg_a0 = (u8 *)D_00258490;
     enemy_init_entities();
     reg_a0 = (u8 *)D_00258460;
@@ -2409,11 +2305,6 @@ void stage3_carrier_start(void) {
 void sprite_draw_layer1_keep(void);
 
 void stage3_carrier(void) {
-#ifndef DDPDOJ_PC
-    void enemy_remove(void);
-    void enemy_path_step(void);
-    void sprite_draw_layer3_keep(void);
-#endif
     reg_d1.h[0] = ENTITY(reg_a6)->y.h;
     reg_d2.h[0] = ENTITY(reg_a6)->x.h;
     if ((s16) reg_d2.h[0] >= 0x6000) {
@@ -2557,10 +2448,6 @@ extern u8 D_002584E0[];
 extern s16 g_slowdown_boss_allowed;
 
 void battleship_b_start() {
-#ifndef DDPDOJ_PC
-    s32 enemy_set_task_state();
-    s32 enemy_init_entities();
-#endif
     u16 temp_a1;
 
     reg_a0 = D_002584E0;
@@ -2576,17 +2463,10 @@ void battleship_b_start() {
     g_slowdown_boss_allowed = 1;
 }
 
-#ifndef DDPDOJ_PC
-s32 sprite_draw_layer4();
-#endif
 s32 bullet_cancel_with_flags();
 extern u8 D_00258520[];
 
 void battleship_b(void) {
-#ifndef DDPDOJ_PC
-    s32 enemy_remove();
-    s32 sprite_draw_layer2();
-#endif
     s16 temp_v1_2;
     u32 temp_a0;
     u32 temp_a0_2;
@@ -2764,9 +2644,6 @@ void battleship_b_fire(void) {
 
 
 void ground_gun_a_aim(void) {
-#ifndef DDPDOJ_PC
-    void aim256_at_player();
-#endif
     reg_d0.h[0] = ENTITY(reg_a6)->y.h;
     reg_d1.h[0] = ENTITY(reg_a6)->x.h;
     reg_d0.h[0] += 0x7FFF + 0x7D01;
@@ -2822,9 +2699,6 @@ void ground_gun_a_fire() {
 
 
 void ground_gun_b_aim() {
-#ifndef DDPDOJ_PC
-    s32 aim256_at_player();
-#endif
     reg_d0.h[0] = ENTITY(reg_a6)->y.h;
     reg_d1.h[0] = ENTITY(reg_a6)->x.h;
     aim256_at_player();
@@ -2844,9 +2718,6 @@ void ground_gun_b_aim() {
     }
 }
 
-#ifndef DDPDOJ_PC
-s32 bullet_fire256_fast();
-#endif
 s32 direction_step_toward();
 
 void ground_gun_b_fire(void) {
@@ -2895,10 +2766,6 @@ extern u8 D_00258580[];
 extern u8 D_002585B0[];
 
 void battleship_c_start() {
-#ifndef DDPDOJ_PC
-    s32 enemy_set_task_state();
-    s32 enemy_init_entities();
-#endif
     u16 temp_a1;
 
     reg_a0 = D_002585B0;
@@ -2915,10 +2782,6 @@ void battleship_c_start() {
 extern u8 D_00258620[];
 
 void battleship_c(void) {
-#ifndef DDPDOJ_PC
-    s32 enemy_remove();
-    s32 sprite_draw_layer2();
-#endif
     s16 temp_v1;
     s16 temp_v1_3;
     u32 temp_a0;
@@ -3232,9 +3095,6 @@ void battleship_c_fire(void) {
 
 
 void ground_gun_c_aim(void) {
-#ifndef DDPDOJ_PC
-    void aim256_at_player();
-#endif
     ENTITY(reg_a6)[1].offset_y.h = 2;
     ENTITY(reg_a6)[1].offset_x.h = 0xE;
     ENTITY(reg_a6)[1].sprite.h = 4;
@@ -3247,9 +3107,6 @@ void ground_gun_c_aim(void) {
 
 
 void ground_gun_c_fire() {
-#ifndef DDPDOJ_PC
-    s32 aim256_at_player();
-#endif
     u16 temp_a0;
 
     reg_tmp.b[0] = ENTITY(reg_a6)[1].offset_y.b[1];
@@ -3298,11 +3155,6 @@ extern u8 D_00258720[];
 
 void wing_gunner_start(void)
 {
-#ifndef DDPDOJ_PC
-    extern void enemy_set_task_state(void);
-    extern void enemy_init_entities(void);
-    extern void enemy_path_start(void);
-#endif
     reg_a0 = D_00258720;
     enemy_init_entities();
 
@@ -3329,10 +3181,6 @@ extern u32 reg_call_target_as_u32;
 #endif
 
 void wing_gunner(void) {
-#ifndef DDPDOJ_PC
-    s32 enemy_remove();
-    s32 enemy_path_step();
-#endif
     u16 temp_a1;
     u32 temp_a0;
 
@@ -3579,11 +3427,6 @@ extern u8 D_002587C0[];
 extern u8 D_002587E0[];
 
 void hover_gunner_start(void) {
-#ifndef DDPDOJ_PC
-    s32 enemy_set_task_state();
-    s32 enemy_init_entities();
-    s32 enemy_path_start();
-#endif
     reg_a0 = D_002587E0;
     enemy_init_entities();
     reg_a0 = D_002587C0;
@@ -3607,11 +3450,6 @@ extern u8 D_00258800[];
 extern u8 D_0028C9D8;
 
 void hover_gunner(void) {
-#ifndef DDPDOJ_PC
-    s32 enemy_remove();
-    s32 enemy_path_step();
-    s32 aim256_at_player();
-#endif
     u16 temp_a1;
     u16 temp_a2;
     u8 temp_a0_3;
@@ -3823,9 +3661,6 @@ void signal_timer_first(void) {
     enemy_set_entity_count(0);
 }
 
-#ifndef DDPDOJ_PC
-s32 enemy_init_entities();                            /* extern */
-#endif
 extern s32 D_00258980[];
 
 void signal_timer_start(void) {
@@ -3871,13 +3706,6 @@ extern u16 g_stage_x2;
 void entity_draw_layer2();
 
 void small_tank_c_start(void) {
-#ifndef DDPDOJ_PC
-    s32 enemy_remove();
-    s32 enemy_set_task_state();
-    s32 enemy_init_entities();
-    s32 enemy_path_start();
-    void sprite_draw_layer2();
-#endif
     s16 temp_v1_2;
     u16 *temp_a2;
     u16 temp_a3;
@@ -3951,11 +3779,6 @@ extern u16 g_frame_mod2;
 extern u16 g_rank_10_16;
 
 void small_tank_c(void) {
-#ifndef DDPDOJ_PC
-    s32 enemy_remove();
-    s32 enemy_path_step();
-    s32 sprite_draw_layer2();
-#endif
     enemy_path_step();
     if (enemy_move_end_requested != 0) return;
     entity_bounds_check_narrow();

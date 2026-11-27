@@ -1,7 +1,5 @@
 #include "common.h"
-#ifdef DDPDOJ_PC
-#include "pc_gameplay_abi.h"
-#endif
+#include "arcade_gameplay.h"
 #include "entity.h"
 #include "explosion.h"
 #include "enemy.h"
@@ -85,11 +83,6 @@ extern u16 g_stage_x2;
 extern s8 enemy_move_end_requested;
 
 void stage2_blooming_base_start(void) {
-#ifndef DDPDOJ_PC
-    s32 enemy_set_task_state();
-    s32 enemy_init_entities();
-    s32 enemy_path_start();
-#endif
     (*(s8 **)&reg_a0) = stage2_blooming_base_start_table_3;
     enemy_init_entities();
     (*(s8 **)&reg_a0) = stage2_blooming_base_start_table_2;
@@ -113,11 +106,6 @@ void stage2_blooming_base_start(void) {
 
 s32 pickup_spawn_plain();
 s32 explosion_spawn();
-#ifndef DDPDOJ_PC
-s32 enemy_hitbox_debug_draw();
-s32 enemy_remove();
-s32 enemy_path_step();
-#endif
 s32 enemy_variant_timer_a_set();
 s32 sfx_explosion_ground_large();
 s32 entity_draw_layer1();
@@ -261,11 +249,6 @@ void stage2_long_warehouse_first(void) {
     enemy_set_entity_count(0);
 }
 
-#ifndef DDPDOJ_PC
-s32 enemy_set_task_state();                            /* extern */
-s32 enemy_init_entities();                            /* extern */
-s32 enemy_path_start();                            /* extern */
-#endif
 extern s8 stage2_long_warehouse_start_table[];
 extern s8 stage2_long_warehouse_start_table_2[];
 extern s8 stage2_long_warehouse_start_value;
@@ -414,11 +397,6 @@ extern s8 stage2_square_warehouse_start_table_2[];
 extern s8 stage2_square_warehouse_start_value;
 
 void stage2_square_warehouse_start(void) {
-#ifndef DDPDOJ_PC
-    s32 enemy_set_task_state();
-    s32 enemy_init_entities();
-    s32 enemy_path_start();
-#endif
     (*(s8 **)&reg_a0) = stage2_square_warehouse_start_table_2;
     enemy_init_entities();
     (*(s8 **)&reg_a0) = &stage2_square_warehouse_start_value;
@@ -540,11 +518,6 @@ void stage2_gymnasium_first(void) {
     enemy_set_entity_count(0);
 }
 
-#ifndef DDPDOJ_PC
-s32 enemy_set_task_state();                            /* extern */
-s32 enemy_init_entities();                            /* extern */
-s32 enemy_path_start();                            /* extern */
-#endif
 extern s8 stage2_gymnasium_start_table[];
 extern s8 stage2_gymnasium_start_table_2[];
 extern s8 stage2_gymnasium_start_value;
@@ -685,11 +658,6 @@ extern u16 g_rank_6_16;
 extern u16 g_stage;
 
 void stage2_sliding_gun_start(void) {
-#ifndef DDPDOJ_PC
-    s32 enemy_set_task_state();
-    s32 enemy_init_entities();
-    s32 enemy_path_start();
-#endif
     reg_a0 = (u8 *)(stage2_sliding_gun_start_table_3);
     enemy_init_entities();
     reg_a0 = (u8 *)(stage2_sliding_gun_start_table_2);
@@ -934,11 +902,6 @@ extern s8 stage2_wrecker_gun_start_table_3[];
 extern u16 g_rank_1_16;
 
 void stage2_wrecker_gun_start(void) {
-#ifndef DDPDOJ_PC
-    s32 enemy_set_task_state();
-    s32 enemy_init_entities();
-    s32 enemy_path_start();
-#endif
     (*(s8 **)&reg_a0) = stage2_wrecker_gun_start_table_3;
     enemy_init_entities();
     (*(s8 **)&reg_a0) = stage2_wrecker_gun_start_table_2;
@@ -964,9 +927,6 @@ void stage2_wrecker_gun_start(void) {
     }
 }
 
-#ifndef DDPDOJ_PC
-s32 bullet_fire256();
-#endif
 s32 enemy_switch_target_player();
 s32 bullet_cancel_with_flags();
 extern u16 g_direction64_offsets_432[];
@@ -1345,11 +1305,6 @@ extern u32 stage2_boss_hangar_start_table_2[];
 
 void stage2_boss_hangar_start(void)
 {
-#ifndef DDPDOJ_PC
-    extern void enemy_set_task_state(void);
-    extern void enemy_init_entities(void);
-    extern void enemy_path_start(void);
-#endif
     reg_a0 = (u8 *)((ArcadeSavedAddress)stage2_boss_hangar_start_table_2);
     enemy_init_entities();
 
@@ -1364,9 +1319,6 @@ void stage2_boss_hangar_start(void)
 }
 
 s32 entity_draw_layer4();
-#ifndef DDPDOJ_PC
-s32 sprite_draw_layer4();
-#endif
 extern u16 stage2_boss_hangar_table[];
 extern u16 g_scroll_line;
 

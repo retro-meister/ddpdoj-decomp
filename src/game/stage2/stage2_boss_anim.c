@@ -1,7 +1,5 @@
 #include "common.h"
-#ifdef DDPDOJ_PC
-#include "pc_gameplay_abi.h"
-#endif
+#include "arcade_gameplay.h"
 #include "entity.h"
 #include "enemy_kinds.h"
 #include "stage2_boss.h"
@@ -138,9 +136,6 @@ extern void rng_next_masked(void);
 
 void stage2_boss_radome_idle_pick(void)
 {
-#ifndef DDPDOJ_PC
-    extern void rng_next_bit(void);
-#endif
     RADOME_IDLE(reg_a4)->turn.h = 0;
     rng_next_bit();
     RADOME_IDLE(reg_a4)->turn.t.reload = reg_d0.b[0];
@@ -217,9 +212,6 @@ void stage2_boss_torso_idle(void) {
 
 
 void stage2_boss_radome_spin_start(void) {
-#ifndef DDPDOJ_PC
-    s32 rng_next_bit();
-#endif
     RADOME_SPIN(reg_a4)->unread_04 = 0;
     RADOME_SPIN(reg_a4)->step = 1U;
     rng_next_bit();

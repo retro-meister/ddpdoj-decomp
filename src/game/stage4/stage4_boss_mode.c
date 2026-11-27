@@ -1,7 +1,5 @@
 #include "common.h"
-#ifdef DDPDOJ_PC
-#include "pc_gameplay_abi.h"
-#endif
+#include "arcade_gameplay.h"
 #include "entity.h"
 #include "explosion.h"
 #include "stage4_boss.h"
@@ -221,9 +219,6 @@ void stage4_boss_explosions_scattered(void) {
     }
 }
 
-#ifndef DDPDOJ_PC
-s32 boss_movement_start();                            /* extern */
-#endif
 s32 boss_part_show();                            /* extern */
 s32 sprite_palette_load();                            /* extern */
 extern u8 D_0025FF30[];
@@ -244,9 +239,6 @@ void stage4_boss_mode_enter(void) {
     *(*(u16 **)&reg_a4) = 0;
 }
 
-#ifndef DDPDOJ_PC
-s32 boss_movement_start();
-#endif
 s32 stage4_boss_shield_on();
 s32 stage4_boss_part_stop_hits();
 

@@ -1,7 +1,5 @@
 #include "common.h"
-#ifdef DDPDOJ_PC
-#include "pc_gameplay_abi.h"
-#endif
+#include "arcade_gameplay.h"
 #include "entity.h"
 #include "explosion.h"
 #include "enemy.h"
@@ -230,11 +228,6 @@ extern s8 enemy_move_end_requested;
 
 void stage5_small_turret_start(void)
 {
-#ifndef DDPDOJ_PC
-    extern void enemy_set_task_state(void);
-    extern void enemy_init_entities(void);
-    extern void enemy_path_start(void);
-#endif
     reg_a0 = stage5_small_turret_start_table_2;
     enemy_init_entities();
 
@@ -252,9 +245,6 @@ void stage5_small_turret_start(void)
 
 s32 pickup_spawn_variant();
 s32 bullet_fire_fast();
-#ifndef DDPDOJ_PC
-s32 enemy_remove();
-#endif
 s32 sfx_explosion_air_small();
 s32 score_add_no_chain();
 s32 score_add();
@@ -263,10 +253,6 @@ s32 direction_to_target_player();
 extern u8 stage5_small_turret_table[];
 
 void stage5_small_turret(void) {
-#ifndef DDPDOJ_PC
-    s32 enemy_hitbox_debug_draw();
-    s32 sprite_draw_layer1();
-#endif
     u16 temp_a0;
     u16 temp_a1;
 
@@ -411,11 +397,6 @@ extern u8 stage5_bee_hatch_start_table_2[];
 extern u16 g_scroll_line;
 
 void stage5_bee_hatch_start(void) {
-#ifndef DDPDOJ_PC
-    s32 enemy_set_task_state();
-    s32 enemy_init_entities();
-    s32 enemy_path_start();
-#endif
     reg_a0 = stage5_bee_hatch_start_table_2;
     enemy_init_entities();
     reg_a0 = stage5_bee_hatch_start_table;
@@ -447,9 +428,6 @@ s32 rng_next_unsigned();
 extern u8 stage5_bee_hatch_table[];
 
 void stage5_bee_hatch(void) {
-#ifndef DDPDOJ_PC
-    s32 sprite_draw_layer1();
-#endif
     s16 temp_v0;
     s16 temp_v0_2;
     u16 temp_a0;
@@ -557,11 +535,6 @@ extern u8 stage5_small_spider_turret_start_table_2[];
 extern s16 g_bullet_limit_raised_2[];
 
 void stage5_small_spider_turret_start(void) {
-#ifndef DDPDOJ_PC
-    s32 enemy_set_task_state();
-    s32 enemy_init_entities();
-    s32 enemy_path_start();
-#endif
     reg_a0 = stage5_small_spider_turret_start_table_2;
     enemy_init_entities();
     reg_a0 = stage5_small_spider_turret_start_table;
@@ -585,9 +558,6 @@ void stage5_small_spider_turret_start(void) {
 
 s32 bullet_fire256_double();
 s32 sfx_explosion_ground_large();
-#ifndef DDPDOJ_PC
-s32 aim256_at_player();
-#endif
 extern u8 stage5_small_spider_turret_table[];
 extern u8 stage5_small_spider_turret_table_2[4];
 extern u8 stage5_small_spider_turret_table_3[4];
@@ -712,10 +682,6 @@ block_15:
 extern u8 stage5_small_spider_turret_draw_table[];
 
 void stage5_small_spider_turret_draw(void) {
-#ifndef DDPDOJ_PC
-    void enemy_hitbox_debug_draw();
-    void sprite_draw_layer1();
-#endif
     reg_a0 = reg_a6;
     enemy_hitbox_debug_draw();
     reg_a0 = stage5_small_spider_turret_draw_table;
@@ -745,11 +711,6 @@ extern u16 g_enemy_signal_6;
 extern u16 g_enemy_signal_4;
 
 void stage5_small_spider_head_start(void) {
-#ifndef DDPDOJ_PC
-    s32 enemy_set_task_state();
-    s32 enemy_init_entities();
-    s32 enemy_path_start();
-#endif
     reg_a0 = (u8 *)(stage5_small_spider_head_start_table_2);
     enemy_init_entities();
     reg_a0 = (u8 *)(stage5_small_spider_head_start_table);
@@ -774,9 +735,6 @@ next_2:
     *(s16 *)reg_a0 = 1;
 }
 
-#ifndef DDPDOJ_PC
-s32 bullet_fire256_fixed();
-#endif
 s32 bullet_fire256_2way();
 extern u8 stage5_small_spider_head_table[];
 extern u8 stage5_small_spider_head_table_2[];
@@ -786,10 +744,6 @@ extern u8 stage5_small_spider_head_table_5[];
 extern u16 g_bullets_blocked;
 
 void stage5_small_spider_head(void) {
-#ifndef DDPDOJ_PC
-    s32 enemy_hitbox_debug_draw();
-    s32 sprite_draw_layer1();
-#endif
     u16 temp_a0;
     u16 temp_v1;
     u32 temp_v0;
@@ -911,11 +865,6 @@ extern u8 stage5_large_spider_turret_start_table[];
 extern u8 stage5_large_spider_turret_start_table_2[];
 
 void stage5_large_spider_turret_start(void) {
-#ifndef DDPDOJ_PC
-    s32 enemy_set_task_state();
-    s32 enemy_init_entities();
-    s32 enemy_path_start();
-#endif
     reg_a0 = stage5_large_spider_turret_start_table_2;
     enemy_init_entities();
     reg_a0 = stage5_large_spider_turret_start_table;
@@ -943,10 +892,6 @@ extern u8 stage5_large_spider_turret_table_3[4];
 extern u8 stage5_large_spider_turret_table_4[4];
 
 void stage5_large_spider_turret(void) {
-#ifndef DDPDOJ_PC
-    s32 enemy_hitbox_debug_draw();
-    s32 sprite_draw_layer1();
-#endif
     u32 temp_a0_3;
     u8 var_a0;
 
@@ -1095,11 +1040,6 @@ extern u16 g_enemy_signal_7;
 extern u16 g_enemy_signal_5;
 
 void stage5_large_spider_head_start(void) {
-#ifndef DDPDOJ_PC
-    s32 enemy_set_task_state();
-    s32 enemy_init_entities();
-    s32 enemy_path_start();
-#endif
     reg_a0 = (u8 *)(stage5_large_spider_head_start_table_2);
     enemy_init_entities();
     reg_a0 = (u8 *)(stage5_large_spider_head_start_table);
@@ -1133,10 +1073,6 @@ extern u8 stage5_large_spider_head_table_4[];
 extern u8 stage5_large_spider_head_table_5[];
 
 void stage5_large_spider_head(void) {
-#ifndef DDPDOJ_PC
-    s32 enemy_hitbox_debug_draw();
-    s32 sprite_draw_layer1();
-#endif
     u8 *temp_a1;
     s16 temp_a2;
     u16 temp_a0;
@@ -1263,10 +1199,6 @@ extern u8 stage5_spiderling_start_table_2[];
 extern u8 stage5_spiderling_start_table_3[];
 
 void stage5_spiderling_start(void) {
-#ifndef DDPDOJ_PC
-    s32 enemy_set_task_state();
-    s32 enemy_init_entities();
-#endif
     reg_a0 = stage5_spiderling_start_table_3;
     enemy_init_entities();
     ENTITY(reg_a6)->y.h = (u16) SPIDERLING(reg_a5)->at_start.y;
@@ -1283,20 +1215,10 @@ void stage5_spiderling_start(void) {
     ENTITY(reg_a6)->attr.b.palette = (u8) SPIDERLING(reg_a5)->now.palette;
 }
 
-#ifndef DDPDOJ_PC
-s32 bullet_fire256();
-s32 sprite_draw_layer5();
-#endif
 s32 sprite_draw_layer5_zoom_keep();
 s32 rng_next();
 s32 rng_next_d5();
-#ifndef DDPDOJ_PC
-s32 entity_velocity();
-#endif
 s32 entity_turn_to_target_player();
-#ifndef DDPDOJ_PC
-s32 direction256_to_target_player();
-#endif
 s32 entity_check_bounds();
 extern u8 stage5_spiderling_table[];
 extern u8 stage5_spiderling_table_2[8];
@@ -1304,9 +1226,6 @@ extern u16 g_frame_mod2;
 extern u16 g_game_frame;
 
 void stage5_spiderling(void) {
-#ifndef DDPDOJ_PC
-    s32 enemy_hitbox_debug_draw();
-#endif
     u8 *var_a0;
     u16 temp_a0_2;
     u16 temp_a2;
@@ -1493,10 +1412,6 @@ extern u8 stage5_bee_drone_start_table_2[];
 extern u8 stage5_bee_drone_start_table_3[];
 
 void stage5_bee_drone_start(void) {
-#ifndef DDPDOJ_PC
-    s32 enemy_set_task_state();
-    s32 enemy_init_entities();
-#endif
     u16 temp_a0;
     u32 temp_a2;
 
@@ -1529,9 +1444,6 @@ extern u8 stage5_bee_drone_table[];
 extern u8 stage5_bee_drone_table_2[];
 
 void stage5_bee_drone(void) {
-#ifndef DDPDOJ_PC
-    s32 enemy_hitbox_debug_draw();
-#endif
     s64 temp_v0_10;
     s64 temp_v0_11;
     s64 temp_v0_3;
@@ -1786,10 +1698,6 @@ extern u8 stage5_anim_test_a_start_table[];
 extern u8 stage5_anim_test_a_start_table_2[];
 
 void stage5_anim_test_a_start(void) {
-#ifndef DDPDOJ_PC
-    s32 enemy_set_task_state();
-    s32 enemy_init_entities();
-#endif
     reg_a0 = stage5_anim_test_a_start_table_2;
     enemy_init_entities();
     reg_a0 = stage5_anim_test_a_start_table;
@@ -1807,9 +1715,6 @@ s32 entity_move_by_p2_stick();
 extern u8 stage5_anim_test_a_table[];
 
 void stage5_anim_test_a(void) {
-#ifndef DDPDOJ_PC
-    s32 enemy_hitbox_debug_draw();
-#endif
     u16 temp_a0;
 
     entity_move_by_p2_stick();
@@ -1845,10 +1750,6 @@ extern u8 stage5_anim_test_b_start_table[];
 extern u8 stage5_anim_test_b_start_table_2[];
 
 void stage5_anim_test_b_start(void) {
-#ifndef DDPDOJ_PC
-    s32 enemy_set_task_state();
-    s32 enemy_init_entities();
-#endif
     reg_a0 = stage5_anim_test_b_start_table_2;
     enemy_init_entities();
     reg_a0 = stage5_anim_test_b_start_table;
@@ -1865,9 +1766,6 @@ void stage5_anim_test_b_start(void) {
 extern u8 stage5_anim_test_b_table[];
 
 void stage5_anim_test_b(void) {
-#ifndef DDPDOJ_PC
-    s32 enemy_hitbox_debug_draw();
-#endif
     u16 temp_a0;
 
     entity_move_by_p2_stick();

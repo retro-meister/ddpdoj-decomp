@@ -1,7 +1,5 @@
 #include "common.h"
-#ifdef DDPDOJ_PC
-#include "pc_gameplay_abi.h"
-#endif
+#include "arcade_gameplay.h"
 #include "entity.h"
 #include "stage5_boss.h"
 
@@ -132,9 +130,6 @@ void (*stage5_boss_fire_routines[])(void) = {
 #endif
 };
 
-#ifndef DDPDOJ_PC
-s32 bullet_fire256_fixed();
-#endif
 extern u8 D_002641C0[];
 
 void stage5_boss_arm_gun_fire_a(void) {
@@ -1040,9 +1035,6 @@ next_2:
 }
 
 void stage5_boss_form1_rage_fire(void) {
-#ifndef DDPDOJ_PC
-    s32 bullet_fire256_direct();
-#endif
     u32 var_a1;
     u8 var_a0;
 
@@ -1180,9 +1172,6 @@ void stage5_boss_fire_form2_mouth_start(void) {
 
 
 void stage5_boss_fire_form2_mouth(s16 *arg1) {
-#ifndef DDPDOJ_PC
-    s32 bullet_fire256_direct();
-#endif
     s16 *t1;
     s16 *t2;
     u32 t3;
@@ -1311,9 +1300,6 @@ next_33:;
 }
 
 void stage5_boss_jet_fire(void) {
-#ifndef DDPDOJ_PC
-    s32 bullet_fire256_direct();
-#endif
     u32 temp_a0;
 
     reg_d7.h[0] = reg_d1.h[0];
@@ -1446,9 +1432,6 @@ block_8:
 }
 
 void stage5_boss_form2_horn_fire(void) {
-#ifndef DDPDOJ_PC
-    s32 bullet_fire256_direct();
-#endif
     reg_d3.h[1] = *(u16 *)reg_a3;
     reg_a3 += 2;
     reg_d3.h[0] = *(u16 *)reg_a3;
@@ -1630,9 +1613,6 @@ void stage5_boss_fire_form2_stinger_start(void) {
 
 
 void stage5_boss_fire_form2_stinger(void) {
-#ifndef DDPDOJ_PC
-    s32 bullet_fire256_direct();
-#endif
     s16 *t1;
     s16 *t2;
     u16 t3;
@@ -1762,9 +1742,6 @@ next_23:;
 }
 
 void stage5_boss_form3_a_fire_ring(void) {
-#ifndef DDPDOJ_PC
-    extern void bullet_fire256_direct(void);
-#endif
     reg_d2.h[1] = ENTITY(reg_a6)->y.h;
     reg_d2.h[0] = ENTITY(reg_a6)->x.h;
     reg_d3.w = 0xFA000000;
@@ -1897,9 +1874,6 @@ block_end:
 }
 
 void stage5_boss_form3_b_fire(void) {
-#ifndef DDPDOJ_PC
-    s32 bullet_fire256_direct();
-#endif
     u32 var_a1;
     u8 var_a0;
 
@@ -2000,9 +1974,6 @@ void stage5_boss_fire_form3_attack_b() {
 }
 
 void stage5_boss_form3_c_fire(void) {
-#ifndef DDPDOJ_PC
-    s32 bullet_fire256_direct();
-#endif
     reg_d0.h[1] = FORM3_C(reg_a4)->shots.speed;
     reg_d0.h[0] = FORM3_C(reg_a4)->shots.bullet;
     reg_d2.h[1] = ENTITY(reg_a6)->y.h;
@@ -2181,9 +2152,6 @@ extern u16 g_enemy_signal_1;
 extern u16 g_enemy_signal_0;
 
 void stage5_boss_fire_form3_spiral(void) {
-#ifndef DDPDOJ_PC
-    s32 bullet_fire256_direct();
-#endif
     s16 *t1;
     u8 t2;
     u8 t3;
@@ -2302,9 +2270,6 @@ next_2:
 extern u16 g_direction64_offsets_166[];
 
 void stage5_boss_form3_rage_first_volley(void) {
-#ifndef DDPDOJ_PC
-    s32 bullet_fire256_direct();
-#endif
     u16 var_a0;
     reg_tmp.b[0] = FORM3_RAGE(reg_a4)->shot[0].t.count;
     FORM3_RAGE(reg_a4)->shot[0].t.count -= 1;
@@ -2339,9 +2304,6 @@ void stage5_boss_form3_rage_first_volley(void) {
 extern u16 g_direction64_offsets_432[];
 
 void stage5_boss_form3_rage_third_volley(void) {
-#ifndef DDPDOJ_PC
-    s32 bullet_fire256_direct();
-#endif
     u16 var_a0;
     reg_tmp.b[0] = FORM3_RAGE(reg_a4)->shot[2].t.count;
     FORM3_RAGE(reg_a4)->shot[2].t.count -= 1;
@@ -2400,9 +2362,6 @@ void stage5_boss_fire_form3_rage_start(void) {
 extern u16 g_direction64_offsets_2CC[];
 
 void stage5_boss_fire_form3_rage(void) {
-#ifndef DDPDOJ_PC
-    s32 bullet_fire256_direct();
-#endif
     u8 *p;
     u8 t;
 

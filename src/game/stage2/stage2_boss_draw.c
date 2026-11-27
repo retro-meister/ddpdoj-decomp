@@ -1,7 +1,5 @@
 #include "common.h"
-#ifdef DDPDOJ_PC
-#include "pc_gameplay_abi.h"
-#endif
+#include "arcade_gameplay.h"
 #include "entity.h"
 #include "stage2_boss.h"
 
@@ -36,9 +34,6 @@ void (*stage2_boss_draw_routines[])(void) = {
 extern u8 stage2_boss_draw_lower_table[];
 
 void stage2_boss_draw_lower(void) {
-#ifndef DDPDOJ_PC
-    s32 sprite_draw_layer2_keep();
-#endif
     reg_a0 = (u8 *)stage2_boss_draw_lower_table;
     reg_a0 += ENTITY(reg_a6)[1].offset_x.h;
     reg_tmp.h[0] = ENTITY(reg_a6)[1].offset_x.h;
@@ -56,9 +51,6 @@ void stage2_boss_draw_lower(void) {
 extern u8 stage2_boss_draw_torso_table[];
 
 void stage2_boss_draw_torso(void) {
-#ifndef DDPDOJ_PC
-    s32 sprite_draw_layer2_keep();
-#endif
     u16 temp_a0;
     u16 temp_a2;
 
@@ -80,9 +72,6 @@ void stage2_boss_draw_torso(void) {
 extern u8 stage2_boss_draw_shoulder_cannon_table[];
 
 void stage2_boss_draw_shoulder_cannon(void) {
-#ifndef DDPDOJ_PC
-    s32 sprite_draw_layer2_keep();
-#endif
     u16 temp_a2;
     u32 temp_a3;
 
@@ -109,9 +98,6 @@ void stage2_boss_draw_shoulder_cannon(void) {
 extern u8 stage2_boss_draw_shoulder_turret_mount_table[];
 
 void stage2_boss_draw_shoulder_turret_mount(void) {
-#ifndef DDPDOJ_PC
-    s32 sprite_draw_layer2_keep();
-#endif
     u16 temp_a1;
     u16 temp_a3;
 
@@ -134,9 +120,6 @@ void stage2_boss_draw_shoulder_turret_mount(void) {
 extern u8 stage2_boss_draw_side_gun_a_table[];
 
 void stage2_boss_draw_side_gun_a(void) {
-#ifndef DDPDOJ_PC
-    s32 sprite_draw_layer2_keep();
-#endif
     u16 temp_a1;
     u16 temp_a3;
     u32 temp_a2;
@@ -164,9 +147,6 @@ void stage2_boss_draw_side_gun_a(void) {
 extern u8 stage2_boss_draw_side_gun_b_table[];
 
 void stage2_boss_draw_side_gun_b(void) {
-#ifndef DDPDOJ_PC
-    s32 sprite_draw_layer2_keep();
-#endif
     u16 temp_a1;
     u16 temp_a3;
     u32 temp_a2;
@@ -194,9 +174,6 @@ void stage2_boss_draw_side_gun_b(void) {
 extern u8 D_0026C3F0[];
 
 void stage2_boss_draw_turret_2(void) {
-#ifndef DDPDOJ_PC
-    s32 sprite_draw_layer2_keep();
-#endif
     u16 temp_a0;
 
     reg_d2.w = 0;
@@ -217,9 +194,6 @@ void stage2_boss_draw_turret_2(void) {
 }
 
 void stage2_boss_draw_turret_3(void) {
-#ifndef DDPDOJ_PC
-    s32 sprite_draw_layer2_keep();
-#endif
     u16 temp_a0;
 
     reg_d2.w = 0;
@@ -242,9 +216,6 @@ void stage2_boss_draw_turret_3(void) {
 extern u8 D_0026C470[];
 
 void stage2_boss_draw_shoulder_turret_a(void) {
-#ifndef DDPDOJ_PC
-    s32 sprite_draw_layer2_keep();
-#endif
     u16 temp_a0;
 
     reg_d2.w = 0;
@@ -265,9 +236,6 @@ void stage2_boss_draw_shoulder_turret_a(void) {
 }
 
 void stage2_boss_draw_shoulder_turret_b(void) {
-#ifndef DDPDOJ_PC
-    s32 sprite_draw_layer2_keep();
-#endif
     u16 temp_a0;
 
     reg_d2.w = 0;
@@ -290,9 +258,6 @@ void stage2_boss_draw_shoulder_turret_b(void) {
 extern u8 stage2_boss_draw_radome_table[];
 
 void stage2_boss_draw_radome(void) {
-#ifndef DDPDOJ_PC
-    void sprite_draw_layer2_keep();
-#endif
     reg_d0.w = 0;
     reg_a0 = stage2_boss_draw_radome_table;
     reg_d0.b[0] = ENTITY(reg_a6)[8].move.b.dir;

@@ -1,7 +1,5 @@
 #include "common.h"
-#ifdef DDPDOJ_PC
-#include "pc_gameplay_abi.h"
-#endif
+#include "arcade_gameplay.h"
 #include "entity.h"
 #include "stage5_boss.h"
 
@@ -201,9 +199,6 @@ void stage5_boss_move_form2_ascend_start(void) {
     stage5_boss_move_form2_ascend();
 }
 
-#ifndef DDPDOJ_PC
-s32 boss_movement_start();
-#endif
 s32 boss_part_show();
 s32 boss_animation_start();
 s32 music_play_bgm7();
@@ -211,9 +206,6 @@ s32 stage5_boss_form2_take_hits();
 s32 stage5_boss_start_damage();
 
 void stage5_boss_move_form2_ascend(void) {
-#ifndef DDPDOJ_PC
-    s32 entity_velocity();
-#endif
     u16 temp_v0;
 
     temp_v0 = ASCEND(reg_a4)->delay;
@@ -282,9 +274,6 @@ s32 rng_next();
 s32 entity_turn_toward();
 
 void stage5_boss_move_form2_mouth_wander(void) {
-#ifndef DDPDOJ_PC
-    s32 entity_velocity();
-#endif
     entity_velocity();
     if (WANDER(reg_a4)->turning != 0) {
         reg_d1.b[0] = WANDER(reg_a4)->target_dir;
@@ -330,9 +319,6 @@ void stage5_boss_move_form2_death_descend_start(void) {
 }
 
 void stage5_boss_move_form2_death_descend() {
-#ifndef DDPDOJ_PC
-    void entity_velocity(void);
-#endif
     entity_velocity();
 }
 
@@ -350,9 +336,6 @@ void stage5_boss_move_form3_wander_a_start(void) {
 }
 
 void stage5_boss_move_form3_wander_a() {
-#ifndef DDPDOJ_PC
-    s32 entity_velocity();
-#endif
     entity_velocity();
     if (WANDER(reg_a4)->turning != 0) {
         reg_d1.b[0] = WANDER(reg_a4)->target_dir;
@@ -402,9 +385,6 @@ void stage5_boss_move_form2_jet_wander_start() {
 }
 
 void stage5_boss_move_form2_jet_wander(void) {
-#ifndef DDPDOJ_PC
-    s32 entity_velocity();
-#endif
     entity_velocity();
     if (WANDER(reg_a4)->turning != 0) {
         reg_d1.b[0] = WANDER(reg_a4)->target_dir;
@@ -454,9 +434,6 @@ void stage5_boss_move_form2_horn_wander_start() {
 }
 
 void stage5_boss_move_form2_horn_wander(void) {
-#ifndef DDPDOJ_PC
-    s32 entity_velocity();
-#endif
     entity_velocity();
     if (WANDER(reg_a4)->turning != 0) {
         reg_d1.b[0] = WANDER(reg_a4)->target_dir;
@@ -507,9 +484,6 @@ void stage5_boss_move_form2_stinger_wander_start(void) {
 }
 
 void stage5_boss_move_form2_stinger_wander(void) {
-#ifndef DDPDOJ_PC
-    s32 entity_velocity();
-#endif
     entity_velocity();
     if (WANDER(reg_a4)->turning != 0) {
         reg_d1.b[0] = WANDER(reg_a4)->target_dir;
@@ -560,9 +534,6 @@ void stage5_boss_move_form3_wander_b_start(void) {
 }
 
 void stage5_boss_move_form3_wander_b() {
-#ifndef DDPDOJ_PC
-    s32 entity_velocity();
-#endif
     entity_velocity();
     if (WANDER(reg_a4)->turning != 0) {
         reg_d1.b[0] = WANDER(reg_a4)->target_dir;
@@ -609,9 +580,6 @@ void stage5_boss_move_form3_wander_c_start(void) {
 }
 
 void stage5_boss_move_form3_wander_c(void) {
-#ifndef DDPDOJ_PC
-    s32 entity_velocity();
-#endif
     entity_velocity();
     if (WANDER(reg_a4)->turning != 0) {
         reg_d1.b[0] = WANDER(reg_a4)->target_dir;
@@ -663,9 +631,6 @@ u8 stage5_boss_move_form3_wander_d_start(void) {
 }
 
 u8 stage5_boss_move_form3_wander_d(u8 arg0) {
-#ifndef DDPDOJ_PC
-    s32 entity_velocity();
-#endif
     entity_velocity();
     if (WANDER(reg_a4)->turning != 0) {
         reg_d1.b[0] = WANDER(reg_a4)->target_dir;
@@ -715,9 +680,6 @@ void stage5_boss_move_form3_rage_wander_start() {
 }
 
 void stage5_boss_move_form3_rage_wander(void) {
-#ifndef DDPDOJ_PC
-    s32 entity_velocity();
-#endif
     entity_velocity();
     if (WANDER(reg_a4)->turning != 0) {
         reg_d1.b[0] = WANDER(reg_a4)->target_dir;

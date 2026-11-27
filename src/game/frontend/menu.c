@@ -10,7 +10,7 @@
 #include "cd.h"
 
 #ifdef DDPDOJ_PC
-#include "pc_frontend_abi.h"
+#include "arcade_frontend.h"
 #endif
 
 /* One line of a menu screen: where it is drawn, and the slide that brings it there. Positions of the

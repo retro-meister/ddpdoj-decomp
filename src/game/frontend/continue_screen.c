@@ -2,9 +2,7 @@
 #include "continue_screen.h"
 #include "task.h"
 
-#ifdef DDPDOJ_PC
-#include "pc_frontend_abi.h"
-#endif
+#include "arcade_frontend.h"
 
 void continue_panel_step_countdown();
 void continue_panel_step_erase_small();
@@ -75,17 +73,11 @@ void continue_panel_step_done(void);
 void continue_task_close_panel(void);
 
 void player_slot_request_destroyed(void) {
-#ifndef DDPDOJ_PC
-    void player_slot_request(void);
-#endif
     *(u16 *)&reg_d1 = 1;
     player_slot_request();
 }
 
 void player_slot_request_bomb_display(void) {
-#ifndef DDPDOJ_PC
-    void player_slot_request(void);
-#endif
     *(u16 *)&reg_d1 = 9;
     player_slot_request();
 }
@@ -106,7 +98,6 @@ void bomb_palette_load_second(void) {
     bomb_palette_load();
 }
 
-void sprite_palette_load(void);
 
 void bomb_palette_load(void) {
     *(u16 *)&reg_d0 = 6;
@@ -305,12 +296,6 @@ void continue_panels_update(u16 *arg0) {
 
 s32 deferred_text_clear();
 s32 text_layer_put_hex_digit();
-#ifndef DDPDOJ_PC
-s32 stage_clear_running_check();
-#endif
-#ifndef DDPDOJ_PC
-s32 text_layer_print();
-#endif
 s32 sfx_countdown();
 #ifdef DEATH_LABEL
 extern u8 credit_label_p1[];
@@ -614,9 +599,6 @@ void continue_count_store(void)
 #endif
 }
 
-#ifndef DDPDOJ_PC
-s32 player_panel_show();
-#endif
 s32 hud_p1_caption_clear_shifted();
 s32 hud_p2_caption_clear_shifted();
 
@@ -657,9 +639,6 @@ void continue_task_close_panel(void) {
 
 s32 fades_reset();                            /* extern */
 s32 sound_stop_effects();                            /* extern */
-#ifndef DDPDOJ_PC
-s32 music_stop();                            /* extern */
-#endif
 extern u16 g_loop;
 extern u16 g_stage;
 extern u8 g_game_over_after_continue;
@@ -692,7 +671,6 @@ extern u8 *reg_call_target_as_u8_p;
 
 void continue_task(void) {
 #ifndef DDPDOJ_PC
-    s32 player_slot_request();
 #else
     /* A new task can inherit parameters from a prior task in the same slot. */
     if (reg_a5[3] == 0) {

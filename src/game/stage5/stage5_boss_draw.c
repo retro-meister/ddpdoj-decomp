@@ -1,7 +1,5 @@
 #include "common.h"
-#ifdef DDPDOJ_PC
-#include "pc_gameplay_abi.h"
-#endif
+#include "arcade_gameplay.h"
 #include "entity.h"
 #include "stage5_boss.h"
 
@@ -53,9 +51,6 @@ s32 velocity_from_dir256();
 extern u8 D_00264870[];
 
 void stage5_boss_draw_belly(void) {
-#ifndef DDPDOJ_PC
-    s32 sprite_draw_layer2_keep();
-#endif
     u32 temp_a1;
     u32 temp_a2;
 
@@ -93,9 +88,6 @@ void stage5_boss_draw_belly(void) {
 }
 
 void stage5_boss_draw_chest(void) {
-#ifndef DDPDOJ_PC
-    s32 sprite_draw_layer2_keep();
-#endif
     reg_d0.w = 0;
     reg_d1.w = 0;
     reg_d0.b[0] = ENTITY(reg_a6)->move.b.speed;
@@ -119,9 +111,6 @@ void stage5_boss_draw_chest(void) {
 }
 
 void stage5_boss_draw_stinger(void) {
-#ifndef DDPDOJ_PC
-    s32 sprite_draw_layer2_keep();
-#endif
     reg_d0.h[0] = 0x1A;
     reg_d1.w = 0;
     reg_d1.b[0] = STAGE5_EXTRA(reg_a6)->belly_direction;
@@ -144,9 +133,6 @@ void stage5_boss_draw_stinger(void) {
 extern u16 D_00264890[];
 
 void stage5_boss_draw_left_arm_gun_low(void) {
-#ifndef DDPDOJ_PC
-    s32 sprite_draw_layer2_keep();
-#endif
     u32 temp_a0;
 
     reg_d0.h[0] = 0xA00;
@@ -178,9 +164,6 @@ void stage5_boss_draw_left_arm_gun_low(void) {
 }
 
 void stage5_boss_draw_left_arm_gun_mid(void) {
-#ifndef DDPDOJ_PC
-    s32 sprite_draw_layer2_keep();
-#endif
     u32 temp_a0;
 
     reg_d0.h[0] = 0xA00;
@@ -212,9 +195,6 @@ void stage5_boss_draw_left_arm_gun_mid(void) {
 }
 
 void stage5_boss_draw_left_arm_gun_high(void) {
-#ifndef DDPDOJ_PC
-    s32 sprite_draw_layer2_keep();
-#endif
     u32 temp_a0;
 
     reg_d0.h[0] = 0xA00;
@@ -246,9 +226,6 @@ void stage5_boss_draw_left_arm_gun_high(void) {
 }
 
 void stage5_boss_draw_right_arm_gun_low(void) {
-#ifndef DDPDOJ_PC
-    s32 sprite_draw_layer2_keep();
-#endif
     u32 temp_a0;
 
     reg_d0.h[0] = 0xA00;
@@ -280,9 +257,6 @@ void stage5_boss_draw_right_arm_gun_low(void) {
 }
 
 void stage5_boss_draw_right_arm_gun_mid(void) {
-#ifndef DDPDOJ_PC
-    s32 sprite_draw_layer2_keep();
-#endif
     u32 temp_a0;
 
     reg_d0.h[0] = 0xA00;
@@ -314,9 +288,6 @@ void stage5_boss_draw_right_arm_gun_mid(void) {
 }
 
 void stage5_boss_draw_right_arm_gun_high(void) {
-#ifndef DDPDOJ_PC
-    s32 sprite_draw_layer2_keep();
-#endif
     u32 temp_a0;
 
     reg_d0.h[0] = 0xA00;
@@ -355,9 +326,6 @@ void stage5_boss_draw_head(void) {
 extern u8 stage5_boss_draw_form2_head_table[];
 
 void stage5_boss_draw_form2_head(void) {
-#ifndef DDPDOJ_PC
-    s32 sprite_draw_layer2_keep();
-#endif
     u32 temp_a1;
 
     reg_d1.w = 0;
@@ -384,9 +352,6 @@ void stage5_boss_draw_form2_head(void) {
 }
 
 void stage5_boss_draw_form2_belly(void) {
-#ifndef DDPDOJ_PC
-    s32 sprite_draw_layer2_keep();
-#endif
     u32 temp_a1;
     u32 temp_a2;
 
@@ -418,9 +383,6 @@ void stage5_boss_draw_form2_belly(void) {
 
 void stage5_boss_draw_form2_chest(void)
 {
-#ifndef DDPDOJ_PC
-    extern void sprite_draw_layer2_keep(void);
-#endif
     u8 *source;
 
     reg_d2.w = 0x1E51;
@@ -436,9 +398,6 @@ void stage5_boss_draw_form2_chest(void)
 }
 
 void stage5_boss_draw_form2_stinger(void) {
-#ifndef DDPDOJ_PC
-    s32 sprite_draw_layer2_keep();
-#endif
     reg_d0.h[0] = 0x1A;
     reg_d1.w = 0;
     reg_d1.b[0] = STAGE5_EXTRA(reg_a6)->belly_direction;
@@ -461,9 +420,6 @@ void stage5_boss_draw_form2_stinger(void) {
 extern u8 D_002649A8[];
 
 void stage5_boss_draw_form2_exhaust(void) {
-#ifndef DDPDOJ_PC
-    s32 sprite_draw_layer2_keep();
-#endif
     u16 temp_a1;
 
     reg_a0 = D_002649A8;
@@ -484,9 +440,6 @@ void stage5_boss_draw_form2_exhaust(void) {
 extern u16 stage5_boss_draw_form2_wings_table[];
 
 void stage5_boss_draw_form2_wings(void) {
-#ifndef DDPDOJ_PC
-    s32 sprite_draw_layer2_keep();
-#endif
     u16 temp_a3;
     u32 temp_a0;
 
@@ -513,9 +466,6 @@ extern u8 stage5_boss_draw_form3_body_table[];
 extern u16 g_frame_mod3;
 
 void stage5_boss_draw_form3_body(void) {
-#ifndef DDPDOJ_PC
-    s32 sprite_draw_layer2_keep();
-#endif
 #ifdef DEATH_LABEL
     s32 i;
     u16 x;
@@ -575,9 +525,6 @@ extern u16 MAIN_OR_DEATH_LABEL(stage5_boss_draw_form3_tail_table, death_D_0026A2
 #endif
 
 void stage5_boss_draw_form3_tail(void) {
-#ifndef DDPDOJ_PC
-    s32 sprite_draw_layer2_keep();
-#endif
 #ifdef DEATH_LABEL
     s32 i;
     u16 x;
@@ -613,9 +560,6 @@ extern u8 stage5_boss_draw_form3_bomb_barrier_table[];
 extern u16 g_frame_mod2;
 
 void stage5_boss_draw_form3_bomb_barrier(void) {
-#ifndef DDPDOJ_PC
-    s32 sprite_draw_layer2_keep();
-#endif
 #ifdef DEATH_LABEL
     s32 i;
     u16 x;

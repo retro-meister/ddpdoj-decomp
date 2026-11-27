@@ -1,6 +1,6 @@
 #include "common.h"
+#include "arcade_gameplay.h"
 #ifdef DDPDOJ_PC
-#include "pc_gameplay_abi.h"
 #include <assert.h>
 #endif
 #include "entity.h"
@@ -237,9 +237,6 @@ void stage2_boss_mode_rise_sway(void);
 void stage2_boss_rise_sway_next(void);
 void stage2_boss_mode_rage(void);
 
-#ifndef DDPDOJ_PC
-s32 boss_movement_start();                            /* extern */
-#endif
 s32 boss_animation_start();                            /* extern */
 
 void stage2_boss_mode_enter_start(void) {
@@ -263,9 +260,6 @@ void stage2_boss_mode_enter(void) {
     RISE(reg_a4)->running = 0;
 }
 
-#ifndef DDPDOJ_PC
-s32 boss_movement_start();                            /* extern */
-#endif
 s32 stage2_boss_shield_on();                            /* extern */
 s32 stage2_boss_part_take_hits();                            /* extern */
 s32 stage2_boss_part_stop_hits();                            /* extern */
@@ -289,9 +283,6 @@ void stage2_boss_mode_second_phase_start(void) {
 
 typedef void (*Fn)();
 
-#ifndef DDPDOJ_PC
-s32 boss_phase_start();
-#endif
 s32 boss_part_hide();
 s32 stage2_boss_explosions_from_table();
 
@@ -334,9 +325,6 @@ void stage2_boss_mode_second_phase() {
     }
 }
 
-#ifndef DDPDOJ_PC
-s32 boss_movement_start();                            /* extern */
-#endif
 s32 fade_out_and_release();                            /* extern */
 
 void stage2_boss_mode_final_explosion_start(void) {
@@ -605,9 +593,6 @@ loop_6:
     }
 }
 
-#ifndef DDPDOJ_PC
-s32 boss_movement_start();                            /* extern */
-#endif
 s32 boss_animation_start();                            /* extern */
 
 void stage2_boss_mode_high_slow_start(void) {
@@ -1065,9 +1050,6 @@ void stage2_boss_mode_recoil() {
     }
 }
 
-#ifndef DDPDOJ_PC
-s32 boss_movement_start();                            /* extern */
-#endif
 
 void stage2_boss_mode_rise_start(void) {
     reg_d0.w = 4;
@@ -1141,9 +1123,6 @@ void stage2_boss_mode_rise_sway(void) {
     }
 }
 
-#ifndef DDPDOJ_PC
-s32 boss_movement_start();
-#endif
 s32 enemy_switch_target_player();
 
 void stage2_boss_rise_sway_next(void) {

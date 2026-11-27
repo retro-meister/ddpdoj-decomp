@@ -1,7 +1,5 @@
 #include "common.h"
-#ifdef DDPDOJ_PC
-#include "pc_gameplay_abi.h"
-#endif
+#include "arcade_gameplay.h"
 #include "entity.h"
 #include "explosion.h"
 #include "enemy.h"
@@ -18,10 +16,6 @@ void stage3_boss_drone_first(void) {
     enemy_set_entity_count(1);
 }
 
-#ifndef DDPDOJ_PC
-s32 enemy_set_task_state();
-s32 enemy_init_entities();
-#endif
 s32 boss_level_get_from_78();
 extern u8 stage3_boss_drone_start_table_2[];
 extern u8 stage3_boss_drone_start_table_3[];
@@ -68,19 +62,10 @@ void stage3_boss_drone_start(void) {
 }
 
 
-#ifndef DDPDOJ_PC
-s32 bullet_fire256_fixed();
-#endif
 s32 explosion_spawn();
-#ifndef DDPDOJ_PC
-s32 enemy_hitbox_debug_draw();
-#endif
 s32 sfx_explosion_air_large();
 s32 entity_draw_layer5();
 s32 entity_advance256();
-#ifndef DDPDOJ_PC
-s32 aim256_at_player();
-#endif
 extern u8 D_0026D360[];
 extern u8 stage3_boss_drone_table[];
 extern u8 stage3_boss_drone_table_2[];
@@ -90,9 +75,6 @@ extern u16 g_enemies_stopped;
 extern u16 g_damage_blink_counter;
 
 void stage3_boss_drone(void) {
-#ifndef DDPDOJ_PC
-    s32 enemy_remove();
-#endif
     u8 bits;
     u16 hp;
 
@@ -317,17 +299,11 @@ void stage3_boss_lid_bullet_first(void) {
 }
 
 void stage3_boss_lid_bullet_start(void) {
-#ifndef DDPDOJ_PC
-    void enemy_remove(void);
-#endif
     enemy_remove();
 }
 
 
 void stage3_boss_lid_bullet_fade(void) {
-#ifndef DDPDOJ_PC
-    s32 enemy_remove();
-#endif
     reg_tmp.h[1] = ENTITY(reg_a6)->draw.h;
     reg_tmp.h[0] = ENTITY(reg_a6)->sprite.h;
     reg_tmp.w += 1;
@@ -342,19 +318,12 @@ void stage3_boss_lid_bullet_fade(void) {
 }
 
 void stage3_boss_lid_bullet_draw(void) {
-#ifndef DDPDOJ_PC
-    void entity_draw_with_bullets(void);
-#endif
     entity_draw_with_bullets();
 }
 
 extern u8 stage3_boss_lid_bullet_table[];
 
 void stage3_boss_lid_bullet(void) {
-#ifndef DDPDOJ_PC
-    s32 enemy_remove();
-    s32 entity_draw_with_bullets();
-#endif
     u32 var_a0;
 
     if (ENTITY(reg_a6)->flags.sb[0] < 0) {
