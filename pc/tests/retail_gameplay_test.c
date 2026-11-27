@@ -2,6 +2,7 @@
 #include "combat_state.h"
 #include "pc_player_state.h"
 #include "pc_task_state.h"
+#include "pc_replay_frame.h"
 #include "state_slot.h"
 #include "pc_arcade_address.h"
 #include "black_label.h"
@@ -30,6 +31,7 @@ extern u32 g_p2_score;
 extern u16 g_game_frame, g_player_shot_count, g_player_laser_count, g_scroll_line;
 extern u16 g_bomb_entities[];
 extern u8 g_game_frame_ran;
+extern s32 g_replay_position;
 
 enum {
     ATTRACT_ARCADE = 14,
@@ -248,6 +250,7 @@ typedef struct {
     PcPlayerState players;
     PcCombatPools pools;
     PcTaskState tasks;
+    PcReplayFrame replay;
 } GameplaySnapshot;
 
 int main(int argc, char **argv)
@@ -265,13 +268,17 @@ int main(int argc, char **argv)
         GameplaySnapshot *saved = pc_state_slot_read(load_pools, pool_mode, 1, &size);
         pc_arcade_address_init();
         require(saved && size == sizeof(*saved) && pc_combat_restore(&saved->pools) &&
-                pc_player_state_restore(&saved->players) && pc_tasks_restore(&saved->tasks),
+                pc_player_state_restore(&saved->players) && pc_tasks_restore(&saved->tasks) &&
+                pc_replay_frame_restore(&saved->replay),
                 "Restore combat pools into a fresh process");
         require(has_relocated_enemy(), "Resolve the saved entity and callback in this process");
         PcPlayerState restored;
         pc_player_state_capture(&restored);
         require(!memcmp(&restored, &saved->players, sizeof(restored)),
                 "Recover player, weapon and replay fields exactly after restart");
+        require(g_replay_position == saved->replay.replay_position &&
+                !memcmp(&pc_replay, &saved->replay.recording, sizeof(pc_replay)),
+                "Restore replay inputs and cursor");
         SDL_free(saved);
         return !SDL_RemovePath(load_pools);
     }
@@ -381,12 +388,15 @@ int main(int argc, char **argv)
         require(pc_gs_ok() && SDL_RenderPresent(renderer), "Render game frame");
         require(game_take_mode_request() == GAME_MODE_NONE, "Keep running the selected mode");
         if (save_pools && played >= 300 && has_relocated_enemy()) {
-            GameplaySnapshot saved = {0};
-            pc_combat_capture(&saved.pools);
-            pc_player_state_capture(&saved.players);
-            pc_tasks_capture(&saved.tasks);
-            require(pc_state_slot_write(save_pools, pool_mode, 1, &saved, sizeof(saved)),
+            GameplaySnapshot *saved = SDL_calloc(1, sizeof(*saved));
+            require(saved != NULL, "Allocate gameplay snapshot");
+            pc_combat_capture(&saved->pools);
+            pc_player_state_capture(&saved->players);
+            pc_tasks_capture(&saved->tasks);
+            pc_replay_frame_capture(&saved->replay);
+            require(pc_state_slot_write(save_pools, pool_mode, 1, saved, sizeof(*saved)),
                     "Write pools from live gameplay");
+            SDL_free(saved);
             goto cleanup;
         }
 

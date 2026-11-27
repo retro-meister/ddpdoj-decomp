@@ -13,7 +13,8 @@ s32 text_layer_clear();
 s32 text_palette_load();
 #endif
 #ifdef DDPDOJ_PC
-#include "pc_replay_storage.h"
+#include "pc_replay_frame.h"
+#include <string.h>
 #endif
 #include "task.h"
 #include "sdk/ps2sdk.h"
@@ -1505,6 +1506,60 @@ u8 g_replay_file[48];
 
 #ifdef DDPDOJ_PC
 #include "pc_data_alias.h"
+
+void pc_replay_frame_capture(PcReplayFrame *state) {
+    state->recording = pc_replay;
+    memcpy(state->loaded_file, g_replay_file_loaded, sizeof(state->loaded_file));
+    state->header = g_replay_header;
+    state->header_saved = g_replay_header_saved;
+    state->replay_fade_id = g_replay_fade_id;
+    state->simulation_active = g_simulation_active;
+    state->replay_mode = g_replay_mode;
+    state->replay_mode_begun = g_replay_mode_begun;
+    state->replay_buffer_state = g_replay_buffer_state;
+    state->replay_position = g_replay_position;
+    state->replay_begin_pending = g_replay_begin_pending;
+    state->replay_watch_after_run = g_replay_watch_after_run;
+    state->game_over_after_continue = g_game_over_after_continue;
+    state->stage_clear_screen_shown = g_stage_clear_screen_shown;
+    state->replay_start_pending = g_replay_start_pending;
+    state->replay_taken_over = g_replay_taken_over;
+    state->replay_start_p1_score_digits = g_replay_start_p1_score_digits;
+    state->replay_start_p1_score = g_replay_start_p1_score;
+    state->replay_start_p1_score_billions = g_replay_start_p1_score_billions;
+    state->replay_start_p2_score_digits = g_replay_start_p2_score_digits;
+    state->replay_start_p2_score = g_replay_start_p2_score;
+    state->replay_start_p2_score_billions = g_replay_start_p2_score_billions;
+    state->replay_checksum = g_replay_checksum;
+}
+
+bool pc_replay_frame_restore(const PcReplayFrame *state) {
+    if ((u32)state->replay_position > PC_REPLAY_FILE_SIZE - 0x5D08) return false;
+    pc_replay = state->recording;
+    memcpy(g_replay_file_loaded, state->loaded_file, sizeof(state->loaded_file));
+    g_replay_header = state->header;
+    g_replay_header_saved = state->header_saved;
+    g_replay_fade_id = state->replay_fade_id;
+    g_simulation_active = state->simulation_active;
+    g_replay_mode = state->replay_mode;
+    g_replay_mode_begun = state->replay_mode_begun;
+    g_replay_buffer_state = state->replay_buffer_state;
+    g_replay_position = state->replay_position;
+    g_replay_begin_pending = state->replay_begin_pending;
+    g_replay_watch_after_run = state->replay_watch_after_run;
+    g_game_over_after_continue = state->game_over_after_continue;
+    g_stage_clear_screen_shown = state->stage_clear_screen_shown;
+    g_replay_start_pending = state->replay_start_pending;
+    g_replay_taken_over = state->replay_taken_over;
+    g_replay_start_p1_score_digits = state->replay_start_p1_score_digits;
+    g_replay_start_p1_score = state->replay_start_p1_score;
+    g_replay_start_p1_score_billions = state->replay_start_p1_score_billions;
+    g_replay_start_p2_score_digits = state->replay_start_p2_score_digits;
+    g_replay_start_p2_score = state->replay_start_p2_score;
+    g_replay_start_p2_score_billions = state->replay_start_p2_score_billions;
+    g_replay_checksum = state->replay_checksum;
+    return true;
+}
 
 PC_DATA_ALIAS(D_006E5BE2, g_replay_header, 0x2);
 PC_DATA_ALIAS(D_006E5BE4, g_replay_header, 0x4);
