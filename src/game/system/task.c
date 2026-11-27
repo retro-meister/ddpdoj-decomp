@@ -361,11 +361,7 @@ serve_request:
 
 
 void task_stop_self(void) {
-#ifdef DDPDOJ_PC
     reg_a0 = (u8 *)TASK(reg_a5)->id;
-#else
-    reg_a0 = (u8 *)(((s32)reg_a5) + 0x4C);
-#endif
     task_request_stop();
 }
 

@@ -242,11 +242,7 @@ next_request:
 
 
 void enemies_frame(void) {
-#ifdef DDPDOJ_PC
     u8 *temp_s0 = reg_a5;
-#else
-    s32 temp_s0 = (s32)reg_a5;
-#endif
     enemies_start_due();
     enemies_run();
     reg_a5 = (u8 *)temp_s0;

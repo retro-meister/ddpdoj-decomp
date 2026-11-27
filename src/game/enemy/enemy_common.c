@@ -520,7 +520,6 @@ void settings_notice_return_finished(void) {
     reg_d5.w = D_0028DF6C;
     reg_d6.w = D_0028DF68;
     reg_d7.w = D_0028DF64;
-#ifdef DDPDOJ_PC
     reg_a0 = D_0028DF60;
     reg_a1 = D_0028DF5C;
     reg_a2 = D_0028DF58;
@@ -529,16 +528,6 @@ void settings_notice_return_finished(void) {
     reg_a5 = D_0028DF4C;
     reg_a6 = D_0028DF48;
     cond_flag = 0;
-#else
-    reg_a0 = (u8 *)(*(s32 *)&D_0028DF60);
-    reg_a1 = (u8 *)(*(s32 *)&D_0028DF5C);
-    reg_a2 = (u8 *)(*(s32 *)&D_0028DF58);
-    reg_a3 = (u8 *)(*(s32 *)&D_0028DF54);
-    reg_a4 = (u8 *)(*(s32 *)&D_0028DF50);
-    reg_a5 = (u8 *)(*(s32 *)&D_0028DF4C);
-    reg_a6 = (u8 *)(*(s32 *)&D_0028DF48);
-    cond_flag = 0;
-#endif
 }
 
 extern u8 settings_notice_fade_palettes_at_18[];

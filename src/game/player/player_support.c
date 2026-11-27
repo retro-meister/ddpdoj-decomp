@@ -1066,11 +1066,7 @@ void bomb_stock_draw_for_task(void) {
     reg_save_d2 = reg_d2.w;
     reg_save_d6 = reg_d6.w;
     reg_save_d7 = reg_d7.w;
-#ifdef DDPDOJ_PC
     reg_save_a6 = reg_a6;
-#else
-    (*(s32 *)&reg_save_a6) = (s32)reg_a6;
-#endif
     bomb_stock_origin_p1(reg_d6.w, reg_d2.w, reg_d1.w, reg_d0.w);
     if (*(u8 *)(reg_a5 + 6) != 0) {
         bomb_stock_origin_p2();

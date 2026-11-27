@@ -119,11 +119,7 @@ extern u16 D_0028E828;
 
 void attract_demo_state_clear(void) {
     D_0028E7F8 = 0;
-#ifdef DDPDOJ_PC
     D_0028E7FC = NULL;
-#else
-    (*(s32 *)&D_0028E7FC) = 0;
-#endif
     D_0028E800 = 0;
     D_0028E804 = 0;
     attract_demo_state_clear_state = 0;

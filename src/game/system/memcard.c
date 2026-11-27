@@ -378,17 +378,10 @@ void mc_frame_draw(void) {
 
 extern void menu_text_queue_plain(s32 x, s32 y, s32 value);
 
-#ifdef DDPDOJ_PC
 void mc_message_draw(s32 x, char *text, s32 unusedA2, s32 unusedA3,
                      s32 unusedT0, s32 value, s32 unusedT2)
 {
     u8 *saved_state_address = reg_a0;
-#else
-void mc_message_draw(s64 x, char *text, s32 unusedA2, s32 unusedA3,
-                   s32 unusedT0, s32 value)
-{
-    s32 saved_state_address = (s32)reg_a0;
-#endif
 
     reg_a0 = (u8 *)text;
     menu_text_queue_plain(0x1C0 - (s16)x, 0x18, value & 0xFFFF);

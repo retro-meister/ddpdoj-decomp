@@ -873,22 +873,14 @@ void attract_start_button_check(void) {
         if (g_setting_coin_mode == 0x12) {
             g_menu_task_phase = 0;
             reg_d0.h[0] = 0xF;
-#ifdef DDPDOJ_PC
             attract_step_set();
-#else
-            attract_step_set(g_setting_coin_mode);
-#endif
             sfx_confirm();
             return;
         }
         if (g_credit_display_last_coins[0] != 0) {
             g_menu_task_phase = 0;
             reg_d0.h[0] = 0xF;
-#ifdef DDPDOJ_PC
             attract_step_set();
-#else
-            attract_step_set(g_setting_coin_mode);
-#endif
         }
     }
 }

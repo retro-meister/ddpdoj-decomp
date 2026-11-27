@@ -420,11 +420,7 @@ extern s16 g_player2[];
 extern s16 g_player1[];
 
 void player_lasers_update(void) {
-#ifdef DDPDOJ_PC
     u8 *temp_s0 = reg_a5;
-#else
-    s32 temp_s0 = (s32)reg_a5;
-#endif
     g_hyper_hit_scratch = 0;
     g_player_laser_count = 0;
     if (g_player1[0] < 0) {

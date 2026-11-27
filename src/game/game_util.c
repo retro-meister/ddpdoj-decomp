@@ -124,13 +124,8 @@ void binary_to_bcd(void) {
         x = (s32) reg_d0.h[0];
         t = *(s64 *)((u8 *)((s64 *)decimal_place_values) + off);
         if (x >= t) {
-#ifdef DDPDOJ_PC
             buf[i] = x / t;
             reg_d0.h[0] = x % t;
-#else
-            buf[i] = __divdi3(x, t);
-            reg_d0.h[0] = __moddi3(x, t);
-#endif
         } else {
             buf[i] = 0;
         }

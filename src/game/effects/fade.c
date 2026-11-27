@@ -280,11 +280,7 @@ loop_2:
     reg_a0 += 2;
     reg_d3.h[0] = *(u16 *)reg_a0;
     reg_a0 += 2;
-#ifdef DDPDOJ_PC
     reg_a3 = (u8 *)fade_speeds;
-#else
-    reg_a3 = (u8 *)((u32) fade_speeds);
-#endif
     reg_d3.h[0] &= 0x1F;
     reg_d3.h[0] *= 4;
     reg_a3 += reg_d3.h[0];
@@ -453,11 +449,7 @@ loop_2:
     reg_a0 += 2;
     reg_d3.h[0] = *(u16 *)reg_a0;
     reg_a0 += 2;
-#ifdef DDPDOJ_PC
     reg_a3 = (u8 *)fade_speeds;
-#else
-    reg_a3 = (u8 *)((u32) fade_speeds);
-#endif
     reg_d3.h[0] &= 0x1F;
     reg_d3.h[0] *= 4;
     reg_a3 += reg_d3.h[0];
@@ -613,11 +605,7 @@ loop_2:
     reg_a0 += 2;
     reg_d3.h[0] = *(u16 *)reg_a0;
     reg_a0 += 2;
-#ifdef DDPDOJ_PC
     reg_a3 = (u8 *)fade_speeds;
-#else
-    reg_a3 = (u8 *)((u32) fade_speeds);
-#endif
     reg_d3.h[0] &= 0x1F;
     reg_d3.h[0] *= 4;
     reg_a3 += reg_d3.h[0];
@@ -690,11 +678,7 @@ void fade_release(void)
     }
 #endif
     u32 saved_data_register = reg_d0.w;
-#ifdef DDPDOJ_PC
     u8 *saved_address_register = reg_a0;
-#else
-    u32 saved_address_register = (u32)reg_a0;
-#endif
     u16 *entry;
 
     do {

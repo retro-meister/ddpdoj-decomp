@@ -75,11 +75,7 @@ loop_2:
 
 
 void debris_update(void) {
-#ifdef DDPDOJ_PC
     u8 *temp_s0 = reg_a5;
-#else
-    s32 temp_s0 = (s32)reg_a5;
-#endif
     debris_update_loop();
     reg_a5 = (u8 *)temp_s0;
 }

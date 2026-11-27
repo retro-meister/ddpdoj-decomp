@@ -539,11 +539,7 @@ void sprite_entry_from_entity(void) {
 
 typedef void (*Fn)(void);
 
-#ifdef DDPDOJ_PC
 extern Fn multiply_d1_routines[64];
-#else
-extern u8 multiply_d1_routines[];
-#endif
 
 void sprite_zoom_prepare_entity(void) {
     u32 k;
@@ -558,11 +554,7 @@ void sprite_zoom_prepare_entity(void) {
     reg_d0.h[0] = ENTITY(reg_a6)->look.h;
     reg_d0.h[0] &= 0x1FF;
     reg_d0.h[0] >>= 1;
-#ifdef DDPDOJ_PC
     reg_call_target = multiply_d1_routines[reg_d0.h[0] >> 2];
-#else
-    reg_call_target = *(Fn *)(multiply_d1_routines + (reg_d0.h[0] & ~3));
-#endif
     reg_call_target();
     reg_tmp1.h[0] = reg_d1.h[0];
     reg_a0 = (u8 *)multiply_d1_routines;
@@ -574,11 +566,7 @@ void sprite_zoom_prepare_entity(void) {
     reg_d1.h[0] += 0x80;
     reg_d0.b[0] &= ENTITY(reg_a6)->look.b.size;
     reg_d0.h[0] *= 4;
-#ifdef DDPDOJ_PC
     reg_call_target = multiply_d1_routines[reg_d0.h[0] >> 2];
-#else
-    reg_call_target = *(Fn *)(multiply_d1_routines + (reg_d0.h[0] & ~3));
-#endif
     reg_call_target();
 }
 

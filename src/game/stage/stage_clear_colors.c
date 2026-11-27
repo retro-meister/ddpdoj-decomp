@@ -80,11 +80,7 @@ extern u16 D_0028E788;
 void stage_clear_color_table_get(void)
 {
     reg_d0.w = 0;
-#ifdef DDPDOJ_PC
     reg_a0 = ARCADE_POINTER_TABLE_AT(u8 *, stage_clear_color_table_get_table, g_stage_clear_color_index & ~3);
-#else
-    reg_a0 = (u8 *)(*(s8 **)((u8 *)((u8 *)stage_clear_color_table_get_table) + (g_stage_clear_color_index & ~3)));
-#endif
     reg_a0 += 7;
     reg_a0 -= D_0028E788;
     reg_d0.b[0] = (u8)*(s8 *)reg_a0;

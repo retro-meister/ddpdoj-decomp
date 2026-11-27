@@ -8,21 +8,13 @@ void scroll_events_run_line(void);
 s32 entity_draw_with_player_shots();                            /* extern */
 
 void player_shot_draw_a(void) {
-#ifdef DDPDOJ_PC
     reg_a0 = reg_a6;
-#else
-    reg_a0 = (u8 *)(((s32)reg_a6));
-#endif
     player_shot_draw_unused();
     entity_draw_with_player_shots();
 }
 
 void player_shot_draw_b(void) {
-#ifdef DDPDOJ_PC
     reg_a0 = reg_a6;
-#else
-    reg_a0 = (u8 *)(((s32)reg_a6));
-#endif
     player_shot_draw_unused();
     entity_draw_with_player_shots();
 }

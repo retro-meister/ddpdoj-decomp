@@ -4,13 +4,8 @@
 void credit_display_changed_check_coins(void);
 void credit_display_changed_check_side(void);
 void credit_display_changed_check_side_coins(u8 arg0);
-#ifdef DDPDOJ_PC
 void credit_display_changed(void);
 void credit_display_unchanged(void);
-#else
-void credit_display_changed();
-void credit_display_unchanged();
-#endif
 void p1_continue_discount_reset(void);
 void p2_continue_discount_reset(void);
 void p1_credit_spend(void);

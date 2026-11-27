@@ -2665,11 +2665,7 @@ block_4:
                 reg_d4.h[0] += 1;
             }
         }
-#ifdef DDPDOJ_PC
         reg_a0 = reg_a6;
-#else
-        reg_a0 = (u8 *)((u32) reg_a6);
-#endif
         reg_d5.w = 0x30;
         reg_d6.w = 0;
         do {

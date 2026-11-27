@@ -1715,13 +1715,8 @@ next_1:
                 reg_d3.h[0] = t4;
                 reg_a3 = (u8 *)(t1);
                 reg_d4.w = 0;
-#ifdef DDPDOJ_PC
                 reg_a0 = (u8 *)*(Fn *)reg_a2;
                 reg_a2 += sizeof(Fn);
-#else
-                reg_a0 = *(u8 **)reg_a2;
-                reg_a2 += 4;
-#endif
                 reg_call_target = (Fn)(reg_a0);
                 reg_call_target();
             } while ((s16)(--reg_d7.h[0]) >= 0);

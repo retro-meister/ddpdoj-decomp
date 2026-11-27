@@ -588,15 +588,9 @@ void continue_count_store(void)
     *(u16 *)(reg_a5 + 4) = 0x93C;
     reg_tmp.h[1] = *(u16 *)(reg_a4 + 0x10);
     reg_tmp.h[0] = *(u16 *)(reg_a4 + 0x12);
-#ifdef DDPDOJ_PC
     reg_a0 = ARCADE_ADDRESS_DECODE(u8 *, reg_tmp.w);
     reg_d0.b[0] = reg_a5[5];
     *reg_a0 = reg_d0.b[0];
-#else
-    (*(u32 *)&reg_a0) = reg_tmp.w;
-    reg_d0.b[0] = reg_a5[5];
-    *(u8 *)(*(u32 *)&reg_a0) = reg_d0.b[0];
-#endif
 }
 
 s32 hud_p1_caption_clear_shifted();

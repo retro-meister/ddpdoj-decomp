@@ -793,11 +793,7 @@ next_1:
     reg_d3.h[0] -= 1;
 }
 
-#ifdef DDPDOJ_PC
 extern void (*wreck_draw_routines[8])(void);
-#else
-extern u8 wreck_draw_routines[];
-#endif
 extern u16 g_frame_mod8;
 extern u16 g_frame_mod2;
 extern u16 g_wreck_count[];

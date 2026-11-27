@@ -1783,11 +1783,7 @@ extern u8 *g_bullet_fire_saved_a0_as_u8_p;
 void bullet_fire_loop2(void) {
     g_bullet_fire_saved_d0 = reg_d0.w;
     g_bullet_fire_saved_d1 = reg_d1.w;
-#ifdef DDPDOJ_PC
     g_bullet_fire_saved_a0 = (BulletSavedAddress)reg_a0;
-#else
-    g_bullet_fire_saved_a0_as_u8_p = reg_a0;
-#endif
     reg_tmp1.w = reg_d1.w;
     reg_d1.h[0] = 0x81;
     reg_d1.h[1] = reg_tmp1.h[0];
@@ -2120,11 +2116,7 @@ void bullet_fire256_loop2_double() {
 void bullet_fire256_loop2(void) {
     g_bullet_fire_saved_d0 = reg_d0.w;
     g_bullet_fire_saved_d1 = reg_d1.w;
-#ifdef DDPDOJ_PC
     g_bullet_fire_saved_a0 = (BulletSavedAddress)reg_a0;
-#else
-    g_bullet_fire_saved_a0_as_u8_p = reg_a0;
-#endif
     reg_tmp1.w = reg_d1.w;
     reg_d1.h[0] = 0x81;
     reg_d1.h[1] = reg_tmp1.h[0];
@@ -2410,11 +2402,7 @@ void bullet_type_setup_00(void) {
     cond_flag = 0;
     reg_d0.w = g_bullet_spawn_saved_d0;
     reg_d7.sw = (s32)g_bullet_spawn_saved_d7;
-#ifdef DDPDOJ_PC
     reg_a0 = g_bullet_spawn_saved_a0;
-#else
-    reg_a0 = (u8 *)(*(s32 *)&g_bullet_spawn_saved_a0);
-#endif
     reg_a1 = (u8 *)g_bullet_spawn_saved_a1;
 }
 
