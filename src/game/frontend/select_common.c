@@ -1,4 +1,5 @@
 #include "common.h"
+#include "black_label.h"
 #include "entity.h"
 
 void select_piece_move(void);
@@ -1101,7 +1102,7 @@ next_5:
     reg_d2.h[0] = *(u16 *)(reg_a0 + 6);
     reg_d3.h[0] = 0x630;
     reg_d4.h[0] = 0x12;
-    if (ENTITY(reg_a6)->flags.b[0] != 1) goto next_8;
+    if (GAME_RULE(ENTITY(reg_a6)->flags.b[0] != 1, 1)) goto next_8;
     if (ENTITY(reg_a6)->y.h == 0) goto next_9;
 next_8:
     sprite_draw_keep();
@@ -1110,7 +1111,7 @@ next_9:
     reg_d1.h[0] = *(u16 *)(reg_a0 + 0xA);
     reg_d2.h[1] = *(u16 *)(reg_a0 + 0xC);
     reg_d2.h[0] = *(u16 *)(reg_a0 + 0xE);
-    if (ENTITY(reg_a6)->flags.b[0] != 1) goto next_10;
+    if (GAME_RULE(ENTITY(reg_a6)->flags.b[0] != 1, 1)) goto next_10;
     if (ENTITY(reg_a6)->y.h == 1) goto next_11;
 next_10:
     sprite_draw_keep();

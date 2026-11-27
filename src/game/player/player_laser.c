@@ -315,7 +315,7 @@ void ship_select_ship_update(void) {
     if (reg_d0.w & 4) {
         ENTITY(reg_a6)->y.h -= 1;
         if (0 > (s16) ENTITY(reg_a6)->y.h) {
-            ENTITY(reg_a6)->y.h = 0U;
+            ENTITY(reg_a6)->y.h = GAME_RULE(0U, 1U);
         }
     }
     if (ENTITY(reg_a6)->y.h != reg_d6.h[0]) {
@@ -325,7 +325,7 @@ void ship_select_ship_update(void) {
     if (reg_d0.w & 8) {
         ENTITY(reg_a6)->y.h += 1;
         if ((s16) ENTITY(reg_a6)->y.h > 1) {
-            ENTITY(reg_a6)->y.h = 1U;
+            ENTITY(reg_a6)->y.h = GAME_RULE(1U, 0U);
         }
     }
     if (ENTITY(reg_a6)->y.h != reg_d6.h[0]) {
