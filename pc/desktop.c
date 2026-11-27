@@ -49,13 +49,14 @@ static bool run_modes(SDL_Window *window, SDL_Renderer *renderer, const char *is
             return false;
         }
         SDL_SharedObject *module = SDL_LoadObject(path);
-        SDL_free(path);
         if (!module) {
+            SDL_free(path);
             return false;
         }
         PcRunMode *run = (PcRunMode *)SDL_LoadFunction(module, "pc_run_mode");
         GameMode next_mode = GAME_MODE_NONE;
-        bool ok = run && run(renderer, iso, mode, &next_mode);
+        bool ok = run && run(renderer, iso, path, mode, &next_mode);
+        SDL_free(path);
         mode = next_mode;
         SDL_UnloadObject(module);
         if (!ok) {
