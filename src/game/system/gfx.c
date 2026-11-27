@@ -90,9 +90,13 @@ Vertex g_wallpaper_vertices[16] = {
 extern s16 g_text_palette[];
 extern s16 g_sprite_palette[];
 extern s16 g_bg_palette[];
-extern s16 g_clut_buf[];
-extern s16 g_sprite_clut_buf[];
-extern s16 g_bg_clut_buf[];
+typedef struct {
+    s16 background[2048];
+    s16 sprite[2048];
+    s16 general[1024];
+} ClutStorage;
+
+extern ClutStorage g_clut_storage;
 
 void splash_image_upload(void)
 {
@@ -401,30 +405,30 @@ void clut_upload_defaults(void)
     s32 colorIndex;
 
     source = g_default_palette;
-    palette = g_clut_buf;
+    palette = g_clut_storage.general;
     for (colorIndex = 0; colorIndex < 16; colorIndex++) {
         palette[colorIndex] = *source++;
     }
     g_clut_upload_cbp = 0x3832;
-    clut_upload((u8 *)g_clut_buf, 0, 1);
+    clut_upload((u8 *)g_clut_storage.general, 0, 1);
 
     source = g_default_text_palette;
-    palette = g_clut_buf;
+    palette = g_clut_storage.general;
     for (colorIndex = 0; colorIndex < 15; colorIndex++) {
         palette[colorIndex] = *source++ | 0x8000;
     }
     palette[colorIndex] = *source;
     g_clut_upload_cbp = 0x3830;
-    clut_upload((u8 *)g_clut_buf, 0, 1);
+    clut_upload((u8 *)g_clut_storage.general, 0, 1);
 
     source = (s16 *)palette_white;
-    palette = g_clut_buf;
+    palette = g_clut_storage.general;
     for (colorIndex = 0; colorIndex < 31; colorIndex++) {
         palette[colorIndex] = *source++ | 0x8000;
     }
     palette[colorIndex] = *source;
     g_clut_upload_cbp = 0x383A;
-    clut_upload((u8 *)g_clut_buf, 1, 1);
+    clut_upload((u8 *)g_clut_storage.general, 1, 1);
 }
 
 
@@ -437,7 +441,7 @@ void text_palette_upload(void) {
     s16 *palette;
 
     source = g_text_palette;
-    palette = g_clut_buf;
+    palette = g_clut_storage.general;
     for (i = 0; i < 16; i++) {
         for (colorIndex = 0; colorIndex < 15; colorIndex++) {
             palette[colorIndex] = *source++ | 0x8000;
@@ -446,7 +450,7 @@ void text_palette_upload(void) {
         palette += 0x40;
     }
     g_clut_upload_cbp = 0x37B0;
-    clut_upload((u8 *)g_clut_buf, 0, 16);
+    clut_upload((u8 *)g_clut_storage.general, 0, 16);
 }
 
 /* 32-colour palettes go out in the GS's CSM1 order (entries 8-15 and 16-23 swapped). */
@@ -456,7 +460,7 @@ void sprite_palette_upload(void) {
     s16 *dst;
 
     src = g_sprite_palette;
-    dst = g_sprite_clut_buf;
+    dst = g_clut_storage.sprite;
     i = 0;
     do {
         i++;
@@ -496,7 +500,8 @@ void sprite_palette_upload(void) {
         dst += 64;
     } while (i < 32);
     g_clut_upload_cbp = 0x3730;
-    clut_upload((u8 *)g_sprite_clut_buf, 1, 32);
+    /* The last 16x16 upload extends into the general plane. */
+    clut_upload((u8 *)&g_clut_storage + sizeof(g_clut_storage.background), 1, 32);
 }
 
 void bg_palette_upload(void) {
@@ -505,7 +510,7 @@ void bg_palette_upload(void) {
     s16 *dst;
 
     src = g_bg_palette;
-    dst = g_bg_clut_buf;
+    dst = g_clut_storage.background;
     i = 0;
     do {
         i++;
@@ -545,7 +550,7 @@ void bg_palette_upload(void) {
         dst += 64;
     } while (i < 32);
     g_clut_upload_cbp = 0x36B0;
-    clut_upload((u8 *)g_bg_clut_buf, 1, 32);
+    clut_upload((u8 *)&g_clut_storage, 1, 32);
 }
 
 #include "splash_draw.inc.h"
@@ -1449,7 +1454,7 @@ void wallpaper_load(s32 index, u16 *src) {
         sceGsExecLoadImage(&g_gs_load_image, buf);
     }
     row = 0;
-    dst = (u16 *)g_sprite_clut_buf;
+    dst = (u16 *)g_clut_storage.sprite;
     do {
         row++;
         dst[0] = src[0] | 0x8000;
@@ -1472,7 +1477,7 @@ void wallpaper_load(s32 index, u16 *src) {
         dst += 8;
     } while (row < 2);
     g_clut_upload_cbp = 0x18C0;
-    clut_upload((u8 *)g_sprite_clut_buf, 1, 1);
+    clut_upload((u8 *)g_clut_storage.sprite, 1, 1);
 }
 
 
@@ -1779,13 +1784,7 @@ Quad g_quad_queue[2001];
 Quad g_quad_queue[4000];
 #endif
 GlyphQueueEntry g_glyph_queue[1024];
-#ifdef DDPDOJ_PC
-s16 g_bg_clut_buf[5120];
-#else
-s16 g_clut_buf[1024];
-s16 g_sprite_clut_buf[2048];
-s16 g_bg_clut_buf[2048];
-#endif
+ClutStorage g_clut_storage __attribute__((aligned(16)));
 #ifdef DEATH_LABEL
 s32 g_bg_tile_offsets[4624];
 #else
@@ -1796,8 +1795,6 @@ RenderTarget g_render_target;
 #ifdef DDPDOJ_PC
 #include "pc_data_alias.h"
 
-PC_DATA_ALIAS(g_sprite_clut_buf, g_bg_clut_buf, 0x1000);
-PC_DATA_ALIAS(g_clut_buf, g_bg_clut_buf, 0x2000);
 #ifdef DEATH_LABEL
 PC_DATA_ALIAS(g_quad_queue_as_GlyphQuad_a, g_quad_queue, 0);
 #endif
@@ -1805,6 +1802,10 @@ PC_DATA_ALIAS(g_quad_queue_as_GlyphQuad_a, g_quad_queue, 0);
 
 #ifdef DDPDOJ_PC
 #include "pc_frame_regions.h"
+
+_Static_assert(offsetof(ClutStorage, sprite) == 0x1000, "sprite CLUT offset");
+_Static_assert(offsetof(ClutStorage, general) == 0x2000, "general CLUT offset");
+_Static_assert(sizeof(ClutStorage) == 0x2800, "CLUT storage size");
 
 const PcFrameRegion pc_graphics_regions[] = {
     PC_FRAME_REGION(g_stage_unpack_state),
@@ -1817,9 +1818,9 @@ const PcFrameRegion pc_graphics_regions[] = {
     PC_FRAME_REGION(g_label_timer),
     PC_FRAME_REGION(g_label_fade),
     PC_FRAME_REGION(g_bg_tile_offsets),
-    { g_bg_clut_buf + 4096, 2048, false },
-    { g_bg_clut_buf + 2048, 4096, false },
-    { g_bg_clut_buf, 4096, false },
+    PC_FRAME_REGION(g_clut_storage.general),
+    PC_FRAME_REGION(g_clut_storage.sprite),
+    PC_FRAME_REGION(g_clut_storage.background),
     PC_FRAME_REGION(g_render_target),
     { NULL, 0 },
 };

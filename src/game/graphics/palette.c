@@ -1,7 +1,14 @@
 #include "common.h"
 
-extern u8 D_0028E0AC;
-extern u8 palette_banks_flush_state;
+typedef union {
+    struct {
+        u8 interval;
+        u8 remaining;
+    } delay;
+    u16 initial_delays;
+} PalettePulseTimer;
+
+extern PalettePulseTimer g_palette_pulse_timer;
 extern u16 D_0028E0B0;
 extern u16 D_0028E0B4;
 extern s16 fade_areas_5;
@@ -59,12 +66,7 @@ void palettes_init(void) {
         (*(s16 *)((u8 *)(temp_a2) + (0xE))) = 0;
     } while (var_a3_2 < 0xF0);
     fade_areas_1 = 0;
-#ifdef DDPDOJ_PC
-    D_0028E0AC = 1;
-    palette_banks_flush_state = 1;
-#else
-    (*(s16 *)&D_0028E0AC) = 0x101;
-#endif
+    g_palette_pulse_timer.initial_delays = 0x0101;
     fade_areas_3 = 0;
     D_0028E0B0 = 1;
     fade_areas_5 = 0;
@@ -130,7 +132,6 @@ s32 color_at_brightness();
 s32 text_palette_upload();
 s32 sprite_palette_upload();
 s32 bg_palette_upload();
-extern u8 D_0028E0AC;
 extern u16 D_0028E0B0;
 extern u16 D_0028E0B4;
 extern u16 g_scroll_line;
@@ -194,11 +195,11 @@ void palette_banks_flush(void) {
         color_at_brightness();
         *(u16 *)reg_a1 = (u16) reg_d0.h[0];
         bg_palette_upload();
-        reg_tmp.b[0] = palette_banks_flush_state;
-        palette_banks_flush_state -= 1;
+        reg_tmp.b[0] = g_palette_pulse_timer.delay.remaining;
+        g_palette_pulse_timer.delay.remaining -= 1;
         if ((s32) reg_tmp.b[0] <= 0) {
             reg_d0.h[0] = D_0028E0B0;
-            palette_banks_flush_state = D_0028E0AC;
+            g_palette_pulse_timer.delay.remaining = g_palette_pulse_timer.delay.interval;
             if ((s16)(reg_d0.h[0]) < 0) {
                 D_0028E0B4 += reg_d0.h[0];
                 if ((s16) D_0028E0B4 < 0x18) {
@@ -274,8 +275,7 @@ s16 fade_areas_3 __attribute__((aligned(4)));
 s16 fade_areas_5 __attribute__((aligned(4)));
 u16 D_0028E0B4 __attribute__((aligned(4)));
 u16 D_0028E0B0 __attribute__((aligned(4)));
-u8 palette_banks_flush_state;
-u8 D_0028E0AC __attribute__((aligned(4)));
+PalettePulseTimer g_palette_pulse_timer __attribute__((aligned(4)));
 
 /* .bss (the compiler lays these out in reverse) */
 u8 g_palette_bank_b[2048];
@@ -285,14 +285,17 @@ u8 fade_areas_4[480];
 #ifdef DDPDOJ_PC
 #include "pc_frame_regions.h"
 
+_Static_assert(sizeof(PalettePulseTimer) == 2, "palette pulse timer size");
+_Static_assert(offsetof(PalettePulseTimer, delay.remaining) == 1, "palette pulse countdown offset");
+
 const PcFrameRegion pc_palette_regions[] = {
     PC_FRAME_REGION(fade_areas_1),
     PC_FRAME_REGION(fade_areas_3),
     PC_FRAME_REGION(fade_areas_5),
     PC_FRAME_REGION(D_0028E0B4),
     PC_FRAME_REGION(D_0028E0B0),
-    PC_FRAME_REGION(palette_banks_flush_state),
-    PC_FRAME_REGION(D_0028E0AC),
+    PC_FRAME_REGION(g_palette_pulse_timer.delay.remaining),
+    PC_FRAME_REGION(g_palette_pulse_timer.delay.interval),
     PC_FRAME_REGION(g_palette_bank_b),
     PC_FRAME_REGION(g_palette_bank_a),
     PC_FRAME_REGION(fade_areas_4),
