@@ -1,6 +1,7 @@
 #include "gallery/gallery.h"
 #include "disc_image.h"
 #include "gs.h"
+#include "presentation.h"
 #include "gs_texture.h"
 #include "pc_gs_game.h"
 
@@ -347,7 +348,8 @@ int main(int argc, char **argv)
     if (driver) {
         window = SDL_CreateWindow("Gallery draw test", 640, 480, SDL_WINDOW_HIDDEN);
         require(window != NULL, "Open Gallery window");
-        renderer = SDL_CreateRenderer(window, driver);
+        renderer = SDL_strcmp(driver, "desktop") == 0 ? pc_create_renderer(window) :
+                                                       SDL_CreateRenderer(window, driver);
     } else {
         canvas = SDL_CreateSurface(640, 480, SDL_PIXELFORMAT_RGBA32);
         require(canvas != NULL, "Create Gallery surface");

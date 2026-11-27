@@ -11,14 +11,6 @@ static Uint64 poll_time;
 static Uint64 render_budget = 4000000;
 static SDL_Renderer *display_renderer;
 
-void pc_enable_vsync(SDL_Renderer *renderer)
-{
-    display_renderer = renderer;
-    if (!SDL_SetRenderVSync(renderer, 1)) {
-        SDL_Log("VSync unavailable: %s", SDL_GetError());
-    }
-}
-
 static Uint64 field_deadline(void)
 {
     return epoch + (next_field * three_fields_ns + 2) / 3;
@@ -32,8 +24,9 @@ static void start_clock(Uint64 now)
     }
 }
 
-void pc_wait_to_poll_input(void)
+void pc_wait_to_poll_input(SDL_Renderer *renderer)
 {
+    display_renderer = renderer;
     Uint64 now = SDL_GetTicksNS();
     start_clock(now);
     Uint64 deadline = field_deadline();

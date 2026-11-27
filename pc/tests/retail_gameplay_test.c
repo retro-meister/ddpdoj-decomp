@@ -1,6 +1,7 @@
 #include "cdvd.h"
 #include "game_loop.h"
 #include "gs.h"
+#include "presentation.h"
 #include "memory_card.h"
 #include "pc_input.h"
 #include "pc_sound.h"
@@ -167,10 +168,10 @@ int main(int argc, char **argv)
     SDL_SetHint(SDL_HINT_JOYSTICK_ALLOW_BACKGROUND_EVENTS, "1");
     require(SDL_Init(SDL_INIT_VIDEO | SDL_INIT_GAMEPAD | SDL_INIT_AUDIO), "Initialize SDL");
 
-    SDL_Window *window = NULL;
-    SDL_Renderer *renderer = NULL;
-    require(SDL_CreateWindowAndRenderer("DaiOuJou gameplay test", 640, 480, SDL_WINDOW_HIDDEN,
-                                        &window, &renderer), "Create test renderer");
+    SDL_Window *window = SDL_CreateWindow("DaiOuJou gameplay test", 640, 480, SDL_WINDOW_HIDDEN);
+    require(window != NULL, "Create test window");
+    SDL_Renderer *renderer = replay ? SDL_CreateRenderer(window, NULL) : pc_create_renderer(window);
+    require(renderer != NULL, "Create test renderer");
     require(pc_cdvd_mount(argv[1]) && pc_bgm_open(argv[1]) && pc_sfx_load(argv[1]), "Load retail assets");
     require(pc_mc_open_storage(argv[2]), "Open test memory card");
 

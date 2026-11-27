@@ -5,6 +5,7 @@
 #include "game_loop.h"
 #include "gs.h"
 #include "pc_input.h"
+#include "presentation.h"
 #include "sfx.h"
 #include "vblank.h"
 
@@ -60,9 +61,9 @@ static bool start_mode(GameMode mode, const char *iso)
     return true;
 }
 
-static bool process_input(void)
+static bool process_input(SDL_Renderer *renderer)
 {
-    pc_wait_to_poll_input();
+    pc_wait_to_poll_input(renderer);
     SDL_Event event;
     while (SDL_PollEvent(&event)) {
         if (event.type == SDL_EVENT_QUIT) {
@@ -86,7 +87,7 @@ static bool run_mode(SDL_Renderer *renderer, const char *iso, GameMode *next_mod
         return false;
     }
     bool ok = true;
-    while (process_input()) {
+    while (process_input(renderer)) {
         s32 state = gallery_run_frame();
         if (state < 0) {
             ok = false;
@@ -111,7 +112,7 @@ static bool run_mode(SDL_Renderer *renderer, const char *iso, GameMode *next_mod
     pc_gs_bind_game(renderer);
     game_boot_begin();
     bool loaded = false;
-    while (process_input()) {
+    while (process_input(renderer)) {
         if (loaded) {
             game_run_frame();
         } else {
@@ -176,15 +177,19 @@ int main(int argc, char **argv)
     DiscSelection selection = {0};
     const char *iso = argc == 2 ? argv[1] : NULL;
     GameMode next_mode = GAME_MODE_NONE;
-    bool ok = SDL_Init(SDL_INIT_VIDEO | SDL_INIT_GAMEPAD | SDL_INIT_AUDIO) &&
-        SDL_CreateWindowAndRenderer(title, 768, 576, SDL_WINDOW_RESIZABLE | SDL_WINDOW_HIGH_PIXEL_DENSITY,
-                                    &window, &renderer);
+    if (SDL_Init(SDL_INIT_VIDEO | SDL_INIT_GAMEPAD | SDL_INIT_AUDIO)) {
+        window = SDL_CreateWindow(title, 768, 576, SDL_WINDOW_RESIZABLE |
+                                  SDL_WINDOW_HIGH_PIXEL_DENSITY | SDL_WINDOW_HIDDEN);
+        if (window) {
+            renderer = pc_create_renderer(window);
+        }
+    }
+    bool ok = renderer && SDL_ShowWindow(window);
     if (ok && !iso) {
         choose_disc(window, &selection);
         iso = selection.path;
     }
     if (ok && !selection.canceled) {
-        pc_enable_vsync(renderer);
         ok = iso && pc_cdvd_mount(iso) && pc_sfx_load(iso) && pc_sfx_open_device() &&
              run_mode(renderer, iso, &next_mode);
     }
