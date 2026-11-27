@@ -1,8 +1,8 @@
 #include "common.h"
 #include "test_mode.h"
 
-struct TestGameValuePrintersRecord { void *p0; void *p1; void *p2; void *p3; u16 w4[8]; };
-extern struct TestGameValuePrintersRecord test_game_value_printers;
+typedef void (*ValuePrinter)(void);
+extern ValuePrinter test_game_value_printers[8];
 
 s32 input_get_p1_pressed();
 s32 sfx_confirm();
@@ -372,10 +372,10 @@ u8 test_game_extend_names[256] = {
     0x20, 0x20, 0x20, 0x20, 0x20, 0x20, 0x20, 0x20, 0x20, 0x20, 0x20, 0x20, 0x20, 0x20, 0x20, 0xFF,
 };
 
-struct TestGameValuePrintersRecord test_game_value_printers = {
+ValuePrinter test_game_value_printers[8] = {
     test_game_print_difficulty,
     test_game_print_extend,
     test_game_print_ship_stock,
     test_game_print_rapid_fire,
-    { 0xFFFF, 0xFFFF, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000 },
+    (ValuePrinter)-1,
 };

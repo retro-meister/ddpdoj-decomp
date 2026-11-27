@@ -2,8 +2,8 @@
 #include "test_mode.h"
 
 extern void *test_system_item_texts[8];
-struct TestSystemValuePrintersRecord { void *p0; void *p1; void *p2; void *p3; u16 w4[8]; };
-extern struct TestSystemValuePrintersRecord test_system_value_printers;
+typedef void (*ValuePrinter)(void);
+extern ValuePrinter test_system_value_printers[8];
 
 s32 input_get_p1_pressed();
 void test_system_print_blank_note(void);
@@ -64,7 +64,6 @@ void test_system_begin(void) {
 }
 
 void test_system_print_items(void) {
-    s32 offset;
 
     reg_a0 = test_system_text_coin_mode;
     reg_d0.h[0] = 0;
@@ -79,8 +78,7 @@ void test_system_print_items(void) {
     test_print_lines();
     reg_d0.w = 0;
     reg_d0.b[0] = (u8) g_test_cursor;
-    offset = reg_d0.h[0] * 4;
-    reg_a0 = *(u8 **)((u8 *)((u8 *)test_system_item_texts) + offset);
+    reg_a0 = test_system_item_texts[reg_d0.h[0]];
     reg_d0.h[0] = 2;
     test_print_lines();
 }
@@ -158,7 +156,7 @@ void test_system_print_chute_type(void) {
 typedef void (*Fn)();
 
 void test_system_print_values(void) {
-    s32 offset;
+    ValuePrinter printer;
 
     reg_d7.h[0] = 0;
     test_system_print_coin_mode();
@@ -170,10 +168,16 @@ void test_system_print_values(void) {
     test_system_print_chute_type();
     reg_d0.w = 0;
     reg_d0.b[0] = (u8) g_test_cursor;
-    offset = reg_d0.h[0] * 4;
-    reg_d0.w = *(u32 *)(((u8 *)&test_system_value_printers) + offset);
+    printer = test_system_value_printers[reg_d0.h[0]];
+#ifdef DDPDOJ_PC
+    if (printer == (ValuePrinter)-1) {
+        reg_d0.w = (u32)-1;
+        return;
+    }
+#endif
+    reg_d0.w = ARCADE_ADDRESS_ENCODE(printer);
     if (reg_d0.w != -1U) {
-        reg_a0 = (u8 *)reg_d0.w;
+        reg_a0 = ARCADE_ADDRESS_DECODE(u8 *, reg_d0.w);
         reg_d7.h[0] = 2;
         reg_call_target = (Fn)reg_a0;
         reg_call_target();
@@ -392,10 +396,10 @@ s32 test_system_blank_note[8] = {
     0x20202020, 0x20202020, 0x20202020, 0x20202020, 0x20202020, 0x20202020, 0x20202020, 0xFF202020,
 };
 
-struct TestSystemValuePrintersRecord test_system_value_printers = {
+ValuePrinter test_system_value_printers[8] = {
     test_system_print_coin_mode,
     test_system_print_continue,
     test_system_print_demo_sound,
     test_system_print_chute_type,
-    { 0xFFFF, 0xFFFF, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000 },
+    (ValuePrinter)-1,
 };
