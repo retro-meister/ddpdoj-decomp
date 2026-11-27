@@ -19,6 +19,7 @@ s32 score_add();
 s32 bullet_cancel_on_boss_hit();
 extern u8 g_game_mode;
 extern u16 g_stage5_boss_all_forms;
+extern u16 g_loop;
 extern s32 g_boss_score;
 extern u16 g_damage_blink_counter;
 
@@ -214,10 +215,10 @@ next_7:
     return;
 block_chk:
     if (STAGE5_DAMAGE(reg_a6)->form1_second_phase != 0) goto next_8;
-    if (g_stage5_boss_all_forms != 0) goto next_8;
+    if (GAME_RULE(g_stage5_boss_all_forms, g_loop) != 0) goto next_8;
     reg_d0.h[1] = TW(0x16);
     reg_d0.h[0] = TW(0x18);
-    reg_d0.w += 0xFFFD6000;
+    reg_d0.w -= GAME_RULE(0x2A000U, 0x23000U);
     if (0 > (s32) reg_d0.w) goto next_10;
     goto next_8;
 next_10:

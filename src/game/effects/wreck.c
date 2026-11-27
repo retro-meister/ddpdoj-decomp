@@ -482,7 +482,7 @@ void clear_bonus_p1_step(void) {
         goto block_2;
     }
 #ifdef DDPDOJ_BONUS_FEATURES
-    if (g_black_label_active && g_loop == 0 && !g_black_label_single_loop) {
+    if (g_black_label_active && g_loop == 0) {
         g_loop2_starting_lives[0] = g_p1_lives;
         goto block_2;
     }
@@ -509,7 +509,7 @@ block_3:
         case 0:
             goto block_1;
         }
-        reg_d0.w = GAME_RULE(0x01000000, 0x03000000);
+        reg_d0.w = 0x01000000;
         score_add_p1();
         g_p1_lives -= 1;
         hud_p1_lives_put();
@@ -598,7 +598,7 @@ void clear_bonus_p2_step(void) {
         goto block_2;
     }
 #ifdef DDPDOJ_BONUS_FEATURES
-    if (g_black_label_active && g_loop == 0 && !g_black_label_single_loop) {
+    if (g_black_label_active && g_loop == 0) {
         g_loop2_starting_lives[1] = g_p2_lives;
         goto block_2;
     }
@@ -625,7 +625,7 @@ block_3:
         case 0:
             goto block_1;
         }
-        reg_d0.w = GAME_RULE(0x01000000, 0x03000000);
+        reg_d0.w = 0x01000000;
         score_add_p2();
         g_p2_lives -= 1;
         hud_p2_lives_put();
