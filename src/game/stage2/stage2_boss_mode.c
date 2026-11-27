@@ -1,6 +1,7 @@
 #include "common.h"
 #ifdef DDPDOJ_PC
 #include "pc_gameplay_abi.h"
+#include <assert.h>
 #endif
 #include "entity.h"
 #include "explosion.h"
@@ -283,9 +284,6 @@ void stage2_boss_mode_second_phase_start(void) {
     SECOND_PHASE(reg_a4)->delay = 0x10;
     SECOND_PHASE(reg_a4)->effect_timer.h = 4;
     SECOND_PHASE(reg_a4)->unread_08 = 0;
-#ifdef DDPDOJ_PC
-    SECOND_PHASE(reg_a4)->effect = 0;
-#endif
     ARCADE_REGISTER_CALL(stage2_boss_mode_second_phase, 0x10);
 }
 
@@ -311,7 +309,10 @@ void stage2_boss_mode_second_phase() {
         if ((s32) reg_tmp.b[0] <= 0) {
             SECOND_PHASE(reg_a4)->effect_timer.t.count = (u8) SECOND_PHASE(reg_a4)->effect_timer.t.reload;
 #ifdef DDPDOJ_PC
-            reg_a0 = ARCADE_POINTER_TABLE_AT(u8 *, stage2_boss_blast_sounds, SECOND_PHASE(reg_a4)->effect);
+            const u16 offset = SECOND_PHASE(reg_a4)->effect;
+            /* The original carries this offset over from the previous phase slot. */
+            assert(offset % 4 == 0 && offset / 4 < sizeof(stage2_boss_blast_sounds) / sizeof(stage2_boss_blast_sounds[0]));
+            reg_a0 = ARCADE_POINTER_TABLE_AT(u8 *, stage2_boss_blast_sounds, offset);
 #else
             reg_a0 = (u8 *)stage2_boss_blast_sounds;
             reg_a0 += SECOND_PHASE(reg_a4)->effect;
@@ -320,11 +321,7 @@ void stage2_boss_mode_second_phase() {
             reg_call_target = (Fn)(reg_a0);
             reg_call_target();
             SECOND_PHASE(reg_a4)->effect += 4;
-#ifdef DDPDOJ_PC
-            SECOND_PHASE(reg_a4)->effect &= 0x1F;
-#else
             SECOND_PHASE(reg_a4)->unread_08 &= 0x1F;
-#endif
         }
         SECOND_PHASE(reg_a4)->delay -= 1;
         if (SECOND_PHASE(reg_a4)->delay == 0) {
