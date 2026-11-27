@@ -1,3 +1,4 @@
+#include "black_label.h"
 #include "common.h"
 #include "arcade_gameplay.h"
 #include "entity.h"
@@ -90,13 +91,17 @@ void stage2_boss_body_spread_fan();
 void stage2_boss_fire_body_rage(void);
 
 extern u16 g_loop;
+#ifdef DDPDOJ_BONUS_FEATURES
+void bullet_fire_fast(void);
+void slowdown_allow_with_boss(void);
+#endif
 
 void stage2_boss_fire_fixed_wider_on_loop(void) {
     if (g_loop != 0) {
         bullet_fire_fixed();
-        reg_d1.b[0] -= 1;
+        reg_d1.b[0] -= GAME_RULE(1, 3);
         bullet_fire_fixed();
-        reg_d1.b[0] += 2;
+        reg_d1.b[0] += GAME_RULE(2, 6);
     }
     bullet_fire_fixed();
 }
@@ -268,7 +273,7 @@ void stage2_boss_fire_torso_rapid(void) {
             reg_d1.h[0] += reg_d1.h[0];
             rng_next();
             reg_d1.b[0] += reg_d0.b[0];
-            reg_d0.w = 0x80013;
+            reg_d0.w = GAME_RULE(0x80013, 0x50013);
             reg_a0 = (u8 *)(g_direction64_offsets_166);
             reg_d3.h[0] = reg_d1.h[0];
             reg_d3.h[0] &= 0x3F;
@@ -309,7 +314,7 @@ void stage2_boss_fire_torso_rapid(void) {
                 reg_tmp3.h[0] = ((((u16)reg_d3.h[0]) + 2) != 0) ? *(u16 *)((u8 *)reg_a0 + ((s16)(((u16)reg_d3.h[0]) + 2) & ~1)) : *(u16 *)reg_a0;
                 reg_d3.w = *(u32 *)&reg_tmp3.h[0];
                 reg_d3.w += reg_d5.w;
-                bullet_fire256_fixed();
+                GAME_RULE(bullet_fire256_fixed, bullet_fire256_fast)();
                 reg_d1.b[0] += 0x10;
                 reg_d3.h[0] = reg_d1.h[0];
                 reg_d3.h[0] &= 0x3F;
@@ -319,27 +324,29 @@ void stage2_boss_fire_torso_rapid(void) {
                 reg_tmp3.h[0] = ((((u16)reg_d3.h[0]) + 2) != 0) ? *(u16 *)((u8 *)reg_a0 + ((s16)(((u16)reg_d3.h[0]) + 2) & ~1)) : *(u16 *)reg_a0;
                 reg_d3.w = *(u32 *)&reg_tmp3.h[0];
                 reg_d3.w += reg_d5.w;
-                bullet_fire256_fixed();
-                reg_d1.b[0] += 8;
-                reg_d3.h[0] = reg_d1.h[0];
-                reg_d3.h[0] &= 0x3F;
-                reg_d3.h[0] += reg_d3.h[0];
-                reg_d3.h[0] += reg_d3.h[0];
-                reg_tmp3.h[1] = (reg_d3.h[0] != 0) ? *(u16 *)((u8 *)reg_a0 + ((s16)reg_d3.h[0] & ~1)) : *(u16 *)reg_a0;
-                reg_tmp3.h[0] = ((((u16)reg_d3.h[0]) + 2) != 0) ? *(u16 *)((u8 *)reg_a0 + ((s16)(((u16)reg_d3.h[0]) + 2) & ~1)) : *(u16 *)reg_a0;
-                reg_d3.w = *(u32 *)&reg_tmp3.h[0];
-                reg_d3.w += reg_d5.w;
-                bullet_fire256_fixed();
-                reg_d1.b[0] += 0x10;
-                reg_d3.h[0] = reg_d1.h[0];
-                reg_d3.h[0] &= 0x3F;
-                reg_d3.h[0] += reg_d3.h[0];
-                reg_d3.h[0] += reg_d3.h[0];
-                reg_tmp3.h[1] = (reg_d3.h[0] != 0) ? *(u16 *)((u8 *)reg_a0 + ((s16)reg_d3.h[0] & ~1)) : *(u16 *)reg_a0;
-                reg_tmp3.h[0] = ((((u16)reg_d3.h[0]) + 2) != 0) ? *(u16 *)((u8 *)reg_a0 + ((s16)(((u16)reg_d3.h[0]) + 2) & ~1)) : *(u16 *)reg_a0;
-                reg_d3.w = *(u32 *)&reg_tmp3.h[0];
-                reg_d3.w += reg_d5.w;
-                bullet_fire256_fixed();
+                GAME_RULE(bullet_fire256_fixed, bullet_fire256_fast)();
+                if (GAME_RULE(1, 0)) {
+                    reg_d1.b[0] += 8;
+                    reg_d3.h[0] = reg_d1.h[0];
+                    reg_d3.h[0] &= 0x3F;
+                    reg_d3.h[0] += reg_d3.h[0];
+                    reg_d3.h[0] += reg_d3.h[0];
+                    reg_tmp3.h[1] = (reg_d3.h[0] != 0) ? *(u16 *)((u8 *)reg_a0 + ((s16)reg_d3.h[0] & ~1)) : *(u16 *)reg_a0;
+                    reg_tmp3.h[0] = ((((u16)reg_d3.h[0]) + 2) != 0) ? *(u16 *)((u8 *)reg_a0 + ((s16)(((u16)reg_d3.h[0]) + 2) & ~1)) : *(u16 *)reg_a0;
+                    reg_d3.w = *(u32 *)&reg_tmp3.h[0];
+                    reg_d3.w += reg_d5.w;
+                    bullet_fire256_fixed();
+                    reg_d1.b[0] += 0x10;
+                    reg_d3.h[0] = reg_d1.h[0];
+                    reg_d3.h[0] &= 0x3F;
+                    reg_d3.h[0] += reg_d3.h[0];
+                    reg_d3.h[0] += reg_d3.h[0];
+                    reg_tmp3.h[1] = (reg_d3.h[0] != 0) ? *(u16 *)((u8 *)reg_a0 + ((s16)reg_d3.h[0] & ~1)) : *(u16 *)reg_a0;
+                    reg_tmp3.h[0] = ((((u16)reg_d3.h[0]) + 2) != 0) ? *(u16 *)((u8 *)reg_a0 + ((s16)(((u16)reg_d3.h[0]) + 2) & ~1)) : *(u16 *)reg_a0;
+                    reg_d3.w = *(u32 *)&reg_tmp3.h[0];
+                    reg_d3.w += reg_d5.w;
+                    bullet_fire256_fixed();
+                }
             }
         }
         TORSO_RAPID(reg_a4)->shots_left -= 1;
@@ -522,37 +529,38 @@ void stage2_boss_fire_shoulder_triple(void) {
 void stage2_boss_shoulder_sweep_a_shot(void) {
     reg_d5.b[0] = 2;
     if (g_loop != 0) {
-        reg_d5.b[0] = 3;
+        reg_d5.b[0] = GAME_RULE(3, 1);
     }
-    reg_d0.w = 0xFFFC0007;
+    reg_d0.w = GAME_RULE(0xFFFC0007, 0xFFFA0007);
     reg_d1.b[0] -= reg_d5.b[0];
     reg_d1.h[0] &= 0x3F;
     if (((s32) reg_d1.h[0] < 0x10) || ((s32) reg_d1.h[0] > 0x30)) {
         reg_d0.w += 0x80000;
     }
-    bullet_fire_fixed();
-    reg_d0.w = 0xFFFD0007;
+    GAME_RULE(bullet_fire_fixed, bullet_fire_fast)();
+    reg_d0.w = GAME_RULE(0xFFFD0007, 0xFFFB0007);
     reg_d1.b[0] += reg_d5.b[0];
     reg_d1.h[0] &= 0x3F;
     if (((s32) reg_d1.h[0] < 0x10) || ((s32) reg_d1.h[0] > 0x30)) {
         reg_d0.w += 0x80000;
     }
-    bullet_fire_fixed();
-    reg_d0.w = 0xFFFE0007;
+    GAME_RULE(bullet_fire_fixed, bullet_fire_fast)();
+    reg_d0.w = GAME_RULE(0xFFFE0007, 0xFFFC0007);
     reg_d1.b[0] += reg_d5.b[0];
     reg_d1.h[0] &= 0x3F;
     if (((s32) reg_d1.h[0] < 0x10) || ((s32) reg_d1.h[0] > 0x30)) {
         reg_d0.w += 0x80000;
     }
-    bullet_fire_fixed();
+    GAME_RULE(bullet_fire_fixed, bullet_fire_fast)();
     if (g_loop != 0) {
-        reg_d0.w = 0xFFFF0007;
+        reg_d0.w = GAME_RULE(0xFFFF0007, 0xFFFD0007);
         reg_d1.b[0] += reg_d5.b[0];
         reg_d1.h[0] &= 0x3F;
         if (((s32) reg_d1.h[0] < 0x10) || ((s32) reg_d1.h[0] > 0x30)) {
             reg_d0.w += 0x80000;
         }
-        bullet_fire_fixed();
+        GAME_RULE(bullet_fire_fixed, bullet_fire_fast)();
+        if (GAME_RULE(0, 1)) return;
         reg_d0.w = 7;
         reg_d1.b[0] += reg_d5.b[0];
         reg_d1.h[0] &= 0x3F;
@@ -653,12 +661,20 @@ void stage2_boss_fire_shoulder_sweep_a(void) {
     }
 }
 
-s32 bullet_fire_2way();
+void bullet_fire_2way(void);
+
+#ifdef DDPDOJ_BONUS_FEATURES
+static void stage2_fast_pair(void) {
+    if (g_loop) reg_d0.w += 4u << 16;
+    bullet_fire_2way();
+    if (g_loop) reg_d0.w -= 4u << 16;
+}
+#endif
 extern u16 g_direction64_offsets_2CC[];
 
 void stage2_boss_shoulder_sweep_b_shot(void) {
     reg_a0 = (u8 *)(g_direction64_offsets_2CC);
-    reg_d0.w = 0xFFFA0007;
+    reg_d0.w = GAME_RULE(0xFFFA0007, 0xFFF90007);
     reg_d1.h[0] &= 0x3F;
     if (((s32) reg_d1.b[0] < 0x10) || ((s32) reg_d1.b[0] > 0x30)) {
         reg_d0.w += 0x80000;
@@ -671,8 +687,8 @@ void stage2_boss_shoulder_sweep_b_shot(void) {
     reg_tmp3.h[0] = (((u16)reg_d3.h[0] + 2) != 0) ? *(u16 *)((u8 *)reg_a0 + ((s16)((u16)reg_d3.h[0] + 2) & ~1)) : *(u16 *)reg_a0;
     reg_d3.w = *(u32 *)&reg_tmp3.h[0];
     reg_d3.w += reg_d5.w;
-    bullet_fire_2way();
-    reg_d0.w = 0xFFFA0007;
+    GAME_RULE(bullet_fire_2way, stage2_fast_pair)();
+    reg_d0.w = GAME_RULE(0xFFFA0007, 0xFFF90007);
     reg_d1.b[0] += 6;
     reg_d1.h[0] &= 0x3F;
     if (((s32) reg_d1.b[0] < 0x10) || ((s32) reg_d1.b[0] > 0x30)) {
@@ -686,8 +702,8 @@ void stage2_boss_shoulder_sweep_b_shot(void) {
     reg_tmp3.h[0] = (((u16)reg_d3.h[0] + 2) != 0) ? *(u16 *)((u8 *)reg_a0 + ((s16)((u16)reg_d3.h[0] + 2) & ~1)) : *(u16 *)reg_a0;
     reg_d3.w = *(u32 *)&reg_tmp3.h[0];
     reg_d3.w += reg_d5.w;
-    bullet_fire_2way();
-    reg_d0.w = 0xFFFA0007;
+    GAME_RULE(bullet_fire_2way, stage2_fast_pair)();
+    reg_d0.w = GAME_RULE(0xFFFA0007, 0xFFF90007);
     reg_d1.b[0] += 6;
     reg_d1.h[0] &= 0x3F;
     if (((s32) reg_d1.b[0] < 0x10) || ((s32) reg_d1.b[0] > 0x30)) {
@@ -701,8 +717,8 @@ void stage2_boss_shoulder_sweep_b_shot(void) {
     reg_tmp3.h[0] = (((u16)reg_d3.h[0] + 2) != 0) ? *(u16 *)((u8 *)reg_a0 + ((s16)((u16)reg_d3.h[0] + 2) & ~1)) : *(u16 *)reg_a0;
     reg_d3.w = *(u32 *)&reg_tmp3.h[0];
     reg_d3.w += reg_d5.w;
-    bullet_fire_2way();
-    reg_d0.w = 0xFFFA0007;
+    GAME_RULE(bullet_fire_2way, stage2_fast_pair)();
+    reg_d0.w = GAME_RULE(0xFFFA0007, 0xFFF90007);
     reg_d1.b[0] -= 0x12;
     reg_d1.h[0] &= 0x3F;
     if (((s32) reg_d1.b[0] < 0x10) || ((s32) reg_d1.b[0] > 0x30)) {
@@ -716,8 +732,8 @@ void stage2_boss_shoulder_sweep_b_shot(void) {
     reg_tmp3.h[0] = (((u16)reg_d3.h[0] + 2) != 0) ? *(u16 *)((u8 *)reg_a0 + ((s16)((u16)reg_d3.h[0] + 2) & ~1)) : *(u16 *)reg_a0;
     reg_d3.w = *(u32 *)&reg_tmp3.h[0];
     reg_d3.w += reg_d5.w;
-    bullet_fire_2way();
-    reg_d0.w = 0xFFFA0007;
+    GAME_RULE(bullet_fire_2way, stage2_fast_pair)();
+    reg_d0.w = GAME_RULE(0xFFFA0007, 0xFFF90007);
     reg_d1.b[0] -= 6;
     reg_d1.h[0] &= 0x3F;
     if (((s32) reg_d1.b[0] < 0x10) || ((s32) reg_d1.b[0] > 0x30)) {
@@ -731,7 +747,7 @@ void stage2_boss_shoulder_sweep_b_shot(void) {
     reg_tmp3.h[0] = (((u16)reg_d3.h[0] + 2) != 0) ? *(u16 *)((u8 *)reg_a0 + ((s16)((u16)reg_d3.h[0] + 2) & ~1)) : *(u16 *)reg_a0;
     reg_d3.w = *(u32 *)&reg_tmp3.h[0];
     reg_d3.w += reg_d5.w;
-    bullet_fire_2way();
+    GAME_RULE(bullet_fire_2way, stage2_fast_pair)();
 }
 
 s32 rng_next_masked();
@@ -785,7 +801,7 @@ void stage2_boss_fire_shoulder_sweep_b(void) {
             SHOULDER_SWEEP(reg_a4)->second.t.count = (u8) SHOULDER_SWEEP(reg_a4)->second.t.reload;
             if (g_bullets_blocked == 0) {
                 reg_d1.w = 0;
-                reg_d0.w = 0x6000B;
+                reg_d0.w = GAME_RULE(0x6000B, 0x4000B);
                 reg_d1.b[0] = ENTITY(reg_a6)[4].move.b.dir;
                 reg_d1.b[0] += 0x20;
                 reg_d2.h[1] = ENTITY(reg_a6)[4].y.h;
@@ -794,7 +810,7 @@ void stage2_boss_fire_shoulder_sweep_b(void) {
                 reg_d4.w = 0;
                 stage2_boss_fire_fixed_wider_on_loop();
                 reg_d1.w = 0;
-                reg_d0.w = 0x6000B;
+                reg_d0.w = GAME_RULE(0x6000B, 0x4000B);
                 reg_d1.b[0] = ENTITY(reg_a6)[5].move.b.dir;
                 reg_d1.b[0] += 0x20;
                 reg_d2.h[1] = ENTITY(reg_a6)[5].y.h;
@@ -856,7 +872,7 @@ void stage2_boss_fire_shoulder_sweep_b(void) {
 
 void stage2_boss_shoulder_sweep_c_shot(void) {
     reg_a0 = (u8 *)(g_direction64_offsets_2CC);
-    reg_d0.w = 0xFFFF0007;
+    reg_d0.w = GAME_RULE(0xFFFF0007, 0xFFFE0007);
     reg_d1.b[0] -= 2;
     if (((s32) reg_d1.b[0] < 0x40) || ((s32) reg_d1.b[0] > 0xC0)) {
         reg_d0.w += 0x80000;
@@ -868,8 +884,8 @@ void stage2_boss_shoulder_sweep_c_shot(void) {
     reg_tmp3.h[0] = (((u16)reg_d3.h[0] + 2) != 0) ? *(u16 *)((u8 *)reg_a0 + ((s16)((u16)reg_d3.h[0] + 2) & ~1)) : *(u16 *)reg_a0;
     reg_d3.w = *(u32 *)&reg_tmp3.h[0];
     reg_d3.w += reg_d5.w;
-    bullet_fire256_fixed();
-    reg_d0.w = 0xFFFF0007;
+    GAME_RULE(bullet_fire256_fixed, bullet_fire256_fast)();
+    reg_d0.w = GAME_RULE(0xFFFF0007, 0xFFFE0007);
     reg_d1.b[0] += 2;
     if (((s32) reg_d1.b[0] < 0x40) || ((s32) reg_d1.b[0] > 0xC0)) {
         reg_d0.w += 0x80000;
@@ -881,8 +897,8 @@ void stage2_boss_shoulder_sweep_c_shot(void) {
     reg_tmp3.h[0] = (((u16)reg_d3.h[0] + 2) != 0) ? *(u16 *)((u8 *)reg_a0 + ((s16)((u16)reg_d3.h[0] + 2) & ~1)) : *(u16 *)reg_a0;
     reg_d3.w = *(u32 *)&reg_tmp3.h[0];
     reg_d3.w += reg_d5.w;
-    bullet_fire256_fixed();
-    reg_d0.w = 0xFFFF0007;
+    GAME_RULE(bullet_fire256_fixed, bullet_fire256_fast)();
+    reg_d0.w = GAME_RULE(0xFFFF0007, 0xFFFE0007);
     reg_d1.b[0] += 2;
     if (((s32) reg_d1.b[0] < 0x40) || ((s32) reg_d1.b[0] > 0xC0)) {
         reg_d0.w += 0x80000;
@@ -894,9 +910,9 @@ void stage2_boss_shoulder_sweep_c_shot(void) {
     reg_tmp3.h[0] = (((u16)reg_d3.h[0] + 2) != 0) ? *(u16 *)((u8 *)reg_a0 + ((s16)((u16)reg_d3.h[0] + 2) & ~1)) : *(u16 *)reg_a0;
     reg_d3.w = *(u32 *)&reg_tmp3.h[0];
     reg_d3.w += reg_d5.w;
-    bullet_fire256_fixed();
+    GAME_RULE(bullet_fire256_fixed, bullet_fire256_fast)();
     if (g_loop != 0) {
-        reg_d0.w = 0xFFFD0007;
+        reg_d0.w = GAME_RULE(0xFFFD0007, 0xFFFE0007);
         reg_d1.b[0] += 1;
         if (((s32) reg_d1.b[0] < 0x40) || ((s32) reg_d1.b[0] > 0xC0)) {
             reg_d0.w += 0x80000;
@@ -909,7 +925,7 @@ void stage2_boss_shoulder_sweep_c_shot(void) {
         reg_d3.w = *(u32 *)&reg_tmp3.h[0];
         reg_d3.w += reg_d5.w;
         bullet_fire256_fixed();
-        reg_d0.w = 0xFFFD0007;
+        reg_d0.w = GAME_RULE(0xFFFD0007, 0xFFFE0007);
         reg_d1.b[0] -= 6;
         if (((s32) reg_d1.b[0] < 0x40) || ((s32) reg_d1.b[0] > 0xC0)) {
             reg_d0.w += 0x80000;
@@ -983,7 +999,7 @@ void stage2_boss_fire_shoulder_sweep_c(void) {
             SHOULDER_SWEEP(reg_a4)->second.t.count = (u8) SHOULDER_SWEEP(reg_a4)->second.t.reload;
             if (g_bullets_blocked == 0) {
                 reg_d1.w = 0;
-                reg_d0.w = 0x6000B;
+                reg_d0.w = GAME_RULE(0x6000B, 0x4000B);
                 reg_d1.b[0] = ENTITY(reg_a6)[4].move.b.dir;
                 reg_d1.b[0] += 0x20;
                 reg_d2.h[1] = ENTITY(reg_a6)[4].y.h;
@@ -992,7 +1008,7 @@ void stage2_boss_fire_shoulder_sweep_c(void) {
                 reg_d4.w = 0;
                 stage2_boss_fire_fixed_wider_on_loop();
                 reg_d1.w = 0;
-                reg_d0.w = 0x6000B;
+                reg_d0.w = GAME_RULE(0x6000B, 0x4000B);
                 reg_d1.b[0] = ENTITY(reg_a6)[5].move.b.dir;
                 reg_d1.b[0] += 0x20;
                 reg_d2.h[1] = ENTITY(reg_a6)[5].y.h;
@@ -1059,7 +1075,7 @@ void stage2_boss_fire_shoulder_sweep_c(void) {
 void stage2_boss_shoulder_sweep_d_shot(void) {
     u32 var_a1;
     reg_a0 = (u8 *)(g_direction64_offsets_2CC);
-    reg_d0.w = 7;
+    reg_d0.w = GAME_RULE(7, 0xFFFC0007);
     reg_d7.w = 3;
     reg_d1.h[0] &= 0x3F;
     if (((s32) reg_d1.b[0] < 0x10) || ((s32) reg_d1.b[0] > 0x30)) {
@@ -1075,13 +1091,13 @@ void stage2_boss_shoulder_sweep_d_shot(void) {
         reg_tmp3.h[0] = (((u16)reg_d3.h[0] + 2) != 0) ? *(u16 *)((u8 *)reg_a0 + ((s16)((u16)reg_d3.h[0] + 2) & ~1)) : *(u16 *)reg_a0;
         reg_d3.w = *(u32 *)&reg_tmp3.h[0];
         reg_d3.w += reg_d5.w;
-        bullet_fire_fixed();
+        GAME_RULE(bullet_fire_fixed, bullet_fire_fast)();
         var_a1 = reg_d0.w;
         reg_d0.w = var_a1 + 0x20000;
     } while ((s16)(--reg_d7.h[0]) >= 0);
     if (g_loop != 0) {
-        reg_d0.w = 7;
-        reg_d1.b[0] += 4;
+        reg_d0.w = GAME_RULE(7, 0xFFFC0007);
+        reg_d1.b[0] += GAME_RULE(4, 12);
         reg_d7.w = 1;
         reg_d1.h[0] &= 0x3F;
         if (((s32) reg_d1.b[0] < 0x10) || ((s32) reg_d1.b[0] > 0x30)) {
@@ -1097,7 +1113,7 @@ void stage2_boss_shoulder_sweep_d_shot(void) {
             reg_tmp3.h[0] = (((u16)reg_d3.h[0] + 2) != 0) ? *(u16 *)((u8 *)reg_a0 + ((s16)((u16)reg_d3.h[0] + 2) & ~1)) : *(u16 *)reg_a0;
             reg_d3.w = *(u32 *)&reg_tmp3.h[0];
             reg_d3.w += reg_d5.w;
-            bullet_fire_fixed();
+            GAME_RULE(bullet_fire_fixed, bullet_fire_fast)();
             var_a1 = reg_d0.w;
             reg_d0.w = var_a1 + 0x20000;
         } while ((s16)(--reg_d7.h[0]) >= 0);
@@ -1107,8 +1123,8 @@ void stage2_boss_shoulder_sweep_d_shot(void) {
 
 void stage2_boss_fire_shoulder_sweep_d_start() {
     SHOULDER_SWEEP(reg_a4)->step = 0;
-    SHOULDER_SWEEP(reg_a4)->shot.h = 0x4400;
-    SHOULDER_SWEEP(reg_a4)->second.h = 0x1802;
+    SHOULDER_SWEEP(reg_a4)->shot.h = GAME_RULE(0x4400, 0x6400);
+    SHOULDER_SWEEP(reg_a4)->second.h = GAME_RULE(0x1802, 0x3802);
     reg_d0.h[0] = ENTITY(reg_a6)[4].y.h;
     reg_d1.h[0] = ENTITY(reg_a6)[4].x.h;
     aim_at_player();
@@ -1328,7 +1344,7 @@ void stage2_boss_fire_knee_gun_start(void)
 {
     KNEE_GUN(reg_a4)->step = 0;
     KNEE_GUN(reg_a4)->shot.h = 0x1004;
-    KNEE_GUN(reg_a4)->shot_arg = 0xFFFF;
+    KNEE_GUN(reg_a4)->shot_arg = GAME_RULE(0xFFFF, 0xFFFE);
     KNEE_GUN(reg_a4)->side = 1;
     KNEE_GUN(reg_a4)->shots.h = 0x0606;
     KNEE_GUN(reg_a4)->extra = 0;
@@ -1443,7 +1459,7 @@ void stage2_boss_fire_shoulder_missile(void) {
     SHOULDER_MISSILE(reg_a4)->shot.t.count -= 1;
     if ((s32) reg_tmp.b[0] <= 0) {
         SHOULDER_MISSILE(reg_a4)->shot.t.count = (u8) SHOULDER_MISSILE(reg_a4)->shot.t.reload;
-        reg_d0.w = 0x6000B;
+        reg_d0.w = GAME_RULE(0x6000B, 0x3000B);
         reg_d1.w = 0;
         reg_d1.b[0] = ENTITY(reg_a6)[4].move.b.dir;
         reg_d1.b[0] += 0x20;
@@ -1454,7 +1470,7 @@ void stage2_boss_fire_shoulder_missile(void) {
         reg_d4.w = 0;
         stage2_boss_fire_fixed_wider_on_loop();
         reg_d1.w = 0;
-        reg_d0.w = 0x6000B;
+        reg_d0.w = GAME_RULE(0x6000B, 0x3000B);
         reg_d1.b[0] = ENTITY(reg_a6)[5].move.b.dir;
         reg_d1.b[0] += 0x20;
         reg_d1.b[0] &= 0x3F;
@@ -1547,6 +1563,10 @@ void stage2_boss_fire_column(void)
     reg_tmp.w = adjustedD0;
     reg_d0.h[1] = reg_d0.h[0];
     reg_d0.h[0] = 7;
+#ifdef DDPDOJ_BONUS_FEATURES
+    if (g_black_label_active) bullet_fire_fixed();
+    else
+#endif
     ARCADE_REGISTER_CALL(bullet_fire, adjustedD0, lowD6);
     reg_d6.w = savedD6;
 }
@@ -1559,7 +1579,7 @@ void stage2_boss_fire_shoulder_cannon_start(void) {
         stage2_boss_fire_shoulder_cannon();
         return;
     }
-    SHOULDER_CANNON(reg_a4)->shot.h = 2;
+    SHOULDER_CANNON(reg_a4)->shot.h = GAME_RULE(2, 4);
     stage2_boss_fire_shoulder_cannon();
 }
 
@@ -1585,7 +1605,7 @@ void stage2_boss_fire_shoulder_cannon(void) {
         reg_d6.h[0] = 0x20;
         reg_d7.h[0] = 0x14;
         if (g_loop != 0) {
-            reg_d7.h[0] = 0x28;
+            reg_d7.h[0] = GAME_RULE(0x28, 0x20);
         }
         reg_d2.h[1] = ENTITY(reg_a6)->y.h;
         t1 = ENTITY(reg_a6)->x.h;
@@ -1715,11 +1735,11 @@ void stage2_boss_body_spread_fan() {
         bullet_fire256_fast();
         if (g_loop != 0) {
             temp_a0 = reg_d0.w;
-            reg_d0.w = temp_a0 + 0xFFFC0000;
+            reg_d0.w = temp_a0 + GAME_RULE(0xFFFC0000, 0xFFFD0000);
             reg_d1.b[0] -= 2;
             bullet_fire256_fast();
             reg_d1.b[0] += 2;
-            reg_d0.w += 0x40000;
+            reg_d0.w += GAME_RULE(0x40000, 0x30000);
         }
     } while ((s16)(--reg_d7.h[0]) >= 0);
     reg_d7.w = 0;
@@ -1740,11 +1760,11 @@ void stage2_boss_body_spread_fan() {
         bullet_fire256_fast();
         if (g_loop != 0) {
             temp_a0_2 = reg_d0.w;
-            reg_d0.w = temp_a0_2 + 0xFFFC0000;
+            reg_d0.w = temp_a0_2 + GAME_RULE(0xFFFC0000, 0xFFFD0000);
             reg_d1.b[0] += 2;
             bullet_fire256_fast();
             reg_d1.b[0] -= 2;
-            reg_d0.w += 0x40000;
+            reg_d0.w += GAME_RULE(0x40000, 0x30000);
         }
     } while ((s16)(--reg_d7.h[0]) >= 0);
     reg_d0.w = save_d0;
@@ -1764,6 +1784,9 @@ void stage2_boss_fire_body_rage_start(void) {
     BODY_RAGE(reg_a4)->step = 0;
     BODY_RAGE(reg_a4)->shot.h = 0;
     BODY_RAGE(reg_a4)->toggle.h = 0;
+#ifdef DDPDOJ_BONUS_FEATURES
+    if (g_black_label_active) slowdown_allow_with_boss();
+#endif
     stage2_boss_fire_body_rage();
 }
 
@@ -1833,7 +1856,9 @@ next_3:
     bullet_fire256_double();
     goto next_5;
 next_4:
+    if (GAME_RULE(0, g_loop)) reg_d0.w += 6u << 16;
     bullet_fire256_2way();
+    if (GAME_RULE(0, g_loop)) reg_d0.w -= 6u << 16;
 next_5:
     c = reg_d7.h[0] - 1;
     reg_d7.h[0] = c;
