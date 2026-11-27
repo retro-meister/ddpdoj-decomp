@@ -6,7 +6,6 @@
 #include "pc_sound.h"
 #include "sdk/libgraph.h"
 #include "sfx.h"
-#include "video.h"
 
 #include <SDL3/SDL.h>
 #include <SDL3/SDL_main.h>
@@ -179,7 +178,6 @@ int main(int argc, char **argv)
     SDL_Joystick *second = two_player ? attach_controller() : NULL;
 
     pc_gs_bind_game(renderer);
-    pc_video_bind(renderer);
     game_boot_begin();
     bool loaded = false, confirmed = false, bomb_finished = false;
     SDL_GamepadButton pressed = SDL_GAMEPAD_BUTTON_INVALID;
@@ -227,7 +225,7 @@ int main(int argc, char **argv)
         } else {
             loaded = game_boot_frame();
         }
-        require(pc_gs_ok() && pc_video_ok() && SDL_RenderPresent(renderer), "Render game frame");
+        require(pc_gs_ok() && SDL_RenderPresent(renderer), "Render game frame");
         require(game_take_mode_request() == GAME_MODE_NONE, "Keep running the selected mode");
 
 #ifndef DEATH_LABEL
@@ -274,7 +272,6 @@ int main(int argc, char **argv)
     }
     pc_bgm_close();
     pc_mc_close_storage();
-    pc_video_bind(NULL);
     pc_sfx_shutdown();
     pc_cdvd_unmount();
     pc_pad_shutdown();

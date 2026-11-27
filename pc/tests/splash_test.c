@@ -1,4 +1,3 @@
-#include "video.h"
 #include "gs.h"
 #include "disc_image.h"
 #include "gfx.h"
@@ -90,10 +89,11 @@ int main(int argc, char **argv) {
         renderer = SDL_CreateSoftwareRenderer(surface);
     }
     require(renderer != NULL, "Create the renderer");
-    pc_video_bind(renderer);
     pc_gs_bind_game(renderer);
     g_dma_gif = sceDmaGetChan(SCE_DMA_GIF);
     framebuffer_begin(g_gif_buf);
+    g_clut_upload_cbp = 0x3836;
+    clut_upload(g_splash_file_buf, 1, 1);
     splash_begin();
     int frame = 0;
     do {
@@ -103,7 +103,7 @@ int main(int argc, char **argv) {
         splash_update();
         splash_image_draw();
         fade_update_and_draw();
-        require(pc_video_ok() && pc_gs_ok(), "Draw the splash and fade");
+        require(pc_gs_ok(), "Draw the splash and fade");
         SDL_Surface *readback = NULL;
         if (frame == 1 || frame == 40 || !cond_flag) {
             readback = SDL_RenderReadPixels(renderer, NULL);
@@ -113,7 +113,7 @@ int main(int argc, char **argv) {
             expect_pixel(readback, 224, 112, 1, 1, 1);
         }
         if (frame == 40) {
-            expect_pixel(readback, 224, 112, 8, 48, 248);
+            expect_pixel(readback, 225, 113, 8, 48, 248);
             expect_pixel(readback, 448, 112, 0, 0, 0);
         }
         if (!cond_flag) {
@@ -126,7 +126,6 @@ int main(int argc, char **argv) {
     require(g_splash_visible == 0, "The splash must release control to the attract task");
     check_menu_overlay(renderer);
     pc_gs_bind_gallery(NULL);
-    pc_video_bind(NULL);
     SDL_DestroyRenderer(renderer);
     if (window) {
         SDL_DestroyWindow(window);

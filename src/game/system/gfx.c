@@ -94,7 +94,6 @@ extern s16 g_clut_buf[];
 extern s16 g_sprite_clut_buf[];
 extern s16 g_bg_clut_buf[];
 
-#ifndef DDPDOJ_PC
 void splash_image_upload(void)
 {
     g_tex_upload_tbp = 0x2240;
@@ -117,7 +116,6 @@ void splash_image_upload(void)
         break;
     }
 }
-#endif
 
 extern u16 g_stage;
 
@@ -550,9 +548,7 @@ void bg_palette_upload(void) {
     clut_upload((u8 *)g_bg_clut_buf, 1, 32);
 }
 
-#ifndef DDPDOJ_PC
 #include "splash_draw.inc.h"
-#endif
 
 extern s32 g_stage_map_unused_b;
 extern s32 g_stage_map_unused_a;

@@ -772,9 +772,7 @@ void vram_clear_all(void)
 }
 
 
-#ifndef DDPDOJ_PC
 #include "screen_fade.inc.h"
-#endif
 
 
 void vibration_stop_all(void)
@@ -1016,14 +1014,12 @@ void *g_pad_dma_buf;
 void *g_dma_gif;
 s32 g_frame_counter;
 s8 g_display_reset_pending __attribute__((aligned(4)));
-#ifndef DDPDOJ_PC
 s8 g_fade_state __attribute__((aligned(4)));
 #ifdef DEATH_LABEL
 s8 g_fade_white __attribute__((aligned(4)));
 #endif
 s16 g_fade_step __attribute__((aligned(4)));
 s16 g_fade_alpha __attribute__((aligned(4)));
-#endif
 s32 g_stage_map_progress;
 
 u8 g_pad_dma_buf_1[0x100] __attribute__((aligned(64)));

@@ -14,7 +14,6 @@
 #else
 #include "memory_card.h"
 #include "pc_sound.h"
-#include "video.h"
 #endif
 
 static bool start_mode(GameMode mode, const char *iso)
@@ -107,7 +106,6 @@ static bool run_mode(SDL_Renderer *renderer, const char *iso, GameMode *next_mod
         return false;
     }
     pc_gs_bind_game(renderer);
-    pc_video_bind(renderer);
     game_boot_begin();
     bool loaded = false;
     while (process_input()) {
@@ -116,7 +114,7 @@ static bool run_mode(SDL_Renderer *renderer, const char *iso, GameMode *next_mod
         } else {
             loaded = game_boot_frame();
         }
-        if (!pc_gs_ok() || !pc_video_ok() || !SDL_RenderPresent(renderer)) {
+        if (!pc_gs_ok() || !SDL_RenderPresent(renderer)) {
             return false;
         }
         *next_mode = game_take_mode_request();
@@ -198,7 +196,6 @@ int main(int argc, char **argv)
 #ifndef DDPDOJ_GALLERY_HOST
     pc_bgm_close();
     pc_mc_close_storage();
-    pc_video_bind(NULL);
 #endif
     pc_sfx_shutdown();
     pc_cdvd_unmount();

@@ -5,7 +5,6 @@
 #include "pad.h"
 #include "pc_replay_storage.h"
 #include "sfx.h"
-#include "video.h"
 
 #include <SDL3/SDL.h>
 #include <SDL3/SDL_main.h>
@@ -76,7 +75,6 @@ int main(int argc, char **argv)
     require(SDL_CreateWindowAndRenderer("Card test", 640, 480, SDL_WINDOW_HIDDEN, &window, &renderer) &&
             pc_mc_open_storage(argv[2]) && pc_cdvd_mount(argv[1]) && pc_sfx_load(argv[1]), "Open test disc and card");
     pc_gs_bind_game(renderer);
-    pc_video_bind(renderer);
     game_boot_begin();
 
     g_setting_difficulty = 3;
@@ -99,7 +97,6 @@ int main(int argc, char **argv)
     pc_mc_close_storage();
     pc_cdvd_unmount();
     pc_sfx_shutdown();
-    pc_video_bind(NULL);
     pc_gs_bind_game(NULL);
     SDL_DestroyRenderer(renderer);
     SDL_DestroyWindow(window);

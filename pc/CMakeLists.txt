@@ -159,18 +159,6 @@ target_compile_features(ddpdoj_cdvd PRIVATE c_std_11)
 target_include_directories(ddpdoj_cdvd PUBLIC . ../include)
 target_link_libraries(ddpdoj_cdvd PUBLIC ddpdoj_disc PRIVATE SDL3::SDL3)
 
-add_library(ddpdoj_video STATIC video.c)
-target_compile_features(ddpdoj_video PRIVATE c_std_11)
-target_compile_definitions(ddpdoj_video PUBLIC DDPDOJ_PC)
-target_include_directories(ddpdoj_video PUBLIC . ../include)
-target_link_libraries(ddpdoj_video PUBLIC SDL3::SDL3)
-
-add_library(ddpdoj_death_video STATIC video.c)
-target_compile_features(ddpdoj_death_video PRIVATE c_std_11)
-target_compile_definitions(ddpdoj_death_video PRIVATE DDPDOJ_PC DEATH_LABEL)
-target_include_directories(ddpdoj_death_video PUBLIC . ../include)
-target_link_libraries(ddpdoj_death_video PUBLIC SDL3::SDL3)
-
 add_library(ddpdoj_pad STATIC pad.c)
 target_compile_features(ddpdoj_pad PRIVATE c_std_11)
 target_compile_definitions(ddpdoj_pad PUBLIC DDPDOJ_PC)
@@ -198,8 +186,6 @@ foreach(mode IN ITEMS main death)
 endforeach()
 set_target_properties(ddpdoj_main PROPERTIES OUTPUT_NAME ddpdoj)
 set_target_properties(ddpdoj_death PROPERTIES OUTPUT_NAME ddpdoj-death)
-target_link_libraries(ddpdoj_main PRIVATE ddpdoj_video)
-target_link_libraries(ddpdoj_death PRIVATE ddpdoj_death_video)
 
 add_executable(ddpdoj_gallery_host desktop.c)
 set_target_properties(ddpdoj_gallery_host PROPERTIES OUTPUT_NAME ddpdoj-gallery)
@@ -289,7 +275,7 @@ if(BUILD_TESTING)
     add_executable(ddpdoj_disc_test tests/disc_test.c ../src/game/system/cd_io.c)
     add_executable(ddpdoj_gallery_disc_test tests/disc_test.c ../src/gallery/cd.c)
     add_executable(ddpdoj_splash_test tests/splash_test.c)
-    target_link_libraries(ddpdoj_splash_test PRIVATE ddpdoj_main_system ddpdoj_video
+    target_link_libraries(ddpdoj_splash_test PRIVATE ddpdoj_main_system
         ddpdoj_sound ddpdoj_sfx ddpdoj_mode ddpdoj_cdvd ddpdoj_pad ddpdoj_memory_card ddpdoj_gs)
     add_test(NAME splash_render COMMAND ddpdoj_splash_test)
     add_executable(ddpdoj_pad_test tests/pad_test.c ../src/gallery/pad.c)
@@ -332,18 +318,13 @@ if(BUILD_TESTING)
             add_executable(${target} tests/retail_gameplay_test.c)
             target_link_libraries(${target} PRIVATE ddpdoj_${mode}_system
                 ddpdoj_sound ddpdoj_sfx ddpdoj_mode ddpdoj_cdvd ddpdoj_pad ddpdoj_memory_card ddpdoj_gs)
-            if(mode STREQUAL "death")
-                target_link_libraries(${target} PRIVATE ddpdoj_death_video)
-            else()
-                target_link_libraries(${target} PRIVATE ddpdoj_video)
-            endif()
             add_test(NAME retail_${mode}_gameplay COMMAND ${target} "${DDPDOJ_TEST_ISO}"
                 "${CMAKE_CURRENT_BINARY_DIR}/test-cards-${mode}")
             set_tests_properties(retail_${mode}_gameplay PROPERTIES
                 ENVIRONMENT "SDL_AUDIODRIVER=dummy" RUN_SERIAL TRUE TIMEOUT 180)
         endforeach()
         add_executable(ddpdoj_retail_card_test tests/retail_card_test.c)
-        target_link_libraries(ddpdoj_retail_card_test PRIVATE ddpdoj_main_system ddpdoj_video
+        target_link_libraries(ddpdoj_retail_card_test PRIVATE ddpdoj_main_system
             ddpdoj_sound ddpdoj_sfx ddpdoj_mode ddpdoj_cdvd ddpdoj_pad ddpdoj_memory_card ddpdoj_gs)
         add_test(NAME retail_card_save_load COMMAND ddpdoj_retail_card_test "${DDPDOJ_TEST_ISO}"
             "${CMAKE_CURRENT_BINARY_DIR}/test-cards-save-load")
