@@ -276,3 +276,21 @@ u8 D_0028E0AC __attribute__((aligned(4)));
 u8 g_palette_bank_b[2048];
 u8 g_palette_bank_a[2048];
 u8 fade_areas_4[480];
+
+#ifdef DDPDOJ_PC
+#include "pc_frame_regions.h"
+
+const PcFrameRegion pc_palette_regions[] = {
+    PC_FRAME_REGION(fade_areas_1),
+    PC_FRAME_REGION(fade_areas_3),
+    PC_FRAME_REGION(fade_areas_5),
+    PC_FRAME_REGION(D_0028E0B4),
+    PC_FRAME_REGION(D_0028E0B0),
+    PC_FRAME_REGION(palette_banks_flush_state),
+    PC_FRAME_REGION(D_0028E0AC),
+    PC_FRAME_REGION(g_palette_bank_b),
+    PC_FRAME_REGION(g_palette_bank_a),
+    PC_FRAME_REGION(fade_areas_4),
+    { NULL, 0 },
+};
+#endif

@@ -250,7 +250,7 @@ static bool has_relocated_enemy(void)
 
 typedef struct {
     PcPlayerState at_save;
-    PcPlayerState next[12];
+    PcPlayerState next[120];
 } ExpectedTrajectory;
 
 static void run_trajectory(SDL_Renderer *renderer, ExpectedTrajectory *states, bool compare)

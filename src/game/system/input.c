@@ -118,3 +118,17 @@ void input_get_p1_pressed(void) {
 void input_get_p2_pressed(void) {
     *(u16 *)&reg_d0 = g_input_p2_pressed;
 }
+
+#ifdef DDPDOJ_PC
+#include "pc_frame_regions.h"
+
+const PcFrameRegion pc_input_regions[] = {
+    PC_FRAME_REGION(g_input_p1_held),
+    PC_FRAME_REGION(g_input_p1_pressed),
+    PC_FRAME_REGION(g_input_p1_previous),
+    PC_FRAME_REGION(g_input_p2_held),
+    PC_FRAME_REGION(g_input_p2_pressed),
+    PC_FRAME_REGION(g_input_p2_previous),
+    { NULL, 0 },
+};
+#endif
