@@ -1799,6 +1799,7 @@ PC_DATA_ALIAS(g_quad_queue_as_GlyphQuad_a, g_quad_queue, 0);
 #include "pc_frame_regions.h"
 
 const PcFrameRegion pc_graphics_regions[] = {
+    PC_FRAME_REGION(g_stage_unpack_state),
     PC_FRAME_REGION(g_stage_map_alpha),
     PC_FRAME_REGION(g_stage_map_marker_level),
     PC_FRAME_REGION(g_stage_map_marker_step),

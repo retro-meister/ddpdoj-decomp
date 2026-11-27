@@ -101,12 +101,12 @@ static bool run_mode(SDL_Renderer *renderer, const char *iso, const char *module
     bool present;
     SDL_Scancode state_key = SDL_SCANCODE_UNKNOWN;
     while (process_input(renderer, &present, &state_key)) {
-        if (loaded && state_key != SDL_SCANCODE_UNKNOWN) {
+        if (loaded && state_key != SDL_SCANCODE_UNKNOWN && pc_mc_idle()) {
             if (!handle_state_key(state_key, module_path, mode)) {
                 SDL_LogError(SDL_LOG_CATEGORY_APPLICATION, "Savestate: %s", SDL_GetError());
             }
+            state_key = SDL_SCANCODE_UNKNOWN;
         }
-        state_key = SDL_SCANCODE_UNKNOWN;
         if (loaded) {
             game_run_frame();
         } else {

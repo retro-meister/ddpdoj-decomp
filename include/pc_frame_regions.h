@@ -31,6 +31,16 @@ extern const PcFrameRegion pc_glyph_cache_regions[], pc_sprite_queue_regions[];
 
 extern const PcFrameRegion pc_items_regions[], pc_pickups_regions[], pc_slowdown_regions[];
 
+extern const PcFrameRegion pc_enemy_anim_regions[];
+extern const PcFrameRegion pc_shoulder_regions[];
+extern const PcFrameRegion pc_wreck_regions[];
+extern const PcFrameRegion pc_screen_mode_regions[];
+extern const PcFrameRegion pc_notice_regions[];
+extern const PcFrameRegion pc_score_cells_regions[];
+extern const PcFrameRegion pc_text_regions[];
+
+extern const PcFrameRegion pc_cd_regions[];
+
 size_t pc_frame_regions_size(void);
 bool pc_frame_regions_capture(void *buffer, size_t size);
 bool pc_frame_regions_restore(const void *buffer, size_t size);

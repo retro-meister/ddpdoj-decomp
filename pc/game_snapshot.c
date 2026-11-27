@@ -1,4 +1,5 @@
 #include "game_snapshot.h"
+#include "gfx.h"
 #include "combat_state.h"
 #include "gs_texture.h"
 #include "pc_frame_regions.h"
@@ -66,10 +67,12 @@ static bool restore(GameSnapshot *state, size_t bytes)
     if (!textures) return false;
     bool ok = pc_gs_textures_load(textures) && SDL_TellIO(textures) == SDL_GetIOSize(textures);
     SDL_CloseIO(textures);
-    return ok && pc_combat_restore(&state->combat) && pc_tasks_restore(&state->tasks) &&
+    ok = ok && pc_combat_restore(&state->combat) && pc_tasks_restore(&state->tasks) &&
            pc_player_state_restore(&state->players) && pc_replay_frame_restore(&state->replay) &&
            pc_frame_regions_restore(state->regions, regions) &&
            pc_bgm_restore(&state->music) && pc_sfx_restore(&state->sounds);
+    if (ok) display_reset();
+    return ok;
 }
 
 bool pc_game_load(const char *path, GameMode mode, Uint64 build)

@@ -1501,3 +1501,17 @@ PaletteColor g_font_alt_palette[32] __attribute__((aligned(64)));
 u8 g_cd_unused[64] __attribute__((aligned(64)));    /* nothing refers to these 64 bytes */
 sceCdlFILE g_cd_file __attribute__((aligned(64)));
 #endif
+
+#ifdef DDPDOJ_PC
+#include "pc_frame_regions.h"
+
+const PcFrameRegion pc_text_regions[] = {
+    PC_FRAME_REGION(g_text_queue_count),
+    PC_FRAME_REGION(g_overlay_queue_count),
+    PC_FRAME_REGION(g_text_queue),
+    PC_FRAME_REGION(g_overlay_queue),
+    PC_FRAME_REGION(g_font_palettes),
+    PC_FRAME_REGION(g_font_alt_palette),
+    { NULL, 0 },
+};
+#endif

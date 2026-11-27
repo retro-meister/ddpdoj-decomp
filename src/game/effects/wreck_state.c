@@ -4,3 +4,12 @@
 
 /* .bss (the compiler lays these out in reverse) */
 u8 D_002BAE90[32];
+
+#ifdef DDPDOJ_PC
+#include "pc_frame_regions.h"
+
+const PcFrameRegion pc_wreck_regions[] = {
+    PC_FRAME_REGION(D_002BAE90),
+    { NULL, 0 },
+};
+#endif

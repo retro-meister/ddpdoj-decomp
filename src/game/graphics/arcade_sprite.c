@@ -596,6 +596,11 @@ u8 *g_unpack_src;
 
 const PcFrameRegion pc_stage_sprites_regions[] = {
     PC_FRAME_REGION(stage_buffer),
+    PC_FRAME_REGION(g_unpack_chunk_size),
+    PC_FRAME_REGION(g_unpack_step),
+    PC_FRAME_POINTER(g_unpack_src_start),
+    PC_FRAME_POINTER(g_unpack_src),
+    PC_FRAME_POINTER(g_unpack_dst),
     { NULL, 0 },
 };
 #endif

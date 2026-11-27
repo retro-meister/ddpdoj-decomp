@@ -382,6 +382,15 @@ if(BUILD_TESTING)
             set_tests_properties(retail_${mode}_gameplay PROPERTIES
                 ENVIRONMENT "SDL_AUDIODRIVER=dummy" RUN_SERIAL TRUE TIMEOUT 180)
         endforeach()
+        foreach(action IN ITEMS save load)
+            add_test(NAME stage5_savestate_${action} COMMAND ddpdoj_main_retail_gameplay_test
+                "${DDPDOJ_TEST_ISO}" "${CMAKE_CURRENT_BINARY_DIR}/test-cards-stage5"
+                --${action}-pools "${CMAKE_CURRENT_BINARY_DIR}/test-stage5-state.bin" --later-stage)
+            set_tests_properties(stage5_savestate_${action} PROPERTIES
+                ENVIRONMENT "SDL_AUDIODRIVER=dummy" RUN_SERIAL TRUE TIMEOUT 180)
+        endforeach()
+        set_tests_properties(stage5_savestate_save PROPERTIES FIXTURES_SETUP stage5_state)
+        set_tests_properties(stage5_savestate_load PROPERTIES FIXTURES_REQUIRED stage5_state)
         add_executable(ddpdoj_retail_card_test tests/retail_card_test.c)
         target_link_libraries(ddpdoj_retail_card_test PRIVATE ddpdoj_main_system
             ddpdoj_sound ddpdoj_sfx ddpdoj_mode ddpdoj_cdvd ddpdoj_pad ddpdoj_memory_card ddpdoj_gs)

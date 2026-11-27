@@ -1472,6 +1472,9 @@ void replay_snapshot_save(Buf *buf) {
     s32 v;
     u8 *p = (u8 *)buf;
 
+#ifdef DDPDOJ_PC
+    if (update_menu)
+#endif
     printf("replay size[%d]\n", 0x5534);
     for (i = 0; i < 0xC08; i++) {
         buf->f0000[i] = ACTIVE_PICKUPS[i];

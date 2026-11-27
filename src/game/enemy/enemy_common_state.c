@@ -14,3 +14,16 @@ u32 g_settings_notice_fade;
 
 PC_DATA_ALIAS(g_settings_notice_fade_flags, settings_notice_begin_state, 0x1);
 #endif
+
+#ifdef DDPDOJ_PC
+#include "pc_frame_regions.h"
+
+const PcFrameRegion pc_notice_regions[] = {
+    PC_FRAME_REGION(settings_notice_begin_state),
+    PC_FRAME_REGION(g_settings_notice_shown),
+    PC_FRAME_REGION(g_settings_notice_loaded),
+    PC_FRAME_REGION(g_settings_notice_time),
+    PC_FRAME_REGION(g_settings_notice_fade),
+    { NULL, 0 },
+};
+#endif
