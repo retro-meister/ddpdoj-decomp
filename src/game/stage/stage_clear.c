@@ -1,4 +1,5 @@
 #include "common.h"
+#include "stage_tally.h"
 #include "black_label.h"
 
 void slowdown_reset(void);
@@ -44,9 +45,6 @@ extern s16 g_game_task_handle;
 extern s16 stage_clear_state_clear_state;
 extern s16 D_0028E958;
 extern u16 D_0028E960;
-extern u8 D_002BF410[];
-extern u8 D_002BF450[];
-extern u8 D_002BF490[];
 void stage_clear_state_clear(void) {
     s32 var_a1;
     u8 *temp_a2;
@@ -57,7 +55,7 @@ void stage_clear_state_clear(void) {
 
     var_a1 = 0;
     do {
-        temp_a2 = (u8 *)(D_002BF490 + var_a1);
+        temp_a2 = (u8 *)&g_stage_clear.display + var_a1;
         (*(s8 *)((u8 *)(temp_a2) + (0))) = 0;
         var_a1 += 8;
         (*(s8 *)((u8 *)(temp_a2) + (1))) = 0;
@@ -78,8 +76,8 @@ void stage_clear_state_clear(void) {
     D_0028E95C = 0;
     D_0028E960 = 0;
     do {
-        temp_a3 = (u8 *)(D_002BF450 + var_a2);
-        temp_t0 = (u8 *)(D_002BF410 + var_a2);
+        temp_a3 = (u8 *)g_stage_clear.original + var_a2;
+        temp_t0 = (u8 *)g_stage_clear.dimmed + var_a2;
         (*(s16 *)((u8 *)(temp_a3) + (0))) = 0;
         var_t1 += 8;
         (*(s16 *)((u8 *)(temp_t0) + (0))) = 0;
@@ -303,7 +301,7 @@ void stage_clear_task(void) {
         g_game_frame_ran = 0;
         game_stage_objects_clear();
         *(s8 *)(reg_a5 + 7) = 0x1E;
-        goto block_after;
+        goto check_stage_transition;
     }
     if (temp_a0_2 == 0x1E) {
         if (g_stage_load_finished != 0) {
@@ -323,7 +321,7 @@ void stage_clear_task(void) {
             *(s8 *)(reg_a5 + 7) = 4;
         }
     }
-block_after:
+check_stage_transition:
     if (*(u8 *)(reg_a5 + 7) == 2) {
         if ((g_replay_mode == 2) && (g_stage_clear_screen_shown == 0)) {
             *(u8 *)(reg_a5 + 7) = 3U;
@@ -339,13 +337,13 @@ block_after:
         boss_hit_state_clear();
         g_players_hidden = 0;
         *(u8 *)(reg_a5 + 7) = 3U;
-        goto block_25;
+        goto update_clear_phase;
     }
-block_25:
+update_clear_phase:
     temp_v1_2 = *(u8 *)(reg_a5 + 7);
 #ifdef DEATH_LABEL
     if (temp_v1_2 == 0x16) {
-        reg_a6 = D_002BF490;
+        reg_a6 = (u8 *)&g_stage_clear.display;
         stage_clear_screen_update();
         if ((g_game_mode == 2) && ((s8)death_D_00290568 == 1)) {
             death_D_00290568 = 0;
@@ -367,12 +365,12 @@ block_25:
     }
 #endif
     if (temp_v1_2 == 0x15) {
-        reg_a6 = D_002BF490;
+        reg_a6 = (u8 *)&g_stage_clear.display;
         stage_clear_screen_update();
         return;
     }
     if (temp_v1_2 == 0xB) {
-        reg_a6 = D_002BF490;
+        reg_a6 = (u8 *)&g_stage_clear.display;
         stage_clear_screen_update();
         reg_d0.h[1] = *(u16 *)(reg_a5 + 8);
         reg_d0.h[0] = *(u16 *)(reg_a5 + 0xA);
@@ -396,11 +394,11 @@ block_25:
         }
     }
     if (*(u8 *)(reg_a5 + 7) == 1) {
-        reg_a6 = D_002BF490;
+        reg_a6 = (u8 *)&g_stage_clear.display;
         stage_clear_screen_update();
     }
     if (*(u8 *)(reg_a5 + 7) == 0xA) {
-        reg_a6 = D_002BF490;
+        reg_a6 = (u8 *)&g_stage_clear.display;
         stage_clear_screen_update();
         *(u8 *)(reg_a5 + 6) -= 1;
         if (*(u8 *)(reg_a5 + 6) == 0) {
@@ -409,7 +407,7 @@ block_25:
             fade_in_and_release();
             *(u8 *)(reg_a5 + 7) = 1U;
             reg_a0 = (u8 *)(((u16 *)g_sprite_palette));
-            reg_a1 = (u8 *)(((u16 *)D_002BF450));
+            reg_a1 = (u8 *)&g_stage_clear + sizeof(g_stage_clear.dimmed);
             reg_a0 += 0x5C0;
             *(u16 *)reg_a1 = *(u16 *)reg_a0;
             reg_a0 += 2;
@@ -505,8 +503,8 @@ block_25:
             reg_a0 += 2;
             reg_a1 += 2;
             *(u16 *)reg_a1 = *(u16 *)reg_a0;
-            reg_a0 = (u8 *)(((u16 *)D_002BF450));
-            reg_a1 = (u8 *)(((u16 *)D_002BF410));
+            reg_a0 = (u8 *)&g_stage_clear + sizeof(g_stage_clear.dimmed);
+            reg_a1 = (u8 *)&g_stage_clear;
             reg_d7.w = 0x1F;
             do {
                 temp_a0_3 = *(u16 *)reg_a0;
@@ -517,7 +515,7 @@ block_25:
                 *(u16 *)reg_a1 = reg_d0.h[0];
                 reg_a1 += 2;
             } while ((s16)(reg_d7.h[0]--) >= 0);
-            reg_a0 = (u8 *)(((u16 *)D_002BF410));
+            reg_a0 = (u8 *)&g_stage_clear;
             reg_d0.h[0] = 0x17;
             sprite_palette_load();
         }
@@ -548,25 +546,25 @@ extern u16 tally_bonus_sprite_draw_table_3[];
 extern u16 tally_bonus_sprite_draw_table_4[];
 
 void tally_bonus_sprite_draw(void) {
-    if (*(s16 *)(reg_a6 + 0x3E) >= 0) {
+    if (STAGE_TALLY(reg_a6)->bonus_motion_offset.sh >= 0) {
         reg_d1.w = 0;
         reg_a0 = (u8 *)(tally_bonus_sprite_draw_table);
-        reg_d1.h[0] = *(u16 *)(reg_a6 + 0x3E);
+        reg_d1.h[0] = STAGE_TALLY(reg_a6)->bonus_motion_offset.h;
         reg_d0.h[0] = (reg_d1.h[0] != 0) ? *(u16 *)((u8 *)reg_a0 + ((s16)reg_d1.h[0] & ~1)) : *(u16 *)reg_a0;
-        *(u16 *)(reg_a6 + 0x4C) += reg_d0.h[0];
+        STAGE_TALLY(reg_a6)->bonus_offset_y[0].h += reg_d0.h[0];
         reg_a1 = (u8 *)(tally_bonus_sprite_draw_table_2);
         reg_d0.h[0] = (reg_d1.h[0] != 0) ? *(u16 *)((u8 *)reg_a1 + ((s16)reg_d1.h[0] & ~1)) : *(u16 *)reg_a1;
-        *(u16 *)(reg_a6 + 0x4E) += reg_d0.h[0];
+        STAGE_TALLY(reg_a6)->bonus_offset_y[1].h += reg_d0.h[0];
         reg_a1 = (u8 *)(tally_bonus_sprite_draw_table_3);
         reg_d0.h[0] = (reg_d1.h[0] != 0) ? *(u16 *)((u8 *)reg_a1 + ((s16)reg_d1.h[0] & ~1)) : *(u16 *)reg_a1;
-        *(u16 *)(reg_a6 + 0x50) += reg_d0.h[0];
+        STAGE_TALLY(reg_a6)->bonus_offset_y[2].h += reg_d0.h[0];
         reg_a1 = (u8 *)(tally_bonus_sprite_draw_table_4);
         reg_d0.h[0] = (reg_d1.h[0] != 0) ? *(u16 *)((u8 *)reg_a1 + ((s16)reg_d1.h[0] & ~1)) : *(u16 *)reg_a1;
-        *(u16 *)(reg_a6 + 0x52) += reg_d0.h[0];
-        *(u16 *)(reg_a6 + 0x3E) += 2;
+        STAGE_TALLY(reg_a6)->bonus_offset_y[3].h += reg_d0.h[0];
+        STAGE_TALLY(reg_a6)->bonus_motion_offset.h += 2;
         reg_a0 += reg_d1.w;
         if (D_00269ADE == reg_a0) {
-            *(u16 *)(reg_a6 + 0x3E) = 0xFFFF;
+            STAGE_TALLY(reg_a6)->bonus_motion_offset.h = 0xFFFF;
         }
     }
 }
@@ -646,10 +644,10 @@ void stage_clear_screen_update(void) {
     u8 *v3;
     u8 *v4;
 
-    v1 = *(u8 *)(reg_a6 + 3);
-    v4 = (u8 *)(reg_a6 + 3);
+    v1 = STAGE_TALLY(reg_a6)->flags;
+    v4 = (u8 *)&STAGE_TALLY(reg_a6)->flags;
     if (!(v1 & 1)) {
-        *(u8 *)(reg_a6 + 3) = (u8) (v1 | 1);
+        STAGE_TALLY(reg_a6)->flags = (u8) (v1 | 1);
         D_0028E961 |= 2;
         reg_d0.w = 0;
         t5 = reg_d0.h[0];
@@ -679,19 +677,19 @@ void stage_clear_screen_update(void) {
         return;
     }
     if (!(v1 & 4)) {
-        *(u8 *)(reg_a6 + 3) = (u8) (v1 | 4);
-        *(u16 *)(reg_a6 + 4) = 1U;
+        STAGE_TALLY(reg_a6)->flags = (u8) (v1 | 4);
+        STAGE_TALLY(reg_a6)->setup_delay.h = 1U;
         bg_layer_clear();
         return;
     }
-    t8 = *(u16 *)(reg_a6 + 4);
-    t16 = (u8 *)(reg_a6 + 4);
+    t8 = STAGE_TALLY(reg_a6)->setup_delay.h;
+    t16 = (u8 *)&STAGE_TALLY(reg_a6)->setup_delay;
     if (t8 != 0) {
-        *(u16 *)(reg_a6 + 4) = (u16) (t8 - 1);
-        if (*(u16 *)(reg_a6 + 4) != 0) goto next_290;
+        STAGE_TALLY(reg_a6)->setup_delay.h = (u16) (t8 - 1);
+        if (STAGE_TALLY(reg_a6)->setup_delay.h != 0) goto finish_tally_setup;
         {
             reg_a0 = (u8 *)(stage_clear_screen_update_table_6);
-            reg_a1 = (u8 *)(reg_a6 + 6);
+            reg_a1 = (u8 *)&STAGE_TALLY(reg_a6)->panel_motion_offset;
             *(u16 *)reg_a1 = *(u16 *)reg_a0;
             reg_a0 += 2;
             reg_a1 += 2;
@@ -723,80 +721,80 @@ void stage_clear_screen_update(void) {
             reg_tmp.w = 0xA0000;
             reg_a0 += 2;
             reg_a1 += 2;
-            *(u16 *)(reg_a6 + 0x3A) = (u16) reg_tmp.h[1];
-            *(u16 *)(reg_a6 + 0x3C) = (u16) reg_tmp.h[0];
+            STAGE_TALLY(reg_a6)->unread_3A[0] = (u16) reg_tmp.h[1];
+            STAGE_TALLY(reg_a6)->unread_3A[1] = (u16) reg_tmp.h[0];
             reg_tmp.w = 0x4D001C00;
-            *(u16 *)(reg_a6 + 0x40) = (u16) reg_tmp.h[1];
-            *(u16 *)(reg_a6 + 0x42) = (u16) reg_tmp.h[0];
+            STAGE_TALLY(reg_a6)->panel_position[0][0].h = (u16) reg_tmp.h[1];
+            STAGE_TALLY(reg_a6)->panel_position[0][1].h = (u16) reg_tmp.h[0];
             reg_tmp.w = 0x2D001C00;
-            *(u16 *)(reg_a6 + 0x44) = (u16) reg_tmp.h[1];
-            *(u16 *)(reg_a6 + 0x46) = (u16) reg_tmp.h[0];
+            STAGE_TALLY(reg_a6)->panel_position[1][0].h = (u16) reg_tmp.h[1];
+            STAGE_TALLY(reg_a6)->panel_position[1][1].h = (u16) reg_tmp.h[0];
             reg_tmp.w = 0x0E001C00;
-            *(u16 *)(reg_a6 + 0x48) = (u16) reg_tmp.h[1];
-            *(u16 *)(reg_a6 + 0x4A) = (u16) reg_tmp.h[0];
-            *(s16 *)(reg_a6 + 0x4C) = 0;
-            *(s16 *)(reg_a6 + 0x4E) = 0;
-            *(s16 *)(reg_a6 + 0x50) = 0;
-            *(s16 *)(reg_a6 + 0x52) = 0;
+            STAGE_TALLY(reg_a6)->panel_position[2][0].h = (u16) reg_tmp.h[1];
+            STAGE_TALLY(reg_a6)->panel_position[2][1].h = (u16) reg_tmp.h[0];
+            STAGE_TALLY(reg_a6)->bonus_offset_y[0].sh = 0;
+            STAGE_TALLY(reg_a6)->bonus_offset_y[1].sh = 0;
+            STAGE_TALLY(reg_a6)->bonus_offset_y[2].sh = 0;
+            STAGE_TALLY(reg_a6)->bonus_offset_y[3].sh = 0;
             reg_tmp.w = 0xBCF;
-            *(u16 *)(reg_a6 + 0x54) = (u16) reg_tmp.h[1];
-            *(u16 *)(reg_a6 + 0x56) = (u16) reg_tmp.h[0];
+            STAGE_TALLY(reg_a6)->star_sprite[0][0].h = (u16) reg_tmp.h[1];
+            STAGE_TALLY(reg_a6)->star_sprite[0][1].h = (u16) reg_tmp.h[0];
             reg_tmp.w = 0xC0F;
-            *(u16 *)(reg_a6 + 0x58) = (u16) reg_tmp.h[1];
-            *(u16 *)(reg_a6 + 0x5A) = (u16) reg_tmp.h[0];
+            STAGE_TALLY(reg_a6)->star_sprite[1][0].h = (u16) reg_tmp.h[1];
+            STAGE_TALLY(reg_a6)->star_sprite[1][1].h = (u16) reg_tmp.h[0];
         }
-next_290:
+finish_tally_setup:
         return;
     } else {
-        if (*(s16 *)(reg_a6 + 6) >= 0) {
+        if (STAGE_TALLY(reg_a6)->panel_motion_offset.sh >= 0) {
             reg_a0 = (u8 *)(stage_clear_screen_update_table_7);
             reg_d1.w = 0;
-            reg_d1.h[0] = *(u16 *)(reg_a6 + 6);
+            reg_d1.h[0] = STAGE_TALLY(reg_a6)->panel_motion_offset.h;
             reg_d0.h[0] = (reg_d1.h[0] != 0) ? *(u16 *)((u8 *)reg_a0 + ((s16)reg_d1.h[0] & ~1)) : *(u16 *)reg_a0;
-            *(u16 *)(reg_a6 + 8) -= reg_d0.h[0];
-            *(u16 *)(reg_a6 + 0xC) += reg_d0.h[0];
-            *(u16 *)(reg_a6 + 6) += 2;
+            STAGE_TALLY(reg_a6)->panel_edge_x[0][0].h -= reg_d0.h[0];
+            STAGE_TALLY(reg_a6)->panel_edge_x[1][0].h += reg_d0.h[0];
+            STAGE_TALLY(reg_a6)->panel_motion_offset.h += 2;
             reg_a0 += reg_d1.w;
-            t9 = *(u16 *)(reg_a6 + 0x16);
+            t9 = STAGE_TALLY(reg_a6)->inner_edge_delay.h;
             if (t9 != 0) {
-                *(u16 *)(reg_a6 + 0x16) = (u16) (t9 - reg_d0.h[0]);
-                t10 = *(u16 *)(reg_a6 + 0x16);
-                v3 = (u8 *)(reg_a6 + 0x16);
+                STAGE_TALLY(reg_a6)->inner_edge_delay.h = (u16) (t9 - reg_d0.h[0]);
+                t10 = STAGE_TALLY(reg_a6)->inner_edge_delay.h;
+                v3 = (u8 *)&STAGE_TALLY(reg_a6)->inner_edge_delay;
                 if ((t10 != 0) && ((s16)(t10) < 0)) {
                     reg_d0.h[0] = t10;
                     reg_d0.h[0] *= 0xFFFF;
-                    *(u16 *)(reg_a6 + 0x16) = 0U;
-                    goto block_15;
+                    STAGE_TALLY(reg_a6)->inner_edge_delay.h = 0U;
+                    goto move_inner_edges;
                 }
             } else {
-block_15:
-                *(u16 *)(reg_a6 + 0xA) -= reg_d0.h[0];
+move_inner_edges:
+                STAGE_TALLY(reg_a6)->panel_edge_x[0][1].h -= reg_d0.h[0];
                 v4 = (u8 *)(reg_a6);
-                v3 = (u8 *)((void *) (*(u16 *)((u8 *)(v4) + (0xE))));
-                (*(u16 *)((u8 *)(v4) + (0xE))) = (u16) (v3 + reg_d0.h[0]);
+                v3 = (u8 *)((void *) STAGE_TALLY(v4)->panel_edge_x[1][1].h);
+                STAGE_TALLY(v4)->panel_edge_x[1][1].h = (u16) (v3 + reg_d0.h[0]);
                 if (D_00269AAE == reg_a0) {
-                    *(u16 *)(reg_a6 + 6) = 0xFFFF;
+                    STAGE_TALLY(reg_a6)->panel_motion_offset.h = 0xFFFF;
                 }
             }
             if (g_player1[0] >= 0) {
-                *(u16 *)(reg_a6 + 8) = 0U;
-                *(u16 *)(reg_a6 + 0xA) = 0U;
+                STAGE_TALLY(reg_a6)->panel_edge_x[0][0].h = 0U;
+                STAGE_TALLY(reg_a6)->panel_edge_x[0][1].h = 0U;
             }
             if (g_player2[0] >= 0) {
-                *(u16 *)(reg_a6 + 0xC) = 0x40U;
-                *(u16 *)(reg_a6 + 0xE) = 0x40U;
+                STAGE_TALLY(reg_a6)->panel_edge_x[1][0].h = 0x40U;
+                STAGE_TALLY(reg_a6)->panel_edge_x[1][1].h = 0x40U;
             }
-            if (*(s16 *)(reg_a6 + 6) < 0) {
+            if (STAGE_TALLY(reg_a6)->panel_motion_offset.sh < 0) {
                 g_boss_present |= 8;
             }
             tally_frame_animate();
             return;
         }
         if (v1 & 2) {
-            *(u8 *)(reg_a6 + 3) = (u8) (v1 | 2);
+            STAGE_TALLY(reg_a6)->flags = (u8) (v1 | 2);
         } else {
-            *(u8 *)(reg_a6 + 3) = (u8) (v1 | 2);
-            *(u16 *)(reg_a6 + 0x2C) = 0x18U;
+            STAGE_TALLY(reg_a6)->flags = (u8) (v1 | 2);
+            STAGE_TALLY(reg_a6)->count_delay.h = 0x18U;
             reg_d7.w = 0;
             if (g_player1[0] < 0) {
                 reg_d0.h[0] = g_p1_stage_stars_large;
@@ -806,17 +804,17 @@ block_15:
                     reg_d7.w = 1;
                     reg_d5.h[0] = reg_d0.h[0];
                     binary_to_bcd();
-                    *(u16 *)(reg_a6 + 0x18) = (u16) reg_d2.h[0];
+                    STAGE_TALLY(reg_a6)->players[0].small_digits.h = (u16) reg_d2.h[0];
                     t1 = reg_d5.h[0];
                     reg_d5.h[0] = t1 * 0xA;
-                    *(u16 *)(reg_a6 + 0x1A) = (u16) reg_d5.h[0];
+                    STAGE_TALLY(reg_a6)->players[0].small_remaining.h = (u16) reg_d5.h[0];
                     reg_d0.h[0] = g_p1_stage_stars_large;
                     reg_d5.h[0] = reg_d0.h[0];
                     binary_to_bcd();
-                    *(u16 *)(reg_a6 + 0x1C) = (u16) reg_d2.h[0];
+                    STAGE_TALLY(reg_a6)->players[0].large_digits.h = (u16) reg_d2.h[0];
                     t3 = reg_d5.h[0];
                     reg_d5.h[0] = t3 * 0x14;
-                    *(u16 *)(reg_a6 + 0x1E) = (u16) reg_d5.h[0];
+                    STAGE_TALLY(reg_a6)->players[0].large_remaining.h = (u16) reg_d5.h[0];
                 }
             }
             if (g_player2[0] < 0) {
@@ -827,34 +825,34 @@ block_15:
                     reg_d7.w = 1;
                     reg_d5.h[0] = reg_d0.h[0];
                     binary_to_bcd();
-                    *(u16 *)(reg_a6 + 0x22) = (u16) reg_d2.h[0];
+                    STAGE_TALLY(reg_a6)->players[1].small_digits.h = (u16) reg_d2.h[0];
                     t2 = reg_d5.h[0];
                     reg_d5.h[0] = t2 * 0xA;
-                    *(u16 *)(reg_a6 + 0x24) = (u16) reg_d5.h[0];
+                    STAGE_TALLY(reg_a6)->players[1].small_remaining.h = (u16) reg_d5.h[0];
                     reg_d0.h[0] = g_p2_stage_stars_large;
                     reg_d5.h[0] = reg_d0.h[0];
                     binary_to_bcd();
-                    *(u16 *)(reg_a6 + 0x26) = (u16) reg_d2.h[0];
+                    STAGE_TALLY(reg_a6)->players[1].large_digits.h = (u16) reg_d2.h[0];
                     t3 = reg_d5.h[0];
                     reg_d5.h[0] = t3 * 0x14;
-                    *(u16 *)(reg_a6 + 0x28) = (u16) reg_d5.h[0];
+                    STAGE_TALLY(reg_a6)->players[1].large_remaining.h = (u16) reg_d5.h[0];
                 }
             }
             if (reg_d7.h[0] == 0) {
-                *(u16 *)(reg_a6 + 0x2C) = 4U;
+                STAGE_TALLY(reg_a6)->count_delay.h = 4U;
             }
         }
         tally_frame_animate();
         tally_players_draw();
-        t11 = *(u16 *)(reg_a6 + 0x2C);
+        t11 = STAGE_TALLY(reg_a6)->count_delay.h;
         if (t11 != 0) {
-            *(u16 *)(reg_a6 + 0x2C) = (u16) (t11 - 1);
+            STAGE_TALLY(reg_a6)->count_delay.h = (u16) (t11 - 1);
             return;
         }
-        if (!(*(u8 *)(reg_a6 + 3) & 8)) {
+        if (!(STAGE_TALLY(reg_a6)->flags & 8)) {
             reg_d7.w = 0;
-            reg_d6.h[0] = *(u16 *)(reg_a6 + 0x1A);
-            reg_d6.h[0] += *(u16 *)(reg_a6 + 0x1E);
+            reg_d6.h[0] = STAGE_TALLY(reg_a6)->players[0].small_remaining.h;
+            reg_d6.h[0] += STAGE_TALLY(reg_a6)->players[0].large_remaining.h;
             if (reg_d6.h[0] != 0) {
                 input_get_p1_pressed();
                 if ((g_replay_mode == 2) && (g_menu_pad == 1)) {
@@ -867,14 +865,14 @@ block_15:
                     binary_to_bcd();
                     reg_d0.w = reg_d2.w;
                     reg_d0.w *= 0x10;
-                    *(u16 *)(reg_a6 + 0x1A) = 0U;
-                    *(u16 *)(reg_a6 + 0x1E) = 0U;
-                    goto block_48;
+                    STAGE_TALLY(reg_a6)->players[0].small_remaining.h = 0U;
+                    STAGE_TALLY(reg_a6)->players[0].large_remaining.h = 0U;
+                    goto award_p1_star_points;
                 }
                 reg_d6.w = 0;
-                t13 = *(u16 *)(reg_a6 + 0x1A);
+                t13 = STAGE_TALLY(reg_a6)->players[0].small_remaining.h;
                 if (t13 != 0) {
-                    *(u16 *)(reg_a6 + 0x1A) = (u16) (t13 - 5);
+                    STAGE_TALLY(reg_a6)->players[0].small_remaining.h = (u16) (t13 - 5);
                     reg_d0.w = 0x50;
                     reg_d7.h[0] = 1;
                     reg_d1.w = 0x10;
@@ -882,11 +880,11 @@ block_15:
                     stage_clear_delay_a_tick();
                     reg_d6.w = 1;
                 }
-                t14 = *(u16 *)(reg_a6 + 0x1E);
+                t14 = STAGE_TALLY(reg_a6)->players[0].large_remaining.h;
                 if (t14 != 0) {
-                    *(u16 *)(reg_a6 + 0x1E) = (u16) (t14 - 5);
+                    STAGE_TALLY(reg_a6)->players[0].large_remaining.h = (u16) (t14 - 5);
                     reg_d0.w = 0x50;
-block_48:
+award_p1_star_points:
                     reg_d7.h[0] = 1;
                     reg_d1.w = 0x10;
                     score_add_masked();
@@ -895,8 +893,8 @@ block_48:
                     }
                 }
             }
-            reg_d6.h[0] = *(u16 *)(reg_a6 + 0x24);
-            reg_d6.h[0] += *(u16 *)(reg_a6 + 0x28);
+            reg_d6.h[0] = STAGE_TALLY(reg_a6)->players[1].small_remaining.h;
+            reg_d6.h[0] += STAGE_TALLY(reg_a6)->players[1].large_remaining.h;
             if (reg_d6.h[0] != 0) {
                 input_get_p2_pressed();
                 if ((g_replay_mode == 2) && (g_menu_pad == 0)) {
@@ -909,14 +907,14 @@ block_48:
                     binary_to_bcd();
                     reg_d0.w = reg_d2.w;
                     reg_d0.w *= 0x10;
-                    *(u16 *)(reg_a6 + 0x24) = 0U;
-                    *(u16 *)(reg_a6 + 0x28) = 0U;
-                    goto block_60;
+                    STAGE_TALLY(reg_a6)->players[1].small_remaining.h = 0U;
+                    STAGE_TALLY(reg_a6)->players[1].large_remaining.h = 0U;
+                    goto award_p2_star_points;
                 }
                 reg_d6.w = 0;
-                t6 = *(u16 *)(reg_a6 + 0x24);
+                t6 = STAGE_TALLY(reg_a6)->players[1].small_remaining.h;
                 switch (t6) { case 0: break; default:
-                    *(u16 *)(reg_a6 + 0x24) = (u16) (t6 - 5);
+                    STAGE_TALLY(reg_a6)->players[1].small_remaining.h = (u16) (t6 - 5);
                     reg_d0.w = 0x50;
                     reg_d7.h[0] = 1;
                     reg_d1.w = 8;
@@ -924,11 +922,11 @@ block_48:
                     stage_clear_delay_b_tick();
                     reg_d6.w = 1;
                 }
-                t7 = *(u16 *)(reg_a6 + 0x28);
+                t7 = STAGE_TALLY(reg_a6)->players[1].large_remaining.h;
                 if (t7 != 0) {
-                    *(u16 *)(reg_a6 + 0x28) = (u16) (t7 - 5);
+                    STAGE_TALLY(reg_a6)->players[1].large_remaining.h = (u16) (t7 - 5);
                     reg_d0.w = 0x50;
-block_60:
+award_p2_star_points:
                     reg_d7.h[0] = 1;
                     reg_d1.w = 8;
                     score_add_masked();
@@ -937,21 +935,21 @@ block_60:
                     }
                 }
             }
-            if (reg_d7.h[0] != 0) goto next_499;
+            if (reg_d7.h[0] != 0) goto finish_count_frame;
             {
-                *(u8 *)(reg_a6 + 3) |= 8;
+                STAGE_TALLY(reg_a6)->flags |= 8;
                 reg_d0.h[0] = 8;
                 if (g_boss_hits == 0) {
                     reg_d0.h[0] = 1;
                 }
-                *(u16 *)(reg_a6 + 0x2C) = (u16) reg_d0.h[0];
+                STAGE_TALLY(reg_a6)->count_delay.h = (u16) reg_d0.h[0];
             }
-next_499:
+finish_count_frame:
             return;
         } else {
-            if (*(s16 *)(reg_a6 + 0x3E) >= 0) {
+            if (STAGE_TALLY(reg_a6)->bonus_motion_offset.sh >= 0) {
                 tally_bonus_sprite_draw();
-                if (*(s16 *)(reg_a6 + 0x3E) < 0) {
+                if (STAGE_TALLY(reg_a6)->bonus_motion_offset.sh < 0) {
                     g_boss_present |= 4;
                 }
             }
@@ -1021,9 +1019,9 @@ next_499:
                     }
                     g_stage_clear_wait_timer = 0;
                     g_replay_save_asked = 0;
-                    goto block_77;
+                    goto prepare_following_stage;
                 }
-block_77:
+prepare_following_stage:
                 t4 = *(u16 *)(reg_a5 + 4);
                 if (t4 != 0) {
                     if ((g_simulation_active != 0) || (g_replay_mode == 2)) {
@@ -1042,16 +1040,16 @@ block_77:
                     if ((g_replay_save_asked == 0) && (replay_save_wanted_check() != 0)) {
                         if (replay_file_finalize() != 0) {
                             g_replay_save_asked = 1;
-                            goto block_90;
+                            goto check_stage_loaded;
                         }
                     } else {
-block_90:
+check_stage_loaded:
                         if (g_loaded_stage == g_stage) {
-                            goto block_91;
+                            goto start_results_fade;
                         }
                     }
                 } else {
-block_91:
+start_results_fade:
                     if ((*(u16 *)(reg_a5 + 4) == 0) && (v2 = 1, (g_simulation_active != 1))) {
                         reg_a0 = (u8 *)(((u16 *)D_00269920));
                         *(u8 *)(reg_a5 + 7) = 0x15U;

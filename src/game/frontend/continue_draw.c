@@ -1,5 +1,5 @@
 #include "common.h"
-#include "entity.h"
+#include "stage_tally.h"
 
 extern u8 g_game_mode;
 extern u8 g_setting_replay_save;
@@ -23,10 +23,10 @@ extern s16 g_player2[];
 extern s16 g_player1[];
 
 void tally_frame_animate(void) {
-    ENTITY(reg_a6)->hit_y_plus.b[1] -= 1;
-    if ((s8) ENTITY(reg_a6)->hit_y_plus.b[1] < 0) {
-        ENTITY(reg_a6)->hit_y_plus.b[1] = (u8) ENTITY(reg_a6)->hit_y_plus.b[0];
-        reg_a0 = reg_a6 + 0x54;
+    STAGE_TALLY(reg_a6)->star_frame_timer[0].b[1] -= 1;
+    if ((s8) STAGE_TALLY(reg_a6)->star_frame_timer[0].b[1] < 0) {
+        STAGE_TALLY(reg_a6)->star_frame_timer[0].b[1] = (u8) STAGE_TALLY(reg_a6)->star_frame_timer[0].b[0];
+        reg_a0 = (u8 *)STAGE_TALLY(reg_a6)->star_sprite[0];
         reg_tmp.h[1] = *(u16 *)reg_a0;
         reg_tmp.h[0] = *(u16 *)(reg_a0 + 2);
         reg_tmp.w += 1;
@@ -38,10 +38,10 @@ void tally_frame_animate(void) {
             *(u16 *)(reg_a0 + 2) = (u16) reg_tmp.h[0];
         }
     }
-    ENTITY(reg_a6)->hit_y_minus.b[1] -= 1;
-    if ((s8) ENTITY(reg_a6)->hit_y_minus.b[1] < 0) {
-        ENTITY(reg_a6)->hit_y_minus.b[1] = (u8) ENTITY(reg_a6)->hit_y_minus.b[0];
-        reg_a0 = reg_a6 + 0x58;
+    STAGE_TALLY(reg_a6)->star_frame_timer[1].b[1] -= 1;
+    if ((s8) STAGE_TALLY(reg_a6)->star_frame_timer[1].b[1] < 0) {
+        STAGE_TALLY(reg_a6)->star_frame_timer[1].b[1] = (u8) STAGE_TALLY(reg_a6)->star_frame_timer[1].b[0];
+        reg_a0 = (u8 *)STAGE_TALLY(reg_a6)->star_sprite[1];
         reg_tmp.h[1] = *(u16 *)reg_a0;
         reg_tmp.h[0] = *(u16 *)(reg_a0 + 2);
         reg_tmp.w += 1;
@@ -53,8 +53,8 @@ void tally_frame_animate(void) {
             *(u16 *)(reg_a0 + 2) = (u16) reg_tmp.h[0];
         }
     }
-    reg_d1.h[1] = ENTITY(reg_a6)[2].flags.h;
-    reg_d1.h[0] = ENTITY(reg_a6)[2].y.h;
+    reg_d1.h[1] = STAGE_TALLY(reg_a6)->panel_position[0][0].h;
+    reg_d1.h[0] = STAGE_TALLY(reg_a6)->panel_position[0][1].h;
     reg_d1.w += 0xF000E400;
     reg_tmp2.w = 0x14B1;
     reg_d2.h[1] = reg_tmp2.h[1];
@@ -62,94 +62,94 @@ void tally_frame_animate(void) {
     reg_d3.h[0] = 0x10E0;
     reg_d4.h[0] = 0x15;
     sprite_draw_layer1();
-    reg_d1.h[1] = ENTITY(reg_a6)[2].x.h;
-    reg_d1.h[0] = ENTITY(reg_a6)[2].offset_y.h;
+    reg_d1.h[1] = STAGE_TALLY(reg_a6)->panel_position[1][0].h;
+    reg_d1.h[0] = STAGE_TALLY(reg_a6)->panel_position[1][1].h;
     reg_d1.w += 0xF000E400;
     reg_d2.w = 0x14B2;
     reg_d3.h[0] = 0x10E0;
     reg_d4.h[0] = 0x15;
     sprite_draw_layer1();
-    reg_d1.h[1] = ENTITY(reg_a6)[2].offset_x.h;
-    reg_d1.h[0] = ENTITY(reg_a6)[2].draw.h;
+    reg_d1.h[1] = STAGE_TALLY(reg_a6)->panel_position[2][0].h;
+    reg_d1.h[0] = STAGE_TALLY(reg_a6)->panel_position[2][1].h;
     reg_d1.w += 0xF200E400;
     reg_d2.w = 0x14AA;
     reg_d3.h[0] = 0xEE0;
     reg_d4.h[0] = 0x15;
     sprite_draw_layer1();
-    reg_d1.h[1] = ENTITY(reg_a6)[2].flags.h;
-    reg_d1.h[0] = ENTITY(reg_a6)[2].y.h;
-    reg_d1.h[0] += ENTITY(reg_a6)->offset_x.h;
+    reg_d1.h[1] = STAGE_TALLY(reg_a6)->panel_position[0][0].h;
+    reg_d1.h[0] = STAGE_TALLY(reg_a6)->panel_position[0][1].h;
+    reg_d1.h[0] += STAGE_TALLY(reg_a6)->panel_edge_x[0][0].h;
     reg_d1.w += 0xF000E400;
     reg_d2.w = 0x14B0;
     reg_d3.h[0] = 0x10E0;
     reg_d4.h[0] = 0x15;
     sprite_draw_layer3();
-    reg_d1.h[0] = ENTITY(reg_a6)[2].y.h;
-    reg_d1.h[0] += ENTITY(reg_a6)->draw.h;
+    reg_d1.h[0] = STAGE_TALLY(reg_a6)->panel_position[0][1].h;
+    reg_d1.h[0] += STAGE_TALLY(reg_a6)->panel_edge_x[0][1].h;
     reg_d1.h[0] += 0xE400;
     reg_d2.w = 0x14AF;
     reg_d3.h[0] = 0x10E0;
     sprite_draw_layer3();
-    reg_d1.h[1] = ENTITY(reg_a6)[2].x.h;
-    reg_d1.h[0] = ENTITY(reg_a6)[2].offset_y.h;
-    reg_d1.h[0] += ENTITY(reg_a6)->sprite.h;
+    reg_d1.h[1] = STAGE_TALLY(reg_a6)->panel_position[1][0].h;
+    reg_d1.h[0] = STAGE_TALLY(reg_a6)->panel_position[1][1].h;
+    reg_d1.h[0] += STAGE_TALLY(reg_a6)->panel_edge_x[1][0].h;
     reg_d1.w += 0xF000E400;
     reg_d2.w = 0x14B0;
     reg_d3.h[0] = 0x10E0;
     reg_d4.h[0] = 0x6015;
     sprite_draw_layer3();
-    reg_d1.h[0] = ENTITY(reg_a6)[2].offset_y.h;
-    reg_d1.h[0] += ENTITY(reg_a6)->look.h;
+    reg_d1.h[0] = STAGE_TALLY(reg_a6)->panel_position[1][1].h;
+    reg_d1.h[0] += STAGE_TALLY(reg_a6)->panel_edge_x[1][1].h;
     reg_d1.h[0] += 0xE400;
     reg_d2.w = 0x14AF;
     reg_d3.h[0] = 0x10E0;
     sprite_draw_layer3();
-    reg_d1.h[1] = ENTITY(reg_a6)[2].offset_x.h;
-    reg_d1.h[0] = ENTITY(reg_a6)[2].draw.h;
+    reg_d1.h[1] = STAGE_TALLY(reg_a6)->panel_position[2][0].h;
+    reg_d1.h[0] = STAGE_TALLY(reg_a6)->panel_position[2][1].h;
     reg_d1.h[1] += 0x440;
-    reg_d1.h[1] += ENTITY(reg_a6)[2].sprite.h;
+    reg_d1.h[1] += STAGE_TALLY(reg_a6)->bonus_offset_y[0].h;
     reg_d1.w += 0xFA00EE00;
     reg_d2.w = 0x14B3;
     reg_d3.h[0] = 0x690;
     reg_d4.h[0] = 0x15;
     sprite_draw_layer3();
-    reg_d1.h[1] = ENTITY(reg_a6)[2].offset_x.h;
-    reg_d1.h[0] = ENTITY(reg_a6)[2].draw.h;
+    reg_d1.h[1] = STAGE_TALLY(reg_a6)->panel_position[2][0].h;
+    reg_d1.h[0] = STAGE_TALLY(reg_a6)->panel_position[2][1].h;
     reg_d1.h[1] += 0x440;
-    reg_d1.h[1] -= ENTITY(reg_a6)[2].look.h;
+    reg_d1.h[1] -= STAGE_TALLY(reg_a6)->bonus_offset_y[1].h;
     reg_d1.w += 0xFA00EE00;
     reg_d2.w = 0x14B4;
     reg_d3.h[0] = 0x690;
     reg_d4.h[0] = 0x15;
     sprite_draw_layer3();
-    reg_d1.h[1] = ENTITY(reg_a6)[2].offset_x.h;
-    reg_d1.h[0] = ENTITY(reg_a6)[2].draw.h;
+    reg_d1.h[1] = STAGE_TALLY(reg_a6)->panel_position[2][0].h;
+    reg_d1.h[0] = STAGE_TALLY(reg_a6)->panel_position[2][1].h;
     reg_d1.h[1] += 0x400;
-    reg_d1.h[1] += ENTITY(reg_a6)[2].hit_y_plus.h;
+    reg_d1.h[1] += STAGE_TALLY(reg_a6)->bonus_offset_y[2].h;
     reg_d1.w += 0xF800EC00;
     reg_d2.w = 0x14AB;
     reg_d3.h[0] = 0x8A0;
     reg_d4.h[0] = 0x14;
     sprite_draw_layer3();
-    reg_d1.h[1] = ENTITY(reg_a6)[2].offset_x.h;
-    reg_d1.h[0] = ENTITY(reg_a6)[2].draw.h;
+    reg_d1.h[1] = STAGE_TALLY(reg_a6)->panel_position[2][0].h;
+    reg_d1.h[0] = STAGE_TALLY(reg_a6)->panel_position[2][1].h;
     reg_d1.h[1] += 0x400;
-    reg_d1.h[1] -= ENTITY(reg_a6)[2].hit_y_minus.h;
+    reg_d1.h[1] -= STAGE_TALLY(reg_a6)->bonus_offset_y[3].h;
     reg_d1.w += 0xF800EC00;
     reg_d2.w = 0x14AC;
     reg_d3.h[0] = 0x8A0;
     reg_d4.h[0] = 0x14;
     sprite_draw_layer3();
-    if (g_player1[0] >= 0) goto next_110;
-    reg_d1.h[1] = ENTITY(reg_a6)[2].flags.h;
-    reg_d1.h[0] = ENTITY(reg_a6)[2].y.h;
+    if (g_player1[0] >= 0) goto draw_p2_panel;
+    reg_d1.h[1] = STAGE_TALLY(reg_a6)->panel_position[0][0].h;
+    reg_d1.h[0] = STAGE_TALLY(reg_a6)->panel_position[0][1].h;
     reg_d1.w += 0xF400F200;
     reg_d2.w = 0x14A9;
     reg_d3.h[0] = 0xC70;
     reg_d4.h[0] = 0x13;
     sprite_draw_layer1();
-    reg_d1.h[1] = ENTITY(reg_a6)[2].flags.h;
-    reg_d1.h[0] = ENTITY(reg_a6)[2].y.h;
+    reg_d1.h[1] = STAGE_TALLY(reg_a6)->panel_position[0][0].h;
+    reg_d1.h[0] = STAGE_TALLY(reg_a6)->panel_position[0][1].h;
     reg_d1.w += 0xF3BFF940;
     reg_d1.w += 0xFE00FA00;
     reg_d2.w = 0x14AD;
@@ -158,30 +158,30 @@ void tally_frame_animate(void) {
     sprite_draw_layer1();
     reg_d1.w = 0x53001300;
     reg_d1.w += 0xFC00FD00;
-    reg_d2.h[1] = ENTITY(reg_a6)[2].hit_x_plus.h;
-    reg_d2.h[0] = ENTITY(reg_a6)[2].hit_x_minus.h;
+    reg_d2.h[1] = STAGE_TALLY(reg_a6)->star_sprite[0][0].h;
+    reg_d2.h[0] = STAGE_TALLY(reg_a6)->star_sprite[0][1].h;
     reg_d3.h[0] = 0x418;
     reg_d4.h[0] = 0x1C;
     sprite_draw_layer1();
     reg_d1.w = 0x47801300;
     reg_d1.w += 0xFC00FD00;
-    reg_d2.h[1] = ENTITY(reg_a6)[2].hp.h;
-    reg_d2.h[0] = ENTITY(reg_a6)[2].move.h;
+    reg_d2.h[1] = STAGE_TALLY(reg_a6)->star_sprite[1][0].h;
+    reg_d2.h[0] = STAGE_TALLY(reg_a6)->star_sprite[1][1].h;
     reg_d3.h[0] = 0x418;
     reg_d4.h[0] = 0x1C;
     sprite_draw_layer1();
-next_110:
+draw_p2_panel:
     ;
-    if (g_player2[0] >= 0) goto next_120;
-    reg_d1.h[1] = ENTITY(reg_a6)[2].x.h;
-    reg_d1.h[0] = ENTITY(reg_a6)[2].offset_y.h;
+    if (g_player2[0] >= 0) goto finish_panel_draw;
+    reg_d1.h[1] = STAGE_TALLY(reg_a6)->panel_position[1][0].h;
+    reg_d1.h[0] = STAGE_TALLY(reg_a6)->panel_position[1][1].h;
     reg_d1.w += 0xF400F200;
     reg_d2.w = 0x14A9;
     reg_d3.h[0] = 0xC70;
     reg_d4.h[0] = 0x13;
     sprite_draw_layer1();
-    reg_d1.h[1] = ENTITY(reg_a6)[2].x.h;
-    reg_d1.h[0] = ENTITY(reg_a6)[2].offset_y.h;
+    reg_d1.h[1] = STAGE_TALLY(reg_a6)->panel_position[1][0].h;
+    reg_d1.h[0] = STAGE_TALLY(reg_a6)->panel_position[1][1].h;
     reg_d1.w += 0x0CC00700;
     reg_d1.w += 0xFE00FA00;
     reg_d2.w = 0x14AE;
@@ -190,19 +190,19 @@ next_110:
     sprite_draw_layer1();
     reg_d1.w = 0x32C01300;
     reg_d1.w += 0xFC00FD00;
-    reg_d2.h[1] = ENTITY(reg_a6)[2].hit_x_plus.h;
-    reg_d2.h[0] = ENTITY(reg_a6)[2].hit_x_minus.h;
+    reg_d2.h[1] = STAGE_TALLY(reg_a6)->star_sprite[0][0].h;
+    reg_d2.h[0] = STAGE_TALLY(reg_a6)->star_sprite[0][1].h;
     reg_d3.h[0] = 0x418;
     reg_d4.h[0] = 0x1C;
     sprite_draw_layer1();
     reg_d1.w = 0x27401300;
     reg_d1.w += 0xFC00FD00;
-    reg_d2.h[1] = ENTITY(reg_a6)[2].hp.h;
-    reg_d2.h[0] = ENTITY(reg_a6)[2].move.h;
+    reg_d2.h[1] = STAGE_TALLY(reg_a6)->star_sprite[1][0].h;
+    reg_d2.h[0] = STAGE_TALLY(reg_a6)->star_sprite[1][1].h;
     reg_d3.h[0] = 0x418;
     reg_d4.h[0] = 0x1C;
     sprite_draw_layer1();
-next_120:
+finish_panel_draw:
     ;
 }
 
@@ -213,39 +213,39 @@ extern u8 tally_players_draw_table[];
 void tally_players_draw(void) {
     u32 sh;
 
-    if (g_player1[0] >= 0) goto next_7;
-    reg_d7.h[0] = ENTITY(reg_a6)->hp.h;
+    if (g_player1[0] >= 0) goto draw_p2_stars;
+    reg_d7.h[0] = STAGE_TALLY(reg_a6)->players[0].small_digits.h;
     reg_d2.w = 0xF;
     reg_d2.h[0] &= reg_d7.h[0];
     reg_a1 = (u8 *)tally_players_draw_table;
     reg_d2.w = *(u32 *)(tally_players_draw_table + reg_d2.h[0] * 4);
-    reg_d1.h[1] = ENTITY(reg_a6)[2].flags.h;
-    reg_d1.h[0] = ENTITY(reg_a6)[2].y.h;
+    reg_d1.h[1] = STAGE_TALLY(reg_a6)->panel_position[0][0].h;
+    reg_d1.h[0] = STAGE_TALLY(reg_a6)->panel_position[0][1].h;
     reg_d1.w += 0x080001C0;
     reg_d1.w += 0xFE00FF00;
     reg_d3.h[0] = 0x208;
     reg_d4.h[0] = 0x16;
     sprite_draw_layer1();
     reg_d7.h[0] >>= 4;
-    if (reg_d7.h[0] == 0) goto next_1;
+    if (reg_d7.h[0] == 0) goto draw_p1_small_points;
     tally_digit_draw();
     reg_d7.h[0] >>= 4;
-    if (reg_d7.h[0] == 0) goto next_1;
+    if (reg_d7.h[0] == 0) goto draw_p1_small_points;
     tally_digit_draw();
-next_1:
-    reg_d1.h[1] = ENTITY(reg_a6)[2].flags.h;
-    reg_d1.h[0] = ENTITY(reg_a6)[2].y.h;
+draw_p1_small_points:
+    reg_d1.h[1] = STAGE_TALLY(reg_a6)->panel_position[0][0].h;
+    reg_d1.h[0] = STAGE_TALLY(reg_a6)->panel_position[0][1].h;
     reg_d1.w += 0x030009C0;
     reg_d1.w += 0xFE00FF00;
     reg_d2.w = 0x152B;
     reg_d3.h[0] = 0x208;
     reg_d4.h[0] = 0x16;
     sprite_draw_layer1();
-    reg_d0.h[0] = ENTITY(reg_a6)->move.h;
-    if (reg_d0.h[0] == 0) goto next_2;
+    reg_d0.h[0] = STAGE_TALLY(reg_a6)->players[0].small_remaining.h;
+    if (reg_d0.h[0] == 0) goto draw_p1_large_stars;
     reg_d1.h[0] -= 0x200;
     sprite_draw_layer1();
-    reg_d0.h[0] = ENTITY(reg_a6)->move.h;
+    reg_d0.h[0] = STAGE_TALLY(reg_a6)->players[0].small_remaining.h;
     binary_to_bcd();
     reg_d7.w = reg_d2.w;
     reg_d2.w = 0xF;
@@ -255,22 +255,22 @@ next_1:
     reg_d1.h[0] -= 0x200;
     sprite_draw_layer1();
     reg_d7.w >>= 4;
-    if (reg_d7.w == 0) goto next_2;
+    if (reg_d7.w == 0) goto draw_p1_large_stars;
     tally_digit_draw();
     reg_d7.w >>= 4;
-    if (reg_d7.w == 0) goto next_2;
+    if (reg_d7.w == 0) goto draw_p1_large_stars;
     tally_digit_draw();
     reg_d7.w >>= 4;
-    if (reg_d7.w == 0) goto next_2;
+    if (reg_d7.w == 0) goto draw_p1_large_stars;
     tally_digit_draw();
-next_2:
-    reg_d7.h[0] = ENTITY(reg_a6)->attr.h;
+draw_p1_large_stars:
+    reg_d7.h[0] = STAGE_TALLY(reg_a6)->players[0].large_digits.h;
     reg_d2.w = 0xF;
     reg_d2.h[0] &= reg_d7.h[0];
     reg_a1 = (u8 *)tally_players_draw_table;
     reg_d2.w = *(u32 *)(tally_players_draw_table + reg_d2.h[0] * 4);
-    reg_d1.h[1] = ENTITY(reg_a6)[2].flags.h;
-    reg_d1.h[0] = ENTITY(reg_a6)[2].y.h;
+    reg_d1.h[1] = STAGE_TALLY(reg_a6)->panel_position[0][0].h;
+    reg_d1.h[0] = STAGE_TALLY(reg_a6)->panel_position[0][1].h;
     reg_d1.w += 0xFD4001C0;
     reg_d1.w += 0xFE00FF00;
     reg_d3.h[0] = 0x208;
@@ -278,26 +278,26 @@ next_2:
     sprite_draw_layer1();
     sh = (u32) reg_d7.h[0] >> 4;
     reg_d7.h[0] = sh;
-    if ((u16) sh == 0) goto next_3;
+    if ((u16) sh == 0) goto draw_p1_large_points;
     tally_digit_draw();
     sh = (u32) reg_d7.h[0] >> 4;
     reg_d7.h[0] = sh;
-    if ((u16) sh == 0) goto next_3;
+    if ((u16) sh == 0) goto draw_p1_large_points;
     tally_digit_draw();
-next_3:
-    reg_d1.h[1] = ENTITY(reg_a6)[2].flags.h;
-    reg_d1.h[0] = ENTITY(reg_a6)[2].y.h;
+draw_p1_large_points:
+    reg_d1.h[1] = STAGE_TALLY(reg_a6)->panel_position[0][0].h;
+    reg_d1.h[0] = STAGE_TALLY(reg_a6)->panel_position[0][1].h;
     reg_d1.w += 0xF84009C0;
     reg_d1.w += 0xFE00FF00;
     reg_d2.w = 0x152B;
     reg_d3.h[0] = 0x208;
     reg_d4.h[0] = 0x16;
     sprite_draw_layer1();
-    reg_d0.h[0] = ENTITY(reg_a6)->misc.h;
-    if (reg_d0.h[0] == 0) goto next_7;
+    reg_d0.h[0] = STAGE_TALLY(reg_a6)->players[0].large_remaining.h;
+    if (reg_d0.h[0] == 0) goto draw_p2_stars;
     reg_d1.h[0] -= 0x200;
     sprite_draw_layer1();
-    reg_d0.h[0] = ENTITY(reg_a6)->misc.h;
+    reg_d0.h[0] = STAGE_TALLY(reg_a6)->players[0].large_remaining.h;
     binary_to_bcd();
     reg_d7.w = reg_d2.w;
     reg_d2.w = 0xF;
@@ -308,29 +308,29 @@ next_3:
     sprite_draw_layer1();
     sh = reg_d7.w >> 4;
     reg_d7.w = sh;
-    if (sh == 0) goto next_7;
+    if (sh == 0) goto draw_p2_stars;
     tally_digit_draw();
     sh = reg_d7.w >> 4;
     reg_d7.w = sh;
-    if (sh == 0) goto next_7;
+    if (sh == 0) goto draw_p2_stars;
     tally_digit_draw();
     sh = reg_d7.w >> 4;
     reg_d7.w = sh;
-    if (sh == 0) goto next_7;
+    if (sh == 0) goto draw_p2_stars;
     tally_digit_draw();
     sh = reg_d7.w >> 4;
     reg_d7.w = sh;
-    if (sh == 0) goto next_7;
+    if (sh == 0) goto draw_p2_stars;
     tally_digit_draw();
-next_7:
-    if (g_player2[0] >= 0) goto block_rts;
-    reg_d7.h[0] = ENTITY(reg_a6)[1].y.h;
+draw_p2_stars:
+    if (g_player2[0] >= 0) goto finish_star_draw;
+    reg_d7.h[0] = STAGE_TALLY(reg_a6)->players[1].small_digits.h;
     reg_d2.w = 0xF;
     reg_d2.h[0] &= reg_d7.h[0];
     reg_a1 = (u8 *)tally_players_draw_table;
     reg_d2.w = *(u32 *)(tally_players_draw_table + reg_d2.h[0] * 4);
-    reg_d1.h[1] = ENTITY(reg_a6)[2].x.h;
-    reg_d1.h[0] = ENTITY(reg_a6)[2].offset_y.h;
+    reg_d1.h[1] = STAGE_TALLY(reg_a6)->panel_position[1][0].h;
+    reg_d1.h[0] = STAGE_TALLY(reg_a6)->panel_position[1][1].h;
     reg_d1.w += 0x080001C0;
     reg_d1.w += 0xFE00FF00;
     reg_d3.h[0] = 0x208;
@@ -338,26 +338,26 @@ next_7:
     sprite_draw_layer1();
     sh = (u32) reg_d7.h[0] >> 4;
     reg_d7.h[0] = sh;
-    if ((u16) sh == 0) goto next_4;
+    if ((u16) sh == 0) goto draw_p2_small_points;
     tally_digit_draw();
     sh = (u32) reg_d7.h[0] >> 4;
     reg_d7.h[0] = sh;
-    if ((u16) sh == 0) goto next_4;
+    if ((u16) sh == 0) goto draw_p2_small_points;
     tally_digit_draw();
-next_4:
-    reg_d1.h[1] = ENTITY(reg_a6)[2].x.h;
-    reg_d1.h[0] = ENTITY(reg_a6)[2].offset_y.h;
+draw_p2_small_points:
+    reg_d1.h[1] = STAGE_TALLY(reg_a6)->panel_position[1][0].h;
+    reg_d1.h[0] = STAGE_TALLY(reg_a6)->panel_position[1][1].h;
     reg_d1.w += 0x030009C0;
     reg_d1.w += 0xFE00FF00;
     reg_d2.w = 0x152B;
     reg_d3.h[0] = 0x208;
     reg_d4.h[0] = 0x16;
     sprite_draw_layer1();
-    reg_d0.h[0] = ENTITY(reg_a6)[1].x.h;
-    if (reg_d0.h[0] == 0) goto next_5;
+    reg_d0.h[0] = STAGE_TALLY(reg_a6)->players[1].small_remaining.h;
+    if (reg_d0.h[0] == 0) goto draw_p2_large_stars;
     reg_d1.h[0] -= 0x200;
     sprite_draw_layer1();
-    reg_d0.h[0] = ENTITY(reg_a6)[1].x.h;
+    reg_d0.h[0] = STAGE_TALLY(reg_a6)->players[1].small_remaining.h;
     binary_to_bcd();
     reg_d7.w = reg_d2.w;
     reg_d2.w = 0xF;
@@ -368,24 +368,24 @@ next_4:
     sprite_draw_layer1();
     sh = reg_d7.w >> 4;
     reg_d7.w = sh;
-    if (sh == 0) goto next_5;
+    if (sh == 0) goto draw_p2_large_stars;
     tally_digit_draw();
     sh = reg_d7.w >> 4;
     reg_d7.w = sh;
-    if (sh == 0) goto next_5;
+    if (sh == 0) goto draw_p2_large_stars;
     tally_digit_draw();
     sh = reg_d7.w >> 4;
     reg_d7.w = sh;
-    if (sh == 0) goto next_5;
+    if (sh == 0) goto draw_p2_large_stars;
     tally_digit_draw();
-next_5:
-    reg_d7.h[0] = ENTITY(reg_a6)[1].offset_y.h;
+draw_p2_large_stars:
+    reg_d7.h[0] = STAGE_TALLY(reg_a6)->players[1].large_digits.h;
     reg_d2.w = 0xF;
     reg_d2.h[0] &= reg_d7.h[0];
     reg_a1 = (u8 *)tally_players_draw_table;
     reg_d2.w = *(u32 *)(tally_players_draw_table + reg_d2.h[0] * 4);
-    reg_d1.h[1] = ENTITY(reg_a6)[2].x.h;
-    reg_d1.h[0] = ENTITY(reg_a6)[2].offset_y.h;
+    reg_d1.h[1] = STAGE_TALLY(reg_a6)->panel_position[1][0].h;
+    reg_d1.h[0] = STAGE_TALLY(reg_a6)->panel_position[1][1].h;
     reg_d1.w += 0xFD4001C0;
     reg_d1.w += 0xFE00FF00;
     reg_d3.h[0] = 0x208;
@@ -393,26 +393,26 @@ next_5:
     sprite_draw_layer1();
     sh = (u32) reg_d7.h[0] >> 4;
     reg_d7.h[0] = sh;
-    if ((u16) sh == 0) goto next_6;
+    if ((u16) sh == 0) goto draw_p2_large_points;
     tally_digit_draw();
     sh = (u32) reg_d7.h[0] >> 4;
     reg_d7.h[0] = sh;
-    if ((u16) sh == 0) goto next_6;
+    if ((u16) sh == 0) goto draw_p2_large_points;
     tally_digit_draw();
-next_6:
-    reg_d1.h[1] = ENTITY(reg_a6)[2].x.h;
-    reg_d1.h[0] = ENTITY(reg_a6)[2].offset_y.h;
+draw_p2_large_points:
+    reg_d1.h[1] = STAGE_TALLY(reg_a6)->panel_position[1][0].h;
+    reg_d1.h[0] = STAGE_TALLY(reg_a6)->panel_position[1][1].h;
     reg_d1.w += 0xF84009C0;
     reg_d1.w += 0xFE00FF00;
     reg_d2.w = 0x152B;
     reg_d3.h[0] = 0x208;
     reg_d4.h[0] = 0x16;
     sprite_draw_layer1();
-    reg_d0.h[0] = ENTITY(reg_a6)[1].offset_x.h;
-    if (reg_d0.h[0] == 0) goto block_rts;
+    reg_d0.h[0] = STAGE_TALLY(reg_a6)->players[1].large_remaining.h;
+    if (reg_d0.h[0] == 0) goto finish_star_draw;
     reg_d1.h[0] -= 0x200;
     sprite_draw_layer1();
-    reg_d0.h[0] = ENTITY(reg_a6)[1].offset_x.h;
+    reg_d0.h[0] = STAGE_TALLY(reg_a6)->players[1].large_remaining.h;
     binary_to_bcd();
     reg_d7.w = reg_d2.w;
     reg_d2.w = 0xF;
@@ -423,20 +423,20 @@ next_6:
     sprite_draw_layer1();
     sh = reg_d7.w >> 4;
     reg_d7.w = sh;
-    if (sh == 0) goto block_rts;
+    if (sh == 0) goto finish_star_draw;
     tally_digit_draw();
     sh = reg_d7.w >> 4;
     reg_d7.w = sh;
-    if (sh == 0) goto block_rts;
+    if (sh == 0) goto finish_star_draw;
     tally_digit_draw();
     sh = reg_d7.w >> 4;
     reg_d7.w = sh;
-    if (sh == 0) goto block_rts;
+    if (sh == 0) goto finish_star_draw;
     tally_digit_draw();
     sh = reg_d7.w >> 4;
     reg_d7.w = sh;
-    if (sh == 0) goto block_rts;
+    if (sh == 0) goto finish_star_draw;
     tally_digit_draw();
-block_rts:
+finish_star_draw:
     return;
 }
