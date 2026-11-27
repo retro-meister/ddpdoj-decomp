@@ -254,12 +254,3 @@ u16 password_bits_unpack_table[20] = {
     0x4559, 0x6455, 0x5644, 0x544B, 0x6258, 0x5048, 0x6369, 0x4C52,
     0x00FF, 0x0000, 0x0000, 0x0000,
 };
-
-#ifdef DDPDOJ_PC
-#include "pc_data_alias.h"
-
-PC_DATA_ALIAS(D_0025BF98, name_entry_side_begin_table, 0x8);
-PC_DATA_ALIAS(D_0025BFA6, name_entry_side_begin_table, 0x16);
-PC_DATA_ALIAS(D_0025BFB4, name_entry_side_begin_table, 0x24);
-PC_DATA_ALIAS(D_0025BFC2, name_entry_side_begin_table, 0x32);
-#endif

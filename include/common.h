@@ -72,20 +72,6 @@ extern u8 *reg_atmp; /* scratch address register (exchanges) */
    table, which the start-up routines check before they put the address in. */
 #define POINTER_SLOT(index) (index), (index) + 1
 
-/*
- * Data tables hold addresses as two 16-bit words, high word first. The tables that point at code or at other
- * tables are filled in at start-up with this.
- */
-#define STORE_POINTER(words, target) \
-    reg_tmp.w = (u32)(target); \
-    (words)[0] = reg_tmp.h[1]; \
-    (words)[1] = reg_tmp.h[0]
-
-/* The same store written without the scratch register. */
-#define STORE_POINTER_DIRECT(words, target) \
-    (words)[0] = ((u32)(target)) >> 16; \
-    (words)[1] = ((u32)(target)) & 0xFFFF
-
 /* The same for any other 32-bit value kept as two words. */
 #define STORE_LONG(words, value) \
     reg_tmp.w = (u32)(value); \
@@ -99,13 +85,13 @@ typedef uintptr_t ArcadeSavedAddress;
 typedef s32 ArcadeSavedAddress;
 #endif
 
-/* Convert the producers and consumers of a packed address together. */
+/* Packed game addresses use two 16-bit words, high word first. */
 #ifdef DDPDOJ_PC
 #define ARCADE_ADDRESS_ENCODE(address) pc_arcade_address_encode((uintptr_t)(address))
 #define ARCADE_ADDRESS_DECODE(type, slot) ((type)pc_arcade_address_decode((u32)(slot)))
 #define ARCADE_POINTER_TABLE_AT(type, table, byte_offset) ((type)(table)[(byte_offset) / 4])
-#define STORE_ARCADE_ADDRESS(words, target) STORE_LONG(words, ARCADE_ADDRESS_ENCODE(target))
-#define STORE_ARCADE_ADDRESS_DIRECT(words, target) do { \
+#define STORE_POINTER(words, target) STORE_LONG(words, ARCADE_ADDRESS_ENCODE(target))
+#define STORE_POINTER_DIRECT(words, target) do { \
     u32 slot = ARCADE_ADDRESS_ENCODE(target); \
     (words)[0] = (u16)(slot >> 16); \
     (words)[1] = (u16)slot; \
@@ -114,9 +100,18 @@ typedef s32 ArcadeSavedAddress;
 #define ARCADE_ADDRESS_ENCODE(address) ((u32)(address))
 #define ARCADE_ADDRESS_DECODE(type, slot) ((type)(slot))
 #define ARCADE_POINTER_TABLE_AT(type, table, byte_offset) (*(type *)((u8 *)(table) + (byte_offset)))
-#define STORE_ARCADE_ADDRESS(words, target) STORE_POINTER(words, target)
-#define STORE_ARCADE_ADDRESS_DIRECT(words, target) STORE_POINTER_DIRECT(words, target)
+#define STORE_POINTER(words, target) \
+    reg_tmp.w = (u32)(target); \
+    (words)[0] = reg_tmp.h[1]; \
+    (words)[1] = reg_tmp.h[0]
+
+/* The same store written without the scratch register. */
+#define STORE_POINTER_DIRECT(words, target) \
+    (words)[0] = ((u32)(target)) >> 16; \
+    (words)[1] = ((u32)(target)) & 0xFFFF
 #endif
+#define STORE_ARCADE_ADDRESS STORE_POINTER
+#define STORE_ARCADE_ADDRESS_DIRECT STORE_POINTER_DIRECT
 extern s8 cond_flag; /* result of the last routine that reports through the condition codes */
 extern void (*reg_call_target)(); /* 0x28E3F4: address of the routine an indirect call goes through */
 extern s8 rng_values[256];

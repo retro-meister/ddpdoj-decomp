@@ -490,10 +490,7 @@ extern u16 D_002526F2[];
 extern u16 D_00252702[];
 extern u16 D_00252722[];
 extern u16 stage_scroll_event_lists[];
-extern u16 D_0025BF98[];
-extern u16 D_0025BFA6[];
-extern u16 D_0025BFB4[];
-extern u16 D_0025BFC2[];
+extern u16 name_entry_side_begin_table[32];
 extern u16 name_entry_letter_table[];
 extern u16 select_panel_piece_2_draw_table_as_u16_a[];
 extern u16 D_0028C14A[];
@@ -2663,22 +2660,22 @@ void checked_pointers_store(void) {
         printf("error! avram_tbl5[2]\n");
     }
     STORE_ARCADE_ADDRESS(stage5_scroll_events + 2, stage5_scroll_sounds);
-    if (D_0025BF98[0] != 0x4) {
+    if (name_entry_side_begin_table[4] != 0x4) {
         printf("error! name_fin_tbl[4]\n");
     }
-    STORE_POINTER(D_0025BF98, D_00261F30);
-    if (D_0025BFA6[0] != 0xb) {
+    STORE_POINTER(name_entry_side_begin_table + 4, D_00261F30);
+    if (name_entry_side_begin_table[11] != 0xb) {
         printf("error! name_fin_tbl[11]\n");
     }
-    STORE_POINTER(D_0025BFA6, ((u16 *)name_entry_task_begin_table_2));
-    if (D_0025BFB4[0] != 0x12) {
+    STORE_POINTER(name_entry_side_begin_table + 11, ((u16 *)name_entry_task_begin_table_2));
+    if (name_entry_side_begin_table[18] != 0x12) {
         printf("error! name_fin_tbl[18]\n");
     }
-    STORE_POINTER(D_0025BFB4, ((u16 *)name_entry_task_begin_table_3));
-    if (D_0025BFC2[0] != 0x19) {
+    STORE_POINTER(name_entry_side_begin_table + 18, ((u16 *)name_entry_task_begin_table_3));
+    if (name_entry_side_begin_table[25] != 0x19) {
         printf("error! name_fin_tbl[25]\n");
     }
-    STORE_POINTER(D_0025BFC2, ((u16 *)name_entry_task_begin_table));
+    STORE_POINTER(name_entry_side_begin_table + 25, ((u16 *)name_entry_task_begin_table));
     if (name_entry_letter_table[0] != 0x0) {
         printf("error! nam_mozi_dir[0]\n");
     }
