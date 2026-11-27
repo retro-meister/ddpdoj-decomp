@@ -1,3 +1,4 @@
+#include "black_label.h"
 #include "common.h"
 #include "ps2_text.h"
 #include "enemy.h"
@@ -685,7 +686,7 @@ void stage3_midboss_mode_attack_a(void) {
             reg_tmp.b[0] = ENTITY(reg_a6)[4].draw.b.priority;
             ENTITY(reg_a6)[4].draw.b.priority -= 1;
             if ((s32) reg_tmp.b[0] <= 0) {
-                reg_d0.h[0] = 0x20;
+                reg_d0.h[0] = GAME_RULE(0x20, 0x30);
                 reg_d0.h[0] -= g_rank_1_16;
                 ENTITY(reg_a6)[4].draw.b.priority = (u8) reg_d0.b[0];
                 reg_d0.b[0] = ENTITY(reg_a6)[1].look.b.size;
@@ -997,20 +998,20 @@ void stage3_midboss_mode_05(void) {
         reg_tmp.b[0] = ENTITY(reg_a6)[6].look.b.size;
         ENTITY(reg_a6)[6].look.b.size -= 1;
         if ((s32) reg_tmp.b[0] <= 0) {
-            reg_d0.h[0] = 0x10;
+            reg_d0.h[0] = GAME_RULE(0x10, 0x12);
             reg_d1.h[0] = g_rank_1_16;
             reg_d1.h[0] >>= 2;
             reg_d0.b[0] -= reg_d1.b[0];
             ENTITY(reg_a6)[6].look.b.size = (u8) reg_d0.b[0];
             direction256_to_target_player();
             if (cond_flag == 0) {
-                reg_d0.w = 0x70004;
+                reg_d0.w = GAME_RULE(0x70004, 0x40004);
                 t1 = 0xF6000000;
-                reg_d1.h[0] -= 0x20;
+                reg_d1.h[0] -= GAME_RULE(0x20, 0x30);
                 reg_d2.h[1] = ENTITY(reg_a6)->y.h;
                 reg_d2.h[0] = ENTITY(reg_a6)->x.h;
                 reg_d5.w = 0xF6000000;
-                reg_d7.w = 8;
+                reg_d7.w = GAME_RULE(8, 12);
                 reg_a0 = (u8 *)(g_direction64_offsets_432);
                 reg_d4.w = 0;
                 do {
@@ -1269,6 +1270,14 @@ void stage3_midboss_pod(void) {
     if (g_no_enemy_bullets != 0) {
         goto next_1;
     }
+#ifdef DDPDOJ_BONUS_FEATURES
+    if (g_black_label_active) {
+        if (!g_enemy_signal_4 || g_enemy_signal_e == 0 || g_enemy_signal_e == 2) {
+            ENTITY(reg_a6)->flags.b[0] &= ~1;
+        }
+        goto check_pod_damage;
+    }
+#endif
     if (g_enemy_signal_4 == 0) {
         goto next_2;
     }
@@ -1278,6 +1287,9 @@ void stage3_midboss_pod(void) {
     if (g_enemy_signal_e == 2) {
         goto next_2;
     }
+#ifdef DDPDOJ_BONUS_FEATURES
+check_pod_damage:
+#endif
     reg_d1.w = 0x5C;
     reg_d1.b[0] &= *(u8 *) (reg_a6 + 1);
     if (reg_d1.b[0] == 0) {
@@ -1293,6 +1305,12 @@ void stage3_midboss_pod(void) {
     if (*(s16 *) (reg_a6 + 0x18) >= 0) {
         goto next_4;
     }
+#ifdef DDPDOJ_BONUS_FEATURES
+    if (g_black_label_active) {
+        reg_d0.w = 0;
+        score_add();
+    }
+#endif
 next_2:
     reg_d0.w = 2;
     explosion_spawn();

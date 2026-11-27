@@ -1,3 +1,4 @@
+#include "black_label.h"
 #include "common.h"
 #include "simulation.h"
 #include "enemy.h"
@@ -1269,6 +1270,12 @@ void laser_vs_enemies(void) {
     reg_d5.h[0] = *(u16 *) (reg_a1 + 0x1C);
     reg_d4.h[0] = reg_d5.h[0];
     reg_d4.h[0] >>= 2;
+#ifdef DDPDOJ_BONUS_FEATURES
+    if (g_black_label_active) {
+        extern u16 g_true_last_boss;
+        if ((s16)g_true_last_boss < 0) reg_d4.h[0] >>= 1;
+    }
+#endif
     reg_d7.h[0] = g_hyper_level_hit_scratch;
     reg_d7.h[0] -= 1;
 loop_20:

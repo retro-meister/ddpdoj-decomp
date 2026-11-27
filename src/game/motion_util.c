@@ -1,3 +1,4 @@
+#include "black_label.h"
 #include "common.h"
 #include "arcade_gameplay.h"
 #include "player.h"
@@ -168,11 +169,11 @@ void bullets_cancel_sweep(void) {
         reg_d0.h[0] = *(u16 *)reg_a2;
         if ((s16) reg_d0.h[0] < 0) {
             if (reg_d1.h[0] & 0x10) {
-                reg_d0.w = 0x23;
+                reg_d0.w = GAME_RULE(0x23, 0x46);
                 score_add_p1();
             }
             if (reg_d1.h[0] & 8) {
-                reg_d0.w = 0x23;
+                reg_d0.w = GAME_RULE(0x23, 0x46);
                 score_add_p2();
             }
         }

@@ -127,6 +127,42 @@ extern s32 g_p1_chain_points;
 extern u16 g_max_combo_time;
 extern u16 g_loop;
 
+#ifdef DDPDOJ_BONUS_FEATURES
+extern s32 g_p1_chain_first_score, g_p2_chain_first_score;
+extern s32 g_p1_chain_points_shown, g_p2_chain_points_shown;
+extern u16 g_p1_hits, g_p2_hits;
+
+static void black_label_hyper_kill(int second_player) {
+    s32 *first = second_player ? &g_p2_chain_first_score : &g_p1_chain_first_score;
+    s32 *points = second_player ? &g_p2_chain_points : &g_p1_chain_points;
+    s32 *shown = second_player ? &g_p2_chain_points_shown : &g_p1_chain_points_shown;
+    u16 *hits = second_player ? &g_p2_hits : &g_p1_hits;
+    u16 level = second_player ? g_p2_hyper_level : g_p1_hyper_level;
+    void (*laser_hit)(void) = second_player ? p2_laser_hit : p1_laser_hit;
+    void (*credit)(void) = second_player ? score_add_p2 : score_add_p1;
+    u16 i;
+    if (*first) {
+        *points = *shown = *first;
+        *hits = 1;
+        *first = 0;
+    }
+    for (i = 0; i < level; ++i) {
+        s32 saved = *points;
+        int award;
+        if (!g_loop) *points = (u32)saved >> 4;
+        reg_d0.w = 0;
+        laser_hit();
+        if (!g_loop) {
+            for (award = 0; award < 4; ++award) {
+                reg_d0.w = *points;
+                credit();
+            }
+        }
+        *points = saved;
+    }
+}
+#endif
+
 void score_add(void) {
     u32 temp_s0;
     u32 temp_s0_2;
@@ -139,6 +175,11 @@ void score_add(void) {
     g_max_combo_time = (reg_d2.h[0] != 0) ? *(u16 *)((u8 *)reg_a0 + ((s16)reg_d2.h[0] & ~1)) : *(u16 *)reg_a0;
     if (reg_d1.w & 0x10) {
         p1_laser_hit();
+#ifdef DDPDOJ_BONUS_FEATURES
+        if (g_black_label_active && g_p1_hyper_active) {
+            black_label_hyper_kill(0);
+        } else
+#endif
         if (g_p1_hyper_active != 0) {
             reg_d2.h[0] = g_p1_hyper_level;
             reg_d2.h[0] -= 1;
@@ -165,6 +206,11 @@ void score_add(void) {
     }
     if (reg_d1.w & 8) {
         p2_laser_hit();
+#ifdef DDPDOJ_BONUS_FEATURES
+        if (g_black_label_active && g_p2_hyper_active) {
+            black_label_hyper_kill(1);
+        } else
+#endif
         if (g_p2_hyper_active != 0) {
             reg_d2.h[0] = g_p2_hyper_level;
             reg_d2.h[0] -= 1;
@@ -463,7 +509,7 @@ void p1_combo_timer_add(void) {
     reg_d0.h[0] = g_stage_x2;
     idx = reg_d0.h[0];
     reg_a0 += idx;
-    reg_d0.h[0] = *(u16 *)reg_a0;
+    reg_d0.h[0] = *(u16 *)reg_a0 + GAME_RULE(0, 2);
     reg_d2.h[0] = g_p1_hyper_items;
     if (g_p1_hyper_active != 0) {
         reg_d0.h[0] = g_stage_x2;
@@ -523,7 +569,7 @@ void p2_combo_timer_add(void) {
     reg_d0.h[0] = g_stage_x2;
     idx = reg_d0.h[0];
     reg_a0 += idx;
-    reg_d0.h[0] = *(u16 *)reg_a0;
+    reg_d0.h[0] = *(u16 *)reg_a0 + GAME_RULE(0, 2);
     reg_d2.h[0] = g_p2_hyper_items;
     if (g_p2_hyper_active != 0) {
         reg_d0.h[0] = g_stage_x2;
@@ -562,7 +608,7 @@ void p1_laser_hyper_gauge_tick(void) {
     g_p1_laser_hyper_timer -= 1;
     if ((s16)g_p1_laser_hyper_timer < 0) {
         reg_d2.w = 0;
-        reg_d2.h[0] += 0x10;
+        reg_d2.h[0] += GAME_RULE(0x10, 0x18);
         if (g_simulation_active != 0) {
             g_p1_hyper_gauge += reg_d2.h[0];
         } else {
@@ -598,7 +644,7 @@ void p2_laser_hyper_gauge_tick(void) {
     g_p2_laser_hyper_timer -= 1;
     if ((s16)g_p2_laser_hyper_timer < 0) {
         reg_d2.w = 0;
-        reg_d2.h[0] += 0x10;
+        reg_d2.h[0] += GAME_RULE(0x10, 0x18);
         if (g_simulation_active != 0) {
             g_p2_hyper_gauge += reg_d2.h[0];
         } else {
@@ -769,7 +815,6 @@ void p1_boss_hit_chain(void) {
         return;
     }
     reg_d0.h[0] += g_p1_hyper_level;
-    reg_d0.h[0] = GAME_RULE(reg_d0.h[0], black_label_boss_laser_hits(reg_d0.h[0]));
     p1_boss_hits_add();
 }
 
@@ -843,17 +888,11 @@ void p1_boss_hits_add(void) {
     extern void p1_boss_hits_score(u16);
 #endif
     g_boss_hits += reg_d0.h[0];
-#ifdef DDPDOJ_BONUS_FEATURES
-    if (g_black_label_active && g_boss_hits > 0x7FFF) g_boss_hits = 0x7FFF;
-#endif
     if (!(reg_d1.w & 0x40)) {
         ARCADE_REGISTER_CALL(p1_boss_hits_score, reg_d0.h[0]);
         return;
     }
     g_boss_hits += reg_d0.h[0];
-#ifdef DDPDOJ_BONUS_FEATURES
-    if (g_black_label_active && g_boss_hits > 0x7FFF) g_boss_hits = 0x7FFF;
-#endif
     ARCADE_REGISTER_CALL(p1_boss_hits_score, reg_d0.h[0]);
 }
 
@@ -1053,17 +1092,11 @@ void p2_boss_hits_add(void) {
     extern void p2_boss_hits_score(u16);
 #endif
     g_boss_hits += reg_d0.h[0];
-#ifdef DDPDOJ_BONUS_FEATURES
-    if (g_black_label_active && g_boss_hits > 0x7FFF) g_boss_hits = 0x7FFF;
-#endif
     if (!(reg_d1.w & 0x40)) {
         ARCADE_REGISTER_CALL(p2_boss_hits_score, reg_d0.h[0]);
         return;
     }
     g_boss_hits += reg_d0.h[0];
-#ifdef DDPDOJ_BONUS_FEATURES
-    if (g_black_label_active && g_boss_hits > 0x7FFF) g_boss_hits = 0x7FFF;
-#endif
     ARCADE_REGISTER_CALL(p2_boss_hits_score, reg_d0.h[0]);
 }
 
