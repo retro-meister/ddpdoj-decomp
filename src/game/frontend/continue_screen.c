@@ -776,7 +776,7 @@ next_8:
     if (g_simulation_active != 0) {
         goto next_9;
     }
-    if (g_loop != 0) {
+    if (GAME_RULE(g_loop != 0, 0)) {
         goto next_9;
     }
     game_both_players_out_check();
