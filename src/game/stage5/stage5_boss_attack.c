@@ -1077,11 +1077,7 @@ extern u32 stage5_boss_fire_form1_rage_start_value;
 
 void stage5_boss_fire_form1_rage_start(void) {
     (*(u16 **)&reg_a0) = stage5_boss_fire_form1_rage_start_table;
-#ifdef DDPDOJ_PC
     reg_a1 = reg_a4 + 2;
-#else
-    (*(u16 **)&reg_a1) = (u16 *)((*(s32 *)&reg_a4) + 2);
-#endif
     reg_d0.w = ((u32) stage5_boss_fire_form1_rage_start_value >> 1) - 1;
     do {
         *(*(u16 **)&reg_a1) = *((u16 *)reg_a0);

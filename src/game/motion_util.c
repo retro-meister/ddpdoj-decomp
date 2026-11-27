@@ -528,11 +528,7 @@ next_1:
 next_2:
     reg_d0.b[0] = *(s8 *)(direction_ratio_angles + reg_d0.h[0]);
     reg_d1.h[0] = *(s16 *)(direction_octant_bases + (reg_d4.h[0] & ~1));
-#ifdef DDPDOJ_PC
     direction_octant_combines[reg_d4.h[0] >> 1]();
-#else
-    ((Fn)*(u32 *)((u8 *)((u8 *)direction_octant_combines) + (((s32) reg_d4.h[0] >> 1) * 4)))();
-#endif
 block_rts:
     return;
 }

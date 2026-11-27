@@ -755,11 +755,7 @@ before_first_move:
     }
     enemy_move_end_requested = 0;
     reg_d1.h[0] &= 0xF;
-#ifdef DDPDOJ_PC
     g_enemy_path_commands[reg_d1.h[0]]();
-#else
-    ((Fn)*(u32 *)((u8 *)g_enemy_path_commands + (reg_d1.h[0] * 4)))();
-#endif
     if (enemy_move_end_requested == 0) goto before_first_move;
     return;
 first_move:
@@ -850,11 +846,7 @@ not_a_move:
 command:
     enemy_move_end_requested = 0;
     reg_d1.h[0] &= 0xF;
-#ifdef DDPDOJ_PC
     g_enemy_path_commands[reg_d1.h[0]]();
-#else
-    ((Fn) *(u32 *)((u8 *)g_enemy_path_commands + reg_d1.h[0] * 4))();
-#endif
     if (enemy_move_end_requested == 0) goto path_advanced;
     cond_flag = 0;
     return;

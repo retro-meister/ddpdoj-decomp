@@ -405,13 +405,11 @@ void p2_laser_draw_alternating(void) {
 
 #ifdef DDPDOJ_PC
 typedef uintptr_t LaserRegisterAddress;
-extern Fn p1_laser_part_routines[20];
-extern Fn p2_laser_part_routines[20];
 #else
 typedef u32 LaserRegisterAddress;
-extern u8 p1_laser_part_routines[];
-extern u8 p2_laser_part_routines[];
 #endif
+extern Fn p1_laser_part_routines[20];
+extern Fn p2_laser_part_routines[20];
 extern u16 g_player_laser_count;
 extern u16 g_hyper_hit_scratch;
 extern u16 g_p2_hyper_active;
@@ -439,11 +437,7 @@ void player_lasers_update(void) {
                 reg_d1.w = 0x1F;
                 g_player_laser_count += 1;
                 reg_d1.h[0] &= reg_d0.h[0];
-#ifdef DDPDOJ_PC
                 p1_laser_part_routines[reg_d1.h[0]]();
-#else
-                ((Fn)*(u32 *)((u8 *)p1_laser_part_routines + (reg_d1.h[0] * 4)))();
-#endif
             }
             reg_a6 += 0x30;
         } while ((s16)(--reg_d7.h[0]) >= 0);
@@ -458,11 +452,7 @@ void player_lasers_update(void) {
                 reg_d1.w = 0x1F;
                 g_player_laser_count += 1;
                 reg_d1.h[0] &= reg_d0.h[0];
-#ifdef DDPDOJ_PC
                 p2_laser_part_routines[reg_d1.h[0]]();
-#else
-                ((Fn)*(u32 *)((u8 *)p2_laser_part_routines + (reg_d1.h[0] * 4)))();
-#endif
             }
             reg_a6 += 0x30;
         } while ((s16)(--reg_d7.h[0]) >= 0);

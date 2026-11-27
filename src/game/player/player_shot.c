@@ -69,11 +69,7 @@ void player_shot_jitter_quarter() {
 
 typedef void (*Fn)();
 
-#ifdef DDPDOJ_PC
 extern Fn player_shot_update_routines[16];
-#else
-extern u8 player_shot_update_routines[];
-#endif
 extern u16 g_player_shot_count;
 extern u16 g_p2_hyper_active;
 extern u16 g_p1_hyper_active;
@@ -109,11 +105,7 @@ loop_2:
     ENTITY(reg_a6)->x.h -= reg_d6.h[0];
     reg_d0.w = 0xF;
     reg_d0.h[0] &= reg_d1.h[0];
-#ifdef DDPDOJ_PC
     player_shot_update_routines[reg_d0.h[0]]();
-#else
-    ((Fn)*(u32 *)((u8 *)player_shot_update_routines + (reg_d0.h[0] * 4)))();
-#endif
 next_1:
     reg_a6 += 0x30;
     t = reg_d7.h[0] - 1;

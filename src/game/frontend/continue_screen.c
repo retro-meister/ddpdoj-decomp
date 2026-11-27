@@ -295,11 +295,7 @@ void continue_panels_update(u16 *arg0) {
         temp_v1_2 = *(u16 *)reg_a4;
         reg_d0.h[0] = temp_v1_2;
         if (temp_v1_2 != 0) {
-#ifdef DDPDOJ_PC
             continue_step_routines[reg_d0.h[0]]();
-#else
-            ((Fn)*(u32 *)((u8 *)continue_step_routines + (reg_d0.h[0] * 4)))();
-#endif
         }
         var_a0 = (u16 *)(reg_a4 + 0x16);
         reg_a4 = (u8 *)(var_a0);
@@ -547,11 +543,7 @@ void continue_panel_step_countdown_wide(void) {
     }
     reg_d4.w = 0;
     reg_d4.b[0] = (u8) *(s8 *)(reg_a4 + 0xA);
-#ifdef DDPDOJ_PC
     reg_a0 = (u8 *)continue_digit_frames.sets[reg_d4.h[0]];
-#else
-    reg_a0 = *(u8 **)((u8 *)continue_digit_frames.sets + (reg_d4.h[0] * 4));
-#endif
     reg_a0 += *(u16 *)(reg_a4 + 0x14);
     temp_a3_2 = *(u32 *)reg_a0;
     reg_d4.w = temp_a3_2;

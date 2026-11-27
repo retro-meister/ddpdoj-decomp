@@ -144,11 +144,7 @@ next_7:
 block_3:
 #endif
     reg_d0.h[0] = g_attract_step;
-#ifdef DDPDOJ_PC
     attract_step_routines[reg_d0.h[0]]();
-#else
-    ((Fn)*(u32 *)((u8 *)attract_step_routines + (reg_d0.h[0] * 4)))();
-#endif
 }
 
 s32 screen_clear_unused();                            /* extern */
