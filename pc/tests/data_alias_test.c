@@ -1,12 +1,16 @@
 #include "common.h"
-#include "explosion.h"
+#include "explosion_scripts.h"
 #include "pc_replay_storage.h"
 #include "pc_enemy_animation.h"
 
 #include <stddef.h>
 #include <stdio.h>
 
-_Static_assert(offsetof(struct ExplosionScript14, frames) == 0x10, "Explosion frame data offset");
+_Static_assert(sizeof(ExplosionFrame) == 4, "Explosion draw and sprite words");
+_Static_assert(sizeof(ExplosionSetLook) == 8 && sizeof(ExplosionMove) == 8, "Explosion command sizes");
+_Static_assert(sizeof(ExplosionIntro) == 0x1C, "Three-frame explosion intro");
+_Static_assert(sizeof(ExplosionScriptEntry) == 8, "Packed frame and timing addresses");
+_Static_assert(offsetof(struct ExplosionScript32Frames, frames) == 0x10, "Explosion frame data offset");
 _Static_assert(sizeof(explosion_script_14) == 0x90, "Complete explosion script size");
 
 extern u16 D_00242020[];

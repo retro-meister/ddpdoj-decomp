@@ -1,6 +1,7 @@
 #include "common.h"
 #include "entity.h"
 #include "explosion.h"
+#include "explosion_scripts.h"
 #include "sdk/ps2sdk.h"
 
 void explosions_clear(void);
@@ -230,11 +231,7 @@ typedef void (*Fn)();
 s32 debris_spawn();
 s32 entity_follow_scroll();
 s32 velocity_from_dir256();
-extern u16 explosion_scripts[];
-extern u16 explosion_scripts_b[];
-#ifdef DDPDOJ_PC
-#include "effect_tables.h"
-#else
+#ifndef DDPDOJ_PC
 extern u8 D_00250760[];
 #endif
 extern u16 g_game_frame;
@@ -270,7 +267,7 @@ block_first:
     reg_d1.w &= ~0x80;
     reg_a1 = (u8 *)explosion_scripts_b;
 skip_1:
-    reg_d1.h[0] *= 8;
+    reg_d1.h[0] *= sizeof(ExplosionScriptEntry);
     reg_tmp.h[1] = ((reg_d1.h[0] + 4) != 0) ? *(u16 *)(reg_a1 + ((s16)(reg_d1.h[0] + 4) & ~1)) : *(u16 *)reg_a1;
     reg_tmp.h[0] = ((reg_d1.h[0] + 6) != 0) ? *(u16 *)(reg_a1 + ((s16)(reg_d1.h[0] + 6) & ~1)) : *(u16 *)reg_a1;
     reg_a2 = ARCADE_ADDRESS_DECODE(u8 *, reg_tmp.w);
@@ -380,7 +377,7 @@ block_move:
     reg_a0 = ARCADE_ADDRESS_DECODE(u8 *, reg_tmp.w);
     reg_d0.h[0] = *(u16 *)reg_a0;
     reg_a0 += 2;
-    if ((s16)reg_d0.h[0] != -1) goto block_anim;
+    if ((s16)reg_d0.h[0] != (s16)EXPLOSION_TIMING_END) goto block_anim;
 block_end:
     EXPLOSION(reg_a6)->kind.h = 0;
     goto next_1;
