@@ -4,7 +4,7 @@ enum {
     GS_BLOCKS = 0x4000,
     MAX_TEXTURE_SIDE = 1024,
     TEXTURE_CACHE_SIZE = 48,
-    SPRITE_SIDE = 256,
+    MAX_SPRITE_PIXELS = 256 * 256,
     SPRITE_BUCKETS = 32,
     SPRITES_PER_BUCKET = 8,
 };
@@ -144,7 +144,7 @@ bool pc_gs_texture_upload(const sceGsLoadImage *transfer, const void *pixels)
 
     image->upload = (SDL_Rect){x, y, width, height};
     if ((format == SCE_GS_PSMT4 || format == SCE_GS_PSMT8) &&
-        x + width <= SPRITE_SIDE && y + height <= SPRITE_SIDE) {
+        (x + width) * (y + height) <= MAX_SPRITE_PIXELS) {
         size_t bytes = format == SCE_GS_PSMT4 ? (width * height + 1) / 2 : width * height;
         image->upload_hash = SDL_murmur3_32(pixels, bytes, 0);
     }
@@ -381,8 +381,8 @@ SDL_Texture *pc_gs_texture_get(SDL_Renderer *renderer, u64 tex0, u64 texa,
     unsigned height = SDL_min(image->height, 1u << ((tex0 >> 30) & 0xF));
     const SDL_Rect rect = image->upload;
     if (count && (image->format == SCE_GS_PSMT4 || image->format == SCE_GS_PSMT8) &&
-        rect.x + rect.w <= (int)SDL_min(width, SPRITE_SIDE) &&
-        rect.y + rect.h <= (int)SDL_min(height, SPRITE_SIDE) &&
+        (rect.x + rect.w) * (rect.y + rect.h) <= MAX_SPRITE_PIXELS &&
+        rect.x + rect.w <= (int)width && rect.y + rect.h <= (int)height &&
         covers_vertices(&rect, vertices, count, linear)) {
         return sprite_texture(renderer, image, tex0, texa);
     }
