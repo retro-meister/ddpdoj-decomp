@@ -1,4 +1,5 @@
 #include "common.h"
+#include "black_label.h"
 #include "entity.h"
 #include "explosion.h"
 
@@ -356,15 +357,17 @@ block_d:
     reg_tmp1.h[0] = reg_d1.h[0];
     reg_d1.h[0] = reg_d1.h[1];
     reg_d1.h[1] = reg_tmp1.h[0];
-    reg_d1.h[0] -= 0x1000;
-    reg_tmp3.h[0] = reg_d3.h[0];
-    reg_d3.h[0] = reg_d3.h[1];
-    reg_d3.h[1] = reg_tmp3.h[0];
+    reg_d1.h[0] -= GAME_RULE(0x1000, 0x1c00);
+    if (GAME_RULE(1, 0)) {
+        reg_tmp3.h[0] = reg_d3.h[0];
+        reg_d3.h[0] = reg_d3.h[1];
+        reg_d3.h[1] = reg_tmp3.h[0];
+    }
     reg_tmp.w = reg_tmp1.w;
-    reg_tmp.h[0] = 0xA200;
+    reg_tmp.h[0] = GAME_RULE(0xA200, 0xAE00);
     reg_tmp1.h[0] = reg_d1.h[0];
     reg_tmp1.w += reg_tmp.w;
-    reg_d1.h[0] += 0xA200;
+    reg_d1.h[0] += GAME_RULE(0xA200, 0xAE00);
     if (reg_tmp1.h[1] != 0) goto block_c;
     enemy_fire_distance_check();
     if (cond_flag != 0) goto block_c;
@@ -808,18 +811,20 @@ block_d:
     reg_d1.h[0] += 0xC800;
     if (reg_tmp1.h[1] != 0) goto block_c;
     reg_tmp.w = 0;
-    reg_tmp.h[0] = 0xA200;
+    reg_tmp.h[0] = GAME_RULE(0xA200, 0xAE00);
     reg_tmp1.h[0] = reg_d1.h[0];
     reg_d1.h[0] = reg_d1.h[1];
     reg_d1.h[1] = reg_tmp1.h[0];
-    reg_d1.h[0] -= 0x1000;
-    reg_tmp3.h[0] = reg_d3.h[0];
-    reg_d3.h[0] = reg_d3.h[1];
-    reg_d3.h[1] = reg_tmp3.h[0];
+    reg_d1.h[0] -= GAME_RULE(0x1000, 0x1c00);
+    if (GAME_RULE(1, 0)) {
+        reg_tmp3.h[0] = reg_d3.h[0];
+        reg_d3.h[0] = reg_d3.h[1];
+        reg_d3.h[1] = reg_tmp3.h[0];
+    }
     reg_tmp1.w = 0;
     reg_tmp1.h[0] = reg_d1.h[0];
     reg_tmp1.w += reg_tmp.w;
-    reg_d1.h[0] += 0xA200;
+    reg_d1.h[0] += GAME_RULE(0xA200, 0xAE00);
     if (reg_tmp1.h[1] != 0) goto block_c;
     enemy_fire_distance_check();
     if (cond_flag != 0) goto block_c;

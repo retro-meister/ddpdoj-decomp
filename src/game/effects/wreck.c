@@ -1,5 +1,5 @@
 #include "common.h"
-#include "black_label.h"
+#include "pickups.h"
 #include "simulation.h"
 #include "fade.h"
 #include "enemy.h"
@@ -204,7 +204,7 @@ void startup_pointers_store_a(void) {
     STORE_POINTER(debug_list_views[17].entries, ((u16 *)g_items));
     STORE_POINTER(debug_list_views[18].entries, &(*(u32 *)&g_p1_laser_stop_y));
     STORE_POINTER(debug_list_views[19].entries, &(*(u32 *)&g_p2_laser_stop_y));
-    STORE_POINTER(debug_list_views[20].entries, ((u16 *)g_pickups));
+    STORE_POINTER(debug_list_views[20].entries, ((u16 *)ACTIVE_PICKUPS));
     STORE_POINTER(debug_list_views[21].entries, ((u16 *)g_sparks));
     STORE_POINTER(debug_list_views[22].entries, ((u16 *)g_sparks_second_half));
     STORE_POINTER(debug_list_views[23].entries, ((u16 *)g_deferred_text));

@@ -1,5 +1,6 @@
 #include "black_label.h"
 #include "common.h"
+#include "pickups.h"
 #include "simulation.h"
 #include "enemy.h"
 #include "entity.h"
@@ -327,14 +328,14 @@ loop_5:
             }
             reg_d6.h[0] = g_bullet_count;
             if (reg_d6.h[0] != 0) {
-                reg_a6 = (u8 *)((u16 *)g_pickups);
+                reg_a6 = (u8 *)((u16 *)ACTIVE_PICKUPS);
                 goto loop_17;
 skip_17:
                 reg_a6 += 0x2A;
 loop_17:
-#ifdef DDPDOJ_PC
+#if defined(DDPDOJ_PC) || defined(DDPDOJ_BONUS_FEATURES)
                     /* The count is tested after each active slot. Stop at the last physical slot. */
-                    if (reg_a6 == g_pickups + sizeof(g_pickups)) goto pickups_checked;
+                    if (reg_a6 == ACTIVE_PICKUPS + ACTIVE_PICKUP_BYTES) goto pickups_checked;
 #endif
                     reg_tmp.h[0] = ENTITY(reg_a6)->flags.h;
                     reg_a6 += 2;
@@ -363,7 +364,7 @@ next_17:
                     tmp_dec = reg_d6.h[0] - 1; reg_d6.h[0] = tmp_dec;
                     if (((s64) ((s64) (tmp_dec & 0xFFFF) << 0x30) >> 0x30) >= 0) goto loop_17;
             }
-#ifdef DDPDOJ_PC
+#if defined(DDPDOJ_PC) || defined(DDPDOJ_BONUS_FEATURES)
 pickups_checked:
 #endif
             reg_a6 = (u8 *)g_enemy_entities;

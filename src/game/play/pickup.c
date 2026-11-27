@@ -1,5 +1,5 @@
 #include "common.h"
-#include "black_label.h"
+#include "pickups.h"
 #ifdef DDPDOJ_PC
 #include "arcade_gameplay.h"
 #else
@@ -52,7 +52,7 @@ void pickup_draw_alternating(void) {
 void pickup_draw_alternating(u16 arg0) {
     extern void entity_draw_with_special_items(u16);
 #endif
-    if (g_bullet_count >= 0x34) {
+    if (g_bullet_count >= GAME_RULE(0x34, 60)) {
         reg_d0.w = 1;
         reg_d0.h[0] &= reg_d7.h[0];
         arg0 = g_frame_mod2;
@@ -67,7 +67,7 @@ void pickup_draw_alternating(u16 arg0) {
 void pickup_draw_when_crowded(void) {
     u16 t;
 
-    if (g_bullet_count < 35) goto call;
+    if (g_bullet_count < GAME_RULE(35, 40)) goto call;
     reg_tmp.h[1] = *(u16 *)(reg_a6 + 0x24);
     reg_tmp.h[0] = *(u16 *)(reg_a6 + 0x26);
     reg_a0 = ARCADE_ADDRESS_DECODE(u8 *, reg_tmp.w);
@@ -279,13 +279,26 @@ void pickup_spin_frames_3(void) {
 
 void velocity_from_dir256(void);
 void direction256_to_entity(void);
+void direction256_to_point(void);
 
 void pickup_home_on_target(void) {
     if (ENTITY(reg_a6)->misc.b.user == 0) {
-        reg_tmp.h[1] = *(u16 *)(reg_a6 + 0x24);
-        reg_tmp.h[0] = *(u16 *)(reg_a6 + 0x26);
-        reg_a0 = ARCADE_ADDRESS_DECODE(u8 *, reg_tmp.w);
-        direction256_to_entity();
+#ifdef DDPDOJ_BONUS_FEATURES
+        if (g_black_label_active) {
+            /* On its first update the arcade reads two instruction words from
+               the pickup handler as coordinates. Later updates use the ship. */
+            unsigned kind = ENTITY(reg_a6)->flags.h & 0x7c;
+            reg_d2.h[0] = kind < 0x30 ? 12 : 11;
+            reg_d3.h[0] = (kind & 0x0c) ? 0x6740 : 0x673c;
+            direction256_to_point();
+        } else
+#endif
+        {
+            reg_tmp.h[1] = *(u16 *)(reg_a6 + 0x24);
+            reg_tmp.h[0] = *(u16 *)(reg_a6 + 0x26);
+            reg_a0 = ARCADE_ADDRESS_DECODE(u8 *, reg_tmp.w);
+            direction256_to_entity();
+        }
         ENTITY(reg_a6)->move.b.dir = reg_d1.b[0];
         reg_d0.w = 0x40;
         velocity_from_dir256();
@@ -326,7 +339,7 @@ void pickups_clear(void) {
 
     var_a1 = 0;
     do {
-        temp_a2 = g_pickups + var_a1;
+        temp_a2 = ACTIVE_PICKUPS + var_a1;
         (*(s8 *)((u8 *)(temp_a2) + (0))) = 0;
         var_a1 += 8;
         (*(s8 *)((u8 *)(temp_a2) + (1))) = 0;
@@ -336,7 +349,7 @@ void pickups_clear(void) {
         (*(s8 *)((u8 *)(temp_a2) + (5))) = 0;
         (*(s8 *)((u8 *)(temp_a2) + (6))) = 0;
         (*(s8 *)((u8 *)(temp_a2) + (7))) = 0;
-    } while (var_a1 < 0xC08);
+    } while (var_a1 < (s32)ACTIVE_PICKUP_BYTES);
     g_p2_stage_stars_small = 0;
     g_p2_stage_stars_large = 0;
     g_p1_stage_stars_small = 0;
@@ -404,12 +417,38 @@ void pickup_spawn_plain(void) {
 extern u8 *D_0028DE8C;
 extern u32 D_0028DE90;
 
+#ifdef DDPDOJ_BONUS_FEATURES
+void bee_pickup_spawn(void) {
+    unsigned i;
+    if (!g_black_label_active) {
+        pickup_spawn_variant_here();
+        return;
+    }
+    reg_d1.w = 0;
+    reg_d2.h[0] = (u8)reg_d2.h[0] << 2;
+    D_0028DE90 = reg_d7.w;
+    D_0028DE8C = reg_a0;
+    reg_a0 = black_label_pickups + PICKUP_COUNT * PICKUP_SIZE;
+    for (i = 0; i < BEE_PICKUP_COUNT; ++i, reg_a0 += PICKUP_SIZE) {
+        if (*(u16 *)reg_a0 == 0) {
+            reg_d7.h[0] = BEE_PICKUP_COUNT - 1 - i;
+            pickup_spawn_init();
+            cond_flag = 0;
+            return;
+        }
+    }
+    reg_d7.w = D_0028DE90;
+    reg_a0 = D_0028DE8C;
+    cond_flag = 1;
+}
+#endif
+
 void pickup_spawn(void) {
     u32 tmp;
 
     D_0028DE90 = reg_d7.w;
     D_0028DE8C = reg_a0;
-    reg_a0 = (u8 *) ((u16 *)g_pickups);
+    reg_a0 = (u8 *) ((u16 *)ACTIVE_PICKUPS);
     reg_d7.h[0] = 0x45;
 loop_1:
     if (*(u16 *) reg_a0 != 0) goto next_1;
@@ -431,7 +470,7 @@ extern u16 g_side_scroll_step[];
 void pickups_update(void) {
     reg_d7.h[0] = g_bullet_count;
     if (reg_d7.h[0] != 0) {
-        reg_a6 = (u8 *)((s32 *)g_pickups);
+        reg_a6 = (u8 *)((s32 *)ACTIVE_PICKUPS);
         reg_d7.w -= 1;
         reg_d6.h[0] = g_side_scroll_step[0];
         pickups_update_loop();

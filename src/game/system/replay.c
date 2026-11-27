@@ -1,4 +1,5 @@
 #include "common.h"
+#include "pickups.h"
 #ifndef DDPDOJ_PC
 s32 enemies_resume();
 s32 enemies_stop();
@@ -704,6 +705,12 @@ void replay_record_begin() {
     memset(g_replay_inputs, 0, 0x1A5E0);
     memset(data, 0, 0x5534);
     replay_snapshot_save((u8 *)data);
+#ifdef DDPDOJ_BONUS_FEATURES
+    if (g_black_label_active) {
+        memcpy((u8 *)save + REPLAY_BEE_PICKUPS_OFFSET, black_label_pickups + PICKUP_COUNT * PICKUP_SIZE,
+               BEE_PICKUP_COUNT * PICKUP_SIZE);
+    }
+#endif
     if (g_stage != 0 || g_loop == 0) {
         memset(g_replay_start_state, 0, 0x3A4);
     }
@@ -776,6 +783,12 @@ extern s32 g_replay_file_checksum[];
 void replay_input_playback_begin() {
     g_replay_mode_begun = 2;
     replay_snapshot_load(((s32 *)g_replay_snapshot));
+#ifdef DDPDOJ_BONUS_FEATURES
+    if (g_black_label_active) {
+        memcpy(black_label_pickups + PICKUP_COUNT * PICKUP_SIZE, (u8 *)g_replay_file + REPLAY_BEE_PICKUPS_OFFSET,
+               BEE_PICKUP_COUNT * PICKUP_SIZE);
+    }
+#endif
     if (g_replay_file_checksum[0] == g_replay_checksum) {
         g_replay_buffer_state = 1;
         g_replay_position = 0;

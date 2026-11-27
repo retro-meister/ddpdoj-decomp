@@ -1,5 +1,5 @@
 #include "common.h"
-#include "black_label.h"
+#include "pickups.h"
 #ifdef DDPDOJ_PC
 #include "pc_replay_storage.h"
 #include <string.h>
@@ -1469,7 +1469,7 @@ void replay_snapshot_save(Buf *buf) {
 
     printf("replay size[%d]\n", 0x5534);
     for (i = 0; i < 0xC08; i++) {
-        buf->f0000[i] = g_pickups[i];
+        buf->f0000[i] = ACTIVE_PICKUPS[i];
     }
     *(u16 *)(p + 0xC08) = g_bullet_count;
     *(u16 *)(p + 0xC0A) = g_stage_bees_collected;
@@ -1974,7 +1974,7 @@ void replay_snapshot_load(u8 *p) {
     s32 i;
 
     for (i = 0; i < 0xC08; i++) {
-        g_pickups[i] = p[0x0 + i];
+        ACTIVE_PICKUPS[i] = p[0x0 + i];
     }
     g_bullet_count = *(u16 *)(p + 0xC08);
     g_stage_bees_collected = *(u16 *)(p + 0xC0A);
@@ -3153,7 +3153,19 @@ void replay_text_pointers_encode(s32 baseAddress)
 s32 replay_snapshot_checksum();
 
 void replay_file_pointers_encode(u8 *arg0) {
+#ifdef DDPDOJ_BONUS_FEATURES
+    unsigned i;
+#endif
     g_replay_pointer_not_found = 0;
+#ifdef DDPDOJ_BONUS_FEATURES
+    if (g_black_label_active) {
+        for (i = 0; i < BEE_PICKUP_COUNT; ++i) {
+            u8 *slot = arg0 + REPLAY_BEE_PICKUPS_OFFSET + i * PICKUP_SIZE;
+            pointer_to_table_index((void *)(slot + 0x24), (void *)replay_targets_players, 2);
+            pointer_to_table_index((void *)(slot + 0x28), (void *)entity_draw_layer_routines, 6);
+        }
+    }
+#endif
     replay_snapshot_pointers_encode(arg0 + 0x400);
 #ifdef DDPDOJ_PC
     replay_text_pointers_encode(arg0 + 0x5934);
@@ -3386,15 +3398,33 @@ s32 replay_snapshot_checksum(s32);                             /* extern */
 #endif
 extern s32 g_replay_checksum;
 
+#ifdef DDPDOJ_BONUS_FEATURES
+static void replay_bee_pickups_decode(u8 *file) {
+    unsigned i;
+    if (!g_black_label_active) return;
+    for (i = 0; i < BEE_PICKUP_COUNT; ++i) {
+        u8 *slot = file + REPLAY_BEE_PICKUPS_OFFSET + i * PICKUP_SIZE;
+        REPLAY_TABLE_DECODE(slot + 0x24, replay_targets_players, 2);
+        REPLAY_TABLE_DECODE(slot + 0x28, entity_draw_layer_routines, 6);
+    }
+}
+#endif
+
 #ifdef DDPDOJ_PC
 void replay_file_pointers_decode(void *data) {
     u8 *base = data;
+#ifdef DDPDOJ_BONUS_FEATURES
+    replay_bee_pickups_decode(base);
+#endif
     g_replay_checksum = replay_snapshot_checksum(base + 0x400);
     replay_snapshot_pointers_decode(base + 0x400);
     replay_text_pointers_decode(base + 0x5934);
 }
 #else
 void replay_file_pointers_decode(s32 arg0) {
+#ifdef DDPDOJ_BONUS_FEATURES
+    replay_bee_pickups_decode((u8 *)arg0);
+#endif
     g_replay_checksum = replay_snapshot_checksum(arg0 + 0x400);
     replay_snapshot_pointers_decode((void *)(arg0 + 0x400));
     replay_text_pointers_decode((void *)(arg0 + 0x5934));

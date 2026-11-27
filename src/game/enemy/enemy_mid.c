@@ -1,4 +1,5 @@
 #include "common.h"
+#include "pickups.h"
 #include "arcade_gameplay.h"
 #include "player.h"
 #include "enemy.h"
@@ -1305,7 +1306,7 @@ void mid_flyer_c_fire_pair_a(void)
   u32 nextPosition;
   u32 command;
   savedPosition = reg_d1.h[0];
-  reg_d0.w = 0xFFFF000D;
+  reg_d0.w = GAME_RULE(0xFFFF000D, 0xFFFD000D);
   nextPosition = savedPosition + 2;
   reg_d6.h[0] = savedPosition;
   reg_d1.h[0] = nextPosition;
@@ -1322,7 +1323,7 @@ void mid_flyer_c_fire_pair_b(void)
 {
   u32 saved_d0;
   reg_d6.h[0] = reg_d1.h[0];
-  reg_d0.w = 0xFFFF000D;
+  reg_d0.w = GAME_RULE(0xFFFF000D, 0xFFFD000D);
   reg_d1.h[0] -= 2;
   bullet_fire256_fast();
   saved_d0 = reg_d0.w;
@@ -1535,15 +1536,15 @@ block_24:
                                 }
                             } else {
 block_25:
-                                reg_d0.w = 0x5000C;
+                                reg_d0.w = GAME_RULE(0x5000C, 0x3000C);
                                 reg_d2.h[1] = ENTITY(reg_a6)->y.h;
                                 reg_d2.h[0] = ENTITY(reg_a6)->x.h;
                                 reg_d4.w = 0;
                                 temp_a0 = MID_FLYER_C(reg_a5)->aim[1];
                                 reg_d1.b[0] = temp_a0;
                                 reg_d3.w = 0xF7C0FAC0;
-                                reg_d0.w = 0x5000C;
-                                if (((s32) g_stage >= 3) && (reg_d0.w = 0x5000C, reg_d5.b[0] = MID_FLYER_C(reg_a5)->first_shots_left, (MID_FLYER_C(reg_a5)->first_shots == reg_d5.b[0]))) {
+                                reg_d0.w = GAME_RULE(0x5000C, 0x3000C);
+                                if (((s32) g_stage >= 3) && (reg_d0.w = GAME_RULE(0x5000C, 0x3000C), reg_d5.b[0] = MID_FLYER_C(reg_a5)->first_shots_left, (MID_FLYER_C(reg_a5)->first_shots == reg_d5.b[0]))) {
                                     mid_flyer_c_fire_pair_a();
                                 } else {
                                     bullet_fire256_2way();
@@ -1551,8 +1552,8 @@ block_25:
                                 temp_a1_2 = MID_FLYER_C(reg_a5)->aim[0];
                                 reg_d1.b[0] = temp_a1_2;
                                 reg_d3.h[0] = 0x500;
-                                reg_d0.w = 0x5000C;
-                                if (((s32) g_stage >= 3) && (reg_d0.w = 0x5000C, reg_d5.b[0] = MID_FLYER_C(reg_a5)->first_shots_left, (MID_FLYER_C(reg_a5)->first_shots == reg_d5.b[0]))) {
+                                reg_d0.w = GAME_RULE(0x5000C, 0x3000C);
+                                if (((s32) g_stage >= 3) && (reg_d0.w = GAME_RULE(0x5000C, 0x3000C), reg_d5.b[0] = MID_FLYER_C(reg_a5)->first_shots_left, (MID_FLYER_C(reg_a5)->first_shots == reg_d5.b[0]))) {
                                     mid_flyer_c_fire_pair_b();
                                 } else {
                                     bullet_fire256_2way();
@@ -3664,7 +3665,11 @@ block_3:
     sfx_explosion_air_small();
     reg_d0.h[0] = CONTAINER(reg_a5)->second;
     reg_d2.b[0] = ENTITY(reg_a6)->misc.b.draw_layer;
+#ifdef DDPDOJ_BONUS_FEATURES
+    bee_pickup_spawn();
+#else
     pickup_spawn_variant_here();
+#endif
     reg_d0.w = 0xC;
     explosion_spawn();
     EXPLOSION(reg_a0)->y = ENTITY(reg_a6)->y.h;
@@ -3795,6 +3800,11 @@ void water_flower_turret_start(void) {
     reg_a0 = (u8 *)(water_flower_turret_start_table_2);
     reg_d0.w = 0xB;
     enemy_set_task_state();
+#ifdef DDPDOJ_BONUS_FEATURES
+    if (g_black_label_active) {
+        WATER_FLOWER(reg_a5)->shots = WATER_FLOWER(reg_a5)->shots_left = 1;
+    }
+#endif
     enemy_path_start();
     if (enemy_move_end_requested == 0) {
         reg_d1.b[0] = ENTITY(reg_a6)->move.b.dir;
@@ -4384,7 +4394,7 @@ next_10:
     reg_d1.h[0] += 2;
     reg_d1.h[0] &= 0x3C;
     reg_d4.w = ARCADE_ADDRESS_ENCODE(reg_a6);
-    reg_d0.w = 0xD;
+    reg_d0.w = GAME_RULE(0xD, 0xFFFF000D);
     reg_d2.h[1] = ENTITY(reg_a6)->y.h;
     reg_d2.h[0] = ENTITY(reg_a6)->x.h;
     bullet_fire_fixed();
@@ -4452,7 +4462,7 @@ void mid_flyer_e_hatch_fire(void) {
     temp_a1 = ENTITY(reg_a6)->x.h;
     reg_d2.h[0] = temp_a1;
     reg_d3.w = reg_d7.w;
-    reg_d0.w = 0x3000C;
+    reg_d0.w = GAME_RULE(0x3000C, 0x2000C);
     reg_d0.h[0] = 0xB;
     reg_d4.w = 0;
     bullet_fire256();
@@ -4483,6 +4493,15 @@ void mid_flyer_e_start(void) {
     (*(s8 **)&reg_a0) = (s8 *)mid_flyer_e_start_table_2;
     reg_d0.w = 0xC;
     enemy_set_task_state();
+#ifdef DDPDOJ_BONUS_FEATURES
+    if (g_black_label_active) {
+        ENTITY(reg_a6)[0].hp.h = ENTITY(reg_a6)[1].hp.h = 0x900;
+        MID_FLYER_E(reg_a5)->hatch_shots = MID_FLYER_E(reg_a5)->hatch_shots_left = 2;
+        MID_FLYER_E(reg_a5)->gun_shots = MID_FLYER_E(reg_a5)->gun_shots_left = 3;
+        MID_FLYER_E(reg_a5)->gun_pause = 0x28;
+        MID_FLYER_E(reg_a5)->gun_interval = 6;
+    }
+#endif
     enemy_path_start();
     if (enemy_move_end_requested == 0) {
         reg_d0.b[0] = 5;
@@ -4587,7 +4606,7 @@ block_5:
         var_a1 = (s16 *)(reg_a6 + 1);
         if (reg_d1.h[0] == 0) {
             reg_d0.b[0] = MID_FLYER_E(reg_a5)->palette;
-            if (((s32) ENTITY(reg_a6)->hp.h < 0x260) && (g_damage_blink_counter == 0)) {
+            if (((s32) ENTITY(reg_a6)->hp.h < GAME_RULE(0x260, 0x240)) && (g_damage_blink_counter == 0)) {
                 reg_d0.w = 0x19;
             }
             goto block_14;
@@ -4646,7 +4665,7 @@ block_14:
                             } else {
                                 ENTITY(reg_a6)->flags.b[0] = temp_v1 | 0x40;
                             }
-                            reg_d0.h[0] = 0x20;
+                            reg_d0.h[0] = GAME_RULE(0x20, 0x28);
                             reg_d0.h[0] -= g_rank_2_16;
                             MID_FLYER_E(reg_a5)->gun_countdown = (u8) reg_d0.b[0];
                             MID_FLYER_E(reg_a5)->gun_pause = (u8) reg_d0.b[0];
@@ -4850,6 +4869,11 @@ void mid_tank_horizontal_b_start(void) {
     (*(s8 **)&reg_a0) = (s8 *)mid_tank_horizontal_b_start_table_2;
     reg_d0.w = 0x10;
     enemy_set_task_state();
+#ifdef DDPDOJ_BONUS_FEATURES
+    if (g_black_label_active) {
+        MID_TANK_HB(reg_a5)->shots = MID_TANK_HB(reg_a5)->shots_left = 5;
+    }
+#endif
     enemy_path_start();
     if (enemy_move_end_requested == 0) {
         if (ENTITY(reg_a6)->misc.b.user != 0) {

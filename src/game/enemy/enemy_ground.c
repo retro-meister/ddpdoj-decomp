@@ -1,4 +1,5 @@
 #include "common.h"
+#include "black_label.h"
 #include "arcade_gameplay.h"
 #include "entity.h"
 #include "explosion.h"
@@ -2079,6 +2080,20 @@ block_4:
             EXPLOSION(reg_a0)->move.b.dir = (u8) reg_d0.b[0];
             sfx_explosion_ground_small();
             if ((s32) ENTITY(reg_a6)->y.h >= 0x3200) {
+#ifdef DDPDOJ_BONUS_FEATURES
+                if (g_black_label_active) {
+                    direction256_to_target_player();
+                    if (!cond_flag) {
+                        reg_d0.w = 0x1000C;
+                        reg_d2.h[1] = ENTITY(reg_a6)->y.h;
+                        reg_d2.h[0] = ENTITY(reg_a6)->x.h;
+                        reg_d3.w = 0;
+                        bullet_fire256_fixed();
+                    }
+                    enemy_remove();
+                    return;
+                }
+#endif
                 reg_d1.w = 0;
                 reg_d0.w = 0x1000C;
                 reg_d1.b[0] = ENTITY(reg_a6)->move.b.dir;
@@ -2495,7 +2510,7 @@ void battleship_b(void) {
             ENTITY(reg_a6)->hp.sh = 0x2400;
         }
         if (ENTITY(reg_a6)->hp.sh < 0) {
-            BATTLESHIP_B(reg_a5)->dying_frames = 0x40U;
+            BATTLESHIP_B(reg_a5)->dying_frames = GAME_RULE(0x40U, 0x58U);
             BATTLESHIP_B(reg_a5)->dying_dir = (u16) reg_d1.h[0];
             reg_d0.w = 0x234;
             score_add();
@@ -2809,7 +2824,7 @@ void battleship_c(void) {
             ENTITY(reg_a6)->hp.sh = 0x2400;
         }
         if (ENTITY(reg_a6)->hp.sh < 0) {
-            BATTLESHIP_B(reg_a5)->dying_frames = 0x40U;
+            BATTLESHIP_B(reg_a5)->dying_frames = GAME_RULE(0x40U, 0x60U);
             BATTLESHIP_B(reg_a5)->dying_dir = (u16) reg_d1.h[0];
             reg_d0.w = 0x563;
             score_add();
@@ -3600,18 +3615,18 @@ block_11:
                     reg_d3.h[1] = (reg_d0.h[0] != 0) ? *(u16 *)((u8 *)reg_a0 + ((s16)reg_d0.h[0] & ~1)) : *(u16 *)reg_a0;
                     reg_d3.h[0] = (((reg_d0.h[0] & 0xFFFF) + 2) != 0) ? *(u16 *)((u8 *)reg_a0 + ((s16)((reg_d0.h[0] & 0xFFFF) + 2) & ~1)) : *(u16 *)reg_a0;
                     reg_d4.w = 0;
-                    reg_d0.w = 0x4000C;
+                    reg_d0.w = GAME_RULE(0x4000C, 0x2000C);
                     reg_d2.h[1] = ENTITY(reg_a6)->y.h;
                     reg_d2.h[0] = ENTITY(reg_a6)->x.h;
                     bullet_fire_fixed();
-                    reg_d0.w = 0xFFFE000D;
+                    reg_d0.w = GAME_RULE(0xFFFE000D, 0xFFFC000D);
                     reg_d1.h[0] = reg_d7.h[0];
                     bullet_fire_2way();
                     reg_tmp.b[0] = HOVER_GUNNER(reg_a5)->shots_left;
                     HOVER_GUNNER(reg_a5)->shots_left -= 1;
                     if ((s32) reg_tmp.b[0] <= 0) {
                         HOVER_GUNNER(reg_a5)->shots_left = (u8) HOVER_GUNNER(reg_a5)->shots;
-                        reg_d0.h[0] = 0xA;
+                        reg_d0.h[0] = GAME_RULE(0xA, 0x10);
                         reg_d1.h[0] = g_rank_1_16;
                         reg_d1.h[0] >>= 2;
                         reg_d0.h[0] -= reg_d1.h[0];

@@ -1,3 +1,4 @@
+#include "black_label.h"
 #include "common.h"
 #include "entity.h"
 #include "explosion.h"
@@ -209,7 +210,7 @@ next_3:
                         t3 = (u16 *)(reg_a4 + 2);
                         reg_d3.h[0] = *(u16 *)reg_a4;
                         reg_a4 = (u8 *)(t3);
-                        reg_d0.w = 0x30007;
+                        reg_d0.w = GAME_RULE(0x30007, 0x10007);
                         reg_d4.w = 0;
                         if ((t5 == 3) && ((s32) g_scroll_line >= 0x240)) {
                             reg_d0.w = 0xFFFE0007;
