@@ -2,6 +2,7 @@
 #include "pickups.h"
 #ifdef DDPDOJ_PC
 #include "pc_replay_storage.h"
+#include "pc_player_state.h"
 #include <string.h>
 #endif
 #include "enemy.h"
@@ -1462,7 +1463,11 @@ static u8 *replay_boss_hp_load(u32 address)
 }
 #endif
 
+#ifdef DDPDOJ_PC
+static void capture_replay_snapshot(Buf *buf, bool update_menu) {
+#else
 void replay_snapshot_save(Buf *buf) {
+#endif
     s32 i;
     s32 v;
     u8 *p = (u8 *)buf;
@@ -1781,6 +1786,9 @@ void replay_snapshot_save(Buf *buf) {
     }
     p[0x5532] = g_p1_stage_start_timer;
     p[0x5533] = g_p2_stage_start_timer;
+#ifdef DDPDOJ_PC
+    if (!update_menu) return;
+#endif
     ((s16 *)D_006C58D6)[0] = MAIN_OR_DEATH_LABEL(0xCB, 0x6E);
     ((s16 *)D_006C58AA)[0] = g_setting_difficulty;
     ((s16 *)D_006C58C8)[0] = g_setting_extend;
@@ -2288,6 +2296,35 @@ void replay_snapshot_load(u8 *p) {
     replay_text_layer_load((const Src *)p);
 }
 
+
+#ifdef DDPDOJ_PC
+void replay_snapshot_save(Buf *buf) {
+    capture_replay_snapshot(buf, true);
+}
+
+void pc_player_state_capture(PcPlayerState *state) {
+    memset(state, 0, sizeof(*state));
+    capture_replay_snapshot((Buf *)state->replay, false);
+    memcpy(state->player_tail[0], g_player1 + 98, sizeof(state->player_tail[0]));
+    memcpy(state->player_tail[1], g_player2 + 98, sizeof(state->player_tail[1]));
+    memcpy(state->option_tail[0], g_p1_options + 100, sizeof(state->option_tail[0]));
+    memcpy(state->option_tail[1], g_p2_options + 100, sizeof(state->option_tail[1]));
+    state->boss_hp = ARCADE_ADDRESS_ENCODE(g_boss_hp);
+    state->rng_cursor = rng_cursor;
+}
+
+bool pc_player_state_restore(PcPlayerState *state) {
+    if (state->boss_hp > pc_arcade_image_size) return false;
+    replay_snapshot_load(state->replay);
+    memcpy(g_player1 + 98, state->player_tail[0], sizeof(state->player_tail[0]));
+    memcpy(g_player2 + 98, state->player_tail[1], sizeof(state->player_tail[1]));
+    memcpy(g_p1_options + 100, state->option_tail[0], sizeof(state->option_tail[0]));
+    memcpy(g_p2_options + 100, state->option_tail[1], sizeof(state->option_tail[1]));
+    g_boss_hp = ARCADE_ADDRESS_DECODE(u8 *, state->boss_hp);
+    rng_cursor = state->rng_cursor;
+    return true;
+}
+#endif
 
 void replay_text_layer_load(const Src *src) {
     s32 i;

@@ -1,5 +1,6 @@
 #include "cdvd.h"
 #include "combat_state.h"
+#include "pc_player_state.h"
 #include "state_slot.h"
 #include "pc_arcade_address.h"
 #include "black_label.h"
@@ -242,6 +243,11 @@ static bool has_relocated_enemy(void)
     return false;
 }
 
+typedef struct {
+    PcPlayerState players;
+    PcCombatPools pools;
+} GameplaySnapshot;
+
 int main(int argc, char **argv)
 {
     const char *save_pools = argc == 5 && !strcmp(argv[3], "--save-pools") ? argv[4] : NULL;
@@ -254,11 +260,16 @@ int main(int argc, char **argv)
 #endif
     if (load_pools) {
         size_t size;
-        PcCombatPools *saved = pc_state_slot_read(load_pools, pool_mode, 1, &size);
+        GameplaySnapshot *saved = pc_state_slot_read(load_pools, pool_mode, 1, &size);
         pc_arcade_address_init();
-        require(saved && size == sizeof(*saved) && pc_combat_restore(saved),
+        require(saved && size == sizeof(*saved) && pc_combat_restore(&saved->pools) &&
+                pc_player_state_restore(&saved->players),
                 "Restore combat pools into a fresh process");
         require(has_relocated_enemy(), "Resolve the saved entity and callback in this process");
+        PcPlayerState restored;
+        pc_player_state_capture(&restored);
+        require(!memcmp(&restored, &saved->players, sizeof(restored)),
+                "Recover player, weapon and replay fields exactly after restart");
         SDL_free(saved);
         return !SDL_RemovePath(load_pools);
     }
@@ -368,8 +379,9 @@ int main(int argc, char **argv)
         require(pc_gs_ok() && SDL_RenderPresent(renderer), "Render game frame");
         require(game_take_mode_request() == GAME_MODE_NONE, "Keep running the selected mode");
         if (save_pools && played >= 300 && has_relocated_enemy()) {
-            PcCombatPools saved;
-            pc_combat_capture(&saved);
+            GameplaySnapshot saved = {0};
+            pc_combat_capture(&saved.pools);
+            pc_player_state_capture(&saved.players);
             require(pc_state_slot_write(save_pools, pool_mode, 1, &saved, sizeof(saved)),
                     "Write pools from live gameplay");
             goto cleanup;
