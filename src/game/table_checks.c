@@ -272,7 +272,7 @@ extern u16 name_entry_letter_table_at_52[];
 extern u16 name_entry_letter_table_at_54[];
 extern u8 D_0025FF70[];
 extern u8 D_0025FFB0[];
-extern u8 D_0025FFF0[];
+extern u16 stage5_boss_palette_slot_12[32];
 extern u8 stage5_boss_flash_palettes_a_at_32[];
 extern u8 stage5_boss_flash_palettes_a_at_39[];
 extern u8 stage5_boss_flash_palettes_a_at_46[];
@@ -2643,7 +2643,7 @@ void checked_pointers_store(void) {
     if (stage5_boss_flash_palettes_a[25] != 0x19) {
         printf("error! st5b_mo1_flush_tbl[25]\n");
     }
-    STORE_ARCADE_ADDRESS(stage5_boss_flash_palettes_a + 25, ((u16 *)D_0025FFF0));
+    STORE_ARCADE_ADDRESS(stage5_boss_flash_palettes_a + 25, ((u16 *)stage5_boss_palette_slot_12));
     if (stage5_boss_flash_palettes_a[32] != 0x20) {
         printf("error! st5b_mo1_flush_tbl[32]\n");
     }
@@ -2767,7 +2767,7 @@ void checked_pointers_store(void) {
     if (stage5_boss_fade_palettes_b[18] != 0x12) {
         printf("error! st5b_siro_fade_tbl0[18]\n");
     }
-    STORE_ARCADE_ADDRESS(stage5_boss_fade_palettes_b + 18, ((u16 *)D_0025FFF0));
+    STORE_ARCADE_ADDRESS(stage5_boss_fade_palettes_b + 18, ((u16 *)stage5_boss_palette_slot_12));
     if (stage5_boss_fade_palettes_b[25] != 0x19) {
         printf("error! st5b_siro_fade_tbl0[25]\n");
     }

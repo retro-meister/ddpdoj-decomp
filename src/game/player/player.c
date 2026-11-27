@@ -1,4 +1,5 @@
 #include "common.h"
+#include "game_address.h"
 #include "black_label.h"
 #ifdef DDPDOJ_PC
 #include "arcade_gameplay.h"
@@ -2964,7 +2965,7 @@ s32 sprite_draw_with_players();
 extern u16 player_shield_start_sprites[];
 extern u16 player_draw_table[];
 extern u16 player_shield_palettes[];
-extern u16 player_shield_sprite_tables[];
+extern PackedGameAddress player_shield_sprite_tables[];
 extern u16 player_exhaust_sprite_tables[];
 extern u16 player_exhaust_slow_sprite_tables[];
 extern u16 D_0028C868[];

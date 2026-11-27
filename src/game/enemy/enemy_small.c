@@ -1583,7 +1583,7 @@ extern u16 warning_sign_palette_numbers[];
 extern u16 warning_sign_second_palette_numbers[];
 extern u8 warning_sign_state[];
 extern u8 warning_sign_entities[];
-extern u8 D_00261C30[];
+extern u16 hit_count_flash_palette[32];
 extern u8 warning_sign_start_table[];
 
 void warning_sign_start(void) {
@@ -1602,7 +1602,7 @@ void warning_sign_start(void) {
     reg_d0.h[0] = (reg_d6.h[0] != 0) ? *(u16 *)((u8 *)reg_a1 + ((s16)reg_d6.h[0] & ~1)) : *(u16 *)reg_a1;
     ENTITY(reg_a6)->attr.b.palette = (u8) reg_d0.b[0];
     sprite_palette_load();
-    reg_a0 = D_00261C30;
+    reg_a0 = (u8 *)hit_count_flash_palette;
     reg_a1 = (u8 *)(warning_sign_second_palette_numbers);
     reg_d0.h[0] = (reg_d6.h[0] != 0) ? *(u16 *)((u8 *)reg_a1 + ((s16)reg_d6.h[0] & ~1)) : *(u16 *)reg_a1;
     sprite_palette_load();

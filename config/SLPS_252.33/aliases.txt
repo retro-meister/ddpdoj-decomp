@@ -78,3 +78,4 @@ reg_call_target_as_u8_p = 0x28e3f4; // alias of reg_call_target
 reg_a0_as_s8_p = 0x28e468; // alias of reg_a0
 reg_a4_as_u16_p = 0x28e458; // alias of reg_a4
 g_enemy_entities_as_bytes = 0x2bc7c0; // alias of g_enemy_entities
+battleship_initial_state_byte = 0x28c9b0; // alias of battleship_start_data

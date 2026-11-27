@@ -1,4 +1,6 @@
 #include "cdvd.h"
+#include "enemy.h"
+#include "fade.h"
 #include "combat_state.h"
 #include "pc_player_state.h"
 #include "pc_task_state.h"
@@ -62,6 +64,41 @@ static void require(bool condition, const char *message)
         SDL_LogError(SDL_LOG_CATEGORY_TEST, "%s (%s)", message, SDL_GetError());
         exit(EXIT_FAILURE);
     }
+}
+
+_Static_assert(sizeof(PackedGameAddress) == 4, "packed address size");
+_Static_assert(sizeof(BattleshipStartData) == 16, "battleship startup size");
+_Static_assert(offsetof(BattleshipStartData, shot_routines) == 8, "battleship routine offset");
+_Static_assert(sizeof(FadePaletteRun) == 14, "palette fade run size");
+_Static_assert(offsetof(TwoPaletteFade, runs[0].palette) == 8, "first fade palette offset");
+_Static_assert(offsetof(TwoPaletteFade, runs[1].palette) == 22, "second fade palette offset");
+_Static_assert(sizeof(TwoPaletteFade) == 32, "two palette fade size");
+
+static uintptr_t relocated_address(const PackedGameAddress words)
+{
+    return pc_arcade_address_decode(((u32)words[0] << 16) | words[1]);
+}
+
+static void check_startup_addresses(void)
+{
+    extern PackedGameAddress player_shield_sprite_tables[2], g_explosion_test_labels[2];
+    extern u16 player_shield_sprites_00[], player_shield_sprites_01[];
+    extern u16 g_explosion_test_labels_at_0[], g_explosion_test_labels_at_2[];
+    extern u16 startup_fade_colors[];
+    extern void ground_shot_random_a(void), ground_shot_random_b(void);
+
+    require(relocated_address(player_shield_sprite_tables[0]) == (uintptr_t)player_shield_sprites_00 &&
+            relocated_address(player_shield_sprite_tables[1]) == (uintptr_t)player_shield_sprites_01,
+            "Relocate both shield sprite tables");
+    require(relocated_address(g_explosion_test_labels[0]) == (uintptr_t)g_explosion_test_labels_at_0 &&
+            relocated_address(g_explosion_test_labels[1]) == (uintptr_t)g_explosion_test_labels_at_2,
+            "Relocate both explosion test pages");
+    require(relocated_address(battleship_start_data.shot_routines[0]) == (uintptr_t)ground_shot_random_b &&
+            relocated_address(battleship_start_data.shot_routines[1]) == (uintptr_t)ground_shot_random_a,
+            "Relocate both ground shot routines");
+    require(relocated_address(g_startup_palette_fade.runs[0].palette) == (uintptr_t)startup_fade_colors &&
+            relocated_address(g_startup_palette_fade.runs[1].palette) == (uintptr_t)palette_white,
+            "Relocate both startup fade palettes");
 }
 
 #ifdef DDPDOJ_BONUS_FEATURES
@@ -343,6 +380,7 @@ int main(int argc, char **argv)
 
     pc_gs_bind_game(renderer);
     game_boot_begin();
+    check_startup_addresses();
 #ifdef DDPDOJ_BONUS_FEATURES
     if (demos) {
         check_attract_demos(renderer);

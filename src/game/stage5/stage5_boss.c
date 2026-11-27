@@ -17,7 +17,7 @@ s32 sprite_palette_load();
 s32 stage5_boss_form1_stop_hits();
 extern u8 D_0025FF70[];
 extern u8 D_0025FFB0[];
-extern u8 D_0025FFF0[];
+extern u16 stage5_boss_palette_slot_12[32];
 extern u8 stage5_boss_flash_palettes_a_at_32[];
 extern u8 stage5_boss_flash_palettes_a_at_39[];
 extern u8 stage5_boss_flash_palettes_a_at_46[];
@@ -103,7 +103,7 @@ void stage5_boss_start(void) {
     reg_a0 = D_0025FFB0;
     sprite_palette_load();
     reg_d0.h[0] = 0x12;
-    reg_a0 = D_0025FFF0;
+    reg_a0 = (u8 *)stage5_boss_palette_slot_12;
     sprite_palette_load();
     reg_d0.h[0] = 0x13;
     reg_a0 = stage5_boss_flash_palettes_a_at_32;

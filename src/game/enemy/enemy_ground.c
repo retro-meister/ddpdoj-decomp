@@ -358,7 +358,10 @@ void battleship_first(void) {
 }
 
 extern u8 D_00257C10[];
-extern u8 D_0028C9B0;
+#ifndef DDPDOJ_PC
+/* The retail load addresses the first byte through gp. */
+extern u8 battleship_initial_state_byte;
+#endif
 extern u16 g_enemy_signal_f;
 extern u16 g_enemy_signal_e;
 extern u16 g_enemy_signal_d;
@@ -371,7 +374,11 @@ void battleship_start(void) {
     reg_tmp.w = ARCADE_ADDRESS_ENCODE(reg_a0);
     BATTLESHIP(reg_a5)->after_entities[0] = (u16) reg_tmp.h[1];
     BATTLESHIP(reg_a5)->after_entities[1] = (u16) reg_tmp.h[0];
-    reg_a0 = &D_0028C9B0;
+#ifdef DDPDOJ_PC
+    reg_a0 = (u8 *)&battleship_start_data;
+#else
+    reg_a0 = &battleship_initial_state_byte;
+#endif
     reg_d0.w = 3;
     enemy_set_task_state();
     enemy_path_start();

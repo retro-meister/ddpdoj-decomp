@@ -2,6 +2,7 @@
 #define DDPDOJ_ENEMY_H
 
 #include "types.h"
+#include "game_address.h"
 #include "entity.h"
 
 /* Two bytes of a state block that are set together as one word: a number of frames and its countdown. */
@@ -83,5 +84,16 @@ extern void (*g_enemy_first_routines_high[128])();
 
 #define ENEMY_FLAG_NEW_STEP 0x20     /* EnemyState.flags: the path has moved on; work the speed out again */
 #define ENEMY_FLAG_FROM_SPAWNER 0x40 /* EnemyState.flags: started by a spawner, at start_y/start_x */
+
+typedef struct {
+    /* 0x00 */ u8 other_00;
+    u8 seen;
+    u8 hit_palette;
+    u8 palette;
+    u16 hp[2];
+    PackedGameAddress shot_routines[2];
+} BattleshipStartData;
+
+extern BattleshipStartData battleship_start_data;
 
 #endif

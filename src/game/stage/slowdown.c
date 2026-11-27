@@ -1,6 +1,7 @@
 #include "common.h"
 #include "black_label.h"
 #include "entity.h"
+#include "fade.h"
 
 /* How many objects a frame may hold before the game slows down, by stage: the base number, and what is
    added while a boss is on screen. */
@@ -207,9 +208,13 @@ void slowdown_turn_off(void) {
     g_slowdown_off = 1;
 }
 
-u16 D_002693C0[16] = {
-    0x0002, 0x0000, 0x0000, 0x0000, 0x0004, 0x0005, 0x001F, 0x0003,
-    0x0000, 0x0008, 0x0000, 0x000B, 0x000C, 0x001F, 0x0003, 0x0000,
+TwoPaletteFade g_startup_palette_fade = {
+    2,
+    {
+        { 0, 0, 0, { 4, 5 }, 31, 3 },
+        { 0, 8, 0, { 11, 12 }, 31, 3 },
+    },
+    0,
 };
 
 #ifdef DDPDOJ_PC

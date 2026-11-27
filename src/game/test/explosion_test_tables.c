@@ -1,5 +1,6 @@
 /* Tables of the explosion debug enemy. */
 #include "common.h"
+#include "game_address.h"
 
 u16 g_explosion_test_entities[16] = {
     0x8000, 0xFE00, 0xFE00, 0x0000, 0x00EB, 0x0210, 0x0000, 0x0000,
@@ -28,7 +29,6 @@ u16 g_explosion_test_state[4] = {
     0x0000, 0x1070, 0x0000, 0x0000,
 };
 
-u16 g_explosion_test_labels[4] = {
-    0x0000, 0x0001,
-    0x0002, 0x0003,
+PackedGameAddress g_explosion_test_labels[2] = {
+    { 0, 1 }, { 2, 3 },
 };

@@ -452,7 +452,7 @@ void stage5_midboss5_first(void) {
 s32 sprite_palette_load();
 extern u8 stage5_midboss5_start_table[];
 extern u8 stage5_midboss5_start_table_2[];
-extern u8 stage5_midboss5_start_table_3[];
+extern u16 stage5_midboss5_palette_slot_14[32];
 extern u8 stage5_midboss5_start_table_4[];
 extern u8 stage5_midboss5_start_table_5[];
 extern u16 g_enemy_signal_4;
@@ -481,7 +481,7 @@ void stage5_midboss5_start(void) {
     reg_a0 = (u8 *)stage5_midboss5_start_table_2;
     sprite_palette_load();
     reg_d0.h[0] = 0x14;
-    reg_a0 = (u8 *)stage5_midboss5_start_table_3;
+    reg_a0 = (u8 *)stage5_midboss5_palette_slot_14;
     sprite_palette_load();
 }
 

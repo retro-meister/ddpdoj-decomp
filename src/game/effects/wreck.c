@@ -17,7 +17,6 @@ extern u16 D_0028DC6C[];
 
 extern u8 D_00269920[];
 
-extern u16 D_002693C0[16];
 #ifndef DDPDOJ_PC
 extern u16 D_00269708[];
 #endif
@@ -79,7 +78,7 @@ extern u16 D_00262370[];
 extern u8 settings_notice_fade_palettes_at_11[];
 extern u8 settings_notice_fade_palettes_at_4[];
 extern u16 D_00262470[];
-extern u16 slowdown_budget_limits_loop2_at_16[];
+extern u16 startup_fade_colors[];
 extern struct D002687b0Record D_002687B0;
 extern u16 D_00269750[];
 extern u16 D_00269780[];
@@ -130,8 +129,8 @@ extern void input_get_p2_pressed(void);
 
 
 void startup_pointers_store_a(void) {
-    STORE_POINTER(D_002693C0 + 4, slowdown_budget_limits_loop2_at_16);
-    STORE_POINTER(D_002693C0 + 11, palette_white);
+    STORE_POINTER(g_startup_palette_fade.runs[0].palette, startup_fade_colors);
+    STORE_POINTER(g_startup_palette_fade.runs[1].palette, palette_white);
 #ifndef DDPDOJ_PC
     STORE_POINTER(D_00269708 + 8, D_00269750);
     STORE_POINTER(D_00269708 + 16, D_00269780);

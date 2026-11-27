@@ -1,4 +1,5 @@
 #include "common.h"
+#include "enemy.h"
 #include "task.h"
 #include "sdk/ps2sdk.h"
 
@@ -278,7 +279,6 @@ extern u16 D_0028C5F0[];
 #else
 extern u16 D_0028C5E0[];
 #endif
-extern u16 D_0028C9B0[];
 
 void task_table_init(void);
 void option_offsets_init(void);
@@ -361,13 +361,13 @@ void task_table_init(void) {
 
 extern u16 option_offset_13[];
 extern u16 option_offset_19[];
-extern u16 D_00261CB0[];
+extern u16 hit_count_high_palette[32];
 
 
 void option_offsets_init(void) {
     STORE_ARCADE_ADDRESS(option_offsets + 26, option_offset_13);
-    STORE_ARCADE_ADDRESS(option_offsets + 30, D_00261CB0);
-    STORE_ARCADE_ADDRESS(option_offsets + 34, D_00261CB0);
+    STORE_ARCADE_ADDRESS(option_offsets + 30, hit_count_high_palette);
+    STORE_ARCADE_ADDRESS(option_offsets + 34, hit_count_high_palette);
     STORE_ARCADE_ADDRESS(option_offsets + 38, option_offset_19);
 }
 
@@ -3056,7 +3056,7 @@ extern u16 D_0028C940[];
 
 extern u16 player_ship_hitbox_tables[];
 extern u16 player_ship_shadow_tables[];
-extern u16 player_shield_sprite_tables[];
+extern PackedGameAddress player_shield_sprite_tables[];
 extern u16 player_exhaust_sprite_tables[];
 extern u16 player_exhaust_slow_sprite_tables[];
 extern u16 D_0028C868[];
@@ -3189,8 +3189,8 @@ void player_tables_init(void) {
     STORE_ARCADE_ADDRESS(ship0_shot_list_3_05 + 4, ship0_shot_list_3_05_02);
     STORE_ARCADE_ADDRESS(ship0_shot_list_3_05 + 6, ship0_shot_list_3_05_03);
     STORE_ARCADE_ADDRESS(ship0_shot_list_3_05 + 8, ship0_shot_list_3_05_04);
-    STORE_ARCADE_ADDRESS(player_shield_sprite_tables, player_shield_sprites_00);
-    STORE_ARCADE_ADDRESS(player_shield_sprite_tables + 2, player_shield_sprites_01);
+    STORE_ARCADE_ADDRESS(player_shield_sprite_tables[0], player_shield_sprites_00);
+    STORE_ARCADE_ADDRESS(player_shield_sprite_tables[1], player_shield_sprites_01);
     STORE_ARCADE_ADDRESS(player_exhaust_sprite_tables, player_exhaust_sprites_00);
     STORE_ARCADE_ADDRESS(player_exhaust_sprite_tables + 2, player_exhaust_sprites_01);
     STORE_ARCADE_ADDRESS(player_shield_sprites_01 + 8, player_shield_sprites_01_04);
@@ -3349,7 +3349,7 @@ extern u16 D_00261EB0[];
 
 
 void maximum_level_texts_init(void) {
-    STORE_ARCADE_ADDRESS(((u16 *)p1_maximum_level_texts), D_00261CB0);
+    STORE_ARCADE_ADDRESS(((u16 *)p1_maximum_level_texts), hit_count_high_palette);
     STORE_ARCADE_ADDRESS(p1_maximum_level_texts + 4, D_00261E30);
     STORE_ARCADE_ADDRESS(p1_maximum_level_texts + 8, D_00261E70);
 #ifdef DDPDOJ_PC
@@ -3357,7 +3357,7 @@ void maximum_level_texts_init(void) {
 #else
     STORE_POINTER(D_0028C5E0 + 4, D_00261EB0);
 #endif
-    STORE_ARCADE_ADDRESS(((u16 *)p2_maximum_level_texts), D_00261CB0);
+    STORE_ARCADE_ADDRESS(((u16 *)p2_maximum_level_texts), hit_count_high_palette);
     STORE_ARCADE_ADDRESS(p2_maximum_level_texts + 4, D_00261E30);
     STORE_ARCADE_ADDRESS(p2_maximum_level_texts + 8, D_00261E70);
 #ifdef DDPDOJ_PC
@@ -4073,8 +4073,8 @@ extern u16 D_00258760[];
 extern u16 D_00258770[];
 
 void ground_enemy_pointers_store(void) {
-    STORE_POINTER(D_0028C9B0 + 4, ground_shot_random_b);
-    STORE_POINTER(D_0028C9B0 + 6, ground_shot_random_a);
+    STORE_POINTER(battleship_start_data.shot_routines[0], ground_shot_random_b);
+    STORE_POINTER(battleship_start_data.shot_routines[1], ground_shot_random_a);
     STORE_ARCADE_ADDRESS(D_00258560, ground_gun_a_aim);
     STORE_ARCADE_ADDRESS(D_00258560 + 2, ground_gun_a_fire);
     STORE_ARCADE_ADDRESS(D_00258560 + 4, ground_gun_b_aim);
@@ -4112,11 +4112,11 @@ void ground_enemy_pointers_store(void) {
 extern u16 g_explosion_test_labels_at_0[];
 extern u16 g_explosion_test_labels_at_2[];
 
-extern u16 g_explosion_test_labels[];
+extern PackedGameAddress g_explosion_test_labels[];
 
 void explosion_test_pointers_store(void) {
-    STORE_POINTER(g_explosion_test_labels, g_explosion_test_labels_at_0);
-    STORE_POINTER(g_explosion_test_labels + 2, g_explosion_test_labels_at_2);
+    STORE_POINTER(g_explosion_test_labels[0], g_explosion_test_labels_at_0);
+    STORE_POINTER(g_explosion_test_labels[1], g_explosion_test_labels_at_2);
 }
 
 extern u16 large_tank_entities_at_47[];

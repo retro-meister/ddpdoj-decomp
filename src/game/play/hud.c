@@ -520,8 +520,9 @@ s32 voice_hyper();
 s32 sprite_palette_load();
 s32 hud_p1_caption_clear();
 s32 hud_p2_caption_clear();
-extern u8 D_00261C30[];
-extern u8 hud_boss_bar_enter_table[];
+extern u16 hit_count_flash_palette[32];
+extern u16 hit_count_base_palette[32];
+extern u16 hit_count_high_palette[32];
 extern u8 D_0028E61D;
 extern u8 *g_boss_hp;
 extern s32 g_boss_hp_unit;
@@ -562,10 +563,10 @@ void hud_boss_bar_enter(void) {
     }
     hud_p1_caption_clear();
     hud_p2_caption_clear();
-    reg_a0 = (u8 *)D_00261C30;
+    reg_a0 = (u8 *)hit_count_flash_palette;
     reg_d0.h[0] = 7;
     sprite_palette_load();
-    reg_a0 = (u8 *)hud_boss_bar_enter_table;
+    reg_a0 = (u8 *)hit_count_base_palette;
     reg_d0.h[0] = 8;
     sprite_palette_load();
     goto next_40;
@@ -1306,9 +1307,6 @@ void boss_hits_take_on_button(void) {
 }
 
 s32 palette_bank_b_load_half();
-extern u8 hud_hits_draw_table[];
-extern u8 hud_hits_draw_table_2[];
-extern u8 hud_hits_draw_table_3[];
 extern u16 g_frame_mod2;
 
 void hud_hits_draw(void) {
@@ -1323,20 +1321,20 @@ void hud_hits_draw(void) {
 next_0:
     if (reg_d2.h[0] == 0) goto next_1;
     save_d0 = reg_d0.h[0];
-    reg_a0 = (u8 *)hud_hits_draw_table;
+    reg_a0 = (u8 *)&hit_count_flash_palette[16];
     reg_d0.h[0] = reg_d4.h[0];
     palette_bank_b_load_half();
     reg_d0.h[0] = save_d0;
     goto next_2;
 next_1:
     save_d0 = reg_d0.h[0];
-    reg_a0 = (u8 *)hud_hits_draw_table_2;
+    reg_a0 = (u8 *)&hit_count_base_palette[16];
     reg_d0.h[0] = reg_d4.h[0];
     palette_bank_b_load_half();
     reg_d0.h[0] = save_d0;
     if (reg_d0.h[0] < 0x100) goto next_2;
     save_d0 = reg_d0.h[0];
-    reg_a0 = (u8 *)hud_hits_draw_table_3;
+    reg_a0 = (u8 *)&hit_count_high_palette[16];
     reg_d0.h[0] = reg_d4.h[0];
     palette_bank_b_load_half();
     reg_d0.h[0] = save_d0;

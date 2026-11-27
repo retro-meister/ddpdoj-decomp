@@ -1051,3 +1051,4 @@ death_D_002874C0 = 0x2874c0; // alias of D_0027FEF0
 death_D_002885F0 = 0x2885f0; // alias of D_00281020
 D_00288078 = 0x288078; // alias of death_D_00288078
 g_enemy_entities_as_bytes = 0x68f330; // alias of g_enemy_entities
+battleship_initial_state_byte = 0x28ef18; // alias of battleship_start_data

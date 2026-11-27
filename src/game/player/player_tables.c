@@ -1,5 +1,6 @@
 /* Tables of the player ships. */
 #include "common.h"
+#include "game_address.h"
 
 u16 player_spawn_table[8] = {
     0x0000, 0x4000, 0x0100, 0x00C0, 0x0000, 0x4050, 0x00C0, 0x0100,
@@ -469,9 +470,8 @@ u16 player_shield_palettes[2] = {
     0x0006, 0x0006,
 };
 
-u16 player_shield_sprite_tables[4] = {
-    0x0000, 0x0001,
-    0x0002, 0x0003,
+PackedGameAddress player_shield_sprite_tables[2] = {
+    { 0, 1 }, { 2, 3 },
 };
 
 #ifdef DDPDOJ_PC
